@@ -310,6 +310,8 @@ SUBSYSTEM_DEF(job)
 			key = "Sidefolk"
 		if(WANDERERS)
 			key = "Wanderers"
+		if(TRIBAL)
+			key = "Tribe"
 		else
 			key = "Wanderers"
 	return key

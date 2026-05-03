@@ -16,6 +16,14 @@
 	damage_deflection = 10
 	hardness = 3
 
+/datum/crafting_recipe/roguetown/turfs/desert/sandstone
+	name = "sandstone wall"
+	result = /turf/closed/wall/mineral/rogue/sandstone
+	reqs = list(/obj/item/natural/stone = 2)
+	skillcraft = /datum/skill/craft/masonry
+	verbage_simple = "construct"
+	verbage = "constructs"
+	craftdiff = 2
 
 /turf/closed/wall/mineral/rogue/sandbrick
 	name = "sandbrick wall"
@@ -35,6 +43,15 @@
 	damage_deflection = 10
 	hardness = 3
 
+/datum/crafting_recipe/roguetown/turfs/desert/sandbrick
+	name = "sandbrick wall"
+	result = /turf/closed/wall/mineral/rogue/sandbrick
+	reqs = list(/obj/item/natural/stone = 2)
+	skillcraft = /datum/skill/craft/masonry
+	verbage_simple = "construct"
+	verbage = "constructs"
+	craftdiff = 2
+
 /turf/closed/mineral/rogue/sandstone
 	name = "sandstone"
 	desc = "Dusty, sand-blasted rock."
@@ -43,8 +60,9 @@
 	smooth = SMOOTH_TRUE | SMOOTH_MORE
 	smooth_icon = 'modular_deserttown/icons/rock.dmi'
 	canSmoothWith = list(/turf/closed/mineral/random/rogue/sandstone, /turf/closed/mineral/rogue/sandstone)
-	turf_type = /turf/open/floor/rogue/naturalstone
-	baseturfs = /turf/open/floor/rogue/naturalstone
+	turf_type = /turf/open/floor/rogue/naturalstone/sandstone
+	baseturfs = /turf/open/floor/rogue/naturalstone/sandstone
+	above_floor = /turf/open/floor/rogue/naturalstone/sandstone
 
 /turf/closed/mineral/rogue/bedrock/sandstone
 	name = "sandstone"
@@ -62,8 +80,14 @@
 	smooth = SMOOTH_TRUE | SMOOTH_MORE
 	smooth_icon = 'modular_deserttown/icons/rock.dmi'
 	canSmoothWith = list(/turf/closed/mineral/random/rogue/sandstone, /turf/closed/mineral/rogue/sandstone)
-	turf_type = /turf/open/floor/rogue/naturalstone
-	baseturfs = /turf/open/floor/rogue/naturalstone
+	turf_type = /turf/open/floor/rogue/naturalstone/sandstone
+	baseturfs = /turf/open/floor/rogue/naturalstone/sandstone
+	above_floor = /turf/open/floor/rogue/naturalstone/sandstone
+	mineralSpawnChanceList = list(
+		/turf/closed/mineral/rogue/sandstone/salt = 5,
+		/turf/closed/mineral/rogue/sandstone/iron = 15,
+		/turf/closed/mineral/rogue/sandstone/copper = 10,
+		/turf/closed/mineral/rogue/sandstone/coal = 25)
 
 /turf/closed/mineral/rogue/sandstone/gold
 	icon_state = "mingold"
@@ -139,28 +163,28 @@
 	icon_state = "minmed"
 	mineralChance = 10
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/rogue/salt = 5,
-		/turf/closed/mineral/rogue/gold = 3,
-		/turf/closed/mineral/rogue/silver = 2,
-		/turf/closed/mineral/rogue/iron = 33,
-		/turf/closed/mineral/rogue/elementalmote = 15,
-		/turf/closed/mineral/rogue/cinnabar = 15,
-		/turf/closed/mineral/rogue/copper = 15,
-		/turf/closed/mineral/rogue/tin = 10,
-		/turf/closed/mineral/rogue/coal = 14,
-		/turf/closed/mineral/rogue/gem = 1)
+		/turf/closed/mineral/rogue/sandstone/salt = 5,
+		/turf/closed/mineral/rogue/sandstone/gold = 3,
+		/turf/closed/mineral/rogue/sandstone/silver = 2,
+		/turf/closed/mineral/rogue/sandstone/iron = 33,
+		/turf/closed/mineral/rogue/sandstone/elementalmote = 15,
+		/turf/closed/mineral/rogue/sandstone/cinnabar = 15,
+		/turf/closed/mineral/rogue/sandstone/copper = 15,
+		/turf/closed/mineral/rogue/sandstone/tin = 10,
+		/turf/closed/mineral/rogue/sandstone/coal = 14,
+		/turf/closed/mineral/rogue/sandstone/gem = 1)
 
 /turf/closed/mineral/random/rogue/sandstone/high
 	icon_state = "minhigh"
 	mineralChance = 33
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/rogue/elementalmote = 15,
-		/turf/closed/mineral/rogue/cinnabar = 15,
-		/turf/closed/mineral/rogue/salt = 5,
-		/turf/closed/mineral/rogue/gold = 9,
-		/turf/closed/mineral/rogue/silver = 5,
-		/turf/closed/mineral/rogue/iron = 33,
-		/turf/closed/mineral/rogue/copper = 20,
-		/turf/closed/mineral/rogue/tin = 12,
-		/turf/closed/mineral/rogue/coal = 19,
-		/turf/closed/mineral/rogue/gem = 3)
+		/turf/closed/mineral/rogue/sandstone/elementalmote = 15,
+		/turf/closed/mineral/rogue/sandstone/cinnabar = 15,
+		/turf/closed/mineral/rogue/sandstone/salt = 5,
+		/turf/closed/mineral/rogue/sandstone/gold = 9,
+		/turf/closed/mineral/rogue/sandstone/silver = 5,
+		/turf/closed/mineral/rogue/sandstone/iron = 33,
+		/turf/closed/mineral/rogue/sandstone/copper = 20,
+		/turf/closed/mineral/rogue/sandstone/tin = 12,
+		/turf/closed/mineral/rogue/sandstone/coal = 19,
+		/turf/closed/mineral/rogue/sandstone/gem = 3)

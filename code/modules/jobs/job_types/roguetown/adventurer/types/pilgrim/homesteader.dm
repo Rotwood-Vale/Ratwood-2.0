@@ -480,7 +480,7 @@
 		"Rustic - Fur hat, shortshirt, leather boots",
 		"Miner - Arming cap, trou, work vest",
 		"Entertainer - Fancy hat, tunic, half cloak",
-		"Modest Scholar - Spectacles, tunic, chaperon",
+		"Modest Scholar - Spectacles, scholar's robe, chaperon",
 		"Countryside - Straw hat, chemise, shortboots"
 	)
 
@@ -590,7 +590,7 @@
 			belt = /obj/item/storage/belt/rogue/leather/cloth
 
 		if("Modest Scholar - Spectacles, tunic, chaperon")
-			shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/white
+			shirt = /obj/item/clothing/suit/roguetown/shirt/robe/archivist
 			pants = /obj/item/clothing/under/roguetown/tights/random
 			shoes = /obj/item/clothing/shoes/roguetown/shortboots
 			head = /obj/item/clothing/head/roguetown/chaperon

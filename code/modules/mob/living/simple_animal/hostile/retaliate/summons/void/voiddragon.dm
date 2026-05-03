@@ -652,9 +652,9 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	new /obj/item/clothing/ring/dragon_ring(deathspot)
 	new /obj/item/clothing/ring/dragon_ring(deathspot)
 	new /obj/item/clothing/ring/dragon_ring(deathspot)
-	new /obj/item/book/granter/spell_points/voiddragon
-	new /obj/item/book/granter/spell_points/voiddragon
-	new /obj/item/book/granter/spell_points/voiddragon
+	new /obj/item/book/granter/spell_points/voiddragon(deathspot)
+	new /obj/item/book/granter/spell_points/voiddragon(deathspot)
+	new /obj/item/book/granter/spell_points/voiddragon(deathspot)
 	update_icon()
 	spill_embedded_objects()
 

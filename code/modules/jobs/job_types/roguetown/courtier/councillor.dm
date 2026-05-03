@@ -67,4 +67,8 @@
 	if(SSmapping.config.map_name == "Rockhill")
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/councillor
 		cloak = null
-		mask = null
+	if(SSmapping.config.map_name == "Desert Town")
+		armor = /obj/item/clothing/suit/roguetown/shirt/robe/hierophant
+		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/councillor
+		shoes = /obj/item/clothing/shoes/roguetown/shalal
+		cloak = null

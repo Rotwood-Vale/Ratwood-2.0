@@ -67,3 +67,98 @@
 	contains = list(
 					/obj/item/clothing/head/roguetown/roguehood/reinforced,
 				)
+
+// Exotic import stuff goes here. Should probably be a little pricier than normal stuff. 2x average? Be sure to name the purchase option so it relates to the actual item, but also what slot it fills.
+
+/datum/supply_pack/rogue/light_armor/import
+	group = "Imported Armor (Light)"
+
+/datum/supply_pack/rogue/light_armor/import/otavangambeson
+	name = "Otavan Fencing Gambeson"
+	cost = 60 // Base sellprice of 30
+	contains = list (/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan)
+
+/datum/supply_pack/rogue/light_armor/import/otavanpants1
+	name = "Otavan Heavy Leather Trousers"
+	cost = 40 // Base sellprice of 20
+	contains = list (/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan)
+
+/datum/supply_pack/rogue/light_armor/import/otavanpants2
+	name = "Otavan Fencing Trousers"
+	cost = 40 // Base sellprice of 20
+	contains = list (/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic)
+
+/datum/supply_pack/rogue/light_armor/import/aavnicgambeson
+	name = "Aavnic Fencing Gambeson"
+	cost = 50 // Base sellprice of 30, doesn't cover legs so slightly cheaper
+	contains = list (/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter)
+
+/datum/supply_pack/rogue/light_armor/import/caftan
+	name = "Padded Caftan"
+	cost = 60 // Base sellprice of 30
+	contains = list (/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah)
+
+/datum/supply_pack/rogue/light_armor/import/kazenpants
+	name = "Kazengunese Heavy Leather Trousers"
+	cost = 40 // Base sellprice of 20
+	contains = list (/obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun)
+
+/datum/supply_pack/rogue/light_armor/import/grenzhat
+	name = "Grenzelhoftian Plume Hat"
+	cost = 40 // Base sellprice of 20
+	contains = list (/obj/item/clothing/head/roguetown/grenzelhofthat)
+
+/datum/supply_pack/rogue/light_armor/import/grenzhipshirt
+	name = "Grenzelhoftian Hip Shirt"
+	cost = 60 // Base sellprice of 30
+	contains = list (/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft)
+
+/datum/supply_pack/rogue/light_armor/import/grenzpants
+	name = "Grenzelhoftian Paumpers"
+	cost = 40 // Base sellprice of 20
+	contains = list (/obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants)
+
+/datum/supply_pack/rogue/light_armor/import/desertgambanormal
+	name = "Desert Gambeson"
+	cost = 45 // Base sellprice of 20
+	contains = list (/obj/item/clothing/suit/roguetown/armor/gambeson/zyb)
+
+/datum/supply_pack/rogue/light_armor/import/zybgambaheavy
+	name = "Padded Desert Gambeson"
+	cost = 60 // Base sellprice of 30
+	contains = list (/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb)
+
+/datum/supply_pack/rogue/light_armor/import/naledigamba
+	name = "Naledian Padded Gambeson"
+	cost = 60 // Base sellprice of 30
+	contains = list (/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex)
+
+/datum/supply_pack/rogue/light_armor/import/naleditrou
+	name = "Naledian Hardened Leather Chaqchur (Pants)"
+	cost = 40 // Base sellprice of 20
+	contains = list (/obj/item/clothing/under/roguetown/trou/leather/pontifex)
+
+/datum/supply_pack/rogue/light_armor/import/zybtrou
+	name = "Baggy Hardened Leather Desert Pants"
+	cost = 40 // Base sellprice of 20
+	contains = list (/obj/item/clothing/under/roguetown/trou/leather/pontifex/zyb)
+
+/datum/supply_pack/rogue/light_armor/import/gronnarmor
+	name = "Gronnic Hardened Leather Armor"
+	cost = 45 // Base sellprice of 20
+	contains = list (/obj/item/clothing/suit/roguetown/armor/leather/heavy/gronn)
+
+/datum/supply_pack/rogue/light_armor/import/gronnpants
+	name = "Nomad Hardened Leather Pants"
+	cost = 40 // Base sellprice of 20
+	contains = list (/obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants)
+
+/datum/supply_pack/rogue/light_armor/import/gronnpantsalt
+	name = "Gronnic Leather Pants"
+	cost = 40 // Base sellprice of 20
+	contains = list (/obj/item/clothing/under/roguetown/trou/leather/gronn)
+
+/datum/supply_pack/rogue/light_armor/import/gronnglovesleather
+	name = "Gronnic Fur-lined Heavy Leather Gloves"
+	cost = 40 // Base sellprice of 20
+	contains = list (/obj/item/clothing/gloves/roguetown/angle/gronn)

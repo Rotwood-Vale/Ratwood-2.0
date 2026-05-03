@@ -163,6 +163,7 @@
 	icon_state = "churchslate"
 	mouse_opacity = 0
 	layer = ABOVE_NORMAL_TURF_LAYER+0.1
+	plane = -8
 
 /obj/structure/fluff/walldeco/stone/Initialize(mapload)
 	icon_state = "walldec[rand(1,6)]"

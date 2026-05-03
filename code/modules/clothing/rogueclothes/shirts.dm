@@ -391,7 +391,7 @@
 	salvage_amount = 1
 
 /obj/item/clothing/suit/roguetown/shirt/robe/archivist
-	name = "archivist's robe"
+	name = "scholar's robe"
 	desc = "Robes belonging to seekers of knowledge."
 	icon_state = "archivist"
 	icon = 'icons/roguetown/clothing/shirts.dmi'
@@ -630,7 +630,6 @@
 	icon_state = "exoticsilkbra"
 	item_state = "exoticsilkbra"
 	body_parts_covered = CHEST
-	sewrepair = TRUE
 	flags_inv = null
 	slot_flags = ITEM_SLOT_SHIRT
 	salvage_result = /obj/item/natural/silk

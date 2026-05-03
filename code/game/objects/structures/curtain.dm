@@ -119,6 +119,7 @@
 
 /obj/structure/curtain/drab
 	color = CLOTHING_DRAB
+
 /obj/structure/curtain/orange
 	color = "#a3622c"
 
@@ -153,3 +154,6 @@
 
 /obj/structure/curtain/directional/yellow
 	color = "#a18727"
+	
+/obj/structure/curtain/directional/drab
+	color = CLOTHING_DRAB

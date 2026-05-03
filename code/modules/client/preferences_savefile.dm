@@ -724,6 +724,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["xenophobe_pref"]		>> xenophobe_pref
 	S["restricted_species_pref"]	>> restricted_species_pref
 	S["extra_language"]		>> extra_language
+	S["origin"]				>> origin
 	S["selected_title"]		>> selected_title
 	S["extra_language_1"]	>> extra_language_1
 	S["extra_language_2"]	>> extra_language_2
@@ -1037,6 +1038,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["facial_hair_color"]	, facial_hair_color)
 	WRITE_FILE(S["eye_color"]			, eye_color)
 	WRITE_FILE(S["extra_language"]		, extra_language)
+	WRITE_FILE(S["origin"]				, origin)
 	WRITE_FILE(S["selected_title"]		, selected_title)
 	WRITE_FILE(S["extra_language_1"]	, extra_language_1)
 	WRITE_FILE(S["extra_language_2"]	, extra_language_2)

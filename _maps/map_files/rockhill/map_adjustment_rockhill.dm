@@ -9,9 +9,9 @@
 	realm_name = "Rockhill"
 	blacklist = list(//I had wanted the map variable in the roles themselves to bar them from non-desert maps but it still shows up in the Latejoin menu so I'm doing this just to keep it clear)
 		/datum/job/roguetown/cataphract,
-		/datum/job/roguetown/vizier,
+		// /datum/job/roguetown/vizier,
 		/datum/job/roguetown/headslave,
-		/datum/job/roguetown/sheikh,
+		// /datum/job/roguetown/sheikh,
 		/datum/job/roguetown/janissary,
 		/datum/job/roguetown/janissarysergeant,
 		/datum/job/roguetown/azeb,
@@ -19,6 +19,12 @@
 		/datum/job/roguetown/slavemaster,
 		/datum/job/roguetown/slave,
 		/datum/job/roguetown/adventurer/courtslave,
+		
+		/datum/job/roguetown/tribalchieftain,
+		/datum/job/roguetown/tribalshaman,
+		/datum/job/roguetown/tribalguard,
+		/datum/job/roguetown/tribalrabble,
+		/datum/job/roguetown/tribalvillager,
 		
 		/datum/job/roguetown/sergeant,
 		)

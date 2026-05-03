@@ -5,13 +5,11 @@
 	outfit = /datum/outfit/job/roguetown/janissary/zephyr
 
 	category_tags = list(CTAG_JANISSARY)
-	//Garrison ranged/speed class. Time to go wild
 	subclass_stats = list(
 		STATKEY_SPD = 2,// seems kinda lame but remember guardsman bonus!!
 		STATKEY_PER = 2,
 		STATKEY_WIL = 1,
-		traits_applied = list(TRAIT_DODGEEXPERT)
-		)
+		traits_applied = list(TRAIT_DODGEEXPERT))
 
 	subclass_skills = list(
 		/datum/skill/combat/crossbows = SKILL_LEVEL_MASTER,
@@ -39,7 +37,6 @@
 	pants = /obj/item/clothing/under/roguetown/splintlegs
 	wrists = /obj/item/clothing/wrists/roguetown/splintarms
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
-	armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/janissary
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/zyb
 	head = /obj/item/clothing/head/roguetown/helmet/janissaryhelm
 	backpack_contents = list(
@@ -54,6 +51,8 @@
 	if(H.mind)
 		var/weapons = list("Crossbow","Bow","Sling")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/armor_options = list("Light Armor", "Medium Armor")
+		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in armor_options
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Crossbow")
@@ -76,6 +75,15 @@
 				beltl = /obj/item/rogueweapon/whip
 			if("Club")
 				beltl = /obj/item/rogueweapon/mace/cudgel
+
+		switch(armor_choice)
+			if("Light Armor")
+				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb
+				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
+			if("Medium Armor")
+				armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/janissary
+				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+
 		H.verbs |= /mob/proc/haltyell
 		//Skirmishers get funny spells. Wowzers.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/skirmisher_trap)

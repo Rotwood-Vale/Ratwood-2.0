@@ -516,3 +516,8 @@
 	desc = span_boldred("Godless Heathen. I must keep my distance.")
 	timer = 3 MINUTES
 
+// this generally only happens if you're below 10 FOR, this is a little nudge to work on your luck stat
+/datum/stressevent/xylixian_pity
+	timer = 5 MINUTES
+	stressadd = 1
+	desc = span_red("Xylix took pity upon me and saved me from the consequences of bad luck. I must do better!")

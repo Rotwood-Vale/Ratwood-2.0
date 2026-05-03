@@ -500,6 +500,12 @@
 		"Set 4" = list(
 			STATS_JUNKIES = list("name" = "Number of junkies:", "points" = 9, "capacity" = 70),
 		),
+		"Set 5" = list(
+			STATS_KNOTTED_NOT_LUPIANS = list("name" = "Knottings by non-Lupians:", "points" = 2.5, "capacity" = 50),
+		),
+		"Set 6" = list(
+			STATS_IMPREGNATIONS = list("name" = "Impregnations:", "points" = 5, "capacity" = 50),
+		),
 	)
 
 /datum/storyteller/graggar

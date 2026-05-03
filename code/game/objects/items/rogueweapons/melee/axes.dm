@@ -487,14 +487,14 @@
 
 /datum/intent/spear/bash/poleaxe
 	name = "poleaxe bash"
-	damfactor = 0.8 // worse than dedicated mace
+	damfactor = 1 // worse than dedicated mace
 	reach = 2
 	blunt_chipping = TRUE
 	blunt_chip_strength = BLUNT_CHIP_STRONG
 
 /datum/intent/mace/smash/poleaxe
 	name = "poleaxe smash"
-	damfactor = 0.8 // worse than dedicated mace
+	damfactor = 1 // worse than dedicated mace
 	reach = 2
 	clickcd = CLICK_CD_HEAVY // longer because of range
 	blunt_chip_strength = BLUNT_CHIP_STRONG // eagle's beak uses BLUNT_CHIP_ABSURD instead
@@ -511,6 +511,7 @@
 	icon = 'icons/roguetown/weapons/64.dmi'
 	minstr = 12
 	max_blade_int = 350
+	max_integrity = 150 // compensates for the potential of using it to parry without actually using blunt parry integrity loss
 	associated_skill = /datum/skill/combat/polearms // yes it is located in the axe folder and uses axe subtypes it is a polearm
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
@@ -536,6 +537,7 @@
 	icon = 'icons/roguetown/weapons/64.dmi'
 	minstr = 12
 	max_blade_int = 350
+	max_integrity = 150 // compensates for the potential of using it to parry without actually using blunt parry integrity loss
 	associated_skill = /datum/skill/combat/polearms // yes it is located in the axe folder and uses axe subtypes it is a polearm
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed

@@ -17,12 +17,12 @@
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/axes = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/whipsflails = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/bows = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/slings = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/shields = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
@@ -54,7 +54,7 @@
 
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Scimitar & Shield","Warhammer & Shield","Bardiche","Spear")
+		var/weapons = list("Scimitar & Shield","Warhammer & Shield","Bardiche","Maul - +STR/CON, -SPD/PER/INT")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -68,7 +68,13 @@
 			if("Bardiche")
 				r_hand = /obj/item/rogueweapon/halberd/bardiche
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
-			if("Spear")
-				r_hand = /obj/item/rogueweapon/spear
+			if("Maul - +STR/CON, -SPD/PER/INT")
+				r_hand = /obj/item/rogueweapon/mace/maul
+				l_hand = /obj/item/reagent_containers/glass/bottle/rogue/beer
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				H.change_stat(STATKEY_STR, 1)
+				H.change_stat(STATKEY_CON, 1)
+				H.change_stat(STATKEY_SPD, -1)
+				H.change_stat(STATKEY_PER, -1)
+				H.change_stat(STATKEY_INT, -1)
 	H.verbs |= /mob/proc/haltyell

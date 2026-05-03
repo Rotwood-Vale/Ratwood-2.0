@@ -34,7 +34,7 @@
 
 	var/obj/item/chastity/worn_chastity = chastity_device
 	if(worn_chastity)
-		var/chastity_name = get_examine_item_name_with_custom_link(user, worn_chastity)
+		var/chastity_name = get_examine_item_name_with_hover(user, worn_chastity)
 		var/cage_exposed = observer_privilege || get_location_accessible(src, BODY_ZONE_PRECISE_GROIN)
 		if(cage_exposed)
 			if(perception_level >= 15)
@@ -59,4 +59,4 @@
 		return null
 	if(!isobserver(user) && perception_level < 8)
 		return null
-	return "[m3] [get_examine_item_name_with_custom_link(user, chastity_device.attached_toy)] attached to [m2] chastity device. "
+	return "[m3] [get_examine_item_name_with_hover(user, chastity_device.attached_toy)] attached to [m2] chastity device. "

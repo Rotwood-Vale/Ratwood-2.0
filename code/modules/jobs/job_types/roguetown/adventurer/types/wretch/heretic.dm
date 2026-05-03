@@ -55,9 +55,9 @@
 			if("Mace")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-					beltr = /obj/item/rogueweapon/mace/goden/psymace/old
+					r_hand = /obj/item/rogueweapon/mace/goden/psy/old
 				else
-					beltr = /obj/item/rogueweapon/mace/steel
+					r_hand = /obj/item/rogueweapon/mace/steel
 			if("Flail")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
@@ -150,8 +150,8 @@
 			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/pestra, SLOT_RING, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/sallet/visored, SLOT_HEAD, TRUE)
 			ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
-			H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 2, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 2, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 3, TRUE)
 		if(/datum/patron/divine/eora)
 			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/eora, SLOT_RING, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull, SLOT_HEAD, TRUE)
@@ -331,8 +331,8 @@
 		if(/datum/patron/divine/pestra)
 			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/pestra, SLOT_RING, TRUE)
 			ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
-			H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 2, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 2, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 3, TRUE)
 		if(/datum/patron/divine/eora)
 			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/eora, SLOT_RING, TRUE)
 			ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_GENERIC)

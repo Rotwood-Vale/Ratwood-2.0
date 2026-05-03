@@ -8,6 +8,7 @@
 	chargetime = 0
 	recharge_time = 30 SECONDS
 	antimagic_allowed = TRUE
+	range = 2
 
 /obj/effect/proc_holder/spell/invoked/refocusstudies/cast(list/targets, mob/user = usr)
 	. = ..()

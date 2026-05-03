@@ -58,6 +58,12 @@
 		force = H.move_force)
 // Do not call handle_knockback like in knockback cuz that means it will hardstun
 
+/datum/intent/mace/strike/goden
+	reach = 2
+
+/datum/intent/mace/smash/goden
+	reach = 2
+
 /datum/intent/mace/rangedthrust
 	name = "thrust"
 	blade_class = BCLASS_STAB
@@ -265,7 +271,6 @@
 	force_wielded = 30
 	minstr = 9
 	wdefense = 5
-	wbalance = WBALANCE_SWIFT
 	resistance_flags = FIRE_PROOF
 	icon_state = "psyflangedmace"
 	is_silver = TRUE
@@ -372,11 +377,12 @@
 	force = 15
 	force_wielded = 30
 	possible_item_intents = list(/datum/intent/mace/strike)
-	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/mace/rangedthrust, /datum/intent/effect/daze)
+	gripped_intents = list(/datum/intent/mace/strike/goden, /datum/intent/mace/smash/goden, /datum/intent/mace/rangedthrust, /datum/intent/effect/daze)
 	name = "Goedendag"
 	desc = "Good morning."
 	icon_state = "goedendag"
 	icon = 'icons/roguetown/weapons/64.dmi'
+	slot_flags = null
 	sharpness = IS_BLUNT
 	//dropshrink = 0.75
 	wlength = WLENGTH_LONG
@@ -448,24 +454,21 @@
 	name = "kanabo"
 	desc = "A steel-banded wooden club, made to break the enemy in spirit as much as in flesh. One of the outliers among the many more elegant weapons of Kazengun."
 	icon_state = "kanabo"
-	slot_flags = ITEM_SLOT_BACK
-	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/stab, /datum/intent/effect/daze)
+	gripped_intents = list(/datum/intent/mace/strike/goden, /datum/intent/mace/smash/goden, /datum/intent/stab, /datum/intent/effect/daze)
 	max_integrity = 225 // it's strong wood, but it's still wood.
 
-/obj/item/rogueweapon/mace/goden/psymace
-	name = "psydonic mace"
+/obj/item/rogueweapon/mace/goden/psy
+	name = "psydonic grand mace"
 	desc = "An ornate mace, plated in a ceremonial veneer of silver. Even the unholy aren't immune to discombobulation."
 	icon_state = "psymace"
-	force = 30
+	force = 15
 	force_wielded = 35
 	minstr = 12
-	wdefense = 6
-	wbalance = WBALANCE_HEAVY
 	smelt_bar_num = 2
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/mace/goden/psymace/ComponentInitialize()
+/obj/item/rogueweapon/mace/goden/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -476,7 +479,18 @@
 		added_def = 1,\
 	)
 
-/obj/item/rogueweapon/mace/goden/psymace/old
+/obj/item/rogueweapon/mace/goden/psy/preblessed/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_PSYDONIAN,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 50,\
+		added_def = 1,\
+	)
+
+/obj/item/rogueweapon/mace/goden/psy/old
 	name = "enduring mace"
 	desc = "An ornate mace, its silver tarnished by neglect. Even without HIS holy blessing, its weight ENDURES."
 	icon_state = "psymace"
@@ -488,7 +502,7 @@
 	smeltresult = /obj/item/ingot/steel
 	color = COLOR_FLOORTILE_GRAY
 
-/obj/item/rogueweapon/mace/goden/psymace/old/ComponentInitialize()
+/obj/item/rogueweapon/mace/goden/psy/old/ComponentInitialize()
 	return
 
 /obj/item/rogueweapon/mace/spiked

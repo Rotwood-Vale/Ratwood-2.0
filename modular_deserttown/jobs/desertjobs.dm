@@ -1,17 +1,11 @@
 
-// #define CTAG_SULTAN			"CAT_SULTAN"		// Lord alt
-#define CTAG_VIZIER			"CAT_VIZIER"		// Hand class alt
-#define CTAG_SHEIKH			"CAT_SHEIKH"		// Hand class alt
-// #define CTAG_AMIR			"CAT_AMIR"		// Heir alt
 #define CTAG_CATAPHRACT		"CAT_CATAPHRACT"	// Knight alt
 #define CTAG_AZEB		"CAT_AZEB"		// Warden (?) alt
 #define CTAG_AZEBAGHA	"CAT_AZEBAGHA"		// Warden (?) alt
 #define CTAG_JANISSARYSERGEANT	"CAT_JANISSARYSERGEANT"		// Sergeant class - Handles Sergeant class selector (weapons selection)
 #define CTAG_JANISSARY			"CAT_JANISSARY"		// Menatarms alt
 #define CTAG_SLAVEMASTER	"CAT_SLAVEMASTER"
-// #define CTAG_DTTOWNER		"CAT_DTTOWNER"
 #define CTAG_PSLAVE			"CAT_PSLAVE"
-// #define CTAG_DTCOURTMAGE	"CAT_DTCOURTMAGE"
 #define CTAG_HEADSLAVE		"CAT_HEADSLAVE"		// Seneschal's aesthetic choices.
 
 
@@ -21,10 +15,8 @@
 // #define NOBLEMEN		(1<<0)
 
 // #define LORD		(1<<0)
-// #define SULTAN		(1<<0)
 // #define LADY		(1<<1)
 // #define HAND		(1<<2)
-#define VIZIER		(1<<2)
 // #define STEWARD		(1<<3)
 #define CATAPHRACT		(1<<4)
 #define JANISSARYSERGEANT	(1<<6)
@@ -58,7 +50,6 @@
 // #define DTWIZARD		(1<<1)
 // #define PHYSICIAN 	(1<<2)
 #define HEADSLAVE		(1<<3)
-#define SHEIKH	(1<<4)
 
 // #define YEOMEN		(1<<4)
 
@@ -95,8 +86,6 @@
 // #define CHURCHLING	(1<<1)
 #define SLAVE		(1<<2)
 // #define ORPHAN		(1<<3)
-// #define AMIR		(1<<4)
-// #define DTSHOPHAND	(1<<5)
 // #define CLERK 		(1<<6)
 // #define MAGEAPPRENTICE	(1<<7)
 // #define APOTHECARY	(1<<8)
@@ -111,23 +100,6 @@
 #define COURTSLAVE	    (1<<5) //desert
 // #define WRETCH          (1<<6)
 // #define TRADER			(1<<7)
-
-// #define TRIBAL		(1<<8)
-
-// #define CHIEFTAIN	(1<<0)
-// #define TRIBALCOOK	(1<<1)
-// #define TRIBALGUARD	(1<<2)
-// #define TRIBALSMITH	(1<<3)
-
-// #define SLOP		(1<<9)
-
-// #define TESTER		(1<<0)
-// #define DEATHKNIGHT (1<<1)
-// #define SKELETON	(1<<2)
-// #define GOBLIN		(1<<3)
-// #define VAMPIRE_SERVANT (1<<4)
-// #define VAMPIRE_GUARD (1<<5)
-// #define VAMPIRE_SPAWN (1<<6)
 
 // #define INQUISITION (1<<10)
 
@@ -178,6 +150,16 @@
 		cmode_music = 'sound/music/combat_desert2.ogg'
 	..()
 	
+/datum/job/roguetown/councillor/after_spawn(mob/living/L, mob/M, latejoin = TRUE)//
+	if(SSmapping.config.map_name == "Desert Town")
+		cmode_music = 'sound/music/combat_desert2.ogg'
+	..()
+
+/datum/job/roguetown/hand/after_spawn(mob/living/L, mob/M, latejoin = TRUE)//
+	if(SSmapping.config.map_name == "Desert Town")
+		cmode_music = 'sound/music/combat_desert2.ogg'
+	..()
+
 /datum/job/roguetown/squire/after_spawn(mob/living/L, mob/M, latejoin = TRUE)//
 	if(SSmapping.config.map_name == "Desert Town")
 		cmode_music = 'sound/music/combat_desert2.ogg'

@@ -399,6 +399,9 @@
 	icon = 'icons/roguetown/items/produce.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
 
+/obj/item/clothing/ring/griefflower/show_examine_hover_tooltip()
+	return FALSE
+
 /obj/item/clothing/ring/griefflower/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot == SLOT_RING)
