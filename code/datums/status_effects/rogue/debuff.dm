@@ -1109,3 +1109,14 @@
 	name = "overheating"
 	desc = "My frame is overheating!"
 	icon_state = "fire"
+
+/datum/status_effect/debuff/nobilitylost
+	id = "nobilitylost"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/nobilitylost
+	duration = 20 MINUTES
+	effectedstats = list(STATKEY_LCK = -1, STATKEY_PER = -1, STATKEY_INT = -1)
+
+/atom/movable/screen/alert/status_effect/debuff/nobilitylost
+	name = "Lost Status"
+	desc = "I have lost my standing as a member of the Nobility! Astrata does not favour me!"
+	icon_state = "stressvb"

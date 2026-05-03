@@ -516,3 +516,8 @@
 	timer = 5 MINUTES
 	stressadd = 1
 	desc = span_red("Xylix took pity upon me and saved me from the consequences of bad luck. I must do better!")
+
+/datum/stressevent/nobility_gone
+	timer = 15 MINUTES /// Major... but NOT permament, we want to punish the guy, not make him far travel.
+	stressadd = 6
+	desc = span_boldred("I have been stripped of my nobility! I have fallen from Astrata's grace!")

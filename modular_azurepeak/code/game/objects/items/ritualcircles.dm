@@ -1,3 +1,6 @@
+/mob/living/carbon/human
+	var/changed_noble_status = FALSE
+
 /obj/structure/ritualcircle
 	name = "ritual circle"
 	desc = ""
@@ -81,60 +84,99 @@
 			for(var/mob/living/carbon/human/peep in range(0, loc))
 				if(HAS_TRAIT(peep, TRAIT_NOBLE))
 					continue
+				if(peep.changed_noble_status)
+					continue
 				valids_on_rune += peep
 			if(!valids_on_rune.len)
 				to_chat(user, span_smallred("There are no valid targets on the rune."))
 				return
-			var/mob/living/carbon/human/target = input(user, "Choose a host")
+			var/mob/living/carbon/human/target = input(user, "Choose a host") as null|anything in valids_on_rune
 			if(!target || QDELETED(target) || target.loc != loc)
 				return
-			if(!do_after(user, 5 SECONDS))
+			if(!locate(/obj/item/reagent_containers/lux) in loc)
+				to_chat(user, span_red("The ritual needs a piece of LUX offered as a sacrifice.")) // Minor price, but something that at least makes the Prelate go 'hmm.. is this guy really worth it?'
+				return
+			if(target.mind?.assigned_role in GLOB.church_positions)
+				to_chat(user, span_red("This one has already sworn themselves to the Church!"))
+				return
+			if(HAS_TRAIT(target, TRAIT_PSYDONITE)) // no nobility for you, Psy-chud! This is so the Inquisition doesn't get nobled since I don't believe it makes sense, they are *kinda* clergy.
+				to_chat(user, span_red("This one's fervent and unshakable faith in The One prevents them from receiving Astrata's gift."))
+				return
+			if(target.name in GLOB.excommunicated_players || HAS_TRAIT(target, TRAIT_EXCOMMUNICATED))
+				to_chat(user, span_red("This one has been excommunicated from the Church!"))
+				return
+			if(target.name in GLOB.outlawed_players || HAS_TRAIT(target, TRAIT_OUTLAW))
+				to_chat(user, span_red("Astrata shall not grant nobility to anyone who defies her decrees!"))
 				return
 			user.say("ASTRATA, SOVEREIGN OF THE WORLD!")
-			if(!do_after(user, 5 SECONDS))
-				return
-			user.say("GAZE DOWN UPON THIS MORTAL!")
+			if(target.patron?.type == /datum/patron/inhumen/matthios)
+				to_chat(target, span_cultsmall("I can feel someone's eyes upon me.."))
 			if(!do_after(user, 5 SECONDS))
 				return
 			user.say("MISTRESS OF ORDER! ARBITRATOR OF RIGHT!")
+			if(target.patron?.type == /datum/patron/inhumen/matthios)
+				to_chat(target, span_cultsmall("boring into the back of my head.."))			
 			if(!do_after(user, 5 SECONDS))
 				return
-			user.say("GAZE DOWN UPON THIS ONE!")
+			user.say("GAZE DOWN UPON THIS WORTHY ONE!")
 			if(!do_after(user, 5 SECONDS))
 				return
 			user.say("AND GRANT THEM YOUR HIGHEST HONOR!")
+			icon_state = "astrata_active"
+			ennoblement(target, user)
+			spawn(120)
+				icon_state = "astrata_chalky"
+		if("Abasement")
+			if(!Adjacent(user))
+				to_chat(user, span_smallred("I need to be closer to the rune to perform this ritual."))
+				return
+			var/list/valids_on_rune = list()
+			for(var/mob/living/carbon/human/peep in range(0, loc))
+				if(!HAS_TRAIT(peep, TRAIT_NOBLE || TRAIT_DEFILED_NOBLE || TRAIT_DISGRACED_NOBLE))
+					continue
+				if(peep.changed_noble_status)
+					continue
+				valids_on_rune += peep
+			if(!valids_on_rune.len)
+				to_chat(user, span_smallred("There are no valid targets on the rune."))
+				return
+			var/mob/living/carbon/human/target = input(user, "Choose a host") as null|anything in valids_on_rune
+			if(!target || QDELETED(target) || target.loc != loc)
+				return
+			user.say("ASTRATA, SOVEREIGN OF THE WORLD!")
+			if(!do_after(user, 5 SECONDS))
+				return			
+			user.say("MISTRESS OF ORDER! ARBITRATOR OF RIGHT!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("WE BECKON! GAZE DOWN UPON THIS UNWORTHY ONE!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("AND STRIP THEM OF THEIR UNDESERVED HONORS!")
 			if(!do_after(user, 5 SECONDS))
 				return
 			icon_state = "astrata_active"
-			astratanobling(target)
+			abasement(target, user)
 			spawn(120)
-				icon_state = "astrata_chalky"
+				icon_state = "astrata_chalky"			
 
-/obj/structure/ritualcircle/astrata/proc/astratanobling(mob/living/carbon/human/target)
+/obj/structure/ritualcircle/astrata/proc/ennoblement(mob/living/carbon/human/target, mob/living/carbon/human/user)
 	if(!target || QDELETED(target) || target.loc != loc)
-		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Matthios' blessing.")
+		to_chat(user, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Matthios' blessing.")
 		return
-	if(HAS_TRAIT(target, TRAIT_NOBLE))
-		loc.visible_message(span_cult("This one is already of noble blood!"))
-		return
-	if(target.mind?.assigned_role in GLOB.church_positions)
-		loc.visible_message(span_cult("This one has already sworn themselves to the Church!"))
-		return
-	if(HAS_TRAIT(target, TRAIT_INQUISITION))
-		loc.visible_message(span_cult("This one's fervent and unshakable faith in The One prevents them from receiving Astrata's gift."))
-		return
-	if(target.name in GLOB.excommunicated_players || HAS_TRAIT(target, TRAIT_EXCOMMUNICATED))
-		loc.visible_message(span_cult("This one has been excommunicated from the Church!"))
-		return
-	if(target.name in GLOB.outlawed_players)
-		loc.visible_message(span_cult("Astrata shall not grant nobility to one who defies her decrees!"))
-	var/prompt = alert(target, "Do you accept Astrata's gift?", "I accept.", "I refuse.")
+	var/prompt = alert(target, "Do you accept Astrata's gift?","Astrata demands an answer.", "I accept.", "I refuse.")
 	if(prompt == "I accept.")
-		ADD_TRAIT(target, TRAIT_NOBLE, "astrata_enoblement")
+		playsound(loc, 'sound/magic/astrata_choir.ogg', 85, FALSE, -1)
+		to_chat(target, span_userdanger("I can feel the white-hot LUX make its way into my veins! My blood burnt out to be blue!"))
+		ADD_TRAIT(target, TRAIT_NOBLE, TRAIT_GENERIC)
+		loc.visible_message(span_cult("The LUX turns white-hot and enters their veins!"))
 		target.Stun(60)
 		target.Knockdown(60)
-		playsound(loc, 'sound/magic/astrata_choir.ogg', 85, FALSE, -1)
-		loc.visible_message(span_cult("The Light of Astrata shines down bright upon [target]! His blood runs blue!"))
+		to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
+		target.apply_damage(15, BURN, BODY_ZONE_HEAD) // 'Unimaginable Pain'? Nae! Tis' but 15 burn.
+		target.flash_fullscreen("whiteflash")
+		sleep(20) // we don't want to nukespam the target's chat. Well we do it either way but like, I mean, this gives them breathing room.
+		priority_announce("[user.real_name] has elevated [target.real_name] into the blessed ranks of the Nobility! Their blood runs blue!", title = "Blessed Dae!", sound = 'sound/misc/bell.ogg')
 		if(target.patron?.type == /datum/patron/inhumen/matthios)
 			to_chat(target, span_cult("I can feel the smile of Matthios upon me..."))
 			target.apply_status_effect(/datum/status_effect/buff/matthios_smile)
@@ -145,24 +187,52 @@
 		else
 			to_chat(target, span_cult("I can feel the light of Astrata upon me..."))
 			target.add_stress(/datum/stressevent/neutral_noblement)
+		sleep(1 SECONDS)
 		switch(target.social_rank)
 			if(1)
+				to_chat(target, span_warning("I hav-e risen exponentially into the ranks of the Nobility! This is a grand TRIUMPH!"))
 				target.adjust_triumphs(5)
-				to_chat(target, span_cult("I have risen exponentially into the ranks of the Nobility! This is a true TRIUMPH!"))
 			if(2)
+				to_chat(target, span_warning("I have risen greatly into the ranks of the Nobility! This is a great TRIUMPH!"))
 				target.adjust_triumphs(3)
-				to_chat(target, span_cult("I have risen into the ranks of the Nobility! This is a TRIUMPH!"))
 			if(3)
+				to_chat(target, span_warning("I have entered the ranks of the Nobility! This is a TRIUMPH!"))
 				target.adjust_triumphs(1)
-				to_chat(target, span_cult("I have entered the ranks of the Nobility! This is a TRIUMPH!"))
-		if(prompt == "I refuse.")
-			loc.visible_message(span_cult("[target] refuses Astrata's gift. The light grows malignant...!"))
-			target.Stun(30)
-			target.Knockdown(30)
-			to_chat(target, span_warning("YOU DARE REJECT MY GIFT!? YOU SHALL BURN FOR YOUR INSOLENCE!"))
-			target.adjustFireLoss(25)
-			target.fire_act(1,10)
-			to_chat(loc, span_warning("[target] is set ablaze by Astrata's wrath!"))
+		user.apply_status_effect(/datum/status_effect/debuff/ritesexpended) // Rites expended only if the guy accepts, I feel it's only fair.
+		message_admins("PROMOTION: [user.real_name] ([user.ckey]) has granted nobility to [target.real_name] ([target.ckey])") 
+		log_game("PROMOTION: [user.real_name] ([user.ckey]) has granted nobility to [target.real_name] ([target.ckey])")
+		target.changed_noble_status = TRUE // what if... you had ONE CHANCE, ONE OPPORTUNITY...
+
+	else if(prompt == "I refuse.")
+		loc.visible_message(span_cult("[target] refuses Astrata's gift. The light grows malignant...!"))
+		target.Stun(30)
+		target.Knockdown(30)
+		sleep(20)
+		to_chat(target, span_redtextbig("YOU DARE REJECT MY GIFT!? YOU SHALL BURN FOR YOUR INSOLENCE!"))
+		target.adjustFireLoss(25)
+		target.fire_act(1,10)
+		to_chat(loc, span_warning("[target] is set ablaze by Astrata's wrath!"))
+
+/obj/structure/ritualcircle/astrata/proc/abasement(mob/living/carbon/human/target, mob/living/carbon/human/user)
+	if(!target || QDELETED(target) || target.loc != loc)
+		to_chat(user, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to have their nobility stripped.")
+		return
+	target.Stun(50)
+	target.Knockdown(50)
+	REMOVE_TRAIT(target, TRAIT_NOBLE, TRAIT_GENERIC)
+	REMOVE_TRAIT(target, TRAIT_NOBLE, TRAIT_VIRTUE)
+	to_chat(target, span_warning("YOU ARE UNWORTHY OF MY GRACE!"))
+	loc.visible_message(span_warning("[target] is set aflame by Astrata's wrath!"))
+	to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
+	target.adjustFireLoss(25)
+	target.fire_act(1,10)
+	target.flash_fullscreen("whiteflash")
+	sleep(1 SECONDS)
+	priority_announce("[user.real_name] has stripped [target.real_name] of their nobility! They have fallen from Astrata's grace!", title = "Shameful Dae!", sound = 'sound/misc/excomm.ogg')
+	message_admins("DEMOTION: [user.real_name] ([user.ckey]) has stripped nobility from [target.real_name] ([target.ckey])") // is it reeeally needed? unsure, but eh, worth it for the logs
+	log_game("DEMOTION: [user.real_name] ([user.ckey]) has stripped nobility from  [target.real_name] ([target.ckey])")	
+	user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+	target.changed_noble_status = TRUE // what if... you had ONE CHANCE, ONE OPPORTUNITY...
 
 /obj/structure/ritualcircle/astrata/proc/guidinglight(src)
 	var/ritualtargets = view(7, loc) // Range of 7 from the source, which is the rune
