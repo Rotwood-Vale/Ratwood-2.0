@@ -29,7 +29,8 @@
 	var/mob/living/carbon/human/species/human/northern/underbelly_trader/trader
 	/// All stocked item datums this cycle
 	var/list/shared_pool = list()
-	var/list/exclusive_pool = list()
+	/// Per-ckey exclusive pools so each player gets their own independent stock
+	var/list/exclusive_pools = list()
 	var/list/flinger_pool = list()
 	var/list/shipment_pool = list()
 	/// Track how many of each item a customer has bought this cycle, keyed "ckey_itemname"
@@ -48,14 +49,18 @@
 
 /datum/underbelly_shop/Destroy()
 	QDEL_LIST(shared_pool)
-	QDEL_LIST(exclusive_pool)
+	for(var/ckey in exclusive_pools)
+		QDEL_LIST(exclusive_pools[ckey])
+	exclusive_pools = list()
 	QDEL_LIST(flinger_pool)
 	QDEL_LIST(shipment_pool)
 	return ..()
 
 /datum/underbelly_shop/proc/do_restock()
 	QDEL_LIST(shared_pool)
-	QDEL_LIST(exclusive_pool)
+	for(var/ckey in exclusive_pools)
+		QDEL_LIST(exclusive_pools[ckey])
+	exclusive_pools = list()
 	QDEL_LIST(flinger_pool)
 	QDEL_LIST(shipment_pool)
 	purchase_counts = list()
@@ -256,90 +261,8 @@
 			shared_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], rand(1, entry[4]), entry[5])
 
 	// =========================================================
-	// EXCLUSIVES - Role-locked only, 1 to 3 drawn per cycle.
-	// Format: name, desc, type, stock, cost, flinger, role
-	// Scum guns are rolled in separately at low chance to keep them rare.
+	// Exclusive pools are built per-player on first open. See _build_exclusive_pool().
 	// =========================================================
-	var/list/scum_guns = list(
-		list("Ironshot Mark 1",                "Ser Ironshot's single-shot pistol. Load it, point it, make it count.",       /obj/item/gun/ballistic/firearm/arquebus_pistol/ironshot,         2, 300,  FALSE, "Scum"),
-		list("Ironshot Repeater mark 1",       "A fancy weapon of one of them Kingsfield Nobles. Quite a treat.",  /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller,      1, 750,  FALSE, "Scum"),
-		list("The Abomination",  "The work saiga of every Scum! Only you lot know how to use this...thing.",  /obj/item/gun/ballistic/firearm/abomination,               1, 450, FALSE, "Scum"),
-		list("Hand Cannon",  "Heavy as sin and twice as loud. Plant your feet, point it at trouble, watch trouble disappear. Only the strong handle this one.",  /obj/item/gun/ballistic/firearm/cannon,           1, 1150, FALSE, "Scum"),
-	)
-	var/list/excl_master = list(
-		list("Tipped Hat",         "Nobody's seeing that face. Nobody's knowing that name.",  /obj/item/clothing/head/roguetown/chaperon/flinger,            1, 120, FALSE, "Flinger"),
-		list("Defacer",            "Knuckles that were hardened with ancient alloys and Steel. Hits harder, breaks faster.", /obj/item/rogueweapon/knuckles/defacer, 1, 85, FALSE, "Scum"),
-		list("Suffocator",         "Load it with Zizo's bane, then press it onto an unguarded face. A moment's hesitation is all it needs.", /obj/item/clothing/mask/rogue/suffocator, 1, 200, FALSE, "Ripper"),
-		list("Golden Cockroach",   "Drop it on the floor of a vault and walk away. Don't ask how it works.", /obj/item/golden_cockroach, 1, 280, FALSE, null),
-		list("Blood Red",          "Whatever's in this, it isn't wine. Don't let anyone drink it unless you want to watch them fold.", /obj/item/reagent_containers/glass/bottle/rogue/blood_red, 1, 150, FALSE, "Ripper"),
-		list("Voss Serum",         "A pale little bottle. Slips into a drink without a trace. The body does the rest.", /obj/item/reagent_containers/glass/bottle/rogue/voss_serum, 2, 80, FALSE, "Ripper"),
-		list("Mysterious Organ (II)",   "A pale graft sewn from something foreign. Heals well. You'll notice the shakes.", /obj/item/organ/mysterious/pale,      1, 160, FALSE, "Ripper"),
-		list("Mysterious Organ (I)",  "A dried-up fragment. Less than the others, but it asks less in return.",          /obj/item/organ/mysterious/withered,   1, 80,  FALSE, "Ripper"),
-		list("Mysterious Organ (III)", "A blackened mass. Heals everything. You'll sleep like the dead.",                 /obj/item/organ/mysterious/blackened,  1, 280, FALSE, "Ripper"),
-		list("Reinforced Firing Pin",  "Hits harder. Fits any underbelly firearm. Apply it to the gun.", /obj/item/underbelly_upgrade/damage,    2, 120, FALSE, "Scum"),
-		list("Baffled Powder Sleeve",  "No more smoke cloud after you fire. Apply it to the gun.",       /obj/item/underbelly_upgrade/silencer,  2, 150, FALSE, "Scum"),
-		list("Extended Cylinder Plate","One more round in the chamber. Apply it to the gun.",            /obj/item/underbelly_upgrade/capacity,  2, 180, FALSE, "Scum"),
-		list("Filed Sights",           "Tighter spread. Easier to put the ball where you want it. Apply it to the gun.", /obj/item/underbelly_upgrade/aim, 2, 130, FALSE, "Scum"),
-		list("Cannonball",             "An iron sphere the size of a fist. Fits the hand cannon.",                       /obj/item/ammo_casing/caseless/bullet/cannonball, 3, 600, FALSE, "Scum"),
-	)
-	for(var/entry in scum_guns)
-		if(prob(40))
-			excl_master += list(entry)
-	//1 in 100,000. don't ever expect to see this considering it's a joke gun.
-	if(prob(0.001))
-		excl_master += list(list("The Devastator", "What the hell are you planning on taking down with this? Zizo? BAHAHA!", /obj/item/gun/ballistic/firearm/devastator, 1, 1500, FALSE, "Scum"))
-	var/list/exclusive_roles = list("Scum", "Ripper", "Flinger")
-	for(var/i = 1 to exclusive_roles.len)
-		var/role = exclusive_roles[i]
-		var/list/eligible = list()
-		for(var/entry in excl_master)
-			if(entry[7] == role || isnull(entry[7]))
-				eligible += list(entry)
-		if(!eligible.len)
-			continue
-
-		var/role_target = rand(2, min(5, eligible.len))
-		var/list/eligible_shuffled = shuffle(eligible.Copy())
-		var/added = 0
-		for(var/entry in eligible_shuffled)
-			var/already_stocked = FALSE
-			for(var/datum/underbelly_shop_item/SI in exclusive_pool)
-				if(SI.name == entry[1])
-					already_stocked = TRUE
-					break
-			if(already_stocked)
-				continue
-			exclusive_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], 1, entry[5], FALSE, entry[7])
-			added += 1
-			if(added >= role_target)
-				break
-
-	for(var/i = 1 to exclusive_roles.len)
-		var/role = exclusive_roles[i]
-		var/visible_count = 0
-		for(var/datum/underbelly_shop_item/SI in exclusive_pool)
-			if(SI.exclusive_role == role || isnull(SI.exclusive_role))
-				visible_count += 1
-		if(visible_count >= 2)
-			continue
-
-		var/list/eligible = list()
-		for(var/entry in excl_master)
-			if(entry[7] == role || isnull(entry[7]))
-				eligible += list(entry)
-
-		for(var/entry in shuffle(eligible.Copy()))
-			if(visible_count >= 2)
-				break
-			var/already_stocked = FALSE
-			for(var/datum/underbelly_shop_item/SI in exclusive_pool)
-				if(SI.name == entry[1])
-					already_stocked = TRUE
-					break
-			if(already_stocked)
-				continue
-			exclusive_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], 1, entry[5], FALSE, entry[7])
-			visible_count += 1
 
 	// =========================================================
 	// FLINGER POOL - Independent re-roll. 5-15 slots total.
@@ -407,6 +330,95 @@
 		var/entry = shipment_shuffled[i]
 		shipment_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], rand(1, 3), entry[4])
 
+/datum/underbelly_shop/proc/_build_exclusive_pool()
+	var/list/pool = list()
+	var/list/scum_guns = list(
+		list("Ironshot Mark 1",                "Ser Ironshot's single-shot pistol. Load it, point it, make it count.",       /obj/item/gun/ballistic/firearm/arquebus_pistol/ironshot,         2, 300,  FALSE, "Scum"),
+		list("Ironshot Repeater mark 1",       "A fancy weapon of one of them Kingsfield Nobles. Quite a treat.",  /obj/item/gun/ballistic/firearm/arquebus_pistol/gut_spiller,      1, 750,  FALSE, "Scum"),
+		list("The Abomination",  "The work saiga of every Scum! Only you lot know how to use this...thing.",  /obj/item/gun/ballistic/firearm/abomination,               1, 450, FALSE, "Scum"),
+		list("Hand Cannon",  "Heavy as sin and twice as loud. Plant your feet, point it at trouble, watch trouble disappear. Only the strong handle this one.",  /obj/item/gun/ballistic/firearm/cannon,           1, 1150, FALSE, "Scum"),
+	)
+	var/list/excl_master = list(
+		list("Tipped Hat",         "Nobody's seeing that face. Nobody's knowing that name.",  /obj/item/clothing/head/roguetown/chaperon/flinger,            1, 120, FALSE, "Flinger"),
+		list("Defacer",            "Knuckles that were hardened with ancient alloys and Steel. Hits harder, breaks faster.", /obj/item/rogueweapon/knuckles/defacer, 1, 85, FALSE, "Scum"),
+		list("Suffocator",         "Load it with Zizo's bane, then press it onto an unguarded face. A moment's hesitation is all it needs.", /obj/item/clothing/mask/rogue/suffocator, 1, 200, FALSE, "Ripper"),
+		list("Golden Cockroach",   "Drop it on the floor of a vault and walk away. Don't ask how it works.", /obj/item/golden_cockroach, 1, 280, FALSE, null),
+		list("Blood Red",          "Whatever's in this, it isn't wine. Don't let anyone drink it unless you want to watch them fold.", /obj/item/reagent_containers/glass/bottle/rogue/blood_red, 1, 150, FALSE, "Ripper"),
+		list("Voss Serum",         "A pale little bottle. Slips into a drink without a trace. The body does the rest.", /obj/item/reagent_containers/glass/bottle/rogue/voss_serum, 2, 80, FALSE, "Ripper"),
+		list("Mysterious Organ (II)",   "A pale graft sewn from something foreign. Heals well. You'll notice the shakes.", /obj/item/organ/mysterious/pale,      1, 160, FALSE, "Ripper"),
+		list("Mysterious Organ (I)",  "A dried-up fragment. Less than the others, but it asks less in return.",          /obj/item/organ/mysterious/withered,   1, 80,  FALSE, "Ripper"),
+		list("Mysterious Organ (III)", "A blackened mass. Heals everything. You'll sleep like the dead.",                 /obj/item/organ/mysterious/blackened,  1, 280, FALSE, "Ripper"),
+		list("Reinforced Firing Pin",  "Hits harder. Fits any underbelly firearm. Apply it to the gun.", /obj/item/underbelly_upgrade/damage,    2, 120, FALSE, "Scum"),
+		list("Baffled Powder Sleeve",  "No more smoke cloud after you fire. Apply it to the gun.",       /obj/item/underbelly_upgrade/silencer,  2, 150, FALSE, "Scum"),
+		list("Extended Cylinder Plate","One more round in the chamber. Apply it to the gun.",            /obj/item/underbelly_upgrade/capacity,  2, 180, FALSE, "Scum"),
+		list("Filed Sights",           "Tighter spread. Easier to put the ball where you want it. Apply it to the gun.", /obj/item/underbelly_upgrade/aim, 2, 130, FALSE, "Scum"),
+		list("Cannonball",             "An iron sphere the size of a fist. Fits the hand cannon.",                       /obj/item/ammo_casing/caseless/bullet/cannonball, 3, 600, FALSE, "Scum"),
+	)
+	for(var/entry in scum_guns)
+		if(prob(40))
+			excl_master += list(entry)
+	//1 in 100,000. don't ever expect to see this considering it's a joke gun.
+	if(prob(0.001))
+		excl_master += list(list("The Devastator", "What the hell are you planning on taking down with this? Zizo? BAHAHA!", /obj/item/gun/ballistic/firearm/devastator, 1, 1500, FALSE, "Scum"))
+	var/list/exclusive_roles = list("Scum", "Ripper", "Flinger")
+	for(var/i = 1 to exclusive_roles.len)
+		var/role = exclusive_roles[i]
+		var/list/eligible = list()
+		for(var/entry in excl_master)
+			if(entry[7] == role || isnull(entry[7]))
+				eligible += list(entry)
+		if(!eligible.len)
+			continue
+
+		var/role_target = rand(2, min(5, eligible.len))
+		var/list/eligible_shuffled = shuffle(eligible.Copy())
+		var/added = 0
+		for(var/entry in eligible_shuffled)
+			var/already_stocked = FALSE
+			for(var/datum/underbelly_shop_item/SI in pool)
+				if(SI.name == entry[1])
+					already_stocked = TRUE
+					break
+			if(already_stocked)
+				continue
+			pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], 1, entry[5], FALSE, entry[7])
+			added += 1
+			if(added >= role_target)
+				break
+
+	for(var/i = 1 to exclusive_roles.len)
+		var/role = exclusive_roles[i]
+		var/visible_count = 0
+		for(var/datum/underbelly_shop_item/SI in pool)
+			if(SI.exclusive_role == role || isnull(SI.exclusive_role))
+				visible_count += 1
+		if(visible_count >= 2)
+			continue
+
+		var/list/eligible = list()
+		for(var/entry in excl_master)
+			if(entry[7] == role || isnull(entry[7]))
+				eligible += list(entry)
+
+		for(var/entry in shuffle(eligible.Copy()))
+			if(visible_count >= 2)
+				break
+			var/already_stocked = FALSE
+			for(var/datum/underbelly_shop_item/SI in pool)
+				if(SI.name == entry[1])
+					already_stocked = TRUE
+					break
+			if(already_stocked)
+				continue
+			pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], 1, entry[5], FALSE, entry[7])
+			visible_count += 1
+	return pool
+
+/datum/underbelly_shop/proc/_get_exclusive_pool(mob/living/carbon/human/H)
+	if(!exclusive_pools[H.ckey])
+		exclusive_pools[H.ckey] = _build_exclusive_pool()
+	return exclusive_pools[H.ckey]
+
 /datum/underbelly_shop/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -459,7 +471,7 @@
 		))
 
 	var/list/excl_data = list()
-	for(var/datum/underbelly_shop_item/SI in exclusive_pool)
+	for(var/datum/underbelly_shop_item/SI in _get_exclusive_pool(H))
 		if(SI.exclusive_role && H.job != SI.exclusive_role && H.job != "Gutter King")
 			continue
 		var/buy_count = purchase_counts["[H.ckey]_[SI.name]"] || 0
@@ -532,7 +544,7 @@
 
 	switch(action)
 		if("buy_shared", "buy_exclusive")
-			var/pool = (action == "buy_shared") ? shared_pool : exclusive_pool
+			var/pool = (action == "buy_shared") ? shared_pool : _get_exclusive_pool(H)
 			var/item_name = params["name"]
 			var/datum/underbelly_shop_item/SI = locate_item(pool, item_name)
 			if(!SI)
