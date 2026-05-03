@@ -1,6 +1,6 @@
 /*
 	SMUGGLER TRAIN
-	Every 30-60 minutes, a shipment of contraband drops at the marked landing area.
+	Every 25-45 minutes, a shipment of contraband drops at the marked landing area.
 	Place /obj/effect/landmark/smuggler_drop tiles on the map where crates should appear.
 	Leftover crates from the previous run are destroyed when the next one fires.
 	Everyone on the same Z level hears the rumble.
@@ -25,7 +25,7 @@ GLOBAL_VAR(smuggler_train)
 	var/list/active_crates = list()
 
 /datum/smuggler_train/New()
-	addtimer(CALLBACK(src, PROC_REF(arrive)), rand(30 MINUTES, 60 MINUTES))
+	addtimer(CALLBACK(src, PROC_REF(arrive)), rand(25 MINUTES, 45 MINUTES))
 
 /datum/smuggler_train/proc/arrive()
 	for(var/obj/A in active_crates)
@@ -47,7 +47,7 @@ GLOBAL_VAR(smuggler_train)
 				C << sound('modular_underbelly/sound/train_arrive.ogg', volume = 80)
 				to_chat(C.mob, span_warning("A low rumble shakes the pipes above. Something came through."))
 
-	addtimer(CALLBACK(src, PROC_REF(arrive)), rand(30 MINUTES, 60 MINUTES))
+	addtimer(CALLBACK(src, PROC_REF(arrive)), rand(25 MINUTES, 45 MINUTES))
 
 /datum/smuggler_train/proc/fill_crate(obj/structure/closet/crate/chest/crate/smuggler/C)
 	var/T

@@ -32,7 +32,7 @@ GLOBAL_VAR(underbelly_patient_ward)
 	var/list/active_patients = list()
 
 /datum/underbelly_patient_ward/New()
-	addtimer(CALLBACK(src, PROC_REF(spawn_wave)), rand(20 MINUTES, 40 MINUTES))
+	addtimer(CALLBACK(src, PROC_REF(spawn_wave)), 10 MINUTES)
 
 /datum/underbelly_patient_ward/proc/spawn_wave(schedule_next = TRUE)
 	for(var/mob/M in active_patients)
@@ -45,7 +45,7 @@ GLOBAL_VAR(underbelly_patient_ward)
 		spots += L
 	if(!spots.len)
 		if(schedule_next)
-			addtimer(CALLBACK(src, PROC_REF(spawn_wave)), rand(20 MINUTES, 40 MINUTES))
+			addtimer(CALLBACK(src, PROC_REF(spawn_wave)), 10 MINUTES)
 		return
 
 	var/obj/effect/landmark/patient_spot/chosen = pick(spots)
@@ -60,7 +60,7 @@ GLOBAL_VAR(underbelly_patient_ward)
 			to_chat(H, span_warning("Word comes through the pipes: someone's bleeding out in the Underbelly. Find them before they go cold."))
 
 	if(schedule_next)
-		addtimer(CALLBACK(src, PROC_REF(spawn_wave)), rand(20 MINUTES, 40 MINUTES))
+		addtimer(CALLBACK(src, PROC_REF(spawn_wave)), 10 MINUTES)
 
 // =====================================================
 

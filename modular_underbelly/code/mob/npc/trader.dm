@@ -55,11 +55,11 @@
 	social_rank = SOCIAL_RANK_SCUM
 	if(dna)
 		dna.real_name = "The Trader"
-	next_restock = world.time + (25 MINUTES)
+	next_restock = world.time + (15 MINUTES)
 	shop.do_restock()
 	roll_trade_demands()
 	addtimer(CALLBACK(src, PROC_REF(idle_voice_tick)), rand(20, 45) SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(restock_tick)), 25 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(restock_tick)), 15 MINUTES)
 
 /mob/living/carbon/human/species/human/northern/underbelly_trader/Destroy()
 	QDEL_NULL(shop)
@@ -288,8 +288,8 @@
 		return
 	shop.do_restock()
 	roll_trade_demands()
-	next_restock = world.time + (25 MINUTES)
-	addtimer(CALLBACK(src, PROC_REF(restock_tick)), 25 MINUTES)
+	next_restock = world.time + (15 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(restock_tick)), 15 MINUTES)
 
 /mob/living/carbon/human/species/human/northern/underbelly_trader/proc/on_purchase(mob/user, sound_key)
 	var/sound_file
