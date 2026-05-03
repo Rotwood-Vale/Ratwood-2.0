@@ -137,12 +137,15 @@
 		to_chat(user, span_warning("There is nothing to stir aside yet."))
 		return
 	if(user.get_skill_level(/datum/skill/craft/alchemy) < SKILL_LEVEL_MASTER)
-		to_chat(user, span_warning("My hands move to stir, but I lack the mastery to layer these essences..."))
+		to_chat(user, span_warning("My hands move to stir, but I lack the mastery to mix these essences..."))
+		return
+	if(pending_batches.len)
+		to_chat(user, span_warning("The cauldron can only hold two mixed recipes at once. Empty it first."))
 		return
 	pending_batches += list(ingredients.Copy())
 	ingredients = list()
 	brewing = 0
-	user.visible_message(span_notice("[user] stirs [src] with practiced precision."), span_notice("I stir [src], layering one recipe beneath the next."))
+	user.visible_message(span_notice("[user] stirs [src] with practiced precision."), span_notice("I stir [src], mixing one recipe without affecting the next."))
 
 /*
 /obj/machinery/light/rogue/cauldron/examine(mob/user)
