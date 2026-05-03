@@ -283,15 +283,63 @@
 		list("Cannonball",             "An iron sphere the size of a fist. Fits the hand cannon.",                       /obj/item/ammo_casing/caseless/bullet/cannonball, 3, 600, FALSE, "Scum"),
 	)
 	for(var/entry in scum_guns)
-		if(prob(35))
+		if(prob(40))
 			excl_master += list(entry)
 	//1 in 100,000. don't ever expect to see this considering it's a joke gun.
 	if(prob(0.001))
 		excl_master += list(list("The Devastator", "What the hell are you planning on taking down with this? Zizo? BAHAHA!", /obj/item/gun/ballistic/firearm/devastator, 1, 1500, FALSE, "Scum"))
-	var/list/excl_shuffled = shuffle(excl_master)
-	for(var/i = 1 to min(rand(1, 3), excl_shuffled.len))
-		var/entry = excl_shuffled[i]
-		exclusive_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], 1, entry[5], FALSE, entry[7])
+	var/list/exclusive_roles = list("Scum", "Ripper", "Flinger")
+	for(var/i = 1 to exclusive_roles.len)
+		var/role = exclusive_roles[i]
+		var/list/eligible = list()
+		for(var/entry in excl_master)
+			if(entry[7] == role || isnull(entry[7]))
+				eligible += list(entry)
+		if(!eligible.len)
+			continue
+
+		var/role_target = rand(2, min(5, eligible.len))
+		var/list/eligible_shuffled = shuffle(eligible.Copy())
+		var/added = 0
+		for(var/entry in eligible_shuffled)
+			var/already_stocked = FALSE
+			for(var/datum/underbelly_shop_item/SI in exclusive_pool)
+				if(SI.name == entry[1])
+					already_stocked = TRUE
+					break
+			if(already_stocked)
+				continue
+			exclusive_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], 1, entry[5], FALSE, entry[7])
+			added += 1
+			if(added >= role_target)
+				break
+
+	for(var/i = 1 to exclusive_roles.len)
+		var/role = exclusive_roles[i]
+		var/visible_count = 0
+		for(var/datum/underbelly_shop_item/SI in exclusive_pool)
+			if(SI.exclusive_role == role || isnull(SI.exclusive_role))
+				visible_count += 1
+		if(visible_count >= 2)
+			continue
+
+		var/list/eligible = list()
+		for(var/entry in excl_master)
+			if(entry[7] == role || isnull(entry[7]))
+				eligible += list(entry)
+
+		for(var/entry in shuffle(eligible.Copy()))
+			if(visible_count >= 2)
+				break
+			var/already_stocked = FALSE
+			for(var/datum/underbelly_shop_item/SI in exclusive_pool)
+				if(SI.name == entry[1])
+					already_stocked = TRUE
+					break
+			if(already_stocked)
+				continue
+			exclusive_pool += new /datum/underbelly_shop_item(entry[1], entry[2], entry[3], 1, entry[5], FALSE, entry[7])
+			visible_count += 1
 
 	// =========================================================
 	// FLINGER POOL - Independent re-roll. 5-15 slots total.

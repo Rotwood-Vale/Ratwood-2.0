@@ -877,8 +877,6 @@
 /proc/scum_select_criminal_record(mob/living/carbon/human/H)
 	if(!H?.client || !H.mind || !H.dna?.species)
 		return
-	if(H.islatejoin)
-		return
 	if(H.mind.scum_record_prompted)
 		return
 	H.mind.scum_record_prompted = TRUE
