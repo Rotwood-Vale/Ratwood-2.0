@@ -295,14 +295,6 @@
 				if(b.target == real_name)
 					. += span_syndradio("[m3] a bounty on [m2] head of [b.amount] mammon for [b.reason], issued by [b.employer].")
 					break
-
-		if(HAS_TRAIT(src, TRAIT_GODLESS))
-			if(HAS_TRAIT(user, TRAIT_GODLESS))
-				. += span_notice("A fellow scorned...")
-			else
-				. += span_userdanger("GODLESS HEATHEN! SHAME!")
-				user.add_stress(/datum/stressevent/godless)
-
 		
 		if(name in GLOB.court_agents)
 			var/datum/job/J = SSjob.GetJob(user.mind?.assigned_role)
