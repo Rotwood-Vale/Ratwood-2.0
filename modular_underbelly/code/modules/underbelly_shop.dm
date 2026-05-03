@@ -30,7 +30,7 @@
 	/// All stocked item datums this cycle
 	var/list/shared_pool = list()
 	/// Per-ckey exclusive pools so each player gets their own independent stock
-	var/list/exclusive_pools = list()
+	var/list/list/exclusive_pools = list()
 	var/list/flinger_pool = list()
 	var/list/shipment_pool = list()
 	/// Track how many of each item a customer has bought this cycle, keyed "ckey_itemname"
