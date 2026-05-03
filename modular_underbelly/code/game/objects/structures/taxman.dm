@@ -50,7 +50,15 @@ GLOBAL_LIST_EMPTY(underbelly_debt_contributions)
 			rebate = 500
 		if(3)
 			rebate = 900
-	new /obj/item/roguecoin/gold(drop_turf, rebate)
+	var/gold = FLOOR(rebate / 10, 1)
+	var/silver = FLOOR((rebate % 10) / 5, 1)
+	var/copper = rebate % 5
+	if(gold)
+		new /obj/item/roguecoin/gold(drop_turf, gold)
+	if(silver)
+		new /obj/item/roguecoin/silver(drop_turf, silver)
+	if(copper)
+		new /obj/item/roguecoin/copper(drop_turf, copper)
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(!HAS_TRAIT(H, TRAIT_UNDERBELLY_SCUM))
 			continue
