@@ -884,9 +884,9 @@
 "pS" = (
 /obj/structure/bars/grille/rusty,
 /obj/structure/fluff/traveltile/underbelly_pipe_exit{
-	doorman_id = "KEEP_BASEMENT_NORTH";
-	aportalid = "KEEP_BASEMENT_NORTH_EXIT";
-	aportalgoesto = "KEEP_BASEMENT_NORTH";
+	doorman_id = "DAHOES";
+	aportalid = "DAHOES_EXIT";
+	aportalgoesto = "DAHOES";
 	desc = "A heavy gate fitted to the pipe mouth. Leads back to the surface. This one leads to THE WHITEVEIN"
 	},
 /turf/open/floor/rogue/cobblerock,
@@ -3074,7 +3074,7 @@ Wh
 Wh
 Wh
 Pq
-KE
+AM
 KE
 Wh
 Wh
@@ -5237,7 +5237,7 @@ KE
 AM
 KE
 KE
-KE
+AM
 KE
 KE
 KE
