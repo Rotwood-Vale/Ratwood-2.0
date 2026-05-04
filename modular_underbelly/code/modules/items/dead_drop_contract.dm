@@ -52,6 +52,8 @@ GLOBAL_LIST_EMPTY(dead_drop_spots)
 /obj/item/parcel/dead_drop/HasProximity(mob/nearby)
 	if(!istype(nearby))
 		return
+	if(HAS_TRAIT(nearby, TRAIT_UNDERBELLY_SCUM))
+		return
 	var/obj/item/paper/scroll/dead_drop_contract/C = contract_ref?.resolve()
 	if(bound_ckey)
 		if(!nearby.ckey || nearby.ckey != bound_ckey)
