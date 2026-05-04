@@ -12602,7 +12602,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp{
 	wander = 0
 	},
-/turf/open/floor/rogue/volcanic,
+/turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/bograt/above)
 "cSQ" = (
 /obj/structure/fluff/walldeco/chains,
@@ -34444,7 +34444,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/watcher{
 	wander = 0
 	},
-/turf/open/floor/rogue/volcanic,
+/turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/bograt/above)
 "hXY" = (
 /obj/structure/table/wood,
@@ -69448,9 +69448,7 @@
 	pixel_y = 0;
 	status = 1
 	},
-/turf/open/floor/rogue/volcanic{
-	desc = "Silky and sharp-smooth, like cracked glass"
-	},
+/turf/open/floor/rogue/naturalstone,
 /area/rogue)
 "qpI" = (
 /obj/structure/ladder{
@@ -74388,11 +74386,14 @@
 /turf/open/water/ocean,
 /area/rogue/outdoors/beach/harbor)
 "rCc" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound,
-/turf/open/floor/rogue/volcanic{
-	desc = "Silky and sharp-smooth, like cracked glass"
+/obj/effect/wisp/prestidigitation{
+	color = "#ff0d00";
+	desc = "An ominous manifestation of latent ambient magick";
+	light_color = "#ff0d00";
+	name = "Infernal Wisp"
 	},
-/area/rogue)
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/outdoors/bograt/above)
 "rCh" = (
 /obj/structure/bars/pipe{
 	dir = 8;
@@ -108402,8 +108403,8 @@ bqk
 bqk
 ofP
 bqk
-eRT
-rCc
+bqk
+xUK
 clC
 fTZ
 fTZ
@@ -110986,7 +110987,7 @@ fTZ
 dOj
 bqk
 bqk
-rCc
+xUK
 bqk
 wuu
 bqk
@@ -110994,8 +110995,8 @@ bqk
 bqk
 fdr
 bqk
-eRT
-rCc
+bqk
+xUK
 clC
 fTZ
 fTZ
@@ -594359,8 +594360,8 @@ kKp
 kKp
 ktg
 hXX
-hhI
-kPD
+rCc
+sce
 ktg
 kPD
 kKp
@@ -594791,7 +594792,7 @@ kKp
 kKp
 ktg
 ktg
-kPD
+sce
 ktg
 ktg
 kPD
