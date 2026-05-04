@@ -106,6 +106,7 @@
 	icon_state = "bosskey"
 	lockid = "lord"
 	visual_replacement = /obj/item/roguekey/royal
+	is_important = TRUE
 
 /obj/item/roguekey/lord/Initialize(mapload)
 	. = ..()

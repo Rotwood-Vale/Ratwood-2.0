@@ -2008,7 +2008,7 @@
 	pixel_y = -1
 	},
 /obj/item/roguekey/lord{
-	is_important = TRUE
+	
 	},
 /obj/item/gem_device/throne,
 /turf/open/floor/rogue/carpet/lord/center,
