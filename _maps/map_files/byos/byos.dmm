@@ -11101,7 +11101,7 @@
 	lockid = "lust";
 	name = "Key of Lust";
 	desc = "It's smooth and sensual to the touch.";
-	is_important = TRUE
+	is_important = 1
 	},
 /obj/item/clothing/neck/roguetown/collar/catbell,
 /obj/item/clothing/neck/roguetown/cursed_collar,
@@ -14808,7 +14808,7 @@
 	lockid = "wrath";
 	name = "Key of Wrath";
 	desc = "It's eye glares at you intensely.";
-	is_important = TRUE
+	is_important = 1
 	},
 /obj/structure/closet/crate/chest/gold,
 /turf/open/floor/rogue/tile,
@@ -15974,7 +15974,7 @@
 	lockid = "envy";
 	name = "Key of Envy";
 	desc = "It's covered in small spikes. It hurts to hold.";
-	is_important = TRUE
+	is_important = 1
 	},
 /turf/open/floor/rogue/dirt/desert,
 /area/rogue/under/cave)
@@ -18434,7 +18434,7 @@
 	name = "Key of Gluttony";
 	desc = "It's covered in a thick flesh-like substance.";
 	color = "#751f09";
-	is_important = TRUE
+	is_important = 1
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave)
@@ -20428,7 +20428,7 @@
 	name = "Key of Pride";
 	desc = "It depicts an etched face, grinning like a madman.";
 	pixel_x = -10;
-	is_important = TRUE
+	is_important = 1
 	},
 /obj/item/rogueweapon/sword/long/zizo,
 /turf/open/floor/rogue/carpet/lord/left,
@@ -24297,7 +24297,7 @@
 	lockid = "sloth";
 	name = "Key of Sloth";
 	desc = "Whoever forged this key put barely any effort into it.";
-	is_important = TRUE
+	is_important = 1
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave)
