@@ -21671,8 +21671,8 @@
 "uyg" = (
 /obj/structure/winch{
 	dir = 8;
-	redstone_id = wrath1;
-	gid = wrath1
+	redstone_id = "wrath1";
+	gid = "wrath1"
 	},
 /turf/open/floor/rogue/volcanic/magma,
 /area/rogue/under/cave/inferno)
