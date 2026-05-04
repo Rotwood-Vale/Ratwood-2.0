@@ -50,7 +50,6 @@
 		/datum/reagent/blood_red = 50,
 		/datum/reagent/medicine/healthpot = 30,
 		/datum/reagent/medicine/stronghealth = 30,
-		/datum/reagent/water/blessed = 20,
 	)
 
 // =====================================================

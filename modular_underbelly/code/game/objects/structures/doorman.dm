@@ -257,7 +257,7 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 
 /obj/structure/fluff/traveltile/underbelly/pipe/perform_travel(obj/structure/fluff/traveltile/T, mob/living/L)
 	L.recent_travel = world.time
-	var/mob/living/dragged = ismob(L.pulling) ? L.pulling : null
+	var/atom/movable/dragged = L.pulling
 	L.forceMove(T.loc)
 	if(dragged)
 		dragged.forceMove(T.loc)
@@ -353,7 +353,7 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 
 /obj/structure/fluff/traveltile/underbelly_pipe_exit/perform_travel(obj/structure/fluff/traveltile/T, mob/living/L)
 	L.recent_travel = world.time
-	var/mob/living/dragged = ismob(L.pulling) ? L.pulling : null
+	var/atom/movable/dragged = L.pulling
 	L.forceMove(T.loc)
 	if(dragged)
 		dragged.forceMove(T.loc)
@@ -399,6 +399,7 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 	if(P)
 		for(var/mob/living/M in range(4, P))
 			to_chat(M, span_warning("You hear clattering through the pipe -- someone is coming through."))
+	var/atom/movable/dragged = L.pulling
 	to_chat(L, span_notice("I push on the gate..."))
 	if(!do_after(L, 5 SECONDS, target = src) || QDELETED(src))
 		return
@@ -411,6 +412,9 @@ GLOBAL_LIST_EMPTY(underbelly_speakers)
 				span_notice("I shoulder through and pull the gate closed.")
 			)
 			perform_travel(T, L)
+			if(dragged && !QDELETED(dragged) && !L.pulling)
+				dragged.forceMove(T.loc)
+				L.start_pulling(dragged, state = 1, supress_message = TRUE)
 			return
 	to_chat(L, span_warning("It is a dead end."))
 
