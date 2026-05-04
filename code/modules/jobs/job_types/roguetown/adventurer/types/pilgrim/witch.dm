@@ -73,11 +73,12 @@
 			H.mind?.adjust_spellpoints(9) // twelve if you pick arcyne potential
 			neck = null
 		if("Godsblood")
-			//miracle witch: capped at t2 miracles. cannot pray to regain devo, but has high innate regen because of it (2 instead of 1 from major)
+			//miracle witch: capped at t2 miracles. cannot pray to regain devo, but has high innate regen because of it (2 instead of 1 from major)TRAIT_RITUALIST
 			var/datum/devotion/D = new /datum/devotion/(H, H.patron)
 			H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
 			D.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WITCH, devotion_limit = CLERIC_REQ_2)
 			D.max_devotion *= 0.5
+			ADD_TRAIT(TRAIT_RITUALIST, TRAIT_GENERIC)
 			switch(H.patron?.type)
 				if(/datum/patron/divine/astrata)
 					neck = /obj/item/clothing/neck/roguetown/psicross/astrata
@@ -112,6 +113,7 @@
 			D.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_1)
 			D.max_devotion *= 0.5
 			ADD_TRAIT(H, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
+			ADD_TRAIT(TRAIT_RITUALIST, TRAIT_GENERIC)
 			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 			H.mind?.adjust_spellpoints(6) // twelve if you pick arcyne potential
 			switch(H.patron?.type)
