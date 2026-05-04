@@ -20223,8 +20223,8 @@
 "tii" = (
 /obj/structure/winch{
 	dir = 8;
-	gid = wrath2;
-	redstone_id = wrath2
+	gid = "wrath2";
+	redstone_id = "wrath2"
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave/inferno)
