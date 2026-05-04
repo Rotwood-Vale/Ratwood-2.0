@@ -15,6 +15,8 @@
 	item_state = "pistol"
 	force = 8
 	spread = 8
+	spread_num = 5
+	possible_item_intents = list(/datum/intent/shoot/firearm/scum, /datum/intent/arc/firearm/scum, /datum/intent/mace/strike/wood)
 	wlength = WLENGTH_SHORT
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_HIP
@@ -37,6 +39,8 @@
 	item_state = "blunderbuss"
 	force = 18
 	spread = 20
+	spread_num = 11
+	gripped_intents = list(/datum/intent/shoot/firearm/scum, /datum/intent/arc/firearm/scum, INTENT_GENERIC)
 	mag_type = /obj/item/ammo_box/magazine/internal/firearm/blunderbuss
 
 /obj/item/gun/ballistic/firearm/blunderbuss/scrap_blunderbuss/shoot_live_shot(mob/living/user, pointblank = 0, mob/pbtarget = null, message = 1)
@@ -55,6 +59,8 @@
 	Slow to load, inaccurate, and prone to misfiring spectacularly. The up side is that it still fires a lead ball."
 	force = 12
 	spread = 12
+	spread_num = 6
+	gripped_intents = list(/datum/intent/shoot/firearm/scum, /datum/intent/arc/firearm/scum, INTENT_GENERIC)
 
 /obj/item/gun/ballistic/firearm/arquebus/scrap_musket/shoot_live_shot(mob/living/user, pointblank = 0, mob/pbtarget = null, message = 1)
 	if(prob(25))

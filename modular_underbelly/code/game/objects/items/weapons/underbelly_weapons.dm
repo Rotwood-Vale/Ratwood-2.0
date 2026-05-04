@@ -7,6 +7,12 @@
 	Defacer      - spiked steel knuckles, hits harder but breaks faster.
 */
 
+/datum/intent/shoot/firearm/scum
+	basetime = 85
+
+/datum/intent/arc/firearm/scum
+	basetime = 105
+
 // =====================================================
 // GUT SPILLER - compact pistol, short range carnage
 // purchase_sound_key = "smallgun"
@@ -22,6 +28,8 @@
 	item_state = "repeating_pistol"
 	force = 14
 	spread = 6
+	spread_num = 3
+	possible_item_intents = list(/datum/intent/shoot/firearm/scum, /datum/intent/arc/firearm/scum, /datum/intent/mace/strike/wood)
 	wlength = WLENGTH_SHORT
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_HIP
@@ -177,6 +185,8 @@
 	item_state = "hunter_pistol_loading"
 	force = 12
 	spread = 8
+	spread_num = 4
+	possible_item_intents = list(/datum/intent/shoot/firearm/scum, /datum/intent/arc/firearm/scum, /datum/intent/mace/strike/wood)
 	/// TRUE while the breech is open. Required for loading powder/ball; closed by ramming, opened by use-in-hand.
 	var/breech_open = TRUE
 
@@ -286,11 +296,12 @@
 	wlength = WLENGTH_NORMAL
 	slot_flags = ITEM_SLOT_BACK
 	possible_item_intents = list(/datum/intent/mace/strike/wood)
-	gripped_intents = list(/datum/intent/shoot/firearm, /datum/intent/arc/firearm, /datum/intent/mace/strike/wood)
+	gripped_intents = list(/datum/intent/shoot/firearm/scum, /datum/intent/arc/firearm/scum, /datum/intent/mace/strike/wood)
 	alt_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
 	cartridge_wording = "lead ball"
 	load_time = 60
 	minstr = 8
+	spread_num = 4
 	/// Number of lead balls currently loaded.
 	var/balls_loaded = 0
 	/// Maximum balls the weapon can hold. Raised to 3 by the capacity upgrade.
@@ -578,12 +589,13 @@ GLOBAL_LIST_INIT(cannon_loadable_species, typecacheof(list(
 	item_state = "cannon"
 	force = 24
 	spread = 0
+	spread_num = 0
 	w_class = WEIGHT_CLASS_BULKY
 	wlength = WLENGTH_SHORT
 	walking_stick = FALSE
 	bigboy = TRUE
 	gripsprite = FALSE
-	possible_item_intents = list(/datum/intent/shoot/firearm, /datum/intent/arc/firearm, /datum/intent/mace/strike/wood)
+	possible_item_intents = list(/datum/intent/shoot/firearm/scum, /datum/intent/arc/firearm/scum, /datum/intent/mace/strike/wood)
 	gripped_intents = null
 	slot_flags = ITEM_SLOT_BACK
 	cartridge_wording = "cannonball"
@@ -821,6 +833,8 @@ GLOBAL_LIST_INIT(cannon_loadable_species, typecacheof(list(
 	cartridge_wording = "grapeshot"
 	force = 22
 	spread = 15
+	spread_num = 5
+	gripped_intents = list(/datum/intent/shoot/firearm/scum, /datum/intent/arc/firearm/scum, INTENT_GENERIC)
 	var/rounds_remaining = 0
 	/// Max grapeshots the barrel can hold. Raised to 3 by the capacity upgrade kit.
 	var/max_capacity = 2
