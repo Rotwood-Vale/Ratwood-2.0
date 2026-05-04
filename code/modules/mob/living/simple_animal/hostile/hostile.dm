@@ -613,15 +613,6 @@
 		value = initial(search_objects)
 	search_objects = value
 
-/mob/living/simple_animal/hostile/consider_wakeup()
-	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
-		if(length(grid.client_contents))
-			toggle_ai(AI_ON)
-			return TRUE
-
-	toggle_ai(AI_IDLE)
-	return TRUE
-
 /mob/living/simple_animal/hostile/proc/ListTargetsLazy(_Z)//Step 1, find out what we can see
 	. = list()
 	for (var/I in SSmobs.clients_by_zlevel[_Z])

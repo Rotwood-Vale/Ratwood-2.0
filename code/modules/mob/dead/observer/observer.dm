@@ -609,7 +609,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set hidden = 1
 	var/list/all_mobs = getpois(mobs_only=1,skip_mindless=1)
 
-	// GHOST PROTECTION DISABLED — restore unfiltered orbit list
+	// GHOST PROTECTION DISABLED: This may need to be particularly looked into as noted in a discussion.
 	// var/list/allowed_mobs = list()
 	// if(!check_rights(R_ADMIN, FALSE))
 	// 	for(var/current_name in all_mobs)
