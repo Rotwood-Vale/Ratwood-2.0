@@ -17,6 +17,8 @@
 	resistance_flags = FIRE_PROOF
 	armor_class = ARMOR_CLASS_LIGHT
 	salvage_result = /obj/item/natural/hide/cured
+	cold_protection = LEG_RIGHT | LEG_LEFT | GROIN
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/shorts
 	name = "hardened leather shorts"
@@ -28,11 +30,14 @@
 	body_parts_covered = GROIN
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
+	cold_protection = GROIN
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	name = "otavan leather trousers"
 	desc = "padded leather armor made by Otavan tailors, its quality is remarkable."
 	icon_state = "fencerpants"
+	cold_protection = GROIN | LEG_RIGHT | LEG_LEFT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
 	name = "fencing breeches"
@@ -42,6 +47,8 @@
 	color = "#FFFFFF"
 	detail_color = "#5E4440"
 	allowed_race = NON_DWARVEN_RACE_TYPES
+	heat_protection = GROIN | LEG_RIGHT | LEG_LEFT
+	max_heat_protection_temperature = 600
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic/update_icon()
 	cut_overlays()
@@ -69,6 +76,8 @@
 	detail_color = "#FFFFFF"
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
+	cold_protection = GROIN | LEG_RIGHT | LEG_LEFT
+	min_cold_protection_temperature = 50
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants/attack_right(mob/user)
 	..()
@@ -111,18 +120,24 @@
 	icon_state = "nomadpants"
 	max_integrity = ARMOR_INT_LEG_HARDLEATHER
 	armor = ARMOR_LEATHER
+	cold_protection = GROIN | LEG_RIGHT | LEG_LEFT
+	min_cold_protection_temperature = 50
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun //no, not 'eastpants3', silly!
 	name = "gambeson trousers"
 	desc = "A form of Kazengunite peasant's trousers. The fabric used in their manufacture is strong, and could probably turn away a few blows."
 	icon_state = "baggypants"
 	item_state = "baggypants"
+	heat_protection = GROIN | LEG_RIGHT | LEG_LEFT
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/shadowpants
 	name = "silk tights"
 	desc = "Form-fitting legwear. Almost too form-fitting."
 	icon_state = "shadowpants"
 	allowed_race = NON_DWARVEN_RACE_TYPES
+	heat_protection = GROIN | LEG_RIGHT | LEG_LEFT
+	max_heat_protection_temperature = 600
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/bronzeskirt
 	name = "bronze chain skirt"
@@ -135,3 +150,5 @@
 	sewrepair = FALSE
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/bronze //Reskinned version of the Barbarian's heavy leather trousers. 1:1 functionality, but without the ability to sew-repair.
+	cold_protection = null
+	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN

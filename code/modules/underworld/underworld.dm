@@ -170,4 +170,8 @@ GLOBAL_VAR_INIT(underworld_coins, 0)
 		for(var/obj/effect/landmark/underworldcoin/B in GLOB.landmarks_list)
 			new /obj/item/underworld/coin(B.loc)
 
-
+/obj/item/detroyt_toll
+	name = "Ticket"
+	desc = "This is more than just compressed salt."
+	icon = 'icons/roguetown/items/misc.dmi'
+	icon_state = "ticket_detroyt"

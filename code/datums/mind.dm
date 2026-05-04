@@ -938,6 +938,9 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 /proc/handle_special_items_retrieval(mob/user, atom/host_object)
 	// Attempts to retrieve an item from a player's stash, and applies any base colors, custom names, and descriptions.
 	if(user.mind && isliving(user))
+		var/area/rogue/user_area = get_area(user)
+		if(user_area?.no_special_item_retrieval) // area does not allow fetching special items, return
+			return
 		if(user.mind.special_items && user.mind.special_items.len)
 			var/item = input(user, "What will I take?", "STASH") as null|anything in user.mind.special_items
 			if(item)

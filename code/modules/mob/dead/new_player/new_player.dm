@@ -142,6 +142,32 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 		client.prefs.ShowChoices(src, 3)
 		return 1
 
+	if(href_list["join_server"])
+		var/target_server
+		switch(href_list["join_server"])
+			if("primary")
+				target_server = "byond://ratwood.rip:22096"
+			if("secondary")
+				target_server = "byond://ratwood.rip:22099"
+
+		if(!target_server)
+			return 1
+
+		if(alert(src, "Switch to [target_server]? This will close my current connection.", "Switch Server", "Yes", "No") != "Yes")
+			return 1
+
+		src << browse({"<a id='link' href='[target_server]'>[target_server]</a><script type='text/javascript'>document.getElementById('link').click();window.location='byond://winset?command=.quit'</script>"}, "border=0;titlebar=0;size=1x1;window=server_switch")
+		to_chat(src, "<a href='[target_server]' style='color:#638500;text-decoration:underline;'><b>If I was not switched automatically, click here.</b></a>")
+		return 1
+
+	if(href_list["open_changelog"])
+		var/datum/changelog/changelog_ui = GLOB.changelog_tgui
+		if(!changelog_ui)
+			changelog_ui = new /datum/changelog
+			GLOB.changelog_tgui = changelog_ui
+		changelog_ui.ui_interact(src)
+		return 1
+
 	if(href_list["ready"])
 		var/tready = text2num(href_list["ready"])
 		//Avoid updating ready if we're after PREGAME (they should use latejoin instead)
@@ -162,11 +188,11 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 			if(ready != tready)
 				ready = tready
 		//if it's post initialisation and they're trying to observe we do the needful
-		// Check the git blame for why this was removed.
-		// if(!SSticker.current_state < GAME_STATE_PREGAME && tready == PLAYER_READY_TO_OBSERVE)
-		// 	ready = tready
-		// 	make_me_an_observer()
-		// 	return
+		
+		if(!SSticker.current_state < GAME_STATE_PREGAME && tready == PLAYER_READY_TO_OBSERVE)
+			ready = tready
+			make_me_an_observer()
+			return
 
 	if(href_list["refresh"])
 		winshow(src, "preferencess_window", FALSE)
@@ -297,7 +323,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 		ready = PLAYER_NOT_READY
 		return FALSE
 
-	var/this_is_like_playing_right = alert(src,"Are you sure you wish to observe? Playing is a lot more fun.","VOYEUR","Yes","No")
+	var/this_is_like_playing_right = alert(src,"Are you sure you wish to observe? Playing is a lot more fun.","SPECTATE","Yes","No")
 
 	if(QDELETED(src) || !src.client || this_is_like_playing_right != "Yes")
 		ready = PLAYER_NOT_READY
@@ -604,6 +630,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	omegalist += list(GLOB.peasant_positions)
 	omegalist += list(GLOB.wanderer_positions)
 	omegalist += list(GLOB.youngfolk_positions)
+	omegalist += list(GLOB.tribal_positions)
 
 	for(var/list/category in omegalist)
 		if(!SSjob.name_occupations[category[1]])
@@ -644,8 +671,8 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 					cat_name = "Wanderers"
 				if (INQUISITION)
 					cat_name = "Inquisition"
-			//	if (GOBLIN)
-			//		cat_name = "Goblins"
+				if (TRIBAL)
+					cat_name = "Tribe"
 
 			dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
 			dat += "<legend align='center' style='font-weight: bold; color: [cat_color]'>[cat_name]</legend>"
@@ -710,8 +737,9 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	var/is_antag
 	if(mind in GLOB.pre_setup_antags)
 		is_antag = TRUE
+	var/is_gnoll = (mind?.assigned_role == "Gnoll")
 
-	client.prefs.copy_to(H, antagonist = is_antag)
+	client.prefs.copy_to(H, antagonist = is_antag, skip_normal_prefs = is_gnoll)
 	H.dna.update_dna_identity()
 	if(mind)
 		if(transfer_after)
@@ -719,7 +747,13 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 		mind.active = 0					//we wish to transfer the key manually
 		mind.transfer_to(H)					//won't transfer key since the mind is not active
 
-	H.name = real_name
+	if(is_gnoll)
+		var/gnoll_name = client?.prefs?.gnoll_prefs?.ensure_gnoll_name() || H.real_name
+		H.real_name = gnoll_name
+		H.name = gnoll_name
+		H.dna.real_name = gnoll_name
+	else
+		H.name = real_name
 
 	. = H
 	new_character = .

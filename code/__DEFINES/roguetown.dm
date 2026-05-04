@@ -59,7 +59,8 @@ Balloon Alert / Floating Text defines
 	/datum/species/dullahan,\
 	/datum/species/lamia,\
 	/datum/species/dwarf/gnome,\
-	/datum/species/harpy\
+	/datum/species/harpy,\
+	/datum/species/arachnid,\
 )
 
 #define RACES_RESPECTED \
@@ -83,6 +84,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/demihuman,\
 	/datum/species/harpy,\
 	/datum/species/lamia,\
+	/datum/species/arachnid,\
 	/datum/species/anthromorphsmall,\
 	/datum/species/kobold,\
 	/datum/species/tieberian,\
@@ -161,7 +163,8 @@ Balloon Alert / Floating Text defines
 	/datum/species/construct/metal/porcelain,\
 	/datum/species/dullahan,\
 	/datum/species/lamia,\
-	/datum/species/dwarf/gnome\
+	/datum/species/dwarf/gnome,\
+	/datum/species/arachnid,\
 )
 // Non-dwarf non-kobold non-goblin mostly
 #define NON_DWARVEN_RACE_TYPES list(\
@@ -186,6 +189,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/construct/metal/porcelain,\
 	/datum/species/dullahan,\
 	/datum/species/lamia,\
+	/datum/species/arachnid,\
 )
 // Non-elf non-dwarf non-kobold non-goblin mostly
 #define HUMANLIKE_RACE_TYPES list(\
@@ -206,6 +210,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/harpy,\
 	/datum/species/dullahan,\
 	/datum/species/lamia,\
+	/datum/species/arachnid,\
 )
 #define ALL_CLERIC_PATRONS list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/necra, /datum/patron/divine/pestra, /datum/patron/divine/ravox, /datum/patron/divine/malum, /datum/patron/divine/eora) // Currently unused.
 
@@ -315,10 +320,22 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_LSKELETON		"CAT_LSKELETON"		// Lich Fortified Skeleton classes
 #define CTAG_NSKELETON		"CAT_NSKELETON"		// Necromancer Greater Skeleton classes
 #define CTAG_LICKER_WRETCH  "CAT_LICKER_WRETCH" // Licker wretch. Nuff said.
+#define CTAG_GNOLL			"CAT_GNOLL"			// Wretch-esque gnolls, graggar's chosen.
+#define CTAG_GNOLL_IMPURE	"CAT_GNOLL_IMPURE"	// Reward for beating enough gnolls.
+
+#define CTAG_TRIBAL				"CAT_TRIBAL"			// 
+#define CTAG_TRIBALCHIEFTAIN	"CAT_TRIBALCHIEFTAIN"	// 
+#define CTAG_TRIBALSHAMAN		"CAT_TRIBALSHAMAN"		// 
+#define CTAG_TRIBALGUARD		"CAT_TRIBALGUARD"		// 
+#define CTAG_TRIBALRABBLE		"CAT_TRIBALRABBLE"		// 
+#define CTAG_TRIBALVILLAGER		"CAT_TRIBALVILLAGER"	// 
 
 #define CTAG_WARDEN			"CAT_WARDEN"		// Warden class - Handles warden class selector.
+#define CTAG_VANGUARD		"CAT_VANGUARD"		// Vanguard class - Handles vanguard class selector.
 #define CTAG_WATCH			"CAT_WATCH"			// Watch class - Handles Town Watch class selector
 #define CTAG_MENATARMS		"CAT_MENATARMS"		// Men-at-Arms class - Handles Men-at-Arms class selector
+#define CTAG_BOGMASTER		"CAT_BOGMASTER"		// BOGMASTER class - Handles BOGMASTER class selector (weapons selection)
+#define CTAG_SHERIFF		"CAT_SHERIFF"		// SHERIFF class - Handles SHERIFF class selector (weapons selection)
 #define CTAG_SERGEANT		"CAT_SERGEANT"		// Sergeant class - Handles Sergeant class selector (weapons selection)
 #define CTAG_ROYALGUARD		"CAT_ROYALGUARD"	// Royal Guard class - Handles Royal Guard class selector
 #define CTAG_CONSORT		"CAT_CONSORT"		// Consort/Suitor subclasses
@@ -328,6 +345,7 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_HEIR			"CAT_HEIR"			// Prince(cess) class - Handles Heir class selector
 #define CTAG_LORD			"CAT_LORD"			// Lord class - Handles Lord class selector
 #define CTAG_SQUIRE			"CAT_SQUIRE"		// Squire class - Handles Squire class selector
+#define CTAG_ROOKIE			"CAT_ROOKIE"		// Rookie class - Handles Rookie class selector
 #define CTAG_VETERAN		"CAT_VETERAN"		// Veteran class - Handles Veteran class selector
 #define CTAG_MARSHAL		"CAT_MARSHAL"		// Marshal class
 #define CTAG_SENESCHAL		"CAT_SENESCHAL"		// Seneschal's aesthetic choices.
@@ -338,6 +356,18 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_GUILDSMEN 		"CAT_GUILDSMEN"		// Guildsmen class - Handles Guildsmen class selector
 #define CTAG_NIGHTMAIDEN	"CAT_NIGHTMAIDEN"	// Bathhouse Attendant's aesthetic choices.
 #define CTAG_PRISONER 		"CAT_PRISONER"
+
+// List of Migrant Classes.
+#define CTAG_HFT_LORD "CAT_HFT_LORD"  // Heartfelt Lord Class - Handles Heartfelt Lord class selector.
+#define CTAG_HFT_HAND "CAT_HFT_HAND"  // Heartfelt Hand Class - Handles Heartfelt Hand class selector.
+#define CTAG_HFT_KNIGHT "CAT_HFT_KNIGHT"  // Heartfelt Knight Class - Handles Heartfelt Knight class selector.
+#define CTAG_HFT_RETINUE "CAT_HFT_RETINUE"  // Heartfelt Retinue Class - Handles Heartfelt Retinue class selector.
+#define CTAG_CZWAR_LORD "CTAG_CZWAR_LORD"
+#define CTAG_CZWAR_HEIR "CTAG_CZWAR_HEIR"
+#define CTAG_CZWAR_HUSSAR "CTAG_CZWAR_HUSSAR"
+#define CTAG_CZWAR_RETAINER "CTAG_CZWAR_RETAINER"
+#define CTAG_CZWAR_SERVANT "CTAG_CZWAR_SERVANT"
+
 
 
 // List of mono-class categories. Only here for standardisation sake, but can be added on if desired.
@@ -402,6 +432,7 @@ GLOBAL_LIST_EMPTY(round_join_times)
 
 //Mercenary categories
 #define CLASS_CAT_ETRUSCA "Etrusca"
+#define CLASS_CAT_FERENTIA "Ferentia"
 #define CLASS_CAT_GRENZELHOFT "Grenzelhoft"
 #define CLASS_CAT_NALEDI "Naledi"
 #define CLASS_CAT_ZYBANTU "Zybantium"
@@ -411,6 +442,11 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CLASS_CAT_OTAVA "Otava"
 #define CLASS_CAT_KAZENGUN "Kazengun"
 #define CLASS_CAT_RACIAL "Race Exclusive" //Used for black oaks, grudgebearer dwarves, etc.
+
+//Migrant categories
+#define CLASS_CAT_HFT_COURT "Upper Court"
+#define CLASS_CAT_HFT_GUARD "House Guard"
+#define CLASS_CAT_HFT_WORKER "Workers"
 
 // Social rank defines
 #define SOCIAL_RANK_DIRT 1

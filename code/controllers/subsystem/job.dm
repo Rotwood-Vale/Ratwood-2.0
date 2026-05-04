@@ -310,6 +310,8 @@ SUBSYSTEM_DEF(job)
 			key = "Sidefolk"
 		if(WANDERERS)
 			key = "Wanderers"
+		if(TRIBAL)
+			key = "Tribe"
 		else
 			key = "Wanderers"
 	return key
@@ -693,35 +695,45 @@ SUBSYSTEM_DEF(job)
 
 	//If we joined at roundstart we should be positioned at our workstation
 	if(!joined_late)
-		var/obj/S = null
-		for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
-			if(sloc.name != rank)
-				continue
-			if(locate(/mob/living) in sloc.loc)
-				continue
-			S = sloc
-			sloc.used = TRUE
-			break
-		if(!S)
+		var/spawn_rank = rank
+		var/handled_resident_spawn = FALSE
+		if(istype(H, /mob/living/carbon/human))
+			if(should_use_towner_spawn(H, M?.client))
+				if(spawn_resident_in_tavern(H))
+					handled_resident_spawn = TRUE
+				else
+					spawn_rank = "Towner"
+
+		if(!handled_resident_spawn)
+			var/obj/S = null
 			for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
-				if(sloc.name != rank)
+				if(sloc.name != spawn_rank)
+					continue
+				if(locate(/mob/living) in sloc.loc)
 					continue
 				S = sloc
 				sloc.used = TRUE
 				break
-		if(!S)//danger will robinson something went wrong
-			log_game("Could not find a landmark for [rank]!!!!!!")
-			for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
-				S = sloc
-				sloc.used = TRUE
-				break
-		if(length(GLOB.jobspawn_overrides[rank]))
-			S = pick(GLOB.jobspawn_overrides[rank])
-		if(S)
-			S.JoinPlayerHere(H, FALSE)
-		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
-			log_world("Couldn't find a round start spawn point for [rank]")
-			SendToLateJoin(H)
+			if(!S)
+				for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
+					if(sloc.name != spawn_rank)
+						continue
+					S = sloc
+					sloc.used = TRUE
+					break
+			if(!S)//danger will robinson something went wrong
+				log_game("Could not find a landmark for [spawn_rank]!!!!!!")
+				for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
+					S = sloc
+					sloc.used = TRUE
+					break
+			if(length(GLOB.jobspawn_overrides[spawn_rank]))
+				S = pick(GLOB.jobspawn_overrides[spawn_rank])
+			if(S)
+				S.JoinPlayerHere(H, FALSE)
+			if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
+				log_world("Couldn't find a round start spawn point for [spawn_rank]")
+				SendToLateJoin(H)
 
 
 	if(H.mind)
@@ -872,6 +884,19 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/SendToLateJoin(mob/M, buckle = TRUE)
 	var/atom/destination
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(should_use_towner_spawn(H))
+			if(length(GLOB.jobspawn_overrides["Towner"]))
+				destination = pick(GLOB.jobspawn_overrides["Towner"])
+				destination.JoinPlayerHere(M, FALSE)
+				return
+			if(latejoin_trackers.len)
+				destination = pick(latejoin_trackers)
+				destination.JoinPlayerHere(M, buckle)
+				return
+			if(spawn_resident_in_tavern(H))
+				return
 	if(M.mind && M.mind.assigned_role && length(GLOB.jobspawn_overrides[M.mind.assigned_role])) //We're doing something special today.
 		destination = pick(GLOB.jobspawn_overrides[M.mind.assigned_role])
 		destination.JoinPlayerHere(M, FALSE)
@@ -934,7 +959,7 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/has_restricted_vice(datum/preferences/prefs, datum/job/job)
 	if(!length(job.vice_restrictions))
 		return FALSE
-	
+
 	// Check new vice system (vice1-vice5)
 	if(prefs.vice1?.type in job.vice_restrictions)
 		return TRUE
@@ -952,3 +977,152 @@ SUBSYSTEM_DEF(job)
 		return TRUE
 	
 	return FALSE
+
+/datum/controller/subsystem/job/proc/should_use_towner_spawn(mob/living/carbon/human/H, client/fallback_client)
+	if(!H)
+		return FALSE
+
+	var/assigned_role = H.mind?.assigned_role || H.job
+	if(!(assigned_role in list("Adventurer", "Mercenary", "Court Agent")))
+		return FALSE
+
+	if(HAS_TRAIT(H, TRAIT_RESIDENT))
+		return TRUE
+
+	var/client/C = H.client || fallback_client
+	var/datum/preferences/P = C?.prefs
+	if(!P)
+		return FALSE
+
+	if(istype(P.virtue, /datum/virtue/utility/resident))
+		return TRUE
+
+	if(P.statpack?.name == "Virtuous" && istype(P.virtuetwo, /datum/virtue/utility/resident))
+		return TRUE
+
+	return FALSE
+
+/datum/controller/subsystem/job/proc/spawn_resident_in_tavern(mob/living/carbon/human/H)
+	if(!H)
+		return FALSE
+
+	var/area/spawn_area
+	for(var/area/A in world)
+		if(istype(A, /area/rogue/indoors/town/tavern))
+			spawn_area = A
+			break
+
+	if(!spawn_area)
+		return FALSE
+
+	var/list/possible_chairs = list()
+	for(var/obj/structure/chair/wood/rogue/C in spawn_area)
+		var/turf/T = get_turf(C)
+		if(!is_valid_resident_tavern_turf(T))
+			continue
+		possible_chairs += C
+
+	if(length(possible_chairs))
+		possible_chairs = shuffle(possible_chairs)
+		for(var/obj/structure/chair/wood/rogue/chosen_chair in possible_chairs)
+			var/turf/chair_turf = get_turf(chosen_chair)
+			if(!chair_turf)
+				continue
+
+			if(!(locate(/mob/living) in chair_turf))
+				H.forceMove(chair_turf)
+				return TRUE
+
+			var/turf/adjacent_turf = get_valid_adjacent_resident_turf(chair_turf)
+			if(adjacent_turf)
+				H.forceMove(adjacent_turf)
+				return TRUE
+
+	var/list/possible_spawns = list()
+	for(var/turf/T in spawn_area)
+		if(!is_valid_resident_tavern_turf(T))
+			continue
+		possible_spawns += T
+
+	if(length(possible_spawns))
+		H.forceMove(pick(possible_spawns))
+		return TRUE
+
+	return FALSE
+
+/datum/controller/subsystem/job/proc/get_valid_adjacent_resident_turf(turf/origin)
+	if(!origin)
+		return null
+
+	for(var/direction in list(NORTH, SOUTH, EAST, WEST))
+		var/turf/T = get_step(origin, direction)
+		if(!is_valid_resident_tavern_turf(T))
+			continue
+		return T
+
+	return null
+
+/datum/controller/subsystem/job/proc/is_valid_resident_tavern_turf(turf/T)
+	if(!T || T.density || T.is_blocked_turf(FALSE))
+		return FALSE
+
+	if(locate(/mob/living) in T)
+		return FALSE
+
+	if(!istype(get_area(T), /area/rogue/indoors/town/tavern))
+		return FALSE
+
+	var/map_name = SSmapping?.config?.map_name
+	if(map_name == "Dun Manor")
+		if(T.z != 3 || T.y <= 70)
+			return FALSE
+	else if(map_name == "Dun World")
+		if(T.z != 3 || T.y <= 234)
+			return FALSE
+
+	var/open_neighbors = 0
+	for(var/direction in list(NORTH, SOUTH, EAST, WEST))
+		var/turf/N = get_step(T, direction)
+		if(!N || N.density || N.is_blocked_turf(FALSE))
+			continue
+		open_neighbors++
+
+	return open_neighbors >= 2
+
+/datum/controller/subsystem/job/proc/sync_resident_wanderer_knowledge(mob/living/carbon/human/H, include_pref = FALSE)
+	if(!H?.mind)
+		return
+
+	var/assigned_role = H.mind.assigned_role || H.job
+	var/is_resident_wanderer = FALSE
+
+	if(assigned_role in list("Adventurer", "Mercenary", "Court Agent"))
+		if(HAS_TRAIT(H, TRAIT_RESIDENT))
+			is_resident_wanderer = TRUE
+		else if(include_pref && should_use_towner_spawn(H, H.client))
+			is_resident_wanderer = TRUE
+
+	if(is_resident_wanderer)
+		for(var/mob/living/carbon/human/other in GLOB.human_list)
+			if(other == H || !other.mind)
+				continue
+
+			var/other_role = other.mind.assigned_role || other.job
+			if(other_role == "Towner")
+				H.mind.i_know_person(other.mind)
+				H.mind.person_knows_me(other.mind)
+				continue
+
+			if((other_role in list("Adventurer", "Mercenary", "Court Agent")) && HAS_TRAIT(other, TRAIT_RESIDENT))
+				H.mind.i_know_person(other.mind)
+				H.mind.person_knows_me(other.mind)
+
+	else if(assigned_role == "Towner")
+		for(var/mob/living/carbon/human/other in GLOB.human_list)
+			if(other == H || !other.mind)
+				continue
+
+			var/other_role = other.mind.assigned_role || other.job
+			if((other_role in list("Adventurer", "Mercenary", "Court Agent")) && HAS_TRAIT(other, TRAIT_RESIDENT))
+				H.mind.i_know_person(other.mind)
+				H.mind.person_knows_me(other.mind)

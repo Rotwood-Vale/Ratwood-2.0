@@ -9,7 +9,6 @@
 	skin_tone_wording = "Clan"
 
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,STUBBLE,OLDGREY)
-	inherent_traits = list(TRAIT_NOMOBSWAP)
 	default_features = MANDATORY_FEATURE_LIST
 	use_skintones = 1
 	disliked_food = NONE
@@ -63,6 +62,12 @@
 		/datum/body_marking/flushed_cheeks,
 		/datum/body_marking/eyeliner,
 		/datum/body_marking/tonage,
+		/datum/body_marking/womb_tattoo,
+		/datum/body_marking/butterfly,
+		/datum/body_marking/waist,
+		/datum/body_marking/diagonal_eyes,
+		/datum/body_marking/wide_eyes,
+		/datum/body_marking/stripes,
 	)
 	customizers = list(
 		/datum/customizer/organ/eyes/humanoid,

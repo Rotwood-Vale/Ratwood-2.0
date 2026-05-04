@@ -77,6 +77,9 @@
 		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/skeleton))
 		return FALSE
+	//No cross species pollination!!!
+	if(mind.has_antag_datum(/datum/antagonist/gnoll))
+		return FALSE
 	if(HAS_TRAIT(src, TRAIT_SILVER_BLESSED))
 		return FALSE
 	return TRUE
@@ -151,10 +154,18 @@
 	miss_sound = "bluntwooshlarge"
 	item_d_type = "slash"
 
+/datum/intent/mace/smash/werewolf
+	name = "thrash"
+	desc = "A powerful, smash of lycan muscle that deals normal damage but can throw a standing opponent back and slow them down, based on your strength. Ineffective below 10 strength. Slowdown & Knockback scales to your Strength up to 15 (1 - 5 tiles). Cannot be used consecutively more than every 5 seconds on the same target. Prone targets halve the knockback distance."
+	icon_state = "insmash"
+	chargetime = 1
+	penfactor = 60
+
 /obj/item/rogueweapon/werewolf_claw
 	name = "Verevolf Claw"
 	desc = ""
 	item_state = null
+	experimental_inhand = FALSE
 	lefthand_file = null
 	righthand_file = null
 	icon = 'icons/roguetown/weapons/unarmed32.dmi'
@@ -176,6 +187,7 @@
 	parrysound = list('sound/combat/parry/parrygen.ogg')
 	embedding = list("embedded_pain_multiplier" = 0, "embed_chance" = 0, "embedded_fall_chance" = 0)
 	item_flags = DROPDEL
+	special = /datum/special_intent/axe_swing	//Good pairing for area denial for WW's.
 
 /obj/item/rogueweapon/werewolf_claw/right
 	icon_state = "claw_r"

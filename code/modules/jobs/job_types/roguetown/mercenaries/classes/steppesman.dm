@@ -10,7 +10,6 @@
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_league.ogg'
 	subclass_languages = list(/datum/language/aavnic)
-	horse = /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled
 	extra_context = "This subclass has 5 loadouts with various stats, skills & equipment."
 	subclass_skills = list(
 	//Universal skills
@@ -23,6 +22,10 @@
 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+	)
+
+	virtue_restrictions = list(
+		/datum/virtue/utility/riding
 	)
 
 /datum/outfit/job/roguetown/mercenary/steppesman/pre_equip(mob/living/carbon/human/H)
@@ -44,9 +47,13 @@
 
 	// CLASS ARCHETYPES
 	H.adjust_blindness(-3)
+	var/classchoice
 	if(H.mind)
 		var/classes = list("Starshina - Saber Veteran", "Obyvatel' - Elite Sapper", "Gromoverzhets - Pálya Sapper", "Zastrel'shchik - Light Archer", "Plastunsky - Light Infantry")
-		var/classchoice = input(H, "Choose your archetypes", "Available archetypes") as anything in classes
+		classchoice = input(H, "Choose your archetypes", "Available archetypes") as anything in classes
+	
+	if (H.mind)
+		H.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)
 
 		switch(classchoice)
 			if("Starshina - Saber Veteran")	//Tl;dr - medium armor class for Mount and Blade larpers who still get a saiga. Akin to Vaquero with specific drip.
@@ -118,7 +125,6 @@
 				H.adjust_skillrank_up_to(/datum/skill/craft/masonry, 2, TRUE)		//Ditto
 				H.adjust_skillrank_up_to(/datum/skill/craft/crafting, 2, TRUE)		//Ditto
 				H.adjust_skillrank_up_to(/datum/skill/labor/mining, 3, TRUE)		//Ditto
-				H.adjust_skillrank_up_to(/datum/skill/craft/traps, 3, TRUE)			//Ditto
 				H.change_stat(STATKEY_STR, 2)		//Statblock prone to revision. Probably will be revised. Currently weighted for 7 points and not 9.
 				H.change_stat(STATKEY_WIL, 3)
 				H.change_stat(STATKEY_CON, 2)
@@ -168,7 +174,6 @@
 				H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 2, TRUE)		//To avoid virtue cheese
 				H.adjust_skillrank_up_to(/datum/skill/craft/crafting, 2, TRUE)		//Ditto
 				H.adjust_skillrank_up_to(/datum/skill/labor/mining, 3, TRUE)		//Ditto
-				H.adjust_skillrank_up_to(/datum/skill/craft/traps, 3, TRUE)			//Ditto
 				H.change_stat(STATKEY_WIL, 3)		//Two less speed, no con, compared to 'elite' sappers. 7 spread.
 				H.change_stat(STATKEY_STR, 2)
 				H.change_stat(STATKEY_PER, 2)

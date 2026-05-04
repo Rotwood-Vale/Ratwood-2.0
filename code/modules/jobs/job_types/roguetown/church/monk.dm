@@ -95,7 +95,7 @@
 	beltl = /obj/item/storage/keyring/churchie
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backr = /obj/item/rogueweapon/woodstaff
-	backpack_contents = list(/obj/item/ritechalk)
+	backpack_contents = list(/obj/item/ritechalk, /obj/item/mini_flagpole/church)
 	H.cmode_music = 'sound/music/cmode/church/combat_acolyte.ogg' // has to be defined here for the selection below to work. sm1 please rewrite cmusic to apply pre-equip.
 	switch(H.patron?.type)
 		if(/datum/patron/divine/astrata)
@@ -146,6 +146,7 @@
 			shoes = /obj/item/clothing/shoes/roguetown/sandals
 			armor = /obj/item/clothing/suit/roguetown/shirt/robe/eora
 			cloak = /obj/item/clothing/cloak/templar/eoran
+			r_hand = /obj/item/rogueweapon/huntingknife/scissors
 		if(/datum/patron/divine/malum)
 			head = /obj/item/clothing/head/roguetown/roguehood
 			neck = /obj/item/clothing/neck/roguetown/psicross/malum
@@ -164,6 +165,7 @@
 			backpack_contents = list(/obj/item/ritechalk, /obj/item/book/rogue/law)
 		if(/datum/patron/divine/xylix)
 			head = /obj/item/clothing/head/roguetown/roguehood
+			mask = /obj/item/clothing/mask/rogue/xylixmask
 			neck = /obj/item/clothing/neck/roguetown/psicross/xylix // no more good luck charm,  you wanna cheat gambling? Xylix weeps
 			cloak = /obj/item/clothing/cloak/templar/xylixian
 			wrists = /obj/item/clothing/wrists/roguetown/wrappings
@@ -219,6 +221,9 @@
 	if(H.patron?.type == /datum/patron/divine/eora) // Beauty and Love - beautiful and can read people pretty well.
 		ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_EMPATH, TRAIT_GENERIC)
+		H.adjust_skillrank(/datum/skill/craft/sewing, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/labor/farming, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
 		H.cmode_music = 'sound/music/cmode/church/combat_eora.ogg'
 	if(H.patron?.type == /datum/patron/divine/malum) // Craft and Creativity - they can make stuff.
 		ADD_TRAIT(H, TRAIT_SMITHING_EXPERT, TRAIT_GENERIC)

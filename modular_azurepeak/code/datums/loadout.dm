@@ -39,13 +39,37 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Gaming Dice Container"
 	path = /obj/item/storage/pill_bottle/dice
 
+/datum/loadout_item/dwarven_dice
+	name = "Dwarven Dice Container"
+	path = /obj/item/storage/pill_bottle/dice/dwarven
+
+/datum/loadout_item/bakers_dozen_dice
+	name = "Baker's Dozen Dice Container"
+	path = /obj/item/storage/pill_bottle/dice/bakers_dozen
+
+/datum/loadout_item/threes_away_dice
+	name = "Three's Away Dice Container"
+	path = /obj/item/storage/pill_bottle/dice/threes_away
+
+/datum/loadout_item/dice_war_dice
+	name = "Dice War Container"
+	path = /obj/item/storage/pill_bottle/dice/dice_war
+
+/datum/loadout_item/liars_dice
+	name = "Liar's Dice Container"
+	path = /obj/item/storage/pill_bottle/dice/liars_dice
+
+/datum/loadout_item/dice_poker
+	name = "Dice Poker Container"
+	path = /obj/item/storage/pill_bottle/dice/dice_poker
+
 /datum/loadout_item/tarot_deck
 	name = "Tarot Deck"
 	path = /obj/item/toy/cards/deck/tarot
 
 /datum/loadout_item/custom_book
 	name = "Custom Book"
-	path = /obj/item/book/rogue/loadoutbook
+	path = /obj/item/paper/scroll/custom
 
 /datum/loadout_item/hand_mirror
 	name = "Hand Mirror"
@@ -222,6 +246,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Archer's cap"
 	path = /obj/item/clothing/head/roguetown/archercap
 
+/datum/loadout_item/articap
+	name = "Artificer's Cap"
+	path = /obj/item/clothing/head/roguetown/articap
+
 /datum/loadout_item/strawhat
 	name = "Straw Hat"
 	path = /obj/item/clothing/head/roguetown/strawhat
@@ -229,6 +257,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/witchhat
 	name = "Witch Hat"
 	path = /obj/item/clothing/head/roguetown/witchhat
+
+/datum/loadout_item/witchhat/old
+	name = "Witch Hat (Old)"
+	path = /obj/item/clothing/head/roguetown/witchhat/old
 
 /datum/loadout_item/bardhat
 	name = "Bard Hat"
@@ -357,7 +389,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/duelcape
 	name = "Duelist Cape"
-	path = /obj/item/clothing/cloak/half/duelistcape
+	path = /obj/item/clothing/cloak/duelistcape
 
 /datum/loadout_item/ridercloak
 	name = "Rider Cloak"
@@ -511,6 +543,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/sailorjacket
 	name = "Leather Jacket"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor
+
+/datum/loadout_item/artijacket
+	name = "Artificer Jacket"
+	path = /obj/item/clothing/suit/roguetown/armor/leather/jacket/artijacket
 
 /datum/loadout_item/priestrobe
 	name = "Undervestments"
@@ -737,6 +773,86 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Cursed Collar"
 	path = /obj/item/clothing/neck/roguetown/cursed_collar
 
+/datum/loadout_item/chastity_belt
+	name = "Chastity Belt"
+	path = /obj/item/chastity
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_cage
+	name = "Chastity Cage"
+	path = /obj/item/chastity/chastity_cage
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_cage_anal
+	name = "Chastity Cage with Anal Shield"
+	path = /obj/item/chastity/chastity_cage/anal
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_cage_spiked
+	name = "Spiked Chastity Cage"
+	path = /obj/item/chastity/chastity_cage/spiked
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_cage_spiked_anal
+	name = "Spiked Chastity Cage with Anal Shield"
+	path = /obj/item/chastity/chastity_cage/spiked_anal
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_cage_flat
+	name = "Flat Chastity Cage"
+	path = /obj/item/chastity/chastity_cage/flat
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_cage_flat_anal
+	name = "Flat Chastity Cage with Anal Shield"
+	path = /obj/item/chastity/chastity_cage/flat/anal
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_cage_flat_spiked
+	name = "Spiked Flat Chastity Cage"
+	path = /obj/item/chastity/chastity_cage/flat/spiked
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_cage_flat_spiked_anal
+	name = "Spiked Flat Chastity Cage with Anal Shield"
+	path = /obj/item/chastity/chastity_cage/flat/spiked_anal
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_insertable
+	name = "Chastity Insertable"
+	path = /obj/item/chastity/chastity_belt
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_insertable_anal
+	name = "Chastity Insertable with Anal Shield"
+	path = /obj/item/chastity/chastity_belt/anal
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_insertable_spiked
+	name = "Spiked Chastity Insertable"
+	path = /obj/item/chastity/chastity_belt/spiked
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_insertable_spiked_anal
+	name = "Spiked Chastity Insertable with Anal Shield"
+	path = /obj/item/chastity/chastity_belt/spiked_anal
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_combination
+	name = "Combination Chastity Device"
+	path = /obj/item/chastity/intersex
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_combination_spiked
+	name = "Spiked Combination Chastity Device"
+	path = /obj/item/chastity/intersex/spiked
+	triumph_cost = 1
+
+/datum/loadout_item/chastity_cursed
+	name = "Cursed Chastity Device"
+	path = /obj/item/chastity/cursed
+	triumph_cost = 4
+
 /datum/loadout_item/cloth_blindfold
 	name = "Cloth Blindfold"
 	path = /obj/item/clothing/mask/rogue/blindfold
@@ -796,6 +912,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Black Leather Belt"
 	path = /obj/item/storage/belt/rogue/leather/black
 
+/datum/loadout_item/doublebelt
+	name = "Paired slim belts"
+	path = /obj/item/storage/belt/rogue/leather/double
+
 /datum/loadout_item/belt_cloth
 	name = "Cloth Sash"
 	path = /obj/item/storage/belt/rogue/leather/sash
@@ -807,6 +927,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/psicross
 	name = "Psydonian Cross"
 	path = /obj/item/clothing/neck/roguetown/psicross
+
+/datum/loadout_item/psicross_reform
+	name = "Reformist Psycross"
+	path = /obj/item/clothing/neck/roguetown/psicross/reform
 
 /datum/loadout_item/psicross/astrata
 	name = "Amulet of Astrata"
@@ -879,6 +1003,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/jestershoes
 	name = "Jester's Shoes"
 	path = /obj/item/clothing/shoes/roguetown/jester
+
+/datum/loadout_item/jestermask
+	name = "Jester's Mask"
+	path = /obj/item/clothing/mask/rogue/xylixmask
 
 /datum/loadout_item/cotehardie
 	name = "Fitted Coat"
@@ -1249,6 +1377,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Psydonian Tabard"
 	path = /obj/item/clothing/cloak/psydontabard
 
+/datum/loadout_item/tri_reform_tabard
+	name = "Reformist Tabard"
+	path = /obj/item/clothing/cloak/reformtabard
+
 /datum/loadout_item/tri_abyssor_tabard
 	name = "Abyssorite Tabard"
 	path = /obj/item/clothing/cloak/abyssortabard
@@ -1402,6 +1534,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Lady's Cloak"
 	path = /obj/item/clothing/cloak/lordcloak/ladycloak
 	triumph_cost = 3
+
+/datum/loadout_item/wedding_dress
+	name = "Wedding Silk Dress"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/weddingdress
 
 /datum/loadout_item/tri_lady_cloak/nobility_check(client/C)
 	var/datum/preferences/P = C.prefs
@@ -1653,6 +1789,11 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/clothing/head/roguetown/roguehood/hierophant
 	triumph_cost = 2
 
+/datum/loadout_item/tri_armorhood_hood
+	name = "Studded Leather Hood"
+	path = /obj/item/clothing/head/roguetown/helmet/leather/armorhood/advanced
+	triumph_cost = 2
+
 /datum/loadout_item/tri_pontifex_hood
 	name = "Pontifex Hood"
 	path = /obj/item/clothing/head/roguetown/roguehood/pontifex
@@ -1800,6 +1941,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Naledi Psicross"
 	path = /obj/item/clothing/neck/roguetown/psicross/naledi
 
+/datum/loadout_item/woolencollar
+	name = "Woolen Collar"
+	path = /obj/item/clothing/neck/roguetown/collar/woolen
+
 // MASKS (Alphabetically Ordered)
 
 // SHIRTS & ROBES (Alphabetically Ordered)
@@ -1812,6 +1957,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Pontifex Robe"
 	path = /obj/item/clothing/suit/roguetown/shirt/robe/pointfex
 	triumph_cost = 2
+
+/datum/loadout_item/slitteddress
+	name = "Slitted dress"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/slit
 
 // POLEARMS & STAVES
 /datum/loadout_item/tri_naledi_staff
@@ -1913,6 +2062,14 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/catbell_collar
 	name = "Catbell Collar"
 	path = /obj/item/clothing/neck/roguetown/collar/catbell
+
+/datum/loadout_item/catbell
+	name = "Catbell"
+	path = /obj/item/catbell
+
+/datum/loadout_item/cowbell
+	name = "Cowbell"
+	path = /obj/item/catbell/cow
 
 /datum/loadout_item/rope_leash
 	name = "Rope Leash"
@@ -2061,10 +2218,25 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 //ADDITIONAL ITEMS
 
+/datum/loadout_item/backpack
+	name = "Backpack"
+	path = /obj/item/storage/backpack/rogue/backpack
+	triumph_cost = 6
+
 /datum/loadout_item/satchel
 	name = "Satchel"
 	path = /obj/item/storage/backpack/rogue/satchel
 	triumph_cost = 5
+
+/datum/loadout_item/otavansatchel
+	name = "Otavan Satchel"
+	path = /obj/item/storage/backpack/rogue/satchel/otavan
+	triumph_cost = 5
+
+/datum/loadout_item/shortsatchel
+	name = "Short Satchel"
+	path = /obj/item/storage/backpack/rogue/satchel/short
+	triumph_cost = 4
 
 /datum/loadout_item/pouches
 	name = "Pouche"
@@ -2081,6 +2253,16 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/rogueweapon/mace/parasol
 	triumph_cost = 3
 
+/datum/loadout_item/scabbard
+	name = "Scabbard"
+	path = /obj/item/rogueweapon/scabbard/sword
+	triumph_cost = 1
+
+/datum/loadout_item/greatweaponstrap
+	name = "Great Weapon Strap"
+	path = /obj/item/rogueweapon/scabbard/gwstrap
+	triumph_cost = 2
+
 //INSTRUMENTS
 
 /datum/loadout_item/accordion
@@ -2091,6 +2273,11 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/bagpipe
 	name = "Bagpipe"
 	path = /obj/item/rogue/instrument/bagpipe
+	triumph_cost = 1
+
+/datum/loadout_item/banjo
+	name = "Banjo"
+	path = /obj/item/rogue/instrument/banjo
 	triumph_cost = 1
 
 /datum/loadout_item/drum
@@ -2106,6 +2293,11 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/guitar
 	name = "Guitar"
 	path = /obj/item/rogue/instrument/guitar
+	triumph_cost = 1
+
+/datum/loadout_item/harmonica
+	name = "Harmonica"
+	path = /obj/item/rogue/instrument/harmonica
 	triumph_cost = 1
 
 /datum/loadout_item/harp

@@ -49,7 +49,19 @@
 	var/cooktime_divisor = get_cooktime_divisor(cs)
 	if(on)
 		for(var/obj/item/I in food)
+			if(I.pottery_fragile && I.pottery_baked_at && world.time >= (I.pottery_baked_at + 1 MINUTES))
+				if(prob(30))
+					visible_message(span_warning("[I] starts to crack from the prolonged heat and shatters!"))
+					playsound(src, 'sound/foley/glassbreak.ogg', 75, TRUE)
+					food -= I
+					qdel(I)
+					need_underlay_update = TRUE
+					continue
 			var/obj/item/C = I.cooking(10 * cooktime_divisor, 10, src)
+			if(QDELETED(I))
+				food -= I
+				need_underlay_update = TRUE
+				continue
 			if(C)
 				donefoods = TRUE
 				food -= I

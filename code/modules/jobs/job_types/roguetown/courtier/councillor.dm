@@ -64,3 +64,11 @@
 	beltl = /obj/item/storage/keyring/steward // If this turns out to be overbearing re:stewardry bump down to the clerk keyring instead.
 	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel
 	cloak = /obj/item/clothing/cloak/stabard/surcoat/councillor
+	if(SSmapping.config.map_name == "Rockhill")
+		armor = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/councillor
+		cloak = null
+	if(SSmapping.config.map_name == "Desert Town")
+		armor = /obj/item/clothing/suit/roguetown/shirt/robe/hierophant
+		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/councillor
+		shoes = /obj/item/clothing/shoes/roguetown/shalal
+		cloak = null

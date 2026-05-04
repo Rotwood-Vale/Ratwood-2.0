@@ -29,4 +29,10 @@
 #define THREAT_REGION_ROCKHILL_WOODS_NORTH "Murderwood North"
 #define THREAT_REGION_ROCKHILL_WOODS_SOUTH "Murderwood South"
 #define THREAT_REGION_ROCKHILL_OUTER_GROVE "Rockhill Outer Grove"
+//Deserttown versions
+#define THREAT_REGION_DESERT_NEAR "Al-Ashur Dunes"
+#define THREAT_REGION_DESERT_DEEP "The Deep Dunes"
+//BYOS versions
+#define THREAT_REGION_JUNGLE "The Dread Jungle"
+#define THREAT_REGION_ISLAND "New Kingsfield outskirts"
 #define LOWPOP_THRESHOLD 30 // When do we give highpop tick?

@@ -105,7 +105,7 @@
 
 /obj/item/rogueweapon/sickle/aalloy
 	name = "decrepit sickle"
-	desc = "Her thought was simple; to seperate the wheat from the chaff. By removing the limitations set upon one's spirit by lyfe, only then could divinity be obtained. She was correct - yet Her ascension had gone terribly awry, all-the-same."
+	desc = "Her thought was simple; to separate the wheat from the chaff. By removing the limitations set upon one's spirit by lyfe, only then could divinity be obtained. She was correct - yet Her ascension had gone terribly awry, all-the-same."
 	icon_state = "asickle"
 	color = "#bb9696"
 	sellprice = 15
@@ -234,7 +234,7 @@
 				T.ChangeTurf(/turf/open/floor/rogue/grasscold, flags = CHANGETURF_INHERIT_AIR)
 				playsound(T,'sound/items/dig_shovel.ogg', 100, TRUE)
 			return
-		if(istype(T, /turf/open/floor/rogue/grass) || istype(T, /turf/open/floor/rogue/grassred) || istype(T, /turf/open/floor/rogue/grassyel) || istype(T, /turf/open/floor/rogue/grasscold))
+		if(istype(T, /turf/open/floor/rogue/grass) || istype(T, /turf/open/floor/rogue/grassred) || istype(T, /turf/open/floor/rogue/grassyel) || istype(T, /turf/open/floor/rogue/grasscold) || istype(T, /turf/open/floor/rogue/grasspurple) || istype(T, /turf/open/floor/rogue/grassgrey))
 			playsound(T,'sound/items/dig_shovel.ogg', 100, TRUE)
 			if (do_after(user, work_time, target = src))
 				apply_farming_fatigue(user, 10)
@@ -242,6 +242,16 @@
 					to_chat(user,span_warning("[src] degrades."))
 					src.take_damage(hoe_damage, BRUTE, "blunt")
 				T.ChangeTurf(/turf/open/floor/rogue/dirt, flags = CHANGETURF_INHERIT_AIR)
+				playsound(T,'sound/items/dig_shovel.ogg', 100, TRUE)
+			return
+		if(istype(T, /turf/open/floor/rogue/desert_grass))
+			playsound(T,'sound/items/dig_shovel.ogg', 100, TRUE)
+			if (do_after(user, work_time, target = src))
+				apply_farming_fatigue(user, 10)
+				if(hoe_damage)
+					to_chat(user,span_warning("[src] degrades."))
+					src.take_damage(hoe_damage, BRUTE, "blunt")
+				T.ChangeTurf(/turf/open/floor/rogue/dirt/desert, flags = CHANGETURF_INHERIT_AIR)
 				playsound(T,'sound/items/dig_shovel.ogg', 100, TRUE)
 			return
 		if(istype(T, /turf/open/floor/rogue/dirt))

@@ -3,7 +3,6 @@
 	tutorial = "Originating in the vibrant Kingdom of Etrusca, a 'vaquero' had originally been a mere cattle-driver... Now, though, it has become a title for roaming swashbucklers. Whether they set out as a defender of the commonfolk or a pilferer of purses, the Vaquero is defined by the tale they carve across continents - and more frequently - by their story's violent end."
 	outfit = /datum/outfit/job/roguetown/mercenary/vaquero
 	class_select_category = CLASS_CAT_ETRUSCA
-	horse = /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame/saddled
 	cmode_music = 'sound/music/combat_vaquero.ogg'
 	category_tags = list(CTAG_MERCENARY)
 	subclass_languages = list(/datum/language/etruscan)
@@ -20,7 +19,7 @@
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
@@ -31,10 +30,9 @@
 		/datum/skill/misc/music = SKILL_LEVEL_EXPERT,
 	)
 
-/datum/advclass/mercenary/vaquero/equipme(mob/living/carbon/human/H, dummy)
-	if(should_wear_femme_clothes(H))
-		horse = /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled
-	return ..()
+	virtue_restrictions = list(
+		/datum/virtue/utility/riding
+	)
 
 /datum/outfit/job/roguetown/mercenary/vaquero/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -65,7 +63,7 @@
 	var/datum/inspiration/I = new /datum/inspiration(H)
 	I.grant_inspiration(H, bard_tier = BARD_T1)
 	if(H.mind)
-		var/weapons = list("Accordion","Bagpipe","Drum","Flute","Guitar","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
+		var/weapons = list("Accordion","Bagpipe", "Banjo","Drum","Flute","Guitar","Harmonica","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
 		var/weapon_choice = input(H, "Choose your instrument.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -73,12 +71,16 @@
 				backr = /obj/item/rogue/instrument/accord
 			if("Bagpipe")
 				backr = /obj/item/rogue/instrument/bagpipe
+			if("Banjo")
+				backr = /obj/item/rogue/instrument/banjo
 			if("Drum")
 				backr = /obj/item/rogue/instrument/drum
 			if("Flute")
 				backr = /obj/item/rogue/instrument/flute
 			if("Guitar")
 				backr = /obj/item/rogue/instrument/guitar
+			if("Harmonica")
+				backr = /obj/item/rogue/instrument/harmonica
 			if("Harp")
 				backr = /obj/item/rogue/instrument/harp
 			if("Hurdy-Gurdy")
@@ -98,3 +100,6 @@
 			if("Vocal Talisman")
 				backr = /obj/item/rogue/instrument/vocals
 	H.merctype = 13
+	
+	if (H.mind)
+		H.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)

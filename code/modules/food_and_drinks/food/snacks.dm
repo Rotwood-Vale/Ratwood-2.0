@@ -46,6 +46,7 @@ All foods are distributed among various categories. Use common sense.
 	var/slices_num
 	var/slice_name
 	var/slice_batch = TRUE
+	var/eating_slice  //If eating it without slicing will give you a slice of the food on the last bite
 	var/eatverb
 	var/dried_type = null
 	var/dry = 0
@@ -254,6 +255,12 @@ All foods are distributed among various categories. Use common sense.
 /obj/item/reagent_containers/food/snacks/proc/On_Consume(mob/living/eater)
 	if(!eater)
 		return
+
+	if(slices_num)
+		slices_num--
+		update_icon()
+		if(bitecount == bitesize - 1 && eating_slice)
+			changefood(slice_path, eater)
 
 	var/apply_effect = TRUE
 	// check to see if what we're eating is appropriate fare for our "social class" (aka nobles shouldn't be eating sticks of butter you troglodytes)

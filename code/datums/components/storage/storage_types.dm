@@ -27,8 +27,12 @@
 	/obj/item/needle,
 	/obj/item/natural/worms/leech,
 	/obj/item/reagent_containers/lux,
+	/obj/item/reagent_containers/lux_impure,
+	/obj/item/leechtick,
+	/obj/item/leechtick_bloated,
 	/obj/item/natural/bundle/cloth/bandage,
-	/obj/item/natural/cloth))
+	/obj/item/natural/cloth,
+	))
 
 /datum/component/storage/concrete/roguetown/messkit
 	screen_max_rows = 3
@@ -173,6 +177,7 @@
 	allow_dump_out = TRUE
 	dump_time = 40
 	collection_mode = COLLECT_SAME
+	does_not_spill = TRUE
 
 /datum/component/storage/concrete/tray/New(datum/P, ...)
 	. = ..()

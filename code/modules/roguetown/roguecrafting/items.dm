@@ -132,16 +132,13 @@
 
 /datum/crafting_recipe/roguetown/survival/bag
 	name = "sack"
-	result = /obj/item/storage/roguebag/crafted
+	result = /obj/item/storage/roguebag
 	reqs = list(
 		/obj/item/natural/fibers = 1,
 		/obj/item/natural/cloth = 1,
 		)
 	tools = list(/obj/item/needle)
 	skillcraft = /datum/skill/craft/sewing
-
-/obj/item/storage/roguebag/crafted
-	sellprice = 4
 
 /datum/crafting_recipe/roguetown/survival/bait
 	name = "bait"
@@ -218,8 +215,8 @@
 		/obj/item/ingot/iron = 1,
 		)
 	req_table = TRUE
-	skillcraft = /datum/skill/craft/traps
-	craftdiff = 1
+	skillcraft = /datum/skill/craft/crafting
+	craftdiff = 2
 	verbage_simple = "put together"
 	verbage = "puts together"
 
@@ -363,7 +360,7 @@
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/survival/rucksack/crafted
-	reqs = list(/obj/item/storage/roguebag/crafted = 1,
+	reqs = list(/obj/item/storage/roguebag = 1,
 				/obj/item/rope = 1)
 
 /datum/crafting_recipe/roguetown/survival/handmirror

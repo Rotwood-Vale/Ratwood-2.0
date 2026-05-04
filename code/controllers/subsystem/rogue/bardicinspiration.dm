@@ -35,6 +35,7 @@ GLOBAL_LIST_INIT(learnable_songst3, (list(/obj/effect/proc_holder/spell/invoked/
 	var/tier1acquired = FALSE
 	var/tier2acquired = FALSE
 	var/tier3acquired = FALSE
+	var/is_picking = FALSE // mutex
 
 /datum/inspiration/Destroy(force)
 	. = ..()
@@ -133,6 +134,10 @@ GLOBAL_LIST_INIT(learnable_songst3, (list(/obj/effect/proc_holder/spell/invoked/
 
 	if(!mind)
 		return
+	if(inspiration.is_picking)
+		return
+	inspiration.is_picking = TRUE
+
 	var/list/songs = GLOB.learnable_songst1
 	var/list/choices = list()
 	var/choosablesongtiers = list()
@@ -158,6 +163,7 @@ GLOBAL_LIST_INIT(learnable_songst3, (list(/obj/effect/proc_holder/spell/invoked/
 	var/chosensongtier = tgui_input_list(src, "Choose a tier of song to add to your songbook", "SERENADE", choosablesongtiers)
 
 	if(!chosensongtier)
+		inspiration.is_picking = FALSE
 		return
 
 	switch(chosensongtier)
@@ -176,13 +182,16 @@ GLOBAL_LIST_INIT(learnable_songst3, (list(/obj/effect/proc_holder/spell/invoked/
 	var/obj/effect/proc_holder/spell/invoked/song/item = choices[choice]
 
 	if(!item)
+		inspiration.is_picking = FALSE
 		return     // user canceled;
 	if(alert(src, "[item.desc]", "[item.name]", "Learn", "Cancel") == "Cancel") //gives a preview of the spell's description to let people know what a spell does
+		inspiration.is_picking = FALSE
 		return
 
 	for(var/obj/effect/proc_holder/spell/knownsong in mind.spell_list)
 		if(knownsong.type == item.type)
 			to_chat(src, span_warning("You already know this one!"))
+			inspiration.is_picking = FALSE
 			return
 	var/obj/effect/proc_holder/spell/invoked/song/new_song = new item
 	mind.AddSpell(new_song)
@@ -196,3 +205,4 @@ GLOBAL_LIST_INIT(learnable_songst3, (list(/obj/effect/proc_holder/spell/invoked/
 			inspiration.tier3acquired = TRUE
 	if(inspiration.songsbought >= inspiration.level)
 		verbs -= /mob/living/carbon/human/proc/picksongs
+	inspiration.is_picking = FALSE

@@ -13,8 +13,8 @@
 	sound = 'sound/magic/whiteflame.ogg'
 	cost = 2
 	spell_tier = 1 // Utility. For repair
-	glow_color = GLOW_COLOR_ARCANE
-	glow_intensity = GLOW_INTENSITY_LOW
+	glow_color = null
+	glow_intensity = 0
 
 	miracle = FALSE
 
@@ -41,6 +41,15 @@
 		revert_cast()
 		return
 
+	user.visible_message(
+			span_warning("[user] begins to concentrate on [I]!"),
+			span_notice("I begin to concentrate on [I]..")
+	)
+	if(!do_after(user, 4 SECONDS, TRUE, I, TRUE))
+		to_chat(user, span_warning("My concentration breaks! I could not repair [I]."))
+		revert_cast()
+		return
+
 	var/repair_amount = (repair_percent + (user.STAINT * 0.01)) * I.max_integrity
 
 	I.obj_integrity = min(I.obj_integrity + repair_amount, I.max_integrity)
@@ -50,6 +59,9 @@
 	if(I.obj_integrity >= I.max_integrity)
 		if(I.obj_broken)
 			I.obj_fix()
+		if (I.shoddy_repair && user.get_skill_level(/datum/skill/magic/arcane) >= SKILL_LEVEL_JOURNEYMAN)
+			I.shoddy_repair = FALSE
+			user.visible_message(span_info("[I] glows gently, arcyne magic amending the damage wrought by hasty repairs."))
 		if(I.body_parts_covered_dynamic != I.body_parts_covered)
 			I.repair_coverage()
 			to_chat(user, span_info("[I]'s shorn layers mend together."))

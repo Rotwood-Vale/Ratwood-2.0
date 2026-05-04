@@ -218,7 +218,7 @@
 	..()
 	if(hud)
 		cut_overlay(hud.object_overlay)
-		QDEL_NULL(hud.object_overlay)
+		hud.object_overlay = null
 
 /atom/movable/screen/inventory/update_icon_state()
 	if(!icon_empty)
@@ -1891,6 +1891,26 @@
 	icon = 'icons/mob/rogueheat.dmi'
 	screen_loc = rogueui_fat
 	layer = HUD_LAYER+0.1
+
+/atom/movable/screen/tempbase
+	name = ""
+	mouse_opacity = 0
+	icon_state = "tempbase"
+	icon = 'icons/mob/rogueheat.dmi'
+	screen_loc = rogueui_temperature
+
+
+/atom/movable/screen/temperature
+	name = "Temperature"
+	icon_state = "tempnormal"
+	icon = 'icons/mob/rogueheat.dmi'
+	screen_loc = rogueui_temperature
+	layer = HUD_LAYER+0.1
+
+/atom/movable/screen/temperature/Click(location, control, params)
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.check_temperature_state(H)
 
 /atom/movable/screen/grain
 	icon = 'icons/grain.dmi'

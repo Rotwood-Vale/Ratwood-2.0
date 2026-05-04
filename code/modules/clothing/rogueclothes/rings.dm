@@ -9,7 +9,7 @@
 	sleeved = 'icons/roguetown/clothing/onmob/rings.dmi'
 	sleevetype = "shirt"
 	icon_state = ""
-	slot_flags = ITEM_SLOT_RING
+	slot_flags = ITEM_SLOT_RING|ITEM_SLOT_GLOVES
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	anvilrepair = /datum/skill/craft/armorsmithing
 	experimental_inhand = FALSE
@@ -132,7 +132,7 @@
 
 /obj/item/clothing/ring/active/nomag/activate(mob/user)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, FALSE, FALSE, ITEM_SLOT_RING, INFINITY, FALSE)
+	AddComponent(/datum/component/anti_magic, TRUE, FALSE, FALSE, ITEM_SLOT_RING, ITEM_SLOT_HANDS, INFINITY, FALSE)
 
 /obj/item/clothing/ring/active/nomag/demagicify()
 	. = ..()
@@ -142,49 +142,49 @@
 
 //gold rings
 /obj/item/clothing/ring/emerald
-	name = "gemerald ring"
+	name = "gold gemerald ring"
 	icon_state = "g_ring_emerald"
 	desc = "A beautiful golden ring with a polished Gemerald set into it."
 	smeltresult = /obj/item/roguegem/green
 	sellprice = 195
 
 /obj/item/clothing/ring/ruby
-	name = "rontz ring"
+	name = "gold rontz ring"
 	icon_state = "g_ring_ruby"
 	desc = "A beautiful golden ring with a polished Rontz set into it."
 	smeltresult = /obj/item/roguegem/ruby
 	sellprice = 255
 
 /obj/item/clothing/ring/topaz
-	name = "toper ring"
+	name = "gold toper ring"
 	icon_state = "g_ring_topaz"
 	desc = "A beautiful golden ring with a polished Toper set into it."
 	smeltresult = /obj/item/roguegem/yellow
 	sellprice = 180
 
 /obj/item/clothing/ring/quartz
-	name = "blortz ring"
+	name = "gold blortz ring"
 	icon_state = "g_ring_quartz"
 	desc = "A beautiful golden ring with a polished Blortz set into it."
 	smeltresult = /obj/item/roguegem/blue
 	sellprice = 245
 
 /obj/item/clothing/ring/sapphire
-	name = "saffira ring"
+	name = "gold saffira ring"
 	icon_state = "g_ring_sapphire"
 	desc = "A beautiful golden ring with a polished Saffira set into it."
 	smeltresult = /obj/item/roguegem/violet
 	sellprice = 200
 
 /obj/item/clothing/ring/diamond
-	name = "dorpel ring"
+	name = "gold dorpel ring"
 	icon_state = "g_ring_diamond"
 	desc = "A beautiful golden ring with a polished Dorpel set into it."
 	smeltresult = /obj/item/roguegem/diamond
 	sellprice = 270
 
 /obj/item/clothing/ring/signet
-	name = "signet ring"
+	name = "gold signet ring"
 	icon_state = "signet"
 	desc = "A ring of opulent gold, bearing the symbol of Psydon. By dipping it in melted redtallow, it can seal writs of religious importance - a matter better known to the Inquisition, rather than the Church or Crown."
 	sellprice = 135
@@ -213,37 +213,37 @@
 
 //silver rings
 /obj/item/clothing/ring/emeralds
-	name = "gemerald ring"
+	name = "silver gemerald ring"
 	icon_state = "s_ring_emerald"
 	smeltresult = /obj/item/roguegem/green
 	sellprice = 155
 
 /obj/item/clothing/ring/rubys
-	name = "rontz ring"
+	name = "silver rontz ring"
 	icon_state = "s_ring_ruby"
 	smeltresult = /obj/item/roguegem/ruby
 	sellprice = 215
 
 /obj/item/clothing/ring/topazs
-	name = "toper ring"
+	name = "silver toper ring"
 	icon_state = "s_ring_topaz"
 	smeltresult = /obj/item/roguegem/yellow
 	sellprice = 140
 
 /obj/item/clothing/ring/quartzs
-	name = "blortz ring"
+	name = "silver blortz ring"
 	icon_state = "s_ring_quartz"
 	smeltresult = /obj/item/roguegem/blue
 	sellprice = 205
 
 /obj/item/clothing/ring/sapphires
-	name = "saffira ring"
+	name = "silver saffira ring"
 	icon_state = "s_ring_sapphire"
 	smeltresult = /obj/item/roguegem/violet
 	sellprice = 160
 
 /obj/item/clothing/ring/diamonds
-	name = "dorpel ring"
+	name = "silver dorpel ring"
 	icon_state = "s_ring_diamond"
 	smeltresult = /obj/item/roguegem/diamond
 	sellprice = 230
@@ -325,37 +325,37 @@
 
 //blacksteel rings
 /obj/item/clothing/ring/emeraldbs
-	name = "gemerald ring"
+	name = "blacksteel gemerald ring"
 	icon_state = "bs_ring_emerald"
 	desc = "A beautiful blacksteel ring with a polished Gemerald set into it."
 	sellprice = 295
 
 /obj/item/clothing/ring/rubybs
-	name = "rontz ring"
+	name = "blacksteel rontz ring"
 	icon_state = "bs_ring_ruby"
 	desc = "A beautiful blacksteel ring with a polished Rontz set into it."
 	sellprice = 355
 
 /obj/item/clothing/ring/topazbs
-	name = "toper ring"
+	name = "blacksteel toper ring"
 	icon_state = "bs_ring_topaz"
 	desc = "A beautiful blacksteel ring with a polished Toper set into it."
 	sellprice = 380
 
 /obj/item/clothing/ring/quartzbs
-	name = "blortz ring"
+	name = "blacksteel blortz ring"
 	icon_state = "bs_ring_quartz"
 	desc = "A beautiful blacksteel ring with a polished Blortz set into it."
 	sellprice = 345
 
 /obj/item/clothing/ring/sapphirebs
-	name = "saffira ring"
+	name = "blacksteel saffira ring"
 	icon_state = "bs_ring_sapphire"
 	desc = "A beautiful blacksteel ring with a polished Saffira set into it."
 	sellprice = 300
 
 /obj/item/clothing/ring/diamondbs
-	name = "dorpel ring"
+	name = "blacksteel dorpel ring"
 	icon_state = "bs_ring_diamond"
 	desc = "A beautiful blacksteel ring with a polished Dorpel set into it."
 	sellprice = 370

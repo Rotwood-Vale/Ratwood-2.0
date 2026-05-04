@@ -45,7 +45,8 @@
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
 	icon_state = "loaf6"
 	slices_num = 6
-	bitesize = 8
+	bitesize = 6
+	eating_slice = TRUE
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/breadslice
 	list_reagents = list(/datum/reagent/consumable/nutriment = DOUGH_NUTRITION)
 	faretype = FARE_POOR
@@ -60,20 +61,6 @@
 		icon_state = "loaf[slices_num]"
 	else
 		icon_state = "loaf_slice"
-
-/obj/item/reagent_containers/food/snacks/rogue/bread/On_Consume(mob/living/eater)
-	..()
-	if(slices_num)
-		if(bitecount == 3)
-			slices_num = 5
-		if(bitecount == 4)
-			slices_num = 4
-		if(bitecount == 5)
-			slices_num = 3
-		if(bitecount == 6)
-			slices_num = 2
-		if(bitecount == 7)
-			changefood(slice_path, eater)
 
 /*	.................   Breadslice & Toast   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/breadslice
@@ -405,8 +392,9 @@
 	desc = "A popular dessert amongst the peasantry, this loaf of sweetbread's speckled with fruity surprises. In recent years, it has more palettes amongst the papacy: t'was Rockhill's abbey that christened a variant, glazed with a sugary veneer."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
 	icon_state = "raisinbread6"
-	bitesize = 8
+	bitesize = 6
 	slices_num = 6
+	eating_slice = TRUE
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/raisinbreadslice
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
 	faretype = FARE_NEUTRAL
@@ -421,20 +409,6 @@
 		icon_state = "raisinbread[slices_num]"
 	else
 		icon_state = "raisinbread_slice"
-
-/obj/item/reagent_containers/food/snacks/rogue/raisinbread/On_Consume(mob/living/eater)
-	..()
-	if(slices_num)
-		if(bitecount == 3)
-			slices_num = 5
-		if(bitecount == 4)
-			slices_num = 4
-		if(bitecount == 5)
-			slices_num = 3
-		if(bitecount == 6)
-			slices_num = 2
-		if(bitecount == 7)
-			changefood(slice_path, eater)
 
 /obj/item/reagent_containers/food/snacks/rogue/raisinbreadslice
 	name = "raisin loaf slice"

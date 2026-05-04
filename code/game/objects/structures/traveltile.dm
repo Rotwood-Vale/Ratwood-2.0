@@ -180,15 +180,19 @@
 		else
 			to_chat(L, "<b>It is a dead end.</b>")
 			return FALSE
+/obj/structure/fluff/traveltile/dungeoneer
+	required_trait = TRAIT_DUNGEONMASTER_LABOR_CAMP
 /obj/structure/fluff/traveltile/bandit
 	required_trait = TRAIT_BANDITCAMP
 /obj/structure/fluff/traveltile/vampire
 	required_trait = TRAIT_VAMPMANSION
 /obj/structure/fluff/traveltile/wretch
 	required_trait = TRAIT_ZURCH //I'd tie this to trait_outlaw but unfortunately the heresiarch virtue exists so we're making a new trait instead.
+/obj/structure/fluff/traveltile/inq
+	required_trait = TRAIT_INQUISITION
 /obj/structure/fluff/traveltile/dungeon
 	name = "gate"
-	desc = "This gate's enveloping darkness is so opressive you dread to step through it."
+	desc = "This gate's enveloping darkness is so oppressive you dread to step through it."
 	icon = 'icons/roguetown/misc/portal.dmi'
 	icon_state = "portal"
 	density = FALSE

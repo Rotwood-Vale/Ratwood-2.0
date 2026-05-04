@@ -100,3 +100,20 @@
 		B.opacity = TRUE
 	isSwitchingStates = FALSE
 	update_gate_icon()
+
+//oh right this would take a while to sprite...
+// /obj/structure/gate/vertical/bars
+// 	icon_state = "bar1"
+// 	base_state = "bar"
+// 	opacity = FALSE
+
+// /obj/structure/gate/vertical/bars/Initialize(mapload)
+// 	. = ..()
+// 	INVOKE_ASYNC(src, PROC_REF(close))
+
+// /obj/structure/gate/vertical/bars/preopen
+// 	icon_state = "bar0"
+
+// /obj/structure/gate/vertical/bars/preopen/Initialize(mapload)
+// 	. = ..()
+// 	INVOKE_ASYNC(src, PROC_REF(open))

@@ -98,7 +98,7 @@
 
 /obj/machinery/light/oldlight
 	name = "ancyent lightbar"
-	desc = "Two frustrums hold a glaring death-light. Solid and unyielding."
+	desc = "Two frustums hold a glaring death-light. Solid and unyielding."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "celestial_light"
 	brightness = 10

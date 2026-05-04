@@ -148,6 +148,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/altgripped = FALSE
 	var/list/alt_intents //these replace main intents
 	var/list/gripped_intents //intents while gripped, replacing main intents
+	var/isaltgripsharp = FALSE //In the edge case an alt gripped weapon should remain sharp, then change this to true
 	var/force_wielded = 0
 	var/gripsprite = FALSE //use alternate grip sprite for inhand
 	var/wieldsound = FALSE
@@ -600,6 +601,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(associated_skill && associated_skill.name)
 			inspec += "\n<b>SKILL:</b> [associated_skill.name] <span class='info'><a href='?src=[REF(src)];explainskill=1'>{?}</a></span>"
 
+		if(istype(src, /obj/item/rogueweapon))
+			var/obj/item/rogueweapon/W = src
+			if(W.special)
+				inspec += "[W.special.get_examine()]"
+
 		if(intdamage_factor != 1 && force >= 5)
 			inspec += "\n<b>INTEGRITY DAMAGE:</b> [intdamage_factor * 100]% <span class='info'><a href='?src=[REF(src)];explainintdamage=1'>{?}</a></span>"
 
@@ -647,7 +653,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 							X = "pick"
 						inspec += ("\n<b>[capitalize(X)]</b>")
 				inspec += "<br>"
-
+			var/thermal_text = C.thermal_examine_text()
+			if(thermal_text)
+				inspec += thermal_text
+				inspec += "<br>"
 //**** General durability
 
 		if(max_integrity)
@@ -676,13 +685,117 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/output = "[inspec.Join()]"
 		if(!usr.client.prefs.no_examine_blocks)
 			output = examine_block(output)
-		to_chat(usr, output)	
+		to_chat(usr, output)
 
 /obj/item
 	var/simpleton_price = FALSE
 
 /obj/item/get_inspect_button()
 	return " <span class='info'><a href='?src=[REF(src)];inspect=1'>{?}</a></span>"
+
+/obj/item/proc/show_examine_hover_tooltip()
+	if(has_customized_identity() || always_show_examine_link)
+		return TRUE
+	if(minstr || minstr_req)
+		return TRUE
+	if(force >= 5)
+		return TRUE
+	if(gripped_intents && force_wielded)
+		return TRUE
+	if(wbalance)
+		return TRUE
+	if(wlength != WLENGTH_NORMAL)
+		return TRUE
+	if(alt_intents || gripped_intents || twohands_required)
+		return TRUE
+	if(can_parry || max_blade_int)
+		return TRUE
+	if(associated_skill && associated_skill.name)
+		return TRUE
+	if(intdamage_factor != 1 || demolition_mod != 1)
+		return TRUE
+	return FALSE
+
+/obj/item/proc/get_true_durability_percent_text()
+	if(!max_integrity)
+		return null
+	var/percent = round(((obj_integrity / max_integrity) * 100), 1)
+	return "[percent]% ([floor(obj_integrity)])"
+
+/obj/item/proc/get_hover_examine_description()
+	if(!desc)
+		return null
+	return html_encode(desc)
+
+/obj/item/proc/get_hover_examine_condition_text()
+	return null
+
+/obj/item/proc/get_hover_examine_stat_lines(mob/user, self_examine = FALSE)
+	var/list/lines = list()
+	if(minstr)
+		lines += "<b>MIN.STR:</b> [minstr]"
+	if(minstr_req)
+		lines += "<b>NO HALVING ON WIELD</b>"
+	if(force)
+		lines += "<b>FORCE:</b> [get_force_string(force)]"
+	if(gripped_intents && force_wielded)
+		lines += "<b>WIELDED FORCE:</b> [get_force_string(force_wielded)]"
+	if(wbalance)
+		var/balance_text = ""
+		if(wbalance == WBALANCE_HEAVY)
+			balance_text = "Heavy"
+		if(wbalance == WBALANCE_SWIFT)
+			balance_text = "Swift"
+		if(balance_text)
+			lines += "<b>BALANCE:</b> [balance_text]"
+	if(wlength != WLENGTH_NORMAL)
+		var/length_text = ""
+		switch(wlength)
+			if(WLENGTH_SHORT)
+				length_text = "Short"
+			if(WLENGTH_LONG)
+				length_text = "Long"
+			if(WLENGTH_GREAT)
+				length_text = "Great"
+		if(length_text)
+			lines += "<b>LENGTH:</b> [length_text]"
+	if(alt_intents)
+		lines += "<b>ALT-GRIP:</b> Right click while in hand"
+	var/shaft_text = get_blade_dulling_text(src, verbose = TRUE)
+	if(shaft_text)
+		lines += "<b>SHAFT:</b> [html_encode(shaft_text)]"
+	if(gripped_intents)
+		lines += "<b>TWO-HANDED</b>"
+	if(twohands_required)
+		lines += "<b>BULKY</b>"
+	if(can_parry)
+		lines += "<b>DEFENSE:</b> [wdefense_dynamic]"
+	if(max_blade_int)
+		var/blade_percent = round(((blade_int / max_blade_int) * 100), 1)
+		lines += "<b>SHARPNESS:</b> [blade_percent]% ([blade_int])"
+	if(associated_skill && associated_skill.name)
+		lines += "<b>SKILL:</b> [html_encode(associated_skill.name)]"
+	if(intdamage_factor != 1 && force >= 5)
+		lines += "<b>INTEGRITY DAMAGE:</b> [intdamage_factor * 100]%"
+	if(demolition_mod != 1 && force >= 5)
+		lines += "<b>ANTI-OBJECT MOD:</b> [demolition_mod * 100]%"
+	if(self_examine)
+		var/true_durability = get_true_durability_percent_text()
+		if(true_durability)
+			lines += "<b>Durability:</b> [true_durability]"
+	return lines
+
+/obj/item/proc/get_hover_examine_html(mob/user, self_examine = FALSE)
+	var/list/sections = list()
+	var/description_text = get_hover_examine_description()
+	if(description_text)
+		sections += description_text
+	var/list/stat_lines = get_hover_examine_stat_lines(user, self_examine)
+	if(length(stat_lines))
+		sections += stat_lines.Join("<br>")
+	if(original_name && original_name != name)
+		sections += "<font color='#888888'>Originally: [html_encode(original_name)]</font>"
+	return sections.Join("<br>")
 
 
 /obj/item/interact(mob/user)
@@ -837,7 +950,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			var/oldy = pixel_y
 			pixel_y = pixel_y+5
 			animate(src, pixel_y = oldy, time = 0.5)
-	if(altgripped || wielded)
+	if(altgripped)
+		if(isaltgripsharp == FALSE)
+			sharpness = IS_SHARP
+		ungrip(user,FALSE)
+	else if(wielded)
 		ungrip(user, FALSE)
 	item_flags &= ~IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
@@ -895,7 +1012,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	user.update_equipment_speed_mods()
 
 	if(!user.is_holding(src))
-		if(altgripped || wielded)
+		if(altgripped)
+			if(isaltgripsharp == FALSE)
+				sharpness = IS_SHARP
+			ungrip(user,FALSE)
+		else if(wielded)
 			ungrip(user, FALSE)
 	if(twohands_required)
 		if(slot == ITEM_SLOT_HANDS)
@@ -1476,6 +1597,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(altgripped)
 		altgripped = FALSE
 		wielded = FALSE
+		if(isaltgripsharp == FALSE)
+			sharpness = IS_SHARP
 		if(force_wielded)
 			update_force_dynamic()
 		wdefense_dynamic = wdefense
@@ -1505,7 +1628,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 	altgripped = TRUE
 	update_transform()
-	to_chat(user, span_notice("I wield [src] with an alternate grip"))
+	to_chat(user, span_notice("I wield [src] with an alternate grip."))
+	playsound(loc, pick('sound/combat/weaponr1.ogg','sound/combat/weaponr2.ogg'), 100, TRUE)
 	if(user.get_active_held_item() == src)
 		if(alt_intents)
 			user.update_a_intents()
@@ -1514,6 +1638,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 				update_force_dynamic()
 			wdefense_dynamic = (wdefense + wdefense_wbonus)
 			user.update_inv_hands()
+			if(isaltgripsharp == TRUE)
+				return
+			sharpness = IS_BLUNT
 
 /obj/item/proc/wield(mob/living/carbon/user, show_message = TRUE)
 	if(wielded)
@@ -1580,6 +1707,70 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			str += "NO DEFENSE"
 	return str
 
+/obj/item/proc/temp_to_cold_tier(temp)
+	if(isnull(temp))
+		return "None"
+
+	if(temp < BODYTEMP_COLD_LEVEL_ONE_MAX)
+		return "<font color='#023E8A'>Very Cold</font>"
+	if(temp < BODYTEMP_NORMAL_MIN)
+		return "<font color='#99e6ff'>Cold</font>"
+
+	return "None"
+
+/obj/item/proc/temp_to_heat_tier(temp)
+	if(isnull(temp))
+		return "None"
+
+	if(temp > BODYTEMP_HEAT_LEVEL_ONE_MAX)
+		return "<font color='#DC143C?'>Very Hot</font>"
+	if(temp > BODYTEMP_NORMAL_MAX)
+		return "<font color='#ffff00'>Hot</font>"
+
+	return "None"
+
+/obj/item/proc/thermal_flags_to_zone_text(flags)
+	if(!flags)
+		return "None"
+
+	var/list/parts = list()
+
+	if(flags & HEAD) parts += "Head"
+	if(flags & CHEST) parts += "Chest"
+	if(flags & GROIN) parts += "Groin"
+	if(flags & ARMS) parts += "Arms"
+	if(flags & LEGS) parts += "Legs"
+	if(flags & HANDS) parts += "Hands"
+	if(flags & FEET) parts += "Feet"
+
+	if(!length(parts))
+		return "Unknown"
+
+	return english_list(parts)
+/obj/item/clothing/proc/thermal_examine_text()
+	var/list/out = list()
+
+	// --- Cold ---
+	if(src.cold_protection && src.min_cold_protection_temperature)
+		var/tier = temp_to_cold_tier(src.min_cold_protection_temperature)
+		var/covers = thermal_flags_to_zone_text(src.cold_protection)
+
+		out += "<b>COLD RESISTANCE:</b> [tier]"
+		out += " | Insulates: [covers]"
+
+	// --- Heat ---
+	if(src.heat_protection && src.max_heat_protection_temperature)
+		var/tier = temp_to_heat_tier(src.max_heat_protection_temperature)
+		var/covers = thermal_flags_to_zone_text(src.heat_protection)
+
+		out += "<b>HEAT RESISTANCE:</b> [tier]"
+		out += " | Insulates: [covers]"
+
+	if(!length(out))
+		return null
+
+	return "<br><b><u>THERMAL RESISTANCE:</u></b><br>" + jointext(out, "<br>")
+
 /obj/item/obj_break(damage_flag)
 	..()
 
@@ -1596,6 +1787,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/obj_fix(mob/user, full_repair = TRUE)
 	..()
 	update_damaged_state()
+	if (shoddy_repair) // if we've been jury-rig repaired, ensure our integrity is only restored to 60%
+		obj_integrity = max_integrity * 0.6
 
 /obj/item/obj_destruction(damage_flag)
 	if (damage_flag == "acid")
@@ -1646,6 +1839,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/list/peeledpart = body_parts_covered2organ_names(coveragezone, precise = TRUE)
 
 		if(peel_count < peel_goal)
+			if(last_peel_stack_time == world.time)
+				return
+			last_peel_stack_time = world.time
 			peel_count++
 
 		if(peel_count >= peel_goal)
@@ -1754,4 +1950,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/update_force_dynamic()
 	force_dynamic = (wielded ? force_wielded : force)
+
+/obj/item/proc/has_customized_identity()
+	if(renamedByPlayer)
+		return TRUE
+	if(original_name && original_name != name)
+		return TRUE
+	if(desc != initial(desc))
+		return TRUE
+	return FALSE
 

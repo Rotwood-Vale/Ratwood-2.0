@@ -204,6 +204,9 @@
 							'sound/items/jinglebell4.ogg',\
 							'sound/items/jinglebell5.ogg',\
 							'sound/items/jinglebell6.ogg')
+#define SFX_CBJINGLE list('sound/items/cbjingle1.ogg',\
+							'sound/items/cbjingle2.ogg',\
+							'sound/items/cbjingle3.ogg')
 
 #define INTERACTION_SOUND_RANGE_MODIFIER 0
 #define EQUIP_SOUND_VOLUME 100

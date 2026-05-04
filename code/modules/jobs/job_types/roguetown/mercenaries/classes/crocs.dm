@@ -30,7 +30,6 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/traps = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
@@ -145,7 +144,6 @@
 		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/traps = SKILL_LEVEL_EXPERT,
 	)
 	
 /datum/outfit/job/roguetown/mercenary/crocsass/pre_equip(mob/living/carbon/human/H)
@@ -153,7 +151,7 @@
 	has_loadout = TRUE
 	shirt = /obj/item/clothing/suit/roguetown/shirt/shadowshirt/elflock
 	armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/shadowrobe
-	cloak = /obj/item/clothing/cloak/half/shadowcloak
+	cloak = /obj/item/clothing/cloak/shadowcloak
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless/shadowgloves/elflock
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 	mask = /obj/item/clothing/mask/rogue/shepherd/shadowmask/delf

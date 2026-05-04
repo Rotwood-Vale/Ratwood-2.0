@@ -772,10 +772,10 @@
 /area/rogue/under/tomb/indoors/royal)
 "GY" = (
 /obj/machinery/light/rogue/wallfire/candle/weak/l,
+/mob/living/carbon/human/species/skeleton/npc/hardspread,
 /turf/open/floor/rogue/carpet/lord/left{
 	dir = 1
 	},
-/mob/living/carbon/human/species/skeleton/npc/hardspread,
 /area/rogue/under/tomb/indoors/royal)
 "He" = (
 /obj/structure/closet/crate/chest/crate,

@@ -477,7 +477,23 @@
 
 	msg_stage++
 
+//---- Feint
+/datum/status_effect/debuff/feintcd
+	id = "feintcd"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/feintcd
+	duration = 15 SECONDS
 
+/datum/status_effect/debuff/feintcd/on_creation(mob/living/new_owner, new_dur)
+	if(new_dur)
+		duration = new_dur
+	return ..()
+
+/atom/movable/screen/alert/status_effect/debuff/feintcd
+	name = "Feint Cooldown"
+	desc = "I used it. I must wait, or risk a lower chance of success."
+	icon_state = "feintcd"
+
+//---- Bait
 /datum/status_effect/debuff/baited
 	id = "bait"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/baited
@@ -485,7 +501,7 @@
 
 /atom/movable/screen/alert/status_effect/debuff/baited
 	name = "Baited"
-	desc = "I fell for it. I'm exposed. I won't fall for it again. For now."
+	desc = "I won't fall for it again, for now."
 	icon_state = "bait"
 
 /atom/movable/screen/alert/status_effect/debuff/baitedcd
@@ -498,12 +514,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/baitedcd
 	duration = 30 SECONDS
 
-/atom/movable/screen/alert/status_effect/debuff/feintcd
-	name = "Feint Cooldown"
-	desc = "I used it. I must wait, or risk a lower chance of success."
-	icon_state = "feintcd"
-
-
+//---- Clash
 /atom/movable/screen/alert/status_effect/debuff/clashcd
 	name = "Guard Cooldown"
 	desc = "I used it. I must wait."
@@ -514,6 +525,12 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/clashcd
 	duration = 30 SECONDS
 
+/atom/movable/screen/alert/status_effect/debuff/clashcd
+	name = "Riposte / Guard Cooldown"
+	desc = "I used it. I must wait."
+	icon_state = "guardcd"
+
+//---- Exposed
 /atom/movable/screen/alert/status_effect/debuff/exposed
 	name = "Exposed"
 	desc = "My defenses are exposed. I can be hit through my parry and dodge!"
@@ -523,22 +540,21 @@
 	id = "nofeint"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/exposed
 	duration = 10 SECONDS
+	mob_effect_icon = 'icons/mob/mob_effects.dmi'
+	mob_effect_icon_state = "eff_exposed"
+	mob_effect_layer = MOB_EFFECT_LAYER_EXPOSED
 
 /datum/status_effect/debuff/exposed/on_creation(mob/living/new_owner, new_dur)
 	if(new_dur)
 		duration = new_dur
 	return ..()
 
-/datum/status_effect/debuff/feintcd
-	id = "feintcd"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/feintcd
-	duration = 30 SECONDS
-
-//Unused
+//---- Riposted
 /datum/status_effect/debuff/riposted
 	id = "riposted"
 	duration = 3 SECONDS
 
+//---- Click cd
 /datum/status_effect/debuff/clickcd
 	id = "clickcd"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/clickcd
@@ -554,6 +570,33 @@
 	name = "Action Delayed"
 	desc = "I cannot take another action."
 	icon_state = "clickcd"
+
+//---- Strike cd
+/datum/status_effect/debuff/strikecd
+	id = "strikecd"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/precisestrikecd
+	duration = 30 SECONDS
+
+/atom/movable/screen/alert/status_effect/debuff/precisestrikecd
+	name = "Precise Strike Cooldown"
+	desc = "I used it. I must wait."
+	icon_state = "strikecd"
+
+//---- Special CD
+/datum/status_effect/debuff/specialcd
+	id = "specialcd"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/specialcd
+	duration = 30 SECONDS
+
+/datum/status_effect/debuff/specialcd/on_creation(mob/living/new_owner, new_dur)
+	if(new_dur)
+		duration = new_dur
+	return ..()
+
+/atom/movable/screen/alert/status_effect/debuff/specialcd
+	name = "Precise Strike Cooldown"
+	desc = "I used it. I must wait."
+	icon_state = "strikecd"
 
 // Magical mishaps
 // Victim loses common, their default language, or a random language (in order of preference) for the duration
@@ -857,228 +900,7 @@
 	owner.confused = max(owner.confused - confusion_amount, 0)
 	..()
 
-/datum/status_effect/debuff/baited
-	id = "bait"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/baited
-	duration = 20 SECONDS
-
-/atom/movable/screen/alert/status_effect/debuff/baited
-	name = "Baited"
-	desc = "I fell for it. I'm exposed. I won't fall for it again. For now."
-	icon_state = "bait"
-
-/atom/movable/screen/alert/status_effect/debuff/baitedcd
-	name = "Bait Cooldown"
-	desc = "I used it. I must wait."
-	icon_state = "baitcd"
-
-/datum/status_effect/debuff/baitcd
-	id = "baitcd"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/baitedcd
-	duration = 30 SECONDS
-
-/atom/movable/screen/alert/status_effect/debuff/feintcd
-	name = "Feint Cooldown"
-	desc = "I used it. I must wait, or risk a lower chance of success."
-	icon_state = "feintcd"
-
-
-/atom/movable/screen/alert/status_effect/debuff/clashcd
-	name = "Guard Cooldown"
-	desc = "I used it. I must wait."
-	icon_state = "guardcd"
-
-/datum/status_effect/debuff/strikecd
-	id = "strikecd"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/precisestrikecd
-	duration = 30 SECONDS
-
-/atom/movable/screen/alert/status_effect/debuff/precisestrikecd
-	name = "Precise Strike Cooldown"
-	desc = "I used it. I must wait."
-	icon_state = "strikecd"
-
-/datum/status_effect/debuff/clashcd
-	id = "clashcd"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/clashcd
-	duration = 30 SECONDS
-
-/datum/status_effect/debuff/specialcd
-	id = "specialcd"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/specialcd
-	duration = 30 SECONDS
-
-/datum/status_effect/debuff/specialcd/on_creation(mob/living/new_owner, new_dur)
-	if(new_dur)
-		duration = new_dur
-	return ..()
-
-/atom/movable/screen/alert/status_effect/debuff/specialcd
-	name = "Precise Strike Cooldown"
-	desc = "I used it. I must wait."
-	icon_state = "strikecd"
-
-/atom/movable/screen/alert/status_effect/debuff/exposed
-	name = "Exposed"
-	desc = "My defenses are exposed. I can be hit through my parry and dodge!"
-	icon_state = "exposed"
-
-/datum/status_effect/debuff/exposed
-	id = "nofeint"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/exposed
-	duration = 10 SECONDS
-	mob_effect_icon = 'icons/mob/mob_effects.dmi'
-	mob_effect_icon_state = "eff_exposed"
-	mob_effect_layer = MOB_EFFECT_LAYER_EXPOSED
-
-/datum/status_effect/debuff/exposed/on_creation(mob/living/new_owner, new_dur)
-	if(new_dur)
-		duration = new_dur
-	return ..()
-
-/datum/status_effect/debuff/feintcd
-	id = "feintcd"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/feintcd
-	duration = 15 SECONDS
-
-/datum/status_effect/debuff/feintcd/on_creation(mob/living/new_owner, new_dur)
-	if(new_dur)
-		duration = new_dur
-	return ..()
-
-//Unused
-/datum/status_effect/debuff/riposted
-	id = "riposted"
-	duration = 3 SECONDS
-
-/datum/status_effect/debuff/clickcd
-	id = "clickcd"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/clickcd
-	duration = 3 SECONDS
-
-/datum/status_effect/debuff/clickcd/on_creation(mob/living/new_owner, new_dur)
-	if(new_dur)
-		duration = new_dur
-	new_owner.changeNext_move(duration)
-	return ..()
-
-/atom/movable/screen/alert/status_effect/debuff/clickcd
-	name = "Action Delayed"
-	desc = "I cannot take another action."
-	icon_state = "clickcd"
-
-/datum/status_effect/debuff/crit_resistance_cd
-
-/datum/status_effect/debuff/baited
-	id = "bait"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/baited
-	duration = 20 SECONDS
-
-/atom/movable/screen/alert/status_effect/debuff/baited
-	name = "Baited"
-	desc = "I fell for it. I'm exposed. I won't fall for it again. For now."
-	icon_state = "bait"
-
-/atom/movable/screen/alert/status_effect/debuff/baitedcd
-	name = "Bait Cooldown"
-	desc = "I used it. I must wait."
-	icon_state = "baitcd"
-
-/datum/status_effect/debuff/baitcd
-	id = "baitcd"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/baitedcd
-	duration = 30 SECONDS
-
-/atom/movable/screen/alert/status_effect/debuff/feintcd
-	name = "Feint Cool down"
-	desc = "I used it. I must wait, or risk a lower chance of success."
-	icon_state = "feintcd"
-
-
-/atom/movable/screen/alert/status_effect/debuff/clashcd
-	name = "Riposte / Guard Cooldown"
-	desc = "I used it. I must wait."
-	icon_state = "guardcd"
-
-/datum/status_effect/debuff/strikecd
-	id = "strikecd"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/precisestrikecd
-	duration = 30 SECONDS
-
-/atom/movable/screen/alert/status_effect/debuff/precisestrikecd
-	name = "Precise Strike Cooldown"
-	desc = "I used it. I must wait."
-	icon_state = "strikecd"
-
-/datum/status_effect/debuff/clashcd
-	id = "clashcd"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/clashcd
-	duration = 30 SECONDS
-
-/datum/status_effect/debuff/specialcd
-	id = "specialcd"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/specialcd
-	duration = 30 SECONDS
-
-/datum/status_effect/debuff/specialcd/on_creation(mob/living/new_owner, new_dur)
-	if(new_dur)
-		duration = new_dur
-	return ..()
-
-/atom/movable/screen/alert/status_effect/debuff/specialcd
-	name = "Precise Strike Cooldown"
-	desc = "I used it. I must wait."
-	icon_state = "strikecd"
-
-/atom/movable/screen/alert/status_effect/debuff/exposed
-	name = "Exposed"
-	desc = "My defenses are exposed. I can be hit through my parry and dodge!"
-	icon_state = "exposed"
-
-/datum/status_effect/debuff/exposed
-	id = "nofeint"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/exposed
-	duration = 10 SECONDS
-	mob_effect_icon = 'icons/mob/mob_effects.dmi'
-	mob_effect_icon_state = "eff_exposed"
-	mob_effect_layer = MOB_EFFECT_LAYER_EXPOSED
-
-/datum/status_effect/debuff/exposed/on_creation(mob/living/new_owner, new_dur)
-	if(new_dur)
-		duration = new_dur
-	return ..()
-
-/datum/status_effect/debuff/feintcd
-	id = "feintcd"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/feintcd
-	duration = 15 SECONDS
-
-/datum/status_effect/debuff/feintcd/on_creation(mob/living/new_owner, new_dur)
-	if(new_dur)
-		duration = new_dur
-	return ..()
-
-//Unused
-/datum/status_effect/debuff/riposted
-	id = "riposted"
-	duration = 3 SECONDS
-
-/datum/status_effect/debuff/clickcd
-	id = "clickcd"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/clickcd
-	duration = 3 SECONDS
-
-/datum/status_effect/debuff/clickcd/on_creation(mob/living/new_owner, new_dur)
-	if(new_dur)
-		duration = new_dur
-	new_owner.changeNext_move(duration)
-	return ..()
-
-/atom/movable/screen/alert/status_effect/debuff/clickcd
-	name = "Action Delayed"
-	desc = "I cannot take another action."
-	icon_state = "clickcd"
-
+//---- Crit resistance cd
 /datum/status_effect/debuff/crit_resistance_cd
 	id = "crit_resist_cd"
 	duration = CRIT_RESISTANCE_TIMER_CD

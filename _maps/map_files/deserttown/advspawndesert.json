@@ -1,0 +1,6 @@
+{
+	"map_name": "Adventurer's Dream",
+	"map_path": "map_files/deserttown",
+	"map_file": "advspawndesert.dmm",
+	"traits": [{"Name": "Adventurer's Dream"}]
+}

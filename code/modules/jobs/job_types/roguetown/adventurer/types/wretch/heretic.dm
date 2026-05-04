@@ -8,11 +8,11 @@
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_RITUALIST, TRAIT_HEAVYARMOR)
 	maximum_possible_slots = 2 //Ppl dont like heavy armor antags.
-	// Heretic is by far the best class with access to rituals (as long as they play a god with ritual), holy and heavy armor. So they keep 7 points.
+	// same stats as templar as you are essentially an antagonist aligned templar with miracles and armor
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_CON = 2,
-		STATKEY_WIL = 1
+		STATKEY_WIL = 3
 	)
 	subclass_skills = list(
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
@@ -54,9 +54,9 @@
 			if("Mace")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-					beltr = /obj/item/rogueweapon/mace/goden/psymace/old
+					r_hand = /obj/item/rogueweapon/mace/goden/psy/old
 				else
-					beltr = /obj/item/rogueweapon/mace/steel
+					r_hand = /obj/item/rogueweapon/mace/steel
 			if("Flail")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
@@ -77,7 +77,7 @@
 				else
 					r_hand = /obj/item/rogueweapon/spear/billhook
 		var/datum/devotion/C = new /datum/devotion(H, H.patron)
-		C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_4)	//Minor regen, can level up to T4.
+		C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)	//Minor regen, starts maxed out.
 		wretch_select_bounty(H)
 
 	// You can convert those the church has shunned.
@@ -89,13 +89,13 @@
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
 			H.mind.current.faction += "[H.name]_faction"
 		ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
-	mask = /obj/item/clothing/mask/rogue/facemask/steel
-	neck = /obj/item/clothing/neck/roguetown/gorget
-	pants = /obj/item/clothing/under/roguetown/chainlegs
-	backl = /obj/item/storage/backpack/rogue/satchel
 	backr = /obj/item/rogueweapon/shield/tower/metal
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/rogueweapon/huntingknife
+	if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+		backl = /obj/item/storage/backpack/rogue/satchel/otavan
+	else
+		backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/ritechalk = 1,
@@ -120,11 +120,11 @@
 			H.cmode_music = 'sound/music/combat_graggar.ogg'
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/guard, SLOT_HEAD, TRUE)
 		if(/datum/patron/divine/astrata)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/astrata, SLOT_WRISTS, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/astrata, SLOT_RING, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gold, SLOT_HEAD, TRUE)
 			H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
 		if(/datum/patron/divine/abyssor)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/abyssor, SLOT_WRISTS, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/abyssor, SLOT_RING, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy, SLOT_HEAD, TRUE)
 			H.adjust_skillrank(/datum/skill/labor/fishing, 2, TRUE)
 			ADD_TRAIT(H, TRAIT_WATERBREATHING, TRAIT_GENERIC)
@@ -135,39 +135,39 @@
 			H.adjust_skillrank(/datum/skill/misc/lockpicking, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/music, 1, TRUE)
 		if(/datum/patron/divine/dendor)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/dendor, SLOT_WRISTS, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/dendor, SLOT_RING, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/volfplate, SLOT_HEAD, TRUE)
 			H.cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg'
 			H.adjust_skillrank(/datum/skill/labor/farming, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
 		if(/datum/patron/divine/necra)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/necra, SLOT_WRISTS, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/necra, SLOT_RING, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/guard, SLOT_HEAD, TRUE)
 			ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_SOUL_EXAMINE, TRAIT_GENERIC)
 		if(/datum/patron/divine/pestra)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/pestra, SLOT_WRISTS, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/pestra, SLOT_RING, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/sallet/visored, SLOT_HEAD, TRUE)
 			ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
-			H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 2, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 2, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 3, TRUE)
 		if(/datum/patron/divine/eora)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/eora, SLOT_WRISTS, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/eora, SLOT_RING, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull, SLOT_HEAD, TRUE)
 			ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_EMPATH, TRAIT_GENERIC)
 		if(/datum/patron/divine/noc)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/noc, SLOT_WRISTS, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/noc, SLOT_RING, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/knight, SLOT_HEAD, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE) // Really good at reading... does this really do anything? No. BUT it's soulful.
 			H.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 		if(/datum/patron/divine/ravox)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/ravox, SLOT_WRISTS, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/ravox, SLOT_RING, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/bucket, SLOT_HEAD, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
 		if(/datum/patron/divine/malum)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/malum, SLOT_WRISTS, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/malum, SLOT_RING, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/sheriff, SLOT_HEAD, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/blacksmithing, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/armorsmithing, 1, TRUE)
@@ -175,29 +175,52 @@
 			H.adjust_skillrank(/datum/skill/craft/smelting, 1, TRUE)
 			ADD_TRAIT(H, TRAIT_SMITHING_EXPERT, TRAIT_GENERIC)
 		if(/datum/patron/old_god)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/silver, SLOT_WRISTS, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ornate, SLOT_ARMOR, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq, SLOT_SHIRT, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/chain/psydon, SLOT_GLOVES, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/psydonboots, SLOT_SHOES, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/psydontabard, SLOT_CLOAK, TRUE)
-			var/helmets = list("Barbute", "Sallet", "Armet", "Bucket Helm")
-			var/helmet_choice = input(H,"Choose your PSYDONIAN helmet.", "TAKE UP PSYDON'S HELMS") as anything in helmets
-			switch(helmet_choice)
-				if("Barbute")
-					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psydonbarbute, SLOT_HEAD, TRUE)
-				if("Sallet")
-					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psysallet, SLOT_HEAD, TRUE)
-				if("Armet")
-					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm, SLOT_HEAD, TRUE)
-				if("Bucket Helm")
-					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psybucket, SLOT_HEAD, TRUE)
-			H.change_stat(STATKEY_WIL, 2) //ENDVRE
+			H.change_stat(STATKEY_WIL, 2) //ENDVRE. You give up useful miracles, rites and miracle-healing from other Heretics, so you'll need this.
+			var/heavypsyfashion = list("Traditionalist", "Orthodoxist", "Reformist") //Only outfits differ.
+			var/heavypsyfashion_choice = input(H, "What is your faith in HIM like?", "HE LYVES, HE ENDURES, HE DIES") as anything in heavypsyfashion
+			switch(heavypsyfashion_choice)
+				if("Traditionalist") //You look like any other Heretic.
+					to_chat(H, span_warning("PSYDON LYVES, but HE sacrificed HIMSELF for us. We do not hear HIM, nor does HE hear us, but all roads lead to HIM, and back to us. One day, PSYDON will return and Creation will be at peace again, turning it into true PARADYSE. The Orthodoxy and the Holy See have twisted the scriptures, the tales. The Ten wish to turn the world to their own image, unwilling to help wake our LORD. Meanwhile, the Orthodoxists lie in HIS name, straying from the path of peace and filling the world with pain that HE, through all of Creation, feels, delaying HIS awakening. "))
+					H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/silver, SLOT_RING, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/bucket, SLOT_HEAD, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/cloak/templar/psydon, SLOT_CLOAK, TRUE)
+				if("Orthodoxist") //You look like an Orthodoxist-Adjudicator. The best set mechanically, but a high risk of getting attacked by your fellow Wretches or Bandits.
+					to_chat(H, span_warning("Once you were a part of the feared and loathed Otavan Inquisition, now you hide from them, still clad in their armour. Nostalgia, spite, desperation?... You just can't let go of this uniform."))
+					H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/silver, SLOT_RING, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ornate, SLOT_ARMOR, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq, SLOT_SHIRT, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/chain/psydon, SLOT_GLOVES, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/psydonboots, SLOT_SHOES, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/cloak/psydontabard, SLOT_CLOAK, TRUE)
+					var/helmets = list("Barbute", "Sallet", "Armet", "Bucket Helm")
+					var/helmet_choice = input(H,"Choose your PSYDONIAN helmet.", "TAKE UP PSYDON'S HELMS") as anything in helmets
+					switch(helmet_choice)
+						if("Barbute")
+							H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psydonbarbute, SLOT_HEAD, TRUE)
+						if("Sallet")
+							H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psysallet, SLOT_HEAD, TRUE)
+						if("Armet")
+							H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm, SLOT_HEAD, TRUE)
+						if("Bucket Helm")
+							H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psybucket, SLOT_HEAD, TRUE)
+				if("Reformist") //You look like as if somebody dressed Freifechter into a lot of armour. Better chestpiece, but worse gloves and boots, and worse padded gambeson.
+					to_chat(H, span_warning ("PSYDON fell after his battle against the great evil. But HE LYVES through us, in our memory and our bleeding hearts. As long as we LYVE, so shall HE, through us. All shall be as HE deemed, in HIS name, as HE did."))
+					H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/reform, SLOT_RING, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet, SLOT_HEAD, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/fluted, SLOT_ARMOR, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter, SLOT_SHIRT, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic, SLOT_PANTS, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/angle, SLOT_GLOVES, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short, SLOT_SHOES, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/cloak/reformtabard, SLOT_CLOAK, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/half, SLOT_ARMOR, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk, SLOT_SHIRT, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/chain, SLOT_GLOVES, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/wrists/roguetown/bracers, SLOT_WRISTS, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/armor, SLOT_SHOES, TRUE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/facemask/steel, SLOT_WEAR_MASK, TRUE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/gorget, SLOT_NECK, TRUE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/chainlegs, SLOT_PANTS, TRUE)
 
 /datum/advclass/wretch/heretic/spy
 	name = "Heretic Spy"
@@ -227,7 +250,6 @@
 		/datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/traps = SKILL_LEVEL_JOURNEYMAN,
 	)
 	extra_context = "This subclass gain the Wound Heal miracle and the Convert Heretic spell."
 
@@ -237,12 +259,12 @@
 
 /datum/outfit/job/roguetown/wretch/hereticspy/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("Nimble of dagger and foot both, you are the shadowy herald of the cabal. They will not see you coming."))
-	cloak = /obj/item/clothing/cloak/raincloak/mortus
-	backl = /obj/item/storage/backpack/rogue/satchel
 	belt = /obj/item/storage/belt/rogue/leather
 	neck = /obj/item/clothing/neck/roguetown/gorget
-	mask = /obj/item/clothing/mask/rogue/ragmask/black
+	if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+		backl = /obj/item/storage/backpack/rogue/satchel/otavan
+	else
+		backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/lockpickring/mundane = 1,
@@ -252,11 +274,12 @@
 		/obj/item/ritechalk = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
+	to_chat(H, span_warning("Nimble of dagger and foot both, you are the shadowy herald of the cabal. They will not see you coming."))
 	H.cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
 	if(H.mind)
 		if(H.mind.current)
 			H.mind.current.faction += "[H.name]_faction"
-		var/weapons = list("Rapier","Dagger", "Bow", "Crossbow")
+		var/weapons = list("Rapier","Dagger", "Bow", "Crossbow", "Slurbow")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -276,6 +299,10 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_JOURNEYMAN, TRUE) //have to specifically go into bows/crossbows unlike outlaw
 				beltr = /obj/item/quiver/bolts
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+			if("Slurbow") //If Knaves can have one, then so can you. Normal crossbow is a more optimal choice for Heretic Spy.
+				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				beltr = /obj/item/quiver/bolts
+				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
 		var/datum/devotion/C = new /datum/devotion(H, H.patron)
 		C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_4)	//Minor regen, can level up to T4.
 		wretch_select_bounty(H)
@@ -302,10 +329,10 @@
 		if(/datum/patron/inhumen/graggar)
 			H.cmode_music = 'sound/music/combat_graggar.ogg'
 		if(/datum/patron/divine/astrata)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/astrata, SLOT_WRISTS, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/astrata, SLOT_RING, TRUE)
 			H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
 		if(/datum/patron/divine/abyssor)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/abyssor, SLOT_WRISTS, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/abyssor, SLOT_RING, TRUE)
 			H.adjust_skillrank(/datum/skill/labor/fishing, 2, TRUE)
 			ADD_TRAIT(H, TRAIT_WATERBREATHING, TRAIT_GENERIC)
 		if(/datum/patron/divine/xylix)
@@ -314,46 +341,72 @@
 			H.adjust_skillrank(/datum/skill/misc/lockpicking, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/music, 1, TRUE)
 		if(/datum/patron/divine/dendor)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/dendor, SLOT_WRISTS, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/dendor, SLOT_RING, TRUE)
 			H.cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg'
 			H.adjust_skillrank(/datum/skill/labor/farming, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
 		if(/datum/patron/divine/necra)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/necra, SLOT_WRISTS, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/necra, SLOT_RING, TRUE)
 			ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_SOUL_EXAMINE, TRAIT_GENERIC)
 		if(/datum/patron/divine/pestra)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/pestra, SLOT_WRISTS, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/pestra, SLOT_RING, TRUE)
 			ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
-			H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 2, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 2, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 3, TRUE)
 		if(/datum/patron/divine/eora)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/eora, SLOT_WRISTS, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/eora, SLOT_RING, TRUE)
 			ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_EMPATH, TRAIT_GENERIC)
 		if(/datum/patron/divine/noc)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/noc, SLOT_WRISTS, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/noc, SLOT_RING, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE) // Really good at reading... does this really do anything? No. BUT it's soulful.
 			H.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 		if(/datum/patron/divine/ravox)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/ravox, SLOT_WRISTS, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/ravox, SLOT_RING, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
 		if(/datum/patron/divine/malum)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/malum, SLOT_WRISTS, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/malum, SLOT_RING, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/blacksmithing, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/armorsmithing, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/smelting, 1, TRUE)
 		if(/datum/patron/old_god)
-			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/silver, SLOT_WRISTS, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/roguehood/psydon/confessor, SLOT_HEAD, TRUE) // You do not get the NVGs. Explode.
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/confessor, SLOT_ARMOR, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq, SLOT_SHIRT, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/otavan/psygloves, SLOT_GLOVES, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/psydonboots, SLOT_SHOES, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan, SLOT_PANTS, TRUE)
-			H.change_stat(STATKEY_WIL, 2) //ENDVRE
+			H.change_stat(STATKEY_WIL, 2) //ENDVRE. You give up useful miracles, rites and miracle-healing from other Heretics, so you'll need this.
+			var/lightpsyfashion = list("Traditionalist", "Orthodoxist", "Reformist")
+			var/lightpsyfashion_choice = input(H, "What is your faith in HIM like?", "HE LYVES, HE ENDURES, HE DIES") as anything in lightpsyfashion
+			switch(lightpsyfashion_choice)
+				if("Traditionalist") //You look like any other Heretic Spy.
+					to_chat(H, span_warning("The Otavan Orthodoxy has distorted the faith beyond recognition, they worship not HIM, but mere eidolons and idols of TRUE DIVINITY. Return to tradition, return to form."))
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants, SLOT_PANTS, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat, SLOT_ARMOR, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson, SLOT_SHIRT, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/fingerless_leather, SLOT_GLOVES, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/leather/reinforced, SLOT_SHOES, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/silver, SLOT_RING, TRUE)
+				if("Orthodoxist") //You look like an Orthodoxist-Confessor. The best set mechanically, but a high risk of getting attacked by your fellow Wretches or Bandits.
+					to_chat(H, span_warning("Once you were a part of the feared and loathed Otavan Inquisition, now you hide from them, still clad in their robes. Nostalgia, spite, desperation?... You just can't let go of this uniform."))
+					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/roguehood/psydon/confessor, SLOT_HEAD, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/confessor, SLOT_ARMOR, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq, SLOT_SHIRT, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/otavan/psygloves, SLOT_GLOVES, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/psydonboots, SLOT_SHOES, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan, SLOT_PANTS, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/silver, SLOT_RING, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/facemask/steel/confessor/lensed, SLOT_WEAR_MASK, TRUE) //Dark vision but bad. Still better than being entirely blind in the dark.
+					//Perceptive players will see past your disguise: you lack the beltpack and the silver signet ring, and your gas mask is lensed from get-go.
+				if("Reformist") //You look like a Reformist Freifechter.
+					to_chat(H, span_warning("God is dead, but this world HE left is beautiful and worth of loving. Don't let the butchers from Otava tell you otherwise."))
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/half/fencer, SLOT_ARMOR, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter, SLOT_SHIRT, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/fingerless_leather, SLOT_GLOVES, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short, SLOT_SHOES, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic, SLOT_PANTS, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/reform, SLOT_RING, TRUE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/cloak/raincloak/mortus, SLOT_CLOAK, TRUE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/ragmask/black, SLOT_WEAR_MASK, TRUE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants, SLOT_PANTS, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants, SLOT_PANTS, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat, SLOT_ARMOR, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson, SLOT_SHIRT, TRUE)
@@ -363,7 +416,7 @@
 
 /obj/effect/proc_holder/spell/invoked/convert_heretic
 	name = "Convert The Downtrodden"
-	desc = "Convert an soul excommunicated, cursed, or forced onto apotasy to your cause. Requires a willing participant, and takes a long time to cast."
+	desc = "Convert a soul who is excommunicated, cursed, or forced into apostasy to your cause. Requires a willing participant, and takes a long time to cast."
 	invocations = list("Show this lost sheep the righteous path.")
 	invocation_type = "whisper"
 	sound = 'sound/magic/bless.ogg'

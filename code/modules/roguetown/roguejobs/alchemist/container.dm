@@ -103,6 +103,7 @@
 	icon_state = "beer_2"
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 50)
 	desc = "A bottle that contains a generic housebrewed small-beer. It has an improvised corkseal made of hardened clay."
+	fancy = TRUE
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/zagul
 	name = "Bottle of Zagul"
@@ -178,6 +179,7 @@
 	icon_state = "red_wine"
 	list_reagents = list(/datum/reagent/consumable/ethanol/wine = 50)
 	desc = "A bottle that contains a generic red-wine, likely from Zybantium. It has a red-clay cork-seal."
+	fancy = TRUE
 
 /obj/item/reagent_containers/glass/bottle/rogue/wine/sourwine
 	name = "Bottle of Grenzelhoft Sour"
@@ -192,6 +194,7 @@
 	icon_state = "otavan_red"
 	list_reagents = list(/datum/reagent/consumable/ethanol/redwine = 50)
 	desc = "A bottle with the Otavan Merchant Guild cork-seal. This one appears to be labelled as a relatively young red-wine from the coinlord state."
+	fancy = TRUE
 
 /obj/item/reagent_containers/glass/bottle/rogue/whitewine
 	name = "Bottle of Otavan White"
@@ -199,6 +202,7 @@
 	icon_state = "white_wine"
 	list_reagents = list(/datum/reagent/consumable/ethanol/whitewine = 50)
 	desc = "A bottle with the Otavan Merchant Guild cork-seal. This one appears to be labelled as a sweet wine from the colder northern regions."
+	fancy = TRUE
 
 /obj/item/reagent_containers/glass/bottle/rogue/elfred
 	name = "Bottle of Elven Red"
@@ -206,6 +210,7 @@
 	icon_state = "elven_red"
 	list_reagents = list(/datum/reagent/consumable/ethanol/elfred = 50)
 	desc = "A bottle gilded with a silver cork-seal. It appears to be labelled as an elvish red wine from Otava. Likely worth more than what an entire village makes!"
+	fancy = TRUE
 
 /obj/item/reagent_containers/glass/bottle/rogue/elfblue
 	name = "Bottle of Valmora Blue"
@@ -213,6 +218,7 @@
 	icon_state = "valmora_blue"
 	list_reagents = list(/datum/reagent/consumable/ethanol/elfblue = 50)
 	desc = "A bottle gilded with a golden cork-seal. This is the legendary Valmora Blue from the Vineyard of Valmora, headed by a sainted Dark-Elf swordsmaster. This bottle would swoon Gods over!"
+	fancy = TRUE
 
 /obj/item/reagent_containers/glass/bottle/rogue/luxwine
 	name = "Bottle of Luxintenebre"
@@ -220,6 +226,7 @@
 	icon_state = "luxwine"
 	list_reagents = list(/datum/reagent/consumable/ethanol/luxwine = 50)
 	desc = "A regal-looking bottle with an avantyne cork-seal. Faint whispers of somebody's darkest secrets can be heard coming from the bottle."
+	fancy = TRUE
 
 //AZURE DRINKS
 /obj/item/reagent_containers/glass/bottle/rogue/beer/jagdtrunk
@@ -241,7 +248,7 @@
 	icon = 'icons/obj/alcohol.dmi'
 	icon_state = "ale"
 	list_reagents = list(/datum/reagent/consumable/ethanol/rtoper = 50)
-	desc = "A bottle with the Lirvas-crest cork-seal. An especially tart cider from the petty kingdom of Lirvas. Myths say the brewers let the barrels age in the bog, which results in that especially stong flavour."
+	desc = "A bottle with the Lirvas-crest cork-seal. An especially tart cider from the petty kingdom of Lirvas. Myths say the brewers let the barrels age in the bog, which results in that especially strong flavour."
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/nred
 	name = "Bottle of Norwandine Ale"

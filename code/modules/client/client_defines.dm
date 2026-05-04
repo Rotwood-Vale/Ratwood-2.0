@@ -32,8 +32,6 @@
 		/////////
 	///Player preferences datum for the client
 	var/datum/preferences/prefs = null
-	///last turn of the controlled mob, I think this is only used by mechs?
-	var/last_turn = 0
 	///Move delay of controlled mob, related to input handling
 	var/move_delay = 0
 	///Current area of the controlled mob
@@ -149,6 +147,25 @@
 	/// Last asset send job id.
 	var/last_asset_job = 0
 	var/last_completed_asset_job = 0
+
+	/// Are we completely blocking movement input? This prevents moving and turning
+	var/movement_blocked = FALSE
+	/// Are we locking our movement input? This holds you in place so you can turn on the spot
+	var/movement_locked = FALSE
+
+	/// A rolling buffer of any keys held currently
+	var/list/keys_held = list()
+	/// The direction we WANT to move, based off our keybinds
+	/// Will be udpated to be the actual direction later on
+	var/intended_direction = NONE
+	/*
+	** These next two vars are to apply movement for keypresses and releases made while move delayed.
+	** Because discarding that input makes the game less responsive.
+	*/
+	/// On next move, add this dir to the move that would otherwise be done
+	var/next_move_dir_add
+	/// On next move, subtract this dir from the move that would otherwise be done
+	var/next_move_dir_sub
 
 /client/proc/update_weather(force)
 	if(!mob)

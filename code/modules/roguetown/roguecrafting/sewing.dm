@@ -245,6 +245,13 @@
 				/obj/item/natural/fibers = 1)
 	craftdiff = 4
 
+/datum/crafting_recipe/roguetown/sewing/woolencollar
+	name = "wool collar"
+	category = "Coifs"
+	result = list(/obj/item/clothing/neck/roguetown/collar/woolen)
+	reqs = list(/obj/item/natural/cloth = 1)
+	craftdiff = 0
+
 /datum/crafting_recipe/roguetown/sewing/gbandages
 	name = "bandages, gloved"
 	result = list(/obj/item/clothing/gloves/roguetown/bandages)
@@ -411,8 +418,15 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/pestra
-	name = "tabard, pestra"
+	name = "tabard, pestran templar"
 	result = list(/obj/item/clothing/cloak/templar/pestra)
+	reqs = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/sewing/pestran
+	name = "tabard, pestran"
+	result = list(/obj/item/clothing/cloak/templar/pestran)
 	reqs = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
@@ -484,6 +498,13 @@
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
 
+/datum/crafting_recipe/roguetown/sewing/basiceast
+	name = "simple dobo robe"
+	result = list(/obj/item/clothing/suit/roguetown/armor/basiceast)
+	reqs = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 2)
+	craftdiff = 3
+
 /datum/crafting_recipe/roguetown/sewing/jesterchest
 	name = "jester's tunick"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/jester)
@@ -541,6 +562,14 @@
 //	reqs = list(/obj/item/natural/cloth = 3,
 //				/obj/item/natural/fibers = 1)
 //	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/sewing/slitdress
+	name = "slitted dress"
+	category = "Dresses"
+	result = list(/obj/item/clothing/suit/roguetown/shirt/dress/slit)
+	reqs = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/fancyhat
 	name = "fancy hat"
@@ -886,7 +915,7 @@
 	sellprice = 30
 
 /datum/crafting_recipe/roguetown/sewing/archivist
-	name = "archivist's robes"
+	name = "scholar's robes"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/robe/archivist)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 2,

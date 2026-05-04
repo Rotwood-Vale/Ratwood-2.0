@@ -85,7 +85,7 @@
 
 /datum/supply_pack/rogue/blackmarket_diplomacy/emberwine
 	name = "Emberwine"
-	cost =	150	//formidable poison
+	cost =	120
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/emberwine)
 
 /datum/supply_pack/rogue/blackmarket_diplomacy/bomb

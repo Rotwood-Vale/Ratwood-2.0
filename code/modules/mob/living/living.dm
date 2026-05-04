@@ -114,10 +114,8 @@
 	if(now_pushing)
 		return TRUE
 
-	var/they_can_move = TRUE
 	if(isliving(M))
 		var/mob/living/L = M
-		they_can_move = L.mobility_flags & MOBILITY_MOVE
 
 		//Should stop you pushing a restrained person out of the way
 		if(L.pulledby && L.pulledby != src && L.pulledby != L && L.restrained())
@@ -134,53 +132,6 @@
 
 	if(moving_diagonally)//no mob swap during diagonal moves.
 		return TRUE
-
-	if(!M.buckled && !M.has_buckled_mobs())
-		var/mob_swap = FALSE
-		var/too_strong = (M.move_resist > move_force) //can't swap with immovable objects unless they help us
-		if(istype(M,/mob/living/simple_animal/hostile/retaliate))
-			if(!M:aggressive)
-				mob_swap = TRUE
-		if(!they_can_move) //we have to physically move them
-			if(!too_strong)
-				mob_swap = FALSE
-		else
-			//You can swap with the person you are dragging on grab intent, and restrained people in most cases
-			if(M.pulledby == src && !too_strong)
-				mob_swap = FALSE
-			else if(
-				!( HAS_TRAIT(M, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP) ) &&\
-				( (M.restrained() && !too_strong) ) &&\
-				( restrained() )
-				)
-				mob_swap = FALSE
-		if(mob_swap)
-			//switch our position with M
-			if(loc && !loc.Adjacent(M.loc))
-				return TRUE
-			now_pushing = 1
-			var/oldloc = loc
-			var/oldMloc = M.loc
-
-			var/M_passmob = (M.pass_flags & PASSMOB) // we give PASSMOB to both mobs to avoid bumping other mobs during swap.
-			var/src_passmob = (pass_flags & PASSMOB)
-			M.pass_flags |= PASSMOB
-			pass_flags |= PASSMOB
-
-			var/move_failed = FALSE
-			if(!M.Move(oldloc) || !Move(oldMloc))
-				M.forceMove(oldMloc)
-				forceMove(oldloc)
-				move_failed = TRUE
-			if(!src_passmob)
-				pass_flags &= ~PASSMOB
-			if(!M_passmob)
-				M.pass_flags &= ~PASSMOB
-
-			now_pushing = 0
-
-			if(!move_failed)
-				return TRUE
 
 	if(m_intent == MOVE_INTENT_RUN && dir == get_dir(src, M))
 		if(isliving(M))
@@ -1162,7 +1113,7 @@
 	set name = "Yield"
 	set category = "IC"
 	set hidden = 1
-	if(surrendering || stat)
+	if(surrendering || stat == DEAD)
 		return
 	if(!instant)
 		if(alert(src, "Do you yield?", "SURRENDER", "Yes", "No") == "No")
@@ -1664,7 +1615,7 @@
  */
 
 /mob/living/proc/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
-	adjust_bodytemperature(((fire_handler.stacks * 12)) * 0.5 * seconds_per_tick)
+	adjust_bodytemperature(((fire_handler.stacks)) * 0.5 * seconds_per_tick)
 
 /**
  * Adjust the amount of fire stacks on a mob
@@ -2149,21 +2100,12 @@
 		visible_message(span_info("[src] looks up."))
 	var/turf/ceiling = get_step_multiz(src, UP)
 	var/turf/T = get_turf(src)
+	var/datum/controller/subsystem/ParticleWeather/PW = SSParticleWeather //used so we can see what's the weather outside
 	if(!ceiling) //We are at the highest z-level.
 		if(T.can_see_sky())
-			switch(GLOB.forecast)
-				if("prerain")
-					to_chat(src, span_warning("Dark clouds gather..."))
-					return
-				if("rain")
-					to_chat(src, span_warning("A wet wind blows."))
-					return
-				if("rainbow")
-					to_chat(src, span_notice("A beautiful rainbow!"))
-					return
-				if("fog")
-					to_chat(src, span_warning("I can't see anything, the fog has set in."))
-					return
+			if(PW.runningWeather)
+				to_chat(src, span_warning("[PW.runningWeather.warning_message]"))
+				return
 			to_chat(src, span_warning("There is nothing special to say about this weather."))
 			do_time_change()
 		return
@@ -2172,6 +2114,8 @@
 		return
 
 	if(T.can_see_sky())
+		if(PW.runningWeather)
+			to_chat(src, span_warning("[PW.runningWeather.warning_message]"))
 		do_time_change()
 
 	var/ttime = 10
@@ -2336,10 +2280,24 @@
 	offered_item_ref = WEAKREF(offered_item)
 
 	var/stealthy = (m_intent == MOVE_INTENT_SNEAK)
+	var/obj/item/reagent_containers/glass/offered_item_other = null
+	if(istype(offered_item, /obj/item/reagent_containers/glass) && offered_item?.reagents?.maximum_volume > 0) // we have a drink in our hand
+		offered_item_other = offered_to.offered_item_ref?.resolve()
 
 	if(stealthy)
 		to_chat(src, span_notice("I secretly offer [offered_item] to [offered_to]."))
 		to_chat(offered_to, span_notice("[offered_to] secretly offers [offered_item] to me..."))
+	else if(!isnull(offered_item_other) && istype(offered_item_other) && offered_item_other?.reagents?.maximum_volume > 0) // clink drinks
+		playsound(src,offered_item_other.reagents.maximum_volume > 50 ? 'sound/misc/clink_drink_big.ogg' : 'sound/misc/clink_drink.ogg', 100, TRUE)
+		addtimer(CALLBACK(src, PROC_REF(stop_offering_item)), 0.6 SECONDS)
+		addtimer(CALLBACK(offered_to, PROC_REF(stop_offering_item)), 0.6 SECONDS)
+		visible_message(
+			span_notice("[src] clinks [offered_item] with [offered_to]!"), \
+			span_notice("I clink [offered_item] with [offered_to]!"), \
+			vision_distance = COMBAT_MESSAGE_RANGE, \
+			ignored_mobs = list(offered_to)
+		)
+		to_chat(offered_to, span_notice("[src] clinks [offered_item] with me!"))
 	else
 		visible_message(
 			span_notice("[src] offers [offered_item] to [offered_to] with an outstretched hand."), \

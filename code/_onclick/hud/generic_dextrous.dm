@@ -58,6 +58,10 @@
 	hsover.hud = src
 	static_inventory += hsover
 
+	tempover =  new /atom/movable/screen/tempbase()
+	tempover.hud = src
+	static_inventory += tempover
+
 	fov = new /atom/movable/screen/fov()
 	fov.hud = src
 	static_inventory += fov

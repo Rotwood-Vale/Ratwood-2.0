@@ -31,11 +31,11 @@
 	race_titles = list(
 	"Half-Cat", "Half-Dog", "Half-Volf", "Half-Lion", "Half-Venard",
 	"Half-Tiger", "Half-Sheep", "Half-Goat", "Half-Rous", "Half-Possum",
-	"Half-Pig", "Half-Boar", "Half-Rabbit", "Half-Horse", "Half-Donkey",
+	"Half-Pig", "Half-Boar", "Half-Cabbit", "Half-Rabbit", "Half-Horse", "Half-Donkey",
 	"Half-Hyena", "Half-Deer", "Half-Bear", "Half-Panda", "Half-Coyote",
 	"Half-Moose", "Half-Jackal", "Half-Panther", "Half-Lynx", "Half-Leopard",
 	"Half-Monkey", "Half-Bird", "Half-Seal", "Half-Frog", "Half-Bat", "Half-Otter", "Half-Cow",
-	"Half-Bull", "Half-Bee", "Half-Lizard", "Half-Insect", "Half-Spider", "Half-Monster"
+	"Half-Bull", "Half-Bee", "Half-Lizard", "Half-Insect", "Half-Spider", "Half-Monster", "Half-Drakian"
 	)
 
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,STUBBLE,OLDGREY,MUTCOLORS_PARTSONLY)
@@ -142,6 +142,12 @@
 		/datum/body_marking/bangs,
 		/datum/body_marking/bun,
 		/datum/body_marking/gradient,
+		/datum/body_marking/womb_tattoo,
+		/datum/body_marking/butterfly,
+		/datum/body_marking/waist,
+		/datum/body_marking/diagonal_eyes,
+		/datum/body_marking/wide_eyes,
+		/datum/body_marking/stripes,
 	)
 	descriptor_choices = list(
 		/datum/descriptor_choice/trait,

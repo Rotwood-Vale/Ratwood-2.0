@@ -231,12 +231,23 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		..()
 		return
 	else
+		if(can_saddle && istype(O, /obj/item/reagent_containers/food/snacks/grown/apple) && has_status_effect(/datum/status_effect/buff/mount_apple_healing))
+			to_chat(user, span_warning("[src] is still chewing on the last apple! Try again in a few seconds when they look hungry."))
+			return
 		if(!stat)
 			user.visible_message(span_info("[user] hand-feeds [O] to [src]."), span_notice("I hand-feed [O] to [src]."))
 			playsound(loc,'sound/misc/eat.ogg', rand(30,60), TRUE)
 			qdel(O)
 			food = min(food + 30, 100)
 			adjustHealth(-rand(10,20))
+			if(can_saddle && istype(O, /obj/item/reagent_containers/food/snacks/grown/apple))
+				apply_status_effect(/datum/status_effect/buff/mount_apple_healing, 1)
+				if(istype(src, /mob/living/simple_animal/hostile/retaliate))
+					var/mob/living/simple_animal/hostile/retaliate/retaliating_mount = src
+					if(retaliating_mount.enemies.len)
+						retaliating_mount.enemies = list()
+						visible_message(span_notice("[src] calms down."))
+						retaliating_mount.LoseTarget()
 			if(tame && owner == user)
 				return
 			var/realchance = tame_chance
@@ -289,7 +300,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		move_to_delay = initial(move_to_delay)
 		return
 	var/health_deficiency = getBruteLoss() + getFireLoss()
-	if(health_deficiency >= ( maxHealth - (maxHealth*0.50) ))
+	if(health <= round(maxHealth * 0.5) || health_deficiency >= round(maxHealth * 0.5))
 		move_to_delay = initial(move_to_delay) + 2
 	else
 		move_to_delay = initial(move_to_delay)
@@ -327,12 +338,25 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 /mob/living/simple_animal/proc/handle_automated_movement()
 	set waitfor = FALSE
 	if(!stop_automated_movement && wander && !doing)
-		if(ssaddle && has_buckled_mobs())
+		if(ssaddle)
 			return 0
 		if(binded)
 			return FALSE
+		if(AIStatus == AI_OFF || AIStatus == AI_IDLE)
+			return 0
+		if(pulledby && stop_automated_movement_when_pulled)
+			return 0
 		if((isturf(loc) || allow_movement_on_non_turfs) && (mobility_flags & MOBILITY_MOVE))		//This is so it only moves if it's not inside a closet, gentics machine, etc.
-			turns_since_move++
+			if(turns_since_move < turns_per_move)
+				turns_since_move++
+				return 0
+			if(prob(50))
+				var/turf/T = get_step(loc, pick(GLOB.cardinals))
+				if(T && T.can_traverse_safely(src)) // Don't wander into lava or open space unless we're immune to it/can't fall.
+					step_towards(src, T, cached_multiplicative_slowdown)
+			else
+				setDir(turn(dir, pick(90, -90)))
+			turns_since_move = 0
 			return 1
 
 /mob/living/simple_animal/proc/handle_automated_speech(override)
@@ -422,10 +446,26 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 					butcher(user, on_meathook)
 
 	else if (stat != DEAD && istype(ssaddle, /obj/item/natural/saddle))		//Fallback saftey for saddles
-		var/datum/component/storage/saddle_storage = ssaddle.GetComponent(/datum/component/storage)
-		var/access_time = (user in buckled_mobs) ? 10 : 30
-		if (do_after(user, access_time, target = src))
-			saddle_storage.show_to(user)
+		var/list/modifiers = params2list(params)
+		var/is_shift_middle = modifiers["shift"] || user?.client?.keys_held["Shift"]
+		if(is_shift_middle)
+			if(has_buckled_mobs())
+				to_chat(user, span_warning("I can't remove [src]'s saddle while someone is mounted."))
+				return
+			user.visible_message(span_notice("[user] starts undoing [src]'s saddle."), span_notice("I start undoing [src]'s saddle."))
+			if(do_after(user, 30, target = src))
+				var/obj/item/natural/saddle/saddle_item = ssaddle
+				ssaddle = null
+				saddle_item.forceMove(get_turf(src))
+				user.put_in_hands(saddle_item)
+				playsound(src, 'sound/foley/saddledismount.ogg', 100, TRUE)
+				user.visible_message(span_notice("[user] removes [src]'s saddle."), span_notice("I remove [src]'s saddle."))
+				update_icon()
+		else
+			var/datum/component/storage/saddle_storage = ssaddle.GetComponent(/datum/component/storage)
+			var/access_time = (user in buckled_mobs) ? 10 : 30
+			if (do_after(user, access_time, target = src))
+				saddle_storage.show_to(user)
 	..()
 
 /mob/living/simple_animal/proc/butcher(mob/living/user, on_meathook = FALSE)
@@ -801,6 +841,12 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 
 /mob/living/simple_animal/hostile/user_unbuckle_mob(mob/living/M, mob/user)
 	if(user != M)
+		// Allow others to unbuckle incapacitated or downed riders
+		if(M.stat == CONSCIOUS && (M.mobility_flags & MOBILITY_STAND))
+			return
+		// Bypass the dismount animation for helpless riders
+		unbuckle_mob(M, TRUE)
+		update_icon()
 		return
 	var/time2mount = 12
 	if(M.mind)
@@ -846,6 +892,15 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		if(ssaddle)
 			playsound(src, 'sound/foley/saddlemount.ogg', 100, TRUE)
 	..()
+	if(ishuman(M) && buckled_mobs && buckled_mobs.len < max_buckled_mobs)
+		var/mob/living/carbon/human/primary_rider = M
+		for(var/mob/living/passenger in primary_rider.buckled_mobs.Copy())
+			if(buckled_mobs.len >= max_buckled_mobs)
+				break
+			if(!ishuman(passenger) || passenger.stat != CONSCIOUS)
+				continue
+			primary_rider.unbuckle_mob(passenger, TRUE)
+			buckle_mob(passenger, TRUE, FALSE)
 	update_icon()
 
 /mob/living/simple_animal/hostile
@@ -858,9 +913,9 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
 	if(tame && riding_datum)
 		if(riding_datum.handle_ride(user, direction))
-			riding_datum.vehicle_move_delay = move_to_delay
+			var/new_delay = move_to_delay
 			if(user.m_intent == MOVE_INTENT_RUN)
-				riding_datum.vehicle_move_delay -= 1
+				new_delay -= 1
 				if(loc != oldloc)
 					var/turf/open/T = loc
 					if(!do_footstep && T.footstep)
@@ -879,9 +934,13 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 			if(user.mind)
 				var/amt = user.get_skill_level(/datum/skill/misc/riding)
 				if(amt)
-					riding_datum.vehicle_move_delay -= 5 + amt/6
+					new_delay -= 5 + amt/6
 				else
-					riding_datum.vehicle_move_delay -= 3
+					new_delay -= 3
+			var/health_deficiency = getBruteLoss() + getFireLoss()
+			if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN) && (health <= round(maxHealth * 0.5) || health_deficiency >= round(maxHealth * 0.5)))
+				new_delay = max(new_delay, initial(move_to_delay) + 2)
+			riding_datum.vehicle_move_delay = max(1, new_delay)
 			if(loc != oldloc)
 				var/obj/structure/mineral_door/MD = locate() in loc
 				if(MD && !MD.ridethrough)
@@ -898,8 +957,10 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		L.visible_message(span_danger("[L] falls off [src]!"))
 
 /mob/living/simple_animal/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
+	var/datum/component/riding/riding_datum = LoadComponent(/datum/component/riding)
+	if(riding_datum && ishuman(buckled_mob))
+		max_buckled_mobs = max(max_buckled_mobs, 2)
 	. = ..()
-	LoadComponent(/datum/component/riding)
 
 /mob/living/simple_animal/proc/toggle_ai(togglestatus)
 	if(!can_have_ai && (togglestatus != AI_OFF))
@@ -924,8 +985,8 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 			toggle_ai(AI_ON)
 			return TRUE
 
-	toggle_ai(AI_OFF)
-	return FALSE
+	toggle_ai(AI_IDLE)
+	return TRUE
 
 /mob/living/simple_animal/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()

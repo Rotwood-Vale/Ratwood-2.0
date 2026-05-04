@@ -90,6 +90,11 @@
 
 /obj/item/var/polished = FALSE
 /obj/item/var/polish_bonus = 0
+/obj/item/var/pottery_quality = 0
+/obj/item/var/creator_skill = 0
+/obj/item/var/pottery_fragile = FALSE
+/obj/item/var/pottery_baked_at = 0
+/obj/item/var/pottery_shatter_chance = 100
 
 /obj/item/examine(mob/user)
 	. = ..()
@@ -100,6 +105,8 @@
 			. += span_info("It's been thoroughly brushed.")
 		if(4)
 			. += span_green("It's been nicely polished.")
+	if(shoddy_repair)
+		. += span_warning("This item has been field-repaired and needs to be fixed by a proper craftsman.")
 
 /obj/item/polishing_cream
 	icon = 'icons/roguetown/items/misc.dmi'

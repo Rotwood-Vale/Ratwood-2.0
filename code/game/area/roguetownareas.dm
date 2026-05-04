@@ -20,9 +20,11 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	var/warden_area = FALSE
 	var/holy_area = FALSE
 	var/cell_area = FALSE
+	var/viewing_area = FALSE
 	var/ceiling_protected = FALSE //Prevents tunneling into these from above
 	var/hoardmaster_protected = FALSE//If a player enters, it ashes them. Your greed will consume you.
 	var/necra_area = FALSE
+	var/no_special_item_retrieval = FALSE//we want in rare cases for loadouts to be inaccessible
 
 /area/rogue/Entered(mob/living/carbon/human/guy)
 	. = ..()
@@ -38,13 +40,15 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 		guy.apply_status_effect(/datum/status_effect/buff/dungeoneerbuff)
 	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_VOTARY))//Top Church guys get a buff. Opposite to overt heretics.
 		guy.add_stress(/datum/stressevent/seeblessed)
-	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_OVERTHERETIC))//Heretics are punished for walking in the Church with rites buffs.
-		guy.apply_status_effect(/datum/status_effect/debuff/overt_punishment)
+	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_HOLYWARRIOR))
+		guy.apply_status_effect(/datum/status_effect/debuff/holy_blessing)
 	if((src.necra_area == TRUE) && !(guy.has_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)||(guy.has_status_effect(/datum/status_effect/debuff/deathdoorwilloss)))) //Necra saps at wil
 		if(HAS_TRAIT(guy, TRAIT_SOUL_EXAMINE))
 			guy.apply_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)
 		else
 			guy.apply_status_effect(/datum/status_effect/debuff/deathdoorwilloss)
+	if((src.viewing_area == TRUE) && !guy.has_status_effect(/datum/status_effect/buff/viewingbuff)) // unique buff when in an arena so you have a better view
+		guy.apply_status_effect(/datum/status_effect/buff/viewingbuff)
 	if((src.hoardmaster_protected == TRUE))//Your greed consumes you.
 		message_admins("[guy.real_name]([key_name(guy)]) was dusted by the Hoardmaster, at [ADMIN_JMP(src)]")
 		log_admin("[guy.real_name]([key_name(guy)]) was dusted by the Hoardmaster")
@@ -165,16 +169,6 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	deathsight_message = "a twisted tangle of soaring peaks"
 	// I SURE HOPE NO ONE USE THIS HUH
 
-/area/rogue/outdoors/cave/inhumen/wretch/ghrotto
-	name = "WRETCHED GHROTTO"
-	icon_state = "outdoors"
-	first_time_text = "WRETCHED GHROTTO"
-	droning_sound = 'sound/ambience/bogday (1).ogg'
-	droning_sound_dusk = 'sound/ambience/bogday (2).ogg'
-	droning_sound_night = 'sound/ambience/bogday (3).ogg'
-	converted_type = /area/rogue/outdoors/dungeon1
-	detail_text = DETAIL_TEXT_WRETCHED_GHROTTO
-
 /area/rogue/indoors/shelter/mountains
 	icon_state = "mountains"
 	droning_sound = 'sound/music/area/townstreets.ogg'
@@ -211,7 +205,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 /area/rogue/outdoors/rtfield/rockhill
 	first_time_text = "Rockhill Basin"
 	threat_region = THREAT_REGION_ROCKHILL_BASIN
-	town_area = TRUE
+	town_area = FALSE //might spread out the action a little if townies keep to town.
 
 /area/rogue/outdoors/rtfield/rockhill/above
 	ambientsounds = AMB_MOUNTAIN
@@ -508,6 +502,26 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	soundproof = TRUE
 	deathsight_message = "cells of pain and suffering"
 
+/area/rogue/dietroyt //dungeon labor camp
+	name = "die troyt"
+	icon_state = "cell"
+	ambientsounds = AMB_CAVEWATER
+	ambientnight = AMB_CAVEWATER
+	spookysounds = SPOOKY_CAVE
+	spookynight = SPOOKY_CAVE
+	droning_sound = 'sound/music/area/underdark.ogg'
+	droning_sound_dusk = null
+	droning_sound_night = null
+	cell_area = TRUE
+	town_area = TRUE
+	no_special_item_retrieval = TRUE
+	deathsight_message = "the drone of pickaxes and penance"
+	first_time_text = "DIE TROYT"
+	detail_text = DETAIL_TEXT_DIETROYT
+
+/area/rogue/dietroyt/nomagic
+	noteleport = TRUE
+
 /area/rogue/indoors/town/tavern
 	name = "tavern"
 	icon_state = "tavern"
@@ -555,6 +569,9 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound = 'sound/music/area/catacombs.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
+	// first_time_text = "THE CRYPT OF THE TEN"
+
+/area/rogue/indoors/town/church/basement/crypt
 	first_time_text = "THE CRYPT OF THE TEN"
 
 /area/rogue/indoors/town/fire_chamber
@@ -570,9 +587,6 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	name = "Warden Fort"
 	warden_area = TRUE
 	deathsight_message = "a moss covered stone redoubt, guarding against the wilds"
-
-/area/rogue/indoors/town/warehouse/can_craft_here()
-	return FALSE
 
 /area/rogue/indoors/inq
 	name = "The Inquisition"
@@ -733,6 +747,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_dawn = 'sound/music/area/forest.ogg'
 	converted_type = /area/rogue/indoors/town/grove
 	deathsight_message = "A sacred place of dendor, near the tree of Aeons.."
+	first_time_text = null
 	droning_sound_dusk = null
 	droning_sound_night = null
 	warden_area = TRUE

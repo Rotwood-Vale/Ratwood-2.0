@@ -127,8 +127,8 @@ GLOBAL_LIST_EMPTY(biggates)
 					def_zone = BODY_ZONE_HEAD
 			var/obj/item/bodypart/BP = L.get_bodypart(def_zone)
 			if(BP)
-				L.visible_message(span_boldwarning("[src] comes crashing down on [L]'s [BP]!"), \
-						span_userdanger("[src] crushes my [BP]!"))
+				L.visible_message(span_boldwarning("[src] comes crashing down on [L]'s [BP.name]!"), \
+						span_userdanger("[src] crushes my [BP.name]!"))
 				L.emote("agony")
 				BP.add_wound(/datum/wound/fracture)
 				BP.update_disabled()

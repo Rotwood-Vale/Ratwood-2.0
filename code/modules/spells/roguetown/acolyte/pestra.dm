@@ -1,7 +1,7 @@
 // Diagnose
 /obj/effect/proc_holder/spell/invoked/diagnose
 	name = "Diagnose"
-	desc = "Examine anothers vitals."
+	desc = "Examine another's vitals."
 	overlay_icon = 'icons/mob/actions/pestraspells.dmi'
 	action_icon = 'icons/mob/actions/pestraspells.dmi'
 	overlay_state = "diagnose"

@@ -15,7 +15,7 @@
 
 /datum/skill/craft/weaponsmithing
 	name = "Weaponsmithing"
-	desc = "Determins whether you can smith various weapons. Required to repair weapons successfully on tables."
+	desc = "Determines whether you can smith various weapons. Required to repair weapons successfully on tables."
 	dreams = list(
 		"...tempered in gold and void, sharpened only by the sun and moon, your creation is finally complete. This one... This one will pierce the heavens...",
 		"...sweat drips down your brow and your arms ache with every strike, but at last, the blade is forged. A masterpiece of steel and gold, adorned with rontz gems...",
@@ -86,15 +86,6 @@
 	trait_uncap = list(TRAIT_HOMESTEAD_EXPERT = SKILL_LEVEL_LEGENDARY,
 	TRAIT_SMITHING_EXPERT = SKILL_LEVEL_LEGENDARY,
 	TRAIT_SELF_SUSTENANCE = SKILL_LEVEL_JOURNEYMAN)
-
-/datum/skill/craft/traps
-	name = "Trapmaking"
-	desc = "Determines whether you can craft mantraps and if you can spot and disable traps."
-	dreams = list(
-		"...you spin a quiet silver wire across a hallway, lying in wait for your prey. The monstrous pale volf approaches. This time, you are prepared...",
-		"...the gleam of the trap's sharp teeth catches the dim light as you conceal it beneath layers of brush and foliage. To the untrained eye, it's nothing more than a harmless patch of grass - but you know better..."
-	)
-	expert_name = "Trapper"
 
 /datum/skill/craft/engineering
 	name = "Engineering"

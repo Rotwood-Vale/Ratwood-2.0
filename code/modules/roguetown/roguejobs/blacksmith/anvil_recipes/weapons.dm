@@ -1160,11 +1160,18 @@
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/grown/log/tree/stick)
 	i_type = "Weapons"
 
-/datum/anvil_recipe/weapons/psy/mace
-	name = "Psydonic Mace (+1 Blessed Silver, +1 Stick)"
+/datum/anvil_recipe/weapons/psy/poleaxe
+	name = "Psydonic Poleaxe (+2 Blessed Silver, +1 Small Log)"
 	req_bar = /obj/item/ingot/silverblessed
-	created_item = /obj/item/rogueweapon/mace/goden/psymace
-	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/grown/log/tree/stick)
+	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/ingot/silverblessed, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/greataxe/psy
+	i_type = "Weapons"
+
+/datum/anvil_recipe/weapons/psy/mace
+	name = "Psydonic Grand Mace (+1 Blessed Silver, +1 Small Log)"
+	req_bar = /obj/item/ingot/silverblessed
+	created_item = /obj/item/rogueweapon/mace/goden/psy
+	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/grown/log/tree/small)
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/spear
@@ -1241,11 +1248,18 @@
 	additional_items = list(/obj/item/ingot/silverblessed/bullion, /obj/item/grown/log/tree/stick)
 	i_type = "Weapons"
 
-/datum/anvil_recipe/weapons/psy/mace/inq
-	name = "Psydonic Mace (+1 Blessed Silver, +1 Stick)"
+/datum/anvil_recipe/weapons/psy/poleaxe/inq
+	name = "Psydonic Poleaxe (+2 Blessed Silver, +1 Small Log)"
 	req_bar = /obj/item/ingot/silverblessed/bullion
-	created_item = /obj/item/rogueweapon/mace/goden/psymace
-	additional_items = list(/obj/item/ingot/silverblessed/bullion, /obj/item/grown/log/tree/stick)
+	additional_items = list(/obj/item/ingot/silverblessed/bullion, /obj/item/ingot/silverblessed/bullion, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/greataxe/psy
+	i_type = "Weapons"
+
+/datum/anvil_recipe/weapons/psy/mace/inq
+	name = "Psydonic Grand Mace (+1 Blessed Silver, +1 Small Log)"
+	req_bar = /obj/item/ingot/silverblessed/bullion
+	created_item = /obj/item/rogueweapon/mace/goden/psy
+	additional_items = list(/obj/item/ingot/silverblessed/bullion, /obj/item/grown/log/tree/small)
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/psy/spear/inq

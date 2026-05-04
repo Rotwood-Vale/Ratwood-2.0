@@ -65,9 +65,12 @@
 /datum/outfit/job/roguetown/heir/daring/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/circlet
+	if(should_wear_masc_clothes(H))
+		shirt = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heir
+	if(should_wear_femme_clothes(H))
+		shirt = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heiress
 	armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	pants = /obj/item/clothing/under/roguetown/tights
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/guard
 	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	belt = /obj/item/storage/belt/rogue/leather
 	l_hand = /obj/item/rogueweapon/sword/sabre
@@ -75,6 +78,22 @@
 	beltr = /obj/item/storage/keyring/heir
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
 	backr = /obj/item/storage/backpack/rogue/satchel
+	if(SSmapping.config.map_name == "Desert Town")
+		cloak = /obj/item/clothing/cloak/raincloak/amir
+		shoes = /obj/item/clothing/shoes/roguetown/gladiator
+		armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
+		if(should_wear_masc_clothes(H))
+			head = /obj/item/clothing/head/roguetown/sultan/amir
+			mask = /obj/item/clothing/head/roguetown/circlet
+			shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
+			belt = /obj/item/storage/belt/rogue/leather/cloth/sash/yellow
+			pants = /obj/item/clothing/under/roguetown/sirwal/fancy/red
+		if(should_wear_femme_clothes(H))
+			shirt = /obj/item/clothing/suit/roguetown/shirt/dress/amiradress
+			pants = /obj/item/clothing/under/roguetown/thong
+			mask = /obj/item/clothing/mask/rogue/exoticsilkmask/red
+			belt = /obj/item/storage/belt/rogue/leather/exoticsilkbelt/skirtred
+			head = /obj/item/clothing/head/roguetown/circlet
 
 /datum/advclass/heir/bookworm
 	name = "Introverted Bookworm"
@@ -102,10 +121,12 @@
 	..()
 	if(should_wear_masc_clothes(H))
 		pants = /obj/item/clothing/under/roguetown/tights/random
-		armor = /obj/item/clothing/suit/roguetown/armor/longcoat
-		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/prince
+		cloak = /obj/item/clothing/suit/roguetown/armor/longcoat
+		armor = /obj/item/clothing/suit/roguetown/shirt/dress/royal/prince
+		shirt = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heir
 	if(should_wear_femme_clothes(H))
-		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/princess
+		shirt = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heiress
+		armor = /obj/item/clothing/suit/roguetown/shirt/dress/royal/princess
 	head = /obj/item/clothing/head/roguetown/circlet
 	belt = /obj/item/storage/belt/rogue/leather/cloth/lady
 	beltr = /obj/item/storage/keyring/heir
@@ -114,6 +135,23 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	mask = /obj/item/clothing/mask/rogue/spectacles
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
+	if(SSmapping.config.map_name == "Desert Town")
+		cloak = /obj/item/clothing/cloak/raincloak/amir
+		shoes = /obj/item/clothing/shoes/roguetown/gladiator
+		if(should_wear_masc_clothes(H))
+			head = /obj/item/clothing/head/roguetown/sultan/amir
+			mask = /obj/item/clothing/head/roguetown/circlet
+			shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
+			belt = /obj/item/storage/belt/rogue/leather/cloth/sash/yellow
+			pants = /obj/item/clothing/under/roguetown/sirwal/fancy/red
+		if(should_wear_femme_clothes(H))
+			armor = /obj/item/clothing/suit/roguetown/shirt/dress/amiradress
+			shirt = /obj/item/clothing/suit/roguetown/shirt/exoticsilkbra/red
+			pants = /obj/item/clothing/under/roguetown/thong
+			mask = /obj/item/clothing/mask/rogue/exoticsilkmask/red
+			belt = /obj/item/storage/belt/rogue/leather/exoticsilkbelt/skirtred
+			head = /obj/item/clothing/head/roguetown/circlet
+
 /datum/advclass/heir/aristocrat
 	name = "Sheltered Aristocrat"
 	tutorial = "Life has been kind to you; you've an entire keep at your disposal, servants to wait on you, and a whole retinue of guards to guard you. You've nothing to prove; just live the good life and you'll be a lord someday, too. A lack of ambition translates into a lacking skillset beyond schooling, though, and your breaks from boredom consist of being a damsel or court gossip."
@@ -161,6 +199,22 @@
 		armor = /obj/item/clothing/suit/roguetown/armor/silkcoat
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/princess
 		shoes = /obj/item/clothing/shoes/roguetown/shortboots
+	if(SSmapping.config.map_name == "Desert Town")
+		cloak = /obj/item/clothing/cloak/raincloak/amir
+		shoes = /obj/item/clothing/shoes/roguetown/gladiator
+		if(should_wear_masc_clothes(H))
+			head = /obj/item/clothing/head/roguetown/sultan/amir
+			mask = /obj/item/clothing/head/roguetown/circlet
+			shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
+			belt = /obj/item/storage/belt/rogue/leather/cloth/sash/yellow
+			pants = /obj/item/clothing/under/roguetown/sirwal/fancy/red
+		if(should_wear_femme_clothes(H))
+			armor = /obj/item/clothing/suit/roguetown/shirt/dress/amiradress
+			shirt = /obj/item/clothing/suit/roguetown/shirt/exoticsilkbra/red
+			pants = /obj/item/clothing/under/roguetown/thong
+			mask = /obj/item/clothing/mask/rogue/exoticsilkmask/red
+			belt = /obj/item/storage/belt/rogue/leather/exoticsilkbelt/skirtred
+			head = /obj/item/clothing/head/roguetown/circlet
 
 /datum/advclass/heir/inbred
 	name = "Inbred wastrel"
@@ -201,15 +255,34 @@
 		/obj/item/pestle = 1)
 	if(should_wear_masc_clothes(H))
 		pants = /obj/item/clothing/under/roguetown/tights
-		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/prince
+		armor = /obj/item/clothing/suit/roguetown/shirt/dress/royal/prince
+		shirt = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heir
 		belt = /obj/item/storage/belt/rogue/leather/cloth/lady
 		shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	if(should_wear_femme_clothes(H))
 		belt = /obj/item/storage/belt/rogue/leather/cloth/lady
 		head = /obj/item/clothing/head/roguetown/hennin
 		armor = /obj/item/clothing/suit/roguetown/armor/silkcoat
-		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/princess
+		armor = /obj/item/clothing/suit/roguetown/shirt/dress/royal/princess
+		shirt = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heiress
 		shoes = /obj/item/clothing/shoes/roguetown/shortboots
+	if(SSmapping.config.map_name == "Desert Town")
+		cloak = /obj/item/clothing/cloak/raincloak/amir
+		shoes = /obj/item/clothing/shoes/roguetown/gladiator
+		if(should_wear_masc_clothes(H))
+			head = /obj/item/clothing/head/roguetown/sultan/amir
+			mask = /obj/item/clothing/head/roguetown/circlet
+			shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
+			belt = /obj/item/storage/belt/rogue/leather/cloth/sash/yellow
+			pants = /obj/item/clothing/under/roguetown/sirwal/fancy/red
+			armor = null
+		if(should_wear_femme_clothes(H))
+			armor = /obj/item/clothing/suit/roguetown/shirt/dress/amiradress
+			shirt = /obj/item/clothing/suit/roguetown/shirt/exoticsilkbra/red
+			pants = /obj/item/clothing/under/roguetown/thong
+			mask = /obj/item/clothing/mask/rogue/exoticsilkmask/red
+			belt = /obj/item/storage/belt/rogue/leather/exoticsilkbelt/skirtred
+			head = /obj/item/clothing/head/roguetown/circlet
 
 
 /datum/advclass/heir/scamp
@@ -253,10 +326,29 @@
 	beltr = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
 	backr = /obj/item/storage/backpack/rogue/satchel
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/shorts
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/lowcut
+	if(should_wear_masc_clothes(H))
+		shirt = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heir
+	if(should_wear_femme_clothes(H))
+		shirt = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heiress
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor/nightman
-	cloak = /obj/item/clothing/cloak/half/shadowcloak
+	armor = /obj/item/clothing/suit/roguetown/armor/longcoat
+	cloak = /obj/item/clothing/cloak/shadowcloak
+	if(SSmapping.config.map_name == "Desert Town")
+		cloak = /obj/item/clothing/cloak/raincloak/amir
+		shoes = /obj/item/clothing/shoes/roguetown/gladiator
+		if(should_wear_masc_clothes(H))
+			head = /obj/item/clothing/head/roguetown/sultan/amir
+			mask = /obj/item/clothing/head/roguetown/circlet
+			shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
+			belt = /obj/item/storage/belt/rogue/leather/cloth/sash/yellow
+			pants = /obj/item/clothing/under/roguetown/sirwal/fancy/red
+		if(should_wear_femme_clothes(H))
+			armor = /obj/item/clothing/suit/roguetown/shirt/dress/amiradress
+			shirt = /obj/item/clothing/suit/roguetown/shirt/exoticsilkbra/red
+			pants = /obj/item/clothing/under/roguetown/thong
+			mask = /obj/item/clothing/mask/rogue/exoticsilkmask/red
+			belt = /obj/item/storage/belt/rogue/leather/exoticsilkbelt/skirtred
+			head = /obj/item/clothing/head/roguetown/circlet
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
 		/obj/item/lockpickring/mundane = 1)

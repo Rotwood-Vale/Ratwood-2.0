@@ -33,7 +33,8 @@
 		TRAIT_MEDICINE_EXPERT,
 		TRAIT_DUALWIELDER,
 		TRAIT_VOTARY,
-		TRAIT_CONVICTION
+		TRAIT_CONVICTION,
+		TRAIT_HOLYWARRIOR,
 	)
 
 	//No undeath-adjacent virtues for a role that can sacrifice itself. The Ten like their sacrifices 'pure'.
@@ -70,7 +71,7 @@
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/shields = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
@@ -108,7 +109,8 @@
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/holysee
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/silver = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/mini_flagpole/church,
 		)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 

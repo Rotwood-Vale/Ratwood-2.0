@@ -63,7 +63,8 @@
 	var/healing = 2.5
 
 	if(conditional_buff)
-		to_chat(user, "Channeling my patron's power is easier in these conditions!")
+		if(situational_bonus > 0)
+			to_chat(user, "Channeling my patron's power is easier in these conditions!")
 		healing += situational_bonus
 
 	if(!ishuman(target))

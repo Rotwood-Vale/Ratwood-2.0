@@ -103,6 +103,17 @@
 	cost = 35
 	contains = list(/obj/item/folding_table_stored)
 
+/datum/supply_pack/rogue/adventure_supplies/folding_alchstation
+	name = "Alchemical station kit"
+	cost = 45
+	contains = list(/obj/item/folding_table_stored/alchstation)
+
+/datum/supply_pack/rogue/adventure_supplies/folding_alchcauldron
+	name = "Folding cauldron"
+	cost = 45
+	contains = list(/obj/item/folding_table_stored/alchcauldron)
+
+
 /datum/supply_pack/rogue/adventure_supplies/mess_kit
 	name = "Mess Kit"
 	cost = 60
@@ -127,3 +138,18 @@
 	name = "Roll of bandages"
 	cost = 25
 	contains = list(/obj/item/natural/bundle/cloth/bandage/full)
+
+/datum/supply_pack/rogue/adventure_supplies/small_tent
+	name = "Small Tent Kit"
+	cost = 50
+	contains = list(/obj/item/tent_kit)
+
+/datum/supply_pack/rogue/adventure_supplies/ger
+	name = "Ger Kit"
+	cost = 100
+	contains = list(/obj/item/tent_kit/ger)
+
+/datum/supply_pack/rogue/adventure_supplies/yurt
+	name = "Yurt Kit"
+	cost = 200
+	contains = list(/obj/item/tent_kit/yurt)

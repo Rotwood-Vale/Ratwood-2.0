@@ -23,7 +23,6 @@
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
-		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE, // Have to grind a bit, but can use the ZRONK chair right away
 		/datum/skill/craft/alchemy = SKILL_LEVEL_EXPERT,
 		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN, //For lux extractions.
@@ -39,6 +38,7 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/reagent_containers/glass/bottle/rogue/manapot
 	neck = /obj/item/clothing/neck/roguetown/gorget
+	id = /obj/item/clothing/neck/roguetown/zcross/iron
 	beltl = /obj/item/rogueweapon/huntingknife
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(

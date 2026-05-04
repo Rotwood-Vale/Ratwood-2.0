@@ -171,6 +171,45 @@
 	icon_state = "inqvision"
 	layer = BLIND_LAYER
 
+/atom/movable/screen/fullscreen/nearsight
+	icon_state = "inqvision"
+	layer = CRIT_LAYER
+	plane = FULLSCREEN_PLANE
+
+/atom/movable/screen/fullscreen/heatexhaust
+	icon_state = "heat"
+	layer = CRIT_LAYER
+	plane = FULLSCREEN_PLANE +1
+
+/atom/movable/screen/fullscreen/heatstroke
+	icon_state = "heatstroke"
+	layer = CRIT_LAYER
+	plane = FULLSCREEN_PLANE +1
+
+/atom/movable/screen/fullscreen/hypothermia
+	icon_state = "hypothermia"
+	layer = CRIT_LAYER
+	plane = FULLSCREEN_PLANE +1
+
+/atom/movable/screen/fullscreen/frostbite
+	icon_state = "frostbite"
+	layer = CRIT_LAYER
+	plane = FULLSCREEN_PLANE +1
+
+/atom/movable/screen/fullscreen/dustoverlay
+	icon_state = "smok"
+	layer = CRIT_LAYER
+	plane = FULLSCREEN_PLANE
+	color = "#C3b091"
+	alpha = 125
+
+/atom/movable/screen/fullscreen/dustoverlay_light
+	icon_state = "smok"
+	layer = CRIT_LAYER
+	plane = FULLSCREEN_PLANE
+	color = "#C3b091"
+	alpha = 90
+
 /atom/movable/screen/fullscreen/blackimageoverlay
 	icon_state = "blackimageoverlay"
 	layer = BLIND_LAYER
