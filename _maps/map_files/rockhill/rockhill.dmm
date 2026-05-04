@@ -12593,9 +12593,17 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/outdoors/rtfield/rockhill/above)
 "cSI" = (
-/obj/item/reagent_containers/glass/bowl/aalloy,
-/turf/open/water/swamp,
-/area/rogue/under/cavewet)
+/obj/effect/wisp/prestidigitation{
+	color = "#ff0d00";
+	desc = "An ominous manifestation of latent ambient magick";
+	light_color = "#ff0d00";
+	name = "Infernal Wisp"
+	},
+/mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp{
+	wander = 0
+	},
+/turf/open/floor/rogue/volcanic,
+/area/rogue/outdoors/bograt/above)
 "cSQ" = (
 /obj/structure/fluff/walldeco/chains,
 /turf/open/floor/rogue/naturalstone,
@@ -16270,12 +16278,11 @@
 	},
 /area/rogue/under/cave/skeletoncrypt)
 "dJP" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp{
-	faction = list("infernal","neutral")
+/obj/structure/stairs/stone{
+	dir = 8
 	},
-/turf/open/floor/rogue/volcanic{
-	desc = "Silky and sharp-smooth, like cracked glass"
-	},
+/mob/living/simple_animal/hostile/retaliate/rogue/infernal/watcher,
+/turf/open/floor/rogue/grassred,
 /area/rogue)
 "dJQ" = (
 /obj/structure/fluff/railing/border{
@@ -22347,6 +22354,11 @@
 /area/rogue/indoors/town/church/chapel)
 "ffJ" = (
 /obj/item/natural/rock/gem,
+/obj/machinery/light/rogue/candle/blue{
+	pixel_x = -32;
+	pixel_y = 0;
+	status = 1
+	},
 /turf/open/floor/rogue/volcanic{
 	desc = "Silky and sharp-smooth, like cracked glass"
 	},
@@ -49268,10 +49280,6 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/bath)
-"lDK" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/infernal/watcher,
-/turf/open/floor/rogue/grassred,
-/area/rogue)
 "lDN" = (
 /turf/closed/wall/mineral/rogue/roofwall/outercorner{
 	dir = 4
@@ -50301,7 +50309,8 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/town/rockhill)
 "lPz" = (
-/obj/item/natural/rock/gem,
+/obj/item/natural/rock/coal,
+/obj/machinery/light/rogue/candle/blue,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue)
 "lPI" = (
@@ -78477,11 +78486,16 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/town/grove)
 "sDY" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp{
-	wander = 0
+/obj/item/natural/rock/coal,
+/obj/machinery/light/rogue/candle/blue{
+	pixel_x = 32;
+	pixel_y = 0;
+	status = 1
 	},
-/turf/open/floor/rogue/volcanic,
-/area/rogue/outdoors/bograt/above)
+/turf/open/floor/rogue/volcanic{
+	desc = "Silky and sharp-smooth, like cracked glass"
+	},
+/area/rogue)
 "sEb" = (
 /obj/item/natural/rock{
 	pixel_x = 6;
@@ -88336,6 +88350,7 @@
 	pixel_y = 0;
 	status = 1
 	},
+/mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp,
 /turf/open/floor/rogue/greenstone,
 /area/rogue)
 "uTJ" = (
@@ -106233,7 +106248,7 @@ dOj
 fTZ
 fTZ
 dOj
-uIv
+pzo
 iCV
 uIv
 dOj
@@ -106666,7 +106681,7 @@ fTZ
 fTZ
 pUy
 pzo
-lDK
+pzo
 pzo
 pUy
 fTZ
@@ -107097,7 +107112,7 @@ fTZ
 fTZ
 fTZ
 dOj
-myF
+dJP
 myF
 myF
 dOj
@@ -108388,12 +108403,12 @@ bqk
 ofP
 bqk
 eRT
-eRT
+rCc
 clC
 fTZ
 fTZ
 fTZ
-dJP
+eRT
 bqk
 azk
 fTZ
@@ -109250,12 +109265,12 @@ bqk
 bqk
 bqk
 vbB
-jFM
+clC
 bqk
 eRT
 bBP
 eRT
-rCc
+eRT
 ljj
 bqk
 bqk
@@ -109682,8 +109697,8 @@ oLa
 bqk
 bqk
 bqk
-bqk
-gjv
+dvl
+lPz
 bqk
 bqk
 bqk
@@ -110114,12 +110129,12 @@ bqk
 bqk
 bqk
 wuu
-lPz
+clC
 bqk
 jFM
 bqk
 uJN
-rCc
+eRT
 ljj
 bqk
 gsb
@@ -110980,7 +110995,7 @@ bqk
 fdr
 bqk
 eRT
-eRT
+rCc
 clC
 fTZ
 fTZ
@@ -111412,7 +111427,7 @@ qxu
 bqk
 eRT
 fES
-uJN
+sDY
 clC
 fTZ
 dOj
@@ -132109,9 +132124,9 @@ whb
 whb
 ePJ
 ePJ
-tdR
-tdR
-tdR
+bXC
+bXC
+bXC
 ePJ
 nTH
 dzq
@@ -132541,10 +132556,10 @@ csT
 csT
 csT
 ePJ
-tdR
-cSI
-tdR
-tdR
+bXC
+dJg
+bXC
+bXC
 nTH
 nTH
 qxI
@@ -594343,9 +594358,9 @@ kKp
 kKp
 kKp
 ktg
-sDY
+hXX
 hhI
-sDY
+kPD
 ktg
 kPD
 kKp
@@ -594776,7 +594791,7 @@ kKp
 kKp
 ktg
 ktg
-hXX
+kPD
 ktg
 ktg
 kPD
@@ -595639,7 +595654,7 @@ kKp
 kKp
 kKp
 kKp
-hhI
+cSI
 kPD
 kKp
 kKp
@@ -596498,7 +596513,7 @@ kKp
 kKp
 kKp
 kKp
-sce
+odw
 sce
 sce
 kPD
