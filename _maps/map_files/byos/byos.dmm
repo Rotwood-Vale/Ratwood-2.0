@@ -435,7 +435,8 @@
 /area/rogue/under/cave/licharena)
 "atY" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/spider/rock{
-	faction = list("fae")
+	faction = list("fae");
+	stationary_until_aggro = 1
 	},
 /turf/open/floor/rogue/grasscold,
 /area/rogue/under/underdark{
@@ -524,6 +525,12 @@
 /obj/structure/fluff/psycross/copper,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/outdoors/beach/byos)
+"aBC" = (
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/water/ocean/deep/thermalwater,
+/area/rogue/under/underdark{
+	first_time_text = null
+	})
 "aBP" = (
 /obj/structure/rack/rogue,
 /obj/item/rope,
@@ -705,7 +712,10 @@
 /turf/open/floor/rogue/dirt/desert,
 /area/rogue/outdoors/jungle)
 "aIT" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/primordial/fire,
+/mob/living/simple_animal/hostile/retaliate/rogue/primordial/fire{
+	stationary_until_aggro = 1;
+	faction = list("abberant")
+	},
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave)
 "aIU" = (
@@ -2007,9 +2017,7 @@
 	pixel_x = -7;
 	pixel_y = -1
 	},
-/obj/item/roguekey/lord{
-	
-	},
+/obj/item/roguekey/lord,
 /obj/item/gem_device/throne,
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors)
@@ -3525,13 +3533,7 @@
 	redstone_id = "greedexit"
 	},
 /obj/item/rogueweapon/sword/rapier/lord,
-/obj/item/roguekey{
-	icon_state = "bosskey";
-	lockid = "greed";
-	name = "Key of Greed";
-	desc = "It's golden-perfect sheen almost make it look like it's glowing.";
-	is_important = TRUE
-	},
+/obj/item/roguekey/sin/greed,
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave)
 "dCk" = (
@@ -4084,6 +4086,11 @@
 "egf" = (
 /turf/open/floor/carpet/inn,
 /area/rogue/outdoors/mountains)
+"egy" = (
+/obj/item/natural/rock,
+/obj/effect/decal/cleanable/debris/stony,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/under/cave)
 "egV" = (
 /obj/item/natural/rock,
 /turf/open/floor/rogue/AzureSand,
@@ -4277,6 +4284,10 @@
 "eqe" = (
 /turf/open/floor/rogue/dirt/desert,
 /area/rogue/outdoors/jungle)
+"eqU" = (
+/obj/effect/wisp/prestidigitation,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/under/cave)
 "eru" = (
 /obj/structure/chair/wood/rogue/fancy{
 	dir = 4
@@ -6397,6 +6408,10 @@
 /area/rogue/indoors/inq/boat/office{
 	ceiling_protected = 1
 	})
+"gro" = (
+/obj/item/roguekey/sin/wrath,
+/turf/closed/basic,
+/area/rogue)
 "gsg" = (
 /obj/structure/fluff/statue/femalestatue/zizo{
 	pixel_x = -32;
@@ -7032,6 +7047,7 @@
 /area/rogue/outdoors/mountains)
 "gVJ" = (
 /obj/item/enchantmentscroll/fireresist,
+/obj/effect/wisp/prestidigitation,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave)
 "gVZ" = (
@@ -7299,6 +7315,10 @@
 "hkQ" = (
 /obj/structure/spike_pit,
 /turf/open/floor/rogue/cobble,
+/area/rogue/under/cave)
+"hkR" = (
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/water/river/flow,
 /area/rogue/under/cave)
 "hlg" = (
 /obj/structure/fluff/railing/border{
@@ -7841,6 +7861,13 @@
 	icon_state = "stonewindow"
 	},
 /area/rogue/under/cave/inferno)
+"hPd" = (
+/mob/living/simple_animal/hostile/retaliate/rogue/primordial/water{
+	stationary_until_aggro = 1;
+	faction = list("water")
+	},
+/turf/open/water/cleanshallow,
+/area/rogue/under/cave)
 "hPp" = (
 /turf/open/floor/rogue/volcanic/magma,
 /area/rogue/under/cave/inferno)
@@ -8577,6 +8604,11 @@
 /obj/item/candle/skull/lit,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/banditcamp/byos)
+"iCP" = (
+/obj/structure/table/finestone,
+/obj/item/roguegem/random,
+/turf/open/floor/rogue/underworld/space/sparkle_quiet,
+/area/rogue/under/cave)
 "iCX" = (
 /obj/structure/fluff/big_chain,
 /turf/open/floor/rogue/concrete/bronze,
@@ -9721,7 +9753,8 @@
 /area/rogue/under/cave)
 "jIL" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/spider/rock{
-	faction = list("fae")
+	faction = list("fae");
+	stationary_until_aggro = 1
 	},
 /turf/open/floor/rogue/greenstone/runed{
 	dir = 8
@@ -11096,13 +11129,7 @@
 /obj/item/dildo/gold{
 	pixel_x = -10
 	},
-/obj/item/roguekey{
-	icon_state = "vampkey";
-	lockid = "lust";
-	name = "Key of Lust";
-	desc = "It's smooth and sensual to the touch.";
-	is_important = 1
-	},
+/obj/item/roguekey/sin/lust,
 /obj/item/clothing/neck/roguetown/collar/catbell,
 /obj/item/clothing/neck/roguetown/cursed_collar,
 /turf/open/floor/rogue/cobble,
@@ -11131,7 +11158,9 @@
 /turf/open/floor/rogue/carpet/lord/right,
 /area/rogue/under/town/basement)
 "kXN" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/primordial/air,
+/mob/living/simple_animal/hostile/retaliate/rogue/primordial/air{
+	faction = list("abberant")
+	},
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave)
 "kXV" = (
@@ -11246,6 +11275,10 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/tribeden)
+"lbk" = (
+/obj/item/roguegem/amber,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/under/cave)
 "lbC" = (
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/inq/boat)
@@ -11743,6 +11776,9 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/tribeden)
+"lyF" = (
+/turf/open/floor/rogue/underworld/space,
+/area/rogue/under/cave)
 "lyQ" = (
 /obj/structure/chair/stool/rogue,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -11939,6 +11975,9 @@
 /obj/item/fishingrod,
 /turf/open/floor/rogue/dunes,
 /area/rogue/outdoors/beach/byos)
+"lET" = (
+/turf/open/floor/rogue/underworld/space/sparkle_quiet,
+/area/rogue/under/cave)
 "lEW" = (
 /obj/structure/closet/crate/chest,
 /turf/open/floor/rogue/blocks,
@@ -12523,17 +12562,6 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk,
 /obj/effect/decal/cleanable/roguerune/arcyne/summoning,
 /turf/open/floor/rogue/greenstone/runed,
-/area/rogue/under/cave)
-"mjd" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/primordial/water{
-	stationary_until_aggro = 1;
-	faction = list("neutral", "water")
-	},
-/mob/living/simple_animal/hostile/retaliate/rogue/primordial/water{
-	stationary_until_aggro = 1;
-	faction = list("neutral", "water")
-	},
-/turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/under/cave)
 "mjg" = (
 /obj/structure/flora/roguegrass/water/reeds,
@@ -13333,7 +13361,9 @@
 /area/rogue/indoors/inq/boat)
 "mYZ" = (
 /obj/effect/decal/cleanable/roguerune/arcyne/teleport,
-/mob/living/simple_animal/hostile/retaliate/rogue/primordial/air,
+/mob/living/simple_animal/hostile/retaliate/rogue/primordial/air{
+	faction = list("abberant")
+	},
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave)
 "mZi" = (
@@ -14458,6 +14488,14 @@
 /obj/effect/landmark/mapGenerator/rogue/jungle,
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/mountains)
+"oep" = (
+/mob/living/carbon/human/species/goblin/npc/ambush/sea{
+	icon_state = "goblin_sea";
+	stationary_until_aggro = 1;
+	faction = list("water")
+	},
+/turf/open/floor/rogue/dark_ice,
+/area/rogue/under/cave)
 "oeq" = (
 /turf/closed/wall/mineral/rogue/roofwall/outercorner{
 	dir = 4;
@@ -14803,13 +14841,7 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/inq/boat/basement)
 "oqF" = (
-/obj/item/roguekey{
-	icon_state = "eyekey";
-	lockid = "wrath";
-	name = "Key of Wrath";
-	desc = "It's eye glares at you intensely.";
-	is_important = 1
-	},
+/obj/item/roguekey/sin/wrath,
 /obj/structure/closet/crate/chest/gold,
 /turf/open/floor/rogue/tile,
 /area/rogue/under/cave/inferno)
@@ -15969,13 +16001,7 @@
 /obj/item/clothing/suit/roguetown/shirt/dress/royal,
 /obj/item/clothing/head/roguetown/crown/fakecrown,
 /obj/item/clothing/suit/roguetown/shirt/dress/royal/prince,
-/obj/item/roguekey{
-	icon_state = "spikekey";
-	lockid = "envy";
-	name = "Key of Envy";
-	desc = "It's covered in small spikes. It hurts to hold.";
-	is_important = 1
-	},
+/obj/item/roguekey/sin/envy,
 /turf/open/floor/rogue/dirt/desert,
 /area/rogue/under/cave)
 "psA" = (
@@ -16991,6 +17017,10 @@
 "qsu" = (
 /turf/closed/wall/mineral/rogue/decostone/end/west,
 /area/rogue/under/cave/licharena)
+"qsB" = (
+/obj/item/roguegem/ruby,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/under/cave)
 "qsG" = (
 /turf/closed/wall/mineral/rogue/wooddark/end{
 	dir = 8
@@ -17575,7 +17605,9 @@
 /turf/open/floor/rogue/blocks/green,
 /area/rogue/under/cave/tribeden)
 "qVJ" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/fae/sprite,
+/mob/living/simple_animal/hostile/retaliate/rogue/fae/sprite{
+	stationary_until_aggro = 1
+	},
 /turf/open/floor/rogue/grasscold,
 /area/rogue/under/underdark{
 	first_time_text = null
@@ -18234,6 +18266,14 @@
 "rCA" = (
 /turf/closed/wall/mineral/rogue/wooddark/vertical,
 /area/rogue/indoors/inq/boat/basement)
+"rCB" = (
+/mob/living/simple_animal/hostile/retaliate/rogue/fae/sprite{
+	stationary_until_aggro = 1
+	},
+/turf/open/floor/rogue/grasspurple,
+/area/rogue/under/underdark{
+	first_time_text = null
+	})
 "rEv" = (
 /obj/structure/mineral_door/bars{
 	locked = 1;
@@ -18428,14 +18468,7 @@
 	pixel_x = 2;
 	pixel_y = 5
 	},
-/obj/item/roguekey{
-	icon_state = "vampkey";
-	lockid = "gluttony";
-	name = "Key of Gluttony";
-	desc = "It's covered in a thick flesh-like substance.";
-	color = "#751f09";
-	is_important = 1
-	},
+/obj/item/roguekey/sin/gluttony,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave)
 "rMn" = (
@@ -19904,7 +19937,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/inq/boat)
 "sTq" = (
-/turf/open/water/ocean,
+/turf/open/floor/rogue/dark_ice,
 /area/rogue/under/cave)
 "sTF" = (
 /obj/structure/fluff/railing/border/east,
@@ -20130,7 +20163,7 @@
 /mob/living/carbon/human/species/goblin/npc/ambush/sea{
 	icon_state = "goblin_sea";
 	stationary_until_aggro = 1;
-	faction = list("neutral", "water")
+	faction = list("water")
 	},
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave)
@@ -20422,14 +20455,7 @@
 "tsG" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/roguegem/diamond,
-/obj/item/roguekey{
-	icon_state = "bosskey";
-	lockid = "pride";
-	name = "Key of Pride";
-	desc = "It depicts an etched face, grinning like a madman.";
-	pixel_x = -10;
-	is_important = 1
-	},
+/obj/item/roguekey/sin/pride,
 /obj/item/rogueweapon/sword/long/zizo,
 /turf/open/floor/rogue/carpet/lord/left,
 /area/rogue/under/cave/licharena)
@@ -23166,9 +23192,7 @@
 /turf/open/floor/rogue/tile,
 /area/rogue/under/cave/licharena)
 "vYO" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk{
-	faction = list("neutral")
-	},
+/mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave)
 "vZu" = (
@@ -23560,7 +23584,7 @@
 /mob/living/carbon/human/species/goblin/npc/ambush/sea{
 	icon_state = "goblin_sea";
 	stationary_until_aggro = 1;
-	faction = list("neutral", "water")
+	faction = list("water")
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave)
@@ -23948,6 +23972,10 @@
 /obj/structure/bed/rogue/shit,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/mountains)
+"wKE" = (
+/obj/effect/decal/cleanable/debris/stony,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/under/cave)
 "wKK" = (
 /obj/structure/flora/rock/pile,
 /obj/effect/decal/cleanable/debris,
@@ -24292,13 +24320,7 @@
 /area/rogue/indoors/inq/boat)
 "xda" = (
 /obj/structure/closet/crate/chest/gold,
-/obj/item/roguekey{
-	icon_state = "greenkey";
-	lockid = "sloth";
-	name = "Key of Sloth";
-	desc = "Whoever forged this key put barely any effort into it.";
-	is_important = 1
-	},
+/obj/item/roguekey/sin/sloth,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave)
 "xde" = (
@@ -59770,7 +59792,7 @@ gJn
 gJn
 gJn
 gJn
-gJn
+gro
 gJn
 gJn
 gJn
@@ -172032,7 +172054,7 @@ pHP
 izw
 pHP
 pHP
-izw
+eVS
 pHP
 pHP
 izw
@@ -172223,7 +172245,7 @@ eWy
 eWy
 eWy
 eWy
-eWy
+oep
 eWy
 pHP
 pHP
@@ -172237,7 +172259,7 @@ pHP
 ffv
 pHP
 pHP
-izw
+eVS
 pHP
 pHP
 hJo
@@ -172425,7 +172447,7 @@ eWy
 eWy
 eWy
 eWy
-hJo
+loo
 eWy
 wsY
 hJo
@@ -172436,12 +172458,12 @@ dLa
 hJo
 hJo
 iZl
-hJo
+wKE
 hKl
-izw
-hJo
+eVS
+wKE
 iZl
-izw
+eVS
 izw
 izw
 bVF
@@ -172641,7 +172663,7 @@ xui
 hJo
 pHP
 pHP
-hJo
+wKE
 pHP
 jLR
 wOU
@@ -172829,7 +172851,7 @@ eWy
 eWy
 eWy
 jtS
-tgd
+izw
 hJo
 izw
 hJo
@@ -172840,7 +172862,7 @@ jLR
 wOU
 pHP
 pHP
-izw
+eVS
 pHP
 pHP
 hJo
@@ -173040,13 +173062,13 @@ loo
 dSL
 izw
 hKl
-ffv
+ocC
 izw
 hKl
 iZl
-izw
-hJo
-izw
+eVS
+wKE
+eVS
 ffv
 hJo
 hJo
@@ -173244,7 +173266,7 @@ pHP
 hJo
 pHP
 pHP
-hJo
+wKE
 pHP
 pHP
 izw
@@ -173449,7 +173471,7 @@ pHP
 izw
 pHP
 pHP
-hJo
+wKE
 pHP
 pHP
 hJo
@@ -175259,12 +175281,12 @@ eWy
 eWy
 eWy
 htM
-mjd
+htM
 oai
 xvV
 oai
 oai
-oai
+hPd
 oai
 oai
 oai
@@ -212419,11 +212441,11 @@ eWy
 eWy
 pHP
 vYO
+eqU
 qae
 qae
 qae
-qae
-qae
+eqU
 qae
 qae
 qae
@@ -212434,18 +212456,18 @@ qbj
 qae
 qae
 xui
-qae
-pqe
+emh
+egy
 qae
 qae
 qae
 qbj
 pHP
+wgO
 qae
+lET
 qae
-qae
-qae
-qae
+lyF
 bqG
 pHP
 pHP
@@ -212643,10 +212665,10 @@ qae
 qae
 wgO
 pHP
+lET
 qae
 qae
-qae
-qae
+lyF
 qae
 qae
 xPp
@@ -212830,7 +212852,7 @@ qae
 qae
 qae
 eDz
-qae
+eqU
 eDz
 eDz
 heX
@@ -212846,12 +212868,12 @@ xui
 qae
 heX
 qae
+lyF
 qae
 qae
 qae
-qae
-qae
-qae
+lyF
+lET
 pHP
 eWy
 eWy
@@ -213026,9 +213048,9 @@ eWy
 pHP
 qae
 eDz
+lbk
 qae
-qae
-qae
+eqU
 eDz
 qae
 eDz
@@ -213036,15 +213058,15 @@ qae
 qae
 qae
 yio
+emh
 qae
 qae
 qae
-qae
-qae
+eqU
 qae
 xui
 qae
-qae
+emh
 qae
 yio
 qae
@@ -213053,7 +213075,7 @@ qae
 mYZ
 qae
 qae
-qae
+lET
 pHP
 eWy
 eWy
@@ -213249,13 +213271,13 @@ qae
 qae
 qae
 yio
+lyF
+lET
 qae
 qae
 qae
 qae
-qae
-qae
-qae
+lET
 pHP
 eWy
 eWy
@@ -213428,11 +213450,11 @@ eWy
 eWy
 eWy
 vgm
-qae
+eqU
 eDz
 qae
 qae
-qae
+qsB
 mQe
 vBQ
 eDz
@@ -213454,7 +213476,7 @@ heX
 qae
 qae
 qae
-qae
+lET
 qae
 kXN
 qae
@@ -213653,13 +213675,13 @@ emh
 qae
 wgO
 pHP
-eXp
+iCP
+lET
 qae
+lET
 qae
-qae
-qae
-qae
-qae
+lET
+wgO
 pHP
 eWy
 eWy
@@ -214040,11 +214062,11 @@ qae
 qae
 qae
 qae
-qae
+eqU
 qae
 vBQ
 eDz
-qae
+eqU
 pHP
 pHP
 dTL
@@ -214440,7 +214462,7 @@ eWy
 pHP
 vYO
 qae
-qae
+eqU
 qae
 qae
 qae
@@ -214665,7 +214687,7 @@ jNV
 liz
 tvf
 sLE
-vaV
+wMJ
 wyK
 uXM
 dNc
@@ -215061,7 +215083,7 @@ eWy
 nTx
 wyF
 sLE
-tvf
+rCB
 wyK
 uXM
 wyK
@@ -215267,7 +215289,7 @@ tvf
 vaV
 wyF
 tvf
-tvf
+rCB
 sLE
 uXM
 liz
@@ -215465,7 +215487,7 @@ eWy
 jNV
 fra
 vaV
-wMJ
+vaV
 wyK
 tvf
 vaV
@@ -216282,7 +216304,7 @@ wyK
 kBq
 vaV
 uXM
-lCu
+tvf
 wyF
 roi
 tvf
@@ -216487,7 +216509,7 @@ nTx
 bPO
 vaV
 wyK
-vaV
+bdI
 tvf
 uXM
 uXM
@@ -216697,7 +216719,7 @@ iLt
 bKi
 eWy
 eWy
-rwC
+hkR
 rwC
 rwC
 sFQ
@@ -217092,13 +217114,13 @@ iLt
 iLt
 cbO
 iLt
+aBC
 qtY
 qtY
 qtY
 qtY
 qtY
-qtY
-rwC
+hkR
 rwC
 rwC
 sFQ
@@ -217490,7 +217512,7 @@ eDs
 qtY
 qtY
 qtY
-qtY
+aBC
 qtY
 qtY
 qtY
