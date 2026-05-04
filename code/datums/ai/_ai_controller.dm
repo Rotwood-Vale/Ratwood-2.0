@@ -227,7 +227,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	if(!can_idle)
 		return FALSE
 	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
-		if(length(grid.client_contents))
+		for(var/mob/living/M in grid.client_contents)
 			return FALSE
 	return TRUE
 
@@ -237,12 +237,17 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	if(should_idle())
 		set_ai_status(AI_STATUS_OFF)
 
-/datum/ai_controller/proc/on_client_enter(datum/source, atom/target)
+/datum/ai_controller/proc/on_client_enter(datum/source, list/entering_clients)
 	SIGNAL_HANDLER
-	if(ai_status == AI_STATUS_OFF || ai_status == AI_STATUS_IDLE)
-		set_ai_status(get_expected_ai_status())
 
-/datum/ai_controller/proc/on_client_exit(datum/source, datum/exited)
+	if(ai_status != AI_STATUS_OFF && ai_status != AI_STATUS_IDLE)
+		return
+		
+	for(var/mob/living/M in entering_clients)
+		set_ai_status(get_expected_ai_status())
+		return
+
+/datum/ai_controller/proc/on_client_exit(datum/source, list/exited_clients)
 	SIGNAL_HANDLER
 	recalculate_idle()
 

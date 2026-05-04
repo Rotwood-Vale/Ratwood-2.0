@@ -981,7 +981,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 
 /mob/living/simple_animal/proc/consider_wakeup()
 	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
-		if(length(grid.client_contents))
+		for(var/mob/living/M in grid.client_contents)
 			toggle_ai(AI_ON)
 			return TRUE
 
@@ -1035,12 +1035,15 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 			playsound(src, "fart", 100, TRUE)
 			new pooptype(loc)
 
-/mob/living/simple_animal/proc/on_client_enter(datum/source, atom/target)
+/mob/living/simple_animal/proc/on_client_enter(datum/source, list/entering_clients)
 	SIGNAL_HANDLER
-	if(AIStatus == AI_IDLE)
+	if(AIStatus != AI_IDLE)
+		return
+	for(var/mob/living/M in entering_clients)
 		toggle_ai(AI_ON)
+		return
 
-/mob/living/simple_animal/proc/on_client_exit(datum/source, datum/exited)
+/mob/living/simple_animal/proc/on_client_exit(datum/source, list/exited_clients)
 	SIGNAL_HANDLER
 	consider_wakeup()
 

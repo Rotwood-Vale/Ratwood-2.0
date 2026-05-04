@@ -2930,8 +2930,10 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					return
 
 				if("observe")
-					var/mob/dead/new_player/P = user
-					P.make_me_an_observer()
+					// SPECTATE DISABLED for testing — show notice instead of routing to make_me_an_observer
+					// var/mob/dead/new_player/P = user
+					// P.make_me_an_observer()
+					to_chat(user, span_notice("Spectate disabled currently for testing purposes."))
 					return
 
 				if("finished")

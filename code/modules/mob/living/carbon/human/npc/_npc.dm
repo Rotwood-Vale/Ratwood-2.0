@@ -947,15 +947,15 @@
 	else
 		return FALSE
 
-/mob/living/carbon/human/proc/on_client_enter(datum/source, atom/target)
+/mob/living/carbon/human/proc/on_client_enter(datum/source, list/entering_clients)
 	SIGNAL_HANDLER
-	if(mode == NPC_AI_OFF)
+	if(mode != NPC_AI_SLEEP)
+		return
+	for(var/mob/living/M in entering_clients)
+		mode = NPC_AI_IDLE
 		return
 
-	if(mode == NPC_AI_SLEEP)
-		mode = NPC_AI_IDLE
-
-/mob/living/carbon/human/proc/on_client_exit(datum/source, datum/exited)
+/mob/living/carbon/human/proc/on_client_exit(datum/source, list/exited_clients)
 	SIGNAL_HANDLER
 	if(mode == NPC_AI_OFF)
 		return
@@ -988,7 +988,7 @@
 		return
 
 	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
-		if(length(grid.client_contents))
+		for(var/mob/living/M in grid.client_contents)
 			if(mode != NPC_AI_SLEEP && mode != NPC_AI_IDLE)
 				return TRUE
 			mode = NPC_AI_IDLE

@@ -192,11 +192,10 @@ GLOBAL_VAR_INIT(mobids, 1)
 		return
 	if(!islist(ignored_mobs))
 		ignored_mobs = list(ignored_mobs)
-	var/list/hidden_ghosts = null
-	if(has_ghost_protection(src))
-		hidden_ghosts = get_hidden_ghosts_for_target(src)
-		if(length(hidden_ghosts))
-			ignored_mobs += hidden_ghosts
+	// if(has_ghost_protection(src))
+	// 	hidden_ghosts = get_hidden_ghosts_for_target(src)
+	// 	if(length(hidden_ghosts))
+	// 		ignored_mobs += hidden_ghosts
 	var/list/hearers = get_hearers_in_view(vision_distance, src) //caches the hearers and then removes ignored mobs.
 	hearers -= ignored_mobs
 	if(self_message)
