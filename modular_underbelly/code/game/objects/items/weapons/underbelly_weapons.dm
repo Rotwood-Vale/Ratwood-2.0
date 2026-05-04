@@ -33,6 +33,7 @@
 	wlength = WLENGTH_SHORT
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_HIP
+	load_time = 35
 	var/rounds_remaining = 2
 	var/pending_rounds = 0
 	/// Set when the firing mechanism jams. Cleared by right-clicking to fix it.
@@ -187,6 +188,7 @@
 	spread = 8
 	spread_num = 4
 	possible_item_intents = list(/datum/intent/shoot/firearm/scum, /datum/intent/arc/firearm/scum, /datum/intent/mace/strike/wood)
+	load_time = 35
 	/// TRUE while the breech is open. Required for loading powder/ball; closed by ramming, opened by use-in-hand.
 	var/breech_open = TRUE
 
@@ -299,7 +301,7 @@
 	gripped_intents = list(/datum/intent/shoot/firearm/scum, /datum/intent/arc/firearm/scum, /datum/intent/mace/strike/wood)
 	alt_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
 	cartridge_wording = "lead ball"
-	load_time = 60
+	load_time = 40
 	minstr = 8
 	spread_num = 4
 	/// Number of lead balls currently loaded.
@@ -599,7 +601,7 @@ GLOBAL_LIST_INIT(cannon_loadable_species, typecacheof(list(
 	gripped_intents = null
 	slot_flags = ITEM_SLOT_BACK
 	cartridge_wording = "cannonball"
-	load_time = 80
+	load_time = 55
 	minstr = 13
 	var/mob/living/loaded_passenger
 
@@ -835,6 +837,7 @@ GLOBAL_LIST_INIT(cannon_loadable_species, typecacheof(list(
 	spread = 15
 	spread_num = 5
 	gripped_intents = list(/datum/intent/shoot/firearm/scum, /datum/intent/arc/firearm/scum, INTENT_GENERIC)
+	load_time = 35
 	var/rounds_remaining = 0
 	/// Max grapeshots the barrel can hold. Raised to 3 by the capacity upgrade kit.
 	var/max_capacity = 2

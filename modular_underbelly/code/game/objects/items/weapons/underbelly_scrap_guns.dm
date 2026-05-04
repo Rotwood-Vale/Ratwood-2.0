@@ -20,6 +20,7 @@
 	wlength = WLENGTH_SHORT
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_HIP
+	load_time = 35
 
 /obj/item/gun/ballistic/firearm/arquebus_pistol/scrap_pistol/shoot_live_shot(mob/living/user, pointblank = 0, mob/pbtarget = null, message = 1)
 	if(prob(25))
@@ -42,6 +43,7 @@
 	spread_num = 11
 	gripped_intents = list(/datum/intent/shoot/firearm/scum, /datum/intent/arc/firearm/scum, INTENT_GENERIC)
 	mag_type = /obj/item/ammo_box/magazine/internal/firearm/blunderbuss
+	load_time = 35
 
 /obj/item/gun/ballistic/firearm/blunderbuss/scrap_blunderbuss/shoot_live_shot(mob/living/user, pointblank = 0, mob/pbtarget = null, message = 1)
 	if(prob(35))
@@ -61,6 +63,7 @@
 	spread = 12
 	spread_num = 6
 	gripped_intents = list(/datum/intent/shoot/firearm/scum, /datum/intent/arc/firearm/scum, INTENT_GENERIC)
+	load_time = 35
 
 /obj/item/gun/ballistic/firearm/arquebus/scrap_musket/shoot_live_shot(mob/living/user, pointblank = 0, mob/pbtarget = null, message = 1)
 	if(prob(25))
