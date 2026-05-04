@@ -78,7 +78,7 @@
 			H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
 			D.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WITCH, devotion_limit = CLERIC_REQ_2)
 			D.max_devotion *= 0.5
-			ADD_TRAIT(TRAIT_RITUALIST, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC)
 			switch(H.patron?.type)
 				if(/datum/patron/divine/astrata)
 					neck = /obj/item/clothing/neck/roguetown/psicross/astrata
@@ -113,7 +113,7 @@
 			D.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_1)
 			D.max_devotion *= 0.5
 			ADD_TRAIT(H, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
-			ADD_TRAIT(TRAIT_RITUALIST, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC)
 			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 			H.mind?.adjust_spellpoints(6) // twelve if you pick arcyne potential
 			switch(H.patron?.type)
