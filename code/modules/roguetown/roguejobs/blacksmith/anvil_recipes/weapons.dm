@@ -1151,6 +1151,98 @@
 	created_item = /obj/item/rogueweapon/shield/tower/holysee
 	i_type = "Weapons"
 
+/datum/anvil_recipe/weapons/holysteel/Astrasword
+	name = "Solar Judgement (+1 Holy Steel)"
+	req_bar = /obj/item/ingot/steelholy
+	additional_items = list(/obj/item/ingot/steelholy)
+	created_item = /obj/item/rogueweapon/sword/long/exe/astrata
+	i_type = "Weapons"
+
+/datum/anvil_recipe/weapons/holysteel/Nocsabre
+	name = "Moonlight Khopesh"
+	req_bar = /obj/item/ingot/steelholy
+	created_item = /obj/item/rogueweapon/sword/sabre/nockhopesh
+	i_type = "Weapons"
+
+/datum/anvil_recipe/weapons/holysteel/Nocflail
+	name = "Swift End"
+	req_bar = /obj/item/ingot/steelholy
+	created_item = /obj/item/rogueweapon/flail/sflail/necraflail
+	i_type = "Weapons"
+
+/datum/anvil_recipe/weapons/holysteel/pestradagger
+	name = "Plaguebringer Sickle"
+	req_bar = /obj/item/ingot/steelholy
+	created_item = /obj/item/rogueweapon/huntingknife/idagger/steel/pestrasickle
+	i_type = "Weapons"
+
+/datum/anvil_recipe/weapons/holysteel/MalMaul
+	name = "Kargrund Maul (+2 Holy Steel)"
+	req_bar = /obj/item/ingot/steelholy
+	additional_items = list(/obj/item/ingot/steelholy, /obj/item/ingot/steelholy)
+	created_item = /obj/item/rogueweapon/mace/maul/grand/malum
+	i_type = "Weapons"
+
+/datum/anvil_recipe/weapons/holysteel/Denscythe
+	name = "Summer Scythe"
+	req_bar = /obj/item/ingot/steelholy
+	additional_items = list(/obj/item/ingot/steelholy, /obj/item/ingot/steelholy, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/halberd/bardiche/scythe
+	i_type = "Weapons"
+
+/datum/anvil_recipe/weapons/holysteel/Xyxlash
+	name = "Cackle Lash (+3 Cured Leather)"
+	req_bar = /obj/item/ingot/steelholy
+	additional_items = list(/obj/item/natural/hide/cured, /obj/item/natural/hide/cured, /obj/item/natural/hide/cured)
+	created_item = /obj/item/rogueweapon/whip/xylix
+	i_type = "Weapons"
+
+/datum/anvil_recipe/weapons/holysteel/Ravsword
+	name = "Censure (+2 Holy Steel)"
+	req_bar = /obj/item/ingot/steelholy
+	additional_items = list(/obj/item/ingot/steelholy, /obj/item/ingot/steelholy)
+	created_item = /obj/item/rogueweapon/greatsword/grenz/flamberge/ravox
+	i_type = "Weapons"
+
+/datum/anvil_recipe/weapons/holysteel/EoraStab
+	name = "The Heartstring"
+	req_bar = /obj/item/ingot/steelholy
+	created_item = /obj/item/rogueweapon/sword/rapier/eora
+	i_type = "Weapons"
+
+/datum/anvil_recipe/weapons/holysteel/AybssAxe
+	name = "Tidecleaver (+1 Holy Steel)"
+	req_bar = /obj/item/ingot/steelholy
+	additional_items = list(/obj/item/ingot/steelholy)
+	created_item = /obj/item/rogueweapon/stoneaxe/battle/abyssoraxe
+	i_type = "Weapons"
+
+/datum/anvil_recipe/weapons/holysteel/NecraAxe
+	name = "Respite (+2 Holy Steel, +1 Small Log)"
+	req_bar = /obj/item/ingot/steelholy
+	additional_items = list(/obj/item/ingot/steelholy, /obj/item/ingot/steelholy, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/greataxe/steel/necran
+	i_type = "Weapons"
+
+/datum/anvil_recipe/weapons/holysteel/EclipsSword
+	name = "Eclipsum Longsword (+1 Holy Steel)"
+	req_bar = /obj/item/ingot/steelholy
+	additional_items = list(/obj/item/ingot/steelholy)
+	created_item = /obj/item/rogueweapon/sword/long/holysee_lesser
+	i_type = "Weapons"
+
+/datum/anvil_recipe/weapons/holysteel/EoraKnuck
+	name = "Close Caress"
+	req_bar = /obj/item/ingot/steelholy
+	created_item = /obj/item/rogueweapon/knuckles/eora
+	i_type = "Weapons"
+
+/datum/anvil_recipe/weapons/holysteel/AbyssKuck
+	name = "Barotrauma"
+	req_bar = /obj/item/ingot/steelholy
+	created_item = /obj/item/rogueweapon/katar/abyssor
+	i_type = "Weapons"
+
 // BLESSED SILVER
 
 /datum/anvil_recipe/weapons/psy/axe
