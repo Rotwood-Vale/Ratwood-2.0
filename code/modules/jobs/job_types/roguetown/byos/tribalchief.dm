@@ -42,6 +42,8 @@
 
 /datum/outfit/job/roguetown/tribalchieftain
 	// job_bitflag = BITFLAG_ROYALTY
+	allowed_patrons = list(/datum/patron/dragon)
+	default_patron = /datum/patron/dragon
 
 /datum/outfit/job/roguetown/tribalchieftain
 	head = /obj/item/clothing/head/roguetown/crown/byos

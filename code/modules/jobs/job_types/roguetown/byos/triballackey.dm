@@ -26,12 +26,14 @@
 	round_contrib_points = 2
 	cmode_music = 'sound/music/combat_gronn.ogg'
 	social_rank = SOCIAL_RANK_PEASANT
-	job_traits = list(TRAIT_OUTDOORSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_TRIBAL, TRAIT_DARKVISION)
+	job_traits = list(TRAIT_OUTDOORSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_TRIBAL, TRAIT_DARKVISION, TRAIT_PASSTABLE)
 	job_subclasses = list(
 		/datum/advclass/tribalrabble/rabble,
 	)
 
 /datum/outfit/job/roguetown/tribalrabble
+	allowed_patrons = list(/datum/patron/dragon)
+	default_patron = /datum/patron/dragon
 	cloak = /obj/item/clothing/cloak/tribal
 	belt = /obj/item/storage/belt/rogue/leather/rope
 	backr = /obj/item/storage/backpack/rogue/satchel

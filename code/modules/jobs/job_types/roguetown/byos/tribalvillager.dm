@@ -26,7 +26,7 @@
 	cmode_music = 'sound/music/combat_gronn.ogg'
 	// social_rank = SOCIAL_RANK_PEASANT
 	// job_traits = list(TRAIT_WOODSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_TRIBAL)
-	job_traits = list(TRAIT_TRIBAL, TRAIT_OUTDOORSMAN, TRAIT_DARKVISION)
+	job_traits = list(TRAIT_TRIBAL, TRAIT_OUTDOORSMAN, TRAIT_DARKVISION, TRAIT_PASSTABLE)
 	job_subclasses = list(
 		/datum/advclass/barbersurgeon,
 		/datum/advclass/blacksmith,
@@ -57,3 +57,7 @@
 		pants = /obj/item/clothing/under/roguetown/loincloth/brown
 		wrists = null
 		shoes = null
+
+/datum/outfit/job/roguetown/tribalvillager
+	allowed_patrons = list(/datum/patron/dragon)
+	default_patron = /datum/patron/dragon

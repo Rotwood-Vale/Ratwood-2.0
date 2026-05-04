@@ -26,13 +26,15 @@
 	cmode_music = 'sound/music/combat_gronn.ogg'
 	// cmode_music = 'sound/music/hornofthebeast.ogg'
 	// social_rank = SOCIAL_RANK_PEASANT
-	job_traits = list(TRAIT_OUTDOORSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_TRIBAL, TRAIT_DARKVISION)
+	job_traits = list(TRAIT_OUTDOORSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_TRIBAL, TRAIT_DARKVISION, TRAIT_PASSTABLE)
 	job_subclasses = list(
 		/datum/advclass/tribalguard/hunter,
 		/datum/advclass/tribalguard/warrior,
 		/datum/advclass/tribalguard/savage)
 
 /datum/outfit/job/roguetown/tribalguard
+	allowed_patrons = list(/datum/patron/dragon)
+	default_patron = /datum/patron/dragon
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/fur
 	cloak = /obj/item/clothing/cloak/tribal
 	belt = /obj/item/storage/belt/rogue/leather/rope

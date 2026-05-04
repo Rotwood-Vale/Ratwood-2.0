@@ -5,3 +5,10 @@
 	Regardless of which they worship, one thing is shared: hatred for the Ten."
 	worshippers = "Cultists, The Ten-Scorned, The Rebellious"
 	godhead = /datum/patron/inhumen/zizo
+
+/datum/faith/dragon
+	name = "The Dragon"
+	desc = "The Dragon's cult is old, cruel, and insular. Its faithful revere dominion through fear, blood, and strength above all."
+	worshippers = "Island Tribals"
+	godhead = /datum/patron/dragon
+	preference_accessible = FALSE

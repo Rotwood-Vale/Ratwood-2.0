@@ -40,7 +40,6 @@ GLOBAL_LIST_EMPTY(prayers)
 	var/list/traits_tier = list()
 
 	var/datum/storyteller/storyteller
-
 /datum/patron/proc/on_gain(mob/living/pious)
 	for(var/trait in mob_traits)
 		ADD_TRAIT(pious, trait, "[type]")
