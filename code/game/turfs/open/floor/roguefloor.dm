@@ -950,7 +950,7 @@
 	tiled_dirt = FALSE
 	landsound = 'sound/foley/jumpland/dirtland.wav'
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/turf/open/floor/rogue/dirt/road,/turf/open/floor/rogue/dirt)
+	canSmoothWith = list(/turf/open/floor/rogue/dirt/road,/turf/open/floor/rogue/dirt,/turf/open/floor/rogue/volcanic/magma)
 	neighborlay = "lavedge"
 	temperature = 500
 
@@ -965,6 +965,7 @@
 	icon_state = "magma"
 	dir = SOUTH
 	smooth = SMOOTH_TRUE
+	canSmoothWith = list(/turf/open/floor/rogue/volcanic)
 	temperature = 1000
 	light_outer_range = 2
 	light_power = 0.45

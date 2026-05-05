@@ -23515,7 +23515,8 @@
 	STASTR = 8;
 	STACON = 10;
 	resize = 2;
-	faction = list("infernal", "tribe")
+	faction = list("infernal", "tribe");
+	stationary_until_aggro = 1
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/licharena)
@@ -24289,7 +24290,10 @@
 	},
 /area/rogue/outdoors/jungle)
 "wZv" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/minotaur/original,
+/mob/living/simple_animal/hostile/retaliate/rogue/minotaur/original{
+	faction = list("infernal");
+	stationary_until_aggro = 1
+	},
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/under/cave/licharena)
 "wZT" = (
@@ -25392,7 +25396,8 @@
 	STASTR = 8;
 	STACON = 10;
 	resize = 2;
-	faction = list("infernal", "tribe")
+	faction = list("infernal", "tribe");
+	stationary_until_aggro = 1
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/licharena)
