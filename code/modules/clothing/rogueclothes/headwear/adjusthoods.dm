@@ -24,6 +24,7 @@
 	block2add = FOV_BEHIND
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
+	armor = ARMOR_CLOTHING
 	nudist_approved = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
@@ -80,21 +81,16 @@
 	icon_state = "shalal"
 	item_state = "shalal"
 	flags_inv = HIDEHAIR|HIDEFACIALHAIR|HIDEFACE
-	sleevetype = null
-	sleeved = null
 	icon = 'icons/roguetown/clothing/head.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi' //Overrides slot icon behavior
 	alternate_worn_layer  = 8.9 //On top of helmet
 	body_parts_covered = HEAD|HAIR|EARS|NECK
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
-	armor = ARMOR_CLOTHING
 	dynamic_hair_suffix = ""
 	edelay_type = 1
 	adjustable = CAN_CADJUST
 	toggle_icon_state = TRUE
 	blocksound = SOFTHIT
-	max_integrity = 100
-	sewrepair = TRUE
 	mask_override = TRUE
 	overarmor = FALSE
 	salvage_result = /obj/item/natural/cloth
@@ -232,7 +228,6 @@
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	flags_inv = HIDENECK
 	dynamic_hair_suffix = ""
-	sewrepair = TRUE
 	salvage_result = /obj/item/natural/cloth
 	salvage_amount = 1
 	block2add = null
@@ -370,7 +365,6 @@
 	icon_state = "surghood"
 	item_state = "surghood"
 	color = "#a88d8d"
-	sewrepair = TRUE
 	resistance_flags = FIRE_PROOF
 	armor = ARMOR_SPELLSINGER //Higher-tier protection for pugilist-centric classes. Fits the 'glass cannon' style, and prevents instant death through a glancing headshot on the intended archetype.
 	blade_dulling = DULLING_BASHCHOP

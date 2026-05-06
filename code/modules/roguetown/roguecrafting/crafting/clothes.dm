@@ -238,3 +238,15 @@
 		/obj/item/natural/fibers = 3,
 		)
 	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/survival/mentorhat
+	name = "worn bamboo hat"
+	category = "Clothes"
+	result = /obj/item/clothing/head/roguetown/mentorhat
+	reqs = list(
+		/obj/item/grown/log/tree/small = 1,
+		/obj/item/grown/log/tree/stick = 2,
+		/obj/item/natural/fibers = 2,
+		)
+	skillcraft = /datum/skill/craft/crafting
+	craftdiff = 3

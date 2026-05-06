@@ -208,6 +208,20 @@
 	hammers_per_item = 5
 	skill_level = 1
 
+/datum/artificer_recipe/contraptions/folding_alchcauldron
+	name = "Folding Cauldron (+1 Small Log, +Stone Pot, +Tin)"
+	required_item = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/grown/log/tree/small, /obj/item/reagent_containers/glass/bucket/pot/stone, /obj/item/ingot/tin)
+	created_item = /obj/item/folding_table_stored/alchcauldron
+	skill_level = 3
+
+/datum/artificer_recipe/contraptions/folding_alchstation_stored
+	name = "Alchemical Station Kit (+2 Small Log, +Bottle, +Cog)"
+	required_item = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small, /obj/item/reagent_containers/glass/bottle, /obj/item/roguegear)
+	created_item = /obj/item/folding_table_stored/alchstation
+	skill_level = 3
+
 /datum/artificer_recipe/contraptions/mess_kit
 	name = "Mess Kit (+2 Iron)" // 3 Iron, cuz you get a pot, a pan and other things for free.
 	required_item = /obj/item/ingot/iron

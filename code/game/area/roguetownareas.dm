@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 		GLOB.azure_round_stats[STATS_GREED_DUSTED]++
 
 /area/rogue/indoors
-	name = "indoors rt"
+	name = "indoors"
 	icon_state = "indoors"
 	ambientrain = RAIN_IN
 	ambientsounds = AMB_INGEN
@@ -296,15 +296,6 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 /area/rogue/under/cave/licharena/bossroom/can_craft_here()
 	return FALSE
 
-/area/rogue/under/cave/undeadmanor
-	name = "skelemansion"
-	icon_state = "spidercave"
-	first_time_text = "ABANDONED MANOR"
-	droning_sound = 'sound/music/area/dungeon2.ogg'
-	droning_sound_dusk = null
-	droning_sound_night = null
-	converted_type = /area/rogue/outdoors/dungeon1
-	ceiling_protected = TRUE
 
 /area/rogue/under/cave/inferno
 	name = "inferno"
@@ -323,21 +314,6 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_dusk = null
 	droning_sound_night = null
 	ceiling_protected = TRUE
-
-/area/rogue/under/cave/inhumen
-	name = "inhumen"
-	icon_state = "cave"
-	first_time_text = "FORSAKEN CATHEDRAL"
-	droning_sound = 'sound/music/unholy.ogg'
-	droning_sound_dusk = 'sound/music/unholy.ogg'
-	droning_sound_night = 'sound/music/unholy.ogg'
-	converted_type = /area/rogue/outdoors/dungeon1
-
-/area/rogue/under/cave/inhumen/entrance // Only use these around traveltiles - Constantine
-	name = "inhumen"
-
-/area/rogue/under/cave/inhumen/entrance/can_craft_here() //Made to prevent killboxes - Constantine
-	return FALSE
 
 /area/rogue/under/cave/fishmandungeon //idk what the fish guys are called in lore
 	name = "fishmandungeon"
@@ -446,7 +422,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_night = null
 	deathsight_message = "a structure full of pained wails and practiced surgeons"
 
-/area/rogue/indoors/town/Academy
+/area/rogue/indoors/town/academy
 	name = "Academy"
 	icon_state = "academy"
 	droning_sound = 'sound/music/area/academy.ogg'
@@ -652,6 +628,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_dawn = 'sound/music/area/forest.ogg'
 	converted_type = /area/rogue/indoors/shelter/woods
 	deathsight_message = "A sacred place of dendor, beneath the tree of Aeons.."
+	first_time_text = "The Grove"
 	warden_area = TRUE
 	town_area = FALSE
 
@@ -752,6 +729,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_night = null
 	warden_area = TRUE
 	town_area = FALSE
+	first_time_text = "The Grove"
 
 /// under
 
@@ -788,23 +766,6 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 /area/rogue/outdoors/exposed/under/sewer
 	icon_state = "sewer"
 	droning_sound = 'sound/music/area/sewers.ogg'
-	droning_sound_dusk = null
-	droning_sound_night = null
-
-/area/rogue/under/town/caverogue
-	name = "miningcave (roguetown)"
-	icon_state = "caverogue"
-	ambientsounds = AMB_GENCAVE
-	ambientnight = AMB_GENCAVE
-	spookysounds = SPOOKY_CAVE
-	spookynight = SPOOKY_CAVE
-	droning_sound = 'sound/music/area/caves.ogg'
-	droning_sound_dusk = null
-	droning_sound_night = null
-	converted_type = /area/rogue/outdoors/exposed/under/caves
-/area/rogue/outdoors/exposed/under/caves
-	icon_state = "caves"
-	droning_sound = 'sound/music/area/caves.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
 

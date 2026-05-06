@@ -369,9 +369,9 @@
 
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
-	if(isturf(loc) && istype(loc.loc, /area/start))
-//		to_chat(M, "No attacking people at spawn, you jackass.")
-		return FALSE
+// 	if(isturf(loc) && istype(loc.loc, /area/start))//commented out after deleting the areatype - this is old SS13 code
+// //		to_chat(M, "No attacking people at spawn, you jackass.")
+// 		return FALSE
 
 	if (M.used_intent.type == INTENT_HARM)
 		if(HAS_TRAIT(M, TRAIT_PACIFISM))
@@ -399,9 +399,9 @@
 	..()
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
-	if(isturf(loc) && istype(loc.loc, /area/start))
-//		to_chat(M, "No attacking people at spawn, you jackass.")
-		return FALSE
+// 	if(isturf(loc) && istype(loc.loc, /area/start))//commented out after deleting the areatype - this is old SS13 code
+// //		to_chat(M, "No attacking people at spawn, you jackass.")
+// 		return FALSE
 
 	if (M.used_intent.type == INTENT_HARM)
 		if(HAS_TRAIT(M, TRAIT_PACIFISM))

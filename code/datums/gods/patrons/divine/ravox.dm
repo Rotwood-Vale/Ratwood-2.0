@@ -3,6 +3,8 @@
 	domain = "Justice, Battle, Glory, Righteous Fury"
 	desc = "The Glorious Justice plays as foil to Astrata's Order, preventing the world from being ruled by the Sun's Tyranny. He is an impartial God who exists solely to enforce Divine Justice. His followers are often misguided in their pursuit of such."
 	worshippers = "Warriors, Mercenaries, Knights, Seekers of Justice"
+	virtues = "Fairness, Combat Mastery, Courage"
+	sins = "Cowardice, Sadism, Sexual Violence"
 	mob_traits = list(TRAIT_SHARPER_BLADES)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/tug_of_war			= CLERIC_T0,

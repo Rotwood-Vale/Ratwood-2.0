@@ -15,6 +15,10 @@ GLOBAL_LIST_EMPTY(prayers)
 	var/desc = "A god that ordains you to report this on GitHub - You shouldn't be seeing this, someone forgot to set the description of this patron."
 	/// String that represents who worships this guy
 	var/worshippers = "Shitty coders"
+	///Which qualities the god approves of.
+	var/virtues = "Good coding"
+	///Which qualities the god despises.
+	var/sins = "Spaghetti coding"
 	/// Faith this god belongs to
 	var/datum/faith/associated_faith = /datum/faith
 	/// Whether or not we are accessible in preferences

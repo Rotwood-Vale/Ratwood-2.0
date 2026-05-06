@@ -66,6 +66,12 @@
 		else if(time_flags & TIME_OF_DAY_BIT_NIGHT)
 			modifier -= 0							//300-0 is 300, in the middle of the 'normal' temperature range
 
+	else if(SSmapping.config.map_name == "Build Your Own Settlement")	//desert map should feel hotter then other maps
+		if(time_flags & TIME_OF_DAY_BIT_DAY)
+			modifier += 70							//300+70 is 370, a smidge cooler than the middle of the 'hot' range
+		else if(time_flags & TIME_OF_DAY_BIT_NIGHT)
+			modifier -= 0							//300-0 is 300, in the middle of the 'normal' temperature range
+
 	else if(SSmapping.config.map_name == "Dun World")//Dunworld is colder then the other two maps
 		if(time_flags & TIME_OF_DAY_BIT_DAY)
 			modifier += 0							//No bonus for day time temperatures

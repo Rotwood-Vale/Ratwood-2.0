@@ -1378,8 +1378,11 @@
 						/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,
 						/turf/open/floor/rogue/cobble,
-						/turf/open/floor/rogue/cobble/mossy,
-						/turf/open/floor/rogue/blocks,)
+						/turf/open/floor/rogue/cobblerock,
+						/turf/open/floor/rogue/blocks,
+						/turf/open/floor/rogue/dirt/desert,
+						/turf/open/floor/rogue/dirt/road/desert,
+						/turf/open/floor/rogue/desert_grass,)
 
 /turf/open/floor/rogue/cobble/mossy/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
@@ -1443,6 +1446,9 @@
 						/turf/open/floor/rogue/snowpatchy,
 						/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,
+						/turf/open/floor/rogue/dirt/desert,
+						/turf/open/floor/rogue/dirt/road/desert,
+						/turf/open/floor/rogue/desert_grass,
 						/turf/closed/wall/mineral)
 
 /turf/open/floor/rogue/cobblerock/cardinal_smooth(adjacencies)

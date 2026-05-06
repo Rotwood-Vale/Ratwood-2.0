@@ -84,11 +84,20 @@
 	cost = 10
 	contains = list(/obj/item/clothing/neck/roguetown/collar/leather)
 
+/datum/supply_pack/rogue/bath_clothes/catbell_collar
+	name = "Catbell Collar"
+	cost = 15
+	contains = list(/obj/item/clothing/neck/roguetown/collar/catbell)
+
 /datum/supply_pack/rogue/bath_clothes/cowbell_collar
 	name = "Cowbell Collar"
-	cost = 20
-	contains = list(/obj/item/clothing/neck/roguetown/collar/catbell, /obj/item/clothing/neck/roguetown/collar/cowbell)
+	cost = 15
+	contains = list(/obj/item/clothing/neck/roguetown/collar/cowbell)
 
+/datum/supply_pack/rogue/bath_clothes/spikedcollar
+	name = "Spiked Dog-Collar"
+	cost = 40
+	contains = list(/obj/item/clothing/neck/roguetown/gorget/forlorncollar)
 
 /datum/supply_pack/rogue/bath_clothes/loincloth
 	name = "Loincloth"
@@ -110,3 +119,33 @@
 	name = "Lady's Belt"
 	cost = 10
 	contains = list(/obj/item/storage/belt/rogue/leather/cloth/lady)
+
+/datum/supply_pack/rogue/bath_clothes/corslet
+	name = "Leather Corslet"
+	cost = 30
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/bikini)
+
+/datum/supply_pack/rogue/bath_clothes/corslet/studded
+	name = "Leather Corslet (studded)"
+	cost = 40
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/studded/bikini)
+
+/datum/supply_pack/rogue/bath_clothes/corslet/hide
+	name = "Leather Corslet (barbarian-fashion)"
+	cost = 30
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/hide/bikini)
+
+/datum/supply_pack/rogue/bath_clothes/corslet/chain
+	name = "Chain Corslet"
+	cost = 50
+	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/bikini)
+
+/datum/supply_pack/rogue/bath_clothes/corslet/platehalf
+	name = "Full Plate Corslet"
+	cost = 60
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/bikini)
+
+/datum/supply_pack/rogue/bath_clothes/corslet/plate
+	name = "Full Plate Corslet"
+	cost = 80
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/full/bikini)

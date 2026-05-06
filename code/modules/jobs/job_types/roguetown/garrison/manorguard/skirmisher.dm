@@ -28,7 +28,7 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/riding = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/tracking = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/traps = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_NOVICE,
 	)
 	extra_context = "Chooses between Light Armor (Dodge Expert) & Medium Armor. Additionally, this subclass can set traps."
 
@@ -104,7 +104,7 @@
 	max_targets = 0
 	cast_without_targets = TRUE
 	antimagic_allowed = TRUE
-	associated_skill = /datum/skill/craft/traps
+	associated_skill = /datum/skill/craft/crafting
 	invocation_type = "whisper"
 	miracle = FALSE
 	req_items = list(/obj/item/rogueweapon/shovel)

@@ -16,6 +16,7 @@
 
 //Human Overlays Indexes/////////
 
+#define JOYBRINGER_LAYER		55
 #define BLACK_ROT_LAYER			54
 #define POTENCE_LAYER			53
 #define MUTATIONS_LAYER			52		//mutations. Tk headglows, cold resistance glow, etc
