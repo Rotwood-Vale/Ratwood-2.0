@@ -231,6 +231,8 @@
 	plant_def_type = /datum/plant_def/pipeweed
 
 /obj/item/seeds/swampweed
+	icon = 'icons/roguetown/items/produce.dmi'
+	icon_state = "seeds"
 	seed_identity = "swampweed seeds"
 	plant_def_type = /datum/plant_def/swampweed
 

@@ -1179,6 +1179,9 @@
 	if(!base_delta)
 		return 0
 
+	if(HAS_TRAIT(src, TRAIT_WEATHER_TEMP_RESIST))
+		base_delta = base_delta / 2
+
 	var/current_temp = bodytemperature
 	var/new_temp = current_temp + base_delta
 

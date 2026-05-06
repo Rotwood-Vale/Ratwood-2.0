@@ -375,6 +375,7 @@
 
 		var/holy_skill = user.get_skill_level(attached_spell.associated_skill)
 		var/drip_speed = 56 - (holy_skill * 8)
+		drip_speed = round(drip_speed * 0.5) // Containers fill at 50% faster tick rate
 		var/fatigue_spent = 0
 		var/fatigue_used = max(3, holy_skill)
 		while (do_after(user, drip_speed, target = thing))
@@ -408,5 +409,29 @@
 		the_cloth.wet = holy_skill * 5
 		user.visible_message(span_info("[user] closes [user.p_their()] eyes in prayer, beads of moisture coalescing in [user.p_their()] hands to moisten [the_cloth]."), span_notice("I utter forth a plea to [user.patron.name] for succour, and will moisture into [the_cloth]. I should be able to clean with it properly now."))
 		return water_moisten
-	else
-		to_chat(user, span_info("I'll need to find a container that can hold water."))
+	else if(istype(thing, /obj/structure/soil))
+		var/obj/structure/soil/target_soil = thing
+		if(target_soil.water >= MAX_PLANT_WATER)
+			to_chat(user, span_warning("[thing] is already saturated with water."))
+			return
+
+		user.visible_message(span_info("[user] closes [user.p_their()] eyes in prayer and extends a hand towards [thing] as water seeps from [user.p_their()] fingertips..."), span_notice("I utter forth a plea to [user.patron.name] for succour, and will moisture into [thing]..."))
+
+		var/holy_skill = user.get_skill_level(attached_spell.associated_skill)
+		var/drip_speed = 56 - (holy_skill * 8)
+		drip_speed = round(drip_speed * 0.5)
+		var/fatigue_spent = 0
+		var/fatigue_used = max(3, holy_skill)
+		while(do_after(user, drip_speed, target = thing))
+			if(target_soil.water >= MAX_PLANT_WATER || (user.devotion.devotion - fatigue_used <= 0))
+				break
+
+			target_soil.adjust_water(round(MAX_PLANT_WATER * 0.25)) // 25% of max water per tick
+			fatigue_spent += fatigue_used
+			user.stamina_add(fatigue_used)
+			user.devotion?.update_devotion(-1.0)
+
+			if(prob(80))
+				playsound(user, 'sound/items/fillcup.ogg', 55, TRUE)
+
+		return 0

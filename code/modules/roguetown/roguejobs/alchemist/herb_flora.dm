@@ -81,8 +81,7 @@
 	/obj/structure/flora/roguegrass/herb/valeriana,
 	/obj/structure/flora/roguegrass/herb/artemisia,
 	/obj/structure/flora/roguegrass/herb/rosa,
-	/obj/structure/flora/roguegrass/swampweed))
-
+		/obj/structure/flora/roguegrass/herb/swampweed))
 	var/obj/structure/flora/roguegrass/herb/boi = new type
 	boi.forceMove(get_turf(src))
 	boi.pixel_x += rand(-3,3)
@@ -187,3 +186,14 @@
 	icon_state = "manabloom2"
 
 	herbtype = /obj/item/reagent_containers/food/snacks/grown/manabloom
+
+/obj/structure/flora/roguegrass/herb/swampweed
+	name = "bunch of swampweed"
+	desc = "A green leaf good for smoking."
+	icon = 'icons/roguetown/misc/foliage.dmi'
+	icon_state = "swampweed1"
+	herbtype = /obj/item/reagent_containers/food/snacks/grown/rogue/swampweed
+
+/obj/structure/flora/roguegrass/herb/swampweed/Initialize(mapload)
+	. = ..()
+	icon_state = "swampweed[rand(1,3)]"

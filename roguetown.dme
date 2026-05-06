@@ -1115,6 +1115,7 @@
 #include "code\game\objects\items\rogueitems\barometer.dm"
 #include "code\game\objects\items\rogueitems\bells.dm"
 #include "code\game\objects\items\rogueitems\bombs.dm"
+#include "code\game\objects\items\rogueitems\druidic_staff.dm"
 #include "code\game\objects\items\rogueitems\books.dm"
 #include "code\game\objects\items\rogueitems\bouquet.dm"
 #include "code\game\objects\items\rogueitems\broom.dm"

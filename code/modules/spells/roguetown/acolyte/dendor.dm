@@ -302,8 +302,11 @@
 		target_tree = locate(/obj/structure/flora/roguetree) in target_turf
 	if(target_tree)
 		if(seed_source && get_dist(user, target_tree) > 1)
-			to_chat(user, span_warning("I must be right next to the tree to convert it with Dendor's blessing."))
-			return FALSE
+			// Druidic staff extends the conversion range to 2 tiles.
+			var/holding_druidic_staff = istype(user.get_active_held_item(), /obj/item/rogueweapon/woodstaff/druidic_staff) || istype(user.get_inactive_held_item(), /obj/item/rogueweapon/woodstaff/druidic_staff)
+			if(!holding_druidic_staff || get_dist(user, target_tree) > 2)
+				to_chat(user, span_warning("I must be right next to the tree to convert it with Dendor's blessing."))
+				return FALSE
 		if(seed_source && target_tree.reinvigorate_tree(user))
 			if(seed_source == user.get_active_held_item() || seed_source == user.get_inactive_held_item())
 				qdel(seed_source)

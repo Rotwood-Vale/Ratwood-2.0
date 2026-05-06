@@ -176,6 +176,13 @@
 	required_reagents = list(/datum/reagent/water/gross = 1)
 	required_temp = 375
 
+/datum/chemical_reaction/blessedwaterboil //boiling blessed water converts it to regular water
+	name = "blessed water boiling"
+	id = "blessedwaterboil"
+	results = list(/datum/reagent/water = 1)
+	required_reagents = list(/datum/reagent/water/blessed = 1)
+	required_temp = 375
+
 /datum/reagent/water/bathwater
 	taste_description = "bathwater"
 	color = "#c9e5eec6"

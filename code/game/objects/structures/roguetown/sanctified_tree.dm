@@ -90,8 +90,11 @@
 	var/active_ritual = null
 	/// Progress for the active ritual: associative list of "key" = deposited_count.
 	var/list/ritual_progress = list()
-	/// Cat1 berry-only tracking: TRUE while current cat1 ritual has only received berry food.
-	var/cat1_all_berries = TRUE
+	// ---- Innate harvest state (Dendor's Harvest) ---------------------------
+	/// Number of food items offered since last innate harvest reward.
+	var/harvest_count = 0
+	/// TRUE while all innate harvest offerings so far have been berries.
+	var/innate_harvest_all_berries = TRUE
 	/// Armor held for cat6 transmutation. Stored at the tree's turf until completion.
 	var/obj/item/ritual_armor = null
 
@@ -272,7 +275,6 @@
 
 	// No active ritual — show the category picker.
 	// Display order and skill gates:
-	//   cat1 (Dendor's Harvest)    — None
 	//   cat8 (Nature's Union)      — Novice
 	//   cat10 (Floral Conjuration) — Novice
 	//   cat2 (Fungal Vigil)        — Apprentice
@@ -286,7 +288,7 @@
 	//   cat11 (Winged Rebirth)   — Legendary
 	var/list/cat_opts = list()
 	var/list/cat_map = list()
-	for(var/cat in list("cat1", "cat8", "cat10", "cat2", "cat5", "cat12", "cat4", "cat7", "cat9", "cat3", "cat6", "cat11"))
+	for(var/cat in list("cat8", "cat10", "cat2", "cat5", "cat12", "cat4", "cat7", "cat9", "cat3", "cat6", "cat11"))
 		var/cat_name = get_ritual_display_name(cat)
 		if(is_once_per_tree(cat) && (cat in tree_data.rituals_completed))
 			cat_opts["[cat_name] (completed)"] = null
@@ -342,8 +344,6 @@
 	tree_data.ritual_progress = list()
 	for(var/key in req)
 		tree_data.ritual_progress[key] = 0
-	if(selected == "cat1")
-		tree_data.cat1_all_berries = TRUE
 	to_chat(user, span_notice("I begin the [get_ritual_display_name(selected)] ritual. Offer items by clicking the tree while holding them. Use the amulet only if I need to cancel."))
 	show_ritual_requirements(user, selected)
 
@@ -358,7 +358,6 @@
 
 /obj/structure/flora/roguetree/wise/sanctified/proc/get_ritual_display_name(category)
 	switch(category)
-		if("cat1") return "Dendor's Harvest"
 		if("cat2") return "Fungal Vigil"
 		if("cat3") return "Fey Weaving"
 		if("cat12") return "Timber's Tithe"
@@ -375,7 +374,6 @@
 /// Returns XP awarded to the player upon completing a ritual.
 /obj/structure/flora/roguetree/wise/sanctified/proc/get_ritual_xp(category)
 	switch(category)
-		if("cat1")  return 5
 		if("cat2")  return 25
 		if("cat3")  return 50
 		if("cat4")  return 100
@@ -394,12 +392,11 @@
 /// Returns associative list of offering key -> required count for the given category.
 /obj/structure/flora/roguetree/wise/sanctified/proc/get_required_offerings(category)
 	switch(category)
-		if("cat1") return list("food_item" = 6)
 		if("cat2") return list("manabloom_or_manacrystal" = 10)
 		if("cat3") return list("runed_or_leyline" = 1, "blessed_powder_alt" = 4)
 		if("cat4") return list("boulder_cat4" = 5, "any_stone_cat4" = 15)
 		if("cat5") return list("vital_item" = 10, "ash" = 10, "compost" = 10)
-		if("cat6") return list("zizobane" = 5, "runed_artifact" = 2, "druid_armor" = 1, "volf_head" = 1, "spider_head" = 1, "tree_seed" = 1, "blessed_seed_powder" = 1, "holy_water_container" = 1)
+		if("cat6") return list("zizobane" = 2, "runed_artifact" = 2, "druid_armor" = 1, "volf_head" = 1, "spider_head" = 1, "tree_seed" = 1, "blessed_seed_powder" = 1, "holy_water_container" = 1)
 		if("cat7") return list("leechtick" = 1, "bones" = 4)
 		if("cat8") return list("wedding_flower" = 1)
 		if("cat9") return list("boulder_only" = 1, "magic_stone_or_essence" = 1, "blessed_powder" = 5)
@@ -532,9 +529,6 @@
 					break
 				if(!check_offering_match(key, sack_item))
 					continue
-				if(tree_data.active_ritual == "cat1" && key == "food_item")
-					if(!istype(sack_item, /obj/item/reagent_containers/food/snacks/grown/berries))
-						tree_data.cat1_all_berries = FALSE
 				consume_offering(key, sack_item, user)
 				current++
 				tree_data.ritual_progress[key] = current
@@ -557,10 +551,6 @@
 			continue
 		if(!check_offering_match(key, held))
 			continue
-		// Track whether cat1 offering is a berry.
-		if(tree_data.active_ritual == "cat1" && key == "food_item")
-			if(!istype(held, /obj/item/reagent_containers/food/snacks/grown/berries))
-				tree_data.cat1_all_berries = FALSE
 		consume_offering(key, held, user)
 		tree_data.ritual_progress[key] = current + 1
 		playsound(get_turf(src), 'sound/magic/churn.ogg', 40, FALSE)
@@ -749,7 +739,6 @@
 	if(ritual_xp > 0 && user.mind)
 		user.mind.add_sleep_experience(/datum/skill/magic/druidic, ritual_xp)
 	switch(cat)
-		if("cat1") reward_cat1(user)
 		if("cat2") reward_cat2(user)
 		if("cat3") reward_cat3(user)
 		if("cat4") reward_cat4(user)
@@ -778,25 +767,29 @@
 // Ritual Rewards
 //==============================================================================
 
-/// Cat 1 — Dendor's Harvest: seed bounty (repeatable).
-/// Offerings: 5 any fruit/grain/vegetable food items (rotten okay).
-/// Reward (normal): 1 random misc seed + 1 tree seed (5% sakura, 10% pine, 85% regular).
-/// Reward (berry special case, all 5 berries): 1 wild bush seed + 50% chance flower seed.
-/obj/structure/flora/roguetree/wise/sanctified/proc/reward_cat1(mob/living/user)
+/// Cat 1 — Dendor's Harvest: seed bounty (repeatable, now innate).
+/// Offerings: 6 any fruit/grain/vegetable food items offered hand-by-hand.
+/// Reward (normal): 20% chance misc seed + 1 tree seed (5% sakura, 10% pine, 85% regular).
+/// Reward (berry special case, all 6 berries): 1 wild bush seed + 50% chance flower seed.
+/obj/structure/flora/roguetree/wise/sanctified/proc/reward_cat1_innate(mob/living/user)
 	var/turf/T = get_turf(user)
-	if(tree_data.cat1_all_berries)
-		// Berry special case: all 5 were berries → wild thorny berry hedge seed + possible flower
+	playsound(get_turf(src), 'sound/ambience/noises/mystical (4).ogg', 70, TRUE)
+	visible_message(span_green("The [src.name] pulses with golden light as [user.name] brings the treefather's bounty!"))
+	if(user.mind)
+		user.mind.add_sleep_experience(/datum/skill/magic/druidic, 5)
+	if(tree_data.innate_harvest_all_berries)
+		// Berry special case: all 6 were berries → wild thorny berry hedge seed + possible flower
 		new /obj/item/seeds/bush(T)
 		if(prob(50))
 			new /obj/item/seeds/flower(T)
 		to_chat(user, span_green("The roots twist with thorny energy — a wild hedge sapling seed tumbles forth."))
 		return
-	// Normal reward: 1 misc seed from Dendor's garden + 1 tree seed
+	// Normal reward: 20% chance misc seed from Dendor's garden + 1 tree seed
 	var/misc = pickweight(list(
 		/obj/item/seeds/tea                          = 10,
 		/obj/item/seeds/coffee                       = 10,
 		/obj/item/herbseed/manabloom                 = 8,
-		/obj/item/seeds/swampweed                    = 8,
+		/obj/item/herbseed/swampweed                  = 8,
 		/obj/item/seeds/apple                        = 6,
 		/obj/item/seeds/pear                         = 6,
 		/obj/item/seeds/plum                         = 6,
@@ -824,7 +817,8 @@
 		/obj/item/seeds/pumpkin                      = 3,
 		/obj/item/seeds/berryrogue                   = 3
 	))
-	new misc(T)
+	if(prob(20))
+		new misc(T)
 	// Tree seed: 5% sakura, 10% pine, 85% regular
 	var/tree_type = pickweight(list(
 		/obj/item/seeds/treesap/sakura = 5,
@@ -1302,6 +1296,7 @@
 	var/mob/living/carbon/human/H = user
 	if(H.patron?.type != /datum/patron/divine/dendor)
 		return
+	. += span_info("You may offer produce directly to the tree to receive saplings and seeds. ([tree_data?.harvest_count || 0]/6 offered so far.)")
 	if(show_ritual_hints)
 		. += span_notice("Hold the Dendor amulet against this tree to start or cancel a Treefather bounty.")
 		. += span_notice("Alternatively, touch-intent with an empty hand while wearing the amulet opens the ritual menu.")
@@ -1362,6 +1357,44 @@
 			return
 		open_ritual_menu(user)
 		return
+
+	// Innate Dendor's Harvest: food offerings accumulate at any time (even during an active ritual). Every 6 → reward.
+	if(istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/Hh = user
+		if(Hh.patron?.type == /datum/patron/divine/dendor)
+			// Sack/storage: offer all valid food items from the bag at once.
+			if(istype(I, /obj/item/storage))
+				var/obj/item/storage/bag = I
+				var/offered = 0
+				for(var/obj/item/food_item in bag.contents)
+					if(!check_offering_match("food_item", food_item))
+						continue
+					if(!istype(food_item, /obj/item/reagent_containers/food/snacks/grown/berries))
+						tree_data.innate_harvest_all_berries = FALSE
+					qdel(food_item)
+					tree_data.harvest_count++
+					offered++
+					if(tree_data.harvest_count >= 6)
+						tree_data.harvest_count = 0
+						reward_cat1_innate(user)
+						tree_data.innate_harvest_all_berries = TRUE
+				if(offered)
+					playsound(get_turf(src), 'sound/magic/churn.ogg', 40, FALSE)
+					to_chat(user, span_notice("I offer produce from my sack to the Treefather's roots. ([tree_data.harvest_count]/6)"))
+					return
+			// Single item in hand.
+			if(check_offering_match("food_item", I))
+				if(!istype(I, /obj/item/reagent_containers/food/snacks/grown/berries))
+					tree_data.innate_harvest_all_berries = FALSE
+				qdel(I)
+				tree_data.harvest_count++
+				playsound(get_turf(src), 'sound/magic/churn.ogg', 40, FALSE)
+				to_chat(user, span_notice("I offer produce to the Treefather's roots. ([tree_data.harvest_count]/6)"))
+				if(tree_data.harvest_count >= 6)
+					tree_data.harvest_count = 0
+					reward_cat1_innate(user)
+					tree_data.innate_harvest_all_berries = TRUE
+				return
 
 	// While a ritual is active, offerings are made by clicking the tree with an item in-hand.
 	if(tree_data?.active_ritual && istype(user, /mob/living/carbon/human))

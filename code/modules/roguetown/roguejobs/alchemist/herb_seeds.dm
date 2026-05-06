@@ -7,6 +7,8 @@
 	possible_item_intents = list(/datum/intent/use)
 	var/makes_herb = null
 	var/seed_identity = "unknown"
+	var/seedling_type = /obj/structure/soil_seedling/herb
+	var/herbseed_grow_duration = 5 MINUTES
 
 /obj/item/herbseed/examine(mob/user)
 	. = ..()
@@ -44,8 +46,8 @@
 		to_chat(user, span_warning("There is already something planted in \the [soil]!"))
 		return
 	to_chat(user, span_notice("I plant \the [src] in \the [soil]. I should check back later when it has grown."))
-	var/obj/structure/soil_seedling/herb/seedling = new(get_turf(soil))
-	seedling.configure_seedling(soil, icon, icon_state, makes_herb, 5 MINUTES)
+	var/obj/structure/soil_seedling/herb/seedling = new seedling_type(get_turf(soil))
+	seedling.configure_seedling(soil, icon, icon_state, makes_herb, herbseed_grow_duration)
 	seedling.desc = "A small seedling bedded in a soil plot. It will need healthy soil to sprout."
 	qdel(src)
 	return
@@ -82,6 +84,8 @@
 	var/soil_nutrition_drain = 1.0 / (1 MINUTES)
 	var/final_pixel_x_jitter = 0
 	var/stage = 1
+	var/stage2_icon = 'icons/roguetown/misc/crops.dmi'
+	var/stage2_state = "sunflower0"
 
 /obj/structure/soil_seedling/Initialize(mapload)
 	. = ..()
@@ -123,11 +127,11 @@
 		growth_progress = max(growth_progress - dt * 2, 0)
 	if(stage == 1 && growth_progress >= (grow_duration / 2))
 		stage = 2
-		icon = 'icons/roguetown/misc/crops.dmi'
-		icon_state = "sunflower0"
+		icon = stage2_icon
+		icon_state = stage2_state
 	if(growth_progress >= grow_duration)
 		bloom()
-		return
+		return PROCESS_KILL
 
 /obj/structure/soil_seedling/attackby(obj/item/I, mob/living/user, params)
 	if(linked_soil)
@@ -162,6 +166,16 @@
 /obj/structure/soil_seedling/herb
 	name = "herb seedling"
 	final_pixel_x_jitter = 3
+
+/obj/structure/soil_seedling/herb/swampweed
+	name = "swampweed seedling"
+	stage2_icon = 'icons/roguetown/misc/foliage.dmi'
+	stage2_state = "swampweed1"
+
+/obj/structure/soil_seedling/herb/zizobane
+	name = "zizobane spore seedling"
+	stage2_icon = 'icons/roguetown/misc/crops.dmi'
+	stage2_state = "fyritius0"
 
 /obj/structure/soil_seedling/flower
 	name = "flower seedling"
@@ -229,3 +243,14 @@
 /obj/item/herbseed/manabloom
 	makes_herb = /obj/structure/flora/roguegrass/herb/manabloom
 	seed_identity = "manabloom seeds"
+
+/obj/item/herbseed/swampweed
+	makes_herb = /obj/structure/flora/roguegrass/swampweed/fresh
+	seed_identity = "swampweed seeds"
+	seedling_type = /obj/structure/soil_seedling/herb/swampweed
+
+/obj/item/herbseed/zizobane
+	makes_herb = /obj/structure/zizo_bane
+	seed_identity = "zizobane spores"
+	seedling_type = /obj/structure/soil_seedling/herb/zizobane
+	herbseed_grow_duration = 10 MINUTES

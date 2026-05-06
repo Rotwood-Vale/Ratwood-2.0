@@ -10,9 +10,14 @@
 
 /obj/item/rogueweapon/woodstaff
 	var/cast_time_reduction = null
+	/// When TRUE (the default), Initialize registers the gem-staff slapcrafting recipes.
+	/// Set FALSE on subtypes that should not inherit gem upgrades (e.g. druidic_staff).
+	var/register_gem_slapcrafting = TRUE
 
 /obj/item/rogueweapon/woodstaff/Initialize(mapload)
 	. = ..()
+	if(!register_gem_slapcrafting)
+		return
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/gemstaff/toper_staff,
 		/datum/crafting_recipe/gemstaff/amethyst_staff,

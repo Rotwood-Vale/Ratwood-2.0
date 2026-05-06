@@ -16,6 +16,9 @@
 /obj/structure/zizo_bane/Crossed(atom/movable/arrived)
 	if(time_delay < world.time)
 		if(isliving(arrived))
+			var/mob/living/L = arrived
+			if(L.m_intent == MOVE_INTENT_SNEAK)
+				return // sneaking passes through without triggering
 			make_gas()
 			time_delay = world.time + 20 SECONDS
 
