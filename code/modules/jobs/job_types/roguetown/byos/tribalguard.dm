@@ -294,3 +294,11 @@
 				beltl = /obj/item/rogueweapon/stoneaxe/woodcut/steel/paaxe
 			if("Mace")
 				beltl = /obj/item/rogueweapon/mace/steel/palloy
+
+/datum/job/roguetown/tribalguard/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	..()
+	if(L)
+		var/mob/living/carbon/human/H = L
+		if(!H.mind)
+			return
+		H.ambushable = FALSE

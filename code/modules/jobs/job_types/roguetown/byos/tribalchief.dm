@@ -129,3 +129,10 @@
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 	)
+/datum/job/roguetown/tribalchieftain/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	..();
+	if(L)
+		var/mob/living/carbon/human/H = L
+		if(!H.mind)
+			return
+		H.ambushable = FALSE

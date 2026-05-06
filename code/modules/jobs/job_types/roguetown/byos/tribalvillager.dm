@@ -57,7 +57,13 @@
 		pants = /obj/item/clothing/under/roguetown/loincloth/brown
 		wrists = null
 		shoes = null
-
+/datum/job/roguetown/tribalvillager/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	..();
+	if(L)
+		var/mob/living/carbon/human/H = L
+		if(!H.mind)
+			return
+		H.ambushable = FALSE
 /datum/outfit/job/roguetown/tribalvillager
 	allowed_patrons = list(/datum/patron/dragon)
 	default_patron = /datum/patron/dragon

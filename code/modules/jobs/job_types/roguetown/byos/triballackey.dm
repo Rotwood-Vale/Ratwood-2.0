@@ -96,3 +96,10 @@
 		/obj/item/lockpickring/mundane = 1,
 		)
 	H.set_blindness(0)
+/datum/job/roguetown/tribalrabble/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	..();
+	if(L)
+		var/mob/living/carbon/human/H = L
+		if(!H.mind)
+			return
+		H.ambushable = FALSE
