@@ -270,6 +270,11 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"vice3" = vice3,
 		"vice4" = vice4,
 		"vice5" = vice5,
+		"vice6" = vice6,
+		"vice7" = vice7,
+		"vice8" = vice8,
+		"vice9" = vice9,
+		"vice10" = vice10,
 		"loadout" = loadout,
 		"loadout2" = loadout2,
 		"loadout3" = loadout3,
@@ -338,6 +343,11 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	vice3 = snapshot["vice3"]
 	vice4 = snapshot["vice4"]
 	vice5 = snapshot["vice5"]
+	vice6 = snapshot["vice6"]
+	vice7 = snapshot["vice7"]
+	vice8 = snapshot["vice8"]
+	vice9 = snapshot["vice9"]
+	vice10 = snapshot["vice10"]
 	loadout = snapshot["loadout"]
 	loadout2 = snapshot["loadout2"]
 	loadout3 = snapshot["loadout3"]
@@ -400,6 +410,11 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"vice3" = vice3?.type,
 		"vice4" = vice4?.type,
 		"vice5" = vice5?.type,
+		"vice6" = vice6?.type,
+		"vice7" = vice7?.type,
+		"vice8" = vice8?.type,
+		"vice9" = vice9?.type,
+		"vice10" = vice10?.type,
 		"loadout" = loadout?.type,
 		"loadout2" = loadout2?.type,
 		"loadout3" = loadout3?.type,
@@ -508,6 +523,36 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		vice5 = new vice5_type()
 	else
 		vice5 = null
+
+	var/vice6_type = string_to_typepath(preset["vice6"])
+	if(vice6_type && ispath(vice6_type, /datum/charflaw))
+		vice6 = new vice6_type()
+	else
+		vice6 = null
+
+	var/vice7_type = string_to_typepath(preset["vice7"])
+	if(vice7_type && ispath(vice7_type, /datum/charflaw))
+		vice7 = new vice7_type()
+	else
+		vice7 = null
+
+	var/vice8_type = string_to_typepath(preset["vice8"])
+	if(vice8_type && ispath(vice8_type, /datum/charflaw))
+		vice8 = new vice8_type()
+	else
+		vice8 = null
+
+	var/vice9_type = string_to_typepath(preset["vice9"])
+	if(vice9_type && ispath(vice9_type, /datum/charflaw))
+		vice9 = new vice9_type()
+	else
+		vice9 = null
+
+	var/vice10_type = string_to_typepath(preset["vice10"])
+	if(vice10_type && ispath(vice10_type, /datum/charflaw))
+		vice10 = new vice10_type()
+	else
+		vice10 = null
 	
 	// Load loadout types and instantiate them if valid
 	var/loadout_type = string_to_typepath(preset["loadout"])
@@ -1104,11 +1149,11 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		</div>
 		
 		<h2 style='color: [theme["text"]]; padding: 0 20px; margin: 20px 0 10px 0; border-bottom: 1px solid [theme["border"]]; padding-bottom: 10px;'>Vice Selection</h2>
-		<p style='color: [theme["label"]]; padding: 0 20px; margin: 0 0 15px 0; font-size: 0.9em;'>Select up to 5 vices (at least 1 required). Each selected vice grants +1 point. Points are shared between languages and loadout.</p>			<div class="vices-grid">
+		<p style='color: [theme["label"]]; padding: 0 20px; margin: 0 0 15px 0; font-size: 0.9em;'>Select up to 10 vices (at least 1 required). Each selected vice grants +1 point. Points are shared between languages and loadout.</p>			<div class="vices-grid">
 	"}
 	
-	// Generate 5 vice slots
-	for(var/i = 1 to 5)
+	// Generate 10 vice slots
+	for(var/i = 1 to 10)
 		var/slot_var = "vice[i]"
 		var/datum/charflaw/current_vice = vars[slot_var]
 		var/is_required = (i == 1)
@@ -1614,7 +1659,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		var/action = href_list["vice_action"]
 		var/slot = text2num(href_list["slot"])
 		
-		if(!slot || slot < 1 || slot > 5)
+		if(!slot || slot < 1 || slot > 10)
 			return
 		
 		var/slot_var = "vice[slot]"

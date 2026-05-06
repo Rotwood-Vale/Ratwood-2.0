@@ -489,7 +489,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 		if((client.prefs.virtue?.type in job.virtue_restrictions) || (client.prefs.virtuetwo?.type in job.virtue_restrictions))
 			return JOB_UNAVAILABLE_VIRTUESVICE
 		// Check all vices
-		for(var/datum/charflaw/vice in list(client.prefs.vice1, client.prefs.vice2, client.prefs.vice3, client.prefs.vice4, client.prefs.vice5, client.prefs.charflaw))
+		for(var/datum/charflaw/vice in list(client.prefs.vice1, client.prefs.vice2, client.prefs.vice3, client.prefs.vice4, client.prefs.vice5, client.prefs.vice6, client.prefs.vice7, client.prefs.vice8, client.prefs.vice9, client.prefs.vice10, client.prefs.charflaw))
 			if(vice?.type in job.vice_restrictions)
 				return JOB_UNAVAILABLE_VIRTUESVICE
 //	if(job.title == "Adventurer" && latejoin)

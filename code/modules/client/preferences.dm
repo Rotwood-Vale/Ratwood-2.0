@@ -235,6 +235,11 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/datum/charflaw/vice3
 	var/datum/charflaw/vice4
 	var/datum/charflaw/vice5
+	var/datum/charflaw/vice6
+	var/datum/charflaw/vice7
+	var/datum/charflaw/vice8
+	var/datum/charflaw/vice9
+	var/datum/charflaw/vice10
 
 
 	var/setspouse = ""
@@ -1135,7 +1140,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 					else
 						name = virtuetwo.name
 				// Check all vices
-				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, charflaw))
+				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, vice6, vice7, vice8, vice9, vice10, charflaw))
 					if(vice?.type in job.vice_restrictions)
 						if(name)
 							name += ", "
@@ -1160,7 +1165,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			if(length(job.vice_restrictions))
 				var/list/restricted_vices = list()
 				// Check all vices
-				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, charflaw))
+				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, vice6, vice7, vice8, vice9, vice10, charflaw))
 					if(vice?.type in job.vice_restrictions)
 						restricted_vices += vice.name
 				if(length(restricted_vices))

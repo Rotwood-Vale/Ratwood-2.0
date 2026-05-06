@@ -479,12 +479,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		charflaw = new charflaw()
 
 	// Load new vice system
-	var/vice1_type, vice2_type, vice3_type, vice4_type, vice5_type
+	var/vice1_type, vice2_type, vice3_type, vice4_type, vice5_type, vice6_type, vice7_type, vice8_type, vice9_type, vice10_type
 	S["vice1"] >> vice1_type
 	S["vice2"] >> vice2_type
 	S["vice3"] >> vice3_type
 	S["vice4"] >> vice4_type
 	S["vice5"] >> vice5_type
+	S["vice6"] >> vice6_type
+	S["vice7"] >> vice7_type
+	S["vice8"] >> vice8_type
+	S["vice9"] >> vice9_type
+	S["vice10"] >> vice10_type
 
 	// Vice1 is required - use charflaw as fallback for old characters, only randomize if both are missing
 	if(vice1_type && ispath(vice1_type))
@@ -503,6 +508,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	vice3 = (vice3_type && ispath(vice3_type)) ? new vice3_type() : null
 	vice4 = (vice4_type && ispath(vice4_type)) ? new vice4_type() : null
 	vice5 = (vice5_type && ispath(vice5_type)) ? new vice5_type() : null
+	vice6 = (vice6_type && ispath(vice6_type)) ? new vice6_type() : null
+	vice7 = (vice7_type && ispath(vice7_type)) ? new vice7_type() : null
+	vice8 = (vice8_type && ispath(vice8_type)) ? new vice8_type() : null
+	vice9 = (vice9_type && ispath(vice9_type)) ? new vice9_type() : null
+	vice10 = (vice10_type && ispath(vice10_type)) ? new vice10_type() : null
 
 /datum/preferences/proc/_load_culinary_preferences(S)
 	var/list/loaded_culinary_preferences
@@ -1066,6 +1076,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["vice3"], preferences_typepath_or_null(vice3))
 	WRITE_FILE(S["vice4"], preferences_typepath_or_null(vice4))
 	WRITE_FILE(S["vice5"], preferences_typepath_or_null(vice5))
+	WRITE_FILE(S["vice6"], preferences_typepath_or_null(vice6))
+	WRITE_FILE(S["vice7"], preferences_typepath_or_null(vice7))
+	WRITE_FILE(S["vice8"], preferences_typepath_or_null(vice8))
+	WRITE_FILE(S["vice9"], preferences_typepath_or_null(vice9))
+	WRITE_FILE(S["vice10"], preferences_typepath_or_null(vice10))
 	WRITE_FILE(S["feature_mcolor"]		, features["mcolor"])
 	WRITE_FILE(S["feature_mcolor2"]		, features["mcolor2"])
 	WRITE_FILE(S["feature_mcolor3"]		, features["mcolor3"])
