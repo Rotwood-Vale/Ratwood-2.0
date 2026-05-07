@@ -81,3 +81,17 @@
 // /area/rogue/under/cave/inhumen/wretch/cavern
 // /area/rogue/under/cave/inhumen/wretch/graggarena
 // /area/rogue/under/cave/inhumen/wretch/gnollcavern
+
+// /area/rogue/under/cave/wretch
+// 	name = "cave"
+// 	icon_state = "cave"
+// 	droning_sound = 'sound/music/unholy.ogg'
+// 	droning_sound_dusk = 'sound/music/unholy.ogg'
+// 	droning_sound_night = 'sound/music/unholy.ogg'
+// 	converted_type = /area/rogue/outdoors/dungeon1
+
+// /area/rogue/under/cave/inhumen/entrance // Only use these around traveltiles - Constantine
+// 	name = "inhumen"
+
+// /area/rogue/under/cave/inhumen/entrance/can_craft_here() //Made to prevent killboxes - Constantine
+// 	return FALSE

@@ -346,7 +346,7 @@
 
 /obj/structure/vine/dendor
 	mutations = newlist(/datum/vine_mutation/earthy)
-	opacity = 1
+	opacity = 0
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/vine/attack_hand(mob/user)
 	for(var/datum/vine_mutation/SM in mutations)

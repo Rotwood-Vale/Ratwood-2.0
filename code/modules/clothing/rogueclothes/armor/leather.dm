@@ -268,7 +268,6 @@
 	body_parts_covered = COVERAGE_TORSO
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	sewrepair = TRUE
 	sleevetype = null
 	sleeved = null
 	armor_class = ARMOR_CLASS_LIGHT
@@ -281,7 +280,6 @@
 	slot_flags = ITEM_SLOT_ARMOR
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
 	sleevetype = "shirt"
-	sewrepair = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/leather/vest/white
 	color = CLOTHING_WHITE
@@ -309,11 +307,8 @@
 	desc = "A stylish coat worn by Duelists of Valoria. Light and flexible, it does not impede the complex movements they are known for. Well padded."
 	icon = 'icons/roguetown/clothing/armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/armor.dmi'
-
 	icon_state = "bwleathercoat"
 	item_state = "bwleathercoat"
-
-	sewrepair = TRUE
 	boobed = TRUE
 
 	slot_flags = ITEM_SLOT_ARMOR

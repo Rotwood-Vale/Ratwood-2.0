@@ -75,7 +75,7 @@
 	else
 		return ..()
 
-/obj/strucutre/bed/post_buckle_mob(mob/living/M)
+/obj/structure/bed/post_buckle_mob(mob/living/M)
 	. = ..()
 	M.update_cone_show()
 

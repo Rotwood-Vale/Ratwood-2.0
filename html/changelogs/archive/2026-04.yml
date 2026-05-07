@@ -410,3 +410,40 @@
   - rscadd: six new generic, unflavored mercenary classes for you to make your own
       intrigue with! Sellknight, Sellspear, Sellblade, Hired Thug, Light Crossbowman,
       and Longbowman
+2026-04-30:
+  EvenInDeathIStillServe:
+  - rscadd: Adds a crossbowman virtue that gives you +1 crossbow skill, along with
+      a stashed crossbow and bolts.
+  - rscadd: Adds a Fluffy Overeye hairstyle
+  RandomGooberCoder:
+  - bugfix: EXCIDIUM browser popup will now autoclose when the user is not adjacent
+      to the machine.
+  Teragen:
+  - rscadd: 117th Crusader Subclasses
+  - balance: Ea Nasir Gold Caravan given more starting money and guards given BReady
+      and Steelhearted
+  - balance: Czwarteki now get steels masks and stuff similar to other noble Envoys,
+      but worse due to better stats and skills.
+  - balance: Knightly Journey given health potions and equestrian too
+  - balance: ' Zyb Envoy Removed Garrison SCOM, why did they get this.'
+  - balance: Envoy Jannisary given Longstrider and Battleready alongside +1 CON to
+      differentiate from Merc Jannisaries
+  - balance: 'Otavan Envoy: Equestrian Given to those who got horses. General money
+      increase. Health Potions to certain classes.'
+  - balance: All Slavers given Sleuth.
+  - balance: Master gets perfect tracking. Lampterns changed to copper.
+  - balance: Master now gets more chains, anti-magic ring, and anti-magic gear, plus
+      more money for buying slaves.
+  - balance: All slavers now get bedrolls, food, and a spare chain.
+  - balance: Slaves now get the option between Service, Battle, Mage, and Craftsman.
+  WeNeedMorePhoron, ported by Jamdrawers:
+  - balance: Removed most stats and athletics skills influence on hunger rate and
+      then halved the flat hunger rate gain. Report if hunger happens too often. Str
+      above 10 increases hunger rate by 5% per point instead of 7.5%
+  ophaq:
+  - bugfix: Crow / Bat forms for witches no longer have X-Ray vision.
+  yupup123:
+  - rscadd: Accent Preview Text when Selecting Accents
+  - bugfix: Fixes Saut-Al-Atash Accent
+  zeroisthebiggay:
+  - rscadd: gives necromancers a zcross

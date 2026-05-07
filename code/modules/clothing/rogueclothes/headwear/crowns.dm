@@ -1,4 +1,8 @@
 
+/obj/item/clothing/head/roguetown/crown/
+	sewrepair = FALSE
+	anvilrepair = /datum/skill/craft/armorsmithing
+
 /obj/item/clothing/head/roguetown/crown/fakecrown
 	name = "fake crown"
 	desc = "You shouldn't be seeing this."
@@ -26,7 +30,6 @@
 	dynamic_hair_suffix = null
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	sellprice = 50
-	anvilrepair = /datum/skill/craft/armorsmithing
 
 /obj/item/clothing/head/roguetown/nyle
 	name = "jewel of nyle"
@@ -36,6 +39,7 @@
 	dynamic_hair_suffix = null
 	sellprice = 100
 	resistance_flags = FIRE_PROOF
+	sewrepair = FALSE
 	anvilrepair = /datum/skill/craft/armorsmithing
 
 /obj/item/clothing/head/roguetown/nyle/consortcrown
@@ -48,6 +52,7 @@
 	name = "golden circlet"
 	icon_state = "circlet"
 	item_state = "circlet"
+	sewrepair = FALSE
 	sellprice = 50
 
 /obj/item/clothing/head/roguetown/circlet/carvedgem
@@ -103,3 +108,10 @@
 	desc = "An ornate circlet carved out of opal."
 	icon_state = "circlet_opal"
 	sellprice = 95
+
+/obj/item/clothing/head/roguetown/circlet/carvedgem/chitin
+	name = "chitin circlet"
+	desc = "An ornate circlet carved out of beetle chitin."
+	icon_state = "circlet_shell"
+	color = "#7B8C5E"
+	sellprice = 20

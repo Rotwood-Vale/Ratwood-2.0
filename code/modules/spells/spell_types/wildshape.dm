@@ -85,3 +85,6 @@
 /mob/living/carbon/human/species/wildshape/update_inv_shoes() //Prevents weird blood overlays
 	remove_overlay(SHOES_LAYER)
 	remove_overlay(SHOESLEEVE_LAYER)
+
+/mob/living/carbon/human/species/wildshape/update_inv_neck() //Prevents neck slot sprite overlays in wildshape
+	remove_overlay(NECK_LAYER)

@@ -2009,7 +2009,7 @@
 /area/rogue/indoors/vampire_manor)
 "Hy" = (
 /turf/closed/mineral/rogue/bedrock,
-/area/rogue/indoors/cave)
+/area/rogue/under/cave)
 "HD" = (
 /obj/structure/flora/roguegrass/bush,
 /turf/open/floor/rogue/grasscold,

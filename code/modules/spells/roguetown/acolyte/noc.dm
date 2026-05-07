@@ -50,7 +50,7 @@
 	movement_interrupt = FALSE
 	spell_tier = 1
 	invocation_type = "none"
-	sound = 'sound/misc/area.ogg' //This sound doesnt play for some reason. Fix me.
+	sound = 'sound/misc/fade.ogg'
 	associated_skill = /datum/skill/magic/arcane
 	antimagic_allowed = TRUE
 	hide_charge_effect = TRUE

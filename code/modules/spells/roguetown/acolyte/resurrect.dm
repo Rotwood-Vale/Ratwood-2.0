@@ -550,7 +550,7 @@
 
 /obj/effect/proc_holder/spell/invoked/resurrect/dendor
 	name = "Wild Revival"
-	desc = "Revive the target at a cost, cast on yourself to check.<br>Targets speed and constitution will be sapped for a time."
+	desc = "Revive the target at a cost, cast on yourself to check.<br>Requires a wise tree or sanctified tree nearby. Targets speed and constitution will be sapped for a time."
 	//Herbs that have to do with intelligence mostly. Easier to remember.
 	required_items = list(
 		/obj/item/reagent_containers/food/snacks/grown/manabloom = 3,
@@ -564,6 +564,46 @@
 	debuff_type = /datum/status_effect/debuff/dendor_revival
 	required_structure = /obj/structure/flora/roguetree/wise
 	sound = 'sound/magic/birdsong.ogg'
+
+// Wild Revival can also revive simple animal mobs (no debuff applied, full heal).
+/obj/effect/proc_holder/spell/invoked/resurrect/dendor/cast(list/targets, mob/living/user)
+	if(!isanimal(targets[1]))
+		return ..()
+	var/mob/living/simple_animal/target = targets[1]
+	if(target.stat != DEAD)
+		to_chat(user, span_warning("[target] is not dead."))
+		revert_cast()
+		return FALSE
+	var/validation_result = validate_items(target)
+	if(validation_result != "")
+		to_chat(user, span_warning("[validation_result] on the floor next to or on top of [target]"))
+		revert_cast()
+		return FALSE
+	var/found_structure = FALSE
+	for(var/atom/A in oview(structure_range, target))
+		if(istype(A, required_structure))
+			found_structure = TRUE
+			break
+		if(istype(A, /turf))
+			var/turf/T = A
+			for(var/obj/O in T.contents)
+				if(istype(O, required_structure))
+					found_structure = TRUE
+					break
+		if(found_structure)
+			break
+	if(!found_structure)
+		var/atom/temp_structure = required_structure
+		to_chat(user, span_warning("I need a [initial(temp_structure.name)] near [target]."))
+		revert_cast()
+		return FALSE
+	if(!target.revive(full_heal = TRUE))
+		to_chat(user, span_warning("Nothing happens."))
+		revert_cast()
+		return FALSE
+	target.visible_message(span_notice("[target] is roused by the wild magic!"))
+	consume_items(target)
+	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/resurrect/noc
 	name = "Moonlit Revival"

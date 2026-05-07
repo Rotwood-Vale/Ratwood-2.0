@@ -92,6 +92,11 @@ GLOBAL_LIST_EMPTY(soil_list)
 	record_round_statistic(STATS_PLANTS_HARVESTED)
 	to_chat(user, span_notice(feedback))
 	yield_produce(modifier, is_legendary)
+	// Dendor patrons earn 2 Druidic Trickery XP per successful harvest.
+	if(istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		if(H.patron?.type == /datum/patron/divine/dendor && H.mind)
+			H.mind.add_sleep_experience(/datum/skill/magic/druidic, 2)
 	update_icon()
 
 /obj/structure/soil/proc/try_handle_harvest(obj/item/attacking_item, mob/user, params)
@@ -114,6 +119,12 @@ GLOBAL_LIST_EMPTY(soil_list)
 		herbseed.try_plant_seed(user, src)
 		return TRUE
 	return FALSE
+
+/obj/structure/soil/proc/has_custom_growth()
+	var/turf/T = get_turf(src)
+	if(!T)
+		return FALSE
+	return locate(/obj/structure/soil_seedling) in T || locate(/obj/structure/tree_sapling) in T || locate(/obj/structure/bush_sapling) in T || locate(/obj/structure/mushroom_sprout) in T || locate(/obj/structure/mushroom_circle) in T
 
 /obj/structure/soil/proc/try_handle_uprooting(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/rogueweapon/shovel))
@@ -147,19 +158,29 @@ GLOBAL_LIST_EMPTY(soil_list)
 /obj/structure/soil/proc/try_handle_watering(obj/item/attacking_item, mob/user, params)
 	var/water_amount = 0
 	if(istype(attacking_item, /obj/item/reagent_containers))
-		if(water >= MAX_PLANT_WATER * 0.8)
+		var/target_water = MAX_PLANT_WATER - water
+		if(target_water <= 0)
 			to_chat(user, span_warning("The soil is already wet!"))
 			return TRUE
 		var/obj/item/reagent_containers/container = attacking_item
-		if(container.reagents.has_reagent(/datum/reagent/water, 10))
-			container.reagents.remove_reagent(/datum/reagent/water, 10)
-			water_amount = 150
-		else if(container.reagents.has_reagent(/datum/reagent/water/gross, 10))
-			container.reagents.remove_reagent(/datum/reagent/water/gross, 10)
-			water_amount = 150
-		else
+		var/reagent_units_needed = CEILING(target_water / 6, 1)
+		var/clean_water = min(container.reagents.get_reagent_amount(/datum/reagent/water), reagent_units_needed)
+		var/holy_water = min(container.reagents.get_reagent_amount(/datum/reagent/water/holywater), max(reagent_units_needed - clean_water, 0))
+		var/blessed_water = min(container.reagents.get_reagent_amount(/datum/reagent/water/blessed), max(reagent_units_needed - clean_water - holy_water, 0))
+		var/gross_water = min(container.reagents.get_reagent_amount(/datum/reagent/water/gross), max(reagent_units_needed - clean_water - holy_water - blessed_water, 0))
+		var/total_units = clean_water + holy_water + blessed_water + gross_water
+		if(total_units <= 0)
 			to_chat(user, span_warning("There's no water in \the [container]!"))
 			return TRUE
+		if(clean_water > 0)
+			container.reagents.remove_reagent(/datum/reagent/water, clean_water)
+		if(holy_water > 0)
+			container.reagents.remove_reagent(/datum/reagent/water/holywater, holy_water)
+		if(blessed_water > 0)
+			container.reagents.remove_reagent(/datum/reagent/water/blessed, blessed_water)
+		if(gross_water > 0)
+			container.reagents.remove_reagent(/datum/reagent/water/gross, gross_water)
+		water_amount = min(target_water, total_units * 6)
 	if(water_amount > 0)
 		var/list/wash = list('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg')
 		playsound(user, pick_n_take(wash), 100, FALSE)
@@ -302,7 +323,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 	update_icon()
 
 /obj/structure/soil/proc/bless_soil()
-	blessed_time = 15 MINUTES
+	blessed_time = 12 MINUTES
 	// It's a miracle! Plant comes back to life when blessed by Dendor
 	if(plant && plant_dead)
 		plant_dead = FALSE
@@ -427,37 +448,104 @@ GLOBAL_LIST_EMPTY(soil_list)
 
 /obj/structure/soil/examine(mob/user)
 	. = ..()
+	var/farming_skill = 0
+	var/can_read_growth_timers = FALSE
+	var/can_read_soil_stats = FALSE
+	if(isliving(user))
+		var/mob/living/living_user = user
+		farming_skill = living_user.get_skill_level(/datum/skill/labor/farming)
+		can_read_growth_timers = farming_skill >= SKILL_LEVEL_EXPERT || HAS_TRAIT(living_user, TRAIT_SEEDKNOW)
+		can_read_soil_stats = farming_skill >= SKILL_LEVEL_APPRENTICE || HAS_TRAIT(living_user, TRAIT_SEEDKNOW)
 	// Plant description
 	if(plant)
 		. += span_info("\The [plant.name] is growing here...")
 		// Plant health feedback
-		if(plant_dead == TRUE)
-			. += span_warning("It's dead!")
-		else if(plant_health <=  MAX_PLANT_HEALTH * 0.3)
-			. += span_warning("It's dying!")
-		else if (plant_health <=  MAX_PLANT_HEALTH * 0.6)
-			. += span_warning("It's brown and unhealthy...")
+		if(farming_skill >= SKILL_LEVEL_JOURNEYMAN)
+			. += span_info("Crop health: [round((plant_health / MAX_PLANT_HEALTH) * 100)]%")
+			if(plant_dead == TRUE)
+				. += span_warning("It's dead!")
+			else if(plant_health <=  MAX_PLANT_HEALTH * 0.3)
+				. += span_warning("It's dying!")
+			else if (plant_health <=  MAX_PLANT_HEALTH * 0.6)
+				. += span_warning("It's brown and unhealthy...")
 		// Plant maturation and produce feedback
 		if(matured)
 			. += span_info("It's fully matured.")
+			if(can_read_growth_timers && !produce_ready)
+				var/time_until_produce = max(plant.produce_time - produce_time, 0)
+				var/gm = calculate_growth_multiplier()
+				var/adjusted_produce = (gm > 0) ? round(time_until_produce / gm) : time_until_produce
+				. += span_info("Next harvest in approximately [DisplayTimeText(adjusted_produce)] (at current growth rate).")
 		else
 			. += span_info("It has yet to mature.")
+			if(can_read_growth_timers)
+				var/time_until_mature = max(plant.maturation_time - growth_time, 0)
+				var/gm = calculate_growth_multiplier()
+				var/adjusted_mature = (gm > 0) ? round(time_until_mature / gm) : time_until_mature
+				. += span_info("Estimated time to maturity: [DisplayTimeText(adjusted_mature)] (at current growth rate).")
 		if(produce_ready)
 			. += span_info("It's ready for harvest.")
-	// Water feedback
-	if(water <= MAX_PLANT_WATER * 0.15)
-		. += span_warning("The soil is thirsty.")
-	else if (water <= MAX_PLANT_WATER * 0.5)
-		. += span_info("The soil is moist.")
+	// Custom-growth structures sharing this soil: tree saplings, bush saplings, flower/herb seedlings.
+	// These don't use the standard soil.plant system, so their status is shown here instead.
+	if(!plant)
+		var/turf/custom_turf = get_turf(src)
+		if(custom_turf)
+			var/obj/structure/tree_sapling/tree = locate() in custom_turf
+			var/obj/structure/bush_sapling/bush = locate() in custom_turf
+			var/obj/structure/soil_seedling/seedling = locate() in custom_turf
+			if(tree)
+				if(tree.dead)
+					. += span_warning("A withered sapling is here. Shovel it out to clear the spot.")
+				else
+					switch(tree.stage)
+						if(TREESAP_STAGE_SAPLING)
+							. += span_info("A young tree sapling is taking root here.")
+						if(TREESAP_STAGE_SHRUB)
+							. += span_info("A small shrub is growing steadily here.")
+					if(can_read_growth_timers && tree.stage <= TREESAP_STAGE_SHRUB)
+						var/gm = get_environmental_growth_multiplier()
+						var/time_rem = max(TREESAP_STAGE_TIME - tree.growth_progress, 0)
+						var/adj = (gm > 0) ? round(time_rem / gm) : time_rem
+						. += span_info("Estimated time to next stage: [DisplayTimeText(adj)] (at current growth rate).")
+			else if(bush)
+				if(bush.dead)
+					. += span_warning("A withered bush sprout is here. Shovel it out to clear the spot.")
+				else
+					switch(bush.stage)
+						if(BUSHSAP_STAGE_SAPLING)
+							. += span_info("A young bush sprout is taking root here.")
+						if(BUSHSAP_STAGE_BUDDING)
+							. += span_info("A bush sprout is growing, still rooted in the soil.")
+					if(can_read_growth_timers && bush.stage < BUSHSAP_STAGE_MATURE)
+						var/gm = get_environmental_growth_multiplier()
+						var/time_rem = max(BUSHSAP_STAGE_TIME - bush.growth_progress, 0)
+						var/adj = (gm > 0) ? round(time_rem / gm) : time_rem
+						. += span_info("Estimated time to next stage: [DisplayTimeText(adj)] (at current growth rate).")
+			else if(seedling)
+				. += span_info("A seedling is germinating here.")
+				if(can_read_growth_timers)
+					var/gm = get_environmental_growth_multiplier()
+					var/time_rem = max(seedling.grow_duration - seedling.growth_progress, 0)
+					var/adj = (gm > 0) ? round(time_rem / gm) : time_rem
+					. += span_info("Estimated time to bloom: [DisplayTimeText(adj)] (at current growth rate).")
+	if(can_read_soil_stats)
+		. += span_info("Water: [round((water / MAX_PLANT_WATER) * 100)]%")
+		. += span_info("Nutrition: [round((nutrition / MAX_PLANT_NUTRITION) * 100)]%")
 	else
-		. += span_info("The soil is wet.")
-	// Nutrition feedback
-	if(nutrition <= MAX_PLANT_NUTRITION * 0.15)
-		. += span_warning("The soil is hungry.")
-	else if (nutrition <= MAX_PLANT_NUTRITION * 0.5)
-		. += span_info("The soil is sated.")
-	else
-		. += span_info("The soil looks fertile.")
+		// Water feedback
+		if(water <= MAX_PLANT_WATER * 0.15)
+			. += span_warning("The soil is thirsty.")
+		else if (water <= MAX_PLANT_WATER * 0.5)
+			. += span_info("The soil is moist.")
+		else
+			. += span_info("The soil is wet.")
+		// Nutrition feedback
+		if(nutrition <= MAX_PLANT_NUTRITION * 0.15)
+			. += span_warning("The soil is hungry.")
+		else if (nutrition <= MAX_PLANT_NUTRITION * 0.5)
+			. += span_info("The soil is sated.")
+		else
+			. += span_info("The soil looks fertile.")
 	// Weeds feedback
 	if(weeds >= MAX_PLANT_WEEDS * 0.6)
 		. += span_warning("It's overtaken by the weeds!")
@@ -473,6 +561,19 @@ GLOBAL_LIST_EMPTY(soil_list)
 		. += span_good("The soil has special fertilizer mixed in.")
 	if(pollination_time > 0)
 		. += span_good("The soil has been pollinated.")
+	// Growth bonus breakdown: visible to expert farmers and those with the seedknow trait.
+	// Also shows the effective growth rate so bonus contributions are clearly visible.
+	if(can_read_growth_timers)
+		var/list/natural_bonuses = get_natural_growth_bonuses()
+		if(natural_bonuses["total"] > 0)
+			var/list/bonus_parts = list()
+			if(natural_bonuses["blessed"] > 0)
+				bonus_parts += "blessed soil ([round(natural_bonuses["blessed"] * 100)]%)"
+			if(natural_bonuses["living_light"] > 0)
+				bonus_parts += "living light ([round(natural_bonuses["living_light"] * 100)]%)"
+			if(natural_bonuses["dendor_rune"] > 0)
+				bonus_parts += "Rune of Dendor ([round(natural_bonuses["dendor_rune"] * 100)]%)"
+			. += span_good("Growth bonus: [round(natural_bonuses["total"] * 100)]% ([english_list(bonus_parts)].)") 
 
 #define BLESSING_WEED_DECAY_RATE 10 / (1 MINUTES)
 #define WEED_GROWTH_RATE 3 / (1 MINUTES)
@@ -536,6 +637,69 @@ GLOBAL_LIST_EMPTY(soil_list)
 	if(blessed_time > 0)
 		adjust_plant_health(dt * PLANT_BLESS_HEAL_RATE)
 
+/// Returns an associative list of additive growth bonuses from blessed soil (+20%), Living Light (+10%),
+/// and a nearby Rune of Dendor (+5%). Keys: "blessed", "living_light", "dendor_rune", "total" (capped at 35%).
+/// Multiple runes do not stack — only one rune's bonus is counted regardless of how many are in range.
+/obj/structure/soil/proc/get_natural_growth_bonuses()
+	var/blessed_bonus = (blessed_time > 0) ? 0.20 : 0.0
+	var/living_light_bonus = 0.0
+	for(var/obj/structure/flora/roguetree/wise/sanctified/tree in range(10, src))
+		if(tree.tree_data?.has_heal_aura)
+			living_light_bonus = 0.10
+			break
+	var/dendor_rune_bonus = 0.0
+	for(var/obj/structure/ritualcircle/dendor in range(5, src))
+		dendor_rune_bonus = 0.05
+		break
+	var/total = min(blessed_bonus + living_light_bonus + dendor_rune_bonus, 0.35)
+	return list("blessed" = blessed_bonus, "living_light" = living_light_bonus, "dendor_rune" = dendor_rune_bonus, "total" = total)
+
+/// Returns the growth-speed multiplier from environmental factors only.
+/// Includes: tilling, fertilization, pollination, world traits, natural aura bonuses, and weed penalties.
+/// Does NOT require a plant — safe to call for tree/bush saplings and seedlings.
+/obj/structure/soil/proc/get_environmental_growth_multiplier()
+	var/gm = 1.0
+	if(tilled_time > 0)
+		gm *= 1.6
+	if(fertilized_time > 0)
+		gm *= 2.0
+	if(pollination_time > 0)
+		gm *= 1.75
+	if(has_world_trait(/datum/world_trait/dendor_fertility))
+		gm *= 2.0
+	if(has_world_trait(/datum/world_trait/fertility))
+		gm *= 1.5
+	if(has_world_trait(/datum/world_trait/dendor_drought))
+		gm *= 0.4
+	var/list/nb = get_natural_growth_bonuses()
+	if(nb["total"] > 0)
+		gm *= (1.0 + nb["total"])
+	if(weeds >= MAX_PLANT_WEEDS * 0.6)
+		gm *= 0.75
+	if(weeds >= MAX_PLANT_WEEDS * 0.3)
+		gm *= 0.75
+	return gm
+
+/// Returns the current effective growth-time multiplier based on active soil/plant conditions.
+/// Returns 0 if growth is currently blocked (no water, underground, produce ready, etc.).
+/obj/structure/soil/proc/calculate_growth_multiplier()
+	if(!plant || plant_dead)
+		return 0
+	var/turf/location = loc
+	if(location && !plant.can_grow_underground && location.can_see_sky == SEE_SKY_NO)
+		return 0
+	if(matured && produce_ready)
+		return 0
+	var/drain_rate = plant.water_drain_rate
+	if(drain_rate > 0 && water <= 0)
+		return 0
+	var/gm = get_environmental_growth_multiplier()
+	if(plant_health <= MAX_PLANT_HEALTH * 0.3)
+		gm *= 0.75
+	if(plant_health <= MAX_PLANT_HEALTH * 0.6)
+		gm *= 0.75
+	return gm
+
 /obj/structure/soil/proc/process_plant_nutrition(dt)
 	var/turf/location = loc
 	if(!plant.can_grow_underground && location.can_see_sky == SEE_SKY_NO)
@@ -552,8 +716,10 @@ GLOBAL_LIST_EMPTY(soil_list)
 	// If soil is tilled, grow faster
 	if(tilled_time > 0)
 		growth_multiplier *= 1.6
-	// If soil is blessed or fertilized, grow faster and take up less nutriments
-	if(blessed_time > 0 || fertilized_time > 0)
+	// Blessed soil nutriment reduction (growth boost handled in the additive natural bonus block below).
+	if(blessed_time > 0)
+		nutriment_eat_mutliplier *= 0.8
+	if(fertilized_time > 0)
 		growth_multiplier *= 2.0
 		nutriment_eat_mutliplier *= 0.4
 
@@ -571,6 +737,10 @@ GLOBAL_LIST_EMPTY(soil_list)
 	if(has_world_trait(/datum/world_trait/dendor_drought))
 		growth_multiplier *= 0.4
 		nutriment_eat_mutliplier *= 2
+	// Natural growth bonuses: blessed soil (+20%), Living Light (+10%), Rune of Dendor (+5%) — additive, capped at 35%.
+	var/list/natural_bonuses = get_natural_growth_bonuses()
+	if(natural_bonuses["total"] > 0)
+		growth_multiplier *= (1.0 + natural_bonuses["total"])
 	// If there's too many weeds, they hamper the growth of the plant
 	if(weeds >= MAX_PLANT_WEEDS * 0.3)
 		growth_multiplier *= 0.75
@@ -623,7 +793,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 		soil_decay_time = max(soil_decay_time - dt, 0)
 
 	adjust_water(-dt * SOIL_WATER_DECAY_RATE)
-	adjust_nutrition(-dt * SOIL_NUTRIMENT_DECAY_RATE)
+	adjust_nutrition(-dt * SOIL_NUTRIMENT_DECAY_RATE * (blessed_time > 0 ? 0.5 : 1))
 	if(fertilized_time > 0)
 		nutrition = 100
 	tilled_time = max(tilled_time - dt, 0)

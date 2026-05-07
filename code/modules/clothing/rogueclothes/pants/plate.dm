@@ -20,6 +20,7 @@
 	smelt_bar_num = 2
 	resistance_flags = FIRE_PROOF
 	armor_class = ARMOR_CLASS_HEAVY
+	peel_threshold = 4
 
 /obj/item/clothing/under/roguetown/platelegs/Initialize(mapload)
 	. = ..()

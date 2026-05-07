@@ -134,14 +134,12 @@
 	anvilrepair = null
 	sewrepair = TRUE
 
-/obj/item/clothing/gloves/roguetown/harms
+/obj/item/clothing/gloves/roguetown/leather/horsey
 	name = "arm harness"
 	desc = "Reinforced leather bindings for the arms."
 	icon_state = "harms"
 	item_state = "harms"
-	body_parts_covered = HANDS
-	max_integrity = 400
-	armor = list("blunt" = 60, "slash" = 90, "stab" = 60, "piercing" = 60, "fire" = 0, "acid" = 0)
-	armor_class = ARMOR_CLASS_LIGHT
-	sewrepair = TRUE
+	slot_flags = ITEM_SLOT_GLOVES|ITEM_SLOT_HANDS
+	body_parts_covered = HANDS|ARMS
 	sleeved = FALSE
+	color = null

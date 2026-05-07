@@ -216,7 +216,7 @@
 /datum/anvil_recipe/valuables/zcross_iron
 	name = "Inverted Psycross"
 	req_bar = /obj/item/ingot/iron
-	created_item = /obj/item/clothing/neck/roguetown/zcross/iron
+	created_item = /obj/item/clothing/neck/roguetown/psicross/inhumen
 	craftdiff = 1
 
 //blacksteel Rings

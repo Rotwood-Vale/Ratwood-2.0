@@ -12,6 +12,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Blindness (+1 TRI)"=/datum/charflaw/noeyeall,
 	"Clingy"=/datum/charflaw/clingy,
 	"Colorblind (+1 TRI)"=/datum/charflaw/colorblind,
+	"Compliant"=/datum/charflaw/compliant,
 	"Critical Weakness (+1 TRI)"=/datum/charflaw/critweakness,
 	"Cyclops (L) (+1 TRI)"=/datum/charflaw/noeyel,
 	"Cyclops (R) (+1 TRI)"=/datum/charflaw/noeyer,
@@ -333,6 +334,27 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.adjust_triumphs(1)
+
+/datum/charflaw/compliant
+	name = "Compliant"
+	desc = "No matter how hard I try, I can't put up a fight against others. <br>\
+	<small>I will fail every attempt to resist out of a grab, and others will always be able to break free of mine. Thieves will be able to rob me without issue.</small>"
+
+/datum/charflaw/compliant/on_mob_creation(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		ADD_TRAIT(H, TRAIT_COMPLIANT, TRAIT_GENERIC)
+		H.compliance = 1
+		H.apply_status_effect(/datum/status_effect/compliance)
+
+/datum/charflaw/compliant/on_removal(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		REMOVE_TRAIT(H, TRAIT_COMPLIANT, TRAIT_GENERIC)
+		H.compliance = 0
+		H.remove_status_effect(/datum/status_effect/compliance)
 
 /datum/charflaw/hunted
 	name = "Hunted"

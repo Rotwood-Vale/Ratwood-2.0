@@ -116,6 +116,7 @@
 	blocksound = PLATEHIT
 	smelt_bar_num = 2
 	armor_class = ARMOR_CLASS_HEAVY
+	peel_threshold = 4
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + 50
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/retinue/coat

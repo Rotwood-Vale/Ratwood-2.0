@@ -165,6 +165,11 @@
 	stressadd = 5
 	desc = span_boldred("Oh no! I've received divine punishment!")
 
+/datum/stressevent/treefather_loss
+	timer = 10 MINUTES
+	stressadd = 5
+	desc = span_boldred("The Treefather cries out in grief. A sacred tree has fallen.")
+
 /datum/stressevent/virginchurch
 	timer = INFINITY
 	stressadd = 10

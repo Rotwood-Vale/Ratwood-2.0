@@ -597,6 +597,49 @@ GLOBAL_LIST(teleport_runes)
 	var/list/barriers = list()
 	associated_ritual = /datum/runeritual/other/wall/t3
 
+/obj/effect/decal/cleanable/roguerune/arcyne/wallgreater/proc/clear_fortress_area(turf/deploy_location)
+	if(!template)
+		return
+
+	// Load parsed map (same way load() does)
+	var/datum/parsed_map/parsed = template.cached_map || new(file(template.mappath))
+	if(!parsed?.bounds)
+		return
+
+	var/list/b = parsed.bounds
+
+	var/z_offset_min = b[MAP_MINZ]
+	var/z_offset_max = b[MAP_MAXZ]
+
+	var/half_w = round(template.width / 2)
+	var/half_h = round(template.height / 2)
+
+	var/start_x = max(1, deploy_location.x - half_w - 6)
+	var/end_x   = min(world.maxx, deploy_location.x + half_w + 6)
+	var/start_y = max(1, deploy_location.y - half_h - 6)
+	var/end_y   = min(world.maxy, deploy_location.y + half_h + 6)
+
+	// Iterate exact Z range the template will use
+	for(var/z_offset in z_offset_min to z_offset_max)
+		var/z = deploy_location.z + (z_offset - z_offset_min)
+
+		if(z < 1 || z > world.maxz)
+			continue
+
+		for(var/x in start_x to end_x)
+			for(var/y in start_y to end_y)
+				var/turf/T = locate(x, y, z)
+				if(!T)
+					continue
+
+				// Delete structures
+				for(var/obj/structure/S in T)
+					qdel(S)
+
+				// Delete dense blockers
+				for(var/obj/O in T)
+					if(O.density && !istype(O, /obj/effect))
+						qdel(O)
 
 /obj/effect/decal/cleanable/roguerune/arcyne/wallgreater/proc/get_template(/datum/map_template/arcyne_fortress/fortress)
 
@@ -616,9 +659,8 @@ GLOBAL_LIST(teleport_runes)
 		return
 	var/turf/deploy_location = get_turf(src)
 	get_template(template)
-
+	clear_fortress_area(deploy_location)
 	template.load(deploy_location, centered = TRUE)
-	to_chat(usr, span_hierophant_warning("template.load complete"))
 	if(ritual_result)
 		pickritual.cleanup_atoms(selected_atoms)
 

@@ -180,12 +180,7 @@
 	name = "minor magelight mote"
 	desc = "A tiny display of arcyne power used to illuminate."
 	pixel_x = 20
-	light_outer_range =  4
-	light_color = "#3FBAFD"
-
-	icon = 'icons/roguetown/items/lighting.dmi'
-	icon_state = "wisp"
-
+//baseline wisp is in rogue_fires
 #undef PRESTI_CLEAN
 #undef PRESTI_SPARK
 #undef PRESTI_MOTE

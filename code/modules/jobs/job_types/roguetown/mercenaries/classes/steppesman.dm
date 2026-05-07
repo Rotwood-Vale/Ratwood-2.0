@@ -125,7 +125,6 @@
 				H.adjust_skillrank_up_to(/datum/skill/craft/masonry, 2, TRUE)		//Ditto
 				H.adjust_skillrank_up_to(/datum/skill/craft/crafting, 2, TRUE)		//Ditto
 				H.adjust_skillrank_up_to(/datum/skill/labor/mining, 3, TRUE)		//Ditto
-				H.adjust_skillrank_up_to(/datum/skill/craft/traps, 3, TRUE)			//Ditto
 				H.change_stat(STATKEY_STR, 2)		//Statblock prone to revision. Probably will be revised. Currently weighted for 7 points and not 9.
 				H.change_stat(STATKEY_WIL, 3)
 				H.change_stat(STATKEY_CON, 2)
@@ -175,7 +174,6 @@
 				H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 2, TRUE)		//To avoid virtue cheese
 				H.adjust_skillrank_up_to(/datum/skill/craft/crafting, 2, TRUE)		//Ditto
 				H.adjust_skillrank_up_to(/datum/skill/labor/mining, 3, TRUE)		//Ditto
-				H.adjust_skillrank_up_to(/datum/skill/craft/traps, 3, TRUE)			//Ditto
 				H.change_stat(STATKEY_WIL, 3)		//Two less speed, no con, compared to 'elite' sappers. 7 spread.
 				H.change_stat(STATKEY_STR, 2)
 				H.change_stat(STATKEY_PER, 2)

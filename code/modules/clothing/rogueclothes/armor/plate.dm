@@ -19,6 +19,7 @@
 	equip_delay_self = 4 SECONDS
 	unequip_delay_self = 4 SECONDS
 	armor_class = ARMOR_CLASS_HEAVY
+	peel_threshold = 4
 	smelt_bar_num = 3
 
 /obj/item/clothing/suit/roguetown/armor/plate/ComponentInitialize()

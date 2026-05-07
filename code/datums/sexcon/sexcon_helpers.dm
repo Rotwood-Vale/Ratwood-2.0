@@ -195,7 +195,8 @@
 		if(HAS_TRAIT(wife, TRAIT_BAOTHA_FERTILITY_BOON))
 			prob_for_impreg =  min(prob_for_impreg * 2, IMPREG_PROB_MAX) //if female has baotha boon increase chances
 		if(prob(prob_for_impreg))
-			vag.be_impregnated(src)
+			if(vag.be_impregnated(src))
+				record_round_statistic(STATS_IMPREGNATIONS)
 			vag.impregnation_probability = IMPREG_PROB_DEFAULT // Reset on success
 		else
 			vag.impregnation_probability = min(prob_for_impreg + IMPREG_PROB_INCREMENT, IMPREG_PROB_MAX)
@@ -209,6 +210,7 @@
 				return
 			to_chat(wife, span_love("I feel a strange surge of warmth inside me... Am I pregnant?.."))
 			wife.mpreg = TRUE
+			record_round_statistic(STATS_IMPREGNATIONS)
 		else
 			wife.mpreg_chance = min(prob_for_impreg + IMPREG_PROB_INCREMENT, IMPREG_PROB_MAX)
 

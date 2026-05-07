@@ -792,6 +792,7 @@
 "aSg" = (
 /obj/structure/ladder,
 /obj/structure/rack/rogue/shelf,
+/obj/machinery/light/rogue/candle/blue/r,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/shop)
 "aSh" = (
@@ -2543,7 +2544,7 @@
 	pixel_y = 18
 	},
 /obj/structure/rack/rogue/shelf,
-/turf/open/floor/rogue/blocks,
+/turf/open/floor/carpet/red,
 /area/rogue/under/cave/tribeden)
 "cTF" = (
 /obj/structure/curtain/red,
@@ -6908,6 +6909,14 @@
 "hED" = (
 /turf/open/transparent/openspace,
 /area/rogue/indoors)
+"hER" = (
+/obj/effect/decal/carpet{
+	dir = 4;
+	pixel_x = -13;
+	pixel_y = 17
+	},
+/turf/open/floor/carpet/inn,
+/area/rogue/indoors/town/shop)
 "hFa" = (
 /obj/structure/table/wood{
 	dir = 5;
@@ -14118,6 +14127,10 @@
 	locked = 1;
 	lockid = "merchant"
 	},
+/obj/structure/curtain/red,
+/obj/structure/drape/zybantine{
+	layer = 5
+	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/shop)
 "oVc" = (
@@ -18326,6 +18339,12 @@
 "sTI" = (
 /turf/closed/mineral/rogue/salt,
 /area/rogue/outdoors/beach/byos)
+"sUg" = (
+/obj/structure/drape/zybantine{
+	layer = 5
+	},
+/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/area/rogue/indoors/town/shop)
 "sUk" = (
 /obj/structure/fluff/railing/border{
 	dir = 6
@@ -18497,7 +18516,7 @@
 "teE" = (
 /obj/structure/closet/crate/roguecloset/inn/south,
 /obj/item/clothing/cloak/lordcloak,
-/turf/open/floor/rogue/blocks,
+/turf/open/floor/carpet/royalblack,
 /area/rogue/under/cave/tribeden)
 "teF" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp{
@@ -42522,8 +42541,8 @@ fXv
 nFS
 nFS
 nFS
-oIz
-oIz
+nFS
+nFS
 gJn
 gJn
 gJn
@@ -42724,8 +42743,8 @@ fXv
 nFS
 nFS
 nFS
-oIz
-oIz
+nFS
+nFS
 gJn
 gJn
 gJn
@@ -42926,8 +42945,8 @@ nFS
 nFS
 nFS
 nFS
-oIz
-oIz
+nFS
+nFS
 gJn
 gJn
 gJn
@@ -43128,8 +43147,8 @@ nFS
 nFS
 nFS
 nFS
-oIz
-oIz
+nFS
+nFS
 gJn
 gJn
 gJn
@@ -43330,8 +43349,8 @@ nFS
 nFS
 nFS
 nFS
-oIz
-oIz
+nFS
+nFS
 gJn
 gJn
 gJn
@@ -43532,8 +43551,8 @@ vqP
 vqP
 kYd
 nFS
-oIz
-oIz
+nFS
+nFS
 gJn
 gJn
 gJn
@@ -43734,8 +43753,8 @@ sNx
 mPp
 eSU
 kYd
-oIz
-oIz
+nFS
+nFS
 gJn
 gJn
 gJn
@@ -43936,8 +43955,8 @@ dKn
 dKn
 qIz
 rNX
-oIz
-oIz
+nFS
+nFS
 gJn
 gJn
 gJn
@@ -44138,8 +44157,8 @@ jWK
 lGS
 kYd
 kYd
-oIz
-oIz
+nFS
+nFS
 gJn
 gJn
 gJn
@@ -44340,8 +44359,8 @@ lfq
 lfq
 dxV
 aPO
-oIz
-oIz
+nFS
+nFS
 mFf
 mFf
 mFf
@@ -44542,8 +44561,8 @@ lfq
 lfq
 pcB
 aPO
-oIz
-oIz
+nFS
+nFS
 mFf
 mFf
 mFf
@@ -44744,8 +44763,8 @@ ppF
 skJ
 kYd
 kYd
-oIz
-oIz
+nFS
+nFS
 mFf
 mFf
 mFf
@@ -44946,8 +44965,8 @@ lfq
 lfq
 gSJ
 aPO
-oIz
-oIz
+nFS
+nFS
 mFf
 mFf
 mFf
@@ -45148,8 +45167,8 @@ okh
 nHm
 iWk
 kYd
-oIz
-oIz
+nFS
+nFS
 mFf
 mFf
 mFf
@@ -45350,8 +45369,8 @@ vqP
 vqP
 kYd
 nFS
-oIz
-oIz
+nFS
+nFS
 mFf
 mFf
 mFf
@@ -45552,8 +45571,8 @@ nFS
 nFS
 nFS
 nFS
-oIz
-oIz
+nFS
+nFS
 mFf
 mFf
 mFf
@@ -45754,8 +45773,8 @@ nFS
 nFS
 nFS
 nFS
-oIz
-oIz
+nFS
+nFS
 mFf
 mFf
 mFf
@@ -80704,7 +80723,7 @@ nFS
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -80906,7 +80925,7 @@ nFS
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -81108,7 +81127,7 @@ nFS
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -81310,7 +81329,7 @@ nFS
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -81512,7 +81531,7 @@ nFS
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -81714,7 +81733,7 @@ nFS
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -81916,7 +81935,7 @@ nFS
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -82118,7 +82137,7 @@ nFS
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -82320,7 +82339,7 @@ nFS
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -82522,7 +82541,7 @@ nFS
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -82724,7 +82743,7 @@ nFS
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -82926,7 +82945,7 @@ nFS
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -83128,7 +83147,7 @@ kYd
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -83330,7 +83349,7 @@ aPO
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -83523,16 +83542,16 @@ nFS
 nFS
 nFS
 nFS
-aPO
+sUg
 mhO
 hFM
-hFM
+hER
 dKn
 aPO
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -83734,7 +83753,7 @@ aPO
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -83936,7 +83955,7 @@ eSU
 kYd
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -84138,7 +84157,7 @@ lIn
 kYd
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -84340,7 +84359,7 @@ hhg
 aPO
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -84542,7 +84561,7 @@ vqP
 aPO
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -84744,7 +84763,7 @@ lfq
 aPO
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -84946,7 +84965,7 @@ lxe
 aPO
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -85148,7 +85167,7 @@ vqP
 kYd
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -85235,7 +85254,7 @@ dNc
 dNc
 dNc
 dNc
-hsi
+dNc
 kVL
 kVL
 lzU
@@ -85350,7 +85369,7 @@ kYd
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -85552,7 +85571,7 @@ kYd
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -85640,7 +85659,7 @@ dNc
 dNc
 kVL
 teE
-gtg
+qCt
 xZi
 gWJ
 tIT
@@ -85754,7 +85773,7 @@ kYd
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -85956,7 +85975,7 @@ nFS
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -86158,7 +86177,7 @@ nFS
 nFS
 nFS
 nFS
-oIz
+gJn
 gJn
 gJn
 gJn
@@ -86246,7 +86265,7 @@ dNc
 dNc
 tIT
 qOS
-qCt
+vuH
 hFU
 hFU
 tIT
@@ -87280,8 +87299,8 @@ mKt
 kVL
 dNc
 xui
-xui
-xui
+dNc
+dNc
 dNc
 dNc
 dNc

@@ -17,6 +17,7 @@
 	equip_sound = 'sound/foley/equip/equip_armor.ogg'
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/steel
+	sewrepair = FALSE
 	blocksound = PLATEHIT
 	max_integrity = ARMOR_INT_HELMET_STEEL
 	grid_height = 64

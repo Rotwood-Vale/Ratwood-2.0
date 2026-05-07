@@ -713,7 +713,7 @@
 	name = "chieftain's key"
 	desc = "A ancient, rusty key, well-worn but well-preserved. Fancier than the others"
 	icon_state = "bosskey"
-	lockid = "tribal"
+	lockid = "tribalchief"
 
 //custom key
 /obj/item/roguekey/custom
