@@ -35,6 +35,8 @@
 	var/light_devotion = 5
 	var/water_moisten = 2
 	var/lay_hands_devotion = 10
+	/// The soil plot currently being watered by the fill loop. Set when watering starts; updated to redirect to a new plot mid-cast; null when idle.
+	var/obj/structure/soil/orison_soil_target = null
 
 /obj/item/melee/touch_attack/orison/attack_self()
 	qdel(src)

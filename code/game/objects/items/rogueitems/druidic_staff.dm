@@ -1,7 +1,7 @@
 // ============================================================
 // Druidic Staff
 // A sacred staff infused with Dendor's living power.
-// Has 20 charges that regenerate over time.
+// Has 10 charges that regenerate over time.
 // Middle-click while wielding (two-handed):
 //   - Targets unblessed planted soil nearby: AOE bless within range 4.
 //   - Targets anything else: spawn Dendor vine on that turf.
@@ -148,10 +148,11 @@
 		user.visible_message(span_green("[user] channels Dendor's power through the druidic staff, blessing nearby crops!"), span_green("Dendor's blessing channels from the staff, blessing nearby crops!"))
 		return COMSIG_MOB_CANCEL_CLICKON
 
-	// Branch: anything else → spawn a vine on the target turf.
+	// Branch: anything else → spawn a vine and kneestinger on the target turf.
 	if(!locate(/obj/structure/vine/dendor) in target_turf)
 		new /obj/structure/vine/dendor(target_turf)
-	new /obj/structure/trap/bogtrap/kneestingers(target_turf)
+	if(!locate(/obj/structure/glowshroom) in target_turf)
+		new /obj/structure/glowshroom(target_turf)
 	charges--
 	src.obj_integrity -= (src.max_integrity * 0.02)
 	START_PROCESSING(SSprocessing, src)

@@ -859,8 +859,6 @@
 /obj/structure/flora/roguegrass/swampweed/Initialize(mapload)
 	. = ..()
 	icon_state = "swampweed[rand(1,3)]"
-	if(prob(88))
-		bushtype = pickweight(list(/obj/item/reagent_containers/food/snacks/grown/rogue/swampweed = 1))
 	loot_replenish3()
 	pixel_x += rand(-3,3)
 

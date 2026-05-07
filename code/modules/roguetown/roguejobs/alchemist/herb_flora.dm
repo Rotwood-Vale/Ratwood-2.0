@@ -197,30 +197,3 @@
 /obj/structure/flora/roguegrass/herb/swampweed/Initialize(mapload)
 	. = ..()
 	icon_state = "swampweed[rand(1,3)]"
-
-/obj/structure/flora/roguegrass/herb/swampweed/attack_hand(mob/user)
-	if(harvested)
-		to_chat(user, span_warning("Picked clean; but looks healthy. I should try again later."))
-		return
-	if(!isliving(user))
-		return
-	var/mob/living/L = user
-	user.changeNext_move(CLICK_CD_INTENTCAP)
-	playsound(src.loc, "plantcross", 80, FALSE, -1)
-	if(do_after(L, rand(3,5), src))
-		if(!looty.len)
-			return
-		var/picked_type = pick_n_take(looty)
-		if(picked_type)
-			var/obj/item/A = new picked_type(user.loc)
-			user.put_in_hands(A)
-			var/obj/item/B = new picked_type(user.loc)
-			user.put_in_hands(B)
-			if(HAS_TRAIT(user, TRAIT_WOODWALKER))
-				user.put_in_hands(new picked_type(user.loc))
-			user.visible_message(span_notice("[user] finds [HAS_TRAIT(user, TRAIT_WOODWALKER) ? "three of " : "two of "][A] in [src]."))
-			harvested = TRUE
-			timerid = addtimer(CALLBACK(src, PROC_REF(loot_replenish)), 5 MINUTES, flags = TIMER_STOPPABLE)
-			GLOB.harvested_herbs |= src
-			return
-		user.visible_message(span_notice("[user] searches through [src]."))
