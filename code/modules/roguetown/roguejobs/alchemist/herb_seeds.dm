@@ -167,11 +167,6 @@
 	name = "herb seedling"
 	final_pixel_x_jitter = 3
 
-/obj/structure/soil_seedling/herb/swampweed
-	name = "swampweed seedling"
-	stage2_icon = 'icons/roguetown/misc/foliage.dmi'
-	stage2_state = "swampweed1"
-
 /obj/structure/soil_seedling/herb/zizobane
 	name = "zizobane spore seedling"
 	stage2_icon = 'icons/roguetown/misc/crops.dmi'
@@ -243,11 +238,6 @@
 /obj/item/herbseed/manabloom
 	makes_herb = /obj/structure/flora/roguegrass/herb/manabloom
 	seed_identity = "manabloom seeds"
-
-/obj/item/herbseed/swampweed
-	makes_herb = /obj/structure/flora/roguegrass/swampweed/fresh
-	seed_identity = "swampweed seeds"
-	seedling_type = /obj/structure/soil_seedling/herb/swampweed
 
 /obj/item/herbseed/zizobane
 	name = "zizobane spores"

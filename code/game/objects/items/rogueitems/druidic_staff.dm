@@ -9,7 +9,7 @@
 
 /obj/item/rogueweapon/woodstaff/druidic_staff
 	name = "druidic staff"
-	desc = "A living staff of emerald-green wood, imbued with Dendor's blessing. Its gemerald focus pulses with wild growth."
+	desc = "A living staff of emerald-green wood, imbued with Dendor's blessing. Its bloomstone focus pulses with mystical power."
 	icon = 'modular_azurepeak/icons/obj/items/staffs.dmi'
 	icon_state = "emeraldstaff"
 	slot_flags = ITEM_SLOT_HANDS | ITEM_SLOT_BACK
@@ -20,10 +20,10 @@
 	// Alt-intent (RMB self while wielded): dazing strike.
 	possible_item_intents = list(SPEAR_BASH, /datum/intent/mace/strike/wood)
 	gripped_intents = list(SPEAR_BASH, /datum/intent/mace/strike/wood, /datum/intent/mace/smash/wood, /datum/intent/effect/daze)
-	/// Current charges. Regens 1 per 6s via SSprocessing.
-	var/charges = 20
+	/// Current charges. Regens 1 per 60s via SSprocessing.
+	var/charges = 10
 	/// Maximum charges.
-	var/max_charges = 20
+	var/max_charges = 10
 	/// Elapsed time accumulator for charge regen (in deciseconds).
 	var/regen_elapsed = 0
 	/// Middle-click cooldown — world.time must exceed this to act.
@@ -47,8 +47,8 @@
 	if(charges >= max_charges)
 		return PROCESS_KILL
 	regen_elapsed += delta_time
-	if(regen_elapsed >= 60)
-		regen_elapsed -= 60
+	if(regen_elapsed >= 600)  // 600 dcs = 60 seconds per charge
+		regen_elapsed -= 600
 		charges = min(charges + 1, max_charges)
 		if(charges >= max_charges)
 			return PROCESS_KILL
@@ -141,6 +141,7 @@
 			to_chat(user, span_warning("There are no nearby unblessed planted soil plots to bless."))
 			return COMSIG_MOB_CANCEL_CLICKON
 		charges--
+		src.obj_integrity -= (src.max_integrity * 0.02)
 		START_PROCESSING(SSprocessing, src)
 		middle_click_cooldown = world.time + 100 // 10 seconds
 		playsound(get_turf(user), 'sound/magic/churn.ogg', 60, TRUE)
@@ -150,7 +151,9 @@
 	// Branch: anything else → spawn a vine on the target turf.
 	if(!locate(/obj/structure/vine/dendor) in target_turf)
 		new /obj/structure/vine/dendor(target_turf)
+	new /obj/structure/trap/bogtrap/kneestingers(target_turf)
 	charges--
+	src.obj_integrity -= (src.max_integrity * 0.02)
 	START_PROCESSING(SSprocessing, src)
 	middle_click_cooldown = world.time + 100 // 10 seconds
 	playsound(get_turf(user), 'sound/magic/churn.ogg', 60, TRUE)
@@ -170,5 +173,6 @@
 		/obj/item/alch/bloomstone = 1
 	)
 	craftdiff = SKILL_LEVEL_MASTER
+	craftsound = 'sound/foley/bandage.ogg'
 	verbage_simple = "channel"
 	verbage = "channels"

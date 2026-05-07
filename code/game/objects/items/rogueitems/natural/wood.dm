@@ -28,6 +28,9 @@
 	name = "blessed log"
 	add_atom_colour("#88ffaa", FIXED_COLOUR_PRIORITY)
 	add_filter("blessed_log_outline", 2, list("type" = "outline", "color" = "#58C86A", "alpha" = 95, "size" = 1))
+	if(!istype(src, /obj/item/grown/log/tree/blessed))
+		new /obj/item/grown/log/tree/blessed(loc)
+		qdel(src)
 	return TRUE
 
 /obj/item/grown/log/tree/Destroy()

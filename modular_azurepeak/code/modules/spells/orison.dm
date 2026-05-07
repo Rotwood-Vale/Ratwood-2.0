@@ -394,7 +394,7 @@
 			user.devotion?.update_devotion(-1.0)
 
 			if (prob(80))
-				playsound(user, 'sound/items/fillcup.ogg', 55, TRUE)
+				playsound(user, pick('sound/items/fillcup.ogg','sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 55, TRUE)
 		
 		return min(50, fatigue_spent)
 	else if (istype(thing, /obj/item/natural/cloth))
@@ -413,6 +413,12 @@
 			to_chat(user, span_warning("[thing] is already saturated with water."))
 			return
 
+		// If already watering a soil plot, just redirect to the new one.
+		if(orison_soil_target)
+			orison_soil_target = target_soil
+			to_chat(user, span_notice("I redirect the flow towards [target_soil]..."))
+			return 0
+
 		user.visible_message(span_info("[user] closes [user.p_their()] eyes in prayer and extends a hand towards [thing] as water seeps from [user.p_their()] fingertips..."), span_notice("I utter forth a plea to [user.patron.name] for succour, and will moisture into [thing]..."))
 
 		var/holy_skill = user.get_skill_level(attached_spell.associated_skill)
@@ -420,7 +426,14 @@
 		drip_speed = round(drip_speed * 0.5)
 		var/fatigue_spent = 0
 		var/fatigue_used = max(3, holy_skill)
-		while(do_after(user, drip_speed, target = thing))
+		orison_soil_target = target_soil
+		while(do_after(user, drip_speed, target = user))
+			target_soil = orison_soil_target
+			if(!target_soil || QDELETED(target_soil))
+				break
+			if(!target_soil.Adjacent(user))
+				to_chat(user, span_warning("I am too far from [target_soil] — the blessing fades!"))
+				break
 			if(user.devotion.devotion - fatigue_used <= 0)
 				break
 
@@ -430,10 +443,11 @@
 			user.devotion?.update_devotion(-1.0)
 
 			if(prob(80))
-				playsound(user, 'sound/items/fillcup.ogg', 55, TRUE)
+				playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg','sound/items/fillcup.ogg'), 55, TRUE)
 
 			if(target_soil.water >= MAX_PLANT_WATER)
 				to_chat(user, span_notice("The soil is fully saturated."))
 				break
 
+		orison_soil_target = null
 		return 0

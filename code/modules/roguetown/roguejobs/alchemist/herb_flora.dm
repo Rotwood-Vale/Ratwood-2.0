@@ -198,7 +198,6 @@
 	. = ..()
 	icon_state = "swampweed[rand(1,3)]"
 
-// Swampweed yields 2 herbs per harvest (it grows in thick bunches).
 /obj/structure/flora/roguegrass/herb/swampweed/attack_hand(mob/user)
 	if(harvested)
 		to_chat(user, span_warning("Picked clean; but looks healthy. I should try again later."))

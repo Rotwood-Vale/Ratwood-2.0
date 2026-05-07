@@ -1179,7 +1179,7 @@
 	if(!base_delta)
 		return 0
 
-	if(HAS_TRAIT(src, TRAIT_WEATHER_TEMP_RESIST))
+	if(HAS_TRAIT(src, TRAIT_OUTDOORSMAN))
 		base_delta = base_delta / 2
 
 	var/current_temp = bodytemperature

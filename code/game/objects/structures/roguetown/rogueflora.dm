@@ -865,10 +865,7 @@
 	pixel_x += rand(-3,3)
 
 /obj/structure/flora/roguegrass/swampweed/proc/loot_replenish3()
-	if(bushtype)
-		looty += bushtype
-	if(prob(66))
-		looty += /obj/item/reagent_containers/food/snacks/grown/rogue/swampweed
+	looty += /obj/item/reagent_containers/food/snacks/grown/rogue/swampweed
 
 /obj/structure/flora/roguegrass/swampweed/attack_hand(mob/user)
 	if(isliving(user))
@@ -893,32 +890,6 @@
 			user.visible_message("<span class='warning'>[user] searches through [src].</span>")
 			if(!looty.len)
 				to_chat(user, "<span class='warning'>Picked clean... I should try later.</span>")
-
-// Blooming swampweed seedling: harvestable for 5 minutes before going permanently wild.
-/obj/structure/flora/roguegrass/swampweed/fresh
-	name = "blooming swampweed"
-	desc = "Swampweed that has just pushed through the earth. It can be harvested now, but left alone it will grow into a wild thicket."
-	/// Countdown in deciseconds until this converts to a wild swampweed structure.
-	var/time_remaining = 5 MINUTES
-
-/obj/structure/flora/roguegrass/swampweed/fresh/Initialize(mapload)
-	. = ..() // calls swampweed/Initialize: randomises icon, fills looty
-	START_PROCESSING(SSprocessing, src)
-
-/obj/structure/flora/roguegrass/swampweed/fresh/Destroy()
-	STOP_PROCESSING(SSprocessing, src)
-	return ..()
-
-/obj/structure/flora/roguegrass/swampweed/fresh/process(delta_time)
-	time_remaining -= delta_time
-	if(time_remaining <= 0)
-		new /obj/structure/flora/roguegrass/herb/swampweed(get_turf(src))
-		qdel(src)
-		return PROCESS_KILL
-
-/obj/structure/flora/roguegrass/swampweed/fresh/examine(mob/user)
-	. = ..()
-	. += span_warning("If not harvested within [DisplayTimeText(max(0, time_remaining))], it will grow into a wild thicket.")
 
 /obj/structure/flora/roguegrass/pumpkin
 	name = "bunch of wild pumpkins"

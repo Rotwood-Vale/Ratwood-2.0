@@ -44,6 +44,8 @@ GLOBAL_LIST_EMPTY(soil_list)
 	var/soil_decay_time = SOIL_DECAY_TIME
 	///The time remaining in which the soil was given special fertilizer, effect is similar to being blessed but with less beneficial effects
 	var/fertilized_time = 0
+	/// World time when a fully-grown swampweed plant will go wild if unharvested. -1 means inactive.
+	var/swampweed_overgrow_at = -1
 
 /obj/structure/soil/Initialize(mapload)
 	. = ..()
@@ -141,12 +143,12 @@ GLOBAL_LIST_EMPTY(soil_list)
 	if(istype(attacking_item, /obj/item/rogueweapon/hoe))
 		var/work_time
 		switch(user.get_skill_level(/datum/skill/labor/farming))
-			if(SKILL_LEVEL_LEGENDARY) work_time = 0.5 SECONDS
-			if(SKILL_LEVEL_MASTER)    work_time = 0.6 SECONDS
-			if(SKILL_LEVEL_EXPERT)    work_time = 0.7 SECONDS
-			if(SKILL_LEVEL_JOURNEYMAN) work_time = 0.8 SECONDS
-			if(SKILL_LEVEL_APPRENTICE) work_time = 0.9 SECONDS
-			else                       work_time = 1.0 SECONDS
+			if(SKILL_LEVEL_LEGENDARY)  work_time = 0.5 SECONDS  // fastest
+			if(SKILL_LEVEL_MASTER)     work_time = 1 SECONDS
+			if(SKILL_LEVEL_EXPERT)     work_time = 1.5 SECONDS
+			if(SKILL_LEVEL_JOURNEYMAN) work_time = 2 SECONDS
+			if(SKILL_LEVEL_APPRENTICE) work_time = 2.5 SECONDS
+			else                       work_time = 3 SECONDS  // no skill = stone hoe speed
 		to_chat(user, span_notice("I begin to till the soil..."))
 		playsound(src,'sound/items/dig_shovel.ogg', 100, TRUE)
 		if(do_after(user, work_time, target = src))
@@ -184,7 +186,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 			container.reagents.remove_reagent(/datum/reagent/water/gross, gross_water)
 		water_amount = min(target_water, total_units * 6)
 	if(water_amount > 0)
-		var/list/wash = list('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg')
+		var/list/wash = list('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg','sound/items/fillcup.ogg')
 		playsound(user, pick_n_take(wash), 100, FALSE)
 		to_chat(user, span_notice("I water the soil."))
 		adjust_water(water_amount)
@@ -359,6 +361,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 	if(plant_health <= 0)
 		plant_dead = TRUE
 		produce_ready = FALSE
+		swampweed_overgrow_at = -1
 		update_icon()
 
 /obj/structure/soil/Initialize(mapload)
@@ -373,6 +376,10 @@ GLOBAL_LIST_EMPTY(soil_list)
 
 /obj/structure/soil/process()
 	var/dt = 10
+	if(swampweed_overgrow_at > 0 && world.time >= swampweed_overgrow_at)
+		new /obj/structure/flora/roguegrass/swampweed(get_turf(src))
+		qdel(src)
+		return
 	process_weeds(dt)
 	process_plant(dt)
 	process_soil(dt)
@@ -487,6 +494,8 @@ GLOBAL_LIST_EMPTY(soil_list)
 				. += span_info("Estimated time to maturity: [DisplayTimeText(adjusted_mature)] (at current growth rate).")
 		if(produce_ready)
 			. += span_info("It's ready for harvest.")
+			if(plant?.type == /datum/plant_def/swampweed && swampweed_overgrow_at > 0)
+				. += span_warning("If left unharvested, it will grow into a wild thicket in [DisplayTimeText(max(0, swampweed_overgrow_at - world.time))].")
 	// Custom-growth structures sharing this soil: tree saplings, bush saplings, flower/herb seedlings.
 	// These don't use the standard soil.plant system, so their status is shown here instead.
 	if(!plant)
@@ -560,7 +569,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 	if(blessed_time > 0)
 		. += span_good("The soil seems blessed.")
 	if(fertilized_time > 0)
-		. += span_good("The soil has special fertilizer mixed in.")
+		. += span_good("The soil has special fertilizer mixed in, doubling plant growth speed.")
 	if(pollination_time > 0)
 		. += span_good("The soil has been pollinated.")
 	// Growth bonus breakdown: visible to expert farmers and those with the seedknow trait.
@@ -784,6 +793,8 @@ GLOBAL_LIST_EMPTY(soil_list)
 			produce_time -= plant.produce_time
 			produce_ready = TRUE
 			update_icon()
+			if(plant?.type == /datum/plant_def/swampweed && swampweed_overgrow_at < 0)
+				swampweed_overgrow_at = world.time + (5 MINUTES)
 
 
 #define SOIL_WATER_DECAY_RATE 0.5 / (1 MINUTES)
@@ -828,6 +839,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 /// Yields produce on its tile if it's ready for harvest
 /obj/structure/soil/proc/ruin_produce()
 	produce_ready = FALSE
+	swampweed_overgrow_at = -1
 	update_icon()
 
 /// Yields produce on its tile if it's ready for harvest
@@ -839,6 +851,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 	for(var/i in 1 to spawn_amount)
 		new plant.produce_type(loc)
 	produce_ready = FALSE
+	swampweed_overgrow_at = -1
 	if(!plant.perennial)
 		if(is_legendary) //the user has legendary skill
 			growth_time = 0 //reset growth time

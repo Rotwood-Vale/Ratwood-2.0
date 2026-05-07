@@ -213,8 +213,12 @@
 
 /obj/item/rogueweapon/hoe/attack_turf(turf/T, mob/living/user)
 	if(user.used_intent.type == /datum/intent/till)
-		if(user.get_skill_level(/datum/skill/labor/farming) == SKILL_LEVEL_LEGENDARY) //check if the user has legendary farming skill
-			work_time = 0.5 SECONDS //if legendary skill, do_afters take half a second instead of 3
+		switch(user.get_skill_level(/datum/skill/labor/farming))
+			if(SKILL_LEVEL_LEGENDARY)  work_time = 0.5 SECONDS
+			if(SKILL_LEVEL_MASTER)     work_time = 1 SECONDS
+			if(SKILL_LEVEL_EXPERT)     work_time = 1.5 SECONDS
+			if(SKILL_LEVEL_JOURNEYMAN) work_time = 2 SECONDS
+			if(SKILL_LEVEL_APPRENTICE) work_time = 2.5 SECONDS
 
 		user.changeNext_move(CLICK_CD_INTENTCAP)
 		if(istype(T, /turf/open/floor/rogue/snow) || istype(T, /turf/open/floor/rogue/snowrough) || istype(T, /turf/open/floor/rogue/snowpatchy))

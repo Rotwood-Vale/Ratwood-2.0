@@ -789,7 +789,7 @@
 		/obj/item/seeds/tea                          = 10,
 		/obj/item/seeds/coffee                       = 10,
 		/obj/item/herbseed/manabloom                 = 8,
-		/obj/item/herbseed/swampweed                  = 8,
+		/obj/item/seeds/swampweed                     = 8,
 		/obj/item/seeds/apple                        = 6,
 		/obj/item/seeds/pear                         = 6,
 		/obj/item/seeds/plum                         = 6,

@@ -311,6 +311,7 @@
 	name = "bucket"
 	desc = ""
 	icon = 'icons/roguetown/items/misc.dmi'
+	fillsounds = list('sound/items/fillcup.ogg','sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg')
 	lefthand_file = 'modular/Neu_Food/icons/food_lefthand.dmi'
 	righthand_file = 'modular/Neu_Food/icons/food_righthand.dmi'
 	icon_state = "woodbucket"
