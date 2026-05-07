@@ -39,3 +39,17 @@
 	stockpile_limit = 50
 	passive_generation = 2
 	category = "Seafood"
+
+/datum/roguestock/stockpile/crabmeat
+	name = "Crab Meat"
+	desc = "Prepared crab meat."
+	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/crab
+	held_items = list(0, 0)
+	payout_price = 2
+	withdraw_price = 2
+	transport_fee = 1
+	export_price = 3
+	importexport_amt = 10
+	stockpile_limit = 50
+	passive_generation = 2
+	category = "Seafood"

@@ -309,7 +309,7 @@ GLOBAL_LIST_INIT(chummed_fishing_tiles, list())
 /proc/createCageFishWeightListModlist(list/fishingMods, turf/target)
 	return createCageFishWeightList(fishingMods["commonFishingMod"],fishingMods["rareFishingMod"],fishingMods["treasureFishingMod"],fishingMods["trashFishingMod"],fishingMods["dangerFishingMod"],fishingMods["ceruleanFishingMod"],fishingMods["cheeseFishingMod"], target)
 
-/proc/apply_fishing_quality_to_fish(obj/item/reagent_containers/food/snacks/fish/F, list/modlist, list/size_weights_override = null)
+/proc/apply_fishing_quality_to_fish(obj/item/reagent_containers/food/snacks/fish/F, list/modlist, list/size_weights_override = null, forced_size = null)
 	if(!F)
 		return
 
@@ -344,7 +344,7 @@ GLOBAL_LIST_INIT(chummed_fishing_tiles, list())
 			size_weights["prize"] = 0
 
 	var/fishrarity = pickweightAllowZero(rarity_weights)
-	var/fishsize = pickweightAllowZero(size_weights)
+	var/fishsize = forced_size || pickweightAllowZero(size_weights)
 
 	var/raritydesc = "common"
 	var/costmod = 1

@@ -11,6 +11,7 @@
 	max_occupants = 2
 	max_drivers = 2
 	layer = ABOVE_MOB_LAYER
+	move_resist = 0
 	var/allowed_turf = /turf/open/water //includes all subtypes of water
 
 /obj/vehicle/ridden/dinghy/Initialize(mapload)

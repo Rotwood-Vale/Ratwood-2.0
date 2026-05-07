@@ -346,6 +346,12 @@
 /mob/proc/resolveAdjacentClick(atom/A,obj/item/W,params,used_hand)
 	if(!A)
 		return
+	if(isliving(src) && isobj(A))
+		var/obj/AM = A
+		if(!AM.anchored && W && istype(used_intent, /datum/intent/unarmed/grab))
+			start_pulling(A)
+			stamina_add(used_intent.releasedrain)
+			return
 	if(W)
 		W.melee_attack_chain(src, A, params)
 		if(isliving(src))

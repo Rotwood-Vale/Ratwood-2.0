@@ -598,9 +598,7 @@
 		var/turf/safe_drop_turf = get_safe_catch_drop_turf(user, auto_pending_target)
 		if(ispath(auto_pending_catch, /obj/item/reagent_containers/food/snacks/fish))
 			var/obj/item/reagent_containers/food/snacks/fish/caughtfish = new auto_pending_catch(safe_drop_turf)
-			apply_fishing_quality_to_fish(caughtfish, auto_pending_modlist, rod_size_weights)
-			if(auto_pending_size)
-				caughtfish.apply_fishing_size(auto_pending_size)
+			apply_fishing_quality_to_fish(caughtfish, auto_pending_modlist, rod_size_weights, auto_pending_size)
 			try_spawn_deluxe_bonus_fish(user, auto_pending_modlist, auto_pending_target, auto_pending_catch)
 		else
 			new auto_pending_catch(safe_drop_turf)
@@ -1472,6 +1470,18 @@
 		fishpicker = list(/obj/item/reagent_containers/food/snacks/fish/eel = 2,
 							/obj/item/reagent_containers/food/snacks/fish/carp = 6)
 		deepmod += 1
+	else if(istype(targeted, /turf/open/water/ocean/deep))
+		fishpicker = list(/obj/item/reagent_containers/food/snacks/fish/cod = 4,
+							/obj/item/reagent_containers/food/snacks/fish/angler = 4,
+							/obj/item/reagent_containers/food/snacks/fish/plaice = 3,
+							/obj/item/reagent_containers/food/snacks/fish/lobster = 2)
+		deepmod += 1
+	else if(istype(targeted, /turf/open/water/ocean))
+		fishpicker = list(/obj/item/reagent_containers/food/snacks/fish/cod = 6,
+							/obj/item/reagent_containers/food/snacks/fish/sole = 5,
+							/obj/item/reagent_containers/food/snacks/fish/bass = 5,
+							/obj/item/reagent_containers/food/snacks/fish/flounder = 4,
+							/obj/item/reagent_containers/food/snacks/fish/mackerel = 4)
 
 	if(istype(baited, /obj/item/fishing/bait))
 		B = baited
