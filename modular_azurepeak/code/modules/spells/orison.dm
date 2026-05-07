@@ -50,9 +50,7 @@
 	var/fatigue_used
 	switch (user.used_intent.type)
 		if (/datum/intent/fill)
-			fatigue_used = create_water(target, user)
-			if (fatigue_used)
-				qdel(src)
+			create_water(target, user)
 		if (INTENT_HELP)
 			fatigue_used = thaumaturgy(target, user)
 			if (fatigue_used)
@@ -423,7 +421,7 @@
 		var/fatigue_spent = 0
 		var/fatigue_used = max(3, holy_skill)
 		while(do_after(user, drip_speed, target = thing))
-			if(target_soil.water >= MAX_PLANT_WATER || (user.devotion.devotion - fatigue_used <= 0))
+			if(user.devotion.devotion - fatigue_used <= 0)
 				break
 
 			target_soil.adjust_water(round(MAX_PLANT_WATER * 0.25)) // 25% of max water per tick
@@ -433,5 +431,9 @@
 
 			if(prob(80))
 				playsound(user, 'sound/items/fillcup.ogg', 55, TRUE)
+
+			if(target_soil.water >= MAX_PLANT_WATER)
+				to_chat(user, span_notice("The soil is fully saturated."))
+				break
 
 		return 0

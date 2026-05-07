@@ -250,7 +250,8 @@
 	seedling_type = /obj/structure/soil_seedling/herb/swampweed
 
 /obj/item/herbseed/zizobane
-	makes_herb = /obj/structure/zizo_bane
+	name = "zizobane spores"
+	makes_herb = /obj/structure/zizo_bane/farmed
 	seed_identity = "zizobane spores"
 	seedling_type = /obj/structure/soil_seedling/herb/zizobane
 	herbseed_grow_duration = 10 MINUTES

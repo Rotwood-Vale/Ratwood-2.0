@@ -10,7 +10,10 @@
 /obj/item/rogueweapon/woodstaff/druidic_staff
 	name = "druidic staff"
 	desc = "A living staff of emerald-green wood, imbued with Dendor's blessing. Its gemerald focus pulses with wild growth."
+	icon = 'modular_azurepeak/icons/obj/items/staffs.dmi'
+	icon_state = "emeraldstaff"
 	slot_flags = ITEM_SLOT_HANDS | ITEM_SLOT_BACK
+	anvilrepair = /datum/skill/magic/druidic
 	// Do not inherit gem-staff slapcrafting upgrades.
 	register_gem_slapcrafting = FALSE
 	// Override combat intents — druidic staff uses blunt polearm strikes, not arcane arcing.
@@ -44,8 +47,8 @@
 	if(charges >= max_charges)
 		return PROCESS_KILL
 	regen_elapsed += delta_time
-	if(regen_elapsed >= 6)
-		regen_elapsed -= 6
+	if(regen_elapsed >= 60)
+		regen_elapsed -= 60
 		charges = min(charges + 1, max_charges)
 		if(charges >= max_charges)
 			return PROCESS_KILL
@@ -107,8 +110,8 @@
 		to_chat(user, span_warning("The druidic staff has no charges remaining. It needs time to regenerate."))
 		return COMSIG_MOB_CANCEL_CLICKON
 
-	// Range check — must be within 5 tiles.
-	if(get_dist(user, target) > 5)
+	// Range check — must be within 4 tiles.
+	if(get_dist(user, target) > 4)
 		return
 
 	// Cooldown check.
@@ -163,7 +166,7 @@
 	result = /obj/item/rogueweapon/woodstaff/druidic_staff
 	reqs = list(
 		/obj/item/rogueweapon/woodstaff = 1,
-		/obj/item/grown/log/tree/small/essence = 1,
+		/obj/item/grown/log/tree/blessed = 1,
 		/obj/item/alch/bloomstone = 1
 	)
 	craftdiff = SKILL_LEVEL_MASTER

@@ -964,8 +964,7 @@
 	// Spawn 2 blessed logs at the player's feet as the Treefather's gift.
 	var/turf/T = get_turf(user)
 	for(var/i in 1 to 2)
-		var/obj/item/grown/log/tree/log = new(T)
-		log.bless_log()
+		new /obj/item/grown/log/tree/blessed(T)
 	to_chat(user, span_green("Through the Treefather's power, the tree's limbs shed and regrow, with blessed logs now at my feet."))
 
 //==============================================================================

@@ -139,15 +139,17 @@ GLOBAL_LIST_EMPTY(soil_list)
 
 /obj/structure/soil/proc/try_handle_tilling(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/rogueweapon/hoe))
-		var/is_legendary = FALSE
-		if(user.get_skill_level(/datum/skill/labor/farming) == SKILL_LEVEL_LEGENDARY)
-			is_legendary = TRUE
-		var/work_time = 4 SECONDS
-		if(is_legendary)
-			work_time = 1.5 SECONDS //this is then by get_farming_do_time to around .5 seconds
+		var/work_time
+		switch(user.get_skill_level(/datum/skill/labor/farming))
+			if(SKILL_LEVEL_LEGENDARY) work_time = 0.5 SECONDS
+			if(SKILL_LEVEL_MASTER)    work_time = 0.6 SECONDS
+			if(SKILL_LEVEL_EXPERT)    work_time = 0.7 SECONDS
+			if(SKILL_LEVEL_JOURNEYMAN) work_time = 0.8 SECONDS
+			if(SKILL_LEVEL_APPRENTICE) work_time = 0.9 SECONDS
+			else                       work_time = 1.0 SECONDS
 		to_chat(user, span_notice("I begin to till the soil..."))
 		playsound(src,'sound/items/dig_shovel.ogg', 100, TRUE)
-		if(do_after(user, get_farming_do_time(user, work_time), target = src))
+		if(do_after(user, work_time, target = src))
 			to_chat(user, span_notice("I till the soil."))
 			playsound(src,'sound/items/dig_shovel.ogg', 100, TRUE)
 			user_till_soil(user)
@@ -573,6 +575,8 @@ GLOBAL_LIST_EMPTY(soil_list)
 				bonus_parts += "living light ([round(natural_bonuses["living_light"] * 100)]%)"
 			if(natural_bonuses["dendor_rune"] > 0)
 				bonus_parts += "Rune of Dendor ([round(natural_bonuses["dendor_rune"] * 100)]%)"
+			if(natural_bonuses["tilled"] > 0)
+				bonus_parts += "tilled soil ([round(natural_bonuses["tilled"] * 100)]%)"
 			. += span_good("Growth bonus: [round(natural_bonuses["total"] * 100)]% ([english_list(bonus_parts)].)") 
 
 #define BLESSING_WEED_DECAY_RATE 10 / (1 MINUTES)

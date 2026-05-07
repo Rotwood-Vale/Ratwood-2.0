@@ -34,6 +34,12 @@
 	remove_filter("blessed_log_outline")
 	return ..()
 
+// Pre-blessed large log subtype — spawned directly by the Timber Tithe rite.
+// Required as a typed path for crafting recipe matching.
+/obj/item/grown/log/tree/blessed/Initialize(mapload)
+	. = ..()
+	bless_log()
+
 /obj/item/grown/log/tree/examine(mob/user)
 	. = ..()
 	if(blessed)
