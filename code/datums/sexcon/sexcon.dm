@@ -80,6 +80,7 @@
 
 /datum/sex_controller/New(mob/living/carbon/human/owner)
 	user = owner
+	charge = get_max_charge()
 
 /datum/sex_controller/Destroy()
 	//remove_from_target_receiving()
@@ -371,7 +372,7 @@
 		effective_target.sate_addiction(/datum/charflaw/addiction/lovefiend)
 	after_ejaculation()
 
-/datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null, datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null, orifice = SEX_PART_NULL)
+/datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null, datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null, orifice = SEX_PART_NULL, skip_knot_try = FALSE)
 	// splashed_user is the bottom receiving; for top-initiated actions it matches target, for riding/blowjob it is the rider/sucker while target may be null
 	var/mob/living/carbon/human/effective_target = splashed_user || target
 	log_combat(user, effective_target, "Came inside the target")
@@ -381,23 +382,24 @@
 		playsound(user, pick(list('sound/misc/mat/mouthend (1).ogg','sound/misc/mat/mouthend (2).ogg')), 100, FALSE, ignore_walls = FALSE)
 	else
 		playsound(user, 'sound/misc/mat/endin.ogg', 50, TRUE, ignore_walls = FALSE)
-	if(knot_btm || (user != effective_target && !isnull(effective_target) && istype(effective_target)))
+	if(!skip_knot_try && (knot_btm || (user != effective_target && !isnull(effective_target) && istype(effective_target))))
 		knot_try(knot_action = knot_action, knot_swap_roles = knot_swap_roles, knot_btm = knot_btm)
-	if(splashed_user && (oral || !splashed_user.sexcon.knotted_status))
+	var/datum/sex_controller/receiver_sexcon = splashed_user?.sexcon
+	var/is_receiver_actively_knotted_to_user = receiver_sexcon?.knotted_status == KNOTTED_AS_BTM && receiver_sexcon?.knotted_owner == user
+	if(receiver_sexcon && (oral || !receiver_sexcon.knotted_status || is_receiver_actively_knotted_to_user))
 		var/status_type = !oral ? /datum/status_effect/facial/internal : /datum/status_effect/facial
 		var/datum/status_effect/facial/splashed_type = splashed_user.has_status_effect(status_type)
 		if(!splashed_type)
 			splashed_user.apply_status_effect(status_type)
 			if(oral)
-				splashed_user.visible_message(span_love("[splashed_user] takes a load in their mouth!"), span_love("I take a load in my mouth!"))
+				splashed_user.visible_message(span_love("[splashed_user] takes a load down their throat!"), span_love("I take a load down my throat!"))
 			else
 				splashed_user.visible_message(span_love("[splashed_user] takes a load inside them!"), span_love("I take a load inside me!"))
 		else
 			splashed_type.refresh_cum()
 		if(oral && splashed_user.reagents) //cum fills hunger if taking it orally
 			if(user.getorganslot(ORGAN_SLOT_PENIS))
-				var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
-				splashed_user.reagents.add_reagent(/datum/reagent/erpjuice/cum, testes?.ball_size > DEFAULT_TESTICLES_SIZE ? 6 : 3)
+				splashed_user.reagents.add_reagent(/datum/reagent/erpjuice/cum, get_semen_volume())
 			else
 				splashed_user.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 2)
 			apply_cum_consumed_buff(splashed_user)
@@ -406,7 +408,8 @@
 		modular_record_collar_receive_event(splashed_user, user)
 		if(!oral)
 			var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
-			apply_creampie_drip(splashed_user, orifice, use_long = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
+			if(!is_receiver_actively_knotted_to_user)
+				apply_creampie_drip(splashed_user, orifice, use_long = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/lovefiend))
 		effective_target.sate_addiction(/datum/charflaw/addiction/lovefiend)
 	after_ejaculation()
@@ -564,6 +567,13 @@
 		user.visible_message(span_love(self_mess_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
 		cum_onto(user)
 		return
+	if(user.getorganslot(ORGAN_SLOT_PENIS) && knotted_status == KNOTTED_AS_TOP && knotted_owner == user && ishuman(knotted_recipient) && !QDELETED(knotted_recipient) && knotted_recipient?.sexcon)
+		var/orifice = knotted_part_partner
+		var/is_oral_knot = (orifice & SEX_PART_JAWS) != SEX_PART_NULL
+		var/knotted_climax_msg = is_oral_knot ? "[user] climaxes down [knotted_recipient]'s throat!" : "[user] climaxes deep inside [knotted_recipient]!"
+		user.visible_message(span_love(knotted_climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
+		cum_into(oral = is_oral_knot, splashed_user = knotted_recipient, orifice = orifice, skip_knot_try = TRUE)
+		return
 	var/climax_msg = "[user] makes a mess!"
 	var/modular_climax_msg = modular_get_chastity_climax_message(climax_msg)
 	if(istext(modular_climax_msg))
@@ -573,6 +583,7 @@
 			climax_msg = "[user] climaxes and makes a mess in their chastity device!"
 	user.visible_message(span_love(climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
 	playsound(user, 'sound/misc/mat/endout.ogg', suppress_moan ? 12 : 50, TRUE, ignore_walls = FALSE)
+	var/semen_vol = get_semen_volume()
 	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
 	add_cum_floor(get_turf(user), do_big_puddle = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
 	after_ejaculation()
@@ -586,7 +597,7 @@
 	if(user.getorganslot(ORGAN_SLOT_VAGINA))
 		cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/femcum,1)
 	else
-		cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/cum,2)
+		cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/cum, semen_vol)
 
 /datum/sex_controller/proc/ejaculate_container(obj/item/reagent_containers/glass/C)
 	if(try_resist_orgasm())
@@ -596,11 +607,42 @@
 		user.visible_message(span_love("[user] spills into [C]!"))
 		playsound(user, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
 		if(user.getorganslot(ORGAN_SLOT_PENIS))
-			var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
-			C.reagents.add_reagent(/datum/reagent/erpjuice/cum, testes?.ball_size > DEFAULT_TESTICLES_SIZE ? 6 : 3)
+			C.reagents.add_reagent(/datum/reagent/erpjuice/cum, get_semen_volume())
 		else
 			C.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 2)
 	after_ejaculation()
+
+/datum/sex_controller/proc/get_semen_volume()
+	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
+	if(!testes)
+		return 0
+	var/volume
+	switch(testes.ball_size)
+		if(MIN_TESTICLES_SIZE)
+			volume = 2
+		if(MAX_TESTICLES_SIZE)
+			volume = 4
+		else
+			volume = 3
+	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
+		volume = floor(volume * 1.5)
+
+	var/obj/item/organ/penis/shaft = user.getorganslot(ORGAN_SLOT_PENIS)
+	if(shaft?.penis_type in list(PENIS_TYPE_KNOTTED, PENIS_TYPE_EQUINE, PENIS_TYPE_EQUINE_KNOTTED, PENIS_TYPE_TAPERED_KNOTTED, PENIS_TYPE_TAPERED_DOUBLE_KNOTTED, PENIS_TYPE_BARBED_KNOTTED))
+		volume += 1
+		
+	return volume
+
+/datum/sex_controller/proc/get_max_loads()
+	var/con = user.STACON
+	var/loads = 2 + floor(clamp((con - 10) * 2, 0, 99) / 2)
+	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
+		loads = floor(loads * 1.5)
+	return loads
+
+/// Returns the max charge based on dynamic load count
+/datum/sex_controller/proc/get_max_charge()
+	return get_max_loads() * CHARGE_FOR_CLIMAX
 
 /datum/sex_controller/proc/after_ejaculation()
 	set_arousal(40)
@@ -658,7 +700,7 @@
 
 /datum/sex_controller/proc/set_charge(amount)
 	var/empty = (charge < CHARGE_FOR_CLIMAX)
-	charge = clamp(amount, 0, SEX_MAX_CHARGE)
+	charge = clamp(amount, 0, get_max_charge())
 	var/after_empty = (charge < CHARGE_FOR_CLIMAX)
 	if(empty && !after_empty)
 		to_chat(user, span_notice("I feel like I'm not so spent anymore"))
@@ -1485,11 +1527,39 @@
 			return "<span class='love_ludicrous'>[string]</span>"
 
 /datum/sex_controller/proc/try_pelvis_crush(mob/living/carbon/human/target)
-	if(istype(user.rmb_intent, /datum/rmb_intent/strong))
-		if(!target.has_wound(/datum/wound/fracture/groin))
-			if(prob(10))
-				var/obj/item/bodypart/groin = target.get_bodypart(check_zone(BODY_ZONE_PRECISE_GROIN))
-				groin.add_wound(/datum/wound/fracture)
+	if(istype(user.rmb_intent, /datum/rmb_intent/strong) && force > SEX_FORCE_MID)
+		if(prob(10) && !target.has_status_effect(/datum/status_effect/quivering))
+			target.apply_status_effect(/datum/status_effect/quivering)
+			target.confused += 25
+			target.OffBalance(30 SECONDS)
+		if(user.client.prefs.extreme_erp && target.client.prefs.extreme_erp)
+			if(!target.has_wound(/datum/wound/fracture/groin))
+				if(prob(10))
+					var/obj/item/bodypart/groin = target.get_bodypart(check_zone(BODY_ZONE_PRECISE_GROIN))
+					groin.add_wound(/datum/wound/fracture)
+		
+/datum/sex_controller/proc/try_jaw_crush(mob/living/carbon/human/target)
+	if(istype(user.rmb_intent, /datum/rmb_intent/strong) && force > SEX_FORCE_MID)
+		if(user.client.prefs.extreme_erp && target.client.prefs.extreme_erp)
+			if(!target.has_wound(/datum/wound/fracture/mouth))
+				if(prob(10))
+					var/obj/item/bodypart/mouth = target.get_bodypart(check_zone(BODY_ZONE_PRECISE_MOUTH))
+					mouth.add_wound(/datum/wound/fracture)
+		if(prob(10) && !target.has_status_effect(/datum/status_effect/jaw_gaped) && !target.has_wound(/datum/wound/fracture/mouth))
+			target.apply_status_effect(/datum/status_effect/jaw_gaped)
+			target.apply_status_effect(/datum/status_effect/debuff/dazed)
+
+/datum/status_effect/quivering
+	id = "quivering"
+	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = /atom/movable/screen/alert/status_effect/quivering
+	effectedstats = list("speed" = -2)
+
+/atom/movable/screen/alert/status_effect/quivering
+	name = "Quivering"
+	desc = "I can barely walk..."
+	icon_state = "quivering"
 
 /datum/proc/werewolf_sex_infect_attempt(mob/living/carbon/human/top, mob/living/carbon/human/bottom)
 

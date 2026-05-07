@@ -314,6 +314,13 @@
 	icon_state = "br_rose"
 	sellprice = 30
 
+/obj/item/clothing/wrists/roguetown/gem/chitinbracelet
+	name = "chitin bracelets"
+	desc = "A set of bracelets carved out of beetle chitin."
+	icon_state = "br_shell"
+	color = "#7B8C5E"
+	sellprice = 25
+
 /obj/item/clothing/wrists/roguetown/gem/opalbracelet
 	name = "opal bracelets"
 	desc = "A set of bracelets carved out of opal."

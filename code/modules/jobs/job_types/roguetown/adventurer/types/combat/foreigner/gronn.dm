@@ -1,5 +1,5 @@
 //Gronnic Itinerant is a combination subclass.
-//A choice between polearms and ranged.
+//A choice between polearms, ranged, or miracles.
 /datum/advclass/foreigner/gronn
 	name = "Gronnic Itinerant"
 	tutorial = "Whether separated from your clan, or otherwise cast aside? You've found your way to Ferentia. \
@@ -9,7 +9,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/gronnic
 	subclass_languages = list(/datum/language/gronnic)
 	cmode_music = 'sound/music/combat_gronn.ogg'
-	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_MEDIUMARMOR)
+	traits_applied = list(TRAIT_STEELHEARTED)
 	subclass_stats = list(
 		STATKEY_WIL = 2,
 		STATKEY_INT = -1,
@@ -24,8 +24,9 @@
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 	)
 	extra_context = "Inhumen exclusive. \
-	Bruiser provides: +3STR/-2INT, JMAN polearms and JMAN riding, paired with critical resistance. \
-	Archer provides:  +3PER/+2STR, EXPT bows, JMAN tracking."
+	Bruiser provides: +3STR/-2INT, medium armor training, JMAN polearms and JMAN riding, paired with critical resistance. \
+	Archer provides:  +3PER/+2STR, medium armor training, EXPT bows, JMAN tracking. \
+	Zealot provides: +2SPD/+2STR, dodge expert, T2 miracles."
 
 /datum/outfit/job/roguetown/adventurer/gronnic
 	allowed_patrons = ALL_INHUMEN_PATRONS
@@ -43,7 +44,7 @@
 	backpack_contents = list(/obj/item/rogueweapon/scabbard/sheath)
 
 	if(H.mind)
-		var/gronnish_lot = list("Bruiser","Archer")
+		var/gronnish_lot = list("Bruiser","Archer", "Zealot")
 		var/lot_choice = input(H, "Choose your LOT", "WHAT WERE YOU") as anything in gronnish_lot
 		switch(lot_choice)
 			if("Bruiser")
@@ -58,11 +59,12 @@
 				H.change_stat(STATKEY_STR, 3)
 				H.change_stat(STATKEY_INT, -2)
 				//The rest.
+				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 			if("Archer")
 				//Equipment
 				head = /obj/item/clothing/head/roguetown/hatfur
-				armor = /obj/item/clothing/suit/roguetown/armor/leather/Huus_quyaq
+				armor = /obj/item/clothing/suit/roguetown/armor/plate/scale/steppe
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
 				l_hand = /obj/item/quiver/arrows
 				//Skills & Stats.
@@ -70,6 +72,20 @@
 				H.adjust_skillrank(/datum/skill/misc/tracking, 3, TRUE)
 				H.change_stat(STATKEY_PER, 3)
 				H.change_stat(STATKEY_STR, 2)
+				//The rest.
+				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+			if("Zealot")
+				//Equipment
+				head = /obj/item/clothing/head/roguetown/hatfur
+				armor = /obj/item/clothing/suit/roguetown/armor/leather/Huus_quyaq
+				r_hand = /obj/item/rogueweapon/stoneaxe/handaxe
+				//Skills & Stats.
+				H.adjust_skillrank(/datum/skill/magic/holy, 2, TRUE)
+				H.change_stat(STATKEY_STR, 2)
+				H.change_stat(STATKEY_SPD, 2)
+				//The rest.
+				var/datum/devotion/C = new /datum/devotion(H, H.patron)
+				C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2) //Capped to T2 miracles. Devotion at T2.
+				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
-

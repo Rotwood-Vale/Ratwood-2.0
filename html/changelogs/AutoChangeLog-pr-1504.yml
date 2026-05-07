@@ -1,0 +1,11 @@
+author: "KeberosNihilus"
+delete-after: True
+changes:
+  - rscadd: "New keyring for the Bookworm Heir. Now you've got Mage Tower access!"
+  - rscadd: "Added the ducal blacksteel staff. Just a copy of the regular blacksteel staff, but now with an extra target painted on whoever holds it."
+  - balance: "Reworked the Bookworm Heir into a diet Mage's Apprentice."
+  - balance: "+1 Fortune to the Bookworm so their Weighted Stats are +3 instead of +2. Also makes them slightly better at epic stick warfare (they still have no wrestling, so... Just grab them by the scruff)."
+  - balance: "Aristocrat now has the Tailoring trait so they have their old role of being the dainty knitting lady of the keep back."
+  - balance: "Scamp now has 2 knife skill so they don't need to punch a dummy roundstart."
+  - balance: "Blacksteel staves now have an increased sale price compared to their mundane counterparts. Uncraftable item, so this mostly just encourages people to mug Grenzelmages and people trying to fashionmax."
+  - bugfix: "Daring Twit prince now has Medium Armor training so, like their description says, they are literally just a squire. Mostly."

@@ -38,7 +38,7 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/reagent_containers/glass/bottle/rogue/manapot
 	neck = /obj/item/clothing/neck/roguetown/gorget
-	id = /obj/item/clothing/neck/roguetown/zcross/iron
+	id = /obj/item/clothing/neck/roguetown/psicross/inhumen
 	beltl = /obj/item/rogueweapon/huntingknife
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(

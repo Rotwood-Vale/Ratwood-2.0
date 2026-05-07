@@ -64,7 +64,6 @@
 		/datum/skill/craft/tanning = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/ceramics = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/traps = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 	)
 
@@ -90,6 +89,8 @@
 			/obj/item/recipe_book/blacksmithing = 1,
 			/obj/item/clothing/mask/rogue/spectacles/golden = 1,
 			/obj/item/contraption/linker/master = 1,
+			/obj/item/mini_flagpole/blacksmith = 1,
+			/obj/item/mini_flagpole/artificer = 1,
 			)
 		belt = /obj/item/storage/belt/rogue/leather
 		beltl = /obj/item/storage/belt/rogue/pouch/coins/rich

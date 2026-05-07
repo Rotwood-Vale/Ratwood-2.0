@@ -16,7 +16,7 @@
 	var/list/allowed_turf_typecache
 	var/list/forbid_turf_typecache					//allow typecache for only certain turfs, forbid to allow all but those. allow only certain turfs will take precedence.
 	var/allow_one_away_from_valid_turf = TRUE		//allow moving one tile away from a valid turf but not more.
-	var/drive_verb = "drive"
+	var/drive_verb = "paddle"//This is currently only used for the Dinghy
 	var/ride_check_rider_incapacitated = FALSE
 	var/ride_check_rider_restrained = FALSE
 	var/ride_check_ridden_incapacitated = FALSE
@@ -261,7 +261,7 @@
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else
-		to_chat(user, span_warning("You'll need the keys in one of my hands to [drive_verb] [AM]."))
+		to_chat(user, span_warning("I'll need an oar in one of my hands to [drive_verb] [AM]."))
 	return TRUE
 
 /datum/component/riding/proc/Unbuckle(atom/movable/M)

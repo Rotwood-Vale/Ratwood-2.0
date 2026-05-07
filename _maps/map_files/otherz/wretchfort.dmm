@@ -469,7 +469,7 @@
 /area/rogue/outdoors/wretch)
 "eJ" = (
 /obj/structure/table/church/m,
-/obj/item/clothing/neck/roguetown/zcross/iron,
+/obj/item/clothing/neck/roguetown/psicross/inhumen,
 /obj/item/bodypart/head,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/wretch/gnollcavern)

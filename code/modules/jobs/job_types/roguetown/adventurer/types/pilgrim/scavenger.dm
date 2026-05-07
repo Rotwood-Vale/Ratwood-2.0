@@ -31,7 +31,6 @@
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/traps, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/carpentry, 2, TRUE) //gotta build your farmstead
 	H.adjust_skillrank(/datum/skill/craft/masonry, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/farming, 3, TRUE) //less than a dedicated farmer

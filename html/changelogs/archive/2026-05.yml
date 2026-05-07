@@ -1,0 +1,134 @@
+2026-05-01:
+  EvenInDeathIStillServe:
+  - rscadd: Cow and catbells are now attachable to all neckwear items.
+  - rscadd: Cow and catbells are now available in the loadout.
+  IronDragoon:
+  - rscadd: Added ability for bottoms to force themselves onto a top's knot
+  - rscadd: Ability for bottoms to grind a knot in themselves if they are the one
+      forcing it
+  - rscadd: Subtle knot grinding
+  - rscadd: Some gooner local visible messages about people taking loads on their
+      body/face
+  - rscadd: Can now 'clean' a partner who is actively 'dripping' through rimming/cunnilingus
+      actions.
+  - rscadd: Can now consume cum/femcum to gain a small amount of nutrition through
+      oral sex. This should also be implemented in all the other areas I thought of
+      including cleaning mentioned above, as well as cleaning floor stuff
+  - rscadd: More detailed examine text around active cum dripping
+  - rscadd: Baotha round end influence now tracks non-lupians knotted as well as impregnations
+  - refactor: refactored sexcon a little to respect the bottom/top as opposed to just
+      the 'instigator'
+  john-pawson:
+  - bugfix: fixed being able to far travel dead corpses, opening up a slot twice or
+      opening a slot of a role that you shouldn't be able to.
+2026-05-02:
+  Lir:
+  - bugfix: Fixed a small mapping oversight
+2026-05-03:
+  Jamdrawers:
+  - rscadd: Roguetest_OtherZ option when changing the map to load roguetest without
+      loading the bandit camp/wretch fort/etc.
+  john-pawson:
+  - rscadd: Certain foods will now give you a slice of it when almost finished, for
+      example, the last bite of a loaf of bread will be a bread slice, or the last
+      bite of a salumoi will be a salumoi slice.
+  - bugfix: You can no longer duplicate food by biting and slicing it
+  kimesik:
+  - rscadd: You can tell if somebody's soul is still in with Expert Medicine
+2026-05-04:
+  EvenInDeathIStillServe:
+  - rscadd: Pouring and drinking from containers on sneak intent will do so in 1 unit
+      increments.
+  - rscadd: Sneaking will cork and uncork containers quietly.
+  - rscadd: You can now sprinkle 1 unit of liquid on the rim of FILLED containers
+      when pouring with sneak intent. Anyone drinking from it will absorb that full
+      dose along with the rest of the liquid in it.
+  Jamdrawers:
+  - rscadd: towner hunters have an option for a hatchet instead of a 'hunting sword'
+  - rscdel: Cuts a large number of slapcraft recipes.
+  - refactor: removes 'traps' skill and folds it in to 'crafting'
+  Skye:
+  - rscadd: Amazonian Warriors that were deterred due to changing weather paterns
+      have re-found their way to the Vale. Bikini lovers rejoice!
+  john-pawson:
+  - rscadd: Added portable alchemy stations and cauldrons! The cauldron can only hold
+      60 drams, so you won't be able to make full potion batches with it.
+  - rscadd: The portable alchemy station and the portable cauldron can be bought at
+      the merchant or made by an artificer.
+  - code_imp: Folding table code slightly changed so subtypes can be made of it more
+      easily.
+  - code_imp: Strong cauldron recipes no longer use half normal potion half addittive
+      when being made, now they simply give the full amount of strong potion.
+  kimesik:
+  - rscadd: Reformist Tabard (available in Loadout)
+  - rscadd: Psydonic Heretics (Wretch class) can choose between three denominations,
+      which changes their outfit.
+  ophaq:
+  - bugfix: Adventurer / Court Agents / Mercenaries with the resident virtue now actually
+      spawn in town, and get their known list populated by others that are locals
+      too. It works just like how towners spawn. Also stops players from being force
+      buckled on chairs when spawning in.
+  zoktiik:
+  - rscadd: Added new "Zealot" specialization to the inhumen-exclusive Gronnic Itinerant
+      adventurer subclass. Grants T2 miracles and Dodge Expert, as well as an additional
+      hatchet. Does NOT get Maille Training, gets light armor instead.
+  - balance: '"Archer" specialization now gets the same medium armor as "Bruiser".'
+2026-05-05:
+  Xander3359:
+  - code_imp: Delete duplicate debuffs that did nothing.
+2026-05-06:
+  NalimaTheWitch, Xander:
+  - rscadd: Hiding spots. Go examine bushes or tables to find out how to use them.
+  - rscadd: 'Crawling and wall-leaning sneaking: crawl or wall-lean with sneak mode
+      on to become partially transparent based on Sneak skill.'
+  - rscadd: You can spot people in hiding spots by standing next to them and examining
+      the object, or by using 'look around' (fixed eye button).
+  - qol: Far-looking with sneak mode on no longer prints a visible message to others.
+  - qol: Sneaking movement speed now scales from Sneak skill.
+  ophaq:
+  - rscadd: Lots of new Dendor content! Druids / Dendorites can convert trees into
+      sanctified ones (T4 spell) to interact with and do bounty missions for boons
+      or rewards.
+  - rscadd: Those with the power of Dendor can also heal trees with Bless Crops.
+  - rscadd: "Bless Crops has been reworked as a multi-cast single target spell. Blessings\
+      \ on plots last 12 minutes so it can\u2019t be spammed, but offers a +20% increased\
+      \ growth time. Can still be AoE casted with blessed seed powder. You can also\
+      \ use the spell on logs to get more wood out of them with the right reagents.\
+      \ See the PR for more details!"
+  - rscadd: "Fey mushroom rings. They\u2019re dendorite teleport circles that take\
+      \ a while to grow. Exclusive reward from sanctified trees."
+  - rscadd: Evil trees and wise trees can now be sanctified. Contact your local druid
+      to purify or sanctify them!
+  - rscadd: Bushes, hedge bushes, flowers, trees (sakura, pine, regular) can be grown
+      now. Seeds are obtained via the sanctified trees.
+  - rscadd: The vines from the conjure vines spell are now see-through, no longer
+      obstructing vision.
+  - rscadd: Kneestingers are casted in a 3x1 wall in front of the person using the
+      spell now.
+  - rscadd: "Bonemeal recipe by grinding bones in a pestle & mortar (yes we didn\u2019\
+      t have this before)."
+  - rscadd: Two new rituals with the rune that give you the ability to transform into
+      a mole or small mire-spider.
+  - rscadd: Druidic trickery can be trained by creating blessed seed powders, completing
+      dendor's bounties, or harvesting plants (dendorite exclusive). It can also be
+      written up to journeyman in skillbooks.
+  - rscadd: Sakura trees & the new flowers that you can plant now give a small mood
+      buff upon examine.
+  - rscadd: Dendor runes now give a 5% increase in crop growth speed when a plot is
+      within 5 tiles of it. More runes won't give more.
+  - bugfix: Herb planting now shows early stage growth sprites and no longer allows
+      other plants to be planted in their plot.
+  - qol: Watering soil plots now fills their water level to max if there is enough
+      water in the container. No more watering twice to do so.
+  - qol: "Apprentice farming lets you see the hydration & fertility % levels. Journeyman\
+      \ shows you the plant\u2019s health. Expert shows the time before the next crop\
+      \ stage + growth speed boosts. SEEDKNOW trait also lets you see this stuff."
+  - qol: Druids spawn with their staff on their back instead of in-hand.
+  - qol: Wildshapes now use current devotion bar from before you transformed, not
+      a separate one.
+  - qol: Wildshapes now use SR's claws in-hand sprites. You can use them in-hand with
+      the activate item button to drop them both, or you can use your drop item key
+      to drop just that one, freeing up a hand without having to disable the other
+      claw.
+  - qol: Neck slot items (specifically pouches) are now invisible during wildshape.
+  - balance: Cabbit form can no longer grab people / mobs.

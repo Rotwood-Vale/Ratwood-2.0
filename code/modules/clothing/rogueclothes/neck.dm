@@ -458,35 +458,22 @@
 	user.emote("pray")
 	return
 
-/obj/item/clothing/neck/roguetown/psicross/aalloy
-	name = "decrepit psicross"
-	desc = "'A comet capable of rending all the enemies of humanity apart; oh, how graceful His power was! And His sacrifice, ever so noble! Yet now He slumbers, unaware of the fruits His efforts came to give. And He sighs. And He weeps.'"
-	icon_state = "psycross_a"
-	color = "#bb9696"
+/obj/item/clothing/neck/roguetown/psicross/inhumen
+	name = "inverted psycross"
+	desc = "A symbol of progress from an era that had reason to believe in it."
+	icon_state = "zcross_iron"
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy
 	name = "ancient zcross"
 	desc = "'Progress. Ascension. Destiny. A mandate, commanded by God, to be fulfilled by Man. She called us forth from the edge of reality - and with Her dying breath, rasped out the final truth; the fire is gone, and the world will soon follow.'"
 	icon_state = "zcross_a"
 	color = "#bb9696"
-	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/neck/roguetown/psicross/undivided
 	name = "see amulet"
 	desc = "An amulet, typically worn by the Holy See's own influential figures. Stalwart for centuries against the darkness. \
 	Both a mark of station and grace."
 	icon_state = "undivided"
-	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_RING
-
-/obj/item/clothing/neck/roguetown/zcross/iron
-	name = "inverted psycross"
-	desc = "A symbol of progress from an era that had reason to believe in it."
-	icon_state = "zcross_iron"
-	resistance_flags = FIRE_PROOF
-	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_RING
-	anvilrepair = /datum/skill/craft/armorsmithing
-	grid_width = 32
-	grid_height = 32
 
 /obj/item/clothing/neck/roguetown/psicross/astrata
 	name = "amulet of Astrata"
@@ -554,6 +541,12 @@
 	salvage_result = /obj/item/grown/log/tree/stick
 	salvage_amount = 1
 
+/obj/item/clothing/neck/roguetown/psicross/aalloy
+	name = "decrepit psicross"
+	desc = "'A comet capable of rending all the enemies of humanity apart; oh, how graceful His power was! And His sacrifice, ever so noble! Yet now He slumbers, unaware of the fruits His efforts came to give. And He sighs. And He weeps.'"
+	icon_state = "psycross_a"
+	color = "#bb9696"
+
 /obj/item/clothing/neck/roguetown/psicross/silver
 	name = "silver psycross"
 	desc = "'The horrors persist, but so do I!'"
@@ -568,7 +561,6 @@
 	icon_state = "psycross_g"
 	item_state = "psycross_g"
 	//dropshrink = 0.75
-	resistance_flags = FIRE_PROOF
 	sellprice = 100
 
 /obj/item/clothing/neck/roguetown/psicross/reform
@@ -1143,3 +1135,11 @@
 	icon_state = "amulet_shell"
 	slot_flags = ITEM_SLOT_NECK
 	sellprice = 25
+
+/obj/item/clothing/neck/roguetown/carved/chitinamulet
+	name = "chitin amulet"
+	desc = "An amulet carved from beetle chitin."
+	icon_state = "amulet_shell"
+	color = "#7B8C5E"
+	slot_flags = ITEM_SLOT_NECK
+	sellprice = 20

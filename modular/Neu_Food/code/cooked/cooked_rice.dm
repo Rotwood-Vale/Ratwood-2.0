@@ -90,6 +90,7 @@
 	tastes = list("rice" = 1, "pork" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
 	desc = "Rice mixed with fatty pork."
+	bitesize = 4
 	icon = 'modular/Neu_Food/icons/cooked/cooked_rice.dmi'
 	icon_state = "ricepork"
 	faretype = FARE_FINE
@@ -120,6 +121,7 @@
 	tastes = list("rice" = 1, "pork" = 1, "fresh cucumber" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
 	desc = "Rice mixed with fatty pork and fresh cucumbers."
+	bitesize = 5
 	icon = 'modular/Neu_Food/icons/cooked/cooked_rice.dmi'
 	icon_state = "riceporkmeal"
 	faretype = FARE_LAVISH
@@ -132,6 +134,7 @@
 	tastes = list("rice" = 1, "steak" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
 	desc = "Rice mixed with beef steak."
+	bitesize = 4
 	icon = 'modular/Neu_Food/icons/cooked/cooked_rice.dmi'
 	icon_state = "ricebeef"
 	faretype = FARE_FINE
@@ -162,6 +165,7 @@
 	tastes = list("rice" = 1, "steak" = 1, "carrot" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
 	desc = "Rice mixed with beef steak and carrots."
+	bitesize = 5
 	icon = 'modular/Neu_Food/icons/cooked/cooked_rice.dmi'
 	icon_state = "ricebeefmeal"
 	faretype = FARE_LAVISH
@@ -174,6 +178,7 @@
 	tastes = list("rice" = 1, "shrimp" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
 	desc = "Rice mixed with shrimp."
+	bitesize = 4
 	icon = 'modular/Neu_Food/icons/cooked/cooked_rice.dmi'
 	icon_state = "riceshrimp"
 	faretype = FARE_FINE
@@ -202,8 +207,9 @@
 /obj/item/reagent_containers/food/snacks/rogue/riceshrimpcar
 	name = "rice and shrimp meal"
 	tastes = list("rice" = 1, "shrimp" = 1, "carrot" = 1)
-	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
+	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
 	desc = "Rice mixed with shrimp and carrots."
+	bitesize = 5
 	icon = 'modular/Neu_Food/icons/cooked/cooked_rice.dmi'
 	icon_state = "riceshrimpmeal"
 	faretype = FARE_LAVISH
@@ -216,6 +222,7 @@
 	tastes = list("rice" = 1, "tasty birdmeat" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
 	desc = "Rice mixed with frybird."
+	bitesize = 4
 	icon = 'modular/Neu_Food/icons/cooked/cooked_rice.dmi'
 	icon_state = "ricebird"
 	faretype = FARE_FINE
@@ -246,6 +253,7 @@
 	tastes = list("rice" = 1, "tasty birdmeat" = 1, "carrot" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
 	desc = "Rice mixed with frybird and carrots."
+	bitesize = 5
 	icon = 'modular/Neu_Food/icons/cooked/cooked_rice.dmi'
 	icon_state = "ricebirdmeal"
 	faretype = FARE_LAVISH
@@ -319,6 +327,7 @@
 	tastes = list("rice" = 1, "cheese" = 1, "egg" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_GOOD)
 	desc = "Rice mixed with an egg and layered with melted cheese."
+	bitesize = 4
 	icon = 'modular/Neu_Food/icons/cooked/cooked_rice.dmi'
 	icon_state = "riceeggcheese"
 	faretype = FARE_LAVISH

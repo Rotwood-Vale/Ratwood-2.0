@@ -15,10 +15,10 @@
 	<span style='color: #cc0f0f;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>Can't wear boots</span> | <span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'>Slight Fall Damage Reduction </span></b>"
 
 	expanded_desc = "<b>Harpy</b><br>\
-	Harpies, or less ceremoniously known as magpies, resemble the half-kin in appearance at first glance. \
-	One would rightfully assume they are similar in nature- with accuracy even, much to the harpies chagrin. \
-	Harpies have been uplifted and reconnected to divinity by Eora, having developed culture of music and song which caught the attention of such a goddess. \
-	Their songs and voices may be their own, or proud mimicking other voices theyve heard with unnatural accuracy. \
+	Harpies, or less ceremoniously known as 'magpies,' resemble the half-kin in appearance at first glance, enough so that one would assume they are similar in nature. \
+	Despite this, the origin of the harpy more closely resembles the origin of the goblinoid. The children of the ascendant. With not one parent, but two, they were made by Matthios and Baotha together.  \
+	Matthios giving his new children the cunning and greed to make master thieves, and Baotha giving them the beauty and charm of seductresses. \
+	Yet they are failed servants, scorned by their creators. Their Baothan born desire to capture suitable partners made them too temperamental to be Matthios’ agents of chaos, and their greed and arrogance made them a poor attempt at surpassing Eora’s beauty for Baotha. \
 	\
 	Whilst harpies may fly, their freedom is weighed by corruption of fleshcrafting to this day. Complete open-air freedom is still foreign to them. \
 	Harpies tend to live and gather in colonies at the tops of great sequoia forests and in nearby cliffs. Due to their laden flight, they must employ use of updrafts and proximity to large objects or structures to bolster their limited range and air-dancing performances. \

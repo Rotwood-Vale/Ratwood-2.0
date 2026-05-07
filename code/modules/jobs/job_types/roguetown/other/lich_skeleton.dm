@@ -251,7 +251,6 @@ LICH SKELETONS
 	H.adjust_skillrank(/datum/skill/craft/masonry, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/sewing, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/traps, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/engineering, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/mining, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/lumberjacking, 3, TRUE)

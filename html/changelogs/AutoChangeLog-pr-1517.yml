@@ -1,0 +1,4 @@
+author: "hugmeorelse"
+delete-after: True
+changes:
+  - bugfix: "Fixes Adminhelp Functionality to Match pre-#867 Functionality"

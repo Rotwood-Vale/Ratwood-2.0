@@ -48,6 +48,7 @@
 		/datum/advclass/wretch/vigilante,
 		/datum/advclass/wretch/blackoakwyrm,
 		/datum/advclass/wretch/antipope,
+		/datum/advclass/wretch/ancientchampion,
 	)
 
 /datum/job/roguetown/wretch/after_spawn(mob/living/L, mob/M, latejoin = TRUE)

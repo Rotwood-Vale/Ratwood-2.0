@@ -173,28 +173,28 @@
 			armorval += inventory_back.armor.getRating(type)
 	return armorval*0.5
 
-/mob/living/simple_animal/pet/dog/corgi/attackby(obj/item/O, mob/user, params)
-	if (istype(O, /obj/item/razor))
-		if (shaved)
-			to_chat(user, "<span class='warning'>I can't shave this corgi, it's already been shaved!</span>")
-			return
-		if (nofur)
-			to_chat(user, "<span class='warning'>I can't shave this corgi, it doesn't have a fur coat!</span>")
-			return
-		user.visible_message("<span class='notice'>[user] starts to shave [src] using \the [O].</span>", "<span class='notice'>I start to shave [src] using \the [O]...</span>")
-		if(do_after(user, 50, target = src))
-			user.visible_message("<span class='notice'>[user] shaves [src]'s hair using \the [O].</span>")
-			playsound(loc, 'sound/blank.ogg', 20, TRUE)
-			shaved = TRUE
-			icon_living = "[initial(icon_living)]_shaved"
-			icon_dead = "[initial(icon_living)]_shaved_dead"
-			if(stat == CONSCIOUS)
-				icon_state = icon_living
-			else
-				icon_state = icon_dead
-		return
-	..()
-	update_corgi_fluff()
+// /mob/living/simple_animal/pet/dog/corgi/attackby(obj/item/O, mob/user, params)
+// 	if (istype(O, /obj/item/razor))
+// 		if (shaved)
+// 			to_chat(user, "<span class='warning'>I can't shave this corgi, it's already been shaved!</span>")
+// 			return
+// 		if (nofur)
+// 			to_chat(user, "<span class='warning'>I can't shave this corgi, it doesn't have a fur coat!</span>")
+// 			return
+// 		user.visible_message("<span class='notice'>[user] starts to shave [src] using \the [O].</span>", "<span class='notice'>I start to shave [src] using \the [O]...</span>")
+// 		if(do_after(user, 50, target = src))
+// 			user.visible_message("<span class='notice'>[user] shaves [src]'s hair using \the [O].</span>")
+// 			playsound(loc, 'sound/blank.ogg', 20, TRUE)
+// 			shaved = TRUE
+// 			icon_living = "[initial(icon_living)]_shaved"
+// 			icon_dead = "[initial(icon_living)]_shaved_dead"
+// 			if(stat == CONSCIOUS)
+// 				icon_state = icon_living
+// 			else
+// 				icon_state = icon_dead
+// 		return
+// 	..()
+// 	update_corgi_fluff()
 
 /mob/living/simple_animal/pet/dog/corgi/Topic(href, href_list)
 	if(!(iscarbon(usr) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)))

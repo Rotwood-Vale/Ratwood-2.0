@@ -1,0 +1,6 @@
+author: "WolfOrion"
+delete-after: True
+changes:
+  - rscadd: "Added a new status effect, as well as face-specific effects"
+  - qol: "made bedbreaker check for both force level and extreme preferences"
+  - image: "added a new sprite for the quivering status effect"

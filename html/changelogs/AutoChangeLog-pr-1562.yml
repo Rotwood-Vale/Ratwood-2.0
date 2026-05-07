@@ -1,0 +1,4 @@
+author: "Inveldy"
+delete-after: True
+changes:
+  - bugfix: "Single word change. Replaces \"Azuria\" with \"The vale.\""
