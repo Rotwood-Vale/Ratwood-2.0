@@ -5,7 +5,7 @@
 		"azure_green" = "Undivided",
 		"azure_lane" = "Azuria",
 		// "azure_gold" = "Lirvas",
-		"azure_purple" = "Raneshen",
+		"azure_purple" = "Zybantium",
 		// "azure_gilbranze" = "Gilbranze", - Coming soon :tm:
 		"trey_liam" = "Trey Liam"
 	)

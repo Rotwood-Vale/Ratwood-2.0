@@ -269,7 +269,6 @@
 	character.adjust_skillrank_up_to(/datum/skill/craft/blacksmithing, 2, TRUE)
 	character.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 2, TRUE)
 	character.adjust_skillrank_up_to(/datum/skill/craft/masonry, 2, TRUE)
-	character.adjust_skillrank_up_to(/datum/skill/craft/traps, 2, TRUE)
 	character.adjust_skillrank_up_to(/datum/skill/craft/cooking, 2, TRUE)
 	character.adjust_skillrank_up_to(/datum/skill/craft/engineering, 2, TRUE)
 	character.adjust_skillrank_up_to(/datum/skill/craft/tanning, 2, TRUE)

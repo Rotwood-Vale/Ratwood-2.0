@@ -77,3 +77,8 @@
 	name =	"Climbing Machine"
 	cost =	250
 	contains = list(/obj/item/grapplinghook)
+
+/datum/supply_pack/rogue/blackmarket_tools/golem_skillcore
+	name ="Golem Skill Exhibitor (Self-Service)"
+	cost = 50
+	contains = list(/obj/item/construct_skill_core/blackmarket)

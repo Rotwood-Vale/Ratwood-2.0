@@ -30,8 +30,8 @@
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle
 
-	var/chosen_verb = pick(list("jerks [target.p_their()] cock", "strokes [target.p_their()] cock", "masturbates", "jerks off"))
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] [chosen_verb] [target]..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
+	var/chosen_verb = pick(list("jerks [target]'s cock", "strokes [target]'s cock", "masturbates [target]", "jerks off [target]"))
+	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] [chosen_verb]..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	if(!do_subtle)
 		user.sexcon.generic_sex_noise()
 

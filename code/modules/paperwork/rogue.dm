@@ -125,6 +125,79 @@
 	update_icon_state()
 	user.update_inv_hands()
 
+/obj/item/paper/scroll/custom
+	name = "custom book"
+	desc = "A writable book appearance. Use in hand to customize."
+	icon = 'icons/roguetown/items/books.dmi'
+	icon_state = "book_0"
+	maxlen = 10000
+	var/stage = 0
+	var/base_icon_state = "book"
+	var/customized = FALSE
+
+/obj/item/paper/scroll/custom/attack_self(mob/user)
+	if(stage == 0)
+		var/name_input = stripped_input(user, "Name your book - Leave empty for default.", "Book", max_length = MAX_NAME_LEN)
+		if(name_input)
+			name = name_input
+		stage++
+		return
+
+	if(stage == 1)
+		var/desc_input = stripped_input(user, "Describe your book - Leave empty for default.", "Book", max_length = MAX_BROADCAST_LEN)
+		if(desc_input)
+			desc = desc_input
+		stage++
+		return
+
+	if(stage == 2)
+		var/icon/J = new('icons/roguetown/items/books.dmi')
+		var/list/istates = J.IconStates()
+		var/list/icon_choice = list()
+		for(var/icon_s in istates)
+			if(icon_s == icon_state)
+				continue
+			if(!findtext(icon_s, "_0"))
+				continue
+			icon_choice += list(
+				"[icon_s]" = icon(icon = 'icons/roguetown/items/books.dmi', icon_state = icon_s)
+			)
+
+		var/icon_input = show_radial_menu(user, src, icon_choice, require_near = TRUE, tooltips = FALSE)
+		if(icon_input)
+			icon_state = icon_input
+			base_icon_state = replacetextEx(icon_input, regex(@"_[0-1]"), "")
+			if(alert(user, "Are you happy with this?", "Book Cover", "Yes", "No") != "Yes")
+				icon_state = initial(icon_state)
+				base_icon_state = initial(base_icon_state)
+				return
+		stage++
+		customized = TRUE
+		to_chat(user, span_notice("The book is ready. Right-click to open, use a feather to write."))
+		return
+
+	..()
+
+/obj/item/paper/scroll/custom/update_icon_state()
+	if(!customized)
+		return
+	if(open)
+		icon_state = "[base_icon_state]_1"
+	else
+		icon_state = "[base_icon_state]_0"
+
+/obj/item/paper/scroll/custom/attack_right(mob/user)
+	if(open)
+		slot_flags |= ITEM_SLOT_HIP
+		open = FALSE
+		playsound(src, 'sound/items/book_close.ogg', 100, FALSE)
+	else
+		slot_flags &= ~ITEM_SLOT_HIP
+		open = TRUE
+		playsound(src, 'sound/items/book_open.ogg', 100, FALSE)
+	update_icon_state()
+	user.update_inv_hands()
+
 
 /obj/item/paper/scroll/cargo
 	name = "shipping order"

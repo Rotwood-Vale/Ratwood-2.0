@@ -161,13 +161,13 @@
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/flashlight/flare/torch/Initialize(mapload)
-	GLOB.weather_act_upon_list += src
+//	GLOB.weather_act_upon_list += src
 	. = ..()
 	if(soundloop)
 		soundloop = new(src, FALSE)
 
 /obj/item/flashlight/flare/torch/Destroy()
-	GLOB.weather_act_upon_list -= src
+//	GLOB.weather_act_upon_list -= src
 	. = ..()
 
 /obj/item/flashlight/flare/torch/process()
@@ -192,6 +192,13 @@
 					STOP_PROCESSING(SSobj, src)
 					return
 		fuel = max(fuel - 10, 0)
+	var/turf/obj_turf = get_turf(src)
+	if(!obj_turf)
+		return
+	if(obj_turf.outdoor_effect?.weatherproof)
+		return
+	if(SSParticleWeather?.runningWeather?.target_trait == PARTICLEWEATHER_RAIN && !weather_resistant)
+		extinguish()
 
 /obj/item/flashlight/flare/torch/attack_self(mob/user)
 
@@ -279,10 +286,10 @@
 	on_damage = 15
 	wdefense = 1 //Metal rod. Offers a pittance-of-a-chance to parry an incoming strike.
 	smeltresult = /obj/item/rogueore/coal
-	max_integrity = 100	
+	max_integrity = 100
 	fuel = 120 MINUTES
 	should_self_destruct = FALSE
-	possible_item_intents = list(/datum/intent/use, /datum/intent/mace/strike) //Reflects the fact that it is, in essence, a heavy rod of iron. 
+	possible_item_intents = list(/datum/intent/use, /datum/intent/mace/strike) //Reflects the fact that it is, in essence, a heavy rod of iron.
 	extinguishable = FALSE
 	weather_resistant = TRUE
 	metalizer_result = null

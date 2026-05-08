@@ -75,7 +75,6 @@
 			to_chat(H, span_warning("You're smarter than the rest, by a stone's throw - and you know better than to get up close and personal. Unlike most others, you can read."))
 			H.set_blindness(0)
 
-			H.change_stat(STATKEY_WIL, -2)
 			H.change_stat(STATKEY_CON, -2)
 			H.change_stat(STATKEY_SPD, 2)
 			H.change_stat(STATKEY_INT, 2)
@@ -160,7 +159,6 @@
 	settling down as do you. Still, there is coin to be made on land."))
 			H.set_blindness(0)
 
-
 			ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 
 			H.change_stat(STATKEY_STR, 2)
@@ -177,7 +175,6 @@
 			r_hand = /obj/item/rogueweapon/sword/cutlass
 			beltr = /obj/item/rogueweapon/scabbard/sword
 			beltl = /obj/item/rogueweapon/huntingknife/idagger
-
 
 			H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)
@@ -205,8 +202,8 @@
 			ADD_TRAIT(H, TRAIT_GANG_A, TRAIT_GENERIC)
 			mask = /obj/item/clothing/mask/rogue/ragmask/red
 		if("Gang Blortz Volves")
-			to_chat(H, span_warning("I'm a member of street gang Blortz Volves, a lot of time has passed and now we have to build up our power again,\
-			those bastards from Rontz Ratz will answer for this.\
+			to_chat(H, span_warning("I'm a member of street gang Blortz Volves, a lot of time has passed and now we have to build up our power again, \
+			those bastards from Rontz Ratz will answer for this. \
 			Blortz Wolves howl - enemies cower!"))
 			ADD_TRAIT(H, TRAIT_GANG_B, TRAIT_GENERIC)
 			mask = /obj/item/clothing/mask/rogue/ragmask/azure

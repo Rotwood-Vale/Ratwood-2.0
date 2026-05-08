@@ -3,6 +3,8 @@
 	domain = "Greed, Theft, Dragons, True Freedom"
 	desc = "The Manyfaced Matthios has no true form. Some see Him as a merry highwayman, some as a god of beggars, and others the father of all dragons. One thing is certain: His followers despise Astrata's nobility."
 	worshippers = "Highwaymen, Downtrodden Peasants, Merchants, Slaves, Kobolds"
+	virtues = "Varies; usually greed and commerce"
+	sins = "Nobility, Sloth, Submitting to \"Unjust Hierarchies\""
 	crafting_recipes = list(/datum/crafting_recipe/roguetown/sewing/bandithood)
 	mob_traits = list(TRAIT_COMMIE, TRAIT_MATTHIOS_EYES, TRAIT_SEEPRICES_SHITTY)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,

@@ -13,6 +13,8 @@
 		added = round(-10 + (added * - 40))
 		if(src.climbing) // no stam regen while climbing guh
 			added = 0
+		if (bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX)	//being max heat(level 2) makes you regen half as much stamina
+			added = round(added * 0.5, 1)
 		if(HAS_TRAIT(src, TRAIT_MISSING_NOSE))
 			added = round(added * 0.5, 1)
 		if(HAS_TRAIT(src, TRAIT_MONK_ROBE))
@@ -66,15 +68,16 @@
 
 /mob/living/proc/stamina_nutrition_mod(amt)
 	// to simulate exertion, we deduct a mob's nutrition whenever it takes an action that would give us fatigue.
-	var/nutrition_amount = amt * 0.15 // nutrition goes up to 1k at max (but constantly ticks down) so we need to work at a slightly bigger scale
-	var/athletics_skill = get_skill_level(/datum/skill/misc/athletics)
-	var/chip_amt = 2 + ceil(athletics_skill / 2)
+	var/nutrition_amount = amt * 0.075 // flat 1/2 of the old 0.15 rate
 
-	if (amt <= chip_amt)
-		if (athletics_skill && prob(athletics_skill * 16)) // 16% chance per athletics skill to straight up negate nutrition loss
-			return 0
+	if (amt <= 2)
 		if (amt == 2 && prob(STACON * 5)) // only sprinting knocks off 2 stamina at a time, so test this vs our con to see if we drop it
 			return 0
+
+	//Temperature effects- cold makes you hungrier
+	if (ishuman(src))
+		if (bodytemperature < 250)
+			nutrition_amount *= 1.3
 
 	var/tox_damage = getToxLoss()
 	if (tox_damage >= (maxHealth * 0.2)) // if we have over 20% of our health as toxin damage, add 10% of our toxin damage as base loss
@@ -82,18 +85,9 @@
 
 	if (stamina >= (max_stamina * 0.7)) // if you've spent 70% of your max fatigue, the base amount you lose is doubled
 		nutrition_amount *= 2
-	if (STACON <= 9) // 10% extra nutrition loss for every CON below 9
-		var/low_end_malus = (10 - STACON) * 0.1
-		nutrition_amount *= (1 + low_end_malus)
-	if (STACON >= 11) // 5% less nutrition loss for every CON above 11
-		var/high_end_buff = (STACON - 10) * 0.05
-		nutrition_amount *= (1 - high_end_buff)
-	if (STASTR >= 11) // 7.5% increased nutrition loss for every STR above 11. the gainz don't come cheap
-		var/swole_malus = (10 - STASTR) * 0.075
+	if (STASTR >= 11) // 5% increased nutrition loss for every STR above 11. the gainz don't come cheap
+		var/swole_malus = (10 - STASTR) * 0.05
 		nutrition_amount *= (1 + swole_malus)
-	if (athletics_skill)
-		var/athletics_bonus = athletics_skill * 0.05 //each rank of athletics gives us 5% less nutrition loss
-		nutrition_amount *= (1 - athletics_bonus)
 
 	if (nutrition >= NUTRITION_LEVEL_WELL_FED) // we've only just eaten recently so just flat out reduce the total loss by half
 		nutrition_amount *= 0.5
@@ -110,6 +104,8 @@
 		added = added * 0.5
 	if(added < 0 && HAS_TRAIT(src, TRAIT_FROZEN_STAMINA))
 		added = 0
+	if(bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX && added >=1)	//being max heat(level 2) makes you regen half as much stamina
+		added = round(added * 1.5, 1)
 	stamina = CLAMP(stamina+added, 0, max_stamina)
 	if(added > 0)
 		energy_add(added * -1)

@@ -28,6 +28,11 @@
 	cost = 40
 	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/pigface)
 
+/datum/supply_pack/rogue/Knight/hbascinet
+	name = "Hounskull Bascinet"
+	cost = 40
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull)
+
 /datum/supply_pack/rogue/Knight/knighthelm
 	name = "Knight's Helmet"
 	cost = 40
@@ -302,6 +307,11 @@
 	name = "Silver Long Sword"
 	cost = 60
 	contains = list(/obj/item/rogueweapon/sword/long/silver)
+
+/datum/supply_pack/rogue/Knight/silverwaraxe
+	name = "Silver War Axe"
+	cost = 60
+	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/silver)
 
 /datum/supply_pack/rogue/Knight/silverpoleaxe
 	name = "Silver Poleaxe"

@@ -98,13 +98,15 @@ GLOBAL_LIST_INIT(highwayman_aggro, world.file2list("strings/rt/highwaymanaggroli
 	belt = /obj/item/storage/belt/rogue/leather
 	if(prob(5))
 		beltl = /obj/item/storage/belt/rogue/pouch/medicine
-	if(prob(50))
-		beltr = /obj/item/storage/belt/rogue/pouch/treasure/
-	else
-		if(prob(10))
-			beltr = /obj/item/storage/belt/rogue/pouch/treasure/lucky
-		else
+	switch(rand(1, 100))
+		if(1 to 50)
 			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+		if (51 to 85)
+			beltr = null
+		if (86 to 95)
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
+		if (96 to 100)
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/lucky
 	if(prob(10))
 		id = /obj/item/clothing/ring/gold
 	H.STASTR = rand(12,14) //GENDER EQUALITY!!
@@ -125,7 +127,7 @@ GLOBAL_LIST_INIT(highwayman_aggro, world.file2list("strings/rt/highwaymanaggroli
 		r_hand = /obj/item/rogueweapon/stoneaxe/handaxe
 	if(prob(20))
 		r_hand = /obj/item/rogueweapon/pick/militia
-	if(prob(25))	
+	if(prob(25))
 		l_hand = /obj/item/rogueweapon/shield/wood
 	if(prob(10))
 		l_hand = /obj/item/rogueweapon/huntingknife/idagger

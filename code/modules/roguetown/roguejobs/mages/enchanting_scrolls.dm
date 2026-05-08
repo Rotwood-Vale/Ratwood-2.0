@@ -176,7 +176,7 @@ T1 Enchantments below here*/
 /obj/item/enchantmentscroll/featherstep/attack_obj(obj/item/O, mob/living/user)
 	if(!..())
 		return
-	if(istype(O,/obj/item/clothing/shoes)||istype(O,/obj/item/clothing/ring))
+	if(istype(O,/obj/item/clothing/shoes)||istype(O,/obj/item/clothing/ring|| istype(O,/obj/item/clothing/neck/roguetown/psicross)))
 		to_chat(user, span_notice("You open [src] and place [O] within. Moments later, it flashes blue with arcana, and [src] crumbles to dust."))
 		var/magiceffect= new component
 		O.AddComponent(/datum/component/magic_item, magiceffect)
@@ -230,7 +230,7 @@ T1 Enchantments below here*/
 /obj/item/enchantmentscroll/thievery/attack_obj(obj/item/O, mob/living/user)
 	if(!..())
 		return
-	if(istype(O,/obj/item/clothing/gloves)||istype(O,/obj/item/clothing/ring))
+	if(istype(O,/obj/item/clothing/gloves)||istype(O,/obj/item/clothing/ring|| istype(O,/obj/item/clothing/neck/roguetown/psicross)))
 		to_chat(user, span_notice("You open [src] and place [O] within. Moments later, it flashes blue with arcana, and [src] crumbles to dust."))
 		var/magiceffect= new component
 		O.AddComponent(/datum/component/magic_item, magiceffect)
@@ -248,7 +248,7 @@ T1 Enchantments below here*/
 /obj/item/enchantmentscroll/trekk/attack_obj(obj/item/O, mob/living/user)
 	if(!..())
 		return
-	if(istype(O,/obj/item/clothing/shoes)||istype(O,/obj/item/clothing/ring))
+	if(istype(O,/obj/item/clothing/shoes)||istype(O,/obj/item/clothing/ring|| istype(O,/obj/item/clothing/neck/roguetown/psicross)))
 		to_chat(user, span_notice("You open [src] and place [O] within. Moments later, it flashes blue with arcana, and [src] crumbles to dust."))
 		var/magiceffect= new component
 		O.AddComponent(/datum/component/magic_item, magiceffect)
@@ -383,40 +383,6 @@ T1 Enchantments below here*/
 	else
 		to_chat(user, span_notice("Nothing happens. Perhaps you can't enchant [O] with this?"))
 
-/obj/item/enchantmentscroll/phoenixguard
-	name = "enchanting scroll of phoenix guard"
-	desc = "A scroll imbued with an enchantment of phoenixguard. Sets those that strike you on fire."
-	component = /datum/magic_item/greater/phoenixguard
-
-/obj/item/enchantmentscroll/phoenixguard/attack_obj(obj/item/O, mob/living/user)
-	.=..()
-	if(istype(O,/obj/item/clothing))
-		to_chat(user, span_notice("You open [src] and place [O] within. Moments later, it flashes blue with arcana, and [src] crumbles to dust."))
-		var/magiceffect= new component
-		O.AddComponent(/datum/component/magic_item, magiceffect)
-		O.name += " of phoenix guard"
-		O.filters += filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(1,255),rand(1,255),rand(1,255)))
-		qdel(src)
-	else
-		to_chat(user, span_notice("Nothing happens. Perhaps you can't enchant [O] with this?"))
-
-/obj/item/enchantmentscroll/woundclosing
-	name = "enchanting scroll of wound closure"
-	desc = "A scroll imbued with an enchantment of wound closure. Allows you to periodically seal wounds."
-	component = /datum/magic_item/greater/woundclosing
-
-/obj/item/enchantmentscroll/woundclosing/attack_obj(obj/item/O, mob/living/user)
-	.=..()
-	if(istype(O,/obj/item/clothing/ring))
-		to_chat(user, span_notice("You open [src] and place [O] within. Moments later, it flashes blue with arcana, and [src] crumbles to dust."))
-		var/magiceffect= new component
-		O.AddComponent(/datum/component/magic_item, magiceffect)
-		O.name += " of wound closure"
-		qdel(src)
-		O.filters += filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(1,255),rand(1,255),rand(1,255)))
-	else
-		to_chat(user, span_notice("Nothing happens. Perhaps you can't enchant [O] with this?"))
-
 /obj/item/enchantmentscroll/returningweapon
 	name = "enchanting scroll of returning weapon"
 	desc = "A scroll imbued with an enchantment of returning weapon. Enables you to summon an existing weapon back to you."
@@ -425,7 +391,7 @@ T1 Enchantments below here*/
 /obj/item/enchantmentscroll/returningweapon/attack_obj(obj/item/O, mob/living/user)
 	if(!..())
 		return
-	if(istype(O,/obj/item/clothing/ring)||istype(O,/obj/item/clothing/gloves))
+	if(istype(O,/obj/item/clothing/ring)|| istype(O,/obj/item/clothing/neck/roguetown/psicross)||istype(O,/obj/item/clothing/gloves))
 		to_chat(user, span_notice("You open [src] and place [O] within. Moments later, it flashes blue with arcana, and [src] crumbles to dust."))
 		var/magiceffect= new component
 		O.AddComponent(/datum/component/magic_item, magiceffect)
@@ -443,7 +409,7 @@ T1 Enchantments below here*/
 /obj/item/enchantmentscroll/archery/attack_obj(obj/item/O, mob/living/user)
 	if(!..())
 		return
-	if(istype(O,/obj/item/clothing/ring)||istype(O,/obj/item/clothing/gloves)|| istype(O, /obj/item/clothing/wrists/roguetown/bracers))
+	if(istype(O,/obj/item/clothing/ring)|| istype(O,/obj/item/clothing/neck/roguetown/psicross)||istype(O,/obj/item/clothing/gloves)|| istype(O, /obj/item/clothing/wrists/roguetown/bracers))
 		to_chat(user, span_notice("You open [src] and place [O] within. Moments later, it flashes blue with arcana, and [src] crumbles to dust."))
 		var/magiceffect= new component
 		O.AddComponent(/datum/component/magic_item, magiceffect)

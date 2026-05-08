@@ -6,6 +6,7 @@
 #define TAX_CAT_CHURCH "Church"
 #define TAX_CAT_YEOMEN "Yeomanry"
 #define TAX_CAT_PEASANTS "Peasantry"
+#define TAX_CAT_OUTLANDER "Outlanders"
 
 /proc/send_ooc_note(msg, name, job)
 	var/list/names_to = list()
@@ -36,7 +37,8 @@ SUBSYSTEM_DEF(treasury)
 		TAX_CAT_NOBLE = list("taxAmount" = 0, "fineExemption" = TRUE),
 		TAX_CAT_CHURCH = list("taxAmount" = 6, "fineExemption" = TRUE),
 		TAX_CAT_YEOMEN = list("taxAmount" = 12, "fineExemption" = FALSE),
-		TAX_CAT_PEASANTS = list("taxAmount" = 12, "fineExemption" = FALSE)
+		TAX_CAT_PEASANTS = list("taxAmount" = 12, "fineExemption" = FALSE),
+		TAX_CAT_OUTLANDER = list("taxAmount" = 25, "fineExemption" = FALSE)
 	)
 	var/tax_value = 0.11
 	var/queens_tax = 0.10
@@ -60,6 +62,8 @@ SUBSYSTEM_DEF(treasury)
 
 /datum/controller/subsystem/treasury/Initialize()
 	treasury_value = rand(1000, 2000)
+	if(SSmapping && SSmapping.config && SSmapping.config.map_name == "Build Your Own Settlement")
+		treasury_value = rand(200,400)
 	force_set_round_statistic(STATS_STARTING_TREASURY, treasury_value)
 
 	for(var/path in subtypesof(/datum/roguestock/bounty))
@@ -319,7 +323,9 @@ SUBSYSTEM_DEF(treasury)
 
 /// Returns correct tax (0, 100) for a living mob based on its traits & job
 /datum/controller/subsystem/treasury/proc/get_tax_value_for(mob/living/person)
-	if(HAS_TRAIT(person, TRAIT_NOBLE))
+	if(HAS_TRAIT(person, TRAIT_OUTLANDER))
+		return taxation_cat_settings[TAX_CAT_OUTLANDER]["taxAmount"] / 100
+	else if(HAS_TRAIT(person, TRAIT_NOBLE))
 		return taxation_cat_settings[TAX_CAT_NOBLE]["taxAmount"] / 100
 	else if(HAS_TRAIT(person, TRAIT_RESIDENT) || (person.job in GLOB.yeoman_positions))
 		return taxation_cat_settings[TAX_CAT_YEOMEN]["taxAmount"] / 100
@@ -330,7 +336,9 @@ SUBSYSTEM_DEF(treasury)
 
 /// Checks if a given mob can be fined, based on its traits & job. TRUE if can be fined, FALSE if protected by decrees
 /datum/controller/subsystem/treasury/proc/check_fine_exemption(mob/living/person)
-	if(HAS_TRAIT(person, TRAIT_NOBLE))
+	if(HAS_TRAIT(person, TRAIT_OUTLANDER))
+		return taxation_cat_settings[TAX_CAT_OUTLANDER]["fineExemption"]
+	else if(HAS_TRAIT(person, TRAIT_NOBLE))
 		return taxation_cat_settings[TAX_CAT_NOBLE]["fineExemption"]
 	else if(HAS_TRAIT(person, TRAIT_RESIDENT) || (person.job in GLOB.yeoman_positions))
 		return taxation_cat_settings[TAX_CAT_YEOMEN]["fineExemption"]

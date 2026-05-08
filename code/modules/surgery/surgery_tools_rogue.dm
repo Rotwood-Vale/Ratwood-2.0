@@ -487,7 +487,7 @@
 	throwforce = 12
 	wdefense = 3
 	wbalance = 1
-	tool_behaviour = TOOL_IMPROVISED_SAW
+	tool_behaviour = TOOL_SAW
 	sharpness = IS_BLUNT
 
 /obj/item/rogueweapon/surgery/hemostat/improv

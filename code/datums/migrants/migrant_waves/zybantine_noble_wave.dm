@@ -99,8 +99,18 @@
 	name = "Zybantine Emir"
 	shared_wave_type = /datum/migrant_wave/zybantine_noble
 	can_roll = FALSE
+	downgrade_wave = /datum/migrant_wave/zybantine_noble_down_nine
 	roles = list(
 		/datum/migrant_role/zybantine/emir = 1,
 		/datum/migrant_role/zybantine/janissary = 1,
+	)
+	greet_text = "You are far from home on missive from the Zybantine Empire."
+
+/datum/migrant_wave/zybantine_noble_down_nine
+	name = "Zybantine Emir"
+	shared_wave_type = /datum/migrant_wave/zybantine_noble
+	can_roll = FALSE
+	roles = list(
+		/datum/migrant_role/zybantine/emir = 1,
 	)
 	greet_text = "You are far from home on missive from the Zybantine Empire."

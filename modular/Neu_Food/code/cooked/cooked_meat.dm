@@ -340,6 +340,20 @@
 	else
 		return ..()
 
+/* .............   Seared Gnoll   ................ */
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/gnoll/seared
+	eat_effect = null
+	slices_num = 0
+	name = "seared gnoll"
+	desc = "A disgusting sinewy mess of gnoll meat. Seems the muscle has only toughened after being seared."
+	icon = 'modular/Neu_Food/icons/cooked/cooked_meat.dmi'
+	icon_state = "searedgnoll"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = SNACK_CHUNKY)
+	faretype = FARE_POOR
+	rotprocess = SHELFLIFE_EXTREME
+	fried_type = null
+	cooked_type = null
+
 /* .............   Fried Filet    ................ */
 // This is seafood but is one of the "simple cooked meat" so I put it here.
 /obj/item/reagent_containers/food/snacks/rogue/meat/fish/fried
@@ -414,6 +428,7 @@
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
 	icon_state = "frycabbit_garlick"
 	tastes = list("warm cabbit" = 1, "garlick" = 1)
+	faretype = FARE_FINE
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried/garlick/attackby(obj/item/I, mob/living/user, params)
 	var/found_table = locate(/obj/structure/table) in (loc)
@@ -437,6 +452,7 @@
 	icon_state = "frycabbit_garlick_cucumber"
 	tastes = list("warm cabbit" = 1, "garlick" = 1, "cucumber" = 1)
 	eat_effect = /datum/status_effect/buff/mealbuff
+	faretype = FARE_LAVISH
 
 /* .............  Garlicked Fried Volf   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/garlick
@@ -445,6 +461,7 @@
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
 	icon_state = "fryvolf_garlick"
 	tastes = list("gamey volf" = 1, "garlick" = 1)
+	faretype = FARE_FINE
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/garlick/attackby(obj/item/I, mob/living/user, params)
 	var/found_table = locate(/obj/structure/table) in (loc)
@@ -468,3 +485,4 @@
 	icon_state = "fryvolf_garlick_cucumber"
 	tastes = list("gamey volf" = 1, "garlick" = 1, "cucumber" = 1)
 	eat_effect = /datum/status_effect/buff/mealbuff
+	faretype = FARE_LAVISH

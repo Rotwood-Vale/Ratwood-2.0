@@ -189,6 +189,7 @@
 
 /obj/item/candle/gold
 	name = "gold candle"
+	icon = 'icons/roguetown/items/lighting.dmi'
 	icon_state = "gcandle"
 	sellprice = 30
 

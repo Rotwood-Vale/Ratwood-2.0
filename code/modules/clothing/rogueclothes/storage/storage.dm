@@ -72,6 +72,12 @@
 	item_state = "blackbelt"
 	sellprice = 10
 
+/obj/item/storage/belt/rogue/leather/double
+	name = "pair of belts"
+	desc = "A pair of slim black belts worn around the waist."
+	icon_state = "belt_double"
+	item_state = "belt_double"
+
 /obj/item/storage/belt/rogue/leather/plaquesilver
 	name = "plaque belt"
 	icon_state = "silverplaque"
@@ -118,8 +124,6 @@
 	name = "tasseted belt"
 	icon_state = "steeltasset"
 	sellprice = 35
-	sewrepair = FALSE
-	anvilrepair = /datum/skill/craft/armorsmithing
 
 /obj/item/storage/belt/rogue/leather/rope
 	name = "rope belt"
@@ -157,88 +161,8 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/belts.dmi'
 	slot_flags = ITEM_SLOT_BELT
 
-/obj/item/storage/belt/rogue/pouch
-	name = "pouch"
-	desc = "A small sack with a drawstring that allows it to be worn around the neck. Or at the hips, provided you have a belt."
-	icon = 'icons/roguetown/clothing/storage.dmi'
-	mob_overlay_icon = null
-	icon_state = "pouch"
-	item_state = "pouch"
-	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_NECK
-	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb = list("whips", "lashes")
-	max_integrity = 300
-	equip_sound = 'sound/blank.ogg'
-	content_overlays = FALSE
-	bloody_icon_state = "bodyblood"
+/obj/item/storage/backpack/rogue/satchel
 	sewrepair = TRUE
-	resistance_flags = FIRE_PROOF
-	grid_height = 64
-	grid_width = 32
-	component_type = /datum/component/storage/concrete/roguetown/coin_pouch
-
-/obj/item/storage/belt/rogue/pouch/coins
-
-/obj/item/storage/belt/rogue/pouch/coins/mid/Initialize(mapload)
-	. = ..()
-	var/obj/item/roguecoin/silver/pile/H = new(loc)
-	if(istype(H))
-		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
-			qdel(H)
-	var/obj/item/roguecoin/copper/pile/C = new(loc)
-	if(istype(C))
-		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, C, null, TRUE, TRUE))
-			qdel(C)
-
-/obj/item/storage/belt/rogue/pouch/coins/poor/Initialize(mapload)
-	. = ..()
-	var/obj/item/roguecoin/copper/pile/H = new(loc)
-	if(istype(H))
-		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
-			qdel(H)
-	if(prob(50))
-		H = new(loc)
-		if(istype(H))
-			if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
-				qdel(H)
-
-/obj/item/storage/belt/rogue/pouch/coins/rich/Initialize(mapload)
-	. = ..()
-	var/obj/item/roguecoin/silver/pile/H = new(loc)
-	if(istype(H))
-		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
-			qdel(H)
-	if(prob(50))
-		H = new(loc)
-		if(istype(H))
-			if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
-				qdel(H)
-	var/obj/item/roguecoin/gold/pile/G = new(loc)
-	if(istype(G))
-		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, G, null, TRUE, TRUE))
-			qdel(G)
-	if(prob(50))
-		G = new(loc)
-		if(istype(G))
-			if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, G, null, TRUE, TRUE))
-				qdel(G)
-
-/obj/item/storage/belt/rogue/pouch/coins/virtuepouch/Initialize(mapload)
-	. = ..()
-	var/obj/item/roguecoin/gold/virtuepile/H = new(loc)
-	if(istype(H))
-		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
-			qdel(H)
-
-/obj/item/storage/belt/rogue/pouch/coins/readyuppouch/Initialize(mapload)
-	. = ..()
-	var/obj/item/roguecoin/silver/pile/readyuppile/H = new(loc)
-	if(istype(H))
-		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
-			qdel(H)
-
-/obj/item/storage/belt/rogue/pouch/food/PopulateContents()
-	new /obj/item/reagent_containers/food/snacks/rogue/crackerscooked(src)
 
 /obj/item/storage/backpack/rogue/satchel
 	name = "satchel"
@@ -254,7 +178,6 @@
 	equip_sound = 'sound/blank.ogg'
 	bloody_icon_state = "bodyblood"
 	alternate_worn_layer = UNDER_CLOAK_LAYER
-	sewrepair = TRUE
 	component_type = /datum/component/storage/concrete/roguetown/satchel
 
 /obj/item/storage/backpack/rogue/satchel/heartfelt
@@ -324,7 +247,6 @@
 	sellprice = 15
 	equip_sound = 'sound/blank.ogg'
 	bloody_icon_state = "bodyblood"
-	sewrepair = TRUE
 	component_type = /datum/component/storage/concrete/roguetown/backpack
 
 /obj/item/storage/backpack/rogue/artibackpack
@@ -339,7 +261,6 @@
 	max_integrity = 300
 	equip_sound = 'sound/blank.ogg'
 	bloody_icon_state = "bodyblood"
-	sewrepair = FALSE
 	component_type = /datum/component/storage/concrete/roguetown/backpack
 
 /obj/item/storage/backpack/rogue/backpack/bagpack
@@ -349,7 +270,6 @@
 	item_state = "rucksack"
 	component_type = /datum/component/storage/concrete/roguetown/sack/bag
 	max_integrity = 100
-	sewrepair = TRUE
 	var/tied = FALSE
 
 /obj/item/storage/backpack/rogue/backpack/bagpack/attack_right(mob/user)
@@ -398,7 +318,6 @@
 	strip_delay = 20
 	var/max_storage = 5			//Javelin bag is 4 and they can't hold items. So, more fair having it like this since these are pretty decent weapons.
 	var/list/knives = list()
-	sewrepair = TRUE
 	component_type = /datum/component/storage/concrete/roguetown/belt/knife_belt
 
 /obj/item/storage/belt/rogue/leather/knifebelt/attack_turf(turf/T, mob/living/user)
@@ -502,7 +421,6 @@
 	desc = "A gold adorned belt with the softest of silks barely concealing one's bits."
 	icon_state = "exoticsilkbelt"
 	var/max_storage = 5
-	sewrepair = TRUE
 
 ///////////////////////////////////////////////
 

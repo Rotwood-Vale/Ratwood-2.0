@@ -33,10 +33,13 @@
 		if(3)
 			l_hand = /obj/item/rogueweapon/mace/cudgel/copper
 	belt = /obj/item/storage/belt/rogue/leather/rope
-	if(prob(50))
-		beltr = /obj/item/storage/belt/rogue/pouch/treasure/
-	if(prob(30))
-		beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+	switch(rand(1, 100))
+		if(1 to 50)
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+		if(51 to 95)
+			beltr = null
+		if(96 to 100)
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 
 	H.STASTR = 11
 	H.STASPD = 8
@@ -79,10 +82,13 @@
 	belt = /obj/item/storage/belt/rogue/leather/rope
 	if(prob(5))
 		beltl = /obj/item/reagent_containers/glass/bottle/alchemical/healthpot
-	if(prob(50))
-		beltr = /obj/item/storage/belt/rogue/pouch/treasure/
-	else
-		beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+	switch(rand(1, 100))
+		if(1 to 50)
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+		if(1 to 95)
+			beltr = null
+		if(96 to 100)
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 	if(prob(5))
 		id = /obj/item/clothing/ring/gold
 
@@ -117,10 +123,13 @@
 	belt = /obj/item/storage/belt/rogue/leather/rope
 	if(prob(5))
 		beltl = /obj/item/reagent_containers/glass/bottle/alchemical/healthpot
-	if(prob(50))
-		beltr = /obj/item/storage/belt/rogue/pouch/treasure/
-	else
-		beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+	switch(rand(1, 100))
+		if(1 to 50)
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+		if(51 to 95)
+			beltr = null
+		if(96 to 100)
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 	if(prob(5))
 		id = /obj/item/clothing/ring/gold
 
@@ -159,10 +168,13 @@
 	belt = /obj/item/storage/belt/rogue/leather/
 	if(prob(30))
 		beltl = /obj/item/reagent_containers/glass/bottle/alchemical/healthpot
-	if(prob(50))
-		beltr = /obj/item/storage/belt/rogue/pouch/treasure/
-	else
-		beltr = /obj/item/storage/belt/rogue/pouch/treasure/lucky
+	switch(rand(1, 100))
+		if(1 to 50)
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+		if(51 to 95)
+			beltr = null
+		if(96 to 100)
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 	if(prob(50))
 		id = /obj/item/clothing/ring/gold
 

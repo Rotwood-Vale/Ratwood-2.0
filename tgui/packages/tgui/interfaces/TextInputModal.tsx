@@ -18,6 +18,7 @@ type TextInputData = {
   title: string;
   spellcheck: BooleanLike;
   bigmodal?: boolean;
+  disable_paste?: boolean; // right now just used by chastity code to force players to type out a message with ctrl+c ctrl+v, other use cases may exist. Options are nice :).
 };
 
 export const sanitizeMultiline = (toSanitize: string) => {
@@ -26,6 +27,18 @@ export const sanitizeMultiline = (toSanitize: string) => {
 
 export const removeAllSkiplines = (toSanitize: string) => {
   return toSanitize.replace(/[\r\n]+/, '');
+};
+
+const pauseEvent = (event) => {
+  if (event.stopPropagation) {
+    event.stopPropagation();
+  }
+  if (event.preventDefault) {
+    event.preventDefault();
+  }
+  event.cancelBubble = true;
+  event.returnValue = false;
+  return false;
 };
 
 export const TextInputModal = (props) => {
@@ -40,6 +53,7 @@ export const TextInputModal = (props) => {
     title,
     spellcheck,
     bigmodal,
+    disable_paste,
   } = data;
 
   const [input, setInput] = useState(placeholder || '');
@@ -55,16 +69,18 @@ export const TextInputModal = (props) => {
   };
 
   const visualMultiline = multiline || input.length >= 30;
-  // Dynamically changes the window height based on the message.
-  const dynamicHeight = message.length > 30 ? 
-    (message.length / 40) * 18 : 18;
+  // Dynamically expands the window to accommodate longer prompt messages.
+  const dynamicHeight = message.length > 30 ? (message.length / 40) * 18 : 18;
 
+  // Explicitly multiline inputs (flavor text, OOC notes, ERP prefs, etc.) get a large canvas
+  // so they're comfortable to read and edit. visualMultiline (input overflow) gets a modest bump.
+  // bigmodal hard-overrides both for the largest inputs.
   let windowHeight =
-    135 + dynamicHeight +
-    (visualMultiline ? 75 : 0) +
+    145 + dynamicHeight +
+    (multiline ? 225 : visualMultiline ? 80 : 0) +
     (message.length && large_buttons ? 5 : 0);
-  if (bigmodal) windowHeight = 425; // Override and just make a big modal for FT / OOC Notes
-  const windowWidth = bigmodal ? 530 : 325;
+  if (bigmodal) windowHeight = 500;
+  const windowWidth = bigmodal ? 530 : multiline ? 425 : 325;
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
     if (event.key === KEY.Enter && (!visualMultiline || !event.shiftKey)) {
@@ -74,6 +90,14 @@ export const TextInputModal = (props) => {
       act('cancel');
     }
   }
+// gate for chastity hardmode prayer to prevent cheaters from copy pasting
+  const handleBlockedInput = (event) => {
+    if (!disable_paste) {
+      return;
+    }
+    pauseEvent(event);
+  };
+
   return (
     <Window title={title} width={windowWidth} height={windowHeight}>
       {timeout && <Loader value={timeout} />}
@@ -84,18 +108,21 @@ export const TextInputModal = (props) => {
               <Box color="label">{message}</Box>
             </Stack.Item>
             <Stack.Item grow>
-              <TextArea
-                autoFocus
-                autoSelect
-                fluid
-                userMarkup={{ u: '_', i: '|', b: '+' }}
-                height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
-                maxLength={max_length}
-                onEscape={() => act('cancel')}
-                onChange={onType}
-                placeholder="Type something..."
-                value={input}
-              />
+              {/* height:100% propagates the Stack.Item's grown height down to the TextArea */}
+              <div style={{ height: '100%' }} onDrop={handleBlockedInput} onPaste={handleBlockedInput}>
+                <TextArea
+                  autoFocus
+                  autoSelect
+                  fluid
+                  userMarkup={{ u: '_', i: '|', b: '+' }}
+                  height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
+                  maxLength={max_length}
+                  onEscape={() => act('cancel')}
+                  onChange={onType}
+                  placeholder="Type something..."
+                  value={input}
+                />
+              </div>
             </Stack.Item>
             <Stack.Item>
               <InputButtons

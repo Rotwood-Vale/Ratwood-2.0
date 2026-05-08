@@ -9,6 +9,7 @@
 	chargetime = 0
 	recharge_time = 30 SECONDS
 	antimagic_allowed = TRUE
+	range = 2
 
 /obj/effect/proc_holder/spell/invoked/teach/cast(list/targets, mob/user = usr)
 	. = ..()
@@ -52,7 +53,6 @@
 
 	/datum/skill/craft/tanning,
 	/datum/skill/misc/tracking,
-	/datum/skill/craft/traps,
 
 	/datum/skill/misc/reading,
 	/datum/skill/misc/riding,

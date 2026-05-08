@@ -15,6 +15,8 @@
 	sewrepair = TRUE
 	salvage_result = /obj/item/natural/fur
 	color = "#4d4d4d"
+	cold_protection = HAND_LEFT | HAND_RIGHT
+	min_cold_protection_temperature = 50
 
 /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
 	name = "grenzelhoft gloves"
@@ -27,6 +29,8 @@
 /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith
 	name = "forge gauntlets"
 	color = "#ffffff"
+	heat_protection = HAND_LEFT | HAND_RIGHT
+	max_heat_protection_temperature = 600 
 
 /obj/item/clothing/gloves/roguetown/angle/pontifex
 	name = "rune-scrybed wrappings"

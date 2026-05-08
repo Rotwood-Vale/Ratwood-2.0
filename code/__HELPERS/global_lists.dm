@@ -25,6 +25,8 @@
 	GLOB.emote_list = init_emote_list()
 
 	init_subtypes(/datum/crafting_recipe, GLOB.crafting_recipes)
+	for(var/datum/crafting_recipe/R as anything in GLOB.crafting_recipes)
+		R.build_display_cache()
 
 	init_subtypes(/datum/alch_grind_recipe, GLOB.alch_grind_recipes)
 
@@ -91,6 +93,13 @@
 	//druids menu
 	for(var/mob/living/carbon/human/species/wildshape/shape as anything in subtypesof(/mob/living/carbon/human/species/wildshape))
 		GLOB.wildshapes[shape.name] = shape
+
+	// Vices 
+	for (var/path in subtypesof(/datum/charflaw))
+		var/datum/charflaw/charflaw = new path()
+		GLOB.charflaw_singletons[path] = charflaw
+
+
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.
 /proc/init_subtypes(prototype, list/L)

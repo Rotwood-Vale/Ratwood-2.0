@@ -22,7 +22,7 @@
 		"Templar",
 		"Dungeoneer",
 		"Sergeant",
-		"Men-at-arms",
+		"Man at Arms",
 		"Knight",
 		"Squire",
 		"Mercenary",
@@ -77,8 +77,8 @@
 	mark_component.set_marked_target(marked_target)
 
 	if(marked_target != user)
-		to_chat(user, span_warning("[user] traces a glowing symbol in the air marking [marked_target]."), 
-							span_notice("You mark [marked_target] for pursuit."))
+		to_chat(user, span_warning("[user] traces a glowing symbol in the air marking [marked_target.real_name]."), 
+							span_notice("You mark [marked_target.real_name] for pursuit."))
 
 	return TRUE
 

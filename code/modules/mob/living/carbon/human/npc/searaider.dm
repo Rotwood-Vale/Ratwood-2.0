@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(searaider_aggro, world.file2list("strings/rt/searaideraggroline
 	var/obj/item/bodypart/head/head = get_bodypart(BODY_ZONE_HEAD)
 	var/hairf = pick(list(/datum/sprite_accessory/hair/head/lowbraid, 
 						/datum/sprite_accessory/hair/head/countryponytailalt))
-	var/hairm = pick(list(/datum/sprite_accessory/hair/head/ponytailyeager, 
+	var/hairm = pick(list(/datum/sprite_accessory/hair/head/ponytailwitcher, 
 						/datum/sprite_accessory/hair/head/lowbraid))
 	var/beard = pick(list(/datum/sprite_accessory/hair/facial/viking,
 						/datum/sprite_accessory/hair/facial/manly,
@@ -149,15 +149,18 @@ GLOBAL_LIST_INIT(searaider_aggro, world.file2list("strings/rt/searaideraggroline
 			r_hand = /obj/item/rogueweapon/greataxe
 		if(4)
 			r_hand = /obj/item/rogueweapon/greatsword/zwei
-	if(prob(50))
-		belt = /obj/item/storage/belt/rogue/leather/rope
-		beltr = /obj/item/storage/belt/rogue/pouch/treasure/
-	if(prob(50))
-		belt = /obj/item/storage/belt/rogue/leather/rope
-		beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+	switch(rand(1, 100))
+		if(1 to 20)
+			belt = /obj/item/storage/belt/rogue/leather/rope
+		if(21 to 95)
+			belt = /obj/item/storage/belt/rogue/leather/rope
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+		if (96 to 100)
+			belt = /obj/item/storage/belt/rogue/leather/rope
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 	if(prob(10))
 		id = /obj/item/clothing/ring/gold
-		
+
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	H.STASPD = 9
 	H.STACON = rand(10,12) //so their limbs no longer pop off like a skeleton

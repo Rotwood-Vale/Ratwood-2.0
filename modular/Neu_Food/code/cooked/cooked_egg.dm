@@ -112,6 +112,7 @@
 	tastes = list("fried egg" = 1, "cheese" = 1)
 	name = "valerian omelette"
 	desc = "Fried eggs on a bed of half-melted cheese. A dish from distant lands."
+	bitesize = 4
 	faretype = FARE_FINE
 	portable = FALSE
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
@@ -125,6 +126,7 @@
 	tastes = list("fried egg" = 1, "bacon" = 1)
 	name = "bacon and egg"
 	desc = "Fried eggs with bacon. The bacon's savory salty crunch is a perfect complement to the eggs' more mellow flavors."
+	bitesize = 4
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	icon_state = "baconegg"
 	eat_effect = /datum/status_effect/buff/mealbuff
@@ -159,11 +161,12 @@
 		return ..()
 
 /obj/item/reagent_containers/food/snacks/rogue/friedegg/sausagebacon
-	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
+	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
 	tastes = list("fried egg" = 1, "sausage" = 1, "bacon" = 1)
 	name = "wiener egg with bacon"
 	desc = "Fried egg with sausage and bacon on the side. Mere step away from greatness."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
+	bitesize = 4
 	icon_state = "wienereggbacon"
 	eat_effect = /datum/status_effect/buff/snackbuff
 	rotprocess = SHELFLIFE_DECENT
@@ -184,12 +187,13 @@
 		return ..()
 
 /obj/item/reagent_containers/food/snacks/rogue/friedegg/hammerhold
-	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
+	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_GOOD)
 	tastes = list("fried egg" = 1, "sausage" = 1, "bacon" = 1, "toast" = 1)
 	name = "Hammerholdian breakfast"
 	desc = "A classic of the northern fortresses, peeled of it's more exotic ingredients for Vale kitchens, a true staple of Dwarven diet."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	icon_state = "hammerbreak"
+	bitesize = 5
 	eat_effect = /datum/status_effect/buff/greatmealbuff
 	rotprocess = SHELFLIFE_DECENT
 	faretype = FARE_LAVISH

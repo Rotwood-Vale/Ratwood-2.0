@@ -8,6 +8,8 @@
 	// This is so shoes don't squeak every step
 	var/steps = 1
 	var/step_delay = 0
+	// Guards against duplicate step signals fired in a single tick.
+	var/last_step_tick = -1
 
 	// This is to stop squeak spam from inhand usage
 	var/last_use = 0
@@ -45,6 +47,9 @@
 			playsound(parent, pickweight(override_squeak_sounds), volume, FALSE, -1)
 
 /datum/component/squeak/proc/step_squeak()
+	if(last_step_tick == world.time)
+		return
+	last_step_tick = world.time
 	if(steps > step_delay)
 		play_squeak()
 		steps = 0

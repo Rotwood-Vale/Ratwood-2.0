@@ -46,6 +46,8 @@
 	var/prayer_effectiveness = 2
 	/// Spells we have granted thus far
 	var/list/granted_spells
+	///suppress granting miracles updating from devotion level up
+	var/suppress_grants = FALSE
 
 /datum/devotion/New(mob/living/carbon/human/holder, datum/patron/patron)
 	. = ..()
@@ -115,14 +117,50 @@
 		last_level = level
 	return TRUE
 
-/datum/devotion/proc/try_add_spells(silent = FALSE)
-	if(!holder || !holder.mind)
+/datum/devotion/proc/_grant_all_patron_miracles_direct(mob/living/carbon/human/H, max_tier = null)
+	if(!H || !H.mind || !H.patron)
 		return
 
+	if(length(H.patron.miracles))
+		for(var/spell_type in H.patron.miracles)
+			if(!ispath(spell_type, /obj/effect/proc_holder/spell))
+				continue
+			if(!isnull(max_tier) && H.patron.miracles[spell_type] > max_tier)
+				continue
+			if(H.mind.has_spell(spell_type))
+				continue
+
+			var/obj/effect/proc_holder/spell/newspell = new spell_type
+			if(newspell)
+				H.mind.AddSpell(newspell, H)
+
+	if(length(H.patron.traits_tier))
+		for(var/trait in H.patron.traits_tier)
+			if(!isnull(max_tier) && H.patron.traits_tier[trait] > max_tier)
+				continue
+			ADD_TRAIT(H, trait, TRAIT_MIRACLE)
+
+/datum/devotion/proc/_is_clergy_radical(mob/living/carbon/human/H) //yes i know
+	if(!H)
+		return FALSE
+	return HAS_TRAIT(H, TRAIT_CLERGYRADICAL)
+
+/datum/devotion/proc/_is_learnmiracle_eligible(mob/living/carbon/human/H) //yes i know
+	if(!H || !H.mind)
+		return FALSE
+	return HAS_TRAIT(H, TRAIT_CLERGYRADICAL)
+
+/datum/devotion/proc/try_add_spells(silent = FALSE)
+	if(!holder?.mind || !patron)
+		return FALSE
+	if(_is_clergy_radical(holder))
+		return FALSE
+	if(suppress_grants)
+		return FALSE
 	if(patron)
 		if(length(patron.miracles))
 			for(var/spell_type in patron.miracles)
-				var/required_tier = patron.miracles[spell_type]			
+				var/required_tier = patron.miracles[spell_type]
 				if(required_tier <= level)
 					if(holder.mind.has_spell(spell_type))
 						continue
@@ -132,6 +170,7 @@
 						to_chat(holder, span_boldnotice("I have unlocked a new spell: [newspell]"))
 					holder.mind.AddSpell(newspell, holder)
 					LAZYADD(granted_spells, newspell)
+
 		if(length(patron.traits_tier))
 			for(var/trait in patron.traits_tier)
 				var/required_tier = patron.traits_tier[trait]
@@ -146,24 +185,33 @@
 //passive_gain 		- Passive devotion gain, if any, will begin processing this datum.
 //devotion_limit	- The CLERIC_REQ max_devotion and max_progression will be set to. Devotee overrides this with its own value!
 //start_maxed		- Whether this class starts out with all devotion maxed. Mostly used by Acolytes & Priests to spawn with everything.
+
 /datum/devotion/proc/grant_miracles(mob/living/carbon/human/H, cleric_tier = CLERIC_T0, passive_gain = 0, devotion_limit, start_maxed = FALSE)
 	if(!H || !H.mind || !patron)
 		return
 	level = cleric_tier
-	if(devotion_limit) //Upper devotion limit - Limits gain to that tier's miracles. Mostly used by Templars / Paladins.
+	if(devotion_limit)
 		max_devotion = devotion_limit
 		max_progression = devotion_limit
 	if(passive_gain)
 		passive_devotion_gain = passive_gain
 		passive_progression_gain = passive_gain
 		START_PROCESSING(SSobj, src)
-	if(start_maxed)		//Mainly for Acolytes & Priests
+	if(start_maxed)
 		max_devotion = CLERIC_REQ_4
 		devotion = max_devotion
 		update_devotion(max_devotion, CLERIC_REQ_4, silent = TRUE)
 	else
 		update_devotion(50, 50, silent = TRUE)
 	H.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
+
+	if(_is_learnmiracle_eligible(H))
+		var/miracle_menu_path = text2path("/obj/effect/proc_holder/spell/self/learnmiracle")
+		if(miracle_menu_path)
+			if(!H.mind.has_spell(miracle_menu_path))
+				var/obj/effect/proc_holder/spell/L = new miracle_menu_path
+				if(L)
+					H.mind.AddSpell(L, H)
 
 // Debug verb
 /mob/living/carbon/human/proc/devotionchange()
@@ -216,6 +264,31 @@
 		prayersesh += prayer_effectiveness
 	visible_message("[src] concludes their prayer.", "I conclude my prayer.")
 	to_chat(src, "<font color='purple'>I gained [prayersesh] devotion!</font>")
+	return TRUE
+
+/mob/living/carbon/human/proc/reset_clergy_devotion(cleric_tier, passive_gain, start_maxed = FALSE, devotion_limit = CLERIC_REQ_4)
+	if(!mind || !patron)
+		return FALSE
+	var/datum/devotion/D = devotion
+	if(D)
+		if(length(D.granted_spells))
+			for(var/obj/effect/proc_holder/spell/S in D.granted_spells)
+				mind.RemoveSpell(S)
+		STOP_PROCESSING(SSobj, D)
+		D.patron = patron
+		D.devotion = 0
+		D.max_devotion = CLERIC_REQ_1
+		D.progression = 0
+		D.max_progression = CLERIC_REQ_4
+		D.level = CLERIC_T0
+		D.last_level = null
+		D.passive_devotion_gain = 0
+		D.passive_progression_gain = 0
+		D.granted_spells = null
+		D.suppress_grants = FALSE
+	else
+		D = new /datum/devotion(src, patron)
+	D.grant_miracles(src, cleric_tier = cleric_tier, passive_gain = passive_gain, devotion_limit = devotion_limit, start_maxed = start_maxed)
 	return TRUE
 
 /mob/living/carbon/human/proc/changevoice()

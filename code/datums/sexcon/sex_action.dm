@@ -27,6 +27,8 @@
 	var/subtle_supported = FALSE
 	/// Only allow select actions to end with a knot-tie
 	var/knot_on_finish = FALSE
+	/// Central intimate-state validation participation. Generic actions default to both roles; chastityplay keeps bespoke checks.
+	var/intimate_check_flags = SEX_ACTION_INTIMATE_CHECK_BOTH
 
 /datum/sex_action/proc/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return TRUE
@@ -45,3 +47,55 @@
 
 /datum/sex_action/proc/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return TRUE
+
+// chastity play abstract action, contains shared code for actions that interact with chastity devices
+/datum/sex_action/chastityplay 
+	abstract_type = /datum/sex_action/chastityplay
+	intimate_check_flags = SEX_ACTION_INTIMATE_CHECK_NONE
+
+/datum/sex_action/chastityplay/proc/get_chastity_device_name(mob/living/carbon/human/owner)
+	var/modular_result = modular_get_chastity_device_name(owner)
+	if(!isnull(modular_result))
+		return modular_result
+
+	return "chastity device"
+
+// Shared guard for actions that must be performed on someone else.
+/datum/sex_action/chastityplay/proc/requires_other_target(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	var/modular_result = modular_requires_other_target(user, target)
+	if(!isnull(modular_result))
+		return modular_result
+
+	return FALSE
+
+// Centralized cage presence check to keep action-gating logic consistent.
+/datum/sex_action/chastityplay/proc/target_has_cage(mob/living/carbon/human/target)
+	var/modular_result = modular_target_has_cage(target)
+	if(!isnull(modular_result))
+		return modular_result
+
+	return FALSE
+
+// Matches any front chastity lockout (cage or belt) for actions that work on either.
+/datum/sex_action/chastityplay/proc/target_has_front_chastity(mob/living/carbon/human/target)
+	var/modular_result = modular_target_has_front_chastity(target)
+	if(!isnull(modular_result))
+		return modular_result
+
+	return FALSE
+
+// Standard groin reach check used across chastityplay actions.
+/datum/sex_action/chastityplay/proc/can_reach_target_groin(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	var/modular_result = modular_can_reach_target_groin(user, target)
+	if(!isnull(modular_result))
+		return modular_result
+
+	return FALSE
+
+// Unified sound helper: supports single sound or list input with optional chance gating.
+/datum/sex_action/chastityplay/proc/play_chastity_impact_sound(mob/living/carbon/human/target, sound_to_play, volume = 40, chance = 100, vary = TRUE, frequency = -1)
+	var/modular_result = modular_play_chastity_impact_sound(target, sound_to_play, volume, chance, vary, frequency)
+	if(!isnull(modular_result))
+		return modular_result
+
+	return FALSE

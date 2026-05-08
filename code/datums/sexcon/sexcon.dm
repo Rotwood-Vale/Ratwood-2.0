@@ -42,10 +42,12 @@
 	/// If this person has a collar that rings on
 	var/collar_bell_user = FALSE
 	var/collar_bell_target = FALSE
+	var/list/collar_sounds = SFX_COLLARJINGLE
 	/// Arousal won't change if active.
 	var/arousal_frozen = FALSE
 	var/last_arousal_increase_time = 0
 	var/last_ejaculation_time = 0
+	var/last_oral_drip_consume_time = 0
 	var/last_moan = 0
 	var/last_pain = 0
 	var/aphrodisiac = 1 //1 by default, acts as a multiplier on arousal gain. If this is different than 1, set/freeze arousal is disabled.
@@ -63,19 +65,22 @@
 	var/do_subtle_action = FALSE
 	/// Knot based variables
 	var/do_knot_action = FALSE
+	var/do_knot_action_as_bottom = FALSE
 	var/knotted_status = KNOTTED_NULL // knotted state and used to prevent multiple knottings when we do not handle that case
 	var/knotted_part = SEX_PART_NULL // which orifice was knotted (bitflag)
 	var/knotted_part_partner = SEX_PART_NULL // which orifice was knotted on partner (bitflag)
+	var/knotted_forced_by_bottom = FALSE
 	var/tugging_knot = FALSE
 	var/tugging_knot_check = 0
 	var/tugging_knot_blocked = FALSE
 	var/mob/living/carbon/knotted_owner = null // whom has the knot
 	var/mob/living/carbon/knotted_recipient = null // whom took the knot
-
+	/// Allow crotch to be exposed and bypass clothes check
 	var/bottom_exposed = FALSE
 
 /datum/sex_controller/New(mob/living/carbon/human/owner)
 	user = owner
+	charge = get_max_charge()
 
 /datum/sex_controller/Destroy()
 	//remove_from_target_receiving()
@@ -130,7 +135,7 @@
 			target_y = oldy-1
 			animate(target, pixel_y = target_y, time = time)
 			animate(pixel_y = oldy, time = time)
-		bed.damage_bed(force > SEX_FORCE_HIGH ? 0.5 : 0.25)
+		bed.damage_bed(force > SEX_FORCE_HIGH ? 1.0 : 0.5)
 	else if(table_or_pillory && target && force > SEX_FORCE_MID)
 		if(!istype(table_or_pillory) || QDELETED(table_or_pillory))
 			table_or_pillory = null
@@ -150,30 +155,9 @@
 			grassy_knoll = null
 			return
 		SEND_SIGNAL(grassy_knoll, COMSIG_MOVABLE_CROSSED, user)
-	
+
 	if((collar_bell_user || collar_bell_target) && (force > SEX_FORCE_MID))
-		playsound(collar_bell_target && target ? target : user, SFX_COLLARJINGLE, 50, TRUE, ignore_walls = FALSE)
-
-/obj/structure/bed/rogue
-	var/broken_matress = FALSE
-	var/broken_percentage = 0
-
-/obj/structure/bed/rogue/proc/damage_bed(dam_value)
-	if(sleepy <= 2) // the bed is already pretty awful and broken (i.e: straw bed/bedroll), so don't break it even further
-		return
-	broken_percentage += dam_value
-	if(!broken_matress && (broken_percentage >= 100))
-		broken_matress = TRUE
-		sleepy = 1 //Worse than a bedroll, better than nothing
-		visible_message(span_warning("\The [src] gives an violent snap. It looks broken!"))
-		playsound(src, 'sound/misc/mat/bed break.ogg', 50, TRUE, ignore_walls = FALSE)
-		desc += " The bed looks stained and has seen better daes."
-	else if(broken_percentage >= 100) // clamp
-		broken_percentage = 100
-	else
-		playsound(src, pick(list('sound/misc/mat/bed squeak (1).ogg','sound/misc/mat/bed squeak (2).ogg','sound/misc/mat/bed squeak (3).ogg')), 25, TRUE, ignore_walls = FALSE)
-		if(broken_percentage > 10)
-			playsound(src, 'sound/misc/mat/bed damage.ogg', broken_percentage>>2, TRUE, ignore_walls = FALSE)
+		playsound(collar_bell_target && target ? target : user, collar_sounds, 50, TRUE, ignore_walls = FALSE)
 
 /datum/sex_controller/proc/is_spent()
 	if(charge < CHARGE_FOR_CLIMAX)
@@ -183,9 +167,9 @@
 // any new sex commands that target new locations, will need to be added here, and given a unique bitflag define
 /datum/sex_controller/proc/update_all_accessible_body_zones()
 	access_zone_bitfield = SEX_ZONE_NULL
-	if(get_location_accessible(user, BODY_ZONE_PRECISE_GROIN, grabs = FALSE, skipundies = TRUE))
+	if(bottom_exposed || get_location_accessible(user, BODY_ZONE_PRECISE_GROIN, grabs = FALSE, skipundies = TRUE))
 		access_zone_bitfield |= SEX_ZONE_GROIN
-	if(get_location_accessible(user, BODY_ZONE_PRECISE_GROIN, grabs = TRUE, skipundies = TRUE))
+	if(bottom_exposed || get_location_accessible(user, BODY_ZONE_PRECISE_GROIN, grabs = TRUE, skipundies = TRUE))
 		access_zone_bitfield |= SEX_ZONE_GROIN_GRAB
 	if(get_location_accessible(user, BODY_ZONE_PRECISE_L_FOOT, grabs = FALSE, skipundies = TRUE))
 		access_zone_bitfield |= SEX_ZONE_L_FOOT
@@ -203,9 +187,9 @@
 	switch(body_zone)
 		if(BODY_ZONE_PRECISE_GROIN)
 			if(grabs)
-				if((access_zone_bitfield&SEX_ZONE_GROIN_GRAB) && !get_location_accessible(user, BODY_ZONE_PRECISE_GROIN, grabs = TRUE, skipundies = TRUE))
+				if((access_zone_bitfield&SEX_ZONE_GROIN_GRAB) && !bottom_exposed && !get_location_accessible(user, BODY_ZONE_PRECISE_GROIN, grabs = TRUE, skipundies = TRUE))
 					access_zone_bitfield &= ~SEX_ZONE_GROIN_GRAB
-			else if((access_zone_bitfield&SEX_ZONE_GROIN) && !get_location_accessible(user, BODY_ZONE_PRECISE_GROIN, grabs = FALSE, skipundies = TRUE))
+			else if((access_zone_bitfield&SEX_ZONE_GROIN) && !bottom_exposed && !get_location_accessible(user, BODY_ZONE_PRECISE_GROIN, grabs = FALSE, skipundies = TRUE))
 				access_zone_bitfield &= ~SEX_ZONE_GROIN
 		if(BODY_ZONE_PRECISE_L_FOOT)
 			if((access_zone_bitfield&SEX_ZONE_L_FOOT) && !get_location_accessible(user, BODY_ZONE_PRECISE_L_FOOT, grabs = FALSE, skipundies = TRUE))
@@ -295,10 +279,12 @@
 	return TRUE
 
 /datum/sex_controller/proc/adjust_speed(amt)
-	speed = clamp(speed + amt, SEX_SPEED_MIN, SEX_SPEED_MAX)
+	var/max_setting = (HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || HAS_TRAIT(user, TRAIT_DEPRAVED) || user.has_status_effect(/datum/status_effect/debuff/emberwine)) ? SEX_SPEED_MAX : SEX_SPEED_MAX - 1
+	speed = clamp(speed + amt, SEX_SPEED_MIN, max_setting)
 
 /datum/sex_controller/proc/adjust_force(amt)
-	force = clamp(force + amt, SEX_FORCE_MIN, SEX_FORCE_MAX)
+	var/max_setting = (HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || HAS_TRAIT(user, TRAIT_DEPRAVED) || user.has_status_effect(/datum/status_effect/debuff/emberwine)) ? SEX_FORCE_MAX : SEX_FORCE_MAX - 1
+	force = clamp(force + amt, SEX_FORCE_MIN, max_setting)
 /datum/sex_controller/proc/adjust_arousal_manual(amt)
 	manual_arousal = clamp(manual_arousal + amt, SEX_MANUAL_AROUSAL_MIN, SEX_MANUAL_AROUSAL_MAX)
 
@@ -336,44 +322,153 @@
 	set_target(new_target)
 	show_ui()
 
-/datum/sex_controller/proc/cum_onto(mob/living/carbon/human/splashed_user = null)
-	log_combat(user, target, "Came onto the target")
-	playsound(target, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
+// Try to resist orgasm, returns TRUE if we resisted, FALSE if we didn't. ENDVRE. EDGE. WEEP.
+/datum/sex_controller/proc/try_resist_orgasm()
+	if(!HAS_TRAIT(user, TRAIT_PSYDONIAN_GRIT) || !prob(40))
+		return FALSE
+	if(user.client.prefs.edging == FALSE)
+		return FALSE
+	var/resist_msg = pick(
+		"[user] trembles and hisses, \"With every broken bone, I swore I lyved... HE hath gifted me the strength to ENDURE!\"",
+		"[user] bows [user.p_their()] head and forces the urge back, clinging to faith as the night closes in.",
+		"[user] gasps, \"PSYDON yet LYVES and PSYDON yet ENDURES,\" and denies [user.p_them()]self release.",
+		"[user] clenches hard and steadies [user.p_their()] breathing, choosing the Saints' discipline over indulgence.",
+		"[user] shudders and whispers a penitent prayer, meeting suffering with patience instead of surrender.",
+	)
+	user.visible_message(span_boldwarning(resist_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
+	to_chat(user, span_notice("PSYDON, grant me silence and endurance; I will not yield."))
+	set_arousal(60)
+	user.emote("groan", forced = TRUE)
+	return TRUE
+
+/datum/sex_controller/proc/cum_onto(mob/living/carbon/human/splashed_user = null, cum_on_face = TRUE)
+	if(try_resist_orgasm())
+		return
+	var/mob/living/carbon/human/effective_target = splashed_user || target
+	log_combat(user, effective_target, "Came onto the target")
+	if(effective_target)
+		playsound(effective_target, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
 	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
-	add_cum_floor(get_turf(target), do_big_puddle = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
+	add_cum_floor(get_turf(effective_target || user), do_big_puddle = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
 	if(splashed_user)
-		var/datum/status_effect/facial/facial = splashed_user.has_status_effect(/datum/status_effect/facial)
-		if(!facial)
-			splashed_user.apply_status_effect(/datum/status_effect/facial)
+		if(cum_on_face)
+			var/datum/status_effect/facial/facial = splashed_user.has_status_effect(/datum/status_effect/facial)
+			if(!facial)
+				splashed_user.apply_status_effect(/datum/status_effect/facial)
+				if(splashed_user != user) // don't announce self-ejaculation (e.g. chastity overflow)
+					splashed_user.visible_message(span_love("[splashed_user] takes a load on their face!"), span_love("I take a load on my face!"))
+			else
+				facial.refresh_cum()
 		else
-			facial.refresh_cum()
+			var/datum/status_effect/facial/external/external = splashed_user.has_status_effect(/datum/status_effect/facial/external)
+			if(!external)
+				splashed_user.apply_status_effect(/datum/status_effect/facial/external)
+				if(splashed_user != user) // don't announce self-ejaculation (e.g. chastity overflow)
+					splashed_user.visible_message(span_love("[splashed_user] takes a load on their body!"), span_love("I take a load on my body!"))
+			else
+				external.refresh_cum()
+		modular_record_collar_receive_event(splashed_user, user)
+	if(effective_target?.has_flaw(/datum/charflaw/addiction/lovefiend))
+		effective_target.sate_addiction(/datum/charflaw/addiction/lovefiend)
 	after_ejaculation()
 
-/datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null)
-	log_combat(user, target, "Came inside the target")
-	werewolf_sex_infect_attempt(user, target)
-	deadite_sex_infect_attempt(user, target)
+/datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null, datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null, orifice = SEX_PART_NULL, skip_knot_try = FALSE)
+	// splashed_user is the bottom receiving; for top-initiated actions it matches target, for riding/blowjob it is the rider/sucker while target may be null
+	var/mob/living/carbon/human/effective_target = splashed_user || target
+	log_combat(user, effective_target, "Came inside the target")
+	werewolf_sex_infect_attempt(user, effective_target)
+	deadite_sex_infect_attempt(user, effective_target)
 	if(oral)
 		playsound(user, pick(list('sound/misc/mat/mouthend (1).ogg','sound/misc/mat/mouthend (2).ogg')), 100, FALSE, ignore_walls = FALSE)
 	else
 		playsound(user, 'sound/misc/mat/endin.ogg', 50, TRUE, ignore_walls = FALSE)
-	if(user != target && do_knot_action && !isnull(target) && istype(target))
-		knot_try()
-	if(splashed_user && !splashed_user.sexcon.knotted_status)
+	if(!skip_knot_try && (knot_btm || (user != effective_target && !isnull(effective_target) && istype(effective_target))))
+		knot_try(knot_action = knot_action, knot_swap_roles = knot_swap_roles, knot_btm = knot_btm)
+	var/datum/sex_controller/receiver_sexcon = splashed_user?.sexcon
+	var/is_receiver_actively_knotted_to_user = receiver_sexcon?.knotted_status == KNOTTED_AS_BTM && receiver_sexcon?.knotted_owner == user
+	if(receiver_sexcon && (oral || !receiver_sexcon.knotted_status || is_receiver_actively_knotted_to_user))
 		var/status_type = !oral ? /datum/status_effect/facial/internal : /datum/status_effect/facial
 		var/datum/status_effect/facial/splashed_type = splashed_user.has_status_effect(status_type)
 		if(!splashed_type)
 			splashed_user.apply_status_effect(status_type)
+			if(oral)
+				splashed_user.visible_message(span_love("[splashed_user] takes a load down their throat!"), span_love("I take a load down my throat!"))
+			else
+				splashed_user.visible_message(span_love("[splashed_user] takes a load inside them!"), span_love("I take a load inside me!"))
 		else
 			splashed_type.refresh_cum()
+		if(oral && splashed_user.reagents) //cum fills hunger if taking it orally
+			if(user.getorganslot(ORGAN_SLOT_PENIS))
+				splashed_user.reagents.add_reagent(/datum/reagent/erpjuice/cum, get_semen_volume())
+			else
+				splashed_user.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 2)
+			apply_cum_consumed_buff(splashed_user)
+		if(!oral && user?.dna?.species?.id == "gnoll")
+			splashed_user.has_gnoll_scent_this_round = TRUE
+		modular_record_collar_receive_event(splashed_user, user)
 		if(!oral)
 			var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
-			if(testes?.ball_size > DEFAULT_TESTICLES_SIZE)
-				splashed_user.apply_status_effect(/datum/status_effect/creampie_leak/long)
-			else
-				splashed_user.apply_status_effect(/datum/status_effect/creampie_leak)
+			if(!is_receiver_actively_knotted_to_user)
+				apply_creampie_drip(splashed_user, orifice, use_long = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
+	if(effective_target?.has_flaw(/datum/charflaw/addiction/lovefiend))
+		effective_target.sate_addiction(/datum/charflaw/addiction/lovefiend)
 	after_ejaculation()
-	after_intimate_climax(oral)
+	after_intimate_climax(oral, splashed_user)
+
+/// Applies or accumulates a creampie drip status effect, correctly ORing new orifice flags onto an existing drip rather than silently dropping the second application.
+/proc/apply_creampie_drip(mob/living/carbon/human/target, orifice, use_long = FALSE)
+	var/datum/status_effect/creampie_leak/existing = target.has_status_effect(/datum/status_effect/creampie_leak/long) || target.has_status_effect(/datum/status_effect/creampie_leak)
+	if(existing)
+		existing.orifice |= orifice
+		to_chat(target, span_love("I feel another warmth beginning to leak out of me."))
+		existing.duration = world.time + initial(existing.duration) // refresh timer
+		return
+	if(use_long)
+		target.apply_status_effect(/datum/status_effect/creampie_leak/long, orifice)
+	else
+		target.apply_status_effect(/datum/status_effect/creampie_leak, orifice)
+
+/datum/sex_controller/proc/apply_cum_consumed_buff(mob/living/carbon/human/consumer)
+	if(!consumer)
+		return FALSE
+	consumer.apply_status_effect(/datum/status_effect/buff/cum_consumed)
+	return TRUE
+
+/datum/sex_controller/proc/consume_oral_drips(mob/living/carbon/human/source)
+	if(!source || !user || !source.sexcon)
+		return FALSE
+
+	var/datum/status_effect/creampie_leak/drip = source.has_status_effect(/datum/status_effect/creampie_leak/long)
+	if(!drip)
+		drip = source.has_status_effect(/datum/status_effect/creampie_leak)
+	if(!drip)
+		return FALSE
+
+	if(last_oral_drip_consume_time + 3 SECONDS > world.time)
+		return FALSE
+	last_oral_drip_consume_time = world.time
+
+	var/datum/status_effect/facial/facial = user.has_status_effect(/datum/status_effect/facial)
+	if(!facial)
+		user.apply_status_effect(/datum/status_effect/facial)
+	else
+		facial.refresh_cum()
+
+	if(user.reagents)
+		var/drip_type = drip.contents_to_drip || /datum/reagent/erpjuice/cum
+		user.reagents.add_reagent(drip_type, 1)
+	apply_cum_consumed_buff(user)
+
+	user.visible_message(span_love("[user] laps up the fluids leaking from [source]!"), span_love("I lap up the fluids leaking from [source]!"))
+
+	if(drip.duration <= world.time + 6 SECONDS)
+		if(istype(drip, /datum/status_effect/creampie_leak/long))
+			source.remove_status_effect(/datum/status_effect/creampie_leak/long)
+		else
+			source.remove_status_effect(/datum/status_effect/creampie_leak)
+	else
+		drip.duration -= 6 SECONDS
+	return TRUE
 
 /datum/status_effect/facial
 	id = "facial"
@@ -386,18 +481,28 @@
 	alert_type = null // don't show an alert on screen
 	tick_interval = 7 MINUTES // use this time as our dry count down
 
+/datum/status_effect/facial/external
+	id = "cumshot"
+	alert_type = null // don't show an alert on screen
+	tick_interval = 10 MINUTES // use this time as our dry count down
+
 /datum/status_effect/creampie_leak
 	id = "creampie_leak"
 	alert_type = null // don't show an alert on screen
 	tick_interval = 12 SECONDS
-	duration = 30 SECONDS
+	duration = 60 SECONDS
 	var/contents_to_drip = /datum/reagent/erpjuice/cum
+	var/orifice = SEX_PART_NULL
+
+/datum/status_effect/creampie_leak/on_creation(mob/living/new_owner, orifice_in = SEX_PART_NULL)
+	orifice = orifice_in
+	return ..(new_owner)
 
 /datum/status_effect/creampie_leak/long
 	id = "creampie_leak_long"
 	alert_type = null // don't show an alert on screen
 	tick_interval = 12 SECONDS
-	duration = 60 SECONDS
+	duration = 120 SECONDS
 
 /datum/status_effect/facial/on_apply()
 	RegisterSignal(owner, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_COMPONENT_CLEAN_FACE_ACT),PROC_REF(clean_up))
@@ -423,8 +528,22 @@
 			owner.add_stress(/datum/stressevent/bathcleaned)
 		owner.remove_status_effect(src)
 
+/datum/status_effect/creampie_leak/on_apply()
+	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_up))
+	to_chat(owner, span_love("I feel a warmth beginning to leak out of me."))
+	return ..()
+
+/datum/status_effect/creampie_leak/on_remove()
+	UnregisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT)
+	return ..()
+
+/datum/status_effect/creampie_leak/proc/clean_up(datum/source, strength)
+	if(strength >= CLEAN_WEAK && !QDELETED(owner))
+		to_chat(owner, span_notice("I feel much cleaner now."))
+		owner.remove_status_effect(src)
+
 /datum/status_effect/creampie_leak/tick()
-	if(!get_location_accessible(owner, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
+	if(!owner?.sexcon?.bottom_exposed && !get_location_accessible(owner, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
 		return
 	var/cur_loc = get_turf(owner)
 	if(!cur_loc || !isturf(cur_loc))
@@ -437,10 +556,34 @@
 	cum_chalice.reagents.add_reagent(contents_to_drip,1)
 
 /datum/sex_controller/proc/ejaculate()
+	if(try_resist_orgasm())
+		return
 	SEND_SIGNAL(user, COMSIG_MOB_EJACULATED)
 	log_combat(user, user, "Ejaculated")
-	user.visible_message(span_love("[user] makes a mess!"), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
+	if(modular_try_handle_chastity_ejaculation())
+		return
+	if((has_chastity_cage() || has_chastity_anal()) && prob(50))
+		var/self_mess_msg = "[user] spills over [user.p_their()] own chastity!"
+		user.visible_message(span_love(self_mess_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
+		cum_onto(user)
+		return
+	if(user.getorganslot(ORGAN_SLOT_PENIS) && knotted_status == KNOTTED_AS_TOP && knotted_owner == user && ishuman(knotted_recipient) && !QDELETED(knotted_recipient) && knotted_recipient?.sexcon)
+		var/orifice = knotted_part_partner
+		var/is_oral_knot = (orifice & SEX_PART_JAWS) != SEX_PART_NULL
+		var/knotted_climax_msg = is_oral_knot ? "[user] climaxes down [knotted_recipient]'s throat!" : "[user] climaxes deep inside [knotted_recipient]!"
+		user.visible_message(span_love(knotted_climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
+		cum_into(oral = is_oral_knot, splashed_user = knotted_recipient, orifice = orifice, skip_knot_try = TRUE)
+		return
+	var/climax_msg = "[user] makes a mess!"
+	var/modular_climax_msg = modular_get_chastity_climax_message(climax_msg)
+	if(istext(modular_climax_msg))
+		climax_msg = modular_climax_msg
+	else
+		if(has_chastity_cage() || has_chastity_anal())
+			climax_msg = "[user] climaxes and makes a mess in their chastity device!"
+	user.visible_message(span_love(climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
 	playsound(user, 'sound/misc/mat/endout.ogg', suppress_moan ? 12 : 50, TRUE, ignore_walls = FALSE)
+	var/semen_vol = get_semen_volume()
 	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
 	add_cum_floor(get_turf(user), do_big_puddle = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
 	after_ejaculation()
@@ -454,19 +597,52 @@
 	if(user.getorganslot(ORGAN_SLOT_VAGINA))
 		cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/femcum,1)
 	else
-		cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/cum,2)
+		cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/cum, semen_vol)
 
 /datum/sex_controller/proc/ejaculate_container(obj/item/reagent_containers/glass/C)
+	if(try_resist_orgasm())
+		return
 	if(C && istype(C))
 		log_combat(user, user, "Ejaculated into a container")
 		user.visible_message(span_love("[user] spills into [C]!"))
 		playsound(user, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
 		if(user.getorganslot(ORGAN_SLOT_PENIS))
-			var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
-			C.reagents.add_reagent(/datum/reagent/erpjuice/cum, testes?.ball_size > DEFAULT_TESTICLES_SIZE ? 6 : 3)
+			C.reagents.add_reagent(/datum/reagent/erpjuice/cum, get_semen_volume())
 		else
 			C.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 2)
 	after_ejaculation()
+
+/datum/sex_controller/proc/get_semen_volume()
+	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
+	if(!testes)
+		return 0
+	var/volume
+	switch(testes.ball_size)
+		if(MIN_TESTICLES_SIZE)
+			volume = 2
+		if(MAX_TESTICLES_SIZE)
+			volume = 4
+		else
+			volume = 3
+	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
+		volume = floor(volume * 1.5)
+
+	var/obj/item/organ/penis/shaft = user.getorganslot(ORGAN_SLOT_PENIS)
+	if(shaft?.penis_type in list(PENIS_TYPE_KNOTTED, PENIS_TYPE_EQUINE, PENIS_TYPE_EQUINE_KNOTTED, PENIS_TYPE_TAPERED_KNOTTED, PENIS_TYPE_TAPERED_DOUBLE_KNOTTED, PENIS_TYPE_BARBED_KNOTTED))
+		volume += 1
+		
+	return volume
+
+/datum/sex_controller/proc/get_max_loads()
+	var/con = user.STACON
+	var/loads = 2 + floor(clamp((con - 10) * 2, 0, 99) / 2)
+	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
+		loads = floor(loads * 1.5)
+	return loads
+
+/// Returns the max charge based on dynamic load count
+/datum/sex_controller/proc/get_max_charge()
+	return get_max_loads() * CHARGE_FOR_CLIMAX
 
 /datum/sex_controller/proc/after_ejaculation()
 	set_arousal(40)
@@ -479,11 +655,12 @@
 	last_ejaculation_time = world.time
 	record_round_statistic(STATS_PLEASURES)
 
-/datum/sex_controller/proc/after_intimate_climax(oral)
-	if(user == target || isnull(target) || !istype(target) || QDELETED(target))
+/datum/sex_controller/proc/after_intimate_climax(oral, mob/living/carbon/human/climax_target = null)
+	var/mob/living/carbon/human/effective_target = climax_target || target
+	if(user == effective_target || isnull(effective_target) || !istype(effective_target) || QDELETED(effective_target))
 		return
 	var/user_goodlover = HAS_TRAIT(user, TRAIT_GOODLOVER)
-	var/target_goodlover = HAS_TRAIT(target, TRAIT_GOODLOVER)
+	var/target_goodlover = HAS_TRAIT(effective_target, TRAIT_GOODLOVER)
 	if(!oral)
 		if(target_goodlover)
 			if(!user.mob_timers["cumtri"])
@@ -491,39 +668,41 @@
 				user.adjust_triumphs(1)
 				to_chat(user, span_love("Our loving is a true TRIUMPH!"))
 		if(user_goodlover)
-			if(!target.mob_timers["cumtri"])
-				target.mob_timers["cumtri"] = world.time
-				target.adjust_triumphs(1)
-				to_chat(target, span_love("Our loving is a true TRIUMPH!"))
+			if(!effective_target.mob_timers["cumtri"])
+				effective_target.mob_timers["cumtri"] = world.time
+				effective_target.adjust_triumphs(1)
+				to_chat(effective_target, span_love("Our loving is a true TRIUMPH!"))
 	var/user_beautiful = HAS_TRAIT(user, TRAIT_BEAUTIFUL)
 	var/user_ugly = HAS_TRAIT(user, TRAIT_UNSEEMLY) || HAS_TRAIT(user, TRAIT_DISFIGURED)
-	var/target_beautiful = HAS_TRAIT(target, TRAIT_BEAUTIFUL)
-	var/target_ugly = HAS_TRAIT(target, TRAIT_UNSEEMLY) || HAS_TRAIT(target, TRAIT_DISFIGURED)
+	var/target_beautiful = HAS_TRAIT(effective_target, TRAIT_BEAUTIFUL)
+	var/target_ugly = HAS_TRAIT(effective_target, TRAIT_UNSEEMLY) || HAS_TRAIT(effective_target, TRAIT_DISFIGURED)
 	if(user_ugly && target_ugly || user_beautiful && target_beautiful) // both are ugly/beautiful, add made love buff
 		user.add_stress(/datum/stressevent/cummax)
-		target.add_stress(/datum/stressevent/cummax)
+		effective_target.add_stress(/datum/stressevent/cummax)
 	else // one of them is ugly, add debuff to non-ugly character
 		if(target_ugly && !user_ugly && !user_goodlover) // good lover are immune to ugly characters
 			if(user_beautiful) // stress event last longer
 				user.add_stress(/datum/stressevent/unseemly_made_love/beautiful)
 			else
 				user.add_stress(/datum/stressevent/unseemly_made_love)
-			target.add_stress(/datum/stressevent/cummax)
+			effective_target.add_stress(/datum/stressevent/cummax)
 		if(user_ugly && !target_ugly && !target_goodlover) // good lover are immune to ugly characters
 			if(target_beautiful) // stress event last longer
-				target.add_stress(/datum/stressevent/unseemly_made_love/beautiful)
+				effective_target.add_stress(/datum/stressevent/unseemly_made_love/beautiful)
 			else
-				target.add_stress(/datum/stressevent/unseemly_made_love)
+				effective_target.add_stress(/datum/stressevent/unseemly_made_love)
 			user.add_stress(/datum/stressevent/cummax)
-	if(!oral && force >= SEX_FORCE_HIGH && user.has_flaw(/datum/charflaw/addiction/sadist)) // force pain emote if top is a sadist
-		target.emote("paincrit", forced = TRUE)
+	if(!oral && force >= SEX_FORCE_HIGH && (user.has_flaw(/datum/charflaw/addiction/sadist) || effective_target.has_flaw(/datum/charflaw/addiction/masochist)))
+		effective_target.emote("paincrit", forced = TRUE) // this satiates the sadomasochists in range
+	if(ishuman(user) && ishuman(target) && user.client && target.client)
+		eora_register_consensual_pair(user, target)
 
 /datum/sex_controller/proc/just_ejaculated()
 	return (last_ejaculation_time + 2 SECONDS >= world.time)
 
 /datum/sex_controller/proc/set_charge(amount)
 	var/empty = (charge < CHARGE_FOR_CLIMAX)
-	charge = clamp(amount, 0, SEX_MAX_CHARGE)
+	charge = clamp(amount, 0, get_max_charge())
 	var/after_empty = (charge < CHARGE_FOR_CLIMAX)
 	if(empty && !after_empty)
 		to_chat(user, span_notice("I feel like I'm not so spent anymore"))
@@ -580,6 +759,8 @@
 			oxyloss_multiplier = 1.0
 		if(SEX_FORCE_EXTREME)
 			oxyloss_multiplier = 2.0
+		if(SEX_FORCE_LUDICROUS)
+			oxyloss_multiplier = 3.0
 	oxyloss_amt *= oxyloss_multiplier
 	if(oxyloss_amt <= 0)
 		return
@@ -591,10 +772,18 @@
 		if(prob(10))
 			var/lovermessage = pick("This feels so good!","I am in heaven!","This is too good to be possible!","By the ten!","I can't stop, too good!")
 			to_chat(action_target, span_love(lovermessage))
-	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU))
+	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))
 		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
 			pain_amt *= 2
+	var/list/modular_adjustments = modular_adjust_action_for_target_chastity(action_target, arousal_amt, pain_amt)
+	if(islist(modular_adjustments) && modular_adjustments.len >= 2)
+		arousal_amt = modular_adjustments[1]
+		pain_amt = modular_adjustments[2]
 	action_target.sexcon.receive_sex_action(arousal_amt, pain_amt, giving, force, speed)
+	/// modular signal to let other systems know about the sex action, currently used for chastity course to track arousal and apply pain, but can be used for other things in the future
+	modular_emit_received_sex_action_signal(action_target, arousal_amt, pain_amt, giving)
+	if(modular_should_play_chastitycourse_noise(action_target))
+		chastitycourse_noise(action_target)
 
 /datum/sex_controller/proc/receive_sex_action(arousal_amt, pain_amt, giving, applied_force, applied_speed)
 	arousal_amt *= get_force_pleasure_multiplier(applied_force, giving)
@@ -610,7 +799,7 @@
 
 	damage_from_pain(pain_amt)
 	try_do_moan(arousal_amt, pain_amt, applied_force, giving)
-	try_do_pain_effect(pain_amt, giving)
+	try_do_pain_effect(pain_amt, giving, TRUE)
 
 /datum/sex_controller/proc/damage_from_pain(pain_amt)
 	if(pain_amt < PAIN_MINIMUM_FOR_DAMAGE)
@@ -657,7 +846,14 @@
 	last_moan = world.time
 	user.emote(chosen_emote, forced = TRUE)
 
-/datum/sex_controller/proc/try_do_pain_effect(pain_amt, giving)
+/datum/sex_controller/proc/is_masochist_in_spiked_chastity()
+	var/modular_result = modular_is_masochist_in_spiked_chastity()
+	if(!isnull(modular_result))
+		return modular_result
+
+	return FALSE
+
+/datum/sex_controller/proc/try_do_pain_effect(pain_amt, giving, allow_intimate_item_reaction = FALSE)
 	if(pain_amt < PAIN_MILD_EFFECT)
 		return
 	if(last_pain + PAIN_COOLDOWN >= world.time)
@@ -665,6 +861,8 @@
 	if(prob(50))
 		return
 	last_pain = world.time
+	if(allow_intimate_item_reaction && user?.chastity_device && HAS_TRAIT(user, TRAIT_CHASTITY_SPIKED))
+		return
 	if(pain_amt >= PAIN_HIGH_EFFECT)
 		var/pain_msg = pick(list("IT HURTS!!!", "IT NEEDS TO STOP!!!", "I CAN'T TAKE IT ANYMORE!!!"))
 		to_chat(user, span_boldwarning(pain_msg))
@@ -677,7 +875,7 @@
 		user.flash_fullscreen("redflash1")
 		if(prob(40) && user.stat == CONSCIOUS)
 			user.visible_message(span_warning("[user] shudders in pain!"))
-	else
+	else if(pain_amt >= PAIN_MILD_EFFECT)
 		var/pain_msg = pick(list("It hurts a little...", "It stings...", "I'm aching..."))
 		to_chat(user, span_warning(pain_msg))
 
@@ -725,6 +923,7 @@
 							splashed_user.apply_status_effect(/datum/status_effect/facial)
 						else
 							facial.refresh_cum()
+						modular_record_collar_receive_event(splashed_user, user)
 	if(arousal < PASSIVE_EJAC_THRESHOLD)
 		return
 	if(is_spent())
@@ -738,6 +937,7 @@
 			splashed_user.apply_status_effect(/datum/status_effect/facial)
 		else
 			facial.refresh_cum()
+		modular_record_collar_receive_event(splashed_user, user)
 
 /datum/sex_controller/proc/handle_container_ejaculation()
 	if(arousal < PASSIVE_EJAC_THRESHOLD)
@@ -758,7 +958,13 @@
 	ejaculate_container(milker.get_active_held_item())
 
 /datum/sex_controller/proc/can_use_penis()
+	var/modular_result = modular_can_use_penis()
+	if(!isnull(modular_result))
+		return modular_result
+
 	if(HAS_TRAIT(user, TRAIT_LIMPDICK))
+		return FALSE
+	if(has_chastity_penis())
 		return FALSE
 	var/obj/item/organ/penis/penor = user.getorganslot(ORGAN_SLOT_PENIS)
 	if(!penor)
@@ -766,6 +972,45 @@
 	if(!penor.functional)
 		return FALSE
 	return TRUE
+
+/datum/sex_controller/proc/can_use_vagina()
+	var/modular_result = modular_can_use_vagina()
+	if(!isnull(modular_result))
+		return modular_result
+
+	if(has_chastity_vagina())
+		return FALSE
+	if(!user.getorganslot(ORGAN_SLOT_VAGINA))
+		return FALSE
+	return TRUE
+
+/// Returns TRUE if the user's penis is currently blocked by a chastity device.
+/// Base implementation checks TRAIT_CHASTITY_CAGE, TRAIT_CHASTITY_FULL, and TRAIT_CHASTITY_PENIS_BLOCKED.
+/// Overridden in chastity_helpers.dm to handle cursed device modes before falling through to ..().
+/datum/sex_controller/proc/has_chastity_penis()
+	return HAS_TRAIT(user, TRAIT_CHASTITY_FULL) || HAS_TRAIT(user, TRAIT_CHASTITY_CAGE) || HAS_TRAIT(user, TRAIT_CHASTITY_PENIS_BLOCKED)
+
+/// Returns TRUE if the user's vagina is currently blocked by a chastity device.
+/// Base implementation checks TRAIT_CHASTITY_FULL and TRAIT_CHASTITY_VAGINA_BLOCKED.
+/// Overridden in chastity_helpers.dm to handle cursed device modes before falling through to ..().
+/datum/sex_controller/proc/has_chastity_vagina()
+	return HAS_TRAIT(user, TRAIT_CHASTITY_FULL) || HAS_TRAIT(user, TRAIT_CHASTITY_VAGINA_BLOCKED)
+
+/// Returns TRUE if any front anatomy (penis OR vagina) is blocked by chastity.
+/// Delegates to has_chastity_penis() and has_chastity_vagina() so cursed device overrides apply automatically.
+/datum/sex_controller/proc/has_chastity_cage()
+	return has_chastity_penis() || has_chastity_vagina()
+
+/// Returns TRUE if the user's chastity device is a flat-style cage (/obj/item/chastity/chastity_cage/flat).
+/// Base always returns FALSE — flat detection requires device access; overridden in chastity_helpers.dm.
+/datum/sex_controller/proc/has_chastity_flat()
+	return FALSE
+
+/// Returns TRUE if the user's anal access is currently blocked by a chastity device.
+/// Base implementation checks TRAIT_CHASTITY_ANAL and TRAIT_CHASTITY_FULL.
+/// Overridden in chastity_helpers.dm to handle cursed device modes before falling through to ..().
+/datum/sex_controller/proc/has_chastity_anal()
+	return HAS_TRAIT(user, TRAIT_CHASTITY_ANAL) || HAS_TRAIT(user, TRAIT_CHASTITY_FULL)
 
 /datum/sex_controller/proc/considered_limp()
 	if(arousal >= AROUSAL_HARD_ON_THRESHOLD)
@@ -799,12 +1044,18 @@
 	var/force_name = get_force_string()
 	var/speed_name = get_speed_string()
 	var/manual_arousal_name = get_manual_arousal_string()
+	var/obj/item/organ/penis/got_cock = user.getorganslot(ORGAN_SLOT_PENIS)
+	var/obj/item/organ/vagina/got_pussy = user.getorganslot(ORGAN_SLOT_VAGINA)
 	dat += "<center><a href='?src=[REF(src)];task=speed_down'>\<</a> [speed_name] <a href='?src=[REF(src)];task=speed_up'>\></a> ~|~ <a href='?src=[REF(src)];task=force_down'>\<</a> [force_name] <a href='?src=[REF(src)];task=force_up'>\></a>"
-	if(user.getorganslot(ORGAN_SLOT_PENIS))
+	if(got_cock)
 		dat += " ~|~ <a href='?src=[REF(src)];task=manual_arousal_down'>\<</a> [manual_arousal_name] <a href='?src=[REF(src)];task=manual_arousal_up'>\></a>"
 	dat += "</center><center><a href='?src=[REF(src)];task=toggle_finished'>[do_until_finished ? "UNTIL IM FINISHED" : "UNTIL I STOP"]</a>"
-	if(user.getorganslot(ORGAN_SLOT_PENIS))
+	if(got_cock && !got_pussy)
 		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "PINTLE EXPOSED" : "PINTLE CONCEALED"]</a>"
+	else if(!got_cock && got_pussy)
+		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "PUSSY EXPOSED" : "PUSSY CONCEALED"]</a>"
+	else
+		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "CROTCH EXPOSED" : "CROTCH CONCEALED"]</a>"
 	if(current_action && !desire_stop)
 		var/datum/sex_action/action = SEX_ACTION(current_action)
 		if(action.subtle_supported)
@@ -812,11 +1063,17 @@
 				dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING SUBTLY</a>"
 			else
 				dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING VISIBLY</a>"
-		else if(action.knot_on_finish && knot_penis_type())
-			if(do_knot_action)
-				dat += " | <a href='?src=[REF(src)];task=toggle_knot'><font color='#d146f5'>USING KNOT</font></a>"
-			else
-				dat += " | <a href='?src=[REF(src)];task=toggle_knot'><font color='#eac8de'>NOT USING KNOT</font></a>"
+		if(action.knot_on_finish)
+			if((action.user_sex_part & SEX_PART_COCK) && knot_penis_type())
+				if(do_knot_action)
+					dat += " | <a href='?src=[REF(src)];task=toggle_knot'><font color='#d146f5'>USING KNOT</font></a>"
+				else
+					dat += " | <a href='?src=[REF(src)];task=toggle_knot'><font color='#eac8de'>NOT USING KNOT</font></a>"
+			else if((action.target_sex_part & SEX_PART_COCK) && target?.sexcon?.knot_penis_type())
+				if(do_knot_action_as_bottom)
+					dat += " | <a href='?src=[REF(src)];task=toggle_knot_bottom'><font color='#d146f5'>FORCING KNOT</font></a>"
+				else
+					dat += " | <a href='?src=[REF(src)];task=toggle_knot_bottom'><font color='#eac8de'>NOT FORCING KNOT</font></a>"
 	dat += "</center><center><a href='?src=[REF(src)];task=set_arousal'>SET AROUSAL</a> | <a href='?src=[REF(src)];task=freeze_arousal'>[arousal_frozen ? "UNFREEZE AROUSAL" : "FREEZE AROUSAL"]</a></center>"
 	if(target == user)
 		dat += "<center>Doing unto yourself</center>"
@@ -833,13 +1090,17 @@
 	var/i = 0
 	var/user_is_incapacitated = user.incapacitated()
 	user.sexcon.update_all_accessible_body_zones()
-	if(target != user)
+	if(target && target != user)
 		target.sexcon.update_all_accessible_body_zones()
 	for(var/action_type in GLOB.sex_actions)
 		var/datum/sex_action/action = SEX_ACTION(action_type)
 		if(!(action_category&action.category))
 			continue
+		if(istype(action, /datum/sex_action/chastityplay) && !chastity_content_enabled_for_pair())
+			continue
 		if(!action.shows_on_menu(user, target))
+			continue
+		if(action_blocked_by_intimate_state(action, TRUE))
 			continue
 		dat += "<td>"
 		var/link = ""
@@ -909,6 +1170,8 @@
 			do_subtle_action = !do_subtle_action
 		if("toggle_knot")
 			do_knot_action = !do_knot_action
+		if("toggle_knot_bottom")
+			do_knot_action_as_bottom = !do_knot_action_as_bottom
 	show_ui()
 
 /datum/sex_controller/proc/try_stop_current_action()
@@ -997,9 +1260,53 @@
 	if(!action_type)
 		return FALSE
 	var/datum/sex_action/action = SEX_ACTION(action_type)
+	if(istype(action, /datum/sex_action/chastityplay) && !chastity_content_enabled_for_pair())
+		return FALSE
 	if(!inherent_perform_check(action_type, incapacitated))
 		return FALSE
+	if(action_blocked_by_intimate_state(action))
+		return FALSE
 	if(!action.can_perform(user, target))
+		return FALSE
+	return TRUE
+/// Checks if the action is blocked by an intimate state, such as chastity. If menu_check is TRUE, this is being called for the purpose of showing the action in the menu, and certain checks that would be redundant to do on every menu open (like checking for orgasm immunity from a collar) can be skipped.
+/datum/sex_controller/proc/action_blocked_by_intimate_state(datum/sex_action/action, menu_check = FALSE)
+	if(!action || !user)
+		return FALSE
+	if(action.intimate_check_flags == SEX_ACTION_INTIMATE_CHECK_NONE)
+		return FALSE
+
+	var/user_part = action.user_sex_part & (SEX_PART_COCK | SEX_PART_CUNT | SEX_PART_ANUS)
+	if((action.intimate_check_flags & SEX_ACTION_INTIMATE_CHECK_USER) && user_part)
+		if(SEND_SIGNAL(user, COMSIG_CARBON_SEX_ACTION_VALIDATE, action, target, user_part, TRUE, menu_check) & COMPONENT_SEX_ACTION_BLOCK)
+			return TRUE
+
+	var/target_part = action.target_sex_part & (SEX_PART_COCK | SEX_PART_CUNT | SEX_PART_ANUS)
+	if(target && (action.intimate_check_flags & SEX_ACTION_INTIMATE_CHECK_TARGET) && target_part)
+		if(SEND_SIGNAL(target, COMSIG_CARBON_SEX_ACTION_VALIDATE, action, user, target_part, FALSE, menu_check) & COMPONENT_SEX_ACTION_BLOCK)
+			return TRUE
+
+	return FALSE
+
+/datum/sex_controller/proc/chastity_content_enabled_for(mob/living/carbon/human/H)
+	var/modular_result = modular_chastity_content_enabled_for(H)
+	if(!isnull(modular_result))
+		return modular_result
+
+	if(!H)
+		return FALSE
+	if(!H.client?.prefs)
+		return TRUE
+	return !!H.client.prefs.chastenable
+
+/datum/sex_controller/proc/chastity_content_enabled_for_pair()
+	var/modular_result = modular_chastity_content_enabled_for_pair()
+	if(!isnull(modular_result))
+		return modular_result
+
+	if(!chastity_content_enabled_for(user))
+		return FALSE
+	if(target && target != user && !chastity_content_enabled_for(target))
 		return FALSE
 	return TRUE
 
@@ -1029,14 +1336,26 @@
 		grassy_knoll = locate() in user.loc
 
 /datum/sex_controller/proc/find_ringing_collar()
-	var/obj/item/clothing/neck/roguetown/collar/collar
+	var/obj/item/clothing/neck/roguetown/collar
 	collar = user.get_item_by_slot(SLOT_NECK)
-	collar_bell_user = collar && istype(collar) && collar.bellsound
+	if(collar && istype(collar) && collar.bellsound)
+		collar_bell_user = TRUE
+		var/datum/component/squeak/bell = collar.GetComponent(/datum/component/squeak)
+		if(bell && LAZYLEN(bell.override_squeak_sounds))
+			collar_sounds = bell.override_squeak_sounds
+		else
+			collar_sounds = SFX_COLLARJINGLE
 	if(!target)
 		collar_bell_target = FALSE
 		return
 	collar = target.get_item_by_slot(SLOT_NECK)
-	collar_bell_target = collar && istype(collar) && collar.bellsound
+	if(collar && istype(collar) && collar.bellsound)
+		collar_bell_target = TRUE
+		var/datum/component/squeak/bell = collar.GetComponent(/datum/component/squeak)
+		if(bell && LAZYLEN(bell.override_squeak_sounds))
+			collar_sounds = bell.override_squeak_sounds
+		else
+			collar_sounds = SFX_COLLARJINGLE
 
 /datum/sex_controller/proc/inherent_perform_check(action_type, incapacitated)
 	var/datum/sex_action/action = SEX_ACTION(action_type)
@@ -1073,6 +1392,8 @@
 			return 2.0
 		if(SEX_SPEED_EXTREME)
 			return 2.5
+		if(SEX_SPEED_LUDICROUS)
+			return 3
 
 /datum/sex_controller/proc/get_stamina_cost_multiplier()
 	switch(force)
@@ -1082,7 +1403,9 @@
 			return 1.5
 		if(SEX_FORCE_HIGH)
 			return 2.0
-		if(SEX_SPEED_EXTREME)
+		if(SEX_FORCE_EXTREME)
+			return 2.5
+		if(SEX_FORCE_LUDICROUS)
 			return 2.5
 
 /datum/sex_controller/proc/get_force_pleasure_multiplier(passed_force, giving)
@@ -1107,6 +1430,11 @@
 				return 2.0
 			else
 				return 0.8
+		if(SEX_FORCE_LUDICROUS)
+			if(giving)
+				return 2.0
+			else
+				return 0.8
 
 /datum/sex_controller/proc/get_force_pain_multiplier(passed_force)
 	switch(passed_force)
@@ -1118,6 +1446,8 @@
 			return 2.0
 		if(SEX_FORCE_EXTREME)
 			return 3.0
+		if(SEX_FORCE_LUDICROUS)
+			return 4.0
 
 /datum/sex_controller/proc/get_speed_pain_multiplier(passed_speed)
 	switch(passed_speed)
@@ -1129,6 +1459,8 @@
 			return 1.2
 		if(SEX_SPEED_EXTREME)
 			return 1.4
+		if(SEX_SPEED_LUDICROUS)
+			return 1.6
 
 /datum/sex_controller/proc/get_force_string()
 	switch(force)
@@ -1140,7 +1472,8 @@
 			return "<font color='#f05ee1'>ROUGH</font>"
 		if(SEX_FORCE_EXTREME)
 			return "<font color='#d146f5'>BRUTAL</font>"
-
+		if(SEX_FORCE_LUDICROUS)
+			return "<font color='#d61a43'>FERAL</font>"
 /datum/sex_controller/proc/get_speed_string()
 	switch(speed)
 		if(SEX_SPEED_LOW)
@@ -1151,7 +1484,8 @@
 			return "<font color='#f05ee1'>QUICK</font>"
 		if(SEX_SPEED_EXTREME)
 			return "<font color='#d146f5'>UNRELENTING</font>"
-
+		if(SEX_SPEED_LUDICROUS)
+			return "<font color='#d61a43'>FURIOUS</font>"
 /datum/sex_controller/proc/get_manual_arousal_string()
 	switch(manual_arousal)
 		if(SEX_MANUAL_AROUSAL_DEFAULT)
@@ -1162,6 +1496,9 @@
 			return "<font color='#f05ee1'>PARTIALLY ERECT</font>"
 		if(SEX_MANUAL_AROUSAL_FULL)
 			return "<font color='#d146f5'>FULLY ERECT</font>"
+
+/datum/sex_controller/proc/get_knot_synonym()
+	return pick(list("knot", "knot", "bulb", "plug"))
 
 /datum/sex_controller/proc/get_generic_force_adjective(is_stealth = FALSE)
 	if(is_stealth)
@@ -1175,6 +1512,8 @@
 			return pick(list("roughly", "carelessly", "forcefully", "fervently", "fiercely"))
 		if(SEX_FORCE_EXTREME)
 			return pick(list("brutally", "violently", "relentlessly", "savagely", "mercilessly"))
+		if(SEX_FORCE_LUDICROUS)
+			return pick(list("madly", "uncontrollably", "desperately", "deliriously", "freekishly"))
 
 /datum/sex_controller/proc/spanify_force(string)
 	switch(force)
@@ -1186,13 +1525,43 @@
 			return "<span class='love_high'>[string]</span>"
 		if(SEX_FORCE_EXTREME)
 			return "<span class='love_extreme'>[string]</span>"
+		if(SEX_FORCE_LUDICROUS)
+			return "<span class='love_ludicrous'>[string]</span>"
 
 /datum/sex_controller/proc/try_pelvis_crush(mob/living/carbon/human/target)
-	if(istype(user.rmb_intent, /datum/rmb_intent/strong))
-		if(!target.has_wound(/datum/wound/fracture/groin))
-			if(prob(10))
-				var/obj/item/bodypart/groin = target.get_bodypart(check_zone(BODY_ZONE_PRECISE_GROIN))
-				groin.add_wound(/datum/wound/fracture)
+	if(istype(user.rmb_intent, /datum/rmb_intent/strong) && force > SEX_FORCE_MID)
+		if(prob(10) && !target.has_status_effect(/datum/status_effect/quivering))
+			target.apply_status_effect(/datum/status_effect/quivering)
+			target.confused += 25
+			target.OffBalance(30 SECONDS)
+		if(user.client.prefs.extreme_erp && target.client.prefs.extreme_erp)
+			if(!target.has_wound(/datum/wound/fracture/groin))
+				if(prob(10))
+					var/obj/item/bodypart/groin = target.get_bodypart(check_zone(BODY_ZONE_PRECISE_GROIN))
+					groin.add_wound(/datum/wound/fracture)
+		
+/datum/sex_controller/proc/try_jaw_crush(mob/living/carbon/human/target)
+	if(istype(user.rmb_intent, /datum/rmb_intent/strong) && force > SEX_FORCE_MID)
+		if(user.client.prefs.extreme_erp && target.client.prefs.extreme_erp)
+			if(!target.has_wound(/datum/wound/fracture/mouth))
+				if(prob(10))
+					var/obj/item/bodypart/mouth = target.get_bodypart(check_zone(BODY_ZONE_PRECISE_MOUTH))
+					mouth.add_wound(/datum/wound/fracture)
+		if(prob(10) && !target.has_status_effect(/datum/status_effect/jaw_gaped) && !target.has_wound(/datum/wound/fracture/mouth))
+			target.apply_status_effect(/datum/status_effect/jaw_gaped)
+			target.apply_status_effect(/datum/status_effect/debuff/dazed)
+
+/datum/status_effect/quivering
+	id = "quivering"
+	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = /atom/movable/screen/alert/status_effect/quivering
+	effectedstats = list("speed" = -2)
+
+/atom/movable/screen/alert/status_effect/quivering
+	name = "Quivering"
+	desc = "I can barely walk..."
+	icon_state = "quivering"
 
 /datum/proc/werewolf_sex_infect_attempt(mob/living/carbon/human/top, mob/living/carbon/human/bottom)
 
@@ -1204,13 +1573,13 @@
 	var/infection_probability = 40
 	if(top.mind.has_antag_datum(/datum/antagonist/werewolf))
 		WWtop = top.mind.has_antag_datum(/datum/antagonist/werewolf/)
-	
+
 	if(bottom.mind.has_antag_datum(/datum/antagonist/werewolf))
 		WWbottom = bottom.mind.has_antag_datum(/datum/antagonist/werewolf/)
 
 	if(WWtop && WWbottom)
 		return
-	
+
 	if(WWtop && WWtop.transformed && !WWbottom)
 		if(prob(infection_probability))
 			var/answer = tgui_alert(top, "Infect your mate?", "Please answer in [DisplayTimeText(200)]!", list("Yae","Nae"),200)
@@ -1231,7 +1600,7 @@
 		return
 
 /datum/proc/deadite_sex_infect_attempt(mob/living/carbon/human/top, mob/living/carbon/human/bottom)
-	
+
 	if(!top || !bottom || !top.mind || !bottom.mind)
 		return
 	var/datum/antagonist/zombie/ZMtop
@@ -1239,13 +1608,13 @@
 	var/infection_probability = 40
 	if(top.mind.has_antag_datum(/datum/antagonist/zombie))
 		ZMtop = top.mind.has_antag_datum(/datum/antagonist/zombie/)
-	
+
 	if(bottom.mind.has_antag_datum(/datum/antagonist/zombie))
 		ZMbottom = bottom.mind.has_antag_datum(/datum/antagonist/zombie/)
-	
+
 	if(ZMtop && ZMbottom)
 		return
-	
+
 	if(ZMtop && ZMtop.has_turned && !ZMbottom)
 		if(prob(infection_probability))
 			var/answer = tgui_alert(top, "Spread HER gift?", "Please answer in [DisplayTimeText(200)]!", list("Yae","Nae"),200)
@@ -1264,7 +1633,7 @@
 				top.zaids_check()
 		return
 ///Making sure there're not any other antag or immune, then applies zombie infection
-/mob/living/carbon/human/proc/zaids_check() 
+/mob/living/carbon/human/proc/zaids_check()
 	if(!mind)
 		return
 	if(mind.has_antag_datum(/datum/antagonist/vampire))

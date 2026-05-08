@@ -72,7 +72,8 @@
 	else if(should_wear_femme_clothes(H))
 		armor = /obj/item/clothing/suit/roguetown/shirt/rags
 	backpack_contents = list(
-		/obj/item/bottle_kit
+		/obj/item/bottle_kit,
+		/obj/item/mini_flagpole/innkeeper,
 	)
 
 /datum/outfit/job/roguetown/knavewench/choose_loadout(mob/living/carbon/human/H)

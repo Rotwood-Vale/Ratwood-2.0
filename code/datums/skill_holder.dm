@@ -127,13 +127,17 @@
 		to_chat(current, span_warning("My [S.name] has weakened to [SSskills.level_names[known_skills[S]]]!"))
 
 /datum/skill_holder/proc/adjust_skillrank_up_to(skill, amt, silent = FALSE)
-	var/proper_amt = amt - get_skill_level(skill)
+	var/datum/skill/S = GetSkillRef(skill)
+	var/current_level = known_skills[S] || SKILL_LEVEL_NONE
+	var/proper_amt = amt - current_level
 	if(proper_amt <= 0)
 		return
 	adjust_skillrank(skill, proper_amt, silent)
 
 /datum/skill_holder/proc/adjust_skillrank_down_to(skill, amt, silent = FALSE)
-	var/proper_amt = get_skill_level(skill) - amt
+	var/datum/skill/S = GetSkillRef(skill)
+	var/current_level = known_skills[S] || SKILL_LEVEL_NONE
+	var/proper_amt = current_level - amt
 	if(proper_amt >= 0)
 		return
 	adjust_skillrank(skill, -proper_amt, silent)
@@ -245,36 +249,135 @@
 
 /datum/skill_holder/proc/get_skill_speed_modifier(skill)
 	var/datum/skill/S = GetSkillRef(skill)
-	return S.get_skill_speed_modifier(known_skills[S] || SKILL_LEVEL_NONE)
+	return S.get_skill_speed_modifier(get_skill_level(skill))
 
 /datum/skill_holder/proc/get_skill_level(skill)
 	var/datum/skill/S = GetSkillRef(skill)
-	var/modifier = 0
+	var/level = known_skills[S] || SKILL_LEVEL_NONE
 	if(S?.abstract_type in list(/datum/skill/labor, /datum/skill/craft))
-		modifier = current?.get_inspirational_bonus()
-	if(!(S in known_skills))
-		return SKILL_LEVEL_NONE
-	return known_skills[S] + modifier || SKILL_LEVEL_NONE
+		level += current?.get_inspirational_bonus() || 0
+	// Fallback patron bonuses for paths where rank adjustment timing is missed.
+	if(current)
+		if(istype(S, /datum/skill/misc/lockpicking) && HAS_TRAIT(current, TRAIT_COMMIE))
+			level += 1
+		if(istype(S, /datum/skill/misc/music) && HAS_TRAIT(current, TRAIT_XYLIX))
+			level += 1
+	level = clamp(level, SKILL_LEVEL_NONE, SKILL_LEVEL_LEGENDARY)
+	return level
+
+/datum/skill_holder/proc/get_effective_skill_cap(datum/skill/skill_ref)
+	var/cap = skill_ref.max_untraited_level
+	#ifdef USES_TRAIT_SKILL_GATING
+	if(LAZYLEN(skill_ref.trait_uncap))
+		for(var/trait_name in skill_ref.trait_uncap)
+			if(HAS_TRAIT(current, trait_name) && (skill_ref.trait_uncap[trait_name] > cap))
+				cap = skill_ref.trait_uncap[trait_name]
+	#endif
+	#ifndef USES_TRAIT_SKILL_GATING
+	cap = SKILL_LEVEL_LEGENDARY
+	#endif
+	return cap
+
+/datum/skill_holder/proc/get_xp_brackets(skill_level)
+	switch(skill_level)
+		if(SKILL_LEVEL_NONE)
+			return list(0, SKILL_EXP_NOVICE)
+		if(SKILL_LEVEL_NOVICE)
+			return list(SKILL_EXP_NOVICE, SKILL_EXP_APPRENTICE)
+		if(SKILL_LEVEL_APPRENTICE)
+			return list(SKILL_EXP_APPRENTICE, SKILL_EXP_JOURNEYMAN)
+		if(SKILL_LEVEL_JOURNEYMAN)
+			return list(SKILL_EXP_JOURNEYMAN, SKILL_EXP_EXPERT)
+		if(SKILL_LEVEL_EXPERT)
+			return list(SKILL_EXP_EXPERT, SKILL_EXP_MASTER)
+		if(SKILL_LEVEL_MASTER)
+			return list(SKILL_EXP_MASTER, SKILL_EXP_LEGENDARY)
+		if(SKILL_LEVEL_LEGENDARY)
+			return list(SKILL_EXP_LEGENDARY, SKILL_EXP_LEGENDARY)
+	return list(0, SKILL_EXP_NOVICE)
+
+/// Returns a color hex for a given XP percentage threshold
+/datum/skill_holder/proc/get_progress_color(percent)
+	switch(percent)
+		if(0 to 24)
+			return "#cc3333" // Red
+		if(25 to 49)
+			return "#cc9933" // Orange/Yellow
+		if(50 to 74)
+			return "#3399cc" // Blue
+		if(75 to 100)
+			return "#33cc66" // Green
+	return "#cc3333"
 
 /datum/skill_holder/proc/print_levels(user)
 	var/list/shown_skills = list()
 	for(var/i in known_skills)
 		if(known_skills[i]) //Do we actually have a level in this?
 			shown_skills += i
+	var/datum/skill/lockpick_skill = GetSkillRef(/datum/skill/misc/lockpicking)
+	if(get_skill_level(/datum/skill/misc/lockpicking) > SKILL_LEVEL_NONE)
+		shown_skills |= lockpick_skill
+	var/datum/skill/music_skill = GetSkillRef(/datum/skill/misc/music)
+	if(get_skill_level(/datum/skill/misc/music) > SKILL_LEVEL_NONE)
+		shown_skills |= music_skill
 	if(!length(shown_skills))
 		to_chat(user, span_warning("I don't have any skills."))
 		return
-	var/msg = ""
-	msg += span_info("*---------*\n")
 	var/list/sorted_skills = sortList(shown_skills, GLOBAL_PROC_REF(cmp_skills_for_display))
+	var/bc = "#555555"
+	var/msg = {"<table style='border-collapse: collapse; border: 1px solid [bc];'>"}
+	msg += {"<tr style='border-bottom: 1px solid [bc];'>"}
+	msg += {"<td style='padding: 1px 4px; border-right: 1px solid [bc]; color: #aaaaaa;'><b>Skill</b></td>"}
+	msg += {"<td style='padding: 1px 4px; border-right: 1px solid [bc]; color: #aaaaaa;'><b>Level</b></td>"}
+	msg += {"<td style='padding: 1px 4px; border-right: 1px solid [bc]; color: #aaaaaa;'><b>XP</b></td>"}
+	msg += {"<td style='padding: 1px 2px;'></td>"}
+	msg += "</tr>"
 	for(var/datum/skill/i in sorted_skills)
+		var/skill_level = get_skill_level(i.type)
+		var/raw_skill_level = known_skills[i]
+		var/effective_cap = get_effective_skill_cap(i)
+		var/is_legendary = (skill_level >= SKILL_LEVEL_LEGENDARY)
+		var/is_capped = !is_legendary && (skill_level >= effective_cap)
+
 		var/can_advance_post = current?.mind?.sleep_adv.enough_sleep_xp_to_advance(i.type, 1)
 		var/capped_post = current?.mind?.sleep_adv.enough_sleep_xp_to_advance(i.type, 2)
-		var/rankup_postfix = capped_post ? span_nicegreen(" ★ ") : can_advance_post ? span_nicegreen(" ☆ ") : ""
-		var/skill_name = "<span style='color: [i.color]'>[i]</span>"
-		msg += "[skill_name] - [SSskills.level_names[known_skills[i]]][rankup_postfix] <a href='?src=[REF(i)];skill_detail=1' style='font-size: 0.5em;'>{?}</a>\n"
-	msg += "</span>"
+		var/rankup_postfix = capped_post ? span_nicegreen(" ★") : can_advance_post ? span_nicegreen(" ☆") : ""
+		// Progress column
+		var/progress_col
+		if(is_capped)
+			progress_col = "<b style='color: #cc3333;'>CAPPED</b>"
+		else if(is_legendary)
+			progress_col = "<span style='color: #555555;'>---</span>"
+		else
+			var/percent = 0
+			if(raw_skill_level >= SKILL_LEVEL_APPRENTICE)
+				// Apprentice+ uses sleep XP system for progression
+				var/datum/sleep_adv/sadv = current?.mind?.sleep_adv
+				if(sadv)
+					var/sleep_xp = sadv.get_sleep_xp(i.type)
+					var/needed_xp = sadv.get_requried_sleep_xp_for_skill(i.type, 1)
+					if(needed_xp > 0)
+						percent = clamp(round(sleep_xp * 100 / needed_xp), 0, 200)
+			else
+				// Below Apprentice, XP is tracked directly on skill_experience
+				var/list/brackets = get_xp_brackets(raw_skill_level)
+				var/current_xp = skill_experience[i]
+				var/bracket_start = brackets[1]
+				var/bracket_end = brackets[2]
+				var/bracket_range = bracket_end - bracket_start
+				if(bracket_range > 0)
+					percent = clamp(round((current_xp - bracket_start) * 100 / bracket_range), 0, 100)
+			var/pct_color = get_progress_color(percent)
+			progress_col = "<span style='color: [pct_color];'>[percent]%</span>"
 
+		msg += "<tr style='border-bottom: 1px solid [bc];'>"
+		msg += {"<td style='padding: 1px 4px; border-right: 1px solid [bc];'><span style='color: [i.color]'>[i]</span></td>"}
+		msg += {"<td style='padding: 1px 4px; border-right: 1px solid [bc]; white-space: nowrap;'>[SSskills.level_names[skill_level]][rankup_postfix]</td>"}
+		msg += {"<td style='padding: 1px 4px; border-right: 1px solid [bc]; white-space: nowrap;'>[progress_col]</td>"}
+		msg += {"<td style='padding: 1px 2px;'><a href='?src=[REF(i)];skill_detail=1' style='font-size: 0.5em;'>{?}</a></td>"}
+		msg += "</tr>"
+
+	msg += "</table>"
 	to_chat(user, msg)
 
 /mob/proc/get_inspirational_bonus()

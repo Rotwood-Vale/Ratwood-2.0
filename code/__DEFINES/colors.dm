@@ -75,6 +75,9 @@
 #define CLOTHING_WHITE			"#ffffff"
 #define CLOTHING_ORANGE			"#df8405"
 #define CLOTHING_MAGENTA		"#962e5c"
+#define CLOTHING_DRAB			"#9b7e54"
+#define CLOTHING_DARKDRAB		"#7c6d5c"
+
 
 #define CLOTHING_WET			"#bbbbbb"
 

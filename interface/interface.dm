@@ -89,23 +89,17 @@
 		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
 	return
 
-/client/verb/changelog()
-	set name = "Changelog"
-	set category = "OOC"
-	set hidden = 1
-	src << browse('html/changelog.html', "window=changes;size=675x650")
-	if(prefs.lastchangelog != GLOB.changelog_hash)
-		prefs.lastchangelog = GLOB.changelog_hash
-		prefs.save_preferences()
-		winset(src, "infowindow.changelog", "font-style=;")
-
 /client/verb/recent_changelog()
 	set name = "Recent Changes"
 	set category = "OOC"
-	if(GLOB.changelog.len)
-		to_chat(src, "Recent Changes:")
-		for(var/change in GLOB.changelog)
-			to_chat(src, span_info("- [change]"))
+	to_chat(src, "<a href='byond://?command=open-changelog' style='display:inline-block;padding:4px 10px;border:1px solid #6f8f5f;border-radius:4px;background:#22331d;color:#d8f0c8;text-decoration:none;'><b>Open Changelog</b></a>")
+
+/client/verb/open_changelog()
+	set name = "open-changelog"
+	set category = "OOC"
+	set hidden = 1
+	if(mob)
+		GLOB.changelog_tgui.ui_interact(mob)
 
 /client/verb/hotkeys_help()
 	set name = "_Help-Controls"
@@ -272,6 +266,19 @@ Hotkey-Mode: (hotkey-mode must be on)
 			to_chat(src, "Headshot in chat Enabled")
 		else
 			to_chat(src, "Headshot in chat Disabled")
+
+/client/verb/changelog()
+	set name = "Changelog"
+	set category = "OOC"
+
+	if(!GLOB.changelog_tgui)
+		GLOB.changelog_tgui = new /datum/changelog()
+
+	GLOB.changelog_tgui.ui_interact(mob)
+	if(prefs.lastchangelog != GLOB.changelog_hash)
+		prefs.lastchangelog = GLOB.changelog_hash
+		prefs.save_preferences()
+		winset(src, "infobuttons.changelog", "font-style=;")
 
 /*
 /client/verb/set_blur()

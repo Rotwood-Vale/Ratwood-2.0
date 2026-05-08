@@ -87,8 +87,6 @@
 			turfs += T
 	return turfs
 
-//qdel.dm doesn't compile before this file so uh yeah
-#define QDEL_IN_CLIENT_TIME(item, time) addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), item), time, TIMER_STOPPABLE | TIMER_CLIENT_TIME)
 /**
  * Helper atom that copies an appearance and exists for a period
 */
@@ -609,3 +607,25 @@
 	if(!ckey || !istext(ckey))
 		return "some invalid"
 	return ckey
+
+/// Shows a sensory effect (IE: footstep, attack) to all mobs in range who are unconscious or blind.
+/proc/show_sensory_effect(atom/source, duration = 5, icon_state = "footstep", dir = null, ignore_self = FALSE)
+	var/turf/T = get_turf(source)
+	if (!isturf(T))
+		return FALSE
+
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(display_sensory_effect), source, T, duration, icon_state, dir, ignore_self), 0.5 SECONDS)
+
+/proc/display_sensory_effect(atom/source, turf/T, duration, icon_state, dir, ignore_self)
+	for(var/mob/M in range(7, T))
+		if(!M || (ignore_self && (M == source)))
+			continue
+
+		if(!M.stat && !is_blind(M)) // If the mob is not unconscious and not blind, we don't show the effect.
+			continue
+
+		var/image/I = image('icons/effects/fov/fov_effects.dmi', T, icon_state, SENSORY_LAYER)
+		I.plane = SENSORY_PLANE
+		if(dir)
+			I.dir = dir
+		flick_overlay(I, list(M.client), duration)

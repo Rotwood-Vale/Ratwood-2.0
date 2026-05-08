@@ -59,7 +59,24 @@
 
 /obj/item/dildo/examine()
 	. = ..()
-	. += "[span_notice("It can be attached onto most belts.")]"
+	. += "[span_notice("It can be attached onto most belts and chastity devices.")]"
+
+/obj/item/dildo/afterattack(atom/target, mob/user, proximity_flag, click_parameters)  // lets you mount the dildo directly onto a chastity device or belt by clicking on the mob wearing it with the dildo in hand
+	. = ..()
+	if(!proximity_flag || !ishuman(target))
+		return
+	var/mob/living/carbon/human/H = target
+	var/obj/item/chastity/device = H.chastity_device
+	if(!istype(device) || device.attached_toy || is_attached_to_belt)
+		return
+	if(!get_location_accessible(H, BODY_ZONE_PRECISE_GROIN))
+		to_chat(user, span_warning("[H]'s groin is not accessible!"))
+		return
+	if(!user.transferItemToLoc(src, null))
+		to_chat(user, span_warning("\The [src] is stuck to your hand!"))
+		return
+	if(device.attach_toy(src, user))
+		user.visible_message(span_warning("[user] equips \the [src] onto [H]'s [device]."))
 
 /obj/item/dildo/proc/do_silver_check(mob/living/victim)
 	if(!is_silver || !HAS_TRAIT(victim, TRAIT_SILVER_WEAK))

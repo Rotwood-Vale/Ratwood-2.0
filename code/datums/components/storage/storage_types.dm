@@ -27,8 +27,12 @@
 	/obj/item/needle,
 	/obj/item/natural/worms/leech,
 	/obj/item/reagent_containers/lux,
+	/obj/item/reagent_containers/lux_impure,
+	/obj/item/leechtick,
+	/obj/item/leechtick_bloated,
 	/obj/item/natural/bundle/cloth/bandage,
-	/obj/item/natural/cloth))
+	/obj/item/natural/cloth,
+	))
 
 /datum/component/storage/concrete/roguetown/messkit
 	screen_max_rows = 3
@@ -173,10 +177,18 @@
 	allow_dump_out = TRUE
 	dump_time = 40
 	collection_mode = COLLECT_SAME
+	does_not_spill = TRUE
 
 /datum/component/storage/concrete/tray/New(datum/P, ...)
 	. = ..()
 	can_hold = typecacheof(list(/obj/item/cooking, /obj/item/reagent_containers/glass/bowl, /obj/item/reagent_containers/glass/cup, /obj/item/kitchen, /obj/item/reagent_containers/food, /obj/item/reagent_containers/glass/bottle))
+
+/datum/component/storage/concrete/tray/on_move()
+	var/atom/A = parent
+	for(var/mob/living/L in can_see_contents())
+		if(!L.CanReach(A))
+			hide_from(L)
+	// Trays are designed to carry liquids safely - no spilling on move
 
 /datum/component/storage/concrete/grid/headhook
 	max_w_class = WEIGHT_CLASS_NORMAL

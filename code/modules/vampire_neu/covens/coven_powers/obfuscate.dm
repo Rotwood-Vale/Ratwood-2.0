@@ -4,7 +4,7 @@
 
 /datum/coven/obfuscate
 	name = "Obfuscate"
-	desc = "Makes you less noticable for living and un-living beings."
+	desc = "Makes you less noticeable to living and unliving beings."
 	icon_state = "obfuscate"
 	power_type = /datum/coven_power/obfuscate
 

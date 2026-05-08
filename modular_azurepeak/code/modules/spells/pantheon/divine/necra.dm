@@ -359,7 +359,8 @@
 
 /obj/effect/proc_holder/spell/invoked/necras_sight/proc/add_to_scry(obj/O, mob/living/carbon/human/user)
 	if(O in marked_objects)
-		revert_cast()
+		marked_objects.Remove(O)
+		to_chat(user, span_info("You let the grave slip from your mind..."))
 		return
 	var/holyskill = user.get_skill_level(/datum/skill/magic/holy)
 	var/label = input(user, "Name this grave for your sight:", "Mark Holy Object") as text|null

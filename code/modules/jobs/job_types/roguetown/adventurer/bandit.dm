@@ -20,7 +20,7 @@
 	min_pq = 3
 	max_pq = null
 	round_contrib_points = 5
-	allowed_patrons = ALL_INHUMEN_PATRONS//YEAH!!! MURDER!!!
+	allowed_patrons = list(/datum/patron/inhumen/matthios) // Bandits bro, they rob you blind
 
 	advclass_cat_rolls = list(CTAG_BANDIT = 20)
 	PQ_boost_divider = 10

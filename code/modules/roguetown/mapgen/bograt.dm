@@ -51,7 +51,7 @@
 							/obj/structure/flora/roguegrass/herb/random = 4,
 							/obj/structure/flora/rogueshroom = 1,
 							/obj/effect/decal/remains/bear = 0.5,
-							/obj/effect/decal/remains/human = 0.2)
+							/obj/structure/deadbodyrandom/low = 0.2)
 	spawnableTurfs = list(/turf/open/floor/rogue/dirt/road=2,
 						/turf/open/water/swamp=2,)
 	allowed_areas = list(/area/rogue/outdoors/bograt)
@@ -75,7 +75,8 @@
 	excluded_turfs = list(/turf/open/floor/rogue/dirt/road)
 	allowed_areas = list(/area/rogue/outdoors/bograt/sunken)
 	spawnableAtoms = list(/obj/structure/glowshroom = 2,
-							/obj/structure/flora/roguetree = 5,
+							/obj/structure/flora/rogueshroom/unhappy/random = 4,
+							/obj/structure/flora/roguetree = 4,
 							/obj/structure/flora/roguegrass/bush = 5,
 							/obj/structure/flora/roguegrass = 10,
 							/obj/structure/flora/roguegrass/maneater = 2,
@@ -83,20 +84,23 @@
 							/obj/item/natural/stone = 10,
 							/obj/item/natural/rock = 5,
 							/obj/item/grown/log/tree/stick = 5,
-							/obj/item/magic/artifact = 1,
-							/obj/structure/leyline = 1,
-							/obj/structure/voidstoneobelisk = 2,
-							/obj/structure/flora/roguegrass/herb/manabloom = 2,
-							/obj/item/magic/manacrystal = 2,
+							/obj/item/magic/artifact = 0.5,
+							/obj/structure/leyline = 0.5,
+							/obj/structure/voidstoneobelisk = 1,
+							/obj/structure/flora/roguegrass/herb/manabloom = 1,
+							/obj/item/magic/manacrystal = 1,
 							/obj/item/grown/log/tree/stick = 5,
 							/obj/structure/flora/roguetree/stump/log = 5,
 							/obj/structure/flora/roguetree/stump = 5,
-							/obj/structure/closet/dirthole/closed/loot = 5,
-							/obj/structure/flora/roguegrass/swampweed = 5,
-							/obj/structure/flora/roguegrass/herb/random = 10,
+							/obj/structure/closet/dirthole/closed/loot = 2,
+							/obj/structure/flora/roguegrass/swampweed = 4,
+							/obj/structure/flora/roguegrass/herb/random = 6,
 							/obj/structure/flora/rogueshroom = 3,
 							/obj/effect/decal/remains/bear = 2,
 							/obj/effect/decal/remains/human = 2,
+							/obj/structure/flora/mushroomcluster/unhappy = 2,
+							/obj/structure/flora/tinymushrooms/unhappy = 2,
+							/obj/structure/deadbodyrandom/med = 0.3,
 							/obj/structure/zizo_bane = 3)
 	spawnableTurfs = list(/turf/open/floor/rogue/dirt/road=3,
 						/turf/open/water/swamp=3)

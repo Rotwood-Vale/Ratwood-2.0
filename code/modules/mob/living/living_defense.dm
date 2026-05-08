@@ -1,5 +1,6 @@
 
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = "blunt", absorb_text = null, soften_text = null, armor_penetration, penetrated_text, damage, blade_dulling, peeldivisor, intdamfactor, used_weapon = null)
+	SEND_SIGNAL(src, COMSIG_LIVING_ARMOR_CHECKED)
 	var/armor = getarmor(def_zone, attack_flag, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor, used_weapon)
 
 	//the if "armor" check is because this is used for everything on /living, including humans
@@ -368,9 +369,9 @@
 
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
-	if(isturf(loc) && istype(loc.loc, /area/start))
-//		to_chat(M, "No attacking people at spawn, you jackass.")
-		return FALSE
+// 	if(isturf(loc) && istype(loc.loc, /area/start))//commented out after deleting the areatype - this is old SS13 code
+// //		to_chat(M, "No attacking people at spawn, you jackass.")
+// 		return FALSE
 
 	if (M.used_intent.type == INTENT_HARM)
 		if(HAS_TRAIT(M, TRAIT_PACIFISM))
@@ -398,9 +399,9 @@
 	..()
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
-	if(isturf(loc) && istype(loc.loc, /area/start))
-//		to_chat(M, "No attacking people at spawn, you jackass.")
-		return FALSE
+// 	if(isturf(loc) && istype(loc.loc, /area/start))//commented out after deleting the areatype - this is old SS13 code
+// //		to_chat(M, "No attacking people at spawn, you jackass.")
+// 		return FALSE
 
 	if (M.used_intent.type == INTENT_HARM)
 		if(HAS_TRAIT(M, TRAIT_PACIFISM))
@@ -450,6 +451,9 @@
 		span_hear("I hear a heavy electrical crack.") \
 	)
 	playsound(get_turf(src), pick('sound/misc/elec (1).ogg', 'sound/misc/elec (2).ogg', 'sound/misc/elec (3).ogg'), 100, FALSE)
+	// Home alone 2 Marv scream on electrocution — rare easter egg, 5% chance so it's not common but not impossibly rare.
+	if(ishuman(src) && prob(5))
+		playsound(get_turf(src), 'modular/sound/masomoans/agony/electroscreammarv.ogg', 80, FALSE, 2)
 	return shock_damage
 
 /mob/living/emp_act(severity)

@@ -2,7 +2,7 @@
 //They choose between shield + spear, or miraclist flagellant. Flagellant stuff isn't done, but, whatever...
 /datum/advclass/foreigner/dunewell
 	name = "Dunewell Nomad"
-	tutorial = "Dunewell, deep in the Zybantu deserts, is a place of madness. A region of faith and heresy alike. \
+	tutorial = "Dunewell, deep in the Zybantine deserts, is a place of madness. A region of faith and heresy alike. \
 	For yils, many have fought over the riches and ruins of the old Psydonian holdout. Those who come from it are typically nomads of either party. \
 	Missionary and killer, one in the same. To have ventured as far as Ferentia, you've either escaped the cycle, or intend to repeat it."
 	allowed_races = RACES_ALL_KINDS
@@ -76,24 +76,27 @@
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
 				backl = /obj/item/storage/backpack/rogue/satchel
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				if(H.patron?.type == /datum/patron/inhumen/zizo)
+					H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/minion_order)
+					H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
 
 //Just the nomad clothes.
 /obj/item/clothing/cloak/cape/nomad
-	color = "#7c6d5c"
+	color = CLOTHING_DARKDRAB
 
 /obj/item/clothing/neck/roguetown/coif/padded/nomad
-	color = "#7c6d5c"
+	color = CLOTHING_DARKDRAB
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/nomad
-	color = "#7c6d5c"
+	color = CLOTHING_DARKDRAB
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant/nomad
 	name = "nomad shawl"
 	desc = "Thick and protective while remaining light and breezy. A staple of Zybantu nomads. Distinctly Dunewell..."
-	color = "#7c6d5c"
+	color = CLOTHING_DARKDRAB
 
 /obj/item/clothing/head/roguetown/roguehood/shalal/nomad
-	color = "#7c6d5c"
+	color = CLOTHING_DARKDRAB
 
 /obj/item/clothing/mask/rogue/ragmask/nomad
-	color = "#7c6d5c"
+	color = CLOTHING_DARKDRAB

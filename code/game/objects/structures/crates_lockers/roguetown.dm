@@ -138,6 +138,34 @@
 	dir = SOUTH
 	pixel_y = 16
 
+/obj/structure/closet/crate/drawer/drawer1 // five unique dresser sprites needing five different structures for five different crafting recipes
+	name = "drawer"
+	desc = "A wooden drawer."
+	icon = 'icons/roguetown/misc/structure.dmi'
+	icon_state = "drawer1"
+	base_icon_state = "drawer1"
+
+/obj/structure/closet/crate/drawer/drawer2
+	name = "drawer"
+	desc = "A wooden drawer."
+	icon = 'icons/roguetown/misc/structure.dmi'
+	icon_state = "drawer2"
+	base_icon_state = "drawer2"
+
+/obj/structure/closet/crate/drawer/drawer3
+	name = "drawer"
+	desc = "A wooden drawer."
+	icon = 'icons/roguetown/misc/structure.dmi'
+	icon_state = "drawer3"
+	base_icon_state = "drawer3"
+
+/obj/structure/closet/crate/drawer/drawer4
+	name = "drawer"
+	desc = "A wooden drawer."
+	icon = 'icons/roguetown/misc/structure.dmi'
+	icon_state = "drawer4"
+	base_icon_state = "drawer4"
+
 //Stonekeep port
 /obj/structure/closet/crate/chest/crate
 	name = "crate"

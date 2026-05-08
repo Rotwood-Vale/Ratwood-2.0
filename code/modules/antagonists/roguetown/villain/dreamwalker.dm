@@ -168,13 +168,13 @@
 /datum/component/dreamwalker_repair/proc/on_item_equipped(mob/user, obj/item/source, slot)
 	SIGNAL_HANDLER
 	if(source.item_flags & DREAM_ITEM)
-		to_chat(parent, span_notice("the [source] pulses in your hands, dream energies passively repairing it."))
+		to_chat(parent, span_notice("[source] pulses in your hands, dream energies passively repairing it."))
 		add_item(source)
 
 /datum/component/dreamwalker_repair/proc/on_item_dropped(mob/user, obj/item/source)
 	SIGNAL_HANDLER
 	if(source.item_flags & DREAM_ITEM)
-		to_chat(parent, span_notice("the [source] stops pulsing as it leaves your person."))
+		to_chat(parent, span_notice("[source] stops pulsing as it leaves your person."))
 		remove_item(source)
 
 /datum/component/dreamwalker_repair/proc/add_item(obj/item/I)
@@ -232,6 +232,7 @@
 	var/uses = 0
 	var/max_uses = 3
 	var/turf/linked_turf
+	var/safe_passage = FALSE
 
 /obj/structure/portal_jaunt/Initialize(mapload)
 	. = ..()
@@ -319,7 +320,7 @@
 
 	if(marked_target)
 		RegisterSignal(marked_target, COMSIG_LIVING_DEATH, PROC_REF(on_target_death))
-		to_chat(parent, span_notice("You begin focusing your dream energy on [marked_target]."))
+		to_chat(parent, span_notice("You begin focusing your dream energy on [marked_target.real_name]."))
 
 		// Remove any existing summon spell
 		if(summon_spell && ishuman(parent))

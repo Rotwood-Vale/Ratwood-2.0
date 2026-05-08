@@ -1,6 +1,8 @@
 /datum/sex_action/masturbate_vagina
 	name = "Stroke clit"
 	category = SEX_CATEGORY_HANDS
+	user_sex_part = SEX_PART_CUNT
+	target_sex_part = SEX_PART_CUNT
 	subtle_supported = TRUE
 
 /datum/sex_action/masturbate_vagina/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
