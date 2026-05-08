@@ -387,7 +387,7 @@
 	return 0
 
 /obj/structure/flora/roguetree/wise/sanctified/proc/is_once_per_tree(category)
-	return (category in list("cat4", "cat5", "cat6", "cat7", "cat9", "cat10", "cat11")) // cat12 is repeatable
+	return (category in list("cat4", "cat5", "cat6", "cat7", "cat10", "cat11")) // cat9 and cat12 are repeatable
 
 /// Returns associative list of offering key -> required count for the given category.
 /obj/structure/flora/roguetree/wise/sanctified/proc/get_required_offerings(category)
@@ -909,7 +909,7 @@
 	visible_message(span_green("A peace flower drifts to the roots of [src.name] — the blessings of Dendor and Eora are invoked. Two souls may now offer their bitten apple to be wed beneath this tree."))
 	to_chat(user, span_notice("The ceremony has begun. Both partners should bite the same apple once each, then hand it to the tree to be wed. The one handing the apple over will decide the surname."))
 
-/// Cat 9 — Harvest Bloomstone: a 20-use blessed seed powder stone (once per tree).
+/// Cat 9 — Harvest Bloomstone: a 20-use blessed seed powder stone (repeatable).
 /// Offerings: 1 boulder + 1 enchanted stone (magic_power 10+) + 5 blessed seed powders.
 /// Requires Expert Druidic Trickery to initiate (gated in open_ritual_menu).
 /obj/structure/flora/roguetree/wise/sanctified/proc/reward_cat9(mob/living/user)
