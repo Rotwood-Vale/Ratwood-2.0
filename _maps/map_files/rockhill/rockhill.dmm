@@ -1813,6 +1813,15 @@
 /obj/structure/fluff/railing/corner/north_east,
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/rtfield/rockhill/above)
+"aus" = (
+/obj/structure/mineral_door/swing_door{
+	keylock = 1;
+	locked = 1;
+	lockid = "garrison";
+	name = "stable iii"
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/rtfield/rockhill)
 "aut" = (
 /obj/structure/chair/smallbench,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -14075,6 +14084,12 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/bograt/south)
+"dgR" = (
+/obj/structure/fluff/littlebanners{
+	color = "#a19997"
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/rtfield/rockhill)
 "dgU" = (
 /obj/item/roguebin/trash{
 	pixel_y = 5
@@ -27445,6 +27460,7 @@
 /obj/structure/fluff/littlebanners{
 	color = "#a19997"
 	},
+/obj/structure/table/wood/fancy/red,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/outdoors/exposed/town/keep)
 "gkj" = (
@@ -27839,6 +27855,8 @@
 "gnY" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled,
 /obj/machinery/light/rogue/candle,
+/obj/structure/rack/rogue/shelf/big,
+/obj/item/rogueweapon/spear/lance,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield/rockhill)
 "goc" = (
@@ -43833,6 +43851,12 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/bath)
+"kcN" = (
+/obj/structure/fluff/littlebanners{
+	color = "#a19997"
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/exposed/town/keep)
 "kcO" = (
 /obj/structure/flora/roguegrass/herb/random,
 /turf/open/floor/rogue/grass/nospawn,
@@ -80905,6 +80929,8 @@
 "sOu" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame/saddled,
 /obj/machinery/light/rogue/candle,
+/obj/structure/rack/rogue/shelf/big,
+/obj/item/rogueweapon/spear/lance,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield/rockhill)
 "sOx" = (
@@ -278491,7 +278517,7 @@ xHz
 xHz
 xHz
 vfA
-ubK
+qvR
 fxx
 fxx
 qvR
@@ -280218,10 +280244,10 @@ mOj
 obf
 obf
 xZG
-cAq
-sUw
-uaL
-sjP
+kcN
+dgR
+fxx
+fxx
 fxx
 uaL
 fxx
@@ -299239,7 +299265,7 @@ qvR
 wSn
 spp
 fxx
-eaG
+aus
 uaL
 wjY
 qbu
