@@ -362,7 +362,6 @@
 	desc = "This fish brings vibrant hues to the dark world of the vale."
 	icon_state = "clownfishcom"
 	rarity_icon_states = list("com" = "clownfishcom", "rare" = "clownfishrare", "ultra" = "clownfishultra", "gold" = "clownfishgold")
-	no_rarity_sprite = TRUE
 	faretype = FARE_NEUTRAL
 	sellprice = 40
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/clownfish

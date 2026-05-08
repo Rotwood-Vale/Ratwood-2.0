@@ -316,7 +316,7 @@
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 3,
 		/obj/item/clothing/shoes/roguetown/boots/leather = 2,
 		/obj/item/clothing/head/roguetown/fisherhat = 1,
-		/obj/structure/fermentation_keg = 1,
+		/obj/item/reagent_containers/glass/bottle/rogue = 1,
 	))
 
 /obj/item/fishingrod/proc/get_safe_catch_drop_turf(mob/user, turf/targeted)
@@ -1589,7 +1589,7 @@
 					raritypicker = pickweightmerge(raritypicker, list("ultra" = 1, "gold" = 1))
 
 		if(prob(16 - skillmod - fisher.STALUC)) //you will always have a chance at this, legendary fishers got a 10% chance - their luck stat
-			fishtype = pickweight(list(/obj/item/natural/fibers = 1, /obj/item/storage/belt/rogue/pouch/coins/poor = 1, /obj/item/clothing/shoes/roguetown/boots/leather = 1, /obj/structure/fermentation_keg = 1, /obj/item/clothing/head/roguetown/fisherhat = 1))
+			fishtype = pickweight(list(/obj/item/natural/fibers = 1, /obj/item/storage/belt/rogue/pouch/coins/poor = 1, /obj/item/clothing/shoes/roguetown/boots/leather = 1, /obj/item/reagent_containers/glass/bottle/rogue = 1, /obj/item/clothing/head/roguetown/fisherhat = 1))
 			difficulty = 1
 			acceleration = 1
 			hookwindow = 30
