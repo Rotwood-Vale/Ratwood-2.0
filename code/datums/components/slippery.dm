@@ -16,9 +16,12 @@
 
 /datum/component/slippery/proc/Slip(datum/source, atom/movable/AM)
 	var/mob/victim = AM
-	if(istype(victim) && !victim.is_flying() && !victim.jumping && !victim.zfalling && isnull(victim.throwing))
-		if(victim.slip(knockdown_time, parent, lube_flags, paralyze_time, force_drop_items) && callback)
-			callback.Invoke(victim)
+	if(!istype(victim) || victim.is_flying() || victim.jumping || victim.zfalling || isnull(victim.throwing))
+		return
+	if(victim.m_intent != MOVE_INTENT_RUN) // Only slip if you run
+		return
+	if(victim.slip(knockdown_time, parent, lube_flags, paralyze_time, force_drop_items) && callback)
+		callback.Invoke(victim)
 
 
 /datum/component/slippery/proc/Slip_on_wearer(datum/source, atom/movable/AM, mob/living/crossed)
