@@ -74,10 +74,10 @@
 	detail_text = THREAT_REGION_ISLAND
 	ambush_times = list("night")
 	ambush_mobs = list(
-				/mob/living/simple_animal/hostile/retaliate/rogue/wolf/bobcat = 20,
-				/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 30,
-				/mob/living/simple_animal/hostile/retaliate/rogue/fox = 30,
-				/mob/living/carbon/human/species/skeleton/npc/supereasy = 30)
+				/mob/living/simple_animal/hostile/retaliate/rogue/wolf/bobcat = 10,
+				/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 15,
+				/mob/living/simple_animal/hostile/retaliate/rogue/fox = 15,
+				/mob/living/carbon/human/species/skeleton/npc/supereasy = 15)
 	droning_sound = 'sound/music/area/byos/settlement_day.ogg'
 	droning_sound_night = 'sound/music/area/byos/settlement_night.ogg'
 	droning_sound_dusk = 'sound/music/area/byos/settlement_night.ogg'
