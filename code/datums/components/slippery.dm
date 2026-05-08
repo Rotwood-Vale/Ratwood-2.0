@@ -16,7 +16,7 @@
 
 /datum/component/slippery/proc/Slip(datum/source, atom/movable/AM)
 	var/mob/victim = AM
-	if(!istype(victim) || victim.is_flying() || victim.jumping || victim.zfalling || isnull(victim.throwing))
+	if(!istype(victim) || victim.is_flying() || victim.jumping || victim.zfalling || !isnull(victim.throwing))
 		return
 	if(victim.m_intent != MOVE_INTENT_RUN) // Only slip if you run
 		return
