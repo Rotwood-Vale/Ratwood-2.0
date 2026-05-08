@@ -348,10 +348,15 @@
 		return
 	if(isliving(src) && isobj(A))
 		var/obj/AM = A
-		if(!AM.anchored && W && istype(used_intent, /datum/intent/unarmed/grab))
-			start_pulling(A)
-			stamina_add(used_intent.releasedrain)
+		if(!AM.anchored && W && used_intent?.type == INTENT_GRAB)
+			if(pulling && pulling != AM)
+				stop_pulling()
+			if(start_pulling(AM))
+				src:stamina_add(used_intent.releasedrain)
 			return
+		if(!AM.anchored && W && used_intent?.type == INTENT_DISARM)
+			if(try_unarmed_push_with_item(AM))
+				return
 	if(W)
 		W.melee_attack_chain(src, A, params)
 		if(isliving(src))
@@ -377,6 +382,9 @@
 	if(invis_timer > world.time)
 		mob_timers[MT_INVISIBILITY] = world.time
 		update_sneak_invis(reset = TRUE)
+
+/mob/proc/try_unarmed_push_with_item(atom/movable/AM)
+	return FALSE
 
 //Branching path for Ranged clicks with or without items
 //DOES NOT ACTUALLY KNOW IF YOU'RE RANGED, DO NoT CALL ON IT'S OWN

@@ -169,6 +169,9 @@
 				if(!catch_path)
 					catch_path = src.type
 				if(catch_path == src.type)
+					if(istype(src, /obj/item/reagent_containers/food/snacks/fish))
+						var/obj/item/reagent_containers/food/snacks/fish/F = src
+						apply_fishing_quality_to_fish(F, hand_fishing_modlist, hand_fishing_size_weights)
 					if(user.put_in_hands(src))
 						to_chat(user, span_notice("I reel [src] in by hand!"))
 					else
@@ -359,6 +362,7 @@
 	desc = "This fish brings vibrant hues to the dark world of the vale."
 	icon_state = "clownfishcom"
 	rarity_icon_states = list("com" = "clownfishcom", "rare" = "clownfishrare", "ultra" = "clownfishultra", "gold" = "clownfishgold")
+	no_rarity_sprite = TRUE
 	faretype = FARE_NEUTRAL
 	sellprice = 40
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/clownfish

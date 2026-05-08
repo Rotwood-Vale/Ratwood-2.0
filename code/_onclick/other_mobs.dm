@@ -73,8 +73,10 @@
 			if(used_intent.type == INTENT_GRAB)
 				var/obj/AM = A
 				if(istype(AM) && !AM.anchored)
-					start_pulling(A) //add params to grab bodyparts based on loc
-					stamina_add(ceil(used_intent.releasedrain * rmb_stam_penalty))
+					if(pulling && pulling != AM)
+						stop_pulling()
+					if(start_pulling(AM)) //add params to grab bodyparts based on loc
+						stamina_add(ceil(used_intent.releasedrain * rmb_stam_penalty))
 					return
 			if(used_intent.type == INTENT_DISARM)
 				var/obj/AM = A
@@ -267,7 +269,9 @@
 		if(used_intent.type == INTENT_GRAB)
 			var/obj/structure/AM = A
 			if(istype(AM) && !AM.anchored)
-				start_pulling(A) //add params to grab bodyparts based on loc
+				if(pulling && pulling != AM)
+					stop_pulling()
+				start_pulling(AM) //add params to grab bodyparts based on loc
 				return
 		if(used_intent.type == INTENT_DISARM)
 			var/obj/structure/AM = A
@@ -280,6 +284,18 @@
 					visible_message(span_warning("[src] pushes [AM]."))
 				return
 	A.attack_animal(src)
+
+/mob/living/try_unarmed_push_with_item(atom/movable/AM)
+	if(!AM || AM.anchored)
+		return FALSE
+	var/jadded = max(100-(STASTR*10),5)
+	if(stamina_add(jadded))
+		visible_message(span_info("[src] pushes [AM]."))
+		PushAM(AM, MOVE_FORCE_STRONG)
+	else
+		visible_message(span_warning("[src] pushes [AM]."))
+	changeNext_move(CLICK_CD_MELEE)
+	return TRUE
 
 /atom/proc/attack_animal(mob/user)
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, user)
