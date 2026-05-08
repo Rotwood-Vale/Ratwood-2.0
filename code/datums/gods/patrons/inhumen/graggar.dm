@@ -1,6 +1,6 @@
 /datum/patron/inhumen/graggar
 	name = "Graggar"
-	domain = "Conquest, Cruelty, Kinslaying, Slaughter, Cannibalism, Rape"
+	domain = "Conquest, Cruelty, Kinslaying, Slaughter, Cannibalism, Domination"
 	desc = "The Gorebound Star was a half-orc warlord who sought to strike Ravox down in rage at the cruel fate of His lover. He was decapitated, and His head revived as a mutilated aberration of blue flesh and sickening tendrils. Gazing upon the Star will drive anyone mad."
 	worshippers = "Fallen Warriors, Cannibals, Serial Killers, The Cruel"
 	virtues = "Martial Prowess, Dominance, Violence"

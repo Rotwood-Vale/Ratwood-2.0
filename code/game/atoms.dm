@@ -257,9 +257,6 @@
 	if(!is_centcom_level(T.z))//if not, don't bother
 		return FALSE
 
-	//Check for centcom itself
-	if(istype(T.loc, /area/centcom))
-		return TRUE
 
 /**
  * Ensure a list of atoms/reagents exists inside this atom

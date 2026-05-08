@@ -272,7 +272,7 @@
 	foodtype = GRAIN | FRUIT
 	faretype = FARE_FINE
 	w_class = WEIGHT_CLASS_NORMAL
-	bitesize = 3
+	bitesize = 6
 	rotprocess = SHELFLIFE_EXTREME
 	eat_effect = /datum/status_effect/buff/snackbuff
 	slices_num = 6

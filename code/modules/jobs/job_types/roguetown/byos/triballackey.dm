@@ -77,7 +77,6 @@
 		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/traps = SKILL_LEVEL_EXPERT,
 	)
 
 /datum/outfit/job/roguetown/tribalrabble/rabble/pre_equip(mob/living/carbon/human/H)

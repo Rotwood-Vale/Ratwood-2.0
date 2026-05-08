@@ -469,7 +469,7 @@
 /area/rogue/outdoors/wretch)
 "eJ" = (
 /obj/structure/table/church/m,
-/obj/item/clothing/neck/roguetown/zcross/iron,
+/obj/item/clothing/neck/roguetown/psicross/inhumen,
 /obj/item/bodypart/head,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/wretch/gnollcavern)
@@ -1524,7 +1524,7 @@
 	lockid = "sergeant";
 	pixel_y = 5
 	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/bow/short,
+/obj/item/gun/ballistic/revolver/grenadelauncher/bow,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/wretch)
 "qf" = (

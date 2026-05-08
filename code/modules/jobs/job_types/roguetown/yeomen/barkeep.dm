@@ -82,5 +82,6 @@
 		shoes = /obj/item/clothing/shoes/roguetown/gladiator
 	backpack_contents = list(
 		/obj/item/recipe_book/survival,
-		/obj/item/bottle_kit
+		/obj/item/bottle_kit,
+		/obj/item/mini_flagpole/innkeeper
 	)

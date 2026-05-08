@@ -27,10 +27,10 @@
 	smeltresult = null
 
 /datum/crafting_recipe/roguetown/survival/oar
-	name = "Oar (1 Log, 2 Fibers)"
+	name = "Oar (1 Small Log, 2 Fibers)"
 	result = /obj/item/rogueweapon/mace/oar
 	reqs = list(
-		/obj/item/grown/log/tree = 1,
+		/obj/item/grown/log/tree/small = 1,
 		/obj/item/natural/fibers = 2,
 		)
 	time = 15

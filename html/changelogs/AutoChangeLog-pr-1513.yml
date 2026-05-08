@@ -1,0 +1,9 @@
+author: "KeberosNihilus"
+delete-after: True
+changes:
+  - rscadd: "Added a Noc Miracle variant of Silence. Quicker to cast, slower to cooldown."
+  - rscadd: "Added a Miracle variant of Wither. No change, just scales off Miracle skill."
+  - rscdel: "Removed Darksight and Nocvision from Noc (the spells are still around in the code)"
+  - balance: "Added Noc Silence and Prestidigitation to Noc's T0 spell tier."
+  - balance: "Added Create Campfire to Noc's T4 Utility Spellpack"
+  - balance: "Removed Arcane Bolt, added Wither, added Enchant Weapon to Noc's T4 Offense Spellpack"

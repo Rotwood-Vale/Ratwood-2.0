@@ -11,20 +11,6 @@
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	sellprice = 8
 
-/obj/item/natural/hide/Initialize(mapload)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(
-		/datum/crafting_recipe/roguetown/survival/woodshield,
-		/datum/crafting_recipe/roguetown/survival/book_crafting_kit,
-		/datum/crafting_recipe/roguetown/survival/tribalrags,
-		/datum/crafting_recipe/roguetown/survival/antlerhood,
-		)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-	)
-
 /obj/item/natural/cured/essence
 	name = "essence of wilderness"
 	icon_state = "wessence"
@@ -148,33 +134,12 @@
 	slot_flags = ITEM_SLOT_MOUTH|ITEM_SLOT_HIP
 	bundletype = /obj/item/natural/bundle/bone
 
-/obj/item/natural/bone/Initialize(mapload)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(
-		/datum/crafting_recipe/roguetown/survival/recurvepartial,
-		/datum/crafting_recipe/roguetown/survival/longbowpartial,
-		)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-		)
-
 /obj/item/natural/hide/cured
 	name = "cured leather"
 	icon_state = "leather"
 	desc = "A hide piece that has been cured and may now be worked."
 	sellprice = 7
 	bundletype = /obj/item/natural/bundle/curred_hide
-
-/obj/item/natural/hide/cured/Initialize(mapload)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(
-		/datum/crafting_recipe/roguetown/survival/heatershield,
-		/datum/crafting_recipe/roguetown/leather/neck/leather_collar,
-	/datum/crafting_recipe/roguetown/leather/neck/leather_leash
-	)
-
 
 /obj/item/natural/bundle/curred_hide
 	name = "bundle of cured leather"

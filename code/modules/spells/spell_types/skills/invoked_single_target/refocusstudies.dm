@@ -23,7 +23,6 @@
 	/datum/skill/craft/smelting,
 	/datum/skill/craft/carpentry,
 	/datum/skill/craft/masonry,
-	/datum/skill/craft/traps,
 	/datum/skill/craft/cooking,
 	/datum/skill/craft/engineering,
 	/datum/skill/craft/tanning,

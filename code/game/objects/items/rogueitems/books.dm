@@ -724,7 +724,7 @@
 
 /obj/item/book/rogue/bibble/zizo
 	name = "Lexicon of Her Truth"
-	desc = "By learning Her teachings, we will one day walk in Her footsteps.' A volume forbidden to be read by the Holy See, containing a retelling of the mortal life and ascension of Zizo, the Lady of Darkness - or at least the version of them held by the cultists of her 'Salvation'. Smells suspiciously of dried blood."
+	desc = "By learning Her teachings, we will one day walk in Her footsteps. A volume forbidden to be read by the Holy See, containing a retelling of the mortal lyfe and ascension of ZIZO, the Lady of Progress - or at least the version recounted by the cultists of her 'Salvation'."
 	icon = 'icons/roguetown/items/bookszizo.dmi'
 	icon_state = "zizoble_0"
 	base_icon_state = "zizoble"

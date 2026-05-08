@@ -242,7 +242,7 @@
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/stealing, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/lockpicking, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/traps, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
 #undef CTAG_ZYBANTINE_EMIR
 #undef CTAG_ZYBANTINE_AMIRAH
 #undef CTAG_ZYBANTINE_JANISSARY

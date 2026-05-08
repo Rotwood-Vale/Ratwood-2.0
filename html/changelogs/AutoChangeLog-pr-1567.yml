@@ -1,0 +1,4 @@
+author: "Jamdrawers"
+delete-after: True
+changes:
+  - rscadd: "Adds a series of stat-penalty vices"

@@ -16,6 +16,10 @@ endmap
 map roguetest
 endmap
 
+map roguetest_nootherz
+endmap
+
+
 map dun_world
 	votable
 endmap

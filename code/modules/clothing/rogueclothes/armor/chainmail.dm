@@ -82,6 +82,7 @@
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ornate
 	slot_flags = ITEM_SLOT_ARMOR
 	armor_class = ARMOR_CLASS_HEAVY
+	peel_threshold = 4
 	armor = ARMOR_CUIRASS
 	name = "psydonic hauberk"
 	desc = "A beautiful steel cuirass, decorated with blessed silver fluting and worn atop thick chainmaille. While it falters against arrows and bolts, these interlinked layers are superb at warding off the blows of inhumen claws and axes. </br>'..the knowledge of evil, and the burden of carrying Psydonia's hope upon thine shoulders..' </br>... </br>With some blessed silver and a blacksmith's assistance, I can turn this hauberk into a set of full-plate armor."

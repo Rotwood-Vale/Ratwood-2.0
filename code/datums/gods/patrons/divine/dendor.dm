@@ -17,7 +17,8 @@
 					/obj/effect/proc_holder/spell/targeted/conjure_vines 		= CLERIC_T3,
 					/obj/effect/proc_holder/spell/self/howl/call_of_the_moon	= CLERIC_T4,
 					/obj/effect/proc_holder/spell/invoked/resurrect/dendor		= CLERIC_T4,
-	)
+					/obj/effect/proc_holder/spell/invoked/sanctify_tree			= CLERIC_T4,
+					)
 	confess_lines = list(
 		"DENDOR PROVIDES!",
 		"THE TREEFATHER BRINGS BOUNTY!",

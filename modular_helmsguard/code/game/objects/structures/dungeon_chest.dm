@@ -87,7 +87,7 @@
 		/obj/item/paper/scroll = 30,
 		/obj/item/rope = 30,
 		/obj/item/rope/chain = 30,
-		/obj/item/storage/roguebag/crafted = 30,
+		/obj/item/storage/roguebag = 30,
 		/obj/item/clothing/mask/cigarette/pipe = 30,
 		/obj/item/paper = 30,
 		/obj/item/reagent_containers/glass/bowl = 30,

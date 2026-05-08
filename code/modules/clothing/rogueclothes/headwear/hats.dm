@@ -560,7 +560,6 @@
 	item_state = "hijab_t"
 	icon_state = "deserthood_t"
 	color = "#b8252c"
-	hidesnoutADJ = FALSE
 	flags_inv = null
 	sleevetype = null
 	sleeved = null

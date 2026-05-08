@@ -7,8 +7,34 @@
 	dropshrink = 0.9
 	experimental_inhand = FALSE
 
-	grid_width = 32
-	grid_height = 64
+	grid_width = 64
+	grid_height = 32
+
+//==============================================================================
+// Druidic crafting recipes — appear under the "Druidic Trickery" tab in the
+// crafting window whenever the player has the required skill-level.
+//==============================================================================
+/datum/crafting_recipe/roguetown/druidic
+	abstract_type = /datum/crafting_recipe/roguetown/druidic
+	req_table = FALSE
+	always_availible = TRUE      // shows for anyone who has the ingredients; craftdiff gates who can actually make it
+	skillcraft = /datum/skill/magic/druidic
+	subtype_reqs = FALSE
+	verbage_simple = "prepare"
+	verbage = "prepares"
+	craftsound = 'sound/foley/mortarpestle.ogg'
+
+/datum/crafting_recipe/roguetown/druidic/blessedseedpowder
+	name = "blessed seed powder"
+	result = list(/obj/item/alch/blessedseedpowder)
+	reqs = list(
+		/obj/item/seeds/treesap = 1,
+		/datum/reagent/water/blessed = 10,
+	)
+	tools = list(/obj/item/pestle = 1)
+	craftdiff = SKILL_LEVEL_NOVICE
+	time = 2 SECONDS
+	craft_xp_override = 5
 
 /obj/item/reagent_containers/glass/mortar
 	name = "alchemical mortar"
@@ -77,6 +103,20 @@
 		if(!to_grind)
 			to_chat(user, "<span class='warning'>There's nothing to grind.</span>")
 			return
+		if((to_grind.type == /obj/item/seeds/treesap) && reagents.get_reagent_amount(/datum/reagent/water/blessed) >= 10)
+			if(!ishuman(user) || user.get_skill_level(/datum/skill/magic/druidic) < SKILL_LEVEL_NOVICE)
+				to_chat(user, span_warning("I lack the druidic knowledge to draw Dendor's blessing from these seeds."))
+				return
+			user.visible_message(span_info("[user] grinds [to_grind] into the blessed water, drawing out Dendor's blessing."))
+			playsound(loc, 'sound/foley/mortarpestle.ogg', 100, FALSE)
+			if(do_after(user, 10, target = src))
+				reagents.remove_reagent(/datum/reagent/water/blessed, 10)
+				new /obj/item/alch/blessedseedpowder(get_turf(src))
+				QDEL_NULL(to_grind)
+				to_chat(user, span_notice("The seeds absorb Dendor's blessing, forming luminous powder."))
+				if(user.mind)
+					user.mind.add_sleep_experience(/datum/skill/magic/druidic, 5)
+			return
 		var/datum/alch_grind_recipe/foundrecipe = find_recipe()
 		if(foundrecipe == null)
 			to_chat(user, "<span class='warning'>You don't think that will work!</span>")
@@ -88,10 +128,11 @@
 				for(var/i in 1 to foundrecipe.valid_outputs[output])
 					new output(get_turf(src))
 			if(foundrecipe.bonus_chance_outputs.len > 0)
-				for(var/i in 1 to foundrecipe.bonus_chance_outputs.len)
-					if(foundrecipe.bonus_chance_outputs[foundrecipe.bonus_chance_outputs[i]] >= roll(1,100))
-						var/obj/item/bonusduck = foundrecipe.bonus_chance_outputs[i]
-						new bonusduck(get_turf(user))
+				for(var/bonus_output in foundrecipe.bonus_chance_outputs)
+					var/base_chance = foundrecipe.bonus_chance_outputs[bonus_output]
+					var/final_chance = foundrecipe.get_bonus_output_chance(bonus_output, user, base_chance)
+					if(final_chance >= roll(1, 100))
+						new bonus_output(get_turf(user))
 			if(istype(to_grind,/obj/item/rogueore) || istype(to_grind,/obj/item/ingot))
 				user.flash_fullscreen("whiteflash")
 				var/datum/effect_system/spark_spread/S = new()
