@@ -395,7 +395,7 @@
 		"health" = 5,
 		"costmod" = 4,
 		"hookmod" = 2,
-		"type" = "Titanic",
+		"type" = "prize",
 	)
 	specialrarity = list(
 		"diffmod" = 1,

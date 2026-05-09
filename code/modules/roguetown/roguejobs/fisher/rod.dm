@@ -74,6 +74,7 @@
 	var/list/auto_pending_modlist = null
 	var/turf/auto_pending_target = null
 	var/auto_pending_size = null
+	var/auto_pending_rarity = null
 	var/auto_reel_successes = 0
 	var/auto_retry_used = FALSE
 	var/static/list/rod_size_weights = list("tiny" = 40, "small" = 40, "normal" = 40, "large" = 20, "huge" = 5, "prize" = 1)
@@ -114,9 +115,9 @@
 
 /obj/item/fishingrod/process()
 	if(!fisher)
-		return
+		return PROCESS_KILL
 	if(!(auto_reel_ready || cast_reel_pending || currentlyfishing))
-		return
+		return PROCESS_KILL
 	if(currentlyfishing)
 		if(is_far_from_cast_anchor(fisher, 2))
 			snap_line_from_anchor_drift(fisher)
@@ -474,6 +475,7 @@
 	auto_pending_modlist = null
 	auto_pending_target = null
 	auto_pending_size = null
+	auto_pending_rarity = null
 	auto_reel_successes = 0
 	auto_retry_used = FALSE
 
@@ -598,7 +600,7 @@
 		var/turf/safe_drop_turf = get_safe_catch_drop_turf(user, auto_pending_target)
 		if(ispath(auto_pending_catch, /obj/item/reagent_containers/food/snacks/fish))
 			var/obj/item/reagent_containers/food/snacks/fish/caughtfish = new auto_pending_catch(safe_drop_turf)
-			apply_fishing_quality_to_fish(caughtfish, auto_pending_modlist, rod_size_weights, auto_pending_size)
+			apply_fishing_quality_to_fish(caughtfish, auto_pending_modlist, rod_size_weights, auto_pending_size, auto_pending_rarity)
 			try_spawn_deluxe_bonus_fish(user, auto_pending_modlist, auto_pending_target, auto_pending_catch)
 		else
 			new auto_pending_catch(safe_drop_turf)
@@ -1071,6 +1073,7 @@
 	reel_expire = 0
 	currentstate = "hooked"
 	currentlyfishing = TRUE
+	START_PROCESSING(SSobj, src)
 	directionstate = 1
 	fishtarget = 90
 
@@ -1589,7 +1592,7 @@
 					raritypicker = pickweightmerge(raritypicker, list("ultra" = 1, "gold" = 1))
 
 		if(prob(16 - skillmod - fisher.STALUC)) //you will always have a chance at this, legendary fishers got a 10% chance - their luck stat
-			fishtype = pickweight(list(/obj/item/natural/fibers = 1, /obj/item/storage/belt/rogue/pouch/coins/poor = 1, /obj/item/clothing/shoes/roguetown/boots/leather = 1, /obj/item/reagent_containers/glass/bottle/rogue = 1, /obj/item/clothing/head/roguetown/fisherhat = 1))
+			fishtype = get_cast_junk_reward_path()
 			difficulty = 1
 			acceleration = 1
 			hookwindow = 30
@@ -1732,10 +1735,12 @@
 						targeted.balloon_alert_to_viewers("Tug!")
 						playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 						auto_reel_ready = TRUE
+						START_PROCESSING(SSobj, src)
 						auto_pending_catch = A
 						auto_pending_modlist = islist(modlist) ? modlist.Copy() : null
 						auto_pending_target = targeted
 						auto_pending_size = fishsize
+						auto_pending_rarity = fishrarity
 						auto_reel_deadline = world.time + ow
 						apply_tackle_wear(user, 1, 1, 1)
 				else
@@ -1775,6 +1780,7 @@
 			return
 		// Got a bite. Wait for the player to use the rod in-hand to start reeling (like auto intent).
 		cast_reel_pending = TRUE
+		START_PROCESSING(SSobj, src)
 		cast_reel_pending_deadline = world.time + 30 + (sl * 10)
 		targeted.balloon_alert_to_viewers("Tug!")
 		playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
@@ -1821,6 +1827,7 @@
 
 		//the actual game
 		currentlyfishing = TRUE
+		START_PROCESSING(SSobj, src)
 		currentstate = "hooked"
 		var/waittime = rand(30, 50) - skillmod*2
 		var/lastmouse = 0

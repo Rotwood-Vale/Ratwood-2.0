@@ -349,10 +349,8 @@
 	if(isliving(src) && isobj(A))
 		var/obj/AM = A
 		if(!AM.anchored && W && used_intent?.type == INTENT_GRAB)
-			if(pulling && pulling != AM)
-				stop_pulling()
-			if(start_pulling(AM))
-				src:stamina_add(used_intent.releasedrain)
+			if(try_unarmed_grab_with_item(AM, used_intent.releasedrain))
+				return
 			return
 		if(!AM.anchored && W && used_intent?.type == INTENT_DISARM)
 			if(try_unarmed_push_with_item(AM))
@@ -382,6 +380,9 @@
 	if(invis_timer > world.time)
 		mob_timers[MT_INVISIBILITY] = world.time
 		update_sneak_invis(reset = TRUE)
+
+/mob/proc/try_unarmed_grab_with_item(atom/movable/AM, stamina_cost = 0)
+	return FALSE
 
 /mob/proc/try_unarmed_push_with_item(atom/movable/AM)
 	return FALSE

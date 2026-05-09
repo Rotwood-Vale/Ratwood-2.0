@@ -198,56 +198,57 @@
 	. = ..()
 
 /obj/item/fishingcage/process()
-	if(deployed && bait)
-		if(world.time > check_counter + time2catch)
-			check_counter = world.time
-			var/list/fishingmodlist
-			if(islist(bait.fishingMods))
-				fishingmodlist = bait.fishingMods.Copy()
+	if(!(deployed && bait))
+		return PROCESS_KILL
+	if(world.time > check_counter + time2catch)
+		check_counter = world.time
+		var/list/fishingmodlist
+		if(islist(bait.fishingMods))
+			fishingmodlist = bait.fishingMods.Copy()
+		else
+			fishingmodlist = list(
+				"commonFishingMod" = 1,
+				"rareFishingMod" = 1,
+				"treasureFishingMod" = 1,
+				"trashFishingMod" = 1,
+				"dangerFishingMod" = 1,
+				"ceruleanFishingMod" = 0,
+				"cheeseFishingMod" = 0,
+				"net_cage_ultra_boost" = 2,
+				"net_cage_prize_boost" = 2,
+			)
+		if(!fishingmodlist["net_cage_ultra_boost"])
+			fishingmodlist["net_cage_ultra_boost"] = 2
+		if(!fishingmodlist["net_cage_prize_boost"])
+			fishingmodlist["net_cage_prize_boost"] = 2
+		if(is_cheese_bait(bait))
+			fishingmodlist["cheeseFishingMod"] = 1
+		var/fishingskill = 0
+		if(!QDELETED(fisherperson))
+			fishingmodlist = upgradecagemodlist(fisherperson, fishingmodlist)
+			fishingskill = fisherperson.get_skill_level(/datum/skill/labor/fishing)
+		fishingmodlist["rareFishingMod"] *= clamp(0.70 + (fishingskill * 0.05), 0.70, 1.05)
+		fishingmodlist["net_cage_ultra_boost"] = min(fishingmodlist["net_cage_ultra_boost"], clamp(0.35 + (fishingskill * 0.14), 0.35, 1.15))
+		fishingmodlist["net_cage_prize_boost"] = min(fishingmodlist["net_cage_prize_boost"], clamp(0.20 + (fishingskill * 0.09), 0.20, 0.75))
+		fishingmodlist["size_large_mult"] = clamp(0.80 + (fishingskill * 0.04), 0.70, 1.05)
+		fishingmodlist["size_huge_mult"] = clamp(0.55 + (fishingskill * 0.05), 0.40, 0.90)
+		fishingmodlist["size_prize_mult"] = clamp(0.25 + (fishingskill * 0.05), 0.20, 0.70)
+		caught = pickweightAllowZero(createCageFishWeightListModlist(fishingmodlist, get_turf(src)))
+		caught_modlist = fishingmodlist.Copy()
+		icon_state = "fishingcage_caught"
+		var/consume_bait = FALSE
+		if(istype(bait, /obj/item/natural/worms))
+			if(bait_bundle_uses > 0)
+				bait_bundle_uses--
+				consume_bait = (bait_bundle_uses <= 0)
 			else
-				fishingmodlist = list(
-					"commonFishingMod" = 1,
-					"rareFishingMod" = 1,
-					"treasureFishingMod" = 1,
-					"trashFishingMod" = 1,
-					"dangerFishingMod" = 1,
-					"ceruleanFishingMod" = 0,
-					"cheeseFishingMod" = 0,
-					"net_cage_ultra_boost" = 2,
-					"net_cage_prize_boost" = 2,
-				)
-			if(!fishingmodlist["net_cage_ultra_boost"])
-				fishingmodlist["net_cage_ultra_boost"] = 2
-			if(!fishingmodlist["net_cage_prize_boost"])
-				fishingmodlist["net_cage_prize_boost"] = 2
-			if(is_cheese_bait(bait))
-				fishingmodlist["cheeseFishingMod"] = 1
-			var/fishingskill = 0
-			if(!QDELETED(fisherperson))
-				fishingmodlist = upgradecagemodlist(fisherperson, fishingmodlist)
-				fishingskill = fisherperson.get_skill_level(/datum/skill/labor/fishing)
-			fishingmodlist["rareFishingMod"] *= clamp(0.70 + (fishingskill * 0.05), 0.70, 1.05)
-			fishingmodlist["net_cage_ultra_boost"] = min(fishingmodlist["net_cage_ultra_boost"], clamp(0.35 + (fishingskill * 0.14), 0.35, 1.15))
-			fishingmodlist["net_cage_prize_boost"] = min(fishingmodlist["net_cage_prize_boost"], clamp(0.20 + (fishingskill * 0.09), 0.20, 0.75))
-			fishingmodlist["size_large_mult"] = clamp(0.80 + (fishingskill * 0.04), 0.70, 1.05)
-			fishingmodlist["size_huge_mult"] = clamp(0.55 + (fishingskill * 0.05), 0.40, 0.90)
-			fishingmodlist["size_prize_mult"] = clamp(0.25 + (fishingskill * 0.05), 0.20, 0.70)
-			caught = pickweightAllowZero(createCageFishWeightListModlist(fishingmodlist, get_turf(src)))
-			caught_modlist = fishingmodlist.Copy()
-			icon_state = "fishingcage_caught"
-			var/consume_bait = FALSE
-			if(istype(bait, /obj/item/natural/worms))
-				if(bait_bundle_uses > 0)
-					bait_bundle_uses--
-					consume_bait = (bait_bundle_uses <= 0)
-				else
-					consume_bait = TRUE
-			else
-				consume_bait = getbaitlife(fishingskill, bait, 100)
-			if(consume_bait)
-				QDEL_NULL(bait)
-				bait_bundle_uses = 0
-				fisherperson = null
+				consume_bait = TRUE
+		else
+			consume_bait = getbaitlife(fishingskill, bait, 100)
+		if(consume_bait)
+			QDEL_NULL(bait)
+			bait_bundle_uses = 0
+			fisherperson = null
 			STOP_PROCESSING(SSobj, src)
 	..()
 
