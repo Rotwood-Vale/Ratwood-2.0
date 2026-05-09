@@ -604,8 +604,10 @@ SUBSYSTEM_DEF(gamemode)
 //							H.allmig_reward = 0
 				return TRUE
 		else
+			if(SSvote.mode && SSvote.mode != "endround")
+				SSvote.reset()
 			if(!SSvote.mode)
-				SSvote.initiate_vote("endround", pick("Zlod", "Sun King", "Gaia", "Moon Queen", "Aeon", "Gemini", "Aries"))
+				SSvote.initiate_vote("endround")
 
 	if(SSmapping.retainer.head_rebel_decree)
 		if(reb_end_time == 0)

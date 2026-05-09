@@ -156,7 +156,7 @@ SUBSYSTEM_DEF(vote)
 			if("endround")
 				if(. == "Continue Playing")
 					log_game("LOG VOTE: CONTINUE PLAYING AT [REALTIMEOFDAY]")
-					GLOB.round_timer = world.time + ROUND_EXTENSION_TIME
+					GLOB.round_timer = STATION_TIME_PASSED() + ROUND_EXTENSION_TIME
 				else
 					log_game("LOG VOTE: ELSE  [REALTIMEOFDAY]")
 					log_game("LOG VOTE: ROUNDVOTEEND [REALTIMEOFDAY]")
@@ -390,7 +390,7 @@ SUBSYSTEM_DEF(vote)
 		if("cancel")
 			if(usr.client.holder)
 				if(mode == "endround")
-					GLOB.round_timer = world.time + ROUND_EXTENSION_TIME // admin cancels an endround, defaults to same as continue playing
+					GLOB.round_timer = STATION_TIME_PASSED() + ROUND_EXTENSION_TIME // admin cancels an endround, defaults to same as continue playing
 					log_admin("[key_name(usr)] canceled end round vote.")
 					message_admins("[key_name(usr)] canceled end round vote.")
 				reset()
