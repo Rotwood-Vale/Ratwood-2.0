@@ -501,8 +501,12 @@ All foods are distributed among various categories. Use common sense.
 			return "an adequate meal"
 		if(BASE_NUTRIMENT_NUTRITION * MEAL_AVERAGE to BASE_NUTRIMENT_NUTRITION * MEAL_FILLING)
 			return "a good meal"
-		else
+		if(BASE_NUTRIMENT_NUTRITION * MEAL_FILLING to BASE_NUTRIMENT_NUTRITION * MEAL_COMICALLY_FILLING)
 			return "a lavish, filling meal"
+		if(BASE_NUTRIMENT_NUTRITION * MEAL_COMICALLY_FILLING to BASE_NUTRIMENT_NUTRITION * MEAL_GODLIKE)
+			return "a comically filling meal"
+		else
+			return "a godlike feast"
 
 /obj/item/reagent_containers/food/snacks/proc/rotprocess_to_text()
 	var/rot_text = ""

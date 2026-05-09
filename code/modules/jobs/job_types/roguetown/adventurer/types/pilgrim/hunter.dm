@@ -5,7 +5,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/hunter
 	subclass_social_rank = SOCIAL_RANK_PEASANT
-	traits_applied = list(TRAIT_OUTDOORSMAN, TRAIT_SURVIVAL_EXPERT)
+	traits_applied = list(TRAIT_OUTDOORSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_MASTERFUL_HUNTER)
 	cmode_music = 'sound/music/cmode/towner/combat_towner2.ogg'
 	maximum_possible_slots = 20 // Should never fill, for the purpose of players to know what types towners are in round at the menu
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
@@ -35,6 +35,7 @@
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/hunting = SKILL_LEVEL_EXPERT,
 	)
 
 /datum/outfit/job/roguetown/adventurer/hunter/pre_equip(mob/living/carbon/human/H)
@@ -54,7 +55,8 @@
 				/obj/item/bait = 1,
 				/obj/item/rogueweapon/huntingknife = 1,
 				/obj/item/flashlight/flare/torch/lantern = 1,
-				/obj/item/rogueweapon/scabbard/sheath = 1
+				/obj/item/rogueweapon/scabbard/sheath = 1,
+				/obj/item/hunting_map/white_stag = 1
 				)
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 	if(SSmapping.config.map_name == "Desert Town")
@@ -85,7 +87,7 @@
 	name = "Spear-Hunter"
 	tutorial = "You are a hunter. With your bow you hunt the fauna of the glade, skinning what you kill and cooking any meat left over. The job is dangerous but important in the circulation of clothing and light armor."
 	outfit = /datum/outfit/job/roguetown/adventurer/hunter_spear
-	traits_applied = list(TRAIT_OUTDOORSMAN, TRAIT_SURVIVAL_EXPERT)
+	traits_applied = list(TRAIT_OUTDOORSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_MASTERFUL_HUNTER)
 	cmode_music = 'sound/music/cmode/towner/combat_towner2.ogg'
 	subclass_stats = list(
 		STATKEY_STR = 2,
@@ -110,6 +112,7 @@
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/hunting = SKILL_LEVEL_EXPERT,
 	)
 
 /datum/outfit/job/roguetown/adventurer/hunter_spear/pre_equip(mob/living/carbon/human/H)
@@ -132,6 +135,7 @@
 				/obj/item/bait = 1,
 				/obj/item/rogueweapon/huntingknife = 1,
 				/obj/item/rogueweapon/scabbard/sheath = 1,
+				/obj/item/hunting_map/white_stag = 1,
 				/obj/item/rogueweapon/stoneaxe/handaxe
 				)
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather

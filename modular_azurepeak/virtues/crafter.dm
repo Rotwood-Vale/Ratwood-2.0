@@ -42,12 +42,13 @@
 /datum/virtue/utility/hunter
 	name = "Hunter's Apprentice"
 	desc = "In my youth, I trained under a skilled hunter, learning how to butcher animals and work with leather/hide."
-	added_traits = list(TRAIT_SURVIVAL_EXPERT)
+	added_traits = list(TRAIT_SURVIVAL_EXPERT, TRAIT_MASTERFUL_HUNTER)
 	added_skills = list(list(/datum/skill/craft/crafting, 2, 2),
 						list(/datum/skill/labor/butchering, 2, 2),
 						list(/datum/skill/craft/sewing, 2, 2),
 						list(/datum/skill/craft/tanning, 2, 2),
-						list(/datum/skill/misc/tracking, 2, 2)
+						list(/datum/skill/misc/tracking, 2, 2),
+						list(/datum/skill/misc/hunting, 2, 2)
 	)
 
 /datum/virtue/utility/artificer
