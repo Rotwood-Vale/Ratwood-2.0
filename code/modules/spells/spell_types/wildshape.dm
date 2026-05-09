@@ -70,6 +70,7 @@
 	var/list/stored_spells
 	var/wildshape_icon
 	var/wildshape_icon_state
+	var/untransform_on_death = TRUE
 
 /mob/living/carbon/human/species/wildshape/proc/gain_inherent_skills()
 	if(mind)

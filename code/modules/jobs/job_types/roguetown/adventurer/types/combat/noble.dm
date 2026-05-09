@@ -27,6 +27,7 @@
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/music = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/hunting = SKILL_LEVEL_NOVICE,
 	)
 
 	extra_context = "This class is restricted from using the Equestrian virtue."
@@ -85,6 +86,7 @@
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/hunting = SKILL_LEVEL_NOVICE,
 	)
 
 	extra_context = "This class is restricted from using the Equestrian virtue."
@@ -210,6 +212,7 @@
 		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/hunting = SKILL_LEVEL_NOVICE,
 	)
 	extra_context = "Chooses between Light Armor (Dodge Expert) and Medium Armor."
 
