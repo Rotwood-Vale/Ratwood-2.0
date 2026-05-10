@@ -271,6 +271,7 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/gembracelet.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_gembracelet.dmi'
 	salvage_result = null
+	sewrepair = FALSE
 
 /obj/item/clothing/wrists/roguetown/gem/jadebracelet
 	name = "jade bracelets"
@@ -313,6 +314,13 @@
 	desc = "A set of bracelets carved out of rosestone."
 	icon_state = "br_rose"
 	sellprice = 30
+
+/obj/item/clothing/wrists/roguetown/gem/chitinbracelet
+	name = "chitin bracelets"
+	desc = "A set of bracelets carved out of beetle chitin."
+	icon_state = "br_shell"
+	color = "#7B8C5E"
+	sellprice = 25
 
 /obj/item/clothing/wrists/roguetown/gem/opalbracelet
 	name = "opal bracelets"

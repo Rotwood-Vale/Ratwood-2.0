@@ -411,9 +411,13 @@
 					if(user.mind && R.skillcraft)
 						if(isliving(user))
 							var/mob/living/L = user
-							var/amt2raise = L.STAINT * 2// its different over here
-							if(R.craftdiff > 0) //difficult recipe
-								amt2raise += (R.craftdiff * 10) // also gets more
+							var/amt2raise
+							if(R.craft_xp_override >= 0)
+								amt2raise = R.craft_xp_override
+							else
+								amt2raise = L.STAINT * 2
+								if(R.craftdiff > 0) //difficult recipe
+									amt2raise += (R.craftdiff * 10) // also gets more
 							if(amt2raise > 0)
 								user.mind.add_sleep_experience(R.skillcraft, amt2raise, FALSE)
 					return TRUE

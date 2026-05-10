@@ -343,7 +343,8 @@
 				r_hand = /obj/item/rogueweapon/spear/psyspear/old
 			else
 				r_hand = /obj/item/rogueweapon/spear
-			l_hand = /obj/item/rogueweapon/scabbard/gwstrap
+			backr = /obj/item/rogueweapon/scabbard/gwstrap
+			beltr = /obj/item/rogueweapon/shield/buckler
 		if("Axe")
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut

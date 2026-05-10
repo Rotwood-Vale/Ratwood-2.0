@@ -93,7 +93,7 @@
 		var/unskilled = repair_skill < SKILL_LEVEL_JOURNEYMAN
 		var/integrity_percentage = (attacked_item.obj_integrity / attacked_item.max_integrity) * 100
 
-		if (HAS_TRAIT(blacksmith, TRAIT_SQUIRE_REPAIR)) // squires are always considered skilled w/o other bonuses for the purposes of repair
+		if(HAS_TRAIT(blacksmith, TRAIT_SQUIRE_REPAIR) || HAS_TRAIT(user, TRAIT_SELF_SUSTENANCE)) // squires are always considered skilled w/o other bonuses for the purposes of repair
 			unskilled = FALSE
 
 		if(!attacked_item.anvilrepair || (attacked_item.obj_integrity >= attacked_item.max_integrity) || !isturf(attacked_item.loc))

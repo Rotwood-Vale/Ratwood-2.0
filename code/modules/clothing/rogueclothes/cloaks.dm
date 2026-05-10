@@ -1759,6 +1759,28 @@
 	icon_state = "snowcloak"
 	cold_protection = CHEST | GROIN | ARM_LEFT | ARM_RIGHT
 
+/// Dendor ritual reward variant of the forrester cloak — hallowed by the Treefather.
+/obj/item/clothing/cloak/forrestercloak/blessed
+	name = "blessed forrester cloak"
+	desc = "A forrester cloak hallowed by the Treefather's rite. Living wood fibres are woven through the cloth and it seems to breathe with the quiet life of the forest."
+	color = "#73c47a"
+
+/obj/item/clothing/cloak/forrestercloak/blessed/Initialize(mapload)
+	. = ..()
+	set_light(1, 1, 2, l_color = "#58C86A")
+	add_filter("druid_blessed_glow", 2, list("type" = "outline", "color" = "#58C86A", "alpha" = 95, "size" = 1))
+
+/obj/item/clothing/cloak/forrestercloak/blessed/pickup(mob/user)
+	. = ..()
+	if(!istype(user, /mob/living/carbon/human))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.patron?.type == /datum/patron/divine/dendor)
+		return
+	H.electrocute_act(30, src)
+	H.mob_timers["kneestinger"] = world.time
+	to_chat(H, span_warning("[name] rejects my grasp — only the Treefather's faithful may bear such a gift!"))
+
 /obj/item/clothing/cloak/poncho
 	name = "cloth poncho"
 	desc = "A loose garment that is usually draped across ones upper body. No one's quite sure of its cultural origin."

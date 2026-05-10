@@ -84,7 +84,6 @@
 	icon = 'icons/roguetown/clothing/head.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi' //Overrides slot icon behavior
 	alternate_worn_layer  = 8.9 //On top of helmet
-	body_parts_covered = HEAD|HAIR|EARS|NECK
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	dynamic_hair_suffix = ""
 	edelay_type = 1
@@ -101,9 +100,6 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = 600
 
-/obj/item/clothing/neck/roguetown/roguehood/shalal/ComponentInitialize()
-	AddComponent(/datum/component/adjustable_clothing, HEAD|EARS|NECK|HAIR, HIDEHAIR|HIDEFACE, null, null, null, (UPD_HEAD|UPD_MASK|UPD_NECK))
-
 /obj/item/clothing/head/roguetown/roguehood/shalal/black
 	color = CLOTHING_BLACK
 
@@ -115,13 +111,9 @@
 	desc = "Flowing like blood from a wound, this tithe of cloth-and-silk spills out to the shoulders. It carries the telltale mark of Naledian stitcheries."
 	item_state = "hijab"
 	icon_state = "deserthood"
-	hidesnoutADJ = FALSE
 	flags_inv = HIDEEARS|HIDEHAIR	//Does not hide face.
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_NECK
 	block2add = null
-
-/obj/item/clothing/neck/roguetown/roguehood/shalal/hijab/ComponentInitialize()
-	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, null, null, (UPD_HEAD|UPD_MASK|UPD_NECK))
 
 /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/zyb
 	name = "padded headscarf"
@@ -143,7 +135,6 @@
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_NECK
 	item_state = "heavyhood"
 	icon_state = "heavyhood"
-	hidesnoutADJ = FALSE
 	nudist_approved = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = 50

@@ -65,7 +65,7 @@
 	if(guaranteed_fail)
 		to_chat(HU, special_msg)
 		to_chat(HT, span_notice("I fooled [HU.p_them()]! I've regained my footing!"))
-		HU.emote("groan")
+		HU.emote("groan", forced = TRUE)
 		HU.stamina_add(HU.max_stamina * 0.2)
 		HT.bait_stacks = 0
 		HT.apply_status_effect(/datum/status_effect/debuff/baited)

@@ -111,23 +111,23 @@
 	else
 		..()
 
-/obj/item/razor
-	name = "electric razor"
-	desc = ""
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "razor"
-	flags_1 = CONDUCT_1
-	w_class = WEIGHT_CLASS_TINY
+// /obj/item/razor
+// 	name = "electric razor"
+// 	desc = ""
+// 	icon = 'icons/obj/items_and_weapons.dmi'
+// 	icon_state = "razor"
+// 	flags_1 = CONDUCT_1
+// 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/razor/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins shaving [user.p_them()]self without the razor guard! It looks like [user.p_theyre()] trying to commit suicide!"))
-	shave(user, BODY_ZONE_PRECISE_MOUTH)
-	shave(user, BODY_ZONE_HEAD)//doesnt need to be BODY_ZONE_HEAD specifically, but whatever
-	return BRUTELOSS
+// /obj/item/razor/suicide_act(mob/living/carbon/user)
+// 	user.visible_message(span_suicide("[user] begins shaving [user.p_them()]self without the razor guard! It looks like [user.p_theyre()] trying to commit suicide!"))
+// 	shave(user, BODY_ZONE_PRECISE_MOUTH)
+// 	shave(user, BODY_ZONE_HEAD)//doesnt need to be BODY_ZONE_HEAD specifically, but whatever
+// 	return BRUTELOSS
 
-/obj/item/razor/proc/shave(mob/living/carbon/human/H, location = BODY_ZONE_PRECISE_MOUTH)
-	return
+// /obj/item/razor/proc/shave(mob/living/carbon/human/H, location = BODY_ZONE_PRECISE_MOUTH)
+// 	return
 
 
-/obj/item/razor/attack(mob/M, mob/user)
-	return
+// /obj/item/razor/attack(mob/M, mob/user)
+// 	return

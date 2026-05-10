@@ -18,10 +18,10 @@
 	research_cost = 0
 	check_flags = COVEN_CHECK_CAPABLE | COVEN_CHECK_SPEAK
 	target_type = TARGET_HUMAN
-	vitae_cost = 100
+	vitae_cost = 150
 	range = 4
 	multi_activate = TRUE
-	cooldown_length = 60 SECONDS
+	cooldown_length = 2 MINUTES
 
 /datum/coven_power/presence/awe/pre_activation_checks(mob/living/target)
 	var/mypower = owner.STAINT
@@ -40,7 +40,7 @@
 	target.overlays_standing[MUTATIONS_LAYER] = presence_overlay
 	target.apply_overlay(MUTATIONS_LAYER)
 
-	target.create_walk_to(3 SECONDS, owner)
+	target.create_walk_to(2 SECONDS, owner)
 
 	if(!owner.cmode)
 		to_chat(target, "<span class='userlove'><b>Follow me~</b></span>")
@@ -64,10 +64,10 @@
 	check_flags = COVEN_CHECK_CAPABLE | COVEN_CHECK_SPEAK
 	target_type = TARGET_HUMAN
 	range = 4
-	vitae_cost = 100
+	vitae_cost = 150
 
 	multi_activate = TRUE
-	cooldown_length = 60 SECONDS
+	cooldown_length = 2 MINUTES
 
 /datum/coven_power/presence/dread_gaze/activate(mob/living/carbon/human/target)
 	. = ..()
@@ -80,10 +80,10 @@
 	to_chat(target, "<span class='userlove'><b>FEAR ME</b></span>")
 	owner.say("FEAR ME!!")
 	var/datum/cb = CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, step_away_caster), owner)
-	for(var/i in 1 to 30)
+	for(var/i in 1 to 15)
 		addtimer(cb, (i - 1) * target.total_multiplicative_slowdown())
 	target.emote("scream")
-	target.do_jitter_animation(3 SECONDS)
+	target.do_jitter_animation(2 SECONDS)
 
 /datum/coven_power/presence/dread_gaze/deactivate(mob/living/carbon/human/target)
 	. = ..()
@@ -101,13 +101,13 @@
 
 	level = 3
 	research_cost = 2
-	vitae_cost = 200
+	vitae_cost = 300
 	check_flags = COVEN_CHECK_CAPABLE|COVEN_CHECK_SPEAK
 	target_type = TARGET_HUMAN
 	range = 4
 
 	multi_activate = TRUE
-	cooldown_length = 1 MINUTES
+	cooldown_length = 2 MINUTES
 
 /datum/coven_power/presence/fall/activate(mob/living/carbon/human/target)
 	. = ..()
@@ -117,7 +117,7 @@
 	target.overlays_standing[MUTATIONS_LAYER] = presence_overlay
 	target.apply_overlay(MUTATIONS_LAYER)
 
-	target.Immobilize(3 SECONDS)
+	target.Immobilize(2 SECONDS)
 	to_chat(target, "<span class='userlove'><b>KNEEL</b></span>")
 	owner.say("KNEEL!!")
 	target.set_resting(TRUE, TRUE)
@@ -133,12 +133,12 @@
 
 	level = 4
 	research_cost = 3
-	vitae_cost = 200
+	vitae_cost = 300
 	check_flags = COVEN_CHECK_CAPABLE|COVEN_CHECK_SPEAK
 	target_type = TARGET_HUMAN
 	range = 7
 	multi_activate = TRUE
-	cooldown_length = 1 MINUTES
+	cooldown_length = 2 MINUTES
 
 /datum/coven_power/presence/summon/activate(mob/living/carbon/human/target)
 	. = ..()

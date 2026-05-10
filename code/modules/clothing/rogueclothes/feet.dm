@@ -267,6 +267,29 @@
 	item_state = "welfshoes"
 	anvilrepair = /datum/skill/craft/carpentry
 
+/// Dendor ritual variant of the woad elven boots — blessed by the Treefather's Nature's Temper ritual.
+/obj/item/clothing/shoes/roguetown/boots/leather/elven_boots/druidic
+	name = "blessed druid boots"
+	desc = "Boots shaped from consecrated root-wood, still pulsing with the Treefather's vigour. They offer firm footing and resist both thrust and cut slightly better than common elven craft."
+	armor = list("blunt" = 100, "slash" = 65, "stab" = 130, "piercing" = 20, "fire" = 0, "acid" = 0)
+	max_integrity = 200
+
+/obj/item/clothing/shoes/roguetown/boots/leather/elven_boots/druidic/Initialize(mapload)
+	. = ..()
+	set_light(1, 1, 2, l_color = "#58C86A")
+	add_filter("druid_blessed_glow", 2, list("type" = "outline", "color" = "#58C86A", "alpha" = 95, "size" = 1))
+
+/obj/item/clothing/shoes/roguetown/boots/leather/elven_boots/druidic/pickup(mob/user)
+	. = ..()
+	if(!istype(user, /mob/living/carbon/human))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.patron?.type == /datum/patron/divine/dendor)
+		return
+	H.electrocute_act(30, src)
+	H.mob_timers["kneestinger"] = world.time
+	to_chat(H, span_warning("[name] rejects my grasp — only the Treefather's faithful may bear such a gift!"))
+
 /obj/item/clothing/shoes/roguetown/boots/armor
 	name = "plated boots"
 	desc = "Boots forged of a set of steel plates to protect your fragile toes."
@@ -489,6 +512,7 @@
 	blocksound = PLATEHIT
 	max_integrity = ARMOR_INT_SIDE_BLACKSTEEL
 	armor = ARMOR_PLATE_BSTEEL
+	sewrepair = null
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/blacksteel
 	resistance_flags = FIRE_PROOF
@@ -508,6 +532,8 @@
 	nudist_approved = TRUE
 	heat_protection = FOOT_LEFT | FOOT_RIGHT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+	sewrepair = null
+	anvilrepair = /datum/skill/craft/armorsmithing
 
 //kazen update
 /obj/item/clothing/shoes/roguetown/armor/rumaclan

@@ -75,7 +75,6 @@
 			to_chat(H, span_warning("You're smarter than the rest, by a stone's throw - and you know better than to get up close and personal. Unlike most others, you can read."))
 			H.set_blindness(0)
 
-			H.change_stat(STATKEY_WIL, -2)
 			H.change_stat(STATKEY_CON, -2)
 			H.change_stat(STATKEY_SPD, 2)
 			H.change_stat(STATKEY_INT, 2)

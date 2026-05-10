@@ -3,7 +3,7 @@
 	icon = 'icons/roguetown/misc/flagpole.dmi'
 	icon_state = "flagpole"
 	desc = "An artificed flagpole. It responds to distant signals to show which of the town's important figures are currently active..."
-	density = TRUE
+	density = FALSE
 	blade_dulling = DULLING_BASH
 	integrity_failure = 0.1
 	max_integrity = 0

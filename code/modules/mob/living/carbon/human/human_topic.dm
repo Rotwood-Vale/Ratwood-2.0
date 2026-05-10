@@ -539,7 +539,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 			rumour_display = html_encode(rumour_display)
 			rumour_display = parsemarkdown_basic(rumour_display, hyperlink = TRUE)
 			msg += "<b>You recall what you heard around Town about [src]...</b><br>[rumour_display]"
-		if(((HAS_TRAIT(usr, TRAIT_NOBLE)) || observer_privilege) && length(noble_gossip))
+		if(((HAS_TRAIT(usr, TRAIT_NOBLE)) || (HAS_TRAIT(usr, TRAIT_SLEUTH)) || observer_privilege) && length(noble_gossip))
 			if(msg)
 				msg += "<br><br>"
 			var/gossip_display = noble_gossip

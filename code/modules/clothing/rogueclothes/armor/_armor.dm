@@ -27,3 +27,4 @@
 	flags_inv = HIDEBOOB|HIDECROTCH
 	grid_width = 64
 	grid_height = 64
+	sewrepair = FALSE

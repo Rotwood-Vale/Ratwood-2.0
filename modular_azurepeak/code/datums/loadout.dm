@@ -67,6 +67,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Tarot Deck"
 	path = /obj/item/toy/cards/deck/tarot
 
+/datum/loadout_item/tarot_deck_majorarcana
+	name = "Tarot Deck (Major Arcana)"
+	path = /obj/item/toy/cards/deck/tarot/majorarcana
+
 /datum/loadout_item/custom_book
 	name = "Custom Book"
 	path = /obj/item/paper/scroll/custom
@@ -1014,7 +1018,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/zcross_iron
 	name = "Zizo Cross"
-	path = /obj/item/clothing/neck/roguetown/zcross/iron
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen
 
 // NECKLACES & AMULETS
 /datum/loadout_item/skull_amulet
@@ -2083,7 +2087,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Chain Leash"
 	path = /obj/item/leash/chain
 
-
 /datum/loadout_item/magic_recipes
 	name = "Guide to Arcyne"
 	path = /obj/item/recipe_book/magic
@@ -2123,6 +2126,18 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/cooking_recipes
 	name = "Guide to Cooking"
 	path = /obj/item/recipe_book/cooking
+
+/datum/loadout_item/tenbibble
+	name = "The Verses and Acts of the Ten"
+	path = /obj/item/book/rogue/bibble
+
+/datum/loadout_item/psybibble
+	name = "Tome of Psydon"
+	path = /obj/item/book/rogue/bibble/psy
+
+/datum/loadout_item/zizobibble
+	name = "Lexicon of Her Truth"
+	path = /obj/item/book/rogue/bibble/zizo
 
 //COSMETICS (Perfumes & Lipsticks)
 

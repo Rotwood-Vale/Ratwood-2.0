@@ -1,0 +1,7 @@
+author: "IronDragoon"
+delete-after: True
+changes:
+  - rscadd: "Ruma Seonjang, functionally almost identical to Gun-in but flavoured as the group boss, gets a gold sword"
+  - rscadd: "13 new shamisen tracks and 3 new kazen combat tracks"
+  - rscadd: "adds kodachi (kazen short sword, just a retexture) to the silverface"
+  - bugfix: "fixed kazen scabbard in merchants"

@@ -2,12 +2,14 @@ GLOBAL_LIST_EMPTY(apostasy_players)
 GLOBAL_LIST_EMPTY(cursed_players)
 GLOBAL_LIST_EMPTY(excommunicated_players)
 GLOBAL_LIST_EMPTY(heretical_players)
+GLOBAL_LIST_EMPTY(priest_swap_timers)
 #define PRIEST_ANNOUNCEMENT_COOLDOWN (2 MINUTES)
 #define PRIEST_SERMON_COOLDOWN (30 MINUTES)
 #define PRIEST_APOSTASY_COOLDOWN (10 MINUTES)
 #define PRIEST_EXCOMMUNICATION_COOLDOWN (10 MINUTES)
 #define PRIEST_CURSE_COOLDOWN (15 MINUTES)
 #define PRIEST_SWAP_COOLDOWN (20 MINUTES)
+
 
 /datum/job/roguetown/priest
 	title = "Bishop"
@@ -64,6 +66,10 @@ GLOBAL_LIST_EMPTY(heretical_players)
 		var/title = "Prelate"
 		H.real_name = "[title] [prev_real_name]"
 		H.name = "[title] [prev_name]"
+
+		spawn(50)
+			if(H && H.client)
+				_delayed_path_choice(H)
 
 /datum/advclass/bishop
 	name = "Bishop"
@@ -126,8 +132,6 @@ GLOBAL_LIST_EMPTY(heretical_players)
 	)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank_up_to(/datum/skill/magic/holy, 6, TRUE)
-	var/datum/devotion/C = new /datum/devotion(H, H.patron) // This creates the cleric holder used for devotion spells
-	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)	//Starts off maxed out.
 
 	H.verbs |= /mob/living/carbon/human/proc/coronate_lord
 	H.verbs |= /mob/living/carbon/human/proc/churchannouncement
@@ -137,8 +141,9 @@ GLOBAL_LIST_EMPTY(heretical_players)
 	H.verbs |= /mob/living/carbon/human/proc/completesermon
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic_priest)
 
-/datum/outfit/job/roguetown/priest/basic/choose_loadout(mob/living/carbon/human/H)
-	. = ..()
+/datum/job/roguetown/priest/proc/_pick_loyalist_miracles(mob/living/carbon/human/H)
+	if(!H || !H.mind)
+		return
 	var/t3_count = 2
 	var/list/t4 = list()
 	var/list/t3 = list()
@@ -153,23 +158,66 @@ GLOBAL_LIST_EMPTY(heretical_players)
 			if(patron.miracles[checked_miracle] == CLERIC_T3 && (initial(checked_miracle.priest_excluded) == FALSE))
 				t3[initial(checked_miracle.name)] = checked_miracle
 	for(var/miracle in t4)
-		if(H.mind?.has_spell(t4[miracle]))
+		if(H.mind.has_spell(t4[miracle]))
 			t4.Remove(miracle)
 	for(var/miracle in t3)
-		if(H.mind?.has_spell(t3[miracle]))
+		if(H.mind.has_spell(t3[miracle]))
 			t3.Remove(miracle)
-	var/t4_choice = input(H,"Choose your Tier Four Miracle.", "TAKE UP KNAWLEDGE") as anything in t4
+	var/t4_choice = input(H, "Choose your Tier Four Miracle.", "TAKE UP KNAWLEDGE") as anything in t4
 	if(t4_choice)
 		var/obj/effect/proc_holder/chosen_miracle = t4[t4_choice]
-		H.mind?.AddSpell(new chosen_miracle)
-
+		H.mind.AddSpell(new chosen_miracle)
 	for(var/i in 1 to t3_count)
-		var/t3_choice = input(H,"Choose your Tier Three Miracle.", "TAKE UP KNAWLEDGE ([t3_count] CHOICES REMAIN)") as anything in t3
+		var/t3_choice = input(H, "Choose your Tier Three Miracle.", "TAKE UP KNAWLEDGE ([t3_count] CHOICES REMAIN)") as anything in t3
 		if(t3_choice)
 			var/obj/effect/proc_holder/chosen_miracle = t3[t3_choice]
-			H.mind?.AddSpell(new chosen_miracle)
+			H.mind.AddSpell(new chosen_miracle)
 			t3.Remove(t3_choice)
 			t3_count--
+
+/datum/job/roguetown/priest/proc/_delayed_path_choice(mob/living/carbon/human/H)
+	if(!H || !H.client || !H.mind)
+		return
+
+	var/choice = alert(H, "Choose your path.", "Bishop Doctrine", "Loyalist", "Radical")
+
+	if(choice == "Radical")
+		src.grant_radical_path(H)
+	else
+		src.grant_old_path(H)
+
+/datum/job/roguetown/priest/proc/grant_old_path(mob/living/carbon/human/H)
+	if(!H || !H.mind || !H.patron)
+		return
+	REMOVE_TRAIT(H, TRAIT_CLERGYRADICAL, "job")
+	H.verbs -= /mob/living/carbon/human/proc/change_patron
+	H.reset_clergy_devotion(CLERIC_T4, CLERIC_REGEN_MAJOR, TRUE, CLERIC_REQ_4)
+	_pick_loyalist_miracles(H)
+	to_chat(H, span_notice("I remain on the old path of devotion."))
+
+/datum/job/roguetown/priest/proc/grant_radical_path(mob/living/carbon/human/H)
+	if(!H || !H.mind || !H.patron)
+		return
+	ADD_TRAIT(H, TRAIT_CLERGYRADICAL, "job")
+	H.church_favor += 2400
+	H.miracle_points += 8
+	H.verbs |= /mob/living/carbon/human/proc/change_patron
+	H.reset_clergy_devotion(CLERIC_T4, CLERIC_REGEN_MAJOR, TRUE, CLERIC_REQ_4)
+	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/invoked/convert_heretic_priest))
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic_priest, H)
+	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/invoked/cure_rot))
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/cure_rot, H)
+	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/self/convertrole/templar))
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/convertrole/templar, H)
+	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/self/convertrole/monk))
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/convertrole/monk, H)
+	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/invoked/projectile/divineblast))
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast, H)
+	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/invoked/wound_heal))
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/wound_heal, H)
+	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/invoked/takeapprentice))
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/takeapprentice, H)
+	to_chat(H, span_notice("I embrace the radical path."))
 
 /datum/job/priest/vice //just used to change the priest title
 	title = "Vice Priest"
@@ -320,18 +368,6 @@ GLOBAL_LIST_EMPTY(heretical_players)
 		to_chat(src, span_warning("This one's connection to the ten is too shallow."))
 		return FALSE
 
-	//Flavor messages for cursing certain god's faithful.
-	//Dendor works in mysterious ways.
-	if (istype(H.patron, /datum/patron/divine/dendor))
-		to_chat(src, span_warning("The mad god Dendor is felt strongly. The wolf in this one balks and trashes as it is faintly restrained."))
-		//If we check this here there's no need to apply this trait preemtively to a bunch of people, and allows for greater fluff feedback.
-		ADD_TRAIT(H, TRAIT_CURSE_RESIST, TRAIT_GENERIC)
-
-	//Abyssor's clergy are gripped by his dream.
-	if (istype(H.patron, /datum/patron/divine/abyssor))
-		to_chat(src, span_warning("The Dreamer, Abyssor has his clutches grasped firmly around this one. The light of the ten only barely penetrates the depths."))
-		ADD_TRAIT(H, TRAIT_CURSE_RESIST, TRAIT_GENERIC)
-
 	//Let's not curse heretical antags.
 	if(HAS_TRAIT(H, TRAIT_HERESIARCH))
 		to_chat(src, span_warning("The patron of this one shields them from being suppressed."))
@@ -389,10 +425,8 @@ GLOBAL_LIST_EMPTY(heretical_players)
 		GLOB.apostasy_players += inputty
 		COOLDOWN_START(src, priest_apostasy, PRIEST_APOSTASY_COOLDOWN)
 
-		var/curse_resist = HAS_TRAIT(H, TRAIT_CURSE_RESIST)
-
 		if (istype(H.patron, /datum/patron/divine))
-			H.apply_status_effect(/datum/status_effect/debuff/apostasy, curse_resist)
+			H.apply_status_effect(/datum/status_effect/debuff/apostasy)
 			H.add_stress(/datum/stressevent/apostasy)
 			to_chat(H, span_warning("A holy silence falls upon you. Your Patron cannot hear you anymore..."))
 		else
@@ -504,10 +538,15 @@ code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep 
 	var/list/curse_choices = list(
 		"Curse of Astrata" = /datum/curse/astrata,
 		"Curse of Noc" = /datum/curse/noc,
+		"Curse of Dendor" = /datum/curse/dendor,
+		"Curse of Abyssor" = /datum/curse/abyssor,
 		"Curse of Ravox" = /datum/curse/ravox,
 		"Curse of Necra" = /datum/curse/necra,
 		"Curse of Xylix" = /datum/curse/xylix,
-		)
+		"Curse of Pestra" = /datum/curse/pestra,
+		"Curse of Malum" = /datum/curse/malum,
+		"Curse of Eora" = /datum/curse/eora,
+	)
 
 	var/curse_pick = input("Choose a curse to apply or lift.", "Select Curse") as null|anything in curse_choices
 	if (!curse_pick)
@@ -546,6 +585,56 @@ code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep 
 			log_game("DIVINE CURSE: [real_name] ([ckey]) has stricken [H.real_name] ([H.ckey] with [curse_pick])")
 
 		return
+
+/mob/living/carbon/human/proc/change_patron()
+	set name = "Change Patron"
+	set category = "Priest"
+
+	if(!mind)
+		return
+
+	if(!HAS_TRAIT(src, TRAIT_CLERGYRADICAL))
+		to_chat(src, span_warning("Only a radical bishop may abandon the old doctrine."))
+		return
+
+	var/key = REF(src)
+	var/next_swap = GLOB.priest_swap_timers[key]
+	if(!isnum(next_swap))
+		next_swap = 0
+
+	if(world.time < next_swap)
+		to_chat(src, span_warning("You must wait before changing patron again."))
+		return
+
+	var/list/god_choice = list()
+	var/list/god_type = list()
+
+	for(var/path as anything in GLOB.patrons_by_faith[/datum/faith/divine])
+		var/datum/patron/patron_choice = GLOB.patronlist[path]
+		if(!patron_choice || !patron_choice.name)
+			continue
+
+		god_choice += list("[patron_choice.name]" = icon(icon = 'icons/mob/overhead_effects.dmi', icon_state = "sign_[patron_choice.name]"))
+		god_type[patron_choice.name] = patron_choice.type
+
+	var/string_choice = show_radial_menu(src, src, god_choice, require_near = FALSE)
+	if(!string_choice)
+		return
+	var/new_patron_type = god_type[string_choice]
+	if(!new_patron_type)
+		return
+	if(patron && istype(patron, new_patron_type))
+		to_chat(src, span_info("You already follow [string_choice]."))
+		return
+	patron = new new_patron_type()
+	if(devotion && ("patron" in devotion.vars))
+		devotion.patron = patron
+	GLOB.priest_swap_timers[key] = world.time + PRIEST_SWAP_COOLDOWN
+	if(string_choice == "Astrata")
+		to_chat(src, "<font color='yellow'>HEAVEN SHALL THEE RECOMPENSE. THOU BEAREST MY POWER ONCE MORE.</font>")
+	else
+		to_chat(src, "<font color='yellow'>Thou now professes faith in [string_choice].</font>")
+	to_chat(src, "<font color='yellow'>Your miracles remain unchanged.</font>")
 
 /obj/effect/proc_holder/spell/invoked/convert_heretic_priest
 	name = "Absolve the Heretic"

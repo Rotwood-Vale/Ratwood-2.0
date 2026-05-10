@@ -96,9 +96,10 @@
 	droning_sound = 'sound/music/area/underworlddrone.ogg'
 	ambush_mobs = list(
 		/mob/living/simple_animal/hostile/retaliate/rogue/troll/bog = 20,
-		/mob/living/simple_animal/hostile/retaliate/rogue/spider/rock = 40,
+		/mob/living/simple_animal/hostile/retaliate/rogue/spider/rock = 30,
 		/mob/living/carbon/human/species/skeleton/npc/bogguard = 20,
 		/mob/living/carbon/human/species/skeleton/npc/rockhill = 15,
+		/mob/living/carbon/human/species/npc/deadite = 30,
 		/mob/living/carbon/human/species/goblin/npc/ambush/moon = 30,
 		/mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead = 15,
 		new /datum/ambush_config/mirespiders_ambush = 110,

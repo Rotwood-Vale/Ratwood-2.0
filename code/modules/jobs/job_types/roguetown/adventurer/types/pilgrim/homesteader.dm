@@ -386,7 +386,7 @@
 			/obj/item/folding_table_stored
 		),
 		"Hunter Set" = list(
-			/obj/item/gun/ballistic/revolver/grenadelauncher/bow/short,
+			/obj/item/gun/ballistic/revolver/grenadelauncher/bow,
 			/obj/item/quiver/arrows,
 			/obj/item/rogueweapon/huntingknife/bronze,
 			/obj/item/storage/meatbag,
@@ -429,7 +429,7 @@
 	// Daily Tools - basic combination
 	var/daily_tools_combos = list(
 		"Bronze Axe + Bronze Knife + Sheath" = list(/obj/item/rogueweapon/stoneaxe/woodcut/bronze, /obj/item/rogueweapon/huntingknife/bronze, /obj/item/rogueweapon/scabbard/sheath),
-		"Simple Bow + Quiver" = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow/short, /obj/item/quiver/arrows),
+		"Simple Bow + Quiver" = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow, /obj/item/quiver/arrows),
 		"Iron Spear + Backup Dagger" = list(/obj/item/rogueweapon/spear, /obj/item/rogueweapon/huntingknife/bronze, /obj/item/rogueweapon/scabbard/gwstrap),
 		"Fishing Rod + Worms" = list(/obj/item/fishingrod, /obj/item/natural/worms, /obj/item/natural/worms),
 		"Sickle + Farming Hoe" = list(/obj/item/rogueweapon/sickle, /obj/item/rogueweapon/hoe),

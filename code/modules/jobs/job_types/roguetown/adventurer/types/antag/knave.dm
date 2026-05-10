@@ -74,6 +74,7 @@
 			if("Bow & Sword") //Poacher
 				backl= /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				l_hand = /obj/item/rogueweapon/sword/short
+				r_hand = /obj/item/restraints/legcuffs/beartrap
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				beltr = /obj/item/quiver/arrows
 				head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm //cool hat
@@ -81,7 +82,7 @@
 				backpack_contents = list(
 							/obj/item/needle/thorn = 1,
 							/obj/item/natural/cloth = 1,
-							/obj/item/restraints/legcuffs/beartrap = 2,
+							/obj/item/restraints/legcuffs/beartrap = 1,
 							/obj/item/flashlight/flare/torch = 1,
 							) //poacher gets mantraps
 				H.adjust_skillrank(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)

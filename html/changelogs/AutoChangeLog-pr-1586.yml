@@ -1,0 +1,5 @@
+author: "EvenInDeathIStillServe"
+delete-after: True
+changes:
+  - rscadd: "Characters with the deadened virtue will no longer unintentionally scream, groan, moan, or any other emote that would necessitate showing emotions."
+  - rscadd: "Sex moans can be used at will through *sexmoanhvy and *sexmoanlight"

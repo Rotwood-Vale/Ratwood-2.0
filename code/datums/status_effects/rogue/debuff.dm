@@ -786,6 +786,7 @@
 		break
 	harpy.movement_type |= FLYING
 	harpy.dna.species.speedmod += 0.3
+	harpy.remove_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD) // If they are slowed down (like being in water) remove it
 	harpy.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown = harpy.dna.species.speedmod)
 	harpy.apply_status_effect(/datum/status_effect/debuff/flight_sound_loop)
 	ADD_TRAIT(harpy, TRAIT_SPELLCOCKBLOCK, ORGAN_TRAIT)
@@ -865,6 +866,7 @@
 
 /datum/status_effect/debuff/harpy_flight/proc/init_signals()
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_movement))
+	RegisterSignal(owner, COMSIG_LIVING_UPDATE_TURF_MOVESPEED, PROC_REF(on_turf_movespeed_update))
 
 /datum/status_effect/debuff/harpy_flight/proc/check_movement(datum/source) // rewritten by @tmyqlfpir
 	SIGNAL_HANDLER
@@ -881,12 +883,16 @@
 		cur_turf = temp_turf
 	shadow.forceMove(cur_turf)
 
+/datum/status_effect/debuff/harpy_flight/proc/on_turf_movespeed_update()
+	SIGNAL_HANDLER
+	return TURF_MOVESPEED_BLOCKED // Flying harpies do not get slowed down from turfs
+
 /datum/status_effect/debuff/harpy_flight/proc/remove_signals()
 	UnregisterSignal(owner, list(
 		COMSIG_MOVABLE_MOVED,
+		COMSIG_LIVING_UPDATE_TURF_MOVESPEED,
 	))
-	if(shadow)
-		QDEL_NULL(shadow)
+	QDEL_NULL(shadow)
 
 /datum/status_effect/debuff/harpy_passenger
 	id = "harpy_passenger"

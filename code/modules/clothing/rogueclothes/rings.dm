@@ -15,6 +15,7 @@
 	experimental_inhand = FALSE
 	drop_sound = 'sound/foley/coinphy (1).ogg'
 	nudist_approved = TRUE
+	sewrepair = FALSE
 
 /obj/item/clothing/ring/silver
 	name = "silver ring"
@@ -73,6 +74,12 @@
 	name = "rosestone ring"
 	icon_state = "ring_rose"
 	sellprice = 25
+
+/obj/item/clothing/ring/chitin
+	name = "chitin ring"
+	icon_state = "ring_shell"
+	color = "#7B8C5E"
+	sellprice = 20
 
 /obj/item/clothing/ring/opal
 	name = "opal ring"

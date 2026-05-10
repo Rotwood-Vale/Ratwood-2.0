@@ -12,6 +12,7 @@
 	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
 	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
 	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
+	sewrepair = FALSE
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/steel
 	unarmed_bonus = 1.15
