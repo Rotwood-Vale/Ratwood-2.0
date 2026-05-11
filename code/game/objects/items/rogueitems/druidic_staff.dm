@@ -35,8 +35,27 @@
 
 /obj/item/rogueweapon/woodstaff/druidic_staff/Initialize(mapload)
 	. = ..()
-	START_PROCESSING(SSprocessing, src)
+	// Do not START_PROCESSING here — charges start at max_charges, so process() would
+	// immediately return PROCESS_KILL. handle_middle_click restarts processing when needed.
+	set_light(1, 1, 2, l_color = "#73c47a")
+	add_filter("druid_blessed_glow", 2, list("type" = "outline", "color" = "#58C86A", "alpha" = 95, "size" = 1))
 
+/obj/item/rogueweapon/woodstaff/druidic_staff/OnCrafted(direction, mob/user)
+	. = ..()  
+	// del_reqs called qdel() on the bloomstone which returned QDEL_HINT_LETMELIVE,
+	// decrementing one charge but keeping it alive. Use del() here to bypass Destroy()
+	// entirely so no stone dust is spawned and the stone is cleanly removed.
+	if(!user)
+		return
+	// Check hands first — del_reqs searches hands (and adjacent turfs), not pockets.
+	for(var/obj/item/alch/bloomstone/BS in list(user.get_active_held_item(), user.get_inactive_held_item()))
+		del(BS)
+		return
+	// Check the user's turf and all adjacent turfs (matches del_reqs search range).
+	for(var/turf/T in range(1, user))
+		for(var/obj/item/alch/bloomstone/BS in T)
+			del(BS)
+			return
 /obj/item/rogueweapon/woodstaff/druidic_staff/Destroy()
 	if(signals_registered && registered_on)
 		_unregister_signals(registered_on)
@@ -70,6 +89,7 @@
 	. = ..()
 	_unregister_signals(user)
 
+/// Registers the middle-click and mob-deletion signals on the given wielder.
 /obj/item/rogueweapon/woodstaff/druidic_staff/proc/_register_signals(mob/living/carbon/human/user)
 	if(signals_registered)
 		return
@@ -78,6 +98,7 @@
 	RegisterSignal(user, COMSIG_MOB_MIDDLECLICKON, PROC_REF(handle_middle_click))
 	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(on_registered_mob_deleted))
 
+/// Unregisters all druidic-staff signals from the given mob and clears tracking vars.
 /obj/item/rogueweapon/woodstaff/druidic_staff/proc/_unregister_signals(mob/user)
 	if(!signals_registered)
 		return
@@ -86,6 +107,8 @@
 	UnregisterSignal(user, COMSIG_MOB_MIDDLECLICKON)
 	UnregisterSignal(user, COMSIG_QDELETING)
 
+/// Signal handler — fires when the mob we registered signals on is deleted.
+/// Clears tracking state so Destroy() skips the unregister attempt on an already-gone mob.
 /obj/item/rogueweapon/woodstaff/druidic_staff/proc/on_registered_mob_deleted(datum/source)
 	SIGNAL_HANDLER
 	signals_registered = FALSE
@@ -93,6 +116,8 @@
 
 // ---- Middle-click handler -------------------------------------------------
 
+/// Fires on COMSIG_MOB_MIDDLECLICKON while the staff is wielded.
+/// Branches on the target: unblessed soil → AOE bless, old/burnt tree → reinvigorate, else → vine+glowshroom.
 /obj/item/rogueweapon/woodstaff/druidic_staff/proc/handle_middle_click(mob/living/carbon/human/user, atom/target)
 	SIGNAL_HANDLER
 	// Skill gate — Journeyman Druidic Trickery required.
@@ -146,6 +171,27 @@
 		middle_click_cooldown = world.time + 100 // 10 seconds
 		playsound(get_turf(user), 'sound/magic/churn.ogg', 60, TRUE)
 		user.visible_message(span_green("[user] channels Dendor's power through the druidic staff, blessing nearby crops!"), span_green("Dendor's blessing channels from the staff, blessing nearby crops!"))
+		return COMSIG_MOB_CANCEL_CLICKON
+
+	// Branch: target is or is on an old or burnt tree → reinvigorate it.
+	var/obj/structure/flora/roguetree/target_tree = null
+	if(istype(target, /obj/structure/flora/roguetree) && !istype(target, /obj/structure/flora/roguetree/wise) && !istype(target, /obj/structure/flora/roguetree/evil))
+		target_tree = target
+	else
+		for(var/obj/structure/flora/roguetree/RT in target_turf)
+			if(!istype(RT, /obj/structure/flora/roguetree/wise) && !istype(RT, /obj/structure/flora/roguetree/evil))
+				target_tree = RT
+				break
+	if(target_tree)
+		if(target_tree.reinvigorate_tree(user))
+			charges--
+			src.obj_integrity -= (src.max_integrity * 0.02)
+			START_PROCESSING(SSprocessing, src)
+			middle_click_cooldown = world.time + 100 // 10 seconds
+			playsound(get_turf(user), 'sound/magic/churn.ogg', 60, TRUE)
+			user.visible_message(span_green("[user] draws the druidic staff before [target_tree] — life surges back into the withered bark!"), span_green("You channel the Treefather's power into [target_tree] through the druidic staff!"))
+			return COMSIG_MOB_CANCEL_CLICKON
+		to_chat(user, span_warning("This tree cannot be reinvigorated."))
 		return COMSIG_MOB_CANCEL_CLICKON
 
 	// Branch: anything else → spawn a vine and kneestinger on the target turf.

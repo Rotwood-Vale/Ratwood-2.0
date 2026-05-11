@@ -704,11 +704,8 @@
 			// Drain blessed water but leave the container.
 			held.reagents.remove_reagent(/datum/reagent/water/blessed, 30)
 		if("bloomstone")
-			// Force the bloomstone to drain all charges so Destroy() actually deletes it.
-			held.forceMove(get_turf(src))
-			var/obj/item/alch/bloomstone/offered = held
-			offered.charges = 1
-			qdel(offered)
+			// Use del() to bypass Destroy() entirely — avoids stone dust and QDEL_HINT_LETMELIVE.
+			del(held)
 		else
 			qdel(held)
 
@@ -1368,6 +1365,8 @@
 				for(var/obj/item/food_item in bag.contents)
 					if(!check_offering_match("food_item", food_item))
 						continue
+					if(istype(food_item, /obj/item/reagent_containers/food/snacks/zizo_bane))
+						continue // Zizo bane is a ritual ingredient — don't consume it innately.
 					if(!istype(food_item, /obj/item/reagent_containers/food/snacks/grown/berries))
 						tree_data.innate_harvest_all_berries = FALSE
 					qdel(food_item)
@@ -1382,7 +1381,7 @@
 					to_chat(user, span_notice("I offer produce from my sack to the Treefather's roots. ([tree_data.harvest_count]/6)"))
 					return
 			// Single item in hand.
-			if(check_offering_match("food_item", I))
+			if(check_offering_match("food_item", I) && !istype(I, /obj/item/reagent_containers/food/snacks/zizo_bane))
 				if(!istype(I, /obj/item/reagent_containers/food/snacks/grown/berries))
 					tree_data.innate_harvest_all_berries = FALSE
 				qdel(I)

@@ -1,7 +1,7 @@
 // Druid
 /obj/effect/proc_holder/spell/targeted/blesscrop
 	name = "Bless Crops"
-	desc = "Bless a targeted soil plot or tree. Druidic Trickery increases stored charges. Revives dead plants, gives them nutrition and water if low & boosts their growth. Blessed seed powder can expend all charges to bless up to five nearby planted soils at once."
+	desc = "Bless a targeted soil plot or tree. Druidic Trickery increases stored charges. Revives dead plants, gives them nutrition and water if low & boosts their growth. Blessed seed powder can bless up to five nearby planted soils at once."
 	range = 5
 	selection_type = "range"
 	overlay_state = "blesscrop"
@@ -662,17 +662,18 @@
 
 		var/turf/T = get_turf(target)
 
-		// Clean up branches and leaves from the old newtree.
-		// Mirrors the wise tree conversion in create_wise_tree.dm.
+		// Clean up branches from the old newtree. Leaves are left in place so
+		// they become natural foliage around the sanctified tree instead of leaving bare ground.
 		for(var/turf/adjacent in range(1, T))
 			for(var/obj/structure/flora/newbranch/B in adjacent)
 				qdel(B)
-			for(var/obj/structure/flora/newleaf/L in adjacent)
-				qdel(L)
 		var/turf/above = get_step_multiz(T, UP)
 		if(istype(above, /turf/open/transparent/openspace))
 			for(var/obj/structure/flora/newtree/upper_tree in above)
 				qdel(upper_tree)
+			// Spawn leaves on the upper turf to fill the void left by the removed trunk.
+			if(!locate(/obj/structure/flora/newleaf) in above)
+				new /obj/structure/flora/newleaf(above)
 
 		qdel(target)
 
