@@ -560,7 +560,7 @@
 		/obj/item/fertilizer = 1,
 		/obj/item/natural/fibers = 3,
 	)
-	tools = list(/obj/item/alch/bloomstone = 1)
+	tools = list(TOOL_DRUIDIC_CATALYST = 1)
 	verbage_simple = "grow"
 	verbage = "grows"
 

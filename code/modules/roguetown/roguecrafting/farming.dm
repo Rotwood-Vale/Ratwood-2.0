@@ -14,7 +14,7 @@
 	name = "fertilizer (druidic)"
 	result = /obj/item/fertilizer
 	reqs = list(/obj/item/compost = 1, /obj/item/alch/blessedseedpowder = 1, /obj/item/natural/poo = 1)
-	tools = list(/obj/item/alch/bloomstone = 1)
+	tools = list(TOOL_DRUIDIC_CATALYST = 1)
 	skillcraft = /datum/skill/magic/druidic
 	craftdiff = SKILL_LEVEL_MASTER
 

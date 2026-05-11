@@ -125,6 +125,7 @@
 	major_pot = null
 	med_pot = null
 	minor_pot = null
+	tool_behaviour = TOOL_DRUIDIC_CATALYST
 	var/charges = 20
 
 /obj/item/alch/bloomstone/Initialize(mapload)

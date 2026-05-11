@@ -20,6 +20,8 @@
 	// Alt-intent (RMB self while wielded): dazing strike.
 	possible_item_intents = list(SPEAR_BASH, /datum/intent/mace/strike/wood)
 	gripped_intents = list(SPEAR_BASH, /datum/intent/mace/strike/wood, /datum/intent/mace/smash/wood, /datum/intent/effect/daze)
+	/// Allows this staff to substitute for a harvest bloomstone in druidic crafting recipes.
+	tool_behaviour = TOOL_DRUIDIC_CATALYST
 	/// Current charges. Regens 1 per 60s via SSprocessing.
 	var/charges = 10
 	/// Maximum charges.
