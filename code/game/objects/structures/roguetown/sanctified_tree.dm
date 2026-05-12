@@ -285,7 +285,7 @@
 	//   cat9 (Harvest Bloomstone)  — Expert
 	//   cat3 (Fey Weaving)         — Expert
 	//   cat6 (Nature's Temper)     — Master
-	//   cat11 (Winged Rebirth)   — Legendary
+	//   cat11 (Winged Rebirth)     — Master
 	var/list/cat_opts = list()
 	var/list/cat_map = list()
 	for(var/cat in list("cat8", "cat10", "cat2", "cat5", "cat12", "cat4", "cat7", "cat9", "cat3", "cat6", "cat11"))
@@ -321,12 +321,9 @@
 			if("cat9", "cat3")
 				required_level = SKILL_LEVEL_EXPERT
 				required_name = "Expert"
-			if("cat6")
+			if("cat6", "cat11")
 				required_level = SKILL_LEVEL_MASTER
 				required_name = "Master"
-			if("cat11")
-				required_level = SKILL_LEVEL_LEGENDARY
-				required_name = "Legendary"
 		if(required_level > 0 && druidic_level < required_level)
 			to_chat(user, span_warning("The Treefather will not reveal [get_ritual_display_name(selected)] to one unprepared — [required_name] Druidic Trickery is required."))
 			return

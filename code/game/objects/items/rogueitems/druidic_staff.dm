@@ -196,6 +196,28 @@
 		to_chat(user, span_warning("This tree cannot be reinvigorated."))
 		return COMSIG_MOB_CANCEL_CLICKON
 
+	// Branch: permanently-trimmed fey mushroom circle or mature bush — re-enable overgrowth timer.
+	var/obj/structure/mushroom_circle/fey/MC = istype(target, /obj/structure/mushroom_circle/fey) ? target : locate(/obj/structure/mushroom_circle/fey) in target_turf
+	if(MC && MC.active && MC.permanently_trimmed)
+		MC.receive_bless_crop()
+		charges--
+		src.obj_integrity -= (src.max_integrity * 0.02)
+		START_PROCESSING(SSprocessing, src)
+		middle_click_cooldown = world.time + 100
+		playsound(get_turf(user), 'sound/magic/churn.ogg', 60, TRUE)
+		user.visible_message(span_green("[user] channels the Treefather's power into [MC] — the fey energies stir anew!"), span_green("You channel the Treefather's power into [MC] — the fey energies stir anew!"))
+		return COMSIG_MOB_CANCEL_CLICKON
+	var/obj/structure/bush_sapling/bush = istype(target, /obj/structure/bush_sapling) ? target : locate(/obj/structure/bush_sapling) in target_turf
+	if(bush && bush.stage == BUSHSAP_STAGE_MATURE && !bush.dead && bush.permanently_trimmed)
+		bush.receive_bless_crop()
+		charges--
+		src.obj_integrity -= (src.max_integrity * 0.02)
+		START_PROCESSING(SSprocessing, src)
+		middle_click_cooldown = world.time + 100
+		playsound(get_turf(user), 'sound/magic/churn.ogg', 60, TRUE)
+		user.visible_message(span_green("[user] channels the Treefather's power into [bush] — growth stirs anew!"), span_green("You channel the Treefather's power into [bush] — growth stirs anew!"))
+		return COMSIG_MOB_CANCEL_CLICKON
+
 	// Branch: anything else → spawn a vine and kneestinger on the target turf.
 	if(!locate(/obj/structure/vine/dendor) in target_turf)
 		new /obj/structure/vine/dendor(target_turf)

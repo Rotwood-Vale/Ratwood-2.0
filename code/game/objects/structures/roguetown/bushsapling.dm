@@ -15,6 +15,37 @@
 	density = FALSE
 	debris = list(/obj/item/natural/fibers = 1, /obj/item/natural/thorn = 1)
 
+/// Scissors (snip intent) trims the tall hedge back to a mature bush sapling, The resulting bush immediately starts its growth timer; shear it again (or bless-crop) to control whether it regrows.
+/obj/structure/flora/roguegrass/bush/wall/tall/grown/attackby(obj/item/I, mob/living/user, params)
+	if((istype(I, /obj/item/rogueweapon/huntingknife/scissors) || istype(I, /obj/item/rogueweapon/huntingknife/throwingknife/bauernwehr)) && user.used_intent.type == /datum/intent/snip)
+		to_chat(user, span_notice("I begin cutting the overgrown hedge back down..."))
+		if(do_after(user, 4 SECONDS, target = src))
+			var/turf/T = get_turf(src)
+			new /obj/item/natural/fibers(T)
+			new /obj/item/grown/log/tree/stick(T)
+			// Spawn a mature bush — growth timer starts immediately.
+			// Trim it with scissors again to suppress regrowth, or let bless-crop do it later.
+			var/obj/structure/bush_sapling/trimmed_bush = new /obj/structure/bush_sapling(T)
+			trimmed_bush.stage = BUSHSAP_STAGE_MATURE
+			trimmed_bush.linked_soil = null
+			trimmed_bush.name = "bush"
+			trimmed_bush.icon = 'icons/roguetown/misc/foliage.dmi'
+			trimmed_bush.icon_state = "bush2"
+			trimmed_bush.max_integrity = 100
+			trimmed_bush.obj_integrity = 100
+			trimmed_bush.blade_dulling = DULLING_CUT
+			trimmed_bush.destroy_sound = "plantcross"
+			trimmed_bush.bushtype = pickweight(list(
+				/obj/item/reagent_containers/food/snacks/grown/berries/rogue       = 5,
+				/obj/item/reagent_containers/food/snacks/grown/berries/rogue/poison = 3,
+				/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweed       = 1
+			))
+			trimmed_bush.loot_replenish()
+			to_chat(user, span_notice("I cut the hedge down to a manageable bush. It will grow back unless I trim it or Dendor's blessing keeps it in check."))
+			qdel(src)
+		return
+	return ..()
+
 //==============================================================================
 // Bush sapling
 //==============================================================================
@@ -45,6 +76,8 @@
 	var/res_replenish = 0
 	/// Prevents death before the sapling has received its first watering
 	var/has_grown = FALSE
+	/// TRUE after scissors shearing — hedge growth is paused until bless crops re-enables it.
+	var/permanently_trimmed = FALSE
 
 /obj/structure/bush_sapling/Initialize(mapload)
 	. = ..()
@@ -83,7 +116,8 @@
 				wither_and_die()
 				return PROCESS_KILL
 	else
-		growth_progress += dt
+		if(!permanently_trimmed)
+			growth_progress += dt
 	var/stage_time = (stage == BUSHSAP_STAGE_MATURE) ? BUSHSAP_HEDGE_TIME : BUSHSAP_STAGE_TIME
 	if(growth_progress >= stage_time)
 		advance_stage()
@@ -138,6 +172,16 @@
 		looty += /obj/item/natural/thorn
 	looty += /obj/item/natural/fibers
 
+/// Re-enables hedge growth after it was paused by scissors shearing.
+/// Called by blesscrop and the druidic staff middle-click.
+/obj/structure/bush_sapling/proc/receive_bless_crop()
+	if(!permanently_trimmed)
+		return
+	permanently_trimmed = FALSE
+	growth_progress = 0
+	START_PROCESSING(SSprocessing, src)
+	visible_message(span_green("[src] shudders with the Treefather's blessing — it will start growing toward a hedge again."))
+
 /obj/structure/bush_sapling/proc/spawn_hedge()
 	new /obj/structure/flora/roguegrass/bush/wall/tall/grown(get_turf(src))
 	qdel(src)
@@ -167,11 +211,14 @@
 		return
 	// Standalone mature bush — soil already removed when it transitioned.
 	if(stage == BUSHSAP_STAGE_MATURE)
-		var/time_to_hedge = max(BUSHSAP_HEDGE_TIME - growth_progress, 0)
-		if(growth_progress >= BUSHSAP_HEDGE_TIME * 0.7)
-			. += span_warning("It is looking overgrown. Shear it soon, or it will become a tall hedge in [DisplayTimeText(time_to_hedge)].")
+		if(permanently_trimmed)
+			. += span_notice("This bush is well-maintained and will not become a hedge unless Dendor's blessing stirs it to grow again.")
 		else
-			. += span_notice("A mature bush. Shear it with scissors to keep it manageable, or leave it to grow into a taller hedge in [DisplayTimeText(time_to_hedge)].")
+			var/time_to_hedge = max(BUSHSAP_HEDGE_TIME - growth_progress, 0)
+			if(growth_progress >= BUSHSAP_HEDGE_TIME * 0.7)
+				. += span_warning("It is looking overgrown. Shear it soon, or it will become a tall hedge in [DisplayTimeText(time_to_hedge)].")
+			else
+				. += span_notice("A mature bush. Shear it with scissors to keep it manageable, or leave it to grow into a taller hedge in [DisplayTimeText(time_to_hedge)].")
 
 /obj/structure/bush_sapling/attack_hand(mob/user)
 	// Stage-3: pickable like a wild bush
@@ -210,8 +257,10 @@
 			var/num_fibers = rand(1, 2)
 			for(var/i in 1 to num_fibers)
 				new /obj/item/natural/fibers(user.loc)
-			to_chat(user, span_notice("I trim back the overgrowth and collect [num_fibers] [num_fibers == 1 ? "fiber" : "fibers"]."))
-			growth_progress = 0  // resets hedge-growth timer
+			to_chat(user, span_notice("I trim back the overgrowth and collect [num_fibers] [num_fibers == 1 ? "fiber" : "fibers"]. The bush will stay trimmed until Dendor's blessing stirs it to grow again."))
+			growth_progress = 0
+			permanently_trimmed = TRUE
+			STOP_PROCESSING(SSprocessing, src)
 		return
 
 	// Shovelling out

@@ -321,6 +321,18 @@
 			visible_message(span_green("[usr] invokes Dendor's favor upon [tree]."))
 			return TRUE
 
+	// Fey mushroom circle / mature bush — bless crops re-enables overgrowth timer if permanently trimmed.
+	var/obj/structure/mushroom_circle/fey/MC = istype(target_atom, /obj/structure/mushroom_circle/fey) ? target_atom : locate(/obj/structure/mushroom_circle/fey) in target_turf
+	if(MC && MC.active && MC.permanently_trimmed)
+		MC.receive_bless_crop()
+		visible_message(span_green("[usr] invokes Dendor's blessing upon [MC] — the fey energies stir anew!"))
+		return TRUE
+	var/obj/structure/bush_sapling/bush = istype(target_atom, /obj/structure/bush_sapling) ? target_atom : locate(/obj/structure/bush_sapling) in target_turf
+	if(bush && bush.stage == BUSHSAP_STAGE_MATURE && !bush.dead && bush.permanently_trimmed)
+		bush.receive_bless_crop()
+		visible_message(span_green("[usr] invokes Dendor's blessing upon [bush] — growth stirs anew!"))
+		return TRUE
+
 	to_chat(user, span_warning("That target cannot receive this blessing."))
 	return FALSE
 
