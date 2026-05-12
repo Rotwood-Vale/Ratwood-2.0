@@ -14,6 +14,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_FILLING)
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/pieslice
 	slices_num = 5
+	bitesize = 5
 	slice_name = "pie slice"
 	slice_batch = TRUE
 	faretype = FARE_LAVISH //an entire pie! all to yourself!
@@ -115,6 +116,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_GOOD)
 	slices_num = 4
 	tastes = list("crispy butterdough" = 1, "sweet berries" = 1)
+	bitesize = 4
 	filling_color = "#4a62cf"
 	slice_name = "berry pie slice"
 
@@ -124,6 +126,7 @@
 	desc = "A delicious, homemade pie made with wild berries. Still needs to be sliced."
 	slices_num = 4
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_GOOD, /datum/reagent/berrypoison = 12)
+	bitesize = 4
 	tastes = list("crispy butterdough" = 1, "bitter berries" =1)
 	filling_color = "#4a62cf"
 	slice_name = "berry pie slice"
@@ -134,6 +137,7 @@
 	desc = "A delicious, homemade pie made with the sliced apples. Still needs to be cut."
 	slices_num = 4
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_GOOD)
+	bitesize = 4
 	tastes = list("baked apples and crispy butterdough" = 1)
 	filling_color = "#947a4b"
 	slice_name = "apple pie slice"
@@ -144,6 +148,7 @@
 	desc = "A delicious, homemade pie made with the inside of a crustacean. Still needs to be sliced."
 	slices_num = 4
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_GOOD)
+	bitesize = 4
 	tastes = list("crispy butterdough" = 1, "rich crab meat" = 1)
 	filling_color = "#f1e0cb"
 	slice_name = "crab pie slice"

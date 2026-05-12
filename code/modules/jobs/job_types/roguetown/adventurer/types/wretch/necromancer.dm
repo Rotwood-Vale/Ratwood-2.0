@@ -38,6 +38,7 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/reagent_containers/glass/bottle/rogue/manapot
 	neck = /obj/item/clothing/neck/roguetown/gorget
+	id = /obj/item/clothing/neck/roguetown/psicross/inhumen
 	beltl = /obj/item/rogueweapon/huntingknife
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
@@ -65,6 +66,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/tame_undead)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead_formation/necromancer)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead_guard)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/lacrima/free)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)
 		wretch_select_bounty(H)
 	H.grant_language(/datum/language/undead)

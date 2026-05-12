@@ -415,7 +415,7 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 		mind.rituos_spell = null
 	to_chat(mind.current, span_notice("...and that's all I dreamt of."))
 	if(HAS_TRAIT(mind.current, TRAIT_STUDENT))
-		REMOVE_TRAIT(mind.current, TRAIT_STUDENT, TRAIT_GENERIC)
+		REMOVE_TRAIT(mind.current, TRAIT_STUDENT, null)
 		to_chat(mind.current, span_nicegreen("I feel that I can be educated in a skill once more."))
 	close_ui()
 

@@ -20,6 +20,7 @@
 /obj/item/reagent_containers/food/snacks/rogue/onionsteak
 	name = "onion steak"
 	desc = "Roasted meat garnished with fragrant fried onions, then slathered with the juices of both for a perfect mouth-watering sauce."
+	bitesize = 4
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
 	icon_state = "onionsteak"
 	tastes = list("steak" = 1, "onions" = 1)
@@ -52,10 +53,12 @@
 /obj/item/reagent_containers/food/snacks/rogue/carrotsteak
 	name = "carrot steak"
 	desc = "Roasted meat paired with a savory baked carrot, then slathered with the juices of both for a perfect mouth-watering sauce."
+	bitesize = 4
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
 	icon_state = "carrotsteak"
 	tastes = list("steak" = 1, "carrot" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
+	faretype = FARE_NEUTRAL
 	foodtype = MEAT
 	warming = 5 MINUTES
 	rotprocess = SHELFLIFE_DECENT
@@ -83,8 +86,10 @@
 	tastes = list("steak" = 1, "onion" = 1, "carrots" = 1)
 	name = "steak meal"
 	desc = ""
+	bitesize = 5
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
 	icon_state = "steakmeal"
+	faretype = FARE_FINE
 	foodtype = VEGETABLES | MEAT
 	warming = 3 MINUTES
 	rotprocess = SHELFLIFE_DECENT
@@ -96,6 +101,7 @@
 	tastes = list("savory sausage" = 1, "cabbage" = 1)
 	name = "wiener on cabbage"
 	desc = "A rich and hearty meal, perfect for a soldier on the march."
+	bitesize = 4
 	faretype = FARE_NEUTRAL
 	portable = FALSE
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
@@ -112,6 +118,7 @@
 	tastes = list("savory sausage" = 1, "potato" = 1)
 	name = "wiener on tato"
 	desc = "Stout and nourishing."
+	bitesize = 4
 	faretype = FARE_NEUTRAL
 	portable = FALSE
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
@@ -141,6 +148,7 @@
 /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/spiced
 	name = "spiced bird-roast"
 	desc = "A plump bird, roasted perfection, spiced to taste divine."
+	bitesize = 4
 	faretype = FARE_LAVISH
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
 	icon_state = "pepperchicken"
@@ -151,6 +159,7 @@
 /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/butter
 	name = "butter bird-roast"
 	desc = "A plump bird, roasted perfection, overflowing with butter from the inside."
+	bitesize = 4
 	faretype = FARE_LAVISH
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
 	icon_state = "butterchicken"
@@ -161,6 +170,7 @@
 /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/doublestacked
 	name = "bird filled bird-roast"
 	desc = "A plump bird, roasted perfection.. filled with another bird - what compelled you to make this? Psydon Weeps at your hubris."
+	bitesize = 6
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
 	icon_state = "stuffedchicken"
 	eat_effect = /datum/status_effect/buff/mealbuff
@@ -172,6 +182,7 @@
 	tastes = list("savory sausage" = 1, "fried onions" = 1)
 	name = "wiener and onions"
 	desc = "Stout and flavourful."
+	bitesize = 4
 	faretype = FARE_NEUTRAL
 	portable = FALSE
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
@@ -203,6 +214,7 @@
 	tastes = list("savory sausage" = 1, "potato" = 1)
 	name = "wiener meal"
 	desc = "Stout and nourishing."
+	bitesize = 5
 	faretype = FARE_NEUTRAL
 	portable = FALSE
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
@@ -218,6 +230,7 @@
 	tastes = list("frybird" = 1, "tato" = 1)
 	name = "frybird with a tato"
 	desc = "Hearty, comforting, and rich - Some say it was Ravox's favorite meal."
+	bitesize = 4
 	faretype = FARE_FINE
 	portable = FALSE
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
@@ -233,6 +246,7 @@
 	tastes = list("frybird" = 1)
 	name = "frybird bucket"
 	desc = "Hearty, comforting, and rich - Vale frybird is the best on the continent! Now served in a convenient bucket!"
+	bitesize = 9 //ITS AN ENTIRE BUCKET!!
 	faretype = FARE_FINE
 	portable = FALSE
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'

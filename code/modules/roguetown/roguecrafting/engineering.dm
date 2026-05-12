@@ -126,6 +126,14 @@
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 3
 
+/datum/crafting_recipe/roguetown/engineering/slurbow
+	name = "Slurbow"
+	result = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
+	reqs = list(/obj/item/ingot/steel = 2, /obj/item/natural/fibers = 1, /obj/item/natural/wood/plank = 4)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 5
+
 /datum/crafting_recipe/roguetown/engineering/twentybolts
 	name = "Crossbow Bolts 20x"
 	reqs = list(/obj/item/natural/wood/plank = 3, /obj/item/ingot/iron)
@@ -377,6 +385,25 @@
 
 // ----------- Explosive grenades and gas belchers -----------
 // Mostly here to avoid having to use spark-generating 6 step recipes around impact grenades and other instant explosives
+
+/datum/crafting_recipe/roguetown/engineering/tntbomb
+	name = "blastsand sticks"
+	category = "Explosives"
+	result = /obj/item/tntstick
+	reqs = list(/obj/item/paper = 2, /obj/item/alch/coaldust = 2, /obj/item/compost = 1, /obj/item/natural/fibers = 1)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4
+
+
+/datum/crafting_recipe/roguetown/engineering/satchelbomb
+	name = "blastsand satchel"
+	category = "Explosives"
+	result = /obj/item/satchel_bomb
+	reqs = list(/obj/item/storage/backpack/rogue/satchel  = 1, /obj/item/tntstick = 3, /obj/item/alch/firedust = 1, /obj/item/natural/fibers = 1)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/engineering/impactexplosive
 	name = "impact grenades (x3)"

@@ -93,6 +93,9 @@
 			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
 			beltl = /obj/item/storage/keyring/merchant
 			backr = /obj/item/storage/backpack/rogue/satchel
+		backpack_contents = list(
+		/obj/item/mini_flagpole/merchant = 1,
+	)
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/secular)
 	if(prob(33))

@@ -16,7 +16,6 @@
 	damage_deflection = 10
 	hardness = 3
 
-
 /datum/crafting_recipe/roguetown/turfs/desert/sandstone
 	name = "sandstone wall"
 	result = /turf/closed/wall/mineral/rogue/sandstone
@@ -46,7 +45,7 @@
 
 /datum/crafting_recipe/roguetown/turfs/desert/sandbrick
 	name = "sandbrick wall"
-	result = /turf/closed/wall/mineral/rogue/sandstone
+	result = /turf/closed/wall/mineral/rogue/sandbrick
 	reqs = list(/obj/item/natural/stone = 2)
 	skillcraft = /datum/skill/craft/masonry
 	verbage_simple = "construct"
@@ -61,8 +60,8 @@
 	smooth = SMOOTH_TRUE | SMOOTH_MORE
 	smooth_icon = 'modular_deserttown/icons/rock.dmi'
 	canSmoothWith = list(/turf/closed/mineral/random/rogue/sandstone, /turf/closed/mineral/rogue/sandstone)
-	turf_type = /turf/open/floor/rogue/naturalstone
-	baseturfs = /turf/open/floor/rogue/naturalstone
+	turf_type = /turf/open/floor/rogue/naturalstone/sandstone
+	baseturfs = /turf/open/floor/rogue/naturalstone/sandstone
 	above_floor = /turf/open/floor/rogue/naturalstone/sandstone
 
 /turf/closed/mineral/rogue/bedrock/sandstone
@@ -81,8 +80,9 @@
 	smooth = SMOOTH_TRUE | SMOOTH_MORE
 	smooth_icon = 'modular_deserttown/icons/rock.dmi'
 	canSmoothWith = list(/turf/closed/mineral/random/rogue/sandstone, /turf/closed/mineral/rogue/sandstone)
-	turf_type = /turf/open/floor/rogue/naturalstone
-	baseturfs = /turf/open/floor/rogue/naturalstone
+	turf_type = /turf/open/floor/rogue/naturalstone/sandstone
+	baseturfs = /turf/open/floor/rogue/naturalstone/sandstone
+	above_floor = /turf/open/floor/rogue/naturalstone/sandstone
 	mineralSpawnChanceList = list(
 		/turf/closed/mineral/rogue/sandstone/salt = 5,
 		/turf/closed/mineral/rogue/sandstone/iron = 15,

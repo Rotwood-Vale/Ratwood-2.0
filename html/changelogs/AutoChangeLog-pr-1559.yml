@@ -1,0 +1,14 @@
+author: "The-Sun-In-Splendour"
+delete-after: True
+changes:
+  - balance: "inspector now has MASTERS in their chosen weapon. gulp."
+  - balance: "inspector now gets a slurbow"
+  - balance: "inspector now gets expert crossbow"
+  - balance: "inspector loses 1 con for 1 per"
+  - balance: "inspector's inquisitorial hat now has 225 integrity from 180"
+  - balance: "inspector's armoured inquisitorial duster now has 315 integrity from 270"
+  - balance: "inspector's armoured inquisitorial duster now offers the PSYDONIC ENDURANCE buff, to offset the loss of DODGE EXPERT"
+  - balance: "garrote can now be fixed with regular ropes rather than only inquiry cordage"
+  - balance: "confessor now has a different statspread of 3PER, 2SPD, 2WIL"
+  - balance: "confessor's coat now has 270 durability, same as heavy leather coat"
+  - balance: "confessor's hood and inquisitorial hat now both fireproof. ENDURE your burn wounds with style!"

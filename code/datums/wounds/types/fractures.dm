@@ -233,6 +233,7 @@
 		var/mob/living/carbon/carbon_affected = affected
 		carbon_affected.update_disabled_bodyparts()
 	if(HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS))
+		affected.emote("deathgurgle", forced = TRUE)
 		affected.death()
 
 /datum/wound/fracture/neck/on_mob_loss(mob/living/affected)

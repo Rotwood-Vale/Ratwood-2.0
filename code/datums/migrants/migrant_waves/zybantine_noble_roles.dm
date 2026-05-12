@@ -91,7 +91,7 @@
 		belt = /obj/item/storage/belt/rogue/leather/cloth/lady
 		head = /obj/item/clothing/head/roguetown/nyle
 		shirt = /obj/item/clothing/suit/roguetown/armor/armordress/winterdress/monarch
-		id = /obj/item/scomstone/garrison
+		id = /obj/item/clothing/ring/silver
 		shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	else if(should_wear_masc_clothes(H))
 		head = /obj/item/clothing/head/roguetown/nyle
@@ -135,12 +135,13 @@
 /datum/advclass/zybantine_janissary
 	name = "Janissary Bodyguard"
 	outfit = /datum/outfit/job/roguetown/zybantine/janissary
-	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_BREADY, TRAIT_LONGSTRIDER, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_ZYBANTINE_JANISSARY)
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_WIL = 2,
-		STATKEY_CON = 1,
+		STATKEY_CON = 2,
+		STATKEY_PER = 1,
 		STATKEY_SPD = 1,
 	)
 
@@ -241,7 +242,7 @@
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/stealing, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/lockpicking, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/traps, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
 #undef CTAG_ZYBANTINE_EMIR
 #undef CTAG_ZYBANTINE_AMIRAH
 #undef CTAG_ZYBANTINE_JANISSARY

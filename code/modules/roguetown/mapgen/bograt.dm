@@ -51,7 +51,7 @@
 							/obj/structure/flora/roguegrass/herb/random = 4,
 							/obj/structure/flora/rogueshroom = 1,
 							/obj/effect/decal/remains/bear = 0.5,
-							/obj/effect/decal/remains/human = 0.2)
+							/obj/structure/deadbodyrandom/low = 0.2)
 	spawnableTurfs = list(/turf/open/floor/rogue/dirt/road=2,
 						/turf/open/water/swamp=2,)
 	allowed_areas = list(/area/rogue/outdoors/bograt)
@@ -100,6 +100,7 @@
 							/obj/effect/decal/remains/human = 2,
 							/obj/structure/flora/mushroomcluster/unhappy = 2,
 							/obj/structure/flora/tinymushrooms/unhappy = 2,
+							/obj/structure/deadbodyrandom/med = 0.3,
 							/obj/structure/zizo_bane = 3)
 	spawnableTurfs = list(/turf/open/floor/rogue/dirt/road=3,
 						/turf/open/water/swamp=3)

@@ -160,7 +160,7 @@
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
 	armor = ARMOR_LEATHER_STUDDED
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
-	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb
 	name = "megarmach scale coat"
@@ -268,7 +268,6 @@
 	body_parts_covered = COVERAGE_TORSO
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	sewrepair = TRUE
 	sleevetype = null
 	sleeved = null
 	armor_class = ARMOR_CLASS_LIGHT
@@ -281,7 +280,6 @@
 	slot_flags = ITEM_SLOT_ARMOR
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
 	sleevetype = "shirt"
-	sewrepair = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/leather/vest/white
 	color = CLOTHING_WHITE
@@ -309,11 +307,8 @@
 	desc = "A stylish coat worn by Duelists of Valoria. Light and flexible, it does not impede the complex movements they are known for. Well padded."
 	icon = 'icons/roguetown/clothing/armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/armor.dmi'
-
 	icon_state = "bwleathercoat"
 	item_state = "bwleathercoat"
-
-	sewrepair = TRUE
 	boobed = TRUE
 
 	slot_flags = ITEM_SLOT_ARMOR
@@ -414,3 +409,9 @@
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	armor = ARMOR_PADDED_BAD
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/fur
+	name = "fur underarmor"
+	desc = "A heavy set of hardened robes, lined with fur. The leather is composed of several creatures that were notably difficult to fell by arrow. A proof or rangership among many."
+	icon_state = "hatanga"
+	item_state = "hatanga"

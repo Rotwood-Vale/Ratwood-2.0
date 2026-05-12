@@ -12,6 +12,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Blindness (+1 TRI)"=/datum/charflaw/noeyeall,
 	"Clingy"=/datum/charflaw/clingy,
 	"Colorblind (+1 TRI)"=/datum/charflaw/colorblind,
+	"Compliant"=/datum/charflaw/compliant,
 	"Critical Weakness (+1 TRI)"=/datum/charflaw/critweakness,
 	"Cyclops (L) (+1 TRI)"=/datum/charflaw/noeyel,
 	"Cyclops (R) (+1 TRI)"=/datum/charflaw/noeyer,
@@ -20,6 +21,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Hunted (+1 TRI)"=/datum/charflaw/hunted,
 	"Isolationist"=/datum/charflaw/isolationist,
 	"Junkie"=/datum/charflaw/addiction/junkie,
+	"Lawless"=/datum/charflaw/lawless,
 	"Marked by Baotha" =/datum/charflaw/marked_by_baotha,
 	"Leper (+1 TRI)"=/datum/charflaw/leprosy,
 	"Masochist"=/datum/charflaw/addiction/masochist,
@@ -44,6 +46,11 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Wood Arm (L) (+1 TRI)"=/datum/charflaw/limbloss/arm_l,
 	"Wood Arm (R) (+1 TRI)"=/datum/charflaw/limbloss/arm_r,
 	"Hemophage (+1 TRI)"=/datum/charflaw/hemophage,
+	"Feeble-bodied"=/datum/charflaw/weak,
+	"Frail"=/datum/charflaw/frail,
+	"Doddering"=/datum/charflaw/slow,
+	"Nimrodded"=/datum/charflaw/dull,
+	"Unlucky"=/datum/charflaw/unlucky,
 	))
 
 /datum/charflaw
@@ -332,6 +339,27 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.adjust_triumphs(1)
+
+/datum/charflaw/compliant
+	name = "Compliant"
+	desc = "No matter how hard I try, I can't put up a fight against others. <br>\
+	<small>I will fail every attempt to resist out of a grab, and others will always be able to break free of mine. Thieves will be able to rob me without issue.</small>"
+
+/datum/charflaw/compliant/on_mob_creation(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		ADD_TRAIT(H, TRAIT_COMPLIANT, TRAIT_GENERIC)
+		H.compliance = 1
+		H.apply_status_effect(/datum/status_effect/compliance)
+
+/datum/charflaw/compliant/on_removal(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		REMOVE_TRAIT(H, TRAIT_COMPLIANT, TRAIT_GENERIC)
+		H.compliance = 0
+		H.remove_status_effect(/datum/status_effect/compliance)
 
 /datum/charflaw/hunted
 	name = "Hunted"
@@ -776,6 +804,13 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/marked_by_baotha/on_mob_creation(mob/user)
 
 	var/mutable_appearance/marking_overlay = mutable_appearance('icons/roguetown/misc/baotha_marking.dmi', "marking_[user.gender == "male" ? "m" : "f"]", -BODY_LAYER)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(isdwarf(H) || isgoblinp(H) || iskobold(H) || iscritter(H))
+			if(H.gender == MALE)
+				marking_overlay.pixel_y -= 5
+			else
+				marking_overlay.pixel_y -= 3
 	user.add_overlay(marking_overlay)
 
 	spawn(40)
@@ -810,3 +845,54 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	..()
 	REMOVE_TRAIT(user, TRAIT_HEMOPHAGE, TRAIT_GENERIC)
 	REMOVE_TRAIT(user, TRAIT_VAMPBITE, TRAIT_GENERIC)
+
+
+/datum/charflaw/weak
+	name = "Feeble-bodied"
+	desc = "Limp-wristed and ineffectual, I am not as physically strong as most. <br>\
+	<small>-4 to Strength.</small>"
+
+/datum/charflaw/weak/apply_post_equipment(mob/user)
+	var/mob/living/carbon/human/H = user
+	to_chat(user, "You are weaker than most")
+	H.change_stat(STATKEY_STR, -4)
+
+/datum/charflaw/frail
+	name = "Frail"
+	desc = "Prone to bruising as well as coughs and sneezes, I am more easily injured than most. <br>\
+	<small>-4 to Constitution.</small>"
+
+/datum/charflaw/frail/apply_post_equipment(mob/user)
+	var/mob/living/carbon/human/H = user
+	to_chat(user, "You are more vulnerable than most")
+	H.change_stat(STATKEY_CON, -4)
+
+/datum/charflaw/slow
+	name = "Doddering"
+	desc = "Slow and Steady, you say to yourself. Perhaps a torn ankle, or perhaps it is simply your nature. You are slower than most. <br>\
+	<small>-4 to Speed.</small>"
+
+/datum/charflaw/slow/apply_post_equipment(mob/user)
+	var/mob/living/carbon/human/H = user
+	to_chat(user, "You are slower than most")
+	H.change_stat(STATKEY_SPD, -4)
+
+/datum/charflaw/dull
+	name = "Nimrodded"
+	desc = "Everyone keeps saying fancy words around you but you've never been able to figure out why... You are less intellectual than most. <br>\
+	<small>- 4 to Intellect.</small>"
+
+/datum/charflaw/dull/apply_post_equipment(mob/user)
+	var/mob/living/carbon/human/H = user
+	to_chat(user, "You are duller than most")
+	H.change_stat(STATKEY_INT, -4)
+
+/datum/charflaw/unlucky
+	name = "Unlucky"
+	desc = "Perhaps it is the glass mirror you cracked, or the black cat that follows you, or a curse of the gods. You just feel... off. <br>\
+	<small>-4 to Luck.</small>"
+
+/datum/charflaw/unlucky/apply_post_equipment(mob/user)
+	var/mob/living/carbon/human/H = user
+	to_chat(user, "You are unluckier than most")
+	H.change_stat(STATKEY_LCK, -4)

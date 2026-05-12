@@ -1,0 +1,5 @@
+author: "ophaq"
+delete-after: True
+changes:
+  - rscadd: "RGB color changing to magelight motes. Middle click the mage hand to set it, alt+rightclick to reset."
+  - qol: "Nearly doubles prestidigitation cleaning speed at the cost of a bit more stamina."

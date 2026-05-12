@@ -157,8 +157,6 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 		/datum/crafting_recipe/roguetown/survival/stoneknife,
 		/datum/crafting_recipe/roguetown/survival/stonespear,
 		/datum/crafting_recipe/roguetown/survival/stonesword,
-		/datum/crafting_recipe/roguetown/survival/pot,
-		/datum/crafting_recipe/roguetown/survival/net,
 		)
 
 	AddElement(
@@ -180,27 +178,6 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 	possible_item_intents = list(/datum/intent/hit, /datum/intent/mace/smash/wood, /datum/intent/dagger/cut)
 	sharpening_factor = 21
 	spark_chance = 80
-
-/obj/item/natural/whetstone/Initialize(mapload)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(
-		/datum/crafting_recipe/roguetown/survival/peasantry/thresher/whetstone,
-		/datum/crafting_recipe/roguetown/survival/peasantry/shovel/whetstone,
-		/datum/crafting_recipe/roguetown/survival/peasantry/hoe/whetstone,
-		/datum/crafting_recipe/roguetown/survival/peasantry/pitchfork/whetstone,
-		/datum/crafting_recipe/roguetown/survival/peasantry/goedendag,
-		/datum/crafting_recipe/roguetown/survival/peasantry/scythe,
-		/datum/crafting_recipe/roguetown/survival/peasantry/warflail,
-		/datum/crafting_recipe/roguetown/survival/peasantry/warpick,
-		/datum/crafting_recipe/roguetown/survival/peasantry/warpick_steel,
-		/datum/crafting_recipe/roguetown/survival/peasantry/maciejowski_knife,
-		/datum/crafting_recipe/roguetown/survival/peasantry/maciejowski_messer,
-		)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-		)
 
 /*
 	This right here is stone lore,

@@ -32,6 +32,11 @@
 
 /datum/element/relay_attackers/proc/on_attack_generic(atom/target, mob/living/attacker, list/modifiers)
 	SIGNAL_HANDLER
+	if(ismob(target))
+		var/mob/target_mob = target
+		if(target_mob.ai_controller?.blackboard[BB_BASIC_MOB_TAMED])
+			if(attacker.a_intent?.type == INTENT_HELP || attacker.a_intent?.type == INTENT_GRAB)
+				return
 	relay_attacker(target, attacker)
 
 /datum/element/relay_attackers/proc/on_attack_npc(atom/target, mob/living/attacker)

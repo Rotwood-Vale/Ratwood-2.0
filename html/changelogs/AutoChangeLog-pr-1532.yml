@@ -1,0 +1,5 @@
+author: "Jamdrawers"
+delete-after: True
+changes:
+  - balance: "chain gloves are cheaper to smith at two pairs per bar. Full chain coifs are more expensive to smith at two bars per full coif.\nAlchemical Transmutation Recipes such as stone-to-coal and coal-to-iron have a higher skill requirement\niron dust can be crafted into iron ore with smelting skill"
+  - refactor: "cleans up and compresses code for lots of crafting recipes"

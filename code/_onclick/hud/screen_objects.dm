@@ -218,7 +218,7 @@
 	..()
 	if(hud)
 		cut_overlay(hud.object_overlay)
-		QDEL_NULL(hud.object_overlay)
+		hud.object_overlay = null
 
 /atom/movable/screen/inventory/update_icon_state()
 	if(!icon_empty)
@@ -1710,7 +1710,7 @@
 				M.playsound_local(M, 'sound/misc/notice (2).ogg', 100, FALSE)
 				if(M.sexcon)
 					var/datum/sex_controller/sexo = M.sexcon
-					sexo.adjust_charge(SEX_MAX_CHARGE)
+					sexo.set_charge(sexo.get_max_charge())
 
 
 /atom/movable/screen/rmbintent
@@ -2144,4 +2144,3 @@
 
 /atom/movable/screen/bloodpool_maskpart/mask
 	icon_state = "mana_mask"
-

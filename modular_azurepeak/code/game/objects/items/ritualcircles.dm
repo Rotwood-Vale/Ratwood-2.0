@@ -111,8 +111,78 @@
 
 /obj/structure/ritualcircle/xylix
 	name = "Rune of Trickery"
+	desc = "A Holy Rune of Xylix. The air feels untrustworthy."
 	icon_state = "xylix_chalky"
-	desc = "A Holy Rune of Xylix. You can hear the wind, and distant bells, in the distance."
+	var/trickeryrites = list("Rite of the Pratfall", "Stagehand's Silence")
+
+/obj/structure/ritualcircle/xylix/attack_hand(mob/living/user)
+	if(!istype(user.patron, /datum/patron/divine/xylix))
+		to_chat(user, span_smallred("I don't know the proper rites for this..."))
+		return
+
+	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
+		to_chat(user, span_smallred("I don't know the proper rites for this..."))
+		return
+
+	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
+		to_chat(user, span_smallred("I have performed enough rituals for the day..."))
+		return
+
+	var/riteselection = input(user, "Rituals of Trickery", src) as null|anything in trickeryrites
+	switch(riteselection)
+		if("Rite of the Pratfall")
+			if(!do_after(user, 40))
+				return
+			user.say("Hehe! Tippy toes and tumbling woes...")
+			playsound(loc, 'sound/misc/clownedhehe.ogg', 90, FALSE)
+
+			if(!do_after(user, 40))
+				return
+			user.say("Hoohoo! Step with care, or embrace the air!")
+			playsound(loc, 'sound/misc/clownedhohoho.ogg', 90, FALSE)
+
+			if(!do_after(user, 30))
+				return
+			user.say("Hahaha! Your slippery fate awaits every move! A pratfall a day keeps the dignity away!")
+			playsound(loc, 'sound/magic/decoylaugh.ogg', 90, FALSE)
+
+			icon_state = "xylix_active"
+			loc.visible_message(span_warning("[user] traces a mocking sigil upon the rune."))
+
+			for(var/mob/living/M in range(1, src))
+				M.apply_status_effect(/datum/status_effect/buff/xylix_pratfall)
+
+			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+			addtimer(CALLBACK(src, PROC_REF(reset_rune)), 120)
+
+		if("Stagehand's Silence")
+			if(!do_after(user, 50))
+				return
+			user.say("I CALL UPON THE MANY-FACED TRAGEDIAN!!")
+			playsound(loc, 'sound/misc/clownedhehe.ogg', 90, FALSE)
+
+			if(!do_after(user, 50))
+				return
+			user.say("PLAY YOUR HARP- LET EACH STRING DEAFEN MY FOES!!")
+			playsound(loc, 'sound/misc/clownedhohoho.ogg', 90, FALSE)
+
+			if(!do_after(user, 50))
+				return
+			user.say("--ON WITH THE SHOW!!")
+			to_chat(user, span_cultsmall("Every play needs its stagehands. Xylix will quicken the slow, speed your sneaking, and quiet your footsteps... for a time."))
+			playsound(loc, 'sound/magic/mockery.ogg', 90, FALSE, -1)
+			icon_state = "xylix_active"
+			stagehands_silence()
+			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+			addtimer(CALLBACK(src, PROC_REF(reset_rune)), 120)
+
+/obj/structure/ritualcircle/xylix/proc/stagehands_silence()
+	var/list/ritualtargets = view(1, loc)
+	for(var/mob/living/carbon/human/target in ritualtargets)
+		target.apply_status_effect(/datum/status_effect/buff/stagehands_silence)
+
+/obj/structure/ritualcircle/xylix/proc/reset_rune()
+	icon_state = "xylix_chalky"
 
 /obj/structure/ritualcircle/ravox
 	name = "Rune of Justice"
@@ -174,7 +244,7 @@
 	name = "Rune of Beasts"
 	desc = "A Holy Rune of Dendor. Becoming one with nature is to connect with ones true instinct."
 	icon_state = "dendor_chalky"
-	var/bestialrites = list("Rite of the Lesser Wolf")
+	var/bestialrites = list("Rite of the Lesser Wolf", "Borrowed Madness", "Spider Kinship")
 
 /obj/structure/ritualcircle/dendor/attack_hand(mob/living/user)
 	if(!..())
@@ -208,18 +278,103 @@
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 							spawn(120)
 								icon_state = "dendor_chalky"
+		if("Borrowed Madness")
+			if(do_after(user, 50))
+				user.say("I pray for strength...")
+				playsound(loc, 'sound/vo/mobs/vw/idle (1).ogg', 100, FALSE, -1)
+				if(do_after(user, 50))
+					user.say("I pray for pain...")
+					playsound(loc, 'sound/vo/mobs/vw/idle (4).ogg', 100, FALSE, -1)
+					if(do_after(user, 50))
+						loc.visible_message(span_warning("[user] produces an eerie sound as they titter quietly, softly weeping. Their body twitches ever so slightly..."))
+						playsound(loc, 'sound/vo/mobs/vw/bark (1).ogg', 100, FALSE, -1)
+						if(do_after(user, 30))
+							icon_state = "dendor_active"
+							loc.visible_message(span_warning("[user] suddenly snaps their head upward, letting out a twisted howl!"))
+							playsound(loc, 'sound/vo/mobs/wwolf/howl (2).ogg', 100, FALSE, -1)
+							borrowedmadness(src)
+							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+							spawn(120)
+								icon_state = "dendor_chalky"
+		if("Spider Kinship")
+			if(do_after(user, 50))
+				user.say("I call to the ruthless wilds,")
+				playsound(loc, 'sound/vo/mobs/spider/idle (1).ogg', 100, FALSE, -1)
+				if(do_after(user, 50))
+					user.say("... grant me an agile form of your dominion..!")
+					playsound(loc, 'sound/vo/mobs/spider/idle (3).ogg', 100, FALSE, -1)
+					if(do_after(user, 30))
+						icon_state = "dendor_active"
+						loc.visible_message(span_warning("[user] seizes up, suddenly covered in a mess of silky webs, which then slough away into a sticky pile!"))
+						playsound(loc, 'sound/vo/mobs/spider/pain.ogg', 100, FALSE, -1)
+						spiderkinship(src)
+						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+						spawn(120)
+							icon_state = "dendor_chalky"
 
 /obj/structure/ritualcircle/dendor/proc/lesserwolf(src)
 	var/ritualtargets = view(1, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
 		target.apply_status_effect(/datum/status_effect/buff/lesserwolf)
 
+/obj/structure/ritualcircle/dendor/proc/borrowedmadness(src)
+	var/ritualtargets = view(1, loc)
+	for(var/mob/living/carbon/human/target in ritualtargets)
+		if(!istype(target.patron, /datum/patron/divine/dendor))
+			to_chat(target, span_warning("The ritual's power does not recognize me..."))
+			continue
+		to_chat(target, span_userdanger("Do you like hurting other people?"))
+		target.flash_fullscreen("redflash3")
+		target.emote("agony")
+		target.Unconscious(200)
+		target.Knockdown(200)
+		var/obj/effect/proc_holder/spell/self/wildshape/ws = target.mind?.get_spell(/obj/effect/proc_holder/spell/self/wildshape)
+		if(ws)
+			var/form_path = /mob/living/carbon/human/species/wildshape/dendormole
+			if(!(form_path in ws.possible_shapes))
+				ws.possible_shapes += form_path
+				to_chat(target, span_notice("The Moss Crawler form stirs within my soul..."))
+				addtimer(CALLBACK(src, PROC_REF(remove_ritual_form), target, form_path), 30 MINUTES)
+		else
+			to_chat(target, span_warning("I lack the Beast Form ability to channel this power..."))
+
+/obj/structure/ritualcircle/dendor/proc/spiderkinship(src)
+	var/ritualtargets = view(1, loc)
+	for(var/mob/living/carbon/human/target in ritualtargets)
+		if(!istype(target.patron, /datum/patron/divine/dendor))
+			to_chat(target, span_warning("The ritual's power does not recognize me..."))
+			continue
+		to_chat(target, span_userdanger("The webs of madness and nature whisper to me. The webs are eternal. Long live the Nest!"))
+		target.flash_fullscreen("redflash3")
+		target.emote("agony")
+		target.Unconscious(100)
+		target.Knockdown(200)
+		var/obj/effect/proc_holder/spell/self/wildshape/ws = target.mind?.get_spell(/obj/effect/proc_holder/spell/self/wildshape)
+		if(ws)
+			var/form_path = /mob/living/carbon/human/species/wildshape/mirecrawler
+			if(!(form_path in ws.possible_shapes))
+				ws.possible_shapes += form_path
+				to_chat(target, span_notice("The Mire Crawler form stirs within my soul..."))
+				addtimer(CALLBACK(src, PROC_REF(remove_ritual_form), target, form_path), 30 MINUTES)
+		else
+			to_chat(target, span_warning("I lack the Beast Form ability to channel this power..."))
+
+/// Removes a temporary ritual form from the druid's Beast Form wheel when the duration expires.
+/obj/structure/ritualcircle/dendor/proc/remove_ritual_form(mob/living/carbon/human/target, form_path)
+	if(QDELETED(target) || !target.mind)
+		return
+	var/obj/effect/proc_holder/spell/self/wildshape/ws = target.mind.get_spell(/obj/effect/proc_holder/spell/self/wildshape)
+	if(ws && (form_path in ws.possible_shapes))
+		ws.possible_shapes -= form_path
+		to_chat(target, span_warning("The borrowed form fades from my soul..."))
+
+
 
 /obj/structure/ritualcircle/malum
 	name = "Rune of Forge"
 	desc = "A Holy Rune of Malum. A hammer and heat, to fix any imperfections with."
 	icon_state = "malum_chalky"
-var/forgerites = list("Ritual of Blessed Reforgance")
+	var/forgerites = list("Ritual of Blessed Reforgance")
 
 /obj/structure/ritualcircle/malum/attack_hand(mob/living/user)
 	if(!..())
@@ -1024,7 +1179,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	desc = "A Holy Rune of Eora. A gentle warmth and joy spreads across your soul."
 	icon_state = "eora_chalky"
 
-	var/peacerites = list("Rite of Pacification")
+	var/peacerites = list("Rite of Pacification", "Rite of the Open Hearth")
 
 /obj/structure/ritualcircle/eora/attack_hand(mob/living/user)
 	if((user.patron?.type) != /datum/patron/divine/eora)
@@ -1051,6 +1206,35 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 							spawn(120)
 								icon_state = "eora_chalky"
+		if("Rite of the Open Hearth")
+			var/onrune = view(1, loc)
+			var/list/folksonrune = list()
+			for(var/mob/living/carbon/human/persononrune in onrune)
+				if(HAS_TRAIT(persononrune, TRAIT_EXTEROCEPTION))//Only works on Eorans
+					folksonrune += persononrune
+			if(!folksonrune.len)
+				to_chat(user, span_warning("There are no Eorans on the rune to perform this rite on."))
+				return
+			var/target = input(user, "Choose a host") as null|anything in folksonrune
+			if(!target)
+				return
+			user.say("I stand before you Mother to beg your ear and swear an oath!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("To stoke no anguish! To cause no pain!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("To mend what is frayed and redeem what has strayed!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("To shelter the lost and warm the forgotten!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			icon_state = "eora_active"
+			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+			eoranaura(target)
+			spawn(120)
+				icon_state = "eora_chalky"
 
 /obj/structure/ritualcircle/eora/proc/pacify(src)
 	var/ritualtargets = view(0, loc)
@@ -1058,6 +1242,14 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		loc.visible_message(span_warning("[target] sways like windchimes in the wind..."))
 		target.visible_message(span_green("I feel the burdens of my heart lifting. Something feels very wrong... I don't mind at all..."))
 		target.apply_status_effect(/datum/status_effect/buff/pacify)
+
+/obj/structure/ritualcircle/eora/proc/eoranaura(mob/living/carbon/human/target)
+	loc.visible_message(span_good("[target]'s form becomes enveloped in calming aura."))
+	spawn(20)
+		target.apply_status_effect(/datum/status_effect/eoranaura)
+		playsound(target, 'sound/magic/eora_bless.ogg', 90, FALSE, -1)
+		to_chat(target, span_boldred("I can do no HARM."))
+		ADD_TRAIT(target, TRAIT_PACIFISM, TRAIT_MIRACLE)
 
 
 
@@ -1881,6 +2073,11 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		loc.visible_message(span_cult("[target] moans and shivers on top of the rune. Lashes of purple flame dance across their lower abdomen as a new marking appears against their form."))
 		spawn(20)
 			var/mutable_appearance/marking_overlay = mutable_appearance('icons/roguetown/misc/baotha_marking.dmi', "marking_[target.gender == "male" ? "m" : "f"]", -BODY_LAYER)
+			if(isdwarf(target) || isgoblinp(target) || iskobold(target) || iscritter(target))
+				if(target.gender == MALE)
+					marking_overlay.pixel_y -= 6
+				else
+					marking_overlay.pixel_y -= 4
 			target.add_overlay(marking_overlay)
 			target.update_body_parts()
 			playsound(target, 'sound/health/fastbeat.ogg', 60)

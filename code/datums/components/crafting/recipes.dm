@@ -26,6 +26,7 @@
 	var/wallcraft = FALSE
 	var/diagonal = FALSE //allows diagonal structures to have their direction chosen.
 	var/ignoredensity = FALSE //if TRUE, allows crafting on top of dense structures (for curtains on walls/windows)
+	/// Crafting diff, every diff removes 25% chance to craft
 	var/craftdiff = 1
 	var/sellprice = 0
 	/// Whether this recipe will be hidden from recipe books
@@ -35,8 +36,15 @@
 	/// Whether this recipe will transmit a message in a 7x7 column around the source.
 	var/loud = FALSE
 	//crafting diff, every diff removes 25% chance to craft
-	var/required_tech_node = null // String ID of required tech node, or null if no tech required
-	var/tech_unlocked = TRUE // Set to TRUE when the required tech is unlocked
+	/// String ID of required tech node, or null if no tech required
+	var/required_tech_node = null
+	/// Set to TRUE when the required tech is unlocked
+	var/tech_unlocked = TRUE
+	/// Override the XP amount given on successful craft. -1 means use the default formula (STAINT*2 + craftdiff*10).
+	var/craft_xp_override = -1
+	var/list/cached_display_data
+	var/cached_category
+
 /*
 /datum/crafting_recipe/example
 	name = ""
@@ -48,6 +56,48 @@
 	category = CAT_NONE
 	subcategory = CAT_NONE
 */
+
+/datum/crafting_recipe/proc/build_display_cache()
+	var/list/data = list()
+	data["name"] = name
+	data["ref"] = "[REF(src)]"
+	data["path"] = type
+	data["sellprice"] = sellprice
+	data["craftingdifficulty"] = skill_to_string(craftdiff)
+
+	var/req_text = ""
+	for(var/atom/requirement as anything in reqs)
+		//We just need the name, so cheat-typecast to /atom for speed (even tho Reagents are /datum they DO have a "name" var)
+		//Also these are typepaths so sadly we can't just do "[a]"
+		req_text += " [reqs[requirement]] [initial(requirement.name)],"
+	if(req_text)
+		req_text = copytext(req_text, 1, length(req_text))
+	data["req_text"] = req_text
+
+	var/catalyst_text = ""
+	for(var/atom/catalyst as anything in chem_catalysts) //cheat-typecast
+		catalyst_text += " [chem_catalysts[catalyst]] [initial(catalyst.name)],"
+	if(catalyst_text)
+		catalyst_text = copytext(catalyst_text, 1, length(catalyst_text))
+	data["catalyst_text"] = catalyst_text
+
+	var/tool_text = ""
+	for(var/a in tools)
+		if(ispath(a, /obj/item))
+			var/obj/item/b = a
+			tool_text += " [initial(b.name)],"
+		else
+			tool_text += " [a],"
+	tool_text = replacetext(tool_text,",","",-1)
+	data["tool_text"] = tool_text
+
+	if(skillcraft)
+		var/datum/skill/S = skillcraft
+		cached_category = initial(S.name)
+	else
+		cached_category = "Other"
+
+	cached_display_data = data
 
 /datum/crafting_recipe/proc/generate_html(mob/user)
 	var/client/client = user
@@ -188,7 +238,7 @@
 		html += "<h1></h1>Suitable for all skills<br>"	
 
 	html += {"<div>
-		      <strong>Requirements</strong>
+			  <strong>Requirements</strong>
 			  <br>"}
 
 	for(var/path as anything in reqs)
@@ -212,7 +262,7 @@
 		html += {"
 		<br>
 		<div>
-		    <strong>Required Tools</strong>
+			<strong>Required Tools</strong>
 			<br>
 			  "}
 		for(var/atom/path as anything in tools)
@@ -229,7 +279,7 @@
 		html += {"
 		<br>
 		<div>
-		    <strong>Required Liquids</strong>
+			<strong>Required Liquids</strong>
 			<br>
 			  "}
 		for(var/atom/path as anything in chem_catalysts)

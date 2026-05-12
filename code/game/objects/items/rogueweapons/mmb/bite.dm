@@ -313,4 +313,10 @@
 		to_chat(user, span_warning("Sigh. It's not bleeding."))
 		return
 
+	if(HAS_TRAIT(user, TRAIT_VAMPBITE))
+		if(isliving(grabbed))
+			var/mob/living/victim = grabbed
+			if(!victim.has_status_effect(/datum/status_effect/debuff/kiss_ecstasy))
+				victim.apply_status_effect(/datum/status_effect/debuff/kiss_ecstasy)
+
 	user.drinksomeblood(grabbed, sublimb_grabbed)

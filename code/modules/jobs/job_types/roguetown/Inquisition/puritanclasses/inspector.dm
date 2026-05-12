@@ -19,10 +19,10 @@
 		TRAIT_OUTLANDER
 		)
 	subclass_stats = list(
-		STATKEY_CON = 3,
 		STATKEY_WIL = 3,
+		STATKEY_CON = 2,
 		STATKEY_SPD = 2,
-		STATKEY_PER = 1,
+		STATKEY_PER = 2,
 		STATKEY_INT = 1
 	)
 	subclass_skills = list(
@@ -32,7 +32,7 @@
 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
@@ -56,6 +56,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/otavan/inqboots
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	backr =  /obj/item/storage/backpack/rogue/satchel/otavan
+	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
 	head = /obj/item/clothing/head/roguetown/inqhat
 	mask = /obj/item/clothing/mask/rogue/spectacles/inq/spawnpair
 	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
@@ -84,19 +85,26 @@
 		if("Psydonic Longsword")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/long/psysword/preblessed(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
 		if("Psydonic Rapier")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/psy/preblessed(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
 		if("Daybreak (Whip)")
 			H.put_in_hands(new /obj/item/rogueweapon/whip/antique/psywhip(H), TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 5, TRUE)
 		if("Stigmata (Halberd)")
 			H.put_in_hands(new /obj/item/rogueweapon/halberd/psyhalberd/relic(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 5, TRUE)
 		if("Eucharist (Rapier)")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/psy/relic(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
+	var/quivers = list("Bolts - Steel-Tipped", "Sunderbolts - Silver-Tipped, Halved Damage")
+	var/bolt_choice = input(H,"CHOOSE YOUR MUNITIONS.", "TAKE UP PSYDON'S MISSILES.") as anything in quivers
+	switch(bolt_choice)
+		if("Bolts - Steel-Tipped")
+			H.equip_to_slot_or_del(new /obj/item/quiver/bolts, SLOT_BELT_R, TRUE)
+		if("Sunderbolts - Silver-Tipped, Halved Damage")
+			H.equip_to_slot_or_del(new /obj/item/quiver/holybolts, SLOT_BELT_R, TRUE)

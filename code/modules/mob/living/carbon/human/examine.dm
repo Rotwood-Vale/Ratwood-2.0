@@ -54,6 +54,21 @@
 		return display_name
 	return "<a href='?src=[REF(src)];task=show_custom_item_info;item_ref=[REF(I)]'>[display_name]</a>"
 
+/mob/living/carbon/human/proc/get_examine_item_name_with_hover(mob/user, obj/item/I)
+	if(!I)
+		return ""
+	var/display_name = get_examine_item_name_with_custom_link(user, I)
+	if(!I.show_examine_hover_tooltip())
+		return display_name
+	var/self_examine = (src == user)
+	var/tooltip_html = I.get_hover_examine_html(user, self_examine)
+	if(!tooltip_html)
+		return display_name
+	var/label = display_name
+	if(!I.has_customized_identity() && !I.always_show_examine_link)
+		label = "<u><font color='#add8e6'>[display_name]</font></u>"
+	return "<span data-component=\"TooltipHTML\" data-position=\"bottom-start\" data-html=\"[html_encode(tooltip_html)]\">[label]</span>"
+
 /mob/living/carbon/human/examine(mob/user)
 	var/observer_privilege = isobserver(user)
 	var/t_He = p_they(TRUE)
@@ -197,34 +212,45 @@
 		if(has_status_effect(/datum/status_effect/knot_tied))
 			. += span_warning("A knot is locked inside [p_them()]. [m1] being pulled around like a pet.")
 
-		// Facial/Creampie effect message
+		// Facial/Creampie/Body shot effect message
 		var/datum/status_effect/facial/facial = has_status_effect(/datum/status_effect/facial)
+		var/datum/status_effect/facial/external/external = has_status_effect(/datum/status_effect/facial/external)
 		var/datum/status_effect/facial/internal/creampie = null
+		var/datum/status_effect/creampie_leak/drip = null
 		if(observer_privilege || get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
 			creampie = has_status_effect(/datum/status_effect/facial/internal)
-		if(facial && creampie)
-			var/facial_wet_or_dry = !facial?.has_dried_up ? "glazed" : "plastered"
-			var/creampie_wet_or_dry = !creampie?.has_dried_up ? "dripping out" : "stained with"
-			var/we_wet_or_dry = facial?.has_dried_up && creampie?.has_dried_up ? "dried cum" : "cum" // only show dried if both status are set to dry
-			if(user != src && isliving(user))
+			drip = has_status_effect(/datum/status_effect/creampie_leak/long)
+			if(!drip)
+				drip = has_status_effect(/datum/status_effect/creampie_leak)
+		var/any_cum_effect = facial || external || creampie
+		if(any_cum_effect || drip)
+			var/show_detail = (user == src) || observer_privilege
+			if(!show_detail && isliving(user))
 				var/mob/living/L = user
-				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] [facial_wet_or_dry] and [creampie_wet_or_dry] [we_wet_or_dry]!") : span_warning("[m1] covered in something glossy!")
+				show_detail = (L.STAPER >= 8 && L.STAINT >= 5)
+			if(!show_detail)
+				if(any_cum_effect)
+					. += span_warning("[m1] covered in something glossy!")
 			else
-				. += span_aiprivradio("[m1] [facial_wet_or_dry] and [creampie_wet_or_dry] [we_wet_or_dry]!")
-		else if(facial)
-			var/wet_or_dry = !facial?.has_dried_up ? "glazed with cum" : "plastered with dried cum"
-			if(user != src && isliving(user))
-				var/mob/living/L = user
-				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] [wet_or_dry]!") : span_warning("[m1] smeared with something glossy!")
-			else
-				. += span_aiprivradio("[m1] [wet_or_dry]!")
-		else if(creampie)
-			var/wet_or_dry = !creampie?.has_dried_up ? "dripping out cum" : "stained with dried cum"
-			if(user != src && isliving(user))
-				var/mob/living/L = user
-				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] [wet_or_dry]!") : span_warning("[m1] letting out some glossy stuff!")
-			else
-				. += span_aiprivradio("[m1] [wet_or_dry]!")
+				if(external)
+					. += span_aiprivradio("[capitalize(m2)] body is [!external.has_dried_up ? "covered in cum" : "covered in dried cum"]!")
+				if(facial)
+					. += span_aiprivradio("[capitalize(m2)] face is [!facial.has_dried_up ? "glazed with cum" : "plastered with dried cum"]!")
+				if(creampie && !drip)
+					. += span_aiprivradio("[capitalize(m2)] crotch is [!creampie.has_dried_up ? "a cummy mess" : "stained with dried cum"]!")
+				if(drip)
+					var/is_long = istype(drip, /datum/status_effect/creampie_leak/long)
+					switch(drip.orifice)
+						if(SEX_PART_CUNT)
+							. += span_aiprivradio("[m1] [is_long ? "gushing cum from [m2] sex" : "trickling cum from [m2] sex"]!")
+						if(SEX_PART_ANUS)
+							. += span_aiprivradio("[m1] [is_long ? "leaking heavily from [m2] ass" : "leaking cum from [m2] ass"]!")
+						if(SEX_PART_SLIT_SHEATH)
+							. += span_aiprivradio("[m1] [is_long ? "leaking heavily from [m2] slit" : "trickling cum from [m2] slit"]!")
+						if(SEX_PART_CUNT|SEX_PART_ANUS)
+							. += span_aiprivradio("[m1] [is_long ? "leaking heavily from both [m2] holes" : "dripping cum from both [m2] holes"]!")
+						else
+							. += span_aiprivradio("[m1] [is_long ? "leaking a heavy load" : "dripping cum from [m2] nethers"]!")
 		var/list/modular_lines = human_modular_examine_lines(user, observer_privilege, m1, m2, m3)
 		if(length(modular_lines))
 			. += modular_lines
@@ -483,7 +509,7 @@
 			. += span_userdanger("<a href='?src=[REF(src)];task=bloodpoolinfo;'>Vitae: [(mind && !clan) ? (bloodpool * CLIENT_VITAE_MULTIPLIER) : bloodpool]; Blood: [blood_volume]</a>")
 
 	if(wear_shirt && !(SLOT_SHIRT in obscured))
-		var/str = "[m3] [get_examine_item_name_with_custom_link(user, wear_shirt)]. "
+		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_shirt)]. "
 		str += "[wear_shirt.integrity_check(is_smart)]"
 		if(is_stupid)
 			str = "[m3] some kind of shirt!"
@@ -497,9 +523,8 @@
 			var/obj/item/clothing/under/U = wear_pants
 			if(U.attached_accessory)
 				accessory_msg += " with [icon2html(U.attached_accessory, user)] \a [U.attached_accessory]"
-		var/str = "[m3] [get_examine_item_name_with_custom_link(user, wear_pants)][accessory_msg]. "
-		if(!wear_armor)
-			str += wear_pants.integrity_check(is_smart)
+		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_pants)][accessory_msg]. "
+		str += wear_pants.integrity_check(is_smart)
 		if(is_stupid)
 			str = "[m3] a pair of some pants! "
 		. += str
@@ -507,20 +532,24 @@
 
 	//head
 	if(head && !(SLOT_HEAD in obscured))
-		var/str = "[m3] [get_examine_item_name_with_custom_link(user, head)] on [m2] head. "
-		str += head.integrity_check(is_smart)
+		var/str = "[m3] [get_examine_item_name_with_hover(user, head)] on [m2] head. "
+		var/head_condition = head.integrity_check(is_smart)
+		str += head_condition
 		if(is_stupid)
 			if(istype(head,/obj/item/clothing/head/roguetown/helmet))
 				str = "[m3] some kinda helmet!"
 			else
 				str = "[m3] some kinda hat!"
+			if(head_condition)
+				str += " [head_condition]"
 		. += str
 
 	//suit/armor
 	if(wear_armor && !(SLOT_ARMOR in obscured))
-		var/str = "[m3] [get_examine_item_name_with_custom_link(user, wear_armor)]. "
+		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_armor)]. "
+		var/armor_condition = wear_armor.integrity_check()
 		if(is_smart || is_normal)
-			str += wear_armor.integrity_check(elaborate = TRUE)
+			str += armor_condition
 		else if (is_stupid)
 			if(istype(wear_armor, /obj/item/clothing/suit/roguetown/armor))
 				var/obj/item/clothing/suit/roguetown/armor/examined_armor = wear_armor
@@ -533,11 +562,15 @@
 					if(ARMOR_CLASS_HEAVY)
 						if(!HAS_TRAIT(user, TRAIT_HEAVYARMOR))
 							str = "[m3] some heavy metal stuff!"
+			if(armor_condition)
+				str += " [armor_condition]"
+		if(armor_condition && !findtext(str, "[armor_condition]"))
+			str += " [armor_condition]"
 		. += str
 		//suit/armor storage
 		if(s_store && !(SLOT_S_STORE in obscured))
 			if(is_normal || is_smart)
-				. += "[m1] carrying [get_examine_item_name_with_custom_link(user, s_store)] on [m2] [wear_armor.name]."
+				. += "[m1] carrying [get_examine_item_name_with_hover(user, s_store)] on [m2] [wear_armor.name]."
 	//back
 //	if(back)
 //		. += "[m3] [back.get_examine_string(user)] on [m2] back."
@@ -547,9 +580,9 @@
 		var/str
 		if(istype(cloak, /obj/item/clothing))
 			var/obj/item/clothing/CL = cloak
-			str = "[m3] [get_examine_item_name_with_custom_link(user, CL)] on [m2] shoulders. "
+			str = "[m3] [get_examine_item_name_with_hover(user, CL)] on [m2] shoulders. "
 		else
-			str = "[m3] [get_examine_item_name_with_custom_link(user, cloak)] on [m2] shoulders. "
+			str = "[m3] [get_examine_item_name_with_hover(user, cloak)] on [m2] shoulders. "
 		str += cloak.integrity_check(is_smart)
 		if (is_stupid)					//So they can tell the named RG tabards. If they can read them, anyway.
 			if(!istype(cloak, /obj/item/clothing/cloak/stabard) && user.get_skill_level(/datum/skill/misc/reading) == 0)
@@ -558,27 +591,27 @@
 
 	//right back
 	if(backr && !(SLOT_BACK_R in obscured))
-		var/str = "[m3] [get_examine_item_name_with_custom_link(user, backr)] on [m2] back. "
+		var/str = "[m3] [get_examine_item_name_with_hover(user, backr)] on [m2] back. "
 		str += backr.integrity_check(is_smart)
 		. += str
 
 	//left back
 	if(backl && !(SLOT_BACK_L in obscured))
-		var/str = "[m3] [get_examine_item_name_with_custom_link(user, backl)] on [m2] back. "
+		var/str = "[m3] [get_examine_item_name_with_hover(user, backl)] on [m2] back. "
 		str += backl.integrity_check(is_smart)
 		. += str
 
 	//Hands
 	for(var/obj/item/I in held_items)
 		if(!(I.item_flags & ABSTRACT))
-			var/str = "[m1] holding [get_examine_item_name_with_custom_link(user, I)] in [m2] [get_held_index_name(get_held_index_of_item(I))]. "
+			var/str = "[m1] holding [get_examine_item_name_with_hover(user, I)] in [m2] [get_held_index_name(get_held_index_of_item(I))]. "
 			str += I.integrity_check(is_smart)
 			. += str
 
 	var/datum/component/forensics/FR = GetComponent(/datum/component/forensics)
 	//gloves
 	if(gloves && !(SLOT_GLOVES in obscured))
-		var/str = "[m3] [get_examine_item_name_with_custom_link(user, gloves)] on [m2] hands. "
+		var/str = "[m3] [get_examine_item_name_with_hover(user, gloves)] on [m2] hands. "
 		str += gloves.integrity_check(is_smart)
 		if(is_stupid)
 			str = "[m3] a pair of gloves of some kind!"
@@ -593,13 +626,13 @@
 
 	//belt
 	if(belt && !(SLOT_BELT in obscured))
-		var/str = "[m3] [get_examine_item_name_with_custom_link(user, belt)] about [m2] waist. "
+		var/str = "[m3] [get_examine_item_name_with_hover(user, belt)] about [m2] waist. "
 		str += belt.integrity_check(is_smart)
 		. += str
 		if(istype(belt, /obj/item/storage/belt/rogue)) // check if belt has dildo attached
 			var/obj/item/storage/belt/rogue/belt_with_dildo = belt
 			if(belt_with_dildo.attached_toy)
-				. += "[m3] [get_examine_item_name_with_custom_link(user, belt_with_dildo.attached_toy)] attached to [m2] belt. "
+				. += "[m3] [get_examine_item_name_with_hover(user, belt_with_dildo.attached_toy)] attached to [m2] belt. "
 
 	var/modular_chastity_toy_line = human_modular_chastity_toy_examine_line(user, m2, m3)
 	if(modular_chastity_toy_line)
@@ -608,19 +641,19 @@
 
 	//right belt
 	if(beltr && !(SLOT_BELT_R in obscured))
-		var/str = "[m3] [get_examine_item_name_with_custom_link(user, beltr)] on [m2] belt. "
+		var/str = "[m3] [get_examine_item_name_with_hover(user, beltr)] on [m2] belt. "
 		str += beltr.integrity_check(is_smart)
 		. += str
 
 	//left belt
 	if(beltl && !(SLOT_BELT_L in obscured))
-		var/str = "[m3] [get_examine_item_name_with_custom_link(user, beltl)] on [m2] belt. "
+		var/str = "[m3] [get_examine_item_name_with_hover(user, beltl)] on [m2] belt. "
 		str += beltl.integrity_check(is_smart)
 		. += str
 
 	//shoes
 	if(shoes && !(SLOT_SHOES in obscured))
-		var/str = "[m3] [get_examine_item_name_with_custom_link(user, shoes)] on [m2] feet. "
+		var/str = "[m3] [get_examine_item_name_with_hover(user, shoes)] on [m2] feet. "
 		str += shoes.integrity_check(is_smart)
 		if(is_stupid)
 			str = "[m3] some shoes on [m2] feet!"
@@ -628,7 +661,7 @@
 
 	//mask
 	if(wear_mask && !(SLOT_WEAR_MASK in obscured))
-		var/str = "[m3] [get_examine_item_name_with_custom_link(user, wear_mask)] on [m2] face. "
+		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_mask)] on [m2] face. "
 		str += wear_mask.integrity_check(is_smart)
 		if(is_stupid)
 			str = "[m3] some kinda thing on [m2] face!"
@@ -639,9 +672,9 @@
 		var/str
 		if(istype(mouth, /obj/item/clothing))
 			var/obj/item/clothing/CM = mouth
-			str = "[m3] [get_examine_item_name_with_custom_link(user, CM)] in [m2] mouth. "
+			str = "[m3] [get_examine_item_name_with_hover(user, CM)] in [m2] mouth. "
 		else
-			"[m3] [get_examine_item_name_with_custom_link(user, mouth)] in [m2] mouth. "
+			"[m3] [get_examine_item_name_with_hover(user, mouth)] in [m2] mouth. "
 		str += mouth.integrity_check(is_smart)
 		if(is_stupid)
 			str = "[m3] some kinda thing on [m2] mouth!"
@@ -649,7 +682,7 @@
 
 	//neck
 	if(wear_neck && !(SLOT_NECK in obscured))
-		var/str = "[m3] [get_examine_item_name_with_custom_link(user, wear_neck)] around [m2] neck. "
+		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_neck)] around [m2] neck. "
 		str += wear_neck.integrity_check(is_smart)
 		if (is_stupid)
 			str = "[m3] something on [m2] neck!"
@@ -658,17 +691,17 @@
 	//eyes
 	if(!(SLOT_GLASSES in obscured))
 		if(glasses)
-			. += "[m3] [get_examine_item_name_with_custom_link(user, glasses)] covering [m2] eyes."
+			. += "[m3] [get_examine_item_name_with_hover(user, glasses)] covering [m2] eyes."
 		else if(eye_color == BLOODCULT_EYE)
 			. += span_warning("<B>[m2] eyes are glowing an unnatural red!</B>")
 
 	//ears
 	if(ears && !(SLOT_HEAD in obscured))
-		. += "[m3] [get_examine_item_name_with_custom_link(user, ears)] on [m2] ears."
+		. += "[m3] [get_examine_item_name_with_hover(user, ears)] on [m2] ears."
 
 	//ID
 	if(wear_ring && !(SLOT_RING in obscured))
-		var/str = "[m3] [get_examine_item_name_with_custom_link(user, wear_ring)] on [m2] hands. "
+		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_ring)] on [m2] hands. "
 		if(is_smart && istype(wear_ring, /obj/item/clothing/ring/active))
 			var/obj/item/clothing/ring/active/AR = wear_ring
 			if(AR.cooldowny)
@@ -682,7 +715,7 @@
 
 	//wrists
 	if(wear_wrists && !(SLOT_WRISTS in obscured))
-		var/str = "[m3] [get_examine_item_name_with_custom_link(user, wear_wrists)] on [m2] wrists."
+		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_wrists)] on [m2] wrists."
 		str += wear_wrists.integrity_check(is_smart)
 		if (is_stupid)
 			str = "[m3] something on [m2] wrists!"
@@ -1147,6 +1180,13 @@
 	var/trait_exam = common_trait_examine()
 	if(!isnull(trait_exam))
 		. += trait_exam
+
+	if(temporary_flavortext) //should be kept at the bottom always if possible, since someone could change the spans to trick people if it's on other places
+		var/max_temp_ft_length = 100 //Proably a good idea to fine-tune this later
+		if(length_char(temporary_flavortext) > max_temp_ft_length) 
+			. += " <span class='info' style='color: #eaeaea'> ø ------------ ø\n [copytext_char(temporary_flavortext, 1, max_temp_ft_length + 1)]</span>" + "<a href='?src=[REF(src)];task=show_temp_ft;'>...</a>"
+		else 
+			. += " <span class='info' style='color: #eaeaea'> ø ------------ ø\n [temporary_flavortext]</span>"
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 

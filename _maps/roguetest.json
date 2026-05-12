@@ -5,6 +5,8 @@
 	"traits": [{"Name": "Roguetest", "Up": true}, {"Down": true}],
 	"other_z": [
 		"_maps/map_files/otherz/banditmountain.json",
+		"_maps/map_files/otherz/vl_manor.json",
+		"_maps/map_files/otherz/avspawnrockhill.json",
 		"_maps/map_files/otherz/wretchfort.json"
 	],
 	"minetype": null,

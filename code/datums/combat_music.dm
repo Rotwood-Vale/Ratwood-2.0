@@ -326,6 +326,24 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	shortname = "Kazengite"
 	musicpath = list('sound/music/combat_kazengite.ogg')
 
+/datum/combat_music/firestorm
+	name = "Firestorm (Kazengun)"
+	desc = ""
+	shortname = "Firestorm"
+	musicpath = list('sound/music/combat_Kazengun_Firestorm.ogg')
+
+/datum/combat_music/overlord
+	name = "Overlord (Kazengun)"
+	desc = ""
+	shortname = "Overlord"
+	musicpath = list('sound/music/combat_Kazengun_Overlord.ogg')
+
+/datum/combat_music/runaway_chariot
+	name = "Runaway Chariot (Kazengun)"
+	desc = ""
+	shortname = "Runaway Chariot"
+	musicpath = list('sound/music/combat_Kazengun_Runaway_Chariot.ogg')
+
 /datum/combat_music/knight
 	name = "Knight (Noble)"
 	desc = ""
@@ -452,6 +470,13 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	shortname = "Spymaster"
 	credits = "T-87 SULFURHEAD - ABedofMoss (https://www.youtube.com/@T87-Sulfurhead)"
 	musicpath = list('sound/music/cmode/nobility/combat_spymaster.ogg')
+
+/datum/combat_music/sorcerer
+	name = "Sorcerer (Evil)"
+	desc = "Defund the retinue."
+	shortname = "Sorcerer"
+	credits = "burialgoods - APAB (All Paladins Are Bastards) (https://www.youtube.com/watch?v=CMyvIDLAub8)"
+	musicpath = list('sound/music/cmode/antag/combat_sorcerer.ogg')
 
 /datum/combat_music/squire
 	name = "Squire"
@@ -580,3 +605,10 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	shortname = "Czwarteki"
 	credits = " Andrius Klimka & Andrey Kulik - World of Tanks Original Soundtrack: Studzianki "
 	musicpath = list('sound/music/combat_czwarteki.ogg')
+
+/datum/combat_music/ancient
+	name = "Ancient Champion"
+	desc = "What is dead shall march again. In Her name."
+	shortname = "Ancient"
+	credits = "Carlos Viola - Cante de los Muertos"
+	musicpath = list('sound/music/combat_ancient.ogg')

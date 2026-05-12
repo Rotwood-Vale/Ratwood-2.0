@@ -18,6 +18,9 @@
 	experimental_inhand = FALSE
 	component_type = /datum/component/storage/concrete/roguetown/keyring
 
+/obj/item/storage/keyring/show_examine_hover_tooltip()
+	return FALSE
+
 /obj/item/storage/keyring/Initialize(mapload)
 	. = ..()
 	for(var/X in keys)
@@ -320,6 +323,9 @@
 /obj/item/storage/keyring/heir
 	keys = list(/obj/item/roguekey/manor, /obj/item/roguekey/heir, /obj/item/roguekey/garrison, /obj/item/roguekey/servant)
 
+/obj/item/storage/keyring/heir/nerd
+	keys = list(/obj/item/roguekey/manor, /obj/item/roguekey/heir, /obj/item/roguekey/garrison, /obj/item/roguekey/servant, /obj/item/roguekey/tower)
+
 /obj/item/storage/keyring/mageapprentice
 	keys = list(/obj/item/roguekey/manor, /obj/item/roguekey/tower)
 
@@ -337,3 +343,6 @@
 
 /obj/item/storage/keyring/wardenmaster
 	keys = list(/obj/item/roguekey/sheriff, /obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor, /obj/item/roguekey/armory, /obj/item/roguekey/sergeant, /obj/item/roguekey/warden)
+
+/obj/item/storage/keyring/tribalchief
+	keys = list(/obj/item/roguekey/tribal, /obj/item/roguekey/tribalchief)

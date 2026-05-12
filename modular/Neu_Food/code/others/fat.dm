@@ -57,32 +57,6 @@
 	bitesize = 1
 	dropshrink = 0.75
 
-/obj/item/reagent_containers/food/snacks/tallow/Initialize(mapload)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(
-		/datum/crafting_recipe/roguetown/survival/soap,
-		/datum/crafting_recipe/roguetown/survival/candle,
-		/datum/crafting_recipe/roguetown/survival/candle/eora,
-		/datum/crafting_recipe/roguetown/survival/recurvepartial,
-		/datum/crafting_recipe/roguetown/survival/longbowpartial,
-		/datum/crafting_recipe/roguetown/leather/container/javelinbag,
-		/datum/crafting_recipe/roguetown/leather/fingerless_leather_gloves,
-		/datum/crafting_recipe/roguetown/leather/armor/heavy_leather_pants,
-		/datum/crafting_recipe/roguetown/leather/armor/heavy_leather_pants/shorts,
-		/datum/crafting_recipe/roguetown/leather/armor/helmet/advanced,
-		/datum/crafting_recipe/roguetown/leather/armor/heavy_leather_armor,
-		/datum/crafting_recipe/roguetown/leather/armor/heavy_leather_armor/coat,
-		/datum/crafting_recipe/roguetown/leather/armor/heavy_leather_armor/jacket,
-		/datum/crafting_recipe/roguetown/leather/hidebikini,
-		/datum/crafting_recipe/roguetown/leather/unique/otavanleatherpants,
-		/datum/crafting_recipe/roguetown/leather/unique/otavanboots,
-		)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-		)
-
 /obj/item/reagent_containers/food/snacks/tallow/red
 	name = "redtallow"
 	desc = "Fatty tissue is harvested from slain creachurs and rendered of its membraneous sinew to produce a hard shelf-stable \

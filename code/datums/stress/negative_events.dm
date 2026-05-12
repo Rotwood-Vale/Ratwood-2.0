@@ -165,6 +165,11 @@
 	stressadd = 5
 	desc = span_boldred("Oh no! I've received divine punishment!")
 
+/datum/stressevent/treefather_loss
+	timer = 10 MINUTES
+	stressadd = 5
+	desc = span_boldred("The Treefather cries out in grief. A sacred tree has fallen.")
+
 /datum/stressevent/virginchurch
 	timer = INFINITY
 	stressadd = 10
@@ -510,3 +515,25 @@
 	stressadd = 2
 	desc = span_boldred("The proof of my oath! It's been stolen!")
 	timer = INFINITY
+
+// this generally only happens if you're below 10 FOR, this is a little nudge to work on your luck stat
+/datum/stressevent/xylixian_pity
+	timer = 5 MINUTES
+	stressadd = 1
+	desc = span_red("Xylix took pity upon me and saved me from the consequences of bad luck. I must do better!")
+
+// Prestidigitation water bolt stress events — triggered by being a cat and splashed in the face
+/datum/stressevent/water_splashed_cat
+	timer = 30 SECONDS
+	stressadd = 2
+	desc = span_red("Mrowl! My fur and face is completely drenched. What a humiliating experience.")
+
+/datum/stressevent/water_splashed_noble
+	timer = 30 SECONDS
+	stressadd = 2
+	desc = span_red("The nerve! Water in my face? This indignity is intolerable.")
+
+/datum/stressevent/water_splashed_noble_cat
+	timer = 30 SECONDS
+	stressadd = 4
+	desc = span_boldred("My fur and face is drenched! Not only is this humiliating, but a slight to my noble status!")

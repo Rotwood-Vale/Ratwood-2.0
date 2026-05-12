@@ -1,7 +1,6 @@
-/obj/item/clothing/shoes/toga_sandals
+/obj/item/clothing/shoes/roguetown/sandals/toga_sandals
 	name = "fancy sandals"
 	desc = "Delicate sandals of gleaming leather, their slender straps rising in graceful spirals to embrace the ankle."
-	gender = PLURAL
 	icon = 'modular_rmh/icons/clothing/valentyi/toga_sandals.dmi'
 	mob_overlay_icon = 'modular_rmh/icons/clothing/valentyi/onmob/toga_sandals.dmi'
 	icon_state = "toga_sandals"
@@ -13,7 +12,7 @@
 
 /datum/crafting_recipe/roguetown/leather/footwear/toga_sandals
 	name = "fancy sandals"
-	result = /obj/item/clothing/shoes/toga_sandals
+	result = /obj/item/clothing/shoes/roguetown/sandals/
 	reqs = list(/obj/item/natural/hide/cured = 1)
 
 //SUPPLY PACKS
@@ -22,11 +21,11 @@
 	name = "Fancy Sandals"
 	cost = 15
 	contains = list(
-					/obj/item/clothing/shoes/toga_sandals,
+					/obj/item/clothing/shoes/roguetown/sandals/,
 				)
 
 //LOADOUT
 
 /datum/loadout_item/toga_sandals
 	name = "Fancy Sandals"
-	path = /obj/item/clothing/shoes/toga_sandals
+	path = /obj/item/clothing/shoes/roguetown/sandals/

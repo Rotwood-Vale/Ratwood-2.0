@@ -234,6 +234,7 @@
 		/datum/sprite_accessory/hair/head/flattop_big,
 		/datum/sprite_accessory/hair/head/fluffball,
 		/datum/sprite_accessory/hair/head/fluffy,
+		/datum/sprite_accessory/hair/head/fluffyovereye,
 		/datum/sprite_accessory/hair/head/fluffylong,
 		/datum/sprite_accessory/hair/head/fluffyshort,
 		/datum/sprite_accessory/hair/head/flow_hair,
@@ -528,6 +529,11 @@
 		/datum/sprite_accessory/hair/head/zoey,
 		/datum/sprite_accessory/hair/head/zone,
 		/datum/sprite_accessory/hair/head/zybantu,
+		/datum/sprite_accessory/hair/head/wolfcut,
+		/datum/sprite_accessory/hair/head/triplebuns,
+		/datum/sprite_accessory/hair/head/nest,
+		/datum/sprite_accessory/hair/head/strand,
+		/datum/sprite_accessory/hair/head/sodden,
 		)
 
 /datum/customizer_choice/bodypart_feature/hair/head/humanoid/get_random_accessory(datum/customizer_entry/entry, datum/preferences/prefs)
@@ -838,6 +844,7 @@
 		/datum/sprite_accessory/hair/head/gronnbraid,
 		/datum/sprite_accessory/hair/head/grenzelcut,
 		/datum/sprite_accessory/hair/head/fluffy,
+		/datum/sprite_accessory/hair/head/fluffyovereye,
 		/datum/sprite_accessory/hair/head/fluffyshort,
 		/datum/sprite_accessory/hair/head/fluffylong,
 		/datum/sprite_accessory/hair/head/jay,
@@ -1300,6 +1307,7 @@
 		/datum/sprite_accessory/hair/head/gronnbraid,
 		/datum/sprite_accessory/hair/head/grenzelcut,
 		/datum/sprite_accessory/hair/head/fluffy,
+		/datum/sprite_accessory/hair/head/fluffyovereye,
 		/datum/sprite_accessory/hair/head/fluffyshort,
 		/datum/sprite_accessory/hair/head/fluffylong,
 		/datum/sprite_accessory/hair/head/jay,

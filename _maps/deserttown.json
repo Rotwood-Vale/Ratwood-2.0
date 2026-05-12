@@ -6,6 +6,7 @@
     "other_z": [
         "_maps/map_files/deserttown/deserttownalt.json",
         "_maps/map_files/deserttown/advspawndesert.json",
+		"_maps/map_files/otherz/vl_manor.json",
 		"_maps/map_files/otherz/wretchfort.json"
 	],
 	"minetype": null,

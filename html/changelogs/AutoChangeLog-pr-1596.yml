@@ -1,0 +1,6 @@
+author: "ophaq"
+delete-after: True
+changes:
+  - bugfix: "Essence of lumber spawning from logs now spawns instead of the wilderness kind."
+  - rscadd: "You can get essence of lumber from sawing logs into planks now."
+  - qol: "Shovels dig up stumps twice as fast as chopping with an axe does."

@@ -428,6 +428,7 @@
 	message_muffled = "makes a muffled groan."
 	emote_type = EMOTE_AUDIBLE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /mob/living/carbon/human/verb/emote_groan()
 	set name = "Groan"
@@ -651,12 +652,17 @@
 			span_notice("[H] stops holding [H.p_their()] breath."),
 			span_notice("You stop holding your breath.")
 		)
+		H.log_message("stopped holding their breath.", LOG_ATTACK)
 	else
+		var/confirm = alert(H, "Are you sure you want to hold your breath? This will kill you if held long enough. You can undo it by pressing the emote again.", "Hold Breath", "Yes", "No")
+		if(confirm != "Yes")
+			return FALSE
 		ADD_TRAIT(H, TRAIT_HOLDBREATH, "[type]")
 		H.visible_message(
 			span_notice("[H] begins to hold [H.p_their()] breath."),
 			span_notice("You begin to hold your breath.")
 		)
+		H.log_message("started holding their breath.", LOG_ATTACK)
 
 	return TRUE
 
@@ -776,6 +782,7 @@
 	message_muffled = "makes a muffled laugh."
 	emote_type = EMOTE_AUDIBLE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE , intentional)
 	. = ..()
@@ -854,6 +861,7 @@
 	message_muffled = "makes a muffled noise in attempt to scream!"
 	emote_type = EMOTE_AUDIBLE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /mob/living/carbon/human/verb/emote_scream()
 	set name = "Scream"
@@ -881,6 +889,7 @@
 	emote_type = EMOTE_AUDIBLE
 	only_forced_audio = TRUE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /datum/emote/living/scream/painscream/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -906,6 +915,7 @@
 	emote_type = EMOTE_AUDIBLE
 	only_forced_audio = TRUE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /datum/emote/living/scream/agony/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -924,6 +934,7 @@
 	emote_type = EMOTE_AUDIBLE
 	only_forced_audio = TRUE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /datum/emote/living/scream/firescream/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -965,6 +976,7 @@
 	nomsg = TRUE
 	only_forced_audio = TRUE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /datum/emote/living/drown
 	key = "drown"
@@ -980,6 +992,7 @@
 	nomsg = TRUE
 	only_forced_audio = TRUE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /datum/emote/living/paincrit/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -998,6 +1011,7 @@
 	nomsg = TRUE
 	only_forced_audio = TRUE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /datum/emote/living/painmoan
 	key = "painmoan"
@@ -1005,6 +1019,7 @@
 	nomsg = TRUE
 	only_forced_audio = TRUE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /datum/emote/living/groin
 	key = "groin"
@@ -1012,6 +1027,7 @@
 	nomsg = TRUE
 	only_forced_audio = TRUE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /datum/emote/living/fatigue
 	key = "fatigue"
@@ -2511,3 +2527,99 @@
 	L.death()
 
 	return TRUE
+
+//new dog sounds
+/datum/emote/living/arf
+	key = "arf"
+	key_third_person = "arfs!"
+	message = "arfs!"
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	message_muffled = "makes a muffled arf!"
+	vary = TRUE
+	show_runechat = FALSE
+	is_animal = TRUE
+
+/mob/living/carbon/human/verb/emote_arf()
+	if(istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/wild_tongue) || istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/harpy))
+		set name = "Arf"
+		set category = "Noises"
+		emote("arf", intentional = TRUE, animal = TRUE)
+	else
+		to_chat(usr, span_warning("Your tongue doesn't do that"))
+		return
+
+/datum/emote/living/awuff
+	key = "awuff"
+	key_third_person = "awuffs!"
+	message = "awuffs!"
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	message_muffled = "makes a muffled awuff!"
+	vary = TRUE
+	show_runechat = FALSE
+	is_animal = TRUE
+
+/mob/living/carbon/human/verb/emote_awuff()
+	if(istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/wild_tongue) || istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/harpy))
+		set name = "Awuff"
+		set category = "Noises"
+		emote("awuff", intentional = TRUE, animal = TRUE)
+	else
+		to_chat(usr, span_warning("Your tongue doesn't do that"))
+		return
+
+/datum/emote/living/dcomplain
+	key = "dcomplain"
+	key_third_person = "complains!"
+	message = "complains!"
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	message_muffled = "makes a muffled sound!"
+	vary = TRUE
+	show_runechat = FALSE
+	is_animal = TRUE
+
+/mob/living/carbon/human/verb/emote_dcomplain()
+	if(istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/wild_tongue) || istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/harpy))
+		set name = "Dog Complain"
+		set category = "Noises"
+		emote("dcomplain", intentional = TRUE, animal = TRUE)
+	else
+		to_chat(usr, span_warning("Your tongue doesn't do that"))
+		return
+
+/datum/emote/living/dgrowl
+	key = "dgrowl"
+	key_third_person = "growls!"
+	message = "growls!"
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	message_muffled = "makes a muffled growl!"
+	vary = TRUE
+	show_runechat = FALSE
+	is_animal = TRUE
+
+/mob/living/carbon/human/verb/emote_dgrowl()
+	if(istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/wild_tongue) || istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/harpy))
+		set name = "Dog Growl"
+		set category = "Noises"
+		emote("dgrowl", intentional = TRUE, animal = TRUE)
+	else
+		to_chat(usr, span_warning("Your tongue doesn't do that"))
+		return
+
+/datum/emote/living/dwhine
+	key = "dwhine"
+	key_third_person = "whines!"
+	message = "whines!"
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	message_muffled = "makes a muffled whine!"
+	vary = TRUE
+	show_runechat = FALSE
+	is_animal = TRUE
+
+/mob/living/carbon/human/verb/emote_dwhine()
+	if(istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/wild_tongue) || istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/harpy))
+		set name = "Dog Whine"
+		set category = "Noises"
+		emote("dwhine", intentional = TRUE, animal = TRUE)
+	else
+		to_chat(usr, span_warning("Your tongue doesn't do that"))
+		return

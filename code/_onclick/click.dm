@@ -154,13 +154,6 @@
 				return
 
 
-//	if(modifiers["shift"] && modifiers["middle"])
-//		changeNext_move(CLICK_CD_MELEE)
-//		ShiftMiddleClickOn(A)
-//		return
-//	if(modifiers["shift"] && modifiers["ctrl"])
-//		CtrlShiftClickOn(A)
-//		return
 	if(modifiers["shift"] && modifiers["right"])
 		ShiftRightClickOn(A, params)
 		return
@@ -713,7 +706,12 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 		user.client.statpanel = T.name
 
 /mob/proc/CtrlRightClickOn(atom/A, params)
+	if(A.CtrlRightClick(src))
+		return
 	pointed(A)
+
+/atom/proc/CtrlRightClick(mob/user)
+	return FALSE
 
 /*
 	Misc helpers

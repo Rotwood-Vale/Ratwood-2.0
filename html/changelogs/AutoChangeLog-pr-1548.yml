@@ -1,0 +1,11 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes:
+  - refactor: "Reworked Exposed. It is now consumed on-hit to deal increased damage. Feint applies a lower version of this."
+  - balance: "Feint CD increased to twenty seconds."
+  - balance: "You can no longer jump into offbalance people to knock them over."
+  - balance: "The offbalance period after baiting someone twice has been doubled."
+  - balance: "You can no longer feint people who are not in combat mode, putting you on a three second offbalance if you do."
+  - balance: "Feints will always succeed on someone guarding."
+  - balance: "Baits no longer need line of sight."
+  - balance: "Slightly reduced guard duration."

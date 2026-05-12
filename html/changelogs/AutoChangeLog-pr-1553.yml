@@ -1,0 +1,10 @@
+author: "Vizoplez"
+delete-after: True
+changes:
+  - bugfix: "Amulets causing a ton of runtimes in foot slot"
+  - bugfix: "Being able to point at, examine, and see invisible sneak users via alt-rightclicking"
+  - balance: "Gnoll system moved to use invisibility atop of alpha=0"
+  - balance: "PER now allows for passively spotting sneaked players. Ratio may be changed"
+  - rscadd: "Invisi-Sneaking (No more metagaming via pointing, guardseman!)"
+  - balance: "You are now de-sneaked for exactly 4 seconds upon attacking any object, or player. This does NOT affect grappling, to note, so kidnapping is still viable!"
+  - balance: "You are now de-sneaked for exactly 0.5 seconds upon someone bumping into you."

@@ -1,0 +1,4 @@
+author: "DelineFortune"
+delete-after: True
+changes:
+  - rscadd: "Hemophage debuffs their targets on bite, but their bite also restores their health+stamina now"

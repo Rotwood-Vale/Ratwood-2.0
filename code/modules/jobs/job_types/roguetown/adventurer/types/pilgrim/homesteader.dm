@@ -386,7 +386,7 @@
 			/obj/item/folding_table_stored
 		),
 		"Hunter Set" = list(
-			/obj/item/gun/ballistic/revolver/grenadelauncher/bow/short,
+			/obj/item/gun/ballistic/revolver/grenadelauncher/bow,
 			/obj/item/quiver/arrows,
 			/obj/item/rogueweapon/huntingknife/bronze,
 			/obj/item/storage/meatbag,
@@ -399,7 +399,7 @@
 			/obj/item/natural/worms,
 			/obj/item/natural/worms,
 			/obj/item/rogueweapon/huntingknife/bronze,
-			/obj/item/storage/roguebag/crafted
+			/obj/item/storage/roguebag
 		),
 		"Tailor Set" = list(
 			/obj/item/rogueweapon/huntingknife/scissors,
@@ -429,7 +429,7 @@
 	// Daily Tools - basic combination
 	var/daily_tools_combos = list(
 		"Bronze Axe + Bronze Knife + Sheath" = list(/obj/item/rogueweapon/stoneaxe/woodcut/bronze, /obj/item/rogueweapon/huntingknife/bronze, /obj/item/rogueweapon/scabbard/sheath),
-		"Simple Bow + Quiver" = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow/short, /obj/item/quiver/arrows),
+		"Simple Bow + Quiver" = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow, /obj/item/quiver/arrows),
 		"Iron Spear + Backup Dagger" = list(/obj/item/rogueweapon/spear, /obj/item/rogueweapon/huntingknife/bronze, /obj/item/rogueweapon/scabbard/gwstrap),
 		"Fishing Rod + Worms" = list(/obj/item/fishingrod, /obj/item/natural/worms, /obj/item/natural/worms),
 		"Sickle + Farming Hoe" = list(/obj/item/rogueweapon/sickle, /obj/item/rogueweapon/hoe),
@@ -480,7 +480,7 @@
 		"Rustic - Fur hat, shortshirt, leather boots",
 		"Miner - Arming cap, trou, work vest",
 		"Entertainer - Fancy hat, tunic, half cloak",
-		"Modest Scholar - Spectacles, tunic, chaperon",
+		"Modest Scholar - Spectacles, scholar's robe, chaperon",
 		"Countryside - Straw hat, chemise, shortboots"
 	)
 
@@ -590,7 +590,7 @@
 			belt = /obj/item/storage/belt/rogue/leather/cloth
 
 		if("Modest Scholar - Spectacles, tunic, chaperon")
-			shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/white
+			shirt = /obj/item/clothing/suit/roguetown/shirt/robe/archivist
 			pants = /obj/item/clothing/under/roguetown/tights/random
 			shoes = /obj/item/clothing/shoes/roguetown/shortboots
 			head = /obj/item/clothing/head/roguetown/chaperon
@@ -649,7 +649,6 @@
 			"Carpentry" = /datum/skill/craft/carpentry,
 			"Masonry" = /datum/skill/craft/masonry,
 			"Engineering" = /datum/skill/craft/engineering,
-			"Traps" = /datum/skill/craft/traps,
 			"Alchemy" = /datum/skill/craft/alchemy,
 			"Tanning" = /datum/skill/craft/tanning,
 			"Cooking" = /datum/skill/craft/cooking,

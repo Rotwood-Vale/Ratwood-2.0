@@ -14,7 +14,7 @@
 	equip_sound = 'sound/foley/equip/equip_armor_plate.ogg'
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/steel
-
+	sewrepair = FALSE
 	grid_width = 64
 	grid_height = 32
 	unarmed_bonus = 1.2

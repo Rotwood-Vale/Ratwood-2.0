@@ -165,7 +165,8 @@
 				newamt--
 				BUFPER++
 			STAPER = newamt
-
+			see_override = initial(src.see_invisible) + (STAPER/3.25) //PER is far easier to get in Rogueslop 2.0
+			update_sight() //This also fixes a few new bugs that have come and gone. 
 			update_fov_angles()
 
 		if(STATKEY_INT)
@@ -296,13 +297,37 @@
 	if(ignore_effects)
 		var/truefor = get_true_stat(STATKEY_LCK)
 		if(truefor < 10)
-			return prob((10 - truefor) * multi)
+			var/failed = prob((10 - truefor) * multi)
+			// if we failed, but we're a xylixian devotee, we get another shot
+			if(failed && HAS_TRAIT(src, TRAIT_XYLIX_DEVOTEE))
+				failed = prob((10 - truefor) * multi)
+				// if xylix twisted fate into our favour, get a little jingle from them
+				if(!failed)
+					play_overhead_indicator('icons/mob/overhead_effects.dmi', "sign_Xylix", 15, MUTATIONS_LAYER, private = TRAIT_XYLIX_DEVOTEE, soundin = 'sound/items/gem.ogg', y_offset = 32)
+					add_stress(/datum/stressevent/xylixian_pity)
+			return failed
 	else if(STALUC < 10)
-		return prob((10 - STALUC) * multi)
+		var/failed = prob((10 - STALUC) * multi)
+		// if we failed, but we're a xylixian devotee, we get another shot
+		if(failed && HAS_TRAIT(src, TRAIT_XYLIX_DEVOTEE))
+			failed = prob((10 - STALUC) * multi)
+			// if xylix twisted fate into our favour, get a little jingle from them
+			if(!failed)
+				play_overhead_indicator('icons/mob/overhead_effects.dmi', "sign_Xylix", 15, MUTATIONS_LAYER, private = TRAIT_XYLIX_DEVOTEE, soundin = 'sound/items/gem.ogg', y_offset = 32)
+				add_stress(/datum/stressevent/xylixian_pity)
+		return failed
 
 /mob/living/proc/goodluck(multi = 3)
 	if(STALUC > 10)
-		return prob((STALUC - 10) * multi)
+		var/succeeded = prob((STALUC - 10) * multi)
+		// if we didn't succeed, but we're a xylixian devotee, we get another shot
+		if(!succeeded && HAS_TRAIT(src, TRAIT_XYLIX_DEVOTEE))
+			succeeded = prob((STALUC - 10) * multi)
+			// if xylix twisted fate into our favour, get a little jingle from them
+			if(succeeded)
+				play_overhead_indicator('icons/mob/overhead_effects.dmi', "sign_Xylix", 15, MUTATIONS_LAYER, private = TRAIT_XYLIX_DEVOTEE, soundin = 'sound/items/gem.ogg', y_offset = 32)
+				add_stress(/datum/stressevent/xylixian_fate)
+		return succeeded
 
 /mob/living/proc/get_stat_level(stat_keys)
 	switch(stat_keys)

@@ -56,7 +56,6 @@
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	sellprice = 25
 	color = "#b49679"
-	sewrepair = TRUE
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	var/shiftable = TRUE

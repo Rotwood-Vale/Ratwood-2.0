@@ -1,0 +1,6 @@
+author: "Xander3359"
+delete-after: True
+changes:
+  - bugfix: "Riding a mountable harpy flying no longer kills you"
+  - bugfix: "Fixed the offsets of riding a flying harpy"
+  - balance: "Mountable virtue has been buffed to no longer require strength as a mount"

@@ -43,6 +43,9 @@
 	/// Subclass languages.
 	var/list/subclass_languages
 
+	/// Subclass virtues.
+	var/list/subclass_virtues
+
 	/// Spellpoints. If More than 0, Gives Prestidigitation & the Learning Spell.
 	var/subclass_spellpoints = 0
 
@@ -119,6 +122,10 @@
 		H.social_rank = subclass_social_rank
 
 	// After the end of adv class equipping, apply a SPECIAL trait if able
+
+	if(length(subclass_virtues))
+		for(var/virtue in subclass_virtues)
+			apply_virtue(H, new virtue)
 
 	if(applies_post_equipment)
 		if(H.dna?.species?.id == "gnoll")

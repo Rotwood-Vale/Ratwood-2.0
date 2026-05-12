@@ -55,28 +55,42 @@
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_inspire)//CtA, but blood cost and... kind of worse.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_sacrosanctity)//To get your blood back, m'lord.
-		var/weapons = list("Harp","Lute","Accordion","Guitar","Hurdy-Gurdy","Viola","Vocal Talisman", "Psyaltery", "Flute")
+		var/weapons = list("Accordion","Bagpipe", "Banjo","Drum","Flute","Guitar","Harmonica","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
 		var/weapon_choice = tgui_input_list(H, "Choose your instrument.", "TAKE UP ARMS", weapons)
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Harp")
-				backr = /obj/item/rogue/instrument/harp
-			if("Lute")
-				backr = /obj/item/rogue/instrument/lute
 			if("Accordion")
 				backr = /obj/item/rogue/instrument/accord
+			if("Bagpipe")
+				backr = /obj/item/rogue/instrument/bagpipe
+			if("Banjo")
+				backr = /obj/item/rogue/instrument/banjo
+			if("Drum")
+				backr = /obj/item/rogue/instrument/drum
+			if("Flute")
+				backr = /obj/item/rogue/instrument/flute
 			if("Guitar")
 				backr = /obj/item/rogue/instrument/guitar
+			if("Harmonica")
+				backr = /obj/item/rogue/instrument/harmonica
+			if("Harp")
+				backr = /obj/item/rogue/instrument/harp
 			if("Hurdy-Gurdy")
 				backr = /obj/item/rogue/instrument/hurdygurdy
+			if("Jaw Harp")
+				backr = /obj/item/rogue/instrument/jawharp
+			if("Lute")
+				backr = /obj/item/rogue/instrument/lute
+			if("Psyaltery")
+				backr = /obj/item/rogue/instrument/psyaltery
+			if("Shamisen")
+				backr = /obj/item/rogue/instrument/shamisen
+			if("Trumpet")
+				backr = /obj/item/rogue/instrument/trumpet
 			if("Viola")
 				backr = /obj/item/rogue/instrument/viola
 			if("Vocal Talisman")
 				backr = /obj/item/rogue/instrument/vocals
-			if("Psyaltery")
-				backr = /obj/item/rogue/instrument/psyaltery
-			if("Flute")
-				backr = /obj/item/rogue/instrument/flute
 
 /datum/outfit/job/roguetown/psyaltrist
 	job_bitflag = BITFLAG_HOLY_WARRIOR
