@@ -25,6 +25,15 @@
 #define TOOL_IMPROVISED_SAW	"improvsaw"
 #define TOOL_DRUIDIC_CATALYST	"druidic_catalyst" // Shared tool behaviour for harvest bloomstone and druidic staff required recipes
 
+// Bush sapling growth stages and timers — defined here so items/ files compiled before structures/roguetown can reference them.
+#define BUSHSAP_STAGE_SAPLING 1
+#define BUSHSAP_STAGE_BUDDING 2
+#define BUSHSAP_STAGE_MATURE  3
+
+#define BUSHSAP_STAGE_TIME   (5 MINUTES)
+#define BUSHSAP_HEDGE_TIME   (5 MINUTES)
+#define BUSHSAP_DEATH_TICKS  60   // negative-progress seconds before withering
+
 // If delay between the start and the end of tool operation is less than MIN_TOOL_SOUND_DELAY,
 // tool sound is only played when op is started. If not, it's played twice.
 #define MIN_TOOL_SOUND_DELAY 20

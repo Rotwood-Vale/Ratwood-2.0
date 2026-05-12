@@ -1,11 +1,5 @@
 // Bush Sapling & Flower Sprout — Dendor Content
-#define BUSHSAP_STAGE_SAPLING 1
-#define BUSHSAP_STAGE_BUDDING 2
-#define BUSHSAP_STAGE_MATURE  3
-
-#define BUSHSAP_STAGE_TIME   (5 MINUTES)
-#define BUSHSAP_HEDGE_TIME   (5 MINUTES)
-#define BUSHSAP_DEATH_TICKS  60   // negative-progress seconds before withering
+// BUSHSAP_STAGE_* and BUSHSAP_*_TIME defines live in code/__DEFINES/tools.dm
 
 //==============================================================================
 // Non-blocking tall hedge — spawned when a bush sapling reaches stage 4.
