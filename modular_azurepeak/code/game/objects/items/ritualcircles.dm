@@ -1113,7 +1113,7 @@
 		ADD_TRAIT(target, TRAIT_IWASREVIVED, "[type]")
 	target.mind.remove_antag_datum(/datum/antagonist/zombie)
 	target.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)
-	target.apply_status_effect(/datum/status_effect/debuff/revived)
+	target.apply_necras_revival()
 	target.apply_status_effect(/datum/status_effect/buff/healing, 14)
 	target.add_stress(/datum/stressevent/necrarevive)
 	src.coinslot -= 1 // -1 coin, please insert more coins.

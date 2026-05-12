@@ -189,7 +189,7 @@
 		M.visible_message(span_notice("[M] is dragged back from Necra's hold!"), span_green("I awake from the void."))
 
 		M.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)
-		M.apply_status_effect(/datum/status_effect/debuff/revived)
+		M.apply_necras_revival()
 		M.remove_status_effect(src)
 
 #define POM_FILTER "pom_aura"

@@ -361,7 +361,7 @@
 		H.visible_message(span_notice("[H] is ABSOLVED!"), span_green("I awake from the void."))
 		H.mind.remove_antag_datum(/datum/antagonist/zombie)
 		H.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)	//Removes the rotted-zombie debuff if they have it - Failsafe for it.
-		H.apply_status_effect(/datum/status_effect/debuff/revived)	//Temp debuff on revive, your stats get hit temporarily. Doubly so if having rotted.
+		H.apply_necras_revival(2 MINUTES, /datum/status_effect/debuff/necras_touched/lux, /datum/status_effect/debuff/necras_claim/lux)
 		return TRUE
 
 	// Transfer afflictions from the target to the caster

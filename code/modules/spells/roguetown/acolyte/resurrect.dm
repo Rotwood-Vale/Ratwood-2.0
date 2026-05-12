@@ -21,7 +21,7 @@
 	var/required_items = list(/obj/item/clothing/neck/roguetown/psicross = 1)
 	var/alt_required_items = list(/obj/item/clothing/neck/roguetown/psicross = 1)
 	var/item_radius = 1
-	var/debuff_type = /datum/status_effect/debuff/revived
+	var/debuff_type = null
 	var/structure_range = 1
 	var/harms_undead = TRUE
 	priest_excluded = TRUE
@@ -99,7 +99,7 @@
 			ADD_TRAIT(target, TRAIT_IWASREVIVED, "[type]")
 		target.mind.remove_antag_datum(/datum/antagonist/zombie)
 		target.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)	//Removes the rotted-zombie debuff if they have it - Failsafe for it.
-		target.apply_status_effect(debuff_type)	//Temp debuff on revive, your stats get hit temporarily. Doubly so if having rotted.
+		target.apply_necras_revival()
 		//Due to an increased cost and cooldown, these revival types heal quite a bit.
 		target.apply_status_effect(/datum/status_effect/buff/healing, 14)
 		consume_items(target)
@@ -350,7 +350,7 @@
 
 /datum/status_effect/debuff/random_revival/proc/apply_random_debuff()
 	var/static/list/possible_debuffs = list(
-		/datum/status_effect/debuff/revived,
+		/datum/status_effect/debuff/necras_touched,
 		/datum/status_effect/debuff/dreamfiend_curse,
 		/datum/status_effect/debuff/metabolic_acceleration,
 		/datum/status_effect/debuff/malum_revival,

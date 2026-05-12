@@ -349,17 +349,49 @@
 	desc = "A putrid rotting scent fills your nose as Graggar's call for slaughter rattles you to your core.."
 	icon_state = "call_to_slaughter"
 
-//For revive - your body DIDN'T rot, but it did suffer damage. Unlike being rotted, this one is only timed. Not forever.
-/datum/status_effect/debuff/revived
-	id = "revived"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/revived
-	effectedstats = list(STATKEY_STR = -1, STATKEY_PER = -1, STATKEY_INT = -1, STATKEY_WIL = -1, STATKEY_CON = -1, STATKEY_SPD = -1, STATKEY_LCK = -1)
-	duration = 15 MINUTES		//Should be long enough to stop someone from running back into battle. Plus, this stacks with body-rot debuff. RIP.
+/datum/status_effect/debuff/necras_touched
+	id = "necras_touched"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/necras_touched
+	effectedstats = list(STATKEY_STR = -2, STATKEY_CON = -2, STATKEY_WIL = -2, STATKEY_LCK = -2)
+	duration = 15 MINUTES
 
-/atom/movable/screen/alert/status_effect/debuff/revived
-	name = "Revival Sickness"
-	desc = "You felt lyfe itself course through you, restoring your lux and your essance. You.. live - but your body aches. It still needs time to recover.."
+/datum/status_effect/debuff/necras_touched/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, id)
+
+/datum/status_effect/debuff/necras_touched/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, id)
+
+/datum/status_effect/debuff/necras_touched/lux
+	duration = 5 MINUTES
+
+/atom/movable/screen/alert/status_effect/debuff/necras_touched
+	name = "Necra's Touch"
+	desc = "Necra's cold grasp lingers on my body. My body falters, and I am vulnerable to grievous wounds."
 	icon_state = "revived"
+
+//For revive - Necra's Claim. Her mark rests upon you - you cannot be brought back from death until it fades.
+/datum/status_effect/debuff/necras_claim
+	id = "necras_claim"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/necras_claim
+	duration = 25 MINUTES
+
+/datum/status_effect/debuff/necras_claim/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_DNR, id)
+
+/datum/status_effect/debuff/necras_claim/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_DNR, id)
+
+/datum/status_effect/debuff/necras_claim/lux
+	duration = 10 MINUTES
+
+/atom/movable/screen/alert/status_effect/debuff/necras_claim
+	name = "Necra's Claim"
+	desc = "Necra has marked me as Her own. Should I die again while my lux regains their vitality, no power can drag me back from Her embrace."
+	icon_state = "rotted_body"
 
 //For de-rot - your body ROTTED. Harsher penalty for longer, can be fully off-set with a cure-rot potion.
 /datum/status_effect/debuff/rotted
