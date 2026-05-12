@@ -27,6 +27,7 @@ type PetEntry = {
   arousal_forced: boolean;
   clothing_forbidden: boolean;
   forced_love: boolean;
+  received_cum_count: number | null;
   has_cursed_chastity: boolean;
   has_penis: boolean;
   has_vagina: boolean;
@@ -165,6 +166,9 @@ const SelectedPetInfo = (props: { selectedPets: PetEntry[] }) => {
                   </LabeledList.Item>
                   <LabeledList.Item label="Pet Flags">
                     {getPetFlags(pet)}
+                  </LabeledList.Item>
+                  <LabeledList.Item label="Loads Received">
+                    {pet.received_cum_count ?? 'N/A'}
                   </LabeledList.Item>
                 </LabeledList>
               </Section>

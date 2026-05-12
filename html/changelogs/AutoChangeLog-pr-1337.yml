@@ -1,0 +1,4 @@
+author: "Wadelicious"
+delete-after: True
+changes:
+  - balance: "Makes slurbow's damage scale with Perception"

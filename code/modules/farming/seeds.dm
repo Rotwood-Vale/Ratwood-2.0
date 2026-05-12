@@ -120,6 +120,52 @@
 	if(reagents)
 		reagents.trans_to(S, reagents.total_volume)
 
+/obj/item/seeds/random
+	name = "random seed"
+	desc = "Haha, im in danger."
+
+/obj/item/seeds/random/Initialize(mapload)
+	var/type = pick(list(
+	/obj/item/seeds/wheat,
+	/obj/item/seeds/wheat/oat,
+	/obj/item/seeds/rice,
+	/obj/item/seeds/apple,
+	/obj/item/seeds/pear,
+	/obj/item/seeds/lemon,
+	/obj/item/seeds/lime,
+	/obj/item/seeds/tangerine,
+	/obj/item/seeds/plum,
+	/obj/item/seeds/strawberry,
+	/obj/item/seeds/blackberry,
+	/obj/item/seeds/raspberry,
+	/obj/item/seeds/tomato,
+	/obj/item/seeds/nut,
+	/obj/item/seeds/sugarcane,
+	/obj/item/seeds/pipeweed,
+	/obj/item/seeds/swampweed,
+	/obj/item/seeds/berryrogue,
+	/obj/item/seeds/turnip,
+	/obj/item/seeds/sunflower,
+	/obj/item/seeds/onion,
+	/obj/item/seeds/cabbage,
+	/obj/item/seeds/potato,
+	/obj/item/seeds/fyritius,
+	/obj/item/seeds/poppy,
+	/obj/item/seeds/garlick,
+	/obj/item/seeds/coffee,
+	/obj/item/seeds/tea,
+	/obj/item/seeds/pumpkin,
+	/obj/item/seeds/carrot,
+	/obj/item/seeds/cucumber,
+	/obj/item/seeds/eggplant,))
+
+	var/obj/item/seeds/boi = new type
+	boi.forceMove(get_turf(src))
+	boi.pixel_x += rand(-3,3)
+	. = ..()
+
+	return INITIALIZE_HINT_QDEL
+
 /obj/item/seeds/wheat
 	seed_identity = "wheat seeds"
 	plant_def_type = /datum/plant_def/wheat
@@ -241,3 +287,15 @@
 	seed_identity = "pumpkin seeds"
 	plant_def_type = /datum/plant_def/pumpkin
 	cooked_type = /obj/item/reagent_containers/food/snacks/roastseeds/pumpkin
+
+/obj/item/seeds/carrot
+	seed_identity = "carrot seeds"
+	plant_def_type = /datum/plant_def/carrot
+
+/obj/item/seeds/cucumber
+	seed_identity = "cucumber seeds"
+	plant_def_type = /datum/plant_def/cucumber
+
+/obj/item/seeds/eggplant
+	seed_identity = "eggplant seeds"
+	plant_def_type = /datum/plant_def/eggplant

@@ -29,6 +29,8 @@
 /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith
 	name = "forge gauntlets"
 	color = "#ffffff"
+	heat_protection = HAND_LEFT | HAND_RIGHT
+	max_heat_protection_temperature = 600 
 
 /obj/item/clothing/gloves/roguetown/angle/pontifex
 	name = "rune-scrybed wrappings"

@@ -16,35 +16,24 @@
 			user.apply_status_effect(/datum/status_effect/buff/xylix_joy)
 			to_chat(user, span_info("Their beauty brings a smile to my face, and fortune to my steps!"))
 	if(HAS_TRAIT(src, TRAIT_UNSEEMLY) && user != src)
-		to_chat(user, span_warning("[p_they(TRUE)] [p_are()] quite ugly."))
 		if(!HAS_TRAIT(user, TRAIT_UNSEEMLY))
 			user.add_stress(/datum/stressevent/unseemly)
-	if(HAS_TRAIT(src, TRAIT_COMICSANS) && user != src)
-		to_chat(user, span_sans("[p_they(TRUE)] [p_have()] an oddly annoying face and voice."))
-	if(HAS_TRAIT(src, TRAIT_SCARRED) && user != src)
-		to_chat(user, span_warning("[p_their(TRUE)] face is marked with terrible scars."))
-	if(HAS_TRAIT(src, TRAIT_DISFIGURED) && user != src)
-		to_chat(user, span_warning("[p_their(TRUE)] face is grotesquely disfigured, making [p_them()] unrecognizable."))
 	if(HAS_TRAIT(src, TRAIT_LEPROSY) && user != src)
 		user.add_stress(/datum/stressevent/leprosy)
 	if(HAS_TRAIT(src, TRAIT_UNSETTLING_BEAUTY) && user != src)
 		// 70% chance to give debuff, 30% chance to give buff
 		if(prob(70) && !user.has_stress_event(/datum/stressevent/uncanny))
 			user.add_stress(/datum/stressevent/uncanny)
-			to_chat(user, span_warning("[p_they(TRUE)] [p_are()] unsettlingly beautiful... something is deeply wrong."))
 		else
 			if(!user.has_stress_event(/datum/stressevent/beautiful))
 				user.add_stress(/datum/stressevent/beautiful)
-				to_chat(user, span_info("[p_they(TRUE)] [p_are()] hauntingly beautiful."))
 	if(HAS_TRAIT(src, TRAIT_BEAUTIFUL_UNCANNY) && user != src)
 		// Original 50/50 eerie beauty
 		if(prob(50) && !user.has_stress_event(/datum/stressevent/uncanny))
 			user.add_stress(/datum/stressevent/beautiful)
-			to_chat(user, span_info("[p_they(TRUE)] possess[p_es()] an otherworldly beauty."))
 		else
 			if(!user.has_stress_event(/datum/stressevent/beautiful))
 				user.add_stress(/datum/stressevent/uncanny)
-				to_chat(user, span_warning("There's something eerily wrong about [p_their()] appearance."))
 	// Apply Xylix buff when examining someone with the beautiful trait
 	if(HAS_TRAIT(user, TRAIT_XYLIX) && !user.has_status_effect(/datum/status_effect/buff/xylix_joy) && user.has_stress_event(/datum/stressevent/beautiful))
 		user.apply_status_effect(/datum/status_effect/buff/xylix_joy)
@@ -56,6 +45,14 @@
 	if(length(ext_lines))
 		lines += ext_lines
 	return lines
+
+/mob/living/carbon/human/proc/get_examine_item_name_with_custom_link(mob/user, obj/item/I)
+	if(!I)
+		return ""
+	var/display_name = I.get_examine_string(user)
+	if(!I.has_customized_identity() && !I.always_show_examine_link)
+		return display_name
+	return "<a href='?src=[REF(src)];task=show_custom_item_info;item_ref=[REF(I)]'>[display_name]</a>"
 
 /mob/living/carbon/human/examine(mob/user)
 	var/observer_privilege = isobserver(user)
@@ -104,6 +101,18 @@
 	else
 		on_examine_face(user)
 		var/used_name = name
+		// Scarred trait only hides the name, nothing else
+		if(HAS_TRAIT(src, TRAIT_SCARRED) && !observer_privilege)
+			// Use descriptor system like masked characters
+			var/list/d_list = get_mob_descriptors()
+			var/trait_desc = "[capitalize(build_coalesce_description_nofluff(d_list, src, list(MOB_DESCRIPTOR_SLOT_TRAIT), "%DESC1%"))]"
+			var/stature_desc = "[capitalize(build_coalesce_description_nofluff(d_list, src, list(MOB_DESCRIPTOR_SLOT_STATURE), "%DESC1%"))]"
+			var/descriptor_name = "[trait_desc] [stature_desc]"
+			if(descriptor_name != " " && descriptor_name != "")
+				used_name = descriptor_name
+			else
+				// Fallback to gender-based unknown name
+				used_name = "Unknown [(gender == FEMALE) ? "Woman" : "Man"]"
 		var/used_title = get_role_title()
 		// Check for cosmetic class titles (for advclass cosmetic variants)
 		if(mind && mind.cosmetic_class_title)
@@ -123,7 +132,7 @@
 			var/datum/job/J = SSjob.GetJob(job)
 			if(!J || J.wanderer_examine)
 				display_as_wanderer = TRUE
-			if(J.lowlife_examine)
+			else if(J.lowlife_examine)
 				display_as_lowlife = TRUE
 		var/rank_color = "#725D4C"
 		if(HAS_TRAIT(src, TRAIT_NOBLE) && social_rank < 4)
@@ -144,7 +153,7 @@
 			social_strata = "<a href='?src=[REF(src)];social_strata=1'><font color='#[rank_color]'>⛯</font></A>"
 		var/display1
 		var/display2 = "[(!HAS_TRAIT(usr, TRAIT_OUTLANDER) && src.social_rank) ? "[social_strata]" : " "]"
-		if ((valid_headshot_link(src, headshot_link, TRUE)) && (user.client?.prefs.chatheadshot))
+		if ((dna?.species?.id != "gnoll") && (valid_headshot_link(src, headshot_link, TRUE)) && (user.client?.prefs.chatheadshot))
 			if(display_as_wanderer)
 				display1 = span_info("ø ------------ ø\n[chat_headshot(headshot_link)]\nThis is <EM>[used_name]</EM>, the wandering [race_name].")
 			else if(display_as_lowlife)
@@ -240,18 +249,9 @@
 				if(their_god)
 					. += (user_side == mob_side) ? span_notice("Fellow [their_god.name] supporter!") : span_userdanger("Vile [their_god.name] supporter!")
 
-		if(dna.species.use_skintones)
-			var/skin_tone_wording = dna.species.skin_tone_wording ? LOWER_TEXT(dna.species.skin_tone_wording) : "skin tone"
-			var/list/skin_tones = dna.species.get_skin_list()
-			var/skin_tone_seen = "incomprehensible"
-			if(!HAS_TRAIT(src, TRAIT_ROTMAN) && skin_tone)
-				//AGGHHHHH this is stupid
-				for(var/tone in skin_tones)
-					if(src.skin_tone == skin_tones[tone])
-						skin_tone_seen = LOWER_TEXT(tone)
-						break
-			var/slop_lore_string = "."
-			. += span_info("[capitalize(m2)] [skin_tone_wording] is [skin_tone_seen][slop_lore_string]")
+
+		if(origin && origin != "Unknown")
+			. += span_info("[capitalize(m2)] ancestry is [origin].")
 
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -359,6 +359,57 @@
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
 					. += span_redtext("[m1] repulsive!")
 
+		if (HAS_TRAIT(src, TRAIT_COMICSANS))
+			. += span_sans("[m3] an oddly annoying face and voice.")
+
+		if (HAS_TRAIT(src, TRAIT_SCARRED))
+			. += span_redtext("[capitalize(m2)] face is marked with terrible scars.")
+
+		if (HAS_TRAIT(src, TRAIT_DISFIGURED))
+			switch (pronouns)
+				if (HE_HIM, SHE_HER_M)
+					. += span_beautiful_masc("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
+				if (SHE_HER, HE_HIM_F)
+					. += span_beautiful_fem("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
+				if (THEY_THEM, THEY_THEM_F, IT_ITS)
+					. += span_beautiful_nb("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
+
+		if (HAS_TRAIT(src, TRAIT_UNSETTLING_BEAUTY))
+			switch (pronouns)
+				if (HE_HIM, SHE_HER_M)
+					if(user.has_stress_event(/datum/stressevent/uncanny))
+						. += span_beautiful_masc("[m1] unsettlingly handsome... something is deeply wrong.")
+					else
+						. += span_beautiful_masc("[m1] hauntingly handsome.")
+				if (SHE_HER, HE_HIM_F)
+					if(user.has_stress_event(/datum/stressevent/uncanny))
+						. += span_beautiful_fem("[m1] unsettlingly beautiful... something is deeply wrong.")
+					else
+						. += span_beautiful_fem("[m1] hauntingly beautiful.")
+				if (THEY_THEM, THEY_THEM_F, IT_ITS)
+					if(user.has_stress_event(/datum/stressevent/uncanny))
+						. += span_beautiful_nb("[m1] unsettlingly attractive... something is deeply wrong.")
+					else
+						. += span_beautiful_nb("[m1] hauntingly attractive.")
+
+		if (HAS_TRAIT(src, TRAIT_BEAUTIFUL_UNCANNY))
+			switch (pronouns)
+				if (HE_HIM, SHE_HER_M)
+					if(user.has_stress_event(/datum/stressevent/beautiful))
+						. += span_beautiful_masc("[m1] possess[p_es()] an otherworldly handsomeness.")
+					else
+						. += span_beautiful_masc("There's something eerily wrong about [m2] appearance.")
+				if (SHE_HER, HE_HIM_F)
+					if(user.has_stress_event(/datum/stressevent/beautiful))
+						. += span_beautiful_fem("[m1] possess[p_es()] an otherworldly beauty.")
+					else
+						. += span_beautiful_fem("There's something eerily wrong about [m2] appearance.")
+				if (THEY_THEM, THEY_THEM_F, IT_ITS)
+					if(user.has_stress_event(/datum/stressevent/beautiful))
+						. += span_beautiful_nb("[m1] possess[p_es()] an otherworldly allure.")
+					else
+						. += span_beautiful_nb("There's something eerily wrong about [m2] appearance.")
+
 		// Shouldn't be able to tell they are unrevivable through a mask as a Necran
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user)
 			if(HAS_TRAIT(user, TRAIT_DEATHSIGHT))
@@ -432,7 +483,7 @@
 			. += span_userdanger("<a href='?src=[REF(src)];task=bloodpoolinfo;'>Vitae: [(mind && !clan) ? (bloodpool * CLIENT_VITAE_MULTIPLIER) : bloodpool]; Blood: [blood_volume]</a>")
 
 	if(wear_shirt && !(SLOT_SHIRT in obscured))
-		var/str = "[m3] [wear_shirt.get_examine_string(user)]. "
+		var/str = "[m3] [get_examine_item_name_with_custom_link(user, wear_shirt)]. "
 		str += "[wear_shirt.integrity_check(is_smart)]"
 		if(is_stupid)
 			str = "[m3] some kind of shirt!"
@@ -446,7 +497,7 @@
 			var/obj/item/clothing/under/U = wear_pants
 			if(U.attached_accessory)
 				accessory_msg += " with [icon2html(U.attached_accessory, user)] \a [U.attached_accessory]"
-		var/str = "[m3] [wear_pants.get_examine_string(user)][accessory_msg]. "
+		var/str = "[m3] [get_examine_item_name_with_custom_link(user, wear_pants)][accessory_msg]. "
 		if(!wear_armor)
 			str += wear_pants.integrity_check(is_smart)
 		if(is_stupid)
@@ -456,7 +507,7 @@
 
 	//head
 	if(head && !(SLOT_HEAD in obscured))
-		var/str = "[m3] [head.get_examine_string(user)] on [m2] head. "
+		var/str = "[m3] [get_examine_item_name_with_custom_link(user, head)] on [m2] head. "
 		str += head.integrity_check(is_smart)
 		if(is_stupid)
 			if(istype(head,/obj/item/clothing/head/roguetown/helmet))
@@ -467,7 +518,7 @@
 
 	//suit/armor
 	if(wear_armor && !(SLOT_ARMOR in obscured))
-		var/str = "[m3] [wear_armor.get_examine_string(user)]. "
+		var/str = "[m3] [get_examine_item_name_with_custom_link(user, wear_armor)]. "
 		if(is_smart || is_normal)
 			str += wear_armor.integrity_check(elaborate = TRUE)
 		else if (is_stupid)
@@ -486,7 +537,7 @@
 		//suit/armor storage
 		if(s_store && !(SLOT_S_STORE in obscured))
 			if(is_normal || is_smart)
-				. += "[m1] carrying [s_store.get_examine_string(user)] on [m2] [wear_armor.name]."
+				. += "[m1] carrying [get_examine_item_name_with_custom_link(user, s_store)] on [m2] [wear_armor.name]."
 	//back
 //	if(back)
 //		. += "[m3] [back.get_examine_string(user)] on [m2] back."
@@ -496,9 +547,9 @@
 		var/str
 		if(istype(cloak, /obj/item/clothing))
 			var/obj/item/clothing/CL = cloak
-			str = "[m3] [CL.get_examine_string(user)] on [m2] shoulders. "
+			str = "[m3] [get_examine_item_name_with_custom_link(user, CL)] on [m2] shoulders. "
 		else
-			str = "[m3] [cloak.get_examine_string(user)] on [m2] shoulders. "
+			str = "[m3] [get_examine_item_name_with_custom_link(user, cloak)] on [m2] shoulders. "
 		str += cloak.integrity_check(is_smart)
 		if (is_stupid)					//So they can tell the named RG tabards. If they can read them, anyway.
 			if(!istype(cloak, /obj/item/clothing/cloak/stabard) && user.get_skill_level(/datum/skill/misc/reading) == 0)
@@ -507,27 +558,27 @@
 
 	//right back
 	if(backr && !(SLOT_BACK_R in obscured))
-		var/str = "[m3] [backr.get_examine_string(user)] on [m2] back. "
+		var/str = "[m3] [get_examine_item_name_with_custom_link(user, backr)] on [m2] back. "
 		str += backr.integrity_check(is_smart)
 		. += str
 
 	//left back
 	if(backl && !(SLOT_BACK_L in obscured))
-		var/str = "[m3] [backl.get_examine_string(user)] on [m2] back. "
+		var/str = "[m3] [get_examine_item_name_with_custom_link(user, backl)] on [m2] back. "
 		str += backl.integrity_check(is_smart)
 		. += str
 
 	//Hands
 	for(var/obj/item/I in held_items)
 		if(!(I.item_flags & ABSTRACT))
-			var/str = "[m1] holding [I.get_examine_string(user)] in [m2] [get_held_index_name(get_held_index_of_item(I))]. "
+			var/str = "[m1] holding [get_examine_item_name_with_custom_link(user, I)] in [m2] [get_held_index_name(get_held_index_of_item(I))]. "
 			str += I.integrity_check(is_smart)
 			. += str
 
 	var/datum/component/forensics/FR = GetComponent(/datum/component/forensics)
 	//gloves
 	if(gloves && !(SLOT_GLOVES in obscured))
-		var/str = "[m3] [gloves.get_examine_string(user)] on [m2] hands. "
+		var/str = "[m3] [get_examine_item_name_with_custom_link(user, gloves)] on [m2] hands. "
 		str += gloves.integrity_check(is_smart)
 		if(is_stupid)
 			str = "[m3] a pair of gloves of some kind!"
@@ -542,13 +593,13 @@
 
 	//belt
 	if(belt && !(SLOT_BELT in obscured))
-		var/str = "[m3] [belt.get_examine_string(user)] about [m2] waist. "
+		var/str = "[m3] [get_examine_item_name_with_custom_link(user, belt)] about [m2] waist. "
 		str += belt.integrity_check(is_smart)
 		. += str
 		if(istype(belt, /obj/item/storage/belt/rogue)) // check if belt has dildo attached
 			var/obj/item/storage/belt/rogue/belt_with_dildo = belt
 			if(belt_with_dildo.attached_toy)
-				. += "[m3] [belt_with_dildo.attached_toy.get_examine_string(user)] attached to [m2] belt. "
+				. += "[m3] [get_examine_item_name_with_custom_link(user, belt_with_dildo.attached_toy)] attached to [m2] belt. "
 
 	var/modular_chastity_toy_line = human_modular_chastity_toy_examine_line(user, m2, m3)
 	if(modular_chastity_toy_line)
@@ -557,19 +608,19 @@
 
 	//right belt
 	if(beltr && !(SLOT_BELT_R in obscured))
-		var/str = "[m3] [beltr.get_examine_string(user)] on [m2] belt. "
+		var/str = "[m3] [get_examine_item_name_with_custom_link(user, beltr)] on [m2] belt. "
 		str += beltr.integrity_check(is_smart)
 		. += str
 
 	//left belt
 	if(beltl && !(SLOT_BELT_L in obscured))
-		var/str = "[m3] [beltl.get_examine_string(user)] on [m2] belt. "
+		var/str = "[m3] [get_examine_item_name_with_custom_link(user, beltl)] on [m2] belt. "
 		str += beltl.integrity_check(is_smart)
 		. += str
 
 	//shoes
 	if(shoes && !(SLOT_SHOES in obscured))
-		var/str = "[m3] [shoes.get_examine_string(user)] on [m2] feet. "
+		var/str = "[m3] [get_examine_item_name_with_custom_link(user, shoes)] on [m2] feet. "
 		str += shoes.integrity_check(is_smart)
 		if(is_stupid)
 			str = "[m3] some shoes on [m2] feet!"
@@ -577,7 +628,7 @@
 
 	//mask
 	if(wear_mask && !(SLOT_WEAR_MASK in obscured))
-		var/str = "[m3] [wear_mask.get_examine_string(user)] on [m2] face. "
+		var/str = "[m3] [get_examine_item_name_with_custom_link(user, wear_mask)] on [m2] face. "
 		str += wear_mask.integrity_check(is_smart)
 		if(is_stupid)
 			str = "[m3] some kinda thing on [m2] face!"
@@ -588,9 +639,9 @@
 		var/str
 		if(istype(mouth, /obj/item/clothing))
 			var/obj/item/clothing/CM = mouth
-			str = "[m3] [CM.get_examine_string(user)] in [m2] mouth. "
+			str = "[m3] [get_examine_item_name_with_custom_link(user, CM)] in [m2] mouth. "
 		else
-			"[m3] [mouth.get_examine_string(user)] in [m2] mouth. "
+			"[m3] [get_examine_item_name_with_custom_link(user, mouth)] in [m2] mouth. "
 		str += mouth.integrity_check(is_smart)
 		if(is_stupid)
 			str = "[m3] some kinda thing on [m2] mouth!"
@@ -598,7 +649,7 @@
 
 	//neck
 	if(wear_neck && !(SLOT_NECK in obscured))
-		var/str = "[m3] [wear_neck.get_examine_string(user)] around [m2] neck. "
+		var/str = "[m3] [get_examine_item_name_with_custom_link(user, wear_neck)] around [m2] neck. "
 		str += wear_neck.integrity_check(is_smart)
 		if (is_stupid)
 			str = "[m3] something on [m2] neck!"
@@ -607,17 +658,17 @@
 	//eyes
 	if(!(SLOT_GLASSES in obscured))
 		if(glasses)
-			. += "[m3] [glasses.get_examine_string(user)] covering [m2] eyes."
+			. += "[m3] [get_examine_item_name_with_custom_link(user, glasses)] covering [m2] eyes."
 		else if(eye_color == BLOODCULT_EYE)
 			. += span_warning("<B>[m2] eyes are glowing an unnatural red!</B>")
 
 	//ears
 	if(ears && !(SLOT_HEAD in obscured))
-		. += "[m3] [ears.get_examine_string(user)] on [m2] ears."
+		. += "[m3] [get_examine_item_name_with_custom_link(user, ears)] on [m2] ears."
 
 	//ID
 	if(wear_ring && !(SLOT_RING in obscured))
-		var/str = "[m3] [wear_ring.get_examine_string(user)] on [m2] hands. "
+		var/str = "[m3] [get_examine_item_name_with_custom_link(user, wear_ring)] on [m2] hands. "
 		if(is_smart && istype(wear_ring, /obj/item/clothing/ring/active))
 			var/obj/item/clothing/ring/active/AR = wear_ring
 			if(AR.cooldowny)
@@ -631,7 +682,7 @@
 
 	//wrists
 	if(wear_wrists && !(SLOT_WRISTS in obscured))
-		var/str = "[m3] [wear_wrists.get_examine_string(user)] on [m2] wrists."
+		var/str = "[m3] [get_examine_item_name_with_custom_link(user, wear_wrists)] on [m2] wrists."
 		str += wear_wrists.integrity_check(is_smart)
 		if (is_stupid)
 			str = "[m3] something on [m2] wrists!"
@@ -909,15 +960,22 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/stress = H.get_stress_amount()//stress check for racism
-		if(H.has_flaw(/datum/charflaw/paranoid) || stress >= 4)//Paranoid or stressed, for basic examine.
-			if(H.dna.species.name != dna.species.name)
-				if(dna.species.stress_examine)//some species don't have a stress desc
+		if(H.dna.species.name != dna.species.name && dna.species.stress_examine)
+			var/should_apply_species_reaction = dna.species.examine_stress_always
+			if(!should_apply_species_reaction)
+				should_apply_species_reaction = H.has_flaw(/datum/charflaw/paranoid) || stress >= 4
+			if(should_apply_species_reaction)
+				var/is_graggar_follower = (H.patron?.type == dna.species.examine_relief_patron)
+				if(is_graggar_follower)
+					if(dna.species.examine_relief_event)
+						user.add_stress(dna.species.examine_relief_event)
+				else
 					. += dna.species.stress_desc
-				if(!HAS_TRAIT(user, TRAIT_TOLERANT))//They're given the stress event if they qualify for racism and aren't tolerant.
-					var/stress_type = /datum/stressevent/shunned_race
-					if(HAS_TRAIT(user, TRAIT_XENOPHOBIC))//Xenophobic are hit worse. By a bit.
-						stress_type = /datum/stressevent/shunned_race_xenophobic
-					user.add_stress(stress_type)
+					if(dna.species.examine_stress_ignores_tolerant || !HAS_TRAIT(user, TRAIT_TOLERANT))//They're given the stress event if they qualify for racism and aren't tolerant.
+						var/stress_type = dna.species.examine_stress_event
+						if(HAS_TRAIT(user, TRAIT_XENOPHOBIC))//Xenophobic are hit worse. By a bit.
+							stress_type = dna.species.examine_stress_event_xenophobic
+						user.add_stress(stress_type)
 
 	if((user != src) && isliving(user))
 		var/mob/living/L = user
@@ -1010,7 +1068,7 @@
 		if(get_dist(src, H) <= ((2 + clamp(floor(((H.STAPER - 10))),-1, 4)) + HAS_TRAIT(user, TRAIT_INTELLECTUAL)))
 			. += "<a href='?src=[REF(src)];task=assess;'>Assess</a>"
 
-	if((!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes))
+	if((dna?.species?.id != "gnoll") && (!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes))
 		. += "<a href='?src=[REF(src)];task=view_headshot;'>Examine closer</a>"
 
 	/// Rumours & Gossip
@@ -1078,6 +1136,13 @@
 	if(!appears_dead)
 		if(skipface && user.has_flaw(/datum/charflaw/hunted) && user != src)
 			user.add_stress(/datum/stressevent/hunted)
+
+	if(dna?.species?.type == /datum/species/gnoll)
+		if(istype(user, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = user
+			if(H.dna?.species?.type == /datum/species/gnoll)
+				if(user.advjob)
+					. += span_notice("<i>They are a [advjob] of the pack.</i>")
 
 	var/trait_exam = common_trait_examine()
 	if(!isnull(trait_exam))

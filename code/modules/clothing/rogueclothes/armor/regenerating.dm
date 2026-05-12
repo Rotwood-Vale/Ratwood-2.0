@@ -20,28 +20,28 @@
 	var/reptimer
 	/// Time taken for regeneration
 	var/repair_time = 10 SECONDS
+	/// If the armor regen is stopped by a combat tag
+	var/combat_taggable = FALSE
 
-	/// Regen interrupt vars
-	var/interrupt_damount
-	var/interrupt_dtype
-	var/interrupt_dflag
-	var/interrupt_ddir
-
-/obj/item/clothing/suit/roguetown/armor/regenerating/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armor_penetration)
+/obj/item/clothing/suit/roguetown/armor/regenerating/equipped(mob/user, slot)
 	. = ..()
-	if(regen_interrupt(damage_amount, damage_type, damage_flag, attack_dir))
-		combat_timer = addtimer(CALLBACK(src, PROC_REF(begin_repair)), COMBAT_TAG_DURATION, TIMER_UNIQUE|TIMER_OVERRIDE)
-		if(timeleft(reptimer))
-			to_chat(loc, span_notice(repairmsg_stop))
-		deltimer(reptimer)
+	UnregisterSignal(user, list(COMSIG_SPECIES_ATTACKED_BY, COMSIG_LIVING_ARMOR_CHECKED, COMSIG_MOB_APPLY_DAMGE))
+	if(slot == SLOT_SHIRT || slot == SLOT_ARMOR)
+		RegisterSignal(user, list(COMSIG_SPECIES_ATTACKED_BY, COMSIG_LIVING_ARMOR_CHECKED, COMSIG_MOB_APPLY_DAMGE), PROC_REF(on_attacked_by))
+
+/// Combat tag system, makes your skin stop regenning if you are attacked by anything
+/obj/item/clothing/suit/roguetown/armor/regenerating/proc/on_attacked_by(datum/source)
+	SIGNAL_HANDLER
+	if(!combat_taggable) // This means constant in-combat regen
+		if(!reptimer && obj_integrity < max_integrity)
+			begin_repair()
 		return
 
-	if(obj_integrity >= max_integrity) // Armor doesn't need a fix
-		deltimer(reptimer)
-		return
-
-	if(!reptimer && !combat_timer) // Armor is damaged but regen isnt interrupted (While the regen isnt active)
-		begin_repair()
+	combat_timer = addtimer(CALLBACK(src, PROC_REF(begin_repair)), COMBAT_TAG_DURATION, TIMER_UNIQUE|TIMER_OVERRIDE)
+	if(timeleft(reptimer))
+		to_chat(loc, span_notice(repairmsg_stop))
+	deltimer(reptimer)
+	return
 
 /// Start repairing the armor
 /obj/item/clothing/suit/roguetown/armor/regenerating/proc/begin_repair()
@@ -61,18 +61,6 @@
 
 	to_chat(loc, span_notice(repairmsg_continue))
 	reptimer = addtimer(CALLBACK(src, PROC_REF(armour_regen)), repair_time, TIMER_OVERRIDE|TIMER_UNIQUE|TIMER_STOPPABLE)
-
-/// Stops armor regen if you match any of the criteria
-/obj/item/clothing/suit/roguetown/armor/regenerating/proc/regen_interrupt(damage_amount, damage_type, damage_flag, attack_dir)
-	if(interrupt_damount && interrupt_damount < damage_amount)
-		return TRUE
-	if(interrupt_dtype && interrupt_dtype == damage_type)
-		return TRUE
-	if(interrupt_dflag && interrupt_dflag == damage_flag)
-		return TRUE
-	if(interrupt_ddir && interrupt_ddir == attack_dir)
-		return TRUE
-	return FALSE
 
 // SKIN ARMOUR
 
@@ -128,6 +116,6 @@
 	max_integrity = 300
 	body_parts_covered = FULL_BODY
 	body_parts_inherent = FULL_BODY
-	interrupt_damount = 1
+	combat_taggable = TRUE
 
 #undef COMBAT_TAG_DURATION

@@ -157,7 +157,11 @@
 				else
 					var/amt = R.payout_price * B.amount
 					SStreasury.economic_output += R.export_price * B.amount
-					if(!SStreasury.give_money_account(amt, H, "+[amt] from [R.name] bounty") && message == TRUE)
+					var/tax_rate = SStreasury.get_tax_value_for(H)
+					var/taxed = round(amt * tax_rate)
+					SStreasury.treasury_value += taxed
+					amt -= taxed
+					if(!SStreasury.give_money_account(amt, H, "+[amt] from [R.name] bounty. [taxed]m taxed") && message == TRUE)
 						say("No account found. Submit your fingers to a Meister for inspection.")
 					else
 						record_round_statistic(STATS_STOCKPILE_EXPANSES, amt)
@@ -189,7 +193,11 @@
 				say("Stockpile is full, no payment.")
 			else if(amt)
 				SStreasury.economic_output += true_value
-				if(!SStreasury.give_money_account(amt, H, "+[amt] from [R.name] bounty") && message == TRUE)
+				var/tax_rate = SStreasury.get_tax_value_for(H)
+				var/taxed = round(amt * tax_rate)
+				SStreasury.treasury_value += taxed
+				amt -= taxed
+				if(!SStreasury.give_money_account(amt, H, "+[amt] from [R.name] bounty. [taxed]m taxed") && message == TRUE)
 					say("No account found. Submit your fingers to a Meister for inspection.")
 			record_round_statistic(STATS_STOCKPILE_EXPANSES, amt) // Unlike deposit, a treasure minting is equal to both expending and profiting at the same time
 			record_round_statistic(STATS_STOCKPILE_REVENUE, true_value)
@@ -216,5 +224,3 @@
 		say("Bulk selling in progress...")
 		playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 		playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
-
-

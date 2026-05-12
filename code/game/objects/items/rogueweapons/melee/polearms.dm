@@ -338,6 +338,7 @@
 	thrown_bclass = BCLASS_STAB
 	throwforce = 25
 	resistance_flags = FLAMMABLE
+	special = /datum/special_intent/polearm_backstep
 
 /obj/item/rogueweapon/spear/trident
 	// Better one handed & throwing weapon, flimsier.
@@ -532,6 +533,7 @@
 	wdefense = 4
 	max_integrity = 60
 	throwforce = 20
+	special = null
 
 /obj/item/rogueweapon/spear/billhook
 	name = "billhook"
@@ -542,6 +544,7 @@
 	minstr = 8
 	wdefense = 6
 	throwforce = 15
+	special = null
 
 /obj/item/rogueweapon/spear/improvisedbillhook
 	force = 12
@@ -776,6 +779,7 @@
 	associated_skill = /datum/skill/combat/polearms
 	walking_stick = TRUE
 	wdefense = 6
+	special = /datum/special_intent/polearm_backstep
 
 /obj/item/rogueweapon/halberd/getonmobprop(tag)
 	. = ..()
@@ -1008,6 +1012,7 @@
 	max_blade_int = 300
 	wdefense = 5
 	smelt_bar_num = 3
+	special = /datum/special_intent/greatsword_swing
 
 /obj/item/rogueweapon/greatsword/getonmobprop(tag)
 	. = ..()

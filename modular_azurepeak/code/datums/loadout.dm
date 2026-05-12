@@ -361,7 +361,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/duelcape
 	name = "Duelist Cape"
-	path = /obj/item/clothing/cloak/half/duelistcape
+	path = /obj/item/clothing/cloak/duelistcape
 
 /datum/loadout_item/ridercloak
 	name = "Rider Cloak"
@@ -895,6 +895,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/psicross
 	name = "Psydonian Cross"
 	path = /obj/item/clothing/neck/roguetown/psicross
+
+/datum/loadout_item/psicross_reform
+	name = "Reformist Psycross"
+	path = /obj/item/clothing/neck/roguetown/psicross/reform
 
 /datum/loadout_item/psicross/astrata
 	name = "Amulet of Astrata"

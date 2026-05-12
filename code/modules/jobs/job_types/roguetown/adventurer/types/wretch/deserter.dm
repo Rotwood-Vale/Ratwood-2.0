@@ -5,7 +5,7 @@
 	allowed_races = ACCEPTED_RACES
 	outfit = /datum/outfit/job/roguetown/wretch/deserter
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_DISGRACED_NOBLE)
+	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_EQUESTRIAN, TRAIT_DISGRACED_NOBLE)
 	maximum_possible_slots = 2 //Ideal role for fraggers. Better to limit it.
 
 	cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg' // same as new hedgeknight music
@@ -65,26 +65,34 @@
 			if("Estoc")
 				r_hand = /obj/item/rogueweapon/estoc
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 			if("Longsword + Shield")
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/long
 				backr = /obj/item/rogueweapon/shield/tower/metal
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 			if("Mace + Shield")
 				beltr = /obj/item/rogueweapon/mace/steel
 				backr = /obj/item/rogueweapon/shield/tower/metal
+				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
 			if("Flail + Shield")
 				beltr = /obj/item/rogueweapon/flail/sflail
 				backr = /obj/item/rogueweapon/shield/tower/metal
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_MASTER, TRUE)
 			if("Lucerne")
 				r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)
 			if("Battle Axe")
 				backr = /obj/item/rogueweapon/stoneaxe/battle
+				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
 			if("Lance + Kite Shield")
 				r_hand = /obj/item/rogueweapon/spear/lance
 				backr = /obj/item/rogueweapon/shield/tower/metal
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)
 			if("Shamshir")
 				r_hand = /obj/item/rogueweapon/sword/sabre/shamshir
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 		var/helmets = list(
 			"Pigface Bascinet" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,
 			"Guard Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/guard,
@@ -98,6 +106,7 @@
 			"Slitted Kettle"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle,
 			"Froggemund Helmet"	= /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth,
 			"Kulah Khud"	= /obj/item/clothing/head/roguetown/helmet/sallet/zyb,
+			"Otavan Helmet" = /obj/item/clothing/head/roguetown/helmet/otavan,
 			"None"
 		)
 		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
@@ -135,12 +144,10 @@
 		H.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)
 
 /datum/advclass/wretch/deserter/maa
-	name = "Disgraced Man at Arms"
-	tutorial = "You had your post. You had your duty. Dissatisfied, lacking in morale, or simply thinking yourself better than it. - You decided to walk. Now it follows you everywhere you go."
+	name = "Fighter"
+	tutorial = "It matters not what cause you swing your weapon for, in the end you fight the same way your ancestors and their ancestors did: clad in metal and intimately intertwined with gore and death."
 	outfit = /datum/outfit/job/roguetown/wretch/desertermaa
-	maximum_possible_slots = 2 //Ideal role for fraggers. Better to limit it.
-
-	cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg' // same as new hedgeknight music
+	cmode_music = 'sound/music/combat_vigilante.ogg' //Unused by any other class, so may as very well...
 	class_select_category = CLASS_CAT_WARRIOR
 	// Slightly more rounded. These can be nudged as needed.
 	traits_applied = list(TRAIT_MEDIUMARMOR)
@@ -206,11 +213,16 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/charge)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/convertrole/brotherhood)
 		var/helmets = list(
-		"Simple Helmet" 	= /obj/item/clothing/head/roguetown/helmet,
-		"Kettle Helmet" 	= /obj/item/clothing/head/roguetown/helmet/kettle,
-		"Bascinet Helmet"		= /obj/item/clothing/head/roguetown/helmet/bascinet,
-		"Sallet Helmet"		= /obj/item/clothing/head/roguetown/helmet/sallet,
-		"Winged Helmet" 	= /obj/item/clothing/head/roguetown/helmet/winged,
+		"Simple Helmet" 		 = /obj/item/clothing/head/roguetown/helmet,
+		"Kettle Helmet" 		 = /obj/item/clothing/head/roguetown/helmet/kettle,
+		"Bascinet Helmet" 		 = /obj/item/clothing/head/roguetown/helmet/bascinet,
+		"Sallet Helmet" 		 = /obj/item/clothing/head/roguetown/helmet/sallet,
+		"Winged Helmet" 		 = /obj/item/clothing/head/roguetown/helmet/winged,
+		"Skull Cap"				 = /obj/item/clothing/head/roguetown/helmet/skullcap,
+		"Gronnic Ownel Helmet" 	 = /obj/item/clothing/head/roguetown/helmet/bascinet/atgervi/gronn/ownel,
+		"Steel Shishak" 		 = /obj/item/clothing/head/roguetown/helmet/sallet/shishak,
+		"Nomad Helmet" 			 = /obj/item/clothing/head/roguetown/helmet/nomadhelmet,
+		"Grenzelhoft Plume Hat"  = /obj/item/clothing/head/roguetown/grenzelhofthat,
 		"None"
 		)
 		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
@@ -218,27 +230,150 @@
 			head = helmets[helmchoice]
 
 		var/masks = list(
-		"Steel Mask"		= /obj/item/clothing/mask/rogue/facemask/steel,
-		"Wildguard"			= /obj/item/clothing/mask/rogue/wildguard,
+		"Steel Mask" 			= /obj/item/clothing/mask/rogue/facemask/steel,
+		"Steel Hound Mask" 		= /obj/item/clothing/mask/rogue/facemask/steel/hound,
+		"Wildguard" 			= /obj/item/clothing/mask/rogue/wildguard,
+		"Steppesman War Mask" 	= /obj/item/clothing/mask/rogue/facemask/steel/steppesman,
+		"Steppesman Beast Mask"	= /obj/item/clothing/mask/rogue/facemask/steel/steppesman/anthro,
 		"None"
 		)
 		var/maskchoice = input(H, "Choose your Mask.", "MASK MASK MASK") as anything in masks // Run from it. MASK. MASK. MASK.
 		if(maskchoice != "None")
 			mask = masks[maskchoice]
 
-		wretch_select_bounty(H)
-
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
-	armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
-	pants = /obj/item/clothing/under/roguetown/chainlegs
-	neck = /obj/item/clothing/neck/roguetown/chaincoif
-	cloak = /obj/item/clothing/cloak/stabard/surcoat
-	wrists = /obj/item/clothing/wrists/roguetown/bracers
-	gloves = /obj/item/clothing/gloves/roguetown/chain
-	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
-	beltl = /obj/item/rogueweapon/mace/cudgel
+		var/armor_options = list("Brigandine Set", "Maille Set", "Cuirass Set", "Hammerholdian Set", "Steppesman Set", "Gronn Set", "Grenzelhoftian Set", "Otavan Set")
+		var/armor_choice = input(H, "Choose your armor.", "DIE IN FASHION") as anything in armor_options
+		switch(armor_choice)
+			if("Brigandine Set")
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
+				armor = /obj/item/clothing/suit/roguetown/armor/brigandine
+				pants = /obj/item/clothing/under/roguetown/splintlegs
+				neck = /obj/item/clothing/neck/roguetown/gorget/steel
+				wrists = /obj/item/clothing/wrists/roguetown/splintarms
+				gloves = /obj/item/clothing/gloves/roguetown/plate/iron
+				shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
+			if("Maille Set")
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
+				armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
+				pants = /obj/item/clothing/under/roguetown/chainlegs
+				neck = /obj/item/clothing/neck/roguetown/chaincoif
+				wrists = /obj/item/clothing/wrists/roguetown/bracers
+				gloves = /obj/item/clothing/gloves/roguetown/chain
+				shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
+			if("Cuirass Set")
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
+				armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted
+				pants = /obj/item/clothing/under/roguetown/chainlegs
+				neck = /obj/item/clothing/neck/roguetown/gorget/steel
+				wrists = /obj/item/clothing/wrists/roguetown/bracers
+				gloves = /obj/item/clothing/gloves/roguetown/chain
+				shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
+			if("Hammerholdian Set") //It is actually called Gronn in-game, but it's from AP's lore where Gronns are Totally-Not-Vikings, whereas on RW Gronns are Mongols and Hammerholdians are Vikings.
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
+				armor = /obj/item/clothing/suit/roguetown/armor/brigandine/gronn
+				pants = /obj/item/clothing/under/roguetown/splintlegs/iron/gronn
+				neck = /obj/item/clothing/neck/roguetown/chaincoif
+				wrists = /obj/item/clothing/wrists/roguetown/bracers
+				gloves = /obj/item/clothing/gloves/roguetown/chain/gronn
+				shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
+			if("Steppesman Set")
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah //Better gambeson but your dedicated leg protection is worse.
+				armor = /obj/item/clothing/suit/roguetown/armor/plate/scale/steppe
+				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+				neck = /obj/item/clothing/neck/roguetown/chaincoif
+				wrists = /obj/item/clothing/wrists/roguetown/bracers
+				gloves = /obj/item/clothing/gloves/roguetown/chain
+				shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot/steppesman
+			if("Gronn Set")
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah //Better gambeson but your dedicated leg protection is worse.
+				armor = /obj/item/clothing/suit/roguetown/armor/plate/scale/steppe
+				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants
+				neck = /obj/item/clothing/neck/roguetown/gorget/steel
+				wrists = /obj/item/clothing/wrists/roguetown/bracers
+				gloves = /obj/item/clothing/gloves/roguetown/angle
+				shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
+			if("Grenzelhoftian Set")
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft //Better gambeson but your dedicated leg protection is worse.
+				armor = /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_half_plate //Better chest protection but worse limb protection, a fair trade-off.
+				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants
+				neck = /obj/item/clothing/neck/roguetown/gorget
+				wrists = /obj/item/clothing/wrists/roguetown/bracers
+				shoes = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft
+				gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
+			if("Otavan Set")
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan //Better gambeson but your dedicated leg protection is worse.
+				armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted //Actual Otavan plate's AC is heavy.
+				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
+				neck = /obj/item/clothing/neck/roguetown/fencerguard
+				wrists = /obj/item/clothing/wrists/roguetown/bracers
+				shoes = /obj/item/clothing/shoes/roguetown/boots/otavan
+				gloves = /obj/item/clothing/gloves/roguetown/otavan
 	belt = /obj/item/storage/belt/rogue/leather
+	beltl = /obj/item/rogueweapon/mace/cudgel
 	backr = /obj/item/storage/backpack/rogue/satchel
+	if(H.mind)
+		var/archetype = list("Heavy Infantry", "Light Infantry", "Bogguard/Cavalryman", "Feldsher", "Warcaster", "Veteran")
+		var/archetype_choice = input (H, "Choose your primary training.", "HOW DO YOU KILL?") as anything in archetype
+		switch(archetype_choice)
+			if("Heavy Infantry") //Classic Deserter. Master Athletics, Expert Swimming and Expert Shields. Otherwise nothing special.
+				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_MASTER, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
+				cloak = /obj/item/clothing/cloak/stabard/surcoat
+				to_chat(H, span_warning("You trained to fight as a part of dense shield formations. This made you fit, but you didn't have a chance to pick up any other skills."))
+			if("Light Infantry") //Throwing weapons guy. Starts with steel javelins; +1 SPD and -1 STR; Journeyman in Sneaking.
+				H.change_stat(STATKEY_SPD, 1)
+				H.change_stat(STATKEY_STR, -1)
+				H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				cloak = /obj/item/clothing/cloak/poachercloak //Maybe you are a former Warden-Forester?
+				beltl = /obj/item/quiver/javelin/steel
+				l_hand = /obj/item/clothing/head/roguetown/roguehood/poacher
+				to_chat(H, span_warning("You trained to fight in loose formations, harassing your foes from afar with throwning weapons and swift attacks."))
+			if("Bogguard/Cavalryman") //TRAIT_EQUESTRIAN, Expert Riding, Leech & Kneestinger Immunity. BOGGUARD LIVES!
+				ADD_TRAIT(H, TRAIT_EQUESTRIAN, TRAIT_GENERIC)
+				H.adjust_skillrank_up_to(/datum/skill/misc/riding, SKILL_LEVEL_EXPERT, TRUE)
+				if (istype (H.patron, /datum/patron/divine/dendor)) //Dendorites get Expert Swimming instead of redundant immunities.
+					H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_EXPERT, TRUE)
+				else
+					ADD_TRAIT(H, TRAIT_LEECHIMMUNE, TRAIT_GENERIC)
+					ADD_TRAIT(H, TRAIT_KNEESTINGER_IMMUNITY, TRAIT_GENERIC)
+				cloak = /obj/item/clothing/cloak/stabard/bog
+				to_chat(H, span_warning("You trained in equestrianism and traversing treacherous terrains. The local bog is no less than a second home for you."))
+			if("Feldsher") //Expert Medicine and a surgery bag. No TRAIT_MEDICINE_EXPERT, so you can't progress past Expert without somebody taking you on as their medicine apprentice.
+				H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_EXPERT, TRUE)
+				cloak = /obj/item/clothing/suit/roguetown/shirt/robe/feld
+				beltl = /obj/item/storage/belt/rogue/surgery_bag
+				to_chat(H, span_warning("You were a field chirurgeon, a healer rather than a killer. In time, you learned how to murder and became both."))
+			if("Warcaster") //Wretch Spellblade that's not exclusive to racist elfs! T2 Arcyne, Magearmor, Apprentice Arcyne, 12 spell points, but worse stats -- weighted stat total of +5.
+				ADD_TRAIT(H, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)
+				H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_APPRENTICE, TRUE)
+				H.change_stat(STATKEY_STR, -1)
+				H.change_stat(STATKEY_CON, -1)
+				H.change_stat(STATKEY_PER, -1)
+				H.mind?.adjust_spellpoints(12)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/airblade)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
+				cloak = /obj/item/clothing/cloak/tabard
+				to_chat(H, span_warning("You trained in the difficult skill of casting magic while clad in burdening armour. Your training paid off, but left little time or energy for physical education."))
+			if("Veteran") //Master in primary weapon skills and Expert in all other weapon skills except Unarmed, but worse stats -- weighted stat total of +5.
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_MASTER, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
+				H.change_stat(STATKEY_INT, 1)
+				H.change_stat(STATKEY_STR, -1)
+				H.change_stat(STATKEY_WIL, -1)
+				H.change_stat(STATKEY_CON, -1)
+				H.change_stat(STATKEY_PER, -1)
+				cloak = /obj/item/clothing/cloak/stabard/surcoat
+				to_chat(H, span_warning("You fought for far too long; your body and mind are on the brink of collapse, but your muscles still remember every single swing and thrust. One last fight..."))
+	wretch_select_bounty(H)
 
 	backpack_contents = list(/obj/item/natural/cloth = 1, /obj/item/rogueweapon/huntingknife/idagger/steel/special = 1, /obj/item/rope/chain = 1, /obj/item/storage/belt/rogue/pouch/coins/poor = 1, /obj/item/flashlight/flare/torch/lantern/prelit = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
 

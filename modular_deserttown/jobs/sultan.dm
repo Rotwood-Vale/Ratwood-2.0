@@ -1,0 +1,407 @@
+/datum/job/roguetown/sultan
+	title = "Sultan"
+	f_title = "Sultana"
+	flag = SULTAN
+	department_flag = NOBLEMEN
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	selection_color = JCOLOR_NOBLE
+	allowed_races = RACES_TOLERATED_UP
+	allowed_sexes = list(MALE, FEMALE)
+	advclass_cat_rolls = list(CTAG_SULTAN = 20)
+
+	spells = list(
+		/obj/effect/proc_holder/spell/self/grant_title,
+		/obj/effect/proc_holder/spell/self/convertrole/slave,
+		/obj/effect/proc_holder/spell/self/convertrole/azeb
+		/obj/effect/proc_holder/spell/self/convertrole/guard,
+		/obj/effect/proc_holder/spell/self/grant_nobility,
+	)
+	outfit = /datum/outfit/job/roguetown/sultan
+	visuals_only_outfit = /datum/outfit/job/roguetown/sultan/visuals
+
+	display_order = JDO_LORD
+	tutorial = "Elevated upon your throne through a web of intrigue and political upheaval, you are the absolute authority of these lands and at the center of every plot within it. Every man, woman and child is envious of your position and would replace you in less than a heartbeat: Show them the error of their ways."
+	whitelist_req = FALSE
+	min_pq = 10
+	max_pq = null
+	round_contrib_points = 4
+	give_bank_account = 1000
+	required = TRUE
+	cmode_music = 'sound/music/combat_noble.ogg'
+	social_rank = SOCIAL_RANK_ROYAL
+	// Can't use the Throat when you can't talk properly or.. at all for that matter.
+	vice_restrictions = list(/datum/charflaw/mute, /datum/charflaw/unintelligible)
+
+	job_subclasses = list(
+		/datum/advclass/sultan/dtwarrior,
+		/datum/advclass/sultan/dtmerchant,
+		/datum/advclass/sultan/dtwizard,
+		/datum/advclass/sultan/dtinbred
+	)
+
+/datum/outfit/job/roguetown/sultan
+	job_bitflag = BITFLAG_ROYALTY
+
+/datum/job/roguetown/sultan/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	. = ..()
+	if(L)
+		var/list/chopped_name = splittext(L.real_name, " ")
+		if(length(chopped_name) > 1)
+			chopped_name -= chopped_name[1]
+			GLOB.lordsurname = jointext(chopped_name, " ")
+		else
+			GLOB.lordsurname = "of [L.real_name]"
+		SSticker.set_ruler_mob(L)
+		to_chat(world, "<b><span class='notice'><span class='big'>[L.real_name] is [SSticker.rulertype] of Rotwood Vale.</span></span></b>")
+		if(istype(SSticker.regentmob, /mob/living/carbon/human))
+			var/mob/living/carbon/human/regentbuddy = SSticker.regentmob
+			to_chat(L, span_notice("Word reached me on the approach that [regentbuddy.real_name], the [regentbuddy.job], served as regent in my absence."))
+		SSticker.regentmob = null //Time for regent to give up the position.
+
+		addtimer(CALLBACK(L, TYPE_PROC_REF(/mob, lord_marriage_choice)), 50)
+		// if(STATION_TIME_PASSED() <= 10 MINUTES) //Late to the party? Stuck with default colors, sorry!
+		addtimer(CALLBACK(L, TYPE_PROC_REF(/mob, lord_color_choice)), 50)
+
+/datum/outfit/job/roguetown/sultan
+	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
+	beltl = /obj/item/storage/keyring/lord
+	backpack_contents = list(/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1)
+	id = /obj/item/scomstone/garrison
+
+/datum/outfit/job/roguetown/sultan/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(SSroguemachine.crown == null || (QDELETED(SSroguemachine.crown)))
+		SSroguemachine.crown = null
+		head = /obj/item/clothing/head/roguetown/crown/serpcrown
+	else
+		to_chat(H, span_warning("My crown must be yet in the realm. I shall search it out."))
+	if(should_wear_femme_clothes(H))
+		head = /obj/item/clothing/head/roguetown/sultana
+		mask = /obj/item/clothing/head/roguetown/crown/serpcrown
+		// l_hand = /obj/item/rogueweapon/lordscepter //currently aren't working on sultans
+		belt = /obj/item/storage/belt/rogue/leather/cloth/lady
+		gloves = /obj/item/clothing/gloves/roguetown/leather/black
+		armor = /obj/item/clothing/suit/roguetown/shirt/sultana
+		shoes = /obj/item/clothing/shoes/roguetown/gladiator
+	else if(should_wear_masc_clothes(H))
+		head = /obj/item/clothing/head/roguetown/sultan
+		mask = /obj/item/clothing/head/roguetown/crown/serpcrown
+		// l_hand = /obj/item/rogueweapon/lordscepter
+		belt = /obj/item/storage/belt/rogue/leather/sultbelt
+		pants = /obj/item/clothing/under/roguetown/tights/black
+		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/black
+		armor = /obj/item/clothing/suit/roguetown/shirt/sultan
+		shoes = /obj/item/clothing/shoes/roguetown/shalal
+	if(H.wear_mask)
+		if(istype(H.wear_mask, /obj/item/clothing/mask/rogue/eyepatch))
+			qdel(H.wear_mask)
+			mask = /obj/item/clothing/mask/rogue/lordmask
+		if(istype(H.wear_mask, /obj/item/clothing/mask/rogue/eyepatch/left))
+			qdel(H.wear_mask)
+			mask = /obj/item/clothing/mask/rogue/lordmask/l
+	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
+
+//	SSticker.rulermob = H
+/**
+	Warrior Lord subclass. An evolution from the Daring Twit. This is the original Lord Class.
+*/
+/datum/advclass/sultan/dtwarrior
+	tutorial = "You're a noble warrior. You rose to your rank through your own strength and skill, whether by leading your men or by fighting alongside them. Or perhaps you are none of that, but simply a well-trained heir elevated to the position of Lord. You're trained in the usage of heavy armor, and knows swordsmanship well."
+	outfit = /datum/outfit/job/roguetown/sultan/warrior
+	category_tags = list(CTAG_SULTAN)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR)
+	subclass_stats = list(
+		STATKEY_LCK = 5,
+		STATKEY_INT = 3,
+		STATKEY_WIL = 3,
+		STATKEY_PER = 2,
+		STATKEY_SPD = 1,
+		STATKEY_STR = 1,
+	)
+	subclass_skills = list(
+		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN,
+	)
+
+/datum/outfit/job/roguetown/sultan/warrior/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.age == AGE_OLD)
+		H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
+
+/**
+	Merchant Lord subclass. Consider this an evolution from Sheltered Aristocrat.
+	Gets the same weighted 12 statspread + 5 fortune, but no strength. +2 Int, trade 2 End for 2 Perception. Keep speed. Deals gotta be quick.
+	Get nice traits for seeing price, secular appraise and keen ears for spying.
+	Weapon skills are worse across the board compared to the warrior lord, apprentice only.
+	Has a high noble income plus a starting pouch with insane amount of money.
+*/
+/datum/advclass/sultan/dtmerchant
+	name = "Wise Dealer"
+	tutorial = "You were always talented with coins and trade. And your talents have brought you to the position of the Sultan of Al-Ashur. You could be a merchant who bought his way into nobility and power, or an exceptionally talented noble who were inclined to be good with coins. Fighting directly is not your forte\
+	But you have plenty of wealth, keen ears, and know a good deal from a bad one."
+	outfit = /datum/outfit/job/roguetown/sultan/merchant
+	category_tags = list(CTAG_SULTAN)
+	noble_income = 400 // Let's go crazy. This is +400 per day for a total of 2400 per round at the end of a day. This is probably equal to doubling passive incomes of the keep.
+	traits_applied = list(TRAIT_NOBLE, TRAIT_SEEPRICES, TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_MEDIUMARMOR)
+	subclass_stats = list(
+		STATKEY_LCK = 5,
+		STATKEY_INT = 5,
+		STATKEY_PER = 4,
+		STATKEY_SPD = 1,
+		STATKEY_WIL = 1,
+	)
+	subclass_skills = list(
+		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_EXPERT, // Weapons suitable for defending yourself as a merchant.
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
+		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
+	)
+
+/datum/outfit/job/roguetown/sultan/merchant/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/secular)
+
+/**
+	Wizard duke! We still want the court mage to be the most powerful wizard,
+	but if a warrior duke can be about as strong as a Knight, then a wizard duke could probably afford to be as strong as a mage's associate. They'll get T3, no armor prof.
+*/
+/datum/advclass/sultan/dtwizard
+	name = "Sorcerous Sultan"
+	tutorial = "A good ruler is backed with force. You just happen to have a keen amount of mastery over the world's strongest forces: Magic. Of course, having to manage your realm has meant that you aren't as studied as the realm's greatest wizards- but your cunning sorcery is what has you sat upon the throne."
+	outfit = /datum/outfit/job/roguetown/sultan/wizard
+	category_tags = list(CTAG_SULTAN)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_INTELLECTUAL)
+	subclass_stats = list(
+		STATKEY_LCK = 5,
+		STATKEY_INT = 5,
+		STATKEY_PER = 2,
+		STATKEY_SPD = 2,
+		STATKEY_WIL = 1,
+	)
+	subclass_spellpoints = 27
+	subclass_skills = list(
+		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
+		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/magic/arcane = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
+	)
+
+/datum/outfit/job/roguetown/sultan/wizard/pre_equip(mob/living/carbon/human/H)
+	..()
+	backr = /obj/item/storage/backpack/rogue/satchel
+	backpack_contents = list(/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1, /obj/item/roguegem/amethyst = 1, /obj/item/spellbook_unfinished/pre_arcyne = 1)
+
+/**
+	Inbred Lord subclass. A joke class, evolution of the Inbred Wastrel.
+	Literally the same stat line and skills line, but with one exception - 10 Fortune.
+	Why? Because it is funny, that's why. They also have heavy armor training.
+	The fact that the inbred wastrel with 20 fortune and critical weakness
+	can get into heavy armor and try to fight is hilarious.
+*/
+/datum/advclass/sultan/dtinbred
+	name = "Inbred Sultan"
+	tutorial = "Psydon and Astrata smiles upon you. For despite your inbred and weak body, and your family's conspiracies to remove you from succession, you have somehow become the Sultan of Al Ashur. May your reign lasts a hundred years."
+	outfit = /datum/outfit/job/roguetown/sultan/inbred
+	category_tags = list(CTAG_SULTAN)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_CRITICAL_WEAKNESS, TRAIT_NORUN, TRAIT_HEAVYARMOR, TRAIT_GOODLOVER)
+	subclass_stats = list(
+		STATKEY_LCK = 10,
+		STATKEY_INT = -2,
+		STATKEY_PER = -2,
+		STATKEY_CON = -2,
+		STATKEY_WIL = -2,
+		STATKEY_STR = -2,
+	)
+	subclass_skills = list(
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
+	)
+
+/datum/outfit/job/roguetown/sultan/inbred/pre_equip(mob/living/carbon/human/H)
+	..()
+	H.adjust_skillrank(/datum/skill/combat/crossbows, pick(0,1), TRUE)
+	H.adjust_skillrank(/datum/skill/misc/climbing, pick(0,0,1), TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, pick(0,1), TRUE)
+
+/datum/outfit/job/roguetown/sultan/visuals/pre_equip(mob/living/carbon/human/H)
+	..()
+	head = /obj/item/clothing/head/roguetown/crown/fakecrown //Prevents the crown of woe from happening again.
+
+// /proc/give_lord_surname(mob/living/carbon/human/family_guy, preserve_original = FALSE)
+// 	if(!GLOB.lordsurname)
+// 		return
+// 	if(preserve_original)
+// 		family_guy.fully_replace_character_name(family_guy.real_name, family_guy.real_name + " " + GLOB.lordsurname)
+// 		return family_guy.real_name
+// 	var/list/chopped_name = splittext(family_guy.real_name, " ")
+// 	if(length(chopped_name) > 1)
+// 		family_guy.fully_replace_character_name(family_guy.real_name, chopped_name[1] + " " + GLOB.lordsurname)
+// 	else
+// 		family_guy.fully_replace_character_name(family_guy.real_name, family_guy.real_name + " " + GLOB.lordsurname)
+// 	return family_guy.real_name
+
+// /obj/effect/proc_holder/spell/self/grant_title
+// 	name = "Grant Title"
+// 	desc = "Grant someone a title of honor... Or shame."
+// 	overlay_state = "recruit_titlegrant"
+// 	antimagic_allowed = TRUE
+// 	recharge_time = 100
+// 	/// Maximum range for title granting
+// 	var/title_range = 3
+// 	/// Maximum length for the title
+// 	var/title_length = 42
+
+// /obj/effect/proc_holder/spell/self/grant_title/cast(list/targets, mob/user = usr)
+// 	. = ..()
+// 	var/granted_title = input(user, "What title do you wish to grant?", "[name]") as null|text
+// 	granted_title = reject_bad_text(granted_title, title_length)
+// 	if(!granted_title)
+// 		return
+// 	var/list/recruitment = list()
+// 	for(var/mob/living/carbon/human/village_idiot in (get_hearers_in_view(title_range, user) - user))
+// 		//not allowed
+// 		if(!can_title(village_idiot))
+// 			continue
+// 		recruitment[village_idiot.name] = village_idiot
+// 	if(!length(recruitment))
+// 		to_chat(user, span_warning("There are no potential honoraries in range."))
+// 		return
+// 	var/inputty = input(user, "Select an honorary!", "[name]") as anything in recruitment
+// 	if(inputty)
+// 		var/mob/living/carbon/human/recruit = recruitment[inputty]
+// 		if(!QDELETED(recruit) && (recruit in get_hearers_in_view(title_range, user)))
+// 			INVOKE_ASYNC(src, PROC_REF(village_idiotify), recruit, user, granted_title)
+// 		else
+// 			to_chat(user, span_warning("Honorific failed!"))
+// 	else
+// 		to_chat(user, span_warning("Honorific cancelled."))
+
+// /obj/effect/proc_holder/spell/self/grant_title/proc/can_title(mob/living/carbon/human/recruit)
+// 	//wtf
+// 	if(QDELETED(recruit))
+// 		return FALSE
+// 	//need a mind
+// 	if(!recruit.mind)
+// 		return FALSE
+// 	//need to see their damn face
+// 	if(!recruit.get_face_name(null))
+// 		return FALSE
+// 	return TRUE
+
+// /obj/effect/proc_holder/spell/self/grant_title/proc/village_idiotify(mob/living/carbon/human/recruit, mob/living/carbon/human/recruiter, granted_title)
+// 	if(QDELETED(recruit) || QDELETED(recruiter) || !granted_title)
+// 		return FALSE
+// 	if(GLOB.lord_titles[recruit.real_name])
+// 		recruiter.say("I HEREBY STRIP YOU, [uppertext(recruit.name)], OF THE TITLE OF [uppertext(GLOB.lord_titles[recruit.real_name])]!")
+// 		GLOB.lord_titles -= recruit.real_name
+// 		return FALSE
+// 	recruiter.say("I HEREBY GRANT YOU, [uppertext(recruit.name)], THE TITLE OF [uppertext(granted_title)]!")
+// 	REMOVE_TRAIT(recruit, TRAIT_OUTLANDER, ADVENTURER_TRAIT)
+// 	REMOVE_TRAIT(recruit, TRAIT_OUTLANDER, TRAIT_GENERIC)
+// 	GLOB.lord_titles[recruit.real_name] = granted_title
+// 	return TRUE
+
+// /obj/effect/proc_holder/spell/self/grant_nobility
+// 	name = "Grant Nobility"
+// 	desc = "Make someone a noble, or strip them of their nobility."
+// 	overlay_state = "recruit_titlegrant"
+// 	antimagic_allowed = TRUE
+// 	recharge_time = 100
+// 	/// Maximum range for nobility granting
+// 	var/nobility_range = 3
+
+// /obj/effect/proc_holder/spell/self/grant_nobility/cast(list/targets, mob/user = usr)
+// 	. = ..()
+// 	var/list/recruitment = list()
+// 	for(var/mob/living/carbon/human/village_idiot in (get_hearers_in_view(nobility_range, user) - user))
+// 		//not allowed
+// 		if(!can_nobility(village_idiot))
+// 			continue
+// 		recruitment[village_idiot.name] = village_idiot
+// 	if(!length(recruitment))
+// 		to_chat(user, span_warning("There are no potential honoraries in range."))
+// 		return
+// 	var/inputty = input(user, "Select an honorary!", "[name]") as anything in recruitment
+// 	if(inputty)
+// 		var/mob/living/carbon/human/recruit = recruitment[inputty]
+// 		if(!QDELETED(recruit) && (recruit in get_hearers_in_view(nobility_range, user)))
+// 			INVOKE_ASYNC(src, PROC_REF(grant_nobility), recruit, user)
+// 		else
+// 			to_chat(user, span_warning("Honorific failed!"))
+// 	else
+// 		to_chat(user, span_warning("Honorific cancelled."))
+
+// /obj/effect/proc_holder/spell/self/grant_nobility/proc/can_nobility(mob/living/carbon/human/recruit)
+// 	//wtf
+// 	if(QDELETED(recruit))
+// 		return FALSE
+// 	//need a mind
+// 	if(!recruit.mind)
+// 		return FALSE
+// 	//need to see their damn face
+// 	if(!recruit.get_face_name(null))
+// 		return FALSE
+// 	if(HAS_TRAIT(recruit, TRAIT_DEFILED_NOBLE)) // Their lux was tainted by evil matthios rite. They are utterly fucked.
+// 		return FALSE
+// 	return TRUE
+
+// /obj/effect/proc_holder/spell/self/grant_nobility/proc/grant_nobility(mob/living/carbon/human/recruit, mob/living/carbon/human/recruiter)
+// 	if(QDELETED(recruit) || QDELETED(recruiter))
+// 		return FALSE
+// 	if(HAS_TRAIT(recruit, TRAIT_NOBLE))
+// 		if(!(recruit.job in GLOB.foreign_positions))
+// 			recruiter.say("I HEREBY STRIP YOU, [uppertext(recruit.name)], OF NOBILITY!!")
+// 			REMOVE_TRAIT(recruit, TRAIT_NOBLE, TRAIT_GENERIC)
+// 			REMOVE_TRAIT(recruit, TRAIT_NOBLE, TRAIT_VIRTUE)
+// 			return FALSE
+// 		else
+// 			to_chat(recruiter, span_warning("Their nobility is not mine to strip!"))
+// 			return FALSE
+// 	recruiter.say("I HEREBY GRANT YOU, [uppertext(recruit.name)], NOBILITY!")
+// 	ADD_TRAIT(recruit, TRAIT_NOBLE, TRAIT_GENERIC)
+// 	return TRUE
+	if(SSmapping.config.map_name == "Desert Town")
+		spells = list(
+		/obj/effect/proc_holder/spell/self/grant_title,
+		/obj/effect/proc_holder/spell/self/convertrole/guard,
+		/obj/effect/proc_holder/spell/self/grant_nobility,
+		/obj/effect/proc_holder/spell/self/convertrole/slave,
+		/obj/effect/proc_holder/spell/self/convertrole/azeb,
+		)
+	else
+		spells = list(
+		/obj/effect/proc_holder/spell/self/grant_title,
+		/obj/effect/proc_holder/spell/self/convertrole/guard,
+		/obj/effect/proc_holder/spell/self/grant_nobility,
+		/obj/effect/proc_holder/spell/self/convertrole/bog,
+		/obj/effect/proc_holder/spell/self/convertrole/servant,
+		)

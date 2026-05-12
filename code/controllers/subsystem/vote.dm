@@ -222,87 +222,82 @@ SUBSYSTEM_DEF(vote)
 	vote_alert.status = SOUND_STREAM
 	vote_alert.volume = 100
 
-	if(!mode)
-		if(started_time && initiator_key)
-			var/next_allowed_time = (started_time + CONFIG_GET(number/vote_delay))
-			if(mode)
-				to_chat(usr, span_warning("There is already a vote in progress! please wait for it to finish."))
-				return 0
+	if(mode)
+		to_chat(usr, span_warning("There is already a vote in progress! please wait for it to finish."))
+		return FALSE
 
-			var/admin = FALSE
-			var/ckey = ckey(initiator_key)
-			if(GLOB.admin_datums[ckey])
-				admin = TRUE
+	if(started_time && initiator_key)
+		var/next_allowed_time = (started_time + CONFIG_GET(number/vote_delay))
 
-			if(next_allowed_time > world.time && !admin)
-				to_chat(usr, span_warning("A vote was initiated recently, you must wait [DisplayTimeText(next_allowed_time-world.time)] before a new vote can be started!"))
-				return 0
+		var/admin = FALSE
+		if(GLOB.admin_datums[ckey(initiator_key)])
+			admin = TRUE
 
-		reset()
-		switch(vote_type)
-			if("restart")
-				choices.Add("Restart Round","Continue Playing")
-			if("gamemode")
-				choices.Add(config.votable_modes)
-			if("map")
-				for(var/map in global.config.maplist)
-					var/datum/map_config/VM = config.maplist[map]
-					if(!VM.votable)
-						continue
-					var/player_count = GLOB.clients.len
-					if(VM.config_max_users > 0 && player_count >= VM.config_max_users)
-						continue
-					if(VM.config_min_users > 0 && player_count <= VM.config_min_users)
-						continue
-					choices.Add(VM.map_name)
-			if("custom")
-				question = stripped_input(usr,"What is the vote for?")
-				if(!question)
-					return 0
-				for(var/i=1,i<=10,i++)
-					var/option = capitalize(stripped_input(usr,"Please enter an option or hit cancel to finish"))
-					if(!option || mode || !usr.client)
-						break
-					choices.Add(option)
-			if("endround")
-				initiator_key = pick("Psydon", "Zizo")
-				choices.Add("Continue Playing","End Round")
-				vote_alert.file = 'sound/roundend/roundend-vote-sound.ogg'
-			if("storyteller")
-				choices.Add(SSgamemode.storyteller_vote_choices())
-				vote_height = 800 // Give more room for storyteller
-			else
-				return 0
-		mode = vote_type
-		initiator = initiator_key
-		started_time = world.time
-		var/text = "[capitalize(mode)] vote started by [initiator]."
-		if(mode == "storyteller")
-			text = initiator
-		if(mode == "custom")
-			text += "\n[question]"
-		log_vote(text)
-		var/vp
-		if(vote_period)
-			vp = vote_period
-			custom_vote_period = vote_period
+		if(next_allowed_time > world.time && !admin)
+			to_chat(usr, span_warning("A vote was initiated recently, you must wait [DisplayTimeText(next_allowed_time-world.time)] before a new vote can be started!"))
+			return FALSE
+
+	reset()
+	switch(vote_type)
+		if("restart")
+			choices.Add("Restart Round","Continue Playing")
+		if("gamemode")
+			choices.Add(config.votable_modes)
+		if("map")
+			for(var/map in global.config.maplist)
+				var/datum/map_config/VM = config.maplist[map]
+				if(!VM.votable)
+					continue
+				var/player_count = GLOB.clients.len
+				if(VM.config_max_users > 0 && player_count >= VM.config_max_users)
+					continue
+				if(VM.config_min_users > 0 && player_count <= VM.config_min_users)
+					continue
+				choices.Add(VM.map_name)
+		if("custom")
+			question = stripped_input(usr,"What is the vote for?")
+			if(!question)
+				return FALSE
+			for(var/i=1,i<=10,i++)
+				var/option = capitalize(stripped_input(usr,"Please enter an option or hit cancel to finish"))
+				if(!option || mode || !usr.client)
+					break
+				choices.Add(option)
+		if("endround")
+			initiator_key = pick("Psydon", "Zizo")
+			choices.Add("Continue Playing","End Round")
+			vote_alert.file = 'sound/roundend/roundend-vote-sound.ogg'
+		if("storyteller")
+			choices.Add(SSgamemode.storyteller_vote_choices())
+			vote_height = 800 // Give more room for storyteller
 		else
-			vp = CONFIG_GET(number/vote_period)
-		if(vote_alert.file)
-			for(var/mob/M in GLOB.player_list)
-				SEND_SOUND(M, vote_alert)
-		to_chat(world, "\n<font color='purple'><b>[text]</b>\nClick <a href='?src=[REF(src)]'>here</a> to place your vote.\nYou have [DisplayTimeText(vp)] to vote.</font>")
-		time_remaining = round(vp/10)
-//		for(var/c in GLOB.clients)
-//			var/client/C = c
-//			var/datum/action/vote/V = new
-//			if(question)
-//				V.name = "Vote: [question]"
-//			C.player_details.player_actions += V
-//			V.Grant(C.mob)
-//			generated_actions += V
-		return 1
-	return 0
+			return FALSE
+
+	mode = vote_type
+	initiator = initiator_key
+	started_time = world.time
+	var/text = "[capitalize(mode)] vote started by [initiator]."
+	if(mode == "storyteller")
+		text = initiator
+	if(mode == "custom")
+		text += "\n[question]"
+	log_vote(text)
+	var/vp
+	if(vote_period)
+		vp = vote_period
+		custom_vote_period = vote_period
+	else
+		vp = CONFIG_GET(number/vote_period)
+	if(vote_alert.file)
+		for(var/mob/M in GLOB.player_list)
+			SEND_SOUND(M, vote_alert)
+	to_chat(world, "\n<font color='purple'><b>[text]</b>\nClick <a href='?src=[REF(src)]'>here</a> to place your vote.\nYou have [DisplayTimeText(vp)] to vote.</font>")
+	time_remaining = round(vp/10)
+
+	for(var/mob/voter as anything in GLOB.player_list)
+		voter.vote()
+
+	return TRUE
 
 // Helper for sending an active vote to someone who has just logged in
 /datum/controller/subsystem/vote/proc/send_vote(client/C)

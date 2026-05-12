@@ -1290,35 +1290,46 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	"}
 	
 	// FREE LANGUAGE SLOT
+	var/origin_lang = origin?.origin_language
+
 	var/datum/language/free_lang
-	if(ispath(extra_language, /datum/language))
+	if(!origin_lang && ispath(extra_language, /datum/language))
 		free_lang = new extra_language()
-	
-	html += "<div class='vice-slot' style='border-color: #4CAF50;'>"
-	html += "<div class='slot-header'>"
-	html += "<span class='slot-number'>Free Language</span>"
-	html += "<span class='slot-cost' style='background: #4CAF50; color: [theme["bg"]];'>FREE</span>"
-	html += "</div>"
-	
-	if(free_lang)
+
+	if(origin_lang)
+		html += "<div class='vice-slot' style='border-color: #7b5353;'>"
+		html += "<div class='slot-header'>"
+		html += "<span class='slot-number'>Free Language</span>"
+		html += "<span class='slot-cost' style='background: #7b5353; color: #ffcccc;'>LOCKED BY ORIGIN</span>"
+		html += "</div>"
 		html += "<div class='vice-display'>"
 		html += "<div class='vice-info'>"
-		html += "<div class='vice-name'>[free_lang.name]</div>"
-		html += "<div class='vice-desc'>[free_lang.desc]</div>"
-		html += "</div>"
-		html += "</div>"
-		html += "<div class='actions'>"
-		html += "<a class='btn btn-select' href='byond://?src=\ref[src];language_action=free_change'>Change Language</a>"
-		html += "</div>"
-		qdel(free_lang)
+		html += "<div class='vice-name'>LOCKED</div>"
+		html += "<div class='vice-desc'>Granted by your origin ([origin.name]). Cannot be changed.</div>"
+		html += "</div></div></div>"
 	else
-		html += "<div class='empty-slot'>"
-		html += "No Language Selected<br><br>"
-		html += "<a class='btn btn-select' href='byond://?src=\ref[src];language_action=free_select'>Select Language</a>"
+		html += "<div class='vice-slot' style='border-color: #4CAF50;'>"
+		html += "<div class='slot-header'>"
+		html += "<span class='slot-number'>Free Language</span>"
+		html += "<span class='slot-cost' style='background: #4CAF50; color: [theme["bg"]];'>FREE</span>"
 		html += "</div>"
-	
-	html += "</div>"
-	
+		if(free_lang)
+			html += "<div class='vice-display'>"
+			html += "<div class='vice-info'>"
+			html += "<div class='vice-name'>[free_lang.name]</div>"
+			html += "<div class='vice-desc'>[free_lang.desc]</div>"
+			html += "</div></div>"
+			html += "<div class='actions'>"
+			html += "<a class='btn btn-select' href='byond://?src=\ref[src];language_action=free_change'>Change Language</a>"
+			html += "</div>"
+			qdel(free_lang)
+		else
+			html += "<div class='empty-slot'>"
+			html += "No Language Selected<br><br>"
+			html += "<a class='btn btn-select' href='byond://?src=\ref[src];language_action=free_select'>Select Language</a>"
+			html += "</div>"
+		html += "</div>"
+
 	// Generate 2 paid language slots (slot 1 = 2 points, slot 2 = 4 points)
 	for(var/i = 1 to 2)
 		var/slot_var = i == 1 ? "extra_language_1" : "extra_language_2"

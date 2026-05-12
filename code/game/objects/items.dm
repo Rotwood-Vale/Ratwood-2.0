@@ -600,6 +600,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(associated_skill && associated_skill.name)
 			inspec += "\n<b>SKILL:</b> [associated_skill.name] <span class='info'><a href='?src=[REF(src)];explainskill=1'>{?}</a></span>"
 
+		if(istype(src, /obj/item/rogueweapon))
+			var/obj/item/rogueweapon/W = src
+			if(W.special)
+				inspec += "[W.special.get_examine()]"
+
 		if(intdamage_factor != 1 && force >= 5)
 			inspec += "\n<b>INTEGRITY DAMAGE:</b> [intdamage_factor * 100]% <span class='info'><a href='?src=[REF(src)];explainintdamage=1'>{?}</a></span>"
 
@@ -1822,4 +1827,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/update_force_dynamic()
 	force_dynamic = (wielded ? force_wielded : force)
+
+/obj/item/proc/has_customized_identity()
+	if(renamedByPlayer)
+		return TRUE
+	if(original_name && original_name != name)
+		return TRUE
+	if(desc != initial(desc))
+		return TRUE
+	return FALSE
 

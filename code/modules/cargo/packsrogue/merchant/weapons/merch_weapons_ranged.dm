@@ -91,6 +91,14 @@
 					/obj/item/quiver/bolts,
 				)
 
+/datum/supply_pack/rogue/ranged_weapons/quivers/heavybluntbolts
+	name = "Quiver of Heavy Blunt Bolts"
+	cost = 35 // 2 Iron Ingots
+	contains = list(
+					/obj/item/quiver/heavybluntbolts,
+				)
+
+
 /datum/supply_pack/rogue/ranged_weapons/quivers/pyrobolts
 	name = "Quiver of Pyroclastic Bolts"
 	cost = 100 // Matching price of steel

@@ -1,5 +1,6 @@
 /obj/item/clothing/neck/roguetown/cursed_collar
 	name = "cursed collar"
+	always_show_examine_link = TRUE
 	desc = "A sinister looking collar with ruby studs. It seems to radiate a dark energy."
 	// Credit regarding sprites to Necbro
 	// https://github.com/StoneHedgeSS13/StoneHedge/commit/9ddc09d4cb91903beff6d523c91aef75312d5163
@@ -16,6 +17,35 @@
 	var/datum/mind/collar_master = null
 	var/silenced = FALSE
 	var/applying = FALSE
+	/// Round-persistent counter for non-self ejaculation events received by the current wearer.
+	var/received_cum_count = 0
+
+/obj/item/clothing/neck/roguetown/cursed_collar/examine(mob/user)
+	. = ..()
+	if(received_cum_count == 1)
+		. += span_notice("1 tally mark is etched into the collar's metal surface.")
+	else if(received_cum_count > 1)
+		. += span_notice("[received_cum_count] tally marks are etched into the collar's metal surface.")
+
+/obj/item/clothing/neck/roguetown/cursed_collar/proc/record_nonself_ejaculation(mob/living/carbon/human/source, mob/living/carbon/human/wearer)
+	if(!source || !wearer)
+		return FALSE
+	if(source == wearer)
+		return FALSE
+	if(loc != wearer)
+		return FALSE
+	var/added = get_tally_increment_for_source(source)
+	received_cum_count += added
+	var/tally_msg = added == 1 ? "A metal scraping sound is briefly heard, a tally mark suddenly appears on [wearer]'s collar." : "A metal scraping sound is briefly heard, two tally marks suddenly appear on [wearer]'s collar."
+	for(var/mob/M in viewers(1, wearer))
+		to_chat(M, span_notice(tally_msg))
+	return TRUE
+
+/obj/item/clothing/neck/roguetown/cursed_collar/proc/get_tally_increment_for_source(mob/living/carbon/human/source)
+	return tally_increment_for_ejaculation_source(source)
+
+/obj/item/clothing/neck/roguetown/cursed_collar/proc/reset_received_cum_count()
+	received_cum_count = 0
 
 /obj/item/clothing/neck/roguetown/cursed_collar/attack(mob/living/carbon/human/C, mob/living/user)
 	if(!istype(C))
@@ -150,6 +180,7 @@
 
 /obj/item/clothing/neck/roguetown/cursed_collar/dropped(mob/living/carbon/human/user)
 	. = ..()
+	reset_received_cum_count()
 	if(!user)
 		return
 	SEND_SIGNAL(user, COMSIG_CARBON_LOSE_COLLAR)

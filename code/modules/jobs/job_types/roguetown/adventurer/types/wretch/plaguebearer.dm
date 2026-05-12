@@ -1,6 +1,6 @@
 /datum/advclass/wretch/plaguebearer
-	name = "Plaguebearer"
-	tutorial = "A disgraced physician forced into exile and years of hardship, you have turned to a private practice surrounding the only things you've ever known - poisons and plague. Revel in the spreading of blight, and unleash craven pestilence."
+	name = "Malpractitioner"
+	tutorial = "A disgraced physician forced into exile and years of hardship, you have turned to a private practice. Operating beyond the bounds of the law, you work with traitors, heretics, and common criminals as easily as your peers would treat a peasant or craftsman."
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/wretch/plaguebearer
 	cmode_music = 'sound/music/combat_physician.ogg'
@@ -8,14 +8,14 @@
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_CICERONE, TRAIT_NOSTINK, TRAIT_MEDICINE_EXPERT, TRAIT_ALCHEMY_EXPERT)
 	maximum_possible_slots = 1 //They spawn with killer's ice lol I'm limiting this shit 
+	extra_context = "This subclass has a choice of starting with a poisonable dagger and a bow with poison arrows, a poisonable dagger and magic, or a rapier and the ability to dodge well."
 	subclass_stats = list(
 		STATKEY_INT = 4,
 		STATKEY_PER = 3,
 		STATKEY_CON = 2
 	)
 	subclass_skills = list(
-		/datum/skill/combat/bows = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT, // To escape grapplers, fuck you
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
@@ -51,22 +51,33 @@
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/strongpoison = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
-		/obj/item/rogueweapon/huntingknife/idagger/steel/corroded = 1,
+		/obj/item/natural/worms/leech/cheele = 1,
 		)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
 	if(H.mind)
-		var/weapons = list("Archery", "LET THERE BE PLAGUE!!!")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/primary_weapons = list("A Poison Dagger", "A Rapier and Agility")
+		var/primary_weapon_choice = input(H, "Choose your signature weapon.", "TOOLS OF YOUR TRADE") as anything in primary_weapons
 		H.set_blindness(0)
-		switch(weapon_choice)
-			if("Archery")
-				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
-				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-				beltl = /obj/item/quiver/poisonarrows
-			if("LET THERE BE PLAGUE!!!")
-				H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 4, TRUE)
-				backr = /obj/item/rogueweapon/woodstaff/toper
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/acidsplash)
+		switch(primary_weapon_choice)
+			if("A Poison Dagger")
+				backpack_contents += /obj/item/rogueweapon/huntingknife/idagger/steel/corroded
+				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
+				var/additional_weapons = list("Archery", "Magic")
+				var/additional_weapon_choice = input(H, "Effective, but risky. What gives you range?", "TOOLS OF YOUR TRADE") as anything in additional_weapons
+				switch(additional_weapon_choice)
+					if("Archery")
+						H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
+						backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+						beltl = /obj/item/quiver/poisonarrows
+					if("Magic")
+						H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_EXPERT, TRUE)
+						backr = /obj/item/rogueweapon/woodstaff/toper
+						H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/acidsplash)
+			if("A Rapier and Agility")
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
+				beltl = /obj/item/rogueweapon/scabbard/sword
+				l_hand = /obj/item/rogueweapon/sword/rapier
 		wretch_select_bounty(H)

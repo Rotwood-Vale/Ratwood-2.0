@@ -31,6 +31,8 @@
 				used = list('sound/vo/male/gen/drown (1).ogg','sound/vo/male/gen/drown (2).ogg','sound/vo/male/gen/drown (3).ogg')
 			if("embed")
 				used = list('sound/vo/male/gen/embed (1).ogg','sound/vo/male/gen/embed (2).ogg','sound/vo/male/gen/embed (3).ogg')
+			if("facepalm")
+				used = list('sound/vo/facepalm1.ogg', 'sound/vo/facepalm2.ogg')
 			if("fatigue")
 				used = 'sound/vo/male/gen/fatigue.ogg'
 			if("firescream")
@@ -82,6 +84,8 @@
 					used = 'sound/vo/male/wilhelm_scream.ogg'
 			if("shh")
 				used = 'sound/vo/male/gen/shh.ogg'
+			if("shiver")
+				used = list('sound/vo/shiver.ogg')
 			if("sigh")
 				used = 'sound/vo/male/gen/sigh.ogg'
 			if("snore")

@@ -22,6 +22,7 @@
 		STATKEY_PER = 1,
 		STATKEY_SPD = 1,
 	)
+
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
@@ -36,6 +37,10 @@
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/stealing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN,
+	)
+
+	subclass_languages = list(
+		/datum/language/grenzelhoftian,
 	)
 
 /datum/outfit/job/roguetown/grenzel/envoy/pre_equip(mob/living/carbon/human/H)
@@ -65,7 +70,6 @@
 		/obj/item/paper/scroll = 2
 		)
 	H.cmode_music = 'sound/music/combat_grenzelhoft.ogg'
-	H.grant_language(/datum/language/grenzelhoftian)
 
 /datum/migrant_role/grenzel/bodyguard
 	name = "Leibwächter"
@@ -102,34 +106,36 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 	)
-
+	subclass_languages = list(
+		/datum/language/grenzelhoftian,
+	)
 /datum/outfit/job/roguetown/grenzel/doppel/pre_equip(mob/living/carbon/human/H)
 	..()
+
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	neck = /obj/item/clothing/neck/roguetown/gorget/steel
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft
 	head = /obj/item/clothing/head/roguetown/grenzelhofthat
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_half_plate
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_halfplate
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants
 	shoes = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
-	backr = /obj/item/storage/backpack/rogue/satchel/short
-	backl = /obj/item/rogueweapon/scabbard/gwstrap
+	backr = /obj/item/storage/backpack/rogue/satchel/black
 	r_hand = /obj/item/rogueweapon/greatsword/grenz
+	backl = /obj/item/rogueweapon/scabbard/gwstrap
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
 		/obj/item/rogueweapon/huntingknife/idagger = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 1,
 		/obj/item/natural/bundle/cloth/bandage/full = 1,
-		)
-	H.cmode_music = 'sound/music/combat_grenzelhoft.ogg'
-	H.grant_language(/datum/language/grenzelhoftian)
+	)
+
+
 	var/weapons = list("Zweihander","Kriegmesser & Buckler","Halberd","Partizan")
 	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
-	H.set_blindness(0)
 	switch(weapon_choice)
 		if("Zweihander")
 			r_hand = /obj/item/rogueweapon/greatsword/grenz
@@ -144,6 +150,11 @@
 		if("Partizan")
 			r_hand = /obj/item/rogueweapon/spear/partizan
 			backl = /obj/item/rogueweapon/scabbard/gwstrap
+		else
+			r_hand = /obj/item/rogueweapon/greatsword/grenz
+			backl = /obj/item/rogueweapon/scabbard/gwstrap
+	H.cmode_music = 'sound/music/combat_grenzelhoft.ogg'
+	H.set_blindness(0)
 
 
 /datum/migrant_role/grenzel/priest
@@ -179,6 +190,10 @@
 		/datum/skill/labor/farming = SKILL_LEVEL_APPRENTICE,
 	)
 
+	subclass_languages = list(
+		/datum/language/grenzelhoftian,
+	)
+
 /datum/outfit/job/roguetown/grenzel/priest/pre_equip(mob/living/carbon/human/H)
 	..()
 	if (!(istype(H.patron, /datum/patron/divine/astrata)))
@@ -199,7 +214,6 @@
 		/obj/item/ritechalk = 1,
 	)
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	H.grant_language(/datum/language/grenzelhoftian)
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)
 
 #undef CTAG_GRENZEL_ENVOY

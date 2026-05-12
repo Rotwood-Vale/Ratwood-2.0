@@ -1,0 +1,4 @@
+author: "Guidesu"
+delete-after: True
+changes:
+  - rscadd: "Some taurs can now have visible clothing based on armour types on their shirt / armour slot and cloak slot (jupon and tabard)."

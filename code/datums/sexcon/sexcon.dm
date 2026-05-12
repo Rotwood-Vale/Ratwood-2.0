@@ -348,6 +348,7 @@
 			splashed_user.apply_status_effect(/datum/status_effect/facial)
 		else
 			facial.refresh_cum()
+		modular_record_collar_receive_event(splashed_user, user)
 	after_ejaculation()
 
 /datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null)
@@ -367,6 +368,9 @@
 			splashed_user.apply_status_effect(status_type)
 		else
 			splashed_type.refresh_cum()
+		if(!oral && user?.dna?.species?.id == "gnoll")
+			splashed_user.has_gnoll_scent_this_round = TRUE
+		modular_record_collar_receive_event(splashed_user, user)
 		if(!oral)
 			var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
 			if(testes?.ball_size > DEFAULT_TESTICLES_SIZE)
@@ -534,8 +538,8 @@
 			else
 				target.add_stress(/datum/stressevent/unseemly_made_love)
 			user.add_stress(/datum/stressevent/cummax)
-	if(!oral && force >= SEX_FORCE_HIGH && user.has_flaw(/datum/charflaw/addiction/sadist)) // force pain emote if top is a sadist
-		target.emote("paincrit", forced = TRUE)
+	if(!oral && force >= SEX_FORCE_HIGH && (user.has_flaw(/datum/charflaw/addiction/sadist) || target.has_flaw(/datum/charflaw/addiction/masochist)))
+		target.emote("paincrit", forced = TRUE) // this satiates the sadomasochists in range
 
 /datum/sex_controller/proc/just_ejaculated()
 	return (last_ejaculation_time + 2 SECONDS >= world.time)
@@ -761,6 +765,7 @@
 							splashed_user.apply_status_effect(/datum/status_effect/facial)
 						else
 							facial.refresh_cum()
+						modular_record_collar_receive_event(splashed_user, user)
 	if(arousal < PASSIVE_EJAC_THRESHOLD)
 		return
 	if(is_spent())
@@ -774,6 +779,7 @@
 			splashed_user.apply_status_effect(/datum/status_effect/facial)
 		else
 			facial.refresh_cum()
+		modular_record_collar_receive_event(splashed_user, user)
 
 /datum/sex_controller/proc/handle_container_ejaculation()
 	if(arousal < PASSIVE_EJAC_THRESHOLD)

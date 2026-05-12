@@ -23,6 +23,34 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		mob_examine_panel.ui_interact(usr)
 		return
 
+	if(href_list["task"] == "show_custom_item_info")
+		if(!observer_privilege && !usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+			return
+		var/obj/item/target_item = locate(href_list["item_ref"])
+		if(!istype(target_item))
+			return
+		if(!(target_item in held_items) && !(target_item in get_equipped_items(TRUE)) && \
+			target_item != chastity_device && \
+			!(chastity_device && target_item == chastity_device.attached_toy))
+			return
+		var/is_chastity_item = (target_item == chastity_device)
+		var/is_chastity_attached_toy = (chastity_device && target_item == chastity_device.attached_toy)
+		if(!observer_privilege && (is_chastity_item || is_chastity_attached_toy))
+			if(!get_location_accessible(src, BODY_ZONE_PRECISE_GROIN))
+				return
+			var/perception_level = 15
+			if(isliving(usr))
+				var/mob/living/L = usr
+				perception_level = L.STAPER
+			if(perception_level < 8)
+				return
+		if(!target_item.has_customized_identity() && !target_item.always_show_examine_link)
+			return
+		var/list/item_examine = target_item.examine(usr)
+		if(length(item_examine))
+			to_chat(usr, usr.client?.prefs?.no_examine_blocks ? item_examine.Join("\n") : examine_block(item_examine.Join("\n")))
+		return
+
 	if(href_list["inspect_limb"] && (observer_privilege || usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY)))
 		var/list/msg = list()
 		var/mob/user = usr

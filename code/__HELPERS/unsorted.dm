@@ -227,6 +227,33 @@ Turf and target are separate in case you want to teleport some distance from a t
 		return TRUE
 	return FALSE
 
+//Whether a living mob's client prefs currently hide them from non-admin ghosts.
+/proc/has_ghost_protection(atom/target)
+	if(!isliving(target))
+		return FALSE
+	var/mob/living/living_target = target
+	return !!living_target.client?.prefs?.ghost_protection
+
+//Admins keep their existing observer tooling even when a target has ghost protection.
+/proc/ghost_bypasses_ghost_protection(mob/viewer)
+	return !!check_rights_for(viewer?.client, R_ADMIN)
+
+//Whether a protected living target should be hidden from this observer.
+/proc/is_hidden_from_ghosts(atom/target, mob/viewer)
+	if(!isobserver(viewer))
+		return FALSE
+	if(ghost_bypasses_ghost_protection(viewer))
+		return FALSE
+	return has_ghost_protection(target)
+
+/proc/get_hidden_ghosts_for_target(atom/target)
+	. = list()
+	if(!has_ghost_protection(target))
+		return
+	for(var/mob/dead/observer/observer in GLOB.player_list)
+		if(is_hidden_from_ghosts(target, observer))
+			. += observer
+
 
 //Returns a list of all items of interest with their name
 /proc/getpois(mobs_only=0,skip_mindless=0,team=null)
@@ -1359,20 +1386,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 	return "{[time_high]-[time_mid]-[GUID_VERSION][time_low]-[GUID_VARIANT][time_clock]-[node_id]}"
 
-// \ref behaviour got changed in 512 so this is necesary to replicate old behaviour.
-// If it ever becomes necesary to get a more performant REF(), this lies here in wait
-// #define REF(thing) (thing && istype(thing, /datum) && (thing:datum_flags & DF_USE_TAG) && thing:tag ? "[thing:tag]" : "\ref[thing]")
-/proc/REF(input)
-	if(istype(input, /datum))
-		var/datum/thing = input
-		if(thing.datum_flags & DF_USE_TAG)
-			if(!thing.tag)
-				stack_trace("A ref was requested of an object with DF_USE_TAG set but no tag: [thing]")
-				thing.datum_flags &= ~DF_USE_TAG
-			else
-				return "\[[url_encode(thing.tag)]\]"
-	return "\ref[input]"
-
 // Makes a call in the context of a different usr
 // Use sparingly
 /world/proc/PushUsr(mob/M, datum/callback/CB, ...)
@@ -1590,6 +1603,8 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 	/area/rogue/outdoors/rtfield, \
 	/area/rogue/outdoors/woodsrat, \
 	/area/rogue/outdoors/bograt, \
+	/area/rogue/outdoors/desert, \
+	/area/rogue/outdoors/desertdeep, \
 )
 
 /proc/is_valid_hunting_area(area/A)

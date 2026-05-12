@@ -470,3 +470,11 @@
 	else
 		return INITIALIZE_HINT_QDEL
 
+/obj/effect/temp_visual/special_intent
+	layer = HUD_LAYER
+	plane = ABOVE_LIGHTING_PLANE
+
+/obj/effect/temp_visual/special_intent/Initialize(mapload, customdur)
+	if(customdur)
+		duration = customdur
+	. = ..()
