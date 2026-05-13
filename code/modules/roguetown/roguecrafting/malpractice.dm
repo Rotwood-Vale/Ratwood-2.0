@@ -61,7 +61,7 @@
 	name = "completed lungs"
 	result = list(/obj/item/organ/lungs/t1)
 	reqs = list(/obj/item/organ/lungs = 1,
-				/obj/item/reagent_containers/lux = 1,
+				/obj/item/reagent_containers/lux = 2,
 				/obj/item/natural/bone = 1,
 	)
 	craftdiff = 5
@@ -70,7 +70,7 @@
 	name = "completed heart"
 	result = list(/obj/item/organ/heart/t1)
 	reqs = list(/obj/item/organ/heart = 1,
-				/obj/item/reagent_containers/lux = 1,
+				/obj/item/reagent_containers/lux = 2,
 				/obj/item/reagent_containers/food/snacks/rogue/meat = 1,
 	)
 	craftdiff = 5
@@ -79,7 +79,7 @@
 	name = "completed liver"
 	result = list(/obj/item/organ/liver/t1)
 	reqs = list(/obj/item/organ/liver = 1,
-				/obj/item/reagent_containers/lux = 1,
+				/obj/item/reagent_containers/lux = 2,
 				/obj/item/reagent_containers/powder/salt = 1,
 	)
 	craftdiff = 5
@@ -88,7 +88,7 @@
 	name = "completed stomach"
 	result = list(/obj/item/organ/stomach/t1)
 	reqs = list(/obj/item/organ/stomach = 1,
-				/obj/item/reagent_containers/lux = 1,
+				/obj/item/reagent_containers/lux = 2,
 				/obj/item/rogueore/coal = 1,
 	)
 	craftdiff = 5
@@ -97,7 +97,7 @@
 	name = "Eyes of the Scholar of Noс"
 	result = list(/obj/item/organ/eyes/t1)
 	reqs = list(/obj/item/organ/eyes = 1,
-				/obj/item/reagent_containers/lux = 1,
+				/obj/item/reagent_containers/lux = 2,
 				/obj/item/reagent_containers/food/snacks/grown/carrot = 1,
 	)
 	craftdiff = 5
@@ -106,7 +106,7 @@
 	name = "blessed lungs"
 	result = list(/obj/item/organ/lungs/t2)
 	reqs = list(/obj/item/organ/lungs/t1 = 1,
-				/obj/item/reagent_containers/lux = 1,
+				/obj/item/reagent_containers/lux = 4,
 				/obj/item/alch/airdust = 2,
 	)
 	craftdiff = 6
@@ -115,7 +115,7 @@
 	name = "blessed heart"
 	result = list(/obj/item/organ/heart/t2)
 	reqs = list(/obj/item/organ/heart/t1 = 1,
-				/obj/item/reagent_containers/lux = 1,
+				/obj/item/reagent_containers/lux = 4,
 				/obj/item/alch/firedust = 2,
 	)
 	craftdiff = 6
@@ -124,7 +124,7 @@
 	name = "blessed liver"
 	result = list(/obj/item/organ/liver/t2)
 	reqs = list(/obj/item/organ/liver/t1 = 1,
-				/obj/item/reagent_containers/lux = 1,
+				/obj/item/reagent_containers/lux = 4,
 				/obj/item/alch/waterdust = 2,
 	)
 	craftdiff = 6
@@ -133,7 +133,7 @@
 	name = "blessed stomach"
 	result = list(/obj/item/organ/stomach/t2)
 	reqs = list(/obj/item/organ/stomach/t1 = 1,
-				/obj/item/reagent_containers/lux = 1,
+				/obj/item/reagent_containers/lux = 4,
 				/obj/item/alch/waterdust = 1,
 				/obj/item/alch/airdust = 1,
 	)
@@ -143,7 +143,7 @@
 	name = "blessed dendorite eyes"
 	result = list(/obj/item/organ/eyes/t2)
 	reqs = list(/obj/item/organ/eyes/t1 = 1,
-				/obj/item/reagent_containers/lux = 1,
+				/obj/item/reagent_containers/lux = 4,
 				/obj/item/alch/firedust = 1,
 				/obj/item/alch/waterdust = 1,
 	)
