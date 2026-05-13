@@ -1,4 +1,6 @@
 /datum/job
+	/// List of category tags for job filtering and UI
+	var/list/category_tags = list()
 	//The name of the job , used for preferences, bans and more. Make sure you know what you're doing before changing this.
 	var/title = "NOPE"
 	// Display title - If empty, uses the proper title instead
