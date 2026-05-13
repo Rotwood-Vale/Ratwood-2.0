@@ -161,10 +161,10 @@
 	additional_items = list(/obj/item/reagent_containers/glass/bottle/waterskin)
 
 /datum/artificer_recipe/bronze/tools/grappler
-	name = "Grappler (+1 ironpick)(+2 bronze gears)(+1 rope)"
+	name = "Grappler (+2 bronze gears)(+1 rope)"
 	required_item = /obj/item/ingot/bronze
 	created_item = /obj/item/grapplinghook
-	additional_items = list(/obj/item/rogueweapon/pick, /obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/rope)
+	additional_items = list(/obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/rope)
 	skill_level = 4
 
 // --------- Contraptions -----------
@@ -290,9 +290,9 @@
 	skill_level = 3
 
 /datum/artificer_recipe/contraptions/artificerarmor
-	name = "Artificer armor (+3 ancient alloy ingot)(+2 Bronze gear)"
+	name = "Artificer armor (1 purified alloy, 2 bronze ingots, 2 bronze gear)"
 	required_item = /obj/item/ingot/purifiedaalloy
-	additional_items = list(/obj/item/ingot/purifiedaalloy,/obj/item/ingot/purifiedaalloy, /obj/item/roguegear/bronze,/obj/item/roguegear/bronze)
+	additional_items = list(/obj/item/ingot/bronze, /obj/item/ingot/bronze, /obj/item/roguegear/bronze, /obj/item/roguegear/bronze)
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer
 	hammers_per_item = 12
 	skill_level = 4
@@ -319,6 +319,15 @@
 	created_item = /obj/item/clothing/neck/roguetown/cursed_collar
 	hammers_per_item = 14
 	skill_level = 5
+
+/datum/artificer_recipe/contraptions/nochadeglasses // A new goodie for artificers
+	name = "Noc Shade (+1 Bronze Ingot)"
+	required_item = /obj/item/clothing/mask/rogue/spectacles
+	additional_items = list(/obj/item/roguegear/bronze, /obj/item/ingot/bronze)
+	created_item = /obj/item/clothing/mask/rogue/spectacles/inq
+	hammers_per_item = 14
+	skill_level = 5
+
 // --------- WEAPON -----------
 
 /datum/artificer_recipe/wood/weapons //Again, a bit silly, but is important
@@ -448,9 +457,9 @@
 	skill_level = 2
 
 /datum/artificer_recipe/ammunition/pyrobolt_five
-	name = "pyroclastic bolt x5 (+1 iron) (+1 fyritius)"
+	name = "pyroclastic bolt x5 (+1 iron) (+1 fire essentia)"
 	required_item = /obj/item/natural/wood/plank
-	additional_items = list(/obj/item/ingot/iron, /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius)
+	additional_items = list(/obj/item/ingot/iron, /obj/item/alch/firedust)
 	created_item = list(
 				/obj/item/ammo_casing/caseless/rogue/bolt/pyro,
 				/obj/item/ammo_casing/caseless/rogue/bolt/pyro,
@@ -461,11 +470,10 @@
 	hammers_per_item = 6
 	skill_level = 2
 
-
 /datum/artificer_recipe/ammunition/pyroarrow_five
-	name = "pyroclastic arrow x5 (+1 iron) (+1 fyritius)"
+	name = "pyroclastic arrow x5 (+1 iron) (+1 fire essentia)"
 	required_item = /obj/item/natural/wood/plank
-	additional_items = list(/obj/item/ingot/iron, /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius)
+	additional_items = list(/obj/item/ingot/iron, /obj/item/alch/firedust)
 	created_item = list(
 				/obj/item/ammo_casing/caseless/rogue/arrow/pyro,
 				/obj/item/ammo_casing/caseless/rogue/arrow/pyro,
@@ -475,6 +483,30 @@
 				)
 	hammers_per_item = 6
 	skill_level = 2
+
+/datum/artificer_recipe/ammunition/lead_ball_pouch
+	name = "lead ball pouch"
+	required_item = /obj/item/natural/hide/cured
+	additional_items = list(/obj/item/natural/hide/cured, /obj/item/alch/firedust) // we dont want too many of these entering circulation
+	created_item = /obj/item/quiver/bullet
+	hammers_per_item = 2
+	skill_level = 1 // your just putting it together
+
+/datum/artificer_recipe/ammunition/powderflask
+	name = "Powder Flask (+2 firedust, +1 cured leather)"
+	required_item = /obj/item/natural/hide/cured
+	additional_items = list(/obj/item/alch/firedust, /obj/item/alch/firedust, /obj/item/natural/hide/cured) 
+	created_item = /obj/item/powderflask
+	hammers_per_item = 2
+	skill_level = 4  // We want professionals to be making this.
+
+/datum/artificer_recipe/ammunition/ramrod
+	name = "Rifle Ramrod (+1 bronze ingot,  +2 tallow)" // tallow is actually quite historically accurate
+	required_item = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/ingot/bronze, /obj/item/reagent_containers/food/snacks/tallow, /obj/item/reagent_containers/food/snacks/tallow) 
+	created_item = /obj/item/powderflask
+	hammers_per_item = 2
+	skill_level = 4  // We want professionals to be making this.
 
 /datum/artificer_recipe/ammunition/lead_ball
 	name = "lead ball x8 (+2 iron)"
@@ -596,14 +628,11 @@
 
 
 /datum/artificer_recipe/general/tntbomb
-	name = "Gun powder sticks"
+	name = "Gun powder sticks (+1 scroll, +1 coal dust, +1 air essentia, +1 fire essentia)"
 	required_item = /obj/item/rogueore/coal
 	additional_items = list(/obj/item/paper/scroll,
 							/obj/item/alch/coaldust,
-							/obj/item/alch/coaldust,
 							/obj/item/alch/airdust,
-							/obj/item/alch/airdust,
-							/obj/item/alch/firedust,
 							/obj/item/alch/firedust)
 	created_item = /obj/item/tntstick
 	hammers_per_item = 5

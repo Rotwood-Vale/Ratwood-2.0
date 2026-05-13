@@ -42,6 +42,60 @@
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 2
 
+/datum/crafting_recipe/roguetown/engineering/ore2bronze
+	name = "Ore to Bronze"
+	result = /obj/item/ingot/bronze
+	reqs = list(/obj/item/rogueore/copper = 1) // 1 to 1 conversion rate
+	verbage_simple = "engineer"
+	verbage = "engineers"
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4 // Bread and butter for artificers
+
+/datum/crafting_recipe/roguetown/engineering/ore2firedust
+	name = "Ore to Fire Essentia"
+	result = /obj/item/alch/firedust
+	reqs = list(/obj/item/rogueore/copper = 1) // 1 to 1 conversion rate
+	verbage_simple = "engineer"
+	verbage = "engineers"
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4 // Bread and butter for artificers
+
+/datum/crafting_recipe/roguetown/engineering/ore2airdust
+	name = "Ore to Air Essentia"
+	result = /obj/item/alch/airdust
+	reqs = list(/obj/item/rogueore/copper = 1) // 1 to 1 conversion rate
+	verbage_simple = "engineer"
+	verbage = "engineers"
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4 // Bread and butter for artificers
+
+/datum/crafting_recipe/roguetown/engineering/ore2airdust
+	name = "Ore to Earth Essentia"
+	result = /obj/item/alch/earthdust
+	reqs = list(/obj/item/rogueore/copper = 1) // 1 to 1 conversion rate
+	verbage_simple = "engineer"
+	verbage = "engineers"
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4 // Bread and butter for artificers
+
+/datum/crafting_recipe/roguetown/engineering/ore2airdust
+	name = "Ore to Water Essentia"
+	result = /obj/item/alch/waterdust
+	reqs = list(/obj/item/rogueore/copper = 1) // 1 to 1 conversion rate
+	verbage_simple = "engineer"
+	verbage = "engineers"
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4 // Bread and butter for artificers
+
+/datum/crafting_recipe/roguetown/engineering/ore2airdust
+	name = "Arcyne Power Meld"
+	result = /obj/item/magic/melded/t1 
+	reqs = list(/obj/item/alch/magicdust = 1, /obj/item/alch/manabloompowder = 4)   // this might be much. Lets try it, will absolutely require interaction with alchemists
+	verbage_simple = "engineer"
+	verbage = "engineers"
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 5 // Arguably will need high int for this. Might swap to 6
+
 /datum/crafting_recipe/roguetown/engineering/bars
 	name = "metal bars"
 	result = /obj/structure/bars
@@ -167,7 +221,7 @@
 	name = "pyroclastic bolt"
 	result = /obj/item/ammo_casing/caseless/rogue/bolt/pyro
 	reqs = list(/obj/item/ammo_casing/caseless/rogue/bolt = 1,
-				/obj/item/reagent_containers/food/snacks/grown/rogue/fyritius = 1)
+				/obj/item/alch/firedust = 1)
 	structurecraft = /obj/machinery/artificer_table
 	craftdiff = 1
 	skillcraft = /datum/skill/craft/engineering
@@ -182,7 +236,7 @@
 				/obj/item/ammo_casing/caseless/rogue/bolt/pyro
 				)
 	reqs = list(/obj/item/ammo_casing/caseless/rogue/bolt = 5,
-				/obj/item/reagent_containers/food/snacks/grown/rogue/fyritius = 5)
+				/obj/item/alch/firedust = 5)
 	structurecraft = /obj/machinery/artificer_table
 	craftdiff = 1
 	skillcraft = /datum/skill/craft/engineering
@@ -191,7 +245,7 @@
 	name = "pyroclastic arrow"
 	result = /obj/item/ammo_casing/caseless/rogue/arrow/pyro
 	reqs = list(/obj/item/ammo_casing/caseless/rogue/arrow/iron = 1,
-				/obj/item/reagent_containers/food/snacks/grown/rogue/fyritius = 1)
+				/obj/item/alch/firedust = 1)
 	structurecraft = /obj/machinery/artificer_table
 	craftdiff = 1
 	skillcraft = /datum/skill/craft/engineering
@@ -390,7 +444,7 @@
 	name = "blastsand sticks"
 	category = "Explosives"
 	result = /obj/item/tntstick
-	reqs = list(/obj/item/paper = 2, /obj/item/alch/coaldust = 2, /obj/item/compost = 1, /obj/item/natural/fibers = 1)
+	reqs = list(/obj/item/paper = 2, /obj/item/alch/coaldust = 2, /obj/item/alch/firedust = 1)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
@@ -411,7 +465,7 @@
 	result = list(/obj/item/impact_grenade/explosion,
 				  /obj/item/impact_grenade/explosion,
 				  /obj/item/impact_grenade/explosion)
-	reqs = list(/obj/item/natural/clay = 1, /obj/item/paper = 1, /obj/item/alch/coaldust = 1, /obj/item/alch/firedust = 1, /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius = 1)
+	reqs = list(/obj/item/natural/clay = 1, /obj/item/paper = 1, /obj/item/alch/coaldust = 1, /obj/item/alch/firedust = 1)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
@@ -422,7 +476,7 @@
 	result = list(/obj/item/impact_grenade/smoke, 
 				  /obj/item/impact_grenade/smoke,
 				  /obj/item/impact_grenade/smoke,)
-	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/ash = 1, /datum/reagent/water = 48)
+	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /datum/reagent/water = 48)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
@@ -433,7 +487,7 @@
 	result = list(/obj/item/impact_grenade/smoke/poison_gas,
 				  /obj/item/impact_grenade/smoke/poison_gas,
 				  /obj/item/impact_grenade/smoke/poison_gas)
-	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/ash = 1, /datum/reagent/berrypoison = 5, /obj/item/alch/airdust = 1, /datum/reagent/water = 48)
+	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /datum/reagent/berrypoison = 5, /obj/item/alch/airdust = 1, /datum/reagent/water = 48)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
@@ -444,7 +498,7 @@
 	result = list(/obj/item/impact_grenade/smoke/fire_gas,
 				  /obj/item/impact_grenade/smoke/fire_gas,
 				  /obj/item/impact_grenade/smoke/fire_gas)
-	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 2, /obj/item/ash = 1, /obj/item/alch/firedust = 1, /obj/item/alch/solardust = 1, /datum/reagent/water = 48)
+	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 2, /obj/item/alch/firedust = 1)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
@@ -455,7 +509,7 @@
 	result = list(/obj/item/impact_grenade/smoke/blind_gas,
 				  /obj/item/impact_grenade/smoke/blind_gas,
 				  /obj/item/impact_grenade/smoke/blind_gas)
-	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/ash = 1, /obj/item/reagent_containers/food/snacks/rogue/veg/onion_sliced = 1, /obj/item/natural/dirtclod = 1, /datum/reagent/water = 48)
+	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/alch/firedust = 1)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
@@ -466,7 +520,7 @@
 	result = list(/obj/item/impact_grenade/smoke/mute_gas,
 				  /obj/item/impact_grenade/smoke/mute_gas,
 				  /obj/item/impact_grenade/smoke/mute_gas)
-	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/ash = 1, /obj/item/alch/irondust = 1, /obj/item/rogueore/cinnabar = 1, /datum/reagent/water = 48)
+	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/alch/irondust = 1, /obj/item/rogueore/cinnabar = 1, /datum/reagent/water = 48)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
@@ -477,7 +531,7 @@
 	result = list(/obj/item/impact_grenade/smoke/healing_gas,
 				  /obj/item/impact_grenade/smoke/healing_gas,
 				  /obj/item/impact_grenade/smoke/healing_gas)
-	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/ash = 1, /obj/item/alch/viscera = 1, /obj/item/alch/bonemeal = 1, /datum/reagent/water = 48)
+	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/alch/viscera = 1, /obj/item/alch/bonemeal = 1, /datum/reagent/water = 48)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4 
