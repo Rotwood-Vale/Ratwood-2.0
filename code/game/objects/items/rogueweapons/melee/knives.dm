@@ -275,6 +275,10 @@
 	smeltresult = /obj/item/ingot/steel
 	picklvl = 0.9
 
+/obj/item/rogueweapon/huntingknife/chefknife/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/tipped_item)	//Lets you tip your weapon in poison
+
 /obj/item/rogueweapon/huntingknife/combat
 	force = 20
 	name = "seax"

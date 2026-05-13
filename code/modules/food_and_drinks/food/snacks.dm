@@ -656,6 +656,11 @@ All foods are distributed among various categories. Use common sense.
 		if(!do_after(user, 1 SECONDS / cd, target = src))
 			return FALSE
 		var/reagents_per_slice = reagents.total_volume/slices_num
+		var/add_reagents_from_knife = W?.reagents?.total_volume // if we're slicing with a tipped_item knife, poison some of the reagents into the cake
+		if(add_reagents_from_knife >= reagents_per_slice) // if the slice too small to inject into, don't attempt
+			add_reagents_from_knife = 0
+		else if(add_reagents_from_knife)
+			reagents_per_slice -= add_reagents_from_knife // make room for our knife's reagent
 		if (istype(src,/obj/item/reagent_containers/food/snacks/grown/onion/rogue))
 			if (ishuman(user))
 				var/mob/living/carbon/H = user
@@ -668,15 +673,36 @@ All foods are distributed among various categories. Use common sense.
 		for(var/i in 1 to slices_num)
 			var/obj/item/reagent_containers/food/snacks/slice = new slice_path(loc)
 			initialize_slice(slice, reagents_per_slice)
+			if(add_reagents_from_knife) // for a batch slice, copy reagents into all slices instead of transferring (becuase a fraction of the knife's reagent would be too small to have an impact)
+				W.reagents.copy_to(slice, add_reagents_from_knife)
+		if(add_reagents_from_knife)
+			var/reagent_color = mix_color_from_reagents(W.reagents.reagent_list)
+			to_chat(user, span_notice("\The [W] loses its <font color=[reagent_color]>coating</font>."))
+			W.reagents.clear_reagents()
 		qdel(src)
 	else
 		var/reagents_per_slice = reagents.total_volume/slices_num
+		var/add_reagents_from_knife = W?.reagents?.total_volume // if we're slicing with a tipped_item knife, poison some of the reagents into the cake
+		if(add_reagents_from_knife >= reagents_per_slice) // if the slice too small to inject into, don't attempt
+			add_reagents_from_knife = 0
+		else if(add_reagents_from_knife)
+			reagents_per_slice -= add_reagents_from_knife // make room for our knife's reagent
 		var/obj/item/reagent_containers/food/snacks/slice = new slice_path(loc)
 		initialize_slice(slice, reagents_per_slice)
+		if(add_reagents_from_knife)
+			var/reagent_color = mix_color_from_reagents(W.reagents.reagent_list)
+			W.reagents.trans_to(slice, add_reagents_from_knife)
+			if(!W.reagents.total_volume)
+				to_chat(user, span_notice("\The [W] loses its <font color=[reagent_color]>coating</font>."))
 		slices_num--
 		if(slices_num == 1)
 			slice = new slice_path(loc)
 			initialize_slice(slice, reagents_per_slice)
+			if(add_reagents_from_knife)
+				var/reagent_color = mix_color_from_reagents(W.reagents.reagent_list)
+				W.reagents.trans_to(slice, add_reagents_from_knife)
+				if(!W.reagents.total_volume)
+					to_chat(user, span_notice("\The [W] loses its <font color=[reagent_color]>coating</font>."))
 			qdel(src)
 			return TRUE
 		if(slices_num <= 0)
