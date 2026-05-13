@@ -352,9 +352,9 @@
 /datum/status_effect/debuff/necras_touched
 	id = "necras_touched"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/necras_touched
-	effectedstats = list(STATKEY_STR = -2, STATKEY_CON = -2, STATKEY_WIL = -2, STATKEY_LCK = -2)
+	effectedstats = list(STATKEY_STR = -1, STATKEY_WIL = -1, STATKEY_PER = -1, STATKEY_INT = -1, STATKEY_SPD = -3,  STATKEY_CON = -4, STATKEY_LCK = -6)
 	duration = 15 MINUTES
-
+	//I think luck nuke and con nuke will be more impactful and more flavrful, i mean, you just got back from the dead, your body is in shambles and your soul is rattled. You should feel it HARD. This is the "I just got back from the dead" debuff, and it should feel like it.
 /datum/status_effect/debuff/necras_touched/on_apply()
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, id)
