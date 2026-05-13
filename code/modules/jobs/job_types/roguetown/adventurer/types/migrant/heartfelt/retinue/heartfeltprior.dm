@@ -25,7 +25,6 @@
 	/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 	/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
 	/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
-	/datum/skill/combat/staves = SKILL_LEVEL_EXPERT,
 	/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
 	/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
 	/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,

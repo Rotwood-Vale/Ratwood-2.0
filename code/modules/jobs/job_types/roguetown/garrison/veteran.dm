@@ -126,7 +126,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 6, TRUE)
 				H.put_in_hands(new /obj/item/rogueweapon/flail/sflail)
 			if("Quarterstaff")
-				H.adjust_skillrank_up_to(/datum/skill/combat/staves, 6, TRUE) // Funny and rarely utilized weapon option. Why not?
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 6, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 6, TRUE)
 				H.put_in_hands(new /obj/item/rogueweapon/woodstaff/quarterstaff/steel)
 				H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L)
