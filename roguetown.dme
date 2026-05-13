@@ -2506,6 +2506,7 @@
 #include "code\modules\roguetown\roguecrafting\farming.dm"
 #include "code\modules\roguetown\roguecrafting\fleshcrafting.dm"
 #include "code\modules\roguetown\roguecrafting\items.dm"
+#include "code\modules\roguetown\roguecrafting\malpractice.dm"
 #include "code\modules\roguetown\roguecrafting\runes.dm"
 #include "code\modules\roguetown\roguecrafting\sewing.dm"
 #include "code\modules\roguetown\roguecrafting\structure.dm"

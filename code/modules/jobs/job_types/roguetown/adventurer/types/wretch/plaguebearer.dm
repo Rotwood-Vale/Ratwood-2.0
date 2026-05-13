@@ -1,14 +1,13 @@
 /datum/advclass/wretch/plaguebearer
 	name = "Malpractitioner"
-	tutorial = "A disgraced physician forced into exile and years of hardship, you have turned to a private practice. Operating beyond the bounds of the law, you work with traitors, heretics, and common criminals as easily as your peers would treat a peasant or craftsman."
+	tutorial = "A disgraced physician forced into exile and years of hardship after your experiments with human flesh had got exposed, you have turned to a private practice. Operating beyond the bounds of the law, you work with traitors, heretics, and common criminals as easily as your peers would treat a peasant or craftsman."
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/wretch/plaguebearer
 	cmode_music = 'sound/music/combat_physician.ogg'
 	class_select_category = CLASS_CAT_TRADER
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_CICERONE, TRAIT_NOSTINK, TRAIT_MEDICINE_EXPERT, TRAIT_ALCHEMY_EXPERT)
-	maximum_possible_slots = 1 //They spawn with killer's ice lol I'm limiting this shit 
-	extra_context = "This subclass has a choice of starting with a poisonable dagger and a bow with poison arrows, a poisonable dagger and magic, or a rapier and the ability to dodge well."
+	extra_context = "This subclass can craft improved organs and has a choice of starting with a poisonable dagger and a bow with poison arrows, a poisonable dagger and magic, or a rapier and the ability to dodge well."
 	subclass_stats = list(
 		STATKEY_INT = 4,
 		STATKEY_PER = 3,
@@ -45,7 +44,6 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 	backpack_contents = list(
-		/obj/item/reagent_containers/glass/bottle/rogue/poison = 1, // You get one epic poison. As a treat because you're valid. Don't waste it. 
 		/obj/item/reagent_containers/glass/bottle/rogue/stampoison = 1,
 		/obj/item/recipe_book/alchemy = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
@@ -53,15 +51,32 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		/obj/item/natural/worms/leech/cheele = 1,
 		)
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
 	if(H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/malpractice) //Is this horrible? Yes. It works, though.
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/malpractice/lungs)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/malpractice/heart)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/malpractice/liver)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/malpractice/stomach)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/malpractice/eyes)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/malpractice/tongue)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/malpractice/lungs_t1)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/malpractice/heart_t1)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/malpractice/liver_t1)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/malpractice/stomach_t1)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/malpractice/eyes_t1)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/malpractice/lungs_t2)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/malpractice/heart_t2)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/malpractice/liver_t2)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/malpractice/stomach_t2)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/malpractice/eyes_t2)
 		var/primary_weapons = list("A Poison Dagger", "A Rapier and Agility")
 		var/primary_weapon_choice = input(H, "Choose your signature weapon.", "TOOLS OF YOUR TRADE") as anything in primary_weapons
 		H.set_blindness(0)
 		switch(primary_weapon_choice)
 			if("A Poison Dagger")
-				backpack_contents += /obj/item/rogueweapon/huntingknife/idagger/steel/corroded
+				l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/corroded
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 				var/additional_weapons = list("Archery", "Magic")
 				var/additional_weapon_choice = input(H, "Effective, but risky. What gives you range?", "TOOLS OF YOUR TRADE") as anything in additional_weapons
