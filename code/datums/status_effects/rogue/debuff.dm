@@ -352,46 +352,184 @@
 /datum/status_effect/debuff/necras_touched
 	id = "necras_touched"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/necras_touched
-	effectedstats = list(STATKEY_STR = -1, STATKEY_WIL = -1, STATKEY_PER = -1, STATKEY_INT = -1, STATKEY_SPD = -3,  STATKEY_CON = -4, STATKEY_LCK = -6)
-	duration = 15 MINUTES
-	//I think luck nuke and con nuke will be more impactful and more flavrful, i mean, you just got back from the dead, your body is in shambles and your soul is rattled. You should feel it HARD. This is the "I just got back from the dead" debuff, and it should feel like it.
+	duration = 20 MINUTES
+	tick_interval = 1 MINUTES
+	var/list/raw_penalties
+	var/recovery_progress = 0
+	var/recovery_goal = 300
+
 /datum/status_effect/debuff/necras_touched/on_apply()
+	raw_penalties = list(STATKEY_STR = -10, STATKEY_CON = -10, STATKEY_WIL = -10, STATKEY_LCK = -10, STATKEY_PER = -10, STATKEY_INT = -10, STATKEY_SPD = -10)
+	effectedstats = raw_penalties.Copy()
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, id)
 
+/datum/status_effect/debuff/necras_touched/proc/get_recovery_points()
+	var/points = 5
+	var/is_hungry = owner.has_status_effect("hungryt1") || owner.has_status_effect("hungryt2") || owner.has_status_effect("hungryt3")
+	var/is_thirsty = owner.has_status_effect("thirsty1") || owner.has_status_effect("thirsty2") || owner.has_status_effect("thirsty3")
+	var/well_fed = !is_hungry && !is_thirsty && (owner.has_status_effect("meal") || owner.has_status_effect("greatmeal") || owner.has_status_effect("snack") || owner.has_status_effect("greatsnack"))
+	if(well_fed)
+		points += 5
+	if(owner.has_status_effect("vigorized"))
+		points += 5
+	if(owner.IsSleeping())
+		points += 20
+	return points
+
+/datum/status_effect/debuff/necras_touched/tick()
+	recovery_progress = min(recovery_progress + get_recovery_points(), recovery_goal)
+	var/target_penalty = round(-10 * (1 - recovery_progress / recovery_goal))
+	var/list/to_remove = list()
+	for(var/S in raw_penalties)
+		var/current_penalty = raw_penalties[S]
+		var/delta = target_penalty - current_penalty
+		if(delta > 0 && effectedstats[S])
+			var/actual = min(delta, -effectedstats[S])
+			if(actual > 0)
+				owner.change_stat(S, actual)
+				effectedstats[S] += actual
+			if(effectedstats[S] >= 0)
+				effectedstats -= S
+		raw_penalties[S] = target_penalty
+		if(target_penalty >= 0)
+			to_remove += S
+	for(var/S in to_remove)
+		raw_penalties -= S
+	if(recovery_progress >= recovery_goal)
+		owner.remove_status_effect(src)
+
 /datum/status_effect/debuff/necras_touched/on_remove()
-	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, id)
+	. = ..()
 
 /datum/status_effect/debuff/necras_touched/lux
 	duration = 5 MINUTES
+	recovery_goal = 75
 
 /atom/movable/screen/alert/status_effect/debuff/necras_touched
 	name = "Necra's Touch"
 	desc = "Necra's cold grasp lingers on my body. My body falters, and I am vulnerable to grievous wounds."
 	icon_state = "revived"
 
+/atom/movable/screen/alert/status_effect/debuff/necras_touched/examine_ui(mob/user)
+	var/datum/status_effect/debuff/necras_touched/E = attached_effect
+	var/list/inspec = list("----------------------")
+	inspec += "<br><span class='notice'><b>[name]</b></span>"
+	inspec += "<br>[desc]"
+	for(var/S in E?.effectedstats)
+		if(E.effectedstats[S] < 0)
+			var/newnum = E.effectedstats[S] * -1
+			inspec += "<br><span class='danger'>[S]</span> \Roman [newnum]"
+	inspec += "<br>----------------------"
+	if(E?.owner)
+		var/mob/living/M = E.owner
+		inspec += "<br><b>Recovery: [E.recovery_progress] / [E.recovery_goal]</b>"
+		var/is_hungry = M.has_status_effect("hungryt1") || M.has_status_effect("hungryt2") || M.has_status_effect("hungryt3")
+		var/is_thirsty = M.has_status_effect("thirsty1") || M.has_status_effect("thirsty2") || M.has_status_effect("thirsty3")
+		var/well_fed = !is_hungry && !is_thirsty && (M.has_status_effect("meal") || M.has_status_effect("greatmeal") || M.has_status_effect("snack") || M.has_status_effect("greatsnack"))
+		var/has_drink_buff = M.has_status_effect("vigorized")
+		var/sleeping = M.IsSleeping()
+		var/points_this_tick = E.get_recovery_points()
+		inspec += "<br>Gaining <b>[points_this_tick]</b> recovery per minute."
+		if(sleeping)
+			inspec += "<br><span class='green'>Sleeping (+20)</span>"
+		else
+			inspec += "<br><span class='danger'>Not sleeping — rest to recover faster.</span>"
+		if(well_fed && has_drink_buff)
+			inspec += "<br><span class='green'>Well-fed and vigorized (+10)</span>"
+		else if(well_fed)
+			inspec += "<br><span class='green'>Well-fed (+5)</span>"
+		else if(has_drink_buff)
+			inspec += "<br><span class='green'>Vigorized (+5)</span>"
+		else
+			inspec += "<br><span class='danger'>Eat a hearty meal and drink coffee or tea (+5 each).</span>"
+		if(is_hungry)
+			inspec += "<br><span class='danger'>Hunger prevents the meal bonus.</span>"
+		if(is_thirsty)
+			inspec += "<br><span class='danger'>Thirst prevents the meal bonus.</span>"
+	inspec += "<br>----------------------"
+	to_chat(user, "[inspec.Join()]")
+
 //For revive - Necra's Claim. Her mark rests upon you - you cannot be brought back from death until it fades.
 /datum/status_effect/debuff/necras_claim
 	id = "necras_claim"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/necras_claim
-	duration = 25 MINUTES
+	duration = 30 MINUTES
+	tick_interval = 1 MINUTES
+	needs_processing = TRUE
+	var/recovery_progress = 0
+	var/recovery_goal = 300
 
 /datum/status_effect/debuff/necras_claim/on_apply()
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_DNR, id)
+
+/datum/status_effect/debuff/necras_claim/proc/get_recovery_points()
+	var/points = 5
+	var/is_hungry = owner.has_status_effect("hungryt1") || owner.has_status_effect("hungryt2") || owner.has_status_effect("hungryt3")
+	var/is_thirsty = owner.has_status_effect("thirsty1") || owner.has_status_effect("thirsty2") || owner.has_status_effect("thirsty3")
+	var/well_fed = !is_hungry && !is_thirsty && (owner.has_status_effect("meal") || owner.has_status_effect("greatmeal") || owner.has_status_effect("snack") || owner.has_status_effect("greatsnack"))
+	if(well_fed)
+		points += 5
+	if(owner.has_status_effect("vigorized"))
+		points += 5
+	if(owner.IsSleeping())
+		points += 20
+	return points
+
+/datum/status_effect/debuff/necras_claim/tick()
+	recovery_progress = min(recovery_progress + get_recovery_points(), recovery_goal)
+	if(recovery_progress >= recovery_goal)
+		owner.remove_status_effect(src)
 
 /datum/status_effect/debuff/necras_claim/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_DNR, id)
 
 /datum/status_effect/debuff/necras_claim/lux
-	duration = 10 MINUTES
+	duration = 15 MINUTES
+	recovery_goal = 75
 
 /atom/movable/screen/alert/status_effect/debuff/necras_claim
 	name = "Necra's Claim"
 	desc = "Necra has marked me as Her own. Should I die again while my lux regains their vitality, no power can drag me back from Her embrace."
 	icon_state = "rotted_body"
+
+/atom/movable/screen/alert/status_effect/debuff/necras_claim/examine_ui(mob/user)
+	var/datum/status_effect/debuff/necras_claim/E = attached_effect
+	var/list/inspec = list("----------------------")
+	inspec += "<br><span class='notice'><b>[name]</b></span>"
+	inspec += "<br>[desc]"
+	inspec += "<br>----------------------"
+	if(E?.owner)
+		var/mob/living/M = E.owner
+		inspec += "<br><b>Recovery: [E.recovery_progress] / [E.recovery_goal]</b>"
+		var/is_hungry = M.has_status_effect("hungryt1") || M.has_status_effect("hungryt2") || M.has_status_effect("hungryt3")
+		var/is_thirsty = M.has_status_effect("thirsty1") || M.has_status_effect("thirsty2") || M.has_status_effect("thirsty3")
+		var/well_fed = !is_hungry && !is_thirsty && (M.has_status_effect("meal") || M.has_status_effect("greatmeal") || M.has_status_effect("snack") || M.has_status_effect("greatsnack"))
+		var/has_drink_buff = M.has_status_effect("vigorized")
+		var/sleeping = M.IsSleeping()
+		var/points_this_tick = E.get_recovery_points()
+		inspec += "<br>Gaining <b>[points_this_tick]</b> recovery per minute."
+		if(sleeping)
+			inspec += "<br><span class='green'>Sleeping (+20)</span>"
+		else
+			inspec += "<br><span class='danger'>Not sleeping — rest to recover faster.</span>"
+		if(well_fed && has_drink_buff)
+			inspec += "<br><span class='green'>Well-fed and vigorized (+10)</span>"
+		else if(well_fed)
+			inspec += "<br><span class='green'>Well-fed (+5)</span>"
+		else if(has_drink_buff)
+			inspec += "<br><span class='green'>Vigorized (+5)</span>"
+		else
+			inspec += "<br><span class='danger'>Eat a hearty meal and drink coffee or tea (+5 each).</span>"
+		if(is_hungry)
+			inspec += "<br><span class='danger'>Hunger prevents the meal bonus.</span>"
+		if(is_thirsty)
+			inspec += "<br><span class='danger'>Thirst prevents the meal bonus.</span>"
+	inspec += "<br>----------------------"
+	to_chat(user, "[inspec.Join()]")
 
 //For de-rot - your body ROTTED. Harsher penalty for longer, can be fully off-set with a cure-rot potion.
 /datum/status_effect/debuff/rotted
