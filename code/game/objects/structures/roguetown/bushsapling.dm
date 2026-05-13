@@ -10,7 +10,7 @@
 	debris = list(/obj/item/natural/fibers = 1, /obj/item/natural/thorn = 1)
 
 /// Scissors (snip intent) trims the tall hedge back to a mature bush sapling, The resulting bush immediately starts its growth timer; shear it again (or bless-crop) to control whether it regrows.
-/obj/structure/flora/roguegrass/bush/wall/tall/grown/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/flora/roguegrass/bush/wall/tall/attackby(obj/item/I, mob/living/user, params)
 	if((istype(I, /obj/item/rogueweapon/huntingknife/scissors) || istype(I, /obj/item/rogueweapon/huntingknife/throwingknife/bauernwehr)) && user.used_intent.type == /datum/intent/snip)
 		to_chat(user, span_notice("I begin cutting the overgrown hedge back down..."))
 		if(do_after(user, 4 SECONDS, target = src))
@@ -248,10 +248,7 @@
 	if((istype(I, /obj/item/rogueweapon/huntingknife/scissors) || istype(I, /obj/item/rogueweapon/huntingknife/throwingknife/bauernwehr)) && user.used_intent.type == /datum/intent/snip && stage == BUSHSAP_STAGE_MATURE && !dead)
 		to_chat(user, span_notice("I begin trimming [src]..."))
 		if(do_after(user, 3 SECONDS, target = src))
-			var/num_fibers = rand(1, 2)
-			for(var/i in 1 to num_fibers)
-				new /obj/item/natural/fibers(user.loc)
-			to_chat(user, span_notice("I trim back the overgrowth and collect [num_fibers] [num_fibers == 1 ? "fiber" : "fibers"]. The bush will stay trimmed until Dendor's blessing stirs it to grow again."))
+			to_chat(user, span_notice("The bush is neatly trimmed. It will stay tidy until the treefather's blessing stirs it to grow again."))
 			growth_progress = 0
 			permanently_trimmed = TRUE
 			STOP_PROCESSING(SSprocessing, src)

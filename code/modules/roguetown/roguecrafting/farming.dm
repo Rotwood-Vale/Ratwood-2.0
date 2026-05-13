@@ -12,7 +12,7 @@
 
 /datum/crafting_recipe/roguetown/farming/fertilizer/druidic
 	name = "fertilizer (druidic)"
-	result = list(/obj/item/fertilizer, /obj/item/fertilizer)
+	result = /obj/item/fertilizer
 	reqs = list(/obj/item/compost = 2, /obj/item/alch/blessedseedpowder = 1)
 	tools = list(TOOL_DRUIDIC_CATALYST = 1)
 	skillcraft = /datum/skill/magic/druidic
