@@ -190,3 +190,16 @@
 	jobspawn_override = list("Ferentian Envoy")
 	delete_after_roundstart = FALSE
 
+// Place this landmark where Kingsfield role pacifism should be removed.
+/obj/effect/landmark/kingsfield_pacifism_release
+	name = "Kingsfield Pacifism Release"
+	icon_state = "arrow"
+
+/obj/effect/landmark/kingsfield_pacifism_release/Crossed(atom/movable/AM, oldloc)
+	. = ..()
+	if(!ishuman(AM))
+		return
+	var/mob/living/carbon/human/H = AM
+	if(HAS_TRAIT_FROM(H, TRAIT_PACIFISM, KINGSFIELD_PACIFISM_TRAIT))
+		REMOVE_TRAIT(H, TRAIT_PACIFISM, KINGSFIELD_PACIFISM_TRAIT)
+		to_chat(H, span_notice("You feel your diplomatic pacifism lift."))

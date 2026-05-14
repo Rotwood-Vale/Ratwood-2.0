@@ -1,5 +1,4 @@
 /obj/structure/roguemachine/goldface/public/kingsfield/Topic(href, href_list)
-	. = ..()
 	if(!ishuman(usr))
 		return
 	if(!usr.canUseTopic(src, BE_CLOSE) || (locked && !is_public))
@@ -42,7 +41,7 @@
 				return
 			budget2change(wgain, usr)
 			wgain = 0
-	return
+	return attack_hand(usr)
 
 /obj/structure/roguemachine/goldface/public/kingsfield/smith/Topic(href, href_list)
 	return ..() // Inherit Kingsfield SILVERFACE free logic
@@ -461,10 +460,12 @@
 			if(PA.group == current_cat)
 				pax += PA
 		for(var/datum/supply_pack/PA in sortNames(pax))
-			var/costy = PA.cost + PA.cost * extra_fee
-			if(!(upgrade_flags & UPGRADE_NOTAX))
-				costy = costy + round(SStreasury.tax_value * PA.cost)
-			costy = round(costy)
+			var/costy = 0
+			if(!istype(src, /obj/structure/roguemachine/goldface/public/kingsfield))
+				costy = PA.cost + PA.cost * extra_fee
+				if(!(upgrade_flags & UPGRADE_NOTAX))
+					costy = costy + round(SStreasury.tax_value * PA.cost)
+				costy = round(costy)
 			var/quantified_name = PA.no_name_quantity ? PA.name : "[PA.name] [PA.contains.len > 1?"x[PA.contains.len]":""]"
 			if(is_public && locked)
 				contents += "[quantified_name]<BR>"
