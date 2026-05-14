@@ -559,6 +559,12 @@
 	icon_state = "cheesekey"
 	lockid = "steward"
 
+/obj/item/roguekey/diplomatic
+	name = "Diplomatic Key"
+	desc = "A polished key intended for diplomatic quarters and official offices."
+	icon_state = "cheesekey"
+	lockid = "admin"
+
 /obj/item/roguekey/archive
 	name = "archive key"
 	desc = "This key looks barely used."
