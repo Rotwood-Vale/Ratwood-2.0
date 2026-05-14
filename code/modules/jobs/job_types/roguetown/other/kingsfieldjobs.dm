@@ -48,6 +48,9 @@
 	if(L?.mind)
 		L.mind.remove_all_antag_datums()
 	. = ..()
+	ADD_TRAIT(L, TRAIT_NOHUNGER, TRAIT_GENERIC)
+	L.nutrition = NUTRITION_LEVEL_FULL
+	L.hydration = HYDRATION_LEVEL_FULL
 	L.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_APPRENTICE, TRUE)
 	L.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_NOVICE, TRUE)
 	L.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_NOVICE, TRUE)
@@ -115,6 +118,9 @@
 	if(L?.mind)
 		L.mind.remove_all_antag_datums()
 	. = ..()
+	ADD_TRAIT(L, TRAIT_NOHUNGER, TRAIT_GENERIC)
+	L.nutrition = NUTRITION_LEVEL_FULL
+	L.hydration = HYDRATION_LEVEL_FULL
 	L.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_JOURNEYMAN, TRUE)
 	L.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_APPRENTICE, TRUE)
 	L.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_NOVICE, TRUE)
