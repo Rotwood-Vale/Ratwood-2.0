@@ -1252,7 +1252,7 @@
 
 	priority_announce("[thegroom.real_name] and [thebride.real_name] have been wed beneath the Treefather's boughs!", title = "Nature's Union!", sound = 'sound/misc/bell.ogg')
 
-	var/list/titles = list("Sir", "Ser", "Dame", "Lord", "Lady", "Knight-Captain", "Duke", "Duchess", "Father", "Mother", "Brother", "Sister", "Prelate", "Devotee", "Votary")
+	var/list/titles = list("Sir", "Dame", "Lord", "Lady", "Knight-Captain", "Duke", "Duchess", "Father", "Mother", "Brother", "Sister", "Prelate", "Devotee", "Votary")
 
 	var/list/groom_name_parts = splittext(thegroom.real_name, " ")
 	var/title_found = (titles.Find(groom_name_parts[1]) != 0)

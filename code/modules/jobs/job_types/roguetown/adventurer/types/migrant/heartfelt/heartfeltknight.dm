@@ -28,7 +28,7 @@
 			S.name = "knight tabard ([index])"
 		var/prev_real_name = H.real_name
 		var/prev_name = H.name
-		var/honorary = "Ser"
+		var/honorary = "Sir"
 		if(H.pronouns == SHE_HER || H.pronouns == THEY_THEM_F)
 			honorary = "Dame"
 		GLOB.chosen_names -= prev_real_name

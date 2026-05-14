@@ -1397,7 +1397,7 @@
 							if(!surname || !length(trim(surname)))
 								surname = thegroom.dna.species.random_surname()
 							priority_announce("[thegroom.real_name] has married [thebride.real_name]!", title = "Holy Union!", sound = 'sound/misc/bell.ogg')
-							var/list/titles = list("Sir", "Ser", "Dame", "Lord", "Lady", "Knight-Captain", "Duke", "Duchess", "Father", "Mother", "Brother", "Sister", "Prelate", "Devotee", "Votary")
+							var/list/titles = list("Sir", "Dame", "Lord", "Lady", "Knight-Captain", "Duke", "Duchess", "Father", "Mother", "Brother", "Sister", "Prelate", "Devotee", "Votary")
 							// Assign surname to groom
 							var/list/groom_name_parts = splittext(thegroom.real_name, " ")
 							var/title_found = (titles.Find(groom_name_parts[1]) != 0)

@@ -58,7 +58,7 @@
 			S.name = "Captain Tabard ([index])" //This doesn't even actually work but you know.
 		var/prev_real_name = H.real_name
 		var/prev_name = H.name
-		var/honorary = "Ser"
+		var/honorary = "Sir"
 		if(should_wear_femme_clothes(H))
 			honorary = "Dame"
 		H.real_name = "[honorary] [prev_real_name]"

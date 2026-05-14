@@ -1197,7 +1197,7 @@
 "DE" = (
 /obj/structure/table/wood/poor,
 /obj/item/reagent_containers/glass/cup/skull{
-	desc = "The skull of Ser Jebediah Gillie, prior commander of the wardens, hard to believe you're drinking from his skull.";
+	desc = "The skull of Sir Jebediah Gillie, prior commander of the wardens, hard to believe you're drinking from his skull.";
 	name = "Ser Jebediah Gillie"
 	},
 /turf/open/floor/rogue/twig,
