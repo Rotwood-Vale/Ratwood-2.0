@@ -80,7 +80,7 @@
 			/obj/item/clothing/under/roguetown/sirwal/plainrandom,
 		))
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
-	belt = /obj/item/storage/belt/rogue/leather/rope
+	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/rich
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
@@ -138,8 +138,9 @@
 
 /datum/outfit/job/roguetown/ferrentian_envoy/pre_equip(mob/living/carbon/human/H)
 	. = ..()
+	armor = null
 	if(should_wear_femme_clothes(H))
-		armor = pick(list(
+		shirt = pick(list(
 			/obj/item/clothing/suit/roguetown/shirt/dress/silkdress,
 			/obj/item/clothing/suit/roguetown/shirt/dress/silkydress/random,
 			/obj/item/clothing/suit/roguetown/shirt/dress/gen/blue,
@@ -161,7 +162,7 @@
 		if(prob(50))
 			head = /obj/item/clothing/head/roguetown/turban/fancypurple
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
-	belt = /obj/item/storage/belt/rogue/leather/rope
+	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
@@ -173,4 +174,6 @@
 // Spawn landmark for Ferrentian Envoy arrivals. Place this in the Kingsfield map where envoys should appear.
 /obj/effect/landmark/start/ferrentian_envoy
 	name = "Ferrentian Envoy Spawn"
+	icon_state = "arrow"
 	jobspawn_override = list("Ferrentian Envoy")
+	delete_after_roundstart = FALSE

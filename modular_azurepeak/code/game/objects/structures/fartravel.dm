@@ -219,6 +219,6 @@
 /obj/effect/landmark/start/kingsfield_visitor
 	name = "Kingsfield Visitor Spawn"
 	icon_state = "arrow"
-	jobspawn_override = list("Kingsfield Visitor")
+	jobspawn_override = list("Kingsfield Visitor", "Ferrentian Envoy")
 	delete_after_roundstart = FALSE
 
