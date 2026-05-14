@@ -43,16 +43,14 @@
 	bypass_jobban = TRUE
 	bypass_lastclass = TRUE
 	category_tags = list(CTAG_KINGSFIELD)
-	subclass_skills = list(
-		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/athletics = SKILL_LEVEL_NOVICE,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE
-	)
 
 /datum/job/roguetown/kingsfield_visitor/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	if(L?.mind)
 		L.mind.remove_all_antag_datums()
 	. = ..()
+	L.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_APPRENTICE, TRUE)
+	L.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_NOVICE, TRUE)
+	L.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_NOVICE, TRUE)
 	apply_kingsfield_join_fade(L)
 
 /datum/outfit/job/roguetown/kingsfield_visitor/pre_equip(mob/living/carbon/human/H)
@@ -112,16 +110,14 @@
 	category_tags = list(CTAG_KINGSFIELD)
 	job_traits = list(TRAIT_NOBLE)
 	social_rank = SOCIAL_RANK_NOBLE
-	subclass_skills = list(
-		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE
-	)
 
 /datum/job/roguetown/ferrentian_envoy/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	if(L?.mind)
 		L.mind.remove_all_antag_datums()
 	. = ..()
+	L.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	L.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_APPRENTICE, TRUE)
+	L.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_NOVICE, TRUE)
 	apply_kingsfield_join_fade(L)
 
 /datum/job/roguetown/ferrentian_envoy/special_job_check(mob/dead/new_player/player)
