@@ -1,3 +1,58 @@
+/obj/structure/roguemachine/goldface/public/kingsfield/Topic(href, href_list)
+	. = ..()
+	if(!ishuman(usr))
+		return
+	if(!usr.canUseTopic(src, BE_CLOSE) || (locked && !is_public))
+		return
+	if(href_list["buy"])
+		var/mob/M = usr
+		var/path = text2path(href_list["buy"])
+		if(!ispath(path, /datum/supply_pack))
+			message_admins("[usr.key] tried to buy [path] from Kingsfield SILVERFACE (blocked)")
+			return
+		var/datum/supply_pack/PA = SSmerchant.supply_packs[path]
+		var/cost = 0 // Always free for Kingsfield SILVERFACE
+		var/profit = 0
+		var/tax_amt = 0
+		if(budget < cost)
+			say("Not enough!")
+			return
+		budget -= cost
+		wgain += profit
+		record_round_statistic(value_record_key, cost)
+		record_round_statistic(STATS_TRADE_VALUE_IMPORTED, cost)
+		var/shoplength = PA.contains.len
+		for(var/l=1,l<=shoplength,l++)
+			var/pathi = PA.contains[l]
+			new pathi(get_turf(M))
+		return
+	if(href_list["change"])
+		if(budget > 0)
+			budget2change(budget, usr)
+			budget = 0
+	if(href_list["changecat"])
+		current_cat = href_list["changecat"]
+	if(href_list["withdrawgain"])
+		if(!usr.canUseTopic(src, BE_CLOSE))
+			return
+		if(ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			if(wgain <= 0)
+				return
+			if(!(H.job in profit_id))
+				return
+			budget2change(wgain, usr)
+			wgain = 0
+	return
+
+/obj/structure/roguemachine/goldface/public/kingsfield/smith/Topic(href, href_list)
+	return ..() // Inherit Kingsfield SILVERFACE free logic
+
+/obj/structure/roguemachine/goldface/public/kingsfield/tailor/Topic(href, href_list)
+	return ..() // Inherit Kingsfield SILVERFACE free logic
+
+/obj/structure/roguemachine/goldface/public/kingsfield/apothecary/Topic(href, href_list)
+	return ..() // Inherit Kingsfield SILVERFACE free logic
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
