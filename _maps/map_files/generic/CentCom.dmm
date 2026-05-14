@@ -2576,9 +2576,6 @@
 /area/rogue/under/wretch/graggarena)
 "SH" = (
 /obj/structure/table/wood/long_table/mid/alt,
-/obj/structure/roguemachine/mail{
-	mailtag = "Kingsfield"
-	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors)
 "Tm" = (

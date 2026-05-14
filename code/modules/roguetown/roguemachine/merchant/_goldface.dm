@@ -153,6 +153,84 @@
 	. = ..()
 	. += span_info("This can be locked by a physician's key")
 
+/obj/structure/roguemachine/goldface/public/kingsfield
+	name = "Kingsfield Visitor's SILVERFACE"
+	lockid = "admin"
+	profit_id = list("Kingsfield Visitor", "Ferrentian Envoy")
+	extra_fee = 0
+	profit_margin = 0
+	is_public = TRUE
+	motto = "SILVERFACE - Complimentary Trade Delegation"
+	categories = list(
+		"Adventuring Supplies",
+		"Alcohols",
+		"Food",
+		"Games",
+		"Substances",
+		"Gems",
+		"Instruments",
+		"Luxury",
+		"Magic",
+		"Livestock",
+		"Cosmetics",
+		"Raw Materials",
+		"Seeds",
+		"Tools",
+		"Weapons (Exotic)",
+	)
+	categories_gamer = list()
+
+/obj/structure/roguemachine/goldface/public/kingsfield/examine()
+	. = ..()
+	. += span_info("A complimentary trading interface provided to Kingsfield visitors. Can be locked by a Diplomatic Key.")
+
+/obj/structure/roguemachine/goldface/public/kingsfield/smith
+	name = "Kingsfield Smithy's SILVERFACE"
+	lockid = "admin"
+	profit_id = list("Kingsfield Visitor", "Ferrentian Envoy")
+	categories = list(
+		"Armor (Iron)",
+		"Armor (Steel)",
+		"Armor (Exotic)",
+		"Weapons (Ranged)",
+		"Weapons (Iron and Shields)",
+		"Weapons (Steel)",
+	)
+	categories_gamer = list()
+
+/obj/structure/roguemachine/goldface/public/kingsfield/smith/examine()
+	. = ..()
+	. += span_info("A complimentary smithing interface for Kingsfield visitors. Can be locked by a Diplomatic Key.")
+
+/obj/structure/roguemachine/goldface/public/kingsfield/tailor
+	name = "Kingsfield Tailor's SILVERFACE"
+	lockid = "admin"
+	profit_id = list("Kingsfield Visitor", "Ferrentian Envoy")
+	categories = list(
+		"Apparel",
+		"Wardrobe",
+		"Armor (Light)",
+		"Imported Armor (Light)",
+	)
+	categories_gamer = list()
+
+/obj/structure/roguemachine/goldface/public/kingsfield/tailor/examine()
+	. = ..()
+	. += span_info("A complimentary tailoring interface for Kingsfield visitors. Can be locked by a Diplomatic Key.")
+
+/obj/structure/roguemachine/goldface/public/kingsfield/apothecary
+	name = "Kingsfield Apothecary's SILVERFACE"
+	lockid = "admin"
+	profit_id = list("Kingsfield Visitor", "Ferrentian Envoy")
+	categories = list(
+		"Potions",
+	)
+	categories_gamer = list()
+
+/obj/structure/roguemachine/goldface/public/kingsfield/apothecary/examine()
+	. = ..()
+	. += span_info("A complimentary alchemical interface for Kingsfield visitors. Can be locked by a Diplomatic Key.")
+
 /obj/structure/roguemachine/goldface/Initialize(mapload)
 	. = ..()
 	update_icon()
