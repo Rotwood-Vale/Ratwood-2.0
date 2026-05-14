@@ -45,6 +45,8 @@
 	category_tags = list(CTAG_KINGSFIELD)
 
 /datum/job/roguetown/kingsfield_visitor/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	if(L?.mind)
+		L.mind.remove_all_antag_datums()
 	. = ..()
 	apply_kingsfield_join_fade(L)
 
@@ -107,6 +109,8 @@
 	social_rank = SOCIAL_RANK_NOBLE
 
 /datum/job/roguetown/ferrentian_envoy/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	if(L?.mind)
+		L.mind.remove_all_antag_datums()
 	. = ..()
 	apply_kingsfield_join_fade(L)
 
