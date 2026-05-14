@@ -29,6 +29,78 @@
 	to_chat(owner, span_warning("The Treefather's vigil fades from me."))
 
 //==============================================================================
+// Dendor Defiler Curse (applied when a non-Dendorite chops a sanctified tree)
+//==============================================================================
+#define DEFILER_FILTER "dendor_defiler_curse"
+
+/atom/movable/screen/alert/status_effect/dendor_defiler
+	name = "Treefather's Wrath"
+	desc = "The Treefather's fury courses through me — I am marked as a defiler of sacred groves."
+	icon_state = "restrained"
+
+/datum/status_effect/debuff/dendor_defiler
+	id = "dendor_defiler"
+	duration = 10 MINUTES
+	alert_type = /atom/movable/screen/alert/status_effect/dendor_defiler
+	effectedstats = list("speed" = -2)
+	/// The client-side mark image shown only to Dendorites.
+	var/image/defiler_mark
+	/// Clients that received the mark image, for cleanup.
+	var/list/mark_clients = list()
+	/// world.time threshold after which oxy damage stops (45 seconds from apply).
+	var/oxy_damage_until = 0
+	/// world.time of next brute damage tick (fires every 5 seconds).
+	var/next_brute_time = 0
+
+/datum/status_effect/debuff/dendor_defiler/on_apply()
+	if(isliving(owner))
+		owner.add_filter(DEFILER_FILTER, 2, list("type" = "outline", "color" = "#44FF44", "alpha" = 140, "size" = 1))
+		playsound(owner, 'sound/misc/jack_killing_2.ogg', 80, FALSE)
+		to_chat(owner, span_userdanger("The Treefather's curse seizes me — the forest remembers what I have done!"))
+		to_chat(owner, span_userdanger("The tree's cursed vines coil around my throat, beginning to strangle me!"))
+		oxy_damage_until = world.time + 1 MINUTES
+		next_brute_time = world.time
+		defiler_mark = image('icons/effects/effects.dmi', owner, "curse", ABOVE_MOB_LAYER)
+		defiler_mark.color = "#44FF44"
+		for(var/client/CL in GLOB.clients)
+			if(!istype(CL.mob, /mob/living/carbon/human))
+				continue
+			var/mob/living/carbon/human/H = CL.mob
+			if(H.patron?.type == /datum/patron/divine/dendor)
+				CL.images += defiler_mark
+				mark_clients += CL
+	return TRUE
+
+/datum/status_effect/debuff/dendor_defiler/on_remove()
+	if(isliving(owner))
+		owner.remove_filter(DEFILER_FILTER)
+		to_chat(owner, span_warning("The Treefather's curse finally relents — but the forest does not forget."))
+	for(var/client/CL in mark_clients)
+		CL?.images -= defiler_mark
+	mark_clients = list()
+	defiler_mark = null
+
+/datum/status_effect/debuff/dendor_defiler/tick()
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/C = owner
+	if(world.time >= next_brute_time)
+		C.adjustBruteLoss(5)
+		next_brute_time = world.time + 5 SECONDS
+		var/static/list/vine_messages = list(
+			"Thorned vines bite into my flesh!",
+			"The curse's vines tear at my skin!",
+			"The Treefather's vines rake across me!"
+		)
+		to_chat(owner, span_userdanger(pick(vine_messages)))
+	if(world.time <= oxy_damage_until)
+		C.adjustOxyLoss(3)
+	if(prob(20))
+		C.flash_fullscreen("stressflash")
+
+#undef DEFILER_FILTER
+
+//==============================================================================
 // Blessed Druid Armor (reward from Cat 6 ritual)
 //==============================================================================
 
@@ -142,12 +214,20 @@
 	var/datum/sanctified_tree_data/tree_data
 	/// If FALSE (for sanctified_wise trees), hides ritual and wedding hints in examine.
 	var/show_ritual_hints = TRUE
+	/// TRUE while a fire suppression timer is already queued.
+	var/fire_suppression_queued = FALSE
+	/// TRUE after suppress_fire fires — tree no longer takes fire damage.
+	var/fire_immune = FALSE
+	/// Last non-Dendorite carbon who threw an item at this tree (for fire-kill debuff).
+	var/mob/living/carbon/last_fire_attacker
 	/// Current max_integrity bonus from nearby living trees.
 	var/integrity_bonus = 0
 	/// SSprocessing dt accumulator — recalculates bonus every 60 seconds.
 	var/bonus_check_elapsed = 0
 	/// SSprocessing dt accumulator — restores integrity periodically.
 	var/integrity_regen_elapsed = 0
+	/// SSprocessing dt accumulator — scans for fire on the tree every 5 seconds.
+	var/fire_check_elapsed = 0
 
 /obj/structure/flora/roguetree/wise/sanctified/Initialize(mapload)
 	. = ..()
@@ -206,6 +286,22 @@
 		integrity_regen_elapsed = 0
 		if(obj_integrity < max_integrity)
 			obj_integrity = min(obj_integrity + 10, max_integrity)
+	fire_check_elapsed += dt
+	if(fire_check_elapsed >= 5 SECONDS)
+		fire_check_elapsed = 0
+		var/has_fire = FALSE
+		for(var/obj/effect/hotspot/H in loc)
+			has_fire = TRUE
+			break
+		if(!has_fire)
+			for(var/turf/T in range(1, src))
+				for(var/obj/effect/hotspot/H in T)
+					has_fire = TRUE
+					break
+				if(has_fire)
+					break
+		if(has_fire)
+			suppress_fire()
 	if(!tree_data)
 		return
 	if(tree_data.has_slow_aura)
@@ -443,7 +539,7 @@
 		if("lux") return "Lux"
 		if("leechtick") return "Bloated leech tick"
 		if("bones") return "Bones"
-		if("wedding_flower") return "Eoran peace flower"
+		if("wedding_flower") return "Eoran peace flower OR rosa bouquet"
 		if("boulder_only") return "A large boulder"
 		if("magic_stone_or_essence") return "An enchanted stone (magic power 5+), essence of wilderness, or essence of lumber"
 		if("blessed_powder") return "Blessed seed powder"
@@ -656,7 +752,7 @@
 		if("bones")
 			return istype(held, /obj/item/natural/bone) || istype(held, /obj/item/alch/bone)
 		if("wedding_flower")
-			return istype(held, /obj/item/clothing/head/peaceflower)
+			return istype(held, /obj/item/clothing/head/peaceflower) || istype(held, /obj/item/bouquet/rosa)
 		if("boulder_only")
 			return istype(held, /obj/item/natural/rock)
 		if("magic_stone_or_essence")
@@ -1399,12 +1495,74 @@
 				return
 	return ..()
 
+/obj/structure/flora/roguetree/wise/sanctified/fire_act(added, maxstacks)
+	if(fire_immune)
+		return
+	// Attribute this fire event to the nearest non-Dendorite carbon in range
+	// so fire-spell kills apply the curse on destruction.
+	for(var/mob/living/carbon/C in range(8, src))
+		if(C.patron?.type == /datum/patron/divine/dendor)
+			continue
+		last_fire_attacker = C
+		break
+	. = ..()
+	if(!fire_suppression_queued)
+		fire_suppression_queued = TRUE
+		addtimer(CALLBACK(src, PROC_REF(suppress_fire)), 5 SECONDS)
+
+/obj/structure/flora/roguetree/wise/sanctified/proc/suppress_fire()
+	fire_suppression_queued = FALSE
+	if(QDELETED(src))
+		return
+	fire_immune = TRUE
+	visible_message(span_warning("The sanctified tree's ancient magic surges — smothering the flames!"))
+	for(var/obj/effect/hotspot/H in loc)
+		qdel(H)
+	for(var/turf/T in range(1, src))
+		for(var/obj/effect/hotspot/H in T)
+			qdel(H)
+	addtimer(VARSET_CALLBACK(src, fire_immune, FALSE), 5 SECONDS)
+
 /obj/structure/flora/roguetree/wise/sanctified/obj_destruction(damage_flag)
 	set_light(0)
 	visible_message(span_warning("The sanctified tree's golden light dies as it falls — the Treefather's blessing is broken!"))
+	if(last_fire_attacker && !QDELETED(last_fire_attacker))
+		last_fire_attacker.apply_status_effect(/datum/status_effect/debuff/dendor_defiler)
 	var/obj/item/grown/log/tree/blessed_log = new(loc)
 	blessed_log.bless_log()
 	return ..()
+
+/obj/structure/flora/roguetree/wise/sanctified/proc/try_root_attacker(mob/living/attacker)
+	if(!iscarbon(attacker) || !prob(40))
+		return
+	var/mob/living/carbon/C = attacker
+	if(C.patron?.type == /datum/patron/divine/dendor)
+		return
+	C.Stun(5)
+	C.Knockdown(5)
+	if(tree_data?.has_slow_aura)
+		C.adjustBruteLoss(5)
+	visible_message(span_userdanger("The Treefather's wrath erupts — roots surge from the earth and seize [C]!"))
+
+/obj/structure/flora/roguetree/wise/sanctified/attacked_by(obj/item/I, mob/living/user)
+	try_root_attacker(user)
+	var/was_destroyed = obj_destroyed
+	. = ..()
+	if(!was_destroyed && obj_destroyed && iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.patron?.type != /datum/patron/divine/dendor)
+			C.apply_status_effect(/datum/status_effect/debuff/dendor_defiler)
+
+/obj/structure/flora/roguetree/wise/sanctified/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum, damage_flag)
+	. = ..()
+	if(isitem(AM))
+		var/obj/item/I = AM
+		if(I.throwforce && ismob(I.thrownby))
+			try_root_attacker(I.thrownby)
+			if(iscarbon(I.thrownby))
+				var/mob/living/carbon/C = I.thrownby
+				if(C.patron?.type != /datum/patron/divine/dendor)
+					last_fire_attacker = C
 
 //==============================================================================
 // Sanctified Wise Tree
