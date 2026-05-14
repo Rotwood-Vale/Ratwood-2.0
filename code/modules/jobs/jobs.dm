@@ -185,6 +185,11 @@ GLOBAL_LIST_INIT(tribal_positions, list(
 	"Tribal Villager",
 ))
 
+GLOBAL_LIST_INIT(kingsfield_positions, list(
+	"Kingsfield Visitor",
+	"Ferrentian Envoy",
+))
+
 GLOBAL_LIST_INIT(roguewar_positions, list(
 	"Adventurer",
 ))

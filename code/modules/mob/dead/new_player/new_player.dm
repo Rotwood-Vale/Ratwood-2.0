@@ -631,6 +631,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	omegalist += list(GLOB.wanderer_positions)
 	omegalist += list(GLOB.youngfolk_positions)
 	omegalist += list(GLOB.tribal_positions)
+	omegalist += list(GLOB.kingsfield_positions)
 
 	for(var/list/category in omegalist)
 		if(!SSjob.name_occupations[category[1]])
@@ -652,27 +653,30 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 		if (length(available_jobs))
 			var/cat_color = SSjob.name_occupations[category[1]].selection_color //use the color of the first job in the category (the department head) as the category color
 			var/cat_name = ""
-			switch (SSjob.name_occupations[category[1]].department_flag)
-				if (NOBLEMEN)
-					cat_name = "Nobles"
-				if (COURTIERS)
-					cat_name = "Courtiers"
-				if (GARRISON)
-					cat_name = "Garrison"
-				if (CHURCHMEN)
-					cat_name = "Churchmen"
-				if (YEOMEN)
-					cat_name = "Yeomen"
-				if (PEASANTS)
-					cat_name = "Peasants"
-				if (YOUNGFOLK)
-					cat_name = "Sidefolk"
-				if (WANDERERS)
-					cat_name = "Wanderers"
-				if (INQUISITION)
-					cat_name = "Inquisition"
-				if (TRIBAL)
-					cat_name = "Tribe"
+			if(category == GLOB.kingsfield_positions)
+				cat_name = "Kingsfield"
+			else
+				switch (SSjob.name_occupations[category[1]].department_flag)
+					if (NOBLEMEN)
+						cat_name = "Nobles"
+					if (COURTIERS)
+						cat_name = "Courtiers"
+					if (GARRISON)
+						cat_name = "Garrison"
+					if (CHURCHMEN)
+						cat_name = "Churchmen"
+					if (YEOMEN)
+						cat_name = "Yeomen"
+					if (PEASANTS)
+						cat_name = "Peasants"
+					if (YOUNGFOLK)
+						cat_name = "Sidefolk"
+					if (WANDERERS)
+						cat_name = "Wanderers"
+					if (INQUISITION)
+						cat_name = "Inquisition"
+					if (TRIBAL)
+						cat_name = "Tribe"
 
 			dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
 			dat += "<legend align='center' style='font-weight: bold; color: [cat_color]'>[cat_name]</legend>"
