@@ -116,6 +116,8 @@
 	var/deathsight_message = "a locale wreathed in enigmatic fog"
 
 	var/coven_protected = FALSE
+	/// If true, Kingsfield role pacifism is disabled while in this area.
+	var/pacifismOff = FALSE
 
 	/// If true, speech generated in this area will not propagate to other z-levels, and can only be heard by hearers with a line of sight.
 	var/soundproof = FALSE
@@ -392,6 +394,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	var/mob/living/L = M
 	if(!L.ckey || L.stat == DEAD)
 		return
+
+	if(L.mind?.assigned_role in list("Kingsfield Visitor", "Ferentian Envoy"))
+		if(pacifismOff)
+			if(HAS_TRAIT_FROM(L, TRAIT_PACIFISM, "kingsfield_pacifism"))
+				REMOVE_TRAIT(L, TRAIT_PACIFISM, "kingsfield_pacifism")
+		else
+			if(!HAS_TRAIT_FROM(L, TRAIT_PACIFISM, "kingsfield_pacifism"))
+				ADD_TRAIT(L, TRAIT_PACIFISM, "kingsfield_pacifism")
 
 	// Ambience goes down here -- make sure to list each area separately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 //	if(L.client && !L.client.ambience_playing && L.client.prefs.toggles & SOUND_SHIP_AMBIENCE)

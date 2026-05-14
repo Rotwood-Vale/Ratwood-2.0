@@ -1,5 +1,6 @@
 // Add Kingsfield category tag for joinlate menu section
 #define CTAG_KINGSFIELD "ctag_kingsfield"
+#define KINGSFIELD_PACIFISM_TRAIT "kingsfield_pacifism"
 
 /proc/apply_kingsfield_join_fade(mob/living/L)
 	set waitfor = FALSE
@@ -48,6 +49,7 @@
 	if(L?.mind)
 		L.mind.remove_all_antag_datums()
 	. = ..()
+	ADD_TRAIT(L, TRAIT_PACIFISM, KINGSFIELD_PACIFISM_TRAIT)
 	ADD_TRAIT(L, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	L.nutrition = NUTRITION_LEVEL_FULL
 	L.hydration = HYDRATION_LEVEL_FULL
@@ -118,6 +120,7 @@
 	if(L?.mind)
 		L.mind.remove_all_antag_datums()
 	. = ..()
+	ADD_TRAIT(L, TRAIT_PACIFISM, KINGSFIELD_PACIFISM_TRAIT)
 	ADD_TRAIT(L, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	L.nutrition = NUTRITION_LEVEL_FULL
 	L.hydration = HYDRATION_LEVEL_FULL
@@ -186,3 +189,4 @@
 	icon_state = "arrow"
 	jobspawn_override = list("Ferentian Envoy")
 	delete_after_roundstart = FALSE
+
