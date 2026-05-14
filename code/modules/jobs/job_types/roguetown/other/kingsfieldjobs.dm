@@ -43,6 +43,11 @@
 	bypass_jobban = TRUE
 	bypass_lastclass = TRUE
 	category_tags = list(CTAG_KINGSFIELD)
+	subclass_skills = list(
+		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE
+	)
 
 /datum/job/roguetown/kingsfield_visitor/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	if(L?.mind)
@@ -98,7 +103,7 @@
 	display_order = JDO_PILGRIM
 	show_in_credits = FALSE
 	announce_latejoin = FALSE
-	always_show_on_latechoices = TRUE
+	always_show_on_latechoices = FALSE // Only show if admin
 	min_pq = 0
 	max_pq = null
 	can_random = FALSE
@@ -107,6 +112,11 @@
 	category_tags = list(CTAG_KINGSFIELD)
 	job_traits = list(TRAIT_NOBLE)
 	social_rank = SOCIAL_RANK_NOBLE
+	subclass_skills = list(
+		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE
+	)
 
 /datum/job/roguetown/ferrentian_envoy/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	if(L?.mind)
@@ -118,14 +128,16 @@
 	return !!(player?.client?.holder)
 
 /datum/job/roguetown/ferrentian_envoy/special_check_latejoin(client/C)
+	// Only show in latejoin menu for admins
 	return !!(C?.holder)
 
 /datum/job/roguetown/ferrentian_envoy/override_latejoin_spawn(mob/living/carbon/human/H)
 	var/list/override_locs = GLOB.jobspawn_overrides["Ferrentian Envoy"]
 	if(override_locs && override_locs.len)
 		var/obj/effect/landmark/start/S = pick(override_locs)
-		H.forceMove(S.loc)
-		return TRUE
+		if(H && S && S.loc)
+			H.forceMove(S.loc)
+			return TRUE
 	return FALSE
 
 /datum/outfit/job/roguetown/ferrentian_envoy/pre_equip(mob/living/carbon/human/H)
