@@ -3887,9 +3887,6 @@
 	color = "#3f3f3f";
 	dir = 8
 	},
-/obj/machinery/light/roguestreet/orange/walllamp{
-	dir = 8
-	},
 /obj/effect/decal/cobble/mossy{
 	dir = 8;
 	pixel_x = 7
@@ -4027,15 +4024,6 @@
 	pixel_x = 7
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/outdoors/town/rockhill{
-	name = "kingsfield garden district";
-	first_time_text = "Kingsfield - Garden District"
-	})
-"CX" = (
-/obj/structure/table/wood/long_table/right,
-/obj/item/natural/feather,
-/obj/item/natural/feather,
-/turf/open/floor/rogue/wood,
 /area/rogue/outdoors/town/rockhill{
 	name = "kingsfield garden district";
 	first_time_text = "Kingsfield - Garden District"
@@ -6006,12 +5994,7 @@
 	first_time_text = "Ferentian Diplomatic Headquarters"
 	})
 "Rl" = (
-/obj/structure/roguemachine/mail/l{
-	mailtag = "Kingsfield - Tavern"
-	},
-/obj/structure/table/wood{
-	icon_state = "tablewood1"
-	},
+/obj/item/roguebin/water,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
@@ -6070,18 +6053,9 @@
 	first_time_text = "Kingsfield Tavern"
 	})
 "RJ" = (
-/obj/structure/table/wood/long_table,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/turf/open/floor/rogue/wood,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/rogue/grass,
 /area/rogue/outdoors/town/rockhill{
 	name = "kingsfield garden district";
 	first_time_text = "Kingsfield - Garden District"
@@ -6467,16 +6441,6 @@
 	name = "kingsfield garden district";
 	first_time_text = "Kingsfield - Garden District"
 	})
-"Vr" = (
-/obj/structure/table/wood/long_table/mid/alt,
-/obj/structure/roguemachine/mail{
-	mailtag = "Kingsfield - Garden District"
-	},
-/turf/open/floor/rogue/wood,
-/area/rogue/outdoors/town/rockhill{
-	name = "kingsfield garden district";
-	first_time_text = "Kingsfield - Garden District"
-	})
 "Vu" = (
 /obj/structure/closet/crate/roguecloset,
 /obj/item/clothing/suit/roguetown/shirt/dress/silkydress,
@@ -6593,7 +6557,10 @@
 	first_time_text = "Kingsfield Tavern"
 	})
 "VX" = (
-/turf/closed/wall/mineral/rogue/wooddark/horizontal,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/rogue/grass,
 /area/rogue/outdoors/town/rockhill{
 	name = "kingsfield garden district";
 	first_time_text = "Kingsfield - Garden District"
@@ -6725,15 +6692,6 @@
 	},
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/brflowers,
-/turf/open/floor/rogue/grass,
-/area/rogue/outdoors/town/rockhill{
-	name = "kingsfield garden district";
-	first_time_text = "Kingsfield - Garden District"
-	})
-"WN" = (
-/obj/machinery/light/roguestreet/orange/walllamp{
-	dir = 4
-	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/town/rockhill{
 	name = "kingsfield garden district";
@@ -24833,9 +24791,9 @@ Lr
 Lr
 Lr
 pz
-Tx
+Gw
 RJ
-Jz
+Gw
 dy
 Gw
 Gw
@@ -24936,8 +24894,8 @@ Lr
 Lr
 pz
 VX
-Vr
-Jz
+Gw
+Gw
 Gw
 Gw
 Gw
@@ -25037,9 +24995,9 @@ Lr
 Lr
 Lr
 pz
-Tx
-CX
-Jz
+Gw
+Gw
+Gw
 Gw
 Gw
 dy
@@ -25139,7 +25097,7 @@ Lr
 Lr
 Lr
 pz
-WN
+Gw
 yl
 Gw
 jC
