@@ -24,6 +24,28 @@
 		L.client.screen -= F
 	qdel(F)
 
+/proc/apply_kingsfield_training(mob/living/L)
+	if(!L)
+		return
+	var/list/kingsfield_training_skills = list(
+		/datum/skill/combat/knives,
+		/datum/skill/combat/swords,
+		/datum/skill/combat/polearms,
+		/datum/skill/combat/maces,
+		/datum/skill/combat/axes,
+		/datum/skill/combat/whipsflails,
+		/datum/skill/combat/bows,
+		/datum/skill/combat/crossbows,
+		/datum/skill/combat/slings,
+		/datum/skill/combat/staves,
+		/datum/skill/combat/firearms,
+		/datum/skill/combat/shields,
+		/datum/skill/misc/medicine,
+		/datum/skill/craft/cooking,
+	)
+	for(var/skill_path in kingsfield_training_skills)
+		L.adjust_skillrank_up_to(skill_path, SKILL_LEVEL_JOURNEYMAN, TRUE)
+
 /datum/job/roguetown/kingsfield_visitor
 	title = "Kingsfield Visitor"
 	faction = "Station"
@@ -56,6 +78,7 @@
 	L.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_APPRENTICE, TRUE)
 	L.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_NOVICE, TRUE)
 	L.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_NOVICE, TRUE)
+	apply_kingsfield_training(L)
 	apply_kingsfield_join_fade(L)
 
 /datum/outfit/job/roguetown/kingsfield_visitor/pre_equip(mob/living/carbon/human/H)
@@ -127,6 +150,7 @@
 	L.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_JOURNEYMAN, TRUE)
 	L.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_APPRENTICE, TRUE)
 	L.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_NOVICE, TRUE)
+	apply_kingsfield_training(L)
 	apply_kingsfield_join_fade(L)
 
 /datum/job/roguetown/ferentian_envoy/special_job_check(mob/dead/new_player/player)
