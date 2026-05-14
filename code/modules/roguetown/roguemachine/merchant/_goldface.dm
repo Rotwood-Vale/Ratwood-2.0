@@ -13,7 +13,6 @@
 		var/datum/supply_pack/PA = SSmerchant.supply_packs[path]
 		var/cost = 0 // Always free for Kingsfield SILVERFACE
 		var/profit = 0
-		var/tax_amt = 0
 		if(budget < cost)
 			say("Not enough!")
 			return
