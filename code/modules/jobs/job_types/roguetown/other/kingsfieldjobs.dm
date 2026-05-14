@@ -128,9 +128,12 @@
 	return !!(C?.holder)
 
 /datum/job/roguetown/ferrentian_envoy/override_latejoin_spawn(mob/living/carbon/human/H)
-	var/list/override_locs = GLOB.jobspawn_overrides["Ferrentian Envoy"]
-	if(override_locs && override_locs.len)
-		var/obj/effect/landmark/start/S = pick(override_locs)
+	var/list/eligible_spawns = list()
+	for(var/obj/effect/landmark/start/ferrentian_envoy/S in GLOB.start_landmarks_list)
+		if(S.loc)
+			eligible_spawns += S
+	if(eligible_spawns.len)
+		var/obj/effect/landmark/start/S = pick(eligible_spawns)
 		if(H && S && S.loc)
 			H.forceMove(S.loc)
 			return TRUE
