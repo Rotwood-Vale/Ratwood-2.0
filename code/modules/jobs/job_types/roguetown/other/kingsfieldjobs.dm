@@ -175,34 +175,20 @@
 /datum/outfit/job/roguetown/ferentian_envoy/pre_equip(mob/living/carbon/human/H)
 	. = ..()
 	armor = null
+	head = null
 	if(should_wear_femme_clothes(H))
-		shirt = pick(list(
-			/obj/item/clothing/suit/roguetown/shirt/dress/silkdress,
-			/obj/item/clothing/suit/roguetown/shirt/dress/silkydress/random,
-			/obj/item/clothing/suit/roguetown/shirt/dress/gen/blue,
-		))
-		pants = pick(list(
-			/obj/item/clothing/under/roguetown/tights,
-			/obj/item/clothing/under/roguetown/tights/black,
-			/obj/item/clothing/under/roguetown/tights/random,
-		))
+		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/silkdress
+		pants = /obj/item/clothing/under/roguetown/tights/black
 	else
-		shirt = pick(list(
-			/obj/item/clothing/suit/roguetown/shirt/dress/thawb/gold,
-			/obj/item/clothing/suit/roguetown/shirt/dress/thawb/random,
-		))
-		pants = pick(list(
-			/obj/item/clothing/under/roguetown/sirwal/fancy/random,
-			/obj/item/clothing/under/roguetown/tights/black,
-		))
-		if(prob(50))
-			head = /obj/item/clothing/head/roguetown/turban/fancypurple
+		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb/gold
+		pants = /obj/item/clothing/under/roguetown/sirwal/fancy/random
+		head = /obj/item/clothing/head/roguetown/turban/fancypurple
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	belt = /obj/item/storage/belt/rogue/leather
-	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
+	beltl = /obj/item/roguekey/diplomatic
+	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
-		/obj/item/roguekey/diplomatic = 1,
 		/obj/item/flashlight/flare/torch/lantern = 1,
 		/obj/item/reagent_containers/food/snacks/rogue/bread = 1,
 	)
