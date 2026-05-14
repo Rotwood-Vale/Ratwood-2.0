@@ -64,6 +64,8 @@
 			new /obj/item/grown/log/tree/small(get_turf(src.loc))
 			if(prob(skill_level + user.goodluck(2)))	// when sawing instead of essence you get extra small log
 				new /obj/item/grown/log/tree/small(get_turf(src.loc))
+			if(prob(skill_level + user.goodluck(2)))	// same rate as chopping for lumber essence
+				new /obj/item/grown/log/tree/small/essence(get_turf(src.loc))
 			if(user.is_holding(src))
 				user.dropItemToGround(src)
 			user.mind.add_sleep_experience(/datum/skill/labor/lumberjacking, (user.STAINT*0.5))
@@ -84,7 +86,7 @@
 			new lumber(get_turf(src))
 				// Scaling is less steep than tanning as lumberjacking is easier to level and get
 			if(prob(skill_level + user.goodluck(2)))
-				new /obj/item/natural/cured/essence(get_turf(user))
+				new /obj/item/grown/log/tree/small/essence(get_turf(user))
 				if(!sound_played)
 					sound_played = TRUE
 					to_chat(user, span_warning("Dendor weeps..."))
@@ -192,6 +194,11 @@
 				user.dropItemToGround(src)
 			for(var/i=1, i<=woodtotal, ++i)
 				new /obj/item/natural/wood/plank(get_turf(src.loc))
+			var/lumber_skill = user.get_skill_level(/datum/skill/labor/lumberjacking)
+			if(prob(lumber_skill + user.goodluck(2)))
+				new /obj/item/grown/log/tree/small/essence(get_turf(src.loc))
+				to_chat(user, span_warning("Dendor weeps..."))
+				playsound(src, pick('sound/items/gem.ogg'), 100, FALSE)
 			user.mind.add_sleep_experience(/datum/skill/craft/carpentry, (user.STAINT*0.5))
 			new /obj/effect/decal/cleanable/debris/woody(get_turf(src))
 			qdel(src)

@@ -888,7 +888,7 @@ Inquisitorial armory down here
 /obj/item/inqarticles/garrote/attack_self(mob/user)
 	if(obj_broken)
 		to_chat(user, span_warning("It's useless now, although.."))
-		to_chat(user, span_notice("I could rethread it with more cordage."))
+		to_chat(user, span_notice("I could rethread it with more cordage or rope."))
 		return
 	if(wielded)
 		ungrip(user, FALSE)
@@ -934,8 +934,8 @@ Inquisitorial armory down here
 
 /obj/item/inqarticles/garrote/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
-	if(istype(I, /obj/item/rope/inqarticles/inquirycord))
-		user.visible_message(span_warning("[user] starts to rethread the [src] using the [I]."))
+	if(istype(I, /obj/item/rope/inqarticles/inquirycord) || (istype(I, /obj/item/rope) && !istype(I, /obj/item/rope/chain)))
+		user.visible_message(span_warning("[user] starts to rethread the [src] using [I]."))
 		if(do_after(user, 8 SECONDS))
 			qdel(I)
 			obj_broken = FALSE

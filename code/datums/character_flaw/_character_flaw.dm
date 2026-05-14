@@ -46,6 +46,11 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Wood Arm (L) (+1 TRI)"=/datum/charflaw/limbloss/arm_l,
 	"Wood Arm (R) (+1 TRI)"=/datum/charflaw/limbloss/arm_r,
 	"Hemophage (+1 TRI)"=/datum/charflaw/hemophage,
+	"Feeble-bodied"=/datum/charflaw/weak,
+	"Frail"=/datum/charflaw/frail,
+	"Doddering"=/datum/charflaw/slow,
+	"Nimrodded"=/datum/charflaw/dull,
+	"Unlucky"=/datum/charflaw/unlucky,
 	))
 
 /datum/charflaw
@@ -840,3 +845,54 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	..()
 	REMOVE_TRAIT(user, TRAIT_HEMOPHAGE, TRAIT_GENERIC)
 	REMOVE_TRAIT(user, TRAIT_VAMPBITE, TRAIT_GENERIC)
+
+
+/datum/charflaw/weak
+	name = "Feeble-bodied"
+	desc = "Limp-wristed and ineffectual, I am not as physically strong as most. <br>\
+	<small>-4 to Strength.</small>"
+
+/datum/charflaw/weak/apply_post_equipment(mob/user)
+	var/mob/living/carbon/human/H = user
+	to_chat(user, "You are weaker than most")
+	H.change_stat(STATKEY_STR, -4)
+
+/datum/charflaw/frail
+	name = "Frail"
+	desc = "Prone to bruising as well as coughs and sneezes, I am more easily injured than most. <br>\
+	<small>-4 to Constitution.</small>"
+
+/datum/charflaw/frail/apply_post_equipment(mob/user)
+	var/mob/living/carbon/human/H = user
+	to_chat(user, "You are more vulnerable than most")
+	H.change_stat(STATKEY_CON, -4)
+
+/datum/charflaw/slow
+	name = "Doddering"
+	desc = "Slow and Steady, you say to yourself. Perhaps a torn ankle, or perhaps it is simply your nature. You are slower than most. <br>\
+	<small>-4 to Speed.</small>"
+
+/datum/charflaw/slow/apply_post_equipment(mob/user)
+	var/mob/living/carbon/human/H = user
+	to_chat(user, "You are slower than most")
+	H.change_stat(STATKEY_SPD, -4)
+
+/datum/charflaw/dull
+	name = "Nimrodded"
+	desc = "Everyone keeps saying fancy words around you but you've never been able to figure out why... You are less intellectual than most. <br>\
+	<small>- 4 to Intellect.</small>"
+
+/datum/charflaw/dull/apply_post_equipment(mob/user)
+	var/mob/living/carbon/human/H = user
+	to_chat(user, "You are duller than most")
+	H.change_stat(STATKEY_INT, -4)
+
+/datum/charflaw/unlucky
+	name = "Unlucky"
+	desc = "Perhaps it is the glass mirror you cracked, or the black cat that follows you, or a curse of the gods. You just feel... off. <br>\
+	<small>-4 to Luck.</small>"
+
+/datum/charflaw/unlucky/apply_post_equipment(mob/user)
+	var/mob/living/carbon/human/H = user
+	to_chat(user, "You are unluckier than most")
+	H.change_stat(STATKEY_LCK, -4)

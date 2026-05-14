@@ -584,7 +584,7 @@
 	icon_state = "inqcoat"
 	item_state = "inqcoat"
 	sleevetype = "shirt"
-	max_integrity = 300
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	sewrepair = TRUE
 	equip_delay_self = 4 SECONDS
 	armor_class = ARMOR_CLASS_LIGHT
@@ -623,7 +623,7 @@
 	icon_state = "inqcoata"
 	item_state = "inqcoata"
 	equip_delay_self = 4 SECONDS
-	max_integrity = 300
+	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE
 	armor_class = ARMOR_CLASS_MEDIUM
 	armor = ARMOR_CUIRASS
 	smelt_bar_num = 2
@@ -633,6 +633,17 @@
 /obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat/armored/ComponentInitialize()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_STEP)
 	return
+
+// Armored Inqcoat is medium armour, disabling inspector's dodge expert. Psydonic endurance ensures it becomes a side grade rather than a downgrade.
+/obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat/armored/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == SLOT_ARMOR)
+		user.apply_status_effect(/datum/status_effect/buff/psydonic_endurance)
+
+/obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat/armored/dropped(mob/living/carbon/human/user)
+	. = ..()
+	if(istype(user) && user?.wear_armor == src)
+		user.remove_status_effect(/datum/status_effect/buff/psydonic_endurance)
 
 /obj/item/clothing/suit/roguetown/armor/plate/bronze
 	name = "bronze cuirass"

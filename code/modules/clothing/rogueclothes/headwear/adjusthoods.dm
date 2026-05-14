@@ -318,6 +318,7 @@
 	max_integrity = 200
 	salvage_result = /obj/item/natural/cloth
 	salvage_amount = 1
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/head/roguetown/roguehood/hierophant
 	name = "hierophant's pashmina"

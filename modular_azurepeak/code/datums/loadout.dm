@@ -928,6 +928,8 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Rope Belt"
 	path = /obj/item/storage/belt/rogue/leather/rope
 
+// Religious Amulets.
+
 /datum/loadout_item/psicross
 	name = "Psydonian Cross"
 	path = /obj/item/clothing/neck/roguetown/psicross
@@ -979,6 +981,22 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/psicross/zizo
 	name = "Ancient Zcross"
 	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy
+
+/datum/loadout_item/psicross/matthios
+	name = "Amulet of Matthios"
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios
+
+/datum/loadout_item/psicross/graggar
+	name = "Amulet of Graggar"
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar
+
+/datum/loadout_item/psicross/baotha
+	name = "Amulet of Baotha"
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha
+
+/datum/loadout_item/psicross/ten
+	name = "Amulet of Ten"
+	path = /obj/item/clothing/neck/roguetown/psicross/ten
 
 /datum/loadout_item/wedding_band
 	name = "silver wedding band"
@@ -2087,7 +2105,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Chain Leash"
 	path = /obj/item/leash/chain
 
-
 /datum/loadout_item/magic_recipes
 	name = "Guide to Arcyne"
 	path = /obj/item/recipe_book/magic
@@ -2127,6 +2144,18 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/cooking_recipes
 	name = "Guide to Cooking"
 	path = /obj/item/recipe_book/cooking
+
+/datum/loadout_item/tenbibble
+	name = "The Verses and Acts of the Ten"
+	path = /obj/item/book/rogue/bibble
+
+/datum/loadout_item/psybibble
+	name = "Tome of Psydon"
+	path = /obj/item/book/rogue/bibble/psy
+
+/datum/loadout_item/zizobibble
+	name = "Lexicon of Her Truth"
+	path = /obj/item/book/rogue/bibble/zizo
 
 //COSMETICS (Perfumes & Lipsticks)
 

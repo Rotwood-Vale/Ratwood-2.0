@@ -4,6 +4,8 @@
 	req_table = FALSE
 	subtype_reqs = TRUE
 	craftsound = 'sound/foley/Building-01.ogg'
+	verbage_simple = "construct"
+	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/TurfCheck(mob/user, turf/T)
 	if(istype(T,/turf/open/transparent/openspace))
@@ -17,8 +19,6 @@
 	result = /obj/structure/handcart
 	reqs = list(/obj/item/grown/log/tree/small = 3,
 				/obj/item/rope = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/noose
 	name = "noose"
@@ -42,8 +42,6 @@
 	name = "static wooden horse"
 	result = /obj/structure/wooden_horse
 	reqs = list(/obj/item/natural/wood/plank = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 0
 
@@ -51,8 +49,6 @@
 	name = "mobile wooden horse"
 	result = /obj/structure/wooden_horse/mobile
 	reqs = list(/obj/item/natural/wood/plank = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 0
 
@@ -63,8 +59,6 @@
 		/obj/item/natural/wood/plank = 3,
 		/obj/item/ingot/iron = 1,
 	)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 2
 
@@ -75,8 +69,6 @@
 		/obj/item/natural/wood/plank = 3,
 		/obj/item/ingot/iron = 1,
 	)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 2
 
@@ -87,8 +79,6 @@
 		/obj/item/grown/log/tree/small = 2,
 		/obj/item/ingot/iron = 1,
 	)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 2
 
@@ -96,8 +86,6 @@
 	name = "gloryhole"
 	result = /obj/structure/bondage/gloryhole
 	reqs = list(/obj/item/natural/wood/plank = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 0
 
@@ -105,8 +93,6 @@
 	name = "chains"
 	result = /obj/structure/bondage/chains
 	reqs = list(/obj/item/rope/chain = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 1
 
@@ -115,31 +101,23 @@
 	result = /obj/structure/fluff/psycross/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/grown/log/tree/stake = 3)
-	verbage_simple = "construct"
-	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/psycruci
 	name = "wooden psydonic cross"
 	result = /obj/structure/fluff/psycross/psycrucifix
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/grown/log/tree/stake = 3)
-	verbage_simple = "construct"
-	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/stonepsycruci
 	name = "stone psydonic cross"
 	result = /obj/structure/fluff/psycross/psycrucifix/stone
 	reqs =	list(/obj/item/natural/stone = 3)
-	verbage_simple = "construct"
-	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/silverpsycruci
 	name = "silver psydonic cross"
 	result = /obj/structure/fluff/psycross/psycrucifix/silver
 	reqs = list(/obj/item/ingot/silverblessed = 1,
 				/obj/item/ingot/steel = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/masonry
 	craftdiff = 3
 
@@ -147,8 +125,6 @@
 	name = "stone cross"
 	result = /obj/structure/fluff/psycross
 	reqs = list(/obj/item/natural/stone = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/zizo_shrine
 	name = "wooden inverse cross"
@@ -163,16 +139,12 @@
 	name = "swing door"
 	result = /obj/structure/mineral_door/swing_door
 	reqs = list(/obj/item/grown/log/tree/small = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/door
 	name = "wooden door"
 	result = /obj/structure/mineral_door/wood
 	reqs = list(/obj/item/grown/log/tree/small = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/stonedoor
@@ -188,8 +160,6 @@
 	result = /obj/structure/mineral_door/wood/deadbolt
 	reqs = list(/obj/item/grown/log/tree/small = 2,
 				/obj/item/grown/log/tree/stick = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 2
 
@@ -197,8 +167,6 @@
 	name = "fancy door"
 	result = /obj/structure/mineral_door/wood/fancywood
 	reqs = list(/obj/item/grown/log/tree/small = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 3
 
@@ -206,8 +174,6 @@
 	name = "Wooden Glass Door"
 	result = /obj/structure/mineral_door/wood/window
 	reqs = list(/obj/item/grown/log/tree/small = 2, /obj/item/natural/glass = 2)
-	verbage_simple = "construst"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 3
 
@@ -223,8 +189,6 @@
 	name = "display stand"
 	reqs = list(/obj/item/grown/log/tree/small = 2, /obj/item/grown/log/tree/stick = 2)
 	result = /obj/structure/mannequin
-	verbage_simple = "construct"
-	verbage = "constructs"
 	craftdiff = 2
 	skillcraft = /datum/skill/craft/carpentry
 
@@ -232,8 +196,6 @@
 	name = "mannequin (female)"
 	reqs = list(/obj/item/grown/log/tree/small = 2, /obj/item/grown/log/tree/stick = 2)
 	result = /obj/structure/mannequin/male/female
-	verbage_simple = "construct"
-	verbage = "constructs"
 	craftdiff = 2
 	skillcraft = /datum/skill/craft/carpentry
 
@@ -241,8 +203,6 @@
 	name = "mannequin (male)"
 	reqs = list(/obj/item/grown/log/tree/small = 2, /obj/item/grown/log/tree/stick = 2)
 	result = /obj/structure/mannequin/male
-	verbage_simple = "construct"
-	verbage = "constructs"
 	craftdiff = 2
 	skillcraft = /datum/skill/craft/carpentry
 
@@ -254,8 +214,6 @@
 	result = /obj/structure/meathook
 	reqs = list(/obj/item/grown/log/tree = 2,
 				/obj/item/rope = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/crafting
 	craftdiff = 2
 
@@ -272,16 +230,12 @@
 	name = "wooden chair"
 	result = /obj/item/chair/rogue/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/chairthrone
 	name = "small throne"
 	result = /obj/structure/chair/wood/rogue/throne
 	reqs = list(/obj/item/natural/wood/plank = 2, /obj/item/natural/silk = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 
 /obj/item/chair/rogue/crafted
@@ -291,24 +245,18 @@
 	name = "park bench (left)"
 	result = /obj/structure/chair/hotspring_bench/left
 	reqs = list(/obj/item/grown/log/tree/small = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/parkbenchmiddle
 	name = "park bench (middle)"
 	result = /obj/structure/chair/hotspring_bench
 	reqs = list(/obj/item/grown/log/tree/small = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/parkbenchright
 	name = "park bench (right)"
 	result = /obj/structure/chair/hotspring_bench/right
 	reqs = list(/obj/item/grown/log/tree/small = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/fancychair
@@ -316,8 +264,6 @@
 	result = /obj/item/chair/rogue/fancy/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/natural/silk = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 
 /obj/item/chair/rogue/fancy/crafted
@@ -328,8 +274,6 @@
 	result = /obj/item/chair/stool/bar/rogue/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	skillcraft = /datum/skill/craft/carpentry
-	verbage_simple = "construct"
-	verbage = "constructs"
 
 /obj/item/chair/stool/bar/rogue/crafted
 	sellprice = 6
@@ -416,8 +360,6 @@
 	reqs = list(/obj/item/grown/log/tree/small = 2,
 				/obj/item/grown/log/tree/stick = 2,
 				/obj/item/natural/fibers = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/structure/alch
@@ -474,8 +416,6 @@
 	reqs = list(/obj/item/grown/log/tree/small = 2)
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 2
-	verbage_simple = "construct"
-	verbage = "constructs"
 	ontile = TRUE
 
 /datum/crafting_recipe/roguetown/structure/stairsd/TurfCheck(mob/user, turf/T)
@@ -533,8 +473,6 @@
 	result = /obj/structure/fluff/railing/corner
 	reqs = list(/obj/item/natural/wood/plank = 1)
 	ontile = TRUE
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	buildsame = TRUE
 	diagonal = TRUE
@@ -545,8 +483,6 @@
 	result = /obj/structure/fluff/railing/border
 	reqs = list(/obj/item/natural/wood/plank = 1)
 	ontile = TRUE
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	buildsame = TRUE
 	craftdiff = 1
@@ -554,10 +490,8 @@
 /datum/crafting_recipe/roguetown/structure/railing
 	name = "railing"
 	result = /obj/structure/fluff/railing/wood
-	reqs = list(/obj/item/grown/log/tree/small = 1)
+	reqs = list(/obj/item/grown/log/tree/stick = 2)
 	ontile = TRUE
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	buildsame = TRUE
 
@@ -566,8 +500,6 @@
 	result = /obj/structure/rack/rogue/shelf
 	reqs = list(/obj/item/natural/wood/plank = 1)
 	wallcraft = TRUE
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 2
 
@@ -614,16 +546,12 @@
 	name = "rack"
 	result = /obj/structure/rack/rogue
 	reqs = list(/obj/item/grown/log/tree/stick = 3)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/chest
 	name = "chest"
 	result = /obj/structure/closet/crate/chest/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 0
 
@@ -635,16 +563,12 @@
 	name = "closet"
 	result = /obj/structure/closet/crate/roguecloset
 	reqs = list(/obj/item/grown/log/tree/small = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/coffin
 	name = "wooden coffin"
 	result = /obj/structure/closet/crate/coffin
 	reqs = list(/obj/item/grown/log/tree/small = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 1
 
@@ -652,8 +576,6 @@
 	name = "sleep coffin"
 	result = /obj/structure/closet/crate/coffin/vampire
 	reqs = list(/obj/item/natural/wood/plank = 2, /obj/item/natural/silk = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 0 // I don't like lickers or wretches. but they cannot make this by default to even level up. I guess fair is fair. changed to 0
 
@@ -697,8 +619,6 @@
 	result = /obj/machinery/light/rogue/firebowl/standing
 	reqs = list(/obj/item/natural/stone = 1,
 				/obj/item/rogueore/coal = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/standingblue
 	name = "standing blue fire"
@@ -706,8 +626,6 @@
 	reqs = list(/obj/item/natural/stone = 1,
 				/obj/item/rogueore/coal = 1,
 				/obj/item/ash = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 
 /datum/crafting_recipe/roguetown/structure/oven
 	name = "oven"
@@ -723,8 +641,6 @@
 	name = "drying rack"
 	result = /obj/machinery/tanningrack
 	reqs = list(/obj/item/grown/log/tree/stick = 3)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/strawbed
@@ -732,8 +648,6 @@
 	result = /obj/structure/bed/rogue/shit
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/natural/fibers = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 0
 
@@ -743,8 +657,6 @@
 	reqs = list(/obj/item/grown/log/tree/small = 2,
 				/obj/item/natural/cloth = 2)
 	tools = list(/obj/item/needle)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 1
 
@@ -754,8 +666,6 @@
 	reqs = list(/obj/item/grown/log/tree/small = 2,
 				/obj/item/natural/cloth = 1)
 	tools = list(/obj/item/needle)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 1
 
@@ -765,8 +675,6 @@
 	reqs = list(/obj/item/grown/log/tree/small = 3,
 				/obj/item/natural/cloth = 4)
 	tools = list(/obj/item/needle)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 2
 
@@ -777,8 +685,6 @@
 	reqs = list(/obj/item/grown/log/tree/small = 3,
 				/obj/item/natural/cloth = 3)
 	tools = list(/obj/item/needle)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 2
 
@@ -786,16 +692,12 @@
 	name = "wooden table"
 	result = /obj/structure/table/wood/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 
 /datum/crafting_recipe/roguetown/structure/fancytableblack
 	name = "fancy wooden table(black)"
 	result = /obj/structure/table/wood/fancy/black
 	reqs = list(/obj/item/natural/wood/plank = 1, /obj/item/natural/silk = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 3
 
@@ -803,8 +705,6 @@
 	name = "fancy wooden table(blue)"
 	result = /obj/structure/table/wood/fancy/blue
 	reqs = list(/obj/item/natural/wood/plank = 1, /obj/item/natural/silk = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 3
 
@@ -812,8 +712,6 @@
 	name = "fancy wooden table(cyan)"
 	result = /obj/structure/table/wood/fancy/cyan
 	reqs = list(/obj/item/natural/wood/plank = 1, /obj/item/natural/silk = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 3
 
@@ -821,8 +719,6 @@
 	name = "fancy wooden table(green)"
 	result = /obj/structure/table/wood/fancy/green
 	reqs = list(/obj/item/natural/wood/plank = 1, /obj/item/natural/silk = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 3
 
@@ -830,8 +726,6 @@
 	name = "fancy wooden table(orange)"
 	result = /obj/structure/table/wood/fancy/orange
 	reqs = list(/obj/item/natural/wood/plank = 1, /obj/item/natural/silk = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 3
 
@@ -839,8 +733,6 @@
 	name = "fancy wooden table(purple)"
 	result = /obj/structure/table/wood/fancy/purple
 	reqs = list(/obj/item/natural/wood/plank = 1, /obj/item/natural/silk = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 3
 
@@ -848,8 +740,6 @@
 	name = "fancy wooden table(red)"
 	result = /obj/structure/table/wood/fancy/red
 	reqs = list(/obj/item/natural/wood/plank = 1, /obj/item/natural/silk = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 3
 
@@ -857,8 +747,6 @@
 	name = "fancy wooden table(royal black)"
 	result = /obj/structure/table/wood/fancy/royalblack
 	reqs = list(/obj/item/natural/wood/plank = 1, /obj/item/natural/silk = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 4
 
@@ -866,8 +754,6 @@
 	name = "fancy wooden table(royal blue)"
 	result = /obj/structure/table/wood/fancy/royalblue
 	reqs = list(/obj/item/natural/wood/plank = 1, /obj/item/natural/silk = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 4
 
@@ -875,8 +761,6 @@
 	name = "nice long table"
 	result = /obj/structure/table/wood/long_table
 	reqs = list(/obj/item/natural/wood/plank = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 4
 
@@ -884,8 +768,6 @@
 	name = "nice long table(middle)"
 	result = /obj/structure/table/wood/long_table/mid/alt
 	reqs = list(/obj/item/natural/wood/plank = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 4
 
@@ -893,8 +775,6 @@
 	name = "large table"
 	result = /obj/structure/table/wood/large_table
 	reqs = list(/obj/item/natural/wood/plank = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 3
 
@@ -902,8 +782,6 @@
 	name = "operating table"
 	result = /obj/structure/table/optable
 	reqs = list(/obj/item/grown/log/tree/small = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 2
 
@@ -922,6 +800,7 @@
 	verbage_simple = "build"
 	verbage = "builds"
 	skillcraft = /datum/skill/craft/masonry
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/structure/millstone
 	name = "millstone"
@@ -961,8 +840,6 @@
 	name = "custom sign"
 	result = /obj/structure/fluff/customsign
 	reqs = list(/obj/item/grown/log/tree/small = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 1
 
@@ -972,8 +849,6 @@
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/grown/log/tree/stick = 1,
 				/obj/item/natural/fibers = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 1
 
@@ -983,8 +858,6 @@
 	name = "wall ladder"
 	result = /obj/structure/wallladder
 	reqs = list(/obj/item/grown/log/tree/small = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	wallcraft = TRUE
 	craftdiff = 2
@@ -1229,7 +1102,6 @@
 	result = /obj/structure/noose/gallows
 	reqs = list(/obj/item/rope = 1, /obj/item/grown/log/tree/small = 2)
 	craftdiff = 2
-	verbage = "constructs"
 	craftsound = 'sound/foley/Building-01.ogg'
 	ontile = TRUE
 
@@ -1238,7 +1110,6 @@
 	result = /obj/structure/pillory
 	reqs = list(/obj/item/ingot/iron = 1, /obj/item/grown/log/tree/small = 1)
 	craftdiff = 2
-	verbage = "constructs"
 	craftsound = 'sound/foley/Building-01.ogg'
 	ontile = TRUE
 
@@ -1249,8 +1120,6 @@
 	result = /obj/structure/chair/bench/couch
 	reqs = list(/obj/item/natural/wood/plank = 3,
 				/obj/item/natural/silk = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 4
 
@@ -1259,8 +1128,6 @@
 	result = /obj/structure/chair/bench/couch/r
 	reqs = list(/obj/item/natural/wood/plank = 3,
 				/obj/item/natural/silk = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 4
 
@@ -1269,8 +1136,6 @@
 	result = /obj/structure/chair/bench/couchablack
 	reqs = list(/obj/item/natural/wood/plank = 3,
 				/obj/item/natural/silk = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 4
 
@@ -1279,8 +1144,6 @@
 	result = /obj/structure/chair/bench/couchablack/r
 	reqs = list(/obj/item/natural/wood/plank = 3,
 				/obj/item/natural/silk = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 4
 
@@ -1289,8 +1152,6 @@
 	result = /obj/structure/chair/bench/ultimacouch
 	reqs = list(/obj/item/natural/wood/plank = 3,
 				/obj/item/natural/silk = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 4
 
@@ -1299,8 +1160,6 @@
 	result = /obj/structure/chair/bench/ultimacouch/r
 	reqs = list(/obj/item/natural/wood/plank = 3,
 				/obj/item/natural/silk = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 4
 
@@ -1309,8 +1168,6 @@
 	result = /obj/structure/chair/bench/coucha
 	reqs = list(/obj/item/natural/wood/plank = 3,
 				/obj/item/natural/silk = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 4
 
@@ -1319,8 +1176,6 @@
 	result = /obj/structure/chair/bench/coucha/r
 	reqs = list(/obj/item/natural/wood/plank = 3,
 				/obj/item/natural/silk = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 4
 
@@ -1329,8 +1184,6 @@
 	result = /obj/structure/chair/bench/couchamagenta
 	reqs = list(/obj/item/natural/wood/plank = 3,
 				/obj/item/natural/silk = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 4
 
@@ -1339,8 +1192,6 @@
 	result = /obj/structure/chair/bench/couchamagenta/r
 	reqs = list(/obj/item/natural/wood/plank = 3,
 				/obj/item/natural/silk = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 4
 
@@ -1373,8 +1224,6 @@
 				/obj/item/ingot/gold = 1,
 				/obj/item/natural/glass = 1)
 	skillcraft = /datum/skill/craft/carpentry
-	verbage_simple = "construct"
-	verbage = "constructs"
 	wallcraft = TRUE
 	craftdiff = 5
 
@@ -1382,8 +1231,6 @@
 	name = "Floor Clock"
 	result = /obj/structure/fluff/clock
 	reqs = list(/obj/item/natural/wood/plank = 2,/obj/item/roguegear/bronze = 1, /obj/item/ingot/iron = 1)
-	verbage_simple = "construst"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 2
 
@@ -1391,8 +1238,6 @@
 	name = "Wall Clock (North)"
 	result = /obj/structure/fluff/wallclock
 	reqs = list(/obj/item/natural/wood/plank = 2,/obj/item/roguegear/bronze = 1, /obj/item/ingot/iron = 1)
-	verbage_simple = "construst"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 2
 	wallcraft = TRUE
@@ -1401,8 +1246,6 @@
 	name = "Long Dresser"
 	result = /obj/structure/closet/crate/drawer/drawer2
 	reqs= list(/obj/item/natural/wood/plank = 2)
-	verbage_simple = "construst"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 2
 
@@ -1410,8 +1253,6 @@
 	name = "Long Dresser (Alt)"
 	result = /obj/structure/closet/crate/drawer/drawer2
 	reqs = list(/obj/item/natural/wood/plank = 2)
-	verbage_simple = "construst"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 2
 
@@ -1419,8 +1260,6 @@
 	name = "Tall and long Dresser"
 	result = /obj/structure/closet/crate/drawer/drawer3
 	reqs = list(/obj/item/natural/wood/plank = 2)
-	verbage_simple = "construst"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 2
 
@@ -1428,8 +1267,6 @@
 	name = "Tall and skinny Dresser"
 	result = /obj/structure/closet/crate/drawer/drawer4
 	reqs = list(/obj/item/natural/wood/plank = 2)
-	verbage_simple = "construst"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 2
 
@@ -1437,8 +1274,6 @@
 	name = "Bedside Drawer"
 	result = /obj/structure/closet/crate/drawer
 	reqs = list(/obj/item/natural/wood/plank = 2)
-	verbage_simple = "construst"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 2
 
@@ -1446,8 +1281,6 @@
 	name = "Telescope"
 	result = /obj/structure/telescope
 	reqs = list(/obj/item/grown/log/tree/stick = 2, /obj/item/ingot/iron = 1, /obj/item/natural/glass = 1)
-	verbage_simple = "construst"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 2
 
@@ -1455,8 +1288,6 @@
 	name = "Globe"
 	result = /obj/structure/globe
 	reqs = list(/obj/item/grown/log/tree/stick = 2, /obj/item/natural/wood/plank = 3)
-	verbage_simple = "construst"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 3
 
@@ -1464,8 +1295,6 @@
 	name = "Wooden Table (Alt)"
 	result = /obj/structure/table/wood/poor/alt_alt
 	reqs = list(/obj/item/natural/wood/plank = 1)
-	verbage_simple = "construst"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 2
 
@@ -1473,8 +1302,6 @@
 	name = "Ornate Wooden Table"
 	result = /obj/structure/table/fine
 	reqs = list(/obj/item/natural/wood/plank = 2)
-	verbage_simple = "construst"
-	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 3
 
@@ -1483,9 +1310,7 @@
 /datum/crafting_recipe/roguetown/structure/hangingchains
 	name = "Hanging Chains"
 	result = /obj/structure/fluff/walldeco/chains
-	reqs = list(/obj/item/ingot/iron = 1, /obj/item/rope/chain = 2)
-	verbage_simple = "construst"
-	verbage = "constructs"
+	reqs = list(/obj/item/rope/chain = 2)
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 1
 
@@ -1540,61 +1365,47 @@
 	name = "red pillows (2 cloth)"
 	result = /obj/structure/fluff/pillow/red
 	reqs = list(/obj/item/natural/cloth = 2)
-	skillcraft = /datum/skill/craft/carpentry
-	verbage_simple = "construct"
-	verbage = "constructs"
+	skillcraft = /datum/skill/craft/sewing
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/structure/bluepillows
 	name = "blue pillows (2 cloth)"
 	result = /obj/structure/fluff/pillow/blue
 	reqs = list(/obj/item/natural/cloth = 2)
-	skillcraft = /datum/skill/craft/carpentry
-	verbage_simple = "construct"
-	verbage = "constructs"
+	skillcraft = /datum/skill/craft/sewing
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/structure/greenpillows
 	name = "green pillows (2 cloth)"
 	result = /obj/structure/fluff/pillow/green
 	reqs = list(/obj/item/natural/cloth = 2)
-	skillcraft = /datum/skill/craft/carpentry
-	verbage_simple = "construct"
-	verbage = "constructs"
+	skillcraft = /datum/skill/craft/sewing
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/structure/brownpillows
 	name = "brown pillows (2 cloth)"
 	result = /obj/structure/fluff/pillow/brown
 	reqs = list(/obj/item/natural/cloth = 2)
-	skillcraft = /datum/skill/craft/carpentry
-	verbage_simple = "construct"
-	verbage = "constructs"
+	skillcraft = /datum/skill/craft/sewing
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/structure/magentapillows
 	name = "magenta pillows (2 cloth)"
 	result = /obj/structure/fluff/pillow/magenta
 	reqs = list(/obj/item/natural/cloth = 2)
-	skillcraft = /datum/skill/craft/carpentry
-	verbage_simple = "construct"
-	verbage = "constructs"
+	skillcraft = /datum/skill/craft/sewing
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/structure/purplepillows
 	name = "purple pillows (2 cloth)"
 	result = /obj/structure/fluff/pillow/purple
 	reqs = list(/obj/item/natural/cloth = 2)
-	skillcraft = /datum/skill/craft/carpentry
-	verbage_simple = "construct"
-	verbage = "constructs"
+	skillcraft = /datum/skill/craft/sewing
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/structure/blackpillows
 	name = "black pillows (2 cloth)"
 	result = /obj/structure/fluff/pillow/black
 	reqs = list(/obj/item/natural/cloth = 2)
-	skillcraft = /datum/skill/craft/carpentry
-	verbage_simple = "construct"
-	verbage = "constructs"
+	skillcraft = /datum/skill/craft/sewing
 	craftdiff = 2
