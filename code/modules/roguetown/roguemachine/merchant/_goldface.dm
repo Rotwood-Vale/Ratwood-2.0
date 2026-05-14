@@ -211,7 +211,7 @@
 /obj/structure/roguemachine/goldface/public/kingsfield
 	name = "Kingsfield Visitor's SILVERFACE"
 	lockid = "admin"
-	profit_id = list("Kingsfield Visitor", "Ferrentian Envoy")
+	profit_id = list("Kingsfield Visitor", "Ferentian Envoy")
 	extra_fee = 0
 	profit_margin = 0
 	is_public = TRUE
@@ -242,7 +242,7 @@
 /obj/structure/roguemachine/goldface/public/kingsfield/smith
 	name = "Kingsfield Smithy's SILVERFACE"
 	lockid = "admin"
-	profit_id = list("Kingsfield Visitor", "Ferrentian Envoy")
+	profit_id = list("Kingsfield Visitor", "Ferentian Envoy")
 	categories = list(
 		"Armor (Iron)",
 		"Armor (Steel)",
@@ -260,7 +260,7 @@
 /obj/structure/roguemachine/goldface/public/kingsfield/tailor
 	name = "Kingsfield Tailor's SILVERFACE"
 	lockid = "admin"
-	profit_id = list("Kingsfield Visitor", "Ferrentian Envoy")
+	profit_id = list("Kingsfield Visitor", "Ferentian Envoy")
 	categories = list(
 		"Apparel",
 		"Wardrobe",
@@ -276,7 +276,7 @@
 /obj/structure/roguemachine/goldface/public/kingsfield/apothecary
 	name = "Kingsfield Apothecary's SILVERFACE"
 	lockid = "admin"
-	profit_id = list("Kingsfield Visitor", "Ferrentian Envoy")
+	profit_id = list("Kingsfield Visitor", "Ferentian Envoy")
 	categories = list(
 		"Potions",
 	)

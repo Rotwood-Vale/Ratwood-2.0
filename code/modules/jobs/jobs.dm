@@ -187,7 +187,7 @@ GLOBAL_LIST_INIT(tribal_positions, list(
 
 GLOBAL_LIST_INIT(kingsfield_positions, list(
 	"Kingsfield Visitor",
-	"Ferrentian Envoy",
+	"Ferentian Envoy",
 ))
 
 GLOBAL_LIST_INIT(roguewar_positions, list(

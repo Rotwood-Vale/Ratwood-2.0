@@ -3,7 +3,7 @@
 	Thus we mus convert it to a ckey
 */
 /datum/mind/proc/adjust_triumphs(amt, counted = TRUE)
-	if(amt > 0 && assigned_role in list("Kingsfield Visitor", "Ferrentian Envoy"))
+	if(amt > 0 && assigned_role in list("Kingsfield Visitor", "Ferentian Envoy"))
 		return
 	if(!key)
 		return
@@ -29,7 +29,7 @@
 	So we can always get a ckey.
 */
 /client/proc/adjust_triumphs(amt, counted = TRUE)
-	if(amt > 0 && mob?.mind?.assigned_role in list("Kingsfield Visitor", "Ferrentian Envoy"))
+	if(amt > 0 && mob?.mind?.assigned_role in list("Kingsfield Visitor", "Ferentian Envoy"))
 		return
 	if(!amt)
 		return
@@ -50,7 +50,7 @@
 	mobs also got ckeys p simple
 */
 /mob/proc/adjust_triumphs(amt, counted = TRUE)
-	if(amt > 0 && mind?.assigned_role in list("Kingsfield Visitor", "Ferrentian Envoy"))
+	if(amt > 0 && mind?.assigned_role in list("Kingsfield Visitor", "Ferentian Envoy"))
 		return
 	if(!ckey)
 		return

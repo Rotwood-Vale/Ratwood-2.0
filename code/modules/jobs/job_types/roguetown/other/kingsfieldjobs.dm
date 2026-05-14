@@ -91,16 +91,16 @@
 		/obj/item/reagent_containers/food/snacks/rogue/bread = 1,
 	)
 
-/datum/job/roguetown/ferrentian_envoy
-	title = "Ferrentian Envoy"
+/datum/job/roguetown/ferentian_envoy
+	title = "Ferentian Envoy"
 	faction = "Station"
 	total_positions = 99
 	spawn_positions = 0
 	selection_color = "#8d8f78"
 	allowed_races = RACES_ALL_KINDS
 	allowed_sexes = list(MALE, FEMALE)
-	tutorial = "You are a Ferrentian envoy operating in Kingsfield under special authority."
-	outfit = /datum/outfit/job/roguetown/ferrentian_envoy
+	tutorial = "You are a Ferentian envoy operating in Kingsfield under special authority."
+	outfit = /datum/outfit/job/roguetown/ferentian_envoy
 	display_order = JDO_PILGRIM
 	show_in_credits = FALSE
 	announce_latejoin = FALSE
@@ -114,7 +114,7 @@
 	job_traits = list(TRAIT_NOBLE)
 	social_rank = SOCIAL_RANK_NOBLE
 
-/datum/job/roguetown/ferrentian_envoy/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+/datum/job/roguetown/ferentian_envoy/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	if(L?.mind)
 		L.mind.remove_all_antag_datums()
 	. = ..()
@@ -126,16 +126,16 @@
 	L.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_NOVICE, TRUE)
 	apply_kingsfield_join_fade(L)
 
-/datum/job/roguetown/ferrentian_envoy/special_job_check(mob/dead/new_player/player)
+/datum/job/roguetown/ferentian_envoy/special_job_check(mob/dead/new_player/player)
 	return !!(player?.client?.holder)
 
-/datum/job/roguetown/ferrentian_envoy/special_check_latejoin(client/C)
+/datum/job/roguetown/ferentian_envoy/special_check_latejoin(client/C)
 	// Only show in latejoin menu for admins
 	return !!(C?.holder)
 
-/datum/job/roguetown/ferrentian_envoy/override_latejoin_spawn(mob/living/carbon/human/H)
+/datum/job/roguetown/ferentian_envoy/override_latejoin_spawn(mob/living/carbon/human/H)
 	var/list/eligible_spawns = list()
-	for(var/obj/effect/landmark/start/ferrentian_envoy/S in GLOB.start_landmarks_list)
+	for(var/obj/effect/landmark/start/ferentian_envoy/S in GLOB.start_landmarks_list)
 		if(S.loc)
 			eligible_spawns += S
 	if(eligible_spawns.len)
@@ -145,7 +145,7 @@
 			return TRUE
 	return FALSE
 
-/datum/outfit/job/roguetown/ferrentian_envoy/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/ferentian_envoy/pre_equip(mob/living/carbon/human/H)
 	. = ..()
 	armor = null
 	if(should_wear_femme_clothes(H))
@@ -180,9 +180,9 @@
 		/obj/item/reagent_containers/food/snacks/rogue/bread = 1,
 	)
 
-// Spawn landmark for Ferrentian Envoy arrivals. Place this in the Kingsfield map where envoys should appear.
-/obj/effect/landmark/start/ferrentian_envoy
-	name = "Ferrentian Envoy Spawn"
+// Spawn landmark for Ferentian Envoy arrivals. Place this in the Kingsfield map where envoys should appear.
+/obj/effect/landmark/start/ferentian_envoy
+	name = "Ferentian Envoy Spawn"
 	icon_state = "arrow"
-	jobspawn_override = list("Ferrentian Envoy")
+	jobspawn_override = list("Ferentian Envoy")
 	delete_after_roundstart = FALSE
