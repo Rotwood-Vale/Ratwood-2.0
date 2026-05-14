@@ -117,7 +117,12 @@
 	return !!(C?.holder)
 
 /datum/job/roguetown/ferrentian_envoy/override_latejoin_spawn(mob/living/carbon/human/H)
-	return TRUE  // Use custom spawn location
+	var/list/override_locs = GLOB.jobspawn_overrides["Ferrentian Envoy"]
+	if(override_locs && override_locs.len)
+		var/obj/effect/landmark/start/S = pick(override_locs)
+		H.forceMove(S.loc)
+		return TRUE
+	return FALSE
 
 /datum/outfit/job/roguetown/ferrentian_envoy/pre_equip(mob/living/carbon/human/H)
 	. = ..()
