@@ -47,10 +47,12 @@
 	var/image/defiler_mark
 	/// Clients that received the mark image, for cleanup.
 	var/list/mark_clients = list()
-	/// world.time threshold after which oxy damage stops (45 seconds from apply).
+	/// world.time threshold after which oxy damage stops (1 minute from apply).
 	var/oxy_damage_until = 0
 	/// world.time of next brute damage tick (fires every 5 seconds).
 	var/next_brute_time = 0
+	/// world.time of next strangle message tick (fires every 5 seconds).
+	var/next_strangle_time = 0
 
 /datum/status_effect/debuff/dendor_defiler/on_apply()
 	if(isliving(owner))
@@ -58,8 +60,9 @@
 		playsound(owner, 'sound/misc/jack_killing_2.ogg', 80, FALSE)
 		to_chat(owner, span_userdanger("The Treefather's curse seizes me — the forest remembers what I have done!"))
 		to_chat(owner, span_userdanger("The tree's cursed vines coil around my throat, beginning to strangle me!"))
-		oxy_damage_until = world.time + 1 MINUTES
+		oxy_damage_until = world.time + 50 SECONDS
 		next_brute_time = world.time
+		next_strangle_time = world.time
 		defiler_mark = image('icons/effects/effects.dmi', owner, "curse", ABOVE_MOB_LAYER)
 		defiler_mark.color = "#44FF44"
 		for(var/client/CL in GLOB.clients)
@@ -94,7 +97,18 @@
 		)
 		to_chat(owner, span_userdanger(pick(vine_messages)))
 	if(world.time <= oxy_damage_until)
-		C.adjustOxyLoss(3)
+		if(HAS_TRAIT(C, TRAIT_NOBREATH))
+			C.adjustBruteLoss(3)
+		else
+			C.adjustOxyLoss(3)
+			if(world.time >= next_strangle_time)
+				next_strangle_time = world.time + 5 SECONDS
+				var/static/list/strangle_messages = list(
+					"The tree's vines tighten around my throat — I cannot breathe!",
+					"The tree's cursed vines chokes the air from my lungs!",
+					"I gasp for breath as the tree's thorned vines squeeze my neck!"
+				)
+				to_chat(owner, span_userdanger(pick(strangle_messages)))
 	if(prob(20))
 		C.flash_fullscreen("stressflash")
 
@@ -1050,6 +1064,8 @@
 		ws.possible_shapes += /mob/living/carbon/human/species/wildshape/crow
 	to_chat(H, span_green("The knowledge of bat and crow forms take root in my soul. I can now call shift into them through Beast Form."))
 
+/// Cat 12 — Timber's Tithe: yields 2 blessed logs (repeatable).
+/// Offerings: 5 tree saplings of any type.
 /obj/structure/flora/roguetree/wise/sanctified/proc/reward_cat12(mob/living/user)
 	// Spawn 2 blessed logs at the player's feet as the Treefather's gift.
 	var/turf/T = get_turf(user)
@@ -1285,8 +1301,6 @@
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/lesser_dryad_special)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/minion_order/lesser_dryad)
 
-	// Register tree destruction signal is no longer needed — cleanup is handled in Destroy().
-
 	visible_message(span_boldwarning("[H.name]'s hand is pressed against the bark — a flash of gold seals the pact!"))
 	playsound(get_turf(src), 'sound/ambience/noises/mystical (4).ogg', 70, TRUE)
 	to_chat(H, span_green("My soul is bound to this sanctified tree. Should it fall, a part of me falls with it."))
@@ -1510,17 +1524,16 @@
 		fire_suppression_queued = TRUE
 		addtimer(CALLBACK(src, PROC_REF(suppress_fire)), 5 SECONDS)
 
+/// Extinguishes the tree's own fire sprite but leaves hotspots on the turf intact.
+/// Called from fire_act's 5-second timer. Sets fire_immune TRUE for 5 seconds so the
+/// tree visually suppresses itself, but can be re-ignited by persistent floor fire once immunity expires.
 /obj/structure/flora/roguetree/wise/sanctified/proc/suppress_fire()
 	fire_suppression_queued = FALSE
-	if(QDELETED(src))
+	if(QDELETED(src) || fire_immune)
 		return
 	fire_immune = TRUE
 	visible_message(span_warning("The sanctified tree's ancient magic surges — smothering the flames!"))
-	for(var/obj/effect/hotspot/H in loc)
-		qdel(H)
-	for(var/turf/T in range(1, src))
-		for(var/obj/effect/hotspot/H in T)
-			qdel(H)
+	extinguish()
 	addtimer(VARSET_CALLBACK(src, fire_immune, FALSE), 5 SECONDS)
 
 /obj/structure/flora/roguetree/wise/sanctified/obj_destruction(damage_flag)
@@ -1532,8 +1545,10 @@
 	blessed_log.bless_log()
 	return ..()
 
+/// 40% chance (60% with Bulwark aura) to stun and knockdown a non-Dendorite carbon attacker for 0.5 seconds.
+/// Also deals 5 brute if the Bulwark aura (cat4) is active on this tree.
 /obj/structure/flora/roguetree/wise/sanctified/proc/try_root_attacker(mob/living/attacker)
-	if(!iscarbon(attacker) || !prob(40))
+	if(!iscarbon(attacker) || !prob(tree_data?.has_slow_aura ? 60 : 40))
 		return
 	var/mob/living/carbon/C = attacker
 	if(C.patron?.type == /datum/patron/divine/dendor)
