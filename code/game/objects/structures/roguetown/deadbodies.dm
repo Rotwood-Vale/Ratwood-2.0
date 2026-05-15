@@ -427,3 +427,108 @@
 		/obj/item/clothing/gloves/roguetown/plate                         = 15,
 		/obj/item/clothing/under/roguetown/platelegs                      = 15,
 	)
+
+/obj/structure/deadbodyrandom
+	name = "random dead body (dummy)"
+	desc = "This dummy object doesn't do anything"
+	icon = 'icons/roguetown/rw_deadbodies.dmi'
+	icon_state = "base"
+
+//A random-body spawner that picks a random body
+/obj/structure/deadbodyrandom/all
+	name = "random dead body"
+	desc = "This dummy object can spawn any body"
+
+/obj/structure/deadbodyrandom/all/Initialize(mapload)
+	var/type = pick(list(/obj/structure/deadbody/generic,
+	/obj/structure/deadbody/adventurer_leather,
+	/obj/structure/deadbody/adventurer_steel,
+	/obj/structure/deadbody/maa,
+	/obj/structure/deadbody/warden,
+	/obj/structure/deadbody/wizard,
+	/obj/structure/deadbody/necromancer,
+	/obj/structure/deadbody/skeleton,
+	/obj/structure/deadbody/greater_skeleton,
+	/obj/structure/deadbody/rogue,
+	/obj/structure/deadbody/peasant,
+	/obj/structure/deadbody/bogman,
+	/obj/structure/deadbody/old_knight))
+
+	var/obj/structure/deadbodyrandom/all/boi = new type
+	boi.forceMove(get_turf(src))
+	boi.pixel_x += rand(-3,3)
+	. = ..()
+
+	return INITIALIZE_HINT_QDEL
+
+//A random-body spawner weighted toward high-tier bodies
+/obj/structure/deadbodyrandom/high
+	name = "random dead body (high)"
+	desc = "This spawner spawns the best bodies"
+
+/obj/structure/deadbodyrandom/high/Initialize(mapload)
+	var/type = pick(list(
+	/obj/structure/deadbody/adventurer_steel,
+	/obj/structure/deadbody/maa,
+	/obj/structure/deadbody/warden,
+	/obj/structure/deadbody/wizard,
+	/obj/structure/deadbody/necromancer,
+	/obj/structure/deadbody/greater_skeleton,
+	/obj/structure/deadbody/rogue,
+	/obj/structure/deadbody/old_knight))
+
+	var/obj/structure/deadbodyrandom/high/boi = new type
+	boi.forceMove(get_turf(src))
+	boi.pixel_x += rand(-3,3)
+	. = ..()
+
+	return INITIALIZE_HINT_QDEL
+
+//A random-body spawner weighted toward mid-tier bodies
+/obj/structure/deadbodyrandom/med
+	name = "random dead body (medium)"
+	desc = "This spawner spawns bodies weighted by value"
+
+/obj/structure/deadbodyrandom/med/Initialize(mapload)
+	var/type = pick(list(/obj/structure/deadbody/generic,
+	/obj/structure/deadbody/generic,
+	/obj/structure/deadbody/adventurer_leather,
+	/obj/structure/deadbody/adventurer_steel,
+	/obj/structure/deadbody/maa,
+	/obj/structure/deadbody/warden,
+	/obj/structure/deadbody/skeleton,
+	/obj/structure/deadbody/skeleton,
+	/obj/structure/deadbody/rogue,
+	/obj/structure/deadbody/peasant,
+	/obj/structure/deadbody/peasant,
+	/obj/structure/deadbody/bogman,))
+
+	var/obj/structure/deadbodyrandom/med/boi = new type
+	boi.forceMove(get_turf(src))
+	boi.pixel_x += rand(-3,3)
+	. = ..()
+
+	return INITIALIZE_HINT_QDEL
+
+//A random-body spawner for low-tier bodies only
+/obj/structure/deadbodyrandom/low
+	name = "random dead body (low)"
+	desc = "This spawner spawns only the basic bodies"
+
+/obj/structure/deadbodyrandom/low/Initialize(mapload)
+	var/type = pick(list(/obj/structure/deadbody/generic,
+	/obj/structure/deadbody/generic,
+	/obj/structure/deadbody/adventurer_leather,
+	/obj/structure/deadbody/skeleton,
+	/obj/structure/deadbody/skeleton,
+	/obj/structure/deadbody/rogue,
+	/obj/structure/deadbody/peasant,
+	/obj/structure/deadbody/peasant,
+	/obj/structure/deadbody/bogman,))
+
+	var/obj/structure/deadbodyrandom/low/boi = new type
+	boi.forceMove(get_turf(src))
+	boi.pixel_x += rand(-3,3)
+	. = ..()
+
+	return INITIALIZE_HINT_QDEL
