@@ -40,6 +40,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Silver Weakness"=/datum/charflaw/silverweakness,
 	"Sleepless (+1 TRI)"=/datum/charflaw/sleepless,
 	"Smoker"=/datum/charflaw/addiction/smoker,
+	"Malodorous"=/datum/charflaw/malodorous,
 	"Ugly"=/datum/charflaw/ugly,
 	"Unintelligible (+1 TRI)"=/datum/charflaw/unintelligible,
 	"Unsettling Beauty"=/datum/charflaw/unsettling_beauty,
@@ -69,6 +70,9 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 // Called when a vice is removed from a character to clean up persistent effects
 /datum/charflaw/proc/on_removal(mob/user)
+	return
+
+/datum/charflaw/proc/on_bath(mob/user)
 	return
 
 /mob/proc/has_flaw(flaw)
@@ -190,6 +194,61 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/badsight/proc/apply_reading_skill(mob/living/carbon/human/H)
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 	H.adjust_triumphs(1)
+
+/datum/charflaw/malodorous
+	name = "Malodorous"
+	desc = "My body odor is unbearable without regular baths, and others can tell."
+	var/last_aura_tick = 0
+	var/aura_tick_delay = 5 SECONDS
+	var/suppressed_until = 0
+	var/next_gas_puff = 0
+
+/datum/charflaw/malodorous/proc/is_reeking()
+	return world.time >= suppressed_until
+
+/datum/charflaw/malodorous/on_bath(mob/user)
+	if(!ishuman(user))
+		return
+	suppressed_until = world.time + 30 MINUTES
+	to_chat(user, span_notice("I scrub the stink away. I should stay fresh for a while."))
+
+/datum/charflaw/malodorous/flaw_on_life(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(!is_reeking())
+		return
+	if(!H.can_smell())
+		return
+	if(user.mind?.antag_datums)
+		for(var/datum/antagonist/D in user.mind?.antag_datums)
+			if(istype(D, /datum/antagonist/vampire/lord) || istype(D, /datum/antagonist/werewolf) || istype(D, /datum/antagonist/skeleton) || istype(D, /datum/antagonist/zombie) || istype(D, /datum/antagonist/lich))
+				return
+	if(world.time >= next_gas_puff)
+		var/obj/effect/temp_visual/small_smoke/puff = new /obj/effect/temp_visual/small_smoke(null)
+		puff.duration = rand(100, 150)
+		puff.layer = ABOVE_MOB_LAYER
+		puff.color = "#3a6600"
+		puff.alpha = 150
+
+		H.vis_contents += puff
+		next_gas_puff = world.time + rand(12 SECONDS, 26 SECONDS)
+	if(world.time < last_aura_tick + aura_tick_delay)
+		return
+	last_aura_tick = world.time
+	apply_stink_aura(H)
+
+/datum/charflaw/malodorous/proc/apply_stink_aura(mob/living/carbon/human/H)
+	for(var/mob/living/nearby in view(2, H))
+		if(nearby == H)
+			continue
+		if(nearby.stat)
+			continue
+		if(!nearby.can_smell())
+			continue
+		if(!nearby.has_stress_event(/datum/stressevent/stinky_aura))
+			to_chat(nearby, span_warning("Something nearby reeks."))
+		nearby.add_stress(/datum/stressevent/stinky_aura)
 
 /datum/charflaw/paranoid
 	name = "Paranoid"
