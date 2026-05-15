@@ -2694,6 +2694,7 @@
 #include "code\modules\spells\roguetown\acolyte\necra.dm"
 #include "code\modules\spells\roguetown\acolyte\noc.dm"
 #include "code\modules\spells\roguetown\acolyte\pestra.dm"
+#include "code\modules\spells\roguetown\acolyte\pestra_fleshcraft.dm"
 #include "code\modules\spells\roguetown\acolyte\ravox.dm"
 #include "code\modules\spells\roguetown\acolyte\resurrect.dm"
 #include "code\modules\spells\roguetown\acolyte\xylix.dm"

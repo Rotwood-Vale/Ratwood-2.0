@@ -19,7 +19,7 @@
 	invocation_type = "shout" //can be none, whisper, emote and shout
 	associated_skill = /datum/skill/magic/holy
 	devotion_cost = 15
-	recharge_time = 15 SECONDS
+	recharge_time = 30 SECONDS
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	miracle = TRUE
 	cost = 3
@@ -233,3 +233,93 @@
 		return TRUE
 	revert_cast()
 	return FALSE
+
+// Blindness but weaker
+
+// =========================
+// Blindness (better)
+// =========================
+
+
+/obj/effect/proc_holder/spell/invoked/lesserblindness
+	name = "Noc's Veil"
+	desc = "Curse a foe with a creeping veil that dims their sight."
+	overlay_state = "blindness"
+	clothes_req = FALSE
+	releasedrain = 30
+	chargedrain = 0
+	chargetime = 0
+	range = 7
+	warnie = "sydwarning"
+	movement_interrupt = FALSE
+	sound = 'sound/magic/churn.ogg'
+	spell_tier = 2
+	invocations = list("Noc darkens thine eyes!")
+	invocation_type = "shout"
+	associated_skill = /datum/skill/magic/holy
+	devotion_cost = 50
+	recharge_time = 35 SECONDS
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	miracle = TRUE
+	cost = 3
+
+/obj/effect/proc_holder/spell/invoked/lesserblindness/cast(list/targets, mob/user = usr)
+	. = ..()
+	if(!targets || !length(targets) || !targets[1] || !isliving(targets[1]))
+		revert_cast()
+		return FALSE
+	var/mob/living/target = targets[1]
+	if(target.anti_magic_check(TRUE, TRUE))
+		return FALSE
+	if(target.has_status_effect(/datum/status_effect/debuff/living_darkness_blindness))
+		to_chat(user, span_warning("They are already shrouded in living darkness!"))
+		revert_cast()
+		return FALSE
+	target.visible_message(
+		span_warning("[user] points at [target]'s eyes!"),
+		span_warning("A dim veil settles over my sight!")
+	)
+	var/level = clamp(max(1, user.get_skill_level(associated_skill)), 1, 6)
+	target.apply_status_effect(/datum/status_effect/debuff/living_darkness_blindness, user, level)
+	return TRUE
+
+/datum/status_effect/debuff/living_darkness_blindness
+	id = "living_darkness_blindness"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/living_darkness_blindness
+
+	effectedstats = list("perception" = -3, "fortune" = -3)
+	duration = 2 SECONDS
+	var/fullscreen_key = "living_darkness_tint" //keep it snowflake its important to avoid conflicts with existing tint
+	var/applied = FALSE
+
+/datum/status_effect/debuff/living_darkness_blindness/on_creation(mob/living/new_owner, mob/living/caster, potency)
+	var/lvl = 1
+	if(isnum(potency))
+		lvl = potency
+	lvl = clamp(lvl, 1, 6)
+	duration = (lvl * 2) SECONDS
+	return ..()
+
+/datum/status_effect/debuff/living_darkness_blindness/on_apply()
+	. = ..()
+	if(!owner)
+		return FALSE
+	if(istype(owner, /mob/living/carbon))
+		var/mob/living/carbon/C = owner
+		C.overlay_fullscreen(fullscreen_key, /atom/movable/screen/fullscreen/impaired, 1)
+		applied = TRUE
+		C.update_sight()
+	return TRUE
+
+/datum/status_effect/debuff/living_darkness_blindness/on_remove()
+	if(owner && applied && istype(owner, /mob/living/carbon))
+		var/mob/living/carbon/C = owner
+		C.clear_fullscreen(fullscreen_key, 0)
+		C.update_sight()
+	return ..()
+
+/atom/movable/screen/alert/status_effect/debuff/living_darkness_blindness
+	name = "Living Darkness"
+	desc = "A dim veil clouds my vision."
+	icon_state = "blind"
+
