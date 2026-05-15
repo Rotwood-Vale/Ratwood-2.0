@@ -470,6 +470,8 @@
 /obj/item/bodypart/taur/drop_limb(special) //copypasta
 	var/mob/living/carbon/C = owner
 	. = ..()
+	if(C && grants_longstrider)
+		REMOVE_TRAIT(C, TRAIT_LONGSTRIDER, BODY_ZONE_TAUR)
 	if(C && !special)
 		if(HAS_TRAIT_FROM(C, TRAIT_PONYGIRL_RIDEABLE, BODY_ZONE_TAUR))
 			REMOVE_TRAIT(C, TRAIT_PONYGIRL_RIDEABLE, BODY_ZONE_TAUR)
@@ -582,6 +584,13 @@
 	C.queue_icon_update(PENDING_UPDATE_BODY | PENDING_UPDATE_HAIR | PENDING_UPDATE_DAMAGE)	
 	C.update_mobility()
 	return TRUE
+
+/obj/item/bodypart/taur/attach_limb(mob/living/carbon/C, special)
+	. = ..()
+	if(. && grants_longstrider)
+		ADD_TRAIT(C, TRAIT_LONGSTRIDER, BODY_ZONE_TAUR)
+		if(C.shoes)
+			C.dropItemToGround(C.shoes, force = TRUE)
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special)
 	//Transfer some head appearance vars over

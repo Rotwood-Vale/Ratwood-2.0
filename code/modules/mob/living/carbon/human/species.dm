@@ -778,6 +778,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			if(is_inhumen || is_lamia || is_harpy)
 				return FALSE
+			var/obj/item/bodypart/taur/taur_part = H.get_taur_tail()
+			if(taur_part?.grants_longstrider)
+				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_SHOES) )
 				return FALSE
 			if(num_legs < 1)

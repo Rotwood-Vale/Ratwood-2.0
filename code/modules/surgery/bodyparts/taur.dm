@@ -39,6 +39,8 @@
 	// "d" = deer
 	// null = no taur-specific clothing support
 	var/taur_clothing_category = null
+	// If TRUE, grants TRAIT_LONGSTRIDER on attach and prevents wearing shoes (like harpies)
+	var/grants_longstrider = FALSE
 	// Customizable colors for plate tasset overlays (like detail_color on clothing)
 	var/tasset1_color = null
 	var/tasset2_color = null
@@ -226,6 +228,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 	offset_x = -16
 	taur_icon_state = "saiga_s"
 	clip_mask_state = "clip_mask_saiga"
+	grants_longstrider = TRUE
 
 	has_taur_color = TRUE
 
@@ -236,6 +239,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 	taur_icon_state = "deer_s"
 	taur_clothing_category = "d"
 	taur_markings_state = "deer_markings"
+	grants_longstrider = TRUE
 
 	has_taur_color = TRUE
 
@@ -247,6 +251,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 	taur_markings_state = "goat_markings"
 	clip_mask_state = null
 	clip_mask_legs_state = "clip_mask_goat"
+	grants_longstrider = TRUE
 
 	has_taur_color = TRUE
 
@@ -325,6 +330,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 	taur_icon_state = "spider_s"
 	taur_markings_state = "spider_markings"
 	taur_tertiary_state = "spider_markings_2"
+	grants_longstrider = TRUE
 
 	has_taur_color = TRUE
 
@@ -335,6 +341,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 	taur_icon_state = "centipede_s"
 	taur_markings_state = "centipede_markings"
 	taur_tertiary_state = "centipede_markings_2"
+	grants_longstrider = TRUE
 
 	has_taur_color = TRUE
 
@@ -354,6 +361,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 	offset_x = -16
 	taur_icon_state = "ant_s"
 	taur_markings_state = "ant_markings"
+	grants_longstrider = TRUE
 
 	has_taur_color = TRUE
 
@@ -363,6 +371,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 	offset_x = -16
 	taur_icon_state = "wasp_s"
 	taur_markings_state = "wasp_markings"
+	grants_longstrider = TRUE
 
 	has_taur_color = TRUE
 
@@ -373,5 +382,6 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 	taur_icon_state = "insect_s"
 	taur_markings_state = "insect_markings"
 	taur_tertiary_state = "insect_markings_2"
+	grants_longstrider = TRUE
 
 	has_taur_color = TRUE
