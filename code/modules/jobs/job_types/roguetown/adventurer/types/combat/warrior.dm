@@ -60,7 +60,7 @@
 			if("Iron Saber & Wood Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/sword/saber/iron
+				r_hand = /obj/item/rogueweapon/sword/sabre/iron
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				backr = /obj/item/rogueweapon/shield/wood
 		var/armors = list("Chainmaille Set","Iron Breastplate","Gambeson & Helmet","Light Zybantine Armor")

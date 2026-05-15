@@ -11,8 +11,6 @@
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	anvilrepair = null
-	sewrepair = TRUE
 	unarmed_bonus = 1.1
 	color = "#66584c"
 	cold_protection = HAND_LEFT | HAND_RIGHT
@@ -30,8 +28,6 @@
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	anvilrepair = null
-	sewrepair = TRUE
 	nudist_approved = TRUE
 
 /obj/item/clothing/gloves/roguetown/fingerless/shadowgloves
@@ -63,8 +59,6 @@
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	anvilrepair = null
-	sewrepair = TRUE
 	salvage_result = /obj/item/natural/hide/cured
 
 /obj/item/clothing/gloves/roguetown/otavan
@@ -80,8 +74,6 @@
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	anvilrepair = null
-	sewrepair = TRUE
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	cold_protection = HAND_LEFT | HAND_RIGHT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
@@ -116,8 +108,6 @@
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	anvilrepair = null
-	sewrepair = TRUE
 
 /obj/item/clothing/gloves/roguetown/eastgloves2
 	name = "stylish gloves"
@@ -131,8 +121,6 @@
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	anvilrepair = null
-	sewrepair = TRUE
 
 /obj/item/clothing/gloves/roguetown/leather/horsey
 	name = "arm harness"

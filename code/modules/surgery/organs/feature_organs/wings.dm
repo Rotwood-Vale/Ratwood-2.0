@@ -98,37 +98,42 @@
 
 /obj/effect/proc_holder/spell/self/harpy_flight/cast(mob/living/carbon/human/user)
 	var/harpy_AC = user.highest_ac_worn()
-	if(harpy_AC == ARMOR_CLASS_NONE)
-		if(!user.buckled)
-			if(!user.pulledby)
-				if(!user.has_status_effect(/datum/status_effect/debuff/harpy_flight))
-					if(user.mobility_flags & MOBILITY_STAND)
-						if(!user.restrained(ignore_grab = FALSE))
-							if(HAS_TRAIT(user, TRAIT_INFINITE_STAMINA))
-								to_chat(user, span_bloody("I am too energetic to control my flight!</br>AGHH!!"))
-								user.Knockdown(10)
-							else
-								user.visible_message(span_notice("[user] prepares to take flight."))
-								if(do_after(user, 3 SECONDS))
-									var/athletics_skill = max(user.get_skill_level(/datum/skill/misc/athletics), SKILL_LEVEL_NOVICE)
-									var/stamina_cost_final = round((baseline_stamina_cost - athletics_skill), 1)
-									user.apply_status_effect(/datum/status_effect/debuff/harpy_flight, stamina_cost_final)
-									playsound(user, pick(swoop_sound), 100)
-									user.emote("wingsfly", forced = TRUE)
-									if(prob(1)) // somebody, call saint jiub!!
-										playsound(user, 'sound/foley/footsteps/flight_sounds/cliffracer.ogg', 100)
-						else
-							to_chat(user, span_bloody("The chains are restricting my freedom!!"))
-					else
-						to_chat(user, span_bloody("I can't fly while imbalanced like this! AGHH!!"))
-				else
-					to_chat(user, span_bloody("Wah, back on the ground! How... quaint!!")) // sad emoji
-					user.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
-					playsound(user, pick(swoop_sound), 100)
-					user.emote("wingsfly", forced = TRUE)
-			else
-				to_chat(user, span_bloody("SOMEONE'S <b>HOLDING ME</b>, I CAN'T GET OFF THE GROUND LIKE THIS! </br> THE CRUELTY!!"))
-		else
-			to_chat(user, span_bloody("I CAN'T GET OFF THE GROUND WHILE... STUCK LIKE THIS!!"))
-	else
+	if(harpy_AC != ARMOR_CLASS_NONE)
 		to_chat(user, span_bloody("THE ARMOR WEIGHS ME DOWN!!")) // LIGHT ON YO FEET SOULJA
+		return
+	if(user.buckled)
+		to_chat(user, span_bloody("I CAN'T GET OFF THE GROUND WHILE... STUCK LIKE THIS!!"))
+		return
+	if(user.pulledby)
+		to_chat(user, span_bloody("SOMEONE'S <b>HOLDING ME</b>, I CAN'T GET OFF THE GROUND LIKE THIS! </br> THE CRUELTY!!"))
+		return
+
+	if(user.has_status_effect(/datum/status_effect/debuff/harpy_flight))
+		to_chat(user, span_bloody("Wah, back on the ground! How... quaint!!")) // sad emoji
+		user.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
+		playsound(user, pick(swoop_sound), 100)
+		user.emote("wingsfly", forced = TRUE)
+		return
+
+	if(!(user.mobility_flags & MOBILITY_STAND))
+		to_chat(user, span_bloody("I can't fly while imbalanced like this! AGHH!!"))
+		return
+	if(user.restrained(ignore_grab = FALSE))
+		to_chat(user, span_bloody("The chains are restricting my freedom!!"))
+
+	if(HAS_TRAIT(user, TRAIT_INFINITE_STAMINA))
+		to_chat(user, span_bloody("I am too energetic to control my flight!</br>AGHH!!"))
+		user.Knockdown(10)
+		return
+
+	user.visible_message(span_notice("[user] prepares to take flight."))
+	if(!do_after(user, 3 SECONDS))
+		return
+
+	var/athletics_skill = max(user.get_skill_level(/datum/skill/misc/athletics), SKILL_LEVEL_NOVICE)
+	var/stamina_cost_final = round((baseline_stamina_cost - athletics_skill), 1)
+	user.apply_status_effect(/datum/status_effect/debuff/harpy_flight, stamina_cost_final)
+	playsound(user, pick(swoop_sound), 100)
+	user.emote("wingsfly", forced = TRUE)
+	if(prob(1)) // somebody, call saint jiub!!
+		playsound(user, 'sound/foley/footsteps/flight_sounds/cliffracer.ogg', 100)

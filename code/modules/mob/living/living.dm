@@ -110,7 +110,7 @@
 /mob/living/proc/MobBump(mob/M)
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
-
+	M.mob_timers[MT_SNEAKBUMP] = world.time //Here we go again. Make people suddenly lose stealth if they're bumped. No more rogueshittery.
 	if(now_pushing)
 		return TRUE
 

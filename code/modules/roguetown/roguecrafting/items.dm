@@ -504,3 +504,19 @@
 		/obj/item/ash = 1)
 	skillcraft = /datum/skill/misc/medicine
 	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/ironore
+	name = "iron ore"
+	result = /obj/item/rogueore/iron
+	reqs = list(
+		/obj/item/alch/irondust = 3,
+		)
+	skillcraft = /datum/skill/craft/smelting
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/ironore/advanced
+	name = "iron ore (advanced)"
+	reqs = list(
+		/obj/item/alch/irondust = 2,
+		)
+	craftdiff = 4

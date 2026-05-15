@@ -25,7 +25,7 @@
 	..()
 	set_light(2, 2, 1, l_color = "#551c1c")
 
-/obj/item/necro_relics/necro_crystal/proc/recharge(obj/item/reagent_containers/lux/L, mob/user)
+/obj/item/necro_relics/necro_crystal/proc/recharge(obj/item/reagent_containers/lux_impure/L, mob/user)
 	if(current_charges >= max_charges)
 		to_chat(user, span_notice("The crystal is already brimming with power."))
 		return FALSE
@@ -37,7 +37,7 @@
 	return TRUE
 
 /obj/item/necro_relics/necro_crystal/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers/lux))
+	if(istype(I, /obj/item/reagent_containers/lux_impure))
 		return recharge(I, user)
 	return ..()
 

@@ -304,6 +304,17 @@
 	icon_state = "t[rand(1,4)]stump"
 
 /obj/structure/flora/roguetree/stump/attackby(obj/item/I, mob/living/user)
+	if(istype(I, /obj/item/rogueweapon/shovel))
+		var/skill_level = user.get_skill_level(/datum/skill/labor/lumberjacking)
+		var/dig_time = (120 - (skill_level * 15)) / 2
+		playsound(src, 'sound/items/dig_shovel.ogg', 80, TRUE)
+		if(!do_after(user, dig_time, target = user))
+			return
+		to_chat(user, span_notice("I dig up [src]."))
+		new lumber(get_turf(src))
+		playsound(src, destroy_sound, 100, TRUE)
+		qdel(src)
+		return TRUE
 	if(user.used_intent.blade_class == BCLASS_CHOP && lumber_amount)
 		var/skill_level = user.get_skill_level(/datum/skill/labor/lumberjacking)
 		var/lumber_time = (120 - (skill_level * 15))

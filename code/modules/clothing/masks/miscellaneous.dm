@@ -100,9 +100,3 @@
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjustmask(user)
-
-
-/obj/item/clothing/mask/bandana/black
-	name = "black bandana"
-	desc = ""
-	icon_state = "bandblack"

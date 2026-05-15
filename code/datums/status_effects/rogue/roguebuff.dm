@@ -1646,7 +1646,7 @@
 
 /datum/status_effect/buff/clash
 	id = "clash"
-	duration = 6 SECONDS
+	duration = 4 SECONDS
 	var/dur
 	var/sfx_on_apply = 'sound/combat/clash_initiate.ogg'
 	var/swingdelay_mod = 5

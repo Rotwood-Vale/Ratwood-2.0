@@ -23,6 +23,14 @@
 	associated_skill = /datum/skill/magic/arcane
 	zizo_spell = TRUE
 
+/obj/effect/proc_holder/spell/invoked/silence/miracle
+	cost = 0
+	spell_tier = 0
+	associated_skill = /datum/skill/magic/holy
+	chargetime = 9
+	recharge_time = 120 SECONDS
+	invocations = list("Lunaria Silentium!")
+
 /obj/effect/proc_holder/spell/invoked/silence/cast(list/targets, mob/user = usr)
 	if(isliving(targets[1]))
 		var/mob/living/carbon/target = targets[1]
