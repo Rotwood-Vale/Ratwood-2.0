@@ -55,14 +55,14 @@
 
 /obj/structure/underworld/carriageman/attackby(obj/item/W, mob/living/user)
 	if(!istype(user, /mob/living/carbon/spirit)&& !toll && HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
-		if(istype(W, /obj/item/thetoll))
+		if(istype(W, /obj/item/thetoll) || istype(W, /obj/item/roguecoin/necra_token))
 			qdel(W)
 			to_chat(user, "<br><font color=purple><span class='bold'>THE TOLL IS PAID, A TRANSACTION MADE.</span></font>")
 			user << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 0, 0 ,0, 50)
 			toll = TRUE
 			return
 	if(!istype(user, /mob/living/carbon/spirit)&& toll && HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
-		if(istype(W, /obj/item/thetoll))
+		if(istype(W, /obj/item/thetoll) || istype(W, /obj/item/roguecoin/necra_token))
 			to_chat(user, "<br><font color=purple><span class='bold'>ONE TRANSACTION AT A TIME.</span></font>")
 			user << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 0, 0 ,0, 50)
 			return

@@ -123,18 +123,17 @@
 					new /obj/item/soulthread((get_turf(user)))
 					corpse.burialrited = TRUE
 					record_round_statistic(STATS_GRAVES_CONSECRATED)
-					// Necra rewards the undertaker with psilen for completing burial rites
-					var/num_psilen = 1
+					// Necra rewards the undertaker with tokens of gratitude for completing burial rites
+					var/num_tokens = 5
 					if(ishuman(corpse))
 						var/mob/living/carbon/human/H = corpse
 						if(istype(H.mouth, /obj/item/roguecoin/copper))
 							// Coin in the mouth of the dead — Necra's toll paid, bonus awarded
-							num_psilen = 2
+							num_tokens = 10
 							to_chat(user, span_notice("The coin placed in this one's mouth pleases the Undermaiden. Her bounty is doubled."))
-					for(var/n in 1 to num_psilen)
-						var/obj/item/roguecoin/aalloy/coin = new(get_turf(user))
-						coin.pixel_x = rand(-6, 6)
-						coin.pixel_y = rand(-6, 6)
+					var/obj/item/roguecoin/necra_token/burial_reward = new(get_turf(user), num_tokens)
+					burial_reward.pixel_x = rand(-6, 6)
+					burial_reward.pixel_y = rand(-6, 6)
 
 /obj/structure/closet/dirthole/attackby(obj/item/attacking_item, mob/user, params)
 	if(!istype(attacking_item, /obj/item/rogueweapon/shovel))

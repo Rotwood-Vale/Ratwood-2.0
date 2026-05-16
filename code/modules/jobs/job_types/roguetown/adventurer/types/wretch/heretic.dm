@@ -145,6 +145,8 @@
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/guard, SLOT_HEAD, TRUE)
 			ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_SOUL_EXAMINE, TRAIT_GENERIC)
+			var/datum/action/innate/toggle_necra_deathsense/heretic_deathsense1 = new
+			heretic_deathsense1.Grant(H)
 		if(/datum/patron/divine/pestra)
 			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/pestra, SLOT_RING, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/sallet/visored, SLOT_HEAD, TRUE)
@@ -349,6 +351,8 @@
 			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/necra, SLOT_RING, TRUE)
 			ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_SOUL_EXAMINE, TRAIT_GENERIC)
+			var/datum/action/innate/toggle_necra_deathsense/heretic_deathsense2 = new
+			heretic_deathsense2.Grant(H)
 		if(/datum/patron/divine/pestra)
 			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/pestra, SLOT_RING, TRUE)
 			ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)

@@ -609,6 +609,34 @@
 	icon_state = "debuff"
 	color ="#af9f9f"
 
+/// Applied when a non-Necran enters Death's Precipice. Persists while in the realm; lingers for 5 minutes after leaving.
+/datum/status_effect/debuff/necra_realm_dread
+	id = "necra_realm_dread"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/necra_realm_dread
+	effectedstats = list(STATKEY_LCK = -2)
+	duration = -1
+	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = 5 SECONDS
+	/// World time when the mob last left the necra realm. -1 means currently in the realm.
+	var/exit_world_time = -1
+
+/datum/status_effect/debuff/necra_realm_dread/process()
+	. = ..()
+	var/area/rogue/our_area = get_area(owner)
+	if(!isnull(our_area) && our_area.necra_area)
+		exit_world_time = -1
+	else
+		if(exit_world_time == -1)
+			exit_world_time = world.time
+		else if(world.time >= exit_world_time + 5 MINUTES)
+			owner.remove_status_effect(src)
+
+/atom/movable/screen/alert/status_effect/debuff/necra_realm_dread
+	name = "Realm Dread"
+	desc = "The wrongness of that place clings to me. Even now I can feel its cold weight on my soul."
+	icon_state = "debuff"
+	color = "#4a3a5c"
+
 /atom/movable/screen/alert/status_effect/emberwine
 	name = "Aphrodesiac"
 	desc = "The warmth is spreading through my body..."

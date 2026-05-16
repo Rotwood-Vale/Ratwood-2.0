@@ -159,9 +159,18 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 /obj/structure/deaths_door_portal/attack_hand(mob/living/user)
 	playsound(get_turf(src), 'sound/misc/carriage2.ogg', 50, TRUE, -2, ignore_walls = TRUE)
 	to_chat(user, span_notice("You reach for the glowing portal..."))
+	// Check for a fireman-carried passenger BEFORE the user moves
+	var/mob/living/passenger = null
+	for(var/mob/living/M in get_turf(user))
+		if(M != user && M.buckled == user)
+			passenger = M
+			break
 	if(!do_after(user, 2 SECONDS, src))
 		return
 	enter_portal(user)
+	// Bring any fireman-carried companion through with the Necran
+	if(passenger && !QDELETED(passenger))
+		enter_portal(passenger)
 
 /obj/structure/deaths_door_portal/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(user.incapacitated())
@@ -214,6 +223,12 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 
 	enter_portal(M, user)
 
+	// Necrans who guide a dead body (not a player soul) through receive 5 tokens of gratitude
+	if(is_necran && is_dead && !has_player)
+		var/obj/item/roguecoin/necra_token/body_reward = new(get_turf(user), 5)
+		body_reward.pixel_x = rand(-6, 6)
+		body_reward.pixel_y = rand(-6, 6)
+
 	user.visible_message(
 		span_warning("[user] drags [M] into Death's Door!")
 	)
@@ -222,27 +237,67 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 	if(!destination)
 		return
 	playsound(get_turf(src), 'sound/misc/portalenter.ogg', 50, TRUE, -2, ignore_walls = TRUE)
-	target.forceMove(destination)
+	var/turf/spawn_turf = destination
+	// Necra's chosen are guided to the Carriageman upon entering her realm
+	if(HAS_TRAIT(target, TRAIT_SOUL_EXAMINE))
+		var/obj/structure/underworld/carriageman/CM = locate(/obj/structure/underworld/carriageman) in world
+		if(CM && get_turf(CM).z == destination.z)
+			var/turf/CM_turf = get_turf(CM)
+			for(var/turf/T in range(2, CM))
+				if(T == CM_turf)
+					continue
+				if(T.density)
+					continue
+				var/blocked = FALSE
+				for(var/atom/movable/AM in T)
+					if(AM.density)
+						blocked = TRUE
+						break
+				if(!blocked)
+					spawn_turf = T
+					break
+	target.forceMove(spawn_turf)
 
-/// Bones, skulls, and severed heads fed to the portal are accepted as offerings and yield psilen.
+/// Bones, skulls, severed limbs, and whole bodies fed to the portal yield tokens of gratitude.
 /obj/structure/deaths_door_portal/attackby(obj/item/I, mob/living/user, params)
 	if(!HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
 		return ..()
-	// Bones
+	// Bone bundles — reward scales with number of bones in the bundle
+	if(istype(I, /obj/item/natural/bundle/bone))
+		var/obj/item/natural/bundle/bone/bundle = I
+		var/bundle_count = bundle.amount
+		to_chat(user, span_notice("The portal hungrily accepts the bundle of [bundle_count] bones."))
+		var/obj/item/roguecoin/necra_token/bundle_reward = new(get_turf(user), bundle_count)
+		bundle_reward.pixel_x = rand(-6, 6)
+		bundle_reward.pixel_y = rand(-6, 6)
+		qdel(I)
+		return
+	// Single bones
 	if(istype(I, /obj/item/natural/bone))
 		to_chat(user, span_notice("The portal hungrily accepts the offering."))
-		var/obj/item/roguecoin/aalloy/coin = new(get_turf(user))
+		var/obj/item/roguecoin/necra_token/coin = new(get_turf(user))
 		coin.pixel_x = rand(-6, 6)
 		coin.pixel_y = rand(-6, 6)
 		qdel(I)
 		return
-	// Severed heads and skull bodyparts
-	if(istype(I, /obj/item/bodypart/head))
+	// Severed heads — excluding spirit bodyparts and heads still bound to a living player
+	if(istype(I, /obj/item/bodypart/head) && !istype(I, /obj/item/bodypart/head/spirit))
+		var/obj/item/bodypart/head/H = I
+		if(H.brainmob?.mind?.key)
+			to_chat(user, span_warning("The portal recoils — this soul has not yet departed."))
+			return
 		to_chat(user, span_notice("The portal consumes the fallen's head in offering."))
-		for(var/n in 1 to rand(1, 2))
-			var/obj/item/roguecoin/aalloy/coin = new(get_turf(user))
-			coin.pixel_x = rand(-6, 6)
-			coin.pixel_y = rand(-6, 6)
+		var/obj/item/roguecoin/necra_token/head_coin = new(get_turf(user))
+		head_coin.pixel_x = rand(-6, 6)
+		head_coin.pixel_y = rand(-6, 6)
+		qdel(I)
+		return
+	// Other bodyparts (limbs) — 1 token each
+	if(istype(I, /obj/item/bodypart) && !istype(I, /obj/item/bodypart/head))
+		to_chat(user, span_notice("The portal accepts the severed remains."))
+		var/obj/item/roguecoin/necra_token/limb_coin = new(get_turf(user))
+		limb_coin.pixel_x = rand(-6, 6)
+		limb_coin.pixel_y = rand(-6, 6)
 		qdel(I)
 		return
 	return ..()

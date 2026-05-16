@@ -653,3 +653,37 @@
 	if(ismob(pious))
 		if(pious.see_invisible >= SEE_INVISIBLE_OBSERVER)
 			pious.see_invisible = SEE_INVISIBLE_LIVING	// restore to normal living sight
+
+// =====================================================
+// Necra Death Sense — toggleable innate action
+// =====================================================
+
+/// Granted alongside TRAIT_SOUL_EXAMINE in job setup procs for Necra templars, monks, and heretics.
+/// When active, Necran receives a death notice with exact area name whenever a player character dies.
+/datum/action/innate/toggle_necra_deathsense
+	name = "Necra's Eye (ON)"
+	desc = "Receive Necra's whispers when a soul departs the mortal world. Toggle to silence them."
+	icon_icon = 'icons/mob/actions/necramiracles.dmi'
+	button_icon_state = "locatecorpse"
+
+/datum/action/innate/toggle_necra_deathsense/Grant(mob/M)
+	..()
+	if(owner)
+		Activate()
+
+/datum/action/innate/toggle_necra_deathsense/Remove(mob/M)
+	if(M)
+		REMOVE_TRAIT(M, TRAIT_NECRA_DEATHSIGHT, "necra_deathsense_action")
+	..()
+
+/datum/action/innate/toggle_necra_deathsense/Activate()
+	ADD_TRAIT(owner, TRAIT_NECRA_DEATHSIGHT, "necra_deathsense_action")
+	name = "Necra's Eye (ON)"
+	active = TRUE
+	UpdateButtonIcon()
+
+/datum/action/innate/toggle_necra_deathsense/Deactivate()
+	REMOVE_TRAIT(owner, TRAIT_NECRA_DEATHSIGHT, "necra_deathsense_action")
+	name = "Necra's Eye (OFF)"
+	active = FALSE
+	UpdateButtonIcon()

@@ -156,32 +156,55 @@
 
 /// Necran cordage — blessed burial-cordage.
 /// Binds the dead and undead much faster, and doesn't slow the user when dragging them.
+/// Living targets require being prone on the ground AND aggressively grabbed.
 /obj/item/rope/necran_cord
 	name = "burial-cordage"
 	desc = "A length of cord woven from burial linen and blessed by Necra's rites. The dead yield to it without struggle."
-	icon_state = "rope"
-	breakouttime = 10 SECONDS
+	icon = 'icons/roguetown/items/misc.dmi'
+	icon_state = "inqcordage"
+	item_state = "inqcordage"
+	breakouttime = 8 SECONDS
+	slipouttime = 900
+	light_system = STATIC_LIGHT
+	light_power = 1
+	light_outer_range = 1.5
+	light_color = "#e8f4ff"
 
 /obj/item/rope/necran_cord/try_cuff_arms(mob/living/carbon/C, mob/living/user)
 	// Dead/undead targets can be bound instantly without resistance
-	if(C.stat == DEAD || HAS_TRAIT(C, TRAIT_UNDEAD))
+	if(C.stat == DEAD || (C.mob_biotypes & MOB_UNDEAD))
 		apply_cuffs(C, user)
 		C.visible_message(span_warning("[user] binds [C] with [src.name]."), \
 							span_danger("[user] binds me with [src.name]."))
 		return
-	return ..()
+	// Living targets must be prone AND aggressively grabbed
+	if(!(C.mobility_flags & MOBILITY_STAND))
+		if(C.pulledby?.grab_state >= GRAB_AGGRESSIVE)
+			return ..()
+	to_chat(user, span_warning("I need [C] prone on the ground and firmly grabbed to bind them with this cord."))
 
 /obj/item/rope/necran_cord/try_cuff_legs(mob/living/carbon/C, mob/living/user)
 	// Dead/undead targets can be leg-bound instantly without resistance
-	if(C.stat == DEAD || HAS_TRAIT(C, TRAIT_UNDEAD))
+	if(C.stat == DEAD || (C.mob_biotypes & MOB_UNDEAD))
 		apply_cuffs(C, user, TRUE)
 		C.visible_message(span_warning("[user] binds [C]'s legs with [src.name]."), \
 							span_danger("[user] binds my legs with [src.name]."))
 		return
-	return ..()
+	// Living targets must be prone AND aggressively grabbed
+	if(!(C.mobility_flags & MOBILITY_STAND))
+		if(C.pulledby?.grab_state >= GRAB_AGGRESSIVE)
+			return ..()
+	to_chat(user, span_warning("I need [C] prone on the ground and firmly grabbed to bind them with this cord."))
 
 /obj/item/rope/necran_cord/apply_cuffs(mob/living/carbon/target, mob/user, leg = FALSE)
+	// Adjust escape difficulty based on target's state before binding
+	if(target.stat == DEAD || (target.mob_biotypes & MOB_UNDEAD))
+		src.breakouttime = 8 SECONDS	// inquiry-cord strength on the dead
+		src.slipouttime = 900
+	else
+		src.breakouttime = 25			// living escape in ~2.5s (half of normal rope)
+		src.slipouttime = 30 SECONDS
 	. = ..()
 	// When leg-cuffed to a dead/undead mob, remove the slowdown for the Necran practitioner
-	if(leg && (target.stat == DEAD || HAS_TRAIT(target, TRAIT_UNDEAD)))
+	if(leg && (target.stat == DEAD || (target.mob_biotypes & MOB_UNDEAD)))
 		target.remove_movespeed_modifier(MOVESPEED_ID_CUFFED_LEG_SLOWDOWN)

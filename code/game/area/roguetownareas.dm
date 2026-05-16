@@ -47,6 +47,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 			guy.apply_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)
 		else
 			guy.apply_status_effect(/datum/status_effect/debuff/deathdoorwilloss)
+			guy.apply_status_effect(/datum/status_effect/debuff/necra_realm_dread) // lingers 10 min after leaving
 	if((src.viewing_area == TRUE) && !guy.has_status_effect(/datum/status_effect/buff/viewingbuff)) // unique buff when in an arena so you have a better view
 		guy.apply_status_effect(/datum/status_effect/buff/viewingbuff)
 	if((src.hoardmaster_protected == TRUE))//Your greed consumes you.

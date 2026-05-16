@@ -251,6 +251,46 @@
 	base_type = CTYPE_ANCIENT
 	plural_name = "psila"
 
+/// A blessed coin of gratitude — Necra's currency. Produced by burial rites and portal offerings.
+/// Accepted by the Carriageman in lieu of the Toll. Stacks up to 200.
+/obj/item/roguecoin/necra_token
+	name = "token of gratitude"
+	desc = "A worn zenny, its surface tarnished and faintly luminous. Blessed by Necra's rites — proof that a soul was laid to rest with grace and reverence."
+	icon_state = "a1"
+	sellprice = 0
+	base_type = "t"  // unique type — does not merge with psilen ("a") or any other coin
+	plural_name = "tokens of gratitude"
+	resistance_flags = FIRE_PROOF
+	light_system = STATIC_LIGHT
+	light_power = 1
+	light_outer_range = 1
+	light_color = "#d8f4ff"
+
+/obj/item/roguecoin/necra_token/update_icon()
+	..()
+	// Remap "t" prefix to "a" prefix to reuse psilen (ancient) icon states
+	icon_state = "a" + copytext(icon_state, 2)
+
+/obj/item/roguecoin/necra_token/merge(obj/item/roguecoin/G, mob/user)
+	if(!G)
+		return
+	if(G.base_type != base_type)
+		return
+	var/amt_to_merge = min(G.quantity, 200 - quantity)
+	if(amt_to_merge <= 0)
+		return
+	set_quantity(quantity + amt_to_merge)
+	last_merged_heads_tails = G.heads_tails
+	G.set_quantity(G.quantity - amt_to_merge)
+	rigged_outcome = 0
+	G.rigged_outcome = 0
+	if(user && G.quantity <= 0)
+		user.doUnEquip(G)
+		user.update_inv_hands()
+	if(G.quantity <= 0)
+		qdel(G)
+	playsound(loc, 'sound/foley/coins1.ogg', 100, TRUE, -2)
+
 /obj/item/roguecoin/inqcoin/pile/Initialize(mapload)
 	. = ..()
 	set_quantity(rand(4,19))
