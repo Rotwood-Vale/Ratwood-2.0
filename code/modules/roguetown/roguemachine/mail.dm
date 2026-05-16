@@ -727,16 +727,19 @@
 
 /obj/structure/roguemachine/mail/proc/get_delivery_addresses()
 	var/list/addresses = list()
-	if(mailtag && trim(mailtag))
-		addresses += trim(mailtag)
-	if(mailtags?.len)
-		for(var/alias in mailtags)
-			if(!istext(alias))
-				continue
-			var/clean_alias = trim(alias)
-			if(!clean_alias || clean_alias in addresses)
-				continue
-			addresses += clean_alias
+	if(mailtag)
+		var/primary_address = trim("[mailtag]")
+		if(length(primary_address))
+			addresses += primary_address
+	if(mailtags)
+		var/index = 1
+		while(index <= mailtags.len)
+			var/address_tag = mailtags[index]
+			if(address_tag)
+				var/clean_alias = trim("[address_tag]")
+				if(length(clean_alias))
+					addresses += clean_alias
+			index++
 	return addresses
 
 /obj/structure/roguemachine/mail/proc/get_directory_addresses()
@@ -812,7 +815,7 @@
 		for(var/pack in sortNames(items, order=0))
 			var/datum/inqports/PA = pack
 			var/name = uppertext(PA.name)
-			if(inqonly && !HAS_TRAIT(user, TRAIT_PURITAN) || (PA.maximum && !PA.remaining) || inqcoins < PA.marquescost)
+			if((inqonly && !HAS_TRAIT(user, TRAIT_PURITAN)) || (PA.maximum && !PA.remaining) || (inqcoins < PA.marquescost))
 				contents += "[name]<BR>"
 			else
 				contents += "<a href='?src=[REF(src)];buy=[PA.type]'>[name]</a><BR>"
