@@ -4531,7 +4531,7 @@
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/structure/roguemachine/mail{
 	mailtag = "Kingsfield - Ferentian Diplomatic Mission";
-	mailtags = "list("Aavar", "Etrusca", "Grenzelhoft", "Gronn", "Hammerhold", "Kazengun", "Old Naledi", "Otava", "Underdark", "North Zybantium", "West Zybantium", "East Zybantium", "Grenzelhoftian Holy See", "Otavan Inquisitorial Council");"
+		mailtags = list("Aavar", "Etrusca", "Grenzelhoft", "Gronn", "Hammerhold", "Kazengun", "Old Naledi", "Otava", "Underdark", "North Zybantium", "West Zybantium", "East Zybantium", "Grenzelhoftian Holy See", "Otavan Inquisitorial Council")
 	},
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town{
