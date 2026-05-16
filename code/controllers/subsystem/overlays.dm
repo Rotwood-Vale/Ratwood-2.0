@@ -41,28 +41,35 @@ SUBSYSTEM_DEF(overlays)
 
 /atom/proc/build_appearance_list(build_overlays)
 	if(!islist(build_overlays))
+		if(!build_overlays)
+			return list()
 		build_overlays = list(build_overlays)
 
 	for(var/overlay in build_overlays)
-		if(!overlay)
-			build_overlays -= overlay
-			continue
-		if(istext(overlay))
-			// This is too expensive to run normally but running it during CI is a good test
-			// if(PERFORM_ALL_TESTS(focus_only/invalid_overlays))
-			// 	if(!icon_exists(icon, overlay))
-			// 		var/icon_file = "[icon]" || "Unknown Generated Icon"
-			// 		stack_trace("Invalid overlay: Icon object '[icon_file]' [REF(icon)] used in '[src]' [type] is missing icon state [overlay].")
-			// 		continue
-			build_overlays -= overlay
-			build_overlays += iconstate2appearance(icon, overlay)
-		else if(isicon(overlay))
-			build_overlays -= overlay
-			build_overlays += icon2appearance(overlay)
+		if(!overlay || istext(overlay) || isicon(overlay))
+			var/list/normalized_overlays = list()
+			for(var/raw_overlay in build_overlays)
+				if(!raw_overlay)
+					continue
+				if(istext(raw_overlay))
+					// This is too expensive to run normally but running it during CI is a good test
+					// if(PERFORM_ALL_TESTS(focus_only/invalid_overlays))
+					// 	if(!icon_exists(icon, raw_overlay))
+					// 		var/icon_file = "[icon]" || "Unknown Generated Icon"
+					// 		stack_trace("Invalid overlay: Icon object '[icon_file]' [REF(icon)] used in '[src]' [type] is missing icon state [raw_overlay].")
+					// 		continue
+					normalized_overlays += iconstate2appearance(icon, raw_overlay)
+				else if(isicon(raw_overlay))
+					normalized_overlays += icon2appearance(raw_overlay)
+				else
+					normalized_overlays += raw_overlay
+			return normalized_overlays
 
 	return build_overlays
 
 /atom/proc/cut_overlays()
+	if(!length(overlays))
+		return
 	STAT_START_STOPWATCH
 	overlays = null
 	POST_OVERLAY_CHANGE(src)
@@ -72,8 +79,16 @@ SUBSYSTEM_DEF(overlays)
 /atom/proc/cut_overlay(list/remove_overlays)
 	if(!overlays)
 		return
+	var/list/normalized_remove = build_appearance_list(remove_overlays)
+	if(!length(normalized_remove))
+		return
 	STAT_START_STOPWATCH
-	overlays -= build_appearance_list(remove_overlays)
+	var/starting_overlay_len = length(overlays)
+	overlays -= normalized_remove
+	if(length(overlays) == starting_overlay_len)
+		STAT_STOP_STOPWATCH
+		STAT_LOG_ENTRY(SSoverlays.stats, type)
+		return
 	POST_OVERLAY_CHANGE(src)
 	STAT_STOP_STOPWATCH
 	STAT_LOG_ENTRY(SSoverlays.stats, type)
@@ -81,8 +96,16 @@ SUBSYSTEM_DEF(overlays)
 /atom/proc/add_overlay(list/add_overlays)
 	if(!overlays)
 		return
+	var/list/normalized_add = build_appearance_list(add_overlays)
+	if(!length(normalized_add))
+		return
 	STAT_START_STOPWATCH
-	overlays += build_appearance_list(add_overlays)
+	var/starting_overlay_len = length(overlays)
+	overlays += normalized_add
+	if(length(overlays) == starting_overlay_len)
+		STAT_STOP_STOPWATCH
+		STAT_LOG_ENTRY(SSoverlays.stats, type)
+		return
 	POST_OVERLAY_CHANGE(src)
 	STAT_STOP_STOPWATCH
 	STAT_LOG_ENTRY(SSoverlays.stats, type)

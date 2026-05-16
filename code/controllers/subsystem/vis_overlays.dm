@@ -15,6 +15,8 @@ SUBSYSTEM_DEF(vis_overlays)
 
 /datum/controller/subsystem/vis_overlays/fire(resumed = FALSE)
 	if(!resumed)
+		if(!vis_overlay_cache.len)
+			return
 		currentrun = vis_overlay_cache.Copy()
 	var/list/current_run = currentrun
 
@@ -83,13 +85,15 @@ SUBSYSTEM_DEF(vis_overlays)
 /datum/controller/subsystem/vis_overlays/proc/rotate_vis_overlay(atom/thing, old_dir, new_dir)
 	if(old_dir == new_dir)
 		return
+	if(!length(thing.managed_vis_overlays))
+		return
 	var/rotation = dir2angle(old_dir) - dir2angle(new_dir)
 	var/list/overlays_to_remove = list()
-	for(var/i in thing.managed_vis_overlays - unique_vis_overlays)
-		var/obj/effect/overlay/vis/overlay = i
+	for(var/obj/effect/overlay/vis/overlay as anything in thing.managed_vis_overlays)
+		if(overlay.cache_expiration == -1)
+			overlay.dir = turn(overlay.dir, rotation)
+			continue
 		add_vis_overlay(thing, overlay.icon, overlay.icon_state, overlay.layer, overlay.plane, turn(overlay.dir, rotation), overlay.alpha, overlay.appearance_flags)
 		overlays_to_remove += overlay
-	for(var/i in thing.managed_vis_overlays & unique_vis_overlays)
-		var/obj/effect/overlay/vis/overlay = i
-		overlay.dir = turn(overlay.dir, rotation)
-	remove_vis_overlay(thing, overlays_to_remove)
+	if(length(overlays_to_remove))
+		remove_vis_overlay(thing, overlays_to_remove)
