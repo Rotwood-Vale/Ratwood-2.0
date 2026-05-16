@@ -255,8 +255,8 @@
 
 	// Overlay state caching: only update overlays if the overlay would actually change
 	if(hud)
-		var/last_overlay = hud.object_overlay
-		var/last_overlay_curloc = hud.overlay_curloc
+		var/image/last_overlay = hud.object_overlay
+		var/atom/movable/screen/last_overlay_curloc = hud.overlay_curloc
 		var/should_update = TRUE
 		if(last_overlay && last_overlay.icon == item_overlay.icon && last_overlay.icon_state == item_overlay.icon_state && last_overlay.color == item_overlay.color && last_overlay.alpha == item_overlay.alpha && last_overlay_curloc == src)
 			should_update = FALSE
