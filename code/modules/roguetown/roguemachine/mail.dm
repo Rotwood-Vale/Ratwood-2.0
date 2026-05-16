@@ -27,6 +27,7 @@
 	var/list/inq_category = list("✤ RELIQUARY ✤")
 	var/ournum
 	var/mailtag
+	var/list/mailtags
 	var/obfuscated = FALSE
 
 /obj/structure/roguemachine/mail/Initialize(mapload)
@@ -91,7 +92,7 @@
 	if(inqcoins)
 		to_chat(user, span_warning("The machine doesn't respond."))
 		return
-	var/send2place = input(user, "Where to? (Person or #number)", "ROGUETOWN", null)
+	var/send2place = input(user, "Where to? (Person, address or #number)", "ROGUETOWN", null)
 	if(!send2place)
 		return
 	var/sentfrom = input(user, "Who is this letter from?", "ROGUETOWN", null)
@@ -134,6 +135,20 @@
 		else
 			to_chat(user, span_warning("Failed to send it. Bad number?"))
 	else
+		var/obj/structure/roguemachine/mail/addressed_machine = find_hermes_by_address(send2place)
+		if(addressed_machine)
+			P.mailer = sentfrom
+			P.mailedto = send2place
+			P.update_icon()
+			P.forceMove(addressed_machine.loc)
+			addressed_machine.say("New mail!")
+			playsound(addressed_machine, 'sound/misc/hiss.ogg', 100, FALSE, -1)
+			visible_message(span_warning("[user] sends something."))
+			playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
+			SStreasury.give_money_treasury(coin_loaded, "Mail")
+			coin_loaded = FALSE
+			update_icon()
+			return
 		if(!send2place)
 			return
 		if(SSroguemachine.hermailermaster)
@@ -488,7 +503,7 @@
 			to_chat(user, span_warning("The machine doesn't respond."))
 			return
 		if(alert(user, "Send Mail?",,"YES","NO") == "YES")
-			var/send2place = input(user, "Where to? (Person or #number)", "ROGUETOWN", null)
+			var/send2place = input(user, "Where to? (Person, address or #number)", "ROGUETOWN", null)
 			var/sentfrom = input(user, "Who is this from? (Leave blank to send anonymously)", "ROGUETOWN", null)
 			if(!sentfrom)
 				sentfrom = "Anonymous"
@@ -513,6 +528,17 @@
 				else
 					to_chat(user, span_warning("Cannot send it. Bad number?"))
 			else
+				var/obj/structure/roguemachine/mail/addressed_machine = find_hermes_by_address(send2place)
+				if(addressed_machine)
+					P.mailer = sentfrom
+					P.mailedto = send2place
+					P.update_icon()
+					P.forceMove(addressed_machine.loc)
+					addressed_machine.say("New mail!")
+					playsound(addressed_machine, 'sound/misc/hiss.ogg', 100, FALSE, -1)
+					visible_message(span_warning("[user] sends something."))
+					playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
+					return
 				if(!send2place)
 					return
 				var/mob/living/carbon/human/mailrecipient = null
@@ -619,10 +645,8 @@
 	for(var/obj/structure/roguemachine/mail/X in SSroguemachine.hermailers)
 		if(X.obfuscated)
 			continue
-		if(X.mailtag)
-			dat += "#[X.ournum] [X.mailtag]<br>"
-		else
-			dat += "#[X.ournum] [capitalize(get_area_name(X))]<br>"
+		for(var/address in X.get_directory_addresses())
+			dat += "#[X.ournum] [address]<br>"
 
 	var/datum/browser/popup = new(user, "hermes_directory", "<center>HERMES DIRECTORY</center>", 387, 420)
 	popup.set_content(dat)
@@ -700,6 +724,38 @@
 		if(I.mailedto == name)
 			return TRUE
 	return FALSE
+
+/obj/structure/roguemachine/mail/proc/get_delivery_addresses()
+	var/list/addresses = list()
+	if(mailtag && trim(mailtag))
+		addresses += trim(mailtag)
+	if(mailtags?.len)
+		for(var/alias in mailtags)
+			if(!istext(alias))
+				continue
+			var/clean_alias = trim(alias)
+			if(!clean_alias || clean_alias in addresses)
+				continue
+			addresses += clean_alias
+	return addresses
+
+/obj/structure/roguemachine/mail/proc/get_directory_addresses()
+	var/list/addresses = get_delivery_addresses()
+	if(!addresses.len)
+		addresses += capitalize(get_area_name(src))
+	return addresses
+
+/proc/find_hermes_by_address(address)
+	if(!address)
+		return null
+	var/target = lowertext(trim(address))
+	if(!target)
+		return null
+	for(var/obj/structure/roguemachine/mail/X in SSroguemachine.hermailers)
+		for(var/mail_address in X.get_delivery_addresses())
+			if(lowertext(trim(mail_address)) == target)
+				return X
+	return null
 
 
 /*
