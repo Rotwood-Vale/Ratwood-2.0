@@ -27,18 +27,24 @@
 	var/list/inq_category = list("✤ RELIQUARY ✤")
 	var/ournum
 	var/mailtag
-	var/list/mailtags
-	var/obfuscated = FALSE
-
-/obj/structure/roguemachine/mail/Initialize(mapload)
-	. = ..()
-	SSroguemachine.hermailers += src
-	ournum = SSroguemachine.hermailers.len
-	name = "[name] #[ournum]"
-	update_icon()
-
-/obj/structure/roguemachine/mail/Destroy()
+	var/mailtags
+		collect_mailtags("[mailtags]", addresses)
 	set_light(0)
+
+/obj/structure/roguemachine/mail/proc/collect_mailtags(text, list/addresses)
+	if(!text)
+		return
+	var/clean_text = trim(text)
+	if(!clean_text)
+		return
+	var/comma = findtext(clean_text, ",")
+	if(comma)
+		var/first_tag = trim(copytext(clean_text, 1, comma))
+		if(length(first_tag))
+			addresses += first_tag
+		collect_mailtags(copytext(clean_text, comma + 1), addresses)
+	else
+		addresses += clean_text
 	SSroguemachine.hermailers -= src
 	return ..()
 
@@ -728,18 +734,21 @@
 /obj/structure/roguemachine/mail/proc/get_delivery_addresses()
 	var/list/addresses = list()
 	if(mailtag)
-		var/primary_address = trim("[mailtag]")
+		var/primary_address = mailtag
 		if(length(primary_address))
 			addresses += primary_address
 	if(mailtags)
-		var/index = 1
-		while(index <= mailtags.len)
-			var/address_tag = mailtags[index]
-			if(address_tag)
-				var/clean_alias = trim("[address_tag]")
-				if(length(clean_alias))
-					addresses += clean_alias
-			index++
+		var/mailtags_text = mailtags
+		var/start = 1
+		while(start <= length(mailtags_text))
+			var/comma = findtext(mailtags_text, ",", start)
+			var/address_tag = comma ? copytext(mailtags_text, start, comma) : copytext(mailtags_text, start)
+			var/clean_alias = trim(address_tag)
+			if(length(clean_alias))
+				addresses += clean_alias
+			if(!comma)
+				break
+			start = comma + 1
 	return addresses
 
 /obj/structure/roguemachine/mail/proc/get_directory_addresses()
