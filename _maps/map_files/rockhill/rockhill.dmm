@@ -87703,7 +87703,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors/town/church)
 "uMG" = (
-/obj/item/rogueweapon/sword/saber/iron,
+/obj/item/rogueweapon/sword/sabre/iron,
 /turf/open/water/swamp/deep,
 /area/rogue/under/cavewet)
 "uMH" = (
