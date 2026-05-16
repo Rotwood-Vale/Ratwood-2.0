@@ -23,6 +23,7 @@
 		for(var/l=1,l<=shoplength,l++)
 			var/pathi = PA.contains[l]
 			new pathi(get_turf(M))
+		playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 		return
 	if(href_list["change"])
 		if(budget > 0)
