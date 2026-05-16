@@ -968,7 +968,6 @@
 #include "code\game\area\random_dungeons\fishman_dungeon.dm"
 #include "code\game\area\random_dungeons\gethsmane.dm"
 #include "code\game\area\random_dungeons\his_vault.dm"
-#include "code\game\area\random_dungeons\sunkenchurch.dm"
 #include "code\game\area\random_dungeons\wretch_areas.dm"
 #include "code\game\area\town\town.dm"
 #include "code\game\area\town\undertown.dm"
