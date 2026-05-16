@@ -239,31 +239,34 @@
 
 /atom/movable/screen/inventory/proc/add_overlays()
 	var/mob/user = hud?.mymob
-
-	cut_overlays()
-
 	if(!user || !slot_id)
 		return
 
 	var/obj/item/holding = user.get_active_held_item()
-
 	if(!holding || user.get_item_by_slot(slot_id))
 		return
 
 	var/image/item_overlay = image(holding)
 	item_overlay.alpha = 92
-
 	if(!user.can_equip(holding, slot_id, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
 		item_overlay.color = "#fd0279"
 	else
 		item_overlay.color = "#c5c5c5"
 
+	// Overlay state caching: only update overlays if the overlay would actually change
 	if(hud)
-		if(hud.object_overlay)
-			if(hud.overlay_curloc != src)
-				hud.overlay_curloc.cut_overlay(hud.object_overlay)
+		var/last_overlay = hud.object_overlay
+		var/last_overlay_curloc = hud.overlay_curloc
+		var/should_update = TRUE
+		if(last_overlay && last_overlay.icon == item_overlay.icon && last_overlay.icon_state == item_overlay.icon_state && last_overlay.color == item_overlay.color && last_overlay.alpha == item_overlay.alpha && last_overlay_curloc == src)
+			should_update = FALSE
+		if(!should_update)
+			return
+		cut_overlays()
+		if(last_overlay && last_overlay_curloc && last_overlay_curloc != src)
+			last_overlay_curloc.cut_overlay(last_overlay)
 		hud.overlay_curloc = src
-		cut_overlay(hud.object_overlay)
+		cut_overlay(last_overlay)
 		hud.object_overlay = item_overlay
 		add_overlay(hud.object_overlay)
 
