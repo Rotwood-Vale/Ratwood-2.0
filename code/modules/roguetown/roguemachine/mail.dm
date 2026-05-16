@@ -28,8 +28,19 @@
 	var/ournum
 	var/mailtag
 	var/mailtags
-		collect_mailtags("[mailtags]", addresses)
+	var/obfuscated = FALSE
+
+/obj/structure/roguemachine/mail/Initialize(mapload)
+	. = ..()
+	SSroguemachine.hermailers += src
+	ournum = SSroguemachine.hermailers.len
+	name = "[name] #[ournum]"
+	update_icon()
+
+/obj/structure/roguemachine/mail/Destroy()
 	set_light(0)
+	SSroguemachine.hermailers -= src
+	return ..()
 
 /obj/structure/roguemachine/mail/proc/collect_mailtags(text, list/addresses)
 	if(!text)
@@ -45,8 +56,6 @@
 		collect_mailtags(copytext(clean_text, comma + 1), addresses)
 	else
 		addresses += clean_text
-	SSroguemachine.hermailers -= src
-	return ..()
 
 /obj/structure/roguemachine/mail/attack_hand(mob/user)
 	if(ishuman(user) && GLOB.carebox.try_retrieve_carebox(user, src))
@@ -885,3 +894,4 @@
 /*
 	INQUISITION INTERACTIONS - END
 */
+ 
