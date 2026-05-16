@@ -12,6 +12,14 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 
 /obj/structure/deaths_door_shrine/attack_hand(mob/living/user)
 	to_chat(user, span_notice("You reach for the glowing portal..."))
+	if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
+		// Necra's chosen move through her realm's portal without hesitation
+		if(user.mob_biotypes & MOB_UNDEAD)
+			user.visible_message(span_danger("The Undermaiden churns the undead!"))
+			explosion(get_turf(user), light_impact_range = 1, flame_range = 1, smoke = FALSE)
+			return
+		exit_deaths_door(user, user)
+		return
 	if(!do_after(user, 2 SECONDS, src))
 		return
 
@@ -156,19 +164,50 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 	enter_portal(user)
 
 /obj/structure/deaths_door_portal/MouseDrop_T(atom/movable/O, mob/living/user)
+	if(user.incapacitated())
+		return
+	if(!Adjacent(user) || !user.Adjacent(O))
+		return
+
+	// Necrans can drag burial shrouds into the portal
+	if(istype(O, /obj/structure/closet/burial_shroud))
+		if(!HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
+			to_chat(user, span_warning("You cannot draw this through the portal."))
+			return
+		playsound(get_turf(src), 'sound/misc/carriage2.ogg', 50, TRUE, -2, ignore_walls = TRUE)
+		if(!do_after(user, 2 SECONDS, src))
+			return
+		if(destination && !QDELETED(O))
+			O.forceMove(destination)
+			user.visible_message(span_warning("[user] guides \the [O] through Death's Door!"))
+		return
+
 	if(!istype(O, /mob/living))
 		return
 	var/mob/living/M = O
 
-	if(user.incapacitated())
+	var/is_necran = HAS_TRAIT(user, TRAIT_SOUL_EXAMINE)
+	var/is_undead = (M.mob_biotypes & MOB_UNDEAD)
+	var/is_dead = (istype(M, /mob/living/carbon) && M.stat == DEAD)
+	var/has_player = (M.mind?.key != null)
+
+	// Non-Necrans explode undead they try to drag in
+	if(is_undead && !is_necran)
+		to_chat(user, span_danger("The Undermaiden churns the undead!"))
+		explosion(get_turf(M), light_impact_range = 1, flame_range = 1, smoke = FALSE)
 		return
-	if(!Adjacent(user) || !user.Adjacent(M))
+
+	// Non-Necrans cannot drag dead mobs
+	if(is_dead && !is_necran)
+		to_chat(user, span_warning("You cannot drag the dead through this portal."))
 		return
+
 	playsound(get_turf(src), 'sound/misc/carriage2.ogg', 50, TRUE, -2, ignore_walls = TRUE)
 	if(!do_after_mob(user, M, 2 SECONDS))
 		return
 
-	if(M.mob_biotypes & MOB_UNDEAD)
+	// Player corpses with ckey pass through freely; living undead still explode for non-Necrans (already handled above)
+	if(is_undead && !is_necran)
 		to_chat(user, span_danger("The Undermaiden churns the undead!"))
 		explosion(get_turf(M), light_impact_range = 1, flame_range = 1, smoke = FALSE)
 		return
@@ -184,6 +223,29 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		return
 	playsound(get_turf(src), 'sound/misc/portalenter.ogg', 50, TRUE, -2, ignore_walls = TRUE)
 	target.forceMove(destination)
+
+/// Bones, skulls, and severed heads fed to the portal are accepted as offerings and yield psilen.
+/obj/structure/deaths_door_portal/attackby(obj/item/I, mob/living/user, params)
+	if(!HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
+		return ..()
+	// Bones
+	if(istype(I, /obj/item/natural/bone))
+		to_chat(user, span_notice("The portal hungrily accepts the offering."))
+		var/obj/item/roguecoin/aalloy/coin = new(get_turf(user))
+		coin.pixel_x = rand(-6, 6)
+		coin.pixel_y = rand(-6, 6)
+		qdel(I)
+		return
+	// Severed heads and skull bodyparts
+	if(istype(I, /obj/item/bodypart/head))
+		to_chat(user, span_notice("The portal consumes the fallen's head in offering."))
+		for(var/n in 1 to rand(1, 2))
+			var/obj/item/roguecoin/aalloy/coin = new(get_turf(user))
+			coin.pixel_x = rand(-6, 6)
+			coin.pixel_y = rand(-6, 6)
+		qdel(I)
+		return
+	return ..()
 
 GLOBAL_VAR_INIT(underworld_strands, 0)
 /obj/effect/landmark/underworldstrands

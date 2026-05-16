@@ -848,7 +848,7 @@
 	return ..()
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
-	var/carrydelay = 50 //if you have latex you are faster at grabbing
+	var/carrydelay = HAS_TRAIT(src, TRAIT_SOUL_EXAMINE) ? 20 : 50 // Necra acolytes hoist the dead with practiced ease
 
 	var/backnotshoulder = FALSE
 	if(r_grab && l_grab)

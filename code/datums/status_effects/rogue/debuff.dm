@@ -544,19 +544,32 @@
 
 /datum/status_effect/debuff/necrandeathdoorwilloss/on_apply()
 	. = ..()
-	owner.add_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
+	owner.add_movespeed_modifier("NECRAN_REALM_SPEED", multiplicative_slowdown = -4)	// speed boost in Necra's realm
+	RegisterSignal(owner, COMSIG_LIVING_UPDATE_TURF_MOVESPEED, PROC_REF(on_necran_realm_turf_movespeed))
 	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
 	ADD_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/debuff/necrandeathdoorwilloss/on_remove()
 	. = ..()
-	owner.remove_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING)
+	owner.remove_movespeed_modifier("NECRAN_REALM_SPEED")
+	UnregisterSignal(owner, COMSIG_LIVING_UPDATE_TURF_MOVESPEED)
+	owner.update_turf_movespeed(get_turf(owner))	// restore terrain slowdown now that staff-bypass is gone
 	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
 	REMOVE_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
 
+/// If the Necran is holding any walking-stick type item, negate terrain slowdown in the realm.
+/datum/status_effect/debuff/necrandeathdoorwilloss/proc/on_necran_realm_turf_movespeed()
+	SIGNAL_HANDLER
+	var/obj/item/active = owner.get_active_held_item()
+	if(active?.walking_stick)
+		return TURF_MOVESPEED_BLOCKED
+	var/obj/item/inactive = owner.get_inactive_held_item()
+	if(inactive?.walking_stick)
+		return TURF_MOVESPEED_BLOCKED
+
 /datum/status_effect/debuff/necrandeathdoorwilloss/process()
 	.=..()
-	owner.energy_add(-1)	//being in death's edge drains energy from people
+	owner.energy_add(-0.2)	//being in death's edge drains much less energy from Necra's chosen
 	var/area/rogue/our_area = get_area(owner)
 	if(isnull(our_area) || !(our_area.necra_area))
 		owner.remove_status_effect(src)

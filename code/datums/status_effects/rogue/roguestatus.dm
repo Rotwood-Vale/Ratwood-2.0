@@ -44,3 +44,16 @@
 	name = "Max Peace"
 	desc = ""
 	icon_state = "stressvg"
+
+/// Short-duration cleanse blessing applied by the Necran censer
+/datum/status_effect/censer_blessed
+	id = "censer_blessed"
+	duration = 90 SECONDS
+	effectedstats = list(STATKEY_LCK = 1)
+	alert_type = /atom/movable/screen/alert/status_effect/censer_blessed
+	status_type = STATUS_EFFECT_REPLACE
+
+/atom/movable/screen/alert/status_effect/censer_blessed
+	name = "Cleansed"
+	desc = "The Undermaiden's incense has purified you. You feel briefly at peace."
+	icon_state = "stressg"

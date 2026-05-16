@@ -244,6 +244,7 @@
 		ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_SOUL_EXAMINE, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
+		H.change_stat(STATKEY_STR, 1)	// Necra acolytes carry the dead; their bodies harden to the labor.
 		H.adjust_skillrank_up_to(/datum/skill/combat/staves, 3, TRUE)//For the stave. Beat back the dead. +1 from base, like Ravox.
 		H.adjust_skillrank_up_to(/datum/skill/combat/maces, 2, TRUE)//Or the shovel, I guess... loser...
 		H.cmode_music = 'sound/music/cmode/church/combat_necra.ogg'

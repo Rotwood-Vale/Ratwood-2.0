@@ -177,6 +177,11 @@
 			return
 
 		if(istype(T, /turf/open/floor/rogue/grass) || istype(T, /turf/open/floor/rogue/grassred) || istype(T, /turf/open/floor/rogue/grassyel) || istype(T, /turf/open/floor/rogue/grasscold) || istype(T, /turf/open/floor/rogue/grasspurple) || istype(T, /turf/open/floor/rogue/grassgrey))
+			if(HAS_TRAIT(user, TRAIT_GRAVEROBBER) && istype(user.rmb_intent, /datum/rmb_intent/strong))
+				to_chat(user, span_notice("You carve through the grass, exposing the earth beneath."))
+				T.ChangeTurf(/turf/open/floor/rogue/dirt, flags = CHANGETURF_INHERIT_AIR)
+				playsound(T, 'sound/items/dig_shovel.ogg', 100, TRUE)
+				return
 			to_chat(user, span_warning("There is grass in the way."))
 			return
 
@@ -417,6 +422,8 @@
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "shroud_folded"
 	w_class = WEIGHT_CLASS_SMALL
+	grid_width = 32
+	grid_height = 64
 	var/unfoldedbag_path = /obj/structure/closet/burial_shroud
 
 /obj/item/burial_shroud/attack_self(mob/user)
@@ -488,6 +495,23 @@
 		var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
 		usr.put_in_hands(B)
 		qdel(src)
+
+/obj/structure/closet/burial_shroud/verb/fold_sheet()
+	set name = "Fold Sheet"
+	set category = "Object"
+	set src in view(1)
+	var/mob/user = usr
+	if(!ishuman(user))
+		return
+	if(!Adjacent(user))
+		return
+	if(contents.len)
+		to_chat(user, "<span class='warning'>There are too many things inside [src] to fold it.</span>")
+		return
+	user.visible_message("<span class='notice'>[user] folds up [src].</span>")
+	var/obj/item/burial_shroud/B = foldedbag_instance || new foldedbag_path
+	user.put_in_hands(B)
+	qdel(src)
 
 /obj/item/bodybag
 	name = "body bag"
@@ -661,14 +685,14 @@
 	As with standard Necran practice in the many sects, it has been anointed in censer soot, permitting it to act as a focus."
 	force = 16//Iron quarterstaff level.
 	force_wielded = 22//See above.
-	possible_item_intents = list(SPEAR_BASH, /datum/intent/special/magicarc)//One hand lets you arc divine blast and such.
-	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff,
-	/datum/intent/axe/chop/stone, /datum/intent/shovelscoop)//Two hands to let you shovel and chop.
+	possible_item_intents = list(/datum/intent/shovelscoop, SPEAR_BASH, /datum/intent/special/magicarc)//One hand lets you arc divine blast and shovel.
+	gripped_intents = list(/datum/intent/shovelscoop, /datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff,
+	/datum/intent/rend, /datum/intent/shovelscoop)//Two hands to let you shovel, rend, and thrust.
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "mortstaff"//Temp sprite.
 	associated_skill = /datum/skill/combat/staves
-	wdefense = 3
-	wdefense_wbonus = 3//Bless this, m'lord.
+	wdefense = 5
+	wdefense_wbonus = 6//Bless this, m'lord.
 	max_integrity = 200
 	resistance_flags = FLAMMABLE
 	sharpness = IS_BLUNT

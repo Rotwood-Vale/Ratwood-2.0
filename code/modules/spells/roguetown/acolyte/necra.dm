@@ -161,7 +161,8 @@
 /obj/effect/proc_holder/spell/invoked/speakwithdead
 	name = "Speak with Dead"
 	desc = "Call upon the Undermaiden to let your words reach a departed soul, and hear their whisper in return."
-	range = 5
+	max_targets = 0
+	cast_without_targets = TRUE
 	overlay_state = "speakwithdead"
 	releasedrain = 30
 	recharge_time = 30 SECONDS
@@ -174,63 +175,73 @@
 	devotion_cost = 30
 
 /obj/effect/proc_holder/spell/invoked/speakwithdead/cast(list/targets, mob/user = usr)
-	if(!targets || !length(targets))
-		to_chat(user, "<font color='red'>To perform a miracle, you are supposed to stay next to their fallen body. If there no soul in the body, there will be no responce.</font>")
-		return FALSE
+	. = ..()
+	// Build list of souls who can be spoken with
+	var/list/souls = list()
+	for(var/mob/living/C in GLOB.dead_mob_list)
+		if(!C.mind)
+			continue
+		var/mob/dead/observer/ghost = null
+		for(var/mob/dead/observer/G in world)
+			if(G.mind == C.mind)
+				ghost = G
+				break
+		if(!ghost)
+			continue	// no active ghost, cannot speak
+		var/area/soul_area = get_area(C)
+		var/area_str = soul_area ? "([soul_area.name]) " : ""
+		souls["[area_str][C.real_name]"] = ghost
 
-	var/mob/living/target = targets[1]
+	if(!length(souls))
+		to_chat(user, span_warning("No souls answer the Undermaiden's call at this time."))
+		revert_cast()
+		return .
 
-	if(isliving(target) && target.stat == DEAD)
-		return speakwithdead(user, target)
-	else
-		to_chat(user, "<font color='red'>They are not dead. Yet.</font>")
-		return FALSE
+	var/selected = tgui_input_list(user, "Whose soul shall I call forth?", "Speak with the Dead", souls)
 
-/proc/speakwithdead(mob/user, mob/living/target)
-	if(target.stat == DEAD && target.mind)
-		var/message = input(user, "You speak to the spirit of [target.real_name]. What will you say?", "Speak with the Dead") as text|null
+	if(!selected || QDELETED(src) || QDELETED(user))
+		revert_cast()
+		return .
 
-		if(message)
-			if(target.mind.current)
-				to_chat(target.mind.current, "<span style='color:gold'><b>[user.real_name]</b> says: \"[message]\"</span>")
+	var/mob/dead/observer/ghost = souls[selected]
+	if(!ghost || QDELETED(ghost))
+		to_chat(user, span_warning("The soul has slipped beyond reach."))
+		return .
 
-			var/mob/dead/observer/ghost = null
+	// Prompt the ghost for consent
+	var/consent = alert(ghost, "[user.real_name], a servant of the Undermaiden, calls upon you. Will you speak?", "Speak with the Living", "Yes", "No")
+	if(consent != "Yes")
+		to_chat(user, span_warning("The soul does not wish to speak."))
+		return .
 
-			for (var/mob/dead/observer/G in world)
-				if (G.mind == target.mind)
-					ghost = G
-					break
+	if(QDELETED(ghost) || QDELETED(user))
+		return .
 
-			if (!ghost && target.mind && target.mind.key)
-				var/expected_ckey = ckey(target.mind.key)
-				for (var/mob/dead/observer/G2 in world)
-					if (G2.client && ckey(G2.key) == expected_ckey)
-						ghost = G2
-						break
+	// Save ghost state, make them visible and move them to the Necran
+	var/saved_invisibility = ghost.invisibility
+	var/turf/saved_turf = get_turf(ghost)
+	ghost.set_invisibility(0)
+	ghost.forceMove(get_turf(user))
+	ghost.status_flags |= GODMODE
 
-			if (ghost && ghost != target.mind.current)
-				to_chat(ghost, "<span style='color:gold'><b>[user.real_name]</b> says: \"[message]\"</span>")
+	to_chat(user, span_cultsmall("A soul stirs before you. Speak aloud — they will hear you and can respond in kind. The connection lasts for one minute."))
+	to_chat(ghost, span_cultsmall("You have been summoned before a servant of the Undermaiden. Speak aloud. The connection lasts for one minute."))
+	playsound(get_turf(user), 'sound/vo/mobs/ghost/whisper (3).ogg', 60, TRUE)
 
-			to_chat(user, "<span style='color:gold'>You say to the spirit: \"[message]\"</span>")
+	// 60 second communication window — restore ghost after
+	addtimer(CALLBACK(src, PROC_REF(end_speakwithdead_session), ghost, saved_invisibility, saved_turf, user), 60 SECONDS, TIMER_STOPPABLE)
 
-			var/mob/replier = null
-			if (ghost && ghost.client)
-				replier = ghost
-			else if (target.mind.current && target.mind.current.client)
-				replier = target.mind.current
-
-			if(replier)
-				var/spirit_message = input(replier, "An acolyte of Necra named [user.real_name] seeks your attention. What is your reply?", "Spirit's Response") as text|null
-				if(spirit_message)
-					to_chat(user, "<span style='color:silver'><i>The spirit whispers:</i> \"[spirit_message]\"</span>")
-				else
-					to_chat(user, "<span style='color:#aaaaaa'><i>The spirit chooses to remain silent...</i></span>")
-			else
-				to_chat(user, "<span style='color:#aaaaaa'><i>The spirit cannot answer right now...</i></span>")
-		else
-			to_chat(user, "<span style='color:#aaaaaa'><i>You choose not to speak.</i></span>")
-	else
-		to_chat(user, "<span style='color:#aaaaaa'><i>No spirit answers your call.</i></span>")
+/// Ends a Speak with Dead session: restores ghost to original state.
+/obj/effect/proc_holder/spell/invoked/speakwithdead/proc/end_speakwithdead_session(mob/dead/observer/ghost, saved_invisibility, turf/saved_turf, mob/living/user)
+	if(QDELETED(ghost))
+		return
+	ghost.status_flags &= ~GODMODE
+	ghost.set_invisibility(saved_invisibility)
+	if(saved_turf && !QDELETED(saved_turf))
+		ghost.forceMove(saved_turf)
+	to_chat(ghost, span_cultsmall("The Undermaiden's thread grows thin. You are pulled back."))
+	if(!QDELETED(user))
+		to_chat(user, span_cultsmall("The soul's presence fades. The connection has ended."))
 
 // BODY INTO COIN
 
@@ -393,10 +404,28 @@
 	invocation_type = "whisper"
 	recharge_time = 15 SECONDS
 	devotion_cost = 35
+	/// Weakref to the currently tracked corpse for periodic updates.
+	var/datum/weakref/tracked_corpse = null
+	/// Stoppable timer ID for periodic directional updates.
+	var/locate_timer_id = null
+
+/obj/effect/proc_holder/spell/targeted/locate_dead/Destroy()
+	if(locate_timer_id)
+		deltimer(locate_timer_id)
+		locate_timer_id = null
+	tracked_corpse = null
+	return ..()
 
 /obj/effect/proc_holder/spell/targeted/locate_dead/cast(list/targets, mob/living/user = usr)
 	. = ..()
 	var/list/mob/corpses = list()
+
+	// Option to stop current tracking (shown at top)
+	if(tracked_corpse)
+		corpses["✦ Stop Tracking Current Corpse"] = "STOP_TRACKING"
+
+	// Option to search nearby NPC corpses
+	corpses["✦ Search Nearby (NPC Corpses)"] = "NPC_SEARCH"
 
 	for(var/mob/living/C in GLOB.dead_mob_list)
 		if(!C.mind)
@@ -430,28 +459,111 @@
 		if(descriptor_name == " ")
 			descriptor_name = "Unknown"
 
-		corpse_name += " of \a [descriptor_name]..."
-		corpses[corpse_name] = C
+		// Soul status: check if the player's mind is still present as a ghost
+		var/soul_tag = ""
+		if(istype(C.mind?.current, /mob/dead/observer))
+			soul_tag = "[Lingers] "
+		else if(C.mind?.key)
+			soul_tag = "[Departed] "
 
-	if(!length(corpses))
+		// Area prefix
+		var/area/corpse_area_entry = get_area(C)
+		var/area_prefix_entry = corpse_area_entry ? "([corpse_area_entry.name]) " : ""
+
+		var/full_name = "[area_prefix_entry][soul_tag][corpse_name] of \a [descriptor_name]..."
+		corpses[full_name] = C
+
+	if(length(corpses) <= 2) // only the two special options exist, no real corpses
 		to_chat(user, span_warning("The Undermaiden's grasp lets slip."))
 		revert_cast()
 		return .
 
 	var/selected = tgui_input_list(user, "Which body shall I seek?", "Available Bodies", corpses)
 
-	if(!selected || QDELETED(src) || QDELETED(user) || QDELETED(corpses[selected]))
-		to_chat(user, span_warning("The Undermaiden's grasp lets slip."))
+	// Cancelled without selecting — refund devotion
+	if(!selected || QDELETED(src) || QDELETED(user))
+		revert_cast()
+		return .
+
+	// Handle special options
+	if(corpses[selected] == "STOP_TRACKING")
+		to_chat(user, span_notice("The Undermaiden releases her pull."))
+		if(locate_timer_id)
+			deltimer(locate_timer_id)
+			locate_timer_id = null
+		tracked_corpse = null
+		revert_cast()
+		return .
+
+	if(corpses[selected] == "NPC_SEARCH")
+		// Scan nearby area for mindless dead (NPC corpses)
+		var/list/npc_corpses = list()
+		for(var/mob/living/NPC in range(15, user))
+			if(NPC.stat != DEAD)
+				continue
+			if(NPC.mind)
+				continue	// skip player corpses, already shown above
+			var/npc_area = get_area(NPC)
+			var/npc_area_str = npc_area ? "([npc_area.name]) " : ""
+			npc_corpses["[npc_area_str][NPC.name]"] = NPC
+		if(!length(npc_corpses))
+			to_chat(user, span_warning("No nearby corpses answer the Undermaiden's call."))
+			revert_cast()
+			return .
+		var/npc_selected = tgui_input_list(user, "Nearby remains:", "Nearby Corpses", npc_corpses)
+		if(!npc_selected || QDELETED(src) || QDELETED(user))
+			revert_cast()
+			return .
+		var/mob/living/npc_corpse = npc_corpses[npc_selected]
+		if(QDELETED(npc_corpse))
+			revert_cast()
+			return .
+		// Track the NPC corpse and send initial update
+		if(locate_timer_id)
+			deltimer(locate_timer_id)
+		tracked_corpse = WEAKREF(npc_corpse)
+		locate_timer_id = addtimer(CALLBACK(src, PROC_REF(send_locate_update), user), 15 SECONDS, TIMER_LOOP | TIMER_STOPPABLE)
+		send_locate_update(user)
 		return .
 
 	var/mob/living/corpse = corpses[selected]
+	if(QDELETED(corpse))
+		to_chat(user, span_warning("The Undermaiden's grasp lets slip."))
+		return .
+
+	// Cancel existing timer and start fresh tracking
+	if(locate_timer_id)
+		deltimer(locate_timer_id)
+	tracked_corpse = WEAKREF(corpse)
+	locate_timer_id = addtimer(CALLBACK(src, PROC_REF(send_locate_update), user), 15 SECONDS, TIMER_LOOP | TIMER_STOPPABLE)
+
+	// Send immediate update
+	send_locate_update(user)
+
+/// Sends a directional update to the user toward the tracked corpse.
+/// Called immediately after selection and by the repeating timer.
+/obj/effect/proc_holder/spell/targeted/locate_dead/proc/send_locate_update(mob/living/user)
+	if(QDELETED(user) || !tracked_corpse)
+		if(locate_timer_id)
+			deltimer(locate_timer_id)
+			locate_timer_id = null
+		tracked_corpse = null
+		return
+	var/mob/living/corpse = tracked_corpse.resolve()
+	if(!corpse || QDELETED(corpse))
+		to_chat(user, span_warning("The Undermaiden's thread has gone cold. The soul is beyond reach."))
+		if(locate_timer_id)
+			deltimer(locate_timer_id)
+			locate_timer_id = null
+		tracked_corpse = null
+		return
 
 	var/turf/turf_user = get_turf(user)
 	var/turf/turf_corpse = get_turf(corpse)
 
 	if(!turf_user || !turf_corpse)
 		to_chat(user, span_warning("The Undermaiden's grasp lets slip."))
-		return .
+		return
 
 	var/vertical_text = null
 	var/vertical_arrow = null
@@ -511,3 +623,33 @@
 	var/area_text = corpse_area ? corpse_area.name : "an unknown place"
 
 	to_chat(user, span_notice("The Undermaiden pulls on your hand.[direction_text]<br>[distance_text] Its resting place lies within <b>[area_text]</b>."))
+
+// =================== GHOST AWARENESS ===================
+
+/// When a ghost speaks, Necran followers nearby hear a faint whisper of it.
+/mob/dead/observer/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	. = ..()
+	var/clean = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	if(!clean)
+		return
+	var/turf/ghost_turf = get_turf(src)
+	if(!ghost_turf)
+		return
+	for(var/mob/living/L in range(7, ghost_turf))
+		if(!HAS_TRAIT(L, TRAIT_SOUL_EXAMINE))
+			continue
+		if(L.z != z)
+			continue
+		to_chat(L, span_deadsay("<i>A spirit murmurs nearby: \"[clean]\"</i>"))
+
+/// Give Necrans the ability to see ghosts (see_invisible raised to observer level).
+/datum/patron/divine/necra/on_gain(mob/living/pious)
+	. = ..()
+	if(ismob(pious))
+		pious.see_invisible = max(pious.see_invisible, SEE_INVISIBLE_OBSERVER)
+
+/datum/patron/divine/necra/on_loss(mob/living/pious)
+	. = ..()
+	if(ismob(pious))
+		if(pious.see_invisible >= SEE_INVISIBLE_OBSERVER)
+			pious.see_invisible = SEE_INVISIBLE_LIVING	// restore to normal living sight

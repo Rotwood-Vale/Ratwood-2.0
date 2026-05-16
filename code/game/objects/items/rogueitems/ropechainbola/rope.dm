@@ -154,3 +154,34 @@
 		target.add_movespeed_modifier(MOVESPEED_ID_CUFFED_LEG_SLOWDOWN, update=TRUE, priority=100, multiplicative_slowdown=2, movetypes=GROUND)
 		return
 
+/// Necran cordage — blessed burial-cordage.
+/// Binds the dead and undead much faster, and doesn't slow the user when dragging them.
+/obj/item/rope/necran_cord
+	name = "burial-cordage"
+	desc = "A length of cord woven from burial linen and blessed by Necra's rites. The dead yield to it without struggle."
+	icon_state = "rope"
+	breakouttime = 10 SECONDS
+
+/obj/item/rope/necran_cord/try_cuff_arms(mob/living/carbon/C, mob/living/user)
+	// Dead/undead targets can be bound instantly without resistance
+	if(C.stat == DEAD || HAS_TRAIT(C, TRAIT_UNDEAD))
+		apply_cuffs(C, user)
+		C.visible_message(span_warning("[user] binds [C] with [src.name]."), \
+							span_danger("[user] binds me with [src.name]."))
+		return
+	return ..()
+
+/obj/item/rope/necran_cord/try_cuff_legs(mob/living/carbon/C, mob/living/user)
+	// Dead/undead targets can be leg-bound instantly without resistance
+	if(C.stat == DEAD || HAS_TRAIT(C, TRAIT_UNDEAD))
+		apply_cuffs(C, user, TRUE)
+		C.visible_message(span_warning("[user] binds [C]'s legs with [src.name]."), \
+							span_danger("[user] binds my legs with [src.name]."))
+		return
+	return ..()
+
+/obj/item/rope/necran_cord/apply_cuffs(mob/living/carbon/target, mob/user, leg = FALSE)
+	. = ..()
+	// When leg-cuffed to a dead/undead mob, remove the slowdown for the Necran practitioner
+	if(leg && (target.stat == DEAD || HAS_TRAIT(target, TRAIT_UNDEAD)))
+		target.remove_movespeed_modifier(MOVESPEED_ID_CUFFED_LEG_SLOWDOWN)

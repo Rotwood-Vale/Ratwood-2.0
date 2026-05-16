@@ -1316,6 +1316,7 @@
 	id = "undermaidenbargain"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/undermaidenbargain
 	duration = 30 MINUTES
+	effectedstats = list(STATKEY_END = 1)
 
 /datum/status_effect/buff/undermaidenbargain/on_apply()
 	. = ..()

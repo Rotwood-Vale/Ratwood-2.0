@@ -389,3 +389,12 @@ Necra's Censer
 		var/datum/effect_system/smoke_spread/smoke/necra_censer/S = new
 		S.set_up(2, user.loc)
 		S.start()
+		// Cleanse the user and nearby living mobs, and bless them briefly
+		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		user.apply_status_effect(/datum/status_effect/censer_blessed)
+		for(var/mob/living/carbon/human/H in range(4, user))
+			if(H == user)
+				continue
+			SEND_SIGNAL(H, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			H.apply_status_effect(/datum/status_effect/censer_blessed)
+			to_chat(H, span_notice("The Undermaiden's incense washes over you."))
