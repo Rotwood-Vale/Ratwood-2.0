@@ -751,12 +751,12 @@
 /proc/find_hermes_by_address(address)
 	if(!address)
 		return null
-	var/target = lowertext(trim(address))
+	var/target = LOWER_TEXT(trim(address))
 	if(!target)
 		return null
 	for(var/obj/structure/roguemachine/mail/X in SSroguemachine.hermailers)
 		for(var/mail_address in X.get_delivery_addresses())
-			if(lowertext(trim(mail_address)) == target)
+			if(LOWER_TEXT(trim(mail_address)) == target)
 				return X
 	return null
 
