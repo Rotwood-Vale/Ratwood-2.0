@@ -91,6 +91,18 @@
 	name = "kingsfield garden district";
 	first_time_text = "Kingsfield - Garden District"
 	})
+"ak" = (
+/obj/structure/chair/wood{
+	dir = 8;
+	pixel_y = 13;
+	pixel_x = 8
+	},
+/obj/structure/fluff/wallclock,
+/turf/open/floor/carpet/royalblack,
+/area/rogue/indoors/town/tavern{
+	name = "Kingsfield Tavern";
+	first_time_text = "Kingsfield Tavern"
+	})
 "al" = (
 /obj/machinery/light/rogue/candle,
 /obj/structure/closet/crate/roguecloset/lord,
@@ -340,6 +352,13 @@
 /obj/structure/mineral_door/wood/window{
 	name = "Themed Inn Rooms"
 	},
+/turf/open/floor/carpet/red,
+/area/rogue/indoors/town/tavern{
+	name = "Kingsfield Tavern";
+	first_time_text = "Kingsfield Tavern"
+	})
+"bp" = (
+/obj/structure/fluff/wallclock/l,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
@@ -603,6 +622,13 @@
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
 	})
+"cF" = (
+/obj/machinery/gear_painter,
+/turf/open/floor/carpet/red,
+/area/rogue/indoors/town/tavern{
+	name = "Kingsfield Tavern";
+	first_time_text = "Kingsfield Tavern"
+	})
 "cG" = (
 /obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 4
@@ -718,13 +744,6 @@
 /area/rogue/indoors/town{
 	name = "Ferentian Diplomatic Headquarters";
 	first_time_text = "Ferentian Diplomatic Headquarters"
-	})
-"db" = (
-/obj/structure/fluff/wallclock/r,
-/turf/open/floor/carpet/red,
-/area/rogue/indoors/town/tavern{
-	name = "Kingsfield Tavern";
-	first_time_text = "Kingsfield Tavern"
 	})
 "dh" = (
 /obj/effect/decal/cobble/mossy{
@@ -1196,6 +1215,16 @@
 /area/rogue/under/town/basement{
 	first_time_text = "The Gutter";
 	name = "The Gutter"
+	})
+"fX" = (
+/obj/machinery/light/roguestreet/orange/walllamp{
+	dir = 8
+	},
+/obj/structure/fluff/wallclock/r,
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/indoors/town/tavern{
+	name = "Kingsfield Tavern";
+	first_time_text = "Kingsfield Tavern"
 	})
 "gb" = (
 /obj/structure/closet/crate/chest{
@@ -1712,14 +1741,6 @@
 	first_time_text = "The Gutter";
 	name = "The Gutter"
 	})
-"ja" = (
-/obj/machinery/light/roguestreet/orange/walllamp,
-/obj/structure/fluff/wallclock/r,
-/turf/open/floor/carpet/red,
-/area/rogue/indoors/town/tavern{
-	name = "Kingsfield Tavern";
-	first_time_text = "Kingsfield Tavern"
-	})
 "jb" = (
 /obj/structure/stairs/stone{
 	dir = 1
@@ -1895,18 +1916,6 @@
 	pixel_x = 3
 	},
 /turf/open/floor/rogue/tile/harem2,
-/area/rogue/indoors/town/tavern{
-	name = "Kingsfield Tavern";
-	first_time_text = "Kingsfield Tavern"
-	})
-"kk" = (
-/obj/structure/chair/wood{
-	dir = 8;
-	pixel_y = 13;
-	pixel_x = 8
-	},
-/obj/structure/fluff/wallclock,
-/turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
@@ -2232,6 +2241,18 @@
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
 	})
+"mj" = (
+/obj/machinery/light/roguestreet/orange/walllamp{
+	dir = 4
+	},
+/obj/structure/roguemachine/scomm/receive_only/l{
+	scom_tag = "Kingsfield - Tavern Dressing Room"
+	},
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/indoors/town/tavern{
+	name = "Kingsfield Tavern";
+	first_time_text = "Kingsfield Tavern"
+	})
 "mk" = (
 /obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 4
@@ -2482,6 +2503,13 @@
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
 	})
+"nR" = (
+/obj/structure/fluff/wallclock/r,
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/indoors/town/tavern{
+	name = "Kingsfield Tavern";
+	first_time_text = "Kingsfield Tavern"
+	})
 "nU" = (
 /obj/structure/bars/grille/rusty,
 /turf/open/water/sewer,
@@ -2532,25 +2560,9 @@
 	name = "Ferentian Diplomatic Headquarters";
 	first_time_text = "Ferentian Diplomatic Headquarters"
 	})
-"oh" = (
-/obj/structure/fluff/wallclock,
-/turf/open/floor/carpet/red,
-/area/rogue/indoors/town/tavern{
-	name = "Kingsfield Tavern";
-	first_time_text = "Kingsfield Tavern"
-	})
 "oj" = (
 /obj/machinery/light/rogue/candle,
 /turf/open/floor/carpet/purple,
-/area/rogue/indoors/town/tavern{
-	name = "Kingsfield Tavern";
-	first_time_text = "Kingsfield Tavern"
-	})
-"ol" = (
-/obj/structure/roguemachine/scomm/receive_only/l{
-	scom_tag = "Kingsfield - Tavern Upstairs 2"
-	},
-/turf/open/floor/carpet/red,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
@@ -2974,6 +2986,15 @@
 /turf/closed/wall/mineral/rogue/decostone/mossy/blue/long{
 	dir = 1
 	},
+/area/rogue/indoors/town/tavern{
+	name = "Kingsfield Tavern";
+	first_time_text = "Kingsfield Tavern"
+	})
+"qD" = (
+/obj/structure/roguemachine/scomm/receive_only{
+	scom_tag = "Kingsfield - Tavern Upstairs 1"
+	},
+/turf/open/floor/carpet/red,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
@@ -3931,13 +3952,6 @@
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
 	})
-"vu" = (
-/obj/machinery/gear_painter,
-/turf/open/floor/carpet/red,
-/area/rogue/indoors/town/tavern{
-	name = "Kingsfield Tavern";
-	first_time_text = "Kingsfield Tavern"
-	})
 "vv" = (
 /turf/closed/wall/mineral/rogue/stonebrick,
 /area/rogue/indoors/town{
@@ -4002,18 +4016,6 @@
 /area/rogue/outdoors/town/manor{
 	first_time_text = "Kingsfield - Diplomatic Quarter";
 	name = "kingsfield diplomatic quarter"
-	})
-"vP" = (
-/obj/machinery/light/roguestreet/orange/walllamp{
-	dir = 4
-	},
-/obj/structure/roguemachine/scomm/receive_only/l{
-	scom_tag = "Kingsfield - Tavern Dressing Room"
-	},
-/turf/open/floor/rogue/tile/harem1,
-/area/rogue/indoors/town/tavern{
-	name = "Kingsfield Tavern";
-	first_time_text = "Kingsfield Tavern"
 	})
 "vS" = (
 /turf/closed/wall/mineral/rogue/wooddark{
@@ -4123,6 +4125,15 @@
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
 	})
+"wS" = (
+/obj/structure/roguemachine/scomm/receive_only/l{
+	scom_tag = "Kingsfield - Tavern Upstairs 2"
+	},
+/turf/open/floor/carpet/red,
+/area/rogue/indoors/town/tavern{
+	name = "Kingsfield Tavern";
+	first_time_text = "Kingsfield Tavern"
+	})
 "wU" = (
 /obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 4
@@ -4162,15 +4173,6 @@
 "xh" = (
 /obj/structure/roguewindow/harem1,
 /turf/closed/wall/mineral/rogue/decostone/mossy/red/long,
-/area/rogue/indoors/town/tavern{
-	name = "Kingsfield Tavern";
-	first_time_text = "Kingsfield Tavern"
-	})
-"xj" = (
-/obj/structure/roguemachine/scomm/receive_only{
-	scom_tag = "Kingsfield - Tavern Upstairs 1"
-	},
-/turf/open/floor/carpet/red,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
@@ -4808,8 +4810,9 @@
 	name = "Kingsfield Depths"
 	})
 "Bc" = (
+/obj/machinery/light/roguestreet/orange/walllamp,
 /obj/structure/fluff/wallclock/r,
-/turf/open/floor/rogue/tile/harem1,
+/turf/open/floor/carpet/red,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
@@ -5969,13 +5972,6 @@
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
 	})
-"Hk" = (
-/obj/structure/fluff/wallclock/l,
-/turf/open/floor/carpet/red,
-/area/rogue/indoors/town/tavern{
-	name = "Kingsfield Tavern";
-	first_time_text = "Kingsfield Tavern"
-	})
 "Hn" = (
 /obj/structure/fermentation_keg/kgsunsake,
 /obj/machinery/light/roguestreet/orange/walllamp{
@@ -6652,6 +6648,13 @@
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/tile/harem,
+/area/rogue/indoors/town/tavern{
+	name = "Kingsfield Tavern";
+	first_time_text = "Kingsfield Tavern"
+	})
+"KQ" = (
+/obj/structure/fluff/wallclock/r,
+/turf/open/floor/carpet/red,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
@@ -8616,6 +8619,13 @@
 	first_time_text = "The Gutter";
 	name = "The Gutter"
 	})
+"Wx" = (
+/obj/structure/fluff/wallclock,
+/turf/open/floor/carpet/red,
+/area/rogue/indoors/town/tavern{
+	name = "Kingsfield Tavern";
+	first_time_text = "Kingsfield Tavern"
+	})
 "Wy" = (
 /obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 4
@@ -9021,16 +9031,6 @@
 /area/rogue/indoors/town{
 	name = "Ferentian Diplomatic Headquarters";
 	first_time_text = "Ferentian Diplomatic Headquarters"
-	})
-"YH" = (
-/obj/machinery/light/roguestreet/orange/walllamp{
-	dir = 8
-	},
-/obj/structure/fluff/wallclock/r,
-/turf/open/floor/rogue/tile/harem1,
-/area/rogue/indoors/town/tavern{
-	name = "Kingsfield Tavern";
-	first_time_text = "Kingsfield Tavern"
 	})
 "YK" = (
 /obj/structure/fluff/railing/border{
@@ -47963,7 +47963,7 @@ sM
 GL
 KZ
 nP
-vP
+mj
 id
 KZ
 sU
@@ -48058,7 +48058,7 @@ oY
 Lw
 oY
 KZ
-ja
+Bc
 JJ
 ZB
 Tf
@@ -48168,7 +48168,7 @@ Jl
 KZ
 nP
 sU
-vu
+cF
 KZ
 sU
 Vm
@@ -48263,8 +48263,8 @@ nv
 nv
 KJ
 bX
-Hk
-ol
+bp
+wS
 bX
 ZQ
 KZ
@@ -48345,7 +48345,7 @@ XC
 KZ
 KZ
 KZ
-xj
+qD
 bX
 zI
 bX
@@ -48355,7 +48355,7 @@ bX
 bX
 KJ
 bX
-db
+KQ
 bX
 ez
 pI
@@ -48370,11 +48370,11 @@ pI
 bX
 bX
 Aj
-YH
+fX
 sU
 ZB
 VG
-Bc
+nR
 Vm
 bX
 JO
@@ -48549,11 +48549,11 @@ FO
 uQ
 lf
 KZ
-bX
+tq
 bX
 KZ
 TS
-Hk
+bp
 JJ
 Xz
 sU
@@ -48651,7 +48651,7 @@ AY
 WK
 tX
 KZ
-oh
+Wx
 bX
 KZ
 Io
@@ -48848,15 +48848,15 @@ Tb
 Tb
 KZ
 bX
+hI
 bX
 bX
 bX
 bX
+hI
 bX
 bX
-bX
-bX
-bX
+ZQ
 KZ
 KZ
 fo
@@ -49466,7 +49466,7 @@ Zh
 sH
 Zh
 hZ
-kk
+ak
 hT
 BT
 qy
