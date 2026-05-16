@@ -243,8 +243,6 @@
 	if(H.patron?.type == /datum/patron/divine/necra) // Death and Moving on - grave diggers.
 		ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_SOUL_EXAMINE, TRAIT_GENERIC)
-		var/datum/action/innate/toggle_necra_deathsense/monk_deathsense = new
-		monk_deathsense.Grant(H)
 		ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
 		H.change_stat(STATKEY_STR, 1)	// Necra acolytes carry the dead; their bodies harden to the labor.
 		H.adjust_skillrank_up_to(/datum/skill/combat/staves, 3, TRUE)//For the stave. Beat back the dead. +1 from base, like Ravox.

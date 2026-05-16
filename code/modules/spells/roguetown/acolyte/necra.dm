@@ -642,48 +642,58 @@
 			continue
 		to_chat(L, span_deadsay("<i>A spirit murmurs nearby: \"[clean]\"</i>"))
 
-/// Give Necrans the ability to see ghosts (see_invisible raised to observer level).
+/// Give Necrans ghost vision and death sense on patron gain, and add Cleric tab toggles.
 /datum/patron/divine/necra/on_gain(mob/living/pious)
 	. = ..()
-	if(ismob(pious))
-		pious.see_invisible = max(pious.see_invisible, SEE_INVISIBLE_OBSERVER)
+	if(!ishuman(pious))
+		return
+	var/mob/living/carbon/human/H = pious
+	H.see_invisible = max(H.see_invisible, SEE_INVISIBLE_OBSERVER)
+	ADD_TRAIT(H, TRAIT_NECRA_DEATHSIGHT, "necra_patron")
+	H.verbs += list(
+		/mob/living/carbon/human/proc/necra_toggle_ghost_sight,
+		/mob/living/carbon/human/proc/necra_toggle_death_notices,
+	)
 
 /datum/patron/divine/necra/on_loss(mob/living/pious)
 	. = ..()
-	if(ismob(pious))
-		if(pious.see_invisible >= SEE_INVISIBLE_OBSERVER)
-			pious.see_invisible = SEE_INVISIBLE_LIVING	// restore to normal living sight
+	if(!ishuman(pious))
+		return
+	var/mob/living/carbon/human/H = pious
+	if(H.see_invisible >= SEE_INVISIBLE_OBSERVER)
+		H.see_invisible = SEE_INVISIBLE_LIVING
+	REMOVE_TRAIT(H, TRAIT_NECRA_DEATHSIGHT, "necra_patron")
+	H.verbs -= list(
+		/mob/living/carbon/human/proc/necra_toggle_ghost_sight,
+		/mob/living/carbon/human/proc/necra_toggle_death_notices,
+	)
 
 // =====================================================
-// Necra Death Sense — toggleable innate action
+// Necra Cleric Tab — Ghost Sight & Death Notice toggles
 // =====================================================
 
-/// Granted alongside TRAIT_SOUL_EXAMINE in job setup procs for Necra templars, monks, and heretics.
-/// When active, Necran receives a death notice with exact area name whenever a player character dies.
-/datum/action/innate/toggle_necra_deathsense
-	name = "Necra's Eye (ON)"
-	desc = "Receive Necra's whispers when a soul departs the mortal world. Toggle to silence them."
-	icon_icon = 'icons/mob/actions/necramiracles.dmi'
-	button_icon_state = "locatecorpse"
+/// Toggles whether the Necran can see and hear wandering player ghosts.
+/// Appears in the Cleric verb tab alongside Prayer and Check Devotion.
+/mob/living/carbon/human/proc/necra_toggle_ghost_sight()
+	set name = "Necra's Veil — Toggle Ghost Sight"
+	set category = "Cleric"
 
-/datum/action/innate/toggle_necra_deathsense/Grant(mob/M)
-	..()
-	if(owner)
-		Activate()
+	if(src.see_invisible >= SEE_INVISIBLE_OBSERVER)
+		src.see_invisible = SEE_INVISIBLE_LIVING
+		to_chat(src, span_notice("I close my eyes to the wandering dead."))
+	else
+		src.see_invisible = max(src.see_invisible, SEE_INVISIBLE_OBSERVER)
+		to_chat(src, span_notice("The veil thins — I perceive the wandering spirits of the departed."))
 
-/datum/action/innate/toggle_necra_deathsense/Remove(mob/M)
-	if(M)
-		REMOVE_TRAIT(M, TRAIT_NECRA_DEATHSIGHT, "necra_deathsense_action")
-	..()
+/// Toggles whether the Necran receives a location notice whenever a player character dies.
+/// Appears in the Cleric verb tab alongside Prayer and Check Devotion.
+/mob/living/carbon/human/proc/necra_toggle_death_notices()
+	set name = "Necra's Eye — Toggle Death Notices"
+	set category = "Cleric"
 
-/datum/action/innate/toggle_necra_deathsense/Activate()
-	ADD_TRAIT(owner, TRAIT_NECRA_DEATHSIGHT, "necra_deathsense_action")
-	name = "Necra's Eye (ON)"
-	active = TRUE
-	UpdateButtonIcon()
-
-/datum/action/innate/toggle_necra_deathsense/Deactivate()
-	REMOVE_TRAIT(owner, TRAIT_NECRA_DEATHSIGHT, "necra_deathsense_action")
-	name = "Necra's Eye (OFF)"
-	active = FALSE
-	UpdateButtonIcon()
+	if(HAS_TRAIT(src, TRAIT_NECRA_DEATHSIGHT))
+		REMOVE_TRAIT(src, TRAIT_NECRA_DEATHSIGHT, "necra_patron")
+		to_chat(src, span_notice("I silence Necra's whispers of passing souls."))
+	else
+		ADD_TRAIT(src, TRAIT_NECRA_DEATHSIGHT, "necra_patron")
+		to_chat(src, span_notice("Necra's whispers will reach me when a soul departs."))
