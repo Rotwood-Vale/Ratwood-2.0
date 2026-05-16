@@ -653,6 +653,27 @@
 	experimental_inhand = FALSE
 	experimental_onhip = FALSE
 
+/// Dendor ritual variant of the woad elven helm — forged by the Treefather's Nature's Temper blessing.
+/// Offers superior stab resistance and meaningful slash defence compared to the standard elven helm.
+/obj/item/clothing/head/roguetown/helmet/heavy/elven_helm/druidic
+	name = "blessed druid helm"
+	desc = "A helm grown deep within Dendor's sanctified grove, hardened by ancient sap and ritual fire. It turns aside both blade and piercing thrust, though a skilled slasher may still find purchase."
+	armor = list("blunt" = 100, "slash" = 65, "stab" = 130, "piercing" = 40, "fire" = 0, "acid" = 0)
+
+/obj/item/clothing/head/roguetown/helmet/heavy/elven_helm/druidic/Initialize(mapload)
+	. = ..()
+	set_light(1, 1, 2, l_color = "#58C86A")
+	add_filter("druid_blessed_glow", 2, list("type" = "outline", "color" = "#58C86A", "alpha" = 95, "size" = 1))
+/obj/item/clothing/head/roguetown/helmet/heavy/elven_helm/druidic/pickup(mob/user)
+	. = ..()
+	if(!istype(user, /mob/living/carbon/human))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.patron?.type == /datum/patron/divine/dendor)
+		return
+	H.electrocute_act(30, src)
+	H.mob_timers["kneestinger"] = world.time
+	to_chat(H, span_warning("[name] rejects my grasp — only the Treefather's faithful may bear such a gift!"))
 /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth
 	name = "froggemund helmet"
 	desc = "A tall and imposing frogmouth-style helm popular in the highest plateaus of the vale. It covers not only the entire head and face, but the neck as well. Add a cloth to show the colors of your family or allegiance."

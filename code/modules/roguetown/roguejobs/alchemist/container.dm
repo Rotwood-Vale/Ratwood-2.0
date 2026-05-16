@@ -87,6 +87,11 @@
 /obj/item/reagent_containers/glass/bottle/alchemical/fermented_crab
 	list_reagents = list(/datum/reagent/fermented_crab = 15)
 
+/obj/item/reagent_containers/glass/bottle/alchemical/emberwine
+	name = "Alchemical Emberwine Vial"
+	list_reagents = list(/datum/reagent/consumable/ethanol/beer/emberwine = 5)
+	desc = "A small alchemical vial holding only a sip of emberwine."
+
 //////////////////////////
 /// ALCOHOLIC BOTTLES ///
 //////////////////////////

@@ -280,7 +280,7 @@
 	desc = "A fine leather slouch, beplumed with a crimson feather and fitted with a hidden steel skull cap. It serves as a reminder that the Holy Otavan Inquisition triumphs in one avenue above all else - fashion. </br>'To keep ones vision away from the heavens, and focused on the sin beneath the soil.'"
 	icon_state = "inqhat"
 	item_state = "inqhat"
-	max_integrity = 200
+	max_integrity = ARMOR_INT_HELMET_HARDLEATHER
 	armor = ARMOR_SPELLSINGER
 	body_parts_covered = HEAD|HAIR|EARS
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
@@ -288,6 +288,7 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 	heat_protection = HEAD
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+	resistance_flags = FIRE_PROOF // drip is eternal
 
 /obj/item/clothing/head/roguetown/headband/red
 	color = CLOTHING_RED
@@ -560,7 +561,6 @@
 	item_state = "hijab_t"
 	icon_state = "deserthood_t"
 	color = "#b8252c"
-	hidesnoutADJ = FALSE
 	flags_inv = null
 	sleevetype = null
 	sleeved = null

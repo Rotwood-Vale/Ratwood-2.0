@@ -38,6 +38,10 @@
 	return
 
 /atom/proc/MiddleMouseDrop_T(atom/dropping, mob/user)
+	if(dropping == user && isliving(user))
+		var/mob/living/L = user
+		if(L.try_handle_middle_targeted_spell(src))
+			return
 	SEND_SIGNAL(src, COMSIG_MOUSEDROPPED_ONTO, dropping, user)
 	return
 

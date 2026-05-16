@@ -5,21 +5,19 @@
 	name = "Harpy"
 	id = "harpy"
 	desc = "<b>Harpy</b><br>\
-	Harpies, or less ceremoniously known as 'magpies,' resemble the half-kin in appearance at first glance. \
-	One would rightfully assume they are similar in nature- with accuracy even, much to the harpies' chagrin. \
-	Harpies have been uplifted and reconnected to divinity by Eora, having developed culture of music and song which caught the attention of such a goddess. \
-	Their songs and voices may be their own, or proud mimicking other voices they've heard with unnatural accuracy. \
-	\
+	Harpies, often called \"songbirds\" or \"Magpies\" by some, resemble the half-kin in appearance at first glance. \
+	However, the exact nature of the creatures is a much more complicated, debated topic, with many unknown details. \
+	Their origin comes from the cliffs of Etrusca, but their creation is disputed by scholars to be from one of several gods, but there is no confirmed answer whether they are the creation of Baotha, Eora, Matthios, or even Pestra's hand. \
+	Mistrusted by many for their wily and possessive nature, yet admired by others for their intelligence and beauty, these nomads are oft welcomed at a distance by most new cities they travel to. 	\
 	<span style='color: #cc0f0f;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>-3 CON | -2 STR</span> |<span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'> +1 PER | +1 INT | +2 SPD</b></span> </br> \
 	<span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>Flight | Innate Singing | Strong Bites</b></span> </br> \
-	<span style='color: #cc0f0f;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>Can't wear boots</span> | <span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'>Slight Fall Damage Reduction </span></b>"
+	<span style='color: #cc0f0f;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>Can't wear boots</span> | <span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #00０;'>Slight Fall Damage Reduction </span></b>"
 
 	expanded_desc = "<b>Harpy</b><br>\
-	Harpies, or less ceremoniously known as magpies, resemble the half-kin in appearance at first glance. \
-	One would rightfully assume they are similar in nature- with accuracy even, much to the harpies chagrin. \
-	Harpies have been uplifted and reconnected to divinity by Eora, having developed culture of music and song which caught the attention of such a goddess. \
-	Their songs and voices may be their own, or proud mimicking other voices theyve heard with unnatural accuracy. \
-	\
+	Harpies, often called \"songbirds\" or \"Magpies\" by some, resemble the half-kin in appearance at first glance. \
+	However, the exact nature of the creatures is a much more complicated, debated topic, with many unknown details. \
+	Their origin comes from the cliffs of Etrusca, but their creation is disputed by scholars to be from one of several gods, but there is no confirmed answer whether they are the creation of Baotha, Eora, Matthios, or even Pestra's hand. \
+	Mistrusted by many for their wily and possessive nature, yet admired by others for their intelligence and beauty, these nomads are oft welcomed at a distance by most new cities they travel to. 	\
 	Whilst harpies may fly, their freedom is weighed by corruption of fleshcrafting to this day. Complete open-air freedom is still foreign to them. \
 	Harpies tend to live and gather in colonies at the tops of great sequoia forests and in nearby cliffs. Due to their laden flight, they must employ use of updrafts and proximity to large objects or structures to bolster their limited range and air-dancing performances. \
 	Their serene songs and blissful music can be heard echoing far below, guiding travelers and thieves both to respite... or treasure. For as lifted into grace as they might be, these magpies earn such a nickname from instinctual Matthiosan greed and love for anything that shines. \

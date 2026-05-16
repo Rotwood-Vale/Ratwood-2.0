@@ -145,10 +145,7 @@ decreases charge time if held opened in hand, for pure mage build + aesthetics.
 
 /obj/item/book/spellbook/attack_right(mob/user)
 	if(!picked)
-		var/list/designlist = list("green", "yellow", "brown")
-		var/mob/living/carbon/human/gamer = user
-		if(gamer.job == "Court Magician")
-			designlist = list("steel", "gem", "skin", "mimic")
+		var/list/designlist = list("green", "yellow", "brown", "steel", "gem", "skin", "mimic", "wyrdbark", "sunfire", "abyssal", "cinder", "vessel", "edgebound", "sovereign")
 		var/the_time = world.time
 		var/design = input(user, "Select a design.","Spellbook Design") as null|anything in designlist
 		if(!design)

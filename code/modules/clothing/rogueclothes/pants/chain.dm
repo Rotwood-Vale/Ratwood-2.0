@@ -68,28 +68,6 @@
 	sewrepair = FALSE
 	smeltresult = /obj/item/ingot/iron
 
-/obj/item/clothing/under/roguetown/brayette
-	name = "brayette"
-	desc = "Maille groin protection ideal for answering Dendor's call without removing your plate armor."
-	gender = PLURAL
-	icon_state = "chain_bootyshorts"
-	item_state = "chain_bootyshorts"
-	sewrepair = FALSE
-	armor = ARMOR_MAILLE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
-	body_parts_covered = GROIN
-	blocksound = CHAINHIT
-	max_integrity = ARMOR_INT_LEG_STEEL_CHAIN
-	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
-	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	anvilrepair = /datum/skill/craft/armorsmithing
-	smeltresult = /obj/item/ingot/steel
-	r_sleeve_status = SLEEVE_NOMOD
-	l_sleeve_status = SLEEVE_NOMOD
-	resistance_flags = FIRE_PROOF
-	armor_class = ARMOR_CLASS_LIGHT
-
 /obj/item/clothing/under/roguetown/chainlegs/iron
 	name = "iron chain chausses"
 	icon_state = "ichain_legs"

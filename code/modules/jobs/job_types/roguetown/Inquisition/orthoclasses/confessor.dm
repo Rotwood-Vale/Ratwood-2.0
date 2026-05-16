@@ -17,10 +17,9 @@
 		TRAIT_PURITAN_ADVENTURER,//For fluff.
 	)
 	subclass_stats = list(
-		STATKEY_SPD = 3,
-		STATKEY_WIL = 3,
-		STATKEY_PER = 2,
-		STATKEY_STR = -1
+		STATKEY_PER = 3,
+		STATKEY_SPD = 2,
+		STATKEY_WIL = 2,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN, //Should rely on the seizing garrote to properly subdue foes.
@@ -62,8 +61,8 @@
 				r_hand = /obj/item/rogueweapon/scabbard/sword
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 		var/quivers = list("Bolts - Steel-Tipped", "Sunderbolts - Silver-Tipped, Halved Damage")
-		var/boltchoice = input(H,"Choose your MUNITIONS.", "TAKE UP PSYDON'S MISSILES.") as anything in quivers
-		switch(boltchoice)
+		var/bolt_choice = input(H,"CHOOSE YOUR MUNITIONS", "TAKE UP PSYDON'S MISSILES.") as anything in quivers
+		switch(bolt_choice)
 			if("Bolts - Steel-Tipped")
 				beltl = /obj/item/quiver/bolts
 			if("Sunderbolts - Silver-Tipped, Halved Damage")

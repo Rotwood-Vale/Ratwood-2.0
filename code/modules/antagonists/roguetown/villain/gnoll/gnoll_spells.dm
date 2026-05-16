@@ -280,11 +280,11 @@
 
 /datum/component/gnoll_combat_tracker/proc/on_damage(datum/source, damage, damagetype, def_zone)
 	SIGNAL_HANDLER
+	var/mob/living/carbon/human/H = parent
 	last_damage_time = world.time
 	damage_taken += damage
-
+	H.invisibility = initial(H.invisibility) //Prevent any potential issues with gnolls becoming invisible (THIS SHOULD NEVER BE NECESSARY, but the timer may fail!)
 	if(channeling_abduction && ishuman(parent) && get_recent_damage() >= GNOLL_ABDUCT_DAMAGE_THRESHOLD)
-		var/mob/living/carbon/human/H = parent
 		// micro stun to break any do_afters
 		// asynchronous as to not mess with signal behavior!
 		spawn(0)
@@ -344,7 +344,7 @@
 
 	animate(target, alpha = 0, time = 1 SECONDS, easing = EASE_IN)
 	target.mob_timers[MT_INVISIBILITY] = world.time + base_dur
-
+	user.invisibility = (SEE_INVISIBLE_LIVING + (user.get_skill_level(/datum/skill/misc/sneaking) * 0.75))+3 //Gnolls are harder to spot when using their evil magicks.
 	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, update_sneak_invis), TRUE), base_dur)
 	addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, visible_message), span_warning("[target] lunges out of the shadows!"), span_notice("Your invisibility fades.")), base_dur)
 

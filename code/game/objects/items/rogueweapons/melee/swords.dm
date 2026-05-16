@@ -888,7 +888,7 @@
 		/datum/intent/sword/chop/short,
 		)
 	icon_state = "eastshortsword"
-	sheathe_icon = "kodachi"
+	sheathe_icon = "mulyeog"
 
 /obj/item/rogueweapon/sword/short/iron
 	name = "iron shortsword"
@@ -1094,8 +1094,8 @@
 	sheathe_icon = "decsaber"
 	sellprice = 140
 
-/obj/item/rogueweapon/sword/saber/iron
-	name = "iron saber"
+/obj/item/rogueweapon/sword/sabre/iron
+	name = "iron sabre"
 	desc = "A Naledian sword mass produced for line infantry. Its fittings are simple, munitions grade, but the construction is sturdy and the blade as threatening \
 	as any."
 	smeltresult = /obj/item/ingot/iron
@@ -1848,14 +1848,19 @@
 	name = "ruma hwando"
 	desc = "A foreign steel single-edged sword with cloud patterns on the groove. The Ruma Clan's insignia is engraved on the blade."
 	icon_state = "eastsword2"
+	force = 27
+	max_integrity = 200
+	sharpness_mod = 2
+	sellprice = 50
 
 /obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain
-	force = 30
+	force = 27
 	name = "samjeongdo"
 	desc = "A gold-stained sword with cloud patterns on the groove. One of a kind. It is a symbol of status within the Ruma clan."
 	icon_state = "eastsword3"
-	max_integrity = 180
-	wdefense = 4
+	max_integrity = 200
+	sharpness_mod = 2
+	sellprice = 150
 
 /obj/item/rogueweapon/sword/sabre/hook
 	force = 20

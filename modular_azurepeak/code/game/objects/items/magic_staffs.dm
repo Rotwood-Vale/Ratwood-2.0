@@ -67,6 +67,12 @@
 	desc = "A fine wood staff that is reinforced with blacksteel rivets and furnishings often used by War-Magos that have graduated from the Celestial Academy of Magos. Perched atop it is an less efficient though equally beautiful alchemical Dorpel. Perhaps I could enhance it with a better Dorpel?"
 	icon_state = "blacksteelstaff"
 	max_integrity = 300 // 100 more integrity than a steel quarterstaff due to it's blacksteel nature. Can't smelt it down though :)
+	sellprice = 60
+
+/obj/item/rogueweapon/woodstaff/emerald/blacksteelstaff/royal
+	name = "ducal blacksteel staff"
+	desc = "A mage's staff that has been reinforced with blacksteel rivets and plating. An extravagent gift for a precocious heir that serves as both casting implement and mark of station. The alchemical Dorpel it uses, however, leaves it as a generally sub-par channeling tool. Perhaps it could be improved with a true Dorpel?"
+	sellprice = 100
 
 /obj/item/rogueweapon/woodstaff/sapphire
 	name = "saffira-focused staff"
@@ -114,9 +120,10 @@
 
 /obj/item/rogueweapon/woodstaff/diamond/blacksteelstaff // Upgraded version, more CDR can be crafted by combining a base Blacksteel Staff with a dorpel
 	name = "refined blacksteel staff"
-	desc = "A fine wood staff that is reinforced with blacksteel rivets and furnishings often used by War-Magos that have graduated from the Celestial Academy of Magos. Perched atop it is a new beautiful Dorpel that shimmers with magical energies"
+	desc = "A fine wood staff that is reinforced with blacksteel rivets and furnishings often used by War-Magos that have graduated from the Celestial Academy of Magos. Perched atop it is a new beautiful Dorpel that shimmers with magical energies."
 	icon_state = "blacksteelstaff"
 	max_integrity = 300 // 100 more integrity than a steel quarterstaff due to it's blacksteel nature. Can't smelt it down though :)
+	sellprice = 160
 
 /obj/item/rogueweapon/woodstaff/riddle_of_steel
 	name = "\improper Staff of the Riddle-Steel"

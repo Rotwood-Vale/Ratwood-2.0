@@ -368,6 +368,7 @@
 		/obj/item/natural/hide/cured = 1,
 		)
 	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 4
 
 /obj/item/rogueweapon/shield/heater/crafted
 	sellprice = 6

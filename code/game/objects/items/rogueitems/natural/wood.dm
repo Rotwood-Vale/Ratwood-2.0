@@ -19,6 +19,26 @@
 	var/lumber = /obj/item/grown/log/tree/small //These are solely for lumberjack calculations
 	var/lumber_amount = 1
 	metalizer_result = /obj/item/rogueore/iron
+	var/blessed = FALSE
+
+/obj/item/grown/log/tree/proc/bless_log()
+	if(blessed)
+		return FALSE
+	blessed = TRUE
+	name = "blessed log"
+	add_atom_colour("#88ffaa", FIXED_COLOUR_PRIORITY)
+	add_filter("blessed_log_outline", 2, list("type" = "outline", "color" = "#58C86A", "alpha" = 95, "size" = 1))
+	return TRUE
+
+/obj/item/grown/log/tree/Destroy()
+	remove_filter("blessed_log_outline")
+	return ..()
+
+/obj/item/grown/log/tree/examine(mob/user)
+	. = ..()
+	if(blessed)
+		. += span_green("This log bears Dendor's blessing.")
+		. += span_info("Blessed timber has a big chance to yield 1 extra small log, and a smaller chance to yield 2 extra small logs when chopped.")
 
 /obj/item/grown/log/tree/Initialize(mapload)
 	. = ..()
@@ -44,6 +64,8 @@
 			new /obj/item/grown/log/tree/small(get_turf(src.loc))
 			if(prob(skill_level + user.goodluck(2)))	// when sawing instead of essence you get extra small log
 				new /obj/item/grown/log/tree/small(get_turf(src.loc))
+			if(prob(skill_level + user.goodluck(2)))	// same rate as chopping for lumber essence
+				new /obj/item/grown/log/tree/small/essence(get_turf(src.loc))
 			if(user.is_holding(src))
 				user.dropItemToGround(src)
 			user.mind.add_sleep_experience(/datum/skill/labor/lumberjacking, (user.STAINT*0.5))
@@ -64,11 +86,19 @@
 			new lumber(get_turf(src))
 				// Scaling is less steep than tanning as lumberjacking is easier to level and get
 			if(prob(skill_level + user.goodluck(2)))
-				new /obj/item/natural/cured/essence(get_turf(user))
+				new /obj/item/grown/log/tree/small/essence(get_turf(user))
 				if(!sound_played)
 					sound_played = TRUE
 					to_chat(user, span_warning("Dendor weeps..."))
 					playsound(src,pick('sound/items/gem.ogg'), 100, FALSE)
+		if(blessed)
+			if(prob(50))
+				to_chat(user, span_notice("Dendor's blessing preserves abundant timber, nearly doubling my yield."))
+				new /obj/item/grown/log/tree/small(get_turf(src))
+				new /obj/item/grown/log/tree/small(get_turf(src))
+			else if(prob(80))
+				to_chat(user, span_notice("Dendor's blessing preserves more usable timber for my efforts."))
+				new /obj/item/grown/log/tree/small(get_turf(src))
 		if(!skill_level)
 			to_chat(user, span_info("Due to inexperience, I ruin some of the timber..."))
 		user.mind.add_sleep_experience(/datum/skill/labor/lumberjacking, (user.STAINT*0.5))
@@ -164,6 +194,11 @@
 				user.dropItemToGround(src)
 			for(var/i=1, i<=woodtotal, ++i)
 				new /obj/item/natural/wood/plank(get_turf(src.loc))
+			var/lumber_skill = user.get_skill_level(/datum/skill/labor/lumberjacking)
+			if(prob(lumber_skill + user.goodluck(2)))
+				new /obj/item/grown/log/tree/small/essence(get_turf(src.loc))
+				to_chat(user, span_warning("Dendor weeps..."))
+				playsound(src, pick('sound/items/gem.ogg'), 100, FALSE)
 			user.mind.add_sleep_experience(/datum/skill/craft/carpentry, (user.STAINT*0.5))
 			new /obj/effect/decal/cleanable/debris/woody(get_turf(src))
 			qdel(src)

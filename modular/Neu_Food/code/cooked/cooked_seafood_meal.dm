@@ -36,6 +36,7 @@
 /obj/item/reagent_containers/food/snacks/rogue/berrysalmon
 	name = "berrymash salmon"
 	desc = "A dish of jacksberries mashed atop peppered salmon. Hearty."
+	bitesize = 4
 	icon = 'modular/Neu_Food/icons/cooked/cooked_seafood_meal.dmi'
 	icon_state = "salmon_berry"
 	tastes = list("peppered fish" = 1, "fruity lightness" = 1)
@@ -116,6 +117,7 @@
 /obj/item/reagent_containers/food/snacks/rogue/onionplaice
 	name = "plaice with onion"
 	desc = "A slab of plaice with fried onion. Delicious!"
+	bitesize = 4
 	icon = 'modular/Neu_Food/icons/cooked/cooked_seafood_meal.dmi'
 	icon_state = "onion_plaice"
 	tastes = list("oniony fish" = 1)

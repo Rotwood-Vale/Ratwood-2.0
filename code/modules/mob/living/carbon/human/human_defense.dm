@@ -35,8 +35,10 @@
 		if(used.blocksound)
 			playsound(loc, get_armor_sound(used.blocksound, blade_dulling), 100)
 		var/intdamage = damage
+		var/consume_debuff = TRUE
 		// Penetrative damage deals significantly less to the armor. Tentative.
 		if((damage + armor_penetration) > protection && d_type != "blunt")
+			consume_debuff = FALSE
 			intdamage = (damage + armor_penetration) - protection
 		if(intdamfactor != 1)
 			intdamage *= intdamfactor
@@ -50,6 +52,21 @@
 			if(bless.is_blessed)
 				// Apply multiplier if the blessing is active.
 				intdamage = round(intdamage * bless.cursed_item_intdamage)
+
+		if(consume_debuff)	//If this is FALSE, then this is a penetrative hit -- we consume these in bodypart_attacked_by.
+			if(has_status_effect(/datum/status_effect/debuff/exposed))
+				intdamage *= EXPOSED_INTEG_MOD
+				playsound(src, 'sound/combat/exposed_pop.ogg', 100, TRUE)
+				visible_message(span_biginfo("[src] suffers a savage hit to their armor while exposed, sending them reeling!"))
+				remove_status_effect(/datum/status_effect/debuff/exposed)
+				emote("pain", forced = TRUE)
+			else if(has_status_effect(/datum/status_effect/debuff/vulnerable))
+				intdamage *= VULN_INTEG_MOD
+				playsound(src, 'sound/combat/vulnerable_pop.ogg', 100, TRUE)
+				visible_message(span_biginfo("[src] is struck while vulnerable, leaving a dent in their armor!"))
+				remove_status_effect(/datum/status_effect/debuff/vulnerable)
+				emote("groan", forced = TRUE)
+
 		used.take_damage(intdamage, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
 	if(physiology)
 		protection += physiology.armor.getRating(d_type)

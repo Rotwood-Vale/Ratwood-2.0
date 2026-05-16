@@ -68,6 +68,17 @@
 			else
 				mod = 6
 
+		if(MOVE_INTENT_SNEAK)
+			var/base_walk = CONFIG_GET(number/movedelay/walk_delay)
+			var/default_delay = 6
+			if(HAS_TRAIT(src, TRAIT_LIGHT_STEP))
+				default_delay = base_walk * 1.3
+			var/skill = get_skill_level(/datum/skill/misc/sneaking)
+			var/skill_mod = 1.6 - (skill * 0.1)
+			var/skill_delay = base_walk * skill_mod
+			mod = min(default_delay, skill_delay)
+
+
 	var/spdchange = (10-STASPD)*0.1
 	var/speed_limit = HAS_TRAIT(src, TRAIT_UNCAPPED_SPEED) ? -2 : -0.5
 	spdchange = clamp(spdchange, speed_limit, 1)  //if this is not clamped, maniacs will run at unfathomable speed
@@ -76,14 +87,19 @@
 	add_movespeed_modifier(MOVESPEED_ID_MOB_WALK_RUN_CONFIG_SPEED, TRUE, 100, override = TRUE, multiplicative_slowdown = mod)
 
 /mob/living/proc/update_turf_movespeed(turf/open/T)
-	if(isopenturf(T))
-		var/usedslow = T.get_slowdown(src)
-		if(HAS_TRAIT(src, TRAIT_TRAM_MOVER))
-			usedslow = 0
-		if(usedslow != 0)
-			add_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD, update=TRUE, priority=100, multiplicative_slowdown=usedslow, movetypes=GROUND)
-		else
-			remove_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD)
+	if(!isopenturf(T))
+		remove_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD)
+		return
+	if((movement_type & (FLYING|FLOATING)) || flying)
+		remove_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD)
+		return
+	if(SEND_SIGNAL(src, COMSIG_LIVING_UPDATE_TURF_MOVESPEED) & TURF_MOVESPEED_BLOCKED)
+		return
+	var/usedslow = T.get_slowdown(src)
+	if(HAS_TRAIT(src, TRAIT_TRAM_MOVER))
+		usedslow = 0
+	if(usedslow != 0)
+		add_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD, update=TRUE, priority=100, multiplicative_slowdown=usedslow, movetypes=GROUND)
 	else
 		remove_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD)
 

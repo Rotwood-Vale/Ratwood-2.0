@@ -9,22 +9,16 @@
 
 	C = new C()
 	curses += C
-	var/curse_resist = FALSE
-	if(HAS_TRAIT(src, TRAIT_CURSE_RESIST))
-		curse_resist = 0.5
-	C.on_gain(src, curse_resist)
+	C.on_gain(src, FALSE)
 	return TRUE
 
 /mob/living/carbon/human/proc/remove_curse(datum/curse/C)
 	if(!is_cursed(C))
 		return FALSE
 
-	var/curse_resist = FALSE
-	if(HAS_TRAIT(src, TRAIT_CURSE_RESIST))
-		curse_resist = 0.5
 	for(var/datum/curse/curse in curses)
 		if(curse.name == C.name)
-			curse.on_loss(src, curse_resist)
+			curse.on_loss(src, FALSE)
 			curses -= curse
 			return TRUE
 	return FALSE

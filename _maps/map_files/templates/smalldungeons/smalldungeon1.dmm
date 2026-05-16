@@ -71,8 +71,8 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "bn" = (
-/obj/machinery/light/rogue/wallfire/candle/blue,
-/obj/machinery/light/rogue/wallfire/candle/blue,
+/obj/machinery/light/rogue/candle/blue,
+/obj/machinery/light/rogue/candle/blue,
 /mob/living/carbon/human/species/skeleton/npc/medium,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
@@ -93,7 +93,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/dungeon1)
 "bv" = (
-/obj/machinery/light/rogue/wallfire/candle/blue,
+/obj/machinery/light/rogue/candle/blue,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "bC" = (
@@ -959,7 +959,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "vN" = (
-/obj/machinery/light/rogue/wallfire/candle/blue,
+/obj/machinery/light/rogue/candle/blue,
 /mob/living/carbon/human/species/skeleton/npc/medium,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)

@@ -63,7 +63,12 @@
 		return
 	user.wallpressed = dir2wall
 	user.update_wallpress_slowdown()
-	user.visible_message(pressing_mob ? span_info("[user] is pushed against [src] by [pressing_mob].") : span_info("[user] leans against [src]."))
+	if(pressing_mob)
+		user.visible_message(span_info("[user] is pushed against [src] by [pressing_mob]."))
+	else if(user.m_intent == MOVE_INTENT_SNEAK)
+		to_chat(user, span_info("You press yourself against [src]."))
+	else
+		user.visible_message(span_info("[user] leans against [src]."))
 	switch(dir2wall)
 		if(NORTH)
 			user.setDir(SOUTH)
@@ -77,6 +82,25 @@
 		if(WEST)
 			user.setDir(EAST)
 			user.set_mob_offsets("wall_press", _x = -12, _y = 0)
+
+/mob/living/proc/get_wallpress_alpha()
+	var/skill_level = src.get_skill_level(/datum/skill/misc/sneaking)
+
+	switch(skill_level)
+		if(1)
+			return 128 //50%
+		if(2)
+			return 115 //55%
+		if(3)
+			return 102 //60%
+		if(4)
+			return 90 //65%
+		if(5)
+			return 77 //70%
+		if(6)
+			return 64 //75%
+
+	return 255
 
 /turf/closed/proc/wallshove(mob/living/user)
 	if(user.wallpressed)
@@ -103,10 +127,21 @@
 			user.set_mob_offsets("wall_press", _x = -12, _y = 0)
 
 /mob/living/proc/update_wallpress_slowdown()
-	if(wallpressed)
-		add_movespeed_modifier("wallpress", TRUE, 100, override = TRUE, multiplicative_slowdown = 3)
-	else
+	if(!wallpressed)
 		remove_movespeed_modifier("wallpress")
+		animate(src, alpha = 255, time = 10)
+		REMOVE_TRAIT(src, TRAIT_SPELLCOCKBLOCK, TRAIT_GENERIC)
+		return
+
+	add_movespeed_modifier("wallpress", TRUE, 100, override = TRUE, multiplicative_slowdown = 3)
+	if(m_intent != MOVE_INTENT_SNEAK)
+		return
+	ADD_TRAIT(src, TRAIT_SPELLCOCKBLOCK, TRAIT_GENERIC) // spell restrictions don't seem to be working well so I'm doing it this way for now
+	var/lean_alpha = get_wallpress_alpha()
+	if(src.alpha != 0 && lean_alpha < src.alpha)
+		var/used_time = 50
+		used_time = max(used_time - (get_skill_level(/datum/skill/misc/sneaking) * 8), 10)
+		animate(src, alpha = lean_alpha, time = used_time)
 
 /turf/closed/Bumped(atom/movable/AM)
 	..()
@@ -330,17 +365,6 @@
 	to_be_destroyed = FALSE
 	return src
 
-/turf/closed/indestructible/sandstone
-	name = "sandstone wall"
-	desc = ""
-	icon = 'icons/turf/walls/sandstone_wall.dmi'
-	icon_state = "sandstone"
-	baseturfs = /turf/closed/indestructible/sandstone
-	smooth = SMOOTH_TRUE
-
-/turf/closed/indestructible/oldshuttle/corner
-	icon_state = "corner"
-
 /turf/closed/indestructible/splashscreen
 	name = ""
 	icon = 'icons/title_static.png'
@@ -368,77 +392,3 @@
 	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "riveted"
 	smooth = SMOOTH_TRUE
-
-/turf/closed/indestructible/abductor
-	icon_state = "alien1"
-
-/turf/closed/indestructible/opshuttle
-	icon_state = "wall3"
-
-/turf/closed/indestructible/fakeglass/Initialize(mapload)
-	. = ..()
-	icon_state = null //set the icon state to null, so our base state isn't visible
-	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
-	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
-
-/turf/closed/indestructible/opsglass/Initialize(mapload)
-	. = ..()
-	icon_state = null
-	underlays += mutable_appearance('icons/obj/structures.dmi', "grille")
-	underlays += mutable_appearance('icons/turf/floors.dmi', "plating")
-
-/turf/closed/indestructible/rock
-	name = "granite"
-	desc = ""
-	icon = 'icons/turf/mining.dmi'
-	icon_state = "rock2"
-
-/turf/closed/indestructible/rock/snow
-	name = "mountainside"
-	desc = ""
-	icon = 'icons/turf/walls.dmi'
-	icon_state = "snowrock"
-	bullet_sizzle = TRUE
-	bullet_bounce_sound = null
-
-/turf/closed/indestructible/rock/snow/ice
-	name = "iced rock"
-	desc = ""
-	icon = 'icons/turf/walls.dmi'
-	icon_state = "icerock"
-
-/turf/closed/indestructible/paper
-	name = "thick paper wall"
-	desc = ""
-	icon = 'icons/turf/walls.dmi'
-	icon_state = "paperwall"
-
-/turf/closed/indestructible/necropolis
-	name = "necropolis wall"
-	desc = ""
-	icon = 'icons/turf/walls.dmi'
-	icon_state = "necro"
-	explosion_block = 50
-	baseturfs = /turf/closed/indestructible/necropolis
-
-/turf/closed/indestructible/necropolis/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
-	underlay_appearance.icon = 'icons/turf/floors.dmi'
-	underlay_appearance.icon_state = "necro1"
-	return TRUE
-
-/turf/closed/indestructible/riveted/boss
-	name = "necropolis wall"
-	desc = ""
-	icon = 'icons/turf/walls/boss_wall.dmi'
-	icon_state = "wall"
-	canSmoothWith = list(/turf/closed/indestructible/riveted/boss, /turf/closed/indestructible/riveted/boss/see_through)
-	explosion_block = 50
-	baseturfs = /turf/closed/indestructible/riveted/boss
-
-/turf/closed/indestructible/riveted/boss/see_through
-	opacity = FALSE
-
-/turf/closed/indestructible/riveted/boss/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
-	underlay_appearance.icon = 'icons/turf/floors.dmi'
-	underlay_appearance.icon_state = "basalt"
-	return TRUE

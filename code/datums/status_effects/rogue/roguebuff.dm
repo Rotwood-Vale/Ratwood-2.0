@@ -333,7 +333,7 @@
 		pintle.functional = TRUE
 		had_disfunctional_pintle = TRUE
 
-	owner?.sexcon?.adjust_charge(SEX_MAX_CHARGE)
+	owner?.sexcon?.set_charge(owner?.sexcon?.get_max_charge())
 
 /datum/status_effect/buff/fermented_crab/on_remove()
 	. = ..()
@@ -1666,7 +1666,7 @@
 
 /datum/status_effect/buff/clash
 	id = "clash"
-	duration = 6 SECONDS
+	duration = 4 SECONDS
 	var/dur
 	var/sfx_on_apply = 'sound/combat/clash_initiate.ogg'
 	var/swingdelay_mod = 5

@@ -158,8 +158,15 @@
 
 /obj/item/rogueweapon/wolf_claw/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)
+
+/obj/item/rogueweapon/wolf_claw/attack_self(mob/living/user)
+	var/obj/item/rogueweapon/wolf_claw/active = user.get_active_held_item()
+	var/obj/item/rogueweapon/wolf_claw/inactive = user.get_inactive_held_item()
+	if(active)
+		user.dropItemToGround(active, TRUE)
+	if(inactive && inactive != active)
+		user.dropItemToGround(inactive, TRUE)
 
 // WOLF SPELLS //
 /obj/effect/proc_holder/spell/self/wolfclaws
@@ -175,22 +182,20 @@
 	..()
 	var/obj/item/rogueweapon/wolf_claw/left/l
 	var/obj/item/rogueweapon/wolf_claw/right/r
+	var/active = user.get_active_held_item()
+	var/inactive = user.get_inactive_held_item()
 
-	l = user.get_active_held_item()
-	r = user.get_inactive_held_item()
-	if(extended)
-		if(istype(l, /obj/item/rogueweapon/wolf_claw))
-			user.dropItemToGround(l, TRUE)
-			qdel(l)
-		if(istype(r, /obj/item/rogueweapon/wolf_claw))
-			user.dropItemToGround(r, TRUE)
-			qdel(r)
-		//user.visible_message("Your claws retract.", "You feel your claws retracting.", "You hear a sound of claws retracting.")
+	if(istype(active, /obj/item/rogueweapon/wolf_claw) || istype(inactive, /obj/item/rogueweapon/wolf_claw))
+		if(istype(active, /obj/item/rogueweapon/wolf_claw))
+			user.dropItemToGround(active, TRUE)
+		if(istype(inactive, /obj/item/rogueweapon/wolf_claw) && inactive != active)
+			user.dropItemToGround(inactive, TRUE)
+		to_chat(user, span_notice("My claws retract."))
 		extended = FALSE
 	else
-		l = new(user,1)
-		r = new(user,2)
+		l = new(user, 1)
+		r = new(user, 2)
 		user.put_in_hands(l, TRUE, FALSE, TRUE)
 		user.put_in_hands(r, TRUE, FALSE, TRUE)
-		//user.visible_message("Your claws extend.", "You feel your claws extending.", "You hear a sound of claws extending.")
+		to_chat(user, span_notice("My claws extend."))
 		extended = TRUE

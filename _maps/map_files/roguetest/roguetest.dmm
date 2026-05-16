@@ -268,7 +268,7 @@
 /area/rogue/indoors)
 "jK" = (
 /turf/closed/mineral/rogue/bedrock,
-/area/rogue/indoors/cave)
+/area/rogue/under/cave)
 "kl" = (
 /obj/structure/plough,
 /turf/open/floor/rogue/grass,
@@ -919,7 +919,7 @@
 /area/rogue/indoors)
 "AU" = (
 /turf/closed/mineral/random/rogue,
-/area/rogue/indoors/cave)
+/area/rogue/under/cave)
 "AX" = (
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors)
@@ -1063,7 +1063,7 @@
 /area/rogue/outdoors)
 "Eu" = (
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/indoors/cave)
+/area/rogue/under/cave)
 "Ew" = (
 /obj/structure/roguemachine/stockpile,
 /turf/open/floor/rogue/grass,

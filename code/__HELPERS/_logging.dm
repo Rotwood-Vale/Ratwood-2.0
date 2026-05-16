@@ -341,6 +341,9 @@
 /proc/key_name_admin(whom, include_name = TRUE)
 	return key_name(whom, TRUE, include_name)
 
+/proc/key_name_ahelp(whom)
+	return key_name(whom, FALSE, FALSE)
+
 /proc/loc_name(atom/A)
 	if(!istype(A))
 		return "(INVALID LOCATION)"

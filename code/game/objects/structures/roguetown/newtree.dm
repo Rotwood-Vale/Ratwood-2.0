@@ -117,6 +117,12 @@
 			record_featured_stat(FEATURED_STATS_TREE_FELLERS, user)
 			record_round_statistic(STATS_TREES_CUT)
 
+/obj/structure/flora/newtree/proc/bless_tree(mob/user)
+	if(obj_integrity < max_integrity)
+		obj_integrity = min(max_integrity, obj_integrity + round(max_integrity / 2))
+		return TRUE
+	return FALSE
+
 /obj/structure/flora/newtree/update_icon_state()
 	icon_state = burnt ? "burnt" : ""
 
@@ -136,6 +142,8 @@
 	dir = pick(GLOB.cardinals)
 	SStreesetup.initialize_me |= src
 	build_trees()
+	build_branches()
+	build_leafs()
 	update_icon()
 	if(istype(loc, /turf/open/floor/rogue/grass))
 		var/turf/T = loc
@@ -149,6 +157,8 @@
 		T.update_icon()
 
 /obj/structure/flora/newtree/proc/build_branches()
+	if(!istype(loc, /turf/open/transparent/openspace))
+		return
 	for(var/D in GLOB.cardinals)
 		var/turf/NT = get_step(src, D)
 		if(istype(NT, /turf/open/transparent/openspace))

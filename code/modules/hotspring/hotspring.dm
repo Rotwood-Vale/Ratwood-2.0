@@ -247,6 +247,29 @@
 	obj_flags = CAN_BE_HIT | IGNORE_SINK
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = GAME_PLANE_UPPER
+	pixel_x = -60
+	pixel_y = -10
 
 	bound_height = 128
 	bound_width = 128
+	max_integrity = 200
+	blade_dulling = DULLING_CUT
+	attacked_sound = 'sound/misc/woodhit.ogg'
+	destroy_sound = 'sound/misc/woodhit.ogg'
+	static_debris = list(/obj/item/grown/log/tree = 1)
+	var/obj/effect/abstract/particle_holder/cached/petal_effect
+
+/obj/structure/flora/sakura/Initialize(mapload)
+	. = ..()
+	petal_effect = new(src, /particles/sakura, 6)
+	petal_effect.vis_flags &= ~VIS_INHERIT_PLANE
+
+/obj/structure/flora/sakura/Destroy()
+	QDEL_NULL(petal_effect)
+	return ..()
+
+/obj/structure/flora/sakura/examine(mob/user)
+	. = ..()
+	if(iscarbon(user))
+		user.add_stress(/datum/stressevent/sakura_view)
+		to_chat(user, span_green("The gentle flutter of petals calms my spirit."))
