@@ -205,6 +205,33 @@
 		return
 	return ..()
 
+/// Allow a single coin to be placed in a dead mob's mouth by targeting the mouth zone.
+/obj/item/roguecoin/afterattack(atom/target, mob/living/user, proximity, params)
+	. = ..()
+	if(!proximity)
+		return
+	if(!ishuman(target))
+		return
+	var/mob/living/carbon/human/H = target
+	if(H.stat != DEAD)
+		return
+	if(user.stat != CONSCIOUS)
+		return
+	if(user.zone_selected != BODY_ZONE_PRECISE_MOUTH)
+		return
+	if(quantity > 1)
+		to_chat(user, span_warning("I need a single coin, not a stack, to place it in [H]'s mouth."))
+		return
+	if(H.mouth)
+		to_chat(user, span_warning("[H] already has something in their mouth."))
+		return
+	if(!user.temporarilyRemoveItemFromInventory(src))
+		return
+	H.mouth = src
+	src.forceMove(H)
+	H.update_inv_mouth()
+	to_chat(user, span_notice("I slip [src] into [H]'s mouth."))
+
 //OTAVAN MARQUE - WORTHLESS TO ANYONE BUT INQ.
 /obj/item/roguecoin/inqcoin
 	name = "otavan marque"

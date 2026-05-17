@@ -241,21 +241,22 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 	// Necra's chosen are guided to the Carriageman upon entering her realm
 	if(HAS_TRAIT(target, TRAIT_SOUL_EXAMINE))
 		var/obj/structure/underworld/carriageman/CM = locate(/obj/structure/underworld/carriageman) in world
-		if(CM && get_turf(CM).z == destination.z)
+		if(CM)
 			var/turf/CM_turf = get_turf(CM)
-			for(var/turf/T in range(2, CM))
-				if(T == CM_turf)
-					continue
-				if(T.density)
-					continue
-				var/blocked = FALSE
-				for(var/atom/movable/AM in T)
-					if(AM.density)
-						blocked = TRUE
+			if(CM_turf.z == destination.z)
+				for(var/turf/T in range(2, CM))
+					if(T == CM_turf)
+						continue
+					if(T.density)
+						continue
+					var/blocked = FALSE
+					for(var/atom/movable/AM in T)
+						if(AM.density)
+							blocked = TRUE
+							break
+					if(!blocked)
+						spawn_turf = T
 						break
-				if(!blocked)
-					spawn_turf = T
-					break
 	target.forceMove(spawn_turf)
 
 /// Bones, skulls, severed limbs, and whole bodies fed to the portal yield tokens of gratitude.
@@ -300,6 +301,42 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		limb_coin.pixel_y = rand(-6, 6)
 		qdel(I)
 		return
+	// Skulls and loose organs offered to the portal yield psilen
+	if(istype(I, /obj/item/skull) || istype(I, /obj/item/organ))
+		to_chat(user, span_notice("The portal consumes [I] in offering."))
+		var/obj/item/roguecoin/aalloy/psilen_coin = new(get_turf(user))
+		psilen_coin.pixel_x = rand(-6, 6)
+		psilen_coin.pixel_y = rand(-6, 6)
+		qdel(I)
+		return
+	// A sack or bag filled with the accepted offerings can be dumped in all at once
+	if(istype(I, /obj/item/storage))
+		var/obj/item/storage/sack = I
+		var/total_tokens = 0
+		var/total_psilen = 0
+		var/list/sack_contents = sack.contents.Copy()
+		for(var/obj/item/sack_item in sack_contents)
+			if(istype(sack_item, /obj/item/natural/bundle/bone))
+				var/obj/item/natural/bundle/bone/bundle = sack_item
+				total_tokens += bundle.amount
+				qdel(sack_item)
+			else if(istype(sack_item, /obj/item/natural/bone) || istype(sack_item, /obj/item/bodypart))
+				total_tokens++
+				qdel(sack_item)
+			else if(istype(sack_item, /obj/item/skull) || istype(sack_item, /obj/item/organ))
+				total_psilen++
+				qdel(sack_item)
+		if(total_tokens > 0)
+			var/obj/item/roguecoin/necra_token/sack_tokens = new(get_turf(user), total_tokens)
+			sack_tokens.pixel_x = rand(-6, 6)
+			sack_tokens.pixel_y = rand(-6, 6)
+		if(total_psilen > 0)
+			var/obj/item/roguecoin/aalloy/sack_psilen = new(get_turf(user), total_psilen)
+			sack_psilen.pixel_x = rand(-6, 6)
+			sack_psilen.pixel_y = rand(-6, 6)
+		if(total_tokens > 0 || total_psilen > 0)
+			to_chat(user, span_notice("The portal greedily accepts the offerings from [I]."))
+			return
 	return ..()
 
 GLOBAL_VAR_INIT(underworld_strands, 0)

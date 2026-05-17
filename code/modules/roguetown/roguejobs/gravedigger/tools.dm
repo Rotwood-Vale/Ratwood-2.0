@@ -84,8 +84,7 @@
 							H = new /obj/structure/closet/dirthole(T)
 						else
 							T.ChangeTurf(/turf/open/floor/rogue/dirt/road, flags = CHANGETURF_INHERIT_AIR)
-							var/turf/open/floor/rogue/dirt/newD = T
-							H = newD.holie
+							H = new /obj/structure/closet/dirthole(T)
 
 					if(H)
 						H.stage = 3
@@ -178,9 +177,11 @@
 
 		if(istype(T, /turf/open/floor/rogue/grass) || istype(T, /turf/open/floor/rogue/grassred) || istype(T, /turf/open/floor/rogue/grassyel) || istype(T, /turf/open/floor/rogue/grasscold) || istype(T, /turf/open/floor/rogue/grasspurple) || istype(T, /turf/open/floor/rogue/grassgrey))
 			if(HAS_TRAIT(user, TRAIT_GRAVEROBBER) && istype(user.rmb_intent, /datum/rmb_intent/strong))
-				to_chat(user, span_notice("You carve through the grass, exposing the earth beneath."))
-				T.ChangeTurf(/turf/open/floor/rogue/dirt, flags = CHANGETURF_INHERIT_AIR)
-				playsound(T, 'sound/items/dig_shovel.ogg', 100, TRUE)
+				to_chat(user, span_notice("I begin carving through the grass..."))
+				if(do_after(user, 5 SECONDS, target = T))
+					to_chat(user, span_notice("You carve through the grass, exposing the earth beneath."))
+					T.ChangeTurf(/turf/open/floor/rogue/dirt, flags = CHANGETURF_INHERIT_AIR)
+					playsound(T, 'sound/items/dig_shovel.ogg', 100, TRUE)
 				return
 			to_chat(user, span_warning("There is grass in the way."))
 			return

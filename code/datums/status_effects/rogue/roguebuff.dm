@@ -1323,10 +1323,41 @@
 	to_chat(owner, span_danger("You feel as though some horrible deal has been prepared in your name. May you never see it fulfilled..."))
 	playsound(owner, 'sound/misc/bell.ogg', 100, FALSE, -1)
 	ADD_TRAIT(owner, TRAIT_DEATHBARGAIN, id)
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_bargain_death))
 
 /datum/status_effect/buff/undermaidenbargain/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_DEATHBARGAIN, id)
+	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
+
+/// Fired when the bargained player dies. Schedules revival in the underworld after the death proc finishes.
+/datum/status_effect/buff/undermaidenbargain/proc/on_bargain_death(datum/source, gibbed)
+	SIGNAL_HANDLER
+	if(gibbed)
+		return // The bargain can't save the gibbed
+	if(!owner.mind?.active)
+		return // Only player-controlled mobs get the bargain
+	// Delay by 1 tick so the full death proc (rot component, etc.) finishes first
+	addtimer(CALLBACK(src, PROC_REF(fulfill_bargain)), 1)
+
+/// Called 1 tick after death — revives the player in the underworld realm.
+/datum/status_effect/buff/undermaidenbargain/proc/fulfill_bargain()
+	if(QDELETED(src) || QDELETED(owner))
+		return
+	var/mob/living/H = owner
+	if(H.stat != DEAD)
+		return // Already revived by something else
+	H.revive(full_heal = FALSE)
+	// The heal effect: rapid wound/damage recovery + brief death immunity
+	H.apply_status_effect(/datum/status_effect/buff/undermaidenbargainheal)
+	H.visible_message(span_danger("Something cold and irresistible drags [H] back from beyond the threshold!"))
+	playsound(get_turf(H), 'sound/misc/deadbell.ogg', 100, FALSE, -1)
+	// Move to underworld
+	if(length(GLOB.deaths_door_entries))
+		H.forceMove(pick(GLOB.deaths_door_entries))
+		to_chat(H, span_cultsmall("The bargain struck in your name has been called. You have been dragged to the Undermaiden's realm — find your way out."))
+	else
+		to_chat(H, span_cultsmall("The bargain has been called, but Necra's realm could not be reached. You are spared, this once."))
 
 
 /datum/status_effect/buff/undermaidenbargainheal/on_apply()

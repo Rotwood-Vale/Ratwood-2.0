@@ -391,10 +391,18 @@ Necra's Censer
 		S.start()
 		// Cleanse the user and nearby living mobs, and bless them briefly
 		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-		user.apply_status_effect(/datum/status_effect/censer_blessed)
+		if(ishuman(user))
+			var/mob/living/carbon/human/UH = user
+			for(var/obj/item/I in UH.get_equipped_items())
+				SEND_SIGNAL(I, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		if(isliving(user))
+			var/mob/living/LU = user
+			LU.apply_status_effect(/datum/status_effect/mood/censer_blessed)
 		for(var/mob/living/carbon/human/H in range(4, user))
 			if(H == user)
 				continue
 			SEND_SIGNAL(H, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-			H.apply_status_effect(/datum/status_effect/censer_blessed)
+			for(var/obj/item/I in H.get_equipped_items())
+				SEND_SIGNAL(I, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			H.apply_status_effect(/datum/status_effect/mood/censer_blessed)
 			to_chat(H, span_notice("The Undermaiden's incense washes over you."))

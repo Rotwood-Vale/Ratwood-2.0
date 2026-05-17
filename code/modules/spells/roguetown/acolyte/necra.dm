@@ -161,7 +161,6 @@
 /obj/effect/proc_holder/spell/invoked/speakwithdead
 	name = "Speak with Dead"
 	desc = "Call upon the Undermaiden to let your words reach a departed soul, and hear their whisper in return."
-	max_targets = 0
 	cast_without_targets = TRUE
 	overlay_state = "speakwithdead"
 	releasedrain = 30
@@ -462,9 +461,9 @@
 		// Soul status: check if the player's mind is still present as a ghost
 		var/soul_tag = ""
 		if(istype(C.mind?.current, /mob/dead/observer))
-			soul_tag = "[Lingers] "
+			soul_tag = "(Lingers) "
 		else if(C.mind?.key)
-			soul_tag = "[Departed] "
+			soul_tag = "(Departed) "
 
 		// Area prefix
 		var/area/corpse_area_entry = get_area(C)
@@ -503,7 +502,7 @@
 				continue
 			if(NPC.mind)
 				continue	// skip player corpses, already shown above
-			var/npc_area = get_area(NPC)
+			var/area/npc_area = get_area(NPC)
 			var/npc_area_str = npc_area ? "([npc_area.name]) " : ""
 			npc_corpses["[npc_area_str][NPC.name]"] = NPC
 		if(!length(npc_corpses))
