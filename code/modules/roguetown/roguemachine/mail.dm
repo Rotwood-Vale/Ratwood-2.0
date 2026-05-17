@@ -132,16 +132,20 @@
 	if(findtext(send2place, "#"))
 		var/box2find = text2num(copytext(send2place, findtext(send2place, "#")+1))
 		var/found = FALSE
-		for(var/obj/structure/roguemachine/mail/X in SSroguemachine.hermailers)
-			if(X.ournum == box2find)
-				found = TRUE
-				P.mailer = sentfrom
-				P.mailedto = send2place
-				P.update_icon()
-				P.forceMove(X.loc)
-				X.say("New mail!")
-				playsound(X, 'sound/misc/hiss.ogg', 100, FALSE, -1)
-				break
+		var/obj/structure/roguemachine/mail/X = find_hermes_by_directory_number(box2find)
+		if(!X)
+			for(var/obj/structure/roguemachine/mail/legacy in SSroguemachine.hermailers)
+				if(legacy.ournum == box2find)
+					X = legacy
+					break
+		if(X)
+			found = TRUE
+			P.mailer = sentfrom
+			P.mailedto = send2place
+			P.update_icon()
+			P.forceMove(X.loc)
+			X.say("New mail!")
+			playsound(X, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 		if(found)
 			visible_message(span_warning("[user] sends something."))
 			playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
@@ -528,16 +532,20 @@
 				var/box2find = text2num(copytext(send2place, findtext(send2place, "#")+1))
 				testing("box2find [box2find]")
 				var/found = FALSE
-				for(var/obj/structure/roguemachine/mail/X in SSroguemachine.hermailers)
-					if(X.ournum == box2find)
-						found = TRUE
-						P.mailer = sentfrom
-						P.mailedto = send2place
-						P.update_icon()
-						P.forceMove(X.loc)
-						X.say("New mail!")
-						playsound(X, 'sound/misc/hiss.ogg', 100, FALSE, -1)
-						break
+				var/obj/structure/roguemachine/mail/X = find_hermes_by_directory_number(box2find)
+				if(!X)
+					for(var/obj/structure/roguemachine/mail/legacy in SSroguemachine.hermailers)
+						if(legacy.ournum == box2find)
+							X = legacy
+							break
+				if(X)
+					found = TRUE
+					P.mailer = sentfrom
+					P.mailedto = send2place
+					P.update_icon()
+					P.forceMove(X.loc)
+					X.say("New mail!")
+					playsound(X, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 				if(found)
 					visible_message(span_warning("[user] sends something."))
 					playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
@@ -660,16 +668,9 @@
 
 /obj/structure/roguemachine/mail/proc/view_directory(mob/user)
 	var/dat
-	var/list/shown_entries = list()
-	for(var/obj/structure/roguemachine/mail/X in SSroguemachine.hermailers)
-		if(X.obfuscated)
-			continue
-		for(var/address in X.get_directory_addresses())
-			var/entry = "#[X.ournum] [address]"
-			if(entry in shown_entries)
-				continue
-			shown_entries += list(entry)
-			dat += "[entry]<br>"
+	var/list/entries = get_hermes_directory_entries(FALSE)
+	for(var/list/entry in entries)
+		dat += "#[entry[\"num\"]] [entry[\"address\"]]<br>"
 
 	var/datum/browser/popup = new(user, "hermes_directory", "<center>HERMES DIRECTORY</center>", 387, 420)
 	popup.set_content(dat)
@@ -786,6 +787,29 @@
 		for(var/mail_address in X.get_delivery_addresses())
 			if(LOWER_TEXT(trim(mail_address)) == target)
 				return X
+	return null
+
+/proc/get_hermes_directory_entries(include_obfuscated = FALSE)
+	var/list/entries = list()
+	var/directory_num = 1
+	for(var/obj/structure/roguemachine/mail/X in SSroguemachine.hermailers)
+		if(!include_obfuscated && X.obfuscated)
+			continue
+		for(var/address in X.get_directory_addresses())
+			entries += list(list(
+				"num" = directory_num,
+				"machine" = X,
+				"address" = "[address]",
+			))
+			directory_num += 1
+	return entries
+
+/proc/find_hermes_by_directory_number(number)
+	if(!isnum(number) || number < 1)
+		return null
+	for(var/list/entry in get_hermes_directory_entries(FALSE))
+		if(entry["num"] == number)
+			return entry["machine"]
 	return null
 
 
