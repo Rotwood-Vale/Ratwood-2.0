@@ -670,7 +670,9 @@
 	var/dat
 	var/list/entries = get_hermes_directory_entries(FALSE)
 	for(var/list/entry in entries)
-		dat += "#[entry[\"num\"]] [entry[\"address\"]]<br>"
+		var/directory_num = entry["num"]
+		var/address = entry["address"]
+		dat += "#[directory_num] [address]<br>"
 
 	var/datum/browser/popup = new(user, "hermes_directory", "<center>HERMES DIRECTORY</center>", 387, 420)
 	popup.set_content(dat)
