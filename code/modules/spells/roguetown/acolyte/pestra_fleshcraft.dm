@@ -14,7 +14,7 @@
 	movement_interrupt = FALSE
 	sound = 'sound/gore/flesh_eat_03.ogg'
 	spell_tier = 1
-	invocations = list("Flesh, remember the shape I give you.")
+	invocations = list("Flesh, remember the shape I give you...")
 	invocation_type = "whisper"
 	associated_skill = /datum/skill/magic/holy
 	devotion_cost = 25
