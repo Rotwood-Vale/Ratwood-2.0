@@ -46,6 +46,11 @@
 	stressadd = 2
 	desc = span_red("Smells like death here.")
 
+/datum/stressevent/stinky_aura
+	timer = 20 SECONDS
+	stressadd = 2
+	desc = span_red("Something nearby reeks.")
+
 /datum/stressevent/peckish
 	timer = 10 MINUTES
 	stressadd = 1

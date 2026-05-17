@@ -332,3 +332,9 @@
   - balance: Feints will always succeed on someone guarding.
   - balance: Baits no longer need line of sight.
   - balance: Slightly reduced guard duration.
+2026-05-15:
+  The-Sun-In-Splendour:
+  - rscadd: heresiarch's amulet now changes based on the patron
+  - bugfix: golden zcross and bronze graggar amulet no longer has no sprite
+  yupup123:
+  - rscadd: Added new Malodorous Flaw
