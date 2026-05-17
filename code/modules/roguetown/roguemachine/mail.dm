@@ -34,6 +34,8 @@
 	. = ..()
 	SSroguemachine.hermailers += src
 	ournum = SSroguemachine.hermailers.len
+	if(!mailtags && LOWER_TEXT(trim(mailtag)) == LOWER_TEXT("Kingsfield - Ferentian Diplomatic Mission"))
+		mailtags = "Aavar, Etrusca, Grenzelhoft, Gronn, Hammerhold, Kazengun, Old Naledi, Otava, Underdark, North Zybantium, West Zybantium, East Zybantium, Grenzelhoftian Holy See, Otavan Inquisitorial Council"
 	name = "[name] #[ournum]"
 	update_icon()
 
@@ -658,11 +660,15 @@
 
 /obj/structure/roguemachine/mail/proc/view_directory(mob/user)
 	var/dat
+	var/list/shown_addresses = list()
 	for(var/obj/structure/roguemachine/mail/X in SSroguemachine.hermailers)
 		if(X.obfuscated)
 			continue
 		for(var/address in X.get_directory_addresses())
-			dat += "#[X.ournum] [address]<br>"
+			if(address in shown_addresses)
+				continue
+			shown_addresses += list(address)
+			dat += "[address]<br>"
 
 	var/datum/browser/popup = new(user, "hermes_directory", "<center>HERMES DIRECTORY</center>", 387, 420)
 	popup.set_content(dat)
@@ -746,15 +752,19 @@
 	if(mailtag)
 		var/primary_address = trim(mailtag)
 		if(length(primary_address))
-			addresses += primary_address
+			addresses += list(primary_address)
 	if(mailtags)
-		collect_mailtags(mailtags, addresses)
+		var/list/raw_aliases = splittext(mailtags, ",")
+		for(var/address_tag in raw_aliases)
+			var/clean_alias = trim(address_tag)
+			if(length(clean_alias))
+				addresses += list(clean_alias)
 
 	if(addresses.len)
 		var/list/unique_addresses = list()
 		for(var/address in addresses)
 			if(!(address in unique_addresses))
-				unique_addresses += address
+				unique_addresses += list(address)
 		return unique_addresses
 
 	return addresses
