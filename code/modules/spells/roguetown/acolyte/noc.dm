@@ -19,7 +19,7 @@
 	invocation_type = "shout" //can be none, whisper, emote and shout
 	associated_skill = /datum/skill/magic/holy
 	devotion_cost = 15
-	recharge_time = 30 SECONDS
+	recharge_time = 23 SECONDS
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	miracle = TRUE
 	cost = 3
@@ -341,7 +341,7 @@
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	devotion_cost = 50
-	recharge_time = 45 SECONDS
+	recharge_time = 30 SECONDS
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	miracle = TRUE
 
@@ -389,7 +389,7 @@
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	devotion_cost = 50
-	recharge_time = 120 SECONDS
+	recharge_time = 60 SECONDS
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	miracle = TRUE
 

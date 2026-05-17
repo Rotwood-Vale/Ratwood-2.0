@@ -692,3 +692,126 @@
 		return TRUE
 	revert_cast()
 	return FALSE
+
+/obj/effect/proc_holder/spell/invoked/cascade
+	name = "Cascade"
+	desc = "Invoke Zizo, Dame of Progress, to turn a cleric's weakened faith into a violent cascade of progress."
+	range = 7
+	sound = list('sound/magic/churn.ogg')
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	releasedrain = 40
+	chargedrain = 0
+	chargetime = 30
+	warnie = "spellwarning"
+	no_early_release = TRUE
+	charging_slowdown = 1
+	chargedloop = /datum/looping_sound/invokeholy
+	gesture_required = TRUE
+	associated_skill = /datum/skill/magic/holy
+	recharge_time = 90 SECONDS
+	hide_charge_effect = TRUE
+	movement_interrupt = FALSE
+	miracle = TRUE
+	devotion_cost = 100
+	invocations = list("Clerics and gods alike shall yield to Z progress!")
+	invocation_type = "shout"
+
+/obj/effect/proc_holder/spell/invoked/cascade/cast(list/targets, mob/living/user)
+	. = ..()
+
+	if(!targets || !length(targets) || !ishuman(targets[1]))
+		revert_cast()
+		return FALSE
+
+	var/mob/living/carbon/human/target = targets[1]
+
+	if(user.z != target.z)
+		to_chat(user, span_warning("Zizo demands that progress be witnessed on the same level."))
+		revert_cast()
+		return FALSE
+
+	var/current_devotion = target.devotion
+	var/maximum_devotion = target.max_devotion
+
+	if(!isnum(current_devotion) || !isnum(maximum_devotion) || maximum_devotion <= 0)
+		to_chat(user, span_warning("[target] has no devotion for Zizo to measure."))
+		revert_cast()
+		return FALSE
+
+	var/missing_devotion = maximum_devotion - current_devotion
+
+	if(missing_devotion <= 10)
+		to_chat(user, span_warning("[target]'s faith is not weakened enough to yield."))
+		revert_cast()
+		return FALSE
+
+	if(missing_devotion <= 30)
+		user.say("Faith yields!")
+		target.visible_message(span_danger("[target] is seared by Zizo's cascade!"), span_userdanger("My weakened faith burns under the weight of progress!"))
+		target.adjustFireLoss(30)
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		return TRUE
+
+	if(missing_devotion <= 60)
+		user.say("Old faith breaks!")
+		target.visible_message(span_danger("[target] is burned by Zizo's cascade!"), span_userdanger("My devotion falters as progress tears through it!"))
+		target.adjustFireLoss(60)
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		return TRUE
+
+	if(missing_devotion <= 100)
+		user.say("Progress will not kneel!")
+		target.visible_message(span_danger("[target] staggers as Zizo's cascade strikes them!"), span_userdanger("My faith buckles before Zizo's progress!"))
+		target.adjustFireLoss(80)
+		target.Stun(20)
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		return TRUE
+
+	if(missing_devotion <= 200)
+		user.say("The gods must yield!")
+		target.visible_message(span_danger("[target] is consumed by cascading holy force!"), span_userdanger("My weakened devotion collapses before progress!"))
+		target.adjustFireLoss(100)
+		target.adjust_fire_stacks(7, /datum/status_effect/fire_handler/fire_stacks/divine)
+		target.Stun(20)
+		target.ignite_mob()
+		explosion(get_turf(target), heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, smoke = FALSE)
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		return TRUE
+
+	if(missing_devotion <= 500) //something bad happens
+		user.say("Your god cannot stop progress!")
+		target.visible_message(span_danger("[target] is wreathed in Zizo's cascading flame!"), span_userdanger("My faith is overwhelmed by relentless progress!"))
+		target.adjustFireLoss(120)
+		target.adjust_fire_stacks(9, /datum/status_effect/fire_handler/fire_stacks/divine)
+		target.ignite_mob()
+		target.Stun(40)
+		explosion(get_turf(target), heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, smoke = FALSE)
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		return TRUE
+
+	if(missing_devotion <= 1000) //barely possible anyway
+		user.say("Faith shall yield to progress!")
+		target.visible_message(span_danger("[target] is struck by a violent cascade of Zizo's power!"), span_userdanger("My weakened faith erupts under the march of progress!"))
+		target.Stun(60)
+		target.emote("agony")
+		target.adjustFireLoss(140)
+		target.adjust_fire_stacks(9, /datum/status_effect/fire_handler/fire_stacks/divine)
+		target.ignite_mob()
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		explosion(get_turf(target), heavy_impact_range = 2, light_impact_range = 3, flame_range = 4, smoke = FALSE)
+		return TRUE
+
+	if(missing_devotion >= 1001) //
+		user.say("Clerics and gods alike shall yield to progress!") //i have no idea what to put here so there a main idea that your gods bow before the progress
+		target.visible_message(span_danger("[target] is shattered by Zizo's impossible cascade!"), span_userdanger("My faith collapses beneath something greater than gods!"))
+		target.Stun(80)
+		target.emote("agony")
+		target.adjustFireLoss(160)
+		target.adjust_fire_stacks(9, /datum/status_effect/fire_handler/fire_stacks/divine)
+		target.ignite_mob()
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		explosion(get_turf(target), heavy_impact_range = 2, light_impact_range = 3, flame_range = 4, smoke = FALSE)
+		return TRUE
+
+	revert_cast()
+	return FALSE
