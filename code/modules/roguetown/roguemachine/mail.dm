@@ -644,7 +644,8 @@
 
 /obj/structure/roguemachine/mail/examine(mob/user)
 	. = ..()
-	. += "<a href='?src=[REF(src)];directory=1'>Directory:</a> [mailtag][mailtags ? ", [mailtags]" : ""]"
+	var/suffix = mailtags ? ", [mailtags]" : ""
+	. += "<a href='?src=[REF(src)];directory=1'>Directory:</a> [mailtag][suffix]"
 
 /obj/structure/roguemachine/mail/Topic(href, href_list)
 	..()
@@ -743,21 +744,19 @@
 /obj/structure/roguemachine/mail/proc/get_delivery_addresses()
 	var/list/addresses = list()
 	if(mailtag)
-		var/primary_address = mailtag
+		var/primary_address = trim(mailtag)
 		if(length(primary_address))
 			addresses += primary_address
 	if(mailtags)
-		var/mailtags_text = mailtags
-		var/start = 1
-		while(start <= length(mailtags_text))
-			var/comma = findtext(mailtags_text, ",", start)
-			var/address_tag = comma ? copytext(mailtags_text, start, comma) : copytext(mailtags_text, start)
-			var/clean_alias = trim(address_tag)
-			if(length(clean_alias))
-				addresses += clean_alias
-			if(!comma)
-				break
-			start = comma + 1
+		collect_mailtags(mailtags, addresses)
+
+	if(addresses.len)
+		var/list/unique_addresses = list()
+		for(var/address in addresses)
+			if(!(address in unique_addresses))
+				unique_addresses += address
+		return unique_addresses
+
 	return addresses
 
 /obj/structure/roguemachine/mail/proc/get_directory_addresses()
