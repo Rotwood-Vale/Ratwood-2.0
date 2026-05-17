@@ -660,15 +660,16 @@
 
 /obj/structure/roguemachine/mail/proc/view_directory(mob/user)
 	var/dat
-	var/list/shown_addresses = list()
+	var/list/shown_entries = list()
 	for(var/obj/structure/roguemachine/mail/X in SSroguemachine.hermailers)
 		if(X.obfuscated)
 			continue
 		for(var/address in X.get_directory_addresses())
-			if(address in shown_addresses)
+			var/entry = "#[X.ournum] [address]"
+			if(entry in shown_entries)
 				continue
-			shown_addresses += list(address)
-			dat += "[address]<br>"
+			shown_entries += list(entry)
+			dat += "[entry]<br>"
 
 	var/datum/browser/popup = new(user, "hermes_directory", "<center>HERMES DIRECTORY</center>", 387, 420)
 	popup.set_content(dat)
