@@ -87,11 +87,19 @@
 				//End bloody footprints
 				S.step_action()
 		if(mouth)
+			var/in_grave_pit = FALSE
+			var/atom/container = loc
+			while(container)
+				if(istype(container, /obj/structure/closet/dirthole))
+					in_grave_pit = TRUE
+					break
+				container = container.loc
+			var/is_dead_or_undead = (stat == DEAD) || (mob_biotypes & MOB_UNDEAD)
 
-			if(mouth.spitoutmouth && prob(5))
+			if(!(in_grave_pit && is_dead_or_undead) && mouth.spitoutmouth && prob(5))
 				visible_message(span_warning("[src] spits out [mouth]."))
 				dropItemToGround(mouth, silent = FALSE)
-			if(src.mind?.has_antag_datum(/datum/antagonist/zombie) && (!src.handcuffed) && prob(50))
+			if(!(in_grave_pit && is_dead_or_undead) && src.mind?.has_antag_datum(/datum/antagonist/zombie) && (!src.handcuffed) && prob(50))
 				visible_message(span_warning("[src] spits out [mouth]."))
 				dropItemToGround(mouth, silent = FALSE)
 		if(istype(get_turf(src), /turf/open/floor/rogue/snow) && !HAS_TRAIT(src, TRAIT_LIGHT_STEP))

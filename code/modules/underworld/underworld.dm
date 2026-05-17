@@ -26,12 +26,159 @@
 	anchored = TRUE
 	density = TRUE
 	var/toll = FALSE
+	var/list/pending_choice = list()
+	var/list/pending_tokens = list()
+	var/list/pending_has_shovel = list()
+	var/list/pending_has_censer = list()
 /obj/structure/underworld/carriageman/Initialize(mapload)
 	. = ..()
 	set_light(5, 4, 30, l_color = LIGHT_COLOR_BLUE)
 
+/obj/structure/underworld/carriageman/examine(mob/user)
+	. = ..()
+	. += span_notice("The Carriageman accepts the Toll from the dead.")
+	. += span_notice("Necrans who follow the Undermaiden may select and purchase boons with tokens of gratitude.")
+
+/obj/structure/underworld/carriageman/proc/get_trade_key(mob/living/user)
+	if(user?.ckey)
+		return user.ckey
+	return REF(user)
+
+/obj/structure/underworld/carriageman/proc/follows_necra(mob/living/user)
+	return user?.patron?.type == /datum/patron/divine/necra
+
+/obj/structure/underworld/carriageman/proc/clear_trade_state(mob/living/user)
+	var/key = get_trade_key(user)
+	pending_choice -= key
+	pending_tokens -= key
+	pending_has_shovel -= key
+	pending_has_censer -= key
+
+/obj/structure/underworld/carriageman/proc/get_pending_tokens(mob/living/user)
+	var/key = get_trade_key(user)
+	return pending_tokens[key] || 0
+
+/obj/structure/underworld/carriageman/proc/add_pending_tokens(mob/living/user, amt)
+	if(amt <= 0)
+		return
+	var/key = get_trade_key(user)
+	pending_tokens[key] = (pending_tokens[key] || 0) + amt
+
+/obj/structure/underworld/carriageman/proc/get_required_tokens(choice)
+	switch(choice)
+		if("shovel")
+			return 200
+		if("censer")
+			return 100
+		if("cord")
+			return 25
+		if("scroll1")
+			return 50
+		if("scroll2")
+			return 100
+	return 0
+
+/obj/structure/underworld/carriageman/proc/give_trade_reward(mob/living/user, obj/item/reward)
+	if(!reward || !user)
+		return
+	if(!user.put_in_hands(reward, TRUE))
+		reward.forceMove(get_turf(user))
+
+/obj/structure/underworld/carriageman/proc/consume_token_payment(obj/item/roguecoin/necra_token/T, mob/living/user)
+	var/key = get_trade_key(user)
+	var/choice = pending_choice[key]
+	if(!choice)
+		return FALSE
+	var/required = get_required_tokens(choice)
+	var/current = get_pending_tokens(user)
+	if(current >= required)
+		to_chat(user, span_notice("I have already paid enough tokens for this request."))
+		return TRUE
+	var/need = required - current
+	var/take = min(need, T.quantity)
+	if(take <= 0)
+		return TRUE
+	add_pending_tokens(user, take)
+	if(take >= T.quantity)
+		qdel(T)
+	else
+		T.set_quantity(T.quantity - take)
+	to_chat(user, span_notice("The Carriageman takes [take] token\s of gratitude."))
+	return TRUE
+
+/obj/structure/underworld/carriageman/proc/try_complete_trade(mob/living/user)
+	var/key = get_trade_key(user)
+	var/choice = pending_choice[key]
+	if(!choice)
+		return FALSE
+	var/required = get_required_tokens(choice)
+	if(get_pending_tokens(user) < required)
+		return FALSE
+
+	if(choice == "shovel")
+		if(!pending_has_shovel[key])
+			return FALSE
+		new /obj/item/rogueweapon/shovel/mort_staff(get_turf(user))
+		to_chat(user, span_notice("The Carriageman presents an unadorned mortician's staff."))
+
+	if(choice == "censer")
+		if(!pending_has_censer[key])
+			return FALSE
+		give_trade_reward(user, new /obj/item/necra_censer/upgraded(get_turf(user)))
+		to_chat(user, span_notice("The Carriageman returns your censer, transformed by underworld ash."))
+
+	if(choice == "cord")
+		give_trade_reward(user, new /obj/item/rope/necran_cord(get_turf(user)))
+		to_chat(user, span_notice("The Carriageman coils a pale burial-cord into your waiting hands."))
+
+	if(choice == "scroll1")
+		give_trade_reward(user, new /obj/item/underworld/carriageman_scroll/first(get_turf(user)))
+		to_chat(user, span_notice("The Carriageman grants the first blessed scroll."))
+
+	if(choice == "scroll2")
+		give_trade_reward(user, new /obj/item/underworld/carriageman_scroll/second(get_turf(user)))
+		to_chat(user, span_notice("The Carriageman grants the second blessed scroll."))
+
+	playsound(user, pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 50, FALSE)
+	clear_trade_state(user)
+	return TRUE
+
 /obj/structure/underworld/carriageman/attack_hand(mob/living/user)
 	if(!istype(user, /mob/living/carbon/spirit))
+		if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE) && follows_necra(user))
+			var/key = get_trade_key(user)
+			if(pending_choice[key])
+				var/choice_action = alert(user, "The Carriageman already awaits the rest of your current offering. Must this bargain be canceled?", "Pending Trade", "Keep Current Trade", "Cancel Current Trade")
+				if(choice_action == "Keep Current Trade" || !choice_action)
+					to_chat(user, span_warning("This trade must be fulfilled before another may be chosen."))
+					return
+				clear_trade_state(user)
+			var/list/options = list(
+				"Mortician's Staff (200 tokens + iron shovel)",
+				"Upgrade Necra censer (100 tokens + Necra's censer)",
+				"Burial Cord (25 tokens)",
+				"Staff Blessing Scroll I (50 tokens)",
+				"Staff Blessing Scroll II (100 tokens)"
+			)
+			var/choice = input(user, "Choose a reward from the Carriageman", "Carriageman") as null|anything in options
+			if(!choice)
+				return
+			clear_trade_state(user)
+			switch(choice)
+				if("Mortician's Staff (200 tokens + iron shovel)")
+					pending_choice[key] = "shovel"
+				if("Upgrade Necra censer (100 tokens + Necra's censer)")
+					pending_choice[key] = "censer"
+				if("Burial Cord (25 tokens)")
+					pending_choice[key] = "cord"
+				if("Blessing Scroll I (50 tokens)")
+					pending_choice[key] = "scroll1"
+				if("Staff Blessing Scroll II (100 tokens)")
+					pending_choice[key] = "scroll2"
+			to_chat(user, span_notice("Your selection is made. Present the required offering now."))
+			return
+		if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE) && !follows_necra(user))
+			to_chat(user, span_warning("You must be a follower of the Undermaiden to select boons."))
 		if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE)&& toll)
 			to_chat(user, "<br><font color=purple><span class='bold'>HANDS EXCHANGE PAY AND OATHS GIVE WAY, BE ON YOUR WAY</span></font>")
 			user << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 0, 0 ,0, 50)
@@ -54,20 +201,45 @@
 		user << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 0, 0 ,0, 50)
 
 /obj/structure/underworld/carriageman/attackby(obj/item/W, mob/living/user)
-	if(!istype(user, /mob/living/carbon/spirit)&& !toll && HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
-		if(istype(W, /obj/item/thetoll) || istype(W, /obj/item/roguecoin/necra_token))
+	if(!istype(user, /mob/living/carbon/spirit))
+		if(!HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
+			to_chat(user, span_warning("The Carriageman does not acknowledge you."))
+			return
+		var/key = get_trade_key(user)
+		var/choice = pending_choice[key]
+		if(istype(W, /obj/item/thetoll) && !choice)
+			if(toll)
+				to_chat(user, "<br><font color=purple><span class='bold'>ONE TRANSACTION AT A TIME.</span></font>")
+				return
 			qdel(W)
 			to_chat(user, "<br><font color=purple><span class='bold'>THE TOLL IS PAID, A TRANSACTION MADE.</span></font>")
-			user << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 0, 0 ,0, 50)
 			toll = TRUE
 			return
-	if(!istype(user, /mob/living/carbon/spirit)&& toll && HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
-		if(istype(W, /obj/item/thetoll) || istype(W, /obj/item/roguecoin/necra_token))
-			to_chat(user, "<br><font color=purple><span class='bold'>ONE TRANSACTION AT A TIME.</span></font>")
-			user << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 0, 0 ,0, 50)
+		if(!follows_necra(user))
+			to_chat(user, span_warning("The Carriageman only bargains with followers of the Undermaiden."))
 			return
-	if(!istype(user, /mob/living/carbon/spirit) && !HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
-		to_chat(user, span_warning("The carriageman does not acknowledge the living."))
+		if(!choice)
+			to_chat(user, span_warning("Choose a reward from The Carriageman first."))
+			return
+		if(istype(W, /obj/item/roguecoin/necra_token))
+			var/obj/item/roguecoin/necra_token/T = W
+			consume_token_payment(T, user)
+			try_complete_trade(user)
+			return
+		if(choice == "shovel" && istype(W, /obj/item/rogueweapon/shovel) && !istype(W, /obj/item/rogueweapon/shovel/mort_staff))
+			qdel(W)
+			pending_has_shovel[key] = TRUE
+			to_chat(user, span_notice("The Carriageman accepts the iron shovel."))
+			try_complete_trade(user)
+			return
+		if(choice == "censer" && istype(W, /obj/item/necra_censer) && !istype(W, /obj/item/necra_censer/upgraded))
+			qdel(W)
+			pending_has_censer[key] = TRUE
+			to_chat(user, span_notice("The Carriageman accepts your censer."))
+			try_complete_trade(user)
+			return
+		to_chat(user, span_warning("This is not part of your selected offering."))
+		return
 	var/mob/living/carbon/spirit/ghost = user
 	if(istype(W, /obj/item/underworld/coin))
 		if(!ghost.paid)
@@ -82,6 +254,31 @@
 	else
 		to_chat(ghost, "<br><font color=purple><span class='bold'>ONLY THE TOLL WILL I ACCEPT</span></font>")
 		user << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 0, 0 ,0, 50)
+
+/obj/item/underworld/carriageman_scroll
+	name = "blessing scroll"
+	desc = "A pale vellum scroll etched with deathly sigils for a mortician's staff. Its rite is written plainly upon the parchment."
+	icon = 'icons/roguetown/items/misc.dmi'
+	icon_state = "scroll"
+	var/incantation = null
+	var/power_scroll = FALSE
+
+/obj/item/underworld/carriageman_scroll/first
+	name = "blessing scroll I"
+	desc = "The first of the Carriageman's blessings. It grants a mortician's staff a keen silver edge and must be used before the second blessed scroll."
+
+/obj/item/underworld/carriageman_scroll/second
+	name = "blessing scroll II"
+	desc = "The second of the Carriageman's blessings. It deepens a previously blessed mortician's staff with greater strike power and durability. The first blessed scroll must be used before this one."
+	power_scroll = TRUE
+	incantation = "By the Undermaiden's power within this scroll, grant this holy staff endurance and strength!"
+
+/// Debug: max-stack tokens of gratitude for testing
+/obj/item/roguecoin/necra_token/debug_pile
+
+/obj/item/roguecoin/necra_token/debug_pile/Initialize(mapload)
+	. = ..()  
+	set_quantity(200)
 
 /obj/structure/underworld/barrier //Blocks sprite locations
 	name = "DONT STAND HERE"

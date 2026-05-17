@@ -1,6 +1,37 @@
 GLOBAL_LIST_INIT(deaths_door_entries,list())
 GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 
+/proc/get_deathsdoor_companion(mob/living/user)
+	if(!user)
+		return null
+	for(var/mob/living/M in get_turf(user))
+		if(M != user && M.buckled == user)
+			return M
+	if(istype(user.pulling, /mob/living) && user.grab_state >= GRAB_AGGRESSIVE)
+		var/mob/living/pulled = user.pulling
+		if(pulled.pulledby == user)
+			return pulled
+	return null
+
+/proc/apply_deathsdoor_holy_fire(mob/living/target)
+	if(!target)
+		return
+	if(!target.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
+		to_chat(target, span_danger("The Undermaiden's holy fire sears your body!"))
+	target.adjust_fire_stacks(2, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+	target.ignite_mob()
+
+/proc/get_deathsdoor_entry_turf()
+	if(!length(GLOB.deaths_door_entries))
+		return null
+	var/turf/entry = pick(GLOB.deaths_door_entries)
+	if(!entry)
+		return null
+	for(var/turf/open/open_turf in range(1, entry))
+		if(!open_turf.density)
+			return open_turf
+	return entry
+
 /obj/structure/deaths_door_shrine
 	name = "A Way Out"
 	desc = "The eerie calm comes to an end, one way or another."
@@ -12,6 +43,7 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 
 /obj/structure/deaths_door_shrine/attack_hand(mob/living/user)
 	to_chat(user, span_notice("You reach for the glowing portal..."))
+	var/mob/living/companion = get_deathsdoor_companion(user)
 	if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
 		// Necra's chosen move through her realm's portal without hesitation
 		if(user.mob_biotypes & MOB_UNDEAD)
@@ -29,11 +61,19 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		return
 
 	exit_deaths_door(user, user)
+	if(companion && !QDELETED(companion))
+		exit_deaths_door(user, companion)
 
 /obj/structure/deaths_door_shrine/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(!istype(O, /mob/living))
 		return
 	var/mob/living/target = O
+	var/is_necran = HAS_TRAIT(user, TRAIT_SOUL_EXAMINE)
+
+	if(target.stat == DEAD && !is_necran)
+		apply_deathsdoor_holy_fire(target)
+		user.visible_message(span_warning("[user] consigns [target] to the Undermaiden's holy flames."))
+		return
 
 	if(target.mob_biotypes & MOB_UNDEAD)
 		target.visible_message(span_danger("The Undermaiden churns the undead!"))
@@ -55,6 +95,9 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 
 /obj/structure/deaths_door_shrine/proc/exit_deaths_door(mob/living/user, mob/living/target = null)
 	var/list/dests = list()
+	var/turf/default_exit = user.get_adventurer_latejoin_turf()
+	if(default_exit)
+		dests[default_exit] = "A Strange Place"
 
 	// Acolytes can choose exits
 	if(user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/necras_sight))
@@ -141,13 +184,12 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 
 /obj/structure/deaths_door_portal/Initialize(mapload, mob/living/_caster)
 	. = ..()
-	var/list/dests = GLOB.deaths_door_entries
-	if(!length(dests))
+	if(!length(GLOB.deaths_door_entries))
 		message_admins("Death's Door Portal: No entry destinations! Inform a mapper!")	//You're missing any landmarks that are subtypes of /obj/effect/landmark/deaths_door/entry in deaths precipice
 		return
 
-	destination = pick(dests)
-	addtimer(CALLBACK(src, PROC_REF(expire)), 15 SECONDS)
+	destination = get_deathsdoor_entry_turf()
+	addtimer(CALLBACK(src, PROC_REF(expire)), 30 SECONDS)
 
 /obj/structure/deaths_door_portal/proc/expire()
 	if(QDELETED(src))
@@ -159,18 +201,17 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 /obj/structure/deaths_door_portal/attack_hand(mob/living/user)
 	playsound(get_turf(src), 'sound/misc/carriage2.ogg', 50, TRUE, -2, ignore_walls = TRUE)
 	to_chat(user, span_notice("You reach for the glowing portal..."))
-	// Check for a fireman-carried passenger BEFORE the user moves
-	var/mob/living/passenger = null
-	for(var/mob/living/M in get_turf(user))
-		if(M != user && M.buckled == user)
-			passenger = M
-			break
+	var/mob/living/passenger = get_deathsdoor_companion(user)
 	if(!do_after(user, 2 SECONDS, src))
 		return
 	enter_portal(user)
-	// Bring any fireman-carried companion through with the Necran
+	// Bring any fireman-carried or aggressively grabbed companion through with the Necran
 	if(passenger && !QDELETED(passenger))
-		enter_portal(passenger)
+		// NPC corpses are left behind; only living mobs or player bodies cross
+		if(passenger.stat == DEAD && !passenger.mind?.key)
+			passenger.visible_message(span_warning("[passenger] slips from [user]'s grasp at the threshold, denying its entry."))
+		else
+			enter_portal(passenger)
 
 /obj/structure/deaths_door_portal/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(user.incapacitated())
@@ -200,15 +241,15 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 	var/is_dead = (istype(M, /mob/living/carbon) && M.stat == DEAD)
 	var/has_player = (M.mind?.key != null)
 
+	if(is_dead && !is_necran)
+		apply_deathsdoor_holy_fire(M)
+		user.visible_message(span_warning("[user] consigns [M] to the Undermaiden's holy flames."))
+		return
+
 	// Non-Necrans explode undead they try to drag in
 	if(is_undead && !is_necran)
 		to_chat(user, span_danger("The Undermaiden churns the undead!"))
 		explosion(get_turf(M), light_impact_range = 1, flame_range = 1, smoke = FALSE)
-		return
-
-	// Non-Necrans cannot drag dead mobs
-	if(is_dead && !is_necran)
-		to_chat(user, span_warning("You cannot drag the dead through this portal."))
 		return
 
 	playsound(get_turf(src), 'sound/misc/carriage2.ogg', 50, TRUE, -2, ignore_walls = TRUE)
@@ -224,7 +265,7 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 	enter_portal(M, user)
 
 	// Necrans who guide a dead body (not a player soul) through receive 5 tokens of gratitude
-	if(is_necran && is_dead && !has_player)
+	if(is_necran && is_dead && !has_player && !M.burialrited)
 		var/obj/item/roguecoin/necra_token/body_reward = new(get_turf(user), 5)
 		body_reward.pixel_x = rand(-6, 6)
 		body_reward.pixel_y = rand(-6, 6)
@@ -236,10 +277,15 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 /obj/structure/deaths_door_portal/proc/enter_portal(mob/living/target, mob/living/forcer)
 	if(!destination)
 		return
+	// NPC corpses (no mind.key) crumble to ash; player bodies pass through to the Carriageman
+	if(target.stat == DEAD && !target.mind?.key)
+		target.visible_message(span_warning("[target] crumbles into ash as it crosses the threshold!"))
+		target.dust()
+		return
 	playsound(get_turf(src), 'sound/misc/portalenter.ogg', 50, TRUE, -2, ignore_walls = TRUE)
 	var/turf/spawn_turf = destination
-	// Necra's chosen are guided to the Carriageman upon entering her realm
-	if(HAS_TRAIT(target, TRAIT_SOUL_EXAMINE))
+	// Necra's chosen, transported dead players, and carried living players appear near the Carriageman
+	if(HAS_TRAIT(target, TRAIT_SOUL_EXAMINE) || (target.stat == DEAD && target.mind?.key) || (target.stat != DEAD && target.mind?.key))
 		var/obj/structure/underworld/carriageman/CM = locate(/obj/structure/underworld/carriageman) in world
 		if(CM)
 			var/turf/CM_turf = get_turf(CM)
@@ -258,6 +304,11 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 						spawn_turf = T
 						break
 	target.forceMove(spawn_turf)
+	// Apply holy fire to undead players (but not plain dead ones without the undead flag)
+	if(target.mind?.key && (target.mob_biotypes & MOB_UNDEAD) && target.stat != DEAD)
+		if(!target.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
+			to_chat(target, span_danger("The Undermaiden's holy fire consumes your unholy body!"))
+		apply_deathsdoor_holy_fire(target)
 
 /// Bones, skulls, severed limbs, and whole bodies fed to the portal yield tokens of gratitude.
 /obj/structure/deaths_door_portal/attackby(obj/item/I, mob/living/user, params)

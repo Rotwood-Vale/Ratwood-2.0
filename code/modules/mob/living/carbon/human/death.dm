@@ -171,6 +171,7 @@
 	. = ..()
 	if(!.)
 		return
+	burialrited = FALSE
 	switch(job)
 		if("Grand Duke", "Grand Duchess")
 			removeomen(OMEN_NOLORD)

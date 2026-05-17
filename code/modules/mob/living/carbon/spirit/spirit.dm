@@ -211,6 +211,7 @@
 /proc/pacify_corpse(mob/living/corpse, mob/user, coin_pq = PQ_GAIN_BURIAL_COIN)
 	if((corpse.stat != DEAD) || !corpse.mind)
 		return FALSE
+	corpse.burialrited = TRUE
 	var/attacker_ckey = corpse.lastattackerckey || TRUE
 	if(ishuman(corpse))
 		var/mob/living/carbon/human/human_corpse = corpse
@@ -227,8 +228,9 @@
 					fallen.visible_message(span_warning("A coin falls from above!"))
 					if(coin_pq && user?.ckey && (user.ckey != attacker_ckey))
 						adjust_playerquality(coin_pq, user.ckey)
-					qdel(human_corpse.mouth)
-					human_corpse.update_inv_mouth()
+					if(!istype(coin, /obj/item/roguecoin/copper))
+						qdel(human_corpse.mouth)
+						human_corpse.update_inv_mouth()
 					break
 	corpse.mind.remove_antag_datum(/datum/antagonist/zombie)
 	var/mob/dead/observer/ghost

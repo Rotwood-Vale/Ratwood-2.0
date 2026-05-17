@@ -290,6 +290,13 @@
 		victim?.dna?.species?.handle_fire(victim, no_protection)
 	victim.adjustFireLoss(8)
 
+/// Blessed fire does not burn clothing and only spreads to undead mobs
+/datum/status_effect/fire_handler/fire_stacks/sunder/blessed/proc/can_spread_to(mob/living/target)
+	// Only spread blessed fire to undead mobs
+	if(target.mob_biotypes & MOB_UNDEAD)
+		return TRUE
+	return FALSE
+
 /datum/status_effect/fire_handler/wet_stacks
 	id = "wet_stacks"
 

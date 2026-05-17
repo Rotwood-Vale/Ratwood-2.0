@@ -67,12 +67,13 @@
 			var/turf/open/floor/rogue/dirt/D = T
 
 			if(!heldclod && user && istype(user.rmb_intent, /datum/rmb_intent/strong) && HAS_TRAIT(user, TRAIT_GRAVEROBBER))
+				var/strong_dig_delay = wielded ? 5 SECONDS : 10 SECONDS
 				if(D.holie && D.holie.stage >= 3)
 					return
 
 				to_chat(user, span_notice("I tear into the earth, carving out a pit!"))
 
-				if(do_after(user, 5 SECONDS, target = T))
+				if(do_after(user, strong_dig_delay, target = T))
 					var/obj/structure/closet/dirthole/H = null
 
 					if(istype(T, /turf/open/floor/rogue/dirt))
@@ -97,24 +98,10 @@
 						heldclod = new(src)
 						update_icon()
 
-						var/list/spawn_turfs = list(
-							get_turf(user),
-							get_step(user, NORTH),
-							get_step(user, SOUTH),
-							get_step(user, EAST),
-							get_step(user, WEST)
-						)
-
-						var/spawned = 0
-						for(var/turf/spawnT in spawn_turfs)
-							if(!spawnT)
-								continue
-
-							new /obj/item/natural/dirtclod(spawnT)
-							spawned++
-
-							if(spawned >= 3)
-								break
+						var/turf/spawnT = get_turf(user)
+						if(spawnT)
+							for(var/i in 1 to 3)
+								new /obj/item/natural/dirtclod(spawnT)
 
 						playsound(T, 'sound/items/dig_shovel.ogg', 100, TRUE)
 
@@ -177,8 +164,9 @@
 
 		if(istype(T, /turf/open/floor/rogue/grass) || istype(T, /turf/open/floor/rogue/grassred) || istype(T, /turf/open/floor/rogue/grassyel) || istype(T, /turf/open/floor/rogue/grasscold) || istype(T, /turf/open/floor/rogue/grasspurple) || istype(T, /turf/open/floor/rogue/grassgrey))
 			if(HAS_TRAIT(user, TRAIT_GRAVEROBBER) && istype(user.rmb_intent, /datum/rmb_intent/strong))
+				var/strong_dig_delay = wielded ? 5 SECONDS : 10 SECONDS
 				to_chat(user, span_notice("I begin carving through the grass..."))
-				if(do_after(user, 5 SECONDS, target = T))
+				if(do_after(user, strong_dig_delay, target = T))
 					to_chat(user, span_notice("You carve through the grass, exposing the earth beneath."))
 					T.ChangeTurf(/turf/open/floor/rogue/dirt, flags = CHANGETURF_INHERIT_AIR)
 					playsound(T, 'sound/items/dig_shovel.ogg', 100, TRUE)
@@ -692,7 +680,7 @@
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "mortstaff"//Temp sprite.
 	associated_skill = /datum/skill/combat/staves
-	wdefense = 5
+	wdefense = 6
 	wdefense_wbonus = 6//Bless this, m'lord.
 	max_integrity = 200
 	resistance_flags = FLAMMABLE
@@ -704,6 +692,37 @@
 	anvilrepair = /datum/skill/craft/carpentry
 	pickup_sound = 'modular_helmsguard/sound/sheath_sounds/draw_polearm.ogg'
 	is_silver = TRUE
+	var/staff_blessing_tier = 0
+
+/obj/item/rogueweapon/shovel/mort_staff/Initialize(mapload)
+	. = ..()
+	update_blessing_visuals()
+
+/obj/item/rogueweapon/shovel/mort_staff/Destroy()
+	remove_filter("mortstaff_glow")
+	return ..()
+
+/obj/item/rogueweapon/shovel/mort_staff/proc/update_blessing_visuals()
+	if(staff_blessing_tier >= 2)
+		set_light(2, 0.5, 2, l_color = "#eef7ff")
+		add_filter("mortstaff_glow", 2, list("type" = "outline", "color" = "#f4fbff", "alpha" = 80, "size" = 1))
+	else
+		set_light(0)
+		remove_filter("mortstaff_glow")
+
+/obj/item/rogueweapon/shovel/mort_staff/examine(mob/user)
+	. = ..()
+	if(staff_blessing_tier >= 2)
+		. += span_notice("It bears both Carriageman blessings: a keen silver edge, wielding strength and durability.")
+	else if(staff_blessing_tier >= 1)
+		. += span_notice("It bears the first Carriageman blessing: a keen silver edge has been worked into the staff.")
+
+/datum/intent/rend/mort_staff_blessed
+	blade_class = BCLASS_CUT
+
+/datum/intent/spear/thrust/quarterstaff/mort_staff_blessed
+	blade_class = BCLASS_STAB
+	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg')
 
 /obj/item/rogueweapon/shovel/mort_staff/ComponentInitialize()
 	AddComponent(\
@@ -713,8 +732,49 @@
 		added_force = 0,\
 		added_blade_int = 0,\
 		added_int = 50,\
-		added_def = 2,\
+		added_def = 0,\
 	)
+
+/obj/item/rogueweapon/shovel/mort_staff/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/underworld/carriageman_scroll))
+		var/obj/item/underworld/carriageman_scroll/S = I
+		if(S.power_scroll)
+			if(staff_blessing_tier < 1)
+				to_chat(user, span_warning("This greater blessing must follow the first rite."))
+				return TRUE
+			if(staff_blessing_tier >= 2)
+				to_chat(user, span_warning("This staff has already received the greater blessing."))
+				return TRUE
+		else if(staff_blessing_tier >= 1)
+			to_chat(user, span_warning("This staff has already received the first blessing."))
+			return TRUE
+		user.visible_message(span_warning("[user] unfurls [S] over [src] and begins a grave-lit recitation..."))
+		if(!do_after(user, 5 SECONDS, target = src))
+			return TRUE
+		if(S.power_scroll)
+			user.say(S.incantation || "By the Undermaiden's power within this scroll, grant this holy staff endurance and strength!")
+			staff_blessing_tier = 2
+			max_integrity += 50
+			obj_integrity += 50
+			force += 5
+			force_wielded += 5
+			update_force_dynamic()
+			update_blessing_visuals()
+			to_chat(user, span_notice("The staff's core hardens and its two-handed strike swells with force."))
+		else
+			user.say("By the Undermaiden's power, bless this staff with a keen edge!")
+			staff_blessing_tier = 1
+			sharpness = IS_SHARP
+			gripped_intents = list(/datum/intent/shovelscoop, /datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff/mort_staff_blessed, /datum/intent/rend/mort_staff_blessed, /datum/intent/shovelscoop)
+			update_blessing_visuals()
+			to_chat(user, span_notice("The staff's edge keenly hums as the first blessing settles into the silver."))
+		var/turf/drop_turf = get_turf(user)
+		if(drop_turf)
+			new /obj/item/ash(drop_turf)
+		to_chat(user, span_notice("The scroll disintegrates into pale ash."))
+		qdel(S)
+		return TRUE
+	return ..()
 
 /obj/item/rogueweapon/shovel/mort_staff/getonmobprop(tag)
 	. = ..()

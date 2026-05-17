@@ -269,7 +269,8 @@
 		to_chat(user, "<span class='warning'>[src] is missing that.</span>")
 		return FALSE
 
-	if(!user.cmode)
+	var/can_targeted_surgery = (user.used_intent?.type != INTENT_GRAB)
+	if(!user.cmode && can_targeted_surgery)
 		var/try_to_fail = !istype(user.rmb_intent, /datum/rmb_intent/weak)
 		var/list/possible_steps = list()
 		for(var/datum/surgery_step/surgery_step as anything in GLOB.surgery_steps)

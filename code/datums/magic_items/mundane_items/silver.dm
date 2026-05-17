@@ -12,7 +12,7 @@
 		if(HAS_TRAIT(H, TRAIT_SILVER_WEAK) && !H.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
 			H.visible_message("<font color='white'>The unholy strike weakens the curse temporarily!</font>")
 			to_chat(H, span_userdanger("Silver rebukes my presence! My vitae smolders, and my powers wane!"))
-			H.adjust_fire_stacks(2, /datum/status_effect/fire_handler/fire_stacks/sunder)
+			H.adjust_fire_stacks(2, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
 
 /datum/magic_item/mundane/silver/on_equip(obj/item/i, mob/living/user)
 	. = ..()
@@ -25,7 +25,7 @@
 		user.Knockdown(10)
 		user.Paralyze(10)
 		user.adjustFireLoss(25)
-		user.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder)
+		user.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
 
 /datum/magic_item/mundane/silver/on_pickup(obj/item/i, mob/living/user)
 	var/mob/living/carbon/human/H = user
@@ -38,12 +38,12 @@
 				H.Knockdown(10)
 				H.Paralyze(10)
 				H.adjustFireLoss(25)
-				H.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder)
+				H.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
 				H.ignite_mob()
 			if(W && W.transformed == TRUE)
 				to_chat(H, span_userdanger("I can't pick up the silver, it is my BANE!"))
 				H.Knockdown(10)
 				H.Paralyze(10)
 				H.adjustFireLoss(25)
-				H.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder)
+				H.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
 				H.ignite_mob()

@@ -210,6 +210,8 @@
 	. = ..()
 	if(!proximity)
 		return
+	if(!istype(src, /obj/item/roguecoin/copper))
+		return
 	if(!ishuman(target))
 		return
 	var/mob/living/carbon/human/H = target
@@ -292,6 +294,10 @@
 	light_power = 1
 	light_outer_range = 1
 	light_color = "#d8f4ff"
+
+/obj/item/roguecoin/necra_token/Initialize(mapload, coin_amount)
+	. = ..()
+	set_light(1.5, 0.35, 1.25, l_color = light_color, l_on = TRUE)
 
 /obj/item/roguecoin/necra_token/update_icon()
 	..()

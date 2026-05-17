@@ -170,41 +170,78 @@
 	light_outer_range = 1.5
 	light_color = "#e8f4ff"
 
+/obj/item/rope/necran_cord/Initialize(mapload)
+	. = ..()
+	set_light(1.5, 0.4, 1.5, l_color = light_color)
+	add_filter("necran_cord_glow", 2, list("type" = "outline", "color" = "#f5fbff", "alpha" = 70, "size" = 1))
+
+/obj/item/rope/necran_cord/Destroy()
+	remove_filter("necran_cord_glow")
+	return ..()
+
+/obj/item/rope/necran_cord/proc/can_bind_target(mob/living/carbon/C, mob/living/user)
+	if(C.pulledby == user && user.grab_state >= GRAB_AGGRESSIVE)
+		return TRUE
+	to_chat(user, span_warning("I need [C] in an aggressive grab to bind them with this cord."))
+	return FALSE
+
+/obj/item/rope/necran_cord/proc/get_bind_time(mob/living/carbon/C, mob/living/user)
+	var/surrender_mod = 1
+	if(C.compliance || C.surrendering || HAS_TRAIT(C, TRAIT_BAGGED))
+		surrender_mod = 0.5
+	var/bind_time = 60 * surrender_mod
+	if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
+		bind_time *= 0.5
+	return bind_time
+
 /obj/item/rope/necran_cord/try_cuff_arms(mob/living/carbon/C, mob/living/user)
-	// Dead/undead targets can be bound instantly without resistance
-	if(C.stat == DEAD || (C.mob_biotypes & MOB_UNDEAD))
-		apply_cuffs(C, user)
-		C.visible_message(span_warning("[user] binds [C] with [src.name]."), \
-							span_danger("[user] binds me with [src.name]."))
+	if(C.handcuffed)
 		return
-	// Living targets must be prone AND aggressively grabbed
-	if(!(C.mobility_flags & MOBILITY_STAND))
-		if(C.pulledby?.grab_state >= GRAB_AGGRESSIVE)
-			return ..()
-	to_chat(user, span_warning("I need [C] prone on the ground and firmly grabbed to bind them with this cord."))
+	if(!(C.get_num_arms(FALSE) || C.get_arm_ignore()))
+		to_chat(user, span_warning("[C] has no arms to tie up."))
+		return
+	if(!can_bind_target(C, user))
+		return
+	C.visible_message(span_warning("[user] is trying to bind [C]'s arms with [src.name]!"), \
+						span_userdanger("[user] is trying to bind my arms with [src.name]!"))
+	playsound(loc, cuffsound, 100, TRUE, -2)
+	if(!(do_mob(user, C, get_bind_time(C, user), double_progress = TRUE) && C.get_num_arms(FALSE)))
+		to_chat(user, span_warning("I fail to tie up [C]!"))
+		return
+	apply_cuffs(C, user)
+	C.visible_message(span_warning("[user] ties [C] with [src.name]."), \
+						span_danger("[user] ties me up with [src.name]."))
+	SSblackbox.record_feedback("tally", "handcuffs", 1, type)
+	log_combat(user, C, "handcuffed")
 
 /obj/item/rope/necran_cord/try_cuff_legs(mob/living/carbon/C, mob/living/user)
-	// Dead/undead targets can be leg-bound instantly without resistance
-	if(C.stat == DEAD || (C.mob_biotypes & MOB_UNDEAD))
-		apply_cuffs(C, user, TRUE)
-		C.visible_message(span_warning("[user] binds [C]'s legs with [src.name]."), \
-							span_danger("[user] binds my legs with [src.name]."))
+	if(C.legcuffed)
 		return
-	// Living targets must be prone AND aggressively grabbed
-	if(!(C.mobility_flags & MOBILITY_STAND))
-		if(C.pulledby?.grab_state >= GRAB_AGGRESSIVE)
-			return ..()
-	to_chat(user, span_warning("I need [C] prone on the ground and firmly grabbed to bind them with this cord."))
+	if(C.get_num_legs(FALSE) < 2)
+		to_chat(user, span_warning("[C] is missing two or one legs."))
+		return
+	if(!can_bind_target(C, user))
+		return
+	C.visible_message(span_warning("[user] is trying to bind [C]'s legs with [src.name]!"), \
+						span_userdanger("[user] is trying to bind my legs with [src.name]!"))
+	playsound(loc, cuffsound, 30, TRUE, -2)
+	if(!do_mob(user, C, get_bind_time(C, user)) || C.get_num_legs(FALSE) < 2)
+		to_chat(user, span_warning("I fail to tie up [C]!"))
+		return
+	apply_cuffs(C, user, TRUE)
+	C.visible_message(span_warning("[user] ties [C]'s legs with [src.name]."), \
+						span_danger("[user] ties my legs with [src.name]."))
+	SSblackbox.record_feedback("tally", "legcuffs", 1, type)
+	log_combat(user, C, "legcuffed", TRUE)
 
 /obj/item/rope/necran_cord/apply_cuffs(mob/living/carbon/target, mob/user, leg = FALSE)
-	// Adjust escape difficulty based on target's state before binding
-	if(target.stat == DEAD || (target.mob_biotypes & MOB_UNDEAD))
-		src.breakouttime = 8 SECONDS	// inquiry-cord strength on the dead
-		src.slipouttime = 900
-	else
-		src.breakouttime = 25			// living escape in ~2.5s (half of normal rope)
+	if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
+		src.breakouttime = 25
 		src.slipouttime = 30 SECONDS
+	else
+		src.breakouttime = initial(breakouttime)
+		src.slipouttime = initial(slipouttime)
+	src.strip_delay = get_bind_time(target, user)
 	. = ..()
-	// When leg-cuffed to a dead/undead mob, remove the slowdown for the Necran practitioner
-	if(leg && (target.stat == DEAD || (target.mob_biotypes & MOB_UNDEAD)))
+	if(leg && HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
 		target.remove_movespeed_modifier(MOVESPEED_ID_CUFFED_LEG_SLOWDOWN)

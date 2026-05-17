@@ -34,55 +34,126 @@
 
 /obj/effect/proc_holder/spell/targeted/churn
 	name = "Churn Undead"
-	desc = "Stuns and explodes undead."
-	range = 8//We return it, up from 4...
+	desc = "Rend a targeted undead foe with the Undermaiden's fire. Holds 2 charges, each restoring in 15 seconds; if emptied, it refills after 40 seconds."
+	range = 8
+	selection_type = "range"
 	overlay_state = "necra_ult"//Temp.
 	releasedrain = 30
-	chargetime = 6 SECONDS//Up from 2.
-	recharge_time = 2 MINUTES//Up from 60.
-	max_targets = 2//... in exchange for max targets...
-	cast_without_targets = TRUE
+	chargetime = 6 SECONDS
+	charge_type = "charges"
+	recharge_time = 2
+	max_targets = 1
+	cast_without_targets = FALSE
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/churn.ogg'
 	associated_skill = /datum/skill/magic/holy
 	invocations = list("The Undermaiden rebukes!!")
 	invocation_type = "shout"
 	miracle = TRUE
-	devotion_cost = 150//... with a higher devotion cost, at +100, from 50.
+	devotion_cost = 150
+	var/max_churn_charges = 2
+	var/charge_regen_elapsed = 0
+	var/empty_refill_elapsed = 0
+	var/empty_refill_active = FALSE
+	var/datum/weakref/last_churn_target = null
+	var/list/churn_target_cooldowns = list()
+
+/obj/effect/proc_holder/spell/targeted/churn/Initialize(mapload)
+	. = ..()
+	charge_counter = max_churn_charges
+
+/obj/effect/proc_holder/spell/targeted/churn/proc/is_churn_target(mob/living/target)
+	if(!target || target.stat == DEAD)
+		return FALSE
+	if(target.mob_biotypes & MOB_UNDEAD)
+		return TRUE
+	if(target.mind?.has_antag_datum(/datum/antagonist/vampire) && !SEND_SIGNAL(target, COMSIG_DISGUISE_STATUS))
+		return TRUE
+	if(target.mind?.has_antag_datum(/datum/antagonist/zombie))
+		return TRUE
+	return FALSE
+
+/obj/effect/proc_holder/spell/targeted/churn/can_target(mob/living/target)
+	return is_churn_target(target)
+
+/obj/effect/proc_holder/spell/targeted/churn/charge_check(mob/user, silent = FALSE)
+	if(empty_refill_active || charge_counter <= 0)
+		if(!silent)
+			to_chat(user, span_warning("[name] has no charges left!"))
+		return FALSE
+	return TRUE
+
+/obj/effect/proc_holder/spell/targeted/churn/process()
+	for(var/key in churn_target_cooldowns.Copy())
+		if(churn_target_cooldowns[key] <= world.time)
+			churn_target_cooldowns -= key
+	if(empty_refill_active)
+		empty_refill_elapsed += 2
+		if(empty_refill_elapsed >= 40 SECONDS)
+			empty_refill_active = FALSE
+			empty_refill_elapsed = 0
+			charge_regen_elapsed = 0
+			charge_counter = max_churn_charges
+			if(action)
+				action.UpdateButtonIcon()
+			STOP_PROCESSING(SSfastprocess, src)
+		return
+	if(charge_counter < max_churn_charges)
+		charge_regen_elapsed += 2
+		while(charge_regen_elapsed >= 15 SECONDS && charge_counter < max_churn_charges)
+			charge_regen_elapsed -= 15 SECONDS
+			charge_counter++
+		if(action)
+			action.UpdateButtonIcon()
+		if(charge_counter >= max_churn_charges)
+			charge_counter = max_churn_charges
+			STOP_PROCESSING(SSfastprocess, src)
+		return
+	STOP_PROCESSING(SSfastprocess, src)
+
+/obj/effect/proc_holder/spell/targeted/churn/after_cast(list/targets, mob/user = usr)
+	. = ..()
+	if(charge_counter <= 0)
+		empty_refill_active = TRUE
+		empty_refill_elapsed = 0
+		charge_regen_elapsed = 0
+		START_PROCESSING(SSfastprocess, src)
+		return
+	empty_refill_active = FALSE
+	empty_refill_elapsed = 0
+	charge_regen_elapsed = 0
+	START_PROCESSING(SSfastprocess, src)
 
 /obj/effect/proc_holder/spell/targeted/churn/cast(list/targets,mob/living/user = usr)
-	var/prob2explode = 100
-	if(user && user.mind)
-		prob2explode = 0
-		for(var/i in 1 to user.get_skill_level(/datum/skill/magic/holy))
-			prob2explode += 30
-	for(var/mob/living/L in targets)
-		var/isvampire = FALSE
-		var/iszombie = FALSE
-		if(L.stat == DEAD)
-			continue
-		if(L.mind)
-			var/datum/antagonist/vampire/V = L.mind.has_antag_datum(/datum/antagonist/vampire)
-			if(V && !SEND_SIGNAL(L, COMSIG_DISGUISE_STATUS))
-				isvampire = TRUE
-			if(L.mind.has_antag_datum(/datum/antagonist/zombie))
-				iszombie = TRUE
-			if(L.mind.special_role == "Vampire Lord" || L.mind.special_role == "Lich")	//Won't detonate Lich's or VLs but will fling them away.
-				user.visible_message(span_warning("[L] overpowers being churned!"), span_userdanger("[L] is too strong, I am churned!"))
-				user.Stun(50)
-				user.throw_at(get_ranged_target_turf(user, get_dir(user,L), 7), 7, 1, L, spin = FALSE)
-				return
-		if((L.mob_biotypes & MOB_UNDEAD) || isvampire || iszombie)
-			var/vamp_prob = prob2explode
-			if(isvampire)
-				vamp_prob -= 59
-			if(prob(vamp_prob))
-				L.visible_message("<span class='warning'>[L] has been churned by Necra's grip!", "<span class='danger'>I've been churned by Necra's grip!")
-				explosion(get_turf(L), light_impact_range = 1, flame_range = 1, smoke = FALSE)
-				L.Stun(50)
-			else
-				L.visible_message(span_warning("[L] resists being churned!"), span_userdanger("I resist being churned!"))
-	..()
+	var/mob/living/target = length(targets) ? targets[1] : null
+	if(!target || !is_churn_target(target))
+		revert_cast(user)
+		return FALSE
+	if(target.mind?.special_role == "Vampire Lord" || target.mind?.special_role == "Lich")
+		user.visible_message(span_warning("[target] overpowers being churned!"), span_userdanger("[target] is too strong, I am churned!"))
+		user.Stun(50)
+		user.throw_at(get_ranged_target_turf(user, get_dir(user, target), 7), 7, 1, target, spin = FALSE)
+		revert_cast(user)
+		return FALSE
+	var/last_target_ref = last_churn_target?.resolve()
+	if(last_target_ref == target)
+		to_chat(user, span_warning("The Undermaiden refuses to churn the same soul twice in a row."))
+		revert_cast(user)
+		return FALSE
+	var/target_key = REF(target)
+	if(churn_target_cooldowns[target_key] > world.time)
+		to_chat(user, span_warning("The Undermaiden's grip still lingers on [target]."))
+		revert_cast(user)
+		return FALSE
+	last_churn_target = WEAKREF(target)
+	churn_target_cooldowns[target_key] = world.time + 15 SECONDS
+	target.visible_message(span_warning("[target] convulses as the Undermaiden churns [target.p_them()] from within!"), span_userdanger("The Undermaiden churns me from within!"))
+	playsound(get_turf(target), 'sound/magic/churn.ogg', 100, TRUE)
+	target.apply_damage(target.mind?.key ? 50 : 100, BURN, BODY_ZONE_HEAD)
+	target.adjust_fire_stacks(4, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+	target.ignite_mob()
+	target.apply_status_effect(/datum/status_effect/debuff/churned_undead)
+	. = ..()
 	return TRUE
 
 
@@ -100,7 +171,7 @@
 	action_icon_state = "necraportal"
 	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	charging_slowdown = 1
-	chargetime = 2 SECONDS
+	chargetime = 1 SECONDS
 	recharge_time = 30 SECONDS
 	antimagic_allowed = TRUE
 	sound = 'sound/misc/deadbell.ogg'

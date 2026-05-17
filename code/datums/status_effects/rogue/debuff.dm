@@ -70,6 +70,18 @@
 	duration = 100
 	needs_processing = FALSE
 
+/datum/status_effect/debuff/churned_undead
+	id = "churned_undead"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/churned_undead
+	effectedstats = list(STATKEY_STR = -2, STATKEY_SPD = -2, STATKEY_WIL = -2)
+	duration = 15 SECONDS
+	needs_processing = FALSE
+
+/atom/movable/screen/alert/status_effect/debuff/churned_undead
+	name = "Churned"
+	desc = "The Undermaiden's grip has left your body weak and smoldering."
+	icon_state = "debuff"
+
 /atom/movable/screen/alert/status_effect/debuff/thirstyt3
 	name = "Thirsty"
 	desc = "I urgently need water!"
@@ -544,14 +556,14 @@
 
 /datum/status_effect/debuff/necrandeathdoorwilloss/on_apply()
 	. = ..()
-	owner.add_movespeed_modifier("NECRAN_REALM_SPEED", multiplicative_slowdown = -4)	// speed boost in Necra's realm
+	owner.apply_status_effect(/datum/status_effect/buff/necran_realm_stride)
 	RegisterSignal(owner, COMSIG_LIVING_UPDATE_TURF_MOVESPEED, PROC_REF(on_necran_realm_turf_movespeed))
 	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
 	ADD_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/debuff/necrandeathdoorwilloss/on_remove()
 	. = ..()
-	owner.remove_movespeed_modifier("NECRAN_REALM_SPEED")
+	owner.remove_status_effect(/datum/status_effect/buff/necran_realm_stride)
 	UnregisterSignal(owner, COMSIG_LIVING_UPDATE_TURF_MOVESPEED)
 	owner.update_turf_movespeed(get_turf(owner))	// restore terrain slowdown now that staff-bypass is gone
 	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
@@ -561,10 +573,10 @@
 /datum/status_effect/debuff/necrandeathdoorwilloss/proc/on_necran_realm_turf_movespeed()
 	SIGNAL_HANDLER
 	var/obj/item/active = owner.get_active_held_item()
-	if(active?.walking_stick)
+	if(istype(active, /obj/item/rogueweapon/shovel/mort_staff) && active.wielded)
 		return TURF_MOVESPEED_BLOCKED
 	var/obj/item/inactive = owner.get_inactive_held_item()
-	if(inactive?.walking_stick)
+	if(istype(inactive, /obj/item/rogueweapon/shovel/mort_staff) && inactive.wielded)
 		return TURF_MOVESPEED_BLOCKED
 
 /datum/status_effect/debuff/necrandeathdoorwilloss/process()

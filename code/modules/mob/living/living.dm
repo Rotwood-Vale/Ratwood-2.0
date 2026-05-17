@@ -1658,6 +1658,18 @@
 
 	apply_status_effect(fire_type, stacks, TRUE)
 
+/mob/living/proc/get_spreading_fire_status()
+	var/datum/status_effect/fire_handler/fire_stacks/sunder/blessed/blessed_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+	if(blessed_status)
+		return blessed_status
+	var/datum/status_effect/fire_handler/fire_stacks/sunder/sunder_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder)
+	if(sunder_status)
+		return sunder_status
+	var/datum/status_effect/fire_handler/fire_stacks/divine/divine_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/divine)
+	if(divine_status)
+		return divine_status
+	return has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
+
 //Share fire evenly between the two mobs
 //Called in MobBump() and Crossed()
 /mob/living/proc/spreadFire(mob/living/spread_to)
@@ -1667,8 +1679,17 @@
 	if(HAS_TRAIT(spread_to, TRAIT_NOFIRE) || HAS_TRAIT(src, TRAIT_NOFIRE))
 		return
 
-	var/datum/status_effect/fire_handler/fire_stacks/fire_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
-	var/datum/status_effect/fire_handler/fire_stacks/their_fire_status = spread_to.has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
+	var/datum/status_effect/fire_handler/fire_stacks/fire_status = get_spreading_fire_status()
+	var/datum/status_effect/fire_handler/fire_stacks/their_fire_status = spread_to.get_spreading_fire_status()
+	
+	// Blessed fire only spreads to undead mobs
+	if(fire_status && fire_status.type == /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+		if(!(spread_to.mob_biotypes & MOB_UNDEAD))
+			return
+	if(their_fire_status && their_fire_status.type == /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+		if(!(src.mob_biotypes & MOB_UNDEAD))
+			return
+	
 	if(fire_status && fire_status.on_fire)
 		if(their_fire_status && their_fire_status.on_fire)
 			var/firesplit = (fire_stacks + spread_to.fire_stacks) / 2

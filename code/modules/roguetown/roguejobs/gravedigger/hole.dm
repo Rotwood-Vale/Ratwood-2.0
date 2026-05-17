@@ -8,6 +8,7 @@
 	var/mutable_appearance/abovemob
 	var/turf/open/floor/rogue/dirt/mastert
 	var/faildirt = 0
+	var/burial_rites_done = FALSE
 	mob_storage_capacity = 3
 	allow_dense = TRUE
 	opened = TRUE
@@ -106,36 +107,73 @@
 /obj/structure/closet/dirthole/attack_hand(mob/living/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
-		var/atom/movable/coffin = src
-		for(var/mob/living/corpse in coffin)
-			if(!corpse.stat == DEAD)
+		var/mob/living/target_corpse = null
+		for(var/mob/living/corpse in src)
+			if(corpse.stat != DEAD)
 				to_chat(user, "That one hasn't truly passed on yet?!")
 				return
-			if(corpse.burialrited)
-				to_chat(user, "This grave has already been consecrated...")
+			if(corpse.mind?.key)
+				if(!burial_rites_done)
+					target_corpse = corpse
+					break
+			if(!corpse.burialrited)
+				target_corpse = corpse
+				break
+		if(!target_corpse)
+			to_chat(user, "This body has already been consecrated...")
+			return
+		to_chat(user, "I begin my burial rites...")
+		if(do_after(user, 50))
+			user.say("#Rest thy soul for all aeon within Necra's embrace!")
+			to_chat(user, "I have extracted a strand of luxthread, proof of passing.")
+			playsound(user, 'sound/misc/bellold.ogg', 20)
+			new /obj/item/soulthread((get_turf(user)))
+			target_corpse.burialrited = TRUE
+			record_round_statistic(STATS_GRAVES_CONSECRATED)
+			// If this is a player body, send them to lobby and reward the Necran 1 triumph
+			if(target_corpse.mind?.key)
+				burial_rites_done = TRUE
+				SEND_SIGNAL(user, COMSIG_GRAVE_CONSECRATED, src)
+				if(ishuman(user))
+					user.adjust_triumphs(1)
+					to_chat(user, span_notice("The Undermaiden honors this consecration. A triumph is yours."))
+				var/obj/item/roguecoin/necra_token/burial_reward = new(get_turf(user), 10)
+				burial_reward.pixel_x = rand(-6, 6)
+				burial_reward.pixel_y = rand(-6, 6)
+				pacify_corpse(target_corpse, user)
 				return
-			else
-				to_chat(user, "I begin my burial rites...")
-				if(do_after(user, 50))
-					user.say("#Rest thy soul for all aeon within Necra's embrace!")
-					to_chat(user, "I have extracted a strand of luxthread, proof of passing.")
-					playsound(user, 'sound/misc/bellold.ogg', 20)
-					new /obj/item/soulthread((get_turf(user)))
-					corpse.burialrited = TRUE
-					record_round_statistic(STATS_GRAVES_CONSECRATED)
-					// Necra rewards the undertaker with tokens of gratitude for completing burial rites
-					var/num_tokens = 5
-					if(ishuman(corpse))
-						var/mob/living/carbon/human/H = corpse
-						if(istype(H.mouth, /obj/item/roguecoin/copper))
-							// Coin in the mouth of the dead — Necra's toll paid, bonus awarded
-							num_tokens = 10
-							to_chat(user, span_notice("The coin placed in this one's mouth pleases the Undermaiden. Her bounty is doubled."))
-					var/obj/item/roguecoin/necra_token/burial_reward = new(get_turf(user), num_tokens)
-					burial_reward.pixel_x = rand(-6, 6)
-					burial_reward.pixel_y = rand(-6, 6)
+			// Necra rewards the undertaker with tokens of gratitude for completing burial rites
+			var/num_tokens = 5
+			if(ishuman(target_corpse))
+				var/mob/living/carbon/human/H = target_corpse
+				if(istype(H.mouth, /obj/item/roguecoin/copper))
+					// Coin in the mouth of the dead — Necra's toll paid, bonus awarded
+					num_tokens = 10
+					to_chat(user, span_notice("The coin placed in this one's mouth pleases the Undermaiden. Her bounty is doubled."))
+			var/obj/item/roguecoin/necra_token/burial_reward = new(get_turf(user), num_tokens)
+			burial_reward.pixel_x = rand(-6, 6)
+			burial_reward.pixel_y = rand(-6, 6)
 
 /obj/structure/closet/dirthole/attackby(obj/item/attacking_item, mob/user, params)
+	if(stage == 4)
+		if(istype(attacking_item, /obj/item/grown/log/tree/stick) || istype(attacking_item, /obj/item/natural/bundle/stick))
+			if(locate(/obj/structure/gravemarker) in loc)
+				to_chat(user, span_warning("This grave is already hallowed."))
+				return
+			to_chat(user, span_notice("I begin placing a marker over the grave..."))
+			if(do_after(user, 5 SECONDS, target = src))
+				if(istype(attacking_item, /obj/item/natural/bundle/stick))
+					var/obj/item/natural/bundle/stick/B = attacking_item
+					B.amount--
+					if(B.amount <= 0)
+						qdel(B)
+					else
+						B.update_bundle()
+				else
+					qdel(attacking_item)
+				var/obj/structure/gravemarker/G = new(loc)
+				G.OnCrafted(null, user)
+			return
 	if(!istype(attacking_item, /obj/item/rogueweapon/shovel))
 		return ..()
 	var/obj/item/rogueweapon/shovel/attacking_shovel = attacking_item

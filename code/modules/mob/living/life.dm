@@ -69,6 +69,7 @@
 	else
 		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 		handle_environment()
+		handle_necra_realm_fire()
 		handle_random_events()  // pain stun, vomitting, etc
 		update_sneak_invis()
 		handle_traits() // eye, ear, brain damages
@@ -147,6 +148,20 @@
 			wound.on_life()
 		else
 			wound.on_death()
+
+	/mob/living/proc/handle_necra_realm_fire()
+		var/area/current_area = get_area(src)
+		if(!current_area?.necra_area)
+			return
+		if(mind?.key)
+			return
+		if(!(mob_biotypes & MOB_UNDEAD) || stat == DEAD)
+			return
+		if(world.time < (mob_timers["necra_holy_fire"] || 0) + 10 SECONDS)
+			return
+		mob_timers["necra_holy_fire"] = world.time
+		adjust_fire_stacks(1, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+		ignite_mob(TRUE)
 
 /obj/item/proc/on_embed_life(mob/living/user, obj/item/bodypart/bodypart)
 	return

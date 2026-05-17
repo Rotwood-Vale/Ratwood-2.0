@@ -291,6 +291,12 @@
 		if(name in GLOB.excommunicated_players)
 			. += span_userdanger("HERETIC! SHAME!")
 
+		if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE) && stat == DEAD)
+			if(burialrited)
+				. += span_notice("This body has already been consecrated to the Undermaiden.")
+			else
+				. += span_warning("This body has not yet been consecrated.")
+
 		if(HAS_TRAIT(src, TRAIT_EXCOMMUNICATED))
 			. += span_userdanger("EXCOMMUNICATED! SHAME!")//Temporary, probably going to get rid of the trait since it doesn't fit for us.
 /*

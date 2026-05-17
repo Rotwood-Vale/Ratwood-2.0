@@ -381,13 +381,37 @@ Necra's Censer
 	//hitsound = 'sound/blank.ogg'
 	sellprice = 10 // Shouldn't be worth a lot in world
 	dropshrink = 0.6
+	var/cleanse_radius = 4
+	var/smoke_radius = 2
+	var/punish_dead_undead = FALSE
+
+/obj/item/necra_censer/upgraded
+	name = "blessed Necra's censer"
+	desc = "A censer infused with the underworld's ash and Undermaiden's blessing. Its cleansing mist reaches much farther than a common censer, and scorns undead caught in its mist."
+	cleanse_radius = 8
+	smoke_radius = 4
+	punish_dead_undead = TRUE
+
+/obj/item/necra_censer/proc/apply_censer_effect(mob/living/carbon/human/H)
+	if(punish_dead_undead && (H.stat == DEAD || (H.mob_biotypes & MOB_UNDEAD)))
+		H.remove_status_effect(/datum/status_effect/necra_censer_mood_bonus)
+		H.apply_status_effect(/datum/status_effect/necra_censer_mood_debuff)
+		H.add_stress(/datum/stressevent/necra_censer_undead)
+		if(!H.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
+			to_chat(H, span_danger("Silver fire lashes at your body!"))
+		H.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+		H.ignite_mob()
+		return
+	H.remove_status_effect(/datum/status_effect/necra_censer_mood_debuff)
+	H.apply_status_effect(/datum/status_effect/necra_censer_mood_bonus)
+	H.add_stress(/datum/stressevent/necra_censer)
 
 /obj/item/necra_censer/attack_self(mob/user)
 	if(do_after(user, 3 SECONDS))
 		playsound(user.loc, 'sound/items/censer_use.ogg', 100)
 		user.visible_message(span_info("[user.name] lifts up their arm and swings the chain on \the [name] around lightly."))
 		var/datum/effect_system/smoke_spread/smoke/necra_censer/S = new
-		S.set_up(2, user.loc)
+		S.set_up(smoke_radius, user.loc)
 		S.start()
 		// Cleanse the user and nearby living mobs, and bless them briefly
 		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
@@ -395,14 +419,20 @@ Necra's Censer
 			var/mob/living/carbon/human/UH = user
 			for(var/obj/item/I in UH.get_equipped_items())
 				SEND_SIGNAL(I, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			for(var/obj/item/I in UH.held_items)
+				SEND_SIGNAL(I, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			apply_censer_effect(UH)
 		if(isliving(user))
 			var/mob/living/LU = user
-			LU.apply_status_effect(/datum/status_effect/mood/censer_blessed)
-		for(var/mob/living/carbon/human/H in range(4, user))
+			if(!ishuman(LU))
+				LU.apply_status_effect(/datum/status_effect/mood/censer_blessed)
+		for(var/mob/living/carbon/human/H in range(cleanse_radius, user))
 			if(H == user)
 				continue
 			SEND_SIGNAL(H, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 			for(var/obj/item/I in H.get_equipped_items())
 				SEND_SIGNAL(I, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-			H.apply_status_effect(/datum/status_effect/mood/censer_blessed)
+			for(var/obj/item/I in H.held_items)
+				SEND_SIGNAL(I, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			apply_censer_effect(H)
 			to_chat(H, span_notice("The Undermaiden's incense washes over you."))

@@ -1120,9 +1120,13 @@
 	user.apply_status_effect(/datum/status_effect/debuff/ritesexpended) // only after a succesful revive
 
 /obj/structure/ritualcircle/necra/proc/undermaidenbargain(src)
-	var/ritualtargets = view(7, loc)
+	var/ritualtargets = view(1, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
-		target.apply_status_effect(/datum/status_effect/buff/undermaidenbargain)
+		if(!target.client && !target.mind?.key)
+			continue
+		var/prompt = alert(target, "The Undermaiden offers you a bargain in your name. Accept it?", "Undermaiden's Bargain", "Accept", "Refuse")
+		if(prompt == "Accept")
+			target.apply_status_effect(/datum/status_effect/buff/undermaidenbargain)
 
 /obj/structure/ritualcircle/necra/proc/undermaidenvow(src)
 	var/ritualtargets = view(1, loc)

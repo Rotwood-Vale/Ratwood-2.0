@@ -1107,6 +1107,25 @@
 	desc = "The shard of the great comet had inspired me to ENDURE."
 	icon_state = "censerbuff"
 
+/datum/status_effect/buff/necran_realm_stride
+	id = "necran_realm_stride"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/necran_realm_stride
+	duration = -1
+	status_type = STATUS_EFFECT_REPLACE
+	effectedstats = list(STATKEY_SPD = 4)
+	tick_interval = 5 SECONDS
+
+/datum/status_effect/buff/necran_realm_stride/process()
+	.=..()
+	var/area/rogue/our_area = get_area(owner)
+	if(isnull(our_area) || !(our_area.necra_area))
+		owner.remove_status_effect(src)
+
+/atom/movable/screen/alert/status_effect/buff/necran_realm_stride
+	name = "Undermaiden's Stride"
+	desc = "My familiarity of this realm quickens my steps."
+	icon_state = "buff"
+
 #define FORTIFY_FILTER "fortify_glow"
 /datum/status_effect/buff/fortify //Increases all healing while it lasts.
 	id = "fortify"
@@ -1348,13 +1367,20 @@
 	if(H.stat != DEAD)
 		return // Already revived by something else
 	H.revive(full_heal = FALSE)
+	for(var/obj/item/bodypart/bodypart as anything in H.bodyparts)
+		for(var/datum/wound/wound as anything in bodypart.wounds)
+			wound.cauterize_wound()
+	H.blood_volume = max(H.blood_volume, BLOOD_VOLUME_NORMAL)
 	// The heal effect: rapid wound/damage recovery + brief death immunity
 	H.apply_status_effect(/datum/status_effect/buff/undermaidenbargainheal)
+	H.apply_status_effect(/datum/status_effect/pacify, 10 MINUTES)
 	H.visible_message(span_danger("Something cold and irresistible drags [H] back from beyond the threshold!"))
 	playsound(get_turf(H), 'sound/misc/deadbell.ogg', 100, FALSE, -1)
 	// Move to underworld
 	if(length(GLOB.deaths_door_entries))
-		H.forceMove(pick(GLOB.deaths_door_entries))
+		var/turf/entry_turf = get_deathsdoor_entry_turf()
+		if(entry_turf)
+			H.forceMove(entry_turf)
 		to_chat(H, span_cultsmall("The bargain struck in your name has been called. You have been dragged to the Undermaiden's realm — find your way out."))
 	else
 		to_chat(H, span_cultsmall("The bargain has been called, but Necra's realm could not be reached. You are spared, this once."))
