@@ -7,7 +7,7 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 	for(var/mob/living/M in get_turf(user))
 		if(M != user && M.buckled == user)
 			return M
-	if(istype(user.pulling, /mob/living) && user.grab_state >= GRAB_AGGRESSIVE)
+	if(istype(user.pulling, /mob/living) && user.grab_state >= GRAB_PASSIVE)
 		var/mob/living/pulled = user.pulling
 		if(pulled.pulledby == user)
 			return pulled
@@ -20,6 +20,55 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		to_chat(target, span_danger("The Undermaiden's holy fire sears your body!"))
 	target.adjust_fire_stacks(2, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
 	target.ignite_mob()
+
+/proc/reject_deathsdoor_body(mob/living/user, mob/living/target, source_name)
+	if(!user || !target)
+		return
+	new /obj/effect/temp_visual/explosion(get_turf(target))
+	playsound(get_turf(target), 'sound/misc/explode/explosion.ogg', 100, TRUE, -1)
+	user.visible_message(span_warning("[user] is rejected by [source_name] as [user.p_they()] tries to force [target] through it."))
+	if(target.mob_biotypes & MOB_UNDEAD)
+		apply_deathsdoor_holy_fire(target)
+
+/proc/is_excluded_aalloy_projectile(obj/item/I)
+	if(!I)
+		return FALSE
+	if(istype(I, /obj/item/quiver) || istype(I, /obj/item/ammo_casing))
+		return TRUE
+	var/type_text = lowertext("[I.type]")
+	if(findtext(type_text, "arrow") || findtext(type_text, "bolt") || findtext(type_text, "javelin"))
+		return TRUE
+	return FALSE
+
+/proc/is_aalloy_portal_offering(obj/item/I)
+	if(!I)
+		return FALSE
+	var/type_text = lowertext("[I.type]")
+	if(!findtext(type_text, "aalloy"))
+		return FALSE
+	if(is_excluded_aalloy_projectile(I))
+		return FALSE
+	if(istype(I, /obj/item/rogueweapon))
+		return TRUE
+	if(istype(I, /obj/item/clothing))
+		return TRUE
+	return FALSE
+
+/proc/ash_carried_tolls_on_exit(mob/living/target)
+	if(!target)
+		return
+	var/turf/current_turf = get_turf(target)
+	var/ashed_any = FALSE
+	for(var/obj/item/thetoll/toll_item in target.GetAllContents(/obj/item/thetoll))
+		if(QDELETED(toll_item))
+			continue
+		qdel(toll_item)
+		ashed_any = TRUE
+	if(ashed_any)
+		ensure_underworld_toll_present()
+		if(current_turf)
+			new /obj/item/ash(current_turf)
+		to_chat(target, span_warning("Necra's toll crumbles into ash as you leave her realm."))
 
 /proc/get_deathsdoor_entry_turf()
 	if(!length(GLOB.deaths_door_entries))
@@ -51,6 +100,8 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 			explosion(get_turf(user), light_impact_range = 1, flame_range = 1, smoke = FALSE)
 			return
 		exit_deaths_door(user, user)
+		if(companion && !QDELETED(companion))
+			exit_deaths_door(user, companion)
 		return
 	if(!do_after(user, 2 SECONDS, src))
 		return
@@ -71,8 +122,7 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 	var/is_necran = HAS_TRAIT(user, TRAIT_SOUL_EXAMINE)
 
 	if(target.stat == DEAD && !is_necran)
-		apply_deathsdoor_holy_fire(target)
-		user.visible_message(span_warning("[user] consigns [target] to the Undermaiden's holy flames."))
+		reject_deathsdoor_body(user, target, "A Way Out")
 		return
 
 	if(target.mob_biotypes & MOB_UNDEAD)
@@ -121,6 +171,7 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 	var/turf/T = prompt_deaths_door_exit(user, dests)
 	if(!T)
 		return
+	ash_carried_tolls_on_exit(target)
 	target.forceMove(T)
 	playsound(get_turf(target), 'sound/misc/portalenter.ogg', 50, TRUE, -2, ignore_walls = TRUE)
 	target.visible_message(span_danger("The air warps and rapidly chills as [user] stumbles out of a deathly calm realm."))
@@ -242,8 +293,7 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 	var/has_player = (M.mind?.key != null)
 
 	if(is_dead && !is_necran)
-		apply_deathsdoor_holy_fire(M)
-		user.visible_message(span_warning("[user] consigns [M] to the Undermaiden's holy flames."))
+		reject_deathsdoor_body(user, M, "Death's Door")
 		return
 
 	// Non-Necrans explode undead they try to drag in
@@ -262,7 +312,7 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		explosion(get_turf(M), light_impact_range = 1, flame_range = 1, smoke = FALSE)
 		return
 
-	enter_portal(M, user)
+	enter_portal(M)
 
 	// Necrans who guide a dead body (not a player soul) through receive 5 tokens of gratitude
 	if(is_necran && is_dead && !has_player && !M.burialrited)
@@ -274,18 +324,31 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		span_warning("[user] drags [M] into Death's Door!")
 	)
 
-/obj/structure/deaths_door_portal/proc/enter_portal(mob/living/target, mob/living/forcer)
+/obj/structure/deaths_door_portal/proc/enter_portal(mob/living/target)
 	if(!destination)
 		return
 	// NPC corpses (no mind.key) crumble to ash; player bodies pass through to the Carriageman
 	if(target.stat == DEAD && !target.mind?.key)
 		target.visible_message(span_warning("[target] crumbles into ash as it crosses the threshold!"))
-		target.dust()
+		target.dust(just_ash = TRUE)
 		return
 	playsound(get_turf(src), 'sound/misc/portalenter.ogg', 50, TRUE, -2, ignore_walls = TRUE)
 	var/turf/spawn_turf = destination
-	// Necra's chosen, transported dead players, and carried living players appear near the Carriageman
-	if(HAS_TRAIT(target, TRAIT_SOUL_EXAMINE) || (target.stat == DEAD && target.mind?.key) || (target.stat != DEAD && target.mind?.key))
+	var/is_necran = HAS_TRAIT(target, TRAIT_SOUL_EXAMINE)
+	
+	// Non-Necran players spawn at random underworld locations
+	if(target.mind?.key && !is_necran)
+		var/list/valid_spawns = list()
+		for(var/obj/effect/landmark/underworld/L in GLOB.landmarks_list)
+			valid_spawns += L
+		if(length(valid_spawns))
+			var/obj/effect/landmark/underworld/spawn_landmark = pick(valid_spawns)
+			spawn_turf = get_turf(spawn_landmark)
+			// Apply underworld mood penalty for non-necrans
+			target.apply_status_effect(/datum/status_effect/debuff/underworld_malaise)
+			to_chat(target, span_warning("The Undermaiden's realm is cold and unwelcoming. You feel dread settle upon your shoulders, with your mind and soul waning."))
+	// Necra's chosen appear near the Carriageman
+	else if(is_necran || target.mind?.key)
 		var/obj/structure/underworld/carriageman/CM = locate(/obj/structure/underworld/carriageman) in world
 		if(CM)
 			var/turf/CM_turf = get_turf(CM)
@@ -360,6 +423,14 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		psilen_coin.pixel_y = rand(-6, 6)
 		qdel(I)
 		return
+	// Aalloy armor and weapons (excluding arrows/bolts/javelins) are accepted for 1 token each
+	if(is_aalloy_portal_offering(I))
+		to_chat(user, span_notice("The portal accepts the decrepit offering."))
+		var/obj/item/roguecoin/necra_token/aalloy_reward = new(get_turf(user))
+		aalloy_reward.pixel_x = rand(-6, 6)
+		aalloy_reward.pixel_y = rand(-6, 6)
+		qdel(I)
+		return
 	// A sack or bag filled with the accepted offerings can be dumped in all at once
 	if(istype(I, /obj/item/storage))
 		var/obj/item/storage/sack = I
@@ -376,6 +447,9 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 				qdel(sack_item)
 			else if(istype(sack_item, /obj/item/skull) || istype(sack_item, /obj/item/organ))
 				total_psilen++
+				qdel(sack_item)
+			else if(is_aalloy_portal_offering(sack_item))
+				total_tokens++
 				qdel(sack_item)
 		if(total_tokens > 0)
 			var/obj/item/roguecoin/necra_token/sack_tokens = new(get_turf(user), total_tokens)
@@ -474,6 +548,7 @@ GLOBAL_VAR_INIT(underworld_strands, 0)
 
 	src.forceMove(T)
 
+/// Returns a random adventurer latejoin turf for safe extraction and shrine fallback exits.
 /mob/living/proc/get_adventurer_latejoin_turf()
 	var/list/candidates = list()
 

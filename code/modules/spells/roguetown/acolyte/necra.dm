@@ -62,6 +62,42 @@
 	. = ..()
 	charge_counter = max_churn_charges
 
+/obj/effect/proc_holder/spell/targeted/churn/Click()
+	var/mob/living/user = usr
+	if(!istype(user))
+		return
+	if(!can_cast(user))
+		deactivate(user)
+		return
+	if(active)
+		deactivate(user)
+	else
+		active = TRUE
+		add_ranged_ability(user, null, TRUE)
+	update_icon()
+
+/obj/effect/proc_holder/spell/targeted/churn/deactivate(mob/living/user)
+	active = FALSE
+	remove_ranged_ability(null)
+	update_icon()
+
+/obj/effect/proc_holder/spell/targeted/churn/InterceptClickOn(mob/living/caller, params, atom/target)
+	. = ..()
+	if(.)
+		return TRUE
+	if(!can_cast(caller) || !cast_check(FALSE, ranged_ability_user))
+		return TRUE
+	if(ismob(target))
+		perform(list(target), TRUE, user = ranged_ability_user)
+	deactivate(caller)
+	return TRUE
+
+/obj/effect/proc_holder/spell/targeted/churn/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	last_churn_target = null
+	churn_target_cooldowns = null
+	return ..()
+
 /obj/effect/proc_holder/spell/targeted/churn/proc/is_churn_target(mob/living/target)
 	if(!target || target.stat == DEAD)
 		return FALSE
@@ -97,6 +133,7 @@
 			if(action)
 				action.UpdateButtonIcon()
 			STOP_PROCESSING(SSfastprocess, src)
+			return PROCESS_KILL
 		return
 	if(charge_counter < max_churn_charges)
 		charge_regen_elapsed += 2
@@ -108,8 +145,10 @@
 		if(charge_counter >= max_churn_charges)
 			charge_counter = max_churn_charges
 			STOP_PROCESSING(SSfastprocess, src)
+			return PROCESS_KILL
 		return
 	STOP_PROCESSING(SSfastprocess, src)
+	return PROCESS_KILL
 
 /obj/effect/proc_holder/spell/targeted/churn/after_cast(list/targets, mob/user = usr)
 	. = ..()

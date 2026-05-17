@@ -726,6 +726,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/underworldcoin
 	name = "ferryman coin"
 
+/obj/effect/landmark/underworld_toll_spawn
+	name = "underworld toll spawn"
+
 /obj/effect/landmark/underworldsafe
 	name = "safe zone"
 

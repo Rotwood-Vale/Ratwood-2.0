@@ -982,23 +982,24 @@
 	name = "Rune of Death"
 	desc = "A Holy Rune of Necra. Quiet acceptance stirs within you."
 	icon_state = "necra_chalky"
-	var/deathrites = list("Undermaiden's Bargain", "Vow to the Undermaiden", "The Toll")
-	var/coinslot = 0
+	var/deathrites = list("Undermaiden's Bargain", "Vow to the Undermaiden", "Lux Thread Revival")
+	var/luxslot = 0
 
 
 /obj/structure/ritualcircle/necra/examine(mob/user)
 	. = ..()
-	if(coinslot)
-		. += "</br>The circle has been sprinkled with [coinslot] toll coins..."
+	if(luxslot)
+		. += "</br>The circle has been woven with [luxslot] lux thread\s. 10 are needed for Lux Thread Revival."
 
 /obj/structure/ritualcircle/necra/attackby(obj/item/I, mob/user, params)
 	. = ..()
-	if(istype(I, /obj/item/thetoll))
-		loc.visible_message(span_warning("[user] begins to break [I] over the ritual circle..."))
+	if(istype(I, /obj/item/soulthread))
+		var/obj/item/soulthread/thread = I
+		loc.visible_message(span_warning("[user] begins to weave [thread] into the ritual circle..."))
 		if(do_after(user, 50))
-			loc.visible_message(span_warning("[user] shatters [I] over the ritual circle..."))
-			coinslot += 1
-			qdel(I)
+			loc.visible_message(span_warning("[user] binds [thread] into the circle's markings..."))
+			luxslot += max(thread.strungtogether, 1)
+			qdel(thread)
 
 /obj/structure/ritualcircle/necra/attack_hand(mob/living/user)
 	if(!..())
@@ -1054,31 +1055,39 @@
 								icon_state = "necra_chalky"
 						else
 							loc.visible_message(span_warning("Then... nothing. The Undermaiden does not care for the vows of the damned, or those of other faiths."))
-		if("The Toll")
-			if(!coinslot)
-				to_chat("This rite requires the toll to be prepared...")
-				return
+		if("Lux Thread Revival")
+			var/list/missing_requirements = list()
+			if(luxslot < 10)
+				missing_requirements += "10 lux thread prepared on the rune ([luxslot]/10)"
 			var/onrune = view(1, loc)
 			var/list/folksonrune = list()
 			for(var/mob/living/carbon/human/persononrune in onrune)
 				if(persononrune.stat == DEAD)
 					folksonrune += persononrune
+			if(!folksonrune.len)
+				missing_requirements += "a dead supplicant standing on the rune"
+			if(missing_requirements.len)
+				to_chat(user, span_warning("This rite cannot be enacted yet. Missing: [jointext(missing_requirements, ", ")]."))
+				return
+			to_chat(user, span_notice("The rite is prepared with [luxslot] lux thread. Choose a supplicant."))
 			var/target = input(user, "Choose a supplicant") as null|anything in folksonrune
-			if(target)
-				loc.visible_message(span_warning("[user] draws spectral strands of Lux up through the air, tearing the veil between lyfe and death!"))
-				playsound(user, 'sound/vo/mobs/ghost/whisper (3).ogg', 100, FALSE, -1)
+			if(!target)
+				to_chat(user, span_warning("Without a chosen supplicant, the rite cannot begin."))
+				return
+			loc.visible_message(span_warning("[user] draws spectral strands of Lux up through the air, tearing the veil between lyfe and death!"))
+			playsound(user, 'sound/vo/mobs/ghost/whisper (3).ogg', 100, FALSE, -1)
+			if(do_after(user, 60))
+				playsound(user, 'sound/vo/mobs/ghost/whisper (1).ogg', 100, FALSE, -1)
 				if(do_after(user, 60))
-					playsound(user, 'sound/vo/mobs/ghost/whisper (1).ogg', 100, FALSE, -1)
-					if(do_after(user, 60))
-						loc.visible_message(span_warning("[user] moves their lips but no words can be heard, speaking to a massive spectral figure on the other side!"))
-						playsound(user, 'sound/vo/mobs/ghost/death.ogg', 100, FALSE, -1)
-						if(do_after(user, 20))
-							icon_state = "necra_active"
-							user.say("For this toll, a soul!!")
-							to_chat(user,span_cultsmall("[user] grasps the strands of Lux and attempts to pull a soul through the rift!"))
-							thetoll(target, user)
-							spawn(120)
-								icon_state = "necra_chalky"
+					loc.visible_message(span_warning("[user] moves their lips but no words can be heard, speaking to a massive spectral figure on the other side!"))
+					playsound(user, 'sound/vo/mobs/ghost/death.ogg', 100, FALSE, -1)
+					if(do_after(user, 20))
+						icon_state = "necra_active"
+						user.say("For these threads, a soul!!")
+						to_chat(user,span_cultsmall("[user] grasps the strands of Lux and attempts to pull a soul through the rift!"))
+						thetoll(target, user)
+						spawn(120)
+							icon_state = "necra_chalky"
 
 
 
@@ -1116,7 +1125,7 @@
 	target.apply_status_effect(/datum/status_effect/debuff/revived)
 	target.apply_status_effect(/datum/status_effect/buff/healing, 14)
 	target.add_stress(/datum/stressevent/necrarevive)
-	src.coinslot -= 1 // -1 coin, please insert more coins.
+	src.luxslot = max(src.luxslot - 10, 0) // 10 lux thread spent per revival
 	user.apply_status_effect(/datum/status_effect/debuff/ritesexpended) // only after a succesful revive
 
 /obj/structure/ritualcircle/necra/proc/undermaidenbargain(src)
@@ -1176,6 +1185,31 @@
 	icon = 'icons/roguetown/underworld/enigma_husks.dmi'
 	icon_state = "soultoken"
 	sellprice = 30
+
+/obj/item/thetoll/proc/update_holder_toll_slow(mob/living/L)
+	if(!L)
+		return
+	if(L.is_holding_item_of_type(/obj/item/thetoll))
+		L.apply_status_effect(/datum/status_effect/debuff/toll_burden)
+	else
+		L.remove_status_effect(/datum/status_effect/debuff/toll_burden)
+
+/obj/item/thetoll/pickup(mob/user)
+	. = ..()
+	if(isliving(user))
+		update_holder_toll_slow(user)
+
+/obj/item/thetoll/dropped(mob/user)
+	. = ..()
+	if(isliving(user))
+		update_holder_toll_slow(user)
+
+/obj/item/thetoll/Destroy()
+	if(isliving(loc))
+		var/mob/living/L = loc
+		update_holder_toll_slow(L)
+	ensure_underworld_toll_present()
+	return ..()
 
 
 /obj/structure/ritualcircle/eora

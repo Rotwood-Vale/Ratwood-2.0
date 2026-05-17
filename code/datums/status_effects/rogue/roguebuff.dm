@@ -1328,14 +1328,14 @@
 
 /atom/movable/screen/alert/status_effect/buff/undermaidenbargain
 	name = "Undermaiden's Bargain"
-	desc = "A horrible deal was struck in my name..."
+	desc = "If I fall, Necra herself shall drag me back from death to and to her realm. There, I will have a chance to continue my existence once the toll is paid."
 	icon_state = "buff"
 
 /datum/status_effect/buff/undermaidenbargain
 	id = "undermaidenbargain"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/undermaidenbargain
 	duration = 30 MINUTES
-	effectedstats = list(STATKEY_END = 1)
+	effectedstats = list(STATKEY_WIL = 1)
 
 /datum/status_effect/buff/undermaidenbargain/on_apply()
 	. = ..()
@@ -1354,36 +1354,74 @@
 	SIGNAL_HANDLER
 	if(gibbed)
 		return // The bargain can't save the gibbed
+	if(owner.has_status_effect(/datum/status_effect/buff/necras_vow) || HAS_TRAIT(owner, TRAIT_NECRAS_VOW))
+		owner.remove_status_effect(/datum/status_effect/buff/undermaidenbargain)
+		to_chat(owner, span_warning("Necra rejects your contradiction. You cannot hold both the vow to her and the bargain."))
+		return
 	if(!owner.mind?.active)
 		return // Only player-controlled mobs get the bargain
-	// Delay by 1 tick so the full death proc (rot component, etc.) finishes first
-	addtimer(CALLBACK(src, PROC_REF(fulfill_bargain)), 1)
+	// Schedule prompt after 5 seconds for player to accept/decline
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(prompt_undermaiden_bargain), WEAKREF(owner)), 5 SECONDS)
 
-/// Called 1 tick after death — revives the player in the underworld realm.
-/datum/status_effect/buff/undermaidenbargain/proc/fulfill_bargain()
-	if(QDELETED(src) || QDELETED(owner))
+/proc/prompt_undermaiden_bargain(datum/weakref/owner_ref)
+	var/mob/living/carbon/human/H = owner_ref?.resolve()
+	if(!H || QDELETED(H) || H.stat != DEAD)
 		return
-	var/mob/living/H = owner
+	var/choice = alert(H, "Time to fulfill your bargain. Will you accept and be dragged to the Necra's realm?", "Undermaiden's Bargain", "Accept", "Decline")
+	if(choice == "Accept")
+		try_fulfill_undermaiden_bargain(owner_ref)
+	else
+		H.remove_status_effect(/datum/status_effect/buff/undermaidenbargain)
+		to_chat(H, span_warning("You have refused to uphold the bargain. Your corpse remains where it fell, for now."))
+
+/proc/try_fulfill_undermaiden_bargain(datum/weakref/owner_ref)
+	var/mob/living/carbon/human/H = owner_ref?.resolve()
+	if(!H || QDELETED(H))
+		return
 	if(H.stat != DEAD)
 		return // Already revived by something else
 	H.revive(full_heal = FALSE)
+	// Clear all wounds and cuts
 	for(var/obj/item/bodypart/bodypart as anything in H.bodyparts)
-		for(var/datum/wound/wound as anything in bodypart.wounds)
+		var/list/wounds_to_remove = bodypart.wounds.Copy()
+		for(var/datum/wound/wound as anything in wounds_to_remove)
 			wound.cauterize_wound()
-	H.blood_volume = max(H.blood_volume, BLOOD_VOLUME_NORMAL)
+	// Clear bleeding status effects
+	H.remove_status_effect(/datum/status_effect/debuff/bleeding)
+	H.remove_status_effect(/datum/status_effect/debuff/bleedingworse)
+	H.remove_status_effect(/datum/status_effect/debuff/bleedingworst)
+	H.blood_volume = BLOOD_VOLUME_NORMAL
 	// The heal effect: rapid wound/damage recovery + brief death immunity
 	H.apply_status_effect(/datum/status_effect/buff/undermaidenbargainheal)
 	H.apply_status_effect(/datum/status_effect/pacify, 10 MINUTES)
 	H.visible_message(span_danger("Something cold and irresistible drags [H] back from beyond the threshold!"))
 	playsound(get_turf(H), 'sound/misc/deadbell.ogg', 100, FALSE, -1)
-	// Move to underworld
-	if(length(GLOB.deaths_door_entries))
-		var/turf/entry_turf = get_deathsdoor_entry_turf()
-		if(entry_turf)
-			H.forceMove(entry_turf)
-		to_chat(H, span_cultsmall("The bargain struck in your name has been called. You have been dragged to the Undermaiden's realm — find your way out."))
-	else
-		to_chat(H, span_cultsmall("The bargain has been called, but Necra's realm could not be reached. You are spared, this once."))
+	// Move to a random toll-spawn landmark in the underworld
+	if(length(GLOB.landmarks_list))
+		var/list/valid_spawns = list()
+		for(var/obj/effect/landmark/underworld_toll_spawn/L in GLOB.landmarks_list)
+			valid_spawns += L
+		if(!length(valid_spawns))
+			for(var/obj/effect/landmark/underworld/L in GLOB.landmarks_list)
+				valid_spawns += L
+		if(length(valid_spawns))
+			var/obj/effect/landmark/spawn_landmark = pick(valid_spawns)
+			var/turf/spawn_turf = get_turf(spawn_landmark)
+			if(spawn_turf)
+				H.forceMove(spawn_turf)
+				// Spawn a toll at the selected toll-spawn location
+				var/obj/item/roguecoin/necra_token/toll = new(spawn_turf)
+				toll.pixel_x = rand(-6, 6)
+				toll.pixel_y = rand(-6, 6)
+				to_chat(H, span_cultsmall("The bargain struck in your name has been called. You have been dragged to the Undermaiden's realm — a toll awaits you somewhere in this maze of lost souls."))
+				return
+	to_chat(H, span_cultsmall("The bargain has been called, but Necra's realm could not be reached. You are spared, this once."))
+
+/// Called when player accepts the prompt — revives the player in the underworld realm.
+/datum/status_effect/buff/undermaidenbargain/proc/fulfill_bargain()
+	if(QDELETED(src) || QDELETED(owner))
+		return
+	try_fulfill_undermaiden_bargain(WEAKREF(owner))
 
 
 /datum/status_effect/buff/undermaidenbargainheal/on_apply()

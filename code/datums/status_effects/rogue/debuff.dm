@@ -1023,6 +1023,39 @@
 	desc = "ARGHHHH GET ME DOWN!!"
 	icon_state = "muscles"
 
+/// The Undermaiden's realm afflicts the non-faithful with terrible dread
+/datum/status_effect/debuff/underworld_malaise
+	id = "underworld_malaise"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/underworld_malaise
+	duration = 1 MINUTES  // Applied on entry to underworld, persists 1 minute after leaving
+	status_type = STATUS_EFFECT_REFRESH
+	needs_processing = FALSE
+
+/atom/movable/screen/alert/status_effect/debuff/underworld_malaise
+	name = "Underworld Malaise"
+	desc = "The Undermaiden's cold gaze weighs upon me. I SHOULDN'T BE HERE! My mind and soul wanes, when will it end?"
+	icon_state = "debuff"
+
+/datum/status_effect/debuff/underworld_malaise/on_apply()
+	. = ..()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		// Apply stress/mood penalty through adding bad mood status effects
+		H.apply_status_effect(/datum/status_effect/mood/vbad)
+		to_chat(H, span_warning("A crushing despair settles over you as you enter this cold, forsaken realm..."))
+
+/datum/status_effect/debuff/toll_burden
+	id = "toll_burden"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/toll_burden
+	effectedstats = list(STATKEY_SPD = -10)
+	status_type = STATUS_EFFECT_REFRESH
+	needs_processing = FALSE
+
+/atom/movable/screen/alert/status_effect/debuff/toll_burden
+	name = "Weighted by Toll"
+	desc = "Carrying Necra's toll weighs heavily on me."
+	icon_state = "debuff"
+
 //////////////////////////////////////
 ///FLIGHT SOUND LOOP STATUS EFFECT///
 ////////////////////////////////////

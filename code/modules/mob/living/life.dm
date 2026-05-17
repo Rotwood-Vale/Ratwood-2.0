@@ -118,6 +118,33 @@
 	if(GLOB.cold_breath_overlay in overlays)
 		cut_overlay(GLOB.cold_breath_overlay)
 
+/mob/living/proc/handle_necra_realm_fire()
+	var/static/datum/weakref/carriageman_ref
+	var/obj/structure/underworld/carriageman/CM = null
+	if(carriageman_ref)
+		CM = carriageman_ref.resolve()
+	if(!CM)
+		CM = locate(/obj/structure/underworld/carriageman) in world
+		if(CM)
+			carriageman_ref = WEAKREF(CM)
+	if(!CM)
+		return
+	if(stat == DEAD)
+		return
+	if(!(mob_biotypes & MOB_UNDEAD))
+		return
+	if(get_dist(src, CM) > 8)
+		return
+	var/turf/src_turf = get_turf(src)
+	var/turf/cm_turf = get_turf(CM)
+	if(!src_turf || !cm_turf || src_turf.z != cm_turf.z)
+		return
+	if(world.time < (mob_timers["necra_holy_fire"] || 0) + 10 SECONDS)
+		return
+	mob_timers["necra_holy_fire"] = world.time
+	adjust_fire_stacks(1, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+	ignite_mob(TRUE)
+
 /mob/living/proc/handle_random_events(additional = 0)
 	//random painstun
 	if(!stat && !HAS_TRAIT(src, TRAIT_NOPAINSTUN))
@@ -149,20 +176,6 @@
 		else
 			wound.on_death()
 
-	/mob/living/proc/handle_necra_realm_fire()
-		var/area/current_area = get_area(src)
-		if(!current_area?.necra_area)
-			return
-		if(mind?.key)
-			return
-		if(!(mob_biotypes & MOB_UNDEAD) || stat == DEAD)
-			return
-		if(world.time < (mob_timers["necra_holy_fire"] || 0) + 10 SECONDS)
-			return
-		mob_timers["necra_holy_fire"] = world.time
-		adjust_fire_stacks(1, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
-		ignite_mob(TRUE)
-
 /obj/item/proc/on_embed_life(mob/living/user, obj/item/bodypart/bodypart)
 	return
 
@@ -174,7 +187,10 @@
 		if(prob(embedded.embedding.embedded_pain_chance))
 			if(embedded.is_silver && HAS_TRAIT(src, TRAIT_SILVER_WEAK) && !has_status_effect(STATUS_EFFECT_ANTIMAGIC))
 				var/datum/component/silverbless/psyblessed = embedded.GetComponent(/datum/component/silverbless)
-				adjust_fire_stacks(1, psyblessed?.is_blessed ? /datum/status_effect/fire_handler/fire_stacks/sunder/blessed : /datum/status_effect/fire_handler/fire_stacks/sunder)
+				var/fire_stack_type = /datum/status_effect/fire_handler/fire_stacks/sunder
+				if(psyblessed && psyblessed.is_blessed)
+					fire_stack_type = /datum/status_effect/fire_handler/fire_stacks/sunder/blessed
+				adjust_fire_stacks(1, fire_stack_type)
 			to_chat(src, span_danger("[embedded] in me hurts!"))
 
 		if(prob(embedded.embedding.embedded_fall_chance))

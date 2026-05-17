@@ -568,11 +568,10 @@
 		if(blesscomp?.is_blessed)
 			if(!victim.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
 				to_chat(victim, span_danger("Blessed silver rebukes my presence! These fires are lashing at my very soul!"))
-			victim.adjust_fire_stacks(thrown ? 1 : 3, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
 		else
-			if(!victim.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder))
+			if(!victim.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
 				to_chat(victim, span_danger("Silver rebukes my presence! My vitae smolders, and my powers wane!"))
-			victim.adjust_fire_stacks(thrown ? 1 : 3, /datum/status_effect/fire_handler/fire_stacks/sunder)
+		victim.adjust_fire_stacks(thrown ? 1 : 3, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
 		victim.ignite_mob()
 
 /mob/living/attacked_by(obj/item/I, mob/living/user)

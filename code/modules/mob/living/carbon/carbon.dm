@@ -1086,25 +1086,6 @@
 	if(status_flags & GODMODE)
 		return
 	if(stat != DEAD)
-		if(health <= HEALTH_THRESHOLD_NEARDEATH && HAS_TRAIT(src, TRAIT_DEATHBARGAIN))
-			// Undermaiden's Bargain: Necra claims the body and restores it in her realm
-			remove_status_effect(/datum/status_effect/buff/undermaidenbargain)
-			to_chat(src, span_danger("The Bargain is called in. The Undermaiden takes her due..."))
-			playsound(src, 'sound/misc/deadbell.ogg', 100, FALSE, -1)
-			for(var/obj/effect/landmark/underworld/A in GLOB.landmarks_list)
-				forceMove(A.loc)
-				break
-			// Clear all wounds and restore the body to a survivable state
-			heal_wounds(100)
-			update_damage_overlays()
-			adjustBruteLoss(-getBruteLoss() * 0.5, 0)
-			adjustFireLoss(-getFireLoss() * 0.5, 0)
-			adjustOxyLoss(-getOxyLoss(), 0)
-			blood_volume = BLOOD_VOLUME_NORMAL
-			updatehealth()
-			// Apply the revived debuff as the price of Necra's mercy
-			src.apply_status_effect(/datum/status_effect/debuff/revived)
-			return
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 			INVOKE_ASYNC(src, PROC_REF(emote), "deathgurgle")
 			death()

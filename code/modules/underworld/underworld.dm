@@ -154,27 +154,27 @@
 					return
 				clear_trade_state(user)
 			var/list/options = list(
-				"Mortician's Staff (200 tokens + iron shovel)",
-				"Upgrade Necra censer (100 tokens + Necra's censer)",
 				"Burial Cord (25 tokens)",
+				"Upgrade Necra censer (100 tokens + Necra's censer)",
 				"Staff Blessing Scroll I (50 tokens)",
-				"Staff Blessing Scroll II (100 tokens)"
+				"Staff Blessing Scroll II (100 tokens)",
+				"Mortician's Staff (200 tokens + iron shovel)"
 			)
 			var/choice = input(user, "Choose a reward from the Carriageman", "Carriageman") as null|anything in options
 			if(!choice)
 				return
 			clear_trade_state(user)
 			switch(choice)
-				if("Mortician's Staff (200 tokens + iron shovel)")
-					pending_choice[key] = "shovel"
-				if("Upgrade Necra censer (100 tokens + Necra's censer)")
-					pending_choice[key] = "censer"
 				if("Burial Cord (25 tokens)")
 					pending_choice[key] = "cord"
-				if("Blessing Scroll I (50 tokens)")
+				if("Upgrade Necra censer (100 tokens + Necra's censer)")
+					pending_choice[key] = "censer"
+				if("Staff Blessing Scroll I (50 tokens)")
 					pending_choice[key] = "scroll1"
 				if("Staff Blessing Scroll II (100 tokens)")
 					pending_choice[key] = "scroll2"
+				if("Mortician's Staff (200 tokens + iron shovel)")
+					pending_choice[key] = "shovel"
 			to_chat(user, span_notice("Your selection is made. Present the required offering now."))
 			return
 		if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE) && !follows_necra(user))
@@ -212,6 +212,7 @@
 				to_chat(user, "<br><font color=purple><span class='bold'>ONE TRANSACTION AT A TIME.</span></font>")
 				return
 			qdel(W)
+			ensure_underworld_toll_present()
 			to_chat(user, "<br><font color=purple><span class='bold'>THE TOLL IS PAID, A TRANSACTION MADE.</span></font>")
 			toll = TRUE
 			return
@@ -219,7 +220,7 @@
 			to_chat(user, span_warning("The Carriageman only bargains with followers of the Undermaiden."))
 			return
 		if(!choice)
-			to_chat(user, span_warning("Choose a reward from The Carriageman first."))
+			to_chat(user, span_warning("Choose a reward from the Carriageman first."))
 			return
 		if(istype(W, /obj/item/roguecoin/necra_token))
 			var/obj/item/roguecoin/necra_token/T = W
@@ -361,6 +362,32 @@ GLOBAL_VAR_INIT(underworld_coins, 0)
 
 /obj/item/underworld/coin/notracking
 	should_track = FALSE
+
+/proc/ensure_underworld_toll_present()
+	var/has_realm_toll = FALSE
+	for(var/obj/item/thetoll/T in world)
+		if(QDELETED(T))
+			continue
+		var/area/rogue/A = get_area(T)
+		if(!isnull(A) && A.necra_area)
+			has_realm_toll = TRUE
+			break
+	if(has_realm_toll)
+		return
+
+	var/list/valid_spawns = list()
+	for(var/obj/effect/landmark/underworld_toll_spawn/L in GLOB.landmarks_list)
+		valid_spawns += L
+	if(!length(valid_spawns))
+		for(var/obj/effect/landmark/underworldcoin/C in GLOB.landmarks_list)
+			valid_spawns += C
+	if(!length(valid_spawns))
+		return
+
+	var/obj/effect/landmark/chosen = pick(valid_spawns)
+	var/turf/spawn_turf = get_turf(chosen)
+	if(spawn_turf)
+		new /obj/item/thetoll(spawn_turf)
 
 /proc/coin_upkeep()
 	if(GLOB.underworld_coins < 8)
