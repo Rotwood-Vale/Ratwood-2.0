@@ -670,5 +670,3 @@
 
 	revert_cast()
 	return FALSE
-
-/
