@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/rogue/spirit_vengeance
-	name = "Rancor Spirit"
+	name = "Summon of Zizo"
 	desc = ""
 	icon = 'modular_hearthstone/icons/mob/spirit_vengeance.dmi'
 	icon_state = "spirit_vengeance"
@@ -15,8 +15,8 @@
 	maxHealth = 50
 	health = 50
 	harm_intent_damage = 5
-	melee_damage_lower = 5
-	melee_damage_upper = 7
+	melee_damage_lower = 15
+	melee_damage_upper = 20
 	vision_range = 7
 	aggro_vision_range = 9
 	retreat_distance = 0

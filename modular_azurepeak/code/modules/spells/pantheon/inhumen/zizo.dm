@@ -608,3 +608,87 @@
 			if(I.type == item_type)
 				needed--
 				qdel(I)
+
+
+/obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance
+	name = "Avenging Spirits"
+	desc = "Summon three spiteful skulls in Zizo's name to harry a chosen foe."
+	range = 7
+	sound = list('sound/magic/magnet.ogg')
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	releasedrain = 40
+	chargetime = 30
+	warnie = "spellwarning"
+	no_early_release = TRUE
+	charging_slowdown = 1
+	chargedloop = /datum/looping_sound/invokeholy
+	gesture_required = TRUE
+	associated_skill = /datum/skill/magic/holy
+	recharge_time = 45 SECONDS
+	hide_charge_effect = TRUE
+	miracle = TRUE
+	devotion_cost = 50
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
+	overlay_state = "vengeful_spirit"
+	action_icon_state = "vengeful_spirit"
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
+	invocations = list("Zizo, loose the rancor of the restless!")
+	invocation_type = "shout"
+
+/obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance/cast(list/targets, mob/living/user)
+	. = ..()
+	if(isliving(targets[1]))
+		var/mob/living/target = targets[1]
+		if(user.dir == SOUTH || user.dir == NORTH)
+			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_turf(user),user)
+			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_step(user, EAST),user)
+			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_step(user, WEST),user)
+		else
+			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_turf(user),user)
+			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_step(user, NORTH),user)
+			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_step(user, SOUTH),user)
+		for(var/mob/living/simple_animal/hostile/rogue/spirit_vengeance/swarm in view(2, user))
+			swarm.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
+		return TRUE
+	revert_cast()
+	return FALSE
+
+
+/obj/effect/proc_holder/spell/invoked/raise_spirit_respite
+	name = "Bone Warden of Zizo"
+	desc = "Call forth a towering skeletal aspect of Zizo, granting your foe the only respite she permits."
+	range = 7
+	sound = list('sound/magic/necra_sight.ogg')
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	releasedrain = 40
+	chargetime = 30
+	warnie = "spellwarning"
+	no_early_release = TRUE
+	charging_slowdown = 1
+	chargedloop = /datum/looping_sound/invokeholy
+	gesture_required = TRUE
+	associated_skill = /datum/skill/magic/holy
+	recharge_time = 1 MINUTES
+	hide_charge_effect = TRUE
+	miracle = TRUE
+	devotion_cost = 100
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
+	overlay_state = "aspect"
+	action_icon_state = "aspect"
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
+	invocations = list("Spite of Zizo, rise and help!")
+	invocation_type = "shout"
+
+/obj/effect/proc_holder/spell/invoked/raise_spirit_respite/cast(list/targets, mob/living/user)
+	. = ..()
+	if(isliving(targets[1]))
+		var/mob/living/target = targets[1]
+		if(user.dir == SOUTH || user.dir == NORTH)
+			new /mob/living/simple_animal/hostile/rogue/spirit_respite(get_turf(user),user)
+		else
+			new /mob/living/simple_animal/hostile/rogue/spirit_respite(get_turf(user),user)
+		for(var/mob/living/simple_animal/hostile/rogue/spirit_respite/avatar in view(2, user))
+			avatar.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
+		return TRUE
+	revert_cast()
+	return FALSE
