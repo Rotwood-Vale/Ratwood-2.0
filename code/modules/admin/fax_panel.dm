@@ -26,6 +26,7 @@ GLOBAL_DATUM_INIT(fax_panel, /datum/fax_panel, new)
 		hermes_list += list(list(
 			"num" = H.ournum,
 			"tag" = H.mailtag || "",
+			"mailtags" = H.mailtags || "",
 		))
 	data["hermes_list"] = hermes_list
 

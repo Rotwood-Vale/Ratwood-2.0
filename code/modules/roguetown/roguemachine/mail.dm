@@ -644,7 +644,7 @@
 
 /obj/structure/roguemachine/mail/examine(mob/user)
 	. = ..()
-	. += "<a href='?src=[REF(src)];directory=1'>Directory:</a> [mailtag]"
+	. += "<a href='?src=[REF(src)];directory=1'>Directory:</a> [mailtag][mailtags ? ", [mailtags]" : ""]"
 
 /obj/structure/roguemachine/mail/Topic(href, href_list)
 	..()
