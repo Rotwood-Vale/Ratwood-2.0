@@ -300,7 +300,7 @@ GLOBAL_VAR(restart_counter)
 	if(TEST_RUN_PARAMETER in params)
 		FinishTestRun()
 		return
-
+	world.Export("http://127.0.0.1:8080/restart")
 	if(TgsAvailable())
 		send2chat(new /datum/tgs_message_content("Round ending!"), CONFIG_GET(string/chat_announce_new_game))
 		testing("tgsavailable passed")
