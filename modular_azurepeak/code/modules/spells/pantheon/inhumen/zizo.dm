@@ -731,7 +731,7 @@
 		return FALSE
 
 	var/current_devotion = target.devotion
-	var/maximum_devotion = target.max_devotion
+	var/maximum_devotion = CLERIC_T4
 
 	if(!isnum(current_devotion) || !isnum(maximum_devotion) || maximum_devotion <= 0)
 		to_chat(user, span_warning("[target] has no devotion for Zizo to measure."))
