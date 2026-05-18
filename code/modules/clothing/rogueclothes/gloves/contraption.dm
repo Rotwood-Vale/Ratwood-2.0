@@ -31,7 +31,6 @@
 /obj/item/clothing/gloves/roguetown/chain/contraption/proc/misfire_result(obj/O, mob/living/user)
 	misfiring = TRUE
 	explosion(src, light_impact_range = 2, flame_range = 2, smoke = TRUE)
-	//qdel(src)
 	O.take_damage(400, BRUTE, "blunt", 1)
 
 /obj/item/clothing/gloves/roguetown/chain/contraption/proc/charge_deduction(obj/O, mob/living/user, deduction)
@@ -74,6 +73,8 @@
 	var/datum/effect_system/spark_spread/S = new()
 	var/turf/front = get_turf(src)
 	if(istype(I, accepted_power_source))
+		if(current_charge)
+			to_chat(user, span_warning("The gauntlets already have a [initial(accepted_power_source.name)] inside!"))
 		user.changeNext_move(CLICK_CD_FAST)
 		S.set_up(1, 1, front)
 		S.start()

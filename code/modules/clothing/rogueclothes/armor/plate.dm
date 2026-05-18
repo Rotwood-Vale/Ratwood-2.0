@@ -103,7 +103,6 @@
 				legendaryarcane = FALSE
 				user.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 				user.apply_status_effect(/datum/status_effect/buff/artificerint)
-				user.change_stat("intelligence", 3)
 				to_chat(user, span_notice("Arcyne lightning crackles across the cuirass, enchanting your mind with forbidden knowledge!"))
 				icon_state ="artificerplate_powered"
 				item_state = "artificerplate_powered"
