@@ -39,7 +39,7 @@
 	selection_type = "range"
 	overlay_state = "necra_ult"//Temp.
 	releasedrain = 30
-	chargetime = 1 SECONDS
+	chargetime = 2 SECONDS
 	charge_type = "charges"
 	recharge_time = 2
 	max_targets = 1
@@ -55,7 +55,6 @@
 	var/charge_regen_elapsed = 0
 	var/empty_refill_elapsed = 0
 	var/empty_refill_active = FALSE
-	var/datum/weakref/last_churn_target = null
 	var/list/churn_target_cooldowns = list()
 
 /obj/effect/proc_holder/spell/targeted/churn/Initialize(mapload)
@@ -93,7 +92,6 @@
 
 /obj/effect/proc_holder/spell/targeted/churn/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
-	last_churn_target = null
 	churn_target_cooldowns = null
 	return ..()
 
@@ -180,17 +178,11 @@
 		user.throw_at(get_ranged_target_turf(user, get_dir(user, target), 7), 7, 1, target, spin = FALSE)
 		revert_cast(user)
 		return FALSE
-	var/last_target_ref = last_churn_target?.resolve()
-	if(last_target_ref == target)
-		to_chat(user, span_warning("The Undermaiden refuses to churn the same soul twice in a row."))
-		revert_cast(user)
-		return FALSE
 	var/target_key = REF(target)
 	if(churn_target_cooldowns[target_key] > world.time)
 		to_chat(user, span_warning("The Undermaiden's grip still lingers on [target]."))
 		revert_cast(user)
 		return FALSE
-	last_churn_target = WEAKREF(target)
 	churn_target_cooldowns[target_key] = world.time + 15 SECONDS
 	target.visible_message(span_warning("[target] convulses as the Undermaiden churns [target.p_them()] from within!"), span_userdanger("The Undermaiden churns me from within!"))
 	playsound(get_turf(target), 'sound/magic/churn.ogg', 100, TRUE)
@@ -295,6 +287,7 @@
 	. = ..()
 	// Build list of souls who can be spoken with
 	var/list/souls = list()
+	// Dead players with active ghosts
 	for(var/mob/living/C in GLOB.dead_mob_list)
 		if(!C.mind)
 			continue
@@ -309,6 +302,22 @@
 		var/area_str = soul_area ? "([soul_area.name]) " : ""
 		souls["[area_str][C.real_name]"] = ghost
 
+	// Dead players whose spirit is still in their body (not yet ghostized)
+	for(var/mob/living/carbon/human/C in GLOB.dead_mob_list)
+		if(!C.mind?.key)
+			continue
+		// Skip if already has an active ghost — that entry is shown above
+		var/already_ghost = FALSE
+		for(var/mob/dead/observer/G in world)
+			if(G.mind == C.mind)
+				already_ghost = TRUE
+				break
+		if(already_ghost)
+			continue
+		var/area/soul_area = get_area(C)
+		var/area_str = soul_area ? "([soul_area.name]) " : ""
+		souls["(Spirit in body, [area_str][C.real_name])"] = C
+
 	if(!length(souls))
 		to_chat(user, span_warning("No souls answer the Undermaiden's call at this time."))
 		revert_cast()
@@ -320,21 +329,37 @@
 		revert_cast()
 		return .
 
-	var/mob/dead/observer/ghost = souls[selected]
-	if(!ghost || QDELETED(ghost))
+	var/datum/soul_target = souls[selected]
+	if(!soul_target || QDELETED(soul_target))
 		to_chat(user, span_warning("The soul has slipped beyond reach."))
 		return .
 
-	// Prompt the ghost for consent
-	var/consent = alert(ghost, "[user.real_name], a servant of the Undermaiden, calls upon you. Will you speak?", "Speak with the Living", "Yes", "No")
-	if(consent != "Yes")
-		to_chat(user, span_warning("The soul does not wish to speak."))
-		return .
+	var/mob/dead/observer/ghost = istype(soul_target, /mob/dead/observer) ? soul_target : null
+	var/mob/living/carbon/human/living_target = istype(soul_target, /mob/living/carbon/human) ? soul_target : null
 
-	if(QDELETED(ghost) || QDELETED(user))
-		return .
+	if(living_target)
+		// Dead player with spirit in body — pull their spirit out so they can speak
+		var/consent = alert(living_target, "[user.real_name], a servant of the Undermaiden, calls upon your spirit. Will you temporarily leave your body to appear before them and speak?", "Speak with the Dead", "Yes", "No")
+		if(consent != "Yes")
+			to_chat(user, span_warning("The soul does not wish to speak."))
+			return .
+		if(QDELETED(living_target) || QDELETED(user))
+			return .
+		// Ghostize the living player (preserves body; can reenter corpse)
+		ghost = living_target.ghostize(TRUE)
+		if(!ghost || QDELETED(ghost))
+			to_chat(user, span_warning("The soul could not be drawn forth."))
+			return .
+	else
+		// Prompt the existing ghost for consent
+		var/consent = alert(ghost, "[user.real_name], a servant of the Undermaiden, calls upon you. Will you speak?", "Speak with the Living", "Yes", "No")
+		if(consent != "Yes")
+			to_chat(user, span_warning("The soul does not wish to speak."))
+			return .
+		if(QDELETED(ghost) || QDELETED(user))
+			return .
 
-	// Move the ghost to the Necran — no forced visibility change, ghost sight handles it
+	// Move the ghost to the Necran
 	ghost.forceMove(get_turf(user))
 
 	to_chat(user, span_cultsmall("A soul stirs before you. Speak aloud — they will hear you and can respond in kind."))
@@ -525,10 +550,17 @@
 	// Option to search nearby NPC corpses
 	corpses["✦ Search Nearby (Forsaken Corpses)"] = "NPC_SEARCH"
 
+	// Build the candidate set: dead_mob_list is primary; also scan player_list for newly dead
+	// bodies whose mob may not have made it into dead_mob_list yet (race condition on death tick)
+	var/list/candidates = list()
 	for(var/mob/living/C in GLOB.dead_mob_list)
-		if(!C.mind)
-			continue
+		if(C.mind && !(C in candidates))
+			candidates += C
+	for(var/mob/living/carbon/human/C in GLOB.player_list)
+		if(C.stat == DEAD && C.mind && !(C in candidates))
+			candidates += C
 
+	for(var/mob/living/C in candidates)
 		if(istype(C, /mob/living/carbon/human))
 			var/mob/living/carbon/human/B = C
 			if(B.buried)
@@ -576,7 +608,7 @@
 		var/full_name = "[area_prefix_entry][corpse_name]of \a [descriptor_name]..."
 		corpses[full_name] = C
 
-	if(length(corpses) <= 2) // only the two special options exist, no real corpses
+	if(!length(corpses))
 		to_chat(user, span_warning("The Undermaiden's grasp lets slip."))
 		revert_cast()
 		return .
@@ -736,7 +768,16 @@
 	if(istype(corpse_area, /area/rogue/indoors/deathsedge))
 		area_text = lowertext(area_text)
 
-	to_chat(user, span_notice("The Undermaiden pulls on your hand.[direction_text]<br>[distance_text] Its resting place lies within <b>[area_text]</b>."))
+	// Show current soul status so the Necran knows whether the spirit has departed or ghosted
+	var/soul_status = ""
+	if(istype(corpse.mind?.current, /mob/dead/observer))
+		soul_status = " <i>(Spirit roaming)</i>"
+	else if(corpse.mind?.key && corpse.mind?.current == corpse)
+		soul_status = " <i>(Spirit lingering)</i>"
+	else if(corpse.mind?.key)
+		soul_status = " <i>(Spirit departed)</i>"
+
+	to_chat(user, span_notice("The Undermaiden pulls on your hand.[direction_text]<br>[distance_text] Its resting place lies within <b>[area_text]</b>.[soul_status]"))
 
 // =================== GHOST AWARENESS ===================
 
@@ -758,6 +799,51 @@
 		to_chat(L, span_deadsay("<i>Spirit of [ghost_name] murmurs: \"[clean]\"</i>"))
 		balloon_alert(L, "[ghost_name]: [clean]")
 
+/// Dead player ghosts (rogue observers) can speak and emote, but only Necrans nearby hear them.
+/// This overrides the empty return in say.dm since necra.dm is compiled after it.
+/mob/dead/observer/rogue/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	// Handle emotes — check for *emote prefix, broadcast to nearby Necrans
+	if(check_emote(message, forced))
+		var/turf/ghost_turf = get_turf(src)
+		if(!ghost_turf)
+			return
+		var/ghost_name = real_name ? real_name : name
+		var/emote_msg = trim(copytext(sanitize(message), 2, MAX_MESSAGE_LEN))
+		if(emote_msg)
+			for(var/mob/living/L in range(7, ghost_turf))
+				if(!HAS_TRAIT(L, TRAIT_NECRA_GHOST_VOICES))
+					continue
+				if(L.z != z)
+					continue
+				to_chat(L, span_deadsay("<i>Spirit of [ghost_name] [emote_msg]</i>"))
+		return
+	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	if(!message)
+		return
+	var/turf/ghost_turf = get_turf(src)
+	if(!ghost_turf)
+		return
+	var/ghost_name = real_name ? real_name : name
+	to_chat(src, span_deadsay("<b>Spirit of [ghost_name]</b> murmurs: \"[message]\""))
+	// Show a speech bubble above the ghost's head — only visible to those who can see the ghost
+	balloon_alert(src, "[message]")
+	for(var/mob/living/L in range(7, ghost_turf))
+		if(!HAS_TRAIT(L, TRAIT_NECRA_GHOST_VOICES))
+			continue
+		if(L.z != z)
+			continue
+		to_chat(L, span_deadsay("<i>Spirit of [ghost_name] murmurs: \"[message]\"</i>"))
+		// Play a ghostly carriage whisper sound for each Necran nearby (half volume, client-side only)
+		if(L.client)
+			L.client << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), volume = 30)
+
+/// Examining a rogue ghost shows "Spirit of name" to Necrans with soul-sight.
+/mob/dead/observer/rogue/examine(mob/user)
+	if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
+		to_chat(user, span_notice("This is the lingering spirit of <b>[real_name ? real_name : name]</b>."))
+		return
+	return ..()
+
 /// Give Necrans ghost vision and death sense on patron gain, and add Cleric tab toggles.
 /datum/patron/divine/necra/on_gain(mob/living/pious)
 	. = ..()
@@ -773,6 +859,7 @@
 		/mob/living/carbon/human/proc/necra_toggle_death_notices,
 		/mob/living/carbon/human/proc/necra_toggle_ghost_voices,
 	)
+	to_chat(H, span_cultsmall("Necra's blessing opens your eyes to the departed: you may see wandering spirits of the dead, hear their murmurs, and sense the passing of souls nearby. Toggle these gifts through the Cleric tab."))
 
 /datum/patron/divine/necra/on_loss(mob/living/pious)
 	. = ..()
@@ -801,11 +888,11 @@
 	set category = "Cleric"
 
 	if(HAS_TRAIT(src, TRAIT_NECRA_GHOST_VISION))
-		REMOVE_TRAIT(src, TRAIT_NECRA_GHOST_VISION, "necra_toggle")
+		REMOVE_TRAIT(src, TRAIT_NECRA_GHOST_VISION, "necra_patron")
 		src.update_sight()
 		to_chat(src, span_notice("I close my eyes to the wandering dead."))
 	else
-		ADD_TRAIT(src, TRAIT_NECRA_GHOST_VISION, "necra_toggle")
+		ADD_TRAIT(src, TRAIT_NECRA_GHOST_VISION, "necra_patron")
 		src.see_invisible = max(src.see_invisible, SEE_INVISIBLE_NECRA_SPIRIT)
 		to_chat(src, span_notice("The veil thins — I perceive the wandering spirits of the departed."))
 

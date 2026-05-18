@@ -1030,7 +1030,7 @@
 						user.say("Forgive me, the bargain is intoned!!")
 						to_chat(user,span_cultsmall("My devotion to the Undermaiden has allowed me to strike a bargain for these souls...."))
 						playsound(loc, 'sound/vo/mobs/ghost/moan (1).ogg', 100, FALSE, -1)
-						undermaidenbargain(src)
+						undermaidenbargain(src, user)
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 						spawn(120)
 							icon_state = "necra_chalky"
@@ -1128,10 +1128,16 @@
 	src.luxslot = max(src.luxslot - 10, 0) // 10 lux thread spent per revival
 	user.apply_status_effect(/datum/status_effect/debuff/ritesexpended) // only after a succesful revive
 
-/obj/structure/ritualcircle/necra/proc/undermaidenbargain(src)
+/obj/structure/ritualcircle/necra/proc/undermaidenbargain(circle, mob/living/necran_user)
 	var/ritualtargets = view(1, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
 		if(!target.client && !target.mind?.key)
+			continue
+		// Once per player — the bargain cannot be struck twice
+		if(HAS_TRAIT(target, TRAIT_BARGAIN_PERMANENT))
+			to_chat(target, span_warning("The Undermaiden's bargain has already been sealed in your name. She does not deal it more than once."))
+			if(necran_user)
+				to_chat(necran_user, span_warning("[target.real_name] has already struck their pact with the Undermaiden. It cannot be offered again."))
 			continue
 		var/prompt = alert(target, "The Undermaiden offers you a bargain in your name. Accept it?", "Undermaiden's Bargain", "Accept", "Refuse")
 		if(prompt == "Accept")

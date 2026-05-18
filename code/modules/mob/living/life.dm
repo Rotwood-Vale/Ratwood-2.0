@@ -63,6 +63,7 @@
 		if(times_fired % 3 == 0)
 			handle_status_effects(3) //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 			handle_environment()
+			handle_necra_realm_fire()
 			handle_random_events(15) // pain stun, vomitting, etc
 			update_sneak_invis()
 			handle_traits(3) // eye, ear, brain damages
@@ -124,9 +125,9 @@
 		return
 	if(stat == DEAD)
 		return
-	if(!(mob_biotypes & MOB_UNDEAD))
+	if(!is_necra_holy_target(src))
 		return
-	if(get_dist(src, CM) > 8)
+	if(get_dist(src, CM) > 5)
 		return
 	var/turf/src_turf = get_turf(src)
 	var/turf/cm_turf = get_turf(CM)

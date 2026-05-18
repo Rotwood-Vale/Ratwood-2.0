@@ -55,14 +55,15 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 /proc/is_aalloy_portal_offering(obj/item/I)
 	if(!I)
 		return FALSE
-	var/type_text = lowertext("[I.type]")
-	if(!findtext(type_text, "aalloy"))
-		return FALSE
 	if(is_excluded_aalloy_projectile(I))
 		return FALSE
-	if(istype(I, /obj/item/rogueweapon))
+	if(!istype(I, /obj/item/rogueweapon) && !istype(I, /obj/item/clothing))
+		return FALSE
+	var/type_text = lowertext("[I.type]")
+	if(findtext(type_text, "aalloy"))
 		return TRUE
-	if(istype(I, /obj/item/clothing))
+	// Items that smelt into aalloy material count as offerings (e.g. decrepit flail)
+	if(ispath(I.smeltresult, /obj/item/ingot/aaslag) || ispath(I.smeltresult, /obj/item/ingot/aalloy))
 		return TRUE
 	return FALSE
 
@@ -128,6 +129,21 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		exit_deaths_door(user, companion, chosen)
 
 /obj/structure/deaths_door_shrine/MouseDrop_T(atom/movable/O, mob/living/user)
+	// Necrans can drag burial shrouds out through the shrine, same as into the portal
+	if(istype(O, /obj/structure/closet/burial_shroud))
+		if(!HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
+			to_chat(user, span_warning("You cannot draw this through the portal."))
+			return
+		if(!do_after(user, 2 SECONDS, src))
+			return
+		if(QDELETED(O))
+			return
+		var/turf/chosen = exit_deaths_door(user, user)
+		if(chosen)
+			O.forceMove(chosen)
+			user.visible_message(span_warning("[user] guides \the [O] through Necra's shrine."))
+		return
+
 	if(!istype(O, /mob/living))
 		return
 	var/mob/living/target = O
@@ -324,16 +340,15 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 	var/turf/drag_turf = get_turf(M)
 	playsound(drag_turf, pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 60, TRUE, -1)
 	M.visible_message(span_cultsmall("A small rift with ghastly screams tears from the ground. Ghostly hands reach out, pulling [M] across the threshold into the Undermaiden's realm!"))
-	new /obj/effect/temp_visual/trap/wither(drag_turf, 3 SECONDS)
-	new /obj/effect/temp_visual/wither_actual(drag_turf)
 
-	enter_portal(M)
-
-	// Necrans who guide a dead body (not a player soul) through receive 5 tokens of gratitude
+	// Necrans who guide a dead NPC body through receive 5 tokens of gratitude
+	// Check BEFORE enter_portal() — that proc QDELs the NPC mob, making M invalid after the call
 	if(is_necran && is_dead && !has_player && !M.burialrited)
 		var/obj/item/roguecoin/necra_token/body_reward = new(get_turf(user), 5)
 		body_reward.pixel_x = rand(-6, 6)
 		body_reward.pixel_y = rand(-6, 6)
+
+	enter_portal(M)
 
 	user.visible_message(
 		span_warning("[user] drags [M] into Death's Door!")

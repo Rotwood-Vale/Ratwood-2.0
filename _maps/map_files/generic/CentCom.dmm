@@ -745,9 +745,11 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "cX" = (
-/obj/item/flashlight/lantern/shrunken{
-	pixel_y = 10;
-	pixel_x = -8
+/obj/item/skull{
+	pixel_y = 10
+	},
+/obj/item/skull{
+	pixel_x = -10
 	},
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/indoors/deathsedge)
@@ -1565,8 +1567,10 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "tr" = (
-/obj/item/flashlight/lantern/shrunken{
-	pixel_x = 8;
+/obj/item/skull{
+	pixel_x = 10
+	},
+/obj/item/skull{
 	pixel_y = -10
 	},
 /turf/open/floor/rogue/underworld/road,
@@ -1597,9 +1601,11 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/mountains)
 "tX" = (
-/obj/item/flashlight/lantern/shrunken{
-	pixel_x = 8;
+/obj/item/skull{
 	pixel_y = 10
+	},
+/obj/item/skull{
+	pixel_x = 10
 	},
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/indoors/deathsedge)
@@ -2118,9 +2124,11 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "EN" = (
-/obj/item/flashlight/lantern/shrunken{
-	pixel_y = -10;
-	pixel_x = -8
+/obj/item/skull{
+	pixel_y = -10
+	},
+/obj/item/skull{
+	pixel_x = -10
 	},
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/indoors/deathsedge)

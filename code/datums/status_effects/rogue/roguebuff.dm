@@ -1138,6 +1138,7 @@
 
 /datum/status_effect/buff/necra_realm_presence/on_apply()
 	. = ..()
+	owner.add_stress(/datum/stressevent/necra_realm_peace)
 	to_chat(owner, span_cultsmall("The Undermaiden's realm settles over you with a deep and sacred calm. Her domain embraces you."))
 
 /datum/status_effect/buff/necra_realm_presence/process()
@@ -1145,11 +1146,16 @@
 	var/area/rogue/our_area = get_area(owner)
 	if(!isnull(our_area) && our_area.necra_area)
 		exit_world_time = -1
+		owner.add_stress(/datum/stressevent/necra_realm_peace)
 	else
 		if(exit_world_time == -1)
 			exit_world_time = world.time
-		else if(world.time >= exit_world_time + 5 MINUTES)
+		else if(world.time >= exit_world_time + 30 SECONDS)
 			owner.remove_status_effect(src)
+
+/datum/status_effect/buff/necra_realm_presence/on_remove()
+	. = ..()
+	owner.remove_stress(/datum/stressevent/necra_realm_peace)
 
 /atom/movable/screen/alert/status_effect/buff/necra_realm_presence
 	name = "Undermaiden's Embrace"
@@ -1364,13 +1370,15 @@
 /datum/status_effect/buff/undermaidenbargain
 	id = "undermaidenbargain"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/undermaidenbargain
-	duration = 30 MINUTES
+	duration = -1	// Permanent — never expires on its own; only removed when the bargain fires or is rejected
 	effectedstats = list(STATKEY_WIL = 1)
 
 /datum/status_effect/buff/undermaidenbargain/on_apply()
 	. = ..()
 	to_chat(owner, span_danger("You feel as though some horrible deal has been prepared in your name. May you never see it fulfilled..."))
 	playsound(owner, 'sound/misc/bell.ogg', 100, FALSE, -1)
+	// Permanent brand — persists even after the status effect is removed so the bargain can never be taken twice
+	ADD_TRAIT(owner, TRAIT_BARGAIN_PERMANENT, "bargain_permanent")
 	ADD_TRAIT(owner, TRAIT_DEATHBARGAIN, id)
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_bargain_death))
 
@@ -1397,12 +1405,21 @@
 	var/mob/living/carbon/human/H = owner_ref?.resolve()
 	if(!H || QDELETED(H) || H.stat != DEAD)
 		return
-	var/choice = alert(H, "Time to fulfill your bargain. Will you accept and be dragged to the Necra's realm?", "Undermaiden's Bargain", "Accept", "Decline")
+	// The player may have ghostized since death — find their ghost mob if so
+	var/mob/alert_target = H
+	if(!H.client && H.mind)
+		for(var/mob/dead/observer/G in world)
+			if(G.mind == H.mind && !G.started_as_observer)
+				alert_target = G
+				break
+	if(!alert_target.client)
+		return // Player is offline
+	var/choice = alert(alert_target, "Time to fulfill your bargain. Will you accept and be dragged to the Necra's realm?", "Undermaiden's Bargain", "Accept", "Decline")
 	if(choice == "Accept")
 		try_fulfill_undermaiden_bargain(owner_ref)
 	else
 		H.remove_status_effect(/datum/status_effect/buff/undermaidenbargain)
-		to_chat(H, span_warning("You have refused to uphold the bargain. Your corpse remains where it fell, for now."))
+		to_chat(alert_target, span_warning("You have refused to uphold the bargain. Your corpse remains where it fell, for now."))
 
 /proc/try_fulfill_undermaiden_bargain(datum/weakref/owner_ref)
 	var/mob/living/carbon/human/H = owner_ref?.resolve()
@@ -1428,6 +1445,7 @@
 	H.visible_message(span_danger("Something cold and irresistible drags [H] back from beyond the threshold!"))
 	playsound(get_turf(H), 'sound/misc/deadbell.ogg', 100, FALSE, -1)
 	// Move to a random toll-spawn landmark in the underworld
+	var/turf/spawn_turf = null
 	if(length(GLOB.landmarks_list))
 		var/list/valid_spawns = list()
 		for(var/obj/effect/landmark/underworld_toll_spawn/L in GLOB.landmarks_list)
@@ -1437,17 +1455,25 @@
 				valid_spawns += L
 		if(length(valid_spawns))
 			var/obj/effect/landmark/spawn_landmark = pick(valid_spawns)
-			var/turf/spawn_turf = get_turf(spawn_landmark)
-			if(spawn_turf)
-				H.forceMove(spawn_turf)
-				// Spawn a toll at the selected toll-spawn location
-				var/obj/item/roguecoin/necra_token/toll = new(spawn_turf)
-				toll.pixel_x = rand(-6, 6)
-				toll.pixel_y = rand(-6, 6)
-				to_chat(H, span_cultsmall("The bargain struck in your name has been called. You have been dragged to the Undermaiden's realm — a toll awaits you somewhere in this maze of lost souls."))
-				// Revive the body a few seconds after arriving
-				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(complete_bargain_revival), owner_ref), 2 SECONDS)
-				return
+			spawn_turf = get_turf(spawn_landmark)
+	// Fallback: use a deaths_door entry point in the underworld realm
+	if(!spawn_turf)
+		spawn_turf = get_deathsdoor_entry_turf()
+	if(spawn_turf)
+		// Wither visual at the body's current location — the indicator the bargain is about to pull them away
+		var/turf/origin_turf = get_turf(H)
+		if(origin_turf)
+			new /obj/effect/temp_visual/trap/wither(origin_turf, 3 SECONDS)
+			new /obj/effect/temp_visual/wither_actual(origin_turf)
+		H.forceMove(spawn_turf)
+		// Spawn a toll at the selected toll-spawn location
+		var/obj/item/roguecoin/necra_token/toll = new(spawn_turf)
+		toll.pixel_x = rand(-6, 6)
+		toll.pixel_y = rand(-6, 6)
+		to_chat(H, span_cultsmall("The bargain struck in your name has been called. You have been dragged to the Undermaiden's realm — a toll awaits you somewhere in this maze of lost souls."))
+		// Revive the body a few seconds after arriving
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(complete_bargain_revival), owner_ref), 2 SECONDS)
+		return
 	to_chat(H, span_cultsmall("The bargain has been called, but Necra's realm could not be reached. You are spared, this once."))
 
 /proc/complete_bargain_revival(datum/weakref/owner_ref)
@@ -1455,6 +1481,12 @@
 	if(!H || QDELETED(H) || H.stat != DEAD)
 		return
 	H.revive(full_heal = TRUE)
+	// Return the player's ghost to their revived body if they had ghostized
+	if(H.mind)
+		for(var/mob/dead/observer/G in world)
+			if(G.mind == H.mind && !G.started_as_observer)
+				H.mind.transfer_to(H)
+				break
 	// The heal effect: rapid wound/damage recovery + brief death immunity
 	H.apply_status_effect(/datum/status_effect/buff/undermaidenbargainheal)
 	H.apply_status_effect(/datum/status_effect/pacify, 10 MINUTES)

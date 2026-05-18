@@ -374,13 +374,23 @@
 
 /obj/effect/proc_holder/spell/invoked/necras_sight/proc/add_to_scry(obj/O, mob/living/carbon/human/user)
 	if(O in marked_objects)
-		marked_objects.Remove(O)
-		to_chat(user, span_info("You let the grave slip from your mind..."))
+		// Object already marked — offer to rename it instead of removing
+		var/new_label = input(user, "Rename this location (leave blank to unmark it):", "Rename Marked Location", marked_objects[O]) as text|null
+		if(isnull(new_label))
+			return // cancelled dialog, do nothing
+		if(!length(trim(new_label)))
+			marked_objects.Remove(O)
+			to_chat(user, span_info("You let the grave slip from your mind..."))
+		else
+			marked_objects[O] = trim(new_label)
+			to_chat(user, span_info("You whisper a new name for the grave..."))
 		return
 	var/holyskill = user.get_skill_level(/datum/skill/magic/holy)
 	var/label = input(user, "Name this grave for your sight:", "Mark Holy Object") as text|null
-	if(!label || !length(label))
-		label = "[O.name]"
+	if(isnull(label) || !length(trim(label)))
+		to_chat(user, span_warning("No name given — the grave is not marked."))
+		return
+	label = trim(label)
 
 // Replace logic when at cap
 	if(length(marked_objects) >= holyskill)

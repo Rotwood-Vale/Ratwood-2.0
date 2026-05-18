@@ -62,7 +62,8 @@
 #define TRAIT_WOODSMAN "Talented Woodsman"
 #define TRAIT_LAMIAN_TAIL "Lamian Tail"
 #define TRAIT_DUNGEONMASTER "Ruthless Jailor"
-#define TRAIT_DEATHBARGAIN "Death Bargain" // Used by UNDERMAIDEN'S BARGAIN
+#define TRAIT_DEATHBARGAIN "Death Bargain" // Used by UNDERMAIDEN'S BARGAIN (active)
+#define TRAIT_BARGAIN_PERMANENT "Bargain Sealed" // Permanently set when bargain is applied; prevents a second bargain ever
 #define TRAIT_RITUALIST "Ritualist"  // Allows use of ritual chalk
 #define TRAIT_INQUISITION "Otavan Adherent"
 #define TRAIT_GOODTRAINER "Good Trainer"
@@ -378,7 +379,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_ROT_EATER = span_necrosis("I can eat rotten food."),
 	TRAIT_ORGAN_EATER = span_bloody("I can eat organs and raw flesh."),
 	TRAIT_KNEESTINGER_IMMUNITY = "I am immune to the shock of kneestingers and vines.",
-	TRAIT_SOUL_EXAMINE = span_deadsay("I know when someone's soul has departed."),
+	TRAIT_SOUL_EXAMINE = span_deadsay("The Undermaiden's blessing opens my eyes: I can see departed spirits, hear their whispered words, and examine bodies to know if their soul still lingers. Carrying and stripping bodies is easier for me."),
 	TRAIT_CRACKHEAD = span_love("I can use drugs as much as I want!"),
 	TRAIT_COMMIE = span_bloody("I can recognize other free men, and they can recognize me too. I can also speak in thieves' cant and pick locks a bit better than most."),
 	TRAIT_KNOWNCRIMINAL = span_bloody("I am a branded criminal. Nothing can change this."),

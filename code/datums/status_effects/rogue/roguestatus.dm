@@ -59,6 +59,7 @@
 
 /datum/status_effect/necra_censer_mood_bonus
 	id = "necra_censer_mood_bonus"
+	status_type = STATUS_EFFECT_REFRESH
 	duration = 2 MINUTES
 	effectedstats = list(STATKEY_LCK = 1)
 	alert_type = /atom/movable/screen/alert/status_effect/necra_censer_mood_bonus
@@ -71,6 +72,7 @@
 
 /datum/status_effect/necra_censer_mood_debuff
 	id = "necra_censer_mood_debuff"
+	status_type = STATUS_EFFECT_REFRESH
 	duration = 2 MINUTES
 	effectedstats = list(STATKEY_LCK = -1)
 	alert_type = /atom/movable/screen/alert/status_effect/necra_censer_mood_debuff
@@ -97,6 +99,6 @@
 	desc = span_red("The Undermaiden's cold realm presses in on your soul. Your mind reels with dread.")
 
 /datum/stressevent/necra_realm_peace
-	timer = 2 MINUTES
-	stressadd = -3
+	timer = 3 MINUTES
+	stressadd = -5
 	desc = span_green("The Undermaiden's realm carries a deep, sacred calm. You feel at peace in her domain.")

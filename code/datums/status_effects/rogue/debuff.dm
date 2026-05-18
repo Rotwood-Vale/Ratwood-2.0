@@ -633,6 +633,7 @@
 
 /datum/status_effect/debuff/necra_realm_dread/on_apply()
 	. = ..()
+	owner.add_stress(/datum/stressevent/underworld_dread)
 	if(ishuman(owner))
 		to_chat(owner, span_warning("The Undermaiden's cold gaze weighs upon you. You SHOULDN'T BE HERE. Your mind and soul wane..."))
 
@@ -641,11 +642,16 @@
 	var/area/rogue/our_area = get_area(owner)
 	if(!isnull(our_area) && our_area.necra_area)
 		exit_world_time = -1
+		owner.add_stress(/datum/stressevent/underworld_dread)
 	else
 		if(exit_world_time == -1)
 			exit_world_time = world.time
 		else if(world.time >= exit_world_time + 5 MINUTES)
 			owner.remove_status_effect(src)
+
+/datum/status_effect/debuff/necra_realm_dread/on_remove()
+	. = ..()
+	owner.remove_stress(/datum/stressevent/underworld_dread)
 
 /atom/movable/screen/alert/status_effect/debuff/necra_realm_dread
 	name = "Realm Dread"
