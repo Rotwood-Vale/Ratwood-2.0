@@ -169,7 +169,7 @@ GLOBAL_LIST_EMPTY(last_words)
 					var/area/DA = get_area(src)
 					var/area_name = DA ? DA.name : "an unknown place"
 					to_chat(player, span_warning("Necra draws my gaze — [src.real_name] has departed from [area_name]."))
-				if (HAS_TRAIT(player, TRAIT_DEATHSIGHT))
+				else if (HAS_TRAIT(player, TRAIT_DEATHSIGHT))
 					if (HAS_TRAIT(player, TRAIT_CABAL))
 						to_chat(player, span_warning("I feel the faint passage of disjointed life essence as it flees [locale]."))
 					else

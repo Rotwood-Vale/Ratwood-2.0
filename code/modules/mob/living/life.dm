@@ -119,14 +119,7 @@
 		cut_overlay(GLOB.cold_breath_overlay)
 
 /mob/living/proc/handle_necra_realm_fire()
-	var/static/datum/weakref/carriageman_ref
-	var/obj/structure/underworld/carriageman/CM = null
-	if(carriageman_ref)
-		CM = carriageman_ref.resolve()
-	if(!CM)
-		CM = locate(/obj/structure/underworld/carriageman) in world
-		if(CM)
-			carriageman_ref = WEAKREF(CM)
+	var/obj/structure/underworld/carriageman/CM = get_underworld_carriageman()
 	if(!CM)
 		return
 	if(stat == DEAD)

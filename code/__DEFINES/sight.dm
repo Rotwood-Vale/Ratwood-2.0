@@ -9,6 +9,11 @@
 //#define SEE_INVISIBLE_LEVEL_ONE 35 //currently unused
 //#define INVISIBILITY_LEVEL_ONE 35 //currently unused
 
+/// Dead player spirits are assigned this invisibility so Necra clerics can see them,
+/// while pure spectator/admin observers (invisibility = INVISIBILITY_OBSERVER) remain hidden.
+#define INVISIBILITY_NECRA_SPIRIT 35
+#define SEE_INVISIBLE_NECRA_SPIRIT 35
+
 //#define SEE_INVISIBLE_LEVEL_TWO 45 //currently unused
 //#define INVISIBILITY_LEVEL_TWO 45 //currently unused
 

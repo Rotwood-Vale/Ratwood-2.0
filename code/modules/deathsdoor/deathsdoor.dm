@@ -1,6 +1,18 @@
 GLOBAL_LIST_INIT(deaths_door_entries,list())
 GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 
+/// Returns the underworld carriageman, caching via static weakref to avoid repeated world scans.
+/proc/get_underworld_carriageman()
+	var/static/datum/weakref/carriageman_cache
+	if(carriageman_cache)
+		var/obj/structure/underworld/carriageman/cached = carriageman_cache.resolve()
+		if(cached)
+			return cached
+	var/obj/structure/underworld/carriageman/CM = locate(/obj/structure/underworld/carriageman) in world
+	if(CM)
+		carriageman_cache = WEAKREF(CM)
+	return CM
+
 /proc/get_deathsdoor_companion(mob/living/user)
 	if(!user)
 		return null
@@ -99,9 +111,9 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 			user.visible_message(span_danger("The Undermaiden churns the undead!"))
 			explosion(get_turf(user), light_impact_range = 1, flame_range = 1, smoke = FALSE)
 			return
-		exit_deaths_door(user, user)
-		if(companion && !QDELETED(companion))
-			exit_deaths_door(user, companion)
+		var/turf/chosen = exit_deaths_door(user, user)
+		if(chosen && companion && !QDELETED(companion))
+			exit_deaths_door(user, companion, chosen)
 		return
 	if(!do_after(user, 2 SECONDS, src))
 		return
@@ -111,9 +123,9 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		explosion(get_turf(user), light_impact_range = 1, flame_range = 1, smoke = FALSE)
 		return
 
-	exit_deaths_door(user, user)
-	if(companion && !QDELETED(companion))
-		exit_deaths_door(user, companion)
+	var/turf/chosen = exit_deaths_door(user, user)
+	if(chosen && companion && !QDELETED(companion))
+		exit_deaths_door(user, companion, chosen)
 
 /obj/structure/deaths_door_shrine/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(!istype(O, /mob/living))
@@ -143,7 +155,7 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		span_notice("[user] guides [target] through Necra's shrine.")
 	)
 
-/obj/structure/deaths_door_shrine/proc/exit_deaths_door(mob/living/user, mob/living/target = null)
+/obj/structure/deaths_door_shrine/proc/exit_deaths_door(mob/living/user, mob/living/target = null, turf/forced_dest = null)
 	var/list/dests = list()
 	var/turf/default_exit = user.get_adventurer_latejoin_turf()
 	if(default_exit)
@@ -166,15 +178,16 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 
 	if(!length(dests))
 		message_admins("Death's Door Shrine: No exit destinations! Inform a mapper!")	//You're missing /obj/effect/landmark/deaths_door/exit from the map
-		return
+		return null
 
-	var/turf/T = prompt_deaths_door_exit(user, dests)
+	var/turf/T = forced_dest ? forced_dest : prompt_deaths_door_exit(user, dests)
 	if(!T)
-		return
+		return null
 	ash_carried_tolls_on_exit(target)
 	target.forceMove(T)
 	playsound(get_turf(target), 'sound/misc/portalenter.ogg', 50, TRUE, -2, ignore_walls = TRUE)
 	target.visible_message(span_danger("The air warps and rapidly chills as [user] stumbles out of a deathly calm realm."))
+	return T
 
 /proc/prompt_deaths_door_exit(mob/living/user, list/dests)
 	if(!length(dests))
@@ -262,7 +275,8 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		if(passenger.stat == DEAD && !passenger.mind?.key)
 			passenger.visible_message(span_warning("[passenger] slips from [user]'s grasp at the threshold, denying its entry."))
 		else
-			enter_portal(passenger)
+			// Companions brought by a Necran spawn near the carriageman, not at a random spot
+			enter_portal(passenger, force_carriageman = HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
 
 /obj/structure/deaths_door_portal/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(user.incapacitated())
@@ -306,11 +320,12 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 	if(!do_after_mob(user, M, 2 SECONDS))
 		return
 
-	// Player corpses with ckey pass through freely; living undead still explode for non-Necrans (already handled above)
-	if(is_undead && !is_necran)
-		to_chat(user, span_danger("The Undermaiden churns the undead!"))
-		explosion(get_turf(M), light_impact_range = 1, flame_range = 1, smoke = FALSE)
-		return
+	// Spooky visual and sound as the body crosses the threshold — shown to all nearby before M is moved
+	var/turf/drag_turf = get_turf(M)
+	playsound(drag_turf, pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 60, TRUE, -1)
+	M.visible_message(span_cultsmall("A small rift with ghastly screams tears from the ground. Ghostly hands reach out, pulling [M] across the threshold into the Undermaiden's realm!"))
+	new /obj/effect/temp_visual/trap/wither(drag_turf, 3 SECONDS)
+	new /obj/effect/temp_visual/wither_actual(drag_turf)
 
 	enter_portal(M)
 
@@ -324,7 +339,7 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		span_warning("[user] drags [M] into Death's Door!")
 	)
 
-/obj/structure/deaths_door_portal/proc/enter_portal(mob/living/target)
+/obj/structure/deaths_door_portal/proc/enter_portal(mob/living/target, force_carriageman = FALSE)
 	if(!destination)
 		return
 	// NPC corpses (no mind.key) crumble to ash; player bodies pass through to the Carriageman
@@ -336,20 +351,22 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 	var/turf/spawn_turf = destination
 	var/is_necran = HAS_TRAIT(target, TRAIT_SOUL_EXAMINE)
 	
-	// Non-Necran players spawn at random underworld locations
-	if(target.mind?.key && !is_necran)
+	// Non-Necran players (not carried by a Necran) spawn at random underworld locations
+	if(target.mind?.key && !is_necran && !force_carriageman)
 		var/list/valid_spawns = list()
 		for(var/obj/effect/landmark/underworld/L in GLOB.landmarks_list)
 			valid_spawns += L
 		if(length(valid_spawns))
 			var/obj/effect/landmark/underworld/spawn_landmark = pick(valid_spawns)
 			spawn_turf = get_turf(spawn_landmark)
-			// Apply underworld mood penalty for non-necrans
-			target.apply_status_effect(/datum/status_effect/debuff/underworld_malaise)
-			to_chat(target, span_warning("The Undermaiden's realm is cold and unwelcoming. You feel dread settle upon your shoulders, with your mind and soul waning."))
-	// Necra's chosen appear near the Carriageman
-	else if(is_necran || target.mind?.key)
-		var/obj/structure/underworld/carriageman/CM = locate(/obj/structure/underworld/carriageman) in world
+			// Apply persistent underworld dread to non-Necrans; removes itself 5 min after they leave
+			target.apply_status_effect(/datum/status_effect/debuff/necra_realm_dread)
+	// Necra's chosen (and those they carry) appear near the Carriageman
+	else
+		// Give Necrans entering their own realm a persistent mood boost; removes itself 5 min after they leave
+		if(is_necran && target.mind?.key)
+			target.apply_status_effect(/datum/status_effect/buff/necra_realm_presence)
+		var/obj/structure/underworld/carriageman/CM = get_underworld_carriageman()
 		if(CM)
 			var/turf/CM_turf = get_turf(CM)
 			if(CM_turf.z == destination.z)
@@ -367,8 +384,8 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 						spawn_turf = T
 						break
 	target.forceMove(spawn_turf)
-	// Apply holy fire to undead players (but not plain dead ones without the undead flag)
-	if(target.mind?.key && (target.mob_biotypes & MOB_UNDEAD) && target.stat != DEAD)
+	// Apply holy fire to all living undead and skeletons on entry
+	if((target.mob_biotypes & MOB_UNDEAD || istype(target, /mob/living/simple_animal/hostile/rogue/skeleton)) && target.stat != DEAD)
 		if(!target.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
 			to_chat(target, span_danger("The Undermaiden's holy fire consumes your unholy body!"))
 		apply_deathsdoor_holy_fire(target)

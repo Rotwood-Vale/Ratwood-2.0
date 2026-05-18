@@ -118,6 +118,8 @@
 #define TRAIT_NOCSIGHT "Blessing of Noc" // I can see just a bit more clearly in darkness.
 #define TRAIT_DEATHSIGHT "Veiled Whispers" // Is notified when a player character dies, but not told exactly where or how.
 #define TRAIT_NECRA_DEATHSIGHT "Necra Death Whispers" // Necra clerics (with TRAIT_SOUL_EXAMINE) receive death notices with exact area location.
+#define TRAIT_NECRA_GHOST_VISION "Necra Ghost Vision" // Necra clerics actively see ghosts; persists through sight updates.
+#define TRAIT_NECRA_GHOST_VOICES "Necra Ghost Voices" // Necra clerics hear nearby player ghosts speaking, with "Spirit of" prefix.
 //Hearthstone/Azure end.
 
 // ROGUEspecialTRAITS (description when rmb skills button)

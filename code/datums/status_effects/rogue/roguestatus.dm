@@ -90,3 +90,13 @@
 	timer = 2 MINUTES
 	stressadd = 3
 	desc = span_red("The Undermaiden's incense lashes at your unholy body. You feel disturbed.")
+
+/datum/stressevent/underworld_dread
+	timer = 3 MINUTES
+	stressadd = 10
+	desc = span_red("The Undermaiden's cold realm presses in on your soul. Your mind reels with dread.")
+
+/datum/stressevent/necra_realm_peace
+	timer = 2 MINUTES
+	stressadd = -3
+	desc = span_green("The Undermaiden's realm carries a deep, sacred calm. You feel at peace in her domain.")

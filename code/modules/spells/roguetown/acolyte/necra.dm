@@ -39,7 +39,7 @@
 	selection_type = "range"
 	overlay_state = "necra_ult"//Temp.
 	releasedrain = 30
-	chargetime = 6 SECONDS
+	chargetime = 1 SECONDS
 	charge_type = "charges"
 	recharge_time = 2
 	max_targets = 1
@@ -89,7 +89,6 @@
 		return TRUE
 	if(ismob(target))
 		perform(list(target), TRUE, user = ranged_ability_user)
-	deactivate(caller)
 	return TRUE
 
 /obj/effect/proc_holder/spell/targeted/churn/Destroy()
@@ -106,6 +105,13 @@
 	if(target.mind?.has_antag_datum(/datum/antagonist/vampire) && !SEND_SIGNAL(target, COMSIG_DISGUISE_STATUS))
 		return TRUE
 	if(target.mind?.has_antag_datum(/datum/antagonist/zombie))
+		return TRUE
+	// Silver-weak creatures (e.g. rotcured) are also valid targets, but NOT werewolves
+	if(HAS_TRAIT(target, TRAIT_SILVER_WEAK))
+		if(target.mind?.has_antag_datum(/datum/antagonist/werewolf))
+			return FALSE
+		if(target.mind?.has_antag_datum(/datum/antagonist/werewolf/lesser))
+			return FALSE
 		return TRUE
 	return FALSE
 
@@ -188,6 +194,8 @@
 	churn_target_cooldowns[target_key] = world.time + 15 SECONDS
 	target.visible_message(span_warning("[target] convulses as the Undermaiden churns [target.p_them()] from within!"), span_userdanger("The Undermaiden churns me from within!"))
 	playsound(get_turf(target), 'sound/magic/churn.ogg', 100, TRUE)
+	new /obj/effect/temp_visual/explosion(get_turf(target))
+	playsound(get_turf(target), 'sound/misc/explode/explosion.ogg', 75, TRUE, -1)
 	target.apply_damage(target.mind?.key ? 50 : 100, BURN, BODY_ZONE_HEAD)
 	target.adjust_fire_stacks(4, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
 	target.ignite_mob()
@@ -326,31 +334,12 @@
 	if(QDELETED(ghost) || QDELETED(user))
 		return .
 
-	// Save ghost state, make them visible and move them to the Necran
-	var/saved_invisibility = ghost.invisibility
-	var/turf/saved_turf = get_turf(ghost)
-	ghost.set_invisibility(0)
+	// Move the ghost to the Necran — no forced visibility change, ghost sight handles it
 	ghost.forceMove(get_turf(user))
-	ghost.status_flags |= GODMODE
 
-	to_chat(user, span_cultsmall("A soul stirs before you. Speak aloud — they will hear you and can respond in kind. The connection lasts for one minute."))
-	to_chat(ghost, span_cultsmall("You have been summoned before a servant of the Undermaiden. Speak aloud. The connection lasts for one minute."))
+	to_chat(user, span_cultsmall("A soul stirs before you. Speak aloud — they will hear you and can respond in kind."))
+	to_chat(ghost, span_cultsmall("You have been called before a servant of the Undermaiden. Speak, if you wish. When done, simply wander or depart."))
 	playsound(get_turf(user), 'sound/vo/mobs/ghost/whisper (3).ogg', 60, TRUE)
-
-	// 60 second communication window — restore ghost after
-	addtimer(CALLBACK(src, PROC_REF(end_speakwithdead_session), ghost, saved_invisibility, saved_turf, user), 60 SECONDS, TIMER_STOPPABLE)
-
-/// Ends a Speak with Dead session: restores ghost to original state.
-/obj/effect/proc_holder/spell/invoked/speakwithdead/proc/end_speakwithdead_session(mob/dead/observer/ghost, saved_invisibility, turf/saved_turf, mob/living/user)
-	if(QDELETED(ghost))
-		return
-	ghost.status_flags &= ~GODMODE
-	ghost.set_invisibility(saved_invisibility)
-	if(saved_turf && !QDELETED(saved_turf))
-		ghost.forceMove(saved_turf)
-	to_chat(ghost, span_cultsmall("The Undermaiden's thread grows thin. You are pulled back."))
-	if(!QDELETED(user))
-		to_chat(user, span_cultsmall("The soul's presence fades. The connection has ended."))
 
 // BODY INTO COIN
 
@@ -512,7 +501,7 @@
 	invocations = list("Undermaiden, guide my hand to those who have lost their way.")
 	invocation_type = "whisper"
 	recharge_time = 15 SECONDS
-	devotion_cost = 35
+	devotion_cost = 15
 	/// Weakref to the currently tracked corpse for periodic updates.
 	var/datum/weakref/tracked_corpse = null
 	/// Stoppable timer ID for periodic directional updates.
@@ -534,7 +523,7 @@
 		corpses["✦ Stop Tracking Current Corpse"] = "STOP_TRACKING"
 
 	// Option to search nearby NPC corpses
-	corpses["✦ Search Nearby (NPC Corpses)"] = "NPC_SEARCH"
+	corpses["✦ Search Nearby (Forsaken Corpses)"] = "NPC_SEARCH"
 
 	for(var/mob/living/C in GLOB.dead_mob_list)
 		if(!C.mind)
@@ -568,18 +557,23 @@
 		if(descriptor_name == " ")
 			descriptor_name = "Unknown"
 
-		// Soul status: check if the player's mind is still present as a ghost
-		var/soul_tag = ""
+		// Soul status: Roaming = ghost out of body, Lingering = mind in body, Departed = gone to lobby
+		var/soul_short = ""
 		if(istype(C.mind?.current, /mob/dead/observer))
-			soul_tag = "(Lingers) "
+			soul_short = "Roaming"
+		else if(C.mind?.key && C.mind?.current == C)
+			soul_short = "Lingering"
 		else if(C.mind?.key)
-			soul_tag = "(Departed) "
+			soul_short = "Departed"
 
 		// Area prefix
 		var/area/corpse_area_entry = get_area(C)
-		var/area_prefix_entry = corpse_area_entry ? "([corpse_area_entry.name]) " : ""
+		var/area_str_entry = corpse_area_entry ? corpse_area_entry.name : "unknown area"
+		if(istype(corpse_area_entry, /area/rogue/indoors/deathsedge))
+			area_str_entry = lowertext(area_str_entry)
 
-		var/full_name = "[area_prefix_entry][soul_tag][corpse_name] of \a [descriptor_name]..."
+		var/area_prefix_entry = soul_short != "" ? "([soul_short], [area_str_entry]) " : "([area_str_entry]) "
+		var/full_name = "[area_prefix_entry][corpse_name]of \a [descriptor_name]..."
 		corpses[full_name] = C
 
 	if(length(corpses) <= 2) // only the two special options exist, no real corpses
@@ -667,6 +661,15 @@
 		tracked_corpse = null
 		return
 
+	// Auto-stop tracking if the body has been revived
+	if(corpse.stat != DEAD)
+		to_chat(user, span_notice("The soul stirs \u2014 and the body likely lives once more. Tracking is no longer needed."))
+		if(locate_timer_id)
+			deltimer(locate_timer_id)
+			locate_timer_id = null
+		tracked_corpse = null
+		return
+
 	var/turf/turf_user = get_turf(user)
 	var/turf/turf_corpse = get_turf(corpse)
 
@@ -726,16 +729,18 @@
 		direction_text += "<br>Horizontal: <b>[horizontal_arrow]</b> [horizontal_text]"
 
 	if(!length(direction_text))
-		direction_text = "<br><b>•</b> nowhere discernible"
+		direction_text = "<br><b>•</b> With you or in an unknown location."
 
 	var/area/corpse_area = get_area(turf_corpse)
 	var/area_text = corpse_area ? corpse_area.name : "an unknown place"
+	if(istype(corpse_area, /area/rogue/indoors/deathsedge))
+		area_text = lowertext(area_text)
 
 	to_chat(user, span_notice("The Undermaiden pulls on your hand.[direction_text]<br>[distance_text] Its resting place lies within <b>[area_text]</b>."))
 
 // =================== GHOST AWARENESS ===================
 
-/// When a ghost speaks, Necran followers nearby hear a faint whisper of it.
+/// When a ghost speaks, Necran followers nearby hear it and see a speech bubble.
 /mob/dead/observer/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	. = ..()
 	var/clean = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -744,12 +749,14 @@
 	var/turf/ghost_turf = get_turf(src)
 	if(!ghost_turf)
 		return
+	var/ghost_name = real_name ? real_name : name
 	for(var/mob/living/L in range(7, ghost_turf))
-		if(!HAS_TRAIT(L, TRAIT_SOUL_EXAMINE))
+		if(!HAS_TRAIT(L, TRAIT_NECRA_GHOST_VOICES))
 			continue
 		if(L.z != z)
 			continue
-		to_chat(L, span_deadsay("<i>A spirit murmurs nearby: \"[clean]\"</i>"))
+		to_chat(L, span_deadsay("<i>Spirit of [ghost_name] murmurs: \"[clean]\"</i>"))
+		balloon_alert(L, "[ghost_name]: [clean]")
 
 /// Give Necrans ghost vision and death sense on patron gain, and add Cleric tab toggles.
 /datum/patron/divine/necra/on_gain(mob/living/pious)
@@ -757,11 +764,14 @@
 	if(!ishuman(pious))
 		return
 	var/mob/living/carbon/human/H = pious
-	H.see_invisible = max(H.see_invisible, SEE_INVISIBLE_OBSERVER)
+	ADD_TRAIT(H, TRAIT_NECRA_GHOST_VISION, "necra_patron")
+	ADD_TRAIT(H, TRAIT_NECRA_GHOST_VOICES, "necra_patron")
+	H.see_invisible = max(H.see_invisible, SEE_INVISIBLE_NECRA_SPIRIT)
 	ADD_TRAIT(H, TRAIT_NECRA_DEATHSIGHT, "necra_patron")
 	H.verbs += list(
 		/mob/living/carbon/human/proc/necra_toggle_ghost_sight,
 		/mob/living/carbon/human/proc/necra_toggle_death_notices,
+		/mob/living/carbon/human/proc/necra_toggle_ghost_voices,
 	)
 
 /datum/patron/divine/necra/on_loss(mob/living/pious)
@@ -769,12 +779,15 @@
 	if(!ishuman(pious))
 		return
 	var/mob/living/carbon/human/H = pious
-	if(H.see_invisible >= SEE_INVISIBLE_OBSERVER)
+	REMOVE_TRAIT(H, TRAIT_NECRA_GHOST_VISION, "necra_patron")
+	REMOVE_TRAIT(H, TRAIT_NECRA_GHOST_VOICES, "necra_patron")
+	if(H.see_invisible == SEE_INVISIBLE_NECRA_SPIRIT)
 		H.see_invisible = SEE_INVISIBLE_LIVING
 	REMOVE_TRAIT(H, TRAIT_NECRA_DEATHSIGHT, "necra_patron")
 	H.verbs -= list(
 		/mob/living/carbon/human/proc/necra_toggle_ghost_sight,
 		/mob/living/carbon/human/proc/necra_toggle_death_notices,
+		/mob/living/carbon/human/proc/necra_toggle_ghost_voices,
 	)
 
 // =====================================================
@@ -784,20 +797,28 @@
 /// Toggles whether the Necran can see and hear wandering player ghosts.
 /// Appears in the Cleric verb tab alongside Prayer and Check Devotion.
 /mob/living/carbon/human/proc/necra_toggle_ghost_sight()
-	set name = "Necra's Veil — Toggle Ghost Sight"
+	set name = "Toggle Ghost Sight"
 	set category = "Cleric"
 
-	if(src.see_invisible >= SEE_INVISIBLE_OBSERVER)
-		src.see_invisible = SEE_INVISIBLE_LIVING
+	if(HAS_TRAIT(src, TRAIT_NECRA_GHOST_VISION))
+		REMOVE_TRAIT(src, TRAIT_NECRA_GHOST_VISION, "necra_toggle")
+		src.update_sight()
 		to_chat(src, span_notice("I close my eyes to the wandering dead."))
 	else
-		src.see_invisible = max(src.see_invisible, SEE_INVISIBLE_OBSERVER)
+		ADD_TRAIT(src, TRAIT_NECRA_GHOST_VISION, "necra_toggle")
+		src.see_invisible = max(src.see_invisible, SEE_INVISIBLE_NECRA_SPIRIT)
 		to_chat(src, span_notice("The veil thins — I perceive the wandering spirits of the departed."))
+
+/// Ensures ghost sight is re-applied when the engine recalculates sight (e.g. on movement).
+/mob/living/carbon/human/update_sight()
+	. = ..()
+	if(HAS_TRAIT(src, TRAIT_NECRA_GHOST_VISION))
+		see_invisible = max(see_invisible, SEE_INVISIBLE_NECRA_SPIRIT)
 
 /// Toggles whether the Necran receives a location notice whenever a player character dies.
 /// Appears in the Cleric verb tab alongside Prayer and Check Devotion.
 /mob/living/carbon/human/proc/necra_toggle_death_notices()
-	set name = "Necra's Eye — Toggle Death Notices"
+	set name = "Toggle Death Notices"
 	set category = "Cleric"
 
 	if(HAS_TRAIT(src, TRAIT_NECRA_DEATHSIGHT))
@@ -806,3 +827,15 @@
 	else
 		ADD_TRAIT(src, TRAIT_NECRA_DEATHSIGHT, "necra_patron")
 		to_chat(src, span_notice("Necra's whispers will reach me when a soul departs."))
+
+/// Toggles whether the Necran hears the murmurs of nearby player ghosts.
+/mob/living/carbon/human/proc/necra_toggle_ghost_voices()
+	set name = "Toggle Ghost Voices"
+	set category = "Cleric"
+
+	if(HAS_TRAIT(src, TRAIT_NECRA_GHOST_VOICES))
+		REMOVE_TRAIT(src, TRAIT_NECRA_GHOST_VOICES, "necra_patron")
+		to_chat(src, span_notice("The whispers of the dead fall silent to my ears."))
+	else
+		ADD_TRAIT(src, TRAIT_NECRA_GHOST_VOICES, "necra_patron")
+		to_chat(src, span_notice("I open myself to the murmurs of wandering spirits."))

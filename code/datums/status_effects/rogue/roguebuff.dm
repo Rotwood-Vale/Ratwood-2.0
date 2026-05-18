@@ -1126,6 +1126,36 @@
 	desc = "My familiarity of this realm quickens my steps."
 	icon_state = "buff"
 
+/// Applied when a Necran enters Death's Precipice. Persists while in the realm; lingers for 5 minutes after leaving.
+/datum/status_effect/buff/necra_realm_presence
+	id = "necra_realm_presence"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/necra_realm_presence
+	duration = -1
+	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = 5 SECONDS
+	/// World time when the Necran last left the realm. -1 means currently in the realm.
+	var/exit_world_time = -1
+
+/datum/status_effect/buff/necra_realm_presence/on_apply()
+	. = ..()
+	to_chat(owner, span_cultsmall("The Undermaiden's realm settles over you with a deep and sacred calm. Her domain embraces you."))
+
+/datum/status_effect/buff/necra_realm_presence/process()
+	. = ..()
+	var/area/rogue/our_area = get_area(owner)
+	if(!isnull(our_area) && our_area.necra_area)
+		exit_world_time = -1
+	else
+		if(exit_world_time == -1)
+			exit_world_time = world.time
+		else if(world.time >= exit_world_time + 5 MINUTES)
+			owner.remove_status_effect(src)
+
+/atom/movable/screen/alert/status_effect/buff/necra_realm_presence
+	name = "Undermaiden's Embrace"
+	desc = "In Her sacred realm, I am at peace. The Undermaiden's presence fills me with calm."
+	icon_state = "buff"
+
 #define FORTIFY_FILTER "fortify_glow"
 /datum/status_effect/buff/fortify //Increases all healing while it lasts.
 	id = "fortify"
@@ -1380,7 +1410,11 @@
 		return
 	if(H.stat != DEAD)
 		return // Already revived by something else
-	H.revive(full_heal = FALSE)
+	// If the head is completely missing the Undermaiden cannot restore the bargain
+	if(!H.get_bodypart(BODY_ZONE_HEAD))
+		H.remove_status_effect(/datum/status_effect/buff/undermaidenbargain)
+		to_chat(H, span_warning("The Undermaiden cannot mend what has been wholly lost. Without a head, your bargain is forfeit."))
+		return
 	// Clear all wounds and cuts
 	for(var/obj/item/bodypart/bodypart as anything in H.bodyparts)
 		var/list/wounds_to_remove = bodypart.wounds.Copy()
@@ -1391,9 +1425,6 @@
 	H.remove_status_effect(/datum/status_effect/debuff/bleedingworse)
 	H.remove_status_effect(/datum/status_effect/debuff/bleedingworst)
 	H.blood_volume = BLOOD_VOLUME_NORMAL
-	// The heal effect: rapid wound/damage recovery + brief death immunity
-	H.apply_status_effect(/datum/status_effect/buff/undermaidenbargainheal)
-	H.apply_status_effect(/datum/status_effect/pacify, 10 MINUTES)
 	H.visible_message(span_danger("Something cold and irresistible drags [H] back from beyond the threshold!"))
 	playsound(get_turf(H), 'sound/misc/deadbell.ogg', 100, FALSE, -1)
 	// Move to a random toll-spawn landmark in the underworld
@@ -1414,8 +1445,22 @@
 				toll.pixel_x = rand(-6, 6)
 				toll.pixel_y = rand(-6, 6)
 				to_chat(H, span_cultsmall("The bargain struck in your name has been called. You have been dragged to the Undermaiden's realm — a toll awaits you somewhere in this maze of lost souls."))
+				// Revive the body a few seconds after arriving
+				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(complete_bargain_revival), owner_ref), 2 SECONDS)
 				return
 	to_chat(H, span_cultsmall("The bargain has been called, but Necra's realm could not be reached. You are spared, this once."))
+
+/proc/complete_bargain_revival(datum/weakref/owner_ref)
+	var/mob/living/carbon/human/H = owner_ref?.resolve()
+	if(!H || QDELETED(H) || H.stat != DEAD)
+		return
+	H.revive(full_heal = TRUE)
+	// The heal effect: rapid wound/damage recovery + brief death immunity
+	H.apply_status_effect(/datum/status_effect/buff/undermaidenbargainheal)
+	H.apply_status_effect(/datum/status_effect/pacify, 10 MINUTES)
+	H.apply_status_effect(/datum/status_effect/debuff/necra_bargain_penance)
+	H.visible_message(span_danger("[H] lurches upright, drawn back from death by an unseen hand!"))
+	playsound(get_turf(H), 'sound/misc/deadbell.ogg', 80, FALSE, -1)
 
 /// Called when player accepts the prompt — revives the player in the underworld realm.
 /datum/status_effect/buff/undermaidenbargain/proc/fulfill_bargain()

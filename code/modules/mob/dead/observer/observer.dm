@@ -370,6 +370,10 @@ Works together with spawning an observer, noted above.
 	ghost.ghostize_time = world.time
 	SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
 	ghost.can_reenter_corpse = can_reenter_corpse
+	// Dead player spirits use a lower invisibility so Necra clerics can perceive them.
+	// Admin ghosts keep INVISIBILITY_OBSERVER so they remain fully hidden from living players.
+	if(!admin)
+		ghost.set_invisibility(INVISIBILITY_NECRA_SPIRIT)
 	ghost.key = key
 	return ghost
 

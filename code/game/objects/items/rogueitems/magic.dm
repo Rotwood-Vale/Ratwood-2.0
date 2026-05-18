@@ -392,8 +392,22 @@ Necra's Censer
 	smoke_radius = 4
 	punish_dead_undead = TRUE
 
+/// Returns TRUE if this mob is a valid holy target for Necra's censer: undead (by biotype),
+/// or silver-weak non-players (rotcured virtue), excluding werewolves.
+/proc/is_necra_holy_target(mob/living/H)
+	if(H.mob_biotypes & MOB_UNDEAD)
+		return TRUE
+	if(HAS_TRAIT(H, TRAIT_SILVER_WEAK))
+		// Werewolves are silver-weak but are NOT holy targets
+		if(H.mind?.has_antag_datum(/datum/antagonist/werewolf))
+			return FALSE
+		if(H.mind?.has_antag_datum(/datum/antagonist/werewolf/lesser))
+			return FALSE
+		return TRUE
+	return FALSE
+
 /obj/item/necra_censer/proc/apply_censer_effect(mob/living/carbon/human/H)
-	if(punish_dead_undead && (H.stat == DEAD || (H.mob_biotypes & MOB_UNDEAD)))
+	if(punish_dead_undead && is_necra_holy_target(H))
 		H.remove_status_effect(/datum/status_effect/necra_censer_mood_bonus)
 		H.apply_status_effect(/datum/status_effect/necra_censer_mood_debuff)
 		H.add_stress(/datum/stressevent/necra_censer_undead)

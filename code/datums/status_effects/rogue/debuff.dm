@@ -625,12 +625,16 @@
 /datum/status_effect/debuff/necra_realm_dread
 	id = "necra_realm_dread"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/necra_realm_dread
-	effectedstats = list(STATKEY_LCK = -2)
 	duration = -1
 	status_type = STATUS_EFFECT_REPLACE
 	tick_interval = 5 SECONDS
 	/// World time when the mob last left the necra realm. -1 means currently in the realm.
 	var/exit_world_time = -1
+
+/datum/status_effect/debuff/necra_realm_dread/on_apply()
+	. = ..()
+	if(ishuman(owner))
+		to_chat(owner, span_warning("The Undermaiden's cold gaze weighs upon you. You SHOULDN'T BE HERE. Your mind and soul wane..."))
 
 /datum/status_effect/debuff/necra_realm_dread/process()
 	. = ..()
@@ -648,6 +652,38 @@
 	desc = "The wrongness of that place clings to me. Even now I can feel its cold weight on my soul."
 	icon_state = "debuff"
 	color = "#4a3a5c"
+
+/// Burning punishment applied on bargain revival. Deals 5 fire damage every 5 seconds for 1 minute. Does not burn clothing.
+/datum/status_effect/debuff/necra_bargain_penance
+	id = "necra_bargain_penance"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/necra_bargain_penance
+	duration = 1 MINUTES
+	tick_interval = 5 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+
+/datum/status_effect/debuff/necra_bargain_penance/on_apply()
+	. = ..()
+	owner.adjust_fire_stacks(4, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+	owner.ignite_mob()
+	to_chat(owner, span_userdanger("<span class='big'>YOU HAVE CHEATED DEATH. FOR THIS SIN, YOU MUST SUFFER YOUR END OF THE BARGAIN!</span>"))
+	to_chat(owner, span_warning("Find the toll and bring it to the Carriageman — only by paying it or finding one of my annointed may you leave this realm."))
+
+/datum/status_effect/debuff/necra_bargain_penance/process()
+	. = ..()
+	owner.adjustFireLoss(5)
+	if(!owner.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
+		owner.adjust_fire_stacks(2, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+		owner.ignite_mob()
+
+/datum/status_effect/debuff/necra_bargain_penance/on_remove()
+	. = ..()
+	owner.remove_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+
+/atom/movable/screen/alert/status_effect/debuff/necra_bargain_penance
+	name = "Undermaiden's Penance"
+	desc = "Burning in the Undermaiden's holy flames. Find the toll and pay it to escape."
+	icon_state = "debuff"
+	color = "#c06020"
 
 /atom/movable/screen/alert/status_effect/emberwine
 	name = "Aphrodesiac"
@@ -1041,7 +1077,7 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		// Apply stress/mood penalty through adding bad mood status effects
-		H.apply_status_effect(/datum/status_effect/mood/vbad)
+		H.add_stress(/datum/stressevent/underworld_dread)
 		to_chat(H, span_warning("A crushing despair settles over you as you enter this cold, forsaken realm..."))
 
 /datum/status_effect/debuff/toll_burden

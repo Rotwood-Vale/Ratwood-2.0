@@ -92,6 +92,7 @@
 	for (var/mob/living/L in targets)
 		var/is_vampire = FALSE
 		var/is_zombie = FALSE
+		var/is_silver_weak = FALSE
 		if(L.stat == DEAD)
 			continue
 		if (L.mind)
@@ -105,7 +106,11 @@
 				too_powerful = L
 				user.visible_message(span_warning("[user] suddenly pales before an unseen presence, and gasps!"), span_warning("The sound of rushing blood fills my ears and mind, drowning out my abrogation!"))
 				break
-		if (L.mob_biotypes & MOB_UNDEAD || is_vampire || is_zombie)
+		// Silver-weak creatures (e.g. rotcured) are holy targets, but NOT werewolves
+		if(HAS_TRAIT(L, TRAIT_SILVER_WEAK))
+			if(!L.mind?.has_antag_datum(/datum/antagonist/werewolf) && !L.mind?.has_antag_datum(/datum/antagonist/werewolf/lesser))
+				is_silver_weak = TRUE
+		if (L.mob_biotypes & MOB_UNDEAD || is_vampire || is_zombie || is_silver_weak)
 			things_to_churn += L
 
 	if (!too_powerful)
@@ -143,6 +148,7 @@
 	var/base_tick = 0.2
 	var/intensity = 1
 	var/range = 10
+	var/last_holy_fire_time = 0
 
 /datum/status_effect/churned/on_creation(mob/living/new_owner, mob/living/caster, potency)
 	intensity = potency
@@ -171,10 +177,16 @@
 	if (prob(10))
 		to_chat(owner, span_warning("A frenzy of ghostly motes assail my form!"))
 		owner.emote("scream")
+	// Apply a stack of holy fire every 5 seconds to undead caught in the aura
+	if(world.time >= last_holy_fire_time + 5 SECONDS)
+		last_holy_fire_time = world.time
+		owner.adjust_fire_stacks(1, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+		owner.ignite_mob()
 
-	var/mob/living/our_debuffer = debuffer.resolve()
-	if (get_dist(our_debuffer, owner) > range)
-		to_chat(owner, span_notice("I've escaped the cloying mists!"))
+	var/mob/living/our_debuffer = debuffer?.resolve()
+	if(!our_debuffer || get_dist(our_debuffer, owner) > range)
+		if(our_debuffer)
+			to_chat(owner, span_notice("I've escaped the cloying mists!"))
 		qdel(src)
 
 /datum/status_effect/churned/on_remove()
