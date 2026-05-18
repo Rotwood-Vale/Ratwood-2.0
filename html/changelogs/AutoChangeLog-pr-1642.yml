@@ -1,0 +1,5 @@
+author: "JustMeTheIInd"
+delete-after: True
+changes:
+  - rscadd: "Adventurer Ascendant Clerics spawn with proper amulets now"
+  - rscadd: "allows the Exorcist to choose the type of their silver psycross."

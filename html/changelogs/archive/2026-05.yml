@@ -338,3 +338,10 @@
   - bugfix: golden zcross and bronze graggar amulet no longer has no sprite
   yupup123:
   - rscadd: Added new Malodorous Flaw
+2026-05-18:
+  Jamdrawers:
+  - balance: the 'deadite rot timer' is reduced from 7 minutes to 5 minutes
+  Xander3359:
+  - bugfix: Fixed the person a harpy carries up a z level immediately falling
+  - bugfix: Fixed the person buckled to a harpy being left behind when the harpy moves
+      up or down

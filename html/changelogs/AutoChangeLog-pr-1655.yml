@@ -1,0 +1,4 @@
+author: "Jamdrawers"
+delete-after: True
+changes:
+  - image: "Made fog a bit more transparent and slower"

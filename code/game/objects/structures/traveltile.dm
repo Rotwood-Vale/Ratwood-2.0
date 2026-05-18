@@ -208,6 +208,11 @@
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "shitportal"
 
+/obj/structure/fluff/traveltile/magicportal/unstable
+	desc = "flickering, warping magick. Where could it possibly lead?"
+	name = "unstable portal"
+	color = "#ff0d00"
+
 /obj/structure/fluff/traveltile/rockhillentrance
 	desc = "Awake from this dream. The road to Rockhill awaits."
 	name = "To Rockhill"

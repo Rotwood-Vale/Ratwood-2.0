@@ -27,7 +27,7 @@
 	// Also because the alternative is not very clean codewise.
 	subclass_stashed_items = list(
 		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
 	)
 	extra_context = "This subclass can choose from multiple disciplines. \
 	The further your chosen discipline strays from unarmed combat, however, the greater your skills in fistfighting and wrestling will atrophy. \
@@ -62,6 +62,18 @@
 		/obj/item/reagent_containers/food/snacks/rogue/bread = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/beer = 1, //Plays into the classic stereotype of beer-loving monks and well-stocked pilgrims.
 		)
+	
+	// Ascendant symbols go into the backpack, so you don't get insta-found out.
+	switch(H.patron?.type)
+		if(/datum/patron/inhumen/zizo)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen] = 1
+		if(/datum/patron/inhumen/matthios)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
+		if(/datum/patron/inhumen/graggar)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
+		if(/datum/patron/inhumen/baotha)	
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
+
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
 
@@ -228,6 +240,15 @@
 		/obj/item/flashlight/flare/torch/metal = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		)
+	switch(H.patron?.type)
+		if(/datum/patron/inhumen/zizo)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen] = 1
+		if(/datum/patron/inhumen/matthios)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
+		if(/datum/patron/inhumen/graggar)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
+		if(/datum/patron/inhumen/baotha)	
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
 	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
@@ -441,6 +462,15 @@
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
+	switch(H.patron?.type)
+		if(/datum/patron/inhumen/zizo)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen] = 1
+		if(/datum/patron/inhumen/matthios)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
+		if(/datum/patron/inhumen/graggar)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
+		if(/datum/patron/inhumen/baotha)	
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
 	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
 	switch(H.patron?.type)

@@ -1,0 +1,5 @@
+author: "WolfOrion"
+delete-after: True
+changes:
+  - balance: "lawless now makes nobles disgraced."
+  - bugfix: "bandits that opt to not be wanted now are actually not wanted."

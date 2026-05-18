@@ -7,7 +7,7 @@
 //	where you would want the updater procs below to run
 
 //	This also works with decimals.
-#define SAVEFILE_VERSION_MAX	37
+#define SAVEFILE_VERSION_MAX	38
 
 // Safely extract a type path from datums or type values; returns null if unset/invalid.
 /proc/preferences_typepath_or_null(value)
@@ -1012,6 +1012,26 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	all_quirks = SANITIZE_LIST(all_quirks)
 
 	S["customizer_entries"] >> customizer_entries
+
+	var/save_version = savefile_needs_update(S)
+	if(save_version > 0 && save_version < 38)
+	// Here's the plan, we save the old type and the old color, then re-apply them after validation. Should be seamless
+		var/old_accessory_type
+		var/old_selected_color
+		testing("Save version < 37, updating wings.")
+		var/list/wing_types = subtypesof(/datum/sprite_accessory/wings)
+		for(var/datum/customizer_entry/old_entry as anything in customizer_entries)
+			if(!(old_entry.accessory_type in wing_types))
+				continue
+			old_accessory_type = old_entry.accessory_type
+			old_selected_color = old_entry.accessory_colors
+			validate_customizer_entries() // Here we do validation which rebuilds the customizers
+			var/datum/customizer_entry/organ/wings/new_wing_entry = locate(/datum/customizer_entry/organ/wings) in customizer_entries
+			if(!istype(new_wing_entry))
+				continue
+			new_wing_entry.wings_color = old_selected_color
+			new_wing_entry.accessory_type = old_accessory_type
+
 	validate_customizer_entries()
 
 	return TRUE

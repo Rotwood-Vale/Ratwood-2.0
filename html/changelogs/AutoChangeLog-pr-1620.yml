@@ -1,0 +1,6 @@
+author: "ophaq"
+delete-after: True
+changes:
+  - bugfix: "Arcyne affinity is less jank. Lower CD, slightly higher devotion cost. Lets you pick multiple categories over time now."
+  - bugfix: "Noc acolytes & missionaries qualify for the weapon enchant spell's auto refresh."
+  - bugfix: "Noc ritual text when it ends. It used to just look like it cut off mid sentence."
