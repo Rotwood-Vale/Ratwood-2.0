@@ -608,10 +608,21 @@
 
 	if(corpses[selected] == "NPC_SEARCH")
 		var/list/npc_corpses = list()
-		for(var/mob/living/NPC in range(20, user))
-			if(NPC.stat != DEAD || NPC.mind)
+		// Search current z-level and adjacent z-levels (dungeons above/below)
+		var/list/z_levels_to_check = list(user.z)
+		if(user.z > 1)
+			z_levels_to_check += user.z - 1
+		if(user.z < world.maxz)
+			z_levels_to_check += user.z + 1
+		for(var/z in z_levels_to_check)
+			var/turf/ref_turf = locate(user.x, user.y, z)
+			if(!ref_turf)
 				continue
-			npc_corpses += NPC
+			for(var/mob/living/NPC in range(20, ref_turf))
+				if(NPC.stat != DEAD || NPC.mind)
+					continue
+				if(!(NPC in npc_corpses))
+					npc_corpses += NPC
 		// Find the closest 5 by distance
 		var/turf/uturf = get_turf(user)
 		var/list/closest = list()

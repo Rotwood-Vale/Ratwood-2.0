@@ -1402,28 +1402,14 @@
 		return
 	if(!mind?.key)
 		return // Only player-controlled mobs get the bargain
-	// Schedule prompt after 5 seconds — gives the death cutscene time to complete
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(prompt_undermaiden_bargain), WEAKREF(src)), 5 SECONDS)
+	// Notify the player immediately while they still have their client on their body
+	to_chat(src, span_cultsmall("<b>The bargain struck in your name has been called.</b> Necra's cold grip tightens — you will be pulled to her realm momentarily..."))
+	// Auto-fulfill after 3 seconds — no dialog, no race conditions
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(try_fulfill_undermaiden_bargain), WEAKREF(src)), 3 SECONDS)
 
-/// Prompts the dead player (or their ghost) to accept or decline the Undermaiden's bargain, then dispatches accordingly.
+/// DEPRECATED — no longer called. The death override calls try_fulfill_undermaiden_bargain directly.
 /proc/prompt_undermaiden_bargain(datum/weakref/owner_ref)
-	var/mob/living/carbon/human/H = owner_ref?.resolve()
-	if(!H || QDELETED(H) || H.stat != DEAD)
-		return
-	// The player may have ghostized since death — check mind.current directly
-	var/mob/alert_target = H
-	if(!H.client && H.mind)
-		var/mob/dead/observer/G = istype(H.mind.current, /mob/dead/observer) ? H.mind.current : null
-		if(G && !G.started_as_observer)
-			alert_target = G
-	if(!alert_target.client)
-		return // Player is offline
-	var/choice = alert(alert_target, "Time to fulfill your bargain. Will you accept and be dragged to the Necra's realm?", "Undermaiden's Bargain", "Accept", "Decline")
-	if(choice == "Accept")
-		try_fulfill_undermaiden_bargain(owner_ref)
-	else
-		H.remove_status_effect(/datum/status_effect/buff/undermaidenbargain)
-		to_chat(alert_target, span_warning("You have refused to uphold the bargain. Your corpse remains where it fell, for now."))
+	return
 
 /// Validates conditions and teleports the dead player to the underworld realm, then schedules the revive.
 /proc/try_fulfill_undermaiden_bargain(datum/weakref/owner_ref)
@@ -1471,7 +1457,13 @@
 				toll_spawns += T
 		if(length(toll_spawns))
 			new /obj/item/thetoll(pick(toll_spawns))
-		to_chat(H, span_cultsmall("The bargain struck in your name has been called. You have been dragged to the Undermaiden's realm — a toll awaits you somewhere in this maze of lost souls. Find it and pay the Carriageman, or seek out one of her anointed to guide you free."))
+		// Deliver the arrival message to the ghost if the player has already ghostized
+		var/mob/msg_target = H
+		if(!H.client && H.mind)
+			var/mob/dead/observer/G = istype(H.mind.current, /mob/dead/observer) ? H.mind.current : null
+			if(G && !G.started_as_observer)
+				msg_target = G
+		to_chat(msg_target, span_cultsmall("The bargain struck in your name has been called. You have been dragged to the Undermaiden's realm — a toll awaits you somewhere in this maze of lost souls. Find it and pay the Carriageman, or seek out one of her anointed to guide you free."))
 		// Revive the body a few seconds after arriving
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(complete_bargain_revival), owner_ref), 2 SECONDS)
 		return
