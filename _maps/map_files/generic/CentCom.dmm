@@ -745,8 +745,10 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "cX" = (
-/obj/structure/underworld/barrier,
-/obj/structure/underworld/barrier,
+/obj/item/flashlight/lantern/shrunken{
+	pixel_y = 10;
+	pixel_x = -8
+	},
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/indoors/deathsedge)
 "do" = (
@@ -1563,12 +1565,9 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "tr" = (
-/obj/structure/underworld/barrier,
-/obj/effect/wisp/prestidigitation{
-	color = "#ff75b1";
-	desc = "A small, fiery ball of light made up of mystical energy.";
-	name = "Will-o'-the-wisp";
-	pixel_x = 0
+/obj/item/flashlight/lantern/shrunken{
+	pixel_x = 8;
+	pixel_y = -10
 	},
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/indoors/deathsedge)
@@ -1597,6 +1596,13 @@
 /obj/item/natural/rock,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/mountains)
+"tX" = (
+/obj/item/flashlight/lantern/shrunken{
+	pixel_x = 8;
+	pixel_y = 10
+	},
+/turf/open/floor/rogue/underworld/road,
+/area/rogue/indoors/deathsedge)
 "uj" = (
 /obj/effect/decal/edge{
 	color = "#3f3f3f";
@@ -1700,6 +1706,7 @@
 	pixel_x = -97;
 	pixel_y = -36
 	},
+/obj/structure/underworld/barrier,
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/indoors/deathsedge)
 "wO" = (
@@ -2111,9 +2118,11 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "EN" = (
-/obj/structure/underworld/barrier,
-/obj/structure/underworld/barrier,
-/turf/open/floor/rogue/churchrough,
+/obj/item/flashlight/lantern/shrunken{
+	pixel_y = -10;
+	pixel_x = -8
+	},
+/turf/open/floor/rogue/underworld/road,
 /area/rogue/indoors/deathsedge)
 "ES" = (
 /obj/effect/landmark/underworld_toll_spawn,
@@ -2630,6 +2639,7 @@
 	color = "#7f788a";
 	lifetime = 14400
 	},
+/obj/structure/underworld/barrier,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/deathsedge)
 "RD" = (
@@ -2684,6 +2694,7 @@
 	color = "#7f788a";
 	lifetime = 14400
 	},
+/obj/structure/underworld/barrier,
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/indoors/deathsedge)
 "Sv" = (
@@ -13465,7 +13476,7 @@ fz
 is
 qe
 Ey
-Ey
+kI
 HA
 MC
 Zg
@@ -13474,7 +13485,7 @@ Ey
 Ey
 MC
 HA
-Ey
+kI
 Ey
 Ey
 MC
@@ -13592,7 +13603,7 @@ MC
 MC
 RC
 RC
-fz
+LK
 MC
 Ey
 Ey
@@ -13720,12 +13731,12 @@ Ey
 MC
 MC
 MC
-fz
-fz
+LK
+LK
 RC
 MC
 Ey
-kI
+Ey
 Ey
 Ey
 Ey
@@ -13850,9 +13861,9 @@ Ey
 Ey
 Ey
 MC
-Ey
-fz
-fz
+mq
+LK
+LK
 MC
 on
 Ey
@@ -14240,10 +14251,10 @@ Ey
 Ey
 MC
 MC
-LK
-mq
-LK
-tr
+fz
+Ey
+fz
+my
 Ey
 Ey
 MC
@@ -14370,10 +14381,10 @@ Ey
 MC
 Ey
 Ey
-mq
-LK
-LK
-mq
+Ey
+fz
+fz
+Ey
 Ey
 MC
 Ey
@@ -14500,10 +14511,10 @@ MC
 Ey
 Ey
 MC
-EN
 LK
-LK
-mq
+fz
+fz
+Ey
 Ey
 MC
 MC
@@ -14891,8 +14902,8 @@ Ey
 MC
 Ey
 fz
-fz
-Ey
+LK
+mq
 Ey
 fz
 Ey
@@ -15021,16 +15032,16 @@ Ey
 MC
 Ey
 Ey
-Ey
-fz
+mq
+LK
 Ey
 QF
 sD
 Ey
 Ey
-Ey
+tr
 fz
-Ey
+tX
 Ey
 MC
 Ey
@@ -15152,7 +15163,7 @@ Ey
 Ey
 fz
 wM
-fz
+LK
 Ey
 fz
 Kt
@@ -15260,7 +15271,7 @@ MC
 on
 Ey
 MC
-Ey
+kI
 Ey
 Ey
 MC
@@ -15281,16 +15292,16 @@ Ey
 MC
 Ey
 fz
-Ey
-fz
+mq
+LK
 Ey
 Ey
 hc
 DU
 Ey
-Ey
+EN
 fz
-Ey
+cX
 Ey
 MC
 Ey
@@ -15411,8 +15422,8 @@ Ey
 MC
 Ey
 fz
-Ey
-fz
+mq
+LK
 Ey
 fz
 Ey
@@ -15673,7 +15684,7 @@ Ey
 fz
 Ey
 fz
-cX
+Ey
 MC
 Ey
 Ey
@@ -15803,7 +15814,7 @@ MC
 fz
 fz
 Ey
-mq
+Ey
 Ey
 MC
 MC
@@ -15930,10 +15941,10 @@ kI
 Ey
 MC
 Ey
-LK
-LK
-mq
-tr
+fz
+fz
+Ey
+my
 Ey
 Ey
 Ey
@@ -16450,9 +16461,9 @@ Ey
 Ey
 Ey
 MC
-Ey
-fz
-fz
+mq
+LK
+LK
 Ey
 Ey
 Ey
@@ -16580,8 +16591,8 @@ MC
 Ey
 Ey
 MC
-fz
-Ey
+LK
+mq
 RC
 MC
 Ey
@@ -16712,7 +16723,7 @@ Ey
 MC
 RC
 So
-fz
+LK
 MC
 MC
 Ey
@@ -16840,9 +16851,9 @@ Ey
 Ey
 Ey
 MC
-fz
-fz
-fz
+LK
+LK
+LK
 MC
 Ey
 Ey
