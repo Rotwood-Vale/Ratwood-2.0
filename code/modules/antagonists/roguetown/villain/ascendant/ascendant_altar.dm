@@ -146,7 +146,7 @@ GLOBAL_LIST_INIT(capstone_pool, list(
 		if(1)
 			ADD_TRAIT(user, TRAIT_LONGSTRIDER, TRAIT_GENERIC)
 			to_chat(user, span_danger("The first capstone. My mind opens. The world around me seems to get smaller. A corpse. We are living on a corpse. And this deadite must be dealt with the same as the rest. My pace stiffens."))
-			user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/churn)
+			user.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/churn)
 			addomen(ASCEND_FIRST)
 			priority_announce("The leylines begin to tremble in unnatural perversion - MAJOR ARCANA: THE FOOL, UPRIGHT.", "THE DREAMER", 'sound/villain/dreamer_warning.ogg')
 		if(2)

@@ -202,6 +202,14 @@
 
 /obj/structure/underworld/carriageman/attackby(obj/item/W, mob/living/user)
 	if(!istype(user, /mob/living/carbon/spirit))
+		// Bargain penance: let non-Necran revived players pay their toll to unlock the shrine exit
+		if(HAS_TRAIT(user, TRAIT_BARGAIN_PENANCE_LOCKED) && istype(W, /obj/item/thetoll))
+			qdel(W)
+			REMOVE_TRAIT(user, TRAIT_BARGAIN_PENANCE_LOCKED, "bargain_penance")
+			user.remove_status_effect(/datum/status_effect/debuff/necra_bargain_penance)
+			to_chat(user, span_cultsmall("The Carriageman's bony hand accepts the toll. You feel the Undermaiden's hold on you loosen — the Way Out is yours to pass through once more."))
+			user << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 0, 0, 0, 50)
+			return
 		if(!HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
 			to_chat(user, span_warning("The Carriageman does not acknowledge you."))
 			return

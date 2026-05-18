@@ -1368,9 +1368,9 @@
 	var/strip_delayed = what.strip_delay
 	if(enhanced_strip)
 		strip_delayed = 0.1 SECONDS
-	// Necra's blessing: strip dead bodies twice as fast
+	// Necra's blessing: strip dead bodies at a much faster rate
 	if(HAS_TRAIT(src, TRAIT_SOUL_EXAMINE) && istype(who, /mob/living) && (who.stat == DEAD))
-		strip_delayed *= 0.5
+		strip_delayed *= 0.30
 	if(do_after(src, strip_delayed * surrender_mod, who))
 		if(what && (Adjacent(who) || (enhanced_strip && (get_dist(src, who) <= 3))))
 			enhanced_strip = FALSE

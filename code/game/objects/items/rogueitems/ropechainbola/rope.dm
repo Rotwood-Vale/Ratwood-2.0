@@ -169,6 +169,7 @@
 	light_power = 1
 	light_outer_range = 1.5
 	light_color = "#e8f4ff"
+	cuffsound = 'sound/misc/cordage.ogg'
 
 /obj/item/rope/necran_cord/Initialize(mapload)
 	. = ..()

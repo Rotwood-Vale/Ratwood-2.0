@@ -659,31 +659,32 @@
 	icon_state = "debuff"
 	color = "#4a3a5c"
 
-/// Burning punishment applied on bargain revival. Deals 5 fire damage every 5 seconds for 1 minute. Does not burn clothing.
+/// Punishment applied on bargain revival. Deals 5 brute damage every 5 seconds for 1 minute.
 /datum/status_effect/debuff/necra_bargain_penance
 	id = "necra_bargain_penance"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/necra_bargain_penance
 	duration = 1 MINUTES
 	tick_interval = 5 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
+	var/total_brute_dealt = 0
 
 /datum/status_effect/debuff/necra_bargain_penance/on_apply()
 	. = ..()
-	owner.adjust_fire_stacks(4, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
-	owner.ignite_mob()
 	to_chat(owner, span_userdanger("<span class='big'>YOU HAVE CHEATED DEATH. FOR THIS SIN, YOU MUST SUFFER YOUR END OF THE BARGAIN!</span>"))
 	to_chat(owner, span_warning("Find the toll and bring it to the Carriageman — only by paying it or finding one of my annointed may you leave this realm."))
 
 /datum/status_effect/debuff/necra_bargain_penance/process()
 	. = ..()
-	owner.adjustFireLoss(5)
-	if(!owner.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
-		owner.adjust_fire_stacks(2, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
-		owner.ignite_mob()
+	if(total_brute_dealt >= 50)
+		return
+	var/dmg = min(5, 50 - total_brute_dealt)
+	owner.adjustBruteLoss(dmg)
+	total_brute_dealt += dmg
 
 /datum/status_effect/debuff/necra_bargain_penance/on_remove()
 	. = ..()
-	owner.remove_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+	// Ensure the portal lock is always cleared when penance ends, even if toll was not paid
+	REMOVE_TRAIT(owner, TRAIT_BARGAIN_PENANCE_LOCKED, "bargain_penance")
 
 /atom/movable/screen/alert/status_effect/debuff/necra_bargain_penance
 	name = "Undermaiden's Penance"

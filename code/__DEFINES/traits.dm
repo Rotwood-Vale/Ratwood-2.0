@@ -64,6 +64,7 @@
 #define TRAIT_DUNGEONMASTER "Ruthless Jailor"
 #define TRAIT_DEATHBARGAIN "Death Bargain" // Used by UNDERMAIDEN'S BARGAIN (active)
 #define TRAIT_BARGAIN_PERMANENT "Bargain Sealed" // Permanently set when bargain is applied; prevents a second bargain ever
+#define TRAIT_BARGAIN_PENANCE_LOCKED "Bargain Penance Locked" // Set on revival — blocks the Way Out portal until toll is paid or a Necran guides them out
 #define TRAIT_RITUALIST "Ritualist"  // Allows use of ritual chalk
 #define TRAIT_INQUISITION "Otavan Adherent"
 #define TRAIT_GOODTRAINER "Good Trainer"

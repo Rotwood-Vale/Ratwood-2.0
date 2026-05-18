@@ -105,6 +105,13 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 
 /obj/structure/deaths_door_shrine/attack_hand(mob/living/user)
 	to_chat(user, span_notice("You reach for the glowing portal..."))
+
+	// Bargain penance lock checked first — applies to everyone including Necrans
+	if(HAS_TRAIT(user, TRAIT_BARGAIN_PENANCE_LOCKED))
+		to_chat(user, span_cultsmall("The Undermaiden bars your path. Seek the toll and pay the Carriageman — or find one of her anointed to guide you free."))
+		playsound(get_turf(src), 'sound/misc/deadbell.ogg', 50, FALSE, -1)
+		return
+
 	var/mob/living/companion = get_deathsdoor_companion(user)
 	if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
 		// Necra's chosen move through her realm's portal without hesitation
@@ -167,6 +174,12 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 
 	exit_deaths_door(user, target)
 
+	// If a Necran guides out a penance-locked player, release the lock
+	if(is_necran && HAS_TRAIT(target, TRAIT_BARGAIN_PENANCE_LOCKED))
+		REMOVE_TRAIT(target, TRAIT_BARGAIN_PENANCE_LOCKED, "bargain_penance")
+		target.remove_status_effect(/datum/status_effect/debuff/necra_bargain_penance)
+		to_chat(target, span_cultsmall("The Undermaiden's anointed has guided you free. Your debt is absolved."))
+
 	user.visible_message(
 		span_notice("[user] guides [target] through Necra's shrine.")
 	)
@@ -177,15 +190,18 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 	if(default_exit)
 		dests[default_exit] = "A Strange Place"
 
-	// Acolytes can choose exits
-	if(user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/necras_sight))
-		var/list/sight_dests = get_necras_sight_entries(user)
-		if(length(sight_dests))
+	// Necra devoted can choose exits — collect waypoints from ALL living Necrans so their marks are shared
+	if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
+		for(var/mob/living/necran in GLOB.player_list)
+			if(!HAS_TRAIT(necran, TRAIT_SOUL_EXAMINE) || necran.stat == DEAD)
+				continue
+			var/list/sight_dests = get_necras_sight_entries(necran)
 			for(var/turf/T in sight_dests)
-				dests[T] = sight_dests[T]
+				if(!(T in dests))
+					dests[T] = sight_dests[T]
 
-	// Always allow shrine exit
-	if(GLOB.deaths_door_exit)
+	// Shrine exit only for Necrans; non-Necrans exit straight through the veil to a strange place
+	if(GLOB.deaths_door_exit && HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
 		dests[GLOB.deaths_door_exit] = "Necra's Shrine"
 	// Warn Necra followers without sight
 	if(!user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/necras_sight))
@@ -261,6 +277,14 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 	anchored = TRUE
 	density = FALSE
 	var/turf/destination
+	/// Timer ID for the automatic portal expiry. Stored so it can be cancelled in Destroy.
+	var/expire_timer
+
+/obj/structure/deaths_door_portal/Destroy()
+	if(expire_timer)
+		deltimer(expire_timer)
+		expire_timer = null
+	return ..()
 
 /obj/structure/deaths_door_portal/Initialize(mapload, mob/living/_caster)
 	. = ..()
@@ -269,9 +293,10 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		return
 
 	destination = get_deathsdoor_entry_turf()
-	addtimer(CALLBACK(src, PROC_REF(expire)), 30 SECONDS)
+	expire_timer = addtimer(CALLBACK(src, PROC_REF(expire)), 30 SECONDS, TIMER_STOPPABLE)
 
 /obj/structure/deaths_door_portal/proc/expire()
+	expire_timer = null
 	if(QDELETED(src))
 		return
 	visible_message(span_notice("The glowing portal closes shut!"))
@@ -319,7 +344,8 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 
 	var/is_necran = HAS_TRAIT(user, TRAIT_SOUL_EXAMINE)
 	var/is_undead = (M.mob_biotypes & MOB_UNDEAD)
-	var/is_dead = (istype(M, /mob/living/carbon) && M.stat == DEAD)
+	// Include skeletons (simple_animal) and other undead that are dead, not just carbon mobs
+	var/is_dead = (M.stat == DEAD && (istype(M, /mob/living/carbon) || is_undead))
 	var/has_player = (M.mind?.key != null)
 
 	if(is_dead && !is_necran)
@@ -343,12 +369,13 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 
 	// Necrans who guide a dead NPC body through receive 5 tokens of gratitude
 	// Check BEFORE enter_portal() — that proc QDELs the NPC mob, making M invalid after the call
-	if(is_necran && is_dead && !has_player && !M.burialrited)
+	// Undead (skeletons etc.) also reward even if they formerly had a player
+	if(is_necran && is_dead && (!has_player || is_undead) && !M.burialrited)
 		var/obj/item/roguecoin/necra_token/body_reward = new(get_turf(user), 5)
 		body_reward.pixel_x = rand(-6, 6)
 		body_reward.pixel_y = rand(-6, 6)
 
-	enter_portal(M)
+	enter_portal(M, force_carriageman = is_necran)
 
 	user.visible_message(
 		span_warning("[user] drags [M] into Death's Door!")
@@ -357,8 +384,8 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 /obj/structure/deaths_door_portal/proc/enter_portal(mob/living/target, force_carriageman = FALSE)
 	if(!destination)
 		return
-	// NPC corpses (no mind.key) crumble to ash; player bodies pass through to the Carriageman
-	if(target.stat == DEAD && !target.mind?.key)
+	// NPC corpses crumble to ash; undead (skeletons) crumble regardless of whether they had a player
+	if(target.stat == DEAD && (!target.mind?.key || (target.mob_biotypes & MOB_UNDEAD)))
 		target.visible_message(span_warning("[target] crumbles into ash as it crosses the threshold!"))
 		target.dust(just_ash = TRUE)
 		return
@@ -507,6 +534,7 @@ GLOBAL_VAR_INIT(underworld_strands, 0)
 /obj/effect/landmark/underworldstrands/Destroy()
 	if(spawn_timer)
 		deltimer(spawn_timer)
+		spawn_timer = null
 	return ..()
 
 /obj/effect/landmark/underworldstrands/proc/start_timer()

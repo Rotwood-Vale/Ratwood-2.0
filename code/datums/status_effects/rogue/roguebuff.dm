@@ -1380,38 +1380,42 @@
 	// Permanent brand — persists even after the status effect is removed so the bargain can never be taken twice
 	ADD_TRAIT(owner, TRAIT_BARGAIN_PERMANENT, "bargain_permanent")
 	ADD_TRAIT(owner, TRAIT_DEATHBARGAIN, id)
-	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_bargain_death))
 
 /datum/status_effect/buff/undermaidenbargain/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_DEATHBARGAIN, id)
-	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
 
-/// Fired when the bargained player dies. Schedules revival in the underworld after the death proc finishes.
+/// Fired when the bargained player dies. Kept for reference but no longer called — death override in /mob/living/carbon/human/death handles this.
 /datum/status_effect/buff/undermaidenbargain/proc/on_bargain_death(datum/source, gibbed)
 	SIGNAL_HANDLER
-	if(gibbed)
-		return // The bargain can't save the gibbed
-	if(owner.has_status_effect(/datum/status_effect/buff/necras_vow) || HAS_TRAIT(owner, TRAIT_NECRAS_VOW))
-		owner.remove_status_effect(/datum/status_effect/buff/undermaidenbargain)
-		to_chat(owner, span_warning("Necra rejects your contradiction. You cannot hold both the vow to her and the bargain."))
-		return
-	if(!owner.mind?.active)
-		return // Only player-controlled mobs get the bargain
-	// Schedule prompt after 5 seconds for player to accept/decline
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(prompt_undermaiden_bargain), WEAKREF(owner)), 5 SECONDS)
+	return
 
+/// Overrides human death to reliably fire the bargain, bypassing signal timing issues.
+/mob/living/carbon/human/death(gibbed, nocutscene)
+	. = ..()
+	if(gibbed || !HAS_TRAIT(src, TRAIT_DEATHBARGAIN))
+		return
+	// Necra's Vow conflicts with the bargain
+	if(has_status_effect(/datum/status_effect/buff/necras_vow) || HAS_TRAIT(src, TRAIT_NECRAS_VOW))
+		remove_status_effect(/datum/status_effect/buff/undermaidenbargain)
+		to_chat(src, span_warning("Necra rejects your contradiction. You cannot hold both the vow to her and the bargain."))
+		return
+	if(!mind?.key)
+		return // Only player-controlled mobs get the bargain
+	// Schedule prompt after 5 seconds — gives the death cutscene time to complete
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(prompt_undermaiden_bargain), WEAKREF(src)), 5 SECONDS)
+
+/// Prompts the dead player (or their ghost) to accept or decline the Undermaiden's bargain, then dispatches accordingly.
 /proc/prompt_undermaiden_bargain(datum/weakref/owner_ref)
 	var/mob/living/carbon/human/H = owner_ref?.resolve()
 	if(!H || QDELETED(H) || H.stat != DEAD)
 		return
-	// The player may have ghostized since death — find their ghost mob if so
+	// The player may have ghostized since death — check mind.current directly
 	var/mob/alert_target = H
 	if(!H.client && H.mind)
-		for(var/mob/dead/observer/G in world)
-			if(G.mind == H.mind && !G.started_as_observer)
-				alert_target = G
-				break
+		var/mob/dead/observer/G = istype(H.mind.current, /mob/dead/observer) ? H.mind.current : null
+		if(G && !G.started_as_observer)
+			alert_target = G
 	if(!alert_target.client)
 		return // Player is offline
 	var/choice = alert(alert_target, "Time to fulfill your bargain. Will you accept and be dragged to the Necra's realm?", "Undermaiden's Bargain", "Accept", "Decline")
@@ -1421,6 +1425,7 @@
 		H.remove_status_effect(/datum/status_effect/buff/undermaidenbargain)
 		to_chat(alert_target, span_warning("You have refused to uphold the bargain. Your corpse remains where it fell, for now."))
 
+/// Validates conditions and teleports the dead player to the underworld realm, then schedules the revive.
 /proc/try_fulfill_undermaiden_bargain(datum/weakref/owner_ref)
 	var/mob/living/carbon/human/H = owner_ref?.resolve()
 	if(!H || QDELETED(H))
@@ -1443,19 +1448,11 @@
 	H.remove_status_effect(/datum/status_effect/debuff/bleedingworst)
 	H.blood_volume = BLOOD_VOLUME_NORMAL
 	H.visible_message(span_danger("Something cold and irresistible drags [H] back from beyond the threshold!"))
-	playsound(get_turf(H), 'sound/misc/deadbell.ogg', 100, FALSE, -1)
-	// Move to a random toll-spawn landmark in the underworld
+	playsound(get_turf(H), pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 100, FALSE, -1)
+	// Move to a random deaths_door entry landmark in the underworld
 	var/turf/spawn_turf = null
-	if(length(GLOB.landmarks_list))
-		var/list/valid_spawns = list()
-		for(var/obj/effect/landmark/underworld_toll_spawn/L in GLOB.landmarks_list)
-			valid_spawns += L
-		if(!length(valid_spawns))
-			for(var/obj/effect/landmark/underworld/L in GLOB.landmarks_list)
-				valid_spawns += L
-		if(length(valid_spawns))
-			var/obj/effect/landmark/spawn_landmark = pick(valid_spawns)
-			spawn_turf = get_turf(spawn_landmark)
+	if(length(GLOB.deaths_door_entries))
+		spawn_turf = pick(GLOB.deaths_door_entries)
 	// Fallback: use a deaths_door entry point in the underworld realm
 	if(!spawn_turf)
 		spawn_turf = get_deathsdoor_entry_turf()
@@ -1466,31 +1463,38 @@
 			new /obj/effect/temp_visual/trap/wither(origin_turf, 3 SECONDS)
 			new /obj/effect/temp_visual/wither_actual(origin_turf)
 		H.forceMove(spawn_turf)
-		// Spawn a toll at the selected toll-spawn location
-		var/obj/item/roguecoin/necra_token/toll = new(spawn_turf)
-		toll.pixel_x = rand(-6, 6)
-		toll.pixel_y = rand(-6, 6)
-		to_chat(H, span_cultsmall("The bargain struck in your name has been called. You have been dragged to the Undermaiden's realm — a toll awaits you somewhere in this maze of lost souls."))
+		// Spawn the carriageman's toll ONLY at underworld_toll_spawn landmarks
+		var/list/toll_spawns = list()
+		for(var/obj/effect/landmark/underworld_toll_spawn/L in GLOB.landmarks_list)
+			var/turf/T = get_turf(L)
+			if(T)
+				toll_spawns += T
+		if(length(toll_spawns))
+			new /obj/item/thetoll(pick(toll_spawns))
+		to_chat(H, span_cultsmall("The bargain struck in your name has been called. You have been dragged to the Undermaiden's realm — a toll awaits you somewhere in this maze of lost souls. Find it and pay the Carriageman, or seek out one of her anointed to guide you free."))
 		// Revive the body a few seconds after arriving
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(complete_bargain_revival), owner_ref), 2 SECONDS)
 		return
 	to_chat(H, span_cultsmall("The bargain has been called, but Necra's realm could not be reached. You are spared, this once."))
 
+/// Fully revives the bargain recipient and returns their ghost to their body.
 /proc/complete_bargain_revival(datum/weakref/owner_ref)
 	var/mob/living/carbon/human/H = owner_ref?.resolve()
 	if(!H || QDELETED(H) || H.stat != DEAD)
 		return
 	H.revive(full_heal = TRUE)
 	// Return the player's ghost to their revived body if they had ghostized
+	// Use mind.current directly instead of scanning all of world
 	if(H.mind)
-		for(var/mob/dead/observer/G in world)
-			if(G.mind == H.mind && !G.started_as_observer)
-				H.mind.transfer_to(H)
-				break
+		var/mob/dead/observer/G = istype(H.mind.current, /mob/dead/observer) ? H.mind.current : null
+		if(G && !G.started_as_observer)
+			H.mind.transfer_to(H)
 	// The heal effect: rapid wound/damage recovery + brief death immunity
 	H.apply_status_effect(/datum/status_effect/buff/undermaidenbargainheal)
 	H.apply_status_effect(/datum/status_effect/pacify, 10 MINUTES)
 	H.apply_status_effect(/datum/status_effect/debuff/necra_bargain_penance)
+	// Block A Way Out portal until the toll is paid or a Necran guides them free
+	ADD_TRAIT(H, TRAIT_BARGAIN_PENANCE_LOCKED, "bargain_penance")
 	H.visible_message(span_danger("[H] lurches upright, drawn back from death by an unseen hand!"))
 	playsound(get_turf(H), 'sound/misc/deadbell.ogg', 80, FALSE, -1)
 
@@ -1507,21 +1511,25 @@
 	to_chat(owner, span_warning("You feel the deal struck in your name is being fulfilled..."))
 	playsound(owner, 'sound/misc/deadbell.ogg', 100, FALSE, -1)
 	ADD_TRAIT(owner, TRAIT_NODEATH, id)
-	var/dirgeline = rand(1,6)
-	spawn(15)
-		switch(dirgeline)
-			if(1)
-				to_chat(owner, span_cultsmall("She watches the city skyline as her crimson pours into the drain."))
-			if(2)
-				to_chat(owner, span_cultsmall("He only wanted more for his family. He feels comfort on the pavement, the Watchman's blade having met its mark."))
-			if(3)
-				to_chat(owner, span_cultsmall("A sailor's leg is caught in naval rope. Their last thoughts are of home."))
-			if(4)
-				to_chat(owner, span_cultsmall("She sobbed over the Venardine's corpse. The Brigand's mace stemmed her tears."))
-			if(5)
-				to_chat(owner, span_cultsmall("A farm son chokes up his last. At his bedside, a sister and mother weep."))
-			if(6)
-				to_chat(owner, span_cultsmall("A woman begs at a Headstone. It is your fault."))
+	addtimer(CALLBACK(src, PROC_REF(send_deathvision)), 1.5 SECONDS)
+
+/// Shows a random Undermaiden death-vision message to the bargain recipient shortly after revival.
+/datum/status_effect/buff/undermaidenbargainheal/proc/send_deathvision()
+	if(QDELETED(src) || QDELETED(owner))
+		return
+	switch(rand(1, 6))
+		if(1)
+			to_chat(owner, span_cultsmall("She watches the city skyline as her crimson pours into the drain."))
+		if(2)
+			to_chat(owner, span_cultsmall("He only wanted more for his family. He feels comfort on the pavement, the Watchman's blade having met its mark."))
+		if(3)
+			to_chat(owner, span_cultsmall("A sailor's leg is caught in naval rope. Their last thoughts are of home."))
+		if(4)
+			to_chat(owner, span_cultsmall("She sobbed over the Venardine's corpse. The Brigand's mace stemmed her tears."))
+		if(5)
+			to_chat(owner, span_cultsmall("A farm son chokes up his last. At his bedside, a sister and mother weep."))
+		if(6)
+			to_chat(owner, span_cultsmall("A woman begs at a Headstone. It is your fault."))
 
 /datum/status_effect/buff/undermaidenbargainheal/on_remove()
 	. = ..()

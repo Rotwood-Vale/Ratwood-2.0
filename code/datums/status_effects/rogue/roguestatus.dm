@@ -59,7 +59,7 @@
 
 /datum/status_effect/necra_censer_mood_bonus
 	id = "necra_censer_mood_bonus"
-	status_type = STATUS_EFFECT_REFRESH
+	status_type = STATUS_EFFECT_UNIQUE
 	duration = 2 MINUTES
 	effectedstats = list(STATKEY_LCK = 1)
 	alert_type = /atom/movable/screen/alert/status_effect/necra_censer_mood_bonus
@@ -72,7 +72,7 @@
 
 /datum/status_effect/necra_censer_mood_debuff
 	id = "necra_censer_mood_debuff"
-	status_type = STATUS_EFFECT_REFRESH
+	status_type = STATUS_EFFECT_UNIQUE
 	duration = 2 MINUTES
 	effectedstats = list(STATKEY_LCK = -1)
 	alert_type = /atom/movable/screen/alert/status_effect/necra_censer_mood_debuff

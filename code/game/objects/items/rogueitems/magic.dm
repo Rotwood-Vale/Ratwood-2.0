@@ -407,14 +407,17 @@ Necra's Censer
 	return FALSE
 
 /obj/item/necra_censer/proc/apply_censer_effect(mob/living/carbon/human/H)
-	if(punish_dead_undead && is_necra_holy_target(H))
+	if(is_necra_holy_target(H))
+		// Both regular and upgraded censers disturb the unholy
 		H.remove_status_effect(/datum/status_effect/necra_censer_mood_bonus)
 		H.apply_status_effect(/datum/status_effect/necra_censer_mood_debuff)
 		H.add_stress(/datum/stressevent/necra_censer_undead)
-		if(!H.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
-			to_chat(H, span_danger("Silver fire lashes at your body!"))
-		H.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
-		H.ignite_mob()
+		// Only the upgraded censer also burns them
+		if(punish_dead_undead)
+			if(!H.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
+				to_chat(H, span_danger("Silver fire lashes at your body!"))
+			H.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+			H.ignite_mob()
 		return
 	H.remove_status_effect(/datum/status_effect/necra_censer_mood_debuff)
 	H.apply_status_effect(/datum/status_effect/necra_censer_mood_bonus)

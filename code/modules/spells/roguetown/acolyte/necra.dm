@@ -32,18 +32,15 @@
 			return
 	to_chat(user, span_red("I failed to perform the rites."))
 
-/obj/effect/proc_holder/spell/targeted/churn
+/obj/effect/proc_holder/spell/invoked/churn
 	name = "Churn Undead"
-	desc = "Rend a targeted undead foe with the Undermaiden's fire. Holds 2 charges, each restoring in 15 seconds; if emptied, it refills after 40 seconds."
+	desc = "Rend a targeted undead foe with the Undermaiden's fire. Charge the spell and then release on a target. Holds 2 charges, each restoring in 15 seconds; if emptied, it refills after 40 seconds."
 	range = 8
-	selection_type = "range"
 	overlay_state = "necra_ult"//Temp.
 	releasedrain = 30
 	chargetime = 2 SECONDS
 	charge_type = "charges"
 	recharge_time = 2
-	max_targets = 1
-	cast_without_targets = FALSE
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/churn.ogg'
 	associated_skill = /datum/skill/magic/holy
@@ -57,45 +54,16 @@
 	var/empty_refill_active = FALSE
 	var/list/churn_target_cooldowns = list()
 
-/obj/effect/proc_holder/spell/targeted/churn/Initialize(mapload)
+/obj/effect/proc_holder/spell/invoked/churn/Initialize(mapload)
 	. = ..()
 	charge_counter = max_churn_charges
 
-/obj/effect/proc_holder/spell/targeted/churn/Click()
-	var/mob/living/user = usr
-	if(!istype(user))
-		return
-	if(!can_cast(user))
-		deactivate(user)
-		return
-	if(active)
-		deactivate(user)
-	else
-		active = TRUE
-		add_ranged_ability(user, null, TRUE)
-	update_icon()
-
-/obj/effect/proc_holder/spell/targeted/churn/deactivate(mob/living/user)
-	active = FALSE
-	remove_ranged_ability(null)
-	update_icon()
-
-/obj/effect/proc_holder/spell/targeted/churn/InterceptClickOn(mob/living/caller, params, atom/target)
-	. = ..()
-	if(.)
-		return TRUE
-	if(!can_cast(caller) || !cast_check(FALSE, ranged_ability_user))
-		return TRUE
-	if(ismob(target))
-		perform(list(target), TRUE, user = ranged_ability_user)
-	return TRUE
-
-/obj/effect/proc_holder/spell/targeted/churn/Destroy()
+/obj/effect/proc_holder/spell/invoked/churn/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	churn_target_cooldowns = null
 	return ..()
 
-/obj/effect/proc_holder/spell/targeted/churn/proc/is_churn_target(mob/living/target)
+/obj/effect/proc_holder/spell/invoked/churn/proc/is_churn_target(mob/living/target)
 	if(!target || target.stat == DEAD)
 		return FALSE
 	if(target.mob_biotypes & MOB_UNDEAD)
@@ -113,17 +81,17 @@
 		return TRUE
 	return FALSE
 
-/obj/effect/proc_holder/spell/targeted/churn/can_target(mob/living/target)
+/obj/effect/proc_holder/spell/invoked/churn/can_target(mob/living/target)
 	return is_churn_target(target)
 
-/obj/effect/proc_holder/spell/targeted/churn/charge_check(mob/user, silent = FALSE)
+/obj/effect/proc_holder/spell/invoked/churn/charge_check(mob/user, silent = FALSE)
 	if(empty_refill_active || charge_counter <= 0)
 		if(!silent)
 			to_chat(user, span_warning("[name] has no charges left!"))
 		return FALSE
 	return TRUE
 
-/obj/effect/proc_holder/spell/targeted/churn/process()
+/obj/effect/proc_holder/spell/invoked/churn/process()
 	for(var/key in churn_target_cooldowns.Copy())
 		if(churn_target_cooldowns[key] <= world.time)
 			churn_target_cooldowns -= key
@@ -154,7 +122,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	return PROCESS_KILL
 
-/obj/effect/proc_holder/spell/targeted/churn/after_cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/invoked/churn/after_cast(list/targets, mob/user = usr)
 	. = ..()
 	if(charge_counter <= 0)
 		empty_refill_active = TRUE
@@ -167,7 +135,7 @@
 	charge_regen_elapsed = 0
 	START_PROCESSING(SSfastprocess, src)
 
-/obj/effect/proc_holder/spell/targeted/churn/cast(list/targets,mob/living/user = usr)
+/obj/effect/proc_holder/spell/invoked/churn/cast(list/targets,mob/living/user = usr)
 	var/mob/living/target = length(targets) ? targets[1] : null
 	if(!target || !is_churn_target(target))
 		revert_cast(user)
@@ -268,10 +236,11 @@
 
 // Speak with dead
 
-/obj/effect/proc_holder/spell/invoked/speakwithdead
+/obj/effect/proc_holder/spell/targeted/speakwithdead
 	name = "Speak with Dead"
 	desc = "Call upon the Undermaiden to let your words reach a departed soul, and hear their whisper in return."
 	cast_without_targets = TRUE
+	max_targets = 0
 	overlay_state = "speakwithdead"
 	releasedrain = 30
 	recharge_time = 30 SECONDS
@@ -283,19 +252,20 @@
 	miracle = TRUE
 	devotion_cost = 30
 
-/obj/effect/proc_holder/spell/invoked/speakwithdead/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/speakwithdead/cast(list/targets, mob/user = usr)
 	. = ..()
 	// Build list of souls who can be spoken with
 	var/list/souls = list()
 	// Dead players with active ghosts
 	for(var/mob/living/C in GLOB.dead_mob_list)
-		if(!C.mind)
+		if(C.stat != DEAD)
 			continue
-		var/mob/dead/observer/ghost = null
-		for(var/mob/dead/observer/G in world)
-			if(G.mind == C.mind)
-				ghost = G
-				break
+		if(C == user || (user.mind && C.mind == user.mind))
+			continue // skip own body
+		if(!C.mind?.key)
+			continue
+		// Use mind.current directly — avoids an O(world) scan per dead mob
+		var/mob/dead/observer/ghost = istype(C.mind.current, /mob/dead/observer) ? C.mind.current : null
 		if(!ghost)
 			continue	// no active ghost, cannot speak
 		var/area/soul_area = get_area(C)
@@ -304,15 +274,14 @@
 
 	// Dead players whose spirit is still in their body (not yet ghostized)
 	for(var/mob/living/carbon/human/C in GLOB.dead_mob_list)
+		if(C.stat != DEAD)
+			continue
+		if(C == user || (user.mind && C.mind == user.mind))
+			continue // skip own body
 		if(!C.mind?.key)
 			continue
-		// Skip if already has an active ghost — that entry is shown above
-		var/already_ghost = FALSE
-		for(var/mob/dead/observer/G in world)
-			if(G.mind == C.mind)
-				already_ghost = TRUE
-				break
-		if(already_ghost)
+		// If mind.current is already an observer ghost, covered in the loop above
+		if(istype(C.mind?.current, /mob/dead/observer))
 			continue
 		var/area/soul_area = get_area(C)
 		var/area_str = soul_area ? "([soul_area.name]) " : ""
@@ -490,6 +459,7 @@
 	soul.status_flags &= ~GODMODE
 	soul.density = initial(soul.density) */
 
+/// Returns a single Unicode arrow character for the given BYOND cardinal/diagonal direction.
 /proc/necra_dir_arrow(dir)
 	switch(dir)
 		if(NORTH)      return "↑"
@@ -502,6 +472,7 @@
 		if(SOUTHWEST)  return "↙"
 	return "•"
 
+/// Returns a string of [count] repeated copies of [arrow], used to convey z-level distance.
 /proc/necra_repeat_arrow(arrow, count)
 	var/result = ""
 	for(var/i in 1 to count)
@@ -554,10 +525,10 @@
 	// bodies whose mob may not have made it into dead_mob_list yet (race condition on death tick)
 	var/list/candidates = list()
 	for(var/mob/living/C in GLOB.dead_mob_list)
-		if(C.mind && !(C in candidates))
+		if(C.mind?.key && !(C in candidates))
 			candidates += C
 	for(var/mob/living/carbon/human/C in GLOB.player_list)
-		if(C.stat == DEAD && C.mind && !(C in candidates))
+		if(C.stat == DEAD && C.mind?.key && !(C in candidates))
 			candidates += C
 
 	for(var/mob/living/C in candidates)
@@ -606,19 +577,24 @@
 
 		var/area_prefix_entry = soul_short != "" ? "([soul_short], [area_str_entry]) " : "([area_str_entry]) "
 		var/full_name = "[area_prefix_entry][corpse_name]of \a [descriptor_name]..."
-		corpses[full_name] = C
+		// Deduplicate keys in case two corpses share the same description
+		var/base_name = full_name
+		var/suffix = 1
+		while(base_name in corpses)
+			base_name = "[full_name] ([suffix++])"
+		corpses[base_name] = C
 
 	if(!length(corpses))
 		to_chat(user, span_warning("The Undermaiden's grasp lets slip."))
 		revert_cast()
-		return .
+		return FALSE
 
 	var/selected = tgui_input_list(user, "Which body shall I seek?", "Available Bodies", corpses)
 
-	// Cancelled without selecting — refund devotion
+	// Cancelled without selecting — no chant or devotion cost
 	if(!selected || QDELETED(src) || QDELETED(user))
 		revert_cast()
-		return .
+		return FALSE
 
 	// Handle special options
 	if(corpses[selected] == "STOP_TRACKING")
@@ -628,37 +604,47 @@
 			locate_timer_id = null
 		tracked_corpse = null
 		revert_cast()
-		return .
+		return FALSE // No chant or devotion cost for a management action
 
 	if(corpses[selected] == "NPC_SEARCH")
-		// Scan nearby area for mindless dead (NPC corpses)
 		var/list/npc_corpses = list()
-		for(var/mob/living/NPC in range(15, user))
-			if(NPC.stat != DEAD)
+		for(var/mob/living/NPC in range(20, user))
+			if(NPC.stat != DEAD || NPC.mind)
 				continue
-			if(NPC.mind)
-				continue	// skip player corpses, already shown above
+			npc_corpses += NPC
+		// Find the closest 5 by distance
+		var/turf/uturf = get_turf(user)
+		var/list/closest = list()
+		var/list/remaining = npc_corpses.Copy()
+		while(length(closest) < 5 && length(remaining) > 0)
+			var/mob/living/best = remaining[1]
+			var/best_dist = get_dist(uturf, get_turf(best))
+			for(var/mob/living/candidate in remaining)
+				var/d = get_dist(uturf, get_turf(candidate))
+				if(d < best_dist)
+					best = candidate
+					best_dist = d
+			closest += best
+			remaining -= best
+		if(!length(closest))
+			to_chat(user, span_notice("The Undermaiden's sweep finds no forsaken remains nearby."))
+			revert_cast()
+			return .
+		var/msg = "The Undermaiden's sweep reveals forsaken remains nearby:"
+		for(var/i in 1 to length(closest))
+			var/mob/living/NPC = closest[i]
+			var/turf/corpse_turf = get_turf(NPC)
+			var/h_dir = get_dir(uturf, corpse_turf)
+			var/arrow = necra_dir_arrow(h_dir)
+			var/z_text = ""
+			if(NPC.z != user.z)
+				var/zdiff = abs(NPC.z - user.z)
+				z_text = NPC.z > user.z ? " [necra_repeat_arrow("⇧", zdiff)]" : " [necra_repeat_arrow("⇩", zdiff)]"
 			var/area/npc_area = get_area(NPC)
-			var/npc_area_str = npc_area ? "([npc_area.name]) " : ""
-			npc_corpses["[npc_area_str][NPC.name]"] = NPC
-		if(!length(npc_corpses))
-			to_chat(user, span_warning("No nearby corpses answer the Undermaiden's call."))
-			revert_cast()
-			return .
-		var/npc_selected = tgui_input_list(user, "Nearby remains:", "Nearby Corpses", npc_corpses)
-		if(!npc_selected || QDELETED(src) || QDELETED(user))
-			revert_cast()
-			return .
-		var/mob/living/npc_corpse = npc_corpses[npc_selected]
-		if(QDELETED(npc_corpse))
-			revert_cast()
-			return .
-		// Track the NPC corpse and send initial update
-		if(locate_timer_id)
-			deltimer(locate_timer_id)
-		tracked_corpse = WEAKREF(npc_corpse)
-		locate_timer_id = addtimer(CALLBACK(src, PROC_REF(send_locate_update), user), 15 SECONDS, TIMER_LOOP | TIMER_STOPPABLE)
-		send_locate_update(user)
+			var/area_name = npc_area ? npc_area.name : "unknown"
+			msg += "\n  [i]. <b>[arrow]</b>[z_text] ([area_name])"
+		to_chat(user, span_notice(msg))
+		revert_cast()
 		return .
 
 	var/mob/living/corpse = corpses[selected]
@@ -677,6 +663,7 @@
 
 /// Sends a directional update to the user toward the tracked corpse.
 /// Called immediately after selection and by the repeating timer.
+/// Sends a directional compass message to the tracking Necran, showing distance, area, and soul status of the target corpse.
 /obj/effect/proc_holder/spell/targeted/locate_dead/proc/send_locate_update(mob/living/user)
 	if(QDELETED(user) || !tracked_corpse)
 		if(locate_timer_id)
@@ -797,7 +784,7 @@
 		if(L.z != z)
 			continue
 		to_chat(L, span_deadsay("<i>Spirit of [ghost_name] murmurs: \"[clean]\"</i>"))
-		balloon_alert(L, "[ghost_name]: [clean]")
+		balloon_alert(src, clean)
 
 /// Dead player ghosts (rogue observers) can speak and emote, but only Necrans nearby hear them.
 /// This overrides the empty return in say.dm since necra.dm is compiled after it.
@@ -825,14 +812,14 @@
 		return
 	var/ghost_name = real_name ? real_name : name
 	to_chat(src, span_deadsay("<b>Spirit of [ghost_name]</b> murmurs: \"[message]\""))
-	// Show a speech bubble above the ghost's head — only visible to those who can see the ghost
-	balloon_alert(src, "[message]")
 	for(var/mob/living/L in range(7, ghost_turf))
 		if(!HAS_TRAIT(L, TRAIT_NECRA_GHOST_VOICES))
 			continue
 		if(L.z != z)
 			continue
 		to_chat(L, span_deadsay("<i>Spirit of [ghost_name] murmurs: \"[message]\"</i>"))
+		// Show speech text above the ghost's head for nearby Necrans
+		balloon_alert(src, message)
 		// Play a ghostly carriage whisper sound for each Necran nearby (half volume, client-side only)
 		if(L.client)
 			L.client << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), volume = 30)

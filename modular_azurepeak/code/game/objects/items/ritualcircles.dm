@@ -1048,11 +1048,10 @@
 						icon_state = "necra_active"
 						user.say("This soul pledges themselves to thee!!")
 						to_chat(user,span_cultsmall("My devotion to the Undermaiden has allowed me to anoint a vow for this soul...."))
-						if(undermaidenvow(src))
+						if(undermaidenvow())
 							playsound(loc, 'sound/vo/mobs/ghost/moan (1).ogg', 100, FALSE, -1)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-							spawn(120)
-								icon_state = "necra_chalky"
+							addtimer(CALLBACK(src, PROC_REF(reset_rune_icon)), 120)
 						else
 							loc.visible_message(span_warning("Then... nothing. The Undermaiden does not care for the vows of the damned, or those of other faiths."))
 		if("Lux Thread Revival")
@@ -1086,10 +1085,7 @@
 						user.say("For these threads, a soul!!")
 						to_chat(user,span_cultsmall("[user] grasps the strands of Lux and attempts to pull a soul through the rift!"))
 						thetoll(target, user)
-						spawn(120)
-							icon_state = "necra_chalky"
-
-
+						addtimer(CALLBACK(src, PROC_REF(reset_rune_icon)), 120)
 
 /obj/structure/ritualcircle/necra/proc/thetoll(mob/living/carbon/human/target, mob/living/user)
 	var/revive_pq = PQ_GAIN_REVIVE
@@ -1143,13 +1139,18 @@
 		if(prompt == "Accept")
 			target.apply_status_effect(/datum/status_effect/buff/undermaidenbargain)
 
-/obj/structure/ritualcircle/necra/proc/undermaidenvow(src)
+/// Resets the ritual rune icon to its dormant chalky state after a rite completes.
+/obj/structure/ritualcircle/necra/proc/reset_rune_icon()
+	icon_state = "necra_chalky"
+
+/// Scans range-1 for a Necran-patron human and applies the Vow healing effect to them. Returns TRUE if a valid target was found.
+/obj/structure/ritualcircle/necra/proc/undermaidenvow()
 	var/ritualtargets = view(1, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
 		if(HAS_TRAIT(target, TRAIT_ROTMAN) || HAS_TRAIT(target, TRAIT_NOBREATH) || target.mob_biotypes & MOB_UNDEAD)	//No Undead, no Rotcured, no Deathless
-			return FALSE
+			continue
 		if(target.patron.type != /datum/patron/divine/necra)
-			return FALSE
+			continue
 		target.apply_status_effect(/datum/status_effect/buff/necras_vow)
 		target.apply_status_effect(/datum/status_effect/buff/healing/necras_vow)
 		return TRUE
@@ -1191,6 +1192,10 @@
 	icon = 'icons/roguetown/underworld/enigma_husks.dmi'
 	icon_state = "soultoken"
 	sellprice = 30
+
+/obj/item/thetoll/Initialize(mapload)
+	. = ..()
+	transform *= 0.5
 
 /obj/item/thetoll/proc/update_holder_toll_slow(mob/living/L)
 	if(!L)
