@@ -48,7 +48,7 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		return FALSE
 	if(istype(I, /obj/item/quiver) || istype(I, /obj/item/ammo_casing))
 		return TRUE
-	var/type_text = lowertext("[I.type]")
+	var/type_text = LOWER_TEXT("[I.type]")
 	if(findtext(type_text, "arrow") || findtext(type_text, "bolt") || findtext(type_text, "javelin"))
 		return TRUE
 	return FALSE
@@ -61,7 +61,7 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		return FALSE
 	if(!istype(I, /obj/item/rogueweapon) && !istype(I, /obj/item/clothing))
 		return FALSE
-	var/type_text = lowertext("[I.type]")
+	var/type_text = LOWER_TEXT("[I.type]")
 	if(findtext(type_text, "aalloy"))
 		return TRUE
 	// Items that smelt into aalloy material count as offerings (e.g. decrepit flail)

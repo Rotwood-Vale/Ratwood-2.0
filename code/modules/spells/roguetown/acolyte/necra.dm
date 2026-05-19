@@ -572,7 +572,7 @@
 		var/area/corpse_area_entry = get_area(C)
 		var/area_str_entry = corpse_area_entry ? corpse_area_entry.name : "unknown area"
 		if(istype(corpse_area_entry, /area/rogue/indoors/deathsedge))
-			area_str_entry = lowertext(area_str_entry)
+			area_str_entry = LOWER_TEXT(area_str_entry)
 
 		var/area_prefix_entry = soul_short != "" ? "([soul_short], [area_str_entry]) " : "([area_str_entry]) "
 		var/full_name = "[area_prefix_entry][corpse_name]of \a [descriptor_name]..."
@@ -774,7 +774,7 @@
 	var/area/corpse_area = get_area(turf_corpse)
 	var/area_text = corpse_area ? corpse_area.name : "an unknown place"
 	if(istype(corpse_area, /area/rogue/indoors/deathsedge))
-		area_text = lowertext(area_text)
+		area_text = LOWER_TEXT(area_text)
 
 	// Show current soul status so the Necran knows whether the spirit has departed or ghosted
 	var/soul_status = ""
