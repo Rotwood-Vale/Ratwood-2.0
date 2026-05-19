@@ -107,20 +107,19 @@
 /obj/structure/closet/dirthole/attack_hand(mob/living/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
+		// If already consecrated, don't allow re-consecration
+		if(burial_rites_done)
+			to_chat(user, "This grave has already been consecrated with Necra's rites.")
+			return
 		var/mob/living/target_corpse = null
 		for(var/mob/living/corpse in src)
 			if(corpse.stat != DEAD)
 				to_chat(user, "That one hasn't truly passed on yet?!")
 				return
-			if(corpse.mind?.key)
-				if(!burial_rites_done)
-					target_corpse = corpse
-					break
-			if(!corpse.burialrited)
+			if(!target_corpse)
 				target_corpse = corpse
-				break
 		if(!target_corpse)
-			to_chat(user, "This body has already been consecrated...")
+			to_chat(user, "There is no body here to consecrate.")
 			return
 		to_chat(user, "I begin my burial rites...")
 		if(do_after(user, 50))
@@ -129,11 +128,11 @@
 			playsound(user, 'sound/misc/bellold.ogg', 20)
 			new /obj/item/soulthread((get_turf(user)))
 			target_corpse.burialrited = TRUE
+			burial_rites_done = TRUE
 			record_round_statistic(STATS_GRAVES_CONSECRATED)
+			SEND_SIGNAL(user, COMSIG_GRAVE_CONSECRATED, src)
 			// If this is a player body, send them to lobby and reward the Necran 1 triumph
 			if(target_corpse.mind?.key)
-				burial_rites_done = TRUE
-				SEND_SIGNAL(user, COMSIG_GRAVE_CONSECRATED, src)
 				if(ishuman(user))
 					user.adjust_triumphs(1)
 					to_chat(user, span_notice("The Undermaiden honors this consecration. A triumph is yours."))
@@ -142,7 +141,7 @@
 				burial_reward.pixel_y = rand(-6, 6)
 				pacify_corpse(target_corpse, user)
 				return
-			// Necra rewards the undertaker with tokens of gratitude for completing burial rites
+			// Necra rewards the undertaker with tokens of gratitude for completing burial rites on NPC bodies
 			var/num_tokens = 5
 			if(ishuman(target_corpse))
 				var/mob/living/carbon/human/H = target_corpse

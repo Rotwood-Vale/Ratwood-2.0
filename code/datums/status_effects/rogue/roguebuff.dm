@@ -1152,6 +1152,7 @@
 			exit_world_time = world.time
 		else if(world.time >= exit_world_time + 30 SECONDS)
 			owner.remove_status_effect(src)
+			return PROCESS_KILL
 
 /datum/status_effect/buff/necra_realm_presence/on_remove()
 	. = ..()
@@ -1380,36 +1381,29 @@
 	// Permanent brand — persists even after the status effect is removed so the bargain can never be taken twice
 	ADD_TRAIT(owner, TRAIT_BARGAIN_PERMANENT, "bargain_permanent")
 	ADD_TRAIT(owner, TRAIT_DEATHBARGAIN, id)
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_owner_death))
 
 /datum/status_effect/buff/undermaidenbargain/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_DEATHBARGAIN, id)
+	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
 
-/// Fired when the bargained player dies. Kept for reference but no longer called — death override in /mob/living/carbon/human/death handles this.
-/datum/status_effect/buff/undermaidenbargain/proc/on_bargain_death(datum/source, gibbed)
+/datum/status_effect/buff/undermaidenbargain/proc/on_owner_death(mob/living/carbon/human/source, gibbed)
 	SIGNAL_HANDLER
-	return
-
-/// Overrides human death to reliably fire the bargain, bypassing signal timing issues.
-/mob/living/carbon/human/death(gibbed, nocutscene)
-	. = ..()
-	if(gibbed || !HAS_TRAIT(src, TRAIT_DEATHBARGAIN))
+	to_chat(owner, span_cultsmall("(Bargain) Death signal received. Gibbed: [gibbed]. Has mind key: [owner.mind?.key ? "yes" : "no"]. Has vow: [owner.has_status_effect(/datum/status_effect/buff/necras_vow) ? "yes" : "no"]."))
+	if(gibbed)
 		return
 	// Necra's Vow conflicts with the bargain
-	if(has_status_effect(/datum/status_effect/buff/necras_vow) || HAS_TRAIT(src, TRAIT_NECRAS_VOW))
-		remove_status_effect(/datum/status_effect/buff/undermaidenbargain)
-		to_chat(src, span_warning("Necra rejects your contradiction. You cannot hold both the vow to her and the bargain."))
+	if(owner.has_status_effect(/datum/status_effect/buff/necras_vow) || HAS_TRAIT(owner, TRAIT_NECRAS_VOW))
+		owner.remove_status_effect(/datum/status_effect/buff/undermaidenbargain)
+		to_chat(owner, span_warning("Necra rejects your contradiction. You cannot hold both the vow to her and the bargain."))
 		return
-	if(!mind?.key)
+	if(!owner.mind?.key)
 		return // Only player-controlled mobs get the bargain
 	// Notify the player immediately while they still have their client on their body
-	to_chat(src, span_cultsmall("<b>The bargain struck in your name has been called.</b> Necra's cold grip tightens — you will be pulled to her realm momentarily..."))
+	to_chat(owner, span_cultsmall("<b>The bargain struck in your name has been called.</b> Necra's cold grip tightens — you will be pulled to her realm momentarily..."))
 	// Auto-fulfill after 3 seconds — no dialog, no race conditions
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(try_fulfill_undermaiden_bargain), WEAKREF(src)), 3 SECONDS)
-
-/// DEPRECATED — no longer called. The death override calls try_fulfill_undermaiden_bargain directly.
-/proc/prompt_undermaiden_bargain(datum/weakref/owner_ref)
-	return
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(try_fulfill_undermaiden_bargain), WEAKREF(owner)), 3 SECONDS)
 
 /// Validates conditions and teleports the dead player to the underworld realm, then schedules the revive.
 /proc/try_fulfill_undermaiden_bargain(datum/weakref/owner_ref)
@@ -1448,6 +1442,8 @@
 		if(origin_turf)
 			new /obj/effect/temp_visual/trap/wither(origin_turf, 3 SECONDS)
 			new /obj/effect/temp_visual/wither_actual(origin_turf)
+		// Lock portal immediately — dead body is now in the underworld, prevent bypassing the shrine before revival
+		ADD_TRAIT(H, TRAIT_BARGAIN_PENANCE_LOCKED, "bargain_penance")
 		H.forceMove(spawn_turf)
 		// Spawn the carriageman's toll ONLY at underworld_toll_spawn landmarks
 		var/list/toll_spawns = list()
@@ -1484,18 +1480,10 @@
 	// The heal effect: rapid wound/damage recovery + brief death immunity
 	H.apply_status_effect(/datum/status_effect/buff/undermaidenbargainheal)
 	H.apply_status_effect(/datum/status_effect/pacify, 10 MINUTES)
-	H.apply_status_effect(/datum/status_effect/debuff/necra_bargain_penance)
-	// Block A Way Out portal until the toll is paid or a Necran guides them free
-	ADD_TRAIT(H, TRAIT_BARGAIN_PENANCE_LOCKED, "bargain_penance")
+	to_chat(H, span_userdanger("<span class='big'>YOU HAVE CHEATED DEATH. FOR THIS SIN, YOU MUST SUFFER YOUR END OF THE BARGAIN!</span>"))
+	to_chat(H, span_warning("Find the toll and bring it to the Carriageman — only by paying it or finding one of my annointed may you leave this realm."))
 	H.visible_message(span_danger("[H] lurches upright, drawn back from death by an unseen hand!"))
 	playsound(get_turf(H), 'sound/misc/deadbell.ogg', 80, FALSE, -1)
-
-/// Called when player accepts the prompt — revives the player in the underworld realm.
-/datum/status_effect/buff/undermaidenbargain/proc/fulfill_bargain()
-	if(QDELETED(src) || QDELETED(owner))
-		return
-	try_fulfill_undermaiden_bargain(WEAKREF(owner))
-
 
 /datum/status_effect/buff/undermaidenbargainheal/on_apply()
 	. = ..()

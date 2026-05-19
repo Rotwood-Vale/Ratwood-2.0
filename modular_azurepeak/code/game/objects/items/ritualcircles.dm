@@ -1197,28 +1197,22 @@
 	. = ..()
 	transform *= 0.5
 
-/obj/item/thetoll/proc/update_holder_toll_slow(mob/living/L)
-	if(!L)
-		return
-	if(L.is_holding_item_of_type(/obj/item/thetoll))
-		L.apply_status_effect(/datum/status_effect/debuff/toll_burden)
-	else
-		L.remove_status_effect(/datum/status_effect/debuff/toll_burden)
-
 /obj/item/thetoll/pickup(mob/user)
 	. = ..()
+	transform *= 0.5
 	if(isliving(user))
-		update_holder_toll_slow(user)
+		user.add_movespeed_modifier(MOVESPEED_ID_TOLL_BURDEN, update = TRUE, priority = 0, multiplicative_slowdown = 3)
 
 /obj/item/thetoll/dropped(mob/user)
 	. = ..()
+	transform *= 0.5
 	if(isliving(user))
-		update_holder_toll_slow(user)
+		user.remove_movespeed_modifier(MOVESPEED_ID_TOLL_BURDEN)
 
 /obj/item/thetoll/Destroy()
 	if(isliving(loc))
 		var/mob/living/L = loc
-		update_holder_toll_slow(L)
+		L.remove_movespeed_modifier(MOVESPEED_ID_TOLL_BURDEN)
 	ensure_underworld_toll_present()
 	return ..()
 

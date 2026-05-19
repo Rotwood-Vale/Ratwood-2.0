@@ -43,7 +43,12 @@
 			. += "I do not know how to read. Not like this one's name matters much anymore."
 		else
 			. += span_notice("A grave marker. It says... \"[wrotesign]\".")
-	if(consecrated)
+	var/consecrated_properly = FALSE
+	for(var/obj/structure/closet/dirthole/hole in loc)
+		if(hole.burial_rites_done)
+			consecrated_properly = TRUE
+			break
+	if(consecrated_properly)
 		. += span_notice("The marker carries a faint warmth — this resting place has been blessed with Necra's rites.")
 	else
 		. += span_warning("This grave has not been consecrated with Necra's rites.")
@@ -84,6 +89,7 @@
 	for(var/obj/structure/closet/dirthole/hole in loc)
 		if(pacify_coffin(hole, user))
 			consecrated = TRUE
+			hole.burial_rites_done = TRUE
 			to_chat(user, span_notice("I feel their soul finding peace..."))
 			SEND_SIGNAL(user, COMSIG_GRAVE_CONSECRATED, hole)
 			record_round_statistic(STATS_GRAVES_CONSECRATED)

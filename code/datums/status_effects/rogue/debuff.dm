@@ -648,6 +648,7 @@
 			exit_world_time = world.time
 		else if(world.time >= exit_world_time + 5 MINUTES)
 			owner.remove_status_effect(src)
+			return PROCESS_KILL
 
 /datum/status_effect/debuff/necra_realm_dread/on_remove()
 	. = ..()
@@ -676,10 +677,11 @@
 /datum/status_effect/debuff/necra_bargain_penance/process()
 	. = ..()
 	if(total_brute_dealt >= 50)
-		return
+		return PROCESS_KILL
 	var/dmg = min(5, 50 - total_brute_dealt)
 	owner.adjustBruteLoss(dmg)
 	total_brute_dealt += dmg
+	to_chat(owner, span_userdanger("Ethereal hands claw at your flesh, attempting to keep you here!"))
 
 /datum/status_effect/debuff/necra_bargain_penance/on_remove()
 	. = ..()
@@ -1090,7 +1092,6 @@
 /datum/status_effect/debuff/toll_burden
 	id = "toll_burden"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/toll_burden
-	effectedstats = list(STATKEY_SPD = -10)
 	status_type = STATUS_EFFECT_REFRESH
 	needs_processing = FALSE
 

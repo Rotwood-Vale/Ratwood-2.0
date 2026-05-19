@@ -66,7 +66,7 @@
 		if(istype(T, /turf/open/floor/rogue/dirt))
 			var/turf/open/floor/rogue/dirt/D = T
 
-			if(!heldclod && user && istype(user.rmb_intent, /datum/rmb_intent/strong) && HAS_TRAIT(user, TRAIT_GRAVEROBBER))
+			if(!heldclod && user && istype(user.rmb_intent, /datum/rmb_intent/strong) && (HAS_TRAIT(user, TRAIT_GRAVEROBBER) || HAS_TRAIT(user, TRAIT_SOUL_EXAMINE)))
 				var/strong_dig_delay = wielded ? 5 SECONDS : 10 SECONDS
 				if(D.holie && D.holie.stage >= 3)
 					return
@@ -163,7 +163,7 @@
 			return
 
 		if(istype(T, /turf/open/floor/rogue/grass) || istype(T, /turf/open/floor/rogue/grassred) || istype(T, /turf/open/floor/rogue/grassyel) || istype(T, /turf/open/floor/rogue/grasscold) || istype(T, /turf/open/floor/rogue/grasspurple) || istype(T, /turf/open/floor/rogue/grassgrey))
-			if(HAS_TRAIT(user, TRAIT_GRAVEROBBER) && istype(user.rmb_intent, /datum/rmb_intent/strong))
+			if((HAS_TRAIT(user, TRAIT_GRAVEROBBER) || HAS_TRAIT(user, TRAIT_SOUL_EXAMINE)) && istype(user.rmb_intent, /datum/rmb_intent/strong))
 				var/strong_dig_delay = wielded ? 5 SECONDS : 10 SECONDS
 				to_chat(user, span_notice("I begin carving through the grass..."))
 				if(do_after(user, strong_dig_delay, target = T))

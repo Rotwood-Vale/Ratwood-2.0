@@ -115,7 +115,6 @@
 		if(action)
 			action.UpdateButtonIcon()
 		if(charge_counter >= max_churn_charges)
-			charge_counter = max_churn_charges
 			STOP_PROCESSING(SSfastprocess, src)
 			return PROCESS_KILL
 		return

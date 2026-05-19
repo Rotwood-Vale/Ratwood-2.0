@@ -90,3 +90,4 @@
 
 #define MOVESPEED_ID_CELERITY                           "CELERITY_BUFF"
 #define MOVESPEED_ID_FOTV                               "FOTV_BUFF"
+#define MOVESPEED_ID_TOLL_BURDEN                        "TOLL_BURDEN"

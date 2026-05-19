@@ -42,6 +42,7 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 	if(target.mob_biotypes & MOB_UNDEAD)
 		apply_deathsdoor_holy_fire(target)
 
+/// Returns TRUE if [I] is an aalloy-ineligible projectile (arrows, bolts, javelins, quivers).
 /proc/is_excluded_aalloy_projectile(obj/item/I)
 	if(!I)
 		return FALSE
@@ -52,6 +53,7 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		return TRUE
 	return FALSE
 
+/// Returns TRUE if [I] can be fed to the Death's Door portal for a token of gratitude (aalloy weapons/clothing, excluding flagged projectiles).
 /proc/is_aalloy_portal_offering(obj/item/I)
 	if(!I)
 		return FALSE
@@ -67,6 +69,7 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		return TRUE
 	return FALSE
 
+/// Destroys any toll items carried by [target] when they leave the realm, spawning ash and ensuring a replacement toll is present.
 /proc/ash_carried_tolls_on_exit(mob/living/target)
 	if(!target)
 		return
@@ -113,6 +116,9 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		return
 
 	var/mob/living/companion = get_deathsdoor_companion(user)
+	var/obj/structure/closet/burial_shroud/pulled_shroud = null
+	if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE) && istype(user.pulling, /obj/structure/closet/burial_shroud))
+		pulled_shroud = user.pulling
 	if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
 		// Necra's chosen move through her realm's portal without hesitation
 		if(user.mob_biotypes & MOB_UNDEAD)
@@ -122,6 +128,9 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		var/turf/chosen = exit_deaths_door(user, user)
 		if(chosen && companion && !QDELETED(companion))
 			exit_deaths_door(user, companion, chosen)
+		if(chosen && pulled_shroud && !QDELETED(pulled_shroud))
+			pulled_shroud.forceMove(chosen)
+			user.visible_message(span_warning("[user] guides \the [pulled_shroud] through the portal."))
 		return
 	if(!do_after(user, 2 SECONDS, src))
 		return
@@ -307,6 +316,9 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 	playsound(get_turf(src), 'sound/misc/carriage2.ogg', 50, TRUE, -2, ignore_walls = TRUE)
 	to_chat(user, span_notice("You reach for the glowing portal..."))
 	var/mob/living/passenger = get_deathsdoor_companion(user)
+	var/obj/structure/closet/burial_shroud/pulled_shroud = null
+	if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE) && istype(user.pulling, /obj/structure/closet/burial_shroud))
+		pulled_shroud = user.pulling
 	if(!do_after(user, 2 SECONDS, src))
 		return
 	enter_portal(user)
@@ -318,6 +330,10 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		else
 			// Companions brought by a Necran spawn near the carriageman, not at a random spot
 			enter_portal(passenger, force_carriageman = HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
+	// Necrans pulling a burial shroud bring it through with them
+	if(pulled_shroud && !QDELETED(pulled_shroud) && destination)
+		pulled_shroud.forceMove(destination)
+		user.visible_message(span_warning("[user] guides \the [pulled_shroud] through Death's Door!"))
 
 /obj/structure/deaths_door_portal/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(user.incapacitated())

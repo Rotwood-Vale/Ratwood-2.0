@@ -120,22 +120,18 @@
 			return FALSE
 		new /obj/item/rogueweapon/shovel/mort_staff(get_turf(user))
 		to_chat(user, span_notice("The Carriageman presents an unadorned mortician's staff."))
-
-	if(choice == "censer")
+	else if(choice == "censer")
 		if(!pending_has_censer[key])
 			return FALSE
 		give_trade_reward(user, new /obj/item/necra_censer/upgraded(get_turf(user)))
 		to_chat(user, span_notice("The Carriageman returns your censer, transformed by underworld ash."))
-
-	if(choice == "cord")
+	else if(choice == "cord")
 		give_trade_reward(user, new /obj/item/rope/necran_cord(get_turf(user)))
 		to_chat(user, span_notice("The Carriageman coils a pale burial-cord into your waiting hands."))
-
-	if(choice == "scroll1")
+	else if(choice == "scroll1")
 		give_trade_reward(user, new /obj/item/underworld/carriageman_scroll/first(get_turf(user)))
 		to_chat(user, span_notice("The Carriageman grants the first blessed scroll."))
-
-	if(choice == "scroll2")
+	else if(choice == "scroll2")
 		give_trade_reward(user, new /obj/item/underworld/carriageman_scroll/second(get_turf(user)))
 		to_chat(user, span_notice("The Carriageman grants the second blessed scroll."))
 
@@ -189,6 +185,10 @@
 		if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE)&& !toll)
 			to_chat(user, "<br><font color=purple><span class='bold'>RITES ARE A FICKLE THING, SWORN ONCE A DAY- <br> PAY THE TOLL, AND OATHS GIVE WAY</span></font>")
 			user << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 0, 0 ,0, 50)
+			return
+		if(HAS_TRAIT(user, TRAIT_BARGAIN_PENANCE_LOCKED))
+			user << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 0, 0, 0, 50)
+			to_chat(user, span_cultsmall("THE TOLL OR AN ANOINTED'S HAND — NO OTHER PATH LEAVES THIS PLACE."))
 			return
 		to_chat(user, span_warning("The carriageman does not acknowledge the living."))
 		return
