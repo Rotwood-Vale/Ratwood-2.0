@@ -172,6 +172,7 @@
 
 /datum/outfit/job/roguetown/underbelly/gutterking/post_equip(mob/living/carbon/human/H)
 	..()
+	H.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_MASTER, TRUE)
 	if(H.mind)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scum_select_criminal_record), H), 5 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
@@ -420,6 +421,7 @@
 	if(H.mind)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scum_select_criminal_record), H), 5 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 	H.faction |= "bums"
+	H.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_APPRENTICE, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_JOURNEYMAN, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_APPRENTICE, TRUE)
@@ -1058,7 +1060,7 @@
 	outfit = /datum/outfit/job/roguetown/underbelly/docks_cook
 	antag_job = FALSE
 	display_order = JDO_DOCKS_COOK
-	min_pq = 5
+	min_pq = 2
 	max_pq = null
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_SCUM
