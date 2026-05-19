@@ -6338,6 +6338,10 @@
 	},
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/academy)
+"bww" = (
+/obj/effect/landmark/start/dockscooklate,
+/turf/open/floor/carpet/red,
+/area/rogue/outdoors/beach/harbor)
 "bwy" = (
 /obj/structure/bed/rogue/shit,
 /obj/effect/spawner/lootdrop/roguetown/sewers,
@@ -19662,6 +19666,14 @@
 	},
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/church)
+"epN" = (
+/obj/machinery/light/rogue/candle/l{
+	pixel_x = -1;
+	pixel_y = -27
+	},
+/obj/effect/landmark/start/scumlate,
+/turf/open/floor/carpet/red,
+/area/rogue/outdoors/beach/harbor)
 "epQ" = (
 /turf/open/water/cleanshallow,
 /area/rogue/under/cave)
@@ -24303,6 +24315,10 @@
 /obj/item/rogueweapon/woodstaff,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cavewet)
+"fuj" = (
+/obj/effect/landmark/start/consiglierelate,
+/turf/open/floor/carpet/red,
+/area/rogue/outdoors/beach/harbor)
 "fuk" = (
 /obj/machinery/light/rogue/lanternpost{
 	dir = 1
@@ -46794,6 +46810,10 @@
 /obj/structure/closet/dirthole/grave,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/town/graveyard)
+"kEX" = (
+/obj/effect/landmark/start/scumlate,
+/turf/open/floor/carpet/red,
+/area/rogue/outdoors/beach/harbor)
 "kEY" = (
 /obj/structure/rack/rogue,
 /turf/open/floor/rogue/ruinedwood,
@@ -47495,6 +47515,10 @@
 "kMC" = (
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/garrison)
+"kMQ" = (
+/obj/effect/landmark/start/proletariuslate,
+/turf/open/floor/carpet/red,
+/area/rogue/outdoors/beach/harbor)
 "kMU" = (
 /obj/machinery/light/rogue/hearth,
 /turf/open/floor/rogue/dirt/road,
@@ -61654,6 +61678,10 @@
 /turf/closed/mineral/random/rogue/med,
 /turf/closed/mineral/rogue,
 /area/rogue/under/cave)
+"oaS" = (
+/obj/effect/landmark/start/ripperlate,
+/turf/open/floor/carpet/red,
+/area/rogue/outdoors/beach/harbor)
 "oaW" = (
 /obj/structure/fluff/railing/border{
 	dir = 10
@@ -90766,6 +90794,7 @@
 /area/rogue/indoors/inq/basement)
 "uST" = (
 /obj/structure/chair/wood/rogue/throne,
+/obj/effect/landmark/start/gutterkingleft,
 /turf/open/floor/carpet/red,
 /area/rogue/outdoors/beach/harbor)
 "uSW" = (
@@ -92865,6 +92894,10 @@
 "vtq" = (
 /obj/structure/fluff/railing/border,
 /turf/open/floor/rogue/metal,
+/area/rogue/outdoors/beach/harbor)
+"vtr" = (
+/obj/effect/landmark/start/flingerlate,
+/turf/open/floor/carpet/red,
 /area/rogue/outdoors/beach/harbor)
 "vtw" = (
 /turf/closed/wall/mineral/rogue/stone,
@@ -537788,9 +537821,9 @@ lwW
 lpz
 dQq
 oFy
-oFy
-oFy
-oFy
+bww
+bww
+bww
 oFy
 lpz
 euP
@@ -538220,9 +538253,9 @@ oIi
 lpz
 dQq
 oFy
-oFy
-oFy
-oFy
+kMQ
+kMQ
+kMQ
 nyp
 lpz
 euP
@@ -538653,8 +538686,8 @@ bOY
 dQq
 oFy
 oFy
-oFy
-oFy
+vtr
+vtr
 oFy
 lpz
 euP
@@ -539083,7 +539116,7 @@ dQq
 dQq
 lpz
 dQq
-oFy
+oaS
 oFy
 oFy
 oFy
@@ -539515,11 +539548,11 @@ lpz
 mFm
 lpz
 klX
-oFy
-oFy
-oFy
-oFy
-oFy
+oaS
+kEX
+kEX
+kEX
+kEX
 lpz
 euP
 euP
@@ -539947,11 +539980,11 @@ lpz
 lpz
 lpz
 dQq
-oFy
-oFy
-oFy
-oFy
-nyp
+oaS
+kEX
+kEX
+kEX
+epN
 idK
 euP
 euP
@@ -541244,7 +541277,7 @@ dQq
 lpz
 dQq
 oFy
-oFy
+fuj
 uST
 oFy
 oFy
