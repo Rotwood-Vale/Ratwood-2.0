@@ -953,7 +953,7 @@
 				H.change_stat(STATKEY_SPD, 1)
 	to_chat(H, span_bloody("I am known. The law has my name. I've survived it this far."))
 	scum_send_warning(H)
-
+// Im sorry.
 /mob/living/carbon/human/say(message, bubble_type, list/spans, sanitize, datum/language/language, ignore_spam, forced, message_mode)
 	. = ..()
 	if(!HAS_TRAIT(src, TRAIT_UNDERBELLY_SCUM) || !prob(3))
