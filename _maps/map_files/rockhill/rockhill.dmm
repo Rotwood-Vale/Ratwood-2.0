@@ -5613,6 +5613,12 @@
 	},
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/indoors/town/magician/rockhill)
+"bmZ" = (
+/obj/machinery/light/roguestreet/orange/walllamp{
+	pixel_x = -10
+	},
+/turf/open/transparent/openspace,
+/area/rogue/outdoors/beach/harbor)
 "bna" = (
 /obj/effect/decal/cobbleedge{
 	dir = 1;
@@ -19757,12 +19763,6 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/town/rockhill)
-"eoA" = (
-/obj/effect/decal/carpet/square/black{
-	pixel_x = 17
-	},
-/turf/open/floor/rogue/wood/herringbone,
-/area/rogue/under/scum/lounge)
 "eoB" = (
 /obj/structure/fluff/railing/border/east,
 /turf/open/floor/rogue/cobble/mossy,
@@ -27430,7 +27430,7 @@
 "gdk" = (
 /obj/structure/mineral_door/wood/donjon{
 	locked = 1;
-	lockid = "walls";
+	lockid = "underbelly_scum";
 	name = "Gatehouse"
 	},
 /turf/open/floor/rogue/cobble,
@@ -42953,12 +42953,6 @@
 	},
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/town/grove)
-"jHu" = (
-/obj/machinery/light/roguestreet/orange/walllamp{
-	pixel_x = -10
-	},
-/turf/open/transparent/openspace,
-/area/rogue/outdoors/beach/harbor)
 "jHx" = (
 /obj/item/natural/rock,
 /turf/open/floor/rogue/dirt,
@@ -43728,16 +43722,6 @@
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/rtfield/rockhill)
-"jQJ" = (
-/obj/structure/fluff/railing/wood{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/machinery/light/rogue/lanternpost{
-	dir = 1
-	},
-/turf/open/floor/rogue/blocks/stonered/tiny,
-/area/rogue/under/scum)
 "jQS" = (
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/under/town/sewer)
@@ -44298,14 +44282,6 @@
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/rhgoblinencampment)
-"jXU" = (
-/obj/structure/fluff/railing/border{
-	dir = 1
-	},
-/turf/open/floor/rogue/tile{
-	icon_state = "tile"
-	},
-/area/rogue/under/scum/lounge)
 "jXV" = (
 /obj/effect/decal/mossy{
 	dir = 8
@@ -52937,6 +52913,14 @@
 /obj/structure/fermentation_keg/random/beer,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/shelter/woods)
+"lWT" = (
+/obj/structure/fluff/railing/border{
+	dir = 1
+	},
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
+/area/rogue/under/scum/lounge)
 "lXe" = (
 /obj/structure/table/wood{
 	dir = 10;
@@ -70283,6 +70267,12 @@
 	name = "damaged metal wall"
 	},
 /area/rogue/under/town/sewer)
+"pRR" = (
+/obj/effect/decal/carpet/square/black{
+	pixel_x = 17
+	},
+/turf/open/floor/rogue/wood/herringbone,
+/area/rogue/under/scum/lounge)
 "pRV" = (
 /obj/item/natural/cloth{
 	pixel_x = -5
@@ -92787,6 +92777,16 @@
 	},
 /turf/closed/wall/mineral/rogue/wooddark/window,
 /area/rogue/indoors/town/grove)
+"vhU" = (
+/obj/structure/fluff/railing/wood{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/machinery/light/rogue/lanternpost{
+	dir = 1
+	},
+/turf/open/floor/rogue/blocks/stonered/tiny,
+/area/rogue/under/scum)
 "via" = (
 /obj/effect/lily_petal/two,
 /turf/open/floor/rogue/cobble/mossy,
@@ -316709,7 +316709,7 @@ dUg
 dUg
 dUg
 tkV
-eoA
+pRR
 jUQ
 jUQ
 kJw
@@ -321452,7 +321452,7 @@ gXw
 iXM
 lpz
 etQ
-jXU
+lWT
 laZ
 laZ
 rNF
@@ -322761,7 +322761,7 @@ mVD
 mVD
 lpz
 oTC
-jQJ
+vhU
 oTC
 rne
 dWy
@@ -417793,7 +417793,7 @@ lmh
 lmh
 hqN
 xii
-jHu
+bmZ
 euP
 euP
 euP
