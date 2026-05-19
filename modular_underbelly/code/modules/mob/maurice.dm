@@ -8,7 +8,7 @@
 
 /mob/living/simple_animal/pet/maurice
 	name = "maurice"
-	desc = "A small, well-travelled mole. He seems to know something you don't."
+	desc = "A small, well-travelled mole. He seems to know something you don't. He has grown up!"
 	icon = 'icons/roguetown/mob/monster/mole.dmi'
 	icon_state = "mole"
 	icon_living = "mole"
@@ -46,7 +46,7 @@
 
 /mob/living/simple_animal/pet/maurice/Initialize(mapload)
 	. = ..()
-	transform = transform.Scale(0.4, 0.4)
+	transform = transform.Scale(0.7, 0.7)
 	if(permanent)
 		home_turf = get_turf(src)
 
