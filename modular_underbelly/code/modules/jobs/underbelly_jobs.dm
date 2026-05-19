@@ -954,6 +954,18 @@
 	to_chat(H, span_bloody("I am known. The law has my name. I've survived it this far."))
 	scum_send_warning(H)
 
+/mob/living/carbon/human/say(message, bubble_type, list/spans, sanitize, datum/language/language, ignore_spam, forced, message_mode)
+	. = ..()
+	if(!HAS_TRAIT(src, TRAIT_UNDERBELLY_SCUM) || !prob(3))
+		return
+	playsound(src, pick(
+		'modular_underbelly/sound/gibberish/giberish1.ogg',
+		'modular_underbelly/sound/gibberish/giberish2.ogg',
+		'modular_underbelly/sound/gibberish/giberish3.ogg',
+		'modular_underbelly/sound/gibberish/giberish4.ogg',
+		'modular_underbelly/sound/gibberish/giberish5.ogg',
+	), 50, TRUE)
+
 // =====================================================
 // DOCKWORKER
 // 10 PQ. Rough hand working the docks. Balanced stats,
