@@ -559,13 +559,13 @@
 		if(descriptor_name == " ")
 			descriptor_name = "Unknown"
 
-		// Soul status: Roaming = ghost out of body, Lingering = mind in body, Departed = gone to lobby
+		// Soul status: Lingering = client still in dead body, Roaming = ghosted out, Departed = gone to lobby
 		var/soul_short = ""
-		if(istype(C.mind?.current, /mob/dead/observer))
-			soul_short = "Roaming"
-		else if(C.mind?.key && C.mind?.current == C)
+		if(C.key)
 			soul_short = "Lingering"
-		else if(C.mind?.key)
+		else if(C.get_ghost(FALSE, TRUE))
+			soul_short = "Roaming"
+		else
 			soul_short = "Departed"
 
 		// Area prefix
@@ -699,6 +699,17 @@
 		tracked_corpse = null
 		return
 
+	// Auto-stop if body has been given burial rites (buried var set by pacify_corpse)
+	if(istype(corpse, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = corpse
+		if(H.buried)
+			to_chat(user, span_notice("The soul has been laid to rest. The Undermaiden's thread fades."))
+			if(locate_timer_id)
+				deltimer(locate_timer_id)
+				locate_timer_id = null
+			tracked_corpse = null
+			return
+
 	var/turf/turf_user = get_turf(user)
 	var/turf/turf_corpse = get_turf(corpse)
 
@@ -767,11 +778,11 @@
 
 	// Show current soul status so the Necran knows whether the spirit has departed or ghosted
 	var/soul_status = ""
-	if(istype(corpse.mind?.current, /mob/dead/observer))
-		soul_status = " <i>(Spirit roaming)</i>"
-	else if(corpse.mind?.key && corpse.mind?.current == corpse)
+	if(corpse.key)
 		soul_status = " <i>(Spirit lingering)</i>"
-	else if(corpse.mind?.key)
+	else if(corpse.get_ghost(FALSE, TRUE))
+		soul_status = " <i>(Spirit roaming)</i>"
+	else
 		soul_status = " <i>(Spirit departed)</i>"
 
 	to_chat(user, span_notice("The Undermaiden pulls on your hand.[direction_text]<br>[distance_text] Its resting place lies within <b>[area_text]</b>.[soul_status]"))

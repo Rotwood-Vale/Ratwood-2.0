@@ -124,7 +124,10 @@
 	base_intents = zombie.base_intents
 
 	//Just need to clear it to snapshot. May get things we don't want to get.
-	for(var/status_effect in zombie.status_effects)
+	for(var/datum/status_effect/status_effect as anything in zombie.status_effects)
+		// Preserve Undermaiden's Bargain through death so its COMSIG_LIVING_DEATH hook can fire.
+		if(istype(status_effect, /datum/status_effect/buff/undermaidenbargain))
+			continue
 		zombie.remove_status_effect(status_effect)
 
 	src.STASTR = zombie.STASTR
