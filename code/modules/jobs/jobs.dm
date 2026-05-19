@@ -226,7 +226,8 @@ GLOBAL_LIST_INIT(underbelly_positions, list(
 	"Scum",
 	"Flinger",
 	"Ripper",
-	"Proletarius",
+	"Dockworker",
+	"Docks Cook",
 ))
 
 GLOBAL_LIST_INIT(job_assignment_order, get_job_assignment_order())

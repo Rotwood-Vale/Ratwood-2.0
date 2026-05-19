@@ -42,10 +42,20 @@ GLOBAL_VAR(smuggler_train)
 		active_crates += crate
 
 	if(target_z)
-		for(var/client/C in GLOB.clients)
-			if(C.mob && C.mob.z == target_z)
+		var/list/notified = list()
+		for(var/obj/effect/landmark/smuggler_drop/L in GLOB.landmarks_list)
+			for(var/client/C in GLOB.clients)
+				if(C in notified)
+					continue
+				if(!C.mob)
+					continue
+				if(abs(C.mob.z - L.z) > 1)
+					continue
+				if(get_dist(C.mob, L) > 20)
+					continue
+				notified += C
 				C << sound('modular_underbelly/sound/train_arrive.ogg', volume = 80)
-				to_chat(C.mob, span_warning("A low rumble shakes the pipes above. Something came through."))
+				to_chat(C.mob, span_warning("A the dock's bell sounds out in the docks. Something arrived."))
 
 	addtimer(CALLBACK(src, PROC_REF(arrive)), rand(25 MINUTES, 45 MINUTES))
 

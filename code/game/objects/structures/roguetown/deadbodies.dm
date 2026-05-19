@@ -3,7 +3,6 @@
 	desc = "Someone's final resting place."
 	icon = 'icons/roguetown/rw_deadbodies.dmi'
 	icon_state = "base"
-	density = FALSE
 	var/looted = FALSE
 	var/list/loot_table
 	var/list/loot_table_lucky
@@ -378,7 +377,8 @@
 	desc = "They died for a greater cause, it seems like."
 	pose_states = list("bogman", "bog10", "bog20", "bog30", "bog40")
 	loot_table = list(
-		/obj/item/storage/belt/rogue/pouch/coins/poor                     = 30,
+		/obj/item/storage/belt/rogue/pouch/coins/mid                      = 30,
+		/obj/item/storage/belt/rogue/pouch/coins/poor                     = 20,
 		/obj/item/rogueweapon/huntingknife/idagger/steel                  = 20,
 		/obj/item/rogueweapon/mace                                        = 10,
 		/obj/item/impact_grenade/explosion                                = 10,
@@ -387,7 +387,6 @@
 		/obj/item/clothing/suit/roguetown/armor/leather/hide              = 8,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot         = 15,
 		/obj/item/flashlight/flare/torch                                  = 10,
-		/obj/item/flashlight/flare/torch/lantern                          = 20,
 	)
 	loot_table_lucky = list(
 		/obj/item/storage/belt/rogue/pouch/coins/rich                     = 20,

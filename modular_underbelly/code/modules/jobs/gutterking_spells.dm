@@ -220,29 +220,3 @@
 
 /obj/effect/proc_holder/spell/self/gutterking_mark/proc/clear_mark(name)
 	marked_names -= name
-
-// -------------------------------------------------------------------------
-// Speak - global announcement from the Boss
-// -------------------------------------------------------------------------
-
-/obj/effect/proc_holder/spell/self/gutterking_announce
-	name = "Speak"
-	desc = "Your voice carries from the gutters to every ear in the vale."
-	overlay_state = "recruit_bog"
-	antimagic_allowed = TRUE
-	recharge_time = 3 MINUTES
-
-/obj/effect/proc_holder/spell/self/gutterking_announce/cast(list/targets, mob/user)
-	if(user.stat)
-		revert_cast(user)
-		return FALSE
-
-	to_chat(user, span_warning("<b>Warning:</b> This is a server-wide announcement. Abusing it is grounds for a roleban."))
-	var/msg = input(user, "What do you want the vale to hear?", "Speak") as text|null
-	if(!msg)
-		revert_cast(user)
-		return FALSE
-
-	priority_announce(msg, "A deep rumble stirs from the sewers...", 'modular_underbelly/sound/scummy_announcement.ogg', sender = user)
-
-	..()

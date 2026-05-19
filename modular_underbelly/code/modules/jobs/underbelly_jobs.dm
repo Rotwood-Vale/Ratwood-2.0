@@ -63,7 +63,7 @@
 	if(H.mind)
 		H.mind.scum_warning_shown = TRUE
 	H << sound('modular_underbelly/sound/scummy.ogg', volume = 35)
-	to_chat(H, "<span class='userdanger'>I am Scum. The Gods forsake me, and society has rebuked me to these depths. If I wish to survive until the end of the week, I should follow <a href=\"https://wiki.ratwood.rip/index.php/Underbelly#THE_LAWS_OF_THE_SCUM\">The laws of The Scum</a> if I wish to keep my position within this organization - and not find myself dead in the sewers.</span>")
+	to_chat(H, "<span class='userdanger'>I am Scum. The Gods forsake me, and society has cast me out to the docks. If I wish to survive until the end of the week, I should follow <a href=\"https://wiki.ratwood.rip/index.php/Underbelly#THE_LAWS_OF_THE_SCUM\">The laws of The Scum</a> if I wish to keep my position within this organization - and not find myself dead in the harbor.</span>")
 	to_chat(H, "<span class='warning'>This role is held to a higher roleplay standard by the staff team. Failing to meet role expectations can be met with harsher punishments than others. AHelp if you need assistance!</span>")
 
 /obj/item/clothing/head/roguetown/helmet/blackguard
@@ -137,13 +137,13 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_patrons = UNDERBELLY_ALLOWED_PATRONS
 	tutorial = "This place is no kingdom, no matter what anyone calls it. It runs, it pays, and when an order is given it gets done. \
-	The Keep upstairs thinks they own this town. You own what's underneath. \
+	The Keep thinks they own this town. You own the docks. \
 	Keep the Scum in line, keep the Flipside off your back, and don't get sloppy."
 
 	outfit = /datum/outfit/job/roguetown/underbelly/gutterking
 	antag_job = FALSE
 	display_order = JDO_GUTTER_KING
-	min_pq = 100
+	min_pq = 95
 	max_pq = null
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_SCUM
@@ -183,7 +183,6 @@
 	H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_word)
 	H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_laylow)
 	H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_mark)
-	H.AddSpell(new /obj/effect/proc_holder/spell/self/gutterking_announce)
 
 // =====================================================
 // CONSIGLIERE
@@ -780,6 +779,7 @@
 	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
 	subclass_social_rank = SOCIAL_RANK_SCUM
 	subclass_languages = list(/datum/language/thievescant)
+	traits_applied = list(TRAIT_ALCHEMY_EXPERT)
 	subclass_stats = list(
 		STATKEY_INT = 2,
 		STATKEY_WIL = 2,
@@ -787,11 +787,12 @@
 	)
 	subclass_skills = list(
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/magic/holy = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
 		/datum/skill/labor/farming = SKILL_LEVEL_JOURNEYMAN,
@@ -816,11 +817,34 @@
 		/obj/item/roguekey/underbelly/scum = 1,
 		/obj/item/flashlight/flare/torch = 1,
 	)
+	switch(H.patron?.type)
+		if(/datum/patron/divine/astrata)
+			neck = /obj/item/clothing/neck/roguetown/psicross/astrata
+		if(/datum/patron/divine/noc)
+			neck = /obj/item/clothing/neck/roguetown/psicross/noc
+		if(/datum/patron/divine/dendor)
+			neck = /obj/item/clothing/neck/roguetown/psicross/dendor
+		if(/datum/patron/divine/abyssor)
+			neck = /obj/item/clothing/neck/roguetown/psicross/abyssor
+		if(/datum/patron/divine/ravox)
+			neck = /obj/item/clothing/neck/roguetown/psicross/ravox
+		if(/datum/patron/divine/necra)
+			neck = /obj/item/clothing/neck/roguetown/psicross/necra
+		if(/datum/patron/divine/xylix)
+			neck = /obj/item/clothing/neck/roguetown/psicross/xylix
+		if(/datum/patron/divine/pestra)
+			neck = /obj/item/clothing/neck/roguetown/psicross/pestra
+		if(/datum/patron/divine/malum)
+			neck = /obj/item/clothing/neck/roguetown/psicross/malum
+		if(/datum/patron/divine/eora)
+			neck = /obj/item/clothing/neck/roguetown/psicross/eora
+		else
+			neck = /obj/item/clothing/neck/roguetown/psicross
 
 /datum/outfit/job/roguetown/underbelly/ripper/scorned/post_equip(mob/living/carbon/human/H)
 	..()
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_2)
+	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
 
 // Chirurgeon - the precise one. Master medicine, expert knives.
 /datum/advclass/ripper/chirurgeon
@@ -846,7 +870,7 @@
 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
@@ -929,9 +953,9 @@
 	scum_send_warning(H)
 
 // =====================================================
-// PROLETARIUS
-// 10 PQ. Escaped Otavan slave-worker. Welded helm, broken stats.
-// Random survival skills, novice unarmed/reading, journeyman swimming.
+// DOCKWORKER
+// 10 PQ. Rough hand working the docks. Balanced stats,
+// knives and firearms, pirate-adjacent labor skills.
 // =====================================================
 /obj/item/clothing/head/roguetown/helmet/scumbucket
 	name = "welded helm"
@@ -954,7 +978,7 @@
 	return ..(default_layer, default_icon_file, isinhands, femaleuniform, override_state || "scumbucket_onmob", female, customi, sleeveindex, boobed_overlay, clip_mask)
 
 /datum/job/roguetown/proletarius
-	title = "Proletarius"
+	title = "Dockworker"
 	flag = UB_PROLETARIUS
 	department_flag = UNDERBELLY
 	faction = "Station"
@@ -965,8 +989,9 @@
 	allowed_races = RACES_ALL_KINDS
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_patrons = UNDERBELLY_ALLOWED_PATRONS
-	tutorial = "An escaped, or freed slave-worker from the depths of the Otavan Inquisition. These poor, restless souls have had their minds torn asunder, hearing the laughter of their torturers every so often. \
-	Their bodies ravaged, abused and starved, their heads encased in a helm welded to skin, they serve no purpose other than working meat, waiting for Necra's sweet embrace."
+	tutorial = "You work the docks. You haul cargo, patch nets, and know every face that moves through the harbor. \
+	Half the time the work is honest. The other half is none of the Justiciary's business. \
+	The Underbelly keeps you fed, and you return the favor."
 
 	outfit = /datum/outfit/job/roguetown/underbelly/proletarius
 	antag_job = FALSE
@@ -976,6 +1001,7 @@
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_SCUM
 	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
+	job_stats = list(STATKEY_STR = 2, STATKEY_CON = 2, STATKEY_SPD = 1)
 	advjob_examine = TRUE
 	announce_latejoin = FALSE
 	same_job_respawn_delay = 2 MINUTES
@@ -984,63 +1010,93 @@
 
 /datum/outfit/job/roguetown/underbelly/proletarius/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/roguetown/helmet/scumbucket
-	armor = null
-	cloak = null
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant
-	pants = /obj/item/clothing/under/roguetown/tights/vagrant
-	gloves = /obj/item/clothing/gloves/roguetown/fingerless
-	beltl = null
-	beltr = null
+	H.adjust_blindness(-3)
+	head = /obj/item/clothing/head/roguetown/puritan/scum
+	armor = /obj/item/clothing/suit/roguetown/armor/longcoat
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+	shoes = /obj/item/clothing/shoes/roguetown/boots
+	beltl = /obj/item/roguekey/underbelly/scum
+	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel
+	backl = /obj/item/rogueweapon/sword/sabre
+	backr = /obj/item/storage/backpack/rogue/satchel
+	backpack_contents = list(
+		/obj/item/natural/bundle/cloth/bandage/full = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+		/obj/item/flashlight/flare/torch = 1,
+	)
 
 /datum/outfit/job/roguetown/underbelly/proletarius/post_equip(mob/living/carbon/human/H)
 	..()
-	H.STASTR = 3
-	H.STAPER = 3
-	H.STAINT = 3
-	H.STACON = 3
-	H.STAWIL = 3
-	H.STASPD = 3
-	H.STALUC = 3
-	H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_NOVICE, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_NOVICE, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_JOURNEYMAN, TRUE)
-	var/list/survival_pool = list(
-		/datum/skill/craft/cooking,
-		/datum/skill/craft/blacksmithing,
-		/datum/skill/craft/weaponsmithing,
-		/datum/skill/craft/armorsmithing,
-		/datum/skill/craft/smelting,
-		/datum/skill/craft/carpentry,
-		/datum/skill/craft/masonry,
-		/datum/skill/craft/sewing,
-		/datum/skill/craft/tanning,
-		/datum/skill/craft/ceramics,
-		/datum/skill/labor/farming,
-		/datum/skill/labor/mining,
-		/datum/skill/labor/fishing,
-		/datum/skill/labor/butchering,
-		/datum/skill/labor/lumberjacking,
-	)
-	for(var/datum/skill/S as anything in survival_pool)
-		H.adjust_skillrank_up_to(S, rand(SKILL_LEVEL_NOVICE, SKILL_LEVEL_MASTER), TRUE)
 	H.faction |= "bums"
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(proletarius_laugh_tick), H), rand(1, 3) MINUTES, TIMER_STOPPABLE|TIMER_OVERRIDE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_APPRENTICE, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/labor/fishing, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/craft/sewing, SKILL_LEVEL_NOVICE, TRUE)
+	if(H.mind)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scum_select_criminal_record), H), 5 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
-/proc/proletarius_laugh_tick(mob/living/carbon/human/H)
-	if(!H || H.stat == DEAD || H.job != "Proletarius")
-		return
-	if(H.client)
-		var/static/list/laughs = list(
-			'modular_underbelly/sound/hallucinations/laugh_center.ogg',
-			'modular_underbelly/sound/hallucinations/laugh_left1.ogg',
-			'modular_underbelly/sound/hallucinations/laugh_left2.ogg',
-			'modular_underbelly/sound/hallucinations/laugh_left3.ogg',
-			'modular_underbelly/sound/hallucinations/laugh_right1.ogg',
-			'modular_underbelly/sound/hallucinations/laugh_right2.ogg',
-		)
-		H.playsound_local(H, pick(laughs), 40, 0)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(proletarius_laugh_tick), H), rand(1, 4) MINUTES, TIMER_STOPPABLE|TIMER_OVERRIDE)
+// =====================================================
+// DOCKS COOK
+// 10 PQ. Galley cook for the dock crew.
+// =====================================================
+/datum/job/roguetown/docks_cook
+	title = "Docks Cook"
+	flag = UB_DOCKS_COOK
+	department_flag = UNDERBELLY
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	selection_color = JCOLOR_UNDERBELLY
+
+	allowed_races = RACES_ALL_KINDS
+	allowed_sexes = list(MALE, FEMALE)
+	allowed_patrons = UNDERBELLY_ALLOWED_PATRONS
+	tutorial = "The docks are hungry. You keep people here fed, no questions asked about who sits at your table or what they carry when they leave."
+
+	outfit = /datum/outfit/job/roguetown/underbelly/docks_cook
+	antag_job = FALSE
+	display_order = JDO_DOCKS_COOK
+	min_pq = 10
+	max_pq = null
+	round_contrib_points = 2
+	social_rank = SOCIAL_RANK_SCUM
+	cmode_music = 'modular_underbelly/sound/combat_scum.ogg'
+	job_traits = list(TRAIT_CICERONE, TRAIT_HOMESTEAD_EXPERT)
+	advjob_examine = TRUE
+	announce_latejoin = FALSE
+	same_job_respawn_delay = 2 MINUTES
+
+/datum/outfit/job/roguetown/underbelly/docks_cook
+
+/datum/outfit/job/roguetown/underbelly/docks_cook/pre_equip(mob/living/carbon/human/H)
+	..()
+	H.adjust_blindness(-3)
+	mask = null
+	head = /obj/item/clothing/head/roguetown/cookhat
+	armor = null
+	cloak = /obj/item/clothing/cloak/apron/cook
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+	shoes = /obj/item/clothing/shoes/roguetown/shortboots
+	belt = /obj/item/storage/belt/rogue/leather
+	beltl = /obj/item/roguekey/underbelly/scum
+	beltr = /obj/item/rogueweapon/huntingknife/cleaver
+	backr = /obj/item/storage/backpack/rogue/satchel
+	backpack_contents = list(
+		/obj/item/recipe_book/survival = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
+		/obj/item/flashlight/flare/torch = 1,
+	)
+
+/datum/outfit/job/roguetown/underbelly/docks_cook/post_equip(mob/living/carbon/human/H)
+	..()
+	H.faction |= "bums"
+	H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_APPRENTICE, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_APPRENTICE, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/craft/cooking, SKILL_LEVEL_EXPERT, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/craft/crafting, SKILL_LEVEL_NOVICE, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/labor/butchering, SKILL_LEVEL_EXPERT, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/labor/farming, SKILL_LEVEL_APPRENTICE, TRUE)
 
 // Spawn landmarks for the underbelly other-z maps.
 // All are late-join (delete_after_roundstart = FALSE) so respawning players can still use them.
@@ -1081,9 +1137,15 @@
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/proletariuslate
-	name = "Proletarius"
+	name = "Dockworker"
 	icon_state = "arrow"
-	jobspawn_override = list("Proletarius")
+	jobspawn_override = list("Dockworker")
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/dockscooklate
+	name = "Docks Cook"
+	icon_state = "arrow"
+	jobspawn_override = list("Docks Cook")
 	delete_after_roundstart = FALSE
 
 

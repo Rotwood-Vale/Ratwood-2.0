@@ -227,6 +227,7 @@
 #define UB_RIPPER		(1<<4)
 #define UB_PROLETARIUS	(1<<5)
 #define UB_CONSIGLIERE	(1<<6)
+#define UB_DOCKS_COOK	(1<<7)
 
 #define JCOLOR_NOBLE "#aa83b9"
 #define JCOLOR_COURTIER "#81adc8"
@@ -336,6 +337,7 @@
 #define JDO_FLINGER_JOB 31.8
 #define JDO_RIPPER_JOB 31.9
 #define JDO_PROLETARIUS 31.95
+#define JDO_DOCKS_COOK 31.97
 
 #define JDO_MERCENARY 31
 #define JDO_GRENZELHOFT 31.1
