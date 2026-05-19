@@ -175,20 +175,15 @@ GLOBAL_LIST_EMPTY(underbelly_debt_contributions)
 
 	if(effective_tier)
 		var/triumphs
-		var/pq
 		switch(effective_tier)
 			if(1)
-				triumphs = 10
-				pq = 0.5
+				triumphs = 25
 			if(2)
-				triumphs = 15
-				pq = 1
+				triumphs = 40
 			if(3)
-				triumphs = 20
-				pq = 2
+				triumphs = 55
 			if(4)
-				triumphs = 30
-				pq = 3.5
+				triumphs = 75
 		if(pay_ratio >= 1.0)
 			to_chat(world, span_greentext("The Underbelly has paid off their [owed] mammon debt to Kingsfield's Crime Syndicate!"))
 		else
@@ -197,12 +192,10 @@ GLOBAL_LIST_EMPTY(underbelly_debt_contributions)
 			if(!HAS_TRAIT(H, TRAIT_UNDERBELLY_SCUM))
 				continue
 			H.adjust_triumphs(triumphs)
-			if(H.ckey)
-				adjust_playerquality(pq, H.ckey)
 			if(pay_ratio >= 1.0)
 				to_chat(H, span_greentext("The Syndicate is satisfied. The [owed] mammon debt was paid in full. +[triumphs] Triumph\s awarded."))
 			else
-				to_chat(H, span_greentext("The Syndicate is somewhat satisfied. [round(pay_ratio * 100)]% of the [owed] mammon debt was paid ([paid]/[owed])."))
+				to_chat(H, span_greentext("The Syndicate is somewhat satisfied. [round(pay_ratio * 100)]% of the [owed] mammon debt was paid ([paid]/[owed]). +[triumphs] Triumph\s awarded."))
 			if(leaderboard)
 				to_chat(H, span_greentext("Top contributors:[leaderboard]"))
 	else

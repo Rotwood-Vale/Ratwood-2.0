@@ -25,7 +25,7 @@ GLOBAL_VAR(smuggler_train)
 	var/list/active_crates = list()
 
 /datum/smuggler_train/New()
-	addtimer(CALLBACK(src, PROC_REF(arrive)), rand(25 MINUTES, 45 MINUTES))
+	addtimer(CALLBACK(src, PROC_REF(arrive)), rand(10 MINUTES, 25 MINUTES))
 
 /datum/smuggler_train/proc/arrive()
 	for(var/obj/A in active_crates)
@@ -49,15 +49,15 @@ GLOBAL_VAR(smuggler_train)
 					continue
 				if(!C.mob)
 					continue
-				if(abs(C.mob.z - L.z) > 1)
+				if(abs(C.mob.z - L.z) > 2)
 					continue
 				if(get_dist(C.mob, L) > 20)
 					continue
 				notified += C
-				C << sound('modular_underbelly/sound/train_arrive.ogg', volume = 80)
+				C << sound('modular_underbelly/sound/train_arrive.ogg', volume = 55)
 				to_chat(C.mob, span_warning("A the dock's bell sounds out in the docks. Something arrived."))
 
-	addtimer(CALLBACK(src, PROC_REF(arrive)), rand(25 MINUTES, 45 MINUTES))
+	addtimer(CALLBACK(src, PROC_REF(arrive)), rand(10 MINUTES, 25 MINUTES))
 
 /datum/smuggler_train/proc/fill_crate(obj/structure/closet/crate/chest/crate/smuggler/C)
 	var/T

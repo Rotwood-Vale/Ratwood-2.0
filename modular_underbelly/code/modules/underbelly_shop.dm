@@ -361,17 +361,23 @@
 	//1 in 100,000. don't ever expect to see this considering it's a joke gun.
 	if(prob(0.001))
 		excl_master += list(list("The Devastator", "What the hell are you planning on taking down with this? Zizo? BAHAHA!", /obj/item/gun/ballistic/firearm/devastator, 1, 1500, FALSE, "Scum"))
-	var/list/exclusive_roles = list("Scum", "Ripper", "Flinger")
+	var/list/exclusive_roles = list("Scum", "Ripper", "Flinger", "Gutter King", "Consigliere")
 	for(var/i = 1 to exclusive_roles.len)
 		var/role = exclusive_roles[i]
 		var/list/eligible = list()
 		for(var/entry in excl_master)
-			if(entry[7] == role || isnull(entry[7]))
+			if(role in list("Gutter King", "Consigliere") || entry[7] == role || isnull(entry[7]) || (role == "Flinger" && entry[7] == "Scum"))
 				eligible += list(entry)
 		if(!eligible.len)
 			continue
 
-		var/role_target = rand(2, min(5, eligible.len))
+		var/role_target
+		if(role in list("Gutter King", "Consigliere"))
+			role_target = rand(6, min(12, eligible.len))
+		else if(role == "Flinger")
+			role_target = rand(4, min(8, eligible.len))
+		else
+			role_target = rand(2, min(5, eligible.len))
 		var/list/eligible_shuffled = shuffle(eligible.Copy())
 		var/added = 0
 		for(var/entry in eligible_shuffled)
@@ -391,18 +397,19 @@
 		var/role = exclusive_roles[i]
 		var/visible_count = 0
 		for(var/datum/underbelly_shop_item/SI in pool)
-			if(SI.exclusive_role == role || isnull(SI.exclusive_role))
+			if(role in list("Gutter King", "Consigliere") || SI.exclusive_role == role || isnull(SI.exclusive_role) || (role == "Flinger" && SI.exclusive_role == "Scum"))
 				visible_count += 1
-		if(visible_count >= 2)
+		var/role_min = (role in list("Gutter King", "Consigliere")) ? 6 : (role == "Flinger" ? 4 : 2)
+		if(visible_count >= role_min)
 			continue
 
 		var/list/eligible = list()
 		for(var/entry in excl_master)
-			if(entry[7] == role || isnull(entry[7]))
+			if(role in list("Gutter King", "Consigliere") || entry[7] == role || isnull(entry[7]) || (role == "Flinger" && entry[7] == "Scum"))
 				eligible += list(entry)
 
 		for(var/entry in shuffle(eligible.Copy()))
-			if(visible_count >= 2)
+			if(visible_count >= role_min)
 				break
 			var/already_stocked = FALSE
 			for(var/datum/underbelly_shop_item/SI in pool)
@@ -473,7 +480,7 @@
 
 	var/list/excl_data = list()
 	for(var/datum/underbelly_shop_item/SI in _get_exclusive_pool(H))
-		if(SI.exclusive_role && H.job != SI.exclusive_role && H.job != "Gutter King")
+		if(SI.exclusive_role && !(H.job in list("Gutter King", "Consigliere")) && H.job != SI.exclusive_role && !(H.job == "Flinger" && SI.exclusive_role == "Scum"))
 			continue
 		var/buy_count = purchase_counts["[H.ckey]_[SI.name]"] || 0
 		excl_data += list(list(
@@ -590,7 +597,7 @@
 /datum/underbelly_shop/proc/do_purchase(mob/living/carbon/human/H, datum/underbelly_shop_item/SI, count_key, max_buys)
 	var/obj/structure/roguemachine/underbelly_chute/chute = GLOB.underbelly_chute
 	var/budget = chute ? (chute.budgets[H.ckey] || 0) : 0
-	if(SI.exclusive_role && H.job != SI.exclusive_role && H.job != "Gutter King")
+	if(SI.exclusive_role && !(H.job in list("Gutter King", "Consigliere")) && H.job != SI.exclusive_role && !(H.job == "Flinger" && SI.exclusive_role == "Scum"))
 		to_chat(H, span_warning("That's not for you."))
 		return FALSE
 	if(SI.stock <= 0)

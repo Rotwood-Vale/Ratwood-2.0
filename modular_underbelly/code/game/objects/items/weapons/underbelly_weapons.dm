@@ -104,10 +104,15 @@
 		if(pending_rounds + rounds_remaining + (chambered ? 1 : 0) >= 3)
 			to_chat(user, span_warning("The [src]'s cylinder is already full!"))
 			return
+		var/firearm_skill = user.get_skill_level(/datum/skill/combat/firearms)
+		user.visible_message(span_notice("[user] begins feeding a lead ball into [src]."))
 		playsound(src, "modular_helmsguard/sound/arquebus/insert.ogg", 100)
-		user.visible_message(span_notice("[user] drops a lead ball into the cylinder of [src]."))
-		pending_rounds++
-		qdel(A)
+		if(do_after(user, max(5, 15 - firearm_skill * 2), src))
+			if(pending_rounds + rounds_remaining + (chambered ? 1 : 0) >= 3 || QDELETED(A))
+				return
+			user.visible_message(span_notice("[user] drops a lead ball into the cylinder of [src]."))
+			pending_rounds++
+			qdel(A)
 		return
 	if(istype(A, /obj/item/ramrod) && pending_rounds > 0)
 		var/obj/item/ramrod/R = A
@@ -414,11 +419,15 @@
 		if(balls_loaded >= max_balls)
 			to_chat(user, span_warning("Both barrels are already loaded."))
 			return
+		user.visible_message(span_notice("[user] begins dropping a ball into [src]."))
 		playsound(src, 'modular_underbelly/sound/gun/load_bullet.ogg', 90, FALSE)
-		user.visible_message(span_notice("[user] drops a ball into [src]."))
-		qdel(A)
-		balls_loaded++
-		reloaded = TRUE
+		if(do_after(user, load_time - (firearm_skill * 2), src))
+			if(balls_loaded >= max_balls || QDELETED(A))
+				return
+			user.visible_message(span_notice("[user] seats a ball in [src]."))
+			qdel(A)
+			balls_loaded++
+			reloaded = TRUE
 		return
 	if(istype(A, /obj/item/ammo_casing))
 		to_chat(user, span_warning("[src] only fires lead balls."))

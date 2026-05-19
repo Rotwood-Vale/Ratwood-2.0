@@ -31,37 +31,6 @@ GLOBAL_VAR(underbelly_patient_ward)
 /datum/underbelly_patient_ward
 	var/list/active_patients = list()
 
-/datum/underbelly_patient_ward/New()
-	addtimer(CALLBACK(src, PROC_REF(spawn_wave)), 10 MINUTES)
-
-/datum/underbelly_patient_ward/proc/spawn_wave(schedule_next = TRUE)
-	for(var/mob/M in active_patients)
-		if(!QDELETED(M))
-			qdel(M)
-	active_patients.Cut()
-
-	var/list/spots = list()
-	for(var/obj/effect/landmark/patient_spot/L in GLOB.landmarks_list)
-		spots += L
-	if(!spots.len)
-		if(schedule_next)
-			addtimer(CALLBACK(src, PROC_REF(spawn_wave)), 10 MINUTES)
-		return
-
-	var/obj/effect/landmark/patient_spot/chosen = pick(spots)
-	var/mob/living/carbon/human/species/human/northern/underbelly_patient/P = new(chosen.loc)
-	active_patients += P
-
-	for(var/client/C in GLOB.clients)
-		if(!C.mob || !istype(C.mob, /mob/living/carbon/human))
-			continue
-		var/mob/living/carbon/human/H = C.mob
-		if(H.job == "Ripper" && H.stat == CONSCIOUS)
-			to_chat(H, span_warning("Word comes through the pipes: someone's bleeding out in the Underbelly. Find them before they go cold."))
-
-	if(schedule_next)
-		addtimer(CALLBACK(src, PROC_REF(spawn_wave)), 10 MINUTES)
-
 // =====================================================
 
 /mob/living/carbon/human/species/human/northern/underbelly_patient
@@ -399,8 +368,47 @@ GLOBAL_VAR(underbelly_supply_board_datum)
 		D.sanitize_orders()
 		D.show_to(H)
 
-/obj/structure/underbelly_supply_board/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/underbelly_supply_board/attack_right(mob/living/user)
 	if(!istype(user, /mob/living/carbon/human))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.job != "Ripper")
+		to_chat(H, span_warning("This board isn't for you."))
+		return
+	var/datum/underbelly_supply_orders/D = GLOB.underbelly_supply_board_datum
+	if(!D)
+		return
+	var/mob/living/carbon/human/species/human/northern/underbelly_patient/existing = D.called_patients[H.ckey]
+	if(!isnull(existing) && !QDELETED(existing) && !existing.paid_out)
+		to_chat(H, span_warning("Your last patient is still waiting. Tend to them first."))
+		return
+	var/last_call = D.call_cooldowns[H.ckey]
+	if(last_call)
+		var/remaining = (last_call + (7 MINUTES + 30 SECONDS)) - world.time
+		if(remaining > 0)
+			var/mins_left = max(1, CEILING(remaining / (1 MINUTES), 1))
+			to_chat(H, span_warning("Can't call for another patient yet. [mins_left] minute\s remaining."))
+			return
+	if(tgui_alert(user, "Call for a patient? They'll be brought to the nearest spot.", "Call Patient", list("Call", "Cancel")) != "Call")
+		return
+	if(QDELETED(src))
+		return
+	var/obj/effect/landmark/patient_spot/best = null
+	var/best_dist = 9999
+	for(var/obj/effect/landmark/patient_spot/L in GLOB.landmarks_list)
+		var/d = get_dist(src, L)
+		if(d < best_dist)
+			best_dist = d
+			best = L
+	if(!best)
+		to_chat(H, span_warning("No patient spots are set up nearby."))
+		return
+	var/mob/living/carbon/human/species/human/northern/underbelly_patient/P = new(best.loc)
+	D.called_patients[H.ckey] = P
+	D.call_cooldowns[H.ckey] = world.time
+	to_chat(H, span_notice("A patient has been brought in. They won't last long."))
+
+/obj/structure/underbelly_supply_board/attackby(obj/item/I, mob/living/user, params)
 		return ..()
 	var/mob/living/carbon/human/H = user
 	if(H.job != "Ripper")
@@ -416,6 +424,10 @@ GLOBAL_VAR(underbelly_supply_board_datum)
 	var/list/active_orders = list()
 	///world.time when the next refresh fires.
 	var/next_refresh = 0
+	///ckey -> world.time of when they last called a patient.
+	var/list/call_cooldowns = list()
+	///ckey -> the underbelly_patient mob they last called, if any.
+	var/list/called_patients = list()
 
 /datum/underbelly_supply_orders/New()
 	roll_orders()
