@@ -189,7 +189,7 @@
 	armor_class = ARMOR_CLASS_MEDIUM
 	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL // We are probably one of the best medium armor sets. At higher integ than most(heavy armor levels, pretty much. But worse resistances, we get the bonus over the other sets of being medium and being unequippable.)
 	icon_state = "graggarplate"
-	armor = ARMOR_CUIRASS
+	armor = ARMOR_ASCENDANT
 
 /obj/item/clothing/suit/roguetown/armor/plate/fluted/graggar/Initialize(mapload)
 	. = ..()

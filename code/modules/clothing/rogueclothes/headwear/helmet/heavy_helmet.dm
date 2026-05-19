@@ -744,6 +744,7 @@
 	icon_state = "graggarplatehelm"
 	max_integrity = ARMOR_INT_HELMET_ANTAG
 	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT|HIDEHAIR|HIDEFACIALHAIR
+	armor = ARMOR_ASCENDANT
 	var/active_item = FALSE
 
 /obj/item/clothing/head/roguetown/helmet/heavy/graggar/Initialize(mapload)

@@ -46,6 +46,7 @@
 	desc = "Plate gauntlets which carry the motive force of this world, violence."
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	icon_state = "graggarplategloves"
+	armor = ARMOR_ASCENDANT
 
 /obj/item/clothing/gloves/roguetown/plate/graggar/Initialize(mapload)
 	. = ..()
@@ -73,6 +74,7 @@
 	desc = "avantyne plate gauntlets. Called forth from the edge of what should be known. In Her name."
 	icon_state = "zizogauntlets"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
+	
 
 /obj/item/clothing/gloves/roguetown/plate/zizo/Initialize(mapload)
 	. = ..()
