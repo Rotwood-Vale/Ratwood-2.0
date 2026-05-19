@@ -90,6 +90,11 @@ GLOBAL_VAR(underbelly_patient_ward)
 	///Pinned patient alias so after_creation can't randomize it.
 	var/patient_alias
 
+/mob/living/carbon/human/species/human/northern/underbelly_patient/Destroy(force)
+	if(GLOB.underbelly_patient_ward)
+		GLOB.underbelly_patient_ward.active_patients -= src
+	return ..()
+
 /mob/living/carbon/human/species/human/northern/underbelly_patient/Initialize(mapload)
 	. = ..()
 	set_species(/datum/species/human/northern)
@@ -131,6 +136,11 @@ GLOBAL_VAR(underbelly_patient_ward)
 	mobility_flags &= ~(MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_CANSTAND)
 
 /mob/living/carbon/human/species/human/northern/underbelly_patient/resist_buckle()
+	return
+
+// Skip the full carbon human life tick - the patient's state is managed entirely
+// by my own timers, and wound processing burns CPU for zero benefit here.
+/mob/living/carbon/human/species/human/northern/underbelly_patient/proc/Life(seconds_per_tick, times_fired)
 	return
 
 /mob/living/carbon/human/species/human/northern/underbelly_patient/proc/_seed_wounds()
