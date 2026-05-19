@@ -737,6 +737,7 @@
 	bloody_icon = 'icons/effects/blood64.dmi'
 	experimental_inhand = FALSE
 	experimental_onhip = FALSE
+	armor = ARMOR_ASCENDANT
 
 /obj/item/clothing/head/roguetown/helmet/heavy/graggar
 	name = "vicious helmet"
