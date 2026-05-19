@@ -1,13 +1,12 @@
 /area/rogue/under/scum
-	name = "THE UNDERBELLY"
+	name = "THE DEADWATER DOCKS"
 	icon_state = "under"
-	first_time_text = "THE UNDERBELLY"
+	first_time_text = "THE DEADWATER DOCKS"
+	outdoors = TRUE
 	droning_sound = 'modular_underbelly/sound/scum_day.ogg'
 	droning_sound_dusk = 'modular_underbelly/sound/scum_dawn.ogg'
 	droning_sound_night = 'modular_underbelly/sound/scum_night.ogg'
-	soundenv = 8
-	plane = INDOOR_PLANE
-	converted_type = /area/rogue/outdoors/exposed
+	soundenv = 16
 
 /area/rogue/under/scum/Entered(mob/living/carbon/human/guy)
 	. = ..()
@@ -16,50 +15,9 @@
 	if(HAS_TRAIT(guy, TRAIT_UNDERBELLY_SCUM) && !guy.has_status_effect(/datum/status_effect/buff/home_turf_advantage))
 		guy.apply_status_effect(/datum/status_effect/buff/home_turf_advantage)
 
-/area/rogue/under/scum/common
-	name = "UNDERBELLY COMMON"
-	droning_sound = 'modular_underbelly/sound/scum_day.ogg'
-	droning_sound_dusk = 'modular_underbelly/sound/scum_dawn.ogg'
-	droning_sound_night = 'modular_underbelly/sound/scum_night.ogg'
-
-/area/rogue/under/scum/dorms
-	name = "UNDERBELLY DORMS"
-	droning_sound = 'modular_underbelly/sound/scum_day.ogg'
-	droning_sound_dusk = 'modular_underbelly/sound/scum_dawn.ogg'
-	droning_sound_night = 'modular_underbelly/sound/scum_night.ogg'
-
-/area/rogue/under/scum/shop
-	name = "UNDERBELLY SHOP"
-	droning_sound = 'modular_underbelly/sound/scum_day.ogg'
-	droning_sound_dusk = 'modular_underbelly/sound/scum_dawn.ogg'
-	droning_sound_night = 'modular_underbelly/sound/scum_night.ogg'
-
-/area/rogue/under/scum/workshop
-	name = "UNDERBELLY WORKSHOP"
-	droning_sound = 'modular_underbelly/sound/scum_day.ogg'
-	droning_sound_dusk = 'modular_underbelly/sound/scum_dawn.ogg'
-	droning_sound_night = 'modular_underbelly/sound/scum_night.ogg'
-
-/area/rogue/under/scum/apothecary
-	name = "UNDERBELLY APOTHECARY"
-	droning_sound = 'modular_underbelly/sound/scum_day.ogg'
-	droning_sound_dusk = 'modular_underbelly/sound/scum_dawn.ogg'
-	droning_sound_night = 'modular_underbelly/sound/scum_night.ogg'
-
-/area/rogue/under/scum/landing
-	name = "UNDERBELLY LANDING"
-	droning_sound = 'modular_underbelly/sound/scum_day.ogg'
-	droning_sound_dusk = 'modular_underbelly/sound/scum_dawn.ogg'
-	droning_sound_night = 'modular_underbelly/sound/scum_night.ogg'
-
 /area/rogue/under/scum/lounge
-	name = "UNDERBELLY LOUNGE"
-	droning_sound = 'modular_underbelly/sound/scum_day.ogg'
-	droning_sound_dusk = 'modular_underbelly/sound/scum_dawn.ogg'
-	droning_sound_night = 'modular_underbelly/sound/scum_night.ogg'
-
-/area/rogue/under/scum/boss
-	name = "GUTTER KING'S DEN"
+	name = "THE SALTY MAIDEN"
+	plane = INDOOR_PLANE
 	droning_sound = 'modular_underbelly/sound/scum_day.ogg'
 	droning_sound_dusk = 'modular_underbelly/sound/scum_dawn.ogg'
 	droning_sound_night = 'modular_underbelly/sound/scum_night.ogg'

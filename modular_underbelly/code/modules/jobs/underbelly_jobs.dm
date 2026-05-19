@@ -1028,6 +1028,7 @@
 /datum/outfit/job/roguetown/underbelly/proletarius/post_equip(mob/living/carbon/human/H)
 	..()
 	H.faction |= "bums"
+	H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_APPRENTICE, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_APPRENTICE, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
@@ -1057,7 +1058,7 @@
 	outfit = /datum/outfit/job/roguetown/underbelly/docks_cook
 	antag_job = FALSE
 	display_order = JDO_DOCKS_COOK
-	min_pq = 10
+	min_pq = 5
 	max_pq = null
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_SCUM
@@ -1091,6 +1092,7 @@
 /datum/outfit/job/roguetown/underbelly/docks_cook/post_equip(mob/living/carbon/human/H)
 	..()
 	H.faction |= "bums"
+	H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_JOURNEYMAN, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_APPRENTICE, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_APPRENTICE, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/craft/cooking, SKILL_LEVEL_EXPERT, TRUE)

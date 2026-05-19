@@ -14,8 +14,7 @@ Format:
 endmap
 
 map roguetest
-	default
-endmap
+
 
 map roguetest_nootherz
 endmap
@@ -26,7 +25,7 @@ map dun_world
 endmap
 
 map rockhill
-	votable
+        default
 endmap
 
 map byos
