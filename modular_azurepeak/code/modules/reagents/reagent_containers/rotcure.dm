@@ -20,5 +20,4 @@
 	if(volume > 8)	//Roughly 1 sip from vial.
 		M.remove_status_effect(/datum/status_effect/debuff/rotted)	//Removes de-rot debuff, which is otherwise perminant.
 		M.remove_status_effect(/datum/status_effect/debuff/necras_touched)
-		M.remove_status_effect(/datum/status_effect/debuff/necras_claim)
-	..()
+		..()

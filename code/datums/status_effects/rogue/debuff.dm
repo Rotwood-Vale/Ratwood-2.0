@@ -359,7 +359,7 @@
 	var/recovery_goal = 300
 
 /datum/status_effect/debuff/necras_touched/on_apply()
-	raw_penalties = list(STATKEY_STR = -10, STATKEY_CON = -10, STATKEY_WIL = -10, STATKEY_LCK = -10, STATKEY_PER = -10, STATKEY_INT = -10, STATKEY_SPD = -10)
+	raw_penalties = list(STATKEY_STR = -5, STATKEY_CON = -5, STATKEY_WIL = -5, STATKEY_LCK = -5, STATKEY_PER = -5, STATKEY_INT = -5, STATKEY_SPD = -5)
 	effectedstats = raw_penalties.Copy()
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, id)
@@ -373,13 +373,18 @@
 		points += 5
 	if(owner.has_status_effect("vigorized"))
 		points += 5
-	if(owner.IsSleeping())
+	if(owner.buckled && (istype(owner.buckled, /obj/structure/bed) || istype(owner.buckled, /obj/structure/chair)))
 		points += 20
 	return points
 
 /datum/status_effect/debuff/necras_touched/tick()
 	recovery_progress = min(recovery_progress + get_recovery_points(), recovery_goal)
-	var/target_penalty = round(-10 * (1 - recovery_progress / recovery_goal))
+	var/target_penalty
+	if(recovery_progress < recovery_goal * 0.5)
+		target_penalty = -5
+	else
+		var/second_half_progress = (recovery_progress - recovery_goal * 0.5) / (recovery_goal * 0.5)
+		target_penalty = round(-5 * (1 - second_half_progress))
 	var/list/to_remove = list()
 	for(var/S in raw_penalties)
 		var/current_penalty = raw_penalties[S]
@@ -407,6 +412,10 @@
 	duration = 5 MINUTES
 	recovery_goal = 75
 
+/datum/status_effect/debuff/necras_touched/frankenstein
+	duration = 3 MINUTES
+	recovery_goal = 25
+
 /atom/movable/screen/alert/status_effect/debuff/necras_touched
 	name = "Necra's Touch"
 	desc = "Necra's cold grasp lingers on my body. My body falters, and I am vulnerable to grievous wounds."
@@ -424,98 +433,22 @@
 	inspec += "<br>----------------------"
 	if(E?.owner)
 		var/mob/living/M = E.owner
-		inspec += "<br><b>Recovery: [E.recovery_progress] / [E.recovery_goal]</b>"
+		var/halfway = E.recovery_goal * 0.5
+		if(E.recovery_progress < halfway)
+			inspec += "<br><b>Recovery: [E.recovery_progress] / [E.recovery_goal]</b> <span class='danger'>(Stats locked until [halfway])</span>"
+		else
+			inspec += "<br><b>Recovery: [E.recovery_progress] / [E.recovery_goal]</b> <span class='green'>(Stats recovering)</span>"
 		var/is_hungry = M.has_status_effect("hungryt1") || M.has_status_effect("hungryt2") || M.has_status_effect("hungryt3")
 		var/is_thirsty = M.has_status_effect("thirsty1") || M.has_status_effect("thirsty2") || M.has_status_effect("thirsty3")
 		var/well_fed = !is_hungry && !is_thirsty && (M.has_status_effect("meal") || M.has_status_effect("greatmeal") || M.has_status_effect("snack") || M.has_status_effect("greatsnack"))
 		var/has_drink_buff = M.has_status_effect("vigorized")
-		var/sleeping = M.IsSleeping()
+		var/resting = M.buckled && (istype(M.buckled, /obj/structure/bed) || istype(M.buckled, /obj/structure/chair))
 		var/points_this_tick = E.get_recovery_points()
 		inspec += "<br>Gaining <b>[points_this_tick]</b> recovery per minute."
-		if(sleeping)
-			inspec += "<br><span class='green'>Sleeping (+20)</span>"
+		if(resting)
+			inspec += "<br><span class='green'>Resting (+20)</span>"
 		else
-			inspec += "<br><span class='danger'>Not sleeping — rest to recover faster.</span>"
-		if(well_fed && has_drink_buff)
-			inspec += "<br><span class='green'>Well-fed and vigorized (+10)</span>"
-		else if(well_fed)
-			inspec += "<br><span class='green'>Well-fed (+5)</span>"
-		else if(has_drink_buff)
-			inspec += "<br><span class='green'>Vigorized (+5)</span>"
-		else
-			inspec += "<br><span class='danger'>Eat a hearty meal and drink coffee or tea (+5 each).</span>"
-		if(is_hungry)
-			inspec += "<br><span class='danger'>Hunger prevents the meal bonus.</span>"
-		if(is_thirsty)
-			inspec += "<br><span class='danger'>Thirst prevents the meal bonus.</span>"
-	inspec += "<br>----------------------"
-	to_chat(user, "[inspec.Join()]")
-
-//For revive - Necra's Claim. Her mark rests upon you - you cannot be brought back from death until it fades.
-/datum/status_effect/debuff/necras_claim
-	id = "necras_claim"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/necras_claim
-	duration = 30 MINUTES
-	tick_interval = 1 MINUTES
-	needs_processing = TRUE
-	var/recovery_progress = 0
-	var/recovery_goal = 300
-
-/datum/status_effect/debuff/necras_claim/on_apply()
-	. = ..()
-	ADD_TRAIT(owner, TRAIT_DNR, id)
-
-/datum/status_effect/debuff/necras_claim/proc/get_recovery_points()
-	var/points = 5
-	var/is_hungry = owner.has_status_effect("hungryt1") || owner.has_status_effect("hungryt2") || owner.has_status_effect("hungryt3")
-	var/is_thirsty = owner.has_status_effect("thirsty1") || owner.has_status_effect("thirsty2") || owner.has_status_effect("thirsty3")
-	var/well_fed = !is_hungry && !is_thirsty && (owner.has_status_effect("meal") || owner.has_status_effect("greatmeal") || owner.has_status_effect("snack") || owner.has_status_effect("greatsnack"))
-	if(well_fed)
-		points += 5
-	if(owner.has_status_effect("vigorized"))
-		points += 5
-	if(owner.IsSleeping())
-		points += 20
-	return points
-
-/datum/status_effect/debuff/necras_claim/tick()
-	recovery_progress = min(recovery_progress + get_recovery_points(), recovery_goal)
-	if(recovery_progress >= recovery_goal)
-		owner.remove_status_effect(src)
-
-/datum/status_effect/debuff/necras_claim/on_remove()
-	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_DNR, id)
-
-/datum/status_effect/debuff/necras_claim/lux
-	duration = 15 MINUTES
-	recovery_goal = 75
-
-/atom/movable/screen/alert/status_effect/debuff/necras_claim
-	name = "Necra's Claim"
-	desc = "Necra has marked me as Her own. Should I die again while my lux regains their vitality, no power can drag me back from Her embrace."
-	icon_state = "rotted_body"
-
-/atom/movable/screen/alert/status_effect/debuff/necras_claim/examine_ui(mob/user)
-	var/datum/status_effect/debuff/necras_claim/E = attached_effect
-	var/list/inspec = list("----------------------")
-	inspec += "<br><span class='notice'><b>[name]</b></span>"
-	inspec += "<br>[desc]"
-	inspec += "<br>----------------------"
-	if(E?.owner)
-		var/mob/living/M = E.owner
-		inspec += "<br><b>Recovery: [E.recovery_progress] / [E.recovery_goal]</b>"
-		var/is_hungry = M.has_status_effect("hungryt1") || M.has_status_effect("hungryt2") || M.has_status_effect("hungryt3")
-		var/is_thirsty = M.has_status_effect("thirsty1") || M.has_status_effect("thirsty2") || M.has_status_effect("thirsty3")
-		var/well_fed = !is_hungry && !is_thirsty && (M.has_status_effect("meal") || M.has_status_effect("greatmeal") || M.has_status_effect("snack") || M.has_status_effect("greatsnack"))
-		var/has_drink_buff = M.has_status_effect("vigorized")
-		var/sleeping = M.IsSleeping()
-		var/points_this_tick = E.get_recovery_points()
-		inspec += "<br>Gaining <b>[points_this_tick]</b> recovery per minute."
-		if(sleeping)
-			inspec += "<br><span class='green'>Sleeping (+20)</span>"
-		else
-			inspec += "<br><span class='danger'>Not sleeping — rest to recover faster.</span>"
+			inspec += "<br><span class='danger'>Not resting — sit or lie down to recover faster.</span>"
 		if(well_fed && has_drink_buff)
 			inspec += "<br><span class='green'>Well-fed and vigorized (+10)</span>"
 		else if(well_fed)

@@ -313,6 +313,6 @@
 		update_icon()
 
 		// Apply debuffs
-		occupant.apply_necras_revival(2 MINUTES, /datum/status_effect/debuff/necras_touched/lux, /datum/status_effect/debuff/necras_claim/lux)
+		occupant.apply_necras_revival(/datum/status_effect/debuff/necras_touched/frankenstein)
 
 	return TRUE
