@@ -1399,6 +1399,20 @@
 		return
 	if(!owner.mind?.key)
 		return // Only player-controlled mobs get the bargain
+	if(!owner.get_bodypart(BODY_ZONE_HEAD))
+		to_chat(owner, span_warning("The Undermaiden reaches for you, but cannot mend what has been wholly lost."))
+		return
+	ADD_TRAIT(owner, TRAIT_BARGAIN_PENANCE_LOCKED, "bargain_penance")
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(complete_bargain_teleport), WEAKREF(owner)), 5 SECONDS)
+
+/// Teleports the dead bargain recipient to the underworld before revival.
+/proc/complete_bargain_teleport(datum/weakref/owner_ref)
+	var/mob/living/carbon/human/H = owner_ref.resolve()
+	if(!H || QDELETED(H) || H.stat != DEAD)
+		return
+	if(!H.get_bodypart(BODY_ZONE_HEAD))
+		to_chat(H, span_warning("The Undermaiden reaches for you, but cannot mend what has been wholly lost."))
+		return
 	// Find the underworld entry turf
 	var/turf/spawn_turf = null
 	if(length(GLOB.deaths_door_entries))
@@ -1406,24 +1420,20 @@
 	if(!spawn_turf)
 		spawn_turf = get_deathsdoor_entry_turf()
 	if(!spawn_turf)
-		to_chat(owner, span_cultsmall("The Undermaiden reaches for you, but her realm could not be found."))
+		to_chat(H, span_cultsmall("The Undermaiden reaches for you, but her realm could not be found."))
 		return
-	// Clear wounds and bleeding before moving
-	for(var/datum/wound/W in owner.get_wounds())
+	// Stabilize the corpse first so it does not continue degrading during transport.
+	for(var/datum/wound/W in H.get_wounds())
 		W.cauterize_wound()
-	owner.remove_status_effect(/datum/status_effect/debuff/bleeding)
-	owner.remove_status_effect(/datum/status_effect/debuff/bleedingworse)
-	owner.remove_status_effect(/datum/status_effect/debuff/bleedingworst)
-	owner.blood_volume = BLOOD_VOLUME_NORMAL
-	// Wither visual at origin
-	var/turf/origin = get_turf(owner)
+	H.remove_status_effect(/datum/status_effect/debuff/bleeding)
+	H.remove_status_effect(/datum/status_effect/debuff/bleedingworse)
+	H.remove_status_effect(/datum/status_effect/debuff/bleedingworst)
+	H.blood_volume = BLOOD_VOLUME_NORMAL
+	var/turf/origin = get_turf(H)
 	if(origin)
 		new /obj/effect/temp_visual/trap/wither(origin, 3 SECONDS)
 		new /obj/effect/temp_visual/wither_actual(origin)
-	// Teleport the body NOW — synchronous, player still has their client on their body
-	// This fires before ghost verbs are added to the client, so the player cannot ghostize first
-	ADD_TRAIT(owner, TRAIT_BARGAIN_PENANCE_LOCKED, "bargain_penance")
-	owner.forceMove(spawn_turf)
+	H.forceMove(spawn_turf)
 	playsound(spawn_turf, pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 100, FALSE, -1)
 	// Spawn the toll at an underworld_toll_spawn landmark
 	for(var/obj/effect/landmark/underworld_toll_spawn/L in GLOB.landmarks_list)
@@ -1431,21 +1441,25 @@
 		if(T)
 			new /obj/item/thetoll(T)
 			break
-	to_chat(owner, span_cultsmall("<b>The bargain struck in your name has been called.</b> You have been dragged to the Undermaiden's realm — find the toll and pay the Carriageman to leave."))
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(complete_bargain_revival), WEAKREF(owner)), 2 SECONDS)
+	to_chat(H, span_cultsmall("<b>The bargain struck in your name has been called.</b> You have been dragged to the Undermaiden's realm — find the toll and pay the Carriageman to leave."))
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(complete_bargain_revival), owner_ref), 5 SECONDS)
 
 /// Fully revives the bargain recipient and returns their ghost to their body.
 /proc/complete_bargain_revival(datum/weakref/owner_ref)
 	var/mob/living/carbon/human/H = owner_ref.resolve()
 	if(!H || QDELETED(H) || H.stat != DEAD)
 		return
-	H.revive(full_heal = TRUE, admin_revive = TRUE)
+	// Heal first, then attempt a normal revive. This will not restore lost limbs and won't revive headless bodies.
+	H.fully_heal(admin_revive = FALSE)
+	if(!H.revive(full_heal = FALSE, admin_revive = FALSE))
+		to_chat(H, span_warning("The Undermaiden reaches for you, but cannot restore what has been wholly lost."))
+		return
 	// Pull back the ghost if the player ghostized during the death window
 	H.grab_ghost(force = TRUE)
 	H.apply_status_effect(/datum/status_effect/buff/undermaidenbargainheal)
+	H.apply_status_effect(/datum/status_effect/debuff/necra_bargain_penance)
 	H.apply_status_effect(/datum/status_effect/pacify, 10 MINUTES)
 	to_chat(H, span_userdanger("<span class='big'>YOU HAVE CHEATED DEATH. FOR THIS SIN, YOU MUST SUFFER YOUR END OF THE BARGAIN!</span>"))
-	to_chat(H, span_warning("Find the toll and bring it to the Carriageman — only by paying it or finding one of her anointed may you leave this realm."))
 	H.visible_message(span_danger("[H] lurches upright, drawn back from death by an unseen hand!"))
 	playsound(get_turf(H), 'sound/misc/deadbell.ogg', 80, FALSE, -1)
 

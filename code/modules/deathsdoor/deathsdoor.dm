@@ -470,17 +470,9 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		coin.pixel_y = rand(-6, 6)
 		qdel(I)
 		return
-	// Severed heads — excluding spirit bodyparts and heads still bound to a living player
-	if(istype(I, /obj/item/bodypart/head) && !istype(I, /obj/item/bodypart/head/spirit))
-		var/obj/item/bodypart/head/H = I
-		if(H.brainmob?.mind?.key)
-			to_chat(user, span_warning("The portal recoils — this soul has not yet departed."))
-			return
-		to_chat(user, span_notice("The portal consumes the fallen's head in offering."))
-		var/obj/item/roguecoin/necra_token/head_coin = new(get_turf(user))
-		head_coin.pixel_x = rand(-6, 6)
-		head_coin.pixel_y = rand(-6, 6)
-		qdel(I)
+	// Player heads should never be accepted as token offerings.
+	if(istype(I, /obj/item/bodypart/head))
+		to_chat(user, span_warning("The portal rejects the severed head."))
 		return
 	// Other bodyparts (limbs) — 1 token each
 	if(istype(I, /obj/item/bodypart) && !istype(I, /obj/item/bodypart/head))
@@ -511,15 +503,18 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 		var/obj/item/storage/sack = I
 		var/total_tokens = 0
 		var/total_psilen = 0
+		var/rejected_heads = FALSE
 		var/list/sack_contents = sack.contents.Copy()
 		for(var/obj/item/sack_item in sack_contents)
 			if(istype(sack_item, /obj/item/natural/bundle/bone))
 				var/obj/item/natural/bundle/bone/bundle = sack_item
 				total_tokens += bundle.amount
 				qdel(sack_item)
-			else if(istype(sack_item, /obj/item/natural/bone) || istype(sack_item, /obj/item/bodypart))
+			else if(istype(sack_item, /obj/item/natural/bone) || (istype(sack_item, /obj/item/bodypart) && !istype(sack_item, /obj/item/bodypart/head)))
 				total_tokens++
 				qdel(sack_item)
+			else if(istype(sack_item, /obj/item/bodypart/head))
+				rejected_heads = TRUE
 			else if(istype(sack_item, /obj/item/skull) || istype(sack_item, /obj/item/organ))
 				total_psilen++
 				qdel(sack_item)
@@ -536,6 +531,11 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 			sack_psilen.pixel_y = rand(-6, 6)
 		if(total_tokens > 0 || total_psilen > 0)
 			to_chat(user, span_notice("The portal greedily accepts the offerings from [I]."))
+			if(rejected_heads)
+				to_chat(user, span_warning("The portal rejects severed heads."))
+			return
+		if(rejected_heads)
+			to_chat(user, span_warning("The portal rejects severed heads."))
 			return
 	return ..()
 

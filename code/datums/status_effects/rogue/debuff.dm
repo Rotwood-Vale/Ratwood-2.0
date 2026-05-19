@@ -660,24 +660,28 @@
 	icon_state = "debuff"
 	color = "#4a3a5c"
 
-/// Punishment applied on bargain revival. Deals 5 brute damage every 5 seconds for 1 minute.
+/// Punishment applied on bargain revival. Claws begin 20 seconds later, then deal 5 brute every 5 seconds up to 50 total.
 /datum/status_effect/debuff/necra_bargain_penance
 	id = "necra_bargain_penance"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/necra_bargain_penance
-	duration = 1 MINUTES
+	duration = 70 SECONDS
 	tick_interval = 5 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	var/total_brute_dealt = 0
+	var/claw_start_time = 0
 
 /datum/status_effect/debuff/necra_bargain_penance/on_apply()
 	. = ..()
+	claw_start_time = world.time + 20 SECONDS
 	to_chat(owner, span_userdanger("<span class='big'>YOU HAVE CHEATED DEATH. FOR THIS SIN, YOU MUST SUFFER YOUR END OF THE BARGAIN!</span>"))
 	to_chat(owner, span_warning("Find the toll and bring it to the Carriageman — only by paying it or finding one of my annointed may you leave this realm."))
 
-/datum/status_effect/debuff/necra_bargain_penance/process()
-	. = ..()
+/datum/status_effect/debuff/necra_bargain_penance/tick()
+	if(world.time < claw_start_time)
+		return
 	if(total_brute_dealt >= 50)
-		return PROCESS_KILL
+		owner.remove_status_effect(src)
+		return
 	var/dmg = min(5, 50 - total_brute_dealt)
 	owner.adjustBruteLoss(dmg)
 	total_brute_dealt += dmg
