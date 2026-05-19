@@ -92,7 +92,8 @@ GLOBAL_VAR(underbelly_patient_ward)
 
 /mob/living/carbon/human/species/human/northern/underbelly_patient/Destroy(force)
 	if(GLOB.underbelly_patient_ward)
-		GLOB.underbelly_patient_ward.active_patients -= src
+		var/datum/underbelly_patient_ward/W = GLOB.underbelly_patient_ward
+		W.active_patients -= src
 	return ..()
 
 /mob/living/carbon/human/species/human/northern/underbelly_patient/Initialize(mapload)
@@ -140,7 +141,7 @@ GLOBAL_VAR(underbelly_patient_ward)
 
 // Skip the full carbon human life tick - the patient's state is managed entirely
 // by my own timers, and wound processing burns CPU for zero benefit here.
-/mob/living/carbon/human/species/human/northern/underbelly_patient/proc/Life(seconds_per_tick, times_fired)
+/mob/living/carbon/human/species/human/northern/underbelly_patient/Life(seconds_per_tick, times_fired)
 	return
 
 /mob/living/carbon/human/species/human/northern/underbelly_patient/proc/_seed_wounds()
