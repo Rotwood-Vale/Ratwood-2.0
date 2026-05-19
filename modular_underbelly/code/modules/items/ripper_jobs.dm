@@ -409,6 +409,7 @@ GLOBAL_VAR(underbelly_supply_board_datum)
 	to_chat(H, span_notice("A patient has been brought in. They won't last long."))
 
 /obj/structure/underbelly_supply_board/attackby(obj/item/I, mob/living/user, params)
+	if(!istype(user, /mob/living/carbon/human))
 		return ..()
 	var/mob/living/carbon/human/H = user
 	if(H.job != "Ripper")
