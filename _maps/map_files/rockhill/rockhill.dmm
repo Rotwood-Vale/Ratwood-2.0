@@ -737,7 +737,9 @@
 /obj/structure/fluff/railing/border{
 	dir = 4
 	},
-/turf/open/floor/rogue/tile,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "agM" = (
 /obj/structure/spider/stickyweb,
@@ -1657,6 +1659,12 @@
 /obj/structure/bars/grille,
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town/tavern)
+"arS" = (
+/obj/structure/fluff/walldeco/church/line,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
+/area/rogue/under/scum/lounge)
 "arY" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -12768,7 +12776,10 @@
 /obj/structure/fluff/railing/border/west{
 	dir = 10
 	},
-/turf/open/floor/rogue/tile,
+/obj/structure/fluff/walldeco/church/line,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "cOm" = (
 /obj/structure/glowshroom,
@@ -15715,7 +15726,10 @@
 /area/rogue/outdoors/town/rockhill)
 "dvB" = (
 /obj/machinery/light/rogue/candle/r,
-/turf/open/floor/rogue/tile,
+/obj/structure/fluff/walldeco/church/line,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "dvE" = (
 /obj/structure/rack/rogue,
@@ -19198,7 +19212,9 @@
 /obj/item/reagent_containers/glass/bottle/rogue/beer,
 /obj/item/reagent_containers/glass/bottle/rogue/beer,
 /obj/machinery/light/rogue/candle/l,
-/turf/open/floor/rogue/tile,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "eiv" = (
 /obj/structure/fluff/statue/gargoyle,
@@ -20049,6 +20065,12 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/garrison)
+"etQ" = (
+/obj/machinery/light/rogue/candle,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
+/area/rogue/under/scum/lounge)
 "etT" = (
 /obj/machinery/light/rogue/candle/blue/r{
 	pixel_y = 10
@@ -29649,6 +29671,15 @@
 "gFZ" = (
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/bograt/above)
+"gGb" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 1
+	},
+/obj/structure/fluff/walldeco/church/line{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/rogue/under/scum/lounge)
 "gGi" = (
 /obj/structure/bed/rogue/inn/wool,
 /obj/effect/spawner/lootdrop/cheap_clutter_spawner,
@@ -34436,7 +34467,9 @@
 /obj/structure/fluff/railing/border{
 	dir = 8
 	},
-/turf/open/floor/rogue/tile,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "hJV" = (
 /obj/structure/fluff/nest,
@@ -38811,6 +38844,9 @@
 /area/rogue/indoors/town/manor/rockhill)
 "iNm" = (
 /obj/effect/landmark/start/ripperlate,
+/obj/structure/fluff/walldeco/church/line{
+	dir = 1
+	},
 /turf/open/floor/carpet/red,
 /area/rogue/under/scum/lounge)
 "iNq" = (
@@ -39380,7 +39416,9 @@
 /obj/item/reagent_containers/food/snacks/rogue/meat/salami,
 /obj/item/reagent_containers/food/snacks/rogue/meat/salami,
 /obj/item/reagent_containers/food/snacks/rogue/meat/salami,
-/turf/open/floor/rogue/tile,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "iVy" = (
 /obj/effect/decal/cleanable/dirt/cobweb,
@@ -47071,7 +47109,9 @@
 /obj/structure/fluff/railing/border{
 	dir = 5
 	},
-/turf/open/floor/rogue/tile,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "kFU" = (
 /obj/item/natural/rock/iron,
@@ -47737,7 +47777,9 @@
 	dir = 8
 	},
 /obj/item/book/rogue/cooking,
-/turf/open/floor/rogue/tile,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "kMC" = (
 /turf/open/floor/rogue/herringbone,
@@ -48931,6 +48973,11 @@
 	dir = 1
 	},
 /area/rogue/outdoors/bograt/above)
+"laZ" = (
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
+/area/rogue/under/scum/lounge)
 "lbd" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
@@ -50615,7 +50662,9 @@
 /obj/item/millstone{
 	pixel_y = 36
 	},
-/turf/open/floor/rogue/tile,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "lxr" = (
 /obj/structure/roguewindow/stained/silver,
@@ -57732,7 +57781,9 @@
 /area/rogue/under/dungeon/tricksntraps)
 "nbC" = (
 /obj/machinery/light/rogue/candle/l,
-/turf/open/floor/rogue/tile,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "nbI" = (
 /obj/item/natural/rock,
@@ -58553,6 +58604,12 @@
 "nkS" = (
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/outdoors/woodsrat/above)
+"nlk" = (
+/obj/machinery/light/rogue/candle/r,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
+/area/rogue/under/scum/lounge)
 "nln" = (
 /turf/closed/wall/mineral/rogue/wooddark/vertical,
 /area/rogue/outdoors/bogsafe)
@@ -59418,6 +59475,12 @@
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/town/rockhill)
+"nvL" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 1
+	},
+/turf/open/floor/carpet/red,
+/area/rogue/under/scum/lounge)
 "nvM" = (
 /obj/structure/stairs/stone{
 	dir = 4
@@ -60125,6 +60188,9 @@
 /area/rogue/indoors/town/tavern)
 "nEp" = (
 /obj/structure/roguemachine/taxman,
+/obj/structure/fluff/walldeco/church/line{
+	dir = 1
+	},
 /turf/open/floor/carpet/red,
 /area/rogue/under/scum/lounge)
 "nEr" = (
@@ -62450,6 +62516,9 @@
 	})
 "ofs" = (
 /obj/effect/landmark/start/dockscooklate,
+/obj/structure/fluff/walldeco/church/line{
+	dir = 8
+	},
 /turf/open/floor/carpet/red,
 /area/rogue/under/scum/lounge)
 "oft" = (
@@ -65531,7 +65600,9 @@
 	pixel_x = -3
 	},
 /obj/machinery/light/rogue/candle/r,
-/turf/open/floor/rogue/tile,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "oRO" = (
 /obj/structure/fluff/railing/wood{
@@ -70294,7 +70365,9 @@
 "pVx" = (
 /obj/machinery/light/rogue/hearth,
 /obj/item/cooking/pan,
-/turf/open/floor/rogue/tile,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "pVF" = (
 /obj/structure/rack/rogue/shelf/biggest,
@@ -72014,6 +72087,14 @@
 "qqv" = (
 /turf/open/water/swamp,
 /area/rogue/outdoors/town/grove)
+"qqz" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 8
+	},
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
+/area/rogue/under/scum/lounge)
 "qqK" = (
 /obj/machinery/light/rogue/firebowl/stump,
 /obj/structure/fluff/railing/wood{
@@ -73431,7 +73512,12 @@
 /area/rogue/indoors/town/manor/rockhill)
 "qHI" = (
 /obj/structure/roguemachine/stockpile,
-/turf/open/floor/rogue/tile,
+/obj/structure/fluff/walldeco/church/line{
+	dir = 8
+	},
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "qHN" = (
 /obj/machinery/light/roguestreet/walllamp{
@@ -76090,7 +76176,9 @@
 /area/rogue/under/dungeon/wizarddungeon)
 "rrA" = (
 /obj/machinery/light/rogue/oven/west,
-/turf/open/floor/rogue/tile,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "rrC" = (
 /obj/structure/mirror{
@@ -76660,7 +76748,9 @@
 	dir = 4
 	},
 /obj/item/underbelly_shipment/grain,
-/turf/open/floor/rogue/tile,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "rxy" = (
 /obj/structure/flora/newleaf,
@@ -77613,7 +77703,9 @@
 /obj/structure/fluff/railing/border{
 	dir = 9
 	},
-/turf/open/floor/rogue/tile,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "rKb" = (
 /obj/structure/deadbodyrandom/all,
@@ -77920,7 +78012,9 @@
 /obj/structure/fluff/railing/border{
 	dir = 6
 	},
-/turf/open/floor/rogue/tile,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "rNG" = (
 /obj/structure/rack/rogue,
@@ -79550,7 +79644,9 @@
 /obj/structure/fluff/railing/border{
 	dir = 10
 	},
-/turf/open/floor/rogue/tile,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "sip" = (
 /obj/structure/fluff/railing/border/east{
@@ -82077,7 +82173,9 @@
 "sNj" = (
 /obj/machinery/light/rogue/hearth,
 /obj/item/reagent_containers/glass/bucket/pot,
-/turf/open/floor/rogue/tile,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "sNp" = (
 /obj/structure/chair/smallbench,
@@ -86066,7 +86164,9 @@
 	dir = 4
 	},
 /obj/item/reagent_containers/peppermill,
-/turf/open/floor/rogue/tile,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "tIZ" = (
 /obj/structure/winch{
@@ -87818,6 +87918,12 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/town/rockhill)
+"udT" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/rogue/under/scum/lounge)
 "ueo" = (
 /obj/structure/fluff/railing/border{
 	pixel_y = -8
@@ -89559,7 +89665,9 @@
 	pixel_x = -7;
 	pixel_y = 11
 	},
-/turf/open/floor/rogue/tile,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "uyg" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
@@ -94811,7 +94919,9 @@
 /obj/item/reagent_containers/food/snacks/rogue/meat/fish,
 /obj/item/reagent_containers/food/snacks/rogue/meat/fish,
 /obj/item/reagent_containers/food/snacks/rogue/meat/fish,
-/turf/open/floor/rogue/tile,
+/turf/open/floor/rogue/tile{
+	icon_state = "tile"
+	},
 /area/rogue/under/scum/lounge)
 "vKp" = (
 /obj/structure/bed/rogue/shit,
@@ -320632,15 +320742,15 @@ nZP
 nZP
 lpz
 qHI
-wLM
-wLM
+qqz
+laZ
 eit
-wLM
-wLM
-wLM
+laZ
+laZ
+laZ
 nbC
-wLM
-wLM
+laZ
+arS
 swk
 xPx
 lpz
@@ -321063,15 +321173,15 @@ vgN
 gXw
 nZP
 lpz
-dHL
-wLM
-wLM
-wLM
+etQ
+laZ
+laZ
+laZ
 rNF
 agE
 agE
 kFT
-wLM
+laZ
 cOh
 oQL
 oQL
@@ -321495,16 +321605,16 @@ bJi
 lPr
 tVn
 xPx
-wLM
-wLM
-wLM
+laZ
+laZ
+laZ
 tIY
 uxY
 sNj
 pVx
 rxq
 kMA
-wLM
+arS
 wLM
 wLM
 wLM
@@ -321928,15 +322038,15 @@ lPr
 lPr
 lpz
 lxn
-wLM
-wLM
-wLM
+laZ
+laZ
+laZ
 sic
 hJO
 hJO
 rJZ
-wLM
-wLM
+laZ
+arS
 iyw
 mVD
 lpz
@@ -322362,12 +322472,12 @@ lpz
 oRE
 vKh
 iVw
-wLM
-dvB
+laZ
+nlk
 rrA
 rrA
-wLM
-wLM
+laZ
+laZ
 dvB
 mVD
 mVD
@@ -538368,11 +538478,11 @@ lpz
 lwW
 lpz
 dQq
-mIA
+gGb
 ofs
 ofs
 ofs
-mIA
+udT
 lpz
 euP
 euP
@@ -538800,7 +538910,7 @@ lpz
 oIi
 lpz
 dQq
-mIA
+nvL
 rBR
 rBR
 rBR
@@ -539232,7 +539342,7 @@ cPG
 dQq
 bOY
 dQq
-mIA
+nvL
 mIA
 iIj
 iIj
@@ -540960,7 +541070,7 @@ cPG
 dQq
 lpz
 dQq
-mIA
+nvL
 mIA
 mIA
 mIA
@@ -541824,7 +541934,7 @@ dQq
 dQq
 lpz
 dQq
-mIA
+nvL
 dcW
 uST
 mIA
@@ -542256,7 +542366,7 @@ dQq
 dQq
 oVA
 dQq
-mIA
+nvL
 mIA
 mIA
 mIA
@@ -542688,7 +542798,7 @@ dQq
 kGb
 lpz
 klX
-mIA
+nvL
 mIA
 mIA
 mIA
