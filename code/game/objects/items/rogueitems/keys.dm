@@ -728,7 +728,7 @@
 			name = input + " key"
 			to_chat(user, span_notice("You rename the key to [name]."))
 
-/obj/item/roguekey/lord/attack(mob/M, mob/user, def_zone) // lord's key opens any chastity device without checks and never breaks, because the lord is merciful like that. Petition the duke to have your cage unlocked unlucky squire! 
+/obj/item/roguekey/lord/attack(mob/M, mob/user, def_zone) // lord's key opens any chastity device without checks and never breaks, because the lord is merciful like that. Petition the duke to have your cage unlocked unlucky squire!
 	var/handled = modular_chastity_attack(M, user, def_zone)
 	if(!isnull(handled))
 		return handled

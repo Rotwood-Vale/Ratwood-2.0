@@ -221,7 +221,7 @@
 			to_chat(user, span_notice("Tune up time"))
 			active_item = TRUE
 			return
-		else 
+		else
 			if(active_item)
 				active_item = FALSE
 				user.mind.RemoveSpell(new /obj/effect/proc_holder/spell/invoked/engineertuneup)
@@ -730,7 +730,7 @@
 			to_chat(user, span_notice("Time to wind things up"))
 			active_item = TRUE
 			return
-		else 
+		else
 			if(active_item)
 				active_item = FALSE
 				user.mind.RemoveSpell(new /obj/effect/proc_holder/spell/invoked/engineerwindup)
