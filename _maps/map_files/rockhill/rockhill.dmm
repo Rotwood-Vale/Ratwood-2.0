@@ -48894,6 +48894,10 @@
 /obj/structure/chair/stool/rogue,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/shelter/bog)
+"laD" = (
+/mob/living/simple_animal/pet/maurice/resident,
+/turf/open/floor/rogue/tile,
+/area/rogue/under/scum/lounge)
 "laF" = (
 /obj/machinery/light/rogue/candle/blue{
 	pixel_y = -32
@@ -319338,7 +319342,7 @@ wLM
 wLM
 wLM
 wLM
-wLM
+laD
 wLM
 wLM
 wLM
