@@ -1297,7 +1297,7 @@ Inquisitorial armory down here
 			user.visible_message(span_notice("[user] presses upon [src]'s needle."))
 			if(do_after(user, 30))
 				playsound(src, 'sound/items/blackmirror_needle.ogg', 95, FALSE, 3)
-				if(M.show_redflash())
+				if(user.show_redflash())
 					user.flash_fullscreen("redflash3")
 				user.adjustBruteLoss(40)
 				user.blood_volume = max(user.blood_volume-240, 0)
