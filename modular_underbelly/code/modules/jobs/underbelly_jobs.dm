@@ -1053,7 +1053,7 @@
 
 // =====================================================
 // DOCKS COOK
-// 10 PQ. Galley cook for the dock crew.
+// 10 PQ. Galley cook for the tavern.
 // =====================================================
 /datum/job/roguetown/docks_cook
 	title = "Docks Cook"
