@@ -37357,9 +37357,7 @@
 /area/rogue/under/cave)
 "isT" = (
 /obj/structure/stairs,
-/obj/structure/stairs{
-	dir = 4
-	},
+/obj/structure/stairs,
 /turf/open/transparent/openspace,
 /area/rogue/under/scum/lounge)
 "isU" = (
@@ -51611,9 +51609,7 @@
 /turf/closed/wall/mineral/rogue/roofwall/middle/dir4,
 /area/rogue/indoors/inq)
 "lHO" = (
-/obj/structure/stairs{
-	dir = 4
-	},
+/obj/structure/stairs,
 /obj/machinery/light/rogue/candle/l{
 	pixel_x = 0;
 	pixel_y = -33
