@@ -381,7 +381,7 @@
 	var/opened = FALSE
 	var/obj/structure/autosmither/parent
 
-/obj/structure/material_bin/Initialize()
+/obj/structure/material_bin/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/storage/concrete/grid/anvil_bin)
 
