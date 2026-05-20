@@ -23,16 +23,18 @@
 		/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 20,
 		/mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead = 10,)
 	first_time_text = "THE TERRORBOG"
-	converted_type = /area/rogue/indoors/shelter/bograt
+	converted_type = /area/rogue/indoors/shelter/bog
 	deathsight_message = "a wretched, fetid bog"
 	threat_region = THREAT_REGION_ROCKHILL_BOG_NORTH
 
-/area/rogue/indoors/shelter/bograt
-	name = "Rockhill Bog"
-	icon_state = "bog"
-	droning_sound = 'sound/music/area/bog.ogg'
-	droning_sound_dusk = null
-	droning_sound_night = null
+// /area/rogue/indoors/shelter/bograt//can just share the normal shelter
+// 	name = "Rockhill Bog"
+// 	icon_state = "bog"
+// 	// droning_sound = 'sound/music/area/bog.ogg'//nice to have it sound different indoors than out, gives a nice instant feedback
+// 	droning_sound_dusk = null
+// 	droning_sound_night = null
+// 	deathsight_message = "a wretched, fetid bog"
+// 	warden_area = TRUE
 
 /area/rogue/outdoors/bograt/north
 	name = "Northern Terrorbog"
@@ -138,4 +140,4 @@
 	droning_sound = 'sound/music/area/bog.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
-	converted_type = /area/rogue/indoors/shelter/bograt
+	converted_type = /area/rogue/indoors/shelter/bog

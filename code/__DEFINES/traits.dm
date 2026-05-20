@@ -39,6 +39,8 @@
 #define INSPIRING_MUSICIAN "Inspiring Musician" // unlocks bardic inspiration stuff
 #define TRAIT_NOFALLDAMAGE1 "Fall Damage Reduction"
 #define TRAIT_NOFALLDAMAGE2 "Fall Damage Immunity"
+/// Trait given only temporarily to prevent being able to Z fall (at all)
+#define TRAIT_PREVENT_Z_FALL "Prevent Z fall" // DO NOT GIVE THIS UNDER NORMAL CIRCUMSTANCES
 #define TRAIT_MISSING_NOSE "Missing Nose" //halved stamina regeneration
 #define TRAIT_DISFIGURED "Disfigured"
 #define TRAIT_SPELLCOCKBLOCK "Bewitched" //prevents spellcasting

@@ -86,13 +86,13 @@
 	name = "Arcyne Affinity"
 	desc = "Allows you to learn a spell or two of a certain type once every cycle."
 	miracle = TRUE
-	devotion_cost = 200
-	recharge_time = 50 MINUTES
+	devotion_cost = 250
+	recharge_time = 40 MINUTES
 	chargetime = 0
 	chargedrain = 0
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	associated_skill = /datum/skill/magic/holy
-	var/chosen_bundle
+	var/list/chosen_bundles = list() // Tracks which categories have already been granted
 	var/list/utility_bundle = list(	//Utility means exactly that. Nothing offensive and nothing that can affect another person negatively, 11 spellpoints total. (Barring Fetch, and technically Create Campfire)
 		/obj/effect/proc_holder/spell/self/message,
 		/obj/effect/proc_holder/spell/invoked/leap,
@@ -123,13 +123,18 @@
 	if(!user || !user.mind)
 		revert_cast()
 		return FALSE
-	var/choice = chosen_bundle
-	if(!chosen_bundle)
-		choice = alert(user, "What type of spells has Noc blessed you with?", "CHOOSE PATH", "Utility", "Offense", "Buffs")
-		if(!choice)
-			revert_cast()
-			return FALSE
-		chosen_bundle = choice
+	var/list/available_choices = list("Utility", "Offense", "Buffs")
+	for(var/already in chosen_bundles)
+		available_choices.Remove(already)
+	if(!available_choices.len)
+		user.mind.RemoveSpell(src)
+		to_chat(user, span_notice("The arcyne knowledge granted by Noc has been fully bestowed."))
+		return TRUE
+	var/choice = input(user, "What type of spells has Noc blessed you with?", "CHOOSE PATH") as null|anything in available_choices
+	if(!choice)
+		revert_cast()
+		return FALSE
+	chosen_bundles += choice
 	switch(choice)
 		if("Utility")
 			if(!user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/diagnose/secular))
@@ -142,9 +147,9 @@
 		if("Buffs")
 			add_spells(user, buff_bundle, choice_count = 4)
 			ADD_TRAIT(user, TRAIT_MAGEARMOR, TRAIT_MIRACLE)
-		else
-			revert_cast()
-			return FALSE
+	if(chosen_bundles.len >= 3)
+		user.mind.RemoveSpell(src)
+		to_chat(user, span_notice("The arcyne knowledge granted by Noc has been fully bestowed."))
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/noc_spell_bundle/proc/add_spells(mob/user, list/spells, choice_count = 1, grant_all = FALSE)

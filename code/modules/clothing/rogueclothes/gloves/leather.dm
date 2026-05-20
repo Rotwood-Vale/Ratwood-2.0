@@ -129,5 +129,5 @@
 	item_state = "harms"
 	slot_flags = ITEM_SLOT_GLOVES|ITEM_SLOT_HANDS
 	body_parts_covered = HANDS|ARMS
-	sleeved = FALSE
+	// sleeved = FALSE
 	color = null

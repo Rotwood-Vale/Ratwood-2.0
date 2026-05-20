@@ -221,6 +221,15 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href=\"https://secure.byond.com/membership\">Click Here to find out more</a>.")
 		return 0
 	return 1
+
+/client/proc/is_localhost()
+	var/static/localhost_addresses = list(
+		"127.0.0.1",
+		"::1",
+		null,
+	)
+	return address in localhost_addresses
+
 /*
  * Call back proc that should be checked in all paths where a client can send messages
  *
@@ -322,11 +331,14 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				to_chat(world, "Autoadmin rank not found")
 			else
 				new /datum/admins(autorank, ckey)
-	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin)
-		var/localhost_addresses = list("127.0.0.1", "::1")
-		if(isnull(address) || (address in localhost_addresses))
-			var/datum/admin_rank/localhost_rank = new("!localhost!", R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
-			new /datum/admins(localhost_rank, ckey, 1, 1)
+	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin && is_localhost())
+		var/datum/admin_rank/localhost_rank = new("!localhost!", R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
+		if(QDELETED(localhost_rank))
+			to_chat(world, "Local admin rank creation failed, somehow?")
+			return
+		new /datum/admins(localhost_rank, ckey, 1, 1)
+		CONFIG_SET(number/movedelay/walk_delay, 3)
+		CONFIG_SET(number/movedelay/run_delay, 2)
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
 	if(prefs)
@@ -568,6 +580,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			menuitem.Load_checked(src)
 
 	Master.UpdateTickRate()
+
+	fullscreen()
+	if(byond_version >= 516) // Enable 516 compat browser storage mechanisms
+		winset(src, null, "browser-options=find,byondstorage")
+	// byondstorage,devtools <- other options
 
 //////////////
 //DISCONNECT//
@@ -1180,13 +1197,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 /client/proc/fullscreen()
 	winset(src, "mainwindow", "statusbar=false")
-
-/client/New()
-	..()
-	fullscreen()
-	if(byond_version >= 516) // Enable 516 compat browser storage mechanisms
-		winset(src, null, "browser-options=find,byondstorage")
-	// byondstorage,devtools <- other options
 
 /client/proc/give_award(achievement_type, mob/user)
 	return	player_details.achievements.unlock(achievement_type, mob/user)
