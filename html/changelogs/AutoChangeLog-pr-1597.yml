@@ -1,0 +1,5 @@
+author: "yupup123"
+delete-after: True
+changes:
+  - rscadd: "New Overlay to make the Blind Vice usable."
+  - balance: "Red heals damaged eyes now."

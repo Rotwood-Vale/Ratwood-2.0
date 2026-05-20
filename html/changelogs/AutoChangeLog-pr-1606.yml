@@ -1,0 +1,16 @@
+author: "KeberosNihilus"
+delete-after: True
+changes:
+  - bugfix: "Magician's Associate (MA) three subclasses now has a coinpurse with coins in it. Finally."
+  - bugfix: "MA's three subclasses now have normalized stats."
+  - balance: "Overhauled Magician's Associate's subclasses to have distinct roles."
+  - rscadd: "Added Subclasses to the Sorcerer (Spellslinger, Arcane Alchemist) and Missionary (Preacher, Shepard) adventurer classes."
+  - rscadd: "Added Subclasses (sort of) to MA Alchemist."
+  - balance: "MA Associate - Focuses on combat and spellcasting. T3 spells, more spellpoints, slightly better combat skills, stats suited for combat. Lost Alchemy Expert in turn. No more Strong Red for you."
+  - balance: "MA Alchemist - Focuses on alchemy or medicine. Stats are more sovl focused, but still useful if you're clever. Also useful if you want to harvest reagents and there's no farmers/hunters around. You have T2 spells because of the Alchemy, though."
+  - balance: "MA Apprentice - Focuses on being an apprentice and actually feeling like one, instead of a sleeper power pick. Or you can just be a magical maid. Take your pick. Has Homesteading Expert and mediocre base skills. Also, apprentices are locked to T2 spells so newcomers are less overwhelmed with choice."
+  - balance: "Sorcerer Spellslinger - Diet MA Associate. More combat-focused stat spread, skills, +3 spellpoints, T3 spells"
+  - balance: "Sorcerer Arcane Alchemist - Diet MA Alchemist. More utility focused stat spread, skills. Locked to T2 spells. Gets Alchemy Expert and Seed Knowledge to make up for it."
+  - balance: "Missionary Preacher - Diet Acolyte. Improved housekeeping and housemaking skills, but you're not a Homesteader. You've got the skills but no tools and you can't really improve your skills."
+  - balance: "Missionary Shepard - Diet... Monk? Expert Staves and better Wrestling/Unarmed. A little sovl, as a treat, for our few Missionary mains."
+  - balance: "Old MA Apprentices are no longer objectively better than Old MA Associates. In fact, now you get nothing as an Old MA Apprentice. Either drop out or go be an Associate/Alchemist."

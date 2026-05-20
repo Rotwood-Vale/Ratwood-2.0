@@ -1,0 +1,5 @@
+author: "wikimody"
+delete-after: True
+changes:
+  - bugfix: "fixed Pestras ultimate miracle being stuck at lowest healing rate"
+  - balance: "By removing lowering healing rate from it at all"

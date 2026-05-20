@@ -345,3 +345,39 @@
   - bugfix: Fixed the person a harpy carries up a z level immediately falling
   - bugfix: Fixed the person buckled to a harpy being left behind when the harpy moves
       up or down
+2026-05-19:
+  Jamdrawers:
+  - bugfix: fixes reformist crosses being invisible
+  - image: Made fog a bit more transparent and slower
+  JustMeTheIInd:
+  - rscadd: Adventurer Ascendant Clerics spawn with proper amulets now
+  - rscadd: allows the Exorcist to choose the type of their silver psycross.
+  NotGoldenglow:
+  - rscadd: You can now craft the duelist leather coat from the loadout, in the armored
+      variety.
+  - rscadd: New loadout weapon choices for Duelist Adventurer!
+  - rscadd: two new tailmaw sprites (Tailmaw and Tailmaw (Wag))
+  Randumb-Phantomb:
+  - qol: mallets are now available in the loadout menu
+  The-Sun-In-Splendour:
+  - qol: sojourner staff's arc intent will not jump around based on wether you weild
+      it or not
+  WolfOrion:
+  - balance: lawless now makes nobles disgraced.
+  - bugfix: bandits that opt to not be wanted now are actually not wanted.
+  Xander3359:
+  - rscadd: Winged species can now have gradients to their plumage.
+  ophaq:
+  - bugfix: Arcyne affinity is less jank. Lower CD, slightly higher devotion cost.
+      Lets you pick multiple categories over time now.
+  - bugfix: Noc acolytes & missionaries qualify for the weapon enchant spell's auto
+      refresh.
+  - bugfix: Noc ritual text when it ends. It used to just look like it cut off mid
+      sentence.
+  petwir1:
+  - balance: gave heavy knight, foot knight, and mounted knight expert athletics
+  zeroisthebiggay:
+  - bugfix: addicts properly get debuffed
+  - rscadd: when using the dark armaments ritual, you get to choose between the zizo
+      froggemund which has neck protection and the zizo barbute which has a visor
+      yippee yay

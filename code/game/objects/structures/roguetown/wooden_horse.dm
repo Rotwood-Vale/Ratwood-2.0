@@ -2,7 +2,7 @@
 	name = "wooden saiga"
 	desc = "This tireless steed promises a less than pleasant journey, should you dare to ride it."
 	icon = 'icons/roguetown/misc/structure.dmi'
-	icon_state = "whorse"
+	icon_state = "wooden_horse"
 	base_pixel_x = 0
 	pixel_x = 0
 	attacked_sound = "woodimpact"
@@ -27,7 +27,15 @@
 	var/damage_cap = 75
 	var/next_flavor_time = 0
 	var/buckle_offset_x = 0
-	var/buckle_offset_y = 14
+	var/buckle_offset_y = 15
+
+/obj/structure/wooden_horse/small
+	icon_state = "wooden_horse_small"
+	buckle_offset_y = 7
+
+/obj/structure/wooden_horse/iron
+	icon_state = "wooden_horse_iron"
+	buckle_offset_y = 9
 
 /obj/structure/wooden_horse/Initialize(mapload)
 	. = ..()
@@ -43,10 +51,12 @@
 
 /obj/structure/wooden_horse/proc/can_user_rotate(mob/user)
 	var/mob/living/L = user
+
 	if(istype(L))
 		if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 			return FALSE
-		return TRUE
+		else
+			return TRUE
 	else if(isobserver(user) && CONFIG_GET(flag/ghost_interaction))
 		return TRUE
 	return FALSE
@@ -75,6 +85,11 @@
 	else
 		layer = OBJ_LAYER
 		plane = GAME_PLANE
+
+/obj/structure/wooden_horse/attack_right(mob/user)
+	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
+	if(rotcomp)
+		rotcomp.HandRot(rotcomp,user,ROTATION_CLOCKWISE)
 
 /obj/structure/wooden_horse/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!anchored && !istype(src, /obj/structure/wooden_horse/mobile))
@@ -191,11 +206,12 @@
 	name = "wooden horse"
 	desc = "An affordable means of transportation for all walks of life, though few wish to ride. Watching the galloping of unlucky riders is one of the favorite pastimes of local nobility."
 	icon = 'icons/roguetown/misc/structure.dmi'
-	icon_state = "whorse_2"
+	icon_state = "wooden_horse2"
 	anchored = FALSE
 	drag_slowdown = 0.4
 	facepull = FALSE
 	throw_range = 1
+	buckle_offset_y = 12
 
 //	var/move_sound = 'sound/wooden_wheels.ogg'
 //	var/last_move_sound = 0
