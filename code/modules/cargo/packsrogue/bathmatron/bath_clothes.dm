@@ -121,31 +121,41 @@
 	contains = list(/obj/item/storage/belt/rogue/leather/cloth/lady)
 
 /datum/supply_pack/rogue/bath_clothes/corslet
-	name = "Leather Corslet"
-	cost = 30
+	name = "Corslet (Leather)"
+	cost = 25
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/bikini)
 
 /datum/supply_pack/rogue/bath_clothes/corslet/studded
-	name = "Leather Corslet (studded)"
-	cost = 40
+	name = "Corslet, (Leather, studded)"
+	cost = 35
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/studded/bikini)
 
 /datum/supply_pack/rogue/bath_clothes/corslet/hide
-	name = "Leather Corslet (barbarian-fashion)"
-	cost = 30
+	name = "Corslet (Leather, barbarian-fashion)"
+	cost = 25
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/hide/bikini)
 
 /datum/supply_pack/rogue/bath_clothes/corslet/chain
-	name = "Chain Corslet"
-	cost = 50
+	name = "Corslet (Chain)"
+	cost = 40
 	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/bikini)
 
 /datum/supply_pack/rogue/bath_clothes/corslet/platehalf
-	name = "Full Plate Corslet"
+	name = "Corslet (Half Plate)"
 	cost = 60
 	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/bikini)
 
 /datum/supply_pack/rogue/bath_clothes/corslet/plate
-	name = "Full Plate Corslet"
+	name = "Corslet (Full Plate)"
 	cost = 80
 	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/full/bikini)
+
+// /datum/supply_pack/rogue/bath_clothes/horsey
+// 	name = "Bit, Blinders & Barding (full set)"
+// 	cost = 80
+// 	contains = list(
+// 	/obj/item/clothing/gloves/roguetown/leather/horsey = 1,
+// 	/obj/item/clothing/head/roguetown/horsey = 1,
+// 	/obj/item/clothing/shoes/roguetown/boots/horsey = 1,
+// 	/obj/item/clothing/mask/rogue/horsey = 1,
+// 	/obj/item/clothing/suit/roguetown/armor/leather/studded/bikini/horsey = 1)

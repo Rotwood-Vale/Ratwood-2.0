@@ -41,14 +41,35 @@
 /datum/crafting_recipe/roguetown/structure/wooden_horse
 	name = "static wooden horse"
 	result = /obj/structure/wooden_horse
+	reqs = list(/obj/item/natural/wood/plank = 3)
+	verbage_simple = "construct"
+	verbage = "constructs"
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/structure/wooden_horse/small
+	name = "static wooden horse (small)"
+	result = /obj/structure/wooden_horse/small
 	reqs = list(/obj/item/natural/wood/plank = 2)
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/structure/wooden_horse/iron
+	name = "static wooden horse (iron)"
+	result = /obj/structure/wooden_horse/iron
+	reqs = list(
+		/obj/item/natural/wood/plank = 2,
+		/obj/item/ingot/iron = 1,
+	)
+	verbage_simple = "construct"
+	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/wooden_horse/mobile
 	name = "mobile wooden horse"
 	result = /obj/structure/wooden_horse/mobile
-	reqs = list(/obj/item/natural/wood/plank = 2)
+	reqs = list(/obj/item/natural/wood/plank = 3)
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 0
 

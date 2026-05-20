@@ -382,10 +382,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 	if(!H.wear_mask)
 		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/blindfold(H), SLOT_WEAR_MASK)
-	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
-	head?.add_wound(/datum/wound/facial/eyes/left/permanent)
-	head?.add_wound(/datum/wound/facial/eyes/right/permanent)
-	H.update_fov_angles()
+	H.overlay_fullscreen("blind_flaw", /atom/movable/screen/fullscreen/impaired, 2)
 	H.adjust_triumphs(1)
 
 /datum/charflaw/colorblind
@@ -422,7 +419,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/hunted
 	name = "Hunted"
-	desc = "Something in my past has made me a target. I'm always looking over my shoulder."
+	desc = "Something in my past has made me a target. I'm always looking over my shoulder. YOU MAY BE PERMANENTLY REMOVED FROM THE ROUND WITHOUT ESCALATION BY YOUR ASSASSIN!"
 	var/logged = FALSE
 
 /datum/charflaw/hunted/on_mob_creation(mob/user)
@@ -687,13 +684,13 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		if(user.has_stress_event(/datum/stressevent/vice/greedy))
 			to_chat(user, span_blue("[new_mammon_amount] mammons... That's more like it.."))
 		user.remove_stress(/datum/stressevent/vice/greedy)
-		user.remove_status_effect(/datum/status_effect/debuff/addiction)
+		user.remove_status_effect(/datum/status_effect/debuff/addiction/greedy)
 		last_passed_check = world.time
 		do_update_msg = FALSE
 	else
 		// Feel bad
 		user.add_stress(/datum/stressevent/vice/greedy)
-		user.apply_status_effect(/datum/status_effect/debuff/addiction)
+		user.apply_status_effect(/datum/status_effect/debuff/addiction/greedy)
 
 	if(new_mammon_amount == last_checked_mammons)
 		do_update_msg = FALSE
@@ -705,6 +702,16 @@ GLOBAL_LIST_INIT(character_flaws, list(
 			to_chat(user, span_boldwarning("No! My precious mammons..."))
 
 	last_checked_mammons = new_mammon_amount
+
+/datum/status_effect/debuff/addiction/greedy
+	id = "addiction_greedy"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/addiction/greedy
+	effectedstats = list(STATKEY_WIL = -1, STATKEY_LCK = -1)
+
+/atom/movable/screen/alert/status_effect/debuff/addiction/greedy
+	name = "Greed"
+	desc = "My coinpurse doesn't jingle. Why even lyve?"
+	icon_state = "greedy"
 
 /datum/charflaw/narcoleptic
 	name = "Narcoleptic"

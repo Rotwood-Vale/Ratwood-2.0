@@ -134,17 +134,42 @@
 	to_chat(H, span_warning("You are an esteemed swordsman who foregoes armor in exchange for a more nimble fighting style."))
 	H.set_blindness(0)
 	if(H.mind)
-		var/weapons = list("Rapier","Dagger")
+		var/weapons = list("Rapier & Parrying Dagger","Sabre & Buckler","Messer & Buckler","Dagger & Parrying Dagger","Dual Wield Shortswords","Heavy Dagger & +1 Unarmed")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
-			if("Rapier")
+			if("Rapier & Parrying Dagger")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)//So it actually parries with said dagger.
 				l_hand = /obj/item/rogueweapon/sword/rapier
-				r_hand = /obj/item/rogueweapon/scabbard/sword
-			if("Dagger")
+				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying
+				backr = /obj/item/rogueweapon/scabbard/sword
+			if("Sabre & Buckler")
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+				l_hand = /obj/item/rogueweapon/sword/sabre
+				r_hand = /obj/item/rogueweapon/shield/buckler
+				beltr = /obj/item/rogueweapon/scabbard/sword
+			if("Messer & Buckler")
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+				l_hand = /obj/item/rogueweapon/sword/short/messer/iron/virtue
+				r_hand = /obj/item/rogueweapon/shield/buckler
+				beltr = /obj/item/rogueweapon/scabbard/sword
+			if("Dagger & Parrying Dagger")
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
-				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel
+				l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel
+				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying
 				beltr = /obj/item/rogueweapon/scabbard/sheath
+			if("Heavy Dagger & +1 Unarmed")
+				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				l_hand = /obj/item/rogueweapon/huntingknife/combat
+				beltr = /obj/item/rogueweapon/scabbard/sheath
+			if("Dual Wield Shortswords")
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+				ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
+				l_hand = /obj/item/rogueweapon/sword/short
+				r_hand = /obj/item/rogueweapon/sword/short
+				beltr = /obj/item/rogueweapon/scabbard/sword
+				beltl = /obj/item/rogueweapon/scabbard/sword
 	armor = /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
 	head = /obj/item/clothing/head/roguetown/duelisthat
 	mask = /obj/item/clothing/mask/rogue/duelmask
@@ -523,7 +548,6 @@
 						head = /obj/item/clothing/head/roguetown/helmet/heavy/knight/fluted
 
 	backl = /obj/item/storage/backpack/rogue/satchel
-	wrists = /obj/item/clothing/neck/roguetown/psicross/silver
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	pants = /obj/item/clothing/under/roguetown/tights/puritan
 	cloak = /obj/item/clothing/cloak/cape/puritan
@@ -535,6 +559,14 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/rogueweapon/huntingknife = 1, //Ensures that Exorcists who take the Shovel can still butcher wildlife. Minor oversight on my part.
 		)
+	var/cross = list("The Pantheon Arisen", "The Old God Mourning") 
+	var/cross_choice = input(H, "Whose symbol you bear?", "CHOOSE YOUR TOOL.") as anything in cross
+	switch(cross_choice)
+		if("The Pantheon Arisen")
+			wrists = /obj/item/clothing/neck/roguetown/psicross/silver/undivided
+		if("The Old God Mourning")
+			wrists = /obj/item/clothing/neck/roguetown/psicross/silver
+
 	if(H.age == AGE_OLD)
 		H.change_stat(STATKEY_INT, 1)
 		H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)

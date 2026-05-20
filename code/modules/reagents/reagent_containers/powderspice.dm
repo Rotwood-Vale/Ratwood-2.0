@@ -43,7 +43,7 @@
 		else
 			M.emote(pick("twitch_s","chuckle"))
 	if(M.has_flaw(/datum/charflaw/addiction/junkie))
-		M.sate_addiction()
+		M.sate_addiction(/datum/charflaw/addiction/junkie)
 	M.apply_status_effect(/datum/status_effect/buff/druqks)
 	..()
 
@@ -252,7 +252,7 @@
 
 /datum/reagent/ozium/on_mob_life(mob/living/carbon/M)
 	if(M.has_flaw(/datum/charflaw/addiction/junkie))
-		M.sate_addiction()
+		M.sate_addiction(/datum/charflaw/addiction/junkie)
 	M.apply_status_effect(/datum/status_effect/buff/ozium)
 	..()
 
@@ -297,7 +297,7 @@
 	if(M.reagents.has_reagent(/datum/reagent/moondust_purest))
 		M.Sleeping(40, 0)
 	if(M.has_flaw(/datum/charflaw/addiction/junkie))
-		M.sate_addiction()
+		M.sate_addiction(/datum/charflaw/addiction/junkie)
 	M.apply_status_effect(/datum/status_effect/buff/moondust)
 	if(prob(10))
 		M.flash_fullscreen("whiteflash")
@@ -346,7 +346,7 @@
 		if(!HAS_TRAIT(M, TRAIT_CRACKHEAD))
 			M.Sleeping(40, 0)
 	if(M.has_flaw(/datum/charflaw/addiction/junkie))
-		M.sate_addiction()
+		M.sate_addiction(/datum/charflaw/addiction/junkie)
 	M.apply_status_effect(/datum/status_effect/buff/moondust_purest)
 	if(prob(20))
 		M.flash_fullscreen("whiteflash")
@@ -408,7 +408,7 @@
 		M.emote(pick("twitch", "shiver", "sniff"))
 	narcolepsy_drug_up(M)
 	if(M.has_flaw(/datum/charflaw/addiction/junkie))
-		M.sate_addiction()
+		M.sate_addiction(/datum/charflaw/addiction/junkie)
 	M.apply_status_effect(/datum/status_effect/buff/starsugar)
 	if(prob(20))
 		M.flash_fullscreen("whiteflash")
@@ -476,7 +476,7 @@
 	if(prob(15))
 		M.playsound_local(M, 'sound/misc/heroin_rush.ogg', 100, FALSE)
 	if(M.has_flaw(/datum/charflaw/addiction/junkie))
-		M.sate_addiction()
+		M.sate_addiction(/datum/charflaw/addiction/junkie)
 	..()
 	. = 1
 

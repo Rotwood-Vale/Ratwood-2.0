@@ -674,6 +674,7 @@
 	H.electrocute_act(30, src)
 	H.mob_timers["kneestinger"] = world.time
 	to_chat(H, span_warning("[name] rejects my grasp — only the Treefather's faithful may bear such a gift!"))
+
 /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth
 	name = "froggemund helmet"
 	desc = "A tall and imposing frogmouth-style helm popular in the highest plateaus of the vale. It covers not only the entire head and face, but the neck as well. Add a cloth to show the colors of your family or allegiance."
@@ -711,6 +712,17 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
+/obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/zizo
+	name = "avantyne froggemund"
+	desc = "A heavy frogmouth helmet, forged from avantyne. A wide slit allows for a practical amount of visibility considered unusual for this style of helmet. Called forth from the edge of what should be known. In Her name."
+	icon_state = "zizofrogmouth"
+	item_state = "zizofrogmouth"
+	block2add = FOV_BEHIND
+	max_integrity = ARMOR_INT_HELMET_ANTAG
+
+/obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "HELMET")
 
 /obj/item/clothing/head/roguetown/helmet/heavy/matthios
 	name = "gilded visage"
@@ -764,26 +776,6 @@
 	icon_state = "zizobarbute"
 	max_integrity = ARMOR_INT_HELMET_ANTAG
 	peel_threshold = 4
-	var/frogstyle = FALSE
-
-/obj/item/clothing/head/roguetown/helmet/heavy/zizo/MiddleClick(mob/user)
-	frogstyle = !frogstyle
-	to_chat(user, span_info("My darksteel helmet shifts into the style of [frogstyle ? "a froggemund" : "a barbute"]."))
-	if(frogstyle)
-		icon_state = "zizofrogmouth"
-		name = "darksteel froggemund"
-		desc = "A darksteel froggemund. Called forth from the edge of what should be known. In Her name."
-		flags_inv = HIDEFACE|HIDESNOUT|HIDEEARS
-		body_parts_covered = HEAD|EARS|HAIR
-		adjustable = CANT_CADJUST
-	else
-		icon_state = "zizobarbute"
-		name = "darksteel barbute"
-		desc = "A darksteel barbute. This one has an adjustable visor. Called forth from the edge of what should be known. In Her name."
-		adjustable = CAN_CADJUST
-	update_icon()
-	user.update_inv_head()
-
 
 /obj/item/clothing/head/roguetown/helmet/heavy/zizo/Initialize(mapload)
 	. = ..()

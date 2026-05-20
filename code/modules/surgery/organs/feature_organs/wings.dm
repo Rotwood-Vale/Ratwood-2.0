@@ -18,6 +18,36 @@
 	icon = 'icons/mob/sprite_accessory/wings/wings_64x32.dmi'
 	icon_state = "harpyfolded_FRONT"
 
+	var/wings_color
+	var/wing_natural_gradient
+	var/wing_natural_color
+	var/wing_dye_gradient
+	var/wing_dye_color
+
+/obj/item/organ/wings/bodypart_overlays(mutable_appearance/standing)
+	add_gradient_overlay(standing, wing_natural_gradient, wing_natural_color)
+	add_gradient_overlay(standing, wing_dye_gradient, wing_dye_color)
+
+/obj/item/organ/wings/proc/add_gradient_overlay(mutable_appearance/standing, gradient_type, gradient_color)
+	if(gradient_type == /datum/hair_gradient/none || isnull(gradient_type))
+		return
+	var/datum/sprite_accessory/accessory = SPRITE_ACCESSORY(accessory_type) // In the case of wings we need to get gradient size too
+	var/datum/hair_gradient/gradient = HAIR_GRADIENT(gradient_type)
+	var/icon/gradient_icon = icon(accessory.gradient_icon, gradient.icon_state)
+	if(accessory.pixel_x > 0)
+		gradient_icon.Shift(NORTH, accessory.pixel_x, wrap = TRUE)
+	else if(accessory.pixel_x < 0)
+		gradient_icon.Shift(SOUTH, abs(accessory.pixel_x), wrap = TRUE)
+	var/layered_icon_state = accessory.icon_state
+	var/layer_suffix = accessory.get_layer_suffix(-(standing.layer))
+	if(layer_suffix)
+		layered_icon_state = accessory.icon_state + "_[layer_suffix]"
+	var/icon/hair_icon = icon(accessory.icon, layered_icon_state)
+	gradient_icon.Blend(hair_icon, ICON_ADD)
+	var/mutable_appearance/gradient_appearance = mutable_appearance(gradient_icon)
+	gradient_appearance.color = gradient_color
+	standing.overlays += gradient_appearance
+
 //TODO: Well you know what this flight stuff is a bit complicated and hardcoded, this is enough for now
 
 /obj/item/organ/wings/moth

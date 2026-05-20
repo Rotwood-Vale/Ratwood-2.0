@@ -338,3 +338,125 @@
   - bugfix: golden zcross and bronze graggar amulet no longer has no sprite
   yupup123:
   - rscadd: Added new Malodorous Flaw
+2026-05-18:
+  Jamdrawers:
+  - balance: the 'deadite rot timer' is reduced from 7 minutes to 5 minutes
+  Xander3359:
+  - bugfix: Fixed the person a harpy carries up a z level immediately falling
+  - bugfix: Fixed the person buckled to a harpy being left behind when the harpy moves
+      up or down
+2026-05-19:
+  Jamdrawers:
+  - bugfix: fixes reformist crosses being invisible
+  - image: Made fog a bit more transparent and slower
+  JustMeTheIInd:
+  - rscadd: Adventurer Ascendant Clerics spawn with proper amulets now
+  - rscadd: allows the Exorcist to choose the type of their silver psycross.
+  NotGoldenglow:
+  - rscadd: You can now craft the duelist leather coat from the loadout, in the armored
+      variety.
+  - rscadd: New loadout weapon choices for Duelist Adventurer!
+  - rscadd: two new tailmaw sprites (Tailmaw and Tailmaw (Wag))
+  Randumb-Phantomb:
+  - qol: mallets are now available in the loadout menu
+  The-Sun-In-Splendour:
+  - qol: sojourner staff's arc intent will not jump around based on wether you weild
+      it or not
+  WolfOrion:
+  - balance: lawless now makes nobles disgraced.
+  - bugfix: bandits that opt to not be wanted now are actually not wanted.
+  Xander3359:
+  - rscadd: Winged species can now have gradients to their plumage.
+  ophaq:
+  - bugfix: Arcyne affinity is less jank. Lower CD, slightly higher devotion cost.
+      Lets you pick multiple categories over time now.
+  - bugfix: Noc acolytes & missionaries qualify for the weapon enchant spell's auto
+      refresh.
+  - bugfix: Noc ritual text when it ends. It used to just look like it cut off mid
+      sentence.
+  petwir1:
+  - balance: gave heavy knight, foot knight, and mounted knight expert athletics
+  zeroisthebiggay:
+  - bugfix: addicts properly get debuffed
+  - rscadd: when using the dark armaments ritual, you get to choose between the zizo
+      froggemund which has neck protection and the zizo barbute which has a visor
+      yippee yay
+2026-05-20:
+  Jamdrawers:
+  - bugfix: fixes iron coif/bevor/gorget sprites
+  JustMeTheIInd:
+  - balance: Rontz Ring is now no longer usable when the user is restrained or incapacitated
+  KeberosNihilus:
+  - bugfix: Magician's Associate (MA) three subclasses now has a coinpurse with coins
+      in it. Finally.
+  - bugfix: MA's three subclasses now have normalized stats.
+  - balance: Overhauled Magician's Associate's subclasses to have distinct roles.
+  - rscadd: Added Subclasses to the Sorcerer (Spellslinger, Arcane Alchemist) and
+      Missionary (Preacher, Shepard) adventurer classes.
+  - rscadd: Added Subclasses (sort of) to MA Alchemist.
+  - balance: MA Associate - Focuses on combat and spellcasting. T3 spells, more spellpoints,
+      slightly better combat skills, stats suited for combat. Lost Alchemy Expert
+      in turn. No more Strong Red for you.
+  - balance: MA Alchemist - Focuses on alchemy or medicine. Stats are more sovl focused,
+      but still useful if you're clever. Also useful if you want to harvest reagents
+      and there's no farmers/hunters around. You have T2 spells because of the Alchemy,
+      though.
+  - balance: MA Apprentice - Focuses on being an apprentice and actually feeling like
+      one, instead of a sleeper power pick. Or you can just be a magical maid. Take
+      your pick. Has Homesteading Expert and mediocre base skills. Also, apprentices
+      are locked to T2 spells so newcomers are less overwhelmed with choice.
+  - balance: Sorcerer Spellslinger - Diet MA Associate. More combat-focused stat spread,
+      skills, +3 spellpoints, T3 spells
+  - balance: Sorcerer Arcane Alchemist - Diet MA Alchemist. More utility focused stat
+      spread, skills. Locked to T2 spells. Gets Alchemy Expert and Seed Knowledge
+      to make up for it.
+  - balance: Missionary Preacher - Diet Acolyte. Improved housekeeping and housemaking
+      skills, but you're not a Homesteader. You've got the skills but no tools and
+      you can't really improve your skills.
+  - balance: Missionary Shepard - Diet... Monk? Expert Staves and better Wrestling/Unarmed.
+      A little sovl, as a treat, for our few Missionary mains.
+  - balance: Old MA Apprentices are no longer objectively better than Old MA Associates.
+      In fact, now you get nothing as an Old MA Apprentice. Either drop out or go
+      be an Associate/Alchemist.
+  - balance: Light Brigandine now costs 1 steel / 1 cloth instead of 1 iron / 1 cloth
+      similar to the other Brigandine armors. Splint exists as the Iron variant of
+      the stuff, so now there's no overlap.
+  - balance: Fencing Cuirass now costs 2 steel / 1 cured leather instead of 1 steel
+      / 1 fencing jacket. No longer need a tailor, but now you need more steel.
+  - balance: Light Brigandine goes from 315 -> 290 HP. Studded Leather has 270 for
+      comparison.
+  - balance: "Fencer's Cuirass goes from 180 -> 225 HP. A Steel Breastplate has 270,\
+      \ for comparison.\n\\:cl:\n<!-- Both :cl:'s are required for the changelog to\
+      \ work! You can put your name to the right of the first :cl: if you want to\
+      \ overwrite your GitHub username as author ingame. -->\n<!-- You can use multiple\
+      \ of the same prefix (they're only used for the icon ingame) and delete the\
+      \ unneeded ones. Despite some of the tags, changelogs should generally represent\
+      \ how a player might be affected by the changes rather than a summary of the\
+      \ PR's contents. -->\n<!-- By contributing to this codebase, you confirm that\
+      \ any code and sprites you provide are legal to share and will be licensed under\
+      \ the terms specified in README.md \u2014 AGPLv3 for code and CC-BY-SA 3.0 for\
+      \ assets, unless otherwise stated. You acknowledge that the project maintainers\
+      \ are under no obligation to remove any materials that do not violate these\
+      \ licenses. -->"
+  NotGoldenglow:
+  - rscadd: New loadout option for Foreigner Grenzelhoftian adventurer, including
+      tracking skill and a crossbow.
+  - balance: "Armbrustsch\xFCtze gains tracking skill, athletics and sword skill to\
+      \ maintain parity between the adventurer/mercenary counterpart."
+  Randumb-Phantomb:
+  - balance: squires get hammers now.
+  Xander3359:
+  - config: local versions of the game no longer have mach5 walk speed
+  wikimody:
+  - bugfix: fixed Pestras ultimate miracle being stuck at lowest healing rate
+  - balance: By removing lowering healing rate from it at all
+  yupup123:
+  - rscadd: New Overlay to make the Blind Vice usable.
+  - balance: Red heals damaged eyes now.
+  zeroisthebiggay:
+  - rscadd: addiction vices each have their own separate debuffs, meaning you can
+      stack and clear them individually
+  - balance: across the board made addictions take longer to give you negative effects
+      by about fifty percent
+  - rscadd: bathmatrons can buy scrolls of mirror transform from their vendor for
+      all your gock forming needs

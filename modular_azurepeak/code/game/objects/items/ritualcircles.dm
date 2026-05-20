@@ -1384,10 +1384,16 @@
 	pants = /obj/item/clothing/under/roguetown/platelegs/zizo
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/zizo
 	gloves = /obj/item/clothing/gloves/roguetown/plate/zizo
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/zizo
 	backr = /obj/item/rogueweapon/sword/long/zizo
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
+	var/helmets = list("BARBUTE - VISORED", "FROGMOUTH - NECK PROTECTION")
+	var/helmet_choice = input(H, "Choose your helmet.", "PROTECTION FROM THE LADY") as anything in helmets
+	switch(helmet_choice)
+		if("BARBUTE - VISORED")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/zizo
+		if("FROGMOUTH - NECK PROTECTION")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/zizo
 
 /obj/structure/ritualcircle/zizo/proc/zizoconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)

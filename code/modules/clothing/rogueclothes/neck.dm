@@ -568,7 +568,7 @@
 	name = "reformist psycross"
 	desc = "A psycross with its prongs bent inward. God is dead, but this world HE left is beautiful and worth of loving. ENDURE with every broken bone in your body."
 	sellprice = 0
-	icon_state = "psycross_reform"
+	icon_state = "reformistcross"
 
 /obj/item/clothing/neck/roguetown/psicross/pearl //put it as a psycross so it can be used for miracles
 	name = "pearl amulet"

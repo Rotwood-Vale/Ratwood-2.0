@@ -146,6 +146,11 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/storage/roguebag
 	triumph_cost = 2
 
+/datum/loadout_item/mallet
+	name = "Wooden Mallet"
+	path = /obj/item/rogueweapon/hammer/wood
+	triumph_cost = 3
+
 //ANCIENT TOOLS (Ancient Alloy)
 
 /datum/loadout_item/ancient_hammer

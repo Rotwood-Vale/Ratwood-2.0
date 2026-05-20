@@ -324,6 +324,12 @@
 		return 0
 	return 1
 
+/obj/structure/fluff/railing/fence/flimsy
+	name = "weak palisade"
+	desc = "A rudimentary barrier that might keep the monsters at bay. This one looks old, weathered, and hastily constructed."
+	max_integrity = 180
+	color = "#cccac5"
+
 /obj/structure/bars
 	name = "bars"
 	desc = ""

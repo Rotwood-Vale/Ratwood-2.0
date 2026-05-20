@@ -259,6 +259,10 @@
 	if(!(sigbitflags & SKIP_ADJACENCY_CHECK) && !user.sexcon.Adjacent_Or_Closet(target))
 		return FALSE
 
+	if(!self_target && !isnull(target.buckled) && istype(target.buckled, /obj/structure/bondage/gloryhole)) // gloryhole buckled mobs ignore tile/grab checks
+		sigbitflags |= (SKIP_GRAB_CHECK|SKIP_TILE_CHECK)
+		grabs = FALSE
+
 	if(src.check_same_tile && (user != target || self_target) && !(sigbitflags & SKIP_TILE_CHECK))
 		var/same_tile = (get_turf(user) == get_turf(target))
 		var/grab_bypass = (src.aggro_grab_instead_same_tile && user.get_highest_grab_state_on(target) == GRAB_AGGRESSIVE)
@@ -1156,8 +1160,11 @@
 			do_until_finished = !do_until_finished
 			update_exposure()
 		if("toggle_bottom_exposed")
-			bottom_exposed = !bottom_exposed
-			update_exposure()
+			if(user.incapacitated(ignore_restraints = TRUE))
+				to_chat(user, span_warning("I can't do that right now!"))
+			else
+				bottom_exposed = !bottom_exposed
+				update_exposure()
 		if("set_arousal")
 			var/amount = input(user, "Value above 120 will immediately cause orgasm!", "Set Arousal", arousal) as num
 			if(aphrodisiac > 1 && amount > 0)

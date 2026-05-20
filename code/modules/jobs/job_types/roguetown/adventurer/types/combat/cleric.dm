@@ -27,7 +27,7 @@
 	// Also because the alternative is not very clean codewise.
 	subclass_stashed_items = list(
 		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
 	)
 	extra_context = "This subclass can choose from multiple disciplines. \
 	The further your chosen discipline strays from unarmed combat, however, the greater your skills in fistfighting and wrestling will atrophy. \
@@ -62,6 +62,18 @@
 		/obj/item/reagent_containers/food/snacks/rogue/bread = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/beer = 1, //Plays into the classic stereotype of beer-loving monks and well-stocked pilgrims.
 		)
+	
+	// Ascendant symbols go into the backpack, so you don't get insta-found out.
+	switch(H.patron?.type)
+		if(/datum/patron/inhumen/zizo)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen] = 1
+		if(/datum/patron/inhumen/matthios)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
+		if(/datum/patron/inhumen/graggar)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
+		if(/datum/patron/inhumen/baotha)	
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
+
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
 
@@ -228,6 +240,15 @@
 		/obj/item/flashlight/flare/torch/metal = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		)
+	switch(H.patron?.type)
+		if(/datum/patron/inhumen/zizo)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen] = 1
+		if(/datum/patron/inhumen/matthios)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
+		if(/datum/patron/inhumen/graggar)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
+		if(/datum/patron/inhumen/baotha)	
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
 	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
@@ -441,6 +462,15 @@
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
+	switch(H.patron?.type)
+		if(/datum/patron/inhumen/zizo)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen] = 1
+		if(/datum/patron/inhumen/matthios)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
+		if(/datum/patron/inhumen/graggar)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
+		if(/datum/patron/inhumen/baotha)	
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
 	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
 	switch(H.patron?.type)
@@ -555,7 +585,7 @@
 
 /datum/advclass/cleric/missionary
 	name = "Missionary"
-	tutorial = "You are a devout worshipper of the divine with a strong connection to your patron god. You've spent years studying scriptures and serving your deity - now you wander into foreign lands, spreading the word of your faith."
+	tutorial = "You are a devout worshipper of the divine with a strong connection to your patron god. You've spent years studying scriptures and serving your deity - now you wander into foreign lands, spreading the word of your faith. Preachers focus on homesteading while Shepards preach through example and protecting their would-be flock."
 	outfit = /datum/outfit/job/roguetown/adventurer/missionary
 	traits_applied = list(TRAIT_EMPATH)
 	subclass_stats = list(
@@ -568,13 +598,18 @@
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/staves = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,//just enough to reattach limbs, same as acolytes
+		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/lumberjacking = SKILL_LEVEL_NOVICE,
 	)
 	subclass_stashed_items = list(
 		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
@@ -647,14 +682,20 @@
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3)//Only T4 NOT to start maxed, with a devotion cap.
 	C.update_devotion(C.max_devotion / 4 - 50, C.max_devotion / 4 - 50, silent = TRUE) // Start at ~25% of devotion cap
 	if(H.mind)
-		var/weapons = list("Woodstaff", "Quarterstaff")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("Path of the Preacher", "Path of the Shepard")
+		var/weapon_choice = input(H, "Choose your path.", "CHOOSE YOUR DISCIPLINE.") as anything in weapons
 		switch(weapon_choice)
-			if("Woodstaff")
-				backr = /obj/item/rogueweapon/woodstaff
-			if("Quarterstaff")
+			if("Path of the Preacher")//Discount homesteader. No trait so you can't level these skills up, nor do you have starting tools.
+				r_hand = /obj/item/rogueweapon/woodstaff
+				H.adjust_skillrank_up_to(/datum/skill/craft/cooking, 3, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 3, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/craft/masonry, 1, TRUE)//just so you can make pretty floors easier
+				H.adjust_skillrank_up_to(/datum/skill/craft/sewing, 3, TRUE)
+			if("Path of the Shepard")//The "combat" variant. The core stat spread should keep this class from ever overshadowing the others, but it's worth keeping an eye out anyway.
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
-				l_hand = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/staves, 4, TRUE)//Staves are pretty mediocre. Mostly just makes it really hard to get past their wielded parry.
+				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 3, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 3, TRUE)//Good luck fighting like a monk without monk stats or Dodge Expert.
 
 	if(istype(H.patron, /datum/patron/divine))
 		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast)
