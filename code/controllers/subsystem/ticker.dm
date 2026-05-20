@@ -147,9 +147,9 @@ SUBSYSTEM_DEF(ticker)
 	else
 		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
 
-	// login_music = pick('sound/music/title.ogg','sound/music/title2.ogg')
+
 	// TODO: Make music map dependent
-	login_music = 'sound/music/title.ogg'
+	login_music = pick('sound/music/title.ogg','sound/music/title2.ogg','sound/music/title3.ogg','sound/music/title4.ogg')
 
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase	= generate_code_phrase(return_list=TRUE)

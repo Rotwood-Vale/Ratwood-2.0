@@ -1322,7 +1322,7 @@
 "nw" = (
 /obj/structure/lever/wall{
 	dir = 4;
-	lockid = "inhumenoutdoorgaol2"
+	redstone_id = "inhumenoutdoorgaol2"
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/wretch)

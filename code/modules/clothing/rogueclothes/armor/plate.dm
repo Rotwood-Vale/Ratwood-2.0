@@ -481,10 +481,10 @@
 
 /obj/item/clothing/suit/roguetown/armor/plate/half/fencer
 	name = "fencer's cuirass"
-	desc = "An expertly smithed form-fitting steel cuirass that is much lighter and agile, but breaks with much more ease. It's thinner, but backed with silk and leather."
-	armor = ARMOR_CUIRASS		// Experimental.
+	desc = "An expertly smithed form-fitting steel cuirass that is much lighter and agile. Backed with supple leather and silk, it's not only protective but luxurious to wear."
+	armor = ARMOR_CUIRASS// Experimental.
 	armor_class = ARMOR_CLASS_LIGHT
-	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL
+	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL //costly to make, competes with Light Brigandine. Compare to it and Studded/Hardened Leather.
 	smelt_bar_num = 1
 	icon_state = "fencercuirass"
 	item_state = "fencercuirass"
@@ -648,7 +648,7 @@
 /obj/item/clothing/suit/roguetown/armor/plate/bronze
 	name = "bronze cuirass"
 	desc = "A chiseled breastplate of bronze, further padded with hide to comfort its championing bod. The plates have been carefully forged to mimic the statuesque physiques of Psydonia's ancient heroes. Wearing it bolsters you with determination."
-	body_parts_covered = CHEST | VITALS | LEGS 
+	body_parts_covered = CHEST | VITALS | LEGS
 	icon_state = "bronzecuirass"
 	armor = ARMOR_CUIRASS
 	smeltresult = /obj/item/ingot/bronze
