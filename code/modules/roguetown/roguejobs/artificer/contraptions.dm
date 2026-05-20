@@ -555,19 +555,14 @@
 	force = 21
 	force_wielded = 28
 	max_integrity = 700
-	force_wielded = 19
 	icon_state = "drill"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	item_state = "drill"
 	possible_item_intents = list(MACE_SMASH)
 	gripped_intents = list(/datum/intent/drill)
-	//experimental_inhand = FALSE
-	//experimental_onback = FALSE
 	slot_flags = ITEM_SLOT_BACK
-	//gripspriteonmob = TRUE
 	smeltresult = /obj/item/ingot/bronze
-	//pickmult = 1.5
 	w_class = WEIGHT_CLASS_HUGE
 	accepted_power_source = /obj/item/alch/coaldust
 	prime_power_source = /obj/item/alch/firedust
@@ -579,6 +574,31 @@
 	grid_height = 64
 	grid_width = 64
 	var/active_item = FALSE
+
+/obj/item/contraption/pick/drill/architect
+	name = "architect's drill"
+	desc = "A modified clockwork drill specially made for the guild architect, this masterwork of engineering hits harder and lasts longer."
+	force = 25
+	force_wielded = 30
+	max_integrity = 1000
+	icon_state = "drill"
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	item_state = "drill"
+	possible_item_intents = list(MACE_SMASH)
+	gripped_intents = list(/datum/intent/drill)
+	slot_flags = ITEM_SLOT_BACK
+	smeltresult = /obj/item/ingot/bronze
+	w_class = WEIGHT_CLASS_HUGE
+	accepted_power_source = /obj/item/alch/coaldust
+	prime_power_source = /obj/item/alch/firedust
+	misfire_chance = 0
+	sneaky_misfire_chance = 20
+	charge_per_source = 100
+	charge_per_prime = 200
+	max_stored_charge = 600
+	grid_height = 64
+	grid_width = 64
 
 
 /obj/item/contraption/pick/drill/Initialize()

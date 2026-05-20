@@ -265,7 +265,7 @@
 #define TRAIT_EQUESTRIAN "Equestrian"
 #define TRAIT_GANG_A "Gang Rontz Ratz"
 #define TRAIT_GANG_B "Gang Blortz Volves"
-#define TRAIT_NATURALARMOR "Tough Skin" 
+#define TRAIT_NATURALARMOR "Tough Skin"
 #define TRAIT_CLERGYRADICAL "Radical member of Clergy"
 
 // ARMOR / CLOTHING GIVEN TRAITS (GIVEN BY WEARING CLOTHES/ARMOR PIECES)
@@ -551,7 +551,6 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others."),
 	TRAIT_FENCERDEXTERITY = span_info("I've trained my entire lyfe around the art of unarmoured fencing, affording myself unmatched speed when wearing very light armour. I'm very choosy otherwise."),
 	TRAIT_HONORBOUND = span_info("The Tattoos of this Clan bind me to a lyfestyle of bare-skinned battle and swordsmanship. I refuse to wear armor that do not compliment my traditional garb and tattoos.")
-	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others.")
 ))
 
 // trait accessor defines
