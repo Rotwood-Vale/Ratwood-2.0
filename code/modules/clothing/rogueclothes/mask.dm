@@ -360,6 +360,8 @@
 	name = "spider rider's mask"
 	desc = "A metal mask adorned with arachnid iconography. A grim visage crafted by a grim race."
 	icon_state = "shadowfacemask"
+	smeltresult = /obj/item/ingot/drow
+	smelt_bar_num = 1
 
 /obj/item/clothing/mask/rogue/facemask/aalloy
 	name = "decrepit mask"

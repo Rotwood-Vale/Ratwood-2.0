@@ -17,7 +17,7 @@
 	max_integrity = 0
 	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
-	locked = FALSE
+	var/locked = FALSE
 	var/keycontrol = "steward"
 	var/current_tab = TAB_MAIN
 	var/compact = TRUE

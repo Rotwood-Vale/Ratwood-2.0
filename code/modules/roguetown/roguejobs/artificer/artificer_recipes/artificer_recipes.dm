@@ -301,7 +301,7 @@
 	name = "Voltic Gauntlet (+1 Tin ingot)(+2 Bronze gear)(+1 cinnabar ore)"
 	required_item = /obj/item/ingot/bronze
 	additional_items = list(/obj/item/roguegear/bronze, /obj/item/roguegear/bronze,/obj/item/ingot/tin, /obj/item/rogueore/cinnabar)
-	created_item = /obj/item/clothing/gloves/roguetown/contraption/voltic
+	created_item = /obj/item/clothing/gloves/roguetown/chain/contraption/voltic
 	hammers_per_item = 12
 	skill_level = 4
 

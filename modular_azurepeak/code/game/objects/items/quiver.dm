@@ -215,6 +215,84 @@
 		arrows += A
 	update_icon()
 
+/obj/item/quiver/bolt/silver/Initialize()
+	..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/bolt/silver/A = new()
+		arrows += A
+	update_icon()
+
+/////////////
+// BOLT, H.//
+/////////////
+
+/obj/item/quiver/bolt/heavy
+	name = "heavy bolt pouch"
+	desc = "A heavy leather canister that can be used to carry heavier bolts. Casketed inside are the missiles that, whether launched from a mounted ballista or handheld siegebow, will devastate without quarter."
+	icon_state = "boltpouch0"
+	item_state = "boltpouch"
+	max_storage = 8
+	sellprice = 10
+	var/allowed_ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt
+
+/obj/item/quiver/bolt/heavy/attack_turf(turf/T, mob/living/user)
+	if(arrows.len >= max_storage)
+		to_chat(user, span_warning("My [src.name] is full!"))
+		return
+	to_chat(user, span_notice("I begin to gather the ammunition..."))
+	for(var/obj/item/ammo_casing/caseless/rogue/heavy_bolt in T.contents)
+		if(do_after(user, 5))
+			if(!eatarrow(heavy_bolt))
+				break
+
+/obj/item/quiver/bolt/heavy/update_icon()
+	if(arrows.len)
+		icon_state = "boltpouch1"
+	else
+		icon_state = "boltpouch0"
+
+/obj/item/quiver/bolt/heavy/standard/Initialize()
+	..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/bolt/heavy/bronze/Initialize()
+	..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/bronze/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/bolt/heavy/aalloy/Initialize()
+	..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/aalloy/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/bolt/heavy/paalloy/Initialize()
+	..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/paalloy/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/bolt/heavy/blunt/Initialize()
+	..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/blunt/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/bolt/heavy/silver/Initialize()
+	..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/silver/A = new()
+		arrows += A
+	update_icon()
+
 /obj/item/quiver/javelin
 	name = "javelinbag"
 	desc = ""

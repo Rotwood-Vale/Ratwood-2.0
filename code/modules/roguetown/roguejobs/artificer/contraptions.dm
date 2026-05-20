@@ -20,6 +20,9 @@
 	var/current_charge = 0
 	var/misfire_chance
 	var/sneaky_misfire_chance
+	var/lockid = null
+	var/lockhash = null
+	var/locked = null
 	/// Are we misfiring? Important for chain reactions.
 	var/misfiring = FALSE
 	obj_flags_ignore = TRUE
@@ -297,12 +300,6 @@
 	var/metalizer_result
 	/// The smelting result, used by the smelter or by the portable smelter
 	var/smeltresult
-	/// The lock ID, used with keys, if a key has the same lock ID it will work on this lock
-	var/lockid
-	/// Lockhash goes hand in hand with lock ID. Horrible system. Still very necessary.
-	var/lockhash
-	/// Is this locked?
-	var/locked
 
 /obj/item/contraption/wood_metalizer/attack_obj(obj/O, mob/living/user)
 	..()
@@ -507,145 +504,50 @@
 		charge_deduction(amputee, user, 1)
 
 /obj/item/contraption/lock_imprinter
-	name = "lock imprinter"
-	desc = "A useful contraption that facilitates a locksmith's job on already installed locks."
+	name = "lock improver"
+	desc = "A useful contraption improves locks at the cost of locks."
 	icon_state = "imprinter"
 	on_icon = "imprinter_flick"
 	off_icon = "imprinter_off"
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_NORMAL
 	accepted_power_source = /obj/item/customlock
 	misfire_chance = 0
 	sneaky_misfire_chance = 20
 	charge_per_source = 2
+	max_stored_charge = 20
 	grid_height = 32
 	grid_width = 64
-	max_stored_charge = 20
-	cog_accept = FALSE
-	var/list/allowed_locks = list(/obj/structure/mineral_door, /obj/structure/closet, /obj/structure/roguemachine/steward, /obj/structure/roguemachine/vendor, /obj/structure/roguemachine/goldface)
-	var/stored_lock_id = "artificer"
-	var/stored_lock_hash = 354
-	var/mode = "Examiner"
-
-/obj/item/contraption/lock_imprinter/examine(mob/user)
-	. = ..()
-	if(!istype(user, /mob/living))
-		return
-	var/mob/living/player = user
-	var/skill = player.get_skill_level(/datum/skill/craft/engineering)
-	if(skill >= 2)
-		. += span_warning("The [name] is currently in [mode] mode.")
-		if(skill >= 4)
-			if(stored_lock_id)
-				. += span_warning("The current stored Lock ID is [stored_lock_id].")
-			else
-				. += span_warning("There is no stored Lock ID.")
-		else
-			. += span_warning("I cannot yet fully understand this contraption.")
-
-/obj/item/contraption/lock_imprinter/attackby(obj/item/I, mob/user, params)
-	..()
-	if(istype(I, /obj/item/key))
-		var/obj/item/key/the_key = I
-		user.changeNext_move(CLICK_CD_FAST)
-		flick(off_icon, src)
-		playsound(user, 'sound/foley/doors/unlock.ogg', 100, TRUE)
-		var/datum/effect_system/spark_spread/S = new()
-		var/turf/front = get_turf(src)
-		S.set_up(1, 1, front)
-		S.start()
-		stored_lock_id = the_key.lockid
-		stored_lock_hash = the_key.lockhash
-		user.visible_message(span_notice("[user] inserts \a [the_key] into the [name] and it starts ticking..."))
-		addtimer(CALLBACK(src, PROC_REF(play_clock_sound)), 5)
 
 /obj/item/contraption/lock_imprinter/attack_obj(obj/O, mob/living/user)
 	..()
-	if(!current_charge)
+
+	if(current_charge<1)
+		flick(off_icon, src)
+		to_chat(user, span_info("The contraption beeps! It requires \a [initial(accepted_power_source.name)]!"))
+		playsound(src, 'sound/magic/magic_nulled.ogg', 100, TRUE)
 		return
-	var/skill = user.get_skill_level(/datum/skill/craft/engineering)
-	var/valid_lock
-	for(var/type in allowed_locks)
-		if(istype(O, type))
-			valid_lock = TRUE
-			if(mode == "Examiner")
-				if(O.lockid)
-					to_chat(user, span_warning("The [name] identifies this lock's ID as [O.lockid]."))
-				else
-					to_chat(user, span_warning("The [name] identifies an absense of a lock or lock ID."))
-				playsound(loc, 'sound/misc/beep.ogg', 50, TRUE)
-				flick(off_icon, src)
-				break
-			if(mode == "Imprinter")
-				O.lockid = stored_lock_id
-				O.lockhash = stored_lock_hash
-				flick(on_icon, src)
-				shake_camera(user, 1, 1)
-				user.visible_message(span_notice("[user] holds the [name] up to the [O.name] causing sparks to fly!"))
-				playsound(src, pick('sound/combat/hits/onmetal/sheet (1).ogg', 'sound/combat/hits/onmetal/sheet (2).ogg', 'sound/combat/hits/onmetal/grille (1).ogg', 'sound/combat/hits/onmetal/grille (2).ogg', 'sound/combat/hits/onmetal/grille (3).ogg'), 100, TRUE)
-				charge_deduction(O, user, 1)
-				var/datum/effect_system/spark_spread/S = new()
-				var/turf/front = get_turf(O)
-				S.set_up(1, 1, front)
-				S.start()
-				user.mind.add_sleep_experience(/datum/skill/craft/engineering, (user.STAINT)) // Only imprinting gives EXP
-				message_admins("[user] has used [name] to change the lock of [O] to [stored_lock_id] hash [stored_lock_hash] in [ADMIN_VERBOSEJMP(front)]")
-				log_game("[user] has used [name] to change the lock of [O] to [stored_lock_id] hash [stored_lock_hash] in [ADMIN_VERBOSEJMP(front)]")
-				if(!skill && prob(sneaky_misfire_chance))
-					misfire(O, user)
-				break
-			if(mode == "Unlocker")
-				var/turf/front = get_turf(O)
-				if(O.locked)
-					O.locked = FALSE
-					playsound(user, 'sound/foley/doors/unlock.ogg', 150, TRUE)
-					playsound(user, 'sound/foley/doors/lockrattlemetal.ogg', 100, TRUE)
-					message_admins("[user] has used [name] to unlock [O] in [ADMIN_VERBOSEJMP(front)]")
-					log_game("[user] has used [name] to unlock [O] in [ADMIN_VERBOSEJMP(front)]")
-				else
-					O.locked = TRUE
-					playsound(user, 'sound/foley/doors/lock.ogg', 150, TRUE)
-					message_admins("[user] has used [name] to lock [O] in [ADMIN_VERBOSEJMP(front)]")
-					log_game("[user] has used [name] to lock [O] in [ADMIN_VERBOSEJMP(front)]")
-				user.visible_message(span_notice("[user] holds the [name] up to the [O.name] causing sparks to fly!"))
-				var/datum/effect_system/spark_spread/S = new()
-				S.set_up(1, 1, front)
-				S.start()
-				var/oldx = O.pixel_x
-				animate(O, pixel_x = oldx+1, time = 0.5)
-				animate(pixel_x = oldx-1, time = 0.5)
-				animate(pixel_x = oldx, time = 0.5)
-				flick(on_icon, src)
-				charge_deduction(O, user, 1)
-				if(!skill && prob(sneaky_misfire_chance))
-					misfire(O, user)
-				break
-		if(!valid_lock)
-			to_chat(user, span_info("The [name] refuses to function."))
-			playsound(user, 'sound/items/flint.ogg', 100, FALSE)
+
+	else if(ispath(O.type, /obj/structure/mineral_door))
+		var/obj/structure/mineral_door/doorupgrade = O
+		var/oldlockdifficulty = doorupgrade.lockdifficulty
+		var/newlockdifficulty = oldlockdifficulty + 1
+		if(newlockdifficulty > 4)
 			flick(off_icon, src)
-			var/datum/effect_system/spark_spread/S = new()
-			var/turf/front = get_turf(O)
-			S.set_up(1, 1, front)
-			S.start()
-
-/obj/item/contraption/lock_imprinter/hammer_action(obj/item/I, mob/user)
-	user.changeNext_move(CLICK_CD_FAST)
-	flick(off_icon, src)
-	user.visible_message(span_info("[user] beats the [name] into submission!"))
-	playsound(src, pick('sound/combat/hits/onmetal/sheet (1).ogg', 'sound/combat/hits/onmetal/sheet (2).ogg', 'sound/combat/hits/onmetal/grille (1).ogg', 'sound/combat/hits/onmetal/grille (2).ogg', 'sound/combat/hits/onmetal/grille (3).ogg'), 100, TRUE)
-	shake_camera(user, 1, 1)
-	var/datum/effect_system/spark_spread/S = new()
-	var/turf/front = get_turf(I)
-	S.set_up(1, 1, front)
-	S.start()
-	switch(mode)
-		if("Examiner")
-			mode = "Imprinter"
-		if("Imprinter")
-			mode = "Unlocker"
-		if("Unlocker")
-			mode = "Examiner"
-
+			to_chat(user, span_info("The contraption beeps! It's upgraded to its limit!"))
+			playsound(src, 'sound/magic/magic_nulled.ogg', 100, TRUE)
+			return
+		flick(on_icon, src)
+		shake_camera(user, 1, 1)
+		user.visible_message(span_notice("[user] holds the [name] up to the [O.name] causing sparks to fly!"))
+		playsound(src, pick('sound/combat/hits/onmetal/sheet (1).ogg', 'sound/combat/hits/onmetal/sheet (2).ogg', 'sound/combat/hits/onmetal/grille (1).ogg', 'sound/combat/hits/onmetal/grille (2).ogg', 'sound/combat/hits/onmetal/grille (3).ogg'), 100, TRUE)
+		doorupgrade.lockdifficulty = newlockdifficulty
+		charge_deduction(O, user, 1)
+		var/datum/effect_system/spark_spread/S = new()
+		var/turf/front = get_turf(O)
+		S.set_up(1, 1, front)
+		S.start()
+		user.mind.add_sleep_experience(/datum/skill/craft/engineering, (user.STAINT)) // Only imprinting gives EXP
+		return
 
 /obj/item/contraption/pick/drill
 	name = "clockwork drill"

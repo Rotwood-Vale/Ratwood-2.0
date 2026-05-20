@@ -13,7 +13,7 @@
 	var/secure = FALSE //secure locker or not, also used if overriding a non-secure locker with a secure door overlay to add fancy lights
 	var/opened = FALSE
 	var/welded = FALSE
-	locked = FALSE
+	var/locked = FALSE
 	var/large = TRUE
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/breakout_time = 1200
@@ -36,7 +36,8 @@
 	var/anchorable = TRUE
 	var/icon_welded = "welded"
 	var/keylock = FALSE
-	lockid = null
+	var/lockid = null
+	var/lockhash = null
 	var/masterkey = FALSE
 	var/lock_strength = 100
 	throw_speed = 1

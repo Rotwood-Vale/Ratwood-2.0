@@ -13,7 +13,7 @@
 	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
 	var/current_tab = TAB_ROUSMAIN
-	locked = FALSE
+	var/locked = FALSE
 	var/keycontrol = "crier"
 	var/total_payments = 0 // Central storage of all broadcaster payments.
 

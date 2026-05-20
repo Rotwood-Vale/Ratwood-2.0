@@ -8,7 +8,7 @@
 	armor = ARMOR_DISPLAYCASE
 	max_integrity = 150
 	integrity_failure = 0.33
-	locked = FALSE
+	var/locked = FALSE
 	var/open = TRUE
 	var/obj/item/rogueweapon/sword/long/heirloom
 

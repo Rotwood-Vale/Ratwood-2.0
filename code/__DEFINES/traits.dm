@@ -24,6 +24,8 @@
 #define TRAIT_HEAVYARMOR "Plate Training"
 #define TRAIT_DODGEEXPERT "Expert Dodger"
 #define TRAIT_MAGEARMOR "Magic Barrier"
+#define TRAIT_FENCERDEXTERITY "Fencer's Dexterity"
+#define TRAIT_HONORBOUND "Honorbound Tattoos"
 #define TRAIT_DECEIVING_MEEKNESS "Deceiving Meekness"
 #define TRAIT_CRITICAL_RESISTANCE "Critical Resistance"
 #define TRAIT_CRITICAL_WEAKNESS "Critical Weakness"
@@ -150,6 +152,7 @@
 #define TRAIT_PSYDONITE "Psydonite's Devotion" // Anti-Miracles on a selective basis, anastasis / cure rot still apply.
 #define TRAIT_BLACKBAGGER "Apprehension Techniques" // Capable of using Garrotes and Blackbags. Apprehension techniques.
 #define TRAIT_RESONANCE "Resonance Caster"//Casting miracles will buff nearby miraclists. Or, would, had I finished it. Instead it applies fortify in an AoE. - Carl
+
 /// Snowflake trait given to Eoran's wearing their bud
 #define TRAIT_EORAN_CONTENTED "Eoran Contented"
 
@@ -247,6 +250,7 @@
 #define TRAIT_ARCYNE_T4 "Arcyne Training (Master)"
 #define TRAIT_BITERHELM "Helmetbiter" // just use this to get helmets which are bitey.
 #define TRAIT_STRENGTH_UNCAPPED "Strength Unbound"	//ignores the STR softcap.
+
 /// Allows you to move faster than the speed softcap
 #define TRAIT_UNCAPPED_SPEED "Speed Unbound"
 #define TRAIT_EORAN_CALM "Eoran Calm"
@@ -546,7 +550,9 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_NATURALARMOR = span_info("Whether by natural or other means, my skin is strong enough to resist being pierced and cut."),
 	TRAIT_CLERGYRADICAL = span_info("I follow the radical path of the clergy, abandoning the old road of devotion in favor of self-guided miracle study."),
 	TRAIT_TRIBAL = span_info("I belong to the Island's tribe."),
-	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others.")
+	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others."),
+	TRAIT_FENCERDEXTERITY = span_info("I've trained my entire lyfe around the art of unarmoured fencing, affording myself unmatched speed when wearing very light armour. I'm very choosy otherwise."),
+	TRAIT_HONORBOUND = span_info("The Tattoos of this Clan bind me to a lyfestyle of bare-skinned battle and swordsmanship. I refuse to wear armor that do not compliment my traditional garb and tattoos.")
 ))
 
 // trait accessor defines

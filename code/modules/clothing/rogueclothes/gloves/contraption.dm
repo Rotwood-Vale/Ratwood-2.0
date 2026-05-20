@@ -12,10 +12,6 @@
 	var/misfiring = FALSE
 	var/cog_accept = TRUE
 
-/obj/item/clothing/gloves/roguetown/chain/contraption/ComponentInitialize()
-	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
-	AddComponent(/datum/component/armour_filtering/negative, TRAIT_HONORBOUND)
-
 // === CONTRAPTION CORE BEHAVIOR ===
 /obj/item/clothing/gloves/roguetown/chain/contraption/proc/battery_collapse(obj/O, mob/living/user)
 	to_chat(user, span_info("The [accepted_power_source.name] powering [src] fizzles into nothing!"))

@@ -190,6 +190,8 @@
 	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish, /datum/intent/dagger/sucker_punch) // sucker as a little flavor and bonus. 
 	force = 22
 	minstr = 10 //meant for a medium armor mounted soldier. With the +2 from the drow merc statspread, it should cover most statpack silliness save for Wary.  
+	smeltresult = /obj/item/ingot/drow
+	smelt_bar_num = 1
 
 /obj/item/rogueweapon/whip/bronze
 	name = "bronze whip"

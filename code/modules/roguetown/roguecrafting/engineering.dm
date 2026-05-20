@@ -213,9 +213,7 @@
 /datum/crafting_recipe/roguetown/engineering/heavycrossbow
 	name = "siegebow with heavy bolt pouch"
 	category = "Weapons"
-	result = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy,
-						/obj/item/quiver/bolt/heavy,
-					)
+	result = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy, /obj/item/quiver/bolt/heavy,)
 	reqs = list(/obj/item/roguegear = 2, /obj/item/ingot/steel = 2, /obj/item/natural/fibers = 4, /obj/item/natural/wood/plank = 4, /obj/item/natural/hide/cured = 2)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
@@ -255,10 +253,10 @@
 	name = "blunt heavy bolts, iron (x4)"
 	category = "Ammo"
 	reqs = list(/obj/item/natural/wood/plank = 2, /obj/item/ingot/iron = 1)
-	result = list(/obj/item/ammo_casing/caseless/rogue/heavy_bolt/blunt,
-						/obj/item/ammo_casing/caseless/rogue/heavy_bolt/blunt,
-						/obj/item/ammo_casing/caseless/rogue/heavy_bolt/blunt,
-						/obj/item/ammo_casing/caseless/rogue/heavy_bolt/blunt,
+	result = list(/obj/item/ammo_casing/caseless/rogue/bolt/heavyblunt,
+						/obj/item/ammo_casing/caseless/rogue/bolt/heavyblunt,
+						/obj/item/ammo_casing/caseless/rogue/bolt/heavyblunt,
+						/obj/item/ammo_casing/caseless/rogue/bolt/heavyblunt,
 					)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
@@ -268,14 +266,14 @@
 	name = "blunt heavy bolts, iron (x8)"
 	category = "Ammo"
 	reqs = list(/obj/item/natural/wood/plank = 4, /obj/item/ingot/iron = 2)
-	result = list(/obj/item/ammo_casing/caseless/rogue/heavy_bolt/blunt,
-						/obj/item/ammo_casing/caseless/rogue/heavy_bolt/blunt,
-						/obj/item/ammo_casing/caseless/rogue/heavy_bolt/blunt,
-						/obj/item/ammo_casing/caseless/rogue/heavy_bolt/blunt,
-						/obj/item/ammo_casing/caseless/rogue/heavy_bolt/blunt,
-						/obj/item/ammo_casing/caseless/rogue/heavy_bolt/blunt,
-						/obj/item/ammo_casing/caseless/rogue/heavy_bolt/blunt,
-						/obj/item/ammo_casing/caseless/rogue/heavy_bolt/blunt,
+	result = list(/obj/item/ammo_casing/caseless/rogue/bolt/heavyblunt,
+						/obj/item/ammo_casing/caseless/rogue/bolt/heavyblunt,
+						/obj/item/ammo_casing/caseless/rogue/bolt/heavyblunt,
+						/obj/item/ammo_casing/caseless/rogue/bolt/heavyblunt,
+						/obj/item/ammo_casing/caseless/rogue/bolt/heavyblunt,
+						/obj/item/ammo_casing/caseless/rogue/bolt/heavyblunt,
+						/obj/item/ammo_casing/caseless/rogue/bolt/heavyblunt,
+						/obj/item/ammo_casing/caseless/rogue/bolt/heavyblunt,
 					)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering

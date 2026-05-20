@@ -299,6 +299,18 @@
 
 // ✤ EQUIPMENT ✤ BELONGS HERE! JUST BELOW!
 
+/datum/inqports/equipment/superbow
+	name = "Relic - The Ballista, Evercracking"
+	item_type = /obj/structure/closet/crate/chest/inqreliquary/relic/superbow/
+	marquescost = 16
+	maximum = 1
+
+/obj/structure/closet/crate/chest/inqreliquary/relic/superbow/Initialize()
+	. = ..()
+	new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy(src)
+	new /obj/item/quiver/bolt/heavy/standard(src)
+	new /obj/item/ammo_casing/caseless/rogue/heavy_bolt/silver(src)
+
 /datum/inqports/equipment/psydonthorns
 	name = "1 Psydonian Thorns"
 	item_type = /obj/item/clothing/wrists/roguetown/bracers/psythorns

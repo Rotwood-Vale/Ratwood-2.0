@@ -80,6 +80,7 @@
 	var/ignore_source_check = FALSE
 
 	var/damage = 10
+	var/object_damage_multiplier = 1	//Damage multiplier when hitting objects, as opposed to mobs.
 	var/npc_simple_damage_mult = 1 // Multiplicative bonus damage vs mindless simple animals.
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = FALSE //Determines if the projectile will skip any damage inflictions
@@ -125,6 +126,9 @@
 	var/bonus_accuracy = 0 //bonus accuracy that cannot be affected by range drop off.
 
 	var/target_z = 0
+	var/damages_turf_walls = FALSE
+	var/wall_impact_break_probability = 0
+	var/hit_wall = FALSE
 
 /obj/projectile/proc/handle_drop()
 	return
@@ -207,10 +211,16 @@
 
 	if(!nodamage && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_loca) && prob(75))
 		var/turf/closed/wall/W = target_loca
-		if(impact_effect_type && !hitscan)
-			new impact_effect_type(target_loca, hitx, hity)
+		hit_wall = TRUE
+		if(prob(75))
+			if(impact_effect_type && !hitscan)
+				new impact_effect_type(target_loca, hitx, hity)
+			W.add_dent(WALL_DENT_SHOT, hitx, hity)
 
 		W.add_dent(WALL_DENT_SHOT, hitx, hity)
+
+		if(damages_turf_walls)
+			W.take_damage(damage, damage_type, flag, TRUE, object_damage_multiplier)
 
 		return BULLET_ACT_HIT
 

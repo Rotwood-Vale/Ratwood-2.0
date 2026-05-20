@@ -10,7 +10,7 @@
 	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
 	var/list/held_items = list()
-	locked = TRUE
+	var/locked = TRUE
 	var/budget = 0
 	var/wgain = 0
 	var/keycontrol = "merchant"

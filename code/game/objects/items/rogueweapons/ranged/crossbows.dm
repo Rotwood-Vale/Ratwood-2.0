@@ -228,9 +228,60 @@
 	hasloadedsprite = TRUE
 	penfactor = 1.5//We want this to go through, no matter what, effectively.
 
+/datum/intent/buttstroke/heavy
+	name = "heavy buttstroke"
+	damfactor = 1.15
+	swingdelay = 6
+	icon_state = "instrike"
+	item_d_type = "blunt"
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR - 0.45 //Reduces integrity damage modifier to +15%.
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy
+	name = "siegebow"
+	desc = "A heavier weight crossbow - the basis of a mounted ballista, made fit for handheld usage. Integrated just beneath the stock is a windlass mechanism, necessary to surmount the siegebow's titanic draw-strength. It loads heavier, full-length bolts; purpose-made to pulverize. </br>Assembled in Grenzelhoft, championed by Valoria, and unfamiliar to the highlands of Azure Peak."
+	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon_state = "heavybow0"
+	item_state = "heavybow"
+	possible_item_intents = list(/datum/intent/shoot/crossbow/heavy, /datum/intent/arc/crossbow/heavy, /datum/intent/buttstroke/heavy, /datum/intent/effect/daze) //Remember, this is quite heavy.
+	load_sound = 'sound/foley/doors/lockmetal.ogg'
+	fire_sound = 'sound/combat/Ranged/crossbow_big_shot.ogg'
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/heavy_xbow
+	minstr = 12 //Should only affect melee damage. Sells the impression that you're hauling some serious artillery around.
+	force = 20
+	wdefense = 4
+	max_integrity = 150
+	chargingspeed = 60 //+20, or a little over +50% the standard charging speed.
+	reloadtime = 160 //Roughly sixteen seconds, or +200% the standard reloading speed.
+	accfactor = 0.5 //Hey, I'd like to see you try to aim a siege weapon while standing up!
+	equip_delay_self = 3 SECONDS
+	unequip_delay_self = 3 SECONDS
+	inv_storage_delay = 2 SECONDS
+
 /obj/item/ammo_box/magazine/internal/shot/heavy_xbow
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt
 	caliber = "heabolt"
 	max_ammo = 1
 	start_empty = TRUE
+
+/datum/intent/shoot/crossbow/heavy
+	basetime = 60
+	chargetime = 1
+	chargedrain = 1 //Takes 50% longer to properly aim and fire. Imparts a stamina drain and audio cue, too.
+	charging_slowdown = 2 //Slows down movement, on par with a dedicated longbow. You can probably guess why.
+
+/datum/intent/arc/crossbow/heavy
+	basetime = 60
+	chargetime = 1.5
+	chargedrain = 1 //Ditto.
+	charging_slowdown = 2.5 //Little more than before, with the assumption that you're taking your time for a more precise shot.
+
+/datum/intent/shoot/crossbow/heavy/prewarning()
+	if(mastermob)
+		mastermob.visible_message(span_warning("[mastermob] readies [masteritem]!"))
+		playsound(mastermob, pick('sound/combat/Ranged/crossbow_medium_reload-02.ogg'), 100, FALSE)
+
+/datum/intent/arc/crossbow/heavy/prewarning()
+	if(mastermob)
+		mastermob.visible_message(span_warning("[mastermob] readies [masteritem] for a precise shot!"))
+		playsound(mastermob, pick('sound/combat/Ranged/crossbow_medium_reload-02.ogg'), 100, FALSE)
 

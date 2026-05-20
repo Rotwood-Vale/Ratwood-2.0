@@ -22,13 +22,13 @@
 	max_integrity = 0
 	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
-	locked = FALSE
+	var/locked = FALSE
 	var/budget = 0
 	var/upgrade_flags
 	var/current_cat = "1"
 	// Motto displayed at the top of the vendor interface
 	var/motto = "GOLDFACE - In the name of greed."
-	lockid = "merchant"
+	var/lockid = "merchant"
 	// Which job can access profit from this vendor
 	var/profit_id = list("Merchant", "Shophand")
 	/// How much % of the base price is added as profit

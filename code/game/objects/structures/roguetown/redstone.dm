@@ -318,10 +318,10 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	var/firedirectiontwo = NORTHEAST //bullet variation for spread mode
 	var/firedirectionthree = NORTHWEST //bullet variation for spread mode
 	var/spreadmode = FALSE //spread out your shots, waste your ammo
-	locked = FALSE
+	var/locked = FALSE
 	var/keylock = FALSE
-	lockhash = 0
-	lockid = null
+	var/lockhash = 0
+	var/lockid = null
 	var/lockbroken = 0
 	var/locksound = 'sound/foley/doors/woodlock.ogg'
 	var/unlocksound = 'sound/foley/doors/woodlock.ogg'
