@@ -39,7 +39,6 @@
 
 /datum/outfit/job/roguetown/mercenary/gronnheavy/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.dna.species.soundpack_m = new /datum/voicepack/male/evil() //It's fucking cool okay
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron/gronn
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gronn
 	gloves = /obj/item/clothing/gloves/roguetown/plate/iron/gronn
@@ -48,7 +47,7 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/iron //Weakspot.
 	pants = /obj/item/clothing/under/roguetown/platelegs/iron/gronn
 	r_hand = /obj/item/rogueweapon/mace/maul //this is literally the only weapon type they'll get to use. No alternatives.
-	neck = /obj/item/clothing/neck/roguetown/bevor/iron //Their weakspot. Go replace it if you're a chud I guess
+	neck = /obj/item/clothing/neck/roguetown/gorget //Their weakspot. Go replace it if you're a chud I guess
 	backl = /obj/item/storage/backpack/rogue/satchel/black
 	backr = /obj/item/rogueweapon/scabbard/gwstrap
 	belt = /obj/item/storage/belt/rogue/leather

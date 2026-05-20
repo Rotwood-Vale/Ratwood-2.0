@@ -405,7 +405,6 @@
 #include "code\controllers\subsystem\vis_overlays.dm"
 #include "code\controllers\subsystem\vote.dm"
 #include "code\controllers\subsystem\weather.dm"
-#include "code\controllers\subsystem\movement\conveyors.dm"
 #include "code\controllers\subsystem\movement\minecarts.dm"
 #include "code\controllers\subsystem\movement\move_manager.dm"
 #include "code\controllers\subsystem\movement\movement_loop.dm"
