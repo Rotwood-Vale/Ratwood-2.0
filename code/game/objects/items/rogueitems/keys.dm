@@ -9,8 +9,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	dropshrink = 0.75
 	throwforce = 0
-	var/lockhash = 0
-	var/lockid = null
+	lockhash = 0
+	lockid = null
 	var/hardmode_indestructible = FALSE
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_MOUTH|ITEM_SLOT_NECK
 	drop_sound = 'sound/items/gems (1).ogg'
@@ -758,9 +758,7 @@
 	icon_state = "brownkey"
 	w_class = WEIGHT_CLASS_TINY
 	dropshrink = 0.75
-	var/lockhash = 0
-	grid_height = 32
-	grid_width = 32
+	lockhash = 0
 
 /obj/item/customblank/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/hammer))
@@ -793,9 +791,7 @@
 	icon_state = "lock"
 	w_class = WEIGHT_CLASS_SMALL
 	dropshrink = 0.75
-	var/lockhash = 0
-	grid_height = 32
-	grid_width = 32
+	lockhash = 0
 
 /obj/item/customlock/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/hammer))
