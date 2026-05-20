@@ -131,7 +131,7 @@
 		user.visible_message(span_warning("[src] settles down."))
 		user.update_inv_wear_id()
 
-    // === VOLTIC ZAP ===
+	// === VOLTIC ZAP ===
 /obj/item/clothing/gloves/roguetown/chain/contraption/voltic/proc/activate(mob/living/user)
 	if (!user)
 		return
