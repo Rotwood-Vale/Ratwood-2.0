@@ -357,12 +357,12 @@
 	var/list/raw_penalties
 	var/recovery_progress = 0
 	var/recovery_goal = 300
+	var/ticks_elapsed = 0
 
 /datum/status_effect/debuff/necras_touched/on_apply()
 	raw_penalties = list(STATKEY_STR = -5, STATKEY_CON = -5, STATKEY_WIL = -5, STATKEY_LCK = -5, STATKEY_PER = -5, STATKEY_INT = -5, STATKEY_SPD = -5)
 	effectedstats = raw_penalties.Copy()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, id)
 
 /datum/status_effect/debuff/necras_touched/proc/get_recovery_points()
 	var/points = 5
@@ -378,6 +378,13 @@
 	return points
 
 /datum/status_effect/debuff/necras_touched/tick()
+	ticks_elapsed++
+	if(ticks_elapsed == 1)
+		ADD_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, id)
+		ADD_TRAIT(owner, TRAIT_DNR, id)
+	else if(ticks_elapsed == 11)
+		REMOVE_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, id)
+		REMOVE_TRAIT(owner, TRAIT_DNR, id)
 	recovery_progress = min(recovery_progress + get_recovery_points(), recovery_goal)
 	var/target_penalty
 	if(recovery_progress < recovery_goal * 0.5)
@@ -406,6 +413,7 @@
 
 /datum/status_effect/debuff/necras_touched/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, id)
+	REMOVE_TRAIT(owner, TRAIT_DNR, id)
 	. = ..()
 
 /datum/status_effect/debuff/necras_touched/lux
@@ -438,6 +446,10 @@
 			inspec += "<br><b>Recovery: [E.recovery_progress] / [E.recovery_goal]</b> <span class='danger'>(Stats locked until [halfway])</span>"
 		else
 			inspec += "<br><b>Recovery: [E.recovery_progress] / [E.recovery_goal]</b> <span class='green'>(Stats recovering)</span>"
+		if(E.ticks_elapsed >= 1 && E.ticks_elapsed < 11)
+			inspec += "<br><span class='danger'>Death mark active — cannot be revived. ([11 - E.ticks_elapsed] min remaining)</span>"
+		else if(E.ticks_elapsed < 1)
+			inspec += "<br><span class='warning'>Death mark activates in 1 minute.</span>"
 		var/is_hungry = M.has_status_effect("hungryt1") || M.has_status_effect("hungryt2") || M.has_status_effect("hungryt3")
 		var/is_thirsty = M.has_status_effect("thirsty1") || M.has_status_effect("thirsty2") || M.has_status_effect("thirsty3")
 		var/well_fed = !is_hungry && !is_thirsty && (M.has_status_effect("meal") || M.has_status_effect("greatmeal") || M.has_status_effect("snack") || M.has_status_effect("greatsnack"))
