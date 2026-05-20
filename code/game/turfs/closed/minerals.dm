@@ -74,22 +74,48 @@
 
 		var/mob/living/L = user
 		user.doing = FALSE
-		// Makes more sense for the check since they always
-		// become an open tile afterwards
-		while(density && user.Adjacent(src))
-			if((L.energy > 0) && (do_after(user, CLICK_CD_MELEE, TRUE, src)))
-				..()
-				var/olddam = turf_integrity
-				if(turf_integrity && turf_integrity > 10)
-					if(turf_integrity < olddam)
-						if(prob(50))
-							if(user.Adjacent(src))
-								var/obj/item/natural/stone/S = new(src)
-								S.forceMove(get_turf(user))
-					if(!density)
-						break
-			else
-				break
+		if(istype(I, /obj/item/contraption/pick/drill)&& L.used_intent.type == /datum/intent/drill)
+			var/obj/item/contraption/pick/drill/drillitem = I
+			// we're holding a drill and on drill intent
+			if (drillitem.current_charge < 1)
+				to_chat(user, span_warning("Not enough fuel."))
+				drillitem.ungrip(user)
+				return
+			while(density && user.Adjacent(src))
+				if((L.energy > 0) && (do_after(user, CLICK_CD_RANGE, TRUE, src))&&(drillitem.current_charge > 2))
+					..()
+					drillitem.current_charge -= 1
+					user.stamina_add(-10)//not using up as much stamina for a drill, instead using up charges
+					if (drillitem.current_charge < 1)
+						drillitem.ungrip(user, "it ran out of fuel")
+					var/olddam = turf_integrity
+					if(turf_integrity && turf_integrity > 10)
+						if(turf_integrity < olddam)
+							if(prob(50))
+								if(user.Adjacent(src))
+									var/obj/item/natural/stone/S = new(src)
+									S.forceMove(get_turf(user))
+						if(!density)
+							break
+				else
+					break
+		else
+			// Makes more sense for the check since they always
+			// become an open tile afterwards
+			while(density && user.Adjacent(src))
+				if((L.energy > 0) && (do_after(user, CLICK_CD_MELEE, TRUE, src)))
+					..()
+					var/olddam = turf_integrity
+					if(turf_integrity && turf_integrity > 10)
+						if(turf_integrity < olddam)
+							if(prob(50))
+								if(user.Adjacent(src))
+									var/obj/item/natural/stone/S = new(src)
+									S.forceMove(get_turf(user))
+						if(!density)
+							break
+				else
+					break
 
 /turf/closed/mineral/attack_right(mob/user)
 	var/obj/item = user.get_active_held_item()

@@ -22,7 +22,8 @@
 /obj/item/clothing/gloves/roguetown/contraption/proc/misfire_result(obj/O, mob/living/user)
 	misfiring = TRUE
 	explosion(src, light_impact_range = 2, flame_range = 2, smoke = TRUE)
-	qdel(src)
+	//qdel(src)
+	O.take_damage(400, BRUTE, "blunt", 1)
 
 /obj/item/clothing/gloves/roguetown/contraption/proc/charge_deduction(obj/O, mob/living/user, deduction)
 	current_charge -= deduction
@@ -50,11 +51,16 @@
 
 /obj/item/clothing/gloves/roguetown/contraption/voltic/attackby(obj/item/I, mob/user, params)
 	if(istype(I, accepted_power_source))
-		if(current_charge)
-			to_chat(user, span_warning("The gauntlets already have a [initial(accepted_power_source.name)] inside!"))
+		user.changeNext_move(CLICK_CD_FAST)
+		S.set_up(1, 1, front)
+		S.start()
+		if((max_stored_charge - current_charge) < charge_per_source) //checking if there's too much charge
+			to_chat(user, span_info("I try to insert the [I.name] but theres already \a [initial(accepted_power_source.name)] inside!"))
+			playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
+			shake_camera(user, 1, 1)
 		else
-			to_chat(user, span_info("You insert the [I.name]. The gauntlets begin to hum with power."))
-			current_charge = charge_per_source
+			to_chat(user, span_info("I insert the [I.name] and the [name] starts ticking."))
+			current_charge += charge_per_source
 			playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
 			qdel(I)
 		return
