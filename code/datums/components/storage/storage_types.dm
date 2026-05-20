@@ -289,3 +289,20 @@
 /datum/component/storage/concrete/roguetown/dice_pouch/New(datum/P, ...)
 	. = ..()
 	can_hold = typecacheof(list(/obj/item/dice))
+
+/datum/component/storage/concrete/grid/anvil_bin
+	max_w_class = WEIGHT_CLASS_HUGE
+	screen_max_rows = 8
+	screen_max_columns = 4
+
+/datum/component/storage/concrete/grid/anvil_bin/show_to(mob/M)
+	var/obj/structure/material_bin/source = src.parent
+	if(!source.opened)
+		return FALSE
+	. = ..()
+
+/datum/component/storage/concrete/grid/anvil_bin/can_be_inserted(obj/item/storing, stop_messages, mob/user, worn_check, params, storage_click)
+	var/obj/structure/material_bin/source = src.parent
+	if(!source.opened)
+		return FALSE
+	. = ..()
