@@ -10165,7 +10165,7 @@
 /obj/item/reagent_containers/glass/bowl/tin,
 /obj/structure/fluff/walldeco/rpainting/forest{
 	pixel_x = 30;
-	name = ""MemoriesofHolyMoley"";
+	name = "\"MemoriesofHolyMoley\"";
 	desc = "He misses Her very much."
 	},
 /turf/open/floor/rogue/tile,
