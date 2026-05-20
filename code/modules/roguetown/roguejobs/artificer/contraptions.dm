@@ -593,7 +593,7 @@
 	accepted_power_source = /obj/item/alch/coaldust
 	prime_power_source = /obj/item/alch/firedust
 	misfire_chance = 0
-	sneaky_misfire_chance = 20
+	sneaky_misfire_chance = 0
 	charge_per_source = 100
 	charge_per_prime = 200
 	max_stored_charge = 600
