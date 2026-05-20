@@ -17978,6 +17978,14 @@
 "eaB" = (
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woodsrat/north)
+"eaC" = (
+/obj/structure/flora/roguegrass/water/reeds,
+/obj/structure/fluff/traveltile/lich{
+	aportalgoesto = "lichin";
+	aportalid = "lichout"
+	},
+/turf/open/water/swamp/deep,
+/area/rogue/outdoors/bograt/sunken)
 "eaD" = (
 /obj/structure/closet/crate/chest/old_crate{
 	lockid = "walls"
@@ -68907,6 +68915,17 @@
 	icon_state = "bathtileratwood"
 	},
 /area/rogue/under/town/basement/keep)
+"pWT" = (
+/obj/item/roguebin/trash{
+	pixel_y = 6
+	},
+/obj/structure/fluff/customsign{
+	icon_state = "signwrote";
+	name = "LITTERING WILL BE PROSECUTED";
+	pixel_y = 24
+	},
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/outdoors/town/rockhill)
 "pWV" = (
 /obj/structure/fluff/statue/gargoyle/candles,
 /turf/open/floor/rogue/blocks,
@@ -247924,7 +247943,7 @@ wwX
 wwX
 iJc
 nhG
-nhG
+eaC
 "}
 (80,1,2) = {"
 cjc
@@ -248355,8 +248374,8 @@ hMX
 fns
 wwX
 iJc
-iJc
 nhG
+eaC
 "}
 (81,1,2) = {"
 cjc
@@ -248787,8 +248806,8 @@ hMX
 hMX
 wwX
 iJc
-iJc
 nhG
+eaC
 "}
 (82,1,2) = {"
 cjc
@@ -249219,7 +249238,7 @@ jDE
 uLJ
 wwX
 dWQ
-iJc
+nhG
 nhG
 "}
 (83,1,2) = {"
@@ -410020,7 +410039,7 @@ axD
 hNW
 lxk
 tNj
-fnA
+pWT
 fnA
 fnA
 wbg

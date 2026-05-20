@@ -13972,6 +13972,13 @@
 	},
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors/town/manor/desert)
+"fwB" = (
+/obj/structure/fluff/traveltile/lich{
+	aportalgoesto = "lichin";
+	aportalid = "lichout"
+	},
+/turf/open/floor/rogue/citybrick/citybrick1,
+/area/rogue/under/town/basement/desert)
 "fwE" = (
 /obj/structure/table/wood/poor,
 /obj/item/reagent_containers/glass/cup/wooden{
@@ -47163,6 +47170,14 @@
 /obj/structure/roguemachine/vendor/innrockhill,
 /turf/closed/wall/mineral/rogue/sandbrick,
 /area/rogue/indoors/town/tavern/desert)
+"sVp" = (
+/obj/structure/fluff/walldeco/fakewall{
+	icon = 'modular_deserttown/icons/sandstone.dmi';
+	pixel_y = 2;
+	icon_state = "sand-stone"
+	},
+/turf/open/floor/rogue/citybrick/citybrick1,
+/area/rogue/under/town/basement/desert)
 "sVt" = (
 /obj/item/cushion/desert2,
 /turf/open/floor/carpet/royalblack,
@@ -540414,7 +540429,7 @@ sWG
 jPX
 gMr
 gMr
-gMr
+fhY
 gMr
 gMr
 jPX
@@ -540725,9 +540740,9 @@ aEU
 sWG
 jPX
 gMr
-gMr
-gMr
-gMr
+fhY
+fhY
+fhY
 gMr
 jPX
 sWG
@@ -541035,12 +541050,12 @@ kFh
 kFh
 aEU
 sWG
-jPX
-gMr
-gMr
-gMr
-gMr
-gMr
+sVp
+fhY
+fhY
+fwB
+fhY
+fhY
 jPX
 sWG
 mve
@@ -541349,9 +541364,9 @@ aEU
 sWG
 jPX
 gMr
-gMr
-gMr
-gMr
+fhY
+fhY
+fhY
 gMr
 jPX
 sWG
@@ -541662,7 +541677,7 @@ sWG
 jPX
 gMr
 gMr
-gMr
+fhY
 gMr
 gMr
 jPX
