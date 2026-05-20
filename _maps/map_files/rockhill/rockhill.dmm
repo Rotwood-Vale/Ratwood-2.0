@@ -19764,6 +19764,12 @@
 "eom" = (
 /turf/closed/wall/mineral/rogue/roofwall/middle,
 /area/rogue/indoors/town/physician)
+"eow" = (
+/obj/structure/roguemachine/mail{
+	mailtag = "The Salty Maiden - Deadwater Docks"
+	},
+/turf/open/floor/rogue/tile,
+/area/rogue/under/scum/lounge)
 "eox" = (
 /obj/structure/roguewindow,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -89639,6 +89645,12 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/beach/harbor)
+"uuP" = (
+/obj/structure/roguemachine/mail{
+	mailtag = "The Salty Maiden - Deadwater Docks"
+	},
+/turf/open/transparent/openspace,
 /area/rogue/outdoors/beach/harbor)
 "uuS" = (
 /obj/structure/fluff/railing/wood{
@@ -319754,7 +319766,7 @@ hNh
 nZP
 nZP
 lpz
-wLM
+eow
 wLM
 aYO
 wLM
@@ -324510,7 +324522,7 @@ euP
 euP
 euP
 euP
-euP
+uuP
 euP
 euP
 euP
