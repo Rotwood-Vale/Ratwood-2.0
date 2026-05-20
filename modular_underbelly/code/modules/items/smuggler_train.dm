@@ -1,8 +1,7 @@
 /*
 	SMUGGLER TRAIN
-	Every 25-45 minutes, a shipment of contraband drops at the marked landing area.
+	Every 15-35 minutes, a shipment of contraband drops at the marked landing area.
 	Place /obj/effect/landmark/smuggler_drop tiles on the map where crates should appear.
-	Leftover crates from the previous run are destroyed when the next one fires.
 	Everyone on the same Z level hears the rumble.
 */
 
@@ -22,24 +21,17 @@ GLOBAL_VAR(smuggler_train)
 	desc = "A battered wooden crate. Whoever packed this wasn't planning to get caught."
 
 /datum/smuggler_train
-	var/list/active_crates = list()
 
 /datum/smuggler_train/New()
-	addtimer(CALLBACK(src, PROC_REF(arrive)), rand(10 MINUTES, 25 MINUTES))
+	addtimer(CALLBACK(src, PROC_REF(arrive)), rand(15 MINUTES, 35 MINUTES))
 
 /datum/smuggler_train/proc/arrive()
-	for(var/obj/A in active_crates)
-		if(!QDELETED(A))
-			qdel(A)
-	active_crates.Cut()
-
 	var/target_z = 0
 	for(var/obj/effect/landmark/smuggler_drop/L in GLOB.landmarks_list)
 		if(!target_z)
 			target_z = L.z
 		var/obj/structure/closet/crate/chest/crate/smuggler/crate = new(L.loc)
 		fill_crate(crate)
-		active_crates += crate
 
 	if(target_z)
 		var/list/notified = list()
@@ -57,7 +49,7 @@ GLOBAL_VAR(smuggler_train)
 				C << sound('modular_underbelly/sound/train_arrive.ogg', volume = 55)
 				to_chat(C.mob, span_warning("A the dock's bell sounds out in the docks. Something arrived."))
 
-	addtimer(CALLBACK(src, PROC_REF(arrive)), rand(10 MINUTES, 25 MINUTES))
+	addtimer(CALLBACK(src, PROC_REF(arrive)), rand(15 MINUTES, 35 MINUTES))
 
 /datum/smuggler_train/proc/fill_crate(obj/structure/closet/crate/chest/crate/smuggler/C)
 	var/T
