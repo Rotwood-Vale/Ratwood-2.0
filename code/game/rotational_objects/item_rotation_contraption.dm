@@ -11,7 +11,7 @@
 	var/in_stack = 1
 	var/can_stack = TRUE
 	var/place_behavior
-	var/resize_factor = 0.95
+	var/resize_factor
 
 /obj/item/rotation_contraption/Initialize(mapload)
 	. = ..()
@@ -133,6 +133,7 @@
 
 /obj/item/rotation_contraption/large_cog
 	placed_type = /obj/structure/rotation_piece/cog/large
+	resize_factor = 1.5
 
 /obj/item/rotation_contraption/horizontal
 	placed_type = /obj/structure/gearbox
@@ -146,6 +147,7 @@
 	grid_height = 96
 	grid_width = 96
 
+	resize_factor = 1.5
 
 /obj/item/rotation_contraption/minecart_rail
 	placed_type = /obj/structure/minecart_rail
@@ -158,20 +160,6 @@
 
 	grid_height = 64
 	grid_width = 32
-
-/obj/item/rotation_contraption/roller
-	placed_type = /obj/structure/roller
-
-	grid_height = 32
-	grid_width = 32
-
-/*
-/obj/item/rotation_contraption/roller_sorter
-	placed_type = /obj/structure/roller_sorter
-
-	grid_height = 32
-	grid_width = 32
-*/	
 
 /* commenting out water pipes for now 
 /obj/item/rotation_contraption/water_pipe

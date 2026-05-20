@@ -434,10 +434,8 @@
 /datum/crafting_recipe/roguetown/survival/strucrepairkit
 	name = "Structure Repair Kit"
 	category = "Tools"
-	result = list(/obj/item/construction/repairkit/structure,
-				  /obj/item/construction/repairkit/structure,
-				  /obj/item/construction/repairkit/structure)
-	reqs = list(/obj/item/construction/nail = 6,
+	result = /obj/item/construction/repairkit/structure
+	reqs = list(/obj/item/construction/nail = 3,
 				/obj/item/natural/wood/plank = 3,
 				/obj/item/natural/stoneblock = 3)
 	skillcraft = /datum/skill/craft/carpentry

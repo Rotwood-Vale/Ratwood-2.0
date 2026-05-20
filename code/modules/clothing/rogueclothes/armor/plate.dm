@@ -70,7 +70,7 @@
 	update_description()
 
 /obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/contraption/linker))
+	if(istype(I, /obj/item/rogueweapon/hammer))
 		if(user.get_skill_level(/datum/skill/craft/engineering) >= 3)
 			toggle_mode(user)
 			return
@@ -102,12 +102,12 @@
 				active_item = TRUE
 				legendaryarcane = FALSE
 				user.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
-				user.apply_status_effect(/datum/status_effect/buff/artificerint)
-				to_chat(user, span_notice("Arcyne lightning crackles across the cuirass, enchanting your mind with forbidden knowledge!"))
+				user.change_stat("intelligence", 3)
+				to_chat(user, span_notice("Magicks flow throughout your body."))
 				icon_state ="artificerplate_powered"
 				item_state = "artificerplate_powered"
 			else
-				user.apply_status_effect(/datum/status_effect/buff/artificerint)
+				user.change_stat("intelligence", 3)
 				legendaryarcane = TRUE
 				active_item = TRUE
 				to_chat(user, span_warning("[src] hums, but you are already a master of the arcane."))
@@ -128,8 +128,7 @@
 			else
 				legendaryathletics = TRUE
 			active_item = TRUE
-			to_chat(user, span_notice("Arcyne lightning crackles across the cuirass, enchanting your body with adrenalized power!"))
-			user.apply_status_effect(/datum/status_effect/buff/artificerstr)
+			to_chat(user, span_notice("Strength flow throughout your body."))
 			user.change_stat("strength", 2)
 			user.change_stat("willpower", 2)
 			icon_state ="artificerplate_powered"
@@ -148,7 +147,6 @@
 					H.adjust_skillrank(/datum/skill/magic/arcane, -1, TRUE)
 				if(H.get_item_by_slot(SLOT_ARMOR) == src)
 					to_chat(H, span_notice("Gone is the arcane magicks enhancing thine abilities..."))
-					H.remove_status_effect(/datum/status_effect/buff/artificerint)
 					H.change_stat("intelligence", -3)
 					active_item = FALSE
 					return
@@ -160,8 +158,7 @@
 				if(!legendaryathletics)
 					H.adjust_skillrank(/datum/skill/misc/athletics, -1, TRUE)
 				if(H.get_item_by_slot(SLOT_ARMOR) == src)
-					to_chat(H, span_notice("Gone is the strength, which bolstered thine arms.."))
-					user.remove_status_effect(/datum/status_effect/buff/artificerstr)
+					to_chat(H, span_notice("Gone is the strength enhancing thine abilities..."))
 					user.change_stat("strength", -2)
 					user.change_stat("willpower", -2)
 					active_item = FALSE
