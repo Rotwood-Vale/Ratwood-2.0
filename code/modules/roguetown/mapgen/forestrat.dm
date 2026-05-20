@@ -27,6 +27,12 @@
 	excluded_turfs = list(/turf/open/floor/rogue/dirt/road)
 	excluded_turfs = list(/turf/open/floor/rogue/dirt/road, /turf/open/floor/rogue/dirt/nospawn, /turf/open/floor/rogue/grass/nospawn)
 	spawnableAtoms = list(/obj/structure/flora/newtree = 1,
+							/obj/structure/flora/roguetree/palm = 3,
+							/obj/structure/flora/roguetree/jungle = 0.1,
+							/obj/structure/flora/roguetree/jungle/small = 3,
+							/obj/structure/flora/roguegrass/bush/jungle = 2,
+							/obj/structure/flora/roguegrass/bush/jungle/large = 8,
+							/obj/structure/flora/roguegrass/jungle = 6,
 							/obj/structure/flora/roguetree/wise = 0.4,
 							/obj/structure/flora/roguetree = 8,
 							/obj/structure/flora/roguegrass/bush = 5,

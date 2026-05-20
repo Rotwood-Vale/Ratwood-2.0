@@ -1180,9 +1180,11 @@
 //A smattering of jungle-themed assets
 //trees
 
+#define COLOR_JUNGLEPLANT	"#84968a"
+
 /obj/structure/flora/roguetree/jungle//version with mechanics this time
 	name = "jungle tree"
-	color = "#a7b5a9"
+	color = COLOR_JUNGLEPLANT
 	// desc = "Scant, precious shade."
 	stump_type = /obj/structure/flora/roguetree/stump/palm
 	icon = 'icons/obj/flora/jungletrees.dmi'
@@ -1214,7 +1216,7 @@
 /obj/structure/flora/roguegrass/bush/jungle
 	name = "jungle bush"
 	desc = ""
-	color = "#b9c4bd"
+	color = COLOR_JUNGLEPLANT
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "bushb"
 
@@ -1230,9 +1232,9 @@
 /obj/structure/flora/roguegrass/herb/random
 	name = "random herb"
 	desc = "Haha, im in danger."
-
+	
 /obj/structure/flora/roguegrass/bush/jungle/large
-	color = "#a7b5a9"
+	color = COLOR_JUNGLEPLANT
 	icon = 'icons/obj/flora/largejungleflora.dmi'
 	icon_state = "bush"
 	pixel_x = -16
@@ -1253,7 +1255,7 @@
 /obj/structure/flora/roguegrass/jungle
 	name = "jungle grass"
 	desc = ""
-	color = "#a7b5a9"
+	color = COLOR_JUNGLEPLANT
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "grassa"
 

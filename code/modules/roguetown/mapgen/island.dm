@@ -39,7 +39,7 @@
 							/obj/effect/decal/remains/bear = 0.5,
 							/obj/effect/decal/remains/human = 0.2,)
 	// spawnableTurfs = list(/turf/open/floor/rogue/dirt/road=5)
-	allowed_areas = list(/area/rogue/outdoors/byos,/area/rogue/outdoors/rtfield,/area/rogue/outdoors/town)
+	allowed_areas = list(/area/rogue/outdoors/byos,/area/rogue/outdoors/rtfield,/area/rogue/outdoors/town, /area/rogue/outdoors/exposed/town/keep)
 
 /datum/mapGeneratorModule/islandgrass
 	clusterCheckFlags = CLUSTER_CHECK_NONE
@@ -47,7 +47,7 @@
 	excluded_turfs = list(/turf/open/floor/rogue/dirt/road)
 	spawnableAtoms = list(/obj/structure/flora/roguegrass = 4,
 							/obj/structure/flora/roguegrass/jungle = 2,)
-	allowed_areas = list(/area/rogue/outdoors/byos,/area/rogue/outdoors/rtfield,/area/rogue/outdoors/town)
+	allowed_areas = list(/area/rogue/outdoors/byos,/area/rogue/outdoors/rtfield,/area/rogue/outdoors/town, /area/rogue/outdoors/exposed/town/keep)
 	
 /datum/mapGeneratorModule/island/road
 	clusterCheckFlags = CLUSTER_CHECK_DIFFERENT_ATOMS
@@ -55,4 +55,4 @@
 	excluded_turfs = list()
 	spawnableAtoms = list(/obj/item/natural/stone = 18,
 							/obj/item/grown/log/tree/stick = 3)
-	allowed_areas = list(/area/rogue/outdoors/byos,/area/rogue/outdoors/rtfield,/area/rogue/outdoors/town)
+	allowed_areas = list(/area/rogue/outdoors/byos,/area/rogue/outdoors/rtfield,/area/rogue/outdoors/town, /area/rogue/outdoors/exposed/town/keep)
