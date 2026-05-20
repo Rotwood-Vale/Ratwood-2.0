@@ -80,8 +80,7 @@
 						human_target.emote("gasp")
 						human_target.Jitter(100)
 						human_target.electrocute_act(25, src, 1)//slight damage
-						human_target.visible_message(span_notice("[human_target] jerks awake with a buzz!"), 
-													 span_userdanger("You awaken with a jolt as your core is spun!"))
+						human_target.visible_message(span_notice("[human_target] jerks awake with a buzz!"), span_userdanger("You awaken with a jolt as your core is spun!"))
 						
 						// Apply debuffs
 						human_target.mind.remove_antag_datum(/datum/antagonist/zombie)
