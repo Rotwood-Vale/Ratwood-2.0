@@ -58,11 +58,24 @@ GLOBAL_VAR(underbelly_patient_ward)
 	var/ozium_used = FALSE
 	///Pinned patient alias so after_creation can't randomize it.
 	var/patient_alias
+	///Timer IDs for stoppable long-lived timers.
+	var/despawn_timer_id
+	var/groan_timer_id
 
 /mob/living/carbon/human/species/human/northern/underbelly_patient/Destroy(force)
 	if(GLOB.underbelly_patient_ward)
 		var/datum/underbelly_patient_ward/W = GLOB.underbelly_patient_ward
 		W.active_patients -= src
+	if(GLOB.underbelly_supply_board_datum)
+		var/datum/underbelly_supply_orders/D = GLOB.underbelly_supply_board_datum
+		for(var/ckey in D.called_patients)
+			if(D.called_patients[ckey] == src)
+				D.called_patients -= ckey
+				break
+	if(despawn_timer_id)
+		deltimer(despawn_timer_id)
+	if(groan_timer_id)
+		deltimer(groan_timer_id)
 	return ..()
 
 /mob/living/carbon/human/species/human/northern/underbelly_patient/Initialize(mapload)
@@ -78,9 +91,9 @@ GLOBAL_VAR(underbelly_patient_ward)
 	addtimer(CALLBACK(src, PROC_REF(_apply_patient_state)), 0)
 	addtimer(CALLBACK(src, PROC_REF(_seed_wounds)), 0)
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(idle_groan)), rand(10, 25) SECONDS)
+	groan_timer_id = addtimer(CALLBACK(src, PROC_REF(idle_groan)), rand(10, 25) SECONDS, TIMER_STOPPABLE)
 	addtimer(CALLBACK(src, PROC_REF(treatment_tick)), 3 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(check_despawn)), 3 MINUTES)
+	despawn_timer_id = addtimer(CALLBACK(src, PROC_REF(check_despawn)), 3 MINUTES, TIMER_STOPPABLE)
 
 /mob/living/carbon/human/species/human/northern/underbelly_patient/proc/_apply_patient_state()
 	if(QDELETED(src))
@@ -196,7 +209,7 @@ GLOBAL_VAR(underbelly_patient_ward)
 		"It hurts...",
 		"*clutches a wound",
 	))
-	addtimer(CALLBACK(src, PROC_REF(idle_groan)), rand(20, 40) SECONDS)
+	groan_timer_id = addtimer(CALLBACK(src, PROC_REF(idle_groan)), rand(20, 40) SECONDS, TIMER_STOPPABLE)
 
 /mob/living/carbon/human/species/human/northern/underbelly_patient/proc/check_despawn()
 	if(QDELETED(src))
@@ -205,12 +218,12 @@ GLOBAL_VAR(underbelly_patient_ward)
 		qdel(src)
 		return
 	if(world.time < expire_at)
-		addtimer(CALLBACK(src, PROC_REF(check_despawn)), max(1 SECONDS, expire_at - world.time))
+		despawn_timer_id = addtimer(CALLBACK(src, PROC_REF(check_despawn)), max(1 SECONDS, expire_at - world.time), TIMER_STOPPABLE)
 		return
 	if(treating_ckey && !treatment_grace_used)
 		treatment_grace_used = TRUE
 		expire_at = world.time + (90 SECONDS)
-		addtimer(CALLBACK(src, PROC_REF(check_despawn)), 90 SECONDS)
+		despawn_timer_id = addtimer(CALLBACK(src, PROC_REF(check_despawn)), 90 SECONDS, TIMER_STOPPABLE)
 		var/mob/living/carbon/human/H_warn = _find_treater()
 		if(H_warn)
 			to_chat(H_warn, span_danger("[src] is fading fast - finish up!"))
