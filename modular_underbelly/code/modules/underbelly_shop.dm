@@ -1,3 +1,7 @@
+/// Flagged TRUE on items that came out of the Trader's shop, so he won't buy them back.
+/obj/item
+	var/bought_from_underbelly_trader = FALSE
+
 /// A single purchaseable entry in the Trader's shop.
 /datum/underbelly_shop_item
 	var/name = ""
@@ -615,6 +619,7 @@
 	SI.stock -= 1
 	purchase_counts[count_key] = bought_so_far + 1
 	session_purchases[H.ckey] = (session_purchases[H.ckey] || 0) + 1
-	new SI.item_type(get_turf(H))
+	var/obj/item/new_item = new SI.item_type(get_turf(H))
+	new_item.bought_from_underbelly_trader = TRUE
 	trader?.on_purchase(H, SI.purchase_sound_key)
 	return TRUE

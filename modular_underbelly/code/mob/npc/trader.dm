@@ -601,6 +601,10 @@
 	if(istype(I, /obj/item/roguecoin) || istype(I, /obj/item/storage))
 		return ..()
 
+	if(I.bought_from_underbelly_trader)
+		to_chat(H, span_warning("[src] looks at [I.name] with a flat stare. \"I just sold you this. Do you think I'm a dumbass?\""))
+		return
+
 	var/base_value = I.get_real_price()
 	if(base_value < 50)
 		to_chat(H, span_warning("[src] glances at [I.name]. \"Not worth the paperwork, friend.\""))
