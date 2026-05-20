@@ -358,6 +358,7 @@
 	dir = 4
 	},
 /obj/item/roguecoin/scum_pass/etched,
+/obj/item/quiver/zigs/cannabis,
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/under/scum/lounge)
 "ady" = (
@@ -10164,7 +10165,7 @@
 /obj/item/reagent_containers/glass/bowl/tin,
 /obj/structure/fluff/walldeco/rpainting/forest{
 	pixel_x = 30;
-	name = ""Memories of Holy Moley"";
+	name = ""MemoriesofHolyMoley"";
 	desc = "He misses Her very much."
 	},
 /turf/open/floor/rogue/tile,
@@ -68964,6 +68965,11 @@
 /obj/item/roguecoin/gold/pile,
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/vault)
+"pCw" = (
+/obj/structure/fluff/pillow,
+/obj/effect/landmark/start/scumlate,
+/turf/open/floor/carpet/red,
+/area/rogue/under/scum/lounge)
 "pCx" = (
 /obj/structure/closet/crate/chest{
 	lockid = "mage"
@@ -96786,6 +96792,13 @@
 	},
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/mountains/decap/rockhill)
+"wdW" = (
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/gun/ballistic/firearm/abomination,
+/obj/item/quiver/bullet/lead/extended,
+/obj/item/powderflask,
+/turf/open/floor/rogue/blocks/stonered,
+/area/rogue/under/scum/lounge)
 "web" = (
 /obj/structure/table/wood/poor/alt,
 /obj/item/rogueweapon/huntingknife/stoneknife,
@@ -540071,10 +540084,10 @@ dQq
 lpz
 dQq
 iNm
-mIA
-mIA
-mCa
-mIA
+tqO
+tqO
+pCw
+tqO
 lpz
 frO
 frO
@@ -541368,8 +541381,8 @@ lpz
 dQq
 nvL
 mCa
-mIA
-mIA
+tqO
+tqO
 mIA
 lpz
 euP
@@ -543089,7 +543102,7 @@ euP
 lpz
 dof
 kGb
-dQq
+wdW
 dQq
 kGb
 lpz

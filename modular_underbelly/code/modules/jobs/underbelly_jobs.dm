@@ -1060,8 +1060,8 @@
 	flag = UB_DOCKS_COOK
 	department_flag = UNDERBELLY
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 3
+	spawn_positions = 3
 	selection_color = JCOLOR_UNDERBELLY
 
 	allowed_races = RACES_ALL_KINDS
