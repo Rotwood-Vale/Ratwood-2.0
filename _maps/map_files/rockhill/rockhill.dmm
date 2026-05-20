@@ -103242,7 +103242,6 @@
 /obj/structure/bars/passage/shutter{
 	redstone_id = "scum_resto"
 	},
-/obj/structure/bars/shop,
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/under/scum/lounge)
 "xzC" = (
