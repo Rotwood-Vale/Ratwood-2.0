@@ -14276,6 +14276,10 @@
 	},
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/church/basement)
+"cWt" = (
+/obj/machinery/light/rogue/firebowl/stump,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/bog/south)
 "cWu" = (
 /turf/closed/wall/mineral/rogue/decostone,
 /area/rogue/under/town/sewer)
@@ -44641,6 +44645,10 @@
 /obj/structure/fluff/walldeco/chains,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/his_vault/puzzle)
+"jlK" = (
+/obj/machinery/light/rogue/firebowl/standing/red,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/outdoors/mountains)
 "jlL" = (
 /obj/structure/table/wood/poor,
 /obj/item/rogueweapon/huntingknife/cleaver,
@@ -52202,6 +52210,13 @@
 	icon_state = "roofg"
 	},
 /area/rogue/outdoors/town/roofs)
+"kOY" = (
+/obj/structure/fluff/traveltile/lich{
+	aportalgoesto = "lichout";
+	aportalid = "lichin"
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/outdoors/mountains)
 "kPe" = (
 /mob/living/simple_animal/hostile/rogue/mirespider_lurker,
 /turf/open/floor/rogue/dirt,
@@ -68255,6 +68270,9 @@
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/exposed/town/keep)
+"ody" = (
+/turf/closed/wall/mineral/rogue/stone/red_moss,
+/area/rogue/outdoors/mountains)
 "odC" = (
 /obj/structure/fluff/railing/border,
 /obj/structure/fluff/railing/border/east,
@@ -91834,6 +91852,10 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/mountains)
+"sWs" = (
+/obj/structure/fluff/walldeco/vinez/red,
+/turf/closed/wall/mineral/rogue/stone/red_moss,
+/area/rogue/outdoors/mountains)
 "sWE" = (
 /turf/closed/wall/mineral/rogue/decostone/long,
 /area/rogue/under/cave/dukecourt)
@@ -97276,6 +97298,12 @@
 /obj/structure/fluff/railing/border,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/his_vault/four)
+"uaJ" = (
+/obj/structure/stairs/stone{
+	dir = 8
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/outdoors/mountains)
 "uaK" = (
 /obj/structure/mineral_door/wood{
 	locked = 1;
@@ -356092,8 +356120,8 @@ qwK
 qwK
 qwK
 qwK
-qwK
-qwK
+uaJ
+uaJ
 qwK
 qwK
 qwK
@@ -356544,8 +356572,8 @@ qwK
 qwK
 qwK
 qwK
-qwK
-qwK
+fZN
+fZN
 qwK
 qwK
 qwK
@@ -356996,8 +357024,8 @@ qwK
 qwK
 qwK
 qwK
-qwK
-qwK
+fZN
+fZN
 qwK
 qwK
 qwK
@@ -357448,8 +357476,8 @@ qwK
 qwK
 qwK
 qwK
-qwK
-qwK
+fZN
+fZN
 qwK
 qwK
 eGx
@@ -357900,8 +357928,8 @@ qwK
 qwK
 qwK
 qwK
-qwK
-qwK
+jlK
+fZN
 qwK
 eGx
 eGx
@@ -358353,8 +358381,8 @@ qwK
 qwK
 qwK
 qwK
-qwK
-eGx
+fZN
+fZN
 eGx
 eGx
 eGx
@@ -358805,8 +358833,8 @@ qwK
 qwK
 qwK
 qwK
-eGx
-eGx
+fZN
+fZN
 eGx
 eGx
 eGx
@@ -361028,8 +361056,8 @@ sxN
 sxN
 sxN
 jYu
-uMx
-uMx
+jYu
+jYu
 qwK
 qwK
 qwK
@@ -361480,9 +361508,9 @@ lCD
 sxN
 xot
 jYu
-uMx
-nsT
-nsT
+jYu
+aay
+aay
 qwK
 qwK
 qwK
@@ -361933,10 +361961,10 @@ sxN
 aay
 jYu
 aay
-rnW
-mBb
-rnW
-jki
+sxN
+xot
+sxN
+cWt
 qwK
 qwK
 qwK
@@ -467736,11 +467764,11 @@ eGx
 eGx
 eGx
 eGx
-eGx
-eGx
-eGx
-eGx
-eGx
+ody
+ody
+sWs
+sWs
+sWs
 eGx
 eGx
 eGx
@@ -468188,11 +468216,11 @@ eGx
 eGx
 eGx
 eGx
-eGx
-eGx
-eGx
-eGx
-eGx
+ody
+kOY
+kOY
+kOY
+ody
 eGx
 eGx
 eGx
@@ -468640,11 +468668,11 @@ eGx
 eGx
 eGx
 eGx
-eGx
-eGx
-eGx
-eGx
-eGx
+ody
+jlK
+fZN
+fZN
+ody
 eGx
 eGx
 eGx
@@ -469092,11 +469120,11 @@ eGx
 eGx
 eGx
 eGx
-eGx
-eGx
-eGx
-eGx
-eGx
+sWs
+sWs
+fZN
+fZN
+sWs
 eGx
 eGx
 eGx
@@ -469544,11 +469572,11 @@ eGx
 eGx
 eGx
 eGx
-eGx
-eGx
-eGx
-eGx
-eGx
+qwK
+sWs
+fZN
+fZN
+sWs
 eGx
 eGx
 eGx
@@ -469996,11 +470024,11 @@ eGx
 eGx
 eGx
 eGx
-eGx
-eGx
-eGx
-eGx
-eGx
+ody
+ody
+fZN
+fZN
+sWs
 eGx
 eGx
 eGx
@@ -470448,11 +470476,11 @@ eGx
 eGx
 eGx
 eGx
-eGx
-eGx
-eGx
-eGx
-eGx
+ody
+fZN
+fZN
+jlK
+sWs
 eGx
 eGx
 eGx
@@ -470900,11 +470928,11 @@ eGx
 eGx
 eGx
 eGx
-eGx
-eGx
-eGx
-eGx
-eGx
+ody
+uaJ
+uaJ
+ody
+ody
 eGx
 eGx
 eGx
@@ -471353,8 +471381,8 @@ eGx
 eGx
 eGx
 eGx
-eGx
-eGx
+aBB
+aBB
 eGx
 eGx
 eGx
@@ -471805,8 +471833,8 @@ eGx
 eGx
 eGx
 eGx
-eGx
-eGx
+aBB
+aBB
 eGx
 eGx
 eGx
