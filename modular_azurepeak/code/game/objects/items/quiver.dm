@@ -215,7 +215,7 @@
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/bolt/silver/Initialize()
+/obj/item/quiver/bolt/silver/Initialize(mapload)
 	..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/bolt/silver/A = new()
@@ -251,42 +251,42 @@
 	else
 		icon_state = "boltpouch0"
 
-/obj/item/quiver/bolt/heavy/standard/Initialize()
+/obj/item/quiver/bolt/heavy/standard/Initialize(mapload)
 	..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/bolt/heavy/bronze/Initialize()
+/obj/item/quiver/bolt/heavy/bronze/Initialize(mapload)
 	..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/bronze/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/bolt/heavy/aalloy/Initialize()
+/obj/item/quiver/bolt/heavy/aalloy/Initialize(mapload)
 	..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/aalloy/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/bolt/heavy/paalloy/Initialize()
+/obj/item/quiver/bolt/heavy/paalloy/Initialize(mapload)
 	..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/paalloy/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/bolt/heavy/blunt/Initialize()
+/obj/item/quiver/bolt/heavy/blunt/Initialize(mapload)
 	..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/blunt/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/bolt/heavy/silver/Initialize()
+/obj/item/quiver/bolt/heavy/silver/Initialize(mapload)
 	..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/silver/A = new()

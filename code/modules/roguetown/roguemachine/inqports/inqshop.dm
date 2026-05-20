@@ -305,7 +305,7 @@
 	marquescost = 16
 	maximum = 1
 
-/obj/structure/closet/crate/chest/inqreliquary/relic/superbow/Initialize()
+/obj/structure/closet/crate/chest/inqreliquary/relic/superbow/Initialize(mapload)
 	. = ..()
 	new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy(src)
 	new /obj/item/quiver/bolt/heavy/standard(src)
