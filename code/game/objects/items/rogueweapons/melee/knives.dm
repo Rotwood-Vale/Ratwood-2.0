@@ -425,7 +425,8 @@
 	icon_state = "spiderdagger"
 	sheathe_icon = "spiderdagger"
 	force = 22 // Same as elvish dagger
-	smeltresult = null
+	smeltresult = /obj/item/ingot/drow
+	smelt_bar_num = 1
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/holysee
 	name = "eclipsum dagger"
@@ -735,6 +736,8 @@
 	last_used = 0
 	is_silver = TRUE
 	picklvl = 1.2
+	smeltresult = /obj/item/ingot/drow
+	smelt_bar_num = 1
 
 /obj/item/rogueweapon/huntingknife/idagger/navaja
 	possible_item_intents = list(/datum/intent/dagger/thrust,/datum/intent/dagger/cut,  /datum/intent/dagger/thrust/pick)

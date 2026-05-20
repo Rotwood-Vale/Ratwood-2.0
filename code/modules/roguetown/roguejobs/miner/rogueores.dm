@@ -242,6 +242,13 @@
 	smeltresult = /obj/item/ingot/blacksteel
 	sellprice = 100
 
+/obj/item/ingot/drow
+	name = "skikudic ingot"
+	desc = "This ingot offers an alternative - if rarely-heard - solution to riddle of steel, courtesy of the Underdark's fungus-fueled forges. Sunlight refuses to illuminate its presence, no matter how bright its glare becomes. </br>'..perhaps, the forge's heat can scald away its fungal temperance..'"
+	icon_state = "ingotdrow"
+	smeltresult = /obj/item/ingot/drow //Smelting the ingot again 'burns away' the fungal temperance, allowing it to be reused for said recipes.
+	sellprice = 30 //Rarer to obtain than iron, and feasible to sell off as salvage.
+
 //Blessed Ingots
 /obj/item/ingot/steelholy/
 	name = "holy steel bar"

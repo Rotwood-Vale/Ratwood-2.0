@@ -2225,3 +2225,47 @@
 	name = "Wrench Tuneup"
 	desc = "a wrench has turned me up, helping steel myself for more damage"
 	icon_state = "buff"
+
+//Artificer armor buff
+/datum/status_effect/buff/artificerint
+	id = "artificer_arcyne"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/artificerint
+	effectedstats = list(STATKEY_INT = 3)
+
+/atom/movable/screen/alert/status_effect/buff/artificerint
+	name = "Artificer Arcyne"
+	desc = "This armor fills me with arcyne power and knowledge"
+	icon_state = "buff"
+
+/datum/status_effect/buff/artificerstr
+	id = "artificer_athletic"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/artificerstr
+	effectedstats = list(STATKEY_STR = 2, STATKEY_WIL = 2)
+
+/atom/movable/screen/alert/status_effect/buff/artificerstr
+	name = "Artificer Athletic"
+	desc = "This armor fills me with atheletic power and strength"
+	icon_state = "buff"
+
+//construct buffing
+/datum/status_effect/buff/windup
+	id = "windup"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/windup
+	effectedstats = list(STATKEY_SPD = 1, STATKEY_WIL = 1)
+	duration = 15 MINUTES
+
+/atom/movable/screen/alert/status_effect/buff/windup
+	name = "Drill Windup"
+	desc = "a drill has wound up my core, making me faster"
+	icon_state = "buff"
+
+/datum/status_effect/buff/tuneup
+	id = "tuneup"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/tuneup
+	effectedstats = list(STATKEY_CON = 1)
+	duration = 15 MINUTES
+
+/atom/movable/screen/alert/status_effect/buff/tuneup
+	name = "Wrench Tuneup"
+	desc = "a wrench has turned me up, helping steel myself for more damage"
+	icon_state = "buff"

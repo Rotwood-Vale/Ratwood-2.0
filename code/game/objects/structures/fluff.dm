@@ -572,6 +572,12 @@
 	var/togg = FALSE
 	smeltresult = /obj/item/ingot/bronze
 
+/obj/structure/bars/pipe/left
+	name = "bronze pipe"
+	icon_state = "pipe2"
+	dir = WEST
+	pixel_x = 19
+
 //===========================
 
 /obj/structure/fluff/clock

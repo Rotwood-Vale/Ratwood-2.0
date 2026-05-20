@@ -60,6 +60,7 @@
 #define ARMOR_INT_SIDE_ANTAG 500 // Integrity for antag pieces
 #define ARMOR_INT_SIDE_BLACKSTEEL 400 // Integrity for blacksteel pieces
 #define ARMOR_INT_SIDE_STEEL 300 // Integrity for steel pieces
+#define ARMOR_INT_SIDE_BRONZE 250 // Integrity for bronze pieces
 #define ARMOR_INT_SIDE_IRON 225 // Integrity for iron pieces
 #define ARMOR_INT_SIDE_HARDLEATHER 250 // Integrity for hardened leather pieces
 #define ARMOR_INT_SIDE_LEATHER 200 // Integrity for leather / copper pieces

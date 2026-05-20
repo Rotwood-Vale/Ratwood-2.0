@@ -83,7 +83,7 @@
 
 	if(!istype(I, /obj/item/natural/fibers))
 		return
-	
+
 	I.visible_message(
 		span_warning("[user] begins to prepare [src].."),
 		span_notice("I begin to set-up [src] with [I].")
@@ -98,7 +98,7 @@
 			to_chat(user, span_warningbig("Uh oh."))
 			light()
 		return
-	
+
 	var/obj/item/bomb/tripbomb/trip = new /obj/item/bomb/tripbomb(get_turf(src))
 	trip.b_type = type
 	trip.icon_state = icon_state
@@ -173,7 +173,7 @@
 /obj/item/tripwire
 	name = "fibre tripwire"
 	desc = "You almost missed it - phew. Best cut it with a blade to disarm it."
-	icon = 'icons/roguetown/items/misc.dmi'	
+	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "wire"
 	anchored = TRUE
 	var/obj/item/bomb/tripbomb/payload
@@ -195,7 +195,7 @@
 		new payload.b_type(payload.loc)
 		QDEL_NULL(payload)
 		return ..()
-	
+
 	if(istype(I, /obj/item/natural/dirtclod))
 		var/skill = user.get_skill_level(/datum/skill/craft/crafting)
 		alpha = (90 - skill * 5)
@@ -275,7 +275,7 @@
 
 /obj/item/bomb/smoke/explode()
 	var/turf/T = get_turf(src)
-	if(!T) 
+	if(!T)
 		return FALSE
 	playsound(loc, 'sound/items/smokebomb.ogg', 50)
 	var/datum/effect_system/smoke_spread/smoke = new /datum/effect_system/smoke_spread
@@ -374,6 +374,7 @@
 	var/fuze = 15 SECONDS
 	var/lit = FALSE
 	var/prob2fail = 1
+	var/PVE_damage = 500
 
 //admin only mega bomb, should never be made craftable
 /obj/item/satchel_bomb/mega
@@ -382,14 +383,14 @@
 	icon_state = "satchel_bomb"
 	lit_state = "satchel_bomb-lit"
 	icon = 'icons/roguetown/items/misc.dmi'
-	w_class = WEIGHT_CLASS_BULKY 
+	w_class = WEIGHT_CLASS_BULKY
 	dropshrink = 5
 	throwforce = 0
 	throw_range = 1
 	throw_speed = 0.3
 	fuze = 50
 	lit = FALSE
-	prob2fail = 0 
+	prob2fail = 0
 	PVE_damage = 500
 	grid_width = 256
 	grid_height = 256
@@ -493,7 +494,7 @@
 
 /obj/item/impact_grenade/attack_self(mob/user)
 	..()
-	explodes() 
+	explodes()
 
 /obj/item/impact_grenade/explosion
 	name = "Impact grenade"
@@ -566,4 +567,4 @@
 	name = "silent gas belcher"
 	desc = "A gas belcher. The smell from this makes your mind blank and your tongue still."
 	icon_state = "smokeshell_purple"
-	smoke_type = /datum/effect_system/smoke_spread/mute_gas	
+	smoke_type = /datum/effect_system/smoke_spread/mute_gas

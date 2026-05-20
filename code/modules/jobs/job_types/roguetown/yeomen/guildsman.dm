@@ -215,7 +215,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/flashlight/flare/torch/lantern
-	beltl = /obj/item/rogueweapon/pick/steel
+	beltl = /obj/item/contraption/pick/drill/architect
 	backr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(
