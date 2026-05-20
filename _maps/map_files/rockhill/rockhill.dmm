@@ -17710,6 +17710,29 @@
 	dir = 4
 	},
 /area/rogue/indoors/town/manor/rockhill)
+"dRF" = (
+/obj/structure/table/wood/long_table{
+	dir = 4
+	},
+/obj/item/natural/feather,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/turf/open/floor/rogue/tile,
+/area/rogue/under/scum/lounge)
 "dRK" = (
 /obj/structure/fermentation_keg,
 /turf/open/floor/rogue/woodturned,
@@ -20533,29 +20556,6 @@
 	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/manor/rockhill)
-"eyz" = (
-/obj/structure/table/wood/long_table{
-	dir = 4
-	},
-/obj/item/natural/feather,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/turf/open/floor/rogue/tile,
-/area/rogue/under/scum/lounge)
 "eyA" = (
 /obj/structure/closet/crate/chest,
 /obj/item/reagent_containers/glass/bottle,
@@ -102775,6 +102775,10 @@
 	},
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
+"xuG" = (
+/obj/machinery/light/rogue/campfire/fireplace/inn,
+/turf/closed/wall/mineral/rogue/decowood,
+/area/rogue/under/scum/lounge)
 "xuJ" = (
 /turf/closed/mineral/rogue,
 /area/rogue/indoors/town/bath)
@@ -317634,7 +317638,7 @@ vqb
 hwL
 cjP
 dUg
-lpz
+xuG
 lpz
 lpz
 xPx
@@ -319354,7 +319358,7 @@ nZP
 nZP
 ahO
 wLM
-eyz
+dRF
 lpz
 dHL
 wLM
@@ -426927,7 +426931,7 @@ dQq
 dQq
 dQq
 dQq
-lpz
+xuG
 dQq
 dQq
 xPx
@@ -430815,7 +430819,7 @@ cPG
 iDa
 uPE
 cPG
-lpz
+xuG
 dQq
 dQq
 dQq
