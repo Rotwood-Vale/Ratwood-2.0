@@ -500,7 +500,7 @@
 
 /obj/structure/flora/roguegrass/bush/proc/is_bog_bush()
 	var/area/A = get_area(src)
-	return istype(A, /area/rogue/outdoors/bog) || istype(A, /area/rogue/outdoors/bograt) || istype(A, /area/rogue/indoors/shelter/bog) || istype(A, /area/rogue/indoors/shelter/bograt)
+	return istype(A, /area/rogue/outdoors/bog) || istype(A, /area/rogue/outdoors/bograt) || istype(A, /area/rogue/indoors/shelter/bog)
 
 /obj/structure/flora/roguegrass/bush/proc/loot_replenish()
 	if(bushtype)
