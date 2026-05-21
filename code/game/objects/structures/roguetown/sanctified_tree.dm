@@ -1545,10 +1545,10 @@
 	blessed_log.bless_log()
 	return ..()
 
-/// 40% chance (60% with Bulwark aura) to stun and knockdown a non-Dendorite carbon attacker for 0.5 seconds.
+/// 20% chance (30% with Bulwark aura) to stun and knockdown a non-Dendorite carbon attacker for 0.5 seconds.
 /// Also deals 5 brute if the Bulwark aura (cat4) is active on this tree.
 /obj/structure/flora/roguetree/wise/sanctified/proc/try_root_attacker(mob/living/attacker)
-	if(!iscarbon(attacker) || !prob(tree_data?.has_slow_aura ? 60 : 40))
+	if(!iscarbon(attacker) || !prob(tree_data?.has_slow_aura ? 30 : 20))
 		return
 	var/mob/living/carbon/C = attacker
 	if(C.patron?.type == /datum/patron/divine/dendor)
