@@ -1656,7 +1656,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/tri_duelist_coat
 	name = "Duelist Coat"
-	path = /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
+	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/jacket/duelcoat
 	triumph_cost = 3
 
 /datum/loadout_item/tri_fencing_gambeson

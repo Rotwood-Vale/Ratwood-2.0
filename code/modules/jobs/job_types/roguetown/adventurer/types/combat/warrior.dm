@@ -170,7 +170,7 @@
 				r_hand = /obj/item/rogueweapon/sword/short
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				beltl = /obj/item/rogueweapon/scabbard/sword
-	armor = /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/jacket/duelcoat
 	head = /obj/item/clothing/head/roguetown/duelisthat
 	mask = /obj/item/clothing/mask/rogue/duelmask
 	cloak = /obj/item/clothing/cloak/duelistcape

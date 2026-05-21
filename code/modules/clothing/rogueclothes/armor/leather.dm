@@ -302,7 +302,7 @@
 	allowed_sex = list(MALE, FEMALE)
 	allowed_race = NON_DWARVEN_RACE_TYPES
 
-/obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
+/obj/item/clothing/suit/roguetown/armor/leather/heavy/jacket/duelcoat
 	name = "leather coat"
 	desc = "A stylish coat worn by Duelists of Valoria. Light and flexible, it does not impede the complex movements they are known for. Well padded."
 	icon = 'icons/roguetown/clothing/armor.dmi'
@@ -319,11 +319,11 @@
 	detail_tag = "_detail"
 	detail_color = "#FFFFFF"
 
-/obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat/Initialize(mapload)
+/obj/item/clothing/suit/roguetown/armor/leather/heavy/jacket/duelcoat/Initialize(mapload)
 	. = ..()
 	update_icon()
 
-/obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat/update_icon()
+/obj/item/clothing/suit/roguetown/armor/leather/heavy/jacket/duelcoat/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
 		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))

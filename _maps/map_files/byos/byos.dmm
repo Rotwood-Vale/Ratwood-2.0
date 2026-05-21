@@ -18731,7 +18731,7 @@
 /obj/item/clothing/suit/roguetown/armor/longcoat,
 /obj/item/clothing/head/roguetown/headband/red,
 /obj/item/rogueweapon/sword/cutlass,
-/obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat,
+/obj/item/clothing/suit/roguetown/armor/leather/heavy/jacket/duelcoat,
 /turf/open/floor/rogue/ruinedwood/spiral{
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},

@@ -152,7 +152,7 @@
 
 /datum/crafting_recipe/roguetown/leather/armor/duelcoat
 	name = "leather coat"
-	result = /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
+	result = /obj/item/clothing/suit/roguetown/armor/leather/heavy/jacket/duelcoat
 	reqs = list(
 		/obj/item/natural/hide/cured = 4,
 		/obj/item/reagent_containers/food/snacks/tallow = 1,
