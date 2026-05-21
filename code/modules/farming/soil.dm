@@ -63,7 +63,6 @@ GLOBAL_LIST_EMPTY(soil_list)
 /obj/structure/soil/proc/user_harvests(mob/living/user)
 	if(!produce_ready)
 		return
-	apply_farming_fatigue(user, 5)
 	add_sleep_experience(user, /datum/skill/labor/farming, user.STAINT * 2)
 
 	var/farming_skill = user.get_skill_level(/datum/skill/labor/farming)
@@ -151,7 +150,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 			else                       work_time = 3 SECONDS  // no skill = stone hoe speed
 		to_chat(user, span_notice("I begin to till the soil..."))
 		playsound(src,'sound/items/dig_shovel.ogg', 100, TRUE)
-		if(do_after(user, work_time, target = src))
+		if(do_after(user, get_farming_do_time(user, work_time), target = src))
 			to_chat(user, span_notice("I till the soil."))
 			playsound(src,'sound/items/dig_shovel.ogg', 100, TRUE)
 			user_till_soil(user)
@@ -494,7 +493,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 				. += span_info("Estimated time to maturity: [DisplayTimeText(adjusted_mature)] (at current growth rate).")
 		if(produce_ready)
 			. += span_info("It's ready for harvest.")
-			if(plant?.type == /datum/plant_def/swampweed && swampweed_overgrow_at > 0)
+			if(istype(plant, /datum/plant_def/swampweed) && swampweed_overgrow_at > 0)
 				. += span_warning("If left unharvested, it will grow into a wild thicket in [DisplayTimeText(max(0, swampweed_overgrow_at - world.time))].")
 	// Custom-growth structures sharing this soil: tree saplings, bush saplings, flower/herb seedlings.
 	// These don't use the standard soil.plant system, so their status is shown here instead.
@@ -793,7 +792,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 			produce_time -= plant.produce_time
 			produce_ready = TRUE
 			update_icon()
-			if(plant?.type == /datum/plant_def/swampweed && swampweed_overgrow_at < 0)
+			if(istype(plant, /datum/plant_def/swampweed) && swampweed_overgrow_at < 0)
 				swampweed_overgrow_at = world.time + (5 MINUTES)
 
 

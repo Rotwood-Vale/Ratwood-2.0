@@ -1179,11 +1179,13 @@
 	if(!base_delta)
 		return 0
 
-	if(HAS_TRAIT(src, TRAIT_OUTDOORSMAN))
-		base_delta = base_delta / 2
-
 	var/current_temp = bodytemperature
 	var/new_temp = current_temp + base_delta
+
+	if(HAS_TRAIT(src, TRAIT_OUTDOORSMAN))
+		if((base_delta > 0 && current_temp >= BODYTEMP_NORMAL_MIN) || (base_delta < 0 && current_temp <= BODYTEMP_NORMAL_MAX))
+			base_delta = base_delta / 2
+			new_temp = current_temp + base_delta
 
 	// If caller didn't supply exposure temp, assume resulting temp
 	if(isnull(exposure_temp))

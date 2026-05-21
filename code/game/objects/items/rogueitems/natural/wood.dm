@@ -28,9 +28,6 @@
 	name = "blessed log"
 	add_atom_colour("#88ffaa", FIXED_COLOUR_PRIORITY)
 	add_filter("blessed_log_outline", 2, list("type" = "outline", "color" = "#58C86A", "alpha" = 95, "size" = 1))
-	if(!istype(src, /obj/item/grown/log/tree/blessed))
-		new /obj/item/grown/log/tree/blessed(loc)
-		qdel(src)
 	return TRUE
 
 /obj/item/grown/log/tree/Destroy()
@@ -73,6 +70,14 @@
 			new /obj/item/grown/log/tree/small(get_turf(src.loc))
 			if(prob(skill_level + user.goodluck(2)))	// when sawing instead of essence you get extra small log
 				new /obj/item/grown/log/tree/small(get_turf(src.loc))
+			if(blessed)
+				if(prob(50))
+					to_chat(user, span_notice("Dendor's blessing preserves abundant timber, nearly doubling my yield."))
+					new /obj/item/grown/log/tree/small(get_turf(src))
+					new /obj/item/grown/log/tree/small(get_turf(src))
+				else if(prob(80))
+					to_chat(user, span_notice("Dendor's blessing preserves more usable timber for my efforts."))
+					new /obj/item/grown/log/tree/small(get_turf(src))
 			if(user.is_holding(src))
 				user.dropItemToGround(src)
 			user.mind.add_sleep_experience(/datum/skill/labor/lumberjacking, (user.STAINT*0.5))

@@ -44,19 +44,18 @@
 
 /obj/item/rogueweapon/woodstaff/druidic_staff/OnCrafted(direction, mob/user)
 	. = ..()  
-	// del_reqs called qdel() on the bloomstone which returned QDEL_HINT_LETMELIVE,
-	// decrementing one charge but keeping it alive. Use del() here to bypass Destroy()
-	// entirely so no stone dust is spawned and the stone is cleanly removed.
+	// del_reqs qdel() spends one bloomstone charge and lets it survive.
+	// Consume the bloomstone explicitly for this recipe instead of using raw del().
 	if(!user)
 		return
 	// Check hands first — del_reqs searches hands (and adjacent turfs), not pockets.
 	for(var/obj/item/alch/bloomstone/BS in list(user.get_active_held_item(), user.get_inactive_held_item()))
-		del(BS)
+		BS.consume_for_crafting()
 		return
 	// Check the user's turf and all adjacent turfs (matches del_reqs search range).
 	for(var/turf/T in range(1, user))
 		for(var/obj/item/alch/bloomstone/BS in T)
-			del(BS)
+			BS.consume_for_crafting()
 			return
 /obj/item/rogueweapon/woodstaff/druidic_staff/Destroy()
 	if(signals_registered && registered_on)

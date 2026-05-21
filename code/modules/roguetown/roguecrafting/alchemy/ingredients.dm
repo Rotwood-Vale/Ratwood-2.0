@@ -127,6 +127,14 @@
 	minor_pot = null
 	tool_behaviour = TOOL_DRUIDIC_CATALYST
 	var/charges = 20
+	/// TRUE when this bloomstone should be deleted outright without spending charges or creating dust.
+	var/consume_without_shatter = FALSE
+
+/// Consumes the bloomstone as a crafting ingredient.
+/// Used by druidic staff crafting to remove the item cleanly without shatter dust.
+/obj/item/alch/bloomstone/proc/consume_for_crafting()
+	consume_without_shatter = TRUE
+	qdel(src)
 
 /obj/item/alch/bloomstone/Initialize(mapload)
 	. = ..()
@@ -139,6 +147,8 @@
 
 /obj/item/alch/bloomstone/Destroy()
 	remove_filter("bloomstone_glow")
+	if(consume_without_shatter)
+		return ..()
 	charges--
 	if(charges > 0)
 		// Stone survives this use; re-apply glow and stay alive.
