@@ -1441,7 +1441,7 @@
 
 /datum/crafting_recipe/roguetown/sewing/tailcoat
 	name =  "tailcoat"
-	result = list(/obj/item/clothing/armor/gambeson/tailcoat)
+	result = list(/obj/item/clothing/suit/roguetown/armor/gambeson/tailcoat)
 	reqs = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 2,
 				/obj/item/natural/silk = 2)

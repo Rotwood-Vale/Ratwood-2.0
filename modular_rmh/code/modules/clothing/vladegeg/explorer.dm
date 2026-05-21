@@ -9,7 +9,7 @@
 	mob_overlay_icon = 'modular_rmh/icons/clothing/vladegeg/onmob/explorer.dmi'
 	sleeved = 'modular_rmh/icons/clothing/vladegeg/onmob/helpers/explorer_sleeves.dmi'
 
-/obj/item/clothing/armor/gambeson/explorer/update_icon()
+/obj/item/clothing/suit/roguetown/armor/gambeson/explorer/update_icon()
 	. = ..()
 
 /obj/item/clothing/under/roguetown/trou/leather/explorer
