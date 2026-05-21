@@ -188,7 +188,7 @@
 			return
 		if(HAS_TRAIT(user, TRAIT_BARGAIN_PENANCE_LOCKED))
 			user << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 0, 0, 0, 50)
-			to_chat(user, span_cultsmall("THE TOLL OR AN ANOINTED'S HAND — NO OTHER PATH LEAVES THIS PLACE."))
+			to_chat(user, span_cultsmall("THE TOLL OR AN ANOINTED'S HAND - NO OTHER PATH LEAVES THIS PLACE."))
 			return
 		to_chat(user, span_warning("The carriageman does not acknowledge the living."))
 		return
@@ -207,7 +207,7 @@
 			qdel(W)
 			REMOVE_TRAIT(user, TRAIT_BARGAIN_PENANCE_LOCKED, "bargain_penance")
 			user.remove_status_effect(/datum/status_effect/debuff/necra_bargain_penance)
-			to_chat(user, span_cultsmall("The Carriageman's bony hand accepts the toll. You feel the Undermaiden's hold on you loosen — the Way Out is yours to pass through once more."))
+			to_chat(user, span_cultsmall("The Carriageman's bony hand accepts the toll. You feel the Undermaiden's hold on you loosen - the Way Out is yours to pass through once more."))
 			user << sound(pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 0, 0, 0, 50)
 			return
 		if(!HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))

@@ -263,7 +263,7 @@
 			continue // skip own body
 		if(!C.mind?.key)
 			continue
-		// Use mind.current directly — avoids an O(world) scan per dead mob
+		// Use mind.current directly - avoids an O(world) scan per dead mob
 		var/mob/dead/observer/ghost = istype(C.mind.current, /mob/dead/observer) ? C.mind.current : null
 		if(!ghost)
 			continue	// no active ghost, cannot speak
@@ -306,7 +306,7 @@
 	var/mob/living/carbon/human/living_target = istype(soul_target, /mob/living/carbon/human) ? soul_target : null
 
 	if(living_target)
-		// Dead player with spirit in body — pull their spirit out so they can speak
+		// Dead player with spirit in body - pull their spirit out so they can speak
 		var/consent = alert(living_target, "[user.real_name], a servant of the Undermaiden, calls upon your spirit. Will you temporarily leave your body to appear before them and speak?", "Speak with the Dead", "Yes", "No")
 		if(consent != "Yes")
 			to_chat(user, span_warning("The soul does not wish to speak."))
@@ -330,7 +330,7 @@
 	// Move the ghost to the Necran
 	ghost.forceMove(get_turf(user))
 
-	to_chat(user, span_cultsmall("A soul stirs before you. Speak aloud — they will hear you and can respond in kind."))
+	to_chat(user, span_cultsmall("A soul stirs before you. Speak aloud - they will hear you and can respond in kind."))
 	to_chat(ghost, span_cultsmall("You have been called before a servant of the Undermaiden. Speak, if you wish. When done, simply wander or depart."))
 	playsound(get_turf(user), 'sound/vo/mobs/ghost/whisper (3).ogg', 60, TRUE)
 
@@ -590,7 +590,7 @@
 
 	var/selected = tgui_input_list(user, "Which body shall I seek?", "Available Bodies", corpses)
 
-	// Cancelled without selecting — no chant or devotion cost
+	// Cancelled without selecting - no chant or devotion cost
 	if(!selected || QDELETED(src) || QDELETED(user))
 		revert_cast()
 		return FALSE
@@ -810,7 +810,7 @@
 /// Dead player ghosts (rogue observers) can speak and emote, but only Necrans nearby hear them.
 /// This overrides the empty return in say.dm since necra.dm is compiled after it.
 /mob/dead/observer/rogue/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	// Handle emotes — check for *emote prefix, broadcast to nearby Necrans
+	// Handle emotes - check for *emote prefix, broadcast to nearby Necrans
 	if(check_emote(message, forced))
 		var/turf/ghost_turf = get_turf(src)
 		if(!ghost_turf)
@@ -886,7 +886,7 @@
 	)
 
 // =====================================================
-// Necra Cleric Tab — Ghost Sight & Death Notice toggles
+// Necra Cleric Tab - Ghost Sight & Death Notice toggles
 // =====================================================
 
 /// Toggles whether the Necran can see and hear wandering player ghosts.
@@ -902,7 +902,7 @@
 	else
 		ADD_TRAIT(src, TRAIT_NECRA_GHOST_VISION, "necra_patron")
 		src.see_invisible = max(src.see_invisible, SEE_INVISIBLE_NECRA_SPIRIT)
-		to_chat(src, span_notice("The veil thins — I perceive the wandering spirits of the departed."))
+		to_chat(src, span_notice("The veil thins - I perceive the wandering spirits of the departed."))
 
 /// Ensures ghost sight is re-applied when the engine recalculates sight (e.g. on movement).
 /mob/living/carbon/human/update_sight()

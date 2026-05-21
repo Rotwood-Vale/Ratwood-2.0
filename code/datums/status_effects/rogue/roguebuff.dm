@@ -1371,14 +1371,14 @@
 /datum/status_effect/buff/undermaidenbargain
 	id = "undermaidenbargain"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/undermaidenbargain
-	duration = -1	// Permanent — never expires on its own; only removed when the bargain fires or is rejected
+	duration = -1	// Permanent - never expires on its own; only removed when the bargain fires or is rejected
 	effectedstats = list(STATKEY_WIL = 1)
 
 /datum/status_effect/buff/undermaidenbargain/on_apply()
 	. = ..()
 	to_chat(owner, span_danger("You feel as though some horrible deal has been prepared in your name. May you never see it fulfilled..."))
 	playsound(owner, 'sound/misc/bell.ogg', 100, FALSE, -1)
-	// Permanent brand — persists even after the status effect is removed so the bargain can never be taken twice
+	// Permanent brand - persists even after the status effect is removed so the bargain can never be taken twice
 	ADD_TRAIT(owner, TRAIT_BARGAIN_PERMANENT, "bargain_permanent")
 	ADD_TRAIT(owner, TRAIT_DEATHBARGAIN, id)
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_owner_death))
@@ -1441,7 +1441,7 @@
 		if(T)
 			new /obj/item/thetoll(T)
 			break
-	to_chat(H, span_cultsmall("<b>The bargain struck in your name has been called.</b> You have been dragged to the Undermaiden's realm — find the toll and pay the Carriageman to leave."))
+	to_chat(H, span_cultsmall("<b>The bargain struck in your name has been called.</b> You have been dragged to the Undermaiden's realm - find the toll and pay the Carriageman to leave."))
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(complete_bargain_revival), owner_ref), 5 SECONDS)
 
 /// Fully revives the bargain recipient and returns their ghost to their body.

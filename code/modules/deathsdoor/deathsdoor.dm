@@ -109,9 +109,9 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 /obj/structure/deaths_door_shrine/attack_hand(mob/living/user)
 	to_chat(user, span_notice("You reach for the glowing portal..."))
 
-	// Bargain penance lock checked first — applies to everyone including Necrans
+	// Bargain penance lock checked first - applies to everyone including Necrans
 	if(HAS_TRAIT(user, TRAIT_BARGAIN_PENANCE_LOCKED))
-		to_chat(user, span_cultsmall("The Undermaiden bars your path. Seek the toll and pay the Carriageman — or find one of her anointed to guide you free."))
+		to_chat(user, span_cultsmall("The Undermaiden bars your path. Seek the toll and pay the Carriageman - or find one of her anointed to guide you free."))
 		playsound(get_turf(src), 'sound/misc/deadbell.ogg', 50, FALSE, -1)
 		return
 
@@ -199,7 +199,7 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 	if(default_exit)
 		dests[default_exit] = "A Strange Place"
 
-	// Necra devoted can choose exits — collect waypoints from ALL living Necrans so their marks are shared
+	// Necra devoted can choose exits - collect waypoints from ALL living Necrans so their marks are shared
 	if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
 		for(var/mob/living/necran in GLOB.player_list)
 			if(!HAS_TRAIT(necran, TRAIT_SOUL_EXAMINE) || necran.stat == DEAD)
@@ -378,13 +378,13 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 	if(!do_after_mob(user, M, 2 SECONDS))
 		return
 
-	// Spooky visual and sound as the body crosses the threshold — shown to all nearby before M is moved
+	// Spooky visual and sound as the body crosses the threshold - shown to all nearby before M is moved
 	var/turf/drag_turf = get_turf(M)
 	playsound(drag_turf, pick('sound/misc/carriage1.ogg', 'sound/misc/carriage2.ogg', 'sound/misc/carriage3.ogg', 'sound/misc/carriage4.ogg'), 60, TRUE, -1)
 	M.visible_message(span_cultsmall("A small rift with ghastly screams tears from the ground. Ghostly hands reach out, pulling [M] across the threshold into the Undermaiden's realm!"))
 
 	// Necrans who guide a dead NPC body through receive 5 tokens of gratitude
-	// Check BEFORE enter_portal() — that proc QDELs the NPC mob, making M invalid after the call
+	// Check BEFORE enter_portal() - that proc QDELs the NPC mob, making M invalid after the call
 	// Undead (skeletons etc.) also reward even if they formerly had a player
 	if(is_necran && is_dead && (!has_player || is_undead) && !M.burialrited)
 		var/obj/item/roguecoin/necra_token/body_reward = new(get_turf(user), 5)
@@ -452,7 +452,7 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 /obj/structure/deaths_door_portal/attackby(obj/item/I, mob/living/user, params)
 	if(!HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
 		return ..()
-	// Bone bundles — reward scales with number of bones in the bundle
+	// Bone bundles - reward scales with number of bones in the bundle
 	if(istype(I, /obj/item/natural/bundle/bone))
 		var/obj/item/natural/bundle/bone/bundle = I
 		var/bundle_count = bundle.amount
@@ -474,7 +474,7 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 	if(istype(I, /obj/item/bodypart/head))
 		to_chat(user, span_warning("The portal rejects the severed head."))
 		return
-	// Other bodyparts (limbs) — 1 token each
+	// Other bodyparts (limbs) - 1 token each
 	if(istype(I, /obj/item/bodypart) && !istype(I, /obj/item/bodypart/head))
 		to_chat(user, span_notice("The portal accepts the severed remains."))
 		var/obj/item/roguecoin/necra_token/limb_coin = new(get_turf(user))

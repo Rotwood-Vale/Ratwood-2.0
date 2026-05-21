@@ -280,14 +280,14 @@
 	base_type = CTYPE_ANCIENT
 	plural_name = "psila"
 
-/// A blessed coin of gratitude — Necra's currency. Produced by burial rites and portal offerings.
+/// A blessed coin of gratitude - Necra's currency. Produced by burial rites and portal offerings.
 /// Accepted by the Carriageman in lieu of the Toll. Stacks up to 200.
 /obj/item/roguecoin/necra_token
 	name = "token of gratitude"
-	desc = "A worn zenny, its surface tarnished and faintly luminous. Blessed by Necra's rites — proof that a soul was laid to rest with grace and reverence."
+	desc = "A worn zenny, its surface tarnished and faintly luminous. Blessed by Necra's rites - proof that a soul was laid to rest with grace and reverence."
 	icon_state = "a1"
 	sellprice = 0
-	base_type = "t"  // unique type — does not merge with psilen ("a") or any other coin
+	base_type = "t"  // unique type - does not merge with psilen ("a") or any other coin
 	plural_name = "tokens of gratitude"
 	resistance_flags = FIRE_PROOF
 	light_system = STATIC_LIGHT

@@ -674,7 +674,7 @@
 	. = ..()
 	claw_start_time = world.time + 20 SECONDS
 	to_chat(owner, span_userdanger("<span class='big'>YOU HAVE CHEATED DEATH. FOR THIS SIN, YOU MUST SUFFER YOUR END OF THE BARGAIN!</span>"))
-	to_chat(owner, span_warning("Find the toll and bring it to the Carriageman — only by paying it or finding one of my annointed may you leave this realm."))
+	to_chat(owner, span_warning("Find the toll and bring it to the Carriageman - only by paying it or finding one of my annointed may you leave this realm."))
 
 /datum/status_effect/debuff/necra_bargain_penance/tick()
 	if(world.time < claw_start_time)

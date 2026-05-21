@@ -49,7 +49,7 @@
 			consecrated_properly = TRUE
 			break
 	if(consecrated_properly)
-		. += span_notice("The marker carries a faint warmth — this resting place has been blessed with Necra's rites.")
+		. += span_notice("The marker carries a faint warmth - this resting place has been blessed with Necra's rites.")
 	else
 		. += span_warning("This grave has not been consecrated with Necra's rites.")
 

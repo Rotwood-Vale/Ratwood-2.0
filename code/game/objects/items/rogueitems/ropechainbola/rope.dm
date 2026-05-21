@@ -154,7 +154,7 @@
 		target.add_movespeed_modifier(MOVESPEED_ID_CUFFED_LEG_SLOWDOWN, update=TRUE, priority=100, multiplicative_slowdown=2, movetypes=GROUND)
 		return
 
-/// Necran cordage — blessed burial-cordage.
+/// Necran cordage - blessed burial-cordage.
 /// Binds the dead and undead much faster, and doesn't slow the user when dragging them.
 /// Living targets require being prone on the ground AND aggressively grabbed.
 /obj/item/rope/necran_cord

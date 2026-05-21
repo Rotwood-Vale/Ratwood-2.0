@@ -1129,7 +1129,7 @@
 	for(var/mob/living/carbon/human/target in ritualtargets)
 		if(!target.client && !target.mind?.key)
 			continue
-		// Once per player — the bargain cannot be struck twice
+		// Once per player - the bargain cannot be struck twice
 		if(HAS_TRAIT(target, TRAIT_BARGAIN_PERMANENT))
 			to_chat(target, span_warning("The Undermaiden's bargain has already been sealed in your name. She does not deal it more than once."))
 			if(necran_user)

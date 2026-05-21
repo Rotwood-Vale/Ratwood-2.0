@@ -146,7 +146,7 @@
 			if(ishuman(target_corpse))
 				var/mob/living/carbon/human/H = target_corpse
 				if(istype(H.mouth, /obj/item/roguecoin/copper))
-					// Coin in the mouth of the dead — Necra's toll paid, bonus awarded
+					// Coin in the mouth of the dead - Necra's toll paid, bonus awarded
 					num_tokens = 10
 					to_chat(user, span_notice("The coin placed in this one's mouth pleases the Undermaiden. Her bounty is doubled."))
 			var/obj/item/roguecoin/necra_token/burial_reward = new(get_turf(user), num_tokens)
