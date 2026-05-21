@@ -146,6 +146,11 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/storage/roguebag
 	triumph_cost = 2
 
+/datum/loadout_item/mallet
+	name = "Wooden Mallet"
+	path = /obj/item/rogueweapon/hammer/wood
+	triumph_cost = 3
+
 //ANCIENT TOOLS (Ancient Alloy)
 
 /datum/loadout_item/ancient_hammer
@@ -330,6 +335,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Salvia Crown"
 	path = /obj/item/flowercrown/salvia
 
+/datum/loadout_item/tri_grenzelhoft_hat_capless
+	name = "Capless Grenzelhoft Hat"
+	path = /obj/item/clothing/head/roguetown/caplessgrenzelhofthat
+	
 //CLOAKS
 /datum/loadout_item/tabard
 	name = "Tabard"
@@ -478,6 +487,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/sandals
 	name = "Sandals"
 	path = /obj/item/clothing/shoes/roguetown/sandals
+
+/datum/loadout_item/toga_sandals
+	name = "Fancy Sandals"
+	path = /obj/item/clothing/shoes/roguetown/sandals/toga_sandals
 
 /datum/loadout_item/shortboots
 	name = "Short Boots"
@@ -928,6 +941,8 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Rope Belt"
 	path = /obj/item/storage/belt/rogue/leather/rope
 
+// Religious Amulets.
+
 /datum/loadout_item/psicross
 	name = "Psydonian Cross"
 	path = /obj/item/clothing/neck/roguetown/psicross
@@ -979,6 +994,22 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/psicross/zizo
 	name = "Ancient Zcross"
 	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy
+
+/datum/loadout_item/psicross/matthios
+	name = "Amulet of Matthios"
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios
+
+/datum/loadout_item/psicross/graggar
+	name = "Amulet of Graggar"
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar
+
+/datum/loadout_item/psicross/baotha
+	name = "Amulet of Baotha"
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha
+
+/datum/loadout_item/psicross/ten
+	name = "Amulet of Ten"
+	path = /obj/item/clothing/neck/roguetown/psicross/ten
 
 /datum/loadout_item/wedding_band
 	name = "silver wedding band"

@@ -107,12 +107,11 @@ SUBSYSTEM_DEF(nightshift)
 				apply_status_effect(/datum/status_effect/debuff/vamp_dreams)
 			if(HAS_TRAIT(src, TRAIT_NIGHT_OWL) && !HAS_TRAIT(src, TRAIT_NOSLEEP))
 				apply_status_effect(/datum/status_effect/debuff/sleepytime)
-			if(HAS_TRAIT(src, TRAIT_INFINITE_STAMINA) || HAS_TRAIT(src, TRAIT_NOSLEEP))
-				handle_sleep_triumphs()
 		if("dusk")
 			SEND_SIGNAL(src, COMSIG_MOB_DUSKED)
 		if("night")
 			SEND_SIGNAL(src, COMSIG_MOB_NIGHTED)
+			handle_sleep_triumphs()
 			if(HAS_TRAIT(src, TRAIT_INFINITE_STAMINA) || HAS_TRAIT(src, TRAIT_NOSLEEP))
 				return ..()
 			if(HAS_TRAIT(src, TRAIT_NIGHT_OWL))
@@ -133,7 +132,7 @@ SUBSYSTEM_DEF(nightshift)
 	if(mind.assigned_role != "Unassigned" && istype(mind.assigned_role, /datum/job) && (mind.assigned_role.title in towner_jobs)) //If you play a towner-related role, you get an additonal triumph
 		triumphs_to_add++
 	adjust_triumphs(triumphs_to_add)
-	to_chat(src, span_danger("Nights Survived: \Roman[allmig_reward]"))
+	to_chat(src, span_danger("Days Survived: \Roman[allmig_reward]"))
 
 /mob/living/carbon/human
 	var/survived_cycles = 0

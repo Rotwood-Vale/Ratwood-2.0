@@ -26,7 +26,7 @@
 	if(world.time < last_parry + setparrytime)
 		if(!istype(rmb_intent, /datum/rmb_intent/riposte))
 			return FALSE
-	if(has_status_effect(/datum/status_effect/debuff/exposed))
+	if(has_status_effect(/datum/status_effect/debuff/exposed) || has_status_effect(/datum/status_effect/debuff/vulnerable))
 		return FALSE
 	if(has_status_effect(/datum/status_effect/debuff/riposted))
 		return FALSE

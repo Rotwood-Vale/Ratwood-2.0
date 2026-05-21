@@ -356,6 +356,18 @@
 	smeltresult = /obj/item/ingot/iron
 	sewrepair = FALSE
 
+/obj/item/clothing/mask/rogue/facemask/equipped(mob/user, slot)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_fov_angles()
+
+/obj/item/clothing/mask/rogue/facemask/dropped(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_fov_angles()
+
 /obj/item/clothing/mask/rogue/facemask/shadowfacemask
 	name = "spider rider's mask"
 	desc = "A metal mask adorned with arachnid iconography. A grim visage crafted by a grim race."
@@ -862,7 +874,14 @@
 	next_honk = world.time + 1 SECONDS
 	playsound(src, 'sound/misc/honkmask.ogg', 70, TRUE)
 	to_chat(user, span_notice("The mask's nose is squeezed! It emits a squeaky honk."))
-
+/obj/item/clothing/mask/rogue/xylixmask/dropped(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		hide_identity = initial(hide_identity)
+		block2add = initial(block2add)
+		H.update_fov_angles()
+		H.update_vision_cone()
 /obj/item/clothing/mask/rogue/xylixmask/MiddleClick(mob/user, params)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return

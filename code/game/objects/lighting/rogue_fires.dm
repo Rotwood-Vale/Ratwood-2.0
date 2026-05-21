@@ -366,6 +366,10 @@
 	QDEL_NULL(torchy)
 	on = FALSE
 	set_light(0)
+	pixel_x = 0
+	pixel_y = 0
+	if(dirin == SOUTH)
+		pixel_y = 32
 	update_icon()
 
 	..(dirin, user)

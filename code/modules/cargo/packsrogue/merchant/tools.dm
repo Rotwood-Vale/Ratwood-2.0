@@ -60,15 +60,6 @@
 					/obj/item/flint,
 				)
 
-/datum/supply_pack/rogue/tools/bottl
-	name = "Glass Bottles"
-	cost = 15
-	contains = list(
-					/obj/item/reagent_containers/glass/bottle/rogue,
-					/obj/item/reagent_containers/glass/bottle/rogue,
-					/obj/item/reagent_containers/glass/bottle/rogue,
-				)
-
 /datum/supply_pack/rogue/tools/pipes
 	name = "Pipe"
 	cost = 15
@@ -188,16 +179,17 @@
 	contains = list(/obj/item/roguekey/shop)
 
 /datum/supply_pack/rogue/tools/alch_bottle
-	name = "Alchemy Bottle"
+	name = "Bottle (Alchemical Vial)"
 	cost = 1
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical,)
 
 /datum/supply_pack/rogue/tools/alch_bottles
-	name = "Bulk Alchemy Bottles" //Buy 8 now get 1 free!
+	name = "Bottles (Alchemical Vials, bulk)" //Buy 8 now get 1 free!
 	cost = 8
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical,/obj/item/reagent_containers/glass/bottle/alchemical,/obj/item/reagent_containers/glass/bottle/alchemical,
 	/obj/item/reagent_containers/glass/bottle/alchemical,/obj/item/reagent_containers/glass/bottle/alchemical,/obj/item/reagent_containers/glass/bottle/alchemical,
 	/obj/item/reagent_containers/glass/bottle/alchemical,/obj/item/reagent_containers/glass/bottle/alchemical,/obj/item/reagent_containers/glass/bottle/alchemical)
+
 
 /datum/supply_pack/rogue/tools/alch_bottlenormal
 	name = "Bottle"
@@ -205,10 +197,10 @@
 	contains = list(/obj/item/reagent_containers/glass/bottle,)
 
 /datum/supply_pack/rogue/tools/alch_bottlesnormal
-	name = "Bulk Bottles" //
-	cost = 20
+	name = "Bottles (Bulk)" //buy 4 get 1 free
+	cost = 12
 	contains = list(/obj/item/reagent_containers/glass/bottle/,/obj/item/reagent_containers/glass/bottle/,/obj/item/reagent_containers/glass/bottle/,
-	/obj/item/reagent_containers/glass/bottle/,/obj/item/reagent_containers/glass/bottle/,/obj/item/reagent_containers/glass/bottle/,)
+	/obj/item/reagent_containers/glass/bottle/,/obj/item/reagent_containers/glass/bottle/)
 
 /datum/supply_pack/rogue/tools/headhook
 	name = "Iron Head Hook"

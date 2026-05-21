@@ -1,4 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes:
-  - bugfix: "You are no longer slowed down by turfs if you are flying or floating"

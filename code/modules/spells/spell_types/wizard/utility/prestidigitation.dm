@@ -17,13 +17,27 @@
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
 	hand_path = /obj/item/melee/touch_attack/prestidigitation
+	var/mote_color = null
+
+// Re-apply saved prestidigitation color when the touch hand is summoned again.
+/obj/effect/proc_holder/spell/targeted/touch/prestidigitation/ChargeHand(mob/living/carbon/user)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/melee/touch_attack/prestidigitation/hand = attached_hand
+	if(!istype(hand))
+		return
+	if(mote_color)
+		hand.apply_mote_color(mote_color)
+	else
+		hand.apply_mote_color(hand.default_mote_color)
 
 /obj/item/melee/touch_attack/prestidigitation
 	name = "\improper prestidigitating touch"
 	desc = "You recall the following incantations you've learned:\n \
 	<b>Touch</b>: Use your arcyne powers to scrub an object or something clean, like using soap. Also known as the Apprentice's Woe.\n \
 	<b>Shove</b>: Will forth a spark on an item of your choosing (or in front of you, if used on the ground) to ignite flammable items and things like torches, lanterns or campfires. \n \
-	<b>Use</b>: Conjure forth an orbiting mote of magelight to light your way.\n \
+	<b>Use</b>: Conjure forth an orbiting mote of magelight to light your way. Middle-click this hand to set the mote's color. Alt-right-click to reset it.\n \
 	<b>Punch</b>: Conjure a harmless bolt of water at your target, extinguishing any flames upon them. When aimed at the head, it may distress those of feline nature or noble bearing."
 	catchphrase = null
 	no_effect = TRUE
@@ -33,6 +47,7 @@
 	icon_state = "grabbing_greyscale"
 	color = "#3FBAFD" // this produces green because the icon base is yellow but someone else can fix that if they want
 	var/obj/effect/wisp/prestidigitation/mote
+	var/default_mote_color = "#3FBAFD"
 	var/cleanspeed = 35 // adjust this down as low as 15 depending on magic skill
 	var/motespeed = 20 // mote summoning speed
 	var/sparkspeed = 30 // spark summoning speed
@@ -42,6 +57,7 @@
 /obj/item/melee/touch_attack/prestidigitation/Initialize(mapload)
 	. = ..()
 	mote = new(src)
+	apply_mote_color(default_mote_color)
 
 /obj/item/melee/touch_attack/prestidigitation/Destroy()
 	if(mote)
@@ -50,6 +66,64 @@
 
 /obj/item/melee/touch_attack/prestidigitation/attack_self()
 	qdel(src)
+
+
+/obj/item/melee/touch_attack/prestidigitation/MiddleClick(mob/user, params)
+	. = ..()
+	if(!ishuman(user))
+		return
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+		return
+
+	var/obj/effect/proc_holder/spell/targeted/touch/prestidigitation/base_spell = attached_spell
+	if(!base_spell)
+		return
+
+	var/current_color = base_spell.mote_color || mote?.color || default_mote_color
+	var/picked_color = input(user, "Choose your magelight mote color:", "Dyes", current_color) as color|null
+	if(isnull(picked_color))
+		return
+	var/picked_color_hex = sanitize_hexcolor(picked_color)
+	if(!picked_color_hex)
+		return
+	var/list/hsl = rgb2hsl(hex2num(copytext(picked_color_hex,1,3)),hex2num(copytext(picked_color_hex,3,5)),hex2num(copytext(picked_color_hex,5,7)))
+	var/lightness_percent = round(hsl[3] * 100, 0.1)
+	var/new_color = sanitize_hexcolor(picked_color, 6, TRUE)
+	if(lightness_percent < 30)
+		to_chat(user, span_warning("The picked color is too dark (minimum lightness is 30%)! Reverting to default color."))
+		new_color = default_mote_color
+
+	base_spell.mote_color = new_color
+	apply_mote_color(new_color)
+	to_chat(user, span_notice("I attune my magelight mote to a new hue."))
+
+/obj/item/melee/touch_attack/prestidigitation/AltRightClick(mob/user)
+	if(!ishuman(user))
+		return
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+		return
+
+	var/obj/effect/proc_holder/spell/targeted/touch/prestidigitation/base_spell = attached_spell
+	if(base_spell)
+		base_spell.mote_color = null
+	apply_mote_color(default_mote_color)
+	to_chat(user, span_notice("I reset my magelight mote color."))
+
+/obj/item/melee/touch_attack/prestidigitation/proc/apply_mote_color(new_color)
+	if(!new_color)
+		new_color = default_mote_color
+	if(color != new_color)
+		color = new_color
+	if(!mote)
+		return
+	if(mote.color != new_color)
+		mote.color = new_color
+	var/light_changed = FALSE
+	if(mote.light_color != new_color)
+		mote.set_light_color(new_color)
+		light_changed = TRUE
+	if(light_changed && mote.light_system == STATIC_LIGHT)
+		mote.update_light()
 
 /obj/item/melee/touch_attack/prestidigitation/afterattack(atom/target, mob/living/carbon/user, proximity)
 	switch (user.used_intent.type)
@@ -77,7 +151,7 @@
 	var/extra_fatigue = 0 // extra fatigue isn't considered in xp calculation
 	switch (action)
 		if (PRESTI_CLEAN)
-			fatigue_used *= 0.2 // going to be spamming a lot of this probably
+			extra_fatigue = 2.5 // baseline stamina cost per clean
 		if (PRESTI_SPARK)
 			extra_fatigue = 5 // just a bit of extra fatigue on this one
 		if (PRESTI_MOTE)
@@ -97,6 +171,11 @@
 	// adjusted from /obj/item/wisp_lantern & /obj/item/wisp
 	if (!mote)
 		return // should really never happen
+	var/obj/effect/proc_holder/spell/targeted/touch/prestidigitation/base_spell = attached_spell
+	if(base_spell?.mote_color)
+		apply_mote_color(base_spell.mote_color)
+	else
+		apply_mote_color(default_mote_color)
 
 	//let's adjust the light power based on our skill, too
 	var/skill_level = user.get_skill_level(attached_spell.associated_skill)
@@ -144,6 +223,7 @@
 	// let's adjust the clean speed based on our skill level
 	var/skill_level = user.get_skill_level(attached_spell.associated_skill)
 	cleanspeed = initial(cleanspeed) - (skill_level * 3) // 3 cleanspeed per skill level, from 35 down to a maximum of 17 (pretty quick)
+	cleanspeed = max(1, round(cleanspeed * 0.75)) // 25% less time (e.g. 2s -> 1.5s)
 
 	if (istype(target, /obj/structure/roguewindow))
 		user.visible_message(span_notice("[user] gestures at \the [target.name]. Tiny motes of arcyne power dance across its surface..."), span_notice("I begin to clean \the [target.name] with my arcyne power..."))
@@ -200,6 +280,8 @@
 	name = "minor magelight mote"
 	desc = "A tiny display of arcyne power used to illuminate."
 	pixel_x = 20
+	color = "#3FBAFD"
+	light_color = "#3FBAFD"
 //baseline wisp is in rogue_fires
 
 // Harmless water bolt fired by prestidigitation's punch intent

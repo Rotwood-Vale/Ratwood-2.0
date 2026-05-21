@@ -70,7 +70,7 @@
 		switch(weapon_choice2)
 			if("Scimitar")
 				beltl = /obj/item/rogueweapon/scabbard/sword
-				l_hand = /obj/item/rogueweapon/sword/saber/iron
+				l_hand = /obj/item/rogueweapon/sword/sabre/iron
 			if("Whip") // They can head down to the armory to sideshift into one of the other bows.
 				beltl = /obj/item/rogueweapon/whip
 			if("Club")

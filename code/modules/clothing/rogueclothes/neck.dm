@@ -568,7 +568,7 @@
 	name = "reformist psycross"
 	desc = "A psycross with its prongs bent inward. God is dead, but this world HE left is beautiful and worth of loving. ENDURE with every broken bone in your body."
 	sellprice = 0
-	icon_state = "psycross_reform"
+	icon_state = "reformistcross"
 
 /obj/item/clothing/neck/roguetown/psicross/pearl //put it as a psycross so it can be used for miracles
 	name = "pearl amulet"
@@ -1144,3 +1144,57 @@
 	color = "#7B8C5E"
 	slot_flags = ITEM_SLOT_NECK
 	sellprice = 20
+
+// AP port. 
+
+/obj/item/clothing/neck/roguetown/psicross/inhumen/g
+	name = "golden inverted psycross"
+	desc = "'Doth thee wish to live deliciously? Mortality is but a shackle; and if you wish to break free from its steely grasp, all you need to do.. is put thine faith in me.'"
+	icon_state = "zcross_g"
+	resistance_flags = FIRE_PROOF
+	sellprice = 100
+
+/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios
+	name = "amulet of Matthios"
+	desc = "He was but one flame in the dark. Together, his flock shall outblaze the tyrant sun."
+	icon_state = "matthios"
+	resistance_flags = FIRE_PROOF
+	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_RING
+	smeltresult = null
+
+/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar
+	name = "amulet of Graggar"
+	desc = "Blood leads only to glory, and violence begets divinity. Nothing less. Conquest is simply another name for victory."
+	icon_state = "graggar"
+	resistance_flags = FIRE_PROOF
+	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_RING
+	smeltresult = null
+
+/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/bronze
+	name = "bronze amulet of Graggar"
+	desc = "'EVERYTHING - AND EVERYONE YOU LOVE - WILL BE GONE! WHAT WILL YOU HAVE, AFTER THE LAST FIRE'S BEEN SMOTHERED OUT?!' </br>‎  </br>'..You. I'd still have you.'"
+	icon_state = "graggar_b"
+	item_state = "graggar_b"
+	sellprice = 25
+
+/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha
+	name = "amulet of Baotha"
+	desc = "A hollow promise rendered in gold. It weighs heavy with the memory of sweet wine turned to poison, and the comfort of a sorrow that refuses to fade."
+	icon_state = "baotha"
+	resistance_flags = FIRE_PROOF
+	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_RING
+	smeltresult = null
+
+/obj/item/clothing/neck/roguetown/psicross/ten
+	name = "amulet of Ten"
+	desc = "The Ten eternal, strength in unity. Stalwart for centuries against the darkness."
+	icon_state = "undivided"
+	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_RING
+
+/obj/item/clothing/neck/roguetown/psicross/silver/undivided
+	name = "silver amulet of Ten"
+	desc = "Ward of silver, sigil of eternity; by the Ten, I command thee back to Hell!"
+	icon_state = "undivided_s"
+	sellprice = 50
+
+
