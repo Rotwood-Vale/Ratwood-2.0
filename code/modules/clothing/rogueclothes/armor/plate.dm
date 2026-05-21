@@ -614,6 +614,15 @@
 			user.visible_message(span_warning("[user] stops fitting [W] inside the [src]."))
 		return
 
+/obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == SLOT_ARMOR)
+		user.apply_status_effect(/datum/status_effect/buff/psydonic_endurance)
+
+/obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat/dropped(mob/living/carbon/human/user)
+	. = ..()
+	if(istype(user) && user?.wear_armor == src)
+		user.remove_status_effect(/datum/status_effect/buff/psydonic_endurance)
 
 /obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat/armored
 	slot_flags = ITEM_SLOT_ARMOR
