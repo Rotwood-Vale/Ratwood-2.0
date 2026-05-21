@@ -1272,7 +1272,7 @@ Necra's Censer (by ARefrigerator)
 #define SAY_INFO(msg)  to_chat(user, span_info(msg))
 #define SAY_WARN(msg)  to_chat(user, span_warning(msg))
 
-/obj/item/artifact/ravox_lens
+/obj/item/artefact/ravox_lens
 	name = "Ravox trace lens"
 	desc = "A fearless god's lens that reveals the truth."
 	icon = 'icons/roguetown/items/artefactsten.dmi'
@@ -1284,10 +1284,10 @@ Necra's Censer (by ARefrigerator)
 	var/range = 8
 	var/view_check = TRUE
 
-/obj/item/artifact/ravox_lens/Initialize()
+/obj/item/artefact/ravox_lens/Initialize()
 	. = ..()
 
-/obj/item/artifact/ravox_lens/afterattack(atom/target, mob/living/user, params)
+/obj/item/artefact/ravox_lens/afterattack(atom/target, mob/living/user, params)
 	. = ..()
 	if(!target || !user)
 		return FALSE
@@ -1389,7 +1389,7 @@ Necra's Censer (by ARefrigerator)
 
 
 /************************
-/obj/item/artifact/fishingrod/abyssoid
+/obj/item/artefact/fishingrod/abyssoid
  * Дроп только рыбы + не нужен bait.
  **************************************************/
 
@@ -1596,14 +1596,14 @@ Necra's Censer (by ARefrigerator)
 
 // ASS TRATA
 
-/obj/item/artifact/astrata_star
+/obj/item/artefact/astrata_star
 	name = "Star of Astrata"
 	desc = "An artifact used to help the lost find the true light."
 	icon = 'icons/roguetown/items/artefactsten.dmi'
 	icon_state = "astrataartefact"
 	force = 0
 
-/obj/item/artifact/astrata_star/attack(mob/living/target, mob/user)
+/obj/item/artefact/astrata_star/attack(mob/living/target, mob/user)
 	if(!istype(target, /mob/living/carbon/human))
 		return
 

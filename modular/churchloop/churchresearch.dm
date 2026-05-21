@@ -67,11 +67,11 @@ var/global/divine_patrons_built = FALSE
 var/global/inhumen_patrons_built = FALSE
 
 var/global/list/PATRON_ARTIFACTS = list(
-	"Astrata" = list(/obj/item/artifact/astrata_star),
+	"Astrata" = list(/obj/item/artefact/astrata_star),
 	"Noc"     = list(/obj/item/artefact/noc_phylactery),
 	"Dendor"  = list(/obj/item/artefact/dendor_hose),
 	"Abyssor" = list(/obj/item/fishingrod/abyssoid),
-	"Ravox"   = list(/obj/item/artifact/ravox_lens),
+	"Ravox"   = list(/obj/item/artefact/ravox_lens),
 	"Necra"   = list(/obj/item/artefact/necra_censer),
 	"Xylix"   = list(/obj/item/clothing/gloves/xylix),
 	"Pestra"  = list(/obj/item/rogueweapon/surgery/multitool, /obj/item/needle/pestra, /obj/item/natural/worms/leech/cheele),
