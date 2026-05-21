@@ -1817,7 +1817,7 @@
 			var/hook_roll = rand(1, 10) + str_hook + sl
 			var/hook_target = 8 + fish_challenge_hook * 4
 			if(hook_roll < hook_target)
-				to_chat(user, "<span class='warning'>I get a nibble — but the fish tears free before I can secure the line!</span>")
+				to_chat(user, "<span class='warning'>I get a nibble - but the fish tears free before I can secure the line!</span>")
 				apply_tackle_wear(user, 1, 1, 1)
 				update_icon()
 				return
