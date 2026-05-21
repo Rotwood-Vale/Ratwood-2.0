@@ -1814,7 +1814,7 @@
 
 /atom/movable/screen/alert/status_effect/buff/psydonic_endurance
 	name = "Psydonic Endurance"
-	desc = "I am protected by blessed Psydonian plate armor."
+	desc = "I am protected by blessed Psydonian armor."
 	icon_state = "buff"
 
 #undef BLOODRAGE_FILTER
