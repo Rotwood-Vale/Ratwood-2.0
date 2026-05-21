@@ -104,13 +104,21 @@
 	deathsight_message = "the roofs of the bustling city"
 
 /area/rogue/outdoors/town/roofs/keep
-	name = "Keep Rooftops"
+	name = "keep rooftops"
 	icon_state = "manor"
 	keep_area = TRUE
 
 /area/rogue/outdoors/town/roofs/church
-	name = "Church Rooftops"
+	name = "church rooftops"
 	holy_area = TRUE
+
+/area/rogue/outdoors/town/roofs/warden
+	name = "warden rooftops"
+	warden_area = TRUE
+
+/area/rogue/outdoors/town/roofs/tavern
+	name = "tavern rooftops"
+	tavern_area = TRUE
 
 /area/rogue/indoors/shelter/town/roofs
 	icon_state = "roofs"
@@ -127,6 +135,10 @@
 	converted_type = /area/rogue/outdoors/exposed/magiciantower
 	keep_area = TRUE
 	// detail_text = DETAIL_TEXT_UNIVERSITY_OF_ROTWOOD
+	
+/area/rogue/indoors/town/magician/arcynefortress
+	name = "arcyne fortress"
+	first_time_text = "Arcyne Fortress"
 
 /area/rogue/indoors/town/magician/rockhill
 	name = "Wizard's Tower"
@@ -308,13 +320,27 @@
 	icon_state = "warehouse"
 	deathsight_message = "musty crates and cheap imports"
 
+/area/rogue/indoors/town/warehouse/harbor
+	droning_sound = 'sound/music/area/harbor.ogg'
+	droning_sound_dusk = null
+	droning_sound_night = null
+	ambientsounds = AMB_BOAT
+	ambientnight = AMB_BOAT
+	deathsight_message = "musty crates and cheap imports, a salty sea-tang on the air"
+
 /area/rogue/indoors/town/warehouse/can_craft_here()
 	return FALSE
 
 /area/rogue/indoors/town/warden
-	name = "Warden Fort"
+	name = "warden fort"
 	warden_area = TRUE
 	deathsight_message = "a moss covered stone redoubt, guarding against the wilds"
+
+/area/rogue/indoors/town/cell/warden
+	converted_type = /area/rogue/indoors/town/warden
+	town_area = FALSE
+	warden_area = TRUE
+	deathsight_message = "makeshift cells of pain and suffering at the border of the wilds"
 
 /area/rogue/indoors/inq
 	name = "The Inquisition"

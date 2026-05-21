@@ -18,14 +18,14 @@
 	desc = "I have channeled too much of Pestra's power, and cannot harbor much of her divine infestation."
 	icon_state = "divine_exhaustion"
 
-// The healing of this is equivalent 3x pestra's heal, or 2x fortified pestra's heal. It wanes but lasts a long time.
+// The ultimate healing miracle
 /datum/status_effect/buff/divine_rebirth_healing
 	id = "divine_rebirth_healing"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/divine_rebirth_healing
 	duration = 30 SECONDS // Gradual healing
 	tick_interval = 3 SECONDS
 	var/time_left
-	var/healing_strength = 45 // Starts strong
+	var/healing_strength = 45
 	var/limbs_regenerated = 0
 	var/max_limbs_to_regenerate = 3
 	var/outline_colour = "#FFD700"
@@ -49,8 +49,6 @@
 /datum/status_effect/buff/divine_rebirth_healing/tick()
 	var/time_progress = (duration - time_left) / duration
 	time_left -= tick_interval
-	// This shouldn't ever dip below 5, but let's use MAX for safety anyways
-	healing_strength = max(5, healing_strength - (time_progress * (healing_strength - 5)))
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = outline_colour
 	do_sprite_shake(owner, 3, 3, 15, 1)

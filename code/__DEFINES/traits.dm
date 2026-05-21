@@ -84,7 +84,6 @@
 #define TRAIT_PERMAMUTE "Permanent Mute"
 #define TRAIT_EXCOMMUNICATED "Excommunicated"
 #define TRAIT_HERESIARCH "Forbidden Knowledge"//Church curse protection. Stronger heretic spires. Heretic conversion handling.
-#define TRAIT_ZURCH 	"Hidden Domiciles" //allows entry to ascendant church
 #define TRAIT_DREAMWALKER "Dreamwalker"
 #define TRAIT_PONYGIRL_RIDEABLE "Mount" //riding
 #define TRAIT_BLACKLEG	"Blackleg" //Rig coin flips and dice. Fluvian exclusive.
@@ -113,6 +112,13 @@
 #define TRAIT_CHASTITY_LOCKED "Locked Chastity Device" // Prevents removal of the chastity device.
 #define TRAIT_EXTREME_TEMPERATURE_IMMUNE "Extreme Temperature Immunity" //immunitty to heatstroke and frostbite without damage reduction
 #define TRAIT_COMPLIANT "Compliant" //forced to be compliant
+
+//travel zone traits
+#define TRAIT_BANDITCAMP "banditcamp"
+#define TRAIT_DUNGEONMASTER_LABOR_CAMP "dungeonmasterlaborcamp"
+#define TRAIT_VAMPMANSION "vampiremansion"
+#define TRAIT_ZURCH 	"Hidden Domiciles" //allows entry to Wretch Camp
+#define TRAIT_LICHLAIR "lichlair" //Access to the lich's lair on the CentCom Z level.
 
 //Hearthstone port (Tracking)
 #define TRAIT_PERFECT_TRACKER "Huntmaster" //Will always find any tracks and analyzes them perfectly.
@@ -192,9 +198,6 @@
 #define TRAIT_UNSETTLING_BEAUTY "Unsettling Beauty"
 #define TRAIT_SCARRED "Scarred"
 #define TRAIT_SIMPLE_WOUNDS "simple_wounds"
-#define TRAIT_BANDITCAMP "banditcamp"
-#define TRAIT_DUNGEONMASTER_LABOR_CAMP "dungeonmasterlaborcamp"
-#define TRAIT_VAMPMANSION "vampiremansion"
 #define TRAIT_VAMP_DREAMS "vamp_dreams"
 #define TRAIT_LIMPDICK "Limp Dick"
 #define TRAIT_SEXPASS "sexpass"

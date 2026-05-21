@@ -28,6 +28,7 @@
 		M.adjustOxyLoss(-1.25, 0)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
 		M.adjustCloneLoss(-1.75*REM, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_EYES, -1*REM)
 	..()
 
 /datum/reagent/medicine/stronghealth
@@ -51,6 +52,7 @@
 		M.adjustOxyLoss(-5, 0)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
 		M.adjustCloneLoss(-7*REM, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_EYES, -2.5*REM)
 	..()
 	. = 1
 
