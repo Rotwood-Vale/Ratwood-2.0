@@ -197,7 +197,7 @@
 
 	// Branch: permanently-trimmed fey mushroom circle or mature bush — re-enable overgrowth timer.
 	var/obj/structure/mushroom_circle/fey/MC = istype(target, /obj/structure/mushroom_circle/fey) ? target : locate(/obj/structure/mushroom_circle/fey) in target_turf
-	if(MC && MC.active && MC.permanently_trimmed)
+	if(MC?.active && MC.permanently_trimmed)
 		MC.receive_bless_crop()
 		charges--
 		src.obj_integrity -= (src.max_integrity * 0.02)
