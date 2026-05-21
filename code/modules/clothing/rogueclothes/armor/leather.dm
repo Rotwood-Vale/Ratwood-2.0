@@ -52,7 +52,7 @@
 	GLOB.lordcolor -= src
 	return ..()
 
-/obj/item/clothing/armor/gambeson/tailcoat
+/obj/item/clothing/suit/roguetown/armor/gambeson/tailcoat
 	name = "tailcoat"
 	desc = "A finely-sewn tailcoat often worn by those on the brink of the upper echelons of Astratan caste."
 	icon = 'icons/roguetown/clothing/armor.dmi'
