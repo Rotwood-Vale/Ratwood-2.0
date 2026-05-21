@@ -4,7 +4,7 @@
 	flag = WRETCH
 	department_flag = WANDERERS
 	faction = "Station"
-	total_positions = 5
+	total_positions = 10
 	spawn_positions = 5
 	allowed_races = RACES_ALL_KINDS
 	tutorial = "Somewhere in your lyfe, you fell to the wrong side of civilization. Hounded by the consequences of your actions, you spend your daes prowling the roads for easy marks and loose purses, scraping to get by."
@@ -112,7 +112,7 @@
 		slots += extra
 
 	//5 slots minimum, 10 maximum.
-	slots = min(slots, 10)
+	slots = min(slots, 20)
 
 	wretch_job.total_positions = slots
 	wretch_job.spawn_positions = slots
