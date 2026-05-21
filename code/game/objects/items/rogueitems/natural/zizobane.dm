@@ -33,7 +33,7 @@
 	playsound(src.loc, "plantcross", 80, FALSE, -1)
 	user.visible_message(span_warning("[user] starts plucking out \the [src] from the earth."))
 	if(do_after(user, 3 SECONDS, target = src))
-		var/obj/item/reagent_containers/food/snacks/zizo_bane/z = new /obj/item/reagent_containers/food/snacks/zizo_bane/(get_turf(src))
+		var/obj/item/reagent_containers/food/snacks/zizo_bane/z = new(get_turf(src))
 		user.put_in_active_hand(z)
 		qdel(src)
 
