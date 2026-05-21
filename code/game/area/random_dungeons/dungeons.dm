@@ -7,8 +7,9 @@
 	spookysounds = SPOOKY_CAVE
 	spookynight = SPOOKY_CAVE
 	droning_sound = 'sound/music/area/catacombs.ogg'
-	// droning_sound_dusk = null
-	// droning_sound_night = null
+	droning_sound_dusk = null
+	droning_sound_night = null
+	ceiling_protected = TRUE
 	// ambush_times = list("night","dawn","dusk","day")
 	// ambush_mobs = list(
 	// 			/mob/living/simple_animal/hostile/retaliate/rogue/bigrat = 30,
@@ -24,12 +25,6 @@
 	name = "Sunken Church"
 	icon_state = "sunkenz"
 	droning_sound = 'sound/music/area/scroll_of_nihilism.ogg'
-	droning_sound_dusk = null
-	droning_sound_night = null
-	ambientsounds = AMB_BASEMENT
-	ambientnight = AMB_BASEMENT
-	converted_type = /area/rogue/outdoors/dungeon1
-	ceiling_protected = TRUE
 	deathsight_message = "a dark and terrible corrupted place of worship, deep within death and murk"
 	detail_text = DETAIL_TEXT_SUNKEN_CHURCH
 
@@ -37,12 +32,17 @@
 	name = "Tricky Dungeon"
 	icon_state = "sunkenz"
 	droning_sound = 'sound/music/area/scroll_of_nihilism.ogg'
-	// droning_sound = 'sound/music/area/dungeon.ogg'
-	droning_sound_dusk = null
-	droning_sound_night = null
-	ambientsounds = AMB_BASEMENT
-	ambientnight = AMB_BASEMENT
-	converted_type = /area/rogue/outdoors/dungeon1
-	ceiling_protected = TRUE
-	deathsight_message = "A swampy stone hideout, hidden many times over"
-	// detail_text = DETAIL_TEXT_SUNKEN_CHURCH
+	deathsight_message = "A swampy stone hideout, hidden many times over."
+
+/area/rogue/under/dungeon/wizarddungeon
+	name = "Abandoned Wizard Tower"
+	first_time_text = "Crumbling Magician's Tower"
+	spookysounds = SPOOKY_MYSTICAL
+	spookynight = SPOOKY_MYSTICAL
+	droning_sound = 'sound/music/area/abandonedwizartorium.ogg'
+	deathsight_message = "Where great minds created even greater mistakes."
+
+/area/rogue/under/dungeon/drowfort
+	name = "Drow Outpost"
+	droning_sound = 'sound/music/area/underdark.ogg'
+	deathsight_message = "A deep, dark house of pain and dominance."

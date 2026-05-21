@@ -103,8 +103,10 @@
 	var/used_sound
 	var/list/used_footsteps
 	var/obj/item/clothing/shoes/humshoes = H.shoes
-
-	if((humshoes && !humshoes?.is_barefoot) && !islamia(H) || feetCover && !islamia(H)) //are we wearing shoes, and do they actually cover the sole
+	var/heldbarefoot = TRUE //Presume by default that they're barefooted. it WILL be set regardless.
+	if(istype(humshoes,/obj/item/clothing/shoes)) //Fixes amulet and other misc. item runtimes
+		heldbarefoot = humshoes?.is_barefoot
+	if((humshoes && !heldbarefoot) && !islamia(H) || feetCover && !islamia(H)) //are we wearing shoes, and do they actually cover the sole
 		//SANITY CHECK, WILL NOT PLAY A SOUND IF THE LIST IS INVALID
 		if(!GLOB.footstep[T.footstep] || (LAZYLEN(GLOB.footstep[T.footstep]) < 3))
 			testing("SOME silly guy GAVE AN INVALID FOOTSTEP VALUE ([T.footstep]) TO [T.type]!!! FIX THIS SHIT!!!")

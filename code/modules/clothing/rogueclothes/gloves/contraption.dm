@@ -44,7 +44,8 @@
 	var/datum/beam/current_beam = null
 	var/active = FALSE
 	var/cooldowny
-
+	sewrepair = FALSE
+	anvilrepair = /datum/skill/craft/armorsmithing
 
 
 /obj/item/clothing/gloves/roguetown/contraption/voltic/attackby(obj/item/I, mob/user, params)

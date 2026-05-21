@@ -52,3 +52,29 @@
 		M.adjustFireLoss(0.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
 		. = TRUE
 	..()
+
+/datum/reagent/medicine/vital_essence
+	name = "Vital Essence"
+	description = "A stolen essence of blood that restores flesh, stamina, and thirst."
+	reagent_state = LIQUID
+	color = "#7a0000"
+	taste_description = "warm vital essence"
+	overdose_threshold = 0
+	metabolization_rate = REAGENTS_METABOLISM
+	alpha = 173
+
+/datum/reagent/medicine/vital_essence/on_mob_life(mob/living/carbon/M)
+	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+		M.blood_volume = min(M.blood_volume + 5, BLOOD_VOLUME_NORMAL)
+	if(!HAS_TRAIT(M, TRAIT_INFINITE_STAMINA))
+		M.energy_add(10)
+	var/list/wCount = M.get_wounds()
+	if(wCount.len > 0)
+		M.heal_wounds(5) // something between red and strong red. We cannot drink water 
+	if(volume > 0.99)
+		M.adjustBruteLoss(-1 * REM, 0)
+		M.adjustFireLoss(-1 * REM, 0)
+		M.adjustOxyLoss(-1, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * REM)
+		M.adjustCloneLoss(-1 * REM, 0)
+	..()

@@ -87,14 +87,19 @@
 	add_movespeed_modifier(MOVESPEED_ID_MOB_WALK_RUN_CONFIG_SPEED, TRUE, 100, override = TRUE, multiplicative_slowdown = mod)
 
 /mob/living/proc/update_turf_movespeed(turf/open/T)
-	if(isopenturf(T))
-		var/usedslow = T.get_slowdown(src)
-		if(HAS_TRAIT(src, TRAIT_TRAM_MOVER))
-			usedslow = 0
-		if(usedslow != 0)
-			add_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD, update=TRUE, priority=100, multiplicative_slowdown=usedslow, movetypes=GROUND)
-		else
-			remove_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD)
+	if(!isopenturf(T))
+		remove_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD)
+		return
+	if((movement_type & (FLYING|FLOATING)) || flying)
+		remove_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD)
+		return
+	if(SEND_SIGNAL(src, COMSIG_LIVING_UPDATE_TURF_MOVESPEED) & TURF_MOVESPEED_BLOCKED)
+		return
+	var/usedslow = T.get_slowdown(src)
+	if(HAS_TRAIT(src, TRAIT_TRAM_MOVER))
+		usedslow = 0
+	if(usedslow != 0)
+		add_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD, update=TRUE, priority=100, multiplicative_slowdown=usedslow, movetypes=GROUND)
 	else
 		remove_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD)
 

@@ -165,7 +165,8 @@
 				newamt--
 				BUFPER++
 			STAPER = newamt
-
+			see_override = initial(src.see_invisible) + (STAPER/3.25) //PER is far easier to get in Rogueslop 2.0
+			update_sight() //This also fixes a few new bugs that have come and gone. 
 			update_fov_angles()
 
 		if(STATKEY_INT)

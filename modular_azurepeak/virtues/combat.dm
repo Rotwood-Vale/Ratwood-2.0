@@ -197,6 +197,7 @@
 	name = "Natural Armor"
 	desc = "Whether by natural means or other means, my skin is strong enough to resist being pierced and cut."
 	custom_text = "This will replace your SHIRT slot with a regenerating, unremoveable armor."
+	added_traits = list(TRAIT_NATURALARMOR)
 
 /datum/virtue/combat/tough_hide/apply_to_human(mob/living/carbon/human/recipient)
 	. = ..()

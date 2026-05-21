@@ -32,7 +32,7 @@
 	xp_gain = TRUE
 	miracle = FALSE
 
-/obj/effect/proc_holder/spell/invoked/projectile/frostbolt/cast(mob/user = usr)
+/obj/effect/proc_holder/spell/invoked/projectile/frostbolt/cast(list/targets, mob/user = user)
 	var/mob/living/target = user
 	var/datum/intent/a_intent = target.a_intent
 	if(istype(a_intent, /datum/intent/special/magicarc))

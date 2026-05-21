@@ -77,6 +77,13 @@
 	var/mob/living/carbon/knotted_recipient = null // whom took the knot
 	/// Allow crotch to be exposed and bypass clothes check
 	var/bottom_exposed = FALSE
+	// Moved here from proc/get_generic_force_adjective to reduce list initialization/destruction
+	var/static/list/stealth_force_adjectives 	= list("subtly", "sneakily", "covertly", "stealthily", "quietly")
+	var/static/list/low_force_adjectives 		= list("gently", "carefully", "tenderly", "gingerly", "delicately", "lazily")
+	var/static/list/mid_force_adjectives 		= list("firmly", "vigorously", "eagerly", "steadily", "intently")
+	var/static/list/high_force_adjectives 		= list("roughly", "carelessly", "forcefully", "fervently", "fiercely")
+	var/static/list/extreme_force_adjectives 	= list("brutally", "violently", "relentlessly", "savagely", "mercilessly")
+	var/static/list/ludicrous_force_adjectives 	= list("madly", "uncontrollably", "desperately", "deliriously", "freekishly")
 
 /datum/sex_controller/New(mob/living/carbon/human/owner)
 	user = owner
@@ -155,7 +162,7 @@
 			grassy_knoll = null
 			return
 		SEND_SIGNAL(grassy_knoll, COMSIG_MOVABLE_CROSSED, user)
-	
+
 	if((collar_bell_user || collar_bell_target) && (force > SEX_FORCE_MID))
 		playsound(collar_bell_target && target ? target : user, collar_sounds, 50, TRUE, ignore_walls = FALSE)
 
@@ -251,6 +258,10 @@
 
 	if(!(sigbitflags & SKIP_ADJACENCY_CHECK) && !user.sexcon.Adjacent_Or_Closet(target))
 		return FALSE
+
+	if(!self_target && !isnull(target.buckled) && istype(target.buckled, /obj/structure/bondage/gloryhole)) // gloryhole buckled mobs ignore tile/grab checks
+		sigbitflags |= (SKIP_GRAB_CHECK|SKIP_TILE_CHECK)
+		grabs = FALSE
 
 	if(src.check_same_tile && (user != target || self_target) && !(sigbitflags & SKIP_TILE_CHECK))
 		var/same_tile = (get_turf(user) == get_turf(target))
@@ -624,21 +635,29 @@
 			volume = 4
 		else
 			volume = 3
-	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
-		volume = floor(volume * 1.5)
 
 	var/obj/item/organ/penis/shaft = user.getorganslot(ORGAN_SLOT_PENIS)
 	if(shaft?.penis_type in list(PENIS_TYPE_KNOTTED, PENIS_TYPE_EQUINE, PENIS_TYPE_EQUINE_KNOTTED, PENIS_TYPE_TAPERED_KNOTTED, PENIS_TYPE_TAPERED_DOUBLE_KNOTTED, PENIS_TYPE_BARBED_KNOTTED))
 		volume += 1
-		
-	return volume
+
+	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
+		volume *= 1.5
+	if(HAS_TRAIT(user, TRAIT_BIGGUY))
+		volume *= 1.5
+	if(is_species(user, /datum/species/gnoll))
+		volume *= 1.5
+	return floor(volume)
 
 /datum/sex_controller/proc/get_max_loads()
 	var/con = user.STACON
 	var/loads = 2 + floor(clamp((con - 10) * 2, 0, 99) / 2)
 	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
-		loads = floor(loads * 1.5)
-	return loads
+		loads *= 1.5
+	if(HAS_TRAIT(user, TRAIT_BIGGUY))
+		loads *= 1.5
+	if(is_species(user, /datum/species/gnoll))
+		loads *= 1.5
+	return floor(loads)
 
 /// Returns the max charge based on dynamic load count
 /datum/sex_controller/proc/get_max_charge()
@@ -694,6 +713,8 @@
 			user.add_stress(/datum/stressevent/cummax)
 	if(!oral && force >= SEX_FORCE_HIGH && (user.has_flaw(/datum/charflaw/addiction/sadist) || effective_target.has_flaw(/datum/charflaw/addiction/masochist)))
 		effective_target.emote("paincrit", forced = TRUE) // this satiates the sadomasochists in range
+	if(ishuman(user) && ishuman(target) && user.client && target.client)
+		eora_register_consensual_pair(user, target)
 
 /datum/sex_controller/proc/just_ejaculated()
 	return (last_ejaculation_time + 2 SECONDS >= world.time)
@@ -1147,8 +1168,11 @@
 			do_until_finished = !do_until_finished
 			update_exposure()
 		if("toggle_bottom_exposed")
-			bottom_exposed = !bottom_exposed
-			update_exposure()
+			if(user.incapacitated(ignore_restraints = TRUE))
+				to_chat(user, span_warning("I can't do that right now!"))
+			else
+				bottom_exposed = !bottom_exposed
+				update_exposure()
 		if("set_arousal")
 			var/amount = input(user, "Value above 120 will immediately cause orgasm!", "Set Arousal", arousal) as num
 			if(aphrodisiac > 1 && amount > 0)
@@ -1500,18 +1524,18 @@
 
 /datum/sex_controller/proc/get_generic_force_adjective(is_stealth = FALSE)
 	if(is_stealth)
-		return pick(list("subtly","sneakily","covertly","stealthily","quietly"))
+		return pick(stealth_force_adjectives)
 	switch(force)
 		if(SEX_FORCE_LOW)
-			return pick(list("gently", "carefully", "tenderly", "gingerly", "delicately", "lazily"))
+			return pick(low_force_adjectives)
 		if(SEX_FORCE_MID)
-			return pick(list("firmly", "vigorously", "eagerly", "steadily", "intently"))
+			return pick(mid_force_adjectives)
 		if(SEX_FORCE_HIGH)
-			return pick(list("roughly", "carelessly", "forcefully", "fervently", "fiercely"))
+			return pick(high_force_adjectives)
 		if(SEX_FORCE_EXTREME)
-			return pick(list("brutally", "violently", "relentlessly", "savagely", "mercilessly"))
+			return pick(extreme_force_adjectives)
 		if(SEX_FORCE_LUDICROUS)
-			return pick(list("madly", "uncontrollably", "desperately", "deliriously", "freekishly"))
+			return pick(ludicrous_force_adjectives)
 
 /datum/sex_controller/proc/spanify_force(string)
 	switch(force)
@@ -1571,13 +1595,13 @@
 	var/infection_probability = 40
 	if(top.mind.has_antag_datum(/datum/antagonist/werewolf))
 		WWtop = top.mind.has_antag_datum(/datum/antagonist/werewolf/)
-	
+
 	if(bottom.mind.has_antag_datum(/datum/antagonist/werewolf))
 		WWbottom = bottom.mind.has_antag_datum(/datum/antagonist/werewolf/)
 
 	if(WWtop && WWbottom)
 		return
-	
+
 	if(WWtop && WWtop.transformed && !WWbottom)
 		if(prob(infection_probability))
 			var/answer = tgui_alert(top, "Infect your mate?", "Please answer in [DisplayTimeText(200)]!", list("Yae","Nae"),200)
@@ -1598,7 +1622,7 @@
 		return
 
 /datum/proc/deadite_sex_infect_attempt(mob/living/carbon/human/top, mob/living/carbon/human/bottom)
-	
+
 	if(!top || !bottom || !top.mind || !bottom.mind)
 		return
 	var/datum/antagonist/zombie/ZMtop
@@ -1606,13 +1630,13 @@
 	var/infection_probability = 40
 	if(top.mind.has_antag_datum(/datum/antagonist/zombie))
 		ZMtop = top.mind.has_antag_datum(/datum/antagonist/zombie/)
-	
+
 	if(bottom.mind.has_antag_datum(/datum/antagonist/zombie))
 		ZMbottom = bottom.mind.has_antag_datum(/datum/antagonist/zombie/)
-	
+
 	if(ZMtop && ZMbottom)
 		return
-	
+
 	if(ZMtop && ZMtop.has_turned && !ZMbottom)
 		if(prob(infection_probability))
 			var/answer = tgui_alert(top, "Spread HER gift?", "Please answer in [DisplayTimeText(200)]!", list("Yae","Nae"),200)
@@ -1631,7 +1655,7 @@
 				top.zaids_check()
 		return
 ///Making sure there're not any other antag or immune, then applies zombie infection
-/mob/living/carbon/human/proc/zaids_check() 
+/mob/living/carbon/human/proc/zaids_check()
 	if(!mind)
 		return
 	if(mind.has_antag_datum(/datum/antagonist/vampire))

@@ -324,6 +324,12 @@
 		return 0
 	return 1
 
+/obj/structure/fluff/railing/fence/flimsy
+	name = "weak palisade"
+	desc = "A rudimentary barrier that might keep the monsters at bay. This one looks old, weathered, and hastily constructed."
+	max_integrity = 180
+	color = "#cccac5"
+
 /obj/structure/bars
 	name = "bars"
 	desc = ""
@@ -1029,7 +1035,7 @@
 	icon = 'icons/roguetown/misc/ay.dmi'
 	icon_state = "4"
 	pixel_x = -32
-	pixel_y = -16
+	// pixel_y = -16
 
 /obj/structure/fluff/statue/scare
 	name = "scarecrow"
@@ -1581,6 +1587,7 @@
 	desc = "Wisdom and calm."
 	icon_state = "noc"
 	icon = 'icons/roguetown/misc/statues/statue_noc.dmi'
+	pixel_x = -16
 
 /obj/structure/fluff/statue/noc/guard
 	name = "active noc statue"
@@ -1591,6 +1598,7 @@
 	desc = "Beauty and Charm"
 	icon_state = "eora"
 	icon = 'icons/roguetown/misc/statues/statue_eora.dmi'
+	pixel_x = -16
 
 /obj/structure/fluff/statue/zizo
 	name = "dubious statue"

@@ -512,6 +512,7 @@
 	blocksound = PLATEHIT
 	max_integrity = ARMOR_INT_SIDE_BLACKSTEEL
 	armor = ARMOR_PLATE_BSTEEL
+	sewrepair = null
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/blacksteel
 	resistance_flags = FIRE_PROOF
@@ -531,6 +532,8 @@
 	nudist_approved = TRUE
 	heat_protection = FOOT_LEFT | FOOT_RIGHT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+	sewrepair = null
+	anvilrepair = /datum/skill/craft/armorsmithing
 
 //kazen update
 /obj/item/clothing/shoes/roguetown/armor/rumaclan

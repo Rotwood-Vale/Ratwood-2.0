@@ -440,4 +440,14 @@
 /datum/sprite_accessory/tail/large_snake_plain
 	icon = 'modular_causticcove/icons/mob/tails/large_snake.dmi'
 	name = "Large Snake Plain"
-	icon_state = "large_snake_plain"	
+	icon_state = "large_snake_plain"
+
+// Not caustic cove, i just wanted it at the bottom tee hee.
+/datum/sprite_accessory/tail/tailmaw
+	name = "Tailmaw"
+	icon_state = "tailmaw"
+
+/datum/sprite_accessory/tail/tailmaw2
+	name = "Tailmaw (Wag)"
+	icon_state = "tailmaw2"
+	can_wag = TRUE

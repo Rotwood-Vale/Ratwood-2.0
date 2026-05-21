@@ -226,6 +226,19 @@
 	invocation_type = "shout" //can be none, whisper, emote and shout
 	var/datum/component/infestation_charges/charge_component
 
+
+/obj/effect/proc_holder/spell/invoked/infestation/proc/ensure_charge_component(mob/living/user)
+	if(!user)
+		return FALSE
+	var/datum/component/infestation_charges/existing_component = user.GetComponent(/datum/component/infestation_charges)
+	if(existing_component)
+		charge_component = existing_component
+		charge_component.parent_spell = src
+	else
+		charge_component = user.AddComponent(/datum/component/infestation_charges, src)
+
+	return TRUE
+
 /obj/effect/proc_holder/spell/invoked/infestation/on_gain(mob/living/user)
 	// Note: there is no logic to remove the component yet, this should be fine
 	. = ..()
@@ -251,6 +264,7 @@
 	action.desc = "[desc]\n<span class='notice'>Charges = [charge_count]</span>"
 
 /obj/effect/proc_holder/spell/invoked/infestation/cast(list/targets, mob/living/user)
+	ensure_charge_component(user)
 	var/atom/target = targets[1]
 	if(isliving(target))
 		var/mob/living/carbon/M = target

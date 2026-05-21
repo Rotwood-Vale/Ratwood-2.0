@@ -411,7 +411,7 @@
 		log_admin("[key_name(src)] played local URL music: [web_sound_input]")
 		message_admins("[key_name(src)] played local URL music: [web_sound_input]")
 		var/turf/source_turf = get_turf(src.mob)
-		for(var/mob/M in GLOB.player_list)
+		for(var/mob/M in GLOB.player_list + GLOB.dead_mob_list)
 			var/client/C = M.client
 			if(!C)
 				continue
@@ -435,7 +435,7 @@
 		return
 
 	if(!M)
-		M = input("Play to whom?", "Active Players") as null|anything in GLOB.player_list
+		M = input("Play to whom?", "Active Players") as null|anything in (GLOB.player_list + GLOB.dead_mob_list)
 
 	if(!M)
 		return

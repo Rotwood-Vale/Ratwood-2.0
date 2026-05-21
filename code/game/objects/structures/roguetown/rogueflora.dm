@@ -304,6 +304,17 @@
 	icon_state = "t[rand(1,4)]stump"
 
 /obj/structure/flora/roguetree/stump/attackby(obj/item/I, mob/living/user)
+	if(istype(I, /obj/item/rogueweapon/shovel))
+		var/skill_level = user.get_skill_level(/datum/skill/labor/lumberjacking)
+		var/dig_time = (120 - (skill_level * 15)) / 2
+		playsound(src, 'sound/items/dig_shovel.ogg', 80, TRUE)
+		if(!do_after(user, dig_time, target = user))
+			return
+		to_chat(user, span_notice("I dig up [src]."))
+		new lumber(get_turf(src))
+		playsound(src, destroy_sound, 100, TRUE)
+		qdel(src)
+		return TRUE
 	if(user.used_intent.blade_class == BCLASS_CHOP && lumber_amount)
 		var/skill_level = user.get_skill_level(/datum/skill/labor/lumberjacking)
 		var/lumber_time = (120 - (skill_level * 15))
@@ -399,7 +410,6 @@
 	blade_dulling = DULLING_CUT
 	debris = list(/obj/item/natural/fibers = 1)
 
-
 /obj/structure/flora/roguegrass/spark_act()
 	fire_act()
 
@@ -410,6 +420,14 @@
 
 /obj/structure/flora/roguegrass/update_icon()
 	icon_state = "grass[rand(1, 6)]"
+
+/obj/structure/flora/roguegrass/verdant
+	icon = 'icons/obj/flora/ausflora.dmi'
+	icon_state = "sparsegrass_1"
+
+/obj/structure/flora/roguegrass/verdant/Initialize(mapload)
+	. = ..()
+	icon_state = "sparsegrass_[rand(1, 3)]"
 
 /obj/structure/flora/roguegrass/water
 	name = "grass"
