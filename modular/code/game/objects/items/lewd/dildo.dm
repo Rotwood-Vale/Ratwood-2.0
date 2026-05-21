@@ -134,3 +134,13 @@
 	color = "#A2CBE3"
 	dildo_material = "blacksteel"
 	sellprice = 150
+
+/obj/item/dildo/clay
+	color = "#B2875E"
+	dildo_material = "clay"
+	sellprice = 4
+
+/obj/item/dildo/porcelain
+	color = "#F4F1E8"
+	dildo_material = "porcelain"
+	sellprice = 10

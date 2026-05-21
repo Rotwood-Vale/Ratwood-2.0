@@ -103,6 +103,11 @@
 /obj/item/reagent_containers/glass/attack_obj(obj/target, mob/living/user)
 	if(user.used_intent.type == INTENT_GENERIC)
 		return ..()
+	if(istype(target, /obj/item/reagent_containers/glass/bucket/pot))
+		var/obj/item/reagent_containers/glass/bucket/pot/pot_target = target
+		if(pot_target.has_lid && user.used_intent.type == INTENT_POUR)
+			to_chat(user, span_warning("I need to remove the lid from [target] before filling it."))
+			return
 
 	testing("attackobj1")
 

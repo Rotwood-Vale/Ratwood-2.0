@@ -18,6 +18,11 @@
 	icon_state = "spoon_iron"
 	sellprice = 6
 
+/obj/item/kitchen/spoon/bronze
+	name = "bronze spoon"
+	icon_state = "spoon_bronze"
+	sellprice = 5
+
 /obj/item/kitchen/spoon/tin
 	name = "tin spoon"
 	icon_state = "spoon_tin"

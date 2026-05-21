@@ -182,6 +182,22 @@
 	force = 10
 	throwforce = 15
 
+/obj/item/reagent_containers/glass/cup/bronzemug
+	name = "bronze mug"
+	desc = "A durable bronze mug."
+	icon_state = "bronzemug"
+	sellprice = 5
+	force = 5
+	throwforce = 10
+
+/obj/item/reagent_containers/glass/cup/bronzegoblet
+	name = "bronze goblet"
+	desc = "A bronze goblet with a warm metallic sheen."
+	icon_state = "bronzegoblet"
+	sellprice = 9
+	force = 10
+	throwforce = 15
+
 /obj/item/reagent_containers/glass/cup/silver
 	name = "silver goblet"
 	desc = "A silver goblet, its surface carefully polished."

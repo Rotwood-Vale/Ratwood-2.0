@@ -50,18 +50,18 @@
 	stockpile_limit = 50 // Allow a small amount of stones to be sold for chiselling
 	passive_generation = 10 // Free rocks!!
 
-/datum/roguestock/stockpile/glass
-	name = "Glass Batch"	//'Raw' glass
-	desc = "A mixture of finely ground materials that is used to make glass."
-	item_type = /obj/item/natural/clay/glassbatch
-	held_items = list(5, 0)
-	payout_price = 4
-	withdraw_price = 4
-	transport_fee = 5
-	export_price = 5
-	importexport_amt = 5
-	stockpile_limit = 25
-	passive_generation = 3
+/datum/roguestock/stockpile/clay
+	name = "Clay"
+	desc = "Damp clay gathered for pottery and shaping work."
+	item_type = /obj/item/natural/clay
+	held_items = list(10, 0)
+	payout_price = 1
+	withdraw_price = 1
+	transport_fee = 0
+	export_price = 1
+	importexport_amt = 10
+	stockpile_limit = 50
+	passive_generation = 10
 
 /datum/roguestock/stockpile/iron
 	name = "Raw Iron"

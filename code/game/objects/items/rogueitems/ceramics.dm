@@ -8,10 +8,35 @@
 	if(!prob(pottery_shatter_chance))
 		return FALSE
 	visible_message(span_warning("[src] shatters on impact!"))
+	new /obj/item/natural/pottery_shard(get_turf(src))
 	new /obj/effect/decal/cleanable/debris/glassy(get_turf(src))
 	playsound(get_turf(src), 'sound/foley/glassbreak.ogg', 75, TRUE)
 	qdel(src)
 	return TRUE
+
+/obj/item/natural/pottery_shard
+	name = "pottery shards"
+	desc = "Broken ceramic shards that can be ground back into clay."
+	icon = 'icons/roguetown/items/crafting.dmi'
+	icon_state = "shard1"
+	color = "#8B4A3A"
+	item_state = "shard"
+	drop_sound = 'sound/foley/dropsound/glass_drop.ogg'
+	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/stab)
+	force = 2
+	throwforce = 4
+	w_class = WEIGHT_CLASS_TINY
+	attack_verb = list("cut", "scratched")
+	max_integrity = 25
+
+/obj/item/natural/pottery_shard/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/caltrop, force)
+
+/obj/item/natural/pottery_shard/Crossed(mob/living/L)
+	if(istype(L))
+		playsound(loc, 'sound/foley/glass_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
+	return ..()
 
 // Uncooked items -- Still need to be brought to a kiln
 // Those are all children of natural/clay so that they can inherit the Glaze method.
@@ -268,12 +293,20 @@
 
 //Flask (was a cup) - subtype of regular cup but can shatter.
 /obj/item/natural/clay/claycup
-	name = "unglazed clay canister"
-	icon = 'icons/roguetown/items/cooking.dmi'
+	name = "raw clay cup"
+	icon = 'modular/Neu_Food/icons/cookware/cup.dmi'
 	icon_state = "claycupraw"
-	desc = "A small canister fashioned from clay. Still needs to be glazed to be useful."
+	desc = "A clay cup that still needs to be baked."
 	obj_flags = UNIQUE_RENAME
 	cooked_type = /obj/item/reagent_containers/glass/cup/claycup
+
+/obj/item/natural/clay/claymug
+	name = "raw clay mug"
+	icon = 'modular/Neu_Food/icons/cookware/cup.dmi'
+	icon_state = "claymugraw"
+	desc = "A clay mug that still needs to be baked."
+	obj_flags = UNIQUE_RENAME
+	cooked_type = /obj/item/reagent_containers/glass/cup/claymug
 
 /obj/item/natural/clay/claycupclassic
 	name = "unglazed clay canister"
@@ -283,15 +316,54 @@
 	obj_flags = UNIQUE_RENAME
 	cooked_type = /obj/item/reagent_containers/glass/cup/claycupclassic
 
+/obj/item/natural/clay/claycupclassic/porcelain
+	name = "raw porcelain canister"
+	desc = "A small canister shaped from refined clay. Needs to be fired in a kiln."
+	cooked_type = /obj/item/reagent_containers/glass/cup/claycupclassic/porcelain
+
+/obj/item/natural/clay/claybowl
+	name = "raw clay bowl"
+	icon = 'modular/Neu_Food/icons/cookware/bowl.dmi'
+	icon_state = "bowl_clay_raw"
+	desc = "A clay bowl that still needs to be baked."
+	obj_flags = UNIQUE_RENAME
+	cooked_type = /obj/item/reagent_containers/glass/bowl/clay
+
+/obj/item/natural/clay/clayfork
+	name = "raw clay fork"
+	icon = 'modular/Neu_Food/icons/cookware/fork.dmi'
+	icon_state = "afork"
+	desc = "A clay fork that still needs to be baked."
+	obj_flags = UNIQUE_RENAME
+	cooked_type = /obj/item/kitchen/fork/clay
+
 /obj/item/reagent_containers/glass/cup/claycup
-	name = "clay canister"
-	desc = "A small ceramic canister."
-	icon = 'icons/roguetown/items/cooking.dmi'
-	icon_state = "claycupcook"
+	name = "clay cup"
+	desc = "A baked clay cup."
+	icon = 'modular/Neu_Food/icons/cookware/cup.dmi'
+	icon_state = "claycupbaked"
 	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
 	pottery_fragile = TRUE
 	sellprice = 2
 	reagent_flags = OPENCONTAINER	//So it doesn't appear through
+	var/clay_fill_icon_state = "claycupbaked_brownfilling"
+
+/obj/item/reagent_containers/glass/cup/claycup/update_icon(dont_fill=FALSE)
+	cut_overlays()
+
+	if(reagents.total_volume)
+		var/mutable_appearance/filling = mutable_appearance(icon, clay_fill_icon_state)
+
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		filling.alpha = mix_alpha_from_reagents(reagents.reagent_list)
+		add_overlay(filling)
+	if(max_dice)
+		var/dice_count = 0
+		for(var/obj/item/dice/D in contents)
+			dice_count++
+		if(dice_count)
+			dice_count = min(3, dice_count)
+		add_overlay(mutable_appearance(icon, "[icon_state]dice[dice_count]"))
 
 /obj/item/reagent_containers/glass/cup/claycupclassic
 	name = "clay canister"
@@ -302,6 +374,78 @@
 	pottery_fragile = TRUE
 	sellprice = 2
 	reagent_flags = OPENCONTAINER	//So it doesn't appear through
+
+/obj/item/reagent_containers/glass/cup/claycup/porcelain
+	name = "porcelain cup"
+	desc = "A porcelain cup fired from refined clay."
+	icon_state = "claycupcook"
+	clay_fill_icon_state = "claycupcookfilling"
+	sellprice = 8
+
+/obj/item/reagent_containers/glass/cup/claycup/porcelain/glaze_porcelain
+	name = "glazed porcelain cup"
+	icon_state = "claycupcook_porcelain"
+	clay_fill_icon_state = "claycupcook_porcelainfilling"
+
+/obj/item/reagent_containers/glass/cup/claycup/porcelain/glaze_shattergold
+	name = "shattergold porcelain cup"
+	icon_state = "claycupcook_shattergold"
+	clay_fill_icon_state = "claycupcook_shattergoldfilling"
+
+/obj/item/reagent_containers/glass/cup/claycup/porcelain/glaze_bluegold
+	name = "bluegold porcelain cup"
+	icon_state = "claycupcook_bluegold"
+	clay_fill_icon_state = "claycupcook_bluegoldfilling"
+
+/obj/item/reagent_containers/glass/cup/claymug
+	name = "clay mug"
+	desc = "A baked clay mug."
+	icon = 'modular/Neu_Food/icons/cookware/cup.dmi'
+	icon_state = "claymugbaked"
+	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
+	pottery_fragile = TRUE
+	sellprice = 3
+	reagent_flags = OPENCONTAINER
+	var/clay_fill_icon_state = "claymugbaked_brownfilling"
+
+/obj/item/reagent_containers/glass/cup/claymug/update_icon(dont_fill=FALSE)
+	cut_overlays()
+
+	if(reagents.total_volume)
+		var/mutable_appearance/filling = mutable_appearance(icon, clay_fill_icon_state)
+
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		filling.alpha = mix_alpha_from_reagents(reagents.reagent_list)
+		add_overlay(filling)
+	if(max_dice)
+		var/dice_count = 0
+		for(var/obj/item/dice/D in contents)
+			dice_count++
+		if(dice_count)
+			dice_count = min(3, dice_count)
+		add_overlay(mutable_appearance(icon, "[icon_state]dice[dice_count]"))
+
+/obj/item/reagent_containers/glass/cup/claymug/porcelain
+	name = "porcelain mug"
+	desc = "A porcelain mug fired from refined clay."
+	icon_state = "claymugcook"
+	clay_fill_icon_state = "claymugcookfilling"
+	sellprice = 9
+
+/obj/item/reagent_containers/glass/cup/claymug/porcelain/glaze_porcelain
+	name = "glazed porcelain mug"
+	icon_state = "claymugcook_porcelain"
+	clay_fill_icon_state = "claymugcook_porcelainfilling"
+
+/obj/item/reagent_containers/glass/cup/claymug/porcelain/glaze_shattergold
+	name = "shattergold porcelain mug"
+	icon_state = "claymugcook_shattergold"
+	clay_fill_icon_state = "claymugcook_shattergoldfilling"
+
+/obj/item/reagent_containers/glass/cup/claymug/porcelain/glaze_bluegold
+	name = "bluegold porcelain mug"
+	icon_state = "claymugcook_bluegold"
+	clay_fill_icon_state = "claymugcook_bluegoldfilling"
 
 /obj/item/reagent_containers/glass/cup/claycup/throw_impact(atom/hit_atom, datum/thrownthing/thrownthing)
 	if(pottery_throw_shatter(hit_atom, thrownthing))
@@ -358,13 +502,31 @@
 		return
 	. = ..()
 
+/obj/item/reagent_containers/glass/cup/claycupclassic/porcelain
+	name = "porcelain canister"
+	desc = "A small ceramic canister fired from refined clay."
+	icon_state = "claycupcook"
+	sellprice = 5
+
 // Raw teapot
 /obj/item/natural/clay/rawteapot
 	name = "raw teapot"
-	icon = 'icons/roguetown/items/cooking.dmi'
-	icon_state = "teapot_raw"
+	icon = 'modular/Neu_Food/icons/cookware/pot.dmi'
+	icon_state = "teapot_clay_raw"
 	desc = "A teapot fashioned from clay. Still needs to be baked to be useful."
 	obj_flags = UNIQUE_RENAME
+	cooked_type = /obj/item/reagent_containers/glass/bucket/pot/teapot/clay
+
+/obj/item/natural/clay/rawteapot/attackby(obj/item/W, mob/living/user, params)
+	if(istype(W, /obj/item/dye_brush) || istype(W, /obj/item/alch/golddust))
+		to_chat(user, span_warning("This clay teapot style can't be glazed with dye or gold dust."))
+		return TRUE
+	return ..()
+
+/obj/item/natural/clay/rawteapot/classic
+	name = "raw classic teapot"
+	icon = 'icons/roguetown/items/cooking.dmi'
+	icon_state = "teapot_raw"
 	cooked_type = /obj/item/reagent_containers/glass/bucket/pot/teapot
 
 // Raw teacup
@@ -375,6 +537,39 @@
 	desc = "A teacup fashioned from clay. Still needs to be baked to be useful."
 	obj_flags = UNIQUE_RENAME
 	cooked_type = /obj/item/reagent_containers/glass/cup/ceramic
+
+/obj/item/natural/clay/rawclaykettle
+	name = "raw clay kettle"
+	icon = 'modular/Neu_Food/icons/cookware/pot.dmi'
+	icon_state = "claykettle_raw"
+	desc = "A kettle fashioned from clay. Still needs to be baked to be useful."
+	obj_flags = UNIQUE_RENAME
+	cooked_type = /obj/item/reagent_containers/glass/bucket/pot/claykettle
+
+/obj/item/natural/clay/rawclaypot
+	name = "raw clay pot"
+	icon = 'modular/Neu_Food/icons/cookware/pot.dmi'
+	icon_state = "pote_clay_raw"
+	desc = "A pot fashioned from clay. Still needs to be baked to be useful."
+	obj_flags = UNIQUE_RENAME
+	cooked_type = /obj/item/reagent_containers/glass/bucket/pot/claypot
+
+/obj/item/natural/clay/rawblowrod
+	name = "raw blowing pipe"
+	icon = 'icons/roguetown/weapons/tools.dmi'
+	icon_state = "blowJobRodRaw"
+	desc = "A clay blowing pipe that still needs to be baked."
+	obj_flags = UNIQUE_RENAME
+	cooked_type = /obj/item/rogueweapon/blowrod
+
+/obj/item/natural/clay/rawdildo
+	name = "raw clay dildo"
+	icon = 'modular/icons/obj/lewd/dildo.dmi'
+	icon_state = "unfinished"
+	color = "#A67C52"
+	desc = "An unfired clay toy. It needs to be baked before it can be finished."
+	obj_flags = UNIQUE_RENAME
+	cooked_type = /obj/item/dildo/clay
 
 //Bricks - Makes bricks which are used for building. (Need brick-wall sprites for this.. augh..)
 /obj/item/natural/clay/claybrick
@@ -540,12 +735,13 @@
 // -------------------- Porcelain --------------------
 
 /obj/item/natural/clay/porcelain
-	name = "raw porcelain piece"
-	desc = "A carefully shaped porcelain piece. It needs firing in a kiln."
+	name = "raw porcelain base"
+	desc = "A generic porcelain blank that should be shaped into a finished piece before firing."
 	icon = 'icons/roguetown/items/cooking.dmi'
 	icon_state = "clayporcelaincupraw"
 	dropshrink = 1
 	obj_flags = UNIQUE_RENAME
+	cooked_type = /obj/item/carvedgem/porcelain
 
 /obj/item/natural/clay/porcelain/Initialize(mapload)
 	. = ..()
@@ -636,8 +832,45 @@
 
 /obj/item/natural/clay/porcelain/fork
 	name = "raw porcelain fork"
-	icon_state = "clayporcelainforkraw"
+	icon = 'modular/Neu_Food/icons/cookware/fork.dmi'
+	icon_state = "fork_porcelain"
 	cooked_type = /obj/item/kitchen/fork/carved/porcelain
+
+/obj/item/natural/clay/porcelain/claycup
+	name = "raw porcelain cup"
+	icon = 'modular/Neu_Food/icons/cookware/cup.dmi'
+	icon_state = "claycupraw"
+	cooked_type = /obj/item/reagent_containers/glass/cup/claycup/porcelain
+	special_glaze_default_type = /obj/item/reagent_containers/glass/cup/claycup/porcelain
+	needs_glaze_gold_dust = TRUE
+	special_glaze_result_types = list(
+		"porcelain glaze" = /obj/item/reagent_containers/glass/cup/claycup/porcelain/glaze_porcelain,
+		"shattergold glaze" = /obj/item/reagent_containers/glass/cup/claycup/porcelain/glaze_shattergold,
+		"bluegold glaze" = /obj/item/reagent_containers/glass/cup/claycup/porcelain/glaze_bluegold,
+	)
+	special_glaze_icon_states = list(
+		"porcelain glaze" = "claycupcook_porcelain",
+		"shattergold glaze" = "claycupcook_shattergold",
+		"bluegold glaze" = "claycupcook_bluegold",
+	)
+
+/obj/item/natural/clay/porcelain/mug
+	name = "raw porcelain mug"
+	icon = 'modular/Neu_Food/icons/cookware/cup.dmi'
+	icon_state = "claymugraw"
+	cooked_type = /obj/item/reagent_containers/glass/cup/claymug/porcelain
+	special_glaze_default_type = /obj/item/reagent_containers/glass/cup/claymug/porcelain
+	needs_glaze_gold_dust = TRUE
+	special_glaze_result_types = list(
+		"porcelain glaze" = /obj/item/reagent_containers/glass/cup/claymug/porcelain/glaze_porcelain,
+		"shattergold glaze" = /obj/item/reagent_containers/glass/cup/claymug/porcelain/glaze_shattergold,
+		"bluegold glaze" = /obj/item/reagent_containers/glass/cup/claymug/porcelain/glaze_bluegold,
+	)
+	special_glaze_icon_states = list(
+		"porcelain glaze" = "claymugcook_porcelain",
+		"shattergold glaze" = "claymugcook_shattergold",
+		"bluegold glaze" = "claymugcook_bluegold",
+	)
 
 /obj/item/natural/clay/porcelain/spoon
 	name = "raw porcelain spoon"
@@ -646,18 +879,33 @@
 
 /obj/item/natural/clay/porcelain/bowl
 	name = "raw porcelain bowl"
-	icon_state = "clayporcelainbowlraw"
+	icon = 'modular/Neu_Food/icons/cookware/bowl.dmi'
+	icon_state = "bowl_clay_baked"
 	cooked_type = /obj/item/reagent_containers/glass/bowl/carved/porcelain
+	special_glaze_default_type = /obj/item/reagent_containers/glass/bowl/carved/porcelain
+	needs_glaze_gold_dust = TRUE
+	special_glaze_result_types = list(
+		"porcelain glaze" = /obj/item/reagent_containers/glass/bowl/carved/porcelain/glaze_porcelain,
+		"shattergold glaze" = /obj/item/reagent_containers/glass/bowl/carved/porcelain/glaze_shattergold,
+		"bluegold glaze" = /obj/item/reagent_containers/glass/bowl/carved/porcelain/glaze_bluegold,
+	)
+	special_glaze_icon_states = list(
+		"porcelain glaze" = "bowl_clay_cook_porcelain",
+		"shattergold glaze" = "bowl_clay_cook_shattergold",
+		"bluegold glaze" = "bowl_clay_cook_bluegold",
+	)
 
 /obj/item/natural/clay/porcelain/cup
 	name = "raw porcelain teacup"
-	icon_state = "clayporcelaincupraw"
+	icon = 'modular/Neu_Food/icons/cookware/cup.dmi'
+	icon_state = "cup_shell"
 	dropshrink = 1
 	cooked_type = /obj/item/reagent_containers/glass/cup/porcelain
 
 /obj/item/natural/clay/porcelain/fancycup
 	name = "raw fancy porcelain cup"
-	icon_state = "clayporcelaincupfancyraw"
+	icon = 'modular/Neu_Food/icons/cookware/cup.dmi'
+	icon_state = "fancycup_shell"
 	dropshrink = 1
 	cooked_type = /obj/item/reagent_containers/glass/cup/porcelain/fancy
 
@@ -668,25 +916,85 @@
 
 /obj/item/natural/clay/porcelain/platter
 	name = "raw porcelain platter"
-	icon_state = "clayporcelainplatterraw"
+	icon = 'modular/Neu_Food/icons/cookware/platter.dmi'
+	icon_state = "platter_shell"
 	cooked_type = /obj/item/cooking/platter/carved/porcelain
+	special_glaze_default_type = /obj/item/cooking/platter/carved/porcelain
+	needs_glaze_gold_dust = TRUE
+	special_glaze_result_types = list(
+		"porcelain glaze" = /obj/item/cooking/platter/carved/porcelain/glaze_porcelain,
+		"shattergold glaze" = /obj/item/cooking/platter/carved/porcelain/glaze_shattergold,
+		"bluegold glaze" = /obj/item/cooking/platter/carved/porcelain/glaze_bluegold,
+	)
+	special_glaze_icon_states = list(
+		"porcelain glaze" = "platter_clay_cook_porcelain",
+		"shattergold glaze" = "platter_clay_cook_shattergold",
+		"bluegold glaze" = "platter_clay_cook_bluegold",
+	)
 
 /obj/item/natural/clay/porcelain/teapot
 	name = "raw porcelain teapot"
-	icon_state = "clayporcelainteapotraw"
+	icon = 'modular/Neu_Food/icons/cookware/pot.dmi'
+	icon_state = "teapot_clay_raw"
 	cooked_type = /obj/item/reagent_containers/glass/bucket/pot/teapot/porcelain
+	special_glaze_default_type = /obj/item/reagent_containers/glass/bucket/pot/teapot/porcelain
+	needs_glaze_gold_dust = TRUE
+	special_glaze_result_types = list(
+		"porcelain glaze" = /obj/item/reagent_containers/glass/bucket/pot/teapot/porcelain/glaze_porcelain,
+		"shattergold glaze" = /obj/item/reagent_containers/glass/bucket/pot/teapot/porcelain/glaze_shattergold,
+		"bluegold glaze" = /obj/item/reagent_containers/glass/bucket/pot/teapot/porcelain/glaze_bluegold,
+	)
+	special_glaze_icon_states = list(
+		"porcelain glaze" = "teapot_clay_cook_porcelain",
+		"shattergold glaze" = "teapot_clay_cook_shattergold",
+		"bluegold glaze" = "teapot_clay_cook_bluegold",
+	)
+
+/obj/item/natural/clay/porcelain/kettle
+	name = "raw porcelain kettle"
+	icon = 'modular/Neu_Food/icons/cookware/pot.dmi'
+	icon_state = "claykettle_raw"
+	cooked_type = /obj/item/reagent_containers/glass/bucket/pot/porcelainkettle
+
+/obj/item/natural/clay/porcelain/pot
+	name = "raw porcelain pot"
+	icon = 'modular/Neu_Food/icons/cookware/pot.dmi'
+	icon_state = "pote_clay_raw"
+	cooked_type = /obj/item/reagent_containers/glass/bucket/pot/porcelainpot
+	special_glaze_default_type = /obj/item/reagent_containers/glass/bucket/pot/porcelainpot
+	needs_glaze_gold_dust = TRUE
+	special_glaze_result_types = list(
+		"porcelain glaze" = /obj/item/reagent_containers/glass/bucket/pot/porcelainpot/glaze_porcelain,
+		"shattergold glaze" = /obj/item/reagent_containers/glass/bucket/pot/porcelainpot/glaze_shattergold,
+		"bluegold glaze" = /obj/item/reagent_containers/glass/bucket/pot/porcelainpot/glaze_bluegold,
+	)
+	special_glaze_icon_states = list(
+		"porcelain glaze" = "pote_clay_porcelain",
+		"shattergold glaze" = "pote_clay_shattergold",
+		"bluegold glaze" = "pote_clay_bluegold",
+	)
 
 /obj/item/natural/clay/porcelain/fancyteapot
 	name = "raw fancy teapot"
+	icon = 'modular/Neu_Food/icons/cookware/pot.dmi'
 	icon_state = "clayporcelainfancyteapot2"
 	dropshrink = 1
 	cooked_type = /obj/item/reagent_containers/glass/bucket/pot/teapot/fancy
 
 /obj/item/natural/clay/porcelain/decorativeteapot
 	name = "raw decorative teapot"
+	icon = 'modular/Neu_Food/icons/cookware/pot.dmi'
 	icon_state = "clayporcelainteapotraw"
 	dropshrink = 1
 	cooked_type = /obj/item/reagent_containers/glass/bucket/pot/teapot/porcelain/decorative
+
+/obj/item/natural/clay/porcelain/dildo
+	name = "raw porcelain dildo"
+	icon = 'modular/icons/obj/lewd/dildo.dmi'
+	icon_state = "unfinished"
+	color = "#D9CBB2"
+	desc = "An unfired porcelain toy. It needs to be baked before it can be finished."
+	cooked_type = /obj/item/dildo/porcelain
 
 /obj/item/carvedgem/porcelain
 	name = "porcelain base"
@@ -799,11 +1107,9 @@
 	pottery_fragile = TRUE
 	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
 	sellprice = 25
-	var/porcelain_fill_icon_state = "cup_porcelainfilling"
+	var/porcelain_fill_icon_state = "cup_porcelain_filling"
 
 /obj/item/reagent_containers/glass/cup/porcelain/update_icon(dont_fill=FALSE)
-	testing("cupupdate")
-
 	cut_overlays()
 
 	if(reagents.total_volume)
@@ -847,6 +1153,7 @@
 /obj/item/reagent_containers/glass/cup/porcelain/fancy
 	name = "fancy porcelain teacup"
 	icon_state = "fancycup_porcelain"
+	porcelain_fill_icon_state = "fancycup_porcelain_filling"
 	dropshrink = 1
 	sellprice = 40
 
@@ -860,11 +1167,83 @@
 	name = "porcelain teapot"
 	desc = "A dainty porcelain teapot used to serve tea."
 	icon = 'modular/Neu_Food/icons/cookware/pot.dmi'
-	icon_state = "teapot_porcelain"
+	icon_state = "teapot_clay"
 	dropshrink = 1
 	pottery_fragile = TRUE
 	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
 	sellprice = 30
+
+/obj/item/reagent_containers/glass/bucket/pot/teapot/porcelain/update_icon()
+	return FALSE // Teapots do not use pot fill overlays.
+
+/obj/item/reagent_containers/glass/bucket/pot/teapot/clay
+	name = "clay teapot"
+	desc = "A teapot made out of baked clay."
+	icon = 'modular/Neu_Food/icons/cookware/pot.dmi'
+	icon_state = "teapot_clay_baked"
+	pottery_fragile = TRUE
+	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
+
+/obj/item/reagent_containers/glass/bucket/pot/claykettle
+	name = "clay kettle"
+	desc = "A kettle made out of baked clay."
+	icon = 'modular/Neu_Food/icons/cookware/pot.dmi'
+	icon_state = "claykettle_baked"
+	w_class = WEIGHT_CLASS_NORMAL
+	grid_width = 32
+	grid_height = 64
+	pottery_fragile = TRUE
+	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
+	sellprice = 12
+	lid_icon_state = "claykettle_lid"
+
+/obj/item/reagent_containers/glass/bucket/pot/porcelainkettle
+	name = "porcelain kettle"
+	desc = "A kettle fired from refined clay."
+	icon = 'modular/Neu_Food/icons/cookware/pot.dmi'
+	icon_state = "porcelainkettle"
+	w_class = WEIGHT_CLASS_NORMAL
+	grid_width = 32
+	grid_height = 64
+	pottery_fragile = TRUE
+	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
+	sellprice = 18
+	lid_icon_state = "porcelainkettle_lid"
+
+/obj/item/reagent_containers/glass/bucket/pot/claypot
+	name = "clay pot"
+	desc = "A pot made out of baked clay."
+	icon = 'modular/Neu_Food/icons/cookware/pot.dmi'
+	icon_state = "pote_clay_baked"
+	pottery_fragile = TRUE
+	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
+	sellprice = 10
+	lid_icon_state = "pote_clay_baked_lid"
+
+/obj/item/reagent_containers/glass/bucket/pot/porcelainpot
+	name = "porcelain pot"
+	desc = "A pot fired from refined clay."
+	icon = 'modular/Neu_Food/icons/cookware/pot.dmi'
+	icon_state = "pote_clay"
+	pottery_fragile = TRUE
+	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
+	sellprice = 16
+	lid_icon_state = "pote_clay_porcelain_lid2"
+
+/obj/item/reagent_containers/glass/bucket/pot/porcelainpot/glaze_porcelain
+	name = "glazed porcelain pot"
+	icon_state = "pote_clay_porcelain"
+	lid_icon_state = "pote_clay_porcelain_lid"
+
+/obj/item/reagent_containers/glass/bucket/pot/porcelainpot/glaze_shattergold
+	name = "shattergold porcelain pot"
+	icon_state = "pote_clay_shattergold"
+	lid_icon_state = "pote_clay_shattergold_lid"
+
+/obj/item/reagent_containers/glass/bucket/pot/porcelainpot/glaze_bluegold
+	name = "bluegold porcelain pot"
+	icon_state = "pote_clay_bluegold"
+	lid_icon_state = "pote_clay_bluegold_lid"
 
 /obj/item/reagent_containers/glass/bucket/pot/teapot/throw_impact(atom/hit_atom, datum/thrownthing/thrownthing)
 	if(pottery_throw_shatter(hit_atom, thrownthing))
@@ -892,16 +1271,28 @@
 
 /obj/item/reagent_containers/glass/bucket/pot/teapot/porcelain/fancy
 	name = "fancy porcelain teapot"
-	icon = 'icons/roguetown/items/cooking.dmi'
-	icon_state = "clayporcelainfancyteapot2"
+	icon = 'modular/Neu_Food/icons/cookware/pot.dmi'
+	icon_state = "teapot_fancy"
 	dropshrink = 1
 	sellprice = 35
+
+/obj/item/reagent_containers/glass/bucket/pot/teapot/porcelain/glaze_porcelain
+	name = "glazed porcelain teapot"
+	icon_state = "teapot_clay_cook_porcelain"
+
+/obj/item/reagent_containers/glass/bucket/pot/teapot/porcelain/glaze_shattergold
+	name = "shattergold porcelain teapot"
+	icon_state = "teapot_clay_cook_shattergold"
+
+/obj/item/reagent_containers/glass/bucket/pot/teapot/porcelain/glaze_bluegold
+	name = "bluegold porcelain teapot"
+	icon_state = "teapot_clay_cook_bluegold"
 
 /obj/item/reagent_containers/glass/bucket/pot/teapot/porcelain/decorative
 	name = "decorative porcelain teapot"
 	desc = "An ornate porcelain teapot with a decorative finish."
 	icon = 'modular/Neu_Food/icons/cookware/pot.dmi'
-	icon_state = "teapot_porcelain"
+	icon_state = "teapot_fancy"
 	dropshrink = 1
 	sellprice = 35
 
@@ -970,6 +1361,18 @@
 	pottery_fragile = TRUE
 	sellprice = 25
 
+/obj/item/reagent_containers/glass/bowl/carved/porcelain/glaze_porcelain
+	name = "glazed porcelain bowl"
+	icon_state = "bowl_clay_cook_porcelain"
+
+/obj/item/reagent_containers/glass/bowl/carved/porcelain/glaze_shattergold
+	name = "shattergold porcelain bowl"
+	icon_state = "bowl_clay_cook_shattergold"
+
+/obj/item/reagent_containers/glass/bowl/carved/porcelain/glaze_bluegold
+	name = "bluegold porcelain bowl"
+	icon_state = "bowl_clay_cook_bluegold"
+
 /obj/item/reagent_containers/glass/bowl/carved/porcelain/throw_impact(atom/hit_atom, datum/thrownthing/thrownthing)
 	if(pottery_throw_shatter(hit_atom, thrownthing))
 		return
@@ -995,6 +1398,18 @@
 	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
 	pottery_fragile = TRUE
 	sellprice = 30
+
+/obj/item/cooking/platter/carved/porcelain/glaze_porcelain
+	name = "glazed porcelain platter"
+	icon_state = "platter_clay_cook_porcelain"
+
+/obj/item/cooking/platter/carved/porcelain/glaze_shattergold
+	name = "shattergold porcelain platter"
+	icon_state = "platter_clay_cook_shattergold"
+
+/obj/item/cooking/platter/carved/porcelain/glaze_bluegold
+	name = "bluegold porcelain platter"
+	icon_state = "platter_clay_cook_bluegold"
 
 /obj/item/cooking/platter/carved/porcelain/throw_impact(atom/hit_atom, datum/thrownthing/thrownthing)
 	if(pottery_throw_shatter(hit_atom, thrownthing))

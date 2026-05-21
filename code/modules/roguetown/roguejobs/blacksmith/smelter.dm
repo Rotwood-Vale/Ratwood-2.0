@@ -52,6 +52,9 @@
 	if(istype(attacking_item, /obj/item/rogueweapon/tongs))
 		var/obj/item/rogueweapon/tongs/tongs = attacking_item
 		if(tongs.hingot)
+			if(istype(tongs.hingot, /obj/item/natural/clay/glassbatch))
+				to_chat(user, span_warning("Glass batch needs a dedicated glass kiln, not a metal furnace."))
+				return
 			if(length(contained_items) >= max_contained_items)
 				to_chat(user, span_warn("\The [src] is already full!"))
 				return
@@ -90,6 +93,10 @@
 		if(!.) //False/null if using the item as fuel. If true, we want to try smelt it so go onto next segment.
 			return
 
+	if(istype(attacking_item, /obj/item/natural/clay/glassbatch))
+		to_chat(user, span_warning("Glass batch needs a dedicated glass kiln, not a metal furnace."))
+		return
+
 	if(attacking_item.smeltresult)
 		add_item(attacking_item, user) // Adds the item to the smelter's contained_items list, if it can be smelted.
 		return
@@ -103,6 +110,9 @@
 		return
 
 	if(held_item?.smeltresult)
+		if(istype(held_item, /obj/item/natural/clay/glassbatch))
+			to_chat(user, span_warning("Glass batch needs a dedicated glass kiln, not a metal furnace."))
+			return
 		add_item(held_item, user)
 
 	return ..()
@@ -351,3 +361,76 @@
 	max_contained_items = 6
 	smelting_ticks = 45
 	climbable = FALSE
+
+// ======================================================
+// Glass Kiln — processes glass batch into heated glass
+// Accepts glassbatch only; regular smelters reject it.
+// Produces 50% more glass on average via a bonus-glass chance.
+// ======================================================
+/obj/machinery/light/rogue/smelter/glasskiln
+	icon = 'icons/roguetown/misc/forge.dmi'
+	name = "glass kiln"
+	desc = "A high-temperature ceramic kiln lined with fireclay, purpose-built for firing glass batch into heated glass. Runs hotter than a metal furnace but accepts only glass materials."
+	icon_state = "glasskiln0"
+	base_state = "glasskiln"
+	anchored = TRUE
+	density = TRUE
+	max_contained_items = 6
+	smelting_ticks = 25
+
+/obj/machinery/light/rogue/smelter/glasskiln/proc/is_valid_kiln_item(obj/item/checking_item)
+	return istype(checking_item, /obj/item/natural/clay/glassbatch) || istype(checking_item, /obj/item/natural/dirtclod/sand)
+
+/obj/machinery/light/rogue/smelter/glasskiln/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(istype(attacking_item, /obj/item/rogueweapon/tongs))
+		var/obj/item/rogueweapon/tongs/tongs = attacking_item
+		if(tongs.hingot && !is_valid_kiln_item(tongs.hingot))
+			to_chat(user, span_warning("The glass kiln only accepts glass batch and sand."))
+			return
+		return ..()
+	if(is_valid_kiln_item(attacking_item))
+		add_item(attacking_item, user)
+		return
+	if(attacking_item.smeltresult)
+		to_chat(user, span_warning("The glass kiln only accepts glass batch, not metal ores."))
+		return
+	return ..()
+
+/obj/machinery/light/rogue/smelter/glasskiln/attack_right(mob/user)
+	var/obj/item/held_item = user.get_active_held_item()
+	if(!held_item)
+		return ..()
+	if(istype(held_item, /obj/item/rogueweapon/tongs))
+		attackby(held_item, user)
+		return
+	if(is_valid_kiln_item(held_item))
+		add_item(held_item, user)
+		return
+	if(held_item.smeltresult)
+		to_chat(user, span_warning("The glass kiln only accepts glass batch, not metal ores."))
+		return
+	return ..()
+
+/obj/machinery/light/rogue/smelter/glasskiln/add_item(obj/item/smelting_item, mob/user)
+	if(!is_valid_kiln_item(smelting_item))
+		to_chat(user, span_warning("The glass kiln only accepts glass batch and sand."))
+		return
+	return ..()
+
+/obj/machinery/light/rogue/smelter/glasskiln/handle_smelting()
+	var/glassbatch_count = 0
+	var/sand_count = 0
+	for(var/obj/item/item as anything in contained_items)
+		if(istype(item, /obj/item/natural/clay/glassbatch))
+			glassbatch_count++
+		else if(istype(item, /obj/item/natural/dirtclod/sand))
+			sand_count++
+		contained_items -= item
+		qdel(item)
+	var/bonus_outputs = min(glassbatch_count, sand_count)
+	for(var/i in 1 to (glassbatch_count + bonus_outputs))
+		contained_items += new /obj/item/natural/glass/heated(src)
+	playsound(src, 'sound/misc/smelter_fin.ogg', 100, FALSE)
+	visible_message(span_notice("\The [src] finished firing glass."))
+	smelting_progress = smelting_ticks + 1
+	actively_smelting = FALSE
