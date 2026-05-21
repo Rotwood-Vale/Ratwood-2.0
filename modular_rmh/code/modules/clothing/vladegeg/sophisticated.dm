@@ -8,7 +8,7 @@
 	sleeved = 'modular_rmh/icons/clothing/vladegeg/onmob/helpers/sophisticated_sleeves.dmi'
 	slot_flags = ITEM_SLOT_SHIRT | ITEM_SLOT_ARMOR
 
-/obj/item/clothing/suit/roguetown/armor/gambeson/sophisticated_coat
+/obj/item/clothing/suit/roguetown/armor/longcoat/sophisticated_coat
 	name = "sophisticated coat"
 	desc = "A sophisticated coat of fine tailoring and subtle elegance, worn to project refinement, confidence, and social standing."
 	icon_state = "coat"
@@ -16,7 +16,7 @@
 	icon = 'modular_rmh/icons/clothing/vladegeg/sophisticated.dmi'
 	mob_overlay_icon = 'modular_rmh/icons/clothing/vladegeg/onmob/sophisticated.dmi'
 	sleeved = 'modular_rmh/icons/clothing/vladegeg/onmob/helpers/sophisticated_sleeves.dmi'
-	slot_flags = ITEM_SLOT_ARMOR | ITEM_SLOT_CLOAK
+	color = null
 
 //CRAFTING
 
@@ -32,7 +32,7 @@
 
 /datum/crafting_recipe/roguetown/leather/sophisticated_coat
 	name = "sophisticated coat"
-	result = /obj/item/clothing/suit/roguetown/armor/gambeson/sophisticated_coat
+	result = /obj/item/clothing/suit/roguetown/armor/longcoat/sophisticated_coat
 	reqs = list(/obj/item/natural/hide/cured = 1,/obj/item/natural/fur = 2)
 	craftdiff = 2
 
@@ -44,4 +44,4 @@
 
 /datum/loadout_item/sophisticated_coat
 	name = "sophisticated coat"
-	path = /obj/item/clothing/suit/roguetown/armor/gambeson/sophisticated_coat
+	path = /obj/item/clothing/suit/roguetown/armor/longcoat/sophisticated_coat
