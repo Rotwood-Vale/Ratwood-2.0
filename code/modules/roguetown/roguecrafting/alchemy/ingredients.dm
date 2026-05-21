@@ -111,14 +111,14 @@
 	return ..()
 
 //==============================================================================
-// Harvest Bloomstone — ritual reward from Cat 9 Harvest Bloomstone rite.
+// Harvest Bloomstone - ritual reward from Cat 9 Harvest Bloomstone rite.
 // Functions as a 20-use blessed seed powder when held during Bless Crops.
 // Each use (qdel call from blesscrop) decrements charges instead of destroying it.
 // When all 20 charges are spent, the stone shatters and leaves stone dust.
 //==============================================================================
 /obj/item/alch/bloomstone
 	name = "harvest bloomstone"
-	desc = "A smooth stone suffused with the Treefather's living power. When held during while using the Bless Crops miracle it functions like blessed seed powder and spends a charge instead of being consumed — good for twenty uses before it shatters."
+	desc = "A smooth stone suffused with the Treefather's living power. When held during while using the Bless Crops miracle it functions like blessed seed powder and spends a charge instead of being consumed - good for twenty uses before it shatters."
 	icon = 'icons/roguetown/gems/gem_shell.dmi'
 	icon_state = "cutgem_shell"
 	color = "#228B22"
@@ -154,7 +154,7 @@
 		// Stone survives this use; re-apply glow and stay alive.
 		add_filter("bloomstone_glow", 2, list("type" = "outline", "color" = "#73c47a", "alpha" = 95, "size" = 1))
 		return QDEL_HINT_LETMELIVE
-	// All charges spent — shatter into stone dust.
+	// All charges spent - shatter into stone dust.
 	new /obj/item/alch/stonedust(get_turf(src))
 	if(loc && isliving(loc))
 		var/mob/living/holder = loc

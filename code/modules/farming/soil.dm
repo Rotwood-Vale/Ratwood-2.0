@@ -651,7 +651,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 
 /// Returns an associative list of additive growth bonuses from blessed soil (+20%), Living Light (+10%),
 /// a nearby Rune of Dendor (+5%), and tilled soil (+5%). Keys: "blessed", "living_light", "dendor_rune", "tilled", "total" (capped at 40%).
-/// Multiple runes do not stack — only one rune's bonus is counted regardless of how many are in range.
+/// Multiple runes do not stack - only one rune's bonus is counted regardless of how many are in range.
 /obj/structure/soil/proc/get_natural_growth_bonuses()
 	var/blessed_bonus = (blessed_time > 0) ? 0.20 : 0.0
 	var/living_light_bonus = 0.0
@@ -669,7 +669,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 
 /// Returns the growth-speed multiplier from environmental factors only.
 /// Includes: tilling, fertilization, pollination, world traits, natural aura bonuses, and weed penalties.
-/// Does NOT require a plant — safe to call for tree/bush saplings and seedlings.
+/// Does NOT require a plant - safe to call for tree/bush saplings and seedlings.
 /obj/structure/soil/proc/get_environmental_growth_multiplier()
 	var/gm = 1.0
 	if(tilled_time > 0)
@@ -750,7 +750,7 @@ GLOBAL_LIST_EMPTY(soil_list)
 	if(has_world_trait(/datum/world_trait/dendor_drought))
 		growth_multiplier *= 0.4
 		nutriment_eat_mutliplier *= 2
-	// Natural growth bonuses: blessed soil (+20%), Living Light (+10%), Rune of Dendor (+5%) — additive, capped at 35%.
+	// Natural growth bonuses: blessed soil (+20%), Living Light (+10%), Rune of Dendor (+5%) - additive, capped at 35%.
 	var/list/natural_bonuses = get_natural_growth_bonuses()
 	if(natural_bonuses["total"] > 0)
 		growth_multiplier *= (1.0 + natural_bonuses["total"])

@@ -6,6 +6,7 @@
 	density = FALSE
 	anchored= TRUE
 	var/time_delay = 0
+	var/amount_on_harvest = 1
 
 /obj/structure/zizo_bane/Initialize(mapload)
 	. = ..()
@@ -30,24 +31,17 @@
 	S.start()
 
 /obj/structure/zizo_bane/attack_hand(mob/living/carbon/human/user)
-	playsound(src.loc, "plantcross", 80, FALSE, -1)
+	var/turf/src_turf = get_turf(src)
+	playsound(src_turf, "plantcross", 80, FALSE, -1)
 	user.visible_message(span_warning("[user] starts plucking out \the [src] from the earth."))
 	if(do_after(user, 3 SECONDS, target = src))
-		var/obj/item/reagent_containers/food/snacks/zizo_bane/z = new(get_turf(src))
-		user.put_in_active_hand(z)
+		for(var/i in 1 to amount_on_harvest)
+			new /obj/item/reagent_containers/food/snacks/zizo_bane(src_turf)
 		qdel(src)
 
-// Farmed variant — grown from seed, yields 2 mushrooms on harvest.
+// Farmed variant - grown from seed, yields 2 mushrooms on harvest.
 /obj/structure/zizo_bane/farmed
-
-/obj/structure/zizo_bane/farmed/attack_hand(mob/living/carbon/human/user)
-	playsound(src.loc, "plantcross", 80, FALSE, -1)
-	user.visible_message(span_warning("[user] starts plucking out \the [src] from the earth."))
-	if(do_after(user, 3 SECONDS, target = src))
-		var/obj/item/reagent_containers/food/snacks/zizo_bane/z = new /obj/item/reagent_containers/food/snacks/zizo_bane/(get_turf(src))
-		user.put_in_active_hand(z)
-		new /obj/item/reagent_containers/food/snacks/zizo_bane(get_turf(src))
-		qdel(src)
+	amount_on_harvest = 2
 	
 /obj/item/reagent_containers/food/snacks/zizo_bane
 	name = "Zizo's bane"

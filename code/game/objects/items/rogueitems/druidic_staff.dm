@@ -16,7 +16,7 @@
 	anvilrepair = /datum/skill/magic/druidic
 	// Do not inherit gem-staff slapcrafting upgrades.
 	register_gem_slapcrafting = FALSE
-	// Override combat intents — druidic staff uses blunt polearm strikes, not arcane arcing.
+	// Override combat intents - druidic staff uses blunt polearm strikes, not arcane arcing.
 	// Alt-intent (RMB self while wielded): dazing strike.
 	possible_item_intents = list(SPEAR_BASH, /datum/intent/mace/strike/wood)
 	gripped_intents = list(SPEAR_BASH, /datum/intent/mace/strike/wood, /datum/intent/mace/smash/wood, /datum/intent/effect/daze)
@@ -28,7 +28,7 @@
 	var/max_charges = 10
 	/// Elapsed time accumulator for charge regen (in deciseconds).
 	var/regen_elapsed = 0
-	/// Middle-click cooldown — world.time must exceed this to act.
+	/// Middle-click cooldown - world.time must exceed this to act.
 	var/middle_click_cooldown = 0
 	/// Whether we are currently registered for middle-click on the wielder.
 	var/signals_registered = FALSE
@@ -37,7 +37,7 @@
 
 /obj/item/rogueweapon/woodstaff/druidic_staff/Initialize(mapload)
 	. = ..()
-	// Do not START_PROCESSING here — charges start at max_charges, so process() would
+	// Do not START_PROCESSING here - charges start at max_charges, so process() would
 	// immediately return PROCESS_KILL. handle_middle_click restarts processing when needed.
 	set_light(1, 1, 2, l_color = "#73c47a")
 	add_filter("druid_blessed_glow", 2, list("type" = "outline", "color" = "#58C86A", "alpha" = 95, "size" = 1))
@@ -48,7 +48,7 @@
 	// Consume the bloomstone explicitly for this recipe instead of using raw del().
 	if(!user)
 		return
-	// Check hands first — del_reqs searches hands (and adjacent turfs), not pockets.
+	// Check hands first - del_reqs searches hands (and adjacent turfs), not pockets.
 	for(var/obj/item/alch/bloomstone/BS in list(user.get_active_held_item(), user.get_inactive_held_item()))
 		BS.consume_for_crafting()
 		return
@@ -108,7 +108,7 @@
 	UnregisterSignal(user, COMSIG_MOB_MIDDLECLICKON)
 	UnregisterSignal(user, COMSIG_QDELETING)
 
-/// Signal handler — fires when the mob we registered signals on is deleted.
+/// Signal handler - fires when the mob we registered signals on is deleted.
 /// Clears tracking state so Destroy() skips the unregister attempt on an already-gone mob.
 /obj/item/rogueweapon/woodstaff/druidic_staff/proc/on_registered_mob_deleted(datum/source)
 	SIGNAL_HANDLER
@@ -118,12 +118,12 @@
 // ---- Middle-click handler -------------------------------------------------
 
 /// Fires on COMSIG_MOB_MIDDLECLICKON while the staff is wielded.
-/// Branches on the target: unblessed soil → AOE bless, old/burnt tree → reinvigorate, else → vine+glowshroom.
+/// Branches on the target: unblessed soil -> AOE bless, old/burnt tree -> reinvigorate, else -> vine+glowshroom.
 /obj/item/rogueweapon/woodstaff/druidic_staff/proc/handle_middle_click(mob/living/carbon/human/user, atom/target)
 	SIGNAL_HANDLER
-	// Skill gate — Journeyman Druidic Trickery required.
+	// Skill gate - Journeyman Druidic Trickery required.
 	if(user.get_skill_level(/datum/skill/magic/druidic) < SKILL_LEVEL_JOURNEYMAN)
-		to_chat(user, span_warning("The staff's power eludes me — Journeyman Druidic Trickery is required."))
+		to_chat(user, span_warning("The staff's power eludes me - Journeyman Druidic Trickery is required."))
 		return COMSIG_MOB_CANCEL_CLICKON
 
 	// Must be wielded (two-handed) to channel power.
@@ -136,7 +136,7 @@
 		to_chat(user, span_warning("The druidic staff has no charges remaining. It needs time to regenerate."))
 		return COMSIG_MOB_CANCEL_CLICKON
 
-	// Range check — must be within 4 tiles.
+	// Range check - must be within 4 tiles.
 	if(get_dist(user, target) > 4)
 		return
 
@@ -149,7 +149,7 @@
 	if(!target_turf)
 		return
 
-	// Branch: target is or is on a soil plot → AOE bless unblessed planted soils within range 4.
+	// Branch: target is or is on a soil plot -> AOE bless unblessed planted soils within range 4.
 	var/obj/structure/soil/target_soil = null
 	if(istype(target, /obj/structure/soil))
 		target_soil = target
@@ -174,7 +174,7 @@
 		user.visible_message(span_green("[user] channels Dendor's power through the druidic staff, blessing nearby crops!"), span_green("Dendor's blessing channels from the staff, blessing nearby crops!"))
 		return COMSIG_MOB_CANCEL_CLICKON
 
-	// Branch: target is or is on an old or burnt tree → reinvigorate it.
+	// Branch: target is or is on an old or burnt tree -> reinvigorate it.
 	var/obj/structure/flora/roguetree/target_tree = null
 	if(istype(target, /obj/structure/flora/roguetree) && !istype(target, /obj/structure/flora/roguetree/wise) && !istype(target, /obj/structure/flora/roguetree/evil))
 		target_tree = target
@@ -190,12 +190,12 @@
 			START_PROCESSING(SSprocessing, src)
 			middle_click_cooldown = world.time + 100 // 10 seconds
 			playsound(get_turf(user), 'sound/magic/churn.ogg', 60, TRUE)
-			user.visible_message(span_green("[user] draws the druidic staff before [target_tree] — life surges back into the withered bark!"), span_green("You channel the Treefather's power into [target_tree] through the druidic staff!"))
+			user.visible_message(span_green("[user] draws the druidic staff before [target_tree] - life surges back into the withered bark!"), span_green("You channel the Treefather's power into [target_tree] through the druidic staff!"))
 			return COMSIG_MOB_CANCEL_CLICKON
 		to_chat(user, span_warning("This tree cannot be reinvigorated."))
 		return COMSIG_MOB_CANCEL_CLICKON
 
-	// Branch: permanently-trimmed fey mushroom circle or mature bush — re-enable overgrowth timer.
+	// Branch: permanently-trimmed fey mushroom circle or mature bush - re-enable overgrowth timer.
 	var/obj/structure/mushroom_circle/fey/MC = istype(target, /obj/structure/mushroom_circle/fey) ? target : locate(/obj/structure/mushroom_circle/fey) in target_turf
 	if(MC?.active && MC.permanently_trimmed)
 		MC.receive_bless_crop()
@@ -204,7 +204,7 @@
 		START_PROCESSING(SSprocessing, src)
 		middle_click_cooldown = world.time + 100
 		playsound(get_turf(user), 'sound/magic/churn.ogg', 60, TRUE)
-		user.visible_message(span_green("[user] channels the Treefather's power into [MC] — the fey energies stir anew!"), span_green("You channel the Treefather's power into [MC] — the fey energies stir anew!"))
+		user.visible_message(span_green("[user] channels the Treefather's power into [MC] - the fey energies stir anew!"), span_green("You channel the Treefather's power into [MC] - the fey energies stir anew!"))
 		return COMSIG_MOB_CANCEL_CLICKON
 	var/obj/structure/bush_sapling/bush = istype(target, /obj/structure/bush_sapling) ? target : locate(/obj/structure/bush_sapling) in target_turf
 	if(bush && bush.stage == BUSHSAP_STAGE_MATURE && !bush.dead && bush.permanently_trimmed)
@@ -214,10 +214,10 @@
 		START_PROCESSING(SSprocessing, src)
 		middle_click_cooldown = world.time + 100
 		playsound(get_turf(user), 'sound/magic/churn.ogg', 60, TRUE)
-		user.visible_message(span_green("[user] channels the Treefather's power into [bush] — growth stirs anew!"), span_green("You channel the Treefather's power into [bush] — growth stirs anew!"))
+		user.visible_message(span_green("[user] channels the Treefather's power into [bush] - growth stirs anew!"), span_green("You channel the Treefather's power into [bush] - growth stirs anew!"))
 		return COMSIG_MOB_CANCEL_CLICKON
 
-	// Branch: anything else → spawn a vine and kneestinger on the target turf.
+	// Branch: anything else -> spawn a vine and kneestinger on the target turf.
 	if(!locate(/obj/structure/vine/dendor) in target_turf)
 		new /obj/structure/vine/dendor(target_turf)
 	if(!locate(/obj/structure/glowshroom) in target_turf)
@@ -227,7 +227,7 @@
 	START_PROCESSING(SSprocessing, src)
 	middle_click_cooldown = world.time + 100 // 10 seconds
 	playsound(get_turf(user), 'sound/magic/churn.ogg', 60, TRUE)
-	user.visible_message(span_green("[user] directs the druidic staff at [target] — vines erupt from the ground!"), span_green("You direct the druidic staff at [target] — vines erupt from the ground!"))
+	user.visible_message(span_green("[user] directs the druidic staff at [target] - vines erupt from the ground!"), span_green("You direct the druidic staff at [target] - vines erupt from the ground!"))
 	return COMSIG_MOB_CANCEL_CLICKON
 
 // ============================================================
