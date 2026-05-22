@@ -116,8 +116,8 @@
 	if(loc != user)
 		return
 	if(cooldowny && world.time < cooldowny + cdtime)
-			to_chat(user, span_warning("Nothing happens."))
-			return
+		to_chat(user, span_warning("Nothing happens."))
+		return
 	user.visible_message(span_warning("[user] primes the [src]!"))
 	if(activate_sound)
 		playsound(user, activate_sound, 100, FALSE, -1)
