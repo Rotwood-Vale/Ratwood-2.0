@@ -501,7 +501,7 @@
 /datum/status_effect/buff/wardenbuff
 	id = "wardenbuff"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/wardenbuff
-	effectedstats = list(STATKEY_SPD = 1, STATKEY_PER = 3)
+	effectedstats = list(STATKEY_SPD = 1, STATKEY_PER = 1)
 
 /atom/movable/screen/alert/status_effect/buff/viewingbuff
 	name = "Good View"
@@ -516,7 +516,7 @@
 /datum/status_effect/buff/barkeepbuff
 	id = "barkeepbuff"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/barkeepbuff
-	effectedstats = list(STATKEY_CON = 1,STATKEY_WIL = 1, STATKEY_SPD = 1, STATKEY_STR = 3)
+	effectedstats = list(STATKEY_CON = 1,STATKEY_WIL = 1, STATKEY_SPD = 1, STATKEY_STR = 1)
 
 /datum/status_effect/buff/barkeepbuff/process()
 
@@ -528,7 +528,7 @@
 /datum/status_effect/buff/guardbuffone
 	id = "guardbuffone"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/guardbuffone
-	effectedstats = list(STATKEY_CON = 1,STATKEY_WIL = 1, STATKEY_SPD = 1, STATKEY_PER = 2)
+	effectedstats = list(STATKEY_WIL = 1, STATKEY_SPD = 1)
 
 /datum/status_effect/buff/dungeoneerbuff
 	id = "dungeoneerbuff"
@@ -581,13 +581,13 @@
 	id = "holyblessing"
 	alert_type = /atom/movable/screen/alert/status_effect/holy_empowerement
 	effectedstats = list(
-		STATKEY_STR = 2,
-		STATKEY_PER = 2,
-		STATKEY_INT = 2,
-		STATKEY_CON = 2,
-		STATKEY_WIL = 2,
-		STATKEY_SPD = 2,
-		STATKEY_LCK = 2,
+		STATKEY_STR = 1,
+		STATKEY_PER = 1,
+		STATKEY_INT = 1,
+		STATKEY_CON = 1,
+		STATKEY_WIL = 1,
+		STATKEY_SPD = 1,
+		STATKEY_LCK = 1,
 	)
 
 /datum/status_effect/debuff/holy_blessing/process()
