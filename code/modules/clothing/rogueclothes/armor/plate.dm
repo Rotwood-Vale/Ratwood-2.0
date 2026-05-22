@@ -55,7 +55,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer
 	name = "artificed half-plate"
-	desc = "Polished gilbronze layers, magewelded into lightweight plate armor. It holds a slot for an arcyne meld to power it."
+	desc = "Forbidden knowledge, resurrected into a weightless vessel of gilbranze-and-magicka. It holds a slot for an arcyne meld to power it."
 	smeltresult = /obj/item/ingot/aaslag
 	icon_state = "artificerplate"
 	item_state = "artificerplate"
@@ -65,12 +65,13 @@
 	var/active_item = FALSE //Prevents issues like dragon ring giving negative str instead
 	var/legendaryarcane = FALSE
 	var/legendaryathletics = FALSE
-/obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer/Initialize(mapload)
+
+/obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer/Initialize()
 	.=..()
 	update_description()
 
 /obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/rogueweapon/hammer))
+	if(istype(I, /obj/item/contraption/linker))
 		if(user.get_skill_level(/datum/skill/craft/engineering) >= 3)
 			toggle_mode(user)
 			return
@@ -85,7 +86,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer/proc/toggle_mode(mob/user)
 	if(!src.ontable())
-		to_chat(user, span_notice("I need to put this on a table first")) //prevents stats staying on a person if tinkered on self
+		to_chat(user, span_notice("I need to put this on a table first!")) //prevents stats staying on a person if tinkered on self
 	else
 		mode = (mode == 1) ? 2 : 1
 		user.visible_message(span_notice("[user] tinkers with [src], adjusting its enhancements."))
@@ -102,19 +103,19 @@
 				active_item = TRUE
 				legendaryarcane = FALSE
 				user.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
-				user.change_stat("intelligence", 3)
-				to_chat(user, span_notice("Magicks flow throughout your body."))
+				user.apply_status_effect(/datum/status_effect/buff/artificerint)
+				to_chat(user, span_notice("Arcyne lightning crackles across the cuirass, enchanting your mind with forbidden knowledge!"))
 				icon_state ="artificerplate_powered"
 				item_state = "artificerplate_powered"
 			else
-				user.change_stat("intelligence", 3)
+				user.apply_status_effect(/datum/status_effect/buff/artificerint)
 				legendaryarcane = TRUE
 				active_item = TRUE
-				to_chat(user, span_warning("[src] hums, but you are already a master of the arcane."))
+				to_chat(user, span_warning("Arcyne lightning crackles across the cuirass, enshrining your mastery over magicka!"))
 				icon_state ="artificerplate_powered"
 				item_state = "artificerplate_powered"
 		else
-			to_chat(user, span_warning("[src] feels cold and dead to the non-arcane."))
+			to_chat(user, span_warning("The cuirass feels unnervingly cold to the touch."))
 	if(mode == 2)
 		if(slot != SLOT_ARMOR)
 			return
@@ -128,14 +129,13 @@
 			else
 				legendaryathletics = TRUE
 			active_item = TRUE
-			to_chat(user, span_notice("Strength flow throughout your body."))
-			user.change_stat("strength", 2)
-			user.change_stat("willpower", 2)
+			to_chat(user, span_notice("Arcyne lightning crackles across the cuirass, enchanting your body with adrenalized power!"))
+			user.apply_status_effect(/datum/status_effect/buff/artificerstr)
 			icon_state ="artificerplate_powered"
 			item_state = "artificerplate_powered"
 			return
 		else
-			to_chat(user, span_warning("The curiass feels cold and dead."))
+			to_chat(user, span_warning("The cuirass feels unnervingly warm to the touch."))
 
 /obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer/dropped(mob/living/user)
 	.=..()
@@ -146,8 +146,8 @@
 				if(!legendaryarcane)
 					H.adjust_skillrank(/datum/skill/magic/arcane, -1, TRUE)
 				if(H.get_item_by_slot(SLOT_ARMOR) == src)
-					to_chat(H, span_notice("Gone is the arcane magicks enhancing thine abilities..."))
-					H.change_stat("intelligence", -3)
+					to_chat(H, span_notice("Gone is the intelligence, which bolstered thine arcyna.."))
+					user.remove_status_effect(/datum/status_effect/buff/artificerint)
 					active_item = FALSE
 					return
 			else
@@ -158,9 +158,8 @@
 				if(!legendaryathletics)
 					H.adjust_skillrank(/datum/skill/misc/athletics, -1, TRUE)
 				if(H.get_item_by_slot(SLOT_ARMOR) == src)
-					to_chat(H, span_notice("Gone is the strength enhancing thine abilities..."))
-					user.change_stat("strength", -2)
-					user.change_stat("willpower", -2)
+					to_chat(H, span_notice("Gone is the strength, which bolstered thine arms.."))
+					user.remove_status_effect(/datum/status_effect/buff/artificerstr)
 					active_item = FALSE
 					return
 			else
@@ -168,9 +167,9 @@
 
 /obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer/proc/update_description()
 	if(mode == 1)
-		desc = "Polished gilbronze layers, magewelded into lightweight plate armor. It hums with arcyne power, enhancing magical prowess."
+		desc = "Forbidden knowledge, resurrected into a weightless vessel of gilbranze-and-magicka. It crackles with raw magicka; the mind, empowered."
 	else
-		desc = "Polished gilbronze layers, magewelded into lightweight plate armor. It radiates raw strength, reinforcing the wearer's physical might."
+		desc = "Forbidden knowledge, resurrected into a weightless vessel of gilbranze-and-magicka. It crackles with arcyne vigor; the body, emboldened."
 
 /obj/item/clothing/suit/roguetown/armor/plate/fluted
 	name = "fluted half-plate"
@@ -309,6 +308,8 @@
 	item_state = "shadowplate"
 	armor_class = ARMOR_CLASS_MEDIUM
 	allowed_race = NON_DWARVEN_RACE_TYPES
+	smeltresult = /obj/item/ingot/drow
+	smelt_bar_num = 2
 
 /obj/item/clothing/suit/roguetown/armor/plate/full/fluted/ornate/ordinator
 	name = "inquisitorial ordinator's plate"
