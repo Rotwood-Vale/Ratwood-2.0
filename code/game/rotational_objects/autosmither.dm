@@ -52,7 +52,7 @@
 	var/list/post_start_list = list(STEP_BUTTON, STEP_LEVER, STEP_FIDDLE)
 	debris = list(/obj/item/roguegear = 2, /obj/item/natural/wood/plank = 2, /obj/item/ingot/steel = 1)
 
-/obj/structure/autosmither/Initialize()
+/obj/structure/autosmither/Initialize(mapload)
 	. = ..()
 	var/turf/turf = get_step(src, EAST)
 	hopper = new hopper_type(turf)
@@ -615,6 +615,13 @@
 
 /obj/structure/closet/crate/chest/autosmither/CanAStarPass(ID, dir, caller)
 	return TRUE
+
+/obj/structure/closet/crate/chest/autosmither/CanPass(atom/movable/mover, turf/target)
+	return TRUE
+
+/obj/structure/closet/crate/chest/autosmither/get_mechanics_examine(mob/user)
+	. = ..()
+	AddComponent(/datum/component/storage/concrete/grid/anvil_bin)
 
 /obj/structure/closet/crate/chest/autosmither/CanPass(atom/movable/mover, turf/target)
 	return TRUE
