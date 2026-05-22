@@ -456,19 +456,12 @@
 	base_icon_state = "book8"
 	bookfile = "brassfort1.json"
 
-/obj/item/book/rogue/pyrgos2
+/obj/item/book/rogue/pyrgos2 // i'm just going to make two volumes. Someone else can make the 3rd.
 	name = "The Brass Fortresses, Volume 2"
 	desc = "By Lack-Of-Grace"
 	icon_state ="book8_0"
 	base_icon_state = "book8"
 	bookfile = "brassfort2.json"
-
-/obj/item/book/rogue/pyrgos3
-	name = "The Brass Fortresses, Volume 3"
-	desc = "By Lack-Of-Grace"
-	icon_state ="book8_0"
-	base_icon_state = "book8"
-	bookfile = "brassfort3.json"
 
 /obj/item/book/rogue/naledi1
 	name = "The Path of the War Scholar Volume 1"
