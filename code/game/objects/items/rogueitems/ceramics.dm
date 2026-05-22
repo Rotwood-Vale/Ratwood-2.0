@@ -589,7 +589,7 @@
 	obj_flags = UNIQUE_RENAME
 	cooked_type = /obj/item/roguestatue/clay
 
-// Named design subtypes — each produces a specific cooked statue variant
+// Named design subtypes - each produces a specific cooked statue variant
 /obj/item/natural/clay/claystatue/design1
 	icon_state = "claystatueraw"
 	cooked_type = /obj/item/roguestatue/clay/design1
@@ -692,7 +692,7 @@
 	. = ..(mapload)
 	icon_state = "statueglass[pick(1,2,3,4,5)]"
 
-// Named glass statue designs — each locks to a specific icon state
+// Named glass statue designs - each locks to a specific icon state
 /obj/item/roguestatue/glass/design1
 	icon_state = "statueglass1"
 
@@ -1480,7 +1480,7 @@
 			color = brush.dye
 		return
 
-/* Blown Glass Items — produced by the glass blowing rod, dyeable in the dye bin */
+/* Blown Glass Items - produced by the glass blowing rod, dyeable in the dye bin */
 
 /obj/item/reagent_containers/glass/bottle/blown
 	name = "blown glass bottle"

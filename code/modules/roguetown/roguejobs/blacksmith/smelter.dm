@@ -363,7 +363,7 @@
 	climbable = FALSE
 
 // ======================================================
-// Glass Kiln — processes glass batch into heated glass
+// Glass Kiln - processes glass batch into heated glass
 // Accepts glassbatch only; regular smelters reject it.
 // Produces 50% more glass on average via a bonus-glass chance.
 // ======================================================

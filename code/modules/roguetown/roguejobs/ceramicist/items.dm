@@ -231,7 +231,7 @@
 			if(SKILL_LEVEL_EXPERT)
 				failure_chance = 20
 		if(prob(failure_chance))
-			user.visible_message(span_warning("[user] loses control of the glass — it cracks and shatters!"), span_warning("I lose control of the molten glass — it cracks and shatters!"))
+			user.visible_message(span_warning("[user] loses control of the glass - it cracks and shatters!"), span_warning("I lose control of the molten glass - it cracks and shatters!"))
 			playsound(src, 'sound/foley/glassbreak.ogg', 75, TRUE)
 			loaded_glass = null
 			update_icon()

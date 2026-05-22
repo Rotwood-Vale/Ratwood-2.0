@@ -94,12 +94,12 @@
 		if(SKILL_LEVEL_NOVICE)
 			return roll <= 25 ? 1 : 0
 		if(SKILL_LEVEL_APPRENTICE)
-			// Below journeyman — skewed heavily towards poor quality
+			// Below journeyman - skewed heavily towards poor quality
 			if(roll <= 10) return 2
 			if(roll <= 50) return 1
 			return 0
 		if(SKILL_LEVEL_JOURNEYMAN)
-			// Still learning — higher chance of poor quality than expected
+			// Still learning - higher chance of poor quality than expected
 			if(roll <= 10) return 3
 			if(roll <= 35) return 2
 			if(roll <= 65) return 1
@@ -215,7 +215,7 @@
 		if(!istype(selected_recipe, /datum/pottery_wheel_recipe/porcelain) && skill_level < SKILL_LEVEL_EXPERT)
 			ruin_chance = max(1, round(ruin_chance * 0.5))
 		if(prob(ruin_chance))
-			user.visible_message(span_warning("[user] loses control of the clay on the wheel — it collapses!"), span_warning("I lose control of the spinning clay — it collapses and is ruined!"))
+			user.visible_message(span_warning("[user] loses control of the clay on the wheel - it collapses!"), span_warning("I lose control of the spinning clay - it collapses and is ruined!"))
 			playsound(src, 'modular/Neu_Food/sound/kneading.ogg', 80, TRUE)
 			new /obj/item/natural/clay(get_turf(src))
 			qdel(loaded_clay)

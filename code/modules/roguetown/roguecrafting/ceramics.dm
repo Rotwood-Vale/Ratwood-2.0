@@ -397,7 +397,7 @@
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
-/* Glassware tab — items blown from heated glass using the blowing rod */
+/* Glassware tab - items blown from heated glass using the blowing rod */
 /datum/crafting_recipe/roguetown/ceramics/handbook_glassware
 	name = "glassware"
 	structurecraft = null
