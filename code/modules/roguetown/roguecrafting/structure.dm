@@ -347,18 +347,6 @@
 	craftsound = null
 	craftdiff = 2
 
-/datum/crafting_recipe/roguetown/structure/glasskiln
-	name = "glass kiln"
-	result = /obj/machinery/light/rogue/smelter/glasskiln
-	reqs = list(/obj/item/natural/stone = 5,
-				/obj/item/natural/clay = 3,
-				/obj/item/natural/brick = 2)
-	skillcraft = /datum/skill/craft/ceramics
-	verbage_simple = "build"
-	verbage = "builds"
-	craftsound = null
-	craftdiff = SKILL_LEVEL_JOURNEYMAN
-
 /datum/crafting_recipe/roguetown/structure/forge
 	name = "forge"
 	result = /obj/machinery/light/rogue/forge

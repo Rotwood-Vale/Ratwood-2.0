@@ -52,9 +52,6 @@
 	if(istype(attacking_item, /obj/item/rogueweapon/tongs))
 		var/obj/item/rogueweapon/tongs/tongs = attacking_item
 		if(tongs.hingot)
-			if(istype(tongs.hingot, /obj/item/natural/clay/glassbatch))
-				to_chat(user, span_warning("Glass batch needs a dedicated glass kiln, not a metal furnace."))
-				return
 			if(length(contained_items) >= max_contained_items)
 				to_chat(user, span_warn("\The [src] is already full!"))
 				return
@@ -93,10 +90,6 @@
 		if(!.) //False/null if using the item as fuel. If true, we want to try smelt it so go onto next segment.
 			return
 
-	if(istype(attacking_item, /obj/item/natural/clay/glassbatch))
-		to_chat(user, span_warning("Glass batch needs a dedicated glass kiln, not a metal furnace."))
-		return
-
 	if(attacking_item.smeltresult)
 		add_item(attacking_item, user) // Adds the item to the smelter's contained_items list, if it can be smelted.
 		return
@@ -110,9 +103,6 @@
 		return
 
 	if(held_item?.smeltresult)
-		if(istype(held_item, /obj/item/natural/clay/glassbatch))
-			to_chat(user, span_warning("Glass batch needs a dedicated glass kiln, not a metal furnace."))
-			return
 		add_item(held_item, user)
 
 	return ..()
