@@ -410,7 +410,6 @@
 	blade_dulling = DULLING_CUT
 	debris = list(/obj/item/natural/fibers = 1)
 
-
 /obj/structure/flora/roguegrass/spark_act()
 	fire_act()
 
@@ -421,6 +420,14 @@
 
 /obj/structure/flora/roguegrass/update_icon()
 	icon_state = "grass[rand(1, 6)]"
+
+/obj/structure/flora/roguegrass/verdant
+	icon = 'icons/obj/flora/ausflora.dmi'
+	icon_state = "sparsegrass_1"
+
+/obj/structure/flora/roguegrass/verdant/Initialize(mapload)
+	. = ..()
+	icon_state = "sparsegrass_[rand(1, 3)]"
 
 /obj/structure/flora/roguegrass/water
 	name = "grass"

@@ -1,0 +1,6 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes:
+  - rscadd: "baotha marked applies a unique addiction vice if you aren't baothan yourself, sated same as nymphomaniac but without letting you do things like identify other nymphomaniacs with it"
+  - rscdel: "baotha mark giving nymphomaniac"
+  - bugfix: "baotha mark being taken with nymphomaniac breaking you"

@@ -1,0 +1,14 @@
+author: "ophaq"
+delete-after: True
+changes:
+  - rscadd: "Several more pottery items such as dildos, and new glazed variants of other items. You can make a blowing pipe with pottery now too!"
+  - rscadd: "Several ports of re-sprites on cups."
+  - rscadd: "Adds in a flint and pestle / mortar to the potter's backpack."
+  - rscadd: "You can glaze certain items now with gold dust and use middle-click with a dye brush to choose your fancy glaze."
+  - rscadd: "Replaced glass batches with clay in the stockpile."
+  - rscadd: "Glass kiln. Functions like a great furnace, but only takes glass batches and sand. You can put in 3 batches and 3 sand to get 6 heated glass."
+  - rscadd: "Pottery shards. You can grind them to get clay if you break your pottery. Now you can recycle your shitty results!"
+  - rscadd: "Pot lids. Reduces boiling time by 50%. Teapots get an innate 25% reduction in boiling time now. To add/remove them, just middle click the pot on the hearth or wherever. Works for kettles too."
+  - rscadd: "Adds in bronze fork, platter, cup, mug, etc... It's bronze cutlery smiths can make."
+  - balance: "Many balance changes to XP gained when making things. Failure rates adjusted too, so it's not as frustrating."
+  - balance: "Changes up recipes a bit. It's less tedious now to make the special clays now."

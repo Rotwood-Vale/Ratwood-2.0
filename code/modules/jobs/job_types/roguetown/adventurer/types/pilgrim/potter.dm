@@ -49,6 +49,9 @@
 		/obj/item/natural/clay = 8,
 		/obj/item/natural/clay/glassbatch = 2,
 		/obj/item/rogueore/coal = 1,
+		/obj/item/flint = 1,
+		/obj/item/reagent_containers/glass/mortar = 1,
+		/obj/item/pestle = 1,
 		/obj/item/dye_brush = 1,
 		/obj/item/storage/roguebag,
 		/obj/item/recipe_book/ceramics = 1)

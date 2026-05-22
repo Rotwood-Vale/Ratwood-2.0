@@ -66,6 +66,7 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	if(H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/suicidebomb/lesser)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic) //Voluntary conversion.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/zizo_snuff/champion) //Champion-variant of Snuff Lights. Non-miracle, static range of 7, but much longer CD.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending) //You can't take off your armour or do rites, so that's your only way of repairing your armour.

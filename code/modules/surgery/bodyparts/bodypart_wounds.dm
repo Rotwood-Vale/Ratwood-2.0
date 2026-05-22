@@ -125,10 +125,9 @@
 		bleed_rate *= grab.bleed_suppressing
 	bleed_rate = max(round(bleed_rate, 0.1), 0)
 
-	// temporarily disabling below because it is niche use and a LOT of performance drain
-	/*var/surgery_flags = get_surgery_flags()
+	var/surgery_flags = get_surgery_flags()
 	if(surgery_flags & SURGERY_CLAMPED)
-		return min(bleed_rate, 0.5)*/
+		return min(bleed_rate, 0.5)
 	return bleed_rate
 
 /// Called after a bodypart is attacked so that wounds and critical effects can be applied

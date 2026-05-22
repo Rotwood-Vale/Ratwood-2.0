@@ -55,7 +55,7 @@
 	name = "glass clay"
 	tools = list(/obj/item/reagent_containers/glass/mortar, /obj/item/pestle)
 	result = list(/obj/item/natural/clay/glassbatch)
-	reqs = list(/obj/item/natural/clay = 2, /obj/item/ash = 2, /obj/item/alch/stonedust = 1)
+	reqs = list(/obj/item/natural/clay = 2, /obj/item/ash = 1, /obj/item/natural/dirtclod/sand = 1, /obj/item/alch/stonedust = 1)
 	craftdiff = 0
 	hides_from_books = TRUE
 
@@ -86,7 +86,7 @@
 /datum/crafting_recipe/roguetown/ceramics/handbook_materials/glass_clay
 	name = "glass batch"
 	result = list(/obj/item/natural/clay/glassbatch)
-	reqs = list(/obj/item/natural/clay = 2, /obj/item/ash = 2, /obj/item/alch/stonedust = 1)
+	reqs = list(/obj/item/natural/clay = 2, /obj/item/ash = 1, /obj/item/natural/dirtclod/sand = 1, /obj/item/alch/stonedust = 1)
 	tools = list(/obj/item/reagent_containers/glass/mortar, /obj/item/pestle)
 	hides_from_books = FALSE
 
@@ -98,8 +98,15 @@
 	hides_from_books = TRUE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/claycup
-	name = "clay canister"
+	name = "clay cup"
 	result = list(/obj/item/natural/clay/claycup)
+	reqs = list(/obj/item/natural/clay = 1)
+	craftdiff = 0
+	hides_from_books = FALSE
+
+/datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/claymug
+	name = "clay mug"
+	result = list(/obj/item/natural/clay/claymug)
 	reqs = list(/obj/item/natural/clay = 1)
 	craftdiff = 0
 	hides_from_books = FALSE
@@ -142,6 +149,34 @@
 /datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/teacup
 	name = "teacup"
 	result = list(/obj/item/natural/clay/rawteacup)
+	reqs = list(/obj/item/natural/clay = 1)
+	craftdiff = 0
+	hides_from_books = FALSE
+
+/datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/bowl
+	name = "clay bowl"
+	result = list(/obj/item/natural/clay/claybowl)
+	reqs = list(/obj/item/natural/clay = 1)
+	craftdiff = 0
+	hides_from_books = FALSE
+
+/datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/fork
+	name = "clay fork"
+	result = list(/obj/item/natural/clay/clayfork)
+	reqs = list(/obj/item/natural/clay = 1)
+	craftdiff = 0
+	hides_from_books = FALSE
+
+/datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/blowing_pipe
+	name = "blowing pipe"
+	result = list(/obj/item/natural/clay/rawblowrod)
+	reqs = list(/obj/item/natural/clay = 1)
+	craftdiff = 0
+	hides_from_books = FALSE
+
+/datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/dildo
+	name = "clay dildo"
+	result = list(/obj/item/natural/clay/rawdildo)
 	reqs = list(/obj/item/natural/clay = 1)
 	craftdiff = 0
 	hides_from_books = FALSE
@@ -242,6 +277,18 @@
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
+/datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/cup_alt
+	name = "porcelain cup"
+	result = list(/obj/item/natural/clay/porcelain/claycup)
+	reqs = list(/obj/item/natural/clay/refined = 1)
+	hides_from_books = FALSE
+
+/datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/mug
+	name = "porcelain mug"
+	result = list(/obj/item/natural/clay/porcelain/mug)
+	reqs = list(/obj/item/natural/clay/refined = 1)
+	hides_from_books = FALSE
+
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/platter
 	name = "porcelain platter"
 	result = list(/obj/item/natural/clay/porcelain/platter)
@@ -300,6 +347,12 @@
 	name = "decorative porcelain teapot"
 	result = list(/obj/item/natural/clay/porcelain/decorativeteapot)
 	reqs = list(/obj/item/natural/clay/refined = 2)
+	hides_from_books = FALSE
+
+/datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/dildo
+	name = "porcelain dildo"
+	result = list(/obj/item/natural/clay/porcelain/dildo)
+	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/mask

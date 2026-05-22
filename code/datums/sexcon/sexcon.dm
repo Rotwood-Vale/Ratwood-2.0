@@ -259,6 +259,10 @@
 	if(!(sigbitflags & SKIP_ADJACENCY_CHECK) && !user.sexcon.Adjacent_Or_Closet(target))
 		return FALSE
 
+	if(!self_target && !isnull(target.buckled) && istype(target.buckled, /obj/structure/bondage/gloryhole)) // gloryhole buckled mobs ignore tile/grab checks
+		sigbitflags |= (SKIP_GRAB_CHECK|SKIP_TILE_CHECK)
+		grabs = FALSE
+
 	if(src.check_same_tile && (user != target || self_target) && !(sigbitflags & SKIP_TILE_CHECK))
 		var/same_tile = (get_turf(user) == get_turf(target))
 		var/grab_bypass = (src.aggro_grab_instead_same_tile && user.get_highest_grab_state_on(target) == GRAB_AGGRESSIVE)
@@ -377,6 +381,8 @@
 		modular_record_collar_receive_event(splashed_user, user)
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/lovefiend))
 		effective_target.sate_addiction(/datum/charflaw/addiction/lovefiend)
+	if(effective_target?.has_flaw(/datum/charflaw/addiction/baothamarked))
+		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	after_ejaculation()
 
 /datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null, datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null, orifice = SEX_PART_NULL, skip_knot_try = FALSE)
@@ -419,6 +425,8 @@
 				apply_creampie_drip(splashed_user, orifice, use_long = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/lovefiend))
 		effective_target.sate_addiction(/datum/charflaw/addiction/lovefiend)
+	if(effective_target?.has_flaw(/datum/charflaw/addiction/baothamarked))
+		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	after_ejaculation()
 	after_intimate_climax(oral, splashed_user)
 
@@ -631,21 +639,29 @@
 			volume = 4
 		else
 			volume = 3
-	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
-		volume = floor(volume * 1.5)
 
 	var/obj/item/organ/penis/shaft = user.getorganslot(ORGAN_SLOT_PENIS)
 	if(shaft?.penis_type in list(PENIS_TYPE_KNOTTED, PENIS_TYPE_EQUINE, PENIS_TYPE_EQUINE_KNOTTED, PENIS_TYPE_TAPERED_KNOTTED, PENIS_TYPE_TAPERED_DOUBLE_KNOTTED, PENIS_TYPE_BARBED_KNOTTED))
 		volume += 1
-		
-	return volume
+
+	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
+		volume *= 1.5
+	if(HAS_TRAIT(user, TRAIT_BIGGUY))
+		volume *= 1.5
+	if(is_species(user, /datum/species/gnoll))
+		volume *= 1.5
+	return floor(volume)
 
 /datum/sex_controller/proc/get_max_loads()
 	var/con = user.STACON
 	var/loads = 2 + floor(clamp((con - 10) * 2, 0, 99) / 2)
 	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
-		loads = floor(loads * 1.5)
-	return loads
+		loads *= 1.5
+	if(HAS_TRAIT(user, TRAIT_BIGGUY))
+		loads *= 1.5
+	if(is_species(user, /datum/species/gnoll))
+		loads *= 1.5
+	return floor(loads)
 
 /// Returns the max charge based on dynamic load count
 /datum/sex_controller/proc/get_max_charge()
@@ -656,6 +672,8 @@
 	adjust_charge(-CHARGE_FOR_CLIMAX)
 	if(user.has_flaw(/datum/charflaw/addiction/lovefiend))
 		user.sate_addiction(/datum/charflaw/addiction/lovefiend)
+	if(user.has_flaw(/datum/charflaw/addiction/baothamarked))
+		user.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	user.add_stress(/datum/stressevent/cumok)
 	user.emote("sexmoanhvy", forced = TRUE)
 	user.playsound_local(user, 'sound/misc/mat/end.ogg', 100)
@@ -1156,8 +1174,11 @@
 			do_until_finished = !do_until_finished
 			update_exposure()
 		if("toggle_bottom_exposed")
-			bottom_exposed = !bottom_exposed
-			update_exposure()
+			if(user.incapacitated(ignore_restraints = TRUE))
+				to_chat(user, span_warning("I can't do that right now!"))
+			else
+				bottom_exposed = !bottom_exposed
+				update_exposure()
 		if("set_arousal")
 			var/amount = input(user, "Value above 120 will immediately cause orgasm!", "Set Arousal", arousal) as num
 			if(aphrodisiac > 1 && amount > 0)

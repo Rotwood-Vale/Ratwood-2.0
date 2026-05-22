@@ -28,6 +28,17 @@
 	icon_state = "bowl_iron"
 	sellprice = 20
 
+/obj/item/reagent_containers/glass/bowl/clay
+	name = "clay bowl"
+	icon_state = "bowl_clay_cook"
+	pottery_fragile = TRUE
+	sellprice = 3
+
+/obj/item/reagent_containers/glass/bowl/bronze
+	name = "bronze bowl"
+	icon_state = "bowl_bronze"
+	sellprice = 14
+
 /obj/item/reagent_containers/glass/bowl/gold
 	name = "gold bowl"
 	icon_state = "bowl_gold"

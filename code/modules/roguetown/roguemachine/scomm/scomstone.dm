@@ -30,6 +30,9 @@
 	grid_height = 32
 
 /obj/item/scomstone/attack_right(mob/living/carbon/human/user)
+	if(user.restrained() || user.incapacitated())
+		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
+		return
 	if(on_cooldown)
 		to_chat(user, span_warning("The gemstone inside the ring radiates heat. It's still cooling down from its last use."))
 		playsound(loc, 'sound/misc/machineno.ogg', 100, FALSE, -1)
@@ -68,6 +71,9 @@
 	on_cooldown = FALSE
 
 /obj/item/scomstone/MiddleClick(mob/user)
+	if(user.restrained() || user.incapacitated())
+		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
+		return
 	if(.)
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
@@ -149,6 +155,9 @@
 	sellprice = 100
 
 /obj/item/scomstone/garrison/attack_right(mob/living/carbon/human/user)
+	if(user.restrained() || user.incapacitated())
+		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
+		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	if(on_cooldown)
 		to_chat(user, span_warning("The gemstone inside the ring radiates heat. It's still cooling down from its last use."))
@@ -200,6 +209,9 @@
 	addtimer(CALLBACK(src, PROC_REF(reset_cooldown)), cooldown)
 
 /obj/item/scomstone/garrison/attack_self(mob/living/user)
+	if(user.restrained() || user.incapacitated())
+		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
+		return
 	if(.)
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)

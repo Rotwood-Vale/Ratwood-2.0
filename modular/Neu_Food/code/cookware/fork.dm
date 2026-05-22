@@ -28,6 +28,17 @@
 	icon_state = "fork_iron"
 	sellprice = 6
 
+/obj/item/kitchen/fork/clay
+	name = "clay fork"
+	icon_state = "afork"
+	pottery_fragile = TRUE
+	sellprice = 2
+
+/obj/item/kitchen/fork/bronze
+	name = "bronze fork"
+	icon_state = "fork_bronze"
+	sellprice = 5
+
 /obj/item/kitchen/fork/tin
 	name = "tin fork"
 	icon_state = "fork_tin"

@@ -33,6 +33,10 @@
 	req_bar = /obj/item/ingot/tin
 	craftdiff = SKILL_LEVEL_NOVICE
 
+/datum/anvil_recipe/tools/bronze
+	abstract_type = /datum/anvil_recipe/tools/bronze
+	craftdiff = SKILL_LEVEL_NOVICE
+
 /datum/anvil_recipe/tools/blacksteel
 	abstract_type = /datum/anvil_recipe/tools/blacksteel
 	req_bar = /obj/item/ingot/blacksteel
@@ -381,9 +385,32 @@
 	name = "Cooking Pot, Copper"
 	created_item = /obj/item/reagent_containers/glass/bucket/pot/copper
 
+/datum/anvil_recipe/tools/bronze/pot
+	name = "Cooking Pot, Bronze"
+	req_bar = /obj/item/ingot/bronze
+	created_item = /obj/item/reagent_containers/glass/bucket/pot/bronze
+
+/datum/anvil_recipe/tools/bronze/mugs
+	name = "Mugs, Bronze (x3)"
+	req_bar = /obj/item/ingot/bronze
+	created_item = /obj/item/reagent_containers/glass/cup/bronzemug
+	createditem_num = 3
+
+/datum/anvil_recipe/tools/bronze/goblets
+	name = "Goblets, Bronze (x2)"
+	req_bar = /obj/item/ingot/bronze
+	created_item = /obj/item/reagent_containers/glass/cup/bronzegoblet
+	createditem_num = 2
+
 /datum/anvil_recipe/tools/copper/platter
 	name = "Platter, Copper (x2)"
 	created_item = /obj/item/cooking/platter/copper
+	createditem_num = 2
+
+/datum/anvil_recipe/tools/bronze/platter
+	name = "Platter, Bronze (x2)"
+	req_bar = /obj/item/ingot/bronze
+	created_item = /obj/item/cooking/platter/bronze
 	createditem_num = 2
 
 /datum/anvil_recipe/tools/tin/platter
@@ -404,6 +431,12 @@
 	created_item = /obj/item/kitchen/spoon/iron
 	createditem_num = 3
 
+/datum/anvil_recipe/tools/bronze/spoon
+	name = "Spoon, Bronze (x3)"
+	req_bar = /obj/item/ingot/bronze
+	created_item = /obj/item/kitchen/spoon/bronze
+	createditem_num = 3
+
 /datum/anvil_recipe/tools/tin/spoon
 	name = "Spoon, Tin (x3)"
 	created_item = /obj/item/kitchen/spoon/tin
@@ -411,6 +444,12 @@
 /datum/anvil_recipe/tools/iron/fork
 	name = "Fork, Iron (x3)"
 	created_item = /obj/item/kitchen/fork/iron
+	createditem_num = 3
+
+/datum/anvil_recipe/tools/bronze/fork
+	name = "Fork, Bronze (x3)"
+	req_bar = /obj/item/ingot/bronze
+	created_item = /obj/item/kitchen/fork/bronze
 	createditem_num = 3
 
 /datum/anvil_recipe/tools/tin/fork
@@ -429,6 +468,12 @@
 
 /datum/anvil_recipe/tools/iron/bowl
 	created_item = /obj/item/reagent_containers/glass/bowl/iron
+	craftdiff = 1
+
+/datum/anvil_recipe/tools/bronze/bowl
+	name = "Bowl, Bronze"
+	req_bar = /obj/item/ingot/bronze
+	created_item = /obj/item/reagent_containers/glass/bowl/bronze
 	craftdiff = 1
 
 // --------- CASTING TOOLS -----------

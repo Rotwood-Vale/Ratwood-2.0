@@ -141,6 +141,8 @@
 				S.start()
 			QDEL_NULL(to_grind)
 			if(user.mind)
+				if(istype(foundrecipe, /datum/alch_grind_recipe/pottery_shards))
+					user.adjust_experience(/datum/skill/craft/ceramics, 1, FALSE)
 				user.adjust_experience(/datum/skill/craft/alchemy, user.STAINT, FALSE)
 			return
 	if(istype(I ,/obj/item/reagent_containers/glass))

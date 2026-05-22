@@ -16,30 +16,79 @@
 	throwforce = 10
 	dropshrink = 1 // Override for bucket
 	volume = 240
+	var/has_lid = FALSE
+	var/lid_icon_state = "potelid"
+	var/boiling_temperature_threshold = 374
+	var/lid_on_sound = 'sound/foley/dropsound/shovel_drop.ogg'
+	var/lid_off_sound = 'sound/items/uncork.ogg'
 
 /obj/item/reagent_containers/glass/bucket/pot/update_icon()
 	cut_overlays()
 	if(reagents.total_volume > 0)
+		var/is_boiling = reagents.chem_temp > boiling_temperature_threshold
 		if(reagents.total_volume <= 50)
-			var/mutable_appearance/filling = mutable_appearance(icon, "pote_half")
+			var/mutable_appearance/filling = mutable_appearance(icon, is_boiling ? "pote_boilhalf" : "pote_half")
 			filling.color = mix_color_from_reagents(reagents.reagent_list)
 			filling.alpha = mix_alpha_from_reagents(reagents.reagent_list)
 			add_overlay(filling)
 
 		if(reagents.total_volume > 50)
-			var/mutable_appearance/filling = mutable_appearance(icon, "pote_full")
+			var/mutable_appearance/filling = mutable_appearance(icon, is_boiling ? "pote_boilfull" : "pote_full")
 			filling.color = mix_color_from_reagents(reagents.reagent_list)
 			filling.alpha = mix_alpha_from_reagents(reagents.reagent_list)
 			add_overlay(filling)
 
+	if(has_lid && lid_icon_state)
+		add_overlay(mutable_appearance(icon, lid_icon_state))
+
+/obj/item/reagent_containers/glass/bucket/pot/proc/toggle_lid(mob/user)
+	if(user.get_active_held_item())
+		to_chat(user, span_info("I need an empty hand to handle the lid."))
+		return FALSE
+	has_lid = !has_lid
+	if(has_lid)
+		reagent_flags &= ~OPENCONTAINER
+		playsound(get_turf(src), lid_on_sound, 60, TRUE)
+	else
+		reagent_flags |= OPENCONTAINER
+		playsound(get_turf(src), lid_off_sound, 60, TRUE)
+	to_chat(user, has_lid ? span_notice("I cover [src] with its lid.") : span_notice("I remove the lid from [src]."))
+	update_icon()
+	if(istype(loc, /obj/machinery/light/rogue/hearth))
+		var/obj/machinery/light/rogue/hearth/hearth_loc = loc
+		hearth_loc.update_icon()
+	return TRUE
+
+/obj/item/reagent_containers/glass/bucket/pot/is_refillable()
+	if(has_lid)
+		return FALSE
+	return ..()
+
+/obj/item/reagent_containers/glass/bucket/pot/attack_right(mob/user)
+	return ..()
+
+/obj/item/reagent_containers/glass/bucket/pot/MiddleClick(mob/user, params)
+	if(!Adjacent(user))
+		return
+	toggle_lid(user)
+
 
 /obj/item/reagent_containers/glass/bucket/pot/attackby(obj/item/I, mob/user, params)
+	if(has_lid && (I.reagents || istype(I, /obj/item/reagent_containers/glass/bowl)))
+		to_chat(user, span_warning("I need to remove the lid from [src] before filling it."))
+		return TRUE
 	if(istype(I, /obj/item/reagent_containers/glass/bowl))
 		to_chat(user, "<span class='notice'>Filling the bowl...</span>")
 		playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 70, FALSE)
 		if(do_after(user,2 SECONDS, target = src))
 			reagents.trans_to(I, reagents.total_volume)
 	return TRUE
+
+/obj/item/reagent_containers/glass/bucket/pot/attack_obj(obj/target, mob/living/user)
+	if(has_lid && (user.used_intent.type == INTENT_POUR || user.used_intent.type == INTENT_SPLASH))
+		to_chat(user, span_warning("I need to remove the lid from [src] first."))
+		return
+	return ..()
 
 /obj/item/reagent_containers/glass/bucket/pot/aalloy
 	name = "decrepit pot"
@@ -48,6 +97,7 @@
 	volume = 120
 	color = "#bb9696"
 	sellprice = 25
+	lid_icon_state = "apote_lid"
 
 /obj/item/reagent_containers/glass/bucket/pot/stone
 	name = "stone pot"
@@ -62,11 +112,19 @@
 	grid_width = 32
 	grid_height = 64
 	volume = 120
+	lid_icon_state = "kettlelid"
 
 /obj/item/reagent_containers/glass/bucket/pot/copper
 	name = "copper pot"
 	desc = "A pot made out of copper. It can hold a lot of liquid."
 	icon_state = "pote_copper"
+	lid_icon_state = "pote_copper_lid"
+
+/obj/item/reagent_containers/glass/bucket/pot/bronze
+	name = "bronze pot"
+	desc = "A pot made out of bronze. It can hold a lot of liquid."
+	icon_state = "bronzepot"
+	lid_icon_state = "bronzepot_lid"
 
 /obj/item/reagent_containers/glass/bucket/pot/teapot
 	name = "teapot"
@@ -76,6 +134,14 @@
 	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
 	volume = 120
 	sellprice = 20
+	lid_icon_state = null
+	has_lid = FALSE
+
+/obj/item/reagent_containers/glass/bucket/pot/teapot/toggle_lid(mob/user)
+	reagent_flags |= OPENCONTAINER
+	has_lid = FALSE
+	to_chat(user, span_info("The teapot's lid isn't handled separately."))
+	return FALSE
 
 /obj/item/reagent_containers/glass/bucket/pot/carved
 	name = "carved teapot"

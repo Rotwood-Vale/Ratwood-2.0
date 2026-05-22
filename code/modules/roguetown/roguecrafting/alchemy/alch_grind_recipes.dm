@@ -119,6 +119,11 @@
 	valid_outputs = list(/obj/item/alch/stonedust = 1)
 	bonus_chance_outputs = list(/obj/item/alch/stonedust = 50)
 
+/datum/alch_grind_recipe/pottery_shards
+	name = "Pottery Shards"
+	valid_input = /obj/item/natural/pottery_shard
+	valid_outputs = list(/obj/item/natural/clay = 1)
+
 /datum/alch_grind_recipe/seedsherb
 	name = "Herb Seeds"
 	picky = FALSE

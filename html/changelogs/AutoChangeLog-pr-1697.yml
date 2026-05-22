@@ -1,0 +1,4 @@
+author: "IronDragoon"
+delete-after: True
+changes:
+  - rscadd: "Admin cake button now gives a random slice from a much greater variety of cakes"

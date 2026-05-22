@@ -366,6 +366,10 @@
 	QDEL_NULL(torchy)
 	on = FALSE
 	set_light(0)
+	pixel_x = 0
+	pixel_y = 0
+	if(dirin == SOUTH)
+		pixel_y = 32
 	update_icon()
 
 	..(dirin, user)
@@ -529,7 +533,7 @@
 	var/cooktime_divisor = get_cooktime_divisor(cs)
 	if(do_after(user, 2 SECONDS / cooktime_divisor, target = src))
 		to_chat(user, span_info("I fan the flame on [src].")) // Until line combine is on by default gotta do this to avoid spam
-		try_cook(cooktime_divisor)
+		try_cook(cooktime_divisor, TRUE)
 		attack_right(user)
 
 /obj/machinery/light/rogue/hearth/attackby(obj/item/W, mob/living/user, params)
@@ -625,13 +629,14 @@
 						if(pot.reagents.chem_temp < MIN_STEW_TEMPERATURE)
 							to_chat(user, span_notice("[pot] isn't boiling!</span>"))
 							return
+						var/effective_divisor = pot:has_lid ? cooktime_divisor * 2 : cooktime_divisor
 						if(do_after(user, 2 SECONDS / cooktime_divisor, target = src))
 							user.visible_message(span_info("[user] places [W] into the pot.</span>"))
 							add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
 							qdel(W)
 							playsound(src.loc, 'sound/items/Fish_out.ogg', 20, TRUE)
 							pot.reagents.remove_reagent(/datum/reagent/water, VOLUME_PER_STEW_COOK)
-							sleep(R.cooktime / cooktime_divisor)
+							sleep(R.cooktime / effective_divisor)
 							playsound(src, "bubbles", 30, TRUE)
 							pot.reagents.remove_reagent(/datum/reagent/water, VOLUME_PER_STEW_COOK_AFTER) // Remove water first prevent overfill
 							pot.reagents.add_reagent(R.output, VOLUME_PER_STEW_COOK + VOLUME_PER_STEW_COOK_AFTER)
@@ -673,6 +678,7 @@
 				attachment = null
 				update_icon()
 		if(istype(attachment, /obj/item/reagent_containers/glass/bucket/pot) || istype(attachment, /obj/item/reagent_containers/glass/crucible))
+			attachment.update_icon()
 			if(!user.put_in_active_hand(attachment))
 				attachment.forceMove(user.loc)
 			attachment = null
@@ -698,9 +704,18 @@
 		if(IS_WET_OPEN_TURF(O))
 			extinguish()
 	if(on)
-		try_cook(cooktime_divisor)
+		try_cook(cooktime_divisor, FALSE)
 
-/obj/machinery/light/rogue/hearth/proc/try_cook(cooktime_divisor)
+/obj/machinery/light/rogue/hearth/MiddleClick(mob/user, params)
+	if(!Adjacent(user))
+		return
+	if(istype(attachment, /obj/item/reagent_containers/glass/bucket/pot))
+		var/obj/item/reagent_containers/glass/bucket/pot/attached_pot = attachment
+		if(attached_pot.toggle_lid(user))
+			update_icon()
+			return TRUE
+
+/obj/machinery/light/rogue/hearth/proc/try_cook(cooktime_divisor, is_fanning = FALSE)
 	if(initial(fueluse) > 0)
 		if(fueluse > 0)
 			fueluse = max(fueluse - 10, 0)
@@ -721,7 +736,16 @@
 					food = C
 		if(istype(attachment, /obj/item/reagent_containers/glass/bucket/pot))
 			if(attachment.reagents)
-				attachment.reagents.expose_temperature(400, 0.033)
+				var/heat_rate = 0.033
+				var/obj/item/reagent_containers/glass/bucket/pot/attached_pot = attachment
+				if(istype(attached_pot, /obj/item/reagent_containers/glass/bucket/pot/teapot))
+					heat_rate *= 1.25
+				if(is_fanning)
+					heat_rate *= 1.5
+				if(attached_pot.has_lid)
+					heat_rate *= 1.5
+				attachment.reagents.expose_temperature(400, heat_rate)
+				attached_pot.update_icon()
 				if(attachment.reagents.chem_temp > MIN_STEW_TEMPERATURE)
 					boilloop.start()
 				else

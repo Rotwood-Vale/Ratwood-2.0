@@ -41,14 +41,35 @@
 /datum/crafting_recipe/roguetown/structure/wooden_horse
 	name = "static wooden horse"
 	result = /obj/structure/wooden_horse
+	reqs = list(/obj/item/natural/wood/plank = 3)
+	verbage_simple = "construct"
+	verbage = "constructs"
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/structure/wooden_horse/small
+	name = "static wooden horse (small)"
+	result = /obj/structure/wooden_horse/small
 	reqs = list(/obj/item/natural/wood/plank = 2)
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/structure/wooden_horse/iron
+	name = "static wooden horse (iron)"
+	result = /obj/structure/wooden_horse/iron
+	reqs = list(
+		/obj/item/natural/wood/plank = 2,
+		/obj/item/ingot/iron = 1,
+	)
+	verbage_simple = "construct"
+	verbage = "constructs"
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/wooden_horse/mobile
 	name = "mobile wooden horse"
 	result = /obj/structure/wooden_horse/mobile
-	reqs = list(/obj/item/natural/wood/plank = 2)
+	reqs = list(/obj/item/natural/wood/plank = 3)
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 0
 
@@ -325,6 +346,18 @@
 	verbage = "builds"
 	craftsound = null
 	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/structure/glasskiln
+	name = "glass kiln"
+	result = /obj/machinery/light/rogue/smelter/glasskiln
+	reqs = list(/obj/item/natural/stone = 5,
+				/obj/item/natural/clay = 3,
+				/obj/item/natural/brick = 2)
+	skillcraft = /datum/skill/craft/ceramics
+	verbage_simple = "build"
+	verbage = "builds"
+	craftsound = null
+	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/structure/forge
 	name = "forge"
@@ -919,15 +952,6 @@
 	skillcraft = /datum/skill/craft/masonry
 	wallcraft = TRUE
 	craftdiff = 2
-
-/datum/crafting_recipe/roguetown/structure/statue
-	name = "statue"
-	result = /obj/structure/fluff/statue/femalestatue //TODO: Add sculpting
-	reqs = list(/obj/item/natural/stone = 3)
-	verbage_simple = "build"
-	verbage = "builds"
-	skillcraft = /datum/skill/craft/masonry
-	craftdiff = 3
 
 // SCOM is not constructable, only the receive only version is constructable to prevent unactionable sneeding.
 /datum/crafting_recipe/roguetown/structure/rcom

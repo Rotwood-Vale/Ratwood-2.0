@@ -12,7 +12,7 @@
 
 /datum/crafting_recipe/roguetown/leather/footwear/toga_sandals
 	name = "fancy sandals"
-	result = /obj/item/clothing/shoes/roguetown/sandals/
+	result = /obj/item/clothing/shoes/roguetown/sandals/toga_sandals
 	reqs = list(/obj/item/natural/hide/cured = 1)
 
 //SUPPLY PACKS
@@ -21,11 +21,11 @@
 	name = "Fancy Sandals"
 	cost = 15
 	contains = list(
-					/obj/item/clothing/shoes/roguetown/sandals/,
+					/obj/item/clothing/shoes/roguetown/sandals/toga_sandals,
 				)
 
 //LOADOUT
 
 /datum/loadout_item/toga_sandals
 	name = "Fancy Sandals"
-	path = /obj/item/clothing/shoes/roguetown/sandals/
+	path = /obj/item/clothing/shoes/roguetown/sandals/toga_sandals

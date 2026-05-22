@@ -1042,7 +1042,7 @@
 	icon = 'icons/roguetown/misc/ay.dmi'
 	icon_state = "4"
 	pixel_x = -32
-	pixel_y = -16
+	// pixel_y = -16
 
 /obj/structure/fluff/statue/scare
 	name = "scarecrow"
@@ -1594,6 +1594,7 @@
 	desc = "Wisdom and calm."
 	icon_state = "noc"
 	icon = 'icons/roguetown/misc/statues/statue_noc.dmi'
+	pixel_x = -16
 
 /obj/structure/fluff/statue/noc/guard
 	name = "active noc statue"
@@ -1604,6 +1605,7 @@
 	desc = "Beauty and Charm"
 	icon_state = "eora"
 	icon = 'icons/roguetown/misc/statues/statue_eora.dmi'
+	pixel_x = -16
 
 /obj/structure/fluff/statue/zizo
 	name = "dubious statue"
