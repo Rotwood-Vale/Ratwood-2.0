@@ -411,7 +411,8 @@
 	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/mace/smash, /datum/intent/mace/warhammer/pick)
 	gripped_intents = list(/datum/intent/axe/cut/battle ,/datum/intent/axe/chop/battle, /datum/intent/stab, /datum/intent/mace/warhammer/pick)
 	force_wielded = 28	//No damage changes for wielded/unwielded
-	icon_state = "valaska"
+	icon = 'icons/roguetown/weapons/axes32.dmi'
+	icon_state = "valaskapick"
 	demolition_mod = 2.5
 	walking_stick = TRUE
 
