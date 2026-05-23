@@ -185,8 +185,43 @@
 	first_time_text = "Kingsfield - Garden District"
 	})
 "az" = (
-/obj/structure/fermentation_keg/redwine,
-/obj/machinery/light/roguestreet/walllamp,
+/obj/structure/closet/crate/roguecloset/dark,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/cup,
+/obj/item/reagent_containers/glass/bucket/pot,
+/obj/item/kitchen/fork,
+/obj/item/kitchen/fork,
+/obj/item/kitchen/fork,
+/obj/item/kitchen/fork,
+/obj/item/kitchen/fork,
+/obj/item/kitchen/fork,
+/obj/item/kitchen/fork,
+/obj/item/kitchen/fork,
+/obj/item/kitchen/fork,
+/obj/item/kitchen/fork,
+/obj/item/kitchen/spoon,
+/obj/item/kitchen/spoon,
+/obj/item/kitchen/spoon,
+/obj/item/kitchen/spoon,
+/obj/item/kitchen/spoon,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/town/basement{
 	first_time_text = "The Gutter";
@@ -1148,6 +1183,13 @@
 /turf/open/floor/rogue/metal,
 /area/rogue/under/dungeon{
 	name = "Kingsfield Depths"
+	})
+"et" = (
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/under/town/basement{
+	first_time_text = "The Gutter";
+	name = "The Gutter"
 	})
 "eu" = (
 /obj/structure/fluff/railing/border,
@@ -2872,6 +2914,12 @@
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
 	})
+"nB" = (
+/turf/open/water/cleanshallow,
+/area/rogue/under/town/basement{
+	first_time_text = "The Gutter";
+	name = "The Gutter"
+	})
 "nC" = (
 /obj/structure/roguewindow/openclose/reinforced{
 	dir = 8;
@@ -3391,11 +3439,12 @@
 	name = "The Gutter"
 	})
 "pT" = (
-/obj/structure/roguewindow/harem1,
-/turf/open/floor/rogue/tile/harem,
-/area/rogue/indoors/town/tavern{
-	name = "Kingsfield Tavern";
-	first_time_text = "Kingsfield Tavern"
+/obj/structure/table/wood/long_table/mid/alt,
+/obj/item/reagent_containers/glass/cup,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/under/town/basement{
+	first_time_text = "The Gutter";
+	name = "The Gutter"
 	})
 "pU" = (
 /obj/structure/stairs/stone{
@@ -4573,45 +4622,14 @@
 	first_time_text = "Kingsfield Tavern"
 	})
 "vg" = (
+/obj/structure/table/wood/poor,
 /obj/structure/rack/rogue/shelf,
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
+/obj/item/rogueweapon/huntingknife/chefknife{
+	pixel_x = -6;
+	pixel_y = 36
 	},
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
-	},
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
-	},
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
-	},
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
-	},
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
-	},
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
-	},
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
-	},
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
-	},
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
+/obj/item/kitchen/rollingpin{
+	pixel_x = 8;
 	pixel_y = 31
 	},
 /turf/open/floor/rogue/cobble/mossy,
@@ -5654,6 +5672,16 @@
 /area/rogue/under/dungeon{
 	name = "Kingsfield Depths"
 	})
+"AS" = (
+/obj/structure/fermentation_keg/random/beer,
+/obj/machinery/light/roguestreet/walllamp{
+	dir = 4
+	},
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/under/town/basement{
+	first_time_text = "The Gutter";
+	name = "The Gutter"
+	})
 "AT" = (
 /obj/structure/closet/crate/chest{
 	name = "BDSM Gear"
@@ -6085,51 +6113,7 @@
 	name = "kingsfield diplomatic quarter"
 	})
 "CI" = (
-/obj/structure/rack/rogue/shelf,
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
-	},
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
-	},
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
-	},
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
-	},
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
-	},
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
-	},
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
-	},
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
-	},
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
-	},
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
-	},
-/obj/item/reagent_containers/glass/cup{
-	pixel_x = -9;
-	pixel_y = 31
-	},
+/obj/structure/roguemachine/withdraw/kingsfield,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/town/basement{
 	first_time_text = "The Gutter";
@@ -6527,7 +6511,9 @@
 	})
 "Ek" = (
 /obj/machinery/light/rogue/candle/r,
-/turf/open/floor/rogue/tile/harem,
+/turf/closed/wall/mineral/rogue/decostone/mossy/red/long{
+	dir = 1
+	},
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
@@ -7027,7 +7013,9 @@
 	})
 "GZ" = (
 /obj/machinery/light/rogue/candle/l,
-/turf/open/floor/rogue/tile/harem,
+/turf/closed/wall/mineral/rogue/decostone/mossy/red/long{
+	dir = 1
+	},
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
@@ -8712,7 +8700,7 @@
 	},
 /obj/structure/vine,
 /obj/effect/wisp/green,
-/turf/open/water/cleanshallow,
+/turf/open/floor/rogue/grass,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
@@ -9719,6 +9707,18 @@
 /area/rogue/indoors/town{
 	name = "Ferentian Diplomatic Headquarters";
 	first_time_text = "Ferentian Diplomatic Headquarters"
+	})
+"Uh" = (
+/obj/machinery/light/rogue/hearth{
+	pixel_x = 0;
+	pixel_y = 7
+	},
+/obj/machinery/light/rogue/oven/south,
+/obj/item/cooking/pan,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/under/town/basement{
+	first_time_text = "The Gutter";
+	name = "The Gutter"
 	})
 "Uj" = (
 /obj/structure/stairs/stone,
@@ -10869,7 +10869,10 @@
 	first_time_text = "Kingsfield Tavern"
 	})
 "Zw" = (
-/obj/structure/fermentation_keg/whitewine,
+/obj/machinery/light/roguestreet/walllamp{
+	dir = 4
+	},
+/obj/structure/fermentation_keg/random/beer,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/town/basement{
 	first_time_text = "The Gutter";
@@ -20388,10 +20391,10 @@ Ox
 Ox
 Ox
 gw
-KZ
-gw
-KZ
-sV
+Xy
+Xy
+Xy
+ut
 wa
 wa
 wa
@@ -20490,10 +20493,10 @@ Ox
 Ox
 Ox
 GZ
-Ox
-GZ
-Ox
-pT
+Xy
+Xy
+Xy
+ut
 wa
 wa
 wa
@@ -20591,11 +20594,11 @@ mi
 Ox
 Ox
 Ox
-Ox
-Ox
-Ox
-Ox
-pT
+Jm
+Xy
+Xy
+Xy
+ut
 wa
 wa
 wa
@@ -20694,10 +20697,10 @@ Ox
 Ox
 Ox
 Ek
-Ox
-Ek
-Ox
-pT
+Xy
+Xy
+Xy
+ut
 wa
 wa
 wa
@@ -20796,10 +20799,10 @@ xh
 xh
 Ws
 gw
-ZI
-gw
-ZI
-sV
+Xy
+Xy
+Xy
+ut
 wa
 wa
 wa
@@ -26715,11 +26718,11 @@ Tb
 Tb
 Tb
 Xy
-Xy
-dl
 EY
-bQ
-bQ
+EY
+AS
+CQ
+Zw
 kb
 EY
 HB
@@ -26817,11 +26820,11 @@ Tb
 Tb
 Tb
 Xy
-Xy
-dl
 EY
-Zw
-Be
+az
+et
+gx
+gx
 gx
 Be
 gx
@@ -26919,10 +26922,10 @@ Tb
 Tb
 Tb
 Xy
-Xy
-dl
 EY
-az
+EY
+nB
+gx
 gx
 gx
 dB
@@ -27022,7 +27025,7 @@ Tb
 Tb
 Xy
 Xy
-dl
+EY
 EY
 bQ
 CI
@@ -27127,9 +27130,9 @@ Xy
 dl
 bQ
 bQ
-vg
+dC
 gx
-bR
+pT
 HB
 gx
 gx
@@ -27228,7 +27231,7 @@ Xy
 Xy
 dl
 bQ
-dC
+Uh
 gx
 gx
 aT
@@ -27330,7 +27333,7 @@ Xy
 Xy
 dl
 bQ
-CQ
+vg
 jc
 gx
 jc
