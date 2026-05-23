@@ -10,6 +10,7 @@ import { Loader } from './common/Loader';
 type Data = {
   autofocus: BooleanLike;
   buttons: string[];
+  can_close: BooleanLike;
   large_buttons: BooleanLike;
   message: string;
   swapped_buttons: BooleanLike;
@@ -27,6 +28,7 @@ export function AlertModal(props) {
   const {
     autofocus,
     buttons = [],
+    can_close = true,
     large_buttons,
     message = '',
     timeout,
@@ -45,31 +47,56 @@ export function AlertModal(props) {
 
   const [selected, setSelected] = useState(0);
 
-  const windowWidth = 345 + (buttons.length > 2 ? 55 : 0);
+  const buttonCount = Math.max(buttons.length, 1);
+  const messageLines = message.split('\n');
+  const longestMessageLine = messageLines.reduce(
+    (longest, line) => Math.max(longest, line.length),
+    0,
+  );
+
+  // Expand width for long explicit lines so the modal better matches paragraph content.
+  const minWindowWidth = 345 + (buttons.length > 2 ? 55 : 0);
+  const estimatedMessageWidth = longestMessageLine * 7 + 80;
+  const windowWidth = Math.min(760, Math.max(minWindowWidth, estimatedMessageWidth));
 
   // very accurate estimate of padding for each num of buttons
-  const paddingMagicNumber = 67 / buttons.length + 23;
+  const paddingMagicNumber = 67 / buttonCount + 23;
 
   // At least one of the buttons has a long text message
   const isVerbose = buttons.some(
     (button) =>
       textWidth(button, '', large_buttons ? 14 : 12) > // 14 is the larger font size for large buttons
-      windowWidth / buttons.length - paddingMagicNumber,
+      windowWidth / buttonCount - paddingMagicNumber,
   );
   const largeSpacing = isVerbose && large_buttons ? 20 : 15;
 
+  const messageContentWidth = Math.max(260, windowWidth - 70);
+  const approxCharsPerLine = Math.max(20, Math.floor(messageContentWidth / 7));
+  const estimatedLineCount = messageLines.reduce(
+    (total, line) => total + Math.max(1, Math.ceil(line.length / approxCharsPerLine)),
+    0,
+  );
+  const messageHeight = Math.min(560, estimatedLineCount * 18 + 6);
+  const buttonHeight = isVerbose
+    ? largeSpacing * buttonCount + 20
+    : large_buttons
+      ? 48
+      : 38;
+
   // Dynamically sets window dimensions
-  const windowHeight =
-    120 +
-    (isVerbose ? largeSpacing * buttons.length : 0) +
-    (message.length > 30 ? Math.ceil(message.length / 4) : 0) +
-    (message.length && large_buttons ? 5 : 0);
+  const windowHeight = Math.min(
+    760,
+    92 + messageHeight + buttonHeight + (timeout ? 6 : 0),
+  );
 
   /** Changes button selection, etc */
   function keyDownHandler(event: KeyboardEvent<HTMLDivElement>) {
     switch (event.key) {
       case KEY.Space:
       case KEY.Enter:
+        if (!buttons.length) {
+          return;
+        }
         act('choose', { choice: buttons[selected] });
         return;
       case KEY.Left:
@@ -83,7 +110,7 @@ export function AlertModal(props) {
         return;
 
       default:
-        if (isEscape(event.key)) {
+        if (isEscape(event.key) && can_close) {
           act('cancel');
           return;
         }
@@ -92,22 +119,25 @@ export function AlertModal(props) {
 
   /** Manages iterating through the buttons */
   function onKey(direction: DIRECTION) {
+    if (!buttons.length) {
+      return;
+    }
     const newIndex = (selected + direction + buttons.length) % buttons.length;
     setSelected(newIndex);
   }
 
   return (
-    <Window height={windowHeight} title={title} width={windowWidth}>
+    <Window canClose={can_close} height={windowHeight} title={title} width={windowWidth}>
       {!!timeout && <Loader value={timeout} />}
       <Window.Content onKeyDown={keyDownHandler}>
         <Section fill>
           <Stack fill vertical>
-            <Stack.Item m={1} grow>
-              <Box color="label" overflow="hidden">
+            <Stack.Item m={1}>
+              <Box color="label" overflow="hidden" style={{ whiteSpace: 'pre-line' }}>
                 {message}
               </Box>
             </Stack.Item>
-            <Stack.Item grow>
+            <Stack.Item>
               {!!autofocus && <Autofocus />}
               {isVerbose ? (
                 <VerticalButtons selected={selected} />

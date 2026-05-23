@@ -40,7 +40,7 @@ Enjoy!"
 	if(!L?.client)
 		return
 
-	tgui_alert(L, KINGSFIELD_WELCOME_TEXT, "Welcome to Kingsfield", list("I understand the rules"))
+	tgui_alert(L, KINGSFIELD_WELCOME_TEXT, "Welcome to Kingsfield", list("I understand the rules"), can_close = FALSE)
 
 /proc/apply_kingsfield_training(mob/living/L)
 	if(!L)
