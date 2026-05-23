@@ -1,6 +1,9 @@
 // Add Kingsfield category tag for joinlate menu section
 #define CTAG_KINGSFIELD "ctag_kingsfield"
 #define KINGSFIELD_PACIFISM_TRAIT "kingsfield_pacifism"
+#define KINGSFIELD_WELCOME_TEXT "Kingsfield is an area that exists 'outside' of the current round. It IS however, still expected that you will remain IN character and not break our normal server rules. You are allowed to join/fartravel to and from Kingsfield as much as you wish, you do not need to ask permission, to allow you to try loadouts, clothing etc. Once you arrive here, DO NOT then rejoin the main game as the same character if you were in the round previously.\n\n\
+While this area is IN character, there is a dedicated area specifically where OOC discussion IS allowed, called 'The Gutter'. To visit, take the stairs down in front of the tavern, and use the travel tile. Please remember that OOC chatter of ANY kind is ONLY allowed in The Gutter and speaking out of character in the rest of Kingsfield is a rulebreak and will be punished appropriately.\n\n\
+Enjoy!"
 
 /proc/apply_kingsfield_join_fade(mob/living/L)
 	set waitfor = FALSE
@@ -23,6 +26,18 @@
 	if(L?.client)
 		L.client.screen -= F
 	qdel(F)
+
+/proc/show_kingsfield_welcome(mob/living/L)
+	set waitfor = FALSE
+	if(!L)
+		return
+
+	// Delay slightly so the transfer and arrival fade can complete before showing the rules.
+	sleep(3 SECONDS)
+	if(!L?.client)
+		return
+
+	tgui_alert(L, KINGSFIELD_WELCOME_TEXT, "Welcome to Kingsfield", list("I understand the rules"))
 
 /proc/apply_kingsfield_training(mob/living/L)
 	if(!L)
@@ -58,6 +73,7 @@
 	L.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_NOVICE, TRUE)
 	apply_kingsfield_training(L)
 	apply_kingsfield_join_fade(L)
+	show_kingsfield_welcome(L)
 
 /datum/job/roguetown/kingsfield_visitor
 	title = "Kingsfield Visitor"
