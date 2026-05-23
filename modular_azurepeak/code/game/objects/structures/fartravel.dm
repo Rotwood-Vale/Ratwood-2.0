@@ -131,7 +131,9 @@
 
 	var/datum/mind/departing_mind = departing_mob.mind
 	var/old_assigned_role = departing_mind?.assigned_role
-	var/dat = "[ADMIN_LOOKUPFLW(user)] has traveled to Kingsfield via far travel with [departing_mob], previous job [old_assigned_role ? old_assigned_role : departing_mob.job], at [AREACOORD(src)]."
+	var/dat = "[ADMIN_LOOKUPFLW(user)] has departed to Kingsfield via far travel as [departing_mob], previous job [old_assigned_role ? old_assigned_role : departing_mob.job], at [AREACOORD(src)]."
+	var/self_log = "departed to Kingsfield via far travel from [AREACOORD(src)] (previous job: [old_assigned_role ? old_assigned_role : departing_mob.job])"
+	var/old_round_join_time = departing_mob.ckey ? GLOB.round_join_times[departing_mob.ckey] : null
 	var/turf/spawn_turf = get_spawn_turf_for_job("Kingsfield Visitor")
 	if(!spawn_turf)
 		to_chat(departing_mob, span_warning("I cannot find passage to Kingsfield right now."))
@@ -149,12 +151,14 @@
 		message_admins(dat + " Failed to assign Kingsfield Visitor.")
 		log_admin(dat + " Failed to assign Kingsfield Visitor.")
 		return
+	if(!isnull(old_round_join_time) && departing_mob.ckey)
+		GLOB.round_join_times[departing_mob.ckey] = old_round_join_time
 
 	var/target_job = SSrole_class_handler.get_advclass_by_name(old_advjob)
 	if(target_job)
 		SSrole_class_handler.adjust_class_amount(target_job, -1)
 
-	var/dat_contents = " Contents despawned along:"
+	var/dat_contents = " Contents removed during Kingsfield transfer:"
 	if(!length(departing_mob.contents))
 		dat_contents += " none."
 	else
@@ -174,7 +178,6 @@
 			if(removing_bounty.target == departing_mob.real_name)
 				GLOB.head_bounties -= removing_bounty
 
-	GLOB.chosen_names -= departing_mob.real_name
 	var/datum/job/old_job = old_assigned_role ? SSjob.GetJob(old_assigned_role) : null
 	if(old_job)
 		LAZYREMOVE(GLOB.actors_list[SSjob.bitflag_to_department(old_job.department_flag, old_job.obsfuscated_job)], departing_mob.mobid)
@@ -212,12 +215,19 @@
 	if(ishuman(departing_mob))
 		var/mob/living/carbon/human/final_human = departing_mob
 		try_apply_character_post_equipment(final_human, final_human.client)
+		var/fakekey = final_human.ckey
+		if(final_human.ckey in GLOB.anonymize)
+			fakekey = get_fake_key(final_human.ckey)
+		GLOB.character_list[final_human.mobid] = "[fakekey] was [final_human.real_name] ([final_human.mind?.assigned_role || \"Kingsfield Visitor\"])<BR>"
+		GLOB.character_ckey_list[final_human.real_name] = final_human.ckey
+		log_manifest(final_human.ckey, final_human.mind, final_human, latejoin = TRUE)
 
 	departing_mob.recent_travel = world.time
+	departing_mob.log_message(self_log, LOG_ADMIN, log_globally = FALSE)
 	to_chat(departing_mob, span_notice("You leave your former life behind and arrive in Kingsfield as a visitor."))
 
-	message_admins(dat + " Reassigned to Kingsfield Visitor.")
-	log_admin(dat + " Reassigned to Kingsfield Visitor.")
+	message_admins(dat + " Arrived as Kingsfield Visitor.")
+	log_admin(dat + " Arrived as Kingsfield Visitor.")
 
 
 // Spawn landmark for Kingsfield Visitor arrivals. Place this in the Kingsfield map where new visitors should appear.
