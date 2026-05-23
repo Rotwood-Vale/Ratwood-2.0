@@ -68,6 +68,28 @@
 	converted_type = /area/rogue/outdoors/exposed/under/basement
 	deathsight_message = "beneath streets of stone, frequent of blood and steel"
 
+/area/rogue/under/town/basement/Entered(atom/movable/M, atom/OldLoc)
+	. = ..()
+	if(name != "The Gutter")
+		return
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
+	if(!L.client || !L.ckey || L.stat == DEAD)
+		return
+	L.log_message("entered The Gutter", LOG_GAME, log_globally = FALSE)
+
+/area/rogue/under/town/basement/Exited(atom/movable/M)
+	. = ..()
+	if(name != "The Gutter")
+		return
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
+	if(!L.client || !L.ckey || L.stat == DEAD)
+		return
+	L.log_message("left The Gutter", LOG_GAME, log_globally = FALSE)
+
 /area/rogue/under/town/basement/keep
 	name = "keep basement"
 	icon_state = "basement"
