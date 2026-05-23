@@ -50,15 +50,25 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	if(H.mind)
-		var/grenzel_purpose = list("Zweihander","Halberd","Eagle's Beak")
+		var/grenzel_purpose = list("Zweihander","Hellebardier (Halberd)","Armbrustschütze (Crossbow + Messer)", "Eagle's Beak")
 		var/weapon_choice = input(H, "Choose your ALLY", "WOE THE CONTRACT") as anything in grenzel_purpose
 		switch(weapon_choice)
 			if("Zweihander")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 				r_hand = /obj/item/rogueweapon/greatsword/grenz
-			if("Halberd")
+			if("Hellebardier (Halberd)")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 				r_hand = /obj/item/rogueweapon/halberd
+			if("Armbrustschütze (Crossbow + Messer)")
+				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 4, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 3, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/misc/tracking, 3, TRUE)
+				l_hand = /obj/item/rogueweapon/sword/long/kriegmesser
+				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+				beltl = /obj/item/quiver/bolts
+				beltr = /obj/item/rogueweapon/scabbard
+				H.change_stat(STATKEY_STR, -1)
+				H.change_stat(STATKEY_PER, 2) // so the boy can aim his crossbow and see further, maintain +7 stats total.
 			if("Eagle's Beak")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 				r_hand = /obj/item/rogueweapon/eaglebeak

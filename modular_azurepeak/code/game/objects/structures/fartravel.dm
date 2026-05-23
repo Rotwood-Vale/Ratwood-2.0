@@ -24,6 +24,9 @@
 	if(departing_mob != user && departing_mob.client)
 		to_chat(user, "<span class='warning'>This one retains their free will. It's their choice if they want to leave the round or not.</span>")
 		return
+	if(departing_mob.stat == DEAD && !departing_mob.client) //died and respawned or disconnected, no free slots for far-traveling someone that already opened a slot
+		to_chat(user, "<span class='warning'>This one is long dead and has passed unto another place. They have already left.</span>")
+		return
 	if(alert("Are you sure you want to [departing_mob == user ? "depart the round for good (you" : "send this person away (they"] will be removed from the current round, the job slot freed)?", "Departing", "Confirm", "Cancel") != "Confirm")
 		return
 	if(user.incapacitated() || QDELETED(departing_mob) || (departing_mob != user && departing_mob.client) || get_dist(src, dropping) > 2 || get_dist(src, user) > 2)

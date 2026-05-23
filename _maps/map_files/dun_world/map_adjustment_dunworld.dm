@@ -20,6 +20,12 @@
 		/datum/job/roguetown/slave,
 		/datum/job/roguetown/adventurer/courtslave,
 		
+		/datum/job/roguetown/tribalchieftain,
+		/datum/job/roguetown/tribalshaman,
+		/datum/job/roguetown/tribalguard,
+		/datum/job/roguetown/tribalrabble,
+		/datum/job/roguetown/tribalvillager,
+		
 		/datum/job/roguetown/vanguard,//more wardens
 		/datum/job/roguetown/guardsman,//MAA do double duty here
 		/datum/job/roguetown/watchcaptain,//sergeant does the job here

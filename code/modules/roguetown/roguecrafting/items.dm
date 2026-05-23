@@ -132,16 +132,13 @@
 
 /datum/crafting_recipe/roguetown/survival/bag
 	name = "sack"
-	result = /obj/item/storage/roguebag/crafted
+	result = /obj/item/storage/roguebag
 	reqs = list(
 		/obj/item/natural/fibers = 1,
 		/obj/item/natural/cloth = 1,
 		)
 	tools = list(/obj/item/needle)
 	skillcraft = /datum/skill/craft/sewing
-
-/obj/item/storage/roguebag/crafted
-	sellprice = 4
 
 /datum/crafting_recipe/roguetown/survival/bait
 	name = "bait"
@@ -218,8 +215,8 @@
 		/obj/item/ingot/iron = 1,
 		)
 	req_table = TRUE
-	skillcraft = /datum/skill/craft/traps
-	craftdiff = 1
+	skillcraft = /datum/skill/craft/crafting
+	craftdiff = 2
 	verbage_simple = "put together"
 	verbage = "puts together"
 
@@ -268,6 +265,19 @@
 /datum/crafting_recipe/roguetown/survival/tarot_deck
 	name = "tarot deck"
 	result = list(/obj/item/toy/cards/deck/tarot)
+	reqs = list(
+		/obj/item/paper/scroll = 3,
+		/obj/item/grown/log/tree/small = 1,
+		/obj/item/ash = 1,
+		)
+	skillcraft = /datum/skill/misc/reading
+	tools = list(/obj/item/natural/feather)
+	req_table = TRUE
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/survival/tarot_deck_majorarcana
+	name = "tarot deck (major arcana)"
+	result = list(/obj/item/toy/cards/deck/tarot/majorarcana)
 	reqs = list(
 		/obj/item/paper/scroll = 3,
 		/obj/item/grown/log/tree/small = 1,
@@ -363,7 +373,7 @@
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/survival/rucksack/crafted
-	reqs = list(/obj/item/storage/roguebag/crafted = 1,
+	reqs = list(/obj/item/storage/roguebag = 1,
 				/obj/item/rope = 1)
 
 /datum/crafting_recipe/roguetown/survival/handmirror
@@ -494,3 +504,19 @@
 		/obj/item/ash = 1)
 	skillcraft = /datum/skill/misc/medicine
 	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/ironore
+	name = "iron ore"
+	result = /obj/item/rogueore/iron
+	reqs = list(
+		/obj/item/alch/irondust = 3,
+		)
+	skillcraft = /datum/skill/craft/smelting
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/ironore/advanced
+	name = "iron ore (advanced)"
+	reqs = list(
+		/obj/item/alch/irondust = 2,
+		)
+	craftdiff = 4

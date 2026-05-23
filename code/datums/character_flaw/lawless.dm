@@ -37,6 +37,12 @@
 	if (!my_crime)
 		my_crime = "crimes against the Crown"
 	add_bounty(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, bounty_total, FALSE, my_crime, bounty_poster)
+	if(HAS_TRAIT(H, TRAIT_NOBLE))
+		REMOVE_TRAIT(H, TRAIT_NOBLE, JOB_TRAIT)
+		REMOVE_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
+		REMOVE_TRAIT(H, TRAIT_NOBLE, ADVENTURER_TRAIT)
+		ADD_TRAIT(H, TRAIT_DISGRACED_NOBLE, TRAIT_GENERIC)
+		H.is_noble()
 	if (face_known == "They know my face")
 		if(bounty_poster == "The Justiciary of The Vale")
 			GLOB.outlawed_players += H.real_name

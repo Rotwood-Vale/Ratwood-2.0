@@ -3,6 +3,8 @@
 	domain = "The Sun, the Moon, Earth, Justice, Freedom, the Seas, Creation, Inspiration, Death, Decay, Love, Healing, and Life."
 	desc = "A United Pantheon, Stalwart against the Darkness. The Ten grant lessons and boons to mortals. The primary form of worship being a generalist approach to worshipping all Ten, and taking lessons from all. This is the primary theology of the Grenzelhoft Holy See."
 	worshippers = "Holy See Clergymen. Pragmatists of the Ten."
+	virtues = "Temperance, Devotion, Caution"
+	sins = "Stubbornness, Recklessness, Zeal"
 	mob_traits = list()
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI, // ONLY Lower miracles of other lists. A much more varied utility miracle list, and a much wider selection. Also, our generic miracles(Lesser heal + Divine blast for acolytes) are better. But no specialization makes a lower level list. We're going to exclude Abyssor.
 					/obj/effect/proc_holder/spell/self/astrata_gaze				= CLERIC_T0,

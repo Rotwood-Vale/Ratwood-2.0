@@ -30,6 +30,10 @@
 	target.sexcon.make_sucking_noise()
 	user.sexcon.do_thrust_animate(target)
 
+	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))
+		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
+			user.sexcon.try_jaw_crush(target)
+
 	user.sexcon.perform_sex_action(user, 1, 3, TRUE)
 	user.sexcon.handle_passive_ejaculation(target)
 

@@ -374,6 +374,7 @@
 	stump_type = /obj/structure/flora/roguetree/stump/palm
 	pixel_x = -32
 	opacity = 0 //palm trees are skinny
+	density = 0
 
 /obj/structure/flora/roguetree/palm/Initialize()
 	. = ..()
@@ -386,6 +387,7 @@
 	icon = 'modular_deserttown/icons/bigpalm.dmi'
 	stump_type = null
 	pixel_x = -32
+	density = 0
 
 /obj/structure/flora/roguetree/stump/palm/Initialize()
 	. = ..()

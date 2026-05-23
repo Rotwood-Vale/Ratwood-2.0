@@ -962,6 +962,10 @@
 	name = "Fluffy"
 	icon_state = "fluffy"
 
+/datum/sprite_accessory/hair/head/fluffyovereye
+	name = "Fluffy (Over Eye)"
+	icon_state = "fluffy_overeye"
+
 /datum/sprite_accessory/hair/head/fluffyshort
 	name = "Fluffy (Short)"
 	icon_state = "fluffyshort"
@@ -1689,6 +1693,26 @@
 /datum/sprite_accessory/hair/head/beachwave
 	name = "Beach Wave"
 	icon_state = "beachwave"
+
+/datum/sprite_accessory/hair/head/wolfcut
+	name = "Wolfcut"
+	icon_state = "wolfcut"
+
+/datum/sprite_accessory/hair/head/triplebuns
+	name = "Triple Buns"
+	icon_state = "triplebuns"
+
+/datum/sprite_accessory/hair/head/nest
+	name = "Nest"
+	icon_state = "nest"
+
+/datum/sprite_accessory/hair/head/strand
+	name = "Strand"
+	icon_state = "strand"
+
+/datum/sprite_accessory/hair/head/sodden
+	name = "Sodden"
+	icon_state = "sodden"
 
 /datum/sprite_accessory/hair/head/vulpkian
 	abstract_type = /datum/sprite_accessory/hair/head/vulpkian

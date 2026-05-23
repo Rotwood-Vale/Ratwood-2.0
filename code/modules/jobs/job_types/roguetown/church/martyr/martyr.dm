@@ -109,7 +109,9 @@
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/holysee
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/silver = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/mini_flagpole/church,
+		/obj/item/clothing/neck/roguetown/psicross/undivided
 		)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 

@@ -34,6 +34,11 @@
 		/obj/item/bomb/smoke,
 		/obj/item/bomb/smoke)
 
+/datum/supply_pack/rogue/bath_rogue/mirrortransform
+	name = "Scroll of Mirror Transform"
+	cost = 50
+	contains = list(/obj/item/book/granter/spell/blackstone/mirror_transform)
+
 /datum/supply_pack/rogue/bath_rogue/waterarrows
 	name = "Water Arrows"
 	cost = 20
@@ -85,3 +90,13 @@
 	name = "Climbing Gear"
 	cost = 150
 	contains = list(/obj/item/clothing/climbing_gear)
+
+/datum/supply_pack/rogue/bath_rogue/whip
+	name = "Whip"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/whip)
+
+/datum/supply_pack/rogue/bath_rogue/brandiron
+	name = "Branding Iron"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/surgery/cautery/branding)

@@ -3,6 +3,8 @@
 	domain = "Necromancy, Progress, The Rot, Left-Handed Magicks"
 	desc = "The God-Head was the mortal snow elf Zinoviya, abandoned by Her Divine Father PSYDON. When She found out She was denied godhood, She struck PSYDON down and took it Herself, plunging the world into the Second Coming of the Rot. Burn the world to ash, and build it anew."
 	worshippers = "Necromancers, Maddened Mages, The Undead"
+	virtues = "Progress, Undeath, Ambition"
+	sins = "Ignorance, Stagnation, Humility"
 	mob_traits = list(TRAIT_CABAL, TRAIT_ZIZOSIGHT)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/zizo_snuff						= CLERIC_T0,
@@ -12,6 +14,7 @@
 					/obj/effect/proc_holder/spell/invoked/raise_undead_formation/miracle= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/tame_undead/miracle			= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/rituos/miracle 				= CLERIC_T3,
+					/obj/effect/proc_holder/spell/targeted/touch/lacrima				= CLERIC_T3,
 	)
 	confess_lines = list(
 		"PRAISE ZIZO!",

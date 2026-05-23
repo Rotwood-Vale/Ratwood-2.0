@@ -101,15 +101,6 @@
 	deathsight_message = "root-bound caverns"
 	detail_text = DETAIL_TEXT_SKELETON_CRYPT
 
-/area/rogue/under/cavewet/wizarddungeon
-	name = "Abandoned Wizard Tower"
-	first_time_text = "Crumbling Tower"
-	spookysounds = SPOOKY_MYSTICAL
-	spookynight = SPOOKY_MYSTICAL
-	droning_sound = 'sound/music/area/abandonedwizartorium.ogg'
-	droning_sound_dusk = null
-	droning_sound_night = null
-
 /area/rogue/under/cavewet/river
 	name = "Cave River"
 	icon_state = "river"

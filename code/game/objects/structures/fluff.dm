@@ -324,6 +324,12 @@
 		return 0
 	return 1
 
+/obj/structure/fluff/railing/fence/flimsy
+	name = "weak palisade"
+	desc = "A rudimentary barrier that might keep the monsters at bay. This one looks old, weathered, and hastily constructed."
+	max_integrity = 180
+	color = "#cccac5"
+
 /obj/structure/bars
 	name = "bars"
 	desc = ""
@@ -357,6 +363,12 @@
 /obj/structure/bars/shop
 	icon_state = "barsbent"
 	layer = BELOW_OBJ_LAYER
+
+/obj/structure/bars/rusty
+	name = "rusty bars"
+	desc = "these look fragile"
+	color ="#ffcd9f"
+	max_integrity = 200
 
 /obj/structure/bars/shop/bronze
 	color = "#ff9c1a"
@@ -854,6 +866,26 @@
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = list("sound/combat/hits/onmetal/metalimpact (1).ogg", "sound/combat/hits/onmetal/metalimpact (2).ogg")
 
+/obj/structure/fluff/alch/folding
+	name = "folding alchemical lab"
+	desc = "A compact laboratory. Laid out and ready to work."
+	icon = 'icons/roguetown/misc/gadgets.dmi'
+	icon_state = "foldingAlchstationDeployed"
+	max_integrity = 350
+	debris = list(/obj/item/grown/log/tree/small = 2)
+	climbable = TRUE
+	climb_offset = 10
+
+/obj/structure/fluff/alch/folding/examine()
+	. = ..()
+	. += span_blue("Right-Click to fold the lab.")
+
+/obj/structure/fluff/alch/folding/attack_right(mob/user)
+	if(do_after(user, 5 SECONDS, target = src))
+		user.visible_message(span_notice("[user] folds [src]."), span_notice("You fold [src]."))
+		new /obj/item/folding_table_stored/alchstation(drop_location())
+		qdel(src)
+		return ..()
 
 /obj/structure/fluff/statue
 	name = "statue"
@@ -1003,7 +1035,7 @@
 	icon = 'icons/roguetown/misc/ay.dmi'
 	icon_state = "4"
 	pixel_x = -32
-	pixel_y = -16
+	// pixel_y = -16
 
 /obj/structure/fluff/statue/scare
 	name = "scarecrow"
@@ -1555,6 +1587,7 @@
 	desc = "Wisdom and calm."
 	icon_state = "noc"
 	icon = 'icons/roguetown/misc/statues/statue_noc.dmi'
+	pixel_x = -16
 
 /obj/structure/fluff/statue/noc/guard
 	name = "active noc statue"
@@ -1565,9 +1598,11 @@
 	desc = "Beauty and Charm"
 	icon_state = "eora"
 	icon = 'icons/roguetown/misc/statues/statue_eora.dmi'
+	pixel_x = -16
 
 /obj/structure/fluff/statue/zizo
 	name = "dubious statue"
 	desc = "Blasphemy... unless...?"
 	icon_state = "zaelorian_crynsaris"
 	icon = 'icons/roguetown/misc/statues/statue_zizo.dmi'
+	pixel_x = -16

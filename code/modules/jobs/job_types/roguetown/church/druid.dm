@@ -64,6 +64,8 @@
 		/datum/skill/combat/whipsflails = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/polearms = SKILL_LEVEL_NOVICE, //To help them defend themselves with parrying
 		/datum/skill/combat/staves = SKILL_LEVEL_NOVICE, //This, too.
+		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/butchering = SKILL_LEVEL_APPRENTICE
 	)
 
 /datum/outfit/job/roguetown/druid
@@ -75,22 +77,65 @@
 /datum/outfit/job/roguetown/druid/basic/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
-	belt = /obj/item/storage/belt/rogue/leather/rope
+	belt = /obj/item/storage/belt/rogue/leather/
+	backr = /obj/item/rogueweapon/woodstaff
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	beltl = /obj/item/rogueweapon/whip //The whip itself is not often associated to many jobs. Druids feel like a thematic choice to have a self-defense whip
 	backl = /obj/item/storage/backpack/rogue/satchel
+	backr = /obj/item/rogueweapon/woodstaff
 	head = /obj/item/clothing/head/roguetown/dendormask
-	wrists = /obj/item/clothing/neck/roguetown/psicross/dendor
+	id = /obj/item/clothing/neck/roguetown/psicross/dendor //Ring slot amulet for wildform so it is not dropping on the ground.
 	shirt = /obj/item/clothing/suit/roguetown/shirt/robe/dendor
-	backpack_contents = list(/obj/item/ritechalk, /obj/item/storage/keyring/churchie)
+	backpack_contents = list(/obj/item/ritechalk, /obj/item/storage/keyring/churchie, /obj/item/seeds/treesap)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank_up_to(/datum/skill/magic/holy, 5, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/magic/druidic, 5, TRUE)
 	H.ambushable = FALSE
-	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)	//Starts off maxed out.
 
 /datum/outfit/job/roguetown/druid/basic/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
 	H.put_in_hands(new /obj/item/rogueweapon/woodstaff(H)) //To encourage them to wander the forests and to help defend themselves
+
+/datum/job/roguetown/druid/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	..()
+	if(!ishuman(L))
+		return
+
+	var/mob/living/carbon/human/H = L
+	H.advsetup = 1
+	H.invisibility = INVISIBILITY_MAXIMUM
+	H.become_blind("advsetup")
+
+	spawn(50)
+		if(H && H.client)
+			_delayed_path_choice(H)
+
+/datum/job/roguetown/druid/proc/grant_old_path(mob/living/carbon/human/H)
+	if(!H || !H.mind || !H.patron)
+		return
+
+	REMOVE_TRAIT(H, TRAIT_CLERGYRADICAL, "job")
+	H.reset_clergy_devotion(CLERIC_T4, CLERIC_REGEN_MAJOR, TRUE, CLERIC_REQ_4)
+	to_chat(H, span_notice("I remain on the old path of devotion."))
+
+/datum/job/roguetown/druid/proc/grant_radical_path(mob/living/carbon/human/H)
+	if(!H || !H.mind || !H.patron)
+		return
+
+	ADD_TRAIT(H, TRAIT_CLERGYRADICAL, "job")
+	H.miracle_points += 3
+	H.church_favor += 1600
+	H.reset_clergy_devotion(CLERIC_T4, CLERIC_REGEN_MAJOR, TRUE, CLERIC_REQ_4)
+	to_chat(H, span_notice("I embrace the radical path."))
+
+/datum/job/roguetown/druid/proc/_delayed_path_choice(mob/living/carbon/human/H)
+	if(!H || !H.client || !H.mind)
+		return
+
+	var/choice = alert(H, "Choose your path.", "Druidic Doctrine", "Loyalist", "Radical")
+
+	if(choice == "Radical")
+		grant_radical_path(H)
+	else
+		grant_old_path(H)

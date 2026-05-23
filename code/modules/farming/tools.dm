@@ -112,8 +112,8 @@
 /obj/item/rogueweapon/hoe
 	force = 10
 	force_wielded = 15
-	possible_item_intents = list(/datum/intent/pick)
-	gripped_intents = list(/datum/intent/pick,SPEAR_BASH,TILL_INTENT)
+	possible_item_intents = list(TILL_INTENT, /datum/intent/pick)
+	gripped_intents = list(TILL_INTENT, /datum/intent/pick, SPEAR_BASH)
 	name = "hoe"
 	desc = "A tool for tiling soil. It's all dirty and worn."
 	icon_state = "hoe"

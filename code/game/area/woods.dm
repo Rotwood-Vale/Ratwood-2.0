@@ -28,13 +28,10 @@
 	detail_text = DETAIL_TEXT_AZURE_GROVE
 
 /area/rogue/indoors/shelter/woods
-	name = "Rotwood Vale"
-	icon_state = "woods"
-	droning_sound = 'sound/music/area/forest.ogg'
-	droning_sound_dusk = 'sound/music/area/septimus.ogg'
-	droning_sound_night = 'sound/music/area/forestnight.ogg'
-	threat_region = THREAT_REGION_AZURE_GROVE
-	deathsight_message = "somewhere in the wilds"
+	name = "woodland shelter"
+	// droning_sound = 'sound/music/area/forest.ogg'
+	// droning_sound_dusk = 'sound/music/area/septimus.ogg'
+	// droning_sound_night = 'sound/music/area/forestnight.ogg'
 
 /area/rogue/outdoors/woods/north
 	name = "Rotwood Vale - North"
@@ -112,9 +109,3 @@
 	name = "Woods above"
 	ambientsounds = AMB_MOUNTAIN
 	ambientnight = AMB_MOUNTAIN
-
-/area/rogue/outdoors/woods/vampire_lair
-	warden_area = FALSE
-	ambush_times = list()
-	ambush_mobs = null
-	threat_region = ""

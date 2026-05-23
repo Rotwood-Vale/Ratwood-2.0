@@ -62,6 +62,7 @@
 	body_parts_covered = EYES
 	nudist_approved = TRUE
 	anvilrepair = /datum/skill/craft/armorsmithing
+	sewrepair = FALSE
 //	block2add = FOV_BEHIND
 
 /obj/item/clothing/mask/rogue/spectacles/inq
@@ -214,6 +215,7 @@
 	icon_state = "lmask"
 	sellprice = 50
 	anvilrepair = /datum/skill/craft/armorsmithing
+	sewrepair = FALSE
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/mask/rogue/lordmask/l
@@ -333,6 +335,7 @@
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/iron
+	sewrepair = FALSE
 
 /obj/item/clothing/mask/rogue/facemask
 	name = "iron mask"
@@ -351,6 +354,19 @@
 	experimental_onhip = TRUE
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/iron
+	sewrepair = FALSE
+
+/obj/item/clothing/mask/rogue/facemask/equipped(mob/user, slot)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_fov_angles()
+
+/obj/item/clothing/mask/rogue/facemask/dropped(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_fov_angles()
 
 /obj/item/clothing/mask/rogue/facemask/shadowfacemask
 	name = "spider rider's mask"
@@ -593,6 +609,7 @@
 	salvage_result = /obj/item/natural/bone
 	salvage_amount = 1
 	nudist_approved = TRUE
+	sewrepair = FALSE
 
 /obj/item/clothing/mask/rogue/ragmask
 	name = "rag mask"
@@ -684,15 +701,12 @@
 	sewrepair = TRUE
 	nudist_approved = TRUE
 
-/obj/item/clothing/mask/rogue/hblinders
+/obj/item/clothing/mask/rogue/horsey
 	name = "head blinders"
 	desc = "Keeps the wearer focused ahead. Made of reinforced leather."
 	icon_state = "hblinders"
 	item_state = "hblinders"
 	body_parts_covered = HEAD
-	max_integrity = 400
-	armor = list("blunt" = 80, "slash" = 90, "stab" = 80, "piercing" = 80, "fire" = 0, "acid" = 0)
-	armor_class = ARMOR_CLASS_LIGHT
 	sewrepair = TRUE
 
 //gemcarved masks from Vanderlin
@@ -784,6 +798,7 @@
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
 	smeltresult = null
 	anvilrepair = /datum/skill/craft/ceramics
+	sewrepair = FALSE
 	sellprice = 0
 	var/hide_identity = TRUE
 	var/next_honk = 0
@@ -859,7 +874,14 @@
 	next_honk = world.time + 1 SECONDS
 	playsound(src, 'sound/misc/honkmask.ogg', 70, TRUE)
 	to_chat(user, span_notice("The mask's nose is squeezed! It emits a squeaky honk."))
-
+/obj/item/clothing/mask/rogue/xylixmask/dropped(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		hide_identity = initial(hide_identity)
+		block2add = initial(block2add)
+		H.update_fov_angles()
+		H.update_vision_cone()
 /obj/item/clothing/mask/rogue/xylixmask/MiddleClick(mob/user, params)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return

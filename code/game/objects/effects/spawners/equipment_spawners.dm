@@ -134,8 +134,7 @@
 		/obj/item/clothing/suit/roguetown/armor/leather/hide/bikini = 6,
 		/obj/item/clothing/suit/roguetown/armor/chainmail/bikini = 1,
 		/obj/item/clothing/suit/roguetown/armor/plate/bikini = 1,
-		/obj/item/clothing/under/roguetown/brayette = 6,
-		/obj/item/clothing/under/roguetown/chainlegs/skirt = 1,
+		/obj/item/clothing/under/roguetown/chainlegs/skirt = 4,
 		/obj/item/clothing/under/roguetown/platelegs/skirt = 1,
 	)
 
@@ -348,4 +347,178 @@
 		/obj/item/clothing/head/roguetown/helmet/blacksteel/bucket = 1,
 		/obj/item/clothing/under/roguetown/platelegs/blacksteel = 1,
 		/obj/item/rogueweapon/greatsword/grenz/flamberge/blacksteel = 1,
+	)
+
+/obj/effect/spawner/lootdrop/heresy
+	name = "heretical item spawner"
+	icon_state = "heresy"
+	lootcount = 1
+	loot = list(
+		/obj/item/rogueweapon/sword/long/zizo = 15,
+		/obj/item/clothing/under/roguetown/platelegs/zizo = 8,
+		/obj/item/clothing/suit/roguetown/armor/plate/full/zizo = 8,
+		/obj/item/clothing/shoes/roguetown/boots/armor/zizo = 8,
+		/obj/item/clothing/head/roguetown/helmet/heavy/zizo = 8,
+		/obj/item/clothing/gloves/roguetown/plate/zizo = 5,
+		/obj/item/book/rogue/bibble/zizo = 15,
+		/obj/item/necro_relics/necro_crystal = 10,
+		/obj/item/flashlight/flare/torch/lantern/pumpkin/zizo = 1,
+		/obj/item/carvedgem/onyxa/snake = 5,
+		/obj/item/underworld/coin = 5,
+		/obj/item/clothing/mask/rogue/facemask/carved/onyxamask = 1,
+		/obj/item/clothing/mask/rogue/facemask/yoruku_oni = 1,
+		/obj/item/clothing/mask/rogue/facemask/carved/jademask = 1,
+		/obj/item/clothing/mask/rogue/facemask/carved/ambermask = 1,
+		/obj/item/clothing/mask/rogue/facemask/carved/coralmask = 1,
+		/obj/item/clothing/mask/rogue/facemask/carved/opalmask = 1,
+		/obj/item/clothing/mask/rogue/facemask/carved/porcelainmask = 1,
+		/obj/item/clothing/mask/rogue/facemask/carved/rosemask = 1,
+		/obj/item/clothing/mask/rogue/facemask/carved/turqmask = 1,
+		/obj/item/clothing/mask/rogue/facemask/shadowfacemask = 1,
+		/obj/item/clothing/mask/rogue/goblin_mask = 1,
+		/obj/item/carvedgem/rose/statue/baotha = 10,
+		/obj/item/clothing/gloves/roguetown/plate/graggar = 8,
+		/obj/item/clothing/head/roguetown/helmet/heavy/graggar = 8,
+		/obj/item/clothing/shoes/roguetown/boots/armor/graggar = 8,
+		/obj/item/clothing/suit/roguetown/armor/plate/fluted/graggar = 8,
+		/obj/item/clothing/under/roguetown/platelegs/graggar = 8,
+		/obj/item/rogueweapon/greataxe/steel/doublehead/graggar = 15,
+		/obj/item/clothing/gloves/roguetown/plate/matthios = 8,
+		/obj/item/clothing/head/roguetown/helmet/heavy/matthios = 8,
+		/obj/item/clothing/shoes/roguetown/boots/armor/matthios = 8,
+		/obj/item/clothing/suit/roguetown/armor/plate/full/matthios = 8,
+		/obj/item/clothing/under/roguetown/platelegs/matthios = 8,
+		/obj/item/rogueweapon/flail/peasantwarflail/matthios = 8,
+		/obj/item/mattcoin = 5,
+		/obj/item/reagent_containers/powder/herozium = 10,
+		/obj/item/reagent_containers/powder/starsugar = 10,
+		/obj/item/roguestatue/gold/loot = 10,
+		/obj/item/clothing/head/roguetown/witchhat/old = 10,
+		/obj/item/magic/infernal/core = 10,
+		/obj/item/magic/infernal/flame = 10,
+		/obj/item/magic/infernal/fang = 10,
+		/obj/item/rogueweapon/woodstaff/ruby = 10,
+		/obj/item/rogueweapon/whip/spiderwhip = 10,
+		/obj/item/carvedgem/onyxa/spider = 10,
+		/obj/item/rogueweapon/shield/tower/spidershield = 10,
+		/obj/item/spellbook_unfinished/pre_arcyne = 10,
+		/obj/effect/spawner/lootdrop/potion_poisons = 10,
+		/obj/effect/spawner/lootdrop/decrepit_equipment_spawner = 10,
+		/obj/effect/spawner/lootdrop/ancient_equipment_spawner = 10,
+		/obj/item/book/granter/spell/blackstone/invisibility = 10,
+		/obj/item/book/granter/spell/blackstone/fetch = 10,
+		/obj/item/reagent_containers/glass/bottle/alchemical/spdpot = 10,
+		/obj/item/book/granter/spell/blackstone/bonechill = 10,
+		/obj/item/book/granter/spell/blackstone/skeleton = 10,
+		/obj/item/book/granter/spell/blackstone/sicknessray = 15,
+		/obj/item/reagent_containers/glass/bottle/rogue/emberwine = 10,
+		/obj/item/reagent_containers/glass/bottle/alchemical/spidervenom_paralytic = 5,
+		/obj/item/reagent_containers/glass/bottle/alchemical/strpot = 10,
+		/obj/item/book/granter/spell/blackstone/fortitude = 5,
+		/obj/item/book/granter/spell/blackstone/enlarge = 10,
+	)
+
+/obj/effect/spawner/lootdrop/zizo
+	name = "zizo item spawner"
+	icon_state = "heresy"
+	lootcount = 1
+	loot = list(
+		/obj/item/rogueweapon/sword/long/zizo = 15,
+		/obj/item/clothing/under/roguetown/platelegs/zizo = 10,
+		/obj/item/clothing/suit/roguetown/armor/plate/full/zizo = 10,
+		/obj/item/clothing/shoes/roguetown/boots/armor/zizo = 10,
+		/obj/item/clothing/head/roguetown/helmet/heavy/zizo = 10,
+		/obj/item/clothing/gloves/roguetown/plate/zizo = 5,
+		/obj/item/book/rogue/bibble/zizo = 15,
+		/obj/item/necro_relics/necro_crystal = 10,
+		/obj/item/flashlight/flare/torch/lantern/pumpkin/zizo = 1,
+		/obj/item/carvedgem/onyxa/snake = 5,
+		/obj/item/clothing/mask/rogue/facemask/carved/onyxamask = 1,
+		/obj/item/spellbook_unfinished/pre_arcyne = 10,
+		/obj/effect/spawner/lootdrop/potion_poisons = 10,
+		/obj/item/reagent_containers/glass/bottle/alchemical/intpot = 5,
+		/obj/item/book/granter/spell/blackstone/bonechill = 10,
+		/obj/item/book/granter/spell/blackstone/skeleton = 10,
+		/obj/item/book/granter/spell/blackstone/sicknessray = 15,
+	)
+/obj/effect/spawner/lootdrop/graggar
+	name = "graggar item spawner"
+	icon_state = "heresy"
+	lootcount = 1
+	loot = list(
+		/obj/item/clothing/mask/rogue/facemask/yoruku_oni = 1,
+		/obj/item/clothing/gloves/roguetown/plate/graggar = 10,
+		/obj/item/clothing/head/roguetown/helmet/heavy/graggar = 10,
+		/obj/item/clothing/shoes/roguetown/boots/armor/graggar = 10,
+		/obj/item/clothing/suit/roguetown/armor/plate/fluted/graggar = 10,
+		/obj/item/clothing/under/roguetown/platelegs/graggar = 10,
+		/obj/item/rogueweapon/greataxe/steel/doublehead/graggar = 15,
+		/obj/item/reagent_containers/glass/bottle/alchemical/strpot = 10,
+		/obj/item/book/granter/spell/blackstone/fortitude = 5,
+		/obj/item/book/granter/spell/blackstone/enlarge = 10,
+		/obj/item/bomb = 10,
+	)
+/obj/effect/spawner/lootdrop/matt
+	name = "matthios item spawner"
+	icon_state = "heresy"
+	lootcount = 1
+	loot = list(
+		/obj/item/clothing/gloves/roguetown/plate/matthios = 10,
+		/obj/item/clothing/head/roguetown/helmet/heavy/matthios = 10,
+		/obj/item/clothing/shoes/roguetown/boots/armor/matthios = 10,
+		/obj/item/clothing/suit/roguetown/armor/plate/full/matthios = 10,
+		/obj/item/clothing/under/roguetown/platelegs/matthios = 10,
+		/obj/item/rogueweapon/flail/peasantwarflail/matthios = 10,
+		/obj/effect/spawner/lootdrop/potion_poisons = 5,
+		/obj/item/roguestatue/gold/loot = 10,
+		/obj/item/reagent_containers/glass/bottle/alchemical/spdpot = 10,
+		/obj/item/mattcoin = 10,
+		/obj/item/book/granter/spell/blackstone/invisibility = 10,
+		/obj/item/book/granter/spell/blackstone/fetch = 10,
+	)
+/obj/effect/spawner/lootdrop/baotha//add baothan ritual armor when we get around to that
+	name = "baotha item spawner"
+	icon_state = "heresy"
+	lootcount = 1
+	loot = list(
+		/obj/item/carvedgem/onyxa/snake = 5,
+		/obj/item/underworld/coin = 5,
+		/obj/item/carvedgem/rose/statue/baotha = 10,
+		/obj/item/reagent_containers/powder/herozium = 10,
+		/obj/item/reagent_containers/powder/starsugar = 10,
+		/obj/item/roguestatue/gold/loot = 10,
+		/obj/item/rogueweapon/woodstaff/ruby = 10,
+		/obj/item/rogueweapon/whip/spiderwhip = 10,
+		/obj/item/carvedgem/onyxa/spider = 10,
+		/obj/item/rogueweapon/shield/tower/spidershield = 10,
+		/obj/effect/spawner/lootdrop/potion_poisons = 5,
+		/obj/item/reagent_containers/glass/bottle/rogue/emberwine = 10,
+		/obj/item/reagent_containers/glass/bottle/alchemical/spidervenom_paralytic = 5,
+	)
+/obj/item/carvedgem/rose/statue/baotha
+	name = "baothan statuette"
+	desc = "A statue carved out of filthy, filthy rosestone."
+	color = "#b85cb3"
+
+/obj/effect/spawner/lootdrop/contraband
+	name = "confiscated item spawner"
+	icon_state = "heresy"
+	loot = list(
+		/obj/item/mattcoin = 5,
+		/obj/item/reagent_containers/powder/herozium = 5,
+		/obj/item/reagent_containers/powder/starsugar = 5,
+		/obj/item/roguestatue/gold/loot = 5,
+		/obj/item/rogueweapon/woodstaff/ruby = 5,
+		/obj/effect/spawner/lootdrop/potion_poisons = 10,
+		/obj/item/reagent_containers/glass/bottle/alchemical/spdpot = 2,
+		/obj/item/reagent_containers/glass/bottle/rogue/emberwine = 5,
+		/obj/item/reagent_containers/glass/bottle/alchemical/spidervenom_paralytic = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/strpot = 5,
+		/obj/item/bmbstrap = 2,
+		/obj/item/restraints/legcuffs/beartrap = 5,
+		/obj/item/reagent_containers/powder/ozium = 5,
+		/obj/item/reagent_containers/powder/moondust = 5,
+		/obj/item/reagent_containers/powder/spice = 5,
+		/obj/item/tntstick = 5,
+		/obj/item/bomb = 10,
 	)

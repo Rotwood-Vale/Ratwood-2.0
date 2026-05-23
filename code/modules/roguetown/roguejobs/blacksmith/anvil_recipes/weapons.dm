@@ -4,46 +4,57 @@
 
 /datum/anvil_recipe/weapons/aalloy
 	abstract_type = /datum/anvil_recipe/weapons/aalloy
+	req_bar = /obj/item/ingot/aalloy
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/anvil_recipe/weapons/paalloy
 	abstract_type = /datum/anvil_recipe/weapons/paalloy
+	req_bar = /obj/item/ingot/purifiedaalloy
 	craftdiff = SKILL_LEVEL_JOURNEYMAN // Steel equivalence
 
 /datum/anvil_recipe/weapons/copper
 	abstract_type = /datum/anvil_recipe/weapons/copper
+	req_bar = /obj/item/ingot/copper
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/anvil_recipe/weapons/bronze
 	abstract_type = /datum/anvil_recipe/weapons/bronze
+	req_bar = /obj/item/ingot/bronze
 	craftdiff = SKILL_LEVEL_NOVICE //Situationally better than iron, but far more limited in terms of recipes and availability.
 
 /datum/anvil_recipe/weapons/iron
 	abstract_type = /datum/anvil_recipe/weapons/iron
+	req_bar = /obj/item/ingot/iron
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/anvil_recipe/weapons/steel
 	abstract_type = /datum/anvil_recipe/weapons/steel
+	req_bar = /obj/item/ingot/steel
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/anvil_recipe/weapons/decorated
 	abstract_type = /datum/anvil_recipe/weapons/decorated
 	craftdiff = SKILL_LEVEL_EXPERT
+	req_bar = /obj/item/ingot/gold
 
 /datum/anvil_recipe/weapons/silver
 	abstract_type = /datum/anvil_recipe/weapons/
+	req_bar = /obj/item/ingot/silver
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/anvil_recipe/weapons/psy
 	abstract_type = /datum/anvil_recipe/weapons/psy
+	req_bar = /obj/item/ingot/silverblessed/bullion
 	craftdiff = SKILL_LEVEL_MASTER
 
 /datum/anvil_recipe/weapons/holysteel
 	abstract_type = /datum/anvil_recipe/weapons/holysteel
+	req_bar = /obj/item/ingot/steelholy
 	craftdiff = SKILL_LEVEL_MASTER
 
 /datum/anvil_recipe/weapons/blacksteel
 	abstract_type = /datum/anvil_recipe/weapons/blacksteel
+	req_bar = /obj/item/ingot/blacksteel
 	craftdiff = SKILL_LEVEL_MASTER
 
 
@@ -282,6 +293,11 @@
 	req_blade = /obj/item/blade/iron_sword
 	created_item = /obj/item/rogueweapon/sword/short/messer/iron
 
+/datum/anvil_recipe/weapons/iron/sabre
+	name = "Sabre, Iron"
+	req_blade = /obj/item/blade/iron_sword
+	created_item = /obj/item/rogueweapon/sword/sabre/iron
+
 /datum/anvil_recipe/weapons/iron/dagger
 	name = "Dagger, Iron"
 	req_blade = /obj/item/blade/iron_knife
@@ -428,7 +444,6 @@
 
 /datum/anvil_recipe/weapons/steel/rapier
 	name = "Rapier, Steel"
-	req_blade = /obj/item/blade/steel_sword
 	created_item = /obj/item/rogueweapon/sword/rapier
 
 /datum/anvil_recipe/weapons/steel/cutlass
@@ -765,7 +780,6 @@
 	additional_items = list(/obj/item/ingot/silver, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/ammo_casing/caseless/rogue/javelin/silver
 	createditem_num = 2
-
 
 
 /datum/anvil_recipe/weapons/gladius

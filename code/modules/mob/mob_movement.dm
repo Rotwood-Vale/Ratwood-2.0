@@ -597,14 +597,27 @@
 
 	var/used_time = 50
 	var/light_threshold = rogue_sneaking_light_threshhold
+	var/held_invis_value = (SEE_INVISIBLE_LIVING + (get_skill_level(/datum/skill/misc/sneaking) * 0.55))+1 //At 5 sneak, you get a total of ~24 invis - 3.75 bonus
 	if(mind)
 		used_time = max(used_time - (get_skill_level(/datum/skill/misc/sneaking) * 8), 0)
 		light_threshold += (get_skill_level(/datum/skill/misc/sneaking) / 20)
 
+	if(!reset && m_intent != MOVE_INTENT_SNEAK && alpha != initial(alpha)) // prevents funny bugs with getting stuck transparent
+		if(!wallpressed)
+			animate(src, alpha = initial(alpha), time = 10)
+			spawn(10) regenerate_icons()
+			invisibility = initial(invisibility) //Ditto. Stops you from getting stuck invisible.
+		else
+			animate(src, alpha = 255, time = 10)
+			invisibility = initial(invisibility) //fucking lol lmao
+
+		rogue_sneaking = FALSE
+		return
+
 	if(rogue_sneaking || reset) //If sneaking, check if they should be revealed
 		var/should_reveal = FALSE
 		// are we crit, sleeping, been recently discovered, have no turf, force-revealed or not in sneak intent? then we should be revealed, end of.
-		if((stat > SOFT_CRIT) || IsSleeping() || (world.time < mob_timers[MT_FOUNDSNEAK] + 30 SECONDS) || !T || reset || (m_intent != MOVE_INTENT_SNEAK))
+		if((stat > SOFT_CRIT) || IsSleeping() || (world.time < mob_timers[MT_FOUNDSNEAK] + 30 SECONDS) || !T || reset || (m_intent != MOVE_INTENT_SNEAK) || (world.time < mob_timers[MT_SNEAKATTACK] + 4 SECONDS) || (world.time < mob_timers[MT_SNEAKBUMP] + 0.5 SECONDS))
 			should_reveal = TRUE
 
 		// are we in a area of light that should reveal us?
@@ -615,19 +628,54 @@
 
 		if (should_reveal)
 			used_time = round(clamp((50 - (used_time*1.75)), 5, 50),1)
-			animate(src, alpha = initial(alpha), time =	used_time) //sneak skill makes you reveal slower but not as drastic as disappearing speed
-			spawn(used_time) regenerate_icons()
+			if(!wallpressed) // so we can stay partially invisible if wallpressed
+				invisibility = initial(invisibility) //Prevents a super rare edge case where you would stay super invisible and evil forever. Why does this happen? SPAWN() is the beast of satan
+				animate(src, alpha = initial(alpha), time =	used_time) //sneak skill makes you reveal slower but not as drastic as disappearing speed
+				spawn(used_time) regenerate_icons()
+			else
+				if(alpha != 255)
+					invisibility = initial(invisibility) //Ensure to set this back to type default (Always 0 for mobs). Execute BEFORE the animate so you can see them fade in.
+					animate(src, alpha = 255, time = used_time)
 			rogue_sneaking = FALSE
 			return
 
 	else //not currently sneaking, check if we can sneak
 		if (m_intent == MOVE_INTENT_SNEAK) // we were not sneaking and are now trying to.
+			if(wallpressed)
+				update_wallpress_slowdown()
+			var/target_alpha = 255
+			if(lying)
+				target_alpha = get_lying_alpha()
+			if(target_alpha != alpha)
+				if(!wallpressed)
+					animate(src, alpha = target_alpha, time = used_time) //Use regular ass sneakcode here so it isn't ungodly overpowered
+					spawn(used_time + 5) regenerate_icons()
 			light_amount = T.get_lumcount()  // as above, this is moderately expensive, so only check it if we need to.
 			if(light_amount < light_threshold)
-				animate(src, alpha = 0, time = used_time)
+				animate(src, alpha = get_lying_alpha(), time = used_time) //THIS PART CONTROLS REGULAR SNEAKING. USE INVIS HERE.
 				spawn(used_time + 5) regenerate_icons()
+				invisibility = held_invis_value //At 5 sneak, you get a total of ~24 invis - 3.75 bonus
 				rogue_sneaking = TRUE
 	return
+
+/mob/living/proc/get_lying_alpha()
+	var/skill_level = src.get_skill_level(/datum/skill/misc/sneaking)
+
+	switch(skill_level)
+		if(1)
+			return 178 //30%
+		if(2)
+			return 140 //45%
+		if(3)
+			return 128 //50%
+		if(4)
+			return 102 //60%
+		if(5)
+			return 77 //70%
+		if(6)
+			return 51 //80%
+
+	return 255
 
 ///Checked whenever a mob tries to change their movement intent
 /mob/proc/toggle_rogmove_intent(intent, silent = FALSE)

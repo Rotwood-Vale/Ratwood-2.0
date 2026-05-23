@@ -34,6 +34,7 @@ body {
 @font-face {
 	font-family: "Honoka Mincho";
 	src: url("HonokaMincho.ttf");
+}
 
 @font-face { 
   font-family: "Dauphin"; 
@@ -53,6 +54,11 @@ body {
 @font-face {
   font-family: "Persian";
   src: url('algaib.otf');
+}
+
+@font-face {
+	font-family: "Almalik";
+	src: url('algaib.otf');
 }
 
 @font-face { 
@@ -83,7 +89,9 @@ body {
 @font-face {
 	font-family: "Dauphin";
 	src: url("elf.ttf");
+}
 
+@font-face {
   font-family: "Yuji Boku";
   src: url('kazengunese.ttf');
 }
@@ -96,6 +104,11 @@ body {
 @font-face { 
   font-family: "Notredame"; 
   src: url('otavan.ttf'); 
+}
+
+@font-face { 
+  font-family: "Parisish"; 
+  src: url('posh.ttf'); 
 }
 
 @font-face {
@@ -958,7 +971,7 @@ h2.alert {
 }
 
 .orator					{font-family: "Project Sans", "Pterra"; font-size: 100%;}
-.sandwauk 				{font-family: "Persian", "Pterra"; font-size: 140%; letter-spacing: 2px;}
+.sandwauk 				{font-family: "Almalik", "Dauphin", "Persian", "Furqan", cursive, "Pterra"; font-size: 140%; letter-spacing: 2px;}
 .human 					{font-family: "Honoka Mincho", "Pterra";}
 .elf					{font-family: "Dauphin", cursive, "Pterra";}
 .dwarf 					{font-family: "MasonAlternate", "Pterra";} 
@@ -976,6 +989,7 @@ h2.alert {
 .beast					{font-family: "Thief by The Riddler", "Pterra";}
 .reptile				{font-family: "Kingthings Petrock", "Pterra"; font-size: 120%;}
 .otavan					{font-family: "Notredame", "Pterra"; font-size: 200%;}
+.posh					{font-family: "Parisish", "Pterra"; font-size: 130%;}
 .etruscan				{font-family: "Feronia", "Pterra"; font-size: 100%;}
 .gronnic				{font-family: "Jorvik Informal", "Pterra"; font-size: 100%;}
 .aavnic					{font-family: "Romeodn", "Pterra"; font-size: 100%;}
@@ -1113,6 +1127,10 @@ h2.alert {
 }
 .love_extreme {
 	color: #d146f5;
+	font-size: 75%;
+}
+.love_ludicrous {
+	color: #d61a43;
 	font-size: 75%;
 }
 .aphrodisiac {

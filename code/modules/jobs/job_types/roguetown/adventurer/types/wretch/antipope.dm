@@ -56,7 +56,14 @@
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backr = /obj/item/rogueweapon/woodstaff/quarterstaff
-	id = /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy
+	if(istype(H.patron, /datum/patron/inhumen/zizo))
+		id = /obj/item/clothing/neck/roguetown/psicross/inhumen/g
+	if(istype(H.patron, /datum/patron/inhumen/graggar))
+		id = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar
+	if(istype(H.patron, /datum/patron/inhumen/baotha))
+		id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha
+	if(istype(H.patron, /datum/patron/inhumen/matthios))
+		id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,
@@ -213,8 +220,8 @@
 	if (!H.restrained())
 		to_chat(src, span_warning ("My victim needs to be restrained in order to do this!"))
 		return
-	if(!istype(S, /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy))
-		to_chat(src, span_warning("I need to be holding a zcross to extract this divination!"))
+	if(!istype(S, /obj/item/clothing/neck/roguetown/psicross/inhumen/))
+		to_chat(src, span_warning("I need to be holding an inhumen amulet to extract this divination!"))
 		return
 	for(var/obj/structure/fluff/psycross/zizocross/N in oview(5, src))
 		found = N
@@ -228,7 +235,7 @@
 			"ARE YOU FAITHFUL!?",
 			"WHO IS YOUR SHEPHERD!?",
 		)
-		src.visible_message(span_warning("[src] shoves the decrepit zcross into [H]'s lux!"))
+		src.visible_message(span_warning("[src] shoves [S] into [H]'s lux!"))
 		say(pick(faith_lines), spans = list("torture"))
 		H.emote("agony", forced = TRUE)
 

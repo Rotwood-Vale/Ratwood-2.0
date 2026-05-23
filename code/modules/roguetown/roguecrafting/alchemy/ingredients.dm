@@ -91,6 +91,65 @@
 	med_pot = /datum/alch_cauldron_recipe/stamina_potion
 	minor_pot = /datum/alch_cauldron_recipe/strong_antidote
 
+/obj/item/alch/blessedseedpowder
+	name = "blessed seed powder"
+	desc = "Luminous seed dust prepared with sanctified water. Dendor's touch lingers within it."
+	icon = 'icons/roguetown/items/produce.dmi'
+	icon_state = "flour"
+	color = "#BFFFC4"
+	major_pot = null
+	med_pot = null
+	minor_pot = null
+
+/obj/item/alch/blessedseedpowder/Initialize(mapload)
+	. = ..()
+	set_light(1, 1, 2, l_color = "#58C86A")
+	add_filter("blessedseed_glow", 2, list("type" = "outline", "color" = "#58C86A", "alpha" = 95, "size" = 1))
+
+/obj/item/alch/blessedseedpowder/Destroy()
+	remove_filter("blessedseed_glow")
+	return ..()
+
+//==============================================================================
+// Harvest Bloomstone — ritual reward from Cat 9 Harvest Bloomstone rite.
+// Functions as a 20-use blessed seed powder when held during Bless Crops.
+// Each use (qdel call from blesscrop) decrements charges instead of destroying it.
+// When all 20 charges are spent, the stone shatters and leaves stone dust.
+//==============================================================================
+/obj/item/alch/bloomstone
+	name = "harvest bloomstone"
+	desc = "A smooth stone suffused with the Treefather's living power. When held during while using the Bless Crops miracle it functions like blessed seed powder and spends a charge instead of being consumed — good for twenty uses before it shatters."
+	icon = 'icons/roguetown/gems/gem_shell.dmi'
+	icon_state = "cutgem_shell"
+	color = "#228B22"
+	major_pot = null
+	med_pot = null
+	minor_pot = null
+	var/charges = 20
+
+/obj/item/alch/bloomstone/Initialize(mapload)
+	. = ..()
+	set_light(1, 1, 2, l_color = "#73c47a")
+	add_filter("bloomstone_glow", 2, list("type" = "outline", "color" = "#73c47a", "alpha" = 95, "size" = 1))
+
+/obj/item/alch/bloomstone/examine(mob/user)
+	. = ..()
+	. += span_info("It has [charges] charge\s remaining.")
+
+/obj/item/alch/bloomstone/Destroy()
+	remove_filter("bloomstone_glow")
+	charges--
+	if(charges > 0)
+		// Stone survives this use; re-apply glow and stay alive.
+		add_filter("bloomstone_glow", 2, list("type" = "outline", "color" = "#73c47a", "alpha" = 95, "size" = 1))
+		return QDEL_HINT_LETMELIVE
+	// All charges spent — shatter into stone dust.
+	new /obj/item/alch/stonedust(get_turf(src))
+	if(loc && isliving(loc))
+		var/mob/living/holder = loc
+		to_chat(holder, span_warning("The Harvest Bloomstone's light gutters and the stone crumbles to dust in my hand!"))
+	return ..()
+
 /obj/item/alch/runedust
 	name = "raw essentia"
 	icon_state = "runedust"
@@ -424,14 +483,6 @@
 	major_pot = /datum/alch_cauldron_recipe/lck_potion
 	med_pot = /datum/alch_cauldron_recipe/spd_potion
 	minor_pot = /datum/alch_cauldron_recipe/aphrodisiac
-
-/obj/item/alch/manabloompowder
-	name = "manabloom powder"
-	icon_state = "bluepowder"
-
-	major_pot = /datum/alch_cauldron_recipe/mana_potion
-	med_pot = /datum/alch_cauldron_recipe/int_potion
-	minor_pot = /datum/alch_cauldron_recipe/big_mana_potion
 
 /obj/item/alch/manabloompowder
 	name = "manabloom powder"

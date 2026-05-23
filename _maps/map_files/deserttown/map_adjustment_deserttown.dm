@@ -118,6 +118,12 @@
 		// /datum/job/roguetown/prince,//dtprince
 		// /datum/job/roguetown/shophand,
 		
+		/datum/job/roguetown/tribalchieftain,
+		/datum/job/roguetown/tribalshaman,
+		/datum/job/roguetown/tribalguard,
+		/datum/job/roguetown/tribalrabble,
+		/datum/job/roguetown/tribalvillager,
+		
 	)
 
 //list to blacklist for other maps (update as new replacements are added)

@@ -116,6 +116,7 @@
 	blocksound = PLATEHIT
 	smelt_bar_num = 2
 	armor_class = ARMOR_CLASS_HEAVY
+	peel_threshold = 4
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + 50
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/retinue/coat
@@ -156,8 +157,8 @@
 	blocksound = SOFTHIT
 	body_parts_covered = COVERAGE_TORSO
 	armor = ARMOR_LEATHER_STUDDED
-	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE
-	smeltresult = /obj/item/ingot/iron
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 25//Same define as studded leather armor which this has the same resistance/coverage as.
+	smeltresult = /obj/item/ingot/steel
 	equip_delay_self = 40
 	armor_class = ARMOR_CLASS_LIGHT//steel version of the studded leather armor now
 	w_class = WEIGHT_CLASS_BULKY

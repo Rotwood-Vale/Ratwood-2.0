@@ -107,7 +107,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			msg_to_send = "<span style='font-size:70%'>[base_msg]</span>"
 		else
 			msg_to_send = base_msg
-		to_chat(C, msg_to_send)
+		to_chat(C, type = MESSAGE_TYPE_OOC, html = msg_to_send)
 
 //				if(!holder.fakekey || C.holder)
 //					if(check_rights_for(src, R_ADMIN))
@@ -224,7 +224,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			msg_to_send = "<span style='font-size:70%'>[base_msg]</span>"
 		else
 			msg_to_send = base_msg
-		to_chat(C, msg_to_send)
+		to_chat(C, type = MESSAGE_TYPE_OOC, html = msg_to_send)
 
 
 /proc/toggle_ooc(toggle = null)

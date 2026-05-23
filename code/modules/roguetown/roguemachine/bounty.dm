@@ -42,6 +42,9 @@
 	var/list/choices = list("Consult Bounties", "Set Bounty", "Print List of Bounties", "Remove Bounty", "Collect Change")
 	var/selection = input(user, "The Excidium listens", src) as null|anything in choices
 
+	if(!Adjacent(user, src)) // User can move while selecting, sanity check
+		return
+
 	switch(selection)
 
 		if("Consult Bounties")
@@ -84,11 +87,25 @@
 		bounty_found = TRUE
 
 	if(bounty_found)
-		var/datum/browser/popup = new(user, "BOUNTIES", "", 500, 300)
+		var/datum/browser/popup = new(user, "BOUNTIES", "", 500, 300, src)
 		popup.set_content(consult_menu)
 		popup.open()
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(user_moved))
 	else
 		say("No bounties are currently active.")
+
+/// Subscribes to COMSIG_MOVABLE_MOVED to prevent the user from having bounty screen open when not adjacent to the machine
+/obj/structure/roguemachine/bounty/proc/user_moved(mob/former_user)
+	SIGNAL_HANDLER
+
+	if(!istype(former_user))
+		return
+
+	if(Adjacent(former_user, src))
+		return
+
+	UnregisterSignal(former_user, COMSIG_MOVABLE_MOVED)
+	former_user << browse(null, "window=BOUNTIES")
 
 /obj/structure/roguemachine/bounty/proc/remove_bounty(mob/living/carbon/human/user)
 	var/list/bounty_list = list()

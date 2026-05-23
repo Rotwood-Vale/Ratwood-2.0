@@ -440,6 +440,21 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/list/cake_types = list(
 		/obj/item/reagent_containers/food/snacks/rogue/cakeslice,
 		/obj/item/reagent_containers/food/snacks/rogue/frostedcakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/applecakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/applenutcakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/berrycakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/blackberrycakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/carrotcakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/lemoncakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/limecakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/menthacakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/peacecakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/raspberrycakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/rocknutcakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/strawberrycakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/tangerinecakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/hcakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/ccakeslice,
 	)
 	var/cake_type = pick(cake_types)
 	new cake_type(T)

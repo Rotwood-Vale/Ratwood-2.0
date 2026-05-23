@@ -391,7 +391,6 @@
 	resistance_flags = NONE
 	experimental_onback = FALSE
 	bigboy = TRUE
-	sewrepair = TRUE
 
 	equip_delay_self = 5 SECONDS
 	unequip_delay_self = 5 SECONDS
@@ -542,7 +541,7 @@
 	can_parry = TRUE
 	wdefense = 8
 
-	max_integrity = 0
+	max_integrity = 220
 
 /obj/item/rogueweapon/scabbard/sword/kazengun/noparry
 	name = "ceremonial kazengun scabbard"
@@ -575,7 +574,8 @@
 	icon_state = "kazscab_gold"
 	item_state = "kazscab_gold"
 	valid_blade = /obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain
-	sellprice = 10
+	max_integrity = 220
+	sellprice = 50
 
 /obj/item/rogueweapon/scabbard/sword/kazengun/kodachi
 	name = "plain lacquer scabbard"

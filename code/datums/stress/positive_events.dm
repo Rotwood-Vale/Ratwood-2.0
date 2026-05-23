@@ -118,6 +118,11 @@
 	stressadd = -5
 	desc = span_boldgreen("Down with the tyranny!")
 
+/datum/stressevent/fresh_haircut
+	timer = 60 MINUTES
+	stressadd = -2
+	desc = span_green("My hair has been freshly cut and tended to.")
+
 /datum/stressevent/music
 	timer = 1 MINUTES
 	stressadd = -1
@@ -157,6 +162,16 @@
 	stressadd = -1
 	desc = span_blue("Relaxing.")
 	timer = 1 MINUTES
+
+/datum/stressevent/sakura_view
+	stressadd = -2
+	timer = 30 MINUTES
+	desc = span_green("The cherry blossom's beauty fills me with peace.")
+
+/datum/stressevent/flower_view
+	stressadd = -1
+	timer = 15 MINUTES
+	desc = span_green("Seeing the pretty flowers lifted my spirits!")
 
 /datum/stressevent/bathwater/on_apply(mob/living/user)
 	. = ..()
