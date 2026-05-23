@@ -62,6 +62,8 @@
 	var/list/resident_advclass
 	//a door name a skilled artisan can make 
 	var/doorname = null
+	// Non-pickable door, Still can use skeleton key.
+	var/verysecure = FALSE
 
 /obj/structure/mineral_door/onkick(mob/user)
 	if(isSwitchingStates)
@@ -640,6 +642,9 @@
 	if(door_opened || isSwitchingStates)
 		to_chat(user, "<span class='warning'>This cannot be picked while it is open.</span>")
 		return
+	if(verysecure) 
+		to_chat(user, "<span class='warning'>This lock is too complex to be picked.</span>")
+		return
 	if(!keylock)
 		return
 	if(lockbroken)
@@ -1048,6 +1053,15 @@
 	repair_cost_second = /obj/item/natural/stone
 	repair_skill = /datum/skill/craft/masonry
 	smeltresult = null
+
+/obj/structure/mineral_door/wood/donjon/reinforced
+	desc = "A reinforced door with a complex looking lock."
+	icon_state = "donjondir"
+	base_state = "donjon"
+	keylock = TRUE
+	max_integrity = 3000
+	over_state = "dunjonopen"
+	kickthresh = 50
 
 /obj/structure/mineral_door/wood/donjon/stone/attack_right(mob/user)
 	// Check for keys first (inherited from parent)
