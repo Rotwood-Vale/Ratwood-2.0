@@ -78087,6 +78087,10 @@
 	},
 /turf/closed/mineral/rogue,
 /area/rogue/under/town/basement/keep)
+"rRt" = (
+/obj/machinery/light/rogue/firebowl/standing/blue,
+/turf/open/floor/rogue/concrete/bronze,
+/area/rogue/outdoors/mountains)
 "rRA" = (
 /obj/machinery/light/rogue/candle/blue{
 	pixel_x = -14
@@ -421536,7 +421540,7 @@ gpn
 gpn
 gpn
 gpn
-xVR
+rRt
 xoN
 hZK
 hZK
