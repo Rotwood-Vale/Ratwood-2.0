@@ -590,3 +590,21 @@
 		alternate_worn_layer = BACK_LAYER //Above Hair Layer
 	user.update_inv_wear_mask()
 	user.update_inv_head()
+
+// The exact same as the Grenzelhoft hat w/ the cap, but capless; no armor stats. Allows for drip with the helmet aesthetic PR
+/obj/item/clothing/head/roguetown/caplessgrenzelhofthat
+	name = "capless grenzelhoft plume hat"
+	desc = "Whether it's monsters or fair maidens, a true Grenzelhoftian slays both. This one lacks any protection beneath."
+	icon_state = "grenzelhat"
+	item_state = "grenzelhat"
+	icon = 'icons/roguetown/clothing/head.dmi'
+	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
+	slot_flags = ITEM_SLOT_HEAD
+	detail_tag = "_detail"
+	altdetail_tag = "_detailalt"
+	dynamic_hair_suffix = ""
+	resistance_flags = FIRE_PROOF //doesnt spawn, only a cosmetic loadout item. Keep the swag.
+	color = "#262927"
+	detail_color = "#FFFFFF"
+	altdetail_color = "#9c2525"
+	

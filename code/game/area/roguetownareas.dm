@@ -164,6 +164,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 /area/rogue/indoors/shelter
 	icon_state = "shelter"
 	deathsight_message = "somewhere in the wilds, under a roof"
+	warden_area = TRUE
 
 /area/rogue/outdoors/mountains
 	name = "Mountains"
@@ -342,6 +343,12 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	name = "wayfarer's dream"
 	icon_state = "dream"
 	first_time_text = "A Wayfarer's Dream"
+
+/area/rogue/underworld/adventurespawn/start
+	first_time_text = "null"
+	droning_sound = null
+	droning_sound_dusk = null
+	droning_sound_night = null
 
 #define SOUND_ENV_INDOOR = 2
 #define SOUND_ENV_OUTDOOR = 16

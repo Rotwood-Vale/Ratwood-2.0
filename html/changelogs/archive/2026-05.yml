@@ -460,3 +460,82 @@
       by about fifty percent
   - rscadd: bathmatrons can buy scrolls of mirror transform from their vendor for
       all your gock forming needs
+2026-05-21:
+  2whatever2:
+  - balance: Clamps now actually reduce bloodloss on attached limbs.
+  CloverIsLucky:
+  - balance: Adventurer Paladin can choose a different silver weapon if you choose
+      the Crusader Path.
+  Jamdrawers:
+  - rscadd: more crafting recipes for statues
+  - bugfix: fixes templars getting their buff where they shouldn't, cleans up areatypes
+  MarioTheShiba:
+  - bugfix: fixed a playsound(url) bug.
+  Mryourface13:
+  - rscadd: Added 3 pink colors :3
+  SneakySlinky:
+  - rscadd: Added a cum volume/max loads multiplier to characters with the BIGGUY
+      trait
+  - rscadd: Added a cum volume/max loads multiplier to gnolls
+  - rscadd: Added an examine descriptor for characters with small penises that would
+      have sheaths
+  The-Sun-In-Splendour:
+  - rscadd: ancient champion now has lesser calcic outburst
+  ToothyDeer:
+  - rscadd: Adds a Grenzelhoft plumehat w/ no armor values so it may be worn over
+      helmets.
+  gatorceres:
+  - rscadd: Deadite saigas and volfs may be commanded by necromancers
+  ophaq:
+  - bugfix: Fixes the fancy sandals in the loadout to give the actual fancy sandals
+      item (not the gladiator ones) and not the regular sandals.
+  - rscadd: Adds half-hare &  half-rabbit to half-kin race titles.
+  - rscadd: Adds harevolk and cabbitvolk for critterkin's titles.
+  - rscadd: Adds hare-kin and cabbit-kin for wildkin.
+  - rscadd: Adds the padded and studded hood to the tailor silverface.
+  - rscadd: Adds studded hood to the merchant goldface.
+  - rscadd: Allows the hoods to be worn on the neck slot (not just the head).
+  - bugfix: Fixes a FoV issue with certain masks like the jester, oni and kitsune
+      ones not updating the FoV at times when they were removed.
+  - rscadd: The posh accent is now available. It's an accent with a fancy speaking
+      font for fancy people with their fancy tongues.
+2026-05-22:
+  IronDragoon:
+  - rscadd: Admin cake button now gives a random slice from a much greater variety
+      of cakes
+  Jamdrawers:
+  - rscadd: baothan ritual armor!
+  SneakySlinky:
+  - rscadd: Readded curse related interactions for Abyssor and Dendor patrons
+  The-Sun-In-Splendour:
+  - balance: tailor now gets master tanning
+  ophaq:
+  - rscadd: Several more pottery items such as dildos, and new glazed variants of
+      other items. You can make a blowing pipe with pottery now too!
+  - rscadd: Several ports of re-sprites on cups.
+  - rscadd: Adds in a flint and pestle / mortar to the potter's backpack.
+  - rscadd: You can glaze certain items now with gold dust and use middle-click with
+      a dye brush to choose your fancy glaze.
+  - rscadd: Replaced glass batches with clay in the stockpile.
+  - rscadd: Glass kiln. Functions like a great furnace, but only takes glass batches
+      and sand. You can put in 3 batches and 3 sand to get 6 heated glass.
+  - rscadd: Pottery shards. You can grind them to get clay if you break your pottery.
+      Now you can recycle your shitty results!
+  - rscadd: Pot lids. Reduces boiling time by 50%. Teapots get an innate 25% reduction
+      in boiling time now. To add/remove them, just middle click the pot on the hearth
+      or wherever. Works for kettles too.
+  - rscadd: Adds in bronze fork, platter, cup, mug, etc... It's bronze cutlery smiths
+      can make.
+  - balance: Many balance changes to XP gained when making things. Failure rates adjusted
+      too, so it's not as frustrating.
+  - balance: Changes up recipes a bit. It's less tedious now to make the special clays
+      now.
+  zeroisthebiggay:
+  - rscadd: baotha marked applies a unique addiction vice if you aren't baothan yourself,
+      sated same as nymphomaniac but without letting you do things like identify other
+      nymphomaniacs with it
+  - rscdel: baotha mark giving nymphomaniac
+  - bugfix: baotha mark being taken with nymphomaniac breaking you
+2026-05-23:
+  CVSthePharmacy:
+  - bugfix: fix the valaska axe sprite

@@ -82,7 +82,7 @@
 /// Applies a named accent's full transformation pipeline to a test message and returns the result.
 /// Returns null for accents that have no text transformations (font-only or no accent).
 /proc/apply_accent_preview(accent_name, message)
-	if(accent_name == "No accent" || accent_name == "Saut al-Atash accent")
+	if(accent_name == "No accent" || accent_name == "Saut al-Atash accent" || accent_name == "Posh accent")
 		return null
 	message = treat_message_accent(message, get_accent_list_for_name(accent_name, "multiword"), REGEX_FULLWORD)
 	message = treat_message_accent_fullword(message, strings("accent_universal.json", "universal", convert_HTML = TRUE), get_accent_list_for_name(accent_name, "full"))
