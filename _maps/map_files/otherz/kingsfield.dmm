@@ -404,7 +404,7 @@
 /obj/structure/mineral_door/wood/window{
 	name = "Themed Inn Rooms"
 	},
-/turf/open/floor/carpet/red,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
@@ -1974,6 +1974,9 @@
 	})
 "iT" = (
 /obj/machinery/light/rogue/candle,
+/obj/effect/decal/carpet{
+	pixel_y = -17
+	},
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
@@ -3354,7 +3357,9 @@
 	first_time_text = "Kingsfield - Garden District"
 	})
 "pN" = (
-/obj/structure/curtain/yellow,
+/obj/structure/curtain/yellow{
+	icon_state = "curtain-closed"
+	},
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
@@ -4442,6 +4447,7 @@
 /obj/structure/flora/roguetree/stump/log{
 	pixel_x = -10
 	},
+/obj/effect/wisp/green,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
@@ -4625,7 +4631,7 @@
 	dir = 4;
 	name = "Bathroom"
 	},
-/turf/open/floor/rogue/tile/harem1,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
@@ -4995,7 +5001,7 @@
 /obj/structure/mineral_door/wood/kingsfield{
 	name = "Royal Inn Room"
 	},
-/turf/open/floor/carpet/royalblack,
+/turf/open/floor/carpet/red,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
@@ -5301,6 +5307,17 @@
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
 	})
+"zl" = (
+/obj/structure/curtain/red{
+	icon_state = "curtain-closed";
+	opacity = 1;
+	open = 0
+	},
+/turf/open/floor/carpet/royalblack,
+/area/rogue/indoors/town/tavern{
+	name = "Kingsfield Tavern";
+	first_time_text = "Kingsfield Tavern"
+	})
 "zq" = (
 /obj/structure/mirror/fancy{
 	pixel_y = 0;
@@ -5374,10 +5391,10 @@
 	first_time_text = "Kingsfield - Garden District"
 	})
 "zI" = (
-/obj/structure/mineral_door/wood/window{
-	name = "Inn Rooms"
+/obj/machinery/light/rogue/campfire/fireplace{
+	pixel_y = 32
 	},
-/turf/open/floor/carpet/red,
+/turf/open/floor/rogue/grasscold,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
@@ -5445,7 +5462,7 @@
 /obj/structure/mineral_door/wood/window{
 	name = "Dressing and Bathrooms"
 	},
-/turf/open/floor/rogue/tile/harem1,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
@@ -7521,7 +7538,7 @@
 /obj/structure/mineral_door/wood/kingsfield{
 	name = "Inn Room"
 	},
-/turf/open/floor/rogue/tile/harem1,
+/turf/open/floor/carpet/red,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
@@ -7854,7 +7871,7 @@
 	})
 "KJ" = (
 /obj/structure/mineral_door/wood/window,
-/turf/open/floor/carpet/red,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
@@ -8079,6 +8096,8 @@
 /obj/item/rogueweapon/woodstaff/aries,
 /obj/machinery/light/rogue/candle,
 /obj/structure/closet/crate/roguecloset,
+/obj/item/clothing/suit/roguetown/shirt/undershirt/priest,
+/obj/item/perfume/frankincense,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
@@ -8692,6 +8711,7 @@
 	icon_state = "glowshroom3"
 	},
 /obj/structure/vine,
+/obj/effect/wisp/green,
 /turf/open/water/cleanshallow,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
@@ -9017,6 +9037,12 @@
 	pixel_y = -32
 	},
 /obj/structure/closet/crate/roguecloset,
+/obj/item/clothing/suit/roguetown/shirt/robe/nun,
+/obj/item/clothing/head/roguetown/nun,
+/obj/item/clothing/cloak/battlenun,
+/obj/item/clothing/suit/roguetown/shirt/undershirt/priest,
+/obj/item/clothing/head/roguetown/veiled,
+/obj/item/artefact/necra_censer,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
@@ -9593,7 +9619,7 @@
 	name = "Room Supplies";
 	opacity = 1
 	},
-/turf/open/floor/carpet/red,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/tavern{
 	name = "Kingsfield Tavern";
 	first_time_text = "Kingsfield Tavern"
@@ -49597,7 +49623,7 @@ Xy
 Xy
 KZ
 tq
-bX
+ZQ
 KZ
 YF
 pg
@@ -49927,7 +49953,7 @@ yT
 Zs
 bX
 bX
-zI
+UD
 bX
 Zr
 hI
@@ -50029,7 +50055,7 @@ KZ
 KZ
 Fc
 bX
-zI
+UD
 bX
 bX
 pI
@@ -50097,7 +50123,7 @@ Tb
 Xy
 Xy
 kZ
-Ka
+zI
 qZ
 AY
 mO
@@ -50107,7 +50133,7 @@ RO
 zd
 KZ
 tq
-bX
+ZQ
 KZ
 me
 yu
@@ -50130,7 +50156,7 @@ AY
 qF
 KZ
 bk
-zI
+UD
 KZ
 KZ
 KZ
@@ -50321,7 +50347,7 @@ rc
 rc
 rc
 me
-Zc
+zl
 me
 rc
 KZ
@@ -50413,7 +50439,7 @@ tA
 PZ
 KZ
 tq
-bX
+ZQ
 KZ
 KZ
 KZ
@@ -50719,7 +50745,7 @@ wp
 ZE
 KZ
 tq
-bX
+ZQ
 KZ
 KZ
 KZ
@@ -50836,10 +50862,10 @@ Mg
 hZ
 yu
 rc
-rc
+cD
 yu
-hZ
-bX
+cD
+pN
 yu
 hZ
 lC
@@ -51024,7 +51050,7 @@ QK
 oH
 MO
 KZ
-bX
+aP
 bX
 KZ
 KR
@@ -51127,7 +51153,7 @@ IF
 ZE
 KZ
 tq
-bX
+ZQ
 KZ
 Mg
 sn
@@ -51450,8 +51476,8 @@ yu
 rc
 cD
 yu
-rc
 cD
+rc
 yu
 YF
 dO

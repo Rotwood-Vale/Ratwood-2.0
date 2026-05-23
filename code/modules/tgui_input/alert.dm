@@ -145,8 +145,8 @@
 			SStgui.close_uis(src)
 			return TRUE
 		if("cancel")
-				if(!can_close)
-					return
+			if(!can_close)
+				return
 			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
