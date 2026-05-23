@@ -27,7 +27,9 @@
 		to_chat(user, "<span class='warning'>This one is long dead and has passed unto another place. They have already left.</span>")
 		return
 	var/travel_choice
-	var/already_in_kingsfield = (departing_mob.mind?.assigned_role in GLOB.kingsfield_positions)
+	var/already_in_kingsfield = FALSE
+	if(departing_mob.mind?.assigned_role)
+		already_in_kingsfield = !!GLOB.kingsfield_positions.Find(departing_mob.mind.assigned_role)
 	if(departing_mob == user && departing_mob.stat != DEAD)
 		if(!already_in_kingsfield)
 			travel_choice = alert(
@@ -56,7 +58,7 @@
 
 	if(travel_choice == "Cancel" || !travel_choice)
 		return
-	if(travel_choice == "Travel to Kingsfield" && !SSjob.GetJob("Kingsfield Visitor"))
+	if(travel_choice == "Travel to Kingsfield" && (!SSjob.GetJob("Kingsfield Visitor") || !get_spawn_turf_for_job("Kingsfield Visitor")))
 		to_chat(user, span_warning("Travel to Kingsfield is currently unavailable."))
 		return
 	if(user.incapacitated() || QDELETED(departing_mob) || (departing_mob != user && departing_mob.client) || get_dist(src, dropping) > 2 || get_dist(src, user) > 2)
@@ -130,6 +132,12 @@
 	var/datum/mind/departing_mind = departing_mob.mind
 	var/old_assigned_role = departing_mind?.assigned_role
 	var/dat = "[ADMIN_LOOKUPFLW(user)] has traveled to Kingsfield via far travel with [departing_mob], previous job [old_assigned_role ? old_assigned_role : departing_mob.job], at [AREACOORD(src)]."
+	var/turf/spawn_turf = get_spawn_turf_for_job("Kingsfield Visitor")
+	if(!spawn_turf)
+		to_chat(departing_mob, span_warning("I cannot find passage to Kingsfield right now."))
+		message_admins(dat + " Failed to find a Kingsfield Visitor spawn landmark.")
+		log_admin(dat + " Failed to find a Kingsfield Visitor spawn landmark.")
+		return
 
 	// Capture advjob before AssignRole (which changes assigned_role)
 	var/old_advjob = departing_mob.advjob
@@ -194,9 +202,6 @@
 	for(var/obj/item/thing as anything in items_to_delete)
 		QDEL_NULL(thing)
 
-	var/turf/spawn_turf = get_spawn_turf_for_job("Kingsfield Visitor")
-	if(!spawn_turf)
-		spawn_turf = get_turf(src)
 	if(spawn_turf)
 		departing_mob.forceMove(spawn_turf)
 

@@ -86,6 +86,20 @@
 	. = ..()
 	apply_kingsfield_role_setup(L, SKILL_LEVEL_APPRENTICE, SKILL_LEVEL_NOVICE)
 
+/datum/job/roguetown/kingsfield_visitor/special_job_check(mob/dead/new_player/player)
+	return FALSE
+
+/datum/job/roguetown/kingsfield_visitor/special_check_latejoin(client/C)
+	return !!get_spawn_turf_for_job("Kingsfield Visitor")
+
+/datum/job/roguetown/kingsfield_visitor/override_latejoin_spawn(mob/living/carbon/human/H)
+	var/turf/spawn_turf = get_spawn_turf_for_job("Kingsfield Visitor")
+	if(!spawn_turf)
+		to_chat(H, span_warning("I cannot find passage to Kingsfield right now."))
+		return FALSE
+	H.forceMove(spawn_turf)
+	return TRUE
+
 /datum/outfit/job/roguetown/kingsfield_visitor/pre_equip(mob/living/carbon/human/H)
 	. = ..()
 	if(should_wear_femme_clothes(H))
@@ -151,22 +165,17 @@
 	apply_kingsfield_role_setup(L, SKILL_LEVEL_JOURNEYMAN, SKILL_LEVEL_APPRENTICE)
 
 /datum/job/roguetown/ferentian_envoy/special_job_check(mob/dead/new_player/player)
-	return !!(player?.client?.holder)
+	return !!(player?.client?.holder) && !!get_spawn_turf_for_job("Ferentian Envoy")
 
 /datum/job/roguetown/ferentian_envoy/special_check_latejoin(client/C)
-	// Only show in latejoin menu for admins
-	return !!(C?.holder)
+	return !!(C?.holder) && !!get_spawn_turf_for_job("Ferentian Envoy")
 
 /datum/job/roguetown/ferentian_envoy/override_latejoin_spawn(mob/living/carbon/human/H)
-	var/list/eligible_spawns = list()
-	for(var/obj/effect/landmark/start/ferentian_envoy/S in GLOB.start_landmarks_list)
-		if(S.loc)
-			eligible_spawns += S
-	if(eligible_spawns.len)
-		var/obj/effect/landmark/start/S = pick(eligible_spawns)
-		if(H && S && S.loc)
-			H.forceMove(S.loc)
-			return TRUE
+	var/turf/spawn_turf = get_spawn_turf_for_job("Ferentian Envoy")
+	if(spawn_turf)
+		H.forceMove(spawn_turf)
+		return TRUE
+	to_chat(H, span_warning("I cannot find the Ferentian envoy post right now."))
 	return FALSE
 
 /datum/outfit/job/roguetown/ferentian_envoy/pre_equip(mob/living/carbon/human/H)

@@ -501,7 +501,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
-	var/error = IsJobUnavailable(rank)
+	var/error = IsJobUnavailable(rank, TRUE)
 	if(error != JOB_AVAILABLE)
 		to_chat(src, span_warning("[get_job_unavailable_error_message(error, rank)]"))
 		return FALSE
@@ -528,7 +528,9 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 
 	testing("basedtest 1")
 
-	SSjob.AssignRole(src, rank, 1)
+	if(!SSjob.AssignRole(src, rank, TRUE))
+		to_chat(src, span_warning("That role is no longer available."))
+		return FALSE
 	testing("basedtest 2")
 	var/mob/living/character = create_character(TRUE)	//creates the human and transfers vars and mind
 	testing("basedtest 3")
