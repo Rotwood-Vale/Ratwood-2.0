@@ -49,6 +49,7 @@
 
 		// Outcasts & Misc
 		/datum/job/roguetown/bandit = list(display_title = "Pirate", f_title = "Pirate"),
+		/datum/job/roguetown/pilgrim = list(display_title = "Castaway", f_title = "Castaway"),
 		/datum/job/roguetown/orphan = list(display_title = "Stowaway", f_title = "Stowaway"),
 		/datum/job/roguetown/beggar = list(display_title = "Stowaway", f_title = "Stowaway"),
 	)
@@ -73,7 +74,7 @@
 		// /datum/job/roguetown/adventurer//Adventurers
 		// /datum/job/roguetown/wretch,
 		// /datum/job/roguetown/bandit,
-		/datum/job/roguetown/pilgrim,//everyone came on the boat so no real difference with towner
+		// /datum/job/roguetown/pilgrim, // Re-allowed on BYOS and renamed to Castaway in title_adjust.
 		// /datum/job/roguetown/trader,
 		// /datum/job/roguetown/assassin,
 
