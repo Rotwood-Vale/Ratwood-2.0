@@ -27,7 +27,7 @@
 		to_chat(user, "<span class='warning'>This one is long dead and has passed unto another place. They have already left.</span>")
 		return
 	var/travel_choice
-	var/already_in_kingsfield = (departing_mob.mind?.assigned_role == "Kingsfield Visitor")
+	var/already_in_kingsfield = (departing_mob.mind?.assigned_role in GLOB.kingsfield_positions)
 	if(departing_mob == user && departing_mob.stat != DEAD)
 		if(!already_in_kingsfield)
 			travel_choice = alert(

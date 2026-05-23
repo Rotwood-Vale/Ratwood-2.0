@@ -35,6 +35,8 @@
 	if(istype(P, /obj/item/roguecoin))
 		if(withdraw_tab?.free_withdraw)
 			return
+		if(!withdraw_tab)
+			return
 		withdraw_tab.insert_coins(P)
 		return attack_hand(user)
 	..()

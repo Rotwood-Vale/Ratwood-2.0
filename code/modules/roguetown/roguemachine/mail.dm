@@ -510,7 +510,6 @@
 				sentfrom = "Anonymous"
 			if(findtext(send2place, "#"))
 				var/box2find = text2num(copytext(send2place, findtext(send2place, "#")+1))
-				testing("box2find [box2find]")
 				var/found = FALSE
 				var/obj/structure/roguemachine/mail/X = find_hermes_by_directory_number(box2find)
 				if(X)
@@ -631,15 +630,6 @@
 	. = ..()
 	var/suffix = mailtags ? ", [mailtags]" : ""
 	. += "<a href='?src=[REF(src)];directory=1'>Directory:</a> [mailtag][suffix]"
-
-/obj/structure/roguemachine/mail/Topic(href, href_list)
-	..()
-
-	if(!usr)
-		return
-
-	if(href_list["directory"])
-		view_directory(usr)
 
 /obj/structure/roguemachine/mail/proc/view_directory(mob/user)
 	var/dat
@@ -784,6 +774,9 @@
 /proc/find_hermes_by_directory_number(number)
 	if(!isnum(number) || number < 1)
 		return null
+	for(var/obj/structure/roguemachine/mail/X in SSroguemachine.hermailers)
+		if(X.ournum == number)
+			return X
 	for(var/list/entry in get_hermes_directory_entries(FALSE))
 		if(entry["num"] == number)
 			return entry["machine"]
@@ -859,6 +852,10 @@
 
 /obj/structure/roguemachine/mail/Topic(href, href_list)
 	..()
+	if(href_list["directory"])
+		if(usr)
+			view_directory(usr)
+		return
 	if(!usr.canUseTopic(src, BE_CLOSE))
 		return
 	if(href_list["eject"])
