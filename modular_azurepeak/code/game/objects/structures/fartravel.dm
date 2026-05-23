@@ -216,9 +216,12 @@
 		var/mob/living/carbon/human/final_human = departing_mob
 		try_apply_character_post_equipment(final_human, final_human.client)
 		var/fakekey = final_human.ckey
+		var/final_role = final_human.mind?.assigned_role
+		if(!final_role)
+			final_role = "Kingsfield Visitor"
 		if(final_human.ckey in GLOB.anonymize)
 			fakekey = get_fake_key(final_human.ckey)
-		GLOB.character_list[final_human.mobid] = "[fakekey] was [final_human.real_name] ([final_human.mind?.assigned_role || \"Kingsfield Visitor\"])<BR>"
+		GLOB.character_list[final_human.mobid] = "[fakekey] was [final_human.real_name] ([final_role])<BR>"
 		GLOB.character_ckey_list[final_human.real_name] = final_human.ckey
 		log_manifest(final_human.ckey, final_human.mind, final_human, latejoin = TRUE)
 
