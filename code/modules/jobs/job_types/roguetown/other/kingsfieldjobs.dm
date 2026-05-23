@@ -46,6 +46,19 @@
 	for(var/skill_path in kingsfield_training_skills)
 		L.adjust_skillrank_up_to(skill_path, SKILL_LEVEL_JOURNEYMAN, TRUE)
 
+/proc/apply_kingsfield_role_setup(mob/living/L, reading_level, athletics_level)
+	if(!L)
+		return
+	ADD_TRAIT(L, TRAIT_PACIFISM, KINGSFIELD_PACIFISM_TRAIT)
+	ADD_TRAIT(L, TRAIT_NOHUNGER, TRAIT_GENERIC)
+	L.nutrition = NUTRITION_LEVEL_FULL
+	L.hydration = HYDRATION_LEVEL_FULL
+	L.adjust_skillrank_up_to(/datum/skill/misc/reading, reading_level, TRUE)
+	L.adjust_skillrank_up_to(/datum/skill/misc/athletics, athletics_level, TRUE)
+	L.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_NOVICE, TRUE)
+	apply_kingsfield_training(L)
+	apply_kingsfield_join_fade(L)
+
 /datum/job/roguetown/kingsfield_visitor
 	title = "Kingsfield Visitor"
 	faction = "Station"
@@ -71,15 +84,7 @@
 	if(L?.mind)
 		L.mind.remove_all_antag_datums()
 	. = ..()
-	ADD_TRAIT(L, TRAIT_PACIFISM, KINGSFIELD_PACIFISM_TRAIT)
-	ADD_TRAIT(L, TRAIT_NOHUNGER, TRAIT_GENERIC)
-	L.nutrition = NUTRITION_LEVEL_FULL
-	L.hydration = HYDRATION_LEVEL_FULL
-	L.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_APPRENTICE, TRUE)
-	L.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_NOVICE, TRUE)
-	L.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_NOVICE, TRUE)
-	apply_kingsfield_training(L)
-	apply_kingsfield_join_fade(L)
+	apply_kingsfield_role_setup(L, SKILL_LEVEL_APPRENTICE, SKILL_LEVEL_NOVICE)
 
 /datum/outfit/job/roguetown/kingsfield_visitor/pre_equip(mob/living/carbon/human/H)
 	. = ..()
@@ -143,15 +148,7 @@
 	if(L?.mind)
 		L.mind.remove_all_antag_datums()
 	. = ..()
-	ADD_TRAIT(L, TRAIT_PACIFISM, KINGSFIELD_PACIFISM_TRAIT)
-	ADD_TRAIT(L, TRAIT_NOHUNGER, TRAIT_GENERIC)
-	L.nutrition = NUTRITION_LEVEL_FULL
-	L.hydration = HYDRATION_LEVEL_FULL
-	L.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_JOURNEYMAN, TRUE)
-	L.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_APPRENTICE, TRUE)
-	L.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_NOVICE, TRUE)
-	apply_kingsfield_training(L)
-	apply_kingsfield_join_fade(L)
+	apply_kingsfield_role_setup(L, SKILL_LEVEL_JOURNEYMAN, SKILL_LEVEL_APPRENTICE)
 
 /datum/job/roguetown/ferentian_envoy/special_job_check(mob/dead/new_player/player)
 	return !!(player?.client?.holder)

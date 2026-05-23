@@ -395,13 +395,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!L.ckey || L.stat == DEAD)
 		return
 
-	if(L.mind?.assigned_role in list("Kingsfield Visitor", "Ferentian Envoy"))
+	var/pacifism_source = "kingsfield_pacifism"
+	if(L.mind?.assigned_role in GLOB.kingsfield_positions)
 		if(pacifismOff)
-			if(HAS_TRAIT_FROM(L, TRAIT_PACIFISM, "kingsfield_pacifism"))
-				REMOVE_TRAIT(L, TRAIT_PACIFISM, "kingsfield_pacifism")
+			if(HAS_TRAIT_FROM(L, TRAIT_PACIFISM, pacifism_source))
+				REMOVE_TRAIT(L, TRAIT_PACIFISM, pacifism_source)
 		else
-			if(!HAS_TRAIT_FROM(L, TRAIT_PACIFISM, "kingsfield_pacifism"))
-				ADD_TRAIT(L, TRAIT_PACIFISM, "kingsfield_pacifism")
+			if(!HAS_TRAIT_FROM(L, TRAIT_PACIFISM, pacifism_source))
+				ADD_TRAIT(L, TRAIT_PACIFISM, pacifism_source)
 
 	// Ambience goes down here -- make sure to list each area separately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 //	if(L.client && !L.client.ambience_playing && L.client.prefs.toggles & SOUND_SHIP_AMBIENCE)

@@ -1,57 +1,3 @@
-/obj/structure/roguemachine/goldface/public/kingsfield/Topic(href, href_list)
-	if(!ishuman(usr))
-		return
-	if(!usr.canUseTopic(src, BE_CLOSE) || (locked && !is_public))
-		return
-	if(href_list["buy"])
-		var/mob/M = usr
-		var/path = text2path(href_list["buy"])
-		if(!ispath(path, /datum/supply_pack))
-			message_admins("[usr.key] tried to buy [path] from Kingsfield SILVERFACE (blocked)")
-			return
-		var/datum/supply_pack/PA = SSmerchant.supply_packs[path]
-		var/cost = 0 // Always free for Kingsfield SILVERFACE
-		var/profit = 0
-		if(budget < cost)
-			say("Not enough!")
-			return
-		budget -= cost
-		wgain += profit
-		record_round_statistic(value_record_key, cost)
-		record_round_statistic(STATS_TRADE_VALUE_IMPORTED, cost)
-		var/shoplength = PA.contains.len
-		for(var/l=1,l<=shoplength,l++)
-			var/pathi = PA.contains[l]
-			new pathi(get_turf(M))
-		playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
-		return
-	if(href_list["change"])
-		if(budget > 0)
-			budget2change(budget, usr)
-			budget = 0
-	if(href_list["changecat"])
-		current_cat = href_list["changecat"]
-	if(href_list["withdrawgain"])
-		if(!usr.canUseTopic(src, BE_CLOSE))
-			return
-		if(ishuman(usr))
-			var/mob/living/carbon/human/H = usr
-			if(wgain <= 0)
-				return
-			if(!(H.job in profit_id))
-				return
-			budget2change(wgain, usr)
-			wgain = 0
-	return attack_hand(usr)
-
-/obj/structure/roguemachine/goldface/public/kingsfield/smith/Topic(href, href_list)
-	return ..() // Inherit Kingsfield SILVERFACE free logic
-
-/obj/structure/roguemachine/goldface/public/kingsfield/tailor/Topic(href, href_list)
-	return ..() // Inherit Kingsfield SILVERFACE free logic
-
-/obj/structure/roguemachine/goldface/public/kingsfield/apothecary/Topic(href, href_list)
-	return ..() // Inherit Kingsfield SILVERFACE free logic
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
@@ -285,6 +231,12 @@
 	. = ..()
 	. += span_info("A complimentary alchemical interface for Kingsfield visitors. Can be locked by a Diplomatic Key.")
 
+/obj/structure/roguemachine/goldface/proc/uses_complimentary_pricing()
+	return FALSE
+
+/obj/structure/roguemachine/goldface/public/kingsfield/uses_complimentary_pricing()
+	return TRUE
+
 /obj/structure/roguemachine/goldface/Initialize(mapload)
 	. = ..()
 	update_icon()
@@ -347,10 +299,11 @@
 			message_admins("silly MOTHERFUCKER [usr.key] IS TRYING TO BUY A [path] WITH THE GOLDFACE")
 			return
 		var/datum/supply_pack/PA = SSmerchant.supply_packs[path]
-		var/profit = ROUND_UP(PA.cost * profit_margin)
-		var/cost = PA.cost + PA.cost * extra_fee
-		var/tax_amt = round(SStreasury.tax_value * PA.cost)
-		if(!(upgrade_flags & UPGRADE_NOTAX) && !bypass_tax)
+		var/free_pricing = uses_complimentary_pricing()
+		var/profit = free_pricing ? 0 : ROUND_UP(PA.cost * profit_margin)
+		var/cost = free_pricing ? 0 : PA.cost + PA.cost * extra_fee
+		var/tax_amt = free_pricing ? 0 : round(SStreasury.tax_value * PA.cost)
+		if(!free_pricing && !(upgrade_flags & UPGRADE_NOTAX) && !bypass_tax)
 			cost = cost + tax_amt
 		cost = round(cost)
 		if(budget < cost)
@@ -360,11 +313,11 @@
 		wgain += profit
 		record_round_statistic(value_record_key, cost)
 		record_round_statistic(STATS_TRADE_VALUE_IMPORTED, cost)
-		if(!(upgrade_flags & UPGRADE_NOTAX) && !bypass_tax)
+		if(!free_pricing && !(upgrade_flags & UPGRADE_NOTAX) && !bypass_tax)
 			SStreasury.give_money_treasury(tax_amt, "goldface import tax")
 			record_featured_stat(FEATURED_STATS_TAX_PAYERS, human_mob, tax_amt)
 			record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
-		else
+		else if(!free_pricing)
 			record_round_statistic(STATS_TAXES_EVADED, tax_amt)
 		var/shoplength = PA.contains.len
 		for(var/l=1,l<=shoplength,l++)
@@ -462,9 +415,9 @@
 				pax += PA
 		for(var/datum/supply_pack/PA in sortNames(pax))
 			var/costy = 0
-			if(!istype(src, /obj/structure/roguemachine/goldface/public/kingsfield))
+			if(!uses_complimentary_pricing())
 				costy = PA.cost + PA.cost * extra_fee
-				if(!(upgrade_flags & UPGRADE_NOTAX))
+				if(!(upgrade_flags & UPGRADE_NOTAX) && !bypass_tax)
 					costy = costy + round(SStreasury.tax_value * PA.cost)
 				costy = round(costy)
 			var/quantified_name = PA.no_name_quantity ? PA.name : "[PA.name] [PA.contains.len > 1?"x[PA.contains.len]":""]"

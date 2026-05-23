@@ -44,21 +44,6 @@
 	SSroguemachine.hermailers -= src
 	return ..()
 
-/obj/structure/roguemachine/mail/proc/collect_mailtags(text, list/addresses)
-	if(!text)
-		return
-	var/clean_text = trim(text)
-	if(!clean_text)
-		return
-	var/comma = findtext(clean_text, ",")
-	if(comma)
-		var/first_tag = trim(copytext(clean_text, 1, comma))
-		if(length(first_tag))
-			addresses += first_tag
-		collect_mailtags(copytext(clean_text, comma + 1), addresses)
-	else
-		addresses += clean_text
-
 /obj/structure/roguemachine/mail/attack_hand(mob/user)
 	if(ishuman(user) && GLOB.carebox.try_retrieve_carebox(user, src))
 		return TRUE
@@ -133,11 +118,6 @@
 		var/box2find = text2num(copytext(send2place, findtext(send2place, "#")+1))
 		var/found = FALSE
 		var/obj/structure/roguemachine/mail/X = find_hermes_by_directory_number(box2find)
-		if(!X)
-			for(var/obj/structure/roguemachine/mail/legacy in SSroguemachine.hermailers)
-				if(legacy.ournum == box2find)
-					X = legacy
-					break
 		if(X)
 			found = TRUE
 			P.mailer = sentfrom
@@ -533,11 +513,6 @@
 				testing("box2find [box2find]")
 				var/found = FALSE
 				var/obj/structure/roguemachine/mail/X = find_hermes_by_directory_number(box2find)
-				if(!X)
-					for(var/obj/structure/roguemachine/mail/legacy in SSroguemachine.hermailers)
-						if(legacy.ournum == box2find)
-							X = legacy
-							break
 				if(X)
 					found = TRUE
 					P.mailer = sentfrom
