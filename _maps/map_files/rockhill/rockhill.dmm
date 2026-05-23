@@ -10339,6 +10339,9 @@
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town)
+"cpv" = (
+/turf/closed/wall/mineral/rogue/pipe/line,
+/area/rogue/outdoors/mountains)
 "cpx" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/structure/fluff/big_chain{
@@ -25788,6 +25791,12 @@
 /obj/structure/flora/roguetree/burnt,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woodsrat/south)
+"fLM" = (
+/obj/structure/bars/grille{
+	dir = 4
+	},
+/turf/open/water/bath,
+/area/rogue/outdoors/mountains)
 "fLO" = (
 /obj/structure/bars/grille,
 /turf/open/water/swamp,
@@ -40517,7 +40526,7 @@
 /obj/structure/closet/crate/drawer{
 	pixel_y = 16
 	},
-/turf/open/floor/rogue/ruinedwood/spiral,
+/turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/mountains)
 "jjk" = (
 /obj/structure/table/wood,
@@ -82061,7 +82070,9 @@
 /area/rogue/under/cavewet)
 "sPf" = (
 /obj/machinery/light/rogue/candle/red/r,
-/turf/open/water/bath,
+/obj/structure/table/wood/poor,
+/obj/machinery/light/rogue/candle/floorcandle/pink,
+/turf/open/floor/rogue/wood,
 /area/rogue/outdoors/mountains)
 "sPm" = (
 /obj/item/rope/chain,
@@ -423257,7 +423268,7 @@ jTl
 svi
 beQ
 moU
-oUi
+fLM
 ovC
 ovC
 rjb
@@ -423689,12 +423700,12 @@ tML
 jOB
 svi
 teW
-xmY
+cpv
 ovC
 ovC
-rjb
-jji
-agh
+fQt
+ylO
+ugC
 blW
 ugC
 blW
@@ -424121,11 +424132,11 @@ teW
 qTG
 wlM
 teW
-oUi
-ovC
+erZ
+rjb
 sPf
-fQt
-gyj
+rjb
+jji
 qxL
 blW
 gtz
