@@ -570,7 +570,7 @@
 	item_state = "drill"
 	possible_item_intents = list(MACE_SMASH)
 	gripped_intents = list(/datum/intent/drill)
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = ITEM_SLOT_HIP
 	smeltresult = /obj/item/ingot/bronze
 	w_class = WEIGHT_CLASS_HUGE
 	accepted_power_source = /obj/item/alch/coaldust
@@ -593,10 +593,10 @@
 	icon_state = "drill"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
-	item_state = "drill"
+	item_state = "drill2"
 	possible_item_intents = list(MACE_SMASH)
 	gripped_intents = list(/datum/intent/drill)
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = ITEM_SLOT_HIP
 	smeltresult = /obj/item/ingot/bronze
 	w_class = WEIGHT_CLASS_HUGE
 	accepted_power_source = /obj/item/alch/coaldust
@@ -675,6 +675,7 @@
 	var/misfire_icon = "smelter_misfire"
 	var/fin_icon = "smelter_fin"
 
+	slot_flags = ITEM_SLOT_HIP
 	w_class = WEIGHT_CLASS_NORMAL
 
 	grid_height = 64
