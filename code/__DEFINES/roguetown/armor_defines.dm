@@ -18,7 +18,7 @@
 #define ARMOR_INT_HELMET_LEATHER 200
 #define ARMOR_INT_HELMET_CLOTH 100
 
-// Chest / Armor Pieces
+// Chest / Armor Pieces 
 
 // HEAVY
 #define ARMOR_INT_CHEST_PLATE_ANTAG 700
