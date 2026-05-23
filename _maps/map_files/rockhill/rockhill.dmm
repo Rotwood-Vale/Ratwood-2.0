@@ -104311,9 +104311,9 @@
 	},
 /area/rogue/indoors/town)
 "xVR" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/open/transparent/openspace,
-/area/rogue/indoors/shelter/mountains)
+/obj/machinery/light/rogue/firebowl/standing/red,
+/turf/open/floor/rogue/concrete/bronze,
+/area/rogue/outdoors/mountains)
 "xVY" = (
 /turf/closed/wall/mineral/rogue/roofwall/outercorner{
 	dir = 8
@@ -418080,7 +418080,7 @@ gpn
 orc
 gpn
 gpn
-gpn
+xVR
 xoN
 jax
 jax
@@ -421536,7 +421536,7 @@ gpn
 gpn
 gpn
 gpn
-gpn
+xVR
 xoN
 hZK
 hZK
@@ -538620,7 +538620,7 @@ lIT
 bPo
 lIT
 clE
-xVR
+rbn
 rbn
 rbn
 jYx
