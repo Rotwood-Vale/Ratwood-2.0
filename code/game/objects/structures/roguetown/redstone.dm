@@ -333,7 +333,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	var/masterkey = TRUE //if masterkey can open this regardless
 	debris = list(/obj/item/roguegear = 1, /obj/item/natural/wood/plank = 1, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow = 1)
 
-/obj/structure/englauncher/Initialize()
+/obj/structure/englauncher/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -517,7 +517,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 			bodyzone =  pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 			quiver_fire(firedirectionthree, bodyzone)
 
-/obj/structure/englauncher/proc/quiver_fire(var/launcher_direction, var/launcher_bodyzone)
+/obj/structure/englauncher/proc/quiver_fire(launcher_direction, launcher_bodyzone)
 	if(!ammo)
 		return
 	if(ammo.arrows.len)
@@ -529,7 +529,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 			ammo.update_icon()
 			break
 
-/obj/structure/englauncher/proc/container_aerosolize(var/launcher_liquid, var/launcher_direction)
+/obj/structure/englauncher/proc/container_aerosolize(launcher_liquid, launcher_direction)
 	var/turf/T = get_step(src, launcher_direction) //check for turf
 	if(T)
 		var/obj/item/reagent_containers/con = launcher_liquid //get the container
@@ -617,11 +617,11 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	var/base_state = "floorhatch"
 	max_integrity = 0
 	redstone_structure = TRUE
-/*
-/obj/structure/floordoor/Initialize()
+
+/obj/structure/floordoor/Initialize(mapload)
 	AddComponent(/datum/component/squeak, list('sound/foley/footsteps/FTMET_A1.ogg','sound/foley/footsteps/FTMET_A2.ogg','sound/foley/footsteps/FTMET_A3.ogg','sound/foley/footsteps/FTMET_A4.ogg'), 100)
 	return ..()
-*/
+
 /obj/structure/floordoor/obj_break(damage_flag)
 	obj_flags = null
 	..()
@@ -659,7 +659,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	nomouseover = TRUE
 	mouse_opacity = 0
 
-/obj/structure/floordoor/gatehatch/Initialize()
+/obj/structure/floordoor/gatehatch/Initialize(mapload)
 	AddComponent(/datum/component/squeak, list('sound/foley/footsteps/FTMET_A1.ogg','sound/foley/footsteps/FTMET_A2.ogg','sound/foley/footsteps/FTMET_A3.ogg','sound/foley/footsteps/FTMET_A4.ogg'), 40)
 	return ..()
 

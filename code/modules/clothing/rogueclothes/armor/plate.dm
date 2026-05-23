@@ -66,7 +66,7 @@
 	var/legendaryarcane = FALSE
 	var/legendaryathletics = FALSE
 
-/obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer/Initialize()
+/obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer/Initialize(mapload)
 	.=..()
 	update_description()
 

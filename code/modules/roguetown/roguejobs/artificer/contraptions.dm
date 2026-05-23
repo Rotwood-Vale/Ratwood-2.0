@@ -610,7 +610,7 @@
 	grid_width = 64
 
 
-/obj/item/contraption/pick/drill/Initialize()
+/obj/item/contraption/pick/drill/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
