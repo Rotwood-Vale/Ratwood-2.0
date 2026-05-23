@@ -87,7 +87,7 @@
 		. += span_notice("Rollers don't consume stress from the network.")
 	. += span_notice("Use a <b>wrench</b> to rotate it.")
 
-/obj/structure/roller/get_mechanics_examine(mob/user)
+/obj/structure/roller/examine(mob/user)
 	. = ..()
 	. += span_info("Powered rollers move loose items and mobs in their facing direction.")
 	. += span_info("They accept rotation from their side connections and do not consume stress from the network.")

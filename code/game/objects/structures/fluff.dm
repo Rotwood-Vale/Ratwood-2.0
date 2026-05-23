@@ -890,7 +890,7 @@
 /obj/structure/fluff/alch/folding/attack_right(mob/user)
 	if(do_after(user, 5 SECONDS, target = src))
 		user.visible_message(span_notice("[user] folds [src]."), span_notice("You fold [src]."))
-		new /obj/item/folding_alchstation_stored(drop_location())
+		new /obj/item/folding_table_stored/alchstation(drop_location())
 		qdel(src)
 		return ..()
 

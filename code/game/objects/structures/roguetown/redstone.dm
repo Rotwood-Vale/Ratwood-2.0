@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	var/toggled = FALSE
 	redstone_structure = TRUE
 
-/obj/structure/lever/get_mechanics_examine(mob/user)
+/obj/structure/lever/examine(mob/user)
 	. = ..()
 	. += span_info("Left-click the lever to actuate whatever might be connected to it. The time needed to complete this action scales with your character's Strength.")
 
@@ -322,10 +322,10 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	var/firedirectiontwo = NORTHEAST //bullet variation for spread mode
 	var/firedirectionthree = NORTHWEST //bullet variation for spread mode
 	var/spreadmode = FALSE //spread out your shots, waste your ammo
-	var/locked = FALSE
+	locked = FALSE
 	var/keylock = FALSE
-	var/lockhash = 0
-	var/lockid = null
+	lockhash = 0
+	lockid = null
 	var/lockbroken = 0
 	var/locksound = 'sound/foley/doors/woodlock.ogg'
 	var/unlocksound = 'sound/foley/doors/woodlock.ogg'
@@ -577,7 +577,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 		return
 	else
 		var/obj/item/roguekey/K = I
-		if(K.lockhash == lockhash || istype(K, /obj/item/roguekey/lord) || istype(K, /obj/item/roguekey/skeleton)) //master key cares not for lockhashes
+		if(K.lockhash == lockhash || istype(K, /obj/item/roguekey/lord)) //master key cares not for lockhashes
 			lock_toggle(user)
 			return
 		else

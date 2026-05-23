@@ -1,5 +1,18 @@
 #define TRY_MISFIRE(target_mob) if(prob(misfire_chance)) misfire(target_mob)
 
+/obj
+
+	/// This is the result when the wood metalizer artifact is used on this item
+	var/metalizer_result
+	/// The smelting result, used by the smelter or by the portable smelter
+	var/smeltresult
+	/// The lock ID, used with keys, if a key has the same lock ID it will work on this lock
+	var/lockid
+	/// Lockhash goes hand in hand with lock ID. Horrible system. Still very necessary.
+	var/lockhash
+	/// Is this locked?
+	var/locked
+
 /obj/item/contraption
 	name = "random piece of machinery"
 	desc = "A cog with teeth meticulously crafted for tight interlocking."
@@ -20,6 +33,7 @@
 	//allows you to store several charges
 	var/max_stored_charge = 20
 	var/current_charge = 0
+	var/charge_per_use = 1
 	var/misfire_chance
 	var/sneaky_misfire_chance
 	/// Are we misfiring? Important for chain reactions.
@@ -60,7 +74,7 @@
 /obj/item/contraption/examine(mob/user)
 	. = ..()
 	if(!istype(user, /mob/living))
-		return
+		return TRUE
 	var/mob/living/player = user
 	var/skill = player.get_skill_level(/datum/skill/craft/engineering)
 	if(current_charge)
@@ -249,7 +263,7 @@
 	else
 		. += span_notice("All you can make out is a bunch of gibberish.")
 
-/obj/item/contraption/linker/get_mechanics_examine(mob/user)
+/obj/item/contraption/linker/examine(mob/user)
 	. = ..()
 	. += span_info("Use it like a multitool on compatible machinery to store a target in its buffer, then use it again on another compatible target to link them.")
 	. += span_info("Use it in-hand to wipe its stored buffer.")
@@ -310,7 +324,7 @@
 		var/obj/result = new randomingot(get_turf(I))
 		result.dir = newdir
 		qdel(I)
-	else 
+	else
 		to_chat(user, span_info("The [name] refuses to function."))
 		playsound(user, 'sound/items/flint.ogg', 100, FALSE)
 		flick(off_icon, src)
@@ -650,23 +664,23 @@
 	var/obj/machinery/light/rogue/smelter/hand_held
 	var/datum/effect_system/spark_spread/S = new()
 	var/countdown_ticks = 0
-	var/queued_explosion_severity = 0 
-	
+	var/queued_explosion_severity = 0
+
 	name = "portable smelter"
 	desc = "Furnaces are a thing of the past. The future is here!"
 
 	icon_state = "smelter_off"
-	var/on_icon = "smelter_on"
-	var/off_icon = "smelter_off"
+	on_icon = "smelter_on"
+	off_icon = "smelter_off"
 	var/misfire_icon = "smelter_misfire"
 	var/fin_icon = "smelter_fin"
-	
+
 	w_class = WEIGHT_CLASS_NORMAL
-	
+
 	grid_height = 64
 	grid_width = 64
 
-	prime_power_source = list(/obj/item/rogueore/coal, /obj/item/rogueore/charcoal)
+	prime_power_source = list(/obj/item/rogueore/coal, /obj/item/rogueore/coal/charcoal)
 	accepted_power_source = /obj/item/grown/log/tree/small
 
 	max_stored_charge = 10
@@ -690,7 +704,7 @@
 
 	if(istype(attacking_item, /obj/item/rogueweapon/tongs))
 		var/obj/item/rogueweapon/tongs/T = attacking_item
-		
+
 		if(T.hingot) // Safely check for the ingot inside the validated tongs block
 
 			if(current_charge == 0)
@@ -708,12 +722,12 @@
 
 				user.visible_message(span_info("[user] finishes heating the bar."))
 				playsound(src.loc,'sound/misc/frying.ogg', 80, FALSE)
-				
+
 				icon_state = off_icon
 				flick(fin_icon, src)
-				
+
 				current_charge -= 1
-				
+
 				var/obj/item/rogueweapon/tongs/heldstuff = user.get_active_held_item()
 				if(istype(heldstuff, /obj/item/rogueweapon/tongs/stone) && heldstuff.obj_integrity <= 1)
 					heldstuff.hingot.forceMove(get_turf(user))
@@ -722,7 +736,7 @@
 					heldstuff.obj_break()
 
 				TRY_MISFIRE(user)
-					
+
 				return TRUE
 			else
 				user.visible_message(span_info("The heating process was interrupted!"))
@@ -737,7 +751,7 @@
 	if(src.current_charge == 0)
 		to_chat(user, span_notice("I should refuel the [src] before trying to use it!"))
 		return TRUE
-	
+
 	if(hand_held.attack_right(user))
 		TRY_MISFIRE(user)
 		return TRUE
@@ -748,7 +762,7 @@
 	. = ..()
 	hand_held.examine(user, params)
 
-/obj/item/contraption/smelter/proc/misfire(mob/living/user)
+/obj/item/contraption/smelter/proc/missmelt(mob/living/user)
 	var/total_delay = rand(2, 4) * (1 SECONDS)
 
 	if(queued_explosion_severity > 0 && countdown_ticks <= 0)
@@ -777,16 +791,11 @@
 		countdown_ticks--
 
 	to_chat(user, span_warning("\The [src] spits violently and loses pressure!"))
-	charge_deduction(src, user, charge_per_use) 
-	
+	charge_deduction(src, user, charge_per_use)
+
 	S.set_up(1, 1, get_turf(src))
 	S.start()
 	playsound(user, 'sound/items/flint.ogg', 100, FALSE)
-	
-
-	if(user && user.get_turfsqdist(src) <= 2)
-		shake_camera(user, 1, 1)
-		flash_fullscreen(user, "whiteflash", 1)
 
 	addtimer(CALLBACK(src, PROC_REF(misfire), user), total_delay)
 	return TRUE
@@ -794,10 +803,10 @@
 /obj/item/contraption/smelter/proc/execute_burst_explosion()
 	visible_message(span_danger("\The [src] bursts into flames!"))
 	explosion(epicenter = src, light_impact_range = 3, flame_range = 1, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
-	
-	queued_explosion_severity = 0 
-	countdown_ticks = 0           
-	misfiring = FALSE  
+
+	queued_explosion_severity = 0
+	countdown_ticks = 0
+	misfiring = FALSE
 
 	return TRUE
 

@@ -7,14 +7,14 @@
 	var/on = FALSE
 	//these is built and anchored, artificers need to be careful where they place them, one of the drawbacks
 	anchored = TRUE
-	density = TRUE 
+	density = TRUE
 	layer = ABOVE_MOB_LAYER
 	stress_generator = TRUE
 	rotation_structure = TRUE
 	initialize_dirs = CONN_DIR_FORWARD | CONN_DIR_FLIP
 	debris = list(/obj/item/magic/infernal/core = 1)
 
-/obj/structure/infernalengine/get_mechanics_examine(mob/user)
+/obj/structure/infernalengine/examine(mob/user)
 	. = ..()
 	. += span_info("This engine generates rotational power continuously for connected machinery while it remains active.")
 	. += span_info("Keep it out of wet terrain. Water can extinguish it and stop the engine.")

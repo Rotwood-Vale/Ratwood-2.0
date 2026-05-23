@@ -1,4 +1,4 @@
-/obj/item/clothing/gloves/roguetown/chain/contraption
+/obj/item/clothing/gloves/roguetown/contraption
 	var/obj/item/accepted_power_source = /obj/item/roguegear	//Bronze by default
 	//this is what we use to double power items with, this isn't for all devices
 	var/obj/item/prime_power_source = /obj/item/debug
@@ -11,34 +11,34 @@
 	var/sneaky_misfire_chance
 	var/misfiring = FALSE
 	var/cog_accept = TRUE
-
-/obj/item/clothing/gloves/roguetown/chain/contraption/ComponentInitialize()
+/*
+/obj/item/clothing/gloves/roguetown/contraption/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_HONORBOUND)
-
+*/
 // === CONTRAPTION CORE BEHAVIOR ===
-/obj/item/clothing/gloves/roguetown/chain/contraption/proc/battery_collapse(obj/O, mob/living/user)
+/obj/item/clothing/gloves/roguetown/contraption/proc/battery_collapse(obj/O, mob/living/user)
 	to_chat(user, span_info("The [accepted_power_source.name] powering [src] fizzles into nothing!"))
 	playsound(src, pick('sound/combat/hits/onmetal/grille (1).ogg','sound/combat/hits/onmetal/grille (2).ogg'), 100, FALSE)
 	O.take_damage(400, BRUTE, "blunt", 1)
 
-/obj/item/clothing/gloves/roguetown/chain/contraption/proc/misfire(obj/O, mob/living/user)
+/obj/item/clothing/gloves/roguetown/contraption/proc/misfire(obj/O, mob/living/user)
 	to_chat(user, span_danger("[src] spark violently in your hands!"))
 	playsound(src, 'sound/misc/bell.ogg', 100)
 	addtimer(CALLBACK(src, PROC_REF(misfire_result), O, user), rand(5, 30))
 
-/obj/item/clothing/gloves/roguetown/chain/contraption/proc/misfire_result(obj/O, mob/living/user)
+/obj/item/clothing/gloves/roguetown/contraption/proc/misfire_result(obj/O, mob/living/user)
 	misfiring = TRUE
 	explosion(src, light_impact_range = 2, flame_range = 2, smoke = TRUE)
 	O.take_damage(400, BRUTE, "blunt", 1)
 
-/obj/item/clothing/gloves/roguetown/chain/contraption/proc/charge_deduction(obj/O, mob/living/user, deduction)
+/obj/item/clothing/gloves/roguetown/contraption/proc/charge_deduction(obj/O, mob/living/user, deduction)
 	current_charge -= deduction
 	if(current_charge <= 0)
 		addtimer(CALLBACK(src, PROC_REF(battery_collapse), O, user), 5)
 
 
-/obj/item/clothing/gloves/roguetown/chain/contraption/voltic
+/obj/item/clothing/gloves/roguetown/contraption/voltic
 	name = "voltic contraption gauntlets"
 	desc = "A pair of bronze-plated gauntlets fitted with whirring machinery. Runic enigmas have been meticulously etched onto their joints, forming a voltic incantation that hums with electrical power. It hungers for cogs."
 	icon_state = "volticgauntlets"
@@ -49,8 +49,8 @@
 	max_integrity = ARMOR_INT_SIDE_BRONZE
 	break_sound = 'sound/foley/breaksound.ogg'
 	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
-	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
+	pickup_sound = 'sound/foley/equip/equip_armor.ogg'
+	equip_sound = 'sound/foley/equip/equip_armor.ogg'
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/bronze
 	grid_width = 64
@@ -69,7 +69,7 @@
 
 
 
-/obj/item/clothing/gloves/roguetown/chain/contraption/voltic/attackby(obj/item/I, mob/user, params)
+/obj/item/clothing/gloves/roguetown/contraption/voltic/attackby(obj/item/I, mob/user, params)
 	var/datum/effect_system/spark_spread/S = new()
 	var/turf/front = get_turf(src)
 	if(istype(I, accepted_power_source))
@@ -105,14 +105,14 @@
 			playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
 			qdel(I)
 
-/obj/item/clothing/gloves/roguetown/chain/contraption/voltic/get_mechanics_examine(mob/user)
+/obj/item/clothing/gloves/roguetown/contraption/voltic/examine(mob/user)
 	. = ..()
 	. += span_info("Insert a bronze gear into the gauntlets to charge them.")
 	. += span_info("Right-click the gauntlets while wearing or holding them to prime a short lightning burst.")
 	. += span_info("The burst shocks nearby targets within 2 tiles, briefly immobilizes them, and consumes charge. After use, the gauntlets go on cooldown.")
 
 
-/obj/item/clothing/gloves/roguetown/chain/contraption/voltic/attack_right(mob/user)
+/obj/item/clothing/gloves/roguetown/contraption/voltic/attack_right(mob/user)
 	if(loc != user)
 		return
 	if(cooldowny && world.time < cooldowny + cdtime)
@@ -127,7 +127,7 @@
 	update_icon()
 	activate(user)
 
-/obj/item/clothing/gloves/roguetown/chain/contraption/voltic/proc/demagicify()
+/obj/item/clothing/gloves/roguetown/contraption/voltic/proc/demagicify()
 	active = FALSE
 	update_icon()
 	if(ismob(loc))
@@ -136,7 +136,7 @@
 		user.update_inv_wear_id()
 
 	// === VOLTIC ZAP ===
-/obj/item/clothing/gloves/roguetown/chain/contraption/voltic/proc/activate(mob/living/user)
+/obj/item/clothing/gloves/roguetown/contraption/voltic/proc/activate(mob/living/user)
 	if(!user)
 		return
 	if(obj_broken)

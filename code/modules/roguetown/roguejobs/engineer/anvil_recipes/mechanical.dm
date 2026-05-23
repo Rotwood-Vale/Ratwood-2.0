@@ -2,7 +2,7 @@
 	i_type = "Engineering"
 	appro_skill = /datum/skill/craft/engineering
 	craftdiff = 1
-	
+
 //--------- TIN RECIPES -----------
 
 /datum/anvil_recipe/engineering/nails
@@ -118,14 +118,14 @@
 	name = "Folding Cauldron (+1 Small Log, +Stone Pot, +Tin)"
 	req_bar = /obj/item/ingot/bronze
 	additional_items = list(/obj/item/grown/log/tree/small, /obj/item/reagent_containers/glass/bucket/pot/stone, /obj/item/ingot/tin)
-	created_item = /obj/item/folding_alchcauldron_stored
+	created_item = /obj/item/folding_table_stored/alchcauldron
 	craftdiff = 3
 
 /datum/anvil_recipe/engineering/folding_alchstation_stored
 	name = "Alchemical Station Kit (+2 Small Log, +Bottle, +Cog)"
 	req_bar = /obj/item/ingot/bronze
 	additional_items = list(/obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small, /obj/item/reagent_containers/glass/bottle, /obj/item/roguegear)
-	created_item = /obj/item/folding_alchstation_stored
+	created_item = /obj/item/folding_table_stored/alchstation
 	craftdiff = 3
 
 /datum/anvil_recipe/engineering/bronze/lamptern
@@ -285,7 +285,7 @@
 	name = "Voltic Gauntlet (+1 Tin ingot, +2 Bronze gear, +1 cinnabar ore)"
 	req_bar = /obj/item/ingot/bronze
 	additional_items = list(/obj/item/roguegear, /obj/item/roguegear, /obj/item/ingot/tin, /obj/item/rogueore/cinnabar)
-	created_item = /obj/item/clothing/gloves/roguetown/chain/contraption/voltic
+	created_item = /obj/item/clothing/gloves/roguetown/contraption/voltic
 	craftdiff = 4
 
 /datum/anvil_recipe/engineering/steamshield

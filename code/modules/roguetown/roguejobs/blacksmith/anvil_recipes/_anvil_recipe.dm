@@ -26,6 +26,7 @@
 	// Whether this recipe will be hidden from recipe books
 	var/hides_from_books = FALSE
 	var/req_trait = null
+	var/rotations_required = 1
 
 /datum/anvil_recipe/New(datum/P, using_blade = FALSE, ...)
 	. = ..()
@@ -155,8 +156,8 @@
 		html += "in Engineering<br>"
 
 	html += {"<div>
-		      <strong>Requirements</strong>
-			  <br>"}
+		    <strong>Requirements</strong>
+			<br>"}
 
 	html += "[icon2html(new req_bar, user)] Start with [initial(req_bar.name)] on an anvil.<br>"
 	html += "Hammer the material.<br>"

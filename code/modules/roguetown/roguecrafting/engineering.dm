@@ -268,7 +268,7 @@
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 3
-
+/*
 /datum/crafting_recipe/roguetown/engineering/twentyboltsbronze
 	name = "hastequilled crossbow bolt, bronze (x20)"
 	category = "Ammo"
@@ -301,7 +301,7 @@
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 3
-/*
+
 /datum/crafting_recipe/roguetown/engineering/heavycrossbow
 	name = "siegebow with heavy bolt pouch"
 	category = "Weapons"
@@ -434,7 +434,7 @@
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 5
 
-//poison arrow and bolt 
+//poison arrow and bolt
 /* Place holder if poison bolts come back
 /datum/crafting_recipe/roguetown/engineering/poisonbolt_five
 	name = "poison bolt (x5)"
@@ -794,7 +794,7 @@
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 5 
+	craftdiff = 5
 
 /datum/crafting_recipe/roguetown/engineering/infernalengine
 	name = "infernal engine"
@@ -972,10 +972,10 @@
 	)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 4 
+	craftdiff = 4
 
 // ------------ Craftable Traps ----------
-//setting these up as a more "arcane" alternative to trap making done with engineering. 
+//setting these up as a more "arcane" alternative to trap making done with engineering.
 
 /datum/crafting_recipe/roguetown/engineering/rocktrap
 	name = "rock trap (engineered)"
