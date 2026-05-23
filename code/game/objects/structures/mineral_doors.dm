@@ -643,7 +643,7 @@
 		to_chat(user, "<span class='warning'>This cannot be picked while it is open.</span>")
 		return
 	if(verysecure) 
-		to_chat(user, "<span class='warning'>This lock is too complex to be picked.</span>")
+		to_chat(user, "<span class='warning'>This lock is too complex to be picked, I will need the key.</span>")
 		return
 	if(!keylock)
 		return
