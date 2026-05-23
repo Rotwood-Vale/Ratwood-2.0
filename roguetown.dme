@@ -3031,6 +3031,7 @@
 #include "modular\code\game\objects\items\rogueitems\chastity\chastityitems.dm"
 #include "modular\code\game\objects\structures\falsewall.dm"
 #include "modular\code\modules\admin\bunker_bypass.dm"
+#include "modular\code\modules\crafting\marble.dm"
 #include "modular\code\modules\crafting\lewd\chastity_crafting.dm"
 #include "modular\code\modules\crafting\lewd\dildo_crafting.dm"
 #include "modular\code\modules\jobs\job_types\roguetown\roguetown.dm"
