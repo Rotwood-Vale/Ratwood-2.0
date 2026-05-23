@@ -352,7 +352,7 @@
 	smelting_ticks = 45
 	climbable = FALSE
 
-	/obj/machinery/light/rogue/smelter/hand_held
+/obj/machinery/light/rogue/smelter/hand_held
 	anchored = FALSE
 	density = FALSE
 	climbable = FALSE
