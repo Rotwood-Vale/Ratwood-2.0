@@ -8717,6 +8717,10 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor/rockhill)
+"bWI" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/rogue/grassred,
+/area/rogue/outdoors/mountains)
 "bWV" = (
 /obj/structure/stairs/stone{
 	dir = 4
@@ -38114,14 +38118,6 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/town/grove)
-"iHb" = (
-/turf/closed/wall/mineral/rogue/tent{
-	dir = 4;
-	name = "sail";
-	desc = "A sail made from durable fabric. Used to propel a boat by harnessing Abyssor's tidal winds.";
-	opacity = 0
-	},
-/area/rogue/outdoors/rtfield/rockhill)
 "iHc" = (
 /obj/structure/roguerock,
 /turf/open/floor/rogue/naturalstone,
@@ -48064,6 +48060,9 @@
 /obj/structure/closet/dirthole/grave,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cave/goblinfort)
+"kSg" = (
+/turf/open/floor/rogue/grassyel,
+/area/rogue/outdoors/mountains)
 "kSl" = (
 /obj/structure/flora/roguegrass/swampweed,
 /turf/open/floor/rogue/grass,
@@ -88106,6 +88105,10 @@
 /obj/item/grown/log/tree/stick,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/shelter/bog)
+"ukz" = (
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/grassred,
+/area/rogue/outdoors/mountains)
 "ukD" = (
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/indoors/town/cell/warden)
@@ -97345,6 +97348,11 @@
 /obj/structure/manaflower,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/town/grove)
+"wtd" = (
+/obj/structure/flora/roguegrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/rogue/grassyel,
+/area/rogue/outdoors/mountains)
 "wte" = (
 /turf/open/floor/rogue/rooftop/green/corner1{
 	dir = 8
@@ -104301,6 +104309,10 @@
 	icon_state = "vertw"
 	},
 /area/rogue/indoors/town)
+"xVR" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/transparent/openspace,
+/area/rogue/indoors/shelter/mountains)
 "xVY" = (
 /turf/closed/wall/mineral/rogue/roofwall/outercorner{
 	dir = 8
@@ -275605,8 +275617,8 @@ oLq
 wSn
 eFj
 aCq
-iHb
-iHb
+shj
+shj
 fDB
 wZF
 uHW
@@ -428015,7 +428027,7 @@ xZg
 xZg
 xZg
 xZg
-xZg
+wtd
 jYx
 jYx
 jYx
@@ -428446,8 +428458,8 @@ xZg
 xZg
 xZg
 xZg
-xZg
-xZg
+kSg
+gtz
 jYx
 jYx
 jYx
@@ -428878,8 +428890,8 @@ xZg
 xZg
 xZg
 xZg
-xZg
-xZg
+ukz
+bWI
 jYx
 jYx
 jYx
@@ -429311,7 +429323,7 @@ xZg
 xZg
 xZg
 xZg
-xZg
+ukz
 jYx
 jYx
 jYx
@@ -538607,7 +538619,7 @@ lIT
 bPo
 lIT
 clE
-rbn
+xVR
 rbn
 rbn
 jYx
