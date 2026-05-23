@@ -545,6 +545,9 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	testing("basedtest 5")
 
 	if(job && !job.override_latejoin_spawn(character))
+		if(rank == "Kingsfield Visitor" || rank == "Ferentian Envoy")
+			qdel(character)
+			return FALSE
 		testing("basedtest 6")
 		SSjob.SendToLateJoin(character)
 		testing("basedtest 7")
