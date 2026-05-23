@@ -15,7 +15,6 @@ import { Window } from '../layouts';
 type HermesEntry = {
   num: number;
   tag: string;
-  mailtags: string;
 };
 
 type Data = {
@@ -226,7 +225,6 @@ export const FaxPanel = (props) => {
                       <option key={h.num} value={h.num}>
                         #{h.num}
                         {h.tag ? ` — ${h.tag}` : ''}
-                        {h.mailtags ? ` (${h.mailtags})` : ''}
                       </option>
                     ))}
                   </select>
