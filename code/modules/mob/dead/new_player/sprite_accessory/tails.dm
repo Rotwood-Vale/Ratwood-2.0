@@ -451,3 +451,24 @@
 	name = "Tailmaw (Wag)"
 	icon_state = "tailmaw2"
 	can_wag = TRUE
+
+/datum/sprite_accessory/tail/tailmaw2_head
+	name = "Tailmaw (Coloured Head)"
+	icon_state = "tailmawwag_head"
+	color_keys = 2
+	color_key_names = list("Tail", "Head")
+	can_wag = TRUE
+
+/datum/sprite_accessory/tail/tailmaw2_stripes
+	name = "Tailmaw (Striped)"
+	icon_state = "tailmawwag_striped"
+	color_keys = 2
+	color_key_names = list("Tail", "Stripes")
+	can_wag = TRUE
+
+/datum/sprite_accessory/tail/tailmaw2_headstripes
+	name = "Tailmaw (Striped, Coloured Head)"
+	icon_state = "tailmawwag_stripedhead"
+	color_keys = 3
+	color_key_names = list("Tail", "Stripes", "Head")
+	can_wag = TRUE
