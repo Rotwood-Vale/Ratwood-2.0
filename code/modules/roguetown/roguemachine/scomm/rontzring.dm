@@ -85,9 +85,6 @@
 	if(user.restrained() || user.incapacitated())
 		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
 		return
-	if(!get_location_accessible(user, BODY_ZONE_PRECISE_MOUTH, grabs = TRUE))
-		to_chat(user, span_warning("My mouth is covered!"))
-		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	var/input_text = input(user, "Enter your message:", "Message")
 	if(input_text)

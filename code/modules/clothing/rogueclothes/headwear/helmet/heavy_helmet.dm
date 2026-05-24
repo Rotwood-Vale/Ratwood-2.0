@@ -719,6 +719,7 @@
 	item_state = "zizofrogmouth"
 	block2add = FOV_BEHIND
 	max_integrity = ARMOR_INT_HELMET_ANTAG
+	armor = ARMOR_ASCENDANT
 
 /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/zizo/Initialize(mapload)
 	. = ..()
@@ -737,6 +738,7 @@
 	bloody_icon = 'icons/effects/blood64.dmi'
 	experimental_inhand = FALSE
 	experimental_onhip = FALSE
+	armor = ARMOR_ASCENDANT
 
 /obj/item/clothing/head/roguetown/helmet/heavy/graggar
 	name = "vicious helmet"
@@ -776,6 +778,7 @@
 	icon_state = "zizobarbute"
 	max_integrity = ARMOR_INT_HELMET_ANTAG
 	peel_threshold = 4
+	armor = ARMOR_ASCENDANT
 
 /obj/item/clothing/head/roguetown/helmet/heavy/zizo/Initialize(mapload)
 	. = ..()

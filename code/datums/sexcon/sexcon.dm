@@ -677,8 +677,39 @@
 	user.add_stress(/datum/stressevent/cumok)
 	user.emote("sexmoanhvy", forced = TRUE)
 	user.playsound_local(user, 'sound/misc/mat/end.ogg', 100)
+	try_xylix_confetti_climax()
 	last_ejaculation_time = world.time
 	record_round_statistic(STATS_PLEASURES)
+
+/datum/sex_controller/proc/try_xylix_confetti_climax()
+	if(user?.patron?.type != /datum/patron/divine/xylix)
+		return
+	if(user.get_skill_level(/datum/skill/magic/holy) < SKILL_LEVEL_NOVICE)
+		return
+	var/trigger_chance = user.has_status_effect(/datum/status_effect/debuff/emberwine) ? 2 : 1
+	if(!prob(trigger_chance))
+		return
+	var/turf/center = get_turf(user)
+	if(!center)
+		return
+	playsound(user, 'sound/misc/xylixconfetti.ogg', 50, TRUE, ignore_walls = FALSE)
+	if(user.has_status_effect(/datum/status_effect/debuff/emberwine))
+		for(var/turf/T in RANGE_TURFS(1, center))
+			new /obj/effect/decal/cleanable/confetti/xylix(T)
+		return
+
+	var/turf/front = get_step(center, user.dir)
+	if(!front)
+		front = center
+	var/left_dir = turn(user.dir, 90)
+	var/right_dir = turn(user.dir, -90)
+	var/turf/left = get_step(front, left_dir)
+	var/turf/right = get_step(front, right_dir)
+	new /obj/effect/decal/cleanable/confetti/xylix(front)
+	if(left)
+		new /obj/effect/decal/cleanable/confetti/xylix(left)
+	if(right)
+		new /obj/effect/decal/cleanable/confetti/xylix(right)
 
 /datum/sex_controller/proc/after_intimate_climax(oral, mob/living/carbon/human/climax_target = null)
 	var/mob/living/carbon/human/effective_target = climax_target || target

@@ -163,9 +163,6 @@
 		to_chat(user, span_warning("The gemstone inside the ring radiates heat. It's still cooling down from its last use."))
 		playsound(loc, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		return
-	if(!get_location_accessible(user, BODY_ZONE_PRECISE_MOUTH, grabs = TRUE))
-		to_chat(user, span_warning("My mouth is covered!"))
-		return
 	visible_message(span_notice ("[user] presses their ring against their mouth."))
 	var/input_text = input(user, "Enter your message:", "Message")
 	if(!input_text)

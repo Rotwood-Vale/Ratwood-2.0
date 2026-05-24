@@ -1,0 +1,4 @@
+author: "EvenInDeathIStillServe"
+delete-after: True
+changes:
+  - rscadd: "Your voice descriptor will prefix your voice identity on speaking when masked or out of view."
