@@ -172,6 +172,11 @@ body {
 }
 
 @font-face {
+	font-family: "Rustlander";
+	src: url("rustlander.ttf");
+}
+
+@font-face {
 	font-family: "Romeodn";
 	src: url("aavnic.ttf");
 }
@@ -952,6 +957,10 @@ h2.alert {
 }
 .gronnic {
 	font-family: "Jorvik Informal", "Pterra";
+	font-size: 100%;
+}
+.rustlander {
+	font-family: "Rustlander", "Pterra";
 	font-size: 100%;
 }
 .aavnic {
