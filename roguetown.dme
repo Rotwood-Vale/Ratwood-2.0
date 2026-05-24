@@ -2065,6 +2065,7 @@
 #include "code\modules\language\roguetown\merar.dm"
 #include "code\modules\language\roguetown\orc.dm"
 #include "code\modules\language\roguetown\otavan.dm"
+#include "code\modules\language\roguetown\rustlander.dm"
 #include "code\modules\language\roguetown\sandspeak.dm"
 #include "code\modules\language\roguetown\thievescant.dm"
 #include "code\modules\language\roguetown\undead.dm"

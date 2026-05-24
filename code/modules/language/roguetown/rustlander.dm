@@ -1,18 +1,20 @@
-/datum/language/celestial
-	name = "Sama'glos"
-	desc = "The divine language of celestial beings and the desert kingdoms. Also known as Sandspeak, it carries the wisdom of the heavens and the shifting sands."
+/datum/language/rustlander
+	name = "Glossa"
+	desc = "Once the tongue used during the wars against Zizo a long time ago, it has now changed and morphed, but is vaguely similar to the celestial tongue."
 	speech_verb = "says"
 	ask_verb = "asks"
 	exclaim_verb = "yells"
-	key = "c"
+	key = "x"
 	space_chance = 60
 	default_priority = 80
-	icon_state = "celestial"
-	spans = list(SPAN_SAND)
+	icon_state = "celestial" // similar linguistic background
+	spans = list(SPAN_RUSTLANDER)
 	syllables = list(
-		"ak", "al", "am", "an", "ar", "bi", "da", "de", "di", "ek", "el",
-		"en", "er", "il", "in", "ir", "ka", "la", "le", "li", "ma", "nd",
-		"ol", "on", "ra", "ve", "ya", "ada", "ama", "ara", "ard", "ari", "asi",
-		"bil", "bir", "cin", "edi", "eni", "ere", "eri", "ici", "ile", "ili", "ind",
-		"lan", "lar", "ldu", "ler", "mak", "man", "nda", "nde", "nla", "ola", "old",
-		"onu", "rin", "var", "ver", "yor")
+    "ακ", "αλ", "αμ", "μπι", "ντα", "δε", "ντι", "εκ", "ελ",  "εν", "ερ", 
+	"ιλ", "κα", "λα", "λε", "λι", "μα", "ντ",
+    "ολ",  "βε", "αντα", "αμα", "αρντ", "μπιλ", "μπιρ", "τσιν", "εντι",
+	"το", "τα", "κα", "τη", "ει", "σε", "ικ", "με",
+	"απο", "αυτ", "και", "του", "την", "δεν", "βρε", "ωρε", "ορε", "ενα",
+	"ενι", "ερε", "ερι", "ιτσι", "ιλε", "ιλι", "ιντ",
+    "λαν", "λαρ", "λντου", "λερ", "μακ", "μαν", "ντα", "ντε", "νλα", "ολα", "ολντ",
+    "βαρ", "βερ")
