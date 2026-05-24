@@ -212,13 +212,13 @@
 		//This and necra's vow need a better way of handling this. But I'm too lazy to do that.
 		if(M.has_status_effect(/datum/status_effect/buff/inviolability))
 			if(isnull(user.mind))
-				user.adjust_fire_stacks(1)
+				user.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder)
 				user.ignite_mob()
 			else
 				if(prob(30))
 					to_chat(M, span_warning("Some matter of force harms us!"))
-			user.adjust_blurriness(2)
-			user.adjustBruteLoss(rand(10, 15))
+			user.adjust_blurriness(3)
+			user.adjustBruteLoss(rand(15, 30))
 
 	//Niche signal for post-swingdelay attacks when we want to care about those.
 	_attacker_signal = null

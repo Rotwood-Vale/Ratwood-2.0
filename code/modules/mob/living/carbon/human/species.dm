@@ -1301,13 +1301,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(user.mob_biotypes & MOB_UNDEAD)//This and necra's vow need a better way of handling this. But I'm too lazy to do that.
 			if(target.has_status_effect(/datum/status_effect/buff/inviolability))
 				if(isnull(user.mind))
-					user.adjust_fire_stacks(1)
+					user.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder)
 					user.ignite_mob()
 				else
 					if(prob(30))
 						to_chat(user, span_warning("Some matter of force harms us!"))
-				user.adjust_blurriness(2)
-				user.adjustBruteLoss(rand(10, 15))
+				user.adjust_blurriness(3)
+				user.adjustBruteLoss(rand(15, 30))
 
 /*		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(user.dna.species.punchdamagelow)
