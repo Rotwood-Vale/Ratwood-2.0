@@ -124,7 +124,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 				arrowpart += " ⇈"
 			if(speakturf.z < sourceturf.z)
 				arrowpart += " ⇊"
-			
+
 			var/hidden = TRUE
 			if(HAS_TRAIT(src, TRAIT_KEENEARS))
 				if(ishuman(speaker) && ishuman(src))
@@ -183,12 +183,10 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return FALSE
 	return TRUE
 
-/atom/movable/proc/show_redflash()
-	return TRUE
-
-/mob/show_redflash()
+/mob/proc/redflash()
 	if(client?.prefs?.no_redflash)
 		return FALSE
+	flash_fullscreen()
 	return TRUE
 
 /atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
