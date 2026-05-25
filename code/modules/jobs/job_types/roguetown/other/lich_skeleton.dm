@@ -153,7 +153,7 @@ LICH SKELETONS
 
 	H.energy = H.max_energy
 
-// Heavy/Tanky goon. Not heavy armor but due to the steel + weapons they'll fare just fine.
+// Heavy/Tanky goon. Heavy armor - an alternative to avantyne
 /datum/advclass/greater_skeleton/lich/bulwark
 	name = "Ancient Death Bulwark"
 	tutorial = "All throughout, you've borne the brunt. And even in death, will you continue."
@@ -191,11 +191,11 @@ LICH SKELETONS
 
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/guard/paalloy
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/paalloy
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/paalloy
-	pants = /obj/item/clothing/under/roguetown/chainlegs/kilt/paalloy
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/paalloy
+	pants = /obj/item/clothing/under/roguetown/platelegs/paalloy
 	neck = /obj/item/clothing/neck/roguetown/gorget/paalloy
 	shoes = /obj/item/clothing/shoes/roguetown/boots/aalloy
-	gloves = /obj/item/clothing/gloves/roguetown/chain/paalloy
+	gloves = /obj/item/clothing/gloves/roguetown/plate/paalloy
 
 	H.adjust_blindness(-3)
 	var/weapons = list("Greatsword", "Bardiche", "Grand Mace", "Mace + Shield","Spear + Shield", "Warhammer + Shield")
