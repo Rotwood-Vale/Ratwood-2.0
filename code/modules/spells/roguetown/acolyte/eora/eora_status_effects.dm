@@ -306,7 +306,7 @@
 /datum/status_effect/debuff/eoran_wilting/tick()
 	if(isliving(owner))
 		var/mob/living/L = owner
-		L.redflash("redflash3", 1)
+		L.painflash(1)
 		
 		// Small damage to limbs as warning
 		if(iscarbon(L))

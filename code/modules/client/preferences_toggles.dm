@@ -120,13 +120,13 @@
 /client/verb/toggle_Chastity_Hardmode()
 	set category = "Options"
 	set name = "Toggle Permanent Binding"
-	
+
 	if(!prefs)
 		return
-	
+
 	// Enabling hard mode requires confirmation
 	if(prefs.chastity_hardmode == CHASTITY_HARDMODE_DISABLED)
-		var/confirm = alert(src, 
+		var/confirm = alert(src,
 			"PERMANENT CHASTITY BINDING:\n\n\
 			• Only the device's unique key can unlock it\n\
 			• Keys can be lost, stolen, or destroyed forever\n\
@@ -139,11 +139,11 @@
 			"Permanent Chastity Binding",
 			"I accept the binding",
 			"I refuse")
-		
+
 		if(confirm != "I accept the binding")
 			to_chat(src, span_notice("You decline the permanent binding."))
 			return
-		
+
 		prefs.chastity_hardmode = CHASTITY_HARDMODE_ENABLED
 		prefs.save_preferences()
 		if(ishuman(mob))
@@ -288,11 +288,25 @@
 
 /client/verb/toggle_redflash()
 	set category = "Options"
-	set name = "Toggle Red Screen Flash"
-	if(prefs)
-		prefs.no_redflash = !prefs.no_redflash
-		prefs.save_preferences()
-		to_chat(src, "You will see the red flashing effect [prefs.no_redflash ? "less" : "more"] frequently.")
+	set name = "Modify Red Screen Flash"
+
+	if(!prefs)
+		return FALSE
+
+	switch(prefs.redflash_mode)
+
+		if(1)
+			prefs.redflash_mode = 0
+			to_chat(src, "Your screen flash is now: REMOVED (Disabled completely).")
+		if(2)
+			prefs.redflash_mode = 1
+			to_chat(src, "Your screen flash is now: REDUCED (Caped at lowest setting).")
+		else
+			prefs.redflash_mode = 2
+			to_chat(src, "Your screen flash is now: NORMAL (Full effects).")
+
+	mob.clear_fullscreen("brute")
+	return prefs.save_preferences()
 
 /client/verb/toggle_lobby_music()
 	set name = "Toggle Lobby Music"

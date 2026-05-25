@@ -183,12 +183,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return FALSE
 	return TRUE
 
-/mob/proc/redflash()
-	if(client?.prefs?.no_redflash)
-		return FALSE
-	flash_fullscreen()
-	return TRUE
-
 /atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
 

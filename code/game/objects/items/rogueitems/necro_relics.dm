@@ -72,7 +72,7 @@
 		return FALSE
 	if(!HAS_TRAIT(user, TRAIT_CABAL))
 		to_chat(user, span_warning("The crystal rejects you! It shatters within your grasp!"))
-		user.redflash("redflash1")
+		user.painflash(1)
 		new /obj/item/natural/glass_shard(get_turf(src))
 		playsound(src, "glassbreak", 70, TRUE)
 		qdel(src)
@@ -117,7 +117,7 @@
 	else
 		to_chat(user, span_notice("The crystal's glow lessens. [current_charges] use\s remain."))
 
-	user.redflash("redflash1")
+	user.painflash(1)
 	playsound(src, "shatter", 50, TRUE)
 
 	return TRUE

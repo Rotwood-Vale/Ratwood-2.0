@@ -165,7 +165,7 @@
 		if(do_after(L, 25, target = src))
 			var/mob/living/carbon/C = user
 			to_chat(C, span_userdanger("OH SWEET PSYDON, WHY DID I THINK THIS WAS A GOOD IDEA???"))
-			C.redflash("redflash3")
+			C.painflash(3)
 			C.emote("agony", forced = TRUE)
 			C.adjust_fire_stacks(500) //you deserve this.
 			C.ignite_mob()
@@ -252,6 +252,6 @@
 		if(do_after(L, 25, target = src))
 			var/mob/living/carbon/C = user
 			to_chat(C, span_userdanger("OH SWEET PSYDON, WHY DID I THINK THIS WAS A GOOD IDEA???"))
-			C.redflash("redflash3")
+			C.painflash(3)
 			C.emote("agony", forced = TRUE)
 			C.gib() //YOU. LITERALLY. DESERVE THIS.

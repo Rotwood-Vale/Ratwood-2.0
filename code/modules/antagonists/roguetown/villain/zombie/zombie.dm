@@ -413,7 +413,7 @@
 
 
 	if (converted || infected_wake)
-		zombie.redflash("redflash3")
+		zombie.painflash(3)
 		zombie.emote("scream") // Warning for nearby players
 		zombie.Knockdown(1)
 

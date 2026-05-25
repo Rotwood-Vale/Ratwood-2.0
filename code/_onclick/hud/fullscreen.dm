@@ -73,6 +73,29 @@
 			else
 				client.screen -= screen
 
+/mob/proc/redflash(overlay_type, severity)
+	if(!client || client.prefs.redflash_mode == 0 || stat == DEAD || HAS_TRAIT(src, TRAIT_NOPAIN))
+		return FALSE
+
+	if(client.prefs.redflash_mode == 1)
+		if(overlay_type == "brute")
+			severity = 1
+
+		else if(overlay_type == "pain")
+			severity = "painflash1"
+
+	if(overlay_type == "brute")
+		return src.overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
+
+	if(overlay_type == "pain")
+		return src.flash_fullscreen(severity)
+
+/mob/proc/damageflash(severity)
+	return src.redflash("brute", severity)
+
+/mob/proc/painflash(severity)
+	return (src.redflash("pain", "painflash[severity]"))
+
 /atom/movable/screen/fullscreen
 	icon = 'icons/mob/screen_full.dmi'
 	icon_state = "default"

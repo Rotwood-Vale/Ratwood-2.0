@@ -85,7 +85,7 @@
 		if("bite")
 			to_chat(src, span_danger("A growing cold seeps into my body. I feel horrible... REALLY horrible..."))
 		if("wound")
-			src.redflash("redflash3")
+			src.painflash(3)
 			to_chat(src, span_danger("Ow! It hurts. I feel horrible... REALLY horrible..."))
 
 	return TRUE

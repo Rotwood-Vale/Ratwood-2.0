@@ -1005,52 +1005,49 @@
 		overlay_fullscreen("oxy", /atom/movable/screen/fullscreen/oxy, severity)
 	else
 		clear_fullscreen("oxy")
-/*
+
 	//Fire and Brute damage overlay (BSSR)
-	var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
-	if(hurtdamage)
+	var/totaldamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
+	if(totaldamage)
 		var/severity = 0
-		switch(hurtdamage)
-			if(5 to 15)
+		switch(totaldamage)
+			if(1 to 15)
 				severity = 1
 			if(15 to 30)
 				severity = 2
 			if(30 to 45)
 				severity = 3
-			if(45 to 70)
+			if(45 to 60)
 				severity = 4
-			if(70 to 85)
+			if(60 to 75)
 				severity = 5
-			if(85 to INFINITY)
+			if(75 to 90)
 				severity = 6
-		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
-	else
-		clear_fullscreen("brute")*/
+			if(90 to INFINITY)
+				severity = 7
 
-	var/hurtdamage = ((get_complex_pain() / (STAWIL * 10)) * 100) //what percent out of 100 to max pain
+		damageflash(severity)
+	else
+		clear_fullscreen("brute")
+
+/* Disabled as I do not want to code this right now, the game can continue to use shitty sporadic code for now
+
+	var/hurtdamage = forced ? damage : damage * hit_percent * burnmod * H.physiology.burn_mod * brutemod * H.physiology.brute_mod
 	if(hurtdamage > 5) //float
 		var/severity = 0
 		switch(hurtdamage)
-			if(5 to 20)
+			if(hurtdamage < 10)
 				severity = 1
-			if(20 to 40)
+			if(hurtdamage < 20)
 				severity = 2
-			if(40 to 60)
+			if(hurtdamage >= 20)
 				severity = 3
-				redflash("painflash", /atom/movable/screen/fullscreen/painflash)
-			if(60 to 80)
-				severity = 4
-				redflash("painflash", /atom/movable/screen/fullscreen/painflash)
-			if(80 to 99)
-				severity = 5
-				redflash("painflash", /atom/movable/screen/fullscreen/painflash)
-			if(99 to INFINITY)
-				severity = 6
-				redflash("painflash", /atom/movable/screen/fullscreen/painflash)
-		redflash("brute", /atom/movable/screen/fullscreen/brute, severity)
+
+		painflash(severity)
 	else
-		clear_fullscreen("brute")
-		clear_fullscreen("painflash")
+		clear_fullscreen("pain")
+
+*/
 
 /mob/living/carbon/update_health_hud(shown_health_amount)
 	if(!client || !hud_used)

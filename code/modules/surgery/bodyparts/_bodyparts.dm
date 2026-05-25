@@ -380,11 +380,11 @@
 
 	if(owner)
 		if((brute + burn) < 10)
-			owner.redflash("redflash1")
+			owner.painflash(1)
 		else if((brute + burn) < 20)
-			owner.redflash("redflash2")
+			owner.painflash(2)
 		else if((brute + burn) >= 20)
-			owner.redflash("redflash3")
+			owner.painflash(3)
 
 	if(owner && updating_health)
 		owner.updatehealth()

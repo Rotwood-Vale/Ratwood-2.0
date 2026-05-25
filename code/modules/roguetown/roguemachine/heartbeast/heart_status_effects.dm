@@ -31,7 +31,7 @@
 		return
 	var/mob/living/L = owner
 
-	L.redflash("redflash3")
+	L.painflash(3)
 	L.adjustBruteLoss(15)
 
 	if(!limb_removed && iscarbon(L))
