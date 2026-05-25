@@ -223,6 +223,7 @@ LICH SKELETONS
 	H.energy = H.max_energy
 
 // non-Combat crafter goon. Worse weapons + armor but does base-building. Fortnite.
+// Has a unique extra varient calcic outburst choice that destroys walls and does a huge amount of damage on exploding but takes 8 seconds to prime, on top of their regular varient. 
 /datum/advclass/greater_skeleton/lich/sapper
 	name = "Broken-Bone Sapper"
 	tutorial = "Simple. Obedient. Like an ant in a colony."
@@ -235,13 +236,16 @@ LICH SKELETONS
 
 	H.STASTR = 10
 	H.STASPD = 6
-	H.STACON = 9
+	H.STACON = 8
 	H.STAWIL = 10
 	H.STAINT = 8
 	H.STAPER = 10
 
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_SQUIRE_REPAIR, TRAIT_GENERIC)
+
+	// Sapper-exclusive self-exploding spell
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/sapperbomb)
 
 	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)
