@@ -66,7 +66,7 @@ LICH SKELETONS
 	shoes = /obj/item/clothing/shoes/roguetown/sandals/aalloy
 	gloves = /obj/item/clothing/gloves/roguetown/chain/paalloy
 
-	backr = /obj/item/rogueweapon/shield/wood
+	backr = /obj/item/rogueweapon/shield/tower/metal/palloy
 	beltl = /obj/item/quiver/javelin/paalloy
 	H.adjust_blindness(-3)
 	var/weapons = list("Gladius","Kopesh","Shortsword","Axe", "Flail")
@@ -210,13 +210,13 @@ LICH SKELETONS
 			r_hand = /obj/item/rogueweapon/mace/goden/steel/paalloy
 		if("Mace + Shield")
 			r_hand = /obj/item/rogueweapon/mace/steel/palloy
-			l_hand = /obj/item/rogueweapon/shield/wood
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/palloy
 		if("Spear + Shield")
 			r_hand = /obj/item/rogueweapon/spear/paalloy
-			l_hand = /obj/item/rogueweapon/shield/wood
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/palloy
 		if("Warhammer + Shield")
 			r_hand = /obj/item/rogueweapon/mace/warhammer/steel/paalloy
-			l_hand = /obj/item/rogueweapon/shield/wood
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/palloy
 
 	H.energy = H.max_energy
 
