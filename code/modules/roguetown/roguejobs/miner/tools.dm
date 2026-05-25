@@ -63,6 +63,12 @@
 	max_integrity = 250
 	smeltresult = null
 
+/obj/item/rogueweapon/pick/paalloy
+	name = "ancient pick"
+	desc = "A chisel of ancient gilbranze, which once labored to gather the ores necessary for an ancient alloy; such was lost in the aftermath of Her ascension."
+	icon_state = "apick"
+	smeltresult = /obj/item/ingot/aaslag
+
 /obj/item/rogueweapon/pick/aalloy
 	name = "decrepit pick"
 	desc = "A chisel of wrought bronze, which once labored to gather the ores necessary for an ancient alloy; such was lost in the aftermath of Her ascension."

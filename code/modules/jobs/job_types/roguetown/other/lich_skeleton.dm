@@ -275,7 +275,8 @@ LICH SKELETONS
 	backl = /obj/item/storage/backpack/rogue/satchel
 	gloves = /obj/item/clothing/gloves/roguetown/chain/paalloy
 
-	beltr = /obj/item/rogueweapon/stoneaxe/woodcut
-	beltl = /obj/item/rogueweapon/pick/copper
+	beltr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/paaxe
+	beltl = /obj/item/rogueweapon/hammer/aalloy
+	r_hand = /obj/item/rogueweapon/pick/paalloy
 
 	H.energy = H.max_energy
