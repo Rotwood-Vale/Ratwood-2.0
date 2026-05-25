@@ -239,6 +239,7 @@ LICH SKELETONS
 	H.STAPER = 10
 
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_SQUIRE_REPAIR, TRAIT_GENERIC)
 
 	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)
@@ -255,6 +256,7 @@ LICH SKELETONS
 	H.adjust_skillrank(/datum/skill/craft/masonry, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/sewing, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/ceramics, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/engineering, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/mining, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/lumberjacking, 3, TRUE)
