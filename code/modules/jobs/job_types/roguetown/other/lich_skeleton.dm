@@ -45,7 +45,7 @@ LICH SKELETONS
 	H.adjust_skillrank(/datum/skill/combat/axes, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
@@ -69,7 +69,7 @@ LICH SKELETONS
 	backr = /obj/item/rogueweapon/shield/tower/metal/palloy
 	beltl = /obj/item/quiver/javelin/paalloy
 	H.adjust_blindness(-3)
-	var/weapons = list("Gladius","Kopesh","Shortsword","Axe", "Flail")
+	var/weapons = list("Gladius","Kopesh","Shortsword","Axe", "Flail", "Spear")
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
 	switch(weapon_choice)
@@ -86,6 +86,8 @@ LICH SKELETONS
 			beltr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/paaxe
 		if("Flail")
 			beltr = /obj/item/rogueweapon/flail/sflail/paflail
+		if("Spear")
+			r_hand = /obj/item/rogueweapon/spear/paalloy
 
 	H.energy = H.max_energy
 
