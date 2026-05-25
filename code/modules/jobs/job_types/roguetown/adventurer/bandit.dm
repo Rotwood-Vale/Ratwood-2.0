@@ -3,8 +3,8 @@
 	flag = BANDIT
 	department_flag = WANDERERS
 	faction = "Station"
-	total_positions = 5	//bare minimum of five on round start, regardless of garrison/holywarrior count
-	spawn_positions = 5
+	total_positions = 0	//bare minimum of five on round start, regardless of garrison/holywarrior count
+	spawn_positions = 0
 	antag_job = TRUE
 	allowed_races = RACES_ALL_KINDS
 	tutorial = "At some point in your lyfe, you'd fallen to the wrong side of the carriage. Whether by butchery or finesse, you're known throughout the land. \
@@ -71,7 +71,7 @@
 	switch(wanted_choice)
 		if("Yes")
 			ADD_TRAIT(H, TRAIT_KNOWNCRIMINAL, TRAIT_GENERIC)
-		if("No") 
+		if("No")
 			to_chat(H, span_warning("I am still relatively new to the gang. My crimes have gone unnoticed so far, but I lack experience."))
 			return null
 	var/bounty_poster = input(H, "Who placed a bounty on you?", "Bounty Poster") as anything in list("The Justiciary of Rotwood", "The Grenzelhoftian Holy See")
@@ -115,21 +115,21 @@
 				H.change_stat(STATKEY_SPD, 1)
 	to_chat(H, span_danger("You are playing an Antagonist role. By choosing to spawn as a Bandit, you are expected to actively create conflict with other players regardless of bounty status. Failing to play this role with the appropriate gravitas may result in punishment for Low Roleplay standards."))
 
-/proc/update_bandit_slots()
-	var/datum/job/bandit_job = SSjob.GetJob("Bandit")
-	if(!bandit_job)
-		return
-
-	var/player_count = length(GLOB.joined_player_list)
-	var/slots = 5
-
+// /proc/update_bandit_slots()
+//	var/datum/job/bandit_job = SSjob.GetJob("Bandit")
+//	if(!bandit_job)
+//		return
+//
+//	var/player_count = length(GLOB.joined_player_list)
+//	var/slots = 5
+//
 	//Add 1 slot for every 12 players over 30.
-	if(player_count > 42)
-		var/extra = floor((player_count - 42) / 12)
-		slots += extra
-
+//	if(player_count > 42)
+//		var/extra = floor((player_count - 42) / 12)
+//		slots += extra
+//
 	//5 slots minimum, 7 maximum.
-	slots = min(slots, 9)
-
-	bandit_job.total_positions = slots
-	bandit_job.spawn_positions = slots
+//	slots = min(slots, 9)
+//
+//	bandit_job.total_positions = slots
+//	bandit_job.spawn_positions = slots
