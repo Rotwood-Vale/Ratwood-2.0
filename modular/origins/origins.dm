@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	origin_title = "Rustland"
 	origin_language = /datum/language/rustlander
 	map_x = 283
-	map_y = 210
+	map_y = 185
 
 /datum/origin/avar
 	name = "Avar"

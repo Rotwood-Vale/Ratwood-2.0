@@ -24,6 +24,7 @@
 		/datum/language/kazengunese,
 		/datum/language/otavan,
 		/datum/language/etruscan,
+		/datum/language/rustlander,
 		/datum/language/gronnic,
 		/datum/language/aavnic,
 		/datum/language/abyssal,
