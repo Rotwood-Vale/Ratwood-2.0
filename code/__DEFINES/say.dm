@@ -73,6 +73,7 @@
 #define SPAN_ABYSSAL "abyssal"
 #define SPAN_GRENZELHOFTIAN "grenzelhoftian"
 #define SPAN_GRONNIC "gronnic"
+#define SPAN_RUSTLANDER "rustlander"
 #define SPAN_BEAST "beast"
 #define SPAN_ORC "orc"
 #define SPAN_DRACONIC "reptile"

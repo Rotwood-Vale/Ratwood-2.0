@@ -26,6 +26,7 @@
 		"posh.ttf" = 'interface/fonts/languages/posh.ttf',
 		"etruscan.ttf" = 'interface/fonts/languages/etruscan.ttf',
 		"gronnic.ttf" = 'interface/fonts/languages/gronnic.ttf',
+		"rustlander.ttf" = 'interface/fonts/languages/rustlander.ttf',
 		"aavnic.ttf" = 'interface/fonts/languages/aavnic.ttf',
 		"merar.ttf" = 'interface/fonts/languages/merar.ttf',
 		"abyssal.ttf" = 'interface/fonts/languages/abyssal.ttf',
