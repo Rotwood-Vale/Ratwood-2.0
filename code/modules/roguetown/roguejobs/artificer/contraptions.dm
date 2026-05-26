@@ -772,7 +772,7 @@
 	if(prob(50))
 		var/boom_delay = rand(5, 10)
 
-		if(prob(50))
+		if(prob(90))
 			severity = 1
 			to_chat(user, span_warning("Oh fuck."))
 			playsound(src, 'sound/misc/bell.ogg', 100, FALSE)
