@@ -1,4 +1,5 @@
 #define TRY_MISFIRE(target_mob) if(prob(misfire_chance)) misfire(target_mob)
+#define TRY_misfire(target_mob) if(prob(misfire_chance)) misfire(target_mob)
 
 /obj
 
@@ -590,7 +591,7 @@
 	force = 25
 	force_wielded = 30
 	max_integrity = 1000
-	icon_state = "drill"
+	icon_state = "drill2"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	item_state = "drill2"
@@ -639,7 +640,7 @@
 	if(active_item)
 		return
 	if(slot == ITEM_SLOT_HANDS)
-		if (user.get_skill_level(/datum/skill/craft/engineering) >= 4)
+		if(user.get_skill_level(/datum/skill/craft/engineering) >= 4)
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/engineerwindup)
 			to_chat(user, span_notice("Time to wind things up"))
 			active_item = TRUE
@@ -663,8 +664,7 @@
 /obj/item/contraption/smelter
 	var/obj/machinery/light/rogue/smelter/hand_held
 	var/datum/effect_system/spark_spread/S = new()
-	var/countdown_ticks = 0
-	var/queued_explosion_severity = 0
+	var/severity = 0
 
 	name = "portable smelter"
 	desc = "Furnaces are a thing of the past. The future is here!"
@@ -681,11 +681,11 @@
 	grid_height = 64
 	grid_width = 64
 
-	prime_power_source = list(/obj/item/rogueore/coal, /obj/item/rogueore/coal/charcoal)
-	accepted_power_source = /obj/item/grown/log/tree/small
+	prime_power_source = /obj/item/alch/firedust
+	accepted_power_source = /obj/item/alch/coaldust
 
-	max_stored_charge = 10
-	charge_per_prime = 3
+	max_stored_charge = 20
+	charge_per_prime = 5
 	charge_per_source = 2
 	misfire_chance = 5
 
@@ -713,8 +713,10 @@
 				return TRUE
 
 			icon_state = on_icon
+			update_icon()
+			playsound(src.loc,'sound/misc/smelter_sound.ogg', 50, FALSE)
+
 			user.visible_message(span_info("[user] starts heating the bar."))
-			playsound(src.loc,'sound/misc/smelter_sound.ogg', 20, FALSE)
 
 			if(do_after(user, 5 SECONDS, target = src))
 				T.hott = world.time
@@ -722,10 +724,11 @@
 				T.update_icon()
 
 				user.visible_message(span_info("[user] finishes heating the bar."))
-				playsound(src.loc,'sound/misc/frying.ogg', 80, FALSE)
+				playsound(src.loc,'sound/misc/frying.ogg', 50, FALSE)
 
 				icon_state = off_icon
 				flick(fin_icon, src)
+				update_icon()
 
 				current_charge -= 1
 
@@ -737,13 +740,14 @@
 					heldstuff.obj_break()
 
 				TRY_MISFIRE(user)
-
 				return TRUE
 			else
 				user.visible_message(span_info("The heating process was interrupted!"))
 				playsound(src.loc,'sound/items/bsmithfail.ogg', 100, FALSE)
+
 				icon_state = off_icon
 				flick(fin_icon, src)
+				update_icon()
 				return TRUE
 
 	return ..()
@@ -763,56 +767,42 @@
 	. = ..()
 	hand_held.examine(user, params)
 
-/obj/item/contraption/smelter/proc/missmelt(mob/living/user)
-	var/total_delay = rand(2, 4) * (1 SECONDS)
+/obj/item/contraption/smelter/misfire(atom/A, mob/living/user)
 
-	if(queued_explosion_severity > 0 && countdown_ticks <= 0)
-		if(queued_explosion_severity == 1)
-			execute_burst_explosion()
-		if(queued_explosion_severity == 2)
-			execute_catastrophic_explosion()
-		return TRUE
-
-	else if(queued_explosion_severity == 0)
+	if(prob(50))
+		var/boom_delay = rand(5, 10)
 
 		if(prob(50))
+			severity = 1
+			to_chat(user, span_warning("Oh fuck."))
+			playsound(src, 'sound/misc/bell.ogg', 100, FALSE)
+			addtimer(CALLBACK(src, PROC_REF(misfire_result), A, user), boom_delay)
 
-			if(prob(50))
-				queued_explosion_severity = 2
-				misfiring = TRUE
-				countdown_ticks = 4
-				total_delay += 4 SECONDS
-			else
-				queued_explosion_severity = 1
-				misfiring = TRUE
-				countdown_ticks = 2
-				total_delay += 2 SECONDS
+		else
+			severity = 2
+			to_chat(user, span_danger("By the gods..."))
+			playsound(src, 'sound/misc/bell.ogg', 100, FALSE)
+			addtimer(CALLBACK(src, PROC_REF(misfire_result), A, user), boom_delay)
 
-	if(queued_explosion_severity > 0)
-		countdown_ticks--
+	else
+		severity = 0
+		to_chat(user, span_info("\The [src] spits violently and loses pressure!"))
+		charge_deduction(src, user, charge_per_use)
 
-	to_chat(user, span_warning("\The [src] spits violently and loses pressure!"))
-	charge_deduction(src, user, charge_per_use)
+		S.set_up(1, 1, get_turf(src))
+		S.start()
+		playsound(user, 'sound/items/flint.ogg', 100, FALSE)
 
-	S.set_up(1, 1, get_turf(src))
-	S.start()
-	playsound(user, 'sound/items/flint.ogg', 100, FALSE)
+/obj/item/contraption/smelter/misfire_result(atom/A, mob/living/user)
+	if(severity == 0)
+		return FALSE
 
-	addtimer(CALLBACK(src, PROC_REF(misfire), user), total_delay)
-	return TRUE
+	if(severity == 1)
+		explosion(epicenter = src, light_impact_range = 3, flame_range = 1, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
+		qdel(hand_held)
+		qdel(src)
 
-/obj/item/contraption/smelter/proc/execute_burst_explosion()
-	visible_message(span_danger("\The [src] bursts into flames!"))
-	explosion(epicenter = src, light_impact_range = 3, flame_range = 1, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
-
-	queued_explosion_severity = 0
-	countdown_ticks = 0
-	misfiring = FALSE
-
-	return TRUE
-
-/obj/item/contraption/smelter/proc/execute_catastrophic_explosion()
-	visible_message(span_danger("\The [src] catastrophically fails, causing a massive explosion!"))
-	explosion(epicenter = src, devastation_range = 2, heavy_impact_range = 3, light_impact_range = 8, flame_range = 7, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
-	qdel(hand_held)
-	qdel(src)
+	if(severity == 2)
+		explosion(epicenter = src, heavy_impact_range = 5, light_impact_range = 10, flame_range = 5, ignorecap = TRUE, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
+		qdel(hand_held)
+		qdel(src)
