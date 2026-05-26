@@ -570,7 +570,7 @@
 	sellprice = 0
 	icon_state = "psycross_reform"
 
-/obj/item/clothing/neck/roguetown/psicross/trinity
+/obj/item/clothing/neck/roguetown/psicross/trinity // no one can make these yet, see merc pr.
 	name = "Psydonic Trinity Psycross"
 	desc = "Psycross from the Rustlands. PSYDON is not dead! HE will return with both his left and right hands to CLEANSE the world. Begone any notion of saints or enduring fervor; we will be PURE or die trying! The psycross depicts three divine figures entwined in thorns, locked in eternal communion."
 	icon_state = "psycross_a"

@@ -953,7 +953,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/psicross_trinity
 	name = "Trinity Psicross"
-	path = /obj/item/clothing/neck/roguetown/psicross/reform
+	path = /obj/item/clothing/neck/roguetown/psicross/trinity
 
 /datum/loadout_item/psicross/astrata
 	name = "Amulet of Astrata"
