@@ -26,40 +26,40 @@
 		target.apply_status_effect(/datum/status_effect/debuff/call_to_slaughter)	//Debuffs non-inhumens/psydonians
 	return TRUE
 
-//Unholy Grasp - Throws disappearing net made of viscera at enemy. Creates blood on impact.
-/obj/effect/proc_holder/spell/invoked/projectile/blood_net
-	name = "Unholy Grasp"
-	desc = "Toss forth an unholy snare of blood and guts a short distance, summoned from your leftover trophies sacrificed to Graggar. Like a net, may it snare your target!"
-	clothes_req = FALSE
-	overlay_state = "unholy_grasp"
-	range = 3													//It's a net, so low range.
-	req_inhand = /obj/item/alch/viscera							//Need to have viscera inhand to cast this.
-	associated_skill = /datum/skill/magic/holy
-	projectile_type = /obj/projectile/magic/unholy_grasp
-	chargedloop = /datum/looping_sound/invokeholy
-	releasedrain = 30
-	chargedrain = 0
-	chargetime = 15
-	recharge_time = 10 SECONDS
+//Unholy Grasp - Throws disappearing net made of viscera at enemy. Creates blood on impact. It's broken, everybody knows it's broken, graggarites abuse it all the time, so you can have it back when someone bothers to look at this and fix it.
+//obj/effect/proc_holder/spell/invoked/projectile/blood_net
+//	name = "Unholy Grasp"
+//	desc = "Toss forth an unholy snare of blood and guts a short distance, summoned from your leftover trophies sacrificed to Graggar. Like a net, may it snare your target!"
+//	clothes_req = FALSE
+//	overlay_state = "unholy_grasp"
+//	range = 3													//It's a net, so low range.
+//	req_inhand = /obj/item/alch/viscera							//Need to have viscera inhand to cast this.
+//	associated_skill = /datum/skill/magic/holy
+//	projectile_type = /obj/projectile/magic/unholy_grasp
+//	chargedloop = /datum/looping_sound/invokeholy
+//	releasedrain = 30
+//	chargedrain = 0
+//	chargetime = 15
+//	recharge_time = 10 SECONDS
 
-/obj/projectile/magic/unholy_grasp
-	name = "viceral organ net"
-	icon_state = "tentacle_end"
-	nodamage = TRUE
-	knockdown = 3 SECONDS
+//obj/projectile/magic/unholy_grasp
+//	name = "viceral organ net"
+//	icon_state = "tentacle_end"
+//	nodamage = TRUE
+//	knockdown = 3 SECONDS
 
-/obj/projectile/magic/unholy_grasp/on_hit(atom/hit_atom, datum/thrownthing/throwingdatum)
-	. = ..()
-	if(. == BULLET_ACT_MISS || . == BULLET_ACT_BLOCK || !iscarbon(hit_atom))
-		return
-	ensnare(hit_atom)
+//obj/projectile/magic/unholy_grasp/on_hit(atom/hit_atom, datum/thrownthing/throwingdatum)
+//	. = ..()
+//	if(. == BULLET_ACT_MISS || . == BULLET_ACT_BLOCK || !iscarbon(hit_atom))
+//		return
+//	ensnare(hit_atom)
 
-/obj/projectile/magic/unholy_grasp/proc/ensnare(mob/living/carbon/carbon)
-	visible_message(span_danger("\The [src] ensnares [carbon] in vicera!"))
-	to_chat(carbon, span_danger("\The [src] ensnares you!"))
-	carbon.Knockdown(knockdown)
-	carbon.apply_status_effect(/datum/status_effect/debuff/netted, 30 SECONDS)
-	playsound(src, 'sound/combat/caught.ogg', 50, TRUE)
+//obj/projectile/magic/unholy_grasp/proc/ensnare(mob/living/carbon/carbon)
+//	visible_message(span_danger("\The [src] ensnares [carbon] in vicera!"))
+//	to_chat(carbon, span_danger("\The [src] ensnares you!"))
+//	carbon.Knockdown(knockdown)
+//	carbon.apply_status_effect(/datum/status_effect/debuff/netted, 30 SECONDS)
+//	playsound(src, 'sound/combat/caught.ogg', 50, TRUE)
 
 /obj/effect/proc_holder/spell/invoked/revel_in_slaughter
 	name = "Revel in Slaughter"
