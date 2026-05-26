@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	desc = "The Rustlands are a collection of locations centered around three fortresses that have been constructed on leylines across Psydonia. Rustlanders predominantly live in spiraling fortress-cities called Pyrgoi. There are three fortress cities.  \
 	Dytikos Pyrgos is located north of Hammerhold, Kentrikos Pyrgos is located east of Otava, and Anatolikos Pyrgos is located somewhere near the Kazen Isles.  \
 	Surrounding the Pyrgoi are the Rustlands, a land of infectious beasts and long-lost artificer constructs that operate off of orders that have little purpose following the conclusion of the Rot Wars… \
-	It is known that the Pyrgoi produce firearms, which are often used by levymen to reclaim the lowermost levels of the megastructures in the name of the Psydonic Trinity.
+	It is known that the Pyrgoi produce firearms, which are often used by levymen to reclaim the lowermost levels of the megastructures in the name of the Psydonic Trinity."
 	origin_title = "Rustland"
 	origin_language = /datum/language/rustlander
 	map_x = 283
