@@ -69,37 +69,37 @@
 			log_admin("[key_name(src)] has attempted to advertise in LOOC: [msg]")
 			return
 
-
 	//msg = emoji_parse(msg)
 
-	var/prefix = ""
+	var/mob/S = mob
+	var/s_name = S.name
+	var/s_ckey = ckey
+	var/pfx = wp ? "LOOC (WP)" : "LOOC"
 
 	mob.log_talk(msg, LOG_LOOC)
 
-	if(wp == 0)
-		prefix = "LOOC"
-	else
-		prefix = "LOOC (WP)"
+	var/admin_info = " ([s_ckey]) [ADMIN_FLW(S)] <A href='?_src_=holder;[HrefToken()];mute=[s_ckey];mute_type=[MUTE_LOOC]'><font color='[(prefs.muted & MUTE_LOOC) ? "red" : "blue"]'>\[MUTE\]</font></a>"
+	
+	var/msg_reg = "<font color='#6699CC'><b><span class='prefix'>[pfx]:</span> <EM>[s_name]:</EM> <span class='message'>[msg]</span></b></font>"
+	var/msg_adm = "<font color='#6699CC'><b><span class='prefix'>[pfx]:</span> <EM>[s_name][admin_info]:</EM> <span class='message'>[msg]</span></b></font>"
+	var/msg_rem = "<font color='#003458'><b>(R) <span class='prefix'>[pfx]:</span> <EM>[s_name][admin_info]:</EM> <span class='message'>[msg]</span></b></font>"
 
+	var/list/hearers = wp ? get_hearers_in_range(7, S) : get_hearers_in_view(7, S)
+	var/list/seen = list()
 
-	var/list/mobs = list()
-	var/muted = prefs.muted
-	for(var/mob/M in GLOB.player_list)
-		var/added_text
-		var/is_admin = FALSE
+	for(var/mob/M in hearers)
 		var/client/C = M.client
-		if(!M.client)
+		if(!C || !(C.prefs.chat_toggles & CHAT_OOC))
 			continue
+		
+		seen[C] = TRUE
 		if((C in GLOB.admins) && (C.prefs.admin_chat_toggles & CHAT_ADMINLOOC))
-			added_text += " ([mob.ckey]) [ADMIN_FLW(mob)] <A href='?_src_=holder;[HrefToken()];mute=[ckey];mute_type=[MUTE_LOOC]'><font color='[(muted & MUTE_LOOC)?"red":"blue"]'>\[MUTE\]</font></a>"
-			is_admin = 1
-		mobs += C
-		if(C.prefs.chat_toggles & CHAT_OOC)
-			var/turf/speakturf = get_turf(M)
-			var/turf/sourceturf = get_turf(usr)
-			if(wp == 1 && (M in range (7, src)))
-				to_chat(C, "<font color='["#6699CC"]'><b><span class='prefix'>[prefix]:</span> <EM>[src.mob.name][added_text]:</EM> <span class='message'>[msg]</span></b></font>")
-			else if(speakturf in get_hear(7, sourceturf))
-				to_chat(C, "<font color='["#6699CC"]'><b><span class='prefix'>[prefix]:</span> <EM>[src.mob.name][added_text]:</EM> <span class='message'>[msg]</span></b></font>")
-			else if(is_admin == 1)
-				to_chat(C, "<font color='["#003458"]'><b>(R) <span class='prefix'>[prefix]:</span> <EM>[src.mob.name][added_text]:</EM> <span class='message'>[msg]</span></b></font>")
+			to_chat(C, msg_adm)
+		else
+			to_chat(C, msg_reg)
+
+	for(var/client/C in GLOB.admins)
+		if(seen[C] || !(C.prefs.admin_chat_toggles & CHAT_ADMINLOOC) || !(C.prefs.chat_toggles & CHAT_OOC))
+			continue
+		
+		to_chat(C, msg_rem)

@@ -1694,6 +1694,26 @@
 	name = "Beach Wave"
 	icon_state = "beachwave"
 
+/datum/sprite_accessory/hair/head/wolfcut
+	name = "Wolfcut"
+	icon_state = "wolfcut"
+
+/datum/sprite_accessory/hair/head/triplebuns
+	name = "Triple Buns"
+	icon_state = "triplebuns"
+
+/datum/sprite_accessory/hair/head/nest
+	name = "Nest"
+	icon_state = "nest"
+
+/datum/sprite_accessory/hair/head/strand
+	name = "Strand"
+	icon_state = "strand"
+
+/datum/sprite_accessory/hair/head/sodden
+	name = "Sodden"
+	icon_state = "sodden"
+
 /datum/sprite_accessory/hair/head/vulpkian
 	abstract_type = /datum/sprite_accessory/hair/head/vulpkian
 	icon = 'icons/mob/sprite_accessory/hair/vulpkian_hair.dmi'

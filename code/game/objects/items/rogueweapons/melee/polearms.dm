@@ -1342,7 +1342,7 @@
 	It serves a more noble purpose, now, as a sojourner's casting implement. Though, with enough force, one may still drive the tip forward."
 	icon_state = "psystaff"//Temp
 	possible_item_intents = list(SPEAR_BASH, /datum/intent/special/magicarc)
-	gripped_intents = list(/datum/intent/spear/thrust/blunted, /datum/intent/mace/smash/wood/ranged, /datum/intent/special/magicarc)
+	gripped_intents = list(/datum/intent/spear/thrust/blunted, /datum/intent/special/magicarc, /datum/intent/mace/smash/wood/ranged)
 	force = 18
 	force_wielded = 20//Worse than just using a knife, really, despite the range.
 	thrown_bclass = BCLASS_STAB

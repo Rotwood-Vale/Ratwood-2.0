@@ -609,10 +609,10 @@
 	name = "Moonlit Revival"
 	desc = "Revive the target at a cost, cast on yourself to check.<br>Targets intelligence will be sapped for a time, in addition they will be burned by moonlight."
 	required_items = list(
-		/obj/item/paper/scroll = 15
+		/obj/item/paper/scroll = 6
 	)
 	alt_required_items = list(
-		/obj/item/paper = 15
+		/obj/item/paper = 10
 	)
 	debuff_type = /datum/status_effect/debuff/noc_revival
 	overlay_state = "noc_revive"

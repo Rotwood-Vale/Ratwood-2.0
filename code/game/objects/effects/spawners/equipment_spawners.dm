@@ -134,8 +134,7 @@
 		/obj/item/clothing/suit/roguetown/armor/leather/hide/bikini = 6,
 		/obj/item/clothing/suit/roguetown/armor/chainmail/bikini = 1,
 		/obj/item/clothing/suit/roguetown/armor/plate/bikini = 1,
-		/obj/item/clothing/under/roguetown/brayette = 6,
-		/obj/item/clothing/under/roguetown/chainlegs/skirt = 1,
+		/obj/item/clothing/under/roguetown/chainlegs/skirt = 4,
 		/obj/item/clothing/under/roguetown/platelegs/skirt = 1,
 	)
 

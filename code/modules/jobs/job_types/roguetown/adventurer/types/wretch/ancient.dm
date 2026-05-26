@@ -44,7 +44,6 @@
 		H.set_patron(/datum/patron/inhumen/zizo) //Your entire purpose.
 		H.adjust_blindness(-3)
 		H.mind.add_antag_datum(new /datum/antagonist/skeleton())
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/zizo
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	mask = /obj/item/flowercrown/rosa //Worn by Her champions. Bring death to bring forth new life.
 	cloak = /obj/item/clothing/cloak/half
@@ -67,6 +66,7 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	if(H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/suicidebomb/lesser)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic) //Voluntary conversion.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/zizo_snuff/champion) //Champion-variant of Snuff Lights. Non-miracle, static range of 7, but much longer CD.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending) //You can't take off your armour or do rites, so that's your only way of repairing your armour.
@@ -80,6 +80,13 @@
 	H.energy = H.max_energy //Just in case.
 	REMOVE_TRAIT(H, TRAIT_EASYDISMEMBER, TRAIT_GENERIC)
 	to_chat(H, span_danger("You are an ancient warrior risen from death, not a comedic skeleton. Be menacing and play with gravitas rather than humour."))
+	var/helmets = list("BARBUTE - VISORED", "FROGMOUTH - NECK PROTECTION")
+	var/helmet_choice = input(H, "Choose your helmet.", "PROTECTION FROM THE LADY") as anything in helmets
+	switch(helmet_choice)
+		if("BARBUTE - VISORED")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/zizo
+		if("FROGMOUTH - NECK PROTECTION")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/zizo
 
 /datum/outfit/job/roguetown/wretch/ancientchampion/choose_loadout(mob/living/carbon/human/H)
 	if(H.mind)

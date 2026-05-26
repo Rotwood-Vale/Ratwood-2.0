@@ -1,6 +1,0 @@
-author: "john-pawson"
-delete-after: True
-changes:
-  - rscadd: "bigger meals now take more bites to finish"
-  - bugfix: "fixed missing fares on certain foods"
-  - bugfix: "fixed missing nutrients on certain foods"

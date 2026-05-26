@@ -25,7 +25,7 @@ GLOBAL_LIST_EMPTY_TYPED(schizohelps, /datum/schizohelp)
 		if(!(admin.prefs.chat_toggles & CHAT_PRAYER))
 			continue
 		var/answer_button = span_info("(<a href='?src=[admin];schizohelp=[REF(ticket)];'>ANSWER</a>)")
-		to_chat(admin, "[message_admins] [answer_button]")
+		to_chat(admin, type = MESSAGE_TYPE_PRAYER, html = "[message_admins] [answer_button]")
 	COOLDOWN_START(src, schizohelp_cooldown, 1 MINUTES)
 	// Comes out as... GAME: MENTOR HELP: GreedyPelican42/(Lord Featherton the Great) asked : How do I fly?
 	log_game("MENTOR HELP: [key_name(src)] asked : [msg]")
