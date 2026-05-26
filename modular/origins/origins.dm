@@ -85,8 +85,8 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	The Gentry aim to reclaim the lowermost levels of the megastructures in the name of the Psydonic Trinity."
 	origin_title = "Rustland"
 	origin_language = /datum/language/rustlander
-	map_x = 283
-	map_y = 189
+	map_x = 250
+	map_y = 100
 
 /datum/origin/avar
 	name = "Avar"
