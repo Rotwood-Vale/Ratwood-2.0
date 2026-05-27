@@ -121,6 +121,7 @@ Enjoy!"
 /datum/job/roguetown/kingsfield_visitor/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	if(L?.mind)
 		L.mind.remove_all_antag_datums()
+		L.mind.special_role = null
 	. = ..()
 	apply_kingsfield_role_setup(L, SKILL_LEVEL_APPRENTICE, SKILL_LEVEL_NOVICE)
 
@@ -199,6 +200,7 @@ Enjoy!"
 /datum/job/roguetown/ferentian_envoy/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	if(L?.mind)
 		L.mind.remove_all_antag_datums()
+		L.mind.special_role = null
 	. = ..()
 	apply_kingsfield_role_setup(L, SKILL_LEVEL_JOURNEYMAN, SKILL_LEVEL_APPRENTICE)
 

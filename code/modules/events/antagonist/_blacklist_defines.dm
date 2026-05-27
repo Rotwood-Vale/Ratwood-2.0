@@ -19,4 +19,6 @@
 		"Guildmaster",\
 		"Court Magician",\
 		"Keeper",\
+		"Kingsfield Visitor",\
+		"Ferentian Envoy",\
 	)

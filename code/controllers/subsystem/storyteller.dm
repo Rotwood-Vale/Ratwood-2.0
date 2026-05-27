@@ -342,6 +342,9 @@ SUBSYSTEM_DEF(gamemode)
 	for(var/mob/candidate as anything in candidate_candidates)
 		if(QDELETED(candidate) || !candidate.key || !candidate.client || (!observers && !candidate.mind))
 			continue
+		// Never assign antagonist roles to players in Kingsfield positions regardless of event settings
+		if(isliving(candidate) && candidate.mind && (candidate.mind.assigned_role in GLOB.kingsfield_positions))
+			continue
 		if(!observers)
 			if(!ready_players && !isliving(candidate))
 				continue
