@@ -175,6 +175,9 @@
 	if(!gibbed && should_cleanup_kingsfield_corpse())
 		addtimer(CALLBACK(src, PROC_REF(cleanup_kingsfield_corpse)), KINGSFIELD_BODY_DESPAWN_DELAY)
 
+	if(!gibbed && mind?.assigned_role in GLOB.kingsfield_positions)
+		ghostize(1)
+
 	if(SSticker.HasRoundStarted())
 		SSblackbox.ReportDeath(src)
 		log_message("has died (BRUTE: [src.getBruteLoss()], BURN: [src.getFireLoss()], TOX: [src.getToxLoss()], OXY: [src.getOxyLoss()], CLONE: [src.getCloneLoss()])", LOG_ATTACK)
