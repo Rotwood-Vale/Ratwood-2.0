@@ -542,3 +542,25 @@
 2026-05-24:
   YakiAttaki:
   - rscadd: Added some new, colourable tailmaw variants.
+2026-05-25:
+  EvenInDeathIStillServe:
+  - rscadd: Your voice descriptor will prefix your voice identity on speaking when
+      masked or out of view.
+  SneakySlinky:
+  - bugfix: fixed player-made books being blank
+  - rscdel: Deleted old code referencing an improper component initialization for
+      a dummy item path
+  - rscdel: Removed redundant code from soap/bath item that was copied from soap itself
+  - balance: Adding a sprinting check to soap to slip people
+  - balance: Also by extension nerfs Xylixian miracles + rituals and the associated
+      slip-granting sources
+  Wadelicious:
+  - bugfix: Avantyne is no longer cucked (The proper antag armor tags were given)
+  ophaq:
+  - rscadd: Xylixians with holy skill have an incredibly small chance of creating
+      cumfetti. Drag your local Xylixian today to the bath house today!
+  petwir1:
+  - rscadd: Made mage resource gathering automated
+  wikimody:
+  - refactor: removed double declarations of smokes
+  - rscadd: Bandits and garnison can talk into their rings with mask on again

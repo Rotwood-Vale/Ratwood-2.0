@@ -1,4 +1,0 @@
-author: "petwir1"
-delete-after: True
-changes:
-  - rscadd: "Made mage resource gathering automated"

@@ -240,7 +240,7 @@
 		"necromancer_old", "necro10", "necro20", "necro30", "necro40",
 	)
 	loot_table = list(
-		/obj/item/book/granter/spell/blackstone/skeleton                  = 15,
+		/obj/item/book/granter/spell/blackstone/skeleton/lesser           = 15,
 		/obj/item/book/granter/spell/blackstone/sicknessray               = 12,
 		/obj/item/book/granter/spell/blackstone/bonechill                 = 10,
 		/obj/item/book/granter/spell/blackstone/fetch                     = 8,
@@ -251,12 +251,12 @@
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot         = 10,
 	)
 	loot_table_lucky = list(
-		/obj/item/book/granter/spell/blackstone/skeleton                  = 20,
+		/obj/item/book/granter/spell/blackstone/skeleton/lesser           = 15,
+		/obj/item/book/granter/spell/blackstone/skeleton                  = 10,
 		/obj/item/book/granter/spell/blackstone/sicknessray               = 15,
 		/obj/item/book/granter/spell/blackstone/invisibility              = 15,
 		/obj/item/book/granter/spell/blackstone/bonechill                 = 10,
 		/obj/item/book/granter/spell/blackstone/familiar                  = 8,
-		/obj/item/skull                                                   = 20,
 		/obj/item/storage/belt/rogue/pouch/coins/rich                     = 15,
 	)
 

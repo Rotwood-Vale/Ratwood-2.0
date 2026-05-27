@@ -105,7 +105,9 @@
 			if(removing_bounty.target == departing_mob.real_name)
 				GLOB.head_bounties -= removing_bounty
 	GLOB.chosen_names -= departing_mob.real_name
-	if(mob_job)
+	if(!mob_job)
+		LAZYREMOVE(GLOB.actors_list[SSjob.bitflag_to_department(WANDERERS, FALSE)], departing_mob.mobid)
+	else
 		LAZYREMOVE(GLOB.actors_list[SSjob.bitflag_to_department(mob_job.department_flag, mob_job.obsfuscated_job)], departing_mob.mobid)
 	LAZYREMOVE(GLOB.roleplay_ads, departing_mob.mobid)
 	message_admins(dat)
@@ -123,6 +125,9 @@
 		var/list/embeds = departing_mob.get_embedded_objects()
 		for(var/thing in embeds)
 			QDEL_NULL(thing)
+	if(departing_mob.client)
+		// Move players to lobby/new_player so they can choose if they want to spectate. For potential latency reduction
+		departing_mob.returntolobby()
 	QDEL_NULL(departing_mob)
 
 /obj/structure/far_travel/proc/perform_kingsfield_round_transfer(mob/living/carbon/human/departing_mob, mob/user)

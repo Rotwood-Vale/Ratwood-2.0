@@ -1,0 +1,4 @@
+author: "IronDragoon"
+delete-after: True
+changes:
+  - bugfix: "boring AI proc stuff, should help with TDI"

@@ -20943,6 +20943,10 @@
 /area/rogue/indoors/town/physician/desert{
 	keep_area = 1
 	})
+"iqv" = (
+/obj/effect/landmark/start/dt/chaplain,
+/turf/open/floor/rogue/tile/checkeralt,
+/area/rogue/indoors/town/desert/manor)
 "iqw" = (
 /obj/structure/stairs/stone{
 	dir = 2;
@@ -397341,7 +397345,7 @@ aGo
 hfZ
 hiF
 gMP
-gMP
+iqv
 aLc
 cDa
 cDa

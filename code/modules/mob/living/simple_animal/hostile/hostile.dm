@@ -1,3 +1,31 @@
+GLOBAL_VAR_INIT(hostile_ai_listtargets_calls, 0)
+GLOBAL_VAR_INIT(hostile_ai_candidates_scanned, 0)
+GLOBAL_VAR_INIT(hostile_ai_observer_candidates_filtered, 0)
+GLOBAL_VAR_INIT(hostile_ai_newplayer_candidates_filtered, 0)
+GLOBAL_VAR_INIT(hostile_ai_canattack_calls, 0)
+GLOBAL_VAR_INIT(hostile_ai_canattack_observer_rejects, 0)
+GLOBAL_VAR_INIT(hostile_ai_canattack_newplayer_rejects, 0)
+
+/proc/get_hostile_ai_targeting_metrics()
+	return list(
+		"listtargets_calls" = GLOB.hostile_ai_listtargets_calls,
+		"candidates_scanned" = GLOB.hostile_ai_candidates_scanned,
+		"observer_candidates_filtered" = GLOB.hostile_ai_observer_candidates_filtered,
+		"newplayer_candidates_filtered" = GLOB.hostile_ai_newplayer_candidates_filtered,
+		"canattack_calls" = GLOB.hostile_ai_canattack_calls,
+		"canattack_observer_rejects" = GLOB.hostile_ai_canattack_observer_rejects,
+		"canattack_newplayer_rejects" = GLOB.hostile_ai_canattack_newplayer_rejects,
+	)
+
+/proc/reset_hostile_ai_targeting_metrics()
+	GLOB.hostile_ai_listtargets_calls = 0
+	GLOB.hostile_ai_candidates_scanned = 0
+	GLOB.hostile_ai_observer_candidates_filtered = 0
+	GLOB.hostile_ai_newplayer_candidates_filtered = 0
+	GLOB.hostile_ai_canattack_calls = 0
+	GLOB.hostile_ai_canattack_observer_rejects = 0
+	GLOB.hostile_ai_canattack_newplayer_rejects = 0
+
 /mob/living/simple_animal/hostile
 	faction = list("hostile")
 	stop_automated_movement_when_pulled = 0
@@ -57,6 +85,10 @@
 	var/retreat_health
 
 	var/next_seek
+	var/next_full_seek
+	var/lazy_seek_interval = 4
+	var/full_seek_interval = 20
+	var/use_lazy_target_scan = TRUE
 
 	cmode = 1
 	setparrytime = 30
@@ -93,7 +125,31 @@
 		return 0
 	if(binded)
 		return FALSE
-	var/list/possible_targets = ListTargets() //we look around for potential targets and make it a list for later use.
+	var/list/possible_targets
+
+	// Untargeted hostiles are the common case in live rounds; keep scans cheap and infrequent.
+	if(target)
+		possible_targets = ListTargets()
+	else
+		if(search_objects || !use_lazy_target_scan)
+			possible_targets = ListTargets()
+		else if(world.time >= next_seek)
+			next_seek = world.time + lazy_seek_interval
+			var/turf/search_turf = get_turf(targets_from)
+			if(search_turf)
+				possible_targets = ListTargetsLazy(search_turf.z)
+
+		// Periodically run a full scan so object searches and non-player interactions still function.
+		if(world.time >= next_full_seek)
+			next_full_seek = world.time + full_seek_interval
+			var/list/full_targets = ListTargets()
+			if(possible_targets)
+				possible_targets |= full_targets
+			else
+				possible_targets = full_targets
+
+		if(!possible_targets)
+			possible_targets = list()
 
 	if(environment_smash)
 		EscapeConfinement()
@@ -156,12 +212,16 @@
 
 /mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user)
 	if(stat == CONSCIOUS && !target && AIStatus != NPC_AI_OFF && !client && user)
+		next_seek = 0
+		next_full_seek = 0
 		FindTarget(list(user), 1)
 	return ..()
 
 /mob/living/simple_animal/hostile/bullet_act(obj/projectile/P)
 	if(stat == CONSCIOUS && !target && AIStatus != NPC_AI_OFF && !client)
 		if(P.firer && get_dist(src, P.firer) <= aggro_vision_range)
+			next_seek = 0
+			next_full_seek = 0
 			FindTarget(list(P.firer), 1)
 		Goto(P.starting, move_to_delay, 3)
 	return ..()
@@ -169,8 +229,16 @@
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
 /mob/living/simple_animal/hostile/proc/ListTargets() //Step 1, find out what we can see
+	GLOB.hostile_ai_listtargets_calls++
 	if(!search_objects)
 		. = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
+		GLOB.hostile_ai_candidates_scanned += length(.)
+		for(var/mob/dead/observer/O in .)
+			. -= O
+			GLOB.hostile_ai_observer_candidates_filtered++
+		for(var/mob/dead/new_player/N in .)
+			. -= N
+			GLOB.hostile_ai_newplayer_candidates_filtered++
 
 		var/static/hostile_machines = typecacheof(list())
 
@@ -235,7 +303,14 @@
 
 // Please do not add one-off mob AIs here, but override this function for your mob
 /mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
+	GLOB.hostile_ai_canattack_calls++
 	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
+		return FALSE
+	if(isobserver(the_target))
+		GLOB.hostile_ai_canattack_observer_rejects++
+		return FALSE
+	if(isnewplayer(the_target))
+		GLOB.hostile_ai_canattack_newplayer_rejects++
 		return FALSE
 
 	if(binded)
@@ -400,6 +475,8 @@
 	if(target)
 		last_aggro_loss = world.time
 	target = null
+	next_seek = 0
+	next_full_seek = 0
 	approaching_target = FALSE
 	in_melee = FALSE
 	walk(src, 0)
@@ -576,7 +653,10 @@
 		if(AI_ON)
 			. = 1
 		if(AI_IDLE)
-			if(FindTarget(possible_targets, 1))
+			if(target && CanAttack(target))
+				. = 1
+				toggle_ai(AI_ON)
+			else if(FindTarget(possible_targets, 1))
 				. = 1
 				toggle_ai(AI_ON) //Wake up for more than one Life() cycle.
 			else
@@ -626,6 +706,6 @@
 	. = list()
 	for (var/I in SSmobs.clients_by_zlevel[_Z])
 		var/mob/M = I
-		if (get_dist(M, src) < vision_range)
+		if (get_dist(M, targets_from) <= vision_range)
 			if (isturf(M.loc))
 				. += M

@@ -53769,6 +53769,7 @@
 	dir = 1;
 	icon_state = "borderfall"
 	},
+/obj/effect/landmark/start/chaplain,
 /turf/open/floor/rogue/tile{
 	icon_state = "bfloorz"
 	},

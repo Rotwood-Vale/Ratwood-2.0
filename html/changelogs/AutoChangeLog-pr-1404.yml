@@ -1,0 +1,4 @@
+author: "ophaq"
+delete-after: True
+changes:
+  - bugfix: "Potentially fixes music again."

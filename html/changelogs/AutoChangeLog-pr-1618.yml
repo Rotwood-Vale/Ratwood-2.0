@@ -1,0 +1,4 @@
+author: "Jamdrawers"
+delete-after: True
+changes:
+  - bugfix: "fixes crafting recipes requiring silver bullion instead of just blessed silver"

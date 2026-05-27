@@ -1,4 +1,0 @@
-author: "wikimody"
-delete-after: True
-changes:
-  - refactor: "removed double declarations of smokes"

@@ -1,7 +1,0 @@
-author: "SneakySlinky"
-delete-after: True
-changes:
-  - rscdel: "Deleted old code referencing an improper component initialization for a dummy item path"
-  - rscdel: "Removed redundant code from soap/bath item that was copied from soap itself"
-  - balance: "Adding a sprinting check to soap to slip people"
-  - balance: "Also by extension nerfs Xylixian miracles + rituals and the associated slip-granting sources"
