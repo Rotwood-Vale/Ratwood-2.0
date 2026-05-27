@@ -1049,7 +1049,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	popup.open(FALSE)
 	onclose(user, "capturekeypress", src)
 
-/datum/preferences/proc/SetChoices(mob/user, limit = 14, list/splitJobs = list("Court Magician", "Knight Captain", "Bishop", "Merchant", "Archivist", "Towner", "Grenzelhoft Mercenary", "Beggar", "Prisoner", "Goblin King"), widthPerColumn = 295, height = 620) //295 620
+/datum/preferences/proc/SetChoices(mob/user, limit = 14, list/splitJobs = list("Court Magician", "Knight Captain", "Bishop", "Merchant", "Archivist", "Towner", "Grenzelhoft Mercenary", "Beggar", "Prisoner", "Goblin King", "Kingsfield Visitor"), widthPerColumn = 295, height = 620) //295 620
 	if(!SSjob)
 		return
 
@@ -1082,6 +1082,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 		var/datum/job/lastJob
 		for(var/datum/job/job in sortList(SSjob.occupations, GLOBAL_PROC_REF(cmp_job_display_asc)))
 			if(!job.spawn_positions)
+				continue
+			if(job.title == "Ferentian Envoy")
 				continue
 
 			index += 1
@@ -1188,6 +1190,13 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			else
 				HTML += span_dark("<a href='?_src_=prefs;preference=job;task=tutorial;tut='[job.tutorial]''>[used_name]</a>")*/
 
+			var/list/hover_lines = list(job.tutorial)
+			if(job.show_position_indicators)
+				hover_lines += "Slots: [job.spawn_positions]"
+			if(job.round_contrib_points)
+				hover_lines += "RCP: +[job.round_contrib_points]"
+			var/hover_text = jointext(hover_lines, "<br>")
+
 			HTML += {"
 
 <style>
@@ -1223,8 +1232,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 </style>
 
 <div class="tutorialhover"> [job.class_setup_examine ? "<a href='?src=[REF(job)];explainjob=1'><font>[job_display]</font></a>" : "<font>[job_display]</font>"]</span>
-<span class="tutorial">[job.tutorial]<br>
-Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contrib_points]" : ""]</span>
+<span class="tutorial">[hover_text]</span>
 </div>
 
 			"}

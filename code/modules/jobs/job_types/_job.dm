@@ -173,6 +173,9 @@
 	///Whether this class can be clicked on for details.
 	var/class_setup_examine = TRUE
 
+	/// If FALSE, hides slot/position counts in preference and latejoin role displays.
+	var/show_position_indicators = TRUE
+
 	///The social rank of the job, determines the examine text when examining others or being examined
 	var/social_rank = SOCIAL_RANK_DIRT
 

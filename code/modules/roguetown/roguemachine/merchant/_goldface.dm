@@ -168,20 +168,13 @@
 	is_public = TRUE
 	motto = "SILVERFACE - Complimentary Trade Delegation"
 	categories = list(
-		"Adventuring Supplies",
 		"Alcohols",
 		"Food",
 		"Games",
 		"Substances",
-		"Gems",
 		"Instruments",
 		"Luxury",
-		"Magic",
-		"Livestock",
 		"Cosmetics",
-		"Raw Materials",
-		"Seeds",
-		"Tools",
 		"Weapons (Exotic)",
 	)
 	categories_gamer = list()

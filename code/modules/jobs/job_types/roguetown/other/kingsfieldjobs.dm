@@ -201,7 +201,7 @@ Enjoy!"
 	allowed_sexes = list(MALE, FEMALE)
 	tutorial = "You have arrived in Kingsfield as a humble visitor."
 	outfit = /datum/outfit/job/roguetown/kingsfield_visitor
-	display_order = JDO_PILGRIM
+	display_order = JDO_KINGSFIELD_VISITOR
 	show_in_credits = FALSE
 	announce_latejoin = FALSE
 	always_show_on_latechoices = TRUE
@@ -210,6 +210,7 @@ Enjoy!"
 	can_random = FALSE
 	bypass_jobban = TRUE
 	bypass_lastclass = TRUE
+	show_position_indicators = FALSE
 	category_tags = list(CTAG_KINGSFIELD)
 
 /datum/job/roguetown/kingsfield_visitor/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
@@ -279,7 +280,7 @@ Enjoy!"
 	allowed_sexes = list(MALE, FEMALE)
 	tutorial = "You are a Ferentian envoy operating in Kingsfield under special authority."
 	outfit = /datum/outfit/job/roguetown/ferentian_envoy
-	display_order = JDO_PILGRIM
+	display_order = JDO_FERENTIAN_ENVOY
 	show_in_credits = FALSE
 	announce_latejoin = FALSE
 	always_show_on_latechoices = FALSE // Only show if admin
@@ -288,6 +289,7 @@ Enjoy!"
 	can_random = FALSE
 	bypass_jobban = TRUE
 	bypass_lastclass = TRUE
+	show_position_indicators = FALSE
 	category_tags = list(CTAG_KINGSFIELD)
 	job_traits = list(TRAIT_NOBLE)
 	social_rank = SOCIAL_RANK_NOBLE
