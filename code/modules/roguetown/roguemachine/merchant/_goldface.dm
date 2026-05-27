@@ -70,6 +70,8 @@
 	)
 	var/is_public = FALSE // Whether it is a public access vendor.
 	var/extra_fee = 0 // Extra Guild Fees on purchases. Meant to make publicface very unprofitable.
+	/// Optional list of supply pack types hidden/blocked from this machine.
+	var/list/excluded_supply_packs = null
 
 /obj/structure/roguemachine/goldface/public
 	name = "SILVERFACE"
@@ -157,6 +159,10 @@
 	name = "Kingsfield Visitor's SILVERFACE"
 	lockid = "admin"
 	profit_id = list("Kingsfield Visitor", "Ferentian Envoy")
+	excluded_supply_packs = list(
+		/datum/supply_pack/rogue/tools/serfst,
+		/datum/supply_pack/rogue/tools/scomst,
+	)
 	extra_fee = 0
 	profit_margin = 0
 	is_public = TRUE
@@ -188,6 +194,7 @@
 	name = "Kingsfield Smithy's SILVERFACE"
 	lockid = "admin"
 	profit_id = list("Kingsfield Visitor", "Ferentian Envoy")
+	excluded_supply_packs = list()
 	categories = list(
 		"Armor (Iron)",
 		"Armor (Steel)",
@@ -206,6 +213,7 @@
 	name = "Kingsfield Tailor's SILVERFACE"
 	lockid = "admin"
 	profit_id = list("Kingsfield Visitor", "Ferentian Envoy")
+	excluded_supply_packs = list()
 	categories = list(
 		"Apparel",
 		"Wardrobe",
@@ -222,6 +230,7 @@
 	name = "Kingsfield Apothecary's SILVERFACE"
 	lockid = "admin"
 	profit_id = list("Kingsfield Visitor", "Ferentian Envoy")
+	excluded_supply_packs = list()
 	categories = list(
 		"Potions",
 	)
@@ -299,6 +308,8 @@
 			message_admins("silly MOTHERFUCKER [usr.key] IS TRYING TO BUY A [path] WITH THE GOLDFACE")
 			return
 		var/datum/supply_pack/PA = SSmerchant.supply_packs[path]
+		if(excluded_supply_packs && (PA.type in excluded_supply_packs))
+			return
 		var/free_pricing = uses_complimentary_pricing()
 		var/profit = free_pricing ? 0 : ROUND_UP(PA.cost * profit_margin)
 		var/cost = free_pricing ? 0 : PA.cost + PA.cost * extra_fee
@@ -407,12 +418,22 @@
 		contents += "<center>[current_cat]<BR></center>"
 		contents += "<center><a href='?src=[REF(src)];changecat=1'>\[RETURN\]</a><BR><BR></center>"
 		var/list/pax = list()
-		for(var/pack in SSmerchant.supply_packs)
-			var/datum/supply_pack/PA = SSmerchant.supply_packs[pack]
-			if(PA.not_in_public && is_public)
-				continue
-			if(PA.group == current_cat)
-				pax += PA
+		if(excluded_supply_packs)
+			for(var/pack in SSmerchant.supply_packs)
+				var/datum/supply_pack/PA = SSmerchant.supply_packs[pack]
+				if(PA.not_in_public && is_public)
+					continue
+				if(PA.type in excluded_supply_packs)
+					continue
+				if(PA.group == current_cat)
+					pax += PA
+		else
+			for(var/pack in SSmerchant.supply_packs)
+				var/datum/supply_pack/PA = SSmerchant.supply_packs[pack]
+				if(PA.not_in_public && is_public)
+					continue
+				if(PA.group == current_cat)
+					pax += PA
 		for(var/datum/supply_pack/PA in sortNames(pax))
 			var/costy = 0
 			if(!uses_complimentary_pricing())
