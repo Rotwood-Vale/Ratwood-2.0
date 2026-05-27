@@ -16,7 +16,7 @@ var/global/list/lazy_mob_triggers_by_turf = list()
 
 /obj/effect/lazy_mob_trigger
 	name = "lazy mob trigger"
-	desc = "Invisible lazy mob trigger."
+	desc = "Invisible lazy mob trigger." //ivisible lines around you have to activate by crossing
 	anchored = TRUE
 	density = FALSE
 	opacity = FALSE
@@ -90,7 +90,7 @@ var/global/list/lazy_mob_triggers_by_turf = list()
 
 /obj/effect/lazy_mob_spawner
 	name = "lazy mob spawner"
-	desc = "Spawns its mob after a living player crosses its invisible trigger ring."
+	desc = "Spawns its mob after a living player crosses its invisible trigger ring." //players not supposed to see it anyway, ghost see somehow if you add an icon
 
 	anchored = TRUE
 	density = FALSE
@@ -218,7 +218,7 @@ var/global/list/lazy_mob_triggers_by_turf = list()
 	return TRUE
 
 
-/obj/effect/lazy_mob_spawner/skeleton_bow
+/obj/effect/lazy_mob_spawner/skeleton_bow //test stuff names to make it easier to find in smm
 	name = "lazy skeleton bow spawner"
 	mob_type = /mob/living/simple_animal/hostile/rogue/skeleton/bow
 	trigger_range = LAZY_MOB_DEFAULT_TRIGGER_RANGE
