@@ -403,6 +403,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		else
 			if(!HAS_TRAIT_FROM(L, TRAIT_PACIFISM, pacifism_source))
 				ADD_TRAIT(L, TRAIT_PACIFISM, pacifism_source)
+		if(enforce_kingsfield_role_area(L, src))
+			return
 
 	// Ambience goes down here -- make sure to list each area separately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 //	if(L.client && !L.client.ambience_playing && L.client.prefs.toggles & SOUND_SHIP_AMBIENCE)

@@ -139,7 +139,44 @@ Enjoy!"
 	if(!T)
 		return FALSE
 	var/area/spawn_area = get_area(T)
-	return istype(spawn_area, /area/rogue/outdoors/kingsfield) || istype(spawn_area, /area/rogue/indoors/kingsfield) || istype(spawn_area, /area/rogue/under/kingsfield)
+	return is_kingsfield_area(spawn_area)
+
+/proc/is_kingsfield_area(area/A)
+	if(!A)
+		return FALSE
+	return istype(A, /area/rogue/outdoors/kingsfield) || istype(A, /area/rogue/indoors/kingsfield) || istype(A, /area/rogue/under/kingsfield)
+
+/proc/enforce_kingsfield_role_area(mob/living/L, area/current_area)
+	var/static/list/last_kingsfield_enforcement_log = list()
+	var/static/kingsfield_enforcement_log_cooldown = 5 MINUTES
+
+	if(!L?.mind)
+		return FALSE
+	if(!(L.mind.assigned_role in GLOB.kingsfield_positions))
+		return FALSE
+	if(is_kingsfield_area(current_area))
+		return FALSE
+
+	var/turf/return_turf = get_kingsfield_spawn_turf_for_job(L.mind.assigned_role)
+	if(!return_turf)
+		return_turf = get_kingsfield_spawn_turf_for_job("Kingsfield Visitor")
+	if(!return_turf)
+		return FALSE
+
+	if(get_turf(L) == return_turf)
+		return FALSE
+
+	var/log_key = L.ckey ? L.ckey : "[REF(L)]"
+	var/last_log_time = last_kingsfield_enforcement_log[log_key]
+	if(isnull(last_log_time) || world.time >= (last_log_time + kingsfield_enforcement_log_cooldown))
+		var/msg = "Kingsfield safeguard: [key_name(L)] as [L.mind.assigned_role] entered [current_area ? current_area.name : "unknown area"] at [AREACOORD(L)] and was returned to Kingsfield at [AREACOORD(return_turf)]."
+		message_admins(msg)
+		log_admin(msg)
+		last_kingsfield_enforcement_log[log_key] = world.time
+
+	L.forceMove(return_turf)
+	to_chat(L, span_warning("You are returned to Kingsfield."))
+	return TRUE
 
 /proc/get_kingsfield_spawn_turf_for_job(jobname)
 	var/list/landmarks = list()
