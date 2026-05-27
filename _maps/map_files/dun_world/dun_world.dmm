@@ -9085,9 +9085,10 @@
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/indoors/town/church/chapel)
 "bRK" = (
-/obj/structure/mineral_door/wood/donjon/stone{
+/obj/structure/mineral_door/wood/donjon/reinforced{
+	dir = 4;
 	locked = 1;
-	lockid = "puritan";
+	lockid = "inquisition";
 	name = "Vault"
 	},
 /turf/open/floor/rogue/tile,
@@ -53219,8 +53220,7 @@
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/under/town/sewer)
 "lfb" = (
-/obj/structure/mineral_door/wood/donjon{
-	dir = 1;
+/obj/structure/mineral_door/wood/donjon/reinforced{
 	locked = 1;
 	lockid = "vault";
 	name = "Vault Door"
@@ -57432,6 +57432,15 @@
 "lVK" = (
 /turf/open/floor/rogue/metal,
 /area/rogue/under/underdark/north)
+"lVQ" = (
+/obj/structure/mineral_door/wood/donjon{
+	dir = 1;
+	locked = 1;
+	lockid = "puritan";
+	name = "Inquisitorial Manor"
+	},
+/turf/closed/wall/mineral/rogue/decowood/vert,
+/area/rogue/indoors/inq/office)
 "lVR" = (
 /obj/effect/decal/edge{
 	color = "#423926";
@@ -70690,9 +70699,11 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/shelter/woods)
 "oHp" = (
-/obj/structure/mineral_door/wood/donjon/stone{
+/obj/structure/mineral_door/wood/donjon/reinforced{
+	dir = 2;
 	locked = 1;
-	lockid = "priest"
+	lockid = "priest";
+	name = "Church Vault"
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/church/chapel)
@@ -509556,7 +509567,7 @@ udu
 ygY
 ygY
 ygY
-ygY
+lVQ
 udu
 ygY
 weu
