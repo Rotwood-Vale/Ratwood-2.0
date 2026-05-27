@@ -77,6 +77,8 @@
 	var/mob/living/carbon/knotted_recipient = null // whom took the knot
 	/// Allow crotch to be exposed and bypass clothes check
 	var/bottom_exposed = FALSE
+	/// If TRUE, hide genital visuals only. The organs still function but are now a True/False toggle
+	var/hide_pintle_visuals = FALSE
 	// Moved here from proc/get_generic_force_adjective to reduce list initialization/destruction
 	var/static/list/stealth_force_adjectives 	= list("subtly", "sneakily", "covertly", "stealthily", "quietly")
 	var/static/list/low_force_adjectives 		= list("gently", "carefully", "tenderly", "gingerly", "delicately", "lazily")
@@ -1132,6 +1134,8 @@
 		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "PUSSY EXPOSED" : "PUSSY CONCEALED"]</a>"
 	else
 		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "CROTCH EXPOSED" : "CROTCH CONCEALED"]</a>"
+	if(got_cock || got_pussy || user.getorganslot(ORGAN_SLOT_TESTICLES))
+		dat += " | <a href='?src=[REF(src)];task=toggle_hide_pintle_visuals'>[hide_pintle_visuals ? "GENITALS HIDDEN" : "GENITALS VISIBLE"]</a>"
 	if(current_action && !desire_stop)
 		var/datum/sex_action/action = SEX_ACTION(current_action)
 		if(action.subtle_supported)
@@ -1230,6 +1234,9 @@
 			else
 				bottom_exposed = !bottom_exposed
 				update_exposure()
+		if("toggle_hide_pintle_visuals")
+			hide_pintle_visuals = !hide_pintle_visuals
+			update_exposure()
 		if("set_arousal")
 			var/amount = input(user, "Value above 120 will immediately cause orgasm!", "Set Arousal", arousal) as num
 			if(aphrodisiac > 1 && amount > 0)
