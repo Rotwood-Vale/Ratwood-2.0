@@ -161,6 +161,9 @@ GLOBAL_LIST_EMPTY(last_words)
 	// this was a player that just died, so do the honors
 	if (client)
 		if (!gibbed)
+			var/area/death_area = get_area(src)
+			if (istype(death_area, /area/rogue/outdoors/kingsfield) || istype(death_area, /area/rogue/indoors/kingsfield) || istype(death_area, /area/rogue/under/kingsfield))
+				return TRUE
 			var/locale = prepare_deathsight_message()
 			for (var/mob/living/player in GLOB.player_list)
 				if (player.stat == DEAD || isbrain(player))

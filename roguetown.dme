@@ -953,6 +953,7 @@
 #include "code\game\area\byos.dm"
 #include "code\game\area\generic_caves.dm"
 #include "code\game\area\hotsprings.dm"
+#include "code\game\area\kingsfield.dm"
 #include "code\game\area\miscareas.dm"
 #include "code\game\area\mountdecap.dm"
 #include "code\game\area\northcoast.dm"
