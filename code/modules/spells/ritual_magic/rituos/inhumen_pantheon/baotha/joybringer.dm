@@ -53,3 +53,40 @@
 
 #undef JOYBRINGER_FILTER
 
+/datum/status_effect/debuff/joybringer_druqks
+	id = "joybringer_druqks"
+	effectedstats = list(STATKEY_LCK = -2)
+	duration = 3 SECONDS
+	alert_type = null
+
+/datum/status_effect/debuff/joybringer_druqks/on_apply()
+	. = ..()
+	owner.overlay_fullscreen("joybringer_weeds", /atom/movable/screen/fullscreen/weedsm)
+	owner.overlay_fullscreen("joybringer_druqks", /atom/movable/screen/fullscreen/druqks)
+
+	ADD_TRAIT(owner, TRAIT_DRUQK, src)
+
+	if(owner.client)
+		SSdroning.play_area_sound(get_area(owner), owner.client)
+
+/datum/status_effect/debuff/joybringer_druqks/on_remove()
+	. = ..()
+	owner.clear_fullscreen("joybringer_druqks")
+	owner.clear_fullscreen("joybringer_weeds")
+
+	REMOVE_TRAIT(owner, TRAIT_DRUQK, src)
+
+	if(owner.client)
+		SSdroning.play_area_sound(get_area(owner), owner.client)
+
+/datum/status_effect/debuff/joybringer_druqks/tick()
+	if(owner.hallucination < 30) // this can stack up INFINITELY if you dont cap it like this
+		owner.hallucination += 3 // and it doesnt decay *that* fast.
+	owner.Jitter(1)
+
+	if(!prob(10))
+		return
+
+	owner.emote(pick("chuckle", "giggle"))
+
+

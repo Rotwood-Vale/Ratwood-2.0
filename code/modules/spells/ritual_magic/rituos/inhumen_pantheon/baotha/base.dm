@@ -79,11 +79,11 @@
 					if(!do_after(user, 5 SECONDS))
 						user.say("Let all those who look upon me see thy beauty and despair!!")
 						if(!do_after(user, 5 SECONDS))
-						icon_state = "baotha_active"
-						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-						baothaarmor(target)
-						spawn(120)
-							icon_state = "baotha_chalky"
+							icon_state = "baotha_active"
+							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+							baothaarmor(target)
+							spawn(120)
+								icon_state = "baotha_chalky"
 		if("Rite of Joy")
 			var/onrune = view(1, loc)
 			var/list/folksonrune = list()

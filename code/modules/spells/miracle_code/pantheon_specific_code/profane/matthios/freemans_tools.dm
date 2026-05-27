@@ -358,7 +358,7 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 /obj/item/matthios_canister/examine(mob/user)
 	. = ..()
 
-	if(HAS_TRAIT(user, TRAIT_FREEMAN))
+	if(HAS_TRAIT(user, TRAIT_COMMIE))
 		. += span_notice("[freeman_truth()]")
 		. += span_warning("[freeman_progress(user)]")
 
@@ -543,7 +543,7 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 		return
 
 	// ROUTE 3 - LUX
-	if(istype(I, /obj/item/reagent_containers/lux)||istype(I, /obj/item/reagent_containers/lux_moss))
+	if(istype(I, /obj/item/reagent_containers/lux))
 		if(!set_route("lux", user))
 			to_chat(user, span_notice("This will no longer work with the draught..."))
 			return
@@ -693,7 +693,7 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 		return
 	if(HAS_TRAIT(target, TRAIT_DNR))
 		to_chat(user, span_danger("The Geald within the vial does not react to them at all. Strange."))
-		return	
+		return
 	if(HAS_TRAIT(target, TRAIT_NOBLE))
 		to_chat(user, span_notice("You have a feeling that Matthios would personally eviscerate you for trying this on them."))
 		return
@@ -772,7 +772,7 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 	if(istype(I, (/obj/item/natural/rock)))
 		return 4
 
-	if(istype(I, (/obj/item/scrap) || istype(I, /obj/item/natural/glass)))
+	if(istype(I, (/obj/item/rogueore/iron) || istype(I, /obj/item/natural/glass)))
 		return 10
 
 	if(istype(I, /obj/item/rogueore))
@@ -783,8 +783,8 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 		var/obj/item/roguegem/G = I
 		return G.sellprice
 
-	if(istype(I, /obj/item/riddleofsteel))	
-		var/obj/item/riddleofsteel/R = I	
+	if(istype(I, /obj/item/riddleofsteel))
+		var/obj/item/riddleofsteel/R = I
 		return R.sellprice
 
 	return 0
@@ -1078,11 +1078,7 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 		"Ducal Peppersteak" = /obj/item/reagent_containers/food/snacks/rogue/peppersteak/ducal,
 		"Lobster Meal" = /obj/item/reagent_containers/food/snacks/rogue/fryfish/lobster/meal,
 		"Crabcake" = /obj/item/reagent_containers/food/snacks/rogue/crabcake,
-		"Chocolate" = /obj/item/reagent_containers/food/snacks/chocolate,
-		"Meat Tomatoplate" = /obj/item/reagent_containers/food/snacks/rogue/meattomatoplate,
-		"Broth Brique" = /obj/item/reagent_containers/food/snacks/rogue/meat/brothbrique,
 		"Strawberry Cake" = /obj/item/reagent_containers/food/snacks/rogue/strawberrycake,
-		"Cookies" = /obj/item/reagent_containers/food/snacks/rogue/cookiec,
 		"Meat Handpie" = /obj/item/reagent_containers/food/snacks/rogue/handpie/meat,
 	)
 
@@ -1098,7 +1094,7 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 		funny_smoke(src)
 		qdel(src)
 		return
-	
+
 	if(!ishungry && prob(80 - miraclecheck)) // bread troll
 		to_chat(user, span_warning("The mixture shifts... simplifying itself into something more befitting your greed."))
 		new /obj/item/reagent_containers/food/snacks/rogue/bread(get_turf(src))
@@ -1108,7 +1104,7 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 		qdel(src)
 		return
 
-	if(ishungry && prob(25)) 
+	if(ishungry && prob(25))
 		to_chat(user, span_notice("Matthios takes pity on your mortal limitations. You compulsively shout in gratitude!"))
 		user.say(pick("PRAISE YOU, O' GENEROUS MATTHIOS!!","AT LAST, THE TRUE GOLD OF CULINARY ALCHEMY!!","BLESSED BE THY HANDS WHICH GRANT ME SUSTENANCE, MATTHIOS!!","I SHALL GIVE ALL FOR THY SMILE, LORD OF FREEDOM!!"), language = /datum/language/common)
 
@@ -1129,7 +1125,7 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 /obj/item/matthios_canister/goodnite
 	name = "vial of goodnite base"
 	desc = "A dim, cloudy fluid rests inside, barely moving. Occasionally, something viscous streaks through it— like diluted brain matter. The glass feels warm, almost comforting. Staring at too long makes your eyelids heavy, and you get an odd compulsion to drink it."
-	
+
 	var/max_ingredients = 5
 
 	required_ingredients = list(
@@ -1235,7 +1231,7 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 		return
 
 	if(target == user)
-		to_chat(user, span_notice("You begin administering the vial to [target.name]'s forehead..."))	
+		to_chat(user, span_notice("You begin administering the vial to [target.name]'s forehead..."))
 	else
 		to_chat(user, span_notice("You begin administering the vial to your own forehead..."))
 
@@ -1316,8 +1312,8 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 	name = "vial of warsmith base"
 	desc = "A biting liquor gnaws within the vial, as though it would eat iron itself. Flecks of metal drift and vanish, then return as if unmade and remade. It reeks of rust and sharp ruin. No forge would suffer this thing near its works."
 
-	var/needed_scrap = 3
-	var/current_scrap = 0
+	var/needed_metal = 3
+	var/current_metal = 0
 	var/has_needle = FALSE
 	var/current_fibers = 0
 	var/needed_fibers = 6
@@ -1326,14 +1322,12 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 		/obj/item/needle,
 		/obj/item/natural/bundle/fibers,
 		/obj/item/natural/fibers,
-		/obj/item/scrap,
 		/obj/item/rogueore/iron,
 	)
 	ingredient_colors = list(
 		/obj/item/needle = "#c0c0c0",
 		/obj/item/natural/bundle/fibers = "#1fa712",
 		/obj/item/natural/fibers = "#1fa712",
-		/obj/item/scrap = "#6e6e6e",
 		/obj/item/rogueore/iron = "#6e6e6e",
 	)
 
@@ -1341,31 +1335,31 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 	return "A cunning weave of filament and will. Metal and fiber undone to their first truths, that they may be rewrought aright. It does not destroy— it remembers the shape of perfection, and compels all things toward it."
 
 /obj/item/matthios_canister/warsmith/freeman_progress(mob/user)
-	return "Needle: [has_needle ? "set" : "wanting"]\nFibers: [current_fibers]/[needed_fibers]\nIron scrap: [current_scrap]/[needed_scrap]"
+	return "Needle: [has_needle ? "set" : "wanting"]\nFibers: [current_fibers]/[needed_fibers]\nIron metal: [current_metal]/[needed_metal]"
 
 /obj/item/matthios_canister/warsmith/attackby(obj/item/I, mob/user)
 	if(!HAS_TRAIT(user, TRAIT_MATTHIOS_EYES))
 		to_chat(user, span_warning("The hell do I do with this? This is no alchemy!"))
 		return TRUE
 
-	if((istype(I, /obj/item/scrap)) || (istype(I, /obj/item/rogueore/iron)))
-		if(current_scrap >= needed_scrap)
+	if(istype(I, /obj/item/rogueore/iron))
+		if(current_metal >= needed_metal)
 			to_chat(user, span_warning("The mixture refuses more metal."))
 			return TRUE
 
 		if(do_after(user, 2 SECONDS))
-			if(current_scrap >= needed_scrap)
+			if(current_metal >= needed_metal)
 				return TRUE
 
-			current_scrap = min(current_scrap + 1, needed_scrap)
+			current_metal = min(current_metal + 1, needed_metal)
 			playsound(user.loc,'sound/misc/smelter_sound.ogg', 50, FALSE)
 			qdel(I)
 
-			var/color_to_use = ingredient_colors[/obj/item/scrap]
+			var/color_to_use = ingredient_colors[/obj/item/rogueore/iron]
 			if(color_to_use)
 				current_color = color_to_use
 
-			to_chat(user, span_notice("You feed scrap into the mixture. ([current_scrap]/[needed_scrap])"))
+			to_chat(user, span_notice("You feed metal into the mixture. ([current_metal]/[needed_metal])"))
 			update_icon()
 			check_completion(user)
 		return TRUE
@@ -1457,7 +1451,7 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 	return TRUE
 
 /obj/item/matthios_canister/warsmith/check_completion(mob/user)
-	if(current_scrap < needed_scrap)
+	if(current_metal < needed_metal)
 		return
 	if(!has_needle)
 		return
@@ -1618,7 +1612,7 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 			return TRUE
 
 		var/amount = min(20, R.reagents.total_volume)
-		
+
 		if(do_after(user, 2 SECONDS))
 			if(has_blood)
 				path = "blood"
@@ -2016,13 +2010,13 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/gilded/examine(mob/user)
 	. = ..()
-	if(HAS_TRAIT(user, TRAIT_FREEMAN) && stolen_fyre)
-		. += span_notice("<i>As coin begets coin, so too does Her pride beget ruin. She believes Her will absolute, yet She stands as anything but. The theft of Her fyre was merely the first proof. The future belongs to the free. To humenkind. Not to the rule of a weak tyrant and their blood-bound puppets.</i>")	
-	if(HAS_TRAIT(user, TRAIT_FREEMAN))
+	if(HAS_TRAIT(user, TRAIT_COMMIE) && stolen_fyre)
+		. += span_notice("<i>As coin begets coin, so too does Her pride beget ruin. She believes Her will absolute, yet She stands as anything but. The theft of Her fyre was merely the first proof. The future belongs to the free. To humenkind. Not to the rule of a weak tyrant and their blood-bound puppets.</i>")
+	if(HAS_TRAIT(user, TRAIT_COMMIE))
 		. += span_warning("This amulet can be swapped into another form by using it on your hand.")
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/gilded/attack_self(mob/user)
-	if(!HAS_TRAIT(user, TRAIT_FREEMAN))
+	if(!HAS_TRAIT(user, TRAIT_COMMIE))
 		return
 	if(!do_after(user, 1 SECONDS))
 		return
@@ -2040,14 +2034,14 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 		icon_state = "matthios"
 		to_chat(user, span_warning("The gilded amulet settles back into familiar weight. You feel a grin, as He commends you for your boldness."))
 		playsound(user.loc, 'sound/magic/swap.ogg', 25, TRUE, -2)
-	
+
 	update_icon()
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/gilded/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(obj_broken || active_item)
 		return
-	if((slot == SLOT_NECK || slot == SLOT_RING) && HAS_TRAIT(user, TRAIT_FREEMAN))
+	if((slot == SLOT_NECK || slot == SLOT_RING) && HAS_TRAIT(user, TRAIT_COMMIE))
 		active_item = TRUE
 		if(!user.has_language(/datum/language/thievescant))
 			to_chat(user, span_info("You gain insight on Thieves' Cant.<br><br><i>Keep in mind these are 'words' that come out as gestures, so blend it between normal speech to make it not so obvious.<br><font color=yellow>(Prefix: ,y)</font></i>"))
@@ -2079,7 +2073,7 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 	. = ..()
 	if(obj_broken || active_item)
 		return
-	if(slot == SLOT_GLOVES && HAS_TRAIT(user, TRAIT_FREEMAN))
+	if(slot == SLOT_GLOVES && HAS_TRAIT(user, TRAIT_COMMIE))
 		active_item = TRUE
 		to_chat(user, span_info("Like Him, my hands ready to grasp the impossible."))
 		ADD_TRAIT(user, TRAIT_SILENT_LOCKPICK, "matthiosboon")
@@ -2103,9 +2097,9 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 /obj/item/clothing/mask/rogue/spectacles/matthios/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(obj_broken || active_item)
-		return		
+		return
 	if(slot == SLOT_WEAR_MASK || slot == SLOT_HEAD)
-		if(HAS_TRAIT(user, TRAIT_FREEMAN))
+		if(HAS_TRAIT(user, TRAIT_COMMIE))
 			active_item = TRUE
 			if(!user.has_status_effect(/datum/status_effect/buff/matthios_vision))
 				to_chat(user, span_info("Gold gleams where truth once hid."))
@@ -2185,7 +2179,7 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 
 /obj/item/clothing/shoes/roguetown/boots/muffle_matthios/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot == SLOT_SHOES && HAS_TRAIT(user, TRAIT_FREEMAN))
+	if(slot == SLOT_SHOES && HAS_TRAIT(user, TRAIT_COMMIE))
 		to_chat(user, span_info("Like Him, I slink into the shadows."))
 		ADD_TRAIT(user, TRAIT_SILENT_FOOTSTEPS, "matthiosboon")
 		ADD_TRAIT(user, TRAIT_LIGHT_STEP, "matthiosboon")
@@ -2234,7 +2228,7 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 			addtimer(CALLBACK(src, PROC_REF(truthsnuke_transmute_target), target), 8 SECONDS)
 			continue
 
-		var/is_heretic = HAS_TRAIT(target, TRAIT_FREEMAN) || HAS_TRAIT(target, TRAIT_CABAL) || HAS_TRAIT(target, TRAIT_HORDE) || HAS_TRAIT(target, TRAIT_DEPRAVED)
+		var/is_heretic = HAS_TRAIT(target, TRAIT_COMMIE) || HAS_TRAIT(target, TRAIT_CABAL) || HAS_TRAIT(target, TRAIT_HORDE) || HAS_TRAIT(target, TRAIT_DEPRAVED)
 
 		target.apply_status_effect(/datum/status_effect/buff/alch/fire_resist)
 
@@ -2310,7 +2304,7 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 			continue
 
 		// Nobility / clergy are transmuted violently
-		if(HAS_TRAIT(target, TRAIT_NOBLE) || HAS_TRAIT(target, TRAIT_CLERGY))
+		if(HAS_TRAIT(target, TRAIT_NOBLE) || if(target, has_clergy))
 			target.visible_message(
 				span_danger("[target]'s skin begins to SLOUGH AND BURN HORRIFICALLY, glowing like molten metal!"),
 				span_userdanger("MY LIMBS BURN IN AGONY...")
@@ -2328,7 +2322,7 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 			addtimer(CALLBACK(src, PROC_REF(truthsnuke_transmute_target), target), 8 SECONDS)
 			continue
 
-		var/is_heretic = HAS_TRAIT(target, TRAIT_FREEMAN) || HAS_TRAIT(target, TRAIT_CABAL) || HAS_TRAIT(target, TRAIT_HORDE) || HAS_TRAIT(target, TRAIT_DEPRAVED)
+		var/is_heretic = HAS_TRAIT(target, TRAIT_COMMIE) || HAS_TRAIT(target, TRAIT_CABAL) || HAS_TRAIT(target, TRAIT_HORDE) || HAS_TRAIT(target, TRAIT_DEPRAVED)
 
 		target.apply_status_effect(/datum/status_effect/buff/alch/fire_resist)
 
@@ -2459,7 +2453,7 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 
 /obj/item/storage/belt/rogue/pouch/matthios/Initialize()
 	. = ..()
-	AddComponent(/datum/component/cursed_item, (TRAIT_FREEMAN||TRAIT_XYLIX), "BLESSED POUCH")
+	AddComponent(/datum/component/cursed_item, (TRAIT_COMMIE||TRAIT_XYLIX), "BLESSED POUCH")
 
 /obj/item/storage/backpack/rogue/backpack/matthios
 	name = "smuggling bag"
@@ -2472,11 +2466,11 @@ var/global/list/da_bubbles = list('sound/foley/bubb (1).ogg','sound/foley/bubb (
 
 /obj/item/storage/backpack/rogue/backpack/matthios/Initialize()
 	. = ..()
-	AddComponent(/datum/component/cursed_item, (TRAIT_FREEMAN||TRAIT_XYLIX), "BLESSED RUCKSACK")
+	AddComponent(/datum/component/cursed_item, (TRAIT_COMMIE||TRAIT_XYLIX), "BLESSED RUCKSACK")
 
 /obj/item/rope/chain/matthios
 	name = "gilded chain"
-	desc = "A heavy, gilded chain that thrums with latent divine power. It resonates negatively with the essence of nobility, as if stirred by divine rebuke."	
+	desc = "A heavy, gilded chain that thrums with latent divine power. It resonates negatively with the essence of nobility, as if stirred by divine rebuke."
 	color = "#fdff86"
 	aura_color = "#fff385"
 	matthios_chains = TRUE

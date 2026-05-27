@@ -102,6 +102,33 @@ SUBSYSTEM_DEF(treasury)
 		total_rural_tax += RURAL_TAX
 		auto_export()
 
+/datum/controller/subsystem/treasury/proc/get_account(target)
+	if(!target)
+		return null
+	return bank_accounts[target]
+
+/datum/controller/subsystem/treasury/proc/get_balance(target)
+	var/datum/fund/account = get_account(target)
+	return account ? account.balance : 0
+
+/datum/controller/subsystem/treasury/proc/has_account(target)
+	return !isnull(bank_accounts[target])
+
+/datum/controller/subsystem/treasury/proc/rename_account(mob/living/user, new_name)
+	var/datum/fund/account = get_account(user)
+	if(!account)
+		return
+	account.name = new_name
+
+/datum/controller/subsystem/treasury/proc/is_name_taken(candidate_name)
+	if(!candidate_name)
+		return FALSE
+	for(var/key in bank_accounts)
+		var/datum/fund/account = bank_accounts[key]
+		if(account?.name == candidate_name)
+			return TRUE
+	return FALSE
+
 /datum/controller/subsystem/treasury/proc/create_bank_account(name, initial_deposit)
 	if(!name)
 		return

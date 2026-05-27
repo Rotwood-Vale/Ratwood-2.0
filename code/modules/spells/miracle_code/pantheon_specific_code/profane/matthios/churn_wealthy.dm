@@ -40,7 +40,7 @@
 		var/totalvalue = mammonsinbank + mammonsonperson
 		if(HAS_TRAIT(target, TRAIT_NOBLE))
 			totalvalue += 101 // We're ALWAYS going to do a medium level smite minimum to nobles.
-		if(HAS_TRAIT(target, TRAIT_FREEMAN))
+		if(HAS_TRAIT(target, TRAIT_COMMIE))
 			totalvalue -= 50 // We do little bit less damage to other Matthiosites
 		switch(totalvalue)
 			if(0 to 10)

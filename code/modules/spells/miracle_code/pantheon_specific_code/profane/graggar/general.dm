@@ -1,6 +1,8 @@
 /datum/action/cooldown/spell/graggar
 	background_icon = 'icons/mob/actions/graggarmiracles.dmi'
 	button_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	overlay_icon = 'icons/mob/actions/graggarmiracles.dmi'
 	spell_color = GLOW_COLOR_GRAGGAR
 	ignore_armor_penalty = TRUE
 	attunement_school = null

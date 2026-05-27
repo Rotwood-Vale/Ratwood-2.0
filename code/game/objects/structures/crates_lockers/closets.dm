@@ -342,6 +342,9 @@
 		var/pickchance = 35
 		var/moveup = 10
 
+		var/silentpick = HAS_TRAIT(user, TRAIT_SILENT_LOCKPICK)
+		var/gildedeyes = HAS_TRAIT(user, TRAIT_GILDED_SIGHT)
+
 		picktime -= (pickskill * 10)
 		picktime = clamp(picktime, 10, 70)
 
@@ -353,20 +356,22 @@
 		pickchance *= P.picklvl
 		pickchance = clamp(pickchance, 1, 95)
 
-		var/picked = FALSE
-		user.log_message("attempting to lockpick closet \"[src.name]\" (currently [locked ? "locked" : "unlocked"]).", LOG_ATTACK)
+		if(gildedeyes)
+			picktime = clamp(picktime, 10, 15)
 
 		while(!QDELETED(I) &&(lockprogress < locktreshold))
 			if(!do_after(user, picktime, target = src))
 				break
 			if(prob(pickchance))
 				lockprogress += moveup
-				playsound(src.loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
+				if(silentpick)
+					playsound(src.loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 2, TRUE)
+				else
+					playsound(src.loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
 				to_chat(user, "<span class='warning'>Click...</span>")
 				if(L.mind)
 					add_sleep_experience(L, /datum/skill/misc/lockpicking, L.STAINT/2)
 				if(lockprogress >= locktreshold)
-					picked = TRUE
 					to_chat(user, "<span class='deadsay'>The locking mechanism gives.</span>")
 					record_featured_stat(FEATURED_STATS_CRIMINALS, user)
 					record_round_statistic(STATS_LOCKS_PICKED)
@@ -375,13 +380,14 @@
 				else
 					continue
 			else
-				playsound(loc, 'sound/items/pickbad.ogg', 40, TRUE)
+				if(silentpick)
+					playsound(loc, 'sound/items/pickbad.ogg', 2, TRUE)
+				else
+					playsound(loc, 'sound/items/pickbad.ogg', 40, TRUE)
 				I.take_damage(1, BRUTE, "blunt")
 				to_chat(user, "<span class='warning'>Clack.</span>")
 				add_sleep_experience(L, /datum/skill/misc/lockpicking, L.STAINT/4)
 				continue
-		if(!picked)
-			user.log_message("stopped/failed lockpicking closet \"[src.name]\" (remains [locked ? "locked" : "unlocked"]).", LOG_ATTACK)
 		return
 
 /obj/structure/closet/proc/tool_interact(obj/item/W, mob/user)//returns TRUE if attackBy call shouldnt be continued (because tool was used/closet was of wrong type), FALSE if otherwise
@@ -543,12 +549,20 @@
 	if(locked)
 		user.visible_message(span_warning("[user] unlocks [src]."), \
 			span_notice("I unlock [src]."))
-		playsound(src, 'sound/foley/doors/lock.ogg', 100)
+
+		if(HAS_TRAIT(user, TRAIT_SILENT_LOCKPICK))
+			playsound(src, 'sound/foley/doors/lock.ogg', 25)
+		else
+			playsound(src, 'sound/foley/doors/lock.ogg', 100)
 		locked = 0
 	else
 		user.visible_message(span_warning("[user] locks [src]."), \
 			span_notice("I lock [src]."))
-		playsound(src, 'sound/foley/doors/lock.ogg', 100)
+
+		if(HAS_TRAIT(user, TRAIT_SILENT_LOCKPICK))
+			playsound(src, 'sound/foley/doors/lock.ogg', 25)
+		else
+			playsound(src, 'sound/foley/doors/lock.ogg', 100)
 		locked = 1
 
 /obj/structure/closet/emag_act(mob/user)

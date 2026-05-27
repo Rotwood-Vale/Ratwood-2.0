@@ -60,7 +60,7 @@
 	var/resident_role
 	/// The requied advclass of the resident
 	var/list/resident_advclass
-	//a door name a skilled artisan can make 
+	//a door name a skilled artisan can make
 	var/doorname = null
 
 /obj/structure/mineral_door/onkick(mob/user)
@@ -214,7 +214,7 @@
 	if(human.mind && human.mind.cosmetic_class_title)
 		owner_title = human.mind.cosmetic_class_title
 	else if(human.advjob)
-		owner_title = human.advjob		
+		owner_title = human.advjob
 	name = "[user.real_name][owner_title ? " the [owner_title]" : ""]'s house"
 	return TRUE
 
@@ -668,7 +668,7 @@
 		pickchance += perbonus
 		pickchance *= P.picklvl
 		pickchance = clamp(pickchance, 1, 95)
-		
+
 		if (lockdifficulty > 1) //each time the difficulty goes up, the harder the lock
 			picktime = picktime+(10*lockdifficulty)//add a flat 10 per level
 			pickchance = pickchance/(lockdifficulty*0.75)//reduce the chance by .75 per level

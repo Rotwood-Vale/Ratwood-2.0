@@ -455,10 +455,17 @@
 			if(L.STAINT > 9 && L.STAPER > 9)
 				. += span_redtext("<i>[m1] critically fragile!</i>")
 
-	if(user != src && HAS_TRAIT(user, TRAIT_MATTHIOS_EYES) && (!HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS)))
+	if(user != src && HAS_TRAIT(user, TRAIT_MATTHIOS_EYES) && !HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
 		var/atom/item = get_most_expensive()
 		if(item)
-			. += span_notice("You get the feeling [m2] most valuable possession is \a [item].")
+			. += span_notice("You get the feeling [src]'s most valuable possession is \a [item].")
+		var/mammonsonperson = get_mammons_in_atom(src)
+		var/mammonsinbank = SStreasury.get_balance(src)
+		var/totalvalue = mammonsonperson + mammonsinbank
+		if(totalvalue && HAS_TRAIT(user, TRAIT_GILDED_SIGHT))
+			. += span_notice("They carry [mammonsonperson] mammons, with [mammonsinbank] stored away, totaling [totalvalue].")
+		else if(mammonsonperson && mammonsonperson >= 100) // worth a whole mission board!
+			. += span_notice("They carry about [mammonsonperson] mammons with them.")
 
 	if(user != src && get_dist(user, src) <= 3)
 		var/datum/charflaw/malodorous/malodorous_flaw = src.get_flaw(/datum/charflaw/malodorous)

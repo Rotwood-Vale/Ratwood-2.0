@@ -845,6 +845,13 @@
 		remove_client_colour(/datum/client_colour/nocshaded)
 		clear_fullscreen("inqvision")
 
+	if(HAS_TRAIT(src, TRAIT_GILDED_SIGHT))
+		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_NOCSHADES)
+		see_in_dark = max(see_in_dark, 12)
+		add_client_colour(/datum/client_colour/gildsight)
+	else
+		remove_client_colour(/datum/client_colour/gildsight)
+
 	if(HAS_TRAIT(src, TRAIT_SANDSTORMED))
 		if(!HAS_TRAIT(src, TRAIT_SANDSTORM_GOGGLES))
 			overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/nearsight)
