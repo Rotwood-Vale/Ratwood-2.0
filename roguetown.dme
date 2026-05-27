@@ -3046,6 +3046,7 @@
 #include "modular\code\modules\slave_collar\collar_master_verbs.dm"
 #include "modular\code\modules\slave_collar\cursed_collar.dm"
 #include "modular\Creechers\code\trufflepig.dm"
+#include "modular\lazyspawn\lazyspawn.dm"
 #include "modular\Mapping\icons\Mapping_aides.dm"
 #include "modular\Neu_Farming\code\eggs.dm"
 #include "modular\Neu_Food\cooking_helpers.dm"
