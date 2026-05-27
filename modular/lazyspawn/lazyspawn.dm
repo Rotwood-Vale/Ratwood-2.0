@@ -5,27 +5,23 @@
 #define LAZY_MOB_MAX_SPAWN_DELAY 15 SECONDS
 
 /// turf key -> /obj/effect/lazy_mob_trigger
-/// один trigger object на turf, даже если рядом несколько спавнеров
+/// only one trigger
 var/global/list/lazy_mob_triggers_by_turf = list()
-
 
 /proc/lazy_mob_trigger_key(turf/T)
 	if(!T)
 		return null
-
 	return "[T.x]|[T.y]|[T.z]"
 
 
 /obj/effect/lazy_mob_trigger
 	name = "lazy mob trigger"
 	desc = "Invisible lazy mob trigger."
-
 	anchored = TRUE
 	density = FALSE
 	opacity = FALSE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_ABSTRACT
-
 	/// Spawners attached to this trigger turf.
 	var/list/linked_spawners = list()
 
