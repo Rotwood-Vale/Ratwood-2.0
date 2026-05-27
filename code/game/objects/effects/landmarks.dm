@@ -183,6 +183,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Head Physician"
 	icon_state = "arrow"
 
+/obj/effect/landmark/start/chaplain
+	name = "Court Chaplain"
+	icon_state = "arrow"
+
 /obj/effect/landmark/start/guardsman
 	name = "City Guard"
 	icon_state = "arrow"

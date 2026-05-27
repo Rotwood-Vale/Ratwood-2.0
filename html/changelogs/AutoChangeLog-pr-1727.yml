@@ -1,0 +1,4 @@
+author: "Jamdrawers"
+delete-after: True
+changes:
+  - admin: "no longer alerted by puking"

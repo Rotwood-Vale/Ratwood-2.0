@@ -8,6 +8,7 @@
 	var/shown = 0
 	var/mob/user
 	var/listindex
+	var/list/tracked_clients
 
 /datum/progressbar/New(mob/User, goal_number, atom/target)
 	. = ..()
@@ -30,10 +31,12 @@
 	animate(bar, pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 
 /datum/progressbar/proc/update(progress)
-	for(var/mob/M in get_hearers_in_view(world.view, src, RECURSIVE_CONTENTS_CLIENT_MOBS))
-		if(!M.client) // still need to check just in case
-			continue
-		M.client.images += bar // no need for |=, images is deduplicated engine-side which is far faster
+	if(!tracked_clients)
+		tracked_clients = list()
+	for(var/mob/M in viewers(user, null))
+		if(M.client)
+			M.client.images |= bar
+			tracked_clients |= M.client
 
 	progress = CLAMP(progress, 0, goal)
 	last_progress = progress
@@ -61,11 +64,14 @@
 		LAZYREMOVE(user.progressbars, bar.loc)
 
 	animate(bar, alpha = 0, time = PROGRESSBAR_ANIMATION_TIME)
-	addtimer(CALLBACK(src, PROC_REF(remove_from_clients)), PROGRESSBAR_ANIMATION_TIME, TIMER_CLIENT_TIME)
+	addtimer(CALLBACK(src, PROC_REF(remove_from_client)), PROGRESSBAR_ANIMATION_TIME, TIMER_CLIENT_TIME)
 	return ..()
 
-/datum/progressbar/proc/remove_from_clients()
-	QDEL_NULL(bar) // deleting an image clears it from all clients
+/datum/progressbar/proc/remove_from_client()
+	for(var/client/C in tracked_clients)
+		C.images -= bar
+	bar = null
+	tracked_clients = null
 
 #undef PROGRESSBAR_ANIMATION_TIME
 #undef PROGRESSBAR_HEIGHT

@@ -19,6 +19,7 @@
 		/datum/job/roguetown/slavemaster,
 		/datum/job/roguetown/slave,
 		/datum/job/roguetown/adventurer/courtslave,
+		/datum/job/roguetown/dtchaplain,
 		
 		/datum/job/roguetown/tribalchieftain,
 		/datum/job/roguetown/tribalshaman,
