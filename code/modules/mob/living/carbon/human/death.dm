@@ -17,7 +17,7 @@
 	else
 		new /obj/effect/decal/remains/human(loc)
 
-#define KINGSFIELD_BODY_DESPAWN_DELAY (1 MINUTES)
+#define KINGSFIELD_BODY_DESPAWN_DELAY (5 SECONDS)
 
 /mob/living/carbon/human/proc/should_cleanup_kingsfield_corpse()
 	var/area/current_area = get_area(src)
@@ -28,12 +28,7 @@
 		return
 	if(!should_cleanup_kingsfield_corpse())
 		return
-	var/area/current_area = get_area(src)
-	var/area_name = current_area ? current_area.name : "Kingsfield"
-	var/admin_message = "Body of [real_name] deleted in [area_name] at [ADMIN_VERBOSEJMP(src)]."
-	message_admins(admin_message)
-	log_admin(admin_message)
-	dust(just_ash = TRUE, drop_items = TRUE, force = TRUE)
+	dust(just_ash = TRUE, drop_items = FALSE, force = TRUE)
 
 /proc/rogueviewers(range, object)
 	. = list(viewers(range, object))
