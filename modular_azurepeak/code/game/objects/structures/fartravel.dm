@@ -85,9 +85,7 @@
 		mob_job = SSjob.GetJob(departing_mob.mind.assigned_role)
 		if(mob_job)
 			mob_job.current_positions = max(0, mob_job.current_positions - 1)
-			var/target_job = SSrole_class_handler.get_advclass_by_name(departing_mob.advjob)
-			if(target_job)
-				SSrole_class_handler.adjust_class_amount(target_job, -1)
+		release_departing_advclass(departing_mob, departing_mob.mind.assigned_role)
 	if(!length(departing_mob.contents))
 		dat += " none."
 	else
@@ -144,6 +142,7 @@
 		return
 
 	// Capture advjob before AssignRole (which changes assigned_role)
+	var/old_selected_advclass = departing_mob.selected_advclass
 	var/old_advjob = departing_mob.advjob
 
 	// AssignRole internally handles decrementing the old job's current_positions.
@@ -156,9 +155,7 @@
 	if(!isnull(old_round_join_time) && departing_mob.ckey)
 		GLOB.round_join_times[departing_mob.ckey] = old_round_join_time
 
-	var/target_job = SSrole_class_handler.get_advclass_by_name(old_advjob)
-	if(target_job)
-		SSrole_class_handler.adjust_class_amount(target_job, -1)
+	release_departing_advclass(departing_mob, old_assigned_role, old_selected_advclass ? old_selected_advclass : old_advjob)
 
 	var/dat_contents = " Contents removed during Kingsfield transfer:"
 	if(!length(departing_mob.contents))
@@ -232,6 +229,33 @@
 
 	message_admins(dat + " Arrived as Kingsfield Visitor.")
 	log_admin(dat + " Arrived as Kingsfield Visitor.")
+
+/obj/structure/far_travel/proc/release_departing_advclass(mob/living/carbon/human/departing_mob, old_assigned_role = null, old_advclass_name = null)
+	if(!departing_mob)
+		return FALSE
+
+	if(!old_advclass_name)
+		old_advclass_name = departing_mob.selected_advclass
+	if(!old_advclass_name)
+		old_advclass_name = departing_mob.advjob
+
+	var/datum/advclass/target_job = old_advclass_name ? SSrole_class_handler.get_advclass_by_name(old_advclass_name) : null
+	if(target_job && target_job.total_slots_occupied > 0)
+		SSrole_class_handler.adjust_class_amount(target_job, -1)
+		return TRUE
+
+	var/role_to_check = old_assigned_role ? old_assigned_role : departing_mob?.mind?.assigned_role
+	var/datum/job/old_job = role_to_check ? SSjob.GetJob(role_to_check) : null
+	if(!old_job || length(old_job.job_subclasses) != 1)
+		return FALSE
+
+	var/datum/advclass/single_subclass_type = old_job.job_subclasses[1]
+	var/datum/advclass/single_subclass = SSrole_class_handler.get_advclass_by_name(initial(single_subclass_type.name))
+	if(!single_subclass || single_subclass.total_slots_occupied <= 0)
+		return FALSE
+
+	SSrole_class_handler.adjust_class_amount(single_subclass, -1)
+	return TRUE
 
 
 // Spawn landmark for Kingsfield Visitor arrivals. Place this in the Kingsfield map where new visitors should appear.

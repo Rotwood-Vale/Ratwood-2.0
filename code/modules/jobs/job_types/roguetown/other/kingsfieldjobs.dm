@@ -254,6 +254,9 @@ Enjoy!"
 	if(!ishuman(AM))
 		return
 	var/mob/living/carbon/human/H = AM
+	var/area/current_area = get_area(H)
+	if(current_area?.pacifismOff)
+		return
 	if(HAS_TRAIT_FROM(H, TRAIT_PACIFISM, KINGSFIELD_PACIFISM_TRAIT))
 		REMOVE_TRAIT(H, TRAIT_PACIFISM, KINGSFIELD_PACIFISM_TRAIT)
 		to_chat(H, span_notice("You feel your diplomatic pacifism lift."))

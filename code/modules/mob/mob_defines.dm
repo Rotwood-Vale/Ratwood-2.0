@@ -166,6 +166,8 @@
 	var/job = null//Living
 	var/migrant_type = null
 	var/advjob = null
+	/// Canonical selected advclass name used for slot accounting; unlike advjob this is not a display title.
+	var/selected_advclass = null
 
 	/// What social rank does this mob have
 	var/social_rank

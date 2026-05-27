@@ -695,6 +695,7 @@ SUBSYSTEM_DEF(job)
 
 	var/datum/job/job = GetJob(rank)
 
+	H.selected_advclass = null
 	H.job = rank
 
 	SEND_SIGNAL(H, COMSIG_JOB_RECEIVED, H.job)

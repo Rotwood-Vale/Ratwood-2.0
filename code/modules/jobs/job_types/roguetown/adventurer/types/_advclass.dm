@@ -80,6 +80,7 @@
 
 	post_equip(H)
 
+	H.selected_advclass = name
 	H.advjob = name
 
 	var/turf/TU = get_turf(H)
