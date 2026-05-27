@@ -64,6 +64,63 @@ Enjoy!"
 	for(var/skill_path in kingsfield_training_skills)
 		L.adjust_skillrank_up_to(skill_path, SKILL_LEVEL_JOURNEYMAN, TRUE)
 
+/proc/reset_for_kingsfield_arrival(mob/living/L)
+	if(!L || !ishuman(L))
+		return
+
+	var/mob/living/carbon/human/H = L
+
+	// Keep character customization baselines (race/age/statpack), wipe role-derived stats.
+	H.roll_stats()
+
+	// Wipe all learned skills so Kingsfield applies a predictable visitor baseline.
+	for(var/skill_type in subtypesof(/datum/skill))
+		var/current_rank = H.get_skill_level(skill_type)
+		if(current_rank > 0)
+			H.adjust_skillrank(skill_type, -current_rank, TRUE)
+
+	if(H.mind)
+		H.mind.RemoveAllSpells()
+		H.mind.spell_points = 0
+		H.mind.used_spell_points = 0
+		H.mind.has_changed_spell = FALSE
+		if(H.mind.has_rituos)
+			H.mind.has_rituos = FALSE
+		if(H.mind.rituos_spell)
+			H.mind.RemoveSpell(H.mind.rituos_spell)
+			H.mind.rituos_spell = null
+
+	// Clear devotion/miracle progression so miracle abilities cannot repopulate.
+	if(H.devotion)
+		QDEL_NULL(H.devotion)
+	H.miracle_points = 0
+	H.church_favor = 0
+	H.verbs -= list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
+
+	// Remove legal/religious world-state flags tied to their identity.
+	if(H.real_name in GLOB.excommunicated_players)
+		GLOB.excommunicated_players -= H.real_name
+	if(H.real_name in GLOB.outlawed_players)
+		GLOB.outlawed_players -= H.real_name
+	if(H.name in GLOB.excommunicated_players)
+		GLOB.excommunicated_players -= H.name
+	if(H.name in GLOB.outlawed_players)
+		GLOB.outlawed_players -= H.name
+
+	// Remove role/class-applied traits while preserving customization and innate sources.
+	if(H.status_traits)
+		for(var/trait in H.status_traits.Copy())
+			if(HAS_TRAIT_FROM(H, trait, JOB_TRAIT))
+				REMOVE_TRAIT(H, trait, JOB_TRAIT)
+			if(HAS_TRAIT_FROM(H, trait, TRAIT_GENERIC))
+				REMOVE_TRAIT(H, trait, TRAIT_GENERIC)
+
+	H.cmode_music = null
+
+	// Remove temporary martial arts granted by jobs/class systems.
+	if(H.mind?.martial_art?.base)
+		H.mind.martial_art.remove(H)
+
 /proc/apply_kingsfield_role_setup(mob/living/L, reading_level, athletics_level)
 	if(!L)
 		return
@@ -122,6 +179,7 @@ Enjoy!"
 	if(L?.mind)
 		L.mind.remove_all_antag_datums()
 		L.mind.special_role = null
+	reset_for_kingsfield_arrival(L)
 	. = ..()
 	apply_kingsfield_role_setup(L, SKILL_LEVEL_APPRENTICE, SKILL_LEVEL_NOVICE)
 
@@ -201,6 +259,7 @@ Enjoy!"
 	if(L?.mind)
 		L.mind.remove_all_antag_datums()
 		L.mind.special_role = null
+	reset_for_kingsfield_arrival(L)
 	. = ..()
 	apply_kingsfield_role_setup(L, SKILL_LEVEL_JOURNEYMAN, SKILL_LEVEL_APPRENTICE)
 
