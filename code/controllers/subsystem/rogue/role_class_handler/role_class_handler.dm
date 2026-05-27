@@ -158,7 +158,9 @@ SUBSYSTEM_DEF(role_class_handler)
 
 // A dum helper to adjust the class amount, we could do it elsewhere but this will also inform any relevant class handlers open.
 /datum/controller/subsystem/role_class_handler/proc/adjust_class_amount(datum/advclass/target_datum, amount)
-	target_datum.total_slots_occupied += amount
+	if(!target_datum || !amount)
+		return
+	target_datum.total_slots_occupied = max(0, target_datum.total_slots_occupied + amount)
 
 	if(!(target_datum.maximum_possible_slots == -1)) // Is the class not set to infinite?
 		if((target_datum.total_slots_occupied >= target_datum.maximum_possible_slots)) // We just hit a cap, iterate all the class handlers and inform them.

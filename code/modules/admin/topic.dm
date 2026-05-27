@@ -804,16 +804,17 @@
 			return
 		var/old_advclass_name = M.selected_advclass ? M.selected_advclass : M.advjob
 		var/target_job = old_advclass_name ? SSrole_class_handler.get_advclass_by_name(old_advclass_name) : null
-		var/datum/job/mob_job = SSjob.GetJob(M.mind.assigned_role)
+		var/datum/job/mob_job
 		if(M.mind)
+			mob_job = SSjob.GetJob(M.mind.assigned_role)
 			if(mob_job)
 				mob_job.current_positions = max(0, mob_job.current_positions - 1)
-			if(target_job && target_job.total_slots_occupied > 0)
+			if(target_job)
 				SSrole_class_handler.adjust_class_amount(target_job, -1)
 			else if(!target_job && mob_job && length(mob_job.job_subclasses) == 1)
 				var/datum/advclass/single_subclass_type = mob_job.job_subclasses[1]
 				var/datum/advclass/single_subclass = SSrole_class_handler.get_advclass_by_name(initial(single_subclass_type.name))
-				if(single_subclass && single_subclass.total_slots_occupied > 0)
+				if(single_subclass)
 					SSrole_class_handler.adjust_class_amount(single_subclass, -1)
 			M.mind.unknow_all_people()
 			for(var/datum/mind/MF in get_minds())

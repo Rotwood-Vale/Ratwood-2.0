@@ -240,7 +240,7 @@
 		old_advclass_name = departing_mob.advjob
 
 	var/datum/advclass/target_job = old_advclass_name ? SSrole_class_handler.get_advclass_by_name(old_advclass_name) : null
-	if(target_job && target_job.total_slots_occupied > 0)
+	if(target_job)
 		SSrole_class_handler.adjust_class_amount(target_job, -1)
 		return TRUE
 
@@ -251,7 +251,7 @@
 
 	var/datum/advclass/single_subclass_type = old_job.job_subclasses[1]
 	var/datum/advclass/single_subclass = SSrole_class_handler.get_advclass_by_name(initial(single_subclass_type.name))
-	if(!single_subclass || single_subclass.total_slots_occupied <= 0)
+	if(!single_subclass)
 		return FALSE
 
 	SSrole_class_handler.adjust_class_amount(single_subclass, -1)
