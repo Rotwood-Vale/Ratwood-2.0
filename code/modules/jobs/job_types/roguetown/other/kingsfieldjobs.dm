@@ -321,20 +321,20 @@ Enjoy!"
 	armor = null
 	head = null
 	if(should_wear_femme_clothes(H))
-		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/silkdress
+		armor = /obj/item/clothing/suit/roguetown/shirt/dress/royal/princess
 		pants = /obj/item/clothing/under/roguetown/tights/black
 	else
-		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb/gold
-		pants = /obj/item/clothing/under/roguetown/sirwal/fancy/random
-		head = /obj/item/clothing/head/roguetown/turban/fancypurple
-	shoes = /obj/item/clothing/shoes/roguetown/shortboots
+		armor = /obj/item/clothing/suit/roguetown/shirt/dress/royal/prince
+		pants = /obj/item/clothing/under/roguetown/tights/black
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
+	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	belt = /obj/item/storage/belt/rogue/leather
-	beltl = /obj/item/roguekey/diplomatic
-	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
-	backr = /obj/item/storage/backpack/rogue/satchel
+	beltl = /obj/item/storage/keyring/kfenvoy
+	backl = /obj/item/storage/backpack/rogue/satchel
+	id = /obj/item/scomstone
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch/lantern = 1,
-		/obj/item/reagent_containers/food/snacks/rogue/bread = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
 	)
 
 // Spawn landmark for Ferentian Envoy arrivals. Place this in the Kingsfield map where envoys should appear.

@@ -193,3 +193,9 @@
 	name = "watch captain's seal"
 	seal_label = "The Watch Captain of Rotwood Vale"
 	seal_color = "#1e4a7e"
+
+// Ferentian Envoy seal
+/obj/item/seal/ferentian_diplomatic
+	name = "Ferentian diplomatic seal"
+	seal_label = "The Ferentian Diplomatic Headquarters"
+	seal_color = "#67ca67"

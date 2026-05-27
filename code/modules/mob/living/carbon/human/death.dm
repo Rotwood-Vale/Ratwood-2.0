@@ -175,7 +175,7 @@
 	if(!gibbed && should_cleanup_kingsfield_corpse())
 		addtimer(CALLBACK(src, PROC_REF(cleanup_kingsfield_corpse)), KINGSFIELD_BODY_DESPAWN_DELAY)
 
-	if(!gibbed && mind?.assigned_role in GLOB.kingsfield_positions)
+	if(!gibbed && (mind?.assigned_role in GLOB.kingsfield_positions))
 		ghostize(1)
 
 	if(SSticker.HasRoundStarted())
