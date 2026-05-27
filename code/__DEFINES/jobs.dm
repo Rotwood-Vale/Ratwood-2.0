@@ -229,6 +229,7 @@
 #define JCOLOR_WANDERER  "#c86e3a"
 #define JCOLOR_INQUISITION "#FF0000"
 #define JCOLOR_TRIBAL "#0bac2e"
+#define JCOLOR_KINGSFIELD "#8d8f78"
 
 /// Key value for taking the department's string and getting a color back
 #define JCOLOR_BY_DEPARTMENT list(\
@@ -242,6 +243,7 @@
 	"Peasants" = JCOLOR_PEASANT,\
 	"Sidefolk" = "grey",\
 	"Wanderers" = JCOLOR_WANDERER,\
+	"Kingsfield" = JCOLOR_KINGSFIELD,\
 	"Tribe" = JCOLOR_TRIBAL,\
 )
 

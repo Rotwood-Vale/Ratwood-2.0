@@ -127,15 +127,12 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		"Peasants" = list(), // Pheasants (the birb)
 		"Sidefolk" = list(), // Side strugglers
 		"Wanderers" = list(), // Nobodies.
+		"Kingsfield" = list(), // Kingsfield visitors/envoys
 		"Tribe" = list(), // Nobodies.
 	)
 	for(var/job_name in ready_players_by_job)
 		var/datum/job/J = SSjob.GetJob(job_name)
-		var/key
-		if(!J)
-			key = SSjob.bitflag_to_department(WANDERER, TRUE)
-		else
-			key = SSjob.bitflag_to_department(J.department_flag)
+		var/key = SSjob.get_actors_department(J, job_name)
 
 		var/list/job_players = ready_players_by_job[job_name]
 		job_list_by_department[key] += "<B>[job_name]</B> ([job_players.len]) - [job_players.Join(", ")]<br>"

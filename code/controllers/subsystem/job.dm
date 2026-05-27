@@ -316,6 +316,13 @@ SUBSYSTEM_DEF(job)
 			key = "Wanderers"
 	return key
 
+/datum/controller/subsystem/job/proc/get_actors_department(datum/job/job_datum, assigned_role)
+	if(assigned_role in GLOB.kingsfield_positions)
+		return "Kingsfield"
+	if(!job_datum)
+		return bitflag_to_department(WANDERERS, FALSE)
+	return bitflag_to_department(job_datum.department_flag, job_datum.obsfuscated_job)
+
 //This proc is called before the level loop of DivideOccupations() and will try to select a head, ignoring ALL non-head preferences for every level until
 //it locates a head or runs out of levels to check
 //This is basically to ensure that there's atleast a few heads in the round
