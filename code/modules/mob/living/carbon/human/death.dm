@@ -17,6 +17,24 @@
 	else
 		new /obj/effect/decal/remains/human(loc)
 
+#define KINGSFIELD_BODY_DESPAWN_DELAY (1 MINUTES)
+
+/mob/living/carbon/human/proc/should_cleanup_kingsfield_corpse()
+	var/area/current_area = get_area(src)
+	return istype(current_area, /area/rogue/outdoors/kingsfield) || istype(current_area, /area/rogue/indoors/kingsfield) || istype(current_area, /area/rogue/under/kingsfield)
+
+/mob/living/carbon/human/proc/cleanup_kingsfield_corpse()
+	if(QDELETED(src) || stat != DEAD)
+		return
+	if(!should_cleanup_kingsfield_corpse())
+		return
+	var/area/current_area = get_area(src)
+	var/area_name = current_area ? current_area.name : "Kingsfield"
+	var/admin_message = "Body of [real_name] deleted in [area_name] at [ADMIN_VERBOSEJMP(src)]."
+	message_admins(admin_message)
+	log_admin(admin_message)
+	dust(just_ash = TRUE, drop_items = TRUE, force = TRUE)
+
 /proc/rogueviewers(range, object)
 	. = list(viewers(range, object))
 	if(isliving(object))
@@ -159,6 +177,9 @@
 			user_species.soul_light_off()
 			update_body()
 
+	if(!gibbed && should_cleanup_kingsfield_corpse())
+		addtimer(CALLBACK(src, PROC_REF(cleanup_kingsfield_corpse)), KINGSFIELD_BODY_DESPAWN_DELAY)
+
 	if(SSticker.HasRoundStarted())
 		SSblackbox.ReportDeath(src)
 		log_message("has died (BRUTE: [src.getBruteLoss()], BURN: [src.getFireLoss()], TOX: [src.getToxLoss()], OXY: [src.getOxyLoss()], CLONE: [src.getCloneLoss()])", LOG_ATTACK)
@@ -166,6 +187,8 @@
 			var/death_admin_message = "[key_name(src)] [loc_name(src)] [ADMIN_FLW(src)] has died (BRUTE: [src.getBruteLoss()], BURN: [src.getFireLoss()], TOX: [src.getToxLoss()], OXY: [src.getOxyLoss()], CLONE: [src.getCloneLoss()])"
 			message_admins(death_admin_message)
 			log_admin(death_admin_message)
+
+#undef KINGSFIELD_BODY_DESPAWN_DELAY
 
 /mob/living/carbon/human/revive(full_heal, admin_revive)
 	. = ..()
