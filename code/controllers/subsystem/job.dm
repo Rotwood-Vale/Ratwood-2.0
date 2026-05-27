@@ -703,6 +703,25 @@ SUBSYSTEM_DEF(job)
 	//If we joined at roundstart we should be positioned at our workstation
 	if(!joined_late)
 		var/spawn_rank = rank
+		if(spawn_rank in GLOB.kingsfield_positions)
+			var/turf/kingsfield_spawn = get_kingsfield_spawn_turf_for_job(spawn_rank)
+			if(!kingsfield_spawn)
+				var/msg = "No Kingsfield spawn marker found for [spawn_rank]. Prevented fallback spawning outside Kingsfield."
+				message_admins(msg)
+				log_game(msg)
+				if(M?.client)
+					to_chat(M, span_warning("I cannot find the Kingsfield arrival marker for [spawn_rank]. Contact an admin."))
+				if(job)
+					job.current_positions = max(job.current_positions - 1, 0)
+				if(H?.mind)
+					H.mind.assigned_role = null
+				if(N)
+					N.new_character = null
+				qdel(H)
+				return null
+			else
+				H.forceMove(kingsfield_spawn)
+
 		var/handled_resident_spawn = FALSE
 		if(istype(H, /mob/living/carbon/human))
 			if(should_use_towner_spawn(H, M?.client))
@@ -711,7 +730,7 @@ SUBSYSTEM_DEF(job)
 				else
 					spawn_rank = "Towner"
 
-		if(!handled_resident_spawn)
+		if(!handled_resident_spawn && !(spawn_rank in GLOB.kingsfield_positions))
 			var/obj/S = null
 			for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
 				if(sloc.name != spawn_rank)

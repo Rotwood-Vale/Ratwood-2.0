@@ -78,11 +78,30 @@ Enjoy!"
 	apply_kingsfield_join_fade(L)
 	show_kingsfield_welcome(L)
 
+/proc/is_kingsfield_spawn_turf(turf/T)
+	if(!T)
+		return FALSE
+	var/area/spawn_area = get_area(T)
+	return istype(spawn_area, /area/rogue/outdoors/kingsfield) || istype(spawn_area, /area/rogue/indoors/kingsfield) || istype(spawn_area, /area/rogue/under/kingsfield)
+
+/proc/get_kingsfield_spawn_turf_for_job(jobname)
+	var/list/landmarks = list()
+	for(var/obj/effect/landmark/start/sloc as anything in GLOB.jobspawn_overrides[jobname])
+		if(QDELETED(sloc))
+			continue
+		var/turf/spawn_turf = get_turf(sloc)
+		if(!is_kingsfield_spawn_turf(spawn_turf))
+			continue
+		landmarks += spawn_turf
+	if(!length(landmarks))
+		return null
+	return pick(landmarks)
+
 /datum/job/roguetown/kingsfield_visitor
 	title = "Kingsfield Visitor"
 	faction = "Station"
 	total_positions = 99
-	spawn_positions = 0
+	spawn_positions = 99
 	selection_color = "#8d8f78"
 	allowed_races = RACES_ALL_KINDS
 	allowed_sexes = list(MALE, FEMALE)
@@ -106,13 +125,13 @@ Enjoy!"
 	apply_kingsfield_role_setup(L, SKILL_LEVEL_APPRENTICE, SKILL_LEVEL_NOVICE)
 
 /datum/job/roguetown/kingsfield_visitor/special_job_check(mob/dead/new_player/player)
-	return FALSE
+	return !!get_kingsfield_spawn_turf_for_job("Kingsfield Visitor")
 
 /datum/job/roguetown/kingsfield_visitor/special_check_latejoin(client/C)
-	return !!get_spawn_turf_for_job("Kingsfield Visitor")
+	return !!get_kingsfield_spawn_turf_for_job("Kingsfield Visitor")
 
 /datum/job/roguetown/kingsfield_visitor/override_latejoin_spawn(mob/living/carbon/human/H)
-	var/turf/spawn_turf = get_spawn_turf_for_job("Kingsfield Visitor")
+	var/turf/spawn_turf = get_kingsfield_spawn_turf_for_job("Kingsfield Visitor")
 	if(!spawn_turf)
 		to_chat(H, span_warning("I cannot find passage to Kingsfield right now."))
 		return FALSE
@@ -158,7 +177,7 @@ Enjoy!"
 	title = "Ferentian Envoy"
 	faction = "Station"
 	total_positions = 99
-	spawn_positions = 0
+	spawn_positions = 99
 	selection_color = "#8d8f78"
 	allowed_races = RACES_ALL_KINDS
 	allowed_sexes = list(MALE, FEMALE)
@@ -184,13 +203,13 @@ Enjoy!"
 	apply_kingsfield_role_setup(L, SKILL_LEVEL_JOURNEYMAN, SKILL_LEVEL_APPRENTICE)
 
 /datum/job/roguetown/ferentian_envoy/special_job_check(mob/dead/new_player/player)
-	return !!(player?.client?.holder) && !!get_spawn_turf_for_job("Ferentian Envoy")
+	return !!(player?.client?.holder) && !!get_kingsfield_spawn_turf_for_job("Ferentian Envoy")
 
 /datum/job/roguetown/ferentian_envoy/special_check_latejoin(client/C)
-	return !!(C?.holder) && !!get_spawn_turf_for_job("Ferentian Envoy")
+	return !!(C?.holder) && !!get_kingsfield_spawn_turf_for_job("Ferentian Envoy")
 
 /datum/job/roguetown/ferentian_envoy/override_latejoin_spawn(mob/living/carbon/human/H)
-	var/turf/spawn_turf = get_spawn_turf_for_job("Ferentian Envoy")
+	var/turf/spawn_turf = get_kingsfield_spawn_turf_for_job("Ferentian Envoy")
 	if(spawn_turf)
 		H.forceMove(spawn_turf)
 		return TRUE

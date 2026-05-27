@@ -58,7 +58,7 @@
 
 	if(travel_choice == "Cancel" || !travel_choice)
 		return
-	if(travel_choice == "Travel to Kingsfield" && (!SSjob.GetJob("Kingsfield Visitor") || !get_spawn_turf_for_job("Kingsfield Visitor")))
+	if(travel_choice == "Travel to Kingsfield" && (!SSjob.GetJob("Kingsfield Visitor") || !get_kingsfield_spawn_turf_for_job("Kingsfield Visitor")))
 		to_chat(user, span_warning("Travel to Kingsfield is currently unavailable."))
 		return
 	if(user.incapacitated() || QDELETED(departing_mob) || (departing_mob != user && departing_mob.client) || get_dist(src, dropping) > 2 || get_dist(src, user) > 2)
@@ -136,7 +136,7 @@
 	var/dat = "[ADMIN_LOOKUPFLW(user)] has departed to Kingsfield via far travel as [departing_mob], previous job [old_assigned_role ? old_assigned_role : departing_mob.job], at [AREACOORD(src)]."
 	var/self_log = "departed to Kingsfield via far travel from [AREACOORD(src)] (previous job: [old_assigned_role ? old_assigned_role : departing_mob.job])"
 	var/old_round_join_time = departing_mob.ckey ? GLOB.round_join_times[departing_mob.ckey] : null
-	var/turf/spawn_turf = get_spawn_turf_for_job("Kingsfield Visitor")
+	var/turf/spawn_turf = get_kingsfield_spawn_turf_for_job("Kingsfield Visitor")
 	if(!spawn_turf)
 		to_chat(departing_mob, span_warning("I cannot find passage to Kingsfield right now."))
 		message_admins(dat + " Failed to find a Kingsfield Visitor spawn landmark.")
