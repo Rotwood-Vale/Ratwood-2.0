@@ -72,6 +72,7 @@
 	seal_is_official = FALSE
 	cap_uses_color = FALSE
 	var/customized = FALSE
+	var/customized_name = "custom seal"
 
 /obj/item/seal/custom/attack_self(mob/user)
 	if(customized)
@@ -93,10 +94,40 @@
 	seal_color = new_color
 	customized = TRUE
 	cap_uses_color = TRUE
-	name = "custom seal"
+	name = customized_name
 	desc = "A personalized wax seal with a unique engraving."
 	update_icon()
 	to_chat(user, span_notice("I engrave [src] and set its wax color."))
+
+// Admin/mapping-only custom seal that preserves official underlined seal text on documents.
+/obj/item/seal/custom/official
+	name = "Custom Official Seal"
+	desc = "A blank official seal head ready to be engraved once."
+	seal_label = "Custom Official Seal"
+	seal_is_official = TRUE
+	customized_name = "Custom Official Seal"
+
+/obj/item/seal/custom/official/attack_self(mob/user)
+	if(is_blind(user))
+		return
+	var/new_label = stripped_input(user, "Engrave your seal text (format, 'a seal of <name>):", "Custom Official Seal Engraving", seal_label, 64)
+	if(!new_label)
+		return
+	new_label = trim(STRIP_HTML_SIMPLE(new_label, 64))
+	if(!length(new_label))
+		to_chat(user, span_warning("The engraving must contain text."))
+		return
+	var/new_color = sanitize_hexcolor(color_pick_sanitized(user, "Choose wax color:", "Custom Official Seal Color", seal_color, 0.2, 1), 6, TRUE)
+	if(!new_color)
+		new_color = "#8b6914"
+	seal_label = new_label
+	seal_color = new_color
+	customized = TRUE
+	cap_uses_color = TRUE
+	name = customized_name
+	desc = "A personalized official wax seal with a unique engraving."
+	update_icon()
+	to_chat(user, span_notice("I re-engrave [src] and set its wax color."))
 
 /datum/crafting_recipe/roguetown/survival/custom_seal
 	name = "Blank Custom Seal (1 Small Log)"
