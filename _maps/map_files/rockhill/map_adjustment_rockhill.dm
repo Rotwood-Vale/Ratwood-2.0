@@ -28,7 +28,6 @@
 		/datum/job/roguetown/tribalvillager,
 		
 		/datum/job/roguetown/sergeant,
-		/datum/job/roguetown/kingsfield_visitor, // Kingsfield only; enabled by the Kingsfield secondary z-level
 		)
 	slot_adjust = list(
 		/datum/job/roguetown/manorguard = 4,//split with watchmen
