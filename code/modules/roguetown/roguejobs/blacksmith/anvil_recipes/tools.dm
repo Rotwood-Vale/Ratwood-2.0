@@ -96,7 +96,7 @@
 /datum/anvil_recipe/tools/decrepit/hammer
 	name = "Hammer, Decrepit (+1 Stick)"
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/hammer/decrepit
+	created_item = /obj/item/rogueweapon/hammer/ancient/decrepit
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/decrepit/sickle

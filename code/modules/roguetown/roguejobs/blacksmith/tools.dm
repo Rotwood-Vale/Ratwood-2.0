@@ -255,13 +255,17 @@
 	force = 18
 	max_integrity = 15
 
-/obj/item/rogueweapon/hammer/decrepit
+/obj/item/rogueweapon/hammer/ancient
+	name = "ancient hammer"
+	desc = "A polished gilbranze hammer from the days of death."
+	icon_state = "ahammer"
+	smeltresult = /obj/item/ingot/aaslag
+	
+/obj/item/rogueweapon/hammer/ancient/decrepit
 	name = "decrepit hammer"
 	desc = "A decrepit old hammer."
-	icon_state = "ahammer"
 	force = 12
 	max_integrity = 10
-	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/rogueweapon/hammer/copper
 	name = "copper hammer"

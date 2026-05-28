@@ -26143,7 +26143,7 @@
 "kwe" = (
 /obj/structure/table/wood/long_table/right,
 /obj/item/rogueweapon/tongs,
-/obj/item/rogueweapon/hammer/decrepit,
+/obj/item/rogueweapon/hammer/ancient/decrepit,
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/under/cave)
 "kwh" = (
