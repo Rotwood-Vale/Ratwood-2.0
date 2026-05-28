@@ -278,7 +278,7 @@ LICH SKELETONS
 	backl = /obj/item/storage/backpack/rogue/satchel
 	gloves = /obj/item/clothing/gloves/roguetown/chain/ancient
 
-	beltr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/paaxe
+	beltr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient
 	beltl = /obj/item/rogueweapon/hammer/ancient
 	r_hand = /obj/item/rogueweapon/pick/ancient
 
