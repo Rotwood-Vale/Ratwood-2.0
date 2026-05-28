@@ -373,13 +373,18 @@
 	desc = "A metal mask adorned with arachnid iconography. A grim visage crafted by a grim race."
 	icon_state = "shadowfacemask"
 
-/obj/item/clothing/mask/rogue/facemask/aalloy
+/obj/item/clothing/mask/rogue/facemask/ancient
+	name = "ancient mask"
+	desc = "Polished gilbranze, molded into an intimidating visage. Touch the cheek; it is warm, like flesh. But it is not flesh. Not yet."
+	max_integrity = 200
+	icon_state = "ancientmask"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/clothing/mask/rogue/facemask/ancient/decrepit
 	name = "decrepit mask"
 	desc = "Frayed bronze, molded into an unblinking visage. Only the statues, buried within the innards of Mount Decapitation, share its wrinkled lip and sneer of cold command."
-	icon_state = "ancientmask"
 	max_integrity = 75
 	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = null
 
 /obj/item/clothing/mask/rogue/facemask/copper
@@ -477,13 +482,6 @@
 	icon_state = "smask"
 	max_integrity = 200
 	smeltresult = /obj/item/ingot/steel
-
-/obj/item/clothing/mask/rogue/facemask/steel/paalloy
-	name = "ancient mask"
-	desc = "Polished gilbranze, molded into an intimidating visage. Touch the cheek; it is warm, like flesh. But it is not flesh. Not yet."
-	icon_state = "ancientmask"
-	smeltresult = /obj/item/ingot/aaslag
-
 
 /obj/item/clothing/mask/rogue/facemask/steel/hound
 	name = "steel hound mask"

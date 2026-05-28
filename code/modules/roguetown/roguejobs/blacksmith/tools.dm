@@ -255,14 +255,13 @@
 	force = 18
 	max_integrity = 15
 
-/obj/item/rogueweapon/hammer/aalloy
+/obj/item/rogueweapon/hammer/decrepit
 	name = "decrepit hammer"
 	desc = "A decrepit old hammer."
 	icon_state = "ahammer"
 	force = 12
 	max_integrity = 10
-	smeltresult = /obj/item/ingot/aalloy
-
+	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/rogueweapon/hammer/copper
 	name = "copper hammer"
@@ -426,14 +425,14 @@
 		else
 			icon_state = "stonetongsi0"
 
-/obj/item/rogueweapon/tongs/aalloy
+/obj/item/rogueweapon/tongs/decrepit
 	name = "decrepit tongs"
 	icon_state = "atongs"
 	force = 5
 	smeltresult = null
 	max_integrity = 10
 
-/obj/item/rogueweapon/tongs/aalloy/update_icon()
+/obj/item/rogueweapon/tongs/decrepit/update_icon()
 	. = ..()
 	if(!hingot)
 		icon_state = "atongs"

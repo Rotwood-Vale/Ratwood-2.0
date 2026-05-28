@@ -42,6 +42,19 @@
 	sewrepair = FALSE
 	smeltresult = /obj/item/ingot/steel
 
+/obj/item/clothing/wrists/roguetown/bracers/ancient
+	name = "ancient bracers"
+	desc = "Polished gilbranze cuffings, clasped around the wrists. Through ascension, the chains of mortality are broken; and only through death will the spirit be ready to embrace divinity."
+	icon_state = "ancientbracers"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/clothing/wrists/roguetown/bracers/ancient/decrepit
+	name = "decrepit bracers"
+	desc = "Frayed bronze cuffings, bound across the wrists. Don't bother counting the tallies left behind by their former legionnaires; none of them ever returned from the battlefields."
+	max_integrity = ARMOR_INT_SIDE_DECREPIT
+	color = "#bb9696"
+	anvilrepair = null
+
 /obj/item/clothing/wrists/roguetown/bracers/psythorns
 	name = "psydonic thorns"
 	desc = "Thorns fashioned from pliable yet durable blacksteel - woven and interlinked, fashioned to be wrapped around the wrists."
@@ -73,21 +86,6 @@
 	else
 		user.visible_message(span_warning("[user] stops reshaping [src]."))
 		return
-
-/obj/item/clothing/wrists/roguetown/bracers/aalloy
-	name = "decrepit bracers"
-	desc = "Frayed bronze cuffings, bound across the wrists. Don't bother counting the tallies left behind by their former legionnaires; none of them ever returned from the battlefields."
-	max_integrity = ARMOR_INT_SIDE_DECREPIT
-	icon_state = "ancientbracers"
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-
-/obj/item/clothing/wrists/roguetown/bracers/paalloy
-	name = "ancient bracers"
-	desc = "Polished gilbranze cuffings, clasped around the wrists. Through ascension, the chains of mortality are broken; and only through death will the spirit be ready to embrace divinity."
-	icon_state = "ancientbracers"
-	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/clothing/wrists/roguetown/bracers/leather
 	name = "leather bracers"

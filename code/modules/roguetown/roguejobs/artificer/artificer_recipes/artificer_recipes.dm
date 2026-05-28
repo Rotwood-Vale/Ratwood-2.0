@@ -290,10 +290,10 @@
 	skill_level = 3
 
 /datum/artificer_recipe/contraptions/artificerarmor
-	name = "Artificer armor (+3 ancient alloy ingot)(+2 Bronze gear)"
-	required_item = /obj/item/ingot/purifiedaalloy
-	additional_items = list(/obj/item/ingot/purifiedaalloy,/obj/item/ingot/purifiedaalloy, /obj/item/roguegear/bronze,/obj/item/roguegear/bronze)
-	created_item = /obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer
+	name = "Artificer armor (+3 Gilbranze, +2 Bronze Gear)"
+	required_item = /obj/item/ingot/gilbranze
+	additional_items = list(/obj/item/ingot/gilbranze,/obj/item/ingot/gilbranze, /obj/item/roguegear/bronze,/obj/item/roguegear/bronze)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/ancient/artificer
 	hammers_per_item = 12
 	skill_level = 4
 

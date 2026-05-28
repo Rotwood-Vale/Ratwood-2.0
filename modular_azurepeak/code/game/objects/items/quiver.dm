@@ -188,10 +188,10 @@
 /obj/item/quiver/Parrows/Initialize(mapload)
 	. = ..()
 
-/obj/item/quiver/bolts/paalloy/Initialize(mapload)
+/obj/item/quiver/bolts/ancient/Initialize(mapload)
 	..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/rogue/bolt/paalloy/A = new()
+		var/obj/item/ammo_casing/caseless/rogue/bolt/ancient/A = new()
 		arrows += A
 	update_icon()
 
@@ -209,10 +209,10 @@
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/paalloy/Initialize(mapload)
+/obj/item/quiver/ancient/Initialize(mapload)
 	..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/rogue/arrow/steel/paalloy/A = new()
+		var/obj/item/ammo_casing/caseless/rogue/arrow/steel/ancient/A = new()
 		arrows += A
 	update_icon()
 
@@ -284,10 +284,10 @@
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/javelin/paalloy/Initialize(mapload)
+/obj/item/quiver/javelin/ancient/Initialize(mapload)
 	..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/rogue/javelin/steel/paalloy/A = new()
+		var/obj/item/ammo_casing/caseless/rogue/javelin/steel/ancient/A = new()
 		arrows += A
 	update_icon()
 
@@ -356,10 +356,10 @@
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/sling/paalloy/Initialize(mapload)
+/obj/item/quiver/sling/ancient/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/rogue/sling_bullet/paalloy/A = new()
+		var/obj/item/ammo_casing/caseless/rogue/sling_bullet/ancient/A = new()
 		arrows += A
 	update_icon()
 

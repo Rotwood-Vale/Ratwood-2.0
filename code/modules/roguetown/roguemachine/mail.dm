@@ -545,7 +545,7 @@
 						mailrecipient.playsound_local(mailrecipient, 'sound/misc/mail.ogg', 100, FALSE, -1)
 					return
 
-	if(istype(P, /obj/item/roguecoin/aalloy))
+	if(istype(P, /obj/item/roguecoin/gilbranze))
 		return
 
 	if(istype(P, /obj/item/roguecoin/inqcoin))

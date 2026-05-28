@@ -195,7 +195,7 @@
 /area/rogue/under/tomb/cave)
 "rr" = (
 /obj/structure/closet/dirthole/closed,
-/obj/item/clothing/suit/roguetown/armor/plate/half/aalloy,
+/obj/item/clothing/suit/roguetown/armor/plate/half/ancient/decrepit,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb)
 "rU" = (

@@ -190,19 +190,17 @@
 /obj/item/clothing/neck/roguetown/chaincoif/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/chain_equip.ogg', null, (UPD_HEAD|UPD_MASK|UPD_NECK))	//Chain coif.
 
-/obj/item/clothing/neck/roguetown/chaincoif/paalloy
+/obj/item/clothing/neck/roguetown/chaincoif/ancient
 	name = "ancient coif"
 	desc = "Polished gilbranze rings, linked together to form a billowing hood. Let it not be a crown of thorns that saves this dying world, but a crown of progress; of fettered metal and stained bone, rejuvenated by Zizo's will to herald Her greatest works yet."
 	icon_state = "achaincoif"
 	smeltresult = /obj/item/ingot/aaslag
 
-/obj/item/clothing/neck/roguetown/chaincoif/iron/aalloy
+/obj/item/clothing/neck/roguetown/chaincoif/ancient/decrepit
 	name = "decrepit coif"
 	desc = "Frayed bronze rings, linked together to form a billowing hood. Shrapnel peppers the linkage; arrowheads and speartips, brought along from a battlefield who's history - and legionnaires - have been lost to tyme."
-	icon_state = "achaincoif"
 	max_integrity = ARMOR_INT_SIDE_DECREPIT
 	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = null
 
 /obj/item/clothing/neck/roguetown/chaincoif/chainmantle
@@ -316,13 +314,23 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = PLATEHIT
 
-/obj/item/clothing/neck/roguetown/gorget/aalloy
+/obj/item/clothing/neck/roguetown/gorget/steel
+	name = "steel gorget"
+	smeltresult = /obj/item/ingot/steel
+	max_integrity = ARMOR_INT_SIDE_STEEL
+	icon_state = "sgorget"
+
+/obj/item/clothing/neck/roguetown/gorget/steel/ancient
+	name = "ancient gorget"
+	desc = "Polished gilbranze plates, layered atop one-another to guard the neck. The spine; a sacred leyline between spirit and sinew. It must remain unsevered, lest Her blessings be lost."
+	icon_state = "ancientgorget"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/clothing/neck/roguetown/gorget/steel/ancient/decrepit
 	name = "decrepit gorget"
 	desc = "Frayed bronze plates, shingled together to shroud the neck. Primitive scrapes line the flanks, yet the center seems to've been cored out by a spear's thrust."
-	icon_state = "ancientgorget"
 	max_integrity = ARMOR_INT_SIDE_DECREPIT
 	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = null
 
 /obj/item/clothing/neck/roguetown/gorget/copper
@@ -383,23 +391,10 @@
 	desc = "Nature knows not of mercy."
 	icon_state = "iwolfcollaralt"
 
-/obj/item/clothing/neck/roguetown/gorget/steel
-	name = "steel gorget"
-	smeltresult = /obj/item/ingot/steel
-	max_integrity = ARMOR_INT_SIDE_STEEL
-	icon_state = "sgorget"
-
 /obj/item/clothing/neck/roguetown/gorget/steel/kazengun
 	name = "kazengunite gorget"
 	desc = "A series of interlocking rings of metal set around the throat. Used by the kouken of Kazengun for precisely the same reason as the knights of Psydonia."
 	icon_state = "kazengunneckguard"
-
-/obj/item/clothing/neck/roguetown/gorget/paalloy
-	name = "ancient gorget"
-	desc = "Polished gilbranze plates, layered atop one-another to guard the neck. The spine; a sacred leyline between spirit and sinew. It must remain unsevered, lest Her blessings be lost."
-	icon_state = "ancientgorget"
-	max_integrity = ARMOR_INT_SIDE_STEEL
-	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/clothing/neck/roguetown/gorget/cursed_collar // minor flavor swap so people know it's a scam shitty knockoff.
 	name = "lesser cursed collar"
@@ -465,7 +460,7 @@
 	desc = "A symbol of progress from an era that had reason to believe in it."
 	icon_state = "zcross_iron"
 
-/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy
+/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient
 	name = "ancient zcross"
 	desc = "'Progress. Ascension. Destiny. A mandate, commanded by God, to be fulfilled by Man. She called us forth from the edge of reality - and with Her dying breath, rasped out the final truth; the fire is gone, and the world will soon follow.'"
 	icon_state = "zcross_a"
@@ -543,7 +538,7 @@
 	salvage_result = /obj/item/grown/log/tree/stick
 	salvage_amount = 1
 
-/obj/item/clothing/neck/roguetown/psicross/aalloy
+/obj/item/clothing/neck/roguetown/psicross/decrepit
 	name = "decrepit psicross"
 	desc = "'A comet capable of rending all the enemies of humanity apart; oh, how graceful His power was! And His sacrifice, ever so noble! Yet now He slumbers, unaware of the fruits His efforts came to give. And He sighs. And He weeps.'"
 	icon_state = "psycross_a"

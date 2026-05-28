@@ -550,17 +550,16 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		to_chat(src, span_warning("You're not alive yet. Set this in your Game Preferences instead."))
 		return
 	var/mob/living/L = mob
-	var/track_select = input(src, "Choose a combat music track to use TEMPORARILY.\n\
-									You can set this permanently in Game Preferences.\
-									", "Combat Music", L.cmode_music_override_name)\
-									as null|anything in GLOB.cmode_tracks_by_name
-	if(track_select)
+	var/datum/combat_music/combat_music = pick_combat_music_with_listen(
+		"Choose a combat music track to use TEMPORARILY.\nYou can set this permanently in Game Preferences.",
+		"Combat Music",
+		L.cmode_music_override_name,
+	)
+	if(combat_music)
 		if(!isliving(mob)) // mob might've changed between then and now
 			return
 		L = mob
-		var/datum/combat_music/combat_music
-		combat_music = GLOB.cmode_tracks_by_name[track_select]
-		to_chat(src, span_notice("Selected track: <b>[track_select]</b>."))
+		to_chat(src, span_notice("Selected track: <b>[combat_music.name]</b>."))
 		if(combat_music.desc)
 			to_chat(src, "<i>[combat_music.desc]</i>")
 		if(combat_music.credits)
@@ -578,6 +577,42 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			S.cmode_music_override = combat_music.musicpath
 			S.cmode_music_override_name = combat_music.name
 	return
+
+/client/proc/start_combat_music_preview(track_key)
+	var/datum/combat_music/track = GLOB.cmode_tracks_by_name[track_key]
+	if(!track?.musicpath)
+		return FALSE
+
+	if(combat_music_preview_active)
+		stop_combat_music_preview()
+
+	var/sound/preview_sound = sound(
+		pick(track.musicpath),
+		repeat = TRUE,
+		wait = 0,
+		channel = CHANNEL_CMUSIC4,
+		volume = clamp((prefs?.combatmusicvol || 50) * 1.2, 0, 100),
+	)
+	SEND_SOUND(src, preview_sound)
+	combat_music_preview_active = TRUE
+	combat_music_preview_track_key = track_key
+	return TRUE
+
+/client/proc/stop_combat_music_preview()
+	if(!combat_music_preview_active)
+		return
+	var/sound/sound_killer = sound('sound/blank.ogg')
+	sound_killer.channel = CHANNEL_CMUSIC4
+	SEND_SOUND(src, sound_killer)
+	combat_music_preview_active = FALSE
+	combat_music_preview_track_key = null
+
+/client/proc/pick_combat_music_with_listen(prompt_text, window_title = "Combat Music", default_track_name = null)
+	var/track_select = tgui_input_list(src, prompt_text, window_title, GLOB.cmode_tracks_by_name, default_track_name, 0, FALSE, GLOB.tgui_always_state, TRUE)
+	if(!track_select)
+		return null
+
+	return GLOB.cmode_tracks_by_name[track_select]
 
 /client/verb/runm()
 	set name = "Run Mode"

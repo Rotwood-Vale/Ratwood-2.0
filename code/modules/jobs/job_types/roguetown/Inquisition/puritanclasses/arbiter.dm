@@ -163,7 +163,7 @@ Here because they're unused elsewhere.
 
 /obj/item/clothing/head/roguetown/helmet/arbiter
 	name = "arbiter mask"
-	desc = "An iconic, gilbranze mask, depicting the visage of Him. Weeping, as He is."
+	desc = "An iconic gilbranze mask, depicting the visage of HIM. Weeping, as HE is."
 	icon_state = "overseermask"
 	item_state = "overseermask"
 	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
@@ -175,12 +175,12 @@ Here because they're unused elsewhere.
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	sewrepair = TRUE
 	anvilrepair = /datum/skill/craft/armorsmithing
-	smeltresult = /obj/item/ingot/purifiedaalloy
+	smeltresult = /obj/item/ingot/aaslag
 	var/active_item = FALSE
 	dropshrink = null
 
 /obj/item/clothing/head/roguetown/helmet/arbiter/vice
-	desc = "An iconic, silver mask depicting the visage of Him. Weeping, as He is."
+	desc = "An iconic, silver mask depicting the visage of HIM. Weeping, as HE is."
 	icon_state = "viceseermask"
 	item_state = "viceseermask"
 	is_silver = TRUE

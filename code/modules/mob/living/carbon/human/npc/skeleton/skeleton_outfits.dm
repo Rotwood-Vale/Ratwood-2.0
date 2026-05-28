@@ -76,17 +76,17 @@
 			if(96 to 100)
 				beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 	if(prob(5))
-		id = /obj/item/clothing/ring/aalloy
+		id = /obj/item/clothing/ring/decrepit
 	var/weapon_choice = rand(1, 4)
 	switch(weapon_choice)
 		if(1)
-			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/aaxe
+			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient/decrepit
 		if(2)
-			r_hand = /obj/item/rogueweapon/sword/short/ashort
+			r_hand = /obj/item/rogueweapon/sword/short/ancient/decrepit
 		if(3)
-			r_hand = /obj/item/rogueweapon/spear/aalloy
+			r_hand = /obj/item/rogueweapon/spear/ancient/decrepit
 		if(4)
-			r_hand = /obj/item/rogueweapon/mace/alloy
+			r_hand = /obj/item/rogueweapon/mace/steel/ancient/decrepit
 	H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 1, TRUE)
@@ -106,9 +106,9 @@
 	H.STAWIL = 12
 	H.STAINT = 1
 	name = "Skeleton Footsoldier"
-	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/aalloy
-	pants = /obj/item/clothing/under/roguetown/chainlegs/kilt/aalloy
-	shoes = /obj/item/clothing/shoes/roguetown/boots/aalloy
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/ancient/decrepit
+	pants = /obj/item/clothing/under/roguetown/chainlegs/kilt/ancient/decrepit
+	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/ancient/decrepit
 	if(prob(20))
 		belt = /obj/item/storage/belt/rogue/leather/rope
 		switch(rand(1, 100))
@@ -119,17 +119,17 @@
 			if(96 to 100)
 				beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 	if(prob(5))
-		id = /obj/item/clothing/ring/aalloy
+		id = /obj/item/clothing/ring/decrepit
 	var/weapon_choice = rand(1, 4)
 	switch(weapon_choice)
 		if(1)
-			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/aaxe
+			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient/decrepit
 		if(2)
-			r_hand = /obj/item/rogueweapon/sword/short/ashort
+			r_hand = /obj/item/rogueweapon/sword/short/ancient/decrepit
 		if(3)
-			r_hand = /obj/item/rogueweapon/spear/aalloy
+			r_hand = /obj/item/rogueweapon/spear/ancient/decrepit
 		if(4)
-			r_hand = /obj/item/rogueweapon/mace/alloy
+			r_hand = /obj/item/rogueweapon/mace/steel/ancient/decrepit
 	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 2, TRUE)
@@ -151,14 +151,14 @@
 	name = "Skeleton Pirate"
 	head =  /obj/item/clothing/head/roguetown/helmet/tricorn
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/aalloy
-	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/aalloy
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/ancient/decrepit
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/ancient/decrepit
 	pants = /obj/item/clothing/under/roguetown/tights/sailor
-	shoes = /obj/item/clothing/shoes/roguetown/boots/aalloy
+	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/ancient/decrepit
 	if(prob(50))
-		r_hand = /obj/item/rogueweapon/huntingknife/idagger/adagger
+		r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/ancient/decrepit
 	else
-		r_hand = /obj/item/rogueweapon/knuckles/aknuckles
+		r_hand = /obj/item/rogueweapon/knuckles/ancient/decrepit
 	if(prob(20))
 		belt = /obj/item/storage/belt/rogue/leather/rope
 		switch(rand(1, 100))
@@ -169,7 +169,7 @@
 			if(96 to 100)
 				beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 	if(prob(5))
-		id = /obj/item/clothing/ring/aalloy
+		id = /obj/item/clothing/ring/decrepit
 	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 2, TRUE)
@@ -190,14 +190,14 @@
 	H.STAINT = 1
 	name = "Skeleton Soldier"
 	cloak = /obj/item/clothing/cloak/stabard/surcoat/guard // Ooo Spooky Old Dead MAA
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/aalloy
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/aalloy
-	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/aalloy
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/aalloy
-	pants = /obj/item/clothing/under/roguetown/chainlegs/kilt/aalloy
-	shoes = /obj/item/clothing/shoes/roguetown/boots/aalloy
-	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron/aalloy
-	gloves = /obj/item/clothing/gloves/roguetown/chain/aalloy
+	head = /obj/item/clothing/head/roguetown/helmet/heavy/ancient/decrepit
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/ancient/decrepit
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/ancient/decrepit
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/ancient/decrepit
+	pants = /obj/item/clothing/under/roguetown/chainlegs/kilt/ancient/decrepit
+	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/ancient/decrepit
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient/decrepit
+	gloves = /obj/item/clothing/gloves/roguetown/chain/ancient/decrepit
 	if(prob(30))
 		switch(rand(1, 100))
 			if(1 to 50)
@@ -207,15 +207,15 @@
 			if(96 to 100)
 				beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 	if(prob(5))
-		id = /obj/item/clothing/ring/aalloy
+		id = /obj/item/clothing/ring/decrepit
 	if(prob(33)) // 33% chance of shield, so ranged don't get screwed over entirely
-		l_hand = /obj/item/rogueweapon/shield/tower/metal/alloy
+		l_hand = /obj/item/rogueweapon/shield/tower/metal/ancient/decrepit
 	if(prob(33))
-		r_hand = /obj/item/rogueweapon/spear/aalloy
+		r_hand = /obj/item/rogueweapon/spear/ancient/decrepit
 	else if(prob(33))
-		r_hand = /obj/item/rogueweapon/sword/short/gladius/agladius	// ave
+		r_hand = /obj/item/rogueweapon/sword/short/gladius/ancient/decrepit	// ave
 	else
-		r_hand = /obj/item/rogueweapon/flail/aflail
+		r_hand = /obj/item/rogueweapon/flail/sflail/ancient/decrepit
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)
@@ -239,31 +239,31 @@
 	if(skeletonclass == 1) // Khopesh Knight
 		H.STASPD = 12 // Hue
 		cloak = /obj/item/clothing/cloak/hierophant
-		mask = /obj/item/clothing/mask/rogue/facemask/aalloy
-		armor = /obj/item/clothing/suit/roguetown/armor/plate/half/aalloy
-		shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/aalloy
-		wrists = /obj/item/clothing/wrists/roguetown/bracers/aalloy
-		pants = /obj/item/clothing/under/roguetown/platelegs/aalloy
-		shoes = /obj/item/clothing/shoes/roguetown/boots/aalloy
-		neck = /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy
-		gloves = /obj/item/clothing/gloves/roguetown/chain/aalloy
-		r_hand = /obj/item/rogueweapon/sword/sabre/alloy
-		l_hand = /obj/item/rogueweapon/sword/sabre/alloy
+		mask = /obj/item/clothing/mask/rogue/facemask/ancient/decrepit
+		armor = /obj/item/clothing/suit/roguetown/armor/plate/half/ancient/decrepit
+		shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/ancient/decrepit
+		wrists = /obj/item/clothing/wrists/roguetown/bracers/ancient/decrepit
+		pants = /obj/item/clothing/under/roguetown/platelegs/ancient/decrepit
+		shoes = /obj/item/clothing/shoes/roguetown/boots/armor/ancient/decrepit
+		neck = /obj/item/clothing/neck/roguetown/psicross/inhumen/ancient
+		gloves = /obj/item/clothing/gloves/roguetown/chain/ancient/decrepit
+		r_hand = /obj/item/rogueweapon/sword/sabre/ancient/decrepit
+		l_hand = /obj/item/rogueweapon/sword/sabre/ancient/decrepit
 	else // Withered Dreadknight
 		H.STASPD = 8
 		cloak = /obj/item/clothing/cloak/tabard/blkknight
-		head = /obj/item/clothing/head/roguetown/helmet/heavy/guard/aalloy
-		armor = /obj/item/clothing/suit/roguetown/armor/plate/aalloy
-		shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/aalloy
-		wrists = /obj/item/clothing/wrists/roguetown/bracers/aalloy
-		pants = /obj/item/clothing/under/roguetown/platelegs/aalloy
-		shoes = /obj/item/clothing/shoes/roguetown/boots/aalloy
-		neck = /obj/item/clothing/neck/roguetown/gorget/aalloy
-		gloves = /obj/item/clothing/gloves/roguetown/plate/aalloy
+		head = /obj/item/clothing/head/roguetown/helmet/heavy/guard/ancient/decrepit
+		armor = /obj/item/clothing/suit/roguetown/armor/plate/ancient/decrepit
+		shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ancient/decrepit
+		wrists = /obj/item/clothing/wrists/roguetown/bracers/ancient/decrepit
+		pants = /obj/item/clothing/under/roguetown/platelegs/ancient/decrepit
+		shoes = /obj/item/clothing/shoes/roguetown/boots/armor/ancient/decrepit
+		neck = /obj/item/clothing/neck/roguetown/gorget/steel/ancient/decrepit
+		gloves = /obj/item/clothing/gloves/roguetown/plate/ancient/decrepit
 		if(prob(50))
-			r_hand = /obj/item/rogueweapon/greatsword/aalloy
+			r_hand = /obj/item/rogueweapon/greatsword/ancient/decrepit
 		else
-			r_hand = /obj/item/rogueweapon/mace/goden/aalloy
+			r_hand = /obj/item/rogueweapon/mace/goden/steel/ancient/decrepit
 
 	if(prob(60))
 		belt = /obj/item/storage/belt/rogue/leather/rope
@@ -275,7 +275,7 @@
 			if(96 to 100)
 				beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 	if(prob(5))
-		id = /obj/item/clothing/ring/aalloy
+		id = /obj/item/clothing/ring/decrepit
 	H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 4, TRUE)
@@ -300,11 +300,11 @@
 	H.STAINT = 1
 	name = "Skeleton"
 	if(prob(10))
-		head = /obj/item/clothing/head/roguetown/helmet/heavy/aalloy
+		head = /obj/item/clothing/head/roguetown/helmet/heavy/ancient/decrepit
 	if(prob(10))
-		armor = /obj/item/clothing/suit/roguetown/armor/plate/half/aalloy
+		armor = /obj/item/clothing/suit/roguetown/armor/plate/half/ancient/decrepit
 	if(prob(25))
-		shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/aalloy
+		shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/ancient/decrepit
 	if(prob(90))
 		wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	if(prob(90))
@@ -314,17 +314,17 @@
 	if(prob(70))
 		neck = /obj/item/clothing/neck/roguetown/coif
 	if(prob(70))
-		gloves = /obj/item/clothing/gloves/roguetown/chain/aalloy
+		gloves = /obj/item/clothing/gloves/roguetown/chain/ancient/decrepit
 	if(prob(20))
-		l_hand = /obj/item/rogueweapon/shield/tower/metal/alloy
+		l_hand = /obj/item/rogueweapon/shield/tower/metal/ancient/decrepit
 	if(prob(25))
-		r_hand = /obj/item/rogueweapon/spear/aalloy
+		r_hand = /obj/item/rogueweapon/spear/ancient/decrepit
 	else if(prob(25))
-		r_hand = /obj/item/rogueweapon/mace/alloy
+		r_hand = /obj/item/rogueweapon/mace/steel/ancient/decrepit
 	else if(prob(25))
-		r_hand = /obj/item/rogueweapon/sword/short/ashort
+		r_hand = /obj/item/rogueweapon/sword/short/ancient/decrepit
 	else
-		r_hand = /obj/item/rogueweapon/flail/aflail
+		r_hand = /obj/item/rogueweapon/flail/sflail/ancient/decrepit
 	if(prob(40))
 		belt = /obj/item/storage/belt/rogue/leather/rope
 		if(prob(10))
@@ -332,7 +332,7 @@
 		else
 			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
 	if(prob(5))
-		id = /obj/item/clothing/ring/aalloy
+		id = /obj/item/clothing/ring/decrepit
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)
@@ -375,15 +375,15 @@
 		else
 			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
 	if(prob(5))
-		id = /obj/item/clothing/ring/aalloy
+		id = /obj/item/clothing/ring/decrepit
 	var/weapon_choice = rand(1, 4)
 	switch(weapon_choice)
 		if(1)
-			r_hand = /obj/item/rogueweapon/sickle/aalloy
+			r_hand = /obj/item/rogueweapon/sickle/decrepit
 		if(2)
 			r_hand = /obj/item/rogueweapon/woodstaff
 		if(3)
-			r_hand = /obj/item/rogueweapon/huntingknife/idagger/adagger
+			r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/ancient/decrepit
 		if(4)
 			r_hand = /obj/item/rogueweapon/mace/woodclub
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
@@ -419,9 +419,9 @@
 		head = /obj/item/clothing/head/roguetown/helmet/horned
 	neck = /obj/item/clothing/neck/roguetown/collar/leather
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-	r_hand = /obj/item/rogueweapon/pick/aalloy
+	r_hand = /obj/item/rogueweapon/pick/decrepit
 	if(prob(20))
-		r_hand = /obj/item/rogueweapon/shovel/aalloy
+		r_hand = /obj/item/rogueweapon/shovel/decrepit
 	if(prob(40))
 		belt = /obj/item/storage/belt/rogue/leather/rope
 		if(prob(10))
@@ -429,7 +429,7 @@
 		else
 			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
 	if(prob(5))
-		id = /obj/item/clothing/ring/aalloy
+		id = /obj/item/clothing/ring/decrepit
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)

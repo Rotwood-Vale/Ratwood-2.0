@@ -3,9 +3,9 @@
 	i_type = "Utilities"
 
 // Material parent classes - one skill level lower than weapons
-/datum/anvil_recipe/tools/aalloy
-	abstract_type = /datum/anvil_recipe/tools/aalloy
-	req_bar = /obj/item/ingot/aalloy
+/datum/anvil_recipe/tools/decrepit
+	abstract_type = /datum/anvil_recipe/tools/decrepit
+	req_bar = /obj/item/ingot/decrepit
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/anvil_recipe/tools/copper
@@ -75,98 +75,96 @@
 
 // --------- ANCIENT ALLOY -----------
 
-/datum/anvil_recipe/tools/aalloy/thresher
+/datum/anvil_recipe/tools/decrepit/thresher
 	name = "Thresher, Decrepit (+1 Stick)"
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/thresher/aalloy
+	created_item = /obj/item/rogueweapon/thresher/decrepit
 	i_type = "Tools"
 
-/datum/anvil_recipe/tools/aalloy/hoe
+/datum/anvil_recipe/tools/decrepit/hoe
 	name = "Hoe, Decrepit (+2 Sticks)"
 	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/hoe/aalloy
+	created_item = /obj/item/rogueweapon/hoe/decrepit
 	i_type = "Tools"
 
-/datum/anvil_recipe/tools/aalloy/pitchfork
+/datum/anvil_recipe/tools/decrepit/pitchfork
 	name = "Pitchfork, Decrepit (+2 Sticks)"
 	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/pitchfork/aalloy
+	created_item = /obj/item/rogueweapon/pitchfork/decrepit
 	i_type = "Tools"
 
-/datum/anvil_recipe/tools/aalloy/hammer
+/datum/anvil_recipe/tools/decrepit/hammer
 	name = "Hammer, Decrepit (+1 Stick)"
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/hammer/aalloy
+	created_item = /obj/item/rogueweapon/hammer/decrepit
 	i_type = "Tools"
 
-/datum/anvil_recipe/tools/aalloy/sickle
+/datum/anvil_recipe/tools/decrepit/sickle
 	name = "Sickle, Decrepit (+1 Stick)"
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/sickle/aalloy
+	created_item = /obj/item/rogueweapon/sickle/decrepit
 	i_type = "Tools"
 
 
-/datum/anvil_recipe/tools/aalloy/tongs
+/datum/anvil_recipe/tools/decrepit/tongs
 	name = "Tongs, Decrepit"
-	created_item = /obj/item/rogueweapon/tongs/aalloy
+	created_item = /obj/item/rogueweapon/tongs/decrepit
 	i_type = "Tools"
 
-/datum/anvil_recipe/tools/aalloy/pick
+/datum/anvil_recipe/tools/decrepit/pick
 	name = "Pickaxe, Decrepit (+1 Stick)"
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/pick/aalloy
+	created_item = /obj/item/rogueweapon/pick/decrepit
 	i_type = "Tools"
 
-/datum/anvil_recipe/tools/aalloy/shovel
+/datum/anvil_recipe/tools/decrepit/shovel
 	name = "Shovel, Decrepit (+2 Sticks)"
 	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/shovel/aalloy
+	created_item = /obj/item/rogueweapon/shovel/decrepit
 	i_type = "Tools"
 
-/datum/anvil_recipe/tools/aalloy/sewingneedle
+/datum/anvil_recipe/tools/decrepit/sewingneedle
 	name = "Needles, Decrepit (x3)"
-	created_item = /obj/item/needle/aalloy
+	created_item = /obj/item/needle/decrepit
 	createditem_num = 3
 
-/datum/anvil_recipe/tools/aalloy/pan
+/datum/anvil_recipe/tools/decrepit/pan
 	name = "Frypan, Decrepit"
-	created_item = /obj/item/cooking/pan/aalloy
+	created_item = /obj/item/cooking/pan/decrepit
 
-/datum/anvil_recipe/tools/aalloy/agobs
+/datum/anvil_recipe/tools/decrepit/agobs
 	name = "Goblets x2"
-	created_item = /obj/item/reagent_containers/glass/cup/aalloygob
+	created_item = /obj/item/reagent_containers/glass/cup/decrepitgob
 	createditem_num = 2
 
-/datum/anvil_recipe/tools/aalloy/amugs
+/datum/anvil_recipe/tools/decrepit/amugs
 	name = "Mug, Decrepit (x3)"
-	created_item = /obj/item/reagent_containers/glass/cup/aalloymug
+	created_item = /obj/item/reagent_containers/glass/cup/decrepitmug
 	createditem_num = 3
 
 
-/datum/anvil_recipe/tools/aalloy/pot
+/datum/anvil_recipe/tools/decrepit/pot
 	name = "Cooking Pot, Decrepit"
-	created_item = /obj/item/reagent_containers/glass/bucket/pot/aalloy
+	created_item = /obj/item/reagent_containers/glass/bucket/pot/decrepit
 
 
-/datum/anvil_recipe/tools/aalloy/platter
+/datum/anvil_recipe/tools/decrepit/platter
 	name = "Platter, Decrepit (x3)"
-	created_item = /obj/item/cooking/platter/aalloy
+	created_item = /obj/item/cooking/platter/decrepit
 	createditem_num = 3
 
-/datum/anvil_recipe/tools/aalloy/bowl
+/datum/anvil_recipe/tools/decrepit/bowl
 	name = "Bowl, Decrepit (x2)"
-	created_item = /obj/item/reagent_containers/glass/bowl/aalloy
-	createditem_num = 2
-	craftdiff = 1
+	created_item = /obj/item/reagent_containers/glass/bowl/decrepit
 
-/datum/anvil_recipe/tools/aalloy/fork
+/datum/anvil_recipe/tools/decrepit/fork
 	name = "Fork, Decrepit (x3)"
-	created_item = /obj/item/kitchen/fork/aalloy
+	created_item = /obj/item/kitchen/fork/decrepit
 	createditem_num = 3
 
-/datum/anvil_recipe/tools/aalloy/spoon
+/datum/anvil_recipe/tools/decrepit/spoon
 	name = "Spoon, Decrepit (x3)"
-	created_item = /obj/item/kitchen/spoon/aalloy
+	created_item = /obj/item/kitchen/spoon/decrepit
 	createditem_num = 3
 
 
@@ -431,9 +429,9 @@
 	created_item = /obj/item/kitchen/fork/gold
 	createditem_num = 3
 
-/datum/anvil_recipe/tools/aalloy/fork
+/datum/anvil_recipe/tools/decrepit/fork
 	name = "Fork, decrepit (x3)"
-	created_item = /obj/item/kitchen/fork/aalloy
+	created_item = /obj/item/kitchen/fork/decrepit
 	createditem_num = 3
 
 /datum/anvil_recipe/tools/iron/bowl

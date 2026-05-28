@@ -3,15 +3,15 @@
 	appro_skill = /datum/skill/craft/weaponsmithing  // inheritance yay !!
 	i_type = "Weapons"
 
-/datum/anvil_recipe/weapons/aalloy
-	abstract_type = /datum/anvil_recipe/weapons/aalloy
-	req_bar = /obj/item/ingot/aalloy
-	craftdiff = SKILL_LEVEL_NOVICE
-
-/datum/anvil_recipe/weapons/paalloy
-	abstract_type = /datum/anvil_recipe/weapons/paalloy
-	req_bar = /obj/item/ingot/purifiedaalloy
+/datum/anvil_recipe/weapons/ancient
+	abstract_type = /datum/anvil_recipe/weapons/ancient
+	req_bar = /obj/item/ingot/gilbranze
 	craftdiff = SKILL_LEVEL_JOURNEYMAN // Steel equivalence
+
+/datum/anvil_recipe/weapons/decrepit
+	abstract_type = /datum/anvil_recipe/weapons/decrepit
+	req_bar = /obj/item/ingot/decrepit
+	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/anvil_recipe/weapons/copper
 	abstract_type = /datum/anvil_recipe/weapons/copper
@@ -61,143 +61,139 @@
 
 // DECREPIT/ANCIENT ALLOY
 
-/datum/anvil_recipe/weapons/aalloy/flail
-	name = "Flail, Decrepit"
-	created_item = /obj/item/rogueweapon/flail/aflail
-
-/datum/anvil_recipe/weapons/paalloy/flail/
+/datum/anvil_recipe/weapons/ancient/flail/
 	name = "Flail, Ancient"
-	created_item = /obj/item/rogueweapon/flail/sflail/paflail
+	created_item = /obj/item/rogueweapon/flail/sflail/ancient
 
-/datum/anvil_recipe/weapons/aalloy/dagger
-	name = "Dagger, Decrepit"
-	created_item = /obj/item/rogueweapon/huntingknife/idagger/adagger
+/datum/anvil_recipe/weapons/decrepit/flail
+	name = "Flail, Decrepit"
+	created_item = /obj/item/rogueweapon/flail/sflail/ancient/decrepit
 
-
-/datum/anvil_recipe/weapons/paalloy/dagger
+/datum/anvil_recipe/weapons/ancient/dagger
 	name = "Dagger, Ancient"
-	created_item = /obj/item/rogueweapon/huntingknife/idagger/steel/padagger
+	created_item = /obj/item/rogueweapon/huntingknife/idagger/steel/ancient
 
-/datum/anvil_recipe/weapons/aalloy/knuckles
-	name = "Knuckles, Decrepit"
-	created_item = /obj/item/rogueweapon/knuckles/aknuckles
+/datum/anvil_recipe/weapons/decrepit/dagger
+	name = "Dagger, Decrepit"
+	created_item = /obj/item/rogueweapon/huntingknife/idagger/steel/ancient/decrepit
 
-/datum/anvil_recipe/weapons/paalloy/knuckles
+/datum/anvil_recipe/weapons/ancient/knuckles
 	name = "Knuckles, Ancient"
-	created_item = /obj/item/rogueweapon/knuckles/paknuckles
+	created_item = /obj/item/rogueweapon/knuckles/ancient
 
-/datum/anvil_recipe/weapons/aalloy/gladius
-	name = "Gladius, Decrepit"
-	created_item = /obj/item/rogueweapon/sword/short/gladius/agladius
+/datum/anvil_recipe/weapons/decrepit/knuckles
+	name = "Knuckles, Decrepit"
+	created_item = /obj/item/rogueweapon/knuckles/ancient/decrepit
 
-
-/datum/anvil_recipe/weapons/paalloy/gladius
-	name = "Gladius, Ancient"
-	created_item = /obj/item/rogueweapon/sword/short/gladius/pagladius
-
-/datum/anvil_recipe/weapons/aalloy/shortsword
-	name = "Shortsword, Decrepit"
-	created_item = /obj/item/rogueweapon/sword/short/ashort
-
-/datum/anvil_recipe/weapons/paalloy/shortsword
+/datum/anvil_recipe/weapons/ancient/shortsword
 	name = "Shortsword, Ancient"
-	created_item = /obj/item/rogueweapon/sword/short/pashortsword
+	created_item = /obj/item/rogueweapon/sword/short/ancient
 
-/datum/anvil_recipe/weapons/aalloy/khopesh
-	name = "Khopesh, Decrepit"
-	created_item = /obj/item/rogueweapon/sword/sabre/alloy
+/datum/anvil_recipe/weapons/decrepit/shortsword
+	name = "Shortsword, Decrepit"
+	created_item = /obj/item/rogueweapon/sword/short/ancient/decrepit
 
-/datum/anvil_recipe/weapons/paalloy/khopesh
+/datum/anvil_recipe/weapons/ancient/gladius
+	name = "Gladius, Ancient"
+	created_item = /obj/item/rogueweapon/sword/short/gladius/ancient
+
+/datum/anvil_recipe/weapons/decrepit/gladius
+	name = "Gladius, Decrepit"
+	created_item = /obj/item/rogueweapon/sword/short/gladius/ancient/decrepit
+
+/datum/anvil_recipe/weapons/ancient/khopesh
 	name = "Khopesh, Ancient"
-	created_item = /obj/item/rogueweapon/sword/sabre/palloy
+	created_item = /obj/item/rogueweapon/sword/sabre/ancient
 
-/datum/anvil_recipe/weapons/aalloy/handaxe
-	name = "Axe, Decrepit"
-	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/aaxe
+/datum/anvil_recipe/weapons/decrepit/khopesh
+	name = "Khopesh, Decrepit"
+	created_item = /obj/item/rogueweapon/sword/sabre/ancient/decrepit
 
-/datum/anvil_recipe/weapons/paalloy/handaxe
+/datum/anvil_recipe/weapons/ancient/handaxe
 	name = "Axe, Ancient"
-	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/steel/paaxe
+	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient
 
-/datum/anvil_recipe/weapons/aalloy/mace
-	name = "Mace, Decrepit"
-	created_item = /obj/item/rogueweapon/mace/alloy
+/datum/anvil_recipe/weapons/decrepit/handaxe
+	name = "Axe, Decrepit"
+	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient/decrepit
 
-
-/datum/anvil_recipe/weapons/paalloy/mace
+/datum/anvil_recipe/weapons/ancient/mace
 	name = "Mace, Ancient"
-	created_item = /obj/item/rogueweapon/mace/steel/palloy
+	created_item = /obj/item/rogueweapon/mace/steel/ancient
 
-/datum/anvil_recipe/weapons/aalloy/warhammer
-	name = "Warhammer, Decrepit"
-	created_item = /obj/item/rogueweapon/mace/warhammer/alloy
+/datum/anvil_recipe/weapons/decrepit/mace
+	name = "Mace, Decrepit"
+	created_item = /obj/item/rogueweapon/mace/steel/ancient/decrepit
 
-/datum/anvil_recipe/weapons/paalloy/warhammer
+/datum/anvil_recipe/weapons/ancient/warhammer
 	name = "Warhammer, Ancient"
-	created_item = /obj/item/rogueweapon/mace/warhammer/steel/paalloy
+	created_item = /obj/item/rogueweapon/mace/warhammer/steel/ancient
 
-/datum/anvil_recipe/weapons/aalloy/tossblade
-	name = "Tossblades, Decrepit (x4)"
-	created_item = /obj/item/rogueweapon/huntingknife/throwingknife/aalloy
-	createditem_num = 4
+/datum/anvil_recipe/weapons/decrepit/warhammer
+	name = "Warhammer, Decrepit"
+	created_item = /obj/item/rogueweapon/mace/warhammer/steel/ancient/decrepit
 
-/datum/anvil_recipe/weapons/paalloy/tossblade
+/datum/anvil_recipe/weapons/ancient/tossblade
 	name = "Tossblades, Ancient (x4)"
-	created_item = /obj/item/rogueweapon/huntingknife/throwingknife/steel/palloy
+	created_item = /obj/item/rogueweapon/huntingknife/throwingknife/steel/ancient
 	createditem_num = 4
 
-/datum/anvil_recipe/weapons/aalloy/gsw
+/datum/anvil_recipe/weapons/decrepit/tossblade
+	name = "Tossblades, Decrepit (x4)"
+	created_item = /obj/item/rogueweapon/huntingknife/throwingknife/steel/ancient/decrepit
+	createditem_num = 4
+
+/datum/anvil_recipe/weapons/ancient/gsw
+	name = "Greatsword, Ancient (+2 Gilbranze)"
+	created_item = /obj/item/rogueweapon/greatsword/ancient
+	additional_items = list(/obj/item/ingot/gilbranze, /obj/item/ingot/gilbranze)
+
+/datum/anvil_recipe/weapons/decrepit/gsw
 	name = "Greatsword, Decrepit (+2 Alloy)"
-	created_item = /obj/item/rogueweapon/greatsword/aalloy
-	additional_items = list(/obj/item/ingot/aalloy, /obj/item/ingot/aalloy)
+	created_item = /obj/item/rogueweapon/greatsword/ancient/decrepit
+	additional_items = list(/obj/item/ingot/decrepit, /obj/item/ingot/decrepit)
 
-/datum/anvil_recipe/weapons/paalloy/gsw
-	name = "Greatsword, Ancient (+2 Purified Alloy)"
-	created_item = /obj/item/rogueweapon/greatsword/paalloy
-	additional_items = list(/obj/item/ingot/purifiedaalloy, /obj/item/ingot/purifiedaalloy)
+/datum/anvil_recipe/weapons/ancient/bardiche
+	name = "Bardiche, Ancient (+1 log, +1 Gilbranze)"
+	created_item = /obj/item/rogueweapon/halberd/bardiche/ancient
+	additional_items = list(/obj/item/ingot/iron, /obj/item/grown/log/tree/small)
 
-/datum/anvil_recipe/weapons/aalloy/bardiche
+/datum/anvil_recipe/weapons/decrepit/bardiche
 	name = "Bardiche, Decrepit (+1 log, +1 Alloy)"
-	created_item = /obj/item/rogueweapon/halberd/bardiche/aalloy
+	created_item = /obj/item/rogueweapon/halberd/bardiche/ancient/decrepit
 	additional_items = list(/obj/item/ingot/iron, /obj/item/grown/log/tree/small)
 
-/datum/anvil_recipe/weapons/paalloy/bardiche
-	name = "Bardiche, Ancient (+1 log, +1 Purified Alloy)"
-	created_item = /obj/item/rogueweapon/halberd/bardiche/paalloy
-	additional_items = list(/obj/item/ingot/iron, /obj/item/grown/log/tree/small)
+/datum/anvil_recipe/weapons/ancient/grandmace
+	name = "Grand Mace, Purified (+1 Gilbranze, +1 Small Log)"
+	additional_items = list(/obj/item/ingot/gilbranze, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/mace/goden/steel/ancient
 
-/datum/anvil_recipe/weapons/aalloy/grandmace
+/datum/anvil_recipe/weapons/decrepit/grandmace
 	name = "Grand Mace, Decrepit (+1 Alloy, +1 Small Log)"
-	additional_items = list(/obj/item/ingot/aalloy, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/mace/goden/aalloy
+	additional_items = list(/obj/item/ingot/decrepit, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/mace/goden/steel/ancient/decrepit
 
-/datum/anvil_recipe/weapons/paalloy/grandmace
-	name = "Grand Mace, Purified (+1 Purified Alloy, +1 Small Log)"
-	additional_items = list(/obj/item/ingot/purifiedaalloy, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/mace/goden/steel/paalloy
-
-/datum/anvil_recipe/weapons/aalloy/spear
-	name = "Spear, Decrepit(+1 Small Log)"
-	additional_items = list(/obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/spear/aalloy
-
-/datum/anvil_recipe/weapons/paalloy/spear
+/datum/anvil_recipe/weapons/ancient/spear
 	name = "Spear, Ancient (+1 Small Log)"
 	additional_items = list(/obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/spear/paalloy
+	created_item = /obj/item/rogueweapon/spear/ancient
 
-/datum/anvil_recipe/weapons/aalloy/javelin
-	name = "Javelin, Decrepit (+1 Small Log) (x2)"
+/datum/anvil_recipe/weapons/decrepit/spear
+	name = "Spear, Decrepit(+1 Small Log)"
 	additional_items = list(/obj/item/grown/log/tree/small)
-	created_item = /obj/item/ammo_casing/caseless/rogue/javelin/aalloy
-	createditem_num = 2
+	created_item = /obj/item/rogueweapon/spear/ancient/decrepit
 
-/datum/anvil_recipe/weapons/paalloy/javelin
+/datum/anvil_recipe/weapons/ancient/javelin
 	name = "Javelin, Ancient (+1 Small Log) (x2)"
 	additional_items = list(/obj/item/grown/log/tree/small)
-	created_item = /obj/item/ammo_casing/caseless/rogue/javelin/steel/paalloy
+	created_item = /obj/item/ammo_casing/caseless/rogue/javelin/steel/ancient
 	createditem_num = 2
 
+/datum/anvil_recipe/weapons/decrepit/javelin
+	name = "Javelin, Decrepit (+1 Small Log) (x2)"
+	additional_items = list(/obj/item/grown/log/tree/small)
+	created_item = /obj/item/ammo_casing/caseless/rogue/javelin/steel/ancient/decrepit
+	createditem_num = 2
 
 // COPPER
 
@@ -801,29 +797,35 @@
 	craftdiff = 2
 
 /// SHIELDS
-/datum/anvil_recipe/weapons/steel/kiteshield
-	name = "Kite Shield (+1 Steel, +1 Cured Leather)"
-	additional_items = list(/obj/item/ingot/steel, /obj/item/natural/hide/cured)
-	created_item = /obj/item/rogueweapon/shield/tower/metal
-
-/datum/anvil_recipe/weapons/alloy/shield
-	name = "Shield, Decrepit (+1 Alloy, +1 Cured Leather)"
-	additional_items = list(/obj/item/ingot/aalloy, /obj/item/natural/hide/cured)
-	created_item = /obj/item/rogueweapon/shield/tower/metal/alloy
-
-/datum/anvil_recipe/weapons/alloy/shield
-	name = "Shield, Ancient (+1 Purified Alloy, +1 Cured Leather)"
-	additional_items = list(/obj/item/ingot/purifiedaalloy, /obj/item/natural/hide/cured)
-	created_item = /obj/item/rogueweapon/shield/tower/metal/palloy
 
 /datum/anvil_recipe/weapons/iron/towershield
 	name = "Tower Shield (+1 Small Log)"
 	additional_items = list(/obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/shield/tower
 
+/datum/anvil_recipe/weapons/steel/kiteshield
+	name = "Kite Shield (+1 Steel, +1 Cured Leather)"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/natural/hide/cured)
+	created_item = /obj/item/rogueweapon/shield/tower/metal
+
+/datum/anvil_recipe/weapons/ancient/shield
+	name = "Kite Shield, Ancient (+1 Gilbranze, +1 Cured Leather)"
+	additional_items = list(/obj/item/ingot/gilbranze, /obj/item/natural/hide/cured)
+	created_item = /obj/item/rogueweapon/shield/tower/metal/ancient
+
+/datum/anvil_recipe/weapons/decrepit/shield
+	name = "Kite Shield, Decrepit (+1 Alloy, +1 Cured Leather)"
+	additional_items = list(/obj/item/ingot/decrepit, /obj/item/natural/hide/cured)
+	created_item = /obj/item/rogueweapon/shield/tower/metal/ancient/decrepit
+
 /datum/anvil_recipe/weapons/steel/buckler
 	name = "Buckler (+1 Steel)"
 	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/shield/buckler
+
+/datum/anvil_recipe/weapons/ancient/buckler
+	name = "Buckler, Ancient (+1 Gilbranze)"
+	additional_items = list(/obj/item/ingot/gilbranze)
 	created_item = /obj/item/rogueweapon/shield/buckler
 
 /datum/anvil_recipe/weapons/iron/roundshield
@@ -845,17 +847,17 @@
 	createditem_num = 10
 	i_type = "Ammo"
 
-/datum/anvil_recipe/weapons/aalloy/bolts
-	name = "Bolts, Decrepit (+2 Stick) (x10)"
+/datum/anvil_recipe/weapons/ancient/bolts
+	name = "Bolts, Ancient (+2 Stick) (x10)"
 	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
-	created_item = /obj/item/ammo_casing/caseless/rogue/bolt/aalloy
+	created_item = /obj/item/ammo_casing/caseless/rogue/bolt/ancient
 	createditem_num = 10
 	i_type = "Ammo"
 
-/datum/anvil_recipe/weapons/paalloy/bolts
-	name = "Bolts, Ancient (+2 Stick) (x10)"
+/datum/anvil_recipe/weapons/decrepit/bolts
+	name = "Bolts, Decrepit (+2 Stick) (x10)"
 	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
-	created_item = /obj/item/ammo_casing/caseless/rogue/bolt/paalloy
+	created_item = /obj/item/ammo_casing/caseless/rogue/bolt/decrepit
 	createditem_num = 10
 	i_type = "Ammo"
 
@@ -883,13 +885,6 @@
 	createditem_num = 10
 	i_type = "Ammo"
 
-/datum/anvil_recipe/weapons/aalloy/arrows
-	name = "Broadhead Arrows, Decrepit (+2 Stick) (x10)"
-	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
-	created_item = /obj/item/ammo_casing/caseless/rogue/arrow/iron/aalloy
-	createditem_num = 10
-	i_type = "Ammo"
-
 /datum/anvil_recipe/weapons/steel/arrows
 	name = "Bodkin Arrows, Steel (+2 Stick) (x10)"
 	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
@@ -897,13 +892,19 @@
 	createditem_num = 10
 	i_type = "Ammo"
 
-/datum/anvil_recipe/weapons/paalloy/arrows
+/datum/anvil_recipe/weapons/ancient/arrows
 	name = "Bodkin Arrows, Ancient (+2 Stick) (x10)"
 	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
-	created_item = /obj/item/ammo_casing/caseless/rogue/arrow/steel/paalloy
+	created_item = /obj/item/ammo_casing/caseless/rogue/arrow/steel/ancient
 	createditem_num = 10
 	i_type = "Ammo"
 
+/datum/anvil_recipe/weapons/decrepit/arrows
+	name = "Broadhead Arrows, Decrepit (+2 Stick) (x10)"
+	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
+	created_item = /obj/item/ammo_casing/caseless/rogue/arrow/iron/decrepit
+	createditem_num = 10
+	i_type = "Ammo"
 
 // SLING
 
@@ -919,18 +920,17 @@
 	createditem_num = 10
 	i_type = "Ammo"
 
-/datum/anvil_recipe/weapons/aalloy/slingbullets
-	name = "Sling Bullets, Decrepit (x10)"
-	created_item = /obj/item/ammo_casing/caseless/rogue/sling_bullet/aalloy
-	createditem_num = 10
-	i_type = "Ammo"
-
-/datum/anvil_recipe/weapons/paalloy/slingbullets
+/datum/anvil_recipe/weapons/ancient/slingbullets
 	name = "Sling Bullets, Ancient (x10)"
-	created_item = /obj/item/ammo_casing/caseless/rogue/sling_bullet/paalloy
+	created_item = /obj/item/ammo_casing/caseless/rogue/sling_bullet/ancient
 	createditem_num = 10
 	i_type = "Ammo"
 
+/datum/anvil_recipe/weapons/decrepit/slingbullets
+	name = "Sling Bullets, Decrepit (x10)"
+	created_item = /obj/item/ammo_casing/caseless/rogue/sling_bullet/decrepit
+	createditem_num = 10
+	i_type = "Ammo"
 
 // UNIQUE
 
