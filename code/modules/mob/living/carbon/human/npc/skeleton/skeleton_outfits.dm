@@ -419,7 +419,7 @@
 		head = /obj/item/clothing/head/roguetown/helmet/horned
 	neck = /obj/item/clothing/neck/roguetown/collar/leather
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-	r_hand = /obj/item/rogueweapon/pick/decrepit
+	r_hand = /obj/item/rogueweapon/pick/ancient/decrepit
 	if(prob(20))
 		r_hand = /obj/item/rogueweapon/shovel/decrepit
 	if(prob(40))

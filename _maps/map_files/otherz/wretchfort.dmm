@@ -3276,7 +3276,7 @@
 /area/rogue/under/wretch/cavern)
 "GB" = (
 /obj/item/flashlight/flare/torch/lantern/bronzelamptern,
-/obj/item/rogueweapon/pick/decrepit,
+/obj/item/rogueweapon/pick/ancient/decrepit,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/wretch/cavern)
 "GE" = (

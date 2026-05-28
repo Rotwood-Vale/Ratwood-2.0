@@ -38811,7 +38811,7 @@
 /area/rogue/outdoors/town/roofs/keep)
 "iPs" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/pick/decrepit,
+/obj/item/rogueweapon/pick/ancient/decrepit,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/tools,
 /obj/machinery/light/rogue/candle/green,
 /turf/open/floor/rogue/churchrough{
@@ -48116,8 +48116,8 @@
 /area/rogue/outdoors/woodsrat/safe)
 "kTG" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/pick/decrepit,
-/obj/item/rogueweapon/pick/decrepit,
+/obj/item/rogueweapon/pick/ancient/decrepit,
+/obj/item/rogueweapon/pick/ancient/decrepit,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/tools,
 /turf/open/floor/rogue/churchrough{
 	color = "#d4ffcf"
@@ -49214,7 +49214,7 @@
 /area/rogue/indoors)
 "lhM" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/pick/decrepit,
+/obj/item/rogueweapon/pick/ancient/decrepit,
 /turf/open/floor/rogue/churchrough{
 	color = "#d4ffcf"
 	},
@@ -51116,7 +51116,7 @@
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/town/grove)
 "lHr" = (
-/obj/item/rogueweapon/pick/decrepit,
+/obj/item/rogueweapon/pick/ancient/decrepit,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave)
 "lHv" = (
@@ -84422,7 +84422,7 @@
 "tvn" = (
 /obj/machinery/anvil,
 /obj/effect/decal/cleanable/debris/glassy,
-/obj/item/rogueweapon/pick/decrepit,
+/obj/item/rogueweapon/pick/ancient/decrepit,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave)
 "tvr" = (

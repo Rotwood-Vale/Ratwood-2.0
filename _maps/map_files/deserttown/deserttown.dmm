@@ -26813,7 +26813,7 @@
 /area/rogue/under/dungeon)
 "kNe" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/pick/decrepit,
+/obj/item/rogueweapon/pick/ancient/decrepit,
 /turf/open/floor/rogue/churchrough{
 	color = "#d4ffcf"
 	},
@@ -30462,8 +30462,8 @@
 /area/rogue/outdoors/town/manor/desert)
 "mlD" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/pick/decrepit,
-/obj/item/rogueweapon/pick/decrepit,
+/obj/item/rogueweapon/pick/ancient/decrepit,
+/obj/item/rogueweapon/pick/ancient/decrepit,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/tools,
 /turf/open/floor/rogue/churchrough{
 	color = "#d4ffcf"
@@ -47211,7 +47211,7 @@
 /area/rogue/outdoors/desert/above)
 "sWH" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/pick/decrepit,
+/obj/item/rogueweapon/pick/ancient/decrepit,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/tools,
 /obj/machinery/light/rogue/candle/green,
 /turf/open/floor/rogue/churchrough{

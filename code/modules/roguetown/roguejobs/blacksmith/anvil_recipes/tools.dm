@@ -114,7 +114,7 @@
 /datum/anvil_recipe/tools/decrepit/pick
 	name = "Pickaxe, Decrepit (+1 Stick)"
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/pick/decrepit
+	created_item = /obj/item/rogueweapon/pick/ancient/decrepit
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/decrepit/shovel

@@ -165,7 +165,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/ancient_pick
 	name = "Ancient Pick"
-	path = /obj/item/rogueweapon/pick/decrepit
+	path = /obj/item/rogueweapon/pick/ancient/decrepit
 	triumph_cost = 3
 
 /datum/loadout_item/ancient_shovel
