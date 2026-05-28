@@ -35,6 +35,8 @@
 // 	name = "Villager"
 /obj/effect/landmark/start/dt/courtslave
 	name = "Enslaved Adventurer"
+/obj/effect/landmark/start/dt/chaplain
+	name = "Palace Chaplain"
 
 // /obj/effect/landmark/start/
 // 	name = ""

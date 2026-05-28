@@ -69,7 +69,7 @@
 			return
 
 /obj/structure/roguemachine/vendor/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/roguecoin/aalloy))
+	if(istype(P, /obj/item/roguecoin/gilbranze))
 		return
 	if(istype(P, /obj/item/roguecoin/inqcoin))
 		return

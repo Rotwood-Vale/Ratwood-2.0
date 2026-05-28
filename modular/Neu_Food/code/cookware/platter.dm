@@ -103,7 +103,7 @@ What it does:
 
 	update_icon()
 
-/obj/item/cooking/platter/aalloy
+/obj/item/cooking/platter/decrepit
 	name = "decrepit platter"
 	desc = "Wrought bronze, flattened to serve. The edge remains wet with red; spilled merlot, meaty juices, or blood?"
 	icon_state = "aplatter"
@@ -117,14 +117,6 @@ What it does:
 	resistance_flags = FIRE_PROOF
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	sellprice = 8
-
-/obj/item/cooking/platter/bronze
-	name = "bronze platter"
-	desc = "A bronze platter for serving hearty meals."
-	icon_state = "platter_bronze"
-	resistance_flags = FIRE_PROOF
-	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
-	sellprice = 9
 
 /obj/item/cooking/platter/pewter
 	name = "tin platter"

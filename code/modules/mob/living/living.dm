@@ -408,10 +408,11 @@
 				return
 
 		// Makes it so people who recently broke out of grabs cannot be grabbed again
-		if(TIMER_COOLDOWN_RUNNING(target, "broke_free") && target.stat == CONSCIOUS)
+		if(COOLDOWN_TIMELEFT(target, broke_free) && target.stat == CONSCIOUS)
 			target.visible_message(span_warning("[target] slips from [src]'s grip."), \
 					span_warning("I slip from [src]'s grab."))
 			log_combat(src, target, "tried grabbing", addition="passive grab")
+			stop_pulling()
 			return
 
 		log_combat(src, target, "grabbed", addition="passive grab")
@@ -1067,15 +1068,14 @@
 
 	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
 	//resisting grabs (as if it helps anyone...)
-	if(pulledby)
-		var/mob/living/P
-		if(isliving(pulledby))
-			P = pulledby
+	if(isliving(pulledby))
+		var/mob/living/puller = pulledby
 		if(!restrained(ignore_grab = 1))
 			log_combat(src, pulledby, "resisted grab")
-			resist_grab()
+			if(resist_grab())
+				COOLDOWN_START(src, broke_free, 5 SECONDS)
 			return
-		else if(P.compliance) // we ARE handcuffed apart from the grab, but grabber has Compliance Mode on
+		else if(puller.compliance) // we ARE handcuffed apart from the grab, but grabber has Compliance Mode on
 			log_combat(src, pulledby, "resisted grab (is restrained, compliance mode bypass)") // if you try baiting prisoners with this, I'll know.
 			resist_grab() // resisting out of his grab (100% success) takes priority here
 			return

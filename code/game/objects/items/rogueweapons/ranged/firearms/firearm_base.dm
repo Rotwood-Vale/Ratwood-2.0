@@ -32,6 +32,7 @@ At least, it should. Fingers crossed.
 	w_class = WEIGHT_CLASS_SMALL
 	grid_height = 64
 	grid_width = 32
+	dropshrink = 0.6
 
 /obj/item/gun/ballistic/firearm
 	name = "PARENT FIREARM"

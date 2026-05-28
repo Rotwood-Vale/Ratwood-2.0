@@ -37,6 +37,7 @@
 		"cheeseFishingMod" = 0
 	)
 	baitresilience = 10
+	dropshrink = 0.85
 
 /obj/item/leechtick/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()

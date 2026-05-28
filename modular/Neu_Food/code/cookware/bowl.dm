@@ -18,7 +18,7 @@
 	drinksounds = list('sound/items/drink_cup (1).ogg','sound/items/drink_cup (2).ogg','sound/items/drink_cup (3).ogg','sound/items/drink_cup (4).ogg','sound/items/drink_cup (5).ogg')
 	fillsounds = list('sound/items/fillcup.ogg')
 
-/obj/item/reagent_containers/glass/bowl/aalloy
+/obj/item/reagent_containers/glass/bowl/decrepit
 	name = "decrepit bowl"
 	icon_state = "abowl"
 	sellprice = 15
@@ -27,17 +27,6 @@
 	name = "iron bowl"
 	icon_state = "bowl_iron"
 	sellprice = 20
-
-/obj/item/reagent_containers/glass/bowl/clay
-	name = "clay bowl"
-	icon_state = "bowl_clay_cook"
-	pottery_fragile = TRUE
-	sellprice = 3
-
-/obj/item/reagent_containers/glass/bowl/bronze
-	name = "bronze bowl"
-	icon_state = "bowl_bronze"
-	sellprice = 14
 
 /obj/item/reagent_containers/glass/bowl/gold
 	name = "gold bowl"

@@ -639,16 +639,18 @@
 	if(L.IsSleeping() || L.surrendering)
 		if(cmode)
 			playsound_local(src, 'sound/misc/comboff.ogg', 100)
-			SSdroning.play_area_sound(get_area(src), client)
 			cmode = FALSE
+			SSdroning.kill_droning(client)
+			SSdroning.play_area_sound(get_area(src), client)
 		if(hud_used)
 			if(hud_used.cmode_button)
 				hud_used.cmode_button.update_icon()
 		return
 	if(cmode)
 		playsound_local(src, 'sound/misc/comboff.ogg', 100)
-		SSdroning.play_area_sound(get_area(src), client)
 		cmode = FALSE
+		SSdroning.kill_droning(client)
+		SSdroning.play_area_sound(get_area(src), client)
 		if(client && HAS_TRAIT(src, TRAIT_SCREENSHAKE))
 			animate(client, pixel_y)
 	else

@@ -385,7 +385,7 @@
 		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	after_ejaculation()
 
-/datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null, datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null, orifice = SEX_PART_NULL, skip_knot_try = FALSE)
+/datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null, datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null, orifice = SEX_PART_NULL, skip_knot_try = FALSE, consume_charge = TRUE)
 	// splashed_user is the bottom receiving; for top-initiated actions it matches target, for riding/blowjob it is the rider/sucker while target may be null
 	var/mob/living/carbon/human/effective_target = splashed_user || target
 	log_combat(user, effective_target, "Came inside the target")
@@ -394,8 +394,8 @@
 	if(oral)
 		playsound(user, pick(list('sound/misc/mat/mouthend (1).ogg','sound/misc/mat/mouthend (2).ogg')), 100, FALSE, ignore_walls = FALSE)
 	else
-		playsound(user, 'sound/misc/mat/endin.ogg', 50, TRUE, ignore_walls = FALSE)
-	if(!skip_knot_try && (knot_btm || (user != effective_target && !isnull(effective_target) && istype(effective_target))))
+		playsound(user, 'sound/misc/mat/endin.ogg', 100, TRUE, ignore_walls = FALSE)
+	if(!skip_knot_try && consume_charge && (knot_btm || (user != effective_target && !isnull(effective_target) && istype(effective_target))))
 		knot_try(knot_action = knot_action, knot_swap_roles = knot_swap_roles, knot_btm = knot_btm)
 	var/datum/sex_controller/receiver_sexcon = splashed_user?.sexcon
 	var/is_receiver_actively_knotted_to_user = receiver_sexcon?.knotted_status == KNOTTED_AS_BTM && receiver_sexcon?.knotted_owner == user
@@ -427,7 +427,7 @@
 		effective_target.sate_addiction(/datum/charflaw/addiction/lovefiend)
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/baothamarked))
 		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
-	after_ejaculation()
+	after_ejaculation(consume_charge)
 	after_intimate_climax(oral, splashed_user)
 
 /// Applies or accumulates a creampie drip status effect, correctly ORing new orifice flags onto an existing drip rather than silently dropping the second application.
@@ -652,9 +652,26 @@
 		volume *= 1.5
 	return floor(volume)
 
+/datum/sex_controller/proc/get_load_bursts()
+	switch(get_semen_volume())
+		if(4)
+			return 2
+		if(5 to INFINITY)
+			return 3
+		else
+			return 1
+
 /datum/sex_controller/proc/get_max_loads()
 	var/con = user.STACON
-	var/loads = 2 + floor(clamp((con - 10) * 2, 0, 99) / 2)
+	var/minimum_loads = 3
+	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
+	if(testes)
+		switch(testes.ball_size)
+			if(MIN_TESTICLES_SIZE)
+				minimum_loads = 2
+			if(MAX_TESTICLES_SIZE)
+				minimum_loads = 4
+	var/loads = minimum_loads + floor(clamp((con - 10) * 2, 0, 99) / 2)
 	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
 		loads *= 1.5
 	if(HAS_TRAIT(user, TRAIT_BIGGUY))
@@ -667,9 +684,12 @@
 /datum/sex_controller/proc/get_max_charge()
 	return get_max_loads() * CHARGE_FOR_CLIMAX
 
-/datum/sex_controller/proc/after_ejaculation()
+/datum/sex_controller/proc/after_ejaculation(consume_charge = TRUE)
 	set_arousal(40)
-	adjust_charge(-CHARGE_FOR_CLIMAX)
+	if(consume_charge)
+		adjust_charge(-CHARGE_FOR_CLIMAX)
+	else
+		to_chat(user, span_love("<i>Spurt!</i>"))
 	if(user.has_flaw(/datum/charflaw/addiction/lovefiend))
 		user.sate_addiction(/datum/charflaw/addiction/lovefiend)
 	if(user.has_flaw(/datum/charflaw/addiction/baothamarked))
@@ -677,8 +697,39 @@
 	user.add_stress(/datum/stressevent/cumok)
 	user.emote("sexmoanhvy", forced = TRUE)
 	user.playsound_local(user, 'sound/misc/mat/end.ogg', 100)
+	try_xylix_confetti_climax()
 	last_ejaculation_time = world.time
 	record_round_statistic(STATS_PLEASURES)
+
+/datum/sex_controller/proc/try_xylix_confetti_climax()
+	if(user?.patron?.type != /datum/patron/divine/xylix)
+		return
+	if(user.get_skill_level(/datum/skill/magic/holy) < SKILL_LEVEL_NOVICE)
+		return
+	var/trigger_chance = user.has_status_effect(/datum/status_effect/debuff/emberwine) ? 2 : 1
+	if(!prob(trigger_chance))
+		return
+	var/turf/center = get_turf(user)
+	if(!center)
+		return
+	playsound(user, 'sound/misc/xylixconfetti.ogg', 50, TRUE, ignore_walls = FALSE)
+	if(user.has_status_effect(/datum/status_effect/debuff/emberwine))
+		for(var/turf/T in RANGE_TURFS(1, center))
+			new /obj/effect/decal/cleanable/confetti/xylix(T)
+		return
+
+	var/turf/front = get_step(center, user.dir)
+	if(!front)
+		front = center
+	var/left_dir = turn(user.dir, 90)
+	var/right_dir = turn(user.dir, -90)
+	var/turf/left = get_step(front, left_dir)
+	var/turf/right = get_step(front, right_dir)
+	new /obj/effect/decal/cleanable/confetti/xylix(front)
+	if(left)
+		new /obj/effect/decal/cleanable/confetti/xylix(left)
+	if(right)
+		new /obj/effect/decal/cleanable/confetti/xylix(right)
 
 /datum/sex_controller/proc/after_intimate_climax(oral, mob/living/carbon/human/climax_target = null)
 	var/mob/living/carbon/human/effective_target = climax_target || target

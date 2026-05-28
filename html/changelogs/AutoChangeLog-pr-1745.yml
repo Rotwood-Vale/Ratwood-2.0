@@ -1,4 +1,4 @@
 author: "Jamdrawers"
 delete-after: True
 changes:
-  - rscadd: "baothan ritual armor!"
+  - bugfix: "vanguard spawns"
