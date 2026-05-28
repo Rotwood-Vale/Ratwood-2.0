@@ -1,5 +1,5 @@
 //Numbing Pleasure - T3, halves pain from target for a period of time. (Similar to Ravox's without any blood-clotting and better pain suppression + good mood buff.)
-/obj/effect/proc_holder/spell/invoked/painkiller
+/datum/action/cooldown/spell/painkiller
 	name = "Numbing Pleasure"
 	desc = "Numbs the targets pain and improves their mood."
 	action_icon = 'icons/mob/actions/baothamiracles.dmi'
@@ -18,7 +18,7 @@
 	miracle = TRUE
 	devotion_cost = 75
 
-/obj/effect/proc_holder/spell/invoked/painkiller/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/painkiller/cast(list/targets, mob/living/user)
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 		var/mob/living/carbon/human/human_target = target
@@ -31,7 +31,7 @@
 		target.apply_status_effect(/datum/status_effect/buff/vitae)					//+2 Fortune and mood buff
 		return TRUE
 
-/obj/effect/proc_holder/spell/invoked/painkiller/proc/restore_pain_mod(datum/physiology/physiology)
+/datum/action/cooldown/spell/painkiller/proc/restore_pain_mod(datum/physiology/physiology)
 	if(!physiology)
 		return
 

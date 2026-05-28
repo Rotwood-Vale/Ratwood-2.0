@@ -1,6 +1,6 @@
 // T1: (fires a bone splinter at a target; fires a significantly stronger bone lance if holding bones)
 
-/obj/effect/proc_holder/spell/invoked/projectile/profane/miracle
+/datum/action/cooldown/spell/projectile/bone_splinter
 	name = "Bone Splinter"
 	desc = "Fire forth a splinter of unholy bone, tearing flesh and causing bleeding. If you hold pieces of bone in your other hand, you will coax a much stronger lance of bone into being."
 	button_icon = 'icons/mob/actions/zizomiracles.dmi'
@@ -14,7 +14,7 @@
 	charge_required = TRUE
 	charge_time = 15
 	cooldown_time = 10 SECONDS
-	zizo_spell = TRUE
+	miracle = TRUE
 
 /obj/item/bone/splinter
 	name = "bone splinter"
@@ -32,7 +32,7 @@
 	nodamage = FALSE
 	var/embed_prob = 10
 
-/obj/effect/proc_holder/spell/invoked/projectile/profane/miracle/fire_projectile(atom/target)
+/datum/action/cooldown/spell/projectile/bone_splinter/fire_projectile(atom/target)
 	var/obj/item/held_item = owner.get_active_held_item()
 	var/big_cast = FALSE
 	if(istype(held_item, /obj/item/natural/bundle/bone))
@@ -67,7 +67,7 @@
 	to_chat(user, span_danger("[src] crumbles into dust..."))
 	qdel(src)
 
-/obj/effect/proc_holder/spell/invoked/projectile/profane/miracle
+/datum/action/cooldown/spell/projectile/bone_splinter
 	primary_resource_type = SPELL_COST_DEVOTION
 	primary_resource_cost = 15
 	associated_skill = /datum/skill/magic/holy

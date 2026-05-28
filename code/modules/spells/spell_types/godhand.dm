@@ -3,7 +3,7 @@
 	desc = ""
 	var/catchphrase = "High Five!"
 	var/on_use_sound = null
-	var/obj/effect/proc_holder/spell/targeted/touch/attached_spell
+	var/datum/action/cooldown/spell/attached_spell
 	icon = 'icons/obj/balloons.dmi'
 	lefthand_file = 'icons/mob/inhands/misc/touchspell_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'

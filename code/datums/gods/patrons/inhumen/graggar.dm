@@ -6,16 +6,16 @@
 	virtues = "Martial Prowess, Dominance, Violence"
 	sins = "Weakness, Servility, Cowardice"
 	mob_traits = list(TRAIT_HORDE, TRAIT_ORGAN_EATER)
-	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
-					/obj/effect/proc_holder/spell/self/graggar_bloodrage				= CLERIC_T0,
-					/obj/effect/proc_holder/spell/self/graggar_chainbreak				= CLERIC_T0,
-					/obj/effect/proc_holder/spell/invoked/lesser_heal 					= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/blood_heal					= CLERIC_T1,
-					/obj/effect/proc_holder/spell/self/graggar_battlecry 				= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/projectile/unholy_grasp 		= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/silence/graggar				= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/revel_in_death	 			= CLERIC_T3,
-					/obj/effect/proc_holder/spell/invoked/resurrect/graggar				= CLERIC_T4,
+	miracles = list(/datum/action/cooldown/spell/orison						= CLERIC_ORI,
+					/datum/action/cooldown/spell/graggar_bloodrage			= CLERIC_T0,
+					/datum/action/cooldown/spell/graggar_chainbreak			= CLERIC_T0,
+					/datum/action/cooldown/spell/lesser_heal 				= CLERIC_T1,
+					/datum/action/cooldown/spell/blood_heal					= CLERIC_T1,
+					/datum/action/cooldown/spell/graggar_battlecry 			= CLERIC_T1,
+					/datum/action/cooldown/spell/projectile/unholy_grasp 	= CLERIC_T2,
+					/datum/action/cooldown/spell/silence/graggar			= CLERIC_T2,
+					/datum/action/cooldown/spell/revel_in_death	 			= CLERIC_T3,
+					/datum/action/cooldown/spell/resurrect/graggar			= CLERIC_T4,
 	)
 	confess_lines = list(
 		"GRAGGAR IS THE BEAST I WORSHIP!",

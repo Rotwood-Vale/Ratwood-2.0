@@ -1,5 +1,5 @@
 //T0: Graggar cuffbreak
-/obj/effect/proc_holder/spell/self/graggar_chainbreak
+/datum/action/cooldown/spell/graggar_chainbreak
 	name = "Break the Chains"
 	desc = "Snap off your restraints with unholy help."
 	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
@@ -14,7 +14,7 @@
 	devotion_cost = 50
 	antimagic_allowed = FALSE
 
-/obj/effect/proc_holder/spell/self/graggar_chainbreak/cast(list/targets, mob/user)
+/datum/action/cooldown/spell/graggar_chainbreak/cast(list/targets, mob/user)
 	. = ..()
 	if(!ishuman(user))
 		revert_cast()

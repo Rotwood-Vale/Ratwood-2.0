@@ -1,6 +1,6 @@
 // T3 Lacrima (plunge your hand into someone's ribs to rip out their impure lux for your diabolical uses)
 
-/obj/effect/proc_holder/spell/targeted/touch/lacrima
+/datum/action/cooldown/spell/lacrima
 	name = "Lacrima"
 	desc = "Wreath your hand in inhumen energies.\n \
 	USE on a mind-inhabited victim who is alyve, floored, whose lux is intact to plunge your hand into their chest, shattering their ribs and will alike in order to forcefully tear the lux from their chest.\n \
@@ -18,7 +18,7 @@
 	associated_skill = /datum/skill/magic/holy
 	hand_path = /obj/item/melee/touch_attack/lacrima
 
-/obj/effect/proc_holder/spell/targeted/touch/lacrima/free
+/datum/action/cooldown/spell/lacrima/free
 	miracle = FALSE
 
 /obj/item/melee/touch_attack/lacrima

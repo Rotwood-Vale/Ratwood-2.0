@@ -76,12 +76,12 @@
 
 	if(H.mind)
 		wretch_select_bounty(H)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/wound_heal)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/silence)//Shut that guy up!
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/nondetection)//For the purposes of meeting folks.
+		H.mind.AddSpell(new /datum/action/cooldown/spell/convert_heretic)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/wound_heal)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/silence)//Shut that guy up!
+		H.mind.AddSpell(new /datum/action/cooldown/spell/nondetection)//For the purposes of meeting folks.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)//See above.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/evil_resurrect)//Sacrifice a heart to bring somebody back to life.
+		H.mind.AddSpell(new /datum/action/cooldown/spell/evil_resurrect)//Sacrifice a heart to bring somebody back to life.
 		H.verbs |= /mob/living/carbon/human/proc/completesermon_evil
 		H.verbs |= /mob/living/carbon/human/proc/revelations
 
@@ -154,10 +154,10 @@
 			t0.Remove(t0_choice)
 			t0_count--
 
-	if(H.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation/miracle))
+	if(H.mind?.has_spell(/datum/action/cooldown/spell/summon_lesser_undead/miracle))
 		H.mind?.current.faction += "[H.name]_faction"
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/command_undead)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/command_undead)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/gravemark)
 
 /mob/living/carbon/human/proc/completesermon_evil()
 	set name = "Inhumen Sermon"

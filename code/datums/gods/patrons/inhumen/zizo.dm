@@ -6,18 +6,18 @@
 	virtues = "Progress, Undeath, Ambition"
 	sins = "Ignorance, Stagnation, Humility"
 	mob_traits = list(TRAIT_CABAL, TRAIT_ZIZOSIGHT)
-	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
-					/obj/effect/proc_holder/spell/self/zizo_snuff						= CLERIC_T0,
-					/obj/effect/proc_holder/spell/invoked/lesser_heal 					= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/blood_heal					= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/projectile/profane/miracle 	= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/convert_heretic/miracle		= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/raise_lesser_undead/miracle	= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/raise_undead/miracle			= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/tame_undead/miracle			= CLERIC_T3,
-					/obj/effect/proc_holder/spell/invoked/rituos/miracle 				= CLERIC_T3,
-					/obj/effect/proc_holder/spell/targeted/touch/lacrima				= CLERIC_T3,
-					/obj/effect/proc_holder/spell/invoked/resurrect/zizo				= CLERIC_T4,
+	miracles = list(/datum/action/cooldown/spell/orison							= CLERIC_ORI,
+					/datum/action/cooldown/spell/zizo_snuff						= CLERIC_T0,
+					/datum/action/cooldown/spell/lesser_heal 					= CLERIC_T1,
+					/datum/action/cooldown/spell/blood_heal						= CLERIC_T1,
+					/datum/action/cooldown/spell/projectile/bone_splinter 		= CLERIC_T1,
+					/datum/action/cooldown/spell/convert_heretic/miracle		= CLERIC_T2,
+					/datum/action/cooldown/spell/raise_lesser_undead/miracle	= CLERIC_T2,
+					/datum/action/cooldown/spell/raise_undead/miracle			= CLERIC_T2,
+					/datum/action/cooldown/spell/tame_undead/miracle			= CLERIC_T3,
+					/datum/action/cooldown/spell/rituos/miracle 				= CLERIC_T3,
+					/datum/action/cooldown/spell/lacrima						= CLERIC_T3,
+					/datum/action/cooldown/spell/resurrect/zizo					= CLERIC_T4,
 	)
 	confess_lines = list(
 		"PRAISE ZIZO!",

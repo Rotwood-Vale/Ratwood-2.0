@@ -2,7 +2,7 @@
 // number of times scales from your miracle tier, then once those "free" dodges are spent, it takes enem skill vs miracle chance
 // can grapple attackers by having throw intent on, if attacked again by your target or someone else, either slam them down, or slam them on the attacker
 
-/obj/effect/proc_holder/spell/self/skulduggery
+/datum/action/cooldown/spell/skulduggery
 	name = "Skulduggery"
 	desc = "Imbue your mind and eyes with the cunning of Matthios, reading strikes before they land and punishing them with brutal efficiency.<br><br>Toggle Throw mode to actively intercept and grapple attacks, otherwise, you'll try to avoid them however you can."
 	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
@@ -16,7 +16,7 @@
 	antimagic_allowed = FALSE
 	range = 0
 
-/obj/effect/proc_holder/spell/self/skulduggery/cast(list/targets, mob/user)
+/datum/action/cooldown/spell/skulduggery/cast(list/targets, mob/user)
 	. = ..()
 	if(!ishuman(user))
 		revert_cast()

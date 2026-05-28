@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/invoked/raise_undead
+/datum/action/cooldown/spell/raise_undead
 	name = "Raise Greater Undead"
 	desc = "Raise a single greater skeleton that serves you. They are imbued with a fragment of a soul and is more intelligent than usual, simple-minded lesser undead.\n\
 	Should the spell fails to find a suitable soul, a mindless undead will be summoned in its place with decrepit equipment.\n\
@@ -17,7 +17,7 @@
 	associated_skill = /datum/skill/magic/arcane
 	recharge_time = 60 SECONDS
 
-/obj/effect/proc_holder/spell/invoked/raise_undead/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/raise_undead/cast(list/targets, mob/living/user)
 	..()
 
 	var/turf/T = get_turf(targets[1])
@@ -51,10 +51,10 @@
 	target.visible_message(span_warning("[target]'s eyes light up with an eerie glow!"))
 	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup), "FORTIFIED SKELETON"), 3 SECONDS)
 	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, choose_pronouns_and_body)), 7 SECONDS)
-	target.mind.AddSpell(new /obj/effect/proc_holder/spell/self/suicidebomb/lesser)
+	target.mind.AddSpell(new /datum/action/cooldown/spell/suicidebomb/lesser)
 	return TRUE
 
-/obj/effect/proc_holder/spell/invoked/raise_undead/proc/backup_summon(turf/T)
+/datum/action/cooldown/spell/raise_undead/proc/backup_summon(turf/T)
 	var/skeleton_roll = rand(1, 3)
 	// 66% chance of medium 33% of heavy
 	switch(skeleton_roll)

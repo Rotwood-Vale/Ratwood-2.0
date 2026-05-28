@@ -34,7 +34,7 @@
 	gloves = /obj/item/clothing/gloves/roguetown/plate/zizo
 	backr = /obj/item/rogueweapon/sword/long/zizo
 	neck = /obj/item/clothing/neck/roguetown/bevor
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
+	H.mind.AddSpell(new /datum/action/cooldown/spell/mending/lesser)
 	var/helmets = list("BARBUTE - VISORED", "FROGMOUTH - NECK PROTECTION")
 	var/helmet_choice = input(H, "Choose your helmet.", "PROTECTION FROM THE LADY") as anything in helmets
 	switch(helmet_choice)

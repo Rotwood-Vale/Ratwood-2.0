@@ -80,7 +80,7 @@
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/steward
 		// shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/red//actually dress under overshirt doesn't look too bad
 	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/secular)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/appraise/secular)
 	H.verbs |= /mob/living/carbon/human/proc/adjust_taxes
 
 GLOBAL_VAR_INIT(steward_tax_cooldown, -50000) // Antispam

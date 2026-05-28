@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/self/suicidebomb
+/datum/action/cooldown/spell/suicidebomb
 	name = "Calcic Outburst"
 	desc = "Explode in a wonderful blast of osseous shrapnel."
 	overlay_state = "tragedy"
@@ -15,7 +15,7 @@
 	var/exp_flash = 3
 	var/exp_fire = 0
 
-/obj/effect/proc_holder/spell/self/suicidebomb/cast(list/targets, mob/living/user = usr)
+/datum/action/cooldown/spell/suicidebomb/cast(list/targets, mob/living/user = usr)
 	..()
 	if(!user)
 		return FALSE
@@ -34,7 +34,7 @@
 
 	addtimer(CALLBACK(src, PROC_REF(lichdeath), user), 5 SECONDS)
 
-/obj/effect/proc_holder/spell/self/suicidebomb/proc/lichdeath(mob/living/user)
+/datum/action/cooldown/spell/suicidebomb/lichdeath(mob/living/user)
 	var/datum/antagonist/lich/lichman = user.mind.has_antag_datum(/datum/antagonist/lich)
 	explosion(get_turf(user), -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire, soundin = 'sound/misc/explode/incendiary (1).ogg')
 	if(lichman && user.stat != DEAD && lichman.consume_phylactery(0)) // Use phylactery at 0 timer. Die if none.
@@ -43,7 +43,7 @@
 	user.death()
 	return TRUE
 
-/obj/effect/proc_holder/spell/self/suicidebomb/lesser
+/datum/action/cooldown/spell/suicidebomb/lesser
 	name = "Lesser Calcic Outburst"
 	exp_heavy = 0
 	exp_light = 2

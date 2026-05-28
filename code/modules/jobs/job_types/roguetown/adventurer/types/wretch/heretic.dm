@@ -81,12 +81,12 @@
 		wretch_select_bounty(H)
 
 	// You can convert those the church has shunned.
-	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)
-	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/wound_heal)
+	H.mind?.AddSpell(new /datum/action/cooldown/spell/convert_heretic)
+	H.mind?.AddSpell(new /datum/action/cooldown/spell/wound_heal)
 	if (istype (H.patron, /datum/patron/inhumen/zizo))
 		if(H.mind)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/minion_order)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
+			H.mind.AddSpell(new /datum/action/cooldown/spell/minion_order)
+			H.mind.AddSpell(new /datum/action/cooldown/spell/gravemark)
 			H.mind.current.faction += "[H.name]_faction"
 		ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
 	backr = /obj/item/rogueweapon/shield/tower/metal
@@ -309,13 +309,13 @@
 
 	if (istype (H.patron, /datum/patron/inhumen/zizo))
 		if(H.mind)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/minion_order)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
+			H.mind.AddSpell(new /datum/action/cooldown/spell/minion_order)
+			H.mind.AddSpell(new /datum/action/cooldown/spell/gravemark)
 			if(H.mind.current)
 				H.mind.current.faction += "[H.name]_faction"
 		ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
-	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)
-	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/wound_heal)
+	H.mind?.AddSpell(new /datum/action/cooldown/spell/convert_heretic)
+	H.mind?.AddSpell(new /datum/action/cooldown/spell/wound_heal)
 
 /datum/outfit/job/roguetown/wretch/hereticspy/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
@@ -414,7 +414,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/leather/reinforced, SLOT_SHOES, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/wrists/roguetown/bracers/leather/heavy, SLOT_WRISTS, TRUE)
 
-/obj/effect/proc_holder/spell/invoked/convert_heretic
+/datum/action/cooldown/spell/convert_heretic
 	name = "Convert The Downtrodden"
 	desc = "Convert a soul who is excommunicated, cursed, or forced into apostasy to your cause. Requires a willing participant, and takes a long time to cast."
 	invocations = list("Show this lost sheep the righteous path.")
@@ -427,7 +427,7 @@
 	associated_skill = /datum/skill/magic/holy
 	overlay_state = "convert_heretic"
 
-/obj/effect/proc_holder/spell/invoked/convert_heretic/cast(list/targets, mob/living/carbon/human/user)
+/datum/action/cooldown/spell/convert_heretic/cast(list/targets, mob/living/carbon/human/user)
 	if(!HAS_TRAIT(user, TRAIT_HERESIARCH))
 		to_chat(user, span_warning("You lack the knowledge for this ritual."))
 		return FALSE

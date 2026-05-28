@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/invoked/projectile/divineblast/unholyblast
+/datum/action/cooldown/spell/projectile/unholyblast
 	name = "Unholy Blast"
 	desc = "Channel unholy power and sunder the unbelievers. Deals additional damage to wretched conformists and Psydonites! \n\
 	Damage is increased by 100% versus simple-minded creechurs.\n\
@@ -21,7 +21,7 @@
 	damage = 15 // Slightly lower base damage
 	arcshot = TRUE
 
-/obj/effect/proc_holder/spell/invoked/projectile/divineblast/unholyblast/cast(list/targets, mob/user = user)
+/datum/action/cooldown/spell/projectile/unholyblast/cast(list/targets, mob/user = user)
 	var/mob/living/carbon/human/H = user
 	var/datum/intent/a_intent = H.a_intent
 	if(istype(a_intent, /datum/intent/special/magicarc))

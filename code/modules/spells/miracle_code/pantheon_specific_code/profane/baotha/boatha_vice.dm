@@ -1,5 +1,5 @@
 //T0 that tells the user the person's vice.
-/obj/effect/proc_holder/spell/invoked/baotha_vice
+/datum/action/cooldown/spell/baotha_vice
 	name = "Tell Vice"
 	desc = "Tells you the targets Vice."
 	action_icon = 'icons/mob/actions/baothamiracles.dmi'
@@ -19,7 +19,7 @@
 	devotion_cost = 10
 	var/list/fake_vices = list()
 
-/obj/effect/proc_holder/spell/invoked/baotha_vice/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/baotha_vice/cast(list/targets, mob/living/user)
 	if(!ishuman(targets?[1]))
 		revert_cast()
 		return FALSE

@@ -393,7 +393,7 @@
 /datum/outfit/job/roguetown/prisoner_witch/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H) return
 	..() // Call base prisoner outfit for collar/loincloth
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+	H.mind.AddSpell(new /datum/action/cooldown/spell/prestidigitation)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/misc/reading, 4, TRUE)

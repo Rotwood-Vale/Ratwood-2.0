@@ -143,11 +143,11 @@
 	if(H.mind)
 		detailcolor = input("Choose a color.", "NALEDIAN COLORPLEX") as anything in naledicolors
 		detailcolor = naledicolors[detailcolor]
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/prestidigitation)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fetch) // In an attempt to make them less Possibly Wildly OP, they can't freely pick their spells. Casts at apprentice level, but doesn't get the spellbuy points it'd provide.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/ensnare)
 		H.mind.AddSpell(new/obj/effect/proc_holder/spell/invoked/projectile/repel)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/summonrogueweapon/bladeofpsydon)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/summonrogueweapon/bladeofpsydon)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/shadowstep)
 
 	head = /obj/item/clothing/head/roguetown/roguehood/pontifex

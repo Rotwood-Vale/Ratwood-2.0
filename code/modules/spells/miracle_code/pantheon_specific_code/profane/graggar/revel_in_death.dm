@@ -1,5 +1,5 @@
 //T3: Revel in Death - Increase bleeding and pain of a target.
-/obj/effect/proc_holder/spell/invoked/revel_in_death
+/datum/action/cooldown/spell/revel_in_death
 	name = "Revel in Death"
 	desc = "Increases the bleeding and pain of a target. Their blood-loss amount scales with every point of constitution over ten. \
 	Those with ten or less constituion will instead have a flat rate (x1.25)."
@@ -17,7 +17,7 @@
 	miracle = TRUE
 	devotion_cost = 70
 
-/obj/effect/proc_holder/spell/invoked/revel_in_death/cast(list/targets, mob/living/user = usr)
+/datum/action/cooldown/spell/revel_in_death/cast(list/targets, mob/living/user = usr)
 	var/mob/living/carbon/human/human = targets[1]
 
 	if(!istype(human) || human == user)

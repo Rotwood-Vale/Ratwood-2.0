@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/targeted/touch/nondetection
+/datum/action/cooldown/spell/nondetection
 	name = "Nondetection"
 	desc = "Consume a handful of ash and shroud a target that you touch from divination magic for 1 hour."
 	clothes_req = FALSE
@@ -29,15 +29,15 @@
 /obj/item/melee/touch_attack/nondetection/attack_self()
 	attached_spell.remove_hand()
 
-/obj/effect/proc_holder/spell/targeted/touch/nondetection/proc/add_buff_timer(mob/living/user)
+/datum/action/cooldown/spell/nondetection/proc/add_buff_timer(mob/living/user)
 	addtimer(CALLBACK(src, PROC_REF(remove_buff), user), wait = 1 HOURS)
 
-/obj/effect/proc_holder/spell/targeted/touch/nondetection/proc/remove_buff(mob/living/user)
+/datum/action/cooldown/spell/nondetection/proc/remove_buff(mob/living/user)
 	REMOVE_TRAIT(user, TRAIT_ANTISCRYING, MAGIC_TRAIT)
 	to_chat(user, span_warning("I feel my anti-scrying shroud failing."))
 
 /obj/item/melee/touch_attack/nondetection/afterattack(atom/target, mob/living/carbon/user, proximity)
-	var/obj/effect/proc_holder/spell/targeted/touch/nondetection/base_spell = attached_spell
+	var/datum/action/cooldown/spell/nondetection/base_spell = attached_spell
 	var/requirement = FALSE
 	var/obj/item/sacrifice
 

@@ -1,5 +1,5 @@
 //T2: Unholy Grasp - Throws disappearing net made of viscera at enemy. Creates blood on impact.
-/obj/effect/proc_holder/spell/invoked/projectile/unholy_grasp
+/datum/action/cooldown/spell/projectile/unholy_grasp
 	name = "Unholy Grasp"
 	desc = "Unleashes a snare of external blood and guts. The viscera winds around the legs of mortals... \
 	Though has little effect on simple creatures. Mortals cannot remove the net, but it decays ten seconds after landing."

@@ -1,6 +1,6 @@
 //T2
 
-/obj/effect/proc_holder/spell/invoked/raise_undead/miracle
+/datum/action/cooldown/spell/raise_undead/miracle
 	name = "Raise Undead"
 	desc = "Invoke forbidden magicka to summon a mindless, shambling skeleton.\nMindless skeletons can be given orders to guard, patrol, and attack by their summoner.\nThese skeletons are weaker than their more complex-jointed counterparts, but are harder to incapacitate."
 	button_icon = 'icons/mob/actions/zizomiracles.dmi'
@@ -19,7 +19,7 @@
 	invocation_type = INVOCATION_SHOUT
 	var/spawn_lifespan
 
-/obj/effect/proc_holder/spell/invoked/raise_undead/miracle/cast(atom/cast_on)
+/datum/action/cooldown/spell/raise_undead/miracle/cast(atom/cast_on)
 	. = ..()
 
 	if(istype(get_area(owner), /area/rogue/indoors/ravoxarena))
@@ -40,6 +40,6 @@
 		addtimer(CALLBACK(src, PROC_REF(add_skeleton_faction), skeleton_new, caster_name), 1.1 SECONDS)
 	return TRUE
 
-/obj/effect/proc_holder/spell/invoked/raise_undead/miracle/proc/add_skeleton_faction(mob/living/skeleton, caster_name)
+/datum/action/cooldown/spell/raise_undead/miracle/proc/add_skeleton_faction(mob/living/skeleton, caster_name)
 	if(!QDELETED(skeleton))
 		skeleton.faction |= list("cabal", "[caster_name]_faction")

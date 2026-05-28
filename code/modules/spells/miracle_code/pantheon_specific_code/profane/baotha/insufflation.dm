@@ -1,6 +1,6 @@
 // Insufflation - effectively just drugging yourself. Lets you pick, the same as Enrapturing Powder. T1, for now, to make up for the loss of the Baotha Blessing buff.
 
-/obj/effect/proc_holder/spell/self/insufflation 
+/datum/action/cooldown/spell/insufflation 
 	name = "Insufflation"
 	desc = "Imbibes yourself on one of four drugs, in Her name. Your intent will determine the drug ingested. \n\
 	\
@@ -27,7 +27,7 @@
 	miracle = TRUE
 	devotion_cost = 30
 
-/obj/effect/proc_holder/spell/self/insufflation/cast(list/targets, mob/user)
+/datum/action/cooldown/spell/insufflation/cast(list/targets, mob/user)
 	if(!ishuman(user))
 		revert_cast()
 		return FALSE

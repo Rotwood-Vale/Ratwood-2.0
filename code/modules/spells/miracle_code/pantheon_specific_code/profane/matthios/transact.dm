@@ -1,6 +1,6 @@
 // T1 - Take value of item in hand, apply that as healing. Destroys item.
 
-/obj/effect/proc_holder/spell/invoked/matthios_transact
+/datum/action/cooldown/spell/transact
 	name = "Transact"
 	desc = "Sacrifice an item in your hand, applying a heal over time to yourself with strenght depending on its value."
 	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
@@ -23,7 +23,7 @@
 	recharge_time = 20 SECONDS
 
 
-/obj/effect/proc_holder/spell/invoked/matthios_transact/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/transact/cast(list/targets, mob/living/user)
 	. = ..()
 	var/obj/item/held_item = user.get_active_held_item()
 	if(!held_item)

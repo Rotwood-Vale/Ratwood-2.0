@@ -1,6 +1,6 @@
 //T3 COUNT WEALTH, HURT TARGET/APPLY EFFECTS BASED ON AMOUNT OF WEALTH. AT 500+, OLD STYLE CHURNS THE TARGET.
 
-/obj/effect/proc_holder/spell/invoked/churn_wealthy
+/datum/action/cooldown/spell/churn_wealthy
 	name = "Churn Wealthy"
 	desc = "Attacks the target by weight of their greed, dealing increased damage and effects depending on how wealthy they are."
 	clothes_req = FALSE
@@ -20,7 +20,7 @@
 	recharge_time = 5 MINUTES //This probably should not be on low cooldown
 	range = 4
 
-/obj/effect/proc_holder/spell/invoked/churn_wealthy/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/churn_wealthy/cast(list/targets, mob/living/user)
 	if(ishuman(targets[1]))
 		var/mob/living/carbon/human/target = targets[1]
 

@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/invoked/convert_heretic/miracle
+/datum/action/cooldown/spell/convert_heretic/miracle
 	name = "Convert The Downtrodden"
 	desc = "Convert an soul excommunicated, cursed, or forced onto apotasy to your cause. Requires a willing participant, and takes a long time to cast."
 	button_icon = 'icons/mob/actions/roguespells.dmi'
@@ -15,14 +15,14 @@
 	associated_stat = null
 	self_cast_possible = FALSE
 
-/obj/effect/proc_holder/spell/invoked/convert_heretic/miracle/free
+/datum/action/cooldown/spell/convert_heretic/miracle/free
 	primary_resource_type = SPELL_COST_STAMINA
 	primary_resource_cost = 50
 
-/obj/effect/proc_holder/spell/invoked/convert_heretic/miracle/is_valid_target(atom/cast_on)
+/datum/action/cooldown/spell/convert_heretic/miracle/is_valid_target(atom/cast_on)
 	return ishuman(cast_on)
 
-/obj/effect/proc_holder/spell/invoked/convert_heretic/miracle/cast(atom/cast_on)
+/datum/action/cooldown/spell/convert_heretic/miracle/cast(atom/cast_on)
 	. = ..()
 	var/mob/living/carbon/human/user = owner
 	var/mob/living/carbon/human/target = cast_on

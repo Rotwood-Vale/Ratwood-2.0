@@ -1,6 +1,6 @@
 // T0: Determine the net mammon value of target
 
-/obj/effect/proc_holder/spell/invoked/appraise
+/datum/action/cooldown/spell/appraise
 	name = "Appraise"
 	desc = "Tells you how many mammons someone has on them and in the meister."
 	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
@@ -19,14 +19,14 @@
 	antimagic_allowed = TRUE
 	recharge_time = 5 SECONDS
 
-/obj/effect/proc_holder/spell/invoked/appraise/secular
+/datum/action/cooldown/spell/appraise/secular
 	name = "Secular Appraise"
 	range = 2
 	associated_skill = /datum/skill/misc/reading // idk reading is like Accounting right
 	miracle = FALSE
 	devotion_cost = 0 //Merchants are not clerics
 
-/obj/effect/proc_holder/spell/invoked/appraise/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/appraise/cast(list/targets, mob/living/user)
 	if(ishuman(targets[1]))
 		var/mob/living/carbon/human/target = targets[1]
 		if(HAS_TRAIT(target, TRAIT_DECEIVING_MEEKNESS) && target != user)

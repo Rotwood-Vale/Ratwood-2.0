@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/invoked/barter
+/datum/action/cooldown/spell/barter
 	name = "Barter"
 	desc = "Offer the targeted item to your patron, in exchange for a sum of mammon, scaling with my expertise in holy skill. The capricious nature of Matthios makes this a poor value exchange, all in all."
 	clothes_req = FALSE
@@ -40,7 +40,7 @@
 		/obj/item/clothing/ring/signet/silver,
 	)
 
-/obj/effect/proc_holder/spell/invoked/barter/cast(list/targets, mob/user)
+/datum/action/cooldown/spell/barter/cast(list/targets, mob/user)
 	. = ..()
 	if(!istype(targets[1], /obj/item))
 		revert_cast()
@@ -87,6 +87,6 @@
 						return FALSE
 				qdel(I)
 
-/obj/effect/proc_holder/spell/invoked/barter/proc/process_barter(mammon, mob/user, turf/target_turf)
+/datum/action/cooldown/spell/barter/process_barter(mammon, mob/user, turf/target_turf)
 	playsound(target_turf, 'sound/effects/matth_barter.ogg', 100, TRUE)
 	budget2change(mammon, user, putinhands = FALSE, custom_turf = target_turf)

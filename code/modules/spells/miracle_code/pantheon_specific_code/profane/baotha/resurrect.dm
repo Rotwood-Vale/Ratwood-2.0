@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/invoked/resurrect/baotha
+/datum/action/cooldown/spell/resurrect/baotha
 	name = "Drive the Thorns Deep"
 	desc = "Revives the target by afflicting them with a lasting addiction."
 	debuff_type = /datum/status_effect/debuff/baotha_addiction

@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/invoked/resurrect
+/datum/action/cooldown/spell/resurrect
 	name = "Anastasis"
 	overlay_state = "revive"
 	releasedrain = 90
@@ -26,16 +26,16 @@
 	var/harms_undead = TRUE
 	priest_excluded = TRUE
 
-/obj/effect/proc_holder/spell/invoked/resurrect/start_recharge()
+/datum/action/cooldown/spell/resurrect/start_recharge()
 	recharge_time = initial(recharge_time) * SSchimeric_tech.get_resurrection_multiplier()
 	. = ..()
 
-/obj/effect/proc_holder/spell/invoked/resurrect/proc/get_current_required_items()
+/datum/action/cooldown/spell/resurrect/proc/get_current_required_items()
 	if(SSchimeric_tech.has_revival_cost_reduction() && length(alt_required_items))
 		return alt_required_items
 	return required_items
 
-/obj/effect/proc_holder/spell/invoked/resurrect/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/resurrect/cast(list/targets, mob/living/user)
 	. = ..()
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
@@ -107,13 +107,13 @@
 	revert_cast()
 	return FALSE
 
-/obj/effect/proc_holder/spell/invoked/resurrect/cast_check(skipcharge = 0,mob/user = usr)
+/datum/action/cooldown/spell/resurrect/cast_check(skipcharge = 0,mob/user = usr)
 	if(!..())
 		to_chat(user, span_warning("The miracle fizzles."))
 		return FALSE
 	return TRUE
 
-/obj/effect/proc_holder/spell/invoked/resurrect/proc/validate_items(atom/center)
+/datum/action/cooldown/spell/resurrect/validate_items(atom/center)
 	var/list/current_required_items = get_current_required_items()
 	var/list/available_items = list()
 	var/list/missing_items = list()
@@ -141,7 +141,7 @@
 		return "Missing components: [string]."
 	return ""
 
-/obj/effect/proc_holder/spell/invoked/resurrect/proc/consume_items(atom/center)
+/datum/action/cooldown/spell/resurrect/consume_items(atom/center)
 	var/list/current_required_items = get_current_required_items()
 	for(var/item_type in current_required_items)
 		var/needed = current_required_items[item_type]
@@ -153,7 +153,7 @@
 				needed--
 				qdel(I)
 
-/obj/effect/proc_holder/spell/invoked/resurrect/abyssor
+/datum/action/cooldown/spell/resurrect/abyssor
 	name = "Abyssal Revival"
 	desc = "Revive the target at a cost, cast on yourself to check.<br>a dreamfiend will stalk the target and sap their stats until confronted by them."
 	sound = 'sound/magic/whale.ogg'
@@ -179,7 +179,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/dreamfiend_curse
 	/// Type of dreamfiend to summon
 	var/dreamfiend_type
-	var/obj/effect/proc_holder/spell/invoked/summon_dreamfiend_curse/curse_spell
+	var/datum/action/cooldown/spell/summon_dreamfiend_curse/curse_spell
 
 /datum/status_effect/debuff/dreamfiend_curse/on_creation(mob/living/new_owner)
 	// Choose dreamfiend type from weighted list
@@ -199,7 +199,7 @@
 	)
 
 	// Add summoning spell to the victim
-	if(!new_owner.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/abyssal_strength))
+	if(!new_owner.mind?.has_spell(/datum/action/cooldown/spell/abyssal_strength))
 		curse_spell = new(new_owner)
 		new_owner.mind?.AddSpell(curse_spell)
 		curse_spell.dreamfiend_type = dreamfiend_type
@@ -223,7 +223,7 @@
 	name = "Abyssal Curse."
 	desc = "A nightmare entity has revived you, but now it is draining your vitality. Summon it to confront it."
 
-/obj/effect/proc_holder/spell/invoked/summon_dreamfiend_curse
+/datum/action/cooldown/spell/summon_dreamfiend_curse
 	name = "Confront Terror"
 	desc = "Summon the dreamfiend haunting you to confront it directly"
 	overlay_state = "terrors"
@@ -236,7 +236,7 @@
 	recharge_time = 600 SECONDS
 	var/timed_cooldown
 
-/obj/effect/proc_holder/spell/invoked/summon_dreamfiend_curse/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/summon_dreamfiend_curse/cast(list/targets, mob/living/user)
 	if (world.time < timed_cooldown)
 		to_chat(user, span_warning("You must gather your strength before you are ready to confront your terror!"))
 		to_chat(user, span_warning("Time remaining: [max(0, timed_cooldown - world.time)/10] seconds."))
@@ -258,7 +258,7 @@
 	to_chat(user, span_warning("No valid space to manifest the nightmare!"))
 	return FALSE
 
-/obj/effect/proc_holder/spell/invoked/resurrect/pestra
+/datum/action/cooldown/spell/resurrect/pestra
 	name = "Putrid Revival"
 	desc = "Revive the target by consuming heartblood. Self cast for more information."
 	sound = 'sound/magic/slimesquish.ogg'
@@ -273,7 +273,7 @@
 	action_icon = 'icons/mob/actions/pestraspells.dmi'
 	overlay_state = "resurrect"
 
-/obj/effect/proc_holder/spell/invoked/resurrect/eora
+/datum/action/cooldown/spell/resurrect/eora
 	//Does heartfelt even exist?
 	name = "Heartfelt Revival"
 	desc = "Revive the target at a cost, cast on yourself to check.<br>The target will get hungry faster for a time."
@@ -319,7 +319,7 @@
 
 	return ..()
 
-/obj/effect/proc_holder/spell/invoked/resurrect/xylix
+/datum/action/cooldown/spell/resurrect/xylix
 	//Cheap, but wildly unpretictable with possibly far worse effects than other methods.
 	name = "Anastasis?"
 	desc = "Revives the target? Grants them a random debuff from other revivals, small change to be worse or better."
@@ -348,7 +348,7 @@
 
 	return TRUE
 
-/datum/status_effect/debuff/random_revival/proc/apply_random_debuff()
+/datum/status_effect/debuff/random_revival/apply_random_debuff()
 	var/static/list/possible_debuffs = list(
 		/datum/status_effect/debuff/revived,
 		/datum/status_effect/debuff/dreamfiend_curse,
@@ -361,7 +361,7 @@
 	var/debuff_type = pick(possible_debuffs)
 	owner.apply_status_effect(debuff_type)
 
-/datum/status_effect/debuff/random_revival/proc/apply_teleport_effect()
+/datum/status_effect/debuff/random_revival/apply_teleport_effect()
 	var/area/target_area = locate(/area/rogue/indoors/town/manor) in GLOB.sortedAreas
 	if(!target_area)
 		apply_random_debuff() // Fallback if manor doesn't exist
@@ -523,7 +523,7 @@
 	desc = "Your mind feels clouded and moonlight burns your skin."
 	icon_state = "noc_curse"
 
-/obj/effect/proc_holder/spell/invoked/resurrect/malum
+/datum/action/cooldown/spell/resurrect/malum
 	name = "Diligent Revival"
 	desc = "Revive the target at a cost, cast on yourself to check.<br>Targets willpower and strength will be sapped for a time."
 	required_items = list(
@@ -535,7 +535,7 @@
 	debuff_type = /datum/status_effect/debuff/malum_revival
 	sound = 'sound/magic/clang.ogg'
 
-/obj/effect/proc_holder/spell/invoked/resurrect/ravox
+/datum/action/cooldown/spell/resurrect/ravox
 	name = "Just Revival"
 	desc = "Revive the target at a cost, cast on yourself to check.<br>Targets strength and speed will be sapped for a time."
 	// The items here are somewhat hard to pick as it still has to be something a ravox acolyte would reasonably obtain.
@@ -548,7 +548,7 @@
 	)
 	debuff_type = /datum/status_effect/debuff/ravox_revival
 
-/obj/effect/proc_holder/spell/invoked/resurrect/dendor
+/datum/action/cooldown/spell/resurrect/dendor
 	name = "Wild Revival"
 	desc = "Revive the target at a cost, cast on yourself to check.<br>Requires a wise tree or sanctified tree nearby. Targets speed and constitution will be sapped for a time."
 	//Herbs that have to do with intelligence mostly. Easier to remember.
@@ -566,7 +566,7 @@
 	sound = 'sound/magic/birdsong.ogg'
 
 // Wild Revival can also revive simple animal mobs (no debuff applied, full heal).
-/obj/effect/proc_holder/spell/invoked/resurrect/dendor/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/resurrect/dendor/cast(list/targets, mob/living/user)
 	if(!isanimal(targets[1]))
 		return ..()
 	var/mob/living/simple_animal/target = targets[1]
@@ -605,7 +605,7 @@
 	consume_items(target)
 	return TRUE
 
-/obj/effect/proc_holder/spell/invoked/resurrect/noc
+/datum/action/cooldown/spell/resurrect/noc
 	name = "Moonlit Revival"
 	desc = "Revive the target at a cost, cast on yourself to check.<br>Targets intelligence will be sapped for a time, in addition they will be burned by moonlight."
 	required_items = list(

@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/invoked/extract_heart
+/datum/action/cooldown/spell/extract_heart
 	name = "Heart Extraction"
 	desc = "An unholy rite to claim hearts as a tribute to Graggar. Only works on fresh corpses."
 	overlay_state = "curse"
@@ -14,7 +14,7 @@
 	/// Base time, reduced by butchery skill
 	var/extraction_time = 15 SECONDS
 
-/obj/effect/proc_holder/spell/invoked/extract_heart/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/extract_heart/cast(list/targets, mob/living/user)
 	var/mob/living/carbon/human/target = targets[1]
 
 	if(!istype(target))

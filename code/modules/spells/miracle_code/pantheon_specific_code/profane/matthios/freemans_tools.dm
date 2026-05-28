@@ -8,7 +8,7 @@
 // Most of the things included here envision utility and non-combat applications, and dhe "alchemy" part offers the
 // means to convert discarded adven trash and item clutter into useful things.
 
-/obj/effect/proc_holder/spell/self/freemans_tools
+/datum/action/cooldown/spell/freemans_tools
 	button_icon = 'icons/mob/actions/matthiosmiracles.dmi'
 	button_icon_state = "lockpick"
 	name = "Freeman's Tools"
@@ -161,7 +161,7 @@
 
 	var/list/item_cooldowns = list()
 
-/obj/effect/proc_holder/spell/self/freemans_tools/cast(atom/cast_on)
+/datum/action/cooldown/spell/freemans_tools/cast(atom/cast_on)
 	. = ..()
 	var/mob/living/carbon/human/H = owner
 	if(!istype(H))

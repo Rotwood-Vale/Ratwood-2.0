@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/targeted/touch/lesserknock
+/datum/action/cooldown/spell/lesserknock
 	name = "Lesser Knock"
 	desc = "A simple spell used to focus the arcyne into an instrument for lockpicking. Can be dispelled by using it on anything that isn't a locked/unlocked door."
 	clothes_req = FALSE
@@ -18,7 +18,7 @@
 	hide_charge_effect = TRUE
 	cost = 2 // Utility and needs lockpicking skills
 
-/obj/effect/proc_holder/spell/targeted/touch/lesserknock/miracle
+/datum/action/cooldown/spell/lesserknock/miracle
 	name = "Matthiosan Knock"
 	desc = "A simple prayer to the free-god that forms into an instrument for lockpicking. Can be dispelled by using it on anything that isn't a locked/unlocked door." //Slightly more appropriate
 	miracle = TRUE

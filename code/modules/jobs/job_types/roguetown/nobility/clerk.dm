@@ -53,7 +53,7 @@
 /datum/outfit/job/roguetown/clerk/basic/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/secular)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/appraise/secular)
 
 	if(should_wear_femme_clothes(H))
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/green

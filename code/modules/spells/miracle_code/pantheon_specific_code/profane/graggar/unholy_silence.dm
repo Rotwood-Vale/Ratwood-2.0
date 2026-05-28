@@ -1,5 +1,5 @@
 //T2: Unholy Silence - Silences a target, preventing them from speaking or casting spells.
-/obj/effect/proc_holder/spell/invoked/silence/graggar
+/datum/action/cooldown/spell/silence/graggar
 	name = "Unholy Silence"
 	desc = "Tie up the tongue of your foe, making them unable to speak or cast spells/miracles."
 	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
@@ -18,7 +18,7 @@
 	invocations = list("BE SILENT!", "QUIET!", "NOT ANOTHER WORD!")
 	zizo_spell = FALSE // Graggar wants his car back.
 
-/obj/effect/proc_holder/spell/invoked/silence/graggar/cast(list/targets, mob/user = usr)//This one does actually work on mages, fully.
+/datum/action/cooldown/spell/silence/graggar/cast(list/targets, mob/user = usr)//This one does actually work on mages, fully.
 	if(iscarbon(targets[1]))
 		var/mob/living/carbon/target = targets[1]
 		if(user == target) //self target

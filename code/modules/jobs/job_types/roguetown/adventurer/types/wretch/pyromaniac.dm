@@ -68,7 +68,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 2, TRUE)
 				backr = /obj/item/rogueweapon/woodstaff/toper
 				if(H.mind)
-					H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+					H.mind.AddSpell(new /datum/action/cooldown/spell/prestidigitation)
 					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fireball)
 					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/spitfire)
 					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/rebuke)

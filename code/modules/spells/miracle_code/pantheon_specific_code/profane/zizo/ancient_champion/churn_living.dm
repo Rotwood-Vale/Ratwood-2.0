@@ -1,5 +1,5 @@
 // Ancient Champion-exclusive: An evil variant of Repulse. Longer charge time and CD, but greater maxthrow, push range and the affected people lose 50 stamina. The undead are immune.
-/obj/effect/proc_holder/spell/invoked/churnliving //Repulse variant.
+/datum/action/cooldown/spell/churnliving //Repulse variant.
 	name = "Churn Living"
 	desc = "Conjure forth a wave of necrotic energy, repelling non-undead around you and greatly damaging their stamina."
 	xp_gain = FALSE
@@ -28,7 +28,7 @@
 	var/repulse_force = MOVE_FORCE_EXTREMELY_STRONG
 	var/push_range = 2 //1 tile more.
 
-/obj/effect/proc_holder/spell/invoked/churnliving/cast(list/targets, mob/user, stun_amt = 5)
+/datum/action/cooldown/spell/churnliving/cast(list/targets, mob/user, stun_amt = 5)
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster

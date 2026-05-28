@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/invoked/raise_deadite
+/datum/action/cooldown/spell/raise_deadite
 	name = "Raise Deadite"
 	desc = "Infuse the target with quick acting Rot, raising them as a deadite. They will not be friendly to you."
 	cost = 3
@@ -20,7 +20,7 @@
 	associated_skill = /datum/skill/magic/arcane
 	zizo_spell = TRUE
 
-/obj/effect/proc_holder/spell/invoked/raise_deadite/cast(list/targets, mob/user)
+/datum/action/cooldown/spell/raise_deadite/cast(list/targets, mob/user)
 	. = ..()
 	for(var/mob/living/carbon/human/M in targets)
 		if(!HAS_TRAIT(M, TRAIT_ZOMBIE_IMMUNE) && ishuman(M) && M.mind)

@@ -6,7 +6,7 @@
 	virtues = "Temperance, Devotion, Caution"
 	sins = "Stubbornness, Recklessness, Zeal"
 	mob_traits = list()
-	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI, // ONLY Lower miracles of other lists. A much more varied utility miracle list, and a much wider selection. Also, our generic miracles(Lesser heal + Divine blast for acolytes) are better. But no specialization makes a lower level list. We're going to exclude Abyssor.
+	miracles = list(/datum/action/cooldown/spell/orison							= CLERIC_ORI, // ONLY Lower miracles of other lists. A much more varied utility miracle list, and a much wider selection. Also, our generic miracles(Lesser heal + Divine blast for acolytes) are better. But no specialization makes a lower level list. We're going to exclude Abyssor.
 					/obj/effect/proc_holder/spell/self/astrata_gaze				= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/darkvision/miracle	= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/blood_heal			= CLERIC_T1,

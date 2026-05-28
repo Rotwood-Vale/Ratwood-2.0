@@ -1,6 +1,6 @@
 //Enrapturing Powder - T2, basically a crackhead blowing cocaine in your face.
 
-/obj/effect/proc_holder/spell/invoked/projectile/blowingdust
+/datum/action/cooldown/spell/projectile/blowingdust
 	name = "Enrapturing Powder"
 	desc = "Blows dust of a potent drug at the target, applying a variety of effects. \
 	Your intent will determine the drug thrown at the target. \n\
@@ -28,7 +28,7 @@
 	invocations = list("flicks their wrist, filling the air in front of them with a fine powder.")
 	devotion_cost = 30
 
-/obj/effect/proc_holder/spell/invoked/projectile/blowingdust/cast(list/targets, mob/user = user)
+/datum/action/cooldown/spell/projectile/blowingdust/cast(list/targets, mob/user = user)
 	switch(user.rmb_intent.name)
 		if("feint")
 			projectile_type = /obj/projectile/magic/blowingdust/spice

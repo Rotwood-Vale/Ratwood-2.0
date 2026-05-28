@@ -2,7 +2,7 @@
 //T2 - Mammonite
 //Uses up to 100 Mammon to deal 100 damage with 75% armor penetration on your next strike. Can't get simpler than that.
 
-/obj/effect/proc_holder/spell/self/mammonite
+/datum/action/cooldown/spell/mammonite
 	name = "Mammonite"
 	desc = "Invoke Matthios's name and invest 50 to 100 mammon of your own hoard into your next strike. The power of your offering mirrors the wealth spent, drawing even from your bank. Every coin fuels your glory.<br><br>Penetrates armor equal to 75% of the mammon spent."
 	button_icon = 'icons/mob/actions/matthiosmiracles.dmi'
@@ -21,7 +21,7 @@
 	var/min_mammon = 25
 	var/max_mammon = 100
 
-/obj/effect/proc_holder/spell/self/mammonite/can_cast_spell(feedback = TRUE)
+/datum/action/cooldown/spell/mammonite/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -46,7 +46,7 @@
 
 	return TRUE
 
-/obj/effect/proc_holder/spell/self/mammonite/cast(atom/cast_on)
+/datum/action/cooldown/spell/mammonite/cast(atom/cast_on)
 	. = ..()
 	var/mob/living/carbon/human/H = owner
 	if(!istype(H))

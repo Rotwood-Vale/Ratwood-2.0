@@ -73,7 +73,7 @@
 					if("Magic")
 						H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_EXPERT, TRUE)
 						backr = /obj/item/rogueweapon/woodstaff/toper
-						H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+						H.mind.AddSpell(new /datum/action/cooldown/spell/prestidigitation)
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/acidsplash)
 			if("A Rapier and Agility")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)

@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/invoked/resurrect/matthios
+/datum/action/cooldown/spell/resurrect/matthios
 	name = "Rekindled Exchange"
 	desc = "Revives the target by invoking a deal with Matthios. In exchange for their lyfe returned, they will be placed\
 	in a lasting debt to Him. Any coins within their hands will be spent paying off said debt. Blood for gold."

@@ -95,4 +95,4 @@
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/matthios
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/chainmantle
 	backr = /obj/item/rogueweapon/flail/peasantwarflail/matthios
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
+	H.mind.AddSpell(new /datum/action/cooldown/spell/mending/lesser)

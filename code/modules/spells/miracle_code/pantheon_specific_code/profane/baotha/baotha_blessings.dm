@@ -1,6 +1,6 @@
 //Baotha's Blessings - T0, reverses overdose effect on a target + soothing moodlet. Useful to T0/Devotee because it allows them to stop an OD death, but puts them on the clock. (Medieval narcan..... #BanNarcan)
 
-/obj/effect/proc_holder/spell/invoked/baotha_blessings
+/datum/action/cooldown/spell/baotha_blessings
 	name = "Baotha's Blessings"
 	desc = "Gets the target drunk and stops them from overdosing for a time."
 	action_icon = 'icons/mob/actions/baothamiracles.dmi'
@@ -20,7 +20,7 @@
 	miracle = TRUE
 	devotion_cost = 10
 
-/obj/effect/proc_holder/spell/invoked/baotha_blessings/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/baotha_blessings/cast(list/targets, mob/living/user)
 	if(isliving(targets[1]))
 		var/mob/living/carbon/target = targets[1]
 		if(HAS_TRAIT(target, TRAIT_PSYDONITE))

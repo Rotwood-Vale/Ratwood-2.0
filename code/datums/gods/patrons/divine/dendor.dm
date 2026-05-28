@@ -6,7 +6,7 @@
 	virtues = "Harmony, Primitivism, Hunting"
 	sins = "Civilization, Overhunting, Disrespecting Nature"
 	mob_traits = list(TRAIT_KNEESTINGER_IMMUNITY, TRAIT_LEECHIMMUNE)
-	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
+	miracles = list(/datum/action/cooldown/spell/orison							= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/spiderspeak 			= CLERIC_T0,
 					/obj/effect/proc_holder/spell/targeted/blesscrop			= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/lesser_heal 			= CLERIC_T1,

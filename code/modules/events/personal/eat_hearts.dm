@@ -22,7 +22,7 @@
 			continue
 		if(!H.patron || !istype(H.patron, /datum/patron/inhumen/graggar))
 			continue
-		if(locate(/obj/effect/proc_holder/spell/invoked/extract_heart) in H.mind.spell_list)
+		if(locate(/datum/action/cooldown/spell/extract_heart) in H.mind.spell_list)
 			continue
 		return TRUE
 
@@ -36,7 +36,7 @@
 			continue
 		if(!human_mob.patron || !istype(human_mob.patron, /datum/patron/inhumen/graggar))
 			continue
-		if(locate(/obj/effect/proc_holder/spell/invoked/extract_heart) in human_mob.mind.spell_list)
+		if(locate(/datum/action/cooldown/spell/extract_heart) in human_mob.mind.spell_list)
 			continue
 		valid_targets += human_mob
 
@@ -48,7 +48,7 @@
 	var/datum/objective/consume_organs/new_objective = new(owner = chosen_one.mind)
 	chosen_one.mind.add_personal_objective(new_objective)
 
-	var/obj/effect/proc_holder/spell/invoked/extract_heart/heart_spell = new()
+	var/datum/action/cooldown/spell/extract_heart/heart_spell = new()
 	chosen_one.mind.AddSpell(heart_spell)
 
 	to_chat(chosen_one, span_userdanger("YOU ARE GOD'S CHOSEN!"))

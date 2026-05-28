@@ -3,7 +3,7 @@
 #define PRESTI_MOTE    "presti_mote"
 #define PRESTI_SPLASH  "presti_splash"
 
-/obj/effect/proc_holder/spell/targeted/touch/prestidigitation
+/datum/action/cooldown/spell/prestidigitation
 	name = "Prestidigitation"
 	desc = "A few basic tricks many apprentices use to practice basic manipulation of the arcyne."
 	clothes_req = FALSE
@@ -20,7 +20,7 @@
 	var/mote_color = null
 
 // Re-apply saved prestidigitation color when the touch hand is summoned again.
-/obj/effect/proc_holder/spell/targeted/touch/prestidigitation/ChargeHand(mob/living/carbon/user)
+/datum/action/cooldown/spell/prestidigitation/ChargeHand(mob/living/carbon/user)
 	. = ..()
 	if(!.)
 		return
@@ -75,7 +75,7 @@
 	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		return
 
-	var/obj/effect/proc_holder/spell/targeted/touch/prestidigitation/base_spell = attached_spell
+	var/datum/action/cooldown/spell/prestidigitation/base_spell = attached_spell
 	if(!base_spell)
 		return
 
@@ -103,7 +103,7 @@
 	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		return
 
-	var/obj/effect/proc_holder/spell/targeted/touch/prestidigitation/base_spell = attached_spell
+	var/datum/action/cooldown/spell/prestidigitation/base_spell = attached_spell
 	if(base_spell)
 		base_spell.mote_color = null
 	apply_mote_color(default_mote_color)
@@ -146,7 +146,7 @@
 
 /obj/item/melee/touch_attack/prestidigitation/proc/handle_cost(mob/living/carbon/human/user, action)
 	// handles fatigue/stamina deduction, this stuff isn't free - also returns the cost we took to use for xp calculations
-	var/obj/effect/proc_holder/spell/targeted/touch/prestidigitation/base_spell = attached_spell
+	var/datum/action/cooldown/spell/prestidigitation/base_spell = attached_spell
 	var/fatigue_used = base_spell.get_fatigue_drain() //note that as our skills/stats increases, our fatigue drain DECREASES, so this means less xp, too. which is what we want since this is a basic spell, not a spam-for-xp-forever kinda beat
 	var/extra_fatigue = 0 // extra fatigue isn't considered in xp calculation
 	switch (action)
@@ -171,7 +171,7 @@
 	// adjusted from /obj/item/wisp_lantern & /obj/item/wisp
 	if (!mote)
 		return // should really never happen
-	var/obj/effect/proc_holder/spell/targeted/touch/prestidigitation/base_spell = attached_spell
+	var/datum/action/cooldown/spell/prestidigitation/base_spell = attached_spell
 	if(base_spell?.mote_color)
 		apply_mote_color(base_spell.mote_color)
 	else

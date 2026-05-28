@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/invoked/resurrect/graggar
+/datum/action/cooldown/spell/resurrect/graggar
 	name = "Blood for Graggar"
 	desc = "You cannot dominate the dead. Place GRAGGAR'S EYES upon a fallen mortal, granting them the\
 	chance to fight again... for a price. Their intelligence will be drained for some time, or until\
@@ -134,7 +134,7 @@
 	to_chat(owner, span_userdanger("Your mind feels clouded by a primal bloodlust. Graggar demands a challenge! Summon the rift before your time runs out!"))
 
 	// Grant the summoning spell
-	var/obj/effect/proc_holder/spell/invoked/summon_rift/S = new(owner)
+	var/datum/action/cooldown/spell/summon_rift/S = new(owner)
 	owner.mind?.AddSpell(S)
 
 /datum/status_effect/debuff/graggar_challenge/on_remove()
@@ -144,7 +144,7 @@
 		trigger_failure_consequences(owner)
 
 	// Cleanup the spell if they still have it
-	for(var/obj/effect/proc_holder/spell/invoked/summon_rift/S in owner.mind?.spell_list)
+	for(var/datum/action/cooldown/spell/summon_rift/S in owner.mind?.spell_list)
 		owner.mind.RemoveSpell(S)
 		qdel(S)
 	. = ..()
@@ -165,7 +165,7 @@
 
 /// Helper spell
 
-/obj/effect/proc_holder/spell/invoked/summon_rift
+/datum/action/cooldown/spell/summon_rift
 	name = "Summon Primal Rift"
 	desc = "Challenge the rift-born to clear your blood-debt. Must be cast on a nearby floor. Make sure to kill all foes, Graggar will not tolerate further acts of mercy."
 	invocation_type = "shout"
@@ -176,7 +176,7 @@
 	// Let's make it hard to cheese this with a death trap box or something
 	range = 2
 
-/obj/effect/proc_holder/spell/invoked/summon_rift/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/summon_rift/cast(list/targets, mob/living/user)
 	if(summoned)
 		to_chat(user, span_warning("The rift was already summoned!"))
 		revert_cast()

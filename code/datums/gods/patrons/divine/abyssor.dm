@@ -6,7 +6,7 @@
 	virtues = "Dreaming, Open-Mindedness, Purity"
 	sins = "Forgetfulness, Deception, Taking Name in Vain"
 	mob_traits = list(TRAIT_ABYSSOR_SWIM, TRAIT_SEA_DRINKER)
-	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
+	miracles = list(/datum/action/cooldown/spell/orison							= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/aquatic_compulsion	= CLERIC_T0,
 					/obj/effect/proc_holder/spell/self/abyssor_wind				= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/lesser_heal 			= CLERIC_T1,

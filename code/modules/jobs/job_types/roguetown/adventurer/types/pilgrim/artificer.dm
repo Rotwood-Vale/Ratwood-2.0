@@ -60,5 +60,5 @@
 	)
 	// Always hated the fact that they began using magic for their stuff. Yet it is needed, same as the normal one. Perhaps one day we will change it, and move towards a more steampunk vibe. I pray.
 	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/prestidigitation)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)

@@ -1,5 +1,5 @@
 //T0: Bloodrage  -- Uncapped STR buff.
-/obj/effect/proc_holder/spell/self/graggar_bloodrage
+/datum/action/cooldown/spell/graggar_bloodrage
 	name = "Bloodrage"
 	desc = "Tap into Graggar's wellspring of strength and knowledge, granting unbound power at the cost of temporary insanity and physical exhaustion." 		//reflavored into "graggar grants you some of the strength he got from stealing the souls of miscellaneous ravoxians"
 	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
@@ -22,7 +22,7 @@
 	/datum/status_effect/incapacitating/stun,
 	/datum/status_effect/incapacitating/knockdown,)
 
-/obj/effect/proc_holder/spell/self/graggar_bloodrage/cast(list/targets, mob/user)
+/datum/action/cooldown/spell/graggar_bloodrage/cast(list/targets, mob/user)
 	. = ..()
 	if(!ishuman(user))
 		revert_cast()

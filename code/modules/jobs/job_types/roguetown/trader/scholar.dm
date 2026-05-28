@@ -57,7 +57,7 @@
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	beltr = /obj/item/rogueweapon/huntingknife
 	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/prestidigitation)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/teach)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/learn)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/refocusstudies)

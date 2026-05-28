@@ -7,18 +7,18 @@
 	sins = "Nobility, Sloth, Submitting to \"Unjust Hierarchies\""
 	crafting_recipes = list(/datum/crafting_recipe/roguetown/sewing/bandithood)
 	mob_traits = list(TRAIT_COMMIE, TRAIT_MATTHIOS_EYES, TRAIT_SEEPRICES_SHITTY)
-	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
-					/datum/action/cooldown/spell/freemans_tools					= CLERIC_T0,
-					/obj/effect/proc_holder/spell/invoked/firebreath			= CLERIC_T0,
-					/obj/effect/proc_holder/spell/invoked/lesser_heal 			= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/blood_heal			= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/transact				= CLERIC_T1,
-					/obj/effect/proc_holder/spell/self/skulduggery				= CLERIC_T1, // AAAAAAAAAAA
-					/datum/action/cooldown/spell/mammonite						= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/barter				= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/equalize				= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/churn_wealthy			= CLERIC_T3,
-					/obj/effect/proc_holder/spell/invoked/resurrect/matthios	= CLERIC_T4,
+	miracles = list(/datum/action/cooldown/spell/orison					= CLERIC_ORI,
+					/datum/action/cooldown/spell/freemans_tools			= CLERIC_T0,
+					/datum/action/cooldown/spell/firebreath				= CLERIC_T0,
+					/datum/action/cooldown/spell/lesser_heal 			= CLERIC_T1,
+					/datum/action/cooldown/spell/blood_heal				= CLERIC_T1,
+					/datum/action/cooldown/spell/transact				= CLERIC_T1,
+					/datum/action/cooldown/spell/skulduggery			= CLERIC_T1, // AAAAAAAAAAA
+					/datum/action/cooldown/spell/mammonite				= CLERIC_T2,
+					/datum/action/cooldown/spell/barter					= CLERIC_T2,
+					/datum/action/cooldown/spell/equalize				= CLERIC_T2,
+					/datum/action/cooldown/spell/churn_wealthy			= CLERIC_T3,
+					/datum/action/cooldown/spell/resurrect/matthios		= CLERIC_T4,
 
 	)
 	confess_lines = list(

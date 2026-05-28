@@ -1,5 +1,5 @@
 // T3 - bond that lasts for 8 minutes as long as bonded are within 7 tiles, TRAIT_NOPAIN, spd = 5 end = 3
-/obj/effect/proc_holder/spell/invoked/joyride
+/datum/action/cooldown/spell/joyride
 	name = "Joyride"
 	desc = "A frenzy for two to partake in."
 	action_icon = 'icons/mob/actions/baothamiracles.dmi'
@@ -15,7 +15,7 @@
 	devotion_cost = 75
 	associated_skill = /datum/skill/magic/holy
 
-/obj/effect/proc_holder/spell/invoked/joyride/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/joyride/cast(list/targets, mob/living/user)
 	var/mob/living/target = targets[1]
 
 	var/datum/component/baotha_joyride/existing = user.GetComponent(/datum/component/baotha_joyride)

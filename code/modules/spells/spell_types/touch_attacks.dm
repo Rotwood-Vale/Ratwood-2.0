@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/targeted/touch
+/datum/action/cooldown/spell
 	var/hand_path = /obj/item/melee/touch_attack
 	var/obj/item/melee/touch_attack/attached_hand = null
 	var/drawmessage = "You channel the power of the spell to my hand."
@@ -8,24 +8,24 @@
 	range = -1
 	var/castdrain = FALSE // value for if you want a summonable weapon to cost stamina
 
-/obj/effect/proc_holder/spell/targeted/touch/Destroy()
+/datum/action/cooldown/spell/Destroy()
 	remove_hand()
 	to_chat(usr, span_notice("The power of the spell dissipates from my hand."))
 	..()
 
-/obj/effect/proc_holder/spell/targeted/touch/proc/remove_hand(recharge = FALSE)
+/datum/action/cooldown/spell/proc/remove_hand(recharge = FALSE)
 	QDEL_NULL(attached_hand)
 	if(recharge)
 		charge_counter = recharge_time
 
-/obj/effect/proc_holder/spell/targeted/touch/proc/on_hand_destroy(obj/item/melee/touch_attack/hand)
+/datum/action/cooldown/spell/proc/on_hand_destroy(obj/item/melee/touch_attack/hand)
 	if(hand != attached_hand)
 		CRASH("Incorrect touch spell hand.")
 	//Start recharging.
 	attached_hand = null
 	action.UpdateButtonIcon()
 
-/obj/effect/proc_holder/spell/targeted/touch/cast(list/targets, mob/user = usr)
+/datum/action/cooldown/spell/cast(list/targets, mob/user = usr)
 	if(!QDELETED(attached_hand))
 		remove_hand(TRUE)
 		to_chat(user, span_notice("[dropmessage]"))
@@ -36,13 +36,13 @@
 			if(ChargeHand(C))
 				return
 
-/obj/effect/proc_holder/spell/targeted/touch/charge_check(mob/user,silent = FALSE)
+/datum/action/cooldown/spell/charge_check(mob/user,silent = FALSE)
 	if(!QDELETED(attached_hand)) //Charge doesn't matter when putting the hand away.
 		return TRUE
 	else
 		return ..()
 
-/obj/effect/proc_holder/spell/targeted/touch/proc/ChargeHand(mob/living/carbon/user)
+/datum/action/cooldown/spell/proc/ChargeHand(mob/living/carbon/user)
 	attached_hand = new hand_path(src)
 	attached_hand.attached_spell = src
 	if(!user.put_in_hands(attached_hand))

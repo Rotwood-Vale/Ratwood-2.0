@@ -1,6 +1,6 @@
 // Heresiarch-exclusive: Perfect Reanimation. Anastasis but evil. Requires a heart and a zizocross structure to revive somebody.
 
-/obj/effect/proc_holder/spell/invoked/resurrect/zizo
+/datum/action/cooldown/spellt/zizo
 	name = "Zizoid Rebirth"
 	desc = "Revive a fallen ally by siphoning their potential. You gain their strength, whilst they gain a second chance.\
 	If they die, you will lose their stolen strength."
@@ -18,7 +18,7 @@
 	debuff_type = null
 	required_structure = /obj/structure/fluff/psycross/zizocross
 
-/obj/effect/proc_holder/spell/invoked/resurrect/zizo/cast(list/targets, mob/living/carbon/human/user)
+/datum/action/cooldown/spell/resurrect/zizo/cast(list/targets, mob/living/carbon/human/user)
 	var/list/stat_pool = list(STATKEY_STR, STATKEY_SPD, STATKEY_CON, STATKEY_WIL, STATKEY_INT, STATKEY_PER, STATKEY_LCK)
 	var/list/tithe_distribution = list()
 

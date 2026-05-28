@@ -7,10 +7,10 @@
 	sins = "Witchcraft, Sadism, Overindulgence"
 	associated_faith = /datum/faith/old_god
 	mob_traits = list(TRAIT_PSYDONIAN_GRIT)
-	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
-					/obj/effect/proc_holder/spell/self/check_boot				= CLERIC_T0,
-					/obj/effect/proc_holder/spell/invoked/psydonendure			= CLERIC_T1,
-					/obj/effect/proc_holder/spell/self/psydonrespite			= CLERIC_T2,
+	miracles = list(/datum/action/cooldown/spell/orison						= CLERIC_ORI,
+					/obj/effect/proc_holder/spell/self/check_boot			= CLERIC_T0,
+					/obj/effect/proc_holder/spell/invoked/psydonendure		= CLERIC_T1,
+					/obj/effect/proc_holder/spell/self/psydonrespite		= CLERIC_T2,
 	)
 	traits_tier = list(TRAIT_PSYDONITE = CLERIC_T1)
 	confess_lines = list(

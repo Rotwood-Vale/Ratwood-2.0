@@ -2,7 +2,7 @@
 
 // T2 We're going to debuff a targets stats = to the difference between us and them in total stats.
 
-/obj/effect/proc_holder/spell/invoked/equalize
+/datum/action/cooldown/spell/equalize
 	name = "Equalize"
 	desc = "Create equality, with a thumb on the scales, with your target. Siphon strength, speed, and constitution from them."
 	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
@@ -23,7 +23,7 @@
 	recharge_time = 6 MINUTES
 	range = 4
 
-/obj/effect/proc_holder/spell/invoked/equalize/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/equalize/cast(list/targets, mob/living/user)
 	if(ishuman(targets[1]))
 		var/mob/living/target = targets[1]
 		if(user == target)

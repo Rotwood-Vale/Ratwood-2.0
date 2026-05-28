@@ -168,7 +168,7 @@
 		shoes = /obj/item/clothing/shoes/roguetown/sandals
 	// Not a real mage, no free spell point. Take Arcyne Potential if you want it.
 	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/prestidigitation)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
 
 /datum/advclass/guildsman/architect

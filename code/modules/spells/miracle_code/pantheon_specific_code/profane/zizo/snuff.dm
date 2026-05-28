@@ -1,6 +1,6 @@
 // T0: Snuffs out fires/lights around area of the caster, greater range with higher HOLY skill
 
-/obj/effect/proc_holder/spell/self/zizo_snuff
+/datum/action/cooldown/spell/zizo_snuff
 	name = "Snuff Lights"
 	desc = "Extinguish all lights in range, with your Miracles skill increasing range."
 	button_icon = 'icons/mob/actions/zizomiracles.dmi'
@@ -21,7 +21,7 @@
 	zizo_spell = TRUE
 	var/snuff_range = 2
 
-/obj/effect/proc_holder/spell/self/zizo_snuff/cast(atom/cast_on)
+/datum/action/cooldown/spell/zizo_snuff/cast(atom/cast_on)
 	. = ..()
 	if(!ishuman(owner))
 		return FALSE

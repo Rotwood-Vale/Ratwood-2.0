@@ -6,7 +6,7 @@
 	virtues = "Humor, Friendship, Joy"
 	sins = "Slavery, Seriousness, Servility"
 	mob_traits = list(TRAIT_XYLIX)
-	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison				= CLERIC_ORI,
+	miracles = list(/datum/action/cooldown/spell/orison								= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/xylixslip					= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/ventriloquism				= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/xylixlian_luck        	= CLERIC_T1,

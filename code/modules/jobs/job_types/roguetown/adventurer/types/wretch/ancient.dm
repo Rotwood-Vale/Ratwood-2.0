@@ -68,7 +68,7 @@
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/suicidebomb/lesser)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic) //Voluntary conversion.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/zizo_snuff/champion) //Champion-variant of Snuff Lights. Non-miracle, static range of 7, but much longer CD.
+		H.mind.AddSpell(new /datum/action/cooldown/spell/zizo_snuff/champion) //Champion-variant of Snuff Lights. Non-miracle, static range of 7, but much longer CD.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending) //You can't take off your armour or do rites, so that's your only way of repairing your armour.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/deathgrasp) //GET OVER HERE. Fetch that also applies -4 Speed, but with a longer CD.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/churnliving) //Repulse variant. Get out of dorpels. Longer charge time and CD, but greater push range (2 tiles) and affected targets lose some stamina.

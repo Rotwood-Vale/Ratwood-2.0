@@ -321,4 +321,4 @@
 
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery) //it's back. if they become op feintmeisters remove this
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/lesserknock) //they're a magic thief. i mean come on
+		H.mind.AddSpell(new /datum/action/cooldown/spell/lesserknock) //they're a magic thief. i mean come on

@@ -55,7 +55,7 @@
 	if(H.mind)
 		//Integral spells.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/conjure_armor/barrier)//Anti-magic.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/prestidigitation)
 		//Buff spells, next.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/hawks_eyes)

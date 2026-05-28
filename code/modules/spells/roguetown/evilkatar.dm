@@ -1,8 +1,8 @@
-/obj/effect/proc_holder/spell/targeted/touch/summonrogueweapon/evil
+/datum/action/cooldown/spell/summonrogueweapon/evil
 	castdrain = 25
 	school = "transmutation"
 
-/obj/effect/proc_holder/spell/targeted/touch/summonrogueweapon/evil/inhumenblade
+/datum/action/cooldown/spell/summonrogueweapon/evil/inhumenblade
 	name = "Inhumen Blade"
 	desc = "Summon an inhumen blade."
 	clothes_req = FALSE

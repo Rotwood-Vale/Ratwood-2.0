@@ -1,5 +1,5 @@
 //T1: Call to Slaughter - AoE buff for Inhumen surrounding you, debuff for Pantheoneers
-/obj/effect/proc_holder/spell/self/graggar_battlecry
+/datum/action/cooldown/spell/graggar_battlecry
 	name = "Call to Slaughter"
 	desc = "Grants you and all allies nearby a buff to their strength, willpower, and constitution. Debuffs followers of the Ten, but not Psydonites."
 	fluff_desc = "The battlefield quakes with your roar! Shaken to their core, they will prove easy pickings for a worthy champion such as yourself; the power of the Sinistar, unleashed.\
@@ -23,7 +23,7 @@
 
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC | SPELL_REQUIRES_HUMAN | SPELL_REQUIRES_SAME_Z
 
-/obj/effect/proc_holder/spell/self/graggar_battlecry/cast(atom/cast_on)
+/datum/action/cooldown/spell/graggar_battlecry/cast(atom/cast_on)
 	. = ..()
 	var/mob/living/carbon/human/H = owner
 	if(!istype(H))

@@ -1,5 +1,5 @@
 // T1, orison inspired healing spell that pours a drink called Lover's Ruin. Works like a red for baotha blessed, poisons non-blessed.
-/obj/effect/proc_holder/spell/targeted/touch/loversruin
+/datum/action/cooldown/spell/loversruin
 	name = "Lover's Ruin"
 	desc = "A toast to passion that ends in ash.\n \
 		Beseech Baotha to pour wine onto a container. Poisons the unfaithful, rewards Her blessed with healing."

@@ -9,7 +9,7 @@
 
 	allowed_races = list(/datum/species/goblinp, /datum/species/anthromorphsmall, /datum/species/kobold)
 	allowed_sexes = list(MALE, FEMALE)
-	spells = list(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+	spells = list(/datum/action/cooldown/spell/prestidigitation)
 	display_order = JDO_TRIBALSHAMAN
 	// tutorial = "Ooga chacka ZAP a chacka!"
 	tutorial = "You've seen visions of fire and magma, gnashing claws and red scales. The Dragon's will burns behind your eyes, and Graggar's voice echoes in your dreams. \

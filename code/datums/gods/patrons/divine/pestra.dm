@@ -6,7 +6,7 @@
 	virtues = "Compassion, Decay, Curiosity"
 	sins = "Arrogance, Wrath, Denying Healthcare to Anyone"
 	mob_traits = list(TRAIT_EMPATH, TRAIT_ROT_EATER)
-	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
+	miracles = list(/datum/action/cooldown/spell/orison							= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/diagnose				= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/pestra_leech			= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/lesser_heal 			= CLERIC_T1,

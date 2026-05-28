@@ -1,6 +1,6 @@
 //T3
 
-/obj/effect/proc_holder/spell/invoked/tame_undead/miracle
+/datum/action/cooldown/spell/tame_undead/miracle
 	name = "Tame Undead"
 	desc = "Oftentymes, husks and shamblers walk aimlessly - uncertain of their future. They need not look further, any longer.\nRequires the target to be within four tiles. Works on undead animals, too."
 	button_icon = 'icons/mob/actions/zizomiracles.dmi'
@@ -16,10 +16,10 @@
 	self_cast_possible = FALSE
 	zizo_spell = TRUE
 
-/obj/effect/proc_holder/spell/invoked/tame_undead/miracle/is_valid_target(atom/cast_on)
+/datum/action/cooldown/spell/tame_undead/miracle/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
-/obj/effect/proc_holder/spell/invoked/tame_undead/miracle/cast(atom/cast_on)
+/datum/action/cooldown/spell/tame_undead/miracle/cast(atom/cast_on)
 	. = ..()
 
 	var/mob/living/target = cast_on

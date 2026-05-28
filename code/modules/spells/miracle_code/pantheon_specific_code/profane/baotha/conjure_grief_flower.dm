@@ -1,5 +1,5 @@
 //T1, Baotha's version of Eora's Bud (now renamed True Peace Bloom). Applies the TRAIT_CRACKHEAD baothans have.
-/obj/effect/proc_holder/spell/invoked/griefflower
+/datum/action/cooldown/spell/griefflower
 	name = "False Serenity Bloom"
 	desc = "A gift for those whom you have choosen as worthy of Her grace, to be able to imbibe in Her gifts as you do."
 	clothes_req = FALSE
@@ -17,7 +17,7 @@
 	associated_skill = /datum/skill/magic/holy
 	recharge_time = 30 MINUTES //To avoid spamming this shit and giving all heretics florida-man crackhead superpowers. No Bro.
 
-/obj/effect/proc_holder/spell/invoked/griefflower/cast(mob/living/user)
+/datum/action/cooldown/spell/griefflower/cast(mob/living/user)
 	var/turf/T = get_turf(user)
 	if(!isclosedturf(T))
 		new /obj/item/clothing/ring/griefflower(T)

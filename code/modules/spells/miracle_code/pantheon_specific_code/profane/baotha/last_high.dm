@@ -1,5 +1,5 @@
 // T2 - clears all stress. Forget your worries, pookie bear.
-/obj/effect/proc_holder/spell/invoked/lasthigh
+/datum/action/cooldown/spell/lasthigh
 	name = "Last High"
 	desc = "Pleasure's perfume, just before the fall."
 	action_icon = 'icons/mob/actions/baothamiracles.dmi'
@@ -19,7 +19,7 @@
 	miracle = TRUE
 	devotion_cost = 75
 
-/obj/effect/proc_holder/spell/invoked/lasthigh/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/lasthigh/cast(list/targets, mob/living/user)
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 		if(target.mob_biotypes & MOB_UNDEAD)

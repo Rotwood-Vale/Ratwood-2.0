@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/invoked/rituos
+/datum/action/cooldown/spell/rituos
 	name = "Rituos"
 	desc = "Do a ritual for she of Z that skeletonises a part of your body and bestows upon you arcyne magycks until you next sleep. Once your whole body has become skeletonised you gain full access to the Arcyne, bolstering your knowledge of spells with each additional ritual."
 	clothes_req = FALSE
@@ -17,12 +17,12 @@
 	/// How many times Rituos has been casted
 	var/rituos_counter = 0
 
-/obj/effect/proc_holder/spell/invoked/rituos/miracle
+/datum/action/cooldown/spell/rituos/miracle
 	miracle = TRUE
 	devotion_cost = 120
 	associated_skill = /datum/skill/magic/holy
 
-/obj/effect/proc_holder/spell/invoked/rituos/cast(list/targets, mob/living/carbon/user)
+/datum/action/cooldown/spell/rituos/cast(list/targets, mob/living/carbon/user)
 	. = ..()
 	if(!user || !user.mind)
 		return FALSE

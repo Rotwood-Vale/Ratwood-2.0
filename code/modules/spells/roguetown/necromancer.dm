@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/invoked/bonechill
+/datum/action/cooldown/spell/bonechill
 	name = "Bone Chill"
 	desc = "Chill the target with necrotic energy. Severely reduces speed and weakens physical prowess."
 	cost = 3
@@ -20,7 +20,7 @@
 	miracle = FALSE
 	zizo_spell = TRUE
 
-/obj/effect/proc_holder/spell/invoked/bonechill/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/bonechill/cast(list/targets, mob/living/user)
 	..()
 	if(!isliving(targets[1]))
 		return FALSE
@@ -41,7 +41,7 @@
 
 	return TRUE
 
-/obj/effect/proc_holder/spell/invoked/eyebite
+/datum/action/cooldown/spell/eyebite
 	name = "Eyebite"
 	overlay_state = "raiseskele"
 	releasedrain = 30
@@ -58,7 +58,7 @@
 	miracle = FALSE
 	hide_charge_effect = TRUE
 
-/obj/effect/proc_holder/spell/invoked/eyebite/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/eyebite/cast(list/targets, mob/living/user)
 	..()
 	if(!isliving(targets[1]))
 		return FALSE
@@ -69,7 +69,7 @@
 	target.blur_eyes(10)
 	return TRUE
 
-/obj/effect/proc_holder/spell/invoked/raise_undead_formation
+/datum/action/cooldown/spell/summon_lesser_undead
 	name = "Raise Lesser Undead Formation"
 	desc = "Raises a formation of simple minded undead skeletons. Inferior shamblers. Husks in everything but zeal."
 	clothes_req = FALSE
@@ -90,7 +90,7 @@
 	var/to_spawn = 4
 	hide_charge_effect = TRUE
 
-/obj/effect/proc_holder/spell/invoked/raise_undead_formation/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/summon_lesser_undead/cast(list/targets, mob/living/user)
 	..()
 
 	var/turf/T = get_turf(targets[1])
@@ -133,14 +133,14 @@
 				new /mob/living/simple_animal/hostile/rogue/skeleton(t_turf, user, cabal_affine, is_summoned)
 	return TRUE
 
-/obj/effect/proc_holder/spell/invoked/raise_undead_formation/necromancer
+/datum/action/cooldown/spell/summon_lesser_undead/necromancer
 	cabal_affine = TRUE
 	is_summoned = TRUE
 	recharge_time = 35 SECONDS
 	to_spawn = 3
 
 
-/obj/effect/proc_holder/spell/invoked/raise_undead_guard
+/datum/action/cooldown/spell/summon_undead
 	name = "Conjure Undead"
 	desc = "Raises an undead guard in your servitude."
 	clothes_req = FALSE
@@ -160,7 +160,7 @@
 	var/cabal_affine = FALSE
 	var/is_summoned = FALSE
 
-/obj/effect/proc_holder/spell/invoked/raise_undead_guard/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/summon_undead/cast(list/targets, mob/living/user)
 	..()
 
 	var/turf/T = get_turf(targets[1])
@@ -211,7 +211,7 @@
 	return TRUE
 
 
-/obj/effect/proc_holder/spell/invoked/tame_undead
+/datum/action/cooldown/spell/tame_undead
 	name = "Tame Undead"
 	desc = "Oftentymes, husks and shamblers walk aimlessly - uncertain of their future. Befriends the undead \
 	Requires the target to be within four tiles. Works on undead animals, too, and they will heed your command."
@@ -226,7 +226,7 @@
 	chargedloop = /datum/looping_sound/invokegen
 	no_early_release = TRUE
 
-/obj/effect/proc_holder/spell/invoked/tame_undead/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/tame_undead/cast(list/targets, mob/living/user)
 	..()
 
 	if(!isliving(targets[1]))
@@ -256,7 +256,7 @@
 	return TRUE
 
 
-/obj/effect/proc_holder/spell/invoked/projectile/sickness
+/datum/action/cooldown/spell/projectile/sickness
 	name = "Ray of Sickness"
 	desc = ""
 	clothes_req = FALSE
@@ -274,7 +274,7 @@
 	associated_skill = /datum/skill/magic/arcane
 	recharge_time = 15 SECONDS
 
-/obj/effect/proc_holder/spell/invoked/gravemark
+/datum/action/cooldown/spell/gravemark
 	name = "Gravemark"
 	desc = "Adds or removes a target from the list of allies exempt from your undead's aggression."
 	overlay_state = "gravemark"
@@ -286,7 +286,7 @@
 	recharge_time = 15 SECONDS
 	hide_charge_effect = TRUE
 
-/obj/effect/proc_holder/spell/invoked/gravemark/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/gravemark/cast(list/targets, mob/living/user)
 	. = ..()
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
@@ -313,7 +313,7 @@
 		return TRUE
 	return FALSE
 
-/obj/effect/proc_holder/spell/invoked/command_undead
+/datum/action/cooldown/spell/command_undead
 	name = "Command Undead"
 	desc = "Commands skeletons. Cast on turf to head in that direction ignoring all else. Cast on self to command it to follow, cast on target to attack them, Cast on a lesser skeleton to set to idle-aggressive,"
 	overlay_state = "ZIZO"
@@ -328,7 +328,7 @@
 	var/list/summoned_minions = list() // You can reuse the one tracked by your summon spell
 	var/faction_ordering = FALSE ///this sets whether it orders mobs the user is aligned with in range or just mobs who are the character's 'friends' (ie, their summons)
 
-/obj/effect/proc_holder/spell/invoked/command_undead/cast(list/targets, mob/living/user)
+/datum/action/cooldown/spell/command_undead/cast(list/targets, mob/living/user)
 	if(!user)
 		return
 
@@ -427,7 +427,7 @@
 	to_chat(user, "<span class='notice'>You issue an order to your minions.</span>")
 
 //AI processing orders for simple mob undead
-/obj/effect/proc_holder/spell/invoked/command_undead/proc/process_minions(order_type, turf/target_location = null, mob/living/target = null, faction_tag = null)
+/datum/action/cooldown/spell/command_undead/process_minions(order_type, turf/target_location = null, mob/living/target = null, faction_tag = null)
 	var/mob/caster = usr
 	var/count = 0
 

@@ -6,19 +6,19 @@
 	virtues = "Lust, Gluttony, Thrill-Seeking"
 	sins = "Chastity, Temperance, Gloom"
 	mob_traits = list(TRAIT_DEPRAVED, TRAIT_CRACKHEAD)
-	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
-					/obj/effect/proc_holder/spell/targeted/touch/loversruin				= CLERIC_T0,
-					/obj/effect/proc_holder/spell/invoked/baotha_vice					= CLERIC_T0,
-					/obj/effect/proc_holder/spell/invoked/baotha_blessings				= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/griefflower					= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/lesser_heal 					= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/blood_heal					= CLERIC_T1,
-					/obj/effect/proc_holder/spell/self/insufflation						= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/projectile/blowingdust		= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/joyride						= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/lasthigh						= CLERIC_T3,
-					/obj/effect/proc_holder/spell/invoked/painkiller					= CLERIC_T3,
-					/obj/effect/proc_holder/spell/invoked/resurrect/baotha				= CLERIC_T4,
+	miracles = list(/datum/action/cooldown/spell/orison						= CLERIC_ORI,
+					/datum/action/cooldown/spell/loversruin					= CLERIC_T0,
+					/datum/action/cooldown/spell/baotha_vice				= CLERIC_T0,
+					/datum/action/cooldown/spell/baotha_blessings			= CLERIC_T1,
+					/datum/action/cooldown/spell/griefflower				= CLERIC_T1,
+					/datum/action/cooldown/spell/lesser_heal 				= CLERIC_T1,
+					/datum/action/cooldown/spell/blood_heal					= CLERIC_T1,
+					/datum/action/cooldown/spell/insufflation				= CLERIC_T1,
+					/datum/action/cooldown/spell/projectile/blowingdust		= CLERIC_T2,
+					/datum/action/cooldown/spell/joyride					= CLERIC_T2,
+					/datum/action/cooldown/spell/lasthigh					= CLERIC_T3,
+					/datum/action/cooldown/spell/painkiller					= CLERIC_T3,
+					/datum/action/cooldown/spell/resurrect/baotha			= CLERIC_T4,
 	)
 	confess_lines = list(
 		"BAOTHA DEMANDS PLEASURE!",

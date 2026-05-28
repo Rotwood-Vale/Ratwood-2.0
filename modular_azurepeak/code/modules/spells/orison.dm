@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/targeted/touch/orison
+/datum/action/cooldown/spell/orison
 	name = "Orison"
 	overlay_state = "thaumaturgy"
 	desc = "The basic precept of holy magic orients around the power of prayer and soliciting a Divine Patron for a tiny sliver of Their might."

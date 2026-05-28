@@ -6,7 +6,7 @@
 	virtues = "Respecting the Dead, Sloth, Fatalism"
 	sins = "Undeath, Humor, Revival"
 	mob_traits = list(TRAIT_SOUL_EXAMINE, TRAIT_NOSTINK)	//No stink is generic but they deal with dead bodies so.. makes sense, I suppose?
-	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison				= CLERIC_ORI,
+	miracles = list(/datum/action/cooldown/spell/orison								= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/necras_sight				= CLERIC_T0,
 					/obj/effect/proc_holder/spell/targeted/locate_dead				= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/lesser_heal				= CLERIC_T1,

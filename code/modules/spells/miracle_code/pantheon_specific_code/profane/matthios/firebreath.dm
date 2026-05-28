@@ -1,5 +1,5 @@
 //T0: Firebreath
-/obj/effect/proc_holder/spell/invoked/firebreath // Shamelessly steals Wither's cool code / Originally from Racial Perk PR for drakians
+/datum/action/cooldown/spell/firebreath // Shamelessly steals Wither's cool code / Originally from Racial Perk PR for drakians
 	name = "Raze"
 	desc = "Tap into the dragon aspect of your Lord, unleashing a wave of unholy fyre in front of you. Damage increases with Holy Skill"
 	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
@@ -23,7 +23,7 @@
 	var/strike_delay = 2
 	var/damage = 20
 
-/obj/effect/proc_holder/spell/invoked/firebreath/cast(list/targets, mob/user = usr)
+/datum/action/cooldown/spell/firebreath/cast(list/targets, mob/user = usr)
 	var/turf/T = get_turf(targets[1])
 	var/turf/source_turf = get_turf(user)
 
@@ -48,7 +48,7 @@
 		addtimer(CALLBACK(src, PROC_REF(ignite), affected_turf), tile_delay)
 	return TRUE
 
-/obj/effect/proc_holder/spell/invoked/firebreath/proc/ignite(turf/damage_turf)
+/datum/action/cooldown/spell/firebreath/ignite(turf/damage_turf)
 	new /obj/effect/temp_visual/firebreath_actual(damage_turf)
 	playsound(damage_turf, 'sound/magic/fireball.ogg', 50, TRUE)
 

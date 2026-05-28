@@ -1,8 +1,8 @@
-/obj/effect/proc_holder/spell/targeted/touch/summonrogueweapon
+/datum/action/cooldown/spell/summonrogueweapon
 	castdrain = 25
 	school = "transmutation"
 
-/obj/effect/proc_holder/spell/targeted/touch/summonrogueweapon/bladeofpsydon
+/datum/action/cooldown/spell/summonrogueweapon/bladeofpsydon
 	name = "Blade of Psydon"
 	desc = "The manifestation of the higher concept of a blade itself. Said to be drawn upon from Noc's tresury of wisdom, each casting a poor facsimile of the perfect weapon They hold."
 	clothes_req = FALSE
