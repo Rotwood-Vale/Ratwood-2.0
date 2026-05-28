@@ -10,6 +10,7 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/crackerscooked
 	w_class = WEIGHT_CLASS_NORMAL
 	eat_effect = null
+	dropshrink = 0.8
 
 /*	.................   Hardtack   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/crackerscooked
@@ -23,6 +24,7 @@
 	tastes = list("spelt" = 1)
 	bitesize = 6
 	rotprocess = null
+	dropshrink = 0.8
 
 /obj/item/reagent_containers/food/snacks/rogue/crackerscooked/On_Consume(mob/living/eater)
 	..()

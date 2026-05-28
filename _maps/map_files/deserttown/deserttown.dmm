@@ -1302,7 +1302,7 @@
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/desert)
 "aBw" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/roguegrass/reedbush,
 /turf/open/water/swamp,
 /area/rogue/under/underdark/rockhill)
 "aBz" = (
@@ -20943,6 +20943,10 @@
 /area/rogue/indoors/town/physician/desert{
 	keep_area = 1
 	})
+"iqv" = (
+/obj/effect/landmark/start/dt/chaplain,
+/turf/open/floor/rogue/tile/checkeralt,
+/area/rogue/indoors/town/desert/manor)
 "iqw" = (
 /obj/structure/stairs/stone{
 	dir = 2;
@@ -32617,7 +32621,7 @@
 /turf/closed/wall/mineral/rogue/sandbrick,
 /area/rogue/indoors/town/garrison/desert/cell)
 "ngn" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/roguegrass/reedbush,
 /turf/open/water/swamp/deep,
 /area/rogue/under/cave/rhgoblinencampment)
 "ngx" = (
@@ -57457,7 +57461,7 @@
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/outdoors/desert/above)
 "wUI" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/roguegrass/reedbush,
 /turf/open/water/swamp,
 /area/rogue/under/cave/skeletoncrypt)
 "wUO" = (
@@ -397341,7 +397345,7 @@ aGo
 hfZ
 hiF
 gMP
-gMP
+iqv
 aLc
 cDa
 cDa

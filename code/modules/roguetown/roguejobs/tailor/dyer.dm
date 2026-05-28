@@ -609,7 +609,7 @@ GLOBAL_LIST_INIT(pridelist, list(
 	desc = "A sizeable brush made of the finest mane-hairs. Thick dye adheres to it well."
 	icon_state = "dbrush"
 	w_class = WEIGHT_CLASS_SMALL
-	dropshrink = 0.8
+	dropshrink = 0.7
 	grid_width = 32
 	grid_height = 32
 

@@ -555,6 +555,7 @@
 	resistance_flags = FLAMMABLE
 	grid_width = 32
 	grid_height = 64
+	dropshrink = 0.8
 	var/number_of_pages = 2
 	var/compiled_pages = null
 	var/list/page_texts = list()
@@ -698,6 +699,7 @@
 	desc = "Apply on a written manuscript to create a book."
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "book_crafting_kit"
+	dropshrink = 0.7
 
 /obj/item/book/rogue/swatchbook
 	name = "Tailor's Swatchbook"

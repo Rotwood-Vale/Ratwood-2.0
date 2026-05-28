@@ -49,10 +49,12 @@
 	user.sexcon.perform_sex_action(user, 2, 0, TRUE)
 	if(user.sexcon.check_active_ejaculation())
 		user.visible_message(span_love("[user] cums into [target]'s slit!"))
-		user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_SLIT_SHEATH)
+		for(var/i = 1; i <= user.sexcon.get_load_bursts(); i++)
+			user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_SLIT_SHEATH, consume_charge = i == 1 ? TRUE : FALSE)
+			if(HAS_TRAIT(target, TRAIT_BAOTHA_FERTILITY_BOON) && !target.getorganslot(ORGAN_SLOT_VAGINA))
+				user.try_impregnate(target)
+			sleep(10)
 		user.virginity = FALSE
-		if(HAS_TRAIT(target, TRAIT_BAOTHA_FERTILITY_BOON) && !target.getorganslot(ORGAN_SLOT_VAGINA))
-			user.try_impregnate(target)
 
 	if(user.sexcon.considered_limp())
 		user.sexcon.perform_sex_action(target, 1.2, 3, FALSE)
@@ -100,10 +102,12 @@
 	user.sexcon.perform_sex_action(user, 2, 0, TRUE)
 	if(user.sexcon.check_active_ejaculation())
 		user.visible_message(span_love("[user] cums into [target]'s slit!"))
-		user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_SLIT_SHEATH)
+		for(var/i = 1; i <= user.sexcon.get_load_bursts(); i++)
+			user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_SLIT_SHEATH, consume_charge = i == 1 ? TRUE : FALSE)
+			if(HAS_TRAIT(target, TRAIT_BAOTHA_FERTILITY_BOON) && !target.getorganslot(ORGAN_SLOT_VAGINA))
+				user.try_impregnate(target)
+			sleep(10)
 		user.virginity = FALSE
-		if(HAS_TRAIT(target, TRAIT_BAOTHA_FERTILITY_BOON) && !target.getorganslot(ORGAN_SLOT_VAGINA))
-			user.try_impregnate(target)
 
 	if(user.sexcon.considered_limp())
 		user.sexcon.perform_sex_action(target, 1.2, 3, FALSE)

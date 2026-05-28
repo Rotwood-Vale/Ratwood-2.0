@@ -873,6 +873,7 @@
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = null
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
+	dropshrink = null
 
 /obj/item/clothing/cloak/apron/blacksmith
 	name = "leather apron"
@@ -1373,6 +1374,7 @@
 	min_cold_protection_temperature = 50
 	heat_protection = null
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
+	dropshrink = null
 
 /obj/item/clothing/cloak/wickercloak
 	name = "wicker cloak"
@@ -1405,6 +1407,7 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 	heat_protection = null
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
+	dropshrink = null
 
 /obj/item/clothing/cloak/lordcloak/ladycloak
 	name = "ladylike shortcloak"
@@ -1580,6 +1583,7 @@
 	icon_state = "bksash"
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
+	dropshrink = null
 
 /obj/item/clothing/under/roguetown/platelegs/blk
 	name = "blacksteel legs"
@@ -1965,6 +1969,7 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT
 	max_heat_protection_temperature = 600
+	dropshrink = null
 
 /obj/item/clothing/cloak/citywatch
 	name = "citywatch cape"

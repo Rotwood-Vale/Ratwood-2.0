@@ -1954,7 +1954,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/under/tomb)
 "EQ" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/roguegrass/reedbush,
 /turf/open/water/bath,
 /area/rogue/under/tomb)
 "ER" = (

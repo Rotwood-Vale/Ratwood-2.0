@@ -185,6 +185,7 @@
 	icon_state = "sandals"
 	item_state = "sandals"
 	nudist_approved = TRUE
+	dropshrink = null
 
 /obj/item/clothing/shoes/roguetown/sandals/aalloy
 	name = "decrepit sandals"
@@ -534,6 +535,7 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 	sewrepair = null
 	anvilrepair = /datum/skill/craft/armorsmithing
+	dropshrink = 0.6
 
 //kazen update
 /obj/item/clothing/shoes/roguetown/armor/rumaclan

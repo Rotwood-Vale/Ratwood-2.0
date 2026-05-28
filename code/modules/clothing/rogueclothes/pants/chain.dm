@@ -18,6 +18,7 @@
 	l_sleeve_status = SLEEVE_NOMOD
 	resistance_flags = FIRE_PROOF
 	armor_class = ARMOR_CLASS_MEDIUM
+	dropshrink = null
 
 /obj/item/clothing/under/roguetown/chainlegs/Initialize(mapload)
 	. = ..()
@@ -44,6 +45,7 @@
 	resistance_flags = FIRE_PROOF
 	sewrepair = FALSE
 	smeltresult = /obj/item/ingot/steel
+	dropshrink = 0.9
 
 /obj/item/clothing/under/roguetown/splintlegs/Initialize(mapload)
 	. = ..()
@@ -91,6 +93,7 @@
 	sleevetype = "chainkilt"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_pants.dmi'
 	alternate_worn_layer = (SHIRT_LAYER)
+	dropshrink = 0.8
 
 /obj/item/clothing/under/roguetown/chainlegs/kilt/aalloy
 	name = "decrepit chain kilt"
@@ -116,6 +119,7 @@
 	sleevetype = "ichainkilt"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_pants.dmi'
 	alternate_worn_layer = (SHIRT_LAYER)
+	dropshrink = 0.8
 
 /obj/item/clothing/under/roguetown/chainlegs/captain
 	name = "captain's chausses"
@@ -124,3 +128,4 @@
 	item_state = "capplateleg"
 	icon = 'icons/roguetown/clothing/special/captain.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/captain.dmi'
+	dropshrink = 0.8

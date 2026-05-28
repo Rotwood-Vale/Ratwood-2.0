@@ -19,6 +19,7 @@
 	var/max_storage = 20
 	var/list/arrows = list()
 	sewrepair = TRUE
+	dropshrink = 0.9
 
 /obj/item/quiver/attack_turf(turf/T, mob/living/user)
 	if(arrows.len >= max_storage)
@@ -222,6 +223,7 @@
 	item_state = "javelinbag"
 	max_storage = 4
 	sellprice = 10
+	dropshrink = 0.85
 
 /obj/item/quiver/javelin/attack_turf(turf/T, mob/living/user)
 	if(arrows.len >= max_storage)
@@ -372,6 +374,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	grid_height = 64
 	grid_width = 32
+	dropshrink = 0.5
 
 /obj/item/quiver/zigs/attackby(obj/A, loc, params)
 	if(A.type in subtypesof(/obj/item/clothing/mask/cigarette/rollie))

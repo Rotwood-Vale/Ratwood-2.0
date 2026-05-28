@@ -37,32 +37,45 @@
 //	That lack of means enforce you not to evil:
 /obj/structure/roguemachine/steward/proc/setup_default_payments()
 	daily_payments["Knight Captain"] = 40
-	daily_payments["Knight"] = 40
-	daily_payments["Sergeant"] = 40 //Garrison
-	daily_payments["Watch Captain"] = 45 //Don't get to live in a fancy keep with servants. More expenses.
-	daily_payments["Master Warden"] = 35 //Garrison
-	daily_payments["Man at Arms"] = 30
+	if(SSmapping.config.map_name == "Dun World")
+		daily_payments["Sergeant"] = 40 //Garrison
+	if(SSmapping.config.map_name == "Desert Town")
+		daily_payments["Slave Master"] = 50
+		daily_payments["Cataphract"] = 40
+		daily_payments["Janissary Sergeant"] = 40 //Garrison
+		daily_payments["Janissary"] = 30
+		daily_payments["Azeb Agha"] = 40
+		daily_payments["Azeb"] = 20
+	else
+		daily_payments["Knight"] = 40
+		daily_payments["Man at Arms"] = 30
+		daily_payments["Warden"] = 25
+		daily_payments["Dungeoneer"] = 30
+	if(SSmapping.config.map_name == "Rockhill")
+		daily_payments["Watch Captain"] = 45 //Don't get to live in a fancy keep with servants. More expenses.
+		daily_payments["Master Warden"] = 35 //Garrison
+		daily_payments["City Guard"] = 30
+		daily_payments["Vanguard"] = 20
 	daily_payments["Rookie"] = 20//paid more than squires because they don't get to live in a castle with maids cooking them dinner
-	daily_payments["City Guard"] = 30
-	daily_payments["Dungeoneer"] = 30
-	daily_payments["Warden"] = 25
-	daily_payments["Vanguard"] = 20
 	daily_payments["Veteran"] = 30
 	daily_payments["Squire"] = 10
-	daily_payments["Seneschal"] = 40 //Manor-House
-	daily_payments["Servant"] = 20
+//courtiers
 	daily_payments["Head Physician"] = 30 //Doctors
 	daily_payments["Apothecary"] = 20 //paid by the keep to heal people, would make sense.
 	daily_payments["Court Magician"] = 50 //University
+	if(SSmapping.config.map_name == "Desert Town")
+		daily_payments["Palace Chaplain"] = 30
+		daily_payments["Headslave"] = 20 //Manor-House
+	else
+		daily_payments["Court Chaplain"] = 30
+		daily_payments["Seneschal"] = 40 //Manor-House
+		daily_payments["Servant"] = 20
 	daily_payments["Archivist"] = 10
 	daily_payments["Magicians Associate"] = 10
 	daily_payments["Jester"] = 6
-	daily_payments["Azeb"] = 20
-	daily_payments["Azeb Agha"] = 40
-	daily_payments["Slave Master"] = 50
-	daily_payments["Janissary"] = 30
-	daily_payments["Janissary Sergeant"] = 40 //Garrison
-	daily_payments["Headslave"] = 20 //Manor-House
+
+	if(SSmapping.config.map_name == "Roguetest")
+		daily_payments["Shophand"] = 999
 
 /obj/structure/roguemachine/steward/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/roguekey))

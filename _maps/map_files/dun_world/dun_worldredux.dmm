@@ -3977,7 +3977,7 @@
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town/magician)
 "aWN" = (
-/obj/structure/flora/ausbushes/reedbush{
+/obj/structure/flora/roguegrass/reedbush{
 	layer = 2;
 	pixel_x = 12;
 	pixel_y = -4
@@ -4517,7 +4517,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/mountains)
 "bdB" = (
-/obj/structure/flora/ausbushes/reedbush{
+/obj/structure/flora/roguegrass/reedbush{
 	pixel_y = -3
 	},
 /turf/open/water/pond,
@@ -6396,7 +6396,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/beach)
 "bzL" = (
-/obj/structure/flora/ausbushes/reedbush{
+/obj/structure/flora/roguegrass/reedbush{
 	pixel_x = 6;
 	pixel_y = -4
 	},
@@ -8671,7 +8671,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet/bogcaves/coastcaves)
 "cbl" = (
-/obj/structure/flora/ausbushes/reedbush{
+/obj/structure/flora/roguegrass/reedbush{
 	layer = 2;
 	pixel_x = 12;
 	pixel_y = -4
@@ -17126,7 +17126,7 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/town/grove)
 "dZq" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/roguegrass/reedbush,
 /turf/open/water/ocean/deep/thermalwater,
 /area/rogue/indoors/town/grove)
 "dZs" = (
@@ -19640,7 +19640,7 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave/goblinfort)
 "eEg" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/roguegrass/reedbush,
 /turf/open/water/cleanshallow,
 /area/rogue/indoors/town/grove)
 "eEh" = (
@@ -39455,7 +39455,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/mountains)
 "jqL" = (
-/obj/structure/flora/ausbushes/reedbush{
+/obj/structure/flora/roguegrass/reedbush{
 	layer = 2;
 	pixel_x = -8;
 	pixel_y = 2
@@ -45490,7 +45490,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
 "kLH" = (
-/obj/structure/flora/ausbushes/reedbush{
+/obj/structure/flora/roguegrass/reedbush{
 	layer = 2;
 	pixel_x = 12;
 	pixel_y = -4
@@ -57018,7 +57018,7 @@
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/exposed/town/keep)
 "nzv" = (
-/obj/structure/flora/ausbushes/reedbush{
+/obj/structure/flora/roguegrass/reedbush{
 	layer = 2;
 	pixel_x = -8;
 	pixel_y = 2
@@ -58504,7 +58504,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/under/underdark/south)
 "nPt" = (
-/obj/structure/flora/ausbushes/reedbush{
+/obj/structure/flora/roguegrass/reedbush{
 	layer = 2;
 	pixel_x = 12;
 	pixel_y = -4
@@ -65435,7 +65435,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/shelter)
 "pqO" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/roguegrass/reedbush,
 /turf/open/water/ocean/deep/thermalwater,
 /area/rogue/outdoors/town/grove)
 "pqP" = (
@@ -70218,7 +70218,7 @@
 /area/rogue/outdoors/mountains/decap/gunduzirak)
 "qzw" = (
 /obj/structure/glowshroom,
-/obj/structure/flora/ausbushes/reedbush{
+/obj/structure/flora/roguegrass/reedbush{
 	layer = 2;
 	pixel_x = 12;
 	pixel_y = -4
@@ -95720,7 +95720,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/shelter/mountains/decap)
 "wzx" = (
-/obj/structure/flora/ausbushes/reedbush{
+/obj/structure/flora/roguegrass/reedbush{
 	layer = 2;
 	pixel_x = 12;
 	pixel_y = -4
@@ -100925,7 +100925,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town/physician)
 "xJj" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/roguegrass/reedbush,
 /turf/open/water/swamp,
 /area/rogue/outdoors/mountains)
 "xJs" = (

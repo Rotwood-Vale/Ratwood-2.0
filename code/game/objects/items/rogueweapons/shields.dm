@@ -31,6 +31,7 @@
 	parrysound = list('sound/combat/parry/shield/towershield (1).ogg','sound/combat/parry/shield/towershield (2).ogg','sound/combat/parry/shield/towershield (3).ogg')
 	max_integrity = 100
 	anvilrepair = /datum/skill/craft/carpentry
+	dropshrink = 0.9
 	COOLDOWN_DECLARE(shield_bang)
 
 
@@ -113,6 +114,7 @@
 	anvilrepair = /datum/skill/craft/carpentry
 	coverage = 30
 	smeltresult = /obj/item/ash
+	dropshrink = 0.8
 
 /obj/item/rogueweapon/shield/attack_right(mob/user)
 	if(overlays.len)
@@ -301,6 +303,7 @@
 	max_integrity = 220 //not fully metal but not fully wood either
 	anvilrepair = /datum/skill/craft/carpentry
 	smeltresult = /obj/item/ingot/iron
+	dropshrink = 0.75
 
 /obj/item/rogueweapon/shield/tower/zyb/getonmobprop(tag)
 	. = ..()

@@ -464,10 +464,10 @@
 /turf/open/water/ocean/deep,
 /area/rogue/outdoors/beach/byos)
 "jW" = (
-/obj/structure/flora/ausbushes/reedbush{
+/obj/structure/flora/roguegrass/reedbush{
 	pixel_x = 6
 	},
-/obj/structure/flora/ausbushes/reedbush{
+/obj/structure/flora/roguegrass/reedbush{
 	pixel_x = -8;
 	pixel_y = -3
 	},

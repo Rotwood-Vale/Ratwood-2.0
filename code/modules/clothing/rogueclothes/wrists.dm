@@ -98,12 +98,14 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
+	equip_sound = 'sound/foley/equip/rummaging-01.ogg'
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	anvilrepair = null
 	smeltresult = null
 	sewrepair = TRUE
 	smeltresult = null
+	dropshrink = null
 	salvage_amount = 0 // sry
 	salvage_result = /obj/item/natural/hide/cured
 	color = "#684338"
@@ -123,6 +125,7 @@
 	color = "#4d4d4d"
 	cold_protection =  ARM_RIGHT | ARM_LEFT
 	min_cold_protection_temperature = 50
+	dropshrink = 0.8
 
 /obj/item/clothing/wrists/roguetown/bracers/copper
 	name = "copper bracers"

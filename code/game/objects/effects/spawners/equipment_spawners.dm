@@ -522,3 +522,20 @@
 		/obj/item/tntstick = 5,
 		/obj/item/bomb = 10,
 	)
+
+/obj/effect/spawner/lootdrop/spider_cave
+	name = "weirdly specific dunworld spidercave loot drop"
+	icon_state = "cot"
+	loot = list(
+		/obj/item/rogueweapon/greataxe/dreamscape = 99,
+		/obj/item/rogueweapon/greataxe/dreamscape/active = 1,
+		/obj/item/clothing/neck/roguetown/leather = 150,
+		/obj/item/clothing/neck/roguetown/chaincoif = 100,
+		/obj/item/clothing/suit/roguetown/armor/plate/half = 50,
+		/obj/item/clothing/head/roguetown/helmet/heavy/volfplate = 100,
+		/obj/item/rogueweapon/mace/warhammer/steel/silver = 100,
+		/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk = 150,
+		/obj/item/clothing/gloves/roguetown/plate = 75,
+		/obj/item/clothing/under/roguetown/platelegs = 75,
+		/obj/item/clothing/head/roguetown/helmet/bascinet = 100
+		)
