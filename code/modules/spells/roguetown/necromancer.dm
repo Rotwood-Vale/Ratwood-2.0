@@ -70,8 +70,8 @@
 	return TRUE
 
 /datum/action/cooldown/spell/summon_lesser_undead
-	name = "Raise Lesser Undead Formation"
-	desc = "Raises a formation of simple minded undead skeletons. Inferior shamblers. Husks in everything but zeal."
+	name = "Summon Lesser Undead"
+	desc = "Summons a band of fragile undead skeletons. Inferior shamblers. Husks in everything but zeal."
 	clothes_req = FALSE
 	overlay_state = "animate"
 	range = 7
@@ -141,8 +141,8 @@
 
 
 /datum/action/cooldown/spell/summon_undead
-	name = "Conjure Undead"
-	desc = "Raises an undead guard in your servitude."
+	name = "Summon Undead"
+	desc = "Summons an undead band in your servitude."
 	clothes_req = FALSE
 	overlay_state = "animate"
 	range = 7
