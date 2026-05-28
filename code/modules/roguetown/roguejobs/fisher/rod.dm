@@ -886,7 +886,7 @@
 	. += span_notice("Use in hand to reel in a hooked catch. Right-click in your off-hand to manage attachments. Alt-Right-Click strips all attachments.")
 
 /obj/item/fishingrod/proc/get_rod_repair_skill()
-	if(istype(src, /obj/item/fishingrod/aalloy))
+	if(istype(src, /obj/item/fishingrod/decrepit))
 		return /datum/skill/craft/blacksmithing
 	return /datum/skill/craft/crafting
 
@@ -2176,7 +2176,7 @@
 	line = new /obj/item/fishing/line/bobber(src)
 	line.alpha = 0
 
-/obj/item/fishingrod/aalloy
+/obj/item/fishingrod/decrepit
 	name = "decrepit fishing rod"
 	desc = "The Comet Syon's impact drowned the world, long ago. The waves've long since receded, but His greatest works remain shrouded far beneath the sea. It seems very fragile."
 	icon_state = "arod"
@@ -2187,7 +2187,7 @@
 	rod_difficultymod = 1
 	rod_raritymod = list("com" = -1, "rare" = 1)
 
-/obj/item/fishingrod/aalloy/iron
+/obj/item/fishingrod/decrepit/iron
 	name = "iron fishing rod"
 	desc = "A fishing rod base off an old decrepit design. Hefty yet sturdy, and made for fishing professionals."
 	color = "#b7a9a0"

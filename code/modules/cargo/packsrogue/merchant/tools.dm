@@ -72,7 +72,7 @@
 /datum/supply_pack/rogue/tools/fishingrod
 	name = "Iron Fishing Rod"
 	cost = 12
-	contains = list(/obj/item/fishingrod/aalloy/iron)
+	contains = list(/obj/item/fishingrod/decrepit/iron)
 
 /datum/supply_pack/rogue/tools/tacklebag
 	name = "Tackle Bag"
