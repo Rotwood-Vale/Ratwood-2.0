@@ -59,6 +59,7 @@
 	body_parts_covered = HEAD|EARS|HAIR|NOSE|EYES
 	experimental_inhand = FALSE
 	experimental_onhip = FALSE
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/helmet/leather/advanced
 	name = "hardened leather helmet"
@@ -183,7 +184,7 @@
 	icon_state = "studhood"
 	item_state = "studhood"
 	flags_inv =	HIDEHAIR|HIDEEARS|HIDEFACE
-	slot_flags = ITEM_SLOT_HEAD
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_NECK
 	body_parts_covered = HEAD|EARS|HAIR|NOSE|EYES|NECK
 	//Something between leather and metal helmet, worse than metal helmet by far.
 	armor = list("blunt" = 70, "slash" = 65, "stab" = 60, "piercing" = 20, "fire" = 0, "acid" = 0)
@@ -199,6 +200,7 @@
 	desc = "A thick studded leather hood with buckles."
 	icon_state = "studhood" //make into new sprite
 	item_state = "studhood"
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_NECK
 	max_integrity = 280
 	//closer to metal helmet but still quite behind, same blunt resist of hardened leather helmet though.
 	armor = ARMOR_LEATHER_STUDDED
@@ -217,6 +219,7 @@
 				var/mob/living/carbon/H = user
 				H.update_inv_head()
 				H.update_inv_neck()
+				H.update_inv_wear_mask()
 		else if(adjustable == CADJUSTED)
 			ResetAdjust(user)
 			if(user)
@@ -224,3 +227,4 @@
 					var/mob/living/carbon/H = user
 					H.update_inv_head()
 					H.update_inv_neck()
+					H.update_inv_wear_mask()

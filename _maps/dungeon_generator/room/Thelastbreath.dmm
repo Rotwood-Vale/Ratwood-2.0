@@ -1306,9 +1306,9 @@
 /area/rogue/under/tomb/indoors)
 "uf" = (
 /obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/item/clothing/gloves/roguetown/plate/paalloy,
+/obj/item/clothing/gloves/roguetown/plate/ancient,
 /obj/item/clothing/shoes/roguetown/boots/leather/reinforced,
-/obj/item/clothing/under/roguetown/platelegs/paalloy,
+/obj/item/clothing/under/roguetown/platelegs/ancient,
 /obj/item/clothing/neck/roguetown/chaincoif,
 /obj/item/clothing/ring/quartz,
 /obj/item/clothing/suit/roguetown/armor/plate/half/iron,
@@ -1320,7 +1320,7 @@
 	candodge = 0
 	},
 /obj/item/rogueweapon/sword/decorated,
-/obj/item/rogueweapon/shield/buckler/palloy,
+/obj/item/rogueweapon/shield/buckler/ancient,
 /obj/item/clothing/neck/roguetown/psicross/silver,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/tomb)
@@ -1954,7 +1954,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/under/tomb)
 "EQ" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/roguegrass/reedbush,
 /turf/open/water/bath,
 /area/rogue/under/tomb)
 "ER" = (
@@ -2936,9 +2936,9 @@
 /area/rogue/under/tomb)
 "UU" = (
 /obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/item/clothing/gloves/roguetown/plate/paalloy,
+/obj/item/clothing/gloves/roguetown/plate/ancient,
 /obj/item/clothing/shoes/roguetown/boots/leather/reinforced,
-/obj/item/clothing/under/roguetown/platelegs/paalloy,
+/obj/item/clothing/under/roguetown/platelegs/ancient,
 /obj/item/clothing/neck/roguetown/chaincoif,
 /obj/item/clothing/ring/quartz,
 /obj/item/clothing/suit/roguetown/armor/plate/half/iron,

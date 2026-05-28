@@ -55,6 +55,7 @@
 	var/can_repair = TRUE
 	grid_width = 32
 	grid_height = 32
+	dropshrink = 0.75
 
 /obj/item/needle/examine()
 	. = ..()
@@ -270,7 +271,7 @@
 	desc = span_green("This needle has been blessed by the goddess of medicine herself!")
 	infinite = TRUE
 
-/obj/item/needle/aalloy
+/obj/item/needle/decrepit
 	name = "decrepit needle"
 	icon_state = "aneedle"
 	desc = "This decrepit old needle doesn't seem helpful for much."

@@ -112,6 +112,18 @@
 	soundenv = 17
 	first_time_text = null
 
+/area/rogue/outdoors/town/roofs/desert/church
+	name = "church rooftops"
+	holy_area = TRUE
+
+/area/rogue/outdoors/town/roofs/desert/arena
+	name = "arena rooftops"
+	warden_area = TRUE
+
+/area/rogue/outdoors/town/roofs/desert/tavern
+	name = "tavern rooftops"
+	tavern_area = TRUE
+
 
 /area/rogue/indoors/shelter/town/desert
 	droning_sound = 'sound/music/area/desert/TheRoad.ogg'

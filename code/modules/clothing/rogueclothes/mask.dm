@@ -356,18 +356,35 @@
 	smeltresult = /obj/item/ingot/iron
 	sewrepair = FALSE
 
+/obj/item/clothing/mask/rogue/facemask/equipped(mob/user, slot)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_fov_angles()
+
+/obj/item/clothing/mask/rogue/facemask/dropped(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_fov_angles()
+
 /obj/item/clothing/mask/rogue/facemask/shadowfacemask
 	name = "spider rider's mask"
 	desc = "A metal mask adorned with arachnid iconography. A grim visage crafted by a grim race."
 	icon_state = "shadowfacemask"
 
-/obj/item/clothing/mask/rogue/facemask/aalloy
+/obj/item/clothing/mask/rogue/facemask/ancient
+	name = "ancient mask"
+	desc = "Polished gilbranze, molded into an intimidating visage. Touch the cheek; it is warm, like flesh. But it is not flesh. Not yet."
+	max_integrity = 200
+	icon_state = "ancientmask"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/clothing/mask/rogue/facemask/ancient/decrepit
 	name = "decrepit mask"
 	desc = "Frayed bronze, molded into an unblinking visage. Only the statues, buried within the innards of Mount Decapitation, share its wrinkled lip and sneer of cold command."
-	icon_state = "ancientmask"
 	max_integrity = 75
 	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = null
 
 /obj/item/clothing/mask/rogue/facemask/copper
@@ -465,13 +482,6 @@
 	icon_state = "smask"
 	max_integrity = 200
 	smeltresult = /obj/item/ingot/steel
-
-/obj/item/clothing/mask/rogue/facemask/steel/paalloy
-	name = "ancient mask"
-	desc = "Polished gilbranze, molded into an intimidating visage. Touch the cheek; it is warm, like flesh. But it is not flesh. Not yet."
-	icon_state = "ancientmask"
-	smeltresult = /obj/item/ingot/aaslag
-
 
 /obj/item/clothing/mask/rogue/facemask/steel/hound
 	name = "steel hound mask"
@@ -862,7 +872,14 @@
 	next_honk = world.time + 1 SECONDS
 	playsound(src, 'sound/misc/honkmask.ogg', 70, TRUE)
 	to_chat(user, span_notice("The mask's nose is squeezed! It emits a squeaky honk."))
-
+/obj/item/clothing/mask/rogue/xylixmask/dropped(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		hide_identity = initial(hide_identity)
+		block2add = initial(block2add)
+		H.update_fov_angles()
+		H.update_vision_cone()
 /obj/item/clothing/mask/rogue/xylixmask/MiddleClick(mob/user, params)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return

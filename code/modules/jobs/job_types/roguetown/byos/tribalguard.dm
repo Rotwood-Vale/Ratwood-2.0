@@ -81,7 +81,7 @@
 	if(should_wear_femme_clothes(H))
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/hide/bikini
 	pants = /obj/item/clothing/under/roguetown/trou/leather
-	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/padagger
+	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/ancient
 	backpack_contents = list(
 		/obj/item/roguekey/tribal = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
@@ -103,13 +103,13 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/slings, 4, TRUE)
 			if("Sling") 
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
-				beltr = /obj/item/quiver/sling/paalloy
+				beltr = /obj/item/quiver/sling/ancient
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/slings, 4, TRUE)
 			if("Spear & Javelins") 
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
-				r_hand = /obj/item/rogueweapon/spear/paalloy
-				beltr = /obj/item/quiver/javelin/paalloy
+				r_hand = /obj/item/rogueweapon/spear/ancient
+				beltr = /obj/item/quiver/javelin/ancient
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 3, TRUE)
@@ -159,11 +159,11 @@
 /datum/outfit/job/roguetown/tribalguard/warrior/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
-	neck = /obj/item/clothing/neck/roguetown/chaincoif/paalloy
-	gloves = /obj/item/clothing/gloves/roguetown/chain/paalloy
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/paalloy
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
+	gloves = /obj/item/clothing/gloves/roguetown/chain/ancient
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/ancient
 	pants = /obj/item/clothing/under/roguetown/trou/leather
-	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/padagger
+	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/ancient
 	backpack_contents = list(
 		/obj/item/roguekey/tribal = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
@@ -178,15 +178,15 @@
 		switch(weapon_choice)
 			if("Ancient Bardiche")
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
-				r_hand = /obj/item/rogueweapon/halberd/bardiche/paalloy
+				r_hand = /obj/item/rogueweapon/halberd/bardiche/ancient
 			if("Ancient Greatmace") 
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
-				r_hand = /obj/item/rogueweapon/mace/goden/steel/paalloy
+				r_hand = /obj/item/rogueweapon/mace/goden/steel/ancient
 			if("Ancient Spear & Shield") 
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
-				r_hand = /obj/item/rogueweapon/spear/paalloy
+				r_hand = /obj/item/rogueweapon/spear/ancient
 			if("Ancient Javelins & Shield")
-				beltr = /obj/item/quiver/javelin/paalloy
+				beltr = /obj/item/quiver/javelin/ancient
 				backl = /obj/item/rogueweapon/shield/tower
 				
 		var/weapons2 = list("Club","Mace","Axe")
@@ -195,9 +195,9 @@
 			if("Club")
 				beltl = /obj/item/rogueweapon/mace/cudgel/shellrungu
 			if("Axe")
-				beltl = /obj/item/rogueweapon/stoneaxe/woodcut/steel/paaxe
+				beltl = /obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient
 			if("Mace")
-				beltl = /obj/item/rogueweapon/mace/steel/palloy
+				beltl = /obj/item/rogueweapon/mace/steel/ancient
 
 /datum/advclass/tribalguard/savage
 	name = "Savage"
@@ -241,12 +241,12 @@
 /datum/outfit/job/roguetown/tribalguard/savage/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
-	neck = /obj/item/clothing/neck/roguetown/chaincoif/paalloy
-	gloves = /obj/item/clothing/gloves/roguetown/chain/paalloy
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/paalloy
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
+	gloves = /obj/item/clothing/gloves/roguetown/chain/ancient
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/ancient
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	belt = /obj/item/storage/belt/rogue/leather/battleskirt/barbarian
-	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/padagger
+	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/ancient
 	if(should_wear_masc_clothes(H))
 		H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 		backl = /obj/item/storage/backpack/rogue/satchel
@@ -267,12 +267,12 @@
 		switch(weapon_choice)
 			if("Ancient Bardiche")
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
-				r_hand = /obj/item/rogueweapon/halberd/bardiche/paalloy
+				r_hand = /obj/item/rogueweapon/halberd/bardiche/ancient
 			if("Ancient Greatmace") 
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
-				r_hand = /obj/item/rogueweapon/mace/goden/steel/paalloy
+				r_hand = /obj/item/rogueweapon/mace/goden/steel/ancient
 			if("Ancient Javelins & Shield")
-				beltr = /obj/item/quiver/javelin/paalloy
+				beltr = /obj/item/quiver/javelin/ancient
 				backl = /obj/item/rogueweapon/shield/tower
 			if("Maul - +STR/CON, -SPD/PER/INT")
 				r_hand = /obj/item/rogueweapon/mace/maul
@@ -289,6 +289,6 @@
 			if("Club")
 				beltl = /obj/item/rogueweapon/mace/cudgel/shellrungu
 			if("Axe")
-				beltl = /obj/item/rogueweapon/stoneaxe/woodcut/steel/paaxe
+				beltl = /obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient
 			if("Mace")
-				beltl = /obj/item/rogueweapon/mace/steel/palloy
+				beltl = /obj/item/rogueweapon/mace/steel/ancient

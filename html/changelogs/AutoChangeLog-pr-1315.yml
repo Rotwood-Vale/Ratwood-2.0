@@ -1,0 +1,8 @@
+author: "john-pawson"
+delete-after: True
+changes:
+  - rscadd: "Added the Remote Passive Import Rate, now the amount of, and which remote resources can be set by the Steward, these imports cost mammon."
+  - rscadd: "Merchant now sells rare/imported food and seeds."
+  - balance: "The Remote Imports will turn a small profit when bought, but will keep spending mammon when they are not. Remote stockpiles for something that isn't bought enough will likely mean mammon lost."
+  - balance: "The Remote Import Rate can only be changed on daylight hours, choose wisely once, and do something else when the sun goes down, there is no need to constantly monitor them as long as there is enough mammon. Do not run out of mammon."
+  - qol: "Prices, amounts, total current spending and categorical spending can be seen at the nerve master."

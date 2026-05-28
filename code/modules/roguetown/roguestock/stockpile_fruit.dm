@@ -8,7 +8,8 @@
 	transport_fee = 1
 	export_price = 3
 	importexport_amt = 10
-	passive_generation = 3 // Apple here remain a clutch for wandering nobles because of sliced??? So higher amount
+	passive_generation = 2 // Famous food, wildly used, and also who doesn't like apples?
+	generation_price = 2
 	stockpile_limit = 50
 	category = "Fruits"
 
@@ -16,12 +17,12 @@
 	name = "Pear"
 	desc = "Too sweet for many, a favored treat for little ones. Dwarves do love them."
 	item_type = /obj/item/reagent_containers/food/snacks/grown/fruit/pear
-	held_items = list(0, 4)
+	held_items = list(0, 8)
 	payout_price = 2
 	withdraw_price = 2
 	export_price = 3
 	importexport_amt = 5
-	passive_generation = 2
+	generation_price = 2
 	stockpile_limit = 25
 	category = "Fruits"
 
@@ -29,12 +30,12 @@
 	name = "Lemon"
 	desc = "Too sweet for many, a favored treat for little ones. Dwarves do love them."
 	item_type = /obj/item/reagent_containers/food/snacks/grown/fruit/lemon
-	held_items = list(0, 4)
+	held_items = list(0, 8)
 	payout_price = 2
 	withdraw_price = 2
 	export_price = 3
 	importexport_amt = 5
-	passive_generation = 2
+	generation_price = 2
 	stockpile_limit = 25
 	category = "Fruits"
 
@@ -42,12 +43,12 @@
 	name = "Lime"
 	desc = "Too sweet for many, a favored treat for little ones. Dwarves do love them."
 	item_type = /obj/item/reagent_containers/food/snacks/grown/fruit/lime
-	held_items = list(0, 4)
+	held_items = list(0, 8)
 	payout_price = 2
 	withdraw_price = 2
 	export_price = 3
 	importexport_amt = 5
-	passive_generation = 2
+	generation_price = 2
 	stockpile_limit = 25
 	category = "Fruits"
 
@@ -55,12 +56,12 @@
 	name = "Tangerine"
 	desc = "Too sweet for many, a favored treat for little ones. Dwarves do love them."
 	item_type = /obj/item/reagent_containers/food/snacks/grown/fruit/tangerine
-	held_items = list(0, 4)
+	held_items = list(0, 8)
 	payout_price = 2
 	withdraw_price = 2
 	export_price = 3
 	importexport_amt = 5
-	passive_generation = 2
+	generation_price = 2
 	stockpile_limit = 25
 	category = "Fruits"
 
@@ -68,12 +69,12 @@
 	name = "Plum"
 	desc = "Too sweet for many, a favored treat for little ones. Dwarves do love them."
 	item_type = /obj/item/reagent_containers/food/snacks/grown/fruit/plum
-	held_items = list(0, 4)
+	held_items = list(0, 8)
 	payout_price = 2
 	withdraw_price = 2
 	export_price = 3
 	importexport_amt = 5
-	passive_generation = 2
+	generation_price = 2
 	stockpile_limit = 25
 	category = "Fruits"
 
@@ -81,12 +82,13 @@
 	name = "Strawberry"
 	desc = "A small, red fruit with a sweet taste. It is often used in desserts."
 	item_type = /obj/item/reagent_containers/food/snacks/grown/fruit/strawberry
-	held_items = list(0, 4)
+	held_items = list(0, 8)
 	payout_price = 2
 	withdraw_price = 2
 	export_price = 3
 	importexport_amt = 5
-	passive_generation = 2
+	passive_generation = 1 //strangely a lot of people actually use strawberries? So, yeah
+	generation_price = 2
 	stockpile_limit = 25
 	category = "Fruits"
 
@@ -94,12 +96,12 @@
 	name = "Blackberry"
 	desc = "A small, dark fruit with a sweet and slightly tart taste. It is often used in desserts."
 	item_type = /obj/item/reagent_containers/food/snacks/grown/fruit/blackberry
-	held_items = list(0, 4)
+	held_items = list(0, 8)
 	payout_price = 2
 	withdraw_price = 2
 	export_price = 3
 	importexport_amt = 5
-	passive_generation = 2
+	generation_price = 2
 	stockpile_limit = 25
 	category = "Fruits"
 
@@ -107,12 +109,12 @@
 	name = "Raspberry"
 	desc = "A small, red fruit with a sweet and slightly tart taste. It is often used in desserts."
 	item_type = /obj/item/reagent_containers/food/snacks/grown/fruit/raspberry
-	held_items = list(0, 4)
+	held_items = list(0, 8)
 	payout_price = 2
 	withdraw_price = 2
 	export_price = 3
 	importexport_amt = 5
-	passive_generation = 2
+	generation_price = 2
 	stockpile_limit = 25
 	category = "Fruits"
 
@@ -120,12 +122,12 @@
 	name = "Tomato"
 	desc = "A red fruit that is often mistaken for a vegetable. It is commonly used in salads and sauces."
 	item_type = /obj/item/reagent_containers/food/snacks/grown/fruit/tomato
-	held_items = list(0, 4)
+	held_items = list(0, 8)
 	payout_price = 2
 	withdraw_price = 2
 	export_price = 3
 	importexport_amt = 5
-	passive_generation = 2
+	generation_price = 2
 	stockpile_limit = 25
 	category = "Fruits"
 
@@ -138,7 +140,7 @@
 	withdraw_price = 3
 	export_price = 4
 	importexport_amt = 5
-	passive_generation = 2
+	generation_price = 3
 	stockpile_limit = 25
 	category = "Fruits"
 
@@ -154,4 +156,5 @@
 	importexport_amt = 10
 	stockpile_limit = 50 // Jackberries are used to mass produce raisins so higher limit
 	passive_generation = 2
+	generation_price = 2
 	category = "Fruits"

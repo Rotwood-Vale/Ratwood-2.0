@@ -114,7 +114,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/under/tomb/wilds)
 "cp" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/roguegrass/reedbush,
 /obj/structure/flora/roguegrass/water,
 /obj/structure/trap/shock,
 /turf/open/water/bath,
@@ -571,7 +571,7 @@
 /turf/open/floor/rogue/carpet,
 /area/rogue/under/tomb/indoors/royal)
 "mb" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/roguegrass/reedbush,
 /obj/structure/flora/roguegrass/water,
 /obj/effect/waterfall,
 /turf/open/water,
@@ -800,7 +800,7 @@
 	},
 /area/rogue/under/tomb/sewer)
 "rP" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/roguegrass/reedbush,
 /obj/structure/flora/roguegrass/water,
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/water/river{
@@ -895,7 +895,7 @@
 /turf/open/water/bath,
 /area/rogue/under/tomb)
 "tm" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/roguegrass/reedbush,
 /obj/structure/trap/shock,
 /obj/effect/waterfall,
 /turf/open/water/river,
@@ -1493,7 +1493,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/tomb/indoors)
 "EC" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/roguegrass/reedbush,
 /obj/structure/flora/roguegrass/water,
 /turf/open/water/river{
 	dir = 4
@@ -1739,7 +1739,7 @@
 /turf/open/floor/rogue/tile/masonic/single,
 /area/rogue/under/tomb/sewer)
 "JZ" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/roguegrass/reedbush,
 /obj/structure/flora/roguegrass/water,
 /turf/open/water/river{
 	dir = 1

@@ -1946,7 +1946,7 @@
 	name = "Rune of Hedonism"
 	desc = "A Holy Rune of Baotha. Relief for the broken hearted."
 	icon_state = "baotha_chalky"
-	var/baotharites = list("Conversion", "Unholy Boon of Fertility")
+	var/baotharites = list("Conversion", "Unholy Boon of Fertility", "Rite of Armaments")
 
 /obj/structure/ritualcircle/baotha/attack_hand(mob/living/user)
 	if((user.patron?.type) != /datum/patron/inhumen/baotha)
@@ -2007,6 +2007,31 @@
 							baothablessing(target)
 							spawn(120)
 								icon_state = "baotha_chalky"
+		if("Rite of Armaments")
+			var/onrune = view(1, loc)
+			var/list/folksonrune = list()
+			for(var/mob/living/carbon/human/persononrune in onrune)
+				if(HAS_TRAIT(persononrune, TRAIT_DEPRAVED))
+					folksonrune += persononrune
+			var/target = input(user, "Choose a host") as null|anything in folksonrune
+			if(!target)
+				return
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("Lady, my Lady...")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("Wrap thee in darkness, swaddle thee in cold bliss, and armor thee in desire...")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("Let all those who look upon me see thy beauty and despair!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			icon_state = "baotha_active"
+			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+			baothaarmor(target)
+			spawn(120)
+				icon_state = "baotha_active"
 
 /obj/structure/ritualcircle/baotha/proc/baothaconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
@@ -2101,6 +2126,29 @@
 		target.emote("Agony")
 		target.apply_damage(100, BRUTE, BODY_ZONE_CHEST)
 		loc.visible_message(span_cult("[target] is violently thrashing atop the rune, writhing, as they dare to defy Baotha."))
+
+/obj/structure/ritualcircle/baotha/proc/baothaarmor(mob/living/carbon/human/target)
+	if(!HAS_TRAIT(target, TRAIT_DEPRAVED))
+		loc.visible_message(span_cult("THE RITE REJECTS ONE NOT OF HER LOVE"))
+		return
+	target.Stun(60)
+	target.Knockdown(60)
+	to_chat(target, span_userdanger("DELECTABLE PAIN!"))
+	target.emote("Agony")
+	playsound(loc, 'sound/combat/newstuck.ogg', 50)
+	if(HAS_TRAIT(target, TRAIT_INFINITE_STAMINA) || (target.mob_biotypes & MOB_UNDEAD))
+		loc.visible_message(span_cult("Great hooks come from the rune, embedding into [target]'s ankles, pulling them onto the rune. Then, into their wrists. As their black, rotten lux is torn from their chest, the very essence of their body surges to form it into armor. "))
+		target.Paralyze(120)
+	else
+		loc.visible_message(span_cult("Great hooks come from the rune, embedding into [target]'s ankles, pulling them onto the rune. Then, into their wrists. Their lux is torn from their chest, and reforms into armor. "))
+	spawn(20)
+		playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
+		target.equipOutfit(/datum/outfit/job/roguetown/baothaarmor)
+		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+		if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
+			ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
+		spawn(40)
+			to_chat(target, span_purple("All will love you and despair."))
 
 //TIME FOR THE ONE. Exclusive to ABSOLVERS. Allowing conversion, deconversion and removal of rite armour.
 //'Lesser' expenditure allows us to have a stopgap to this, while not entirely making poultice farming useless.

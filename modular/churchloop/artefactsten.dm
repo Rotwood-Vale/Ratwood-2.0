@@ -3,8 +3,8 @@
 #define MALUM_ALLOWED_INGOTS list( \
 	/obj/item/ingot/steel, \
 	/obj/item/ingot/iron, \
-	/obj/item/ingot/aalloy, \
-	/obj/item/ingot/purifiedaalloy \
+	/obj/item/ingot/decrepit, \
+	/obj/item/ingot/gilbranze \
 )
 
 var/global/list/EORA_PARTNERS_BY_ID = list()
@@ -145,8 +145,8 @@ Malum's tool
 		var/list/allowed = list(
 			/obj/item/ingot/steel,
 			/obj/item/ingot/iron,
-			/obj/item/ingot/aalloy,
-			/obj/item/ingot/purifiedaalloy
+			/obj/item/ingot/decrepit,
+			/obj/item/ingot/gilbranze
 		)
 		if(!(smeltpath in allowed))
 			to_chat(user, span_warning("[I2] is not suitable for this hammer's smelting."))
