@@ -162,6 +162,8 @@
 				if(isliving(pulling))
 					P = pulling
 
+/obj/structure/stairs/dark
+	icon_state = "desc"//visual change for dark basements and tight quarters
 
 //purely cosmetic curved stairs (kinda confusing to set up right, compare the DIR to regular chairs. Correct version depends on if it's going up or down)
 

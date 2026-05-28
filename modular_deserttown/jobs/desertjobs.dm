@@ -7,6 +7,7 @@
 #define CTAG_SLAVEMASTER	"CAT_SLAVEMASTER"
 #define CTAG_PSLAVE			"CAT_PSLAVE"
 #define CTAG_HEADSLAVE		"CAT_HEADSLAVE"		// Seneschal's aesthetic choices.
+#define CTAG_DTCHAPLAIN		"CAT_DTCHAPLAIN"		// Chaplain for desert town
 
 
 
@@ -50,6 +51,7 @@
 // #define DTWIZARD		(1<<1)
 // #define PHYSICIAN 	(1<<2)
 #define HEADSLAVE		(1<<3)
+#define DTCHAPLAIN		(1<<8)
 
 // #define YEOMEN		(1<<4)
 

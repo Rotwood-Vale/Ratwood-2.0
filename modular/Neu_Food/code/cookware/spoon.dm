@@ -7,7 +7,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	sellprice = 0
 
-/obj/item/kitchen/spoon/aalloy
+/obj/item/kitchen/spoon/decrepit
 	name = "decrepit spoon"
 	icon_state = "aspoon"
 	color = "#bb9696"

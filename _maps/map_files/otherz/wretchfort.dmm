@@ -79,7 +79,7 @@
 /obj/structure/closet/crate/chest/wicker,
 /obj/item/storage/roguebag,
 /obj/item/rogueweapon/shovel/small,
-/obj/item/fishingrod/aalloy,
+/obj/item/fishingrod/decrepit,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/wretch)
 "aS" = (
@@ -174,7 +174,7 @@
 /area/rogue/under/wretch)
 "bI" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/huntingknife/idagger/adagger,
+/obj/item/rogueweapon/huntingknife/idagger/steel/ancient/decrepit,
 /turf/open/floor/rogue/blocks/flipped,
 /area/rogue/under/wretch/temple)
 "bN" = (
@@ -1014,7 +1014,7 @@
 "kB" = (
 /obj/machinery/light/rogue/oven/west,
 /obj/machinery/light/rogue/hearth,
-/obj/item/cooking/pan/aalloy,
+/obj/item/cooking/pan/decrepit,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/wretch)
 "kE" = (
@@ -1237,7 +1237,7 @@
 /area/rogue/under/wretch)
 "mM" = (
 /obj/machinery/light/rogue/hearth,
-/obj/item/reagent_containers/glass/bucket/pot/aalloy,
+/obj/item/reagent_containers/glass/bucket/pot/decrepit,
 /obj/machinery/light/rogue/oven/west,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/wretch)
@@ -2481,7 +2481,7 @@
 /obj/structure/closet/crate/chest/old_crate,
 /obj/machinery/light/rogue/candle,
 /obj/item/rogueweapon/handsaw,
-/obj/item/rogueweapon/stoneaxe/woodcut/aaxe,
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient/decrepit,
 /obj/item/roguegear/bronze,
 /obj/item/rogueweapon/hammer/wood,
 /turf/open/floor/rogue/blocks,
@@ -3276,7 +3276,7 @@
 /area/rogue/under/wretch/cavern)
 "GB" = (
 /obj/item/flashlight/flare/torch/lantern/bronzelamptern,
-/obj/item/rogueweapon/pick/aalloy,
+/obj/item/rogueweapon/pick/decrepit,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/wretch/cavern)
 "GE" = (
@@ -3602,8 +3602,8 @@
 /area/rogue/under/wretch/cavern)
 "Kd" = (
 /obj/machinery/anvil,
-/obj/item/rogueweapon/hammer/aalloy,
-/obj/item/rogueweapon/tongs/aalloy,
+/obj/item/rogueweapon/hammer/decrepit,
+/obj/item/rogueweapon/tongs/decrepit,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/wretch)
 "Kf" = (
@@ -4533,11 +4533,11 @@
 /area/rogue/under/wretch/cavern)
 "Sa" = (
 /obj/structure/closet/crate/chest/wicker,
-/obj/item/rogueweapon/sickle/aalloy,
-/obj/item/rogueweapon/pitchfork/aalloy,
-/obj/item/rogueweapon/hoe/aalloy,
-/obj/item/rogueweapon/shovel/aalloy,
-/obj/item/rogueweapon/thresher/aalloy,
+/obj/item/rogueweapon/sickle/decrepit,
+/obj/item/rogueweapon/pitchfork/decrepit,
+/obj/item/rogueweapon/hoe/decrepit,
+/obj/item/rogueweapon/shovel/decrepit,
+/obj/item/rogueweapon/thresher/decrepit,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/wretch)
 "Sc" = (
@@ -4626,10 +4626,10 @@
 /obj/item/reagent_containers/glass/cup/wooden,
 /obj/item/reagent_containers/glass/cup/skull,
 /obj/item/reagent_containers/glass/cup/skull,
-/obj/item/reagent_containers/glass/cup/aalloygob,
-/obj/item/reagent_containers/glass/cup/aalloygob,
-/obj/item/reagent_containers/glass/cup/aalloygob,
-/obj/item/reagent_containers/glass/cup/aalloygob,
+/obj/item/reagent_containers/glass/cup/decrepitgob,
+/obj/item/reagent_containers/glass/cup/decrepitgob,
+/obj/item/reagent_containers/glass/cup/decrepitgob,
+/obj/item/reagent_containers/glass/cup/decrepitgob,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/wretch/cavern)
 "SO" = (
@@ -4943,7 +4943,7 @@
 /area/rogue/under/wretch/cavern)
 "VD" = (
 /obj/machinery/light/rogue/hearth,
-/obj/item/cooking/pan/aalloy,
+/obj/item/cooking/pan/decrepit,
 /obj/machinery/light/rogue/oven/west,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/wretch)

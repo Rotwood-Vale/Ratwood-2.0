@@ -243,7 +243,7 @@
 	icon_state ="scrollpurple"
 	remarks = list("Pallium nihilum..", "Occultare veritatem..", "Veritatem removan menor..")
 
-/obj/item/book/granter/spell/blackstone/skeleton
+/obj/item/book/granter/spell/blackstone/skeleton//BEWARE this is the super powerful LICH player skeleton spawner
 	name = "Scroll of Raise Skeleton"
 	spell = /obj/effect/proc_holder/spell/invoked/raise_undead
 	spellname = "Raise Skeleton"
@@ -408,3 +408,10 @@
 /obj/item/book/granter/spell_points/voiddragon
 	name = "Arcyne Void Insight"
 	spellpoints = 6
+
+/obj/item/book/granter/spell/blackstone/skeleton/lesser
+	name = "Scroll of Lesser Raise Skeletons"
+	spell = /obj/effect/proc_holder/spell/invoked/raise_undead_formation
+	spellname = "Raise Lesser Skeletons"
+	icon_state ="scrolldarkred"
+	remarks = list("Redi damnatos..", "Exitio ad Necram scriptor exolvuntur..", "Ossa in propinquus..")

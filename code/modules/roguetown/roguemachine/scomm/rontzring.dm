@@ -18,6 +18,7 @@
 	var/listening = TRUE
 	var/speaking = TRUE
 	var/disguised = FALSE
+	dropshrink = 0.7
 
 	sellprice = 0
 	grid_width = 32

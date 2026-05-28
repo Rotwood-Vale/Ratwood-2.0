@@ -42,6 +42,7 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 	mob_overlay_icon = "cage_belt"
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = INDESTRUCTIBLE
+	dropshrink = 0.9
 	var/datum/bodypart_feature/chastity/chastity_feature // snowflake slot for chastity items, belt's dont work as clothing equippables
 	var/chastity_type = 0 // 0 = full, 1 = cage, 2 = cage with anal, 3 = spiked cage, 4 = spiked cage with anal, 5 = insertable, 6 = insertable with anal, 7 = spiked insertable, 8 = spiked insertable with anal, 9 = spiked intersex device
 	var/chastity_organtype = 0 // 0 = neuter, 1 = penis required, 2 = vagina required, 3 = both required

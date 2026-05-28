@@ -265,7 +265,7 @@
 		message_admins("[usr.key] has applied the Crustacean to [src].")
 		return
 
-	if(istype(I, /obj/item/roguecoin/aalloy))
+	if(istype(I, /obj/item/roguecoin/gilbranze))
 		return
 	if(istype(I, /obj/item/roguecoin/inqcoin))
 		return

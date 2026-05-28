@@ -31,6 +31,12 @@
 	first_time_text = "The Town of Rockhill"
 	deathsight_message = "the city of Rockhill and all its bustling souls"
 
+/area/rogue/outdoors/town/church
+	name = "outdoors church district"
+	first_time_text = "Old Church District"
+	deathsight_message = "sanctified ruins near the bustling city"
+	// holy_area = TRUE //ravox decrees it most honorable to not benefit from you +2 to everything buffs while duelling in the duel pit
+
 /area/rogue/indoors/shelter/town
 	icon_state = "town"
 	droning_sound = 'sound/music/area/townstreets.ogg'

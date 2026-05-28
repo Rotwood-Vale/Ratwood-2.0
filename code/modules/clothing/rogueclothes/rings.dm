@@ -16,6 +16,7 @@
 	drop_sound = 'sound/foley/coinphy (1).ogg'
 	nudist_approved = TRUE
 	sewrepair = FALSE
+	dropshrink = 0.4
 
 /obj/item/clothing/ring/silver
 	name = "silver ring"
@@ -23,7 +24,7 @@
 	sellprice = 33
 	is_silver = TRUE
 
-/obj/item/clothing/ring/aalloy
+/obj/item/clothing/ring/decrepit
 	name = "decrepit ring"
 	desc = "A coil of frayed bronze."
 	icon_state = "ring_a"

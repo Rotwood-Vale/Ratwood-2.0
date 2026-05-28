@@ -141,6 +141,7 @@
 	shiftable = FALSE
 	sellprice = 30
 	var/picked = FALSE
+	dropshrink = 0.9
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan/attack_right(mob/user)
 	..()

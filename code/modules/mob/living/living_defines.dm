@@ -1,5 +1,3 @@
-
-
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
 	sight = 0
@@ -170,6 +168,9 @@
 
 	var/datum/component/personal_crafting/craftingthing
 
+	/// Cooldown when you break out of a grab before you can be grabbed again
+	COOLDOWN_DECLARE(broke_free)
+
 	var/obj/item/grabbing/r_grab = null
 	var/obj/item/grabbing/l_grab = null
 
@@ -210,3 +211,9 @@
 	/// If TRUE, denotes that the character (a human) has received their class equipment via equip() proc.
 	/// Usually, this also means that they've made all their choices after spawning.
 	var/class_equip_finished = FALSE
+
+	var/tempatarget = null
+	/// Handles check & slowdown for peglegs. Fuckin' bootleg, literally, but hey it at least works.
+	var/pegleg = 0
+	var/construct = 0
+	var/burialrited = FALSE

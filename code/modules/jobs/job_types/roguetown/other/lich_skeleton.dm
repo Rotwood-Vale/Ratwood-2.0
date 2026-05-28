@@ -13,7 +13,7 @@ LICH SKELETONS
 /datum/outfit/job/roguetown/greater_skeleton/lich
 	cloak = /obj/item/clothing/cloak/thief_cloak/yoruku
 	belt = /obj/item/storage/belt/rogue/leather/black
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/paalloy
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/ancient
 	backl = /obj/item/storage/backpack/rogue/satchel
 
 /datum/outfit/job/roguetown/greater_skeleton/lich/pre_equip(mob/living/carbon/human/H)
@@ -56,34 +56,34 @@ LICH SKELETONS
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/sewing, 2, TRUE)
 
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/paalloy
-	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/paalloy
-	pants = /obj/item/clothing/under/roguetown/chainlegs/kilt/paalloy
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
-	neck = /obj/item/clothing/neck/roguetown/chaincoif/paalloy
-	shoes = /obj/item/clothing/shoes/roguetown/sandals/aalloy
-	gloves = /obj/item/clothing/gloves/roguetown/chain/paalloy
+	head = /obj/item/clothing/head/roguetown/helmet/heavy/ancient
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/ancient
+	pants = /obj/item/clothing/under/roguetown/chainlegs/kilt/ancient
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/ancient
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
+	shoes = /obj/item/clothing/shoes/roguetown/sandals/ancient
+	gloves = /obj/item/clothing/gloves/roguetown/chain/ancient
 
 	backr = /obj/item/rogueweapon/shield/wood
-	beltl = /obj/item/quiver/javelin/paalloy
+	beltl = /obj/item/quiver/javelin/ancient
 	H.adjust_blindness(-3)
 	var/weapons = list("Gladius","Kopesh","Shortsword","Axe", "Flail")
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
 	switch(weapon_choice)
 		if("Gladius")
-			beltr = /obj/item/rogueweapon/sword/short/gladius/pagladius
+			beltr = /obj/item/rogueweapon/sword/short/gladius/ancient
 			beltl = /obj/item/rogueweapon/scabbard
 		if("Kopesh")
-			beltr = /obj/item/rogueweapon/sword/sabre/palloy
+			beltr = /obj/item/rogueweapon/sword/sabre/ancient
 			beltl = /obj/item/rogueweapon/scabbard
 		if("Shortsword")
-			beltr = /obj/item/rogueweapon/sword/short/pashortsword
+			beltr = /obj/item/rogueweapon/sword/short/ancient
 			beltl = /obj/item/rogueweapon/scabbard
 		if("Axe")
-			beltr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/paaxe
+			beltr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient
 		if("Flail")
-			beltr = /obj/item/rogueweapon/flail/sflail/paflail
+			beltr = /obj/item/rogueweapon/flail/sflail/ancient
 
 	H.energy = H.max_energy
 
@@ -122,15 +122,15 @@ LICH SKELETONS
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/sewing, 2, TRUE)
 
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/paalloy
-	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/paalloy
-	pants = /obj/item/clothing/under/roguetown/chainlegs/kilt/paalloy
+	head = /obj/item/clothing/head/roguetown/helmet/heavy/ancient
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/ancient
+	pants = /obj/item/clothing/under/roguetown/chainlegs/kilt/ancient
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
-	neck = /obj/item/clothing/neck/roguetown/chaincoif/paalloy
-	shoes = /obj/item/clothing/shoes/roguetown/sandals/aalloy
-	gloves = /obj/item/clothing/gloves/roguetown/chain/paalloy
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
+	shoes = /obj/item/clothing/shoes/roguetown/sandals/ancient
+	gloves = /obj/item/clothing/gloves/roguetown/chain/ancient
 
-	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/padagger
+	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/ancient
 	H.adjust_blindness(-3)
 	var/weapons = list("Recurve Bow","Yew Longbow", "Crossbow", "Sling")
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
@@ -138,16 +138,16 @@ LICH SKELETONS
 	switch(weapon_choice)
 		if("Recurve Bow")
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-			beltl = /obj/item/quiver/paalloy
+			beltl = /obj/item/quiver/ancient
 		if("Crossbow")
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-			beltl = /obj/item/quiver/bolts/paalloy
+			beltl = /obj/item/quiver/bolts/ancient
 		if("Yew Longbow")
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
-			beltl = /obj/item/quiver/paalloy
+			beltl = /obj/item/quiver/ancient
 		if("Sling")
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
-			beltl = /obj/item/quiver/sling/paalloy
+			beltl = /obj/item/quiver/sling/ancient
 
 	H.energy = H.max_energy
 
@@ -186,13 +186,13 @@ LICH SKELETONS
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/sewing, 2, TRUE)
 
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/guard/paalloy
-	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/paalloy
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/paalloy
-	pants = /obj/item/clothing/under/roguetown/chainlegs/kilt/paalloy
-	neck = /obj/item/clothing/neck/roguetown/gorget/paalloy
-	shoes = /obj/item/clothing/shoes/roguetown/boots/aalloy
-	gloves = /obj/item/clothing/gloves/roguetown/chain/paalloy
+	head = /obj/item/clothing/head/roguetown/helmet/heavy/guard/ancient
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ancient
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/ancient
+	pants = /obj/item/clothing/under/roguetown/platelegs/ancient
+	neck = /obj/item/clothing/neck/roguetown/gorget/steel/ancient
+	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/ancient
+	gloves = /obj/item/clothing/gloves/roguetown/plate/ancient
 
 	H.adjust_blindness(-3)
 	var/weapons = list("Greatsword", "Bardiche", "Grand Mace", "Mace + Shield","Spear + Shield", "Warhammer + Shield")
@@ -200,20 +200,20 @@ LICH SKELETONS
 	H.set_blindness(0)
 	switch(weapon_choice)
 		if("Greatsword")
-			r_hand = /obj/item/rogueweapon/greatsword/paalloy
+			r_hand = /obj/item/rogueweapon/greatsword/ancient
 		if("Bardiche")
-			r_hand = /obj/item/rogueweapon/halberd/bardiche/paalloy
+			r_hand = /obj/item/rogueweapon/halberd/bardiche/ancient
 		if("Grand Mace")
-			r_hand = /obj/item/rogueweapon/mace/goden/steel/paalloy
+			r_hand = /obj/item/rogueweapon/mace/goden/steel/ancient
 		if("Mace + Shield")
-			r_hand = /obj/item/rogueweapon/mace/steel/palloy
-			l_hand = /obj/item/rogueweapon/shield/wood
+			r_hand = /obj/item/rogueweapon/mace/steel/ancient
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/ancient
 		if("Spear + Shield")
-			r_hand = /obj/item/rogueweapon/spear/paalloy
-			l_hand = /obj/item/rogueweapon/shield/wood
+			r_hand = /obj/item/rogueweapon/spear/ancient
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/ancient
 		if("Warhammer + Shield")
-			r_hand = /obj/item/rogueweapon/mace/warhammer/steel/paalloy
-			l_hand = /obj/item/rogueweapon/shield/wood
+			r_hand = /obj/item/rogueweapon/mace/warhammer/steel/ancient
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/ancient
 
 	H.energy = H.max_energy
 
@@ -252,19 +252,22 @@ LICH SKELETONS
 	H.adjust_skillrank(/datum/skill/craft/masonry, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/sewing, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/blacksmithing, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/armorsmithing, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/engineering, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/mining, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/labor/lumberjacking, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/labor/lumberjacking, 4, TRUE)
 
 	head = /obj/item/clothing/head/roguetown/helmet/kettle/minershelm
-	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/paalloy
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/ancient
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
 	neck = /obj/item/clothing/neck/roguetown/coif
-	shoes = /obj/item/clothing/shoes/roguetown/sandals/aalloy
+	shoes = /obj/item/clothing/shoes/roguetown/sandals/ancient
 	backl = /obj/item/storage/backpack/rogue/satchel
-	gloves = /obj/item/clothing/gloves/roguetown/chain/paalloy
+	gloves = /obj/item/clothing/gloves/roguetown/chain/ancient
 
 	beltr = /obj/item/rogueweapon/stoneaxe/woodcut
-	beltl = /obj/item/rogueweapon/pick/copper
+	beltl = /obj/item/rogueweapon/pick
 
 	H.energy = H.max_energy

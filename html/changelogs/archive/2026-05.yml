@@ -542,3 +542,51 @@
 2026-05-24:
   YakiAttaki:
   - rscadd: Added some new, colourable tailmaw variants.
+2026-05-25:
+  EvenInDeathIStillServe:
+  - rscadd: Your voice descriptor will prefix your voice identity on speaking when
+      masked or out of view.
+  SneakySlinky:
+  - bugfix: fixed player-made books being blank
+  - rscdel: Deleted old code referencing an improper component initialization for
+      a dummy item path
+  - rscdel: Removed redundant code from soap/bath item that was copied from soap itself
+  - balance: Adding a sprinting check to soap to slip people
+  - balance: Also by extension nerfs Xylixian miracles + rituals and the associated
+      slip-granting sources
+  Wadelicious:
+  - bugfix: Avantyne is no longer cucked (The proper antag armor tags were given)
+  ophaq:
+  - rscadd: Xylixians with holy skill have an incredibly small chance of creating
+      cumfetti. Drag your local Xylixian today to the bath house today!
+  petwir1:
+  - rscadd: Made mage resource gathering automated
+  wikimody:
+  - refactor: removed double declarations of smokes
+  - rscadd: Bandits and garnison can talk into their rings with mask on again
+2026-05-27:
+  EvenInDeathIStillServe:
+  - rscadd: Creampies will have extra spurts based on semen volume.
+  - balance: Minimum load count restored to 3 with normal size balls. Load count is
+      now modified by ball size, too.
+  IronDragoon:
+  - bugfix: boring AI proc stuff, should help with TDI
+  - bugfix: Hostile mobs should now ignore ghost mobs in target logic, and players
+      will need to choose to spectate as opposed to it being the default on death/fartravel.
+      This will hopefully reduce TDI somewhat (but other changes will be needed too)
+  Jamdrawers:
+  - admin: no longer alerted by puking
+  - balance: scrolls of lich-style raise skeletons mostly replaced in loot pools with
+      scrolls of lesser raise skeletons
+  - rscadd: Adds chaplain role!
+  - bugfix: fixes crafting recipes requiring silver bullion instead of just blessed
+      silver
+  - qol: a great many items given a small amount of dropshrink
+  - refactor: cleaned up a few duplicate definitions for clothing items. Redefined
+      an item spawner used in a singular location to be more normal.
+  Xander3359:
+  - balance: Resisting out of a grab makes you ungrabbable for a short duration
+  ophaq:
+  - bugfix: Potentially fixes music again.
+  tmyqlfpir:
+  - bugfix: Added guardrails for splitting coins logic
