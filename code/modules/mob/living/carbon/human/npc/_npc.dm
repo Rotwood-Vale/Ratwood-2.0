@@ -954,6 +954,7 @@
 
 	if(mode == NPC_AI_SLEEP)
 		mode = NPC_AI_IDLE
+		START_PROCESSING(SShumannpc, src)
 
 /mob/living/carbon/human/proc/on_client_exit(datum/source, datum/exited)
 	SIGNAL_HANDLER
@@ -992,9 +993,11 @@
 			if(mode != NPC_AI_SLEEP && mode != NPC_AI_IDLE)
 				return TRUE
 			mode = NPC_AI_IDLE
+			START_PROCESSING(SShumannpc, src)
 			return TRUE
 
 	mode = NPC_AI_SLEEP
+	STOP_PROCESSING(SShumannpc, src)
 	return FALSE
 
 /mob/living/carbon/human/Moved()

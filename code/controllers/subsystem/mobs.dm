@@ -47,11 +47,42 @@ SUBSYSTEM_DEF(mobs)
 			GLOB.mob_living_list.Remove(L)
 			continue
 
-		if(L.stat == DEAD)
-			L.DeadLife()
-		else
+		if(L.stat != DEAD)
 			L.Life(seconds, times_fired)
 			alive_mobs++
+
+		if (MC_TICK_CHECK)
+			return
+
+SUBSYSTEM_DEF(mobs_dead)
+	name = "Mobs (Dead)"
+	priority = FIRE_PRIORITY_MOBS_DEAD
+	flags = SS_KEEP_TIMING | SS_NO_INIT
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+	wait = 6 SECONDS
+	var/list/currentrun = list()
+	var/dead_mobs = 0
+
+/datum/controller/subsystem/mobs_dead/stat_entry()
+	..("D:[dead_mobs]")
+
+/datum/controller/subsystem/mobs_dead/fire(resumed = 0)
+	if (!resumed)
+		src.currentrun = GLOB.mob_living_list.Copy()
+		dead_mobs = 0
+	var/list/currentrun = src.currentrun
+
+	while(currentrun.len)
+		var/mob/living/L = currentrun[currentrun.len]
+		currentrun.len--
+
+		if(!L || QDELETED(L))
+			GLOB.mob_living_list.Remove(L)
+			continue
+
+		if(L.stat == DEAD)
+			L.DeadLife()
+			dead_mobs++
 
 		if (MC_TICK_CHECK)
 			return
