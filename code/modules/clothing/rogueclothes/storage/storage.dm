@@ -134,6 +134,17 @@
 	color = "#b9a286"
 	component_type = /datum/component/storage/concrete/roguetown/belt/cloth
 
+/obj/item/storage/belt/rogue/leather/rope/gnoll
+	name = "crude belt"
+	desc = "A crude belt, only useful in that you can buckle things to it."
+	icon_state = null
+	resistance_flags = FIRE_PROOF
+	component_type = /datum/component/storage/concrete/roguetown/belt/gnoll
+
+/obj/item/storage/belt/rogue/leather/rope/gnoll/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
 /obj/item/storage/belt/rogue/leather/cloth
 	name = "cloth sash"
 	desc = "A strip of cloth tied together at the ends into a makeshift belt. It's better than nothing."
@@ -221,6 +232,51 @@
 	item_state = "satchelshort"
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_HIP //Implement a check in the future that prevents more than one being worn at once.
 	component_type = /datum/component/storage/concrete/roguetown/satchelshort
+
+/obj/item/storage/backpack/rogue/satchel/short/arts/PopulateContents()
+	. = ..()
+	new /obj/item/rogue/instrument/flute(src)
+	new /obj/item/rogue/instrument/drum(src)
+	new /obj/item/paint_brush(src)
+	new /obj/item/paint_palette(src)
+
+/obj/item/storage/backpack/rogue/satchel/short/crafts/PopulateContents()
+	. = ..()
+	new /obj/item/natural/bundle/cloth/roll(src)
+	new /obj/item/natural/bundle/fibers/full(src)
+	new /obj/item/natural/bundle/curred_hide(src)
+	new /obj/item/natural/bundle/silk(src)
+	new /obj/item/needle(src)
+
+/obj/item/storage/backpack/rogue/satchel/short/medicine/PopulateContents()
+	. = ..()
+	new /obj/item/needle(src)
+	new /obj/item/reagent_containers/glass/bottle/alchemical/healthpot(src)
+	new /obj/item/reagent_containers/powder/moondust_purest(src)
+	new /obj/item/reagent_containers/powder/ozium(src)
+	new /obj/item/reagent_containers/powder/spice(src)
+
+/obj/item/storage/backpack/rogue/satchel/short/food/PopulateContents()
+	. = ..()
+	new /obj/item/reagent_containers/peppermill(src)
+	new /obj/item/reagent_containers/food/snacks/butter(src)
+	new /obj/item/reagent_containers/food/snacks/rogue/meat/poultry(src)
+	new /obj/item/reagent_containers/food/snacks/grown/garlick/rogue(src)
+	new /obj/item/reagent_containers/food/snacks/rogue/meat/steak(src)
+
+/obj/item/storage/backpack/rogue/satchel/short/parchments/PopulateContents()
+	. = ..()
+	new /obj/item/natural/feather(src)
+	new /obj/item/paper/scroll(src)
+	new /obj/item/paper/scroll(src)
+	new /obj/item/paper(src)
+	new /obj/item/paper(src)
+
+/obj/item/storage/backpack/rogue/satchel/short/alchemy/PopulateContents()
+	. = ..()
+	new /obj/item/reagent_containers/glass/mortar(src)
+	new /obj/item/pestle(src)
+	new /obj/item/folding_table_stored/alchcauldron(src)
 
 /obj/item/storage/backpack/rogue/satchel/beltpack
 	name = "beltpack" //Satchel that fits on the cloak or belt slot. Should be exceptionally rare for on-spawn loadouts, unless a flag's added to make it incompatable with regular satchels.
@@ -490,3 +546,4 @@
 	anvilrepair = /datum/skill/craft/blacksmithing
 	smeltresult = /obj/item/ingot/bronze
 	component_type = /datum/component/storage/concrete/grid/orestore/bronze
+

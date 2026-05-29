@@ -5,7 +5,7 @@
 	allowed_races = list(/datum/species/gnoll)
 	outfit = /datum/outfit/job/roguetown/gnoll/shaman
 	applies_post_equipment = FALSE
-	traits_applied = list(TRAIT_RITUALIST, TRAIT_DODGEEXPERT, TRAIT_ALCHEMY_EXPERT)
+	traits_applied = list(TRAIT_RITUALIST, TRAIT_DODGEEXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_DECEIVING_MEEKNESS, TRAIT_INTELLECTUAL, TRAIT_LIGHT_STEP)
 	subclass_stats = list(
 		STATKEY_PER = 2,
 		STATKEY_WIL = 2,
@@ -23,7 +23,6 @@
 		/datum/skill/misc/climbing = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN
@@ -38,6 +37,32 @@
 		var/obj/item/ritechalk/chalk = new /obj/item/ritechalk(H.loc)
 		H.put_in_r_hand(chalk)
 		neck = /obj/item/storage/belt/rogue/pouch/alchemy
+		wrists = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar
+		belt = /obj/item/storage/belt/rogue/leather/rope/gnoll
+		beltr = /obj/item/storage/backpack/rogue/satchel/short/alchemy
+		var/satchels = list("Arts (Instruments, Painting Supplies)","Crafts (Cloth, Leather, Needle)","Medicine (and Drugs)","Food (Butter, Peppermill, Meat)")
+		var/satchel_choice = input(H, "Choose your supplies.", "HOW DO YOU HELP THE PACK?") as anything in satchels
+		switch(satchel_choice)
+			if("Arts (Instruments, Painting Supplies)")
+				var/obj/item/canvas/canvas = new /obj/item/canvas(H.loc)
+				H.put_in_l_hand(canvas)
+				beltl = /obj/item/storage/backpack/rogue/satchel/short/arts
+				H.adjust_skillrank_up_to(/datum/skill/misc/music, 4, TRUE)
+			if("Crafts (Cloth, Leather, Needle)")
+				beltl = /obj/item/storage/backpack/rogue/satchel/short/crafts
+				H.adjust_skillrank_up_to(/datum/skill/craft/crafting, 1, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/craft/masonry, 2, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 2, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/craft/sewing, 2, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/craft/tanning, 2, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/labor/butchering, 2, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/labor/lumberjacking, 1, TRUE)
+			if("Medicine (and Drugs)")
+				beltl = /obj/item/storage/backpack/rogue/satchel/short/medicine
+				H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 1, TRUE)
+			if("Food (Butter, Peppermill, Meat)")
+				beltl = /obj/item/storage/backpack/rogue/satchel/short/food
+				H.adjust_skillrank_up_to(/datum/skill/craft/cooking, 3, TRUE)
 		don_pelt(H)
 		var/datum/devotion/C = new /datum/devotion(H, H.patron)
 		C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)

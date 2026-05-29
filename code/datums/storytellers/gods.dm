@@ -54,7 +54,7 @@
 	always_votable = TRUE
 	follower_modifier = LOWER_FOLLOWER_MODIFIER
 	color_theme = "#FFD700"
-	preferred_gnoll_mode = GNOLL_SCALING_DOUBLE
+	preferred_gnoll_mode = GNOLL_SCALING_PACK
 
 	influence_sets = list(
 	"Set 1" = list(
@@ -83,7 +83,7 @@
 	weight = 4
 	always_votable = TRUE
 	color_theme = "#F0F0F0"
-	preferred_gnoll_mode = GNOLL_SCALING_DOUBLE
+	preferred_gnoll_mode = GNOLL_SCALING_PACK
 
 	tag_multipliers = list(
 		TAG_MAGICAL = 1.2,
@@ -114,7 +114,7 @@
 	weight = 4
 	always_votable = TRUE
 	color_theme = "#228822"
-	preferred_gnoll_mode = GNOLL_SCALING_DOUBLE
+	preferred_gnoll_mode = GNOLL_SCALING_PACK
 
 	tag_multipliers = list(
 		TAG_RAID = 1.3,
@@ -153,7 +153,7 @@
 	weight = 4
 	always_votable = TRUE
 	color_theme = "#3366CC"
-	preferred_gnoll_mode = GNOLL_SCALING_DOUBLE
+	preferred_gnoll_mode = GNOLL_SCALING_PACK
 
 	tag_multipliers = list(
 		TAG_WATER = 1.3,
@@ -226,7 +226,7 @@
 	weight = 4
 	always_votable = TRUE
 	color_theme = "#888888"
-	preferred_gnoll_mode = GNOLL_SCALING_DOUBLE
+	preferred_gnoll_mode = GNOLL_SCALING_PACK
 
 	tag_multipliers = list(
 		TAG_HAUNTED = 1.3,
@@ -267,7 +267,7 @@
 	desc = "Pestra keeps things simple, with a slight bias towards alchemy."
 	welcome_text = "The clattering of instruments, and the churning of alchemical wonders.."
 	color_theme = "#AADDAA"
-	preferred_gnoll_mode = GNOLL_SCALING_DOUBLE
+	preferred_gnoll_mode = GNOLL_SCALING_PACK
 
 	tag_multipliers = list(
 		TAG_ALCHEMY = 1.2,
@@ -300,7 +300,7 @@
 	desc = "Malum believes in hard work, intervening more often than others."
 	welcome_text = "The pounding of red-hot steel, and the laboring of a hundred calloused hands.."
 	color_theme = "#D4A56C"
-	preferred_gnoll_mode = GNOLL_SCALING_DOUBLE
+	preferred_gnoll_mode = GNOLL_SCALING_PACK
 
 	tag_multipliers = list(
 		TAG_WORK = 1.5,
@@ -338,7 +338,7 @@
 	desc = "Eora hates death and promotes love. Raids will never naturally progress, only death will bring them."
 	welcome_text = "\"Love is in the air? Nay; tis the smell of freshly-baked pies upon the windowsills!\""
 	color_theme = "#9966CC"
-	preferred_gnoll_mode = GNOLL_SCALING_DOUBLE
+	preferred_gnoll_mode = GNOLL_SCALING_PACK
 
 	tag_multipliers = list(
 		TAG_WIDESPREAD = 1.5,
@@ -378,7 +378,7 @@
 	weight = 4
 	always_votable = TRUE
 	color_theme = "#664422"
-	preferred_gnoll_mode = GNOLL_SCALING_DOUBLE
+	preferred_gnoll_mode = GNOLL_SCALING_PACK
 
 	tag_multipliers = list(
 		TAG_NATURE = 1.5,

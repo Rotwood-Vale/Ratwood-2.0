@@ -114,6 +114,7 @@
 		var/obj/item/organ/testicles/testicles = getorganslot(ORGAN_SLOT_TESTICLES)
 		if(!testicles)
 			testicles = new()
+			testicles.ball_size = MAX_TESTICLES_SIZE
 			testicles.Insert(src, TRUE, FALSE)
 	else if(penis)
 		penis.Remove(src)
@@ -198,7 +199,7 @@
 		var/mode = SSgnoll_scaling.get_gnoll_scaling()
 		if(mode == GNOLL_SCALING_NONE)
 			to_chat(H, span_smallnotice("There will not be any gnoll reinforcements this week, as far as I can tell. ") + span_info("I must rely on cunning over numbers."))
-		else if(mode != GNOLL_SCALING_DOUBLE)
+		else if(mode != GNOLL_SCALING_PACK)
 			to_chat(H, span_smallnotice("I can expect to be joined by my pack this week. ") + span_info("I should wait for them and group up."))
 		else
 			to_chat(H, span_smallnotice("My pack is small this week. ") + span_info("I should regroup with the other gnolls, and avoid reckless fights until we can hunt together."))

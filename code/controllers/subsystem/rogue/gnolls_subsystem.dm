@@ -4,9 +4,9 @@ SUBSYSTEM_DEF(gnoll_scaling)
 
 	var/gnoll_scaling_mode = 0
 	var/gnoll_playercount_lock = TRUE
-	var/desired_gnoll_slots = 2
+	var/desired_gnoll_slots = 4
 	var/gnoll_scaling_check_queued = FALSE
-	var/last_logged_target_slots = 2
+	var/last_logged_target_slots = 4
 	var/last_storyteller_name = "Unknown"
 	var/last_mode_origin = "default"
 	var/admin_scaling_override = FALSE
@@ -15,12 +15,12 @@ SUBSYSTEM_DEF(gnoll_scaling)
 
 	// Tuning values for each scaling mode.
 	var/max_gnoll_slots = 6
-	var/double_mode_slots = 2
+	var/pack_mode_slots = 4
 	var/flat_mode_threshold_players = 125
-	var/flat_mode_low_slots = 2
-	var/flat_mode_high_slots = 4
+	var/flat_mode_low_slots = 4
+	var/flat_mode_high_slots = 6
 	var/flat_mode_recheck_below_players = 125
-	var/dynamic_mode_base_slots = 2
+	var/dynamic_mode_base_slots = 4
 	var/dynamic_mode_start_players = 75
 	var/dynamic_mode_players_per_extra_slot = 25
 	var/dynamic_mode_recheck_below_players = 90
@@ -29,8 +29,8 @@ SUBSYSTEM_DEF(gnoll_scaling)
 	switch(mode)
 		if(GNOLL_SCALING_NONE)
 			return "NONE"
-		if(GNOLL_SCALING_DOUBLE)
-			return "DOUBLE"
+		if(GNOLL_SCALING_PACK)
+			return "PACK"
 		if(GNOLL_SCALING_FLAT)
 			return "FLAT"
 		if(GNOLL_SCALING_DYNAMIC)
@@ -88,11 +88,11 @@ SUBSYSTEM_DEF(gnoll_scaling)
 	last_mode_origin = "direct"
 	if(preferred_mode == GNOLL_SCALING_RANDOM)
 		last_mode_origin = "random"
-		preferred_mode = pick(GNOLL_SCALING_DOUBLE, GNOLL_SCALING_FLAT, GNOLL_SCALING_DYNAMIC)
+		preferred_mode = pick(GNOLL_SCALING_PACK, GNOLL_SCALING_FLAT, GNOLL_SCALING_DYNAMIC)
 
-	if(!(preferred_mode in list(GNOLL_SCALING_NONE, GNOLL_SCALING_DOUBLE, GNOLL_SCALING_FLAT, GNOLL_SCALING_DYNAMIC)))
+	if(!(preferred_mode in list(GNOLL_SCALING_NONE, GNOLL_SCALING_PACK, GNOLL_SCALING_FLAT, GNOLL_SCALING_DYNAMIC)))
 		last_mode_origin = "fallback"
-		preferred_mode = GNOLL_SCALING_DOUBLE
+		preferred_mode = GNOLL_SCALING_PACK
 
 	return preferred_mode
 
@@ -121,15 +121,15 @@ SUBSYSTEM_DEF(gnoll_scaling)
 	var/players_amt = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 
 	var/mode = get_gnoll_scaling()
-	var/target_slots = 2
+	var/target_slots = 4
 	var/previous_target_slots = desired_gnoll_slots
 	var/recheck_below_players = 0
 
 	switch(mode)
 		if(GNOLL_SCALING_NONE)
 			target_slots = 0
-		if(GNOLL_SCALING_DOUBLE)
-			target_slots = double_mode_slots
+		if(GNOLL_SCALING_PACK)
+			target_slots = pack_mode_slots
 		if(GNOLL_SCALING_FLAT)
 			target_slots = (players_amt >= flat_mode_threshold_players) ? flat_mode_high_slots : flat_mode_low_slots
 			recheck_below_players = flat_mode_recheck_below_players
@@ -191,7 +191,7 @@ SUBSYSTEM_DEF(gnoll_scaling)
 	if(gnoll_scaling_mode != 0)
 		return gnoll_scaling_mode
 
-	var/preferred_mode = GNOLL_SCALING_DOUBLE
+	var/preferred_mode = GNOLL_SCALING_PACK
 	var/storyteller_name = "Unknown"
 	if(SSgamemode?.current_storyteller)
 		preferred_mode = SSgamemode.current_storyteller.preferred_gnoll_mode

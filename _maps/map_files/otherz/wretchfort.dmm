@@ -114,6 +114,10 @@
 /area/rogue/under/wretch/cavern)
 "bd" = (
 /obj/machinery/light/rogue/oven/south,
+/obj/item/reagent_containers/glass/bucket/pot/stone,
+/obj/machinery/light/rogue/hearth{
+	pixel_y = 4
+	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/wretch/gnollcavern)
 "be" = (
@@ -2823,7 +2827,10 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/wretch/gnollcavern)
 "Ct" = (
-/obj/item/roguebin/crackers,
+/obj/item/roguebin/crackers{
+	desc = "A bin full of low moisture bread that keeps well.";
+	name = "bin of rations"
+	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/wretch/gnollcavern)
 "Cu" = (
@@ -3374,6 +3381,9 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/wretch/gnollcavern)
+"HC" = (
+/turf/open/floor/rogue/twig,
+/area/rogue/outdoors/wretch)
 "HF" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	icon_state = "splatter6"
@@ -16375,10 +16385,10 @@ Bi
 Bi
 Bi
 Bi
-Bi
-Bi
-Bi
-Bi
+HC
+HC
+HC
+HC
 Bi
 Bi
 Bi
@@ -16466,12 +16476,12 @@ Bi
 Bi
 Bi
 Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
+HC
+HC
+HC
+HC
+HC
+HC
 Bi
 Bi
 Bi
@@ -16558,20 +16568,20 @@ Bi
 Bi
 Bi
 Bi
+HC
+HC
+HC
+HC
+HC
+HC
 Bi
 Bi
 Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
+HC
+HC
+HC
+HC
+HC
 Bi
 Bi
 Bi
@@ -16650,20 +16660,20 @@ Bi
 Bi
 Bi
 Bi
+HC
+HC
+HC
+HC
+HC
+HC
 Bi
 Bi
 Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
+HC
+HC
+HC
+HC
+HC
 Bi
 Bi
 Bi
@@ -16742,20 +16752,20 @@ Bi
 Bi
 Bi
 Bi
+HC
+HC
+HC
+HC
+HC
+HC
 Bi
 Bi
 Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
+HC
+HC
+HC
+HC
+HC
 Bi
 Bi
 Bi
@@ -16834,20 +16844,20 @@ Bi
 Bi
 Bi
 Bi
+HC
+HC
+HC
+HC
+HC
+HC
 Bi
 Bi
 Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
-Bi
+HC
+HC
+HC
+HC
+HC
 Bi
 Bi
 Bi
@@ -16927,10 +16937,10 @@ Bi
 Bi
 Bi
 Bi
-Bi
-Bi
-Bi
-Bi
+HC
+HC
+HC
+HC
 Bi
 Bi
 Bi
