@@ -33,6 +33,7 @@
 	movement_type = UNSTOPPABLE
 	damage = 60
 	damage_type = BURN
+	woundclass = BCLASS_BURN
 	nodamage = FALSE
 	speed = 0.3
 	flag = "magic"
