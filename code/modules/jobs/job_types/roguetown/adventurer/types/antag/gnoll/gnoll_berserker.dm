@@ -24,6 +24,7 @@
 		/datum/skill/misc/climbing = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/tracking = SKILL_LEVEL_LEGENDARY,
+		/datum/skill/labor/butchering = SKILL_EXP_APPRENTICE,
 		/datum/skill/craft/crafting = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE
 	)
@@ -49,7 +50,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 2, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/craft/sewing, 2, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/craft/tanning, 2, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/labor/butchering, 2, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/labor/butchering, 1, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/labor/lumberjacking, 1, TRUE)
 			if("Medicine (and Drugs)")
 				beltl = /obj/item/storage/backpack/rogue/satchel/short/medicine
