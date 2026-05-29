@@ -32,6 +32,7 @@
 	exp_fire = 1
 	damage = 60
 	damage_type = BURN
+	woundclass = BCLASS_BURN
 	npc_simple_damage_mult = 2 // HAHAHA
 	accuracy = 40 // Base accuracy is lower for burn projectiles because they bypass armor
 	nodamage = FALSE
