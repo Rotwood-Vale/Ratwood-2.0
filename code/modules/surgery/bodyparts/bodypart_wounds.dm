@@ -147,7 +147,7 @@
 	armor = owner.run_armor_check(zone_precise, acheck_dflag, damage = 0)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
-		if(human_owner.checkcritarmor(zone_precise, bclass))
+		if(!(bclass in GLOB.charring_bclasses) && human_owner.checkcritarmor(zone_precise, bclass) && armor)
 			do_crit = FALSE
 		if(owner.mind && (get_damage() <= (max_damage * CRIT_DISMEMBER_DAMAGE_THRESHOLD))) //No crits unless the damage is maxed out.
 			do_crit = FALSE // We used to check if they are buckled or lying down but being grounded is a big enough advantage.
@@ -272,14 +272,10 @@
 			used = round(damage_dividend * 20 + (dam / 2))
 			if(prob(used))
 				attempted_wounds += /datum/wound/sunder
-	if((bclass in GLOB.charring_bclasses))
+	if(bclass in GLOB.charring_bclasses)
 		used = round(damage_dividend * 20 + (dam / 3))
-		if(user && istype(user.rmb_intent, /datum/rmb_intent/strong))
-			dam += 10
-		if(HAS_TRAIT(src, TRAIT_CRITICAL_WEAKNESS))
-			attempted_wounds += /datum/wound/burn/strong
 		if(prob(used))
-			attempted_wounds += /datum/wound/burn
+			attempted_wounds += /datum/wound/charring
 
 
 	// Check if critical resistance applies
@@ -361,6 +357,10 @@
 			used = round(damage_dividend * 20 + (dam / 2))
 			if(prob(used))
 				attempted_wounds += list(/datum/wound/sunder/chest)
+	if(bclass in GLOB.charring_bclasses)
+		used = round(damage_dividend * 20 + (dam / 3))
+		if(prob(used))
+			attempted_wounds += /datum/wound/charring/chest 
 
 	// Check if critical resistance applies
 	var/has_crit_attempt = length(attempted_wounds)
