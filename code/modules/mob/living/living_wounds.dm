@@ -197,13 +197,13 @@
 		used = round(max(dam / 3, 1), 1)
 		if(prob(used))
 			attempted_wounds += /datum/wound/artery/chest
-		if(bclass in GLOB.charring_bclasses)
-			var/charring_type = /datum/wound/charring/chest
-			if(check_zone(zone_precise) == BODY_ZONE_HEAD)
-				charring_type = /datum/wound/charring/head
-				used = round((health / maxHealth) * 20 + (dam / 3), 1)
-				if(prob(used))
-					attempted_wounds += charring_type
+	if(bclass in GLOB.charring_bclasses)
+		var/charring_type = /datum/wound/charring/chest
+		if(check_zone(zone_precise) == BODY_ZONE_HEAD)
+			charring_type = /datum/wound/charring/head
+			used = round((health / maxHealth) * 20 + (dam / 3), 1)
+			if(prob(used))
+				attempted_wounds += charring_type
 
 	for(var/wound_type in shuffle(attempted_wounds))
 		var/datum/wound/applied = simple_add_wound(wound_type, silent, crit_message)
