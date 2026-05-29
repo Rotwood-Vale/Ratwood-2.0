@@ -103,6 +103,8 @@
 
 	var/list/gameplay_entries = list(
 		list("id" = "autoconsume", "label" = "AutoConsume", "enabled" = !!owner.prefs.autoconsume, "desc" = "Repeat consume/feed interactions automatically."),
+		list("id" = "autowoodcut", "label" = "AutoWoodcut", "enabled" = !!owner.prefs.autowoodcut, "desc" = "Automatically continue chopping a tree after the first swing."),
+		list("id" = "autopicking", "label" = "AutoPicking", "enabled" = !!owner.prefs.autopicking, "desc" = "Automatically continue mining after clicking or bumping a rock wall with a pickaxe in hand."),
 		list("id" = "show_rolls", "label" = "Show Rolls", "enabled" = !!owner.prefs.showrolls, "desc" = "Show combat and check roll details in chat."),
 		list("id" = "combat_strip", "label" = "Combat Mode Stripping", "enabled" = !!(owner.prefs.toggles & CMODE_STRIPPING), "desc" = "Allow opening strip menu while in combat mode."),
 		list("id" = "hide_unavailable_emotes", "label" = "Hide Unavailable Noises", "enabled" = !!owner.prefs.hide_unavailable_emotes, "desc" = "Hide anatomy-specific noise verbs your current body cannot use."),
@@ -179,6 +181,10 @@
 				owner.toggle_xptext()
 			if("autoconsume")
 				owner.autoconsume()
+			if("autowoodcut")
+				owner.toggle_autowoodcut()
+			if("autopicking")
+				owner.toggle_autopicking()
 			if("show_rolls")
 				owner.show_rolls()
 			if("combat_strip")
@@ -292,6 +298,30 @@
 			to_chat(src, "You will now try to repeatedly consume/feed food/drinks")
 		else
 			to_chat(src, "You will no longer try to repeatedly consume/feed food/drinks")
+
+/client/verb/toggle_autowoodcut()
+	set category = "Options"
+	set name = "Toggle AutoWoodcut"
+	set hidden = 1
+	if(prefs)
+		prefs.autowoodcut = !prefs.autowoodcut
+		prefs.save_preferences()
+		if(prefs.autowoodcut)
+			to_chat(src, "You will now automatically continue chopping trees.")
+		else
+			to_chat(src, "You will no longer automatically continue chopping trees.")
+
+/client/verb/toggle_autopicking()
+	set category = "Options"
+	set name = "Toggle AutoPicking"
+	set hidden = 1
+	if(prefs)
+		prefs.autopicking = !prefs.autopicking
+		prefs.save_preferences()
+		if(prefs.autopicking)
+			to_chat(src, "You will now automatically continue mining rock walls.")
+		else
+			to_chat(src, "You will no longer automatically continue mining rock walls.")
 
 /client/verb/toggle_hide_unavailable_emotes()
 	set category = "Options"

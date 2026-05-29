@@ -208,6 +208,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/nsfw_examine_always = FALSE
 	var/mute_animal_emotes = FALSE
 	var/autoconsume = FALSE
+	var/autowoodcut = TRUE
+	var/autopicking = TRUE
 	var/runmode = FALSE
 	var/no_examine_blocks = FALSE
 	var/no_autopunctuate = FALSE
