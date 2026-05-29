@@ -24,6 +24,20 @@
 /obj/structure/flora/roguetree/attack_right(mob/user)
 	handle_special_items_retrieval(user, src)
 
+/obj/structure/flora/roguetree/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	if(!isliving(user) || user.used_intent.blade_class != BCLASS_CHOP)
+		return
+	var/mob/living/L = user
+	user.doing = FALSE
+	while(!QDELETED(src) && user.Adjacent(src))
+		if((L.energy > 0) && do_after(user, CLICK_CD_MELEE, TRUE, src))
+			if(QDELETED(src))
+				break
+			..()
+		else
+			break
+
 /obj/structure/flora/roguetree/attacked_by(obj/item/I, mob/living/user)
 	var/was_destroyed = obj_destroyed
 	. = ..()

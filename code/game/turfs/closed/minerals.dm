@@ -62,6 +62,20 @@
 		return TRUE
 	return ..()
 
+// This is snowflaked bump code for mineral walls. Bumping into walls allows you to mine them, if you have apprentice+ skill.
+// My wrists hurt. Let us have this. okay?
+/turf/closed/mineral/Bumped(atom/movable/AM)
+	. = ..()
+	if(ishuman(AM))
+		var/mob/living/carbon/human/user = AM
+		var/obj/item = user.get_active_held_item()
+		if(user.used_intent.type == /datum/intent/pick && (user.get_skill_level(/datum/skill/labor/mining) >= SKILL_LEVEL_APPRENTICE))
+			if(do_after(user, 1 SECONDS, TRUE, src, TRUE, null, TRUE))
+				if(!ismineralturf(src))
+					return
+				src.attackby(item, user, multiplier = 2)
+				user.stamina_add(25)
+
 /turf/closed/mineral/attackby(obj/item/I, mob/user, params, multiplier)
 	if (!user.IsAdvancedToolUser())
 		to_chat(usr, span_warning("I don't have the dexterity to do this!"))
@@ -93,8 +107,8 @@
 
 /turf/closed/mineral/attack_right(mob/user)
 	var/obj/item = user.get_active_held_item()
-	if(user.used_intent.type == /datum/intent/pick && (user.get_skill_level(/datum/skill/labor/mining) >= SKILL_LEVEL_JOURNEYMAN))
-		if(do_after(user, 4 SECONDS, TRUE, src))
+	if(user.used_intent.type == /datum/intent/pick && (user.get_skill_level(/datum/skill/labor/mining) >= SKILL_LEVEL_APPRENTICE))
+		if(do_after(user, 2 SECONDS, TRUE, src))
 			if(!ismineralturf(src))
 				return
 			src.attackby(item, user, multiplier = 4)
