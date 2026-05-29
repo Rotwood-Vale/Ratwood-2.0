@@ -421,7 +421,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	name = "Hunted"
 	desc = "Something in my past has made me a target. I'm always looking over my shoulder. <br>\
 	YOU MAY BE PERMANENTLY REMOVED FROM THE ROUND WITHOUT PRIOR ESCALATION BY YOUR ASSASSIN!<br>\
-	<small>This is not a license to mindlessly frag. No Escalation != No Roleplay. This merely allows you to remove them after confrontation. You should still engage your target as any other person you intend to kill before doing so.</small>"
+	<small>This is not a license for them to mindlessly frag you. No Escalation != No Roleplay. This merely allows them to remove you after confrontation. They should still engage their target as any other person they intend to kill before doing so.</small>"
 	var/logged = FALSE
 
 /datum/charflaw/hunted/on_mob_creation(mob/user)
