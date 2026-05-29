@@ -933,6 +933,7 @@
 #include "code\datums\wounds\types\arteries.dm"
 #include "code\datums\wounds\types\bites.dm"
 #include "code\datums\wounds\types\bruises.dm"
+#include "code\datums\wounds\types\charring.dm"
 #include "code\datums\wounds\types\dislocations.dm"
 #include "code\datums\wounds\types\dismemberment.dm"
 #include "code\datums\wounds\types\fractures.dm"
