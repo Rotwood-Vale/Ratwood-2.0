@@ -37,6 +37,7 @@
 	damage = 40
 	npc_simple_damage_mult = 2 // Good news it is not a trap to shoot at NPC anymore
 	damage_type = BURN
+	woundclass = BCLASS_BURN
 	accuracy = 40 // Base accuracy is lower for burn projectiles because they bypass armor
 	nodamage = FALSE
 	speed = 0.3
