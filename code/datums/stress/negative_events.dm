@@ -524,6 +524,11 @@
 	desc = span_boldred("The proof of my oath! It's been stolen!")
 	timer = INFINITY
 
+/datum/stressevent/exorcistseen
+	stressadd = 1
+	desc = span_boldred("Their eyes are disturbing...")
+	timer = 10 MINUTES
+
 // this generally only happens if you're below 10 FOR, this is a little nudge to work on your luck stat
 /datum/stressevent/xylixian_pity
 	timer = 5 MINUTES

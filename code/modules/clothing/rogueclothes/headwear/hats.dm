@@ -293,6 +293,10 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 	resistance_flags = FIRE_PROOF // drip is eternal
 
+/obj/item/clothing/head/roguetown/inqhat/excorcist
+	name = "Excorcists Fancy Hat"
+	desc = "A fine leather hat, beplumed with a crimson feather from a griphon, fitted with a steel cap to protect ones skull."
+
 /obj/item/clothing/head/roguetown/headband/red
 	color = CLOTHING_RED
 
