@@ -8,4 +8,4 @@
 /datum/statpack/agile/wary
 	name = "Wary"
 	desc = "Some call it fear, others call it cowardice. You, however, call it caution and prudence."
-	stat_array = list(STAT_PERCEPTION = 1)
+	stat_array = list(STAT_PERCEPTION = 2)
