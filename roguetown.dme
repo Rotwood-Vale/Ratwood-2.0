@@ -2865,6 +2865,7 @@
 #include "code\modules\surgery\surgeries\external_organs.dm"
 #include "code\modules\surgery\surgeries\fracture.dm"
 #include "code\modules\surgery\surgeries\frostbite.dm"
+#include "code\modules\surgery\surgeries\charring.dm"
 #include "code\modules\surgery\surgeries\healing.dm"
 #include "code\modules\surgery\surgeries\limb_replacement.dm"
 #include "code\modules\surgery\surgeries\mouth_to_mouth.dm"
