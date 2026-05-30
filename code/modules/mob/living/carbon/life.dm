@@ -123,6 +123,14 @@
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_HOLDBREATH))
 		adjustOxyLoss(10)
+	var/list/lethal_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST);
+	if(health <= HEALTH_THRESHOLD_FULLCRIT && getFireLoss(lethal_zones) >= (100 / FIRE_HARDCRIT_DIVISOR) * getMaxHealth(lethal_zones)) //Oxyloss in Firecrit
+		adjustOxyLoss(4)
+		var/burn_crit_count = 0
+		for(var/datum/wound/charring/char_wound in get_wounds())
+			burn_crit_count++
+			if(burn_crit_count > 1)
+				adjustOxyLoss(4) //Oxygen loss doubles if you have 2 burn crits
 	if(istype(loc, /obj/structure/closet/dirthole))
 		adjustOxyLoss(5)
 	if(istype(loc, /obj/structure/closet/burial_shroud))
