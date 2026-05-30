@@ -220,12 +220,12 @@
 			if(drilltime >= 50) // Adjust this as you like. Currently, it'll alert once half-way done.
 				src.say("DUCHY ALERTED.")
 				playsound(src, 'sound/misc/jawbankanguish.ogg', 100, FALSE, -1)
-				send_ooc_note("A parasite of the Freefolk is breaking [src]! Location: The Vault", job = list("Grand Duke", "Steward", "Clerk"))
+				send_ooc_note("A parasite of the Freefolk is breaking [src]! Location: The Vault", job = list("Duke", "Steward", "Clerk"))
 				has_reported = TRUE
 		else
 			src.say("DUCHY ALERTED.")
 			playsound(src, 'sound/misc/jawbankanguish.ogg', 100, FALSE, -1)
-			send_ooc_note("A parasite of the Freefolk is breaking [src]! Location: The Vault", job = list("Grand Duke", "Steward", "Clerk"))
+			send_ooc_note("A parasite of the Freefolk is breaking [src]! Location: The Vault", job = list("Duke", "Steward", "Clerk"))
 			has_reported = TRUE
 
 	playsound(src, 'sound/misc/TheDrill.ogg', 50, TRUE)
@@ -340,7 +340,7 @@
 		visible_message(span_notice("[src] just spat up a total of [lumpsum] mammon - <b>A lump sum!</b>"))
 		playsound(src, 'sound/misc/coindispense.ogg', 70, TRUE)
 		anguish()
-		send_ooc_note("Someone knocked a lump-sum loose from [src] at the Vault!", job = list("Grand Duke", "Steward", "Clerk"))
+		send_ooc_note("Someone knocked a lump-sum loose from [src] at the Vault!", job = list("Duke", "Steward", "Clerk"))
 		SStreasury.log_to_steward("-[lumpsum] was the lump-sum knocked loose from [src]!")
 		resetlump(src)
 

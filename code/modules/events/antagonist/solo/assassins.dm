@@ -10,7 +10,7 @@
 	shared_occurence_type = SHARED_MINOR_THREAT
 
 	restricted_roles = list(
-		"Grand Duke",
+		"Duke",
 		"Grand Duchess",
 		"Consort",
 		"Dungeoneer",

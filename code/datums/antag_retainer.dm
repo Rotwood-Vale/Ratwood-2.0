@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(found_lords)
 	// Only clean up if we have a functional living lord (meaning the crisis is over)
 	var/has_functional_lord = FALSE
 	for(var/mob/living/carbon/human/H in GLOB.human_list)
-		if(H.mind && (H.mind.assigned_role == "Grand Duke" || H.mind.assigned_role == "Grand Duchess"))
+		if(H.mind && (H.mind.assigned_role == "Duke" || H.mind.assigned_role == "Grand Duchess"))
 			if(H.stat != DEAD && !isbrain(H) && H.get_bodypart(BODY_ZONE_HEAD))
 				has_functional_lord = TRUE
 				break
@@ -85,7 +85,7 @@ GLOBAL_LIST_EMPTY(found_lords)
 	
 	// Check for living lords and track all lords
 	for(var/mob/living/carbon/human/H in GLOB.human_list)
-		if(H.mind && (H.mind.assigned_role == "Grand Duke" || H.mind.assigned_role == "Grand Duchess"))
+		if(H.mind && (H.mind.assigned_role == "Duke" || H.mind.assigned_role == "Grand Duchess"))
 			if(H.ckey)
 				GLOB.found_lords[H.ckey] = TRUE
 			

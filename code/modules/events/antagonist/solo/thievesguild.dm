@@ -13,7 +13,7 @@
 
 	// Restrict from important roles
 	restricted_roles = list(
-		"Grand Duke",
+		"Duke",
 		"Grand Duchess",
 		"Consort",
 		"Dungeoneer",

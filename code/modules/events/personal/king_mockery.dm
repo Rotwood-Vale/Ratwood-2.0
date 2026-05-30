@@ -18,7 +18,7 @@
 		return FALSE
 
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
-		if(!istype(H) || H.stat == DEAD || !H.client || H.job == "Grand Duke")
+		if(!istype(H) || H.stat == DEAD || !H.client || H.job == "Duke")
 			continue
 		if(!H.patron || !istype(H.patron, /datum/patron/divine/xylix))
 			continue
@@ -32,7 +32,7 @@
 	var/list/valid_targets = list()
 
 	for(var/mob/living/carbon/human/human_mob in GLOB.player_list)
-		if(!istype(human_mob) || human_mob.stat == DEAD || !human_mob.client || human_mob.job == "Grand Duke")
+		if(!istype(human_mob) || human_mob.stat == DEAD || !human_mob.client || human_mob.job == "Duke")
 			continue
 		if(!human_mob.patron || !istype(human_mob.patron, /datum/patron/divine/xylix))
 			continue
