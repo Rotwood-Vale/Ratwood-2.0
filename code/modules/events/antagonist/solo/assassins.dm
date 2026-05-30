@@ -11,7 +11,7 @@
 
 	restricted_roles = list(
 		"Duke",
-		"Grand Duchess",
+		"Duchess",
 		"Consort",
 		"Dungeoneer",
 		"Sergeant",

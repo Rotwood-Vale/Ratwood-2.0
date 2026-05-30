@@ -76,7 +76,7 @@
 		departing_mob.visible_message("<span class='notice'>[departing_mob == user ? "Out of their own volition, " : "Ushered by [user], "][departing_mob] leaves the vale.</span>")
 		// If departure is a lord, remove them from found_lords to prevent false omen triggers
 	if(departing_mob.mind && departing_mob.ckey)
-		if(departing_mob.mind.assigned_role == "Duke" || departing_mob.mind.assigned_role == "Grand Duchess")
+		if(departing_mob.mind.assigned_role == "Duke" || departing_mob.mind.assigned_role == "Duchess")
 			if(GLOB.found_lords[departing_mob.ckey])
 				GLOB.found_lords -= departing_mob.ckey
 	if(departing_mob.has_embedded_objects())

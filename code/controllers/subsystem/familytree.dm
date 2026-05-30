@@ -32,7 +32,7 @@ SUBSYSTEM_DEF(familytree)
 	//These jobs are excluded from AddLocal()
 	var/list/excluded_jobs = list(
 		"Duke",
-		"Grand Duchess",
+		"Duchess",
 		"Consort",
 		"Suitor",
 		"Hand",
@@ -215,7 +215,7 @@ SUBSYSTEM_DEF(familytree)
 /datum/controller/subsystem/familytree/proc/GetCurrentMonarch()
 	// Find the monarch at generation 12 (current ruling generation)
 	for(var/datum/family_member/member in ruling_family.members)
-		if(member.generation == 12 && (member.person.job == "Duke" || member.person.job == "Grand Duchess"))
+		if(member.generation == 12 && (member.person.job == "Duke" || member.person.job == "Duchess"))
 			return member
 	return null
 
