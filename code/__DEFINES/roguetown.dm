@@ -441,6 +441,7 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CLASS_CAT_GRONN "Gronn"
 #define CLASS_CAT_OTAVA "Otava"
 #define CLASS_CAT_KAZENGUN "Kazengun"
+#define CLASS_CAT_FAITH "Faith"
 #define CLASS_CAT_RACIAL "Race Exclusive" //Used for black oaks, grudgebearer dwarves, etc.
 
 //Migrant categories

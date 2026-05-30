@@ -1962,6 +1962,7 @@
 #include "code\modules\jobs\job_types\roguetown\mercenaries\classes\ferentia.dm"
 #include "code\modules\jobs\job_types\roguetown\mercenaries\classes\forlorn.dm"
 #include "code\modules\jobs\job_types\roguetown\mercenaries\classes\freifechter.dm"
+#include "code\modules\jobs\job_types\roguetown\mercenaries\classes\gallant.dm"
 #include "code\modules\jobs\job_types\roguetown\mercenaries\classes\grenzelhoft.dm"
 #include "code\modules\jobs\job_types\roguetown\mercenaries\classes\gronnheavy.dm"
 #include "code\modules\jobs\job_types\roguetown\mercenaries\classes\grudgebearer.dm"

@@ -37,6 +37,7 @@
 		/datum/advclass/mercenary/ferentia/thug,
 		/datum/advclass/mercenary/ferentia/crossbowman,
 		/datum/advclass/mercenary/ferentia/longbowman,
+		/datum/advclass/mercenary/gallant,
 		/datum/advclass/mercenary/freelancer,
 		/datum/advclass/mercenary/freelancer/lancer,
 		/datum/advclass/mercenary/grenzelhoft,
