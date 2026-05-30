@@ -773,6 +773,17 @@
 		var/my_burn = abs((bodypart.burn_dam / bodypart.max_damage) * hardcrit_divisor)
 		total_burn = max(total_burn, my_burn)
 		used_damage = max(used_damage, my_burn)
+		var/ref_max_damage = 200 // fallback
+		var/firedamage = 0 
+		if(bodypart.body_zone == BODY_ZONE_CHEST)
+			ref_max_damage = bodypart.max_damage // -- Takes the persons max chest damage as the new ref
+			firedamage = bodypart.burn_dam
+		if((firedamage >= ref_max_damage) && !burn_warned && health <= HEALTH_THRESHOLD_FULLCRIT && !HAS_TRAIT(src, TRAIT_NOBREATH)) // I know this is a hell of a line, bear with me.
+			burn_warned = TRUE
+			src.visible_message(span_boldwarning("[src]'s body is wreathed in searing burns!"))
+			to_chat(src, span_userdanger("Searing heat is tearing through me! If this doesn't stop I will die!"))
+		if(firedamage < ref_max_damage && health > HEALTH_THRESHOLD_CRIT)
+			burn_warned = FALSE
 	if(used_damage < total_tox)
 		used_damage = total_tox
 	if(used_damage < total_oxy)
@@ -790,6 +801,7 @@
 
 /mob/living/carbon
 	var/lightning_flashing = FALSE
+	var/burn_warned = FALSE
 
 /mob/living/carbon/update_sight()
 	if(!client)
