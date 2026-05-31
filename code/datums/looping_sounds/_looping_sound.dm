@@ -53,7 +53,6 @@ GLOBAL_LIST_EMPTY(created_sound_groups)
 	var/frequency
 	var/stopped = TRUE
 	var/persistent_loop = FALSE //we stay in the client's played_loops so we keep updating volume even when out of range
-	var/repeat_sound = TRUE // if FALSE, sound plays once client-side instead of looping
 	var/cursound
 	var/list/thingshearing = list() // this is a list of WEAKREFS to the mobs that can currently hear us
 	var/ignore_walls = TRUE
@@ -254,7 +253,7 @@ GLOBAL_LIST_EMPTY(created_sound_groups)
 	if(persistent_loop)
 		GLOB.persistent_sound_loops -= src
 	if(!direct)
-		for(var/datum/weakref/listener_ref in thingshearing.Copy())
+		for(var/datum/weakref/listener_ref in thingshearing)
 			var/mob/M = listener_ref.resolve()
 			if (!M)
 				continue
