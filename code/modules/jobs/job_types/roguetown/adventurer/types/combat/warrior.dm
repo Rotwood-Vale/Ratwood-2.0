@@ -469,7 +469,7 @@
 		var/sidearm_choice = input(H, "Choose your STEEL.", "SAY YOUR PRAYERS.") as anything in sidearm
 		switch(sidearm_choice)
 			if("Kriegsmesser")
-				l_hand = /obj/item/rogueweapon/long/kriegmesser
+				l_hand = /obj/item/rogueweapon/sword/long/kriegmesser
 			if("Short Sword")
 				l_hand = /obj/item/rogueweapon/sword/short
 			if("Longsword")
@@ -496,9 +496,9 @@
 				ADD_TRAIT(H, TRAIT_SILVER_BLESSED, TRAIT_GENERIC) //'Witcher' archetype. Weaponized alchemy gifts both immunity to nitebeastly curses and a self-suppliable +3 statboost. Well-rounded in almost every facet, but leaves less to chance.
 				H.change_stat(STATKEY_INT, 1)
 				H.change_stat(STATKEY_LCK, -1)
-				head = /obj/item/clothing/head/roguetown/puritan/armored
-				armor = /obj/item/clothing/suit/roguetown/shirt/undershirt/puritan
-				shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
+				head = /obj/item/clothing/head/roguetown/inqhat/excorcist
+				armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
+				shirt = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted
 				belt = /obj/item/storage/belt/rogue/leather/black
 				beltl = pick(
 					/obj/item/reagent_containers/glass/bottle/alchemical/strpot,
@@ -521,10 +521,11 @@
 			if("Orthodoxist - Plate Training + Cuirass")
 				ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_ZOMBIE_IMMUNE, TRAIT_GENERIC) //'Templar' archetype. Blessings protect from the Rot, while opening the opportunity for heavy armor usage. Well-protected and resilient, but slower and visibly identifiable as a prioritable threat.
-				H.change_stat(STATKEY_CON, 1)
-				H.change_stat(STATKEY_SPD, -1)
-				armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted
-				shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/puritan
+				H.change_stat(STATKEY_CON, 3)
+				H.change_stat(STATKEY_STR, 2)
+				H.change_stat(STATKEY_SPD, -2)
+				armor = /obj/item/clothing/suit/roguetown/armor/plate/full/fluted
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 				belt = /obj/item/storage/belt/rogue/leather/black
 				var/helmets = list("Puritan's Armored Hat", "Visored Sallet", "Volfskulle Bascinet", "Fluted Armet")
 				var/helmet_choice = input(H, "Choose your VISAGE.", "GET PSYCHED.") as anything in helmets
@@ -558,7 +559,7 @@
 		H.adjust_skillrank(/datum/skill/combat/whipsflails, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/axes, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
-	//Old people get the option to become glass cannons. Expert Knives + Expert in their chosen weapon, but a permenant -I STR, -I PER, -2 SPD and -2 CON debuff.
+	//Old people get the option to become glass cannons. Master Knives + Master in their chosen weapon, but a permenant -I STR, -I PER, -2 SPD and -2 CON debuff.
 /datum/advclass/sfighter/amazon
 	name = "Amazon"
 	tutorial = "Fierce warrior women from distant lands, Amazons choose their armor based on their preferred fighting style - from light and agile to heavily protected."
