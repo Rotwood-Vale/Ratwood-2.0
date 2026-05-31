@@ -1056,13 +1056,12 @@
 
 /obj/structure/mineral_door/wood/donjon/reinforced
 	desc = "A reinforced door with a complex looking lock."
-	icon_state = "vaultdir"
-	base_state = "vault"
+	icon_state = "donjondir"
+	base_state = "donjon"
 	keylock = TRUE
 	max_integrity = 3000
-	over_state = "vaultopen"
+	over_state = "dunjonopen"
 	kickthresh = 50
-	verysecure = TRUE
 
 /obj/structure/mineral_door/wood/donjon/stone/attack_right(mob/user)
 	// Check for keys first (inherited from parent)
