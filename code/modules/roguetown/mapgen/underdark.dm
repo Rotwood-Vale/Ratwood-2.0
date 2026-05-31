@@ -19,7 +19,7 @@
 							/obj/structure/roguerock = 25,
 							/obj/item/natural/rock = 25,
 						/obj/structure/vine = 5,
-						/obj/effect/hunting_track = 5)
+						/obj/effect/landmark/hunting_spawner = 5)
 
 /datum/mapGeneratorModule/underdarkmud
 	clusterCheckFlags = CLUSTER_CHECK_SAME_ATOMS
@@ -34,7 +34,7 @@
 							/obj/structure/zizo_bane = 2,
 							/obj/structure/flora/roguegrass = 30,
 						/obj/structure/flora/roguegrass/herb/random = 5,
-						/obj/effect/hunting_track = 5)
+						/obj/effect/landmark/hunting_spawner = 5)
 	spawnableTurfs = list(/turf/open/floor/rogue/grasspurple = 2)
 	
 /obj/effect/landmark/mapGenerator/rogue/underdark
@@ -54,7 +54,8 @@
 							/obj/structure/flora/tinymushrooms/unhappy = 20,
 							/obj/structure/roguerock = 25,
 							/obj/item/natural/rock = 25,
-							/obj/structure/vine = 5)
+							/obj/structure/vine = 5,
+							/obj/effect/landmark/hunting_spawner = 5)
 
 /datum/mapGeneratorModule/underdarkscarymud
 	clusterCheckFlags = CLUSTER_CHECK_SAME_ATOMS
@@ -70,5 +71,6 @@
 							/obj/structure/glowshroom = 2,
 							/obj/structure/zizo_bane = 2,
 							/obj/structure/flora/roguegrass = 30,
-							/obj/structure/flora/roguegrass/herb/random = 5)
+							/obj/structure/flora/roguegrass/herb/random = 5,
+							/obj/effect/landmark/hunting_spawner = 5)
 	spawnableTurfs = list(/turf/open/floor/rogue/grasspurple = 2)

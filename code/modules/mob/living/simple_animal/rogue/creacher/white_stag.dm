@@ -260,10 +260,9 @@
 				S.pixel_x = 16
 
 		to_chat(user, span_notice("You mount [src] firmly."))
+		qdel(src)
 
-	qdel(src)
 	return
-	..()
 
 /obj/structure/fluff/walldeco/mounted_head
 	name = "mounted white stag head"

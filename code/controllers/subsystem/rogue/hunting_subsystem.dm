@@ -2,6 +2,11 @@ GLOBAL_LIST_INIT(bog_mire, list(
 	/area/rogue/outdoors/bog,
 	/area/rogue/outdoors/bog/north,
 	/area/rogue/outdoors/bog/south,
+	/area/rogue/outdoors/bograt,
+	/area/rogue/outdoors/bograt/north,
+	/area/rogue/outdoors/bograt/south,
+	/area/rogue/outdoors/bograt/west,
+	/area/rogue/outdoors/bograt/sunken,
 	/area/rogue/under/cavewet/bogcaves,
 	/area/rogue/under/cavewet/bogcaves/west,
 	/area/rogue/under/cavewet/bogcaves/central,
@@ -14,6 +19,11 @@ GLOBAL_LIST_INIT(underdark, list(
 	/area/rogue/under/underdark,
 	/area/rogue/under/underdark/south,
 	/area/rogue/under/underdark/north,
+	/area/rogue/under/underdark/rockhill,
+	/area/rogue/under/underdark/rockhill/east,
+	/area/rogue/under/underdark/rockhill/west,
+	/area/rogue/under/underdarker,
+	/area/rogue/under/underdarker/rockhill,
 	/area/rogue/under/cavewet
 ))
 
@@ -24,13 +34,48 @@ GLOBAL_LIST_INIT(main_forest, list(
 	/area/rogue/outdoors/woods/southeast,
 	/area/rogue/outdoors/woods/south,
 	/area/rogue/outdoors/woods/southwest,
-	/area/rogue/outdoors/woods/northwest
+	/area/rogue/outdoors/woods/northwest,
+	/area/rogue/outdoors/woodsrat,
+	/area/rogue/outdoors/woodsrat/north,
+	/area/rogue/outdoors/woodsrat/south
 ))
 
 GLOBAL_LIST_INIT(coastal_forest, list(
+	/area/rogue/outdoors/beach,
+	/area/rogue/outdoors/beach/north,
+	/area/rogue/outdoors/beach/south,
+	/area/rogue/outdoors/beach/byos,
 	/area/rogue/outdoors/beach/forest,
 	/area/rogue/outdoors/beach/forest/north,
 	/area/rogue/outdoors/beach/forest/south
+))
+
+GLOBAL_LIST_INIT(jungle_island, list(
+	/area/rogue/outdoors/jungle,
+	/area/rogue/outdoors/byos,
+	/area/rogue/outdoors/town/byos,
+	/area/rogue/under/cavewet/byos,
+	/area/rogue/under/cavewet/byos/banditcove
+))
+
+GLOBAL_LIST_INIT(mountains, list(
+	/area/rogue/outdoors/mountains,
+	/area/rogue/outdoors/mountains/deception,
+	/area/rogue/outdoors/mountains/decap,
+	/area/rogue/outdoors/mountains/decap/rockhill,
+	/area/rogue/outdoors/mountains/decap/stepbelow,
+	/area/rogue/outdoors/mountains/decap/gunduzirak,
+	/area/rogue/outdoors/mountains/decap/minotaurfort
+))
+
+GLOBAL_LIST_INIT(caves, list(
+	/area/rogue/indoors/cave,
+	/area/rogue/under/cave,
+	/area/rogue/under/cave/spider,
+	/area/rogue/under/cavewet,
+	/area/rogue/under/cavelava,
+	/area/rogue/outdoors/caves,
+	/area/rogue/outdoors/spidercave
 ))
 
 SUBSYSTEM_DEF(hunting)
@@ -74,9 +119,9 @@ SUBSYSTEM_DEF(hunting)
 			area_lookup[area_path] = group_list
 		qdel(GA)
 
-/datum/controller/subsystem/hunting/proc/get_linked_areas(area/A)
+/datum/controller/subsystem/hunting/proc/get_linked_areas(area_type)
 	// Return the cached reference, or a unique list if it's a "solo" area
-	return area_lookup[A.type] || list(A.type)
+	return area_lookup[area_type] || list(area_type)
 
 // These are used just to provide a memory-optimized way to link areas together on trail init.
 // Since every track references the same lists, this should be optimized? If not, slap me.
@@ -96,3 +141,12 @@ SUBSYSTEM_DEF(hunting)
 
 /datum/hunting_area_group/main_forest/get_areas()
 	return GLOB.main_forest
+
+/datum/hunting_area_group/jungle_island/get_areas()
+	return GLOB.jungle_island
+
+/datum/hunting_area_group/mountains/get_areas()
+	return GLOB.mountains
+
+/datum/hunting_area_group/caves/get_areas()
+	return GLOB.caves

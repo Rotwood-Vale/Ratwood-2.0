@@ -9,12 +9,15 @@
 
 /obj/effect/landmark/hunting_spawner/Initialize(mapload)
 	. = ..()
-	SShunting.active_spawners += src
+	SShunting.active_spawners |= src
+	respawn_trail()
 
 /obj/effect/landmark/hunting_spawner/Destroy()
 	SShunting.active_spawners -= src
 	return ..()
 
 /obj/effect/landmark/hunting_spawner/proc/respawn_trail()
+	if(locate(/obj/effect/hunting_track) in get_turf(src))
+		return FALSE
 	new /obj/effect/hunting_track(src.loc)
-	qdel(src)
+	return TRUE

@@ -35,7 +35,21 @@
 		/area/rogue/outdoors/woods/south = 30,
 		/area/rogue/outdoors/woods/southwest = 30,
 		/area/rogue/outdoors/woods/northwest = 30,
-		/area/rogue/outdoors/rtfield = 50
+		/area/rogue/outdoors/woodsrat = 30,
+		/area/rogue/outdoors/woodsrat/north = 30,
+		/area/rogue/outdoors/woodsrat/south = 30,
+		/area/rogue/outdoors/rtfield = 50,
+		/area/rogue/outdoors/rtfield/rockhill = 50,
+		/area/rogue/outdoors/jungle = 30,
+		/area/rogue/outdoors/byos = 30,
+		/area/rogue/outdoors/town/byos = 30,
+		/area/rogue/outdoors/beach = 25,
+		/area/rogue/outdoors/beach/north = 25,
+		/area/rogue/outdoors/beach/south = 25,
+		/area/rogue/outdoors/beach/byos = 25,
+		/area/rogue/outdoors/beach/forest = 30,
+		/area/rogue/outdoors/beach/forest/north = 30,
+		/area/rogue/outdoors/beach/forest/south = 30
 	)
 
 /datum/hunting_category/mid_tier
@@ -58,7 +72,16 @@
 		/area/rogue/outdoors/woods/southeast = 50,
 		/area/rogue/outdoors/woods/south = 50,
 		/area/rogue/outdoors/woods/southwest = 50,
-		/area/rogue/outdoors/woods/northwest = 50
+		/area/rogue/outdoors/woods/northwest = 50,
+		/area/rogue/outdoors/woodsrat = 50,
+		/area/rogue/outdoors/woodsrat/north = 50,
+		/area/rogue/outdoors/woodsrat/south = 50,
+		/area/rogue/outdoors/jungle = 45,
+		/area/rogue/outdoors/byos = 45,
+		/area/rogue/outdoors/town/byos = 45,
+		/area/rogue/outdoors/beach/forest = 40,
+		/area/rogue/outdoors/beach/forest/north = 40,
+		/area/rogue/outdoors/beach/forest/south = 40
 	)
 
 /datum/hunting_category/high_tier
@@ -83,7 +106,19 @@
 		/area/rogue/outdoors/woods/south = 20,
 		/area/rogue/outdoors/woods/southwest = 20,
 		/area/rogue/outdoors/woods/northwest = 20,
-		/area/rogue/outdoors/mountains/decap = 50
+		/area/rogue/outdoors/woodsrat = 20,
+		/area/rogue/outdoors/woodsrat/north = 20,
+		/area/rogue/outdoors/woodsrat/south = 20,
+		/area/rogue/outdoors/jungle = 25,
+		/area/rogue/outdoors/byos = 25,
+		/area/rogue/outdoors/town/byos = 25,
+		/area/rogue/outdoors/mountains = 40,
+		/area/rogue/outdoors/mountains/deception = 40,
+		/area/rogue/outdoors/mountains/decap = 50,
+		/area/rogue/outdoors/mountains/decap/rockhill = 50,
+		/area/rogue/outdoors/mountains/decap/stepbelow = 50,
+		/area/rogue/outdoors/mountains/decap/gunduzirak = 50,
+		/area/rogue/outdoors/mountains/decap/minotaurfort = 50
 	)
 
 /datum/hunting_category/cursed
@@ -97,7 +132,11 @@
 	preferred_areas = list(
 		/area/rogue/outdoors/beach/forest = 50,
 		/area/rogue/outdoors/beach/forest/north = 50,
-		/area/rogue/outdoors/beach/forest/south = 50
+		/area/rogue/outdoors/beach/forest/south = 50,
+		/area/rogue/outdoors/beach = 35,
+		/area/rogue/outdoors/beach/north = 35,
+		/area/rogue/outdoors/beach/south = 35,
+		/area/rogue/outdoors/beach/byos = 35
 	)
 
 /datum/hunting_category/spiders
@@ -115,7 +154,17 @@
 		/area/rogue/under/underdark = 40,
 		/area/rogue/under/underdark/south = 40,
 		/area/rogue/under/underdark/north = 40,
-		/area/rogue/under/cavewet = 40
+		/area/rogue/under/underdark/rockhill = 40,
+		/area/rogue/under/underdark/rockhill/east = 40,
+		/area/rogue/under/underdark/rockhill/west = 40,
+		/area/rogue/under/underdarker = 40,
+		/area/rogue/under/underdarker/rockhill = 40,
+		/area/rogue/under/cavewet = 40,
+		/area/rogue/under/cavewet/byos = 40,
+		/area/rogue/under/cavewet/byos/banditcove = 40,
+		/area/rogue/under/cave = 35,
+		/area/rogue/under/cave/spider = 50,
+		/area/rogue/under/cavelava = 25
 	)
 
 /datum/hunting_category/mire_spiders
@@ -136,6 +185,12 @@
 		/area/rogue/outdoors/bog = 60,
 		/area/rogue/outdoors/bog/north = 60,
 		/area/rogue/outdoors/bog/south = 60,
+		/area/rogue/outdoors/bograt = 60,
+		/area/rogue/outdoors/bograt/north = 60,
+		/area/rogue/outdoors/bograt/south = 60,
+		/area/rogue/outdoors/bograt/west = 60,
+		/area/rogue/outdoors/bograt/sunken = 60,
+		/area/rogue/outdoors/jungle = 35,
 		/area/rogue/under/cavewet/bogcaves = 60,
 		/area/rogue/under/cavewet/bogcaves/west = 60,
 		/area/rogue/under/cavewet/bogcaves/central = 60,

@@ -23,7 +23,7 @@
 							/obj/item/grown/log/tree/stick = 3,
 							/obj/structure/closet/dirthole/closed/loot=3,
 						/obj/structure/flora/roguegrass/pyroclasticflowers = 3,
-						/obj/effect/hunting_track = 3)
+						/obj/effect/landmark/hunting_spawner = 3)
 	spawnableTurfs = list(/turf/open/floor/rogue/dirt/road=5)
 	allowed_areas = list(/area/rogue/outdoors/rtfield)
 
@@ -51,5 +51,5 @@
 						/obj/structure/flora/roguegrass/maneater = 7,
 							/obj/item/natural/stone = 10,
 							/obj/item/grown/log/tree/stick = 3,
-							/obj/effect/hunting_track = 3)
+							/obj/effect/landmark/hunting_spawner = 3)
 	allowed_areas = list(/area/rogue/outdoors/town,/area/rogue/outdoors/rtfield)

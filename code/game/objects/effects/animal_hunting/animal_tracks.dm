@@ -203,7 +203,7 @@
 
 			if(validate_turf(T))
 				// Let's make sure tracks replenish themselves eventually.
-				if(trail_depth == 0)
+				if(trail_depth == 0 && !(locate(/obj/effect/landmark/hunting_spawner) in get_turf(src)))
 					new /obj/effect/landmark/hunting_spawner(get_turf(src))
 
 				// Do this before reveal trail to make sure the icon is locked if need be
