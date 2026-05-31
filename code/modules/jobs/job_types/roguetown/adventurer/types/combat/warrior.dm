@@ -553,6 +553,15 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/rogueweapon/huntingknife = 1, //Ensures that Exorcists who take the Shovel can still butcher wildlife. Minor oversight on my part.
 		)
+
+	var/cross = list("The Pantheon Arisen", "The Old God Mourning") 
+	var/cross_choice = input(H, "Whose symbol you bear?", "CHOOSE YOUR TOOL.") as anything in cross
+	switch(cross_choice)
+		if("The Pantheon Arisen")
+			wrists = /obj/item/clothing/neck/roguetown/psicross/silver/undivided
+		if("The Old God Mourning")
+			wrists = /obj/item/clothing/neck/roguetown/psicross/silver
+
 	if(H.age == AGE_OLD)
 		H.change_stat(STATKEY_INT, 1)
 		H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
