@@ -398,12 +398,13 @@
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander2.ogg'
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_PURITAN_ADVENTURER, TRAIT_ALCHEMY_EXPERT, TRAIT_WITCHER)
-	maximum_possible_slots = 5 //Not a Wretch or Towner, but still conditionally lethal for an Adventurer - especially with steel coverage and round-start access to silver weapons. Adjust the amount of available slots as needed.
+	maximum_possible_slots = 5 // Low slots for a rather lethal adventurer with a stat spread of a whopping 8 points.
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_PER = 2,
 		STATKEY_WIL = 1,
 		STATKEY_CON = 2,
+		STATKEY_INT = 1, 
 	)
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
@@ -488,17 +489,17 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 
 
-		var/discipline = list("Traditionalist - Bewitched Alchemics + Hauberk", "Reformist - Dodge Expert + Haubergeon", "Orthodoxist - Plate Training + Cuirass")
+		var/discipline = list("Traditionalist - Bewitched Alchemics + Fluted Cuirass", "Reformist - Dodge Expert + Light Brigandine", "Orthodoxist - Plate Training + Fluted Plate")
 		var/discipline_choice = input(H, "Choose your DISCIPLINE.", "FACE YOUR NIGHTMARE.") as anything in discipline
 		switch(discipline_choice)
-			if("Traditionalist - Bewitched Alchemics + Hauberk")
+			if("Traditionalist - Bewitched Alchemics + Fluted Cuirass")
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_SILVER_BLESSED, TRAIT_GENERIC) //'Witcher' archetype. Weaponized alchemy gifts both immunity to nitebeastly curses and a self-suppliable +3 statboost. Well-rounded in almost every facet, but leaves less to chance.
 				H.change_stat(STATKEY_INT, 1)
-				H.change_stat(STATKEY_LCK, -1)
+				H.change_stat(STATKEY_LCK, 1)
 				head = /obj/item/clothing/head/roguetown/inqhat/excorcist
-				armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
-				shirt = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted
+				armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted
+				shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 				belt = /obj/item/storage/belt/rogue/leather/black
 				beltl = pick(
 					/obj/item/reagent_containers/glass/bottle/alchemical/strpot,
@@ -518,20 +519,20 @@
 				armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light
 				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 				belt = /obj/item/storage/belt/rogue/leather/knifebelt/black/silver
-			if("Orthodoxist - Plate Training + Cuirass")
+			if("Orthodoxist - Plate Training + Fluted Plate")
 				ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_ZOMBIE_IMMUNE, TRAIT_GENERIC) //'Templar' archetype. Blessings protect from the Rot, while opening the opportunity for heavy armor usage. Well-protected and resilient, but slower and visibly identifiable as a prioritable threat.
 				H.change_stat(STATKEY_CON, 3)
 				H.change_stat(STATKEY_STR, 2)
-				H.change_stat(STATKEY_SPD, -2)
+				H.change_stat(STATKEY_SPD, -1)
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/full/fluted
 				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 				belt = /obj/item/storage/belt/rogue/leather/black
-				var/helmets = list("Puritan's Armored Hat", "Visored Sallet", "Volfskulle Bascinet", "Fluted Armet")
+				var/helmets = list("Exorcist's Fancy Hat", "Visored Sallet", "Volfskulle Bascinet", "Fluted Armet")
 				var/helmet_choice = input(H, "Choose your VISAGE.", "GET PSYCHED.") as anything in helmets
 				switch(helmet_choice)
-					if("Puritan's Armored Hat")
-						head = /obj/item/clothing/head/roguetown/puritan/armored
+					if("Exorcist's Fancy Hat")
+						head = /obj/item/clothing/head/roguetown/inqhat/excorcist
 					if("Visored Sallet")
 						head = /obj/item/clothing/head/roguetown/helmet/sallet/visored
 					if("Volfskulle Bascinet")
