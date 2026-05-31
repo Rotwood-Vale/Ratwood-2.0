@@ -541,7 +541,6 @@
 						head = /obj/item/clothing/head/roguetown/helmet/heavy/knight/fluted
 
 	backl = /obj/item/storage/backpack/rogue/satchel
-	wrists = /obj/item/clothing/neck/roguetown/psicross/silver
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	pants = /obj/item/clothing/under/roguetown/tights/puritan
 	cloak = /obj/item/clothing/cloak/cape/puritan
