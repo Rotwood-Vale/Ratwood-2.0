@@ -476,7 +476,7 @@
 				l_hand = /obj/item/rogueweapon/sword/long
 			if("Slurbow")
 				l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow 
-				belt_l = /obj/item/quiver/bolts
+				beltl = /obj/item/quiver/bolts
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
 				H.change_stat(STATKEY_PER, 2)
 				H.change_stat(STATKEY_CON, -1)
