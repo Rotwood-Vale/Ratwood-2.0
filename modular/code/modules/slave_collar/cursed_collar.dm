@@ -98,7 +98,6 @@
 			return
 
 		SEND_SIGNAL(C, COMSIG_CARBON_COLLAR_BOUND, collar_master, src)
-		ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 		log_combat(user, C, "tried to collar", addition="with [src]")
 	applying = FALSE
 
@@ -169,7 +168,6 @@
 		return
 
 	SEND_SIGNAL(user, COMSIG_CARBON_COLLAR_BOUND, collar_master, src)
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
 	user.visible_message(span_warning("Cursed collar around [user]'s neck clicks shut!"), \
 							span_userdanger("Cursed collar around your neck clicks shut!"))
@@ -192,8 +190,6 @@
 		if(CM && (user in CM.my_pets))
 			CM.remove_pet(user)
 
-	REMOVE_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
-
 /obj/item/clothing/neck/roguetown/cursed_collar/canStrip(mob/living/carbon/human/stripper, mob/living/carbon/human/owner)
 	// Some strip call sites may not pass owner; infer from loc when possible.
 	if(!owner && ishuman(loc))
@@ -209,7 +205,6 @@
 		owner = loc
 
 	if(stripper?.mind == collar_master)
-		REMOVE_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 		if(owner)
 			SEND_SIGNAL(owner, COMSIG_CARBON_LOSE_COLLAR)
 		return owner ? owner.dropItemToGround(src, force = TRUE) : FALSE
