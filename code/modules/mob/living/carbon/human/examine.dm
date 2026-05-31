@@ -422,19 +422,19 @@
 			switch (pronouns)
 				if (HE_HIM, SHE_HER_M)
 					if(user.has_stress_event(/datum/stressevent/exorcistseen))
-						. += span_redtex("[m1] has an unsettling face... their eyes look wrong.")
-				else
-						. += span_redtex("[m1] eyes look wrong.")
+						. += span_redtext("[m1] has an unsettling face... their eyes look wrong.")
+					else
+						. += span_redtext("[m1] eyes look wrong.")
 				if (SHE_HER, HE_HIM_F)
 					if(user.has_stress_event(/datum/stressevent/exorcistseen))
-						. += span_redtex("[m1] has an unsettling face... their eyes look wrong.")
-				else
-						. += span_redtex("[m1] eyes look wrong.")
+						. += span_redtext("[m1] has an unsettling face... their eyes look wrong.")
+					else
+						. += span_redtext("[m1] eyes look wrong.")
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
 					if(user.has_stress_event(/datum/stressevent/exorcistseen))
-						. += span_redtex("[m1] has an unsettling face... their eyes look wrong.")
-				else
-						. += span_redtex("[m1] eyes look wrong.")
+						. += span_redtext("[m1] has an unsettling face... their eyes look wrong.")
+					else
+						. += span_redtext("[m1] eyes look wrong.")
 
 		if (HAS_TRAIT(src, TRAIT_BEAUTIFUL_UNCANNY))
 			switch (pronouns)
