@@ -305,6 +305,7 @@
 #define TRAIT_MASTER_MASON "Master Masonry"
 
 #define TRAIT_TRIBAL "Island Tribe-member"
+#define TRAIT_WITCHER "Witcher"
 
 // If you want description to show up you gotta have the trait name defined BEFORE this lol
 
