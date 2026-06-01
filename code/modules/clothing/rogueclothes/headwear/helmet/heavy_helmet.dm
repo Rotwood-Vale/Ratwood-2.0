@@ -814,3 +814,26 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/captain/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+
+/obj/item/clothing/head/roguetown/helmet/heavy/heresiarch
+	name = "God Hand's visage"
+	desc = "A headdress woven out of profane cloth, accompanied by a steel mask and a crown of flowers that never wilt. Quiet, unintelligible whispers emanate from it."
+	icon_state = "heresiarchhelm"
+	item_state = "heresiarchhelm"
+	emote_environment = 3
+	body_parts_covered = FULL_HEAD|NECK
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR
+	block2add = FOV_BEHIND
+	max_integrity = ARMOR_INT_HELMET_ANTAG
+	armor = ARMOR_ASCENDANT
+	smeltresult = /obj/item/ingot/steel
+	smelt_bar_num = 2
+	detail_tag = "_detail"
+	altdetail_tag = "_detailalt"
+	color = "#FFFFFF"
+	detail_color = "#FFFFFF"
+	altdetail_color = "#FFFFFF"
+
+/obj/item/clothing/head/roguetown/helmet/heavy/heresiarch/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_GODHAND, "VISAGE")

@@ -52,7 +52,8 @@
 	icon_state = "priestrobe"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
-	armor = ARMOR_PADDED	//Equal to gamby
+	armor = ARMOR_PADDED_GOOD
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 
 /obj/item/clothing/suit/roguetown/shirt/robe/priest/Initialize(mapload)
 	. = ..()

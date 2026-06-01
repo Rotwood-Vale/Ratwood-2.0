@@ -82,14 +82,14 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	subclass_stats = list(
 		STATKEY_INT = 4,
 		STATKEY_WIL = 2,
-		STATKEY_STR = -1,
-		STATKEY_CON = -1,
-		STATKEY_SPD = -1
-	)
+		STATKEY_CON = 2,
+		STATKEY_SPD = 2,
+	) //Same as Wretch-Heresiarch's. You don't get combat traits, so you are going to need good stats to not die.
 	subclass_skills = list(
-		/datum/skill/combat/wrestling = SKILL_LEVEL_MASTER,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_MASTER,
-		/datum/skill/combat/polearms = SKILL_LEVEL_MASTER,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
 		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
@@ -98,6 +98,9 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		/datum/skill/labor/farming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/magic/holy = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 	)
 	subclass_stashed_items = list(
 		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
@@ -671,6 +674,12 @@ code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep 
 
 	if(!HAS_TRAIT(target, TRAIT_HERESIARCH))
 		to_chat(user, span_warning("[target] wasn't marked by the enemy as a heretic!"))
+		revert_cast()
+		return FALSE
+
+	if(HAS_TRAIT(target, TRAIT_GODHAND))
+		to_chat(user, span_warning("The Ten refuse to look upon [target]. A horrible chill runs down your spine."))
+		user.Stun(50)
 		revert_cast()
 		return FALSE
 

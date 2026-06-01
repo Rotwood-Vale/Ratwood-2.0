@@ -174,11 +174,12 @@
 #define TRAIT_CURSE_EORA "Curse of Eora" //world is ugly
 #define TRAIT_CURSE_RESIST "Curse Resistance" //Some folk with a tendency to get cursed are resistant
 
-// ASCENDANT CULTIST TRAITS (all of them recognize each other)
+// ASCENDANT CULTIST TRAITS
 #define TRAIT_COMMIE "Blessing of Matthios" //recognized by bandits as an ally
-#define TRAIT_CABAL "Of the Cabal" //Zizo cultists recognize each other too
-#define TRAIT_HORDE "Anointed" //Graggarites also recognize each other
-#define TRAIT_DEPRAVED "Fallen" //Baothans also recognize each other
+#define TRAIT_CABAL "Of the Cabal"
+#define TRAIT_HORDE "Anointed"
+#define TRAIT_DEPRAVED "Fallen"
+#define TRAIT_GODHAND "God Hand" //Heresiarch-exclusive
 #define TRAIT_MATTHIOS_EYES	"Eyes of Matthios" //Examine to see the most expensive item someone has (Replaces shitty-appraisal)
 
 //ASCENDANT GOD CURSES
@@ -267,7 +268,7 @@
 #define TRAIT_EQUESTRIAN "Equestrian"
 #define TRAIT_GANG_A "Gang Rontz Ratz"
 #define TRAIT_GANG_B "Gang Blortz Volves"
-#define TRAIT_NATURALARMOR "Tough Skin" 
+#define TRAIT_NATURALARMOR "Tough Skin"
 #define TRAIT_CLERGYRADICAL "Radical member of Clergy"
 
 // ARMOR / CLOTHING GIVEN TRAITS (GIVEN BY WEARING CLOTHES/ARMOR PIECES)
@@ -321,7 +322,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_RITUALIST = span_info("I am skilled in the holy arts. Using ritual chalk, I can more deftly channel my God's powers via runes."),
 	TRAIT_INSPIRING_MUSICIAN = span_info("The flow of battle dances to my song!"),
 	TRAIT_INQUISITION = span_info("I serve the Holy Otavan Inquisition. From a passing glance, I can recognize all other adherents within the local sect."),
-	TRAIT_CHOSEN = "Astrata choose you to represent her glory.",
+	TRAIT_CHOSEN = span_suppradio("Astrata has chosen you to represent her glory."),
 	TRAIT_WEBWALK = "I can move freely between webs.",
 	TRAIT_NOSTINK = span_dead("My nose is numb to the smell of decay."),
 	TRAIT_ZJUMP = "Time to reach a new high.",
@@ -416,6 +417,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_FORTITUDE = span_info("The typical drain I feel from day to day life is lessened, my athleticism greater."),
 	TRAIT_GUIDANCE = span_info("The arcyne aides me in battle."),
 	TRAIT_DEPRAVED = span_info("The languid scent of Her debauchery is known to me."),
+	TRAIT_GODHAND = span_suppradio("The Ascendants have chosen me to carry out their will. I am beyond salvation, for I am already saved."),
 	TRAIT_SILVER_BLESSED = span_info("I have been baptized in fire. Blessed silverdust flows through my blood, protecting me from both vampyrism and lycanthropy."),
 	TRAIT_UNLYCKERABLE = span_info("My kind cannot bear the Sun curse for it already has another."),
 	TRAIT_GOODTRAINER = span_info("I am a good teacher, and when it comes to weaponry I can train others to be just as skilled as I am."),
