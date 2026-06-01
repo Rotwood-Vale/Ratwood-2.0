@@ -298,7 +298,7 @@
 	name = "reanimation elixir (impure lux)"
 	category = "Table"
 	result = list(
-		/obj/item/reagent_containers/glass/bottle/frankenbrew/third
+		/obj/item/reagent_containers/glass/bottle/frankenbrew
 	)
 	reqs = list(
 		/obj/item/reagent_containers/glass/bottle = 1,
