@@ -34,21 +34,17 @@
 
 //All skills/traits are on the loadouts. All are identical. Welcome to the stupid way we have to make sub-classes...
 /datum/outfit/job/roguetown/wardenmaster
-	head = /obj/item/clothing/head/roguetown/helmet/bascinet/antler
 	neck = /obj/item/clothing/neck/roguetown/bevor
-	cloak = /obj/item/clothing/cloak/darkcloak/bear/wardenmaster
+	cloak = /obj/item/clothing/cloak/wardencloak
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/warden/upgraded
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/plate/iron
 	belt = /obj/item/storage/belt/rogue/leather
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	backr = /obj/item/storage/backpack/rogue/satchel
-	beltl = /obj/item/rogueweapon/stoneaxe/woodcut/wardenpick
 	id = /obj/item/scomstone/garrison
 
-//Rare-ish anti-armor two hander sword. Kinda alternative of a bastard sword type. Could be cool.
 /datum/advclass/wardenmaster/wardenmaster
 	name = "Master Warden"
 	tutorial = "You are a not just anybody but the Master Warden of the lowtown fortress. While you may have started as some peasant or mercenary, you have advanced through the ranks to that of someone who commands respect and wields it. Take up arms, WARDENMASTER!"
@@ -109,32 +105,61 @@
 		)
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Greataxe","Javelins & Shield","Blackhorn Longbow","Handgonne")	//competent at both sides of wardenry so it's more a matter of what weapon you start with
+		var/weapons = list("Greataxe (+1 STR)","Javelins & Shield (+1 SPD)","Longsword (+1 WIL)","Blackhorn Longbow (+1 PER)","Handgonne (+1 PER)")	//competent at both sides of wardenry so it's more a matter of what weapon you start with
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		var/armor_options = list("Light Armor", "Medium Armor")
 		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in armor_options
+		var/helmets = list(
+			"Antlers of the Antelope" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/antler,
+			"Skull of the Volf"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf,
+			"Skull of the Ram"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/goat,
+			"Skull of the Bear"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/bear,
+			"None"
+		)
+		var/helmchoice = input(H, "Choose your Path.", "HELMET SELECTION") as anything in helmets
+		var/hoods = list(
+			"Common Shroud" 	= /obj/item/clothing/head/roguetown/roguehood/warden,
+			"Antlered Shroud"		= /obj/item/clothing/head/roguetown/roguehood/warden/antler,
+			"None"
+		)
+		var/hoodchoice = input(H, "Choose your Shroud.", "HOOD SELECTION") as anything in hoods
 		H.set_blindness(0)
-		switch(weapon_choice)//feel it'd be nice to have a sword version for a real Jeor Mormont?
-			if("Greataxe")			
+		switch(weapon_choice)
+			if("Greataxe (+1 STR)")			
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				l_hand = /obj/item/rogueweapon/greataxe/steel
-			if("Javelins & Shield")
+				H.change_stat(STATKEY_STR, 1)
+			if("Javelins & Shield (+1 SPD)")
 				beltr = /obj/item/quiver/javelin/steel
 				backl = /obj/item/rogueweapon/shield/tower/
-			if("Blackhorn Longbow")
+				H.change_stat(STATKEY_SPD, 1)
+			if("Longsword (+1 WIL)")//Jeor Mormont.
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
+				backl = /obj/item/rogueweapon/scabbard/sword
+				l_hand = /obj/item/rogueweapon/sword/long
+				H.change_stat(STATKEY_WIL, 1)
+			if("Blackhorn Longbow (+1 PER)")
 				beltr = /obj/item/quiver/arrows
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow/warden
-			if("Handgonne")//okay I can remove this later but I think it would be... just... so based
+				H.change_stat(STATKEY_PER, 1)
+			if("Handgonne (+1 PER)")//okay I can remove this later but I think it would be... just... so based
 				r_hand = /obj/item/gun/ballistic/firearm/handgonne
 				l_hand = /obj/item/powderflask
 				beltr = /obj/item/quiver/bullet/lead
+				H.change_stat(STATKEY_PER, 1)
 		switch(armor_choice)
 			if("Light Armor")
 				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+				beltl = /obj/item/rogueweapon/huntingknife/idagger/warden_machete
 			if("Medium Armor")
-				shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
+				shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 				pants = /obj/item/clothing/under/roguetown/chainlegs
+				beltl = /obj/item/rogueweapon/stoneaxe/woodcut/wardenpick
+		if(helmchoice != "None")
+			head = helmets[helmchoice]
+		if(hoodchoice != "None")
+			mask = hoods[hoodchoice]
 
 /obj/effect/proc_holder/spell/self/convertrole/vanguard
 	name = "Recruit Vanguard"
