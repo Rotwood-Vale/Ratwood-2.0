@@ -84,3 +84,11 @@
 // Comment this to remove traits based skill gating (The traits exist, but it will not have any effect)
 #define USES_TRAIT_SKILL_GATING
 
+// If this is uncommented, will attempt to load and initialize prof.dll/libprof.so by default.
+// Even if it's not defined, you can pass "tracy" via -params in order to try to load it.
+// We do not ship byond-tracy. Build it yourself here: https://github.com/mafemergency/byond-tracy,
+// or the fork which writes profiling data to a file: https://github.com/ParadiseSS13/byond-tracy
+// #define USE_BYOND_TRACY
+
+// If uncommented, will display info about byond-tracy's status in the MC tab.
+// #define MC_TAB_TRACY_INFO

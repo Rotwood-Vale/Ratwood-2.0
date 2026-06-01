@@ -1625,3 +1625,45 @@ GLOBAL_LIST_EMPTY(loadout_selected_advclasses)
 		return
 	if(alert(usr, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modificatoins?", "Really reset?", "No", "Yes") == "Yes")
 		config.admin_reload()
+
+/client/proc/start_tracy()
+	set category = "Debug"
+	set name = "Run Tracy Now"
+	set desc = "Start running the byond-tracy profiler immediately"
+
+	to_chat(world, "hello")
+
+	if(!check_rights(R_DEBUG))
+		return
+	if(Tracy.enabled)
+		to_chat(usr, span_warning("byond-tracy is already running!"), avoid_highlighting = TRUE, type = MESSAGE_TYPE_DEBUG, confidential = TRUE)
+		return
+	else if(Tracy.error)
+		to_chat(usr, span_danger("byond-tracy failed to initialize during an earlier attempt: [Tracy.error]"), avoid_highlighting = TRUE, type = MESSAGE_TYPE_DEBUG, confidential = TRUE)
+		return
+	message_admins(span_adminnotice("[key_name_admin(usr)] is trying to start the byond-tracy profiler."))
+	log_admin("[key_name(usr)] is trying to start the byond-tracy profiler.")
+	if(!Tracy.enable("[usr.ckey]"))
+		var/error = Tracy.error || "N/A"
+		to_chat(usr, span_danger("byond-tracy failed to initialize: [error]"), avoid_highlighting = TRUE, type = MESSAGE_TYPE_DEBUG, confidential = TRUE)
+		message_admins(span_adminnotice("[key_name_admin(usr)] tried to start the byond-tracy profiler, but it failed to initialize ([error])"))
+		log_admin("[key_name(usr)] tried to start the byond-tracy profiler, but it failed to initialize ([error])")
+		return
+	to_chat(usr, span_notice("byond-tracy successfully started!"), avoid_highlighting = TRUE, type = MESSAGE_TYPE_DEBUG, confidential = TRUE)
+	message_admins(span_adminnotice("[key_name_admin(usr)] started the byond-tracy profiler."))
+	log_admin("[key_name(usr)] started the byond-tracy profiler.")
+	if(Tracy.trace_path)
+		rustg_file_write("[Tracy.trace_path]", "[GLOB.log_directory]/tracy.loc")
+
+/client/proc/queue_tracy()
+	set category = "Debug"
+	set name = "Toggle Tracy Next Round"
+	set desc = "Toggle running the byond-tracy profiler next round"
+	if(!check_rights(R_DEBUG))
+		return
+	if(fexists(TRACY_ENABLE_PATH))
+		fdel(TRACY_ENABLE_PATH)
+	else
+		rustg_file_write("[usr.ckey]", TRACY_ENABLE_PATH)
+	message_admins(span_adminnotice("[key_name_admin(usr)] [fexists(TRACY_ENABLE_PATH) ? "enabled" : "disabled"] the byond-tracy profiler for next round."))
+	log_admin("[key_name(usr)] [fexists(TRACY_ENABLE_PATH) ? "enabled" : "disabled"] the byond-tracy profiler for next round.")
