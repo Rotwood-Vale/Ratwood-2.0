@@ -398,12 +398,12 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	else
 		if(ishuman(src))
 			var/mob/living/carbon/human/devotee = src
-			if(devotee.devotion?.devotion < 100)
+			if(devotee.devotion?.devotion < 50)
 				to_chat(src, span_warning("Not enough devotion!"))
 				return FALSE
 			else
-				devotee.devotion?.update_devotion(-100)
-				to_chat(devotee, "<font color='purple'>I lost 100 devotion.</font>")
+				devotee.devotion?.update_devotion(-50)
+				to_chat(devotee, "<font color='purple'>I lost 50 devotion.</font>")
 		ADD_TRAIT(H, TRAIT_BLESSED, JOB_TRAIT)
 		
 		playsound(get_turf(src), 'sound/magic/revive.ogg', 20, TRUE)
