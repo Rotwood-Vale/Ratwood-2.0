@@ -133,19 +133,6 @@
 	max_integrity = 250
 	wdefense = 2
 
-/obj/item/rogueweapon/mace/alloy
-	name = "decrepit mace"
-	desc = "Frayed bronze, perched atop a rotwooden shaft. His sacrifice had drowned Old Syon, and - in its wake - left Man bereft of all it had accomplished. With all other prayers falling upon deaf ears, Man had crafted this idol in tribute to its new God; violence."
-	icon_state = "amace"
-	force = 17
-	force_wielded = 21
-	max_integrity = 180
-	blade_dulling = DULLING_SHAFT_CONJURED
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-
-
 /obj/item/rogueweapon/mace/church
 	force = 25
 	force_wielded = 30
@@ -167,11 +154,21 @@
 	wdefense = 3
 	smelt_bar_num = 2
 
-/obj/item/rogueweapon/mace/steel/palloy
-	name = "ancient alloy mace"
+/obj/item/rogueweapon/mace/steel/ancient
+	name = "ancient mace"
 	desc = "Polished gilbranze, perched atop a reinforced shaft. Break the unenlightened into naught-but-giblets; like a potter's vessels, dashed against the rocks."
 	icon_state = "amace"
 	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/rogueweapon/mace/steel/ancient/decrepit
+	name = "decrepit mace"
+	desc = "Frayed bronze, perched atop a rotwooden shaft. His sacrifice had drowned Old Syon, and - in its wake - left Man bereft of all it had accomplished. With all other prayers falling upon deaf ears, Man had crafted this idol in tribute to its new God; violence."
+	force = 17
+	force_wielded = 21
+	max_integrity = 180
+	blade_dulling = DULLING_SHAFT_CONJURED
+	color = "#bb9696"
+	anvilrepair = null
 
 /obj/item/rogueweapon/mace/steel/silver
 	force = 30
@@ -410,17 +407,6 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/rogueweapon/mace/goden/aalloy
-	name = "decrepit grand mace"
-	desc = "Good nite, sire."
-	force = 12
-	force_wielded = 22
-	icon_state = "ancient_supermace"
-	blade_dulling = DULLING_SHAFT_CONJURED
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-
 /obj/item/rogueweapon/mace/goden/steel
 	name = "grand mace"
 	desc = "Good morning, sire."
@@ -431,12 +417,20 @@
 	smelt_bar_num = 2
 	wdefense_wbonus = 5
 
-/obj/item/rogueweapon/mace/goden/steel/paalloy
+/obj/item/rogueweapon/mace/goden/steel/ancient
 	name = "ancient grand mace"
 	desc = "A twisting polehammer, forged in polished gilbranze. What did you think this was all about? This destruction, this war, this sacrifice; it was all to prepare Man for its true ascension."
 	icon_state = "ancient_supermace"
 	smeltresult = /obj/item/ingot/aaslag
 
+/obj/item/rogueweapon/mace/goden/steel/ancient/decrepit
+	name = "decrepit grand mace"
+	desc = "Good nite, sire."
+	force = 12
+	force_wielded = 22
+	blade_dulling = DULLING_SHAFT_CONJURED
+	color = "#bb9696"
+	anvilrepair = null
 
 /obj/item/rogueweapon/mace/goden/deepduke
 	name = "deep duke's staff"
@@ -522,17 +516,6 @@
 	smeltresult = /obj/item/ingot/iron
 	wdefense = 3
 
-/obj/item/rogueweapon/mace/warhammer/alloy
-	name = "decrepit warhammer"
-	desc = "A macehead of frayed bronze, spiked and perched atop a thin shaft. To see such a knightly implement abandoned to decay and neglect; that wounds the heart greater than any well-poised strike."
-	icon_state = "awarhammer"
-	force = 17
-	max_integrity = 180
-	blade_dulling = DULLING_SHAFT_CONJURED
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-
 /obj/item/rogueweapon/mace/warhammer/steel
 	force = 25
 	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/mace/warhammer/pick, /datum/intent/mace/warhammer/stab)
@@ -553,11 +536,20 @@
 				return list("shrink" = 0.4,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 	return ..()
 
-/obj/item/rogueweapon/mace/warhammer/steel/paalloy
+/obj/item/rogueweapon/mace/warhammer/steel/ancient
 	name = "ancient alloy warhammer"
 	desc = "A macehead of polished gilbranze, spiked and perched atop a reinforced shaft. An elegant weapon from a more civilized age; when Man lived in harmony with one-another, and when 'the undying' was nothing more than a nitemare's thought."
 	icon_state = "awarhammer"
 	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/rogueweapon/mace/warhammer/steel/ancient/decrepit
+	name = "decrepit warhammer"
+	desc = "A macehead of frayed bronze, spiked and perched atop a thin shaft. To see such a knightly implement abandoned to decay and neglect; that wounds the heart greater than any well-poised strike."
+	force = 17
+	max_integrity = 180
+	blade_dulling = DULLING_SHAFT_CONJURED
+	color = "#bb9696"
+	anvilrepair = null
 
 /obj/item/rogueweapon/mace/warhammer/steel/silver
 	name = "silver warhammer"

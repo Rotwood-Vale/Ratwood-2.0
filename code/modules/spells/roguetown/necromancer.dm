@@ -214,7 +214,7 @@
 /obj/effect/proc_holder/spell/invoked/tame_undead
 	name = "Tame Undead"
 	desc = "Oftentymes, husks and shamblers walk aimlessly - uncertain of their future. Befriends the undead \
-	Requires the target to be within four tiles. Works on undead animals, too."
+	Requires the target to be within four tiles. Works on undead animals, too, and they will heed your command."
 	overlay_state = "wolf_head_undead"
 	range = 4
 	warnie = "sydwarning"
@@ -343,16 +343,26 @@
 		to_chat(user, "You must click a location or creature to command your undead.")
 		return
 	var/faction_tag = "[user.mind.current.real_name]_faction"
-	// Handle CARBON skeletons first
-	var/list/minions = list()
+
+	var/list/commandable_simple_mobs = list(
+		/mob/living/simple_animal/hostile/rogue/skeleton,
+		/mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead,
+		/mob/living/simple_animal/hostile/retaliate/rogue/saiga/undead
+	)
+
+	var/list/carbon_minions = list()
 	var/list/simple_minions = list()
 	for(var/mob/living/carbon/human/species/skeleton/npc/summoned/M in view(15, user))
 		if(M.caster == user)
-			minions += M
-	for(var/mob/living/simple_animal/hostile/rogue/skeleton/M in view(15, user))
-		simple_minions += M
+			carbon_minions += M
 
-	if(!length(minions) && !length(simple_minions))
+	for(var/mob/living/simple_animal/M in view(15, user))
+		for(var/type in commandable_simple_mobs)
+			if(istype(M, type))
+				simple_minions += M
+				break
+
+	if(!length(carbon_minions) && !length(simple_minions))
 		to_chat(user, "<span class='warning'>You have no undead under your control nearby.</span>")
 		return
 
@@ -371,7 +381,7 @@
 		return
 
 	// Issue command
-	for(var/mob/living/carbon/human/species/skeleton/npc/summoned/M in minions)
+	for(var/mob/living/carbon/human/species/skeleton/npc/summoned/M in carbon_minions)
 		M.set_command(command_type, target)
 		switch(command_type)
 			if("follow")

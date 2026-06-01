@@ -164,7 +164,7 @@
 	force = 10
 	throwforce = 15
 
-/obj/item/reagent_containers/glass/cup/aalloymug
+/obj/item/reagent_containers/glass/cup/decrepitmug
 	name = "decrepit mug"
 	desc = "Frayed bronze, coiled into a cup. Here, adventurers of centuries-past would laugh and legendize; but now, nothing but empty chairs and empty tables remain."
 	color = "#bb9696"
@@ -173,7 +173,7 @@
 	force = 5
 	throwforce = 10
 
-/obj/item/reagent_containers/glass/cup/aalloygob
+/obj/item/reagent_containers/glass/cup/decrepitgob
 	name = "decrepit goblet"
 	desc = "Frayed bronze, coiled into a hooked vessel. To think that this was once a nobleman's goblet; yet, it has endured far longer than their now-withered bloodline."
 	color = "#bb9696"

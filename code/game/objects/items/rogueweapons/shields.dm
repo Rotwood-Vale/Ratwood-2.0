@@ -31,6 +31,7 @@
 	parrysound = list('sound/combat/parry/shield/towershield (1).ogg','sound/combat/parry/shield/towershield (2).ogg','sound/combat/parry/shield/towershield (3).ogg')
 	max_integrity = 100
 	anvilrepair = /datum/skill/craft/carpentry
+	dropshrink = 0.9
 	COOLDOWN_DECLARE(shield_bang)
 
 
@@ -113,6 +114,7 @@
 	anvilrepair = /datum/skill/craft/carpentry
 	coverage = 30
 	smeltresult = /obj/item/ash
+	dropshrink = 0.8
 
 /obj/item/rogueweapon/shield/attack_right(mob/user)
 	if(overlays.len)
@@ -242,6 +244,21 @@
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 	return ..()
 
+/obj/item/rogueweapon/shield/tower/metal/ancient
+	name = "ancient shield"
+	desc = "A venerable scutum, plated with polished gilbranze. An undying legionnaire's closest friend; that which rebukes arrow-and-bolt alike with unphasing prejudice. It is a reminder - one of many - that Her progress cannot be stopped."
+	icon_state = "ancientsh"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/rogueweapon/shield/tower/metal/ancient/decrepit
+	name = "decrepit shield"
+	desc = "A hefty tower shield, wrought from frayed bronze. Looped with dried kelp and reeking of saltwater, you'd assume that this had been fished out from the remains of a long-sunken warship.. alongside its former legionnaire."
+	max_integrity = 120
+	wdefense = 9
+	blade_dulling = DULLING_SHAFT_CONJURED
+	color = "#bb9696"
+	anvilrepair = null
+
 /obj/item/rogueweapon/shield/tower/metal/psy
 	name = "Covenant"
 	desc = "A Psydonian endures. A Psydonian preserves themselves. A Psydonian preserves His flock."
@@ -273,23 +290,6 @@
 		added_def = 1,\
 	)
 
-/obj/item/rogueweapon/shield/tower/metal/alloy
-	name = "decrepit shield"
-	desc = "A hefty tower shield, wrought from frayed bronze. Looped with dried kelp and reeking of saltwater, you'd assume that this had been fished out from the remains of a long-sunken warship.. alongside its former legionnaire."
-	max_integrity = 120
-	wdefense = 9
-	icon_state = "ancientsh"
-	blade_dulling = DULLING_SHAFT_CONJURED
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-
-/obj/item/rogueweapon/shield/tower/metal/palloy
-	name = "ancient shield"
-	desc = "A venerable scutum, plated with polished gilbranze. An undying legionnaire's closest friend; that which rebukes arrow-and-bolt alike with unphasing prejudice. It is a reminder - one of many - that Her progress cannot be stopped."
-	icon_state = "ancientsh"
-	smeltresult = /obj/item/ingot/purifiedaalloy
-
 /obj/item/rogueweapon/shield/tower/zyb
 	name = "rider shield"
 	desc = "A shield of Zybantine design. Clever usage of wood, iron, and leather make an impressive match for any weapon."
@@ -301,6 +301,7 @@
 	max_integrity = 220 //not fully metal but not fully wood either
 	anvilrepair = /datum/skill/craft/carpentry
 	smeltresult = /obj/item/ingot/iron
+	dropshrink = 0.75
 
 /obj/item/rogueweapon/shield/tower/zyb/getonmobprop(tag)
 	. = ..()
@@ -318,7 +319,7 @@
 	coverage = 55
 
 /obj/item/rogueweapon/shield/buckler
-	name = "buckler shield"
+	name = "buckler"
 	desc = "A sturdy buckler shield. Will block anything you can imagine."
 	icon_state = "bucklersh"
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK
@@ -373,13 +374,12 @@
 			if("onback")
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
-/obj/item/rogueweapon/shield/buckler/palloy
+/obj/item/rogueweapon/shield/buckler/ancient
 	name = "ancient buckler"
 	desc = "An object once before its time, now out of it. The artisan's hammerstrikes are still visible in the mottled surface, yet \
 	the encroach of rust and rot threatens even this memory."
 	icon_state = "ancient_buckler"
-	max_integrity = 85
-	smeltresult = /obj/item/ingot/purifiedaalloy
+	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/rogueweapon/shield/heater
 	name = "heater shield"

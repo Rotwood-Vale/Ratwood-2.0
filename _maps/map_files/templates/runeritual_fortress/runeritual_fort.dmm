@@ -1,14 +1,17 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/structure/fluff/railing/border{
+	dir = 10
+	},
+/turf/open/floor/rogue/greenstone,
+/area/rogue/indoors/town/magician/arcynefortress)
 "ao" = (
 /obj/machinery/light/rogue/firebowl/standing/blue,
 /obj/structure/fluff/railing/border{
 	dir = 1
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/indoors/town/magician{
-	first_time_text = "Arcyne Fortress";
-	name = "Arcyne Fortress"
-	})
+/area/rogue/indoors/town/magician/arcynefortress)
 "ar" = (
 /obj/structure/table/wood/long_table/right,
 /turf/open/floor/rogue/greenstone,
@@ -21,10 +24,7 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/indoors/town/magician{
-	first_time_text = "Arcyne Fortress";
-	name = "Arcyne Fortress"
-	})
+/area/rogue/indoors/town/magician/arcynefortress)
 "aY" = (
 /obj/machinery/light/rogue/candle/blue/l,
 /obj/effect/decal/carpet/kover_darkred,
@@ -66,11 +66,8 @@
 	name = "Arcyne Fortress"
 	})
 "dU" = (
-/turf/open/floor/rogue/dark_ice,
-/area/rogue/indoors/town/magician{
-	first_time_text = "Arcyne Fortress";
-	name = "Arcyne Fortress"
-	})
+/turf/template_noop,
+/area/template_noop)
 "eQ" = (
 /obj/structure/chair/bench/couchablack,
 /turf/open/floor/rogue/greenstone,
@@ -83,10 +80,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/indoors/town/magician{
-	first_time_text = "Arcyne Fortress";
-	name = "Arcyne Fortress"
-	})
+/area/rogue/indoors/town/magician/arcynefortress)
 "gm" = (
 /obj/effect/turf_decal/magedecal,
 /obj/structure/fluff/railing/border{
@@ -100,10 +94,7 @@
 "he" = (
 /obj/structure/mineral_door/wood/deadbolt/arcyne/caster,
 /turf/open/floor/rogue/greenstone,
-/area/rogue/indoors/town/magician{
-	first_time_text = "Arcyne Fortress";
-	name = "Arcyne Fortress"
-	})
+/area/rogue/indoors/town/magician/arcynefortress)
 "hi" = (
 /obj/structure/curtain/directional/blue{
 	icon_state = "curtain-closed";
@@ -190,10 +181,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/greenstone/runed,
-/area/rogue/indoors/town/magician{
-	first_time_text = "Arcyne Fortress";
-	name = "Arcyne Fortress"
-	})
+/area/rogue/indoors/town/magician/arcynefortress)
 "nL" = (
 /obj/machinery/light/rogue/firebowl/standing/blue,
 /turf/open/floor/rogue/greenstone,
@@ -204,10 +192,13 @@
 "nP" = (
 /obj/structure/well/fountain/mana,
 /turf/open/floor/rogue/greenstone/runed,
-/area/rogue/indoors/town/magician{
-	first_time_text = "Arcyne Fortress";
-	name = "Arcyne Fortress"
-	})
+/area/rogue/indoors/town/magician/arcynefortress)
+"oK" = (
+/obj/structure/fluff/railing/border{
+	dir = 5
+	},
+/turf/open/floor/rogue/greenstone,
+/area/rogue/indoors/town/magician/arcynefortress)
 "pc" = (
 /obj/structure/fluff/railing/border{
 	dir = 10
@@ -259,10 +250,7 @@
 	dir = 10
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/indoors/town/magician{
-	first_time_text = "Arcyne Fortress";
-	name = "Arcyne Fortress"
-	})
+/area/rogue/indoors/town/magician/arcynefortress)
 "vA" = (
 /obj/structure/table/wood/long_table/mid/alt,
 /turf/open/floor/rogue/greenstone/runed,
@@ -273,10 +261,7 @@
 "wy" = (
 /obj/structure/table/wood/poker,
 /turf/open/floor/rogue/greenstone,
-/area/rogue/indoors/town/magician{
-	first_time_text = "Arcyne Fortress";
-	name = "Arcyne Fortress"
-	})
+/area/rogue/indoors/town/magician/arcynefortress)
 "wY" = (
 /obj/structure/fluff/railing/border{
 	dir = 5
@@ -285,19 +270,13 @@
 	dir = 6
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/indoors/town/magician{
-	first_time_text = "Arcyne Fortress";
-	name = "Arcyne Fortress"
-	})
+/area/rogue/indoors/town/magician/arcynefortress)
 "xd" = (
 /obj/structure/chair/wood/rogue{
 	dir = 1
 	},
 /turf/open/floor/rogue/greenstone/runed,
-/area/rogue/indoors/town/magician{
-	first_time_text = "Arcyne Fortress";
-	name = "Arcyne Fortress"
-	})
+/area/rogue/indoors/town/magician/arcynefortress)
 "xY" = (
 /obj/structure/stairs{
 	dir = 4
@@ -313,6 +292,10 @@
 	first_time_text = "Arcyne Fortress";
 	name = "Arcyne Fortress"
 	})
+"Ad" = (
+/obj/machinery/light/rogue/candle/blue/r,
+/turf/open/floor/rogue/greenstone,
+/area/rogue/indoors/town/magician/arcynefortress)
 "Ak" = (
 /obj/structure/fluff/railing/border,
 /turf/open/floor/rogue/greenstone,
@@ -341,6 +324,12 @@
 	first_time_text = "Arcyne Fortress";
 	name = "Arcyne Fortress"
 	})
+"Cv" = (
+/obj/structure/fluff/railing/border{
+	dir = 9
+	},
+/turf/open/floor/rogue/greenstone,
+/area/rogue/indoors/town/magician/arcynefortress)
 "CD" = (
 /obj/structure/fluff/railing/border{
 	dir = 6
@@ -363,10 +352,7 @@
 	pixel_x = 5
 	},
 /turf/open/floor/rogue/greenstone/runed,
-/area/rogue/indoors/town/magician{
-	first_time_text = "Arcyne Fortress";
-	name = "Arcyne Fortress"
-	})
+/area/rogue/indoors/town/magician/arcynefortress)
 "DD" = (
 /obj/structure/bookcase,
 /turf/open/floor/rogue/greenstone,
@@ -383,6 +369,14 @@
 	first_time_text = "Arcyne Fortress";
 	name = "Arcyne Fortress"
 	})
+"In" = (
+/obj/machinery/light/rogue/firebowl/standing/blue,
+/turf/open/floor/rogue/greenstone,
+/area/rogue/indoors/town/magician/arcynefortress)
+"Io" = (
+/obj/machinery/light/rogue/candle/blue/l,
+/turf/open/floor/rogue/greenstone,
+/area/rogue/indoors/town/magician/arcynefortress)
 "JU" = (
 /obj/structure/stairs{
 	dir = 8
@@ -394,10 +388,7 @@
 	dir = 6
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/indoors/town/magician{
-	first_time_text = "Arcyne Fortress";
-	name = "Arcyne Fortress"
-	})
+/area/rogue/indoors/town/magician/arcynefortress)
 "Lt" = (
 /obj/structure/fluff/railing/border{
 	dir = 5
@@ -450,10 +441,7 @@
 "MO" = (
 /obj/structure/arcyne_wall/greater/caster,
 /turf/open/floor/rogue/greenstone,
-/area/rogue/indoors/town/magician{
-	first_time_text = "Arcyne Fortress";
-	name = "Arcyne Fortress"
-	})
+/area/rogue/indoors/town/magician/arcynefortress)
 "Ok" = (
 /obj/structure/table/wood/poor,
 /turf/open/floor/rogue/greenstone/runed,
@@ -474,6 +462,9 @@
 	first_time_text = "Arcyne Fortress";
 	name = "Arcyne Fortress"
 	})
+"QN" = (
+/turf/open/floor/rogue/greenstone/runed,
+/area/rogue/indoors/town/magician/arcynefortress)
 "RX" = (
 /obj/structure/stairs{
 	dir = 8
@@ -518,10 +509,7 @@
 	dir = 9
 	},
 /turf/open/floor/rogue/ruinedwood,
-/area/rogue/indoors/town/magician{
-	first_time_text = "Arcyne Fortress";
-	name = "Arcyne Fortress"
-	})
+/area/rogue/indoors/town/magician/arcynefortress)
 "Um" = (
 /obj/structure/fluff/alch,
 /turf/open/floor/rogue/greenstone,
@@ -536,15 +524,19 @@
 	first_time_text = "Arcyne Fortress";
 	name = "Arcyne Fortress"
 	})
+"VR" = (
+/obj/machinery/light/rogue/candle/blue/r,
+/turf/open/floor/rogue/greenstone/runed,
+/area/rogue/indoors/town/magician/arcynefortress)
+"VZ" = (
+/turf/open/floor/rogue/greenstone,
+/area/rogue/indoors/town/magician/arcynefortress)
 "Wz" = (
 /obj/structure/fluff/railing/border{
 	dir = 6
 	},
 /turf/open/floor/rogue/greenstone/runed,
-/area/rogue/indoors/town/magician{
-	first_time_text = "Arcyne Fortress";
-	name = "Arcyne Fortress"
-	})
+/area/rogue/indoors/town/magician/arcynefortress)
 "WN" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /turf/open/floor/rogue/greenstone,
@@ -552,6 +544,12 @@
 	first_time_text = "Arcyne Fortress";
 	name = "Arcyne Fortress"
 	})
+"Xh" = (
+/obj/structure/fluff/railing/border{
+	dir = 6
+	},
+/turf/open/floor/rogue/greenstone,
+/area/rogue/indoors/town/magician/arcynefortress)
 "XH" = (
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town/magician{
@@ -564,6 +562,10 @@
 	first_time_text = "Arcyne Fortress";
 	name = "Arcyne Fortress"
 	})
+"Yf" = (
+/obj/structure/fluff/railing/border,
+/turf/open/floor/rogue/greenstone,
+/area/rogue/indoors/town/magician/arcynefortress)
 "ZS" = (
 /obj/machinery/light/rogue/firebowl/standing/blue,
 /turf/open/floor/rogue/greenstone/runed,
@@ -576,10 +578,7 @@
 	dir = 10
 	},
 /turf/open/floor/rogue/greenstone/runed,
-/area/rogue/indoors/town/magician{
-	first_time_text = "Arcyne Fortress";
-	name = "Arcyne Fortress"
-	})
+/area/rogue/indoors/town/magician/arcynefortress)
 
 (1,1,1) = {"
 dU
@@ -599,22 +598,22 @@ dU
 (2,1,1) = {"
 MO
 MO
-Pe
-Cj
-co
-Pe
-Pe
-Pe
-co
-Cj
-Pe
+VZ
+Io
+QN
+VZ
+VZ
+VZ
+QN
+Io
+VZ
 MO
 MO
 "}
 (3,1,1) = {"
 MO
-Pe
-co
+VZ
+QN
 MO
 MO
 MO
@@ -622,119 +621,119 @@ aJ
 MO
 MO
 MO
-co
-Pe
+QN
+VZ
 MO
 "}
 (4,1,1) = {"
 MO
-Pe
+VZ
 MO
 MO
 wy
 xd
-Pe
-CD
+VZ
+Xh
 MO
 MO
 MO
-co
+QN
 MO
 "}
 (5,1,1) = {"
 MO
-co
+QN
 MO
-nL
+In
 nJ
-Pe
-Pe
-Ak
+VZ
+VZ
+Yf
 JU
 ao
 MO
-Pe
+VZ
 MO
 "}
 (6,1,1) = {"
 MO
-Pe
+VZ
 MO
-co
-Pe
-Pe
-Pe
+QN
+VZ
+VZ
+VZ
 ZX
 vz
-MG
+Cv
 MO
-Pe
+VZ
 MO
 "}
 (7,1,1) = {"
 MO
-Pe
+VZ
 MO
 nP
-co
-co
-co
-co
-co
-co
+QN
+QN
+QN
+QN
+QN
+QN
 MO
-co
+QN
 MO
 "}
 (8,1,1) = {"
 MO
-co
+QN
 MO
-co
-Pe
-Pe
-Pe
+QN
+VZ
+VZ
+VZ
 Wz
 wY
-Lt
+oK
 MO
-Pe
+VZ
 MO
 "}
 (9,1,1) = {"
 MO
-Pe
+VZ
 MO
-nL
+In
 Dj
-Pe
-Pe
-Ak
+VZ
+VZ
+Yf
 Uk
 ao
 MO
-co
+QN
 MO
 "}
 (10,1,1) = {"
 MO
-Pe
+VZ
 MO
 MO
 wy
 xd
-Pe
-pc
+VZ
+ac
 MO
 MO
 MO
-Pe
+VZ
 MO
 "}
 (11,1,1) = {"
 MO
-Pe
-co
+VZ
+QN
 MO
 MO
 MO
@@ -742,22 +741,22 @@ fH
 MO
 MO
 MO
-co
-Pe
+QN
+VZ
 MO
 "}
 (12,1,1) = {"
 MO
 MO
-Pe
-BU
-Pe
-co
-Pe
-Pe
-Pe
-aZ
-Pe
+VZ
+Ad
+VZ
+QN
+VZ
+VZ
+VZ
+VR
+VZ
 MO
 MO
 "}

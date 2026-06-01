@@ -64,6 +64,6 @@
 	allowed_areas = list(/area/rogue/outdoors/jungle)
 	spawnableAtoms = list(/obj/structure/glowshroom = 3,
 							/obj/item/restraints/legcuffs/beartrap/armed = 0.5,
-							/obj/structure/flora/ausbushes/reedbush = 5,
+							/obj/structure/flora/roguegrass/reedbush = 5,
 							/obj/structure/flora/roguegrass/water/reeds = 30,
 							/obj/structure/zizo_bane = 1)

@@ -599,12 +599,12 @@
 /area/rogue/outdoors/woods/vampire_lair)
 "iQ" = (
 /obj/structure/mannequin,
-/obj/item/clothing/shoes/roguetown/boots/aalloy,
-/obj/item/clothing/neck/roguetown/gorget/aalloy,
-/obj/item/clothing/head/roguetown/helmet/heavy/guard/aalloy,
-/obj/item/clothing/gloves/roguetown/plate/aalloy,
+/obj/item/clothing/shoes/roguetown/boots/armor/ancient/decrepit,
+/obj/item/clothing/neck/roguetown/gorget/steel/ancient/decrepit,
+/obj/item/clothing/head/roguetown/helmet/heavy/guard/ancient/decrepit,
+/obj/item/clothing/gloves/roguetown/plate/ancient/decrepit,
 /obj/structure/fluff/railing/border,
-/obj/item/clothing/suit/roguetown/armor/plate/aalloy,
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/decrepit,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/vampire_manor)
 "jc" = (
@@ -787,12 +787,12 @@
 /area/rogue/indoors/vampire_manor)
 "mz" = (
 /obj/structure/mannequin,
-/obj/item/clothing/shoes/roguetown/boots/aalloy,
-/obj/item/clothing/neck/roguetown/gorget/aalloy,
-/obj/item/clothing/head/roguetown/helmet/heavy/guard/aalloy,
-/obj/item/clothing/gloves/roguetown/plate/aalloy,
+/obj/item/clothing/shoes/roguetown/boots/armor/ancient/decrepit,
+/obj/item/clothing/neck/roguetown/gorget/steel/ancient/decrepit,
+/obj/item/clothing/head/roguetown/helmet/heavy/guard/ancient/decrepit,
+/obj/item/clothing/gloves/roguetown/plate/ancient/decrepit,
 /obj/machinery/light/rogue/torchholder/c,
-/obj/item/clothing/suit/roguetown/armor/plate/aalloy,
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/decrepit,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/vampire_manor)
 "mI" = (
@@ -1181,11 +1181,11 @@
 /area/rogue/indoors/vampire_manor)
 "un" = (
 /obj/structure/mannequin,
-/obj/item/clothing/shoes/roguetown/boots/aalloy,
-/obj/item/clothing/neck/roguetown/gorget/aalloy,
-/obj/item/clothing/head/roguetown/helmet/heavy/guard/aalloy,
-/obj/item/clothing/gloves/roguetown/plate/aalloy,
-/obj/item/clothing/suit/roguetown/armor/plate/aalloy,
+/obj/item/clothing/shoes/roguetown/boots/armor/ancient/decrepit,
+/obj/item/clothing/neck/roguetown/gorget/steel/ancient/decrepit,
+/obj/item/clothing/head/roguetown/helmet/heavy/guard/ancient/decrepit,
+/obj/item/clothing/gloves/roguetown/plate/ancient/decrepit,
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/decrepit,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/vampire_manor)
 "uo" = (
@@ -1431,11 +1431,11 @@
 /area/rogue/indoors/vampire_manor)
 "yE" = (
 /obj/structure/mannequin,
-/obj/item/clothing/shoes/roguetown/boots/aalloy,
-/obj/item/clothing/neck/roguetown/gorget/aalloy,
-/obj/item/clothing/head/roguetown/helmet/heavy/guard/aalloy,
-/obj/item/clothing/gloves/roguetown/plate/aalloy,
-/obj/item/clothing/suit/roguetown/armor/plate/aalloy,
+/obj/item/clothing/shoes/roguetown/boots/armor/ancient/decrepit,
+/obj/item/clothing/neck/roguetown/gorget/steel/ancient/decrepit,
+/obj/item/clothing/head/roguetown/helmet/heavy/guard/ancient/decrepit,
+/obj/item/clothing/gloves/roguetown/plate/ancient/decrepit,
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/decrepit,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/vampire_manor)
 "yJ" = (
@@ -2030,10 +2030,10 @@
 /area/rogue/outdoors/woods/vampire_lair)
 "HU" = (
 /obj/structure/mannequin,
-/obj/item/clothing/shoes/roguetown/boots/aalloy,
-/obj/item/clothing/neck/roguetown/gorget/aalloy,
-/obj/item/clothing/head/roguetown/helmet/heavy/guard/aalloy,
-/obj/item/clothing/gloves/roguetown/plate/aalloy,
+/obj/item/clothing/shoes/roguetown/boots/armor/ancient/decrepit,
+/obj/item/clothing/neck/roguetown/gorget/steel/ancient/decrepit,
+/obj/item/clothing/head/roguetown/helmet/heavy/guard/ancient/decrepit,
+/obj/item/clothing/gloves/roguetown/plate/ancient/decrepit,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/vampire_manor)
 "HW" = (
@@ -2110,14 +2110,14 @@
 /area/rogue/indoors/vampire_manor)
 "JN" = (
 /obj/structure/mannequin,
-/obj/item/clothing/shoes/roguetown/boots/aalloy,
-/obj/item/clothing/neck/roguetown/gorget/aalloy,
-/obj/item/clothing/head/roguetown/helmet/heavy/guard/aalloy,
-/obj/item/clothing/gloves/roguetown/plate/aalloy,
+/obj/item/clothing/shoes/roguetown/boots/armor/ancient/decrepit,
+/obj/item/clothing/neck/roguetown/gorget/steel/ancient/decrepit,
+/obj/item/clothing/head/roguetown/helmet/heavy/guard/ancient/decrepit,
+/obj/item/clothing/gloves/roguetown/plate/ancient/decrepit,
 /obj/structure/fluff/walldeco/church/line{
 	dir = 8
 	},
-/obj/item/clothing/suit/roguetown/armor/plate/aalloy,
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/decrepit,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/vampire_manor)
 "JP" = (
@@ -2682,15 +2682,15 @@
 /area/rogue/outdoors/woods/vampire_lair)
 "Tk" = (
 /obj/structure/mannequin,
-/obj/item/clothing/shoes/roguetown/boots/aalloy,
-/obj/item/clothing/neck/roguetown/gorget/aalloy,
-/obj/item/clothing/head/roguetown/helmet/heavy/guard/aalloy,
-/obj/item/clothing/gloves/roguetown/plate/aalloy,
+/obj/item/clothing/shoes/roguetown/boots/armor/ancient/decrepit,
+/obj/item/clothing/neck/roguetown/gorget/steel/ancient/decrepit,
+/obj/item/clothing/head/roguetown/helmet/heavy/guard/ancient/decrepit,
+/obj/item/clothing/gloves/roguetown/plate/ancient/decrepit,
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4;
 	pixel_x = 2
 	},
-/obj/item/clothing/suit/roguetown/armor/plate/aalloy,
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/decrepit,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/vampire_manor)
 "Tm" = (
@@ -2940,11 +2940,11 @@
 /area/rogue/indoors/vampire_manor)
 "Ww" = (
 /obj/structure/closet/crate/chest/wicker,
-/obj/item/rogueweapon/sickle/aalloy,
-/obj/item/rogueweapon/pitchfork/aalloy,
-/obj/item/rogueweapon/hoe/aalloy,
-/obj/item/rogueweapon/shovel/aalloy,
-/obj/item/rogueweapon/thresher/aalloy,
+/obj/item/rogueweapon/sickle/decrepit,
+/obj/item/rogueweapon/pitchfork/decrepit,
+/obj/item/rogueweapon/hoe/decrepit,
+/obj/item/rogueweapon/shovel/decrepit,
+/obj/item/rogueweapon/thresher/decrepit,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods/vampire_lair)
 "WD" = (

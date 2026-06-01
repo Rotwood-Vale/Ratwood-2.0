@@ -7,7 +7,7 @@
 //	where you would want the updater procs below to run
 
 //	This also works with decimals.
-#define SAVEFILE_VERSION_MAX	37
+#define SAVEFILE_VERSION_MAX	38
 
 // Safely extract a type path from datums or type values; returns null if unset/invalid.
 /proc/preferences_typepath_or_null(value)
@@ -239,6 +239,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["be_special"] 		>> be_special
 	S["triumphs"]			>> triumphs
 	S["musicvol"]			>> musicvol
+	S["combatmusicvol"]		>> combatmusicvol
 	S["lobbymusicvol"]		>> lobbymusicvol
 	S["ambiencevol"]		>> ambiencevol
 	S["anonymize"]			>> anonymize
@@ -252,6 +253,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["no_autopunctuate"]	>> no_autopunctuate
 	S["no_language_fonts"]	>> no_language_fonts
 	S["no_language_icon"]	>> no_language_icon
+	S["hide_unavailable_emotes"] >> hide_unavailable_emotes
+	S["hide_tongue_noise_warnings"] >> hide_tongue_noise_warnings
 	S["crt"]				>> crt
 	S["grain"]				>> grain
 	S["sexable"]			>> sexable
@@ -339,6 +342,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	pda_style		= sanitize_inlist(pda_style, GLOB.pda_styles, initial(pda_style))
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 	key_bindings 	= sanitize_islist(key_bindings, list())
+	musicvol = sanitize_integer(musicvol, 0, 100, initial(musicvol))
+	if(!isnum(combatmusicvol))
+		combatmusicvol = musicvol
+	combatmusicvol = sanitize_integer(combatmusicvol, 0, 100, initial(combatmusicvol))
+	lobbymusicvol = sanitize_integer(lobbymusicvol, 0, 100, initial(lobbymusicvol))
+	ambiencevol = sanitize_integer(ambiencevol, 0, 100, initial(ambiencevol))
+	mastervol = sanitize_integer(mastervol, 0, 100, initial(mastervol))
+	hide_unavailable_emotes = sanitize_integer(hide_unavailable_emotes, 0, 1, initial(hide_unavailable_emotes))
 
 	//ROGUETOWN
 	parallax = PARALLAX_INSANE
@@ -375,6 +386,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["asaycolor"], asaycolor)
 	WRITE_FILE(S["triumphs"], triumphs)
 	WRITE_FILE(S["musicvol"], musicvol)
+	WRITE_FILE(S["combatmusicvol"], combatmusicvol)
 	WRITE_FILE(S["lobbymusicvol"], lobbymusicvol)
 	WRITE_FILE(S["ambiencevol"], ambiencevol)
 	WRITE_FILE(S["anonymize"], anonymize)
@@ -387,6 +399,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["no_autopunctuate"], no_autopunctuate)
 	WRITE_FILE(S["no_language_fonts"], no_language_fonts)
 	WRITE_FILE(S["no_language_icon"], no_language_icon)
+	WRITE_FILE(S["hide_unavailable_emotes"], hide_unavailable_emotes)
+	WRITE_FILE(S["hide_tongue_noise_warnings"], hide_tongue_noise_warnings)
 	WRITE_FILE(S["crt"], crt)
 	WRITE_FILE(S["sexable"], sexable)
 	WRITE_FILE(S["chastenable"], chastenable)
@@ -1012,6 +1026,26 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	all_quirks = SANITIZE_LIST(all_quirks)
 
 	S["customizer_entries"] >> customizer_entries
+
+	var/save_version = savefile_needs_update(S)
+	if(save_version > 0 && save_version < 38)
+	// Here's the plan, we save the old type and the old color, then re-apply them after validation. Should be seamless
+		var/old_accessory_type
+		var/old_selected_color
+		testing("Save version < 37, updating wings.")
+		var/list/wing_types = subtypesof(/datum/sprite_accessory/wings)
+		for(var/datum/customizer_entry/old_entry as anything in customizer_entries)
+			if(!(old_entry.accessory_type in wing_types))
+				continue
+			old_accessory_type = old_entry.accessory_type
+			old_selected_color = old_entry.accessory_colors
+			validate_customizer_entries() // Here we do validation which rebuilds the customizers
+			var/datum/customizer_entry/organ/wings/new_wing_entry = locate(/datum/customizer_entry/organ/wings) in customizer_entries
+			if(!istype(new_wing_entry))
+				continue
+			new_wing_entry.wings_color = old_selected_color
+			new_wing_entry.accessory_type = old_accessory_type
+
 	validate_customizer_entries()
 
 	return TRUE

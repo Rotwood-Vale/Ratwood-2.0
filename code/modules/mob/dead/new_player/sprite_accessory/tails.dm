@@ -440,4 +440,35 @@
 /datum/sprite_accessory/tail/large_snake_plain
 	icon = 'modular_causticcove/icons/mob/tails/large_snake.dmi'
 	name = "Large Snake Plain"
-	icon_state = "large_snake_plain"	
+	icon_state = "large_snake_plain"
+
+// Not caustic cove, i just wanted it at the bottom tee hee.
+/datum/sprite_accessory/tail/tailmaw
+	name = "Tailmaw"
+	icon_state = "tailmaw"
+
+/datum/sprite_accessory/tail/tailmaw2
+	name = "Tailmaw (Wag)"
+	icon_state = "tailmaw2"
+	can_wag = TRUE
+
+/datum/sprite_accessory/tail/tailmaw2_head
+	name = "Tailmaw (Coloured Head)"
+	icon_state = "tailmawwag_head"
+	color_keys = 2
+	color_key_names = list("Tail", "Head")
+	can_wag = TRUE
+
+/datum/sprite_accessory/tail/tailmaw2_stripes
+	name = "Tailmaw (Striped)"
+	icon_state = "tailmawwag_striped"
+	color_keys = 2
+	color_key_names = list("Tail", "Stripes")
+	can_wag = TRUE
+
+/datum/sprite_accessory/tail/tailmaw2_headstripes
+	name = "Tailmaw (Striped, Coloured Head)"
+	icon_state = "tailmawwag_stripedhead"
+	color_keys = 3
+	color_key_names = list("Tail", "Stripes", "Head")
+	can_wag = TRUE

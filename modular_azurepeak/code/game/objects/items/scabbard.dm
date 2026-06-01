@@ -270,6 +270,7 @@
 
 	grid_width = 32
 	grid_height = 64
+	dropshrink = 0.85
 
 	force = 3
 	max_integrity = 500

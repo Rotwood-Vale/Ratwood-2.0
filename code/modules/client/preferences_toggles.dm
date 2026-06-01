@@ -13,7 +13,7 @@
 		winset(C, "[verbpath]", "is-checked = [!checked]")
 
 /datum/verbs/menu/Settings/verb/setup_character()
-	set name = "Game Preferences"
+	set name = "Character Preferences"
 	set category = "Options"
 	set desc = ""
 	set hidden = 1
@@ -22,17 +22,212 @@
 #endif
 
 /client/verb/setup_character()
-	set name = "Game Preferences"
+	set name = "Character Preferences"
 	set category = "Options"
 	set desc = ""
 	if(prefs)
 		usr.client.prefs.current_tab = 1
 		usr.client.prefs.ShowChoices(usr, 4)
 
+/client/verb/toggle_options_menu()
+	set name = "Toggles"
+	set category = "Options"
+	set desc = ""
+
+	if(!prefs)
+		return
+
+	if(!toggles_menu)
+		toggles_menu = new(src)
+
+	toggles_menu.ui_interact(mob)
+
+/client/verb/keybindings_menu()
+	set name = "Keybindings"
+	set category = "Options"
+	set desc = ""
+
+	if(!prefs)
+		return
+
+	prefs.SetKeybinds(mob, FALSE)
+
+/datum/toggle_options_menu
+	var/client/owner
+
+/datum/toggle_options_menu/New(client/C)
+	. = ..()
+	owner = C
+
+/datum/toggle_options_menu/Destroy(force)
+	if(owner?.toggles_menu == src)
+		owner.toggles_menu = null
+	owner = null
+	return ..()
+
+/datum/toggle_options_menu/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ToggleOptionsMenu", "Toggles")
+		ui.set_state(GLOB.always_state)
+		ui.open()
+
+/datum/toggle_options_menu/ui_data(mob/user)
+	var/list/data = list()
+	if(!owner?.prefs)
+		data["categories"] = list()
+		return data
+
+	var/list/graphics_entries = list(
+		list("id" = "fullscreen", "label" = "Fullscreen", "enabled" = !!(owner.prefs.toggles & TOGGLE_FULLSCREEN), "desc" = "Use fullscreen mode for the game window."),
+		list("id" = "crt", "label" = "CRT Effect", "enabled" = !!owner.prefs.crt, "desc" = "Apply CRT-style blur/scanline look to the map."),
+		list("id" = "grain", "label" = "Grain Effect", "enabled" = !!owner.prefs.grain, "desc" = "Overlay a subtle film grain effect."),
+		list("id" = "tgui_multiline", "label" = "TGUI Multiline", "enabled" = !!owner.mob?.tgui_multiline, "desc" = "Use multiline TGUI input where supported."),
+	)
+
+	var/list/character_entries = list(
+		list("id" = "masked_examine", "label" = "Masked Examine", "enabled" = !!owner.prefs.masked_examine, "desc" = "Allow your character info to be seen while masked."),
+		list("id" = "wildshape_name", "label" = "Show Wildshape Name", "enabled" = !!owner.prefs.wildshape_name, "desc" = "Show your character name while in wildshape."),
+		list("id" = "nsfw_examine", "label" = "Always Show NSFW Examine", "enabled" = !!owner.prefs.nsfw_examine_always, "desc" = "Always display NSFW examine info, even when clothed."),
+	)
+
+	var/list/visual_entries = list(
+		list("id" = "screen_shake", "label" = "Screen Shake", "enabled" = !!owner.prefs.shake, "desc" = "Enable camera shake during impactful events."),
+		list("id" = "chat_headshot", "label" = "Headshot in Chat", "enabled" = !!owner.prefs.chatheadshot, "desc" = "Show character headshot images next to chat when available."),
+		list("id" = "examine_blocks", "label" = "Hide Examine Blocks", "enabled" = !!owner.prefs.no_examine_blocks, "desc" = "Hide inspect details for items inside containers."),
+		list("id" = "language_fonts", "label" = "Disable Language Fonts", "enabled" = !!owner.prefs.no_language_fonts, "desc" = "Use normal fonts instead of stylized language fonts."),
+		list("id" = "language_icon", "label" = "Disable Language Icon", "enabled" = !!owner.prefs.no_language_icon, "desc" = "Hide language icon prefixes in chat."),
+		list("id" = "floating_text", "label" = "Show Floating Text", "enabled" = !!(owner.prefs.floating_text_toggles & FLOATING_TEXT), "desc" = "Show floating combat/feedback text popups."),
+		list("id" = "xp_text", "label" = "Show XP Text", "enabled" = !!(owner.prefs.floating_text_toggles & XP_TEXT), "desc" = "Show floating XP gain popups."),
+	)
+
+	var/list/gameplay_entries = list(
+		list("id" = "autoconsume", "label" = "AutoConsume", "enabled" = !!owner.prefs.autoconsume, "desc" = "Repeat consume/feed interactions automatically."),
+		list("id" = "show_rolls", "label" = "Show Rolls", "enabled" = !!owner.prefs.showrolls, "desc" = "Show combat and check roll details in chat."),
+		list("id" = "combat_strip", "label" = "Combat Mode Stripping", "enabled" = !!(owner.prefs.toggles & CMODE_STRIPPING), "desc" = "Allow opening strip menu while in combat mode."),
+		list("id" = "hide_unavailable_emotes", "label" = "Hide Unavailable Noises", "enabled" = !!owner.prefs.hide_unavailable_emotes, "desc" = "Hide anatomy-specific noise verbs your current body cannot use."),
+		list("id" = "vocal_barks", "label" = "Hear Vocal Barks", "enabled" = !!owner.prefs.hear_barks, "desc" = "Enable hearing vocal bark sounds."),
+		list("id" = "compliance_notifs", "label" = "Compliance Notifications", "enabled" = !!owner.prefs.compliance_notifs, "desc" = "Show chat notices when compliance mode changes."),
+		list("id" = "skillcap_notifs", "label" = "Skillcap Notifications", "enabled" = !!owner.prefs.skillcap_notifs, "desc" = "Notify when a skill reaches its XP cap."),
+		list("id" = "autopunctuation", "label" = "Disable Autopunctuation", "enabled" = !!owner.prefs.no_autopunctuate, "desc" = "Prevent automatic punctuation in your chat messages."),
+		list("id" = "deadchat", "label" = "Show Deadchat", "enabled" = !!(owner.prefs.chat_toggles & CHAT_DSAY), "desc" = "Receive deadchat messages."),
+		list("id" = "legacy_craft", "label" = "Enable Legacy Craft", "enabled" = !!owner.legacycraft, "desc" = "Use legacy crafting UI/behavior."),
+		list("id" = "roleplay_ads", "label" = "Receive Roleplay Ads", "enabled" = !!(owner.prefs.toggles & ROLEPLAY_ADS), "desc" = "Receive notifications for new roleplay ads."),
+	)
+
+	var/list/audio_entries = list(
+		list("id" = "lobby_music", "label" = "Lobby Music", "enabled" = !!(owner.prefs.toggles & SOUND_LOBBY), "desc" = "Play music while in the lobby."),
+		list("id" = "hear_instruments", "label" = "Hear Instruments", "enabled" = !!(owner.prefs.toggles & SOUND_INSTRUMENTS), "desc" = "Hear bard instruments, jukeboxes, and boomboxes."),
+	)
+
+	var/list/content_entries = list(
+		list("id" = "animal_emotes", "label" = "Animal Noise Emotes", "enabled" = !!(!owner.prefs.mute_animal_emotes), "desc" = "Play animal emote sound effects."),
+		list("id" = "erp_panel", "label" = "Enable ERP Panel Interactions", "enabled" = !!owner.prefs.sexable, "desc" = "Allow others to use ERP panel interactions on you."),
+		list("id" = "chastity", "label" = "Enable Chastity Content", "enabled" = !!owner.prefs.chastenable, "desc" = "Show and allow chastity-related content."),
+		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
+		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allow extreme ERP content categories."),
+		list("id" = "edging", "label" = "Enable Edging Content", "enabled" = !!owner.prefs.edging, "desc" = "Allow edging-related ERP content."),
+	)
+
+	data["categories"] = list(
+		list("name" = "Character", "entries" = character_entries),
+		list("name" = "Graphics", "entries" = graphics_entries),
+		list("name" = "Visuals", "entries" = visual_entries),
+		list("name" = "Gameplay", "entries" = gameplay_entries),
+		list("name" = "Audio", "entries" = audio_entries),
+		list("name" = "Content", "entries" = content_entries),
+	)
+	return data
+
+/datum/toggle_options_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	if(..())
+		return TRUE
+
+	if(!owner?.prefs)
+		return FALSE
+
+	if(action == "toggle")
+		var/id = params["id"]
+		switch(id)
+			if("fullscreen")
+				owner.toggle_fullscreen()
+			if("crt")
+				owner.crtmode()
+			if("grain")
+				owner.grainfilter()
+			if("tgui_multiline")
+				owner.mob?.toggle_tgui_multiline()
+			if("screen_shake")
+				owner.toggle_screenshake()
+			if("chat_headshot")
+				owner.set_picinchat()
+			if("masked_examine")
+				owner.masked_examine()
+			if("nsfw_examine")
+				owner.nsfw_examine_always()
+			if("examine_blocks")
+				owner.toggle_examine_blocks()
+			if("wildshape_name")
+				owner.toggle_wildshape_name()
+			if("language_fonts")
+				owner.toggle_language_fonts()
+			if("language_icon")
+				owner.toggle_language_icon()
+			if("floating_text")
+				owner.toggle_floatingtext()
+			if("xp_text")
+				owner.toggle_xptext()
+			if("autoconsume")
+				owner.autoconsume()
+			if("show_rolls")
+				owner.show_rolls()
+			if("combat_strip")
+				owner.cmode_strip()
+			if("hide_unavailable_emotes")
+				owner.toggle_hide_unavailable_emotes()
+			if("vocal_barks")
+				owner.vocal_barks()
+			if("compliance_notifs")
+				owner.toggle_compliance_notifs()
+			if("skillcap_notifs")
+				owner.toggle_skillcap_notifs()
+			if("autopunctuation")
+				owner.toggle_autopunctuation()
+			if("deadchat")
+				owner.toggle_deadchat()
+			if("legacy_craft")
+				owner.toggle_legacycraft()
+			if("roleplay_ads")
+				owner.toggle_roleplay_ads()
+			if("lobby_music")
+				owner.toggle_lobby_music()
+			if("hear_instruments")
+				owner.prefs.toggles ^= SOUND_INSTRUMENTS
+				owner.prefs.save_preferences()
+				owner.update_sounds()
+				owner.sync_instrument_audio_toggle()
+			if("animal_emotes")
+				owner.mute_animal_emotes()
+			if("erp_panel")
+				owner.toggle_ERP()
+			if("chastity")
+				owner.toggle_Chastity()
+			if("permanent_binding")
+				owner.toggle_Chastity_Hardmode()
+			if("extreme_erp")
+				owner.toggle_extreme_ERP()
+			if("edging")
+				owner.toggle_edging()
+		SStgui.update_uis(src)
+		return TRUE
+
+	return FALSE
+
 /client/verb/toggle_fullscreen()
 	set name = "ToggleFullscreen"
 	set category = "Options"
 	set desc = ""
+	set hidden = 1
 	if(prefs)
 		prefs.toggles ^= TOGGLE_FULLSCREEN
 		prefs.save_preferences()
@@ -41,6 +236,7 @@
 /client/verb/toggle_screenshake()
 	set category = "Options"
 	set name = "Toggle Screen Shake"
+	set hidden = 1
 	if(prefs)
 		prefs.shake = !prefs.shake
 		prefs.save_preferences()
@@ -52,6 +248,7 @@
 /client/verb/masked_examine()
 	set category = "Options"
 	set name = "Toggle Masked Examine"
+	set hidden = 1
 	if(prefs)
 		prefs.masked_examine = !prefs.masked_examine
 		prefs.save_preferences()
@@ -63,6 +260,7 @@
 /client/verb/nsfw_examine_always()
 	set category = "Options"
 	set name = "Toggle NSFW Examine"
+	set hidden = 1
 	if(prefs)
 		prefs.nsfw_examine_always = !prefs.nsfw_examine_always
 		prefs.save_preferences()
@@ -74,6 +272,7 @@
 /client/verb/mute_animal_emotes()
 	set category = "Options"
 	set name = "Toggle Animal Noise Emotes"
+	set hidden = 1
 	if(prefs)
 		prefs.mute_animal_emotes = !prefs.mute_animal_emotes
 		prefs.save_preferences()
@@ -85,6 +284,7 @@
 /client/verb/autoconsume()
 	set category = "Options"
 	set name = "Toggle AutoConsume"
+	set hidden = 1
 	if(prefs)
 		prefs.autoconsume = !prefs.autoconsume
 		prefs.save_preferences()
@@ -93,9 +293,25 @@
 		else
 			to_chat(src, "You will no longer try to repeatedly consume/feed food/drinks")
 
+/client/verb/toggle_hide_unavailable_emotes()
+	set category = "Options"
+	set name = "Toggle Hide Unavailable Noises"
+	set hidden = 1
+	if(prefs)
+		prefs.hide_unavailable_emotes = !prefs.hide_unavailable_emotes
+		prefs.save_preferences()
+		if(ishuman(mob))
+			var/mob/living/carbon/human/H = mob
+			H.update_tongue_noise_verbs()
+		if(prefs.hide_unavailable_emotes)
+			to_chat(src, "Unavailable noise verbs are now hidden.")
+		else
+			to_chat(src, "Unavailable noise verbs are now visible.")
+
 /client/verb/toggle_ERP() // Alters if other people can use the ERP panel ON you.
 	set category = "Options"
 	set name = "Toggle ERP Panel"
+	set hidden = 1
 	if(prefs)
 		prefs.sexable = !prefs.sexable
 		prefs.save_preferences()
@@ -107,6 +323,7 @@
 /client/verb/toggle_Chastity() // Alters whether the user can see or interact with any content related to chastity devices, including the devices themselves, actions that target them, and messages related to them. This is intended for users who want to avoid accidentally encountering this content, but still want to be able to use the game without missing out on unrelated features.
 	set category = "Options"
 	set name = "Toggle Chastity Content"
+	set hidden = 1
 	if(prefs)
 		prefs.chastenable = !prefs.chastenable
 		prefs.save_preferences()
@@ -120,6 +337,7 @@
 /client/verb/toggle_Chastity_Hardmode()
 	set category = "Options"
 	set name = "Toggle Permanent Binding"
+	set hidden = 1
 	
 	if(!prefs)
 		return
@@ -188,6 +406,7 @@
 /client/verb/toggle_extreme_ERP()// toggles gore, ryona, and other extreme content in the ERP panel. This is separate from the regular ERP toggle for users who want to avoid just the extreme content but are okay with milder stuff.
 	set category = "Options"
 	set name = "Toggle Extreme ERP Content"
+	set hidden = 1
 	if(prefs)
 		prefs.extreme_erp = !prefs.extreme_erp
 		prefs.save_preferences()
@@ -201,6 +420,7 @@
 /client/verb/toggle_edging() // Toggles edging content in the ERP panel, for psydonites who clearly can't ENDURE.
 	set category = "Options"
 	set name = "Toggle Edging Content"
+	set hidden = 1
 	if(prefs)
 		prefs.edging = !prefs.edging
 		prefs.save_preferences()
@@ -212,6 +432,7 @@
 /client/verb/toggle_compliance_notifs() // The messages need to be on-by-default while this is in its early stages.
 	set category = "Options"
 	set name = "Toggle Compliance Notifs"
+	set hidden = 1
 	if(prefs)
 		prefs.compliance_notifs = !prefs.compliance_notifs
 		prefs.save_preferences()
@@ -223,6 +444,7 @@
 /client/verb/toggle_skillcap_notifs()
 	set category = "Options"
 	set name = "Toggle Skillcap Notifs"
+	set hidden = 1
 	if(prefs)
 		prefs.skillcap_notifs = !prefs.skillcap_notifs
 		prefs.save_preferences()
@@ -234,6 +456,7 @@
 /client/verb/toggle_examine_blocks()
 	set category = "Options"
 	set name = "Toggle Examine Blocks"
+	set hidden = 1
 	if(prefs)
 		prefs.no_examine_blocks = !prefs.no_examine_blocks
 		prefs.save_preferences()
@@ -245,6 +468,7 @@
 /client/verb/toggle_wildshape_name()
 	set category = "Options"
 	set name = "Toggle Wildshape Name"
+	set hidden = 1
 	if(prefs)
 		prefs.wildshape_name = !prefs.wildshape_name
 		prefs.save_preferences()
@@ -256,6 +480,7 @@
 /client/verb/toggle_autopunctuation()
 	set category = "Options"
 	set name = "Toggle Autopunctuation"
+	set hidden = 1
 	if(prefs)
 		prefs.no_autopunctuate = !prefs.no_autopunctuate
 		prefs.save_preferences()
@@ -267,6 +492,7 @@
 /client/verb/toggle_language_fonts()
 	set category = "Options"
 	set name = "Toggle Language Fonts"
+	set hidden = 1
 	if(prefs)
 		prefs.no_language_fonts = !prefs.no_language_fonts
 		prefs.save_preferences()
@@ -278,6 +504,7 @@
 /client/verb/toggle_language_icon()
 	set category = "Options"
 	set name = "Toggle Language Icon"
+	set hidden = 1
 	if(prefs)
 		prefs.no_language_icon = !prefs.no_language_icon
 		prefs.save_preferences()
@@ -290,6 +517,7 @@
 	set name = "Toggle Lobby Music"
 	set category = "Options"
 	set desc = ""
+	set hidden = 1
 	if(prefs)
 		prefs.toggles ^= SOUND_LOBBY
 		prefs.save_preferences()
@@ -305,6 +533,7 @@
 	set name = "Roleplay Ads (Toggle)"
 	set category = "OOC"
 	set desc = ""
+	set hidden = 1
 	if(prefs)
 		prefs.toggles ^= ROLEPLAY_ADS
 		prefs.save_preferences()
@@ -324,6 +553,7 @@
 	set name = "Combat Mode Stripping"
 	set category = "Options"
 	set desc = ""
+	set hidden = 1
 	if(prefs)
 		prefs.toggles ^= CMODE_STRIPPING
 		prefs.save_preferences()
@@ -333,6 +563,7 @@
 	set name = "Hear Vocal Barks"
 	set category = "Options"
 	set desc = ""
+	set hidden = 1
 	if(prefs)
 		prefs.hear_barks = !prefs.hear_barks
 		prefs.save_preferences()
@@ -341,6 +572,7 @@
 /client/verb/toggle_xptext() // Whether the user can see the balloon XP pop ups.
 	set category = "Options"
 	set name = "Toggle XP Text"
+	set hidden = 1
 	if(prefs)
 		prefs.floating_text_toggles ^= XP_TEXT
 		prefs.save_preferences()
@@ -349,6 +581,7 @@
 /client/verb/toggle_floatingtext() // Whether the user can see the balloon pop ups at all.
 	set category = "Options"
 	set name = "Toggle Floating Text"
+	set hidden = 1
 	if(prefs)
 		prefs.floating_text_toggles ^= FLOATING_TEXT
 		prefs.save_preferences()
@@ -358,6 +591,7 @@
 	set name = "Show/Hide Deadchat"
 	set category = "Options"
 	set desc ="Toggles seeing deadchat"
+	set hidden = 1
 
 	if(prefs)
 		prefs.chat_toggles ^= CHAT_DSAY
@@ -517,6 +751,8 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggle_instruments)()
 	set hidden = 1
 	usr.client.prefs.toggles ^= SOUND_INSTRUMENTS
 	usr.client.prefs.save_preferences()
+	usr.client.update_sounds()
+	usr.client.sync_instrument_audio_toggle()
 	if(usr.client.prefs.toggles & SOUND_INSTRUMENTS)
 		to_chat(usr, "You will now hear people playing musical instruments.")
 	else
@@ -538,7 +774,6 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, Toggle_Soundscape)()
 	else
 		to_chat(usr, "You will no longer hear ambient sounds.")
 		usr.stop_sound_channel(CHANNEL_AMBIENCE)
-		usr.stop_sound_channel(CHANNEL_BUZZ)
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Ambience", "[usr.client.prefs.toggles & SOUND_AMBIENCE ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /datum/verbs/menu/Settings/Sound/Toggle_Soundscape/Get_checked(client/C)
 	return C.prefs.toggles & SOUND_AMBIENCE
@@ -555,7 +790,6 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggle_ship_ambience)()
 		to_chat(usr, "You will now hear ship ambience.")
 	else
 		to_chat(usr, "You will no longer hear ship ambience.")
-		usr.stop_sound_channel(CHANNEL_BUZZ)
 		usr.client.ambience_playing = 0
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Ship Ambience", "[usr.client.prefs.toggles & SOUND_SHIP_AMBIENCE ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, I bet you read this comment expecting to see the same thing :^)
 /datum/verbs/menu/Settings/Sound/toggle_ship_ambience/Get_checked(client/C)

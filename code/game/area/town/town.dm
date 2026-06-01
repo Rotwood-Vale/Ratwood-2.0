@@ -16,18 +16,34 @@
 	converted_type = /area/rogue/indoors/shelter/town
 	first_time_text = "THE CITY OF ROTWOOD VALE"
 	town_area = TRUE
+	warden_area = FALSE
 	deathsight_message = "the city of Rotwood Vale and all its bustling souls"
-	
+
+/area/rogue/outdoors/town/graveyard
+	name = "town graveyard"
+	icon_state = "church"
+	first_time_text = "The Garden of the Dead"
+	holy_area = TRUE
+	warden_area = TRUE//eh why not it's got grass I guess
+	deathsight_message = "a hallowed place of eternal rest"
+
 /area/rogue/outdoors/town/rockhill
 	name = "outdoors rockhill"
 	first_time_text = "The Town of Rockhill"
 	deathsight_message = "the city of Rockhill and all its bustling souls"
+
+/area/rogue/outdoors/town/church
+	name = "outdoors church district"
+	first_time_text = "Old Church District"
+	deathsight_message = "sanctified ruins near the bustling city"
+	// holy_area = TRUE //ravox decrees it most honorable to not benefit from you +2 to everything buffs while duelling in the duel pit
 
 /area/rogue/indoors/shelter/town
 	icon_state = "town"
 	droning_sound = 'sound/music/area/townstreets.ogg'
 	droning_sound_dusk = 'sound/music/area/septimus.ogg'
 	droning_sound_night = 'sound/music/area/sleeping.ogg'
+	town_area = TRUE
 
 /area/rogue/indoors/town
 	name = "indoors"
@@ -45,6 +61,7 @@
 	droning_sound = 'sound/music/area/towngen.ogg'
 	droning_sound_dusk = 'sound/music/area/septimus.ogg'
 	droning_sound_night = 'sound/music/area/sleeping.ogg'
+	town_area = TRUE
 
 /area/rogue/outdoors/exposed/town/keep
 	name = "Keep"
@@ -95,9 +112,21 @@
 	deathsight_message = "the roofs of the bustling city"
 
 /area/rogue/outdoors/town/roofs/keep
-	name = "Keep Rooftops"
+	name = "keep rooftops"
 	icon_state = "manor"
 	keep_area = TRUE
+
+/area/rogue/outdoors/town/roofs/church
+	name = "church rooftops"
+	holy_area = TRUE
+
+/area/rogue/outdoors/town/roofs/warden
+	name = "warden rooftops"
+	warden_area = TRUE
+
+/area/rogue/outdoors/town/roofs/tavern
+	name = "tavern rooftops"
+	tavern_area = TRUE
 
 /area/rogue/indoors/shelter/town/roofs
 	icon_state = "roofs"
@@ -114,6 +143,10 @@
 	converted_type = /area/rogue/outdoors/exposed/magiciantower
 	keep_area = TRUE
 	// detail_text = DETAIL_TEXT_UNIVERSITY_OF_ROTWOOD
+	
+/area/rogue/indoors/town/magician/arcynefortress
+	name = "arcyne fortress"
+	first_time_text = "Arcyne Fortress"
 
 /area/rogue/indoors/town/magician/rockhill
 	name = "Wizard's Tower"
@@ -286,7 +319,6 @@
 	droning_sound = 'sound/music/area/catacombs.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
-	// first_time_text = "THE CRYPT OF THE TEN"
 
 /area/rogue/indoors/town/church/basement/crypt
 	first_time_text = "THE CRYPT OF THE TEN"
@@ -296,13 +328,27 @@
 	icon_state = "warehouse"
 	deathsight_message = "musty crates and cheap imports"
 
+/area/rogue/indoors/town/warehouse/harbor
+	droning_sound = 'sound/music/area/harbor.ogg'
+	droning_sound_dusk = null
+	droning_sound_night = null
+	ambientsounds = AMB_BOAT
+	ambientnight = AMB_BOAT
+	deathsight_message = "musty crates and cheap imports, a salty sea-tang on the air"
+
 /area/rogue/indoors/town/warehouse/can_craft_here()
 	return FALSE
 
 /area/rogue/indoors/town/warden
-	name = "Warden Fort"
+	name = "warden fort"
 	warden_area = TRUE
 	deathsight_message = "a moss covered stone redoubt, guarding against the wilds"
+
+/area/rogue/indoors/town/cell/warden
+	converted_type = /area/rogue/indoors/town/warden
+	town_area = FALSE
+	warden_area = TRUE
+	deathsight_message = "makeshift cells of pain and suffering at the border of the wilds"
 
 /area/rogue/indoors/inq
 	name = "The Inquisition"

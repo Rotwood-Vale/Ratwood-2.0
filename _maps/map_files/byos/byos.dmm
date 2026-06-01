@@ -581,13 +581,6 @@
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/town/basement)
-"aFw" = (
-/turf/closed/wall/mineral/rogue/roofwall/innercorner{
-	dir = 4
-	},
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "aFB" = (
 /obj/structure/bars/passage{
 	redstone_id = "skelejail3"
@@ -624,15 +617,6 @@
 /obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/cave)
-"aGV" = (
-/turf/closed/wall/mineral/rogue/roofwall/middle{
-	dir = 1;
-	max_integrity = 1600;
-	name = "reinforced roofing"
-	},
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "aHh" = (
 /obj/structure/flora/ausbushes/reedbush,
 /turf/open/floor/rogue/naturalstone/sandstone,
@@ -942,9 +926,7 @@
 /obj/item/natural/feather,
 /obj/structure/table/wood/long_table/mid/alt,
 /turf/open/floor/carpet/royalblack,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "bdP" = (
 /turf/closed/wall/mineral/rogue/wooddark/end{
 	dir = 8
@@ -1032,8 +1014,8 @@
 	dir = 4
 	},
 /obj/structure/rack/rogue,
-/obj/item/clothing/shoes/roguetown/sandals/aalloy,
-/obj/item/clothing/shoes/roguetown/sandals/aalloy,
+/obj/item/clothing/shoes/roguetown/sandals/ancient/decrepit,
+/obj/item/clothing/shoes/roguetown/sandals/ancient/decrepit,
 /obj/item/clothing/shoes/roguetown/boots/furlinedanklets,
 /obj/item/clothing/shoes/roguetown/boots/furlinedanklets,
 /obj/item/clothing/shoes/roguetown/boots/furlinedanklets,
@@ -1488,11 +1470,7 @@
 	pixel_x = 4
 	},
 /turf/open/floor/rogue/concrete,
-/area/rogue/indoors/town/warehouse{
-	droning_sound = 'sound/music/area/harbor.ogg';
-	droning_sound_dusk = 'sound/music/area/harbor.ogg';
-	droning_sound_night = 'sound/music/area/harbor.ogg'
-	})
+/area/rogue/indoors/town/warehouse/harbor)
 "bHK" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -1543,11 +1521,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood/platform,
 /area/rogue/outdoors/beach/byos)
-"bLG" = (
-/turf/closed/wall/mineral/rogue/wooddark/horizontal,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "bLV" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -1947,7 +1920,7 @@
 /area/rogue/outdoors/town/byos)
 "ckg" = (
 /obj/structure/rack/rogue,
-/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy,
+/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/inq/boat/basement)
 "ckn" = (
@@ -2528,7 +2501,7 @@
 /turf/open/floor/rogue/metal,
 /area/rogue/under/cave/tribeden)
 "cTh" = (
-/obj/item/rogueweapon/sword/short/gladius/pagladius,
+/obj/item/rogueweapon/sword/short/gladius/ancient,
 /mob/living/carbon/human/species/npc/deadite{
 	faction = list("undead")
 	},
@@ -2588,14 +2561,6 @@
 /obj/item/reagent_containers/food/snacks/smallrat,
 /turf/open/floor/rogue/hay,
 /area/rogue/indoors)
-"cWF" = (
-/obj/structure/fluff/railing/border{
-	dir = 9
-	},
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "cWY" = (
 /obj/item/reagent_containers/food/snacks/smallrat,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -2663,17 +2628,17 @@
 /area/rogue/outdoors/jungle)
 "dam" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/spear/paalloy,
-/obj/item/rogueweapon/spear/paalloy,
-/obj/item/rogueweapon/spear/paalloy,
-/obj/item/rogueweapon/spear/paalloy,
-/obj/item/rogueweapon/spear/paalloy,
-/obj/item/rogueweapon/mace/goden/steel/paalloy{
+/obj/item/rogueweapon/spear/ancient,
+/obj/item/rogueweapon/spear/ancient,
+/obj/item/rogueweapon/spear/ancient,
+/obj/item/rogueweapon/spear/ancient,
+/obj/item/rogueweapon/spear/ancient,
+/obj/item/rogueweapon/mace/goden/steel/ancient{
 	pixel_x = -23;
 	pixel_y = -12
 	},
 /obj/structure/rack/rogue/shelf,
-/obj/item/rogueweapon/halberd/bardiche/paalloy{
+/obj/item/rogueweapon/halberd/bardiche/ancient{
 	pixel_x = -19;
 	pixel_y = 11
 	},
@@ -2787,9 +2752,7 @@
 /area/rogue/under/cave)
 "dhY" = (
 /turf/open/floor/carpet/red,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "dii" = (
 /obj/item/natural/rock/copper,
 /turf/open/floor/rogue/naturalstone,
@@ -3338,9 +3301,9 @@
 /area/rogue/indoors/vampire_manor)
 "dMq" = (
 /obj/structure/rack/rogue,
-/obj/item/clothing/under/roguetown/chainlegs/kilt/paalloy,
-/obj/item/clothing/under/roguetown/chainlegs/kilt/paalloy,
-/obj/item/clothing/under/roguetown/chainlegs/kilt/paalloy,
+/obj/item/clothing/under/roguetown/chainlegs/kilt/ancient,
+/obj/item/clothing/under/roguetown/chainlegs/kilt/ancient,
+/obj/item/clothing/under/roguetown/chainlegs/kilt/ancient,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/tribeden)
 "dNc" = (
@@ -3690,9 +3653,7 @@
 /obj/item/paper/scroll,
 /obj/item/natural/feather,
 /turf/open/floor/carpet/red,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "ehE" = (
 /obj/structure/fluff/railing/border{
 	dir = 5
@@ -3799,15 +3760,6 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/tribeden)
-"epw" = (
-/turf/closed/wall/mineral/rogue/roofwall/middle{
-	dir = 4;
-	max_integrity = 1600;
-	name = "reinforced roofing"
-	},
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "epK" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/minotaur/axe/female{
 	STACON = 15;
@@ -4042,9 +3994,7 @@
 "eEb" = (
 /obj/structure/fluff/wallclock/l,
 /turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "eEe" = (
 /obj/structure/bars/passage{
 	redstone_id = "imps"
@@ -4322,7 +4272,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/indoors)
 "eUq" = (
-/obj/item/rogueweapon/sword/short/gladius/pagladius,
+/obj/item/rogueweapon/sword/short/gladius/ancient,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave)
 "eUJ" = (
@@ -4393,9 +4343,7 @@
 	},
 /obj/item/reagent_containers/glass/bottle/rogue/redwine,
 /turf/open/floor/carpet/red,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "eZp" = (
 /obj/structure/chair/wood/rogue/chair3{
 	dir = 4
@@ -4478,11 +4426,7 @@
 	pixel_y = -7
 	},
 /turf/open/floor/rogue/concrete,
-/area/rogue/indoors/town/warehouse{
-	droning_sound = 'sound/music/area/harbor.ogg';
-	droning_sound_dusk = 'sound/music/area/harbor.ogg';
-	droning_sound_night = 'sound/music/area/harbor.ogg'
-	})
+/area/rogue/indoors/town/warehouse/harbor)
 "fez" = (
 /turf/open/floor/rogue/cobble/mossy{
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
@@ -4972,9 +4916,7 @@
 	lockid = "puritan"
 	},
 /turf/open/floor/rogue/metal/barograte,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "fDM" = (
 /obj/structure/fluff/nest,
 /obj/effect/landmark/start/tribalguard,
@@ -5101,9 +5043,7 @@
 /obj/item/reagent_containers/food/snacks/tallow/red,
 /obj/item/inqarticles/tallowpot,
 /turf/open/floor/rogue/herringbone,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "fMc" = (
 /obj/effect/landmark/start/martyr,
 /turf/open/floor/rogue/woodturned,
@@ -5779,9 +5719,7 @@
 "grm" = (
 /obj/structure/chair/wood/rogue/fancy,
 /turf/open/floor/carpet/royalblack,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "gsh" = (
 /obj/structure/vine{
 	color = "#bf080e"
@@ -6065,14 +6003,14 @@
 /area/rogue/under/town/basement)
 "gFN" = (
 /obj/structure/rack/rogue,
-/obj/item/clothing/wrists/roguetown/bracers/paalloy{
+/obj/item/clothing/wrists/roguetown/bracers/ancient{
 	pixel_y = 28
 	},
 /obj/structure/rack/rogue/shelf,
-/obj/item/clothing/suit/roguetown/armor/plate/half/paalloy,
-/obj/item/clothing/suit/roguetown/armor/plate/half/paalloy,
-/obj/item/clothing/suit/roguetown/armor/plate/half/paalloy,
-/obj/item/clothing/gloves/roguetown/chain/paalloy{
+/obj/item/clothing/suit/roguetown/armor/plate/half/ancient,
+/obj/item/clothing/suit/roguetown/armor/plate/half/ancient,
+/obj/item/clothing/suit/roguetown/armor/plate/half/ancient,
+/obj/item/clothing/gloves/roguetown/chain/ancient{
 	pixel_x = -9;
 	pixel_y = 32
 	},
@@ -6202,9 +6140,7 @@
 "gOm" = (
 /obj/structure/roguewindow/stained/silver,
 /turf/closed/wall/mineral/rogue/wooddark,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "gOw" = (
 /obj/structure/bars/cemetery,
 /obj/structure/flora/roguegrass/thorn_bush,
@@ -6323,20 +6259,13 @@
 	icon_state = "wooden_floor2"
 	},
 /area/rogue/outdoors/beach/byos)
-"gSS" = (
-/turf/closed/wall/mineral/rogue/roofwall/innercorner,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "gTe" = (
 /obj/structure/fluff/railing/border,
 /obj/structure/fluff/railing/border{
 	dir = 1
 	},
 /turf/open/floor/rogue/metal/barograte,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "gTW" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound{
 	resize = 2;
@@ -6940,20 +6869,20 @@
 /area/rogue/indoors/banditcamp/byos)
 "hFm" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/stoneaxe/woodcut/steel/paaxe{
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient{
 	pixel_x = 7;
 	pixel_y = -7
 	},
-/obj/item/rogueweapon/stoneaxe/woodcut/steel/paaxe{
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient{
 	pixel_x = 1;
 	pixel_y = -10
 	},
-/obj/item/rogueweapon/mace/steel/palloy{
+/obj/item/rogueweapon/mace/steel/ancient{
 	pixel_x = -3;
 	pixel_y = 0
 	},
-/obj/item/rogueweapon/mace/steel/palloy,
-/obj/item/rogueweapon/mace/steel/palloy{
+/obj/item/rogueweapon/mace/steel/ancient,
+/obj/item/rogueweapon/mace/steel/ancient{
 	pixel_x = -7;
 	pixel_y = 2
 	},
@@ -7112,14 +7041,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/inq/boat)
-"hNI" = (
-/turf/closed/wall/mineral/rogue/roofwall/middle{
-	max_integrity = 1600;
-	name = "reinforced roof"
-	},
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "hNM" = (
 /obj/structure/table/wood/poor,
 /obj/item/mattcoin,
@@ -7233,9 +7154,7 @@
 /obj/item/needle,
 /obj/item/natural/bundle/cloth/bandage/full,
 /turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "hWH" = (
 /obj/machinery/light/rogue/torchholder/l{
 	dir = 8
@@ -7491,11 +7410,11 @@
 "ihR" = (
 /obj/structure/rack/rogue,
 /obj/structure/rack/rogue/shelf,
-/obj/item/clothing/neck/roguetown/gorget/paalloy{
+/obj/item/clothing/neck/roguetown/gorget/steel/ancient{
 	pixel_x = -8;
 	pixel_y = 31
 	},
-/obj/item/clothing/mask/rogue/facemask/steel/paalloy{
+/obj/item/clothing/mask/rogue/facemask/ancient{
 	pixel_x = 5;
 	pixel_y = 31
 	},
@@ -7534,7 +7453,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/tavern)
 "iiF" = (
-/obj/item/rogueweapon/sword/short/gladius/pagladius,
+/obj/item/rogueweapon/sword/short/gladius/ancient,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave)
 "ijb" = (
@@ -7703,9 +7622,7 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/metal/barograte,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "itY" = (
 /obj/structure/fluff/railing/border{
 	dir = 6;
@@ -7786,13 +7703,6 @@
 "izw" = (
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave)
-"izU" = (
-/turf/closed/wall/mineral/rogue/roofwall/innercorner{
-	dir = 8
-	},
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "iAu" = (
 /obj/item/natural/stone,
 /turf/open/floor/rogue/cobble/mossy,
@@ -8262,9 +8172,7 @@
 "iYh" = (
 /obj/structure/stairs,
 /turf/open/transparent/openspace,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "iYB" = (
 /obj/structure/fluff/railing/fence{
 	dir = 8
@@ -8276,9 +8184,7 @@
 /obj/structure/table/wood/long_table,
 /obj/item/book/rogue/abyssor,
 /turf/open/floor/carpet/royalblack,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "iZl" = (
 /obj/effect/spawner/trap,
 /turf/open/floor/rogue/greenstone/runed{
@@ -8700,11 +8606,6 @@
 /obj/structure/roguemachine/noticeboard,
 /turf/open/floor/rogue/desert_grass,
 /area/rogue/outdoors/town/byos)
-"jwG" = (
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "jxa" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead,
 /turf/open/floor/rogue/cobblerock,
@@ -8752,15 +8653,6 @@
 /obj/machinery/light/rogue/firebowl/church,
 /turf/open/floor/rogue/volcanic,
 /area/rogue/under/cave)
-"jzK" = (
-/turf/closed/wall/mineral/rogue/roofwall/outercorner{
-	dir = 1;
-	max_integrity = 1600;
-	name = "reinforced roofing"
-	},
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "jAW" = (
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/town/byos)
@@ -9248,15 +9140,15 @@
 /obj/structure/rack/rogue/shelf/big{
 	pixel_y = 37
 	},
-/obj/item/quiver/paalloy{
+/obj/item/quiver/ancient{
 	pixel_x = -4;
 	pixel_y = 30
 	},
-/obj/item/quiver/paalloy{
+/obj/item/quiver/ancient{
 	pixel_x = 9;
 	pixel_y = 27
 	},
-/obj/item/quiver/paalloy{
+/obj/item/quiver/ancient{
 	pixel_x = 2;
 	pixel_y = 28
 	},
@@ -9266,11 +9158,11 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow,
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow,
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow,
-/obj/item/quiver/paalloy{
+/obj/item/quiver/ancient{
 	pixel_x = 2;
 	pixel_y = 28
 	},
-/obj/item/quiver/paalloy{
+/obj/item/quiver/ancient{
 	pixel_x = 2;
 	pixel_y = 28
 	},
@@ -9483,9 +9375,7 @@
 "kov" = (
 /obj/structure/bookcase/random/archive,
 /turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "koB" = (
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/water/river{
@@ -9859,9 +9749,7 @@
 	scom_tag = "Inquisition ship - Inquisitor's Office"
 	},
 /turf/open/floor/carpet/red,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "kHK" = (
 /obj/structure/chair/zybantine_sofa/left{
 	pixel_x = 0;
@@ -10374,15 +10262,15 @@
 /obj/item/rogueweapon/huntingknife,
 /obj/item/rogueweapon/huntingknife,
 /obj/item/rogueweapon/huntingknife,
-/obj/item/rogueweapon/huntingknife/idagger/steel/padagger{
+/obj/item/rogueweapon/huntingknife/idagger/steel/ancient{
 	pixel_x = 7;
 	pixel_y = -6
 	},
-/obj/item/rogueweapon/huntingknife/idagger/steel/padagger{
+/obj/item/rogueweapon/huntingknife/idagger/steel/ancient{
 	pixel_x = 11;
 	pixel_y = -9
 	},
-/obj/item/rogueweapon/huntingknife/idagger/steel/padagger{
+/obj/item/rogueweapon/huntingknife/idagger/steel/ancient{
 	pixel_x = 7;
 	pixel_y = -6
 	},
@@ -10408,9 +10296,7 @@
 /area/rogue/indoors/town/shop)
 "lfy" = (
 /turf/closed/wall/mineral/rogue/wooddark/window,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "lfT" = (
 /obj/item/natural/bundle/stoneblock{
 	amount = 4
@@ -10678,9 +10564,7 @@
 	pixel_x = 12
 	},
 /turf/open/floor/rogue/ruinedwood,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "ltv" = (
 /obj/structure/fluff/railing/border{
 	dir = 4
@@ -10737,9 +10621,7 @@
 	dir = 1
 	},
 /turf/open/transparent/openspace,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "lww" = (
 /obj/item/rogueweapon/surgery/saw,
 /obj/structure/table/wood,
@@ -11261,14 +11143,6 @@
 	},
 /turf/open/floor/rogue/AzureSand,
 /area/rogue/under/cave)
-"lYG" = (
-/obj/structure/fluff/railing/border{
-	dir = 10
-	},
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "lYR" = (
 /obj/structure/fluff/railing/border{
 	dir = 5
@@ -11517,13 +11391,6 @@
 	},
 /turf/open/floor/rogue/churchrough,
 /area/rogue/under/cave)
-"miF" = (
-/obj/structure/roguewindow,
-/obj/structure/curtain/red,
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "miV" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk,
 /obj/effect/decal/cleanable/roguerune/arcyne/summoning,
@@ -11578,9 +11445,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/royalblack,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "mlx" = (
 /obj/effect/landmark/start/prisonerr,
 /obj/structure/fluff/walldeco/chains,
@@ -12243,15 +12108,6 @@
 /obj/item/reagent_containers/glass/bucket/pot,
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/inq/boat)
-"mYG" = (
-/turf/closed/wall/mineral/rogue/roofwall/outercorner{
-	dir = 8;
-	max_integrity = 1600;
-	name = "reinforced roofing"
-	},
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "mYM" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -13210,9 +13066,7 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/metal,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "obF" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 8
@@ -13304,9 +13158,7 @@
 /turf/closed/wall/mineral/rogue/roofwall/innercorner{
 	dir = 4
 	},
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "ofw" = (
 /obj/structure/closet/crate/roguecloset{
 	pixel_y = 5
@@ -13552,9 +13404,7 @@
 	pixel_y = -4
 	},
 /turf/open/floor/carpet/red,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "oqk" = (
 /obj/structure/table/vtable/v2{
 	pixel_y = 8
@@ -14011,9 +13861,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/herringbone,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "oNq" = (
 /obj/structure/fluff/railing/border{
 	dir = 10
@@ -14158,9 +14006,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/herringbone,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "oVN" = (
 /turf/closed/wall/mineral/rogue/wooddark/horizontal,
 /area/rogue/indoors/inq/boat/basement)
@@ -14235,9 +14081,7 @@
 	},
 /obj/item/candle/silver/lit,
 /turf/open/floor/carpet/red,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "pbb" = (
 /obj/item/roguegem/blue,
 /obj/effect/decal/cleanable/debris,
@@ -14411,11 +14255,6 @@
 /obj/structure/rogue/trophy/deer,
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/indoors/town/tavern)
-"pgJ" = (
-/turf/open/transparent/openspace,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "pgK" = (
 /obj/item/ingot/gold,
 /obj/item/roguecoin/gold/pile,
@@ -15180,15 +15019,15 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/sling,
 /obj/item/gun/ballistic/revolver/grenadelauncher/sling,
 /obj/item/gun/ballistic/revolver/grenadelauncher/sling,
-/obj/item/quiver/sling/paalloy{
+/obj/item/quiver/sling/ancient{
 	pixel_x = 0;
 	pixel_y = 31
 	},
-/obj/item/quiver/sling/paalloy{
+/obj/item/quiver/sling/ancient{
 	pixel_x = 9;
 	pixel_y = 31
 	},
-/obj/item/quiver/sling/paalloy{
+/obj/item/quiver/sling/ancient{
 	pixel_x = -8;
 	pixel_y = 31
 	},
@@ -16102,9 +15941,7 @@
 	},
 /obj/item/book/rogue/bibble/psy,
 /turf/open/floor/carpet/red,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "qSb" = (
 /obj/structure/closet/crate/chest,
 /obj/item/paper/inqslip/accusation,
@@ -16291,9 +16128,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/herringbone,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "rcD" = (
 /obj/machinery/light/rogue/torchholder{
 	dir = 1
@@ -16945,9 +16780,7 @@
 /obj/item/clothing/gloves/roguetown/otavan/inqgloves,
 /obj/item/clothing/mask/rogue/sack/psy,
 /turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "rLN" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/closet/crate/chest/gold{
@@ -17144,9 +16977,7 @@
 	},
 /obj/effect/landmark/start/puritan,
 /turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "rTX" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
 /obj/machinery/light/rogue/torchholder/c,
@@ -17474,9 +17305,7 @@
 	alpha = 0
 	},
 /turf/closed/wall/mineral/rogue/wooddark,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "sjI" = (
 /obj/item/reagent_containers/glass/cup/wooden,
 /obj/structure/table/wood/poor,
@@ -17841,15 +17670,6 @@
 /obj/structure/flora/newleaf,
 /turf/open/floor/rogue/desert_grass,
 /area/rogue/outdoors/jungle)
-"sBi" = (
-/turf/closed/wall/mineral/rogue/roofwall/outercorner{
-	dir = 4;
-	max_integrity = 1600;
-	name = "reinforced roofing"
-	},
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "sBj" = (
 /obj/structure/rack/rogue,
 /obj/item/rogueweapon/pick{
@@ -17864,12 +17684,12 @@
 /area/rogue/indoors/town/tavern)
 "sCr" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/greatsword/paalloy,
-/obj/item/rogueweapon/sword/sabre/palloy{
+/obj/item/rogueweapon/greatsword/ancient,
+/obj/item/rogueweapon/sword/sabre/ancient{
 	pixel_x = 4;
 	pixel_y = -5
 	},
-/obj/item/rogueweapon/sword/sabre/palloy{
+/obj/item/rogueweapon/sword/sabre/ancient{
 	pixel_x = -6;
 	pixel_y = 7
 	},
@@ -18483,7 +18303,7 @@
 /obj/item/rogueweapon/mace/cudgel/shellrungu,
 /obj/item/rogueweapon/mace/cudgel/shellrungu,
 /obj/item/rogueweapon/mace/cudgel/shellrungu,
-/obj/item/rogueweapon/mace/warhammer/steel/paalloy{
+/obj/item/rogueweapon/mace/warhammer/steel/ancient{
 	pixel_x = 4;
 	pixel_y = -8
 	},
@@ -18554,27 +18374,27 @@
 /area/rogue/under/cave)
 "tgW" = (
 /obj/structure/rack/rogue,
-/obj/item/clothing/neck/roguetown/chaincoif/paalloy,
-/obj/item/clothing/neck/roguetown/chaincoif/paalloy,
-/obj/item/clothing/neck/roguetown/chaincoif/paalloy,
-/obj/item/clothing/neck/roguetown/chaincoif/paalloy,
-/obj/item/clothing/neck/roguetown/chaincoif/paalloy,
-/obj/item/clothing/neck/roguetown/chaincoif/paalloy,
-/obj/item/clothing/head/roguetown/helmet/heavy/paalloy{
+/obj/item/clothing/neck/roguetown/chaincoif/ancient,
+/obj/item/clothing/neck/roguetown/chaincoif/ancient,
+/obj/item/clothing/neck/roguetown/chaincoif/ancient,
+/obj/item/clothing/neck/roguetown/chaincoif/ancient,
+/obj/item/clothing/neck/roguetown/chaincoif/ancient,
+/obj/item/clothing/neck/roguetown/chaincoif/ancient,
+/obj/item/clothing/head/roguetown/helmet/heavy/ancient{
 	pixel_y = 28
 	},
-/obj/item/clothing/head/roguetown/helmet/heavy/paalloy{
+/obj/item/clothing/head/roguetown/helmet/heavy/ancient{
 	pixel_y = 28
 	},
-/obj/item/clothing/head/roguetown/helmet/heavy/paalloy{
+/obj/item/clothing/head/roguetown/helmet/heavy/ancient{
 	pixel_y = 31;
 	pixel_x = -8
 	},
-/obj/item/clothing/head/roguetown/helmet/heavy/paalloy{
+/obj/item/clothing/head/roguetown/helmet/heavy/ancient{
 	pixel_y = 30;
 	pixel_x = 8
 	},
-/obj/item/clothing/head/roguetown/helmet/heavy/guard/paalloy{
+/obj/item/clothing/head/roguetown/helmet/heavy/guard/ancient{
 	pixel_x = -1;
 	pixel_y = 34
 	},
@@ -18785,9 +18605,7 @@
 	dir = 10
 	},
 /turf/open/floor/rogue/metal/barograte,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "trw" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
@@ -18873,9 +18691,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "tvO" = (
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/water/ocean/deep,
@@ -18941,9 +18757,7 @@
 	dir = 6
 	},
 /turf/open/floor/rogue/metal/barograte,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "tzd" = (
 /obj/item/grown/log/tree/small,
 /obj/item/grown/log/tree/small,
@@ -19010,13 +18824,6 @@
 "tDL" = (
 /turf/closed/wall/mineral/rogue/stone/moss,
 /area/rogue/indoors)
-"tDT" = (
-/turf/closed/wall/mineral/rogue/wooddark/end{
-	dir = 1
-	},
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "tEe" = (
 /obj/structure/table/wood{
 	dir = 9;
@@ -19429,13 +19236,6 @@
 /obj/item/rope/chain,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave)
-"ucx" = (
-/turf/closed/wall/mineral/rogue/roofwall/innercorner{
-	dir = 1
-	},
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "ucM" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/water/swamp{
@@ -19563,15 +19363,15 @@
 /obj/structure/rack/rogue/shelf/big{
 	pixel_y = 37
 	},
-/obj/item/quiver/javelin/paalloy{
+/obj/item/quiver/javelin/ancient{
 	pixel_x = -6;
 	pixel_y = 32
 	},
-/obj/item/quiver/javelin/paalloy{
+/obj/item/quiver/javelin/ancient{
 	pixel_x = 5;
 	pixel_y = 31
 	},
-/obj/item/quiver/javelin/paalloy{
+/obj/item/quiver/javelin/ancient{
 	pixel_x = 1;
 	pixel_y = 32
 	},
@@ -19581,7 +19381,7 @@
 /obj/item/rogueweapon/shield/wood,
 /obj/item/rogueweapon/shield/wood,
 /obj/item/rogueweapon/shield/wood,
-/obj/item/rogueweapon/shield/tower/metal/palloy,
+/obj/item/rogueweapon/shield/tower/metal/ancient,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/tribeden)
 "ujT" = (
@@ -19638,11 +19438,7 @@
 /area/rogue/outdoors/mountains)
 "umq" = (
 /turf/open/floor/rogue/concrete,
-/area/rogue/indoors/town/warehouse{
-	droning_sound = 'sound/music/area/harbor.ogg';
-	droning_sound_dusk = 'sound/music/area/harbor.ogg';
-	droning_sound_night = 'sound/music/area/harbor.ogg'
-	})
+/area/rogue/indoors/town/warehouse/harbor)
 "umC" = (
 /obj/structure/flora/roguegrass/bush/jungle/large,
 /turf/open/floor/rogue/naturalstone/sandstone,
@@ -19784,9 +19580,7 @@
 "usk" = (
 /obj/structure/globe,
 /turf/open/floor/carpet/royalblack,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "usw" = (
 /obj/structure/fluff/railing/border{
 	pixel_y = -7
@@ -19820,9 +19614,7 @@
 	icon_state = "map3"
 	},
 /turf/open/floor/carpet/red,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "uuc" = (
 /turf/closed/mineral/rogue/sandstone,
 /area/rogue/outdoors/beach/byos)
@@ -19936,9 +19728,7 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/metal,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "uzI" = (
 /obj/structure/chair/stool/rogue,
 /obj/effect/decal/cobbleedge{
@@ -20016,11 +19806,6 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/banditcamp/byos)
-"uEN" = (
-/turf/closed/wall/mineral/rogue/roofwall/outercorner,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "uFI" = (
 /obj/structure/bars,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -20264,11 +20049,6 @@
 /obj/structure/bed/rogue/shit,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cave)
-"uTs" = (
-/turf/open/floor/carpet/royalblack,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "uUf" = (
 /obj/structure/stairs{
 	dir = 4
@@ -20612,9 +20392,7 @@
 "vqG" = (
 /obj/structure/closet/crate/chest,
 /turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "vqP" = (
 /turf/closed/wall/mineral/rogue/wooddark/horizontal,
 /area/rogue/indoors/town/shop)
@@ -21552,7 +21330,7 @@
 	name = "Key of Wrath";
 	desc = "It's eye glares at you intensely."
 	},
-/obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer,
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/artificer,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave)
 "wqN" = (
@@ -21878,9 +21656,7 @@
 /area/rogue/outdoors/jungle)
 "wFC" = (
 /turf/open/floor/rogue/metal/barograte,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "wFQ" = (
 /obj/structure/trap/damage,
 /obj/effect/decal/remains/human,
@@ -22266,11 +22042,6 @@
 /obj/machinery/light/rogue/firebowl/standing,
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/indoors/inq/boat)
-"wZW" = (
-/turf/closed/wall/mineral/rogue/wooddark,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "xbh" = (
 /obj/structure/fluff/railing/border{
 	dir = 5
@@ -22460,9 +22231,7 @@
 "xrP" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "xsj" = (
 /obj/structure/lever{
 	redstone_id = "greedtrial9"
@@ -23212,9 +22981,7 @@
 /obj/item/reagent_containers/glass/bottle/rogue/manapot,
 /obj/item/book/rogue/bibble/psy,
 /turf/open/floor/rogue/herringbone,
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
+/area/rogue/indoors/inq/boat/office)
 "yed" = (
 /obj/item/roguecoin/copper/pile,
 /mob/living/carbon/human/species/skeleton/npc/pirate,
@@ -23337,13 +23104,6 @@
 /obj/effect/landmark/start/knavewench,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/outdoors/beach/byos)
-"yjY" = (
-/turf/closed/wall/mineral/rogue/wooddark/end{
-	dir = 8
-	},
-/area/rogue/indoors/inq/boat/office{
-	ceiling_protected = 1
-	})
 "yke" = (
 /obj/item/flashlight/flare/torch/lantern,
 /turf/open/floor/rogue/dirt/desert,
@@ -222559,17 +222319,17 @@ dqG
 (187,1,5) = {"
 xnp
 xnp
-uEN
-wZW
-bLG
-bLG
+wAq
+hbh
+qDI
+qDI
 itU
 tza
 itU
-bLG
-bLG
-wZW
-sBi
+qDI
+qDI
+hbh
+sEl
 xnp
 qjJ
 qjJ
@@ -222760,19 +222520,19 @@ dqG
 "}
 (188,1,5) = {"
 qjJ
-uEN
-izU
+wAq
+efK
 sjD
-jwG
+uWP
 lvS
-pgJ
+hVu
 gTe
-pgJ
+hVu
 iYh
-jwG
+uWP
 sjD
-ucx
-sBi
+duZ
+sEl
 qjJ
 qjJ
 dqG
@@ -222962,19 +222722,19 @@ dqG
 "}
 (189,1,5) = {"
 qjJ
-aGV
-wZW
+tkU
+hbh
 xrP
-jwG
-lYG
+uWP
+jbo
 tvu
 trn
 tvu
-cWF
-jwG
+qpP
+uWP
 kov
-wZW
-hNI
+hbh
+ieQ
 qjJ
 qjJ
 dqG
@@ -223164,19 +222924,19 @@ dqG
 "}
 (190,1,5) = {"
 qjJ
-miF
+oKn
 oqe
 qRZ
-uTs
-jwG
-jwG
+rcr
+uWP
+uWP
 wFC
-jwG
-jwG
-jwG
-uTs
+uWP
+uWP
+uWP
+rcr
 iZi
-miF
+oKn
 qjJ
 qjJ
 dqG
@@ -223366,19 +223126,19 @@ dqG
 "}
 (191,1,5) = {"
 qjJ
-miF
+oKn
 eZj
 ehB
 mlv
-jwG
+uWP
 wFC
 wFC
 wFC
-jwG
-jwG
+uWP
+uWP
 grm
 bdt
-miF
+oKn
 qjJ
 qjJ
 dqG
@@ -223568,19 +223328,19 @@ dqG
 "}
 (192,1,5) = {"
 qjJ
-miF
+oKn
 oYO
 uub
-uTs
+rcr
 wFC
-jwG
+uWP
 wFC
-jwG
+uWP
 wFC
 vqG
 usk
 ltr
-miF
+oKn
 qjJ
 qjJ
 dqG
@@ -223770,19 +223530,19 @@ dqG
 "}
 (193,1,5) = {"
 qjJ
-aGV
-wZW
-wZW
-wZW
-wZW
-wZW
+tkU
+hbh
+hbh
+hbh
+hbh
+hbh
 fDu
-wZW
-wZW
-wZW
-wZW
-wZW
-hNI
+hbh
+hbh
+hbh
+hbh
+hbh
+ieQ
 qjJ
 qjJ
 dqG
@@ -223972,19 +223732,19 @@ dqG
 "}
 (194,1,5) = {"
 qjJ
-aGV
-yjY
+tkU
+qsG
 gOm
 oNf
-jwG
+uWP
 kHF
 dhY
 dhY
 eEb
 oVm
 hWc
-tDT
-hNI
+tqH
+ieQ
 qjJ
 qjJ
 dqG
@@ -224174,19 +223934,19 @@ dqG
 "}
 (195,1,5) = {"
 qjJ
-jzK
-aFw
+uPI
+enf
 gOm
 rcC
 rTR
 dhY
 dhY
 dhY
-jwG
-jwG
-jwG
-gSS
-mYG
+uWP
+uWP
+uWP
+dPt
+fAG
 qjJ
 qjJ
 dqG
@@ -224377,17 +224137,17 @@ dqG
 (196,1,5) = {"
 qjJ
 qjJ
-jzK
+uPI
 ofo
 fLD
-jwG
+uWP
 dhY
 dhY
 dhY
 ydZ
 rLo
-gSS
-mYG
+dPt
+fAG
 qjJ
 qjJ
 qjJ
@@ -224580,15 +224340,15 @@ dqG
 qjJ
 qjJ
 qjJ
-jzK
-epw
-miF
-miF
-miF
-miF
-miF
-epw
-mYG
+uPI
+mZi
+oKn
+oKn
+oKn
+oKn
+oKn
+mZi
+fAG
 qjJ
 qjJ
 qjJ

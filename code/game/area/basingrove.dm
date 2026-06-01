@@ -16,14 +16,14 @@
 	droning_sound_night = 'sound/music/area/sleeping.ogg'
 	converted_type = /area/rogue/indoors/shelter/rtfield
 	deathsight_message = "somewhere in the wilds, next to towering walls"
-	warden_area = TRUE
 	threat_region = THREAT_REGION_AZURE_BASIN
 	// detail_text = DETAIL_TEXT_AZURE_BASIN
 
 /area/rogue/outdoors/rtfield/rockhill
+	name = "Rockhill Basin"
 	first_time_text = "Rockhill Basin"
 	threat_region = THREAT_REGION_ROCKHILL_BASIN
-	town_area = FALSE //might spread out the action a little if townies keep to town.
+	// town_area = TRUE //might spread out the action a little if townies keep to town.
 
 /area/rogue/outdoors/rtfield/rockhill/above
 	ambientsounds = AMB_MOUNTAIN

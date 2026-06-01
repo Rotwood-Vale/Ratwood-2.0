@@ -90,9 +90,27 @@ SUBSYSTEM_DEF(treasury)
 						X.demand += rand(5,15)
 					if(X.demand > initial(X.demand))
 						X.demand -= rand(5,15)
+			var/total_generated_cost = 0
+			var/wasted_time = FALSE
 			for(var/datum/roguestock/stockpile/A in stockpile_datums) //Generate some remote resources
+				if(wasted_time && A.passive_generation) //Only the suppliers of the resource you couldn't pay get mad
+					A.passive_generation = 0
+					A.generation_price += 2
+					continue
 				A.held_items[2] += A.passive_generation
-				A.held_items[2] = min(A.held_items[2],10) //To a maximum of 10
+				A.held_items[2] = min(A.held_items[2],A.remote_limit) //To a maximum amount
+				total_generated_cost += A.passive_generation * A.generation_price //Even if we don't have space for it, pay anyways
+				if(total_generated_cost >= treasury_value)                        //You shouldn't passively import resources that nobody is buying, use regular import for that
+					wasted_time = TRUE
+			if(wasted_time)
+				log_to_steward("-[total_generated_cost]m spent on Passive Imports, treasury drained, unable to pay remaining suppliers. Imports automatically cancelled, prices raised, do not waste supplier time.")
+				treasury_value -= total_generated_cost
+				scom_announce("Rotwood Vale failed to pay the Import Rate. Resources have not been delivered, rates set to 0.") //the treasury just got drained, shame unto the current steward
+			else
+				log_to_steward("-[total_generated_cost]m spent on Passive Imports.")
+				treasury_value -= total_generated_cost
+			record_round_statistic(STATS_STOCKPILE_IMPORTS_VALUE, total_generated_cost)
+			total_import += total_generated_cost
 		var/area/A = GLOB.areas_by_type[/area/rogue/indoors/town/vault]
 		for(var/obj/structure/roguemachine/vaultbank/VB in A)
 			if(istype(VB))
@@ -356,3 +374,11 @@ SUBSYSTEM_DEF(treasury)
 	treasury_value -= amt
 	log_to_steward("-[amt] withdrawn from treasury by [target]")
 	return TRUE
+
+/datum/controller/subsystem/treasury/proc/get_current_passive_spending(stockpile_category)
+	var/current_passive_spending = 0
+	for(var/datum/roguestock/stockpile/A in stockpile_datums)
+		if(stockpile_category && A.category != stockpile_category)
+			continue
+		current_passive_spending += A.passive_generation * A.generation_price
+	return current_passive_spending

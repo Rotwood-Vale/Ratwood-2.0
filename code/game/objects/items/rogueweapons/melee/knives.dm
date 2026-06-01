@@ -99,7 +99,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	gripsprite = FALSE
-	//dropshrink = 0.75
+	dropshrink = 0.8
 	wlength = WLENGTH_SHORT
 	w_class = WEIGHT_CLASS_SMALL
 	parrysound = list('sound/combat/parry/bladed/bladedsmall (1).ogg','sound/combat/parry/bladed/bladedsmall (2).ogg','sound/combat/parry/bladed/bladedsmall (3).ogg')
@@ -340,20 +340,6 @@
 	wdefense = 7
 	picklvl = 1.0
 
-/obj/item/rogueweapon/huntingknife/idagger/adagger
-	name = "decrepit dagger"
-	desc = "A short blade, wrought from frayed bronze and tanged within a rotwooden grip. Pieces of a former legionnaire's scabbard cling to the glimmerless alloy."
-	force = 12
-	max_integrity = 75
-	icon_state = "adagger"
-	sheathe_icon = "adagger"
-	blade_dulling = DULLING_SHAFT_CONJURED
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-	randomize_blade_int_on_init = TRUE
-	picklvl = 0.7
-
 /* Wooden Daggers.
 *  Intents, followed by the weapon itself.
 *
@@ -382,13 +368,6 @@
 	resistance_flags = FLAMMABLE //...It's made of wood.
 	picklvl = 0.7
 
-/obj/item/rogueweapon/huntingknife/idagger/steel/padagger
-	name = "ancient dagger"
-	desc = "A short blade, forged from polished gilbranze. It is violence that shepherds progress, and it is progress that will free this world from mortality's chains. Zizo, Zizo, Zizo - I call upon thee; bring forth the undying, so that your works may yet be done!"
-	icon_state = "adagger"
-	smeltresult = /obj/item/ingot/aaslag
-	picklvl = 0.7
-
 /obj/item/rogueweapon/huntingknife/idagger/steel
 	name = "steel dagger"
 	desc = "This is a dagger made of solid steel, more durable."
@@ -398,6 +377,24 @@
 	max_integrity = 150
 	smeltresult = /obj/item/ingot/steel
 	picklvl = 1.1
+
+/obj/item/rogueweapon/huntingknife/idagger/steel/ancient
+	name = "ancient dagger"
+	desc = "A short blade, forged from polished gilbranze. It is violence that shepherds progress, and it is progress that will free this world from mortality's chains. Zizo, Zizo, Zizo - I call upon thee; bring forth the undying, so that your works may yet be done!"
+	icon_state = "adagger"
+	sheathe_icon = "adagger"
+	smeltresult = /obj/item/ingot/aaslag
+	picklvl = 0.7
+
+/obj/item/rogueweapon/huntingknife/idagger/steel/ancient/decrepit
+	name = "decrepit dagger"
+	desc = "A short blade, wrought from frayed bronze and tanged within a rotwooden grip. Pieces of a former legionnaire's scabbard cling to the glimmerless alloy."
+	force = 12
+	max_integrity = 75
+	blade_dulling = DULLING_SHAFT_CONJURED
+	color = "#bb9696"
+	anvilrepair = null
+	randomize_blade_int_on_init = TRUE
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/corroded
 	name = "corroded dagger"
@@ -811,16 +808,6 @@
 	icon_state = "easttossblade"
 	picklvl = 0.8
 
-/obj/item/rogueweapon/huntingknife/throwingknife/aalloy
-	name = "decrepit tossblade"
-	desc = "Chunks of frayed bronze, crudely sharpened into throwing daggers. You might be better off chucking the silverware at them, at this rate. </br>This dagger can be stowed away inside a pair of boots, permitting it to be quickly drawn when needed."
-	icon_state = "throw_knifea"
-	color = "#bb9696"
-	force = 7
-	throwforce = 16
-	randomize_blade_int_on_init = TRUE
-	picklvl = 0.6
-
 /obj/item/rogueweapon/huntingknife/throwingknife/steel
 	name = "steel tossblade"
 	desc = "There are rumors of some sea-marauders loading these into metal tubes with explosive powder to launch then fast and far. Probably won't catch on. </br>This dagger can be stowed away inside a pair of boots, permitting it to be quickly drawn when needed."
@@ -833,10 +820,19 @@
 	sellprice = 2
 	picklvl = 0.9
 
-/obj/item/rogueweapon/huntingknife/throwingknife/steel/palloy
-	name = "ancient alloy tossblade"
+/obj/item/rogueweapon/huntingknife/throwingknife/steel/ancient
+	name = "ancient tossblade"
 	desc = "A sliver of polished gilbranze, delicately carved into a throwing dagger. A favorite amongst Zizo's undying cabal, and especially amongst Her assassins; what better-a-tool to slip through another's neck? </br>This dagger can be stowed away inside a pair of boots, permitting it to be quickly drawn when needed."
 	icon_state = "throw_knifea"
+	picklvl = 0.6
+
+/obj/item/rogueweapon/huntingknife/throwingknife/steel/ancient/decrepit
+	name = "decrepit tossblade"
+	desc = "Chunks of frayed bronze, crudely sharpened into throwing daggers. You might be better off chucking the silverware at them, at this rate. </br>This dagger can be stowed away inside a pair of boots, permitting it to be quickly drawn when needed."
+	color = "#bb9696"
+	force = 7
+	throwforce = 16
+	randomize_blade_int_on_init = TRUE
 	picklvl = 0.6
 
 /obj/item/rogueweapon/huntingknife/throwingknife/silver

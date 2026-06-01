@@ -102,6 +102,10 @@
 				used = 'sound/vo/attn.ogg'
 			if("clap")
 				used = list('sound/vo/clap (1).ogg','sound/vo/clap (2).ogg','sound/vo/clap (3).ogg','sound/vo/clap (4).ogg')
+			if("sexmoanlight")
+				used = list('sound/vo/male/gen/groan (2).ogg','sound/vo/male/gen/groan (3).ogg')
+			if("sexmoanhvy")
+				used = list('sound/vo/male/gen/sound_vo_male_gen_moan (1).ogg','sound/vo/male/gen/sound_vo_male_gen_moan (2).ogg','sound/vo/male/gen/sound_vo_male_gen_moan (3).ogg')
 			if("psst")
 				used = 'sound/vo/psst.ogg'
 			if("meow")

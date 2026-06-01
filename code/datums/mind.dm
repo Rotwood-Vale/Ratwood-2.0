@@ -105,8 +105,6 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 	var/datum/sleep_adv/sleep_adv = null
 
-	var/mugshot_set = FALSE
-
 	var/heretic_nickname 	// Nickname used for heretic commune
 
 	var/picking = FALSE		// Variable that lets the event picker see if someones getting chosen or not
