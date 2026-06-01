@@ -33,7 +33,7 @@
 	pixel_x = -8
 
 /obj/structure/chair/frankenstein/zizo
-	chair_skill_level = 2
+	chair_skill_level = 0
 	current_brew = 48
 
 /obj/structure/chair/frankenstein/Initialize(mapload)

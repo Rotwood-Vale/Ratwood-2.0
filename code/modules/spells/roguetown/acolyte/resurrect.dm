@@ -13,17 +13,18 @@
 	sound = 'sound/magic/revive.ogg'
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
-	recharge_time = 10 MINUTES
+	recharge_time = 1 MINUTES
 	miracle = TRUE
 	devotion_cost = 250
 	var/revive_pq = PQ_GAIN_REVIVE
 	var/required_structure = /obj/structure/fluff/psycross
-	var/required_items = list(/obj/item/clothing/neck/roguetown/psicross = 1)
-	var/alt_required_items = list(/obj/item/clothing/neck/roguetown/psicross = 1)
+	var/required_items
+	var/alt_required_items
 	var/item_radius = 1
 	var/debuff_type = /datum/status_effect/debuff/revived
 	var/structure_range = 1
 	var/harms_undead = TRUE
+	var/checks_blessed = TRUE
 	priest_excluded = TRUE
 
 /obj/effect/proc_holder/spell/invoked/resurrect/start_recharge()
@@ -85,6 +86,17 @@
 			)
 			target.gib()
 			return TRUE
+		if(checks_blessed)
+			if(user.job == "Bishop")
+				user.apply_status_effect(/datum/status_effect/debuff/revival_drain)
+				playsound(get_turf(user), 'sound/villain/hall_pain.ogg', 80, TRUE)
+				to_chat(user, span_danger("You defy the gods and draw back the soul of [target]. Your connection to Astrata tears!"))
+			else if(!HAS_TRAIT(target, TRAIT_BLESSED))
+				to_chat(user, span_warning("[target] has not been blessed and cannot be revived. Perhaps the Bishop could help?"))
+				revert_cast()
+				return FALSE
+			else
+				REMOVE_TRAIT(target, TRAIT_BLESSED, JOB_TRAIT)
 		target.adjustOxyLoss(-target.getOxyLoss()) //Ye Olde CPR
 		if(!target.revive(full_heal = FALSE))
 			to_chat(user, span_warning("Nothing happens."))
@@ -262,6 +274,7 @@
 	name = "Putrid Revival"
 	desc = "Revive the target by consuming heartblood. Self cast for more information."
 	sound = 'sound/magic/slimesquish.ogg'
+	checks_blessed = FALSE
 	required_items = list(
 		/obj/item/heart_blood_canister/filled = 1,
 		/obj/item/heart_blood_vial/filled = 2

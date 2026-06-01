@@ -385,6 +385,25 @@
 	desc = "You've been dead for some time.. your body is finally starting to give out on you."
 	icon_state = "rotted_body"	//Temp holdover, no idea what I'd do for a new icon for this.
 
+/datum/status_effect/debuff/revival_drain
+	id = "revival_drain"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/revival_drain
+	duration = 10 MINUTES
+
+/datum/status_effect/debuff/revival_drain/tick()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	if(!H.devotion)
+		return
+	H.devotion.devotion = 0
+	H.devotion.update_devotion(0, 0)
+
+/atom/movable/screen/alert/status_effect/debuff/revival_drain
+	name = "Divine Expenditure"
+	desc = "I am disconnected from Astrata!"
+	icon_state = "debuff"
+
 /datum/status_effect/debuff/dazed
 	id = "dazed"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed

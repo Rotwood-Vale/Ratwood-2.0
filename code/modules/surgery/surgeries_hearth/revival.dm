@@ -1,3 +1,4 @@
+/*
 /datum/surgery/rogue_revival
 	steps = list(
 		/datum/surgery_step/incise,
@@ -105,3 +106,4 @@
 		span_warning("[user] screws up!"),
 		span_notice("[user] works the lux into [target]'s innards."), TRUE)
 	return TRUE
+*/

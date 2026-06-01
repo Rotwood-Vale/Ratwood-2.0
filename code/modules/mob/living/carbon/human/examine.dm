@@ -442,6 +442,10 @@
 				. += span_danger("They extrude a pale aura. Their soul [src.stat == DEAD ? "was not" : "is not"] clean. This is it for them.")
 			else if(user.stat == DEAD)
 				. += span_danger("This was their only chance at lyfe.")
+		
+		if(HAS_TRAIT(src, TRAIT_BLESSED))
+			if(user.get_skill_level(/datum/skill/magic/holy) >= SKILL_LEVEL_NOVICE)
+				. += span_notice("[m1] blessed.")
 
 	// Real medical role can tell at a glance it is a waste of time, but only if the Necra message don't come first.
 

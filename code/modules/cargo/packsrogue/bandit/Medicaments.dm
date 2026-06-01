@@ -54,7 +54,7 @@
 
 /datum/supply_pack/rogue/Medicaments/frankenbrew
 	name = "Frankenbrew"
-	cost = 200
+	cost = 100
 	contains = list(/obj/item/reagent_containers/glass/bottle/frankenbrew)
 
 /datum/supply_pack/rogue/Medicaments/emberwine

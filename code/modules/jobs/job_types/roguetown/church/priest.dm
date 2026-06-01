@@ -47,6 +47,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		TRAIT_VOTARY,
 		TRAIT_HOMESTEAD_EXPERT,
 		TRAIT_HOLYWARRIOR,
+		TRAIT_BLESSED,
 	)
 	advclass_cat_rolls = list(CTAG_BISHOP = 2)
 	job_subclasses = list(
@@ -139,6 +140,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	H.verbs |= /mob/living/carbon/human/proc/churchpriestcurse //snowflake priests button. Will not sacrifice them
 	H.verbs |= /mob/living/carbon/human/proc/churcheapostasy //punish the lamb reward the wolf
 	H.verbs |= /mob/living/carbon/human/proc/completesermon
+	H.verbs |= /mob/living/carbon/human/proc/churchpriestbless
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic_priest)
 
 /datum/job/roguetown/priest/proc/_pick_loyalist_miracles(mob/living/carbon/human/H)
@@ -319,8 +321,8 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	refuse_message = "I refuse."
 
 /mob/living/carbon/human/proc/completesermon()
-	set name = "Sermon"
-	set category = "Priest"
+	set name = "Sermon Blessing"
+	set category = "Cleric"
 
 	if (!mind)
 		return
@@ -346,14 +348,16 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	for (var/mob/living/carbon/human/H in view(7, src))
 		if (!H.patron)
 			continue
+		if (H.stat == DEAD)
+			continue
 
 		if (istype(H.patron, /datum/patron/divine))
-			H.apply_status_effect(/datum/status_effect/buff/sermon)
+			ADD_TRAIT(H, TRAIT_BLESSED, JOB_TRAIT)
 			H.add_stress(/datum/stressevent/sermon)
 			to_chat(H, span_notice("You feel a divine affirmation from your patron."))
 
 		else if (istype(H.patron, /datum/patron/inhumen))
-			H.apply_status_effect(/datum/status_effect/debuff/hereticsermon)
+			ADD_TRAIT(H, TRAIT_BLESSED, JOB_TRAIT)
 			H.add_stress(/datum/stressevent/heretic_on_sermon)
 			to_chat(H, span_warning("Your patron seethes with disapproval."))
 
@@ -362,6 +366,54 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 			to_chat(H, span_notice("Nothing seems to happen to you."))
 
 	return TRUE
+
+/mob/living/carbon/human/proc/churchpriestbless(mob/living/carbon/human/H in view(7, src))
+	set name = "Blessing"
+	set category = "Cleric"
+
+	if (!mind)
+		return
+
+	if(H.stat == DEAD)
+		to_chat(src, span_warning("They are dead!"))
+		return FALSE
+
+	if (!istype(get_area(src), /area/rogue/indoors/town/church/chapel))
+		to_chat(src, span_warning("I need to do this from the House of the Ten."))
+		return FALSE
+
+	if(!src.key)
+		return
+
+	if((!src.can_speak_vocal() || !src.getorganslot(ORGAN_SLOT_TONGUE)))
+		to_chat(src, span_warning("I can't get the words out!"))
+		return FALSE
+
+	if (!istype(get_area(H), /area/rogue/indoors/town/church/chapel))
+		to_chat(src, span_warning("They need to be in the House of the Ten."))
+		return FALSE
+
+	if (HAS_TRAIT(H, TRAIT_BLESSED))
+		to_chat(src, span_notice("They are already blessed!"))
+	else
+		if(ishuman(src))
+			var/mob/living/carbon/human/devotee = src
+			if(devotee.devotion?.devotion < 100)
+				to_chat(src, span_warning("Not enough devotion!"))
+				return FALSE
+			else
+				devotee.devotion?.update_devotion(-100)
+				to_chat(devotee, "<font color='purple'>I lost 100 devotion.</font>")
+		ADD_TRAIT(H, TRAIT_BLESSED, JOB_TRAIT)
+		
+		playsound(get_turf(src), 'sound/magic/revive.ogg', 20, TRUE)
+		src.say("Astrata te benedicat et protegat, [H.real_name]!", forced = "spell")
+		to_chat(H, span_notice("You feel blessed!"))
+
+		message_admins("BLESSING: [real_name] ([ckey]) has blessed [H.real_name].")
+		log_game("BLESSING: [real_name] ([ckey]) has blessed [H.real_name].")
+
+	return
 
 /mob/living/carbon/human/proc/churchecancurse(mob/living/carbon/human/H, apostasy = FALSE)
 	if (!H.devotion && apostasy)
