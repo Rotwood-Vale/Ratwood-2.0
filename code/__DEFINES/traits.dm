@@ -39,6 +39,8 @@
 #define INSPIRING_MUSICIAN "Inspiring Musician" // unlocks bardic inspiration stuff
 #define TRAIT_NOFALLDAMAGE1 "Fall Damage Reduction"
 #define TRAIT_NOFALLDAMAGE2 "Fall Damage Immunity"
+/// Trait given only temporarily to prevent being able to Z fall (at all)
+#define TRAIT_PREVENT_Z_FALL "Prevent Z fall" // DO NOT GIVE THIS UNDER NORMAL CIRCUMSTANCES
 #define TRAIT_MISSING_NOSE "Missing Nose" //halved stamina regeneration
 #define TRAIT_DISFIGURED "Disfigured"
 #define TRAIT_SPELLCOCKBLOCK "Bewitched" //prevents spellcasting
@@ -82,7 +84,6 @@
 #define TRAIT_PERMAMUTE "Permanent Mute"
 #define TRAIT_EXCOMMUNICATED "Excommunicated"
 #define TRAIT_HERESIARCH "Forbidden Knowledge"//Church curse protection. Stronger heretic spires. Heretic conversion handling.
-#define TRAIT_ZURCH 	"Hidden Domiciles" //allows entry to ascendant church
 #define TRAIT_DREAMWALKER "Dreamwalker"
 #define TRAIT_PONYGIRL_RIDEABLE "Mount" //riding
 #define TRAIT_BLACKLEG	"Blackleg" //Rig coin flips and dice. Fluvian exclusive.
@@ -111,6 +112,13 @@
 #define TRAIT_CHASTITY_LOCKED "Locked Chastity Device" // Prevents removal of the chastity device.
 #define TRAIT_EXTREME_TEMPERATURE_IMMUNE "Extreme Temperature Immunity" //immunitty to heatstroke and frostbite without damage reduction
 #define TRAIT_COMPLIANT "Compliant" //forced to be compliant
+
+//travel zone traits
+#define TRAIT_BANDITCAMP "banditcamp"
+#define TRAIT_DUNGEONMASTER_LABOR_CAMP "dungeonmasterlaborcamp"
+#define TRAIT_VAMPMANSION "vampiremansion"
+#define TRAIT_ZURCH 	"Hidden Domiciles" //allows entry to Wretch Camp
+#define TRAIT_LICHLAIR "lichlair" //Access to the lich's lair on the CentCom Z level.
 
 //Hearthstone port (Tracking)
 #define TRAIT_PERFECT_TRACKER "Huntmaster" //Will always find any tracks and analyzes them perfectly.
@@ -164,6 +172,7 @@
 #define TRAIT_CURSE_PESTRA "Curse of Pestra" //less stamina, cannot run and missing nose
 #define TRAIT_CURSE_MALUM "Curse of Malum" //cannot craft or use smith hammer or level skills in sleep menu
 #define TRAIT_CURSE_EORA "Curse of Eora" //world is ugly
+#define TRAIT_CURSE_RESIST "Curse Resistance" //Some folk with a tendency to get cursed are resistant
 
 // ASCENDANT CULTIST TRAITS (all of them recognize each other)
 #define TRAIT_COMMIE "Blessing of Matthios" //recognized by bandits as an ally
@@ -190,9 +199,6 @@
 #define TRAIT_UNSETTLING_BEAUTY "Unsettling Beauty"
 #define TRAIT_SCARRED "Scarred"
 #define TRAIT_SIMPLE_WOUNDS "simple_wounds"
-#define TRAIT_BANDITCAMP "banditcamp"
-#define TRAIT_DUNGEONMASTER_LABOR_CAMP "dungeonmasterlaborcamp"
-#define TRAIT_VAMPMANSION "vampiremansion"
 #define TRAIT_VAMP_DREAMS "vamp_dreams"
 #define TRAIT_LIMPDICK "Limp Dick"
 #define TRAIT_SEXPASS "sexpass"

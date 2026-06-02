@@ -42,6 +42,7 @@
 		/datum/advclass/wretch/heretic/spy,
 		/datum/advclass/wretch/outlaw,
 		/datum/advclass/wretch/outlaw/marauder,
+		/datum/advclass/wretch/lunacyembracer,
 		/datum/advclass/wretch/poacher,
 		/datum/advclass/wretch/plaguebearer,
 		/datum/advclass/wretch/pyromaniac,
@@ -97,6 +98,7 @@
 		my_crime = "crimes against the Crown"
 	add_bounty(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, bounty_total, FALSE, my_crime, bounty_poster)
 	to_chat(H, span_danger("You are playing an Antagonist role. By choosing to spawn as a Wretch, you are expected to actively create conflict with other players. Failing to play this role with the appropriate gravitas may result in punishment for Low Roleplay standards."))
+	H.playsound_local(get_turf(H), 'sound/music/traitor.ogg', 60, FALSE, pressure_affected = FALSE)
 
 /proc/update_wretch_slots()
 	var/datum/job/wretch_job = SSjob.GetJob("Wretch")

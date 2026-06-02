@@ -5,7 +5,7 @@
 	icon_state = "ring_scom"
 	desc = "A heavy ring made of metal. There is a gem embedded in the center - dim, but alive."
 	gripped_intents = null
-	dropshrink = 0.75
+	dropshrink = 0.6
 	possible_item_intents = list(INTENT_GENERIC)
 	force = 10
 	throwforce = 10
@@ -30,6 +30,9 @@
 	grid_height = 32
 
 /obj/item/scomstone/attack_right(mob/living/carbon/human/user)
+	if(user.restrained() || user.incapacitated())
+		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
+		return
 	if(on_cooldown)
 		to_chat(user, span_warning("The gemstone inside the ring radiates heat. It's still cooling down from its last use."))
 		playsound(loc, 'sound/misc/machineno.ogg', 100, FALSE, -1)
@@ -68,6 +71,9 @@
 	on_cooldown = FALSE
 
 /obj/item/scomstone/MiddleClick(mob/user)
+	if(user.restrained() || user.incapacitated())
+		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
+		return
 	if(.)
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
@@ -149,13 +155,13 @@
 	sellprice = 100
 
 /obj/item/scomstone/garrison/attack_right(mob/living/carbon/human/user)
+	if(user.restrained() || user.incapacitated())
+		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
+		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	if(on_cooldown)
 		to_chat(user, span_warning("The gemstone inside the ring radiates heat. It's still cooling down from its last use."))
 		playsound(loc, 'sound/misc/machineno.ogg', 100, FALSE, -1)
-		return
-	if(!get_location_accessible(user, BODY_ZONE_PRECISE_MOUTH, grabs = TRUE))
-		to_chat(user, span_warning("My mouth is covered!"))
 		return
 	visible_message(span_notice ("[user] presses their ring against their mouth."))
 	var/input_text = input(user, "Enter your message:", "Message")
@@ -200,6 +206,9 @@
 	addtimer(CALLBACK(src, PROC_REF(reset_cooldown)), cooldown)
 
 /obj/item/scomstone/garrison/attack_self(mob/living/user)
+	if(user.restrained() || user.incapacitated())
+		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
+		return
 	if(.)
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)

@@ -252,6 +252,7 @@
 	icon_state = "maneater-seed"
 	max_integrity = 5
 	sellprice = 30
+	dropshrink = 0.7
 
 /obj/item/maneaterseed/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	var/turf/T = get_turf(target)

@@ -15,7 +15,7 @@
 	display_order = JDO_VET
 	whitelist_req = TRUE
 	give_bank_account = 35
-	min_pq = 5 //Should...probably actually be a veteran of at least a few weeks before trying to teach others
+	min_pq = 30 //Should...probably actually be a veteran of at least a few weeks before trying to teach others
 	max_pq = null
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_MINOR_NOBLE

@@ -183,9 +183,9 @@ GLOBAL_LIST_INIT(dwarfskeleton_aggro, world.file2list("strings/rt/dskeletonaggro
 // 	belt = /obj/item/storage/belt/rogue/leather/rope
 // 	neck = /obj/item/clothing/neck/roguetown/collar/leather
 // 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-// 	r_hand = /obj/item/rogueweapon/pick/aalloy
+// 	r_hand = /obj/item/rogueweapon/pick/decrepit
 // 	if(prob(20))
-// 		r_hand = /obj/item/rogueweapon/shovel/aalloy
+// 		r_hand = /obj/item/rogueweapon/shovel/decrepit
 
 // 	H.STASTR = 12
 // 	H.STASPD = 11

@@ -316,6 +316,7 @@
 	extinguishable = FALSE
 	weather_resistant = TRUE
 	metalizer_result = null
+	dropshrink = 0.8
 
 /obj/item/flashlight/flare/torch/lantern/afterattack(atom/movable/A, mob/user, proximity)
 	. = ..()
@@ -436,6 +437,7 @@
 	fuel = 0 MINUTES
 	should_self_destruct = FALSE
 	sellprice = 8 //Allows a minor business to bloom from them. This may require adjustments.
+	dropshrink = null
 
 /obj/item/flashlight/flare/torch/lantern/pumpkin/examine(mob/user)
 	. = ..()

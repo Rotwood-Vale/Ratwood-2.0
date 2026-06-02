@@ -1,0 +1,6 @@
+{
+	"map_name": "Lich's Lair",
+	"map_path": "map_files/otherz",
+	"map_file": "lichlair.dmm",
+	"traits": [{"Name": "Lair of the Lich"}]
+}

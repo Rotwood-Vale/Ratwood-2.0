@@ -1015,9 +1015,15 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		qdel(I)
 		food = max(food + 30, 100)
 
-/mob/living/simple_animal/Life()
+/mob/living/simple_animal/Life(seconds, times_fired)
 	if(!client && can_have_ai && (AIStatus == AI_Z_OFF || AIStatus == AI_OFF))
 		return
+	// AI_IDLE mobs have no players nearby and are not processing via SSnpcpool.
+	// Skip the expensive mob/living/Life() call 2/3 of ticks; status effects already
+	// run every 3rd tick for clientless mobs, so net frequency is unchanged.
+	// Return TRUE (alive) so hostile/Life() does not enter its "dead" path and call walk(src, 0).
+	if(!client && AIStatus == AI_IDLE && times_fired % 3 != 0)
+		return TRUE
 	. = ..()
 	if(.)
 		if(food > 0)

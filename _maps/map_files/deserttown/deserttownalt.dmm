@@ -257,10 +257,10 @@
 /area/rogue/indoors/banditcamp/desert)
 "gA" = (
 /obj/structure/rack/rogue,
-/obj/item/cooking/platter/aalloy,
-/obj/item/cooking/platter/aalloy,
-/obj/item/cooking/platter/aalloy,
-/obj/item/cooking/platter/aalloy,
+/obj/item/cooking/platter/decrepit,
+/obj/item/cooking/platter/decrepit,
+/obj/item/cooking/platter/decrepit,
+/obj/item/cooking/platter/decrepit,
 /obj/machinery/light/rogue/candle/blue,
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/banditcamp/desert)
@@ -567,7 +567,7 @@
 /area/rogue/indoors/banditcamp/desert)
 "pF" = (
 /obj/structure/rack/rogue,
-/obj/item/cooking/pan/aalloy,
+/obj/item/cooking/pan/decrepit,
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/banditcamp/desert)
 "pY" = (
@@ -825,7 +825,7 @@
 	},
 /obj/machinery/light/rogue/oven/south,
 /obj/structure/fluff/railing/border,
-/obj/item/reagent_containers/glass/bucket/pot/aalloy,
+/obj/item/reagent_containers/glass/bucket/pot/decrepit,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/banditcamp/desert)
 "yp" = (

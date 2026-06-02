@@ -23,6 +23,7 @@
 		"kazengunese.ttf" = 'interface/fonts/languages/kazengunese.ttf',
 		"kazengunaccent.ttf" = 'interface/fonts/languages/kazengunaccent.ttf',
 		"otavan.ttf" = 'interface/fonts/languages/otavan.ttf',
+		"posh.ttf" = 'interface/fonts/languages/posh.ttf',
 		"etruscan.ttf" = 'interface/fonts/languages/etruscan.ttf',
 		"gronnic.ttf" = 'interface/fonts/languages/gronnic.ttf',
 		"aavnic.ttf" = 'interface/fonts/languages/aavnic.ttf',

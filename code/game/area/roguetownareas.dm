@@ -93,7 +93,6 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	deathsight_message = "an ancient dread-manor, home of a great and terrible evil. Red eyes look back at you, warning you not to pry further."
 
 /area/rogue/outdoors/woods/vampire_lair
-	warden_area = FALSE
 	ambush_times = null
 	ambush_mobs = null
 	threat_region = ""
@@ -136,17 +135,17 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	icon_state = "outdoors"
 	outdoors = TRUE
 	ambientrain = RAIN_OUT
-//	ambientsounds = list('sound/ambience/wamb.ogg')
 	ambientsounds = AMB_TOWNDAY
 	ambientnight = AMB_TOWNNIGHT
 	spookysounds = SPOOKY_CROWS
 	spookynight = SPOOKY_GEN
-	droning_sound = 'sound/music/area/townstreets.ogg'
+	droning_sound = 'sound/music/area/towngen.ogg'
 	droning_sound_dusk = 'sound/music/area/septimus.ogg'
 	droning_sound_night = 'sound/music/area/sleeping.ogg'
 	converted_type = /area/rogue/indoors/shelter
 	soundenv = 16
 	deathsight_message = "somewhere in the wilds"
+	warden_area = TRUE
 
 /area/rogue/outdoors/banditcamp
 	name = "Bandit Camp"
@@ -164,10 +163,8 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 
 /area/rogue/indoors/shelter
 	icon_state = "shelter"
-	droning_sound = 'sound/music/area/townstreets.ogg'
-	droning_sound_dusk = 'sound/music/area/septimus.ogg'
-	droning_sound_night = 'sound/music/area/sleeping.ogg'
 	deathsight_message = "somewhere in the wilds, under a roof"
+	warden_area = TRUE
 
 /area/rogue/outdoors/mountains
 	name = "Mountains"
@@ -176,10 +173,6 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	ambientnight = AMB_MOUNTAIN
 	spookysounds = SPOOKY_GEN
 	spookynight = SPOOKY_GEN
-	droning_sound = 'sound/music/area/townstreets.ogg'
-	droning_sound_dusk = 'sound/music/area/septimus.ogg'
-	droning_sound_night = 'sound/music/area/sleeping.ogg'
-	warden_area = TRUE
 	soundenv = 17
 	converted_type = /area/rogue/indoors/shelter/mountains
 	deathsight_message = "a twisted tangle of soaring peaks"
@@ -321,6 +314,15 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 // 	first_time_text = "SARGOTH"
 
 
+/area/rogue/indoors/lich_start //Quieter so our droning noise doesn't cut out the on-spawn stinger, not yet. I want this experience to be thematic
+	name = "Lich Lair"
+	droning_sound = 'sound/ambience/creepywind.ogg' //Ominiously quiet starting room, let them build up a bit.
+	droning_sound_dusk = null
+	droning_sound_night = null
+
+/area/rogue/indoors/lich_start/lich_lair //Sovlnuke with a unique track we didn't use previous I think?
+	first_time_text = "FORGOTTEN KEEP"
+	droning_sound = 'sound/music/area/underworlddrone.ogg'
 
 // underworld
 /area/rogue/underworld
@@ -340,6 +342,12 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	name = "wayfarer's dream"
 	icon_state = "dream"
 	first_time_text = "A Wayfarer's Dream"
+
+/area/rogue/underworld/adventurespawn/start
+	first_time_text = "null"
+	droning_sound = null
+	droning_sound_dusk = null
+	droning_sound_night = null
 
 #define SOUND_ENV_INDOOR = 2
 #define SOUND_ENV_OUTDOOR = 16
