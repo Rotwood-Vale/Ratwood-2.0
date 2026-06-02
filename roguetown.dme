@@ -1889,6 +1889,7 @@
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\wretch\blackoak.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\wretch\deserter.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\wretch\hedgemage.dm"
+#include "code\modules\jobs\job_types\roguetown\adventurer\types\wretch\herald_of_progress.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\wretch\heretic.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\wretch\licker.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\wretch\lunacyembracer.dm"
