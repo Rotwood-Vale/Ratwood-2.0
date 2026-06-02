@@ -51,6 +51,9 @@ SUBSYSTEM_DEF(soundloopers)
 		if(PS in played_loops) //Make sure it's not already on the list
 			continue
 
+		if((istype(PS, /datum/looping_sound/instrument) || istype(PS, /datum/looping_sound/musloop) || istype(PS, /datum/looping_sound/dmusloop)) && !(prefs?.toggles & SOUND_INSTRUMENTS))
+			continue
+
 		var/atom/PS_parent = PS.parent.resolve()
 		if(!PS_parent)
 			continue
@@ -76,6 +79,21 @@ SUBSYSTEM_DEF(soundloopers)
 	for(var/datum/looping_sound/loop in played_loops)
 		if (!loop)
 			played_loops -= loop
+			continue
+
+		if((istype(loop, /datum/looping_sound/instrument) || istype(loop, /datum/looping_sound/musloop) || istype(loop, /datum/looping_sound/dmusloop)) && !(prefs?.toggles & SOUND_INSTRUMENTS))
+			var/list/muted_loop = played_loops[loop]
+			var/sound/muted_sound = muted_loop?["SOUND"]
+			if(loop.persistent_loop)
+				muted_loop["MUTESTATUS"] = TRUE
+				muted_loop["VOL"] = 0
+				if(muted_sound)
+					mob.mute_sound(muted_sound)
+			else
+				played_loops -= loop
+				loop.thingshearing -= WEAKREF(mob)
+				if(muted_sound)
+					mob.stop_sound_channel(muted_sound.channel)
 			continue
 		
 		var/atom/loop_parent = loop.parent?.resolve()

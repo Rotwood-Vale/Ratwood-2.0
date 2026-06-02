@@ -22,7 +22,6 @@
 	droning_sound_dusk = 'sound/music/area/desert/NightPrayer.ogg'
 	droning_sound_night = 'sound/music/area/desert/Moonrise.ogg'
 	deathsight_message = "somewhere in the dunes, next to towering walls"
-	warden_area = TRUE
 	threat_region = THREAT_REGION_DESERT_NEAR
 	
 /area/rogue/outdoors/desert/river
@@ -36,7 +35,6 @@
 /area/rogue/outdoors/desertdeep
 	name = "Deep Dunes"
 	icon_state = "desertdeep"
-	warden_area = TRUE
 	ambientsounds = AMB_TOWNDAY
 	ambientnight = AMB_TOWNNIGHT
 	spookysounds = SPOOKY_GEN

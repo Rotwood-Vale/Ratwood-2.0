@@ -340,6 +340,23 @@
 	resistance_flags = FLAMMABLE
 	special = /datum/special_intent/polearm_backstep
 
+/obj/item/rogueweapon/spear/ancient
+	name = "ancient spear"
+	desc = "A gnarled staff, tipped with polished gilbranze. Your breathing hilts, and your knuckles tighten around the staff; you see what is yet to come, yet your mind refuses to retain it. To know what fate this dying world has - it would drive any man inzane."
+	icon_state = "ancient_spear"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/rogueweapon/spear/ancient/decrepit
+	name = "decrepit spear"
+	desc = "A rotting staff, tipped with frayed bronze. After the stone, but before the sword; an interlude for the violence that would soon engulf His world."
+	force = 13
+	force_wielded = 22
+	max_integrity = 120
+	blade_dulling = DULLING_SHAFT_CONJURED
+	color = "#bb9696"
+	anvilrepair = null
+	randomize_blade_int_on_init = TRUE
+
 /obj/item/rogueweapon/spear/trident
 	// Better one handed & throwing weapon, flimsier.
 	name = "bronze trident"
@@ -423,26 +440,6 @@
 				else
 					to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
 			update_icon()
-
-/obj/item/rogueweapon/spear/aalloy
-	name = "decrepit spear"
-	desc = "A rotting staff, tipped with frayed bronze. After the stone, but before the sword; an interlude for the violence that would soon engulf His world."
-	icon_state = "ancient_spear"
-	force = 13
-	force_wielded = 22
-	max_integrity = 120
-	blade_dulling = DULLING_SHAFT_CONJURED
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-	randomize_blade_int_on_init = TRUE
-
-/obj/item/rogueweapon/spear/paalloy
-	name = "ancient spear"
-	desc = "A gnarled staff, tipped with polished gilbranze. Your breathing hilts, and your knuckles tighten around the staff; you see what is yet to come, yet your mind refuses to retain it. To know what fate this dying world has - it would drive any man inzane."
-	smeltresult = /obj/item/ingot/aaslag
-	icon_state = "ancient_spear"
-
 
 /obj/item/rogueweapon/spear/psyspear
 	name = "psydonic spear"
@@ -810,25 +807,22 @@
 	smeltresult = /obj/item/ingot/iron
 	max_blade_int = 200
 
-/obj/item/rogueweapon/halberd/bardiche/aalloy
-	name = "decrepit bardiche"
-	desc = "An imposing poleaxe, wrought from frayed bronze. Whatever noble purpose this weapon held has long since decayed; for it now persists to sunder the chaff that clings to this dying world."
-	max_integrity = 180
-	force = 12
-	force_wielded = 22
-	icon_state = "ancient_bardiche"
-	blade_dulling = DULLING_SHAFT_CONJURED
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-	randomize_blade_int_on_init = TRUE
-
-/obj/item/rogueweapon/halberd/bardiche/paalloy
+/obj/item/rogueweapon/halberd/bardiche/ancient
 	name = "ancient bardiche"
 	desc = "A terrifying poleaxe, forged from polished gilbranze. When Her ascension came, these weapons - bereft of their wielders - sunk deep into the earth. Shadowed hands cradled the blades over the centuries, and would eventually create its steel-tipped successor; the glaive."
 	icon_state = "ancient_bardiche"
 	smeltresult = /obj/item/ingot/aaslag
 
+/obj/item/rogueweapon/halberd/bardiche/ancient/decrepit
+	name = "decrepit bardiche"
+	desc = "An imposing poleaxe, wrought from frayed bronze. Whatever noble purpose this weapon held has long since decayed; for it now persists to sunder the chaff that clings to this dying world."
+	force = 12
+	force_wielded = 22
+	max_integrity = 180
+	blade_dulling = DULLING_SHAFT_CONJURED
+	color = "#bb9696"
+	anvilrepair = null
+	randomize_blade_int_on_init = TRUE
 
 /obj/item/rogueweapon/halberd/bardiche/scythe
 	name = "summer scythe"
@@ -1028,6 +1022,23 @@
 			if("altgrip")
 				return list("shrink" = 0.6,"sx" = 4,"sy" = 0,"nx" = -7,"ny" = 1,"wx" = -8,"wy" = 0,"ex" = 8,"ey" = -1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -135,"sturn" = -35,"wturn" = 45,"eturn" = 145,"nflip" = 8,"sflip" = 8,"wflip" = 1,"eflip" = 0)
 
+/obj/item/rogueweapon/greatsword/ancient
+	name = "ancient greatsword"
+	desc = "A massive blade, forged from polished gilbranze. Your kind will discover your true nature, in wrath and ruin. You will take to the stars and burn them out, one by one. Only when the last star turns to dust, will you finally realize that She was trying to save you from Man's greatest foe; oblivion."
+	icon_state = "ancient_gsw"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/rogueweapon/greatsword/ancient/decrepit
+	name = "decrepit greatsword"
+	desc = "A massive blade, wrought in frayed bronze. It is too big to be called a sword; massive, thick, heavy, and far too rough. Indeed, this blade was more like a heap of raw metal."
+	force = 10
+	force_wielded = 25
+	max_integrity = 150
+	blade_dulling = DULLING_SHAFT_CONJURED
+	color = "#bb9696"
+	anvilrepair = null
+	randomize_blade_int_on_init = TRUE
+
 /obj/item/rogueweapon/greatsword/iron
 	name = "iron greatsword"
 	desc = "Wrought in iron. Heftier and less sturdier than its steel equivalent - but it still does the job."
@@ -1037,26 +1048,6 @@
 	wdefense = 4
 	smelt_bar_num = 3
 	smeltresult = /obj/item/ingot/iron
-
-/obj/item/rogueweapon/greatsword/aalloy
-	name = "decrepit greatsword"
-	desc = "A massive blade, wrought in frayed bronze. It is too big to be called a sword; massive, thick, heavy, and far too rough. Indeed, this blade was more like a heap of raw metal."
-	force = 10
-	force_wielded = 25
-	max_integrity = 150
-	icon_state = "ancient_gsw"
-	blade_dulling = DULLING_SHAFT_CONJURED
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-	randomize_blade_int_on_init = TRUE
-
-
-/obj/item/rogueweapon/greatsword/paalloy
-	name = "ancient greatsword"
-	desc = "A massive blade, forged from polished gilbronze. Your kind will discover your true nature, in wrath and ruin. You will take to the stars and burn them out, one by one. Only when the last star turns to dust, will you finally realize that She was trying to save you from Man's greatest foe; oblivion."
-	icon_state = "ancient_gsw"
-	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/rogueweapon/greatsword/zwei
 	name = "claymore"

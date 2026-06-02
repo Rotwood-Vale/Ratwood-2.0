@@ -686,7 +686,7 @@
 "bJ" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/troll/cave,
 /obj/item/natural/cloth,
-/obj/item/clothing/suit/roguetown/armor/chainmail/aalloy,
+/obj/item/clothing/suit/roguetown/armor/chainmail/ancient/decrepit,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "bR" = (
@@ -798,7 +798,7 @@
 /turf/open/water/bloody,
 /area/rogue/under/wretch/graggarena)
 "eR" = (
-/obj/item/reagent_containers/glass/bucket/pot/aalloy,
+/obj/item/reagent_containers/glass/bucket/pot/decrepit,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "fc" = (
@@ -940,7 +940,7 @@
 /area/rogue/indoors/ravoxarena)
 "hH" = (
 /obj/structure/table/church/alt,
-/obj/item/roguecoin/aalloy,
+/obj/item/roguecoin/gilbranze,
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/indoors/deathsedge)
 "hK" = (
@@ -1649,7 +1649,7 @@
 /turf/closed,
 /area/rogue/outdoors)
 "wX" = (
-/obj/item/fishingrod/aalloy,
+/obj/item/fishingrod/decrepit,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "wZ" = (
@@ -1997,7 +1997,7 @@
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/indoors/deathsedge)
 "Eb" = (
-/obj/item/reagent_containers/glass/cup/aalloymug,
+/obj/item/reagent_containers/glass/cup/decrepitmug,
 /turf/open/floor/rogue/grasspurple,
 /area/rogue/dietroyt)
 "Ed" = (
@@ -2053,7 +2053,7 @@
 /turf/open/floor/rogue/sand,
 /area/rogue/under/wretch/graggarena)
 "Fz" = (
-/obj/item/reagent_containers/glass/bowl/aalloy,
+/obj/item/reagent_containers/glass/bowl/decrepit,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "FD" = (
@@ -2200,7 +2200,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue)
 "Js" = (
-/obj/item/clothing/shoes/roguetown/boots/aalloy,
+/obj/item/clothing/shoes/roguetown/boots/armor/ancient/decrepit,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "JA" = (
@@ -2275,7 +2275,7 @@
 /area/rogue/dietroyt)
 "KV" = (
 /obj/structure/table/church/end/alt,
-/obj/item/roguecoin/aalloy,
+/obj/item/roguecoin/gilbranze,
 /turf/open/floor/rogue/underworld/road,
 /area/rogue/indoors/deathsedge)
 "Le" = (
@@ -2399,8 +2399,8 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "OA" = (
-/obj/item/rogueweapon/greatsword/aalloy,
-/obj/item/clothing/head/roguetown/helmet/heavy/aalloy,
+/obj/item/rogueweapon/greatsword/ancient/decrepit,
+/obj/item/clothing/head/roguetown/helmet/heavy/ancient/decrepit,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "OG" = (

@@ -1092,13 +1092,13 @@
 	candodge = 0
 	},
 /obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/item/clothing/suit/roguetown/armor/plate/half/paalloy,
-/obj/item/clothing/gloves/roguetown/plate/paalloy,
-/obj/item/clothing/under/roguetown/platelegs/paalloy,
+/obj/item/clothing/suit/roguetown/armor/plate/half/ancient,
+/obj/item/clothing/gloves/roguetown/plate/ancient,
+/obj/item/clothing/under/roguetown/platelegs/ancient,
 /obj/item/clothing/shoes/roguetown/boots/leather/reinforced,
 /obj/item/clothing/neck/roguetown/chaincoif,
 /obj/item/rogueweapon/sword/rapier,
-/obj/item/rogueweapon/shield/buckler/palloy,
+/obj/item/rogueweapon/shield/buckler/ancient,
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/tomb)
 "mU" = (
@@ -1178,10 +1178,10 @@
 	candodge = 0
 	},
 /obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/item/clothing/suit/roguetown/armor/plate/half/paalloy,
-/obj/item/clothing/gloves/roguetown/plate/paalloy,
-/obj/item/clothing/head/roguetown/helmet/heavy/paalloy,
-/obj/item/clothing/under/roguetown/platelegs/paalloy,
+/obj/item/clothing/suit/roguetown/armor/plate/half/ancient,
+/obj/item/clothing/gloves/roguetown/plate/ancient,
+/obj/item/clothing/head/roguetown/helmet/heavy/ancient,
+/obj/item/clothing/under/roguetown/platelegs/ancient,
 /obj/item/clothing/shoes/roguetown/boots/leather/reinforced,
 /obj/item/clothing/neck/roguetown/chaincoif,
 /obj/item/rogueweapon/spear/billhook,
@@ -2341,7 +2341,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb/indoors)
 "BY" = (
-/obj/item/clothing/suit/roguetown/armor/chainmail/paalloy,
+/obj/item/clothing/suit/roguetown/armor/chainmail/ancient,
 /turf/open/floor/rogue/twig,
 /area/rogue/under/tomb/indoors)
 "Ca" = (
@@ -2864,10 +2864,10 @@
 	candodge = 0
 	},
 /obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/item/clothing/suit/roguetown/armor/plate/half/paalloy,
-/obj/item/clothing/gloves/roguetown/plate/paalloy,
-/obj/item/clothing/head/roguetown/helmet/heavy/paalloy,
-/obj/item/clothing/under/roguetown/platelegs/paalloy,
+/obj/item/clothing/suit/roguetown/armor/plate/half/ancient,
+/obj/item/clothing/gloves/roguetown/plate/ancient,
+/obj/item/clothing/head/roguetown/helmet/heavy/ancient,
+/obj/item/clothing/under/roguetown/platelegs/ancient,
 /obj/item/clothing/shoes/roguetown/boots/leather/reinforced,
 /obj/item/clothing/neck/roguetown/chaincoif,
 /obj/item/rogueweapon/mace/warhammer/steel,
@@ -4174,7 +4174,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "YD" = (
-/obj/item/clothing/suit/roguetown/armor/plate/aalloy,
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/decrepit,
 /turf/open/floor/rogue/twig,
 /area/rogue/under/tomb/indoors)
 "YE" = (
@@ -4241,7 +4241,7 @@
 /area/rogue/under/tomb/indoors/royal)
 "Zi" = (
 /obj/structure/rack/rogue/shelf/biggest,
-/obj/item/clothing/suit/roguetown/armor/chainmail/paalloy,
+/obj/item/clothing/suit/roguetown/armor/chainmail/ancient,
 /turf/open/floor/rogue/twig,
 /area/rogue/under/tomb/indoors)
 "Zk" = (

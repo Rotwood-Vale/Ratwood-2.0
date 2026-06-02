@@ -8,7 +8,6 @@ GLOBAL_LIST_INIT(colorlist, list(
 	"Sow's skin"="#CE929F",
 	"Salmon Pink"="#FF91A4",
 	"Cherry Blossom"="#FF6699",
-	"Xylix Pink"="#FF3399",
 	"Knight's Red"="#933030",
 	"Royal Red"="#8b2323",
 	"Red Ochre" = "#913831",
@@ -25,7 +24,8 @@ GLOBAL_LIST_INIT(colorlist, list(
 	"Yarrow" = "#f0cb76",
 	"Yellow Ochre" = "#cb9d06",
 	"Mage Yellow" = "#c1b144",
-	"Astrata's Yellow"="#FFFD8D",
+	"Astrata's Yellow"="#ffe333",
+	"Pale Gold"="#FFFD8D",
 	"Olive" = "#98bf64",
 	"Royal Green" = "#264d26",
 	"Forest Green" = "#428138",
@@ -33,6 +33,7 @@ GLOBAL_LIST_INIT(colorlist, list(
 	"Bog Green"="#375B48",
 	"Seafoam Green"="#49938B",
 	"Royal Teal" = "#249589",
+	"Watchman Blue" = "#557d8f",
 	"Cornflower Blue"="#749EE8",
 	"Royal Blue" = "#173266",
 	"Woad Blue"="#395480",
@@ -40,6 +41,7 @@ GLOBAL_LIST_INIT(colorlist, list(
 	"Periwinkle Blue" = "#8f99fb",
 	"Lavender"="#865c9c",
 	"Royal Purple"="#5E4687",
+	"Midnight Violet"="#402c56",
 	"Orchil" = "#66023C",
 	"Wine Rouge"="#752B55",
 	"Royal Magenta" = "#962e5c",
@@ -609,7 +611,7 @@ GLOBAL_LIST_INIT(pridelist, list(
 	desc = "A sizeable brush made of the finest mane-hairs. Thick dye adheres to it well."
 	icon_state = "dbrush"
 	w_class = WEIGHT_CLASS_SMALL
-	dropshrink = 0.8
+	dropshrink = 0.7
 	grid_width = 32
 	grid_height = 32
 

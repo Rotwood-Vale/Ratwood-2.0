@@ -103,7 +103,7 @@
 				return
 		to_chat(user, span_warning("Wrong key."))
 		return
-	if(istype(P, /obj/item/roguecoin/aalloy))
+	if(istype(P, /obj/item/roguecoin/gilbranze))
 		return
 	if(istype(P, /obj/item/roguecoin/inqcoin))
 		return
@@ -191,6 +191,22 @@
 				if(newtax < D.withdraw_price)
 					scom_announce("The withdraw price for [D.name] was decreased.")
 				D.withdraw_price = newtax
+	if(href_list["setrate"])
+		var/datum/roguestock/D = locate(href_list["setrate"]) in SStreasury.stockpile_datums
+		if(!D)
+			return              //Cheaper prices, no taxes, the price? Commitment. You can only change the rates at day. I'd like to make the window shorter,
+		if(GLOB.tod == "night") //less chance to micromanage, incentivize doing other things at later hours, make it unable to be changed at dusk too, but this needs testing first
+			say("Suppliers will only agree to modifying deals at times when Astrata shines.")
+			return
+		var/newrate = input(usr, "Set a new rate for remote imports for [D.name]", src, D.passive_generation) as null|num
+		if(!isnull(newrate))
+			if(!usr.canUseTopic(src, BE_CLOSE) || locked)
+				return
+			if(findtext(num2text(newrate), "."))
+				return
+			newrate = CLAMP(newrate, 0, D.generation_max)
+			scom_announce("Rotwood Vale will [newrate ? "now import [newrate] [D.name] every 5 hours." : "no longer import [D.name] periodically"]")
+			D.passive_generation = newrate
 	if(href_list["setlimit"])
 		var/datum/roguestock/D = locate(href_list["setlimit"]) in SStreasury.stockpile_datums
 		if(!D)
@@ -430,6 +446,7 @@
 				contents += " / Guild's Tax: [SStreasury.queens_tax*100]%</center><BR>"
 				contents += "<center>Auto Export Stockpile Above: "
 				contents += "<a href='?src=\ref[src];changeautoexport=1'>[SStreasury.autoexport_percentage * 100]%</a></center><BR>"
+				contents += "<center>Current Passive Spending: [SStreasury.get_current_passive_spending()]m </center><BR>"
 				var/selection = "<center>Categories: "
 				for(var/category in categories)
 					if(category == current_category)
@@ -442,10 +459,12 @@
 					if(A.category != current_category)
 						continue
 					contents += "<b>[A.name]:</b>"
-					contents += " [A.held_items[1] + A.held_items[2]]"
-					contents += " | SELL: <a href='?src=\ref[src];setbounty=\ref[A]'>[A.payout_price]m</a>"
+					contents += " [A.held_items[1]] | [A.held_items[2]]"
+					contents += " || SELL: <a href='?src=\ref[src];setbounty=\ref[A]'>[A.payout_price]m</a>"
 					contents += " / BUY: <a href='?src=\ref[src];setprice=\ref[A]'>[A.withdraw_price]m</a>"
 					contents += " / LIMIT: <a href='?src=\ref[src];setlimit=\ref[A]'>[A.stockpile_limit]</a>"
+					if(!A.no_passive)
+						contents += " / R.P.I.R.: <a href='?src=\ref[src];setrate=\ref[A]'>[A.passive_generation] ([A.generation_price]m)</a>"
 					if(!A.export_only)
 						if(A.importexport_amt)
 							contents += " <a href='?src=\ref[src];import=\ref[A]'>\[IMP [A.importexport_amt] ([A.get_import_price()])\]</a> <a href='?src=\ref[src];export=\ref[A]'>\[EXP [A.importexport_amt] ([A.get_export_price()])\]</a> <BR>"
@@ -456,7 +475,8 @@
 			else
 				contents += "Treasury: [SStreasury.treasury_value]m<BR>"
 				contents += "Lord's Tax: [SStreasury.tax_value*100]%<BR>"
-				contents += "Guild's Tax: [SStreasury.queens_tax*100]%</center><BR>"
+				contents += "Guild's Tax: [SStreasury.queens_tax*100]%<BR>"
+				contents += "Current Passive Spending: [SStreasury.get_current_passive_spending()]m</center><BR>"
 				var/selection = "<center>Categories: "
 				for(var/category in categories)
 					if(category == current_category)
@@ -464,15 +484,20 @@
 					else
 						selection += "<a href='?src=[REF(src)];changecat=[category]'>[category]</a> "
 				contents += selection + "<BR>"
-				contents += "--------------</center><BR>"
+				contents += "--------------<BR>"
+				contents += "Category Passive Spending: [SStreasury.get_current_passive_spending(current_category)]m</center><BR>"
 				for(var/datum/roguestock/stockpile/A in SStreasury.stockpile_datums)
 					if(A.category != current_category)
 						continue
 					contents += "[A.name]<BR>"
 					contents += "[A.desc]<BR>"
-					contents += "Stockpiled Amount: [A.held_items[1] + A.held_items[2]]<BR>"
+					contents += "Stockpiled Amount (Local): [A.held_items[1]]<BR>"
+					contents += "Stockpiled Amount (Remote): [A.held_items[2]]<BR>"
 					contents += "Bounty Price: <a href='?src=\ref[src];setbounty=\ref[A]'>[A.payout_price]</a><BR>"
 					contents += "Withdraw Price: <a href='?src=\ref[src];setprice=\ref[A]'>[A.withdraw_price]</a><BR>"
+					if(!A.no_passive)
+						contents += "Remote Passive Import Rate: <a href='?src=\ref[src];setrate=\ref[A]'>[A.passive_generation]</a><BR>"
+						contents += "R.P.I.R. Price: [A.generation_price] | Total Rate Price: [A.generation_price * A.passive_generation]<BR>"
 					contents += "Demand: [A.demand2word()]<BR>"
 					if(!A.export_only)
 						if(A.importexport_amt)

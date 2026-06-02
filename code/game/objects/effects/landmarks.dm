@@ -206,6 +206,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/bogguardsman
 	name = "Bog Guard"
 	icon_state = "arrow"
+	jobspawn_override = list("Bog Guard", "Vanguard")
 
 /obj/effect/landmark/start/warden
 	name = "Warden"

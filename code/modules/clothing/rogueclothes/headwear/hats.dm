@@ -35,6 +35,7 @@
 	icon_state = "tophat"
 	color = CLOTHING_BLACK
 	nudist_approved = TRUE
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/bardhat
 	name = "bard's hat"
@@ -109,6 +110,7 @@
 	nudist_approved = TRUE
 	heat_protection = HEAD
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/chaperon
 	name = "chaperon hat"
@@ -205,6 +207,7 @@
 	//dropshrink = 0.75
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/knitcap
 	name = "knit cap"
@@ -340,6 +343,7 @@
 	icon_state = "nun"
 	sellprice = 5
 	nudist_approved = TRUE
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/hennin
 	name = "hennin"

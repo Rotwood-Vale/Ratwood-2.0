@@ -54,7 +54,7 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/zizo
 	belt = /obj/item/storage/belt/rogue/leather/black
-	id = /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy
+	id = /obj/item/clothing/neck/roguetown/psicross/inhumen/ancient
 	backr = /obj/item/rogueweapon/shield/tower/metal
 	backl = /obj/item/storage/backpack/rogue/satchel
 	r_hand = /obj/item/rogueweapon/sword/long/zizo

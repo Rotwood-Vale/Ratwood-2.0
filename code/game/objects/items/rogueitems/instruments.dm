@@ -241,6 +241,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	var/playing = FALSE
 	grid_height = 64
 	grid_width = 32
+	dropshrink = 0.8//damn these things are sprited big
 
 	/// Instrument is in some other holder such as an organ or item.
 	var/not_held = FALSE

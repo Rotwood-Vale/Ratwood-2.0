@@ -155,83 +155,83 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/ancient_hammer
 	name = "Ancient Hammer"
-	path = /obj/item/rogueweapon/hammer/aalloy
+	path = /obj/item/rogueweapon/hammer/decrepit
 	triumph_cost = 3
 
 /datum/loadout_item/ancient_tongs
 	name = "Ancient Tongs"
-	path = /obj/item/rogueweapon/tongs/aalloy
+	path = /obj/item/rogueweapon/tongs/decrepit
 	triumph_cost = 3
 
 /datum/loadout_item/ancient_pick
 	name = "Ancient Pick"
-	path = /obj/item/rogueweapon/pick/aalloy
+	path = /obj/item/rogueweapon/pick/decrepit
 	triumph_cost = 3
 
 /datum/loadout_item/ancient_shovel
 	name = "Ancient Shovel"
-	path = /obj/item/rogueweapon/shovel/aalloy
+	path = /obj/item/rogueweapon/shovel/decrepit
 	triumph_cost = 3
 
 /datum/loadout_item/ancient_hoe
 	name = "Ancient Hoe"
-	path = /obj/item/rogueweapon/hoe/aalloy
+	path = /obj/item/rogueweapon/hoe/decrepit
 	triumph_cost = 3
 
 /datum/loadout_item/ancient_sickle
 	name = "Ancient Sickle"
-	path = /obj/item/rogueweapon/sickle/aalloy
+	path = /obj/item/rogueweapon/sickle/decrepit
 	triumph_cost = 3
 
 /datum/loadout_item/ancient_thresher
 	name = "Ancient Thresher"
-	path = /obj/item/rogueweapon/thresher/aalloy
+	path = /obj/item/rogueweapon/thresher/decrepit
 	triumph_cost = 3
 
 /datum/loadout_item/ancient_pitchfork
 	name = "Ancient Pitchfork"
-	path = /obj/item/rogueweapon/pitchfork/aalloy
+	path = /obj/item/rogueweapon/pitchfork/decrepit
 	triumph_cost = 3
 
 //COOKWARE
 /datum/loadout_item/ancient_pan
 	name = "Ancient Pan"
-	path = /obj/item/cooking/pan/aalloy
+	path = /obj/item/cooking/pan/decrepit
 	triumph_cost = 2
 
 /datum/loadout_item/ancient_pot
 	name = "Ancient Pot"
-	path = /obj/item/reagent_containers/glass/bucket/pot/aalloy
+	path = /obj/item/reagent_containers/glass/bucket/pot/decrepit
 	triumph_cost = 2
 
 /datum/loadout_item/ancient_platter
 	name = "Ancient Platter"
-	path = /obj/item/cooking/platter/aalloy
+	path = /obj/item/cooking/platter/decrepit
 	triumph_cost = 2
 
 /datum/loadout_item/ancient_bowl
 	name = "Ancient Bowl"
-	path = /obj/item/reagent_containers/glass/bowl/aalloy
+	path = /obj/item/reagent_containers/glass/bowl/decrepit
 	triumph_cost = 2
 
 /datum/loadout_item/ancient_mug
 	name = "Ancient Mug"
-	path = /obj/item/reagent_containers/glass/cup/aalloymug
+	path = /obj/item/reagent_containers/glass/cup/decrepitmug
 	triumph_cost = 2
 
 /datum/loadout_item/ancient_goblet
 	name = "Ancient Goblet"
-	path = /obj/item/reagent_containers/glass/cup/aalloygob
+	path = /obj/item/reagent_containers/glass/cup/decrepitgob
 	triumph_cost = 2
 
 /datum/loadout_item/ancient_spoon
 	name = "Ancient Spoon"
-	path = /obj/item/kitchen/spoon/aalloy
+	path = /obj/item/kitchen/spoon/decrepit
 	triumph_cost = 2
 
 /datum/loadout_item/ancient_fork
 	name = "Ancient Fork"
-	path = /obj/item/kitchen/fork/aalloy
+	path = /obj/item/kitchen/fork/decrepit
 	triumph_cost = 2
 
 //HATS
@@ -993,7 +993,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/psicross/zizo
 	name = "Ancient Zcross"
-	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/ancient
 
 /datum/loadout_item/psicross/matthios
 	name = "Amulet of Matthios"
@@ -1297,7 +1297,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/ancient_axe
 	name = "Ancient Axe"
-	path = /obj/item/rogueweapon/stoneaxe/woodcut/aaxe
+	path = /obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient
 	triumph_cost = 4
 
 // SWORDS
@@ -1309,12 +1309,12 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/ancient_gladius
 	name = "Ancient Gladius"
-	path = /obj/item/rogueweapon/sword/short/gladius/pagladius
+	path = /obj/item/rogueweapon/sword/short/gladius/ancient
 	triumph_cost = 4
 
 /datum/loadout_item/ancient_khopesh
 	name = "Ancient Khopesh"
-	path = /obj/item/rogueweapon/sword/sabre/palloy
+	path = /obj/item/rogueweapon/sword/sabre/ancient
 	triumph_cost = 4
 
 // DAGGERS & KNIVES
@@ -1327,7 +1327,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 // MACES & BLUNT
 /datum/loadout_item/ancient_mace
 	name = "Ancient Mace"
-	path = /obj/item/rogueweapon/mace/goden/steel/paalloy
+	path = /obj/item/rogueweapon/mace/goden/steel/ancient
 	triumph_cost = 4
 
 // POLEARMS & SPEARS
@@ -1345,18 +1345,18 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/ancient_spear
 	name = "Ancient Spear"
-	path = /obj/item/rogueweapon/spear/aalloy
+	path = /obj/item/rogueweapon/spear/ancient/decrepit
 	triumph_cost = 4
 
 // ARMOR & CLOTHING
 /datum/loadout_item/ancient_mask
 	name = "Ancient Mask"
-	path = /obj/item/clothing/mask/rogue/facemask/steel/paalloy
+	path = /obj/item/clothing/mask/rogue/facemask/ancient
 	triumph_cost = 4
 
 /datum/loadout_item/ancient_kilt
 	name = "Ancient Kilt"
-	path = /obj/item/clothing/under/roguetown/chainlegs/kilt/paalloy
+	path = /obj/item/clothing/under/roguetown/chainlegs/kilt/ancient
 	triumph_cost = 4
 
 //─────────────────────────────────────────────────────────────

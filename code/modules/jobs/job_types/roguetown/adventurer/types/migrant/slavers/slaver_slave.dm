@@ -55,8 +55,6 @@
 		if("Commoner(+2 LCK)")
 			H.change_stat(STATKEY_LCK, 2)
 
-	ADD_TRAIT(H, TRAIT_NOBLE,TRAIT_GENERIC)
-
 /datum/advclass/slaver/slave/battle
 	name = "Battle Slave"
 	tutorial = "An unlucky slave, captured from their home, moved to the Zybantines and trained for slave labor and obediency, for long enough to where you can only faintly remember who you were before... You are now being transported from the deserts to harsher lands to be sold."

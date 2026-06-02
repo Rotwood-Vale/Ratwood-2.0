@@ -101,6 +101,10 @@
 	name = "Bobcurl"
 	icon_state = "bobcurl"
 
+/datum/sprite_accessory/hair/head/bob_mane
+	name = "Bob (Mane)"
+	icon_state = "bob_mane"
+
 /datum/sprite_accessory/hair/head/boddicker
 	name = "Boddicker"
 	icon_state = "boddicker"
