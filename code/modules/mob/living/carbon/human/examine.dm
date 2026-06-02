@@ -110,7 +110,10 @@
 		obscure_name = FALSE
 
 	if(has_flaw(/datum/charflaw/hunted))
-		. += span_danger("Graggar has marked them!")
+		log_test("Examine log: [user] is examining a hunted target: [src]")
+		. += span_cultsmall("Graggar has marked them!")
+
+
 
 	if(name in unknown_names)
 		. = list(span_info("ø ------------ ø\nThis is <EM>[name]</EM>."))
@@ -438,6 +441,10 @@
 						. += span_beautiful_nb("[m1] possess[p_es()] an otherworldly allure.")
 					else
 						. += span_beautiful_nb("There's something eerily wrong about [m2] appearance.")
+
+if(has_flaw(/datum/charflaw/hunted))
+		log_test("Examine log: 2nd flaw embedding [user] is examining a hunted target: [src]")
+		. += span_cultsmall("Graggar has marked them!")
 
 		// Shouldn't be able to tell they are unrevivable through a mask as a Necran
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user)
