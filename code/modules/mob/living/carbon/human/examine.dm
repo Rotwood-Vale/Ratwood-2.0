@@ -109,7 +109,7 @@
 	if(observer_privilege)
 		obscure_name = FALSE
 
-	if(has_flaw(/datum/charflaw/hunted))
+	if(src.has_flaw(/datum/charflaw/hunted))
 		log_test("First examine working!!")
 		. += span_cultsmall("Graggar has marked them!")
 
