@@ -443,6 +443,9 @@
 			else if(user.stat == DEAD)
 				. += span_danger("This was their only chance at lyfe.")
 
+	if(has_flaw(/datum/charflaw/hunted))
+		. += span_danger("Graggar has marked them!")
+
 	// Real medical role can tell at a glance it is a waste of time, but only if the Necra message don't come first.
 
 	if(user.get_skill_level(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT && src.stat == DEAD)
