@@ -273,6 +273,10 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/kingsfield/garden_district)
+"aY" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/rogue/blocks/newstone/alt,
+/area/rogue/under/kingsfield/arena)
 "aZ" = (
 /obj/structure/far_travel,
 /turf/open/floor/rogue/cobblerock{
@@ -505,6 +509,15 @@
 /obj/item/clothing/cloak/black_cloak,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/kingsfield/ferentian_hq)
+"cr" = (
+/obj/machinery/light/roguestreet/walllamp{
+	dir = 8
+	},
+/obj/structure/glowshroom{
+	icon_state = "glowshroom3"
+	},
+/turf/open/water/sewer,
+/area/rogue/under/kingsfield/gutter)
 "ct" = (
 /obj/structure/fluff/statue/small,
 /turf/closed/wall/mineral/rogue/decostone/cand,
@@ -676,7 +689,6 @@
 /area/rogue/indoors/kingsfield/tavern)
 "dB" = (
 /obj/structure/table/wood/long_table,
-/obj/item/reagent_containers/glass/cup/aalloymug,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/kingsfield/gutter)
 "dC" = (
@@ -1437,6 +1449,10 @@
 	},
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/kingsfield/tavern)
+"jy" = (
+/obj/structure/glowshroom,
+/turf/open/water/sewer,
+/area/rogue/under/kingsfield/gutter)
 "jA" = (
 /obj/machinery/light/roguestreet/orange/walllamp,
 /obj/structure/closet/crate/roguecloset,
@@ -1480,6 +1496,12 @@
 	},
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/kingsfield/ferentian_hq)
+"jN" = (
+/obj/structure/glowshroom{
+	icon_state = "glowshroom2"
+	},
+/turf/open/water/sewer,
+/area/rogue/under/kingsfield/gutter)
 "jQ" = (
 /turf/closed/wall/mineral/rogue/decostone/end/west,
 /area/rogue/indoors/kingsfield/tavern)
@@ -2440,6 +2462,12 @@
 "qp" = (
 /turf/open/water/bath,
 /area/rogue/indoors/kingsfield/tavern)
+"qt" = (
+/obj/structure/glowshroom{
+	icon_state = "glowshroom3"
+	},
+/turf/open/water/sewer,
+/area/rogue/under/kingsfield/gutter)
 "qu" = (
 /obj/machinery/light/rogue/candle{
 	pixel_y = -32
@@ -4157,6 +4185,10 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/kingsfield/ferentian_hq)
+"Cm" = (
+/obj/effect/decal/cleanable/blood/splatter/walls,
+/turf/open/floor/rogue/blocks/newstone/alt,
+/area/rogue/under/kingsfield/arena)
 "Co" = (
 /obj/structure/roguemachine/musicbox/tavern,
 /obj/structure/table/wood/poor,
@@ -4507,6 +4539,10 @@
 /obj/machinery/gear_painter,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/kingsfield/ferentian_hq)
+"DZ" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/rogue/blocks/newstone/alt,
+/area/rogue/under/kingsfield/arena)
 "Eb" = (
 /obj/structure/closet/crate/roguecloset,
 /turf/open/floor/carpet/royalblack,
@@ -5958,6 +5994,10 @@
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors/kingsfield/tavern)
+"Ol" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/rogue/blocks/newstone/alt,
+/area/rogue/under/kingsfield/arena)
 "Om" = (
 /obj/structure/fluff/statue/gargoyle/candles,
 /turf/closed/wall/mineral/rogue/decostone/mossy/red/long{
@@ -6302,6 +6342,10 @@
 /obj/structure/ritualcircle/dendor,
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/kingsfield/tavern)
+"QC" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/rogue/blocks/newstone/alt,
+/area/rogue/under/kingsfield/arena)
 "QH" = (
 /obj/structure/roguemachine/scomm/receive_only/l{
 	scom_tag = "Kingsfield - Tavern Backroom"
@@ -9710,7 +9754,7 @@ gB
 rt
 rt
 rt
-yD
+qt
 HH
 yD
 yD
@@ -9720,7 +9764,7 @@ HH
 yD
 yD
 yD
-yD
+jN
 yD
 yD
 HH
@@ -9729,7 +9773,7 @@ yD
 yD
 yD
 yD
-yD
+jN
 EY
 Xy
 Tb
@@ -9818,7 +9862,7 @@ yD
 yD
 yD
 yD
-yD
+qt
 yD
 yD
 yD
@@ -9915,7 +9959,7 @@ EY
 EY
 EY
 yD
-yD
+jN
 bQ
 qh
 qh
@@ -10239,7 +10283,7 @@ gx
 BG
 aQ
 yD
-yD
+jN
 EY
 Xy
 Tb
@@ -10330,11 +10374,11 @@ yU
 AW
 nU
 nU
+DZ
 nU
 nU
 nU
-nU
-nU
+Cm
 AW
 yU
 gx
@@ -10430,11 +10474,11 @@ qh
 qh
 LH
 AW
+aY
 nU
 nU
 nU
-nU
-nU
+aY
 nU
 nU
 AW
@@ -10629,7 +10673,7 @@ gx
 gx
 yU
 yD
-yD
+jN
 qh
 qh
 yU
@@ -10640,7 +10684,7 @@ nU
 nU
 nU
 nU
-nU
+DZ
 AW
 yU
 gx
@@ -10736,10 +10780,10 @@ qh
 qh
 LH
 AW
+Ol
+DZ
 nU
-nU
-nU
-nU
+Ol
 nU
 nU
 nU
@@ -10832,7 +10876,7 @@ dl
 bQ
 bQ
 bQ
-yD
+jN
 yD
 qh
 qh
@@ -10843,7 +10887,7 @@ nU
 nU
 nU
 nU
-nU
+QC
 nU
 AW
 yU
@@ -10952,7 +10996,7 @@ HT
 gx
 Ba
 aQ
-yD
+jN
 yD
 EY
 Xy
@@ -11157,7 +11201,7 @@ qh
 qh
 qh
 yD
-yD
+qt
 EY
 Xy
 Tb
@@ -11346,7 +11390,7 @@ xL
 yD
 yD
 yD
-yD
+qt
 yD
 yD
 yD
@@ -11354,7 +11398,7 @@ Qd
 Qd
 yD
 yD
-yD
+jy
 yD
 yD
 yD
@@ -11445,13 +11489,13 @@ EY
 EY
 EY
 yD
-yD
-yD
-vT
-yD
-yD
+jN
 yD
 vT
+yD
+yD
+yD
+cr
 Qd
 Qd
 vT
@@ -11462,7 +11506,7 @@ yD
 yD
 vT
 yD
-yD
+jy
 yD
 EY
 Xy
