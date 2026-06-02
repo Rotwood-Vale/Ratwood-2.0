@@ -140,6 +140,9 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/noflaw/apply_post_equipment(mob/user)
 	var/mob/living/carbon/human/H = user
+	if(is_kingsfield_role(H?.mind?.assigned_role))
+		return
+
 	if(H.get_triumphs() < 3)
 		var/flawz = GLOB.character_flaws.Copy()
 		var/charflaw = pick_n_take(flawz)

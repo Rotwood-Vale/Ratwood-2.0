@@ -79,6 +79,9 @@ GLOBAL_LIST_EMPTY(virtues)
 	if (!triumph_cost)
 		return TRUE
 
+	if (is_kingsfield_role(recipient?.mind?.assigned_role))
+		return TRUE
+
 	if (!recipient.mind)
 		return FALSE
 
