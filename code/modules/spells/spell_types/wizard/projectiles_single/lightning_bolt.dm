@@ -43,12 +43,13 @@
 	flag = "magic"
 	light_color = "#ffffff"
 	light_outer_range = 7
+	var/bypass_antimagic = FALSE
 
 /obj/projectile/magic/lightning/on_hit(target)
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
-		if(M.anti_magic_check())
+		if(!bypass_antimagic && M.anti_magic_check())
 			visible_message(span_warning("[src] fizzles on contact with [target]!"))
 			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 			qdel(src)
