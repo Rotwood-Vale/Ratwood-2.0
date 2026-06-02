@@ -42,7 +42,7 @@
 		return TRUE
 	return ..()
 
-/obj/item/reagent_containers/glass/bucket/pot/aalloy
+/obj/item/reagent_containers/glass/bucket/pot/decrepit
 	name = "decrepit pot"
 	desc = "A kettle of wrought bronze. One could only imagine what the stews of millennia prior must've tasted like; do you suppose they knew of seasonings-and-spices, too?"
 	icon_state = "apote"

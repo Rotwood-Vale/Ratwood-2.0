@@ -15,6 +15,44 @@
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Debug Two") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_admin_show_hostile_ai_metrics()
+	set category = "Debug"
+	set name = "Show Hostile AI Metrics"
+	if(!check_rights(R_DEBUG))
+		return
+
+	var/list/metrics = get_hostile_ai_targeting_metrics()
+	var/listtargets_calls = metrics["listtargets_calls"]
+	var/candidates_scanned = metrics["candidates_scanned"]
+	var/observer_candidates_filtered = metrics["observer_candidates_filtered"]
+	var/newplayer_candidates_filtered = metrics["newplayer_candidates_filtered"]
+	var/canattack_calls = metrics["canattack_calls"]
+	var/canattack_observer_rejects = metrics["canattack_observer_rejects"]
+	var/canattack_newplayer_rejects = metrics["canattack_newplayer_rejects"]
+
+	var/ghost_filtered_total = observer_candidates_filtered + newplayer_candidates_filtered
+	var/ghost_filtered_pct = candidates_scanned ? round((ghost_filtered_total * 100) / candidates_scanned, 0.01) : 0
+	var/avg_candidates_per_call = listtargets_calls ? round(candidates_scanned / listtargets_calls, 0.01) : 0
+	var/canattack_ghost_reject_total = canattack_observer_rejects + canattack_newplayer_rejects
+	var/canattack_ghost_reject_pct = canattack_calls ? round((canattack_ghost_reject_total * 100) / canattack_calls, 0.01) : 0
+
+	to_chat(src, span_notice("--- Hostile AI Targeting Metrics ---"))
+	to_chat(src, span_notice("NPC scans run: [listtargets_calls] | Mobs found by hearers(): [candidates_scanned] | Avg mobs per scan: [avg_candidates_per_call]"))
+	to_chat(src, span_notice("Ghosts stripped BEFORE targeting loop -> spectators: [observer_candidates_filtered], lobby players: [newplayer_candidates_filtered] | Total ghost waste avoided: [ghost_filtered_total] ([ghost_filtered_pct]% of all candidates)"))
+	to_chat(src, span_notice("CanAttack() calls: [canattack_calls] | Ghosts reaching CanAttack (should be ~0): spectators: [canattack_observer_rejects], lobby players: [canattack_newplayer_rejects] | Ghost leak rate: [canattack_ghost_reject_pct]%"))
+
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Hostile AI Metrics")
+
+/client/proc/cmd_admin_reset_hostile_ai_metrics()
+	set category = "Debug"
+	set name = "Reset Hostile AI Metrics"
+	if(!check_rights(R_DEBUG))
+		return
+
+	reset_hostile_ai_targeting_metrics()
+	to_chat(src, span_notice("Hostile AI targeting metrics reset."))
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Reset Hostile AI Metrics")
+
 
 
 /* 21st Sept 2010

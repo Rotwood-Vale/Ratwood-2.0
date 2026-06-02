@@ -46,7 +46,9 @@
 		user.sexcon.perform_deepthroat_oxyloss(user, 1.3)
 	if(target.sexcon.check_active_ejaculation())
 		target.visible_message(span_love("[target] cums into [user]'s mouth!"))
-		target.sexcon.cum_into(oral = TRUE, splashed_user = user, knot_action = src, knot_swap_roles = TRUE, knot_btm = user)
+		for(var/i = 1; i <= target.sexcon.get_load_bursts(); i++)
+			target.sexcon.cum_into(oral = TRUE, splashed_user = user, knot_action = src, knot_swap_roles = TRUE, knot_btm = user, consume_charge = i == 1 ? TRUE : FALSE)
+			sleep(10)
 
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE
 

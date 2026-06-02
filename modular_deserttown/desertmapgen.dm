@@ -76,6 +76,6 @@
 	allowed_turfs = list(/turf/open/water/cleanshallow)
 	allowed_areas = list(/area/rogue/outdoors/desert, /area/rogue/outdoors/desertdeep)
 	spawnableAtoms = list(	/obj/structure/flora/roguetree/stump/log = 1,
-							/obj/structure/flora/ausbushes/reedbush = 1,
+							/obj/structure/flora/roguegrass/reedbush = 1,
 							/obj/structure/flora/roguegrass/water/reeds = 1,)
 

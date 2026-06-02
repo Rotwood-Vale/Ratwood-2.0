@@ -34,6 +34,7 @@
 #define BUSHSAP_HEDGE_TIME   (5 MINUTES)
 #define BUSHSAP_DEATH_TICKS  60   // negative-progress seconds before withering
 
+#define TOOL_IMPROVISED_SCALPEL "improvised_scalpel"
 // If delay between the start and the end of tool operation is less than MIN_TOOL_SOUND_DELAY,
 // tool sound is only played when op is started. If not, it's played twice.
 #define MIN_TOOL_SOUND_DELAY 20

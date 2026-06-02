@@ -419,7 +419,7 @@
 /area/rogue/indoors/inq/boat)
 "iR" = (
 /obj/structure/rack/rogue,
-/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy,
+/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/inq/boat/basement)
 "iT" = (
@@ -464,10 +464,10 @@
 /turf/open/water/ocean/deep,
 /area/rogue/outdoors/beach/byos)
 "jW" = (
-/obj/structure/flora/ausbushes/reedbush{
+/obj/structure/flora/roguegrass/reedbush{
 	pixel_x = 6
 	},
-/obj/structure/flora/ausbushes/reedbush{
+/obj/structure/flora/roguegrass/reedbush{
 	pixel_x = -8;
 	pixel_y = -3
 	},

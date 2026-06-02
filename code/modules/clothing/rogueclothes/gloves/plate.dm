@@ -26,20 +26,19 @@
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_SIDE_IRON
 
-/obj/item/clothing/gloves/roguetown/plate/aalloy
+/obj/item/clothing/gloves/roguetown/plate/ancient
+	name = "ancient plate gauntlets"
+	desc = "Polished gilbranze mechanisms, meticulously interconnected to shroud splayed hands. 'Mercy' and 'innocence' are concepts paraded by the unenlightened; spill their blood without guilt, so that the world may yet be remade in Her image."
+	icon_state = "agauntlets"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/clothing/gloves/roguetown/plate/ancient/decrepit
 	name = "decrepit plate gauntlets"
 	desc = "Frayed bronze mechanisms, connected to form the shells of hands. Too clumsy to properly knock a bow, too rigid to comfortably grip a sword; clench those fists any tighter, and the segments'll cut into flesh."
 	icon_state = "agauntlets"
 	max_integrity = ARMOR_INT_SIDE_DECREPIT
 	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = null
-
-/obj/item/clothing/gloves/roguetown/plate/paalloy
-	name = "ancient plate gauntlets"
-	desc = "Polished gilbranze mechanisms, meticulously interconnected to shroud splayed hands. 'Mercy' and 'innocence' are concepts paraded by the unenlightened; spill their blood without guilt, so that the world may yet be remade in Her image."
-	icon_state = "agauntlets"
-	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/clothing/gloves/roguetown/plate/graggar
 	name = "vicious gauntlets"
@@ -56,6 +55,7 @@
 	desc = "Many a man his life hath sold,"
 	icon_state = "matthiosgloves"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
+	armor = ARMOR_ASCENDANT
 
 /obj/item/clothing/gloves/roguetown/plate/matthios/Initialize(mapload)
 	. = ..()
@@ -73,6 +73,7 @@
 	desc = "avantyne plate gauntlets. Called forth from the edge of what should be known. In Her name."
 	icon_state = "zizogauntlets"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
+	armor = ARMOR_ASCENDANT
 
 /obj/item/clothing/gloves/roguetown/plate/zizo/Initialize(mapload)
 	. = ..()

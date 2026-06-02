@@ -18,7 +18,7 @@
 	drinksounds = list('sound/items/drink_cup (1).ogg','sound/items/drink_cup (2).ogg','sound/items/drink_cup (3).ogg','sound/items/drink_cup (4).ogg','sound/items/drink_cup (5).ogg')
 	fillsounds = list('sound/items/fillcup.ogg')
 
-/obj/item/reagent_containers/glass/bowl/aalloy
+/obj/item/reagent_containers/glass/bowl/decrepit
 	name = "decrepit bowl"
 	icon_state = "abowl"
 	sellprice = 15

@@ -1127,6 +1127,19 @@
 	..()
 	icon_state = "stonebr" // Weird override otherwise
 
+/obj/structure/mineral_door/wood/donjon/stone/tough
+	name = "tough stone door"
+	desc = "this one has a stronger lock than usual"
+	locked = TRUE
+	max_integrity = 2500
+	lockdifficulty = 3
+
+/obj/structure/mineral_door/wood/donjon/tough
+	name = "tough reinforced door"
+	desc = "this one has a stronger lock than usual"
+	locked = TRUE
+	max_integrity = 2500
+	lockdifficulty = 3
 
 /obj/structure/mineral_door/bars
 	name = "iron door"
@@ -1154,6 +1167,13 @@
 	repair_cost_first = /obj/item/ingot/iron
 	repair_cost_second = /obj/item/ingot/iron
 	repair_skill = /datum/skill/craft/blacksmithing
+
+/obj/structure/mineral_door/bars/tough
+	name = "tough bars"
+	desc = "this one has a stronger lock than usual"
+	locked = TRUE
+	max_integrity = 2500
+	lockdifficulty = 3
 
 /obj/structure/mineral_door/barsold
 	name = "iron door"
@@ -1252,3 +1272,12 @@
 
 /obj/structure/mineral_door/wood/bath/courtesan
 	resident_advclass = list(/datum/advclass/nightmaiden/concubine, /datum/advclass/nightmaiden/courtesan, /datum/advclass/nightmaiden/dominatrix)
+
+/obj/structure/mineral_door/wood/wretched
+	locked = TRUE
+	keylock = TRUE
+	grant_resident_key = TRUE
+	resident_key_type = /obj/item/roguekey/townie// should be every wretch class - ideally we can get resident_role to accept lists but until then this'll do
+	resident_advclass = list(/datum/advclass/witch, /datum/advclass/wretch/licker, /datum/advclass/wretch/deserter, /datum/advclass/wretch/deserter/maa, /datum/advclass/wretch/berserker, /datum/advclass/wretch/hedgemage, /datum/advclass/wretch/necromancer, /datum/advclass/wretch/heretic, /datum/advclass/wretch/heretic/spy, /datum/advclass/wretch/outlaw, /datum/advclass/wretch/poacher, /datum/advclass/wretch/plaguebearer, /datum/advclass/wretch/pyromaniac, /datum/advclass/wretch/vigilante, /datum/advclass/wretch/blackoakwyrm, /datum/advclass/wretch/antipope, /datum/advclass/wretch/ancientchampion)
+	lockid = null //Will be randomized
+

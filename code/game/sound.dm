@@ -241,6 +241,7 @@
 			M.playsound_local(M, null, volume, vary, frequency, falloff, channel, pressure_affected, S)
 
 /mob/proc/stop_sound_channel(chan)
+	SHOULD_NOT_SLEEP(TRUE)
 	SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = chan))
 
 /mob/proc/set_sound_channel_volume(channel, volume)
@@ -313,6 +314,8 @@
 		mute_sound_channel(chan)
 
 /mob/proc/update_channel_volume(chan, vol)
+	if(!client)
+		return
 	if(vol)
 		for(var/sound/S in client.SoundQuery())
 			if(S.channel == chan)
@@ -321,6 +324,8 @@
 				S.status |= SOUND_UPDATE
 				SEND_SOUND(src, S)
 				S.status &= ~SOUND_UPDATE
+	else
+		mute_sound_channel(chan)
 
 /client/proc/playtitlemusic()
 	set waitfor = FALSE
@@ -328,6 +333,44 @@
 
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
 		SEND_SOUND(src, sound(SSticker.login_music, repeat = 1, wait = 0, volume = prefs.lobbymusicvol, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
+
+/client/proc/sync_instrument_audio_toggle()
+	if(!prefs || !mob)
+		return
+
+	var/instruments_enabled = !!(prefs.toggles & SOUND_INSTRUMENTS)
+	for(var/datum/looping_sound/loop in played_loops)
+		if(!(istype(loop, /datum/looping_sound/instrument) || istype(loop, /datum/looping_sound/musloop) || istype(loop, /datum/looping_sound/dmusloop)))
+			continue
+
+		var/list/loop_state = played_loops[loop]
+		var/sound/loop_sound = loop_state?["SOUND"]
+		if(!loop_sound)
+			continue
+
+		if(instruments_enabled)
+			loop_state["MUTESTATUS"] = FALSE
+			// Ensure next volume refresh path sees a delta and pushes SOUND_UPDATE.
+			if(loop_state["VOL"] <= 0)
+				loop_state["VOL"] = 1
+			mob.unmute_sound(loop_sound)
+		else
+			loop_state["MUTESTATUS"] = TRUE
+			loop_state["VOL"] = 0
+			mob.mute_sound(loop_sound)
+
+	for(var/sound/S in SoundQuery())
+		if(!S)
+			continue
+
+		var/file_name = "[S.file]"
+		if(!(S.channel == CHANNEL_JUKEBOX || findtext(file_name, "sound/instruments/") || findtext(file_name, "sound/music/jukeboxes/") || findtext(file_name, "data/jukeboxuploads/")))
+			continue
+
+		if(instruments_enabled)
+			mob.unmute_sound(S)
+		else
+			mob.mute_sound(S)
 
 /proc/get_rand_frequency()
 	return rand(43100, 45100) //Frequency stuff only works with 45kbps oggs.

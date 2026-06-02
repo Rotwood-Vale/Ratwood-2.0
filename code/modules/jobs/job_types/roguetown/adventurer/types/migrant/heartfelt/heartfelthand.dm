@@ -121,7 +121,7 @@
 	outfit = /datum/outfit/job/roguetown/heartfelt/hand/steward
 	category_tags = list(CTAG_HFT_HAND)
 	subclass_social_rank = SOCIAL_RANK_NOBLE
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_SEEPRICES, TRAIT_HEARTFELT)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_NOBLE, TRAIT_SEEPRICES, TRAIT_HEARTFELT)
 	subclass_stats = list(
 		STATKEY_STR = 1,
 		STATKEY_SPD = 2,
@@ -184,7 +184,7 @@
 	outfit = /datum/outfit/job/roguetown/heartfelt/hand/advisor
 	category_tags = list(CTAG_HFT_HAND)
 	subclass_social_rank = SOCIAL_RANK_NOBLE
-	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2, TRAIT_INTELLECTUAL, TRAIT_SEEPRICES_SHITTY, TRAIT_HEARTFELT)
+	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_NOBLE, TRAIT_ARCYNE_T2, TRAIT_INTELLECTUAL, TRAIT_SEEPRICES_SHITTY, TRAIT_HEARTFELT)
 	subclass_stats = list(
 		STATKEY_INT = 4,
 		STATKEY_PER = 3,

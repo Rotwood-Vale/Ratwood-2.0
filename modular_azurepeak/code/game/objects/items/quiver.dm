@@ -19,6 +19,7 @@
 	var/max_storage = 20
 	var/list/arrows = list()
 	sewrepair = TRUE
+	dropshrink = 0.9
 
 /obj/item/quiver/attack_turf(turf/T, mob/living/user)
 	if(arrows.len >= max_storage)
@@ -187,10 +188,10 @@
 /obj/item/quiver/Parrows/Initialize(mapload)
 	. = ..()
 
-/obj/item/quiver/bolts/paalloy/Initialize(mapload)
+/obj/item/quiver/bolts/ancient/Initialize(mapload)
 	..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/rogue/bolt/paalloy/A = new()
+		var/obj/item/ammo_casing/caseless/rogue/bolt/ancient/A = new()
 		arrows += A
 	update_icon()
 
@@ -208,10 +209,10 @@
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/paalloy/Initialize(mapload)
+/obj/item/quiver/ancient/Initialize(mapload)
 	..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/rogue/arrow/steel/paalloy/A = new()
+		var/obj/item/ammo_casing/caseless/rogue/arrow/steel/ancient/A = new()
 		arrows += A
 	update_icon()
 
@@ -222,6 +223,7 @@
 	item_state = "javelinbag"
 	max_storage = 4
 	sellprice = 10
+	dropshrink = 0.85
 
 /obj/item/quiver/javelin/attack_turf(turf/T, mob/living/user)
 	if(arrows.len >= max_storage)
@@ -282,10 +284,10 @@
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/javelin/paalloy/Initialize(mapload)
+/obj/item/quiver/javelin/ancient/Initialize(mapload)
 	..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/rogue/javelin/steel/paalloy/A = new()
+		var/obj/item/ammo_casing/caseless/rogue/javelin/steel/ancient/A = new()
 		arrows += A
 	update_icon()
 
@@ -354,10 +356,10 @@
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/sling/paalloy/Initialize(mapload)
+/obj/item/quiver/sling/ancient/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/rogue/sling_bullet/paalloy/A = new()
+		var/obj/item/ammo_casing/caseless/rogue/sling_bullet/ancient/A = new()
 		arrows += A
 	update_icon()
 
@@ -372,6 +374,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	grid_height = 64
 	grid_width = 32
+	dropshrink = 0.5
 
 /obj/item/quiver/zigs/attackby(obj/A, loc, params)
 	if(A.type in subtypesof(/obj/item/clothing/mask/cigarette/rollie))
