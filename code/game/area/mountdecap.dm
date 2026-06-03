@@ -110,6 +110,7 @@
 	deathsight_message = "a twisted tangle of soaring peaks"
 	threat_region = THREAT_REGION_MOUNT_DECAP
 	detail_text = DETAIL_TEXT_DECAP_GOBLIN_FORTRESS
+	necrobgone_area = TRUE
 
 /area/rogue/under/cave/scarymaze
 	name = "Necran Labyrinth"

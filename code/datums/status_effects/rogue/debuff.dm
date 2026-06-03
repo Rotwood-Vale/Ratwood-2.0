@@ -22,6 +22,18 @@
 	duration = 100
 	needs_processing = FALSE
 
+/datum/status_effect/debuff/necrodebuff
+	id = "necrodebuff"
+	alert_type = /datum/status_effect/debuff/necrodebuff
+	effectedstats = list(STATKEY_CON = -3,STATKEY_WIL = -3, STATKEY_SPD = -5, STATKEY_PER = -2, STATKEY_INT = -5) // good luck quick casting
+
+/datum/status_effect/debuff/necrodebuff/process()
+	.=..()
+	owner.energy_add(-3)	// we wanna make this tedious and miserable
+	var/area/rogue/our_area = get_area(owner)
+	if(isnull(our_area) || !(our_area.necrobgone_area))
+		owner.remove_status_effect(src)
+
 /atom/movable/screen/alert/status_effect/debuff/hungryt2
 	name = "Hungry"
 	desc = "This living body suffers heavily from hunger."

@@ -7,14 +7,15 @@
 	cmode_music = 'sound/music/combat_heretic.ogg'
 	class_select_category = CLASS_CAT_MAGE
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_ZOMBIE_IMMUNE, TRAIT_MAGEARMOR, TRAIT_GRAVEROBBER, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT, TRAIT_MEDICINE_EXPERT,TRAIT_RITUALIST,TRAIT_OUTLANDER,)
-	maximum_possible_slots = 2 // Going from 1 to 2, because skeleton that are summoned count AGAINST antagonist cap and they don't always shows up
+	traits_applied = list(TRAIT_ZOMBIE_IMMUNE, TRAIT_MAGEARMOR, TRAIT_GRAVEROBBER, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT, TRAIT_MEDICINE_EXPERT,TRAIT_RITUALIST,TRAIT_OUTLANDER, TRAIT_WOODWALKER) // free woodwalker, no more triggering ambushes! Set up a base.
+	maximum_possible_slots = 1 // Mini lych. Treat accordingly.
 	subclass_stats = list(
-		STATKEY_INT = 4,
-		STATKEY_PER = 2,
-		STATKEY_WIL = 1,
-		STATKEY_SPD = 1
-	)
+		STATKEY_INT = 5, // you get max cast speed
+		STATKEY_PER = 3,
+		STATKEY_WIL = 3,
+		STATKEY_CON = 2, // you are effectively a mini boss here
+		STATKEY_SPD = -2 // you have a skeleton horde, position yourself or die
+	)	
 	subclass_spellpoints = 16
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
