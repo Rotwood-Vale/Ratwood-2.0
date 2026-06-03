@@ -17,7 +17,6 @@
 		if(user_is_gnoll)
 			var/datum/antagonist/gnoll/gnoll_antag = H.mind?.has_antag_datum(/datum/antagonist/gnoll)
 			if(gnoll_antag?.is_examine_marked_target(src))
-				log_test("We're returning!! via gnoll examine hook!!")
 				lines += span_cultsmall("Graggar has marked them!")
 			if(src.has_gnoll_scent_this_round)
 				lines += span_cultsmall("They have gnoll scent, a breeder!")
