@@ -109,11 +109,12 @@
 	if(observer_privilege)
 		obscure_name = FALSE
 
-	if(src.has_flaw(/datum/charflaw/hunted))
-		log_test("First examine working!!")
-		. += span_cultsmall("Graggar has marked them!")
-
-
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.mind.has_antag_datum(/datum/antagonist/gnoll))
+			if(src.has_flaw(/datum/charflaw/hunted))
+				log_admin("First examine working")
+				. += span_cultsmall("Graggar has marked them!")
 
 	if(name in unknown_names)
 		. = list(span_info("ø ------------ ø\nThis is <EM>[name]</EM>."))
@@ -442,9 +443,13 @@
 					else
 						. += span_beautiful_nb("There's something eerily wrong about [m2] appearance.")
 
-	if(has_flaw(/datum/charflaw/hunted))
-		log_test("Examine log: 2nd flaw embedding working!!")
-		. += span_danger("Graggar has marked them!")
+	if(ishuman(user))
+		if(istype(user, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = user
+			if(H.dna?.species?.type == /datum/species/gnoll)
+				if(src.has_flaw(/datum/charflaw/hunted))
+				log_admin("Second Examine Working")
+				. += span_cultsmall("Graggar has marked them!")
 
 		// Shouldn't be able to tell they are unrevivable through a mask as a Necran
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user)
