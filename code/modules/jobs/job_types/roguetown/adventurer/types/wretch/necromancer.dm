@@ -7,7 +7,7 @@
 	cmode_music = 'sound/music/combat_heretic.ogg'
 	class_select_category = CLASS_CAT_MAGE
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_ZOMBIE_IMMUNE, TRAIT_MAGEARMOR, TRAIT_GRAVEROBBER, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT, TRAIT_MEDICINE_EXPERT,TRAIT_RITUALIST,TRAIT_OUTLANDER, TRAIT_WOODWALKER) // free woodwalker, no more triggering ambushes! Set up a base.
+	traits_applied = list(TRAIT_ZOMBIE_IMMUNE, TRAIT_MAGEARMOR, TRAIT_GRAVEROBBER, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT, TRAIT_MEDICINE_EXPERT,TRAIT_RITUALIST,TRAIT_OUTLANDER, TRAIT_WOODWALKER, TRAIT_NECROBGONE) // free woodwalker, no more triggering ambushes! Set up a base.
 	maximum_possible_slots = 1 // Mini lych. Treat accordingly.
 	subclass_stats = list(
 		STATKEY_INT = 5, // you get max cast speed

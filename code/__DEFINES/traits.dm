@@ -60,7 +60,7 @@
 #define TRAIT_MONOTHEIST "Monotheist"
 #define TRAIT_GUARDSMAN "Vigilant Guardsman"
 #define TRAIT_TAVERN_FIGHTER "Tavern Fighter"
-#define TRAIT_NECROBGONE "Necro Be Gone!"
+#define TRAIT_NECROBGONE "Necromancers Fear"
 #define TRAIT_FROZEN_STAMINA "Frozen Stamina"
 #define TRAIT_WOODSMAN "Talented Woodsman"
 #define TRAIT_LAMIAN_TAIL "Lamian Tail"
