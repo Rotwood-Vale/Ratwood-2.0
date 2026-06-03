@@ -443,13 +443,13 @@
 					else
 						. += span_beautiful_nb("There's something eerily wrong about [m2] appearance.")
 
-	if(src.has_flaw(/datum/charflaw/hunted))
+	/*if(src.has_flaw(/datum/charflaw/hunted))
 		if(ishuman(user))
 			if(istype(user, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = user
 				if(H.dna?.species?.type == /datum/species/gnoll)
 					log_admin("Second Examine Working")
-					. += span_cultsmall("Graggar has marked them!")
+					. += span_cultsmall("Graggar has marked them!")*/
 
 		// Shouldn't be able to tell they are unrevivable through a mask as a Necran
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user)
