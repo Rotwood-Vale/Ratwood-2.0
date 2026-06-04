@@ -113,7 +113,6 @@
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.mind.has_antag_datum(/datum/antagonist/gnoll))	
-				log_admin("First examine working")
 				. += span_cultsmall("Graggar has marked them!")
 
 	if(name in unknown_names)
