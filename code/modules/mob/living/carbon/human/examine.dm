@@ -109,12 +109,6 @@
 	if(observer_privilege)
 		obscure_name = FALSE
 
-	if(src.has_flaw(/datum/charflaw/hunted))
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(H.mind.has_antag_datum(/datum/antagonist/gnoll))	
-				. += span_cultsmall("Graggar has marked them!")
-
 	if(name in unknown_names)
 		. = list(span_info("ø ------------ ø\nThis is <EM>[name]</EM>."))
 	else if(obscure_name)
