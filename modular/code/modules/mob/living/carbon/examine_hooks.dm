@@ -19,7 +19,7 @@
 			if(gnoll_antag?.is_examine_marked_target(src))
 				lines += span_cultsmall("Graggar has marked them!")*/
 			if(src.has_gnoll_scent_this_round)
-				lines += spsan_cultsmall("They have gnoll scent, a breeder!")
+				lines += span_cultsmall("They have gnoll scent, a breeder!")
 	if(src.has_gnoll_scent_this_round && !user_is_gnoll)
 		if(user_is_inquisition)
 			lines += span_warning("They reek of profane beast-taint. This demands scrutiny.")

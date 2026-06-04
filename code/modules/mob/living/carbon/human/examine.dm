@@ -109,12 +109,6 @@
 	if(observer_privilege)
 		obscure_name = FALSE
 
-	if(src.has_flaw(/datum/charflaw/hunted))
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(H.mind.has_antag_datum(/datum/antagonist/gnoll))	
-				log_admin("First examine working")
-				. += span_cultsmall("Graggar has marked them!")
 
 	if(name in unknown_names)
 		. = list(span_info("ø ------------ ø\nThis is <EM>[name]</EM>."))
@@ -449,6 +443,12 @@
 				. += span_danger("They extrude a pale aura. Their soul [src.stat == DEAD ? "was not" : "is not"] clean. This is it for them.")
 			else if(user.stat == DEAD)
 				. += span_danger("This was their only chance at lyfe.")
+
+	if(src.has_flaw(/datum/charflaw/hunted))
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.mind.has_antag_datum(/datum/antagonist/gnoll))	
+				. += span_cultsmall("Graggar has marked them!")
 
 	// Real medical role can tell at a glance it is a waste of time, but only if the Necra message don't come first.
 
