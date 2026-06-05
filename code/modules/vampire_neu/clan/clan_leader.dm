@@ -16,7 +16,7 @@
 	lord_verbs = list(
 		/mob/living/carbon/human/proc/punish_spawn
 	)
-	lord_traits = list(TRAIT_HEAVYARMOR, TRAIT_INFINITE_ENERGY, TRAIT_STRENGTH_UNCAPPED)
+	lord_traits = list(TRAIT_HEAVYARMOR, TRAIT_INFINITE_ENERGY, TRAIT_STRENGTH_UNCAPPED, TRAIT_COMBAT_AWARE)
 	lord_title = "Lord"
 	vitae_bonus = 500 // Extra vitae for lords
 	ascended = FALSE
