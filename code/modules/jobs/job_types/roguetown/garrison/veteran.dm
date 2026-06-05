@@ -29,7 +29,6 @@
 		/datum/advclass/veteran/spy
 	)
 	job_traits = list(TRAIT_STEELHEARTED, TRAIT_COMBAT_AWARE)
-	virtue_restrictions = list(/datum/virtue/combat/combat_aware)//due to them having the trait by default
 
 /datum/job/roguetown/veteran/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	. = ..()
