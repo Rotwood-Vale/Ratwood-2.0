@@ -89,3 +89,10 @@
 	additional_items = list(/obj/item/ingot/steel, /obj/item/natural/fibers)
 	hammers_per_item = 10
 	skill_level = 4
+
+/datum/artificer_recipe/equipment/slurbow
+	name = "Slurbow (+1 Steel) (+1 Fiber) (+1 Wood Plank)"
+	created_item = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
+	additional_items = list(/obj/item/ingot/steel, /obj/item/natural/fibers, /obj/item/natural/wood/plank)
+	hammers_per_item = 10
+	skill_level = 5
