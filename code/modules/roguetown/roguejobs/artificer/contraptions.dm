@@ -5,7 +5,7 @@
 
 	/// This is the result when the wood metalizer artifact is used on this item
 	var/metalizer_result
-	/// The smelting result, used by the smelter or by the portable smelter
+	/// The smelting result, used by the smelter
 	var/smeltresult
 	/// The lock ID, used with keys, if a key has the same lock ID it will work on this lock
 	var/lockid
@@ -663,11 +663,16 @@
 
 /obj/item/contraption/smelter
 	var/obj/machinery/light/rogue/smelter/hand_held
-	var/datum/effect_system/spark_spread/S = new()
+	var/datum/effect_system/spark_spread/S
 	var/severity = 0
 
 	name = "portable smelter"
 	desc = "Furnaces are a thing of the past. The future is here!"
+	smeltresult = /obj/item/ingot/bronze
+	grid_height = 64
+	grid_width = 64
+
+	icon = 'icons/roguetown/items/misc.dmi'
 
 	icon_state = "smelter_off"
 	on_icon = "smelter_on"
@@ -678,9 +683,6 @@
 	slot_flags = ITEM_SLOT_HIP
 	w_class = WEIGHT_CLASS_NORMAL
 
-	grid_height = 64
-	grid_width = 64
-
 	prime_power_source = /obj/item/alch/firedust
 	accepted_power_source = /obj/item/alch/coaldust
 
@@ -689,8 +691,10 @@
 	charge_per_source = 2
 	misfire_chance = 5
 
-/obj/item/contraption/smelter/New()
+/obj/item/contraption/smelter/New(loc)
 	..()
+
+	S = new()
 	hand_held = new /obj/machinery/light/rogue/smelter/hand_held(src)
 
 /obj/item/contraption/smelter/Destroy()

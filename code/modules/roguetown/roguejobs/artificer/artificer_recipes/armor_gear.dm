@@ -34,35 +34,42 @@
 
 /datum/artificer_recipe/equipment/wooden_staff //Again, a bit silly, but is important
 	name = "Wooden Staff (+1 Plank)"
+	required_item = /obj/item/natural/wood/plank
 	created_item = /obj/item/rogueweapon/woodstaff
 	additional_items = list(/obj/item/natural/wood/plank = 1)
 	hammers_per_item = 3
+	skill_level = 2
 
 /datum/artificer_recipe/equipment/bow // easier recipe for bows
 	name = "Wooden Bow (+1 Fiber) (+1 Plank)"
+	required_item = /obj/item/natural/wood/plank
 	created_item = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
-	hammers_per_item = 3
 	additional_items = list(/obj/item/natural/wood/plank = 1, /obj/item/natural/fibers = 1)
+	hammers_per_item = 3
+	skill_level = 3
+	
 
 /datum/artificer_recipe/equipment/training_sword
 	name = "Wooden Sword (+1 Plank)"
+	required_item = /obj/item/natural/wood/plank
 	created_item = /obj/item/rogueweapon/mace/wsword
 	additional_items = list(/obj/item/natural/wood/plank = 1)
 	hammers_per_item = 3
+	skill_level = 4
 
 /datum/artificer_recipe/equipment/training_dagger
 
-	name = "Wooden Dagger (3x) (+1 Plank)"
-	created_item = list(/obj/item/rogueweapon/huntingknife/idagger/wood,
-						/obj/item/rogueweapon/huntingknife/idagger/wood,
-						/obj/item/rogueweapon/huntingknife/idagger/wood
-						)
-	additional_items = list(/obj/item/natural/wood/plank = 1)
+	name = "Wooden Dagger (3x)"
+	required_item = /obj/item/natural/wood/plank
+	created_item = list(/obj/item/rogueweapon/huntingknife/idagger/wood)
 	hammers_per_item = 2
+	createditem_num = 3
+	skill_level = 2
 
 /datum/artificer_recipe/equipment/wooden_shield
 	name = "Wooden Shield (+1 Plank)"
 	created_item = /obj/item/rogueweapon/shield/wood/crafted
+	required_item = /obj/item/natural/wood/plank
 	additional_items = list(/obj/item/natural/wood/plank = 1)
 	hammers_per_item = 6
 	skill_level = 2
@@ -72,6 +79,7 @@
 
 /datum/artificer_recipe/equipment/heater_shield
 	name = "Heater Shield (+1 Cured Leather)"
+	required_item = /obj/item/natural/wood/plank
 	created_item = /obj/item/rogueweapon/shield/heater/crafted
 	additional_items = list(/obj/item/natural/wood/plank = 1, /obj/item/natural/hide/cured = 1)
 	hammers_per_item = 6
@@ -85,6 +93,7 @@
 
 /datum/artificer_recipe/equipment/crossbow
 	name = "Crossbow (+1 Steel) (+1 Fiber)"
+	required_item = /obj/item/ingot/steel
 	created_item = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 	additional_items = list(/obj/item/ingot/steel, /obj/item/natural/fibers)
 	hammers_per_item = 10
@@ -92,6 +101,7 @@
 
 /datum/artificer_recipe/equipment/slurbow
 	name = "Slurbow (+1 Steel) (+1 Fiber) (+1 Wood Plank)"
+	required_item = /obj/item/ingot/steel
 	created_item = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
 	additional_items = list(/obj/item/ingot/steel, /obj/item/natural/fibers, /obj/item/natural/wood/plank)
 	hammers_per_item = 10

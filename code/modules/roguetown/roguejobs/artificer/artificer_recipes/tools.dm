@@ -72,5 +72,6 @@
 
 /datum/artificer_recipe/tools/wooden_mallet
 	name = "Wooden Mallet"
+	required_item = /obj/item/grown/log/tree/small
 	created_item = /obj/item/rogueweapon/hammer/wood
 	hammers_per_item = 4

@@ -1,5 +1,6 @@
 /datum/crafting_recipe/roguetown/engineering
 	abstract_type = /datum/crafting_recipe/roguetown/engineering
+	var/createditem_num = 1
 
 /datum/crafting_recipe/roguetown/engineering/coolingtable
 	name = "cooling table"
@@ -221,39 +222,16 @@
 		/obj/item/natural/wood/plank = 3,
 		/obj/item/ingot/iron = 1,
 	)
-	result = list(
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		/obj/item/ammo_casing/caseless/rogue/bolt,
-		)
+	result = list(/obj/item/ammo_casing/caseless/rogue/bolt)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 3
+	createditem_num = 20
 
 /datum/crafting_recipe/roguetown/engineering/pressure_plate
 	name = "pressure plate"
 	result = /obj/structure/pressure_plate
-	reqs = list(
-		/obj/item/roguegear/bronze = 1,
-		/obj/item/natural/wood/plank = 2,
-	)
+	reqs = list(/obj/item/roguegear/bronze = 1, /obj/item/natural/wood/plank = 2)
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
