@@ -8,7 +8,7 @@
 	hammers_per_item = 6
 	skill_level = 2
 
-datum/artificer_recipe/ammo/bolts
+/datum/artificer_recipe/ammo/bolts
 	name = "Crossbow Bolts 20x (+2 planks, +1 Iron)"
 	required_item = /obj/item/natural/wood/plank
 	additional_items = list(/obj/item/natural/wood/plank, /obj/item/natural/wood/plank, /obj/item/ingot/iron)

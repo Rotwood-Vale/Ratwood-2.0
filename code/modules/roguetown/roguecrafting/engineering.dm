@@ -781,7 +781,7 @@
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
-
+/*
 /datum/crafting_recipe/roguetown/engineering/smither
 	name = "Autosmither"
 	category = "Machines"
@@ -795,7 +795,7 @@
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 5
-
+*/
 /datum/crafting_recipe/roguetown/engineering/infernalengine
 	name = "infernal engine"
 	req_table = FALSE

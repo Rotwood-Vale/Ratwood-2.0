@@ -1,3 +1,4 @@
+/*
 #define STEP_FIDDLE "fiddle with the machine"
 #define STEP_LEVER "pull the lever"
 #define STEP_BUTTON "push a button"
