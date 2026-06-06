@@ -7,7 +7,7 @@
 	reqs = list(
 		/obj/item/grown/log/tree/small = 1,
 		/obj/item/ingot/iron = 1,
-		/obj/item/roguegea/bronze = 1,
+		/obj/item/roguegear/bronze = 1,
 	)
 	verbage_simple = "engineer"
 	verbage = "engineers"
@@ -470,7 +470,7 @@
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
 
-/datum/crafting_recipe/roguetown/engineering/smither
+/*/datum/crafting_recipe/roguetown/engineering/smither
 	name = "Autosmither"
 	result = /obj/structure/autosmither
 	reqs = list(
@@ -482,7 +482,7 @@
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 5
-
+*/
 /datum/crafting_recipe/roguetown/engineering/infernalengine
 	name = "infernal engine"
 	req_table = FALSE
