@@ -1,4 +1,3 @@
-/*
 #define STEP_FIDDLE "fiddle with the machine"
 #define STEP_LEVER "pull the lever"
 #define STEP_BUTTON "push a button"
@@ -27,7 +26,6 @@
 	initialize_dirs = CONN_DIR_FORWARD | CONN_DIR_LEFT | CONN_DIR_FLIP | CONN_DIR_Z_DOWN
 	anchored = TRUE
 	density = TRUE
-
 	var/list/anvil_recipes_to_craft = list()
 	var/next_queue_id = 1
 
@@ -54,7 +52,7 @@
 	var/list/post_start_list = list(STEP_BUTTON, STEP_LEVER, STEP_FIDDLE)
 	debris = list(/obj/item/roguegear = 2, /obj/item/natural/wood/plank = 2, /obj/item/ingot/steel = 1)
 
-/obj/structure/autosmither/Initialize(mapload)
+/obj/structure/autosmither/Initialize()
 	. = ..()
 	var/turf/turf = get_step(src, EAST)
 	hopper = new hopper_type(turf)
@@ -98,7 +96,7 @@
 			if(STEP_LEVER)
 				. += span_notice("To toggle the machine, pull the lever")
 
-/obj/structure/autosmither/examine(mob/user)
+/obj/structure/autosmither/get_mechanics_examine(mob/user)
 	. = ..()
 	. += span_info("Left-click it with an empty hand to open its control interface and manage its crafting queue.")
 	. += span_info("It crafts from the attached hopper chest and only works while connected to a powered rotational network with enough RPM.")
@@ -621,14 +619,8 @@
 /obj/structure/closet/crate/chest/autosmither/CanPass(atom/movable/mover, turf/target)
 	return TRUE
 
-/obj/structure/closet/crate/chest/autosmither/examine(mob/user)
+/obj/structure/closet/crate/chest/autosmither/get_mechanics_examine(mob/user)
 	. = ..()
-	AddComponent(/datum/component/storage/concrete/grid/anvil_bin)
-
-/obj/structure/closet/crate/chest/autosmither/CanPass(atom/movable/mover, turf/target)
-	return TRUE
-
-/obj/structure/closet/crate/chest/autosmither/examine(mob/user)
 	. += span_info("Use it like a chest. It only opens while the autosmithy is off.")
 	. += span_info("Load materials into it, then close it so the autosmithy can consume them when a recipe begins.")
 
@@ -655,4 +647,3 @@
 #undef STEP_FIDDLE
 #undef STEP_LEVER
 #undef STEP_BUTTON
-*/
