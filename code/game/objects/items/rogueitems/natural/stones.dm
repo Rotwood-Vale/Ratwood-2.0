@@ -296,6 +296,33 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 			S.set_up(1, 1, front)
 			S.start()
 	if( user.used_intent.type == /datum/intent/chisel )
+		if(istype(W, /obj/item/rogueweapon/chisel/assembly))
+			var/obj/item/rogueweapon/chisel/assembly/chisel_set = W
+			if(chisel_set.wielded)
+				var/turf/work_turf = get_turf(src)
+				var/obj/item/natural/stone/current_stone = src
+				while(current_stone)
+					playsound(current_stone.loc, pick('sound/combat/hits/onrock/onrock (1).ogg', 'sound/combat/hits/onrock/onrock (2).ogg', 'sound/combat/hits/onrock/onrock (3).ogg', 'sound/combat/hits/onrock/onrock (4).ogg'), 100)
+					user.visible_message("<span class='info'>[user] chisels the stone into a block.</span>")
+					if(!do_after(user, work_time, target = current_stone))
+						return
+					new /obj/item/natural/stoneblock(get_turf(current_stone.loc))
+					if(HAS_TRAIT(user, TRAIT_MASTER_MASON)) //double the amount for any in a stone worker role
+						new /obj/item/natural/stoneblock(get_turf(current_stone.loc))
+					new /obj/effect/decal/cleanable/debris/stony(get_turf(current_stone))
+					playsound(current_stone.loc, pick('sound/combat/hits/onrock/onrock (1).ogg', 'sound/combat/hits/onrock/onrock (2).ogg', 'sound/combat/hits/onrock/onrock (3).ogg', 'sound/combat/hits/onrock/onrock (4).ogg'), 100)
+					qdel(current_stone)
+					user.mind.add_sleep_experience(/datum/skill/craft/masonry, (user.STAINT*0.2))
+					if(QDELETED(chisel_set) || !chisel_set.wielded)
+						return
+					var/obj/item/natural/stone/next_stone = null
+					for(var/obj/item/natural/stone/S in work_turf)
+						next_stone = S
+						break
+					if(!next_stone)
+						return
+					current_stone = next_stone
+				return
 		playsound(src.loc, pick('sound/combat/hits/onrock/onrock (1).ogg', 'sound/combat/hits/onrock/onrock (2).ogg', 'sound/combat/hits/onrock/onrock (3).ogg', 'sound/combat/hits/onrock/onrock (4).ogg'), 100)
 		user.visible_message("<span class='info'>[user] chisels the stone into a block.</span>")
 		if(do_after(user, work_time))
