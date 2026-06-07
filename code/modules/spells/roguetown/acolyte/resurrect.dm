@@ -662,7 +662,6 @@
 		to_chat(user, span_warning("I feel a wave of disgust wash over me. Dendor shall not help this one."))
 		revert_cast()
 		return FALSE
-	return ..(targets, user)
 	if(!target.revive(full_heal = TRUE))
 		to_chat(user, span_warning("Nothing happens."))
 		revert_cast()
