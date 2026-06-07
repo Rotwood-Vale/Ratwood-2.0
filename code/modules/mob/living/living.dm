@@ -110,7 +110,7 @@
 /mob/living/proc/MobBump(mob/M)
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
-
+	M.mob_timers[MT_SNEAKBUMP] = world.time //Here we go again. Make people suddenly lose stealth if they're bumped. No more rogueshittery.
 	if(now_pushing)
 		return TRUE
 
@@ -408,10 +408,11 @@
 				return
 
 		// Makes it so people who recently broke out of grabs cannot be grabbed again
-		if(TIMER_COOLDOWN_RUNNING(target, "broke_free") && target.stat == CONSCIOUS)
+		if(COOLDOWN_TIMELEFT(target, broke_free) && target.stat == CONSCIOUS)
 			target.visible_message(span_warning("[target] slips from [src]'s grip."), \
 					span_warning("I slip from [src]'s grab."))
 			log_combat(src, target, "tried grabbing", addition="passive grab")
+			stop_pulling()
 			return
 
 		log_combat(src, target, "grabbed", addition="passive grab")
@@ -950,7 +951,6 @@
 	reset_offsets("wall_press")
 	update_wallpress_slowdown()
 
-
 /mob/living/Move(atom/newloc, direct, glide_size_override)
 
 	var/old_direction = dir
@@ -970,6 +970,7 @@
 			lying = 270
 		update_transform()
 		lying_prev = lying
+
 	if (buckled && buckled.loc != newloc) //not updating position
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct, glide_size)
@@ -1067,15 +1068,14 @@
 
 	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
 	//resisting grabs (as if it helps anyone...)
-	if(pulledby)
-		var/mob/living/P
-		if(isliving(pulledby))
-			P = pulledby
+	if(isliving(pulledby))
+		var/mob/living/puller = pulledby
 		if(!restrained(ignore_grab = 1))
 			log_combat(src, pulledby, "resisted grab")
-			resist_grab()
+			if(resist_grab())
+				COOLDOWN_START(src, broke_free, 5 SECONDS)
 			return
-		else if(P.compliance) // we ARE handcuffed apart from the grab, but grabber has Compliance Mode on
+		else if(puller.compliance) // we ARE handcuffed apart from the grab, but grabber has Compliance Mode on
 			log_combat(src, pulledby, "resisted grab (is restrained, compliance mode bypass)") // if you try baiting prisoners with this, I'll know.
 			resist_grab() // resisting out of his grab (100% success) takes priority here
 			return
@@ -1148,6 +1148,9 @@
 		notifyme = client.prefs.compliance_notifs
 
 	if(has_status_effect(/datum/status_effect/compliance))
+		if(HAS_TRAIT(src, TRAIT_COMPLIANT))
+			to_chat(src, span_alert("My vice makes me compliant against my will.")) //only for people who take the compliant vice
+			return
 		src.compliance = 0
 		remove_status_effect(/datum/status_effect/compliance)
 		if(notifyme)
@@ -2047,6 +2050,7 @@
 						found_ping(get_turf(M), client, "hidden")
 
 		for(var/obj/O in view(7,src))
+			SEND_SIGNAL(O, COMSIG_LOOK_AROUND_SPOTTED, src)
 			if(istype(O, /obj/item/restraints/legcuffs/beartrap))
 				var/obj/item/restraints/legcuffs/beartrap/M = O
 				if(isturf(M.loc) && M.armed)
@@ -2186,9 +2190,11 @@
 			_y += offset
 		else if(_y != 0)
 			_y -= offset
-	if(m_intent != MOVE_INTENT_SNEAK)
 		if(_y == 0 && _x == 0)	//Their PER was too low to see anything.
 			message = span_info("[src] oafishly stares in front of themselves.")
+	if(m_intent == MOVE_INTENT_SNEAK)
+		to_chat(src, message)
+	else
 		visible_message(message)
 	animate(client, pixel_x = world.icon_size*_x, pixel_y = world.icon_size*_y, ttime)
 //	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(stop_looking))
@@ -2222,6 +2228,8 @@
 
 	if(m_intent != MOVE_INTENT_SNEAK)
 		visible_message(span_info("[src] looks down through [T]."))
+	else
+		to_chat(src, span_info("[src] looks down through [T]."))
 
 	if(!do_after(src, ttime, target = src))
 		return

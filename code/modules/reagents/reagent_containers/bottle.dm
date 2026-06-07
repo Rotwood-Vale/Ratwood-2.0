@@ -23,6 +23,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	poursounds = list('sound/items/fillbottle.ogg')
 	experimental_onhip = TRUE
 	debris = list(/obj/item/natural/glass_shard = 1)
+	dropshrink = 0.8
 	var/desc_uncorked = "An open bottle. Hopefully the cork is nearby."
 	var/fancy		// for bottles with custom descriptors that you don't want to change when bottle manipulated
 	var/glass_on_impact = FALSE // If TRUE, bottle will generate glass shard on impact. Otherwise it won't.
@@ -89,10 +90,11 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 /obj/item/reagent_containers/glass/bottle/proc/toggle_cork(mob/user)
 	closed = !closed
 	user.changeNext_move(CLICK_CD_RAPID, override = TRUE)
+	var/sneaking = user.m_intent == MOVE_INTENT_SNEAK	
 	if(closed)
-		do_close(user)
+		do_close(user, FALSE, sneaking)
 	else
-		do_open(user)
+		do_open(user, FALSE, sneaking)
 
 /obj/item/reagent_containers/glass/bottle/proc/do_close(mob/user, no_msg = FALSE, no_snd = FALSE)
 	if(user)

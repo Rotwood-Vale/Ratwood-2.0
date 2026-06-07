@@ -59,8 +59,9 @@
 /datum/reagent/blood/on_mob_life(mob/living/carbon/H)//I hate you
 	..()
 	if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
-		H.adjust_nutrition(2)
-		H.adjust_hydration(2)
+		H.adjust_nutrition(10)
+		H.adjust_hydration(10)
+		H.reagents.add_reagent(/datum/reagent/medicine/vital_essence, 12)
 		if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 			H.blood_volume = min(H.blood_volume+4, BLOOD_VOLUME_NORMAL)//Less effective than just water.
 		return
@@ -74,8 +75,9 @@
 /datum/reagent/blood/shitty/on_mob_life(mob/living/carbon/H)
 	..()
 	if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
-		H.adjust_nutrition(0.3)
-		H.adjust_hydration(0.3)
+		H.adjust_nutrition(3)
+		H.adjust_hydration(3)
+		H.reagents.add_reagent(/datum/reagent/medicine/vital_essence, 6)
 		if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 			H.blood_volume = min(H.blood_volume+2, BLOOD_VOLUME_NORMAL)//Much less effective than just water.
 		if(prob(5))
@@ -98,7 +100,7 @@
 /datum/reagent/water
 	name = "Water"
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen."
-	color = "#6a9295c6"
+	color = "#6a9295"
 	taste_description = "water"
 	var/cooling_temperature = 2
 	glass_icon_state = "glass_clear"

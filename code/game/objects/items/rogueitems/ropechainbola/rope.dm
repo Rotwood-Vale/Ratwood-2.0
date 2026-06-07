@@ -19,31 +19,7 @@
 	grid_width = 32
 	grid_height = 64
 	nudist_approved = TRUE
-
-/obj/item/rope/Initialize(mapload)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(
-		/datum/crafting_recipe/roguetown/survival/ropebelt,
-		/datum/crafting_recipe/roguetown/survival/net,
-		/datum/crafting_recipe/roguetown/survival/billhook,
-		/datum/crafting_recipe/roguetown/survival/goedendag,
-		/datum/crafting_recipe/roguetown/survival/rucksack,
-		/datum/crafting_recipe/roguetown/survival/peasantry/thresher/whetstone,
-		/datum/crafting_recipe/roguetown/survival/peasantry/shovel/whetstone,
-		/datum/crafting_recipe/roguetown/survival/peasantry/hoe/whetstone,
-		/datum/crafting_recipe/roguetown/survival/peasantry/pitchfork/whetstone,
-		/datum/crafting_recipe/roguetown/survival/peasantry/peasantwarflail,
-		/datum/crafting_recipe/roguetown/survival/peasantry/goedendag,
-		/datum/crafting_recipe/roguetown/survival/peasantry/waraxe,
-		/datum/crafting_recipe/roguetown/survival/peasantry/warspear_hoe,
-		/datum/crafting_recipe/roguetown/survival/peasantry/warspear_pitchfork,
-		/datum/crafting_recipe/roguetown/survival/peasantry/scythe,
-		)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-		)
+	dropshrink = 0.9
 
 /datum/intent/tie
 	name = "tie"

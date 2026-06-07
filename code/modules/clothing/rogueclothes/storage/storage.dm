@@ -47,6 +47,7 @@
 	sewrepair = TRUE
 	sellprice = 10
 	resistance_flags = FIRE_PROOF
+	dropshrink = 0.8
 
 /obj/item/storage/belt/rogue/leather/plaquegold
 	name = "plaque belt"
@@ -435,6 +436,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	max_integrity = 300
 	equip_sound = 'sound/blank.ogg'
+	dropshrink = 0.8
 	//content_overlays = FALSE
 	bloody_icon_state = "bodyblood"
 	anvilrepair = /datum/skill/craft/blacksmithing

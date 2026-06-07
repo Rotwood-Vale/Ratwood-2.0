@@ -53,7 +53,7 @@
 		else
 			var/used_time = 10 SECONDS
 			if(C.mind)
-				used_time -= max((C.get_skill_level(/datum/skill/craft/traps) * 2 SECONDS), 2 SECONDS)
+				used_time -= max((C.get_skill_level(/datum/skill/craft/crafting) * 2 SECONDS), 2 SECONDS)
 			if(do_after(user, used_time, target = src))
 				close_trap(FALSE)
 				C.visible_message(span_notice("[C] disarms \the [src]."), \
@@ -76,7 +76,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/natural/dirtclod) && armed)
-		var/skill = user.get_skill_level(/datum/skill/craft/traps)
+		var/skill = user.get_skill_level(/datum/skill/craft/crafting)
 		alpha = (90 - skill * 5)
 		qdel(W)
 	if(W.force && armed)
@@ -119,7 +119,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/attack_self(mob/user)
 	..()
-	var/skill = user.get_skill_level(/datum/skill/craft/traps)
+	var/skill = user.get_skill_level(/datum/skill/craft/crafting)
 	var/chance_to_arm = (10 +(skill * 15))
 	if(ishuman(user) && !user.stat && !user.restrained())
 		var/mob/living/L = user

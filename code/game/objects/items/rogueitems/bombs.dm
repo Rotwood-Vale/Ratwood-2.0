@@ -13,6 +13,7 @@
 	var/prob2fail = 5
 	grid_width = 32
 	grid_height = 64
+	dropshrink = 0.7
 
 /obj/item/bomb/Initialize(mapload)
 	..()
@@ -91,7 +92,7 @@
 
 	qdel(I)
 
-	if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/traps), TRUE, src))
+	if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/crafting), TRUE, src))
 		to_chat(user, span_warning("I stop preparing [src]."))
 		new /obj/item/natural/fibers(user.loc)
 		if(prob(10))
@@ -141,9 +142,9 @@
 
 /obj/item/bomb/tripbomb/attackby(obj/item/I, mob/user, params)
 	if(user.used_intent.blade_class == BCLASS_CUT && I.wlength == WLENGTH_SHORT)
-		if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/traps), TRUE, src))
+		if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/crafting), TRUE, src))
 			to_chat(user, span_warning("I stop slicing [src]."))
-			if(!prob(user.get_skill_level(/datum/skill/craft/traps) * 10))
+			if(!prob(user.get_skill_level(/datum/skill/craft/crafting) * 10))
 				to_chat(user, span_warningbig("Oh no."))
 				light()
 		for(var/list/obj/item/tripwire/t_wire in wire_trigger)
@@ -152,7 +153,7 @@
 		QDEL_NULL(src)
 		return ..()
 	if(istype(I, /obj/item/natural/dirtclod))
-		var/skill = user.get_skill_level(/datum/skill/craft/traps)
+		var/skill = user.get_skill_level(/datum/skill/craft/crafting)
 		alpha = (90 - skill * 5)
 		qdel(I)
 	..()
@@ -184,9 +185,9 @@
 
 /obj/item/tripwire/attackby(obj/item/I, mob/user, params)
 	if(user.used_intent.blade_class == BCLASS_CUT && I.wlength == WLENGTH_SHORT)
-		if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/traps), TRUE, src))
+		if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/crafting), TRUE, src))
 			to_chat(user, span_warning("I stop slicing [src]."))
-			if(!prob(user.get_skill_level(/datum/skill/craft/traps) * 10))
+			if(!prob(user.get_skill_level(/datum/skill/craft/crafting) * 10))
 				to_chat(user, span_warningbig("Oh no."))
 				payload.light()
 
@@ -197,7 +198,7 @@
 		return ..()
 	
 	if(istype(I, /obj/item/natural/dirtclod))
-		var/skill = user.get_skill_level(/datum/skill/craft/traps)
+		var/skill = user.get_skill_level(/datum/skill/craft/crafting)
 		alpha = (90 - skill * 5)
 		qdel(I)
 
@@ -205,7 +206,7 @@
 		if(payload.wire_trigger.len == 2)
 			to_chat(user, span_warning("I can not extend [src] anymore."))
 			return ..()
-		if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/traps), TRUE, src))
+		if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/crafting), TRUE, src))
 			to_chat(user, span_warning("I stop extending [src]."))
 			return ..()
 
@@ -371,6 +372,7 @@
 	throw_range = 2
 	slot_flags = ITEM_SLOT_HIP
 	throw_speed = 0.3
+	dropshrink = 0.8
 	var/fuze = 15 SECONDS
 	var/lit = FALSE
 	var/prob2fail = 1
@@ -445,6 +447,7 @@
 	throw_speed = 1
 	grid_width = 32
 	grid_height = 32
+	dropshrink = 0.75
 
 /obj/item/impact_grenade/Initialize(mapload)
 	. = ..()

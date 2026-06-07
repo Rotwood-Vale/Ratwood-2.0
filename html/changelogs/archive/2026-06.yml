@@ -1,0 +1,57 @@
+2026-06-01:
+  Jamdrawers:
+  - balance: lesser skeletons (the simplemob variant spawned in threes by necromancers)
+      no longer drop weapons)
+  Randumb-Phantomb:
+  - image: literally 1 new hairstyle
+  SadStarfish7:
+  - balance: raised veteran pq req
+  SneakySlinky:
+  - rscadd: Abyssal language as a bonus language under character customization
+  WolfOrion:
+  - rscadd: Added sexmoanlight and sexmoanhvy to the default male voicepack
+  YakumoChen:
+  - balance: Adds a pacifism check to twisting limbs and choking.
+  kimesik:
+  - rscadd: Archivist now knows Canilunzt, Merar and Grimorian Sign Speak. If they
+      are a Zizoist, they also know Zizo Chant.
+2026-06-02:
+  Gamer-Johnson:
+  - bugfix: 'fixed the new door from #1735'
+  Teragenic:
+  - bugfix: Heartfelt hand now gets Nobility
+  ceeetchell:
+  - rscadd: Added a rhythm and crescendo combat system to bards
+  - rscadd: Added two new bard songs
+  - rscadd: The crankbox can now be harmonized to be less horrifying.
+  - rscadd: Psyaltrist can now choose between a lesser psy whip and rapier as their
+      weapon.
+  - rscdel: Ruffocating soliloquy
+  - qol: Bards can now select songs regardless of tier, the amount depending on their
+      own bard tier.
+  - qol: Added more flavor to bard related texts.
+  - balance: Psyaltrist now has cooking, crafting and sewing skills
+  - balance: Psyaltrist starts with a lesser gorget
+  - balance: Bardic songs now apply their effects based on the user's bard tier.
+  coffeecoffeecoffee:
+  - balance: ported SR's lunacy embracer changes and limited them to 2 spawns
+2026-06-03:
+  WolfOrion:
+  - bugfix: gives goblins a physical descriptor, just like most everyone else
+2026-06-04:
+  DelineFortune:
+  - rscadd: graggar's net fixed
+  Guidesu:
+  - rscadd: Port Nova Sector shadekin ear and tail (not all of them) for wild-kin
+      in specific.
+  Xander3359:
+  - bugfix: Fixed some regenerating skin only being repairable once
+  - code_imp: Adds the controller overview, which is a debug verb that can visualize
+      subsystem costs
+  - code_imp: Turns hiding spots into a component
+  - bugfix: Breaking a bush while someone is hiding inside it no longer deletes them
+2026-06-05:
+  DelineFortune:
+  - bugfix: hemophages actually heal hp and stamina from blood feeding
+  wikimody:
+  - rscadd: Inquisitors designated trackers now have the easier tracking trait

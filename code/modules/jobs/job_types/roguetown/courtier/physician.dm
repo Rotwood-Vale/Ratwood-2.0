@@ -15,7 +15,7 @@
 	outfit = /datum/outfit/job/roguetown/physician
 	whitelist_req = TRUE
 	advclass_cat_rolls = list(CTAG_COURTPHYS = 2)
-	social_rank = SOCIAL_RANK_MINOR_NOBLE
+	social_rank = SOCIAL_RANK_NOBLE
 	give_bank_account = 30
 	min_pq = 3 //Please don't kill the duke by operating on strong intent. Play apothecary until you're deserving of the great white beak of doom
 	max_pq = null
@@ -23,7 +23,7 @@
 
 	cmode_music = 'sound/music/combat_physician.ogg'
 
-	job_traits = list(TRAIT_MEDICINE_EXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_NOSTINK, TRAIT_EMPATH)
+	job_traits = list(TRAIT_MEDICINE_EXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_NOSTINK, TRAIT_EMPATH, TRAIT_NOBLE)
 	job_subclasses = list(
 		/datum/advclass/physician
 	)
@@ -85,6 +85,7 @@
 		/obj/item/natural/worms/leech/cheele = 1, //little buddy
 		/obj/item/reagent_containers/glass/bottle/waterskin = 1,
 		/obj/item/recipe_book/alchemy = 1,
+		/obj/item/mini_flagpole/apothecary = 1,
 	)
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)

@@ -55,9 +55,6 @@
 	if(check_zone(target_zone) != check_zone(user_zone) || ((target_zone == BODY_ZONE_CHEST)))
 		guaranteed_fail = TRUE
 
-	if(!HT.can_see_cone(HU))
-		special_msg = span_danger("They need to see me for me to bait them!")
-		guaranteed_fail = TRUE
 	if(HT.has_status_effect(/datum/status_effect/debuff/baited))
 		special_msg = span_warning("Too soon! They were expecting it!")
 		guaranteed_fail = TRUE
@@ -65,7 +62,7 @@
 	if(guaranteed_fail)
 		to_chat(HU, special_msg)
 		to_chat(HT, span_notice("I fooled [HU.p_them()]! I've regained my footing!"))
-		HU.emote("groan")
+		HU.emote("groan", forced = TRUE)
 		HU.stamina_add(HU.max_stamina * 0.2)
 		HT.bait_stacks = 0
 		HT.apply_status_effect(/datum/status_effect/debuff/baited)
@@ -81,7 +78,6 @@
 		if(ARMOR_CLASS_HEAVY)
 			fatiguemod = 3
 
-
 	HT.apply_status_effect(/datum/status_effect/debuff/baited)
 	HT.apply_status_effect(/datum/status_effect/debuff/exposed)
 	HT.apply_status_effect(/datum/status_effect/debuff/clickcd, 5 SECONDS)
@@ -90,20 +86,19 @@
 		HT.Immobilize(0.5 SECONDS)
 		HT.stamina_add(HT.max_stamina / fatiguemod)
 		HT.Slowdown(3)
-		HT.emote("huh")
-		HU.purge_peel(BAIT_PEEL_REDUCTION)
+		HT.emote("huh", forced = TRUE)
+		HU.purge_peel(99)
 		HU.changeNext_move(0.1 SECONDS, override = TRUE)
 		to_chat(HU, span_notice("[HT.p_they(TRUE)] fell for my bait <b>perfectly</b>! One more!"))
 		to_chat(HT, span_danger("I fall for [HU.p_their()]'s bait <b>perfectly</b>! I'm losing my footing! <b>I can't let this happen again!</b>"))
 
 	if(HU.has_duelist_ring() && HT.has_duelist_ring() || HT.bait_stacks >= 2)	//We're explicitly (hopefully non-lethally) dueling. Flavor.
-		HT.emote("gasp")
-		HT.OffBalance(2 SECONDS)
-		HT.Immobilize(2 SECONDS)
+		HT.emote("gasp", forced = TRUE)
+		HT.OffBalance(4 SECONDS)
+		HT.Immobilize(4 SECONDS)
 		to_chat(HU, span_notice("[HT.p_they(TRUE)] fell for it again and is off-balanced! NOW!"))
 		to_chat(HT, span_danger("I fall for [HU.p_their()] bait <b>perfectly</b>! My balance is GONE!</b>"))
 		HT.bait_stacks = 0
-
 
 	if(!HT.pulling)
 		return
@@ -156,7 +151,7 @@
 
 /datum/rmb_intent/feint
 	name = "feint"
-	desc = "(RMB WHILE DEFENSE IS ACTIVE) A deceptive half-attack with no follow-through, meant to force your opponent to open their guard. Useless against someone who is dodging."
+	desc = "(RMB WHILE DEFENSE IS ACTIVE) A deceptive half-attack with no follow-through, meant to force your opponent to open their guard. Will fail on targets that are relaxed and less alert."
 	icon_state = "rmbfeint"
 
 /datum/rmb_intent/feint/special_attack(mob/living/user, atom/target)
@@ -171,7 +166,20 @@
 	if(user.has_status_effect(/datum/status_effect/debuff/feintcd))
 		return
 	var/mob/living/L = target
-	user.visible_message(span_danger("[user] feints an attack at [target]!"))
+	if (L.client && !L.cmode && !L.has_status_effect(/datum/status_effect/buff/clash))
+		playsound(user, 'sound/combat/feint.ogg', 100, TRUE)
+		user.visible_message(span_danger("[user] attempts to feint an attack at [L], but only makes a fool of themselves!"))
+		user.OffBalance(3 SECONDS)
+		user.apply_status_effect(/datum/status_effect/debuff/feintcd)
+		for(var/mob/living/carbon/human/H in view(7, user))
+			if(H == user || !H.client)
+				continue
+			if(HAS_TRAIT(H, TRAIT_XYLIX) && !H.has_status_effect(/datum/status_effect/buff/xylix_joy))
+				H.apply_status_effect(/datum/status_effect/buff/xylix_joy)
+				to_chat(H, span_info("Such a curt display of hubris amuses the Laughing God!"))
+		return
+	else
+		user.visible_message(span_danger("[user] feints an attack at [target]!"))
 	var/perc = 50
 	var/obj/item/I = user.get_active_held_item()
 	var/ourskill = 0
@@ -188,8 +196,13 @@
 	perc += (user.STAINT - L.STAINT)*10	//but it's also mostly a mindgame
 	skill_factor = (ourskill - theirskill)/2
 
-	if(L.has_status_effect(/datum/status_effect/debuff/exposed))
+	if(L.has_status_effect(/datum/status_effect/debuff/exposed) || L.has_status_effect(/datum/status_effect/debuff/vulnerable))
 		perc = 0
+
+	if(L.has_status_effect(/datum/status_effect/buff/clash))
+		L.remove_status_effect(/datum/status_effect/buff/clash)
+		to_chat(user, span_notice("[L.p_their(TRUE)] Guard disrupted!"))
+		perc = 100
 
 	user.apply_status_effect(/datum/status_effect/debuff/feintcd)
 	perc = CLAMP(perc, 0, 90)
@@ -199,15 +212,15 @@
 		if(user.client?.prefs.showrolls)
 			to_chat(user, span_warning("[L.p_they(TRUE)] did not fall for my feint... [perc]%"))
 		return
+	
+	var/effect_to_apply = (L.mind ? /datum/status_effect/debuff/vulnerable : /datum/status_effect/debuff/exposed)
 
-	if(L.has_status_effect(/datum/status_effect/buff/clash))
-		L.remove_status_effect(/datum/status_effect/buff/clash)
-		to_chat(user, span_notice("[L.p_their(TRUE)] Guard disrupted!"))
-	L.apply_status_effect(/datum/status_effect/debuff/exposed, 7.5 SECONDS)
+	L.apply_status_effect(effect_to_apply, 7 SECONDS)
 	L.apply_status_effect(/datum/status_effect/debuff/clickcd, max(1.5 SECONDS + skill_factor, 2.5 SECONDS))
 	L.Immobilize(0.5 SECONDS)
 	L.stamina_add(L.stamina * 0.1)
 	L.Slowdown(2)
+	user.changeNext_move(CLICK_CD_FAST)	//We don't want the feint effect to be popped instantly.
 	to_chat(user, span_notice("[L.p_they(TRUE)] fell for my feint attack!"))
 	to_chat(L, span_danger("I fall for [user.p_their()] feint attack!"))
 	playsound(user, 'sound/combat/riposte.ogg', 100, TRUE)

@@ -79,15 +79,6 @@
 				playsound(loc, 'sound/foley/equip/rummaging-01.ogg')
 				return TRUE
 
-/obj/item/clothing/shoes/roguetown/boots/aalloy
-	name = "decrepit boots"
-	desc = "Frayed bronze greaves, shingled atop boots of rotted leather. The toebones of its former legionnaire remain within, rattling about with every step taken."
-	max_integrity = 40
-	icon_state = "ancientboots"
-	color = "#bb9696"
-	cold_protection = null
-	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
-
 /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	name = "psydonic leather boots"
 	desc = "Blacksteel-heeled boots. The leather refuses to be worn down, no matter how far you march through these lands."
@@ -185,13 +176,23 @@
 	icon_state = "sandals"
 	item_state = "sandals"
 	nudist_approved = TRUE
+	dropshrink = null
 
-/obj/item/clothing/shoes/roguetown/sandals/aalloy
-	name = "decrepit sandals"
-	desc = "Frayed bronze platforms, curled about to cradle the feet. The beaches that these sandals once treaded are no more; pearly sands, long since turnt to glass from the Comet Syon's impact."
+/obj/item/clothing/shoes/roguetown/sandals/ancient
+	name = "ancient armored sandals"
+	desc = "Polished gilbranze platforms, curled about to cradle the feet. Gladiators from an era lost, reborn to serve. These sandals were never meant to march 'pon sands, but to stand tall over the bodies of one's enemies."
 	icon_state = "ancientsandals"
-	color = "#bb9696"
+	max_integrity = 200
+	armor = ARMOR_PLATE
+	anvilrepair = /datum/skill/craft/armorsmithing
 	nudist_approved = TRUE
+
+/obj/item/clothing/shoes/roguetown/sandals/ancient/decrepit
+	name = "decrepit armored sandals"
+	desc = "Frayed bronze platforms, curled about to cradle the feet. The beaches that these sandals once treaded are no more; pearly sands, long since turnt to glass from the Comet Syon's impact."
+	max_integrity = 50
+	color = "#bb9696"
+	anvilrepair = null
 
 /obj/item/clothing/shoes/roguetown/shalal
 	name = "babouche"
@@ -267,6 +268,29 @@
 	item_state = "welfshoes"
 	anvilrepair = /datum/skill/craft/carpentry
 
+/// Dendor ritual variant of the woad elven boots — blessed by the Treefather's Nature's Temper ritual.
+/obj/item/clothing/shoes/roguetown/boots/leather/elven_boots/druidic
+	name = "blessed druid boots"
+	desc = "Boots shaped from consecrated root-wood, still pulsing with the Treefather's vigour. They offer firm footing and resist both thrust and cut slightly better than common elven craft."
+	armor = list("blunt" = 100, "slash" = 65, "stab" = 130, "piercing" = 20, "fire" = 0, "acid" = 0)
+	max_integrity = 200
+
+/obj/item/clothing/shoes/roguetown/boots/leather/elven_boots/druidic/Initialize(mapload)
+	. = ..()
+	set_light(1, 1, 2, l_color = "#58C86A")
+	add_filter("druid_blessed_glow", 2, list("type" = "outline", "color" = "#58C86A", "alpha" = 95, "size" = 1))
+
+/obj/item/clothing/shoes/roguetown/boots/leather/elven_boots/druidic/pickup(mob/user)
+	. = ..()
+	if(!istype(user, /mob/living/carbon/human))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.patron?.type == /datum/patron/divine/dendor)
+		return
+	H.electrocute_act(30, src)
+	H.mob_timers["kneestinger"] = world.time
+	to_chat(H, span_warning("[name] rejects my grasp — only the Treefather's faithful may bear such a gift!"))
+
 /obj/item/clothing/shoes/roguetown/boots/armor
 	name = "plated boots"
 	desc = "Boots forged of a set of steel plates to protect your fragile toes."
@@ -286,6 +310,19 @@
 	smeltresult = /obj/item/ingot/steel
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+
+/obj/item/clothing/shoes/roguetown/boots/armor/ancient
+	name = "ancient boots"
+	desc = "Polished gilbranze greaves, layered atop one-another to protect the ankles and feet. The marching, metallic stomps of those who yet walk without lyfe heralds destruction wherever it is heard."
+	icon_state = "ancientboots"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/clothing/shoes/roguetown/boots/armor/ancient/decrepit
+	name = "decrepit boots"
+	desc = "Frayed bronze greaves, shingled atop boots of rotted leather. The toebones of its former legionnaire remain within, rattling about with every step taken."
+	max_integrity = ARMOR_INT_SIDE_DECREPIT
+	color = "#bb9696"
+	anvilrepair = null
 
 /obj/item/clothing/shoes/roguetown/boots/armor/graggar
 	name = "vicious boots"
@@ -489,6 +526,7 @@
 	blocksound = PLATEHIT
 	max_integrity = ARMOR_INT_SIDE_BLACKSTEEL
 	armor = ARMOR_PLATE_BSTEEL
+	sewrepair = null
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/blacksteel
 	resistance_flags = FIRE_PROOF
@@ -508,6 +546,9 @@
 	nudist_approved = TRUE
 	heat_protection = FOOT_LEFT | FOOT_RIGHT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+	sewrepair = null
+	anvilrepair = /datum/skill/craft/armorsmithing
+	dropshrink = 0.6
 
 //kazen update
 /obj/item/clothing/shoes/roguetown/armor/rumaclan

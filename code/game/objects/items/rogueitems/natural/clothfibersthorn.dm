@@ -24,16 +24,11 @@
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/stonehoe,
 		/datum/crafting_recipe/roguetown/survival/woodhammer,
-		/datum/crafting_recipe/roguetown/survival/tneedle,
-		/datum/crafting_recipe/roguetown/survival/recurvepartial,
-		/datum/crafting_recipe/roguetown/survival/longbowpartial,
-		/datum/crafting_recipe/roguetown/survival/wickercloak,
 		/datum/crafting_recipe/roguetown/survival/torch,
 		/datum/crafting_recipe/roguetown/survival/woodhammer,
 		/datum/crafting_recipe/roguetown/survival/stonehoe,
 		/datum/crafting_recipe/roguetown/survival/stonesword,
 		/datum/crafting_recipe/roguetown/survival/woodsword,
-		/datum/crafting_recipe/roguetown/survival/bag,
 		/datum/crafting_recipe/roguetown/survival/rod,
 		/datum/crafting_recipe/roguetown/survival/pearlcross,
 		/datum/crafting_recipe/roguetown/survival/bpearlcross,
@@ -42,9 +37,6 @@
 		/datum/crafting_recipe/roguetown/survival/abyssoramulet,
 		/datum/crafting_recipe/roguetown/survival/broom,
 		/datum/crafting_recipe/roguetown/survival/woodcross,
-		/datum/crafting_recipe/roguetown/survival/mantrap,
-		/datum/crafting_recipe/roguetown/survival/tribalrags,
-		/datum/crafting_recipe/roguetown/survival/skullmask,
 		/datum/crafting_recipe/roguetown/survival/bonespear,
 		/datum/crafting_recipe/roguetown/survival/boneaxe,
 		/datum/crafting_recipe/roguetown/survival/goodluckcharm,
@@ -54,9 +46,6 @@
 		/datum/crafting_recipe/roguetown/survival/bouquet_calendula,
 		/datum/crafting_recipe/roguetown/survival/flowercrown_rosa,
 		/datum/crafting_recipe/roguetown/survival/flowercrown_salvia,
-		/datum/crafting_recipe/roguetown/survival/slingpouchcraft,
-		/datum/crafting_recipe/roguetown/survival/oar,
-		/datum/crafting_recipe/roguetown/survival/boat,
 		)
 
 	AddElement(
@@ -168,6 +157,7 @@
 	bundletype = /obj/item/natural/bundle/cloth
 	sellprice = 4
 	detail_tag = "_soaked"
+	dropshrink = 0.9
 	var/wet = 0
 	/// Effectiveness when used as a bandage, how much it'll lower the bloodloss, bloodloss will get multiplied by this.
 	var/bandage_effectiveness = 0.5
@@ -178,20 +168,6 @@
 	/// If the bandage is soaked in some kind of medicine.
 	var/medicine_quality
 	var/medicine_amount = 0
-
-/obj/item/natural/cloth/Initialize(mapload)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(
-		/datum/crafting_recipe/roguetown/survival/longbowpartial,
-		/datum/crafting_recipe/roguetown/survival/bag,
-		/datum/crafting_recipe/roguetown/survival/book_crafting_kit,
-		/datum/crafting_recipe/roguetown/survival/slingpouchcraft,
-		)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-		)
 
 /obj/item/natural/cloth/attack_right(mob/user)
 	if(user.get_active_held_item())
@@ -368,17 +344,6 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 20
 
-/obj/item/natural/thorn/Initialize(mapload)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(
-		/datum/crafting_recipe/roguetown/survival/tneedle,
-		)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-		)
-
 /obj/item/natural/thorn/attack_self(mob/living/user)
 	user.visible_message(span_warning("[user] snaps [src]."))
 	playsound(user,'sound/items/seedextract.ogg', 100, FALSE)
@@ -474,6 +439,7 @@
 	icon2step = 10
 	grid_width = 32
 	grid_height = 32
+	dropshrink = 0.9
 
 /obj/item/natural/bundle/stick
 	name = "bundle of sticks"

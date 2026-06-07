@@ -18,6 +18,7 @@
 	l_sleeve_status = SLEEVE_NOMOD
 	resistance_flags = FIRE_PROOF
 	armor_class = ARMOR_CLASS_MEDIUM
+	dropshrink = null
 
 /obj/item/clothing/under/roguetown/chainlegs/Initialize(mapload)
 	. = ..()
@@ -44,6 +45,7 @@
 	resistance_flags = FIRE_PROOF
 	sewrepair = FALSE
 	smeltresult = /obj/item/ingot/steel
+	dropshrink = 0.9
 
 /obj/item/clothing/under/roguetown/splintlegs/Initialize(mapload)
 	. = ..()
@@ -68,28 +70,6 @@
 	sewrepair = FALSE
 	smeltresult = /obj/item/ingot/iron
 
-/obj/item/clothing/under/roguetown/brayette
-	name = "brayette"
-	desc = "Maille groin protection ideal for answering Dendor's call without removing your plate armor."
-	gender = PLURAL
-	icon_state = "chain_bootyshorts"
-	item_state = "chain_bootyshorts"
-	sewrepair = FALSE
-	armor = ARMOR_MAILLE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
-	body_parts_covered = GROIN
-	blocksound = CHAINHIT
-	max_integrity = ARMOR_INT_LEG_STEEL_CHAIN
-	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
-	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	anvilrepair = /datum/skill/craft/armorsmithing
-	smeltresult = /obj/item/ingot/steel
-	r_sleeve_status = SLEEVE_NOMOD
-	l_sleeve_status = SLEEVE_NOMOD
-	resistance_flags = FIRE_PROOF
-	armor_class = ARMOR_CLASS_LIGHT
-
 /obj/item/clothing/under/roguetown/chainlegs/iron
 	name = "iron chain chausses"
 	icon_state = "ichain_legs"
@@ -113,22 +93,22 @@
 	sleevetype = "chainkilt"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_pants.dmi'
 	alternate_worn_layer = (SHIRT_LAYER)
+	dropshrink = 0.8
 
-/obj/item/clothing/under/roguetown/chainlegs/kilt/aalloy
-	name = "decrepit chain kilt"
-	desc = "Frayed bronze rings, linked together with bindings of rotting leather to form a waist's drape. The maille jingles with every step, singing the hymn to a cadence once savored by marching legionnaires."
-	icon_state = "achainkilt"
-	sleevetype = "achainkilt"
-	max_integrity = ARMOR_INT_LEG_DECREPIT_CHAIN
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-
-/obj/item/clothing/under/roguetown/chainlegs/kilt/paalloy
+/obj/item/clothing/under/roguetown/chainlegs/kilt/ancient
 	name = "ancient chain kilt"
 	desc = "Polished gilbranze rings, linked together with bindings of silk to form a waist's vestment. These undying legionnaires once marched for Vheslyn, and again for Zizo; but now, they are utterly beholden to the whims of their resurrector."
 	icon_state = "achainkilt"
+	sleevetype = "achainkilt"
 	smeltresult = /obj/item/ingot/aaslag
+	anvilrepair = /datum/skill/craft/armorsmithing
+
+/obj/item/clothing/under/roguetown/chainlegs/kilt/ancient/decrepit
+	name = "decrepit chain kilt"
+	desc = "Frayed bronze rings, linked together with bindings of rotting leather to form a waist's drape. The maille jingles with every step, singing the hymn to a cadence once savored by marching legionnaires."
+	max_integrity = ARMOR_INT_LEG_DECREPIT_CHAIN
+	color = "#bb9696"
+	anvilrepair = null
 
 /obj/item/clothing/under/roguetown/chainlegs/iron/kilt
 	name = "iron chain kilt"
@@ -138,6 +118,7 @@
 	sleevetype = "ichainkilt"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_pants.dmi'
 	alternate_worn_layer = (SHIRT_LAYER)
+	dropshrink = 0.8
 
 /obj/item/clothing/under/roguetown/chainlegs/captain
 	name = "captain's chausses"
@@ -146,3 +127,4 @@
 	item_state = "capplateleg"
 	icon = 'icons/roguetown/clothing/special/captain.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/captain.dmi'
+	dropshrink = 0.8

@@ -23,7 +23,7 @@
 	cmode_music = 'sound/music/cmode/nobility/combat_courtmage.ogg'
 	advjob_examine = TRUE // So that Court Magicians can know if they're teachin' a Apprentice or if someone's a bit more advanced of a player. Just makes the title show up as the advjob's name.
 	social_rank = SOCIAL_RANK_YEOMAN
-	job_traits = list(TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3)
+	job_traits = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2)
 	job_subclasses = list(
 		/datum/advclass/wapprentice/associate,
 		/datum/advclass/wapprentice/alchemist,
@@ -33,6 +33,7 @@
 /datum/outfit/job/roguetown/wapprentice
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
 	pants = /obj/item/clothing/under/roguetown/tights/random
+	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/storage/keyring/mageapprentice
 	backl = /obj/item/storage/backpack/rogue/satchel
@@ -45,21 +46,23 @@
 	outfit = /datum/outfit/job/roguetown/wapprentice/associate
 
 	category_tags = list(CTAG_WASSOCIATE)
+	traits_applied = list(TRAIT_ARCYNE_T3)
 	subclass_stats = list(
 		STATKEY_INT = 3,
-		STATKEY_PER = 2,
+		STATKEY_CON = 1,
+		STATKEY_WIL = 1,
 		STATKEY_SPD = 1
 	)
 	subclass_spellpoints = 21
 	subclass_skills = list(
-		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/athletics = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/riding = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
@@ -93,28 +96,30 @@
 	outfit = /datum/outfit/job/roguetown/wapprentice/alchemist
 
 	category_tags = list(CTAG_WASSOCIATE)
-	traits_applied = list(TRAIT_SEEDKNOW)
+	traits_applied = list(TRAIT_SEEDKNOW, TRAIT_ALCHEMY_EXPERT)
 	subclass_stats = list(
-		STATKEY_INT = 3,
-		STATKEY_PER = 3,
+		STATKEY_INT = 4,
+		STATKEY_PER = 2,
 		STATKEY_WIL = 1
 	)
 	subclass_spellpoints = 18
 	subclass_skills = list(
-		/datum/skill/combat/polearms = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_NOVICE,
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/labor/farming = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/butchering = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/labor/mining = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/labor/fishing = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/wapprentice/alchemist/pre_equip(mob/living/carbon/human/H)
@@ -135,9 +140,21 @@
 		H.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
 		H.change_stat(STATKEY_PER, -1)
 		H.change_stat(STATKEY_INT, 1)
+		H.mind?.adjust_spellpoints(3)//split studies, less magic
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
+	if(H.mind)
+		var/weapons = list("Applied Alchemy","Magical Medicine")
+		var/weapon_choice = input(H, "Choose your tools.", "CHOOSE YOUR DISCIPLINE.") as anything in weapons
+		switch(weapon_choice)
+			if("Applied Alchemy")
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/aerosolize)
+				H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 4, TRUE)
+			if("Magical Medicine")
+				l_hand = /obj/item/storage/belt/rogue/surgery_bag
+				H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 4, TRUE)
+
 
 /datum/advclass/wapprentice/apprentice
 	name = "Magician Apprentice"
@@ -145,19 +162,26 @@
 	outfit = /datum/outfit/job/roguetown/wapprentice/apprentice
 
 	category_tags = list(CTAG_WASSOCIATE)
+	traits_applied = list(TRAIT_HOMESTEAD_EXPERT)//emphasizing the "serve" part of their description
 	subclass_stats = list(
 		STATKEY_INT = 4,
-		STATKEY_WIL = 1,
+		STATKEY_WIL = 2,
 		STATKEY_SPD = 1,
-		STATKEY_LCK = 1 // this is just a carrot for the folk who are mad enough to take this role...
 	)
 	subclass_spellpoints = 18
 	subclass_skills = list(
-		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
+		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/polearms = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/farming = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
+		/datum/skill/labor/butchering = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_NOVICE,//running around for errands
 	)
 
 /datum/outfit/job/roguetown/wapprentice/apprentice/pre_equip(mob/living/carbon/human/H)
@@ -169,12 +193,6 @@
 		/obj/item/spellbook_unfinished/pre_arcyne = 1,
 		/obj/item/chalk = 1,
 		)
-	if(H.age == AGE_OLD)
-		H.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
-		H.change_stat(STATKEY_SPD, -1)
-		H.change_stat(STATKEY_INT, 1)
-		H.mind?.adjust_spellpoints(3)
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'

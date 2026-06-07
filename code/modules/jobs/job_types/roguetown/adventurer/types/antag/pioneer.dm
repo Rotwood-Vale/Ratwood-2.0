@@ -26,7 +26,6 @@
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/carpentry = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/masonry = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/traps = SKILL_LEVEL_JOURNEYMAN,//Point of the class.
 		/datum/skill/craft/engineering = SKILL_LEVEL_JOURNEYMAN,//Contraptions, explosives, etc.
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
@@ -84,7 +83,7 @@
 	max_targets = 0
 	cast_without_targets = TRUE
 	antimagic_allowed = TRUE
-	associated_skill = /datum/skill/craft/traps
+	associated_skill = /datum/skill/craft/crafting
 	invocations = list("Measure twice, set once...")
 	invocation_type = "whisper"
 	miracle = FALSE

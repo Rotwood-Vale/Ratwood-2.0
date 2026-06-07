@@ -130,6 +130,7 @@
 	var/quality = SMELTERY_LEVEL_NORMAL
 	grid_width = 64
 	grid_height = 32
+	dropshrink = 0.8
 
 /obj/item/ingot/examine()
 	. += ..()
@@ -200,23 +201,6 @@
 	smeltresult = /obj/item/ingot/iron
 	sellprice = 15
 
-/obj/item/ingot/iron/Initialize(mapload, smelt_quality)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(
-		/datum/crafting_recipe/roguetown/structure/plough,
-		/datum/crafting_recipe/roguetown/survival/peasantry/thresher,
-		/datum/crafting_recipe/roguetown/survival/peasantry/shovel,
-		/datum/crafting_recipe/roguetown/survival/peasantry/hoe,
-		/datum/crafting_recipe/roguetown/survival/peasantry/pitchfork,
-		/datum/crafting_recipe/roguetown/survival/quarterstaff_iron,
-		/datum/crafting_recipe/roguetown/survival/mantrap,
-		)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-		)
-
 /obj/item/ingot/copper
 	name = "copper bar"
 	desc = "This bar causes a gentle tingling sensation when touched."
@@ -281,7 +265,7 @@
 	smeltresult = /obj/item/ingot/silver //Smelting it removes the blessing
 	sellprice = 100
 
-/obj/item/ingot/aalloy
+/obj/item/ingot/decrepit
 	name = "decrepit ingot"
 	desc = "A decrepit slab of wrought bronze, uncomfortably cold to the touch. The gales shift into whispers, when held for long enough; 'progress commands sacrifice'."
 	icon_state = "ingotancient"
@@ -289,17 +273,16 @@
 	color = "#bb9696"
 	sellprice = 33
 
-
-/obj/item/ingot/purifiedaalloy
-	name = "ancient alloy"
-	desc = "An ingot of polished gilbranze, teeming with forbidden knowledge. The reflection on its surface isn't yours; it smiles back at you with eternal malice."
+/obj/item/ingot/gilbranze
+	name = "gilbranze ingot"
+	desc = "A timeless alloy of gold and bronze, hence the name gilbranze. The reflection on its surface isn't yours; it smiles back at you with eternal malice."
 	icon_state = "ingotancient"
-	smeltresult = /obj/item/ingot/purifiedaalloy
+	smeltresult = /obj/item/ingot/gilbranze
 	sellprice = 111
 
-/obj/item/ingot/purifiedaalloy/eahasir
+/obj/item/ingot/gilbranze/eahasir
 	name = "EA-Hasir high-quality gold ingot"
-	desc = "Solid wealth in your hand- Hey wait a minute, this isn't gold."
+	desc = "Solid wealth in your hand- Hey, wait a minute, this isn't gold!"
 
 /obj/item/ingot/aaslag
 	name = "glimmering slag"

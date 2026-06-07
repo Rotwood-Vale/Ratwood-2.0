@@ -324,6 +324,12 @@
 		return 0
 	return 1
 
+/obj/structure/fluff/railing/fence/flimsy
+	name = "weak palisade"
+	desc = "A rudimentary barrier that might keep the monsters at bay. This one looks old, weathered, and hastily constructed."
+	max_integrity = 180
+	color = "#cccac5"
+
 /obj/structure/bars
 	name = "bars"
 	desc = ""
@@ -755,7 +761,7 @@
 	pixel_y = 0
 	pixel_x = 32
 
-/obj/structure/fluff/signage
+/obj/structure/fluff/signage//these are a bit of a pain
 	name = "sign"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
@@ -765,7 +771,7 @@
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
 	blade_dulling = DULLING_BASHCHOP
-	max_integrity = 500
+	max_integrity = 200
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
 
@@ -781,6 +787,7 @@
 	name = "sign"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
+
 /obj/structure/fluff/buysign/examine(mob/user)
 	. = ..()
 	if(!user.is_literate())
@@ -793,6 +800,7 @@
 	name = "sign"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
+
 /obj/structure/fluff/sellsign/examine(mob/user)
 	. = ..()
 	if(!user.is_literate())
@@ -800,15 +808,15 @@
 	else
 		. += "I can read this sign."
 
-
 /obj/structure/fluff/customsign
 	name = "sign"
 	desc = ""
 	icon_state = "sign"
 	var/wrotesign
-	max_integrity = 500
+	max_integrity = 200//these don't need to be so tough
 	blade_dulling = DULLING_BASHCHOP
 	icon = 'icons/roguetown/misc/structure.dmi'
+	pixel_y = 3
 
 /obj/structure/fluff/customsign/examine(mob/user)
 	. = ..()
@@ -817,6 +825,9 @@
 			. += "I have no idea what it says."
 		else
 			. += "It says \"[wrotesign]\"."
+
+/obj/structure/fluff/customsign/arrow
+	icon_state = "shitsign"
 
 /obj/structure/fluff/customsign/attackby(obj/item/W, mob/user, params)
 	if(!user.cmode)
@@ -860,6 +871,26 @@
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = list("sound/combat/hits/onmetal/metalimpact (1).ogg", "sound/combat/hits/onmetal/metalimpact (2).ogg")
 
+/obj/structure/fluff/alch/folding
+	name = "folding alchemical lab"
+	desc = "A compact laboratory. Laid out and ready to work."
+	icon = 'icons/roguetown/misc/gadgets.dmi'
+	icon_state = "foldingAlchstationDeployed"
+	max_integrity = 350
+	debris = list(/obj/item/grown/log/tree/small = 2)
+	climbable = TRUE
+	climb_offset = 10
+
+/obj/structure/fluff/alch/folding/examine()
+	. = ..()
+	. += span_blue("Right-Click to fold the lab.")
+
+/obj/structure/fluff/alch/folding/attack_right(mob/user)
+	if(do_after(user, 5 SECONDS, target = src))
+		user.visible_message(span_notice("[user] folds [src]."), span_notice("You fold [src]."))
+		new /obj/item/folding_table_stored/alchstation(drop_location())
+		qdel(src)
+		return ..()
 
 /obj/structure/fluff/statue
 	name = "statue"
@@ -1009,7 +1040,7 @@
 	icon = 'icons/roguetown/misc/ay.dmi'
 	icon_state = "4"
 	pixel_x = -32
-	pixel_y = -16
+	// pixel_y = -16
 
 /obj/structure/fluff/statue/scare
 	name = "scarecrow"
@@ -1561,6 +1592,7 @@
 	desc = "Wisdom and calm."
 	icon_state = "noc"
 	icon = 'icons/roguetown/misc/statues/statue_noc.dmi'
+	pixel_x = -16
 
 /obj/structure/fluff/statue/noc/guard
 	name = "active noc statue"
@@ -1571,6 +1603,7 @@
 	desc = "Beauty and Charm"
 	icon_state = "eora"
 	icon = 'icons/roguetown/misc/statues/statue_eora.dmi'
+	pixel_x = -16
 
 /obj/structure/fluff/statue/zizo
 	name = "dubious statue"

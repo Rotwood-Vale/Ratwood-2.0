@@ -37,9 +37,12 @@
 	blade_dulling = DULLING_BASHCHOP
 	debris = list(/obj/item/grown/log/tree/small = 1)
 
-/obj/structure/table/examine(mob/user)
+/obj/structure/table/Initialize(mapload)
 	. = ..()
-//	. += deconstruction_hints(user)
+	AddComponent(/datum/component/hiding_spot, \
+		"Someone is already hiding under %LOCATION!", \
+		"I hide under %LOCATION!", \
+		"I come out from under %LOCATION!")
 
 /obj/structure/table/proc/deconstruction_hints(mob/user)
 	return span_notice("The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.")

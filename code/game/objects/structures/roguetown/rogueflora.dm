@@ -80,6 +80,25 @@
 	. = ..()
 	icon_state = "t[rand(1,16)]"
 
+/obj/structure/flora/roguetree/proc/bless_tree(mob/user)
+	if(obj_integrity < max_integrity)
+		obj_integrity = min(max_integrity, obj_integrity + round(max_integrity / 2))
+		return TRUE
+	return FALSE
+
+/obj/structure/flora/roguetree/proc/reinvigorate_tree(mob/user)
+	if(type == /obj/structure/flora/roguetree)
+		spawn_reinvigorated_tree()
+		if(isliving(user) && user.mind)
+			user.mind.add_sleep_experience(/datum/skill/magic/druidic, 20)
+		return TRUE
+	return FALSE
+
+/obj/structure/flora/roguetree/proc/spawn_reinvigorated_tree()
+	new /obj/structure/flora/newtree(get_turf(src))
+	qdel(src)
+	return TRUE
+
 /obj/structure/flora/roguetree/evil/Initialize(mapload)
 	. = ..()
 	icon_state = "wv[rand(1,2)]"
@@ -97,6 +116,19 @@
 /obj/structure/flora/roguetree/evil
 	var/datum/looping_sound/boneloop/soundloop
 	var/datum/vine_controller/controller
+
+/obj/structure/flora/roguetree/evil/reinvigorate_tree(mob/user)
+	var/turf/T = get_turf(src)
+	for(var/D in GLOB.cardinals)
+		var/turf/adj = get_step(T, D)
+		if(!isclosedturf(adj) && !locate(/obj/structure/glowshroom) in adj)
+			new /obj/structure/glowshroom(adj)
+	// Evil trees cleansed by Dendor's blessing become sanctified, not merely regrown.
+	new /obj/structure/flora/roguetree/wise/sanctified(T)
+	qdel(src)
+	if(isliving(user) && user.mind)
+		user.mind.add_sleep_experience(/datum/skill/magic/druidic, 50)
+	return TRUE
 
 /obj/structure/flora/roguetree/wise
 	name = "sacred tree"
@@ -136,10 +168,60 @@
 	target.throw_at(throw_target, 4, 2)
 	target.adjustBruteLoss(8)
 
+/obj/structure/flora/roguetree/wise
+	var/examine_plays_music = TRUE
+
 /obj/structure/flora/roguetree/wise/examine(mob/user)
 	. = ..()
-	SEND_SOUND(usr, sound(null))
-	playsound(user, 'sound/music/tree.ogg', 80)
+	if(examine_plays_music)
+		SEND_SOUND(user, sound(null))
+		playsound(user, 'sound/music/tree.ogg', 80)
+
+/obj/structure/flora/roguetree/wise/bless_tree(mob/user)
+	if(obj_integrity < max_integrity)
+		obj_integrity = min(max_integrity, obj_integrity + 50)
+		return TRUE
+	return FALSE
+
+/// Converts an unsanctified wise tree into a sanctified wise tree.
+/// Called from blesscrop when blessed seed powder is held.
+/obj/structure/flora/roguetree/wise/reinvigorate_tree(mob/user)
+	if(istype(src, /obj/structure/flora/roguetree/wise/sanctified))
+		return FALSE  // already sanctified in some form
+	var/turf/T = get_turf(src)
+	new /obj/structure/flora/roguetree/wise/sanctified/wise(T)
+	qdel(src)
+	if(isliving(user) && user.mind)
+		user.mind.add_sleep_experience(/datum/skill/magic/druidic, 50)
+	return TRUE
+
+/obj/structure/flora/roguetree/wise/proc/notify_nearby_dendorites()
+	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
+		if(H.patron?.type != /datum/patron/divine/dendor)
+			continue
+		if(H.z != z)
+			continue
+		if(get_dist(H, src) > 10)
+			continue
+		H.add_stress(/datum/stressevent/treefather_loss)
+		var/tree_dir = dir2text(get_dir(H, src))
+		to_chat(H, span_boldwarning("A sacred tree has fallen to my [tree_dir]! The land's natural energies feel disrupted."))
+		playsound(H, 'sound/misc/jack_killing_2.ogg', 60, FALSE)
+
+/obj/structure/flora/roguetree/wise/proc/fling_nearby_mobs()
+	for(var/mob/living/L in range(3, src))
+		if(L.stat == DEAD)
+			continue
+		var/atom/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
+		if(!throwtarget)
+			continue
+		L.safe_throw_at(throwtarget, 4, 1, force = MOVE_FORCE_STRONG)
+		L.Knockdown(2 SECONDS)
+
+/obj/structure/flora/roguetree/wise/obj_destruction(damage_flag)
+	fling_nearby_mobs()
+	notify_nearby_dendorites()
+	return ..()
 
 /obj/structure/flora/roguetree/burnt
 	name = "burnt tree"
@@ -152,6 +234,12 @@
 /obj/structure/flora/roguetree/burnt/Initialize(mapload)
 	. = ..()
 	icon_state = "t[rand(1,4)]"
+
+/obj/structure/flora/roguetree/burnt/reinvigorate_tree(mob/user)
+	spawn_reinvigorated_tree()
+	if(isliving(user) && user.mind)
+		user.mind.add_sleep_experience(/datum/skill/magic/druidic, 20)
+	return TRUE
 
 /obj/structure/flora/roguetree/stump/burnt
 	name = "tree stump"
@@ -216,6 +304,17 @@
 	icon_state = "t[rand(1,4)]stump"
 
 /obj/structure/flora/roguetree/stump/attackby(obj/item/I, mob/living/user)
+	if(istype(I, /obj/item/rogueweapon/shovel))
+		var/skill_level = user.get_skill_level(/datum/skill/labor/lumberjacking)
+		var/dig_time = (120 - (skill_level * 15)) / 2
+		playsound(src, 'sound/items/dig_shovel.ogg', 80, TRUE)
+		if(!do_after(user, dig_time, target = user))
+			return
+		to_chat(user, span_notice("I dig up [src]."))
+		new lumber(get_turf(src))
+		playsound(src, destroy_sound, 100, TRUE)
+		qdel(src)
+		return TRUE
 	if(user.used_intent.blade_class == BCLASS_CHOP && lumber_amount)
 		var/skill_level = user.get_skill_level(/datum/skill/labor/lumberjacking)
 		var/lumber_time = (120 - (skill_level * 15))
@@ -257,6 +356,10 @@
 	. = ..()
 	icon_state = "log[rand(1,2)]"
 
+	AddComponent(/datum/component/hiding_spot, \
+		"Someone is already hiding inside %LOCATION!", \
+		"I hide inside %LOCATION!", \
+		"I come out from inside %LOCATION!")
 
 //newbushes
 
@@ -271,7 +374,6 @@
 	blade_dulling = DULLING_CUT
 	debris = list(/obj/item/natural/fibers = 1)
 
-
 /obj/structure/flora/roguegrass/spark_act()
 	fire_act()
 
@@ -282,6 +384,27 @@
 
 /obj/structure/flora/roguegrass/update_icon()
 	icon_state = "grass[rand(1, 6)]"
+
+/obj/structure/flora/roguegrass/verdant
+	icon = 'icons/obj/flora/ausflora.dmi'
+	icon_state = "sparsegrass_1"
+
+/obj/structure/flora/roguegrass/verdant/Initialize(mapload)
+	. = ..()
+	if(prob(60))
+		icon_state = "sparsegrass_[rand(1, 3)]"
+	else
+		icon_state = "fullgrass_[rand(1, 3)]"
+
+/obj/structure/flora/roguegrass/reedbush
+	name = "reed bush"
+	icon = 'icons/obj/flora/ausflora.dmi'
+	icon_state = "reedbush_1"
+	max_integrity = 1
+
+/obj/structure/flora/roguegrass/reedbush/Initialize(mapload)
+	. = ..()
+	icon_state = "reedbush_[rand(1, 4)]"
 
 /obj/structure/flora/roguegrass/water
 	name = "grass"
@@ -329,14 +452,16 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	var/res_replenish
 	blade_dulling = DULLING_CUT
-	max_integrity = 35
+	max_integrity = 100
+	destroy_sound = "plantcross"
 	climbable = FALSE
 	dir = SOUTH
-	debris = list(/obj/item/natural/fibers = 1, /obj/item/grown/log/tree/stick = 1)
+	debris = list(/obj/item/natural/fibers = 1, /obj/item/grown/log/tree/stick = 1, /obj/item/natural/thorn = 2)
 	var/list/looty = list()
 	var/bushtype
 
 /obj/structure/flora/roguegrass/bush/Initialize(mapload)
+	AddComponent(/datum/component/hiding_spot)
 	if(isnull(bushtype))
 		var/area/rogue/bush_area = get_area(src)
 		if(!bush_area.town_area)
@@ -383,6 +508,9 @@
 					BP.receive_damage(10)
 
 /obj/structure/flora/roguegrass/bush/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(isliving(user))
 		var/mob/living/L = user
 		user.changeNext_move(CLICK_CD_INTENTCAP)
@@ -404,6 +532,7 @@
 				attack_hand(user)
 			if(!looty.len)
 				to_chat(user, span_warning("Picked clean... I should try later."))
+
 /obj/structure/flora/roguegrass/bush/update_icon()
 	icon_state = "bush[rand(2, 4)]"
 
@@ -448,7 +577,7 @@
 	climbable = FALSE
 	icon_state = "bushwall1"
 	max_integrity = 150
-	debris = list(/obj/item/natural/fibers = 1, /obj/item/grown/log/tree/stick = 1, /obj/item/natural/thorn = 1)
+	debris = list(/obj/item/grown/log/tree/small = 1, /obj/item/natural/fibers = 1, /obj/item/grown/log/tree/stick = 1, /obj/item/natural/thorn = 1)
 	attacked_sound = 'sound/misc/woodhit.ogg'
 
 /obj/structure/flora/roguegrass/bush/wall/Initialize(mapload)
@@ -569,6 +698,14 @@
 /obj/structure/flora/shroomstump/Initialize(mapload)
 	. = ..()
 	icon_state = "t[rand(1,4)]stump"
+
+/obj/structure/flora/shroomstump/obj_destruction(damage_flag)
+	if(prob(50))
+		new /obj/item/grown/log/tree/small(get_turf(src))
+	else
+		new /obj/item/grown/log/tree/stick(get_turf(src))
+		new /obj/item/grown/log/tree/stick(get_turf(src))
+	return ..()
 
 /obj/structure/roguerock
 	name = "rock"
@@ -981,6 +1118,13 @@
 	. = ..()
 	icon_state = "dead[rand(1, 3)]"
 
+/obj/structure/flora/roguetree/pine/dead/reinvigorate_tree(mob/user)
+	var/turf/tree_turf = get_turf(src)
+	new /obj/structure/flora/roguetree/pine(tree_turf)
+	qdel(src)
+	if(isliving(user) && user.mind)
+		user.mind.add_sleep_experience(/datum/skill/magic/druidic, 20)
+	return TRUE
 //A smattering of jungle-themed assets
 //trees
 

@@ -41,7 +41,7 @@
 	msg = span_adminnotice("[icon2html(GLOB.admins)]<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> <span class='linkify'>[msg]</span>")
 	for(var/client/C in GLOB.admins)
 		if(C.prefs.chat_toggles & CHAT_PRAYER)
-			to_chat(C, msg)
+			to_chat(C, type = MESSAGE_TYPE_PRAYER, html = msg)
 			if(C.prefs.toggles & SOUND_PRAYERS)
 				if(usr.job == "Priest")
 					SEND_SOUND(C, sound('sound/pray.ogg'))
@@ -52,7 +52,7 @@
 //		var/T = get_turf(src)
 		if(M.stat == DEAD)
 			var/client/J = M.client
-			to_chat(J, msg)
+			to_chat(J, type = MESSAGE_TYPE_PRAYER, html = msg)
 
 	to_chat(usr, span_info("I pray to the gods: \"[msg_tmp]\""))
 
@@ -62,17 +62,17 @@
 /proc/CentCom_announce(text , mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = span_adminnotice("<b><font color=orange>CENTCOM:</font>[ADMIN_FULLMONTY(Sender)] [ADMIN_CENTCOM_REPLY(Sender)]:</b> [msg]")
-	to_chat(GLOB.admins, msg)
+	to_chat(GLOB.admins, type = MESSAGE_TYPE_PRAYER, html = msg)
 
 /proc/Syndicate_announce(text , mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = span_adminnotice("<b><font color=crimson>SYNDICATE:</font>[ADMIN_FULLMONTY(Sender)] [ADMIN_SYNDICATE_REPLY(Sender)]:</b> [msg]")
-	to_chat(GLOB.admins, msg)
+	to_chat(GLOB.admins, type = MESSAGE_TYPE_PRAYER, html = msg)
 
 /proc/Nuke_request(text , mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = span_adminnotice("<b><font color=orange>NUKE CODE REQUEST:</font>[ADMIN_FULLMONTY(Sender)] [ADMIN_CENTCOM_REPLY(Sender)] [ADMIN_SET_SD_CODE]:</b> [msg]")
-	to_chat(GLOB.admins, msg)
+	to_chat(GLOB.admins, type = MESSAGE_TYPE_PRAYER, html = msg)
 
 /mob/proc/roguepray(msg as text)
 //	set category = "IC"
@@ -98,6 +98,6 @@
 	
 	for(var/client/janny in GLOB.admins)
 		if(janny.prefs.chat_toggles & CHAT_PRAYER)
-			to_chat(janny, msg)
+			to_chat(janny, type = MESSAGE_TYPE_PRAYER, html = msg)
 			if(janny.prefs.toggles & SOUND_PRAYERS)
 				SEND_SOUND(janny, sound('sound/pray.ogg'))

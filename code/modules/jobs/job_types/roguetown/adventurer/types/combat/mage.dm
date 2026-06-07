@@ -1,29 +1,32 @@
 /datum/advclass/mage
 	name = "Sorcerer"
-	tutorial = "You are a learned mage and a scholar, having spent your life studying the arcane and its ways."
+	tutorial = "Spellslingers are mages that focus on more potent spells, greater athleticism, and the art of the staff. Arcane Alchemists instead turned their studies to mixing magic and alchemy, the basics of medicine, and rely on creativity instead of arcane might."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/mage
 	class_select_category = CLASS_CAT_MAGE
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
-	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT)
+	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2)
 	subclass_stats = list(
 		STATKEY_INT = 3,
-		STATKEY_PER = 2,
 		STATKEY_SPD = 1,
 	)
-	subclass_spellpoints = 18
+	subclass_spellpoints = 15
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/athletics = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/arcane = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
+		/datum/skill/labor/butchering = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
 	)
 
 /datum/outfit/job/roguetown/adventurer/mage/pre_equip(mob/living/carbon/human/H)
@@ -50,12 +53,34 @@
 		)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
 	if(H.age == AGE_OLD)
-		H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_EXPERT, TRUE)
 		H.mind?.adjust_spellpoints(6)
 	H.cmode_music = 'sound/music/cmode/adventurer/combat_outlander4.ogg'
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
+	if(H.mind)
+		var/weapons = list("Spellslinger","Arcane Alchemist")
+		var/weapon_choice = input(H, "Choose your path.", "WHO ARE YOU?") as anything in weapons
+		switch(weapon_choice)
+			if("Arcane Alchemist")
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/aerosolize)
+				H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 4, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 3, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/craft/sewing, 3, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/labor/butchering, 2, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/labor/farming, 2, TRUE)
+				H.change_stat("perception", 1)
+				H.change_stat("intelligence", 1)
+				ADD_TRAIT(H, TRAIT_ALCHEMY_EXPERT, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_SEEDKNOW, TRAIT_GENERIC)
+			if("Spellslinger")
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 2, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 3, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 4, TRUE)
+				H.mind?.adjust_spellpoints(6)
+				ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
+				H.change_stat("willpower", 2)
 
 /datum/advclass/mage/spellblade
 	name = "Spellblade"
@@ -268,7 +293,7 @@
 		/datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/traps = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/adventurer/spellthief/pre_equip(mob/living/carbon/human/H)

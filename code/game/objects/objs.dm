@@ -15,6 +15,7 @@
 	var/datum/armor/armor
 	var/last_peeled_limb
 	var/peel_count = 0
+	var/last_peel_stack_time = -1
 	var/peel_threshold = 3
 	var/obj_integrity	//defaults to max_integrity
 	var/max_integrity = 500

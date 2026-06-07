@@ -10,32 +10,12 @@
 //	pixel_y = 10
 	layer = OBJ_LAYER
 
-
-
-/obj/structure/chair/smallbench
-	name = "small bench"
-	icon = 'icons/roguetown/misc/structure.dmi'
-	icon_state = "benchsmall"
-	buildstackamount = 1
-	item_chair = null
-	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
-	attacked_sound = "woodimpact"
-	sleepy = 0.5
-	layer = OBJ_LAYER
-	density = FALSE
-
-
-/obj/structure/chair/bench/church
-	icon_state = "church_benchleft"
-
-/obj/structure/chair/bench/church/mid
-	icon_state = "church_benchmid"
-
-/obj/structure/chair/bench/church/r
-	icon_state = "church_benchright"
-
 /obj/structure/chair/bench/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/hiding_spot, \
+		"Someone is already hiding under %LOCATION!", \
+		"I hide under %LOCATION!", \
+		"I come out from under %LOCATION!")
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
 	AddElement(/datum/element/connect_loc, loc_connections)
 	handle_layer()
@@ -74,14 +54,29 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/structure/chair/bench/couch
-	icon_state = "redcouch"
+/obj/structure/chair/smallbench
+	name = "small bench"
+	icon = 'icons/roguetown/misc/structure.dmi'
+	icon_state = "benchsmall"
+	buildstackamount = 1
+	item_chair = null
+	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
+	attacked_sound = "woodimpact"
+	sleepy = 0.5
+	layer = OBJ_LAYER
+	density = FALSE
+
+/obj/structure/chair/bench/church
+	icon_state = "church_benchleft"
+
+/obj/structure/chair/bench/church/mid
+	icon_state = "church_benchmid"
+
+/obj/structure/chair/bench/church/r
+	icon_state = "church_benchright"
 
 /obj/structure/chair/bench/church/smallbench
 	icon_state = "benchsmall"
-
-/obj/structure/chair/bench/couch/r
-	icon_state = "redcouch2"
 
 /obj/structure/chair/bench/ultimacouch
 	icon_state = "ultimacouchleft"
@@ -106,6 +101,12 @@
 
 /obj/structure/chair/bench/couchamagenta/r
 	icon_state = "couchamagentaright"
+
+/obj/structure/chair/bench/couch
+	icon_state = "redcouch"
+
+/obj/structure/chair/bench/couch/r
+	icon_state = "redcouch2"
 
 /obj/structure/chair/bench/couch/Initialize(mapload)
 	. = ..()
@@ -329,6 +330,13 @@
 	var/broken_percentage = 0
 	var/broken_rate = 1.0
 
+/obj/structure/bed/rogue/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/hiding_spot, \
+		"Someone is already hiding under %LOCATION!", \
+		"I hide under %LOCATION!", \
+		"I come out from under %LOCATION!")
+
 /obj/structure/bed/rogue/proc/damage_bed(dam_value)
 	if(broken_matress)
 		playsound(src, pick(list('sound/misc/mat/table (1).ogg','sound/misc/mat/table (2).ogg','sound/misc/mat/table (3).ogg','sound/misc/mat/table (4).ogg')), 30, TRUE, ignore_walls = FALSE)
@@ -398,6 +406,7 @@
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK
 	grid_width = 32
 	grid_height = 64
+	dropshrink = 0.85
 
 /obj/item/bedroll/attack_self(mob/user, params)
 	..()

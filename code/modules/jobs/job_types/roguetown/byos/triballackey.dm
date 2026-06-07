@@ -41,7 +41,7 @@
 	pants = /obj/item/clothing/under/roguetown/loincloth/brown
 	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 	beltr = /obj/item/quiver/arrows
-	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/padagger
+	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/ancient
 
 /datum/advclass/tribalrabble/rabble
 	name = "Hunter"
@@ -77,7 +77,6 @@
 		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/traps = SKILL_LEVEL_EXPERT,
 	)
 
 /datum/outfit/job/roguetown/tribalrabble/rabble/pre_equip(mob/living/carbon/human/H)

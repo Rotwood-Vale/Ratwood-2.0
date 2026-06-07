@@ -55,6 +55,7 @@
 	var/can_repair = TRUE
 	grid_width = 32
 	grid_height = 32
+	dropshrink = 0.75
 
 /obj/item/needle/examine()
 	. = ..()
@@ -121,7 +122,7 @@
 			// basic principles: instead of failing and doing nothing, we instead do something but much less.
 			// if the item is broken and we fix it at low skill, we cap the quality of our repair to 60% total integrity
 			// only skilled craftsmen can fix things at 100% integrity.
-			
+
 			var/skill = max(user.get_skill_level(/datum/skill/craft/sewing), user.get_skill_level(/datum/skill/craft/tanning))
 			var/failed = prob(BASE_FAIL_CHANCE - (skill * FAIL_REDUCTION_PER_LEVEL))
 			var/sewtime = max(SEW_MIN_TIME, BASE_SEW_TIME - (SEW_TIME_REDUCTION_PER_LEVEL * skill))
@@ -132,7 +133,7 @@
 				to_chat(user, span_warning("I can't repair that with a needle."))
 				return
 
-			if (HAS_TRAIT(user, TRAIT_SQUIRE_REPAIR)) // squires are always considered skilled w/o other bonuses for the purposes of repair
+			if(HAS_TRAIT(user, TRAIT_SQUIRE_REPAIR) || HAS_TRAIT(user, TRAIT_SELF_SUSTENANCE))
 				unskilled = FALSE
 
 			// if we're stupid and the object isn't broken and it's had a field repair, we can't fix it any further for the moment
@@ -146,7 +147,7 @@
 			var/total_repair = BASE_SEW_REPAIR + skill * SEW_REPAIR_PER_LEVEL
 			var/repair_line = "[user] repairs [cloth]!"
 			var/total_XP = failed ? XP_ON_FAIL : XP_ON_SUCCESS
-		
+
 			if (failed)
 				total_repair = total_repair * 0.5 // 50% reduction on failed repairs, but we still repair!
 				repair_line = "[user] makes a little progress towards repairing [cloth]..."
@@ -163,7 +164,7 @@
 
 			playsound(loc, 'sound/foley/sewflesh.ogg', 50, TRUE, -2)
 			user.visible_message(span_info(repair_line))
-	
+
 			if(cloth.obj_broken)
 				var/do_fix = FALSE
 				if(unskilled && integrity_percentage >= 60)
@@ -185,7 +186,7 @@
 			else if (!cloth.obj_broken && !unskilled && cloth.shoddy_repair && integrity_percentage >= 100)
 				cloth.shoddy_repair = FALSE
 				to_chat(user, span_notice("My skilled hand has fully repaired this item."))
-			
+
 			if(do_after(user, AUTO_SEW_DELAY, target = I))
 				attack_obj(I, user)
 		return
@@ -270,7 +271,7 @@
 	desc = span_green("This needle has been blessed by the goddess of medicine herself!")
 	infinite = TRUE
 
-/obj/item/needle/aalloy
+/obj/item/needle/decrepit
 	name = "decrepit needle"
 	icon_state = "aneedle"
 	desc = "This decrepit old needle doesn't seem helpful for much."

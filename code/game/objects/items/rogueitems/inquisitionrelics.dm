@@ -79,7 +79,12 @@
 	cranking = !cranking
 	update_icon()
 	if(cranking)
-		user.apply_status_effect(/datum/status_effect/buff/cranking_soulchurner)
+		if(!HAS_TRAIT(user, INSPIRING_MUSICIAN))
+			user.apply_status_effect(/datum/status_effect/buff/cranking_soulchurner)
+		else if(alert(user, "Harmonize the voices or let them scream?", "Soul Churner", "Harmonize", "Scream") != "Scream")
+			user.apply_status_effect(/datum/status_effect/buff/quelling_soulchurner)
+		else
+			user.apply_status_effect(/datum/status_effect/buff/cranking_soulchurner)
 		soundloop.start()
 		var/songhearers = view(7, user)
 		for(var/mob/living/carbon/human/target in songhearers)
@@ -87,6 +92,7 @@
 	if(!cranking)
 		soundloop.stop()
 		user.remove_status_effect(/datum/status_effect/buff/cranking_soulchurner)
+		user.remove_status_effect(/datum/status_effect/buff/quelling_soulchurner)
 
 /obj/item/psydonmusicbox/Initialize(mapload)
 	soundloop = new(src, FALSE)
@@ -111,6 +117,7 @@
 	if(soundloop)
 		soundloop.stop()
 		user.remove_status_effect(/datum/status_effect/buff/cranking_soulchurner)
+		user.remove_status_effect(/datum/status_effect/buff/quelling_soulchurner)
 
 /obj/item/psydonmusicbox/getonmobprop(tag)
 	. = ..()
@@ -253,6 +260,36 @@
 						H.add_stress(/datum/stressevent/soulchurner)
 						if(!H.has_status_effect(/datum/status_effect/buff/churnernegative))
 							H.apply_status_effect(/datum/status_effect/buff/churnernegative)
+
+/atom/movable/screen/alert/status_effect/buff/quelling_soulchurner
+	name = "Quelling Soulchurner"
+	desc = "I am bringing the twisted device to life, quelling the voices..."
+	icon_state = "buff"
+
+/datum/status_effect/buff/quelling_soulchurner
+	id = "quellchurner"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/quelling_soulchurner
+	var/effect_color
+	var/pulse = 0
+	var/ticks_to_apply = 10
+
+/datum/status_effect/buff/quelling_soulchurner/on_creation(mob/living/new_owner, stress, colour)
+	effect_color = "#800000"
+	return ..()
+
+/datum/status_effect/buff/quelling_soulchurner/tick()
+	var/obj/effect/temp_visual/music_rogue/M = new /obj/effect/temp_visual/music_rogue(get_turf(owner))
+	M.color = "#800000"
+	pulse += 1
+	if (pulse >= ticks_to_apply)
+		pulse = 0
+		if(!HAS_TRAIT(owner, TRAIT_INQUISITION))
+			owner.add_stress(/datum/stressevent/soulchurnerhorror)
+		for (var/mob/living/carbon/human/H in hearers(7, owner))
+			if(!H.client)
+				continue
+			if(HAS_TRAIT(H, TRAIT_INQUISITION))
+				H.apply_status_effect(/datum/status_effect/buff/churnerprotection)
 /*
 Inquisitorial armory down here
 
@@ -888,7 +925,7 @@ Inquisitorial armory down here
 /obj/item/inqarticles/garrote/attack_self(mob/user)
 	if(obj_broken)
 		to_chat(user, span_warning("It's useless now, although.."))
-		to_chat(user, span_notice("I could rethread it with more cordage."))
+		to_chat(user, span_notice("I could rethread it with more cordage or rope."))
 		return
 	if(wielded)
 		ungrip(user, FALSE)
@@ -934,8 +971,8 @@ Inquisitorial armory down here
 
 /obj/item/inqarticles/garrote/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
-	if(istype(I, /obj/item/rope/inqarticles/inquirycord))
-		user.visible_message(span_warning("[user] starts to rethread the [src] using the [I]."))
+	if(istype(I, /obj/item/rope/inqarticles/inquirycord) || (istype(I, /obj/item/rope) && !istype(I, /obj/item/rope/chain)))
+		user.visible_message(span_warning("[user] starts to rethread the [src] using [I]."))
 		if(do_after(user, 8 SECONDS))
 			qdel(I)
 			obj_broken = FALSE

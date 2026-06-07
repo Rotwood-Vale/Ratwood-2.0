@@ -125,3 +125,88 @@
 
 /obj/item/organ/stomach/ethereal/proc/adjust_charge(amount)
 	crystal_charge = CLAMP(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_FULL)
+
+/obj/item/organ/stomach/t1
+	name = "completed stomach"
+	icon_state = "stomach"
+	desc = "The perfect art, it feels... Completed."
+	sellprice = 100
+
+/obj/item/organ/stomach/t2
+	name = "blessed stomach"
+	icon_state = "stomach"
+	desc = "They accepted this heresy to defeat a greater heresy. They call it a blessing, but we all know it’s not…"
+	sellprice = 200
+
+/obj/item/organ/stomach/t3
+	name = "corrupted stomach"
+	icon_state = "stomach"
+	desc = "A cursed, perverted artifact. It can serve you well—what sacrifice are you willing to offer to survive?"
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
+	sellprice = 300
+
+/datum/status_effect/buff/t1stomach
+	id = "t1stomach"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/t1stomach
+
+/atom/movable/screen/alert/status_effect/buff/t1stomach
+	name = "Completed stomach"
+	desc = "I have better version of stomach now "
+
+/obj/item/organ/stomach/t1/Insert(mob/living/carbon/M)
+	..()
+	if(M)
+		M.apply_status_effect(/datum/status_effect/buff/t1stomach)
+		ADD_TRAIT(M, TRAIT_ROT_EATER, ORGAN_TRAIT)
+
+/obj/item/organ/stomach/t1/Remove(mob/living/carbon/M, special = 0)
+	..()
+	if(M.has_status_effect(/datum/status_effect/buff/t1stomach))
+		M.remove_status_effect(/datum/status_effect/buff/t1stomach)
+		REMOVE_TRAIT(M, TRAIT_ROT_EATER , ORGAN_TRAIT)
+
+/datum/status_effect/buff/t2stomach
+	id = "t2stomach"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/t2stomach
+
+/atom/movable/screen/alert/status_effect/buff/t2stomach
+	name = "Blessed stomach"
+	desc = "A blessed stomach... Maybe"
+
+/obj/item/organ/stomach/t2/Insert(mob/living/carbon/M)
+	..()
+	if(M)
+		M.apply_status_effect(/datum/status_effect/buff/t2stomach)
+		ADD_TRAIT(M, TRAIT_ROT_EATER, ORGAN_TRAIT)
+		ADD_TRAIT(M, TRAIT_WILD_EATER, ORGAN_TRAIT)
+
+
+/obj/item/organ/stomach/t2/Remove(mob/living/carbon/M, special = 0)
+	..()
+	if(M.has_status_effect(/datum/status_effect/buff/t2stomach))
+		M.remove_status_effect(/datum/status_effect/buff/t2stomach)
+		REMOVE_TRAIT(M, TRAIT_ROT_EATER , ORGAN_TRAIT)
+		REMOVE_TRAIT(M, TRAIT_WILD_EATER , ORGAN_TRAIT)
+
+/datum/status_effect/buff/t3stomach
+	id = "t3stomach"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/t3stomach
+
+/atom/movable/screen/alert/status_effect/buff/t3stomach
+	name = "Corrupted stomach"
+	desc = "Tte cursed thing is inside me now."
+
+/obj/item/organ/stomach/t3/Insert(mob/living/carbon/M)
+	..()
+	if(M)
+		M.apply_status_effect(/datum/status_effect/buff/t3stomach)
+		ADD_TRAIT(M, TRAIT_NASTY_EATER, ORGAN_TRAIT)
+		ADD_TRAIT(M, TRAIT_ORGAN_EATER, ORGAN_TRAIT)
+
+
+/obj/item/organ/stomach/t3/Remove(mob/living/carbon/M, special = 0)
+	..()
+	if(M.has_status_effect(/datum/status_effect/buff/t3stomach))
+		M.remove_status_effect(/datum/status_effect/buff/t3stomach)
+		REMOVE_TRAIT(M, TRAIT_NASTY_EATER, ORGAN_TRAIT)
+		REMOVE_TRAIT(M, TRAIT_ORGAN_EATER, ORGAN_TRAIT)

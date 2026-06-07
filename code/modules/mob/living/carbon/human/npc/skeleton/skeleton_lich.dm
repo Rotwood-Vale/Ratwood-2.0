@@ -18,7 +18,7 @@
 		beltr = /obj/item/storage/belt/rogue/pouch/treasure/lucky
 	else
 		beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
-	id = /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy
+	id = /obj/item/clothing/neck/roguetown/psicross/inhumen/ancient
 	H.STASTR = 20
 	H.STAPER = 20
 	H.STASPD = 10

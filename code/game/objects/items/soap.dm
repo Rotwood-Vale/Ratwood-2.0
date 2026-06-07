@@ -12,12 +12,13 @@
 	throw_speed = 1
 	throw_range = 7
 	grind_results = list(/datum/reagent/lye = 10)
+	dropshrink = 0.7
 	var/cleanspeed = 20 //as fast as 5 arcyne Prestidigitation
 	var/uses = 100
 
 /obj/item/soap/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 80)
+	AddComponent(/datum/component/slippery, 10)
 
 /obj/item/soap/examine(mob/user)
 	. = ..()
@@ -101,6 +102,8 @@
 				visible_message(span_info("[user] tries their best to scrub [target] with the [src]."))
 				to_chat(target, span_warning("That's a bit nicer, I guess."))
 				target.add_stress(/datum/stressevent/bath)
+			var/datum/charflaw/malodorous/malodorous_flaw = target.get_flaw(/datum/charflaw/malodorous)
+			malodorous_flaw?.on_bath(target)
 			uses -= 1
 			if(uses == 0)
 				qdel(src)

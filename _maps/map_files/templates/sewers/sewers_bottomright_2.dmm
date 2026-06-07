@@ -22,7 +22,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "p" = (
-/obj/machinery/light/rogue/wallfire/candle,
+/obj/machinery/light/rogue/candle,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "q" = (
@@ -69,7 +69,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "P" = (
-/obj/machinery/light/rogue/wallfire/candle,
+/obj/machinery/light/rogue/candle,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)

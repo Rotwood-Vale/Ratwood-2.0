@@ -501,7 +501,7 @@
 	base_icon_state = "basic_book"
 	override_find_book = TRUE
 
-/obj/item/book/rogue/playerbook/Initialize(mapload, loc, in_round_player_generated, mob/living/in_round_player_mob, text)
+/obj/item/book/rogue/playerbook/Initialize(mapload, in_round_player_generated, mob/living/in_round_player_mob, text)
 	. = ..()
 	is_in_round_player_generated = in_round_player_generated
 	if(is_in_round_player_generated)
@@ -555,6 +555,7 @@
 	resistance_flags = FLAMMABLE
 	grid_width = 32
 	grid_height = 64
+	dropshrink = 0.8
 	var/number_of_pages = 2
 	var/compiled_pages = null
 	var/list/page_texts = list()
@@ -698,6 +699,7 @@
 	desc = "Apply on a written manuscript to create a book."
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "book_crafting_kit"
+	dropshrink = 0.7
 
 /obj/item/book/rogue/swatchbook
 	name = "Tailor's Swatchbook"
@@ -724,7 +726,7 @@
 
 /obj/item/book/rogue/bibble/zizo
 	name = "Lexicon of Her Truth"
-	desc = "By learning Her teachings, we will one day walk in Her footsteps.' A volume forbidden to be read by the Holy See, containing a retelling of the mortal life and ascension of Zizo, the Lady of Darkness - or at least the version of them held by the cultists of her 'Salvation'. Smells suspiciously of dried blood."
+	desc = "By learning Her teachings, we will one day walk in Her footsteps. A volume forbidden to be read by the Holy See, containing a retelling of the mortal lyfe and ascension of ZIZO, the Lady of Progress - or at least the version recounted by the cultists of her 'Salvation'."
 	icon = 'icons/roguetown/items/bookszizo.dmi'
 	icon_state = "zizoble_0"
 	base_icon_state = "zizoble"
