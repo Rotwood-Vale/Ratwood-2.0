@@ -19,6 +19,7 @@ SUBSYSTEM_DEF(vote)
 	var/list/voting = list()
 	var/list/generated_actions = list()
 	var/static/list/everyone_is_equal = list("custom")
+	var/list/effective_choices = list()
 
 /datum/controller/subsystem/vote/fire()	//called by master_controller
 	if(mode)
@@ -52,17 +53,25 @@ SUBSYSTEM_DEF(vote)
 	choices.Cut()
 	voted.Cut()
 	voting.Cut()
+	effective_choices.Cut()
 	remove_action_buttons()
 
 /datum/controller/subsystem/vote/proc/get_result()
 	//get the highest number of votes
 	var/greatest_votes = 0
 	var/total_votes = 0
+	effective_choices = list()
 	for(var/option in choices)
-		var/votes = choices[option]
-		total_votes += votes
-		if(votes > greatest_votes)
-			greatest_votes = votes
+		var/effective = choices[option]
+		total_votes += choices[option]
+		if(mode == "map" && option == SSmapping.config.map_name)
+			effective -= round(effective * 0.25)
+
+		effective_choices[option] = effective
+
+		if(effective > greatest_votes)
+			greatest_votes = effective
+
 	//default-vote for everyone who didn't vote
 	if(!CONFIG_GET(flag/default_no_vote) && choices.len)
 		var/list/non_voters = GLOB.directory.Copy()
@@ -94,10 +103,18 @@ SUBSYSTEM_DEF(vote)
 						greatest_votes = max(greatest_votes, choices[default_map])
 	//get all options with that many votes and return them in a list
 	. = list()
-	if(greatest_votes)
-		for(var/option in choices)
-			if(choices[option] == greatest_votes)
-				. += option
+	if(greatest_votes <= 0)
+		return .
+	if(!isnum(greatest_votes))
+		return .
+	for(var/option in choices)
+		if(!option)
+			continue
+		var/vote_total = choices[option]
+		if(!vote_total)
+			vote_total = 0
+		if(vote_total >= greatest_votes)
+			. += option
 	return .
 
 /datum/controller/subsystem/vote/proc/announce_result()
@@ -326,11 +343,20 @@ SUBSYSTEM_DEF(vote)
 		else
 			. += "<h2>Vote: [capitalize(mode)]</h2>"
 		. += "Time Left: [time_remaining] s<hr><ul>"
-		for(var/i=1,i<=choices.len,i++)
-			var/votes = choices[choices[i]]
-			if(!votes)
-				votes = 0
-			. += "<li><a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([votes] votepwr)</li>"
+		for(var/i=1, i<=choices.len, i++)
+			var/option = choices[i]
+
+			var/raw = choices[option]
+			if(!raw)
+				raw = 0
+
+			var/effective = raw
+			if(mode == "map" && option == SSmapping.config.map_name)
+				effective -= round(raw * 0.25)
+				. += "<li><a href='?src=[REF(src)];vote=[i]'>[option]</a> (current-map:[effective] votepwr )</li>"
+			else
+				. += "<li><a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([raw] votepwr)</li>"
+
 		. += "</ul><hr>"
 		if(admin)
 			. += "(<a href='?src=[REF(src)];vote=cancel'>Cancel Vote</a>) "
