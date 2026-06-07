@@ -474,6 +474,23 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 			S.set_up(1, 1, front)
 			S.start()
 		return
+	if(istype(W, /obj/item/rogueweapon/pick))
+		if(!isliving(user))
+			..()
+			return
+		var/mob/living/L = user
+		if(!L.client || !L.client.prefs?.autopicking)
+			..()
+			return
+		user.doing = FALSE
+		while(!QDELETED(src) && user.Adjacent(src))
+			if((L.energy > 0) && do_after(user, CLICK_CD_MELEE, TRUE, src))
+				..()
+				if(QDELETED(src))
+					break
+			else
+				break
+		return
 	if( user.used_intent.type == /datum/intent/chisel )
 		playsound(src.loc, pick('sound/combat/hits/onrock/onrock (1).ogg', 'sound/combat/hits/onrock/onrock (2).ogg', 'sound/combat/hits/onrock/onrock (3).ogg', 'sound/combat/hits/onrock/onrock (4).ogg'), 100)
 		user.visible_message("<span class='info'>[user] chisels the boulder into blocks.</span>")
