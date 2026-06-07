@@ -126,10 +126,15 @@ SUBSYSTEM_DEF(vote)
 		else
 			text += "<b>[capitalize(mode)] Vote</b>"
 		for(var/i=1,i<=choices.len,i++)
-			var/votes = choices[choices[i]]
-			if(!votes)
-				votes = 0
-			text += "\n<b>[choices[i]]:</b> [votes]"
+			var/option = choices[i]
+			var/raw_votes = choices[option]
+			if(!raw_votes)
+				raw_votes = 0
+			var/effective_votes = raw_votes
+			if(mode == "map" && option == SSmapping.config.map_name)
+				effective_votes -= round(effective_votes * 0.25)
+
+			text += "\n<b>[option]:</b> [effective_votes]"
 		if(mode != "custom")
 			if(winners.len > 1)
 				text = "\n<b>Vote Tied Between:</b>"
