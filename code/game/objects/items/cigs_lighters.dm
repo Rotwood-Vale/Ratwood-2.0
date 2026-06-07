@@ -334,12 +334,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return lit * heat
 
 /obj/item/clothing/mask/cigarette/dropped(mob/user)
-    . = ..()
-    update_icon()
+	. = ..()
+	update_icon()
 
 /obj/item/clothing/mask/cigarette/equipped(mob/user, slot)
-    . = ..()
-    update_icon()
+	. = ..()
+	update_icon()
 
 // Rollies.
 
