@@ -1041,7 +1041,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to TRUE if you wish it to not give you outputs.
 /obj/item/proc/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
-	if((is_silver || smeltresult == /obj/item/ingot/silver) && (HAS_TRAIT(M, TRAIT_SILVER_WEAK) &&  !M.has_status_effect(STATUS_EFFECT_ANTIMAGIC)))
+	if((is_silver || smeltresult == /obj/item/ingot/silver) && !is_lesser_silver && (HAS_TRAIT(M, TRAIT_SILVER_WEAK) &&  !M.has_status_effect(STATUS_EFFECT_ANTIMAGIC)))
 		var/datum/antagonist/vampire/V_lord = M.mind?.has_antag_datum(/datum/antagonist/vampire/)
 		if(V_lord?.generation >= GENERATION_METHUSELAH)
 			return
@@ -1053,6 +1053,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		M.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder)
 		M.ignite_mob()
 		return FALSE
+	if(is_lesser_silver && HAS_TRAIT(M, TRAIT_SILVER_WEAK) && !M.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
+		// Kick off the lesser silver exposure timer. The status effect handles grace period,
+		// stress event, and eventual ignition; it self-removes when no lesser silver remains.
+		if(!M.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/lesser))
+			M.apply_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/lesser, 1)
 	//else if(is_blessed && slot == SLOT_HANDS)
 	//	user.add_stress(/datum/stressevent/blessed_weapon)
 	if(twohands_required)
@@ -1061,7 +1066,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return 0
 	if(!M)
 		return FALSE
-	if(HAS_TRAIT(M, TRAIT_CHUNKYFINGERS) && (!equipper || equipper == M) && src.type != /obj/item/grabbing/bite) //If a zombie's trying to put something on without assistance that's not a bite
+	if(HAS_TRAIT(M, TRAIT_CHUNKYFINGERS) && (!equipper || equipper == M) && type != /obj/item/grabbing/bite) //If a zombie's trying to put something on without assistance that's not a bite
 		to_chat(M, span_warning("...What?"))
 		return FALSE
 

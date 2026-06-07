@@ -87,7 +87,7 @@
 /datum/crafting_recipe/roguetown/alchemy/menthazig
 	name = "handmade mentha zig"
 	category = "Table"
-	result = list(/obj/item/clothing/mask/cigarette/rollie/mentha/crafted)
+	result = list(/obj/item/clothing/mask/cigarette/rollie/mentha)
 	reqs = list(/obj/item/clothing/mask/cigarette/rollie/nicotine = 1, /obj/item/alch/mentha = 1)
 	craftdiff = 1
 

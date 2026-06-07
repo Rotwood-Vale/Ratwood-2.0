@@ -20,6 +20,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Greedy"=/datum/charflaw/greedy,
 	"Hunted (+1 TRI)"=/datum/charflaw/hunted,
 	"Isolationist"=/datum/charflaw/isolationist,
+	"Caffiend"=/datum/charflaw/addiction/caffiend,
 	"Junkie"=/datum/charflaw/addiction/junkie,
 	"Lawless"=/datum/charflaw/lawless,
 	"Marked by Baotha" =/datum/charflaw/marked_by_baotha,

@@ -18,13 +18,11 @@
 		else
 			M.emote(pick("twitch_s","chuckle"))
 	M.apply_status_effect(/datum/status_effect/buff/weed)
-	if(M.has_flaw(/datum/charflaw/addiction/smoker))
-		M.sate_addiction(/datum/charflaw/addiction/smoker)
+	M.sate_addiction(/datum/charflaw/addiction/smoker)
 	..()
 
 /datum/reagent/drug/space_drugs/on_mob_end_metabolize(mob/living/M)
 	M.clear_fullscreen("weedsm")
-	M.update_body_parts_head_only()
 
 /*
 	if(M.client)
@@ -34,7 +32,6 @@
 /datum/reagent/drug/space_drugs/on_mob_metabolize(mob/living/M)
 	..()
 	M.set_drugginess(30)
-	M.update_body_parts_head_only()
 	M.overlay_fullscreen("weedsm", /atom/movable/screen/fullscreen/weedsm)
 
 /*
@@ -50,7 +47,7 @@
 	alpha = 100
 	show_when_dead = FALSE
 
-/atom/movable/screen/fullscreen/weedsm/Initialize(mapload)
+/atom/movable/screen/fullscreen/weedsm/Initialize()
 	. = ..()
 //			if(L.has_status_effect(/datum/status_effect/buff/weed))
 	filters += filter(type="angular_blur",x=5,y=5,size=1)
@@ -59,8 +56,8 @@
 	to_chat(M, "<span class='danger'>I start tripping hard!</span>")
 
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.1*REM, 0)
-	M.adjustOxyLoss(1.1*REM, 0)
+	M.adjustToxLoss(0.1  * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(1.1  * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 
 /datum/reagent/drug/nicotine
@@ -71,7 +68,7 @@
 	addiction_threshold = 999
 	taste_description = "smoke"
 	trippy = FALSE
-	overdose_threshold=999
+	overdose_threshold = 999
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 
 
@@ -85,51 +82,13 @@
 	..()
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/M)
-/*	if(prob(1))
-		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
-		to_chat(M, "<span class='notice'>[smoke_message]</span>")
-	M.AdjustStun(-5, FALSE)
-	M.AdjustKnockdown(-5, FALSE)
-	M.AdjustUnconscious(-5, FALSE)
-	M.AdjustParalyzed(-5, FALSE)
-	M.AdjustImmobilized(-5, FALSE)*/
-	if(M.has_flaw(/datum/charflaw/addiction/smoker))
-		M.sate_addiction(/datum/charflaw/addiction/smoker)
+	M.sate_addiction(/datum/charflaw/addiction/smoker)
 	..()
 	. = 1
 
 /datum/reagent/drug/nicotine/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.1*REM, 0)
-	M.adjustOxyLoss(1.1*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/drug/mentha // distinct from SS13 menthol, for the mentha zigs
-	name = "Mentha"
-	description = "Extract from the mentha herb. Produces a cooling sensation."
-	reagent_state = LIQUID
-	color = "#FFFFFF"
-	addiction_threshold = 999
-	taste_description = "mentha"
-	trippy = FALSE
-	overdose_threshold=999
-	metabolization_rate = 0.1 * REAGENTS_METABOLISM
-
-/datum/reagent/drug/mentha/on_mob_end_metabolize(mob/living/M)
-	..()
-
-/datum/reagent/drug/mentha/on_mob_metabolize(mob/living/M)
-	var/mob/living/carbon/V = M
-	V.add_stress(/datum/stressevent/menthasmoke)
-	..()
-
-/datum/reagent/drug/mentha/on_mob_life(mob/living/carbon/M)
-	..()
-	. = 1
-
-/datum/reagent/drug/mentha/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.1*REM, 0)
-	M.adjustOxyLoss(1.1*REM, 0)
+	M.adjustToxLoss(0.1  * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(1.1  * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
@@ -154,30 +113,30 @@
 	. = 1
 
 /datum/reagent/drug/crank/overdose_process(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
-	M.adjustToxLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2  * REAGENTS_EFFECT_MULTIPLIER)
+	M.adjustToxLoss(2  * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustBruteLoss(2  * REAGENTS_EFFECT_MULTIPLIER, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage1(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5*REM)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5  * REAGENTS_EFFECT_MULTIPLIER)
 	..()
 
 /datum/reagent/drug/crank/addiction_act_stage2(mob/living/M)
-	M.adjustToxLoss(5*REM, 0)
+	M.adjustToxLoss(5  * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage3(mob/living/M)
-	M.adjustBruteLoss(5*REM, 0)
+	M.adjustBruteLoss(5  * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage4(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM)
-	M.adjustToxLoss(5*REM, 0)
-	M.adjustBruteLoss(5*REM, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3  * REAGENTS_EFFECT_MULTIPLIER)
+	M.adjustToxLoss(5  * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustBruteLoss(5  * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
@@ -389,3 +348,400 @@
 	if(prob(15))
 		M.adjustToxLoss(2, 0)
 	..()
+
+/datum/reagent/drug/mentha // distinct from SS13 menthol, for the mentha zigs
+	name = "Mentha"
+	description = "Extract from the mentha herb. Produces a cooling sensation."
+	reagent_state = LIQUID
+	color = "#3eb489"
+	addiction_threshold = 999
+	taste_description = "mentha"
+	trippy = FALSE
+	overdose_threshold = 999
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+
+/datum/reagent/drug/mentha/on_mob_end_metabolize(mob/living/M)
+	..()
+
+/datum/reagent/drug/mentha/on_mob_metabolize(mob/living/M)
+	var/mob/living/carbon/V = M
+	V.add_stress(/datum/stressevent/menthasmoke)
+	..()
+
+/datum/reagent/drug/mentha/on_mob_life(mob/living/carbon/M)
+	..()
+	. = 1
+
+/datum/reagent/drug/mentha/overdose_process(mob/living/M)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	..()
+	. = 1
+	
+/datum/reagent/drug/blackberry
+	name = "Blackberry"
+	description = "Extract from the blackberry. Produces a sweet-tart sensation."
+	reagent_state = LIQUID
+	color = "#4D0135"
+	addiction_threshold = 999
+	taste_description = "blackberry"
+	trippy = FALSE
+	overdose_threshold = 999
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+
+/datum/reagent/drug/blackberry/on_mob_end_metabolize(mob/living/M)
+	..()
+
+/datum/reagent/drug/blackberry/on_mob_metabolize(mob/living/M)
+	var/mob/living/carbon/V = M
+	V.add_stress(/datum/stressevent/blackberrysmoke)
+	..()
+
+/datum/reagent/drug/blackberry/on_mob_life(mob/living/carbon/M)
+	..()
+	. = 1
+
+/datum/reagent/drug/blackberry/overdose_process(mob/living/M)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	..()
+	. = 1
+	
+/datum/reagent/drug/apple 
+	name = "Apple"
+	description = "Extract from the apple. Produces a sourness and coolness sensation."
+	reagent_state = LIQUID
+	color = "#AF4D43"
+	addiction_threshold = 999
+	taste_description = "apple"
+	trippy = FALSE
+	overdose_threshold = 999
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+
+/datum/reagent/drug/apple/on_mob_end_metabolize(mob/living/M)
+	..()
+
+/datum/reagent/drug/apple/on_mob_metabolize(mob/living/M)
+	var/mob/living/carbon/V = M
+	V.add_stress(/datum/stressevent/applesmoke)
+	..()
+
+/datum/reagent/drug/apple/on_mob_life(mob/living/carbon/M)
+	..()
+	. = 1
+
+/datum/reagent/drug/apple/overdose_process(mob/living/M)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	..()
+	. = 1
+	
+/datum/reagent/drug/chocolate 
+	name = "Chocolate"
+	description = "Extract from the chocolate. Produces a sourness and coolness sensation."
+	reagent_state = LIQUID
+	color = "#7B3F00"
+	addiction_threshold = 999
+	taste_description = "chocolate"
+	trippy = FALSE
+	overdose_threshold = 999
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+
+/datum/reagent/drug/chocolate/on_mob_end_metabolize(mob/living/M)
+	..()
+
+/datum/reagent/drug/chocolate/on_mob_metabolize(mob/living/M)
+	var/mob/living/carbon/V = M
+	V.add_stress(/datum/stressevent/chocolatesmoke)
+	..()
+
+/datum/reagent/drug/chocolate/on_mob_life(mob/living/carbon/M)
+	..()
+	. = 1
+
+/datum/reagent/drug/chocolate/overdose_process(mob/living/M)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	..()
+	. = 1
+	
+/datum/reagent/drug/strawberry 
+	name = "Strawberry"
+	description = "Extract from the strawberry. Produces a sourness and coolness sensation."
+	reagent_state = LIQUID
+	color = "#FC5A8D"
+	addiction_threshold = 999
+	taste_description = "strawberry"
+	trippy = FALSE
+	overdose_threshold = 999
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+
+/datum/reagent/drug/strawberry/on_mob_end_metabolize(mob/living/M)
+	..()
+
+/datum/reagent/drug/strawberry/on_mob_metabolize(mob/living/M)
+	var/mob/living/carbon/V = M
+	V.add_stress(/datum/stressevent/strawberrysmoke)
+	..()
+
+/datum/reagent/drug/strawberry/on_mob_life(mob/living/carbon/M)
+	..()
+	. = 1
+
+/datum/reagent/drug/strawberry/overdose_process(mob/living/M)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	..()
+	. = 1
+	
+/datum/reagent/drug/carrot  
+	name = "Carrot"
+	description = "Extract from the carrot. Produces a sourness and coolness sensation."
+	reagent_state = LIQUID
+	color = "#ED9121"
+	addiction_threshold = 999
+	taste_description = "carrot"
+	trippy = FALSE
+	overdose_threshold = 999
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+
+/datum/reagent/drug/carrot/on_mob_end_metabolize(mob/living/M)
+	..()
+
+/datum/reagent/drug/carrot/on_mob_metabolize(mob/living/M)
+	var/mob/living/carbon/V = M
+	V.add_stress(/datum/stressevent/carrotsmoke)
+	..()
+
+/datum/reagent/drug/carrot/on_mob_life(mob/living/carbon/M)
+	..()
+	. = 1
+
+/datum/reagent/drug/carrot/overdose_process(mob/living/M)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	..()
+	. = 1
+	
+/datum/reagent/drug/lime
+	name = "Lime"
+	description = "Extract from the lime. Produces a sourness and coolness sensation."
+	reagent_state = LIQUID
+	color = "#BFFF00"
+	addiction_threshold = 999
+	taste_description = "lime"
+	trippy = FALSE
+	overdose_threshold = 999
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+
+/datum/reagent/drug/lime/on_mob_end_metabolize(mob/living/M)
+	..()
+
+/datum/reagent/drug/lime/on_mob_metabolize(mob/living/M)
+	var/mob/living/carbon/V = M
+	V.add_stress(/datum/stressevent/limesmoke)
+	..()
+
+/datum/reagent/drug/lime/on_mob_life(mob/living/carbon/M)
+	..()
+	. = 1
+
+/datum/reagent/drug/lime/overdose_process(mob/living/M)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	..()
+	. = 1
+	
+/datum/reagent/drug/salvia
+	name = "Salvia"
+	description = "Extract from the salvia. Produces a spicy, earthy and bitter sensation."
+	reagent_state = LIQUID
+	color = "#FF33FF"
+	addiction_threshold = 999
+	taste_description = "salvia"
+	trippy = FALSE
+	overdose_threshold = 999
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+
+/datum/reagent/drug/salvia/on_mob_end_metabolize(mob/living/M)
+	..()
+
+/datum/reagent/drug/salvia/on_mob_metabolize(mob/living/M)
+	var/mob/living/carbon/V = M
+	V.add_stress(/datum/stressevent/salviasmoke)
+	..()
+
+/datum/reagent/drug/salvia/on_mob_life(mob/living/carbon/M)
+	..()
+	. = 1
+
+/datum/reagent/drug/salvia/overdose_process(mob/living/M)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	..()
+	. = 1
+
+/datum/reagent/drug/valeriana
+	name = "Valeriana"
+	description = "Extract from the valeriana. Produces a bitter-spicy and tart sensation."
+	reagent_state = LIQUID
+	color = "#4a3c5f"
+	addiction_threshold = 999
+	taste_description = "valeriana"
+	trippy = FALSE
+	overdose_threshold = 999
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+
+/datum/reagent/drug/valeriana/on_mob_end_metabolize(mob/living/M)
+	..()
+
+/datum/reagent/drug/valeriana/on_mob_metabolize(mob/living/M)
+	var/mob/living/carbon/V = M
+	V.add_stress(/datum/stressevent/valerianasmoke)
+	if(prob(20))
+		M.drowsyness += 3
+		M.emote(pick("yawn"))
+		M.visible_message("<span class='notice'>[M]'s looks sleepy and relaxed</span>")
+	..()
+
+
+/datum/reagent/drug/valeriana/overdose_process(mob/living/M)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	..()
+	. = 1
+
+/datum/reagent/drug/calendula
+	name = "Calendula"
+	description = "Extract from the calendula. Produces a bitter-spicy and tart sensation."
+	reagent_state = LIQUID
+	color = "#a57006"
+	addiction_threshold = 999
+	taste_description = "calendula"
+	trippy = FALSE
+	overdose_threshold = 30 // lower, cuz of it's healing properties
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+
+/datum/reagent/drug/calendula/on_mob_end_metabolize(mob/living/M)
+	..()
+
+/datum/reagent/drug/calendula/on_mob_metabolize(mob/living/M)
+	var/list/wCount = M.get_wounds()
+	M.adjustBruteLoss(-0.5  * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustFireLoss(-0.5  * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(-0.25, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1  * REAGENTS_EFFECT_MULTIPLIER)
+	M.adjustCloneLoss(-0.5  * REAGENTS_EFFECT_MULTIPLIER, 0)
+	if(wCount.len > 0)
+		M.heal_wounds(0.5)  // twice worse than the tea
+	..()
+
+/datum/reagent/drug/calendula/on_mob_life(mob/living/carbon/M)
+	..()
+	. = 1
+
+/datum/reagent/drug/calendula/overdose_process(mob/living/M)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	..()
+	. = 1
+
+/datum/reagent/drug/petun
+	name = "Petun"
+	description = "A highly concentrated form of nicotine. Produces a causes sore throat and mild relaxation."
+	reagent_state = LIQUID
+	color = "#7ed9ad"
+	addiction_threshold = 999
+	taste_description = "concentrated bitterness"
+	trippy = FALSE
+	overdose_threshold = 999
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+
+/datum/reagent/drug/petun/on_mob_end_metabolize(mob/living/M)
+	..()
+
+/datum/reagent/drug/petun/on_mob_metabolize(mob/living/M)
+	var/mob/living/carbon/V = M
+	V.add_stress(/datum/stressevent/zweed)
+	if(prob(10))
+		M.emote(pick("drool","sigh"))
+	if(prob(5))
+		M.visible_message("<span class='notice'>[M]'s pleasantly relaxing.</span>")
+	..()
+
+/datum/reagent/drug/petun/on_mob_life(mob/living/carbon/M)
+	if(HAS_TRAIT(M, TRAIT_TOXIMMUNE))
+		M.adjustToxLoss(0.1)
+	..()
+	. = 1
+
+/datum/reagent/drug/petun/overdose_process(mob/living/M)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	..()
+	. = 1
+
+/datum/reagent/drug/jacksberries
+	name = "jacksberries"
+	description = "Extract from the jacksberries. Produces a causes sore throat and mild relaxation."
+	reagent_state = LIQUID
+	color = "#57628C"
+	addiction_threshold = 999
+	taste_description = "jacksberries"
+	trippy = FALSE
+	overdose_threshold=999
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+
+/datum/reagent/drug/jacksberries/on_mob_end_metabolize(mob/living/M)
+	..()
+
+/datum/reagent/drug/jacksberries/on_mob_metabolize(mob/living/M)
+	var/mob/living/carbon/V = M
+	V.add_stress(/datum/stressevent/jacksberriessmoke)
+	..()
+
+/datum/reagent/drug/jacksberries/on_mob_life(mob/living/carbon/M)
+	..()
+	. = 1
+
+/datum/reagent/drug/jacksberries/overdose_process(mob/living/M)
+	M.adjustToxLoss(0.1*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(1.1*REAGENTS_EFFECT_MULTIPLIER, 0)
+	..()
+	. = 1
+
+/datum/reagent/drug/abyss
+	name = "Abyss"
+	description = "Extract from the jacksberries. Produces a causes sore throat and mild relaxation."
+	reagent_state = LIQUID
+	color = "#5С0120"
+	addiction_threshold = 999
+	taste_description = "jacksberries"
+	trippy = FALSE
+	overdose_threshold=999
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+
+/datum/reagent/drug/abyss/on_mob_end_metabolize(mob/living/M)
+	..()
+
+/datum/reagent/drug/abyss/on_mob_metabolize(mob/living/M)
+	var/mob/living/carbon/V = M
+	V.add_stress(/datum/stressevent/abysssmoke)
+	if(prob(10))
+		M.emote(pick("drool","gasp"))
+	if(prob(3))
+		M.visible_message("<span class='notice'>[M]'s feels slightly uneasy, <span class='notice'>[M]'s gaze appears puzzled and distant</span>")
+	..()
+
+/datum/reagent/drug/abyss/on_mob_life(mob/living/carbon/M)
+	if(HAS_TRAIT(M, TRAIT_TOXIMMUNE))
+		M.adjustOxyLoss(0.1)
+	M.apply_status_effect(/datum/status_effect/buff/abyss)
+	..()
+	. = 1
+
+/datum/reagent/drug/abyss/overdose_process(mob/living/M)
+	M.adjustToxLoss(0.1*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(1.1*REAGENTS_EFFECT_MULTIPLIER, 0)
+	..()
+	. = 1
