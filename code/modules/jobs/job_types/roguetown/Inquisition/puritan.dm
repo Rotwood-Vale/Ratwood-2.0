@@ -20,7 +20,6 @@
 	min_pq = 30
 	max_pq = null
 	round_contrib_points = 2
-	vice_restrictions = list(/datum/charflaw/godless) // while teeechnically PSYDON LOVES YOU! still as a Godless, I do NOT trust people to not cause issues here. Safety check.
 	social_rank = SOCIAL_RANK_NOBLE
 	job_subclasses = list(
 		/datum/advclass/puritan/inspector,
