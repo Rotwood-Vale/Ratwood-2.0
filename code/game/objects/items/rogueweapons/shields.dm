@@ -455,7 +455,7 @@
 
 /obj/item/rogueweapon/shield/capbuckler // unique, better buckler for knight captain
 	name = "'Order'"
-	desc = "A special buckler shield made out of blacksteel for the captain of the guard, adorned with the vale's crest."
+	desc = "A special buckler shield made out of blacksteel for the captain of the guard, adorned with the realm's crest."
 	icon_state = "capbuckler"
 	icon = 'icons/roguetown/weapons/special/captain.dmi'
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK

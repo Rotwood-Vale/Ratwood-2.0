@@ -577,7 +577,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/ravox_visor
 	name = "plumed ravox helmet"
-	desc = "A helmet with a great, red plume. They will know, in time, that you are the true justiciar of the Vale."
+	desc = "A helmet with a great, red plume. They will know, in time, that you are the true justiciar of the realm."
 	icon_state = "ravoxhelm"
 	item_state = "ravoxhelm"
 	emote_environment = 3
@@ -677,7 +677,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth
 	name = "froggemund helmet"
-	desc = "A tall and imposing frogmouth-style helm popular in the highest plateaus of the vale. It covers not only the entire head and face, but the neck as well. Add a cloth to show the colors of your family or allegiance."
+	desc = "A tall and imposing frogmouth-style helm popular in the highest plateaus of the realm. It covers not only the entire head and face, but the neck as well. Add a cloth to show the colors of your family or allegiance."
 	icon_state = "frogmouth"
 	item_state = "frogmouth"
 	emote_environment = 3

@@ -568,7 +568,7 @@
 
 /datum/reagent/consumable/ethanol/whipwine // dont ask
 	name = "Magickal Whip Wine"
-	description = "A recipe recently floated into the vale. Magickal Whip Wine is said to increase one's potence and stamina sevenfold."
+	description = "A recipe recently floated into these lands. Magickal Whip Wine is said to increase one's potence and stamina sevenfold."
 	boozepwr = 10 // it's a whip. it's an actual whip.
 	taste_description = "leather, bitter herbs, and regret" // what did you expect
 	color = "#3a1d18"

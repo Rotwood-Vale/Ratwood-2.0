@@ -1,7 +1,7 @@
 /datum/job/roguetown/heartfelt/hand
 	title = "Hand of Heartfelt"
 	tutorial = "You are the Hand of Heartfelt, burdened by the perception of failure in protecting your Lord's domain. \
-	Despite doubts from others, your loyalty remains steadfast as you journey to the Vale, determined to fulfill your duties."
+	Despite doubts from others, your loyalty remains steadfast as you journey to these lands, determined to fulfill your duties."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	outfit = /datum/outfit/job/roguetown/heartfelt/hand
@@ -36,7 +36,7 @@
 /datum/advclass/heartfelt/hand/marshal
 	name = "Marshal of Heartfelt"
 	tutorial = "Renowned for your command of war, you laid down your blade in peaceful years, but peace died with Heartfelt. \
-	Pressed once more into service by tragedy, you climb towards the Vale."
+	Pressed once more into service by tragedy, you climb towards these lands."
 	outfit = /datum/outfit/job/roguetown/heartfelt/hand/marshal
 	category_tags = list(CTAG_HFT_HAND)
 	subclass_social_rank = SOCIAL_RANK_NOBLE
@@ -117,7 +117,7 @@
 	name = "Steward of Heartfelt"
 	tutorial = "You are the Steward of Heartfelt, once the quiet architect behind the barony's \
 	order—keeper of ledgers, harvests, and the lifeblood that sustained your people. \
-	Pressed once more into service by tragedy, you climb towards the Vale."
+	Pressed once more into service by tragedy, you climb towards these lands."
 	outfit = /datum/outfit/job/roguetown/heartfelt/hand/steward
 	category_tags = list(CTAG_HFT_HAND)
 	subclass_social_rank = SOCIAL_RANK_NOBLE
@@ -180,7 +180,7 @@
 /datum/advclass/heartfelt/hand/advisor
 	name = "Advisor of Heartfelt"
 	tutorial = "You are the Advisor of Heartfelt, trusted for your measured counsel and keen insight into matters of state. \
-	Bound once more to serve in the wake of ruin, you climb towards the Vale."
+	Bound once more to serve in the wake of ruin, you climb towards these lands."
 	outfit = /datum/outfit/job/roguetown/heartfelt/hand/advisor
 	category_tags = list(CTAG_HFT_HAND)
 	subclass_social_rank = SOCIAL_RANK_NOBLE

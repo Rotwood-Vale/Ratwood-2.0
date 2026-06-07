@@ -41,7 +41,7 @@
 
 /datum/virtue/utility/resident
 	name = "Resident"
-	desc = "I'm a resident of the vale. I have an account in the city's treasury and a home in the city."
+	desc = "I'm a resident of these lands. I have an account in the city's treasury and a home in the city."
 	added_traits = list(TRAIT_RESIDENT)
 
 /datum/virtue/utility/resident/apply_to_human(mob/living/carbon/human/recipient)

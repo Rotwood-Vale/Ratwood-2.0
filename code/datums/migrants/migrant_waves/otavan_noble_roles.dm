@@ -85,7 +85,7 @@
 
 /datum/advclass/otavan_knight
 	name = "Gendarme"
-	tutorial = "Whether through merit, blood or renown, you became a knight in service of the Otavan court. Now, tasked with escorting the Émissaire and protecting them at all cost, you ride into the Vale."
+	tutorial = "Whether through merit, blood or renown, you became a knight in service of the Otavan court. Now, tasked with escorting the Émissaire and protecting them at all cost, you ride into these lands."
 	outfit = /datum/outfit/job/roguetown/otavan/knight
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_NOBLE, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_OTAVAN_KNIGHT)

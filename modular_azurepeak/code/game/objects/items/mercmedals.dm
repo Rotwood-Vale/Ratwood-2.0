@@ -1,6 +1,6 @@
 /obj/item/merctoken
 	name = "writ of commendation"
-	desc = "A small, palm-fitting bound scroll - a writ of commendation for a mercenary in the Duchy of Rotwood Vale."
+	desc = "A small, palm-fitting bound scroll - a writ of commendation for a mercenary of the Realm."
 	icon_state = "merctoken"
 	icon = 'modular_azurepeak/icons/clothing/mercmedals.dmi'
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
@@ -32,7 +32,7 @@
 				signeejob = user.mind.assigned_role
 				visible_message("<span class='warning'>[user] writes their name down on the token.</span>")
 				playsound(src, 'sound/items/write.ogg', 100, FALSE)
-				desc = "A small, palm-fitting bound scroll that can be sent by mail to the Guild. Most of the fine print is unintelligible, save for one bold SIGNEE: [signee], [signeejob] of Rotwood Vale."
+				desc = "A small, palm-fitting bound scroll that can be sent by mail to the Guild. Most of the fine print is unintelligible, save for one bold SIGNEE: [signee], [signeejob] of The Realm."
 				signed = 1
 				return
 		else
@@ -58,7 +58,7 @@
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/blackoak
 	name = "guardian's seedpouch"
-	desc = "A pouch, sealed tight, bearing the acorn of an oak native to the vale. May your end be a new beginning for Rotwood Vale."
+	desc = "A pouch, sealed tight, bearing the acorn of an oak native to the vale. May your end be a new beginning for the Realm."
 	icon_state = "blackoak_pouch"
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/condottiero
@@ -87,7 +87,7 @@
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/atgervi
 	name = "northmanne's idol"
-	desc = "A humble token of tightly-wound canvas, fur, and wood. A piece of home, clutched tight against the chest. Feel its heart beat in tyme with your own. Even here, in the distant vale, \
+	desc = "A humble token of tightly-wound canvas, fur, and wood. A piece of home, clutched tight against the chest. Feel its heart beat in tyme with your own. Even here, in this distant realm, \
 	the gods walk, and they walk with you."
 	icon_state = "atgervi_idol"
 

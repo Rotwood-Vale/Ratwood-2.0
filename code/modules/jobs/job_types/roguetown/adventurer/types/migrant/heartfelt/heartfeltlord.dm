@@ -23,7 +23,7 @@
 /datum/advclass/heartfelt/lord/lord
 	name = "Lord of Heartfelt"
 	tutorial = "You are the Lord of Heartfelt, ruler of a once-prosperous barony now in ruin. \
-	Guided by your Magos, you journey to the Vale, seeking aid to restore your domain to its former glory, or perhaps claim a new throne."
+	Guided by your Magos, you journey to these lands, seeking aid to restore your domain to its former glory, or perhaps claim a new throne."
 	category_tags = list(CTAG_HFT_LORD)
 	maximum_possible_slots = 1
 	outfit = /datum/outfit/job/heartfelt/lord/lord
@@ -250,7 +250,7 @@
 /datum/advclass/heartfelt/lord/chief
 	name = "Chief of Heartfelt"
 	tutorial = "You are the Chieftain of Heartfelt, ruler of a once-prosperous barony now in ruin. \
-	Guided by your Magos, you journey to the Vale, seeking aid to restore your domain to its former glory, or perhaps claim a new throne."
+	Guided by your Magos, you journey to these lands, seeking aid to restore your domain to its former glory, or perhaps claim a new throne."
 	category_tags = list(CTAG_HFT_LORD)
 	maximum_possible_slots = 1
 	outfit = /datum/outfit/job/heartfelt/lord/chief
@@ -360,7 +360,7 @@
 		to_chat(recruiter, span_warning("They're already part of our cause!"))
 		return FALSE
 	if(HAS_TRAIT(recruit, TRAIT_GUARDSMAN))
-		to_chat(recruiter, span_warning("They're already part of the Vale's guard! They can't join our cause!"))
+		to_chat(recruiter, span_warning("They're already part of these lands's guard! They can't join our cause!"))
 		return FALSE
 	if(HAS_TRAIT(recruit, TRAIT_INQUISITION))
 		to_chat(recruiter, span_warning("Their loyalty is to Psydon alone! They can't join our cause!"))
