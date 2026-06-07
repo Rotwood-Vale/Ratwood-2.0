@@ -41,7 +41,8 @@
 /datum/artificer_recipe/tools/lamptern
 	name = "Lamptern, Bronze (x3)"
 	required_item = /obj/item/ingot/bronze
-	created_item = list(/obj/item/flashlight/flare/torch/lantern/bronzelamptern, /obj/item/flashlight/flare/torch/lantern/bronzelamptern,
+	created_item = list(/obj/item/flashlight/flare/torch/lantern/bronzelamptern,
+						/obj/item/flashlight/flare/torch/lantern/bronzelamptern,
 						/obj/item/flashlight/flare/torch/lantern/bronzelamptern)
 
 /datum/artificer_recipe/tools/locks

@@ -42,16 +42,20 @@
 	name = "pyroclastic bolt x5 (+1 iron) (+1 fyritius)"
 	required_item = /obj/item/natural/wood/plank
 	additional_items = list(/obj/item/ingot/iron, /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius)
-	created_item = list(/obj/item/ammo_casing/caseless/rogue/bolt/pyro, /obj/item/ammo_casing/caseless/rogue/bolt/pyro,
-						/obj/item/ammo_casing/caseless/rogue/bolt/pyro, /obj/item/ammo_casing/caseless/rogue/bolt/pyro,
+	created_item = list(/obj/item/ammo_casing/caseless/rogue/bolt/pyro,
+						/obj/item/ammo_casing/caseless/rogue/bolt/pyro,
+						/obj/item/ammo_casing/caseless/rogue/bolt/pyro,
+						/obj/item/ammo_casing/caseless/rogue/bolt/pyro,
 						/obj/item/ammo_casing/caseless/rogue/bolt/pyro)
 
 /datum/artificer_recipe/ammo/pyroarrow_five
 	name = "pyroclastic arrow x5 (+1 iron) (+1 fyritius)"
 	required_item = /obj/item/natural/wood/plank
 	additional_items = list(/obj/item/ingot/iron, /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius)
-	created_item = list(/obj/item/ammo_casing/caseless/rogue/arrow/pyro, /obj/item/ammo_casing/caseless/rogue/arrow/pyro,
-						/obj/item/ammo_casing/caseless/rogue/arrow/pyro, /obj/item/ammo_casing/caseless/rogue/arrow/pyro,
+	created_item = list(/obj/item/ammo_casing/caseless/rogue/arrow/pyro,
+						/obj/item/ammo_casing/caseless/rogue/arrow/pyro,
+						/obj/item/ammo_casing/caseless/rogue/arrow/pyro,
+						/obj/item/ammo_casing/caseless/rogue/arrow/pyro,
 						/obj/item/ammo_casing/caseless/rogue/arrow/pyro)
 
 /datum/artificer_recipe/ammo/lead_ball
