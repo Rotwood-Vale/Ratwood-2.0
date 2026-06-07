@@ -20,7 +20,7 @@
 /obj/item/clothing/gloves/roguetown/contraption/proc/battery_collapse(obj/O, mob/living/user)
 	to_chat(user, span_info("The [accepted_power_source.name] powering [src] fizzles into nothing!"))
 	playsound(src, pick('sound/combat/hits/onmetal/grille (1).ogg','sound/combat/hits/onmetal/grille (2).ogg'), 100, FALSE)
-	O.take_damage(400, BRUTE, "blunt", 1)
+	O.take_damage(150, BRUTE, "blunt", 1)
 
 /obj/item/clothing/gloves/roguetown/contraption/proc/misfire(obj/O, mob/living/user)
 	to_chat(user, span_danger("[src] spark violently in your hands!"))
@@ -30,7 +30,7 @@
 /obj/item/clothing/gloves/roguetown/contraption/proc/misfire_result(obj/O, mob/living/user)
 	misfiring = TRUE
 	explosion(src, light_impact_range = 2, flame_range = 2, smoke = TRUE)
-	O.take_damage(400, BRUTE, "blunt", 1)
+	O.take_damage(150, BRUTE, "blunt", 1)
 
 /obj/item/clothing/gloves/roguetown/contraption/proc/charge_deduction(obj/O, mob/living/user, deduction)
 	current_charge -= deduction
