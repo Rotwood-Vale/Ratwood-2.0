@@ -61,9 +61,9 @@
 
 	name = "Wooden Dagger (3x)"
 	required_item = /obj/item/natural/wood/plank
-	created_item = list(/obj/item/rogueweapon/huntingknife/idagger/wood)
+	created_item = list(/obj/item/rogueweapon/huntingknife/idagger/wood, /obj/item/rogueweapon/huntingknife/idagger/wood,
+						/obj/item/rogueweapon/huntingknife/idagger/wood)
 	hammers_per_item = 2
-	createditem_num = 3
 	skill_level = 2
 
 /datum/artificer_recipe/equipment/wooden_shield

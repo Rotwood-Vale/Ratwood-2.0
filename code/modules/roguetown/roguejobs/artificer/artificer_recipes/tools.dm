@@ -36,39 +36,34 @@
 /datum/artificer_recipe/tools/keys
 	name = "Key (x3)"
 	required_item = /obj/item/ingot/bronze
-	created_item = /obj/item/customblank
-	createditem_num = 3
+	created_item = list(/obj/item/customblank, /obj/item/customblank, /obj/item/customblank)
 
 /datum/artificer_recipe/tools/lamptern
 	name = "Lamptern, Bronze (x3)"
 	required_item = /obj/item/ingot/bronze
-	created_item = /obj/item/flashlight/flare/torch/lantern/bronzelamptern
-	createditem_num = 3
+	created_item = list(/obj/item/flashlight/flare/torch/lantern/bronzelamptern, /obj/item/flashlight/flare/torch/lantern/bronzelamptern,
+						/obj/item/flashlight/flare/torch/lantern/bronzelamptern)
 
 /datum/artificer_recipe/tools/locks
 	name = "Lock (x3)"
 	required_item = /obj/item/ingot/bronze
-	created_item = /obj/item/customlock
-	createditem_num = 3
+	created_item = list(/obj/item/customlock, /obj/item/customlock, /obj/item/customlock)
 
 /datum/artificer_recipe/tools/lockpicks
 	name = "Lockpick (x3)"
 	required_item = /obj/item/ingot/iron
-	created_item = /obj/item/lockpick
-	createditem_num = 3
+	created_item = list(/obj/item/lockpick, /obj/item/lockpick, /obj/item/lockpick)
 
 /datum/artificer_recipe/tools/lockpickring
 	name = "Lockpickring (x3)"
 	required_item = /obj/item/ingot/iron
-	created_item = /obj/item/lockpickring
-	createditem_num = 3
+	created_item = list(/obj/item/lockpickring, /obj/item/lockpickring, /obj/item/lockpickring)
 
 /datum/artificer_recipe/tools/flint
 	name = "Striking Flint x3 (+1 stone)"
 	required_item = /obj/item/ingot/iron
 	additional_items = list(/obj/item/natural/stone)
-	created_item = /obj/item/flint
-	createditem_num = 3
+	created_item = list(/obj/item/flint, /obj/item/flint, /obj/item/flint)
 
 /datum/artificer_recipe/tools/wooden_mallet
 	name = "Wooden Mallet"
