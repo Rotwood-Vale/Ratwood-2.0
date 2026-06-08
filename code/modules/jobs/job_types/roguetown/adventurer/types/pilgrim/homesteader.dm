@@ -662,7 +662,6 @@
 			"Unarmed" = /datum/skill/combat/unarmed,
 			"Knives" = /datum/skill/combat/knives,
 			"Wrestling" = /datum/skill/combat/wrestling,
-			"Staves" = /datum/skill/combat/staves,
 			"Whips & Flails" = /datum/skill/combat/whipsflails,
 			"Bows" = /datum/skill/combat/bows,
 			"Crossbows" = /datum/skill/combat/crossbows,

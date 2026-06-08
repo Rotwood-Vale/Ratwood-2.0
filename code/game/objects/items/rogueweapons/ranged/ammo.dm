@@ -23,18 +23,18 @@
 	max_integrity = 10
 	force = 10
 
+/obj/item/ammo_casing/caseless/rogue/bolt/ancient
+	name = "ancient bolt"
+	desc = "An ancient bolt, tipped with polished gilbranze. The razor-thin tip resembles a sabot more than an arrowhead; something that most alloys cannot reliably withstand."
+	icon_state = "ancientbolt"
+	projectile_type = /obj/projectile/bullet/reusable/bolt/ancient
+
 /obj/item/ammo_casing/caseless/rogue/bolt/decrepit
 	name = "decrepit bolt"
 	desc = "An ancient bolt, tipped with frayed bronze. It lacks the luster that it once held, many centuries ago."
 	icon_state = "ancientbolt"
 	projectile_type = /obj/projectile/bullet/reusable/bolt/decrepit
 	color = "#bb9696"
-
-/obj/item/ammo_casing/caseless/rogue/bolt/ancient
-	name = "ancient bolt"
-	desc = "An ancient bolt, tipped with polished gilbranze. The razor-thin tip resembles a sabot more than an arrowhead; something that most alloys cannot reliably withstand."
-	icon_state = "ancientbolt"
-	projectile_type = /obj/projectile/bullet/reusable/bolt/ancient
 
 /obj/item/ammo_casing/caseless/rogue/bolt/blunt
 	name = "practice bolt"

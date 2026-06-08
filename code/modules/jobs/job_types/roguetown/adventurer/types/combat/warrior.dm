@@ -474,7 +474,7 @@
 				r_hand = /obj/item/rogueweapon/spear/silver
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
 			if("Silver Quarterstaff")
-				H.adjust_skillrank_up_to(/datum/skill/combat/staves, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/silver
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
 
@@ -575,7 +575,6 @@
 		H.adjust_skillrank(/datum/skill/combat/whipsflails, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/axes, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/combat/staves, 1, TRUE)
 	//Old people get the option to become glass cannons. Expert Knives + Expert in their chosen weapon, but a permenant -I STR, -I PER, -2 SPD and -2 CON debuff.
 /datum/advclass/sfighter/amazon
 	name = "Amazon"

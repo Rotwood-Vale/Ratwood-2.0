@@ -92,6 +92,13 @@
 		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
 			qdel(H)
 
+/obj/item/storage/belt/rogue/pouch/coins/gilbranze/Initialize(mapload)
+	. = ..()
+	var/obj/item/roguecoin/gilbranze/pile/H = new(loc)
+	if(istype(H))
+		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
+			qdel(H)
+
 /obj/item/storage/belt/rogue/pouch/food/PopulateContents()
 	new /obj/effect/spawner/lootdrop/roguetown/dungeon/food(src)
 

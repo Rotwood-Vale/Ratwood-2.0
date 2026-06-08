@@ -118,6 +118,7 @@
 
 /obj/structure/roguemachine/steward/Topic(href, href_list)
 	. = ..()
+	var/realmname = SSmapping.map_adjustment.realm_name
 	if(!usr.canUseTopic(src, BE_CLOSE) || locked)
 		return
 	if(href_list["switchtab"])
@@ -135,7 +136,7 @@
 		SStreasury.log_to_steward("-[amt] imported [D.name]")
 		record_round_statistic(STATS_STOCKPILE_IMPORTS_VALUE, amt)
 		if(amt >= 100) //Only announce big spending.
-			scom_announce("Rotwood Vale imports [D.name] for [amt] mammon.", )
+			scom_announce("[realmname] imports [D.name] for [amt] mammon.", )
 		D.raise_demand()
 		addtimer(CALLBACK(src, PROC_REF(do_import), D.type), 10 SECONDS)
 	if(href_list["export"])
@@ -205,7 +206,7 @@
 			if(findtext(num2text(newrate), "."))
 				return
 			newrate = CLAMP(newrate, 0, D.generation_max)
-			scom_announce("Rotwood Vale will [newrate ? "now import [newrate] [D.name] every 5 hours." : "no longer import [D.name] periodically"]")
+			scom_announce("[realmname] will [newrate ? "now import [newrate] [D.name] every 5 hours." : "no longer import [D.name] periodically"]")
 			D.passive_generation = newrate
 	if(href_list["setlimit"])
 		var/datum/roguestock/D = locate(href_list["setlimit"]) in SStreasury.stockpile_datums

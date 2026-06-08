@@ -268,7 +268,7 @@ export const PaperWriterPanel = () => {
                     setPreviewDirty(false);
                     act('sign', { draft, font, seq: nextActionSeq() });
                   }}>
-                  Sign
+                  Done
                 </Button>
               </Stack.Item>
               <Stack.Item>

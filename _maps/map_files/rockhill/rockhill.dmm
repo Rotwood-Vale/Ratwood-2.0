@@ -3680,7 +3680,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Seneschal's Quarters"
 	},
 /turf/open/floor/rogue/concrete,
@@ -6742,8 +6742,9 @@
 /area/rogue/outdoors/beach/harbor)
 "bBg" = (
 /obj/structure/fluff/customsign{
-	desc = "DANGER";
-	name = "Mines"
+	icon_state = "signwrote";
+	pixel_y = 7;
+	wrotesign = "Western Mines - DANGER"
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/rtfield/rockhill)
@@ -7196,9 +7197,9 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/town/roofs)
 "bGi" = (
-/obj/structure/fluff/customsign{
-	icon_state = "signwrote";
-	name = "Rockhill - Northwest"
+/obj/structure/fluff/customsign/arrow{
+	dir = 1;
+	wrotesign = "Rockhill - Northwest"
 	},
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/woodsafe)
@@ -9002,7 +9003,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Servant's Bunks"
 	},
 /turf/open/floor/rogue/concrete,
@@ -15429,11 +15430,11 @@
 "duC" = (
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "WARNING";
 	pixel_x = 9;
 	pixel_y = 20;
 	layer = 5;
-	max_integrity = 50
+	max_integrity = 50;
+	wrotesign = "WARNING"
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/bograt/south)
@@ -19092,8 +19093,9 @@
 /area/rogue/outdoors/beach/harbor)
 "ekK" = (
 /obj/structure/fluff/customsign{
-	desc = "DANGER";
-	name = "Mines"
+	icon_state = "signwrote";
+	pixel_y = 7;
+	wrotesign = "Western Mines - DANGER"
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave)
@@ -22151,9 +22153,9 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/cavewet)
 "eUj" = (
-/obj/structure/fluff/customsign{
-	icon_state = "signwrote";
-	name = "Rockhill - Northwest"
+/obj/structure/fluff/customsign/arrow{
+	dir = 1;
+	wrotesign = "Rockhill - Northwest"
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave)
@@ -22258,8 +22260,11 @@
 /area/rogue/indoors)
 "eVo" = (
 /obj/structure/fluff/customsign{
-	desc = "DANGER";
-	name = "Eastern Mines"
+	icon_state = "signwrote";
+	pixel_y = 7;
+	layer = 5;
+	max_integrity = 50;
+	wrotesign = "Eastern Mines - DANGER"
 	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/cavewet)
@@ -22605,7 +22610,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Seneschal's Quarters"
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -27747,9 +27752,8 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
 "gkx" = (
-/obj/structure/fluff/customsign{
-	icon_state = "signwrote";
-	name = "Rockhill - Northeast"
+/obj/structure/fluff/customsign/arrow{
+	dir = 4
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/bograt/west)
@@ -30830,8 +30834,9 @@
 /area/rogue/under/dungeon/sunkenchurch)
 "gVy" = (
 /obj/structure/fluff/customsign{
-	desc = "DANGER";
-	name = "Mines"
+	icon_state = "signwrote";
+	pixel_y = 7;
+	wrotesign = "Western Mines - DANGER"
 	},
 /turf/open/floor/rogue/ruinedwood/platform,
 /area/rogue/under/cave)
@@ -32193,7 +32198,7 @@
 "hkV" = (
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "WELCOME TO ROCKHILL"
+	wrotesign = "WELCOME TO ROCKHILL"
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/town/rockhill)
@@ -33470,7 +33475,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Kitchen"
 	},
 /turf/open/floor/rogue/concrete,
@@ -48466,8 +48471,8 @@
 /obj/item/roguebin,
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "NO LITTERING BEYOND THIS POINT";
-	pixel_y = 21
+	pixel_y = 21;
+	wrotesign = "NO LITTERING BEYOND THIS POINT"
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/town/rockhill)
@@ -48982,9 +48987,9 @@
 	},
 /area/rogue/indoors/town/church/chapel)
 "lfz" = (
-/obj/structure/fluff/customsign{
-	icon_state = "signwrote";
-	name = "Rockhill - Northeast"
+/obj/structure/fluff/customsign/arrow{
+	dir = 4;
+	wrotesign = "Rockhill - Northeast"
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/bogsafe)
@@ -49606,14 +49611,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/town/church)
-"lni" = (
-/obj/structure/fluff/customsign{
-	icon_state = "signwrote";
-	name = "EVIL ASS.... SOMETHING  DUNGEON - UNDER CONSTRUCTION!!";
-	pixel_y = 3
-	},
-/turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cavewet)
 "lnk" = (
 /obj/structure/bars/steel,
 /turf/open/floor/rogue/naturalstone,
@@ -50202,9 +50199,9 @@
 /obj/structure/fluff/customsign{
 	desc = "Follow the road";
 	icon_state = "signwrote";
-	name = "Whitevein - Down Below!";
 	pixel_x = 7;
-	pixel_y = 10
+	pixel_y = 10;
+	wrotesign = "Whitevein - Down Below!"
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/town/rockhill)
@@ -54432,9 +54429,9 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors)
 "mqL" = (
-/obj/structure/fluff/customsign{
-	icon_state = "signwrote";
-	name = "Rockhill - Northwest"
+/obj/structure/fluff/customsign/arrow{
+	dir = 1;
+	wrotesign = "Rockhill - Northwest"
 	},
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woodsafe)
@@ -54683,7 +54680,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Kitchen Storage"
 	},
 /turf/open/floor/rogue/concrete,
@@ -55563,8 +55560,9 @@
 /area/rogue/indoors/town/manor/rockhill)
 "mDN" = (
 /obj/structure/fluff/customsign{
-	desc = "DANGER";
-	name = "Mines"
+	icon_state = "signwrote";
+	pixel_y = 7;
+	wrotesign = "Western Mines - DANGER"
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/under/cave)
@@ -55837,8 +55835,9 @@
 /area/rogue/indoors/town)
 "mGC" = (
 /obj/structure/fluff/customsign{
-	desc = "DANGER";
-	name = "Mines"
+	icon_state = "signwrote";
+	pixel_y = 7;
+	wrotesign = "Western Mines - DANGER"
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/cave)
@@ -55853,11 +55852,11 @@
 "mHc" = (
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "WARNING";
 	pixel_x = -8;
 	pixel_y = 7;
 	layer = 5;
-	max_integrity = 50
+	max_integrity = 50;
+	wrotesign = "WARNING"
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/bograt/south)
@@ -60376,9 +60375,9 @@
 /turf/open/floor/rogue/ruinedwood/platform,
 /area/rogue/outdoors/beach/harbor)
 "nKS" = (
-/obj/structure/fluff/customsign{
-	icon_state = "signwrote";
-	name = "Rockhill - East"
+/obj/structure/fluff/customsign/arrow{
+	dir = 4;
+	wrotesign = "Rockhill - East"
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/bograt/west)
@@ -64152,7 +64151,7 @@
 "oEV" = (
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "Rockhill - Northeast"
+	wrotesign = "Rockhill - Northeast"
 	},
 /turf/open/floor/rogue/grass/nospawn,
 /area/rogue/outdoors/bogsafe)
@@ -69998,8 +69997,8 @@
 	},
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "LITTERING WILL BE PROSECUTED";
-	pixel_y = 24
+	pixel_y = 24;
+	wrotesign = "LITTERING WILL BE PROSECUTED"
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/town/rockhill)
@@ -70022,11 +70021,11 @@
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/indoors/town/manor/rockhill)
 "pXl" = (
-/obj/structure/fluff/customsign{
-	icon_state = "signwrote";
-	name = "Rockhill - Northeast"
+/obj/structure/fluff/customsign/arrow{
+	dir = 4;
+	wrotesign = "Rockhill - Northeast";
+	pixel_y = 0
 	},
-/obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/bogsafe)
 "pXs" = (
@@ -75233,7 +75232,7 @@
 "rlE" = (
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "Rockhill - North"
+	wrotesign = "Rockhill - North"
 	},
 /turf/open/floor/rogue/grass/nospawn,
 /area/rogue/outdoors/bograt/west)
@@ -79431,7 +79430,7 @@
 "smn" = (
 /obj/structure/table/wood/long_table/right,
 /obj/item/rogueweapon/tongs,
-/obj/item/rogueweapon/hammer/decrepit,
+/obj/item/rogueweapon/hammer/ancient/decrepit,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
 "smv" = (
@@ -79481,7 +79480,7 @@
 "sni" = (
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "Rockhill - North"
+	wrotesign = "Rockhill - North"
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
@@ -80849,7 +80848,7 @@
 "sEw" = (
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "Rockhill - North. Forest - East"
+	wrotesign = "Rockhill - North. Forest - East"
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/bograt/south)
@@ -91076,9 +91075,9 @@
 /turf/open/water/swamp,
 /area/rogue/under/town/sewer)
 "uXG" = (
-/obj/structure/fluff/customsign{
-	icon_state = "signwrote";
-	name = "Rockhill - Northwest"
+/obj/structure/fluff/customsign/arrow{
+	dir = 1;
+	wrotesign = "Rockhill - Northwest"
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cavewet)
@@ -105016,7 +105015,7 @@
 	},
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "WEST TO: ROCKHILL ORPHANAGE AND BOARDING SCHOOL"
+	wrotesign = "WEST TO: ROCKHILL ORPHANAGE AND BOARDING SCHOOL"
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/town/rockhill)
@@ -248052,7 +248051,7 @@ oNE
 tHz
 aad
 tHz
-lni
+gBA
 aad
 tHz
 gQh
@@ -313231,7 +313230,7 @@ xaf
 xaf
 xaf
 xaf
-whb
+aaf
 cNx
 cNx
 whb
@@ -313663,7 +313662,7 @@ whb
 xaf
 xaf
 xaf
-whb
+aaf
 cNx
 aaf
 whb
@@ -314095,7 +314094,7 @@ whb
 whb
 whb
 whb
-whb
+aaf
 cNx
 aaf
 whb
@@ -314959,7 +314958,7 @@ aaf
 aaf
 aaf
 aaf
-xaf
+aaf
 aaf
 aaf
 xaf
@@ -315390,8 +315389,8 @@ xaf
 xaf
 xaf
 xaf
-xaf
-xaf
+aaf
+aaf
 cNx
 iRo
 tHz
@@ -315823,7 +315822,7 @@ huj
 huj
 xaf
 xaf
-xaf
+aaf
 aaf
 cNx
 aaf
@@ -317119,7 +317118,7 @@ xaf
 xaf
 xaf
 xaf
-xaf
+aaf
 aaf
 aaf
 xaf
@@ -327129,8 +327128,8 @@ svL
 quC
 psr
 psr
-qOA
 pXl
+oke
 kKp
 kKp
 kKp

@@ -645,6 +645,7 @@
 #include "code\datums\components\footstep.dm"
 #include "code\datums\components\forensics.dm"
 #include "code\datums\components\hideous_face.dm"
+#include "code\datums\components\hiding_spot.dm"
 #include "code\datums\components\igniter.dm"
 #include "code\datums\components\jousting.dm"
 #include "code\datums\components\knockback.dm"

@@ -85,7 +85,7 @@
 
 /datum/advclass/otavan_knight
 	name = "Gendarme"
-	tutorial = "Whether through merit, blood or renown, you became a knight in service of the Otavan court. Now, tasked with escorting the Émissaire and protecting them at all cost, you ride into the Vale."
+	tutorial = "Whether through merit, blood or renown, you became a knight in service of the Otavan court. Now, tasked with escorting the Émissaire and protecting them at all cost, you ride into these lands."
 	outfit = /datum/outfit/job/roguetown/otavan/knight
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_NOBLE, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_OTAVAN_KNIGHT)
@@ -228,8 +228,7 @@
 		STATKEY_WIL = 2,
 	)
 	subclass_skills = list(
-		/datum/skill/combat/staves = SKILL_LEVEL_JOURNEYMAN,		//everybody was kung-fu fighting. Jman bc you're defending yourself, punk. Roleplay.
-		/datum/skill/combat/polearms = SKILL_LEVEL_NOVICE,		//no powergaming. Staves or bust.
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,		//everybody was kung-fu fighting. Jman bc you're defending yourself, punk. Roleplay.
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,

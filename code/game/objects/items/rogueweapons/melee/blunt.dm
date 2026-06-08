@@ -428,6 +428,7 @@
 	desc = "Good nite, sire."
 	force = 12
 	force_wielded = 22
+	max_integrity = 180
 	blade_dulling = DULLING_SHAFT_CONJURED
 	color = "#bb9696"
 	anvilrepair = null
