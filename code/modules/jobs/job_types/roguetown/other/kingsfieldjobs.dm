@@ -55,7 +55,7 @@ Enjoy!"
 		/datum/skill/combat/bows,
 		/datum/skill/combat/crossbows,
 		/datum/skill/combat/slings,
-		/datum/skill/combat/staves,
+		/datum/skill/combat/polearms,
 		/datum/skill/combat/firearms,
 		/datum/skill/combat/shields,
 		/datum/skill/misc/medicine,

@@ -712,7 +712,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/craft/sewing, 3, TRUE)
 			if("Path of the Shepard")//The "combat" variant. The core stat spread should keep this class from ever overshadowing the others, but it's worth keeping an eye out anyway.
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
-				H.adjust_skillrank_up_to(/datum/skill/combat/staves, 4, TRUE)//Staves are pretty mediocre. Mostly just makes it really hard to get past their wielded parry.
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)//Staves are pretty mediocre. Mostly just makes it really hard to get past their wielded parry.
 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 3, TRUE)//Good luck fighting like a monk without monk stats or Dodge Expert.
 
