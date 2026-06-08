@@ -93,7 +93,8 @@
 	devotion_cost = 80
 	zizo_spell = TRUE
 	recharge_time = 200 SECONDS
-	invocations = list("plays a whined, dreadful refrain.")
+	sound = list('sound/magic/sottovoce.ogg')
+	invocations = list("plays a pulsed, dreadful melodic circuit.")
 	invocation_type = "emote"
 
 /obj/effect/proc_holder/spell/invoked/raise_undead_formation/sotto_voce/cast(list/targets, mob/living/user)
@@ -112,6 +113,7 @@
 /obj/effect/proc_holder/spell/invoked/blink/staccato
 	name = "Into The Void"
 	associated_skill = /datum/skill/misc/music
+	sound = list('sound/magic/heraldblink.ogg')
 	invocations = list("screeches a short, sharp shock of a chord.")
 	invocation_type = "emote"
 
@@ -126,7 +128,8 @@
 	name = "Ride the Lightning"
 	associated_skill = /datum/skill/misc/music
 	projectile_type = /obj/projectile/magic/lightning/forzando
-	invocations = list("shreds an electric power chord!")
+	sound = list('sound/magic/heraldzap.ogg')
+	invocations = list("shreds an electric refrain!")
 	invocation_type = "emote"
 
 /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/forzando/cast(list/targets, mob/living/user = usr)
