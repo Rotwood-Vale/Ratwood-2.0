@@ -1,5 +1,4 @@
 /obj/effect/proc_holder/spell/invoked/song
-	var/song_tier = 1
 	sound = list('sound/magic/buffrollaccent.ogg')
 	overlay_icon = 'icons/mob/actions/bardsongs.dmi'
 	overlay_state = "dirge_t1_base"
@@ -19,6 +18,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/playing_dirge
 	var/effect_color
 	var/datum/status_effect/debuff/debuff_to_apply
+	var/list/debuffs_to_apply_by_level
 	var/pulse = 0
 	var/ticks_to_apply = 10
 	duration = -1
@@ -39,10 +39,11 @@
 	new effect(get_turf(owner))
 	if (pulse >= ticks_to_apply)
 		pulse = 0
-		O.energy_add(-25)
+		O.energy_add(-12.5)
 		for (var/mob/living/carbon/human/H in hearers(10, owner))
 			if(!O.in_audience(H))
-				H.apply_status_effect(debuff_to_apply)
+				var/debuff = debuffs_to_apply_by_level?[O.inspiration.level] || debuff_to_apply
+				H.apply_status_effect(debuff)
 
 
 /datum/status_effect/buff/playing_melody
@@ -50,6 +51,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/playing_melody
 	var/effect_color
 	var/datum/status_effect/buff/buff_to_apply
+	var/list/buffs_to_apply_by_level
 	var/pulse = 0
 	var/ticks_to_apply = 10
 	duration = -1
@@ -70,7 +72,8 @@
 	pulse += 1
 	if (pulse >= ticks_to_apply)
 		pulse = 0
-		O.energy_add(-25)
+		O.energy_add(-12.5)
 		for (var/mob/living/carbon/human/H in hearers(10, owner))
 			if(O.in_audience(H))
-				H.apply_status_effect(buff_to_apply)
+				var/buff = buffs_to_apply_by_level?[O.inspiration.level] || buff_to_apply
+				H.apply_status_effect(buff)

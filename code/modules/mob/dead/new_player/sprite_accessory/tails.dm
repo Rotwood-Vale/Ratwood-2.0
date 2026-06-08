@@ -386,6 +386,15 @@
 	color_keys = 2
 	color_key_names = list("Tail", "Tip")
 
+/datum/sprite_accessory/tail/shadekin
+	name = "Shadekin"
+	icon_state = "shadekin"
+	can_wag = TRUE
+
+/datum/sprite_accessory/tail/shadekin/short
+	name = "Shadekin (Short)"
+	icon_state = "shadekinshort"
+
 /datum/sprite_accessory/tail/owl
 	name = "Owl"
 	icon_state = "owl"
@@ -450,4 +459,25 @@
 /datum/sprite_accessory/tail/tailmaw2
 	name = "Tailmaw (Wag)"
 	icon_state = "tailmaw2"
+	can_wag = TRUE
+
+/datum/sprite_accessory/tail/tailmaw2_head
+	name = "Tailmaw (Coloured Head)"
+	icon_state = "tailmawwag_head"
+	color_keys = 2
+	color_key_names = list("Tail", "Head")
+	can_wag = TRUE
+
+/datum/sprite_accessory/tail/tailmaw2_stripes
+	name = "Tailmaw (Striped)"
+	icon_state = "tailmawwag_striped"
+	color_keys = 2
+	color_key_names = list("Tail", "Stripes")
+	can_wag = TRUE
+
+/datum/sprite_accessory/tail/tailmaw2_headstripes
+	name = "Tailmaw (Striped, Coloured Head)"
+	icon_state = "tailmawwag_stripedhead"
+	color_keys = 3
+	color_key_names = list("Tail", "Stripes", "Head")
 	can_wag = TRUE

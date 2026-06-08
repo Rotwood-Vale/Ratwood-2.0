@@ -94,6 +94,7 @@
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/helmet/janissaryhelm
 	name = "Janissary Helmet"
@@ -104,6 +105,7 @@
 	max_integrity = 250
 	body_parts_covered = HEAD|HAIR|EARS
 	flags_inv = HIDEEARS|HIDEHAIR
+	dropshrink = null
 
 // /obj/item/clothing/head/roguetown/helmet/janissary
 // 	name = "Janissaries Helm"
@@ -235,6 +237,7 @@
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/shirts.dmi'
 	icon_state = "thawb"
 	item_state = "thawb"
+	dropshrink = null
 
 /obj/item/clothing/suit/roguetown/shirt/dress/thawb/black
 	color = CLOTHING_BLACK
@@ -348,6 +351,7 @@
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/easternclothes.dmi'
 	icon_state = "turban"
 	item_state = "turban"
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/turban/tan
 	color = "#93714b"
@@ -688,6 +692,7 @@
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/shirts.dmi'
 	icon_state = "exoticsilkbrag"
 	item_state = "exoticsilkbrag"
+	dropshrink = null
 
 /datum/crafting_recipe/roguetown/sewing/bragreen
 	name = "exotic silk bra(green)"
@@ -701,6 +706,7 @@
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/shirts.dmi'
 	icon_state = "exoticsilkbrar"
 	item_state = "exoticsilkbrar"
+	dropshrink = null
 
 /datum/crafting_recipe/roguetown/sewing/brared
 	name = "exotic silk bra (red)"
@@ -713,6 +719,7 @@
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/masks.dmi'
 	icon_state = "exoticsilkmaskg"
 	item_state = "exoticsilkmaskg"
+	dropshrink = null
 
 /datum/crafting_recipe/roguetown/sewing/maskgreen
 	name = "exotic silk mask (green)"

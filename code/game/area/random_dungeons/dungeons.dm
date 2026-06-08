@@ -20,6 +20,7 @@
 	// 			/mob/living/simple_animal/hostile/retaliate/rogue/minotaur = 5)
 	converted_type = /area/rogue/outdoors/caves
 	deathsight_message = "A dwelling deep below, a dark recess beyond and beneath."
+	ceiling_protected = TRUE
 
 /area/rogue/under/dungeon/sunkenchurch
 	name = "Sunken Church"
@@ -46,3 +47,18 @@
 	name = "Drow Outpost"
 	droning_sound = 'sound/music/area/underdark.ogg'
 	deathsight_message = "A deep, dark house of pain and dominance."
+
+/area/rogue/under/dungeon/oldgoblincamp
+	name = "goblin encampment"
+	first_time_text = "Lost Encampment"
+	droning_sound = 'sound/music/area/gobcamp.ogg'
+	deathsight_message = "A hidden goblin-stained fortress"
+
+/area/rogue/under/dungeon/inferno
+	name = "inferno"
+	icon_state = "fire_chamber"
+	first_time_text = "Another Place"
+	ambientsounds = AMB_CAVELAVA
+	ambientnight = AMB_CAVELAVA
+	droning_sound = 'sound/music/area/inferno.ogg'
+	deathsight_message = "A blistering realm beyond this mortal sphere"

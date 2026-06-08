@@ -19,6 +19,7 @@
 	grid_width = 32
 	grid_height = 64
 	nudist_approved = TRUE
+	dropshrink = 0.9
 
 /datum/intent/tie
 	name = "tie"

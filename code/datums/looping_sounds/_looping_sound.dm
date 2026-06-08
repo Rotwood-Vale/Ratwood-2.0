@@ -3,12 +3,29 @@ GLOBAL_LIST_EMPTY(created_sound_groups)
 	var/list/reserved_channels = list()
 	var/channel_count = 1
 	var/last_iter = 1
+	/// If non-null, channels are managed as a checkout/return pool rather than
+	/// round-robined. Populated by subtypes that need exclusive per-user channels.
+	var/list/pool_channels
 
 /datum/sound_group/New()
 	. = ..()
 	reserved_channels = list()
 	for(var/channel = 1 to channel_count)
 		reserved_channels += SSsounds.reserve_sound_channel(src)
+
+/// Checks out one channel from the pool. Returns null if the pool is empty.
+/datum/sound_group/proc/checkout_channel()
+	if(!pool_channels?.len)
+		return null
+	var/ch = pool_channels[pool_channels.len]
+	pool_channels.len--
+	return ch
+
+/// Returns a channel to the pool. Silently ignores if already present.
+/datum/sound_group/proc/return_channel(channel)
+	if(!pool_channels || (channel in pool_channels))
+		return
+	pool_channels += channel
 
 /datum/sound_group/torches
 	channel_count = 150
@@ -17,7 +34,13 @@ GLOBAL_LIST_EMPTY(created_sound_groups)
 	channel_count = 150
 
 /datum/sound_group/instruments
-	channel_count = 32 //probably more than enough
+	channel_count = 32
+
+/datum/sound_group/instruments/New()
+	. = ..()
+	// Instruments use pool semantics so idle instruments hold no channel;
+	// channels are only checked out while a song is actively playing.
+	pool_channels = reserved_channels.Copy()
 
 /*
 	parent	(the source of the sound)			The source the sound comes from
@@ -203,6 +226,12 @@ GLOBAL_LIST_EMPTY(created_sound_groups)
 
 	var/list/L = M.client.played_loops[src]
 	if(!L)
+		return
+
+	if(!L["MUTESTATUS"])
+		// Already playing — do not re-send. The sound/S object passed through
+		// playsound() is shared and its x/z reflect the last processed listener's
+		// position. Re-sending here would repan the sound to the wrong tile.
 		return
 
 	L["MUTESTATUS"] = FALSE

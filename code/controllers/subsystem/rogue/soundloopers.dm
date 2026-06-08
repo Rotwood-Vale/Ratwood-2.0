@@ -51,6 +51,9 @@ SUBSYSTEM_DEF(soundloopers)
 		if(PS in played_loops) //Make sure it's not already on the list
 			continue
 
+		if((istype(PS, /datum/looping_sound/instrument) || istype(PS, /datum/looping_sound/musloop) || istype(PS, /datum/looping_sound/dmusloop)) && !(prefs?.toggles & SOUND_INSTRUMENTS))
+			continue
+
 		var/atom/PS_parent = PS.parent.resolve()
 		if(!PS_parent)
 			continue
@@ -60,7 +63,7 @@ SUBSYSTEM_DEF(soundloopers)
 		if(get_dist(get_turf(mob),parent_turf) > world.view + PS.extra_range) //Too far away. get_dist shouldn't be too awful for repeated calcs
 			continue
 
-		if(mob_turf.z - parent_turf.z > 2 || mob_turf.z - parent_turf.z < 2) //for some reason get_dist not checking this properly
+		if(mob_turf.z - parent_turf.z > 2 || mob_turf.z - parent_turf.z < -2) //for some reason get_dist not checking this properly
 			continue
 
 		//otherwise add it to the client loops and off we go from there
@@ -77,12 +80,41 @@ SUBSYSTEM_DEF(soundloopers)
 		if (!loop)
 			played_loops -= loop
 			continue
+
+		if((istype(loop, /datum/looping_sound/instrument) || istype(loop, /datum/looping_sound/musloop) || istype(loop, /datum/looping_sound/dmusloop)) && !(prefs?.toggles & SOUND_INSTRUMENTS))
+			var/list/muted_loop = played_loops[loop]
+			var/sound/muted_sound = muted_loop?["SOUND"]
+			if(loop.persistent_loop)
+				muted_loop["MUTESTATUS"] = TRUE
+				muted_loop["VOL"] = 0
+				if(muted_sound)
+					mob.mute_sound(muted_sound)
+			else
+				played_loops -= loop
+				loop.thingshearing -= WEAKREF(mob)
+				if(muted_sound)
+					mob.stop_sound_channel(muted_sound.channel)
+			continue
 		
 		var/atom/loop_parent = loop.parent?.resolve()
 		if(!loop_parent)
+			// Parent is gone — stale entry. Remove it so its old channel number
+			// can't corrupt volume-update packets sent to a recycled channel.
+			// Do NOT stop the channel: it may have been reused by another datum.
+			played_loops -= loop
 			continue
 
 		if(mob && loop_parent == mob) //the sound's coming from inside the house!
+			// Skip distance-based attenuation for your own instrument, but still
+			// clear MUTESTATUS if it got stuck TRUE (e.g. playsound() missed the
+			// musician during a z-level transition and muted them in play()).
+			var/list/self_loop = played_loops[loop]
+			if(self_loop && self_loop["MUTESTATUS"])
+				self_loop["MUTESTATUS"] = FALSE
+				self_loop["VOL"] = loop.volume
+				var/sound/self_sound = self_loop["SOUND"]
+				if(self_sound)
+					mob.unmute_sound(self_sound)
 			continue
 
 		var/max_distance = world.view + loop.extra_range
@@ -143,6 +175,14 @@ SUBSYSTEM_DEF(soundloopers)
 
 			new_volume = new_volume * (prefs.mastervol * 0.01) //Modify it at the end by the player's volume setting
 
+			// Always clear MUTESTATUS when in range, regardless of whether volume changed.
+			// Previously this was inside if(old_volume != new_volume), meaning a sound that
+			// was muted and came back in range at an equal volume would stay permanently muted
+			// (e.g. after a z-level transition where volume calculations produce the same value).
+			if(loop.persistent_loop && found_loop["MUTESTATUS"] == TRUE)
+				found_loop["MUTESTATUS"] = FALSE
+				mob.unmute_sound(found_sound)
+
 			if(old_volume != new_volume)
 				var/turf/T = get_turf(mob)
 				var/dx = source_turf.x - T.x
@@ -158,9 +198,6 @@ SUBSYSTEM_DEF(soundloopers)
 //				var/dy = source_turf.z - T.z
 //				found_sound.y = dy
 
-				if(loop.persistent_loop && found_loop["MUTESTATUS"] == TRUE) //It was out of range and now back in range, reset it
-					found_loop["MUTESTATUS"] = FALSE
-					mob.unmute_sound(found_sound)
 				found_loop["VOL"] = new_volume
 				mob.update_sound_volume(played_loops[loop]["SOUND"], new_volume)
 

@@ -941,15 +941,6 @@
 	wallcraft = TRUE
 	craftdiff = 2
 
-/datum/crafting_recipe/roguetown/structure/statue
-	name = "statue"
-	result = /obj/structure/fluff/statue/femalestatue //TODO: Add sculpting
-	reqs = list(/obj/item/natural/stone = 3)
-	verbage_simple = "build"
-	verbage = "builds"
-	skillcraft = /datum/skill/craft/masonry
-	craftdiff = 3
-
 // SCOM is not constructable, only the receive only version is constructable to prevent unactionable sneeding.
 /datum/crafting_recipe/roguetown/structure/rcom
 	name = "RCOM"

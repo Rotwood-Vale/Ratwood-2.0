@@ -167,6 +167,7 @@
 	desc = ""
 	icon = 'icons/obj/flora/ausflora.dmi'
 	icon_state = "firstbush_1"
+	max_integrity = 30
 
 /obj/structure/flora/ausbushes/Initialize(mapload)
 	if(icon_state == "firstbush_1")

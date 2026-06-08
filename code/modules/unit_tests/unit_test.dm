@@ -57,6 +57,16 @@ GLOBAL_VAR(test_log)
 
 	LAZYADD(fail_reasons, reason)
 
+/// Logs a test message. Will use GitHub action syntax found at https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
+/datum/unit_test/proc/log_for_test(text, priority, file, line)
+	var/map_name = SSmapping.config.map_name
+
+	// Need to escape the text to properly support newlines.
+	var/annotation_text = replacetext(text, "%", "%25")
+	annotation_text = replacetext(annotation_text, "\n", "%0A")
+
+	log_world("::[priority] file=[file],line=[line],title=[map_name]: [type]::[annotation_text]")
+
 /proc/RunUnitTests()
 	CHECK_TICK
 

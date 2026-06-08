@@ -66,6 +66,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	var/critical = FALSE
 	/// Some wounds cause instant death for CRITICAL_WEAKNESS
 	var/mortal = FALSE
+	/// Some wounds cause instant death for SHATTER_WEAKNESS
+	var/shatter_wound = FALSE
 	/// Amount we heal passively while sleeping
 	var/sleep_healing = 1
 	/// Amount we heal passively, always
@@ -243,6 +245,9 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		werewolf_infect_attempt()
 	if(mortal && HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS))
 		affected.emote("deathgurgle", forced = TRUE)
+		affected.death()
+	if(shatter_wound && HAS_TRAIT(affected, TRAIT_SHATTER_WEAKNESS))
+		affected.emote("scream", forced = TRUE)
 		affected.death()
 	if(affected.hud_used?.zone_select)
 		affected.hud_used.zone_select.update_icon()
