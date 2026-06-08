@@ -15,9 +15,6 @@
 		user_is_inquisition = HAS_TRAIT(H, TRAIT_INQUISITION) || (H.mind?.assigned_role in GLOB.inquisition_positions)
 		user_is_clergy = user_is_inquisition || (H.mind?.assigned_role in GLOB.church_positions)
 		if(user_is_gnoll)
-			/*var/datum/antagonist/gnoll/gnoll_antag = H.mind?.has_antag_datum(/datum/antagonist/gnoll)
-			if(gnoll_antag?.is_examine_marked_target(src))
-				lines += span_cultsmall("Graggar has marked them!")*/
 			if(src.has_gnoll_scent_this_round)
 				lines += span_cultsmall("They have gnoll scent, a breeder!")
 	if(src.has_gnoll_scent_this_round && !user_is_gnoll)

@@ -443,12 +443,10 @@
 			else if(user.stat == DEAD)
 				. += span_danger("This was their only chance at lyfe.")
 
-	if(src.has_flaw(/datum/charflaw/hunted))
-		if(ishuman(user))
-			if(istype(user, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = user
-				if(H.dna?.species?.type == /datum/species/gnoll)
-					. += span_cultsmall("Graggar has marked them!")
+    if(has_flaw(/datum/charflaw/hunted) && ishuman(user) && istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		if(H.dna?.species?.type == /datum/species/gnoll)
+			. += span_cultsmall("Graggar has marked them!")
 
 	// Real medical role can tell at a glance it is a waste of time, but only if the Necra message don't come first.
 
