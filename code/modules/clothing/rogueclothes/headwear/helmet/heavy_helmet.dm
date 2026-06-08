@@ -454,7 +454,7 @@
 	if(istype(W, /obj/item/natural/feather))
 		user.visible_message(span_warning("[user] starts to fashion plumage using [W] for [src]."))
 		if(do_after(user, 4 SECONDS))
-			var/obj/item/clothing/head/roguetown/helmet/heavy/ordinatorhelm/plume/P = new /obj/item/clothing/head/roguetown/helmet/heavy/ordinatorhelm/plume(get_turf(src.loc))
+			var/obj/item/clothing/head/roguetown/helmet/heavy/ordinatorhelm/plume/P = new /obj/item/clothing/head/roguetown/helmet/heavy/ordinatorhelm/plume(get_turf(src))
 			if(user.is_holding(src))
 				user.dropItemToGround(src)
 				user.put_in_hands(P)

@@ -94,11 +94,11 @@
 					// Handle skillgating
 					if(!lastuser)
 						brewing = 0
-						src.visible_message(span_info("The cauldron can't brew anything without an alchemist to guide it."))
+						visible_message(span_info("The cauldron can't brew anything without an alchemist to guide it."))
 						return
 					if(found_recipe.skill_required > lastuser?.get_skill_level(/datum/skill/craft/alchemy))
 						brewing = 0
-						src.visible_message(span_warning("The ingredients in the cauldron melds together into a disgusting mess! Perhaps a more skilled alchemist is needed for this recipe."))
+						visible_message(span_warning("The ingredients in the cauldron melds together into a disgusting mess! Perhaps a more skilled alchemist is needed for this recipe."))
 						if(reagents)
 							src.reagents.remove_reagent(/datum/reagent/water, in_cauldron)
 						for(var/obj/item/ing in src.ingredients)
@@ -117,7 +117,7 @@
 						for(var/itempath in found_recipe.output_items)
 							new itempath(get_turf(src))
 					//handle player perception and reset for next time
-					src.visible_message("<span class='info'>The cauldron finishes boiling with a faint [found_recipe.smells_like] smell.</span>")
+					visible_message("<span class='info'>The cauldron finishes boiling with a faint [found_recipe.smells_like] smell.</span>")
 					record_featured_stat(FEATURED_STATS_ALCHEMISTS, lastuser)
 					record_round_statistic(STATS_POTIONS_BREWED)
 					//give xp for /datum/skill/craft/alchemy
@@ -129,7 +129,7 @@
 					qdel(found_recipe)
 				else
 					brewing = 0
-					src.visible_message("<span class='info'>The ingredients in the [src] fail to meld together at all...</span>")
+					visible_message("<span class='info'>The ingredients in the [src] fail to meld together at all...</span>")
 					playsound(src,'sound/misc/smelter_fin.ogg', 30, FALSE)
 
 /obj/machinery/light/rogue/cauldron/attackby(obj/item/I, mob/user, params)

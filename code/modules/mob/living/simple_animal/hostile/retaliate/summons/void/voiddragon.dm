@@ -234,7 +234,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 
 /mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/proc/TailSwipe(mob/victim)
 	var/mob/living/target = victim
-	src.visible_message(span_notice("[src] slams [target] with it's tail, knocking them to the floor!"))
+	visible_message(span_notice("[src] slams [target] with it's tail, knocking them to the floor!"))
 	target.Paralyze(5)
 	target.apply_damage(20, BRUTE)
 	shake_camera(target, 2, 1)
@@ -251,7 +251,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	if(prob(15 + anger_modifier))
 		lava_swoop()
 	if(world.time >= cl_cd)
-		src.visible_message(span_colossus("[src] opens its maw, and lightning crackles beyond its teeth."))
+		visible_message(span_colossus("[src] opens its maw, and lightning crackles beyond its teeth."))
 		chain_lightning(target, src)
 		return
 	if(health <= 0.75 * maxHealth && world.time >= summon_cd)
@@ -264,7 +264,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 /mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/proc/summon_obelisk()
 	var/list/spawnLists = list(/mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk,/mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk)
 	var/reinforcement_count = 2
-	src.visible_message(span_cultbigbold("[src] summons abberant obelisks from beneath the ground."))
+	visible_message(span_cultbigbold("[src] summons abberant obelisks from beneath the ground."))
 	summon_cd = world.time + 2000
 	while(reinforcement_count > 0)
 		var/list/turflist = list()
@@ -287,7 +287,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 			addtimer(cb, (i - 1)*delay)
 	else
 		if(world.time >= slam_cd && !client)
-			src.visible_message(span_colossus("[src] slams the ground, creating a shockwave!"))
+			visible_message(span_colossus("[src] slams the ground, creating a shockwave!"))
 			dragon_slam(src,2,10,8)
 		AttackingTarget()
 	if(patience)
@@ -585,7 +585,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 		return FALSE
 	if(do_after(user, 2 SECONDS, target = src))
 		user.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
-		src.visible_message(span_colossus("[src] unleashes a storm of lightning from it's maw!"))
+		visible_message(span_colossus("[src] unleashes a storm of lightning from it's maw!"))
 		cl_cd = world.time + 500
 		Bolt(user,target,30,5,user)
 		src.move_resist = initial(src.move_resist)

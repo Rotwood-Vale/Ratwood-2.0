@@ -51,15 +51,15 @@
 /obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src.loc, 'sound/blank.ogg', 75, TRUE)
+			playsound(loc, 'sound/blank.ogg', 75, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/blank.ogg', 100, TRUE)
+			playsound(loc, 'sound/blank.ogg', 100, TRUE)
 
 /obj/structure/displaycase/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		dump()
 		if(!disassembled)
-			new /obj/item/natural/glass_shard( src.loc )
+			new /obj/item/natural/glass_shard(loc)
 	qdel(src)
 
 /obj/structure/displaycase/obj_break(damage_flag)
@@ -67,7 +67,7 @@
 
 	if(!obj_broken && !(flags_1 & NODECONSTRUCT_1))
 		density = FALSE
-		new /obj/item/natural/glass_shard( src.loc )
+		new /obj/item/natural/glass_shard(loc)
 		playsound(src, "shatter", 70, TRUE)
 		update_icon()
 
@@ -130,7 +130,7 @@
 		to_chat(user, "<span class='notice'>I deactivate the hover field built into the case.</span>")
 		log_combat(user, src, "deactivates the hover field of")
 		dump()
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 		update_icon()
 		return
 	else
@@ -214,7 +214,7 @@
 		return TRUE
 
 	else
-		to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you can't put it in the [src.name]!</span>")
+		to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you can't put it in the [name]!</span>")
 
 	return
 

@@ -163,7 +163,7 @@ At least, it should. Fingers crossed.
 	return chargetime
 
 /obj/item/gun/ballistic/firearm/shoot_with_empty_chamber()
-	playsound(src.loc, 'modular_helmsguard/sound/arquebus/musketcock.ogg', 100, FALSE)
+	playsound(loc, 'modular_helmsguard/sound/arquebus/musketcock.ogg', 100, FALSE)
 //	update_icon()
 
 /obj/item/gun/ballistic/firearm/attack_self(mob/living/user)

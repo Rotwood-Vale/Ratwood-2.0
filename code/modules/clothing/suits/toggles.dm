@@ -66,11 +66,10 @@
 
 // Logic for raising and lowering the hood.
 /obj/item/clothing/proc/ToggleHood(mob/user)
-	if(!ishuman(user) || src.loc != user)
+	if(!ishuman(user) || loc != user)
 		return
 
 	var/mob/living/carbon/human/H = user
- 
 	// Hood is already UP, make it go DOWN
 	if(hoodtoggled)
 		if(connected_hood)
@@ -93,10 +92,10 @@
 
 	var/obj/item/clothing/head/hooded/new_hood = new hoodtype()
 	new_hood.connected_cloak = src
-	src.connected_hood = new_hood
-	new_hood.color = src.color
+	connected_hood = new_hood
+	new_hood.color = color
 	// Copy the cloak's overlays to the new hood.
-	for(var/mutable_appearance/O in src.overlays)
+	for(var/mutable_appearance/O in overlays)
 		new_hood.add_overlay(O)
 
 	if(H.equip_to_slot_if_possible(new_hood, SLOT_HEAD, qdel_on_fail = TRUE, disable_warning = TRUE, redraw_mob = FALSE))
@@ -104,7 +103,7 @@
 
 		// redraw_mob = FALSE because we'll do that here.
 		if(toggle_icon_state)
-			src.icon_state = "[initial(icon_state)]_t"
+			icon_state = "[initial(icon_state)]_t"
 		
 		H.update_inv_wear_suit()
 		H.update_inv_cloak()
@@ -169,13 +168,13 @@
 		return 0
 
 	to_chat(usr, span_notice("I toggle [src]'s [togglename]."))
-	if(src.hoodtoggled)
-		src.icon_state = "[initial(icon_state)]"
-		src.hoodtoggled = FALSE
-	else if(!src.hoodtoggled)
+	if(hoodtoggled)
+		icon_state = "[initial(icon_state)]"
+		hoodtoggled = FALSE
+	else if(!hoodtoggled)
 		if(toggle_icon_state)
-			src.icon_state = "[initial(icon_state)]_t"
-		src.hoodtoggled = TRUE
+			icon_state = "[initial(icon_state)]_t"
+		hoodtoggled = TRUE
 	usr.update_inv_wear_suit()
 	for(var/X in actions)
 		var/datum/action/A = X

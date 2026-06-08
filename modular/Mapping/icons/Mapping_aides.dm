@@ -96,7 +96,7 @@
 
 /obj/structure/spider/cocoon/Destroy()
 	var/turf/T = get_turf(src)
-	src.visible_message("<span class='warning'>\The [src] splits open.</span>")
+	visible_message("<span class='warning'>\The [src] splits open.</span>")
 	for(var/atom/movable/A in contents)
 		if(istype(A, /mob/living))
 			var/mob/living/L = A

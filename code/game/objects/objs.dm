@@ -140,7 +140,7 @@
 			for(var/mob/M in viewers(1, src))
 				if ((M.client && M.machine == src))
 					is_in_use = TRUE
-					src.interact(M)
+					interact(M)
 		if(update_viewers) //State change is sure only if we check both
 			if(!is_in_use)
 				obj_flags &= ~IN_USE
@@ -165,16 +165,16 @@
 	return
 
 /mob/proc/set_machine(obj/O)
-	if(src.machine)
+	if(machine)
 		unset_machine()
-	src.machine = O
+	machine = O
 	if(istype(O))
 		O.obj_flags |= IN_USE
 
 /obj/item/proc/updateSelfDialog()
-	var/mob/M = src.loc
+	var/mob/M = loc
 	if(istype(M) && M.client && M.machine == src)
-		src.attack_self(M)
+		attack_self(M)
 
 /obj/proc/hide(h)
 	return

@@ -51,19 +51,19 @@
 		if(null)
 			return
 		if("Left Arm")
-			new /obj/item/bodypart/l_arm/prosthetic/bronzeleft(get_turf(src.loc))
+			new /obj/item/bodypart/l_arm/prosthetic/bronzeleft(get_turf(src))
 			qdel(src)
 			return
 		if("Right Arm")
-			new /obj/item/bodypart/r_arm/prosthetic/bronzeright(get_turf(src.loc))
+			new /obj/item/bodypart/r_arm/prosthetic/bronzeright(get_turf(src))
 			qdel(src)
 			return
 		if("Left Leg")
-			new /obj/item/bodypart/l_leg/prosthetic/bronzeleft(get_turf(src.loc))
+			new /obj/item/bodypart/l_leg/prosthetic/bronzeleft(get_turf(src))
 			qdel(src)
 			return
 		if("Right Leg")
-			new /obj/item/bodypart/r_leg/prosthetic/bronzeright(get_turf(src.loc))
+			new /obj/item/bodypart/r_leg/prosthetic/bronzeright(get_turf(src))
 			qdel(src)
 			return
 
@@ -76,19 +76,19 @@
 		if(null)
 			return
 		if("Left Arm")
-			new /obj/item/bodypart/l_arm/prosthetic/iron(get_turf(src.loc))
+			new /obj/item/bodypart/l_arm/prosthetic/iron(get_turf(src))
 			qdel(src)
 			return
 		if("Right Arm")
-			new /obj/item/bodypart/r_arm/prosthetic/iron(get_turf(src.loc))
+			new /obj/item/bodypart/r_arm/prosthetic/iron(get_turf(src))
 			qdel(src)
 			return
 		if("Left Leg")
-			new /obj/item/bodypart/l_leg/prosthetic/iron(get_turf(src.loc))
+			new /obj/item/bodypart/l_leg/prosthetic/iron(get_turf(src))
 			qdel(src)
 			return
 		if("Right Leg")
-			new /obj/item/bodypart/r_leg/prosthetic/iron(get_turf(src.loc))
+			new /obj/item/bodypart/r_leg/prosthetic/iron(get_turf(src))
 			qdel(src)
 			return
 
@@ -101,19 +101,19 @@
 		if(null)
 			return
 		if("Left Arm")
-			new /obj/item/bodypart/l_arm/prosthetic/steel(get_turf(src.loc))
+			new /obj/item/bodypart/l_arm/prosthetic/steel(get_turf(src))
 			qdel(src)
 			return
 		if("Right Arm")
-			new /obj/item/bodypart/r_arm/prosthetic/steel(get_turf(src.loc))
+			new /obj/item/bodypart/r_arm/prosthetic/steel(get_turf(src))
 			qdel(src)
 			return
 		if("Left Leg")
-			new /obj/item/bodypart/l_leg/prosthetic/steel(get_turf(src.loc))
+			new /obj/item/bodypart/l_leg/prosthetic/steel(get_turf(src))
 			qdel(src)
 			return
 		if("Right Leg")
-			new /obj/item/bodypart/r_leg/prosthetic/steel(get_turf(src.loc))
+			new /obj/item/bodypart/r_leg/prosthetic/steel(get_turf(src))
 			qdel(src)
 			return
 
@@ -126,19 +126,19 @@
 		if(null)
 			return
 		if("Left Arm")
-			new /obj/item/bodypart/l_arm/prosthetic/gold(get_turf(src.loc))
+			new /obj/item/bodypart/l_arm/prosthetic/gold(get_turf(src))
 			qdel(src)
 			return
 		if("Right Arm")
-			new /obj/item/bodypart/r_arm/prosthetic/gold(get_turf(src.loc))
+			new /obj/item/bodypart/r_arm/prosthetic/gold(get_turf(src))
 			qdel(src)
 			return
 		if("Left Leg")
-			new /obj/item/bodypart/l_leg/prosthetic/gold(get_turf(src.loc))
+			new /obj/item/bodypart/l_leg/prosthetic/gold(get_turf(src))
 			qdel(src)
 			return
 		if("Right Leg")
-			new /obj/item/bodypart/r_leg/prosthetic/gold(get_turf(src.loc))
+			new /obj/item/bodypart/r_leg/prosthetic/gold(get_turf(src))
 			qdel(src)
 			return
 

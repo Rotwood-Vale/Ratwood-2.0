@@ -111,7 +111,7 @@
 					playsound(loc, 'sound/foley/saddledismount.ogg', 100, FALSE)
 					user.dropItemToGround(src)
 					S.ssaddle = src
-					src.forceMove(S)
+					forceMove(S)
 					S.update_icon()
 		return
 	..()

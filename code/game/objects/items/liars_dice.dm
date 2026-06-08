@@ -680,7 +680,7 @@ Each player starts with 5 dice, rolled in secret. You see only your own dice.<br
 		new_game.max_players = count
 		active_game = new_game
 		new_game.try_join(user)
-		src.visible_message(span_notice("[user] is starting Liar's Dice! [count - 1] more player(s) needed. Activate (Z) the dice bag to join!"))
+		visible_message(span_notice("[user] is starting Liar's Dice! [count - 1] more player(s) needed. Activate (Z) the dice bag to join!"))
 		return
 
 	if(active_game.joining)

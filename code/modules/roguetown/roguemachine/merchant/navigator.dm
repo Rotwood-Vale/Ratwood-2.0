@@ -117,4 +117,4 @@
 				E.budget2change(budgie)
 				budgie = 0
 		if(play_sound)
-			playsound(src.loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
+			playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)

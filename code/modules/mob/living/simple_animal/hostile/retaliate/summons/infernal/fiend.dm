@@ -137,7 +137,7 @@
 	/mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound,
 	/mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound)
 	var/reinforcement_count = 3
-	src.visible_message(span_notice("[src] summons reinforcements from the infernal abyss."))
+	visible_message(span_notice("[src] summons reinforcements from the infernal abyss."))
 	while(reinforcement_count > 0)
 		var/list/turflist = list()
 		for(var/turf/t in RANGE_TURFS(1, src))

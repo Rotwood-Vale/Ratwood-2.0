@@ -263,18 +263,18 @@
 		sigbitflags |= (SKIP_GRAB_CHECK|SKIP_TILE_CHECK)
 		grabs = FALSE
 
-	if(src.check_same_tile && (user != target || self_target) && !(sigbitflags & SKIP_TILE_CHECK))
+	if(check_same_tile && (user != target || self_target) && !(sigbitflags & SKIP_TILE_CHECK))
 		var/same_tile = (get_turf(user) == get_turf(target))
-		var/grab_bypass = (src.aggro_grab_instead_same_tile && user.get_highest_grab_state_on(target) == GRAB_AGGRESSIVE)
+		var/grab_bypass = (aggro_grab_instead_same_tile && user.get_highest_grab_state_on(target) == GRAB_AGGRESSIVE)
 		if(!same_tile && !grab_bypass)
 			return FALSE
 
-	if(src.require_grab && (user != target || self_target) && !(sigbitflags & SKIP_GRAB_CHECK))
+	if(require_grab && (user != target || self_target) && !(sigbitflags & SKIP_GRAB_CHECK))
 		var/grabstate = user.get_highest_grab_state_on(target)
-		if((grabstate == null || grabstate < src.required_grab_state))
+		if((grabstate == null || grabstate < required_grab_state))
 			return FALSE
 
-	if(!isnull(user_controller.current_action) && user_controller.current_action == src.type) // action is active, update the currently accessible body zones
+	if(!isnull(user_controller.current_action) && user_controller.current_action == type) // action is active, update the currently accessible body zones
 		target.sexcon.update_current_accessible_body_zones(location, grabs)
 	var/result = user_controller.get_accessible_body_zone(target.sexcon.access_zone_bitfield, location, grabs)
 	if(result && user == target && !(bodypart in user_controller.using_zones) && user_controller.current_action == SEX_ACTION(src))

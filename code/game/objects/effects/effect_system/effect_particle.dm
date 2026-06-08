@@ -11,7 +11,7 @@
 	if (ispath(type))
 		if (create_new)
 			particles = new type()
-			GLOB.all_particles[src.name] = particles
+			GLOB.all_particles[name] = particles
 		else
 			var/particles/P = type
 			var/index = initial(P.name)

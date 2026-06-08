@@ -125,14 +125,14 @@
 		return
 	if(!user.dropItemToGround(O))
 		return
-	if (O.loc != src.loc)
+	if (O.loc != loc)
 		step(O, get_dir(O, src))
 
 /obj/structure/proc/do_climb(atom/movable/A)
 	// this is done so that climbing onto something doesn't ignore other dense objects on the same turf
 	if(climbable)
 		density = FALSE
-		. = step(A,get_dir(A,src.loc))
+		. = step(A,get_dir(A, loc))
 		density = TRUE
 		
 /obj/structure/ex_act(severity, target, epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range)
@@ -244,7 +244,7 @@
 		..()
 
 /obj/structure/proc/climb_structure(mob/living/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	var/adjusted_climb_time = climb_time
 	if(user.restrained()) //climbing takes twice as long when restrained.
 		adjusted_climb_time *= 2
@@ -258,7 +258,7 @@
 //		user.visible_message(span_warning("[user] starts climbing onto [src]."), span_warning("I start climbing onto [src]..."))
 	structureclimber = user
 	if(do_mob(user, user, adjusted_climb_time))
-		if(src.loc) //Checking if structure has been destroyed
+		if(loc) //Checking if structure has been destroyed
 			if(do_climb(user))
 				user.visible_message(span_warning("[user] climbs onto [src]."), \
 									span_notice("I climb onto [src]."))

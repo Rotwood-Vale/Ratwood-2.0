@@ -467,7 +467,7 @@
 	. = ..()
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(user.used_intent?.blade_class == BCLASS_CUT)
-		playsound(get_turf(src.loc), 'sound/items/wood_sharpen.ogg', 100)
+		playsound(get_turf(src), 'sound/items/wood_sharpen.ogg', 100)
 		user.visible_message(span_info("[user] starts sharpening the sticks in [src]..."), span_info("I start sharpening the sticks in [src]...."))
 		for(var/i in 1 to (amount - 1))
 			if(!do_after(user, 20))
@@ -532,7 +532,7 @@
 	var/mob/living/carbon/human/H = user
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(I, /obj/item/natural/bone))
-		var/obj/item/natural/bundle/bone/F = new(src.loc)
+		var/obj/item/natural/bundle/bone/F = new(loc)
 		H.put_in_hands(F)
 		H.visible_message("[user] ties the bones into a bundle.")
 		qdel(I)

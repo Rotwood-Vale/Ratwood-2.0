@@ -75,8 +75,8 @@
 		if(T.hingot)
 			to_chat(user, span_warning("[T] are already holding something!"))
 			return TRUE
-		if(!user.transferItemToLoc(src, T) && src.loc != T)
-			src.forceMove(T)
+		if(!user.transferItemToLoc(src, T) && loc != T)
+			forceMove(T)
 		T.hingot = src
 		T.hott = world.time
 		addtimer(CALLBACK(T, TYPE_PROC_REF(/obj/item/rogueweapon/tongs, make_unhot), T.hott), 10 SECONDS)

@@ -8,7 +8,7 @@
 	var/warned = FALSE
 
 /datum/magic_item/greater/lifesteal/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)
-	if(world.time < src.last_used + 100)
+	if(world.time < last_used + 100)
 		to_chat(firer, span_notice("[fired_from] is not yet hungry for more life!"))
 		return
 	if(isliving(firer) && isliving(target))
@@ -17,10 +17,10 @@
 		if(damaging.stat != DEAD)
 			healing.heal_ordered_damage(flat_heal, damage_heal_order)
 			firer.visible_message(span_danger("[fired_from] drains life from [target]!"))
-			src.last_used = world.time
+			last_used = world.time
 
 /datum/magic_item/greater/lifesteal/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	if(world.time < src.last_used + 100)
+	if(world.time < last_used + 100)
 		if(!warned)
 			to_chat(user, span_notice("[source] is not yet hungry for more life!"))
 			warned = TRUE
@@ -32,7 +32,7 @@
 			healing.heal_ordered_damage(flat_heal, damage_heal_order)
 			user.visible_message(span_danger("[source] drains life from [target]!"))
 			warned = FALSE
-			src.last_used = world.time
+			last_used = world.time
 
 /datum/magic_item/greater/lightning
 	name = "lightning"
@@ -40,7 +40,7 @@
 	var/list/last_used = list()
 
 /datum/magic_item/greater/lightning/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	if(world.time < (src.last_used[source] + (40 SECONDS)))
+	if(world.time < (last_used[source] + (40 SECONDS)))
 		return
 
 	if(isliving(target))
@@ -67,21 +67,21 @@
 	var/last_used
 
 /datum/magic_item/greater/frostveil/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	if(world.time < src.last_used + 20 SECONDS)
+	if(world.time < last_used + 20 SECONDS)
 		return
 	if(isliving(target))
 		var/mob/living/targeted = target
 		targeted.apply_status_effect(/datum/status_effect/debuff/cold)
 		targeted.visible_message(span_danger("[source] chills [targeted]!"))
-		src.last_used = world.time
+		last_used = world.time
 
 /datum/magic_item/greater/frostveil/on_hit_response(obj/item/I, mob/living/carbon/human/owner, mob/living/carbon/human/attacker)
-	if(world.time < src.last_used + 20 SECONDS)
+	if(world.time < last_used + 20 SECONDS)
 		return
 	if(isliving(attacker) && attacker != owner)
 		attacker.apply_status_effect(/datum/status_effect/debuff/cold)
 		attacker.visible_message(span_danger("[I] chills [attacker]!"))
-		src.last_used = world.time
+		last_used = world.time
 
 /datum/magic_item/greater/phoenixguard
 	name = "phoenixguard"
@@ -89,13 +89,13 @@
 	var/last_used
 
 /datum/magic_item/greater/phoenixguard/on_hit_response(obj/item/I, mob/living/carbon/human/owner, mob/living/carbon/human/attacker)
-	if(world.time < src.last_used + 20 SECONDS)
+	if(world.time < last_used + 20 SECONDS)
 		return
 	if(isliving(attacker) && attacker != owner)
 		attacker.adjust_fire_stacks(5)
 		attacker.ignite_mob()
 		attacker.visible_message(span_danger("[I] sets [attacker] on fire!"))
-		src.last_used = world.time
+		last_used = world.time
 
 /datum/magic_item/greater/woundclosing
 	name = "wound closing"
@@ -228,7 +228,7 @@
 	var/list/last_used = list()
 
 /datum/magic_item/greater/void/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	if(world.time < (src.last_used[source] + 10 SECONDS))
+	if(world.time < (last_used[source] + 10 SECONDS))
 		return
 
 	if(isliving(target) && target != user) //self teleporting might be scary actually

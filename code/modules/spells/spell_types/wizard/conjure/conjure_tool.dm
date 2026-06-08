@@ -57,7 +57,7 @@
 
 /obj/effect/proc_holder/spell/invoked/conjure_tool/Destroy()
 	if(src.conjured_tool)
-		src.visible_message(span_warning("The [src]'s borders begin to shimmer and fade, before it vanishes entirely!"))
+		visible_message(span_warning("The [src]'s borders begin to shimmer and fade, before it vanishes entirely!"))
 		qdel(src.conjured_tool)
 		src.conjured_tool = null
 	return ..()

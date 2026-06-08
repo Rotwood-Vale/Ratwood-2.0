@@ -115,7 +115,7 @@
 		SSroguemachine.key = src
 
 /obj/item/roguekey/lord/proc/anti_stall()
-	src.visible_message(span_warning("The Key of the realm crumbles to dust, the ashes spiriting away in the direction of the Keep."))
+	visible_message(span_warning("The Key of the realm crumbles to dust, the ashes spiriting away in the direction of the Keep."))
 	SSroguemachine.key = null //Do not harddel.
 	qdel(src) //Anti-stall
 
@@ -770,15 +770,15 @@
 /obj/item/customblank/attack_right(mob/user)
 	if(istype(user.get_active_held_item(), /obj/item/roguekey))
 		var/obj/item/roguekey/held = user.get_active_held_item()
-		src.lockhash = held.lockhash
+		lockhash = held.lockhash
 		to_chat(user, span_notice("You trace the teeth from [held] to [src]."))
 	else if(istype(user.get_active_held_item(), /obj/item/customlock))
 		var/obj/item/customlock/held = user.get_active_held_item()
-		src.lockhash = held.lockhash
+		lockhash = held.lockhash
 		to_chat(user, span_notice("You fine-tune [src] to the lock's internals."))
-	else if(istype(user.get_active_held_item(), /obj/item/rogueweapon/hammer) && src.lockhash != 0)
+	else if(istype(user.get_active_held_item(), /obj/item/rogueweapon/hammer) && lockhash != 0)
 		var/obj/item/roguekey/custom/F = new (get_turf(src))
-		F.lockhash = src.lockhash
+		F.lockhash = lockhash
 		to_chat(user, span_notice("You finish [F]."))
 		qdel(src)
 
@@ -801,13 +801,13 @@
 		lockhash = 10000 + input //same deal as the customkey
 	else if(istype(I, /obj/item/roguekey))
 		var/obj/item/roguekey/ID = I
-		if(ID.lockhash == src.lockhash)
+		if(ID.lockhash == lockhash)
 			to_chat(user, span_notice("[I] twists cleanly in [src]."))
 		else
 			to_chat(user, span_warning("[I] jams in [src],"))
 	else if(istype(I, /obj/item/customblank))
 		var/obj/item/customblank/ID = I
-		if(ID.lockhash == src.lockhash)
+		if(ID.lockhash == lockhash)
 			to_chat(user, span_notice("[I] twists cleanly in [src].")) //this makes no sense since the teeth aren't formed yet but i want people to be able to check whether the locks theyre making actually fit
 		else
 			to_chat(user, span_warning("[I] jams in [src]."))
@@ -815,15 +815,15 @@
 /obj/item/customlock/attack_right(mob/user)
 	if(istype(user.get_active_held_item(), /obj/item/roguekey))//i need to figure out how to avoid these massive if/then trees, this sucks
 		var/obj/item/roguekey/held = user.get_active_held_item()
-		src.lockhash = held.lockhash
+		lockhash = held.lockhash
 		to_chat(user, span_notice("You align the lock's internals to [held].")) //locks for non-custom keys
 	else if(istype(user.get_active_held_item(), /obj/item/customblank))
 		var/obj/item/customblank/held = user.get_active_held_item()
-		src.lockhash = held.lockhash
+		lockhash = held.lockhash
 		to_chat(user, span_notice("You align the lock's internals to [held]."))
-	else if(istype(user.get_active_held_item(), /obj/item/rogueweapon/hammer) && src.lockhash != 0)
+	else if(istype(user.get_active_held_item(), /obj/item/rogueweapon/hammer) && lockhash != 0)
 		var/obj/item/customlock/finished/F = new (get_turf(src))
-		F.lockhash = src.lockhash
+		F.lockhash = lockhash
 		to_chat(user, span_notice("You finish [F]."))
 		qdel(src)
 
@@ -835,7 +835,7 @@
 
 /obj/item/customlock/finished/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/hammer))
-		src.holdname = input(user, "What would you like to name this?", "", "") as text
+		holdname = input(user, "What would you like to name this?", "", "") as text
 		if(holdname)
 			to_chat(user, span_notice("You label the [name] with [holdname]."))
 	else
@@ -850,10 +850,10 @@
 			to_chat(user, span_warning("[K] already has a lock."))
 		else
 			KE.keylock = TRUE
-			KE.lockhash = src.lockhash
+			KE.lockhash = lockhash
 			KE.lock_strength = 100
-			if(src.holdname)
-				KE.name = (src.holdname + " " + KE.name)
+			if(holdname)
+				KE.name = (holdname + " " + KE.name)
 			to_chat(user, span_notice("You add [src] to [K]."))
 			qdel(src)
 	if(istype(K, /obj/structure/mineral_door))
@@ -862,10 +862,10 @@
 			to_chat(user, span_warning("[K] already has a lock."))
 		else
 			KE.keylock = TRUE
-			KE.lockhash = src.lockhash
+			KE.lockhash = lockhash
 			KE.lock_strength = 100
-			if(src.holdname)
-				KE.name = src.holdname
+			if(holdname)
+				KE.name = holdname
 			to_chat(user, span_notice("You add [src] to [K]."))
 			qdel(src)
 	if(istype(K, /obj/structure/englauncher))
@@ -874,8 +874,8 @@
 			to_chat(user, span_warning("[K] already has a lock."))
 		else
 			KE.keylock = TRUE
-			KE.lockhash = src.lockhash
-			if(src.holdname)
-				KE.name = src.holdname
+			KE.lockhash = lockhash
+			if(holdname)
+				KE.name = holdname
 			to_chat(user, span_notice("You add [src] to [K]."))
 			qdel(src)

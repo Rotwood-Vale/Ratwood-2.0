@@ -219,7 +219,7 @@
 		if(user.is_holding(src))
 			var/obj/item/clothing/mask/bandana/newBand = new sourceBandanaType(user)
 			var/currentHandIndex = user.get_held_index_of_item(src)
-			var/oldName = src.name
+			var/oldName = name
 			qdel(src)
 			user.put_in_hand(newBand, currentHandIndex)
 			user.visible_message(span_notice("I untie [oldName] back into a [newBand.name]."), span_notice("[user] unties [oldName] back into a [newBand.name]."))

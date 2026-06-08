@@ -39,7 +39,7 @@
 			return
 	qdel(I)
 	src.put_in_hands(J)
-	src.visible_message(span_notice("[src] reaches behind [H]'s ear with a grin, shaking their closed hand for a moment before revealing [J] held in it!"))
+	visible_message(span_notice("[src] reaches behind [H]'s ear with a grin, shaking their closed hand for a moment before revealing [J] held in it!"))
 	mob_timers["lasttrick"] = world.time
 
 /mob/living/carbon/human/proc/get_japery()

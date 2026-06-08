@@ -361,7 +361,7 @@
 ///Return true if we're inside the passed in atom
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
 	if(ispath(container))
-		if(istype(src.loc, container))
+		if(istype(loc, container))
 			return TRUE
 	else if(src in container)
 		return TRUE
@@ -1255,4 +1255,4 @@
 	if(!gotdir || dir_list.len == 0)
 		qdel(src)
 	else
-		src.dir = pick(dir_list) //Random directions are fun :)
+		dir = pick(dir_list) //Random directions are fun :)

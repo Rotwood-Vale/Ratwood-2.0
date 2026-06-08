@@ -21,7 +21,7 @@
 		src.STAPER = 11
 		src.STASPD = 18
 
-		if(src.client.prefs?.wildshape_name)
+		if(client.prefs?.wildshape_name)
 			real_name = "bat ([stored_mob.real_name])"
 		else
 			real_name = "bat"
@@ -161,7 +161,7 @@
 		src.STAPER = 12
 		src.STASPD = 17
 
-		if(src.client.prefs?.wildshape_name)
+		if(client.prefs?.wildshape_name)
 			real_name = "crow ([stored_mob.real_name])"
 		else
 			real_name = "crow"

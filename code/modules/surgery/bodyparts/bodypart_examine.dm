@@ -126,7 +126,7 @@
 
 /obj/item/bodypart/proc/check_for_injuries(mob/user, advanced = FALSE)
 	var/examination = "<span class='info'>"
-	examination += "☼ [capitalize(src.name)]: "
+	examination += "☼ [capitalize(name)]: "
 
 	var/list/status = get_injury_status(user, advanced)
 	if(!length(status))

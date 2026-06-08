@@ -278,7 +278,7 @@
 
 /obj/item/clothing/ring/fate_weaver/proc/dispel()
 	if(!QDELETED(src))
-		src.visible_message(span_warning("The [src]'s borders begin to shimmer and fade, before it vanishes entirely!"))
+		visible_message(span_warning("The [src]'s borders begin to shimmer and fade, before it vanishes entirely!"))
 		qdel(src)
 
 /obj/item/clothing/ring/fate_weaver/obj_break()

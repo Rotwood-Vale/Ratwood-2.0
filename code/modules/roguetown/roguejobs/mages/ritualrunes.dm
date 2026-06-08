@@ -506,19 +506,19 @@ GLOBAL_LIST(teleport_runes)
 		var/turf/target_turf_five = get_step(target_turf_three, turn(user.dir, -90))
 		if(!locate(/obj/structure/arcyne_wall/caster) in target_turf)
 			var/obj/structure/arcyne_wall/caster/newbarrier = new(target_turf, user)
-			src.barriers += newbarrier
+			barriers += newbarrier
 		if(!locate(/obj/structure/arcyne_wall/caster) in target_turf_two)
 			var/obj/structure/arcyne_wall/caster/newbarrier = new(target_turf_two, user)
-			src.barriers += newbarrier
+			barriers += newbarrier
 		if(!locate(/obj/structure/arcyne_wall/caster) in target_turf_three)
 			var/obj/structure/arcyne_wall/caster/newbarrier = new(target_turf_three, user)
-			src.barriers += newbarrier
+			barriers += newbarrier
 		if(!locate(/obj/structure/arcyne_wall/caster) in target_turf_four)
 			var/obj/structure/arcyne_wall/caster/newbarrier = new(target_turf_four, user)
-			src.barriers += newbarrier
+			barriers += newbarrier
 		if(!locate(/obj/structure/arcyne_wall/caster) in target_turf_five)
 			var/obj/structure/arcyne_wall/caster/newbarrier = new(target_turf_five, user)
-			src.barriers += newbarrier
+			barriers += newbarrier
 		active = TRUE
 	else
 		var/mob/living/user = usr
@@ -534,34 +534,34 @@ GLOBAL_LIST(teleport_runes)
 		var/turf/target_turfline2_five = get_step(target_turfline2_three, turn(user.dir, -90))
 		if(!locate(/obj/structure/arcyne_wall/caster) in target_turf)
 			var/obj/structure/arcyne_wall/caster/newbarrier = new(target_turf, user)
-			src.barriers += newbarrier
+			barriers += newbarrier
 		if(!locate(/obj/structure/arcyne_wall/caster) in target_turf_two)
 			var/obj/structure/arcyne_wall/caster/newbarrier = new(target_turf_two, user)
-			src.barriers += newbarrier
+			barriers += newbarrier
 		if(!locate(/obj/structure/arcyne_wall/caster) in target_turf_three)
 			var/obj/structure/arcyne_wall/caster/newbarrier = new(target_turf_three, user)
-			src.barriers += newbarrier
+			barriers += newbarrier
 		if(!locate(/obj/structure/arcyne_wall/caster) in target_turf_four)
 			var/obj/structure/arcyne_wall/caster/newbarrier = new(target_turf_four, user)
-			src.barriers += newbarrier
+			barriers += newbarrier
 		if(!locate(/obj/structure/arcyne_wall/caster) in target_turf_five)
 			var/obj/structure/arcyne_wall/caster/newbarrier = new(target_turf_five, user)
-			src.barriers += newbarrier
+			barriers += newbarrier
 		if(!locate(/obj/structure/arcyne_wall/caster) in target_turfline2)
 			var/obj/structure/arcyne_wall/caster/newbarrier = new(target_turfline2, user)
-			src.barriers += newbarrier
+			barriers += newbarrier
 		if(!locate(/obj/structure/arcyne_wall/caster) in target_turfline2_two)
 			var/obj/structure/arcyne_wall/caster/newbarrier = new(target_turfline2_two, user)
-			src.barriers += newbarrier
+			barriers += newbarrier
 		if(!locate(/obj/structure/arcyne_wall/caster) in target_turfline2_three)
 			var/obj/structure/arcyne_wall/caster/newbarrier = new(target_turfline2_three, user)
-			src.barriers += newbarrier
+			barriers += newbarrier
 		if(!locate(/obj/structure/arcyne_wall/caster) in target_turfline2_four)
 			var/obj/structure/arcyne_wall/caster/newbarrier = new(target_turfline2_four, user)
-			src.barriers += newbarrier
+			barriers += newbarrier
 		if(!locate(/obj/structure/arcyne_wall/caster) in target_turfline2_five)
 			var/obj/structure/arcyne_wall/caster/newbarrier = new(target_turfline2_five, user)
-			src.barriers += newbarrier
+			barriers += newbarrier
 		active = TRUE
 
 	if(ritual_result)
@@ -838,7 +838,7 @@ GLOBAL_LIST(teleport_runes)
 	// - If the ritual failed for some reason (Returned FALSE), likely due to no ghosts taking a role or an error, we shouldn't clean up anything, and reset.
 	if(ismob(ritual_result))
 		summoned_mob = ritual_result
-		src.summoning = TRUE
+		summoning = TRUE
 	if(ritual_result)
 		pickritual.cleanup_atoms(selected_atoms)
 

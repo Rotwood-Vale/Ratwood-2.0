@@ -64,7 +64,7 @@
 
 /obj/item/clothing/suit/roguetown/arcyne_barrier/proc/dispel()
 	if(!QDELETED(src))
-		src.visible_message(span_warning("The [src]'s borders begin to crackle, before shattering in a shower of sparks!"))
+		visible_message(span_warning("The [src]'s borders begin to crackle, before shattering in a shower of sparks!"))
 		playsound(get_turf(src), break_sound, 100, TRUE)
 		qdel(src)
 

@@ -50,7 +50,7 @@
 		to_chat(user, span_warning("The crystal emits an ominous thrumming. The power within is too strained to conjure another skeleton right now."))
 		return FALSE
 
-	if(world.time - src.last_use_time < src.use_cooldown)
+	if(world.time - last_use_time < use_cooldown)
 		to_chat(user, span_warning("The crystal thrums under your touch, but remains inert."))
 		return FALSE
 
@@ -65,7 +65,7 @@
 		to_chat(user, span_warning("You must assign a task for your skeleton!"))
 		return FALSE
 
-	src.last_use_time = world.time
+	last_use_time = world.time
 
 	if(!do_after(user, 60, src))
 		to_chat(user, span_warning("You lose your concentration."))
@@ -125,7 +125,7 @@
 /mob/living/carbon/human/proc/choose_pronouns_and_body()
 	var/p_input = input(src, "Choose your character's pronouns", "Pronouns") as anything in GLOB.pronouns_list
 	if(p_input)
-		src.pronouns = p_input
+		pronouns = p_input
 	if(alert(src, "Do you wish to change your frame?", "Body Type", "Yes", "No") == "Yes")
-		src.gender = (src.gender == MALE) ? FEMALE : MALE
-	src.regenerate_icons()
+		gender = (gender == MALE) ? FEMALE : MALE
+	regenerate_icons()

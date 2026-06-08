@@ -38,7 +38,7 @@
 			if(!underwear)
 				modular_handle_chastity_middleclick_strip(user)
 				return
-			src.visible_message(span_notice("[user] begins to take off [(src==user)?" ":"[src]'s"][underwear]..."))
+			visible_message(span_notice("[user] begins to take off [(src==user)?" ":"[src]'s"][underwear]..."))
 			if(do_after(user, 30, needhand = 1, target = src))
 				var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST)
 				var/obj/item/undies/undies = underwear
@@ -51,7 +51,7 @@
 		if(get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
 			if(!legwear_socks)
 				return
-			src.visible_message(span_notice("[user] begins to take off [(src==user)?" ":"[src]'s"][legwear_socks]..."))
+			visible_message(span_notice("[user] begins to take off [(src==user)?" ":"[src]'s"][legwear_socks]..."))
 			if(do_after(user, 30, needhand = 1, target = src))
 				var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST)
 				var/obj/item/legwears/legwears = legwear_socks
@@ -391,7 +391,7 @@
 		if(C.health > C.crit_threshold)
 			return
 
-		src.visible_message(span_notice("[src] performs CPR on [C.name]!"), span_notice("I perform CPR on [C.name]."))
+		visible_message(span_notice("[src] performs CPR on [C.name]!"), span_notice("I perform CPR on [C.name]."))
 		C.cpr_time = world.time
 		log_combat(src, C, "CPRed")
 
@@ -902,7 +902,7 @@
 
 	if(hands_needed || target_hands_needed)
 		if(hands_needed && !equipped_hands_self)
-			src.visible_message(span_warning("[src] can't get a grip on [target] because their hands are full!"),
+			visible_message(span_warning("[src] can't get a grip on [target] because their hands are full!"),
 				span_warning("I can't get a grip on [target] because your hands are full!"))
 			return
 		else if(target_hands_needed && !equipped_hands_target)
@@ -927,7 +927,7 @@
 	remove_movespeed_modifier(MOVESPEED_ID_SHOVE)
 	var/active_item = get_active_held_item()
 	if(is_type_in_typecache(active_item, GLOB.shove_disarming_types))
-		visible_message(span_warning("[src.name] regains their grip on \the [active_item]!"), span_warning("I regain your grip on \the [active_item]"), null, COMBAT_MESSAGE_RANGE)
+		visible_message(span_warning("[name] regains their grip on \the [active_item]!"), span_warning("I regain your grip on \the [active_item]"), null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/carbon/human/do_after_coefficent()
 	. = ..()

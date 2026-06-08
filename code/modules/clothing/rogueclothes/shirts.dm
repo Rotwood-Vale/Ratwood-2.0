@@ -802,7 +802,7 @@
 /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats/process()
 	if(obj_integrity >= max_integrity)
 		STOP_PROCESSING(SSobj, src)
-		src.visible_message(span_notice("The [src] flow more calmly, as they finish resting and regain their strength."), vision_distance = 1)
+		visible_message(span_notice("The [src] flow more calmly, as they finish resting and regain their strength."), vision_distance = 1)
 		return
 	else if(world.time > src.last_repair + src.repair_time)
 		src.last_repair = world.time

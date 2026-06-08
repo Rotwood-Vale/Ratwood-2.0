@@ -126,7 +126,7 @@
 		to_chat(user, span_warning("I can't leash them, they're too tense!"))
 		return
 
-	if(src.leash_pet != null)
+	if(leash_pet != null)
 		to_chat(user, span_warning("This leash is already attached to [leash_pet]!"))
 		return
 
@@ -177,7 +177,7 @@
 	//Yank the pet. Yank em in close.
 	apply_tug_mob_to_mob(leash_pet, leash_master, 1)
 	log_combat(leash_master, leash_pet, "leash-yanked")
-	leash_pet.visible_message(span_warning("[leash_master] yanks [leash_pet] closer with \the [src.name]."))
+	leash_pet.visible_message(span_warning("[leash_master] yanks [leash_pet] closer with \the [name]."))
 
 //Figure this out in leashs part 2
 /*

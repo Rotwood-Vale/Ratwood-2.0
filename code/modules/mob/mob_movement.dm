@@ -659,7 +659,7 @@
 	return
 
 /mob/living/proc/get_lying_alpha()
-	var/skill_level = src.get_skill_level(/datum/skill/misc/sneaking)
+	var/skill_level = get_skill_level(/datum/skill/misc/sneaking)
 
 	switch(skill_level)
 		if(1)
@@ -744,8 +744,8 @@
 	return TRUE
 
 /mob/living/carbon/human/check_armor_skill()
-	if(istype(src.wear_armor, /obj/item/clothing))
-		var/obj/item/clothing/CL = src.wear_armor
+	if(istype(wear_armor, /obj/item/clothing))
+		var/obj/item/clothing/CL = wear_armor
 		if(CL.armor_class == ARMOR_CLASS_HEAVY)
 			if(!HAS_TRAIT(src, TRAIT_HEAVYARMOR))
 				return FALSE
@@ -753,8 +753,8 @@
 			if(!HAS_TRAIT(src, TRAIT_HEAVYARMOR))
 				if(!HAS_TRAIT(src, TRAIT_MEDIUMARMOR))
 					return FALSE
-	if(istype(src.wear_shirt, /obj/item/clothing))
-		var/obj/item/clothing/CL = src.wear_shirt
+	if(istype(wear_shirt, /obj/item/clothing))
+		var/obj/item/clothing/CL = wear_shirt
 		if(CL.armor_class == ARMOR_CLASS_HEAVY)
 			if(!HAS_TRAIT(src, TRAIT_HEAVYARMOR))
 				return FALSE
@@ -762,8 +762,8 @@
 			if(!HAS_TRAIT(src, TRAIT_HEAVYARMOR))
 				if(!HAS_TRAIT(src, TRAIT_MEDIUMARMOR))
 					return FALSE
-	if(istype(src.wear_pants, /obj/item/clothing))
-		var/obj/item/clothing/CL = src.wear_pants
+	if(istype(wear_pants, /obj/item/clothing))
+		var/obj/item/clothing/CL = wear_pants
 		if(CL.armor_class == ARMOR_CLASS_HEAVY)
 			if(!HAS_TRAIT(src, TRAIT_HEAVYARMOR))
 				return FALSE
@@ -779,20 +779,20 @@
 /mob/living/carbon/human/check_dodge_skill()
 	if(!HAS_TRAIT(src, TRAIT_DODGEEXPERT))
 		return FALSE
-	if(istype(src.wear_armor, /obj/item/clothing))
-		var/obj/item/clothing/CL = src.wear_armor
+	if(istype(wear_armor, /obj/item/clothing))
+		var/obj/item/clothing/CL = wear_armor
 		if(CL.armor_class == ARMOR_CLASS_HEAVY)
 			return FALSE
 		if(CL.armor_class == ARMOR_CLASS_MEDIUM)
 			return FALSE
-	if(istype(src.wear_shirt, /obj/item/clothing))
-		var/obj/item/clothing/CL = src.wear_shirt
+	if(istype(wear_shirt, /obj/item/clothing))
+		var/obj/item/clothing/CL = wear_shirt
 		if(CL.armor_class == ARMOR_CLASS_HEAVY)
 			return FALSE
 		if(CL.armor_class == ARMOR_CLASS_MEDIUM)
 			return FALSE
-	if(istype(src.wear_pants, /obj/item/clothing))
-		var/obj/item/clothing/CL = src.wear_pants
+	if(istype(wear_pants, /obj/item/clothing))
+		var/obj/item/clothing/CL = wear_pants
 		if(CL.armor_class == ARMOR_CLASS_HEAVY)
 			return FALSE
 		if(CL.armor_class == ARMOR_CLASS_MEDIUM)
@@ -805,27 +805,27 @@
 /mob/living/carbon/human/check_mage_armor()
 	if(!HAS_TRAIT(src, TRAIT_MAGEARMOR))
 		return FALSE
-	if(istype(src.wear_armor, /obj/item/clothing))
-		var/obj/item/clothing/CL = src.wear_armor
+	if(istype(wear_armor, /obj/item/clothing))
+		var/obj/item/clothing/CL = wear_armor
 		if(CL.armor_class == ARMOR_CLASS_HEAVY)
 			return FALSE
 		if(CL.armor_class == ARMOR_CLASS_MEDIUM)
 			return FALSE
-	if(istype(src.wear_shirt, /obj/item/clothing))
-		var/obj/item/clothing/CL = src.wear_shirt
+	if(istype(wear_shirt, /obj/item/clothing))
+		var/obj/item/clothing/CL = wear_shirt
 		if(CL.armor_class == ARMOR_CLASS_HEAVY)
 			return FALSE
 		if(CL.armor_class == ARMOR_CLASS_MEDIUM)
 			return FALSE
-	if(istype(src.wear_pants, /obj/item/clothing))
-		var/obj/item/clothing/CL = src.wear_pants
+	if(istype(wear_pants, /obj/item/clothing))
+		var/obj/item/clothing/CL = wear_pants
 		if(CL.armor_class == ARMOR_CLASS_HEAVY)
 			return FALSE
 		if(CL.armor_class == ARMOR_CLASS_MEDIUM)
 			return FALSE
-	if(src.magearmor == 0)
-		src.magearmor = 1
-		src.apply_status_effect(/datum/status_effect/buff/magearmor)
+	if(magearmor == 0)
+		magearmor = 1
+		apply_status_effect(/datum/status_effect/buff/magearmor)
 		return TRUE
 
 /mob/living/proc/check_scale_armor()
@@ -834,9 +834,9 @@
 /mob/living/carbon/human/check_scale_armor()
 	if(!HAS_TRAIT(src, TRAIT_SCALEARMOR))
 		return FALSE
-	if(src.magearmor == 0)
-		src.magearmor = 1
-		src.apply_status_effect(/datum/status_effect/buff/magearmor)
+	if(magearmor == 0)
+		magearmor = 1
+		apply_status_effect(/datum/status_effect/buff/magearmor)
 		return TRUE
 
 /mob/proc/toggle_eye_intent(mob/user) //clicking the fixeye button either makes you fixeye or clears your target

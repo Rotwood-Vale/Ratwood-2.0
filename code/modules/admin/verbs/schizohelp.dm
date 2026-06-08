@@ -50,7 +50,7 @@ GLOBAL_LIST_EMPTY_TYPED(schizohelps, /datum/schizohelp)
 	)
 	/// generate a consistent but anonymous name
 	var/static/fumbling_seed = text2num(GLOB.rogue_round_id)
-	var/md5_num = text2num(md5(real_name || src.name))
+	var/md5_num = text2num(md5(real_name || name))
 	var/adjective = possible_adjectives[(md5_num % length(possible_adjectives)) + 1]
 	var/noun = possible_nouns[(round(md5_num * noise_hash(md5_num, fumbling_seed)) % length(possible_nouns)) + 1]
 	return "[adjective] [noun]"

@@ -662,9 +662,9 @@
 
 /obj/item/rogueweapon/mace/maul/grand/malum/pickup(mob/living/user)
 	if(HAS_TRAIT(user, TRAIT_FORGEBLESSED))
-		src.minstr = 8//-10, if you have the ability to use this.
+		minstr = 8//-10, if you have the ability to use this.
 	else
-		src.minstr = 18
+		minstr = 18
 	..()
 
 //This thing is warded. For fluff. And because it's COOL, we give them silver blessings.

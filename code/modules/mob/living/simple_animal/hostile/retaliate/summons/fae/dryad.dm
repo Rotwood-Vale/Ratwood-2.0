@@ -117,7 +117,7 @@
 	..()
 	for(var/obj/structure/vine/V in view(src))
 		qdel(V)
-	src.visible_message(span_boldwarning("Vines near [src] wither as it returns to it's plane!"))
+	visible_message(span_boldwarning("Vines near [src] wither as it returns to it's plane!"))
 	var/turf/deathspot = get_turf(src)
 	new /obj/item/magic/melded/t1(deathspot)
 	new /obj/item/magic/fae/scale(deathspot)

@@ -79,7 +79,7 @@
 	if(src.pulledby != null)
 		to_chat(src, span_notice("I can't fly away while being grabbed!"))
 		return
-	src.visible_message(span_notice("[src] begins to ascend!"), span_notice("You take flight..."))
+	visible_message(span_notice("[src] begins to ascend!"), span_notice("You take flight..."))
 	if(do_after(src, flight_time))
 		if(src.pulledby == null)
 			src.zMove(UP, TRUE)
@@ -94,7 +94,7 @@
 	if(src.pulledby != null)
 		to_chat(src, span_notice("I can't fly away while being grabbed!"))
 		return
-	src.visible_message(span_notice("[src] begins to descend!"), span_notice("You take flight..."))
+	visible_message(span_notice("[src] begins to descend!"), span_notice("You take flight..."))
 	if(do_after(src, flight_time))
 		if(src.pulledby == null)
 			src.zMove(DOWN, TRUE)
@@ -111,7 +111,7 @@
 
 /mob/living/simple_animal/pet/familiar/examine(mob/user)
 	. = ..()
-	var/datum/familiar_prefs/fpref = src.client?.prefs.familiar_prefs
+	var/datum/familiar_prefs/fpref = client?.prefs.familiar_prefs
 	if(fpref && (fpref.familiar_flavortext || fpref.familiar_headshot_link || fpref.familiar_ooc_notes))
 		. += "<a href='?src=[REF(src)];task=view_fam_headshot;'>Examine closer</a>"
 
@@ -122,7 +122,7 @@
 	. = ..()
 	emote("deathgasp")
 	if(familiar_summoner)
-		to_chat(familiar_summoner, span_warning("[src.name] has fallen, and your bond dims. Yet in the quiet beyond, a flicker of their essence remains."))
+		to_chat(familiar_summoner, span_warning("[name] has fallen, and your bond dims. Yet in the quiet beyond, a flicker of their essence remains."))
 
 /mob/living/simple_animal/pet/familiar/Destroy()
 	if(familiar_summoner)

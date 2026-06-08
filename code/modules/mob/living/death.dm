@@ -6,7 +6,7 @@ GLOBAL_LIST_EMPTY(last_words)
 		death(TRUE)
 	if(client)
 		SSdroning.kill_droning(client)
-	playsound(src.loc, pick('sound/combat/gib (1).ogg','sound/combat/gib (2).ogg'), 80, FALSE, 3)
+	playsound(loc, pick('sound/combat/gib (1).ogg','sound/combat/gib (2).ogg'), 80, FALSE, 3)
 
 	if(!prev_lying)
 		gib_animation()
@@ -106,9 +106,9 @@ GLOBAL_LIST_EMPTY(last_words)
 		GLOB.dead_mob_list += src
 
 //	stop_all_loops()
-	SSdroning.kill_rain(src.client)
-	SSdroning.kill_loop(src.client)
-	SSdroning.kill_droning(src.client)
+	SSdroning.kill_rain(client)
+	SSdroning.kill_loop(client)
+	SSdroning.kill_droning(client)
 	if(!nocutscene)
 		src.playsound_local(src, 'sound/misc/deth.ogg', 100)
 

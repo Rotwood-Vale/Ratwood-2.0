@@ -336,7 +336,7 @@
 	var/obj/item/bodypart/head = H.get_bodypart(BODY_ZONE_HEAD)
 	switch(consequence)
 		if("crunch")
-			playsound(src.loc, 'sound/items/beartrap.ogg', 300, TRUE, -1)
+			playsound(loc, 'sound/items/beartrap.ogg', 300, TRUE, -1)
 			visible_message(span_info("<font color ='red'>It pierces bone as it extracts!</font>"))
 			head.add_wound(/datum/wound/fracture)
 			head.update_disabled()

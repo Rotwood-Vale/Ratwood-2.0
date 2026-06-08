@@ -169,7 +169,7 @@
 		return ..()
 
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/cheesewheel/proc/maturing_done()
-	playsound(src.loc, 'modular/Neu_Food/sound/rustle2.ogg', 100, TRUE, -1)
+	playsound(loc, 'modular/Neu_Food/sound/rustle2.ogg', 100, TRUE, -1)
 	var/obj/item/reagent_containers/food/snacks/rogue/cheddar/cheese = new(loc)
 	var/obj/item/natural/cloth/cloth = new(loc)
 	if(ishuman(loc))

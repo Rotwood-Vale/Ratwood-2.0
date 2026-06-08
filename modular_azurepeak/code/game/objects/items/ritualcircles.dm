@@ -712,7 +712,7 @@
 /obj/structure/active_abyssor_rune/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/spawn_spire), spawn_time)
-	src.visible_message(span_userdanger("A glowing, pulsating rune etches itself into the ground. Reality cracks visibly around it! Something is coming!"))
+	visible_message(span_userdanger("A glowing, pulsating rune etches itself into the ground. Reality cracks visibly around it! Something is coming!"))
 
 /obj/structure/active_abyssor_rune/proc/spawn_spire()
 	new spire_type(get_turf(src))
@@ -802,7 +802,7 @@
 	for(var/obj/structure/active_abyssor_rune/R in range(1, src))
 		qdel(R)
 
-	src.visible_message(span_danger("The spire shatters with a painful ringing. In an instant the dream recedes back to Abyssor's realm, restoring the world as it was."))
+	visible_message(span_danger("The spire shatters with a painful ringing. In an instant the dream recedes back to Abyssor's realm, restoring the world as it was."))
 	STOP_PROCESSING(SSobj, src)
 	playsound(src, 'sound/foley/glassbreak.ogg', 50, TRUE)
 	new /obj/effect/particle_effect/smoke(src.loc)

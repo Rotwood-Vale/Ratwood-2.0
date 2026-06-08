@@ -470,9 +470,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, span_warning("Another consciousness is in my body... It is resisting me."))
 		return
 //	stop_all_loops()
-	SSdroning.kill_rain(src.client)
-	SSdroning.kill_loop(src.client)
-	SSdroning.kill_droning(src.client)
+	SSdroning.kill_rain(client)
+	SSdroning.kill_loop(client)
+	SSdroning.kill_droning(client)
 	remove_client_colour(/datum/client_colour/monochrome)
 	client.change_view(CONFIG_GET(string/default_view))
 	client?.verbs -= GLOB.ghost_verbs
@@ -510,9 +510,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	client.screen.Cut()
 	client.screen += client.void
 //	stop_all_loops()
-	SSdroning.kill_rain(src.client)
-	SSdroning.kill_loop(src.client)
-	SSdroning.kill_droning(src.client)
+	SSdroning.kill_rain(client)
+	SSdroning.kill_loop(client)
+	SSdroning.kill_droning(client)
 	remove_client_colour(/datum/client_colour/monochrome)
 	if(!client)
 		log_game("[key_name(src)] AM failed due to disconnect.")

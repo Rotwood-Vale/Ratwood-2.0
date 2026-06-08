@@ -272,7 +272,7 @@
 					break
 				if(prob(pickchance))
 					lockprogress += moveup
-					playsound(src.loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
+					playsound(loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
 					to_chat(user, "<span class='warning'>Click... [pickchance]% chance to succeed...</span>")
 					if(user.mind)
 						add_sleep_experience(opener, /datum/skill/misc/lockpicking, opener.STAINT/2)
@@ -402,7 +402,7 @@
 	if(HAS_TRAIT(user, TRAIT_BASHDOORS))
 		src.take_damage(15)
 		return
-	src.visible_message(span_info("[user] knocks on [src]."))
+	visible_message(span_info("[user] knocks on [src]."))
 	add_fingerprint(user)
 	playsound(src, 'sound/misc/glassknock.ogg', 100)
 

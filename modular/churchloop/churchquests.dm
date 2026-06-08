@@ -567,12 +567,12 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 		qdel(src)
 		return TRUE
 
-	var/answer = alert(H, "[user] offers [src.name]. Accept it?", src.name, "Accept", "Refuse")
+	var/answer = alert(H, "[user] offers [name]. Accept it?", name, "Accept", "Refuse")
 	if(QDELETED(src)) return FALSE
 
 	if(answer != "Accept")
 		to_chat(user, span_warning("[H] refuses."))
-		to_chat(H, span_notice("You refuse [src.name]."))
+		to_chat(H, span_notice("You refuse [name]."))
 		return FALSE
 
 	if(!_check_distance(user, H))

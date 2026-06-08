@@ -194,7 +194,7 @@
 		if(user.client?.prefs.showrolls && (attacker_dualw || defender_dualw))
 			attacker_feedback = "Attacking with advantage. ([100 - ((prob2defend / 100) * (prob2defend / 100) * 100)]%)"
 
-		if(src.client?.prefs.showrolls)
+		if(client?.prefs.showrolls)
 			var/text = "Roll to dodge... [prob2defend]%"
 			if((defender_dualw || attacker_dualw))
 				if(defender_dualw && attacker_dualw)
@@ -236,9 +236,9 @@
 	playsound(src, 'sound/combat/dodge.ogg', 100, FALSE)
 	throw_at(turfy, 1, 2, src, FALSE)
 	if(drained > 0)
-		src.visible_message(span_warning("<b>[src]</b> dodges [user]'s attack!"))
+		visible_message(span_warning("<b>[src]</b> dodges [user]'s attack!"))
 	else
-		src.visible_message(span_warning("<b>[src]</b> easily dodges [user]'s attack!"))
+		visible_message(span_warning("<b>[src]</b> easily dodges [user]'s attack!"))
 	if(get_dist(src, user) <= user.used_intent?.reach)	//We are still in range of the attacker's weapon post-dodge
 		var/probclip = 50
 		var/obj/item/IS = L.get_active_held_item()

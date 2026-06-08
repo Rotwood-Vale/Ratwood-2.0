@@ -426,13 +426,13 @@
 	auto_turn_destructive()
 	dir = GLOB.reverse_dir[dir]
 	if(dir == NORTH)
-		src.pixel_y = -32
+		pixel_y = -32
 	if(dir == EAST)
-		src.pixel_x = -32
+		pixel_x = -32
 	if(dir == SOUTH)
-		src.pixel_y = 32
+		pixel_y = 32
 	if(dir == WEST)
-		src.pixel_x = 32
+		pixel_x = 32
 	pixel_x += rand(-5,5)
 	pixel_y += rand(-5,5)
 

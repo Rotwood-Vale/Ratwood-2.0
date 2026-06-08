@@ -1438,7 +1438,7 @@ Necra's Censer (by ARefrigerator)
 
 	user.visible_message("<span class='warning'>[user] casts a line!</span>",
 	                     "<span class='notice'>I cast a line.</span>")
-	playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
+	playsound(loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 
 	if(!do_after(user, ft, target = target))
 		to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
@@ -1450,7 +1450,7 @@ Necra's Censer (by ARefrigerator)
 
 	var/ow = 30 + (sl * 10)
 	to_chat(user, "<span class='notice'>Something tugs the line!</span>")
-	playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
+	playsound(loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 
 	do_after(user, ow, target = target)
 
@@ -1469,7 +1469,7 @@ Necra's Censer (by ARefrigerator)
 			user.mind.add_sleep_experience(/datum/skill/labor/fishing, round(fisherman.STAINT, 2), FALSE)
 		record_featured_stat(FEATURED_STATS_FISHERS, fisherman)
 
-	playsound(src.loc, 'sound/items/Fish_out.ogg', 100, TRUE)
+	playsound(loc, 'sound/items/Fish_out.ogg', 100, TRUE)
 
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	update_icon()

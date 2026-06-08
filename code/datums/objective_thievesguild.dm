@@ -85,17 +85,17 @@
 		var/assigned
 		assigned = FALSE
 		if(roll == 1)
-			assigned = src.setup_steal_objective()
+			assigned = setup_steal_objective()
 		else if(roll == 2)
-			assigned = src.setup_mammon_objective()
+			assigned = setup_mammon_objective()
 		else
-			assigned = src.setup_assassinate_objective()
+			assigned = setup_assassinate_objective()
 		if(!assigned)
 			// If assassination fails (no valid targets), fall back to steal
-			assigned = src.setup_steal_objective()
+			assigned = setup_steal_objective()
 		if(!assigned)
 			// If steal also fails, fall back to mammon
-			assigned = src.setup_mammon_objective()
+			assigned = setup_mammon_objective()
 	update_explanation_text()
 
 /datum/objective/thieves_guild_objective/proc/get_assassinate_explanation()
@@ -109,7 +109,7 @@
 /datum/objective/thieves_guild_objective/update_explanation_text()
 	..()
 	if(is_assassinate)
-		explanation_text = src.get_assassinate_explanation()
+		explanation_text = get_assassinate_explanation()
 	else if(is_mammon)
 		explanation_text = "Have at least <b>[mammon_amount] mammon</b> on your person at the end of the round."
 	else
@@ -124,7 +124,7 @@
 	return FALSE
 
 /datum/objective/thieves_guild_objective/proc/check_assassinate_completion()
-	if(src.is_target_dead())
+	if(is_target_dead())
 		return TRUE
 	return FALSE
 
@@ -159,7 +159,7 @@
 	if(!owner.current)
 		return FALSE
 	if(is_assassinate)
-		return src.check_assassinate_completion()
+		return check_assassinate_completion()
 	if(is_mammon)
 		var/total_mammon = get_mammons_in_atom(owner.current)
 		if(owner.current && owner.current.client)

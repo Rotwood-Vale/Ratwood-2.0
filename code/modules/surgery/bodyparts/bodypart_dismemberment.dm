@@ -52,7 +52,7 @@
 		return FALSE //signal handled the dropping
 
 	if(C.try_resist_critical())
-		C.visible_message(span_danger("Critical resistance! [C]'s [src.name] hangs on by a thread!</span>"))
+		C.visible_message(span_danger("Critical resistance! [C]'s [name] hangs on by a thread!</span>"))
 		return FALSE
 
 	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
@@ -92,7 +92,7 @@
 			// we're greviously wounded OR we don't give a shit about two-stage death (guillotines, npcs, etc)
 			C.visible_message(span_danger("<B>[C] is [pick("BRUTALLY","VIOLENTLY","BLOODILY","MESSILY")] DECAPITATED!</B>"))
 	else
-		C.visible_message(span_danger("<B>The [src.name] is [pick("torn off", "sundered", "severed", "separated", "unsewn")]!</B>"))
+		C.visible_message(span_danger("<B>The [name] is [pick("torn off", "sundered", "severed", "separated", "unsewn")]!</B>"))
 	if(!HAS_TRAIT(C, TRAIT_NOPAIN))
 		C.emote("painscream")
 	if(!(NOBLOOD in C.dna?.species?.species_traits))
@@ -215,7 +215,7 @@
 			// we're greviously wounded OR we don't give a shit about two-stage death (guillotines, npcs, etc)
 			C.visible_message(span_danger("<B>[C] is [pick("BRUTALLY","VIOLENTLY","BLOODILY","MESSILY")] DECAPITATED!</B>"))
 	else
-		C.visible_message(span_danger("<B>The [src.name] is [pick("torn off", "sundered", "severed", "separated", "unsewn")]!</B>"))
+		C.visible_message(span_danger("<B>The [name] is [pick("torn off", "sundered", "severed", "separated", "unsewn")]!</B>"))
 	if(!HAS_TRAIT(C, TRAIT_NOPAIN))
 		C.emote("painscream")
 	if(!(NOBLOOD in C.dna?.species?.species_traits))

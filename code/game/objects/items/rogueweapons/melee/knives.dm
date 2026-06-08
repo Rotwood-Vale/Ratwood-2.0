@@ -156,7 +156,7 @@
 			BODY_ZONE_PRECISE_L_FOOT,
 			BODY_ZONE_PRECISE_R_FOOT,
 			)
-		unfortunate_idiot.apply_damage(src.force, BRUTE, dropped_knife_target)
+		unfortunate_idiot.apply_damage(force, BRUTE, dropped_knife_target)
 		user.dropItemToGround(src, TRUE)
 	else
 		user.visible_message(
@@ -747,7 +747,7 @@
 
 /obj/item/rogueweapon/huntingknife/idagger/navaja/attack_self(mob/user)
 	extended = !extended
-	playsound(src.loc, 'sound/blank.ogg', 50, TRUE)
+	playsound(loc, 'sound/blank.ogg', 50, TRUE)
 	if(extended)
 		force = 20
 		wdefense = 6

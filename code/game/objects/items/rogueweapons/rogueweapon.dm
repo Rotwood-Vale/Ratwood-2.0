@@ -158,4 +158,4 @@
 			replaced_shaft = /obj/item/shaft/metal
 	blade_dulling = new_shaft
 	qdel(S)
-	new replaced_shaft(src.drop_location())
+	new replaced_shaft(drop_location())

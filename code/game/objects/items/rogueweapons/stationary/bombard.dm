@@ -63,7 +63,7 @@ Also this is later going to the siege mode. But for now, brigands. Woohoo!!!!
 
 /obj/structure/bombard/Initialize(mapload)
 	. = ..()
-	zdial = src.z
+	zdial = z
 
 /obj/structure/bombard/examine(mob/user)
 	. = ..()//Below displays deobfuscated coords. Is that a good idea? No. But it works. Also lets you math things out easier I guess.
@@ -168,7 +168,7 @@ Also this is later going to the siege mode. But for now, brigands. Woohoo!!!!
 			xoffset = rand(-offset_x_max, offset_x_max)
 			yoffset = rand(-offset_y_max, offset_y_max)
 			if(zdial == null)//No offset? Somehow? That's fine! We do the bombard's Z!
-				zdial = src.z
+				zdial = z
 			else
 				zdial = temp_targ_z
 		else

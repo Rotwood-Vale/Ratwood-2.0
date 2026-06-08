@@ -37,9 +37,9 @@
 
 /obj/effect/decal/cleanable/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/reagent_containers/glass))
-		if(src.reagents && W.reagents)
+		if(reagents && W.reagents)
 			. = 1 //so the containers don't splash their content on the src while scooping.
-			if(!src.reagents.total_volume)
+			if(!reagents.total_volume)
 				to_chat(user, span_notice("[src] isn't thick enough to scoop up!"))
 				return
 			if(W.reagents.total_volume >= W.reagents.maximum_volume)

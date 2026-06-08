@@ -29,7 +29,7 @@
 		var/obj/item/rogueweapon/shovel/S = W
 		if(!S.heldclod && user.used_intent.type == /datum/intent/shovelscoop)
 			playsound(loc,'sound/items/dig_shovel.ogg', 100, TRUE)
-			src.forceMove(S)
+			forceMove(S)
 			S.heldclod = src
 			W.update_icon()
 			return

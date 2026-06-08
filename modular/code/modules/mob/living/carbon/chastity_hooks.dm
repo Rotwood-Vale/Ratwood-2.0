@@ -42,9 +42,9 @@
 
 	if(chastity_device && !chastity_device.locked)
 		if(src == user)
-			src.visible_message(span_notice("[user] begins to take off [chastity_device]..."))
+			visible_message(span_notice("[user] begins to take off [chastity_device]..."))
 		else
-			src.visible_message(span_notice("[user] begins to take off [src]'s [chastity_device]..."))
+			visible_message(span_notice("[user] begins to take off [src]'s [chastity_device]..."))
 		if(do_after(user, 30, needhand = 1, target = src))
 			var/obj/item/chastity/device = chastity_device
 			if(device)

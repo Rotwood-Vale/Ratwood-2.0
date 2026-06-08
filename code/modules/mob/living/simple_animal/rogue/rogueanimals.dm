@@ -141,7 +141,7 @@
 					if(attack_sound)
 						playsound(src, pick(attack_sound), 100, TRUE, -1)
 					face_atom(C)
-					src.visible_message(span_danger("[src] starts to rip apart [C]!"))
+					visible_message(span_danger("[src] starts to rip apart [C]!"))
 					if(do_after(src,100, target = L))
 						var/obj/item/bodypart/limb
 						var/list/limb_list = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -162,7 +162,7 @@
 				else
 					if(attack_sound)
 						playsound(src, pick(attack_sound), 100, TRUE, -1)
-					src.visible_message(span_danger("[src] starts to rip apart [L]!"))
+					visible_message(span_danger("[src] starts to rip apart [L]!"))
 					if(do_after(src,100, target = L))
 						L.gib()
 						return TRUE
@@ -204,7 +204,7 @@
 	if(enemies.len)
 		if(prob(23))
 			enemies = list()
-			src.visible_message(span_notice("[src] calms down."))
+			visible_message(span_notice("[src] calms down."))
 			LoseTarget()
 		else
 			return
@@ -224,7 +224,7 @@
 				if(mob_timers["aggro_time"])
 					if(world.time > mob_timers["aggro_time"] + 30 SECONDS)
 						enemies = list()
-						src.visible_message(span_info("[src] calms down."))
+						visible_message(span_info("[src] calms down."))
 						LoseTarget()
 				else
 					mob_timers["aggro_time"] = world.time
@@ -251,7 +251,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/Retaliate()
 //	if(!enemies.len && message)
-//		src.visible_message(span_warning("[src] panics!"))
+//		visible_message(span_warning("[src] panics!"))
 //	if(flee)
 //		retreat_distance = 10
 //		minimum_distance = 10

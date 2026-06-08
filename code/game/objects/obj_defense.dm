@@ -52,13 +52,13 @@
 		if(BRUTE)
 			if(damage_amount)
 				if(islist(attacked_sound))
-					playsound(src.loc, pick(attacked_sound), 100, FALSE, -1)
+					playsound(loc, pick(attacked_sound), 100, FALSE, -1)
 				else
-					playsound(src.loc, attacked_sound, 100, FALSE, -1)
+					playsound(loc, attacked_sound, 100, FALSE, -1)
 			else
-				playsound(src.loc, "nodmg", 100, FALSE, -1)
+				playsound(loc, "nodmg", 100, FALSE, -1)
 		if(BURN)
-			playsound(src.loc, "burn", 100, FALSE, -1)
+			playsound(loc, "burn", 100, FALSE, -1)
 
 /obj/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum, damage_flag = "blunt")
 	..()
@@ -94,7 +94,7 @@
 
 /obj/bullet_act(obj/projectile/P)
 	. = ..()
-	playsound(src.loc, P.hitsound, 50, TRUE)
+	playsound(loc, P.hitsound, 50, TRUE)
 	visible_message(span_danger("[src] is hit by \a [P]!"), null, null, COMBAT_MESSAGE_RANGE)
 	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
 		take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armor_penetration)

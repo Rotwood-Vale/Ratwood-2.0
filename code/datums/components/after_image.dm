@@ -29,36 +29,36 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(throw_landed))
 
 /datum/component/after_image/RegisterWithParent()
-	for(var/obj/effect/after_image/listed_image in src.after_images)
+	for(var/obj/effect/after_image/listed_image in after_images)
 		listed_image.active = TRUE
-	src.sync_after_images()
+	sync_after_images()
 
 /datum/component/after_image/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_DIR_CHANGE, COMSIG_MOVABLE_THROW_LANDED))
-	for(var/obj/effect/after_image/listed_image in src.after_images)
+	for(var/obj/effect/after_image/listed_image in after_images)
 		listed_image.active = FALSE
 		qdel(listed_image)
 	. = ..()
 
 /datum/component/after_image/Destroy()
-	if(length(src.after_images))
-		for(var/obj/effect/after_image/listed_image in src.after_images)
+	if(length(after_images))
+		for(var/obj/effect/after_image/listed_image in after_images)
 			qdel(listed_image)
-		src.after_images.Cut()
-		src.after_images = null
+		after_images.Cut()
+		after_images = null
 	. = ..()
 
 /datum/component/after_image/proc/change_dir(atom/movable/AM, new_dir, old_dir)
-	src.sync_after_images(new_dir)
+	sync_after_images(new_dir)
 
 /datum/component/after_image/proc/set_loc(atom/movable/AM, atom/last_loc)
-	return src.move(AM, last_loc, AM.dir)
+	return move(AM, last_loc, AM.dir)
 
 /datum/component/after_image/proc/move(atom/movable/AM, turf/last_turf, direct)
-	src.sync_after_images()
+	sync_after_images()
 
 /datum/component/after_image/proc/throw_landed(atom/movable/AM, datum/thrownthing/thing)
-	src.sync_after_images() // necessary to fix pixel_x and pixel_y
+	sync_after_images() // necessary to fix pixel_x and pixel_y
 
 /datum/component/after_image/proc/sync_after_images(dir_override=null)
 	set waitfor = FALSE
@@ -79,7 +79,7 @@
 
 	var/atom/movable/parent_am = parent
 	var/atom/target_loc = parent_am.loc
-	for(var/obj/effect/after_image/listed_image in src.after_images)
+	for(var/obj/effect/after_image/listed_image in after_images)
 		sleep(rest_time)
 		listed_image.sync_with_parent(targeted_image, target_loc)
 

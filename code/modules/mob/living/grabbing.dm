@@ -406,7 +406,7 @@
 					M.visible_message(span_danger("[user] takes [I] from [M]'s hand!"), \
 								span_userdanger("[user] takes [I] from my hand!"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE)
 					user.changeNext_move(12)//avoids instantly attacking with the new weapon
-					playsound(src.loc, 'sound/combat/weaponr1.ogg', 100, FALSE, -1) //sound queue to let them know that they got disarmed
+					playsound(loc, 'sound/combat/weaponr1.ogg', 100, FALSE, -1) //sound queue to let them know that they got disarmed
 				else
 					probby += 20
 					if(prob(probby))
@@ -418,7 +418,7 @@
 						user.Immobilize(10)
 						M.Immobilize(10)
 						M.visible_message(span_notice("[user.name] struggles to disarm [M.name]!"))
-						playsound(src.loc, 'sound/foley/struggle.ogg', 100, FALSE, -1)
+						playsound(loc, 'sound/foley/struggle.ogg', 100, FALSE, -1)
 			else
 				to_chat(user, span_warning("They aren't holding anything on that hand!"))
 				return

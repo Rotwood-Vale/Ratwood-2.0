@@ -171,7 +171,7 @@
 /obj/item/proc/can_craft_with()
 	if(craft_blocked)
 		return FALSE
-	if(istype(src, /obj/item/storage/roguebag) && src.contents.len > 0) //for bait bags
+	if(istype(src, /obj/item/storage/roguebag) && contents.len > 0) //for bait bags
 		return FALSE
 	return TRUE
 

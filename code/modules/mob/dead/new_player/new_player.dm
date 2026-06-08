@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	if(!IsGuestKey(src.key))
 		if (SSdbcore.Connect())
 			var/isadmin = 0
-			if(src.client && src.client.holder)
+			if(client && client.holder)
 				isadmin = 1
 			var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[sanitizeSQL(ckey)]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[sanitizeSQL(ckey)]\")")
 			var/rs = REF(src)
@@ -319,13 +319,13 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 
 //When you cop out of the round (NB: this HAS A SLEEP FOR PLAYER INPUT IN IT)
 /mob/dead/new_player/proc/make_me_an_observer()
-	if(QDELETED(src) || !src.client)
+	if(QDELETED(src) || !client)
 		ready = PLAYER_NOT_READY
 		return FALSE
 
 	var/this_is_like_playing_right = alert(src,"Are you sure you wish to observe? Playing is a lot more fun.","SPECTATE","Yes","No")
 
-	if(QDELETED(src) || !src.client || this_is_like_playing_right != "Yes")
+	if(QDELETED(src) || !client || this_is_like_playing_right != "Yes")
 		ready = PLAYER_NOT_READY
 		src << browse(null, "window=playersetup") //closes the player setup window
 		new_player_panel()

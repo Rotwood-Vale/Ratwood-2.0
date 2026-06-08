@@ -75,7 +75,7 @@
 		user.visible_message(span_notice("[user] starts adding the bait to the fishing cage..."), \
 							span_notice("I start to add [I] to the fishing cage..."))
 		if(do_after(user, 3 SECONDS, target = src))
-			playsound(src.loc, 'sound/foley/pierce.ogg', 50, FALSE)
+			playsound(loc, 'sound/foley/pierce.ogg', 50, FALSE)
 			I.forceMove(src)
 			bait = I
 			check_counter = world.time

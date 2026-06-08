@@ -21,10 +21,10 @@
 	. = ..()
 	if(ringing)
 		return
-	playsound(src.loc, 'sound/misc/bell.ogg', 50, 1)
+	playsound(loc, 'sound/misc/bell.ogg', 50, 1)
 
 
-	for(var/mob/M in view(10, src.loc))
+	for(var/mob/M in view(10, loc))
 		if(M.client)
 			to_chat(M, span_notice("The handheld bell rings sharply through the area."))
 

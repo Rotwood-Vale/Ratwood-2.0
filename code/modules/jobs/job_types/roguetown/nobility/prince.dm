@@ -393,15 +393,15 @@
 				return
 			if(!guy.mind)
 				return
-			src.say("Be my Champion, [guy]!")
+			say("Be my Champion, [guy]!")
 			var/prompt = alert(guy, "Do wish to be [src]'s Champion?", "Champion", "Yes", "No")
 			if(prompt == "No")
 				return
 
 			guy.say("I serve you, [src]!")
-			src.visible_message(span_warning("[src] begins tying the golden ribbon to [guy]'s wrist."))
+			visible_message(span_warning("[src] begins tying the golden ribbon to [guy]'s wrist."))
 			if(do_after(src, 10 SECONDS))
-				src.visible_message(span_warning("[src] ties a golden ribbon to [guy]'s wrist."))
+				visible_message(span_warning("[src] ties a golden ribbon to [guy]'s wrist."))
 				guy.mind.ward = src
 				src.mind.champion = guy
 				var/datum/status_effect/buff/champion/new_champion = guy.apply_status_effect(/datum/status_effect/buff/champion)
@@ -419,10 +419,10 @@
 			return
 
 		else
-			src.visible_message(span_warning("[src] begins untying the golden ribbon from [src.mind.champion]'s wrist."))
+			visible_message(span_warning("[src] begins untying the golden ribbon from [src.mind.champion]'s wrist."))
 			if(do_after(src, 10 SECONDS))
-				src.visible_message(span_warning("[src] unties a golden ribbon from [src.mind.champion]'s wrist."))
-				src.say("I revoke your championship, [target]!")
+				visible_message(span_warning("[src] unties a golden ribbon from [src.mind.champion]'s wrist."))
+				say("I revoke your championship, [target]!")
 				src.mind.champion = null
 				if(target.has_status_effect(/datum/status_effect/buff/champion))
 					target.remove_status_effect(/datum/status_effect/buff/champion)

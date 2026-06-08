@@ -681,14 +681,14 @@
 			return
 
 		var/picked = FALSE
-		user.log_message("attempting to lockpick door \"[src.name]\" (currently [locked ? "locked" : "unlocked"]).", LOG_ATTACK)
+		user.log_message("attempting to lockpick door \"[name]\" (currently [locked ? "locked" : "unlocked"]).", LOG_ATTACK)
 
 		while(!QDELETED(I) &&(lockprogress < locktreshold))
 			if(!do_after(user, picktime, target = src))
 				break
 			if(prob(pickchance))
 				lockprogress += moveup
-				playsound(src.loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
+				playsound(loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
 				to_chat(user, "<span class='warning'>Click...</span>")
 				if(L.mind)
 					add_sleep_experience(L, /datum/skill/misc/lockpicking, L.STAINT/2)
@@ -697,8 +697,8 @@
 					to_chat(user, "<span class='deadsay'>The locking mechanism gives.</span>")
 					if(ishuman(user))
 						var/mob/living/carbon/human/H = user
-						message_admins("[H.real_name]([key_name(user)]) successfully lockpicked [src.name] & [locked ? "unlocked" : "locked"] it. [ADMIN_JMP(src)]")
-						log_admin("[H.real_name]([key_name(user)]) successfully lockpicked [src.name].")
+						message_admins("[H.real_name]([key_name(user)]) successfully lockpicked [name] & [locked ? "unlocked" : "locked"] it. [ADMIN_JMP(src)]")
+						log_admin("[H.real_name]([key_name(user)]) successfully lockpicked [name].")
 						record_featured_stat(FEATURED_STATS_CRIMINALS, user)
 						record_round_statistic(STATS_LOCKS_PICKED)
 						var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, get_turf(src))
@@ -714,7 +714,7 @@
 				add_sleep_experience(L, /datum/skill/misc/lockpicking, L.STAINT/4)
 				continue
 		if(!picked)
-			user.log_message("stopped/failed lockpicking door \"[src.name]\" (remains [locked ? "locked" : "unlocked"]).", LOG_ATTACK)
+			user.log_message("stopped/failed lockpicking door \"[name]\" (remains [locked ? "locked" : "unlocked"]).", LOG_ATTACK)
 		return
 
 /obj/structure/mineral_door/proc/tryskeletonlock(mob/user)
@@ -727,8 +727,8 @@
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		message_admins("[H.real_name]([key_name(user)]) successfully skeletonkey'd [src.name] & [locked ? "unlocked" : "locked"] it. [ADMIN_JMP(src)]")
-		log_admin("[H.real_name]([key_name(user)]) successfully used a skeleton key on [src.name].")
+		message_admins("[H.real_name]([key_name(user)]) successfully skeletonkey'd [name] & [locked ? "unlocked" : "locked"] it. [ADMIN_JMP(src)]")
+		log_admin("[H.real_name]([key_name(user)]) successfully used a skeleton key on [name].")
 	do_sparks(3, FALSE, src)
 	playsound(user, 'sound/items/skeleton_key.ogg', 100)
 	lock_toggle(user) //All That It Does.

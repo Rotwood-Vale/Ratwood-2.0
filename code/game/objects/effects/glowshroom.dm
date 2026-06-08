@@ -44,7 +44,7 @@
 
 		if(L.electrocute_act(electrodam, src))
 			L.mob_timers["kneestinger"] = world.time
-			src.take_damage(30)
+			take_damage(30)
 			if(L.throwing)
 				L.throwing.finalize(FALSE)
 			if(mover.loc != loc && L.stat == CONSCIOUS)
@@ -118,7 +118,7 @@
 
 /obj/structure/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN && damage_amount)
-		playsound(src.loc, 'sound/blank.ogg', 100, TRUE)
+		playsound(loc, 'sound/blank.ogg', 100, TRUE)
 
 /obj/structure/glowshroom/temperature_expose(exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)

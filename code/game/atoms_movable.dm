@@ -278,7 +278,7 @@
 	if(!loc.Exit(src, newloc))
 		return
 
-	if(!newloc.Enter(src, src.loc))
+	if(!newloc.Enter(src, loc))
 		return
 
 	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
@@ -507,8 +507,8 @@
 		CRASH("[src] No valid destination passed into forceMove")
 
 	var/mob/living/carbon/human/H = null
-	if(ishuman(src.loc))
-		H = src.loc
+	if(ishuman(loc))
+		H = loc
 
 	. = FALSE
 	if(destination)
@@ -654,10 +654,10 @@
 	if(!QDELETED(thrower))
 		TT.target_zone = thrower.zone_selected
 
-	var/dist_x = abs(target.x - src.x)
-	var/dist_y = abs(target.y - src.y)
-	var/dx = (target.x > src.x) ? EAST : WEST
-	var/dy = (target.y > src.y) ? NORTH : SOUTH
+	var/dist_x = abs(target.x - x)
+	var/dist_y = abs(target.y - y)
+	var/dx = (target.x > x) ? EAST : WEST
+	var/dy = (target.y > y) ? NORTH : SOUTH
 
 	if (dist_x == dist_y)
 		TT.pure_diagonal = 1
@@ -1010,7 +1010,7 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 
 /atom/movable/proc/do_warning()
 	var/image/I
-	I = image('icons/effects/effects.dmi', src, "mobwarning", src.layer + 0.1)
+	I = image('icons/effects/effects.dmi', src, "mobwarning", layer + 0.1)
 	I.pixel_y = 16
 	flick_overlay(I, GLOB.clients, 5)
 

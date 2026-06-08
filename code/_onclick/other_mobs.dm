@@ -35,7 +35,7 @@
 		var/mob/living/L = A
 		if(!used_intent.noaa)
 			playsound(get_turf(src), pick(GLOB.unarmed_swingmiss), 100, FALSE)
-			// src.emote("attackgrunt")
+			// emote("attackgrunt")
 		if(used_intent.releasedrain)
 			stamina_add(ceil(used_intent.releasedrain * rmb_stam_penalty))
 		if(L.has_status_effect(/datum/status_effect/buff/clash) && L.get_active_held_item() && ishuman(L))
@@ -128,7 +128,7 @@
 /obj/item/ongive(mob/user, params) //take an item if hand is empty
 	if(user.get_active_held_item())
 		return
-	src.attack_hand(user, params)
+	attack_hand(user, params)
 
 /mob/living/ongive(mob/living/carbon/human/user, params)
 	if(!ishuman(user))
@@ -245,19 +245,13 @@
 		if(istype(G) && G.Touch(A,0)) // for magic gloves
 			return
 	if(!used_intent.noaa && ismob(A))
-//		playsound(src, pick(GLOB.unarmed_swingmiss), 100, FALSE)
 		do_attack_animation(A, visual_effect_icon = used_intent.animname)
 		changeNext_move(used_intent.clickcd)
-//		src.emote("attackgrunt")
 		playsound(get_turf(src), used_intent.miss_sound, 100, FALSE)
 		if(used_intent.miss_text)
 			visible_message(span_warning("[src] [used_intent.miss_text]!"), \
 							span_warning("I [used_intent.miss_text]!"))
 		aftermiss()
-
-//	if(isturf(A) && get_dist(src,A) <= 1) //move this to grab inhand item being used on an empty tile
-//		src.Move_Pulled(A)
-//		return
 
 /*
 	Animals & All Unspecified

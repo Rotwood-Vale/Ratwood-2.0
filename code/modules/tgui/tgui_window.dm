@@ -39,7 +39,7 @@
 /datum/tgui_window/New(client/client, id, pooled = FALSE)
 	src.id = id
 	src.client = client
-	src.client.tgui_windows[id] = src
+	client.tgui_windows[id] = src
 	src.pooled = pooled
 	if(pooled)
 		src.pool_index = TGUI_WINDOW_INDEX(id)

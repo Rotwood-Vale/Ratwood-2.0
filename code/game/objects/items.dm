@@ -546,7 +546,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(href_list["inspect"])
 		if(!usr.canUseTopic(src, be_close=TRUE))
 			return
-		var/list/inspec = list(span_notice("Properties of [src.name]"))
+		var/list/inspec = list(span_notice("Properties of [name]"))
 		if(minstr)
 			inspec += "\n<b>MIN.STR:</b> [minstr]"
 		if(minstr_req)
@@ -866,7 +866,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	//If the item is in a storage item, take it out
 	if(inv_storage_delay && SEND_SIGNAL(loc, COMSIG_CONTAINS_STORAGE))
-		if(!move_after(user, inv_storage_delay, target = iscarbon(loc) ? src : src.loc, progress = TRUE))
+		if(!move_after(user, inv_storage_delay, target = iscarbon(loc) ? src : loc, progress = TRUE))
 			return
 	SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
 	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
@@ -887,11 +887,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			wield(user)
 
 /atom/proc/ontable()
-	if(!isturf(src.loc))
+	if(!isturf(loc))
 		return FALSE
-	for(var/obj/structure/table/T in src.loc)
+	for(var/obj/structure/table/T in loc)
 		return TRUE
-	for(var/obj/machinery/anvil/A in src.loc)
+	for(var/obj/machinery/anvil/A in loc)
 		return TRUE
 	return FALSE
 
@@ -1061,7 +1061,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return 0
 	if(!M)
 		return FALSE
-	if(HAS_TRAIT(M, TRAIT_CHUNKYFINGERS) && (!equipper || equipper == M) && src.type != /obj/item/grabbing/bite) //If a zombie's trying to put something on without assistance that's not a bite
+	if(HAS_TRAIT(M, TRAIT_CHUNKYFINGERS) && (!equipper || equipper == M) && type != /obj/item/grabbing/bite) //If a zombie's trying to put something on without assistance that's not a bite
 		to_chat(M, span_warning("...What?"))
 		return FALSE
 
@@ -1110,9 +1110,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		to_chat(user, span_warning("I cannot locate any organic eyes on this brain!"))
 		return
 
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 
-	playsound(loc, src.hitsound, 30, TRUE, -1)
+	playsound(loc, hitsound, 30, TRUE, -1)
 
 	user.do_attack_animation(M)
 
@@ -1131,7 +1131,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		M.take_bodypart_damage(7)
 
-	log_combat(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.used_intent)])")
+	log_combat(user, M, "attacked", "[name]", "(INTENT: [uppertext(user.used_intent)])")
 
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
@@ -1747,21 +1747,22 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return "Unknown"
 
 	return english_list(parts)
+
 /obj/item/clothing/proc/thermal_examine_text()
 	var/list/out = list()
 
 	// --- Cold ---
-	if(src.cold_protection && src.min_cold_protection_temperature)
-		var/tier = temp_to_cold_tier(src.min_cold_protection_temperature)
-		var/covers = thermal_flags_to_zone_text(src.cold_protection)
+	if(cold_protection && min_cold_protection_temperature)
+		var/tier = temp_to_cold_tier(min_cold_protection_temperature)
+		var/covers = thermal_flags_to_zone_text(cold_protection)
 
 		out += "<b>COLD RESISTANCE:</b> [tier]"
 		out += " | Insulates: [covers]"
 
 	// --- Heat ---
-	if(src.heat_protection && src.max_heat_protection_temperature)
-		var/tier = temp_to_heat_tier(src.max_heat_protection_temperature)
-		var/covers = thermal_flags_to_zone_text(src.heat_protection)
+	if(heat_protection && max_heat_protection_temperature)
+		var/tier = temp_to_heat_tier(max_heat_protection_temperature)
+		var/covers = thermal_flags_to_zone_text(heat_protection)
 
 		out += "<b>HEAT RESISTANCE:</b> [tier]"
 		out += " | Insulates: [covers]"

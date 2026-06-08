@@ -175,14 +175,14 @@
 		to_chat(src, span_warning("You cannot inspire others so early."))
 		return
 
-	src.visible_message(span_notice("[src] begins preaching a sermon..."))
+	visible_message(span_notice("[src] begins preaching a sermon..."))
 
 	if (!do_after(src, 120, target = src)) // 120 seconds
-		src.visible_message(span_warning("[src] stops preaching."))
+		visible_message(span_warning("[src] stops preaching."))
 		return
 
-	src.visible_message(span_notice("[src] finishes the sermon, inspiring those nearby!"))
-	playsound(src.loc, 'sound/magic/ahh2.ogg', 80, TRUE)
+	visible_message(span_notice("[src] finishes the sermon, inspiring those nearby!"))
+	playsound(loc, 'sound/magic/ahh2.ogg', 80, TRUE)
 	COOLDOWN_START(src, evil_priest_sermon, EVIL_PRIEST_SERMON_COOLDOWN)
 
 	for (var/mob/living/carbon/human/H in view(7, src))
@@ -235,7 +235,7 @@
 			"ARE YOU FAITHFUL!?",
 			"WHO IS YOUR SHEPHERD!?",
 		)
-		src.visible_message(span_warning("[src] shoves [S] into [H]'s lux!"))
+		visible_message(span_warning("[src] shoves [S] into [H]'s lux!"))
 		say(pick(faith_lines), spans = list("torture"))
 		H.emote("agony", forced = TRUE)
 

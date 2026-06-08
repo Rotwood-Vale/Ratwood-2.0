@@ -231,7 +231,7 @@
 
 	if (A.loc && ismob(A.loc.loc))
 		// we're inside a container inside a mob, so we're almost certainly a saddle, a box, or someone's organs. check if we're adjacent
-		if (src.Adjacent(A.loc.loc))
+		if (Adjacent(A.loc.loc))
 			resolveAdjacentClick(A,W,params)
 			return
 
@@ -606,7 +606,7 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 		for(var/AC in atomrefs)
 			var/AD = "[AC] ([atomcounts[AC]])"
 			atomy[AD] = atomrefs[AC]
-	var/atom/AB = input(user, "What will I take?","Items on [src.name ? "\the [src.name]:" : "the floor:"]",null) as null|anything in atomy
+	var/atom/AB = input(user, "What will I take?","Items on [name ? "\the [name]:" : "the floor:"]",null) as null|anything in atomy
 	if(!AB)
 		return
 	if(QDELETED(atomy[AB]))
@@ -883,7 +883,7 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 		var/icon/I = icon(icon, icon_state, dir)
 		targeti.pixel_y = I.Height() - world.icon_size - 4
 		targeti.pixel_x = -1
-		src.client.images |= targeti
+		client.images |= targeti
 		// for(var/atom/movable/screen/eye_intent/eyet in hud_used.static_inventory)
 		// 	eyet.update_icon(src) //Update eye icon
 	else
@@ -901,7 +901,7 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 	tempfixeye = FALSE
 	if(!fixedeye)
 		nodirchange = FALSE
-	src.client.images -= targeti
+	client.images -= targeti
 	//clear hud icon
 	// for(var/atom/movable/screen/eye_intent/eyet in hud_used.static_inventory)
 	// 	eyet.update_icon(src)

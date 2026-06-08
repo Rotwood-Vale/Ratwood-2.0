@@ -156,7 +156,7 @@
 	H.parentdeck = src
 	var/O = src
 	H.apply_card_vars(H,O)
-	src.cards -= choice
+	cards -= choice
 	H.pickup(user)
 	user.put_in_hands(H)
 	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>I draw a card from the deck.</span>")
@@ -247,7 +247,7 @@
 		dat += "<A href='?src=[REF(src)];pick=[t]'>A [t].</A><BR>"
 	dat += "Which card will you remove next?"
 	var/datum/browser/popup = new(user, "cardhand", "Hand of Cards", 400, 240)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.set_content(dat)
 	popup.open()
 
@@ -265,8 +265,8 @@
 		if (cardUser.is_holding(src))
 			var/choice = href_list["pick"]
 			var/obj/item/toy/cards/singlecard/C = new/obj/item/toy/cards/singlecard(cardUser.loc)
-			src.currenthand -= choice
-			C.parentdeck = src.parentdeck
+			currenthand -= choice
+			C.parentdeck = parentdeck
 			C.cardname = choice
 			C.apply_card_vars(C,O)
 			C.pickup(cardUser)
@@ -274,16 +274,16 @@
 			cardUser.visible_message("<span class='notice'>[cardUser] draws a card from [cardUser.p_their()] hand.</span>", "<span class='notice'>I take the [C.cardname] from your hand.</span>")
 
 			interact(cardUser)
-			if(src.currenthand.len < 3)
-				src.icon_state = "[deckstyle]_hand2"
-			else if(src.currenthand.len < 4)
-				src.icon_state = "[deckstyle]_hand3"
-			else if(src.currenthand.len < 5)
-				src.icon_state = "[deckstyle]_hand4"
-			if(src.currenthand.len == 1)
-				var/obj/item/toy/cards/singlecard/N = new/obj/item/toy/cards/singlecard(src.loc)
-				N.parentdeck = src.parentdeck
-				N.cardname = src.currenthand[1]
+			if(currenthand.len < 3)
+				icon_state = "[deckstyle]_hand2"
+			else if(currenthand.len < 4)
+				icon_state = "[deckstyle]_hand3"
+			else if(currenthand.len < 5)
+				icon_state = "[deckstyle]_hand4"
+			if(currenthand.len == 1)
+				var/obj/item/toy/cards/singlecard/N = new/obj/item/toy/cards/singlecard(loc)
+				N.parentdeck = parentdeck
+				N.cardname = currenthand[1]
 				N.apply_card_vars(N,O)
 				qdel(src)
 				N.pickup(cardUser)
@@ -294,16 +294,16 @@
 
 /obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living/user, params)
 	if(istype(C))
-		if(C.parentdeck == src.parentdeck)
-			src.currenthand += C.cardname
+		if(C.parentdeck == parentdeck)
+			currenthand += C.cardname
 			user.visible_message("<span class='notice'>[user] adds a card to [user.p_their()] hand.</span>", "<span class='notice'>I add the [C.cardname] to your hand.</span>")
 			qdel(C)
 			if(currenthand.len > 4)
-				src.icon_state = "[deckstyle]_hand5"
+				icon_state = "[deckstyle]_hand5"
 			else if(currenthand.len > 3)
-				src.icon_state = "[deckstyle]_hand4"
+				icon_state = "[deckstyle]_hand4"
 			else if(currenthand.len > 2)
-				src.icon_state = "[deckstyle]_hand3"
+				icon_state = "[deckstyle]_hand3"
 		else
 			to_chat(user, "<span class='warning'>I can't mix cards from other decks!</span>")
 	else
@@ -349,30 +349,30 @@
 	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
 		return
 	if(!flipped)
-		src.flipped = 1
+		flipped = 1
 		if (cardname)
-			src.icon_state = "sc_[cardname]_[deckstyle]"
-			src.name = src.cardname
+			icon_state = "sc_[cardname]_[deckstyle]"
+			name = cardname
 		else
-			src.icon_state = "sc_Ace of Spades_[deckstyle]"
-			src.name = "What Card"
-		src.pixel_x = 5
+			icon_state = "sc_Ace of Spades_[deckstyle]"
+			name = "What Card"
+		pixel_x = 5
 	else if(flipped)
-		src.flipped = 0
-		src.icon_state = "singlecard_down_[deckstyle]"
-		src.name = "card"
-		src.pixel_x = -5
+		flipped = 0
+		icon_state = "singlecard_down_[deckstyle]"
+		name = "card"
+		pixel_x = -5
 
 /obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/toy/cards/singlecard/))
 		var/obj/item/toy/cards/singlecard/C = I
-		if(C.parentdeck == src.parentdeck)
+		if(C.parentdeck == parentdeck)
 			var/obj/item/toy/cards/cardhand/H = new/obj/item/toy/cards/cardhand(user.loc)
 			H.currenthand += C.cardname
-			H.currenthand += src.cardname
+			H.currenthand += cardname
 			H.parentdeck = C.parentdeck
 			H.apply_card_vars(H,C)
-			to_chat(user, "<span class='notice'>I combine the [C.cardname] and the [src.cardname] into a hand.</span>")
+			to_chat(user, "<span class='notice'>I combine the [C.cardname] and the [cardname] into a hand.</span>")
 			qdel(C)
 			qdel(src)
 			H.pickup(user)

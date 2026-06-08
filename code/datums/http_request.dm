@@ -14,7 +14,7 @@
 /datum/http_request/New(...)
 	. = ..()
 	if(length(args))
-		src.prepare(arglist(args))
+		prepare(arglist(args))
 
 /datum/http_request/proc/prepare(method, url, body = "", list/headers, output_file)
 	if (!length(headers))

@@ -222,7 +222,7 @@
 
 /atom/movable/screen/parallax_layer/random/space_gas/Initialize(mapload, view)
 	. = ..()
-	src.add_atom_colour(SSparallax.random_parallax_color, ADMIN_COLOUR_PRIORITY)
+	add_atom_colour(SSparallax.random_parallax_color, ADMIN_COLOUR_PRIORITY)
 
 /atom/movable/screen/parallax_layer/random/asteroids
 	icon_state = "asteroids"

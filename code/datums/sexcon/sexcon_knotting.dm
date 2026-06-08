@@ -436,10 +436,10 @@
 		btm.sexcon.knotted_forced_by_bottom = FALSE
 		log_combat(btm, btm, "Stopped knot tugging")
 	if(knotted_status) // this should never trigger, but if it does clear up the invalid state
-		if(src.user)
-			src.user.remove_status_effect(/datum/status_effect/knot_tied)
-			src.user.remove_status_effect(/datum/status_effect/knotted)
-			UnregisterSignal(src.user, COMSIG_MOVABLE_MOVED)
+		if(user)
+			user.remove_status_effect(/datum/status_effect/knot_tied)
+			user.remove_status_effect(/datum/status_effect/knotted)
+			UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 		knotted_owner = null
 		knotted_recipient = null
 		knotted_status = KNOTTED_NULL

@@ -324,7 +324,7 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 /obj/effect/mobspawner/hole/spawn_mob()
 	var/spawnmob = pickweight(mob_types)
 	var/mob/living/damob = spawnmob
-	src.visible_message("<span class='danger'>[damob.name] [picked_string] [src]!</span>")
+	visible_message("<span class='danger'>[damob.name] [picked_string] [src]!</span>")
 	if(spawn_sound)
 		playsound(src, pick(spawn_sound), 100)
 	mymobs += new spawnmob(get_turf(src))
@@ -350,25 +350,25 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 		if(attacking_shovel.heldclod)
 			playsound(loc,'sound/items/empty_shovel.ogg', 100, TRUE)
 			QDEL_NULL(attacking_shovel.heldclod)
-			src.visible_message("<span class='danger'>[user] shoveled some dirt clods into [src]!</span>")
+			visible_message("<span class='danger'>[user] shoveled some dirt clods into [src]!</span>")
 			fill ++
 			if(fill >= filltoseal)
 				playsound(loc,'sound/foley/break_stone.ogg', 100, TRUE)
-				src.visible_message("<span class='danger'>[user] seals [src] with dirts!</span>")
+				visible_message("<span class='danger'>[user] seals [src] with dirts!</span>")
 				Destroy()
 
 	if(istype(attacking_item, /obj/item/rogueweapon/pick))
 		var/obj/item/rogueweapon/pick/attacking_pick = attacking_item
 		playsound(loc,'sound/foley/hit_rock.ogg', 100, TRUE)
-		src.visible_message("<span class='danger'>[user] is picking at the [src] with [attacking_pick]!</span>")
+		visible_message("<span class='danger'>[user] is picking at the [src] with [attacking_pick]!</span>")
 		if(do_after(user, rand(30,60), src))
-			src.visible_message("<span class='danger'>[user] picked some rocks into [src] with [attacking_pick]!</span>")
+			visible_message("<span class='danger'>[user] picked some rocks into [src] with [attacking_pick]!</span>")
 			new /obj/effect/particle_effect/sparks(src.loc)
 			playsound(loc,'sound/foley/hit_rock.ogg', 100, TRUE)
 			fill++
 			if(fill >= filltoseal)
 				playsound(loc,'sound/foley/break_stone.ogg', 100, TRUE)
-				src.visible_message("<span class='danger'>[user] collapsed [src] with [attacking_pick]!</span>")
+				visible_message("<span class='danger'>[user] collapsed [src] with [attacking_pick]!</span>")
 				Destroy()
 	..()
 

@@ -599,7 +599,7 @@
 	if(istype(W, /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/ornate))
 		user.visible_message(span_warning("[user] starts to fit [W] inside the [src]."))
 		if(do_after(user, 12 SECONDS))
-			var/obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat/armored/P = new /obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat/armored(get_turf(src.loc))
+			var/obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat/armored/P = new /obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat/armored(get_turf(src))
 			if(user.is_holding(src))
 				user.dropItemToGround(src)
 			user.put_in_hands(P)

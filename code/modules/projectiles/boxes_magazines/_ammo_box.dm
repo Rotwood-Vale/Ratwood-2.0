@@ -62,7 +62,7 @@
 		for(var/obj/item/ammo_casing/AC in stored_ammo)
 			if(!AC.BB)//found a spent ammo
 				stored_ammo -= AC
-				AC.forceMove(get_turf(src.loc))
+				AC.forceMove(get_turf(src))
 
 				stored_ammo += R
 				R.forceMove(src)

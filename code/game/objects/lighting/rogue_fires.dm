@@ -346,7 +346,7 @@
 		if(!on)
 			if(torchy.fuel > 0)
 				torchy.spark_act()
-				playsound(src.loc, 'sound/items/firelight.ogg', 100)
+				playsound(loc, 'sound/items/firelight.ogg', 100)
 				on = TRUE
 				update()
 				update_icon()
@@ -396,7 +396,7 @@
 		on = FALSE
 		set_light(0)
 		update_icon()
-		playsound(src.loc, 'sound/foley/torchfixturetake.ogg', 70)
+		playsound(loc, 'sound/foley/torchfixturetake.ogg', 70)
 
 /obj/machinery/light/rogue/torchholder/update_icon()
 	if(torchy)
@@ -423,7 +423,7 @@
 				else
 					torchy.spark_act()
 					user.visible_message("<span class='info'>[user] lights [src].</span>")
-					playsound(src.loc, 'sound/items/firelight.ogg', 100)
+					playsound(loc, 'sound/items/firelight.ogg', 100)
 					on = TRUE
 					update()
 					update_icon()
@@ -450,7 +450,7 @@
 				torchy = LR
 				torchy.weather_resistant = TRUE
 				update_icon()
-			playsound(src.loc, 'sound/foley/torchfixtureput.ogg', 70)
+			playsound(loc, 'sound/foley/torchfixtureput.ogg', 70)
 		return
 	. = ..()
 
@@ -582,7 +582,7 @@
 					S.forceMove(src)
 					food = S
 					update_icon()
-					playsound(src.loc, 'sound/misc/frying.ogg', 80, FALSE, extrarange = 5)
+					playsound(loc, 'sound/misc/frying.ogg', 80, FALSE, extrarange = 5)
 					return
 			if(W.type in subtypesof(/obj/item/seeds))
 				var/obj/item/seeds/S = W
@@ -590,7 +590,7 @@
 					S.forceMove(src)
 					food = S
 					update_icon()
-					playsound(src.loc, 'sound/misc/frying.ogg', 80, FALSE, extrarange = 5)
+					playsound(loc, 'sound/misc/frying.ogg', 80, FALSE, extrarange = 5)
 					return
 // Stew + Deep Frying code - refactored!!
 		else if(istype(attachment, /obj/item/reagent_containers/glass/bucket/pot))
@@ -616,7 +616,7 @@
 					if(do_after(user, DEEP_FRY_TIME / cooktime_divisor, target = src))
 						user.visible_message(span_info("[user] deep fries [S] in the pot.</span>"))
 						add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-						new S.deep_fried_type(src.loc)
+						new S.deep_fried_type(loc)
 						qdel(S)
 						pot.reagents.remove_reagent(/datum/reagent/consumable/oil/tallow, OIL_CONSUMED)
 						return
@@ -633,7 +633,7 @@
 							user.visible_message(span_info("[user] places [W] into the pot.</span>"))
 							add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
 							qdel(W)
-							playsound(src.loc, 'sound/items/Fish_out.ogg', 20, TRUE)
+							playsound(loc, 'sound/items/Fish_out.ogg', 20, TRUE)
 							pot.reagents.remove_reagent(/datum/reagent/water, VOLUME_PER_STEW_COOK)
 							sleep(R.cooktime / cooktime_divisor)
 							playsound(src, "bubbles", 30, TRUE)
@@ -789,7 +789,7 @@
 			if(!do_after(user, 2 SECONDS, TRUE, src))
 				return
 			var/obj/item/mobilestove/new_mobilestove = new /obj/item/mobilestove(get_turf(src))
-			new_mobilestove.color = src.color
+			new_mobilestove.color = color
 			qdel(src)
 			return
 
@@ -804,7 +804,7 @@
 		if(affecting && affecting.receive_damage( 0, 5 ))        // 5 burn damage
 			H.update_damage_overlays()
 		var/obj/item/mobilestove/new_mobilestove = new /obj/item/mobilestove(get_turf(src))
-		new_mobilestove.color = src.color
+		new_mobilestove.color = color
 		burn_out()
 		qdel(src)
 		return
@@ -835,7 +835,7 @@
 	user.visible_message(span_notice("[user] begins placing \the [src] down on the ground."))
 	if(do_after(user, 2 SECONDS, TRUE, src))
 		var/obj/machinery/light/rogue/hearth/mobilestove/new_mobilestove = new /obj/machinery/light/rogue/hearth/mobilestove(get_turf(src))
-		new_mobilestove.color = src.color
+		new_mobilestove.color = color
 		qdel(src)
 
 /obj/machinery/light/rogue/campfire

@@ -26,7 +26,7 @@
 	if(isturf(location))
 		M = new new_type( location )
 	else
-		M = new new_type( src.loc )
+		M = new new_type(loc)
 
 	if(!M || !ismob(M))
 		to_chat(usr, "Type path is not a mob (new_type = [new_type]) in change_mob_type(). Contact a coder.")
@@ -37,7 +37,7 @@
 		M.name = new_name
 		M.real_name = new_name
 	else
-		M.name = src.name
+		M.name = name
 		M.real_name = src.real_name
 
 	if(has_dna() && M.has_dna())

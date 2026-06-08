@@ -32,7 +32,7 @@
 
 	if(virgin)
 		virgin = FALSE
-		notify_ghosts("Someone has begun playing with a [src.name] in [get_area(src)]!", source = src, header = "Spirit board")
+		notify_ghosts("Someone has begun playing with a [name] in [get_area(src)]!", source = src, header = "Spirit board")
 
 	planchette = input("Choose the letter.", "Seance!") as null|anything in list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
 	if(!planchette || !Adjacent(M) || next_use > world.time)
@@ -60,7 +60,7 @@
 
 
 	if(light_amount > 0.2)
-		to_chat(M, span_warning("It's too bright here to use [src.name]!"))
+		to_chat(M, span_warning("It's too bright here to use [name]!"))
 		return FALSE
 
 	//mobs in range check
@@ -73,7 +73,7 @@
 				users_in_range++
 
 	if(users_in_range < 2)
-		to_chat(M, span_warning("There aren't enough people to use the [src.name]!"))
+		to_chat(M, span_warning("There aren't enough people to use the [name]!"))
 		return FALSE
 
 	return TRUE

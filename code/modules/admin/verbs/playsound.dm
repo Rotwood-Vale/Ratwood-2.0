@@ -611,7 +611,7 @@
 /client/proc/stop_sounds()
 	set category = "-GameMaster-"
 	set name = "Sound - Stop All Playing"
-	if(!src.holder)
+	if(!holder)
 		return
 
 	log_admin("[key_name(src)] stopped all currently playing sounds.")

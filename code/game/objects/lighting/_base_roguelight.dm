@@ -52,14 +52,14 @@
 /obj/machinery/light/rogue/extinguish()
 	if(on)
 		burn_out()
-		new /obj/effect/temp_visual/small_smoke(src.loc)
+		new /obj/effect/temp_visual/small_smoke(loc)
 	..()
 
 /obj/machinery/light/rogue/burn_out()
 	if(soundloop)
 		soundloop.stop()
 	if(on)
-		playsound(src.loc, 'sound/items/firesnuff.ogg', 100)
+		playsound(loc, 'sound/items/firesnuff.ogg', 100)
 	..()
 	update_icon()
 
@@ -83,7 +83,7 @@
 
 /obj/machinery/light/rogue/fire_act(added, maxstacks)
 	if(!on && ((fueluse > 0) || (initial(fueluse) == 0)))
-		playsound(src.loc, 'sound/items/firelight.ogg', 100)
+		playsound(loc, 'sound/items/firelight.ogg', 100)
 		on = TRUE
 		update()
 		update_icon()
@@ -187,7 +187,7 @@
 				set_light(0)
 				update_icon()
 				qdel(W)
-				src.visible_message("<span class='warning'>[user] snuffs the fire.</span>")
+				visible_message("<span class='warning'>[user] snuffs the fire.</span>")
 				return
 			if(user.used_intent?.type != INTENT_SPLASH)
 				W.spark_act()

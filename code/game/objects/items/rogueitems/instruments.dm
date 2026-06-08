@@ -469,7 +469,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 		return
 
 	if(choice == "Register My Band")
-		if(src.playing)
+		if(playing)
 			to_chat(user, span_warning("Stop playing first."))
 			return
 		var/song_choice = input(user, "Pick your song for this band slot", "Band Lobby", name) as null|anything in song_list

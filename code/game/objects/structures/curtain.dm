@@ -90,7 +90,7 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, 'sound/blank.ogg', 80, TRUE)
+				playsound(loc, 'sound/blank.ogg', 80, TRUE)
 			else
 				playsound(loc, 'sound/blank.ogg', 50, TRUE)
 		if(BURN)

@@ -92,7 +92,7 @@
 		last_heat_time = world.time
 	if(!hot && heat_progress >= heat_capacity && length(ingots) > 0)
 		hot = TRUE
-		playsound(src.loc, 'sound/items/firelight.ogg', 50, TRUE)
+		playsound(loc, 'sound/items/firelight.ogg', 50, TRUE)
 		update_icon()
 	if(heat_progress > 0)
 		update_icon()

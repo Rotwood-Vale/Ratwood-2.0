@@ -256,10 +256,10 @@
 		user.visible_message(span_notice("[user] has thrown [src]. It lands on [result]. [comment]"), \
 							span_notice("I throw [src]. It lands on [result]. [comment]"), \
 							span_hear("I hear [src] rolling, it sounds like a [fake_result]."))
-	else if(!src.throwing) //Dice was thrown and is coming to rest
+	else if(!throwing) //Dice was thrown and is coming to rest
 		visible_message(span_notice("[src] rolls to a stop, landing on [result]. [comment]"))
 	name = "[dicetype] ([result])"
 
 /obj/item/dice/update_icon()
 	cut_overlays()
-	add_overlay("[src.icon_state]-[src.result]")
+	add_overlay("[icon_state]-[result]")

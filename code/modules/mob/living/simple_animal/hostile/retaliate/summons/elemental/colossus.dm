@@ -162,7 +162,7 @@
 	)
 	var/reinforcement_count = 3
 	if(prob(20))
-		src.visible_message(span_notice("[src] breaks apart, scattering minor elementals about!"))
+		visible_message(span_notice("[src] breaks apart, scattering minor elementals about!"))
 		while(reinforcement_count > 0)
 			var/list/turflist = list()
 			for(var/turf/t in RANGE_TURFS(1, src))

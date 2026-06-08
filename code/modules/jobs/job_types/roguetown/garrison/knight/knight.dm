@@ -94,7 +94,7 @@
 				return
 			if(!guy.mind)
 				return
-			src.say("Are you not my squire, [guy]?")
+			say("Are you not my squire, [guy]?")
 
 			var/prompt = alert(guy, "Do wish to be [src]'s squire?", "Squire", "Aye, m'lord!", "Nae, m'lord!")
 			if(prompt == "Nae, m'lord!")

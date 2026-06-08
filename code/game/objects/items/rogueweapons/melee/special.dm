@@ -830,11 +830,11 @@
 /obj/item/rogueweapon/spear/keep_standard/process()
 	if(obj_integrity >= max_integrity)
 		STOP_PROCESSING(SSobj, src)
-		src.visible_message(span_notice("[src] warps and bends, mending as the implement's runes pulse..."), vision_distance = 1)
+		visible_message(span_notice("[src] warps and bends, mending as the implement's runes pulse..."), vision_distance = 1)
 		return
-	else if(world.time > src.last_repair + src.repair_time)
-		src.last_repair = world.time
-		obj_integrity = min(obj_integrity + src.repair_amount, src.max_integrity)
+	else if(world.time > last_repair + repair_time)
+		last_repair = world.time
+		obj_integrity = min(obj_integrity + repair_amount, max_integrity)
 	..()
 
 //Shameless copy of how clothes handle it.

@@ -149,7 +149,7 @@
 	return FALSE
 
 /mob/living/simple_animal/hostile/rogue/dreamfiend/proc/return_to_abyssor()
-	src.visible_message(span_notice("The [src] starts to fade out of reality!"))
+	visible_message(span_notice("The [src] starts to fade out of reality!"))
 	if(do_after(src, desummon_timer, FALSE, target = src))
 		qdel(src)
 
@@ -170,7 +170,7 @@
 		F.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, main_target)
 		F.ai_controller.set_blackboard_key(BB_MAIN_TARGET, main_target)
 	if(main_target)
-		src.visible_message(span_notice("some dreamfiends split forth front the body of the [src] following after [main_target]... countless teeth bared with hostility!"))
+		visible_message(span_notice("some dreamfiends split forth front the body of the [src] following after [main_target]... countless teeth bared with hostility!"))
 	qdel(src)
 
 /mob/living/simple_animal/hostile/rogue/dreamfiend/ancient/death()
@@ -224,7 +224,7 @@
 	new /obj/effect/decal/cleanable/dreamfiend_ichor/large(loc)
 	for(var/i in 1 to 2)
 		new /mob/living/simple_animal/hostile/rogue/dreamfiend/unbound(loc)
-	src.visible_message(span_notice("Some dreamfiends split forth front the body of the [src]!"))
+	visible_message(span_notice("Some dreamfiends split forth front the body of the [src]!"))
 	qdel(src)
 
 /mob/living/simple_animal/hostile/rogue/dreamfiend/ancient/unbound

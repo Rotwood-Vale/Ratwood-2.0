@@ -24,7 +24,7 @@
 
 		AddSpell(new /obj/effect/proc_holder/spell/self/foxclaws)
 		faction += "wolfs" // Foxes have the same faction code-wise so leaving it for now
-		if (src.client.prefs?.wildshape_name)
+		if (client.prefs?.wildshape_name)
 			real_name = "vernard ([stored_mob.real_name])"
 		else
 			real_name = "vernard"

@@ -16,7 +16,7 @@ dreaming. Still have to go to sleep to learn skills. Also gives healing tickrate
 	else if (source_type == 2)
 		pool = locate(/obj/structure/hotspring) in get_turf(src)
 
-	src.visible_message(span_info("[src] begins to soak in [pool]."), span_info("I settle into the water, beginning to soak."), span_info("Someone sloshes idly in some water."))
+	visible_message(span_info("[src] begins to soak in [pool]."), span_info("I settle into the water, beginning to soak."), span_info("Someone sloshes idly in some water."))
 	
 	if(src.has_status_effect(/datum/status_effect/debuff/sleepytime))
 		to_chat(src, span_green("I am taking a relaxing bath. It will remove this tiring feeling I suffer from."))
@@ -42,7 +42,7 @@ dreaming. Still have to go to sleep to learn skills. Also gives healing tickrate
 		if(first_clean) //Cleaning them on first loop through
 			wash_atom(src, CLEAN_STRONG)
 			src.remove_stress(/datum/stressevent/sewertouched)
-			src.visible_message(span_info("[src] washes off the grime."), span_info("The warm water cleanses me."))
+			visible_message(span_info("[src] washes off the grime."), span_info("The warm water cleanses me."))
 			first_clean = FALSE
 
 		if(bodytemperature < BODYTEMP_NORMAL_MIN)	//washing yourself helps to warm you up.
@@ -82,7 +82,7 @@ dreaming. Still have to go to sleep to learn skills. Also gives healing tickrate
 
 		if(soak_count >= soak_threshold && !ultimate_soak && src.has_status_effect(/datum/status_effect/debuff/sleepytime))
 			to_chat(src, span_green("I feel completely refreshed from my soak!"))
-			src.visible_message(span_info("[src] looks completely refreshed, the exhaustion lifting from [src.p_them()]."))
+			visible_message(span_info("[src] looks completely refreshed, the exhaustion lifting from [src.p_them()]."))
 			src.remove_status_effect(/datum/status_effect/debuff/sleepytime)
 			src.remove_stress(/datum/stressevent/sleepytime)
 			src.adjust_triumphs(1)

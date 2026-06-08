@@ -59,7 +59,7 @@
 /obj/item/rogueweapon/huntingknife/idagger/harpy_talons/process()
 	if(obj_integrity >= max_integrity) 
 		STOP_PROCESSING(SSobj, src)
-		src.visible_message(span_notice("[src] are in a much better shape now, enough resting!"), vision_distance = 1)
+		visible_message(span_notice("[src] are in a much better shape now, enough resting!"), vision_distance = 1)
 		return
 	else if(world.time > src.last_repair + src.repair_time)
 		src.last_repair = world.time

@@ -21,7 +21,7 @@
 	if(A == src || A == loc)
 		return FALSE
 
-	if(src.get_num_legs() < 2)
+	if(get_num_legs() < 2)
 		return FALSE
 
 	if(pulledby && pulledby != src)
@@ -142,18 +142,18 @@
 		if(jextra)
 			jump_movable.throw_at(A, jrange, 1, jump_movable, spin = FALSE)
 			while(jump_movable.throwing)
-				if(was_mounted && animal_mount && !QDELETED(animal_mount) && isturf(src.loc))
+				if(was_mounted && animal_mount && !QDELETED(animal_mount) && isturf(loc))
 					animal_mount.forceMove(get_turf(src))
 				sleep(1)
 			jump_movable.throw_at(get_step(jump_movable, jump_movable.dir), 1, 1, jump_movable, spin = FALSE)
 			while(jump_movable.throwing)
-				if(was_mounted && animal_mount && !QDELETED(animal_mount) && isturf(src.loc))
+				if(was_mounted && animal_mount && !QDELETED(animal_mount) && isturf(loc))
 					animal_mount.forceMove(get_turf(src))
 				sleep(1)
 		else
 			jump_movable.throw_at(A, jrange, 1, jump_movable, spin = FALSE)
 			while(jump_movable.throwing)
-				if(was_mounted && animal_mount && !QDELETED(animal_mount) && isturf(src.loc))
+				if(was_mounted && animal_mount && !QDELETED(animal_mount) && isturf(loc))
 					animal_mount.forceMove(get_turf(src))
 				sleep(1)
 		if(!HAS_TRAIT(src, TRAIT_ZJUMP) && (m_intent == MOVE_INTENT_RUN))	//Jesters and werewolves don't get immobilized at all
@@ -177,7 +177,7 @@
 	if(was_mounted && !isnull(prev_layer))
 		layer = prev_layer
 
-	if(was_mounted && animal_mount && !QDELETED(animal_mount) && isturf(src.loc))
+	if(was_mounted && animal_mount && !QDELETED(animal_mount) && isturf(loc))
 		animal_mount.forceMove(get_turf(src))
 		animal_mount.buckle_mob(src, TRUE, FALSE)
 		var/datum/component/riding/mount_riding_after = animal_mount.GetComponent(/datum/component/riding)
@@ -221,7 +221,7 @@
 		return FALSE
 	if(!A || QDELETED(A) || !A.loc)
 		return FALSE
-	if(A == src || A == src.loc)
+	if(A == src || A == loc)
 		return FALSE
 	if(get_num_legs() < 2)
 		return FALSE

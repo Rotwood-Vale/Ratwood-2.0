@@ -101,7 +101,7 @@
 /obj/item/psydonmusicbox/Destroy()
 	if(soundloop)
 		QDEL_NULL(soundloop)
-	src.visible_message(span_cult("A great deluge of souls escapes the shattered box!"))
+	visible_message(span_cult("A great deluge of souls escapes the shattered box!"))
 	return ..()
 
 /obj/item/psydonmusicbox/update_icon()
@@ -346,7 +346,7 @@ Inquisitorial armory down here
 			possible_item_intents = list(/datum/intent/mace/smash/flail/golgotha)
 			user.update_a_intents()
 		else
-			playsound(src.loc, 'sound/items/censer_on.ogg', 100)
+			playsound(loc, 'sound/items/censer_on.ogg', 100)
 			possible_item_intents = list(/datum/intent/mace/smash/flail/golgotha, /datum/intent/bless)
 			user.update_a_intents()
 			on = TRUE
@@ -369,7 +369,7 @@ Inquisitorial armory down here
 
 
 /obj/item/flashlight/flare/torch/lantern/psycenser/turn_off()
-	playsound(src.loc, 'sound/items/censer_off.ogg', 100)
+	playsound(loc, 'sound/items/censer_off.ogg', 100)
 	if(soundloop)
 		soundloop.stop()
 	STOP_PROCESSING(SSobj, src)
@@ -646,7 +646,7 @@ Inquisitorial armory down here
 			working = TRUE
 			icon_state = "indexer_cursed"
 			update_icon()
-			src.say("CURSED BLOOD!")
+			say("CURSED BLOOD!")
 			return
 		icon_state = "indexer_primed"
 		update_icon()

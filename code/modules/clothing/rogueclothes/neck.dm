@@ -932,7 +932,7 @@
 		if(user.real_name == name)
 			GLOB.outlawed_players -= user.real_name
 			priority_announce("[user.real_name] has completed their penance. Justice has been served in the eyes of Ravox.", "PENANCE", 'sound/misc/bell.ogg')
-	playsound(src.loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
+	playsound(loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
 	if(QDELETED(src))
 		return
 	qdel(src)
@@ -1052,7 +1052,7 @@
 /obj/item/clothing/neck/roguetown/dragon_scale/process()
 	if(obj_integrity >= max_integrity)
 		STOP_PROCESSING(SSobj, src)
-		src.visible_message(span_notice("[src] warps and bends, as it mends under the Hoardmaster's influence."), vision_distance = 1)
+		visible_message(span_notice("[src] warps and bends, as it mends under the Hoardmaster's influence."), vision_distance = 1)
 		return
 	else if(world.time > src.last_repair + src.repair_time)
 		src.last_repair = world.time

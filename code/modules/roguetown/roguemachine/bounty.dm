@@ -415,7 +415,7 @@
 	if(!do_after(A, 3 SECONDS, TRUE, M))
 		return
 
-	playsound(src.loc, 'sound/items/pickgood1.ogg', 100, TRUE, -1)
+	playsound(loc, 'sound/items/pickgood1.ogg', 100, TRUE, -1)
 	M.Paralyze(3 SECONDS)
 
 	var/obj/item/clothing/neck/old_mask = M.get_item_by_slot(SLOT_NECK)
@@ -446,7 +446,7 @@
 	if(!do_after(A, 3 SECONDS, TRUE, M))
 		return
 
-	playsound(src.loc, 'sound/items/pickgood1.ogg', 100, TRUE, -1)
+	playsound(loc, 'sound/items/pickgood1.ogg', 100, TRUE, -1)
 	M.Paralyze(3 SECONDS)
 
 	var/obj/item/clothing/neck/old_mask = M.get_item_by_slot(SLOT_NECK)
@@ -506,7 +506,7 @@
 	if(!do_after(A, 5 SECONDS, TRUE, M))
 		return
 
-	playsound(src.loc, 'sound/items/beartrap.ogg', 100, TRUE, -1)
+	playsound(loc, 'sound/items/beartrap.ogg', 100, TRUE, -1)
 	M.Paralyze(3 SECONDS)
 
 	var/correct_head = FALSE
@@ -553,7 +553,7 @@
 		var/obj/item/clothing/neck/roguetown/collar/prisoner/prisonmask = new(get_turf(M))
 		prisonmask.bounty_amount = reward_amount
 		M.equip_to_slot_or_del(prisonmask, SLOT_NECK, TRUE)
-		playsound(src.loc, 'sound/items/beartrap.ogg', 100, TRUE, -1)
+		playsound(loc, 'sound/items/beartrap.ogg', 100, TRUE, -1)
 	else
 		say("This skull carries no reward, you fool.")
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)

@@ -294,7 +294,7 @@
 			else
 				playsound(src, "nodmg", 100, FALSE)
 		if(BURN)
-			playsound(src.loc, "burn", 100, TRUE)
+			playsound(loc, "burn", 100, TRUE)
 
 /obj/structure/vine/Crossed(mob/crosser)
 	if(isliving(crosser))
@@ -500,7 +500,7 @@
 
 /obj/structure/vine/proc/entangle_mob()
 	if(!has_buckled_mobs() && prob(25))
-		for(var/mob/living/V in src.loc)
+		for(var/mob/living/V in loc)
 			entangle(V)
 			if(has_buckled_mobs())
 				break //only capture one mob at a time

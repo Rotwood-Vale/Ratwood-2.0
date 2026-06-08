@@ -743,7 +743,7 @@
 	if(is_once_per_tree(cat))
 		tree_data.rituals_completed |= cat
 	playsound(get_turf(src), 'sound/ambience/noises/mystical (4).ogg', 70, TRUE)
-	visible_message(span_green("The [src.name] blazes with golden light as [user.name] completes a sacred ritual!"))
+	visible_message(span_green("The [name] blazes with golden light as [user.name] completes a sacred ritual!"))
 	// Award Druidic Trickery XP for completing a bounty ritual.
 	var/ritual_xp = get_ritual_xp(cat)
 	if(ritual_xp > 0 && user.mind)
@@ -871,7 +871,7 @@
 	tree_data.has_slow_aura = TRUE
 	max_integrity += 100
 	obj_integrity = min(obj_integrity + 100, max_integrity)
-	visible_message(span_green("The bark of [src.name] hardens like ironwood. A silent ward settles around the tree — those who would defile it will find their feet heavy."))
+	visible_message(span_green("The bark of [name] hardens like ironwood. A silent ward settles around the tree — those who would defile it will find their feet heavy."))
 
 /// Cat 5 — Living Light: passive healing aura + middle-click manual heal (once per tree).
 /// Offerings: 10 mixed sinew/viscera/tailbone/bone/skull + 10 ash + 10 compost.
@@ -880,7 +880,7 @@
 	tree_data.has_heal_aura = TRUE
 	set_light(5, 5, 5, l_color = "#44AA44")
 	add_filter("sanctified_outline", 2, list("type" = "outline", "color" = "#58C86A", "alpha" = 60, "size" = 1))
-	visible_message(span_green("A warm green aura blooms from [src.name]. The Treefather's life flows to those who revere him."))
+	visible_message(span_green("A warm green aura blooms from [name]. The Treefather's life flows to those who revere him."))
 
 /// Cat 6 — Nature's Temper: blessed druid armor + possible elven armor piece (once per tree).
 /// Offerings: 5 zizo bane + 2 runed artifacts + druid armor + volf head + spider head +
@@ -912,7 +912,7 @@
 		return
 	tree_data.wedding_active = TRUE
 	tree_data.wedding_officiant_ckey = user.ckey
-	visible_message(span_green("A peace flower drifts to the roots of [src.name] — the blessings of Dendor and Eora are invoked. Two souls may now offer their bitten apple to be wed beneath this tree."))
+	visible_message(span_green("A peace flower drifts to the roots of [name] — the blessings of Dendor and Eora are invoked. Two souls may now offer their bitten apple to be wed beneath this tree."))
 	to_chat(user, span_notice("The ceremony has begun. Both partners should bite the same apple once each, then hand it to the tree to be wed. The one handing the apple over will decide the surname."))
 
 /// Cat 9 — Harvest Bloomstone: a 20-use blessed seed powder stone (once per tree).
@@ -1276,7 +1276,7 @@
 	thegroom.adjust_triumphs(1)
 	thebride.adjust_triumphs(1)
 
-	visible_message(span_green("The [src.name] blazes with golden light — Dendor and Eora both bless this union!"))
+	visible_message(span_green("The [name] blazes with golden light — Dendor and Eora both bless this union!"))
 	playsound(get_turf(src), 'sound/misc/bell.ogg', 80, FALSE)
 	qdel(A)
 	tree_data.wedding_active = FALSE

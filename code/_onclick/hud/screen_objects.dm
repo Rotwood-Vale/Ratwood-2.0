@@ -847,7 +847,7 @@
 	var/mob/living/carbon/human/human = hud.mymob
 	if(!istype(human))
 		return
-	var/mutable_appearance/iris = mutable_appearance(src.icon, "oeye")
+	var/mutable_appearance/iris = mutable_appearance(icon, "oeye")
 	switch(icon_state)
 		if("eye_closed")
 			iris.icon_state = "oeye_closed"

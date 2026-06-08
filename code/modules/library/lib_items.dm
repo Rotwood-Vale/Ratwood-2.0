@@ -75,7 +75,7 @@
 /obj/structure/bookcase/deconstruct(disassembled = TRUE)
 	for(var/obj/item/book/B in contents)
 		B.forceMove(get_turf(src))
-	new /obj/item/grown/log/tree/small(get_turf(src.loc))
+	new /obj/item/grown/log/tree/small(get_turf(src))
 	qdel(src)
 
 /obj/structure/bookcase/update_icon()

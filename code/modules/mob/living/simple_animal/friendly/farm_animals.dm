@@ -57,7 +57,7 @@
 		if(enemies.len && prob(10))
 			enemies = list()
 			LoseTarget()
-			src.visible_message(span_notice("[src] calms down."))
+			visible_message(span_notice("[src] calms down."))
 	if(stat == CONSCIOUS)
 		udder.generateMilk()
 		eat_plants()
@@ -70,7 +70,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
 	..()
-	src.visible_message(span_danger("[src] gets an evil-looking gleam in [p_their()] eye."))
+	visible_message(span_danger("[src] gets an evil-looking gleam in [p_their()] eye."))
 
 /mob/living/simple_animal/hostile/retaliate/goat/attackby(obj/item/O, mob/user, params)
 	if(stat == CONSCIOUS && istype(O, /obj/item/reagent_containers/glass))

@@ -28,7 +28,7 @@
 
 		AddSpell(new /obj/effect/proc_holder/spell/self/catclaws)
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/woundlick)
-		if (src.client.prefs?.wildshape_name)
+		if (client.prefs?.wildshape_name)
 			real_name = "cat ([stored_mob.real_name])"
 		else
 			real_name = "cat"

@@ -44,7 +44,7 @@
 			return FALSE
 		if(!M.Adjacent(src))
 			return FALSE
-		if(src.incapacitated())
+		if(incapacitated())
 			return FALSE
 		if(M.checkmiss(src))
 			return FALSE

@@ -133,7 +133,7 @@
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
 //		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>", null, null, COMBAT_MESSAGE_RANGE)
+		user.visible_message("<span class='danger'>[user.name] smashes against \the [name] with its paws.</span>", null, null, COMBAT_MESSAGE_RANGE)
 		take_damage(4, BRUTE, "blunt", 1)
 
 /obj/machinery/_try_interact(mob/user)
@@ -283,17 +283,17 @@
 		return
 	if(!user.dropItemToGround(O))
 		return
-	if (O.loc != src.loc)
+	if (O.loc != loc)
 		step(O, get_dir(O, src))
 
 /obj/machinery/proc/do_climb(atom/movable/A)
 	if(climbable)
 		density = FALSE
-		. = step(A,get_dir(A,src.loc))
+		. = step(A,get_dir(A, loc))
 		density = TRUE
 
 /obj/machinery/proc/climb_structure(mob/living/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	var/adjusted_climb_time = climb_time
 	if(user.restrained()) //climbing takes twice as long when restrained.
 		adjusted_climb_time *= 2
@@ -302,7 +302,7 @@
 
 	structureclimber = user
 	if(do_mob(user, user, adjusted_climb_time))
-		if(src.loc) //Checking if structure has been destroyed
+		if(loc) //Checking if structure has been destroyed
 			if(do_climb(user))
 				user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
 									"<span class='notice'>I climb onto [src].</span>")

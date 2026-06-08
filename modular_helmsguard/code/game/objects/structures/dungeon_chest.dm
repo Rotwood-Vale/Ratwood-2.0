@@ -541,7 +541,7 @@
 
 /obj/structure/closet/crate/chest/dungeon/mimic/attack_hand(mob/living/user)
 	. = ..()
-	playsound(src.loc, 'sound/vo/mobs/mimic/surprise.ogg', 100, TRUE)
+	playsound(loc, 'sound/vo/mobs/mimic/surprise.ogg', 100, TRUE)
 	visible_message(span_danger("The [src] is a mimic!"))
 	new	/mob/living/simple_animal/hostile/rogue/mimic (get_turf(src))
 	qdel(src)

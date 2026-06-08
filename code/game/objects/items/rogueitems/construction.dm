@@ -29,8 +29,8 @@
 			return
 	else if(istype(W, /obj/item/construction/))
 		var/obj/item/construction/B = W
-		if(B.bundletype == src.bundletype && src.bundletype != null)
-			var/obj/item/construction/bundle/N = new bundletype(src.loc)
+		if(B.bundletype == bundletype && bundletype != null)
+			var/obj/item/construction/bundle/N = new bundletype(loc)
 			to_chat(user, "You tie the [N.stackname] into a bundle.")
 			qdel(B)
 			qdel(src)
@@ -67,28 +67,28 @@
 		return
 	if(istype(W, /obj/item/construction/bundle))
 		var/obj/item/construction/bundle/B = W
-		if(src.stacktype == B.stacktype)
-			if(src.amount + B.amount > maxamount)
-				B.amount = (src.amount + B.amount) - maxamount
-				src.amount = maxamount
-				src.update_bundle()
+		if(stacktype == B.stacktype)
+			if(amount + B.amount > maxamount)
+				B.amount = (amount + B.amount) - maxamount
+				amount = maxamount
+				update_bundle()
 				B.update_bundle()
 				to_chat(user, "There's not enough space in [src].")
 				if(B.amount == 1)
-					var/obj/H = new stacktype(src.loc)
+					var/obj/H = new stacktype(loc)
 					user.put_in_hands(H)
 					qdel(B)
 			else
 				to_chat(user, "I add the [W] to the [src].")
-				src.amount += B.amount
+				amount += B.amount
 				update_bundle()
 				qdel(B)
 	else if(istype(W, stacktype))
 		if(item_flags & IN_STORAGE)
 			return
-		if(src.amount < src.maxamount)
+		if(amount < maxamount)
 			to_chat(user, "I add the [W] to the [src].")
-			src.amount++
+			amount++
 			qdel(W)
 		else
 			to_chat(user, "There's not enough space in [src].")
@@ -96,12 +96,12 @@
 		return ..()
 
 /obj/item/construction/bundle/use(used)
-	if(src.amount >= used)
-		src.amount -= used
-		src.update_bundle()
-		switch(src.amount)
+	if(amount >= used)
+		amount -= used
+		update_bundle()
+		switch(amount)
 			if(1)
-				new src.stacktype(src.loc)
+				new stacktype(loc)
 				qdel(src)
 			if(0)
 				qdel(src)
@@ -115,15 +115,15 @@
 	var/mob/living/carbon/human/H = user
 	switch(amount)
 		if(2)
-			var/obj/F = new stacktype(src.loc)
-			var/obj/I = new stacktype(src.loc)
+			var/obj/F = new stacktype(loc)
+			var/obj/I = new stacktype(loc)
 			H.put_in_hands(F)
 			H.put_in_hands(I)
 			qdel(src)
 			return
 		else
 			amount -= 1
-			var/obj/F = new stacktype(src.loc)
+			var/obj/F = new stacktype(loc)
 			H.put_in_hands(F)
 			user.visible_message("[user] removes [F] from [src].", "I remove [F] from [src].")
 	update_bundle()
@@ -147,7 +147,7 @@
 				if(!(I in T.contents))
 					continue
 				qdel(I)
-				src.amount++
+				amount++
 				update_bundle()
 
 

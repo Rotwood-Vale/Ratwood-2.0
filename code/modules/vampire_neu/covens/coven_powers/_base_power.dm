@@ -79,7 +79,7 @@
 
 /datum/coven_power/New(datum/coven/discipline)
 	if(!discipline)
-		CRASH("coven_power [src.name] created without a parent discipline!")
+		CRASH("coven_power [name] created without a parent discipline!")
 
 	src.discipline = discipline
 
@@ -599,7 +599,7 @@
  * Overridable proc handling the combat log created by using this power.
  */
 /datum/coven_power/proc/do_logging(target)
-	log_combat(owner, target ? target : owner, "casted the power [src.name] of the Discipline [discipline.name] on")
+	log_combat(owner, target ? target : owner, "casted the power [name] of the Discipline [discipline.name] on")
 
 /**
  * Overridable proc handling the power's duration, which is a timer that triggers the

@@ -110,7 +110,7 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/Initialize(mapload)
 	. = ..()
 	if(heavy_bow == TRUE)
-		src.possible_item_intents = list(
+		possible_item_intents = list(
 									/datum/intent/shoot/bow/heavy,
 									/datum/intent/arc/bow/heavy,
 									INTENT_GENERIC,

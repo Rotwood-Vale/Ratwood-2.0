@@ -86,8 +86,8 @@
 
 /obj/item/flashlight/flare/proc/turn_off()
 	on = FALSE
-	force = initial(src.force)
-	damtype = initial(src.damtype)
+	force = initial(force)
+	damtype = initial(damtype)
 	if(ismob(loc))
 		var/mob/U = loc
 		update_brightness(U)
@@ -221,7 +221,7 @@
 	extinguish()
 
 /obj/item/flashlight/flare/torch/turn_off()
-	playsound(src.loc, 'sound/items/firesnuff.ogg', 100)
+	playsound(loc, 'sound/items/firesnuff.ogg', 100)
 	if(soundloop)
 		soundloop.stop()
 	STOP_PROCESSING(SSobj, src)
@@ -235,7 +235,7 @@
 /obj/item/flashlight/flare/torch/fire_act(added, maxstacks)
 	if(fuel)
 		if(!on)
-			playsound(src.loc, 'sound/items/firelight.ogg', 100)
+			playsound(loc, 'sound/items/firelight.ogg', 100)
 			on = TRUE
 			damtype = BURN
 			update_brightness()

@@ -60,7 +60,7 @@
 	set name = "Reload Admins"
 	set category = "-Server-"
 
-	if(!src.holder)
+	if(!holder)
 		return
 
 	var/confirm = alert(src, "Are you sure you want to reload all admins?", "Confirm", "Yes", "No")
@@ -75,7 +75,7 @@
 	set name = "Reload Whitelist"
 	set category = "-Server-"
 
-	if(!src.holder)
+	if(!holder)
 		return
 
 	var/confirm = alert(src, "Are you sure you want to reload the whitelist?", "Confirm", "Yes", "No")

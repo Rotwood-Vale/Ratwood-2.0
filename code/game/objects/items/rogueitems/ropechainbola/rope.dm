@@ -78,8 +78,8 @@
 	if(C.compliance || C.surrendering || HAS_TRAIT(C, TRAIT_BAGGED))
 		surrender_mod = 0.5	
 
-	C.visible_message(span_warning("[user] is trying to tie [C]'s arms with [src.name]!"), \
-						span_userdanger("[user] is trying to tie my arms with [src.name]!"))
+	C.visible_message(span_warning("[user] is trying to tie [C]'s arms with [name]!"), \
+						span_userdanger("[user] is trying to tie my arms with [name]!"))
 	playsound(loc, cuffsound, 100, TRUE, -2)
 
 	if(!(do_mob(user, C, 60 * surrender_mod, double_progress = TRUE) && C.get_num_arms(FALSE)))
@@ -87,8 +87,8 @@
 		return
 
 	apply_cuffs(C, user)
-	C.visible_message(span_warning("[user] ties [C] with [src.name]."), \
-						span_danger("[user] ties me up with [src.name]."))
+	C.visible_message(span_warning("[user] ties [C] with [name]."), \
+						span_danger("[user] ties me up with [name]."))
 	SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 	log_combat(user, C, "handcuffed")
 
@@ -108,8 +108,8 @@
 	if(C.compliance || C.surrendering)
 		surrender_mod = 0.5
 
-	C.visible_message(span_warning("[user] is trying to tie [C]'s legs with [src.name]!"), \
-						span_userdanger("[user] is trying to tie my legs with [src.name]!"))
+	C.visible_message(span_warning("[user] is trying to tie [C]'s legs with [name]!"), \
+						span_userdanger("[user] is trying to tie my legs with [name]!"))
 
 	playsound(loc, cuffsound, 30, TRUE, -2)
 
@@ -118,8 +118,8 @@
 		return
 
 	apply_cuffs(C, user, TRUE)
-	C.visible_message(span_warning("[user] ties [C]'s legs with [src.name]."), \
-						span_danger("[user] ties my legs with [src.name]."))
+	C.visible_message(span_warning("[user] ties [C]'s legs with [name]."), \
+						span_danger("[user] ties my legs with [name]."))
 	SSblackbox.record_feedback("tally", "legcuffs", 1, type)
 
 	log_combat(user, C, "legcuffed", TRUE)

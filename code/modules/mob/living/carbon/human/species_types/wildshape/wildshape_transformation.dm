@@ -3,7 +3,7 @@
 
 /mob/living/carbon/human/proc/wildshape_transformation(shapepath)
 	if(!mind)
-		log_runtime("NO MIND ON [src.name] WHEN TRANSFORMING")
+		log_runtime("NO MIND ON [name] WHEN TRANSFORMING")
 	Paralyze(1, ignore_canstun = TRUE)
 
 	//before we shed our items, save our neck and ring, if we have any, so we can quickly rewear them
@@ -23,7 +23,7 @@
 
 	var/mob/living/carbon/human/species/wildshape/W = new shapepath(loc) //We crate a new mob for the wildshaping player to inhabit
 
-	W.set_patron(src.patron)
+	W.set_patron(patron)
 	W.gender = gender
 	W.regenerate_icons()
 	W.stored_mob = src
@@ -33,7 +33,7 @@
 		W.spawn_gibs(FALSE)
 
 	playsound(W.loc, 'sound/body/shapeshift-start.ogg', 100, FALSE, 3)
-	src.forceMove(W)
+	forceMove(W)
 
 	// re-equip our stored neck and ring items, if we have them
 	if (stored_ring)
@@ -70,9 +70,9 @@
 	W.set_nutrition(nutrition)
 	W.set_hydration(hydration)
 
-	src.adjustBruteLoss(-src.getBruteLoss())
-	src.adjustFireLoss(-src.getFireLoss())
-	src.adjustOxyLoss(-src.getOxyLoss())
+	adjustBruteLoss(-getBruteLoss())
+	adjustFireLoss(-getFireLoss())
+	adjustOxyLoss(-getOxyLoss())
 
 	W.blood_volume = blood_volume
 	W.bleed_rate = bleed_rate
@@ -104,7 +104,7 @@
 	if(!stored_mob)
 		return
 	if(!mind)
-		log_runtime("NO MIND ON [src.name] WHEN UNTRANSFORMING")
+		log_runtime("NO MIND ON [name] WHEN UNTRANSFORMING")
 	Paralyze(1, ignore_canstun = TRUE)
 
 	// as before, save our worn stuff and prepare to move it back to the mob
@@ -148,9 +148,9 @@
 	W.set_nutrition(nutrition)
 	W.set_hydration(hydration)
 
-	src.adjustBruteLoss(-src.getBruteLoss())
-	src.adjustFireLoss(-src.getFireLoss())
-	src.adjustOxyLoss(-src.getOxyLoss())
+	adjustBruteLoss(-getBruteLoss())
+	adjustFireLoss(-getFireLoss())
+	adjustOxyLoss(-getOxyLoss())
 
 	W.blood_volume = blood_volume
 	W.bleed_rate = bleed_rate

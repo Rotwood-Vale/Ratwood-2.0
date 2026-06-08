@@ -320,7 +320,7 @@
 		START_PROCESSING(SSfastprocess, src)
 		icon_state = lit_state
 		lit = TRUE
-		playsound(src.loc, 'sound/items/firelight.ogg', 100)
+		playsound(loc, 'sound/items/firelight.ogg', 100)
 		if(ismob(loc))
 			var/mob/M = loc
 			M.update_inv_hands()
@@ -335,7 +335,7 @@
 	if(lit)
 		lit = FALSE
 		STOP_PROCESSING(SSfastprocess, src)
-		playsound(src.loc, 'sound/items/firesnuff.ogg', 100)
+		playsound(loc, 'sound/items/firesnuff.ogg', 100)
 		icon_state = initial(icon_state)
 		if(ismob(loc))
 			var/mob/M = loc
@@ -393,7 +393,7 @@
 		START_PROCESSING(SSfastprocess, src)
 		icon_state = lit_state
 		lit = TRUE
-		playsound(src.loc, 'sound/items/firelight.ogg', 100)
+		playsound(loc, 'sound/items/firelight.ogg', 100)
 		if(ismob(loc))
 			var/mob/M = loc
 			M.update_inv_hands()
@@ -409,7 +409,7 @@
 	if(lit)
 		lit = FALSE
 		STOP_PROCESSING(SSfastprocess, src)
-		playsound(src.loc, 'sound/items/firesnuff.ogg', 100)
+		playsound(loc, 'sound/items/firesnuff.ogg', 100)
 		icon_state = initial(icon_state)
 		if(ismob(loc))
 			var/mob/M = loc
@@ -503,7 +503,7 @@
 	var/turf/T = get_turf(src)
 	playsound(T, 'sound/misc/explode/incendiary (1).ogg', 100)
 	var/datum/effect_system/smoke_spread/smoke = new smoke_type
-	new /obj/item/smokeshell (get_turf(src.loc)) //leaving the empty case behind
+	new /obj/item/smokeshell (get_turf(src)) //leaving the empty case behind
 	smoke.set_up(2, T) // radius of 2 around T
 	smoke.start()
 	..() // stop processing and delete self

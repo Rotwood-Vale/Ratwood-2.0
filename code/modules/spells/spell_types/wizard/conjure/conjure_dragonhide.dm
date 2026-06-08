@@ -63,7 +63,7 @@
 
 /obj/item/clothing/suit/roguetown/dragonhide/proc/dispel()
 	if(!QDELETED(src))
-		src.visible_message(span_warning("The [src]'s borders begin to shimmer and fade, before it vanishes entirely!"))
+		visible_message(span_warning("The [src]'s borders begin to shimmer and fade, before it vanishes entirely!"))
 		qdel(src)
 
 /obj/item/clothing/suit/roguetown/dragonhide/obj_break()

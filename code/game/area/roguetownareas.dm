@@ -30,26 +30,26 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	. = ..()
 	if(!ishuman(guy))
 		return
-	if((src.town_area == TRUE) && HAS_TRAIT(guy, TRAIT_GUARDSMAN) && !guy.has_status_effect(/datum/status_effect/buff/guardbuffone)) //man at arms
+	if((town_area == TRUE) && HAS_TRAIT(guy, TRAIT_GUARDSMAN) && !guy.has_status_effect(/datum/status_effect/buff/guardbuffone)) //man at arms
 		guy.apply_status_effect(/datum/status_effect/buff/guardbuffone)
-	if((src.tavern_area == TRUE) && HAS_TRAIT(guy, TRAIT_TAVERN_FIGHTER) && !guy.has_status_effect(/datum/status_effect/buff/barkeepbuff)) // THE FIGHTER
+	if((tavern_area == TRUE) && HAS_TRAIT(guy, TRAIT_TAVERN_FIGHTER) && !guy.has_status_effect(/datum/status_effect/buff/barkeepbuff)) // THE FIGHTER
 		guy.apply_status_effect(/datum/status_effect/buff/barkeepbuff)
-	if((src.warden_area == TRUE) && HAS_TRAIT(guy, TRAIT_WOODSMAN) && !guy.has_status_effect(/datum/status_effect/buff/wardenbuff)) // Warden
+	if((warden_area == TRUE) && HAS_TRAIT(guy, TRAIT_WOODSMAN) && !guy.has_status_effect(/datum/status_effect/buff/wardenbuff)) // Warden
 		guy.apply_status_effect(/datum/status_effect/buff/wardenbuff)
-	if((src.cell_area == TRUE) && HAS_TRAIT(guy, TRAIT_DUNGEONMASTER) && !guy.has_status_effect(/datum/status_effect/buff/dungeoneerbuff)) // Dungeoneer
+	if((cell_area == TRUE) && HAS_TRAIT(guy, TRAIT_DUNGEONMASTER) && !guy.has_status_effect(/datum/status_effect/buff/dungeoneerbuff)) // Dungeoneer
 		guy.apply_status_effect(/datum/status_effect/buff/dungeoneerbuff)
-	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_VOTARY))//Top Church guys get a buff. Opposite to overt heretics.
+	if((holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_VOTARY))//Top Church guys get a buff. Opposite to overt heretics.
 		guy.add_stress(/datum/stressevent/seeblessed)
-	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_HOLYWARRIOR))
+	if((holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_HOLYWARRIOR))
 		guy.apply_status_effect(/datum/status_effect/debuff/holy_blessing)
-	if((src.necra_area == TRUE) && !(guy.has_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)||(guy.has_status_effect(/datum/status_effect/debuff/deathdoorwilloss)))) //Necra saps at wil
+	if((necra_area == TRUE) && !(guy.has_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)||(guy.has_status_effect(/datum/status_effect/debuff/deathdoorwilloss)))) //Necra saps at wil
 		if(HAS_TRAIT(guy, TRAIT_SOUL_EXAMINE))
 			guy.apply_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)
 		else
 			guy.apply_status_effect(/datum/status_effect/debuff/deathdoorwilloss)
-	if((src.viewing_area == TRUE) && !guy.has_status_effect(/datum/status_effect/buff/viewingbuff)) // unique buff when in an arena so you have a better view
+	if((viewing_area == TRUE) && !guy.has_status_effect(/datum/status_effect/buff/viewingbuff)) // unique buff when in an arena so you have a better view
 		guy.apply_status_effect(/datum/status_effect/buff/viewingbuff)
-	if((src.hoardmaster_protected == TRUE))//Your greed consumes you.
+	if((hoardmaster_protected == TRUE))//Your greed consumes you.
 		message_admins("[guy.real_name]([key_name(guy)]) was dusted by the Hoardmaster, at [ADMIN_JMP(src)]")
 		log_admin("[guy.real_name]([key_name(guy)]) was dusted by the Hoardmaster")
 		playsound(src, 'sound/misc/lava_death.ogg', 100, FALSE)

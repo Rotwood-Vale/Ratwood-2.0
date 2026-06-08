@@ -85,7 +85,7 @@
 	if(src.pulledby != null)
 		to_chat(src, span_notice("I can't fly away while being grabbed!"))
 		return
-	src.visible_message(span_notice("[src] begins to ascend!"), span_notice("You take flight..."))
+	visible_message(span_notice("[src] begins to ascend!"), span_notice("You take flight..."))
 	if(do_after(src, fly_time, target))
 		if(src.pulledby == null)
 			src.zMove(UP, TRUE)
@@ -100,7 +100,7 @@
 	if(src.pulledby != null)
 		to_chat(src, span_notice("I can't fly away while being grabbed!"))
 		return
-	src.visible_message(span_notice("[src] begins to descend!"), span_notice("You take flight..."))
+	visible_message(span_notice("[src] begins to descend!"), span_notice("You take flight..."))
 	if(do_after(src, fly_time, target))
 		if(src.pulledby == null)
 			src.zMove(DOWN, TRUE)

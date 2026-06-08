@@ -144,7 +144,7 @@
 		extradefroll = prob(prob2defend)
 		defender_dualw = TRUE
 
-	if(src.client?.prefs.showrolls)
+	if(client?.prefs.showrolls)
 		var/text = "Roll to parry... [prob2defend]%"
 		if(defender_dualw)
 			text += " Twice! Disadvantage! ([(prob2defend / 100) * (prob2defend / 100) * 100]%)"
@@ -288,12 +288,12 @@
 		if(H.stamina_add(parrydrain))
 			if(W)
 				playsound(get_turf(src), pick(W.parrysound), 100, FALSE)
-			if(src.client)
+			if(client)
 				record_round_statistic(STATS_PARRIES)
 			if(istype(rmb_intent, /datum/rmb_intent/riposte))
-				src.visible_message(span_boldwarning("<b>[src]</b> ripostes [user] with [W]!"))
+				visible_message(span_boldwarning("<b>[src]</b> ripostes [user] with [W]!"))
 			else
-				src.visible_message(span_boldwarning("<b>[src]</b> parries [user] with [W]!"))
+				visible_message(span_boldwarning("<b>[src]</b> parries [user] with [W]!"))
 			if(!iscarbon(user))	//Non-carbon mobs never make it to the proper parry proc where the other calculations are done.
 				if(W.max_blade_int)
 					W.remove_bintegrity(SHARPNESS_ONHIT_DECAY, user)
@@ -314,15 +314,15 @@
 		var/mob/living/carbon/human/H = src
 		if(H.stamina_add(parrydrain))
 			playsound(get_turf(src), pick(parry_sound), 100, FALSE)
-			src.visible_message(span_warning("<b>[src]</b> parries [user]!"))
-			if(src.client)
+			visible_message(span_warning("<b>[src]</b> parries [user]!"))
+			if(client)
 				record_round_statistic(STATS_PARRIES)
 			return TRUE
 		else
 			to_chat(src, span_boldwarning("I'm too tired to parry!"))
 			return FALSE
 	else
-		if(src.client)
+		if(client)
 			record_round_statistic(STATS_PARRIES)
 		playsound(get_turf(src), pick(parry_sound), 100, FALSE)
 		return TRUE

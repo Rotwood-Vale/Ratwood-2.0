@@ -276,7 +276,7 @@
 	if(istype(I, /obj/item/clothing/mask/rogue/spectacles/inq))
 		user.visible_message(span_warning("[user] starts to insert [I]'s lenses into [src]."))
 		if(do_after(user, 4 SECONDS))
-			var/obj/item/clothing/mask/rogue/facemask/steel/confessor/lensed/P = new /obj/item/clothing/mask/rogue/facemask/steel/confessor/lensed(get_turf(src.loc))
+			var/obj/item/clothing/mask/rogue/facemask/steel/confessor/lensed/P = new /obj/item/clothing/mask/rogue/facemask/steel/confessor/lensed(get_turf(src))
 			if(user.is_holding(src))
 				user.dropItemToGround(src)
 				user.put_in_hands(P)
@@ -446,7 +446,7 @@
 		if(user.real_name == name)
 			GLOB.outlawed_players -= user.real_name
 			priority_announce("[user.real_name] has completed their penance. Justice has been served in the eyes of Ravox.", "PENANCE", 'sound/misc/bell.ogg')
-	playsound(src.loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
+	playsound(loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
 	if(QDELETED(src))
 		return
 	qdel(src)

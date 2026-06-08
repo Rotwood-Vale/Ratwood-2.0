@@ -366,7 +366,7 @@
 
 //Gnoll summoning item, crafted from gnoll meat AND a gem, both only obtainable from dead gnolls.  
 /obj/item/reagent_containers/food/snacks/rogue/meat/steak/vilespawn/attack_self(mob/living/user)
-	to_chat(user, span_notice("You offer the [src.name] to the void, chanting for a host..."))
+	to_chat(user, span_notice("You offer the [name] to the void, chanting for a host..."))
 	var/list/candidates = pollGhostCandidates("Do you want to play as an Impure Gnoll? You'll be subservient to a master.", "Impure Gnoll", null, null, 10 SECONDS, "impure_gnoll")
 	if(!LAZYLEN(candidates))
 		to_chat(user, span_warning("The meat remains cold. No echoes of violence are hungry enough."))
@@ -396,7 +396,7 @@
 	H.regenerate_icons()
 
 	//The summoned gnoll now has its name assigned before the howl plays
-	src.visible_message(span_warning("The [src.name] bloats and tears open. An explosion of blood and gore heralds the arrival of an Impure Gnoll!"))
+	visible_message(span_warning("The [name] bloats and tears open. An explosion of blood and gore heralds the arrival of an Impure Gnoll!"))
 	H.emote("howl", TRUE)
 	playsound(H.loc, pick('sound/combat/gib (1).ogg','sound/combat/gib (2).ogg'), 80, FALSE, 3)
 	H.spawn_gibs(TRUE)
@@ -432,7 +432,7 @@
 		H.fully_replace_character_name(null, summoned_prefs.ensure_gnoll_name())
 	H.regenerate_icons()
 
-	user.visible_message(span_warning("The [src.name] melds into [user]'s flesh as they transform into an Impure Gnoll!"))
+	user.visible_message(span_warning("The [name] melds into [user]'s flesh as they transform into an Impure Gnoll!"))
 	H.emote("howl", TRUE)
 	playsound(H.loc, pick('sound/combat/gib (1).ogg','sound/combat/gib (2).ogg'), 80, FALSE, 3)
 	H.spawn_gibs(TRUE)

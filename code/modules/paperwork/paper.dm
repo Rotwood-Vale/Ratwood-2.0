@@ -550,7 +550,7 @@
 	for(var/X in contents)
 		var/atom/movable/AM = X
 		user.put_in_hands(AM)
-	playsound(src.loc, 'sound/blank.ogg', 50, TRUE)
+	playsound(loc, 'sound/blank.ogg', 50, TRUE)
 	user.visible_message(span_warning("[user] opens [src]."))
 	if(note)
 		note.forceMove(user.loc)
@@ -569,7 +569,7 @@
 			AM.forceMove(src.loc)
 	if(note)
 		note.forceMove(user.loc)
-	playsound(src.loc, 'sound/blank.ogg', 50, TRUE)
+	playsound(loc, 'sound/blank.ogg', 50, TRUE)
 	qdel(src)
 
 /obj/item/smallDelivery/examine(mob/user)

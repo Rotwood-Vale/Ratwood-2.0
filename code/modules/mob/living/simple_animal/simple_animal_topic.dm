@@ -33,7 +33,7 @@
 			return
 		var/mob/user = usr
 		var/list/dat = list()
-		var/datum/familiar_prefs/prefy = src.client.prefs.familiar_prefs
+		var/datum/familiar_prefs/prefy = client.prefs.familiar_prefs
 
 
 		dat += "<div align='center'><font size = 5; font color = '#dddddd'><b>[prefy.familiar_name]</b></font></div>"

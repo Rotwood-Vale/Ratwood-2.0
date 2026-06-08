@@ -323,7 +323,7 @@
 
 /obj/item/storage/belt/rogue/leather/knifebelt/attack_turf(turf/T, mob/living/user)
 	if(knives.len >= max_storage)
-		to_chat(user, span_warning("Your [src.name] is full!"))
+		to_chat(user, span_warning("Your [name] is full!"))
 		return
 	to_chat(user, span_notice("You begin to gather the ammunition..."))
 	for(var/obj/item/rogueweapon/huntingknife/throwingknife/K in T.contents)

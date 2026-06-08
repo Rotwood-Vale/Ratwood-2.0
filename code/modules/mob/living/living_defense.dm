@@ -233,11 +233,11 @@
 	if(!prob(probby) && !instant && !stat)
 		visible_message(span_warning("[user] struggles with [src]!"),
 						span_warning("[user] struggles to restrain me!"), span_hear("I hear aggressive shuffling!"), null, user)
-		if(src.client?.prefs.showrolls)
+		if(client?.prefs.showrolls)
 			to_chat(user, span_warning("I struggle with [src]! [probby]%"))
 		else
 			to_chat(user, span_warning("I struggle with [src]!"))
-		playsound(src.loc, 'sound/foley/struggle.ogg', 100, FALSE, -1)
+		playsound(loc, 'sound/foley/struggle.ogg', 100, FALSE, -1)
 		user.Immobilize(2 SECONDS)
 		user.changeNext_move(2 SECONDS)
 		src.Immobilize(1 SECONDS)
@@ -249,7 +249,7 @@
 
 	if(!instant)
 		var/sound_to_play = 'sound/foley/grab.ogg'
-		playsound(src.loc, sound_to_play, 100, FALSE, -1)
+		playsound(loc, sound_to_play, 100, FALSE, -1)
 
 	testing("eheh1")
 	user.setGrabState(GRAB_AGGRESSIVE)

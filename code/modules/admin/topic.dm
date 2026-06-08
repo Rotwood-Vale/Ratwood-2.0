@@ -14,7 +14,7 @@
 /datum/admins/Topic(href, href_list)
 	..()
 
-	if(usr.client != src.owner || !check_rights(0))
+	if(usr.client != owner || !check_rights(0))
 		message_admins("[usr.key] has attempted to override the admin panel!")
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
@@ -952,12 +952,12 @@
 			else
 				gender_description = "<font color='red'><b>[M.gender]</b></font>"
 
-		to_chat(src.owner, "<b>Info about [M.name]:</b> ")
-		to_chat(src.owner, "Mob type = [M.type]; Gender = [gender_description] Damage = [health_description]")
-		to_chat(src.owner, "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Mind_name = [M.mind?"[M.mind.name]":""]; Key = <b>[M.key]</b>;")
-		to_chat(src.owner, "Location = [location_description];")
-		to_chat(src.owner, "[special_role_description]")
-		to_chat(src.owner, ADMIN_FULLMONTY_NONAME(M))
+		to_chat(owner, "<b>Info about [M.name]:</b> ")
+		to_chat(owner, "Mob type = [M.type]; Gender = [gender_description] Damage = [health_description]")
+		to_chat(owner, "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Mind_name = [M.mind?"[M.mind.name]":""]; Key = <b>[M.key]</b>;")
+		to_chat(owner, "Location = [location_description];")
+		to_chat(owner, "[special_role_description]")
+		to_chat(owner, ADMIN_FULLMONTY_NONAME(M))
 
 	else if(href_list["addjobslot"])
 		if(!check_rights(R_ADMIN))
@@ -984,7 +984,7 @@
 				var/newtime = null
 				newtime = input(usr, "How many jebs do you want?", "Add wanted posters", "[newtime]") as num|null
 				if(!newtime)
-					to_chat(src.owner, "Setting to amount of positions filled for the job")
+					to_chat(owner, "Setting to amount of positions filled for the job")
 					job.total_positions = job.current_positions
 					break
 				job.total_positions = newtime

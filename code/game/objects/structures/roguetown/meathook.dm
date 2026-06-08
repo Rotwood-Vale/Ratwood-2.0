@@ -38,7 +38,7 @@
 				for(var/item in L.guaranteed_butcher_results)
 					if(ispath(item, /obj/item/reagent_containers/food/snacks))
 						L.guaranteed_butcher_results[item] += 1
-			playsound(src.loc, 'sound/foley/butcher.ogg', 25, TRUE)
+			playsound(loc, 'sound/foley/butcher.ogg', 25, TRUE)
 			L.visible_message(span_danger("[user] hangs [L] on [src]!"), span_danger("[user] hangs you on [src]]!"))
 			L.forceMove(drop_location())
 			L.emote("scream")
@@ -108,7 +108,7 @@
 	M.pixel_y = 0
 	M.pixel_x = 0
 	M.adjustBruteLoss(30)
-	src.visible_message(span_danger("[M] falls free of [src]!"))
+	visible_message(span_danger("[M] falls free of [src]!"))
 	unbuckle_mob(M,force=1)
 	M.emote("scream")
 	M.AdjustParalyzed(20)

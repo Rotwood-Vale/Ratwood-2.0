@@ -4,7 +4,7 @@
 	var/last_used
 
 /datum/magic_item/mundane/silver/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	if(world.time < src.last_used + 100)
+	if(world.time < last_used + 100)
 		return
 	. = ..()
 	if(ishuman(target))

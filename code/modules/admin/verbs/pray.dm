@@ -12,12 +12,12 @@
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)
 		return
-	log_prayer("[src.key]/([src.name]): [msg]")
+	log_prayer("[src.key]/([name]): [msg]")
 //	if(usr.client)
 //		if(usr.client.prefs.muted & MUTE_PRAY)
 //			to_chat(usr, span_danger("I cannot pray (muted)."))
 //			return
-//		if(src.client.handle_spam_prevention(msg,MUTE_PRAY))
+//		if(client.handle_spam_prevention(msg,MUTE_PRAY))
 //			return
 
 	var/font_color = "purple"
@@ -84,7 +84,7 @@
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)
 		return
-	log_prayer("[src.key]/([src.name]): [msg]")
+	log_prayer("[src.key]/([name]): [msg]")
 
 	var/deity = ""
 	if(isliving(src))
@@ -92,7 +92,7 @@
 		if(istype(living_user.patron))
 			deity = " to [living_user.patron.name]"
 	
-	var/display_name = "[real_name || src.name]"
+	var/display_name = "[real_name || name]"
 
 	msg = span_info("[display_name] prays[deity] [ADMIN_FLW(src)][ADMIN_SM(src)]: [msg]")
 	

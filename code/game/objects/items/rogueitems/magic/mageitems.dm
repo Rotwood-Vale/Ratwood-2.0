@@ -146,7 +146,7 @@
 	if(do_after(user, crafttime, target = src))
 		user.visible_message(span_warning("[user] draws an arcyne rune with [user.p_their()] [name]!"), \
 		span_notice("I finish tracing ornate symbols and circles with my [name], leaving behind a ritual rune."))
-		src.amount --
+		amount --
 		new rune_to_scribe(Turf)
 	if(amount == 0)
 		qdel(src)
@@ -437,7 +437,7 @@
 
 /obj/item/rope/chain/bindingshackles/Initialize(mapload)
 	. = ..()
-	src.filters += filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(1,255),rand(1,255),rand(1,255)))
+	filters += filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(1,255),rand(1,255),rand(1,255)))
 
 /obj/item/rope/chain/bindingshackles/t2
 	name = "greater planar binding shackles"

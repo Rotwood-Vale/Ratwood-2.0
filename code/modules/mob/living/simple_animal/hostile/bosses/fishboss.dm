@@ -87,7 +87,7 @@
 	return TRUE
 
 /mob/living/simple_animal/hostile/boss/fishboss/death()
-	src.visible_message("<span class='warning'>The bloated, grotesque fishman explodes in a shower of gore!</span>","<span class='warning'>The bloated, grotesque fishman explodes in a shower of gore!</span>")
+	visible_message("<span class='warning'>The bloated, grotesque fishman explodes in a shower of gore!</span>","<span class='warning'>The bloated, grotesque fishman explodes in a shower of gore!</span>")
 	src.spawn_gibs()
 	src.spawn_gibs()
 	src.spawn_gibs()

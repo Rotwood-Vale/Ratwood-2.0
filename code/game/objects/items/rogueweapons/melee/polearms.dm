@@ -266,7 +266,7 @@
 	if(HAS_TRAIT(user, TRAIT_BLIND) && !user.cmode) //if is not used by a blind mob in combat mode it won't examine
 		var/list/exam = A.examine(user) //directly extracts the examine string without using the examinate proc
 		if(A != user) // avoids the message of user poking themselves
-			src.visible_message(span_notice("[user] pokes [A] with [user.p_their()] wooden staff"))
+			visible_message(span_notice("[user] pokes [A] with [user.p_their()] wooden staff"))
 		if(exam)
 			to_chat(user, exam.Join("\n"))//relays the examine string to the user
 		return TRUE
@@ -391,7 +391,7 @@
 			if(target in range(user,3))
 				user.visible_message("<span class='warning'>[user] searches for a fish!</span>", \
 									"<span class='notice'>I begin looking for a fish to spear.</span>")
-				playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
+				playsound(loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 				ft -= (sl * 20)
 				ft = max(20,ft)
 				if(do_after(user,ft, target = target))
@@ -415,7 +415,7 @@
 						if(A)
 							var/ow = 30 + (sl * 10)
 							to_chat(user, "<span class='notice'>You see something!</span>")
-							playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
+							playsound(loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 							if(!do_after(user,ow, target = target))
 								if(ismob(A))
 									var/mob/M = A
@@ -431,7 +431,7 @@
 									user.mind.add_sleep_experience(/datum/skill/labor/fishing, round(fisherman.STAINT, 2), FALSE)
 									record_featured_stat(FEATURED_STATS_FISHERS, fisherman)
 									GLOB.azure_round_stats[STATS_FISH_CAUGHT]++
-									playsound(src.loc, 'sound/items/Fish_out.ogg', 100, TRUE)
+									playsound(loc, 'sound/items/Fish_out.ogg', 100, TRUE)
 							else
 								to_chat(user, "<span class='warning'>Damn, it got away... I should <b>pull away</b> next time.</span>")
 					else
@@ -650,7 +650,7 @@
 			if(target in range(user,3))
 				user.visible_message("<span class='warning'>[user] searches for a fish!</span>", \
 									"<span class='notice'>I begin looking for a fish to spear.</span>")
-				playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
+				playsound(loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 				ft -= (sl * 20) //every skill lvl is -2 seconds
 				ft = max(20,ft) //min of 2 seconds
 				if(do_after(user,ft, target = target))
@@ -674,7 +674,7 @@
 						if(A)
 							var/ow = 30 + (sl * 10) // Opportunity window, in ticks. Longer means you get more time to cancel your bait
 							to_chat(user, "<span class='notice'>You see something!</span>")
-							playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
+							playsound(loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 							if(!do_after(user,ow, target = target))
 								if(A in subtypesof(/mob/living))
 									var/mob/M = A
@@ -689,7 +689,7 @@
 									user.mind.add_sleep_experience(/datum/skill/labor/fishing, round(fisherman.STAINT, 2), FALSE) // Level up!
 									record_featured_stat(FEATURED_STATS_FISHERS, fisherman)
 									record_round_statistic(STATS_FISH_CAUGHT)
-									playsound(src.loc, 'sound/items/Fish_out.ogg', 100, TRUE)
+									playsound(loc, 'sound/items/Fish_out.ogg', 100, TRUE)
 							else
 								to_chat(user, "<span class='warning'>Damn, it got away... I should <b>pull away</b> next time.</span>")
 					else

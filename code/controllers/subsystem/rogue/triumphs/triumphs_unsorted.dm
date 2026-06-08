@@ -4,7 +4,7 @@
 
 
 /mob/proc/show_triumphs_list()
-	return SStriumphs.show_triumph_leaderboard(src.client)
+	return SStriumphs.show_triumph_leaderboard(client)
 
 /mob/proc/get_triumphs()
 	if(!ckey)

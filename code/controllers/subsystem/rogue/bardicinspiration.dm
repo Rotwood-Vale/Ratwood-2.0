@@ -48,19 +48,14 @@ GLOBAL_LIST_INIT(learnable_rhythms, (list(/obj/effect/proc_holder/spell/self/rhy
 	QDEL_NULL(rhythm_tracker)
 	STOP_PROCESSING(SSobj, src)
 
-
-
 /mob/living/carbon/human/proc/in_audience(mob/living/carbon/human/audiencee)
-	if(!src.mind)
+	if(!mind)
 		return FALSE
-	if(!src.inspiration)
+	if(!inspiration)
 		return FALSE
-		
-	if(audiencee in src.inspiration.audience)
-		return TRUE
-	else
+	if(!(audiencee in inspiration.audience))
 		return FALSE
-
+	return TRUE
 
 /datum/inspiration/proc/grant_inspiration(mob/living/carbon/human/H, bard_tier)
 	if(!H || !H.mind)
@@ -77,9 +72,6 @@ GLOBAL_LIST_INIT(learnable_rhythms, (list(/obj/effect/proc_holder/spell/self/rhy
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/crescendo)
 	H.verbs += list(/mob/living/carbon/human/proc/setaudience, /mob/living/carbon/human/proc/clearaudience, /mob/living/carbon/human/proc/checkaudience, /mob/living/carbon/human/proc/picksongs, /mob/living/carbon/human/proc/resetsongs)
 
-
-
-
 /mob/living/carbon/human/proc/setaudience()
 	set name = "Audience Choice"
 	set category = "Inspiration"
@@ -91,7 +83,7 @@ GLOBAL_LIST_INIT(learnable_rhythms, (list(/obj/effect/proc_holder/spell/self/rhy
 		return FALSE
 	var/list/folksnearby = list()
 	for(var/mob/living/carbon/human/folks in view(7, loc))
-		if(!src.in_audience(folks))
+		if(!in_audience(folks))
 			folksnearby += folks
 
 	if(!folksnearby)
@@ -109,10 +101,10 @@ GLOBAL_LIST_INIT(learnable_rhythms, (list(/obj/effect/proc_holder/spell/self/rhy
 	set category = "Inspiration"
 	if(!inspiration)
 		return FALSE
-	if(src.has_status_effect(/datum/status_effect/buff/playing_music)) // cant clear while playing
-		return
+	if(has_status_effect(/datum/status_effect/buff/playing_music)) // cant clear while playing
+		to_chat(src, "I have to stop playing to clear my audience!")
+		return FALSE
 	inspiration.audience = list()
-
 	return TRUE
 
 

@@ -102,7 +102,7 @@
 				return
 
 /obj/item/flashlight/flare/light/turn_off()
-	playsound(src.loc, 'sound/items/firesnuff.ogg', 100)
+	playsound(loc, 'sound/items/firesnuff.ogg', 100)
 	soundloop.stop()
 	STOP_PROCESSING(SSobj, src)
 	..()

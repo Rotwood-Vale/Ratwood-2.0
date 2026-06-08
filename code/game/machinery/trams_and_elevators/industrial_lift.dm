@@ -651,7 +651,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
  * * boolean, FALSE if the menu should be closed, TRUE if the menu is clear to stay opened.
  */
 /obj/structure/industrial_lift/proc/check_menu(mob/user, starting_loc)
-	if(user.incapacitated() || !user.Adjacent(src) || starting_loc != src.loc)
+	if(user.incapacitated() || !user.Adjacent(src) || starting_loc != loc)
 		return FALSE
 	return TRUE
 

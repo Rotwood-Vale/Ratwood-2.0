@@ -38,7 +38,7 @@
 			return
 		var/atom/movable/screen/movable/action_button/B = over_object
 		var/list/actions = usr.actions
-		actions.Swap(actions.Find(src.linked_action), actions.Find(B.linked_action))
+		actions.Swap(actions.Find(linked_action), actions.Find(B.linked_action))
 		moved = FALSE
 		ordered = TRUE
 		B.moved = FALSE

@@ -74,8 +74,8 @@ GLOBAL_LIST_EMPTY(active_abyssors_rage)
 
 
 /obj/effect/weather/tornado/proc/apply_tornado_force(atom/movable/A)
-	var/dx = A.x - src.x
-	var/dy = A.y - src.y
+	var/dx = A.x - x
+	var/dy = A.y - y
 
 	if(!dx && !dy)
 		return

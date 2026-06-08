@@ -404,7 +404,7 @@
 	target.emote(prob(50) ? "painscream" : "scream", forced = TRUE)
 	target.Stun(40)
 	target.flash_fullscreen("redflash2")
-	playsound(src.loc, 'sound/misc/frying.ogg', 80, FALSE, extrarange = 5)
+	playsound(loc, 'sound/misc/frying.ogg', 80, FALSE, extrarange = 5)
 	update_heated(FALSE)
 	if(cool_timer)
 		deltimer(cool_timer)

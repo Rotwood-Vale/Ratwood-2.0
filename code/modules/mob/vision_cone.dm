@@ -140,17 +140,17 @@
 		female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
 */
 
-/*	if(src.client)
+/*	if(client)
 		var/image/I = null
-		for(I in src.client.hidden_atoms)
+		for(I in client.hidden_atoms)
 			I.override = 0
 			client.images -= I
 			qdel(I)
 		for(var/hidden_hud in client.hidden_images)
 			client.images += hidden_hud
 			client.hidden_images -= hidden_hud
-		src.client.hidden_atoms = list()
-		src.client.hidden_mobs = list()
+		client.hidden_atoms = list()
+		client.hidden_mobs = list()
 		client.hidden_images = list()
 		if(hud_used && hud_used.fov)
 //			hud_used.fov.dir = src.dir
@@ -188,9 +188,9 @@
 				for(M in mobs2hide)
 					I = image("split", M)
 					I.override = 1
-					src.client.images += I
-					src.client.hidden_atoms += I
-					src.client.hidden_mobs += M
+					client.images += I
+					client.hidden_atoms += I
+					client.hidden_mobs += M
 					if(src.pulling == M)//If we're pulling them we don't want them to be invisible, too hard to play like that.
 						I.override = 0
 					if(src.pulledby == M)
@@ -247,8 +247,8 @@
 			if(L in mobs2hide)
 /*				I = image("split", M)
 				I.override = 1
-				src.client.images += I
-				src.client.hidden_atoms += I
+				client.images += I
+				client.hidden_atoms += I
 				if(src.pulling == M)//If we're pulling them we don't want them to be invisible, too hard to play like that.
 					I.override = 0
 				if(src.pulledby == M)

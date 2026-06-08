@@ -55,7 +55,7 @@
 			else
 				playsound(loc, 'sound/blank.ogg', 90, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/blank.ogg', 100, TRUE)
+			playsound(loc, 'sound/blank.ogg', 100, TRUE)
 
 /obj/structure/fireaxecabinet/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if(open)
@@ -80,7 +80,7 @@
 			user.put_in_hands(heirloom)
 			heirloom = null
 			to_chat(user, "<span class='notice'>I take the sword from the [name].</span>")
-			src.add_fingerprint(user)
+			add_fingerprint(user)
 			update_icon()
 			return
 	if(locked)

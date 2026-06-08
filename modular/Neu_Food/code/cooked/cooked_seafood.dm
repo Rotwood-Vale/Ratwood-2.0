@@ -44,7 +44,7 @@
 	faretype = FARE_POOR
 
 /obj/item/reagent_containers/food/snacks/rogue/fryfish/sole/attackby(obj/item/M, mob/living/user, params)
-	if(!locate(/obj/structure/table) in src.loc)
+	if(!locate(/obj/structure/table) in loc)
 		to_chat(user, span_warning("I need to use a table."))
 		return FALSE
 	update_cooktime(user)	
@@ -66,7 +66,7 @@
 	faretype = FARE_NEUTRAL
 
 /obj/item/reagent_containers/food/snacks/rogue/fryfish/cod/attackby(obj/item/I, mob/living/user, params)
-	if(!locate(/obj/structure/table) in src.loc)
+	if(!locate(/obj/structure/table) in loc)
 		to_chat(user, span_warning("I need to use a table."))
 		return FALSE
 	update_cooktime(user)
@@ -96,7 +96,7 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/fryfish/lobster/attackby(obj/item/I, mob/living/user, params)
 	update_cooktime(user)
-	var/found_table = locate(/obj/structure/table) in src.loc
+	var/found_table = locate(/obj/structure/table) in loc
 	if(!found_table)
 		to_chat(user, span_warning("I need to use a table."))
 		return FALSE
@@ -135,7 +135,7 @@
 	faretype = FARE_NEUTRAL
 
 /obj/item/reagent_containers/food/snacks/rogue/fryfish/salmon/attackby(obj/item/M, mob/living/user, params)
-	if(!locate(/obj/structure/table) in src.loc)
+	if(!locate(/obj/structure/table) in loc)
 		to_chat(user, span_warning("I need to use a table."))
 		return FALSE
 	update_cooktime(user)	
@@ -166,7 +166,7 @@
 	faretype = FARE_NEUTRAL
 
 /obj/item/reagent_containers/food/snacks/rogue/fryfish/plaice/attackby(obj/item/M, mob/living/user, params)
-	if(!locate(/obj/structure/table) in src.loc)
+	if(!locate(/obj/structure/table) in loc)
 		to_chat(user, span_warning("I need to use a table."))
 		return FALSE
 	update_cooktime(user)	
@@ -194,7 +194,7 @@
 	faretype = FARE_NEUTRAL
 
 /obj/item/reagent_containers/food/snacks/rogue/fryfish/bass/attackby(obj/item/M, mob/living/user, params)
-	if(!locate(/obj/structure/table) in src.loc)
+	if(!locate(/obj/structure/table) in loc)
 		to_chat(user, span_warning("I need to use a table."))
 		return FALSE
 	update_cooktime(user)	
@@ -222,7 +222,7 @@
 	faretype = FARE_NEUTRAL
 
 /obj/item/reagent_containers/food/snacks/rogue/fryfish/clam/attackby(obj/item/I, mob/living/user, params)
-	if(!locate(/obj/structure/table) in src.loc)
+	if(!locate(/obj/structure/table) in loc)
 		to_chat(user, span_warning("I need to use a table."))
 		return FALSE
 	update_cooktime(user)

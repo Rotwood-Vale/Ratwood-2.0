@@ -16,7 +16,7 @@
 
 /obj/item/book/mimery/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained() || src.loc != usr)
+	if (usr.stat || usr.restrained() || loc != usr)
 		return
 	if (!ishuman(usr))
 		return

@@ -340,7 +340,7 @@
 
 /datum/status_effect/stacking/on_creation(mob/living/new_owner, stacks_to_apply)
 	..()
-	src.add_stacks(stacks_to_apply)
+	add_stacks(stacks_to_apply)
 
 /datum/status_effect/stacking/on_apply()
 	if(!can_have_status())

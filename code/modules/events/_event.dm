@@ -363,16 +363,16 @@
 		return
 	switch(href_list["action"])
 		if("schedule")
-			message_admins("[key_name_admin(usr)] scheduled event [src.name].")
-			log_admin_private("[key_name(usr)] scheduled [src.name].")
-			SSgamemode.current_storyteller.buy_event(src, src.track)
+			message_admins("[key_name_admin(usr)] scheduled event [name].")
+			log_admin_private("[key_name(usr)] scheduled [name].")
+			SSgamemode.current_storyteller.buy_event(src, track)
 		if("force_next")
-			message_admins("[key_name_admin(usr)] forced scheduled event [src.name].")
-			log_admin_private("[key_name(usr)] forced scheduled event [src.name].")
-			SSgamemode.forced_next_events[src.track] = src
+			message_admins("[key_name_admin(usr)] forced scheduled event [name].")
+			log_admin_private("[key_name(usr)] forced scheduled event [name].")
+			SSgamemode.forced_next_events[track] = src
 		if("fire")
-			message_admins("[key_name_admin(usr)] fired event [src.name].")
-			log_admin_private("[key_name(usr)] fired event [src.name].")
+			message_admins("[key_name_admin(usr)] fired event [name].")
+			log_admin_private("[key_name(usr)] fired event [name].")
 			runEvent(random = FALSE, admin_forced = TRUE)
 
 //GLOBAL_LIST_INIT(badomens, list("roundstart"))

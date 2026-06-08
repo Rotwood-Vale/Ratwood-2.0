@@ -60,7 +60,7 @@
 
 /mob/living/carbon/human/proc/werewolf_transform()
 	if(!mind)
-		log_runtime("NO MIND ON [src.name] WHEN TRANSFORMING")
+		log_runtime("NO MIND ON [name] WHEN TRANSFORMING")
 	Paralyze(1, ignore_canstun = TRUE)
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
@@ -169,7 +169,7 @@
 	if(!stored_mob)
 		return
 	if(!mind)
-		log_runtime("NO MIND ON [src.name] WHEN UNTRANSFORMING")
+		log_runtime("NO MIND ON [name] WHEN UNTRANSFORMING")
 	Paralyze(1, ignore_canstun = TRUE)
 	for(var/obj/item/W in src)
 		dropItemToGround(W)

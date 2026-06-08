@@ -667,9 +667,9 @@
 		add_overlay("paper_onfire_overlay")
 
 /obj/item/manuscript/attack_hand(mob/user)
-	if(istype(user, /mob/living) && src.loc == user)
+	if(istype(user, /mob/living) && loc == user)
 		var/mob/living/L = user
-		var/obj/item/paper/P = new /obj/item/paper(get_turf(src.loc))
+		var/obj/item/paper/P = new /obj/item/paper(get_turf(src))
 		L.put_in_active_hand(P)
 		L.put_in_inactive_hand(src)
 		P.icon_state = "paperwrite"
@@ -677,12 +677,12 @@
 		page_texts -= page_texts[length(page_texts)]
 		--number_of_pages
 		if(number_of_pages == 1)
-			var/obj/item/paper/P_two = new /obj/item/paper(get_turf(src.loc))
+			var/obj/item/paper/P_two = new /obj/item/paper(get_turf(src))
 			P_two.icon_state = "paperwrite"
 			P_two.info = page_texts[length(page_texts)]
 			qdel_source = TRUE
 			. = ..()
-			src.loc = get_turf(src.loc)
+			loc = get_turf(src)
 			L.put_in_hands(P_two)
 			qdel(src)
 			return
@@ -710,7 +710,7 @@
 	var/swatchbookcolor = "#000000"
 
 /obj/item/book/rogue/swatchbook/read(mob/user)
-	if(istype(user, /mob/living) && src.loc == user)
+	if(istype(user, /mob/living) && loc == user)
 		if(!user.client || !user.hud_used)
 			return
 		else

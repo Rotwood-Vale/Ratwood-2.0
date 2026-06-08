@@ -62,16 +62,16 @@
 
 /mob/living/simple_animal/hostile/rogue/ghost/wraith/attacked_by(obj/item/I, mob/living/user)
 	if(I && istype(I, /obj/item) && !I.is_silver)
-		user.visible_message(span_danger("\The [I.name] passes through the [src.name]!"))
+		user.visible_message(span_danger("\The [I.name] passes through the [name]!"))
 		return // Ignore attacks from weapons that are not silver
 	..()
 
 /mob/living/simple_animal/hostile/rogue/ghost/wraith/throw_impact(obj/item/I, mob/living/user)
 	if(I)
-		user.visible_message(span_danger("\The [I.name] passes through the [src.name]!"))
+		user.visible_message(span_danger("\The [I.name] passes through the [name]!"))
 		return // Ignore thrown items
 	if(I && istype(I, /obj/item/rogueweapon) && I.is_silver)
-		user.visible_message(span_danger("\The [I.name] strikes the [src.name], harming it!"))
+		user.visible_message(span_danger("\The [I.name] strikes the [name], harming it!"))
 		return ..() // Resume parent procedure if hit by a rogueweapon with is_silver
 	..()
 
@@ -79,10 +79,10 @@
 /mob/living/simple_animal/hostile/rogue/ghost/wraith/Bump(obj/item/I)
 	. = ..()
 	if(I)
-		src.visible_message(span_danger("\The [I.name] passes through the [src.name]!"))
+		visible_message(span_danger("\The [I.name] passes through the [name]!"))
 		return // Ignore thrown items
 	if(I && istype(I, /obj/item/rogueweapon) && I.is_silver)
-		src.visible_message(span_danger("\The [I.name] strikes the [src.name], harming it!"))
+		visible_message(span_danger("\The [I.name] strikes the [name], harming it!"))
 		return ..() // Resume parent procedure if hit by a rogueweapon with is_silver
 	..()
 
@@ -91,16 +91,16 @@
 	if(AM && istype(AM, /obj/item) && istype(AM, /obj/item/rogueweapon))
 		var/obj/item/rogueweapon/thrown = AM
 		if(thrown.is_silver)
-			visible_message(span_danger("\The [AM.name] strikes the [src.name], harming it!"))
+			visible_message(span_danger("\The [AM.name] strikes the [name], harming it!"))
 			return ..() // Resume parent procedure if hit by a rogueweapon with is_silver
 		else
-			visible_message(span_danger("\The [AM.name] passes through the [src.name]!"))
+			visible_message(span_danger("\The [AM.name] passes through the [name]!"))
 			return
 
 
 /mob/living/simple_animal/hostile/rogue/ghost/wraith/bullet_act(obj/projectile/P)
 	if(P)
-		P.visible_message(span_danger("\The [P.name] passes through the [src.name]!"))
+		P.visible_message(span_danger("\The [P.name] passes through the [name]!"))
 		return FALSE // Ignore projectiles
 	..()
 

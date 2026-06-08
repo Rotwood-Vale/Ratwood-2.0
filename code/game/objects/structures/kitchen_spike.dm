@@ -45,7 +45,7 @@
 				return
 			if(user.pulling != L)
 				return
-			playsound(src.loc, 'sound/blank.ogg', 25, TRUE)
+			playsound(loc, 'sound/blank.ogg', 25, TRUE)
 			L.visible_message(span_danger("[user] slams [L] onto the meat spike!"), span_danger("[user] slams you onto the meat spike!"), span_hear("You hear a squishy wet noise."))
 			L.forceMove(drop_location())
 			L.emote("scream")
@@ -100,7 +100,7 @@
 	animate(M, transform = m180, time = 3)
 	M.pixel_y = M.get_standard_pixel_y_offset(180)
 	M.adjustBruteLoss(30)
-	src.visible_message(span_danger("[M] falls free of [src]!"))
+	visible_message(span_danger("[M] falls free of [src]!"))
 	unbuckle_mob(M,force=1)
 	M.emote("scream")
 	M.AdjustParalyzed(20)

@@ -254,7 +254,7 @@
 				else
 					playsound(loc, 'sound/blank.ogg', 90, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/blank.ogg', 100, TRUE)
+			playsound(loc, 'sound/blank.ogg', 100, TRUE)
 
 // returns whether this light has power
 // true if area has power and lightswitch is on
@@ -297,7 +297,7 @@
 
 	if(!skip_sound_and_sparks)
 		if(status == LIGHT_OK || status == LIGHT_BURNED)
-			playsound(src.loc, 'sound/blank.ogg', 75, TRUE)
+			playsound(loc, 'sound/blank.ogg', 75, TRUE)
 		if(on)
 			do_sparks(3, TRUE, src)
 	status = LIGHT_BROKEN
@@ -321,7 +321,7 @@
 
 /obj/machinery/light/proc/explode()
 	set waitfor = 0
-	var/turf/T = get_turf(src.loc)
+	var/turf/T = get_turf(src)
 	break_light_tube()	// break it first to give a warning
 	sleep(2)
 	explosion(T, 0, 0, 2, 2)

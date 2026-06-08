@@ -113,7 +113,7 @@
 	icon_state = "[initial(icon_state)][armed]"
 
 /obj/item/restraints/legcuffs/beartrap/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is sticking [user.p_their()] head in the [src.name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] is sticking [user.p_their()] head in the [name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/blank.ogg', 50, TRUE, -1)
 	return (BRUTELOSS)
 
@@ -137,7 +137,7 @@
 				update_icon()
 				to_chat(user, span_notice("[src] is now [armed ? "armed" : "disarmed"]"))
 			else
-				user.visible_message(span_warning("You couldn't get the shoddy [src.name] [armed ? "shut close!" : "to open up!"]"))
+				user.visible_message(span_warning("You couldn't get the shoddy [name] [armed ? "shut close!" : "to open up!"]"))
 
 /obj/item/restraints/legcuffs/beartrap/proc/close_trap(play_sound = TRUE)
 	armed = FALSE
@@ -148,7 +148,7 @@
 	alpha = 255
 	update_icon()
 	if(play_sound)
-		playsound(src.loc, 'sound/items/beartrap.ogg', 300, TRUE, -1)
+		playsound(loc, 'sound/items/beartrap.ogg', 300, TRUE, -1)
 
 /obj/item/restraints/legcuffs/beartrap/Crossed(AM as mob|obj)
 	if(armed && isturf(loc))

@@ -133,7 +133,7 @@ Additionally, these differ from the concepts, because I wish to see them in prac
 
 /obj/item/cannonball/smoke_emberwine/detonate(turf/T)
 	..()
-	var/datum/reagents/R = src.reagents
+	var/datum/reagents/R = reagents
 	var/datum/effect_system/smoke_spread/chem/smoke_e = new
 	smoke_e.set_up(R, 1, T, FALSE)
 	smoke_e.start()
@@ -166,7 +166,7 @@ Additionally, these differ from the concepts, because I wish to see them in prac
 
 /obj/item/cannonball/smoke_custom/detonate(turf/T)
 	..()
-	var/datum/reagents/R = src.reagents
+	var/datum/reagents/R = reagents
 	if(reagents.total_volume > 0)
 		var/datum/effect_system/smoke_spread/chem/smoke_c = new
 		smoke_c.set_up(R, 1, T, FALSE)

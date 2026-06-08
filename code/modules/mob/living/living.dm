@@ -69,7 +69,7 @@
 		points += "!"
 	visible_message(span_danger("[src] falls down[points]"), \
 					span_danger("I fall down[points]"))
-	playsound(src.loc, 'sound/foley/zfall.ogg', 100, FALSE)
+	playsound(loc, 'sound/foley/zfall.ogg', 100, FALSE)
 	if(!isgroundlessturf(T))
 		ZImpactDamage(T, levels)
 		record_round_statistic(STATS_MOAT_FALLERS)
@@ -416,7 +416,7 @@
 			return
 
 		log_combat(src, target, "grabbed", addition="passive grab")
-		playsound(src.loc, 'sound/combat/shove.ogg', 50, TRUE, -1)
+		playsound(loc, 'sound/combat/shove.ogg', 50, TRUE, -1)
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			var/obj/item/grabbing/O = new()
@@ -468,7 +468,7 @@
 	else
 		if(!supress_message)
 			var/sound_to_play = 'sound/combat/shove.ogg'
-			playsound(src.loc, sound_to_play, 50, TRUE, -1)
+			playsound(loc, sound_to_play, 50, TRUE, -1)
 		var/obj/item/grabbing/O = new(src)
 		O.name = "[AM.name]"
 		O.grabbed = AM
@@ -716,12 +716,12 @@
 		return
 	if(resting)
 		if(!IsKnockdown() && !IsStun() && !IsParalyzed())
-			src.visible_message(span_notice("[src] stands up."))
+			visible_message(span_notice("[src] stands up."))
 			if(move_after(src, 20, target = src))
 				set_resting(FALSE, FALSE)
 				return TRUE
 		else
-			src.visible_message(span_warning("[src] tries to stand up."))
+			visible_message(span_warning("[src] tries to stand up."))
 			return FALSE
 
 /mob/living/proc/toggle_rest()
@@ -735,11 +735,11 @@
 		return
 	if(resting)
 		if(!IsKnockdown() && !IsStun() && !IsParalyzed())
-			src.visible_message(span_info("[src] begins to stand up."))
+			visible_message(span_info("[src] begins to stand up."))
 			if(move_after(src, 20, target = src))
 				set_resting(FALSE, FALSE)
 		else
-			src.visible_message(span_warning("[src] struggles to stand up."))
+			visible_message(span_warning("[src] struggles to stand up."))
 	else
 		set_resting(TRUE, FALSE)
 
@@ -754,7 +754,7 @@
 		if(rest == resting)
 			if(resting)
 				playsound(src, 'sound/foley/toggledown.ogg', 100, FALSE)
-				src.visible_message(span_info("[src] lays down."))
+				visible_message(span_info("[src] lays down."))
 			else
 				playsound(src, 'sound/foley/toggleup.ogg', 100, FALSE)
 		else
@@ -1129,7 +1129,7 @@
 	Knockdown(300)
 	apply_status_effect(/datum/status_effect/debuff/breedable)
 	apply_status_effect(/datum/status_effect/debuff/submissive)
-	src.visible_message(span_notice("[src] yields!"))
+	visible_message(span_notice("[src] yields!"))
 	playsound(src, 'sound/misc/surrender.ogg', 100, FALSE, -1, ignore_walls=TRUE)
 	update_vision_cone()
 	addtimer(CALLBACK(src, PROC_REF(end_submit)), 600)
@@ -1265,7 +1265,7 @@
 				gcord = L.get_inactive_held_item()
 			visible_message(span_warning("[src] struggles to break free from [L]'s [gcord]!"), \
 						span_warning("I struggle against [L]'s [gcord]![rchance]"), null, null, L)
-		playsound(src.loc, 'sound/combat/grabstruggle.ogg', 50, TRUE, -1)
+		playsound(loc, 'sound/combat/grabstruggle.ogg', 50, TRUE, -1)
 		if(!HAS_TRAIT(src, TRAIT_GARROTED))
 			to_chat(pulledby, span_warning("[src] struggles against my grip!"))
 		return FALSE
@@ -1288,7 +1288,7 @@
 		gcord.wipeslate(src)
 	log_combat(L, src, "broke grab")
 	L.changeNext_move(agg_grab ? CLICK_CD_GRABBING : CLICK_CD_GRABBING + 1 SECONDS)
-	playsound(src.loc, 'sound/combat/grabbreak.ogg', 50, TRUE, -1)
+	playsound(loc, 'sound/combat/grabbreak.ogg', 50, TRUE, -1)
 	L.stop_pulling()
 	return TRUE
 

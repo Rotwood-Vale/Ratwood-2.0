@@ -54,28 +54,28 @@
 		return
 	if(istype(target, /obj/effect/decal/cleanable))
 		user.visible_message(span_notice("[user] begins to scrub \the [target.name] out with [src]."), span_warning("I begin to scrub \the [target.name] out with [src]..."))
-		if(do_after(user, src.cleanspeed, target = target))
+		if(do_after(user, cleanspeed, target = target))
 			to_chat(user, span_notice("I scrub \the [target.name] out."))
 			qdel(target)
 			decreaseUses(user)
 
 	else if(ishuman(target) && user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 		var/mob/living/carbon/human/H = user
-		user.visible_message(span_warning("\the [user] washes \the [target]'s mouth out with [src.name]!"), span_notice("I wash \the [target]'s mouth out with [src.name]!")) //washes mouth out with soap sounds better than 'the soap' here			if(user.zone_selected == "mouth")
+		user.visible_message(span_warning("\the [user] washes \the [target]'s mouth out with [name]!"), span_notice("I wash \the [target]'s mouth out with [name]!")) //washes mouth out with soap sounds better than 'the soap' here			if(user.zone_selected == "mouth")
 		H.lip_style = null //removes lipstick
 		H.update_body()
 		decreaseUses(user)
 		return
 	else if(istype(target, /obj/structure/roguewindow))
 		user.visible_message(span_notice("[user] begins to clean \the [target.name] with [src]..."), span_notice("I begin to clean \the [target.name] with [src]..."))
-		if(do_after(user, src.cleanspeed, target = target))
+		if(do_after(user, cleanspeed, target = target))
 			to_chat(user, span_notice("I clean \the [target.name]."))
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			target.set_opacity(initial(target.opacity))
 			decreaseUses(user)
 	else
 		user.visible_message(span_notice("[user] begins to clean \the [target.name] with [src]..."), span_notice("I begin to clean \the [target.name] with [src]..."))
-		if(do_after(user, src.cleanspeed, target = target))
+		if(do_after(user, cleanspeed, target = target))
 			wash_atom(target,CLEAN_MEDIUM)
 			to_chat(user, span_notice("I clean \the [target.name]."))
 			for(var/obj/effect/decal/cleanable/C in target)

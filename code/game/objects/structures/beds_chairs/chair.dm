@@ -227,7 +227,7 @@
 			return
 		if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
 			return
-		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>I grab \the [src.name].</span>")
+		usr.visible_message("<span class='notice'>[usr] grabs \the [name].</span>", "<span class='notice'>I grab \the [name].</span>")
 		var/obj/item/C = new item_chair(loc)
 		item_chair = null
 		TransferComponents(C)
@@ -285,7 +285,7 @@
 			to_chat(user, "<span class='warning'>There is already something here!</span>")
 			return
 
-	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>I right \the [name].</span>")
+	user.visible_message("<span class='notice'>[user] rights \the [name].</span>", "<span class='notice'>I right \the [name].</span>")
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
 	TransferComponents(C)
 	C.setDir(user.dir)

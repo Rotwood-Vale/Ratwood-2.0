@@ -156,7 +156,7 @@
 	src.face_atom(target)
 	src.move_resist = MOVE_FORCE_VERY_STRONG
 	src.add_overlay(direction_overlay)
-	src.visible_message(span_notice("The air chills as [src] takes in energy..."))
+	visible_message(span_notice("The air chills as [src] takes in energy..."))
 	var/fully_charged = do_after(src, delay = charge_duration, target = src)
 	src.cut_overlay(direction_overlay)
 	if (!fully_charged)
@@ -174,7 +174,7 @@
 
 /// Create a laser in the direction we are facing
 /mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk/proc/fire_laser()
-	src.visible_message(span_danger("[src] fires a aberrant beam!"))
+	visible_message(span_danger("[src] fires a aberrant beam!"))
 	playsound(src, 'sound/magic/obeliskbeam.ogg', 150, FALSE, 0, 3)
 	var/turf/target_turf = get_ranged_target_turf(src, src.dir, beam_range)
 	var/turf/origin_turf = get_turf(src)

@@ -354,14 +354,14 @@
 		pickchance = clamp(pickchance, 1, 95)
 
 		var/picked = FALSE
-		user.log_message("attempting to lockpick closet \"[src.name]\" (currently [locked ? "locked" : "unlocked"]).", LOG_ATTACK)
+		user.log_message("attempting to lockpick closet \"[name]\" (currently [locked ? "locked" : "unlocked"]).", LOG_ATTACK)
 
 		while(!QDELETED(I) &&(lockprogress < locktreshold))
 			if(!do_after(user, picktime, target = src))
 				break
 			if(prob(pickchance))
 				lockprogress += moveup
-				playsound(src.loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
+				playsound(loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
 				to_chat(user, "<span class='warning'>Click...</span>")
 				if(L.mind)
 					add_sleep_experience(L, /datum/skill/misc/lockpicking, L.STAINT/2)
@@ -381,7 +381,7 @@
 				add_sleep_experience(L, /datum/skill/misc/lockpicking, L.STAINT/4)
 				continue
 		if(!picked)
-			user.log_message("stopped/failed lockpicking closet \"[src.name]\" (remains [locked ? "locked" : "unlocked"]).", LOG_ATTACK)
+			user.log_message("stopped/failed lockpicking closet \"[name]\" (remains [locked ? "locked" : "unlocked"]).", LOG_ATTACK)
 		return
 
 /obj/structure/closet/proc/tool_interact(obj/item/W, mob/user)//returns TRUE if attackBy call shouldnt be continued (because tool was used/closet was of wrong type), FALSE if otherwise

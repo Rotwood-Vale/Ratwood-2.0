@@ -17,7 +17,7 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/steak/fried/attackby(obj/item/I, mob/living/user, params)
 	var/obj/item/reagent_containers/peppermill/mill = I
-	if(!locate(/obj/structure/table) in src.loc)
+	if(!locate(/obj/structure/table) in loc)
 		to_chat(user, span_warning("I need to use a table."))
 		return FALSE
 	update_cooktime(user)
@@ -163,9 +163,9 @@
 	var/obj/item/reagent_containers/peppermill/mill = I
 	if(istype(mill))
 		if (!isturf(src.loc) || \
-			!(locate(/obj/structure/table) in src.loc) && \
-			!(locate(/obj/structure/table/optable) in src.loc) && \
-			!(locate(/obj/item/storage/bag/tray) in src.loc))
+			!(locate(/obj/structure/table) in loc) && \
+			!(locate(/obj/structure/table/optable) in loc) && \
+			!(locate(/obj/item/storage/bag/tray) in loc))
 			to_chat(user, span_warning("I need to use a table."))
 			return FALSE
 
@@ -372,7 +372,7 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/fish/fried/attackby(obj/item/I, mob/living/user, params)
 	var/obj/item/reagent_containers/peppermill/mill = I
-	if(!locate(/obj/structure/table) in src.loc)
+	if(!locate(/obj/structure/table) in loc)
 		to_chat(user, span_warning("I need to use a table."))
 		return FALSE
 	update_cooktime(user)

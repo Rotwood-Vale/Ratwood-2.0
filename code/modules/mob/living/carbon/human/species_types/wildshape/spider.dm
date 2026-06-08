@@ -28,7 +28,7 @@
 		AddSpell(new /obj/effect/proc_holder/spell/self/createhoney)
 		AddSpell(new /obj/effect/proc_holder/spell/self/weaveweb)
 		faction += "spiders" // It IS a spider
-		if (src.client.prefs?.wildshape_name)
+		if (client.prefs?.wildshape_name)
 			real_name = "beespider ([stored_mob.real_name])"
 		else
 			real_name = "beespider"

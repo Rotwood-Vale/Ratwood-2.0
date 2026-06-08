@@ -88,7 +88,7 @@
 
 	var/fraction = 1/initial(reagent_divisor)
 	for(var/obj/O in range(0,src))
-		if(O.type == src.type)
+		if(O.type == type)
 			continue
 		if(isturf(O.loc))
 			var/turf/T = O.loc
@@ -132,7 +132,7 @@
 
 		for(var/mob/living/L in T)
 			foam_mob(L)
-		var/obj/effect/particle_effect/foam/F = new src.type(T)
+		var/obj/effect/particle_effect/foam/F = new type(T)
 		F.amount = amount
 		reagents.copy_to(F, (reagents.total_volume))
 		F.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
@@ -229,7 +229,7 @@
 	return attack_hand(user)
 
 /obj/structure/foamedmetal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src.loc, 'sound/blank.ogg', 100, TRUE)
+	playsound(loc, 'sound/blank.ogg', 100, TRUE)
 
 /obj/structure/foamedmetal/attack_hand(mob/user)
 	. = ..()
@@ -238,7 +238,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	to_chat(user, "<span class='warning'>I hit [src] but bounce off it!</span>")
-	playsound(src.loc, 'sound/blank.ogg', 100, TRUE)
+	playsound(loc, 'sound/blank.ogg', 100, TRUE)
 
 /obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target)
 	return !density

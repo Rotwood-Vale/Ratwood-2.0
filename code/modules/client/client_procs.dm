@@ -672,8 +672,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		related_accounts_cid += "[query_get_related_cid.item[1]], "
 	qdel(query_get_related_cid)
 	var/admin_rank = "Player"
-	if (src.holder && src.holder.rank)
-		admin_rank = src.holder.rank.name
+	if (holder && holder.rank)
+		admin_rank = holder.rank.name
 	else
 		if (!GLOB.deadmins[ckey] && check_randomizer(connectiontopic))
 			return

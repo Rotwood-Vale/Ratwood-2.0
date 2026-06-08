@@ -155,7 +155,7 @@
 /obj/structure/bush_sapling/Crossed(atom/movable/AM)
 	. = ..()
 	if(!dead && isliving(AM))
-		playsound(src.loc, "plantcross", 50, FALSE, -1)
+		playsound(loc, "plantcross", 50, FALSE, -1)
 
 /obj/structure/bush_sapling/examine(mob/user)
 	// While still rooted in soil (stages 1-2), forward examine to the soil plot — it shows all status/growth info.
@@ -177,7 +177,7 @@
 	// Stage-3: pickable like a wild bush
 	if(stage == BUSHSAP_STAGE_MATURE && !dead)
 		user.changeNext_move(CLICK_CD_INTENTCAP)
-		playsound(src.loc, "plantcross", 50, FALSE, -1)
+		playsound(loc, "plantcross", 50, FALSE, -1)
 		if(do_after(user, 12, target = src))
 			if(!looty.len && world.time > res_replenish)
 				loot_replenish()

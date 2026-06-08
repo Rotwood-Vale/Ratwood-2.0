@@ -361,7 +361,7 @@
 				return
 		if (istype(src,/turf/open/water/sewer))
 			to_chat(user, span_userdanger("Have I gone mad!? Why am I drinking sewage!?"))
-		var/list/waterl = list(src.water_reagent = 5)
+		var/list/waterl = list(water_reagent = 5)
 		var/datum/reagents/reagents = new()
 		reagents.add_reagent_list(waterl)
 		reagents.trans_to(L, reagents.total_volume, transfered_by = user, method = INGEST)
