@@ -52,12 +52,6 @@ SUBSYSTEM_DEF(overlays)
 				if(!raw_overlay)
 					continue
 				if(istext(raw_overlay))
-					// This is too expensive to run normally but running it during CI is a good test
-					// if(PERFORM_ALL_TESTS(focus_only/invalid_overlays))
-					// 	if(!icon_exists(icon, raw_overlay))
-					// 		var/icon_file = "[icon]" || "Unknown Generated Icon"
-					// 		stack_trace("Invalid overlay: Icon object '[icon_file]' [REF(icon)] used in '[src]' [type] is missing icon state [raw_overlay].")
-					// 		continue
 					normalized_overlays += iconstate2appearance(icon, raw_overlay)
 				else if(isicon(raw_overlay))
 					normalized_overlays += icon2appearance(raw_overlay)
