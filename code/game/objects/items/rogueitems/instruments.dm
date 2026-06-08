@@ -773,6 +773,10 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	wdefense = 6
 	wbalance = WBALANCE_HEAVY
 
+/obj/item/rogue/instrument/ztratocaster/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "INSTRUMENT")
+
 /obj/item/rogue/instrument/lute
 	name = "lute"
 	desc = "Its graceful curves were designed to weave joyful melodies."
