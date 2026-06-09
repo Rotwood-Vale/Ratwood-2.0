@@ -258,7 +258,19 @@
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
 
-//rotational and minecart parts
+/datum/crafting_recipe/roguetown/engineering/mallet
+	name = "Wooden Mallet"
+	result = /obj/item/rogueweapon/hammer/wood
+	reqs = list(/obj/item/grown/log/tree/small = 1, /obj/item/natural/fibers = 1, /obj/item/grown/log/tree/stick = 1)
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 1
+
+
+//////////////////////////////////////
+/// Rotational-And-Minecart-Parts ///
+////////////////////////////////////
+
+
 /datum/crafting_recipe/roguetown/engineering/shaft
 	name = "wooden shaft (6x)"
 	result = list(

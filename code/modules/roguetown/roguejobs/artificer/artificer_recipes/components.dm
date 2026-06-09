@@ -1,12 +1,18 @@
+/datum/artificer_recipe/components
+	i_type = "Components"
+	hammers_per_item = 10
+	skill_level = 1
+
+
 /////////////////////////////
 /// ARTIFICER COMPONENTS ///
 ///////////////////////////
 
 
-/datum/artificer_recipe/components
-	i_type = "Components"
-	hammers_per_item = 10
-	skill_level = 1
+/////////////
+/// Cogs ///
+///////////
+
 
 /datum/artificer_recipe/components/wood/cog
 	name = "Wooden Cog"
@@ -34,6 +40,18 @@
 	created_item = list(/obj/item/roguegear/bronze, /obj/item/roguegear/bronze)
 	skill_level = 3
 
+
+///////////////////
+/// Other-Temp ///
+/////////////////
+
+
+/datum/anvil_recipe/engineering/construct_skill_core
+	name = "Golem Skill Exhibitor"
+	created_item = /obj/item/construct_skill_core
+	req_bar = /obj/item/ingot/copper
+	additional_items = list(/obj/item/roguegear, /obj/item/roguegear)
+	craftdiff = 3
 
 /datum/artificer_recipe/components/chains
 	name = "Iron Chain"
