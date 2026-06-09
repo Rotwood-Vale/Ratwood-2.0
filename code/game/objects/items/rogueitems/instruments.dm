@@ -769,7 +769,9 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Abyssor's Bane" = 'sound/music/instruments/ztrato (4).ogg')
 	blade_dulling = DULLING_BASHCHOP
 	minstr = 13
-	max_blade_int = 500
+	max_blade_int = 300
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	smeltresult = null
 	wdefense = 6
 	wbalance = WBALANCE_HEAVY
 
