@@ -47,7 +47,6 @@
 	name = "silver fork"
 	icon_state = "fork_silver"
 	is_silver = TRUE
-	is_lesser_silver = TRUE
 
 /obj/item/kitchen/fork/carved
 	name = "carved fork"

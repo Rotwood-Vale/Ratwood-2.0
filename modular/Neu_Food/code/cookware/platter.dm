@@ -134,7 +134,6 @@ What it does:
 	desc = "A fancy silver plate often used by the nobility as a symbol of class."
 	icon_state = "platter_silver"
 	is_silver = TRUE
-	is_lesser_silver = TRUE
 
 /obj/item/cooking/platter/gold
 	name = "gold platter"

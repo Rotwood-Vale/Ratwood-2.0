@@ -194,7 +194,6 @@
 	icon_state = "silver"
 	last_used = 0
 	is_silver = TRUE
-	is_lesser_silver = TRUE
 	force = 10
 	throwforce = 15
 
@@ -203,14 +202,12 @@
 	desc = "A pewter goblet, blessed with an alluring shine. Though tin with a sprinkling of silver isn't \
 	particularly valuable on its own, most peasants and foreign noblemen tend to be none-the-wiser."
 	is_silver = FALSE
-	is_lesser_silver = FALSE
 
 /obj/item/reagent_containers/glass/cup/silver/small
 	name = "silver cup"
 	desc = "A silver cup, its surface adorned with intricate carvings and runes."
 	icon_state = "scup"
 	is_silver = TRUE
-	is_lesser_silver = TRUE
 	force = 5
 	throwforce = 10
 

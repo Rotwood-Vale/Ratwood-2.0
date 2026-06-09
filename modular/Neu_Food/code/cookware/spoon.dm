@@ -36,7 +36,6 @@
 	name = "silver spoon"
 	icon_state = "spoon_silver"
 	is_silver = TRUE
-	is_lesser_silver = TRUE
 
 /obj/item/kitchen/spoon/carved
 	name = "carved spoon"

@@ -43,7 +43,6 @@
 	name = "silver bowl"
 	icon_state = "bowl_silver"
 	is_silver = TRUE
-	is_lesser_silver = TRUE
 
 /obj/item/reagent_containers/glass/bowl/carved
 	name = "carved bowl"
