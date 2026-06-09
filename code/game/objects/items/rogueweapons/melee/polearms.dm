@@ -149,7 +149,8 @@
 	blade_class = BCLASS_CHOP
 	reach = 1
 	penfactor = BLUNT_DEFAULT_PENFACTOR
-	damfactor = 2.5
+	swingdelay = 10 // in line with chop intent, of which this attack is blade-class'd as to begin with
+	damfactor = 2.0 // just pointing out that the default wielded force of a greatsword is 35. Originally 2.5x dmfactor: 10 strength at 35 force multiplied by 2.5 = 88 force rounded up. Ergo, two shots the highest con statted characters in the game.
 	clickcd = CLICK_CD_CHARGED
 	no_early_release = TRUE
 	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
