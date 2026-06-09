@@ -5,6 +5,8 @@
 	name = "Dwarfb"
 	id = "dwarf"
 	max_age = 200
+	custom_clothes = TRUE
+	clothes_id = "dwarf"
 	languages = list(
 		/datum/language/common,
 		/datum/language/dwarvish

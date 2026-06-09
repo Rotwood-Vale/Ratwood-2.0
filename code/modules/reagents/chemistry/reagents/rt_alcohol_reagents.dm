@@ -195,7 +195,7 @@
 	name = "Butterhairs"
 	boozepwr = 40
 	taste_description = "buttery richness"
-	color = "#5D8A8A"
+	color = "#D4A020"
 	quality = DRINK_GOOD
 
 /datum/reagent/consumable/ethanol/stonebeards
