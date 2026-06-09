@@ -1793,7 +1793,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				/datum/language/otavan,
 				/datum/language/aavnic,
 				/datum/language/merar,
-				/datum/language/thievescant/signlanguage
+				/datum/language/thievescant/signlanguage,
+				/datum/language/abyssal,
 			)
 			var/list/choices = list("None")
 			for(var/language in selectable_languages)
@@ -1842,7 +1843,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 					/datum/language/otavan,
 					/datum/language/aavnic,
 					/datum/language/merar,
-					/datum/language/thievescant/signlanguage
+					/datum/language/thievescant/signlanguage,
+					/datum/language/abyssal,
 				)
 				
 				var/list/choices = list("None")

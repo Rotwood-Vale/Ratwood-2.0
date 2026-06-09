@@ -56,7 +56,7 @@
 		if(isliving(target))
 			var/mob/living/L = target
 			L.Immobilize(0.5 SECONDS)
-			L.apply_status_effect(/datum/status_effect/debuff/clickcd, 6 SECONDS)
+			L.apply_status_effect(/datum/status_effect/debuff/clickcd, 2 SECONDS)
 			L.electrocute_act(1, src, 1, SHOCK_NOSTUN)
-			L.apply_status_effect(/datum/status_effect/buff/lightningstruck, 6 SECONDS)
+			L.apply_status_effect(/datum/status_effect/buff/lightningstruck, 3 SECONDS)
 	qdel(src)

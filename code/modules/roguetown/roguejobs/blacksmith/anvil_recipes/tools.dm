@@ -96,7 +96,7 @@
 /datum/anvil_recipe/tools/decrepit/hammer
 	name = "Hammer, Decrepit (+1 Stick)"
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/hammer/decrepit
+	created_item = /obj/item/rogueweapon/hammer/ancient/decrepit
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/decrepit/sickle
@@ -105,10 +105,9 @@
 	created_item = /obj/item/rogueweapon/sickle/decrepit
 	i_type = "Tools"
 
-
 /datum/anvil_recipe/tools/decrepit/tongs
 	name = "Tongs, Decrepit"
-	created_item = /obj/item/rogueweapon/tongs/decrepit
+	created_item = /obj/item/rogueweapon/tongs/ancient/decrepit
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/decrepit/pick
@@ -142,11 +141,9 @@
 	created_item = /obj/item/reagent_containers/glass/cup/decrepitmug
 	createditem_num = 3
 
-
 /datum/anvil_recipe/tools/decrepit/pot
 	name = "Cooking Pot, Decrepit"
 	created_item = /obj/item/reagent_containers/glass/bucket/pot/decrepit
-
 
 /datum/anvil_recipe/tools/decrepit/platter
 	name = "Platter, Decrepit (x3)"
@@ -188,6 +185,11 @@
 /datum/anvil_recipe/tools/iron/pan
 	name = "Frypan, Iron"
 	created_item = /obj/item/cooking/pan
+
+/datum/anvil_recipe/tools/iron/tallowpot
+	name = "Tallowpot, Iron (x2) (+1 Iron)"
+	created_item = /obj/item/inqarticles/tallowpot
+	createditem_num = 2
 
 /datum/anvil_recipe/tools/iron/keyring
 	name = "Keyrings (x3)"

@@ -3602,8 +3602,8 @@
 /area/rogue/under/wretch/cavern)
 "Kd" = (
 /obj/machinery/anvil,
-/obj/item/rogueweapon/hammer/decrepit,
-/obj/item/rogueweapon/tongs/decrepit,
+/obj/item/rogueweapon/hammer/ancient/decrepit,
+/obj/item/rogueweapon/tongs/ancient/decrepit,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/wretch)
 "Kf" = (

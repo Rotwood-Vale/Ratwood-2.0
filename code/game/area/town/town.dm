@@ -16,6 +16,7 @@
 	converted_type = /area/rogue/indoors/shelter/town
 	first_time_text = "THE CITY OF ROTWOOD VALE"
 	town_area = TRUE
+	warden_area = FALSE
 	deathsight_message = "the city of Rotwood Vale and all its bustling souls"
 
 /area/rogue/outdoors/town/graveyard
@@ -60,6 +61,7 @@
 	droning_sound = 'sound/music/area/towngen.ogg'
 	droning_sound_dusk = 'sound/music/area/septimus.ogg'
 	droning_sound_night = 'sound/music/area/sleeping.ogg'
+	town_area = TRUE
 
 /area/rogue/outdoors/exposed/town/keep
 	name = "Keep"

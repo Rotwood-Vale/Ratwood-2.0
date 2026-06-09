@@ -22,4 +22,4 @@
 			if(!player.client)
 				continue
 
-			to_chat(player, span_danger("Graggar demands blood, gnolls flock to the vale."))
+			to_chat(player, span_danger("Graggar demands blood, gnolls flock to [SSmapping.map_adjustment.realm_name]."))

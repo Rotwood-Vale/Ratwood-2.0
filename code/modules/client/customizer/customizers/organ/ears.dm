@@ -246,6 +246,11 @@
 		/datum/sprite_accessory/ears/big/acrador_short,
 		/datum/sprite_accessory/ears/big/sandfox_large,
 		/datum/sprite_accessory/ears/lynx,
+		/datum/sprite_accessory/ears/shadekin,
+		/datum/sprite_accessory/ears/shadekin/band_left,
+		/datum/sprite_accessory/ears/shadekin/band_right,
+		/datum/sprite_accessory/ears/shadekin/fluffy,
+		/datum/sprite_accessory/ears/shadekin/smooth,
 		/datum/sprite_accessory/ears/zorzor
 		)
 

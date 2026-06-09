@@ -255,13 +255,17 @@
 	force = 18
 	max_integrity = 15
 
-/obj/item/rogueweapon/hammer/decrepit
-	name = "decrepit hammer"
-	desc = "A decrepit old hammer."
+/obj/item/rogueweapon/hammer/ancient
+	name = "ancient hammer"
+	desc = "A hammer of polished gilbronze. Remade masterfully upon a smooth handle, it shall make forth the armaments of HER legionnaries and great works..."
 	icon_state = "ahammer"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/rogueweapon/hammer/ancient/decrepit
+	name = "decrepit hammer"
+	desc = "A hammer of wrought bronze. It has pounded out the beginning of a thousand legacies; of humble adventurers, of noble legionnaires, and of foolish heroes."
 	force = 12
 	max_integrity = 10
-	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/rogueweapon/hammer/copper
 	name = "copper hammer"
@@ -425,14 +429,29 @@
 		else
 			icon_state = "stonetongsi0"
 
-/obj/item/rogueweapon/tongs/decrepit
-	name = "decrepit tongs"
+/obj/item/rogueweapon/tongs/ancient
+	name = "ancient tongs"
+	desc = "Wrought gilbranze pincers the molten alloy, putting it before the anvil and hammer. Soon, it will fashion a new legacy; one unmarred by this dogmatic millenia."
 	icon_state = "atongs"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/rogueweapon/tongs/ancient/update_icon()
+	. = ..()
+	if(!hingot)
+		icon_state = "atongs"
+	else
+		if(hott)
+			icon_state = "atongsi1"
+		else
+			icon_state = "atongsi0"
+
+/obj/item/rogueweapon/tongs/ancient/decrepit
+	name = "decrepit tongs"
+	desc = "How many ingots of once-pure alloy have these rusted, falling-apart jaws handled? The lyves taken through proxy of weapons once pincered by this tool? Perhaps it's about time that tally incremented yet again."
 	force = 5
-	smeltresult = null
 	max_integrity = 10
 
-/obj/item/rogueweapon/tongs/decrepit/update_icon()
+/obj/item/rogueweapon/tongs/ancient/decrepit/update_icon()
 	. = ..()
 	if(!hingot)
 		icon_state = "atongs"
