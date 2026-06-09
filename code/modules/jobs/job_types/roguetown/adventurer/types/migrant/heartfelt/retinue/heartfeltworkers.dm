@@ -1,7 +1,7 @@
 /datum/advclass/heartfelt/retinue/servant
 	name = "Heartfeltian Servant"		
 	tutorial = "You are Servant of Heartfelt, Serant of a once-prosperous barony now in ruin. \
-	Guided by the Magos, you journey to the Vale, seeking aid to restore your domain to its former glory, or perhaps claim a new throne."
+	Guided by the Magos, you journey to these lands, seeking aid to restore your domain to its former glory, or perhaps claim a new throne."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	outfit = /datum/outfit/job/roguetown/heartfelt/retinue/servant

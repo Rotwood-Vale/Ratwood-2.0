@@ -307,7 +307,6 @@
 		if(chest)
 			if(!HAS_TRAIT(target, TRAIT_NOPAIN))
 				target.emote("painscream")
-			chest.add_wound(/datum/wound/fracture/chest)
 			target.apply_damage(50, BRUTE, BODY_ZONE_CHEST)
 			user.visible_message(span_alert("[user] plunges their fist into [target]'s ribcage, shattering it spectacularly!"))
 	if(!do_after(user, tear_time, target = target) && chest.has_wound(/datum/wound/fracture/chest))

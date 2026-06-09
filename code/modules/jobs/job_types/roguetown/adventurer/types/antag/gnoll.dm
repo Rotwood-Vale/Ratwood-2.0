@@ -67,7 +67,6 @@
 			charflaw.on_removal(src)
 		vices = list()
 		charflaw = null
-		statpack = null
 		headshot_link = null
 
 	// Gnolls should not inherit player-authored social metadata from their base slot.

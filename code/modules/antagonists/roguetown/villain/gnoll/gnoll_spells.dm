@@ -27,6 +27,7 @@
 	overlay_state = "sniff"
 	invocation_type = "none"
 	action_icon_state = "sniff"
+	hide_charge_effect = TRUE
 	var/datum/weakref/tracked_target_ref = null
 	var/list/target_warning_next_by_ref = list()
 	var/shown_hunt_disclaimer = FALSE

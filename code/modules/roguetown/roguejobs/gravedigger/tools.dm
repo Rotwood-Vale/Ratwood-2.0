@@ -666,7 +666,7 @@
 	/datum/intent/axe/chop/stone, /datum/intent/shovelscoop)//Two hands to let you shovel and chop.
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "mortstaff"//Temp sprite.
-	associated_skill = /datum/skill/combat/staves
+	associated_skill = /datum/skill/combat/polearms
 	wdefense = 3
 	wdefense_wbonus = 3//Bless this, m'lord.
 	max_integrity = 200

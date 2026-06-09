@@ -177,7 +177,7 @@ SUBSYSTEM_DEF(gnoll_scaling)
 	if(new_total > old_total || new_spawn > old_spawn)
 		for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
 			if(player.client)
-				to_chat(player, span_alert("Graggar demands blood, gnolls flock to the Vale!"))
+				to_chat(player, span_alert("Graggar demands blood, gnolls flock to [SSmapping.map_adjustment.realm_name]!"))
 
 	if(recheck_below_players > 0 && players_amt < recheck_below_players)
 		queue_scaling_recheck()

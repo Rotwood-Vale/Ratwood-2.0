@@ -9,38 +9,13 @@
 	sleepy = 0.5
 //	pixel_y = 10
 	layer = OBJ_LAYER
-	hidingspot = TRUE
-	/// So we can find them with fixed eye search
-	var/mob/living/hiddenguy = null
-
-/obj/structure/chair/bench/examine(mob/user)
-	. = ..()
-	. += span_info("Some structures can be used as hiding places. Toggle the 'SNEAK' button on your HUD, then click the structure to hide in it. You can stop hiding by clicking the structure again, or by moving out of it.")
-
-/obj/structure/chair/smallbench
-	name = "small bench"
-	icon = 'icons/roguetown/misc/structure.dmi'
-	icon_state = "benchsmall"
-	buildstackamount = 1
-	item_chair = null
-	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
-	attacked_sound = "woodimpact"
-	sleepy = 0.5
-	layer = OBJ_LAYER
-	density = FALSE
-
-
-/obj/structure/chair/bench/church
-	icon_state = "church_benchleft"
-
-/obj/structure/chair/bench/church/mid
-	icon_state = "church_benchmid"
-
-/obj/structure/chair/bench/church/r
-	icon_state = "church_benchright"
 
 /obj/structure/chair/bench/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/hiding_spot, \
+		"Someone is already hiding under %LOCATION!", \
+		"I hide under %LOCATION!", \
+		"I come out from under %LOCATION!")
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
 	AddElement(/datum/element/connect_loc, loc_connections)
 	handle_layer()
@@ -52,40 +27,6 @@
 	else
 		layer = OBJ_LAYER
 		plane = GAME_PLANE
-
-/obj/structure/chair/bench/attack_hand(mob/user)
-	if(isliving(user))
-		if(user.m_intent == MOVE_INTENT_SNEAK)
-			hideinside(user)
-			return
-
-/obj/structure/chair/bench/proc/hideinside(mob/living/user)
-	var/sneak_level = user.get_skill_level(/datum/skill/misc/sneaking) || 0
-	var/sneaktime = max(10, 50 - (sneak_level * 10)) // Hard caps at 1 second at Expert and above.
-	if(user.loc == src)
-		unhide(user)
-		return
-	if(occupied)
-		to_chat(user, span_warning("Someone is already hiding under [src]!"))
-		return
-	if(!do_after(user, sneaktime, src))
-		return
-	user.forceMove(src)
-	occupied = TRUE
-	hiddenguy = user
-	to_chat(user, span_warning("I hide under [src]!"))
-
-/obj/structure/chair/bench/proc/unhide(mob/living/user)
-	var/turf/T = get_turf(src)
-	if(!T) return
-	user.forceMove(T)
-	occupied = FALSE
-	hiddenguy = null
-	to_chat(user, span_warning("I come out from under [src]!"))
-
-/obj/structure/chair/bench/relaymove(mob/user)
-	if(user.loc == src)
-		unhide(user)
 
 /obj/structure/chair/bench/post_buckle_mob(mob/living/M)
 	..()
@@ -113,14 +54,29 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/structure/chair/bench/couch
-	icon_state = "redcouch"
+/obj/structure/chair/smallbench
+	name = "small bench"
+	icon = 'icons/roguetown/misc/structure.dmi'
+	icon_state = "benchsmall"
+	buildstackamount = 1
+	item_chair = null
+	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
+	attacked_sound = "woodimpact"
+	sleepy = 0.5
+	layer = OBJ_LAYER
+	density = FALSE
+
+/obj/structure/chair/bench/church
+	icon_state = "church_benchleft"
+
+/obj/structure/chair/bench/church/mid
+	icon_state = "church_benchmid"
+
+/obj/structure/chair/bench/church/r
+	icon_state = "church_benchright"
 
 /obj/structure/chair/bench/church/smallbench
 	icon_state = "benchsmall"
-
-/obj/structure/chair/bench/couch/r
-	icon_state = "redcouch2"
 
 /obj/structure/chair/bench/ultimacouch
 	icon_state = "ultimacouchleft"
@@ -145,6 +101,12 @@
 
 /obj/structure/chair/bench/couchamagenta/r
 	icon_state = "couchamagentaright"
+
+/obj/structure/chair/bench/couch
+	icon_state = "redcouch"
+
+/obj/structure/chair/bench/couch/r
+	icon_state = "redcouch2"
 
 /obj/structure/chair/bench/couch/Initialize(mapload)
 	. = ..()
@@ -367,13 +329,13 @@
 	var/broken_matress = FALSE
 	var/broken_percentage = 0
 	var/broken_rate = 1.0
-	hidingspot = TRUE
-	/// So we can find them with fixed eye search
-	var/mob/living/hiddenguy = null
 
-/obj/structure/bed/rogue/examine(mob/user)
+/obj/structure/bed/rogue/Initialize(mapload)
 	. = ..()
-	. += span_info("Some structures can be used as hiding places. Toggle the 'SNEAK' button on your HUD, then click the structure to hide in it. You can stop hiding by clicking the structure again, or by moving out of it.")
+	AddComponent(/datum/component/hiding_spot, \
+		"Someone is already hiding under %LOCATION!", \
+		"I hide under %LOCATION!", \
+		"I come out from under %LOCATION!")
 
 /obj/structure/bed/rogue/proc/damage_bed(dam_value)
 	if(broken_matress)
@@ -398,40 +360,6 @@
 	dirin = turn(dirin, 180)
 	. = ..(dirin)
 	update_icon()
-
-/obj/structure/bed/rogue/attack_hand(mob/living/user)
-	if(user.m_intent == MOVE_INTENT_SNEAK)
-		hideinside(user)
-		return
-	return ..()
-
-/obj/structure/bed/rogue/proc/hideinside(mob/living/user)
-	var/sneak_level = user.get_skill_level(/datum/skill/misc/sneaking) || 0
-	var/sneaktime = max(10, 50 - (sneak_level * 10)) // Hard caps at 1 second at Expert and above.
-	if(user.loc == src)
-		unhide(user)
-		return
-	if(occupied)
-		to_chat(user, span_warning("Someone is already hiding under [src]!"))
-		return
-	if(!do_after(user, sneaktime, src))
-		return
-	user.forceMove(src)
-	occupied = TRUE
-	hiddenguy = user
-	to_chat(user, span_warning("I hide under [src]!"))
-
-/obj/structure/bed/rogue/proc/unhide(mob/living/user)
-	var/turf/T = get_turf(src)
-	if(!T) return
-	user.forceMove(T)
-	occupied = FALSE
-	hiddenguy = null
-	to_chat(user, span_warning("I come out from under [src]!"))
-
-/obj/structure/bed/rogue/relaymove(mob/user)
-	if(user.loc == src)
-		unhide(user)
 
 /obj/structure/bed/rogue/attack_right(mob/user)
 	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)

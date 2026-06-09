@@ -167,7 +167,7 @@
 	icon_state = "psywhip_lesser"
 	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish)
 	force = 23
-	minstr = 12
+	minstr = 6 // makes it so psyaltrist can actually use it properly
 	wdefense = 0
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed

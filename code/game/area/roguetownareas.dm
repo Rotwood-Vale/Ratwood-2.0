@@ -93,7 +93,6 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	deathsight_message = "an ancient dread-manor, home of a great and terrible evil. Red eyes look back at you, warning you not to pry further."
 
 /area/rogue/outdoors/woods/vampire_lair
-	warden_area = FALSE
 	ambush_times = null
 	ambush_mobs = null
 	threat_region = ""
@@ -146,6 +145,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	converted_type = /area/rogue/indoors/shelter
 	soundenv = 16
 	deathsight_message = "somewhere in the wilds"
+	warden_area = TRUE
 
 /area/rogue/outdoors/banditcamp
 	name = "Bandit Camp"
@@ -173,7 +173,6 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	ambientnight = AMB_MOUNTAIN
 	spookysounds = SPOOKY_GEN
 	spookynight = SPOOKY_GEN
-	warden_area = TRUE
 	soundenv = 17
 	converted_type = /area/rogue/indoors/shelter/mountains
 	deathsight_message = "a twisted tangle of soaring peaks"

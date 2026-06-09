@@ -817,7 +817,7 @@
 	dir = 5
 	},
 /turf/closed/wall/mineral/rogue/stone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "ahS" = (
 /obj/effect/wisp,
 /turf/open/floor/rogue/grass,
@@ -906,7 +906,7 @@
 	dir = 5
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "ajr" = (
 /obj/structure/mineral_door/wood/red{
 	locked = "1";
@@ -930,7 +930,7 @@
 	name = "Bad Room"
 	},
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "ajv" = (
 /turf/open/floor/rogue/tile{
 	icon_state = "tile"
@@ -1431,7 +1431,7 @@
 "api" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/armor,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "apn" = (
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/indoors/town)
@@ -1669,7 +1669,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "asA" = (
 /obj/structure/flora/roguegrass/bush/wall/tall,
 /turf/open/floor/rogue/naturalstone,
@@ -1855,7 +1855,7 @@
 	redstone_id = "firepreentry"
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "auG" = (
 /obj/structure/chair/wood/rogue{
 	dir = 1
@@ -1920,7 +1920,7 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "avm" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/structure/deadbodyrandom/low,
@@ -2214,7 +2214,7 @@
 	dir = 10
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "ayJ" = (
 /obj/structure/bars/grille{
 	dir = 4
@@ -2250,7 +2250,7 @@
 /turf/open/floor/rogue/volcanic{
 	desc = "Silky and sharp-smooth, like cracked glass"
 	},
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "azr" = (
 /obj/structure/winch{
 	desc = "The ship's anchor winch. You're not going anywhere with it lowered.";
@@ -2578,7 +2578,7 @@
 /turf/open/floor/rogue/blocks{
 	icon_state = "paving"
 	},
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "aDe" = (
 /obj/structure/mineral_door/wood/fancywood{
 	locked = 1;
@@ -2954,7 +2954,7 @@
 /turf/open/floor/rogue/blocks{
 	icon_state = "paving"
 	},
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "aIb" = (
 /obj/machinery/light/rogue/candle/floorcandle/alt/pink{
 	pixel_x = 1;
@@ -3293,7 +3293,7 @@
 "aLr" = (
 /obj/item/natural/rock/coal,
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "aLs" = (
 /obj/structure/bed/rogue/shit,
 /turf/open/floor/rogue/dirt/road,
@@ -3680,7 +3680,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Seneschal's Quarters"
 	},
 /turf/open/floor/rogue/concrete,
@@ -3745,7 +3745,7 @@
 /obj/structure/fluff/nest,
 /mob/living/simple_animal/hostile/retaliate/rogue/troll/bog,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "aRr" = (
 /obj/structure/stairs{
 	dir = 1
@@ -3789,7 +3789,7 @@
 "aRK" = (
 /obj/machinery/light/rogue/candle/l,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "aRL" = (
 /obj/effect/wisp/bluegreen,
 /turf/open/floor/rogue/dirt,
@@ -4106,7 +4106,7 @@
 	icon_state = "goblin_moon"
 	},
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "aUT" = (
 /turf/closed/wall/mineral/rogue/roofwall/outercorner{
 	dir = 1
@@ -4288,7 +4288,7 @@
 /area/rogue/under/underdarker/rockhill)
 "aWJ" = (
 /turf/closed/mineral/random/rogue/med,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "aWP" = (
 /obj/structure/closet/crate/roguecloset/inn/chest,
 /obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
@@ -4409,7 +4409,7 @@
 "aYw" = (
 /obj/structure/pillory/double,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "aYC" = (
 /obj/item/rope/chain,
 /obj/item/rope/chain,
@@ -4417,7 +4417,7 @@
 /obj/item/rogueweapon/whip/antique,
 /obj/structure/rack/rogue,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "aYI" = (
 /obj/structure/glowshroom{
 	icon_state = "glowshroom3"
@@ -4554,7 +4554,7 @@
 	dir = 1
 	},
 /turf/closed/wall/mineral/rogue/stone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "bbe" = (
 /obj/structure/table/wood/poor,
 /turf/open/floor/rogue/churchmarble,
@@ -4690,7 +4690,7 @@
 /area/rogue/indoors/town/cell)
 "bbW" = (
 /turf/open/floor/rogue/blocks/stonered,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "bbX" = (
 /obj/machinery/light/rogue/torchholder/hotspring/standing,
 /turf/open/floor/rogue/grasscold,
@@ -4741,13 +4741,13 @@
 	dir = 6
 	},
 /turf/closed/wall/mineral/rogue/stone/moss,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "bcz" = (
 /obj/structure/chair/wood/rogue/chair3{
 	dir = 4
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "bcC" = (
 /obj/structure/fluff/railing/wood{
 	dir = 8;
@@ -5183,7 +5183,7 @@
 /area/rogue/under/town/basement/keep)
 "biF" = (
 /turf/closed/mineral/random/rogue,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "biK" = (
 /obj/structure/stairs{
 	dir = 8
@@ -5350,7 +5350,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "bkU" = (
 /obj/machinery/light/rogue/campfire,
 /turf/open/floor/rogue/cobblerock,
@@ -5763,7 +5763,7 @@
 "bpL" = (
 /obj/effect/decal/cleanable/food/flour,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "bpN" = (
 /obj/machinery/light/rogue/hearth,
 /obj/structure/rack/rogue/shelf{
@@ -5801,7 +5801,7 @@
 /area/rogue/under/underdark/rockhill/west)
 "bqk" = (
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "bqm" = (
 /obj/structure/toilet,
 /turf/open/floor/rogue/grass,
@@ -5927,7 +5927,7 @@
 	redstone_id = "firetreasure"
 	},
 /turf/open/floor/rogue/concrete,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "bsp" = (
 /obj/structure/fluff/railing/border{
 	dir = 10
@@ -6047,7 +6047,7 @@
 "btt" = (
 /obj/structure/fluff/nest,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "btw" = (
 /obj/structure/roguemachine/scomm{
 	pixel_y = -32;
@@ -6499,7 +6499,7 @@
 "bys" = (
 /obj/structure/bars,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "byt" = (
 /turf/open/floor/rogue/AzureSand,
 /area/rogue/outdoors/beach/harbor)
@@ -6742,8 +6742,9 @@
 /area/rogue/outdoors/beach/harbor)
 "bBg" = (
 /obj/structure/fluff/customsign{
-	desc = "DANGER";
-	name = "Mines"
+	icon_state = "signwrote";
+	pixel_y = 7;
+	wrotesign = "Western Mines - DANGER"
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/rtfield/rockhill)
@@ -6799,7 +6800,7 @@
 	redstone_id = "fiendroom"
 	},
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "bBQ" = (
 /obj/machinery/light/rogue/firebowl/standing/blue,
 /turf/open/floor/rogue/churchmarble,
@@ -7196,9 +7197,9 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/town/roofs)
 "bGi" = (
-/obj/structure/fluff/customsign{
-	icon_state = "signwrote";
-	name = "Rockhill - Northwest"
+/obj/structure/fluff/customsign/arrow{
+	dir = 1;
+	wrotesign = "Rockhill - Northwest"
 	},
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/woodsafe)
@@ -7612,7 +7613,7 @@
 /area/rogue/indoors/town)
 "bLn" = (
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "bLr" = (
 /obj/structure/fluff/pillow/blue{
 	color = "#2762cf";
@@ -7655,7 +7656,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "bMc" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -8164,7 +8165,7 @@
 "bRl" = (
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "bRo" = (
 /obj/structure/roguewindow/openclose{
 	dir = 4
@@ -8260,7 +8261,7 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow,
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "bSy" = (
 /obj/structure/stairs{
 	dir = 4
@@ -8433,7 +8434,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "bUE" = (
 /obj/structure/mirror,
 /obj/structure/table/wood{
@@ -8450,7 +8451,7 @@
 /obj/effect/spawner/lootdrop/potion_vitals,
 /obj/effect/spawner/lootdrop/potion_poisons,
 /turf/open/floor/rogue/blocks/green,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "bUF" = (
 /obj/structure/chair/wood/rogue{
 	dir = 1
@@ -8910,6 +8911,11 @@
 	},
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/outdoors/town/rockhill)
+"bZp" = (
+/obj/structure/closet/crate/chest/wicker,
+/obj/item/storage/roguebag,
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/town/church)
 "bZr" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -8997,7 +9003,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Servant's Bunks"
 	},
 /turf/open/floor/rogue/concrete,
@@ -9073,7 +9079,7 @@
 	},
 /obj/item/reagent_containers/food/snacks/rogue/pie/cooked/apple,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "cbR" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
 /obj/machinery/light/rogue/candle/red/r,
@@ -9331,7 +9337,7 @@
 /obj/item/clothing/suit/roguetown/armor/leather/hide/goblin,
 /obj/item/rogueweapon/stoneaxe,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "cfk" = (
 /obj/structure/stairs/stone,
 /turf/open/floor/rogue/grassgrey,
@@ -9423,7 +9429,7 @@
 	name = "Armory"
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "cgj" = (
 /obj/structure/flora/roguegrass/bush,
 /turf/open/floor/rogue/grassgrey,
@@ -9932,7 +9938,7 @@
 /turf/closed/wall/mineral/rogue/decostone/mossy/red/long{
 	dir = 1
 	},
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "clE" = (
 /obj/structure/mineral_door/wood{
 	lockid = "church";
@@ -10326,7 +10332,7 @@
 	density = 0
 	},
 /turf/open/floor/rogue/concrete,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "cpy" = (
 /obj/effect/landmark/quest_spawner/easy,
 /turf/open/floor/rogue/grass,
@@ -10609,7 +10615,7 @@
 /area/rogue/indoors/town/church)
 "ctr" = (
 /turf/closed/wall/mineral/rogue/stone/moss,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "ctu" = (
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/floor/rogue/dirt,
@@ -10829,7 +10835,7 @@
 "cww" = (
 /obj/structure/closet/crate/chest,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "cwD" = (
 /obj/structure/fluff/railing/border{
 	dir = 4
@@ -12569,7 +12575,7 @@
 	name = "mean goblin key"
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "cNX" = (
 /turf/closed/wall/mineral/rogue/decostone/cand,
 /area/rogue/under/town/basement/keep)
@@ -13185,7 +13191,7 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/structure/fluff/statue/tdummy,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "cVJ" = (
 /obj/machinery/light/rogue/cauldron{
 	pixel_y = 5
@@ -13289,7 +13295,7 @@
 "cWt" = (
 /obj/structure/bed/rogue/shit,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "cWu" = (
 /obj/effect/decal/cleanable/dirt/cobweb{
 	dir = 1
@@ -13491,7 +13497,7 @@
 /obj/item/clothing/head/roguetown/helmet/goblin,
 /obj/item/clothing/head/roguetown/helmet/goblin,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "cZs" = (
 /turf/open/floor/rogue/grasscold,
 /area/rogue/under/cave/goblinfort)
@@ -13935,7 +13941,7 @@
 	icon_state = "goblin_moon"
 	},
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "ddI" = (
 /obj/structure/chair/wood/rogue/chair3{
 	dir = 1
@@ -14472,7 +14478,8 @@
 "diY" = (
 /obj/structure/mineral_door/bars{
 	locked = 1;
-	lockid = "priest"
+	lockid = "priest";
+	name = "reliquary"
 	},
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/church)
@@ -14927,7 +14934,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "doG" = (
 /obj/structure/fluff/statue/femalestatue1{
 	pixel_x = -18;
@@ -15154,7 +15161,7 @@
 	},
 /obj/structure/stairs/stone,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "dqS" = (
 /obj/structure/roguewindow,
 /turf/open/floor/rogue/churchbrick,
@@ -15423,11 +15430,11 @@
 "duC" = (
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "WARNING";
 	pixel_x = 9;
 	pixel_y = 20;
 	layer = 5;
-	max_integrity = 50
+	max_integrity = 50;
+	wrotesign = "WARNING"
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/bograt/south)
@@ -15501,7 +15508,7 @@
 /area/rogue/under/town/basement)
 "dvl" = (
 /turf/closed/wall/mineral/rogue/decostone/mossy/red/cand,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "dvm" = (
 /obj/effect/landmark/start/guildsman,
 /turf/open/floor/carpet/royalblack,
@@ -15767,7 +15774,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "dzn" = (
 /turf/closed/wall/mineral/rogue/decostone/mossy/blue,
 /area/rogue/indoors/town/bath)
@@ -15822,12 +15829,12 @@
 	},
 /obj/machinery/light/rogue/smelter,
 /turf/open/floor/rogue/metal,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "dzJ" = (
 /turf/closed/wall/mineral/rogue/pipe{
 	icon_state = "iron_line"
 	},
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "dzL" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/rogue/cobble/mossy,
@@ -16047,7 +16054,7 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
 /obj/item/clothing/ring/active/nomag,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "dBG" = (
 /turf/closed/wall/mineral/rogue/decostone/mossy/red,
 /area/rogue/indoors/town/church)
@@ -16139,7 +16146,7 @@
 /area/rogue/under/cavewet)
 "dCD" = (
 /turf/open/floor/rogue/metal,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "dCE" = (
 /obj/structure/bars/cemetery,
 /turf/open/floor/rogue/church,
@@ -16254,7 +16261,7 @@
 "dDU" = (
 /obj/structure/fluff/railing/border,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "dDZ" = (
 /obj/structure/stairs/stone,
 /turf/open/floor/rogue/blocks,
@@ -16295,7 +16302,7 @@
 "dEM" = (
 /obj/structure/fluff/statue/tdummy,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "dEN" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -16591,7 +16598,7 @@
 "dHU" = (
 /obj/structure/fluff/statue/tdummy,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "dHW" = (
 /obj/structure/roguemachine/scomm{
 	scom_tag = "Manor - Dungeon No2"
@@ -16774,7 +16781,7 @@
 /turf/open/floor/rogue/volcanic{
 	desc = "Silky and sharp-smooth, like cracked glass"
 	},
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "dJQ" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -17093,7 +17100,7 @@
 /area/rogue/indoors/town/bath)
 "dOj" = (
 /turf/closed/mineral/rogue,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "dOk" = (
 /turf/closed/wall/mineral/rogue/roofwall/middle{
 	dir = 8
@@ -17136,7 +17143,7 @@
 "dOF" = (
 /mob/living/carbon/human/species/goblin/npc/cave,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "dOH" = (
 /obj/structure/stairs/stone{
 	dir = 1
@@ -17739,7 +17746,7 @@
 /obj/item/clothing/suit/roguetown/armor/leather/goblin,
 /obj/item/clothing/suit/roguetown/armor/leather/goblin,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "dVI" = (
 /obj/structure/table/wood/poor,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/food,
@@ -17763,7 +17770,7 @@
 "dVP" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound,
 /turf/open/floor/rogue/metal/barograte,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "dVU" = (
 /obj/structure/closet/crate/drawer{
 	keylock = 1;
@@ -17942,7 +17949,7 @@
 "dXV" = (
 /obj/structure/stairs,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "dXZ" = (
 /obj/structure/roguemachine/musicbox{
 	pixel_y = 16
@@ -18239,7 +18246,7 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "eav" = (
 /turf/open/floor/rogue/grassyel,
 /area/rogue/indoors/town/grove)
@@ -18397,7 +18404,7 @@
 /turf/open/floor/rogue/volcanic{
 	desc = "Silky and sharp-smooth, like cracked glass"
 	},
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "ebW" = (
 /obj/structure/chair/stool/rogue,
 /turf/open/floor/rogue/ruinedwood,
@@ -18443,7 +18450,7 @@
 "ecq" = (
 /obj/structure/pillory/double,
 /turf/open/floor/rogue/metal,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "ecv" = (
 /obj/item/natural/dirtclod,
 /turf/open/floor/rogue/cobblerock,
@@ -18532,7 +18539,7 @@
 	redstone_id = "fireexperiment3"
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "edm" = (
 /obj/effect/landmark/quest_spawner/medium,
 /turf/open/floor/rogue/twig,
@@ -19003,7 +19010,7 @@
 	},
 /obj/item/rogueweapon/hammer/iron,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "ejj" = (
 /obj/machinery/light/rogue/torchholder/r,
 /turf/open/floor/rogue/naturalstone,
@@ -19086,8 +19093,9 @@
 /area/rogue/outdoors/beach/harbor)
 "ekK" = (
 /obj/structure/fluff/customsign{
-	desc = "DANGER";
-	name = "Mines"
+	icon_state = "signwrote";
+	pixel_y = 7;
+	wrotesign = "Western Mines - DANGER"
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave)
@@ -19378,7 +19386,7 @@
 	},
 /obj/structure/stairs/stone,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "enz" = (
 /obj/effect/landmark/quest_spawner/medium,
 /turf/open/floor/rogue/grassred,
@@ -19397,7 +19405,7 @@
 	status = 1
 	},
 /turf/open/floor/rogue/greenstone/runed,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "enL" = (
 /obj/structure/closet/crate/chest{
 	lockid = "mage"
@@ -19591,7 +19599,7 @@
 "eqF" = (
 /obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "eqP" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -19606,7 +19614,7 @@
 	},
 /obj/item/dice,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "eqX" = (
 /obj/structure/stairs/stone,
 /obj/structure/fluff/railing/border{
@@ -20959,7 +20967,7 @@
 "eGt" = (
 /obj/structure/fluff/statue/tdummy,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "eGu" = (
 /obj/structure/roguewindow,
 /obj/structure/curtain/directional/red{
@@ -21406,7 +21414,7 @@
 "eKT" = (
 /obj/structure/flora/roguegrass/reedbush,
 /turf/open/water/swamp/deep,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "eLd" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4;
@@ -21563,7 +21571,7 @@
 	dir = 10
 	},
 /turf/closed/wall/mineral/rogue/stone/moss,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "eNu" = (
 /mob/living/carbon/human/species/goblin/npc/moon,
 /turf/open/floor/rogue/grass,
@@ -21946,7 +21954,7 @@
 /turf/open/floor/rogue/volcanic{
 	desc = "Silky and sharp-smooth, like cracked glass"
 	},
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "eSb" = (
 /turf/closed/wall/mineral/rogue/decostone/mossy/blue/cand{
 	climbdiff = 0;
@@ -22145,9 +22153,9 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/cavewet)
 "eUj" = (
-/obj/structure/fluff/customsign{
-	icon_state = "signwrote";
-	name = "Rockhill - Northwest"
+/obj/structure/fluff/customsign/arrow{
+	dir = 1;
+	wrotesign = "Rockhill - Northwest"
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave)
@@ -22252,8 +22260,11 @@
 /area/rogue/indoors)
 "eVo" = (
 /obj/structure/fluff/customsign{
-	desc = "DANGER";
-	name = "Eastern Mines"
+	icon_state = "signwrote";
+	pixel_y = 7;
+	layer = 5;
+	max_integrity = 50;
+	wrotesign = "Eastern Mines - DANGER"
 	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/cavewet)
@@ -22599,7 +22610,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Seneschal's Quarters"
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -22894,7 +22905,7 @@
 /turf/closed/wall/mineral/rogue/decostone/mossy/red/end{
 	dir = 8
 	},
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "fdx" = (
 /obj/structure/handcart,
 /turf/open/floor/rogue/ruinedwood,
@@ -23070,7 +23081,7 @@
 /obj/item/natural/rock/coal,
 /obj/machinery/light/rogue/candle/blue,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "ffR" = (
 /obj/structure/bondage/x_pillory,
 /turf/open/floor/rogue/cobble,
@@ -23097,7 +23108,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "fgl" = (
 /obj/structure/stairs/stone,
 /obj/machinery/light/rogue/candle/blue/r,
@@ -23321,7 +23332,7 @@
 "fip" = (
 /obj/item/grown/log/tree/stick,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "fit" = (
 /obj/machinery/light/rogue/campfire/fireplace{
 	pixel_x = -17;
@@ -23472,7 +23483,7 @@
 	pixel_y = 4
 	},
 /turf/open/floor/rogue/metal,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "fjT" = (
 /obj/structure/stairs/stone{
 	dir = 4
@@ -23702,7 +23713,7 @@
 "fmR" = (
 /obj/item/restraints/legcuffs/beartrap/armed,
 /turf/open/floor/rogue/blocks/green,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "fmV" = (
 /obj/structure/bars,
 /turf/open/floor/rogue/wood,
@@ -23972,7 +23983,7 @@
 	},
 /obj/item/rogueweapon/huntingknife/cleaver,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "fqM" = (
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/bath)
@@ -24414,7 +24425,7 @@
 /area/rogue/indoors/town/church)
 "fwo" = (
 /turf/closed/mineral/rogue/bedrock,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "fwp" = (
 /obj/structure/table/wood{
 	dir = 4;
@@ -24495,7 +24506,7 @@
 "fxv" = (
 /obj/structure/pillory/double,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "fxx" = (
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/rtfield/rockhill)
@@ -24587,7 +24598,7 @@
 /obj/item/restraints/legcuffs/beartrap,
 /obj/item/restraints/legcuffs/beartrap,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "fyj" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -24842,7 +24853,7 @@
 	redstone_id = "goblingate"
 	},
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "fBC" = (
 /obj/effect/wisp{
 	pixel_x = -16
@@ -25031,7 +25042,7 @@
 	redstone_id = "fireexperiment3"
 	},
 /turf/open/floor/rogue/metal/barograte,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "fDU" = (
 /obj/structure/chair/stool/rogue{
 	pixel_x = 2;
@@ -25064,7 +25075,7 @@
 /obj/item/rogueweapon/stoneaxe,
 /obj/item/rogueweapon/stoneaxe,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "fEg" = (
 /obj/structure/fluff/railing/border,
 /obj/structure/fluff/railing/corner,
@@ -25133,7 +25144,7 @@
 	density = 0
 	},
 /turf/open/floor/rogue/concrete,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "fET" = (
 /turf/closed/wall/mineral/rogue/stone/blue_moss,
 /area/rogue/under/underdarker/rockhill)
@@ -25164,7 +25175,7 @@
 "fFi" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "fFj" = (
 /obj/machinery/light/rogue/candle,
 /obj/machinery/light/rogue/candle/floorcandle/alt/pink{
@@ -25220,7 +25231,7 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/materials,
 /obj/item/clothing/head/roguetown/helmet/heavy/bucket/iron,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "fGf" = (
 /obj/machinery/light/rogue/candle/blue{
 	pixel_y = -32
@@ -25760,7 +25771,7 @@
 /obj/item/clothing/neck/roguetown/collar/catbell,
 /obj/item/clothing/neck/roguetown/collar/catbell,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "fMh" = (
 /obj/item/natural/cloth,
 /obj/item/natural/cloth,
@@ -25963,7 +25974,7 @@
 "fOb" = (
 /obj/structure/fluff/statue/gargoyle,
 /turf/closed/wall/mineral/rogue/stone/moss,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "fOj" = (
 /obj/structure/closet/crate/chest/old_crate,
 /obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
@@ -26119,7 +26130,7 @@
 	status = 1
 	},
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "fPN" = (
 /obj/structure/chair/stool/rogue,
 /obj/structure/fluff/railing/border{
@@ -26372,6 +26383,9 @@
 	icon_state = "vertw"
 	},
 /area/rogue/indoors/town)
+"fSx" = (
+/turf/closed/wall/mineral/rogue/wooddark/end,
+/area/rogue/indoors/town/church)
 "fSD" = (
 /obj/structure/mineral_door/wood/donjon/stone{
 	locked = 1;
@@ -26379,7 +26393,7 @@
 	name = "Shaman's Room"
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "fSG" = (
 /obj/structure/stairs/stone,
 /obj/structure/fluff/railing/border{
@@ -26518,7 +26532,7 @@
 /area/rogue/indoors/town/manor/rockhill)
 "fTZ" = (
 /turf/open/lava,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "fUe" = (
 /turf/closed/wall/mineral/rogue/stone/blue_moss,
 /area/rogue/under/cavewet/river)
@@ -27013,7 +27027,7 @@
 	icon_state = "largetable"
 	},
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "gan" = (
 /obj/structure/fluff/railing/border{
 	dir = 4
@@ -27420,11 +27434,11 @@
 	name = "goblin key"
 	},
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "gfO" = (
 /obj/structure/closet/crate/chest,
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "gfP" = (
 /obj/structure/hotspring,
 /obj/structure/hotspring/border/twelve{
@@ -27698,7 +27712,7 @@
 "gjv" = (
 /obj/item/natural/rock/coal,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "gjA" = (
 /obj/structure/roguemachine/mail/r{
 	mailtag = "Veteran's House";
@@ -27738,9 +27752,8 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
 "gkx" = (
-/obj/structure/fluff/customsign{
-	icon_state = "signwrote";
-	name = "Rockhill - Northeast"
+/obj/structure/fluff/customsign/arrow{
+	dir = 4
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/bograt/west)
@@ -27822,7 +27835,7 @@
 "glc" = (
 /obj/structure/stairs/stone,
 /turf/open/floor/rogue/greenstone/runed,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "gld" = (
 /obj/structure/chair/wood/rogue/fancy{
 	dir = 8
@@ -28143,7 +28156,7 @@
 "goQ" = (
 /obj/structure/fluff/railing/border,
 /turf/closed/wall/mineral/rogue/stone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "goS" = (
 /obj/machinery/light/rogue/candle/green/r,
 /turf/open/floor/rogue/churchrough{
@@ -28420,7 +28433,7 @@
 /area/rogue/indoors/town/manor/rockhill)
 "gsb" = (
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "gsc" = (
 /obj/machinery/light/rogue/candle/r,
 /turf/open/floor/rogue/churchrough,
@@ -28972,7 +28985,7 @@
 /area/rogue/outdoors/town/roofs)
 "gyx" = (
 /turf/open/floor/rogue/blocks/green,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "gyE" = (
 /obj/structure/stairs{
 	dir = 1
@@ -29107,8 +29120,8 @@
 /area/rogue/outdoors/town/rockhill)
 "gAB" = (
 /obj/machinery/light/rogue/candle/red/r,
-/turf/open/floor/rogue/cobble/mossy,
-/area/rogue/outdoors/town/church)
+/turf/closed/wall/mineral/rogue/stone/red_moss,
+/area/rogue/indoors/town/church)
 "gAD" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/grasscold,
@@ -29182,7 +29195,7 @@
 	lockid = "gobbo"
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "gBK" = (
 /obj/structure/spider/stickyweb{
 	color = "#d1cdc7"
@@ -29231,7 +29244,7 @@
 "gCx" = (
 /obj/machinery/light/rogue/candle/l,
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "gCH" = (
 /obj/structure/closet/dirthole/closed/loot,
 /obj/structure/flora/roguegrass/herb/symphitum,
@@ -29480,7 +29493,7 @@
 "gFr" = (
 /obj/machinery/light/rogue/hearth,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "gFs" = (
 /obj/structure/noose/gallows{
 	pixel_x = -6;
@@ -29645,7 +29658,7 @@
 /area/rogue/indoors/town/manor/rockhill)
 "gHr" = (
 /turf/closed/mineral/random/rogue/high,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "gHt" = (
 /obj/structure/fluff/railing/border{
 	dir = 9
@@ -29834,7 +29847,7 @@
 	status = 1
 	},
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "gJq" = (
 /turf/closed/wall/mineral/rogue/wooddark/vertical,
 /area/rogue/under/underdarker/rockhill)
@@ -29948,7 +29961,7 @@
 "gKK" = (
 /obj/structure/chair/wood/rogue/throne,
 /turf/open/floor/carpet/royalblack,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "gKP" = (
 /obj/structure/stairs{
 	dir = 4
@@ -30022,7 +30035,7 @@
 	dir = 9
 	},
 /turf/closed/wall/mineral/rogue/stone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "gLD" = (
 /obj/structure/fluff/railing/border{
 	dir = 5
@@ -30192,7 +30205,7 @@
 "gNS" = (
 /obj/item/grown/log/tree/stick,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "gNW" = (
 /obj/structure/fluff/walldeco/church/line,
 /obj/structure/chair/bench/couchablack/r,
@@ -30310,7 +30323,7 @@
 /obj/item/reagent_containers/food/snacks/smallrat,
 /mob/living/carbon/human/species/goblin/npc/moon,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "gPy" = (
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/indoors/town/manor/rockhill)
@@ -30444,7 +30457,7 @@
 	pixel_y = 14
 	},
 /turf/open/floor/carpet/royalblack,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "gRh" = (
 /turf/closed/wall/mineral/rogue/wooddark/window,
 /area/rogue/indoors/town/grove)
@@ -30457,7 +30470,7 @@
 "gRu" = (
 /obj/structure/bed/rogue/inn/hay,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "gRv" = (
 /obj/structure/rack/rogue/shelf,
 /turf/open/floor/carpet/royalblack,
@@ -30761,7 +30774,7 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/materials,
 /obj/item/clothing/suit/roguetown/armor/plate/half/iron,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "gUR" = (
 /obj/machinery/light/rogue/firebowl/stump,
 /obj/structure/flora/roguegrass,
@@ -30821,8 +30834,9 @@
 /area/rogue/under/dungeon/sunkenchurch)
 "gVy" = (
 /obj/structure/fluff/customsign{
-	desc = "DANGER";
-	name = "Mines"
+	icon_state = "signwrote";
+	pixel_y = 7;
+	wrotesign = "Western Mines - DANGER"
 	},
 /turf/open/floor/rogue/ruinedwood/platform,
 /area/rogue/under/cave)
@@ -30977,7 +30991,7 @@
 "gXN" = (
 /obj/item/roguebin/water/gross,
 /turf/open/floor/rogue/metal,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "gXO" = (
 /obj/structure/roguewindow,
 /obj/structure/curtain/directional/orange{
@@ -31008,7 +31022,7 @@
 	dir = 8
 	},
 /turf/closed/wall/mineral/rogue/stone/moss,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "gYi" = (
 /obj/structure/table/wood{
 	dir = 10;
@@ -31259,7 +31273,7 @@
 /obj/item/rogueweapon/huntingknife/stoneknife,
 /obj/item/rogueweapon/huntingknife/stoneknife,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "hac" = (
 /obj/structure/fluff/walldeco/stone{
 	pixel_y = 32
@@ -31408,7 +31422,7 @@
 /obj/structure/rack/rogue,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "hbE" = (
 /obj/structure/mineral_door/wood/donjon/stone{
 	locked = 1;
@@ -32086,7 +32100,7 @@
 /area/rogue/outdoors/town/rockhill)
 "hjN" = (
 /turf/closed/mineral/random/rogue/boglava/high,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "hjP" = (
 /obj/structure/stairs{
 	dir = 4
@@ -32184,7 +32198,7 @@
 "hkV" = (
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "WELCOME TO ROCKHILL"
+	wrotesign = "WELCOME TO ROCKHILL"
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/town/rockhill)
@@ -32274,7 +32288,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/item/reagent_containers/food/snacks/smallrat,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "hmt" = (
 /obj/structure/noose,
 /turf/open/floor/rogue/tile/bath{
@@ -32393,7 +32407,7 @@
 /area/rogue/indoors)
 "hnb" = (
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "hnd" = (
 /obj/structure/roguetent,
 /turf/open/floor/rogue/cobble/mossy,
@@ -32442,7 +32456,7 @@
 "hnA" = (
 /obj/structure/fluff/walldeco/chains,
 /turf/closed/wall/mineral/rogue/stone/moss,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "hnF" = (
 /obj/structure/fluff/walldeco/med5{
 	pixel_y = 32
@@ -32792,7 +32806,7 @@
 	icon_state = "goblin_hell"
 	},
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "hrT" = (
 /obj/structure/bed/rogue/shit,
 /turf/open/floor/rogue/naturalstone,
@@ -33368,7 +33382,7 @@
 /obj/item/clothing/suit/roguetown/shirt/robe/wizard,
 /obj/item/clothing/head/roguetown/wizhat/random,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "hzg" = (
 /obj/structure/closet/crate/chest,
 /turf/open/floor/rogue/concrete{
@@ -33408,7 +33422,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "hzx" = (
 /obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /turf/open/floor/rogue/naturalstone,
@@ -33461,7 +33475,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Kitchen"
 	},
 /turf/open/floor/rogue/concrete,
@@ -33898,7 +33912,7 @@
 "hFC" = (
 /obj/item/roguecoin/copper,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "hFF" = (
 /obj/structure/closet/crate/chest/old_crate,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/materials,
@@ -34175,7 +34189,7 @@
 /obj/machinery/light/rogue/candle/l,
 /obj/item/trash/applecore,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "hIR" = (
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/outdoors/beach/harbor)
@@ -34188,7 +34202,7 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
 /obj/structure/flora/roguegrass/pyroclasticflowers,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "hJe" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/materials,
 /turf/open/floor/rogue/ruinedwood,
@@ -34262,7 +34276,7 @@
 "hJV" = (
 /obj/structure/fluff/nest,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "hJY" = (
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/town/grove)
@@ -34802,7 +34816,7 @@
 /area/rogue/outdoors/beach/harbor)
 "hQF" = (
 /turf/closed/mineral/random/rogue/high,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "hQG" = (
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/town/bath)
@@ -34893,7 +34907,7 @@
 	},
 /mob/living/carbon/human/species/goblin/npc/cave,
 /turf/open/floor/rogue/blocks/green,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "hRR" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/grassyel,
@@ -34983,7 +34997,7 @@
 	name = "fancy goblin key"
 	},
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "hSM" = (
 /obj/structure/stairs/stone{
 	dir = 1
@@ -35024,7 +35038,7 @@
 "hSZ" = (
 /obj/structure/mineral_door/wood/deadbolt,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "hTb" = (
 /obj/structure/fluff/railing/border,
 /obj/structure/fluff/railing/border{
@@ -35115,7 +35129,7 @@
 "hUo" = (
 /obj/item/roguebin/water,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "hUq" = (
 /obj/effect/decal/cobbleedge{
 	dir = 6;
@@ -35193,7 +35207,7 @@
 /obj/structure/bed/rogue/inn/wool,
 /obj/item/bedsheet/rogue/pelt,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "hUU" = (
 /obj/structure/hotspring{
 	icon_state = "lilypetals2"
@@ -35428,7 +35442,7 @@
 "hXq" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "hXu" = (
 /mob/living/carbon/human/species/orc/npc/marauder,
 /turf/open/floor/rogue/twig,
@@ -35700,14 +35714,14 @@
 /obj/structure/fluff/nest,
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "iaq" = (
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/light/rogue/torchholder{
 	dir = 1
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "ias" = (
 /obj/structure/stairs{
 	dir = 8
@@ -36150,7 +36164,7 @@
 "igw" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "igM" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -36939,7 +36953,7 @@
 "iqS" = (
 /obj/structure/bed/rogue/inn/hay,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "iqX" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -37210,7 +37224,7 @@
 	dir = 8
 	},
 /turf/closed/wall/mineral/rogue/stone/window,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "ivA" = (
 /obj/structure/bars/pipe{
 	dir = 8;
@@ -37429,7 +37443,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "iyc" = (
 /obj/machinery/tanningrack,
 /turf/open/floor/rogue/grasscold,
@@ -37569,7 +37583,7 @@
 /turf/open/floor/rogue/volcanic{
 	desc = "Silky and sharp-smooth, like cracked glass"
 	},
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "izO" = (
 /turf/closed/wall/mineral/rogue/wooddark/end{
 	dir = 1
@@ -37762,7 +37776,7 @@
 	redstone_id = "fiendroom"
 	},
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "iCZ" = (
 /obj/structure/closet/crate/roguecloset{
 	keylock = 1;
@@ -37864,7 +37878,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "iEg" = (
 /obj/effect/decal/cleanable/debris/woody,
 /obj/effect/wisp/infernal,
@@ -37918,7 +37932,7 @@
 /obj/effect/spawner/lootdrop/potion_ingredient/herb,
 /obj/effect/spawner/lootdrop/potion_ingredient/herb,
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "iEF" = (
 /obj/effect/decal/cleanable/dirt/cobweb,
 /obj/structure/bed/rogue,
@@ -38100,7 +38114,7 @@
 /obj/item/roguecoin/copper/pile,
 /obj/item/roguestatue/gold/loot,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "iGT" = (
 /obj/machinery/light/rogue/campfire/densefire,
 /turf/open/floor/rogue/dirt/road,
@@ -38721,7 +38735,7 @@
 /obj/structure/closet/crate/roguecloset/inn/south,
 /obj/item/clothing/cloak/lordcloak,
 /turf/open/floor/rogue/blocks/stonered,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "iNZ" = (
 /obj/structure/fluff/statue/gargoyle/moss/candles{
 	pixel_y = -10
@@ -38739,7 +38753,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "iOj" = (
 /obj/machinery/light/rogue/candle/floorcandle,
 /mob/living/simple_animal/hostile/rogue/deepone/wiz,
@@ -38857,7 +38871,7 @@
 "iPS" = (
 /obj/structure/mineral_door/wood/fancywood,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "iQd" = (
 /obj/structure/table/wood/poor,
 /obj/item/reagent_containers/glass/bucket{
@@ -39492,7 +39506,7 @@
 /obj/structure/rack/rogue,
 /turf/open/floor/rogue/cobble,
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "iXT" = (
 /obj/structure/fluff/railing/wood{
 	dir = 4;
@@ -39743,7 +39757,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "jaH" = (
 /obj/machinery/light/rogue/torchholder/hotspring/standing,
 /turf/open/floor/rogue/dirt,
@@ -39842,7 +39856,7 @@
 	pixel_x = 8
 	},
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "jbC" = (
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
@@ -39935,7 +39949,7 @@
 /obj/item/roguecoin/silver,
 /obj/item/roguecoin/silver/pile,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "jcj" = (
 /obj/structure/flora/roguegrass/bush/wall/tall,
 /turf/open/floor/rogue/grassgrey,
@@ -40331,7 +40345,7 @@
 /turf/open/floor/rogue/blocks{
 	icon_state = "paving"
 	},
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "jgU" = (
 /obj/structure/table/wood/fancy/red,
 /turf/open/floor/rogue/ruinedwood{
@@ -40650,7 +40664,7 @@
 /area/rogue/indoors/town/church)
 "jkE" = (
 /turf/open/floor/carpet/royalblack,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "jkF" = (
 /obj/structure/fluff/railing/corner/north_east,
 /turf/open/transparent/openspace,
@@ -40741,7 +40755,7 @@
 /obj/item/natural/rock/coal,
 /obj/effect/wisp,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "jlM" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
@@ -40876,7 +40890,7 @@
 "jmT" = (
 /obj/structure/roguetent,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "jna" = (
 /obj/machinery/light/rogue/torchholder/c,
 /turf/open/floor/rogue/cobble,
@@ -40891,7 +40905,7 @@
 	},
 /obj/item/rogueweapon/surgery/saw/improv,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "jnt" = (
 /obj/structure/flora/roguegrass,
 /obj/structure/fluff/railing/fence{
@@ -41005,7 +41019,7 @@
 "jou" = (
 /obj/structure/chair/wood/rogue/chair3,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "joy" = (
 /obj/structure/chair/bench/church,
 /obj/structure/flora/roguegrass,
@@ -41332,7 +41346,7 @@
 "jrS" = (
 /obj/item/clothing/head/roguetown/helmet/leather/goblin,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "jrT" = (
 /obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/carpet/royalblack,
@@ -41615,7 +41629,7 @@
 /obj/effect/decal/cleanable/blood,
 /mob/living/carbon/human/species/goblin/npc/moon,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "jvH" = (
 /obj/item/natural/feather,
 /obj/structure/table/wood{
@@ -41735,7 +41749,7 @@
 /obj/item/clothing/head/roguetown/helmet/leather/goblin,
 /obj/item/clothing/head/roguetown/helmet/leather/goblin,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "jxJ" = (
 /obj/structure/table/wood{
 	dir = 6;
@@ -42284,7 +42298,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "jDW" = (
 /obj/structure/closet/crate/chest/crate,
 /obj/item/natural/bundle/stick,
@@ -42301,7 +42315,7 @@
 "jEa" = (
 /obj/structure/flora/rogueshroom,
 /turf/open/floor/rogue/blocks/green,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "jEd" = (
 /obj/structure/fluff/pillow/green,
 /turf/open/floor/carpet/royalblack,
@@ -42348,6 +42362,12 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/town/rockhill)
+"jED" = (
+/obj/structure/mineral_door/wood/deadbolt{
+	dir = 1
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/town/church)
 "jEF" = (
 /obj/effect/decal/cobbleedge{
 	dir = 5
@@ -42440,7 +42460,7 @@
 	max_integrity = 100
 	},
 /turf/open/floor/rogue/concrete,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "jFP" = (
 /obj/machinery/light/rogue/candle/blue/l,
 /obj/effect/decal/cobbleedge{
@@ -42622,7 +42642,7 @@
 	loot = list(/obj/item/rogueweapon/mace = 2, /obj/item/rogueweapon/huntingknife/idagger/steel = 2, /obj/item/rogueweapon/mace/cudgel = 2, /obj/item/rogueweapon/mace/warhammer = 2, /obj/item/rogueweapon/huntingknife = 3, /obj/item/rogueweapon/huntingknife/idagger = 2, /obj/item/rogueweapon/halberd = 2, /obj/item/rogueweapon/spear = 3, /obj/item/rogueweapon/flail = 3, /obj/item/rogueweapon/stoneaxe/battle = 1, /obj/item/rogueweapon/stoneaxe/woodcut/steel = 2, /obj/item/rogueweapon/spear = 4, /obj/item/rogueweapon/sword = 2, /obj/item/rogueweapon/sword/iron = 2, /obj/item/rogueweapon/sword/rapier = 1, /obj/item/rogueweapon/sword/short = 1, /obj/item/rogueweapon/sword/long = 1)
 	},
 /turf/open/floor/rogue/concrete,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "jHr" = (
 /obj/structure/glowshroom{
 	icon_state = "glowshroom3"
@@ -42999,6 +43019,12 @@
 "jLX" = (
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/indoors/town/church/chapel)
+"jMh" = (
+/obj/structure/mineral_door/wood/deadbolt{
+	dir = 4
+	},
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/town/church)
 "jMl" = (
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/under/town/basement)
@@ -43047,7 +43073,7 @@
 /obj/item/natural/rock/coal,
 /obj/structure/flora/roguegrass/pyroclasticflowers,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "jMW" = (
 /obj/structure/table/wood/poor,
 /turf/open/floor/rogue/dirt/road,
@@ -43207,7 +43233,7 @@
 	dir = 9
 	},
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "jOl" = (
 /obj/structure/bars,
 /turf/open/floor/rogue/cobble,
@@ -43718,7 +43744,7 @@
 /obj/item/rope/chain,
 /obj/item/rope/chain,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "jUT" = (
 /obj/effect/decal/cobbleedge,
 /obj/structure/chair/wood/rogue{
@@ -43753,7 +43779,7 @@
 "jVu" = (
 /obj/item/natural/rock,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "jVv" = (
 /obj/structure/chair/wood/rogue{
 	pixel_y = 11
@@ -43813,7 +43839,7 @@
 	name = "fancy goblin key"
 	},
 /turf/open/floor/rogue/blocks/green,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "jVO" = (
 /obj/structure/flora/newleaf,
 /obj/structure/flora/roguegrass/bush/wall/tall,
@@ -43857,7 +43883,7 @@
 "jWm" = (
 /obj/structure/rack/rogue,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "jWv" = (
 /obj/structure/fluff/psycross,
 /turf/open/floor/rogue/church,
@@ -43889,7 +43915,7 @@
 	status = 1
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "jWS" = (
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/inq)
@@ -43965,7 +43991,7 @@
 "jXP" = (
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "jXV" = (
 /obj/effect/decal/mossy{
 	dir = 8
@@ -44192,7 +44218,7 @@
 /turf/open/floor/rogue/volcanic{
 	desc = "Silky and sharp-smooth, like cracked glass"
 	},
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "kba" = (
 /obj/machinery/light/rogue/candle,
 /turf/closed/wall/mineral/rogue/wooddark,
@@ -45072,7 +45098,7 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
 /obj/item/roguecoin/silver/pile,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "kkl" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/dirt/road,
@@ -45373,7 +45399,7 @@
 /obj/effect/decal/cleanable/food/egg_smudge,
 /obj/item/reagent_containers/food/snacks/smallrat,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "kns" = (
 /obj/structure/fluff/railing/wood,
 /obj/structure/flora/roguegrass,
@@ -45823,7 +45849,7 @@
 "ksH" = (
 /obj/structure/chair/wood/rogue/chair3,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "ksL" = (
 /obj/structure/fluff/walldeco/painting/queen{
 	pixel_y = -32
@@ -45873,7 +45899,7 @@
 "ktj" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/weapons,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "kto" = (
 /obj/structure/closet/crate/roguecloset/inn,
 /obj/item/paper/scroll{
@@ -46106,7 +46132,7 @@
 /obj/structure/closet/crate/roguecloset/inn/south,
 /obj/item/natural/cloth,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "kvR" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/grassyel,
@@ -46245,7 +46271,7 @@
 	},
 /obj/item/reagent_containers/glass/cup/wooden,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "kxN" = (
 /turf/closed/wall/mineral/rogue/decostone,
 /area/rogue/indoors/town/shop)
@@ -46533,7 +46559,7 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/metal,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "kBs" = (
 /obj/structure/rack/rogue,
 /obj/item/reagent_containers/glass/bucket,
@@ -46593,7 +46619,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "kCe" = (
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/beach/harbor)
@@ -46810,7 +46836,7 @@
 /area/rogue/outdoors/beach/harbor)
 "kFG" = (
 /turf/closed/wall/mineral/rogue/stone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "kFL" = (
 /obj/structure/chair/wood/rogue{
 	dir = 8
@@ -47302,7 +47328,7 @@
 "kKg" = (
 /obj/item/trash/candle,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "kKk" = (
 /obj/structure/closet/crate/roguecloset/inn{
 	keylock = 1;
@@ -47539,7 +47565,7 @@
 "kNE" = (
 /obj/structure/flora/roguegrass/water,
 /turf/open/water/swamp/deep,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "kNH" = (
 /turf/open/floor/rogue/rooftop/green/corner1{
 	dir = 4
@@ -47571,11 +47597,11 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/metal,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "kNU" = (
 /obj/structure/flora/roguegrass/pyroclasticflowers,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "kNW" = (
 /turf/closed/wall/mineral/rogue/roofwall/innercorner{
 	dir = 8
@@ -47650,7 +47676,7 @@
 /area/rogue/under/dungeon/drowfort)
 "kOW" = (
 /turf/closed/wall/mineral/rogue/craftstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "kOZ" = (
 /obj/structure/chair/bench/couchablack,
 /turf/open/floor/rogue/cobble/mossy,
@@ -47712,7 +47738,7 @@
 	max_integrity = 100
 	},
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "kPL" = (
 /obj/structure/stairs{
 	dir = 1
@@ -47975,7 +48001,7 @@
 	redstone_id = "firebigger"
 	},
 /turf/open/floor/rogue/concrete,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "kSe" = (
 /obj/structure/closet/dirthole/grave,
 /turf/open/floor/rogue/dirt/road,
@@ -48036,7 +48062,7 @@
 	icon_state = "goblin_hell"
 	},
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "kTa" = (
 /obj/structure/closet/crate/chest/old_crate,
 /obj/item/rope,
@@ -48300,7 +48326,7 @@
 /area/rogue/indoors/town/church)
 "kWu" = (
 /turf/open/floor/carpet/purple,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "kWw" = (
 /turf/closed/wall/mineral/rogue/decostone/fluffstone,
 /area/rogue/under/town/sewer)
@@ -48445,8 +48471,8 @@
 /obj/item/roguebin,
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "NO LITTERING BEYOND THIS POINT";
-	pixel_y = 21
+	pixel_y = 21;
+	wrotesign = "NO LITTERING BEYOND THIS POINT"
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/town/rockhill)
@@ -48509,7 +48535,7 @@
 /area/rogue/indoors/town/church/basement)
 "kZk" = (
 /turf/open/floor/rogue/metal/barograte,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "kZl" = (
 /obj/item/natural/rock,
 /turf/open/floor/rogue/dirt/road,
@@ -48852,7 +48878,7 @@
 	dir = 6
 	},
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "ldV" = (
 /obj/structure/fluff/railing/border/east,
 /turf/open/floor/rogue/wood,
@@ -48961,9 +48987,9 @@
 	},
 /area/rogue/indoors/town/church/chapel)
 "lfz" = (
-/obj/structure/fluff/customsign{
-	icon_state = "signwrote";
-	name = "Rockhill - Northeast"
+/obj/structure/fluff/customsign/arrow{
+	dir = 4;
+	wrotesign = "Rockhill - Northeast"
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/bogsafe)
@@ -49109,7 +49135,7 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/armor,
 /obj/item/rogueweapon/scabbard/sword,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "lgN" = (
 /obj/structure/curtain/red{
 	icon_state = "curtain-closed";
@@ -49333,14 +49359,14 @@
 "ljj" = (
 /obj/structure/stairs/stone,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "ljo" = (
 /obj/structure/closet/crate/chest,
 /obj/item/rope/chain,
 /obj/item/rope/chain,
 /obj/item/rope/chain,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "ljt" = (
 /obj/structure/fermentation_keg/water,
 /turf/open/floor/rogue/concrete,
@@ -49508,7 +49534,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "llK" = (
 /obj/structure/flora/roguegrass/herb/manabloom,
 /obj/structure/fluff/railing/border/west,
@@ -49585,14 +49611,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/town/church)
-"lni" = (
-/obj/structure/fluff/customsign{
-	icon_state = "signwrote";
-	name = "EVIL ASS.... SOMETHING  DUNGEON - UNDER CONSTRUCTION!!";
-	pixel_y = 3
-	},
-/turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cavewet)
 "lnk" = (
 /obj/structure/bars/steel,
 /turf/open/floor/rogue/naturalstone,
@@ -50124,7 +50142,7 @@
 /obj/item/reagent_containers/powder/flour,
 /obj/item/reagent_containers/food/snacks/rogue/meat/bacon,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "lug" = (
 /turf/closed/wall/mineral/rogue/decostone/end,
 /area/rogue/indoors/town/church)
@@ -50181,9 +50199,9 @@
 /obj/structure/fluff/customsign{
 	desc = "Follow the road";
 	icon_state = "signwrote";
-	name = "Whitevein - Down Below!";
 	pixel_x = 7;
-	pixel_y = 10
+	pixel_y = 10;
+	wrotesign = "Whitevein - Down Below!"
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/town/rockhill)
@@ -50523,7 +50541,7 @@
 /obj/structure/toilet,
 /obj/item/natural/poo/horse,
 /turf/open/floor/rogue/blocks/green,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "lzI" = (
 /obj/structure/fluff/clock,
 /turf/open/floor/rogue/ruinedwood/chevron,
@@ -50658,7 +50676,7 @@
 	},
 /obj/item/rogueweapon/surgery/retractor/improv,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "lBw" = (
 /obj/item/roguebin/water/gross,
 /turf/open/floor/rogue/dirt/road,
@@ -50799,7 +50817,7 @@
 /turf/open/floor/rogue/volcanic{
 	desc = "Silky and sharp-smooth, like cracked glass"
 	},
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "lDN" = (
 /turf/closed/wall/mineral/rogue/roofwall/outercorner{
 	dir = 4
@@ -51481,7 +51499,7 @@
 	name = "Holding Cell"
 	},
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "lLy" = (
 /obj/structure/mineral_door/wood/deadbolt{
 	dir = 8
@@ -51836,7 +51854,7 @@
 	},
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/watcher,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "lPF" = (
 /obj/structure/deadbodyrandom/all,
 /turf/open/floor/rogue/dirt,
@@ -51917,7 +51935,7 @@
 "lQW" = (
 /obj/machinery/light/rogue/candle/r,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "lQY" = (
 /obj/structure/table/wood/long_table/right,
 /turf/open/floor/rogue/ruinedwood,
@@ -52116,7 +52134,7 @@
 	name = "goblin key"
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "lTk" = (
 /obj/item/natural/worms/leech,
 /obj/item/natural/worms/leech,
@@ -52849,7 +52867,7 @@
 "mah" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "mak" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/open/floor/rogue/grass,
@@ -52961,7 +52979,7 @@
 	dir = 1
 	},
 /turf/closed/wall/mineral/rogue/stone/moss,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "mbF" = (
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/tavern)
@@ -53941,7 +53959,7 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/blocks/green,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "mlY" = (
 /obj/structure/fluff/railing/wood{
 	dir = 4;
@@ -54380,7 +54398,7 @@
 "mql" = (
 /obj/item/rogueweapon/mace/woodclub,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "mqn" = (
 /obj/structure/fluff/traveltile{
 	aportalgoesto = "gobdun2b";
@@ -54411,9 +54429,9 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors)
 "mqL" = (
-/obj/structure/fluff/customsign{
-	icon_state = "signwrote";
-	name = "Rockhill - Northwest"
+/obj/structure/fluff/customsign/arrow{
+	dir = 1;
+	wrotesign = "Rockhill - Northwest"
 	},
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woodsafe)
@@ -54491,7 +54509,7 @@
 	pixel_y = -48
 	},
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "mrw" = (
 /obj/structure/mineral_door/swing_door,
 /turf/open/floor/rogue/blocks,
@@ -54638,7 +54656,7 @@
 	redstone_id = "fireexperiment2"
 	},
 /turf/open/floor/rogue/metal/barograte,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "mtd" = (
 /obj/structure/mineral_door/wood/violet{
 	locked = 1;
@@ -54662,7 +54680,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "manor";
+	lockid = "servant";
 	name = "Kitchen Storage"
 	},
 /turf/open/floor/rogue/concrete,
@@ -54756,7 +54774,7 @@
 /area/rogue/under/underdark/rockhill/west)
 "muc" = (
 /turf/closed/wall/mineral/rogue/stone/window/moss,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "muf" = (
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/floor/rogue/naturalstone,
@@ -54764,7 +54782,7 @@
 "mug" = (
 /obj/structure/fluff/nest,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "muj" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -55117,7 +55135,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "myG" = (
 /obj/machinery/light/rogue/candle/l,
 /turf/open/floor/carpet/inn,
@@ -55291,7 +55309,7 @@
 "mAw" = (
 /obj/machinery/light/rogue/smelter,
 /turf/open/floor/rogue/metal,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "mAB" = (
 /obj/structure/fluff/railing/wood{
 	dir = 4;
@@ -55542,8 +55560,9 @@
 /area/rogue/indoors/town/manor/rockhill)
 "mDN" = (
 /obj/structure/fluff/customsign{
-	desc = "DANGER";
-	name = "Mines"
+	icon_state = "signwrote";
+	pixel_y = 7;
+	wrotesign = "Western Mines - DANGER"
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/under/cave)
@@ -55759,11 +55778,13 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/exposed/town/keep)
 "mFW" = (
-/obj/structure/closet/crate/drawer{
-	pixel_y = 16
+/obj/structure/mineral_door/bars{
+	locked = 1;
+	lockid = "priest";
+	name = "confiscated items"
 	},
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/outdoors/town/church)
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/church)
 "mGg" = (
 /obj/structure/bed/rogue/inn/double,
 /obj/item/bedsheet/rogue/fabric_double,
@@ -55814,8 +55835,9 @@
 /area/rogue/indoors/town)
 "mGC" = (
 /obj/structure/fluff/customsign{
-	desc = "DANGER";
-	name = "Mines"
+	icon_state = "signwrote";
+	pixel_y = 7;
+	wrotesign = "Western Mines - DANGER"
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/cave)
@@ -55830,11 +55852,11 @@
 "mHc" = (
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "WARNING";
 	pixel_x = -8;
 	pixel_y = 7;
 	layer = 5;
-	max_integrity = 50
+	max_integrity = 50;
+	wrotesign = "WARNING"
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/bograt/south)
@@ -56068,7 +56090,7 @@
 	icon_state = "goblin_hell"
 	},
 /turf/open/floor/rogue/metal/barograte,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "mKe" = (
 /obj/structure/fluff/railing/wood{
 	dir = 4;
@@ -56143,7 +56165,7 @@
 "mKx" = (
 /obj/item/restraints/legcuffs/beartrap/armed,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "mKA" = (
 /obj/structure/bed/rogue/shit,
 /turf/open/floor/rogue/naturalstone,
@@ -56214,7 +56236,7 @@
 	dir = 8
 	},
 /turf/closed/wall/mineral/rogue/stone/moss,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "mLb" = (
 /obj/structure/flora/roguegrass/bush,
 /turf/open/floor/rogue/grass,
@@ -56265,7 +56287,7 @@
 "mLV" = (
 /mob/living/carbon/human/species/goblin/npc/cave,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "mMf" = (
 /obj/item/natural/stone{
 	pixel_x = 10;
@@ -56423,7 +56445,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "mOp" = (
 /obj/structure/manaflower,
 /obj/structure/flora/roguegrass,
@@ -56469,7 +56491,7 @@
 /obj/structure/fluff/nest,
 /obj/item/trash/applecore,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "mOG" = (
 /obj/structure/fluff/railing/fence,
 /turf/open/floor/rogue/ruinedwood/turned,
@@ -57088,7 +57110,7 @@
 "mXJ" = (
 /obj/structure/bars,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "mXL" = (
 /obj/structure/vine,
 /turf/open/floor/rogue/grass,
@@ -57376,7 +57398,7 @@
 /obj/item/reagent_containers/glass/cup/wooden,
 /obj/item/reagent_containers/glass/cup/wooden,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "nbi" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -57483,6 +57505,9 @@
 /obj/effect/spawner/lootdrop/decrepit_equipment_spawner,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
+"ncn" = (
+/turf/closed/wall/mineral/rogue/decostone/end,
+/area/rogue/outdoors/town/church)
 "ncs" = (
 /obj/structure/fluff/railing/border{
 	dir = 9;
@@ -57696,7 +57721,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "neJ" = (
 /obj/structure/fluff/railing/fence,
 /turf/open/floor/rogue/naturalstone,
@@ -57767,7 +57792,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "nfk" = (
 /obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/rogue/concrete,
@@ -57824,7 +57849,7 @@
 "ngd" = (
 /obj/structure/bed/rogue/inn/hay,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "ngg" = (
 /obj/structure/lever{
 	redstone_id = "handpassage1"
@@ -58082,7 +58107,7 @@
 	name = "goblin key"
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "niW" = (
 /obj/structure/fluff/railing/border{
 	dir = 9
@@ -58103,7 +58128,7 @@
 /obj/item/rogueweapon/shield/wood,
 /obj/item/rogueweapon/shield/wood,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "njb" = (
 /obj/structure/fluff/railing/border,
 /obj/effect/decal/cleanable/debris/woody,
@@ -58305,7 +58330,7 @@
 	dir = 4
 	},
 /turf/closed/wall/mineral/rogue/stone/window,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "nms" = (
 /obj/effect/lily_petal/two,
 /obj/structure/flora/roguegrass,
@@ -58990,7 +59015,7 @@
 /area/rogue/indoors/town/academy)
 "ntW" = (
 /turf/closed/wall/mineral/rogue/decostone/mossy/red/long,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "ntX" = (
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/shelter/bog)
@@ -59102,7 +59127,7 @@
 	redstone_id = "firejail0"
 	},
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "nvu" = (
 /turf/closed/wall/mineral/rogue/decostone/long{
 	dir = 1
@@ -59847,7 +59872,7 @@
 /area/rogue/indoors/town)
 "nEu" = (
 /turf/closed/mineral/random/rogue,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "nEw" = (
 /obj/structure/stairs/stone,
 /turf/open/floor/rogue/cobblerock,
@@ -60350,9 +60375,9 @@
 /turf/open/floor/rogue/ruinedwood/platform,
 /area/rogue/outdoors/beach/harbor)
 "nKS" = (
-/obj/structure/fluff/customsign{
-	icon_state = "signwrote";
-	name = "Rockhill - East"
+/obj/structure/fluff/customsign/arrow{
+	dir = 4;
+	wrotesign = "Rockhill - East"
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/bograt/west)
@@ -61318,7 +61343,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "nWD" = (
 /obj/structure/hotspring/border/thirteen,
 /turf/open/floor/rogue/grass,
@@ -62171,7 +62196,7 @@
 /turf/closed/wall/mineral/rogue/decostone/mossy/red/end{
 	dir = 4
 	},
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "oga" = (
 /obj/structure/roguemachine/scomm/r{
 	scom_tag = "Manor - Servant's Bunks"
@@ -62383,7 +62408,7 @@
 /obj/item/roguecoin/copper,
 /obj/item/roguecoin/gold,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "ojj" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -62410,7 +62435,7 @@
 /area/rogue/outdoors/town/grove)
 "ojz" = (
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "ojI" = (
 /turf/closed/wall/mineral/rogue/decostone,
 /area/rogue/under/cave)
@@ -62595,7 +62620,7 @@
 	redstone_id = "firejail1"
 	},
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "olZ" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab,
 /turf/open/water/swamp,
@@ -62658,7 +62683,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "omA" = (
 /obj/structure/mineral_door/wood/deadbolt{
 	dir = 1
@@ -62745,7 +62770,7 @@
 /area/rogue/outdoors/town/rockhill)
 "onA" = (
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "onG" = (
 /obj/structure/fluff/railing/wood{
 	dir = 8;
@@ -63468,7 +63493,7 @@
 /area/rogue/indoors)
 "ovH" = (
 /turf/closed/wall/mineral/rogue/pipe,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "ovL" = (
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/dungeon/wizarddungeon)
@@ -63889,7 +63914,7 @@
 /obj/structure/fluff/walldeco/chains,
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound,
 /turf/open/floor/rogue/metal/barograte,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "oAS" = (
 /obj/effect/decal/cobbleedge{
 	dir = 8;
@@ -64042,7 +64067,7 @@
 	dir = 5
 	},
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "oDS" = (
 /obj/structure/stairs{
 	dir = 8
@@ -64126,7 +64151,7 @@
 "oEV" = (
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "Rockhill - Northeast"
+	wrotesign = "Rockhill - Northeast"
 	},
 /turf/open/floor/rogue/grass/nospawn,
 /area/rogue/outdoors/bogsafe)
@@ -64234,7 +64259,7 @@
 "oGz" = (
 /mob/living/carbon/human/species/goblin/npc/cave,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "oGB" = (
 /obj/structure/table/wood{
 	icon_state = "tablewood1";
@@ -64254,7 +64279,7 @@
 "oGS" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/watcher,
 /turf/open/floor/rogue/metal/barograte,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "oGT" = (
 /obj/structure/vine,
 /turf/closed/wall/mineral/rogue/decowood,
@@ -64327,7 +64352,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/cobblerock,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "oHX" = (
 /obj/structure/bars/grille{
 	dir = 8
@@ -64428,7 +64453,7 @@
 /area/rogue/outdoors/beach/harbor)
 "oIO" = (
 /turf/open/floor/rogue/blocks/green,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "oIT" = (
 /turf/open/water/ocean/deep,
 /area/rogue/outdoors/beach/harbor)
@@ -64623,7 +64648,7 @@
 	max_integrity = 100
 	},
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "oLj" = (
 /obj/structure/table/wood/poor,
 /obj/machinery/light/rogue/candle,
@@ -64950,7 +64975,7 @@
 	icon_state = "tablewood1"
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "oPb" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -65529,7 +65554,7 @@
 "oVJ" = (
 /obj/item/roguecoin/copper/pile,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "oVN" = (
 /obj/item/grown/log/tree/small,
 /obj/item/grown/log/tree/small,
@@ -65821,7 +65846,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/blocks/green,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "oYx" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -65900,7 +65925,7 @@
 /area/rogue/under/dungeon)
 "oZr" = (
 /turf/closed/wall/mineral/rogue/decostone/mossy/red,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "oZw" = (
 /obj/structure/fluff/railing/border,
 /turf/open/floor/rogue/cobble,
@@ -65936,7 +65961,7 @@
 "oZP" = (
 /turf/open/floor/rogue/cobble,
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "oZS" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/dirt/road,
@@ -66009,7 +66034,7 @@
 /obj/item/roguecoin/silver,
 /obj/item/roguecoin/silver/pile,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "paO" = (
 /obj/structure/closet/crate/chest{
 	pixel_x = 2;
@@ -66110,7 +66135,7 @@
 	status = 1
 	},
 /turf/open/floor/rogue/concrete,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "pbV" = (
 /obj/item/reagent_containers/powder/moondust,
 /obj/item/reagent_containers/powder/moondust,
@@ -66186,7 +66211,7 @@
 	},
 /obj/item/flashlight/flare/torch/lantern,
 /turf/open/floor/rogue/metal,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "pcQ" = (
 /obj/item/natural/rock,
 /turf/open/floor/rogue/cobble,
@@ -66517,7 +66542,7 @@
 /turf/open/floor/rogue/volcanic{
 	desc = "Silky and sharp-smooth, like cracked glass"
 	},
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "phe" = (
 /obj/item/roguebin/water,
 /obj/machinery/light/rogue/candle,
@@ -66609,7 +66634,7 @@
 "phZ" = (
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "pis" = (
 /obj/structure/fluff/railing/border,
 /turf/open/floor/rogue/dirt,
@@ -66716,11 +66741,11 @@
 "pjH" = (
 /obj/item/natural/poo/horse,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "pjM" = (
 /obj/item/reagent_containers/food/snacks/smallrat,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "pjP" = (
 /obj/structure/table/wood/large_table/north{
 	dir = 8
@@ -66832,7 +66857,7 @@
 	pixel_y = 26
 	},
 /turf/open/floor/rogue/metal,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "plg" = (
 /obj/structure/fluff/railing/wood{
 	dir = 4;
@@ -66910,7 +66935,7 @@
 "plB" = (
 /obj/structure/bars/cemetery,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "plD" = (
 /obj/effect/decal/cobble/mossy{
 	dir = 8
@@ -66974,7 +66999,7 @@
 	faction = list("neutral")
 	},
 /turf/open/floor/carpet/red,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "pmJ" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat,
 /obj/item/natural/poo/horse,
@@ -67018,7 +67043,7 @@
 /obj/structure/closet/crate/chest,
 /turf/open/floor/rogue/cobble,
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "pnw" = (
 /obj/structure/bars/steel,
 /turf/open/water/river{
@@ -67105,7 +67130,7 @@
 	redstone_id = "WatcherRoom"
 	},
 /turf/open/floor/rogue/concrete,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "pon" = (
 /obj/structure/bed/rogue/inn/double{
 	dir = 1
@@ -67990,7 +68015,7 @@
 /area/rogue/indoors/town/tavern)
 "pzo" = (
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "pzt" = (
 /obj/structure/bars/pipe{
 	dir = 4;
@@ -68155,7 +68180,7 @@
 	dir = 9
 	},
 /turf/open/floor/rogue/blocks/green,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "pBe" = (
 /obj/structure/flora/roguegrass,
 /obj/structure/flora/roguegrass/herb/random,
@@ -68168,7 +68193,7 @@
 "pBk" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "pBs" = (
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/floor/rogue/woodturned,
@@ -68346,7 +68371,7 @@
 /obj/machinery/light/rogue/candle/blue,
 /obj/item/roguestatue/iron,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "pDk" = (
 /obj/structure/fluff/railing/wood,
 /obj/structure/fluff/railing/border{
@@ -68515,7 +68540,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "pFF" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -68673,7 +68698,7 @@
 /obj/structure/rack/rogue,
 /obj/item/rogueweapon/mace/goden,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "pGU" = (
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/shelter/woods)
@@ -68768,7 +68793,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "pHV" = (
 /obj/effect/particle_effect/smoke{
 	color = "#7f788a";
@@ -69299,7 +69324,7 @@
 	redstone_id = "firebigger"
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "pOi" = (
 /obj/structure/rogue/trophy/deer,
 /obj/structure/chair/bench/ultimacouch,
@@ -69619,7 +69644,7 @@
 	},
 /obj/item/roguecoin/copper/pile,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "pSh" = (
 /obj/structure/chair/wood{
 	dir = 8;
@@ -69796,7 +69821,7 @@
 "pUy" = (
 /obj/structure/fluff/big_chain,
 /turf/open/floor/rogue/concrete,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "pUz" = (
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/dirt,
@@ -69972,8 +69997,8 @@
 	},
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "LITTERING WILL BE PROSECUTED";
-	pixel_y = 24
+	pixel_y = 24;
+	wrotesign = "LITTERING WILL BE PROSECUTED"
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/town/rockhill)
@@ -69996,11 +70021,11 @@
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/indoors/town/manor/rockhill)
 "pXl" = (
-/obj/structure/fluff/customsign{
-	icon_state = "signwrote";
-	name = "Rockhill - Northeast"
+/obj/structure/fluff/customsign/arrow{
+	dir = 4;
+	wrotesign = "Rockhill - Northeast";
+	pixel_y = 0
 	},
-/obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/bogsafe)
 "pXs" = (
@@ -70039,7 +70064,7 @@
 	redstone_id = "firejail2"
 	},
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "pXN" = (
 /obj/structure/closet/crate/roguecloset/inn/chest{
 	keylock = 1;
@@ -70682,7 +70707,7 @@
 "qfG" = (
 /obj/machinery/light/rogue/forge,
 /turf/open/floor/rogue/metal,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "qfK" = (
 /turf/closed/wall/mineral/rogue/roofwall/middle,
 /area/rogue/outdoors/bograt/above)
@@ -70718,7 +70743,7 @@
 	icon_state = "tablewood1"
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "qgf" = (
 /obj/item/reagent_containers/glass/bowl,
 /turf/open/floor/rogue/naturalstone,
@@ -71477,7 +71502,7 @@
 /area/rogue/indoors/shelter/bog)
 "qpp" = (
 /turf/open/floor/carpet/red,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "qpt" = (
 /obj/structure/fluff/railing/border{
 	dir = 6
@@ -71528,7 +71553,7 @@
 /turf/open/floor/rogue/volcanic{
 	desc = "Silky and sharp-smooth, like cracked glass"
 	},
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "qpI" = (
 /obj/structure/ladder{
 	pixel_y = 17
@@ -71707,7 +71732,7 @@
 "qrG" = (
 /obj/machinery/anvil,
 /turf/open/floor/rogue/metal,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "qrH" = (
 /obj/structure/stairs,
 /turf/open/floor/carpet/royalblack,
@@ -72020,7 +72045,7 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "qwr" = (
 /obj/structure/rack/rogue,
 /obj/item/rogueweapon/woodstaff,
@@ -72068,7 +72093,7 @@
 "qwC" = (
 /obj/structure/fluff/grindwheel,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "qwJ" = (
 /obj/machinery/light/rogue/candle/green/l,
 /turf/open/floor/rogue/naturalstone,
@@ -72131,7 +72156,7 @@
 "qxu" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "qxy" = (
 /obj/structure/fluff/statue/gargoyle/candles,
 /turf/open/floor/rogue/ruinedwood{
@@ -72175,7 +72200,7 @@
 	lockid = "gobbo"
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "qxV" = (
 /obj/structure/rack/rogue,
 /obj/item/rogueweapon/pitchfork,
@@ -72849,7 +72874,7 @@
 	name = "Storage"
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "qFk" = (
 /obj/structure/table/wood/poor,
 /turf/open/floor/rogue/tile,
@@ -73003,7 +73028,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "qHs" = (
 /obj/structure/roguemachine/scomm/r{
 	scom_tag = "Manor - War Room"
@@ -73451,7 +73476,7 @@
 /obj/item/natural/rock/coal,
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "qNa" = (
 /obj/structure/well,
 /turf/open/floor/rogue/grass,
@@ -73556,7 +73581,7 @@
 /area/rogue/indoors/town/bath)
 "qOk" = (
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "qOp" = (
 /obj/structure/flora/roguegrass,
 /obj/structure/flora/ausbushes/ppflowers,
@@ -73878,7 +73903,7 @@
 	icon_state = "goblin_moon"
 	},
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "qTl" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/spider/rock,
 /obj/structure/spider/stickyweb,
@@ -74051,7 +74076,7 @@
 	redstone_id = "firejail2"
 	},
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "qVr" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -74945,7 +74970,7 @@
 	dir = 4;
 	icon_state = "iron_line"
 	},
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "rik" = (
 /obj/effect/wisp/infernal,
 /turf/open/floor/rogue/volcanic,
@@ -74978,7 +75003,7 @@
 /obj/machinery/light/rogue/candle,
 /obj/structure/closet/crate/chest,
 /turf/open/floor/rogue/blocks/green,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "rix" = (
 /obj/structure/rack/rogue,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/materials,
@@ -75083,7 +75108,7 @@
 /area/rogue/indoors/town/manor/rockhill)
 "rkn" = (
 /turf/closed/wall/mineral/rogue/stone/window,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "rkp" = (
 /obj/structure/mineral_door/wood/donjon/stone{
 	locked = 1;
@@ -75153,7 +75178,7 @@
 	pixel_y = -8
 	},
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "rkY" = (
 /obj/structure/bearpelt,
 /turf/open/floor/rogue/carpet,
@@ -75207,7 +75232,7 @@
 "rlE" = (
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "Rockhill - North"
+	wrotesign = "Rockhill - North"
 	},
 /turf/open/floor/rogue/grass/nospawn,
 /area/rogue/outdoors/bograt/west)
@@ -75733,7 +75758,7 @@
 	dir = 4
 	},
 /turf/closed/wall/mineral/rogue/stone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "rrQ" = (
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/church/chapel)
@@ -75751,7 +75776,7 @@
 	status = 1
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "rsb" = (
 /obj/structure/fluff/railing/wood{
 	dir = 8;
@@ -75878,7 +75903,7 @@
 /area/rogue/outdoors/woodsrat/north)
 "rsS" = (
 /turf/closed/mineral/rogue/bedrock,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "rsT" = (
 /turf/open/floor/rogue/tile{
 	icon_state = "glyph4"
@@ -76548,7 +76573,7 @@
 /turf/open/floor/rogue/volcanic{
 	desc = "Silky and sharp-smooth, like cracked glass"
 	},
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "rCf" = (
 /obj/structure/deadbody/rogue,
 /turf/open/floor/rogue/churchrough{
@@ -77018,11 +77043,19 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/town/academy)
 "rHS" = (
-/obj/structure/mineral_door/wood/deadbolt{
+/obj/structure/fluff/walldeco/church/line{
 	dir = 1
 	},
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/outdoors/town/church)
+/obj/structure/fluff/walldeco/church/line{
+	dir = 4
+	},
+/obj/structure/curtain/red{
+	icon_state = "curtain-closed";
+	opacity = 1;
+	open = 0
+	},
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/church)
 "rHT" = (
 /obj/item/kitchen/rollingpin{
 	pixel_x = 5
@@ -77252,7 +77285,7 @@
 "rKI" = (
 /obj/structure/bearpelt,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "rKO" = (
 /obj/structure/roguetent,
 /turf/open/floor/rogue/dirt/road,
@@ -77416,7 +77449,7 @@
 	name = "goblin key"
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "rMK" = (
 /obj/structure/fluff/railing/border,
 /obj/effect/decal/cobbleedge{
@@ -77487,7 +77520,7 @@
 /obj/structure/rack/rogue,
 /obj/item/reagent_containers/food/snacks/rogue/bread,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "rNG" = (
 /obj/structure/rack/rogue,
 /obj/structure/rack/rogue/shelf,
@@ -77696,7 +77729,7 @@
 	name = "fancy goblin key"
 	},
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "rQm" = (
 /obj/structure/table/wood{
 	density = 0;
@@ -77742,7 +77775,7 @@
 	dir = 10
 	},
 /turf/closed/wall/mineral/rogue/stone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "rQO" = (
 /obj/structure/plasticflaps,
 /turf/open/water/river{
@@ -77795,7 +77828,7 @@
 	},
 /obj/item/restraints/legcuffs/beartrap/armed,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "rRj" = (
 /turf/open/floor/rogue/rooftop/green/corner1{
 	dir = 4
@@ -78075,7 +78108,7 @@
 	icon_state = "goblin_moon"
 	},
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "rVV" = (
 /obj/structure/fluff/walldeco/stone,
 /turf/closed/wall/mineral/rogue/stone,
@@ -78258,7 +78291,7 @@
 /obj/structure/closet/crate/chest,
 /obj/item/roguegem/green,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "rXQ" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -78275,7 +78308,7 @@
 "rYb" = (
 /obj/structure/fluff/railing/border,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "rYe" = (
 /obj/structure/flora/roguegrass/reedbush,
 /turf/open/water/swamp,
@@ -78470,7 +78503,7 @@
 	dir = 8
 	},
 /turf/closed/wall/mineral/rogue/stone/window,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "saO" = (
 /obj/structure/flora/newleaf/corner{
 	dir = 9
@@ -79010,7 +79043,7 @@
 /area/rogue/under/town/sewer)
 "sgM" = (
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "sgR" = (
 /obj/structure/table/wood/poor,
 /turf/open/floor/rogue/ruinedwood,
@@ -79095,10 +79128,10 @@
 	},
 /obj/item/trash/candle,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "shO" = (
 /turf/closed/wall/mineral/rogue/decostone/mossy/red/end,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "shT" = (
 /obj/structure/flora/roguetree,
 /turf/open/floor/rogue/grass,
@@ -79224,7 +79257,7 @@
 /obj/item/ingot/iron,
 /obj/item/ingot/iron,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "sjW" = (
 /obj/effect/spawner/lootdrop/roguetown/sewers,
 /turf/open/floor/rogue/cobblerock,
@@ -79397,7 +79430,7 @@
 "smn" = (
 /obj/structure/table/wood/long_table/right,
 /obj/item/rogueweapon/tongs,
-/obj/item/rogueweapon/hammer/decrepit,
+/obj/item/rogueweapon/hammer/ancient/decrepit,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
 "smv" = (
@@ -79447,7 +79480,7 @@
 "sni" = (
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "Rockhill - North"
+	wrotesign = "Rockhill - North"
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
@@ -80172,7 +80205,7 @@
 	name = "Outside"
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "swH" = (
 /obj/structure/stairs/stone/cwdown{
 	dir = 1
@@ -80322,7 +80355,7 @@
 /obj/structure/rack/rogue,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/weapons,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "syC" = (
 /obj/structure/flora/rogueshroom,
 /turf/open/floor/rogue/dirt,
@@ -80467,7 +80500,7 @@
 	pixel_x = -5
 	},
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "sAz" = (
 /obj/structure/closet/crate/chest/wicker,
 /turf/open/floor/rogue/woodturned,
@@ -80815,7 +80848,7 @@
 "sEw" = (
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "Rockhill - North. Forest - East"
+	wrotesign = "Rockhill - North. Forest - East"
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/bograt/south)
@@ -81027,7 +81060,7 @@
 /turf/closed/wall/mineral/rogue/decostone/mossy/red/end{
 	dir = 1
 	},
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "sGP" = (
 /obj/structure/rack/rogue,
 /obj/item/rogueore/coal,
@@ -81955,7 +81988,7 @@
 /obj/item/rogueweapon/mace/woodclub,
 /obj/item/rogueweapon/mace/woodclub,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "sSO" = (
 /obj/structure/chair/bench{
 	dir = 4;
@@ -82346,7 +82379,7 @@
 "sXj" = (
 /obj/machinery/light/rogue/candle/blue,
 /turf/open/lava,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "sXm" = (
 /obj/structure/chair/wood/rogue/chair4{
 	dir = 8
@@ -83246,7 +83279,7 @@
 	name = "Barracks"
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "thL" = (
 /obj/structure/fluff/railing/wood{
 	dir = 4;
@@ -83493,7 +83526,7 @@
 	pixel_x = -5
 	},
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "tjS" = (
 /obj/structure/roguewindow/stained/yellow,
 /turf/open/floor/rogue/blocks/stonered/tiny,
@@ -83518,7 +83551,7 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "tkh" = (
 /mob/living/simple_animal/hostile/rogue/deepone,
 /turf/open/floor/rogue/cobble,
@@ -83800,7 +83833,7 @@
 /obj/machinery/light/rogue/hearth,
 /obj/item/reagent_containers/glass/bucket/pot,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "tnK" = (
 /obj/item/rogueweapon/spear/billhook{
 	pixel_x = -17
@@ -83949,7 +83982,7 @@
 	dir = 8
 	},
 /turf/closed/wall/mineral/rogue/stone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "tpJ" = (
 /obj/item/natural/rock,
 /obj/item/roguekey{
@@ -83959,7 +83992,7 @@
 	name = "mean goblin key"
 	},
 /turf/open/floor/rogue/metal,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "tpK" = (
 /obj/structure/fluff/grindwheel,
 /turf/open/floor/rogue/dirt/road,
@@ -84296,7 +84329,7 @@
 "ttW" = (
 /obj/structure/table/wood,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "ttZ" = (
 /mob/living/simple_animal/butterfly,
 /turf/open/floor/rogue/grassred,
@@ -84756,7 +84789,7 @@
 "tzj" = (
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "tzp" = (
 /turf/closed/mineral/rogue/salt,
 /area/rogue/under/cave)
@@ -84820,7 +84853,7 @@
 	},
 /obj/item/reagent_containers/glass/bowl,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "tAw" = (
 /obj/machinery/light/rogue/firebowl/standing/blue,
 /turf/open/floor/rogue/dirt,
@@ -84941,7 +84974,7 @@
 	dir = 5
 	},
 /turf/closed/wall/mineral/rogue/stone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "tBY" = (
 /obj/structure/flora/roguetree,
 /turf/open/water/cleanshallow,
@@ -84989,7 +85022,7 @@
 	name = "goblin key"
 	},
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "tCz" = (
 /obj/machinery/light/rogue/candle/blue,
 /turf/open/floor/rogue/hexstone,
@@ -85104,7 +85137,7 @@
 	redstone_id = "fireexperiment1"
 	},
 /turf/open/floor/rogue/metal/barograte,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "tEt" = (
 /obj/structure/table/wood/poor/alt,
 /obj/item/fishingrod,
@@ -85358,7 +85391,7 @@
 "tHg" = (
 /obj/structure/fluff/walldeco/chains,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "tHm" = (
 /obj/structure/rack/rogue{
 	pixel_y = 10
@@ -85377,7 +85410,7 @@
 	density = 0
 	},
 /turf/open/floor/rogue/concrete,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "tHn" = (
 /obj/structure/flora/roguegrass/bush/wall/tall,
 /turf/open/floor/rogue/grass,
@@ -85484,7 +85517,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/item/reagent_containers/food/snacks/smallrat,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "tIR" = (
 /turf/closed/wall/mineral/rogue/decostone/long,
 /area/rogue/under/town/basement/keep)
@@ -85658,7 +85691,7 @@
 	faction = list("infernal","neutral")
 	},
 /turf/open/floor/rogue/greenstone/runed,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "tLz" = (
 /obj/structure/fluff/railing/border{
 	dir = 9;
@@ -85684,7 +85717,7 @@
 /obj/structure/rack/rogue,
 /obj/item/rogueweapon/spear,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "tLK" = (
 /obj/structure/flora/roguegrass/reedbush,
 /turf/open/water/cleanshallow,
@@ -86302,7 +86335,7 @@
 	redstone_id = "firejail0"
 	},
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "tSI" = (
 /obj/structure/vine,
 /turf/closed/mineral/rogue,
@@ -86751,7 +86784,7 @@
 /obj/item/reagent_containers/food/snacks/rogue/meat/poultry,
 /obj/item/reagent_containers/food/snacks/rogue/dough,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "tXo" = (
 /obj/machinery/light/rogue/candle/r{
 	pixel_x = -32
@@ -86908,7 +86941,7 @@
 "tZc" = (
 /obj/structure/bars,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "tZf" = (
 /obj/item/rogueweapon/huntingknife/cleaver,
 /obj/effect/decal/cleanable/debris/woody,
@@ -86961,7 +86994,7 @@
 	icon_state = "goblin_hell"
 	},
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "uac" = (
 /turf/open/floor/rogue/snowrough,
 /area/rogue/under/cave/goblinfort)
@@ -87091,6 +87124,12 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor/rockhill)
+"ubZ" = (
+/obj/structure/closet/crate/drawer{
+	pixel_y = 16
+	},
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/outdoors/town/church)
 "uca" = (
 /obj/structure/bars/grille,
 /turf/open/water/cleanshallow,
@@ -87168,7 +87207,7 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/weapons,
 /obj/item/rogueweapon/sword/long/exe,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "udt" = (
 /obj/effect/decal/cobbleedge{
 	dir = 9
@@ -87216,7 +87255,7 @@
 /area/rogue/outdoors/beach/harbor)
 "udL" = (
 /turf/open/floor/rogue/cobblerock,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "udN" = (
 /obj/machinery/light/rogue/candle,
 /obj/structure/chair/bench/church/r{
@@ -87326,7 +87365,7 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
 /obj/item/roguecoin/copper/pile,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "ueX" = (
 /obj/structure/table/wood,
 /obj/item/trash/candle,
@@ -87419,7 +87458,7 @@
 "ufN" = (
 /obj/structure/toilet,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "ufX" = (
 /obj/structure/flora/roguegrass/herb/random,
 /turf/open/floor/rogue/dirt,
@@ -88018,7 +88057,7 @@
 	name = "Smithery"
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "unw" = (
 /obj/structure/fluff/railing/border,
 /turf/open/floor/rogue/grassgrey,
@@ -88301,7 +88340,7 @@
 	},
 /obj/item/restraints/legcuffs/beartrap/armed,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "uqm" = (
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/indoors/town/cell/warden)
@@ -88500,7 +88539,7 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/food,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/food,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "uso" = (
 /obj/item/natural/rock,
 /turf/open/floor/rogue/cobble/mossy,
@@ -88574,7 +88613,7 @@
 	},
 /obj/item/reagent_containers/glass/bowl,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "utu" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 8;
@@ -88741,7 +88780,7 @@
 	dir = 5
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "uvr" = (
 /obj/structure/closet/crate/drawer/random{
 	pixel_y = 16
@@ -89539,7 +89578,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "uEU" = (
 /obj/structure/lever/wall{
 	pixel_y = 4;
@@ -89725,7 +89764,7 @@
 "uGS" = (
 /obj/effect/wisp,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "uGY" = (
 /obj/structure/closet/dirthole/grave,
 /turf/open/floor/rogue/dirt,
@@ -89746,7 +89785,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "uHp" = (
 /obj/structure/stairs/stone,
 /obj/machinery/light/rogue/candle/blue/r,
@@ -89802,7 +89841,7 @@
 "uIv" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "uIx" = (
 /obj/structure/fluff/walldeco/vinez,
 /turf/closed/wall/mineral/rogue/decostone/mossy/end,
@@ -89916,7 +89955,7 @@
 /turf/open/floor/rogue/volcanic{
 	desc = "Silky and sharp-smooth, like cracked glass"
 	},
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "uJY" = (
 /obj/structure/bars/pipe{
 	dir = 1;
@@ -90025,7 +90064,7 @@
 	name = "fancy goblin key"
 	},
 /turf/open/floor/rogue/blocks/stonered,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "uLm" = (
 /obj/structure/fluff/walldeco/customflag/rockhill{
 	pixel_y = 3
@@ -90073,7 +90112,7 @@
 /turf/open/floor/rogue/volcanic{
 	desc = "Silky and sharp-smooth, like cracked glass"
 	},
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "uLM" = (
 /obj/machinery/light/rogue/firebowl/standing/green{
 	pixel_y = 12
@@ -90738,7 +90777,7 @@
 	},
 /obj/structure/flora/roguegrass/water,
 /turf/open/water/swamp/deep,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "uTy" = (
 /obj/structure/bars,
 /turf/open/floor/rogue/blocks,
@@ -90752,7 +90791,7 @@
 	},
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp,
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "uTJ" = (
 /obj/item/grown/log/tree,
 /turf/open/floor/rogue/ruinedwood,
@@ -90851,7 +90890,7 @@
 "uVa" = (
 /obj/structure/bars,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "uVc" = (
 /turf/closed/wall/mineral/rogue/pipe{
 	dir = 4;
@@ -90889,7 +90928,7 @@
 "uVA" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "uVE" = (
 /obj/item/roguebin/water/gross,
 /turf/open/floor/rogue/cobble,
@@ -90971,7 +91010,7 @@
 	dir = 9
 	},
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "uWH" = (
 /obj/structure/chair/stool/rogue,
 /turf/open/floor/rogue/twig,
@@ -91036,9 +91075,9 @@
 /turf/open/water/swamp,
 /area/rogue/under/town/sewer)
 "uXG" = (
-/obj/structure/fluff/customsign{
-	icon_state = "signwrote";
-	name = "Rockhill - Northwest"
+/obj/structure/fluff/customsign/arrow{
+	dir = 1;
+	wrotesign = "Rockhill - Northwest"
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cavewet)
@@ -91233,7 +91272,7 @@
 	name = "Barracks"
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "vaC" = (
 /obj/structure/fluff/clock,
 /turf/open/floor/rogue/herringbone,
@@ -91343,7 +91382,7 @@
 	status = 1
 	},
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "vbF" = (
 /obj/structure/fluff/railing/border,
 /obj/structure/fluff/railing/border{
@@ -91425,7 +91464,7 @@
 /obj/machinery/light/rogue/hearth,
 /obj/item/cooking/pan,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "vcL" = (
 /obj/structure/table/wood/poor,
 /obj/effect/decal/cleanable/dirt/cobweb{
@@ -92177,7 +92216,7 @@
 	},
 /obj/item/rogueweapon/mace/woodclub,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "vmF" = (
 /obj/machinery/tanningrack,
 /turf/open/floor/rogue/dirt/road,
@@ -92402,7 +92441,7 @@
 /obj/structure/rack/rogue,
 /obj/item/rogueweapon/pick,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "vpo" = (
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "horzw"
@@ -92583,7 +92622,7 @@
 	pixel_x = 10
 	},
 /turf/open/floor/carpet/red,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "vrC" = (
 /obj/structure/table/wood{
 	icon_state = "tablewood3"
@@ -93212,7 +93251,7 @@
 "vxQ" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "vxT" = (
 /obj/structure/fluff/walldeco/fakewall{
 	icon = 'icons/turf/walls/mossy_stone.dmi';
@@ -93365,7 +93404,7 @@
 	dir = 9
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "vzT" = (
 /obj/structure/handcart,
 /turf/open/floor/rogue/dirt,
@@ -93595,7 +93634,7 @@
 	lockid = "gobbo_chief"
 	},
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "vCz" = (
 /obj/structure/flora/roguegrass/reedbush,
 /turf/open/water/swamp,
@@ -93737,7 +93776,7 @@
 "vEe" = (
 /obj/structure/fluff/walldeco/chains,
 /turf/open/floor/rogue/metal/barograte,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "vEj" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/church,
@@ -94085,7 +94124,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/item/rogueweapon/shovel/small,
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "vIS" = (
 /obj/structure/fluff/railing/wood{
 	dir = 8;
@@ -94187,7 +94226,7 @@
 "vJO" = (
 /obj/structure/mineral_door/bars,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "vJR" = (
 /obj/structure/chair/wood/rogue/chair5,
 /turf/open/floor/rogue/ruinedwood{
@@ -94327,7 +94366,7 @@
 	},
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "vLx" = (
 /obj/structure/chair/wood/rogue,
 /turf/open/floor/rogue/blocks,
@@ -94386,7 +94425,7 @@
 /obj/item/paper,
 /obj/item/paper/scroll,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "vMz" = (
 /obj/structure/fluff/railing/border{
 	dir = 9
@@ -94757,7 +94796,7 @@
 "vRr" = (
 /obj/structure/bars,
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "vRt" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/tools{
@@ -94952,7 +94991,7 @@
 "vTv" = (
 /obj/structure/fluff/big_chain,
 /turf/open/lava,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "vTy" = (
 /turf/closed/wall/mineral/rogue/wooddark/end/west,
 /area/rogue/indoors/shelter/bog)
@@ -95165,7 +95204,7 @@
 /area/rogue/indoors)
 "vVT" = (
 /turf/open/floor/rogue/greenstone/runed,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "vVW" = (
 /turf/open/floor/rogue/ruinedwood{
 	dir = 1;
@@ -95551,7 +95590,7 @@
 	icon_state = "largetable"
 	},
 /turf/open/floor/rogue/dirt,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "wbb" = (
 /obj/item/grown/log/tree/small,
 /turf/open/floor/rogue/ruinedwood,
@@ -95645,7 +95684,7 @@
 	name = "Riches"
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "wbI" = (
 /obj/structure/fluff/railing/border,
 /obj/structure/fluff/railing/wood{
@@ -95682,7 +95721,7 @@
 	},
 /mob/living/carbon/human/species/goblin/npc/cave,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "wcK" = (
 /obj/structure/fluff/railing/wood{
 	pixel_y = -8
@@ -95914,7 +95953,7 @@
 	},
 /obj/item/rogueweapon/tongs,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "wfS" = (
 /obj/structure/flora/roguegrass,
 /obj/structure/fluff/railing/wood{
@@ -96057,7 +96096,7 @@
 	redstone_id = "firejail1"
 	},
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "whG" = (
 /obj/structure/fluff/walldeco/vinez/blue,
 /turf/closed/mineral/rogue,
@@ -96069,7 +96108,7 @@
 "whN" = (
 /obj/item/grown/log/tree,
 /turf/open/floor/rogue/metal,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "whQ" = (
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/church/basement)
@@ -96284,7 +96323,7 @@
 "wkv" = (
 /obj/structure/roguerock,
 /turf/open/floor/rogue/metal/barograte,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "wkw" = (
 /obj/structure/table/vtable,
 /obj/item/reagent_containers/glass/mortar{
@@ -96380,7 +96419,7 @@
 /obj/structure/rack/rogue,
 /turf/open/floor/rogue/cobble,
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "wlI" = (
 /obj/structure/stairs{
 	dir = 8
@@ -97093,7 +97132,7 @@
 	status = 1
 	},
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "wuw" = (
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/rogue/woodturned,
@@ -97119,7 +97158,7 @@
 	},
 /obj/structure/fluff/walldeco/chains,
 /turf/open/floor/rogue/metal/barograte,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "wuJ" = (
 /obj/structure/flora/roguegrass/herb/random,
 /turf/open/floor/rogue/grasscold,
@@ -98157,7 +98196,7 @@
 "wFn" = (
 /obj/structure/fluff/statue/gargoyle,
 /turf/closed/wall/mineral/rogue/stone,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "wFq" = (
 /obj/structure/chair/smallbench{
 	dir = 1
@@ -98234,7 +98273,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/item/reagent_containers/food/snacks/smallrat,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "wFY" = (
 /obj/structure/fluff/railing/wood{
 	dir = 8;
@@ -99880,7 +99919,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "wZm" = (
 /obj/structure/roguemachine/headeater{
 	pixel_x = 32;
@@ -100077,7 +100116,7 @@
 	dir = 4
 	},
 /turf/closed/wall/mineral/rogue/stone/moss,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "xce" = (
 /obj/structure/fluff/railing/border{
 	dir = 9
@@ -100122,7 +100161,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/rogue/cobblerock,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "xcr" = (
 /obj/structure/bed/rogue/inn/wool,
 /obj/item/bedsheet/rogue/cloth,
@@ -100179,7 +100218,7 @@
 "xcW" = (
 /obj/structure/handcart,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "xcX" = (
 /obj/structure/table/wood,
 /turf/open/floor/carpet/royalblack,
@@ -100230,7 +100269,7 @@
 /turf/open/floor/rogue/volcanic{
 	desc = "Silky and sharp-smooth, like cracked glass"
 	},
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "xdS" = (
 /obj/structure/roguemachine/mail{
 	mailtag = "Throne Room";
@@ -100685,7 +100724,7 @@
 "xjY" = (
 /obj/item/rogue/instrument/drum,
 /turf/open/floor/carpet/red,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "xkd" = (
 /obj/structure/fluff/pillow/magenta{
 	dir = 8;
@@ -100958,7 +100997,7 @@
 "xmx" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "xmC" = (
 /obj/item/grown/log/tree/small,
 /turf/open/floor/rogue/herringbone,
@@ -101036,7 +101075,7 @@
 /obj/item/clothing/suit/roguetown/armor/plate/half/iron/goblin,
 /obj/item/clothing/suit/roguetown/armor/plate/half/iron/goblin,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "xnE" = (
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/indoors)
@@ -101357,6 +101396,13 @@
 	},
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
+"xrt" = (
+/obj/machinery/light/roguestreet/midlamp{
+	pixel_y = 10
+	},
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/metal/barograte,
+/area/rogue/outdoors/town/church)
 "xrx" = (
 /obj/structure/fluff/railing/border{
 	dir = 10
@@ -102832,7 +102878,7 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/weapons,
 /obj/item/rogueweapon/sword/stone,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "xIZ" = (
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/grass,
@@ -102962,7 +103008,7 @@
 	},
 /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "xKD" = (
 /obj/structure/bed/rogue/inn/wool{
 	dir = 1
@@ -102980,7 +103026,7 @@
 "xKG" = (
 /obj/item/roguecoin/copper/pile,
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "xKI" = (
 /turf/closed/wall/mineral/rogue/roofwall/middle{
 	dir = 8
@@ -103185,7 +103231,7 @@
 	icon_state = "goblin_hell"
 	},
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "xNq" = (
 /obj/effect/decal/cobbleedge{
 	dir = 6
@@ -103709,7 +103755,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "xTZ" = (
 /obj/item/reagent_containers/food/snacks/smallrat,
 /obj/structure/stairs/stone{
@@ -103754,7 +103800,7 @@
 "xUi" = (
 /obj/structure/chair/wood/rogue/chair3,
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "xUl" = (
 /obj/structure/fluff/railing/fence{
 	dir = 1
@@ -103781,7 +103827,7 @@
 "xUK" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "xUM" = (
 /obj/effect/spawner/lootdrop/valuable_candle_spawner,
 /turf/open/floor/rogue/cobble,
@@ -104367,7 +104413,7 @@
 /obj/item/clothing/shoes/roguetown/boots/blacksteel/modern/plateboots,
 /obj/item/clothing/under/roguetown/platelegs/blacksteel/modern,
 /turf/open/floor/rogue/grassred,
-/area/rogue/under/cave/inferno)
+/area/rogue/under/dungeon/inferno)
 "ycv" = (
 /obj/effect/decal/cleanable/dirt/cobweb{
 	dir = 1
@@ -104809,7 +104855,7 @@
 "yhe" = (
 /obj/item/rogueweapon/huntingknife/stoneknife,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "yhh" = (
 /obj/structure/fluff/railing/border{
 	dir = 9
@@ -104853,7 +104899,7 @@
 /obj/structure/fluff/nest,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "yhx" = (
 /obj/structure/table/wood/map/four,
 /turf/open/floor/rogue/cobble/mossy,
@@ -104951,7 +104997,7 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "yiH" = (
 /obj/structure/curtain/brown,
 /turf/open/floor/rogue/naturalstone,
@@ -104969,7 +105015,7 @@
 	},
 /obj/structure/fluff/customsign{
 	icon_state = "signwrote";
-	name = "WEST TO: ROCKHILL ORPHANAGE AND BOARDING SCHOOL"
+	wrotesign = "WEST TO: ROCKHILL ORPHANAGE AND BOARDING SCHOOL"
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/town/rockhill)
@@ -105087,7 +105133,7 @@
 	pixel_y = 26
 	},
 /turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/rhgoblinencampment)
+/area/rogue/under/dungeon/oldgoblincamp)
 "ykG" = (
 /obj/structure/table/vtable/v2,
 /obj/structure/broadcast_horn/loudmouth/guest{
@@ -161567,12 +161613,12 @@ whb
 whb
 whb
 whb
+jxS
+fJJ
+jxS
 whb
-whb
-whb
-whb
-whb
-whb
+jxS
+fJJ
 whb
 whb
 whb
@@ -162000,10 +162046,10 @@ whb
 whb
 whb
 jxS
-fJJ
-jxS
-whb
-jxS
+pzH
+xmC
+uBY
+uBY
 fJJ
 whb
 whb
@@ -162431,11 +162477,11 @@ whb
 whb
 whb
 whb
-jxS
-pzH
+whb
 xmC
 uBY
 uBY
+uxU
 fJJ
 whb
 whb
@@ -162864,10 +162910,10 @@ whb
 whb
 whb
 whb
-xmC
 uBY
 uBY
-uxU
+uBY
+fJJ
 fJJ
 whb
 whb
@@ -163295,12 +163341,12 @@ whb
 whb
 whb
 whb
+jxS
+jnu
+nOR
+pHs
+jxS
 whb
-uBY
-uBY
-uBY
-fJJ
-fJJ
 whb
 ovX
 gBA
@@ -163728,9 +163774,9 @@ whb
 whb
 whb
 jxS
-jnu
-nOR
-pHs
+jxS
+whb
+jxS
 jxS
 gBA
 gBA
@@ -164159,12 +164205,12 @@ whb
 whb
 whb
 whb
-jxS
-jxS
 whb
-jxS
-jxS
-gBA
+whb
+whb
+whb
+whb
+aaf
 aaf
 aaf
 aaf
@@ -248005,7 +248051,7 @@ oNE
 tHz
 aad
 tHz
-lni
+gBA
 aad
 tHz
 gQh
@@ -313184,7 +313230,7 @@ xaf
 xaf
 xaf
 xaf
-whb
+aaf
 cNx
 cNx
 whb
@@ -313616,7 +313662,7 @@ whb
 xaf
 xaf
 xaf
-whb
+aaf
 cNx
 aaf
 whb
@@ -314048,7 +314094,7 @@ whb
 whb
 whb
 whb
-whb
+aaf
 cNx
 aaf
 whb
@@ -314912,7 +314958,7 @@ aaf
 aaf
 aaf
 aaf
-xaf
+aaf
 aaf
 aaf
 xaf
@@ -315343,8 +315389,8 @@ xaf
 xaf
 xaf
 xaf
-xaf
-xaf
+aaf
+aaf
 cNx
 iRo
 tHz
@@ -315776,7 +315822,7 @@ huj
 huj
 xaf
 xaf
-xaf
+aaf
 aaf
 cNx
 aaf
@@ -317072,7 +317118,7 @@ xaf
 xaf
 xaf
 xaf
-xaf
+aaf
 aaf
 aaf
 xaf
@@ -327082,8 +327128,8 @@ svL
 quC
 psr
 psr
-qOA
 pXl
+oke
 kKp
 kKp
 kKp
@@ -419377,15 +419423,15 @@ vnr
 vnr
 vnr
 djJ
-bMr
+ncn
 bMr
 aSL
 xZg
 jax
 jax
-xZg
-xZg
-xZg
+jax
+jax
+jax
 xlA
 xlA
 jYx
@@ -422390,11 +422436,11 @@ ljt
 svi
 dPL
 tML
+jMh
 moU
-wAm
 tML
-oFR
-pTd
+vFq
+vFq
 hpo
 mLb
 dOw
@@ -422822,10 +422868,10 @@ jTl
 svi
 beQ
 moU
-vFq
+bZp
+moU
 sQt
 sQt
-oFR
 vFq
 bMr
 bRp
@@ -423253,14 +423299,14 @@ pHA
 tML
 jOB
 svi
-teW
-uBV
+moU
+moU
+moU
 sQt
 sQt
-vEm
-mFW
+oFR
 hpo
-pcy
+xrt
 iuh
 hpo
 ixJ
@@ -423685,13 +423731,13 @@ xtS
 teW
 qTG
 wlM
-teW
-vFq
+moU
+ffv
 gAB
-dOw
-rHS
-tDl
-jTg
+ubZ
+iuh
+jED
+sFn
 hpo
 dOw
 hpo
@@ -424118,12 +424164,12 @@ tML
 moU
 moU
 tML
-uBV
-oFR
+moU
+fSx
 oFR
 vEm
-tDl
-jTg
+vEm
+sFn
 hpo
 dOw
 qbS
@@ -427999,7 +428045,7 @@ dUA
 rIP
 lUx
 cmw
-dUA
+mFW
 wJF
 xZg
 xZg
@@ -428431,7 +428477,7 @@ bDF
 cJs
 gFU
 ocA
-bDF
+rHS
 pHA
 lUx
 rQg
