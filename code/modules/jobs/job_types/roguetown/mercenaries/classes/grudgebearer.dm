@@ -188,12 +188,18 @@
 	desc = "Forged to fit the stubbiest of fingers. It is covered in protective layers."
 	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
+	sleeved = null
 	allowed_race = list(/datum/species/dwarf, /datum/species/dwarf/mountain)
 	prevent_crits = list(BCLASS_TWIST)
 	icon_state = "dwarfhand"
 	item_state = "dwarfhand"
 	armor = ARMOR_GRUDGEBEARER
 	max_integrity = 1000
+
+/obj/item/clothing/gloves/roguetown/plate/dwarven/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, female = FALSE, customi = null, sleeveindex, boobed_overlay = FALSE, icon/clip_mask = null)
+	customi = null
+	override_state = female ? "dwarfhand_f_dwarf" : "dwarfhand_dwarf"
+	return ..()
 
 /obj/item/clothing/gloves/roguetown/plate/dwarven/ComponentInitialize()
 	. = ..()
