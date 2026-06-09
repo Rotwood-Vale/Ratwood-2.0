@@ -1,0 +1,4 @@
+author: "coffeecoffeecoffee"
+delete-after: True
+changes:
+  - balance: "Changed grapple cooldown from a whopping 5 seconds to 1 second"

@@ -91,9 +91,9 @@
 	. += span_info("For more grizzly alternatives, one can substitute the wine with blood, or - in the hands of a trained Inquisitorial agent - a filled INDEXER.")
 
 /obj/item/reagent_containers/food/snacks/tallow/red
-	name = "redtallow"
+	name = "inquisitorial tallow"
 	desc = "Fatty tissue is harvested from slain creachurs and rendered of its membraneous sinew to produce a hard shelf-stable \
-	grease. It has then been soaked in blood or something blood adjacent to make for an easily sourced and rather grim wax substitute. As they say in Otava, Bon Appetit."
+	grease. It has then been soaked in blood or something blood adjacent to make for an easily sourced and rather grim wax substitute favored by the Inquisition. As they say in Otava, Bon Appetit."
 	icon_state = "redtallow"
 	tastes = list("grease" = 1, "oil" = 1, "regret" = 1, "blood"= 1,)
 	wax_pigment = "red"
@@ -116,6 +116,12 @@
 	tastes = list("grease" = 1, "oil" = 1, "regret" = 1, "bitterness" = 1,)
 	wax_pigment = "green"
 */
+
+/obj/item/reagent_containers/food/snacks/tallow/soft
+	name = "soft tallow"
+	desc = "Rendered tallow softened with additional fat, making it easier to spread for sealing. It resembles Inquisitorial Tallow, but lacks its holy sanction."
+	icon_state = "softtallow"
+	tastes = list("grease" = 1, "oil" = 1, "regret" =1)
 
 /obj/item/reagent_containers/food/snacks/tallow/attacked_by(obj/item/I, mob/living/user)
 	. = ..()

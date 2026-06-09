@@ -1,0 +1,4 @@
+author: "Fantasiuss"
+delete-after: True
+changes:
+  - rscadd: "Ursine Features descriptor"

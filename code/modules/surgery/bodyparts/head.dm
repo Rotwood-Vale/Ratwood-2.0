@@ -59,7 +59,7 @@
 /obj/item/bodypart/head/examine()
 	. = ..()
 	if(sellprice)
-		. += span_notice("This head seems to be wanted by the Judiciary of The Vale. It can be sold at the merchant or a HEADEATER.")
+		. += span_notice("This head seems to be wanted by the Judiciary of The Realm. It can be sold at the merchant or a HEADEATER.")
 
 /obj/item/bodypart/head/grabbedintents(mob/living/user, precise)
 	var/used_limb = precise

@@ -12,7 +12,7 @@
 	social_rank = SOCIAL_RANK_YEOMAN
 	allowed_races = ACCEPTED_RACES
 
-	tutorial = "You are the leader of the Rotwood Vale Guild of Crafts. You represents the interests of all of the craftsmen underneath you - including the Tailor\
+	tutorial = "You are the leader of the Duchy's Guild of Crafts. You represents the interests of all of the craftsmen underneath you - including the Tailor\
 	the Blacksmiths, the Artificers and the Architects. Other townspeople may look to you for guidance, but they are not under your control. You are an experienced smith and artificer, and can do their work easily. Protect the craftsmen's interests."
 
 	outfit = /datum/outfit/job/roguetown/guildmaster
@@ -35,7 +35,7 @@
 
 /datum/advclass/guildmaster
 	name = "Guildmaster"
-	tutorial = "You are the leader of the Vale Guild of Crafts. You represents the interests of all of the craftsmen underneath you - including the Tailor\
+	tutorial = "You are the leader of the Duchy's Guild of Crafts. You represents the interests of all of the craftsmen underneath you - including the Tailor\
 	the Blacksmiths, the Artificers and the Architects. Other townspeople may look to you for guidance, but they are not under your control. You are an experienced smith and artificer, and can do their work easily. Protect the craftsmen's interests."
 	outfit = /datum/outfit/job/roguetown/guildmaster/basic
 	category_tags = list(CTAG_GUILDSMASTER)
@@ -113,7 +113,7 @@
 	set category = "GUILDMASTER"
 	if(stat)
 		return
-	var/announcementinput = input("Bellow to the vale", "Make an Announcement") as text|null
+	var/announcementinput = input("Bellow to the realm", "Make an Announcement") as text|null
 	if(announcementinput)
 		if(!src.can_speak_vocal())
 			to_chat(src,span_warning("I can't speak!"))

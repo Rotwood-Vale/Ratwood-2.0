@@ -8,8 +8,62 @@
 GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 	"Rogue" = 'icons/mob/roguehud.dmi')))
 
-/proc/ui_style2icon(ui_style)
+/proc/ui_style2icon(ui_style, datum/preferences/prefs)
+	if(ui_style == "Rogue" && prefs)
+		return prefs.get_roguehud_icon()
 	return GLOB.available_ui_styles[ui_style] || GLOB.available_ui_styles[GLOB.available_ui_styles[1]]
+
+/proc/roguehud_icon_for_palette(palette)
+	switch(palette)
+		if(HUD_COLORBLIND_DEUTERANOPIA)
+			return 'icons/mob/roguehud_deuten.dmi'
+		if(HUD_COLORBLIND_PROTANOPIA)
+			return 'icons/mob/roguehud_protan.dmi'
+		if(HUD_COLORBLIND_TRITANOPIA)
+			return 'icons/mob/roguehud_tritan.dmi'
+	return 'icons/mob/roguehud.dmi'
+
+/proc/rogueheat_icon_for_palette(palette)
+	switch(palette)
+		if(HUD_COLORBLIND_DEUTERANOPIA)
+			return 'icons/mob/rogueheat_deuten.dmi'
+		if(HUD_COLORBLIND_PROTANOPIA)
+			return 'icons/mob/rogueheat_protan.dmi'
+		if(HUD_COLORBLIND_TRITANOPIA)
+			return 'icons/mob/rogueheat_tritan.dmi'
+	return 'icons/mob/rogueheat.dmi'
+
+/proc/is_hud_colorblind_palette(palette)
+	switch(palette)
+		if(HUD_COLORBLIND_NONE)
+			return TRUE
+		if(HUD_COLORBLIND_DEUTERANOPIA)
+			return TRUE
+		if(HUD_COLORBLIND_PROTANOPIA)
+			return TRUE
+		if(HUD_COLORBLIND_TRITANOPIA)
+			return TRUE
+	return FALSE
+
+/proc/is_roguehud_palette_icon(hud_icon)
+	return hud_icon == 'icons/mob/roguehud.dmi' \
+		|| hud_icon == 'icons/mob/roguehud_deuten.dmi' \
+		|| hud_icon == 'icons/mob/roguehud_protan.dmi' \
+		|| hud_icon == 'icons/mob/roguehud_tritan.dmi'
+
+/proc/is_rogueheat_palette_icon(hud_icon)
+	return hud_icon == 'icons/mob/rogueheat.dmi' \
+		|| hud_icon == 'icons/mob/rogueheat_deuten.dmi' \
+		|| hud_icon == 'icons/mob/rogueheat_protan.dmi' \
+		|| hud_icon == 'icons/mob/rogueheat_tritan.dmi'
+
+/proc/hud_colorblind_palette_options()
+	return list(
+		list("value" = HUD_COLORBLIND_NONE, "label" = "Default"),
+		list("value" = HUD_COLORBLIND_DEUTERANOPIA, "label" = "Deuteranopia"),
+		list("value" = HUD_COLORBLIND_PROTANOPIA, "label" = "Protanopia"),
+		list("value" = HUD_COLORBLIND_TRITANOPIA, "label" = "Tritanopia"),
+	)
 
 /datum/hud
 	var/mob/mymob
@@ -85,7 +139,7 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 
 	if (!ui_style)
 		// will fall back to the default if any of these are null
-		ui_style = ui_style2icon(owner.client && owner.client.prefs && owner.client.prefs.UI_style)
+		ui_style = ui_style2icon(owner.client && owner.client.prefs && owner.client.prefs.UI_style, owner.client?.prefs)
 
 //	hide_actions_toggle = new
 //	hide_actions_toggle.InitialiseIcon(src)
@@ -166,6 +220,8 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 	var/mob/screenmob = viewmob || mymob
 	if(!screenmob.client)
 		return FALSE
+
+	update_colorblind_hud_palette(screenmob.client?.prefs)
 
 	screenmob.client.screen = list()
 	screenmob.client.apply_clickcatcher()
@@ -277,6 +333,35 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 	ui_style = new_ui_style
 	build_hand_slots()
 //	hide_actions_toggle.InitialiseIcon(src)
+
+/datum/hud/proc/update_colorblind_hud_palette(datum/preferences/prefs)
+	if(!prefs)
+		prefs = mymob?.client?.prefs
+	if(!prefs)
+		return
+
+	var/list/screen_objects = static_inventory + toggleable_inventory + hotkeybuttons + infodisplay + screenoverlays + inv_slots
+	if(hand_slots)
+		for(var/held_index in hand_slots)
+			screen_objects += hand_slots[held_index]
+	if(mymob?.client)
+		screen_objects += mymob.client.screen
+
+	for(var/screen_item as anything in screen_objects)
+		var/atom/movable/screen/screen_object = screen_item
+		if(istype(screen_object))
+			screen_object.apply_colorblind_hud_palette(prefs)
+
+/client/proc/refresh_colorblind_hud_palette()
+	if(!prefs || !mob?.hud_used)
+		return
+	var/datum/hud/used_hud = mob.hud_used
+	used_hud.update_ui_style(ui_style2icon(prefs.UI_style, prefs))
+	used_hud.update_colorblind_hud_palette(prefs)
+	mob.update_a_intents()
+	if(used_hud.rmb_intent)
+		used_hud.rmb_intent.update_icon()
+	used_hud.show_hud(used_hud.hud_version)
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12()

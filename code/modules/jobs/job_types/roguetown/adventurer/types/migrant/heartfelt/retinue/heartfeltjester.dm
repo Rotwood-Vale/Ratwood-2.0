@@ -2,7 +2,7 @@
 /datum/advclass/heartfelt/retinue/jester
 	name = "Heartfeltian Jester"
 	tutorial = "You are the Jester of Heartfelt, a bringer of laughter in brighter days, now left to wander through the ashes of a fallen home. \
-	Though grief weighs heavy beneath your painted smile, you turn your steps toward the Vale—hoping your wit, charm, and cunning may yet carve out a place for joy amidst the ruin."
+	Though grief weighs heavy beneath your painted smile, you turn your steps toward these lands—hoping your wit, charm, and cunning may yet carve out a place for joy amidst the ruin."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/roguetown/heartfelt/retinue/jester

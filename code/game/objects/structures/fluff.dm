@@ -777,10 +777,11 @@
 
 /obj/structure/fluff/signage/examine(mob/user)
 	. = ..()
+	var/realmname = SSmapping.map_adjustment.realm_name
 	if(!user.is_literate())
 		. += "I have no idea what it says."
 	else
-		. += "It says \"ROTWOOD VALE\""
+		. += "It says \"[realmname]\""
 
 /obj/structure/fluff/buysign
 	icon_state = "signwrote"

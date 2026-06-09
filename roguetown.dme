@@ -1148,6 +1148,7 @@
 #include "code\game\objects\items\rogueitems\parasols.dm"
 #include "code\game\objects\items\rogueitems\perfume.dm"
 #include "code\game\objects\items\rogueitems\repairkit.dm"
+#include "code\game\objects\items\rogueitems\seals.dm"
 #include "code\game\objects\items\rogueitems\skillbooks.dm"
 #include "code\game\objects\items\rogueitems\undies.dm"
 #include "code\game\objects\items\rogueitems\util.dm"

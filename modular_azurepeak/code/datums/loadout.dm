@@ -155,12 +155,12 @@ GLOBAL_LIST_EMPTY(loadout_items)
 
 /datum/loadout_item/ancient_hammer
 	name = "Ancient Hammer"
-	path = /obj/item/rogueweapon/hammer/decrepit
+	path = /obj/item/rogueweapon/hammer/ancient/decrepit
 	triumph_cost = 3
 
 /datum/loadout_item/ancient_tongs
 	name = "Ancient Tongs"
-	path = /obj/item/rogueweapon/tongs/decrepit
+	path = /obj/item/rogueweapon/tongs/ancient/decrepit
 	triumph_cost = 3
 
 /datum/loadout_item/ancient_pick

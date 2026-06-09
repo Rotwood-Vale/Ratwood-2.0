@@ -73,7 +73,7 @@
 	if(departing_mob.stat == DEAD)
 		departing_mob.visible_message("<span class='notice'>[user] sends the body of [departing_mob] away. They're someone else's problem now.</span>")
 	else
-		departing_mob.visible_message("<span class='notice'>[departing_mob == user ? "Out of their own volition, " : "Ushered by [user], "][departing_mob] leaves the vale.</span>")
+		departing_mob.visible_message("<span class='notice'>[departing_mob == user ? "Out of their own volition, " : "Ushered by [user], "][departing_mob] leaves [SSmapping.map_adjustment.realm_name].</span>")
 		// If departure is a lord, remove them from found_lords to prevent false omen triggers
 	if(departing_mob.mind && departing_mob.ckey)
 		if(departing_mob.mind.assigned_role == "Grand Duke" || departing_mob.mind.assigned_role == "Grand Duchess")
