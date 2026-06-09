@@ -1,5 +1,0 @@
-author: "zeroisthebiggay"
-delete-after: True
-changes:
-  - rscdel: "staves skill, now everyone who used it previously has had their polearms skill upped to compensate"
-  - balance: "quarterstaves are now polearms"

@@ -1,4 +1,0 @@
-author: "WolfOrion"
-delete-after: True
-changes:
-  - bugfix: "gives lamia a physical descriptor"
