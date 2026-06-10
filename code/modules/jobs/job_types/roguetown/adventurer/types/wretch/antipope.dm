@@ -30,7 +30,6 @@
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT, //For self-defence, no STR so can't grab well, only resist
 		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/staves = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
 		/datum/skill/magic/holy = SKILL_LEVEL_MASTER, //You are Ascendants' chosen.
@@ -312,6 +311,7 @@
 			for(var/mob/living/carbon/human/M in GLOB.human_list)
 				if(M.patron?.type == src.patron?.type)
 					to_chat(M, span_boldnotice("<big><b>Your dark shepherd whispers:</b> [announcementinput]</big>"))
+					M.playsound_local(M, 'sound/magic/zizo_snuff.ogg', 100)
 			COOLDOWN_START(src, evil_priest_announcement, EVIL_PRIEST_ANNOUNCEMENT_COOLDOWN)
 		else
 			to_chat(src, span_warning("Your whispering was interrupted!"))
