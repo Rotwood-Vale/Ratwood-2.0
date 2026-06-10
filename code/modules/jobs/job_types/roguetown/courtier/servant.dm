@@ -73,6 +73,8 @@
 		H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/labor/farming, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
+	if(H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/massage)
 
 /datum/advclass/servant/maid
 	name = "Maid"
@@ -117,6 +119,8 @@
 		H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/labor/farming, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
+	if(H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/massage)
 
 /datum/advclass/servant/butler
 	name = "Butler"
@@ -161,3 +165,5 @@
 		H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/labor/farming, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
+	if(H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/massage)
