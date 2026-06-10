@@ -30,8 +30,9 @@
 		if(target.anti_magic_check(TRUE, TRUE))
 			return FALSE
 		target.visible_message(span_warning("[user] points at [target]'s eyes!"),span_warning("My eyes are covered in darkness!"))
-		var/strength = min(user.get_skill_level(associated_skill) * 4, 4)
-		target.blind_eyes(strength)
+		target.blind_eyes(1.5)
+		target.blur_eyes(5)
+		target.apply_status_effect(/datum/status_effect/debuff/noc_blind)
 		return TRUE
 	revert_cast()
 	return FALSE
