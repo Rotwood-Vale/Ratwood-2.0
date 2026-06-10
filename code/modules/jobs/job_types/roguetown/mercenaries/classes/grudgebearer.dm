@@ -16,20 +16,20 @@
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_WIL = 3,
-		STATKEY_PER = 3,//Anvil"Strikes deftly" is based on PER
+		STATKEY_PER = 3, //Anvil "Strikes deftly" is based on PER
 		STATKEY_STR = 1,
 		STATKEY_SPD = -2
 	)
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_EXPERT,	//Shouldn't be better than the smith (though the stats are already)
-		/datum/skill/craft/blacksmithing = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/smelting = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/blacksmithing = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_NOVICE,
 	)
 
@@ -60,7 +60,7 @@
 		var/wepchoice = input("Choose your weapon", "Available weapons") as anything in weapons
 		switch(wepchoice)
 			if("Grand Mace")
-				backr = /obj/item/rogueweapon/mace/goden/steel
+				r_hand = /obj/item/rogueweapon/mace/goden/steel
 			if("Spiked Maul")
 				r_hand = /obj/item/rogueweapon/mace/maul/spiked
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
@@ -85,7 +85,8 @@
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_APPRENTICE,	//Only here so they'd be able to repair their own armor integrity
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_JOURNEYMAN,	//Only here so they'd be able to repair their own armor integrity
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_JOURNEYMAN,	//Only here so they'd be able to repair their own armor integrity
 		/datum/skill/misc/climbing = SKILL_LEVEL_NOVICE,
 	)
 /datum/outfit/job/roguetown/mercenary/grudgebearer_soldier/pre_equip(mob/living/carbon/human/H)
@@ -115,7 +116,7 @@
 				if("Axe")
 					backr = /obj/item/rogueweapon/stoneaxe/battle
 				if("Grand Mace")
-					backr = /obj/item/rogueweapon/mace/goden/steel
+					r_hand = /obj/item/rogueweapon/mace/goden/steel
 				if("Maul")
 					r_hand = /obj/item/rogueweapon/mace/maul/steel
 					backr = /obj/item/rogueweapon/scabbard/gwstrap
