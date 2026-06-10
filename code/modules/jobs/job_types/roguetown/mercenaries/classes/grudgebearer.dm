@@ -61,6 +61,7 @@
 		switch(wepchoice)
 			if("Grand Mace")
 				r_hand = /obj/item/rogueweapon/mace/goden/steel
+				backr = /obj/item/rogueweapon/scabbard/gwstrap
 			if("Spiked Maul")
 				r_hand = /obj/item/rogueweapon/mace/maul/spiked
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
@@ -117,6 +118,7 @@
 					backr = /obj/item/rogueweapon/stoneaxe/battle
 				if("Grand Mace")
 					r_hand = /obj/item/rogueweapon/mace/goden/steel
+					backr = /obj/item/rogueweapon/scabbard/gwstrap
 				if("Maul")
 					r_hand = /obj/item/rogueweapon/mace/maul/steel
 					backr = /obj/item/rogueweapon/scabbard/gwstrap
