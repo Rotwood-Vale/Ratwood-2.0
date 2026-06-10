@@ -1,7 +1,4 @@
 // Noc Spells
-// Blindness is a cancerous spells and should not be available to everyone.
-// But I am not nuking it from Acolyte yet so it will be unavailable to mage.
-// I repathed it to avoid it becoming available to mages again.
 /obj/effect/proc_holder/spell/invoked/blindness
 	name = "Blindness"
 	desc = "Direct a mote of living darkness to temporarily blind another."
