@@ -188,7 +188,8 @@
 	COOLDOWN_DECLARE(priest_excommunicate)
 	COOLDOWN_DECLARE(priest_curse)
 	COOLDOWN_DECLARE(priest_change_miracles)
-	COOLDOWN_DECLARE(evil_priest_sermon)//I apologise.
+	COOLDOWN_DECLARE(evil_priest_sermon)
+	COOLDOWN_DECLARE(evil_priest_announcement)
 
 	// bait stacks for aimed intent
 	var/bait_stacks

@@ -451,6 +451,17 @@
 		added_def = 2,\
 	)
 
+/obj/item/rogueweapon/huntingknife/idagger/steel/zizo
+	name = "avantyne dagger"
+	desc = "The very moment of sacrifice; that imperceptable difference between a dagger's edge and a heart's chamber, crystallized into \
+	a scalpel of bleeding darksteel. In the hands of Her trusted disciples, it serves as an unholy countermandate against superstition and stagnation."
+	icon_state = "zizodagger"
+	sheathe_icon = "zizodagger"
+	force = 25
+	max_integrity = 250
+	max_blade_int = 200
+	embedding = list("embedded_pain_multiplier" = 1.2, "embed_chance" = 20, "embedded_fall_chance" = 0)
+
 /obj/item/rogueweapon/huntingknife/idagger/steel/pestrasickle
 	name ="plaguebringer sickle"
 	desc = "A wicked edge brings feculent delights."

@@ -4,8 +4,16 @@
 	color = null
 	icon_state = "priesthead"
 	item_state = "priesthead"
-	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	max_integrity = ARMOR_INT_HELMET_HARDLEATHER
+	armor = ARMOR_SPELLSINGER
+	body_parts_covered = HEAD|HAIR|EARS
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
+	cold_protection = HEAD
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	heat_protection = HEAD
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dynamic_hair_suffix = ""
 	sewrepair = TRUE
 

@@ -2190,6 +2190,10 @@
 			var/mob/living/carbon/human/target = input(user, "Choose a host") as null|anything in valids_on_rune
 			if(!target || QDELETED(target) || target.loc != loc)
 				return
+			if(HAS_TRAIT(target, TRAIT_GODHAND))
+				to_chat(user, span_warning("[target]'s lux slips out of your grasp with ease. A deathly chill runs down your spine."))
+				user.Stun(50)
+				return
 			if(do_after(user, 5 SECONDS))
 				user.say("Your silence, a test.")
 				if(do_after(user, 5 SECONDS))

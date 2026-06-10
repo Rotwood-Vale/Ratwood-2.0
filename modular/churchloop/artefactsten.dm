@@ -1613,6 +1613,9 @@ Necra's Censer (by ARefrigerator)
 	if(!istype(user, /mob/living/carbon/human))
 		to_chat(user, span_warning("The Star rejects an unworthy bearer."))
 		return
+	if(HAS_TRAIT(target, TRAIT_GODHAND))
+		to_chat(user, span_warning("The Star doesn't respond. A horrible chill runs down your spine."))
+		return
 	if(!target.client)
 		to_chat(user, span_warning("[target.name] cannot accept the rite without a soul to answer (no client)."))
 		return

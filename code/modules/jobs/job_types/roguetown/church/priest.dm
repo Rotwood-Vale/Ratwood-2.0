@@ -82,14 +82,14 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	subclass_stats = list(
 		STATKEY_INT = 4,
 		STATKEY_WIL = 2,
-		STATKEY_STR = -1,
-		STATKEY_CON = -1,
-		STATKEY_SPD = -1
-	)
+		STATKEY_CON = 2,
+		STATKEY_SPD = 2,
+	) //Same as Wretch-Heresiarch's. You don't get combat traits, so you are going to need good stats to not die.
 	subclass_skills = list(
-		/datum/skill/combat/wrestling = SKILL_LEVEL_MASTER,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_MASTER,
-		/datum/skill/combat/polearms = SKILL_LEVEL_MASTER,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
 		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
@@ -98,6 +98,9 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		/datum/skill/labor/farming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/magic/holy = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 	)
 	subclass_stashed_items = list(
 		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
@@ -230,7 +233,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 /mob/living/carbon/human/proc/coronate_lord()
 	set name = "Coronate"
 	set category = "Priest"
-	to_chat (src, span_warning("The process of crowning a new ruler, and binding his soul to the Throne of the Realm takes a most heavy toil. Any newly coronated Noble Liege will not be able to be revived. You should probably mention this."))
+	to_chat (src, span_warning("The process of crowning a new ruler, and binding his soul to the Throne of the Vale takes a most heavy toil. Any newly coronated Noble Liege will not be able to be revived. You should probably mention this."))
 	if(!mind)
 		return
 	if(world.time < 30 MINUTES)
@@ -266,8 +269,8 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		SSticker.regentmob = null
 		var/dispjob = mind.assigned_role
 		removeomen(OMEN_NOLORD)
-		say("By the authority of the gods, I pronounce you Ruler of all the realm!")
-		priority_announce("[real_name] the [dispjob] has named [HU.real_name] the inheritor of [SSmapping.map_adjustment.realm_name]!", title = "Long Live [HU.real_name]!", sound = 'sound/misc/bell.ogg')
+		say("By the authority of the gods, I pronounce you Ruler of all the vale!")
+		priority_announce("[real_name] the [dispjob] has named [HU.real_name] the inheritor of ROTWOOD VALE!", title = "Long Live [HU.real_name]!", sound = 'sound/misc/bell.ogg')
 		var/datum/job/roguetown/nomoredukes = SSjob.GetJob("Grand Duke")
 		if(nomoredukes)
 			nomoredukes.total_positions = -1000 //We got what we got now.
@@ -283,7 +286,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		to_chat(src, span_warning("I need to do this in the chapel."))
 		return FALSE
 
-	var/announcementinput = input("Bellow to the realm", "Make an Announcement") as text|null
+	var/announcementinput = input("Bellow to the vale", "Make an Announcement") as text|null
 	if(announcementinput)
 		if(!src.can_speak_vocal())
 			to_chat(src,span_warning("I can't speak!"))
@@ -671,6 +674,12 @@ code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep 
 
 	if(!HAS_TRAIT(target, TRAIT_HERESIARCH))
 		to_chat(user, span_warning("[target] wasn't marked by the enemy as a heretic!"))
+		revert_cast()
+		return FALSE
+
+	if(HAS_TRAIT(target, TRAIT_GODHAND))
+		to_chat(user, span_warning("The Ten refuse to look upon [target]. A horrible chill runs down your spine."))
+		user.Stun(50)
 		revert_cast()
 		return FALSE
 
