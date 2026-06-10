@@ -352,17 +352,17 @@
 
 	changeNext_move(CLICK_CD_GRABBING)
 
-//	if(AM.pulledby && AM.pulledby != src)
-//		if(AM == src)
-//			to_chat(src, span_warning("I'm being grabbed by something!"))
-//			return FALSE
-//		else
-//			if(!supress_message)
-//				AM.visible_message(span_danger("[src] has pulled [AM] from [AM.pulledby]'s grip."), span_danger("[src] has pulled me from [AM.pulledby]'s grip."), null, null, src)
-//
-//				to_chat(src, span_notice("I pull [AM] from [AM.pulledby]'s grip!"))
-//			log_combat(AM, AM.pulledby, "pulled from", src)
-//			AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
+	if(AM.pulledby && AM.pulledby != src)
+		if(AM == src)
+			to_chat(src, span_warning("I'm being grabbed by something!"))
+			return FALSE
+		else
+			if(!supress_message)
+				AM.visible_message(span_danger("[src] has pulled [AM] from [AM.pulledby]'s grip."), span_danger("[src] has pulled me from [AM.pulledby]'s grip."), null, null, src)
+
+				to_chat(src, span_notice("I pull [AM] from [AM.pulledby]'s grip!"))
+			log_combat(AM, AM.pulledby, "pulled from", src)
+			AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 	if(AM != src)
 		pulling = AM
 		AM.pulledby = src
