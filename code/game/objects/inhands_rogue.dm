@@ -9,9 +9,6 @@
 	var/smelted = FALSE
 	/// Determines whether this item is silver or not.
 	var/is_silver = FALSE
-	/// "Lesser" silver items still count as silver, but their bite against the silver-weak is muted: no pickup ignition,
-	/// no force-undisguise on hit, and only a slow accumulation of (non-igniting) sunder stacks while held/worn.
-	var/is_lesser_silver = FALSE
 	var/last_used = 0
 	var/toggle_state = null
 	var/override_state = null
