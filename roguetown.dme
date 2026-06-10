@@ -2553,7 +2553,6 @@
 #include "code\modules\roguetown\roguejobs\blacksmith\anvil_recipes\blades.dm"
 #include "code\modules\roguetown\roguejobs\blacksmith\anvil_recipes\dwarven.dm"
 #include "code\modules\roguetown\roguejobs\blacksmith\anvil_recipes\kazengunite.dm"
-#include "code\modules\roguetown\roguejobs\blacksmith\anvil_recipes\dwarven.dm"
 #include "code\modules\roguetown\roguejobs\blacksmith\anvil_recipes\tools.dm"
 #include "code\modules\roguetown\roguejobs\blacksmith\anvil_recipes\valuables.dm"
 #include "code\modules\roguetown\roguejobs\blacksmith\anvil_recipes\weapons.dm"
