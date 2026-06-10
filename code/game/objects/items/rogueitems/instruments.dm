@@ -768,6 +768,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Painkiller" = 'sound/music/instruments/ztrato (3).ogg',
 	"Abyssor's Bane" = 'sound/music/instruments/ztrato (4).ogg')
 	blade_dulling = DULLING_BASHCHOP
+	w_class = WEIGHT_CLASS_HUGE
 	minstr = 13
 	max_blade_int = 300
 	anvilrepair = /datum/skill/craft/weaponsmithing
