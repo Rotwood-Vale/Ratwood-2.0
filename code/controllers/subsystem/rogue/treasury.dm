@@ -1,4 +1,4 @@
-#define RURAL_TAX 50 // Free money. A small safety pool for lowpop mostly
+#define RURAL_TAX 100 // Free money. A small safety pool for lowpop mostly Edited Original 50
 #define TREASURY_TICK_AMOUNT 6 MINUTES
 #define EXPORT_ANNOUNCE_THRESHOLD 100
 
