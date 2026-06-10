@@ -1161,3 +1161,13 @@
 	name = "The Kiss"
 	desc = "A terrible sweetness floods my senses."
 	icon_state = "vampirebite"
+
+/datum/status_effect/debuff/noc_blind
+	id = "noc_blind"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/noc_blind
+	effectedstats = list(STATKEY_PER = -5)
+	duration = 15 SECONDS
+
+/atom/movable/screen/alert/status_effect/debuff/noc_blind
+	name = "Blindness"
+	desc = "Darkness shrouds my eyes!"
