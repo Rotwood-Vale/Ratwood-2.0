@@ -30,12 +30,15 @@
 	become_hearing_sensitive()
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/proc/anti_stall()
-	src.visible_message(span_warning("The Crown of the Vale crumbles to dust, the ashes spiriting away in the direction of the Keep."))
+	src.visible_message(span_warning("The Crown of [SSmapping.map_adjustment.realm_name] crumbles to dust, the ashes spiriting away in the direction of the Keep."))
 	SSroguemachine.scomm_machines -= src
 	SSroguemachine.crown = null //Do not harddel.
 	qdel(src) //Anti-stall
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/attack_right(mob/living/carbon/human/user)
+	if(user.restrained() || user.incapacitated())
+		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	visible_message(span_notice ("[user] presses their hands against their crown."))
 	var/input_text = input(user, "Enter your ducal message:", "Crown SCOM")
@@ -56,7 +59,7 @@
 
 			GLOB.broadcast_list += list(list(
 			"message"   = input_text,
-			"tag"		= "The Crown of the Vale",
+			"tag"		= "The Crown of [SSmapping.map_adjustment.realm_name]",
 			"timestamp" = station_time_timestamp("hh:mm:ss")
 			))
 
@@ -71,6 +74,9 @@
 					S.repeat_message(input_text, src, usedcolor)
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/attack_self(mob/living/user)
+	if(user.restrained() || user.incapacitated())
+		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
+		return
 	if(.)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -79,6 +85,9 @@
 	to_chat(user, span_info("I [garrisonline ? "connect the crown to the garrison SCOMline" : "connect the crown to the general SCOMline"]"))
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/MiddleClick(mob/user)
+	if(user.restrained() || user.incapacitated())
+		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
+		return
 	if(.)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)

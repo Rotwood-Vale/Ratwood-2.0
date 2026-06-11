@@ -449,7 +449,7 @@
 		O.forceMove(T)
 	return 1
 
-/obj/structure/closet/relaymove(mob/user)
+/obj/structure/closet/relaymove(mob/user, direction)
 	if(user.stat || !isturf(loc) || !isliving(user))
 		return
 	if(locked)

@@ -62,6 +62,7 @@
 	body_parts_covered = EYES
 	nudist_approved = TRUE
 	anvilrepair = /datum/skill/craft/armorsmithing
+	sewrepair = FALSE
 //	block2add = FOV_BEHIND
 
 /obj/item/clothing/mask/rogue/spectacles/inq
@@ -214,6 +215,7 @@
 	icon_state = "lmask"
 	sellprice = 50
 	anvilrepair = /datum/skill/craft/armorsmithing
+	sewrepair = FALSE
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/mask/rogue/lordmask/l
@@ -333,6 +335,7 @@
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/iron
+	sewrepair = FALSE
 
 /obj/item/clothing/mask/rogue/facemask
 	name = "iron mask"
@@ -351,19 +354,37 @@
 	experimental_onhip = TRUE
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/iron
+	sewrepair = FALSE
+
+/obj/item/clothing/mask/rogue/facemask/equipped(mob/user, slot)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_fov_angles()
+
+/obj/item/clothing/mask/rogue/facemask/dropped(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_fov_angles()
 
 /obj/item/clothing/mask/rogue/facemask/shadowfacemask
 	name = "spider rider's mask"
 	desc = "A metal mask adorned with arachnid iconography. A grim visage crafted by a grim race."
 	icon_state = "shadowfacemask"
 
-/obj/item/clothing/mask/rogue/facemask/aalloy
+/obj/item/clothing/mask/rogue/facemask/ancient
+	name = "ancient mask"
+	desc = "Polished gilbranze, molded into an intimidating visage. Touch the cheek; it is warm, like flesh. But it is not flesh. Not yet."
+	max_integrity = 200
+	icon_state = "ancientmask"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/clothing/mask/rogue/facemask/ancient/decrepit
 	name = "decrepit mask"
 	desc = "Frayed bronze, molded into an unblinking visage. Only the statues, buried within the innards of Mount Decapitation, share its wrinkled lip and sneer of cold command."
-	icon_state = "ancientmask"
 	max_integrity = 75
 	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = null
 
 /obj/item/clothing/mask/rogue/facemask/copper
@@ -461,13 +482,6 @@
 	icon_state = "smask"
 	max_integrity = 200
 	smeltresult = /obj/item/ingot/steel
-
-/obj/item/clothing/mask/rogue/facemask/steel/paalloy
-	name = "ancient mask"
-	desc = "Polished gilbranze, molded into an intimidating visage. Touch the cheek; it is warm, like flesh. But it is not flesh. Not yet."
-	icon_state = "ancientmask"
-	smeltresult = /obj/item/ingot/aaslag
-
 
 /obj/item/clothing/mask/rogue/facemask/steel/hound
 	name = "steel hound mask"
@@ -593,6 +607,7 @@
 	salvage_result = /obj/item/natural/bone
 	salvage_amount = 1
 	nudist_approved = TRUE
+	sewrepair = FALSE
 
 /obj/item/clothing/mask/rogue/ragmask
 	name = "rag mask"
@@ -781,6 +796,7 @@
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
 	smeltresult = null
 	anvilrepair = /datum/skill/craft/ceramics
+	sewrepair = FALSE
 	sellprice = 0
 	var/hide_identity = TRUE
 	var/next_honk = 0
@@ -856,7 +872,14 @@
 	next_honk = world.time + 1 SECONDS
 	playsound(src, 'sound/misc/honkmask.ogg', 70, TRUE)
 	to_chat(user, span_notice("The mask's nose is squeezed! It emits a squeaky honk."))
-
+/obj/item/clothing/mask/rogue/xylixmask/dropped(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		hide_identity = initial(hide_identity)
+		block2add = initial(block2add)
+		H.update_fov_angles()
+		H.update_vision_cone()
 /obj/item/clothing/mask/rogue/xylixmask/MiddleClick(mob/user, params)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return

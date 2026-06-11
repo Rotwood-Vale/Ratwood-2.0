@@ -483,11 +483,13 @@
  * An atom we are buckled or is contained within us has tried to move
  *
  * Default behaviour is to send a warning that the user can't move while buckled as long
- * as the buckle_message_cooldown has expired (50 ticks)
+ * as the [buckle_message_cooldown][/atom/var/buckle_message_cooldown] has expired (25 ticks)
  */
-/atom/proc/relaymove(mob/user)
+/atom/proc/relaymove(mob/user, direction)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_RELAYMOVE, user, direction) & COMSIG_BLOCK_RELAYMOVE)
+		return
 	if(buckle_message_cooldown <= world.time)
-		buckle_message_cooldown = world.time + 50
+		buckle_message_cooldown = world.time + 25
 		to_chat(user, "<span class='warning'>I should try resisting.</span>")
 	return
 

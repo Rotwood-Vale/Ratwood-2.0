@@ -32,6 +32,8 @@
 	var/static/list/accessory_icon_cache = list()
 	/// Whether this specific accessory doesn't allow for coloring
 	var/color_disabled = FALSE
+	/// Which gradient dmi file this uses
+	var/gradient_icon = 'icons/mob/sprite_accessory/hair/hair_gradients32x32.dmi'
 
 /datum/sprite_accessory/New()
 	if(color_keys > 1)

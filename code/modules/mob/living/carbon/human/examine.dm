@@ -460,6 +460,16 @@
 		if(item)
 			. += span_notice("You get the feeling [m2] most valuable possession is \a [item].")
 
+	if(user != src && get_dist(user, src) <= 3)
+		var/datum/charflaw/malodorous/malodorous_flaw = src.get_flaw(/datum/charflaw/malodorous)
+		if(malodorous_flaw && malodorous_flaw.is_reeking())
+			var/can_see_stink = !isliving(user) // adminghost always sees it
+			if(isliving(user))
+				var/mob/living/living_user = user
+				can_see_stink = living_user.can_smell()
+			if(can_see_stink)
+				. += span_greentext("They reek.")
+
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if(HAS_TRAIT(user, TRAIT_ROYALSERVANT))
@@ -1165,9 +1175,9 @@
 			if(length(neck.branded_writing_on_neck) && get_location_accessible(src, BODY_ZONE_PRECISE_NECK))
 				. += span_info("[capitalize(m2)] neck has been branded with ") + "[span_boldwarning(neck.branded_writing_on_neck)]."
 
-	// Characters with the hunted flaw will freak out if they can't see someone's face.
+	// Characters with the marked for death flaw will freak out if they can't see someone's face.
 	if(!appears_dead)
-		if(skipface && user.has_flaw(/datum/charflaw/hunted) && user != src)
+		if(skipface && user.has_flaw(/datum/charflaw/assassintarget) && user != src)
 			user.add_stress(/datum/stressevent/hunted)
 
 	if(dna?.species?.type == /datum/species/gnoll)

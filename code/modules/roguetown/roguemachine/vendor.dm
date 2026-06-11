@@ -69,7 +69,7 @@
 			return
 
 /obj/structure/roguemachine/vendor/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/roguecoin/aalloy))
+	if(istype(P, /obj/item/roguecoin/gilbranze))
 		return
 	if(istype(P, /obj/item/roguecoin/inqcoin))
 		return
@@ -387,7 +387,7 @@
 		var/obj/P = new X(src)
 		held_items[P] = list()
 		held_items[P]["NAME"] = P.name
-		held_items[P]["PRICE"] = 10
+		held_items[P]["PRICE"] = 5
 
 	update_icon()
 

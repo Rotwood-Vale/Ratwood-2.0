@@ -258,7 +258,7 @@
 			top.Stun(15)
 	if(!btm.IsStun())
 		if(prob(5))
-			btm.emote("groan")
+			btm.emote("groan", forced = TRUE)
 			btm.sexcon.try_do_pain_effect(PAIN_MED_EFFECT, FALSE)
 			btm.Stun(15)
 		else if(prob(3))
@@ -321,7 +321,7 @@
 			return
 	if(!btm.IsStun())
 		if(prob(10))
-			btm.emote("groan")
+			btm.emote("groan", forced = TRUE)
 			btm.sexcon.try_do_pain_effect(PAIN_MED_EFFECT, FALSE)
 			btm.Stun(15)
 			if(top.sexcon.knotted_part_partner&SEX_PART_JAWS && btm.getOxyLoss() < 50) // if the current top knotted them orally

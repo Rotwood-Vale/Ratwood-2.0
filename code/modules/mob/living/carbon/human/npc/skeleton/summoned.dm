@@ -15,23 +15,23 @@
 	H.STAINT = 1
 	name = "Skeleton Soldier"
 	cloak = /obj/item/clothing/cloak/stabard/surcoat/guard // Ooo Spooky Old Dead MAA
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/aalloy
-	mask = /obj/item/clothing/mask/rogue/facemask/aalloy
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/aalloy
-	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/aalloy
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/aalloy
-	pants = /obj/item/clothing/under/roguetown/chainlegs/kilt/aalloy
-	shoes = /obj/item/clothing/shoes/roguetown/boots/aalloy
-	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron/aalloy
-	gloves = /obj/item/clothing/gloves/roguetown/chain/aalloy
+	head = /obj/item/clothing/head/roguetown/helmet/heavy/ancient/decrepit
+	mask = /obj/item/clothing/mask/rogue/facemask/ancient/decrepit
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/ancient/decrepit
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/ancient/decrepit
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/ancient/decrepit
+	pants = /obj/item/clothing/under/roguetown/chainlegs/kilt/ancient/decrepit
+	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/ancient/decrepit
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient/decrepit
+	gloves = /obj/item/clothing/gloves/roguetown/chain/ancient/decrepit
 	if(prob(33))
-		l_hand = /obj/item/rogueweapon/spear/aalloy
+		l_hand = /obj/item/rogueweapon/spear/ancient/decrepit
 	else if(prob(33))
-		l_hand = /obj/item/rogueweapon/flail/aflail
-		r_hand = /obj/item/rogueweapon/shield/tower/metal/alloy/skeleton
+		l_hand = /obj/item/rogueweapon/flail/sflail/ancient/decrepit
+		r_hand = /obj/item/rogueweapon/shield/tower/metal/ancient/decrepit
 	else
-		l_hand = /obj/item/rogueweapon/sword/short/gladius/agladius	// ave
-		r_hand = /obj/item/rogueweapon/shield/tower/metal/alloy/skeleton
+		l_hand = /obj/item/rogueweapon/sword/short/gladius/ancient/decrepit // ave
+		r_hand = /obj/item/rogueweapon/shield/tower/metal/ancient/decrepit
 
 
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
@@ -44,10 +44,6 @@
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
-
-/obj/item/rogueweapon/shield/tower/metal/alloy/skeleton
-	force = 10
-	desc = "A hefty tower shield, wrought from frayed bronze. Looped with dried kelp and reeking of saltwater, you'd assume that this had been fished out from the remains of a long-sunken warship. This one seems half rotted."
 
 /mob/living/carbon/human/species/skeleton/npc/summoned/should_target(atom/target)
 	if(ismob(target))

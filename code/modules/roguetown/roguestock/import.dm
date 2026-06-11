@@ -163,7 +163,7 @@
 
 /datum/roguestock/import/horsecrate
 	name = "Horse Crate"
-	desc = "A strange and unfamiliar mount in the vale. Horses, unlike saigas, have uniquely uncloven, single-toed hooves."
+	desc = "A strange and unfamiliar mount in Ferentia. Horses, unlike saigas, have uniquely uncloven, single-toed hooves."
 	item_type = /obj/structure/closet/crate/chest/steward/horsecrate
 	export_price = 500
 	importexport_amt = 1

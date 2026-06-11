@@ -1,4 +1,0 @@
-author: "WeNeedMorePhoron - ported by jam"
-delete-after: True
-changes:
-  - bugfix: "fixes helmet storage allowing non-clothing items"

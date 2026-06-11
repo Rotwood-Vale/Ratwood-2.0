@@ -11,6 +11,7 @@
 	blocksound = SOFTHIT
 	max_integrity = 200
 	anvilrepair = /datum/skill/craft/carpentry
+	sewrepair = FALSE
 	heat_protection = HAND_LEFT | HAND_RIGHT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 

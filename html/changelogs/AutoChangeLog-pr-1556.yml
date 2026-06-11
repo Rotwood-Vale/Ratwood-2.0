@@ -1,6 +1,0 @@
-author: "Jamdrawers"
-delete-after: True
-changes:
-  - rscadd: "Eoran Harp Bow as a ranged option for the Eoran Templar!"
-  - balance: "shortbows now function as shortbows"
-  - refactor: "adjusted how bows are laid out"

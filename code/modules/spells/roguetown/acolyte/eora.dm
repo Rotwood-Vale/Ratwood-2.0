@@ -16,6 +16,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
+	dropshrink = 0.8
 
 /obj/item/clothing/head/peaceflower/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
@@ -27,7 +28,7 @@
 /obj/item/clothing/head/peaceflower/dropped(mob/living/carbon/human/user)
 	var/trait_given = user?.patron?.type == /datum/patron/divine/eora ? TRAIT_EORAN_CONTENTED : TRAIT_PACIFISM
 	REMOVE_TRAIT(user, trait_given, "peaceflower_[REF(src)]")
-	if(istype(user) && user?.head == src)
+	if(istype(user) && (user?.head == src || user?.wear_mask == src))
 		user.remove_status_effect(/datum/status_effect/buff/peaceflower)
 	return ..()
 
@@ -68,7 +69,7 @@
 	sound = list('sound/magic/magnet.ogg')
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	releasedrain = 40
-	chargetime = 60
+	chargetime = 30
 	warnie = "spellwarning"
 	no_early_release = TRUE
 	charging_slowdown = 1
@@ -533,11 +534,11 @@
 		return TRUE
 
 	if(istype(I, /obj/item/rogueweapon/huntingknife/scissors))
-		if(prune_count >= 4)
+		if(prune_count >= 1)
 			to_chat(user, span_warning("The tree has been fully pruned already!"))
 			return TRUE
 		var/skill = get_farming_skill(user)
-		var/prune_time = 15 SECONDS - (skill * 2.5 SECONDS)
+		var/prune_time = 10 SECONDS - (skill * 2.5 SECONDS)
 
 		to_chat(user, span_notice("You begin pruning the tree..."))
 
@@ -559,22 +560,21 @@
 			to_chat(user, span_warning("The tree can't absorb any more water right now!"))
 			return TRUE
 
-		var/has_water = FALSE
-		if(container.reagents.has_reagent(/datum/reagent/water, 1))
-			has_water = TRUE
+		var/water_type = null
+		if(container.reagents.has_reagent(/datum/reagent/water, 20))
+			water_type = /datum/reagent/water
+		else if(container.reagents.has_reagent(/datum/reagent/water/blessed, 20))
+			water_type = /datum/reagent/water/blessed
 
-		if(!has_water)
-			to_chat(user, span_warning("The tree accepts only fresh, clean water."))
+		if(!water_type)
+			to_chat(user, span_warning("The tree accepts only fresh, clean or blessed water."))
 			return
 
 		var/remaining_cap = 25 - water_happiness
-		var/skill = get_farming_skill(user)
-		var/potential_gain = 5 + (skill * 4)  // 5 at skill 0, 25 at skill 5+
-		var/actual_gain = min(potential_gain, remaining_cap)
-		var/action_time = 5 SECONDS - (skill * 0.5 SECONDS)
+		var/actual_gain = remaining_cap
 
-		if(do_after(user, action_time, target = src))
-			container.reagents.remove_reagent(/datum/reagent/water, 1)
+		if(do_after(user, 1 SECONDS, target = src))
+			container.reagents.remove_reagent(water_type, 20)
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				add_sleep_experience(user, /datum/skill/labor/farming, C.STAINT * 0.5)
@@ -588,6 +588,9 @@
 			return TRUE
 
 	if(istype(I, /obj/item/compost) || istype(I, /obj/item/fertilizer))
+		if(istype(I, /obj/item/fertilizer) && growth_stage != FRUITING)
+			to_chat(user, span_warning("The tree won't absorb the fertilizer properly until it is maturing or fully grown."))
+			return TRUE
 
 		if(fertilizer_happiness >= 25)
 			to_chat(user, span_warning("The tree can't absorb any more nutrients right now!"))
@@ -595,11 +598,10 @@
 
 		var/remaining_cap = 25 - fertilizer_happiness
 		var/skill = get_farming_skill(user)
-		var/potential_gain = 5 + (skill * 4)
+		var/potential_gain = max(5 + (skill * 4), 13)  // A maximum of 13 ensures at most 2 applications of compost
 		var/actual_gain = min(potential_gain, remaining_cap)
-		var/action_time = 5 SECONDS - (skill * 0.5 SECONDS)
 
-		if(do_after(user, action_time, target = src))
+		if(do_after(user, 1 SECONDS, target = src))
 			qdel(I)
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
@@ -667,7 +669,7 @@
 		. += span_warning("The leaves are ashen and dampened, emitting no aura. Perhaps more ash can fix this somehow.")
 
 	if(happiness_tier == 1)
-		. += span_warning("The tree seems neglected. Branches are wilted.")
+		. += span_warning("The tree seems neglected.")
 	else if(happiness_tier == 2)
 		. += span_info("The tree appears content and healthy.")
 	else if(happiness_tier == 3)
@@ -685,13 +687,25 @@
 	else
 		. += span_info("It is fully sated.")
 
-	if(prune_count < 4)
+	if(prune_count < 1)
 		. += span_info("The branches look messy. Perhaps a scissor can right this mess.")
 	else
 		. += span_info("The branches are elaborately pruned.")
 
 	if(length(tree_offerings) < 3)
 		. += span_info("The tree yearns for an offering. Whispers enter your mind. A red crystal that shimmers... Something that sculpts one's form... A glittering seed...")
+
+	if(growth_stage == FRUITING && user.get_skill_level(/datum/skill/labor/farming) >= SKILL_LEVEL_JOURNEYMAN)
+		if(fruit_ready)
+			. += span_good("The fruit is ripe and ready to harvest.")
+		else if(fruit)
+			. += span_info("The fruit is almost ripe.")
+		else
+			var/effective_fruit_time = (fertilizer_happiness > 0) ? time_to_grow_fruit / 2 : time_to_grow_fruit
+			var/remaining_seconds = round(((growth_threshold - growth_progress) / (growth_threshold * 0.25)) * effective_fruit_time / 10)
+			var/minutes = round(remaining_seconds / 60)
+			var/secs = remaining_seconds % 60
+			. += span_info("My farming experience tells me the fruit will start to bear in roughly [minutes > 0 ? "[minutes] minute\s" : ""][minutes > 0 && secs > 0 ? " and " : ""][secs > 0 ? "[secs] second\s" : ""].")
 
 /obj/structure/eoran_pomegranate_tree/proc/reset_care()
 	//The benefit of rare offerings are kept through harvests.
@@ -751,9 +765,10 @@
 	if (growth_stage == FRUITING && !fruit)
 		// We need to grow from 75% to 100% in time_to_grow_fruit
 		var/progress_needed_in_fruiting = growth_threshold * 0.25
+		var/effective_fruit_time = (fertilizer_happiness > 0) ? time_to_grow_fruit / 2 : time_to_grow_fruit
 
-		if (time_to_grow_fruit > 0)
-			target_growth_rate_per_second = progress_needed_in_fruiting / (time_to_grow_fruit / 10)
+		if (effective_fruit_time > 0)
+			target_growth_rate_per_second = progress_needed_in_fruiting / (effective_fruit_time / 10)
 		else
 			target_growth_rate_per_second = growth_threshold // Grow instantly if time is 0
 	else
@@ -767,7 +782,8 @@
 	check_growth_stage()
 
 /obj/structure/eoran_pomegranate_tree/proc/apply_effects(mob/living/target)
-	target.apply_status_effect(/datum/status_effect/debuff/pomegranate_aura, src)
+	if(!HAS_TRAIT(target, TRAIT_EORAN_CALM))
+		target.apply_status_effect(/datum/status_effect/debuff/pomegranate_aura, src)
 
 /obj/structure/eoran_pomegranate_tree/proc/remove_effects(mob/living/target)
 	target.remove_status_effect(/datum/status_effect/debuff/pomegranate_aura)

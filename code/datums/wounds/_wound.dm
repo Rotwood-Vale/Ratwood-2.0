@@ -66,6 +66,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	var/critical = FALSE
 	/// Some wounds cause instant death for CRITICAL_WEAKNESS
 	var/mortal = FALSE
+	/// Some wounds cause instant death for SHATTER_WEAKNESS
+	var/shatter_wound = FALSE
 	/// Amount we heal passively while sleeping
 	var/sleep_healing = 1
 	/// Amount we heal passively, always
@@ -242,6 +244,10 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		werewolf_infection_timer = null
 		werewolf_infect_attempt()
 	if(mortal && HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS))
+		affected.emote("deathgurgle", forced = TRUE)
+		affected.death()
+	if(shatter_wound && HAS_TRAIT(affected, TRAIT_SHATTER_WEAKNESS))
+		affected.emote("scream", forced = TRUE)
 		affected.death()
 	if(affected.hud_used?.zone_select)
 		affected.hud_used.zone_select.update_icon()
@@ -414,7 +420,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 #define CLOT_THRESHOLD_ARTERY 2
 
 /// Make sure this is called AFTER your child upgrade proc, unless you have a reason for the bleed rate to be above artery on a regular wound.
-/datum/wound/dynamic/upgrade(dam as num)
+/datum/wound/dynamic/upgrade(dam as num, armor, exposed = FALSE)
 	if(!bodypart_owner.unlimited_bleeding)
 		if(bleed_rate >= ARTERY_LIMB_BLEEDRATE)
 			set_bleed_rate(ARTERY_LIMB_BLEEDRATE)

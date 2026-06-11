@@ -183,6 +183,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Head Physician"
 	icon_state = "arrow"
 
+/obj/effect/landmark/start/chaplain
+	name = "Court Chaplain"
+	icon_state = "arrow"
+
 /obj/effect/landmark/start/guardsman
 	name = "City Guard"
 	icon_state = "arrow"
@@ -202,6 +206,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/bogguardsman
 	name = "Bog Guard"
 	icon_state = "arrow"
+	jobspawn_override = list("Bog Guard", "Vanguard")
 
 /obj/effect/landmark/start/warden
 	name = "Warden"
@@ -464,6 +469,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/sapprentice
 	name = "Smithy Apprentice"
 	icon_state = "arrow"
+	
+/obj/effect/landmark/start/lich
+	name = "lich"
+	icon_state = "arrow"
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/lich/Initialize(mapload)
+	. = ..()
+	GLOB.lich_starts += loc
 
 //tribal
 

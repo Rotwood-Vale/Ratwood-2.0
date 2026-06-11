@@ -13,6 +13,7 @@
 	icon_state = "serpcrowno"
 	sellprice = 100
 	allowed_race = list(/datum/species/goblinp)
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/crown/byos
 	name = "ancient crown"
@@ -21,6 +22,7 @@
 	icon_state = "serpcrowno"
 	sellprice = 100
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/crown/sparrowcrown
 	name = "champion's circlet"
@@ -53,6 +55,7 @@
 	icon_state = "circlet"
 	item_state = "circlet"
 	sewrepair = FALSE
+	anvilrepair = /datum/skill/craft/armorsmithing
 	sellprice = 50
 
 /obj/item/clothing/head/roguetown/circlet/carvedgem

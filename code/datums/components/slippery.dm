@@ -16,7 +16,7 @@
 
 /datum/component/slippery/proc/Slip(datum/source, atom/movable/AM)
 	var/mob/victim = AM
-	if(istype(victim) && !victim.is_flying() && !victim.jumping && !victim.zfalling && isnull(victim.throwing))
+	if(istype(victim) && !victim.is_flying() && !victim.jumping && !victim.zfalling && isnull(victim.throwing) && victim.m_intent == MOVE_INTENT_RUN)
 		if(victim.slip(knockdown_time, parent, lube_flags, paralyze_time, force_drop_items) && callback)
 			callback.Invoke(victim)
 

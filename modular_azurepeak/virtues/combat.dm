@@ -145,7 +145,7 @@
 								"Pouch of Iron Sling Bullets" = /obj/item/quiver/sling/iron)
 
 /datum/virtue/combat/shepherd/apply_to_human(mob/living/carbon/human/recipient)
-	recipient.adjust_skillrank_up_to(/datum/skill/combat/staves, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
+	recipient.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
 	recipient.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
 
 /*/datum/virtue/combat/tavern_brawler
@@ -197,6 +197,7 @@
 	name = "Natural Armor"
 	desc = "Whether by natural means or other means, my skin is strong enough to resist being pierced and cut."
 	custom_text = "This will replace your SHIRT slot with a regenerating, unremoveable armor."
+	added_traits = list(TRAIT_NATURALARMOR)
 
 /datum/virtue/combat/tough_hide/apply_to_human(mob/living/carbon/human/recipient)
 	. = ..()

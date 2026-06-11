@@ -29,7 +29,7 @@
 	)
 	extra_context = "This subclass, exclusive to Psydonites and Inhumen, focuses on two styles of gameplay. \
 	You can choose a martial loadout, for: +2PER/+1STR, JMAN spears, EXPT shields. \
-	Alternatively, neglect your martial, for: +2PER/+1SPD, JMAN holy, EXPT staves, T2 miracles."
+	Alternatively, neglect your martial, for: +2PER/+1SPD, JMAN holy, EXPT polearms, T2 miracles."
 
 //This is gross, but it works. Better than a new define.
 /datum/outfit/job/roguetown/adventurer/dnomad
@@ -71,7 +71,7 @@
 				C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
 				H.change_stat(STATKEY_PER, 2)
 				H.change_stat(STATKEY_SPD, 1)//As above, 6 stats total.
-				H.adjust_skillrank_up_to(/datum/skill/combat/staves, 4, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/magic/holy, 3, TRUE)
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
 				backl = /obj/item/storage/backpack/rogue/satchel

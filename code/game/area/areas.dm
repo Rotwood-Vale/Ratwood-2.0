@@ -83,7 +83,7 @@
 	var/droning_repeat = TRUE
 	var/droning_wait = 0
 	var/droning_volume = 100
-	var/droning_channel = CHANNEL_BUZZ
+	var/droning_channel = CHANNEL_MUSIC
 	var/droning_frequency = 0
 
 	var/list/spookysounds = null

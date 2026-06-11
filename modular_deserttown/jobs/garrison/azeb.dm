@@ -168,7 +168,7 @@
 	neck = /obj/item/clothing/neck/roguetown/coif/padded
 	pants = /obj/item/clothing/under/roguetown/chainlegs/iron
 	backl = /obj/item/rogueweapon/scabbard/gwstrap
-	beltr = /obj/item/rogueweapon/sword/saber/iron
+	beltr = /obj/item/rogueweapon/sword/sabre/iron
 	beltl = /obj/item/rogueweapon/huntingknife
 	r_hand = /obj/item/rogueweapon/halberd/bardiche
 	backpack_contents = list(
