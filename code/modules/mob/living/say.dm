@@ -457,29 +457,52 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/list/listening = line_of_sight_only ? get_hearers_in_view(message_range + eavesdrop_range, source) : get_hearers_in_range(message_range + eavesdrop_range, source)
 	if(Zs_too)
 		if(speaker_ceiling) // so people above us can hear us too
-			listening += line_of_sight_only ? get_hearers_in_view(message_range + eavesdrop_range, speaker_ceiling) : get_hearers_in_range(message_range + eavesdrop_raneg, speaker_ceiling)
+			listening += line_of_sight_only ? get_hearers_in_view(message_range + eavesdrop_range, speaker_ceiling) : get_hearers_in_range(message_range + eavesdrop_range, speaker_ceiling)
 		if(!line_of_sight_only) // no real good way to do this for LOS-only
 			var/turf/below_turf = GET_TURF_BELOW(source)
 			if(below_turf)
 				listening += get_hearers_in_range(message_range + eavesdrop_range, below_turf)
 	var/list/the_dead = list()
-	for(var/mob/dead/observer/observer as anything in GLOB.dead_mob_list)
-		if(!observer.client?.prefs)
-			continue
-		if(!client) // so ghosts don't have to see mice or cows or chickens making a racket
-			continue
-		if(is_hidden_from_ghosts(src, observer))
-			listening -= observer // just in case
-			continue
-		if(get_dist(observer, src) > message_range) //they're out of range of normal hearing
-			if(eavesdropping_modes[message_mode] && !(observer.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
+	if(Zs_all)
+		for(var/mob/potential_listener as anything in GLOB.player_list)
+			var/observer = isobserver(potential_listener)
+			if(observer)
+				if(!potential_listener.client?.prefs)
+					continue
+				if(!client) // so ghosts don't have to see mice or cows or chickens making a racket
+					continue
+				if(is_hidden_from_ghosts(src, observer))
+					listening -= observer // just in case
+					continue
+			if(get_dist(potential_listener, src) > message_range) //they're out of range of normal hearing
+				if(observer)
+					if(eavesdropping_modes[message_mode] && !(potential_listener.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
+						continue
+					if(!(potential_listener.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
+						continue
+			if(!is_in_zweb(src.z,potential_listener.z))
 				continue
-			if(!(observer.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
+			listening |= potential_listener
+			if(observer)
+				the_dead[observer] = TRUE
+	else // special-case for if only ghosts need to worry
+		for(var/mob/dead/observer/observer as anything in GLOB.dead_mob_list)
+			if(!observer.client?.prefs)
 				continue
-		if(!is_in_zweb(src.z,observer.z))
-			continue
-		listening |= observer
-		the_dead[observer] = TRUE
+			if(!client) // so ghosts don't have to see mice or cows or chickens making a racket
+				continue
+			if(is_hidden_from_ghosts(src, observer))
+				listening -= observer // just in case
+				continue
+			if(get_dist(observer, src) > message_range) //they're out of range of normal hearing
+				if(eavesdropping_modes[message_mode] && !(observer.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
+					continue
+				if(!(observer.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
+					continue
+			if(!is_in_zweb(src.z,observer.z))
+				continue
+			listening |= observer
+			the_dead[observer] = TRUE
 	log_seen(src, null, listening, original_message, SEEN_LOG_SAY)
 
 	var/eavesdropping
