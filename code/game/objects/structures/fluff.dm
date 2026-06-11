@@ -17,6 +17,7 @@
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "pillow"
 	density = FALSE
+	debris = list(/obj/item/natural/cloth = 1)
 
 /obj/structure/fluff/pillow/red
 	color = CLOTHING_RED
@@ -121,6 +122,7 @@
 	flags_1 = ON_BORDER_1
 	climbable = TRUE
 	layer = ABOVE_MOB_LAYER
+	debris = list(/obj/item/grown/log/tree/stick = 1)
 	/// Living mobs can lay down to go past
 	var/pass_crawl = TRUE
 	/// Projectiles can go past
@@ -262,6 +264,7 @@
 	icon_state = "stonehedge"
 	blade_dulling = DULLING_BASHCHOP
 	layer = ABOVE_MOB_LAYER
+	debris = list(/obj/item/natural/stone = 1)
 
 /obj/structure/fluff/railing/border
 	name = "border"
@@ -788,6 +791,7 @@
 	name = "sign"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
+	debris = list(/obj/item/grown/log/tree/stick = 2)
 
 /obj/structure/fluff/buysign/examine(mob/user)
 	. = ..()
@@ -801,6 +805,7 @@
 	name = "sign"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
+	debris = list(/obj/item/grown/log/tree/stick = 2)
 
 /obj/structure/fluff/sellsign/examine(mob/user)
 	. = ..()
@@ -818,6 +823,7 @@
 	blade_dulling = DULLING_BASHCHOP
 	icon = 'icons/roguetown/misc/structure.dmi'
 	pixel_y = 3
+	debris = list(/obj/item/grown/log/tree/stick = 2)
 
 /obj/structure/fluff/customsign/examine(mob/user)
 	. = ..()
@@ -908,6 +914,7 @@
 	blade_dulling = DULLING_BASH
 	max_integrity = 300
 	dir = SOUTH
+	debris = list(/obj/item/natural/stone = 2)
 
 /obj/structure/fluff/statue/Initialize(mapload)
 	. = ..()
@@ -1230,6 +1237,7 @@
 	buckle_prevents_pull = 1
 	var/divine = TRUE
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
+	debris = list(/obj/item/grown/log/tree/stick = 1)
 
 /obj/structure/fluff/psycross/Initialize(mapload)
 	. = ..()
@@ -1294,6 +1302,7 @@
 	icon_state = "psycruci_r"
 	max_integrity = 120
 	chance2hear = 10
+	debris = list(/obj/item/natural/stone = 1)
 
 /obj/structure/fluff/psycross/psycrucifix/silver
 	name = "silver psydonic crucifix"
@@ -1302,6 +1311,7 @@
 	attacked_sound = list("sound/combat/hits/onmetal/metalimpact (1).ogg", "sound/combat/hits/onmetal/metalimpact (2).ogg")
 	max_integrity = 450
 	chance2hear = 10
+	debris = list(/obj/item/alch/silverdust = 1)//ore or an ingot would encourage people to break them too much
 
 /obj/structure/fluff/psycross/zizocross
 	name = "inverted cross"
@@ -1315,6 +1325,7 @@
 	icon_state = "cross_zizo"
 	divine = FALSE
 	max_integrity = 200
+	debris = list(/obj/item/natural/stone = 1)
 
 /obj/structure/fluff/psycross/zizocross/golden
 	name = "golden inverted cross"
@@ -1322,6 +1333,7 @@
 	icon_state = "cross_zizo_u"
 	divine = FALSE
 	max_integrity = 350
+	debris = list(/obj/item/alch/golddust = 1)
 	
 /obj/structure/fluff/psycross/graggar
 	name = "vicious cross"

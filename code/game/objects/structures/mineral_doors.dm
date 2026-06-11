@@ -842,6 +842,7 @@
 	repair_skill = /datum/skill/craft/carpentry
 	smashable = TRUE
 	metalizer_result = /obj/structure/mineral_door/wood/donjon
+	debris = list(/obj/item/grown/log/tree/small = 1)
 
 /obj/structure/mineral_door/wood/Initialize(mapload)
 	if(icon_state =="woodhandle")
@@ -911,6 +912,7 @@
 	ridethrough = TRUE
 	smashable = TRUE
 	metalizer_result = null
+	debris = list(/obj/item/grown/log/tree/small = 1)
 
 /obj/structure/mineral_door/wood/window
 	opacity = FALSE
@@ -1048,6 +1050,7 @@
 	repair_cost_second = /obj/item/natural/stone
 	repair_skill = /datum/skill/craft/masonry
 	smeltresult = null
+	debris = list(/obj/item/natural/stone = 1)
 
 /obj/structure/mineral_door/wood/donjon/stone/attack_right(mob/user)
 	// Check for keys first (inherited from parent)

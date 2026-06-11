@@ -131,6 +131,7 @@
 	layer = MOB_LAYER
 	plane = GAME_PLANE
 	buckleverb = "position"
+	debris = list(/obj/item/grown/log/tree/small = 1)
 	var/buckle_offset_x = 0
 	var/buckle_offset_y = 1
 

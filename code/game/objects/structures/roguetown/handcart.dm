@@ -7,6 +7,7 @@
 	max_integrity = 600
 	anchored = FALSE
 	climbable = TRUE
+	debris = list(/obj/item/grown/log/tree/small = 1)
 
 	var/list/stuff_shit = list()
 

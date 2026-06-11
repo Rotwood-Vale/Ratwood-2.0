@@ -154,6 +154,7 @@
 	crossfire = FALSE
 	healing_range = 2
 	stamina_status_effect = /datum/status_effect/buff/campfire_stamina/fireplace
+	debris = list(/obj/item/natural/stone = 1)
 
 /obj/machinery/light/rogue/campfire/fireplace/attack_right(mob/user)
 	if(isliving(user) && on)
@@ -195,6 +196,7 @@
 	pixel_y = 32
 	soundloop = null
 	fueluse = 0
+	debris = list(/obj/item/candle/yellow = 1)
 
 /obj/machinery/light/rogue/candle/off
 	name = "candles"
@@ -493,6 +495,7 @@
 	on = FALSE
 	cookonme = TRUE
 	soundloop = /datum/looping_sound/fireloop
+	debris = list(/obj/item/natural/stone = 1)
 	var/obj/item/attachment = null
 	var/obj/item/food = null
 	var/mob/living/carbon/human/lastuser
@@ -852,9 +855,11 @@
 	cookonme = TRUE
 	max_integrity = 30
 	soundloop = /datum/looping_sound/fireloop
+	debris = list(/obj/item/grown/log/tree/stick = 1)
 	var/healing_range = 1
 	var/static/list/acceptable_beds = list(/obj/structure/bed, /obj/structure/flora/roguetree/stump, /obj/item/bedsheet)
 	var/datum/status_effect/buff/stamina_status_effect = /datum/status_effect/buff/campfire_stamina
+
 /obj/machinery/light/rogue/campfire/process()
 	..()
 	if(isopenturf(loc))

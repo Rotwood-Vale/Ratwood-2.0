@@ -15,6 +15,7 @@
 	throw_range = 1
 	blade_dulling = DULLING_BASHCHOP
 	obj_flags = CAN_BE_HIT
+	debris = list(/obj/item/grown/log/tree/small = 1)
 
 /obj/item/roguebin/weather_trigger(W)
 	if(W==/datum/weather/rain)

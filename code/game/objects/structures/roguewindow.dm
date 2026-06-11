@@ -20,6 +20,7 @@
 	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
 	break_sound = "glassbreak"
 	destroy_sound = 'sound/combat/hits/onwood/destroywalldoor.ogg'
+	debris = list(/obj/item/grown/log/tree/small = 1)
 	var/window_lock_strength
 	var/list/repair_costs = list(/obj/item/grown/log/tree/small, /obj/item/natural/glass)
 	var/repair_skill = /datum/skill/craft/carpentry

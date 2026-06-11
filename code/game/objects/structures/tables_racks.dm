@@ -603,6 +603,7 @@
 	icon_state = "rack"
 	climbable = TRUE
 	climb_offset = 10
+	debris = list(/obj/item/grown/log/tree/stick = 1)
 
 /obj/structure/rack/rogue/deconstruct(disassembled = TRUE)
 	qdel(src)

@@ -11,6 +11,7 @@
 	max_integrity = 250
 	buckle_lying = 0
 	can_buckle = 1
+	debris = list(/obj/item/grown/log/tree/small = 1)
 
 /obj/structure/meathook/examine()
 	. = ..()

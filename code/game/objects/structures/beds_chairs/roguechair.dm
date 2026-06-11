@@ -372,6 +372,7 @@
 	icon_state = "shitbed"
 	sleepy = 1
 	metalizer_result = null
+	debris = list(/obj/item/natural/fibers = 2)
 
 /obj/structure/bed/rogue/post_buckle_mob(mob/living/M)
 	..()

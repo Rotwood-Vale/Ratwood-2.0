@@ -7,6 +7,7 @@
 	var/maxfiber = 50
 	max_integrity = 200
 	density = TRUE
+	debris = list(/obj/item/grown/log/tree/stick = 1, /obj/item/natural/silk = 1)
 
 /obj/machinery/loom/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/natural/bundle/fibers))

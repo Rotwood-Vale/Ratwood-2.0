@@ -119,6 +119,7 @@
 	name = "Artificer's Guild"
 	desc = ""
 	icon_state = "artificer"
+	debris = list(/obj/item/natural/cloth = 1)
 
 /obj/structure/fluff/walldeco/maidendrape
 	name = "black drape"
@@ -126,6 +127,7 @@
 	icon_state = "black_drape"
 	dir = SOUTH
 	pixel_y = 32
+	debris = list(/obj/item/natural/cloth = 1)
 
 /obj/structure/fluff/walldeco/wallshield
 	name = ""
@@ -144,6 +146,7 @@
 /obj/structure/fluff/walldeco/psybanner
 	name = "banner"
 	icon_state = "Psybanner-PURPLE"
+	debris = list(/obj/item/natural/cloth = 1)
 
 /obj/structure/fluff/walldeco/psybanner/red
 	icon_state = "Psybanner-RED"
@@ -153,6 +156,7 @@
 	desc = ""
 	icon_state = "walldec1"
 	mouse_opacity = 0
+	debris = list(/obj/item/natural/stone = 1)
 
 /obj/structure/fluff/walldeco/stone/bronze
 	color = "#ff9c1a"
@@ -379,6 +383,7 @@
 	icon_state = "bath1"
 	pixel_x = -32
 	alpha = 210
+	debris = list(/obj/item/natural/stone = 1)
 
 /obj/structure/fluff/walldeco/bath/two
 	icon_state = "bath2"

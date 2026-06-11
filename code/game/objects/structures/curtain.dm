@@ -11,6 +11,7 @@
 	anchored = TRUE
 	opacity = 0
 	density = FALSE
+	debris = list(/obj/item/natural/cloth = 1)
 	var/open = TRUE
 	var/closedir = 0
 	var/directional = FALSE//Do these care about which side you open from in the first place?

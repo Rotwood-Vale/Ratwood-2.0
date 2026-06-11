@@ -13,6 +13,7 @@
 	density = TRUE
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = GAME_PLANE_UPPER
+	debris = list(/obj/item/grown/log/tree/small = 1)
 	var/latched = FALSE
 	locked = FALSE
 	var/base_icon = "pillory_single"

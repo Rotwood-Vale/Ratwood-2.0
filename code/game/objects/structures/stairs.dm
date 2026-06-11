@@ -13,6 +13,7 @@
 	layer = 5
 	nomouseover = TRUE
 	plane = FLOOR_PLANE
+	debris = list(/obj/item/grown/log/tree/small = 1)
 
 /obj/structure/stairs/Initialize(mapload)
 	. = ..()
@@ -61,6 +62,7 @@
 	icon = 'icons/obj/stairs.dmi'
 	icon_state = "stonestairs"
 	max_integrity = 600
+	debris = list(/obj/item/natural/stone = 1)
 
 //	climb_offset = 10
 	//RTD animate climbing offset so this can be here

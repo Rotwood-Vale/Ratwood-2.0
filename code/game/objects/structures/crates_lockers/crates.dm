@@ -17,6 +17,7 @@
 	open_sound_volume = 35
 	close_sound_volume = 50
 	drag_slowdown = 0
+	debris = list(/obj/item/grown/log/tree/small = 1)//all the existing ones are made of wood or could reasonably be made of wood
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 	var/base_icon_state
 

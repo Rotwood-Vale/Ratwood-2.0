@@ -9,6 +9,7 @@
 	climbable = FALSE
 	facepull = FALSE
 	drag_slowdown = 2
+	debris = list(/obj/item/grown/log/tree/small = 1)
 
 /obj/structure/plough/examine(mob/user)
 	. = ..()

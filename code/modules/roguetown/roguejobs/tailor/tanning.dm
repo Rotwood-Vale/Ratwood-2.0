@@ -11,6 +11,7 @@
 	blade_dulling = DULLING_BASHCHOP
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
+	debris = list(/obj/item/grown/log/tree/stick = 1)
 
 /obj/machinery/tanningrack/examine(mob/user)
 	. = ..()

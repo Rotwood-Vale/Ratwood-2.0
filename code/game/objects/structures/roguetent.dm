@@ -7,6 +7,7 @@
 	plane = GAME_PLANE
 	density = TRUE
 	opacity = TRUE
+	debris = list(/obj/item/natural/cloth = 1)
 	var/base_state = "tent_door"
 
 /obj/structure/roguetent/update_icon()

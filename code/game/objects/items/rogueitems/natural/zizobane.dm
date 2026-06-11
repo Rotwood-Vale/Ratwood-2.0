@@ -6,6 +6,7 @@
 	density = FALSE
 	anchored= TRUE
 	var/time_delay = 0
+	debris = list(/obj/item/reagent_containers/food/snacks/zizo_bane = 1)
 
 /obj/structure/zizo_bane/Initialize(mapload)
 	. = ..()

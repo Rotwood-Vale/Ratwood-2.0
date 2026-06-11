@@ -1,6 +1,8 @@
 //drape
 /obj/structure/drape/
 	plane = -3
+	max_integrity = 60
+	debris = list(/obj/item/natural/cloth = 1)
 
 /obj/structure/drape/desert
 	name = "desert drape"
@@ -229,6 +231,7 @@
 	layer = 4.82
 	pixel_x = -16
 	plane = GAME_PLANE_UPPER
+	debris = list(/obj/item/natural/stone = 1)
 
 	abstract_type = /obj/structure/pillar
 
@@ -407,6 +410,7 @@
 	icon = 'modular_deserttown/icons/sandstairs.dmi'
 	icon_state = "sandstairs"
 	max_integrity = 600
+	debris = list(/obj/item/natural/stone = 1)
 
 //If we need to change the number of rooms
 // /obj/structure/roguemachine/vendor/inndesert

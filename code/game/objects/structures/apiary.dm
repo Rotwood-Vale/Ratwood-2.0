@@ -209,6 +209,7 @@
 	desc = "A structure housing bees that produce honey and pollinate plants."
 	icon = 'icons/obj/structures/apiary.dmi'
 	icon_state = "beebox-empty"
+	debris = list(/obj/item/grown/log/tree/small = 1)
 
 	var/stored_combs = 0
 	var/outside_bees = 0
