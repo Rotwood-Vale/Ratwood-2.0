@@ -10,6 +10,10 @@
 	var/ignore_hibernation = FALSE
 	var/hibernation_pending_since = 0
 	var/hibernation_wake_until = 0
+	/// Cached bodypart state used by the hibernation predicate.
+	var/hibernation_bodypart_work = FALSE
+	var/hibernation_bodypart_embedded = FALSE
+	var/hibernation_bodypart_bleeding = FALSE
 	var/lastattacker = null
 	var/lastattackerckey = null
 	var/datum/weakref/lastattacker_weakref = null

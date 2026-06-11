@@ -8,12 +8,25 @@
 		return TRUE
 	if(blood_volume < BLOOD_VOLUME_NORMAL && (stat != DEAD || blood_volume))
 		return TRUE
+	if(hibernation_bodypart_embedded)
+		return TRUE
+	if(blood_volume && hibernation_bodypart_bleeding)
+		return TRUE
+	return stat != DEAD && hibernation_bodypart_work
+
+/mob/living/carbon/proc/refresh_hibernation_bodypart_state()
+	hibernation_bodypart_work = FALSE
+	hibernation_bodypart_embedded = FALSE
+	hibernation_bodypart_bleeding = FALSE
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-		if((blood_volume && bodypart.bleeding) || length(bodypart.embedded_objects))
-			return TRUE
-		if(stat != DEAD && (bodypart.needs_processing || length(bodypart.wounds)))
-			return TRUE
-	return FALSE
+		if(length(bodypart.embedded_objects))
+			hibernation_bodypart_embedded = TRUE
+		if(bodypart.bleeding)
+			hibernation_bodypart_bleeding = TRUE
+		if(bodypart.needs_processing || length(bodypart.wounds))
+			hibernation_bodypart_work = TRUE
+		if(hibernation_bodypart_work && hibernation_bodypart_embedded && hibernation_bodypart_bleeding)
+			return
 
 /mob/living/carbon/Life(seconds, times_fired)
 	set invisibility = 0
@@ -48,6 +61,8 @@
 			heal_wounds(0.3, list(/datum/wound/fracture/head, /datum/wound/fracture/head/brain, /datum/wound/fracture/neck))
 
 	handle_embedded_objects()
+	if(!client && times_fired % 3 == 0 && (hibernation_bodypart_work || hibernation_bodypart_embedded || hibernation_bodypart_bleeding))
+		refresh_hibernation_bodypart_state()
 	handle_roguebreath()
 	var/bprv = handle_bodyparts()
 	if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
@@ -77,6 +92,8 @@
 	handle_wounds()
 	handle_embedded_objects()
 	handle_blood()
+	if(hibernation_bodypart_work || hibernation_bodypart_embedded || hibernation_bodypart_bleeding)
+		refresh_hibernation_bodypart_state()
 
 	check_cremation(seconds_per_tick)
 

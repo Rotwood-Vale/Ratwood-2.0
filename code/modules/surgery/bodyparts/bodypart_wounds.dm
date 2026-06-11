@@ -532,6 +532,7 @@
 	embedder.is_embedded = TRUE
 	embedder.forceMove(src)
 	if(owner)
+		owner.hibernation_bodypart_embedded = TRUE
 		embedder.add_mob_blood(owner)
 		if (!silent)
 			playsound(owner, 'sound/combat/newstuck.ogg', 100, vary = TRUE)
