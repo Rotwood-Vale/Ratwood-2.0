@@ -193,7 +193,7 @@ window "statwindow"
 		anchor1 = 0,0
 		anchor2 = 100,100
 		font-family = "Pterra"
-		font-size = 12
+		font-size = 8 //字体调整原12
 		font-style = "6"
 		text-color = #d6dbd5
 		background-color = #000000
