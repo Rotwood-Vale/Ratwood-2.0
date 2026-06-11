@@ -55,6 +55,7 @@
 	var/interesting_dist = AI_DEFAULT_INTERESTING_DIST
 	///our current cell grid
 	var/datum/cell_tracker/our_cells
+	var/clients_in_range = TRUE
 
 /mob/living/carbon/human/Initialize(mapload)
 	. = ..()
@@ -949,17 +950,12 @@
 
 /mob/living/carbon/human/proc/on_client_enter(datum/source, atom/target)
 	SIGNAL_HANDLER
-	if(mode == NPC_AI_OFF)
-		return
-
+	clients_in_range = TRUE
 	if(mode == NPC_AI_SLEEP)
 		mode = NPC_AI_IDLE
 
 /mob/living/carbon/human/proc/on_client_exit(datum/source, datum/exited)
 	SIGNAL_HANDLER
-	if(mode == NPC_AI_OFF)
-		return
-
 	consider_wakeup()
 
 /mob/living/carbon/human/proc/set_new_cells()
@@ -984,20 +980,26 @@
 	set_new_cells()
 
 /mob/living/carbon/human/proc/consider_wakeup()
-	if(mode == NPC_AI_OFF)
-		return
-
+	if(!our_cells)
+		return clients_in_range
+	clients_in_range = FALSE
 	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
 		if(length(grid.client_contents))
-			if(mode != NPC_AI_SLEEP && mode != NPC_AI_IDLE)
-				return TRUE
+			clients_in_range = TRUE
+			break
+
+	if(mode == NPC_AI_OFF)
+		return clients_in_range
+
+	if(clients_in_range)
+		if(mode == NPC_AI_SLEEP)
 			mode = NPC_AI_IDLE
-			return TRUE
+		return TRUE
 
 	mode = NPC_AI_SLEEP
 	return FALSE
 
 /mob/living/carbon/human/Moved()
 	. = ..()
-	if(mode != NPC_AI_OFF)
+	if(!client)
 		update_grid()

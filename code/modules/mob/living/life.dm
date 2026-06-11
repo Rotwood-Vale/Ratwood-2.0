@@ -101,7 +101,7 @@
 			return
 	. =..()
 
-/mob/living/proc/DeadLife()
+/mob/living/proc/DeadLife(seconds_per_tick = 2)
 	set invisibility = 0
 	if (notransform)
 		return

@@ -42,9 +42,6 @@
 		SSmobs.currentrun -= src
 	if(SSmobs_dead)
 		SSmobs_dead.currentrun -= src
-		if(SSmobs_dead.current_dead_mob == src)
-			SSmobs_dead.current_dead_mob = null
-			SSmobs_dead.remaining_dead_life_iterations = 0
 	for(var/s in ownedSoullinks)
 		var/datum/soullink/S = s
 		S.ownerDies(FALSE)
@@ -88,9 +85,6 @@
 		GLOB.mob_living_active_list |= src
 		if(SSmobs_dead)
 			SSmobs_dead.currentrun -= src
-			if(SSmobs_dead.current_dead_mob == src)
-				SSmobs_dead.current_dead_mob = null
-				SSmobs_dead.remaining_dead_life_iterations = 0
 
 /mob/living/onZImpact(turf/T, levels)
 	if(HAS_TRAIT(src, TRAIT_NOFALLDAMAGE2))

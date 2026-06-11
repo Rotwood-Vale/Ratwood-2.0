@@ -112,52 +112,51 @@ SUBSYSTEM_DEF(server_maint)
 	var/list/issues_by_ref = list()
 	var/list/raw_issue_details = list()
 	var/list/living_candidates = list()
+	var/list/lookups = list()
 	var/null_count = 0
 	var/duplicate_count = 0
 	var/invalid_entry_count = 0
 	var/qdeleted_count = 0
 	var/membership_issue_count = 0
 
-	for(var/mob/living/living_mob as anything in GLOB.mob_list)
-		living_candidates |= living_mob
+	for(var/mob/candidate as anything in GLOB.mob_list)
+		if(isliving(candidate))
+			living_candidates[candidate] = TRUE
 
 	for(var/list_name in lists_to_check)
 		var/list/source_list = lists_to_check[list_name]
-		var/list/without_nulls = source_list.Copy()
-		var/original_length = without_nulls.len
-		listclearnulls(without_nulls)
-		var/list_null_count = original_length - without_nulls.len
+		var/check_living_only = !isnull(living_only_lists[list_name])
+		var/list/lookup = list()
+		var/list_null_count = 0
+		for(var/entry as anything in source_list)
+			if(isnull(entry))
+				list_null_count++
+				continue
+			if(!isdatum(entry))
+				invalid_entry_count++
+				raw_issue_details += "[list_name] non-datum entry=[entry]"
+				continue
+			if(lookup[entry])
+				duplicate_count++
+				record_mob_processing_issue(issues_by_ref, entry, "duplicate in [list_name]")
+			else
+				lookup[entry] = TRUE
+
+			if(isliving(entry))
+				living_candidates[entry] = TRUE
+			else if(check_living_only)
+				invalid_entry_count++
+				record_mob_processing_issue(issues_by_ref, entry, "non-living entry in [list_name]")
+		lookups[list_name] = lookup
 		if(list_null_count)
 			null_count += list_null_count
 			raw_issue_details += "[list_name] nulls=[list_null_count]"
 
-		var/list/seen_entries = list()
-		for(var/entry as anything in source_list)
-			if(isnull(entry))
-				continue
-			if(entry in seen_entries)
-				duplicate_count++
-				if(isdatum(entry))
-					record_mob_processing_issue(issues_by_ref, entry, "duplicate in [list_name]")
-				else
-					raw_issue_details += "[list_name] duplicate non-datum=[entry]"
-			else
-				seen_entries |= entry
-
-			if(isliving(entry))
-				living_candidates |= entry
-
-	for(var/list_name in living_only_lists)
-		var/list/source_list = living_only_lists[list_name]
-		for(var/entry as anything in source_list)
-			if(isnull(entry))
-				continue
-			if(!isliving(entry))
-				invalid_entry_count++
-				if(isdatum(entry))
-					record_mob_processing_issue(issues_by_ref, entry, "non-living entry in [list_name]")
-				else
-					raw_issue_details += "[list_name] non-living entry=[entry]"
+	var/list/living_lookup = lookups["mob_living_list"]
+	var/list/active_lookup = lookups["mob_living_active_list"]
+	var/list/dead_processing_lookup = lookups["mob_living_dead_list"]
+	var/list/alive_lookup = lookups["alive_mob_list"]
+	var/list/dead_lookup = lookups["dead_mob_list"]
 
 	for(var/mob/living/living_mob as anything in living_candidates)
 		if(QDELETED(living_mob))
@@ -165,14 +164,14 @@ SUBSYSTEM_DEF(server_maint)
 			record_mob_processing_issue(issues_by_ref, living_mob, "QDELETED membership")
 			continue
 
-		if(!(living_mob in GLOB.mob_living_list))
+		if(!living_lookup[living_mob])
 			membership_issue_count++
 			record_mob_processing_issue(issues_by_ref, living_mob, "missing from mob_living_list")
 
-		var/in_active_processing = (living_mob in GLOB.mob_living_active_list)
-		var/in_dead_processing = (living_mob in GLOB.mob_living_dead_list)
-		var/in_alive_mobs = (living_mob in GLOB.alive_mob_list)
-		var/in_dead_mobs = (living_mob in GLOB.dead_mob_list)
+		var/in_active_processing = active_lookup[living_mob]
+		var/in_dead_processing = dead_processing_lookup[living_mob]
+		var/in_alive_mobs = alive_lookup[living_mob]
+		var/in_dead_mobs = dead_lookup[living_mob]
 
 		if(living_mob.stat == DEAD)
 			if(in_active_processing)
@@ -218,15 +217,20 @@ SUBSYSTEM_DEF(server_maint)
 	var/joined_issue_details = jointext(issue_details, " | ")
 	log_world("Mob processing invariant violation: nulls=[null_count], duplicates=[duplicate_count], invalid=[invalid_entry_count], qdeleted=[qdeleted_count], membership=[membership_issue_count]. [joined_issue_details]")
 
-	// Repair only after the full report has been assembled and logged.
 	for(var/list_name in lists_to_check)
 		var/list/source_list = lists_to_check[list_name]
-		listclearnulls(source_list)
+		var/list/seen = list()
 		var/list/unique_entries = list()
 		for(var/entry as anything in source_list)
-			unique_entries |= entry
+			if(isnull(entry))
+				continue
+			if(isdatum(entry))
+				if(seen[entry])
+					continue
+				seen[entry] = TRUE
+			unique_entries += entry
 		source_list.len = 0
-		source_list |= unique_entries
+		source_list += unique_entries
 
 	for(var/list_name in living_only_lists)
 		var/list/source_list = living_only_lists[list_name]

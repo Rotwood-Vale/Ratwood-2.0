@@ -24,7 +24,7 @@
 	if (notransform)
 		return
 
-	if(!client && mode == NPC_AI_SLEEP)
+	if(!client && (mode == NPC_AI_SLEEP || (mode == NPC_AI_OFF && !ckey && !clients_in_range && !ignore_hibernation)))
 		return
 
 	. = ..()
@@ -106,7 +106,7 @@
 	if(stat != DEAD)
 		return 1
 
-/mob/living/carbon/human/DeadLife()
+/mob/living/carbon/human/DeadLife(seconds_per_tick = 2)
 	set invisibility = 0
 
 	if(notransform)
