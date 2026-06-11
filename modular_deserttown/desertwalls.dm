@@ -15,6 +15,7 @@
 	climbdiff = 3
 	damage_deflection = 10
 	hardness = 3
+	debris = list(/obj/item/natural/stone = 1)
 
 /datum/crafting_recipe/roguetown/turfs/desert/sandstone
 	name = "sandstone wall"
@@ -42,6 +43,7 @@
 	climbdiff = 3
 	damage_deflection = 10
 	hardness = 3
+	debris = list(/obj/item/natural/stone = 1)
 
 /datum/crafting_recipe/roguetown/turfs/desert/sandbrick
 	name = "sandbrick wall"

@@ -44,6 +44,7 @@
 	neighborlay = "dirtedge"
 	climbdiff = 3
 	damage_deflection = 10
+	debris = list(/obj/item/natural/stone = 1)
 
 /turf/closed/wall/mineral/rogue/stone/turf_destruction()
 	loud_message("The sound of a crumbling stone wall rings out", hearing_distance = 14)
@@ -131,6 +132,7 @@
 	neighborlay = "dirtedge"
 	climbdiff = 3
 	damage_deflection = 10
+	debris = list(/obj/item/natural/stone = 1)
 
 /turf/closed/wall/mineral/rogue/craftstone/turf_destruction()
 	loud_message("The sound of heavy stone bricks crumbling apart rings out", hearing_distance = 14)
@@ -154,6 +156,7 @@
 	neighborlay = "dirtedge"
 	climbdiff = 4
 	damage_deflection = 20
+	debris = list(/obj/item/natural/stoneblock = 1)
 
 /turf/closed/wall/mineral/rogue/wood
 	name = "wooden wall"
@@ -175,6 +178,7 @@
 	sheet_amount = 2
 	burn_power = 20
 	spread_chance = 4
+	debris = list(/obj/item/grown/log/tree/small = 1)
 
 /turf/closed/wall/mineral/rogue/wood/window
 	name = "wooden window"
@@ -212,6 +216,7 @@
 	sheet_amount = 1
 	burn_power = 20
 	spread_chance = 9
+	debris = list(/obj/item/natural/cloth = 1)
 
 /turf/closed/wall/mineral/rogue/wooddark
 	name = "dark wood wall"
@@ -232,6 +237,7 @@
 	spread_chance = 4
 	sheet_type = /obj/item/natural/wood/plank
 	sheet_amount = 1
+	debris = list(/obj/item/grown/log/tree/small = 1)
 
 /turf/closed/wall/mineral/rogue/wooddark/horizontal
 	icon_state = "horizwooddark"
@@ -282,6 +288,7 @@
 	spread_chance = 4
 	sheet_type = /obj/item/natural/wood/plank
 	sheet_amount = 1
+	debris = list(/obj/item/grown/log/tree/small = 1)
 
 /turf/closed/wall/mineral/rogue/roofwall/center
 	icon_state = "roofTurf_I"
@@ -340,6 +347,7 @@
 	climbdiff = 3
 	burn_power = 20
 	spread_chance = 4
+	debris = list(/obj/item/grown/log/tree/small = 1)
 
 /turf/closed/wall/mineral/rogue/decowood/Initialize(mapload)
 	. = ..()
@@ -365,6 +373,7 @@
 	baseturfs = list(/turf/open/floor/rogue/blocks)
 	neighborlay = "dirtedge"
 	climbdiff = 3
+	debris = list(/obj/item/natural/stone = 1)
 
 /turf/closed/wall/mineral/rogue/decostone/long
 	icon_state = "decostone-l"
@@ -418,6 +427,7 @@
 	neighborlay = "dirtedge"
 	climbdiff = 4			//Same as stone-brick wall
 	damage_deflection = 20
+	debris = list(/obj/item/natural/brick = 1)
 
 /turf/closed/wall/mineral/rogue/brick/window
 	name = "brick window"
