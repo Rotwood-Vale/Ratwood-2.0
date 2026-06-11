@@ -783,46 +783,59 @@ GLOBAL_VAR_INIT(mobids, 1)
 	..()
 	// && check_rights(R_ADMIN,0)
 	var/time_left = SSgamemode.round_ends_at - world.time
-	var/days = "TWILIGHT"
+	var/days = "黄昏之日"
 	switch(GLOB.dayspassed)
 		if(1)
-			days = "MOON'S DAE"
+			days = "月神之日"
 		if(2)
-			days = "TIW'S DAE"
+			days = "战神之日"
 		if(3)
-			days = "WEDDING'S DAE"
+			days = "婚约之日"
 		if(4)
-			days = "THULE'S DAE"
+			days = "极北之日"
 		if(5)
-			days = "FREYJA'S DAE"
+			days = "爱与丰饶之日"
 		if(6)
-			days = "SATURN'S DAE"
+			days = "土星之日"
 		if(7)
-			days = "SUN'S DAE"
+			days = "太阳之日"
+
+	// 汉化当时
+	var/tod_zh
+	if (GLOB.tod == "dawn")
+		tod_zh = "黎明"
+	else if (GLOB.tod == "day")
+		tod_zh = "白昼"
+	else if (GLOB.tod == "dusk")
+		tod_zh = "黄昏"
+	else if (GLOB.tod == "night")
+		tod_zh = "夜晚"
+	else
+		tod_zh = null
 
 	if(client)
-		if(statpanel("RoundInfo"))
-			stat(null, "MAP: [SSmapping.current_map?.map_name || "Loading..."]")
+		if(statpanel("回合信息"))
+			stat(null, "地图: [SSmapping.current_map?.map_name || "加载中..."]")
 			var/datum/map_config/cached = SSmap_vote.next_map_config
 			if(cached)
-				stat(null, "Next Map: [cached.map_name]")
-			stat(null, "ROUND ID: [GLOB.rogue_round_id ? GLOB.rogue_round_id : "NULL"]")
-			stat(null, "ROUND TIME: [time2text(STATION_TIME_PASSED(), "hh:mm:ss", 0)] [world.time - SSticker.round_start_time]")
+				stat(null, "下张地图: [cached.map_name]")
+			stat(null, "回合 ID: [GLOB.rogue_round_id ? GLOB.rogue_round_id : "NULL"]")
+			stat(null, "时间: [time2text(STATION_TIME_PASSED(), "hh:mm:ss", 0)] [world.time - SSticker.round_start_time]")
 
 			if(SSgamemode.roundvoteend)
-				stat("ROUND END: [DisplayTimeText(time_left)]")
+				stat("回合结束: [DisplayTimeText(time_left)]")
 			if(client?.holder)
-				stat(null, "ROUND TrueTime: [worldtime2text()] [world.time]")
-			stat(null, "STORYTELLER: [SSgamemode.storyteller_name]")
-			stat(null, "TIMEOFDAY: [days] ᛉ [uppertext(GLOB.tod)] ᛉ [station_time_timestamp("hh:mm")]")
-			stat(null, "IC Time: [station_time_timestamp()] [station_time()]")
-			stat(null, "PING: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
-			stat(null, "TIME DILATION: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
+				stat(null, "回合真实时间:[worldtime2text()] [world.time]")
+			stat(null, "叙事者: [SSgamemode.storyteller_name]")
+			stat(null, "日期与时间: [days] ᛉ [uppertext(GLOB.tod)] ᛉ [station_time_timestamp("hh:mm")]")
+			stat(null, "IC 时间: [station_time_timestamp()] [station_time()]")
+			stat(null, "延迟: [round(client.lastping, 1)]ms (平均延迟: [round(client.avgping, 1)]ms)")
+			stat(null, "时间膨胀: [round(SStime_track.time_dilation_current,1)]% 平均时间膨胀:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
 			if(!CONFIG_GET(flag/disable_memory_stats))
-				stat(null, "Memory: [SSmemory_stats.last_rss_mb ? "[SSmemory_stats.last_rss_mb] MB/3900 MB" : "sampling..."]")
+				stat(null, "内存: [SSmemory_stats.last_rss_mb ? "[SSmemory_stats.last_rss_mb] MB/3900 MB" : "取样中..."]")
 			if(check_rights(R_ADMIN,0))
 				stat(null, SSmigrants.get_status_line())
-				stat(null, "Player count: [GLOB.clients.len]") // If someone deletes this again I will slap your balls
+				stat(null, "玩家个数: [GLOB.clients.len]") // If someone deletes this again I will slap your balls
 
 	if(client && client.holder && check_rights(R_DEBUG,0))
 		if(statpanel("MC"))
