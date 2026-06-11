@@ -60,6 +60,8 @@
 				armor = /obj/item/clothing/suit/roguetown/armor/basiceast
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
+				H.change_stat(STATKEY_STR, -2)
+				H.change_stat(STATKEY_SPD, 2) // We swap out str for speed, because this weapon they get is a speed weapon
 
 /datum/advclass/foreigner/yoruku
 	name = "Eastern Assassin"
