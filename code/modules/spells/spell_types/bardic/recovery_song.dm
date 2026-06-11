@@ -40,7 +40,7 @@
 	id = "recoverysong"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/song/recovery
 	duration = 15 SECONDS
-	var/stamina_on_tick = 4
+	var/stamina_on_tick = 3
 
 /datum/status_effect/buff/song/recovery/t2
 	stamina_on_tick = 5

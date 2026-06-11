@@ -60,7 +60,7 @@
 								/obj/item/flashlight/flare/torch = 1,
 								)
 			if("Castaway")
-				var/datum/inspiration/I = new /datum/inspiration(H)
+				var/datum/inspiration/I = new() 
 				I.grant_inspiration(H, bard_tier = BARD_T1)
 				H.change_stat(STATKEY_PER, 1)
 				H.change_stat(STATKEY_WIL, 1)

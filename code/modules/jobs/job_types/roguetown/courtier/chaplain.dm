@@ -146,7 +146,7 @@
 		// 	shoes = /obj/item/clothing/shoes/roguetown/sandals
 		// 	armor = /obj/item/clothing/suit/roguetown/shirt/robe
 		// 	H.cmode_music = 'sound/music/combat_jester.ogg'
-		// 	var/datum/inspiration/I = new /datum/inspiration(H)
+		// 	var/datum/inspiration/I = new() 
 		// 	I.grant_inspiration(H, bard_tier = BARD_T2)
 		else
 			mask = /obj/item/clothing/head/roguetown/roguehood/astrata

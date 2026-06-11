@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(learnable_rhythms, (list(/obj/effect/proc_holder/spell/self/rhy
 
 /datum/inspiration
 	var/mob/living/carbon/human/holder
-	var/level = BARD_T1
+	var/level = 0
 	var/maxaudience = 2
 	var/list/audience = list()
 	var/maxsongs = BARD_T1 + 1
@@ -63,11 +63,16 @@ GLOBAL_LIST_INIT(learnable_rhythms, (list(/obj/effect/proc_holder/spell/self/rhy
 
 
 /datum/inspiration/proc/grant_inspiration(mob/living/carbon/human/H, bard_tier)
-	if(!H || !H.mind)
+	if(!H || !H.mind || !bard_tier)
 		return
+	if(H.inspiration?.level >= bard_tier)
+		return
+	holder = H
+	H.inspiration = src
+	ADD_TRAIT(H, INSPIRING_MUSICIAN, "inspiration")
 	level = bard_tier
 	maxaudience = 2*bard_tier
-	maxsongs = bard_tier + 2
+	maxsongs = bard_tier + 1
 	if(bard_tier >= BARD_T2)
 		maxrhythms = bard_tier
 		if(!rhythm_tracker)
@@ -130,14 +135,6 @@ GLOBAL_LIST_INIT(learnable_rhythms, (list(/obj/effect/proc_holder/spell/self/rhy
 	to_chat(src, "My audience members are: [text]")
 
 	return TRUE
-	
-
-/datum/inspiration/New(mob/living/carbon/human/holder)
-	. = ..()
-	src.holder = holder
-	holder?.inspiration = src
-	ADD_TRAIT(holder, INSPIRING_MUSICIAN, "inspiration")
-
 
 /mob/living/carbon/human/proc/picksongs()
 	set name = "Fill Songbook"

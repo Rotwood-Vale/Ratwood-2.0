@@ -380,5 +380,5 @@
 				H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
 
 				ADD_TRAIT(H, TRAIT_GOODLOVER, TRAIT_GENERIC)
-				var/datum/inspiration/I = new /datum/inspiration(H)
+				var/datum/inspiration/I = new() 
 				I.grant_inspiration(H, bard_tier = BARD_T3)

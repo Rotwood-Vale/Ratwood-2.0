@@ -476,7 +476,7 @@
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)//Capped to T2 miracles. Devotion at T2.
-	var/datum/inspiration/I = new /datum/inspiration(H)
+	var/datum/inspiration/I = new() 
 	I.grant_inspiration(H, bard_tier = BARD_T2)
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
@@ -642,7 +642,7 @@
 		H.mind.current.faction += "[H.name]_faction"
 	// Grant bardic inspiration if Xylix is patron
 	if(istype(H.patron, /datum/patron/divine/xylix))
-		var/datum/inspiration/I = new /datum/inspiration(H)
+		var/datum/inspiration/I = new() 
 		I.grant_inspiration(H, bard_tier = BARD_T2)
 	backl = /obj/item/storage/backpack/rogue/satchel
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/priest

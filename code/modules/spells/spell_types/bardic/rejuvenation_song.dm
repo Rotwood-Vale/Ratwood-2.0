@@ -35,7 +35,7 @@
 	id = "healingrejuvesong"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/healing
 	duration = 15 SECONDS
-	healing_on_tick = 0.6
+	healing_on_tick = 0.4
 	outline_colour = "#c92f2f"
 
 /datum/status_effect/buff/healing/rejuvenationsong/t2
