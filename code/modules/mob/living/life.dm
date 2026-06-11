@@ -117,9 +117,18 @@
 /mob/living/proc/can_hibernate()
 	if(ignore_hibernation)
 		return FALSE
+	if(has_hibernation_sensitive_state())
+		return FALSE
 	if(stat == DEAD)
 		return TRUE
 	return is_calm()
+
+/mob/living/proc/has_hibernation_sensitive_state()
+	if(length(simple_embedded_objects))
+		return TRUE
+	if(blood_volume && (simple_bleeding || bleed_rate))
+		return TRUE
+	return stat != DEAD && length(simple_wounds)
 
 /mob/living/proc/should_hibernate(list/active_z)
 	if(client || ckey || ignore_hibernation)

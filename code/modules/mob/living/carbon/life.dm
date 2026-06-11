@@ -2,6 +2,19 @@
 
 // Kelvin per second (10 K per minute)
 #define TEMP_RECOVERY_RATE (10.0 / 60.0)
+
+/mob/living/carbon/has_hibernation_sensitive_state()
+	if(..())
+		return TRUE
+	if(blood_volume < BLOOD_VOLUME_NORMAL && (stat != DEAD || blood_volume))
+		return TRUE
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		if((blood_volume && bodypart.bleeding) || length(bodypart.embedded_objects))
+			return TRUE
+		if(stat != DEAD && (bodypart.needs_processing || length(bodypart.wounds)))
+			return TRUE
+	return FALSE
+
 /mob/living/carbon/Life(seconds, times_fired)
 	set invisibility = 0
 
