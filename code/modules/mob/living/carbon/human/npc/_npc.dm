@@ -538,6 +538,43 @@
 
 	return FALSE
 
+/mob/living/carbon/human/proc/should_flee_from(mob/living/L)
+	if (L == src)
+		return FALSE
+
+	if (L.alpha == 0 && L.rogue_sneaking)
+		return FALSE
+
+	if(!is_in_zweb(src.z,L.z))
+		return FALSE
+
+	if(L.stat >= UNCONSCIOUS)
+		return FALSE
+
+	if(L.InFullCritical())
+		return FALSE
+
+	if(L.name in friends)
+		return FALSE
+
+	if(enemies[L])
+		return TRUE
+
+	if(faction_check_mob(L))
+		return FALSE
+
+	if(ishuman(L))
+		var/mob/living/carbon/human/human_attacker = L
+		return human_attacker.client || human_attacker.aggressive
+
+	if(istype(L, /mob/living/simple_animal/hostile/retaliate))
+		var/mob/living/simple_animal/hostile/retaliate/retaliator = L
+		return retaliator.aggressive
+	else if(istype(L, /mob/living/simple_animal/hostile))
+		return TRUE
+	
+	return FALSE
+
 /mob/living/carbon/human/proc/npc_try_backstep()
 	// JUKE: backstep after attacking if you're fast and have movement left
 	var/const/base_juke_chance = 5
@@ -680,8 +717,8 @@
 					// if our current candidate is closer, ignore this one
 					if(target && (get_dist(src, target) <= get_dist(src, bystander)))
 						continue
-					// we assume if we want to hurt them they want to hurt us back
-					if(should_target(bystander))
+					// don't flee from a cow or chicken just because you hate them
+					if(should_flee_from(bystander))
 						target = bystander // We're trying to run from this person now
 			if(!target || get_dist(src, target) >= NPC_FLEE_DISTANCE)
 				NPC_THINK("Done fleeing!")
