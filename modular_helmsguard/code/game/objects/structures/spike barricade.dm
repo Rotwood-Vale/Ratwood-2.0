@@ -1,6 +1,6 @@
 /obj/structure/barricade/wood_spike
-	name = "wooden barrier"
-	desc = "A defensive barrier made of sharp wooden stakes,"
+	name = "木刺路障"
+	desc = "一道由尖锐木桩构成的防御路障，"
 	icon = 'modular_helmsguard/icons/obj/structure/spike_barricades.dmi'
 	icon_state = "barricade"
 	max_integrity = 250
@@ -38,16 +38,16 @@
 			if(chance <= 3)
 				BP.add_wound(/datum/wound/puncture)
 				add_mob_blood(M)
-				M.visible_message("<span class='danger'>[M]'s [BP.name] is pierced by the wooden spike!</span>")
+				M.visible_message("<span class='danger'>[M] 的 [BP.name] 被木刺刺穿了！</span>")
 				if(isliving(M))
 					M.emote("pain")
 			if(chance > 3)
-				M.visible_message("<span class='danger'>[M] is impaled on the spikes by the [BP.name]!</span>")
+				M.visible_message("<span class='danger'>[M] 的 [BP.name] 被尖刺狠狠贯穿了！</span>")
 				M.setDir(M.dir)
 				contact_dir = get_dir(src, M)
 				impale(M)
 		else
-			M.visible_message("<span class='danger'>[M]'s [BP.name] is bruised by the wooden spikes!</span>")
+			M.visible_message("<span class='danger'>[M] 的 [BP.name] 被木刺撞得青肿！</span>")
 			M.Knockdown(rand(15,30))
 			M.Immobilize(30)
 			if(isliving(M))
@@ -57,7 +57,7 @@
 	else
 		M.simple_add_wound(/datum/wound/puncture, silent = FALSE, crit_message = FALSE)
 		M.apply_damage(rand(10,50), BRUTE, BP, M.run_armor_check(BP, "stab", damage = rand(10,20)))
-		M.visible_message("<span class='danger'>[M] is pierced by the wooden spike!</span>")
+		M.visible_message("<span class='danger'>[M] 被木刺刺穿了！</span>")
 
 	playsound(src, pick("sound/combat/hits/bladed/genthrust (1).ogg", "sound/combat/hits/bladed/genthrust (2).ogg"),  100)
 
@@ -77,11 +77,11 @@
 		M.apply_damage(rand(5,20), BRUTE, BP, M.run_armor_check(BP, "stab", damage = rand(10,20)))
 		var/armor = M.run_armor_check(BP, "stab")
 		if(armor < 20)
-			M.visible_message("<span class='danger'>[M] is violently impaled on the [BP.name] when trying to climb over the [src]!</span>")
+			M.visible_message("<span class='danger'>[M] 试图翻越 [src] 时，被 [BP.name] 狠狠刺穿！</span>")
 			M.setDir(M.dir)
 			impale(M)
 		else
-			M.visible_message("<span class='danger'>[M] fails to climb over the [src] and was injured at their [BP.name]!</span>")
+			M.visible_message("<span class='danger'>[M] 没能翻过 [src]，并且 [BP.name] 受了伤！</span>")
 			M.Knockdown(rand(15,30))
 			M.Immobilize(30)
 			if(isliving(M))
@@ -118,23 +118,23 @@
 		user.changeNext_move(CLICK_CD_RAPID)
 		playsound(src, "sound/foley/sew_flesh.ogg", 100)
 		if(user != M)
-			user.visible_message(span_warning("[user] tries to pull themselves [M] off of [src]!"))
+			user.visible_message(span_warning("[user] 试图把 [M] 从 [src] 上拽下来！"))
 		else
 			if(isliving(M))
 				M.emote("pain")
-			user.visible_message(span_warning("[user] tries to struggle free from [src]!"))
+			user.visible_message(span_warning("[user] 试图挣脱 [src]！"))
 		if(do_after(user, rand(30,60), src))
 			if(success_chance >= success_check)
 				playsound(src, pick("sound/foley/flesh_rem.ogg", "sound/foley/flesh_rem2.ogg"), 100)
 				M.flash_fullscreen("redflash3")
 				M.emote("painscream")
-				user.visible_message(span_warning("[M] is pulled free from [src]!"))
+				user.visible_message(span_warning("[M] 被从 [src] 上拽了下来！"))
 				..()
 			else
 				if(user != M)
-					user.visible_message(span_warning("[user] failed to remove [M] from [src]!"))
+					user.visible_message(span_warning("[user] 没能把 [M] 从 [src] 上弄下来！"))
 				else
-					user.visible_message(span_warning("[user] failed to remove themselves from the [src]!"))
+					user.visible_message(span_warning("[user] 没能把自己从 [src] 上挣脱下来！"))
 				if(isliving(M))
 					M.emote("pain")
 				M.flash_fullscreen("redflash3")

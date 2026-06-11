@@ -3,7 +3,7 @@
 
 
 /obj/effect/mobspawner/undead_all
-	name = "skelly spawner"
+	name = "骷髅刷怪点"
 	desc = ""
 	anchored = TRUE
 	density = FALSE
@@ -29,11 +29,11 @@
 	/mob/living/simple_animal/hostile/rogue/ghost/wraith = 3,
 	/mob/living/simple_animal/hostile/rogue/ghost/cursed = 3)
 
-	text_faction = "Skeletons"
+	text_faction = "骷髅"
 	objfaction = list("undead")
 
 /obj/effect/mobspawner/skeleton_spawner_hard
-	name = "skelly spawner"
+	name = "骷髅刷怪点"
 	desc = ""
 	anchored = TRUE
 	density = FALSE
@@ -47,11 +47,11 @@
 	/mob/living/carbon/human/species/skeleton/npc/dungeon = 3,
 	/mob/living/simple_animal/hostile/rogue/skeleton/guard/xbow = 3,
 	/mob/living/carbon/human/species/skeleton/dwarf/npc/dungeon = 2)
-	text_faction = "Skeletons"
+	text_faction = "骷髅"
 	objfaction = list("undead")
 
 /obj/effect/mobspawner/skeleton_spawner_simple
-	name = "skelly spawner"
+	name = "骷髅刷怪点"
 	desc = ""
 	anchored = TRUE
 	density = FALSE
@@ -70,12 +70,12 @@
 	/mob/living/simple_animal/hostile/rogue/skeleton/guard/crypt_guard_spear = 2,
 	/mob/living/simple_animal/hostile/rogue/gravelord = 1
 	)
-	text_faction = "Skeletons"
+	text_faction = "骷髅"
 	objfaction = list("undead")
 
 
 /obj/effect/mobspawner/ghosts_all
-	name = "wraith spawner"
+	name = "怨灵刷怪点"
 	desc = ""
 	anchored = TRUE
 	density = FALSE
@@ -86,12 +86,12 @@
 	/mob/living/simple_animal/hostile/rogue/ghost/wraith = 1,
 	/mob/living/simple_animal/hostile/rogue/ghost/cursed = 1
 		)
-	text_faction = "Wraiths"
+	text_faction = "怨灵"
 	objfaction = list("undead")
 
 
 /obj/effect/mobspawner/ghosts_wraiths
-	name = "wraith spawner"
+	name = "怨灵刷怪点"
 	desc = ""
 	anchored = TRUE
 	density = FALSE
@@ -101,11 +101,11 @@
 	mob_types = list(
 	/mob/living/simple_animal/hostile/rogue/ghost/wraith = 1
 		)
-	text_faction = "Wraiths"
+	text_faction = "怨灵"
 	objfaction = list("undead")
 
 /obj/effect/mobspawner/ghosts_cursedsouls
-	name = "cursed soul spawner"
+	name = "诅咒灵魂刷怪点"
 	desc = ""
 	anchored = TRUE
 	density = FALSE
@@ -115,5 +115,5 @@
 	mob_types = list(
 	/mob/living/simple_animal/hostile/rogue/ghost/cursed = 1
 		)
-	text_faction = "Cursed souls"	
+	text_faction = "诅咒灵魂"	
 	objfaction = list("undead")

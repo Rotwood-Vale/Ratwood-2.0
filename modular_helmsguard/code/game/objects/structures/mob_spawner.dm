@@ -14,7 +14,7 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 
 
 /obj/structure/mobspawner
-	name = "mob spawner"
+	name = "生物刷怪点"
 	desc = ""
 //	icon = 'icons/mob/animal.dmi'
 //	icon_state = "hole"
@@ -34,8 +34,8 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 	var/mobs = 0
 	var/mobs_to_spawn = 3
 	var/mob_types = list(/mob/living/carbon/human/species/skeleton/npc = 100)
-	var/text_faction = "Space carps"	//for spawning string
-	var/spawn_text = "emerges from"		//for spawning string
+	var/text_faction = "太空鲤鱼"	//for spawning string
+	var/spawn_text = "从中出现"		//for spawning string
 	var/list/spawn_sound = list()
 	var/list/objfaction = list("test")
 	var/list/mymobs = list()
@@ -149,7 +149,7 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 /// INVISIBLE INDESTRUCTIBLE SPAWNER ///
 
 /obj/effect/mobspawner
-	name = "mob spawner"
+	name = "生物刷怪点"
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "random_loot"
 	desc = ""
@@ -166,9 +166,9 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 	var/max_mobs = 3
 	var/mobs_to_spawn = 3
 	var/mob_types = list(/mob/living/carbon/human/species/skeleton/npc = 100)
-	var/text_faction = "Space carps"	//for spawning string
-	var/list/notification_strings = list("appeared from hiding!", "laid an ambush!", "emerges from the shadows!", "lunged from their hiding place!",
-	"revealed themselves suddenly!")
+	var/text_faction = "太空鲤鱼"	//for spawning string
+	var/list/notification_strings = list("突然现身了！", "发起了伏击！", "从阴影中现身！", "从藏身处猛扑而出！",
+	"突然暴露了身形！")
 	var/picked_string = null
 //	var/list/spawn_sound = list()
 	var/list/objfaction = list("test")
@@ -248,7 +248,7 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 
 
 /obj/effect/mobspawner/hole
-	name = "the hole"
+	name = "洞口"
 	desc = ""
 	icon = 'modular_helmsguard/icons/obj/structure/spawners.dmi'
 	icon_state = "hole"
@@ -265,9 +265,9 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 	mobs_to_spawn = 3
 	mob_types = list(/mob/living/carbon/human/species/skeleton/npc = 100)
 	text_faction = null
-	notification_strings = list("climbs out of")
+	notification_strings = list("从中爬出")
 	picked_string = null
-	notification_strings = list("climbs out of", "emerges from", "crawls out of", "creeps out from")
+	notification_strings = list("从中爬出", "从中出现", "从中爬行而出", "从中悄悄钻出")
 	var/spawn_sound = list('sound/foley/climb.ogg')
 	objfaction = list("test")
 	mymobs = list()
@@ -350,25 +350,24 @@ THESE SPAWNERS SPAWN MOBS BY CHOOSING RANDOM TILES AROUND IT AND SCATTERING THE 
 		if(attacking_shovel.heldclod)
 			playsound(loc,'sound/items/empty_shovel.ogg', 100, TRUE)
 			QDEL_NULL(attacking_shovel.heldclod)
-			src.visible_message("<span class='danger'>[user] shoveled some dirt clods into [src]!</span>")
+			src.visible_message("<span class='danger'>[user] 往 [src] 里铲入了一些土块！</span>")
 			fill ++
 			if(fill >= filltoseal)
 				playsound(loc,'sound/foley/break_stone.ogg', 100, TRUE)
-				src.visible_message("<span class='danger'>[user] seals [src] with dirts!</span>")
+				src.visible_message("<span class='danger'>[user] 用泥土封住了 [src]！</span>")
 				Destroy()
 
 	if(istype(attacking_item, /obj/item/rogueweapon/pick))
 		var/obj/item/rogueweapon/pick/attacking_pick = attacking_item
 		playsound(loc,'sound/foley/hit_rock.ogg', 100, TRUE)
-		src.visible_message("<span class='danger'>[user] is picking at the [src] with [attacking_pick]!</span>")
+		src.visible_message("<span class='danger'>[user] 正在用 [attacking_pick] 凿挖 [src]！</span>")
 		if(do_after(user, rand(30,60), src))
-			src.visible_message("<span class='danger'>[user] picked some rocks into [src] with [attacking_pick]!</span>")
+			src.visible_message("<span class='danger'>[user] 用 [attacking_pick] 往 [src] 里凿进了一些石块！</span>")
 			new /obj/effect/particle_effect/sparks(src.loc)
 			playsound(loc,'sound/foley/hit_rock.ogg', 100, TRUE)
 			fill++
 			if(fill >= filltoseal)
 				playsound(loc,'sound/foley/break_stone.ogg', 100, TRUE)
-				src.visible_message("<span class='danger'>[user] collapsed [src] with [attacking_pick]!</span>")
+				src.visible_message("<span class='danger'>[user] 用 [attacking_pick] 弄塌了 [src]！</span>")
 				Destroy()
 	..()
-

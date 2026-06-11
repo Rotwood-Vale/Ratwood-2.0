@@ -9,7 +9,7 @@
 ///////////////////////
 
 /obj/effect/landmark/start/helms/late/noblelate
-	name = "Noble Late (Helm)"
+	name = "贵族晚加入（赫姆）"
 	icon_state = "arrow"
 	jobspawn_override = list(
 //	"Lord Castellan",
@@ -21,7 +21,7 @@
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/helms/late/courtierlate
-	name = "Courtier Late (Helm)"
+	name = "廷臣晚加入（赫姆）"
 	icon_state = "arrow"
 	jobspawn_override = list(
 	"Court Physician",
@@ -32,7 +32,7 @@
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/helms/late/garrisonlate
-	name = "Retinue Late (Helm)"
+	name = "侍从晚加入（赫姆）"
 	icon_state = "arrow"
 	jobspawn_override = list(
 	"Knight",
@@ -43,7 +43,7 @@
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/helms/late/churchlate
-	name = "Church Late (Helm)"
+	name = "教会晚加入（赫姆）"
 	icon_state = "arrow"
 	jobspawn_override = list(	
 	"Priest",
@@ -58,7 +58,7 @@
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/helms/late/townerlate
-	name = "Towner Late (Helm)"
+	name = "镇民晚加入（赫姆）"
 	icon_state = "arrow"
 	jobspawn_override = list(
 	"Merchant",
@@ -76,7 +76,7 @@
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/helms/late/citywatchlate
-	name = "Citywatch Late (Helm)"
+	name = "城卫晚加入（赫姆）"
 	icon_state = "arrow"
 	jobspawn_override = list(
 	"Bailiff",
@@ -85,7 +85,7 @@
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/helms/late/peasantlate
-	name = "Peasant Late (Helm)"
+	name = "农民晚加入（赫姆）"
 	icon_state = "arrow"
 	jobspawn_override = list(
 	"Soilson",
@@ -94,7 +94,7 @@
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/helms/late/rabblelate
-	name = "Peasant Late (Helm)"
+	name = "平民晚加入（赫姆）"
 	icon_state = "arrow"
 	jobspawn_override = list(
 	"Bawdyhouse Master",
@@ -105,7 +105,7 @@
 
 
 /obj/effect/landmark/start/helms/late/adventurerlate
-	name = "Adventurer Late (Helm)"
+	name = "冒险者晚加入（赫姆）"
 	icon_state = "arrow"
 	jobspawn_override = list(
 	"Adventurer",
@@ -113,7 +113,7 @@
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/helms/late/mercenarylate
-	name = "Mercenary Late (Helm)"
+	name = "佣兵晚加入（赫姆）"
 	icon_state = "arrow"
 	jobspawn_override = list(
 	"Mercenary",
@@ -126,158 +126,158 @@
 //These are roles exclusive to Helmsguard//
 
 /obj/effect/landmark/start/helms/noble/markgraf
-	name = "Lord Castellan"
+	name = "城主"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/noble/consort
-	name = "Lord Consort"
+	name = "领主配偶"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/noble/heir
-	name = "Lord Heir"
+	name = "领主继承人"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/noble/hand
-	name = "Hand"
+	name = "御前之手"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/noble/steward
-	name = "Steward"
+	name = "总管"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/court/physician
-	name = "Court Physician"
+	name = "宫廷医师"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/court/jester
-	name = "Jester"
+	name = "弄臣"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/court/servant
-	name = "Keep Servant"
+	name = "城堡仆役"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/garrison/knight
-	name = "Knight"
+	name = "骑士"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/garrison/manatarms
-	name = "Man-at-Arms"
+	name = "披甲兵"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/garrison/masteratarms
-	name = "Master-at-Arms"
+	name = "军械长"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/garrison/gatekeeper
-	name = "Gatekeeper"
+	name = "守门人"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/church/priest
-	name = "Priest"
+	name = "司祭"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/church/inquisitor
-	name = "Inquisitor"
+	name = "审判官"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/church/monk
-	name = "Monk"
+	name = "修士"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/church/chapmaster
-	name = "Chapter Master"
+	name = "礼拜堂长"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/church/templar_knight
-	name = "Templar Knight"
+	name = "圣殿骑士"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/church/templar_sergeant
-	name = "Templar Sergeant"
+	name = "圣殿军士"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/church/hospitaler_knight
-	name = "Hospitaler Knight"
+	name = "医院骑士"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/church/hospitaler_sergeant
-	name = "Hospitaler Sergeant"
+	name = "医院军士"
 	icon_state = "arrow"
 
 
 /obj/effect/landmark/start/helms/watch/bailiff
-	name = "Bailiff"
+	name = "法警"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/watch/watchman
-	name = "Watchman"
+	name = "卫兵"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/watch/dungeoneer
-	name = "Dungeoneer"
+	name = "狱卒"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/yeomen/merchant
-	name = "Merchant"
+	name = "商人"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/yeomen/innkeeper
-	name = "Innkeeper"
+	name = "店主"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/yeomen/armorer
-	name = "Armorer"
+	name = "甲匠"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/yeomen/weaponsmith
-	name = "Weaponsmith"
+	name = "武器匠"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/yeomen/blacksmith
-	name = "Blacksmith"
+	name = "铁匠"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/yeomen/builder
-	name = "Builder"
+	name = "工匠"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/yeomen/apothecary
-	name = "Apothecary"
+	name = "药剂师"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/yeomen/leatherworker
-	name = "Leather Worker"
+	name = "皮匠"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/yeomen/apprentice
-	name = "Apprentice"
+	name = "学徒"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/yeomen/tailor
-	name = "Tailor"
+	name = "裁缝"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/peasants/soilson
-	name = "Soilson"
+	name = "农家子"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/peasants/serf
-	name = "Serf"
+	name = "农奴"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/rabble/master
-	name = "Bawdyhouse Master"
+	name = "风月馆老板"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/rabble/wench
-	name = "Rake"
+	name = "浪荡子"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/rabble/gutterfolk
-	name = "Gutterfolk"
+	name = "沟巷人"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/helms/rabble/servingwench
-	name = "Serving Lad"
+	name = "侍应小厮"
 	icon_state = "arrow"

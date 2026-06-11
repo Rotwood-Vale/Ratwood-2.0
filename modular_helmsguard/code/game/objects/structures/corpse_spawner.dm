@@ -1,6 +1,6 @@
 
 /obj/effect/spawner/lootdrop/roguetown/corpse_spawner
-	name = "corpse spawner"
+	name = "尸体刷怪点"
 	icon_state = "x2"
 
 	loot = list(/mob/living/carbon/human/species/skeleton/dead/peasant = 10)

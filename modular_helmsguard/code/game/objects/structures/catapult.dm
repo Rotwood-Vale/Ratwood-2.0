@@ -1,6 +1,6 @@
 /obj/structure/catapult
-	name = "Siege Catapult"
-	desc = "An ancient siege engine for hurling projectiles over long distances."
+	name = "攻城投石机"
+	desc = "一台古老的攻城器械，可将投射物抛向远方。"
 	icon = 'modular_helmsguard/icons/obj/structure/catapult.dmi'
 	icon_state = "catapult_ready"
 	anchored = 1
@@ -17,7 +17,7 @@
 	var/busy = 0
 	var/ready = 1
 	var/loaded = 0
-	var/list/choices = list("Fire!", "Set Direction", "Set Target Distance", "Pack Up")
+	var/list/choices = list("发射！", "设置朝向", "设置目标距离", "收拢")
 
 /*/obj/structure/catapult/examine(mob/user)
 	. = ..()
@@ -39,7 +39,7 @@
 /obj/structure/catapult/proc/check_obstruction(mob/living/carbon/user)
 	var/turf/T = get_turf(src)
 	if(istype(T, /turf/open/floor) && T.z > src.z)
-		to_chat(user, "<span class='warning'>The catapult is obstructed by something directly above it.</span>")
+		to_chat(user, "<span class='warning'>投石机正上方有东西挡住了它。</span>")
 		return 1
 	return 0
 
@@ -47,85 +47,86 @@
 	// Check if the catapult is loaded
 	if (packed) // Check if the catapult is packed
 		// Provide a message indicating it cannot be used
-		user.visible_message("<span class='notice'>The catapult is currently packed and cannot be used.</span>")
+		user.visible_message("<span class='notice'>投石机当前处于收拢状态，无法使用。</span>")
 		return // Exit the proc early since no further action can be taken
 
 	if(busy)
-		to_chat(user, "<span class='warning'>Someone else is currently using this equipment.</span>")
+		to_chat(user, "<span class='warning'>现在有别人在使用这台器械。</span>")
 		return
 	// Provide choices to the user
 	if(!ready)
-		user.visible_message("<span class='notice'>[user] cranks the catapult's arm back into position.</span>")
+		user.visible_message("<span class='notice'>[user] 将投石机的抛臂重新摇回原位。</span>")
 		playsound(src, "modular_helmsguard/sound/catapult/adjusting.ogg", 100)
 		if(do_after(user, 30, src))
 			ready = 1
 			update_icon()
-			user.visible_message("<span class='notice'>The catapult is ready to fire again.</span>")
-			to_chat(user, "<span class='warning'>The catapult is already loaded with a projectile.</span>")
+			user.visible_message("<span class='notice'>投石机已准备好再次发射。</span>")
+			to_chat(user, "<span class='warning'>投石机里已经装有投射物了。</span>")
 		return
 
 	if(ready && !packed)
-		var/choice_unpacked = input("What would you like to do with the catapult?", "Catapult Actions") in choices
+		var/choice_unpacked = input("你想对投石机做什么？", "投石机操作") in choices
 		switch(choice_unpacked)
-			if ("Fire!")
+			if ("发射！")
 				if (check_obstruction(src))  // Check for obstruction
 					return // Don't proceed if obstructed
 				if (!loaded)
-					to_chat(user, "<span class='warning'>The catapult is not loaded yet.</span>")
+					to_chat(user, "<span class='warning'>投石机还没有装填。</span>")
 					return
 				if(fire_distance == 0)
-					to_chat(user, "<span class='warning'>[src] needs to be aimed first.</span>")
+					to_chat(user, "<span class='warning'>[src] 需要先完成瞄准。</span>")
 					return
 				else
 					fire_catapult(user) // Pass the distance to fire_catapult
-			if ("Set Direction")
+			if ("设置朝向")
 				var/current_direction = dir
-				var/list/directionlist = list("NORTH", "SOUTH", "EAST", "WEST")
-				var/direction = input("Directions", "Select a direction") as anything in directionlist
+				var/list/directionlist = list("北" = "NORTH", "南" = "SOUTH", "东" = "EAST", "西" = "WEST")
+				var/direction_choice = input("方向", "选择一个方向") as anything in directionlist
+				var/direction = directionlist[direction_choice]
 				var/texttodirection = text2dir(direction)
 				if(busy)
-					to_chat(user, "<span class='warning'>Someone else is currently using this catapult.</span>")
+					to_chat(user, "<span class='warning'>现在有别人在使用这台投石机。</span>")
 					return
 				playsound(src, pick("modular_helmsguard/sound/catapult/aim.ogg", "modular_helmsguard/sound/catapult/aim2.ogg"),  100)
-				user.visible_message("<span class='notice'>[user] tries to turn the [src] to face [direction].</span>")
+				user.visible_message("<span class='notice'>[user] 试着将 [src] 转向 [direction]。</span>")
 				if(texttodirection != current_direction)
 					busy = 1
 					if(do_after(user, 30, src))
 						dir = texttodirection
-						user.visible_message("<span class='notice'>[user] set the [src]'s firing direction to [direction].</span>",
-						"<span class='notice'>You finish adjusting [src]'s firing direction.</span>")
+						user.visible_message("<span class='notice'>[user] 将 [src] 的发射方向设为 [direction]。</span>",
+						"<span class='notice'>你完成了 [src] 的发射方向调整。</span>")
 						busy = 0
 					else
-						user.visible_message("<span class='notice'>The [src] is already facing [direction].</span>")
+						user.visible_message("<span class='notice'>[src] 本来就朝向 [direction]。</span>")
 						busy = 0
 						return
 				else
 					busy = 0
-			if ("Set Target Distance")
-				var/distance_input = input("Set target distance of bombardment.", "tiles") as num
+			if ("设置目标距离")
+				var/distance_input = input("设置轰击目标距离。", "格") as num
 				if(distance_input>max_distance)
-					to_chat(user, "<span class='warning'>The catapult can only fire at the maximum distance of [max_distance] tiles.</span>")
+					to_chat(user, "<span class='warning'>投石机最远只能发射到 [max_distance] 格。</span>")
 					return
 				if(distance_input<min_distance)
-					to_chat(user, "<span class='warning'>The range must be at the minimum distance of [min_distance] tiles.</span>")
+					to_chat(user, "<span class='warning'>射程最少也要有 [min_distance] 格。</span>")
 					return
 				else
 					busy = 1
 					playsound(src, pick("modular_helmsguard/sound/catapult/aim.ogg", "modular_helmsguard/sound/catapult/aim2.ogg"),  100)
-					user.visible_message("<span class='notice'>[user] begins to set the [src]'s firing distance.</span>")
+					user.visible_message("<span class='notice'>[user] 开始设置 [src] 的发射距离。</span>")
 					if(do_after(user, 30, src))
 						fire_distance = distance_input
-						user.visible_message("<span class='notice'>[user] sets the [src] to fire at the distance of [fire_distance] tiles.</span>")
+						user.visible_message("<span class='notice'>[user] 将 [src] 的发射距离设为 [fire_distance] 格。</span>")
 						busy = 0
 					else
 						busy = 0
 						return
-			if ("Pack Up")
-				user.visible_message("<span class='notice'>[user] begins to pack the catapult up.</span>")
+			if ("收拢")
+				user.visible_message("<span class='notice'>[user] 开始收拢投石机。</span>")
 				busy = 1
 				playsound(src, "modular_helmsguard/sound/catapult/adjusting.ogg", 100)
 				if(do_after(user, 10 SECONDS, target = src))
-					user.visible_message("<span class='notice'>[user] have packed the catapult up for moving.</span>")
+					user.visible_message("<span class='notice'>[user] 已将投石机收拢好，便于移动。</span>")
 					anchored = 0
 					packed = 1
 					fire_distance = 0
@@ -140,7 +141,7 @@
 	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) && (packed) || usr.contents.Find(src)))
 		if(!ishuman(usr))
 			return
-		visible_message(span_notice("[usr] sets up the [src]."))
+		visible_message(span_notice("[usr] 架设好了 [src]。"))
 		playsound(src, "modular_helmsguard/sound/catapult/adjusting.ogg",  100)
 		if(do_after(usr, 10 SECONDS, target = src))
 			anchored = 1
@@ -150,16 +151,16 @@
 
 	if(istype(O, /obj/item/boulder))
 		if(!ready)
-			to_chat(user, "<span class='warning'>The catapult's arm needs to be drawn back again.</span>")
+			to_chat(user, "<span class='warning'>投石机的抛臂需要重新拉回。</span>")
 			return
 		if(loaded)
-			to_chat(user, "<span class='warning'>The catapult is already loaded with a projectile.</span>")
+			to_chat(user, "<span class='warning'>投石机里已经装有投射物了。</span>")
 			return
 
 		user.dropItemToGround(O, src)
 		O.forceMove(src)
 		loaded = 1
-		user.visible_message("<span class='notice'>[user] loads \a [O.name] into the catapult.</span>")
+		user.visible_message("<span class='notice'>[user] 将 [O.name] 装入投石机。</span>")
 		playsound(src, 'sound/foley/hit_rock.ogg', 100)
 		// Optional: Remove the projectile from the world to show it's loaded
 		O.loc = src // Keeps it "inside" the catapult
@@ -187,7 +188,7 @@
 		spawn(10)
 			var/obj/item/boulder/P = /obj/item/boulder
 //			var/atom/target = get_edge_target_turf(src, dir)
-			user.visible_message("<span class='notice'>You fire the catapult!</span>")
+			user.visible_message("<span class='notice'>你发射了投石机！</span>")
 			loaded = 0
 			ready = 0
 		// Adjust `distance_input` with a random variation
@@ -218,7 +219,7 @@
 	if(loaded)
 		unload_projectile()
 		playsound(loc, 'sound/foley/cartdump.ogg', 100, FALSE, -1)
-		user.visible_message("<span class='notice'>[user] unloads the catapult.</span>")
+		user.visible_message("<span class='notice'>[user] 卸下了投石机中的弹药。</span>")
 		src.loaded = 0
 		update_icon()
 
@@ -234,7 +235,7 @@
 	// Additional unloading logic...
 
 /obj/item/boulder
-	name = "boulder"
+	name = "巨石"
 	icon = 'modular_helmsguard/icons/obj/structure/cata_ammo.dmi'
 	icon_state = "b-1"
 	w_class = 5
@@ -308,7 +309,7 @@
 			player.playsound_local(get_turf(player), far_explosion_sound, 100, FALSE, pressure_affected = FALSE, channel = boomchannel)
 
 /obj/projectile/rock_shard
-	name = "rock shard"
+	name = "石片"
 	icon_state = "bullet"
 	damage = 15
 	range = 8

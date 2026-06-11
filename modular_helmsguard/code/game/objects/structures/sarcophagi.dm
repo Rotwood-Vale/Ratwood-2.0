@@ -1,7 +1,7 @@
 /obj/structure/closet/crate/coffin/sarcophagus
-	name = "sarcophagus"
+	name = "石棺"
 	icon_state = "sarcophagus"
-	desc = "A place for the dignified dead to rest."
+	desc = "供体面死者安息之处。"
 	anchored = TRUE
 	resistance_flags = null
 	open_sound_volume = 25
@@ -23,7 +23,7 @@
 
 
 /obj/structure/sarcophagus
-	name = "sarcophagus"
+	name = "石棺"
 	icon = 'modular_helmsguard/icons/obj/structure/crypt.dmi'
 	icon_state = "sarcophagus_abandoned"
 	anchored = TRUE
@@ -83,7 +83,7 @@
 	lootcount = 1
 
 /obj/structure/closet/crate/coffin/sarcophagus/danger
-	name = "sarcophagus"
+	name = "石棺"
 	icon_state = "sarcophagus"
 	var/springed = FALSE
 
@@ -135,7 +135,7 @@
 
 
 /obj/effect/spawner/lootdrop/roguetown/sarcophagi
-	name = "sarcophagi"
+	name = "石棺群"
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "redskull"
 	loot = list(
@@ -155,5 +155,4 @@
 	/obj/structure/sarcophagus/alt =1.
 	)
 	lootcount = 1
-
 

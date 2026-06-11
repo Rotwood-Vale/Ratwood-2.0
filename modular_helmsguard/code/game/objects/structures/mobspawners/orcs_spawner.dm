@@ -2,7 +2,7 @@
 ///EFFECT SPAWNER///
 
 /obj/effect/mobspawner/goblin_spawner
-	name = "gob spawner"
+	name = "地精刷怪点"
 	desc = ""
 	anchored = TRUE
 	density = FALSE
@@ -14,11 +14,11 @@
 	/mob/living/simple_animal/hostile/retaliate/rogue/goblin/cave = 3,		//archer
 	/mob/living/simple_animal/hostile/retaliate/rogue/goblin = 3,		//archer
 	/mob/living/carbon/human/species/goblin/npc/cave = 4,)
-	text_faction = "Goblins"
+	text_faction = "地精"
 	objfaction = list("orcs")
 
 /obj/effect/mobspawner/orc_spawner
-	name = "orc spawner"
+	name = "兽人刷怪点"
 	desc = ""
 	anchored = TRUE
 	density = FALSE
@@ -30,11 +30,11 @@
 	/mob/living/carbon/human/species/halforc/orc_raider = 5,		//archer
 	/mob/living/simple_animal/hostile/retaliate/rogue/orc/ranged = 5		//archer
 	)
-	text_faction = "Orcs"
+	text_faction = "兽人"
 	objfaction = list("orcs")
 
 /obj/effect/mobspawner/greenskin_spawner
-	name = "greenskin spawner"
+	name = "绿皮刷怪点"
 	desc = ""
 	anchored = TRUE
 	density = FALSE
@@ -49,12 +49,12 @@
 	/mob/living/carbon/human/species/halforc/orc_raider = 4,
 	/mob/living/simple_animal/hostile/retaliate/rogue/orc/ranged = 3		//archer
 	)
-	text_faction = "Greenskins"
+	text_faction = "绿皮"
 	objfaction = list("orcs")
 
 
 /obj/effect/mobspawner/greenskin_spawner_HORDE
-	name = "greenskin spawner"
+	name = "绿皮刷怪点"
 	desc = ""
 	anchored = TRUE
 	density = FALSE
@@ -69,15 +69,15 @@
 	/mob/living/carbon/human/species/halforc/orc_raider = 4,
 	/mob/living/simple_animal/hostile/retaliate/rogue/orc/ranged = 3		//archer
 	)
-	text_faction = "Greenskins"
+	text_faction = "绿皮"
 	objfaction = list("orcs")
 
 
 ///DESTRUCTIBLE STRUCTURE SPAWNER///
 
 /obj/structure/mobspawner/orc_banner_all
-	name = "Orc Banner"
-	desc = "A tattered banner rallying orc invaders to the area!"
+	name = "兽人战旗"
+	desc = "一面破烂的旗帜，正号召兽人侵略者汇聚到此地！"
 	icon = 'modular_helmsguard/icons/obj/structure/orc_banner.dmi'
 	icon_state = "orc_banner"
 	max_integrity = 500
@@ -98,8 +98,8 @@
 	/mob/living/carbon/human/species/halforc/orc_raider = 4,
 	/mob/living/simple_animal/hostile/retaliate/rogue/orc/ranged = 3		//archer
 	)
-	text_faction = "Greenskins"	
-	spawn_text = "rallied around"
+	text_faction = "绿皮"	
+	spawn_text = "聚集在"
 	spawn_sound = list(
 		'modular_helmsguard/sound/items/horns2/orc 1.ogg',
 		'modular_helmsguard/sound/items/horns2/orc 2.ogg',
@@ -115,8 +115,8 @@
 
 
 /obj/effect/mobspawner/hole/goblins
-	name = "the hole"
-	desc = "A hole that reeks of goblin stentch."
+	name = "洞口"
+	desc = "一个散发着地精恶臭的洞。"
 	icon = 'modular_helmsguard/icons/obj/structure/spawners.dmi'
 	icon_state = "hole"
 	anchored = TRUE

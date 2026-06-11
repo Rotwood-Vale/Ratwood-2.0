@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/rogue/ghost/wraith
-	name = "wraith"
-	desc = "The vengeful spirit of a woman, ever seeking to feast upon the essence of the living." 
+	name = "怨灵"
+	desc = "一名女子充满复仇执念的亡魂，永远渴望吞食生者的精魄。"
 	icon = 'modular_helmsguard/icons/mob/wraiths.dmi'
 	icon_state = "wraith"
 	icon_living = "wraith"
@@ -16,8 +16,8 @@
 	gender = FEMALE
 	speak_chance = 100
 	turns_per_move = 2
-	response_help_continuous = "passes through"
-	response_help_simple = "pass through"
+	response_help_continuous = "穿过"
+	response_help_simple = "穿过"
 	dodging = TRUE
 	dodge_prob = 60
 	maxHealth = 200
@@ -38,7 +38,7 @@
 	dodge_sound = 'sound/combat/dodge.ogg'
 	parry_sound = "bladedmedium"
 	d_intent = INTENT_DODGE
-	speak_emote = list("laments", "cries", "whimpers")
+	speak_emote = list("哀嚎", "哭泣", "呜咽")
 	del_on_death = TRUE
 	STALUC = 20
 	STACON = 10
@@ -62,16 +62,16 @@
 
 /mob/living/simple_animal/hostile/rogue/ghost/wraith/attacked_by(obj/item/I, mob/living/user)
 	if(I && istype(I, /obj/item) && !I.is_silver)
-		user.visible_message(span_danger("\The [I.name] passes through the [src.name]!"))
+		user.visible_message(span_danger("\The [I.name] 穿过了 [src.name]！"))
 		return // Ignore attacks from weapons that are not silver
 	..()
 
 /mob/living/simple_animal/hostile/rogue/ghost/wraith/throw_impact(obj/item/I, mob/living/user)
 	if(I)
-		user.visible_message(span_danger("\The [I.name] passes through the [src.name]!"))
+		user.visible_message(span_danger("\The [I.name] 穿过了 [src.name]！"))
 		return // Ignore thrown items
 	if(I && istype(I, /obj/item/rogueweapon) && I.is_silver)
-		user.visible_message(span_danger("\The [I.name] strikes the [src.name], harming it!"))
+		user.visible_message(span_danger("\The [I.name] 击中了 [src.name]，对其造成了伤害！"))
 		return ..() // Resume parent procedure if hit by a rogueweapon with is_silver
 	..()
 
@@ -79,10 +79,10 @@
 /mob/living/simple_animal/hostile/rogue/ghost/wraith/Bump(obj/item/I)
 	. = ..()
 	if(I)
-		src.visible_message(span_danger("\The [I.name] passes through the [src.name]!"))
+		src.visible_message(span_danger("\The [I.name] 穿过了 [src.name]！"))
 		return // Ignore thrown items
 	if(I && istype(I, /obj/item/rogueweapon) && I.is_silver)
-		src.visible_message(span_danger("\The [I.name] strikes the [src.name], harming it!"))
+		src.visible_message(span_danger("\The [I.name] 击中了 [src.name]，对其造成了伤害！"))
 		return ..() // Resume parent procedure if hit by a rogueweapon with is_silver
 	..()
 
@@ -91,16 +91,16 @@
 	if(AM && istype(AM, /obj/item) && istype(AM, /obj/item/rogueweapon))
 		var/obj/item/rogueweapon/thrown = AM
 		if(thrown.is_silver)
-			visible_message(span_danger("\The [AM.name] strikes the [src.name], harming it!"))
+			visible_message(span_danger("\The [AM.name] 击中了 [src.name]，对其造成了伤害！"))
 			return ..() // Resume parent procedure if hit by a rogueweapon with is_silver
 		else
-			visible_message(span_danger("\The [AM.name] passes through the [src.name]!"))
+			visible_message(span_danger("\The [AM.name] 穿过了 [src.name]！"))
 			return
 
 
 /mob/living/simple_animal/hostile/rogue/ghost/wraith/bullet_act(obj/projectile/P)
 	if(P)
-		P.visible_message(span_danger("\The [P.name] passes through the [src.name]!"))
+		P.visible_message(span_danger("\The [P.name] 穿过了 [src.name]！"))
 		return FALSE // Ignore projectiles
 	..()
 
@@ -113,47 +113,47 @@
 		return ""
 	switch(zone)
 		if(BODY_ZONE_PRECISE_R_EYE)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_L_EYE)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_NOSE)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_MOUTH)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_SKULL)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_EARS)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_NECK)
-			return "neck"
+			return "颈部"
 		if(BODY_ZONE_PRECISE_L_HAND)
-			return "hand"
+			return "手部"
 		if(BODY_ZONE_PRECISE_R_HAND)
-			return "hand"
+			return "手部"
 		if(BODY_ZONE_PRECISE_L_FOOT)
-			return "tail"
+			return "尾部"
 		if(BODY_ZONE_PRECISE_R_FOOT)
-			return "tail"
+			return "尾部"
 		if(BODY_ZONE_PRECISE_STOMACH)
-			return "body"
+			return "躯体"
 		if(BODY_ZONE_PRECISE_GROIN)
-			return "body"
+			return "躯体"
 		if(BODY_ZONE_PRECISE_R_INHAND)
-			return "body"
+			return "躯体"
 		if(BODY_ZONE_PRECISE_L_INHAND)
-			return "body"
+			return "躯体"
 		if(BODY_ZONE_HEAD)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_R_LEG)
-			return "tail"
+			return "尾部"
 		if(BODY_ZONE_L_LEG)
-			return "tail"
+			return "尾部"
 		if(BODY_ZONE_R_ARM)
-			return "arm"
+			return "手臂"
 		if(BODY_ZONE_L_ARM)
-			return "arm"
+			return "手臂"
 		if(BODY_ZONE_CHEST)
-			return "chest"
+			return "胸口"
 
 	return ..()
 
@@ -193,13 +193,13 @@
 	if(!buckled)
 		if(. && prob(60) && iscarbon(C))
 			C.Immobilize(50)
-			C.visible_message(span_danger("\The [src] paralyzes \the [C] in fear!"), 
-			span_danger("\The [src] paralyzes me!"))
+			C.visible_message(span_danger("\The [src] 以恐惧使 \the [C] 动弹不得！"), 
+			span_danger("\The [src] 令我动弹不得！"))
 			emote("aggro")
 		if(prob(10) && iscarbon(C))
 			emote("aggro")
 			Immobilize(2 SECONDS) // Immobilize the wraith for 2 seconds
-			visible_message(span_danger("\The [src] lets out an ear-piercing wail!"))
+			visible_message(span_danger("\The [src] 发出了一声刺耳的尖啸！"))
 			for(var/mob/living/carbon/target in view(5, src))// Check for other carbon mobs in view
 				if(target.stat == CONSCIOUS)
 					shake_camera(target, 3 SECONDS, 3) // Shake the camera of the target
@@ -216,29 +216,29 @@
 	if(buckled == C) // If the wraith is buckled to a carbon mob
 		var/success_chance = C.STACON
 		var/success_check = rand(1,2)
-		C.visible_message(span_danger("\The [C] struggles against \the [src]'s grasp!"))
+		C.visible_message(span_danger("\The [C] 正奋力挣脱 \the [src] 的束缚！"))
 		if(success_chance >= success_check)
 			var/turf/throw_range = get_ranged_target_turf(C, C.dir, rand(3, 5))
-			C.visible_message(span_danger("\The [C] manages to break free from \the [src]'s grasp!"))
+			C.visible_message(span_danger("\The [C] 成功挣脱了 \the [src] 的束缚！"))
 			C.unbuckle_all_mobs()
 			Immobilize(3 SECONDS)
 			Stun(3 SECONDS) // Stun the wraith for a short time after being thrown
 			src.throw_at(throw_range, 1, 7)
 			// Immobilize the wraith for a short time after being thrown
 		else
-			C.visible_message(span_danger("\The [C] struggles but cannot break free from \the [src]'s grasp!"))
+			C.visible_message(span_danger("\The [C] 拼命挣扎，却没能挣脱 \the [src] 的束缚！"))
 			return
 
 
 
 /mob/living/simple_animal/hostile/rogue/ghost/wraith/proc/grapples(mob/living/carbon/C)
 	C.buckle_mob(src, TRUE, TRUE, FALSE, 0, 0) // Buckle the wraith to the target
-	C.visible_message(span_danger("\The [src] strangles \the [C]'s with its cold ghostly hands!"), \
-	span_danger("\The [src] is strangling me with its cold ghostly hands!"))
+	C.visible_message(span_danger("\The [src] 用冰冷的鬼手死死扼住 \the [C]！"), \
+	span_danger("\The [src] 正用冰冷的鬼手扼住我！"))
 
 
 /datum/intent/simple/claw/wraith
-	attack_verb = list("claws", "scratches", "lacerates")
+	attack_verb = list("抓挠", "撕抓", "撕裂")
 	blade_class = BCLASS_CHOP
 	animname = "cut"
 	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')

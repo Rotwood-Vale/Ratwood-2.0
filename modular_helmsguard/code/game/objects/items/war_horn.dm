@@ -1,6 +1,6 @@
 /obj/item/war_horn
-	name = "generic war horn"
-	desc = "Used to coordinate troops in the field and to sound alarms, right click the horn to issue custom message."
+	name = "通用战号"
+	desc = "用于在战场上协调部队并发出警报，右键号角可发布自定义讯息。"
 	icon = 'modular_helmsguard/icons/obj/items/warhorns.dmi'
 	icon_state = "humanhorn"
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_NECK
@@ -19,7 +19,7 @@
 //someone has to get a 4th sound for each and missing distant sounds.
 
 /obj/item/war_horn/human
-	name = "bronze war horn"
+	name = "青铜战号"
 	icon_state = "humanhorn"
 	retreatsound = 'modular_helmsguard/sound/items/horns/h_retreat.ogg'
 	rallysound = 'modular_helmsguard/sound/items/horns/h_rally.ogg'
@@ -32,7 +32,7 @@
 
 	
 /obj/item/war_horn/orc
-	name = "Orcish war horn"
+	name = "兽人战号"
 	icon_state = "orchorn"
 	retreatsound = 'modular_helmsguard/sound/items/horns/o_retreat.ogg'
 	rallysound = 'modular_helmsguard/sound/items/horns/o_rally.ogg'
@@ -44,43 +44,43 @@
 	farchargesound = 'modular_helmsguard/sound/items/horns/o_charge_distant.ogg'
 
 /datum/intent/war_horn
-	attack_verb = list("hit", "strike")
+	attack_verb = list("击打", "挥击")
 	item_d_type = "blunt"
 	chargetime = 0
 	swingdelay = 0
 
 /datum/intent/war_horn/retreat
-	name = "retreat"
+	name = "撤退"
 	icon_state = "inretreat"
 
 /datum/intent/war_horn/rally
-	name = "rally"
+	name = "集结"
 	icon_state = "inrally"
 
 /datum/intent/war_horn/hold
-	name = "hold"
+	name = "坚守"
 	icon_state = "inhold"
 
 /datum/intent/war_horn/charge
-	name = "charge"
+	name = "冲锋"
 	icon_state = "incharge"
 
 /obj/item/war_horn/attack_self(mob/living/user)
 	. = ..()
-	user.visible_message(span_warning("[user] is about to sound the [src]!"))
+	user.visible_message(span_warning("[user] 准备吹响 [src]！"))
 	if(do_after(user, 15))
 		sound_horn(user, user.a_intent)
 
 /obj/item/war_horn/rmb_self(mob/user)
 	. = ..()
-	var/inputty = input("Make an announcement", "ROGUETOWN") as text|null
+	var/inputty = input("发布一则通告", "ROGUETOWN") as text|null
 	if(inputty)
 		sound_horn_announcement(user, user.a_intent, inputty)
 
 /obj/item/war_horn/proc/sound_horn(mob/living/user, datum/intent)
 	user.stop_sound_channel(hornchannel)
 	hornchannel = SSsounds.random_available_channel()
-	user.visible_message(span_warning("[user] sounds the horn!"))
+	user.visible_message(span_warning("[user] 吹响了号角！"))
 	if(intent.type == /datum/intent/war_horn/retreat) //retreat
 		playsound(src, retreatsound, 100, TRUE, channel = hornchannel)
 	if(intent.type == /datum/intent/war_horn/rally) //rally here
@@ -101,41 +101,41 @@
 		var/distance = get_dist(player, origin_turf)
 		if(distance <= 7)
 			if(player.faction[1] in user.faction)
-				to_chat(player, span_warning("[user] signals to [user.a_intent] at [currentarea.location_name]!"))
+				to_chat(player, span_warning("[user] 在 [currentarea.location_name] 发出了 [user.a_intent] 信号！"))
 			continue
-		var/dirtext = " to the "
+		var/dirtext = "的"
 		var/direction = angle2dir(Get_Angle(player, origin_turf))
 		switch(direction)
 			if(NORTH)
-				dirtext += "north"
+				dirtext += "北方"
 			if(SOUTH)
-				dirtext += "south"
+				dirtext += "南方"
 			if(EAST)
-				dirtext += "east"
+				dirtext += "东方"
 			if(WEST)
-				dirtext += "west"
+				dirtext += "西方"
 			if(NORTHWEST)
-				dirtext += "northwest"
+				dirtext += "西北方"
 			if(NORTHEAST)
-				dirtext += "northeast"
+				dirtext += "东北方"
 			if(SOUTHWEST)
-				dirtext += "southwest"
+				dirtext += "西南方"
 			if(SOUTHEAST)
-				dirtext += "southeast"
+				dirtext += "东南方"
 			else //Where ARE you.
-				dirtext = ", although I cannot make out a direction"
+				dirtext = "某个我分辨不清方向的位置"
 		var/disttext
 		switch(distance)
 			if(0 to 20)
-				disttext = " very close"
+				disttext = "很近"
 			if(20 to 40)
-				disttext = " close"
+				disttext = "较近"
 			if(40 to 80)
 				disttext = ""
 			if(80 to 160)
-				disttext = " far"
+				disttext = "较远"
 			else
-				disttext = " very far"
+				disttext = "很远"
 		//sound played for other players
 		player.stop_sound_channel(hornchannel)
 		var/soundtouse
@@ -160,15 +160,15 @@
 			else
 				soundtouse = farchargesound
 		if(player.faction[1] in user.faction) //first is probably their primary.
-			to_chat(player, span_warning("I hear the signal to [user.a_intent.name] somewhere[disttext][dirtext] in the [currentarea.name]!"))
+			to_chat(player, span_warning("我听见 [currentarea.name] 某处[disttext][dirtext]传来了[user.a_intent.name]的信号！"))
 		else
-			to_chat(player, span_warning("I hear a foreign signal somewhere[disttext][dirtext]!"))
+			to_chat(player, span_warning("我听见某处[disttext][dirtext]传来了异族的号角信号！"))
 		player.playsound_local(get_turf(player), soundtouse, 35, FALSE, pressure_affected = FALSE, channel = hornchannel)
 
 /obj/item/war_horn/proc/sound_horn_announcement(mob/living/user, datum/intent, inputty)
 	user.stop_sound_channel(hornchannel)
 	hornchannel = SSsounds.random_available_channel()
-	user.visible_message(span_warning("[user] sounds the horn!"))
+	user.visible_message(span_warning("[user] 吹响了号角！"))
 	if(intent.type == /datum/intent/war_horn/retreat) //retreat
 		playsound(src, retreatsound, 100, TRUE, channel = hornchannel)
 	if(intent.type == /datum/intent/war_horn/rally) //rally here
@@ -189,42 +189,42 @@
 		var/distance = get_dist(player, origin_turf)
 		if(distance <= 7)
 			if(player.faction[1] in user.faction)
-				to_chat(player, span_warning("[user] sends out a horn signal at [currentarea.location_name]!"))
+				to_chat(player, span_warning("[user] 在 [currentarea.location_name] 发出了号角信号！"))
 				to_chat(player, span_colossus("[inputty]"))
 			continue
-		var/dirtext = " to the "
+		var/dirtext = "的"
 		var/direction = angle2dir(Get_Angle(player, origin_turf))
 		switch(direction)
 			if(NORTH)
-				dirtext += "north"
+				dirtext += "北方"
 			if(SOUTH)
-				dirtext += "south"
+				dirtext += "南方"
 			if(EAST)
-				dirtext += "east"
+				dirtext += "东方"
 			if(WEST)
-				dirtext += "west"
+				dirtext += "西方"
 			if(NORTHWEST)
-				dirtext += "northwest"
+				dirtext += "西北方"
 			if(NORTHEAST)
-				dirtext += "northeast"
+				dirtext += "东北方"
 			if(SOUTHWEST)
-				dirtext += "southwest"
+				dirtext += "西南方"
 			if(SOUTHEAST)
-				dirtext += "southeast"
+				dirtext += "东南方"
 			else //Where ARE you.
-				dirtext = ", although I cannot make out a direction"
+				dirtext = "某个我分辨不清方向的位置"
 		var/disttext
 		switch(distance)
 			if(0 to 20)
-				disttext = " very close"
+				disttext = "很近"
 			if(20 to 40)
-				disttext = " close"
+				disttext = "较近"
 			if(40 to 80)
 				disttext = ""
 			if(80 to 160)
-				disttext = " far"
+				disttext = "较远"
 			else
-				disttext = " very far"
+				disttext = "很远"
 		//sound played for other players
 		player.stop_sound_channel(hornchannel)
 		var/soundtouse
@@ -251,7 +251,7 @@
 		if(player.faction[1] in user.faction) //first is probably their primary.
 			to_chat(player, span_colossus("[inputty]"))
 		else
-			to_chat(player, span_warning("I hear a foreign signal somewhere[disttext][dirtext]!"))
+			to_chat(player, span_warning("我听见某处[disttext][dirtext]传来了异族的号角信号！"))
 		player.playsound_local(get_turf(player), soundtouse, 35, FALSE, pressure_affected = FALSE, channel = hornchannel)
 	message_admins("[user] sent out a horn signal: [inputty] from [ADMIN_VERBOSEJMP(user.loc)]")
 	log_game("[user] sent out a horn signal: [inputty] from [loc_name(user.loc)]")

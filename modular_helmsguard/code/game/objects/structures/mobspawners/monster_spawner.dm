@@ -2,7 +2,7 @@
 ///SPAWNER///
 
 /obj/effect/mobspawner/monster_spawner_all
-	name = "monster spawner"
+	name = "怪物刷怪点"
 	desc = ""
 	anchored = TRUE
 	density = FALSE
@@ -24,11 +24,11 @@
 	/mob/living/simple_animal/hostile/retaliate/rogue/mole = 6
 
 	)
-	text_faction = "Some monsters"
+	text_faction = "一些怪物"
 	objfaction = list("caves")
 
 /obj/effect/mobspawner/monster_spawner_minotaurs
-	name = "minotaur spawner"
+	name = "牛头人刷怪点"
 	desc = ""
 	anchored = TRUE
 	density = FALSE
@@ -40,11 +40,11 @@
 	/mob/living/simple_animal/hostile/retaliate/rogue/minotaur/female = 5,
 	/mob/living/simple_animal/hostile/retaliate/rogue/minotaur/axe/female = 3
 	)
-	text_faction = "Minotaurs"
+	text_faction = "牛头人"
 	objfaction = list("caves")
 
 /obj/effect/mobspawner/monster_spawner_animals
-	name = "critter spawner"
+	name = "野兽刷怪点"
 	desc = ""
 	anchored = TRUE
 	density = FALSE
@@ -61,11 +61,11 @@
 	/mob/living/simple_animal/hostile/retaliate/rogue/bigrat = 6,
 	/mob/living/simple_animal/hostile/retaliate/rogue/mole = 4
 	)
-	text_faction = "Some wild animals"
+	text_faction = "一些野生动物"
 	objfaction = list("caves")
 
 /obj/effect/mobspawner/monster_spawner_wolfs
-	name = "volfs spawner"
+	name = "沃尔夫刷怪点"
 	desc = ""
 	anchored = TRUE
 	density = FALSE
@@ -75,11 +75,11 @@
 	/mob/living/simple_animal/hostile/retaliate/rogue/wolf/poison = 1,
 	/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 3
 	)
-	text_faction = "Volfs"	//for spawning string
+	text_faction = "沃尔夫"	//for spawning string
 	objfaction = list("caves")
 
 /obj/effect/mobspawner/monster_spawner_spider
-	name = "spider spawner"
+	name = "蜘蛛刷怪点"
 	desc = ""
 	anchored = TRUE
 	density = FALSE
@@ -89,11 +89,11 @@
 	mob_types = list(/mob/living/simple_animal/hostile/retaliate/rogue/spider = 3,
 					/mob/living/simple_animal/hostile/retaliate/rogue/spider/mutated = 1)
 	)
-	text_faction = "Beespiders"	//for spawning string
+	text_faction = "蜂蛛"	//for spawning string
 	objfaction = list("spiders")
 
 /obj/effect/mobspawner/monster_spawner_trolls
-	name = "troll spawner"
+	name = "巨魔刷怪点"
 	desc = ""
 	anchored = TRUE
 	density = FALSE
@@ -103,7 +103,7 @@
 	/mob/living/simple_animal/hostile/retaliate/rogue/halftroll = 1,
 	/mob/living/simple_animal/hostile/retaliate/rogue/halftroll_cave = 1
 	)
-	text_faction = "Trolls"	//for spawning string
+	text_faction = "巨魔"	//for spawning string
 	objfaction = list("caves")
 
 
@@ -114,8 +114,8 @@
 
 
 /obj/effect/mobspawner/hole/spiders
-	name = "the web covered hole"
-	desc = "A large hole covered with spider webs..."
+	name = "覆满蛛网的洞口"
+	desc = "一个被蜘蛛网覆盖的大洞……"
 	icon = 'modular_helmsguard/icons/obj/structure/spawners.dmi'
 	icon_state = "hole_spider"
 	anchored = TRUE
@@ -166,8 +166,8 @@
 			pixel_x = -32
 
 /obj/effect/mobspawner/hole/wolf
-	name = "the burrow"
-	desc = "A burrow made by wild animals to live in"
+	name = "兽穴"
+	desc = "野生动物挖出来栖身的地洞。"
 	icon = 'modular_helmsguard/icons/obj/structure/spawners.dmi'
 	icon_state = "hole_burrow"
 	anchored = TRUE
@@ -218,5 +218,3 @@
 			pixel_x = 32
 		if(EAST)
 			pixel_x = -32
-
-

@@ -1,6 +1,6 @@
 // GOBLIN
 /mob/living/simple_animal/hostile/retaliate/rogue/goblin
-	name = "goblin"
+	name = "地精"
 	desc = ""
 	icon = 'modular_hearthstone/icons/mob/simple_orcs.dmi'
 	icon_state = "goblinarcher"
@@ -31,15 +31,15 @@
 	minimum_distance = 5
 	check_friendly_fire = 1
 	base_intents = list(/datum/intent/simple/axe)
-	attack_verb_continuous = "hacks"
-	attack_verb_simple = "hack"
+	attack_verb_continuous = "劈砍"
+	attack_verb_simple = "劈砍"
 	attack_sound = 'sound/blank.ogg'
 	canparry = TRUE
 	d_intent = INTENT_PARRY
 	defprob = 50
 	defdrain = 20
 	obj_damage = 1
-	speak_emote = list("grunts")
+	speak_emote = list("咕哝")
 	loot = list(/obj/effect/mob_spawn/human/npc/goblin/normal,
 			/obj/item/gun/ballistic/revolver/grenadelauncher/bow,
 			/obj/item/quiver/arrows,
@@ -69,41 +69,41 @@
 		return ""
 	switch(zone)
 		if(BODY_ZONE_PRECISE_R_EYE)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_L_EYE)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_NOSE)
-			return "nose"
+			return "鼻部"
 		if(BODY_ZONE_PRECISE_MOUTH)
-			return "mouth"
+			return "口部"
 		if(BODY_ZONE_PRECISE_SKULL)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_EARS)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_NECK)
-			return "neck"
+			return "颈部"
 		if(BODY_ZONE_PRECISE_L_HAND)
-			return "foreleg"
+			return "前肢"
 		if(BODY_ZONE_PRECISE_R_HAND)
-			return "foreleg"
+			return "前肢"
 		if(BODY_ZONE_PRECISE_L_FOOT)
-			return "leg"
+			return "腿部"
 		if(BODY_ZONE_PRECISE_R_FOOT)
-			return "leg"
+			return "腿部"
 		if(BODY_ZONE_PRECISE_STOMACH)
-			return "stomach"
+			return "腹部"
 		if(BODY_ZONE_PRECISE_GROIN)
-			return "tail"
+			return "尾部"
 		if(BODY_ZONE_HEAD)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_R_LEG)
-			return "leg"
+			return "腿部"
 		if(BODY_ZONE_L_LEG)
-			return "leg"
+			return "腿部"
 		if(BODY_ZONE_R_ARM)
-			return "foreleg"
+			return "前肢"
 		if(BODY_ZONE_L_ARM)
-			return "foreleg"
+			return "前肢"
 	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/goblin/get_sound(input)

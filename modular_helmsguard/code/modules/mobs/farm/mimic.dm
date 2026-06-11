@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/rogue/mimic
 	icon = 'modular_hearthstone/icons/mob/mimic.dmi'
-	name = "Mimic"
+	name = "拟态怪"
 	icon_state = "mimic"
 	icon_living = "mimic"
 	icon_dead = null
@@ -41,12 +41,12 @@
 /obj/item/organ/eyes/mimic
 	icon = 'modular_hearthstone/icons/mob/mimic_drop.dmi'
 	icon_state = "eye"
-	desc = "A meaty bloodshot eye of a mimic."
+	desc = "一只拟态怪那充血带血丝的肉眼。"
 
 /obj/item/organ/tongue/mimic
 	icon = 'modular_hearthstone/icons/mob/mimic_drop.dmi'
 	icon_state = "tongue"
-	desc = "The long and slithery tongue of a mimic."
+	desc = "一条拟态怪细长而滑腻的舌头。"
 
 /mob/living/simple_animal/hostile/rogue/mimic/death(gibbed)
 	emote("death")
@@ -77,41 +77,41 @@
 		return ""
 	switch(zone)
 		if(BODY_ZONE_PRECISE_R_EYE)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_L_EYE)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_NOSE)
-			return "nose"
+			return "鼻部"
 		if(BODY_ZONE_PRECISE_MOUTH)
-			return "mouth"
+			return "口部"
 		if(BODY_ZONE_PRECISE_SKULL)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_EARS)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_NECK)
-			return "neck"
+			return "颈部"
 		if(BODY_ZONE_PRECISE_L_HAND)
-			return "foreleg"
+			return "前肢"
 		if(BODY_ZONE_PRECISE_R_HAND)
-			return "foreleg"
+			return "前肢"
 		if(BODY_ZONE_PRECISE_L_FOOT)
-			return "leg"
+			return "腿部"
 		if(BODY_ZONE_PRECISE_R_FOOT)
-			return "leg"
+			return "腿部"
 		if(BODY_ZONE_PRECISE_STOMACH)
-			return "stomach"
+			return "腹部"
 		if(BODY_ZONE_PRECISE_GROIN)
-			return "tail"
+			return "尾部"
 		if(BODY_ZONE_HEAD)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_R_LEG)
-			return "leg"
+			return "腿部"
 		if(BODY_ZONE_L_LEG)
-			return "leg"
+			return "腿部"
 		if(BODY_ZONE_R_ARM)
-			return "foreleg"
+			return "前肢"
 		if(BODY_ZONE_L_ARM)
-			return "foreleg"
+			return "前肢"
 	return ..()
 
 /mob/living/simple_animal/hostile/rogue/mimic/AttackingTarget()
@@ -124,16 +124,16 @@
 			C.Immobilize(50)
 			C.Stun(100)
 			C.Knockdown(100)
-			C.visible_message(span_danger("\The [src] pins \the [C] down with its large fleshy claws!"), \
-					span_danger("\The [src] pins me down with its large fleshy claws!"))
+			C.visible_message(span_danger("\The [src] 用它巨大而血肉模糊的利爪将 \the [C] 按倒在地！"), \
+					span_danger("\The [src] 用它巨大而血肉模糊的利爪把我按倒在地！"))
 			emote("aggro")
 
 
 
 /datum/intent/simple/mimic
-	name = "mimic"
+	name = "拟态怪"
 	icon_state = "instrike"
-	attack_verb = list("lacerates", "bites", "claws", "slashes")
+	attack_verb = list("撕裂", "啃咬", "抓挠", "挥砍")
 	animname = "blank22"
 	blade_class = BCLASS_CUT
 	hitsound = "genchop"

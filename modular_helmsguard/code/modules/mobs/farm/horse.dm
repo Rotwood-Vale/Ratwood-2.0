@@ -1,13 +1,13 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/horse
 	icon = 'modular_helmsguard/icons/mob/horse.dmi'
-	name = "horse"
+	name = "马"
 	desc = ""
 	icon_state = "horsewhite"
 	icon_living = "horsewhite"
 	icon_dead = "saiga_dead"
 	icon_gib = "saiga_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	emote_see = list("looks around.", "chews some leaves.", "neighs")
+	emote_see = list("四处张望。", "咀嚼着几片叶子。", "嘶鸣。")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -25,8 +25,8 @@
 	footstep_type = FOOTSTEP_MOB_SHOE
 	pooptype = /obj/item/natural/poo/horse
 	faction = list("horse")
-	attack_verb_continuous = "tramples"
-	attack_verb_simple = "kicks"
+	attack_verb_continuous = "践踏"
+	attack_verb_simple = "踢击"
 	melee_damage_lower = 10
 	melee_damage_upper = 25
 	retreat_distance = 0.
@@ -123,14 +123,14 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/foal
 	icon = 'modular_helmsguard/icons/mob/horse.dmi'
-	name = "foal"
+	name = "小马驹"
 	desc = ""
 	icon_state = "foal"
 	icon_living = "foal"
 	icon_dead = "foal"
 	icon_gib = "foal"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	emote_see = list("looks around.", "chews some leaves.", "neighs")
+	emote_see = list("四处张望。", "咀嚼着几片叶子。", "嘶鸣。")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -350,39 +350,39 @@
 		return ""
 	switch(zone)
 		if(BODY_ZONE_PRECISE_R_EYE)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_L_EYE)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_NOSE)
-			return "snout"
+			return "吻部"
 		if(BODY_ZONE_PRECISE_MOUTH)
-			return "snout"
+			return "吻部"
 		if(BODY_ZONE_PRECISE_SKULL)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_EARS)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_NECK)
-			return "neck"
+			return "颈部"
 		if(BODY_ZONE_PRECISE_L_HAND)
-			return "foreleg"
+			return "前腿"
 		if(BODY_ZONE_PRECISE_R_HAND)
-			return "foreleg"
+			return "前腿"
 		if(BODY_ZONE_PRECISE_L_FOOT)
-			return "leg"
+			return "腿部"
 		if(BODY_ZONE_PRECISE_R_FOOT)
-			return "leg"
+			return "腿部"
 		if(BODY_ZONE_PRECISE_STOMACH)
-			return "stomach"
+			return "腹部"
 		if(BODY_ZONE_HEAD)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_R_LEG)
-			return "leg"
+			return "腿部"
 		if(BODY_ZONE_L_LEG)
-			return "leg"
+			return "腿部"
 		if(BODY_ZONE_R_ARM)
-			return "foreleg"
+			return "前腿"
 		if(BODY_ZONE_L_ARM)
-			return "foreleg"
+			return "前腿"
 	return ..()
 
 
@@ -390,9 +390,9 @@
 
 
 /datum/intent/simple/horse
-	name = "horse"
+	name = "马"
 	icon_state = "instrike"
-	attack_verb = list("tramples", "rams", "kicks")
+	attack_verb = list("践踏", "冲撞", "踢击")
 	animname = "blank22"
 	blade_class = BCLASS_BLUNT
 	hitsound = "punch_hard"
@@ -403,5 +403,3 @@
 	canparry = TRUE
 	item_d_type = "blunt"
 	clickcd = SAIGA_ATTACK_SPEED
-
-

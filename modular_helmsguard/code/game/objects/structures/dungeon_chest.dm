@@ -1,6 +1,6 @@
 
 /obj/effect/spawner/lootdrop/roguetown/dungeon_chest
-	name = "dungeon_chest"
+	name = "地牢宝箱刷怪点"
 	icon_state = "x4"
 	loot = list(
 	/obj/structure/closet/crate/chest/dungeon/generic_item = 6,
@@ -15,7 +15,7 @@
 	lootcount = 1
 
 /obj/effect/spawner/dungeons/maybechest
-	name = "Maybe a chest"
+	name = "也许是个箱子"
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "generic_event"
 	var/tospawn = null
@@ -537,12 +537,12 @@
 	if(user.mind)
 		var/mob/living/examiner = user
 		if(examiner.STAPER >= 12)
-			. += span_notice("It looks like a normal chest, but something about it seems off...")
+			. += span_notice("它看起来像个普通箱子，但总觉得哪里不太对劲……")
 
 /obj/structure/closet/crate/chest/dungeon/mimic/attack_hand(mob/living/user)
 	. = ..()
 	playsound(src.loc, 'sound/vo/mobs/mimic/surprise.ogg', 100, TRUE)
-	visible_message(span_danger("The [src] is a mimic!"))
+	visible_message(span_danger("[src] 是一只拟态怪！"))
 	new	/mob/living/simple_animal/hostile/rogue/mimic (get_turf(src))
 	qdel(src)
 

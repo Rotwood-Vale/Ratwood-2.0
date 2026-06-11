@@ -14,27 +14,27 @@
 	if(picked)
 		return
 	var/the_time = world.time
-	var/design = input(user, "Select a design.","Tabard Design") as null|anything in list("Default", "Gold Cross", "Jeruah", "BlackGold", "BlackWhite")
+	var/design = input(user, "选择一个样式。","罩袍样式") as null|anything in list("默认", "金十字", "杰鲁亚", "黑金", "黑白")
 	if(!design)
 		return
 	if(world.time > (the_time + 30 SECONDS))
 		return
-	if(design == "Gold Cross")
+	if(design == "金十字")
 		detail_color = "#b5b004"
-	if(design == "Jeruah")
+	if(design == "杰鲁亚")
 		detail_color = "#b5b004"
 		color = "#249589"
-	if(design == "BlackGold")
+	if(design == "黑金")
 		detail_color = CLOTHING_YELLOW
 		color = CLOTHING_BLACK
-	if(design == "BlackWhite")
+	if(design == "黑白")
 		detail_color = CLOTHING_WHITE
 		color = CLOTHING_BLACK
 	update_icon()
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_cloak()
-	if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
+	if(alert("你对自己的纹章满意吗？", "纹章", "满意", "不满意") != "满意")
 		detail_color = initial(detail_color)
 		color = initial(color)
 		update_icon()
@@ -61,27 +61,27 @@
 	if(picked)
 		return
 	var/the_time = world.time
-	var/design = input(user, "Select a design.","Tabard Design") as null|anything in list("Default", "Gold Cross", "Jeruah", "BlackGold", "BlackWhite")
+	var/design = input(user, "选择一个样式。","罩袍样式") as null|anything in list("默认", "金十字", "杰鲁亚", "黑金", "黑白")
 	if(!design)
 		return
 	if(world.time > (the_time + 30 SECONDS))
 		return
-	if(design == "Gold Cross")
+	if(design == "金十字")
 		detail_color = "#b5b004"
-	if(design == "Jeruah")
+	if(design == "杰鲁亚")
 		detail_color = "#b5b004"
 		color = "#249589"
-	if(design == "BlackGold")
+	if(design == "黑金")
 		detail_color = CLOTHING_YELLOW
 		color = CLOTHING_BLACK
-	if(design == "BlackWhite")
+	if(design == "黑白")
 		detail_color = CLOTHING_WHITE
 		color = CLOTHING_BLACK
 	update_icon()
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_cloak()
-	if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
+	if(alert("你对自己的纹章满意吗？", "纹章", "满意", "不满意") != "满意")
 		detail_color = initial(detail_color)
 		color = initial(color)
 		update_icon()
@@ -110,27 +110,27 @@
 	if(picked)
 		return
 	var/the_time = world.time
-	var/design = input(user, "Select a design.","Tabard Design") as null|anything in list("Default", "Gold Cross", "Jeruah", "BlackGold", "BlackWhite")
+	var/design = input(user, "选择一个样式。","罩袍样式") as null|anything in list("默认", "金十字", "杰鲁亚", "黑金", "黑白")
 	if(!design)
 		return
 	if(world.time > (the_time + 30 SECONDS))
 		return
-	if(design == "Gold Cross")
+	if(design == "金十字")
 		detail_color = "#b5b004"
-	if(design == "Jeruah")
+	if(design == "杰鲁亚")
 		detail_color = "#b5b004"
 		color = "#249589"
-	if(design == "BlackGold")
+	if(design == "黑金")
 		detail_color = CLOTHING_YELLOW
 		color = CLOTHING_BLACK
-	if(design == "BlackWhite")
+	if(design == "黑白")
 		detail_color = CLOTHING_WHITE
 		color = CLOTHING_BLACK
 	update_icon()
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_cloak()
-	if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
+	if(alert("你对自己的纹章满意吗？", "纹章", "满意", "不满意") != "满意")
 		detail_color = initial(detail_color)
 		color = initial(color)
 		update_icon()

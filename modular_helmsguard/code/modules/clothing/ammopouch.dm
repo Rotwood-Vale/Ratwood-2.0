@@ -1,7 +1,7 @@
 //Technically should just be a quiver, but fuck it - we snowflake up in this bitch.
 //Holds 1/3rd the amount of rounds as a quiver holds arrows, but pretty damn strong against armor so - yeah, suffer.
 /obj/item/ammopouch
-	name = "bullet pouch"
+	name = "弹丸袋"
 	desc = ""
 	icon_state = "pouch0"
 	item_state = "pouch"
@@ -27,7 +27,7 @@
 			bullets += A
 			update_icon()
 		else
-			to_chat(loc, span_warning("Full!"))
+			to_chat(loc, span_warning("满了！"))
 		return
 /*
 	if(istype(A, /obj/item/gun/ballistic/revolver/grenadelauncher/matchlock))
@@ -54,7 +54,7 @@
 /obj/item/ammopouch/examine(mob/user)
 	. = ..()
 	if(bullets.len)
-		. += span_notice("[bullets.len] inside.")
+		. += span_notice("里面有 [bullets.len] 发。")
 
 /obj/item/ammopouch/update_icon()
 	if(bullets.len)

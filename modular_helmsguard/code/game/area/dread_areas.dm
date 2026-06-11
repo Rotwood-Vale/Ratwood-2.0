@@ -7,7 +7,7 @@
 	icon = 'modular_helmsguard/icons/turf/dreadareas.dmi'
 
 /area/rogue/outdoors/dread/dreadwoods
-	name = "Dreadwood Forest"
+	name = "恐惧林"
 	discover_sound = 'sound/misc/area_4.ogg'
 	icon_state = "dreadwood"
 	ambush_types = list(
@@ -26,8 +26,8 @@
 	droning_sound_night = 'sound/music/area/dreadwood_night.ogg'
 	spookysounds = SPOOKY_FROG
 	spookynight = SPOOKY_GEN
-	location_name = "Dreadwood Forest"
-	first_time_text = "Dreadwood Forest"
+	location_name = "恐惧林"
+	first_time_text = "恐惧林"
 	ambush_times = list("night","dawn","dusk","day")
 	converted_type = /area/rogue/indoors/dread/shelter/dreadwoods
 
@@ -36,90 +36,90 @@
 	droning_sound = 'sound/music/area/dreadwood.ogg'
 	droning_sound_dusk = 'sound/music/area/dreadwood.ogg'
 	droning_sound_night = 'sound/music/area/dreadwood_night.ogg'
-	location_name = "Somewhere in Dreadwood"
+	location_name = "恐惧林某处"
 
 /area/rogue/indoors/dread/church
-	name = "Old Church"
-	first_time_text = "Old Church"
+	name = "古老教堂"
+	first_time_text = "古老教堂"
 	icon_state = "dreadchurch"
 	droning_sound = 'sound/music/area/dreadwood.ogg'
 	droning_sound_dusk = 'sound/music/area/dreadwood.ogg'
 	droning_sound_night = 'sound/music/area/dreadwood_night.ogg'
-	location_name = "Dreadwood Church"
+	location_name = "恐惧林教堂"
 
 /area/rogue/indoors/dread/toll
-	name = "Toll House"
-	first_time_text = "Toll House"
+	name = "收费站"
+	first_time_text = "收费站"
 	icon_state = "tollhouse"
 	droning_sound = null
 	droning_sound_dusk = null
 	droning_sound_night = null
-	location_name = "Dreadwood Toll House"
+	location_name = "恐惧林收费站"
 
 /area/rogue/outdoors/dread/merc_spawn
-	name = "mercenary spawn"
+	name = "佣兵出生点"
 	icon_state = "mercenary_spawn"
 	droning_sound = 'sound/music/area/dreadwood.ogg'
 	droning_sound_dusk = 'sound/music/area/dreadwood.ogg'
 	droning_sound_night = 'sound/music/area/dreadwood_night.ogg'
-	location_name = "Mercenary Camp"
+	location_name = "佣兵营地"
 
 
 //NIGHTKEEP
 
 /area/rogue/indoors/dread/nightkeep
-	name = "nebelwacht"
+	name = "雾望堡"
 	icon_state = "nightkeep"
 	droning_sound = 'sound/music/area/dreadwood.ogg'
 	droning_sound_dusk = 'sound/music/area/dreadwood.ogg'
 	droning_sound_night = 'sound/music/area/dreadwood_night.ogg'
-	location_name = "somewhere near Nebelwacht Castle"
+	location_name = "雾望堡附近某处"
 
 /area/rogue/outdoors/dread/nightkeep
-	name = "nebelwacht_outside"
-	first_time_text = "Nebelwacht Castle"
+	name = "雾望堡外部"
+	first_time_text = "雾望堡"
 	discover_sound = 'sound/misc/area_2.ogg'
 	icon_state = "nightkeep_outside"
 	droning_sound = 'sound/music/area/dreadwood.ogg'
 	droning_sound_dusk = 'sound/music/area/dreadwood.ogg'
 	droning_sound_night = 'sound/music/area/dreadwood_night.ogg'
-	location_name = "somewhere from inside Nebelwacht Castle"
+	location_name = "雾望堡内某处"
 
 
 ///GOBLIN OUTPOST
 
 /area/rogue/indoors/dread/gobcamp
-	name = "gobcamp"
+	name = "地精营地"
 	icon_state = "gobcamp"
 	droning_sound = 'sound/music/area/dreadwood.ogg'
 	droning_sound_dusk = 'sound/music/area/dreadwood.ogg'
 	droning_sound_night = 'sound/music/area/dreadwood_night.ogg'
-	location_name = "deep inside of the Goblin Outpost"
+	location_name = "地精前哨站深处"
 
 /area/rogue/outdoors/dread/gobcamp_outside
-	name = "gobcamp_outside"
-	first_time_text = "Goblin Outpost"
+	name = "地精前哨站外部"
+	first_time_text = "地精前哨站"
 	discover_sound = 'sound/misc/area_3.ogg'
 	icon_state = "nightkeep_outside"
 	droning_sound = 'sound/music/area/dreadwood.ogg'
 	droning_sound_dusk = 'sound/music/area/dreadwood.ogg'
 	droning_sound_night = 'sound/music/area/dreadwood_night.ogg'
-	location_name = "Goblin Outpost"
+	location_name = "地精前哨站"
 
 /area/rogue/indoors/dread/forgottenkeep
-	name = "forgotten keep"
+	name = "遗忘堡垒"
 	icon_state = "forgottenkeep"
-	first_time_text = "Forgotten Keep"
+	first_time_text = "遗忘堡垒"
 	discover_sound = 'sound/misc/area_2.ogg'
 	droning_sound = 'sound/music/area/dreadwood.ogg'
 	droning_sound_dusk = 'sound/music/area/dreadwood.ogg'
 	droning_sound_night = 'sound/music/area/dreadwood_night.ogg'
-	location_name = "deep within the Forgotten Keep"
+	location_name = "遗忘堡垒深处"
 
 // UNDERBOROUGH
 /area/rogue/under/cavewet/dreadcave
-	name = "Underway"
-	first_time_text = "The Underway"
-	location_name = "somewhere in the Underway"
+	name = "地下通道"
+	first_time_text = "地下通道"
+	location_name = "地下通道某处"
 	spookysounds = SPOOKY_FROG
 	spookynight = SPOOKY_GEN
