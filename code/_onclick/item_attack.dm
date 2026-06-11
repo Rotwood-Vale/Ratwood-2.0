@@ -275,6 +275,8 @@
 		return TRUE
 
 /obj/item/proc/attack_turf(turf/T, mob/living/user, multiplier)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_TURF, T, user) & COMPONENT_NO_ATTACK_OBJ)
+		return
 	if(T.max_integrity)
 		if(T.attacked_by(src, user, multiplier))
 			user.mob_timers[MT_SNEAKATTACK] = world.time

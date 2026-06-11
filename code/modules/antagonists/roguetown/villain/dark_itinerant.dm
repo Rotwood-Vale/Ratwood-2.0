@@ -41,7 +41,7 @@
 	r_hand = /obj/item/rogueweapon/spear
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel = 1, 
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/rogueweapon/scabbard/sheath/noble = 1,
 		/obj/item/rogueweapon/hammer/iron = 1, 
 		/obj/item/rogueweapon/tongs = 1, 
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1, 
@@ -110,13 +110,13 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/blacksteel/modern/plateboots
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	belt = /obj/item/storage/belt/rogue/leather/steel/tasset
-	beltr = /obj/item/rogueweapon/scabbard/sword
+	beltr = /obj/item/rogueweapon/scabbard/sword/noble
 	backr = /obj/item/storage/backpack/rogue/satchel
 	l_hand = /obj/item/rogueweapon/greatsword/grenz/flamberge/blacksteel
 
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel = 1, 
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/rogueweapon/scabbard/sheath/noble = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/ritechalk = 1,
 	)

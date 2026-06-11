@@ -1580,6 +1580,18 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			if(H.mouth == src)
 				H.update_inv_mouth()
 
+/obj/item/proc/clear_grip_state()
+	if(!wielded && !altgripped)
+		return FALSE
+	if(wielded)
+		wielded = FALSE
+		if(force_wielded)
+			update_force_dynamic()
+		update_wdefense_dynamic()
+	update_transform()
+	icon_angle = initial(icon_angle)
+	return TRUE
+
 /obj/item/proc/ungrip(mob/living/carbon/user, show_message = TRUE)
 	if(!user)
 		return
@@ -1950,6 +1962,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/update_force_dynamic()
 	force_dynamic = (wielded ? force_wielded : force)
+
+/obj/item/proc/update_wdefense_dynamic()
+	wdefense_dynamic = (wielded ? (wdefense + wdefense_wbonus) : wdefense)
 
 /obj/item/proc/has_customized_identity()
 	if(renamedByPlayer)

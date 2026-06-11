@@ -1419,6 +1419,32 @@
 	force = 25 // Same statline as the cup hilted etruscan rapier
 	wdefense = 8
 
+/obj/item/rogueweapon/sword/rapier/courtphysician
+	name = "cane blade"
+	desc = "A steel blade with a gold handle, intended to be concealed inside of a cane, bears the visage of a vulture on its pommel."
+	icon = 'icons/roguetown/weapons/swords32.dmi'
+	icon_state = "doccaneblade"
+	sheathe_icon = "doccaneblade"
+	sellprice = 100 //Gold handle
+	grid_width = 32
+	grid_height = 64
+	dropshrink = 0
+	bigboy = FALSE
+	possible_item_intents = list(/datum/intent/sword/thrust/rapier, /datum/intent/sword/cut/rapier)
+	gripped_intents = null
+	force_wielded = 0
+
+/obj/item/rogueweapon/sword/rapier/hand
+	name = "dark sister"
+	desc = "A tool made for nobler tasks than shedding blood, discreet and ever ready, as you should be too."
+	pixel_y = 0
+	pixel_x = 0
+	bigboy = TRUE
+	icon = 'icons/roguetown/weapons/special/hand32.dmi'
+	icon_state = "staffblade"
+	item_state = "staffblade"
+	sheathe_icon = "staffblade"
+
 /obj/item/rogueweapon/sword/cutlass
 	name = "cutlass"
 	desc = "The mariner's special: A short, broad sabre with a slightly curved blade optimized for slashing."

@@ -56,6 +56,7 @@
 		/obj/item/storage/belt/rogue/pouch/coins/poor,
 		/obj/item/rogueweapon/scabbard/sheath/aavnik,
 		/obj/item/rogueweapon/whip/nagaika,
+		/obj/item/rogueweapon/huntingknife
 		)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 
@@ -96,10 +97,3 @@
 
 /obj/item/rogueweapon/scabbard/sheath/aavnik
 	name = "dagger sheath"
-
-/obj/item/rogueweapon/scabbard/sheath/aavnik/Initialize(mapload)
-	. = ..()
-	if(!sheathed)
-		var/obj/item/rogueweapon/huntingknife/D = new(src)
-		sheathed = D
-		update_icon()

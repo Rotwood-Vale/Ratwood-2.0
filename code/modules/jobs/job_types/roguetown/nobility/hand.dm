@@ -78,7 +78,7 @@
 
 /datum/outfit/job/roguetown/hand/blademaster/pre_equip(mob/living/carbon/human/H)
 	r_hand = /obj/item/rogueweapon/sword/long/dec //Gets STR so longsword instead of a rapier
-	beltr = /obj/item/rogueweapon/scabbard/sword
+	beltr = /obj/item/rogueweapon/scabbard/sword/royal
 	head = /obj/item/clothing/head/roguetown/chaperon/noble/hand
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/hand
 	pants = /obj/item/clothing/under/roguetown/tights/black
@@ -97,7 +97,7 @@
 		shirt = /obj/item/clothing/suit/roguetown/shirt/robe/hierophant
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/dtace = 1,//You don't get killer's ice for this because you're the gross swordsmaster and I HATE YOU!!!!
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/rogueweapon/scabbard/sheath/royal = 1,
 		/obj/item/storage/keyring/hand = 1,
 	)
 	if(H.age == AGE_OLD)
@@ -142,7 +142,7 @@
 /datum/outfit/job/roguetown/hand/spymaster/pre_equip(mob/living/carbon/human/H)
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/dtace = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/rogueweapon/scabbard/sheath/noble = 1,
 		/obj/item/storage/keyring/hand = 1,
 		/obj/item/lockpickring/mundane = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/poison = 1,//Just like the wizard, since he can dip the blade.
@@ -207,8 +207,8 @@
 
 //Advisor start. Trades combat skills for more knowledge and skills - for older hands, hands that don't do combat - people who wanna play wizened old advisors.
 /datum/outfit/job/roguetown/hand/advisor/pre_equip(mob/living/carbon/human/H)
-	r_hand = /obj/item/rogueweapon/sword/rapier/dec
-	beltr = /obj/item/rogueweapon/scabbard/sword
+	r_hand = /obj/item/rogueweapon/sword/rapier/hand
+	beltr = /obj/item/rogueweapon/scabbard/sword/noble
 	head = /obj/item/clothing/head/roguetown/chaperon/noble/hand
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/hand
 	pants = /obj/item/clothing/under/roguetown/tights/black
@@ -226,7 +226,7 @@
 		shirt = /obj/item/clothing/suit/roguetown/shirt/robe/hierophant
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/dtace = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/rogueweapon/scabbard/sheath/courtphysician/hand = 1,
 		/obj/item/storage/keyring/hand = 1,
 		/obj/item/lockpickring/mundane = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/poison = 1,//starts with a vial of poison, like all wizened evil advisors do!
