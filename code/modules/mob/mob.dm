@@ -89,9 +89,9 @@ GLOBAL_VAR_INIT(mobids, 1)
 	mobid = "mob[GLOB.mobids]"
 	GLOB.mobids++
 	if(stat == DEAD)
-		GLOB.dead_mob_list += src
+		GLOB.dead_mob_list |= src
 	else
-		GLOB.alive_mob_list += src
+		GLOB.alive_mob_list |= src
 	set_focus(src)
 	prepare_huds()
 	for(var/v in GLOB.active_alternate_appearances)
@@ -1289,6 +1289,13 @@ GLOBAL_VAR_INIT(mobids, 1)
 	for(var/obj/item/I in held_items)
 		if(I.item_flags & SLOWS_WHILE_IN_HAND)
 			. += I.slowdown
+
+/mob/proc/set_stat(new_stat)
+	if(new_stat == stat)
+		return
+	. = stat
+	stat = new_stat
+	SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, new_stat, .)
 
 
 /mob/say_mod(input, message_mode)

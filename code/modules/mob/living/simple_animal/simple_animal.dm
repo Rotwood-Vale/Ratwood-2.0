@@ -320,7 +320,6 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	if(stat != DEAD)
 		if(health <= 0)
 			death()
-			SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, DEAD)
 			return
 	if(footstep_type)
 		if(!QDELING(src))

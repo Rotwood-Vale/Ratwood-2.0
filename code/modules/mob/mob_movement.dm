@@ -581,7 +581,7 @@
 		rogue_sneaking = TRUE
 		return
 
-	if (stat == DEAD) // we're dead, so be visible if sneaking, and end it there. needed because DeadLife calls this constantly on every dead mob that exists
+	if (stat == DEAD) // Death resets sneaking once through set_stat().
 		if (rogue_sneaking)
 			animate(src, alpha = initial(alpha), time = 25)
 			spawn(25) regenerate_icons()

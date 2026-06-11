@@ -89,8 +89,7 @@ GLOBAL_LIST_EMPTY(last_words)
 
 
 /mob/living/death(gibbed, nocutscene = FALSE)
-	var/was_dead_before = stat == DEAD
-	stat = DEAD
+	set_stat(DEAD)
 	unset_machine()
 	timeofdeath = world.time
 	tod = station_time_timestamp()
@@ -101,10 +100,6 @@ GLOBAL_LIST_EMPTY(last_words)
 //		deadchat_broadcast(" has died at <b>[get_area_name(T)]</b>.", "<b>[mind.name]</b>", follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
 //	if(mind)
 //		mind.store_memory("Time of death: [tod]", 0)
-	GLOB.alive_mob_list -= src
-	if(!gibbed && !was_dead_before)
-		GLOB.dead_mob_list += src
-
 //	stop_all_loops()
 	SSdroning.kill_rain(src.client)
 	SSdroning.kill_loop(src.client)

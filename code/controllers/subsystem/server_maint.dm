@@ -9,6 +9,7 @@ SUBSYSTEM_DEF(server_maint)
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
 	var/cleanup_ticker = 0
+	var/next_mob_processing_validation = 0
 
 /datum/controller/subsystem/server_maint/PreInit()
 	world.hub_password = "" //quickly! before the hubbies see us.
@@ -16,10 +17,15 @@ SUBSYSTEM_DEF(server_maint)
 /datum/controller/subsystem/server_maint/Initialize(timeofday)
 	if (CONFIG_GET(flag/hub))
 		world.update_hub_visibility(TRUE)
+	next_mob_processing_validation = world.time + 60 SECONDS
 	return ..()
 
 /datum/controller/subsystem/server_maint/fire(resumed = FALSE)
 	if(!resumed)
+		if(world.time >= next_mob_processing_validation)
+			validate_mob_processing_lists()
+			next_mob_processing_validation = world.time + 60 SECONDS
+
 		if(listclearnulls(GLOB.clients))
 			log_world("Found a null in clients list!")
 		src.currentrun = GLOB.clients.Copy()
@@ -73,6 +79,189 @@ SUBSYSTEM_DEF(server_maint)
 
 		if (MC_TICK_CHECK) //one day, when ss13 has 1000 people per server, you guys are gonna be glad I added this tick check
 			return
+
+/datum/controller/subsystem/server_maint/proc/record_mob_processing_issue(list/issues_by_ref, datum/entry, issue)
+	if(!entry)
+		return
+
+	var/ref_id = REF(entry)
+	var/list/issue_data = issues_by_ref[ref_id]
+	if(!issue_data)
+		issue_data = list(
+			"entry" = entry,
+			"issues" = list(),
+		)
+		issues_by_ref[ref_id] = issue_data
+
+	var/list/entry_issues = issue_data["issues"]
+	entry_issues |= issue
+
+/datum/controller/subsystem/server_maint/proc/validate_mob_processing_lists()
+	var/list/lists_to_check = list(
+		"mob_living_list" = GLOB.mob_living_list,
+		"mob_living_active_list" = GLOB.mob_living_active_list,
+		"mob_living_dead_list" = GLOB.mob_living_dead_list,
+		"alive_mob_list" = GLOB.alive_mob_list,
+		"dead_mob_list" = GLOB.dead_mob_list,
+	)
+	var/list/living_only_lists = list(
+		"mob_living_list" = GLOB.mob_living_list,
+		"mob_living_active_list" = GLOB.mob_living_active_list,
+		"mob_living_dead_list" = GLOB.mob_living_dead_list,
+	)
+	var/list/issues_by_ref = list()
+	var/list/raw_issue_details = list()
+	var/list/living_candidates = list()
+	var/null_count = 0
+	var/duplicate_count = 0
+	var/invalid_entry_count = 0
+	var/qdeleted_count = 0
+	var/membership_issue_count = 0
+
+	for(var/mob/living/living_mob as anything in GLOB.mob_list)
+		living_candidates |= living_mob
+
+	for(var/list_name in lists_to_check)
+		var/list/source_list = lists_to_check[list_name]
+		var/list/without_nulls = source_list.Copy()
+		var/original_length = without_nulls.len
+		listclearnulls(without_nulls)
+		var/list_null_count = original_length - without_nulls.len
+		if(list_null_count)
+			null_count += list_null_count
+			raw_issue_details += "[list_name] nulls=[list_null_count]"
+
+		var/list/seen_entries = list()
+		for(var/entry as anything in source_list)
+			if(isnull(entry))
+				continue
+			if(entry in seen_entries)
+				duplicate_count++
+				if(isdatum(entry))
+					record_mob_processing_issue(issues_by_ref, entry, "duplicate in [list_name]")
+				else
+					raw_issue_details += "[list_name] duplicate non-datum=[entry]"
+			else
+				seen_entries |= entry
+
+			if(isliving(entry))
+				living_candidates |= entry
+
+	for(var/list_name in living_only_lists)
+		var/list/source_list = living_only_lists[list_name]
+		for(var/entry as anything in source_list)
+			if(isnull(entry))
+				continue
+			if(!isliving(entry))
+				invalid_entry_count++
+				if(isdatum(entry))
+					record_mob_processing_issue(issues_by_ref, entry, "non-living entry in [list_name]")
+				else
+					raw_issue_details += "[list_name] non-living entry=[entry]"
+
+	for(var/mob/living/living_mob as anything in living_candidates)
+		if(QDELETED(living_mob))
+			qdeleted_count++
+			record_mob_processing_issue(issues_by_ref, living_mob, "QDELETED membership")
+			continue
+
+		if(!(living_mob in GLOB.mob_living_list))
+			membership_issue_count++
+			record_mob_processing_issue(issues_by_ref, living_mob, "missing from mob_living_list")
+
+		var/in_active_processing = (living_mob in GLOB.mob_living_active_list)
+		var/in_dead_processing = (living_mob in GLOB.mob_living_dead_list)
+		var/in_alive_mobs = (living_mob in GLOB.alive_mob_list)
+		var/in_dead_mobs = (living_mob in GLOB.dead_mob_list)
+
+		if(living_mob.stat == DEAD)
+			if(in_active_processing)
+				membership_issue_count++
+				record_mob_processing_issue(issues_by_ref, living_mob, "dead mob in active processing")
+			if(!in_dead_processing)
+				membership_issue_count++
+				record_mob_processing_issue(issues_by_ref, living_mob, "dead mob missing from dead processing")
+			if(in_alive_mobs)
+				membership_issue_count++
+				record_mob_processing_issue(issues_by_ref, living_mob, "dead mob in alive_mob_list")
+			if(!in_dead_mobs)
+				membership_issue_count++
+				record_mob_processing_issue(issues_by_ref, living_mob, "dead mob missing from dead_mob_list")
+		else
+			if(!in_active_processing)
+				membership_issue_count++
+				record_mob_processing_issue(issues_by_ref, living_mob, "active mob missing from active processing")
+			if(in_dead_processing)
+				membership_issue_count++
+				record_mob_processing_issue(issues_by_ref, living_mob, "active mob in dead processing")
+			if(!in_alive_mobs)
+				membership_issue_count++
+				record_mob_processing_issue(issues_by_ref, living_mob, "active mob missing from alive_mob_list")
+			if(in_dead_mobs)
+				membership_issue_count++
+				record_mob_processing_issue(issues_by_ref, living_mob, "active mob in dead_mob_list")
+
+	if(!(null_count || duplicate_count || invalid_entry_count || qdeleted_count || membership_issue_count))
+		return
+
+	var/list/issue_details = raw_issue_details.Copy()
+	for(var/ref_id in issues_by_ref)
+		var/list/issue_data = issues_by_ref[ref_id]
+		var/datum/entry = issue_data["entry"]
+		var/stat_value = "n/a"
+		if(ismob(entry))
+			var/mob/mob_entry = entry
+			stat_value = mob_entry.stat
+		var/list/entry_issues = issue_data["issues"]
+		var/joined_issues = jointext(entry_issues, ", ")
+		issue_details += "[ref_id] type=[entry.type] stat=[stat_value] issues=[joined_issues]"
+	var/joined_issue_details = jointext(issue_details, " | ")
+	log_world("Mob processing invariant violation: nulls=[null_count], duplicates=[duplicate_count], invalid=[invalid_entry_count], qdeleted=[qdeleted_count], membership=[membership_issue_count]. [joined_issue_details]")
+
+	// Repair only after the full report has been assembled and logged.
+	for(var/list_name in lists_to_check)
+		var/list/source_list = lists_to_check[list_name]
+		listclearnulls(source_list)
+		var/list/unique_entries = list()
+		for(var/entry as anything in source_list)
+			unique_entries |= entry
+		source_list.len = 0
+		source_list |= unique_entries
+
+	for(var/list_name in living_only_lists)
+		var/list/source_list = living_only_lists[list_name]
+		for(var/entry as anything in source_list.Copy())
+			if(!isliving(entry))
+				source_list -= entry
+				continue
+			var/mob/living/living_entry = entry
+			if(QDELETED(living_entry))
+				source_list -= living_entry
+
+	for(var/list_name in list("alive_mob_list", "dead_mob_list"))
+		var/list/source_list = lists_to_check[list_name]
+		for(var/entry as anything in source_list.Copy())
+			if(!isdatum(entry))
+				continue
+			var/datum/datum_entry = entry
+			if(QDELETED(datum_entry))
+				source_list -= datum_entry
+
+	for(var/mob/living/living_mob as anything in living_candidates)
+		if(QDELETED(living_mob))
+			continue
+
+		GLOB.mob_living_list |= living_mob
+		if(living_mob.stat == DEAD)
+			GLOB.mob_living_active_list -= living_mob
+			GLOB.mob_living_dead_list |= living_mob
+			GLOB.alive_mob_list -= living_mob
+			GLOB.dead_mob_list |= living_mob
+		else
+			GLOB.mob_living_dead_list -= living_mob
+			GLOB.mob_living_active_list |= living_mob
+			GLOB.dead_mob_list -= living_mob
+			GLOB.alive_mob_list |= living_mob
 
 /datum/controller/subsystem/server_maint/Shutdown()
 //	kick_clients_in_lobby(span_boldannounce("The round came to an end with you in the lobby."), TRUE) //second parameter ensures only afk clients are kicked
