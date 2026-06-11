@@ -394,7 +394,7 @@
 
 		dat += "</td>"
 
-	dat += "</tr></table>"
+		dat += "</tr></table>"
 
 	dat += "<hr><center><a href='?src=[REF(src)];button=1'>确定</a> "
 
