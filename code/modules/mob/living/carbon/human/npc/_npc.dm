@@ -881,6 +881,7 @@
 		wander = TRUE
 	if(L == src)
 		return
+	wake_from_hibernation()
 	if(mode != NPC_AI_OFF)
 		if(L.alpha == 0 && L.rogue_sneaking)
 			// we just got hit by something hidden so try and find them
@@ -1005,6 +1006,21 @@
 
 /mob/living/carbon/human/is_calm()
 	return NPC_AI_IS_CALM(mode) && !target && !awaiting_deaggro_despawn()
+
+/mob/living/carbon/human/should_hibernate(list/active_z)
+	if(stat == DEAD)
+		return ..(active_z)
+	if(client || ckey || ignore_hibernation || clients_in_range)
+		hibernation_pending_since = 0
+		return FALSE
+	return update_hibernation_state()
+
+/mob/living/carbon/human/wake_from_hibernation(duration = HIBERNATION_WAKE_GRACE_TIME)
+	. = ..()
+	if(mode == NPC_AI_SLEEP)
+		mode = NPC_AI_IDLE
+	if(mode != NPC_AI_OFF)
+		handle_ai()
 
 /mob/living/carbon/human/hibernation_failsafe()
 	if(mode == NPC_AI_OFF)

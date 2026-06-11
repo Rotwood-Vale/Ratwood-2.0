@@ -121,6 +121,42 @@
 		return TRUE
 	return is_calm()
 
+/mob/living/proc/should_hibernate(list/active_z)
+	if(client || ckey || ignore_hibernation)
+		hibernation_pending_since = 0
+		return FALSE
+
+	var/turf/current_turf = get_turf(src)
+	if(!active_z || !current_turf || current_turf.z > active_z.len || active_z[current_turf.z])
+		hibernation_pending_since = 0
+		return FALSE
+
+	return update_hibernation_state()
+
+/mob/living/proc/update_hibernation_state()
+	if(world.time < hibernation_wake_until)
+		hibernation_pending_since = 0
+		return FALSE
+
+	if(can_hibernate())
+		hibernation_pending_since = 0
+		return TRUE
+
+	if(!hibernation_pending_since)
+		hibernation_pending_since = world.time
+		return FALSE
+
+	if(world.time - hibernation_pending_since < HIBERNATION_FAILSAFE_TIME)
+		return FALSE
+
+	hibernation_failsafe()
+	hibernation_pending_since = 0
+	return can_hibernate()
+
+/mob/living/proc/wake_from_hibernation(duration = HIBERNATION_WAKE_GRACE_TIME)
+	hibernation_pending_since = 0
+	hibernation_wake_until = max(hibernation_wake_until, world.time + duration)
+
 /mob/living/proc/is_calm()
 	return TRUE
 

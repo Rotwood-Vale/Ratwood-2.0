@@ -265,6 +265,7 @@
 #define NPC_AI_IS_CALM(M) ((1 << (M)) & NPC_AI_CALM_MODES)
 
 #define HIBERNATION_FAILSAFE_TIME (3 MINUTES)
+#define HIBERNATION_WAKE_GRACE_TIME (10 SECONDS)
 
 //determines if a mob can smash through it
 #define ENVIRONMENT_SMASH_NONE			0
