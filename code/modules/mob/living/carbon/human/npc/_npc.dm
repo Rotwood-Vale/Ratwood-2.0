@@ -757,6 +757,10 @@
 /mob/living/carbon/human/proc/npc_try_make_grab(mob/living/victim)
 	NPC_THINK("Trying to grab [victim]!")
 	swap_hand() // switch to offhand
+	if(get_active_held_item())
+		// can't grab with an item in our offhand
+		swap_hand() // swap back
+		return
 	rog_intent_change(3) // grab intent
 	npc_choose_grab_zone(victim)
 	UnarmedAttack(victim, TRUE) // instead of start_pulling(victim)
@@ -808,7 +812,7 @@
 			npc_try_use_grab(victim, the_grab) // twist, smash, choke, whatever
 			swap_hand() // switch back to mainhand to avoid fucking up the rest of combat
 			return TRUE // and end turn
-	else if(!OffWeapon && prob(make_grab_chance)) // grab with our empty offhand instead of attack
+	else if(!OffWeapon && !Weapon.wielded && prob(make_grab_chance)) // grab with our empty offhand instead of attack
 		if(npc_try_make_grab(victim)) // returns TRUE if we've finished our turn, not if we succeeded at the grab
 			return TRUE
 
