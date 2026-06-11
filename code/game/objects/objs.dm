@@ -271,6 +271,17 @@
 /obj/proc/dump_contents()
 	CRASH("Unimplemented.")
 
+/// Sets the BLOCK_Z_OUT_DOWN obj_flag and runs associated updates.
+/obj/proc/set_is_platform(new_platform_status)
+	if((obj_flags & BLOCK_Z_OUT_DOWN) == new_platform_status)
+		return
+	var/turf/our_turf = get_turf(src)
+	obj_flags ^= BLOCK_Z_OUT_DOWN
+	if(new_platform_status)
+		our_turf.platform_atom_count++
+	else
+		our_turf.platform_atom_count--
+
 /obj/merge_conflict_marker
 	name = "---Merge Conflict Marker---"
 	desc = "Mapping helper."
