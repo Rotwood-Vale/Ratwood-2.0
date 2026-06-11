@@ -1,10 +1,10 @@
-/proc/remove_rot(mob/living/carbon/human/target, mob/living/user, method = "unknown", damage = 0, success_message = "The rot is removed.", fail_message = "The rot removal failed.", lethal = TRUE)
+/proc/remove_rot(mob/living/carbon/human/target, mob/living/user, method = "unknown", damage = 0, success_message = "腐烂已被清除。", fail_message = "清除腐烂失败了。", lethal = TRUE)
 	if (!istype(target, /mob/living/carbon/human) || QDELETED(target))
 		return FALSE
 
 	//Special check preventing skeletons being cautery burned to regrow flesh
 	if(istype(target, /mob/living/carbon/human/species/skeleton) && method == "surgery")
-		to_chat(user, span_warning("It's going to take a miracle to put flesh back on these bones."))
+		to_chat(user, span_warning("想让这些骨头重新长回血肉，恐怕得靠奇迹。"))
 		return FALSE
 
 	// Check if the target has rot

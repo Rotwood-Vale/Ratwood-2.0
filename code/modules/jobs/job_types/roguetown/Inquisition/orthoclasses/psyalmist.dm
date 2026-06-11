@@ -2,8 +2,8 @@
 //Not intended for proper combat.
 //Knives exist the same way it does on Arbalist, as a 'just in case'.
 /datum/advclass/psyaltrist
-	name = "Psyaltrist"
-	tutorial = "You spent some time with cathedral choirs and psyaltrists. Now you spend your days applying the musical arts to the practical on behalf of His most Holy of Inquisitions."
+	name = "圣咏师"
+	tutorial = "你曾在大教堂唱诗班与 psyaltrist 们身边修习一段时日。如今，你日复一日地把音乐之艺用于实务，为至圣审判庭效力。"
 	outfit = /datum/outfit/job/roguetown/psyaltrist
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_EMPATH, TRAIT_DODGEEXPERT)
@@ -32,7 +32,7 @@
 		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE
 	)
 	subclass_stashed_items = list(
-		"Of Psydon" = /obj/item/book/rogue/bibble/psy
+		"《Psydon 圣典》" = /obj/item/book/rogue/bibble/psy
 	)
 
 /datum/outfit/job/roguetown/psyaltrist/pre_equip(mob/living/carbon/human/H)
@@ -63,49 +63,49 @@
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_inspire)//CtA, but blood cost and... kind of worse.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_sacrosanctity)//To get your blood back, m'lord.
-		var/instruments = list("Accordion","Bagpipe", "Banjo","Drum","Flute","Guitar","Harmonica","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
-		var/instrument_choice = tgui_input_list(H, "Choose your instrument.", "TAKE UP ARMS", instruments)
+		var/instruments = list("手风琴","风笛", "班卓琴","鼓","长笛","吉他","口琴","竖琴","手摇风琴","口簧琴","鲁特琴","圣咏琴","三味线","小号","中提琴","歌咏护符")
+		var/instrument_choice = tgui_input_list(H, "选择你的乐器。", "拿起家伙", instruments)
 		H.set_blindness(0)
 		switch(instrument_choice)
-			if("Accordion")
+			if("手风琴")
 				backr = /obj/item/rogue/instrument/accord
-			if("Bagpipe")
+			if("风笛")
 				backr = /obj/item/rogue/instrument/bagpipe
-			if("Banjo")
+			if("班卓琴")
 				backr = /obj/item/rogue/instrument/banjo
-			if("Drum")
+			if("鼓")
 				backr = /obj/item/rogue/instrument/drum
-			if("Flute")
+			if("长笛")
 				backr = /obj/item/rogue/instrument/flute
-			if("Guitar")
+			if("吉他")
 				backr = /obj/item/rogue/instrument/guitar
-			if("Harmonica")
+			if("口琴")
 				backr = /obj/item/rogue/instrument/harmonica
-			if("Harp")
+			if("竖琴")
 				backr = /obj/item/rogue/instrument/harp
-			if("Hurdy-Gurdy")
+			if("手摇风琴")
 				backr = /obj/item/rogue/instrument/hurdygurdy
-			if("Jaw Harp")
+			if("口簧琴")
 				backr = /obj/item/rogue/instrument/jawharp
-			if("Lute")
+			if("鲁特琴")
 				backr = /obj/item/rogue/instrument/lute
-			if("Psyaltery")
+			if("圣咏琴")
 				backr = /obj/item/rogue/instrument/psyaltery
-			if("Shamisen")
+			if("三味线")
 				backr = /obj/item/rogue/instrument/shamisen
-			if("Trumpet")
+			if("小号")
 				backr = /obj/item/rogue/instrument/trumpet
-			if("Viola")
+			if("中提琴")
 				backr = /obj/item/rogue/instrument/viola
-			if("Vocal Talisman")
+			if("歌咏护符")
 				backr = /obj/item/rogue/instrument/vocals
-		var/weapons = list("Psydonic Whip", "Psydonic Rapier")
-		var/weapon_choice = tgui_input_list(H, "Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.", weapons)
+		var/weapons = list("Psydonic 长鞭", "Psydonic 刺剑")
+		var/weapon_choice = tgui_input_list(H, "选择你的武器。", "执起 Psydon 兵刃", weapons)
 		switch(weapon_choice)
-			if("Psydonic Whip")
+			if("Psydonic 长鞭")
 				H.put_in_hands(new /obj/item/rogueweapon/whip/psywhip_lesser(get_turf(H)), forced = TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
-			if("Psydonic Rapier")
+			if("Psydonic 刺剑")
 				H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/psy(get_turf(H)), forced = TRUE)
 				H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)

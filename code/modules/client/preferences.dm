@@ -480,35 +480,35 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/used_title
 	switch(current_tab)
 		if (0) // Character Settings#
-			used_title = "Character Sheet"
+			used_title = "角色卡"
 
 			// Top-level menu table
 			dat += "<table style='width: 100%; line-height: 20px;'>"
 			// NEXT ROW
 			dat += "<tr>"
 			dat += "<td style='width:33%;text-align:left'>"
-			dat += "<a style='white-space:nowrap;' href='?_src_=prefs;preference=changeslot;'>Change Character</a>"
+			dat += "<a style='white-space:nowrap;' href='?_src_=prefs;preference=changeslot;'>切换角色</a>"
 			dat += "</td>"
 
 			dat += "<td style='width:33%;text-align:center'>"
-			dat += "<a href='?_src_=prefs;preference=job;task=menu'>Class Selection</a>"
+			dat += "<a href='?_src_=prefs;preference=job;task=menu'>职业选择</a>"
 			dat += "</td>"
 
 			dat += "<td style='width:33%;text-align:right'>"
-			dat += "<a href='?_src_=prefs;preference=keybinds;task=menu'>Keybinds</a>"
+			dat += "<a href='?_src_=prefs;preference=keybinds;task=menu'>按键绑定</a>"
 			dat += "</td>"
 			dat += "</tr>"
 
 			// ANOTHA ROW
 			dat += "<tr style='padding-top: 0px;padding-bottom:0px'>"
 			dat += "<td style='width:33%;text-align:left'>"
-			dat += "<a href='?_src_=prefs;preference=tgui_ui_prefs;task=menu'>[tgui_pref ? "TGUI" : "Legacy"]</a>"
+			dat += "<a href='?_src_=prefs;preference=tgui_ui_prefs;task=menu'>[tgui_pref ? "TGUI" : "传统"]</a>"
 			dat += "<br>"
-			dat += "<a href='?_src_=prefs;preference=tgui_theme'>Theme: [get_tgui_theme_display_name()]</a>"
+			dat += "<a href='?_src_=prefs;preference=tgui_theme'>主题：[get_tgui_theme_display_name()]</a>"
 			dat += "</td>"
 
 			dat += "<td style='width:33%;text-align:center'>"
-			dat += "<a href='?_src_=prefs;preference=antag;task=menu'>Villain Selection</a>"
+			dat += "<a href='?_src_=prefs;preference=antag;task=menu'>反派选择</a>"
 			dat += "</td>"
 
 			dat += "<td style='width:33%;text-align:right'>"
@@ -518,19 +518,19 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			// ANOTHER ROW HOLY SHIT WE FINALLY A GOD DAMN GRID NOW! WHOA!
 			dat += "<tr style='padding-top: 0px;padding-bottom:0px'>"
 			dat += "<td style='width:33%; text-align:left'>"
-			dat += "<a href='?_src_=prefs;preference=playerquality;task=menu'><b>PQ:</b></a> [get_playerquality(user.ckey, text = TRUE)]"
+			dat += "<a href='?_src_=prefs;preference=playerquality;task=menu'><b>玩家品质:</b></a> [get_playerquality(user.ckey, text = TRUE)]"
 			dat += "</td>"
 
 			dat += "<td style='width:33%;text-align:center'>"
-			dat += "<a href='?_src_=prefs;preference=triumphs;task=menu'><b>TRIUMPHS:</b></a> [user.get_triumphs() ? "\Roman [user.get_triumphs()]" : "None"]"
+			dat += "<a href='?_src_=prefs;preference=triumphs;task=menu'><b>胜利点:</b></a> [user.get_triumphs() ? "\Roman [user.get_triumphs()]" : "无"]"
 			if(SStriumphs.triumph_buys_enabled)
-				dat += "<a style='white-space:nowrap;' href='?_src_=prefs;preference=triumph_buy_menu'>Triumph Buy</a>"
+				dat += "<a style='white-space:nowrap;' href='?_src_=prefs;preference=triumph_buy_menu'>胜利点购买</a>"
 			dat += "</td>"
 
 			if(CONFIG_GET(flag/roundstart_traits))
-				dat += "<center><h2>Quirk Setup</h2>"
-				dat += "<a href='?_src_=prefs;preference=trait;task=menu'>Configure Quirks</a><br></center>"
-				dat += "<center><b>Current Quirks:</b> [all_quirks.len ? all_quirks.Join(", ") : "None"]</center>"
+				dat += "<center><h2>特质设置</h2>"
+				dat += "<a href='?_src_=prefs;preference=trait;task=menu'>配置特质</a><br></center>"
+				dat += "<center><b>当前特质:</b> [all_quirks.len ? all_quirks.Join(", ") : "无"]</center>"
 
 			// Encapsulating table
 			dat += "<table width = '100%'>"
@@ -540,51 +540,51 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<td width=40% valign='top'>"
 
 // 			-----------START OF IDENT TABLE-----------
-			dat += "<h2>Identity</h2>"
+			dat += "<h2>身份</h2>"
 			dat += "<table width='100%'><tr><td width='75%' valign='top'>"
 			if(is_banned_from(user.ckey, "Appearance"))
-				dat += "<b>Thou are banned from using custom names and appearances. Thou can continue to adjust thy characters, but thee will be randomised once thee joins the game.</b><br>"
+				dat += "<b>您已被禁止使用自定义名称和外观。您仍可继续调整角色，但在加入游戏时会被随机化。</b><br>"
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_NAME]'>Always Random Name: [(randomise[RANDOM_NAME]) ? "Yes" : "No"]</a>"
 //			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_NAME_ANTAG]'>When Antagonist: [(randomise[RANDOM_NAME_ANTAG]) ? "Yes" : "No"]</a>"
-			dat += "<b>Name:</b> "
+			dat += "<b>姓名:</b> "
 			if(check_nameban(user.ckey))
-				dat += "<a href='?_src_=prefs;preference=name;task=input'>NAMEBANNED</a><BR>"
+				dat += "<a href='?_src_=prefs;preference=name;task=input'>名称已被禁用</a><BR>"
 			else
 				dat += "<a href='?_src_=prefs;preference=name;task=input'>[real_name]</a> <a href='?_src_=prefs;preference=name;task=random'>\[R\]</a>"
 			dat += "<BR>"
-			dat += "<b>Nickname:</b> "
+			dat += "<b>昵称:</b> "
 			dat += "<a href='?_src_=prefs;preference=nickname;task=input'>[nickname]</a><BR>"
 			// LETHALSTONE EDIT BEGIN: add pronoun prefs
-			dat += "<b>Pronouns:</b> <a href='?_src_=prefs;preference=pronouns;task=input'>[pronouns]</a><BR>"
+			dat += "<b>人称代词:</b> <a href='?_src_=prefs;preference=pronouns;task=input'>[pronouns]</a><BR>"
 			// LETHALSTONE EDIT END
 			if(!voice_pack)
-				voice_pack = "Default"
+				voice_pack = "默认"
 			// LETHALSTONE EDIT BEGIN: add voice type prefs
-			dat += "<b>Voice Identity</b>: <a href='?_src_=prefs;preference=voicetype;task=input'>[voice_type]</a><BR>"
+			dat += "<b>语音身份</b>: <a href='?_src_=prefs;preference=voicetype;task=input'>[voice_type]</a><BR>"
 			// LETHALSTONE EDIT END
-			dat += "<b>Voice Pack</b>: <a href='?_src_=prefs;preference=voicepack;task=input'>[voice_pack]</a><BR>"
+			dat += "<b>语音包</b>: <a href='?_src_=prefs;preference=voicepack;task=input'>[voice_pack]</a><BR>"
 
 			dat += "<BR>"
-			dat += "<b>Race:</b> <a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a>[spec_check(user) ? "" : " (!)"]<BR>"
+			dat += "<b>种族:</b> <a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a>[spec_check(user) ? "" : " (!)"]<BR>"
 			if(pref_species.use_titles)
-				var/display_title = selected_title ? selected_title : "None"
-				dat += "<b>Race Title:</b> <a href='?_src_=prefs;preference=race_title;task=input'>[display_title]</a><BR>"
-			dat += "<b>Family:</b> <a href='?_src_=prefs;preference=family'>[family ? family : "None"]</a><BR>"
+				var/display_title = selected_title ? selected_title : "无"
+				dat += "<b>种族头衔:</b> <a href='?_src_=prefs;preference=race_title;task=input'>[display_title]</a><BR>"
+			dat += "<b>家族:</b> <a href='?_src_=prefs;preference=family'>[family ? family : "无"]</a><BR>"
 			if(family != FAMILY_NONE)
-				var/spousename = "Preferred Spouse"
+				var/spousename = "首选配偶"
 				if(family == FAMILY_PARTIAL)
-					spousename = "Preferred Parent"
-				dat += "<b>[spousename]:</b> <a href='?_src_=prefs;preference=setspouse'>[setspouse ? setspouse : "None"]</a><BR>"
+					spousename = "首选父母"
+				dat += "<b>[spousename]:</b> <a href='?_src_=prefs;preference=setspouse'>[setspouse ? setspouse : "无"]</a><BR>"
 				if(family != FAMILY_NONE)
-					dat += "<b>Preferred Gender:</b> <a href='?_src_=prefs;preference=gender_choice'>[gender_choice ? gender_choice : "Any Gender"]</a><BR>"
+					dat += "<b>首选性别:</b> <a href='?_src_=prefs;preference=gender_choice'>[gender_choice ? gender_choice : "任意性别"]</a><BR>"
 					var/species_text
 					if(xenophobe_pref == 1)
-						species_text = "<font color='#FFA500'>Same Race</font>"
+						species_text = "<font color='#FFA500'>同种族</font>"
 					else if(xenophobe_pref == 2 && restricted_species_pref)
-						species_text = "<font color='#aa0202'>[restricted_species_pref] Only</font>"
+						species_text = "<font color='#aa0202'>仅[restricted_species_pref]</font>"
 					else
-						species_text = "<font color='#1cb308'>Unrestricted</font>"
-					dat += "<b>Restrict Species:</b> <a href='?_src_=prefs;preference=species_choice'>[species_text]</a><BR>"
+						species_text = "<font color='#1cb308'>不限制</font>"
+					dat += "<b>限制种族:</b> <a href='?_src_=prefs;preference=species_choice'>[species_text]</a><BR>"
 			if(length(pref_species.custom_selection))
 				var/race_bonus_display
 				if(race_bonus)
@@ -592,7 +592,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 						if(pref_species.custom_selection[bonus] == race_bonus)
 							race_bonus_display = bonus
 							break
-				dat += "<b>Race Bonus:</b> <a href='?_src_=prefs;preference=race_bonus_select;task=input'>[race_bonus_display ? "[race_bonus_display]" : "None"]</a><BR>"
+				dat += "<b>种族奖励:</b> <a href='?_src_=prefs;preference=race_bonus_select;task=input'>[race_bonus_display ? "[race_bonus_display]" : "无"]</a><BR>"
 			else
 				race_bonus = null
 				dat += "<BR>"
@@ -603,26 +603,26 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			if(!(AGENDER in pref_species.species_traits))
 				var/dispGender
 				if(gender == MALE)
-					dispGender = "Masculine" // LETHALSTONE EDIT: repurpose gender as bodytype, display accordingly
+					dispGender = "男性化" // LETHALSTONE EDIT: repurpose gender as bodytype, display accordingly
 				else if(gender == FEMALE)
-					dispGender = "Feminine" // LETHALSTONE EDIT: repurpose gender as bodytype, display accordingly
+					dispGender = "女性化" // LETHALSTONE EDIT: repurpose gender as bodytype, display accordingly
 				else
-					dispGender = "Other"
-				dat += "<b>Body Type:</b> <a href='?_src_=prefs;preference=gender'>[dispGender]</a><BR>"
+					dispGender = "其他"
+				dat += "<b>体型:</b> <a href='?_src_=prefs;preference=gender'>[dispGender]</a><BR>"
 				if(randomise[RANDOM_BODY] || randomise[RANDOM_BODY_ANTAG]) //doesn't work unless random body
-					dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_GENDER]'>Always Random Bodytype: [(randomise[RANDOM_GENDER]) ? "Yes" : "No"]</A>"
-					dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_GENDER_ANTAG]'>When Antagonist: [(randomise[RANDOM_GENDER_ANTAG]) ? "Yes" : "No"]</A>"
+					dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_GENDER]'>总是随机体型: [(randomise[RANDOM_GENDER]) ? "是" : "否"]</A>"
+					dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_GENDER_ANTAG]'>反派时: [(randomise[RANDOM_GENDER_ANTAG]) ? "是" : "否"]</A>"
 
 			if(LAZYLEN(pref_species.allowed_taur_types))
 				var/obj/item/bodypart/taur/T = taur_type
-				var/name = ispath(T) ? T::name : "None"
-				dat += "<b>Taur Body Type:</b> <a href='?_src_=prefs;preference=taur_type;task=input'>[name]</a><BR>"
-				dat += "<b>Taur Color:</b> <span style='border: 1px solid #161616; background-color: #[taur_color];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=taur_color;task=input'>Change</a><BR>"
-				dat += "<b>Taur Markings:</b> <span style='border: 1px solid #161616; background-color: #[taur_markings];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=taur_markings;task=input'>Change</a><BR>"
-				dat += "<b>Taur Tertiary:</b> <span style='border: 1px solid #161616; background-color: #[taur_tertiary];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=taur_tertiary;task=input'>Change</a><BR>"
+				var/name = ispath(T) ? T::name : "无"
+				dat += "<b>半兽体型:</b> <a href='?_src_=prefs;preference=taur_type;task=input'>[name]</a><BR>"
+				dat += "<b>半兽颜色:</b> <span style='border: 1px solid #161616; background-color: #[taur_color];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=taur_color;task=input'>更改</a><BR>"
+				dat += "<b>半兽斑纹:</b> <span style='border: 1px solid #161616; background-color: #[taur_markings];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=taur_markings;task=input'>更改</a><BR>"
+				dat += "<b>半兽第三色:</b> <span style='border: 1px solid #161616; background-color: #[taur_tertiary];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=taur_tertiary;task=input'>更改</a><BR>"
 
-			dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
-			dat += "<b>Origin:</b> <a href='?_src_=prefs;preference=origin;task=input'>[origin ? origin.name : "None"]</a><BR>"
+			dat += "<b>年龄:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
+			dat += "<b>出身:</b> <a href='?_src_=prefs;preference=origin;task=input'>[origin ? origin.name : "无"]</a><BR>"
 
 //			dat += "<br><b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
 //			if(randomise[RANDOM_BODY] || randomise[RANDOM_BODY_ANTAG]) //doesn't work unless random body
@@ -637,23 +637,23 @@ GLOBAL_LIST_EMPTY(chosen_names)
 					virtuetwo = GLOB.virtues[/datum/virtue/none]
 			if(statpack.name != "Virtuous")
 				virtuetwo = GLOB.virtues[/datum/virtue/none]
-			dat += "<b>Character Customization:</b> <a href='?_src_=prefs;preference=vices_menu;task=input'>Configure All</a><BR>"
+			dat += "<b>角色自定义:</b> <a href='?_src_=prefs;preference=vices_menu;task=input'>配置全部</a><BR>"
 			var/datum/faith/selected_faith = GLOB.faithlist[selected_patron?.associated_faith]
-			dat += "<b>Faith:</b> <a href='?_src_=prefs;preference=faith;task=input'>[selected_faith?.name || "FUCK!"]</a><BR>"
-			dat += "<b>Patron:</b> <a href='?_src_=prefs;preference=patron;task=input'>[selected_patron?.name || "FUCK!"]</a><BR>"
-			dat += "<b>Dominance:</b> <a href='?_src_=prefs;preference=domhand'>[domhand == 1 ? "Left-handed" : "Right-handed"]</a><BR>"
-			dat += "<b>Food Preferences:</b> <a href='?_src_=prefs;preference=culinary;task=menu'>Change</a><BR>"
+			dat += "<b>信仰:</b> <a href='?_src_=prefs;preference=faith;task=input'>[selected_faith?.name || "错误"]</a><BR>"
+			dat += "<b>庇护者:</b> <a href='?_src_=prefs;preference=patron;task=input'>[selected_patron?.name || "错误"]</a><BR>"
+			dat += "<b>惯用手:</b> <a href='?_src_=prefs;preference=domhand'>[domhand == 1 ? "左利手" : "右利手"]</a><BR>"
+			dat += "<b>食物偏好:</b> <a href='?_src_=prefs;preference=culinary;task=menu'>更改</a><BR>"
 
 			var/musicname = (combat_music.shortname ? combat_music.shortname : combat_music.name)
-			dat += "<b>Combat Music:</b> <a href='?_src_=prefs;preference=combat_music;task=input'>[musicname || "FUCK!"]</a><BR>"
+			dat += "<b>战斗音乐:</b> <a href='?_src_=prefs;preference=combat_music;task=input'>[musicname || "错误"]</a><BR>"
 
-			dat += "<b>Unrevivable:</b> <a href='?_src_=prefs;preference=dnr;task=input'>[dnr_pref ? "Yes" : "No"]</a><BR>"
+			dat += "<b>不可复活:</b> <a href='?_src_=prefs;preference=dnr;task=input'>[dnr_pref ? "是" : "否"]</a><BR>"
 
-			dat += "<b>Be a Familiar:</b><a href='?_src_=prefs;preference=familiar_prefs;task=input'>Familiar Preferences</a><br>"
+			dat += "<b>成为魔宠:</b><a href='?_src_=prefs;preference=familiar_prefs;task=input'>Familiar Preferences</a><br>"
 
-			dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[preferred_map || "No Preference"]</a><br>"
+			dat += "<b>偏好地图:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[preferred_map || "No Preference"]</a><br>"
 
-			dat += "<br><b>Gnoll Customization:</b><a href='?_src_=prefs;preference=gnoll_prefs;task=input'>Gnoll Preferences</a>"
+			dat += "<br><b>豺狼人自定义:</b><a href='?_src_=prefs;preference=gnoll_prefs;task=input'>豺狼人偏好</a>"
 
 /*
 			dat += "<br><br><b>Special Names:</b><BR>"
@@ -674,12 +674,12 @@ GLOBAL_LIST_EMPTY(chosen_names)
 */
 			var/datum/bark/B = GLOB.bark_list[bark_id]
 			dat += "<br>"
-			dat += "<b>Vocal Bark Sound:</b><br>"
-			dat += "<a href='?_src_=prefs;preference=barksound;task=input'>[B ? initial(B.name) : "INVALID"]</a><br>"
-			dat += "<b>Vocal Bark Speed:</b> <a href='?_src_=prefs;preference=barkspeed;task=input'>[bark_speed]</a><br>"
-			dat += "<b>Vocal Bark Pitch:</b> <a href='?_src_=prefs;preference=barkpitch;task=input'>[bark_pitch]</a><br>"
-			dat += "<b>Vocal Bark Variance:</b> <a href='?_src_=prefs;preference=barkvary;task=input'>[bark_variance]</a><br>"
-			dat += "<b><a href='?_src_=prefs;preference=barkpreview;task=input'>Preview Bark</a></b><br>"
+			dat += "<b>叫声类型:</b><br>"
+			dat += "<a href='?_src_=prefs;preference=barksound;task=input'>[B ? initial(B.name) : "无效"]</a><br>"
+			dat += "<b>叫声速度:</b> <a href='?_src_=prefs;preference=barkspeed;task=input'>[bark_speed]</a><br>"
+			dat += "<b>叫声音高:</b> <a href='?_src_=prefs;preference=barkpitch;task=input'>[bark_pitch]</a><br>"
+			dat += "<b>叫声变调:</b> <a href='?_src_=prefs;preference=barkvary;task=input'>[bark_variance]</a><br>"
+			dat += "<b><a href='?_src_=prefs;preference=barkpreview;task=input'>预览叫声</a></b><br>"
 			dat += "</td>"
 			dat += "</tr></table>"
 // 			-----------END OF IDENT TABLE-----------
@@ -693,65 +693,65 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				if(job_preferences[job] > highest_pref)
 					highest_pref = SSjob.GetJob(job)
 			if(!isnull(highest_pref) && !istype(highest_pref, /datum/job/roguetown/jester))
-				dat += "<div style='text-align: center'><br>Subclass Preview:<br> <a href='?_src_=prefs;preference=subclassoutfit;task=input'>[preview_subclass ? "[preview_subclass.name]" : "None"]</a></div>"
+				dat += "<div style='text-align: center'><br>子职业预览:<br> <a href='?_src_=prefs;preference=subclassoutfit;task=input'>[preview_subclass ? "[preview_subclass.name]" : "无"]</a></div>"
 			else
 				preview_subclass = null
 			// Rightmost column, 40% width
 			dat += "<td width=40% valign='top'>"
-			dat += "<h2>Body</h2>"
+			dat += "<h2>身体</h2>"
 
 //			-----------START OF BODY TABLE-----------
 			dat += "<table width='100%'><tr><td width='1%' valign='top'>"
-			dat += "<b>Update feature colors with change:</b> <a href='?_src_=prefs;preference=update_mutant_colors;task=input'>[update_mutant_colors ? "Yes" : "No"]</a><BR>"
+			dat += "<b>更改时更新特征颜色:</b> <a href='?_src_=prefs;preference=update_mutant_colors;task=input'>[update_mutant_colors ? "是" : "否"]</a><BR>"
 			var/use_skintones = pref_species.use_skintones
 			if(use_skintones)
 
 				var/skin_tone_wording = pref_species.skin_tone_wording // Both the skintone names and the word swap here is useless fluff
 
-				dat += "<b>[skin_tone_wording]: </b><a href='?_src_=prefs;preference=s_tone;task=input'>Change </a>"
+				dat += "<b>[skin_tone_wording]: </b><a href='?_src_=prefs;preference=s_tone;task=input'>更改 </a>"
 				dat += "<br>"
 
 			if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
 
-				dat += "<b>Mutant Color #1:</b> <span style='border: 1px solid #161616; background-color: #[features["mcolor"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
-				dat += "<b>Mutant Color #2:</b> <span style='border: 1px solid #161616; background-color: #[features["mcolor2"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color2;task=input'>Change</a><BR>"
-				dat += "<b>Mutant Color #3:</b> <span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
+				dat += "<b>突变颜色 #1:</b> <span style='border: 1px solid #161616; background-color: #[features["mcolor"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>更改</a><BR>"
+				dat += "<b>突变颜色 #2:</b> <span style='border: 1px solid #161616; background-color: #[features["mcolor2"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color2;task=input'>更改</a><BR>"
+				dat += "<b>突变颜色 #3:</b> <span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>更改</a><BR>"
 
-			dat += "<br><b>Voice Color: </b><a href='?_src_=prefs;preference=voice;task=input'>Change</a>"
-			dat += "<br><b>Nickname Color: </b> </b><a href='?_src_=prefs;preference=highlight_color;task=input'>Change</a>"
-			dat += "<br><b>Voice Pitch: </b><a href='?_src_=prefs;preference=voice_pitch;task=input'>[voice_pitch]</a>"
-			dat += "<br><b>Accent:</b> <a href='?_src_=prefs;preference=char_accent;task=input'>[char_accent]</a>"
-			dat += "<br><b>Features:</b> <a href='?_src_=prefs;preference=customizers;task=menu'>Change</a>"
-			dat += "<br><b>Sprite Scale:</b><a href='?_src_=prefs;preference=body_size;task=input'>[(features["body_size"] * 100)]%</a>"
-			dat += "<br><b>Markings:</b> <a href='?_src_=prefs;preference=markings;task=menu'>Change</a>"
-			dat += "<br><b>Descriptors:</b> <a href='?_src_=prefs;preference=descriptors;task=menu'>Change</a>"
+			dat += "<br><b>声音颜色: </b><a href='?_src_=prefs;preference=voice;task=input'>更改</a>"
+			dat += "<br><b>昵称颜色: </b> </b><a href='?_src_=prefs;preference=highlight_color;task=input'>更改</a>"
+			dat += "<br><b>语音音高: </b><a href='?_src_=prefs;preference=voice_pitch;task=input'>[voice_pitch]</a>"
+			dat += "<br><b>口音:</b> <a href='?_src_=prefs;preference=char_accent;task=input'>[char_accent]</a>"
+			dat += "<br><b>特征:</b> <a href='?_src_=prefs;preference=customizers;task=menu'>更改</a>"
+			dat += "<br><b>图像缩放:</b><a href='?_src_=prefs;preference=body_size;task=input'>[(features["body_size"] * 100)]%</a>"
+			dat += "<br><b>斑纹:</b> <a href='?_src_=prefs;preference=markings;task=menu'>更改</a>"
+			dat += "<br><b>描述词:</b> <a href='?_src_=prefs;preference=descriptors;task=menu'>更改</a>"
 
-			dat += "<br><b>Headshot:</b> <a href='?_src_=prefs;preference=headshot;task=input'>Change</a>"
+			dat += "<br><b>头像:</b> <a href='?_src_=prefs;preference=headshot;task=input'>更改</a>"
 			if(headshot_link != null)
 				dat += "<br><img src='[headshot_link]' width='100px' height='100px'>"
 
-			dat += "<br><b>[(length(flavortext) < MINIMUM_FLAVOR_TEXT) ? "<font color = '#802929'>" : ""]Flavortext:[(length(flavortext) < MINIMUM_FLAVOR_TEXT) ? "</font>" : ""]</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><a href='?_src_=prefs;preference=flavortext;task=input'>Change</a>"
-			dat += "<br><b>NSFW Flavortext:</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><a href='?_src_=prefs;preference=nsfwflavortext;task=input'>Change</a>"
-			dat += "<br><b>[(length(ooc_notes) < MINIMUM_OOC_NOTES) ? "<font color = '#802929'>" : ""]OOC Notes:[(length(ooc_notes) < MINIMUM_OOC_NOTES) ? "</font>" : ""]</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><a href='?_src_=prefs;preference=ooc_notes;task=input'>Change</a>"
+			dat += "<br><b>[(length(flavortext) < MINIMUM_FLAVOR_TEXT) ? "<font color = '#802929'>" : ""]风味文本:[(length(flavortext) < MINIMUM_FLAVOR_TEXT) ? "</font>" : ""]</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><a href='?_src_=prefs;preference=flavortext;task=input'>更改</a>"
+			dat += "<br><b>NSFW风味文本:</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><a href='?_src_=prefs;preference=nsfwflavortext;task=input'>更改</a>"
+			dat += "<br><b>[(length(ooc_notes) < MINIMUM_OOC_NOTES) ? "<font color = '#802929'>" : ""]OOC备注:[(length(ooc_notes) < MINIMUM_OOC_NOTES) ? "</font>" : ""]</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><a href='?_src_=prefs;preference=ooc_notes;task=input'>更改</a>"
 
 			// Rumours / Gossip
-			dat += "<br><b>Rumours & Noble Gossip:</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><br><a href='?_src_=prefs;preference=rumour;task=input'>Set Rumours</a><a href='?_src_=prefs;preference=gossip;task=input'>Set Gossip</a><a href='?_src_=prefs;preference=rumour_preview;task=input'><i>Preview</i></a>"
+			dat += "<br><b>传闻与贵族流言:</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><br><a href='?_src_=prefs;preference=rumour;task=input'>设置传闻</a><a href='?_src_=prefs;preference=gossip;task=input'>设置流言</a><a href='?_src_=prefs;preference=rumour_preview;task=input'><i>预览</i></a>"
 
-			dat += "<br><b>ERP Preferences:</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><a href='?_src_=prefs;preference=erpprefs;task=input'>Change</a>"
-			dat += "<br><b>Song:</b> <a href='?_src_=prefs;preference=ooc_extra;task=input'>Change URL</a>"
-			dat += "<a href='?_src_=prefs;preference=change_title;task=input'>Change Title</a>"
-			dat += "<a href='?_src_=prefs;preference=change_artist;task=input'>Change Artist</a>"
-			dat += "<br><b>OOC Extra Image/Video/Gif (Flavor Text):</b> <a href='?_src_=prefs;preference=ooc_extra_img;task=input'>Change</a>"
+			dat += "<br><b>ERP偏好:</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><a href='?_src_=prefs;preference=erpprefs;task=input'>更改</a>"
+			dat += "<br><b>歌曲:</b> <a href='?_src_=prefs;preference=ooc_extra;task=input'>更改URL</a>"
+			dat += "<a href='?_src_=prefs;preference=change_title;task=input'>更改标题</a>"
+			dat += "<a href='?_src_=prefs;preference=change_artist;task=input'>更改艺术家</a>"
+			dat += "<br><b>OOC额外图片/视频/GIF（风味文本）:</b> <a href='?_src_=prefs;preference=ooc_extra_img;task=input'>更改</a>"
 			if(ooc_extra_img_link != null)
 				dat += "<br><img src='[ooc_extra_img_link]' width='100px' height='100px'>"
-			dat += "<br><b>NSFW OOC Extra Image/Video/Gif (Flavor Text):</b> <a href='?_src_=prefs;preference=nsfw_ooc_extra_img;task=input'>Change</a>"
+			dat += "<br><b>NSFW OOC额外图片/视频/GIF（风味文本）:</b> <a href='?_src_=prefs;preference=nsfw_ooc_extra_img;task=input'>更改</a>"
 			if(nsfw_ooc_extra_img_link != null)
 				dat += "<br><img src='[nsfw_ooc_extra_img_link]' width='100px' height='100px'>"
-			dat += "<br><B>Image Gallery:</b> <a href='?_src_=prefs;preference=img_gallery;task=input'>Add</a>"
-			dat+= "<a href='?_src_=prefs;preference=clear_gallery;task=input'>Clear Gallery</a>"
-			dat += "<br><B>Nsfw Image Gallery:</b> <a href='?_src_=prefs;preference=nsfw_img_gallery;task=input'>Add</a>"
-			dat+= "<a href='?_src_=prefs;preference=clear_nsfw_gallery;task=input'>Clear Nsfw Gallery</a>"
-			dat += "<br><a href='?_src_=prefs;preference=ooc_preview;task=input'><b>Preview Examine</b></a>"
+			dat += "<br><B>图片库:</b> <a href='?_src_=prefs;preference=img_gallery;task=input'>添加</a>"
+			dat+= "<a href='?_src_=prefs;preference=clear_gallery;task=input'>清空图片库</a>"
+			dat += "<br><B>NSFW图片库:</b> <a href='?_src_=prefs;preference=nsfw_img_gallery;task=input'>添加</a>"
+			dat+= "<a href='?_src_=prefs;preference=clear_nsfw_gallery;task=input'>清空NSFW图片库</a>"
+			dat += "<br><a href='?_src_=prefs;preference=ooc_preview;task=input'><b>预览查看</b></a>"
 
 			dat += "</td>"
 
@@ -762,11 +762,11 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "</table>"
 
 		if (1) // Game Preferences
-			used_title = "Options"
+			used_title = "设置"
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
-			dat += "<h2>General Settings</h2>"
+			dat += "<h2>常规设置</h2>"
 //			dat += "<b>UI Style:</b> <a href='?_src_=prefs;task=input;preference=ui'>[UI_style]</a><br>"
-			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
+			dat += "<b>tgui 显示器:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "主显示器" : "所有"]</a><br>"
 //			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
 //			dat += "<b>Show Runechat Chat Bubbles:</b> <a href='?_src_=prefs;preference=chat_on_map'>[chat_on_map ? "Enabled" : "Disabled"]</a><br>"
 //			dat += "<b>Runechat message char limit:</b> <a href='?_src_=prefs;preference=max_chat_length;task=input'>[max_chat_length]</a><br>"
@@ -813,7 +813,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<b>Income Updates:</b> <a href='?_src_=prefs;preference=income_pings'>[(chat_toggles & CHAT_BANKCARD) ? "Allowed" : "Muted"]</a><br>"
 			dat += "<br>"
 */
-			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a><br>"
+			dat += "<b>帧率 (FPS):</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a><br>"
 /*
 			dat += "<b>Parallax (Fancy Space):</b> <a href='?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=parallaxup\";return false;'>"
 			switch (parallax)
@@ -857,25 +857,25 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[preferred_map || "Default"]</a><br>"
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
-			dat += "<h2>Special Role Settings</h2>"
+			dat += "<h2>特殊角色设置</h2>"
 
 			if(is_banned_from(user.ckey, ROLE_SYNDICATE))
-				dat += "<font color=red><b>I am banned from antagonist roles.</b></font><br>"
+				dat += "<font color=red><b>我已被禁止担任反派角色。</b></font><br>"
 				src.be_special = list()
 
 
 			for (var/i in GLOB.special_roles_rogue)
 				if(is_banned_from(user.ckey, i))
-					dat += "<b>[capitalize(i)]:</b> <a href='?_src_=prefs;bancheck=[i]'>BANNED</a><br>"
+					dat += "<b>[capitalize(i)]:</b> <a href='?_src_=prefs;bancheck=[i]'>已被封禁</a><br>"
 				else
 					var/days_remaining = null
 					if(ispath(GLOB.special_roles_rogue[i]) && CONFIG_GET(flag/use_age_restriction_for_jobs)) //If it's a game mode antag, check if the player meets the minimum age
 						days_remaining = get_remaining_days(user.client)
 
 					if(days_remaining)
-						dat += "<b>[capitalize(i)]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
+						dat += "<b>[capitalize(i)]:</b> <font color=red> \[[days_remaining] 天后解锁]</font><br>"
 					else
-						dat += "<b>[capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "Enabled" : "Disabled"]</a><br>"
+						dat += "<b>[capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "开启" : "关闭"]</a><br>"
 //			dat += "<br>"
 //			dat += "<b>Midround Antagonist:</b> <a href='?_src_=prefs;preference=allow_midround_antag'>[(toggles & MIDROUND_ANTAG) ? "Enabled" : "Disabled"]</a><br>"
 			dat += "</td></tr></table>"
@@ -883,65 +883,65 @@ GLOBAL_LIST_EMPTY(chosen_names)
 		if(2) //OOC Preferences
 			used_title = "ooc"
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
-			dat += "<h2>OOC Settings</h2>"
-			dat += "<b>Window Flashing:</b> <a href='?_src_=prefs;preference=winflash'>[(windowflashing) ? "Enabled":"Disabled"]</a><br>"
+			dat += "<h2>OOC 设置</h2>"
+			dat += "<b>窗口闪烁提示:</b> <a href='?_src_=prefs;preference=winflash'>[(windowflashing) ? "开启":"关闭"]</a><br>"
 			dat += "<br>"
-			dat += "<b>Play Admin MIDIs:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Enabled":"Disabled"]</a><br>"
-			dat += "<b>Play Lobby Music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Enabled":"Disabled"]</a><br>"
-			dat += "<b>See Pull Requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(chat_toggles & CHAT_PULLR) ? "Enabled":"Disabled"]</a><br>"
+			dat += "<b>播放管理员 MIDI 音乐:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "开启":"关闭"]</a><br>"
+			dat += "<b>播放大厅音乐:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "开启":"关闭"]</a><br>"
+			dat += "<b>接收 Pull Requests 提示:</b> <a href='?_src_=prefs;preference=pull_requests'>[(chat_toggles & CHAT_PULLR) ? "开启":"关闭"]</a><br>"
 			dat += "<br>"
 
 
 			if(user.client)
 				if(unlock_content)
-					dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
+					dat += "<b>公开 BYOND 会员身份:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "公开" : "隐藏"]</a><br>"
 
 				if(unlock_content || check_rights_for(user.client, R_ADMIN))
-					dat += "<b>OOC Color:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : GLOB.normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
+					dat += "<b>OOC 文本颜色:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : GLOB.normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>更改</a><br>"
 
 			dat += "</td>"
 
 			if(user.client.holder)
 				dat +="<td width='300px' height='300px' valign='top'>"
 
-				dat += "<h2>Admin Settings</h2>"
+				dat += "<h2>管理员设置</h2>"
 
-				dat += "<b>Adminhelp Sounds:</b> <a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"Enabled":"Disabled"]</a><br>"
-				dat += "<b>Prayer Sounds:</b> <a href = '?_src_=prefs;preference=hear_prayers'>[(toggles & SOUND_PRAYERS)?"Enabled":"Disabled"]</a><br>"
-				dat += "<b>Announce Login:</b> <a href='?_src_=prefs;preference=announce_login'>[(toggles & ANNOUNCE_LOGIN)?"Enabled":"Disabled"]</a><br>"
+				dat += "<b>管理求助提示音 (Adminhelp):</b> <a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"开启":"关闭"]</a><br>"
+				dat += "<b>祈祷提示音 (Prayer):</b> <a href = '?_src_=prefs;preference=hear_prayers'>[(toggles & SOUND_PRAYERS)?"开启":"关闭"]</a><br>"
+				dat += "<b>上线公告提示:</b> <a href='?_src_=prefs;preference=announce_login'>[(toggles & ANNOUNCE_LOGIN)?"开启":"关闭"]</a><br>"
 				dat += "<br>"
-				dat += "<b>Combo HUD Lighting:</b> <a href = '?_src_=prefs;preference=combohud_lighting'>[(toggles & COMBOHUD_LIGHTING)?"Full-bright":"No Change"]</a><br>"
+				dat += "<b>全局组合 HUD 照明:</b> <a href = '?_src_=prefs;preference=combohud_lighting'>[(toggles & COMBOHUD_LIGHTING)?"全亮":"不改变"]</a><br>"
 				dat += "<br>"
-				dat += "<b>Hide Dead Chat:</b> <a href = '?_src_=prefs;preference=toggle_dead_chat'>[(chat_toggles & CHAT_DSAY)?"Shown":"Hidden"]</a><br>"
-				dat += "<b>Hide Radio Messages:</b> <a href = '?_src_=prefs;preference=toggle_radio_chatter'>[(chat_toggles & CHAT_RADIO)?"Shown":"Hidden"]</a><br>"
-				dat += "<b>Hide Prayers:</b> <a href = '?_src_=prefs;preference=toggle_prayers'>[(chat_toggles & CHAT_PRAYER)?"Shown":"Hidden"]</a><br>"
+				dat += "<b>隐藏死者聊天栏 (Dead Chat):</b> <a href = '?_src_=prefs;preference=toggle_dead_chat'>[(chat_toggles & CHAT_DSAY)?"显示":"隐藏"]</a><br>"
+				dat += "<b>隐藏无线电消息:</b> <a href = '?_src_=prefs;preference=toggle_radio_chatter'>[(chat_toggles & CHAT_RADIO)?"显示":"隐藏"]</a><br>"
+				dat += "<b>隐藏祈祷消息:</b> <a href = '?_src_=prefs;preference=toggle_prayers'>[(chat_toggles & CHAT_PRAYER)?"显示":"隐藏"]</a><br>"
 				if(CONFIG_GET(flag/allow_admin_asaycolor))
 					dat += "<br>"
-					dat += "<b>ASAY Color:</b> <span style='border: 1px solid #161616; background-color: [asaycolor ? asaycolor : "#FF4500"];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=asaycolor;task=input'>Change</a><br>"
+					dat += "<b>ASAY 颜色:</b> <span style='border: 1px solid #161616; background-color: [asaycolor ? asaycolor : "#FF4500"];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=asaycolor;task=input'>更改</a><br>"
 
 				//deadmin
-				dat += "<h2>Deadmin While Playing</h2>"
+				dat += "<h2>游玩时卸任管理</h2>"
 				if(CONFIG_GET(flag/auto_deadmin_players))
-					dat += "<b>Always Deadmin:</b> FORCED</a><br>"
+					dat += "<b>游玩时总是卸任:</b> 强制执行</a><br>"
 				else
-					dat += "<b>Always Deadmin:</b> <a href = '?_src_=prefs;preference=toggle_deadmin_always'>[(toggles & DEADMIN_ALWAYS)?"Enabled":"Disabled"]</a><br>"
+					dat += "<b>游玩时总是卸任:</b> <a href = '?_src_=prefs;preference=toggle_deadmin_always'>[(toggles & DEADMIN_ALWAYS)?"开启":"关闭"]</a><br>"
 					if(!(toggles & DEADMIN_ALWAYS))
 						dat += "<br>"
 						if(!CONFIG_GET(flag/auto_deadmin_antagonists))
-							dat += "<b>As Antag:</b> <a href = '?_src_=prefs;preference=toggle_deadmin_antag'>[(toggles & DEADMIN_ANTAGONIST)?"Deadmin":"Keep Admin"]</a><br>"
+							dat += "<b>作为反派时:</b> <a href = '?_src_=prefs;preference=toggle_deadmin_antag'>[(toggles & DEADMIN_ANTAGONIST)?"卸任管理":"保留管理"]</a><br>"
 						else
-							dat += "<b>As Antag:</b> FORCED<br>"
+							dat += "<b>作为反派时:</b> 强制执行<br>"
 
 						if(!CONFIG_GET(flag/auto_deadmin_heads))
-							dat += "<b>As Command:</b> <a href = '?_src_=prefs;preference=toggle_deadmin_head'>[(toggles & DEADMIN_POSITION_HEAD)?"Deadmin":"Keep Admin"]</a><br>"
+							dat += "<b>作为指挥官时:</b> <a href = '?_src_=prefs;preference=toggle_deadmin_head'>[(toggles & DEADMIN_POSITION_HEAD)?"卸任管理":"保留管理"]</a><br>"
 						else
-							dat += "<b>As Command:</b> FORCED<br>"
+							dat += "<b>作为指挥官时:</b> 强制执行<br>"
 
 				dat += "</td>"
 			dat += "</tr></table>"
 
 		if(3) // Custom keybindings
-			used_title = "Keybinds"
+			used_title = "键位绑定"
 			// Create an inverted list of keybindings -> key
 			var/list/user_binds = list()
 			for (var/key in key_bindings)
@@ -972,26 +972,26 @@ GLOBAL_LIST_EMPTY(chosen_names)
 							bound_key = user_binds[kb.name][bound_key_index]
 							dat += " | <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[bound_key]'>[bound_key]</a>"
 						if(length(user_binds[kb.name]) < MAX_KEYS_PER_KEYBIND)
-							dat += "| <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name]'>Add Secondary</a>"
+							dat += "| <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name]'>添加次要键位</a>"
 						var/list/default_keys = hotkeys ? kb.classic_keys : kb.hotkey_keys
 						if(LAZYLEN(default_keys))
-							dat += "| Default: [default_keys.Join(", ")]"
+							dat += "| 默认: [default_keys.Join(", ")]"
 						dat += "<br>"
 
 			dat += "<br><br>"
-			dat += "<a href ='?_src_=prefs;preference=keybinds;task=keybindings_set'>\[Reset to default\]</a>"
+			dat += "<a href ='?_src_=prefs;preference=keybinds;task=keybindings_set'>\[恢复默认值\]</a>"
 			dat += "</body>"
 
 
 	if(!IsGuestKey(user.key))
-		dat += "<a href='?_src_=prefs;preference=save'>Save</a><br>"
-		dat += "<a href='?_src_=prefs;preference=load'>Undo</a><br>"
+		dat += "<a href='?_src_=prefs;preference=save'>保存设置</a><br>"
+		dat += "<a href='?_src_=prefs;preference=load'>撤销更改</a><br>"
 
 	// well.... one empty slot here for something I suppose lol
 	dat += "<table width='100%'>"
 	dat += "<tr>"
 	dat += "<td width='33%' align='left'>"
-	dat += "<b>Ambient Occlusion:</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "Enabled" : "Disabled"]</a><br>"
+	dat += "<b>环境光遮蔽 (AO):</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "开启" : "关闭"]</a><br>"
 	dat += "</td>"
 	dat += "<td width='33%' align='center'>"
 	var/mob/dead/new_player/N = user
@@ -1000,25 +1000,25 @@ GLOBAL_LIST_EMPTY(chosen_names)
 		if(SSticker.current_state <= GAME_STATE_PREGAME)
 			switch(N.ready)
 				if(PLAYER_NOT_READY)
-					dat += "<b>UNREADY</b> <a href='byond://?src=[REF(N)];ready=[PLAYER_READY_TO_PLAY]'>READY</a>"
+					dat += "<b>未就绪</b> <a href='byond://?src=[REF(N)];ready=[PLAYER_READY_TO_PLAY]'>准备就绪</a>"
 				if(PLAYER_READY_TO_PLAY)
-					dat += "<a href='byond://?src=[REF(N)];ready=[PLAYER_NOT_READY]'>UNREADY</a> <b>READY</b>"
+					dat += "<a href='byond://?src=[REF(N)];ready=[PLAYER_NOT_READY]'>取消准备</a> <b>已就绪</b>"
 					log_game("([user || "NO KEY"]) readied as ([real_name])")
 		else
 			if(!is_active_migrant())
-				dat += "<a href='byond://?src=[REF(N)];late_join=1'>JOINLATE</a>"
+				dat += "<a href='byond://?src=[REF(N)];late_join=1'>局中加入</a>"
 			else
-				dat += "<a class='linkOff' href='byond://?src=[REF(N)];late_join=1'>JOINLATE</a>"
-			dat += " - <a href='?_src_=prefs;preference=migrants'>MIGRATION</a>"
-			dat += "<br><a href='?_src_=prefs;preference=manifest'>ACTORS</a>"
-			dat += " - <a href='?_src_=prefs;preference=observe'>SPECTATE</a>"
+				dat += "<a class='linkOff' href='byond://?src=[REF(N)];late_join=1'>局中加入</a>"
+			dat += " - <a href='?_src_=prefs;preference=migrants'>移民设置</a>"
+			dat += "<br><a href='?_src_=prefs;preference=manifest'>名单</a>"
+			dat += " - <a href='?_src_=prefs;preference=observe'>旁观比赛</a>"
 	else
-		dat += "<a href='?_src_=prefs;preference=finished'>DONE</a>"
+		dat += "<a href='?_src_=prefs;preference=finished'>完成</a>"
 
 	dat += "</td>"
 	dat += "<td width='33%' align='right'>"
-	dat += "<b>Be voice:</b> <a href='?_src_=prefs;preference=schizo_voice'>[(toggles & SCHIZO_VOICE) ? "Enabled":"Disabled"]</a>"
-	dat += "<br><b>Toggle Admin Sounds:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Enabled":"Disabled"]</a>"
+	dat += "<b>成为心之声:</b> <a href='?_src_=prefs;preference=schizo_voice'>[(toggles & SCHIZO_VOICE) ? "开启":"关闭"]</a>"
+	dat += "<br><b>切换管理员声音:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "开启":"关闭"]</a>"
 	dat += "</td>"
 	dat += "</tr>"
 	dat += "</table>"
@@ -1026,7 +1026,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 
 	if(user.client?.is_new_player())
-		dat = list("<center>REGISTER!</center>")
+		dat = list("<center>请注册！</center>")
 
 	winshow(user, "preferencess_window", TRUE)
 	winset(user, "preferencess_window", "size=820x850")
@@ -1043,7 +1043,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 /datum/preferences/proc/CaptureKeybinding(mob/user, datum/keybinding/kb, old_key)
 	var/HTML = {"
-	<div id='focus' style="outline: 0;" tabindex=0>Keybinding: [kb.full_name]<br>[kb.description]<br><br><b>Press any key to change<br>Press ESC to clear</b></div>
+	<div id='focus' style="outline: 0;" tabindex=0>按键绑定: [kb.full_name]<br>[kb.description]<br><br><b>按下任意键进行更改<br>按下 ESC 键清除当前绑定</b></div>
 	<script>
 	var deedDone = false;
 	document.onkeyup = function(e) {
@@ -1070,12 +1070,12 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	</script>
 	"}
 	winshow(user, "capturekeypress", TRUE)
-	var/datum/browser/noclose/popup = new(user, "capturekeypress", "<div align='center'>Keybindings</div>", 350, 300)
+	var/datum/browser/noclose/popup = new(user, "capturekeypress", "<div align='center'>按键绑定</div>", 350, 300)
 	popup.set_content(HTML)
 	popup.open(FALSE)
 	onclose(user, "capturekeypress", src)
 
-/datum/preferences/proc/SetChoices(mob/user, limit = 14, list/splitJobs = list("Court Magician", "Knight Captain", "Bishop", "Merchant", "Archivist", "Towner", "Grenzelhoft Mercenary", "Beggar", "Prisoner", "Goblin King"), widthPerColumn = 295, height = 620) //295 620
+/datum/preferences/proc/SetChoices(mob/user, limit = 14, list/splitJobs = list("宫廷法师", "骑士团长", "主教", "商人", "档案保管员", "镇民", "格伦泽霍夫雇佣兵", "乞丐", "囚犯", "地精王"), widthPerColumn = 295, height = 620) //295 620
 	if(!SSjob)
 		return
 
@@ -1089,16 +1089,16 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/HTML = "<center>"
 	if(SSjob.occupations.len <= 0)
 //		HTML += "The job SSticker is not yet finished creating jobs, please try again later"
-		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>" // Easier to press up here.
+		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>完成</a></center><br>" // Easier to press up here.
 
 	else
 //		HTML += "<b>Choose class preferences</b><br>"
 //		HTML += "<div align='center'>Left-click to raise a class preference, right-click to lower it.<br></div>"
-		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center>" // Easier to press up here.
+		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>完成</a></center>" // Easier to press up here.
 		if(joblessrole != RETURNTOLOBBY && joblessrole != BERANDOMJOB) // this is to catch those that used the previous definition and reset.
 			joblessrole = RETURNTOLOBBY
-		HTML += "<i>Click on an unlocked Class to get more information</i><br>"
-		HTML += "<b>If Role Unavailable:</b><font color='purple'><a href='?_src_=prefs;preference=job;task=nojob'>[joblessrole]</a></font><BR>"
+		HTML += "<i>点击已解锁的职业获取更多信息</i><br>"
+		HTML += "<b>若该角色不可用:</b><font color='purple'><a href='?_src_=prefs;preference=job;task=nojob'>[joblessrole]</a></font><BR>"
 		HTML += "<script type='text/javascript'>function setJobPrefRedirect(level, rank) { window.location.href='?_src_=prefs;preference=job;task=setJobLevel;level=' + level + ';text=' + encodeURIComponent(rank); return false; }</script>"
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
@@ -1132,23 +1132,23 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				used_name = "[job.f_title]"
 			lastJob = job
 			if(is_banned_from(user.ckey, rank))
-				HTML += "[used_name]</td> <td><a href='?_src_=prefs;bancheck=[rank]'> BANNED</a></td></tr>"
+				HTML += "[used_name]</td> <td><a href='?_src_=prefs;bancheck=[rank]'> 已被封禁</a></td></tr>"
 				continue
 			var/required_playtime_remaining = job.required_playtime_remaining(user.client)
 			if(required_playtime_remaining)
-				HTML += "[used_name]</td> <td><font color=red> \[ [get_exp_format(required_playtime_remaining)] as [job.get_exp_req_type()] \] </font></td></tr>"
+				HTML += "[used_name]</td> <td><font color=red> \[ 还需要作为 [job.get_exp_req_type()] 游玩 [get_exp_format(required_playtime_remaining)] \] </font></td></tr>"
 				continue
 			if(!job.player_old_enough(user.client))
 				var/available_in_days = job.available_in_days(user.client)
-				HTML += "[used_name]</td> <td><font color=red> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
+				HTML += "[used_name]</td> <td><font color=red> \[[available_in_days] 天后可用\]</font></td></tr>"
 				continue
 			#ifdef USES_PQ
 			if(!job.required && !isnull(job.min_pq) && (get_playerquality(user.ckey) < job.min_pq))
-				HTML += "<font color=#a59461>[used_name] (Min PQ: [job.min_pq])</font></td> <td> </td></tr>"
+				HTML += "<font color=#a59461>[used_name] (最低 PQ 限制: [job.min_pq])</font></td> <td> </td></tr>"
 				continue
 			#endif
 			if(!job.required && !isnull(job.max_pq) && (get_playerquality(user.ckey) > job.max_pq))
-				HTML += "<font color=#a59461>[used_name] (Max PQ: [job.max_pq])</font></td> <td> </td></tr>"
+				HTML += "<font color=#a59461>[used_name] (最高 PQ 限制: [job.max_pq])</font></td> <td> </td></tr>"
 				continue
 			if(length(job.virtue_restrictions) && length(job.vice_restrictions))
 				var/name
@@ -1169,7 +1169,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 						else
 							name = vice.name
 				if(!isnull(name))
-					HTML += "<font color='#a561a5'>[used_name] (Disallowed by Virtues / Vice: [name])</font></td> <td> </td></tr>"
+					HTML += "<font color='#a561a5'>[used_name] (因美德/恶习冲突而被禁止: [name])</font></td> <td> </td></tr>"
 			if(length(job.virtue_restrictions))
 				var/name
 				if(virtue.type in job.virtue_restrictions)
@@ -1181,7 +1181,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 					else
 						name = virtuetwo.name
 				if(!isnull(name))
-					HTML += "<font color='#a59461'>[used_name] (Disallowed by Virtue: [name])</font></td> <td> </td></tr>"
+					HTML += "<font color='#a59461'>[used_name] (因美德冲突而被禁止: [name])</font></td> <td> </td></tr>"
 					continue
 			if(length(job.vice_restrictions))
 				var/list/restricted_vices = list()
@@ -1190,7 +1190,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 					if(vice?.type in job.vice_restrictions)
 						restricted_vices += vice.name
 				if(length(restricted_vices))
-					HTML += "<font color='#a56161'>[used_name] (Disallowed by Vice: [restricted_vices.Join(", ")])</font></td> <td> </td></tr>"
+					HTML += "<font color='#a56161'>[used_name] (因恶习冲突而被禁止: [restricted_vices.Join(", ")])</font></td> <td> </td></tr>"
 					continue
 			var/job_unavailable = JOB_AVAILABLE
 			if(isnewplayer(parent?.mob))
@@ -1264,7 +1264,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 			switch(job_preferences[job.title])
 				if(JP_HIGH)
-					prefLevelLabel = "High"
+					prefLevelLabel = "高"
 					prefLevelColor = "slateblue"
 					prefUpperLevel = 4
 					prefLowerLevel = 2
@@ -1272,17 +1272,17 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					if(istype(P))
 						P.topjob = job.title
 				if(JP_MEDIUM)
-					prefLevelLabel = "Medium"
+					prefLevelLabel = "中"
 					prefLevelColor = "green"
 					prefUpperLevel = 1
 					prefLowerLevel = 3
 				if(JP_LOW)
-					prefLevelLabel = "Low"
+					prefLevelLabel = "低"
 					prefLevelColor = "orange"
 					prefUpperLevel = 2
 					prefLowerLevel = 4
 				else
-					prefLevelLabel = "NEVER"
+					prefLevelLabel = "无"
 					prefLevelColor = "red"
 					prefUpperLevel = 3
 					prefLowerLevel = 1
@@ -1313,12 +1313,12 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 //			message = "Return to lobby if preferences unavailable"
 //		HTML += "<center><br><a href='?_src_=prefs;preference=job;task=random'>[message]</a></center>"
 		if(user.client.prefs.lastclass)
-			HTML += "<center><a href='?_src_=prefs;preference=job;task=triumphthing'>PLAY AS [user.client.prefs.lastclass] AGAIN</a></center>"
+			HTML += "<center><a href='?_src_=prefs;preference=job;task=triumphthing'>再次以 [user.client.prefs.lastclass] 游玩</a></center>"
 		else
 			HTML += "<br>"
-		HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>Reset</a></center>"
+		HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>重置</a></center>"
 
-	var/datum/browser/noclose/popup = new(user, "mob_occupation", "<div align='center'>Class Selection</div>", width, height)
+	var/datum/browser/noclose/popup = new(user, "mob_occupation", "<div align='center'>职业选择</div>", width, height)
 	popup.set_window_options("can_close=0")
 	popup.set_content(HTML)
 	popup.open(FALSE)
@@ -1369,7 +1369,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 			var/used_name = job.display_title || job.title
 			if((pronouns == SHE_HER || pronouns == THEY_THEM_F) && job.f_title)
 				used_name = "[job.f_title]"
-			to_chat(user, "<font color='red'>You have too low PQ for [used_name] (Min PQ: [job.min_pq]), you may only set it to low.</font>")
+			to_chat(user, "<font color='red'>你的 PQ 对于 [used_name] 来说太低（最低 PQ：[job.min_pq]），你只能将其设为低。</font>")
 			jpval = JP_LOW
 	#endif
 
@@ -1386,15 +1386,15 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	if(user.client?.prefs)
 		if(!user.client.prefs.lastclass)
 			return
-	var/choice = tgalert(user, "Use 2 Triumphs to play as this class again?", "Reset LastPlayed", "Do It", "Cancel")
-	if(choice == "Cancel")
+	var/choice = tgalert(user, "使用 2 胜利点再次以该职业游玩？", "重置上次职业", "确认", "取消")
+	if(choice == "取消")
 		return
 	if(!choice)
 		return
 	if(user.client?.prefs)
 		if(user.client.prefs.lastclass)
 			if(user.get_triumphs() < 2)
-				to_chat(user, span_warning("I haven't TRIUMPHED enough."))
+				to_chat(user, span_warning("我的胜利点不足。"))
 				return
 			user.adjust_triumphs(-2)
 			user.client.prefs.lastclass = null
@@ -1419,12 +1419,12 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	dat += "<style>label { display: inline-block; width: 200px; }</style><body>"
 
-	dat += "<center><a href='?_src_=prefs;preference=keybinds;task=close;return_to_prefs=[return_flag]'>Done</a></center><br>"
+	dat += "<center><a href='?_src_=prefs;preference=keybinds;task=close;return_to_prefs=[return_flag]'>完成</a></center><br>"
 	for (var/category in kb_categories)
 		for (var/i in kb_categories[category])
 			var/datum/keybinding/kb = i
 			if(!length(user_binds[kb.name]))
-				dat += "<label>[kb.full_name]</label> <a href ='?_src_=prefs;preference=keybinds;task=keybindings_capture;keybinding=[kb.name];old_key=["Unbound"]'>Unbound</a>"
+				dat += "<label>[kb.full_name]</label> <a href ='?_src_=prefs;preference=keybinds;task=keybindings_capture;keybinding=[kb.name];old_key=["未绑定"]'>未绑定</a>"
 //						var/list/default_keys = hotkeys ? kb.hotkey_keys : kb.classic_keys
 //						if(LAZYLEN(default_keys))
 //							dat += "| Default: [default_keys.Join(", ")]"
@@ -1436,14 +1436,14 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					bound_key = user_binds[kb.name][bound_key_index]
 					dat += " | <a href ='?_src_=prefs;preference=keybinds;task=keybindings_capture;keybinding=[kb.name];old_key=[bound_key]'>[bound_key]</a>"
 				if(length(user_binds[kb.name]) < MAX_KEYS_PER_KEYBIND)
-					dat += "| <a href ='?_src_=prefs;preference=keybinds;task=keybindings_capture;keybinding=[kb.name]'>Add Secondary</a>"
+					dat += "| <a href ='?_src_=prefs;preference=keybinds;task=keybindings_capture;keybinding=[kb.name]'>添加副键</a>"
 				dat += "<br>"
 
 	dat += "<br><br>"
-	dat += "<a href ='?_src_=prefs;preference=keybinds;task=keybindings_reset'>\[Reset to default\]</a>"
+	dat += "<a href ='?_src_=prefs;preference=keybinds;task=keybindings_reset'>\[重置为默认\]</a>"
 	dat += "</body>"
 
-	var/datum/browser/noclose/popup = new(user, "keybind_setup", "<div align='center'>Keybinds</div>", 600, 600) //no reason not to reuse the occupation window, as it's cleaner that way
+	var/datum/browser/noclose/popup = new(user, "keybind_setup", "<div align='center'>按键绑定</div>", 600, 600) //no reason not to reuse the occupation window, as it's cleaner that way
 	popup.set_window_options("can_close=0")
 	popup.set_content(dat.Join())
 	popup.open(FALSE)
@@ -1453,31 +1453,31 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	dat += "<style>label { display: inline-block; width: 200px; }</style><body>"
 
-	dat += "<center><a href='?_src_=prefs;preference=antag;task=close'>Done</a></center><br>"
+	dat += "<center><a href='?_src_=prefs;preference=antag;task=close'>完成</a></center><br>"
 
 
 	if(is_banned_from(user.ckey, ROLE_SYNDICATE))
-		dat += "<font color=red><b>I am banned from antagonist roles.</b></font><br>"
+		dat += "<font color=red><b>我被禁止担任反派角色。</b></font><br>"
 		src.be_special = list()
 
 
 	for (var/i in GLOB.special_roles_rogue)
 		if(is_banned_from(user.ckey, i))
-			dat += "<b>[capitalize(i)]:</b> <a href='?_src_=prefs;bancheck=[i]'>BANNED</a><br>"
+			dat += "<b>[capitalize(i)]:</b> <a href='?_src_=prefs;bancheck=[i]'>已封禁</a><br>"
 		else
 			var/days_remaining = null
 			if(ispath(GLOB.special_roles_rogue[i]) && CONFIG_GET(flag/use_age_restriction_for_jobs)) //If it's a game mode antag, check if the player meets the minimum age
 				days_remaining = get_remaining_days(user.client)
 
 			if(days_remaining)
-				dat += "<b>[capitalize(i)]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
+				dat += "<b>[capitalize(i)]:</b> <font color=red> \[剩余 [days_remaining] 天]</font><br>"
 			else
-				dat += "<b>[capitalize(i)]:</b> <a href='?_src_=prefs;preference=antag;task=be_special;be_special_type=[i]'>[(i in be_special) ? "Enabled" : "Disabled"]</a><br>"
+				dat += "<b>[capitalize(i)]:</b> <a href='?_src_=prefs;preference=antag;task=be_special;be_special_type=[i]'>[(i in be_special) ? "启用" : "禁用"]</a><br>"
 
 
 	dat += "</body>"
 
-	var/datum/browser/noclose/popup = new(user, "antag_setup", "<div align='center'>Special Role</div>", 250, 300) //no reason not to reuse the occupation window, as it's cleaner that way
+	var/datum/browser/noclose/popup = new(user, "antag_setup", "<div align='center'>特殊角色</div>", 250, 300) //no reason not to reuse the occupation window, as it's cleaner that way
 	popup.set_window_options("can_close=0")
 	popup.set_content(dat.Join())
 	popup.open(FALSE)
@@ -1511,10 +1511,10 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 			ban_details = i
 			break //we only want to get the most recent ban's details
 		if(ban_details && ban_details.len)
-			var/expires = "This is a permanent ban."
+			var/expires = "这是永久封禁。"
 			if(ban_details["expiration_time"])
-				expires = " The ban is for [DisplayTimeText(text2num(ban_details["duration"]) MINUTES)] and expires on [ban_details["expiration_time"]] (server time)."
-			to_chat(user, span_danger("You, or another user of this computer or connection ([ban_details["key"]]) is banned from playing [href_list["bancheck"]].<br>The ban reason is: [ban_details["reason"]]<br>This ban (BanID #[ban_details["id"]]) was applied by [ban_details["admin_key"]] on [ban_details["bantime"]] during round ID [ban_details["round_id"]].<br>[expires]"))
+				expires = " 封禁时长为 [DisplayTimeText(text2num(ban_details["duration"]) MINUTES)]，过期时间为 [ban_details["expiration_time"]]（服务器时间）。"
+			to_chat(user, span_danger("您或此电脑/连接的其他用户（[ban_details["key"]]）被禁止扮演 [href_list["bancheck"]]。<br>封禁原因：[ban_details["reason"]]<br>此封禁（封禁ID #[ban_details["id"]]）由 [ban_details["admin_key"]] 于 [ban_details["bantime"]] 在游戏轮次 ID [ban_details["round_id"]] 中执行。<br>[expires]"))
 			return
 	if(href_list["preference"] == "job")
 		switch(href_list["task"])
@@ -1585,9 +1585,9 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	else if(href_list["preference"] == "agevet")
 		if(!user.check_agevet())
-			to_chat(usr, span_info("- You are a whitelisted player with full access to the server's features. If you'd also like to show others that you've been <b>AGE-VERIFIED</b> with a censored ID, you can open a ticket in Azure Peak's <b>#vet-here</b> channel. Note that this is a purely optional process, and - besides awarding a special header for your flavortext - doesn't affect you in any other way."))
+			to_chat(usr, span_info("- 您是白名单玩家，可完全访问服务器的所有功能。如果您也想向他人展示您已通过<b>年龄验证</b>（使用经过遮挡的身份证明），可以在 Azure Peak 的 <b>#vet-here</b> 频道提交工单。请注意，这是一个完全可选的过程，除了为您的风味文本添加特殊标题外，不会以任何其他方式影响您。"))
 		else
-			to_chat(usr, span_love("- You have been successfully <b>AGE-VERIFIED!</b>"))
+			to_chat(usr, span_love("- 您已成功<b>通过年龄验证！</b>"))
 
 	else if(href_list["preference"] == "culinary")
 		show_culinary_ui(user)
@@ -1682,11 +1682,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 				SetKeybinds(user)
 
 			if("keybindings_reset")
-				var/choice = tgalert(user, "Do you really want to reset your keybindings?", "Setup keybindings", "Do It", "Cancel")
-				if(choice == "Cancel")
+				var/choice = tgalert(user, "您真的想要重置按键绑定吗？", "设置按键绑定", "确认", "取消")
+				if(choice == "取消")
 					SetKeybinds(user)
 					return
-				hotkeys = (choice == "Do It")
+				hotkeys = (choice == "确认")
 				key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
 				user.client.update_movement_keys()
 				SetKeybinds(user)
@@ -1741,17 +1741,17 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 			switch(href_list["preference"])
 				if("ghostform")
 					if(unlock_content)
-						var/new_form = input(user, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in GLOB.ghost_forms
+						var/new_form = input(user, "感谢支持 BYOND - 选择您的幽灵形态：","感谢支持 BYOND",null) as null|anything in GLOB.ghost_forms
 						if(new_form)
 							ghost_form = new_form
 				if("ghostorbit")
 					if(unlock_content)
-						var/new_orbit = input(user, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND", null) as null|anything in GLOB.ghost_orbits
+						var/new_orbit = input(user, "感谢支持 BYOND - 选择您的幽灵轨道：","感谢支持 BYOND", null) as null|anything in GLOB.ghost_orbits
 						if(new_orbit)
 							ghost_orbit = new_orbit
 
 				if("ghostaccs")
-					var/new_ghost_accs = alert("Do you want your ghost to show full accessories where possible, hide accessories but still use the directional sprites where possible, or also ignore the directions and stick to the default sprites?",,GHOST_ACCS_FULL_NAME, GHOST_ACCS_DIR_NAME, GHOST_ACCS_NONE_NAME)
+					var/new_ghost_accs = alert("您希望您的幽灵在可能的情况下显示完整饰品，隐藏饰品但仍使用方向精灵（如果可能），还是忽略方向并坚持使用默认精灵？",,GHOST_ACCS_FULL_NAME, GHOST_ACCS_DIR_NAME, GHOST_ACCS_NONE_NAME)
 					switch(new_ghost_accs)
 						if(GHOST_ACCS_FULL_NAME)
 							ghost_accs = GHOST_ACCS_FULL
@@ -1761,7 +1761,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 							ghost_accs = GHOST_ACCS_NONE
 
 				if("ghostothers")
-					var/new_ghost_others = alert("Do you want the ghosts of others to show up as their own setting, as their default sprites or always as the default white ghost?",,GHOST_OTHERS_THEIR_SETTING_NAME, GHOST_OTHERS_DEFAULT_SPRITE_NAME, GHOST_OTHERS_SIMPLE_NAME)
+					var/new_ghost_others = alert("您希望其他人的幽灵按照他们自己的设置显示，作为他们的默认精灵，还是始终显示为默认的白色幽灵？",,GHOST_OTHERS_THEIR_SETTING_NAME, GHOST_OTHERS_DEFAULT_SPRITE_NAME, GHOST_OTHERS_SIMPLE_NAME)
 					switch(new_ghost_others)
 						if(GHOST_OTHERS_THEIR_SETTING_NAME)
 							ghost_others = GHOST_OTHERS_THEIR_SETTING
@@ -1771,39 +1771,39 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 							ghost_others = GHOST_OTHERS_SIMPLE
 
 				if("name")
-					var/new_name = tgui_input_text(user, "The name of this vessel?", "IDENTITY", real_name, encode = FALSE)
+					var/new_name = tgui_input_text(user, "此容器的名称？", "身份", real_name, encode = FALSE)
 					if(new_name)
 						new_name = reject_bad_name(new_name)
 						if(new_name)
 							real_name = new_name
 						else
-							to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ', . and ,.</font>")
+							to_chat(user, "<font color='red'>无效名称。名称长度应为2到[MAX_NAME_LEN]个字符，只能包含 A-Z, a-z, -, ', . 和 ,。</font>")
 
 				if("nickname")
-					var/new_name = tgui_input_text(user, "Choose your character's nickname (For Highlighting):", "NICKNAME", nickname, encode = FALSE)
+					var/new_name = tgui_input_text(user, "选择您角色的昵称（用于高亮）：", "昵称", nickname, encode = FALSE)
 					if(new_name)
 						new_name = reject_bad_name(new_name)
 						if(new_name)
 							nickname = new_name
 						else
-							to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ', . and ,.</font>")
+							to_chat(user, "<font color='red'>无效名称。名称长度应为2到[MAX_NAME_LEN]个字符，只能包含 A-Z, a-z, -, ', . 和 ,。</font>")
 
 				if("subclassoutfit")
-					var/list/choices = list("None")
+					var/list/choices = list("无")
 					var/datum/job/highest_pref
 					for(var/job in job_preferences)
 						if(job_preferences[job] > highest_pref)
 							highest_pref = SSjob.GetJob(job)
 					if(isnull(highest_pref))
-						to_chat(user, "<b>I don't have a Class set to High!</b>")
+						to_chat(user, "<b>我没有将任何职业设为高！</b>")
 					if(length(highest_pref.job_subclasses))
 						for(var/adv in highest_pref.job_subclasses)
 							var/datum/advclass/advpath = adv
 							var/datum/advclass/advref = SSrole_class_handler.get_advclass_by_name(initial(advpath.name))
 							choices[advref.name] = advref
 					if(length(choices))
-						var/new_choice = input(user, "Choose an outfit preview:", "Outfit Preview")  as anything in choices|null
-						if(new_choice && new_choice != "None")
+						var/new_choice = input(user, "选择装备预览：", "装备预览")  as anything in choices|null
+						if(new_choice && new_choice != "无")
 							preview_subclass = choices[new_choice]
 							update_preview_icon()
 						else
@@ -1816,7 +1816,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 //						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 				if("age")
-					var/new_age = tgui_input_list(user, "Choose your character's age (18-[pref_species.max_age])", "YILS LIVED", pref_species.possible_ages)
+					var/new_age = tgui_input_list(user, "选择您角色的年龄（18-[pref_species.max_age]）", "已活年数", pref_species.possible_ages)
 					if(new_age)
 						age = new_age
 						var/list/hairs
@@ -1829,15 +1829,15 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						// LETHALSTONE EDIT: let players know what this shit does stats-wise
 						switch (age)
 							if (AGE_ADULT)
-								to_chat(user, "You preside in your 'prime', whatever this may be, and gain no bonus nor endure any penalty for your time spent alive.")
+								to_chat(user, "您处于“壮年”时期，无论这意味着什么，您的存活时间既不会带来加成也不会带来惩罚。")
 							if (AGE_MIDDLEAGED)
-								to_chat(user, "Muscles ache and joints begin to slow as Aeon's grasp begins to settle upon your shoulders. (-1 SPD, +1 WIL)")
+								to_chat(user, "肌肉酸痛，关节开始迟缓，永生的魔爪开始落在您的肩上。（-1 速度，+1 意志）")
 							if (AGE_OLD)
-								to_chat(user, "In a place as lethal as PSYDONIA, the elderly are all but marvels... or beneficiaries of the habitually privileged. (-1 STR, -2 SPE, -1 PER, -2 CON, +2 INT, +1 FOR)")
+								to_chat(user, "在像 PSYDONIA 这样致命的地方，老年人堪称奇迹……或者是惯常特权阶层的受益者。（-1 力量，-2 速度，-1 感知，-2 体质，+2 智力，+1 坚韧）")
 						// LETHALSTONE EDIT END
 						ResetJobs()
 						family = FAMILY_NONE
-						to_chat(user, "<font color='red'>Classes reset.</font>")
+						to_chat(user, "<font color='red'>职业已重置。</font>")
 
 				if("map_preference")
 					var/list/available_maps = list("Default")
@@ -1858,56 +1858,56 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					return
 				// LETHALSTONE EDIT: add pronouns
 				if ("pronouns")
-					var pronouns_input = tgui_input_list(user, "Choose your character's pronouns", "PRONOUNS", GLOB.pronouns_list)
+					var pronouns_input = tgui_input_list(user, "选择您角色的人称代词", "人称代词", GLOB.pronouns_list)
 					if(pronouns_input)
 						pronouns = pronouns_input
 						ResetJobs()
-						to_chat(user, "<font color='red'>Your character's pronouns are now [pronouns].</font>")
-						to_chat(user, "<font color='red'><b>Your classes have been reset.</b></font>")
+						to_chat(user, "<font color='red'>您角色的人称代词现在为 [pronouns]。</font>")
+						to_chat(user, "<font color='red'><b>您的职业已重置。</b></font>")
 
 				// LETHALSTONE EDIT: add voice type selection
 				if ("voicetype")
-					var voicetype_input = tgui_input_list(user, "Choose your character's voice type", "VOICE TYPE", GLOB.voice_types_list)
+					var voicetype_input = tgui_input_list(user, "选择您角色的语音类型", "语音类型", GLOB.voice_types_list)
 					if(voicetype_input)
 						voice_type = voicetype_input
-						to_chat(user, "<font color='red'>Your character will now vocalize with a [LOWER_TEXT(voice_type)] affect.</font>")
+						to_chat(user, "<font color='red'>您的角色现在将以 [LOWER_TEXT(voice_type)] 的效果发声。</font>")
 
 				if ("voicepack")
-					var/voicepack_input = tgui_input_list(user, "Choose your character's emote voice pack", "VOICE PACK", GLOB.voice_packs_list)
+					var/voicepack_input = tgui_input_list(user, "选择您角色的表情语音包", "语音包", GLOB.voice_packs_list)
 					if(voicepack_input)
 						voice_pack = voicepack_input
 						if(voicepack_input != "Default")
-							to_chat(user, span_red("<font color='red'>Your character will now audibly emote with a [LOWER_TEXT(voicepack_input)] affect.") + span_notice("<br>This will override your Voice Identity and Class-specific voice packs.</font>"))
+							to_chat(user, span_red("<font color='red'>您的角色现在将以 [LOWER_TEXT(voicepack_input)] 的效果发出有声表情。") + span_notice("<br>这将覆盖您的语音身份和职业特定的语音包。</font>"))
 						else
-							to_chat(user, "<font color='red'>Your character will now audibly emote in accordance to their Voice Identity and any Racial / Class-specific voice packs.</font>")
+							to_chat(user, "<font color='red'>您的角色现在将根据其语音身份以及任何种族/职业特定的语音包发出有声表情。</font>")
 
 				if("taur_type")
 					var/list/species_taur_list = pref_species.get_taur_list()
 					if(!LAZYLEN(species_taur_list))
 						taur_type = null
-						to_chat(user, span_bad("There are no available taur bodies for this species."))
+						to_chat(user, span_bad("该物种没有可用的半人马躯体。"))
 						return
 
 					var/list/taur_selection
 					if(pref_species.forced_taur)
 						taur_selection = list()
 					else
-						taur_selection = list("None")
+						taur_selection = list("无")
 
 					for(var/obj/item/bodypart/taur/tt as anything in pref_species.get_taur_list())
 						taur_selection[tt::name] = tt
 
-					var/new_taur_type = tgui_input_list(user, "Choose your character's taur body", "TAUR BODY", taur_selection)
+					var/new_taur_type = tgui_input_list(user, "选择您角色的半人马躯体", "半人马躯体", taur_selection)
 					if(!new_taur_type)
 						return
 
-					if(new_taur_type == "None")
+					if(new_taur_type == "无")
 						taur_type = null
 					else
 						taur_type = taur_selection[new_taur_type]
 
 					var/obj/item/bodypart/taur/tt = taur_type
-					to_chat(user, span_red("Your character now has [tt ? tt::name : "no taurtype."]."))
+					to_chat(user, span_red("您的角色现在拥有 [tt ? tt::name : "没有半人马类型"]。"))
 
 				if("origin")
 					open_origin_map(user)
@@ -1920,12 +1920,12 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						if(!faith.name)
 							continue
 						faiths_named[faith.name] = faith
-					var/faith_input = tgui_input_list(user, "The world rots. Which truth you bear?", "FAITH", faiths_named)
+					var/faith_input = tgui_input_list(user, "世界正在腐烂。您信奉何种真理？", "信仰", faiths_named)
 					if(faith_input)
 						var/datum/faith/faith = faiths_named[faith_input]
-						to_chat(user, "<font color='yellow'>Faith: [faith.name]</font>")
-						to_chat(user, "Background: [faith.desc]")
-						to_chat(user, "<font color='purple'>Likely Worshippers: [faith.worshippers]</font>")
+						to_chat(user, "<font color='yellow'>信仰：[faith.name]</font>")
+						to_chat(user, "背景：[faith.desc]")
+						to_chat(user, "<font color='purple'>可能的信徒：[faith.worshippers]</font>")
 						selected_patron = GLOB.patronlist[faith.godhead] || GLOB.patronlist[pick(GLOB.patrons_by_faith[faith_input])]
 
 				if("patron")
@@ -1937,49 +1937,49 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						if(patron.disabled_patron)
 							continue
 						patrons_named[patron.name] = patron
-					var/god_input = tgui_input_list(user, "The first amongst many.", "PATRON", patrons_named)
+					var/god_input = tgui_input_list(user, "众神之首。", "主神", patrons_named)
 					if(god_input)
 						selected_patron = patrons_named[god_input]
-						to_chat(user, "<font color='yellow'>Patron: [selected_patron]</font>")
-						to_chat(user, "<font color='#FFA500'>Domain: [selected_patron.domain]</font>")
-						to_chat(user, "Background: [selected_patron.desc]")
-						to_chat(user, "<font color='purple'>Likely Worshippers: [selected_patron.worshippers]</font>")
-						to_chat(user, "<font color='white'>Considers these to be VIRTUES: [selected_patron.virtues]</font>")
-						to_chat(user, "<font color='red'>Considers these to be SINS: [selected_patron.sins]</font>")
+						to_chat(user, "<font color='yellow'>主神：[selected_patron]</font>")
+						to_chat(user, "<font color='#FFA500'>领域：[selected_patron.domain]</font>")
+						to_chat(user, "背景：[selected_patron.desc]")
+						to_chat(user, "<font color='purple'>可能的信徒：[selected_patron.worshippers]</font>")
+						to_chat(user, "<font color='white'>视为美德：[selected_patron.virtues]</font>")
+						to_chat(user, "<font color='red'>视为罪恶：[selected_patron.sins]</font>")
 
 				if("combat_music") // if u change shit here look at /client/verb/combat_music() too
 					if(!combat_music_helptext_shown)
-						to_chat(user, span_notice("<span class='bold'>Combat Music Override</span>\n") + \
-						"Options other than \"Default\" override whatever the game dynamically sets for you, \
-						which is influenced by your job class, villain status, or certain events.\n\
-						You can change this later through \"Combat Mode Music\" in the Options tab.\"</span>")
+						to_chat(user, span_notice("<span class='bold'>战斗音乐覆盖</span>\n") + \
+						"“默认”以外的选项将覆盖游戏动态为您设置的音乐， \
+						该音乐受您的职业、反派状态或某些事件影响。\n\
+						您可以稍后通过选项选项卡中的“战斗模式音乐”进行更改。\"</span>")
 						combat_music_helptext_shown = TRUE
 					var/client/C = user?.client
 					if(!C)
 						return
 					var/datum/combat_music/selected_track = C.pick_combat_music_with_listen(
-						"To you, the Signal sounds like:",
-						"COMBAT MUSIC",
+						"对您而言，信号听起来像：",
+						"战斗音乐",
 						combat_music?.name,
 					)
 					if(selected_track)
 						combat_music = selected_track
-						to_chat(user, span_notice("Selected track: <b>[selected_track.name]</b>."))
+						to_chat(user, span_notice("已选择曲目： <b>[selected_track.name]</b>."))
 						if(combat_music.desc)
 							to_chat(user, "<i>[combat_music.desc]</i>")
 						if(combat_music.credits)
-							to_chat(user, span_info("Song name: <b>[combat_music.credits]</b>"))
+							to_chat(user, span_info("歌曲名称：<b>[combat_music.credits]</b>"))
 
 				if("bdetail")
-					var/list/loly = list("Not yet.","Work in progress.","Don't click me.","Stop clicking this.","Nope.","Be patient.","Sooner or later.")
+					var/list/loly = list("还没有。","施工中。","别点我。","别再点了。","不。","耐心点。","迟早的事。")
 					to_chat(user, "<font color='red'>[pick(loly)]</font>")
 					return
 
 				if("voice")
-					var/new_voice = input(user, "Choose your character's voice color:", "Character Preference","#"+voice_color) as color|null
+					var/new_voice = input(user, "选择您角色的语音颜色：", "角色偏好","#"+voice_color) as color|null
 					if(new_voice)
 						if(color_hex2num(new_voice) < 230)
-							to_chat(user, "<font color='red'>This voice color is too dark for mortals.</font>")
+							to_chat(user, "<font color='red'>这种语音颜色对凡人来说太暗了。</font>")
 							return
 						voice_color = sanitize_hexcolor(new_voice)
 
@@ -2001,16 +2001,16 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						/datum/language/aavnic,
 						/datum/language/merar
 					)
-					var/list/choices = list("None")
+					var/list/choices = list("无")
 					for(var/language in selectable_languages)
 						if(language in pref_species.languages)
 							continue
 						var/datum/language/a_language = new language()
 						choices[a_language.name] = language
 
-					var/chosen_language = tgui_input_list(user, "Choose your character's extra language:", "EXTRA LANGUAGE", choices)
+					var/chosen_language = tgui_input_list(user, "选择您角色的额外语言：", "额外语言", choices)
 					if(chosen_language)
-						if(chosen_language == "None")
+						if(chosen_language == "无")
 							extra_language = "None"
 						else
 							extra_language = choices[chosen_language]
@@ -2018,25 +2018,25 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 				if("race_title")
 					var/list/titles = pref_species.race_titles
-					var/list/choices = list("None")
+					var/list/choices = list("无")
 					for(var/A in titles)
 						if(A == pref_species.languages)
 							continue
 						choices += list(A)
 					if(user?.client)
-						var/result = tgui_input_list(user, "What do they call your kind?", "RACE TITLE", choices)
+						var/result = tgui_input_list(user, "您的同类如何称呼您？", "种族称号", choices)
 
 						if(result)
-							if(result == "None")
+							if(result == "无")
 								selected_title = "None"
 							else
 								selected_title = result
 
 				if("voice_pitch")
-					var/new_voice_pitch = tgui_input_number(user, "Choose your character's voice pitch ([MIN_VOICE_PITCH] to [MAX_VOICE_PITCH], lower is deeper):", "Voice Pitch", 1, 1.35, 0.8, round_value = FALSE)
+					var/new_voice_pitch = tgui_input_number(user, "选择您角色的语音音调（[MIN_VOICE_PITCH] 到 [MAX_VOICE_PITCH]，数值越低越深沉）：", "语音音调", 1, 1.35, 0.8, round_value = FALSE)
 					if(new_voice_pitch)
 						if(new_voice_pitch < MIN_VOICE_PITCH || new_voice_pitch > MAX_VOICE_PITCH)
-							to_chat(user, "<font color='red'>Value must be between [MIN_VOICE_PITCH] and [MAX_VOICE_PITCH].</font>")
+							to_chat(user, "<font color='red'>数值必须在 [MIN_VOICE_PITCH] 和 [MAX_VOICE_PITCH] 之间。</font>")
 							return
 						voice_pitch = new_voice_pitch
 
@@ -2051,7 +2051,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 							if(!allowed.Find(user.client.ckey))
 								continue
 						woof_woof[initial(B.name)] = initial(B.id)
-					var/new_bork = input(user, "Choose your desired vocal bark", "Character Preference") as null|anything in woof_woof
+					var/new_bork = input(user, "选择您想要的发声吠叫", "角色偏好") as null|anything in woof_woof
 					if(new_bork)
 						bark_id = woof_woof[new_bork]
 						var/datum/bark/B = GLOB.bark_list[bark_id] //Now we need sanitization to take into account bark-specific min/max values
@@ -2061,25 +2061,25 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 				if("barkspeed")
 					var/datum/bark/B = GLOB.bark_list[bark_id]
-					var/borkset = input(user, "Choose your desired bark speed (Higher is slower, lower is faster). Min: [initial(B.minspeed)]. Max: [initial(B.maxspeed)]", "Character Preference") as null|num
+					var/borkset = input(user, "选择您想要的吠叫速度（数值越高越慢，越低越快）。最小值：[initial(B.minspeed)]。最大值：[initial(B.maxspeed)]", "角色偏好") as null|num
 					if(!isnull(borkset))
 						bark_speed = round(clamp(borkset, initial(B.minspeed), initial(B.maxspeed)), 1)
 
 				if("barkpitch")
 					var/datum/bark/B = GLOB.bark_list[bark_id]
-					var/borkset = input(user, "Choose your desired baseline bark pitch. Min: [initial(B.minpitch)]. Max: [initial(B.maxpitch)]", "Character Preference") as null|num
+					var/borkset = input(user, "选择您想要的基准吠叫音高。最小值：[initial(B.minpitch)]。最大值：[initial(B.maxpitch)]", "角色偏好") as null|num
 					if(!isnull(borkset))
 						bark_pitch = clamp(borkset, initial(B.minpitch), initial(B.maxpitch))
 
 				if("barkvary")
 					var/datum/bark/B = GLOB.bark_list[bark_id]
-					var/borkset = input(user, "Choose your desired baseline bark pitch. Min: [initial(B.minvariance)]. Max: [initial(B.maxvariance)]", "Character Preference") as null|num
+					var/borkset = input(user, "选择您想要的基准吠叫音高变化。最小值：[initial(B.minvariance)]。最大值：[initial(B.maxvariance)]", "角色偏好") as null|num
 					if(!isnull(borkset))
 						bark_variance = clamp(borkset, initial(B.minvariance), initial(B.maxvariance))
 
 				if("barkpreview")
 					if(SSticker.current_state == GAME_STATE_STARTUP) //Timers don't tick at all during game startup, so let's just give an error message
-						to_chat(user, "<span class='warning'>Bark previews can't play during initialization!</span>")
+						to_chat(user, "<span class='warning'>初始化期间无法播放吠叫预览！</span>")
 						return
 					if(!COOLDOWN_FINISHED(src, bark_previewing))
 						return
@@ -2095,15 +2095,15 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					QDEL_IN(barkbox, total_delay)
 
 				if("highlight_color")
-					var/new_color = color_pick_sanitized(user, "Choose your character's nickname highlight color:", "Character Preference","#"+highlight_color)
+					var/new_color = color_pick_sanitized(user, "选择您角色的昵称高亮颜色：", "角色偏好","#"+highlight_color)
 					if(new_color)
 						highlight_color = sanitize_hexcolor(new_color)
 
 				if("headshot")
-					to_chat(user, "<span class='notice'>Please use a relatively SFW image of the head and shoulder area to maintain immersion level. Lastly, ["<span class='bold'>do not use a real life photo or use any image that is less than serious.</span>"]</span>")
-					to_chat(user, "<span class='notice'>If the photo doesn't show up properly in-game, ensure that it's a direct image link that opens properly in a browser.</span>")
-					to_chat(user, "<span class='notice'>Keep in mind that the photo will be downsized to 325x325 pixels, so the more square the photo, the better it will look.</span>")
-					var/new_headshot_link = tgui_input_text(user, "Input the headshot link (https, hosts: gyazo, lensdump, imgbox, catbox):", "Headshot", headshot_link,  encode = FALSE)
+					to_chat(user, "<span class='notice'>请使用相对无不良内容的头部和肩部区域图像，以保持沉浸感。最后，["<span class='bold'>不要使用真实照片或任何不够严肃的图像。</span>"]</span>")
+					to_chat(user, "<span class='notice'>如果照片在游戏内无法正常显示，请确保它是一个可以在浏览器中正常打开的直接图像链接。</span>")
+					to_chat(user, "<span class='notice'>请注意，照片将被缩小到 325x325 像素，因此照片越方正，效果越好。</span>")
+					var/new_headshot_link = tgui_input_text(user, "输入头像链接（https，支持的主机：gyazo, lensdump, imgbox, catbox）：", "头像", headshot_link,  encode = FALSE)
 					if(new_headshot_link == null)
 						return
 					if(new_headshot_link == "")
@@ -2115,40 +2115,40 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						ShowChoices(user)
 						return
 					headshot_link = new_headshot_link
-					to_chat(user, "<span class='notice'>Successfully updated headshot picture</span>")
-					log_game("[user] has set their Headshot image to '[headshot_link]'.")
+					to_chat(user, "<span class='notice'>成功更新头像图片</span>")
+					log_game("[user] 已将头像图片设置为 '[headshot_link]'.")
 				if("legacyhelp")
 					var/list/dat = list()
-					dat += "This slot was around since before major Flavortext / OOC changes.<br>"
-					dat += "Due to this, it's been grandfathered in to keep its old profile layout and formatting, including html.<br>"
-					dat += "If you wish to keep it as it is, <b>you cannot edit it anymore.</b><br><br>"
-					dat += "ANY edit (Even pressing OK on an unchanged Flavortext / OOC notes) will <font color ='red'><b>irreversibly</b></font> override all html, and remove the legacy status of the slot.<br>"
-					dat += "There are no exceptions. Have fun!"
-					dat += "(You can still add an OOC Extra)"
+					dat += "此槽位在主要的风味文本 / OOC 更改之前就已存在。<br>"
+					dat += "因此，它被保留旧版以保持其旧的个人资料布局和格式，包括 html。<br>"
+					dat += "如果您希望保持原样，<b>您不能再编辑它。</b><br><br>"
+					dat += "任何编辑（即使是在未更改的风味文本 / OOC 备注上点击“确定”）都将<font color ='red'><b>不可逆转地</b></font>覆盖所有 html，并移除该槽位的旧版状态。<br>"
+					dat += "没有例外。玩得开心！"
+					dat += "（您仍然可以添加 OOC 额外内容）"
 					var/datum/browser/popup = new(user, "Legacy Help", nwidth = 450, nheight = 250)
 					popup.set_content(dat.Join())
 					popup.open(FALSE)
 				if("formathelp")
 					var/list/dat = list()
-					dat +="You can use backslash (\\) to escape special characters.<br>"
+					dat +="您可以使用反斜杠 (\\) 来转义特殊字符。<br>"
 					dat += "<br>"
-					dat += "# text : Defines a header.<br>"
-					dat += "|text| : Centers the text.<br>"
-					dat += "**text** : Makes the text <b>bold</b>.<br>"
-					dat += "*text* : Makes the text <i>italic</i>.<br>"
-					dat += "^text^ : Increases the <font size = \"4\">size</font> of the text.<br>"
-					dat += "((text)) : Decreases the <font size = \"1\">size</font> of the text.<br>"
-					dat += "* item : An unordered list item.<br>"
-					dat += "--- : Adds a horizontal rule.<br>"
-					dat += "-=FFFFFFtext=- : Adds a specific <font color = '#FFFFFF'>colour</font> to text.<br><br>"
-					dat += "Minimum Flavortext: <b>[MINIMUM_FLAVOR_TEXT]</b> characters.<br>"
-					dat += "Minimum OOC Notes: <b>[MINIMUM_OOC_NOTES]</b> characters."
+					dat += "# 文本 : 定义标题。<br>"
+					dat += "|文本| : 居中显示文本。<br>"
+					dat += "**文本** : 使文本<b>加粗</b>。<br>"
+					dat += "*文本* : 使文本<i>斜体</i>。<br>"
+					dat += "^文本^ : 增大文本的<font size = \"4\">尺寸</font>。<br>"
+					dat += "((文本)) : 减小文本的<font size = \"1\">尺寸</font>。<br>"
+					dat += "* 项目 : 无序列表项。<br>"
+					dat += "--- : 添加水平分割线。<br>"
+					dat += "-=FFFFFF文本=- : 为文本添加特定的<font color = '#FFFFFF'>颜色</font>。<br><br>"
+					dat += "最小风味文本长度：<b>[MINIMUM_FLAVOR_TEXT]</b> 个字符。<br>"
+					dat += "最小 OOC 备注长度：<b>[MINIMUM_OOC_NOTES]</b> 个字符。"
 					var/datum/browser/popup = new(user, "Formatting Help", nwidth = 400, nheight = 350)
 					popup.set_content(dat.Join())
 					popup.open(FALSE)
 				if("skin_color_ref_list")
 					var/list/dat = list()
-					dat +="Skin color codes reference list<br>"
+					dat +="肤色代码参考列表<br>"
 					dat += "<br>"
 					for(var/tone in pref_species.get_skin_list_tooltip())
 						dat += "[tone]<br>"
@@ -2156,8 +2156,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					popup.set_content(dat.Join())
 					popup.open(FALSE)
 				if("flavortext")
-					to_chat(user, "<span class='notice'>["<span class='bold'>Flavortext should not include nonphysical nonsensory attributes such as backstory or the character's internal thoughts.</span>"]</span>")
-					var/new_flavortext = tgui_input_text(user, "Input your character description:", "Flavortext", flavortext, multiline = TRUE,  encode = FALSE, bigmodal = TRUE)
+					to_chat(user, "<span class='notice'>["<span class='bold'>风味文本不应包含非物理、非感官的属性，例如背景故事或角色的内心想法。</span>"]</span>")
+					var/new_flavortext = tgui_input_text(user, "输入您的角色描述：", "风味文本", flavortext, multiline = TRUE,  encode = FALSE, bigmodal = TRUE)
 					if(new_flavortext == null)
 						return
 					if(new_flavortext == "")
@@ -2165,11 +2165,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						ShowChoices(user)
 						return
 					flavortext = new_flavortext
-					to_chat(user, "<span class='notice'>Successfully updated flavortext</span>")
-					log_game("[user] has set their flavortext'.")
+					to_chat(user, "<span class='notice'>成功更新风味文本</span>")
+					log_game("[user] 已设置其风味文本。")
 				if("ooc_notes")
-					to_chat(user, "<span class='notice'>["<span class='bold'>OOC notes should be used for roleplay hooks and general information about your character.</span>"]</span>")
-					var/new_ooc_notes = tgui_input_text(user, "Input your OOC preferences:", "OOC notes", ooc_notes, multiline = TRUE,  encode = FALSE, bigmodal = TRUE)
+					to_chat(user, "<span class='notice'>["<span class='bold'>OOC 备注应用于角色扮演钩子和关于您角色的一般信息。</span>"]</span>")
+					var/new_ooc_notes = tgui_input_text(user, "输入您的 OOC 偏好：", "OOC 备注", ooc_notes, multiline = TRUE,  encode = FALSE, bigmodal = TRUE)
 					if(new_ooc_notes == null)
 						return
 					if(new_ooc_notes == "")
@@ -2177,12 +2177,12 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						ShowChoices(user)
 						return
 					ooc_notes = new_ooc_notes
-					to_chat(user, "<span class='notice'>Successfully updated OOC notes.</span>")
-					log_game("[user] has set their OOC notes'.")
+					to_chat(user, "<span class='notice'>成功更新 OOC 备注。</span>")
+					log_game("[user] 已设置其 OOC 备注。")
 
 				if("rumour")
-					to_chat(user, span_notice("Rumours are things others might know, or think they know about you, they don't necessarily have to be precise, or even true. But remember that they can provide a hint to another player on how to interact with, or even think about your character.\n<b>Avoid explicit bodily descriptions, though rumors like \"sleeps around a lot\" are fine.</b>"))
-					var/new_rumour = tgui_input_text(user, "Input rumours about your character: (400 Character Limit)", "Rumours", rumour, multiline = TRUE, encode = FALSE, bigmodal = TRUE)
+					to_chat(user, span_notice("谣言是其他人可能知道或自以为了解您的事情，它们不必精确，甚至不必真实。但请记住，它们可以为其他玩家提供如何与您的角色互动甚至思考的提示。\n<b>避免 explicit 的身体描述，但像“经常与人厮混”这样的谣言是可以的。</b>"))
+					var/new_rumour = tgui_input_text(user, "输入关于您角色的谣言：（400 字符限制）", "谣言", rumour, multiline = TRUE, encode = FALSE, bigmodal = TRUE)
 					if(new_rumour == null)
 						return
 					if(new_rumour == "")
@@ -2190,16 +2190,16 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						ShowChoices(user)
 						return
 					if(length(new_rumour) > 400)
-						to_chat(user, span_warning("Rumours cannot exceed 400 characters."))
+						to_chat(user, span_warning("谣言不能超过 400 个字符。"))
 						ShowChoices(user)
 						return
 					rumour = new_rumour
-					to_chat(user, span_notice("Successfully updated Rumours"))
-					log_game("[user] has set their rumour'.")
+					to_chat(user, span_notice("成功更新谣言"))
+					log_game("[user] 已设置其谣言。")
 
 				if("gossip")
-					to_chat(user, span_notice("Gossip is rumours spread around, and known only in Noble circles, only other well-born individuals are aware of it. Gossip, similarly to standard rumours does not need to be precise or true, but remember that it can provide hints and avenues for other Nobles to interact with, and judge your Character.\n<b>Avoid explicit bodily descriptions, though rumors like \"sleeps around a lot\" are fine.</b>"))
-					var/new_gossip = tgui_input_text(user, "Input noble gossip about your character: (400 Character Limit)", "Noble Gossip", noble_gossip, multiline = TRUE, encode = FALSE, bigmodal = TRUE)
+					to_chat(user, span_notice("八卦是四处传播的谣言，仅在贵族圈内知晓，只有其他出身高贵的人才知道。与普通谣言类似，八卦不需要精确或真实，但请记住，它可以为其他贵族提供与您角色互动和评判的提示和途径。\n<b>避免 explicit 的身体描述，但像“经常与人厮混”这样的谣言是可以的。</b>"))
+					var/new_gossip = tgui_input_text(user, "输入关于您角色的贵族八卦：（400 字符限制）", "贵族八卦", noble_gossip, multiline = TRUE, encode = FALSE, bigmodal = TRUE)
 					if(new_gossip == null)
 						return
 					if(new_gossip == "")
@@ -2207,56 +2207,56 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						ShowChoices(user)
 						return
 					if(length(new_gossip) > 400)
-						to_chat(user, span_notice("Noble gossip cannot exceed 400 characters."))
+						to_chat(user, span_notice("贵族八卦不能超过 400 个字符。"))
 						ShowChoices(user)
 						return
 					noble_gossip = new_gossip
-					to_chat(user, span_notice("Successfully updated Noble Gossip"))
-					log_game("[user] has set their noble gossip'.")
+					to_chat(user, span_notice("成功更新贵族八卦"))
+					log_game("[user] 已设置其贵族八卦。")
 
 				if("nsfwflavortext")
-					to_chat(user, "<span class='notice'>["<span class='bold'>NSFW Flavortext can be used for setting things like body descriptions and other physical details that may be conisdered explicit.</span>"]</span>")
-					to_chat(user, "<font color = '#d6d6d6'>Leave blank to clear.</font>")
-					var/new_nsfwflavortext = tgui_input_text(user, "Input your character description:", "NSFW Flavortext", nsfwflavortext, multiline = TRUE,  encode = FALSE, bigmodal = TRUE)
+					to_chat(user, "<span class='notice'>["<span class='bold'>NSFW 风味文本可用于设置身体描述和其他可能被视为 explicit 的身体细节。</span>"]</span>")
+					to_chat(user, "<font color = '#d6d6d6'>留空以清除。</font>")
+					var/new_nsfwflavortext = tgui_input_text(user, "输入您的角色描述：", "NSFW 风味文本", nsfwflavortext, multiline = TRUE,  encode = FALSE, bigmodal = TRUE)
 					if(new_nsfwflavortext == null)
 						return
 					if(new_nsfwflavortext == "")
 						new_nsfwflavortext = null
 						nsfwflavortext = null
-						to_chat(user, "<span class='notice'>Successfully deleted NSFW Flavor Text.</span>")
+						to_chat(user, "<span class='notice'>成功删除 NSFW 风味文本。</span>")
 						ShowChoices(user)
 						return
 					nsfwflavortext = new_nsfwflavortext
-					to_chat(user, "<span class='notice'>Successfully updated NSFW flavortext</span>")
-					log_game("[user] has set their NSFW flavortext'.")
+					to_chat(user, "<span class='notice'>成功更新 NSFW 风味文本</span>")
+					log_game("[user] 已设置其 NSFW 风味文本。")
 				if("erpprefs")
-					to_chat(user, "<span class='notice'>["<span class='bold'>Erotic Roleplay preferences. If you put 'anything goes' or 'no limits' here, do not be surprised if people take you up on it.</span>"]</span>")
-					to_chat(user, "<font color = '#d6d6d6'>Leave blank to clear.</font>")
-					var/new_erpprefs = tgui_input_text(user, "Input your preferences:", "ERP Preferences", erpprefs, multiline = TRUE,  encode = FALSE, bigmodal = TRUE)
+					to_chat(user, "<span class='notice'>["<span class='bold'>色情角色扮演偏好。如果您在这里填写“什么都可以”或“无限制”，如果别人当真了，请不要感到惊讶。</span>"]</span>")
+					to_chat(user, "<font color = '#d6d6d6'>留空以清除。</font>")
+					var/new_erpprefs = tgui_input_text(user, "输入您的偏好：", "ERP 偏好", erpprefs, multiline = TRUE,  encode = FALSE, bigmodal = TRUE)
 					if(new_erpprefs == null)
 						return
 					if(new_erpprefs == "")
 						new_erpprefs = null
 						erpprefs = null
-						to_chat(user, "<span class='notice'>Successfully deleted ERP preferences.</span>")
+						to_chat(user, "<span class='notice'>成功删除 ERP 偏好。</span>")
 						ShowChoices(user)
 						return
 					erpprefs = new_erpprefs
-					to_chat(user, "<span class='notice'>Successfully updated ERP Preferences.</span>")
-					log_game("[user] has set their ERP preferences'.")
+					to_chat(user, "<span class='notice'>成功更新 ERP 偏好。</span>")
+					log_game("[user] 已设置其 ERP 偏好。")
 
 				if("img_gallery")
 
 					if(img_gallery.len >= 3)
-						to_chat(user, "You already have three images in your gallery!")
+						to_chat(user, "您的图库中已有三张图片！")
 						return
 
-					to_chat(user, "<span class='notice'>Please use an image ["<span class='bold'>of your character</span>"] to maintain immersion level. Lastly, ["<span class='bold'>do not use a real life photo or use any image that is less than serious.</span>"]</span>")
-					to_chat(user, "<span class='notice'>If the photo doesn't show up properly in-game, ensure that it's a direct image link that opens properly in a browser.</span>")
-					to_chat(user, "<span class='notice'>Keep in mind that all three images are displayed next to eachother and justified to fill a horizontal rectangle. As such, vertical images work best.</span>")
-					to_chat(user, "<span class='notice'>You can only have a maximum of ["<span class='bold'>THREE IMAGES</span>"] in your gallery at a time.</span>")
+					to_chat(user, "<span class='notice'>请使用["<span class='bold'>您角色的图片</span>"]以保持沉浸感。最后，["<span class='bold'>不要使用真实照片或任何不够严肃的图像。</span>"]</span>")
+					to_chat(user, "<span class='notice'>如果照片在游戏内无法正常显示，请确保它是一个可以在浏览器中正常打开的直接图像链接。</span>")
+					to_chat(user, "<span class='notice'>请注意，三张图片并排显示并自适应填充水平矩形。因此，垂直图像效果最佳。</span>")
+					to_chat(user, "<span class='notice'>您的图库中一次最多只能有["<span class='bold'>三张图片</span>"]。</span>")
 
-					var/new_galleryimg = tgui_input_text(user, "Input the image link (https, hosts: gyazo, lensdump, imgbox, catbox):", "Gallery Image",  encode = FALSE)
+					var/new_galleryimg = tgui_input_text(user, "输入图像链接（https，支持的主机：gyazo, lensdump, imgbox, catbox）：", "图库图像",  encode = FALSE)
 
 					if(new_galleryimg == null)
 						return
@@ -2265,26 +2265,26 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						ShowChoices(user)
 						return
 					if(!valid_headshot_link(user, new_galleryimg))
-						to_chat(user, "<span class='notice'>Invalid image link. Make sure it's a direct link from a valid host (gyazo, lensdump, imgbox, catbox).</span>")
+						to_chat(user, "<span class='notice'>无效的图像链接。请确保它是来自有效主机（gyazo, lensdump, imgbox, catbox）的直接链接。</span>")
 						new_galleryimg = null
 						ShowChoices(user)
 						return
 					img_gallery += new_galleryimg
-					to_chat(user, "<span class='notice'>Successfully added image to gallery.</span>")
-					log_game("[user] has added an image to their gallery: '[new_galleryimg]'.")
+					to_chat(user, "<span class='notice'>成功将图像添加到图库。</span>")
+					log_game("[user] 已向图库添加图像：'[new_galleryimg]'.")
 
 				if("nsfw_img_gallery")
 
 					if(nsfw_img_gallery.len >= 3)
-						to_chat(user, "You already have three images in your gallery!")
+						to_chat(user, "您的 NSFW 图库中已有三张图片！")
 						return
 
-					to_chat(user, "<span class='notice'>Please use an image ["<span class='bold'>of your character</span>"] to maintain immersion level. Lastly, ["<span class='bold'>do not use a real life photo or use any image that is less than serious.</span>"]</span>")
-					to_chat(user, "<span class='notice'>If the photo doesn't show up properly in-game, ensure that it's a direct image link that opens properly in a browser.</span>")
-					to_chat(user, "<span class='notice'>Keep in mind that all three images are displayed next to eachother and justified to fill a horizontal rectangle. As such, vertical images work best.</span>")
-					to_chat(user, "<span class='notice'>You can only have a maximum of ["<span class='bold'>THREE IMAGES</span>"] in your gallery at a time.</span>")
+					to_chat(user, "<span class='notice'>请使用["<span class='bold'>您角色的图片</span>"]以保持沉浸感。最后，["<span class='bold'>不要使用真实照片或任何不够严肃的图像。</span>"]</span>")
+					to_chat(user, "<span class='notice'>如果照片在游戏内无法正常显示，请确保它是一个可以在浏览器中正常打开的直接图像链接。</span>")
+					to_chat(user, "<span class='notice'>请注意，三张图片并排显示并自适应填充水平矩形。因此，垂直图像效果最佳。</span>")
+					to_chat(user, "<span class='notice'>您的 NSFW 图库中一次最多只能有["<span class='bold'>三张图片</span>"]。</span>")
 
-					var/new_galleryimg = tgui_input_text(user, "Input the image link (https, hosts: gyazo, lensdump, imgbox, catbox):", "Gallery Image",  encode = FALSE)
+					var/new_galleryimg = tgui_input_text(user, "输入图像链接（https，支持的主机：gyazo, lensdump, imgbox, catbox）：", "图库图像",  encode = FALSE)
 
 					if(new_galleryimg == null)
 						return
@@ -2293,37 +2293,37 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						ShowChoices(user)
 						return
 					if(!valid_headshot_link(user, new_galleryimg))
-						to_chat(user, "<span class='notice'>Invalid image link. Make sure it's a direct link from a valid host (gyazo, lensdump, imgbox, catbox).</span>")
+						to_chat(user, "<span class='notice'>无效的图像链接。请确保它是来自有效主机（gyazo, lensdump, imgbox, catbox）的直接链接。</span>")
 						new_galleryimg = null
 						ShowChoices(user)
 						return
 					nsfw_img_gallery += new_galleryimg
-					to_chat(user, "<span class='notice'>Successfully added image to nsfw gallery.</span>")
-					log_game("[user] has added an image to their nsfw gallery: '[new_galleryimg]'.")
+					to_chat(user, "<span class='notice'>成功将图像添加到 NSFW 图库。</span>")
+					log_game("[user] 已向 NSFW 图库添加图像：'[new_galleryimg]'.")
 
 				if("clear_gallery")
 					if(!img_gallery.len)
-						to_chat(user, "You don't have any images in your gallery to clear!")
+						to_chat(user, "您的图库中没有要清除的图像！")
 						return
-					var/dachoice = tgui_alert(user, "Do you really want to clear your image gallery?", "Clear Gallery", list("Yae", "Nae"))
-					if(dachoice == "Nae")
+					var/dachoice = tgui_alert(user, "您真的要清除图像图库吗？", "清除图库", list("是", "否"))
+					if(dachoice == "否")
 						ShowChoices(user)
 						return
 					img_gallery = list()
-					to_chat(user, "<span class='notice'>Successfully cleared image gallery.</span>")
-					log_game("[user] has cleared their image gallery.")
+					to_chat(user, "<span class='notice'>成功清除图像图库。</span>")
+					log_game("[user] 已清除其图像图库。")
 
 				if("clear_nsfw_gallery")
 					if(!nsfw_img_gallery.len)
-						to_chat(user, "You don't have any images in your nsfw gallery to clear!")
+						to_chat(user, "您的 NSFW 图库中没有要清除的图像！")
 						return
-					var/dachoice = tgui_alert(user, "Do you really want to clear your nsfw image gallery?", "Clear nsfw Gallery", list("Yae", "Nae"))
-					if(dachoice == "Nae")
+					var/dachoice = tgui_alert(user, "您真的要清除 NSFW 图像图库吗？", "清除 NSFW 图库", list("是", "否"))
+					if(dachoice == "否")
 						ShowChoices(user)
 						return
 					nsfw_img_gallery = list()
-					to_chat(user, "<span class='notice'>Successfully cleared their nsfw image gallery.</span>")
-					log_game("[user] has cleared their nsfw image gallery.")
+					to_chat(user, "<span class='notice'>成功清除 NSFW 图像图库。</span>")
+					log_game("[user] 已清除其 NSFW 图像图库。")
 
 				if("ooc_preview")
 					var/datum/examine_panel/preview_examine_panel = new(user)
@@ -2338,29 +2338,29 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						var/rumour_display = rumour
 						rumour_display = html_encode(rumour_display)
 						rumour_display = parsemarkdown_basic(rumour_display, hyperlink = TRUE)
-						msg += "<b>You recall what you heard around Town about [real_name]...</b><br>[rumour_display]"
+						msg += "<b>您回想起在镇上听到的关于 [real_name] 的传言...</b><br>[rumour_display]"
 					if(length(noble_gossip))
 						if(msg)
 							msg += "<br><br>"
 						var/gossip_display = noble_gossip
 						gossip_display = html_encode(gossip_display)
 						gossip_display = parsemarkdown_basic(gossip_display, hyperlink = TRUE)
-						msg += "<b>You recall what the other Blue-bloods hushed about [real_name]...</b><br>[gossip_display]"
+						msg += "<b>您回想起其他蓝血贵族私下议论的关于 [real_name] 的八卦...</b><br>[gossip_display]"
 					if(msg)
 						to_chat(user, "<span class='info'>[msg]</span>")
 
 				if("ooc_extra")
-					to_chat(user, "<span class='notice'>Add a link from a suitable host (catbox, etc) to an mp3 to embed in your flavor text.</span>")
-					to_chat(user, "<span class='notice'>If the song doesn't  play properly, ensure that it's a direct link that opens properly in a browser.</span>")
-					to_chat(user, "<font color = '#d6d6d6'>Leave blank to clear your current song.</font>")
-					to_chat(user, "<font color ='red'>Abuse of this will get you banned.</font>")
-					var/new_extra_link = tgui_input_text(user, "Input the accessory link (https, hosts: catbox):", "Song URL", ooc_extra, encode = FALSE)
+					to_chat(user, "<span class='notice'>从合适的主机（catbox 等）添加一个 mp3 链接，嵌入到您的风味文本中。</span>")
+					to_chat(user, "<span class='notice'>如果歌曲无法正常播放，请确保它是一个可以在浏览器中正常打开的直接链接。</span>")
+					to_chat(user, "<font color = '#d6d6d6'>留空以清除您当前的歌曲。</font>")
+					to_chat(user, "<font color ='red'>滥用此功能将导致您被禁止。</font>")
+					var/new_extra_link = tgui_input_text(user, "输入附件链接（https，主机：catbox）：", "歌曲 URL", ooc_extra, encode = FALSE)
 					if(new_extra_link == null)
 						return
 					if(new_extra_link == "")
 						new_extra_link = null
 						ooc_extra = null
-						to_chat(user, "<span class='notice'>Successfully deleted OOC Extra.</span>")
+						to_chat(user, "<span class='notice'>成功删除 OOC 额外内容。</span>")
 						ShowChoices(user)
 						return
 					var/static/list/valid_extensions = list("mp3")
@@ -2375,48 +2375,48 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					var/extension = value_split[length(value_split)]
 					if((extension in valid_extensions))
 						ooc_extra = new_extra_link
-						to_chat(user, "<span class='notice'>Successfully updated Song URL.</span>")
-						log_game("[user] has set their Song URL to '[ooc_extra]'.")
+						to_chat(user, "<span class='notice'>成功更新歌曲 URL。</span>")
+						log_game("[user] 已将其歌曲 URL 设置为 '[ooc_extra]'.")
 
 				if("change_artist")
-					var/new_artist = tgui_input_text(user, "Input your song's artist:", "Song Artist", song_artist,  encode = FALSE)
+					var/new_artist = tgui_input_text(user, "输入您歌曲的艺术家：", "歌曲艺术家", song_artist,  encode = FALSE)
 					if(new_artist == null)
 						return
 					if(new_artist == "")
 						ShowChoices(user)
 						return
 					song_artist = new_artist
-					to_chat(user, "<span class='notice'>Successfully updated song artist.</span>")
-					log_game("[user] has set their song artist.")
+					to_chat(user, "<span class='notice'>成功更新歌曲艺术家。</span>")
+					log_game("[user] 已设置其歌曲艺术家。")
 
 				if("change_title")
-					var/new_title = tgui_input_text(user, "Input your song's title:", "Song title", song_title,  encode = FALSE)
+					var/new_title = tgui_input_text(user, "输入您歌曲的标题：", "歌曲标题", song_title,  encode = FALSE)
 					if(new_title== null)
 						return
 					if(new_title == "")
 						ShowChoices(user)
 						return
 					song_title = new_title
-					to_chat(user, "<span class='notice'>Successfully updated song title.</span>")
-					log_game("[user] has set their song title.")
+					to_chat(user, "<span class='notice'>成功更新歌曲标题。</span>")
+					log_game("[user] 已设置其歌曲标题。")
 
 				if("ooc_extra_img")
-					to_chat(user, "<span class='notice'>Add a link to images/videos (jpg, png, gif, mp4) that will be displayed in your Flavor Text.</span>")
-					to_chat(user, "<span class='notice'>Images/videos will be constrained by width but have limitless height. Suitable hosts: catbox, discord, gyazo, lensdump, imgbox.</span>")
-					to_chat(user, "<font color='#d6d6d6'>Leave a single space to delete it.</font>")
-					to_chat(user, "<font color='red'>Abuse of this will get you banned.</font>")
-					var/link = tgui_input_text(user, "Input the image/video link (https):", "OOC Extra Image", ooc_extra_img_link, encode = FALSE)
+					to_chat(user, "<span class='notice'>添加将显示在风味文本中的图像/视频链接（jpg, png, gif, mp4）。</span>")
+					to_chat(user, "<span class='notice'>图像/视频的宽度受限但高度不限。合适的主机：catbox, discord, gyazo, lensdump, imgbox。</span>")
+					to_chat(user, "<font color='#d6d6d6'>留一个空格以删除它。</font>")
+					to_chat(user, "<font color='red'>滥用此功能将导致您被禁止。</font>")
+					var/link = tgui_input_text(user, "输入图像/视频链接（https）：", "OOC 额外图像", ooc_extra_img_link, encode = FALSE)
 					if(link == null)
 						return
 					if(link == "")
 						link = null
-						var/choice = tgui_alert(user, "Do you really want to clear your OOC Extra Image/Video/Gif?", "Clear OOC Extra Image/Video/Gif", list("Yae", "Nae"))
-						if(choice == "Nae")
+						var/choice = tgui_alert(user, "您真的要清除您的 OOC 额外图像/视频/GIF 吗？", "清除 OOC 额外图像/视频/GIF", list("是", "否"))
+						if(choice == "否")
 							ShowChoices(user)
 							return
 						ooc_extra_img = null
 						ooc_extra_img_link = null
-						to_chat(user, "<span class='notice'>Successfully deleted OOC Extra Image.</span>")
+						to_chat(user, "<span class='notice'>成功删除 OOC 额外图像。</span>")
 						ShowChoices(user)
 						return
 					var/static/list/valid_ext = list("jpg", "jpeg", "png", "gif", "mp4")
@@ -2430,30 +2430,30 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					switch(ext)
 						if("jpg", "jpeg", "png", "gif")
 							ooc_extra_img = "<div align='center'><br><img src='[link]' style='max-width: 100%;'/></div>"
-							info = "an image."
+							info = "一张图像。"
 						if("mp4")
 							ooc_extra_img = "<div align='center'><br><video style='max-width: 100%;' controls><source src='[link]' type='video/mp4'></video></div>"
-							info = "a video."
-					to_chat(user, "<span class='notice'>Successfully updated OOC Extra Image with [info]</span>")
-					log_game("[user] has set their OOC Extra Image to '[link]'.")
+							info = "一个视频。"
+					to_chat(user, "<span class='notice'>成功使用 [info] 更新 OOC 额外图像。</span>")
+					log_game("[user] 已将其 OOC 额外图像设置为 '[link]'.")
 
 				if("nsfw_ooc_extra_img")
-					to_chat(user, "<span class='notice'>Add a link to NSFW images/videos (jpg, png, gif, mp4) that will be displayed in your NSFW Flavor Text.</span>")
-					to_chat(user, "<span class='notice'>Images/videos will be constrained by width but have limitless height. Suitable hosts: catbox, discord, gyazo, lensdump, imgbox.</span>")
-					to_chat(user, "<font color='#d6d6d6'>Leave a single space to delete it.</font>")
-					to_chat(user, "<font color='red'>Abuse of this will get you banned.</font>")
-					var/link = tgui_input_text(user, "Input the image/video link (https):", "NSFW OOC Extra Image", nsfw_ooc_extra_img_link, encode = FALSE)
+					to_chat(user, "<span class='notice'>添加将显示在 NSFW 风味文本中的 NSFW 图像/视频链接（jpg, png, gif, mp4）。</span>")
+					to_chat(user, "<span class='notice'>图像/视频的宽度受限但高度不限。合适的主机：catbox, discord, gyazo, lensdump, imgbox。</span>")
+					to_chat(user, "<font color='#d6d6d6'>留一个空格以删除它。</font>")
+					to_chat(user, "<font color='red'>滥用此功能将导致您被禁止。</font>")
+					var/link = tgui_input_text(user, "输入图像/视频链接（https）：", "NSFW OOC 额外图像", nsfw_ooc_extra_img_link, encode = FALSE)
 					if(link == null)
 						return
 					if(link == "")
 						link = null
-						var/choice = tgui_alert(user, "Do you really want to clear your NSFW OOC Extra Image/Video/Gif?", "Clear NSFW OOC Extra Image/Video/Gif", list("Yae", "Nae"))
-						if(choice == "Nae")
+						var/choice = tgui_alert(user, "您真的要清除您的 NSFW OOC 额外图像/视频/GIF 吗？", "清除 NSFW OOC 额外图像/视频/GIF", list("是", "否"))
+						if(choice == "否")
 							ShowChoices(user)
 							return
 						nsfw_ooc_extra_img = null
 						nsfw_ooc_extra_img_link = null
-						to_chat(user, "<span class='notice'>Successfully deleted NSFW OOC Extra Image.</span>")
+						to_chat(user, "<span class='notice'>成功删除 NSFW OOC 额外图像。</span>")
 						ShowChoices(user)
 						return
 					var/static/list/valid_ext = list("jpg", "jpeg", "png", "gif", "mp4")
@@ -2467,12 +2467,12 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					switch(ext)
 						if("jpg", "jpeg", "png", "gif")
 							nsfw_ooc_extra_img = "<div align='center'><br><img src='[link]' style='max-width: 100%;'/></div>"
-							info = "an image."
+							info = "一张图像。"
 						if("mp4")
 							nsfw_ooc_extra_img = "<div align='center'><br><video style='max-width: 100%;' controls><source src='[link]' type='video/mp4'></video></div>"
-							info = "a video."
-					to_chat(user, "<span class='notice'>Successfully updated NSFW OOC Extra Image with [info]</span>")
-					log_game("[user] has set their NSFW OOC Extra Image to '[link]'.")
+							info = "一个视频。"
+					to_chat(user, "<span class='notice'>成功使用 [info] 更新 NSFW OOC 额外图像。</span>")
+					log_game("[user] 已将其 NSFW OOC 额外图像设置为 '[link]'.")
 
 				if("familiar_prefs")
 					familiar_prefs.fam_show_ui()
@@ -2494,7 +2494,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 					species = sortNames(species)
 
-					var/result = tgui_input_list(user, "By what shape are you bound?", "RACE", species)
+					var/result = tgui_input_list(user, "您被何种形态所束缚？", "种族", species)
 
 					if(result)
 						set_new_race(result, user)
@@ -2507,7 +2507,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 				if("charflaw")
 					var/list/coom = GLOB.character_flaws.Copy()
-					var/result = tgui_input_list(user, "What burden will you bear?", "FLAWS",coom)
+					var/result = tgui_input_list(user, "您将承担何种重负？", "缺陷", coom)
 					if(result)
 						result = coom[result]
 						var/datum/charflaw/C = new result()
@@ -2521,60 +2521,60 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 				if("race_bonus_select")
 					if(length(pref_species.custom_selection))
-						var/choice = tgui_input_list(user, "What has fate blessed your race with?", "BONUS", pref_species.custom_selection)
+						var/choice = tgui_input_list(user, "命运赐予您的种族何种祝福？", "加成", pref_species.custom_selection)
 						if(choice)
 							race_bonus = pref_species.custom_selection[choice]
 
 				if("body_size")
-					var/new_body_size = tgui_input_number(user, "Choose your desired sprite size:\n([BODY_SIZE_MIN*100]%-[BODY_SIZE_MAX*100]%), Warning: May make your character look distorted", "Character Preference", features["body_size"]*100)
+					var/new_body_size = tgui_input_number(user, "选择您想要的精灵尺寸：\n([BODY_SIZE_MIN*100]%-[BODY_SIZE_MAX*100]%)，警告：可能使您的角色看起来变形", "角色偏好", features["body_size"]*100)
 					if(new_body_size)
 						new_body_size = clamp(new_body_size * 0.01, BODY_SIZE_MIN, BODY_SIZE_MAX)
 						features["body_size"] = new_body_size
 
 				if("taur_color")
-					var/new_taur_color = color_pick_sanitized(user, "Choose your character's taur color:", "Character Preference", "#"+taur_color)
+					var/new_taur_color = color_pick_sanitized(user, "选择您角色的半人马颜色：", "角色偏好", "#"+taur_color)
 					if(new_taur_color)
 						taur_color = sanitize_hexcolor(new_taur_color)
 
 				if("taur_markings")
-					var/new_taur_markings = color_pick_sanitized(user, "Choose your character's taur markings color:", "Character Preference", "#"+taur_markings)
+					var/new_taur_markings = color_pick_sanitized(user, "选择您角色的半人马标记颜色：", "角色偏好", "#"+taur_markings)
 					if(new_taur_markings)
 						taur_markings = sanitize_hexcolor(new_taur_markings)
 
 				if("taur_tertiary")
-					var/new_taur_tertiary = color_pick_sanitized(user, "Choose your character's taur tertiary markings color:", "Character Preference", "#"+taur_tertiary)
+					var/new_taur_tertiary = color_pick_sanitized(user, "选择您角色的半人马第三级标记颜色：", "角色偏好", "#"+taur_tertiary)
 					if(new_taur_tertiary)
 						taur_tertiary = sanitize_hexcolor(new_taur_tertiary)
 
 				if("mutant_color")
-					var/new_mutantcolor = color_pick_sanitized(user, "Choose your character's mutant #1 color:", "Character Preference","#"+features["mcolor"])
+					var/new_mutantcolor = color_pick_sanitized(user, "选择您角色的突变色 #1：", "角色偏好","#"+features["mcolor"])
 					if(new_mutantcolor)
 
 						features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 						try_update_mutant_colors()
 
 				if("mutant_color2")
-					var/new_mutantcolor = color_pick_sanitized(user, "Choose your character's mutant #2 color:", "Character Preference","#"+features["mcolor2"])
+					var/new_mutantcolor = color_pick_sanitized(user, "选择您角色的突变色 #2：", "角色偏好","#"+features["mcolor2"])
 					if(new_mutantcolor)
 						features["mcolor2"] = sanitize_hexcolor(new_mutantcolor)
 						try_update_mutant_colors()
 
 				if("mutant_color3")
-					var/new_mutantcolor = color_pick_sanitized(user, "Choose your character's mutant #3 color:", "Character Preference","#"+features["mcolor3"])
+					var/new_mutantcolor = color_pick_sanitized(user, "选择您角色的突变色 #3：", "角色偏好","#"+features["mcolor3"])
 					if(new_mutantcolor)
 						features["mcolor3"] = sanitize_hexcolor(new_mutantcolor)
 						try_update_mutant_colors()
 
 				if("skin_choice_pick")
-					var/prompt = alert(user, "Choose skin/scales color",, "Custom", "Predefined")
-					if(prompt == "Custom")
-						var/new_mutantcolor = color_pick_sanitized(user, "Choose your character's skin/scale color:", "Character Preference","#"+features["mcolor"])
+					var/prompt = alert(user, "选择皮肤/鳞片颜色",, "自定义", "预设")
+					if(prompt == "自定义")
+						var/new_mutantcolor = color_pick_sanitized(user, "选择您角色的皮肤/鳞片颜色：", "角色偏好","#"+features["mcolor"])
 						if(new_mutantcolor)
 							features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 							try_update_mutant_colors()
-					if(prompt == "Predefined")
+					if(prompt == "预设")
 						var/listy = pref_species.get_skin_list()
-						var/new_mutantcolor = input(user, "Choose your character's skin tone:", "Sun")  as null|anything in listy
+						var/new_mutantcolor = input(user, "选择您角色的肤色：", "肤色")  as null|anything in listy
 						if(new_mutantcolor)
 							features["mcolor"] = listy[new_mutantcolor]
 							try_update_mutant_colors()
@@ -2593,14 +2593,14 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 */
 				if("s_tone")
 					var/listy = pref_species.get_skin_list()
-					var/new_s_tone = tgui_input_list(user, "Choose your character's skin tone:", "SKINTONE", listy)
+					var/new_s_tone = tgui_input_list(user, "选择您角色的肤色：", "肤色", listy)
 					if(new_s_tone)
 						skin_tone = listy[new_s_tone]
 						try_update_mutant_colors()
 
 				if("charflaw")
 					var/selectedflaw
-					selectedflaw = tgui_input_list(user, "Choose your character's flaw:", "FLAWS", GLOB.character_flaws)
+					selectedflaw = tgui_input_list(user, "选择您角色的缺陷：", "缺陷", GLOB.character_flaws)
 					if(selectedflaw)
 						charflaw = GLOB.character_flaws[selectedflaw]
 						charflaw = new charflaw()
@@ -2608,16 +2608,16 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 							to_chat(user, span_info("[charflaw.desc]"))
 
 				if("char_accent")
-					var/selectedaccent = tgui_input_list(user, "Choose your character's accent:", "Character Preference", GLOB.character_accents)
+					var/selectedaccent = tgui_input_list(user, "选择您角色的口音：", "角色偏好", GLOB.character_accents)
 					if(selectedaccent)
 						char_accent = selectedaccent
-						var/test_message = "Hello friend, yes this is good. My Lord rides through the Duchy with servants and soldiers; the captain and sergeant guard the church while archers and cavalry hold the north road. My sword and shield are sharp, the water flows refreshingly, and we thank the Duke before saying goodbye."
+						var/test_message = "你好朋友，是的这很好。我的领主带着仆人和士兵骑马经过；队长和中士守卫着教堂，而弓箭手和骑兵守住北方的道路。我的剑和盾很锋利，水流清爽，我们在告别前感谢公爵。"
 						var/preview = apply_accent_preview(selectedaccent, test_message)
 						var/preview_text
 						if(preview)
 							preview_text = "[preview]"
 						else
-							preview_text = "[test_message] (this accent uses no text replacements)"
+							preview_text = "[test_message]（此口音不使用文本替换）"
 
 						var/list/accent_preview_spans = GLOB.accent_spans?[selectedaccent]
 						if(accent_preview_spans?.len)
@@ -2625,20 +2625,20 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 							if(accent_preview_span)
 								preview_text = "<span class='[accent_preview_span]'>[preview_text]</span>"
 
-						to_chat(user, span_info("<b>[selectedaccent] Preview:</b> [preview_text]"))
+						to_chat(user, span_info("<b>[selectedaccent] 预览：</b> [preview_text]"))
 
 				if("ooccolor")
-					var/new_ooccolor = color_pick_sanitized(user, "Choose your OOC colour:", "Game Preference",ooccolor)
+					var/new_ooccolor = color_pick_sanitized(user, "选择您的 OOC 颜色：", "游戏偏好", ooccolor)
 					if(new_ooccolor)
 						ooccolor = new_ooccolor
 
 				if("asaycolor")
-					var/new_asaycolor = color_pick_sanitized(user, "Choose your ASAY color:", "Game Preference",asaycolor)
+					var/new_asaycolor = color_pick_sanitized(user, "选择您的 ASAY 颜色：", "游戏偏好", asaycolor)
 					if(new_asaycolor)
 						asaycolor = new_asaycolor
 
 				if("bag")
-					var/new_backpack = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in GLOB.backpacklist
+					var/new_backpack = input(user, "选择您角色的背包风格：", "角色偏好")  as null|anything in GLOB.backpacklist
 					if(new_backpack)
 						backpack = new_backpack
 
@@ -2649,23 +2649,23 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						jumpsuit_style = PREF_SUIT
 
 				if("uplink_loc")
-					var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference") as null|anything in GLOB.uplink_spawn_loc_list
+					var/new_loc = input(user, "选择您角色的叛徒上行链路生成位置：", "角色偏好") as null|anything in GLOB.uplink_spawn_loc_list
 					if(new_loc)
 						uplink_spawn_loc = new_loc
 
 				if("ai_core_icon")
-					var/ai_core_icon = input(user, "Choose your preferred AI core display screen:", "AI Core Display Screen Selection") as null|anything in GLOB.ai_core_display_screens
+					var/ai_core_icon = input(user, "选择您偏好的 AI 核心显示屏幕：", "AI 核心显示屏幕选择") as null|anything in GLOB.ai_core_display_screens
 					if(ai_core_icon)
 						preferred_ai_core_display = ai_core_icon
 
 				if("sec_dept")
-					var/department = input(user, "Choose your preferred security department:", "Security Departments") as null|anything in GLOB.security_depts_prefs
+					var/department = input(user, "选择您偏好的安保部门：", "安保部门") as null|anything in GLOB.security_depts_prefs
 					if(department)
 						prefered_security_department = department
 
 				if ("preferred_map")
 					var/maplist = list()
-					var/no_preference = "No Preference"
+					var/no_preference = "无偏好"
 					for(var/M in config.maplist)
 						var/datum/map_config/VM = config.maplist[M]
 
@@ -2674,35 +2674,35 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 						var/friendlyname = "[VM.map_name] "
 						if (VM.voteweight <= 0)
-							friendlyname += " (disabled)"
+							friendlyname += "（已禁用）"
 						maplist[friendlyname] = VM.map_name
 					maplist[no_preference] = null
-					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference")  as null|anything in sortList(maplist)
+					var/pickedmap = input(user, "选择您偏好的地图。这将用于帮助加权随机地图选择。", "角色偏好")  as null|anything in sortList(maplist)
 					if (pickedmap)
 						preferred_map = maplist[pickedmap]
 
 				if ("clientfps")
-					var/desiredfps = input(user, "Choose your desired fps. (0 = synced with server tick rate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
+					var/desiredfps = input(user, "选择您想要的 FPS。（0 = 与服务器滴答率同步（当前：[world.fps]））", "角色偏好", clientfps)  as null|num
 					if (!isnull(desiredfps))
 						clientfps = desiredfps
 						parent.fps = desiredfps
 				if("ui")
-					var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style)  as null|anything in sortList(GLOB.available_ui_styles)
+					var/pickedui = input(user, "选择您的 UI 样式。", "角色偏好", UI_style)  as null|anything in sortList(GLOB.available_ui_styles)
 					if(pickedui)
 						UI_style = "Rogue"
 						if (parent && parent.mob && parent.mob.hud_used)
 							parent.mob.hud_used.update_ui_style(ui_style2icon(UI_style, src))
 				if("pda_style")
-					var/pickedPDAStyle = input(user, "Choose your PDA style.", "Character Preference", pda_style)  as null|anything in GLOB.pda_styles
+					var/pickedPDAStyle = input(user, "选择您的 PDA 样式。", "角色偏好", pda_style)  as null|anything in GLOB.pda_styles
 					if(pickedPDAStyle)
 						pda_style = pickedPDAStyle
 				if("pda_color")
-					var/pickedPDAColor = input(user, "Choose your PDA Interface color.", "Character Preference", pda_color) as color|null
+					var/pickedPDAColor = input(user, "选择您的 PDA 界面颜色。", "角色偏好", pda_color) as color|null
 					if(pickedPDAColor)
 						pda_color = pickedPDAColor
 
 				if("phobia")
-					var/phobiaType = input(user, "What are you scared of?", "Character Preference", phobia) as null|anything in SStraumas.phobia_types
+					var/phobiaType = input(user, "您害怕什么？", "角色偏好", phobia) as null|anything in SStraumas.phobia_types
 					if(phobiaType)
 						phobia = phobiaType
 
@@ -2712,7 +2712,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					if(unlock_content)
 						toggles ^= MEMBER_PUBLIC
 				if ("max_chat_length")
-					var/desiredlength = input(user, "Choose the max character length of shown Runechat messages. Valid range is 1 to [CHAT_MESSAGE_MAX_LENGTH] (default: [initial(max_chat_length)]))", "Character Preference", max_chat_length)  as null|num
+					var/desiredlength = input(user, "选择显示的符文聊天消息的最大字符长度。有效范围是 1 到 [CHAT_MESSAGE_MAX_LENGTH]（默认值：[initial(max_chat_length)]）", "角色偏好", max_chat_length)  as null|num
 					if (!isnull(desiredlength))
 						max_chat_length = clamp(desiredlength, 1, CHAT_MESSAGE_MAX_LENGTH)
 				if("gender")
@@ -2721,7 +2721,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						pickedGender = "female"
 					if(pickedGender && pickedGender != gender)
 						gender = pickedGender
-						to_chat(user, "<font color='red'>Your character will now use a [friendlyGenders[pickedGender]] sprite.</font>")
+						to_chat(user, "<font color='red'>您的角色现在将使用 [friendlyGenders[pickedGender]] 精灵。</font>")
 						//random_character(gender)
 					genderize_customizer_entries()
 				if("domhand")
@@ -2730,17 +2730,17 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					else
 						domhand = 1
 				if("family")
-					var/list/famtree_options_list = list(FAMILY_NONE, FAMILY_PARTIAL, FAMILY_NEWLYWED, "EXPLAIN THIS TO ME")
+					var/list/famtree_options_list = list(FAMILY_NONE, FAMILY_PARTIAL, FAMILY_NEWLYWED, "向我解释这个")
 					if(age != AGE_ADULT)
-						famtree_options_list = list(FAMILY_NONE, FAMILY_PARTIAL, FAMILY_NEWLYWED, FAMILY_FULL, "EXPLAIN THIS TO ME")
-					var/new_family = tgui_input_list(user, "SELECT YOUR HERO'S BOND", "BLOOD IS THICKER THAN WATER", famtree_options_list, family)
-					if(new_family == "EXPLAIN THIS TO ME")
+						famtree_options_list = list(FAMILY_NONE, FAMILY_PARTIAL, FAMILY_NEWLYWED, FAMILY_FULL, "向我解释这个")
+					var/new_family = tgui_input_list(user, "选择您英雄的羁绊", "血浓于水", famtree_options_list, family)
+					if(new_family == "向我解释这个")
 						to_chat(user, span_purple("\
-						--[FAMILY_NONE] will disable this feature.<br>\
-						--[FAMILY_PARTIAL] will assign you as a progeny of a local house based on your species. This feature will instead assign you as a aunt or uncle to a local family if your older than ADULT.<br>\
-						--[FAMILY_NEWLYWED] assigns you a spouse without adding you to a family. Setspouse will prioritize pairing you with another newlywed with the same name as your setspouse.<br>\
-						--[FAMILY_FULL] will attempt to assign you as matriarch or patriarch of one of the local houses of the kingdom/town. Setspouse will will prevent \
-						players with the setspouse = None from matching with you unless their name equals your setspouse."))
+						--[FAMILY_NONE] 将禁用此功能。<br>\
+						--[FAMILY_PARTIAL] 将根据您的物种将您分配为当地家族的后代。如果您年龄大于 ADULT，此功能将改为将您分配为当地家族的姑妈或叔父。<br>\
+						--[FAMILY_NEWLYWED] 为您分配一个配偶，而不将您添加到家族中。设置配偶将优先将您与另一个具有相同设置配偶名称的新婚配对。<br>\
+						--[FAMILY_FULL] 将尝试将您分配为王国/城镇中某个当地家族的女族长或族长。设置配偶将阻止 \
+						设置配偶 = 无的玩家与您匹配，除非他们的名称等于您的设置配偶。"))
 
 					else if(new_family)
 						family = new_family
@@ -2749,7 +2749,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						xenophobe_pref = 0
 				//Setspouse is part of the family subsystem. It will check existing families for this character and attempt to place you in this family.
 				if("setspouse")
-					var/newspouse = tgui_input_text(user, "INPUT THE IDENTITY OF ANOTHER HERO", "TIL DEATH DO US PART")
+					var/newspouse = tgui_input_text(user, "输入另一位英雄的身份", "至死不渝")
 					if(newspouse)
 						setspouse = newspouse
 					else
@@ -2758,33 +2758,33 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 				if("gender_choice")
 					// If pronouns are neutral, lock to ANY_GENDER
 					if(pronouns == THEY_THEM || pronouns == IT_ITS)
-						to_chat(user, span_warning("With neutral pronouns, you may only choose [ANY_GENDER]."))
+						to_chat(user, span_warning("使用中性代词时，您只能选择 [ANY_GENDER]。"))
 						gender_choice = ANY_GENDER
 					else
 						var/list/gender_choice_option_list = list(ANY_GENDER, SAME_GENDER, DIFFERENT_GENDER)
-						var/new_gender_choice  = tgui_input_list(user, "SELECT YOUR HERO'S PREFERENCE", "TO LOVE AND TO CHERISH", gender_choice_option_list, gender_choice)
+						var/new_gender_choice  = tgui_input_list(user, "选择您英雄的偏好", "相爱相惜", gender_choice_option_list, gender_choice)
 						if(new_gender_choice)
 							gender_choice = new_gender_choice
 				if("species_choice")
-					var/list/restriction_options = list("Unrestricted", "Same Race", "Select Specific Race")
-					var/choice = tgui_input_list(user, "SELECT SPOUSE SPECIES RESTRICTION", "SPECIES RESTRICTION", restriction_options)
-					if(choice == "Unrestricted")
+					var/list/restriction_options = list("无限制", "同一种族", "选择特定种族")
+					var/choice = tgui_input_list(user, "选择配偶种族限制", "种族限制", restriction_options)
+					if(choice == "无限制")
 						xenophobe_pref = 0
 						restricted_species_pref = null
-						to_chat(user, "Spouse species is unrestricted.")
-					else if(choice == "Same Race")
+						to_chat(user, "配偶种族无限制。")
+					else if(choice == "同一种族")
 						xenophobe_pref = 1
 						restricted_species_pref = null
-						to_chat(user, "Spouse species will be restricted to your race.")
-					else if(choice == "Select Specific Race")
+						to_chat(user, "配偶种族将限制为您的种族。")
+					else if(choice == "选择特定种族")
 						var/list/available_races = list()
 						for(var/race_name in GLOB.roundstart_races)
 							available_races += race_name
-						var/selected_race = tgui_input_list(user, "SELECT ALLOWED SPOUSE RACE", "SPECIES SELECTION", available_races)
+						var/selected_race = tgui_input_list(user, "选择允许的配偶种族", "物种选择", available_races)
 						if(selected_race)
 							xenophobe_pref = 2
 							restricted_species_pref = selected_race
-							to_chat(user, "Spouse species will be restricted to [selected_race].")
+							to_chat(user, "配偶种族将限制为 [selected_race]。")
 				if("hotkeys")
 					hotkeys = !hotkeys
 					if(hotkeys)
@@ -2849,11 +2849,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					save_preferences()
 
 				if("keybindings_reset")
-					var/choice = tgalert(user, "Would you prefer 'hotkey' or 'classic' defaults?", "Setup keybindings", "Hotkey", "Classic", "Cancel")
-					if(choice == "Cancel")
+					var/choice = tgalert(user, "您更喜欢“热键”还是“经典”默认设置？", "设置按键绑定", "热键", "经典", "取消")
+					if(choice == "取消")
 						ShowChoices(user)
 						return
-					hotkeys = (choice == "Hotkey")
+					hotkeys = (choice == "热键")
 					key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
 					user.client.update_movement_keys()
 				if("chat_on_map")
@@ -2972,11 +2972,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 				if("schizo_voice")
 					toggles ^= SCHIZO_VOICE
 					if(toggles & SCHIZO_VOICE)
-						to_chat(user, "<span class='warning'>You are now a voice.\n\
-										As a voice, you will receive meditations from players asking about game mechanics!\n\
-										Good voices will be rewarded with PQ for answering meditations, while bad ones are punished at the discretion of The Management.</span>")
+						to_chat(user, "<span class='warning'>您现在是一个“声音”。\n\
+										作为声音，您将收到玩家关于游戏机制的冥想提问！\n\
+										回答冥想的好声音将获得 PQ 奖励，而坏声音将由管理层酌情惩罚。</span>")
 					else
-						to_chat(user, span_warning("You are no longer a voice."))
+						to_chat(user, span_warning("您不再是声音。"))
 
 				if("migrants")
 					migrant.show_ui()
@@ -3012,7 +3012,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 				if("save")
 					save_preferences()
 					save_character()
-					to_chat(user, span_notice("CHARACTER SAVED."))
+					to_chat(user, span_notice("角色已保存。"))
 
 				if("load")
 					load_preferences()
@@ -3028,9 +3028,9 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 								S.cd = "/character[i]"
 								S["real_name"] >> name
 								if(!name)
-									name = "Slot[i]"
+									name = "槽位[i]"
 								choices[name] = i
-					var/choice = tgui_input_list(user, "CHOOSE A HERO","ROGUETOWN", choices)
+					var/choice = tgui_input_list(user, "选择一位英雄", "盗贼小镇", choices)
 					if(choice)
 						choice = choices[choice]
 						if(!load_character(choice))
@@ -3348,7 +3348,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	if(!namedata)
 		return
 
-	var/raw_name = input(user, "Choose your character's [namedata["qdesc"]]:","Character Preference") as text|null
+	var/raw_name = input(user, "选择您角色的[namedata["qdesc"]]：","角色偏好") as text|null
 	if(!raw_name)
 		if(namedata["allow_null"])
 			custom_names[name_id] = get_default_name(name_id)
@@ -3357,15 +3357,15 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	else
 		var/sanitized_name = reject_bad_name(raw_name,namedata["allow_numbers"])
 		if(!sanitized_name)
-			to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z,[namedata["allow_numbers"] ? ",0-9," : ""] -, ' and .</font>")
+			to_chat(user, "<font color='red'>无效名称。名称长度应为2到[MAX_NAME_LEN]个字符，只能包含 A-Z, a-z,[namedata["allow_numbers"] ? ",0-9," : ""] -, ' 和 .。</font>")
 			return
 		else
 			custom_names[name_id] = sanitized_name
 
 /// Resets the client's keybindings. Asks them for which
 /datum/preferences/proc/force_reset_keybindings()
-	var/choice = tgalert(parent.mob, "Your basic keybindings need to be reset, the custom keybinds you've set will remain. Would you prefer 'hotkey' or 'classic TG' mode? DO NOT CLICK CLASSIC UNLESS YOU KNOW WHAT YOU'RE DOING.", "Reset keybindings", "Hotkey", "Classic")
-	hotkeys = (choice != "Classic")
+	var/choice = tgalert(parent.mob, "您的基本按键绑定需要重置，您设置的自定义按键绑定将保留。您更喜欢“热键”模式还是“经典 TG”模式？除非您确切知道自己在做什么，否则不要点击“经典”。", "重置按键绑定", "热键", "经典")
+	hotkeys = (choice != "经典")
 	force_reset_keybindings_direct(hotkeys)
 
 /// Does the actual reset
@@ -3392,12 +3392,12 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	var/find_index = findtext(value, "https://")
 	if(find_index != 1)
 		if(!silent)
-			to_chat(user, "<span class='warning'>Your link must be https!</span>")
+			to_chat(user, "<span class='warning'>您的链接必须是 https！</span>")
 		return FALSE
 
 	if(!findtext(value, ".") || findtext(value, "<") || findtext(value, ">") || findtext(value, "]") || findtext(value, "\["))	//there is no link in the world that would ever need < or >
 		if(!silent)
-			to_chat(user, "<span class='warning'>Invalid link!</span>")
+			to_chat(user, "<span class='warning'>无效链接！</span>")
 		return FALSE
 	var/list/value_split = splittext(value, ".")
 
@@ -3405,13 +3405,13 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	var/extension = value_split[length(value_split)]
 	if(!(extension in valid_extensions))
 		if(!silent)
-			to_chat(usr, "<span class='warning'>The link must be one of the following extensions: '[english_list(valid_extensions)]'</span>")
+			to_chat(usr, "<span class='warning'>链接必须是以下扩展名之一：“[english_list(valid_extensions)]”</span>")
 		return FALSE
 
 	find_index = findtext(value, link_regex)
 	if(find_index != 9)
 		if(!silent)
-			to_chat(usr, "<span class='warning'>The link must be hosted on one of the following sites: 'Gyazo, Lensdump, Imgbox, Catbox, Filegarden'</span>")
+			to_chat(usr, "<span class='warning'>链接必须托管在以下站点之一：Gyazo、Lensdump、Imgbox、Catbox、Filegarden</span>")
 		return FALSE
 	return TRUE
 
@@ -3427,26 +3427,26 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	if(V.desc)
 		dat += "<font size = 3>[span_purple(V.desc)]</font><br>"
 	if(length(V.added_skills))
-		dat += "<font color = '#a3e2ff'><font size = 3>This Virtue adds the following skills: <br>"
+		dat += "<font color = '#a3e2ff'><font size = 3>此美德增加以下技能：<br>"
 		for(var/list/L in V.added_skills)
 			var/name
 			if(ispath(L[1],/datum/skill))
 				var/datum/skill/S = L[1]
 				name = initial(S.name)
-			dat += "["\Roman[L[2]]"] level[L[2] > 1 ? "s" : ""] of <b>[name]</b>[L[3] ? ", up to <b>[SSskills.level_names_plain[L[3]]]</b>" : ""] <br>"
+			dat += "["\Roman[L[2]]"] 级[L[2] > 1 ? "" : ""] of <b>[name]</b>[L[3] ? ", 最高达到 <b>[SSskills.level_names_plain[L[3]]]</b>" : ""] <br>"
 		dat += "</font>"
 	if(length(V.added_traits))
-		dat += "<font color = '#a3ffe0'><font size = 3>This Virtue grants the following traits: <br>"
+		dat += "<font color = '#a3ffe0'><font size = 3>此美德赋予以下特征：<br>"
 		for(var/TR in V.added_traits)
 			dat += "[TR] — <font size = 2>[GLOB.roguetraits[TR]]</font><br>"
 		dat += "</font>"
 	if(length(V.added_stashed_items))
-		dat += "<font color = '#eeffa3'><font size = 3>This Virtue adds the following items to your stash: <br>"
+		dat += "<font color = '#eeffa3'><font size = 3>此美德向您的储藏箱添加以下物品：<br>"
 		for(var/I in V.added_stashed_items)
 			dat += "<i>[I]</i> <br>"
 		dat += "</font>"
 	if(V.custom_text)
-		dat += "<font color = '#ffffff'><font size = 3>This Virtue has this special behaviour: <br>"
+		dat += "<font color = '#ffffff'><font size = 3>此美德具有以下特殊行为：<br>"
 		dat += "[V.custom_text]"
 		dat += "</font>"
 	return dat

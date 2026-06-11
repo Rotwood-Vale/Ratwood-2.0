@@ -41,7 +41,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	if (istype(src, /obj/structure/englauncher))
 		var obj/structure/englauncher/launchercheck = src
 		if(launchercheck.locked)
-			to_chat(user, span_warning("It's locked!"))
+			to_chat(user, span_warning("它锁住了！"))
 			playsound(loc, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 			return
 	//check if the buffer is a trigger or reaction
@@ -58,24 +58,24 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 
 	// no linking two levers together
 	if ((trigger_structure && trigger_buffer) && !(src == multitool.buffer))
-		to_chat(user, "You can't link two triggers together")
+		to_chat(user, "你不能把两个触发器直接连在一起")
 		return
 
 	//no linking two gates together
 	if ((reaction_buffer && reaction_structure) && !(src == multitool.buffer))
-		to_chat(user, "You can't link two signal receivers directly together")
+		to_chat(user, "你不能把两个信号接收器直接连在一起")
 		return
 
 	//check the skill level, someone needs a bit of engineering skill at least
 	if(user.get_skill_level(/datum/skill/craft/engineering) < 3)
-		to_chat(user, span_warning("I have no idea how to use [multitool]!"))
+		to_chat(user, span_warning("我完全不知道该怎么用[multitool]！"))
 		return
-	user.visible_message("[user] starts tinkering with [src].", "You start tinkering with [src].")
+	user.visible_message("[user]开始校准[src]。", "我开始校准[src]。")
 	if(!do_after(user, 3 SECONDS, src))
 		return
 
 	if (reaction_structure && !guildmasteroverride && src.redstone_attached.len >= 1 ) //checks if our target is a gate or trap door with prior connections
-		to_chat(user, "Already linked to another network") //prevents multiple linkings unless its the guildmaster's wrench
+		to_chat(user, "已经连接到另一套网络了") //prevents multiple linkings unless its the guildmaster's wrench
 		return
 
 	if(isstructure(multitool.buffer))
@@ -86,26 +86,26 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 					O.redstone_attached -= src
 					redstone_attached -= O
 				GLOB.redstone_objs -= src
-				to_chat(user, "I wipe out all connections to [src]")
+				to_chat(user, "我清除了[src]的全部连接")
 			else
-				to_chat(user, "[src] cannot be calibrated to itself")
+				to_chat(user, "[src]不能校准到自身。")
 			return
 		if (reaction_structure && !guildmasteroverride && src.redstone_attached.len >= 1) //checks if a structure is a gate or trap door with prior connections
-			to_chat(user, "Already linked to another network") //prevent multiple linkings unless it's the guildmaster wrench
+			to_chat(user, "已经连接到另一套网络了") //prevent multiple linkings unless it's the guildmaster wrench
 			return
 		if (reaction_buffer && !guildmasteroverride && buffer_structure.redstone_attached.len >= 1) //checks if the buffer is a gate or trapdoor with prior connections
-			to_chat(user, "Already linked to another network") //prevent multiple linkings unless it's the guildmaster wrench
+			to_chat(user, "已经连接到另一套网络了") //prevent multiple linkings unless it's the guildmaster wrench
 			//we do this check incase someone linked something with another wrench
 			return
 		buffer_structure.redstone_attached |= src
 		redstone_attached |= buffer_structure
 		GLOB.redstone_objs |= src
 		GLOB.redstone_objs |= buffer_structure
-		to_chat(user, "You calibrate [src] to the output of [buffer_structure].")
+		to_chat(user, "我将[src]校准到[buffer_structure]的输出上。")
 		if (reaction_buffer && !guildmasteroverride) //is the buffer a gate or a trap door that should only have one connection?
 			multitool.remove_buffer(multitool.buffer) //clean up any structure from the buffer if its not a lever or plate, unless this is the guildmaster wrench
 	else
-		to_chat(user, "You store the internal schematics of [src] on [multitool].")
+		to_chat(user, "我把[src]的内部线路图存进了[multitool]。")
 		multitool.set_buffer(src)
 	multitool.charge_deduction(src, user, 1)
 
@@ -134,8 +134,8 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	return
 
 /obj/structure/lever
-	name = "lever"
-	desc = "I want to pull it."
+	name = "拉杆"
+	desc = "我想拉下它。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "leverfloor0"
 	density = FALSE
@@ -149,7 +149,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 		var/mob/living/L = user
 		L.changeNext_move(CLICK_CD_MELEE)
 		var/used_time = 100 - (L.STASTR * 10)
-		user.visible_message(span_warning("[user] pulls the lever."))
+		user.visible_message(span_warning("[user]拉下了拉杆。"))
 		log_game("[key_name(user)] pulled the lever with redstone id \"[redstone_id]\"")
 		if(do_after(user, used_time, target = user))
 			for(var/obj/structure/O in redstone_attached)
@@ -162,32 +162,32 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	var/obj/item = user.get_active_held_item()
 	if(user.used_intent.type == /datum/intent/chisel )
 		if (user.get_skill_level(/datum/skill/craft/engineering) <= 3)
-			to_chat(user, span_warning("I need more skill to carve a name into this lever."))
+			to_chat(user, span_warning("我需要更高的技巧，才能在这个拉杆上刻名字。"))
 			return
 		playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
-		user.visible_message("<span class='info'>[user] Carves a name into the lever.</span>")
+		user.visible_message("<span class='info'>[user]开始在拉杆上刻名字。</span>")
 		if(do_after(user, 10))
 			var/levername
-			levername = input("What name would you like to carve into the lever?")
+			levername = input("你想在这个拉杆上刻什么名字？")
 			if (levername)
-				name = levername + "(lever)"
-				desc = "a lever with a name carved into it"
+				name = levername + "（拉杆）"
+				desc = "一个刻着名字的拉杆"
 			else
-				name = "lever"
-				desc = "a lever with a carving scratched out"
+				name = "拉杆"
+				desc = "一个原有刻字被刮掉的拉杆"
 			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 		return
 	else if(istype(item, /obj/item/rogueweapon/chisel/assembly))
-		to_chat(user, span_warning("You most use both hands to rename doors."))
+		to_chat(user, span_warning("你必须空出双手才能给门改名。"))
 
 /obj/structure/lever/onkick(mob/user)
 	if(isliving(user))
 		var/mob/living/L = user
 		L.changeNext_move(CLICK_CD_MELEE)
 		if(HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
-			user.visible_message("<span class='warning'>[user] slaps the lever with [user.p_their()] tail!</span>")
+			user.visible_message("<span class='warning'>[user]用[user.p_their()]的尾巴拍打了拉杆！</span>")
 		else
-			user.visible_message("<span class='warning'>[user] kicks the lever!</span>")
+			user.visible_message("<span class='warning'>[user]踢了拉杆一脚！</span>")
 		playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
 		if(prob(L.STASTR * 4))
 			for(var/obj/structure/O in redstone_attached)
@@ -222,7 +222,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	if(isliving(user))
 		var/mob/living/L = user
 		L.changeNext_move(CLICK_CD_MELEE)
-		user.visible_message("<span class='warning'>[user] presses a hidden button.</span>")
+		user.visible_message("<span class='warning'>[user]按下了一个隐藏按钮。</span>")
 		user.log_message("pulled the lever with redstone id \"[redstone_id]\"", LOG_GAME)
 		for(var/obj/structure/O in redstone_attached)
 			spawn(0) O.redstone_triggered(user)
@@ -233,8 +233,8 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	return FALSE
 
 /obj/structure/pressure_plate //vanderlin port
-	name = "pressure plate"
-	desc = "Be careful. Stepping on this could either mean a bomb exploding or a door closing on you."
+	name = "压力板"
+	desc = "小心点。踩上去之后，要么是炸弹爆炸，要么是门在你脸上砸下来。"
 	icon = 'icons/roguetown/misc/traps.dmi'
 	icon_state = "pressureplate"
 	max_integrity = 45 // so it gets destroyed when used to explode a bomb
@@ -248,7 +248,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 		return
 	if(isliving(AM))
 		var/mob/living/L = AM
-		to_chat(L, "<span class='info'>I feel something click beneath me.</span>")
+		to_chat(L, "<span class='info'>我感觉脚下有什么咔哒响了一声。</span>")
 		AM.log_message("has activated a pressure plate", LOG_GAME)
 		playsound(src, 'sound/misc/pressurepad_down.ogg', 35, extrarange = 2)
 		triggerplate()
@@ -263,39 +263,39 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	var/obj/item = user.get_active_held_item()
 	if(istype(item,/obj/item/natural/cloth))
 		if(alpha<36)
-			to_chat(user, span_warning("I wipe away the dirt concealing the [name]"))
+			to_chat(user, span_warning("我擦掉了遮住[name]的泥土"))
 			if(do_after(user, 10))
 				alpha = 255
 			return
 	if(istype(item,/obj/item/natural/dirtclod))
 		if(alpha>= 36)
-			to_chat(user, span_warning("I begin to conceal the [name]"))
+			to_chat(user, span_warning("我开始把[name]重新掩藏起来"))
 			if(do_after(user, 10))
 				alpha = 35
 				qdel(item)
 			return
 		else
-			to_chat(user, span_warning("[name] is already concealed"))
+			to_chat(user, span_warning("[name]已经被掩藏好了"))
 			return
 	if(user.used_intent.type == /datum/intent/chisel )
 		if (user.get_skill_level(/datum/skill/craft/engineering) <= 3)
-			to_chat(user, span_warning("I need more skill to carve a name into this plate."))
+			to_chat(user, span_warning("我需要更高的技巧，才能在这个压力板上刻名字。"))
 			return
 		playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
-		user.visible_message("<span class='info'>[user] Carves a name into the plate.</span>")
+		user.visible_message("<span class='info'>[user]在压力板上刻下了名字。</span>")
 		if(do_after(user, 10))
 			var/platename
-			platename = input("What name would you like to carve into the plate?")
+			platename = input("你想在这个压力板上刻什么名字？")
 			if (platename)
-				name = platename + "(plate)"
-				desc = "a plate with a name carved into it"
+				name = platename + "（压力板）"
+				desc = "一块刻着名字的板"
 			else
-				name = "plate"
-				desc = "a plate with a carving scratched out"
+				name = "板"
+				desc = "一块原有刻字被刮掉的板"
 			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 		return
 	else if(istype(item, /obj/item/rogueweapon/chisel/assembly))
-		to_chat(user, span_warning("You most use both hands to rename plates."))
+		to_chat(user, span_warning("你必须空出双手才能给压力板改名。"))
 
 
 /*
@@ -308,8 +308,8 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 */
 
 /obj/structure/englauncher
-	name = "Engineer's Launcher"
-	desc = "A engineering contraption made to launch various objects in the direction its pointed."
+	name = "工程师发射器"
+	desc = "一种工程机关，能把各种东西朝它所指的方向发射出去。"
 	icon = 'icons/roguetown/misc/engineering_structure.dmi'
 	icon_state = "activator"
 	max_integrity = 45 // so it gets destroyed when used to explode a bomb
@@ -370,29 +370,29 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 /obj/structure/englauncher/attack_hand(mob/user)
 	. = ..()
 	if(locked)
-		to_chat(user, span_warning("It's locked!"))
+		to_chat(user, span_warning("它锁住了！"))
 		playsound(loc, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		return
 	var/obj/item = user.get_active_held_item()
 	if(user.used_intent.type == /datum/intent/chisel )
 		if (user.get_skill_level(/datum/skill/craft/engineering) <= 3)
-			to_chat(user, span_warning("I need more skill to carve a name into this launcher."))
+			to_chat(user, span_warning("我需要更高的技巧，才能在这个发射器上刻名字。"))
 			return
 		playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
-		user.visible_message("<span class='info'>[user] Carves a name into the launcher.</span>")
+		user.visible_message("<span class='info'>[user]在发射器上刻下了名字。</span>")
 		if(do_after(user, 10))
 			var/launchername
-			launchername = input("What name would you like to carve into the launcher?")
+			launchername = input("你想在这个发射器上刻什么名字？")
 			if (launchername)
-				name = launchername + "(launcher)"
-				desc = "a launcher with a name carved into it"
+				name = launchername + "（发射器）"
+				desc = "一个刻着名字的发射器"
 			else
-				name = "engineer's launcher"
-				desc = "a launcher with a carving scratched out"
+				name = "工程师发射器"
+				desc = "一个原有刻字被刮掉的发射器"
 			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 		return
 	else if(istype(item, /obj/item/rogueweapon/chisel/assembly))
-		to_chat(user, span_warning("You most use both hands to rename the launcher."))
+		to_chat(user, span_warning("你必须空出双手才能给发射器改名。"))
 	playsound(loc, 'sound/misc/keyboard_enter.ogg', 100, FALSE, -1)
 	sleep(7)
 	if(containment)
@@ -410,13 +410,13 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	var/obj/item = user.get_active_held_item()
 	if(istype(item, /obj/item/roguekey) || istype(item, /obj/item/storage/keyring))
 		if(locked)
-			to_chat(user, span_warning("It won't turn this way. Try turning to the left."))
+			to_chat(user, span_warning("它没法往这边转。试着往左转。"))
 			launcher_rattle()
 			return
 		trykeylock(item, user)
 		return
 	if(locked)
-		to_chat(user, span_warning("It's locked!"))
+		to_chat(user, span_warning("它锁住了！"))
 		playsound(loc, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		return
 	if (user.rmb_intent)
@@ -424,25 +424,25 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 			sleep(1)
 			switch(firedirection)
 				if(WEST)
-					say("Mode: NORTH")
+					say("模式：北")
 					playsound(loc, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 					firedirection = NORTH
 					firedirectiontwo = NORTHEAST
 					firedirectionthree = NORTHWEST
 				if(NORTH)
-					say("Mode: EAST")
+					say("模式：东")
 					playsound(loc, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 					firedirection = EAST
 					firedirectiontwo = NORTHEAST
 					firedirectionthree = SOUTHEAST
 				if(EAST)
-					say("Mode: SOUTH")
+					say("模式：南")
 					playsound(loc, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					firedirection = SOUTH
 					firedirectiontwo = SOUTHEAST
 					firedirectionthree = SOUTHWEST
 				if(SOUTH)
-					say("Mode: WEST")
+					say("模式：西")
 					playsound(loc, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					firedirection = WEST
 					firedirectiontwo = NORTHWEST
@@ -451,29 +451,29 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 			sleep(1)
 			switch(spreadmode)
 				if(TRUE)
-					say("Shot: SINGLE")
+					say("射击：单发")
 					playsound(loc, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					spreadmode = FALSE
 				if(FALSE)
-					say("Shot: SPREAD")
+					say("射击：散射")
 					playsound(loc, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					spreadmode = TRUE
 		else
-			say("WRENCH OR HAMMER REQUIRED")
+			say("需要扳手或锤子")
 		return
 
 /obj/structure/englauncher/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_FAST)
 	if(istype(I, /obj/item/roguekey) || istype(I, /obj/item/storage/keyring))
 		if(!locked)
-			to_chat(user, span_warning("It won't turn this way. Try turning to the right."))
+			to_chat(user, span_warning("这个装置已经没上锁了。"))
 			playsound(src, rattlesound, 100)
 			return
 		else
 			trykeylock(I, user)
 			return
 	if(locked)
-		to_chat(user, span_warning("It's locked!"))
+		to_chat(user, span_warning("它被锁住了。"))
 		playsound(loc, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		return
 	if(!containment && (istype(I,/obj/item/reagent_containers) || istype(I, /obj/item/bomb) || istype(I, /obj/item/flint))) //loading in items
@@ -554,9 +554,9 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	if(!keylock)
 		return
 	if(lockbroken)
-		to_chat(user, span_warning("The lock to this device is broken."))
+		to_chat(user, span_warning("这个装置的锁已经坏了。"))
 	if(lockhash == 0)
-		to_chat(user, span_warning("There is no lock installed"))
+		to_chat(user, span_warning("这个装置根本没有装锁。"))
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	if(istype(I,/obj/item/storage/keyring))
@@ -574,7 +574,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 			else
 				if(user.cmode)
 					launcher_rattle()
-		to_chat(user, span_warning("None of the keys on my keyring go to this device."))
+		to_chat(user, span_warning("我钥匙串上没有一把钥匙能开这个装置。"))
 		launcher_rattle()
 		return
 	else
@@ -583,19 +583,19 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 			lock_toggle(user)
 			return
 		else
-			to_chat(user, span_warning("This is not the correct key that goes to this device."))
+			to_chat(user, span_warning("这不是能打开这个装置的正确钥匙。"))
 			launcher_rattle()
 		return
 
 /obj/structure/englauncher/proc/lock_toggle(mob/user)
 	if(locked)
-		user.visible_message(span_warning("[user] unlocks [src]."), \
-			span_notice("I unlock [src]."))
+		user.visible_message(span_warning("[user]打开了[src]的锁。"), \
+			span_notice("我打开了[src]的锁。"))
 		playsound(src, unlocksound, 100)
 		locked = 0
 	else
-		user.visible_message(span_warning("[user] locks [src]."), \
-			span_notice("I lock [src]."))
+		user.visible_message(span_warning("[user]锁上了[src]。"), \
+			span_notice("我锁上了[src]。"))
 		playsound(src, locksound, 100)
 		locked = 1
 
@@ -607,8 +607,8 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	animate(pixel_x = oldx, time = 0.5)
 
 /obj/structure/floordoor
-	name = "floorhatch"
-	desc = "A handy floor hatch for people who need privacy upstairs."
+	name = "地板活门"
+	desc = "一个方便的地板活门，适合给楼上的人留点隐私。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "floorhatch1"
 	density = FALSE
@@ -707,27 +707,27 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	var/obj/item = user.get_active_held_item()
 	if(user.used_intent.type == /datum/intent/chisel )
 		if (user.get_skill_level(/datum/skill/craft/engineering) <= 3)
-			to_chat(user, span_warning("I need more skill to carve a name into this hatch."))
+			to_chat(user, span_warning("我需要更高的技巧，才能在这个活门上刻名字。"))
 			return
 		playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
-		user.visible_message("<span class='info'>[user] Carves a name into the plate.</span>")
+		user.visible_message("<span class='info'>[user]在活门上刻下了名字。</span>")
 		if(do_after(user, 10))
 			var/hatchname
-			hatchname = input("What name would you like to carve into the hatch?")
+			hatchname = input("你想在这个活门上刻什么名字？")
 			if (hatchname)
-				name = hatchname + "(hatch)"
-				desc = "a hatch with a name carved into it"
+				name = hatchname + "（活门）"
+				desc = "一个刻着名字的活门"
 			else
 				name = ""
-				desc = "a hatch with a carving scratched out"
+				desc = "一个原有刻字被刮掉的活门"
 			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 		return
 	else if(istype(item, /obj/item/rogueweapon/chisel/assembly))
-		to_chat(user, span_warning("You most use both hands to rename the plate."))
+		to_chat(user, span_warning("你必须空出双手才能给这个活门改名。"))
 
 /obj/structure/kybraxor
-	name = "Kybraxor the Devourer"
-	desc = "The mad duke's hungriest pet."
+	name = "吞噬者凯布拉索"
+	desc = "疯公爵最饥饿的宠物。"
 	density = FALSE
 	nomouseover = TRUE
 	icon = 'icons/roguetown/misc/96x96.dmi'
@@ -759,13 +759,13 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 		changing_state = FALSE
 
 /obj/structure/kybraxor/psy
-	name = "Kybraxor the Vaultkeeper"
+	name = "凯布拉索之门"
 	redstone_id = "swamp_psy_dungeon"
 
 /obj/structure/lever/cursed
-	name = "Cursed Lever"
+	name = "诅咒拉杆"
 	// color = "e8a3a0" //this breaks for some reason
-	desc = "A lever radiating a sinister aura. Only those of a certain allegiance may touch it."
+	desc = "一根被黑暗力量缠绕的拉杆，不是谁都能碰。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "leverwall0"
 	var/allowed_factions = null // List of factions allowed to use this lever, e.g. list("orcs", "tribe")
@@ -775,7 +775,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 		return
 	var/mob/living/L = user
 	if(src.allowed_factions && (!L.faction || !length(src.allowed_factions & L.faction)))
-		to_chat(user, "<span class='danger'>A dark force repels your hand!</span>")
+		to_chat(user, "<span class='danger'>一股黑暗力量排斥了我！</span>")
 		playsound(src, 'sound/magic/magic_nulled.ogg', 50)
 		return
 	. = ..()
@@ -786,7 +786,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 		return
 	var/mob/living/L = user
 	if(src.allowed_factions && (!L.faction || !length(src.allowed_factions & L.faction)))
-		to_chat(user, "<span class='danger'>A dark force repels your kick!</span>")
+		to_chat(user, "<span class='danger'>一股黑暗力量弹开了我的踢击！</span>")
 		playsound(src, 'sound/magic/magic_nulled.ogg', 50)
 		return
 	. = ..()

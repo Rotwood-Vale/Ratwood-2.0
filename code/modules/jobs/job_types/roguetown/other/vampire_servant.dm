@@ -28,7 +28,7 @@
 	for(var/datum/advclass/CHECKS in SSrole_class_handler.sorted_class_categories[CTAG_LICKER_WRETCH])
 		possible_classes += CHECKS
 
-	var/datum/advclass/C = input(H.client, "What is my class?", "Adventure") as null|anything in possible_classes
+	var/datum/advclass/C = input(H.client, "我属于哪一类？", "冒险职业") as null|anything in possible_classes
 	C.equipme(H)
 
 	H.adjust_skillrank_up_to(/datum/skill/magic/blood, 3, TRUE)

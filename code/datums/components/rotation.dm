@@ -101,7 +101,7 @@
 
 /datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user, list/examine_list)
 	if(rotation_flags & ROTATION_ALTCLICK)
-		examine_list += span_notice("Alt-click to rotate it clockwise.")
+		examine_list += span_notice("按住 Alt 点击可将它顺时针旋转。")
 
 /datum/component/simple_rotation/proc/HandRot(datum/source, mob/user, rotation = default_rotation_direction)
 	if(!can_be_rotated.Invoke(user, rotation) || !can_user_rotate.Invoke(user, rotation))
@@ -139,10 +139,10 @@
 	return !AM.anchored
 
 /datum/component/simple_rotation/proc/default_after_rotation(mob/user, rotation_type)
-	to_chat(user,span_notice("I [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [parent]."))
+	to_chat(user,span_notice("我[rotation_type == ROTATION_FLIP ? "翻转了" : "旋转了"][parent]。"))
 
 /atom/movable/proc/simple_rotate_clockwise()
-	set name = "Rotate Clockwise"
+	set name = "顺时针旋转"
 	set hidden = 1
 	set src in oview(1)
 	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
@@ -150,7 +150,7 @@
 		rotcomp.HandRot(null,usr,ROTATION_CLOCKWISE)
 
 /atom/movable/proc/simple_rotate_counterclockwise()
-	set name = "Rotate Counter-Clockwise"
+	set name = "逆时针旋转"
 	set hidden = 1
 	set src in oview(1)
 	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
@@ -158,7 +158,7 @@
 		rotcomp.HandRot(null,usr,ROTATION_COUNTERCLOCKWISE)
 
 /atom/movable/proc/simple_rotate_flip()
-	set name = "Flip"
+	set name = "翻转"
 	set hidden = 1
 	set src in oview(1)
 	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)

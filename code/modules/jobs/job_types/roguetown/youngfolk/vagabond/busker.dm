@@ -1,7 +1,7 @@
 /datum/advclass/vagabond_busker
-	name = "Busker"
-	examine_name = "Beggar"
-	tutorial = "You've lost pretty much everything - everything but your instrument and an adequate ability to play it. Maybe a jaunty tune will send a few zennies your way - whether through pitied gratitute, or by distracting long enough for you to swipe a coinpurse."
+	name = "街头艺人"
+	examine_name = "乞丐"
+	tutorial = "你几乎失去了一切, 除了手里的乐器，还有勉强够用的演奏本事。也许一支欢快小调就能给你招来几枚钱币，不管是出于怜悯的打赏，还是让人分神得足够久，好让你顺走他们的钱袋。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/vagabond/busker
@@ -40,39 +40,39 @@
 	if(prob(10))
 		r_hand = /obj/item/rogue/instrument/flute
 
-	var/weapons = list("Accordion","Bagpipe", "Banjo","Drum","Flute","Guitar","Harmonica","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
-	var/weapon_choice = input("Choose your instrument.", "TAKE UP ARMS") as anything in weapons
+	var/weapons = list("手风琴","风笛", "班卓琴","鼓","长笛","吉他","口琴","竖琴","手摇琴","口簧琴","鲁特琴","圣咏琴","三味线","小号","中提琴","咏声护符")
+	var/weapon_choice = input("选择你的乐器。", "拿起家伙") as anything in weapons
 	H.set_blindness(0)
 	switch(weapon_choice)
-		if("Accordion")
+		if("手风琴")
 			backr = /obj/item/rogue/instrument/accord
-		if("Bagpipe")
+		if("风笛")
 			backr = /obj/item/rogue/instrument/bagpipe
-		if("Banjo")
+		if("班卓琴")
 			backr = /obj/item/rogue/instrument/banjo
-		if("Drum")
+		if("鼓")
 			backr = /obj/item/rogue/instrument/drum
-		if("Flute")
+		if("长笛")
 			backr = /obj/item/rogue/instrument/flute
-		if("Guitar")
+		if("吉他")
 			backr = /obj/item/rogue/instrument/guitar
-		if("Harmonica")
+		if("口琴")
 			backr = /obj/item/rogue/instrument/harmonica
-		if("Harp")
+		if("竖琴")
 			backr = /obj/item/rogue/instrument/harp
-		if("Hurdy-Gurdy")
+		if("手摇琴")
 			backr = /obj/item/rogue/instrument/hurdygurdy
-		if("Jaw Harp")
+		if("口簧琴")
 			backr = /obj/item/rogue/instrument/jawharp
-		if("Lute")
+		if("鲁特琴")
 			backr = /obj/item/rogue/instrument/lute
-		if("Psyaltery")
+		if("圣咏琴")
 			backr = /obj/item/rogue/instrument/psyaltery
-		if("Shamisen")
+		if("三味线")
 			backr = /obj/item/rogue/instrument/shamisen
-		if("Trumpet")
+		if("小号")
 			backr = /obj/item/rogue/instrument/trumpet
-		if("Viola")
+		if("中提琴")
 			backr = /obj/item/rogue/instrument/viola
-		if("Vocal Talisman")
+		if("咏声护符")
 			backr = /obj/item/rogue/instrument/vocals

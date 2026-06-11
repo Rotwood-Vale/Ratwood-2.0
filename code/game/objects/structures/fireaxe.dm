@@ -1,6 +1,6 @@
 /obj/structure/fireaxecabinet
-	name = "Sword rack"
-	desc = "A fitting resting place for a sword etched and scratched by tales long past."
+	name = "剑架"
+	desc = "一把历经久远传说、刻痕斑驳之剑的恰当归处。"
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "fireaxe"
 	anchored = TRUE
@@ -34,12 +34,12 @@
 		if(istype(I, /obj/item/rogueweapon/sword/long/heirloom) && !heirloom)
 			var/obj/item/rogueweapon/sword/long/heirloom/F = I
 			if(F.wielded)
-				to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
+				to_chat(user, "<span class='warning'>先把[F.name]解除双手持握。</span>")
 				return
 			if(!user.transferItemToLoc(F, src))
 				return
 			heirloom = F
-			to_chat(user, "<span class='notice'>I place the [F.name] back in the [name].</span>")
+			to_chat(user, "<span class='notice'>我把[F.name]放回了[name]里。</span>")
 			update_icon()
 			return
 		else if(!obj_broken)
@@ -79,12 +79,12 @@
 		if(heirloom)
 			user.put_in_hands(heirloom)
 			heirloom = null
-			to_chat(user, "<span class='notice'>I take the sword from the [name].</span>")
+			to_chat(user, "<span class='notice'>我从[name]里取出了这把剑。</span>")
 			src.add_fingerprint(user)
 			update_icon()
 			return
 	if(locked)
-		to_chat(user, "<span class='warning'>The [name] won't budge!</span>")
+		to_chat(user, "<span class='warning'>[name]纹丝不动！</span>")
 		return
 	else
 		open = !open
@@ -93,7 +93,7 @@
 
 /obj/structure/fireaxecabinet/attack_tk(mob/user)
 	if(locked)
-		to_chat(user, "<span class='warning'>The [name] won't budge!</span>")
+		to_chat(user, "<span class='warning'>[name]纹丝不动！</span>")
 		return
 	else
 		open = !open
@@ -114,20 +114,20 @@
 		add_overlay("glass_raised")
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
-	to_chat(user, "<span class='notice'>Resetting circuitry...</span>")
+	to_chat(user, "<span class='notice'>正在重置电路……</span>")
 	playsound(src, 'sound/blank.ogg', 50, TRUE)
 	if(do_after(user, 20, target = src))
-		to_chat(user, "<span class='notice'>I [locked ? "disable" : "re-enable"] the locking modules.</span>")
+		to_chat(user, "<span class='notice'>我[locked ? "停用了" : "重新启用了"]锁定模块。</span>")
 		locked = !locked
 		update_icon()
 
 /obj/structure/fireaxecabinet/verb/toggle_open()
-	set name = "Open/Close"
+	set name = "打开/关闭"
 	set hidden = 1
 	set src in oview(1)
 
 	if(locked)
-		to_chat(usr, "<span class='warning'>The [name] won't budge!</span>")
+		to_chat(usr, "<span class='warning'>[name]纹丝不动！</span>")
 		return
 	else
 		open = !open
@@ -139,8 +139,8 @@
 	pixel_y = 32
 
 /obj/structure/fireaxecabinet/unforgotten
-	name = "unforgotten blade mantle"
-	desc = "A fitting resting place for a Psydonian sword etched and scratched by endurance long past."
+	name = "未忘之刃剑架"
+	desc = "一柄历经漫长岁月、刻痕累累的普赛顿长剑，正适合安放于此。"
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "fireaxe"
 	heirloom = /obj/item/rogueweapon/greatsword/bsword/psy/unforgotten/
@@ -167,12 +167,12 @@
 		if(istype(I, /obj/item/rogueweapon/greatsword/bsword/psy/unforgotten/) && !heirloom)
 			var/obj/item/rogueweapon/greatsword/bsword/psy/unforgotten/F = I
 			if(F.wielded)
-				to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
+				to_chat(user, "<span class='warning'>先把[F.name]解除双手持握。</span>")
 				return
 			if(!user.transferItemToLoc(F, src))
 				return
 			heirloom = F
-			to_chat(user, "<span class='notice'>I place the [F.name] back in the [name].</span>")
+			to_chat(user, "<span class='notice'>我把[F.name]放回了[name]里。</span>")
 			desc = F.desc
 			update_icon()
 			return

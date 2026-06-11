@@ -6,11 +6,11 @@
 	resilience = TRAUMA_RESILIENCE_LOBOTOMY
 
 /datum/brain_trauma/magic/lumiphobia
-	name = "Lumiphobia"
+	name = "惧光症"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_warning("I feel a craving for darkness.")
-	lose_text = span_notice("Light no longer bothers you.")
+	gain_text = span_warning("我开始渴求黑暗。")
+	lose_text = span_notice("光亮不再困扰我了。")
 	var/next_damage_warning = 0
 
 /datum/brain_trauma/magic/lumiphobia/on_life()
@@ -20,16 +20,16 @@
 		var/light_amount = T.get_lumcount()
 		if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD) //if there's enough light, start dying
 			if(world.time > next_damage_warning)
-				to_chat(owner, span_warning("<b>The light burns you!</b>"))
+				to_chat(owner, span_warning("<b>光亮正在灼烧我！</b>"))
 				next_damage_warning = world.time + 100 //Avoid spamming
 			owner.take_overall_damage(0,3)
 
 /datum/brain_trauma/magic/poltergeist
-	name = "Poltergeist"
+	name = "喧灵"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_warning("I feel a hateful presence close to you.")
-	lose_text = span_notice("I feel the hateful presence fade away.")
+	gain_text = span_warning("我感到一股充满恶意的存在正逼近我。")
+	lose_text = span_notice("我感到那股充满恶意的存在消散了。")
 
 /datum/brain_trauma/magic/poltergeist/on_life()
 	..()
@@ -46,11 +46,11 @@
 			throwing.throw_at(owner, 8, 2)
 
 /datum/brain_trauma/magic/antimagic
-	name = "Athaumasia"
+	name = "拒魔妄想"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_notice("I realize that magic cannot be real.")
-	lose_text = span_notice("I realize that magic might be real.")
+	gain_text = span_notice("我意识到魔法不可能是真实存在的。")
+	lose_text = span_notice("我意识到魔法也许真的存在。")
 
 /datum/brain_trauma/magic/antimagic/on_gain()
 	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, TRAUMA_TRAIT)

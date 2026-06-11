@@ -1,6 +1,6 @@
 /obj/item/roguebin
-	name = "wood bin"
-	desc = "A washbin, a trashbin, a bloodbin... Your choices are limitless."
+	name = "木桶"
+	desc = "洗衣桶、垃圾桶、血桶...用途无穷无尽。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "washbin1"
 	var/base_state
@@ -59,20 +59,20 @@
 		if(kover)
 			playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
 			if(HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
-				user.visible_message(span_warning("[user] tailslams [src]!"), \
-					span_warning("I tailslam [src]!"))
+				user.visible_message(span_warning("[user]用尾巴猛击了[src]！"), \
+					span_warning("我用尾巴猛击了 [src]！"))
 			else
-				user.visible_message(span_warning("[user] kicks [src]!"), \
-					span_warning("I kick [src]!"))
+				user.visible_message(span_warning("[user]踢了[src]！"), \
+					span_warning("我踢了[src]！"))
 			return
 		if(prob(L.STASTR * 8))
 			playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
 			if(HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
-				user.visible_message(span_warning("[user] slaps [src] over with [user.p_their()] tail!"), \
-					span_warning("I tailslap [src], toppling it over!"))
+				user.visible_message(span_warning("[user]用尾巴扫翻了[src]！"), \
+					span_warning("我用尾巴扫翻了[src]！"))
 			else
-				user.visible_message(span_warning("[user] kicks over [src]!"), \
-					span_warning("I kick over [src]!"))
+				user.visible_message(span_warning("[user]踢翻了[src]！"), \
+					span_warning("我踢翻了[src]！"))
 			kover = TRUE
 			chem_splash(loc, 2, list(reagents))
 			var/datum/component/storage/STR = GetComponent(/datum/component/storage)
@@ -84,12 +84,12 @@
 		else
 			playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
 			if(HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
-				user.visible_message(span_warning("[user] tailslams [src]!"), \
-					span_warning("I tailslam [src]!"))
+				user.visible_message(span_warning("[user]用尾巴猛击了[src]！"), \
+					span_warning("我用尾巴猛击了[src]！"))
 			else
 				if(HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
-					user.visible_message(span_warning("[user] kicks [src]!"), \
-						span_warning("I kick [src]!"))
+					user.visible_message(span_warning("[user]踢了[src]！"), \
+						span_warning("我踢了[src]！"))
 
 /obj/item/roguebin/attack_hand(mob/user)
 	var/datum/component/storage/CP = GetComponent(/datum/component/storage)
@@ -103,8 +103,8 @@
 		return
 	if(kover)
 		if(kover)
-			user.visible_message(span_notice("[user] starts to pick up [src]..."), \
-				span_notice("I start to pick up [src]..."))
+			user.visible_message(span_notice("[user]开始扶起[src]..."), \
+				span_notice("我开始扶起[src]..."))
 			if(do_after(user, 30, target = src))
 				kover = FALSE
 				update_icon()
@@ -120,14 +120,14 @@
 			if(!reagents.has_reagent(/datum/reagent/water, 5))
 				removereg = /datum/reagent/water/gross
 				if(!reagents.has_reagent(/datum/reagent/water/gross, 5))
-					to_chat(user, span_warning("No water to wash these stains."))
+					to_chat(user, span_warning("没有水来清洗这些污渍。"))
 					return
 			reagents.remove_reagent(removereg, 5)
 			var/list/wash = list('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg')
 			playsound(user, pick_n_take(wash), 100, FALSE)
 			var/item2wash = user.get_active_held_item()
 			if(!item2wash)
-				user.visible_message(span_info("[user] starts to wash in [src]."))
+				user.visible_message(span_info("[user]开始在[src]里清洗。"))
 				if(do_after(L, 30, target = src))
 					wash_atom(user, CLEAN_STRONG)
 					playsound(user, pick(wash), 100, FALSE)
@@ -136,7 +136,7 @@
 					if(user.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 50)
 						user.adjust_bodytemperature(-50) // washing yourself helps you cool down, not as much as a water tile though
 			else
-				user.visible_message(span_info("[user] starts to wash [item2wash] in [src]."))
+				user.visible_message(span_info("[user]开始在[src]里清洗[item2wash]。"))
 				if(do_after(L, 30, target = src))
 					wash_atom(item2wash, CLEAN_STRONG)
 					playsound(user, pick(wash), 100, FALSE)
@@ -172,11 +172,11 @@
 
 			var/datum/component/anvil_quenchable/existing = ingot.GetComponent(/datum/component/anvil_quenchable)
 			if(!existing)
-				to_chat(user, span_warning("This item isn't finished yet, it requires more work."))
+				to_chat(user, span_warning("这件物品还没完工，需要再加工一下。"))
 				return
 
 			if(!T.hott)
-				to_chat(user, span_warning("The ingot must be hot to temper the metal."))
+				to_chat(user, span_warning("锭必须是热的才能回火处理。"))
 				return
 
 			// Check if we have enough water
@@ -184,7 +184,7 @@
 			if(!reagents.has_reagent(/datum/reagent/water, 5))
 				removereg = /datum/reagent/water/gross
 				if(!reagents.has_reagent(/datum/reagent/water/gross, 5))
-					to_chat(user, span_warning("Need more water to quench in."))
+					to_chat(user, span_warning("需要更多的水来淬火。"))
 					return
 
 			SEND_SIGNAL(ingot, COMSIG_ITEM_QUENCHED, user, src.loc)

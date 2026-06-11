@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/bloodcrawl
-	name = "Blood Crawl"
+	name = "血爬"
 	desc = ""
 	recharge_time = 0
 	clothes_req = FALSE
@@ -19,7 +19,7 @@
 			perform(target)
 			return
 	revert_cast()
-	to_chat(user, span_warning("There must be a nearby source of blood!"))
+	to_chat(user, span_warning("附近必须有可供穿行的血源！"))
 
 /obj/effect/proc_holder/spell/bloodcrawl/perform(obj/effect/decal/cleanable/target, recharge = 1, mob/living/user = usr)
 	if(istype(user))
@@ -32,4 +32,4 @@
 		start_recharge()
 		return
 	revert_cast()
-	to_chat(user, span_warning("I are unable to blood crawl!"))
+	to_chat(user, span_warning("我无法施展血爬！"))

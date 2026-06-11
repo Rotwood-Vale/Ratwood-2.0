@@ -1,6 +1,6 @@
 
 /obj/structure/fluff/littlebanners
-	name = "hanging little banners"
+	name = "悬挂小旗"
 	desc = ""
 	icon = 'modular_hearthstone/icons/obj/decor.dmi'
 	icon_state = "hangingbanners_wr"
@@ -37,7 +37,7 @@
 	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
 		if(!ishuman(usr))
 			return
-		visible_message(span_notice("[usr] tears down [src]."))
+		visible_message(span_notice("[usr]拆除了[src]。"))
 		if(do_after(usr, 30, target = src))
 			playsound(src,'sound/foley/dropsound/cloth_drop.ogg', 100, FALSE)
 			new /obj/item/natural/cloth (get_turf(src))
@@ -49,29 +49,29 @@
 ///Crafting
 
 /datum/crafting_recipe/roguetown/structure/littlebanners
-	name = "fair banners red-white"
+	name = "集市旗帜 红白"
 	result = list(/obj/structure/fluff/littlebanners)
 	reqs = list(/obj/item/natural/cloth = 4, /obj/item/natural/fibers)
-	verbage_simple = "construct"
-	verbage = "constructs"
+	verbage_simple = "搭建"
+	verbage = "搭建"
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/littlebanners/greenblue
-	name = "fair banners green-blue"
+	name = "集市旗帜 绿蓝"
 	result = list(/obj/structure/fluff/littlebanners/greenblue)
 
 /datum/crafting_recipe/roguetown/structure/littlebanners/greenred
-	name = "fair banners green-red"
+	name = "集市旗帜 绿红"
 	result = list(/obj/structure/fluff/littlebanners/greenred)
 
 /datum/crafting_recipe/roguetown/structure/littlebanners/bluewhite
-	name = "fair banners blue-white"
+	name = "集市旗帜 蓝白"
 	result = list(/obj/structure/fluff/littlebanners/bluewhite)
 
 /datum/crafting_recipe/roguetown/structure/littlebanners/greenwhite
-	name = "fair banners green-white"
+	name = "集市旗帜 绿白"
 	result = list(/obj/structure/fluff/littlebanners/greenwhite)
 
 /datum/crafting_recipe/roguetown/structure/littlebanners/bluered
-	name = "fair banners blue-red"
+	name = "集市旗帜 蓝红"
 	result = list(/obj/structure/fluff/littlebanners/bluered)

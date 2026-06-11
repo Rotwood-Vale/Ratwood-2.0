@@ -1,7 +1,7 @@
 
 /obj/item/roguekey
-	name = "key"
-	desc = "An unremarkable iron key."
+	name = "钥匙"
+	desc = "一把毫不起眼的铁钥匙。"
 	icon_state = "iron"
 	icon = 'icons/roguetown/items/keys.dmi'
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
@@ -34,8 +34,8 @@
 			GLOB.lockids[lockid] = lockhash
 
 /obj/item/lockpick
-	name = "lockpick"
-	desc = "A small, sharp piece of metal to aid opening locks in the absence of a key."
+	name = "撬锁器"
+	desc = "一小片锋利的金属，在没有钥匙时可用来开锁。"
 	icon_state = "lockpick"
 	icon = 'icons/roguetown/items/keys.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -53,8 +53,8 @@
 	grid_height = 64
 
 /obj/item/lockpick/goldpin
-	name = "gold hairpin"
-	desc = "Often used by wealthy courtesans and nobility to keep hair and clothing in place."
+	name = "金发簪"
+	desc = "常被富有的交际花与贵族用来固定发丝与衣物。"
 	icon_state = "goldpin"
 	item_state = "goldpin"
 	icon = 'icons/roguetown/clothing/head.dmi'
@@ -91,8 +91,8 @@
 		user.update_icon()
 
 /obj/item/lockpick/goldpin/silver
-	name = "silver hairpin"
-	desc = "Often used by wealthy courtesans and nobility to keep hair and clothing in place. This one's silver - a rarity."
+	name = "银发簪"
+	desc = "常被富有的交际花与贵族用来固定发丝与衣物。这一支是银制的，颇为罕见。"
 	icon_state = "silverpin"
 	item_state = "silverpin"
 	icon = 'icons/roguetown/clothing/head.dmi'
@@ -101,8 +101,8 @@
 	is_silver = TRUE
 
 /obj/item/roguekey/lord
-	name = "master key"
-	desc = "The Lord's key."
+	name = "总钥匙"
+	desc = "领主的钥匙。"
 	icon_state = "bosskey"
 	lockid = "lord"
 	visual_replacement = /obj/item/roguekey/royal
@@ -115,7 +115,7 @@
 		SSroguemachine.key = src
 
 /obj/item/roguekey/lord/proc/anti_stall()
-	src.visible_message(span_warning("The Key of the realm crumbles to dust, the ashes spiriting away in the direction of the Keep."))
+	src.visible_message(span_warning("谷地之钥碎成尘埃，灰烬幽幽飘向要塞的方向。"))
 	SSroguemachine.key = null //Do not harddel.
 	qdel(src) //Anti-stall
 
@@ -131,14 +131,14 @@
 			lockhash = D.lockhash
 
 /obj/item/roguekey/royal
-	name = "Royal Key"
-	desc = "The Key to the royal chambers. It even feels pretentious."
+	name = "王室钥匙"
+	desc = "通往王室寝宫的钥匙，连握在手里都显得高傲。"
 	icon_state = "ekey"
 	lockid = "royal"
 
 /obj/item/roguekey/manor
-	name = "manor key"
-	desc = "This key will open any manor doors."
+	name = "庄园钥匙"
+	desc = "这把钥匙能打开庄园的任意门。"
 	icon_state = "mazekey"
 	lockid = "manor"
 
@@ -179,116 +179,116 @@
 	lockid = "counsil3"
 
 /obj/item/roguekey/heir
-	name = "heir room key"
-	desc = "A highly coveted key belonging to the doors of the heirs of this realm."
+	name = "继承人房间钥匙"
+	desc = "一把令人垂涎的钥匙，属于此地继承人房门。"
 	icon_state = "hornkey"
 	lockid = "heir"
 
 /obj/item/roguekey/garrison
-	name = "town watch key"
-	desc = "This key belongs to the town guards."
+	name = "城卫钥匙"
+	desc = "这把钥匙属于城镇守卫。"
 	icon_state = "spikekey"
 	lockid = "garrison"
 
 /obj/item/roguekey/sergeant
-	name = "sergeant key"
-	desc = "This key belongs to the sergeant of the Men-at-Arms."
+	name = "军士钥匙"
+	desc = "这把钥匙属于武装卫兵的军士。"
 	icon_state = "spikekey"
 	lockid = "sergeant"
 
 /obj/item/roguekey/warden
-	name = "watchtower key"
-	desc = "This key belongs to the wardens."
+	name = "哨塔钥匙"
+	desc = "这把钥匙属于看守。"
 	icon_state = "spikekey"
 	lockid = "warden"
 
 /obj/item/roguekey/dungeon
-	name = "dungeon key"
-	desc = "This key should unlock the rusty bars and doors of the dungeon."
+	name = "地牢钥匙"
+	desc = "这把钥匙应该能打开地牢里生锈的栅栏与门。"
 	icon_state = "rustkey"
 	lockid = "dungeon"
 
 /obj/item/roguekey/vault
-	name = "vault key"
-	desc = "This key opens the mighty vault."
+	name = "金库钥匙"
+	desc = "这把钥匙能打开宏伟的金库。"
 	icon_state = "cheesekey"
 	lockid = "vault"
 
 /obj/item/roguekey/sheriff
-	name = "Knight Captain's key"
-	desc = "This key belongs to the captain of the guard."
+	name = "骑士队长钥匙"
+	desc = "这把钥匙属于卫队长。"
 	icon_state = "cheesekey"
 	lockid = "sheriff"
 
 /obj/item/roguekey/bailiff
-	name = "bailiff's key"
-	desc = "This key belongs to the bailiff."
+	name = "执达吏钥匙"
+	desc = "这把钥匙属于执达吏。"
 	icon_state = "cheesekey"
 	lockid = "sheriff"
 
 /obj/item/roguekey/armory
-	name = "armory key"
-	desc = "This key opens the garrison's armory."
+	name = "军械库钥匙"
+	desc = "这把钥匙能打开驻军军械库。"
 	icon_state = "hornkey"
 	lockid = "armory"
 
 /obj/item/roguekey/knight
-	name = "knight's key"
-	desc = "This is a key to the knight's chambers."
+	name = "骑士钥匙"
+	desc = "这是一把通往骑士居室的钥匙。"
 	icon_state = "ekey"
 	lockid = "knight"
 
 /obj/item/roguekey/merchant
-	name = "merchant's key"
-	desc = "A merchant's key."
+	name = "商人钥匙"
+	desc = "一把商人的钥匙。"
 	icon_state = "cheesekey"
 	lockid = "merchant"
 
 /obj/item/roguekey/shop
-	name = "shop key"
-	desc = "This key opens and closes a shop door."
+	name = "店铺钥匙"
+	desc = "这把钥匙能开启并锁上店门。"
 	icon_state = "ekey"
 	lockid = "shop"
 
 /obj/item/roguekey/townie // For use in round-start available houses in town. Do not use default lockID.
-	name = "town dwelling key"
-	desc = "The key of some townie's home. Hope it's not lost."
+	name = "城镇住宅钥匙"
+	desc = "某位镇民家中的钥匙，希望它没弄丢。"
 	icon_state = "brownkey"
 	lockid = "townie"
 
 /obj/item/roguekey/bath // For use in round-start available bathhouse quarters. Do not use default lockID.
-	name = "bathhouse quarter key"
-	desc = "The key to an employee's quarters. Hope it's not lost."
+	name = "浴场宿舍钥匙"
+	desc = "员工宿舍的钥匙，希望它没弄丢。"
 	icon_state = "brownkey"
 	lockid = "bath"
 
 /obj/item/roguekey/tavern
-	name = "tavern key"
-	desc = "This key should open and close any tavern door."
+	name = "酒馆钥匙"
+	desc = "这把钥匙应当能开关酒馆里的任何门。"
 	icon_state = "hornkey"
 	lockid = "tavern"
 
 /obj/item/roguekey/tavernkeep
-	name = "innkeep's key"
-	desc = "This key opens and closes the innkeep's bedroom."
+	name = "旅店老板钥匙"
+	desc = "这把钥匙能开关旅店老板的卧室门。"
 	icon_state = "greenkey"
 	lockid = "innkeep"
 
 /obj/item/roguekey/crier
-	name = "crier's key"
-	desc = "This key should open and close the crier's office."
+	name = "传令官钥匙"
+	desc = "这把钥匙应当能开关传令官的办公室。"
 	icon_state = "cheesekey"
 	lockid = "crier"
 
 /obj/item/roguekey/keeper
-	name = "beast sanctum key"
-	desc = "This key should open and close the heart beast's sanctum."
+	name = "兽祠钥匙"
+	desc = "这把钥匙应当能开关心兽的圣所。"
 	icon_state = "beastkey"
 	lockid = "keeper"
 
 /obj/item/roguekey/keeper_inner
-	name = "beast inner sanctum key"
-	desc = "This key should open and close the iron gates within the beast's sanctum."
+	name = "兽祠内门钥匙"
+	desc = "这把钥匙应当能开关兽祠内部的铁门。"
 	icon_state = "beastkey2"
 	lockid = "keeper2"
 
@@ -314,202 +314,202 @@
 	lockid = "vroomvi"
 
 /obj/item/roguekey/roomi
-	name = "room I key"
-	desc = "The key to the first room."
+	name = "I号客房钥匙"
+	desc = "第一间客房的钥匙。"
 	icon_state = "brownkey"
 	lockid = "roomi"
 
 /obj/item/roguekey/roomii
-	name = "room II key"
-	desc = "The key to the second room."
+	name = "二号客房钥匙"
+	desc = "第二间客房的钥匙。"
 	icon_state = "brownkey"
 	lockid = "roomii"
 
 /obj/item/roguekey/roomiii
-	name = "room III key"
-	desc = "The key to the third room."
+	name = "三号客房钥匙"
+	desc = "第三间客房的钥匙。"
 	icon_state = "brownkey"
 	lockid = "roomiii"
 
 /obj/item/roguekey/roomiv
-	name = "room IV key"
-	desc = "The key to the fourth room."
+	name = "四号客房钥匙"
+	desc = "第四间客房的钥匙。"
 	icon_state = "brownkey"
 	lockid = "roomiv"
 
 /obj/item/roguekey/roomv
-	name = "room V key"
-	desc = "The key to the fifth room."
+	name = "五号客房钥匙"
+	desc = "第五间客房的钥匙。"
 	icon_state = "brownkey"
 	lockid = "roomv"
 
 /obj/item/roguekey/roomvi
-	name = "room VI key"
-	desc = "The key to the sixth room."
+	name = "六号客房钥匙"
+	desc = "第六间客房的钥匙。"
 	icon_state = "brownkey"
 	lockid = "roomvi"
 
 /obj/item/roguekey/roomvii
-	name = "room VII key"
-	desc = "The key to the seventh room."
+	name = "七号客房钥匙"
+	desc = "第七间客房的钥匙。"
 	icon_state = "brownkey"
 	lockid = "roomvii"
 
 /obj/item/roguekey/roomviii
-	name = "room VIII key"
-	desc = "The key to the eighth room."
+	name = "八号客房钥匙"
+	desc = "第八间客房的钥匙。"
 	icon_state = "brownkey"
 	lockid = "roomviii"
 
 /obj/item/roguekey/roomix
-	name = "room IX key"
-	desc = "The key to the ninth room."
+	name = "九号客房钥匙"
+	desc = "第九间客房的钥匙。"
 	icon_state = "brownkey"
 	lockid = "roomix"
 
 /obj/item/roguekey/roomx
-	name = "room X key"
-	desc = "The key to the tenth room."
+	name = "十号客房钥匙"
+	desc = "第十间客房的钥匙。"
 	icon_state = "brownkey"
 	lockid = "roomx"
 
 /obj/item/roguekey/roomhunt
-	name = "HUNT room key"
-	desc = "The key to the HUNT room, the penthouse suite of the local inn."
+	name = "HUNT套房钥匙"
+	desc = "通往 HUNT 套房的钥匙，那是本地旅店的顶层客房。"
 	icon_state = "brownkey"
 	lockid = "roomhunt"
 
 /obj/item/roguekey/fancyroomi
-	name = "luxury room I key"
-	desc = "The key to the first luxury room."
+	name = "豪华客房一钥匙"
+	desc = "第一间豪华客房的钥匙。"
 	icon_state = "hornkey"
 	lockid = "fancyi"
 
 /obj/item/roguekey/fancyroomii
-	name = "luxury room II key"
-	desc = "The key to the second luxury room."
+	name = "豪华客房二钥匙"
+	desc = "第二间豪华客房的钥匙。"
 	icon_state = "hornkey"
 	lockid = "fancyii"
 
 /obj/item/roguekey/fancyroomiii
-	name = "luxury room III key"
-	desc = "The key to the third luxury room."
+	name = "豪华客房三钥匙"
+	desc = "第三间豪华客房的钥匙。"
 	icon_state = "hornkey"
 	lockid = "fancyiii"
 
 /obj/item/roguekey/fancyroomiv
-	name = "luxury room IV key"
-	desc = "The key to the fourth luxury room."
+	name = "豪华客房四钥匙"
+	desc = "第四间豪华客房的钥匙。"
 	icon_state = "hornkey"
 	lockid = "fancyiv"
 
 /obj/item/roguekey/fancyroomv
-	name = "luxury room V key"
-	desc = "The key to the fifth luxury room."
+	name = "豪华客房五钥匙"
+	desc = "第五间豪华客房的钥匙。"
 	icon_state = "hornkey"
 	lockid = "fancyv"
 
 //vampire mansion//
 /obj/item/roguekey/vampire
-	name = "mansion key"
-	desc = "The key to a vampire lord's castle."
+	name = "宅邸钥匙"
+	desc = "通往吸血鬼领主宅邸的钥匙。"
 	icon_state = "vampkey"
 	lockid = "mansionvampire"
 
 /obj/item/roguekey/vampire/guest
 
-	name = "mansion guest key"
+	name = "宅邸客房钥匙"
 	icon_state = "brownkey"
 	lockid = "mansionvampire_guest"
 
 /obj/item/roguekey/vampire/maid
-	name = "mansion maid key"
+	name = "宅邸女仆钥匙"
 	icon_state = "ekey"
 	lockid = "mansionvampire_maid"
 //
 
 /obj/item/roguekey/crafterguild
-	name = "guild's key"
-	desc = "The key to the Crafter's Guild."
+	name = "工匠公会钥匙"
+	desc = "通往工匠公会的钥匙。"
 	icon_state = "brownkey"
 	lockid = "crafterguild"
 
 /obj/item/roguekey/craftermaster
-	name = "guildmaster's key"
-	desc = "The key of the Crafter's Guild Guildmaster."
+	name = "工匠公会会长钥匙"
+	desc = "工匠公会会长持有的钥匙。"
 	icon_state = "hornkey"
 	lockid = "craftermaster"
 
 /obj/item/roguekey/walls
-	name = "walls key"
-	desc = "This is a rusty key."
+	name = "城墙钥匙"
+	desc = "这是一把生锈的钥匙。"
 	icon_state = "rustkey"
 	lockid = "walls"
 
 /obj/item/roguekey/bandit
-	name = "old key"
-	desc = "This is a rusty key."
+	name = "旧钥匙"
+	desc = "这是一把生锈的钥匙。"
 	icon_state = "rustkey"
 	lockid = "bandit"
 
 /obj/item/roguekey/farm
-	name = "farm key"
-	desc = "This is a rusty key that'll open farm doors."
+	name = "农舍钥匙"
+	desc = "这是一把生锈的钥匙，能打开农舍的门。"
 	icon_state = "rustkey"
 	lockid = "farm"
 
 /obj/item/roguekey/butcher
-	name = "butcher key"
-	desc = "This is a rusty key that'll open butcher doors."
+	name = "屠户钥匙"
+	desc = "这是一把生锈的钥匙，能打开屠户的门。"
 	icon_state = "rustkey"
 	lockid = "butcher"
 
 /obj/item/roguekey/church
-	name = "church key"
-	desc = "This bronze key should open almost all doors in the church."
+	name = "教堂钥匙"
+	desc = "这把青铜钥匙应当能打开教堂中几乎所有的门。"
 	icon_state = "brownkey"
 	lockid = "church"
 
 /obj/item/roguekey/priest
-	name = "Bishop's key"
-	desc = "This is the master key of the church."
+	name = "主教钥匙"
+	desc = "这是教堂的总钥匙。"
 	icon_state = "cheesekey"
 	lockid = "priest"
 
 /obj/item/roguekey/tower
-	name = "tower key"
-	desc = "This key should open anything within the tower."
+	name = "高塔钥匙"
+	desc = "这把钥匙应当能打开高塔中的一切门锁。"
 	icon_state = "greenkey"
 	lockid = "tower"
 
 /obj/item/roguekey/mage
-	name = "magicians's key"
-	desc = "This is the court wizard's key. It watches you..."
+	name = "宫廷法师钥匙"
+	desc = "这是宫廷法师的钥匙。它像在盯着你……"
 	icon_state = "eyekey"
 	lockid = "mage"
 
 /obj/item/roguekey/graveyard
-	name = "crypt key"
-	desc = "This rusty key belongs to the gravekeeper."
+	name = "墓穴钥匙"
+	desc = "这把生锈的钥匙属于守墓人。"
 	icon_state = "rustkey"
 	lockid = "graveyard"
 
 
 /obj/item/roguekey/tailor
-	name = "tailor's key"
-	desc = "This key opens the tailor's shop. There is a thin thread wrapped around it."
+	name = "裁缝钥匙"
+	desc = "这把钥匙能打开裁缝铺，钥身上缠着一缕细线。"
 	icon_state = "brownkey"
 	lockid = "tailor"
 
 /obj/item/roguekey/nightman
-	name = "bathmaster's key"
-	desc = "This regal key opens the bathmaster's office - and his vault."
+	name = "浴场主事钥匙"
+	desc = "这把华贵的钥匙能打开浴场主事的办公室，以及他的金库。"
 	icon_state = "greenkey"
 	lockid = "nightman"
 
 /obj/item/roguekey/nightmaiden
-	name = "bathhouse key"
-	desc = "This regal key opens doors inside the bath-house."
+	name = "浴场钥匙"
+	desc = "这把华贵的钥匙能打开浴场内部的门。"
 	icon_state = "bathkey"
 	lockid = "nightmaiden"
 
@@ -556,103 +556,103 @@
 	lockid = "steam"
 
 /obj/item/roguekey/mercenary
-	name = "mercenary key"
-	desc = "Why, a mercenary would not kick doors down."
+	name = "佣兵钥匙"
+	desc = "毕竟，佣兵总不至于把门直接踹开吧。"
 	icon_state = "greenkey"
 	lockid = "merc"
 
 /obj/item/roguekey/mercenary/bedrooms
-	name = "mercenary bunk i key"
-	desc = "Why, a mercenary would not kick doors down."
+	name = "佣兵铺位一钥匙"
+	desc = "毕竟，佣兵总不至于把门直接踹开吧。"
 	icon_state = "greenkey"
 	lockid = "merc_bunk_i"
 
 /obj/item/roguekey/mercenary/bedrooms/ii
-	name = "mercenary bunk ii key"
+	name = "佣兵铺位二钥匙"
 	lockid = "merc_bunk_ii"
 
 /obj/item/roguekey/mercenary/bedrooms/iii
-	name = "mercenary bunk iii key"
+	name = "佣兵铺位三钥匙"
 	lockid = "merc_bunk_iii"
 
 /obj/item/roguekey/mercenary/bedrooms/iv
-	name = "mercenary bunk iv key"
+	name = "佣兵铺位四钥匙"
 	lockid = "merc_bunk_iv"
 
 /obj/item/roguekey/mercenary/bedrooms/v
-	name = "mercenary bunk v key"
+	name = "佣兵铺位五钥匙"
 	lockid = "merc_bunk_v"
 
 /obj/item/roguekey/mercenary/bedrooms/vi
-	name = "mercenary bunk vi key"
+	name = "佣兵铺位六钥匙"
 	lockid = "merc_bunk_vi"
 
 /obj/item/roguekey/mercenary/bedrooms/vii
-	name = "mercenary bunk vii key"
+	name = "佣兵铺位七钥匙"
 	lockid = "merc_bunk_vii"
 
 /obj/item/roguekey/mercenary/bedrooms/viii
-	name = "mercenary bunk viii key"
+	name = "佣兵铺位八钥匙"
 	lockid = "merc_bunk_viii"
 
 /obj/item/roguekey/physician
-	name = "town physician key"
-	desc = "The key smells of herbs, feeling soothing to the touch."
+	name = "城镇医师钥匙"
+	desc = "这把钥匙带着草药香气，触感令人安心。"
 	icon_state = "greenkey"
 	lockid = "physician"
 
 /obj/item/roguekey/courtphysician
-	name = "court physician key"
-	desc = "The key smells of herbs, feeling soothing to the touch. This one is especially prestigious"
+	name = "宫廷医师钥匙"
+	desc = "这把钥匙带着草药香气，触感令人安心。这一把尤显尊贵。"
 	icon_state = "greenkey"
 	lockid = "cphysician"
 
 /obj/item/roguekey/puritan
-	name = "puritan's key"
-	desc = "This is an intricate key." // i have no idea what is this key about
+	name = "清教徒钥匙"
+	desc = "这是一把做工精巧的钥匙。" // i have no idea what is this key about
 	icon_state = "mazekey"
 	lockid = "puritan"
 
 /obj/item/roguekey/inquisition
-	name = "inquisition key"
-	desc = "This key opens the doors leading into the church's basement, where the inquisition dwells."
+	name = "审判所钥匙"
+	desc = "这把钥匙能打开通往教堂地下室的门，那里正是审判所驻留之处。"
 	icon_state = "brownkey"
 	lockid = "inquisition"
 
 /obj/item/roguekey/inhumen
-	name = "old cell key"
-	desc = "A ancient, rusty key. Seems like it goes to some kind of cell."
+	name = "旧牢房钥匙"
+	desc = "一把古旧生锈的钥匙，看起来像是某间牢房的。"
 	icon_state = "rustkey"
 	lockid = "inhumen"
 
 /obj/item/roguekey/hand
-	name = "hand's key"
-	desc = "This regal key belongs to the Grand Duke's Right Hand."
+	name = "右手大臣钥匙"
+	desc = "这把华贵的钥匙属于大公的右手大臣。"
 	icon_state = "cheesekey"
 	lockid = "hand"
 
 /obj/item/roguekey/steward
-	name = "steward's key"
-	desc = "This key belongs to the court's greedy steward."
+	name = "总管钥匙"
+	desc = "这把钥匙属于宫廷那位贪婪的总管。"
 	icon_state = "cheesekey"
 	lockid = "steward"
 
 /obj/item/roguekey/archive
-	name = "archive key"
-	desc = "This key looks barely used."
+	name = "档案室钥匙"
+	desc = "这把钥匙看起来几乎没被使用过。"
 	icon_state = "ekey"
 	lockid = "archive"
 
 /obj/item/roguekey/servant
-	name = "servant key"
-	desc = "A key of the ducal servants. Hope it's not lost..."
+	name = "仆役钥匙"
+	desc = "公爵仆役所用的钥匙，希望它没弄丢……"
 	icon_state = "brownkey"
 	lockid = "servant"
 
 //grenchensnacker
 /obj/item/roguekey/porta
-	name = "strange key"
-	desc = "Was this key enchanted by a wizard locksmith...?"//what is grenchensnacker.
+	name = "奇异钥匙"
+	desc = "这把钥匙难道被某个法师锁匠施过魔法……？"//what is grenchensnacker.
 	icon_state = "eyekey"
 	lockid = "porta"
 
@@ -663,148 +663,148 @@
 	lockid = ""
 
 /obj/item/roguekey/apartments/apartment1
-	name = "apartment i key"
+	name = "公寓一钥匙"
 	icon_state = "brownkey"
 	lockid = "apartment1"
 
 /obj/item/roguekey/apartments/apartment2
-	name = "apartment ii key"
+	name = "公寓二钥匙"
 	icon_state = "brownkey"
 	lockid = "apartment2"
 
 /obj/item/roguekey/apartments/apartment3
-	name = "apartment iii key"
+	name = "公寓三钥匙"
 	icon_state = "brownkey"
 	lockid = "apartment3"
 
 /obj/item/roguekey/apartments/apartment4
-	name = "apartment iv key"
+	name = "公寓四钥匙"
 	icon_state = "brownkey"
 	lockid = "apartment4"
 
 /obj/item/roguekey/apartments/stall1
-	name = "stall i key"
+	name = "摊位一钥匙"
 	icon_state = "brownkey"
 	lockid = "stall1"
 
 /obj/item/roguekey/apartments/stall2
-	name = "stall ii key"
+	name = "摊位二钥匙"
 	icon_state = "brownkey"
 	lockid = "stall2"
 
 /obj/item/roguekey/apartments/stall3
-	name = "stall iii key"
+	name = "摊位三钥匙"
 	icon_state = "brownkey"
 	lockid = "stall3"
 
 /obj/item/roguekey/apartments/stall4
-	name = "stall iv key"
+	name = "摊位四钥匙"
 	icon_state = "brownkey"
 	lockid = "stall4"
 
 /obj/item/roguekey/apartments/stable1
-	name = "stable i key"
+	name = "马厩一钥匙"
 	icon_state = "brownkey"
 	lockid = "stable1"
 
 /obj/item/roguekey/apartments/stable2
-	name = "stable ii key"
+	name = "马厩二钥匙"
 	icon_state = "brownkey"
 	lockid = "stable2"
 
 /obj/item/roguekey/apartments/stablemaster_1
-	name = "stable i key"
+	name = "马夫马厩一钥匙"
 	icon_state = "brownkey"
 	lockid = "stable_master_1"
 
 /obj/item/roguekey/apartments/stablemaster_2
-	name = "stable ii key"
+	name = "马夫马厩二钥匙"
 	icon_state = "brownkey"
 	lockid = "stable_master_2"
 
 /obj/item/roguekey/apartments/stablemaster_3
-	name = "stable iii key"
+	name = "马夫马厩三钥匙"
 	icon_state = "brownkey"
 	lockid = "stable_master_3"
 
 /obj/item/roguekey/apartments/stablemaster_4
-	name = "stable iv key"
+	name = "马夫马厩四钥匙"
 	icon_state = "brownkey"
 	lockid = "stable_master_4"
 
 /obj/item/roguekey/apartments/stablemaster_5
-	name = "stable v key"
+	name = "马夫马厩五钥匙"
 	icon_state = "brownkey"
 	lockid = "stable_master_5"
 
 /obj/item/roguekey/apartments/stablemaster
-	name = "stablemaster key"
+	name = "马夫钥匙"
 	icon_state = "brownkey"
 	lockid = "stablemaster"
 
 //bathhouse lockers
 
 /obj/item/roguekey/bathlocker1
-	name = "locker I key"
-	desc = "The key to the first locker."
+	name = "储物柜一钥匙"
+	desc = "第一只储物柜的钥匙。"
 	icon_state = "brownkey"
 	lockid = "bathlocker1"
 
 /obj/item/roguekey/bathlocker2
-	name = "locker II key"
-	desc = "The key to the second locker."
+	name = "储物柜二钥匙"
+	desc = "第二只储物柜的钥匙。"
 	icon_state = "brownkey"
 	lockid = "bathlocker2"
 
 /obj/item/roguekey/bathlocker3
-	name = "locker III key"
-	desc = "The key to the third locker."
+	name = "储物柜三钥匙"
+	desc = "第三只储物柜的钥匙。"
 	icon_state = "brownkey"
 	lockid = "bathlocker3"
 
 /obj/item/roguekey/bathlocker4
-	name = "locker IV key"
-	desc = "The key to the fourth locker."
+	name = "储物柜四钥匙"
+	desc = "第四只储物柜的钥匙。"
 	icon_state = "brownkey"
 	lockid = "bathlocker4"
 
 /obj/item/roguekey/bathlocker5
-	name = "locker V key"
-	desc = "The key to the fifth locker."
+	name = "储物柜五钥匙"
+	desc = "第五只储物柜的钥匙。"
 	icon_state = "brownkey"
 	lockid = "bathlocker5"
 
 /obj/item/roguekey/bathlocker6
-	name = "locker VI key"
-	desc = "The key to the sixth locker."
+	name = "储物柜六钥匙"
+	desc = "第六只储物柜的钥匙。"
 	icon_state = "brownkey"
 	lockid = "bathlocker6"
 
 //BYOS keys
 /obj/item/roguekey/tribal
-	name = "tribal key"
-	desc = "A ancient, rusty key, well-worn but well-preserved."
+	name = "部族钥匙"
+	desc = "一把古老生锈的钥匙，虽然磨损严重，却保存得很好。"
 	icon_state = "rustkey"
 	lockid = "tribal"
 
 /obj/item/roguekey/tribalchief
-	name = "chieftain's key"
-	desc = "A ancient, rusty key, well-worn but well-preserved. Fancier than the others"
+	name = "酋长钥匙"
+	desc = "一把古老生锈的钥匙，虽然磨损严重，却保存得很好，比其他钥匙更华丽。"
 	icon_state = "bosskey"
 	lockid = "tribalchief"
 
 //custom key
 /obj/item/roguekey/custom
-	name = "custom key"
-	desc = "A custom key designed by a blacksmith."
+	name = "定制钥匙"
+	desc = "一把由铁匠打造的定制钥匙。"
 	icon_state = "brownkey"
 
 /obj/item/roguekey/custom/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/hammer))
-		var/input = (input(user, "What would you name this key?", "", "") as text)
+		var/input = (input(user, "你想给这把钥匙起什么名字？", "", "") as text)
 		if(input)
-			name = input + " key"
-			to_chat(user, span_notice("You rename the key to [name]."))
+			name = input + "钥匙"
+			to_chat(user, span_notice("你将这把钥匙改名为[name]。"))
 
 /obj/item/roguekey/lord/attack(mob/M, mob/user, def_zone) // lord's key opens any chastity device without checks and never breaks, because the lord is merciful like that. Petition the duke to have your cage unlocked unlucky squire! 
 	var/handled = modular_chastity_attack(M, user, def_zone)
@@ -830,8 +830,8 @@
 
 //custom key blank
 /obj/item/customblank //i'd prefer not to make a seperate item for this honestly
-	name = "blank custom key"
-	desc = "A key without its teeth carved in. Endless possibilities..."
+	name = "空白定制钥匙"
+	desc = "一把尚未刻出齿纹的钥匙，拥有无限可能……"
 	icon = 'icons/roguetown/items/keys.dmi'
 	icon_state = "brownkey"
 	w_class = WEIGHT_CLASS_TINY
@@ -840,31 +840,31 @@
 
 /obj/item/customblank/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/hammer))
-		var/input = input(user, "What would you like to set the key ID to?", "", 0) as num
+		var/input = input(user, "你想把这把钥匙的编号设成什么？", "", 0) as num
 		input = max(0, input)
-		to_chat(user, span_notice("You set the key ID to [input]."))
+		to_chat(user, span_notice("你将钥匙编号设为了[input]。"))
 		lockhash = 10000 + input //having custom lock ids start at 10000 leaves it outside the range that opens normal doors, so you can't make a key that randomly unlocks existing key ids like the church
 
 /obj/item/customblank/attack_right(mob/user)
 	if(istype(user.get_active_held_item(), /obj/item/roguekey))
 		var/obj/item/roguekey/held = user.get_active_held_item()
 		src.lockhash = held.lockhash
-		to_chat(user, span_notice("You trace the teeth from [held] to [src]."))
+		to_chat(user, span_notice("你将[held]的齿纹拓印到了[src]上。"))
 	else if(istype(user.get_active_held_item(), /obj/item/customlock))
 		var/obj/item/customlock/held = user.get_active_held_item()
 		src.lockhash = held.lockhash
-		to_chat(user, span_notice("You fine-tune [src] to the lock's internals."))
+		to_chat(user, span_notice("你将[src]细调至与锁芯内部相配。"))
 	else if(istype(user.get_active_held_item(), /obj/item/rogueweapon/hammer) && src.lockhash != 0)
 		var/obj/item/roguekey/custom/F = new (get_turf(src))
 		F.lockhash = src.lockhash
-		to_chat(user, span_notice("You finish [F]."))
+		to_chat(user, span_notice("你完成了[F]。"))
 		qdel(src)
 
 
 //custom lock unfinished
 /obj/item/customlock
-	name = "unfinished lock"
-	desc = "A lock without its pins set. Endless possibilities..."
+	name = "未完成的锁"
+	desc = "一把尚未调好锁销的锁，拥有无限可能……"
 	icon = 'icons/roguetown/items/keys.dmi'
 	icon_state = "lock"
 	w_class = WEIGHT_CLASS_SMALL
@@ -873,49 +873,49 @@
 
 /obj/item/customlock/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/hammer))
-		var/input = input(user, "What would you like to set the lock ID to?", "", 0) as num
+		var/input = input(user, "你想把这把锁的编号设成什么？", "", 0) as num
 		input = max(0, input)
-		to_chat(user, span_notice("You set the lock ID to [input]."))
+		to_chat(user, span_notice("你将锁的编号设为了[input]。"))
 		lockhash = 10000 + input //same deal as the customkey
 	else if(istype(I, /obj/item/roguekey))
 		var/obj/item/roguekey/ID = I
 		if(ID.lockhash == src.lockhash)
-			to_chat(user, span_notice("[I] twists cleanly in [src]."))
+			to_chat(user, span_notice("[I]在[src]中顺畅转动。"))
 		else
-			to_chat(user, span_warning("[I] jams in [src],"))
+			to_chat(user, span_warning("[I]卡在[src]里了。"))
 	else if(istype(I, /obj/item/customblank))
 		var/obj/item/customblank/ID = I
 		if(ID.lockhash == src.lockhash)
-			to_chat(user, span_notice("[I] twists cleanly in [src].")) //this makes no sense since the teeth aren't formed yet but i want people to be able to check whether the locks theyre making actually fit
+			to_chat(user, span_notice("[I]在[src]中顺畅转动。")) //this makes no sense since the teeth aren't formed yet but i want people to be able to check whether the locks theyre making actually fit
 		else
-			to_chat(user, span_warning("[I] jams in [src]."))
+			to_chat(user, span_warning("[I]卡在[src]里了。"))
 
 /obj/item/customlock/attack_right(mob/user)
 	if(istype(user.get_active_held_item(), /obj/item/roguekey))//i need to figure out how to avoid these massive if/then trees, this sucks
 		var/obj/item/roguekey/held = user.get_active_held_item()
 		src.lockhash = held.lockhash
-		to_chat(user, span_notice("You align the lock's internals to [held].")) //locks for non-custom keys
+		to_chat(user, span_notice("你将锁芯内部调校为匹配[held]。")) //locks for non-custom keys
 	else if(istype(user.get_active_held_item(), /obj/item/customblank))
 		var/obj/item/customblank/held = user.get_active_held_item()
 		src.lockhash = held.lockhash
-		to_chat(user, span_notice("You align the lock's internals to [held]."))
+		to_chat(user, span_notice("你将锁芯内部调校为匹配[held]。"))
 	else if(istype(user.get_active_held_item(), /obj/item/rogueweapon/hammer) && src.lockhash != 0)
 		var/obj/item/customlock/finished/F = new (get_turf(src))
 		F.lockhash = src.lockhash
-		to_chat(user, span_notice("You finish [F]."))
+		to_chat(user, span_notice("你完成了[F]。"))
 		qdel(src)
 
 //finished lock
 /obj/item/customlock/finished
-	name = "lock"
-	desc = "A customized iron lock that is used by keys."
+	name = "锁"
+	desc = "一把可供钥匙使用的定制铁锁。"
 	var/holdname = ""
 
 /obj/item/customlock/finished/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/hammer))
-		src.holdname = input(user, "What would you like to name this?", "", "") as text
+		src.holdname = input(user, "你想给它起什么名字？", "", "") as text
 		if(holdname)
-			to_chat(user, span_notice("You label the [name] with [holdname]."))
+			to_chat(user, span_notice("你给[name]标上了[holdname]。"))
 	else
 		..()
 
@@ -925,35 +925,35 @@
 	if(istype(K, /obj/structure/closet))
 		var/obj/structure/closet/KE = K
 		if(KE.keylock == TRUE)
-			to_chat(user, span_warning("[K] already has a lock."))
+			to_chat(user, span_warning("[K]已经有锁了。"))
 		else
 			KE.keylock = TRUE
 			KE.lockhash = src.lockhash
 			KE.lock_strength = 100
 			if(src.holdname)
 				KE.name = (src.holdname + " " + KE.name)
-			to_chat(user, span_notice("You add [src] to [K]."))
+			to_chat(user, span_notice("你把[src]装到了[K]上。"))
 			qdel(src)
 	if(istype(K, /obj/structure/mineral_door))
 		var/obj/structure/mineral_door/KE = K
 		if(KE.keylock == TRUE)
-			to_chat(user, span_warning("[K] already has a lock."))
+			to_chat(user, span_warning("[K]已经有锁了。"))
 		else
 			KE.keylock = TRUE
 			KE.lockhash = src.lockhash
 			KE.lock_strength = 100
 			if(src.holdname)
 				KE.name = src.holdname
-			to_chat(user, span_notice("You add [src] to [K]."))
+			to_chat(user, span_notice("你把[src]装到了[K]上。"))
 			qdel(src)
 	if(istype(K, /obj/structure/englauncher))
 		var/obj/structure/englauncher/KE = K
 		if(KE.keylock == TRUE)
-			to_chat(user, span_warning("[K] already has a lock."))
+			to_chat(user, span_warning("[K]已经有锁了。"))
 		else
 			KE.keylock = TRUE
 			KE.lockhash = src.lockhash
 			if(src.holdname)
 				KE.name = src.holdname
-			to_chat(user, span_notice("You add [src] to [K]."))
+			to_chat(user, span_notice("你把[src]装到了[K]上。"))
 			qdel(src)

@@ -47,7 +47,7 @@
 
 	// Check if we have enough blood to maintain disguise
 	if(source.bloodpool < disguise_upkeep)
-		to_chat(source, span_warning("My disguise fails as I run out of blood!"))
+		to_chat(source, span_warning("我的血快耗尽了，伪装也随之崩溃！"))
 		remove_disguise(source)
 		return
 
@@ -59,11 +59,11 @@
 		return FALSE
 
 	if(!COOLDOWN_FINISHED(src, transform_cooldown))
-		to_chat(H, span_warning("I must wait before transforming again."))
+		to_chat(H, span_warning("我得再等等，才能再次变形。"))
 		return FALSE
 
 	if(H.bloodpool < min_bloodpool)
-		to_chat(H, span_warning("I don't have enough blood to maintain a disguise."))
+		to_chat(H, span_warning("我的血量不足，维持不了这层伪装。"))
 		return FALSE
 
 	disguised = TRUE
@@ -116,16 +116,16 @@
 		var/datum/clan/vclan = H.clan
 		vclan.apply_vampire_look(H)
 
-	to_chat(H, span_warning("My true nature is revealed!"))
+	to_chat(H, span_warning("我的真面目暴露了！"))
 	return TRUE
 
 /datum/component/vampire_disguise/proc/force_undisguise(mob/living/carbon/human/H)
 	if(!disguised || (H.get_vampire_generation() >= GENERATION_METHUSELAH))
 		return FALSE
 
-	H.visible_message("<font color='white'>[H]'s curse manifests!</font>", ignored_mobs = list(H))
+	H.visible_message("<font color='white'>[H]身上的诅咒显现了！</font>", ignored_mobs = list(H))
 	remove_disguise(H)
-	to_chat(H, span_danger("My disguise is forcibly broken!"))
+	to_chat(H, span_danger("我的伪装被强行撕碎了！"))
 	return TRUE
 
 /datum/component/vampire_disguise/proc/disguise_status()
@@ -145,4 +145,3 @@
 	var/obj/item/organ/ears/ears = H.getorganslot(ORGAN_SLOT_EARS)
 	ears?.set_accessory_type(original_ear_accessory_type, original_ear_accessory_colors)
 	return ..()
-

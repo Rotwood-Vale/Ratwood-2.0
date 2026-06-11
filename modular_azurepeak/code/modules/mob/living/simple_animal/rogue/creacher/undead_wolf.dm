@@ -3,8 +3,8 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead
 //I'm not inhereting base wolf either because it uses cursed elements and AI.
 	icon = 'modular_hearthstone/icons/mob/wolf_undead.dmi'
-	name = "deadite volf"
-	desc = "A volf that was claimed for undeath, defiantly snarling with a hunger for fresh meat."
+	name = "死灵狼"
+	desc = "一头被拖入不死之途的狼，正不屈地龇牙低吼，渴求着新鲜血肉。"
 	icon_state = "wolf"
 	icon_living = "wolf"
 	icon_dead = "wolf_dead"
@@ -78,12 +78,12 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead/death()
 	if(is_downed)
-		visible_message(span_danger("[src] has their head smashed to pulp!"))
+		visible_message(span_danger("[src]的脑袋被砸成了肉泥！"))
 		. = ..()
 		update_icon()
 		ai_controller.set_ai_status(AI_STATUS_OFF)
 	else
-		visible_message(span_notice("[src] falls down, body brutally battered, yet its head continues that unending stare."))
+		visible_message(span_notice("[src]轰然倒地，身躯被打得惨不忍睹，可它的脑袋依旧维持着那无止尽的凝视。"))
 		is_downed = TRUE
 		ai_controller.movement_delay = 100
 		icon_state = icon_downed
@@ -97,7 +97,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead/proc/reanimation()
 	if(!QDELETED(src) && stat != DEAD)
-		visible_message(span_danger("The [src] stands back up."))
+		visible_message(span_danger("[src]又站了起来。"))
 		health = maxHealth
 		leg_health = max_leg_health
 		head_health = max_head_health
@@ -128,7 +128,7 @@
 			leg_health = 0
 			legs_broken = TRUE
 			ai_controller.movement_delay += 10
-			visible_message(span_notice("[src] slows down, its broken legs dragging."))
+			visible_message(span_notice("[src]慢了下来，断裂的腿在地上拖行。"))
 
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead/get_sound(input)
 	switch(input)
@@ -148,39 +148,39 @@
 		return ""
 	switch(zone)
 		if(BODY_ZONE_PRECISE_R_EYE)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_L_EYE)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_NOSE)
-			return "nose"
+			return "鼻部"
 		if(BODY_ZONE_PRECISE_MOUTH)
-			return "mouth"
+			return "嘴部"
 		if(BODY_ZONE_PRECISE_SKULL)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_EARS)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_PRECISE_NECK)
-			return "neck"
+			return "颈部"
 		if(BODY_ZONE_PRECISE_L_HAND)
-			return "foreleg"
+			return "前肢"
 		if(BODY_ZONE_PRECISE_R_HAND)
-			return "foreleg"
+			return "前肢"
 		if(BODY_ZONE_PRECISE_L_FOOT)
-			return "leg"
+			return "后肢"
 		if(BODY_ZONE_PRECISE_R_FOOT)
-			return "leg"
+			return "后肢"
 		if(BODY_ZONE_PRECISE_STOMACH)
-			return "stomach"
+			return "腹部"
 		if(BODY_ZONE_PRECISE_GROIN)
-			return "tail"
+			return "尾部"
 		if(BODY_ZONE_HEAD)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_R_LEG)
-			return "leg"
+			return "后肢"
 		if(BODY_ZONE_L_LEG)
-			return "leg"
+			return "后肢"
 		if(BODY_ZONE_R_ARM)
-			return "foreleg"
+			return "前肢"
 		if(BODY_ZONE_L_ARM)
-			return "foreleg"
+			return "前肢"
 	return ..()

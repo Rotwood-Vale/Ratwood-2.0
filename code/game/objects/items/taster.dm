@@ -1,5 +1,5 @@
 /obj/item/taster
-	name = "taster"
+	name = "试味器"
 	desc = ""
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "tonguenormal"
@@ -17,4 +17,4 @@
 
 	if(O.reagents)
 		var/message = O.reagents.generate_taste_message(taste_sensitivity)
-		to_chat(user, span_notice("[src] tastes <span class='italics'>[message]</span> in [O]."))
+		to_chat(user, span_notice("[src]从[O]里尝出了<span class='italics'>[message]</span>。"))

@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 
 /datum/wound
 	/// Name of the wound, visible to players when inspecting a limb and such
-	var/name = "wound"
+	var/name = "伤口"
 	/// Name that appears on check_for_injuries()
 	var/check_name
 
@@ -66,8 +66,6 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	var/critical = FALSE
 	/// Some wounds cause instant death for CRITICAL_WEAKNESS
 	var/mortal = FALSE
-	/// Some wounds cause instant death for SHATTER_WEAKNESS
-	var/shatter_wound = FALSE
 	/// Amount we heal passively while sleeping
 	var/sleep_healing = 1
 	/// Amount we heal passively, always
@@ -111,9 +109,9 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		return
 	var/visible_name = name
 	if(is_sewn())
-		visible_name += " <span class='green'>(sewn)</span>"
+		visible_name += " <span class='green'>(已缝合)</span>"
 	if(is_clotted())
-		visible_name += " <span class='danger'>(clotted)</span>"
+		visible_name += " <span class='danger'>(已凝血)</span>"
 	return visible_name
 
 /// Description of this wound returned to the player when the bodypart is checked with check_for_injuries()
@@ -129,14 +127,14 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		final_message = replacetext(final_message, "%VICTIM", "[affected.name]")
 		final_message = replacetext(final_message, "%P_THEIR", "[affected.p_their()]")
 	else
-		final_message = replacetext(final_message, "%VICTIM", "victim")
-		final_message = replacetext(final_message, "%P_THEIR", "their")
+		final_message = replacetext(final_message, "%VICTIM", "受害者")
+		final_message = replacetext(final_message, "%P_THEIR", "其")
 	if(affected_bodypart)
 		final_message = replacetext(final_message, "%BODYPART", "[affected_bodypart.name]")
 	else
 		final_message = replacetext(final_message, "%BODYPART", parse_zone(BODY_ZONE_CHEST))
 	if(critical)
-		final_message = "<span class='crit'><b>Critical hit!</b> [final_message]</span>"
+		final_message = "<span class='crit'><b>暴击！</b> [final_message]</span>"
 	return final_message
 
 /// Sound that plays when this wound is applied to a mob
@@ -424,7 +422,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 				newname = sevname
 	name = "[newname  ? "[newname] " : ""][initial(name)]"	//[adjective] [name], aka, "gnarly slash" or "slash"
 	if(name != oldname)
-		owner.visible_message(span_red("The [oldname] on [owner]'s [LOWER_TEXT(bodyzone2readablezone(bodypart_to_zone(bodypart_owner)))] gets worse!"))
+		owner.visible_message(span_red("[owner]的[LOWER_TEXT(bodyzone2readablezone(bodypart_to_zone(bodypart_owner)))]上的[oldname]恶化了！"))
 
 // Blank because it'll be overridden by wound code.
 /datum/wound/dynamic
@@ -443,7 +441,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 				set_bleed_rate(cap)
 				if(!is_armor_maxed)
 					playsound(owner, 'sound/combat/armored_wound.ogg', 100, TRUE)
-					owner.visible_message(span_crit("The wound tears open from [bodypart_owner.owner]'s <b>[bodyzone2readablezone(bodypart_to_zone(bodypart_owner))]</b>, the armor won't let it go any further!"))
+					owner.visible_message(span_crit("[bodypart_owner.owner]的<b>[bodyzone2readablezone(bodypart_to_zone(bodypart_owner))]</b>上的伤口再次撕裂，但护甲阻止了它继续恶化！"))
 					is_armor_maxed = TRUE
 
 #define CLOT_THRESHOLD_INCREASE_PER_HIT 0.1	//This raises the MINIMUM bleed the wound can clot to.
@@ -458,7 +456,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 			set_bleed_rate(ARTERY_LIMB_BLEEDRATE)
 			if(!is_maxed)
 				playsound(owner, 'sound/combat/wound_tear.ogg', 100, TRUE)
-				owner.visible_message(span_crit("The wound gushes open from [bodypart_owner.owner]'s <b>[bodyzone2readablezone(bodypart_to_zone(bodypart_owner))]</b>, nicking an artery!"))
+				owner.visible_message(span_crit("[bodypart_owner.owner]的<b>[bodyzone2readablezone(bodypart_to_zone(bodypart_owner))]</b>上的伤口猛然裂开，割到了动脉！"))
 				is_maxed = TRUE
 			clotting_rate = CLOT_RATE_ARTERY
 			clotting_threshold = CLOT_THRESHOLD_ARTERY

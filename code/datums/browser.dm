@@ -135,7 +135,7 @@
 		return
 	if(isnull(window_id))	//null check because this can potentially nuke goonchat
 		WARNING("Browser [title] tried to open with a null ID")
-		to_chat(user, span_danger("The [title] browser you tried to open failed a sanity check! Please report this on github!"))
+		to_chat(user, span_danger("我尝试打开的 [title] 浏览窗口未通过完整性检查！请把这个问题报告到 github！"))
 		return
 	var/window_size = ""
 	if (width && height)
@@ -167,7 +167,7 @@
 	else
 		WARNING("Browser [title] tried to close with a null ID")
 
-/datum/browser/modal/alert/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1,Timeout=6000)
+/datum/browser/modal/alert/New(User,Message,Title,Button1="确定",Button2,Button3,StealFocus = 1,Timeout=6000)
 	if (!User)
 		return
 
@@ -198,7 +198,7 @@
 	close()
 
 //designed as a drop in replacement for alert(); functions the same. (outside of needing User specified)
-/proc/tgalert(mob/User, Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
+/proc/tgalert(mob/User, Message, Title, Button1="确定", Button2, Button3, StealFocus = 1, Timeout = 6000)
 	if (!User)
 		User = usr
 	switch(askuser(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout))
@@ -210,7 +210,7 @@
 			return Button3
 
 //Same shit, but it returns the button number, could at some point support unlimited button amounts.
-/proc/askuser(mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
+/proc/askuser(mob/User,Message, Title, Button1="确定", Button2, Button3, StealFocus = 1, Timeout = 6000)
 	if (!istype(User))
 		if (istype(User, /client/))
 			var/client/C = User
@@ -270,7 +270,7 @@
 /datum/browser/modal/listpicker
 	var/valueslist = list()
 
-/datum/browser/modal/listpicker/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1, Timeout = FALSE,list/values,inputtype="checkbox", width, height, slidecolor)
+/datum/browser/modal/listpicker/New(User,Message,Title,Button1="确定",Button2,Button3,StealFocus = 1, Timeout = FALSE,list/values,inputtype="checkbox", width, height, slidecolor)
 	if (!User)
 		return
 
@@ -321,7 +321,7 @@
 	opentime = 0
 	close()
 
-/proc/presentpicker(mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/values, inputtype = "checkbox", width, height, slidecolor)
+/proc/presentpicker(mob/User,Message, Title, Button1="确定", Button2, Button3, StealFocus = 1,Timeout = 6000,list/values, inputtype = "checkbox", width, height, slidecolor)
 	if (!istype(User))
 		if (istype(User, /client/))
 			var/client/C = User
@@ -346,7 +346,7 @@
 			pickerlist += list(list("checked" = 1, "value" = GLOB.bitfields[bitfield][i], "name" = i, "allowed_edit" = can_edit))
 		else
 			pickerlist += list(list("checked" = 0, "value" = GLOB.bitfields[bitfield][i], "name" = i, "allowed_edit" = can_edit))
-	var/list/result = presentpicker(User, "", title, Button1="Save", Button2 = "Cancel", Timeout=FALSE, values = pickerlist, width = nwidth, height = nheight, slidecolor = nslidecolor)
+	var/list/result = presentpicker(User, "", title, Button1="保存", Button2 = "取消", Timeout=FALSE, values = pickerlist, width = nwidth, height = nheight, slidecolor = nslidecolor)
 	if (islist(result))
 		if (result["button"] == 2) // If the user pressed the cancel button
 			return
@@ -396,7 +396,7 @@
 
 	dat += "</tr></table>"
 
-	dat += "<hr><center><a href='?src=[REF(src)];button=1'>Ok</a> "
+		dat += "<hr><center><a href='?src=[REF(src)];button=1'>确定</a> "
 
 	dat += "</center>"
 
@@ -418,15 +418,15 @@
 				if (isnull(settings["mainsettings"][setting]["value"]))
 					settings["mainsettings"][setting]["value"] = oldval
 			if ("string")
-				settings["mainsettings"][setting]["value"] = stripped_input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]", settings["mainsettings"][setting]["value"])
+				settings["mainsettings"][setting]["value"] = stripped_input(user, "为 [settings["mainsettings"][setting]["desc"]] 输入新值", "为 [settings["mainsettings"][setting]["desc"]] 输入新值", settings["mainsettings"][setting]["value"])
 			if ("number")
-				settings["mainsettings"][setting]["value"] = input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]") as num
+				settings["mainsettings"][setting]["value"] = input(user, "为 [settings["mainsettings"][setting]["desc"]] 输入新值", "为 [settings["mainsettings"][setting]["desc"]] 输入新值") as num
 			if ("color")
-				settings["mainsettings"][setting]["value"] = input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]", settings["mainsettings"][setting]["value"]) as color
+				settings["mainsettings"][setting]["value"] = input(user, "为 [settings["mainsettings"][setting]["desc"]] 输入新值", "为 [settings["mainsettings"][setting]["desc"]] 输入新值", settings["mainsettings"][setting]["value"]) as color
 			if ("boolean")
-				settings["mainsettings"][setting]["value"] = input(user, "[settings["mainsettings"][setting]["desc"]]?") in list("Yes","No")
+				settings["mainsettings"][setting]["value"] = input(user, "[settings["mainsettings"][setting]["desc"]]?") in list("是","否")
 			if ("ckey")
-				settings["mainsettings"][setting]["value"] = input(user, "[settings["mainsettings"][setting]["desc"]]?") in list("none") + GLOB.directory
+				settings["mainsettings"][setting]["value"] = input(user, "[settings["mainsettings"][setting]["desc"]]?") in list("无") + GLOB.directory
 		if (settings["mainsettings"][setting]["callback"])
 			var/datum/callback/callback = settings["mainsettings"][setting]["callback"]
 			settings = callback.Invoke(settings)
@@ -445,7 +445,7 @@
 	opentime = 0
 	close()
 
-/proc/presentpreflikepicker(mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/settings, width, height, slidecolor)
+/proc/presentpreflikepicker(mob/User,Message, Title, Button1="确定", Button2, Button3, StealFocus = 1,Timeout = 6000,list/settings, width, height, slidecolor)
 	if (!istype(User))
 		if (istype(User, /client/))
 			var/client/C = User

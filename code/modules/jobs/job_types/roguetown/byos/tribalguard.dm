@@ -11,9 +11,9 @@
 	allowed_races = list(/datum/species/goblinp, /datum/species/anthromorphsmall, /datum/species/kobold)
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
 	// tutorial = "Ooga Chacka Guard-a-Chacka."
-	tutorial = "You're the hand of the Chief, and the iron claw of The Dragon. He's of higher power than any mortal. At least, that's what you've been taught. He is the biggest and strongest afterall. \
-	Do what the Chief insists, while keeping order in the fort. Try not to venture out without the Chief's say-so. \
-	'Tend' to captives when possible, instead of outright killing them."
+	tutorial = "你是酋长的臂膀，也是 The Dragon 的铁爪。祂的力量凌驾于任何凡人之上，至少你从小就是这么被教导的。毕竟，祂最大，也最强。\
+	你要遵照酋长的命令，同时维持寨中的秩序。没有酋长首肯，最好别擅自离开。\
+	若有可能，尽量去“照料”俘虏，而不是一上来就把他们杀掉。"
 	display_order = JDO_TRIBALGUARD
 	whitelist_req = TRUE
 
@@ -41,8 +41,8 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/furlinedanklets
 
 /datum/advclass/tribalguard/hunter
-	name = "Hunter"
-	tutorial = "Ooga Chacka Shoota-Chacka."
+	name = "猎手"
+	tutorial = "你是部落中的追踪者与猎手，擅长用弓索和投枪在树林、峭壁与洞穴间追猎猎物，也追猎那些闯入者。"
 	outfit = /datum/outfit/job/roguetown/tribalguard/hunter
 	category_tags = list(CTAG_TRIBALGUARD)
 	traits_applied = list(TRAIT_DODGEEXPERT)
@@ -92,21 +92,21 @@
 		H.grant_language(/datum/language/draconic)
 	H.set_blindness(0)
 	if(H.mind)
-		var/weapons = list("Bow","Sling","Spear & Javelins")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("弓","投石索","长矛与标枪")
+		var/weapon_choice = input(H, "选择你的武器。", "整备武装") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Bow")
+			if("弓")
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				beltr = /obj/item/quiver/arrows
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/slings, 4, TRUE)
-			if("Sling") 
+			if("投石索") 
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
 				beltr = /obj/item/quiver/sling/ancient
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/slings, 4, TRUE)
-			if("Spear & Javelins") 
+			if("长矛与标枪") 
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				r_hand = /obj/item/rogueweapon/spear/ancient
 				beltr = /obj/item/quiver/javelin/ancient
@@ -118,8 +118,8 @@
 
 
 /datum/advclass/tribalguard/warrior
-	name = "Warrior"
-	tutorial = "Ooga Chacka WHACKah-chacka!."
+	name = "战士"
+	tutorial = "你是酋长麾下最可靠的卫士之一，披着厚甲、挥着重兵，习惯在近身厮杀中用蛮力与凶性压垮敌人。"
 	// tutorial = "You're one of the Chief's trusted guards, though many just know you to be a brute. Strong, perhaps too strong, for your size. You've experience with all kinds of weapons, and unarmed combat."
 	outfit = /datum/outfit/job/roguetown/tribalguard/warrior
 	category_tags = list(CTAG_TRIBALGUARD)
@@ -172,36 +172,36 @@
 	H.faction += list("orcs", "tribe")
 	H.set_blindness(0)
 	if(H.mind)
-		var/weapons = list("Ancient Bardiche","Ancient Greatmace","Ancient Spear & Shield", "Ancient Javelins & Shield")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("远古长柄战斧","远古巨权杖","远古长矛与盾", "远古标枪与盾")
+		var/weapon_choice = input(H, "选择你的武器。", "拿起武器") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Ancient Bardiche")
+			if("远古长柄战斧")
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				r_hand = /obj/item/rogueweapon/halberd/bardiche/ancient
-			if("Ancient Greatmace") 
+			if("远古巨权杖") 
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				r_hand = /obj/item/rogueweapon/mace/goden/steel/ancient
-			if("Ancient Spear & Shield") 
+			if("远古长矛与盾") 
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				r_hand = /obj/item/rogueweapon/spear/ancient
-			if("Ancient Javelins & Shield")
+			if("远古标枪与盾")
 				beltr = /obj/item/quiver/javelin/ancient
 				backl = /obj/item/rogueweapon/shield/tower
 				
-		var/weapons2 = list("Club","Mace","Axe")
-		var/weapon_choice2 = input(H, "Choose your sidearm.", "TAKE UP ARMS") as anything in weapons2
+		var/weapons2 = list("棍棒","钉头锤","手斧")
+		var/weapon_choice2 = input(H, "选择你的副武器。", "拿起武器") as anything in weapons2
 		switch(weapon_choice2)
-			if("Club")
+			if("棍棒")
 				beltl = /obj/item/rogueweapon/mace/cudgel/shellrungu
-			if("Axe")
+			if("手斧")
 				beltl = /obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient
-			if("Mace")
+			if("钉头锤")
 				beltl = /obj/item/rogueweapon/mace/steel/ancient
 
 /datum/advclass/tribalguard/savage
-	name = "Savage"
-	tutorial = "Ooga Chacka WHACKah-chacka!."
+	name = "蛮勇者"
+	tutorial = "你是部落里最凶暴、最野蛮的近战怪物，靠着更可怕的体魄和原始怒火扑向敌人，把战场搅成血肉泥潭。"
 	// tutorial = "You're one of the Chief's trusted guards, though many just know you to be a brute. Strong, perhaps too strong, for your size. You've experience with all kinds of weapons, and unarmed combat."
 	outfit = /datum/outfit/job/roguetown/tribalguard/savage
 	category_tags = list(CTAG_TRIBALGUARD)
@@ -261,20 +261,20 @@
 	H.faction += list("orcs", "tribe")
 	H.set_blindness(0)
 	if(H.mind)
-		var/weapons = list("Ancient Bardiche","Ancient Greatmace", "Ancient Javelins & Shield", "Maul - +STR/CON, -SPD/PER/INT")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("远古长柄战斧","远古巨权杖", "远古标枪与盾", "大槌 - 力量/体质提升，速度/感知/智力下降")
+		var/weapon_choice = input(H, "选择你的武器。", "拿起武器") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Ancient Bardiche")
+			if("远古长柄战斧")
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				r_hand = /obj/item/rogueweapon/halberd/bardiche/ancient
-			if("Ancient Greatmace") 
+			if("远古巨权杖") 
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				r_hand = /obj/item/rogueweapon/mace/goden/steel/ancient
-			if("Ancient Javelins & Shield")
+			if("远古标枪与盾")
 				beltr = /obj/item/quiver/javelin/ancient
 				backl = /obj/item/rogueweapon/shield/tower
-			if("Maul - +STR/CON, -SPD/PER/INT")
+			if("大槌 - 力量/体质提升，速度/感知/智力下降")
 				r_hand = /obj/item/rogueweapon/mace/maul
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.change_stat(STATKEY_STR, 1)
@@ -283,12 +283,12 @@
 				H.change_stat(STATKEY_PER, -1)
 				H.change_stat(STATKEY_INT, -1)
 				
-		var/weapons2 = list("Club","Mace","Axe")
-		var/weapon_choice2 = input(H, "Choose your sidearm.", "TAKE UP ARMS") as anything in weapons2
+		var/weapons2 = list("棍棒","钉头锤","手斧")
+		var/weapon_choice2 = input(H, "选择你的副武器。", "拿起武器") as anything in weapons2
 		switch(weapon_choice2)
-			if("Club")
+			if("棍棒")
 				beltl = /obj/item/rogueweapon/mace/cudgel/shellrungu
-			if("Axe")
+			if("手斧")
 				beltl = /obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient
-			if("Mace")
+			if("钉头锤")
 				beltl = /obj/item/rogueweapon/mace/steel/ancient

@@ -1,6 +1,6 @@
 /datum/advclass/mercenary/routier
-	name = "Otavan Routiers"
-	tutorial = "The Routiers are a formidable Otavan mercenary band, a brotherhood of knights from noble families serving lords who seek to profit in peacetime. The Otavan nobility at large and even some of the clergy eagerly awaits to hear about your feats, they expect you to ENDURE, to be the champion of their faith and represent the true values of nobility, will you?"
+	name = "奥塔瓦 巡战骑士"
+	tutorial = "巡战骑士 是一支令人生畏的 奥塔瓦 佣兵团，由出身贵族家门的骑士兄弟组成，为那些想在太平年月里也谋取利益的领主效命。整个 奥塔瓦 贵族阶层，乃至部分神职者，都热切盼着听闻你的功绩；他们期待你坚忍不屈，成为其信仰的斗士，彰显贵族真正的价值。你做得到吗？"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = NON_DWARVEN_RACE_TYPES
 	outfit = /datum/outfit/job/roguetown/mercenary/routier
@@ -39,23 +39,23 @@
 
 	// CLASS ARCHETYPES
 	H.adjust_blindness(-3)
-	var/classes = list("Swordsman","Macebearer","Flailman", "Foot Lancer")
+	var/classes = list("剑士","持钉锤者","链枷手", "徒步枪骑兵")
 	if(H.mind)
-		var/classchoice = input(H, "Choose your archetypes", "Available archetypes") as anything in classes
+		var/classchoice = input(H, "选择你的战斗流派。", "可选流派") as anything in classes
 		H.set_blindness(0)
-		to_chat(H, span_warning("You are a Knight of Otava, well experienced in the use of your chosen arms."))
+		to_chat(H, span_warning("你是一名 奥塔瓦 骑士，对自己选定的兵器早已驾轻就熟。"))
 		switch(classchoice)
-			if("Swordsman")
+			if("剑士")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 				beltl = /obj/item/rogueweapon/scabbard/sword/noble
 				l_hand = /obj/item/rogueweapon/sword/short/falchion
-			if("Macebearer")
+			if("持钉锤者")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 				beltl = /obj/item/rogueweapon/mace/steel/morningstar
-			if("Flailman")
+			if("链枷手")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 				beltl = /obj/item/rogueweapon/flail/sflail
-			if("Foot Lancer")
+			if("徒步枪骑兵")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 				r_hand = /obj/item/rogueweapon/spear/lance
 	wrists = /obj/item/clothing/wrists/roguetown/bracers

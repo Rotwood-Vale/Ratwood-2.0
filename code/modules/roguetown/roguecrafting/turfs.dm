@@ -4,12 +4,12 @@
 
 //Master wood crafting - standardizes all wood crafting.
 /datum/crafting_recipe/roguetown/turfs/wood
-	name = "floor (crude wood) (1 small log)"
+	name = "地板（粗木）（1 根小圆木）"
 	result = /turf/open/floor/rogue/ruinedwood
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	skillcraft = /datum/skill/craft/carpentry
-	verbage_simple = "construct"
-	verbage = "constructs"
+	verbage_simple = "建造"
+	verbage = "建造"
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/turfs/wood/TurfCheck(mob/user, turf/T)
@@ -20,36 +20,36 @@
 	return TRUE
 
 /datum/crafting_recipe/roguetown/turfs/wood/floor
-	name = "floor (crude wood) (1 wooden plank)"
+	name = "地板（粗木）（1 块木板）"
 	result = /turf/open/floor/rogue/ruinedwood
 	reqs = list(/obj/item/natural/wood/plank = 1)
 
 /datum/crafting_recipe/roguetown/turfs/wood/floor
-	name = "floor (wood) (1 wooden plank)"
+	name = "地板（木制）（1 块木板）"
 	result = /turf/open/floor/rogue/wood
 	reqs = list(/obj/item/natural/wood/plank = 1)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/turfs/wood/platform
-	name = "platform (wood) (2 wooden planks)"
+	name = "平台（木制）（2 块木板）"
 	result = /turf/open/floor/rogue/ruinedwood/platform
 	reqs = list(/obj/item/natural/wood/plank = 2)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/turfs/wood/floorhw
-	name = "floor (herringbone weathered)"
+	name = "地板（风化人字纹）"
 	result = /turf/open/floor/rogue/ruinedwood/herringbone
 	reqs = list(/obj/item/natural/wood/plank = 1)
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/turfs/wood/floorhs
-	name = "floor (herringbone stamped)"
+	name = "地板（压印人字纹）"
 	result = /turf/open/floor/rogue/ruinedwood/chevron
 	reqs = list(/obj/item/natural/wood/plank = 1)
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/turfs/wood/floorslanted
-	name = "floor (slanted)"
+	name = "地板（斜纹）"
 	result = /turf/open/floor/rogue/ruinedwood/spiral
 	reqs = list(/obj/item/natural/wood/plank = 1)
 	craftdiff = 3
@@ -64,7 +64,7 @@
 	return TRUE
 
 /datum/crafting_recipe/roguetown/turfs/wood/wall
-	name = "wall (wood) (2 small logs)"
+	name = "墙（木制）（2 根小圆木）"
 	result = /turf/closed/wall/mineral/rogue/wood
 	reqs = list(/obj/item/grown/log/tree/small = 2)
 	craftdiff = 2
@@ -73,18 +73,18 @@
 	reqs = list(/obj/item/natural/wood/plank = 2)
 
 /datum/crafting_recipe/roguetown/turfs/wood/fancy
-	name = "wall fancy (wood) (2 wooden planks)"
+	name = "华丽木墙（2 块木板）"
 	result = /turf/closed/wall/mineral/rogue/decowood
 	reqs = list(/obj/item/natural/wood/plank = 2)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/wood/murderhole
-	name = "murder hole (wood) (2 small logs)"
+	name = "射孔（木制）（2 根小圆木）"
 	result = /turf/closed/wall/mineral/rogue/wood/window
 	reqs = list(/obj/item/grown/log/tree/small = 2)
 	skillcraft = /datum/skill/craft/carpentry
-	verbage_simple = "construct"
-	verbage = "constructs"
+	verbage_simple = "建造"
+	verbage = "建造"
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/turfs/wood/murderhole/alt
@@ -92,31 +92,31 @@
 
 /// carpet
 /datum/crafting_recipe/roguetown/turfs/carpet
-	name = "carpet(inn)"
+	name = "地毯（旅店）"
 	result = /turf/open/floor/carpet/inn
 	reqs = list(/obj/item/natural/silk= 2)	
 	skillcraft = /datum/skill/craft/carpentry
-	verbage_simple = "construct"
-	verbage = "constructs"
+	verbage_simple = "建造"
+	verbage = "建造"
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/turfs/carpet/purple
-	name = "carpet(purple)"
+	name = "地毯（紫色）"
 	result = /turf/open/floor/carpet/purple
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/carpet/red
-	name = "carpet(red)"
+	name = "地毯（红色）"
 	result = /turf/open/floor/carpet/red
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/carpet/stellar
-	name = "carpet(stellar)"
+	name = "地毯（星辉）"
 	result = /turf/open/floor/carpet/stellar
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/carpet/royalblack
-	name = "carpet(royal black)"
+	name = "地毯（皇家黑）"
 	result = /turf/open/floor/carpet/royalblack
 	craftdiff = 3
 
@@ -125,8 +125,8 @@
 /datum/crafting_recipe/roguetown/turfs/stone
 	reqs = list(/obj/item/natural/stoneblock = 1)
 	skillcraft = /datum/skill/craft/masonry
-	verbage_simple = "build"
-	verbage = "builds"
+	verbage_simple = "建造"
+	verbage = "建造"
 
 /datum/crafting_recipe/roguetown/turfs/stone/TurfCheck(mob/user, turf/T)
 	if(isclosedturf(T))
@@ -136,7 +136,7 @@
 	return TRUE
 
 /datum/crafting_recipe/roguetown/turfs/stone/cobblerock
-	name = "road (cobblerock) (1 stone)"
+	name = "道路（鹅卵石）（1 块石料）"
 	result = /turf/open/floor/rogue/cobblerock
 	reqs = list(/obj/item/natural/stone = 1)
 	craftdiff = 0
@@ -149,109 +149,109 @@
 	return TRUE
 
 /datum/crafting_recipe/roguetown/turfs/stone/cobble
-	name = "floor (cobblestone) (1 stone)"
+	name = "地板（鹅卵石）（1 块石料）"
 	result = /turf/open/floor/rogue/cobble
 	reqs = list(/obj/item/natural/stone = 1)
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/turfs/stone/block
-	name = "floor (stoneblock) (1 stone)"
+	name = "地板（石砖）（1 块石料）"
 	result = /turf/open/floor/rogue/blocks
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/turfs/stone/newstone
-	name = "floor (newstone) (2 stoneblocks)"
+	name = "地板（新石）（2 块石砖）"
 	result = /turf/open/floor/rogue/blocks/newstone/alt
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/turfs/stone/herringbone
-	name = "floor (herringbone) (2 stoneblocks)"
+	name = "地板（人字纹）（2 块石砖）"
 	result = /turf/open/floor/rogue/herringbone
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/stone/hexstone
-	name = "floor (hexstone) (2 stoneblocks)"
+	name = "地板（六角石）（2 块石砖）"
 	result = /turf/open/floor/rogue/hexstone
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/turfs/stone/platform
-	name = "platform (stone) (2 stoneblocks)"
+	name = "平台（石制）（2 块石砖）"
 	result = /turf/open/floor/rogue/blocks/platform
 	reqs = list(/obj/item/natural/stoneblock = 2)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/turfs/stone/redstone
-	name = "floor (red stone)"
+	name = "地板（红石）"
 	result = /turf/open/floor/rogue/blocks/stonered
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/turfs/stone/tinyredstone
-	name = "floor (tiny red stone)"
+	name = "地板（细红石）"
 	result = /turf/open/floor/rogue/blocks/stonered/tiny
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/turfs/stone/marblefloor
-	name = "Marble Floor (stone)"
+	name = "大理石地板（石料）"
 	result = /turf/open/floor/rogue/churchmarble
 	reqs = list(/obj/item/natural/stoneblock = 4)
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/turfs/stone/bluestone2
-	name = "Bluestone Slabs"
+	name = "蓝石板"
 	result = /turf/open/floor/rogue/blocks/bluestone
 	reqs = list(/obj/item/natural/stoneblock = 3)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/stone/concreteslab
-	name = "Large Stone Slabs"
+	name = "大型石板"
 	result = /turf/open/floor/rogue/concrete
 	reqs = list(/obj/item/natural/stoneblock = 2)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/turfs/stone/masonic
-	name = "Masonic Decorative Floor"
+	name = "石匠装饰地板"
 	result = /turf/open/floor/rogue/tile/masonic
 	reqs = list(/obj/item/natural/stoneblock = 2)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/stone/masonicalt
-	name = "Masonic Inverse Decorative Floor"
+	name = "石匠反纹装饰地板"
 	result = /turf/open/floor/rogue/tile/masonic/inverted
 	reqs = list(/obj/item/natural/stoneblock = 2)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/stone/masonicspiral
-	name = "Masonic Spiral Decorative Floor"
+	name = "石匠螺旋装饰地板"
 	result = /turf/open/floor/rogue/tile/masonic/spiral
 	reqs = list(/obj/item/natural/stoneblock = 2)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/stone/bluelargetile
-	name = "Blue Large Tiles"
+	name = "蓝色大砖"
 	result = /turf/open/floor/rogue/tile/bfloorz
 	reqs = list(/obj/item/natural/stoneblock = 2)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/stone/churchredbrick
-	name = "Large Red Masonic Bricks"
+	name = "大型红色石匠砖"
 	result = /turf/open/floor/rogue/churchbrick
 	reqs = list(/obj/item/natural/stoneblock = 2)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/stone/haremgreenbricks
-	name = "Harem Green Bricks"
+	name = "后宫绿砖"
 	result = /turf/open/floor/rogue/tile/harem1
 	reqs = list(/obj/item/natural/stoneblock = 2)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/stone/haremredbricks
-	name = "Harem Red Bricks"
+	name = "后宫红砖"
 	result = /turf/open/floor/rogue/tile/harem
 	reqs = list(/obj/item/natural/stoneblock = 2)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/stone/harempink
-	name = "Harem Pink Bricks"
+	name = "后宫粉砖"
 	result = /turf/open/floor/rogue/tile/harem2
 	reqs = list(/obj/item/natural/stoneblock = 2)
 	craftdiff = 3
@@ -265,13 +265,13 @@
 	return TRUE
 
 /datum/crafting_recipe/roguetown/turfs/stone/wall
-	name = "wall (stone) (2 stone)"
+	name = "墙（石制）（2 块石料）"
 	result = /turf/closed/wall/mineral/rogue/stone
 	reqs = list(/obj/item/natural/stone = 2)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/turfs/stone/brick
-	name = "wall (stonebrick) (2 stoneblocks)"
+	name = "墙（石砖）（2 块石砖）"
 	result = /turf/closed/wall/mineral/rogue/stonebrick
 	reqs = list(/obj/item/natural/stoneblock = 2)
 	craftdiff = 3
@@ -283,19 +283,19 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/stone/decorated
-	name = "wall decorated (stone) (2 stone)"
+	name = "装饰石墙（2 块石料）"
 	result = /turf/closed/wall/mineral/rogue/decostone
 	reqs = list(/obj/item/natural/stone = 2)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/stone/craft
-	name = "wall (craftstone) (3 stoneblocks)"
+	name = "墙（工艺石）（3 块石砖）"
 	result = /turf/closed/wall/mineral/rogue/craftstone
 	reqs = list(/obj/item/natural/stoneblock = 3)
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/turfs/stone/window
-	name = "murder hole (stone) (2 stoneblocks)"
+	name = "射孔（石制）（2 块石砖）"
 	result = /turf/closed/wall/mineral/rogue/stone/window
 	reqs = list(/obj/item/natural/stoneblock = 2)
 	craftdiff = 2
@@ -306,8 +306,8 @@
 /datum/crafting_recipe/roguetown/turfs/brick
 	reqs = list(/obj/item/natural/brick = 1)
 	skillcraft = /datum/skill/craft/masonry
-	verbage_simple = "build"
-	verbage = "builds"
+	verbage_simple = "建造"
+	verbage = "建造"
 
 /datum/crafting_recipe/roguetown/turfs/brick/TurfCheck(mob/user, turf/T)
 	if(isclosedturf(T))
@@ -318,25 +318,25 @@
 
 //Needs brick walls, windows, and platforms added at some point but need sprites for this.
 /datum/crafting_recipe/roguetown/turfs/brick/floor
-	name = "floor (brick) (1 brick)"
+	name = "地板（砖）（1 块砖）"
 	result = /turf/open/floor/rogue/tile/brick
 	reqs = list(/obj/item/natural/brick = 1)
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/turfs/brick/wall
-	name = "wall (brick) (1 brick)"
+	name = "墙（砖）（1 块砖）"
 	result = /turf/closed/wall/mineral/rogue/brick
 	reqs = list(/obj/item/natural/brick = 1)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/turfs/brick/window
-	name = "murder hole (brick) (2 brick)"
+	name = "射孔（砖）（2 块砖）"
 	result = /turf/closed/wall/mineral/rogue/brick/window
 	reqs = list(/obj/item/natural/brick = 2)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/turfs/brick/window/openclose
-	name = "reinforced window (brick) (2 brick, 1 iron, 1 glass, 1 dirtclod)"
+	name = "加固窗（砖）（2 块砖，1 份铁，1 块玻璃，1 团泥土）"
 	result = /obj/structure/roguewindow/openclose/reinforced/brick
 	reqs = list(
 	  /obj/item/natural/brick = 2,
@@ -346,24 +346,24 @@
 	)
 	skillcraft = /datum/skill/craft/blacksmithing
 	craftsound = 'sound/items/bsmith1.ogg'
-	verbage_simple = "build"
-	verbage = "builds"
+	verbage_simple = "建造"
+	verbage = "建造"
 	craftdiff = 2
 
 /// WINDOWS
 
 /datum/crafting_recipe/roguetown/turfs/roguewindow
-	name = "window (wooden) (2 small logs)"
+	name = "窗（木制）（2 根小圆木）"
 	result = /obj/structure/roguewindow
 	reqs = list(/obj/item/grown/log/tree/small = 2)
 	skillcraft = /datum/skill/craft/carpentry
 	craftsound = 'sound/foley/Building-01.ogg'
-	verbage_simple = "build"
-	verbage = "builds"
+	verbage_simple = "建造"
+	verbage = "建造"
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/turfs/fancywindow/openclose
-	name = "window (fancy) (2 small logs, 1 stone, 1 glass, 1 dirtclod)"
+	name = "华丽窗（2 根小圆木，1 块石料，1 块玻璃，1 团泥土）"
 	result = /obj/structure/roguewindow/openclose
 	reqs = list(
 	  /obj/item/grown/log/tree/small = 2,
@@ -373,12 +373,12 @@
 	)
 	skillcraft = /datum/skill/craft/carpentry
 	craftsound = 'sound/foley/Building-01.ogg'
-	verbage_simple = "build"
-	verbage = "builds"
+	verbage_simple = "建造"
+	verbage = "建造"
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/reinforcedwindow/openclose
-	name = "window (reinforced) (2 small logs, 1 iron, 1 glass, 1 dirtclod)"
+	name = "加固窗（2 根小圆木，1 份铁，1 块玻璃，1 团泥土）"
 	result = /obj/structure/roguewindow/openclose/reinforced
 	reqs = list(
 		/obj/item/grown/log/tree/small = 2,
@@ -388,28 +388,28 @@
 	)
 	skillcraft = /datum/skill/craft/blacksmithing
 	craftsound = 'sound/items/bsmith1.ogg'
-	verbage_simple = "build"
-	verbage = "builds"
+	verbage_simple = "建造"
+	verbage = "建造"
 	craftdiff = 2
 	
 /// HAY, TWIG AND TENT
 
 /datum/crafting_recipe/roguetown/turfs/hay
-	name = "floor (hay) (2 wheat stalks)"
+	name = "地板（干草）（2 根麦秆）"
 	result = /turf/open/floor/rogue/hay
 	reqs = list(/obj/item/natural/chaff/wheat = 2)
 	skillcraft = /datum/skill/craft/crafting
-	verbage_simple = "assemble"
-	verbage = "assembles"
+	verbage_simple = "组装"
+	verbage = "组装"
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/turfs/twig
-	name = "floor (twig) (2 sticks)"
+	name = "地板（树枝）（2 根木棍）"
 	result = /turf/open/floor/rogue/twig
 	reqs = list(/obj/item/grown/log/tree/stick = 2)
 	skillcraft = /datum/skill/craft/crafting
-	verbage_simple = "assemble"
-	verbage = "assembles"
+	verbage_simple = "组装"
+	verbage = "组装"
 	craftdiff = 0
 	loud = TRUE
 
@@ -422,12 +422,12 @@
 	return TRUE
 
 /datum/crafting_recipe/roguetown/turfs/twigplatform
-	name = "platform (twig) (2 sticks)" //no more cursed single stick left over
+	name = "平台（树枝）（2 根木棍）" //no more cursed single stick left over
 	result = /turf/open/floor/rogue/twig/platform
 	reqs = list(/obj/item/grown/log/tree/stick = 2)
 	skillcraft = /datum/skill/craft/crafting
-	verbage_simple = "assemble"
-	verbage = "assembles"
+	verbage_simple = "组装"
+	verbage = "组装"
 	craftdiff = 1
 	loud = TRUE
 
@@ -440,13 +440,13 @@
 	return TRUE
 
 /datum/crafting_recipe/roguetown/turfs/tentwall
-	name = "tent wall (1 stick, 1 cloth)"
+	name = "帐篷墙（1 根木棍，1 块布）"
 	result = /turf/closed/wall/mineral/rogue/tent
 	reqs = list(/obj/item/grown/log/tree/stick = 1,
 				/obj/item/natural/cloth = 1)
 	skillcraft = /datum/skill/craft/crafting
-	verbage_simple = "set up"	
-	verbage = "sets up"
+	verbage_simple = "搭建"	
+	verbage = "搭建"
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/turfs/tentwall/TurfCheck(mob/user, turf/T)
@@ -457,13 +457,13 @@
 	return TRUE
 
 /datum/crafting_recipe/roguetown/turfs/tentdoor
-	name = "tent door (1 stick, 1 cloth)"
+	name = "帐篷门（1 根木棍，1 块布）"
 	result = /obj/structure/roguetent
 	reqs = list(/obj/item/grown/log/tree/stick = 1,
 				/obj/item/natural/cloth = 1)
 	skillcraft = /datum/skill/craft/crafting
-	verbage_simple = "set up"
-	verbage = "sets up"
+	verbage_simple = "搭建"
+	verbage = "搭建"
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/turfs/tentdoor/TurfCheck(mob/user, turf/T)
@@ -475,12 +475,12 @@
 
 // Normal, non-openable window
 /datum/crafting_recipe/roguetown/turfs/roguewindow
-	name = "static glass window (2 small logs)"
+	name = "固定玻璃窗（2 根小圆木）"
 	result = /obj/structure/roguewindow
 	reqs = list(/obj/item/grown/log/tree/small = 2)
 	skillcraft = /datum/skill/craft/carpentry
-	verbage_simple = "build"
-	verbage = "builds"
+	verbage_simple = "建造"
+	verbage = "建造"
 	craftdiff = 4
 
 	/*
@@ -499,14 +499,14 @@
 
 // The windows you can open and close
 /datum/crafting_recipe/roguetown/turfs/roguewindow/dynamic
-	name = "openable glass window (2 small logs)"
+	name = "可开启玻璃窗（2 根小圆木）"
 	result = /obj/structure/roguewindow/openclose
 	reqs = list(/obj/item/grown/log/tree/small = 2)
 	craftdiff = 4
 
 // The 'windows' of the church that almost no one knows exists.
 /datum/crafting_recipe/roguetown/turfs/roguewindow/stone
-	name = "static glass window (2 stone, 1 glass)"
+	name = "固定玻璃窗（2 块石料，1 块玻璃）"
 	result = /obj/structure/roguewindow/stained/silver
 	reqs = list(/obj/item/natural/stone = 2, /obj/item/natural/glass = 1)
 	skillcraft = /datum/skill/craft/masonry
@@ -514,7 +514,7 @@
 
 // Reinfored windows
 /datum/crafting_recipe/roguetown/turfs/roguewindow/reinforced
-	name = "reinforced glass window (2 small logs, 1 iron, 1 glass)"
+	name = "加固玻璃窗（2 根小圆木，1 份铁，1 块玻璃）"
 	result = /obj/structure/roguewindow/openclose/reinforced
 	reqs = list(/obj/item/grown/log/tree/small = 2, /obj/item/natural/glass = 1, /obj/item/ingot/iron = 1)
 	craftdiff = 3
@@ -522,21 +522,21 @@
 // Dark Wood Walls
 
 /datum/crafting_recipe/roguetown/turfs/wood/darkwoodwall
-	name = "dark wood wall (2 wood planks)"
+	name = "深木墙(2 wood planks)"
 	result = /turf/closed/wall/mineral/rogue/wooddark
 	reqs = list(/obj/item/natural/wood/plank = 2)
 	skillcraft = /datum/skill/craft/carpentry
-	verbage_simple = "construct"
-	verbage = "constructs"
+	verbage_simple = "建造"
+	verbage = "建造"
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/wood/darkwoodwindow
-	name =	"dark wood murderhole (2 wood planks)"
+	name =	"深木射孔（2 块木板）"
 	result = /turf/closed/wall/mineral/rogue/wooddark/window
 	reqs = list(/obj/item/natural/wood/plank = 2)
 	skillcraft = /datum/skill/craft/carpentry
-	verbage_simple = "construct"
-	verbage = "constructs"
+	verbage_simple = "建造"
+	verbage = "建造"
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/wood/darkwoodwall/vertical
@@ -570,8 +570,8 @@
 		/obj/item/natural/fibers = 3,
 	)
 	tools = list(/obj/item/alch/bloomstone = 1)
-	verbage_simple = "grow"
-	verbage = "grows"
+	verbage_simple = "种植"
+	verbage = "种植"
 
 /datum/crafting_recipe/roguetown/turfs/druidic_grass/TurfCheck(mob/user, turf/T)
 	if(isclosedturf(T))
@@ -581,25 +581,25 @@
 	return TRUE
 
 /datum/crafting_recipe/roguetown/turfs/druidic_grass/grass
-	name = "grass"
+	name = "草地"
 	result = /turf/open/floor/rogue/grass
 
 /datum/crafting_recipe/roguetown/turfs/druidic_grass/grassred
-	name = "red grass"
+	name = "红草地"
 	result = /turf/open/floor/rogue/grassred
 
 /datum/crafting_recipe/roguetown/turfs/druidic_grass/grassyel
-	name = "yellow grass"
+	name = "黄草地"
 	result = /turf/open/floor/rogue/grassyel
 
 /datum/crafting_recipe/roguetown/turfs/druidic_grass/grasscold
-	name = "cold grass"
+	name = "寒地草皮"
 	result = /turf/open/floor/rogue/grasscold
 
 /datum/crafting_recipe/roguetown/turfs/druidic_grass/desert_grass
-	name = "desert grass"
+	name = "沙地草皮"
 	result = /turf/open/floor/rogue/desert_grass
 
 /datum/crafting_recipe/roguetown/turfs/druidic_grass/grasspurple
-	name = "purple grass"
+	name = "紫草地"
 	result = /turf/open/floor/rogue/grasspurple

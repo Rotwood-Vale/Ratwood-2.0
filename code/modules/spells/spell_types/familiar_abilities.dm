@@ -4,7 +4,7 @@
 #define SOOTHING_BLOOM_RANGE 5
 
 /obj/effect/proc_holder/spell/self/message_summoner
-	name = "Message Summoner"
+	name = "向召唤者传讯"
 	recharge_time = 1 SECONDS
 
 /obj/effect/proc_holder/spell/self/message_summoner/cast(list/targets, mob/living/simple_animal/pet/familiar/user)
@@ -13,22 +13,22 @@
 	var/mob/living/summoner = user.familiar_summoner
 
 	if(!summoner || !isliving(summoner) || !summoner.mind)
-		to_chat(user, span_warning("You cannot sense your summoner's mind."))
+		to_chat(user, span_warning("你无法感知到召唤者的心智。"))
 		revert_cast()
 		return FALSE
 
-	var/message = input(user, "You make a connection. What are you trying to say?")
+	var/message = input(user, "你建立起了联系。你想说什么？")
 	if(!message)
 		revert_cast()
 		return FALSE
-	to_chat_immediate(summoner, "Arcane whispers fill the back of my head, resolving into [user.real_name]'s voice: <font color=#7246ff>[message]</font>")
-	user.visible_message("[user.name] mutters an incantation and their mouth briefly flashes white.")
+	to_chat_immediate(summoner, "奥术低语滑入我的脑海，最终化作[user.real_name]的声音：<font color=#7246ff>[message]</font>")
+	user.visible_message("[user.name]低声念出咒语，嘴边短暂闪过一道白光。")
 	user.whisper(message)
 	log_game("[key_name(user)] sent a message to [key_name(summoner)] with contents [message]")
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/stillness_of_stone
-	name = "Stillness of Stone"
+	name = "石之静寂"
 	recharge_time = 1 SECONDS
 
 /obj/effect/proc_holder/spell/self/stillness_of_stone/cast(list/targets, mob/living/simple_animal/pet/familiar/pondstone_toad/user)
@@ -47,14 +47,14 @@
 			user.original_name = user.name
 
 		user.visible_message(
-			span_notice("[user.name] becomes utterly still, their body taking on the appearance of a stone."),
-			span_notice("You become utterly still, blending into your surroundings like a stone.")
+			span_notice("[user.name]骤然静止，身体化作一块石头般的模样。"),
+			span_notice("你变得一动不动，如石头般融入周遭环境。")
 		)
 
 		user.icon = 'icons/roguetown/items/natural.dmi'
 		user.icon_state = "stone1"
 		user.icon_living = "stone1"
-		user.name = "Stone"
+		user.name = "石头"
 		user.stoneform = TRUE
 		user.regenerate_icons()
 	return TRUE
@@ -70,8 +70,8 @@
 	stoneform = FALSE
 
 	visible_message(
-		span_notice("[src] shifts back into a more animated, toad-like form."),
-		span_notice("You shift back into your natural form.")
+		span_notice("[src]重新舒展，变回更有生气的蟾蜍模样。"),
+		span_notice("你变回了自己的自然形态。")
 	)
 	regenerate_icons()
 
@@ -93,7 +93,7 @@
 			qdel(petal)
 
 /obj/item/glow_petal
-	name = "Faint Petals"
+	name = "微光花瓣"
 	icon = 'icons/roguetown/mob/familiars.dmi'
 	icon_state = "leaf_trail"
 	anchored = TRUE
@@ -105,15 +105,15 @@
 	light_on = TRUE
 
 /obj/effect/proc_holder/spell/self/scent_of_the_grave
-	name = "Scent of the Grave"
+	name = "墓冢之息"
 	recharge_time = 1 SECONDS
 
 /obj/effect/proc_holder/spell/self/scent_of_the_grave/cast(list/targets, mob/living/simple_animal/pet/familiar/gravemoss_serpent/user)
 	. = ..()
 
 	user.visible_message(
-		span_notice("[user.name] lifts its head, tongue flickering as it tastes the air..."),
-		span_notice("You raise your head, tasting the air for the scent of the dead.")
+		span_notice("[user.name]抬起头，舌头轻颤，细细分辨空气中的气味......"),
+		span_notice("你抬起头，在空气中搜寻亡者的气味。")
 	)
 
 	var/list/trackable_corpses = list()
@@ -122,20 +122,20 @@
 			trackable_corpses += corpse
 
 	if(!trackable_corpses.len)
-		to_chat(user,span_notice("You detect no nearby corpses."))
+		to_chat(user,span_notice("你没有察觉到附近有尸体。"))
 		return FALSE
 
-	var/mob/living/selected_corpse = input(user, "Select a corpse to track", "Nearby corpses") as null|anything in trackable_corpses
+	var/mob/living/selected_corpse = input(user, "选择一具要追踪的尸体", "附近的尸体") as null|anything in trackable_corpses
 	if(!selected_corpse)
 		return FALSE
 	if(QDELETED(selected_corpse))
-		to_chat(user, span_notice("the scent dissipated."))
+		to_chat(user, span_notice("那股气味已经散去了。"))
 		return FALSE
 	var/direction_text = dir2text(get_dir(user.loc, selected_corpse.loc))
 
 	user.visible_message(
-		span_warning("[user.name]'s eyes narrows."),
-		span_notice("The scent of the grave draws you to the [direction_text].")
+		span_warning("[user.name]眯起了眼睛。"),
+		span_notice("墓冢之息正将你引向[direction_text]。")
 	)
 	return TRUE
 
@@ -147,51 +147,51 @@
 	xp_gain = FALSE
 
 /obj/effect/proc_holder/spell/self/inscription_cache
-	name = "Inscription Cache"
+	name = "铭文藏匣"
 	recharge_time = 5 SECONDS
 
 /obj/effect/proc_holder/spell/self/inscription_cache/cast(mob/living/simple_animal/pet/familiar/rune_rat/user)
 	. = ..()
 	var/obj/item/held_item = user.get_active_held_item()
 	if(!held_item)
-		to_chat(user, span_notice("You must be holding something to store."))
+		to_chat(user, span_notice("你必须手里拿着要储存的东西。"))
 		revert_cast()
 		return FALSE
 	if(!(istype(held_item, /obj/item/book) || istype(held_item, /obj/item/paper)))
-		to_chat(user, span_notice("Only written materials can be stored."))
+		to_chat(user, span_notice("只有书写材料才能被储存。"))
 		revert_cast()
 		return FALSE
 	if(length(user.stored_books) >= user.storage_limit)
-		to_chat(user, span_notice("Your cache is full. Recall something first."))
+		to_chat(user, span_notice("你的藏匣已满。先取回一些东西吧。"))
 		revert_cast()
 		return FALSE
 
 	user.stored_books += held_item
 	held_item.forceMove(user) // remove it from the world
-	user.visible_message(span_notice("[user.name] vanishes [held_item.name] into a shimmer of runes."),span_notice("You vanish [held_item.name] into a shimmer of runes."))
+	user.visible_message(span_notice("[user.name]将[held_item.name]化作一阵符文微光收了起来。"),span_notice("你将[held_item.name]化作一阵符文微光收了起来。"))
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/recall_cache
-	name = "Recall cache"
+	name = "唤回藏匣"
 	recharge_time = 5 SECONDS
 
 /obj/effect/proc_holder/spell/self/recall_cache/cast(mob/living/simple_animal/pet/familiar/rune_rat/user)
 	. = ..()
 	if(!length(user.stored_books))
-		to_chat(user, "<span class='notice'>Your cache is empty.</span>")
+		to_chat(user, "<span class='notice'>你的藏匣是空的。</span>")
 		revert_cast()
 		return FALSE
 
-	var/obj/item/selected_item = input(user, "Select an item to retrieve:", "Recall Cache") as null|anything in user.stored_books
+	var/obj/item/selected_item = input(user, "选择要取回的物品：", "唤回藏匣") as null|anything in user.stored_books
 	if(selected_item)
 		if(QDELETED(selected_item))
-			to_chat(user, span_warning("That item is no longer available."))
+			to_chat(user, span_warning("那件物品已不可用了。"))
 			user.stored_books -= selected_item
 			revert_cast()
 			return FALSE
 		selected_item.forceMove(user.loc)
 		user.stored_books -= selected_item
-		user.visible_message(span_notice("[selected_item.name] shimmers into existence beside [user.name]"),span_notice("[selected_item.name] shimmers into existence beside you."))
+		user.visible_message(span_notice("[selected_item.name]在[user.name]身旁微光一闪，显现出来。"),span_notice("[selected_item.name]在你身旁微光一闪，显现出来。"))
 		return TRUE
 	else
 		revert_cast()
@@ -203,15 +203,15 @@
 		stored_item.forceMove(src.loc)
 
 /obj/effect/proc_holder/spell/self/smolder_shroud
-	name = "Smolder Shroud"
+	name = "阴燃烟幕"
 	recharge_time = 5 MINUTES
 	chargetime = 0
 
 /obj/effect/proc_holder/spell/self/smolder_shroud/cast(list/targets, mob/user)
 	. = ..()
 	user.visible_message(
-		span_warning("[user.name] exhales a thick, swirling shroud of smoke!"),
-		span_warning("You exhale a thick, swirling shroud of smoke!")
+		span_warning("[user.name]吐出一团浓厚翻涌的烟幕！"),
+		span_warning("你吐出一团浓厚翻涌的烟幕！")
 	)
 	var/datum/effect_system/smoke_spread/smoke = new /datum/effect_system/smoke_spread
 	smoke.set_up(2, user)
@@ -219,18 +219,18 @@
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/soothing_bloom
-	name = "Soothing Bloom"
+	name = "抚慰花绽"
 	recharge_time = 16 SECONDS
 
 /obj/effect/proc_holder/spell/self/soothing_bloom/cast(list/targets, mob/living/simple_animal/pet/familiar/vaporroot_wisp/user)
 	. = ..()
 
-	user.visible_message(span_notice("[user.name] releases a soothing vapor"),span_notice("You release a soothing vapor"))
+	user.visible_message(span_notice("[user.name]释放出一阵抚慰性的雾气。"),span_notice("你释放出一阵抚慰性的雾气。"))
 	for (var/mob/living/nearby_mob in view(SOOTHING_BLOOM_RANGE, user))
 		if(nearby_mob == user || isdead(nearby_mob))
 			continue
 		nearby_mob.apply_status_effect(/datum/status_effect/regen/soothing_bloom)
-		to_chat(nearby_mob, span_notice("A cool mist settles on your skin, and you feel your wounds slowly close."))
+		to_chat(nearby_mob, span_notice("一层清凉薄雾落在你的肌肤上，你感觉伤口正缓缓愈合。"))
 	return TRUE
 
 /datum/status_effect/regen/soothing_bloom
@@ -242,8 +242,8 @@
 	var/outline_colour = "#129160"
 
 /atom/movable/screen/alert/status_effect/regen/soothing_bloom
-	name = "Soothing Bloom"
-	desc = "You are gently regenerating health over time."
+	name = "抚慰花绽"
+	desc = "你的生命值正在缓缓恢复。"
 
 /datum/status_effect/regen/soothing_bloom/on_apply()
 	var/filter = owner.get_filter(MIRACLE_HEALING_FILTER)
@@ -275,13 +275,13 @@
 		owner.adjustCloneLoss(-healing_on_tick, 0)
 
 /obj/effect/proc_holder/spell/self/starseers_cry
-	name = "Starseer's Cry"
-	desc = "Let out a piercing celestial call that disrupts all veils of shadow within sight."
+	name = "观星者之啼"
+	desc = "发出一声刺耳的天穹长鸣，扰乱视野内一切隐于阴影的伪装。"
 	recharge_time = 30 SECONDS
 
 /obj/effect/proc_holder/spell/self/starseers_cry/cast(list/targets, mob/living/simple_animal/pet/familiar/starfield_crow/user)
 	. = ..()
-	user.visible_message(span_danger("[user.name] lets out a soul-piercing cry, the stars shimmering in their eyes!"))
+	user.visible_message(span_danger("[user.name]发出一声刺魂长啼，眼中星辉闪烁！"))
 
 	for (var/mob/living/living_mob in range(STARSEERS_CRY_RANGE, user))
 		if (living_mob == user)
@@ -292,20 +292,20 @@
 
 		if (invis_active || sneaking)
 			living_mob.update_sneak_invis(reset = TRUE)
-			living_mob.visible_message(span_danger("[living_mob.name] is revealed by a cosmic pulse!"), span_notice("You feel your concealment burn away."))
+			living_mob.visible_message(span_danger("[living_mob.name]被宇宙脉冲显露了出来！"), span_notice("你感觉自己的隐匿被灼烧殆尽。"))
 			found_ping(get_turf(living_mob), user.client, "hidden")
 
 	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/pyroclastic_puff
-	name = "Pyroclastic_puff"
+	name = "火屑喷吐"
 	recharge_time = 1 SECONDS
 	sound = list('sound/magic/whiteflame.ogg')
 
 /obj/effect/proc_holder/spell/invoked/pyroclastic_puff/cast(list/targets, mob/user)
 	. = ..()
 	if (!targets || !targets.len)
-		to_chat(user, span_warning("No valid target selected."))
+		to_chat(user, span_warning("未选定有效目标。"))
 		revert_cast()
 		return FALSE
 	if (isturf(targets[1]))
@@ -315,7 +315,7 @@
 		flick("flintstrike", src)
 		spark_spread_effect.set_up(1, 1, front_turf)
 		spark_spread_effect.start()
-		user.visible_message(span_notice("[user.name] exhales a flurry of glowing sparks!"), span_notice("You breathe out a tiny burst of emberlight."))
+		user.visible_message(span_notice("[user.name]吐出一阵发光火星！"), span_notice("你吐出一小团烬火微光。"))
 		return TRUE
 	else
 		var/atom/target_atom = targets[1]
@@ -323,15 +323,15 @@
 			user.flash_fullscreen("whiteflash")
 			flick("flintstrike", src)
 			target_atom.spark_act()
-			user.visible_message(span_notice("[user.name] exhales a directed spark toward [target_atom]!"), span_notice("You release a pinpoint ember toward [target_atom]."))
+			user.visible_message(span_notice("[user.name]朝[target_atom]吐出一道定向火星！"), span_notice("你朝[target_atom]放出一点炽烬。"))
 			return TRUE
 		else
-			to_chat(user, span_warning("You're too far to spark that."))
+			to_chat(user, span_warning("距离太远，你无法点燃那个目标。"))
 			revert_cast()
 			return FALSE
 
 /obj/effect/proc_holder/spell/self/verdant_sprout
-	name = "Verdant Sprout"
+	name = "苍翠萌芽"
 	recharge_time = 1 MINUTES
 
 /obj/effect/proc_holder/spell/self/verdant_sprout/cast(list/targets, mob/user)
@@ -339,14 +339,14 @@
 	var/turf/target_turf = get_step(user, user.dir)
 
 	if(!isturf(target_turf))
-		to_chat(user, span_warning("You cannot grow plants on this."))
+		to_chat(user, span_warning("你无法在这里催生植物。"))
 		revert_cast()
 		return FALSE
 
 	// Turn dirt to grass
 	if(istype(target_turf, /turf/open/floor/rogue/dirt))
 		target_turf.ChangeTurf(/turf/open/floor/rogue/grass)
-		user.visible_message(span_notice("Vines creep forward in front of [user.name], coaxing new grass from the soil."), span_notice("Vines creep forward in front of you, coaxing new grass from the soil."))
+		user.visible_message(span_notice("藤蔓在[user.name]面前蜿蜒爬行，从泥土中催生出新草。"), span_notice("藤蔓在你面前蜿蜒爬行，从泥土中催生出新草。"))
 		return TRUE
 
 	// Add bush to existing grass tile if empty
@@ -358,37 +358,37 @@
 
 		if(!has_structures)
 			new /obj/structure/flora/roguegrass/bush(target_turf)
-			to_chat(user, span_notice("A small bush rises gently from the grass."))
+			to_chat(user, span_notice("一株小灌木从草地上缓缓长起。"))
 			return TRUE
 		else
-			to_chat(user, span_warning("That spot is already occupied."))
+			to_chat(user, span_warning("那个位置已经被占用了。"))
 			return FALSE
 
-	to_chat(user, span_warning("Nothing happens."))
+	to_chat(user, span_warning("什么都没有发生。"))
 	return FALSE
 
 /obj/effect/proc_holder/spell/self/phantasm_fade
-	name= "Phantasm Fade"
+	name= "幻影消隐"
 	recharge_time = 2 MINUTES
 
 /obj/effect/proc_holder/spell/self/phantasm_fade/cast(list/targets, mob/living/simple_animal/pet/familiar/whisper_stoat/user)
 	. = ..()
-	user.visible_message(span_warning("[user.name] starts to fade into thin air!"), span_notice("You start to become invisible!"))
+	user.visible_message(span_warning("[user.name]开始在空气中淡去！"), span_notice("你开始变得隐形！"))
 	animate(user, alpha = 0, time = 1 SECONDS, easing = EASE_IN)
 	user.mob_timers[MT_INVISIBILITY] = world.time + 15 SECONDS
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, update_sneak_invis), TRUE), 15 SECONDS)
-	addtimer(CALLBACK(user, TYPE_PROC_REF(/atom/movable, visible_message), span_warning("[user.name] fades back into view."), span_notice("You become visible again.")), 15 SECONDS)
+	addtimer(CALLBACK(user, TYPE_PROC_REF(/atom/movable, visible_message), span_warning("[user.name]重新显现出来。"), span_notice("你重新显形了。")), 15 SECONDS)
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/phantom_flicker
-	name= "Phantom Flicker"
+	name= "幻影闪烁"
 	recharge_time = 2 MINUTES
 
 /obj/effect/proc_holder/spell/self/phantom_flicker/cast(list/targets, mob/living/simple_animal/pet/familiar/ripplefox/user)
 	. = ..()
 
 	var/mob/living/simple_animal/pet/familiar/ripplefox/illusory_familiar = new user.type(user.loc)
-	user.visible_message(span_notice("[user.name] blurs and darts away in two directions at once!"))
+	user.visible_message(span_notice("[user.name]的身影一阵模糊，同时朝两个方向窜了出去！"))
 
 	illusory_familiar.familiar_summoner = user
 	illusory_familiar.fully_replace_character_name(null, user.name)
@@ -400,50 +400,50 @@
 
 /proc/delete_illusory_fam(mob/living/simple_animal/pet/familiar/ripplefox/illusory_familiar, mob/user)
 	if(illusory_familiar && !QDELETED(illusory_familiar))
-		user.visible_message(span_notice("[illusory_familiar.name] flickers and vanishes into nothingness."))
+		user.visible_message(span_notice("[illusory_familiar.name]一阵闪烁，随即化为虚无。"))
 		qdel(illusory_familiar)
 
 /obj/effect/proc_holder/spell/self/lurking_step
-	name = "Lurking Step"
-	desc = "Mark this location with a name, binding it to your hidden trail."
+	name = "潜踪留痕"
+	desc = "为此地留下一个名字，将其系于你的隐秘踪径。"
 	recharge_time = 10 SECONDS
 
 /obj/effect/proc_holder/spell/self/lurking_step/cast(list/targets, mob/living/simple_animal/pet/familiar/mist_lynx/user)
 	. = ..()
 	if (!user.saved_trails)
 		user.saved_trails = list()
-	var/spot_name = input(user, "Name this location for future return:", "Mark Trail") as text|null
+	var/spot_name = input(user, "为这个地点命名，方便日后返回：", "标记踪径") as text|null
 	if (!spot_name)
 		return FALSE
 	// Prevent duplicate names
 	for (var/trail_entry in user.saved_trails)
 		if (trail_entry["name"] == spot_name)
-			to_chat(user, span_warning("You already have a trail named '[spot_name]'. Choose a different name."))
+			to_chat(user, span_warning("你已经有一条名为“[spot_name]”的踪径了。请换个名字。"))
 			revert_cast()
 			return FALSE
 	// Prevent duplicate locations
 	for (var/trail_entry in user.saved_trails)
 		if (trail_entry["loc"] == user.loc)
-			to_chat(user, span_warning("You already have a trail marked at this location."))
+			to_chat(user, span_warning("你已经在这个地点留下过踪径了。"))
 			revert_cast()
 			return FALSE
 	// Limit to 3 entries
 	if (user.saved_trails.len >= 3)
 		user.saved_trails.Remove(user.saved_trails[1])
 	user.saved_trails += list(list("name" = spot_name, "loc" = user.loc))
-	to_chat(user, span_notice("You still yourself. The place is etched into your hidden path."))
+	to_chat(user, span_notice("你凝神静气，将此地刻入了自己的隐秘路径。"))
 	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/veilbound_shift
-	name = "Veilbound Shift"
-	desc = "Vanish and reappear at a hidden trail you've marked before."
+	name = "帷径迁跃"
+	desc = "消失无踪，并在你先前标记过的一条隐秘踪径处重现。"
 	chargetime = 20
 	recharge_time = 1 MINUTES
 
 /obj/effect/proc_holder/spell/invoked/veilbound_shift/cast(list/targets, mob/living/simple_animal/pet/familiar/mist_lynx/user)
 	. = ..()
 	if (!user.saved_trails || !user.saved_trails.len)
-		to_chat(user, span_warning("You have no marked paths to return to."))
+		to_chat(user, span_warning("你没有任何可供返回的已标记路径。"))
 		revert_cast()
 		return FALSE
 
@@ -451,7 +451,7 @@
 	for (var/trail_entry in user.saved_trails)
 		trail_names += trail_entry["name"]
 
-	var/selected_trail_name = input(user, "Choose a hidden trail to return to:", "Veilbound Shift") as null|anything in trail_names
+	var/selected_trail_name = input(user, "选择一条要返回的隐秘踪径：", "帷径迁跃") as null|anything in trail_names
 	if (!selected_trail_name)
 		revert_cast()
 		return FALSE
@@ -463,7 +463,7 @@
 			break
 
 	if (!(isturf(target_location) || isopenturf(target_location)))
-		to_chat(user, span_warning("The path has faded..."))
+		to_chat(user, span_warning("那条路径已经消散了......"))
 		// Remove the invalid entry by name
 		for (var/i = 1, i <= user.saved_trails.len, i++)
 			if (user.saved_trails[i]["name"] == selected_trail_name)
@@ -472,7 +472,7 @@
 		revert_cast()
 		return FALSE
 
-	user.visible_message(span_emote("[user.name] blurs at the edges, dissolving like mist."))
+	user.visible_message(span_emote("[user.name]的轮廓逐渐模糊，如雾般消散。"))
 
 	spawn(20)
 		// Re-find the entry by name to ensure it's still valid
@@ -482,25 +482,25 @@
 				current_index = i
 				break
 		if (!(isturf(target_location) || isopenturf(target_location)))
-			to_chat(user, span_warning("The path has faded..."))
+			to_chat(user, span_warning("那条路径已经消散了......"))
 			if (current_index)
 				user.saved_trails.Cut(current_index, current_index+1)
 			return
 		do_teleport(user, target_location, forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
-		user.visible_message(span_emote("A ripple in the air resolves into fur and paw. [user.name] pads silently into view."))
+		user.visible_message(span_emote("空气中一阵涟漪凝成了毛皮与爪影。[user.name]悄无声息地现身了。"))
 
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/verdant_veil
-	name = "Verdant Veil"
-	desc = "Shrouds nearby allies in illusionary invisibility, broken if they move or act."
+	name = "苍翠帷幕"
+	desc = "以幻象隐形笼罩附近盟友，但一旦移动或行动便会解除。"
 	recharge_time = 30 SECONDS
 
 //I wanted a long duration aoe invisibility that would be broken by movement. But I can't make it work so, short duration it is.
 /obj/effect/proc_holder/spell/self/verdant_veil/cast(list/targets, mob/living/simple_animal/pet/familiar/hollow_antlerling/user)
 	. = ..()
-	to_chat(user, span_notice("You exhale a shimmering cloud of forest illusion..."))
-	user.visible_message(span_warning("[user.name] releases a swirl of glowing leaves!"), span_notice("You feel the forest's stillness wrap around you."))
+	to_chat(user, span_notice("你吐出一团闪烁着林野幻影的雾云......"))
+	user.visible_message(span_warning("[user.name]释放出一阵发光的旋叶！"), span_notice("你感到森林的寂静笼罩了自己。"))
 
 	for (var/mob/living/nearby_mob in range(1, user))
 		if (nearby_mob == user || isobserver(nearby_mob))
@@ -509,7 +509,7 @@
 		if (nearby_mob.anti_magic_check(TRUE, TRUE))
 			continue
 
-		nearby_mob.visible_message(span_warning("[nearby_mob] starts to fade into thin air!"), span_notice("You start to become invisible!"))
+		nearby_mob.visible_message(span_warning("[nearby_mob]开始在空气中淡去！"), span_notice("你开始变得隐形！"))
 		animate(nearby_mob, alpha = 0, time = 1 SECONDS, easing = EASE_IN)
 
 		nearby_mob.mob_timers[MT_INVISIBILITY] = world.time + 5 SECONDS

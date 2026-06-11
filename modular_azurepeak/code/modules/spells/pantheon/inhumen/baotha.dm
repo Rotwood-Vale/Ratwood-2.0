@@ -1,8 +1,8 @@
 //Baotha's Blessings - T1, reverses overdose effect on a target + soothing moodlet. (Medieval narcan..... #BanNarcan)
 
 /obj/effect/proc_holder/spell/invoked/baothablessings
-	name = "Baotha's Blessings"
-	desc = "Gets the target drunk and stops them from overdosing for a time."
+	name = "巴奥莎的赐福"
+	desc = "让目标醉酒，并在一段时间内阻止其药物过量。"
 	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
 	action_icon = 'icons/mob/actions/baothamiracles.dmi'
 	overlay_state = "blessing"
@@ -24,22 +24,22 @@
 	if(isliving(targets[1]))
 		var/mob/living/carbon/target = targets[1]
 		if(HAS_TRAIT(target, TRAIT_PSYDONITE))
-			target.visible_message(span_info("[target] stirs for a moment, the miracle dissipates."), span_notice("A dull warmth swells in your heart, only to fade as quickly as it arrived."))
+			target.visible_message(span_info("[target]微微一颤，神迹随之消散。"), span_notice("一股迟钝的暖意在我心中升起，却又如来时一般迅速消退。"))
 			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			return FALSE
 		if(target.has_status_effect(/datum/status_effect/buff/druqks/baotha))
-			to_chat(user, span_warning("They're already blessed by these effects!"))
+			to_chat(user, span_warning("这些效果已经庇佑着他们了！"))
 			revert_cast()
 			return FALSE
 		target.apply_status_effect(/datum/status_effect/buff/druqks/baotha) //Gets the trait temorarily, basically will just stop any active/upcoming ODs.	
-		target.visible_message("<span class='info'>[target]'s eyes appear to gloss over!</span>", "<span class='notice'>I feel.. at ease.</span>")
+		target.visible_message("<span class='info'>[target]的双眼似乎变得迷离起来！</span>", "<span class='notice'>我感觉......平静下来了。</span>")
 
 //Enrapturing Powder - T2, basically a crackhead blowing cocaine in your face.
 
 /obj/effect/proc_holder/spell/invoked/projectile/blowingdust
-	name = "Enrapturing Powder"
-	desc = "Blows dust of a potent painkilling drug at the target, potentially causing overdoses with repeated use."
+	name = "醉心迷尘"
+	desc = "朝目标吹去一种强效止痛药粉。"
 	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
 	action_icon = 'icons/mob/actions/baothamiracles.dmi'
 	overlay_state = "powder"
@@ -53,16 +53,16 @@
 	chargetime = 15
 	recharge_time = 10 SECONDS
 	invocation_type = "whisper"
-	invocations = list("Have a taste of the maiden's pure-bliss...")
+	invocations = list("尝尝少女那纯粹的欢愉吧......")
 	devotion_cost = 30
 
 /obj/projectile/magic/blowingdust
-	name = "unholy dust"
+	name = "不洁迷尘"
 	icon_state = "spark"
 	nodamage = FALSE
 	damage = 1
 	poisontype = /datum/reagent/herozium
-	poisonfeel = "burning" //Would make sense for your eyes or nose to burn, I guess.
+	poisonfeel = "灼烧" //Would make sense for your eyes or nose to burn, I guess.
 	poisonamount = 8 //Decent bit of high, three doses would be just above the overdose threshold if applied fast enough.
 
 /obj/projectile/magic/blowingdust/on_hit(target, mob/living/M)
@@ -70,13 +70,13 @@
 	if(!istype(M))
 		return
 	if(target)
-		to_chat(target, span_warning("Gah! Something.. got in my - eyes.."))
+		to_chat(target, span_warning("啊！有东西......进了我......眼睛里......"))
 		M.blur_eyes(2)
 
 //Numbing Pleasure - T3, removes all pain from self for a period of time. (Similar to Ravox's without any blood-clotting and better pain suppression + good mood buff.)
 /obj/effect/proc_holder/spell/invoked/painkiller
-	name = "Numbing Pleasure"
-	desc = "Numbs the target's pain and improves their mood."
+	name = "麻痹欢愉"
+	desc = "麻痹目标的痛楚并改善其心情。"
 	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
 	action_icon = 'icons/mob/actions/baothamiracles.dmi'
 	overlay_state = "pleasure"
@@ -86,7 +86,7 @@
 	range = 7
 	warnie = "sydwarning"
 	sound = 'sound/magic/timestop.ogg'
-	invocations = list("May you find bliss through your pain!")
+	invocations = list("愿你在痛苦中寻得欢愉！")
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
@@ -101,7 +101,7 @@
 		var/datum/physiology/phy = human_target.physiology
 		if(target.mob_biotypes & MOB_UNDEAD)
 			return FALSE	//No, you don't get to feel good. You're a undead mob. Feel bad.
-		target.visible_message(span_info("[target] begins to twitch as warmth radiates from them!"), span_notice("The pain from my wounds fade, every new one being a mere, pleasent warmth!"))
+		target.visible_message(span_info("[target]开始抽搐，暖意自其体内散发而出！"), span_notice("我伤口带来的痛苦正在消退，每一道新伤都只剩下令人愉悦的暖意！"))
 		phy.pain_mod *= 0.5	//Literally halves your pain modifier.
 		addtimer(VARSET_CALLBACK(phy, pain_mod, phy.pain_mod /= 0.5), 1 MINUTES)	//Adds back the 0.5 of pain, basically setting it back to 1.
 		target.apply_status_effect(/datum/status_effect/buff/vitae)					//+2 Fortune and mood buff
@@ -109,8 +109,8 @@
 
 // T0 that tells the user the person's vices. If they have Deceiving Meekness (and you're a low-level cleric), this spell will lie to you instead.
 /obj/effect/proc_holder/spell/invoked/baothavice
-	name = "Tell Vices"
-	desc = "Attempts to discern the target's vices. Depending on the target and your Miracles skill, some vices could be incorrect."
+	name = "洞悉恶癖"
+	desc = "尝试辨明目标的恶癖。取决于目标和你的神迹技艺，部分恶癖可能并不准确。"
 	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
 	action_icon = 'icons/mob/actions/baothamiracles.dmi'
 	overlay_state = "vice"
@@ -136,7 +136,7 @@
 	var/mob/living/carbon/human/target = targets[1]
 	
 	if(!length(target.vices))
-		to_chat(user, span_warning("They have no vices."))
+		to_chat(user, span_warning("他们没有恶癖。"))
 		revert_cast()
 		return FALSE
 
@@ -166,7 +166,7 @@
 			vice_names = fakey.Copy()
 
 		if(prob(50 + ((target.STAPER - 10) * 10)))
-			to_chat(target, span_warning("A pair of prying eyes were laid on me..."))
+			to_chat(target, span_warning("有一双窥探的眼睛落在了我身上......"))
 
 	if(!vice_names) // if the caster actually passed the check, show real vices instead. 
 		vice_names = list()
@@ -174,14 +174,14 @@
 			vice_names += charflaw.name
 
 	if(!length(vice_names)) // very necessary failsafe, especially if faking one vice and the roll fails FIVE TIMES
-		to_chat(user, span_warning("They have no vices."))
+		to_chat(user, span_warning("他们没有恶癖。"))
 		revert_cast() // shhh, they do have vices but we don't want you to know that
 		return FALSE
 
 	var/vices_string = english_list(vice_names)
-	var/prefix = "Their vices are... "
+	var/prefix = "他们的恶癖是......"
 	if(length(vice_names) == 1)
-		prefix = "Their vice is... "
+		prefix = "他们的恶癖是......"
 	to_chat(user, span_info("[prefix]") + span_warning("[vices_string]."))
 	return TRUE
 
@@ -278,9 +278,9 @@
 
 // T0, orison inspired healing spell that pours a drink called Lover's Ruin. Works like a red for baotha blessed, poisons non-blessed.
 /obj/effect/proc_holder/spell/targeted/touch/loversruin
-	name = "Lover's Ruin"
-	desc = "A toast to passion that ends in ash.\n \
-		Beseech Baotha to pour wine onto a container. Poisons the unfaithful, rewards Her blessed with healing."
+	name = "恋人的毁灭"
+	desc = "敬那终将化作灰烬的炽情。\n \
+		祈求巴奥莎将酒液倾入容器。它会毒害不忠者，并以治愈奖赏受她赐福之人。"
 	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
 	action_icon = 'icons/mob/actions/baothamiracles.dmi'
 	overlay_state = "ruin"
@@ -295,7 +295,7 @@
 	recharge_time = 2 MINUTES
 
 /obj/item/melee/touch_attack/loversruin
-	name = "Baotha's Touch"
+	name = "巴奥莎之触"
 	catchphrase = null
 	possible_item_intents = list(/datum/intent/fill)
 	icon = 'icons/mob/roguehudgrabs.dmi'
@@ -312,10 +312,10 @@
 		qdel(src)
 
 /datum/reagent/medicine/loversruin
-	name = "Lover's Ruin"
-	description = "A sweet smelling concoction. It has small charred petals swimming on the surface."
+	name = "恋人的毁灭"
+	description = "一种香甜气息的调合饮剂。表面漂浮着些许烧焦的小花瓣。"
 	color = "#9c2745"
-	taste_description = "sin"
+	taste_description = "罪"
 
 /datum/reagent/medicine/loversruin/on_mob_life(mob/living/carbon/M)
 	if(HAS_TRAIT(M, TRAIT_CRACKHEAD))
@@ -340,15 +340,15 @@
 
 /obj/item/melee/touch_attack/loversruin/proc/create_ichor(atom/thing, mob/living/carbon/human/user)
 	if(!thing.Adjacent(user))
-		to_chat(user, span_info("I need to be closer to [thing] in order to try filling it with the concoction."))
+		to_chat(user, span_info("我得更靠近[thing]，才能尝试将这份调合物注入其中。"))
 		return
 
 	if(thing.is_refillable())
 		if(thing.reagents.holder_full())
-			to_chat(user, span_warning("[thing] is full."))
+			to_chat(user, span_warning("[thing]已经满了。"))
 			return
 		
-		user.visible_message(span_info("[user] closes [user.p_their()] eyes in prayer and extends a hand over [thing] as a sweet smelling ichor begins to stream from [user.p_their()] fingertips..."), span_notice("I call forth [user.patron.name], to fill [thing] with Her blessings..."))
+		user.visible_message(span_info("[user]闭目祈祷，将手伸向[thing]，一股香甜的神浆自[user.p_their()]指尖缓缓流出......"), span_notice("我呼唤[user.patron.name]，以她的赐福注满[thing]......"))
 
 		var/holy_skill = user.get_skill_level(attached_spell.associated_skill)
 		var/drip_speed = 56 - (holy_skill * 8)
@@ -373,12 +373,12 @@
 		
 		return max(50, fatigue_spent)
 	else
-		to_chat(user, span_info("I'll need to find a container that can hold Her blessing."))
+		to_chat(user, span_info("我得找个能盛放她赐福的容器。"))
 
 //T1, Baotha's version of Eora's Bud (now renamed True Peace Bloom). Applies the TRAIT_CRACKHEAD baothans have.
 /obj/effect/proc_holder/spell/invoked/griefflower
-	name = "False Serenity Bloom"
-	desc = "A gift for those whom you have chosen as worthy of Her grace, to be able to imbibe in Her gifts as you do."
+	name = "虚假宁静之花"
+	desc = "赠予那些被你选中、配得上她恩泽之人，好让他们也能如你一般饮下她的馈赠。"
 	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
 	action_icon = 'icons/mob/actions/baothamiracles.dmi'
 	overlay_state = "bloom"
@@ -400,13 +400,13 @@
 		new /obj/item/clothing/ring/griefflower(T)
 		return TRUE
 
-	to_chat(user, span_warning("The targeted location is blocked. Her gift cannot be invoked."))
+	to_chat(user, span_warning("目标位置被阻挡了。她的赠礼无法降下。"))
 	revert_cast()
 	return FALSE
 
 /obj/item/clothing/ring/griefflower
-	name = "rosa ring"
-	desc = "Once a flower of love, now touched by Baotha's hand. Its petals whisper of desire, despair, and the kind of longing that never dies. Worn by those who cannot let go."
+	name = "蔷薇之戒"
+	desc = "它曾是爱情之花，如今已被巴奥莎之手触及。它的花瓣低语着欲望、绝望，以及那种永不死去的渴求。只有无法放下的人才会佩戴它。"
 	icon_state = "peaceflower"
 	item_state = "peaceflower"
 	icon = 'icons/roguetown/items/produce.dmi'
@@ -427,14 +427,14 @@
 
 // T2 - bond that lasts for 8 minutes as long as bonded are within 7 tiles, TRAIT_NOPAIN, spd = 5 end = 3
 /obj/effect/proc_holder/spell/invoked/joyride
-	name = "Joyride"
-	desc = "A frenzy for two to partake in."
+	name = "极乐共驰"
+	desc = "一场供两人共同沉溺的狂喜。"
 	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
 	action_icon = 'icons/mob/actions/baothamiracles.dmi'
 	overlay_state = "joyride"
 	range = 2
 	chargetime = 0.5 SECONDS
-	invocations = list("By Baotha's mercy, an ecstasy trance for two!")
+	invocations = list("以巴奥莎之慈悲，赐下属于两人的销魂狂喜！")
 	sound = 'sound/magic/magnet.ogg'
 	recharge_time = 60 SECONDS
 	miracle = TRUE
@@ -446,7 +446,7 @@
 
 	var/datum/component/baotha_joyride/existing = user.GetComponent(/datum/component/baotha_joyride)
 	if(existing)
-		to_chat(user, span_warning("Your fates are already intertwined!"))
+		to_chat(user, span_warning("你们的命运早已交缠在一起了！"))
 		revert_cast()
 		return FALSE
 
@@ -455,7 +455,7 @@
 		return FALSE
 
 	if(!do_after(user, 3 SECONDS, target = target))
-		to_chat(user, span_warning("There is no joy without concentration!"))
+		to_chat(user, span_warning("没有专注，便无欢愉！"))
 		revert_cast()
 		return FALSE
 
@@ -464,14 +464,14 @@
 	target.AddComponent(/datum/component/baotha_joyride/partner, target, user, holy_skill)
 
 	user.visible_message(
-		span_notice("[user] and [target] inhale a magenta mist. A shudder, a smile, and the taste of hysteria sweetens their blood."),
+		span_notice("[user]与[target]一同吸入紫红色薄雾。颤栗、微笑，以及歇斯底里的滋味让他们的血液都变得甘甜起来。"),
 	)
 	return TRUE
 
 // T3 - clears all stress. Forget your worries, pookie bear.
 /obj/effect/proc_holder/spell/invoked/lasthigh
-	name = "Last High"
-	desc = "Pleasure's perfume, just before the fall."
+	name = "最后一飨"
+	desc = "在坠落之前，欢愉最后的馥郁。"
 	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
 	action_icon = 'icons/mob/actions/baothamiracles.dmi'
 	overlay_state = "last_high"
@@ -481,7 +481,7 @@
 	range = 7
 	warnie = "sydwarning"
 	sound = 'sound/magic/timestop.ogg'
-	invocations = list("May you find bliss through your pain!")
+	invocations = list("愿你在痛苦中寻得欢愉！")
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
@@ -496,8 +496,8 @@
 			return FALSE
 
 		target.visible_message(
-			span_info("[target] is forced to inhale deeply a sweet smelling mist. They twist in pain, yet a smile decorates their face!"), 
-			span_notice("The world starts to fade around me. My throat melts, my stomach churns, and my pulse quickens. Oblivion never tasted better.")
+			span_info("[target]被迫深深吸入那股香甜雾气。其身躯因痛苦而扭曲，脸上却绽出笑容！"), 
+			span_notice("世界开始在我周围褪色。我的喉咙仿佛融化，胃里翻江倒海，脉搏也越跳越快。湮灭从未如此甘美。")
 		)
 		target.adjustToxLoss(3)
 		target.add_stress(/datum/stressevent/lasthigh)
@@ -506,4 +506,4 @@
 /datum/stressevent/lasthigh
 	timer = 10 MINUTES
 	stressadd = -99
-	desc = span_hypnophrase("The world starts to fade around me. My throat melts, my stomach churns, and my pulse quickens. Oblivion never tasted better.") 
+	desc = span_hypnophrase("世界开始在我周围褪色。我的喉咙仿佛融化，胃里翻江倒海，脉搏也越跳越快。湮灭从未如此甘美。") 

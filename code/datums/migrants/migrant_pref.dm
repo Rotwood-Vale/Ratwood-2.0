@@ -19,9 +19,9 @@
 	role_preferences.Cut()
 	if(!silent && prefs.parent)
 		if(new_state)
-			to_chat(prefs.parent, span_notice("You are now in the migrant queue, and will join the game with them when they arrive"))
+			to_chat(prefs.parent, span_notice("你已进入移民队列，他们到来时你将与其一同加入游戏"))
 		else
-			to_chat(prefs.parent, span_boldwarning("You are no longer in the migrant queue"))
+			to_chat(prefs.parent, span_boldwarning("你已不在移民队列中"))
 
 /datum/migrant_pref/proc/toggle_role_preference(role_type)
 	if(role_type in role_preferences)
@@ -33,9 +33,9 @@
 		if(SSmigrants.can_be_role(prefs.parent, role_type))
 			role_preferences += role_type
 			var/datum/migrant_role/role = MIGRANT_ROLE(role_type)
-			to_chat(prefs.parent, span_nicegreen("You have prioritized the [role.name]. This does not guarantee getting the role."))
+			to_chat(prefs.parent, span_nicegreen("你已将 [role.name] 设为优先选择，但这并不保证你一定会获得该身份。"))
 		else
-			to_chat(prefs.parent, span_warning("You can't be this role. (Wrong species, gender, or age.)"))
+			to_chat(prefs.parent, span_warning("你不能选择这个身份。（种族、性别或年龄不符。）"))
 
 /datum/migrant_pref/proc/post_spawn()
 	set_active(FALSE, TRUE)
@@ -52,12 +52,12 @@
 	// Build main content (left side)
 	var/list/main_dat = list()
 	main_dat += "<div style='padding: 10px;'>"
-	main_dat += "<div style='text-align: center; font-weight: bold; margin-bottom: 10px;'>WAVE: \Roman[SSmigrants.wave_number] | TRIUMPH: [player_triumph]</div>"
-	main_dat += "<div style='text-align: center; margin-bottom: 10px;'><b>BE A MIGRANT: <a href='byond://?src=[REF(src)];task=toggle_active'>[active ? "YES" : "NO"]</a></b></div>"
-	main_dat += "<div style='text-align: center; margin-bottom: 15px;'>Wandering fools: [current_migrants ? "\Roman[current_migrants]" : "None"]</div>"
+	main_dat += "<div style='text-align: center; font-weight: bold; margin-bottom: 10px;'>波次：\Roman[SSmigrants.wave_number] | 凯旋点：[player_triumph]</div>"
+	main_dat += "<div style='text-align: center; margin-bottom: 10px;'><b>成为移民：<a href='byond://?src=[REF(src)];task=toggle_active'>[active ? "是" : "否"]</a></b></div>"
+	main_dat += "<div style='text-align: center; margin-bottom: 15px;'>游荡的傻瓜：[current_migrants ? "\Roman[current_migrants]" : "无"]</div>"
 
 	if(!SSmigrants.current_wave)
-		main_dat += "<div style='text-align: center; margin-bottom: 15px;' id='migrant_countdown'>The mist will clear out of the way in [(SSmigrants.time_until_next_wave / (1 SECONDS))] seconds...</div>"
+		main_dat += "<div style='text-align: center; margin-bottom: 15px;' id='migrant_countdown'>迷雾将在 [(SSmigrants.time_until_next_wave / (1 SECONDS))] 秒后散开……</div>"
 	else
 		var/datum/migrant_wave/wave = MIGRANT_WAVE(SSmigrants.current_wave)
 		main_dat += "<div style='text-align: center; font-weight: bold; margin-bottom: 10px;'>[wave.name]</div>"
@@ -66,9 +66,9 @@
 		if(wave.triumph_total > 0)
 			var/player_contribution = wave.triumph_contributions[client.ckey] ? wave.triumph_contributions[client.ckey] : 0
 			if(player_contribution > 0)
-				main_dat += "<div style='text-align: center; color: cyan; margin-bottom: 10px;'>You influenced this wave! ([player_contribution] triumph)</div>"
+				main_dat += "<div style='text-align: center; color: cyan; margin-bottom: 10px;'>你影响了这次波次！([player_contribution] 凯旋点)</div>"
 			else
-				main_dat += "<div style='text-align: center; color: yellow; margin-bottom: 10px;'>This wave was influenced by triumph!</div>"
+				main_dat += "<div style='text-align: center; color: yellow; margin-bottom: 10px;'>这次波次受到了凯旋点影响！</div>"
 		for(var/role_type in wave.roles)
 			var/datum/migrant_role/role = MIGRANT_ROLE(role_type)
 			var/role_amount = wave.roles[role_type]
@@ -87,14 +87,14 @@
 				triumph_bonus_string = " <span style='color: gold;'>(+[triumph_bonus])</span>"
 
 			main_dat += "<div style='text-align: center; margin: 5px 0;'><a href='byond://?src=[REF(src)];task=toggle_role_preference;role=[role_type]'>[role_name]</a> - \Roman[role_amount] [stars_string][triumph_bonus_string]</div>"
-		main_dat += "<div style='text-align: center; margin-top: 15px;' id='migrant_countdown'>They will arrive in [(SSmigrants.wave_timer / (1 SECONDS))] seconds...</div>"
+		main_dat += "<div style='text-align: center; margin-top: 15px;' id='migrant_countdown'>他们将在 [(SSmigrants.wave_timer / (1 SECONDS))] 秒后到来……</div>"
 
 	main_dat += "</div>"
 
 	// Build wave influence sidebar (right side)
 	var/list/sidebar_dat = list()
 	sidebar_dat += "<div style='padding: 10px; background-color: #1a1a1a; height: 100%; overflow-y: auto;' id='wave-sidebar'>"
-	sidebar_dat += "<div style='text-align: center; font-weight: bold; margin-bottom: 10px; color: #cccccc;'>WAVE INFLUENCE</div>"
+	sidebar_dat += "<div style='text-align: center; font-weight: bold; margin-bottom: 10px; color: #cccccc;'>波次影响</div>"
 
 	// Calculate total weights for percentage calculation
 	var/list/wave_weights = list()
@@ -126,10 +126,10 @@
 		var/wave_name = wave.name
 		if(is_maxed_out)
 			wave_color = "#666666"
-			wave_name = "[wave.name] (MAXED)"
+			wave_name = "[wave.name]（已满）"
 		else if(threshold_reached)
 			wave_color = "gold"
-			wave_name = "[wave.name] (READY!)"
+			wave_name = "[wave.name]（就绪！）"
 		else if(player_contribution > 0)
 			wave_color = "cyan"
 			wave_name = "[wave.name] ([player_contribution])"
@@ -140,16 +140,16 @@
 		// Calculate roll percentage
 		var/roll_percentage = 0
 		if(is_maxed_out)
-			roll_percentage = "0% (Maxed)"
+			roll_percentage = "0%（已满）"
 		else if(threshold_reached)
-			roll_percentage = "100% (Guaranteed)"
+			roll_percentage = "100%（必定）"
 		else if(total_weight > 0)
 			var/wave_weight = wave_weights[wave_type]
 			roll_percentage = "[round((wave_weight / total_weight) * 100, 0.1)]%"
 		else
 			roll_percentage = "0%"
 
-		sidebar_dat += "<div style='margin-bottom: 12px; padding: 8px; border: 1px solid #444; border-radius: 4px;' title='Roll Chance: [roll_percentage] (Base: [wave.weight], Triumph: +[wave.triumph_total * 6])'>"
+		sidebar_dat += "<div style='margin-bottom: 12px; padding: 8px; border: 1px solid #444; border-radius: 4px;' title='抽取概率：[roll_percentage]（基础：[wave.weight]，凯旋加成：+[wave.triumph_total * 6]）'>"
 		sidebar_dat += "<div style='color: [wave_color]; font-weight: bold; margin-bottom: 4px;'>[wave_name]</div>"
 		sidebar_dat += "<div style='background-color: #333; height: 12px; border-radius: 6px; margin-bottom: 4px;'>"
 		sidebar_dat += "<div style='background-color: [threshold_reached ? "gold" : (is_maxed_out ? "#666666" : "cyan")]; height: 100%; width: [progress_percent]%; border-radius: 6px;'></div>"
@@ -161,7 +161,7 @@
 		if(!is_maxed_out)
 			sidebar_dat += "<a href='byond://?src=[REF(src)];task=contribute_triumph;wave=[wave_type]' style='background-color: #4a4a4a; color: white; text-decoration: none; padding: 2px 6px; border-radius: 3px; font-size: 11px;'>+T</a>"
 		else
-			sidebar_dat += "<span style='background-color: #333; color: #666; padding: 2px 6px; border-radius: 3px; font-size: 11px;'>MAX</span>"
+			sidebar_dat += "<span style='background-color: #333; color: #666; padding: 2px 6px; border-radius: 3px; font-size: 11px;'>已满</span>"
 
 		sidebar_dat += "</div>"
 		sidebar_dat += "</div>"
@@ -276,7 +276,7 @@
 		}
 	</script>"}
 
-	var/datum/browser/popup = new(client.mob, "migration", "<center>Find a purpose</center>", 650, 500, src)
+	var/datum/browser/popup = new(client.mob, "migration", "<center>寻找你的目标</center>", 650, 500, src)
 	popup.set_content(dat.Join())
 	popup.open()
 	client.prefs.migrant.viewer = TRUE
@@ -313,13 +313,13 @@
 
 	var/current_triumph = SStriumphs.get_triumphs(client.ckey)
 	if(current_triumph <= 0)
-		to_chat(client, span_warning("You don't have any triumph to contribute!"))
+		to_chat(client, span_warning("你没有可投入的凯旋点！"))
 		return
 
 	var/player_contribution = wave.triumph_contributions[client.ckey] ? wave.triumph_contributions[client.ckey] : 0
 	var/max_contribute = min(current_triumph, 25) // Cap individual contributions
 
-	var/amount = input(client, "Contribute triumph to '[wave.name]'?\n\nYour triumph: [current_triumph]\nYour contribution: [player_contribution]\nWave total: [wave.triumph_total]/[wave.triumph_threshold]\n\nAmount to contribute (1-[max_contribute]):", "Triumph Contribution") as null|num
+	var/amount = input(client, "要向“[wave.name]”投入凯旋点吗？\n\n你的凯旋点：[current_triumph]\n你的贡献：[player_contribution]\n波次总计：[wave.triumph_total]/[wave.triumph_threshold]\n\n投入数量（1-[max_contribute]）：", "凯旋点投入") as null|num
 
 	if(!amount || amount <= 0 || amount > max_contribute)
 		return

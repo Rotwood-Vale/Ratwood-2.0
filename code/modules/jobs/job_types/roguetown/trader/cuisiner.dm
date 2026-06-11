@@ -1,7 +1,7 @@
 /datum/advclass/trader/cuisiner
-	name = "Cuisiner"
-	tutorial = "Whether a disciple of a culinary school, a storied royal chef, or a mercenary cook for hire, your trade is plied at the counter, \
-	the cutting board, and the hearth."
+	name = "厨师"
+	tutorial = "无论你是厨艺学派的门徒、声名显赫的御厨，还是受雇行走各地的佣兵灶夫，你的手艺都得在柜台、\
+	砧板与炉火之间施展。"
 	outfit = /datum/outfit/job/roguetown/adventurer/cuisiner
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_GOODLOVER, TRAIT_HOMESTEAD_EXPERT)
@@ -28,8 +28,8 @@
 
 /datum/outfit/job/roguetown/adventurer/cuisiner/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("Whether a disciple of a culinary school, a storied royal chef, or a mercenary cook for hire, your trade is plied at the counter, \
-	the cutting board, and the hearth."))
+	to_chat(H, span_warning("无论你是厨艺学派的门徒、声名显赫的御厨，还是受雇行走各地的佣兵灶夫，你的手艺都得在柜台、\
+	砧板与炉火之间施展。"))
 	if(H.age == AGE_MIDDLEAGED)
 		H.adjust_skillrank_up_to(/datum/skill/craft/cooking, SKILL_LEVEL_MASTER, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)

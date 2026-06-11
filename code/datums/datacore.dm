@@ -185,7 +185,7 @@ GLOBAL_LIST_EMPTY(fake_ckeys)
 		.manifest tr.alt td {[monochrome?"border-top-width: 2px":"background-color: #DEF"]}
 	</style></head>
 	<table class="manifest" width='350px'>
-	<tr class='head'><th>Name</th><th>Rank</th></tr>
+	<tr class='head'><th>姓名</th><th>职务</th></tr>
 	"}
 	var/even = 0
 	// sort mobs
@@ -220,49 +220,49 @@ GLOBAL_LIST_EMPTY(fake_ckeys)
 		if(!department && !(name in heads))
 			misc[name] = rank
 	if(heads.len > 0)
-		dat += "<tr><th colspan=3>Heads</th></tr>"
+		dat += "<tr><th colspan=3>指挥层</th></tr>"
 		for(var/name in heads)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[heads[name]]</td></tr>"
 			even = !even
 	if(sec.len > 0)
-		dat += "<tr><th colspan=3>Security</th></tr>"
+		dat += "<tr><th colspan=3>安保</th></tr>"
 		for(var/name in sec)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sec[name]]</td></tr>"
 			even = !even
 	if(eng.len > 0)
-		dat += "<tr><th colspan=3>Engineering</th></tr>"
+		dat += "<tr><th colspan=3>工程</th></tr>"
 		for(var/name in eng)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[eng[name]]</td></tr>"
 			even = !even
 	if(med.len > 0)
-		dat += "<tr><th colspan=3>Medical</th></tr>"
+		dat += "<tr><th colspan=3>医疗</th></tr>"
 		for(var/name in med)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[med[name]]</td></tr>"
 			even = !even
 	if(sci.len > 0)
-		dat += "<tr><th colspan=3>Science</th></tr>"
+		dat += "<tr><th colspan=3>科研</th></tr>"
 		for(var/name in sci)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sci[name]]</td></tr>"
 			even = !even
 	if(sup.len > 0)
-		dat += "<tr><th colspan=3>Supply</th></tr>"
+		dat += "<tr><th colspan=3>后勤</th></tr>"
 		for(var/name in sup)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sup[name]]</td></tr>"
 			even = !even
 	if(civ.len > 0)
-		dat += "<tr><th colspan=3>Civilian</th></tr>"
+		dat += "<tr><th colspan=3>民用</th></tr>"
 		for(var/name in civ)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[civ[name]]</td></tr>"
 			even = !even
 	// in case somebody is insane and added them to the manifest, why not
 	if(bot.len > 0)
-		dat += "<tr><th colspan=3>Silicon</th></tr>"
+		dat += "<tr><th colspan=3>硅基</th></tr>"
 		for(var/name in bot)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[bot[name]]</td></tr>"
 			even = !even
 	// misc guys
 	if(misc.len > 0)
-		dat += "<tr><th colspan=3>Miscellaneous</th></tr>"
+		dat += "<tr><th colspan=3>杂项</th></tr>"
 		for(var/name in misc)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[misc[name]]</td></tr>"
 			even = !even
@@ -283,7 +283,7 @@ GLOBAL_LIST_EMPTY(fake_ckeys)
 		else if(H.job)
 			assignment = H.job
 		else
-			assignment = "Unassigned"
+			assignment = "未分配"
 
 		var/static/record_id_num = 1001
 		var/id = num2hex(record_id_num++,6)
@@ -312,11 +312,11 @@ GLOBAL_LIST_EMPTY(fake_ckeys)
 		G.fields["m_stat"]		= "Stable"
 		G.fields["gender"]			= H.gender
 		if(H.gender == "male")
-			G.fields["gender"]  = "Male"
+			G.fields["gender"]  = "男"
 		else if(H.gender == "female")
-			G.fields["gender"]  = "Female"
+			G.fields["gender"]  = "女"
 		else
-			G.fields["gender"]  = "Other"
+			G.fields["gender"]  = "其他"
 		general += G
 
 		//Medical Record
@@ -325,25 +325,25 @@ GLOBAL_LIST_EMPTY(fake_ckeys)
 		M.fields["name"]		= H.real_name
 		M.fields["blood_type"]	= H.dna.blood_type
 		M.fields["b_dna"]		= H.dna.unique_enzymes
-		M.fields["mi_dis"]		= "None"
-		M.fields["mi_dis_d"]	= "No minor disabilities have been declared."
-		M.fields["ma_dis"]		= "None"
-		M.fields["ma_dis_d"]	= "No major disabilities have been diagnosed."
-		M.fields["alg"]			= "None"
-		M.fields["alg_d"]		= "No allergies have been detected in this patient."
-		M.fields["cdi"]			= "None"
-		M.fields["cdi_d"]		= "No diseases have been diagnosed at the moment."
+		M.fields["mi_dis"]		= "无"
+		M.fields["mi_dis_d"]	= "未记录任何轻微残疾。"
+		M.fields["ma_dis"]		= "无"
+		M.fields["ma_dis_d"]	= "未诊断出任何严重残疾。"
+		M.fields["alg"]			= "无"
+		M.fields["alg_d"]		= "该患者未检测出任何过敏反应。"
+		M.fields["cdi"]			= "无"
+		M.fields["cdi_d"]		= "当前未诊断出任何疾病。"
 		medical += M
 
 		//Security Record
 		var/datum/data/record/S = new()
 		S.fields["id"]			= id
 		S.fields["name"]		= H.real_name
-		S.fields["criminal"]	= "None"
+		S.fields["criminal"]	= "无"
 		S.fields["citation"]	= list()
 		S.fields["mi_crim"]		= list()
 		S.fields["ma_crim"]		= list()
-		S.fields["notes"]		= "No notes."
+		S.fields["notes"]		= "无备注。"
 		security += S
 
 		//Locked Record
@@ -354,11 +354,11 @@ GLOBAL_LIST_EMPTY(fake_ckeys)
 		L.fields["age"]			= H.age
 		L.fields["gender"]			= H.gender
 		if(H.gender == "male")
-			G.fields["gender"]  = "Male"
+			G.fields["gender"]  = "男"
 		else if(H.gender == "female")
-			G.fields["gender"]  = "Female"
+			G.fields["gender"]  = "女"
 		else
-			G.fields["gender"]  = "Other"
+			G.fields["gender"]  = "其他"
 		L.fields["blood_type"]	= H.dna.blood_type
 		L.fields["b_dna"]		= H.dna.unique_enzymes
 		L.fields["identity"]	= H.dna.uni_identity

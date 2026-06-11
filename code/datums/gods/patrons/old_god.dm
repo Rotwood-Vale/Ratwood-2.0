@@ -1,10 +1,10 @@
 /datum/patron/old_god
 	name = "Psydon"
-	domain = "Life, Creation, Compassion and Perseverance"
-	desc = "The One arrived to PSYDONIA on the COMET SYON, reshaping the barren world in His image. He was struck down by the Necromantress Zizo; some believe Him dead, others slumbering. May we ENDURE in His name."
-	worshippers = "Ancient Dwarves and Elves, Zybantines, Otavans, Those Who Dream of Peace"
-	virtues = "Peace, Resilience, Stubbornness"
-	sins = "Witchcraft, Sadism, Overindulgence"
+	domain = "生命、创造、慈悲与坚忍"
+	desc = "The One 抵达了 COMET SYON 所载的 PSYDONIA，将那片荒芜世界重塑为祂的模样。祂被死灵魔女 Zizo 击倒；有人相信祂已经死去，也有人相信祂只是沉眠。愿我们以祂之名 ENDURE。"
+	worshippers = "古代矮人与精灵、Zybantines、Otavans、Those Who Dream of Peace"
+	virtues = "和平、坚韧、顽强"
+	sins = "巫术、施虐、纵欲无度"
 	associated_faith = /datum/faith/old_god
 	mob_traits = list(TRAIT_PSYDONIAN_GRIT)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
@@ -14,18 +14,18 @@
 	)
 	traits_tier = list(TRAIT_PSYDONITE = CLERIC_T1)
 	confess_lines = list(
-		"THERE IS ONLY ONE TRUE GOD!",
-		"PSYDON YET LYVES! PSYDON YET ENDURES!",
-		"REBUKE THE HEATHEN, SUNDER THE MONSTER!",
-		"WITH EVERY BROKEN BONE, I SWORE I LYVED!",
-		"FORGIVE THEM, ALLFATHER, FOR THEY KNOW-NOT WHAT THEY DO!",
-		"BARE WITNESS, MY GOD; THE SACRIFICE MADE MANIFEST!",
+		"唯有一位真神！",
+		"PSYDON 仍然活着！PSYDON 依然长存！",
+		"斥退异教徒，粉碎怪物！",
+		"骨断筋折之时，我仍发誓自己活着！",
+		"宽恕他们吧，全父，因为他们不知道自己在做什么！",
+		"见证吧，我的神；这份牺牲已然显现！",
 	)
 
 
 /obj/effect/proc_holder/spell/self/check_boot
 	name = "BOOT-CHECK"
-	desc = "Checks your boot for variety of items."
+	desc = "检查我的靴子里有没有各种东西。"
 	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "BOOTCHECK"
@@ -95,12 +95,12 @@
 		found_thing = new /obj/item/roguecoin/silver
 	else
 		found_thing = new /obj/item/roguecoin/copper
-	to_chat(H, span_info("A coin in my boot? Psydon smiles upon me!"))
+	to_chat(H, span_info("我的靴子里有枚硬币？Psydon 正对我微笑！"))
 	H.put_in_hands(found_thing, FALSE)
 	if(prob(H.STALUC + H.get_skill_level(associated_skill)))
 		var/obj/item/extra_thing = pick(lootpool)
 		new extra_thing(get_turf(user))
-		to_chat(H, span_info("Ah, of course! I almost forgot I had this stashed away for a perfect occasion."))
+		to_chat(H, span_info("啊，当然！我差点忘了自己还藏着这个，正适合此刻派上用场。"))
 		H.put_in_hands(extra_thing, FALSE)
 	return TRUE
 
@@ -117,7 +117,7 @@
 	// Allows prayer near psycross.
 	for(var/obj/structure/fluff/psycross/cross in view(4, get_turf(follower)))
 		if(cross.divine == FALSE)
-			to_chat(follower, span_danger("That defiled cross interupts my prayers!"))
+			to_chat(follower, span_danger("那座被亵渎的 psycross 打断了我的祈祷！"))
 			return FALSE
 		return TRUE
 	// Allows prayer if raining and outside. Psydon weeps.
@@ -130,7 +130,7 @@
 	// Allows prayer if holding silver psycross.
 	if(istype(follower.get_active_held_item(), /obj/item/clothing/neck/roguetown/psicross/silver))
 		return TRUE
-	to_chat(follower, span_danger("For Psydon to hear my prayer I must either must be near a Pantheon Cross, shed my own blood in penitence, hold one of his silver holy symbols, or bask in his rain; as Psydon weeps for his children.."))
+	to_chat(follower, span_danger("若想让 Psydon 听见我的祈祷，我必须在 Pantheon Cross 附近、以自己的鲜血忏悔、手持祂的银制圣徽之一，或沐浴在祂的雨中；因为 Psydon 正为祂的子民哭泣……"))
 	return FALSE
 
 //////////////////////////////////
@@ -139,7 +139,7 @@
 
 /obj/effect/proc_holder/spell/invoked/psydonendure
 	name = "ENDURE"
-	desc = "At the cost of some lyfe sustaining blood, I can mend the wounds of my target."
+	desc = "以一些维系生命的鲜血为代价，我能够治愈目标的伤势。"
 	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "ENDURE"
@@ -172,7 +172,7 @@
 		var/damtotal = brute + burn
 		var/zcross_trigger = FALSE
 		if(user.patron?.undead_hater && (target.mob_biotypes & MOB_UNDEAD)) // YOU ARE NO LONGER MORTAL. NO LONGER OF HIM. PSYDON WEEPS.
-			target.visible_message(span_danger("[target] shudders with a strange stirring feeling!"), span_userdanger("It hurts. You feel like weeping."))
+			target.visible_message(span_danger("[target] 因一股奇异悸动而颤抖！"), span_userdanger("好痛。你感觉自己想哭。"))
 			target.adjustBruteLoss(40)
 			return TRUE
 
@@ -181,7 +181,7 @@
 			if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/decrepit, /obj/item/clothing/neck/roguetown/psicross/silver,	/obj/item/clothing/neck/roguetown/psicross/g))
 				pp += 1
 				if(pp >= 12 & target == user) // A harmless easter-egg. Only applies on self-cast. You'd have to be pretty deliberate to wear 12 of them.
-					target.visible_message(span_danger("[target]'s many psycrosses reverberate with a strange, ephemeral sound..."), span_userdanger("HE must be waking up! I can hear it! I'm ENDURING so much!"))
+					target.visible_message(span_danger("[target] 身上的众多 psycross 共鸣出一种奇异而短暂的声响……"), span_userdanger("祂一定要苏醒了！我听见了！我竟如此 ENDURING！"))
 					playsound(user, 'sound/magic/PSYDONE.ogg', 100, FALSE)
 					sleep(60)
 					user.psydo_nyte()
@@ -219,15 +219,15 @@
 		if (situational_bonus > 0)
 			conditional_buff = TRUE
 
-		target.visible_message(span_info("A strange stirring feeling pours from [target]!"), span_info("Sentimental thoughts drive away my pain..."))
+		target.visible_message(span_info("一股奇异的悸动自 [target] 体内涌出！"), span_info("感伤的思绪驱散了我的痛楚……"))
 		var/psyhealing = 3
 		psyhealing += psicross_bonus
 		if (conditional_buff & !zcross_trigger)
-			to_chat(user, "In <b>ENDURING</b> so much, become <b>EMBOLDENED</b>!")
+			to_chat(user, "正因如此 <b>ENDURING</b>，我变得 <b>无比振奋</b>！")
 			psyhealing += situational_bonus
 
 		if (zcross_trigger)
-			user.visible_message(span_warning("[user] shuddered. Something's very wrong."), span_userdanger("Cold shoots through my spine. Something laughs at me for trying."))
+			user.visible_message(span_warning("[user] 颤抖了一下。情况很不对劲。"), span_userdanger("一阵寒意窜上我的脊背。有某种东西在嘲笑我的尝试。"))
 			user.playsound_local(user, 'sound/misc/zizo.ogg', 25, FALSE)
 			user.adjustBruteLoss(25)
 			return FALSE

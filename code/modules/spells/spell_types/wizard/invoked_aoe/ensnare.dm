@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/ensnare
-	name = "Ensnare"
-	desc = "Tendrils of arcyne force hold anyone in a small area in place for a short while."
+	name = "缚锁术"
+	desc = "奥术之力化作缠索，短时间内将小片区域中的人定在原地。"
 	cost = 3
 	xp_gain = TRUE
 	releasedrain = 20
@@ -16,7 +16,7 @@
 	associated_skill = /datum/skill/magic/arcane
 	range = 6
 	spell_tier = 3
-	invocations = list("Impedio!")
+	invocations = list("缚索，缠身！")
 	invocation_type = "shout"
 	gesture_required = TRUE // Offensive spell
 	glow_color = GLOW_COLOR_DISPLACEMENT
@@ -42,12 +42,12 @@
 		animal.Paralyze(duration, updating = TRUE, ignore_canstun = TRUE)	//i think animal movement is coded weird, i cant seem to stun them
 	for(var/mob/living/L in range(area_of_effect, T))
 		if(L.anti_magic_check())
-			visible_message(span_warning("The tendrils of force can't seem to latch onto [L] "))  //antimagic needs some testing
+			visible_message(span_warning("那些力场缠索似乎无法缠住 [L]！"))  //antimagic needs some testing
 			playsound(get_turf(L), 'sound/magic/magic_nulled.ogg', 100)
 			return
 		L.Immobilize(duration)
 		L.OffBalance(duration)
-		L.visible_message("<span class='warning'>[L] is held by tendrils of arcyne force!</span>")
+		L.visible_message("<span class='warning'>[L] 被奥术力场化成的缠索束住了！</span>")
 		new /obj/effect/temp_visual/ensnare/long(get_turf(L))
 
 /obj/effect/temp_visual/ensnare

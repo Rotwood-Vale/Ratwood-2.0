@@ -194,7 +194,7 @@
 	if(!job_greet_text)
 		return
 	var/used_title = get_used_title(player)
-	to_chat(player, span_notice("You are the <b>[used_title]</b>"))
+	to_chat(player, span_notice("你的身份是 <b>[used_title]</b>"))
 	if(tutorial)
 		to_chat(player, span_notice("*-----------------*"))
 		to_chat(player, span_notice(tutorial))
@@ -240,7 +240,7 @@
 		if(H.mind)
 			H.mind?.special_items["Pouch of Coins"] = /obj/item/storage/belt/rogue/pouch/coins/readyuppouch
 
-		to_chat(M, span_notice("Rising early, you made sure to pack a pouch of coins in your stash and eat a hearty breakfast before starting your day. A true TRIUMPH!"))
+		to_chat(M, span_notice("你起得很早，特地在行囊里备好了一袋钱币，又在出发前饱餐了一顿。真是一场凯旋般的开局！"))
 
 	if(H.islatejoin && announce_latejoin)
 		var/used_title = display_title || title
@@ -408,7 +408,7 @@
 		H.grant_language(/datum/language/celestial)
 
 /datum/outfit/job
-	name = "Standard Gear"
+	name = "标准装备"
 
 	var/jobtype = null
 
@@ -464,7 +464,7 @@
 		for(var/stat in statcl)
 			if(statcl[stat] < H.get_stat(stat))
 				H.change_stat(stat, (statcl[stat] - H.get_stat(stat)))
-				to_chat(H, "Your [stat] was reduced to \Roman[statcl[stat]] due to class limits.")
+				to_chat(H, "由于职业限制，你的 [stat] 被降至 \Roman[statcl[stat]]。")
 
 // LETHALSTONE EDIT: Helper functions for pronoun-based clothing selection
 /proc/should_wear_masc_clothes(mob/living/carbon/human/H)
@@ -488,7 +488,7 @@
 		if(length(job_subclasses) && length(job_stats))
 			CRASH("[REF(src)] has definitions for both class and subclass stats. Likely not intended, and they will stack!")
 		if(length(job_subclasses))
-			dat += "This class has the following subclasses: "
+			dat += "该职业包含以下子职业："
 			for(var/sclass in job_subclasses)
 				sclass_count++
 				var/datum/advclass/adv = sclass
@@ -499,20 +499,20 @@
 				dat += "<td width = 70%><i><font color ='#ece9e9'>[adv_ref.tutorial]</font></i></td>"
 				dat += "<td width = 30%; style='text-align:right'>"
 				if(length(adv_ref.subclass_stats))
-					dat += "<font color ='#7a4d0a'>Stat Bonuses:</font><font color ='#d4b164'>"
+					dat += "<font color ='#7a4d0a'>属性加成：</font><font color ='#d4b164'>"
 					for(var/stat in adv_ref.subclass_stats)
 						dat += "<br>[capitalize(stat)]: <b>[adv_ref.subclass_stats[stat] < 0 ? "<font color = '#cf2a2a'>" : "<font color = '#91cf68'>"]\Roman[adv_ref.subclass_stats[stat]]</font></b>"
 				dat += "<br></td></tr></table></font>"
 				if(length(adv_ref.adv_stat_ceiling))
-					dat += "["<font color = '#cf2a2a'><b>This subclass has the following stat limits: "]</b></font><br>"
+					dat += "<font color = '#cf2a2a'><b>该子职业具有以下属性上限：</b></font><br>"
 					dat += " | "
 					for(var/stat in adv_ref.adv_stat_ceiling)
 						dat += "["[capitalize(stat)]: <b>\Roman[adv_ref.adv_stat_ceiling[stat]]</b>"] | "
-					dat += "<i><br>Regardless of your statpacks or race choice, you will not be able to exceed these stats on spawn.</i></font>"
+					dat += "<i><br>无论你选择何种属性包或种族，出生时都无法超过这些属性上限。</i>"
 				if(adv_ref.subclass_spellpoints > 0)
-					dat += "<font color = '#a3a7e0'>Starting Spellpoints: <b>[adv_ref.subclass_spellpoints]</b></font>"
+					dat += "<font color = '#a3a7e0'>初始法术点数：<b>[adv_ref.subclass_spellpoints]</b></font>"
 				if(length(adv_ref.subclass_languages))
-					dat += "<details><summary><i>Known Languages</i></summary>"
+					dat += "<details><summary><i>已知语言</i></summary>"
 					for(var/i in 1 to length(adv_ref.subclass_languages))
 						var/datum/language/lang = adv_ref.subclass_languages[i]
 						dat += "<i>[initial(lang.name)][i == length(adv_ref.subclass_languages) ? "" : ", "]</i>"
@@ -524,18 +524,18 @@
 					var/list/traitlist
 					if(length(adv_ref.traits_applied))
 						traitlist = adv_ref.traits_applied
-						dat += "<font color ='#7a4d0a'><b>Sub</b>class Traits:</font> "
+						dat += "<font color ='#7a4d0a'><b>子</b>职业特性：</font> "
 					else if(!length(adv_ref.traits_applied) && length(job_traits))
 						traitlist = job_traits
 						show_job_traits = FALSE
-						dat += "<font color ='#7a4d0a'><b>Class</b> Traits:</font> "
+						dat += "<font color ='#7a4d0a'><b>职业</b>特性：</font> "
 					for(var/trait in traitlist)
 						dat += "<details><summary><i><font color ='#ccbb82'>[trait]</font></i></summary>"
 						dat += "<i><font color = '#a3ffe0'>[GLOB.roguetraits[trait]]</font></i></details>"
 					dat += "</font>"
 					dat += "<br>"
 				if(length(adv_ref.subclass_stashed_items))
-					dat += "<br><font color ='#7a4d0a'>Stashed Items:</font><font color ='#d4b164'>"
+					dat += "<br><font color ='#7a4d0a'>藏匿物品：</font><font color ='#d4b164'>"
 					for(var/stashed_item in adv_ref.subclass_stashed_items)
 						dat += "<br> - <i>[stashed_item]</i>"
 					dat += "</font>"
@@ -549,11 +549,11 @@
 						else if(ispath(sk, /datum/skill/combat))
 							notable_skills[sk] = adv_ref.subclass_skills[sk]
 					if(!length(notable_skills))	//Nothing above Jman AND no Combat skills.
-						dat += "<i>This subclass has no notable skills.</i>"
+						dat += "<i>该子职业没有特别突出的技能。</i>"
 					else
 						notable_skills = sortTim(notable_skills,/proc/cmp_numeric_dsc, TRUE)
 						var/max_skills = 5	//We don't want to print out /all/ of them, as it messes up the formatting.
-						dat += "<font color ='#7a4d0a'>Notable Skills: </font>"
+						dat += "<font color ='#7a4d0a'>显著技能：</font>"
 						for(var/sk in notable_skills)
 							if(max_skills > 0)
 								var/datum/skill/skill = sk
@@ -567,24 +567,24 @@
 				dat += "</details>"
 		dat += "<hr>"
 		if(length(job_stats))
-			dat += "Starting Stats:<font color ='#d4b164'>"
+			dat += "初始属性：<font color ='#d4b164'>"
 			for(var/stat in job_stats)
 				dat += "<br>[capitalize(stat)]: <b>[job_stats[stat] < 0 ? "<font color = '#cf2a2a'>" : "<font color = '#91cf68'>"]\Roman[job_stats[stat]]</font></b>"
 			dat += "</font>"	//Ends the stats colors
 			if(length(stat_ceilings))
-				dat += "["<br><font color = '#cf2a2a'><b>This class has the following stat limits:</b> "]<br>"
+				dat += "<br><font color = '#cf2a2a'><b>该职业具有以下属性上限：</b></font><br>"
 				dat += " | "
 				for(var/stat in stat_ceilings)
 					dat += "["[capitalize(stat)]: <b>\Roman[stat_ceilings[stat]]</b>"] | "
-				dat += "<br><i>Regardless of your statpacks or race choice, you will not be able to exceed these stats on spawn.</i></font>"
+				dat += "<br><i>无论你选择何种属性包或种族，出生时都无法超过这些属性上限。</i>"
 				dat += "</font>"	//Ends the stat limit colors
 		if(length(job_traits) && (show_job_traits || sclass_count > 1))
-			dat += "<b>Class</b></font> Traits: "
+			dat += "<b>职业</b></font> 特性："
 			for(var/trait in job_traits)
 				dat += "<details><summary><i><font color ='#ccbb82'>[trait]</font></i></summary>"
 				dat += "<i><font color = '#a3ffe0'>[GLOB.roguetraits[trait]]</font></i></details>"
 			dat += "</font>"
-		dat += "<br><i>This information is not all-encompassing. Many classes have other quirks and skills that define them.</i>"
+		dat += "<br><i>以上信息并不涵盖全部内容。许多职业还有其他独特机制与技能来定义其玩法。</i>"
 		if(istype(src,/datum/job/roguetown/jester))
 			LAZYCLEARLIST(dat)
 			dat = list("<font color = '#d151ab'><center>Come one, come all, where Psydon Lies! <br>Let Xylix roll the dice, <br>unto our untimely demise! <br>Ahahaha!</center>")
@@ -610,7 +610,7 @@
 			if(subclass.maximum_possible_slots != -1)
 				dat += "[subclass.name] — <b>"
 				if(subclass.total_slots_occupied >= subclass.maximum_possible_slots)
-					dat += "FULL!"
+					dat += "已满！"
 				else
 					dat += "[subclass.total_slots_occupied] / [subclass.maximum_possible_slots]"
 				dat += "</b><br>"

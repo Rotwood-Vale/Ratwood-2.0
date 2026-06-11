@@ -16,12 +16,12 @@ dreaming. Still have to go to sleep to learn skills. Also gives healing tickrate
 	else if (source_type == 2)
 		pool = locate(/obj/structure/hotspring) in get_turf(src)
 
-	src.visible_message(span_info("[src] begins to soak in [pool]."), span_info("I settle into the water, beginning to soak."), span_info("Someone sloshes idly in some water."))
+	src.visible_message(span_info("[src]开始在[pool]中浸泡。"), span_info("我在水中缓缓坐下，开始泡澡。"), span_info("有人正在水中懒洋洋地晃动。"))
 	
 	if(src.has_status_effect(/datum/status_effect/debuff/sleepytime))
-		to_chat(src, span_green("I am taking a relaxing bath. It will remove this tiring feeling I suffer from."))
+		to_chat(src, span_green("我正在享受一场放松的沐浴。这会消除我现在承受的疲惫感。"))
 	else
-		to_chat(src, span_green("I am taking a relaxing bath."))
+		to_chat(src, span_green("我正在享受一场放松的沐浴。"))
 
 	var/soak_count = 0
 	var/soak_threshold = 12 // 2 minutes
@@ -36,13 +36,13 @@ dreaming. Still have to go to sleep to learn skills. Also gives healing tickrate
 
 	while(do_after(src, ticks, target = pool))
 		if(src.loc != bathing_spot)
-			to_chat(src, span_warning("I move away from the water, ending my bath."))
+			to_chat(src, span_warning("我离开了水边，结束了这场沐浴。"))
 			break
 
 		if(first_clean) //Cleaning them on first loop through
 			wash_atom(src, CLEAN_STRONG)
 			src.remove_stress(/datum/stressevent/sewertouched)
-			src.visible_message(span_info("[src] washes off the grime."), span_info("The warm water cleanses me."))
+			src.visible_message(span_info("[src]洗去了身上的污垢。"), span_info("温暖的水流洗净了我。"))
 			first_clean = FALSE
 
 		if(bodytemperature < BODYTEMP_NORMAL_MIN)	//washing yourself helps to warm you up.
@@ -65,9 +65,9 @@ dreaming. Still have to go to sleep to learn skills. Also gives healing tickrate
 		if(src.wear_armor || src.head && src.head.armor?.stab > 70)
 			soak_count--
 			if(prob(10))
-				to_chat(src, span_warning("I'm not getting the most out of this with my outer clothes on."))
+				to_chat(src, span_warning("穿着外层衣物，我没法充分享受这场沐浴。"))
 			if(!soapy)
-				to_chat(src, span_warning("I'm not getting anything out of this. I should at least remove my armor and my helmet, or use some soap."))
+				to_chat(src, span_warning("我这样根本泡不出什么效果。我至少该脱掉盔甲和头盔，或者用些肥皂。"))
 				break //No healing for you
 
 
@@ -81,8 +81,8 @@ dreaming. Still have to go to sleep to learn skills. Also gives healing tickrate
 			src.energy_add(100) // Refilling our blue bar
 
 		if(soak_count >= soak_threshold && !ultimate_soak && src.has_status_effect(/datum/status_effect/debuff/sleepytime))
-			to_chat(src, span_green("I feel completely refreshed from my soak!"))
-			src.visible_message(span_info("[src] looks completely refreshed, the exhaustion lifting from [src.p_them()]."))
+			to_chat(src, span_green("这一泡让我彻底恢复了精神！"))
+			src.visible_message(span_info("[src]看起来神清气爽，疲惫正从[src.p_them()]身上消退。"))
 			src.remove_status_effect(/datum/status_effect/debuff/sleepytime)
 			src.remove_stress(/datum/stressevent/sleepytime)
 			src.adjust_triumphs(1)

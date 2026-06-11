@@ -32,13 +32,13 @@
 		var/newratio = (blade_int - amt) / max_blade_int
 		if(ratio > SHARPNESS_TIER1_THRESHOLD && newratio <= SHARPNESS_TIER1_THRESHOLD) //We are above the first threshold but are about to hit it.
 			if(L.STAINT > 9)
-				to_chat(L, span_info("<i><font color = '#ececec'>The edge chips! \The [src]'s damage will start to slowly wane, now.</font></i>"))
+				to_chat(L, span_info("<i><font color = '#ececec'>刃口崩裂了！[src]的伤害现在会开始缓慢衰减。</font></i>"))
 			playsound(L, 'sound/combat/sharpness_loss1.ogg', 75, TRUE)
 
 		//We are above the second threshold but are about to hit it.
 		if(ratio > SHARPNESS_TIER2_THRESHOLD && newratio <= SHARPNESS_TIER2_THRESHOLD)
 			if(L.STAINT > 9)
-				to_chat(L, span_userdanger("A chunk snapped off! \The [src]'s damage will decay much quicker now."))
+				to_chat(L, span_userdanger("崩掉了一大块！[src]的伤害现在会衰减得快得多。"))
 			playsound(L, 'sound/combat/sharpness_loss2.ogg', 100, TRUE)
 
 	blade_int = blade_int - amt
@@ -66,9 +66,9 @@
 	else
 		var/ratio = blade_int / max_blade_int
 		if(ratio < SHARPNESS_TIER2_THRESHOLD && ((blade_int + amt) / max_blade_int) > SHARPNESS_TIER2_THRESHOLD)
-			to_chat(user, span_info("The <b>chunks</b> smooth out. The edge regains some smoothness."))
+			to_chat(user, span_info("<b>崩口</b>被磨平了。刃口恢复了些许平整。"))
 		if(ratio < SHARPNESS_TIER1_THRESHOLD && ((blade_int + amt) / max_blade_int) > SHARPNESS_TIER1_THRESHOLD)
-			to_chat(user, span_info("The <b>chips</b> disappear. The edge is now as sharp as ever."))
+			to_chat(user, span_info("<b>缺口</b>消失了。刃口如今又恢复到了往日的锋利。"))
 		blade_int = blade_int + amt
 		if(blade_int >= max_blade_int)
 			blade_int = max_blade_int
@@ -95,11 +95,11 @@
 			sharpen(ST, user, 0.3)
 			user.changeNext_move(CLICK_CD_TRACKING)
 			if(blade_int >= max_blade_int)
-				to_chat(user, span_info("Fully sharpened."))
+				to_chat(user, span_info("已经磨到最锋利了。"))
 				return
 			for(var/i in 1 to loopcount)
 				if(blade_int >= max_blade_int)
-					to_chat(user, span_info("Fully sharpened."))
+					to_chat(user, span_info("已经磨到最锋利了。"))
 					break
 				if(do_after(user, 1.5 SECONDS, same_direction = TRUE))
 					sharpen(ST, user)
@@ -111,7 +111,7 @@
 /obj/item/proc/sharpen(obj/item/natural/ST, mob/user, factor = 1)
 	playsound(src.loc, pick('sound/items/sharpen_long1.ogg','sound/items/sharpen_long2.ogg'), 100, TRUE)
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message(span_notice("[user] sharpens [src]!"))
+	user.visible_message(span_notice("[user]打磨了[src]！"))
 	degrade_bintegrity(0.5)
 	add_bintegrity((ST.sharpening_factor * factor), user)
 

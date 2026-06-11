@@ -1,8 +1,8 @@
 // Currently the only multi-behavior quirk & the only interaction quirk
 // May refactor territorial to be similar later
 /datum/flesh_quirk/hoarder
-	name = "Hoarder"
-	description = "Acquires valuables, demands valuables, hates thieves."
+	name = "囤积癖"
+	description = "会收集贵重物品，索要贵重物品，也憎恨窃贼。"
 	quirk_type = QUIRK_INTERACT | QUIRK_BEHAVIOR | QUIRK_ENVIRONMENT
 
 	var/value_current = 3
@@ -38,12 +38,12 @@
 		// Might satisfy itself when stealing
 		if(prob(5 * beast.language_tier))
 			beast.satisfied = TRUE
-		beast.heart_beast.visible_message(span_warning("Tendrils from [beast.heart_beast] root into the ground and pull out a glittering pile of coins!"))
+		beast.heart_beast.visible_message(span_warning("[beast.heart_beast]的触须扎进地里，拽出一堆闪闪发光的金币！"))
 	else
 		// Treasury is empty or can't fulfill the request
 		// Will try to steal again sooner
 		next_theft = world.time + (theft_cooldown / 4)
-		beast.heart_beast.visible_message(span_warning("Tendrils from [beast.heart_beast] root into the ground, but come up empty."))
+		beast.heart_beast.visible_message(span_warning("[beast.heart_beast]的触须扎进地里，却什么也没摸出来。"))
 
 /datum/flesh_quirk/hoarder/proc/calculate_withdrawal_amount(language_tier)
 	var/base_min = 10
@@ -110,23 +110,23 @@
 /datum/flesh_quirk/hoarder/apply_item_interaction_quirk(obj/item/I, mob/user, datum/component/chimeric_heart_beast/beast)
 	var/datum/component/eora_bond/existing = user.GetComponent(/datum/component/hoarded_item)
 	if(existing)
-		beast.heart_beast.visible_message(span_warning("[beast.heart_beast] refuses the item!"))
+		beast.heart_beast.visible_message(span_warning("[beast.heart_beast]拒绝了这件物品！"))
 		return FALSE
 
 	// It can, and will get all the coin it wants itself, this is to challenge players
 	if(istype(I, /obj/item/roguecoin))
-		beast.heart_beast.visible_message(span_warning("[beast.heart_beast] seems to find the raw coin boring!"))
+		beast.heart_beast.visible_message(span_warning("[beast.heart_beast]似乎觉得这枚生硬的硬币很无聊！"))
 		return FALSE
 
 	if(I.sellprice < value_current)
-		beast.heart_beast.visible_message(span_warning("[beast.heart_beast] seems unimpressed!"))
+		beast.heart_beast.visible_message(span_warning("[beast.heart_beast]看起来并不感兴趣！"))
 		return FALSE
 
 	beast.happiness = min(beast.happiness + (beast.max_happiness * 0.20), beast.max_happiness)
 	value_current = min(value_current + value_increment, value_cap)
 
 	I.AddComponent(/datum/component/hoarded_item, beast)
-	beast.heart_beast.visible_message(span_notice("[beast.heart_beast] hoards the item with its tentacles."))
+	beast.heart_beast.visible_message(span_notice("[beast.heart_beast]用触须把那件物品卷入囤藏之中。"))
 
 	// We'll calculate this each time just in case someone silly moves the heartbeast (please don't move the blorbo D:)
 	var/turf/center_turf = get_turf(beast.heart_beast)
@@ -143,10 +143,10 @@
 /datum/flesh_quirk/hoarder/proc/handle_thief(obj/item/I, mob/living/user, datum/component/chimeric_heart_beast/beast)
 	if(beast.happiness < (beast.max_happiness * 0.75))
 		user.apply_status_effect(/datum/status_effect/territorial_rage, beast.heart_beast)
-		beast.heart_beast.visible_message(span_userdanger("Tendrils from [beast.heart_beast] lash out at [user]!"))
+		beast.heart_beast.visible_message(span_userdanger("[beast.heart_beast]的触须猛地抽向[user]！"))
 	else
 		beast.happiness = max(beast.happiness - (beast.max_happiness * 0.10), 0)
-		beast.heart_beast.visible_message(span_userdanger("[beast.heart_beast] begrudingly relinquishes the item."))
+		beast.heart_beast.visible_message(span_userdanger("[beast.heart_beast]不情不愿地交出了那件物品。"))
 
 /datum/component/hoarded_item
 	var/datum/component/chimeric_heart_beast/heart_component

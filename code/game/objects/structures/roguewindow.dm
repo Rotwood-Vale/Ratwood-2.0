@@ -1,7 +1,7 @@
 
 /obj/structure/roguewindow
-	name = "window"
-	desc = "A glass window, it separates a small slice of civilization from the savage outside world."
+	name = "窗户"
+	desc = "一扇玻璃窗，它将一小片文明与野蛮的外部世界隔离开来。"
 	icon = 'icons/roguetown/misc/roguewindow.dmi'
 	icon_state = "window-solid"
 	layer = TABLE_LAYER
@@ -54,18 +54,18 @@
 	if(brokenstate)
 		if(!repair_started)
 			if(istype(I, repair_costs[1]))
-				user.visible_message(span_notice("[user] starts repairing [src]."), \
-				span_notice("I start repairing [src]."))
+				user.visible_message(span_notice("[user]开始修理[src]。"), \
+				span_notice("我开始修理[src]。"))
 				playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 				if(do_after(user, (300 / user.get_skill_level(repair_skill)), target = src)) // 1 skill = 30 secs, 2 skill = 15 secs etc.
 					qdel(I)
 					playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 					repair_started = TRUE
 					var/obj/cast_repair_cost_second = repair_costs[2]
-					to_chat(user, span_notice("An additional [initial(cast_repair_cost_second.name)] is needed to finish the job."))
+					to_chat(user, span_notice("还需要额外一个[initial(cast_repair_cost_second.name)]才能修完。"))
 		else if(istype(I, repair_costs[2]))
-			user.visible_message(span_notice("[user] starts repairing [src]."), \
-			span_notice("I start repairing [src]."))
+			user.visible_message(span_notice("[user]开始修理[src]。"), \
+			span_notice("我开始修理[src]。"))
 			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 			if(do_after(user, (300 / user.get_skill_level(repair_skill)), target = src)) // 1 skill = 30 secs, 2 skill = 15 secs etc.
 				qdel(I)
@@ -78,12 +78,12 @@
 				opacity = initial(opacity)
 				obj_integrity = max_integrity
 				repair_started = FALSE
-				user.visible_message(span_notice("[user] repaired [src]."), \
-				span_notice("I repaired [src]."))
+				user.visible_message(span_notice("[user]修好了[src]。"), \
+				span_notice("我修好了[src]。"))
 	else if(obj_integrity < max_integrity && istype(I, repair_costs[1]))
 		to_chat(user, span_warning("[obj_integrity]"))
-		user.visible_message(span_notice("[user] starts repairing [src]."), \
-		span_notice("I start repairing [src]."))
+		user.visible_message(span_notice("[user]开始修理[src]。"), \
+		span_notice("我开始修理[src]。"))
 		playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 		if(do_after(user, (300 / user.get_skill_level(repair_skill)), target = src)) // 1 skill = 30 secs, 2 skill = 15 secs etc.
 			qdel(I)
@@ -91,8 +91,8 @@
 			obj_integrity = obj_integrity + (max_integrity/2)
 			if(obj_integrity > max_integrity)
 				obj_integrity = max_integrity
-			user.visible_message(span_notice("[user] repaired [src]."), \
-			span_notice("I repaired [src]."))
+			user.visible_message(span_notice("[user]修好了[src]。"), \
+			span_notice("我修好了[src]。"))
 
 /obj/structure/roguewindow/openclose/OnCrafted(dirin)
 	dirin = turn(dirin, 180)
@@ -143,7 +143,7 @@
 	icon_state = base_state
 
 /obj/structure/roguewindow/openclose/reinforced
-	desc = "A glass window reinforced with a metal mesh, it still won't keep you alive tonight."
+	desc = "一扇用金属网加固的玻璃窗，但它仍然无法让你活过今晚。"
 	icon_state = "reinforcedwindowdir"
 	base_state = "reinforcedwindow"
 	max_integrity = 800
@@ -161,7 +161,7 @@
 	icon_state = base_state
 
 /obj/structure/roguewindow/openclose/reinforced/brick
-	desc = "A glass window reinforced with a metal frame, it should keep you safe from the outside world."
+	desc = "一扇用金属框架加固的玻璃窗，它应该能保护你免受外界的侵害。"
 	icon_state = "brickwindowdir"
 	base_state = "brickwindow"
 	max_integrity = 1000	//Better than reinforced by a bit; metal frame.
@@ -176,30 +176,30 @@
 	icon_state = base_state
 
 /obj/structure/roguewindow/harem1
-	name = "harem window"
-	desc = "An opaque glass window, you can only imagine what is on the other side."
+	name = "后庭窗"
+	desc = "一扇不透明的玻璃窗，你只能想象另一边是什么。"
 	icon_state = "harem1-solid"
 	base_state = "harem1-solid"
 	repair_costs = list(/obj/item/natural/glass, /obj/item/natural/glass)
 
 /obj/structure/roguewindow/harem2
-	name = "harem window"
-	desc = "An opaque glass window, it promises delights and opportunities you may never see realized."
+	name = "后庭窗"
+	desc = "一扇不透明的玻璃窗，它承诺了你可能永远无法实现的愉悦和机遇。"
 	icon_state = "harem2-solid"
 	base_state = "harem2-solid"
 	opacity = TRUE
 	repair_costs = list(/obj/item/natural/glass, /obj/item/natural/glass)
 
 /obj/structure/roguewindow/harem3
-	name = "harem window"
-	desc = "An opaque glass window, the blur of colors and shapes behind it serve as ever more temptation to the mind."
+	name = "后庭窗"
+	desc = "一扇不透明的玻璃窗，其后模糊的色彩与形状构成了对心灵愈发强烈的诱惑。"
 	icon_state = "harem3-solid"
 	base_state = "harem3-solid"
 	repair_costs = list(/obj/item/natural/glass, /obj/item/natural/glass)
 
 /obj/structure/roguewindow/harem3/frosted
-	name = "frosted glass window"
-	desc = "A frosted glass window, it obscures the view but focuses the mind on just what could be hiding behind it."
+	name = "磨砂玻璃窗"
+	desc = "一扇磨砂玻璃窗，它模糊了视野，却让你的思绪专注于它后面可能隐藏着什么。"
 	opacity = TRUE
 
 /obj/structure/roguewindow/openclose/Initialize(mapload)
@@ -243,7 +243,7 @@
 	var/lockpicking_check_done
 	if(get_dir(src,user) == lockdir)
 		if(brokenstate)
-			to_chat(user, span_warning("It's broken, that would be foolish."))
+			to_chat(user, span_warning("它已经坏了，再这么做就太蠢了。"))
 			return
 		if(climbable)
 			close_up(user)
@@ -276,18 +276,18 @@
 		pickchance = clamp(pickchance, 1, 96)
 
 		if(brokenstate)
-			to_chat(user, span_warning("It's broken, that would be foolish."))
+			to_chat(user, span_warning("它已经坏了，再这么做就太蠢了。"))
 			return
 		else
 			if(!climbable)
-				to_chat(user, ("<span class='deadsay'>I slide [held_knife] through [src] seal...</span>"))
+				to_chat(user, ("<span class='deadsay'>我把[held_knife]从[src]的缝隙里滑了进去……</span>"))
 			while(!QDELETED(held_knife) && (lockprogress < locktreshold))
 				if(!do_after(user, picktime, target = src))
 					break
 				if(prob(pickchance))
 					lockprogress += moveup
 					playsound(src.loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
-					to_chat(user, "<span class='warning'>Click... [pickchance]% chance to succeed...</span>")
+					to_chat(user, "<span class='warning'>咔哒……成功率[pickchance]%。</span>")
 					if(user.mind)
 						add_sleep_experience(opener, /datum/skill/misc/lockpicking, opener.STAINT/2)
 					if(lockprogress >= locktreshold)
@@ -301,11 +301,11 @@
 					playsound(loc, 'sound/items/pickbad.ogg', 40, TRUE)
 					obj_integrity = break_me
 					held_knife.take_damage(10, BRUTE, "blunt")
-					to_chat(user, "<span class='warning'>Clack. [100 - pickchance]% chance to fuck up.</span>")
+					to_chat(user, "<span class='warning'>咔嗒。搞砸概率[100 - pickchance]%。</span>")
 					add_sleep_experience(opener, /datum/skill/misc/lockpicking, opener.STAINT/4)
 					playsound(src, break_sound, 100)
 					log_admin("Window broken at X:[src.x] Y:[src.y] Z:[src.z] in area: [get_area(src)]")
-					loud_message("A loud crash of a window getting broken rings out", hearing_distance = 14)
+					loud_message("窗户碎裂的巨响猛然回荡开来", hearing_distance = 14)
 					new /obj/item/natural/glass_shard (get_turf(src))
 					new /obj/effect/decal/cleanable/debris/glassy(get_turf(src))
 					brokenstate = TRUE
@@ -315,28 +315,28 @@
 					var/obj/effect/track/structure/new_track = new(get_turf(src))
 					new_track.handle_creation(user)
 					user.visible_message(
-						span_warning("[user] fucks up! The window is broken!!"),
-						span_danger("I fucked up!! FUCK!!"))
+						span_warning("[user]失手了，把窗户弄碎了！"),
+						span_danger("我失手了！该死！！"))
 					return
 
 			if(climbable && (lockpicking_check_done == 1))
 				close_up(user)
 				user.visible_message(
-					span_notice("[user] closes the window!!"),
-					span_notice("I close the window!"))
+					span_notice("[user]把窗户关上了！"),
+					span_notice("我把窗户关上了！"))
 			else if(!climbable && (lockpicking_check_done == 1))
-				to_chat(user, "<span class='deadsay'>The locking mechanism gives...</span>")
+				to_chat(user, "<span class='deadsay'>锁扣松开了……</span>")
 				var/obj/effect/track/structure/new_track = new(get_turf(src))
 				new_track.handle_creation(user)
 				open_up(user)
 				user.visible_message(
-					span_notice("[user] pries open [src] with [held_knife]!!"),
-					span_notice("I pry [src] open!"))
+					span_notice("[user]用[held_knife]撬开了[src]！"),
+					span_notice("我把[src]撬开了！"))
 	else
-		to_chat(user, span_warning("The window doesn't close from this side."))
+		to_chat(user, span_warning("这扇窗从这一侧没法关上。"))
 
 /obj/structure/roguewindow/proc/open_up(mob/user)
-	visible_message(span_info("[user] opens [src]."))
+	visible_message(span_info("[user]打开了[src]。"))
 	playsound(src, 'sound/foley/doors/windowup.ogg', 100, FALSE)
 	set_climbable(TRUE)
 	opacity = FALSE
@@ -349,7 +349,7 @@
 	update_icon()
 
 /obj/structure/roguewindow/proc/close_up(mob/user)
-	visible_message(span_info("[user] closes [src]."))
+	visible_message(span_info("[user]关上了[src]。"))
 	playsound(src, 'sound/foley/doors/windowdown.ogg', 100, FALSE)
 	set_climbable(FALSE)
 	opacity = TRUE
@@ -384,8 +384,8 @@
 						dude.Knockdown(5 SECONDS)
 						dude.add_stress(/datum/stressevent/hithead)
 						dude.visible_message(
-							span_warning("[dude] hits their head as they fly through the window!"),
-							span_danger("I hit my head on the window frame!"))
+							span_warning("[dude]飞穿窗户时一头撞上了窗框！"),
+							span_danger("我的脑袋撞上窗框了！"))
 				return 1
 	else if(isitem(mover))
 		var/obj/item/I = mover
@@ -413,7 +413,7 @@
 	if(HAS_TRAIT(user, TRAIT_BASHDOORS))
 		src.take_damage(15)
 		return
-	src.visible_message(span_info("[user] knocks on [src]."))
+	src.visible_message(span_info("[user]敲了敲[src]。"))
 	add_fingerprint(user)
 	playsound(src, 'sound/misc/glassknock.ogg', 100)
 
@@ -421,7 +421,7 @@
 	if(!brokenstate)
 		attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
 		log_admin("Window broken at X:[src.x] Y:[src.y] Z:[src.z] in area: [get_area(src)]")
-		loud_message("A loud crash of a window getting broken rings out", hearing_distance = 14)
+		loud_message("窗户碎裂的巨响猛然回荡开来", hearing_distance = 14)
 		new /obj/item/natural/glass_shard (get_turf(src))
 		new /obj/effect/decal/cleanable/debris/glassy(get_turf(src))
 		set_climbable(TRUE)
@@ -436,8 +436,8 @@
 	var/obj/cast_repair_cost_first = repair_costs[1]
 	var/obj/cast_repair_cost_second = repair_costs[2]
 	if((!repair_started) && (obj_integrity < max_integrity))
-		. += span_notice("A [initial(cast_repair_cost_first.name)] can be used to repair it.")
+		. += span_notice("可以用一个[initial(cast_repair_cost_first.name)]来修复它。")
 		if(brokenstate)
-			. += span_notice("An additional [initial(cast_repair_cost_second.name)] is needed to finish repairs.")
+			. += span_notice("还需要额外一个[initial(cast_repair_cost_second.name)]才能完成修复。")
 	if(repair_started)
-		. += span_notice("An additional [initial(cast_repair_cost_second.name)] is needed to finish repairs.")
+		. += span_notice("还需要额外一个[initial(cast_repair_cost_second.name)]才能完成修复。")

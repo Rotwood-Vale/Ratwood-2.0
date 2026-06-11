@@ -31,7 +31,7 @@ GLOBAL_LIST_EMPTY(mindlinks)
 		message = trim(copytext(message, 3))
 		var/mob/living/recipient = (speaker == owner ? target : owner)
 		
-		to_chat(speaker, span_purple("You project your thoughts to [recipient]: \"[message]\""))
-		to_chat(recipient, span_purple("[speaker] projects their thoughts to you: \"[message]\""))
+		to_chat(speaker, span_purple("我将自己的思绪投向了[recipient]：\"[message]\""))
+		to_chat(recipient, span_purple("[speaker]将其思绪投向了我：\"[message]\""))
 		
 		speech_args[SPEECH_MESSAGE] = null // Prevent the normal speech from happening

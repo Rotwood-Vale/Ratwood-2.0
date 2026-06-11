@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/song/fervor_song
-	name = "Fervorous Fantasia"
-	desc = "Inspire the rhythm of battle, your allies strike and parry 20% better!"
+	name = "奋战幻想曲"
+	desc = "激扬战斗的节奏，使盟友的攻击与招架效果提升 20%！"
 	warnie = "spellwarning"
 	invocations = list("plays a bombastic, rhythmic march! The world feels grounded!") 
 	invocation_type = "emote"
@@ -18,7 +18,7 @@
 		return TRUE
 	else
 		revert_cast()
-		to_chat(user, span_warning("I must be playing something to inspire my audience!"))
+		to_chat(user, span_warning("我必须先演奏起来，才能鼓舞我的听众！"))
 		return
 
 /datum/status_effect/buff/playing_melody/fervor
@@ -29,8 +29,8 @@
 #define FERVOR_FILTER "fervor_glow"
 
 /atom/movable/screen/alert/status_effect/buff/song/fervor // spicy guidance
-	name = "Musical Fervor"
-	desc = "Musical assistance guides my hands. (+20% chance to bypass parry / dodge, +20% chance to parry / dodge)"
+	name = "乐律激昂"
+	desc = "乐声正在引导我的双手。`+20%` 几率绕过招架/闪避，`+20%` 几率成功招架/闪避。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/song/fervor

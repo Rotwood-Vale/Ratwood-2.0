@@ -1,10 +1,10 @@
 /datum/patron/divine/malum
 	name = "Malum"
-	domain = "Craft, Fire, Destruction, Ingenuity"
-	desc = "The Opinionless God teaches that tools for killing or saving are tools, either way. The well-oiled guillotine and the well-sharpened axe are merely tools, and there is no good and evil to their craft."
-	worshippers = "Smiths, Miners, Engineers, Dwarves"
-	virtues = "Craftsmanship, Chastity, Diligence"
-	sins = "Sloth, Moralism, Suicide"
+	domain = "工艺、火焰、毁灭、巧思"
+	desc = "这位无偏之神教导我们：无论是用来杀戮还是用来拯救，工具终究只是工具。润滑得当的断头台与磨得锋利的斧头都不过是器物而已，在它们的锻造之中，本无善恶可言。"
+	worshippers = "铁匠、矿工、工匠、矮人"
+	virtues = "工艺、贞洁、勤勉"
+	sins = "懒惰、道德说教、自尽"
 	mob_traits = list(TRAIT_FORGEBLESSED, TRAIT_BETTER_SLEEP)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/malum_flame_rogue 	= CLERIC_T0,
@@ -18,9 +18,9 @@
 					/obj/effect/proc_holder/spell/invoked/resurrect/malum		= CLERIC_T4,
 	)
 	confess_lines = list(
-		"MALUM IS MY MUSE!",
-		"TRUE VALUE IS IN THE TOIL!",
-		"I AM AN INSTRUMENT OF CREATION!",
+		"MALUM 是我的灵感之源！",
+		"真正的价值存在于劳作之中！",
+		"我是创造的器具！",
 	)
 
 	storyteller = /datum/storyteller/malum
@@ -31,7 +31,7 @@
 	// Allows prayer near psycross
 	for(var/obj/structure/fluff/psycross/cross in view(4, get_turf(follower)))
 		if(cross.divine == FALSE)
-			to_chat(follower, span_danger("That defiled cross interupts my prayers!"))
+			to_chat(follower, span_danger("那座被亵渎的十字架打断了我的祈祷！"))
 			return FALSE
 		return TRUE
 	// Allows prayer in the church
@@ -46,7 +46,7 @@
 	// Allows prayer near smelters.
 	for(var/obj/machinery/light/rogue/smelter/H in view(4, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("For Malum to hear my prayer I must either pray within the church, the smithy's workshop, near a psycross, near a smelter, or hearth to bask in Malum's glory.."))
+	to_chat(follower, span_danger("若想让 Malum 听见我的祈祷，我必须在教堂内、铁匠工坊中、psycross 附近、熔炉旁，或在壁炉边沐浴于 Malum 的荣光之下……"))
 	return FALSE
 
 /datum/patron/divine/malum/on_lesser_heal(
@@ -57,8 +57,8 @@
 	conditional_buff,
 	situational_bonus
 )
-	*message_out = span_info("A tempering heat is discharged out of [target]!")
-	*message_self = span_info("I feel the heat of a forge soothing my pains!")
+	*message_out = span_info("一股淬炼般的热浪自[target]体内迸发而出！")
+	*message_self = span_info("我感到熔炉的热度正在抚慰我的痛楚！")
 
 	var/list/firey_stuff = list(/obj/machinery/light/rogue/torchholder, /obj/machinery/light/rogue/campfire, /obj/machinery/light/rogue/hearth, /obj/machinery/light/rogue/campfire/fireplace, /obj/machinery/light/rogue/candle, /obj/machinery/light/rogue/forge)
 	var/bonus = 0

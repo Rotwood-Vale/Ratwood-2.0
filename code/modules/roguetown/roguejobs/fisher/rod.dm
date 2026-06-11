@@ -1,8 +1,8 @@
 /obj/item/fishingrod
 	force = 12
 	possible_item_intents = list(ROD_CAST,SPEAR_BASH)
-	name = "fishing rod"
-	desc = "Made from weathered wood and coarse twine. The tool of the battle against the dark waters below."
+	name = "钓竿"
+	desc = "由风化木材与粗麻绳制成，是与下方黑水搏斗的工具。"
 	icon_state = "rod"
 	icon = 'icons/roguetown/weapons/tools.dmi'
 	sharpness = IS_BLUNT
@@ -14,7 +14,7 @@
 	grid_width = 32
 
 /datum/intent/cast
-	name = "cast"
+	name = "抛竿"
 	chargetime = 0
 	noaa = TRUE
 	misscost = 0
@@ -30,13 +30,13 @@
 
 /obj/item/fishingrod/attackby(obj/item/I, mob/user, params)
 	if(baited)
-		to_chat(user, span_warning("The rod already has bait on it!"))
+		to_chat(user, span_warning("鱼竿上已经挂了鱼饵！"))
 		return
 	if(!I.isbait) // Don't use items that aren't bait
-		to_chat(user, span_notice("This isn't suitable as bait..."))
+		to_chat(user, span_notice("这东西不适合当鱼饵……"))
 		return
-	user.visible_message(span_notice("[user] hooks something to the line."), \
-						span_notice("I hook [I] to my line."))
+	user.visible_message(span_notice("[user]把什么东西挂到了鱼线上。"), \
+						span_notice("我把[I]挂到了鱼线上。"))
 	playsound(src.loc, 'sound/foley/pierce.ogg', 50, FALSE)
 	if(istype(I,/obj/item/natural/worms))
 		var/obj/item/natural/worms/W = I
@@ -79,8 +79,8 @@
 	if(istype(target, /turf/open/water))
 		if(user.used_intent.type == ROD_CAST && !user.doing)
 			if(target in range(user,5))
-				user.visible_message("<span class='warning'>[user] casts a line!</span>", \
-									"<span class='notice'>I cast a line.</span>")
+				user.visible_message("<span class='warning'>[user]抛出了鱼线！</span>", \
+									"<span class='notice'>我抛出了鱼线。</span>")
 				playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 				ft -= (sl * 20) //every skill lvl is -2 seconds
 				ft = max(20,ft) //min of 2 seconds
@@ -127,8 +127,8 @@
 								A = pickweightAllowZero(createMudFishWeightListModlist(modlist))
 							if(A)
 								var/ow = 30 + (sl * 10) // Opportunity window, in ticks. Longer means you get more time to cancel your bait
-								to_chat(user, "<span class='notice'>Something tugs the line!</span>")
-								target.balloon_alert_to_viewers("Tug!")
+								to_chat(user, "<span class='notice'>有什么东西扯动了鱼线！</span>")
+								target.balloon_alert_to_viewers("有鱼咬钩！")
 								playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 								if(!do_after(user,ow, target = target, same_direction = TRUE))
 									if(A in subtypesof(/mob/living))
@@ -139,29 +139,29 @@
 										user.mind.add_sleep_experience(/datum/skill/labor/fishing, fisherman.STAINT*2) // High risk high reward
 									else
 										new A(user.loc)
-										to_chat(user, "<span class='warning'>Reel 'em in!</span>")
+										to_chat(user, "<span class='warning'>快收线！</span>")
 										teleport_to_dream(user, 10000, 1)
 										user.mind.add_sleep_experience(/datum/skill/labor/fishing, round(fisherman.STAINT, 2), FALSE) // Level up!
 										record_featured_stat(FEATURED_STATS_FISHERS, fisherman)
 										record_round_statistic(STATS_FISH_CAUGHT)
 										playsound(src.loc, 'sound/items/Fish_out.ogg', 100, TRUE)
 									if(prob(80 - (sl * 10))) // Higher skill levels make you less likely to lose your bait
-										to_chat(user, "<span class='warning'>Damn, it ate my bait.</span>")
+										to_chat(user, "<span class='warning'>该死，它把我的鱼饵吃了。</span>")
 										qdel(baited)
 										baited = null
 								else
-									to_chat(user, "<span class='warning'>Damn, it got away... I should <b>pull away</b> next time.</span>")
+									to_chat(user, "<span class='warning'>该死，让它跑了……下次我得记得<b>拉开</b>。</span>")
 									if(prob(100 - (sl * 10))) // Higher chance for it to flee with your bait.
-										to_chat(user, "<span class='warning'>...And took my bait, too.</span>")
+										to_chat(user, "<span class='warning'>……还把我的鱼饵也带走了。</span>")
 										qdel(baited)
 										baited = null
 						else
-							to_chat(user, "<span class='warning'>Not even a nibble...</span>")
+							to_chat(user, "<span class='warning'>连个咬钩的都没有……</span>")
 							user.mind.add_sleep_experience(/datum/skill/labor/fishing, fisherman.STAINT/2) // Pity XP.
 					else
-						to_chat(user, "<span class='warning'>This seems pointless without bait.</span>")
+						to_chat(user, "<span class='warning'>没有鱼饵，这样钓毫无意义。</span>")
 				else
-					to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
+					to_chat(user, "<span class='warning'>我必须站着不动才能钓鱼。</span>")
 			update_icon()
 
 /obj/item/fishingrod/update_icon()
@@ -176,8 +176,8 @@
 		M.update_inv_hands()
 
 /obj/item/fishingrod/decrepit
-	name = "decrepit fishing rod"
-	desc = "The Comet Syon's impact drowned the world, long ago. The waves've long since receded, but His greatest works remain shrouded far beneath the sea."
+	name = "衰朽钓竿"
+	desc = "很久以前，西昂彗星的撞击曾淹没整个世界。浪潮早已退去，但祂最伟大的造物仍深埋海底，不见天日。"
 	icon_state = "arod"
 	color = "#bb9696"
 	sellprice = 15

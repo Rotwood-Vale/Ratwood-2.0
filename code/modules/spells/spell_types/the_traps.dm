@@ -1,12 +1,12 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
-	name = "The Traps!"
+	name = "陷阱阵！"
 	desc = ""
 
 	recharge_time = 250
 	cooldown_min = 50
 
 	clothes_req = TRUE
-	invocations = list("CAVERE INSIDIAS")
+	invocations = list("陷阱，现形！")
 	invocation_type = "shout"
 	range = 3
 

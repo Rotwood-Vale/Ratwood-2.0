@@ -1,7 +1,7 @@
 
 /obj/structure/flora/roguegrass/maneater
-	name = "grass"
-	desc = "Green and vivid. Was that a tendril?"
+	name = "草"
+	desc = "青翠鲜活。刚才那是一根藤蔓吗？"
 	icon = 'icons/roguetown/mob/monster/maneater.dmi'
 	icon_state = "maneater-hidden"
 	max_integrity = 5
@@ -85,7 +85,7 @@
 		return
 
 	buckle_mob(victim, TRUE, check_loc = FALSE)
-	visible_message(span_warningbig("[src] begins to gnaw on [victim]!"))
+	visible_message(span_warningbig("[src]开始啃咬[victim]！"))
 	addtimer(CALLBACK(src, PROC_REF(begin_eat), victim), 3 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE|TIMER_STOPPABLE)
 
 /obj/structure/flora/roguegrass/maneater/real/proc/begin_eat(mob/living/victim, chew_factor = 1)
@@ -94,7 +94,7 @@
 	if(!(has_buckled_mobs() && victim.buckled))
 		return
 
-	visible_message(span_warning("[src] chews on [victim]!"))
+	visible_message(span_warning("[src]咀嚼着[victim]！"))
 
 	playsound(src,'sound/misc/eat.ogg', rand(30,60), TRUE)
 	if(!iscarbon(victim))
@@ -133,22 +133,22 @@
 		return
 	if(!isliving(C))
 		return
-	visible_message(span_danger("[src] spits out [C]!"))
+	visible_message(span_danger("[src]把[C]吐了出来！"))
 	unbuckle_mob(C)
 	playsound(src,'sound/misc/maneaterspit.ogg', 100)
 	return TRUE
 
 /obj/structure/flora/roguegrass/maneater/real/update_icon()
 	if(obj_broken)
-		name = "MANEATER"
-		desc = "This cunning creature is thankfully defeated."
+		name = "食人草"
+		desc = "幸好，这只狡猾的生物已经被击败了。"
 		icon_state = "maneater-dead"
 		return
 	if(aggroed)
-		name = "MANEATER"
+		name = "食人草"
 		icon_state = "maneater"
 	else
-		name = "grass"
+		name = "草"
 		icon_state = "maneater-hidden"
 
 /obj/structure/flora/roguegrass/maneater/real/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user, break_factor = 1)
@@ -158,15 +158,15 @@
 		return ..()
 
 	if(user != buckled_mob)
-		user.visible_message(span_warning("[user] tries to pull [buckled_mob] free of [src]!"))
+		user.visible_message(span_warning("[user]试图把[buckled_mob]从[src]里拽出来！"))
 	else
-		user.visible_message(span_warning("[user] tries to break free of [src]!"))
+		user.visible_message(span_warning("[user]试图挣脱[src]！"))
 
 	var/time2mount = CLAMP((user.STASTR * 2 * break_factor), 1, 99)
 	if(istype(src, /obj/structure/flora/roguegrass/maneater/real/juvenile))
 		time2mount *= 2
 	if(!do_after(user, 1.5 SECONDS, FALSE, src, TRUE, null, FALSE, TRUE))
-		user.visible_message(span_warning("[buckled_mob] stops struggling!"))
+		user.visible_message(span_warning("[buckled_mob]停止了挣扎！"))
 		return
 	if(prob(time2mount))
 		return ..()
@@ -184,8 +184,8 @@
 //JUVENILE MANEATER
 
 /obj/structure/flora/roguegrass/maneater/real/juvenile
-	name = "juvenile maneater"
-	desc = "Green and vivid. This one seems smaller than usual."
+	name = "幼年食人草"
+	desc = "青翠鲜活。这株看起来比寻常的要小一些。"
 	icon = 'icons/roguetown/mob/monster/maneater.dmi'
 	icon_state = "maneater-hidden"
 	max_integrity = 50
@@ -223,13 +223,13 @@
 		growth_stage++
 		// Largest juvenile stage stays under the adult's 1.0 size
 		transform = transform.Scale(1.1, 1.1)
-		visible_message(span_warning("[src] grows bigger!"))
+		visible_message(span_warning("[src] 长得更大了！"))
 		playsound(loc, list('sound/vo/mobs/plant/attack (1).ogg','sound/vo/mobs/plant/attack (2).ogg','sound/vo/mobs/plant/attack (3).ogg','sound/vo/mobs/plant/attack (4).ogg'), 100, FALSE, -1)
 		addtimer(CALLBACK(src, PROC_REF(try_grow)), growth_time)
 		return
 
 	// Replace with adult form
-	visible_message(span_danger("[src] reaches full maturity!"))
+	visible_message(span_danger("[src]彻底长成了！"))
 	var/turf/T = get_turf(src)
 	var/obj/structure/flora/roguegrass/maneater/real/myboy = new(T)
 	myboy.planter = planter
@@ -237,14 +237,14 @@
 
 /obj/structure/flora/roguegrass/maneater/real/juvenile/update_icon()
 	..()
-	name = "juvenile " + name
+	name = "幼年" + name
 
 
 //MANEATER SEEDS
 
 /obj/item/maneaterseed
-	name = "maneater seed"
-	desc = "A seed from a maneater. It looks like it could grow into something dangerous if planted in green grass or dirt."
+	name = "食人草种子"
+	desc = "一颗食人草的种子。若种在青草地或泥地里，它看起来会长成某种危险的东西。"
 	icon = 'icons/roguetown/mob/monster/maneater.dmi'
 	icon_state = "maneater-seed"
 	max_integrity = 5
@@ -257,29 +257,29 @@
 		if(!proximity_flag)
 			return
 		for(var/obj/structure/flora/roguegrass/maneater/M in T)
-			to_chat(user, span_warning("The maneater plants need more space between them to grow."))
+			to_chat(user, span_warning("食人草之间需要留出更多空间才能生长。"))
 			return
 		for(var/turf/adjacent in orange(2, T))
 			for(var/obj/structure/flora/roguegrass/maneater/M in adjacent)
-				to_chat(user, span_warning("The maneater plants need more space between them to grow."))
+				to_chat(user, span_warning("食人草之间需要留出更多空间才能生长。"))
 				return
 		for(var/obj/effect/decal/D in T) //To stop planting on mapped cobble decals etc
-			to_chat(user, span_warning("The ground is too uneven to plant a maneater seed here."))
+			to_chat(user, span_warning("这片地面太不平整，没法在这里种下食人草种子。"))
 			return
-		user.visible_message(span_notice("[user] begins planting a maneater seed."), \
-				span_notice("I begin planting the maneater seed."))
+		user.visible_message(span_notice("[user]开始种植一颗食人草种子。"), \
+				span_notice("我开始种植这颗食人草种子。"))
 		if(do_after(user, 10 SECONDS))
 			var/obj/structure/flora/roguegrass/maneater/real/juvenile/myboy = new(T)
 			myboy.planter = user
-			user.visible_message(span_notice("[user] plants a maneater seed."), \
-				span_notice("I plant the maneater seed."))
+			user.visible_message(span_notice("[user]种下了一颗食人草种子。"), \
+				span_notice("我种下了这颗食人草种子。"))
 			qdel(src)
 			message_admins("[user]/([user.ckey]) plants a maneater seed at [ADMIN_VERBOSEJMP(T)]")
 			return
 	..()
 
 /obj/structure/flora/roguegrass/maneater/real/proc/produce_seed()
-	visible_message(span_warning("[src] spits out a seed!"))
+	visible_message(span_warning("[src]吐出了一颗种子！"))
 	var/turf/target = get_ranged_target_turf(src, pick(GLOB.alldirs), rand(1,3))
 	var/obj/item/maneaterseed/S = new(get_turf(src))
 	S.throw_at(target,3,2)

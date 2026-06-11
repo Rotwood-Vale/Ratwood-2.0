@@ -1,6 +1,6 @@
 /datum/advclass/vagabond_excommunicated
-	name = "Excommunicated"
-	tutorial = "The Church has found you bereft of mercy, and you walk these lands with nothing but the tattered shreds of your faith."
+	name = "被逐教者"
+	tutorial = "教会已认定你不配怜悯，如今你只能带着那点残破不堪、却仍死抓不放的信仰，在谷地四处漂行。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/vagabond/excommunicated

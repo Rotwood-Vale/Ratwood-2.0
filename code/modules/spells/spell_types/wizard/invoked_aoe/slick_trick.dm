@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/slick_trick
-	name = "Slick Trick"
-	desc = "Temporarily create a slippery area that sends victims flying to the floor."
+	name = "滑地诡计"
+	desc = "暂时制造出一片湿滑区域，把倒霉鬼摔翻在地。"
 	cost = 5
 	range = 4
 	ignore_los = FALSE
@@ -15,7 +15,7 @@
 	associated_skill = /datum/skill/magic/arcane
 	gesture_required = TRUE
 	spell_tier = 3 // AOE
-	invocations = list("Dolus Lubricus!") //"Slick Trick" in Latin
+	invocations = list("地面，滑起来！") //"Slick Trick" in Latin
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_DISPLACEMENT
 	glow_intensity = GLOW_INTENSITY_HIGH //Big warning as its AoE
@@ -34,7 +34,7 @@
 		affected_turfs += O
 
 	if(affected_turfs.len)
-		user.visible_message("<span class='warning'>[user] creates slick patches on the floor!</span>")
+		user.visible_message("<span class='warning'>[user] 让地面变得湿滑难立！</span>")
 
 		// Apply effect to all open turfs in range
 		for(var/turf/open/O in affected_turfs)
@@ -49,8 +49,8 @@
 	return FALSE
 
 /obj/effect/temp_visual/slick_warning
-	name = "slippery patch"
-	desc = "Watch your step!"
+	name = "湿滑地块"
+	desc = "走路小心！"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "purplesparkles"
 	color = "#0099FF" // Blue tint for water-like appearance
@@ -61,8 +61,8 @@
 //smaller slick trick for arcane trickster
 
 /obj/effect/proc_holder/spell/invoked/slick_trick_small
-	name = "Calistra's Sneaky Slipsquare" //honoring DnD tradition of naming shit after some random MF. who's Calistra? who knows! make some shit up, roleplayer!
-	desc = "Sneakily create a temporary slippery square that sends victims flying to the floor."
+	name = "卡莉丝特拉的阴险滑地块" //honoring DnD tradition of naming shit after some random MF. who's Calistra? who knows! make some shit up, roleplayer!
+	desc = "悄悄制造一块临时湿滑区域，把倒霉鬼摔翻在地。"
 	cost = 2 
 	range = 6 //slightly bigger range for prank purposes
 	ignore_los = FALSE
@@ -77,7 +77,7 @@
 	associated_skill = /datum/skill/magic/arcane
 	gesture_required = TRUE
 	spell_tier = 2 // non AOE version of slick trip
-	invocations = list("Lapsus Maximus!") // :)
+	invocations = list("滑吧。") // :)
 	invocation_type = "whisper"
 	glow_color = GLOW_COLOR_DISPLACEMENT
 	glow_intensity = GLOW_INTENSITY_MEDIUM //Not an AOE, but make it flashy and silly still. There's not many other tells that you're the one slipping people. 

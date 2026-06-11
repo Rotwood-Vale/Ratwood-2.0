@@ -17,8 +17,8 @@
 #define TREESAP_DEATH_TICKS  60   // negative-progress seconds before dying
 
 /obj/structure/tree_sapling
-	name = "tree sapling"
-	desc = "A tender sapling bedded in mounded soil. It needs regular watering to take root."
+	name = "树苗"
+	desc = "一株栽在土堆里的柔嫩树苗。它需要定期浇水才能扎根。"
 	anchored = TRUE
 	density = FALSE
 	opacity = FALSE
@@ -97,13 +97,13 @@
 /obj/structure/tree_sapling/proc/wither_and_die()
 	STOP_PROCESSING(SSprocessing, src)
 	dead = TRUE
-	name = "withered sapling"
+	name = "枯死的树苗"
 	density = FALSE
 	opacity = FALSE
 	pixel_x = 0
 	icon = dead_icon
 	icon_state = dead_state
-	visible_message(span_warning("[src] withers and dies from lack of water."))
+	visible_message(span_warning("[src]渐渐枯萎死去了。"))
 
 /obj/structure/tree_sapling/proc/advance_stage()
 	growth_progress = 0
@@ -163,16 +163,16 @@
 		return linked_soil.examine(user)
 	. = ..()
 	if(dead)
-		. += span_warning("It has withered and died. Shovel it out to clear the spot.")
+		. += span_warning("它已经彻底枯死，再也不可能长成大树了。")
 		return
 	// Standalone young tree — soil already removed when it transitioned.
 	if(stage == TREESAP_STAGE_YOUNG)
-		. += span_notice("A young tree still taking root. It should grow on its own now.")
+		. += span_notice("它已经长成一棵幼树，再过一段时间就会彻底成熟。")
 		if(isliving(user))
 			var/mob/living/living_user = user
 			if(living_user.get_skill_level(/datum/skill/labor/farming) >= SKILL_LEVEL_EXPERT || HAS_TRAIT(living_user, TRAIT_SEEDKNOW))
 				var/time_remaining = max(TREESAP_YOUNG_TIME - growth_progress, 0)
-				. += span_info("Estimated time to finish growing: [DisplayTimeText(time_remaining)].")
+				. += span_info("照这样下去，再过[DisplayTimeText(time_remaining)]就会长成成树。")
 
 /obj/structure/tree_sapling/attackby(obj/item/I, mob/living/user, params)
 	if(stage <= TREESAP_STAGE_SHRUB && !dead && linked_soil)
@@ -183,12 +183,12 @@
 
 	// Shovelling out
 	if(istype(I, /obj/item/rogueweapon/shovel))
-		to_chat(user, span_notice("I begin uprooting [src]..."))
+		to_chat(user, span_notice("我开始把[src]铲掉。"))
 		playsound(src, 'sound/items/dig_shovel.ogg', 80, TRUE)
 		if(do_after(user, 3 SECONDS, target = src))
 			if(dead)
 				drop_withered_loot()
-			to_chat(user, span_notice("I remove [src]."))
+			to_chat(user, span_notice("我铲掉了[src]。"))
 			qdel(src)
 		return
 
@@ -199,8 +199,8 @@
 //==============================================================================
 
 /obj/structure/tree_sapling/pine
-	name = "pine sapling"
-	desc = "A tender pine sapling. Keep it watered and it will grow into a tall pine tree."
+	name = "松树苗"
+	desc = "一株小小的松树苗，若照料得当，日后会长成高大的针叶树。"
 	icon_state = "palebush_3"
 	stage2_state = "pointybush_1"
 	stage3_state = "t11"
@@ -208,8 +208,8 @@
 	tree_final_type = /obj/structure/flora/roguetree/pine
 
 /obj/structure/tree_sapling/sakura
-	name = "sakura sapling"
-	desc = "A tender cherry-blossom sapling. Water it faithfully and it will reward you with clouds of pink bloom."
+	name = "樱树苗"
+	desc = "一株娇嫩的樱树苗，只要好好栽培，终有一日会开成繁盛花树。"
 	icon_state = "palebush_1"
 	stage2_state = "pinkbush"
 	stage3_state = "t10"

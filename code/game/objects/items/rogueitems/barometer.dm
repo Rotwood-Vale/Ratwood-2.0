@@ -1,6 +1,6 @@
 /obj/item/barometer
-	name = "barometer"
-	desc = "a primitive instrument to track incoming weather"
+	name = "气压计"
+	desc = "一种用来追踪即将到来天气的原始仪器。"
 	icon_state = "barometer"
 	icon = 'icons/roguetown/items/misc.dmi'
 	grid_width = 32
@@ -18,18 +18,18 @@
 	if(!W)
 		return
 
-	visible_message(span_notice("[src] gives a faint *click* as the fluid inside shifts."))
+	visible_message(span_notice("[src]内部液体晃动时，发出轻微的“咔哒”声。"))
 
 /obj/item/barometer/attack_self(mob/user)
 	var/datum/controller/subsystem/ParticleWeather/PW = SSParticleWeather
-	visible_message(span_notice("[user] starts reading the [src]."))
+	visible_message(span_notice("[user]开始查看[src]。"))
 	if(do_after(user, 5 SECONDS, target = src))
 		if(PW.runningWeather)
-			to_chat(user,span_notice("The fluid trembles steadily. The scale indicates the weather is currently [PW.runningWeather.name]."))
+			to_chat(user,span_notice("液体平稳颤动着。刻度显示当前天气为[PW.runningWeather.name]。"))
 			return
 
 		if(PW.queued_weather)
-			to_chat(user,span_notice("The fluid jitters uneasily. The scale indicates a [PW.queued_weather.name] is coming."))
+			to_chat(user,span_notice("液体不安地抖动。刻度显示[PW.queued_weather.name]即将到来。"))
 			return
 
-		to_chat(user,span_notice("The fluid rests calm and unmoving."))
+		to_chat(user,span_notice("液体平静无波，一动不动。"))

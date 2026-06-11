@@ -1,5 +1,6 @@
 /datum/job/roguetown/captain
 	title = "Knight Captain" //The Knight Captain is clearly not drawn from the ranks of guardsmen, or sergeants. They're drawn from the Knightly ranks and should be treated as such.
+	display_title = "骑士队长"
 	flag = GUARD_CAPTAIN
 	department_flag = NOBLEMEN
 	faction = "Station"
@@ -8,10 +9,9 @@
 	allowed_races = RACES_TOLERATED_UP
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
-	tutorial = "Your lineage is noble, and generations of strong, loyal knights have come before you. You served your time \
-	gracefully as knight of his royal majesty, and now you've grown into a role which many men can only dream of becoming. \
-	Veteran among knights, you lead the crown's knights to battle and organize the training squires. Obey the Marshal and the Crown. \
-	Lead your men to victory--and keep them in line--and you will see this realm prosper under a thousand suns."
+	tutorial = "你的血脉出身高贵，世代都有强大而忠诚的骑士先于你而生。你曾优雅而尽责地侍奉王家为骑士，如今终于成长为无数人梦寐以求的地位。 \
+	身为骑士中的老兵，你率领王权麾下的骑士出征，并负责整训侍从。服从执法官与王权。 \
+	带领你的部下走向胜利，也让他们守住纪律，如此你便能见证这片王国在千轮骄阳下兴盛昌隆。"
 	display_order = JDO_GUARD_CAPTAIN
 	advclass_cat_rolls = list(CTAG_CAPTAIN = 20)
 
@@ -59,12 +59,12 @@
 				index = copytext(H.real_name, 1,index)
 			if(!index)
 				index = H.real_name
-			S.name = "Captain Tabard ([index])" //This doesn't even actually work but you know.
+			S.name = "队长罩袍（[index]）" //This doesn't even actually work but you know.
 		var/prev_real_name = H.real_name
 		var/prev_name = H.name
-		var/honorary = "Ser"
+		var/honorary = "爵士"
 		if(should_wear_femme_clothes(H))
-			honorary = "Dame"
+			honorary = "女爵"
 		H.real_name = "[honorary] [prev_real_name]"
 		H.name = "[honorary] [prev_name]"
 
@@ -75,10 +75,9 @@
 					H.mind.person_knows_me(MF)
 
 /datum/advclass/captain/infantry
-	name = "Knight Captain"
-	tutorial = "You've fought shoulder to shoulder with the realm's worthiest Knights while embedded directly within \
-	massed infantry formations. As a peerless armed combatant and tactician both, you are a formidable presence \
-	on any battlefield."
+	name = "骑士队长"
+	tutorial = "你曾直接编入密集步兵军阵，与这片王国最杰出的骑士们并肩作战。 \
+	无论作为武装战士还是战术指挥官，你都堪称无双，因此无论在哪片战场上，你的存在都足以令人畏惧。"
 	outfit = /datum/outfit/job/roguetown/captain/infantry
 	category_tags = list(CTAG_CAPTAIN)
 	subclass_stats = list(
@@ -106,7 +105,7 @@
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 	)
 
-	extra_context = "This class gains Master skill in their weapon of choice."
+	extra_context = "该分支会在所选武器上获得大师级熟练。"
 
 /datum/outfit/job/roguetown/captain/infantry/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -133,18 +132,18 @@
 	H.adjust_blindness(-3)
 	if(H.mind)
 		var/weapons = list(
-			"Sabre",
-			"Glaive",
+			"马刀",
+			"关刀",
 			)
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapon_choice = input(H, "选择你的武器。", "整备武装") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Sabre")
+			if("马刀")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
 				r_hand = /obj/item/rogueweapon/sword/capsabre
 				l_hand = /obj/item/rogueweapon/shield/capbuckler
 				beltr = /obj/item/rogueweapon/scabbard/sword/royal
-			if("Glaive")
+			if("关刀")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 5, TRUE)
 				r_hand = /obj/item/rogueweapon/halberd/capglaive
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
@@ -152,23 +151,23 @@
 		H.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)
 
 /obj/effect/proc_holder/spell/self/convertrole
-	name = "Recruit Beggar"
-	desc = "Recruit someone to your cause."
+	name = "征募乞儿"
+	desc = "征募某人为你效力。"
 	overlay_state = "recruit_bog"
 	antimagic_allowed = TRUE
 	recharge_time = 100
 	/// Role given if recruitment is accepted
 	var/new_role = "Beggar"
 	/// Faction shown to the user in the recruitment prompt
-	var/recruitment_faction = "Beggars"
+	var/recruitment_faction = "乞儿"
 	/// Message the recruiter gives
-	var/recruitment_message = "Serve the beggars, %RECRUIT!"
+	var/recruitment_message = "为乞儿效力吧，%RECRUIT！"
 	/// Range to search for potential recruits
 	var/recruitment_range = 3
 	/// Say message when the recruit accepts
-	var/accept_message = "I will serve!"
+	var/accept_message = "我愿效力！"
 	/// Say message when the recruit refuses
-	var/refuse_message = "I refuse."
+	var/refuse_message = "我拒绝。"
 
 /obj/effect/proc_holder/spell/self/convertrole/cast(list/targets,mob/user = usr)
 	. = ..()
@@ -179,17 +178,17 @@
 			continue
 		recruitment[recruit.name] = recruit
 	if(!length(recruitment))
-		to_chat(user, span_warning("There are no potential recruits in range."))
+		to_chat(user, span_warning("范围内没有可征募的对象。"))
 		return
-	var/inputty = input(user, "Select a potential recruit!", "[name]") as anything in recruitment
+	var/inputty = input(user, "选择一名可征募的对象！", "[name]") as anything in recruitment
 	if(inputty)
 		var/mob/living/carbon/human/recruit = recruitment[inputty]
 		if(!QDELETED(recruit) && (recruit in get_hearers_in_view(recruitment_range, user)))
 			INVOKE_ASYNC(src, PROC_REF(convert), recruit, user)
 		else
-			to_chat(user, span_warning("Recruitment failed!"))
+			to_chat(user, span_warning("征募失败！"))
 	else
-		to_chat(user, span_warning("Recruitment cancelled."))
+		to_chat(user, span_warning("已取消征募。"))
 
 /obj/effect/proc_holder/spell/self/convertrole/proc/can_convert(mob/living/carbon/human/recruit)
 	//wtf
@@ -212,10 +211,10 @@
 	if(QDELETED(recruit) || QDELETED(recruiter))
 		return FALSE
 	recruiter.say(replacetext(recruitment_message, "%RECRUIT", "[recruit]"), forced = "[name]")
-	var/prompt = alert(recruit, "Do you wish to become a [new_role]?", "[recruitment_faction] Recruitment", "Yes", "No")
+	var/prompt = alert(recruit, "你愿意加入[recruitment_faction]吗？", "[recruitment_faction]征募", "同意", "拒绝")
 	if(QDELETED(recruit) || QDELETED(recruiter) || !(recruiter in get_hearers_in_view(recruitment_range, recruit)))
 		return FALSE
-	if(prompt != "Yes")
+	if(prompt != "同意")
 		if(refuse_message)
 			recruit.say(refuse_message, forced = "[name]")
 		return FALSE
@@ -227,13 +226,13 @@
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/convertrole/guard
-	name = "Recruit Guardsmen"
+	name = "征募卫兵"
 	new_role = "Watchman"
 	overlay_state = "recruit_guard"
 	recruitment_faction = "Watchman"
-	recruitment_message = "Serve the town guard, %RECRUIT!"
-	accept_message = "FOR THE CROWN!"
-	refuse_message = "I refuse."
+	recruitment_message = "为城卫效力，%RECRUIT！"
+	accept_message = "为了王权！"
+	refuse_message = "我拒绝。"
 
 /obj/effect/proc_holder/spell/self/convertrole/guard/convert(mob/living/carbon/human/recruit, mob/living/carbon/human/recruiter)
 	. = ..()

@@ -1,7 +1,7 @@
 
 /obj/structure/closet/dirthole
-	name = "hole"
-	desc = "Just a small hole..."
+	name = "土坑"
+	desc = "只是一个小坑..."
 	icon_state = "hole1"
 	icon = 'icons/turf/roguefloor.dmi'
 	var/stage = 1
@@ -19,13 +19,13 @@
 	layer = 2.8
 
 /obj/structure/closet/dirthole/grave
-	desc = "A hole big enough for a coffin."
+	desc = "一个足以容纳棺材的坑。"
 	stage = 3
 	faildirt = 3
 	icon_state = "grave"
 
 /obj/structure/closet/dirthole/closed
-	desc = "A mound of dirt with something below."
+	desc = "一座下方埋着东西的土堆。"
 	stage = 4
 	faildirt = 3
 	climb_offset = 10
@@ -43,16 +43,16 @@
 		return
 	var/mob/living/carbon/stuck = user // Let's get carbonated.
 	if (!stuck.has_hand_for_held_index(stuck.active_hand_index)) // Do we have a functioning hand?
-		to_chat(user, span_warning("I can't dig out of here, I can't move my hand!"))
+		to_chat(user, span_warning("我没法从这里挖出去，我的手动不了！"))
 		return
 	if (stuck.handcuffed) // Are we handcuffed?
-		to_chat(user, span_warning("I can't dig out of here, I'm handcuffed!"))
+		to_chat(user, span_warning("我没法从这里挖出去，我被铐住了！"))
 		return
-	to_chat(user, span_warning("I start clawing at the dirt for a way out!"))
+	to_chat(user, span_warning("我开始抓挠泥土，试图挖出一条生路！"))
 	playsound(src, 'sound/foley/climb.ogg', 100, TRUE) // dirt shaking noises.
 	playsound(usr, 'sound/foley/climb.ogg', 100, TRUE)
 	if (do_after(user, 15 SECONDS, TRUE, src))
-		user.visible_message(span_alert("A hand bursts from [src]!"),span_alert("I've managed to penetrate the surface of [src] with my hand!"))
+		user.visible_message(span_alert("一只手从[src]中破土而出！"),span_alert("我终于用手穿透了[src]的表面！"))
 		playsound(src, 'sound/foley/plantcross1.ogg', 100, TRUE)
 		playsound(usr, 'sound/foley/plantcross1.ogg', 100, TRUE)
 		if (do_after(user, 10 SECONDS, TRUE, src))
@@ -62,7 +62,7 @@
 			src.open()
 			playsound(src, 'sound/foley/breaksound.ogg', 100, TRUE)
 			playsound(src, 'sound/foley/bodyfall (3).ogg', 90, TRUE)
-			user.visible_message(span_warning("[user] emerges from [src]!"),span_alert("I emerge from [src]!"))
+			user.visible_message(span_warning("[user]从[src]中钻了出来！"),span_alert("我从[src]中钻了出来！"))
 			user.log_message("clawed their way out of [src]", LOG_ATTACK)
 
 /obj/structure/closet/dirthole/closed/loot/Initialize(mapload)
@@ -88,7 +88,7 @@
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_SOUL_EXAMINE))
 		if(lootroll == 1)
-			. += span_warning("Better let this one sleep.")
+			. += span_warning("最好让这位继续安睡。")
 
 /obj/structure/closet/dirthole/insertion_allowed(atom/movable/AM)
 	if(istype(AM, /obj/structure/closet/crate/coffin) || istype(AM, /obj/structure/closet/burial_shroud))
@@ -110,16 +110,16 @@
 		var/atom/movable/coffin = src
 		for(var/mob/living/corpse in coffin)
 			if(!corpse.stat == DEAD)
-				to_chat(user, "That one hasn't truly passed on yet?!")
+				to_chat(user, "这具尸体还没有真正离世吗？！")
 				return
 			if(corpse.burialrited)
-				to_chat(user, "This grave has already been consecrated...")
+				to_chat(user, "这座坟墓已经被祝圣过了……")
 				return
 			else
-				to_chat(user, "I begin my burial rites...")
+				to_chat(user, "我开始施行葬仪……")
 				if(do_after(user, 50))
-					user.say("#Rest thy soul for all aeon within Necra's embrace!")
-					to_chat(user, "I have extracted a strand of luxthread, proof of passing.")
+					user.say("#愿你的灵魂在 内克拉 的怀抱中永世安息！")
+					to_chat(user, "我抽取出了一缕灵辉丝线，作为已然离世的证明。")
 					playsound(user, 'sound/misc/bellold.ogg', 20)
 					new /obj/item/soulthread((get_turf(user)))
 					corpse.burialrited = TRUE
@@ -197,7 +197,7 @@
 //								playsound(mastert,'sound/items/dig_shovel.ogg', 100, TRUE)
 //								mastert.ChangeTurf(T.type, flags = CHANGETURF_INHERIT_AIR)
 //								return
-			to_chat(user, span_warning("I can't dig myself any deeper."))
+			to_chat(user, span_warning("我不能再往下挖了。"))
 			return
 		var/used_str = 10
 		if(iscarbon(user))
@@ -242,8 +242,8 @@
 	duration = 10 MINUTES
 
 /atom/movable/screen/alert/status_effect/debuff/cursed
-	name = "Cursed"
-	desc = "I feel... unlucky."
+	name = "被诅咒"
+	desc = "我感觉... 运气不太好。"
 	icon_state = "debuff"
 
 /obj/structure/closet/dirthole/MouseDrop_T(atom/movable/O, mob/living/user)
@@ -271,16 +271,16 @@
 	var/list/targets = list(O, src)
 	add_fingerprint(user)
 	user.visible_message(
-		span_warning("[user] [actuallyismob ? "tries to ":""]stuff [O] into [src]."),
-		span_warning("I [actuallyismob ? "try to ":""]stuff [O] into [src]."),
-		span_hear("I hear clanging.")
+		span_warning("[user][actuallyismob ? "试图将":"将"][O]塞进[src]。"),
+		span_warning("我[actuallyismob ? "试图将":"将"][O]塞进[src]。"),
+		span_hear("我听见一阵哐当声。")
 	)
 	if(actuallyismob)
 		if(do_after_mob(user, targets, 40))
 			user.visible_message(
-				span_notice("[user] stuffs [O] into [src]."),
-				span_notice("I stuff [O] into [src]."),
-				span_hear("I hear a loud bang.")
+				span_notice("[user]将[O]塞进了[src]。"),
+				span_notice("我将[O]塞进了[src]。"),
+				span_hear("我听见一声巨响。")
 			)
 			var/mob/living/stuffed = O
 			log_combat(user, stuffed, "stuffed into [src]", addition = "(STAGE: [stage]) ([stuffed.stat == DEAD ? "DEAD" : "ALIVE"])")
@@ -337,19 +337,19 @@
 /obj/structure/closet/dirthole/update_icon()
 	switch(stage)
 		if(1)
-			name = "hole"
+			name = "土坑"
 			icon_state = "hole1"
 			can_buckle = FALSE
 		if(2)
-			name = "hole"
+			name = "土坑"
 			icon_state = "hole2"
 			can_buckle = FALSE
 		if(3)
-			name = "pit"
+			name = "墓坑"
 			icon_state = "grave"
 			can_buckle = TRUE
 		if(4)
-			name = "grave"
+			name = "坟墓"
 			icon_state = "gravecovered"
 			can_buckle = FALSE
 	update_abovemob()

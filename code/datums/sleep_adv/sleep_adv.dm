@@ -131,7 +131,7 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 		var/capped_post_check = enough_sleep_xp_to_advance(skill, 2)
 		if(COOLDOWN_FINISHED(src, xp_show))
 			if(org_lvl == new_lvl && !capped_post_check && show_xp)
-				L.balloon_alert(L, "[amt] XP")
+				L.balloon_alert(L, "[amt] 经验")
 				COOLDOWN_START(src, xp_show, XP_SHOW_COOLDOWN)
 		return
 	var/datum/skill/skillref = GetSkillRef(skill)
@@ -152,14 +152,14 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 
 		if(L.client?.prefs.skillcap_notifs)
 			// Notifying you on a cooldown if you actually hit the cap
-			var/skillname = skillref.name ? skillref.name : "ERROR"
+			var/skillname = skillref.name ? skillref.name : "错误"
 			var/captimer = LAZYACCESS(L.mob_timers, "skillcap_[skillname]")
 
 			if(!captimer || world.time > (captimer + SKILLCAP_NOTIF_COOLDOWN))
 				L.mob_timers["skillcap_[skillname]"] = world.time
-				to_chat(L, span_warning("I can't learn anything more about [skillname]."))
+				to_chat(L, span_warning("我已经无法再从[skillname]中学到更多东西了。"))
 				if(show_xp)
-					L.balloon_alert(L, "<font color = '#bb2b2b'>Skill cap!</font>")
+					L.balloon_alert(L, "<font color = '#bb2b2b'>技能封顶！</font>")
 
 	var/capped_pre = enough_sleep_xp_to_advance(skill, 2)
 	var/can_advance_pre = enough_sleep_xp_to_advance(skill, 1)
@@ -174,30 +174,30 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 		show_xp = FALSE
 	if(!can_advance_pre && can_advance_post && !silent)
 		to_chat(mind.current, span_nicegreen(pick(list(
-			"I'm getting a better grasp at [LOWER_TEXT(skillref.name)]...",
-			"With some rest, I feel like I can get better at [LOWER_TEXT(skillref.name)]...",
-			"[skillref.name] starts making more sense to me...",
+			"我对[LOWER_TEXT(skillref.name)]的掌握更好了……",
+			"只要休息一下，我感觉自己就能更擅长[LOWER_TEXT(skillref.name)]……",
+			"[skillref.name]开始让我更能领会了……",
 		))))
 		if(!COOLDOWN_FINISHED(src, level_up))
 			if((L.client?.prefs.floating_text_toggles & XP_TEXT))
-				L.balloon_alert(L, "<font color = '#9BCCD0'>Level up...</font>")
+				L.balloon_alert(L, "<font color = '#9BCCD0'>升级了……</font>")
 			L.playsound_local(L, pick(LEVEL_UP_SOUNDS), 100, TRUE)
 			COOLDOWN_START(src, level_up, XP_SHOW_COOLDOWN)
 		show_xp = FALSE
 	if(!capped_pre && capped_post && !silent)
 		if(mind.current.construct)
-			to_chat(mind.current, span_nicegreen("My [LOWER_TEXT(skillref.name)] cannot improve without a skill exhibitor."))
+			to_chat(mind.current, span_nicegreen("若没有技能展示器，我的[LOWER_TEXT(skillref.name)]便无法继续提升。"))
 			return
-		to_chat(mind.current, span_nicegreen("My [LOWER_TEXT(skillref.name)] can no longer improve without some rest and meditation..."))
+		to_chat(mind.current, span_nicegreen("若不经过休息与冥想，我的[LOWER_TEXT(skillref.name)]已无法再提升……"))
 		if(!COOLDOWN_FINISHED(src, level_up))
 			if((L.client?.prefs.floating_text_toggles & XP_TEXT))
-				L.balloon_alert(L, "<font color = '#9BCCD0'>Level up...</font>")
+				L.balloon_alert(L, "<font color = '#9BCCD0'>升级了……</font>")
 			L.playsound_local(L, pick(LEVEL_UP_SOUNDS), 100, TRUE)
 			COOLDOWN_START(src, level_up, XP_SHOW_COOLDOWN)
 		show_xp = FALSE
 	if(COOLDOWN_FINISHED(src, xp_show))
 		if(amt && show_xp && (L.client?.prefs.floating_text_toggles & XP_TEXT))
-			L.balloon_alert(L, "[amt] XP")
+			L.balloon_alert(L, "[amt] 经验")
 			COOLDOWN_START(src, xp_show, XP_SHOW_COOLDOWN)
 
 /datum/sleep_adv/proc/add_cross_training_experience(primary_skill, amt)
@@ -223,12 +223,12 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 	if(!mind.current)
 		return
 	if(HAS_TRAIT(mind.current, TRAIT_CURSE_ABYSSOR))
-		to_chat(mind.current, span_notice("His domain is forbidden to the likes of me."))
+		to_chat(mind.current, span_notice("祂的领域不容我这样的人踏足。"))
 		return
 	if(prob(0)) //TODO SLEEP ADV SPECIALS
 		rolled_specials++
 	var/inspirations = 1
-	to_chat(mind.current, span_notice("My consciousness slips and I start dreaming..."))
+	to_chat(mind.current, span_notice("我的意识开始滑落，我开始做梦……"))
 
 	var/dream_dust = retained_dust
 	dream_dust += BASE_DREAM_DUST
@@ -236,20 +236,20 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 	var/int = mind.current.STAINT
 	dream_dust += mind.current.STAINT * DREAM_DUST_PER_INT //25% dream points for each int
 	if(int < 10)
-		to_chat(mind.current, span_boldwarning("My shallow imagination makes them dull..."))
+		to_chat(mind.current, span_boldwarning("我浅薄的想象力让这些梦变得黯淡……"))
 	else if (int > 10)
-		to_chat(mind.current, span_notice("My creative thinking enhances them..."))
+		to_chat(mind.current, span_notice("我富有创造力的思维让这些梦更加鲜活……"))
 
 	var/stress_median = stress_amount / stress_cycles
 
 	if(stress_median <= -1)
 		// Unstressed, happy
-		to_chat(mind.current, span_notice("With no stresses throughout the day I dream vividly..."))
+		to_chat(mind.current, span_notice("一整天都没有烦忧，我的梦境格外鲜明……"))
 		dream_dust += 100
 		inspirations++
 	else if (stress_median >= 5.0)
 		// Stressed, unhappy
-		to_chat(mind.current, span_boldwarning("Bothered by the stresses of the day my dreams are short..."))
+		to_chat(mind.current, span_boldwarning("白日里的压力扰乱了我，让我的梦境变得短暂……"))
 		dream_dust -= 100
 
 	grant_inspiration_xp(inspirations)
@@ -269,8 +269,8 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 
 /datum/sleep_adv/proc/show_ui(mob/living/user)
 	var/list/dat = list()
-	dat += "<center>Cycle \Roman[sleep_adv_cycle]</center>"
-	dat += "<br><center>Dream, for those who dream may reach higher heights</center><br>"
+	dat += "<center>轮次 \Roman[sleep_adv_cycle]</center>"
+	dat += "<br><center>做梦吧，因为会做梦的人才能抵达更高之处</center><br>"
 	dat += "<center>\Roman[sleep_adv_points]</center>"
 	for(var/skill_type in SSskills.all_skills)
 		var/datum/skill/skill = GetSkillRef(skill_type)
@@ -283,10 +283,10 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 	dat += "<br>"
 	if(rolled_specials > 0)
 		var/can_buy = can_buy_special()
-		dat += "<br><a [can_buy ? "" : "class='linkOff'"] href='?src=[REF(src)];task=buy_special'>Dream something <b>special</b></a> - \Roman[get_special_cost()]"
-		dat += "<br>Specials can have negative or positive effects"
-	dat += "<br><br><center>Your points will be retained<br><a href='?src=[REF(src)];task=continue'>Continue</a></center>"
-	var/datum/browser/popup = new(user, "dreams", "<center>Dreams</center>", 350, 450)
+		dat += "<br><a [can_buy ? "" : "class='linkOff'"] href='?src=[REF(src)];task=buy_special'>做一个<b>特别</b>的梦</a> - \Roman[get_special_cost()]"
+		dat += "<br>特殊梦境可能带来正面或负面效果"
+	dat += "<br><br><center>你的点数会被保留<br><a href='?src=[REF(src)];task=continue'>继续</a></center>"
+	var/datum/browser/popup = new(user, "dreams", "<center>梦境</center>", 350, 450)
 	popup.set_window_options("can_close=0")
 	popup.set_content(dat.Join())
 	popup.open(FALSE)
@@ -337,7 +337,7 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 	if(!enough_sleep_xp_to_advance(skill_type, 1))
 		return
 	if(HAS_TRAIT(mind.current, TRAIT_CURSE_MALUM))
-		to_chat(mind.current, span_warning("My dreams turn to nitemares."))
+		to_chat(mind.current, span_warning("我的梦化作了噩梦。"))
 		return
 	var/datum/skill/skill = GetSkillRef(skill_type)
 	var/dream_text = skill.get_random_dream()
@@ -346,10 +346,10 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 
 	// Notify player if they're benefiting from Malum's blessing for craft skills or sewing
 	if(HAS_TRAIT(mind.current, TRAIT_FORGEBLESSED) && (istype(skill, /datum/skill/craft) || istype(skill, /datum/skill/craft/sewing)))
-		to_chat(mind.current, span_notice("Malum's blessing reduces the dream point cost of your crafting training."))
+		to_chat(mind.current, span_notice("Malum 的赐福降低了你工艺训练所需的梦点消耗。"))
 	// Let them in on it being related to their trait.
 	if(HAS_TRAIT(mind.current, TRAIT_HUMEN_INGENUITY))
-		to_chat(mind.current, span_notice("As if someone were guiding my dreams, knowledge comes easy."))
+		to_chat(mind.current, span_notice("仿佛有人在引导我的梦境，知识来得格外轻易。"))
 
 	sleep_adv_points -= get_skill_cost(skill_type)
 	adjust_sleep_xp(skill_type, -get_requried_sleep_xp_for_skill(skill_type, 1))
@@ -386,11 +386,11 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 	for(var/i in 1 to inspired_skill_names.len)
 		var/skill_name = inspired_skill_names[i]
 		if(i > 1 && i == inspired_skill_names.len)
-			skill_string += " and "
+			skill_string += " 和 "
 		else if(i != 1)
 			skill_string += ", "
 		skill_string += LOWER_TEXT(skill_name)
-	to_chat(mind.current, span_notice("I feel inspired about [skill_string]..."))
+	to_chat(mind.current, span_notice("我对[skill_string]产生了灵感……"))
 
 
 /datum/sleep_adv/proc/buy_special()
@@ -405,18 +405,18 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 		return
 	if(mind.has_changed_spell)
 		mind.has_changed_spell = FALSE
-		to_chat(mind.current, span_smallnotice("I feel like I can change my spells again."))
+		to_chat(mind.current, span_smallnotice("我感觉自己又能再次更换法术了。"))
 	if(mind.has_rituos)
 		mind.has_rituos = FALSE
-		to_chat(mind.current, span_smallnotice("The toil of invoking Her Lesser Work has fled my feeble form. I can continue my transfiguration..."))
+		to_chat(mind.current, span_smallnotice("施行 Her Lesser Work 的劳累已经离开我这孱弱之躯。我可以继续我的蜕变了……"))
 	if (mind.rituos_spell)
-		to_chat(mind.current, span_warning("My glimpse of [mind.rituos_spell.name] flees my slumbering mind..."))
+		to_chat(mind.current, span_warning("我对[mind.rituos_spell.name]的窥见正从沉睡的意识中溜走……"))
 		mind.RemoveSpell(mind.rituos_spell)
 		mind.rituos_spell = null
-	to_chat(mind.current, span_notice("...and that's all I dreamt of."))
+	to_chat(mind.current, span_notice("……我梦到的就只有这些。"))
 	if(HAS_TRAIT(mind.current, TRAIT_STUDENT))
 		REMOVE_TRAIT(mind.current, TRAIT_STUDENT, null)
-		to_chat(mind.current, span_nicegreen("I feel that I can be educated in a skill once more."))
+		to_chat(mind.current, span_nicegreen("我感觉自己又能再接受一次技能教育了。"))
 	close_ui()
 
 /datum/sleep_adv/Topic(href, list/href_list)

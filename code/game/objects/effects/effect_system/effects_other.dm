@@ -66,7 +66,7 @@
 	effect_type = /obj/effect/particle_effect/steam
 
 /obj/effect/particle_effect/ion_trails
-	name = "ion trails"
+	name = "离子尾迹"
 	icon_state = "ion_trails"
 	anchored = TRUE
 
@@ -102,7 +102,7 @@
 
 /datum/effect_system/reagents_explosion/start()
 	if(explosion_message)
-		location.visible_message(span_danger("The solution violently explodes!"), \
-								span_hear("I hear an explosion!"))
+		location.visible_message(span_danger("溶液猛烈爆炸了！"), \
+								span_hear("我听见了一声爆炸！"))
 
 	dyn_explosion(location, amount, flashing_factor)

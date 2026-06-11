@@ -56,18 +56,18 @@
 	if(dragged != user)
 		return
 	if(!user.can_do_sex())
-		to_chat(user, "<span class='warning'>I can't do this.</span>")
+		to_chat(user, "<span class='warning'>我现在做不到这个。</span>")
 		return
 	if(!user?.client?.prefs.sexable)
-		to_chat(user, "<span class='warning'>I don't want to touch [target]. (Your ERP preference, in the options)</span>")
+		to_chat(user, "<span class='warning'>我不想碰[target]。（这是我在选项里的 ERP 偏好设置）</span>")
 		return
 	if(!target?.client?.prefs)
-		to_chat(user, span_warning("[target] is simply not there. I can't do this."))
+		to_chat(user, span_warning("[target]根本就不在那里。我做不到这个。"))
 		log_combat(user, target, "tried ERP menu against d/ced")
 		return
 	if(!target.client.prefs.sexable)
-		to_chat(user, "<span class='warning'>[target] doesn't want to be touched. (Their ERP preference, in the options)</span>")
-		to_chat(target, "<span class='warning'>[user] failed to touch you. (Your ERP preference, in the options)</span>")
+		to_chat(user, "<span class='warning'>[target]不想被碰触。（这是对方在选项里的 ERP 偏好设置）</span>")
+		to_chat(target, "<span class='warning'>[user]没能碰到你。（这是你在选项里的 ERP 偏好设置）</span>")
 		log_combat(user, target, "tried unwanted ERP menu against")
 		return
 	user.sexcon.start(target)
@@ -206,9 +206,9 @@
 			prob_for_impreg =  min(prob_for_impreg * 2, IMPREG_PROB_MAX)
 		if(prob(prob_for_impreg))
 			if(wife.mpreg)
-				to_chat(wife, span_love("I feel a surge of warmth inside me again..."))
+				to_chat(wife, span_love("我又一次感到体内涌起一阵暖意……"))
 				return
-			to_chat(wife, span_love("I feel a strange surge of warmth inside me... Am I pregnant?.."))
+			to_chat(wife, span_love("我感到体内涌起一阵奇异的暖流……难道我怀孕了？……"))
 			wife.mpreg = TRUE
 			record_round_statistic(STATS_IMPREGNATIONS)
 		else

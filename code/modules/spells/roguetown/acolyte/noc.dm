@@ -3,8 +3,8 @@
 // But I am not nuking it from Acolyte yet so it will be unavailable to mage.
 // I repathed it to avoid it becoming available to mages again.
 /obj/effect/proc_holder/spell/invoked/blindness
-	name = "Blindness"
-	desc = "Direct a mote of living darkness to temporarily blind another."
+	name = "失明术"
+	desc = "驱使一缕活生生的黑暗，令他人暂时失明。"
 	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
 	action_icon = 'icons/mob/actions/nocmiracles.dmi'
 	overlay_state = "blindness"
@@ -17,7 +17,7 @@
 	movement_interrupt = FALSE
 	sound = 'sound/magic/churn.ogg'
 	spell_tier = 2 // Combat spell
-	invocations = list("Noc blinds thee of thy sins!")
+	invocations = list("Noc 以黑暗遮蔽你的罪目！")
 	invocation_type = "shout" //can be none, whisper, emote and shout
 	associated_skill = /datum/skill/magic/holy
 	devotion_cost = 15
@@ -41,7 +41,7 @@
 		var/mob/living/target = targets[1]
 		if(target.anti_magic_check(TRUE, TRUE))
 			return FALSE
-		target.visible_message(span_warning("[user] points at [target]'s eyes!"),span_warning("My eyes are covered in darkness!"))
+		target.visible_message(span_warning("[user] 指向了 [target] 的双眼！"),span_warning("黑暗遮住了我的双眼！"))
 		var/strength = min(user.get_skill_level(associated_skill) * 4, 4)
 		target.blind_eyes(strength)
 		return TRUE
@@ -49,11 +49,11 @@
 	return FALSE
 
 /obj/effect/proc_holder/spell/invoked/invisibility
-	name = "Invisibility"
+	name = "隐形术"
 	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
 	action_icon = 'icons/mob/actions/nocmiracles.dmi'
 	overlay_state = "invisibility"
-	desc = "Make another (or yourself) invisible for some time. Duration scales with the arcyne skill. Casting, attacking or being attacked will cancel the duration."
+	desc = "令自己或他人暂时隐形。持续时间随 Arcyne 技艺提升而增加；施法、攻击或受击都会打断效果。"
 	releasedrain = 30
 	chargedrain = 5
 	chargetime = 5
@@ -72,7 +72,7 @@
 
 /obj/effect/proc_holder/spell/invoked/invisibility/miracle
 	miracle = TRUE
-	desc = "Make another (or yourself) invisible for some time. Duration scales with the holy skill. Casting, attacking or being attacked will cancel the duration."
+	desc = "令自己或他人暂时隐形。持续时间随神圣技艺提升而增加；施法、攻击或受击都会打断效果。"
 	devotion_cost = 25
 	chargetime = 0
 	chargedrain = 0
@@ -84,24 +84,24 @@
 		var/mob/living/target = targets[1]
 		if(target.anti_magic_check(TRUE, TRUE))
 			return FALSE
-		target.visible_message(span_warning("[target] starts to fade into thin air!"), span_notice("You start to become invisible!"))
+		target.visible_message(span_warning("[target] 开始在空气中渐渐淡去！"), span_notice("你的身形开始隐没。"))
 		var/dur = max((5 * (user.get_skill_level(associated_skill))), 5)
 		if(dur >= recharge_time)
 			recharge_time = dur + 5 SECONDS
 		animate(target, alpha = 0, time = 1 SECONDS, easing = EASE_IN)
 		target.mob_timers[MT_INVISIBILITY] = world.time + dur SECONDS
 		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, update_sneak_invis), TRUE), dur SECONDS)
-		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, visible_message), span_warning("[target] fades back into view."), span_notice("You become visible again.")), 15 SECONDS)
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, visible_message), span_warning("[target] 重新显现在众人眼前。"), span_notice("你重新显露了身形。")), 15 SECONDS)
 		return TRUE
 	revert_cast()
 	return FALSE
 
 /obj/effect/proc_holder/spell/self/noc_spell_bundle
-	name = "Arcyne Affinity"
+	name = "Arcyne 亲和"
 	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
 	action_icon = 'icons/mob/actions/nocmiracles.dmi'
 	overlay_state = "arcyne_affinity"
-	desc = "Allows you to learn a spell or two of a certain type once every cycle."
+	desc = "允许你每个循环从特定类别中习得一两道法术。"
 	miracle = TRUE
 	devotion_cost = 250
 	recharge_time = 40 MINUTES
@@ -140,33 +140,33 @@
 	if(!user || !user.mind)
 		revert_cast()
 		return FALSE
-	var/list/available_choices = list("Utility", "Offense", "Buffs")
+	var/list/available_choices = list("功能", "进攻", "增益")
 	for(var/already in chosen_bundles)
 		available_choices.Remove(already)
 	if(!available_choices.len)
 		user.mind.RemoveSpell(src)
-		to_chat(user, span_notice("The arcyne knowledge granted by Noc has been fully bestowed."))
+		to_chat(user, span_notice("Noc 所赐的 Arcyne 知识已经尽数降下。"))
 		return TRUE
-	var/choice = input(user, "What type of spells has Noc blessed you with?", "CHOOSE PATH") as null|anything in available_choices
+	var/choice = input(user, "Noc 赐予你的会是哪一类法术？", "选择道路") as null|anything in available_choices
 	if(!choice)
 		revert_cast()
 		return FALSE
 	chosen_bundles += choice
 	switch(choice)
-		if("Utility")
+		if("功能")
 			if(!user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/diagnose/secular))
 				var/secular_diagnose = new /obj/effect/proc_holder/spell/invoked/diagnose/secular
 				user.mind?.AddSpell(secular_diagnose)
 			add_spells(user, utility_bundle, grant_all = TRUE)
-		if("Offense")
+		if("进攻")
 			add_spells(user, offensive_bundle, grant_all = TRUE)
 			ADD_TRAIT(user, TRAIT_MAGEARMOR, TRAIT_MIRACLE)
-		if("Buffs")
+		if("增益")
 			add_spells(user, buff_bundle, choice_count = 4)
 			ADD_TRAIT(user, TRAIT_MAGEARMOR, TRAIT_MIRACLE)
 	if(chosen_bundles.len >= 3)
 		user.mind.RemoveSpell(src)
-		to_chat(user, span_notice("The arcyne knowledge granted by Noc has been fully bestowed."))
+		to_chat(user, span_notice("Noc 所赐的 Arcyne 知识已经尽数降下。"))
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/noc_spell_bundle/proc/add_spells(mob/user, list/spells, choice_count = 1, grant_all = FALSE)
@@ -189,7 +189,7 @@
 		for(var/i in 1 to choice_count)
 			if(!available.len)
 				break
-			var/choice = input(user, "Choose a spell! Choices remaining: [choice_count_visual]") as null|anything in available
+			var/choice = input(user, "选择一道法术！剩余可选次数：[choice_count_visual]") as null|anything in available
 			if(isnull(choice))
 				break
 			var/picked_spell = available[choice]
@@ -209,11 +209,11 @@
 
 //15 PER peer-ahead.
 /obj/effect/proc_holder/spell/invoked/noc_sight
-	name = "Noc's Gaze"
+	name = "Noc 之视"
 	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
 	action_icon = 'icons/mob/actions/nocmiracles.dmi'
 	overlay_state = "noc_sight"
-	desc = "Peer ahead."
+	desc = "向前窥视。"
 	chargetime = 0
 	chargedrain = 0
 	clothes_req = FALSE
@@ -222,7 +222,7 @@
 	range = 7
 	warnie = "sydwarning"
 	movement_interrupt = FALSE
-	invocations = list("Noc guide my gaze.")
+	invocations = list("Noc，请引导我的目光。")
 	invocation_type = "whisper"
 	sound = null
 	associated_skill = /datum/skill/magic/holy

@@ -1,8 +1,8 @@
 //For use in wound closure enchantment only
 
 /obj/effect/proc_holder/spell/invoked/wound_closure
-	name = "Wound Closure"
-	desc = "Heals all wounds on a targeted limb."
+	name = "伤口闭合"
+	desc = "治愈目标肢体上的所有伤口。"
 	overlay_icon = 'icons/mob/actions/genericmiracles.dmi'
 	overlay_state = "heal"
 	action_icon_state = "heal"
@@ -43,12 +43,12 @@
 				if(!istype(object, /obj/item/natural/worms/leech))	//Leeches and surgical cheeles are made an exception.
 					no_embeds = FALSE
 			if(!no_embeds)
-				to_chat(user, span_warning("We cannot seal wounds with objects inside this limb!"))
+				to_chat(user, span_warning("这条肢体里还有异物，无法闭合伤口！"))
 				revert_cast()
 				return FALSE
 		if(!do_after(user, (delay - (0.5 SECONDS * HU.get_skill_level(associated_skill)))))
 			revert_cast()
-			to_chat(user, span_warning("We were interrupted!"))
+			to_chat(user, span_warning("我们被打断了！"))
 			return FALSE
 		var/foundwound = FALSE
 		if(length(affecting.wounds))
@@ -56,7 +56,7 @@
 				if(!isnull(wound) && wound.healable_by_miracles)
 					wound.heal_wound(wound.whp)
 					foundwound = TRUE
-					user.visible_message(("<font color = '#488f33'>[capitalize(wound.name)] oozes a clear fluid and closes shut, forming into a sore bruise!</font>"))
+					user.visible_message(("<font color = '#488f33'>[capitalize(wound.name)]渗出清澈液体并闭合，只留下酸痛的瘀伤！</font>"))
 					affecting.add_wound(/datum/wound/bruise/woundheal)
 			if(foundwound)
 				playsound(target, 'sound/magic/woundheal_crunch.ogg', 100, TRUE)
@@ -64,6 +64,6 @@
 			affecting.update_disabled()
 			return TRUE
 		else
-			to_chat(user, span_warning("The limb is free of wounds."))
+			to_chat(user, span_warning("这条肢体没有伤口。"))
 			revert_cast()
 			return FALSE

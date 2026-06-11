@@ -22,7 +22,7 @@
 
 ///Called on COMSIG_ITEM_ATTACK_SELF. Allows you to change the warcry.
 /datum/component/wearertargeting/punchcooldown/proc/changewarcry(datum/source, mob/user)
-	var/input = stripped_input(user,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 7)
+	var/input = stripped_input(user,"你想把战吼改成什么？最多 6 个字符。", ,"", 7)
 	if(!QDELETED(src) && !QDELETED(user) && !user.Adjacent(parent))
 		return
 	if(input)

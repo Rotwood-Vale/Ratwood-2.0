@@ -1,16 +1,16 @@
 // Assassin, cultist of graggar. Normally found as a drifter.
 /datum/antagonist/assassin
-	name = "Assassin"
-	roundend_category = "assassins"
-	antagpanel_category = "Assassin"
+	name = "刺客"
+	roundend_category = "刺客"
+	antagpanel_category = "刺客"
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "assassin"
 	show_name_in_check_antagonists = TRUE
 	confess_lines = list(
-		"MY CREED IS BLOOD!",
-		"THE DAGGER TOLD ME WHO TO CUT!",
-		"DEATH IS MY DEVOTION!",
-		"THE DARK SUN GUIDES MY HAND!",
+		"我的信条即是鲜血！",
+		"匕首告诉了我该杀谁！",
+		"死亡就是我的信仰！",
+		"黑暗之日指引着我的手！",
 	)
 	antag_flags = FLAG_FAKE_ANTAG
 
@@ -24,20 +24,20 @@
 /datum/antagonist/assassin/on_gain()
 	owner.current.cmode_music = list('sound/music/cmode/antag/combat_assassin.ogg')
 	var/yea = /obj/item/rogueweapon/huntingknife/idagger/steel/profane
-	owner.special_items["Profane Dagger"] = yea // Assigned assassins can get their special dagger from right clicking certain objects.
-	to_chat(owner.current, "<span class='danger'>I've blended in well up until this point, but it's time for the Hunted of Graggar to perish. I must get my dagger from where I hid it.</span>")
+	owner.special_items["亵渎匕首"] = yea // Assigned assassins can get their special dagger from right clicking certain objects.
+	to_chat(owner.current, "<span class='danger'>直到现在我都伪装得很好，但现在该让 格拉加尔 的猎物灭亡了。我必须去取回我藏起来的匕首。</span>")
 	return ..()
 
 /mob/living/carbon/human/proc/who_targets() // Verb for the assassin to remember their targets.
-	set name = "Remember Targets"
-	set category = "Graggar"
+	set name = "回想目标"
+	set category = "格拉加尔"
 	if(!mind)
 		return
 	mind.recall_targets(src)
 
 /datum/antagonist/assassin/on_removal()
 	if(!silent && owner.current)
-		to_chat(owner.current,"<span class='danger'>The red fog in my mind is fading. I am no longer an [name]!</span>")
+		to_chat(owner.current,"<span class='danger'>我脑海中的血红迷雾正在消散。我不再是[name]了！</span>")
 	return ..()
 
 /datum/antagonist/assassin/on_life(mob/user)
@@ -52,17 +52,17 @@
 		if(istype(I, /obj/item/rogueweapon/huntingknife/idagger/steel/profane))
 			for(var/mob/dead/observer/profane/A in I) // Each trapped soul is announced to the server
 				if(A)
-					to_chat(world, "The [A.name] has been stolen for Graggar by [owner.name].<span class='greentext'>DAMNATION!</span>")
+					to_chat(world, "[A.name] 已被 [owner.name] 献给 格拉加尔 夺走。<span class='greentext'>诅咒降临！</span>")
 					traitorwin = TRUE
 
 	if(!considered_alive(owner))
 		traitorwin = FALSE
 
 	if(traitorwin)
-		to_chat(world, "<span class='greentext'>The [name] [owner.name] has TRIUMPHED!</span>")
+		to_chat(world, "<span class='greentext'>[name] [owner.name] 凯旋了！</span>")
 		if(owner?.current)
 			owner.current.playsound_local(get_turf(owner.current), 'sound/misc/triumph.ogg', 100, FALSE, pressure_affected = FALSE)
 	else
-		to_chat(world, "<span class='redtext'>The [name] [owner.name] has FAILED!</span>")
+		to_chat(world, "<span class='redtext'>[name] [owner.name] 失败了！</span>")
 		if(owner?.current)
 			owner.current.playsound_local(get_turf(owner.current), 'sound/misc/fail.ogg', 100, FALSE, pressure_affected = FALSE)

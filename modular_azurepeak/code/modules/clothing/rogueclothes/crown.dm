@@ -1,9 +1,9 @@
 #define GARRISON_CROWN_COLOR "#C2A245"
 
 /obj/item/clothing/head/roguetown/crown/serpcrown
-	name = "Crown of the Realm"
+	name = "王国之冠"
 	article = "the"
-	desc = "Heavy is the head that wears this."
+	desc = "欲戴此冠，必承其重。"
 	icon_state = "serpcrown"
 	//dropshrink = 0
 	dynamic_hair_suffix = null
@@ -30,18 +30,18 @@
 	become_hearing_sensitive()
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/proc/anti_stall()
-	src.visible_message(span_warning("The Crown of [SSmapping.map_adjustment.realm_name] crumbles to dust, the ashes spiriting away in the direction of the Keep."))
+	src.visible_message(span_warning("[SSmapping.map_adjustment.realm_name]之冠碎成尘埃，灰烬朝着要塞的方向飘然而去。"))
 	SSroguemachine.scomm_machines -= src
 	SSroguemachine.crown = null //Do not harddel.
 	qdel(src) //Anti-stall
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/attack_right(mob/living/carbon/human/user)
 	if(user.restrained() || user.incapacitated())
-		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
+		to_chat(user, span_warning("我被束缚或失去行动能力时，无法使用这个！"))
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	visible_message(span_notice ("[user] presses their hands against their crown."))
-	var/input_text = input(user, "Enter your ducal message:", "Crown SCOM")
+	visible_message(span_notice ("[user]将双手按在自己的王冠上。"))
+	var/input_text = input(user, "输入你的公爵讯息：", "王冠SCOM")
 	if(input_text)
 		var/usedcolor = user.voice_color
 		if(user.voicecolor_override)
@@ -59,7 +59,7 @@
 
 			GLOB.broadcast_list += list(list(
 			"message"   = input_text,
-			"tag"		= "The Crown of [SSmapping.map_adjustment.realm_name]",
+			"tag"		= "[SSmapping.map_adjustment.realm_name]之冠",
 			"timestamp" = station_time_timestamp("hh:mm:ss")
 			))
 
@@ -75,30 +75,30 @@
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/attack_self(mob/living/user)
 	if(user.restrained() || user.incapacitated())
-		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
+		to_chat(user, span_warning("我被束缚或失去行动能力时，无法使用这个！"))
 		return
 	if(.)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	garrisonline = !garrisonline
-	to_chat(user, span_info("I [garrisonline ? "connect the crown to the garrison SCOMline" : "connect the crown to the general SCOMline"]"))
+	to_chat(user, span_info("[garrisonline ? "我将王冠接入驻军SCOM线路。" : "我将王冠接入通用SCOM线路。"]"))
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/MiddleClick(mob/user)
 	if(user.restrained() || user.incapacitated())
-		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
+		to_chat(user, span_warning("我被束缚或失去行动能力时，无法使用这个！"))
 		return
 	if(.)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	if(loudmouth_listening)
-		to_chat(user, span_info("I quell the Loudmouth's prattling on the scomstone. It may be muted entirely still."))
+		to_chat(user, span_info("我压下了Loudmouth在SCOM石上的聒噪。若有需要，仍可将其彻底静音。"))
 		loudmouth_listening = FALSE
 	else
 		listening = !listening
 		speaking = !speaking
-		to_chat(user, span_info("I [speaking ? "unmute" : "mute"] the crown's SCOM capabilities."))
+		to_chat(user, span_info("[speaking ? "我恢复了王冠的SCOM功能。" : "我关闭了王冠的SCOM功能。"]"))
 		if(listening)
 			loudmouth_listening = TRUE
 	update_icon()

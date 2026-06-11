@@ -1,6 +1,6 @@
 /obj/item/reagent_containers/glass/bowl
-	name = "wooden bowl"
-	desc = "It is the empty space that makes the bowl useful."
+	name = "木碗"
+	desc = "埏埴以为器，当其无，有器之用"
 	icon = 'modular/Neu_Food/icons/cookware/bowl.dmi'
 	lefthand_file = 'modular/Neu_Food/icons/food_lefthand.dmi'
 	righthand_file = 'modular/Neu_Food/icons/food_righthand.dmi'

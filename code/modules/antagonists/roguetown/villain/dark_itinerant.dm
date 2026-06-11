@@ -1,11 +1,11 @@
 /datum/antagonist/zizo_knight
-	name = "Dark Itinerant Knight"
-	roundend_category = "Dark Itinerant Knight"
-	antagpanel_category = "Dark Itinerant Knight"
+	name = "暗途骑士"
+	roundend_category = "暗途骑士"
+	antagpanel_category = "暗途骑士"
 	job_rank = ROLE_DARK_ITINERANT
 	confess_lines = list(
-		"ZIZO! ZIZO! ZIZO!",
-		"FOR THE PALE LADY!",
+		"齐佐！齐佐！齐佐！",
+		"为了苍白女士！",
 	)
 	rogue_enabled = TRUE
 	var/outfit_path = /datum/outfit/job/dark_itinerant_knight
@@ -19,13 +19,13 @@
 	H.set_patron(/datum/patron/inhumen/zizo)
 	H.cmode_music = 'sound/music/combat_heretic.ogg'
 	H.faction = list("undead")
-	to_chat(owner, span_danger("I'm a servant to the ALMIGHTY. They call it the UNSPEAKABLE. I SHALL WRECK HAVOK and SURVIVE."))
+	to_chat(owner, span_danger("我是那位不可言说之主的仆从。我将掀起浩劫，并活下来。"))
 	H.equipOutfit(outfit_path)
 
 /datum/antagonist/zizo_knight/squire
-	name = "Dark Itinerant Squire"
-	roundend_category = "Dark Itinerant Squire"
-	antagpanel_category = "Dark Itinerant Squire"
+	name = "暗途侍从"
+	roundend_category = "暗途侍从"
+	antagpanel_category = "暗途侍从"
 	outfit_path = /datum/outfit/job/dark_itinerant_squire
 
 /datum/outfit/job/dark_itinerant_squire/pre_equip(mob/living/carbon/human/H)
@@ -73,26 +73,26 @@
 
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mindlink)
 
-	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in list("Crossbow", "Bow", "Sling")
-	var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in list("Light Armor", "Medium Armor")
+	var/weapon_choice = input(H, "选择你的武器。", "拿起兵器") as anything in list("十字弩", "弓", "投石索")
+	var/armor_choice = input(H, "选择你的护甲。", "拿起兵器") as anything in list("轻甲", "中甲")
 	H.set_blindness(0)
 	switch(weapon_choice)
-		if("Crossbow")
+		if("十字弩")
 			beltr = /obj/item/quiver/bolts
 			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-		if("Bow")
+		if("弓")
 			beltr = /obj/item/quiver/bodkin
 			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-		if("Sling")
+		if("投石索")
 			beltr = /obj/item/quiver/sling/iron
 			r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling 
 
 	switch(armor_choice)
-		if("Light Armor")
+		if("轻甲")
 			pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 			armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 			ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-		if("Medium Armor")
+		if("中甲")
 			pants = /obj/item/clothing/under/roguetown/chainlegs
 			armor = /obj/item/clothing/suit/roguetown/armor/brigandine
 			ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
@@ -158,13 +158,13 @@
 	wretch_select_bounty(H)
 
 /obj/effect/proc_holder/spell/self/convertrole/zizosquire
-	name = "Recruit Squire"
+	name = "招募侍从"
 	new_role = "Retainer"
 	overlay_state = "recruit_guard"
 	recruitment_faction = "Retainers"
-	recruitment_message = "Join my service as a retainer, %RECRUIT!"
-	accept_message = "I pledge my service to you!"
-	refuse_message = "I must decline your offer."
+	recruitment_message = "作为扈从加入我的麾下吧，%RECRUIT！"
+	accept_message = "我愿向你宣誓效忠！"
+	refuse_message = "我必须拒绝你的提议。"
 
 /obj/effect/proc_holder/spell/self/convertrole/zizosquire/can_convert(mob/living/carbon/human/recruit)
 	if(QDELETED(recruit))
@@ -184,10 +184,10 @@
 	var/datum/objective/dark_itinerant/zizoserve = new /datum/objective/dark_itinerant/squire(null, recruit.mind)
 
 	zizotrain.target = recruit.mind
-	zizotrain.explanation_text = "Train your squire [recruit.real_name] in the field. Show them the ropes. Ensure they survive."
+	zizotrain.explanation_text = "在实战中训练你的侍从 [recruit.real_name]。带领他们入门，并确保他们活下来。"
 	zk_antag.objectives += zizotrain
 	zizoserve.target = recruiter.mind
-	zizoserve.explanation_text =  "Serve faithfully to your knight [recruiter.real_name], heed their commands and help them."
+	zizoserve.explanation_text =  "忠诚侍奉你的骑士 [recruiter.real_name]，听从其命令并协助他们。"
 	zs_antag.objectives += zizoserve
 	recruit.mind.announce_objectives()
 	recruiter.mind.announce_objectives()
@@ -199,14 +199,14 @@
 	qdel(src)
 
 /datum/objective/dark_itinerant
-	name = "Train your squire"
-	explanation_text = "Train your squire in the field. Show them the ropes. Ensure they survive."
+	name = "训练你的侍从"
+	explanation_text = "在实战中训练你的侍从。带他们入门，并确保他们活下来。"
 	triumph_count = 5
 
 /datum/objective/dark_itinerant/check_completion()
 	return !target || considered_alive(target, enforce_human = TRUE)
 
 /datum/objective/dark_itinerant/squire
-	name = "Serve your Knight"
-	explanation_text = "Serve faithfully to your knight, heed their commands and help them."
+	name = "侍奉你的骑士"
+	explanation_text = "忠诚侍奉你的骑士，听从其命令并协助他们。"
 	triumph_count = 5

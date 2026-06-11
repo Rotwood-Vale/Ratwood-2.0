@@ -11,9 +11,9 @@
 	allowed_races = list(/datum/species/goblinp, /datum/species/anthromorphsmall, /datum/species/kobold)
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
 	// tutorial = "Ooga Chacka WORK-a chacka."
-	tutorial = "You are the lowest of the low in the tribe. You're the camp's laborer, in service to the Chief before all others. \
-	They've chosen you, as the weakest of them all, to prepare and service the camp in whatever fashion they see fit. \
-	Make sure everyone is fed, healthy, and satisfied, all while hoping maybe one day you'll be something more."
+	tutorial = "你是部族里最底层的那一个，是营地里的劳役者，凡事都得先服侍酋长。\
+	他们挑中了你，因为你是所有人里最弱的那个，所以无论营地需要什么脏活累活，都得由你去准备、去打理。\
+	确保大家都吃得上、活得下、别闹出乱子，同时也盼着自己哪天或许能不只是个干杂活的。"
 	display_order = JDO_TRIBALVILLAGER
 	whitelist_req = TRUE
 

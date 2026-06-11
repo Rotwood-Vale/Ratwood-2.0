@@ -73,12 +73,12 @@
 		container.reagents.del_reagent(/datum/reagent/water)
 
 /datum/reagent/consumable/milk
-	name = "Milk"
-	description = "An opaque white liquid produced by the mammary glands of mammals."
+	name = "牛奶"
+	description = "一种由哺乳动物乳腺产生的白色不透明液体。"
 	color = "#DFDFDF" // rgb: 223, 223, 223
-	taste_description = "milk"
+	taste_description = "牛奶"
 	glass_icon_state = "glass_white"
-	glass_name = "glass of milk"
+	glass_name = "一杯牛奶"
 	glass_desc = ""
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/M)

@@ -1,6 +1,6 @@
 
 /obj/effect/proc_holder/spell/targeted/spiderconjur
-	name = "Conjure Web"
+	name = "结网术"
 	range = 8
 	overlay_state = "null"
 	releasedrain = 5

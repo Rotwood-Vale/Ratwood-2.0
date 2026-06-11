@@ -66,7 +66,7 @@
 			QDEL_NULL(H.charflaw)
 		H.update_body()
 		H.faction = list("orcs")
-		H.name = "goblin"
+		H.name = "地精"
 		H.real_name = "goblin"
 		ADD_TRAIT(H, TRAIT_NOMOOD, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_NOHUNGER, TRAIT_GENERIC)

@@ -1,6 +1,6 @@
 /datum/mob_descriptor
 	abstract_type = /datum/mob_descriptor
-	var/name = "Descriptor"
+	var/name = "描述词"
 	var/show_obscured = FALSE
 	var/describe
 	var/prefix

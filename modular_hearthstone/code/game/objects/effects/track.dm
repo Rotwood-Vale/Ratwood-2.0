@@ -80,7 +80,7 @@
 #define ANALYSIS_PERFECT 5
 
 /obj/effect/track
-	name = "\improper track"
+	name = "\improper 痕迹"
 	desc = null
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -95,11 +95,11 @@
 	///When this was created. Adjusts difficulty of locating / analyzing.
 	var/creation_time = 0
 	///What kind of foot, or footwear, created this.
-	var/track_type = "codersock tracks"
+	var/track_type = "不明足迹"
 	///Like above, except what you get if you are not good.
-	var/ambiguous_track_type = "footwear tracks"
+	var/ambiguous_track_type = "鞋类痕迹"
 	///The way the mob was facing when this was created. Obviously can be messed with if you e.g. walk backwards.
-	var/facing = "nowhere"
+	var/facing = "无从判断"
 	///If the depth of the tracks is abnormal, e.g. because of heavy armor.
 	var/depth
 	///If the creator was moving in a special way, e.g. running / sneaking. Difficult to discern.
@@ -150,9 +150,9 @@
 	// Reset variables to defaults
 	creation_time = 0
 	expiry_time = 0
-	track_type = "codersock tracks"
-	ambiguous_track_type = "footwear tracks"
-	facing = "nowhere"
+	track_type = "不明足迹"
+	ambiguous_track_type = "鞋类痕迹"
+	facing = "无从判断"
 	depth = null
 	special_movement = null
 	tracking_modifier = 0
@@ -170,10 +170,10 @@
 	if(.)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	to_chat(user, span_info("You start concealing the tracks.."))
+	to_chat(user, span_info("你开始掩盖这些痕迹……"))
 	if(!do_after(user, 4 SECONDS, target = src))
 		return
-	to_chat(user, span_warning("Nobody should be able to follow these tracks anymore.."))
+	to_chat(user, span_warning("现在应该没人能再循着这些痕迹追踪了……"))
 	qdel(src)
 	return TRUE
 
@@ -235,26 +235,26 @@
 	creation_time = world.time
 	track_source.get_track_info(src)
 	if(track_source.m_intent == MOVE_INTENT_SNEAK)
-		special_movement = "Their creator appears to have been sneaking.."
+		special_movement = "留下这些痕迹的人似乎一直在潜行……"
 	else if(track_source.m_intent == MOVE_INTENT_RUN)
-		special_movement = "Their creator appears to have been running!"
+		special_movement = "留下这些痕迹的人似乎当时在奔跑！"
 	switch(track_source.dir)
 		if(NORTH)
-			facing = "north"
+			facing = "北方"
 		if(SOUTH)
-			facing = "south"
+			facing = "南方"
 		if(EAST)
-			facing = "east"
+			facing = "东方"
 		if(WEST)
-			facing = "west"
+			facing = "西方"
 		if(NORTHWEST)
-			facing = "northwest"
+			facing = "西北方"
 		if(NORTHEAST)
-			facing = "northeast"
+			facing = "东北方"
 		if(SOUTHWEST)
-			facing = "southwest"
+			facing = "西南方"
 		if(SOUTHEAST)
-			facing = "southeast"
+			facing = "东南方"
 	real_image = image(icon, src, real_icon_state, ABOVE_OPEN_TURF_LAYER, track_source.dir) //Recreate image with correct dir.
 	original_dir = track_source.dir
 	expiry_time = world.time + 15 MINUTES //Tracks naturally expire after 15 minutes
@@ -313,42 +313,42 @@
 
 /obj/effect/track/proc/knowledge_readout(mob/user, knowledge)
 	if(knowledge >= ANALYSIS_DECENT)
-		. += "Looks like some [track_type].<br>"
+		. += "看起来像是一些[track_type]。<br>"
 	else
-		. += "Looks like some [ambiguous_track_type].<br>"
-	. += "This track leads [facing].<br>"
+		. += "看起来像是一些[ambiguous_track_type]。<br>"
+	. += "这些痕迹通向[facing]。<br>"
 	if(knowledge > ANALYSIS_DECENT)
 		var/timepassed = ((world.time - creation_time) * SSticker.station_time_rate_multiplier)
 		var/timetext = ""
 		var/realtime = round((world.time - creation_time) / 600, 1)
 		if(timepassed >= 36000)
-			timetext = "[round(timepassed / 36000)] hour[(round(timepassed / 36000)) == 1 ? "" : "s"]"
+			timetext = "[round(timepassed / 36000)]小时"
 		else
-			timetext = "[round(timepassed / 600)] minute[(round(timepassed / 600)) == 1 ? "" : "s"]"
-		. += "These tracks are about [timetext] old. <i>([realtime] minute[realtime == 1 ? "" : "s"] real-time)</i><br>"
+			timetext = "[round(timepassed / 600)]分钟"
+		. += "这些痕迹大约留下了[timetext]。 <i>（现实时间[realtime]分钟）</i><br>"
 		if(depth)
-			. += "These tracks are [depth]!<br>"
+			. += "这些痕迹[depth]！<br>"
 	if(knowledge > ANALYSIS_GOOD && special_movement)
 		. += "[span_danger("[special_movement]")]<br>"
 	if(knowledge > ANALYSIS_TERRIBLE && creator == user)
-		. += "[span_nicegreen("These are your own tracks!")]<br>"
+		. += "[span_nicegreen("这是你自己留下的痕迹！")]<br>"
 	if(knowledge >= ANALYSIS_GOOD)
 		if(overwrites > 10)
-			. += "[span_warning("There are traces of many older tracks here, too..")]<br>"
+			. += "[span_warning("这里也残留着许多更早的痕迹……")]<br>"
 		else if(overwrites >= 2)
-			. += "[span_warning("There are traces of around [overwrites] older tracks here, too..")]<br>"
+			. += "[span_warning("这里也残留着大约[overwrites]道更早的痕迹……")]<br>"
 		var/mob/living/carbon/human/H = user
 		if(!isnull(H.current_mark) && H.current_mark == creator)
-			. += span_nicegreen("This track belongs to your mark.")
+			. += span_nicegreen("这些痕迹属于你的标记目标。")
 		if(H.get_skill_level(/datum/skill/misc/tracking) >= SKILL_LEVEL_EXPERT)
-			. += span_nicegreen("<i><font size = 2>Right-click this track to Mark its owner.</font></i>")
+			. += span_nicegreen("<i><font size = 2>右键这些痕迹可标记它们的主人。</font></i>")
 	return .
 
 ///Gets special info for a track relative to a mob, such as type and depth. Override if desiring tracking modifier adjustment.
 /mob/living/proc/get_track_info(obj/effect/track/this_track)
 	var/mob/living/prototype = type
-	this_track.track_type = "[initial(prototype.name)] tracks" //Lets not mess with someone naming their mob.
-	this_track.ambiguous_track_type = "beast tracks" //Override proc if your mob has weird tracks.
+	this_track.track_type = "[initial(prototype.name)]的足迹" //Lets not mess with someone naming their mob.
+	this_track.ambiguous_track_type = "野兽足迹" //Override proc if your mob has weird tracks.
 
 /mob/living/carbon/human/get_track_info(obj/effect/track/this_track)
 	if(istype(this_track,/obj/effect/track/structure))
@@ -372,15 +372,15 @@
 				this.skill_level = get_skill_level(skill)
 	else
 		if(!(mobility_flags & MOBILITY_STAND)) //Either pulled or crawling.
-			this_track.track_type = "drag marks"
-			this_track.track_type = "drag marks"
+			this_track.track_type = "拖拽痕"
+			this_track.track_type = "拖拽痕"
 		else
 			if(shoes && (shoes.body_parts_covered & FEET))
-				this_track.track_type = "[shoes.name] tracks"
-				this_track.ambiguous_track_type = "footwear tracks"
+				this_track.track_type = "[shoes.name]留下的痕迹"
+				this_track.ambiguous_track_type = "鞋类痕迹"
 			else
-				this_track.track_type = "[dna.species.name] footprints" //Look, I am not going to track the species of every single leg you do surgical malpractice with, so this will do.
-				this_track.ambiguous_track_type = "humanoid footprints"
+				this_track.track_type = "[dna.species.name]脚印" //Look, I am not going to track the species of every single leg you do surgical malpractice with, so this will do.
+				this_track.ambiguous_track_type = "类人脚印"
 
 		var/bonus_weight = 0
 		if(wear_armor)
@@ -399,9 +399,9 @@
 				else
 		switch(bonus_weight)
 			if(2 to INFINITY)
-				this_track.depth = "very deep"
+				this_track.depth = "非常深"
 			if(1 to 2)
-				this_track.depth = "deep"
+				this_track.depth = "很深"
 			else
 	return //This is needed at the moment.
 
@@ -460,7 +460,7 @@
 		. *= (1 + bonus_weight)
 
 /obj/effect/track/structure
-	name = "clue"
+	name = "线索"
 	real_icon_state = "tracks_structure"
 	markable = FALSE
 	var/skill_level
@@ -486,11 +486,11 @@
 
 /obj/effect/track/structure/knowledge_readout(mob/user, knowledge)
 	if(tool_used_ambiguous)
-		. += "Looks like the marks of some kind of \the <font color = '#0d5381'>[tool_used_ambiguous]</font><br>"
+		. += "看起来像是某种<font color = '#0d5381'>[tool_used_ambiguous]</font>留下的痕迹<br>"
 	else if(!tool_used)
-		. += "I have no clue what broke this."
+		. += "我完全看不出这是什么弄坏的。"
 	if(knowledge > ANALYSIS_TERRIBLE && creator == user)
-		. += "[span_nicegreen("These are your own tracks!")]<br>"
+		. += "[span_nicegreen("这是你自己留下的痕迹！")]<br>"
 	if(knowledge < ANALYSIS_DECENT)
 		return .
 	if(knowledge > ANALYSIS_DECENT)
@@ -498,19 +498,19 @@
 		var/timetext = ""
 		var/realtime = round((world.time - creation_time) / 600, 1)
 		if(timepassed >= 36000)
-			timetext = "[round(timepassed / 36000)] hour[(round(timepassed / 36000)) == 1 ? "" : "s"]"
+			timetext = "[round(timepassed / 36000)]小时"
 		else
-			timetext = "[round(timepassed / 600)] minute[(round(timepassed / 600)) == 1 ? "" : "s"]"
-		. += "These tracks are about [timetext] old. <i>([realtime] minute[realtime == 1 ? "" : "s"] real-time)</i><br>"
+			timetext = "[round(timepassed / 600)]分钟"
+		. += "这些痕迹大约留下了[timetext]。 <i>（现实时间[realtime]分钟）</i><br>"
 	if(knowledge >= ANALYSIS_GOOD)
 		if(skill_level)
-			. += "The person was at <font color = '#ebebeb'>[SSskills.level_names_plain[skill_level]]</font> skill level with this item.<br>"
+			. += "此人对这件物品的熟练度为<font color = '#ebebeb'>[SSskills.level_names_plain[skill_level]]</font>。<br>"
 	if(knowledge >= ANALYSIS_PERFECT)
-		. += "It looks to be the distinct markings of \the <font color = '#5ca2d1'>[tool_used].</font><br>"
+		. += "这看起来像是<font color = '#5ca2d1'>[tool_used]</font>留下的独特痕迹。<br>"
 	return .
 
 /obj/effect/track/structure/attack_right(mob/user)
-	to_chat(user,span_info("You can't distinguish an object like this."))
+	to_chat(user,span_info("你无法从这样的物体上分辨出什么。"))
 	return
 
 /obj/effect/track/attack_right(mob/user)
@@ -518,16 +518,16 @@
 		var/mob/living/carbon/human/H = user
 		if(H.get_skill_level(/datum/skill/misc/tracking) > SKILL_LEVEL_JOURNEYMAN)	//Expert+
 			if(!markable)
-				to_chat(H, span_warning("This is not enough to Mark them. I need proper tracks."))
-			to_chat(H, span_info("You start taking note of the person's gait, weight and other distinct features."))
+				to_chat(H, span_warning("这些还不足以标记对方。我需要更完整的痕迹。"))
+			to_chat(H, span_info("你开始记下此人的步态、体重和其他独特特征。"))
 			if(do_after(user, (50 - H.STAPER*2)))
 				H.current_mark = creator
-				to_chat(H, span_warning("You've marked this person. You'll notice their tracks if you find any new ones."))
+				to_chat(H, span_warning("你已标记此人。若再发现新的痕迹，你会认出来。"))
 		else
-			to_chat(H, span_info("I am not skilled enough for this! (Expert level required)"))
+			to_chat(H, span_info("我的技巧还不够！（需要专家级）"))
 
 /obj/effect/track/thievescant
-	name = "engraved symbols"
+	name = "刻下的符号"
 	gender = PLURAL
 	real_icon_state = "thieves_cant"
 	markable = FALSE
@@ -553,15 +553,15 @@
 
 /obj/effect/track/thievescant/knowledge_readout(mob/user, knowledge)
 	if(!user.has_language(/datum/language/thievescant))
-		. += "Looks like a bunch of meaningless engravings..."
+		. += "看起来像是一堆毫无意义的刻痕……"
 	else
-		. += "An engraved message left by [creator == user ? "me" : "one of my fellows"]. It reads...<br>"
+		. += "[creator == user ? "我" : "我的某位同道"]留下的一则刻文。内容是……<br>"
 		. += "<font color = '#0d5381'>\"[message]\"</font>"
 
 	return .
 
 /obj/effect/track/thievescant/attack_right(mob/user)
-	to_chat(user,span_info("You can't distinguish an object like this."))
+	to_chat(user,span_info("你无法从这样的物体上分辨出什么。"))
 	return
 
 #undef ANALYSIS_TERRIBLE

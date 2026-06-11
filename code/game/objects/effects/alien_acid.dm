@@ -1,6 +1,6 @@
 /obj/effect/acid
 	gender = PLURAL
-	name = "acid"
+	name = "酸液"
 	desc = ""
 	icon_state = "acid"
 	density = FALSE
@@ -62,4 +62,4 @@
 			if(L.acid_act(10, acid_used, "feet"))
 				acid_level = max(0, acid_level - acid_used*10)
 				playsound(L, 'sound/blank.ogg', 50, TRUE)
-				to_chat(L, span_danger("[src] burns you!"))
+				to_chat(L, span_danger("[src]灼烧着你！"))

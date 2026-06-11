@@ -5,54 +5,54 @@ GLOBAL_LIST_EMPTY(charflaw_singletons)
 /// Associative list mapping the "menu name" of each vice in the list to its typepath. This list is all of the vices you can choose. 
 /// Used primarily for adding a vice, but also for randomly picking a vice from the selectable space. Try pick_assoc().
 GLOBAL_LIST_INIT(character_flaws, list(
-	"Alcoholic"=/datum/charflaw/addiction/alcoholic,
-	"Annoying Face"=/datum/charflaw/annoying_face,
-	"Asundered Mind (+1 TRI)"=/datum/charflaw/mind_broken,
-	"Bad Sight (+1 TRI)"=/datum/charflaw/badsight,
-	"Blindness (+1 TRI)"=/datum/charflaw/noeyeall,
-	"Clingy"=/datum/charflaw/clingy,
-	"Colorblind (+1 TRI)"=/datum/charflaw/colorblind,
-	"Compliant"=/datum/charflaw/compliant,
-	"Critical Weakness (+1 TRI)"=/datum/charflaw/critweakness,
-	"Cyclops (L) (+1 TRI)"=/datum/charflaw/noeyel,
-	"Cyclops (R) (+1 TRI)"=/datum/charflaw/noeyer,
-	"Devout Follower"=/datum/charflaw/addiction/godfearing,
-	"Greedy"=/datum/charflaw/greedy,
+	"酒鬼"=/datum/charflaw/addiction/alcoholic,
+	"讨嫌面相"=/datum/charflaw/annoying_face,
+	"破碎心智 (+1 TRI)"=/datum/charflaw/mind_broken,
+	"视力不佳 (+1 TRI)"=/datum/charflaw/badsight,
+	"失明 (+1 TRI)"=/datum/charflaw/noeyeall,
+	"粘人"=/datum/charflaw/clingy,
+	"色盲 (+1 TRI)"=/datum/charflaw/colorblind,
+	"顺从"=/datum/charflaw/compliant,
+	"致命脆弱 (+1 TRI)"=/datum/charflaw/critweakness,
+	"独眼 (左) (+1 TRI)"=/datum/charflaw/noeyel,
+	"独眼 (右) (+1 TRI)"=/datum/charflaw/noeyer,
+	"虔诚信徒"=/datum/charflaw/addiction/godfearing,
+	"贪婪"=/datum/charflaw/greedy,
 	"Marked for Death"=/datum/charflaw/assassintarget,
 	"Marked by Gnolls"=/datum/charflaw/hunted,
-	"Isolationist"=/datum/charflaw/isolationist,
-	"Junkie"=/datum/charflaw/addiction/junkie,
-	"Lawless"=/datum/charflaw/lawless,
-	"Marked by Baotha" =/datum/charflaw/marked_by_baotha,
-	"Leper (+1 TRI)"=/datum/charflaw/leprosy,
+	"孤僻"=/datum/charflaw/isolationist,
+	"瘾君子"=/datum/charflaw/addiction/junkie,
+	"无法无天"=/datum/charflaw/lawless,
+	"欲望之印" =/datum/charflaw/marked_by_baotha,
+	"麻风病人 (+1 TRI)"=/datum/charflaw/leprosy,
 	"Loose Straps"=/datum/charflaw/loose_armor,
-	"Masochist"=/datum/charflaw/addiction/masochist,
-	"Missing Nose"=/datum/charflaw/missing_nose,
-	"Mute (+1 TRI)"=/datum/charflaw/mute,
-	"Narcoleptic (+1 TRI)"=/datum/charflaw/narcoleptic,
-	"No Flaw (-3 TRI)"=/datum/charflaw/noflaw,
-	"Nude Sleeper"=/datum/charflaw/nude_sleeper,
-	"Nudist"=/datum/charflaw/nudist,
-	"Nymphomaniac"=/datum/charflaw/addiction/lovefiend,
-	"Pacifism"=/datum/charflaw/pacifism,
-	"Paranoid"=/datum/charflaw/paranoid,
-	"Random or No Flaw"=/datum/charflaw/randflaw,
-	"Sadist"=/datum/charflaw/addiction/sadist,
-	"Scarred"=/datum/charflaw/scarred,
-	"Silver Weakness"=/datum/charflaw/silverweakness,
-	"Sleepless (+1 TRI)"=/datum/charflaw/sleepless,
-	"Smoker"=/datum/charflaw/addiction/smoker,
-	"Malodorous"=/datum/charflaw/malodorous,
-	"Ugly"=/datum/charflaw/ugly,
-	"Unintelligible (+1 TRI)"=/datum/charflaw/unintelligible,
-	"Wood Arm (L) (+1 TRI)"=/datum/charflaw/limbloss/arm_l,
-	"Wood Arm (R) (+1 TRI)"=/datum/charflaw/limbloss/arm_r,
-	"Hemophage (+1 TRI)"=/datum/charflaw/hemophage,
-	"Feeble-bodied"=/datum/charflaw/weak,
-	"Frail"=/datum/charflaw/frail,
-	"Doddering"=/datum/charflaw/slow,
-	"Nimrodded"=/datum/charflaw/dull,
-	"Unlucky"=/datum/charflaw/unlucky,
+	"受虐狂"=/datum/charflaw/addiction/masochist,
+	"失鼻"=/datum/charflaw/missing_nose,
+	"哑巴 (+1 TRI)"=/datum/charflaw/mute,
+	"嗜睡症 (+1 TRI)"=/datum/charflaw/narcoleptic,
+	"无缺陷 (-3 TRI)"=/datum/charflaw/noflaw,
+	"裸睡者"=/datum/charflaw/nude_sleeper,
+	"裸体主义者"=/datum/charflaw/nudist,
+	"性欲亢进"=/datum/charflaw/addiction/lovefiend,
+	"和平主义"=/datum/charflaw/pacifism,
+	"偏执"=/datum/charflaw/paranoid,
+	"随机或无缺陷"=/datum/charflaw/randflaw,
+	"施虐狂"=/datum/charflaw/addiction/sadist,
+	"伤疤累累"=/datum/charflaw/scarred,
+	"畏银"=/datum/charflaw/silverweakness,
+	"失眠 (+1 TRI)"=/datum/charflaw/sleepless,
+	"烟鬼"=/datum/charflaw/addiction/smoker,
+	"恶臭"=/datum/charflaw/malodorous,
+	"丑陋"=/datum/charflaw/ugly,
+	"言语不通 (+1 TRI)"=/datum/charflaw/unintelligible,
+	"木臂 (左) (+1 TRI)"=/datum/charflaw/limbloss/arm_l,
+	"木臂 (右) (+1 TRI)"=/datum/charflaw/limbloss/arm_r,
+	"噬血者 (+1 TRI)"=/datum/charflaw/hemophage,
+	"体弱"=/datum/charflaw/weak,
+	"孱弱"=/datum/charflaw/frail,
+	"蹒跚"=/datum/charflaw/slow,
+	"愚钝"=/datum/charflaw/dull,
+	"倒霉"=/datum/charflaw/unlucky,
 	))
 
 /datum/charflaw
@@ -109,8 +109,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	return
 
 /datum/charflaw/randflaw
-	name = "Random or None"
-	desc = "A 50% chance to be given a random flaw, or a 50% chance to have NO flaw."
+	name = "随机或无"
+	desc = "有 50% 几率获得一个随机缺陷，也有 50% 几率完全没有缺陷。"
 
 /datum/charflaw/randflaw/apply_post_equipment(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -132,12 +132,12 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 
 /datum/charflaw/eznoflaw
-	name = "No Flaw"
-	desc = "I'm a normal person, how rare!"
+	name = "无缺陷"
+	desc = "我是个正常人，这可真稀罕！"
 
 /datum/charflaw/noflaw
-	name = "No Flaw (-3 TRI)"
-	desc = "I'm a normal person, how rare! (Consumes 3 triumphs or gives a random flaw.)"
+	name = "无缺陷 (-3 TRI)"
+	desc = "我是个正常人，这可真稀罕！（消耗 3 点 triumph，否则会获得随机缺陷。）"
 
 /datum/charflaw/noflaw/apply_post_equipment(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -157,8 +157,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		H.adjust_triumphs(-3)
 
 /datum/charflaw/badsight
-	name = "Bad Eyesight"
-	desc = "I need spectacles to see normally from my years spent reading books."
+	name = "视力不佳"
+	desc = "我这些年读书太多，得戴眼镜才能正常看清。"
 
 /datum/charflaw/badsight/flaw_on_life(mob/user)
 	if(!ishuman(user))
@@ -197,8 +197,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	H.adjust_triumphs(1)
 
 /datum/charflaw/malodorous
-	name = "Malodorous"
-	desc = "My body odor is unbearable without regular baths, and others can tell."
+	name = "恶臭"
+	desc = "如果不经常洗澡，我身上的体味会臭得难以忍受，别人也闻得出来。"
 	var/last_aura_tick = 0
 	var/aura_tick_delay = 5 SECONDS
 	var/suppressed_until = 0
@@ -211,7 +211,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		return
 	suppressed_until = world.time + 30 MINUTES
 	user.remove_status_effect(/datum/status_effect/debuff/malodorous_stink)
-	to_chat(user, span_notice("I scrub the stink away. I should stay fresh for a while."))
+	to_chat(user, span_notice("我把这股臭味洗掉了。接下来一阵子应该能清爽些。"))
 
 /datum/charflaw/malodorous/flaw_on_life(mob/user)
 	if(!ishuman(user))
@@ -250,12 +250,12 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		if(HAS_TRAIT(nearby, TRAIT_NOBREATH))
 			continue
 		if(!nearby.has_stress_event(/datum/stressevent/stinky_aura))
-			to_chat(nearby, span_warning("Something nearby reeks."))
+			to_chat(nearby, span_warning("附近有什么东西臭得厉害。"))
 		nearby.add_stress(/datum/stressevent/stinky_aura)
 
 /datum/charflaw/paranoid
-	name = "Paranoid"
-	desc = "I'm even more anxious than most people. I'm extra paranoid of other races and the sight of blood."
+	name = "偏执"
+	desc = "我比大多数人都更焦虑。我尤其害怕异族，也害怕见血。"
 	var/last_check = 0
 
 /datum/charflaw/paranoid/flaw_on_life(mob/user)
@@ -288,8 +288,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		user.add_stress(/datum/stressevent/parablood)
 
 /datum/charflaw/isolationist
-	name = "Isolationist"
-	desc = "I don't like being near people. They might be trying to do something to me..."
+	name = "孤僻"
+	desc = "我不喜欢待在人群附近。他们说不定正打算对我做点什么……"
 	var/last_check = 0
 
 /datum/charflaw/isolationist/flaw_on_life(mob/user)
@@ -314,8 +314,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		P.add_stress(/datum/stressevent/crowd)
 
 /datum/charflaw/clingy
-	name = "Clingy"
-	desc = "I like being around people, it's just so lively..."
+	name = "粘人"
+	desc = "我喜欢待在人群身边，那样才热闹……"
 	var/last_check = 0
 
 /datum/charflaw/clingy/flaw_on_life(mob/user)
@@ -340,8 +340,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		P.add_stress(/datum/stressevent/nopeople)
 
 /datum/charflaw/noeyer
-	name = "Cyclops (R)"
-	desc = "I lost my right eye long ago."
+	name = "独眼 (右)"
+	desc = "很久以前，我就失去了右眼。"
 
 /datum/charflaw/noeyer/on_mob_creation(mob/user)
 	..()
@@ -356,8 +356,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	H.adjust_triumphs(1)
 
 /datum/charflaw/noeyel
-	name = "Cyclops (L)"
-	desc = "I lost my left eye long ago."
+	name = "独眼 (左)"
+	desc = "很久以前，我就失去了左眼。"
 
 /datum/charflaw/noeyel/on_mob_creation(mob/user)
 	..()
@@ -372,8 +372,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	H.adjust_triumphs(1)
 
 /datum/charflaw/noeyeall
-	name = "Blindness"
-	desc = "I lost both of my eyes long ago."
+	name = "失明"
+	desc = "很久以前，我就失去了双眼。"
 
 /datum/charflaw/noeyeall/on_mob_creation(mob/user)
 	..()
@@ -389,8 +389,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	H.adjust_triumphs(1)
 
 /datum/charflaw/colorblind
-	name = "Colorblind"
-	desc = "I was cursed with flawed eyesight from birth, and can't discern things others can. Incompatible with Night-eyed virtue."
+	name = "色盲"
+	desc = "我生来便受诅咒，视力有缺，许多别人能分辨的东西我都看不出来。与夜眼美德不兼容。"
 
 /datum/charflaw/colorblind/on_mob_creation(mob/user)
 	..()
@@ -400,9 +400,9 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		H.adjust_triumphs(1)
 
 /datum/charflaw/compliant
-	name = "Compliant"
-	desc = "No matter how hard I try, I can't put up a fight against others. <br>\
-	<small>I will fail every attempt to resist out of a grab, and others will always be able to break free of mine. Thieves will be able to rob me without issue.</small>"
+	name = "顺从"
+	desc = "无论我怎么努力，我都没法真正反抗别人。<br>\
+	<small>我每次挣脱抓取都会失败，而别人总能从我的抓取中轻易脱身。盗贼也能毫无阻碍地抢我。</small>"
 
 /datum/charflaw/compliant/on_mob_creation(mob/user)
 	..()
@@ -422,19 +422,19 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/assassintarget
 	name = "Marked for Death"
-	desc = "Something in my past has made me a target. I'm always looking over my shoulder.<br>\
-	YOU MAY BE PERMANENTLY REMOVED FROM THE ROUND WITHOUT ESCALATION BY YOUR ASSASSIN!"
+	desc = "我过去的某些事让我成了目标。我总得不停回头张望。<br>\
+	你的刺客可以在不进行升级冲突的情况下永久将你逐出本局！"
 	var/logged = FALSE
 
 /datum/charflaw/hunted
-	name = "Marked by Gnolls"
-	desc = "For one reason or another, I have been deemed a target worthy of Graggar's champions. I hear their cackles anywhere I go.<br>\
-	<small>This virtue will encourage Gnolls to hunt you down. You may potentially be killed in the process.</small>"
+	name = "豺狼人的猎物"
+	desc = "出于某种原因，我被视为了配得上格拉加尔（Graggar）冠军勇士出手的猎物。无论走到哪里，我都能听到他们的怪笑声。<br>\
+	<small>此特质会吸引豺狼人对你展开追杀。在此过程中，你可能会被直接杀死。</small>"
 	var/logged = FALSE
 
 /datum/charflaw/ugly
-	name = "Ugly"
-	desc = "My face is ugly and makes everyone who looks at me miserable. Incompatible with Beautiful virtue."
+	name = "丑陋"
+	desc = "我生得面目可憎，谁看了都要心生不快。与“美貌”美德不兼容。"
 
 /datum/charflaw/ugly/on_mob_creation(mob/user)
 	..()
@@ -449,8 +449,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		REMOVE_TRAIT(H, TRAIT_UNSEEMLY, TRAIT_GENERIC)
 
 /datum/charflaw/nudist
-	name = "Nudist"
-	desc = "I refuse to wear clothes. They are a hindrance to my freedom. I can tolerate certain accessories."
+	name = "裸体主义者"
+	desc = "我拒绝穿衣服。那些玩意只会妨碍我的自由。某些配饰我倒还能容忍。"
 
 /datum/charflaw/nudist/on_mob_creation(mob/user)
 	..()
@@ -465,8 +465,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		REMOVE_TRAIT(H, TRAIT_NUDIST, TRAIT_GENERIC)
 
 /datum/charflaw/inhumen_anatomy
-	name = "Inhumen Anatomy"
-	desc = "My anatomy is inhumen, preventing me from wearing hats and shoes."
+	name = "异种体貌"
+	desc = "我的身体构造异于常人，因此无法穿戴帽子和鞋子。"
 
 /datum/charflaw/inhumen_anatomy/on_mob_creation(mob/user)
 	..()
@@ -481,8 +481,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		REMOVE_TRAIT(H, TRAIT_INHUMEN_ANATOMY, TRAIT_GENERIC)
 
 /datum/charflaw/missing_nose
-	name = "Missing Nose"
-	desc = "I struggle to breathe. My stamina regeneration is halved."
+	name = "失鼻"
+	desc = "我连呼吸都更费力。我的体力回复速度减半。"
 
 /datum/charflaw/missing_nose/on_mob_creation(mob/user)
 	..()
@@ -497,8 +497,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		REMOVE_TRAIT(H, TRAIT_MISSING_NOSE, TRAIT_GENERIC)
 
 /datum/charflaw/disfigured
-	name = "Disfigured"
-	desc = "No one can recognize me. My face has been permanently altered."
+	name = "毁容"
+	desc = "没人认得出我来。我的脸已经被永久改变了。"
 
 /datum/charflaw/disfigured/on_mob_creation(mob/user)
 	..()
@@ -513,8 +513,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		REMOVE_TRAIT(H, TRAIT_DISFIGURED, TRAIT_GENERIC)
 
 /datum/charflaw/pacifism
-	name = "Pacifist"
-	desc = "I cannot harm another living being."
+	name = "和平主义"
+	desc = "我无法伤害另一个活着的生灵。"
 
 /datum/charflaw/pacifism/on_mob_creation(mob/user)
 	..()
@@ -529,8 +529,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		REMOVE_TRAIT(H, TRAIT_PACIFISM, TRAIT_GENERIC)
 
 /datum/charflaw/annoying_face
-	name = "Annoying Face"
-	desc = "I am cursed with an odd voice and appearance."
+	name = "讨嫌面相"
+	desc = "我像是被诅咒了一样，声音和长相都叫人心烦。"
 
 /datum/charflaw/annoying_face/on_mob_creation(mob/user)
 	..()
@@ -545,8 +545,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		REMOVE_TRAIT(H, TRAIT_COMICSANS, TRAIT_GENERIC)
 
 /datum/charflaw/nude_sleeper
-	name = "Nude Sleeper"
-	desc = "I can't fall asleep unless I'm nude and in bed. I cannot sleep while wearing equipment. (Unremovable clothing and certain accessories are allowed.)"
+	name = "裸睡者"
+	desc = "除非赤身躺在床上，否则我根本睡不着。只要身上还穿着装备，我就无法入眠。（不可脱卸的衣物和部分配饰除外。）"
 
 /datum/charflaw/nude_sleeper/on_mob_creation(mob/user)
 	..()
@@ -578,8 +578,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	var/mob/living/carbon/human/H = user
 	REMOVE_TRAIT(H, TRAIT_LOOSE_STRAPS, TRAIT_GENERIC)
 /datum/charflaw/scarred
-	name = "Scarred"
-	desc = "My face bears terrible scars that make identification difficult, but not impossible."
+	name = "伤疤累累"
+	desc = "我脸上布满可怖的伤疤，让人很难辨认出我，但也并非完全认不出来。"
 
 /datum/charflaw/scarred/on_mob_creation(mob/user)
 	..()
@@ -603,8 +603,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 			logged = TRUE
 
 /datum/charflaw/unintelligible
-	name = "Unintelligible"
-	desc = "I cannot speak the common tongue!"
+	name = "言语不通"
+	desc = "我不会说通用语！"
 
 /datum/charflaw/unintelligible/on_mob_creation(mob/user)
 	var/mob/living/carbon/human/recipient = user
@@ -619,8 +619,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	user.adjust_triumphs(1)
 
 /datum/charflaw/greedy
-	name = "Greedy"
-	desc = "I can't get enough of mammons, I need more and more! I've also become good at knowing how much things are worth"
+	name = "贪婪"
+	desc = "我对 mammons 永远不会满足，只会想要越来越多！不过我也因此更擅长判断东西值多少钱。"
 	var/last_checked_mammons = 0
 	var/required_mammons = 0
 	var/next_mammon_increase = 0
@@ -650,16 +650,16 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/greedy/proc/mammon_increase(mob/living/carbon/human/user)
 	if(last_passed_check + (50 MINUTES) < world.time) //If we spend a REALLY long time without being able to satisfy, then pity downgrade
 		required_mammons -= rand(10, 20)
-		to_chat(user, span_blue("Maybe a little less mammons is enough..."))
+		to_chat(user, span_blue("也许少些 mammons 也够了……"))
 	else
 		required_mammons += rand(25, 35) + extra_increment_value
 	required_mammons = min(required_mammons, 250) //Cap at 250 coins maximum
 	next_mammon_increase = world.time + rand(35 MINUTES, 40 MINUTES)
 	var/current_mammons = get_mammons_in_atom(user)
 	if(current_mammons >= required_mammons)
-		to_chat(user, span_blue("I'm quite happy with the amount of mammons I have..."))
+		to_chat(user, span_blue("我手头这些 mammons，已经挺让我满意了……"))
 	else
-		to_chat(user, span_boldwarning("I need more mammons, what I have is not enough..."))
+		to_chat(user, span_boldwarning("我需要更多 mammons，我手里的还不够……"))
 
 	last_checked_mammons = current_mammons
 
@@ -671,7 +671,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(new_mammon_amount >= required_mammons)
 		// Feel better
 		if(user.has_stress_event(/datum/stressevent/vice/greedy))
-			to_chat(user, span_blue("[new_mammon_amount] mammons... That's more like it.."))
+			to_chat(user, span_blue("[new_mammon_amount] 枚 mammons……这才像样……"))
 		user.remove_stress(/datum/stressevent/vice/greedy)
 		user.remove_status_effect(/datum/status_effect/debuff/addiction/greedy)
 		last_passed_check = world.time
@@ -686,9 +686,9 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 	if(do_update_msg)
 		if(ascending)
-			to_chat(user, span_warning("Only [new_mammon_amount] mammons.. I need more..."))
+			to_chat(user, span_warning("才 [new_mammon_amount] 枚 mammons……我还需要更多……"))
 		else
-			to_chat(user, span_boldwarning("No! My precious mammons..."))
+			to_chat(user, span_boldwarning("不！我珍爱的 mammons……"))
 
 	last_checked_mammons = new_mammon_amount
 
@@ -698,13 +698,13 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	effectedstats = list(STATKEY_WIL = -1, STATKEY_LCK = -1)
 
 /atom/movable/screen/alert/status_effect/debuff/addiction/greedy
-	name = "Greed"
-	desc = "My coinpurse doesn't jingle. Why even lyve?"
+	name = "贪欲"
+	desc = "我的钱袋一点叮当声都没有。那还活个什么劲？"
 	icon_state = "greedy"
 
 /datum/charflaw/narcoleptic
-	name = "Narcoleptic"
-	desc = "I get drowsy during the day and tend to fall asleep suddenly, but I can sleep easier if I want to, and moon dust can help me stay awake."
+	name = "嗜睡症"
+	desc = "我白天经常犯困，还会突然睡着，不过若我主动想睡，反倒更容易入眠；月尘也能帮我保持清醒。"
 	var/last_unconsciousness = 0
 	var/next_sleep = 0
 	var/concious_timer = (10 MINUTES)
@@ -735,24 +735,24 @@ GLOBAL_LIST_INIT(character_flaws, list(
 			if(pain >= 40 && pain_pity_charges > 0)
 				pain_pity_charges--
 				concious_timer = rand(1 MINUTES, 2 MINUTES)
-				to_chat(user, span_warning("The pain keeps me awake..."))
+				to_chat(user, span_warning("痛楚让我没法睡过去……"))
 			else
 				if(prob(40) || drugged_up)
 					drugged_up = FALSE
 					concious_timer = rand(4 MINUTES, 6 MINUTES)
-					to_chat(user, span_info("The feeling has passed."))
+					to_chat(user, span_info("那股感觉过去了。"))
 				else
 					concious_timer = rand(7 MINUTES, 15 MINUTES)
-					to_chat(user, span_boldwarning("I can't keep my eyes open any longer..."))
+					to_chat(user, span_boldwarning("我的眼皮已经撑不住了……"))
 					user.Sleeping(rand(30 SECONDS, 50 SECONDS))
-					user.visible_message(span_warning("[user] suddenly collapses!"))
+					user.visible_message(span_warning("[user]突然瘫倒在地！"))
 			do_sleep = FALSE
 			last_unconsciousness = world.time
 	else
 		// Been conscious for ~10 minutes (whatever is the conscious timer)
 		if(last_unconsciousness + concious_timer < world.time)
 			drugged_up = FALSE
-			to_chat(user, span_blue("I'm getting drowsy..."))
+			to_chat(user, span_blue("我开始犯困了……"))
 			user.emote("yawn", forced = TRUE)
 			next_sleep = world.time + rand(7 SECONDS, 11 SECONDS)
 			do_sleep = TRUE
@@ -774,8 +774,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	return mammons
 
 /datum/charflaw/sleepless
-	name = "Insomnia"
-	desc = "I do not sleep. I cannot sleep. I've tried everything."
+	name = "失眠"
+	desc = "我不睡觉。我睡不着。什么法子我都试过了。"
 
 /datum/charflaw/sleepless/on_mob_creation(mob/user)
 	ADD_TRAIT(user, TRAIT_NOSLEEP, TRAIT_GENERIC)
@@ -788,8 +788,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	REMOVE_TRAIT(user, TRAIT_NOSLEEP, TRAIT_GENERIC)
 
 /datum/charflaw/mute
-	name = "Mute"
-	desc = "I was born without the ability to speak."
+	name = "哑巴"
+	desc = "我生来就无法开口说话。"
 
 /datum/charflaw/mute/on_mob_creation(mob/user)
 	ADD_TRAIT(user, TRAIT_PERMAMUTE, TRAIT_GENERIC)
@@ -802,8 +802,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	REMOVE_TRAIT(user, TRAIT_PERMAMUTE, TRAIT_GENERIC)
 
 /datum/charflaw/critweakness
-	name = "Critical Weakness"
-	desc = "My body is as fragile as an eggshell. A critical strike is like to end me then and there."
+	name = "致命脆弱"
+	desc = "我的身体脆得像蛋壳一样。一次致命打击多半就足以当场要了我的命。"
 
 /datum/charflaw/critweakness/on_mob_creation(mob/user)
 	ADD_TRAIT(user, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
@@ -816,8 +816,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	REMOVE_TRAIT(user, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
 
 /datum/charflaw/silverweakness
-	name = "Silver Weakness"
-	desc = "I'm sensitive to silver — it burns and injures me more than it should."
+	name = "畏银"
+	desc = "我对银异常敏感，它灼烧并伤害我的程度远超常理。"
 
 /datum/charflaw/silverweakness/on_mob_creation(mob/user)
 	ADD_TRAIT(user, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
@@ -827,12 +827,12 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	REMOVE_TRAIT(user, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 
 /datum/charflaw/leprosy
-	name = "Leper"
-	desc = "I am cursed with leprosy! Too poor to afford treatment, my skin now lays violated by lesions, my extremities are numb, and my presence disturbs even the most stalwart men."
+	name = "麻风病人"
+	desc = "我被麻风诅咒了！穷得无力医治，如今皮肤满是溃烂病灶，四肢麻木，就连最坚毅的人见了我也会心生不安。"
 
 /datum/charflaw/leprosy/apply_post_equipment(mob/user)
 	var/mob/living/carbon/human/H = user
-	to_chat(user, "I am afflicted. I am outcast and weak. I am a pox on this world.")
+	to_chat(user, "我染上恶疾。我被世人厌弃，虚弱不堪。我是这个世界上的一块毒疮。")
 	ADD_TRAIT(user, TRAIT_LEPROSY, TRAIT_GENERIC)
 	H.change_stat(STATKEY_STR, -1)
 	H.change_stat(STATKEY_INT, -1)
@@ -844,8 +844,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	H.adjust_triumphs(1)
 
 /datum/charflaw/mind_broken
-	name = "Asundered Mind"
-	desc = "My mind is asundered, whether it was by my own means or an unfortunate accident. Nothing seems real to me..."
+	name = "破碎心智"
+	desc = "我的心智已然支离破碎，不知是自作自受，还是飞来横祸所致。在我眼里，一切都显得不真实……"
 
 /datum/charflaw/mind_broken/apply_post_equipment(mob/living/carbon/human/insane_fool)
 	insane_fool.hallucination = INFINITY
@@ -853,8 +853,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	insane_fool.adjust_triumphs(1)
 
 /datum/charflaw/marked_by_baotha
-	name = "Marked by Baotha"
-	desc = "Whether through intentionally seeking out heretical ritualists or against my will, I have been marked by Baotha. I am branded visibly on my groin and am able to be impregnated regardless of physical states that would usually prevent this. I will need to sate my new urges often to avoid stress..."
+	name = "欲望之印"
+	desc = "不论是我主动寻上异端仪式术士，还是在违背意愿的情况下，我都已被 Baotha 打上印记。我的腹股沟处留下了清晰可见的烙印，也因此无论身体原本处于何种通常无法受孕的状态，都仍可能受孕。为了避免压力，我得时常满足这股新生的欲望……"
 
 /datum/charflaw/marked_by_baotha/on_mob_creation(mob/user)
 
@@ -886,9 +886,9 @@ GLOBAL_LIST_INIT(character_flaws, list(
 			L.on_mob_creation(H)
 
 /datum/charflaw/hemophage
-	name = "Hemophage"
-	desc = "Whether by curse or my people, blood is the only thing to keep me alive. Normal sources of nutrition and hydration will make me ill. <br>\
-	<small>Any element of a virtue that modifies eating will be canceled out by Hemophage.</small>"
+	name = "噬血者"
+	desc = "不论是诅咒还是血脉使然，唯有鲜血才能维系我的生命。正常的食物与饮水只会让我生病。 <br>\
+	<small>任何会修改进食效果的美德，其相关部分都会被“噬血者”抵消。</small>"
 
 /datum/charflaw/hemophage/on_mob_creation(mob/living/carbon/human/vamp_wannabe)
 	ADD_TRAIT(vamp_wannabe, TRAIT_HEMOPHAGE, TRAIT_GENERIC)
@@ -902,51 +902,51 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 
 /datum/charflaw/weak
-	name = "Feeble-bodied"
-	desc = "Limp-wristed and ineffectual, I am not as physically strong as most. <br>\
-	<small>-4 to Strength.</small>"
+	name = "体弱"
+	desc = "我手无缚鸡之力，做什么都不太顶用，肉体力量远不如大多数人。 <br>\
+	<small>力量 -4。</small>"
 
 /datum/charflaw/weak/apply_post_equipment(mob/user)
 	var/mob/living/carbon/human/H = user
-	to_chat(user, "You are weaker than most")
+	to_chat(user, "你比大多数人都要虚弱。")
 	H.change_stat(STATKEY_STR, -4)
 
 /datum/charflaw/frail
-	name = "Frail"
-	desc = "Prone to bruising as well as coughs and sneezes, I am more easily injured than most. <br>\
-	<small>-4 to Constitution.</small>"
+	name = "孱弱"
+	desc = "我很容易淤青，也老是咳嗽打喷嚏，比起大多数人更容易受伤。 <br>\
+	<small>体质 -4。</small>"
 
 /datum/charflaw/frail/apply_post_equipment(mob/user)
 	var/mob/living/carbon/human/H = user
-	to_chat(user, "You are more vulnerable than most")
+	to_chat(user, "你比大多数人都更脆弱。")
 	H.change_stat(STATKEY_CON, -4)
 
 /datum/charflaw/slow
-	name = "Doddering"
-	desc = "Slow and Steady, you say to yourself. Perhaps a torn ankle, or perhaps it is simply your nature. You are slower than most. <br>\
-	<small>-4 to Speed.</small>"
+	name = "蹒跚"
+	desc = "你会对自己说，慢一点也稳一些。也许是脚踝旧伤，也许只是天性如此。你比大多数人都更迟缓。 <br>\
+	<small>速度 -4。</small>"
 
 /datum/charflaw/slow/apply_post_equipment(mob/user)
 	var/mob/living/carbon/human/H = user
-	to_chat(user, "You are slower than most")
+	to_chat(user, "你比大多数人都更慢。")
 	H.change_stat(STATKEY_SPD, -4)
 
 /datum/charflaw/dull
-	name = "Nimrodded"
-	desc = "Everyone keeps saying fancy words around you but you've never been able to figure out why... You are less intellectual than most. <br>\
-	<small>- 4 to Intellect.</small>"
+	name = "愚钝"
+	desc = "大家总爱在你面前说些花里胡哨的大词，可你从来没弄明白他们为什么要这么说……你比大多数人都更缺乏聪慧。 <br>\
+	<small>智力 -4。</small>"
 
 /datum/charflaw/dull/apply_post_equipment(mob/user)
 	var/mob/living/carbon/human/H = user
-	to_chat(user, "You are duller than most")
+	to_chat(user, "你比大多数人都更迟钝。")
 	H.change_stat(STATKEY_INT, -4)
 
 /datum/charflaw/unlucky
-	name = "Unlucky"
-	desc = "Perhaps it is the glass mirror you cracked, or the black cat that follows you, or a curse of the gods. You just feel... off. <br>\
-	<small>-4 to Luck.</small>"
+	name = "倒霉"
+	desc = "也许是你打碎的那面玻璃镜子，也许是那只总跟着你的黑猫，又或者是神祇降下的诅咒。你只是觉得……哪哪都不对劲。 <br>\
+	<small>幸运 -4。</small>"
 
 /datum/charflaw/unlucky/apply_post_equipment(mob/user)
 	var/mob/living/carbon/human/H = user
-	to_chat(user, "You are unluckier than most")
+	to_chat(user, "你比大多数人都更倒霉。")
 	H.change_stat(STATKEY_LCK, -4)

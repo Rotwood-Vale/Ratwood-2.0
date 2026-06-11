@@ -1,7 +1,7 @@
 //Dwarf-exclusive mercenary class with unique armor setups.
 /datum/advclass/mercenary/grudgebearer
-	name = "Grudgebearer Smith"
-	tutorial = "Bound by eternal grudges of eons past that have not been forgotten, the Grudgebearers are left to wander the surface, as every other clan has a grudge against you, and you against them. This putrid swampland of a Duchy has also wronged you and your people, you care little for it. Coins are a means to an end -- something you can mine and forge yourself. Trinkets -- made by true smiths, now that will carry respect among your clan. However, such artifacts might not buy you food, or a roof."
+	name = "负怨铸匠"
+	tutorial = "背负着万古未消的宿怨，负怨者被迫流落地表，因为几乎每一个氏族都与你们结怨，而你们也同样痛恨他们。这片腐臭如沼泽的大公国也曾伤害过你和你的族人，你根本不在乎它。金钱不过是达成目的的手段，矿石与钢铁你自己就能开采锻造。真正能为你在族中赢得尊重的，是出自名匠之手的器物。只是，这些杰作未必能换来食物或栖身之所。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
 		/datum/species/dwarf,
@@ -11,7 +11,7 @@
 	class_select_category = CLASS_CAT_RACIAL
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_dwarf.ogg'
-	extra_context = "This subclass is race-limited to: Dwarves."
+	extra_context = "该分支仅限矮人选择。"
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_TRAINED_SMITH, TRAIT_STEELHEARTED, TRAIT_SMITHING_EXPERT) // Another one off exception for a combat role
 	subclass_stats = list(
 		STATKEY_INT = 3,
@@ -56,20 +56,20 @@
 			/obj/item/natural/feather,
 			/obj/item/rogueweapon/tongs = 1,
 			)
-		var/weapons = list("Grand Mace", "Spiked Maul")
-		var/wepchoice = input("Choose your weapon", "Available weapons") as anything in weapons
+		var/weapons = list("巨型权杖", "尖刺重槌")
+		var/wepchoice = input("选择你的武器。", "可选武器") as anything in weapons
 		switch(wepchoice)
-			if("Grand Mace")
+			if("巨型权杖")
 				r_hand = /obj/item/rogueweapon/mace/goden/steel
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
-			if("Spiked Maul")
+			if("尖刺重槌")
 				r_hand = /obj/item/rogueweapon/mace/maul/spiked
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
 		H.merctype = 8
 
 /datum/advclass/mercenary/grudgebearer/soldier
-	name = "Grudgebearer Soldier"
-	tutorial = "Bound by eternal grudges of eons past that have not been forgotten, the Grudgebearers are left to wander the surface, as every other clan has a grudge against you, and you against them. This putrid swampland of a Duchy has also wronged you and your people, you care little for it. Coins are a means to an end -- something you can mine and forge yourself. Trinkets -- made by true smiths, now that will carry respect among your clan. However, such artifacts might not buy you food, or a roof."
+	name = "负怨战士"
+	tutorial = "背负着万古未消的宿怨，负怨者被迫流落地表，因为几乎每一个氏族都与你们结怨，而你们也同样痛恨他们。这片腐臭如沼泽的大公国也曾伤害过你和你的族人，你根本不在乎它。金钱不过是达成目的的手段，矿石与钢铁你自己就能开采锻造。真正能为你在族中赢得尊重的，是出自名匠之手的器物。只是，这些杰作未必能换来食物或栖身之所。"
 	outfit = /datum/outfit/job/roguetown/mercenary/grudgebearer_soldier
 	traits_applied = list(TRAIT_HEAVYARMOR)
 	subclass_stats = list(
@@ -110,23 +110,23 @@
 			/obj/item/natural/feather,
 			)
 		if(H.mind)
-			var/weapons = list("Axe", "Grand Mace", "Maul")
-			var/wepchoice = input(H, "Choose your weapon", "Available weapons") as anything in weapons
+			var/weapons = list("战斧", "巨型权杖", "重槌")
+			var/wepchoice = input(H, "选择你的武器。", "可选武器") as anything in weapons
 			switch(wepchoice)
-				if("Axe")
+				if("战斧")
 					backr = /obj/item/rogueweapon/stoneaxe/battle
-				if("Grand Mace")
+				if("巨型权杖")
 					r_hand = /obj/item/rogueweapon/mace/goden/steel
 					backr = /obj/item/rogueweapon/scabbard/gwstrap
-				if("Maul")
+				if("重槌")
 					r_hand = /obj/item/rogueweapon/mace/maul/steel
 					backr = /obj/item/rogueweapon/scabbard/gwstrap
 		H.merctype = 8
 
 
 /obj/item/clothing/suit/roguetown/armor/plate/full/dwarven
-	name = "grudgebearer dwarven plate"
-	desc = "A standard, layered plate worn by many dwarven troops. It cannot be worked on without intrinsic dwarven knowledge."
+	name = "负怨者矮人板甲"
+	desc = "一套许多矮人战士都会穿戴的标准层叠板甲。若没有与生俱来的矮人工艺知识，便无法对它动工修整。"
 	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
 	allowed_race = list(/datum/species/dwarf, /datum/species/dwarf/mountain)
@@ -147,9 +147,9 @@
 	AddComponent(/datum/component/layeredarmor/grudgebearer)
 
 /obj/item/clothing/suit/roguetown/armor/plate/full/dwarven/smith
-	name = "grudgebearer splint apron"
-	desc = "A standard, layered mixture of plate and maille, worn by many dwarven smiths. \
-	It cannot be worked on without intrinsic dwarven knowledge."
+	name = "负怨者板条铁围"
+	desc = "一件由板甲与锁甲层叠构成的标准护具，许多矮人工匠都会穿戴。 \
+	若没有与生俱来的矮人工艺知识，便无法对它动工修整。"
 	icon_state = "dsmithchest"
 	item_state = "dsmithchest"
 	armor_class = ARMOR_CLASS_MEDIUM
@@ -157,8 +157,8 @@
 	smelt_bar_num = 3
 
 /obj/item/clothing/head/roguetown/helmet/heavy/dwarven
-	name = "grudgebearer dwarven helm"
-	desc = "A hardy, layered helmet. It lets one's dwarvenly beard to poke out."
+	name = "负怨者矮人头盔"
+	desc = "一顶结实耐用的层叠头盔，还特意给矮人的胡须留出了探出来的位置。"
 	body_parts_covered = (HEAD | MOUTH | NOSE | EYES | EARS | NECK)	//This specifically omits hair so you could hang your beard out of the helm
 	armor = ARMOR_GRUDGEBEARER
 	prevent_crits = list(BCLASS_TWIST)
@@ -179,15 +179,15 @@
 	AddComponent(/datum/component/layeredarmor/grudgebearer/helmet)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/dwarven/smith
-	name = "grudgebearer smith helm"
-	desc = "A hardy, layered helmet. It lets one's dwarvenly beard to poke out. \
-	This one is intended for the smiths of the clan. No less protective. All the more stylish."
+	name = "负怨者匠师头盔"
+	desc = "一顶结实耐用的层叠头盔，还特意给矮人的胡须留出了探出来的位置。 \
+	这一顶是为氏族铁匠打造的，防护丝毫不差，样式却更体面。"
 	icon_state = "dsmithhead"
 	item_state = "dsmithhead"
 
 /obj/item/clothing/gloves/roguetown/plate/dwarven
-	name = "grudgebearer dwarven gauntlets"
-	desc = "Forged to fit the stubbiest of fingers. It is covered in protective layers."
+	name = "负怨者矮人臂铠"
+	desc = "专为最粗短的手指锻造，外覆多层防护。"
 	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
 	allowed_race = list(/datum/species/dwarf, /datum/species/dwarf/mountain)
@@ -202,8 +202,8 @@
 	AddComponent(/datum/component/layeredarmor/grudgebearer/limbs)
 
 /obj/item/clothing/shoes/roguetown/boots/armor/dwarven
-	name = "grudgebearer dwarven boots"
-	desc = "Clatters mightily. It is covered in protective layers."
+	name = "负怨者矮人战靴"
+	desc = "迈步时铿锵作响，外覆多层防护。"
 	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
 	allowed_race = list(/datum/species/dwarf, /datum/species/dwarf/mountain)
@@ -299,5 +299,3 @@
 
 	shred_amt = 20	//Limbs lose 2 grades per layer shred, but also repair 4.
 	layer_repair = 2
-
-

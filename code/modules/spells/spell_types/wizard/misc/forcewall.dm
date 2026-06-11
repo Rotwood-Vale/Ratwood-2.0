@@ -1,7 +1,7 @@
 //forcewall
 /obj/effect/proc_holder/spell/invoked/forcewall
-	name = "Forcewall"
-	desc = "Conjure a 3x1 wall of arcyne force, preventing anyone and anything other than you from moving through it."
+	name = "力场墙"
+	desc = "召出一道 `3x1` 的奥术力场墙，除你之外，任何人或物都无法穿过它。"
 	school = "transmutation"
 	releasedrain = 30
 	chargedrain = 1
@@ -17,7 +17,7 @@
 	sound = 'sound/blank.ogg'
 	overlay_state = "forcewall"
 	spell_tier = 2
-	invocations = list("Murus!")
+	invocations = list("墙起！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_ARCANE
 	glow_intensity = GLOW_INTENSITY_MEDIUM
@@ -28,8 +28,8 @@
 
 //adapted from forcefields.dm, this needs to be destructible
 /obj/structure/forcefield_weak
-	desc = "A wall of pure arcyne force."
-	name = "Arcyne Wall"
+	desc = "一堵由纯粹奥术力场构成的墙。"
+	name = "奥术墙"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "arcynewall"
 	break_sound = 'sound/combat/hits/onstone/stonedeath.ogg'
@@ -61,7 +61,7 @@
 		new /obj/effect/temp_visual/trap_wall(affected_turf)
 		addtimer(CALLBACK(src, PROC_REF(new_wall), affected_turf, user), wait = 1 SECONDS)
 
-	user.visible_message("[user] mutters an incantation and a wall of arcyne force manifests out of thin air!")
+	user.visible_message("[user] 低声念诵咒文，一道奥术力场墙凭空显现！")
 	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/forcewall/proc/new_wall(turf/target, mob/user)

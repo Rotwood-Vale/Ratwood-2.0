@@ -1,5 +1,5 @@
 /obj/item/clothing/shoes
-	name = "shoes"
+	name = "鞋子"
 	icon = 'icons/obj/clothing/shoes.dmi'
 	desc = ""
 	gender = PLURAL //Carn: for grammarically correct text-parsing
@@ -30,7 +30,7 @@
 
 /obj/item/clothing/shoes/suicide_act(mob/living/carbon/user)
 	if(rand(2)>1)
-		user.visible_message(span_suicide("[user] begins tying \the [src] up waaay too tightly! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide("[user]开始把[src]系得紧过头了！看起来[user.p_theyre()]在试图自杀！"))
 		var/obj/item/bodypart/l_leg = user.get_bodypart(BODY_ZONE_L_LEG)
 		var/obj/item/bodypart/r_leg = user.get_bodypart(BODY_ZONE_R_LEG)
 		if(l_leg)
@@ -40,7 +40,7 @@
 		playsound(user, "desceration", 50, TRUE, -1)
 		return BRUTELOSS
 	else//didnt realize this suicide act existed (was in miscellaneous.dm) and didnt want to remove it, so made it a 50/50 chance. Why not!
-		user.visible_message(span_suicide("[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?"))
+		user.visible_message(span_suicide("[user]正用[src]猛砸[user.p_their()]自己的脑袋！看起来[user.p_theyre()]在试图自杀！"))
 		for(var/i = 0, i < 3, i++)
 			sleep(3)
 			playsound(user, 'sound/blank.ogg', 50, TRUE)

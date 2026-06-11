@@ -114,7 +114,7 @@
 /obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
 	..()
 	if(obj_flags & FROZEN)
-		visible_message("<span class='danger'>[src] shatters into a million pieces!</span>")
+		visible_message("<span class='danger'>[src]碎成了满地残片！</span>")
 		qdel(src)
 
 /obj/proc/updateUsrDialog()
@@ -206,19 +206,19 @@
 			usr.client.object_say(src)
 	if(href_list[VV_HK_MASS_DEL_TYPE])
 		if(check_rights(R_DEBUG|R_SERVER))
-			var/action_type = alert("Strict type ([type]) or type and all subtypes?",,"Strict type","Type and subtypes","Cancel")
-			if(action_type == "Cancel" || !action_type)
+			var/action_type = alert("仅删除精确类型([type])，还是连同所有子类型一起删除？",,"仅精确类型","类型与子类型","取消")
+			if(action_type == "取消" || !action_type)
 				return
 
-			if(alert("Are you really sure you want to delete all objects of type [type]?",,"Yes","No") != "Yes")
+			if(alert("你确定要删除所有 [type] 类型的对象吗？",,"是","否") != "是")
 				return
 
-			if(alert("Second confirmation required. Delete?",,"Yes","No") != "Yes")
+			if(alert("需要二次确认。删除？",,"是","否") != "是")
 				return
 
 			var/O_type = type
 			switch(action_type)
-				if("Strict type")
+				if("仅精确类型")
 					var/i = 0
 					for(var/obj/Obj in world)
 						if(Obj.type == O_type)
@@ -226,11 +226,11 @@
 							qdel(Obj)
 						CHECK_TICK
 					if(!i)
-						to_chat(usr, "No objects of this type exist")
+						to_chat(usr, "不存在这个类型的对象。")
 						return
 					log_admin("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
 					message_admins("<span class='notice'>[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) </span>")
-				if("Type and subtypes")
+				if("类型与子类型")
 					var/i = 0
 					for(var/obj/Obj in world)
 						if(istype(Obj,O_type))
@@ -238,7 +238,7 @@
 							qdel(Obj)
 						CHECK_TICK
 					if(!i)
-						to_chat(usr, "No objects of this type exist")
+						to_chat(usr, "不存在这个类型的对象。")
 						return
 					log_admin("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
 					message_admins("<span class='notice'>[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) </span>")
@@ -248,7 +248,7 @@
 //	if(obj_flags & UNIQUE_RENAME)
 //		. += "<span class='notice'>Use a pen on it to rename it or change its description.</span>"
 	if(unique_reskin && !current_skin)
-		. += "<span class='notice'>Alt-click it to reskin it.</span>"
+		. += "<span class='notice'>按住 Alt 点击即可重新换皮。</span>"
 
 /obj/AltClick(mob/user)
 	. = ..()
@@ -258,18 +258,18 @@
 /obj/proc/reskin_obj(mob/M)
 	if(!LAZYLEN(unique_reskin))
 		return
-	to_chat(M, "<b>Reskin options for [name]:</b>")
+	to_chat(M, "<b>[name]的换皮选项：</b>")
 	for(var/V in unique_reskin)
 		var/output = icon2html(src, M, unique_reskin[V])
 		to_chat(M, "[V]: <span class='reallybig'>[output]</span>")
 
-	var/choice = input(M,"Warning, you can only reskin [src] once!","Reskin Object") as null|anything in sortList(unique_reskin)
+	var/choice = input(M,"警告：我只能给[src]换皮一次！","更换外观") as null|anything in sortList(unique_reskin)
 	if(!QDELETED(src) && choice && !current_skin && !M.incapacitated() && in_range(M,src))
 		if(!unique_reskin[choice])
 			return
 		current_skin = choice
 		icon_state = unique_reskin[choice]
-		to_chat(M, "[src] is now skinned as '[choice].'")
+		to_chat(M, "[src]现在的外观已变为“[choice]”。")
 
 // Should move all contained objects to it's location.
 /obj/proc/dump_contents()

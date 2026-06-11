@@ -1,6 +1,6 @@
 /datum/advclass/trader/jeweler
-	name = "Jeweler"
-	tutorial = "You make your coin peddling exotic jewelry, gems, and shiny things."
+	name = "珠宝商"
+	tutorial = "你靠兜售异域首饰、宝石和一切亮闪闪的玩意儿来赚钱。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	category_tags = list(CTAG_PILGRIM, CTAG_COURTAGENT, CTAG_LICKER_WRETCH)
@@ -30,7 +30,7 @@
 
 /datum/outfit/job/roguetown/adventurer/trader/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You make your coin peddling exotic jewelry, gems, and shiny things."))
+	to_chat(H, span_warning("你靠兜售异域首饰、宝石和一切亮闪闪的玩意儿来赚钱。"))
 	mask = /obj/item/clothing/mask/rogue/lordmask
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	pants = /obj/item/clothing/under/roguetown/tights/black

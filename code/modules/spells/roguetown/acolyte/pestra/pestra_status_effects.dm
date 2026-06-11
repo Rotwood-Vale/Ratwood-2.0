@@ -10,12 +10,12 @@
 	return ..()
 
 /datum/status_effect/divine_exhaustion/on_remove()
-	to_chat(owner, span_notice("I feel my connection to Pestra's divine power slowly returning."))
+	to_chat(owner, span_notice("我感到自己与 Pestra 神力之间的联系正缓缓恢复。"))
 	return ..()
 
 /atom/movable/screen/alert/status_effect/divine_exhaustion
-	name = "Divine Exhaustion"
-	desc = "I have channeled too much of Pestra's power, and cannot harbor much of her divine infestation."
+	name = "神力耗竭"
+	desc = "我方才引导了过多 Pestra 的力量，如今已无法再承载太多她的神圣虫灾。"
 	icon_state = "divine_exhaustion"
 
 // The ultimate healing miracle
@@ -79,7 +79,7 @@
 			var/limb_to_regrow = pick(regenerable_missing_limbs)
 			if(human_owner.regenerate_limb(limb_to_regrow))
 				limbs_regenerated++
-				human_owner.visible_message(span_info("[human_owner]'s [limb_to_regrow] begins to regrow!"), span_info("I feel a miraculous sensation as my [limb_to_regrow] begins to regrow!"))
+				human_owner.visible_message(span_info("[human_owner] 的 [limb_to_regrow] 开始重新生长！"), span_info("当我的 [limb_to_regrow] 开始再生时，我感到一阵奇迹般的触感！"))
 
 /datum/status_effect/buff/divine_rebirth_healing/proc/do_sprite_shake(mob/living/target, cycles = 3, intensity = 3, rotation_max = 15, speed = 1)
 	if(!target)
@@ -108,8 +108,8 @@
 #undef MIRACLE_HEALING_FILTER
 
 /atom/movable/screen/alert/status_effect/buff/divine_rebirth_healing
-	name = "Divine Rebirth"
-	desc = "Miraculous divine energy is healing my wounds and regenerating my limbs."
+	name = "神圣重生"
+	desc = "奇迹般的神圣能量正在治愈我的伤势，并让我的肢体重新生长。"
 	icon_state = "divine_heal"
 
 /datum/status_effect/buff/pestra_care
@@ -144,8 +144,8 @@
 		owner.adjustCloneLoss(-healing_strength, 0)
 
 /atom/movable/screen/alert/status_effect/buff/pestra_care
-	name = "Pestra's embrace"
-	desc = "It's like something is wriggling around inside of me, but it's making me feel better..."
+	name = "Pestra 的拥抱"
+	desc = "我体内仿佛有什么在蠕动，可那感觉却让我逐渐好转……"
 	icon_state = "divine_heal"
 
 #define PLAGUE_GLOW_FILTER "plague_glow_filter"
@@ -164,7 +164,7 @@
 /datum/status_effect/debuff/pestilent_plague/on_apply()
 	. = ..()
 	owner.adjustBruteLoss(30)
-	to_chat(owner, span_danger("My body is wracked by malaise!"))
+	to_chat(owner, span_danger("我的身体正被剧烈病痛折磨！"))
 	var/filter = owner.get_filter(PLAGUE_GLOW_FILTER)
 	if (!filter)
 		owner.add_filter(PLAGUE_GLOW_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 90, "size" = 2))
@@ -179,18 +179,18 @@
 
 	if(prob(10))
 		var/message = pick(
-			"My flesh feels like it's crawling off my bones!",
-			"Worms writhe beneath my skin!",
-			"Every breath brings more pestilence into my lungs!",
-			"My blood feels thick with disease!",
-			"Bugs feast on my living flesh!",
-			"I'm just food for the bugs!",
-			"The plague consumes me from within!")
+			"我的血肉仿佛正从骨头上爬开！",
+			"有蠕虫正在我皮肤下翻动！",
+			"每一次呼吸都把更多疫病送进了肺里！",
+			"我的血液像是被病邪淤堵了一般！",
+			"虫群正在啃食我活着的血肉！",
+			"我不过是虫子的饵食而已！",
+			"疫病正从我体内将我一点点吞噬！")
 		to_chat(target, span_danger(message))
 
 /atom/movable/screen/alert/status_effect/debuff/pestilent_plague
-	name = "Pestilent Plague"
-	desc = "A violent plague ravages my body, causing immense pain and decay."
+	name = "瘟疫缠身"
+	desc = "一场凶恶的疫病正在摧残我的身体，带来剧痛与腐朽。"
 	icon_state = "debuff_severe"
 
 #undef PLAGUE_GLOW_FILTER
@@ -217,7 +217,7 @@
 	update_alert()
 
 /datum/status_effect/black_rot/on_apply()
-	to_chat(owner, span_userdanger("A deep, chilling rot begins to spread through my body!"))
+	to_chat(owner, span_userdanger("一股深沉而冰冷的腐坏开始在我体内蔓延！"))
 	update_effects()
 	return TRUE
 
@@ -226,20 +226,20 @@
 		return
 	switch(tier)
 		if(1)
-			linked_alert.name = "Black Rot (Creeping)"
-			linked_alert.desc = "A faint darkness spreads beneath my skin."
+			linked_alert.name = "黑腐病（潜行）"
+			linked_alert.desc = "一层淡淡的黑暗正在我皮肤下扩散。"
 			linked_alert.icon_state = "blackrot1"
 		if(2)
-			linked_alert.name = "Black Rot (Festering)"
-			linked_alert.desc = "My veins run black with corruption. I will surely die if this persists."
+			linked_alert.name = "黑腐病（溃烂）"
+			linked_alert.desc = "腐败已使我的血脉化作漆黑。若再持续下去，我必死无疑。"
 			linked_alert.icon_state = "blackrot2"
 		if(3)
-			linked_alert.name = "Black Rot (Boiling)"
-			linked_alert.desc = "My flesh decays and my bones ache. It feels like my skin is boiling."
+			linked_alert.name = "黑腐病（沸腾）"
+			linked_alert.desc = "我的血肉正在腐烂，骨头也隐隐作痛。皮肤仿佛正在沸腾。"
 			linked_alert.icon_state = "blackrot3"
 		if(4)
-			linked_alert.name = "Black Rot (Necrosis)"
-			linked_alert.desc = "I am being consumed by the void. I can feel my bones creaking."
+			linked_alert.name = "黑腐病（坏死）"
+			linked_alert.desc = "虚无正在吞噬我。我能感觉到骨头正发出呻吟。"
 			linked_alert.icon_state = "blackrot4"
 
 /datum/status_effect/black_rot/proc/update_effects()
@@ -326,7 +326,7 @@
 			if(prob(25))
 				owner.adjustBruteLoss(2 * damage_multiplier)
 				if(prob(25))
-					to_chat(owner, span_warning("I feel a strange chill in my bones."))
+					to_chat(owner, span_warning("我感到骨头里泛起一阵古怪的寒意。"))
 
 		if(2)
 			owner.adjustToxLoss(2 * damage_multiplier)
@@ -334,9 +334,9 @@
 				owner.adjustBruteLoss(4 * damage_multiplier)
 			if(prob(10))
 				var/message = pick(
-					"My skin feels cold and clammy.",
-					"A deep ache spreads through my limbs.",
-					"Dark spots dance in my vision.")
+					"我的皮肤冰冷而湿腻。",
+					"一阵深沉的疼痛正沿着四肢蔓延。",
+					"黑斑正在我的视野里乱舞。")
 				to_chat(owner, span_warning(message))
 		if(3)
 			owner.adjustToxLoss(2 * damage_multiplier)
@@ -347,9 +347,9 @@
 				trigger_vomit_fit()
 			if(prob(10))
 				var/message = pick(
-					"My flesh feels like it's rotting away!",
-					"Every breath brings pain!",
-					"The darkness consumes me from within!")
+					"我的血肉像是在一点点烂掉！",
+					"每一次呼吸都带来痛楚！",
+					"黑暗正从我体内将我吞噬！")
 				to_chat(owner, span_userdanger(message))
 		if(4)
 			// Severe damage and limb effects
@@ -366,15 +366,15 @@
 				if(length(breakable_limbs))
 					var/obj/item/bodypart/BP = pick(breakable_limbs)
 					BP.receive_damage(brute = 25 * damage_multiplier)
-					to_chat(owner, span_userdanger("My [BP.name] twists in an unnatural way as tumors bulge it out from beneath my skin!"))
+					to_chat(owner, span_userdanger("我的 [BP.name] 以不自然的角度扭曲起来，皮肤下鼓起的肿瘤正将它顶得变形！"))
 			if(prob(5))
 				trigger_vomit_fit()
 			if(prob(10))
 				var/message = pick(
-					"My body is turning to dust!",
-					"The void calls to me!",
-					"I can feel my soul being consumed!",
-					"Everything is fading to black...")
+					"我的身体正在化作尘埃！",
+					"虚无在呼唤我！",
+					"我能感觉到灵魂正被吞吃！",
+					"万物都在褪入黑暗……")
 				to_chat(owner, span_userdanger(message))
 
 /datum/status_effect/black_rot/proc/add_stack(amount = 1)
@@ -387,7 +387,7 @@
 		progression_timer = world.time + new_time_remaining
 		update_effects()
 		update_alert()
-		to_chat(owner, span_warning("The black rot festers and boils within me!"))
+		to_chat(owner, span_warning("黑腐病正在我体内溃烂翻腾！"))
 
 /datum/status_effect/black_rot/proc/remove_stack(amount = 1)
 	var/old_stacks = stacks
@@ -398,7 +398,7 @@
 		progression_timer = world.time + new_time_remaining
 		update_effects()
 		update_alert()
-		to_chat(owner, span_good("The black rot recedes slightly."))
+		to_chat(owner, span_good("黑腐病稍稍退去了一些。"))
 
 /datum/status_effect/black_rot/proc/set_tier(new_tier)
 	if(new_tier < 1 || new_tier > 4)
@@ -411,20 +411,20 @@
 	progression_timer = world.time + (base_progression_time / stacks)
 	update_effects()
 	update_alert()
-	to_chat(owner, span_userdanger("The black rot shifts!"))
+	to_chat(owner, span_userdanger("黑腐病的形态改变了！"))
 
 /datum/status_effect/black_rot/on_remove()
-	to_chat(owner, span_good("The black rot is completely purged from my body!"))
+	to_chat(owner, span_good("黑腐病已经彻底从我体内清除了！"))
 	return ..()
 
 /atom/movable/screen/alert/status_effect/black_rot
-	name = "Black Rot"
-	desc = "A corrupting darkness spreads through my body."
+	name = "黑腐病"
+	desc = "一股腐化的黑暗正在我体内蔓延。"
 	icon_state = "black_rot1"
 
 // Puke when advancing stages, woo
 /datum/status_effect/black_rot/proc/trigger_vomit_fit()
-	to_chat(owner, span_userdanger("A wave of nausea overwhelms me! IT'S ONLY GETTING WORSE."))
+	to_chat(owner, span_userdanger("一阵恶心猛地将我吞没！而且还在越来越严重。"))
 	for(var/i in 1 to 5)
 		spawn(rand(1 SECONDS, 20 SECONDS))
 			if(owner && !QDELETED(owner) && owner.stat != DEAD)
@@ -439,11 +439,11 @@
 		new /obj/effect/decal/cleanable/black_rot_vomit(vomit_turf)
 	playsound(owner, 'sound/misc/machinevomit.ogg', 50, TRUE)
 	if(prob(10))
-		owner.visible_message(span_warning("[owner] vomits a black, tarry substance!"), span_userdanger("I vomit a black, tarry substance!"))
+		owner.visible_message(span_warning("[owner] 呕出了一团漆黑如沥青般的污秽物！"), span_userdanger("我呕出了一团漆黑如沥青般的污秽物！"))
 
 /obj/effect/decal/cleanable/black_rot_vomit
-	name = "black rot vomit"
-	desc = "A foul, tarry black substance. It seems to writhe with unnatural energy."
+	name = "黑腐呕吐物"
+	desc = "一团恶臭、漆黑如沥青的污秽物。它仿佛还在诡异地蠕动。"
 	icon = 'icons/effects/tomatodecal.dmi'
 	icon_state = "smashed_plant"
 	color = "#000000"
@@ -476,8 +476,8 @@
 	id = "black_rot_carrier"
 	alert_type = /atom/movable/screen/alert/status_effect/black_rot_carrier
 	duration = -1
-	examine_text = "SUBJECTPRONOUN is surrounded by an ominous aura of disease."
+	examine_text = "SUBJECTPRONOUN 周身萦绕着一股不祥的病疫气息。"
 
 /atom/movable/screen/alert/status_effect/black_rot_carrier
-	name = "Pestra's blessing"
-	desc = "I carry Pestra's blessing, people should avoid my touch."
+	name = "Pestra 的赐福"
+	desc = "Pestra 的赐福正寄宿于我体内，旁人最好避开我的碰触。"

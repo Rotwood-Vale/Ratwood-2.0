@@ -37,8 +37,8 @@
 */
 
 /obj/structure/mannequin
-	name = "display stand"
-	desc = "It looks like a decorative training dummy."
+	name = "展示架"
+	desc = "看起来像个装饰用的训练假人。"
 	icon = 'icons/obj/mannequin.dmi'
 	icon_state = "coat_hanger"
 	density = TRUE
@@ -156,7 +156,7 @@
 					MannequinUnequip(null,targ_to_slot)
 					user.put_in_hand(I)
 					add_fingerprint(user)
-					to_chat(user, "You pick up \the [I] from \the [src].")
+					to_chat(user, "我从[src]上取下了[I]。")
 			else
 				FinalEquipCheck(user, item_in_hand, item_slot)
 
@@ -184,24 +184,24 @@
 	var/dat
 
 	dat += EquippableSlots()
-	dat += "<HR>Turn Mannequin:<B><A href='byond://?src=[REF(src)];command=turn_mannequin'>[dir2text(dir)]</A></B>"
-	dat += "<BR><A href='byond://?src=[REF(src)];command=close' style='position:absolute;right:50px'>Close</A>"
+	dat += "<HR>旋转模特：<B><A href='byond://?src=[REF(src)];command=turn_mannequin'>[dir2text(dir)]</A></B>"
+	dat += "<BR><A href='byond://?src=[REF(src)];command=close' style='position:absolute;right:50px'>关闭</A>"
 
-	var/datum/browser/noclose/popup = new(user, "mannequin[REF(src)]", "<div align='center'>Mannequin Fitting</div>", 275, 425)
+	var/datum/browser/noclose/popup = new(user, "mannequin[REF(src)]", "<div align='center'>模特穿戴</div>", 275, 425)
 	//I don't think generating a new popup datum every ui update is a good thing, but what do I know. I'm so used to tgui.
 	popup.set_content(dat)
 	popup.open()
 
 //UI SLOTS
 /obj/structure/mannequin/proc/EquippableSlots()
-	. += "<BR><B>Head:</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_HEAD]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_HEAD])]</A>"
-	. += "<BR><B>Mask:</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_PRECISE_MOUTH]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_MASK])]</A>"
-	. += "<BR><B>Neck:</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_PRECISE_NECK]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_NECK])]</A>"
-	. += "<BR><B>Cloak:</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[SLOT_MANNEQUIN_CLOAK]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_CLOAK])]</A>" //No direct slot to equip.
-	. += "<BR><B>Armor:</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_CHEST]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_ARMOR])]</A>"
-	. += "<BR><B>Shirt:</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_PRECISE_STOMACH]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_SHIRT])]</A>"
-	. += "<BR><B>Belt:</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_PRECISE_GROIN]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_BELT])]</A>"
-	. += "<BR><B>Ring:</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[SLOT_MANNEQUIN_RING]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_RING])]</A>" //No direct slot to equip.
+	. += "<BR><B>头部：</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_HEAD]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_HEAD])]</A>"
+	. += "<BR><B>面部：</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_PRECISE_MOUTH]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_MASK])]</A>"
+	. += "<BR><B>颈部：</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_PRECISE_NECK]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_NECK])]</A>"
+	. += "<BR><B>披风：</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[SLOT_MANNEQUIN_CLOAK]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_CLOAK])]</A>" //No direct slot to equip.
+	. += "<BR><B>护甲：</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_CHEST]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_ARMOR])]</A>"
+	. += "<BR><B>内衬：</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_PRECISE_STOMACH]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_SHIRT])]</A>"
+	. += "<BR><B>腰部：</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_PRECISE_GROIN]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_BELT])]</A>"
+	. += "<BR><B>戒指：</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[SLOT_MANNEQUIN_RING]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_RING])]</A>" //No direct slot to equip.
 
 /obj/structure/mannequin/attackby(obj/item/I, mob/user)
 	if(user.cmode || user.a_intent == INTENT_HARM || user.a_intent == INTENT_DISARM)
@@ -226,38 +226,38 @@
 		if(cloth_to_examine)
 			switch(slot_cloth)
 				if(SLOT_MANNEQUIN_HEAD)
-					slot_examine = " on its head."
+					slot_examine = "戴在它头上。"
 				if(SLOT_MANNEQUIN_NECK)
-					slot_examine = " on its neck."
+					slot_examine = "戴在它颈间。"
 				if(SLOT_MANNEQUIN_GLOVES)
-					slot_examine = " on its hands."
+					slot_examine = "戴在它手上。"
 				if(SLOT_MANNEQUIN_WRISTS)
-					slot_examine = " around its arms."
+					slot_examine = "缠在它手臂上。"
 				if(SLOT_MANNEQUIN_BELT)
-					slot_examine = " about its waist."
+					slot_examine = "系在它腰间。"
 				if(SLOT_MANNEQUIN_SHIRT)
-					slot_examine = " close to its skin."
+					slot_examine = "贴在它身上。"
 				if(SLOT_MANNEQUIN_ARMOR)
-					slot_examine = " over its body."
+					slot_examine = "披覆在它身躯上。"
 				if(SLOT_MANNEQUIN_PANTS)
-					slot_examine = " on its legs."
+					slot_examine = "穿在它腿上。"
 				if(SLOT_MANNEQUIN_FEET)
-					slot_examine = " on its feet."
+					slot_examine = "穿在它脚上。"
 				if(SLOT_MANNEQUIN_MASK)
-					slot_examine = " on its face."
+					slot_examine = "戴在它脸上。"
 				if(SLOT_MANNEQUIN_CLOAK)
-					slot_examine = " over its shoulders."
+					slot_examine = "披在它肩上。"
 				if(SLOT_MANNEQUIN_RING)
-					slot_examine = " around its finger."
-			msg += "Wearing [cloth_to_examine][slot_examine]<br>"
+					slot_examine = "套在它手指上。"
+			msg += "穿戴着[cloth_to_examine][slot_examine]<br>"
 	/*
 	* This is placed here due to the fact
 	* that some clothing is gender locked.
 	* Very annoying that without this consideration
 	* some clothing will be invisible on the mannequin.
 	*/
-	msg += "This mannequin has a [gender == FEMALE ? "feminine" : "masculine"] body.<br>"
-	msg += "Aim for the place where the clothing fits, or drag the mannequin onto yourself for a less immersive panel."
+	msg += "这具模特是[gender == FEMALE ? "女性" : "男性"]体型。<br>"
+	msg += "把准星对准服装应穿的位置，或者把模特拖到自己身上来打开更直接的面板。"
 	to_chat(user, msg)
 
 //Tries to equip the mannequin. Part of attack_hand() reflection of Topic()
@@ -271,7 +271,7 @@
 			var/obj/item/I = clothing[item_slot]
 			MannequinUnequip(I, MannequinEquipHelper(item_slot))
 			add_fingerprint(user)
-			to_chat(user, "<span class='info'>You pick up \the [I] from \the [src].</span>")
+			to_chat(user, "<span class='info'>我从[src]上取下了[I]。</span>")
 	else
 		FinalEquipCheck(user, item_in_hand, item_slot)
 
@@ -285,16 +285,16 @@
 	if(canEquip(user ,item_thing, EquipHelper(slot_placement)))
 		if(user.dropItemToGround(item_thing))
 			if(clothing[slot_placement])
-				to_chat(user, "<span class='info'>You switch \the [item_thing] and \the [clothing[slot_placement]] on the [src].</span>")
+				to_chat(user, "<span class='info'>我把[src]上的[item_thing]和[clothing[slot_placement]]对调了。</span>")
 				MannequinEquip(item_thing, MannequinEquipHelper(slot_placement))
 				add_fingerprint(user)
 			else
 				MannequinEquip(item_thing, MannequinEquipHelper(slot_placement))
 				add_fingerprint(user)
-				to_chat(user, "<span class='info'>You place \the [item_thing] on \the [src].</span>")
+				to_chat(user, "<span class='info'>我把[item_thing]放到了[src]上。</span>")
 		//If drop to ground proc fails
 		else
-			to_chat(user, "<span class='warning'>You can't drop that!</span>")
+			to_chat(user, "<span class='warning'>我没法把那东西放下！</span>")
 
 /*
 * Checks if the item can be equipped by the manniquin.
@@ -308,14 +308,14 @@
 		var/obj/item/clothing/C = item_to_check
 		//Thank you DM Refrence website for telling me how to find out negative if in arguments.
 		if(!(gender in C.allowed_sex) || !(/datum/species/human/northern in C.allowed_race))
-			to_chat(user, "<span class='warning'>This clothing wont fit this mannequins frame.</span>")
+			to_chat(user, "<span class='warning'>这件衣物不适合这具模特的身形。</span>")
 			return FALSE
 
 	if(item_to_check.slot_flags & selected_area)
 		return TRUE
 
 	if(user)
-		to_chat(user, "<span class='warning'>\The [item_to_check] doesn't fit on the mannequins [PlacementDescriber(selected_area)].</span>")
+		to_chat(user, "<span class='warning'>[item_to_check]不适合放在模特的[PlacementDescriber(selected_area)]位置。</span>")
 	return FALSE
 
 /*
@@ -548,7 +548,7 @@
 	tipped_over = FALSE
 	var/matrix/mat = transform
 	transform = mat.Turn(-90)
-	to_chat(L, "You pull [src] off the ground.")
+	to_chat(L, "我把[src]从地上扶了起来。")
 
 /*
 * Procs at creation or mapload. If no items_to_wear then it will equip
@@ -593,7 +593,7 @@
 */
 /obj/structure/mannequin/proc/makeStrippingButton(obj/item/I)
 	if(!istype(I))
-		return "<font color=grey>Empty</font>"
+		return "<font color=grey>空</font>"
 	else
 		return I
 /*
@@ -634,30 +634,30 @@
 /obj/structure/mannequin/proc/PlacementDescriber(target_zone)
 	switch(target_zone)
 		if(ITEM_SLOT_HEAD)
-			return "head"
+			return "头部"
 		if(ITEM_SLOT_CLOAK)
-			return "shoulders"
+			return "肩部"
 		if(ITEM_SLOT_NECK)
-			return "neck"
+			return "颈部"
 		if(ITEM_SLOT_MASK)
-			return "face"
+			return "面部"
 		if(ITEM_SLOT_ARMOR)
-			return "chest"
+			return "胸前"
 		if(ITEM_SLOT_SHIRT)
-			return "belly"
+			return "腹部"
 		if(ITEM_SLOT_BELT)
-			return "crotch"
+			return "腰间"
 		if(ITEM_SLOT_RING)
-			return "finger"
+			return "手指"
 		if(ITEM_SLOT_PANTS)
-			return "legs"
+			return "腿部"
 		if(ITEM_SLOT_GLOVES)
-			return "hands"
+			return "手部"
 		if(ITEM_SLOT_WRISTS)
-			return "wrists"
+			return "手腕"
 		if(ITEM_SLOT_SHOES)
-			return "feet"
-	return "thing"
+			return "脚部"
+	return "部位"
 
 /*
 * Translates target zone into mannequin equipment zone.
@@ -723,8 +723,8 @@
 
 ////Subtypes/////
 /obj/structure/mannequin/male
-	name = "mannequin"
-	desc = "It's unnvervingly still..."
+	name = "人体模特"
+	desc = "它安静得让人不安……"
 	icon_state = "man"
 
 /*
@@ -732,12 +732,12 @@
 * or unequipped of their clothing.
 */
 /obj/structure/mannequin/male/decorative
-	name = "decorative display"
-	desc = "Due to magic or fragile material the clothing on this one cannot be taken off."
+	name = "装饰展示模特"
+	desc = "由于魔法或材质脆弱，这一具上的衣物无法被取下。"
 	unchangeable = TRUE
 
 /obj/structure/mannequin/male/female
-	name = "mannequin"
+	name = "人体模特"
 	icon_state = "woman"
 	gender = FEMALE
 
@@ -759,10 +759,10 @@
 
 /obj/structure/mannequin/male/EquippableSlots()
 	. = ..()
-	. += "<BR><B>Wrists:</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_L_ARM]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_WRISTS])]</A>"
-	. += "<BR><B>Gloves:</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_PRECISE_L_HAND]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_GLOVES])]</A>"
-	. += "<BR><B>Pants:</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_L_LEG]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_PANTS])]</A>"
-	. += "<BR><B>Shoes:</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_PRECISE_L_FOOT]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_FEET])]</A>"
+	. += "<BR><B>手腕：</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_L_ARM]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_WRISTS])]</A>"
+	. += "<BR><B>手套：</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_PRECISE_L_HAND]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_GLOVES])]</A>"
+	. += "<BR><B>裤装：</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_L_LEG]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_PANTS])]</A>"
+	. += "<BR><B>鞋履：</B> <A href='byond://?src=[REF(src)];command=item_placement;item_slot=[BODY_ZONE_PRECISE_L_FOOT]'>[makeStrippingButton(clothing[SLOT_MANNEQUIN_FEET])]</A>"
 
 /obj/structure/mannequin/male/bodypartsNightmare()
 	var/isfemale = (gender == FEMALE ? "f" : "m")

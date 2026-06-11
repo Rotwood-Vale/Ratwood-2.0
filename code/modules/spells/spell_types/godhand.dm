@@ -1,7 +1,7 @@
 /obj/item/melee/touch_attack
-	name = "\improper outstretched hand"
+	name = "\improper 伸出的手掌"
 	desc = ""
-	var/catchphrase = "High Five!"
+	var/catchphrase = "击掌！"
 	var/on_use_sound = null
 	var/obj/effect/proc_holder/spell/targeted/touch/attached_spell
 	icon = 'icons/obj/balloons.dmi'
@@ -25,7 +25,7 @@
 	if(!iscarbon(user)) //Look ma, no hands
 		return
 	if(!(user.mobility_flags & MOBILITY_USE))
-		to_chat(user, "<span class='warning'>I can't reach out!</span>")
+		to_chat(user, "<span class='warning'>我伸不出手！</span>")
 		return
 	..()
 

@@ -1,6 +1,6 @@
 /obj/structure/flora/newtreealt//a visually different version for use in sunnier brighter environments. Would have wanted to make it an easy subtype but it has separate branches and leaves
-	name = "tree"
-	desc = "The thick core of a tree."
+	name = "树"
+	desc = "树木粗壮的主干。"
 	icon = 'icons/roguetown/misc/treealt.dmi'
 	icon_state = "tree1"
 	var/tree_type = 1
@@ -22,7 +22,7 @@
 	if(.)
 		burnt = TRUE
 		if(icon_state != "burnt")
-			name = "burnt tree"
+			name = "焦树"
 			update_icon()
 
 /obj/structure/flora/newtreealt/attack_right(mob/user)
@@ -74,10 +74,10 @@
 			return
 		var/turf/target = get_step_multiz(user, UP)
 		if(!istype(target, /turf/open/transparent/openspace))
-			to_chat(user, span_warning("I can't climb here."))
+			to_chat(user, span_warning("我没法从这里往上爬。"))
 			return
 		if(!L.can_zTravel(target, UP))
-			to_chat(user, span_warning("I can't climb there."))
+			to_chat(user, span_warning("我爬不到那里去。"))
 			return
 		var/used_time = 3 SECONDS
 		var/exp_to_gain = 0
@@ -97,7 +97,7 @@
 					myskill += 1
 			used_time = max(70 - (myskill * 10) - (L.STASPD * 3), (HAS_TRAIT(L, TRAIT_WOODWALKER) ? 15 : 30))
 		playsound(user, 'sound/foley/climb.ogg', 100, TRUE)
-		user.visible_message(span_warning("[user] starts to climb [src]."), span_warning("I start to climb [src]..."))
+		user.visible_message(span_warning("[user]开始攀爬[src]。"), span_warning("我开始攀爬[src]……"))
 		if(do_after(L, used_time, target = src))
 			var/pulling = user.pulling
 			if(ismob(pulling))
@@ -194,8 +194,8 @@
 ///BRANCHES
 
 /obj/structure/flora/newbranchalt
-	name = "branch"
-	desc = "A stable branch, should be safe to walk on."
+	name = "树枝"
+	desc = "一根结实的树枝，走在上面应该还算安全。"
 	icon = 'icons/roguetown/misc/treealt.dmi'
 	icon_state = "branch-end1"
 	attacked_sound = 'sound/misc/woodhit.ogg'
@@ -265,7 +265,7 @@
 	update_icon()
 
 /obj/structure/flora/newleafalt
-	name = "leaves"
+	name = "树叶"
 	icon = 'icons/roguetown/misc/treealt.dmi'
 	icon_state = "center-leaf1"
 	density = FALSE

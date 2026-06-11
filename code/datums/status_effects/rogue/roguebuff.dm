@@ -9,17 +9,17 @@
 	duration = 5 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/drunk
-	name = "Drunk"
+	name = "醉酒"
 	desc = ""
 	icon_state = "drunk"
 
 /atom/movable/screen/alert/status_effect/buff/drunkmurk
-	name = "Murk-Knowledge"
+	name = "Murk 之识"
 	desc = ""
 	icon_state = "drunk"
 
 /atom/movable/screen/alert/status_effect/buff/drunknoc
-	name = "Noc-Shine Strength"
+	name = "Noc 光辉之力"
 	desc = ""
 	icon_state = "drunk"
 
@@ -42,8 +42,8 @@
 	duration = 8 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/snackbuff
-	name = "Good snack"
-	desc = "Better than plain bread. Tasty."
+	name = "好点心"
+	desc = "比白面包强多了，真好吃。"
 	icon_state = "foodbuff"
 
 /datum/status_effect/buff/snackbuff/on_apply() //can't stack two snack buffs, it'll keep the highest one
@@ -60,8 +60,8 @@
 	duration = 10 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/greatsnackbuff
-	name = "Great Snack!"
-	desc = "Nothing like a great and nutritious snack to help you on that final stretch. I feel invigorated."
+	name = "绝佳点心！"
+	desc = "没有什么比一份营养又美味的点心更适合支撑最后一程了。我感觉精神焕发。"
 	icon_state = "foodbuff"
 
 /datum/status_effect/buff/greatsnackbuff/on_apply()
@@ -77,8 +77,8 @@
 	duration = 30 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/mealbuff
-	name = "Good meal"
-	desc = "A meal a day keeps the barber away, or at least it makes it slightly easier."
+	name = "好饭食"
+	desc = "一天一顿好饭能让剃头匠离我远点，至少日子会稍微好过些。"
 	icon_state = "foodbuff"
 
 /datum/status_effect/buff/mealbuff/on_apply()
@@ -94,8 +94,8 @@
 	duration = 30 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/greatmealbuff
-	name = "Great meal!"
-	desc = "That meal was something akin to a noble's feast! It's bound to keep me energized for an entire day."
+	name = "盛宴一餐！"
+	desc = "那顿饭简直像贵族的宴席！它肯定能让我一整天都精力充沛。"
 	icon_state = "foodbuff"
 
 /datum/status_effect/buff/greatmealbuff/on_apply()
@@ -111,8 +111,8 @@
 	duration = 8 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/sweet
-	name = "Sweet embrace"
-	desc = "Sweets are always a sign of good luck, everything goes well when you eat some of them."
+	name = "甜蜜拥抱"
+	desc = "甜食总是好运的象征，吃上几口后万事都顺起来了。"
 	icon_state = "foodbuff"
 
 /datum/status_effect/buff/sweet/on_apply()
@@ -134,7 +134,7 @@
 /datum/status_effect/buff/druqks/baotha/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_MIRACLE)
-	owner.visible_message("[owner]'s eyes appear to return to normal.")
+	owner.visible_message("[owner]的眼睛似乎恢复正常了。")
 
 /datum/status_effect/buff/druqks/on_apply()
 	. = ..()
@@ -162,7 +162,7 @@
 	. = ..()
 
 /atom/movable/screen/alert/status_effect/buff/druqks
-	name = "High"
+	name = "上头"
 	desc = ""
 	icon_state = "acid"
 
@@ -292,7 +292,7 @@
 	. = ..()
 
 /atom/movable/screen/alert/status_effect/buff/weed
-	name = "Dazed"
+	name = "恍惚"
 	desc = ""
 	icon_state = "weed"
 
@@ -344,8 +344,8 @@
 		pintle.functional = FALSE
 
 /atom/movable/screen/alert/status_effect/buff/fermented_crab
-	name = "INVIGORATED"
-	desc = "Fermented crab tasted like shit. But I'm full of vigor now!"
+	name = "精力焕发"
+	desc = "腌蟹味道糟透了，但我现在浑身是劲！"
 
 /datum/status_effect/buff/cum_consumed
 	id = "cum_consumed"
@@ -363,17 +363,17 @@
 	. = ..()
 
 /atom/movable/screen/alert/status_effect/buff/cum_consumed
-	name = "Cumdrunk"
-	desc = "I've swallowed someone's load..."
+	name = "精液上头"
+	desc = "我吞下了某人的精液......"
 	icon_state = "drunk"
 
 /atom/movable/screen/alert/status_effect/buff/vitae
-	name = "Invigorated"
-	desc = "I have supped on the finest of delicacies: life!"
+	name = "振奋"
+	desc = "我品尝了最上等的珍馐：生命！"
 
 /atom/movable/screen/alert/status_effect/buff/featherfall
-	name = "Featherfall"
-	desc = "I am somewhat protected against falling from heights."
+	name = "轻羽缓落"
+	desc = "我在一定程度上不易因高处坠落受伤。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/featherfall
@@ -383,17 +383,17 @@
 
 /datum/status_effect/buff/featherfall/on_apply()
 	. = ..()
-	to_chat(owner, span_warning("I feel lighter."))
+	to_chat(owner, span_warning("我感觉更轻了。"))
 	ADD_TRAIT(owner, TRAIT_NOFALLDAMAGE2, MAGIC_TRAIT)
 
 /datum/status_effect/buff/featherfall/on_remove()
 	. = ..()
-	to_chat(owner, span_warning("The feeling of lightness fades."))
+	to_chat(owner, span_warning("轻盈的感觉消散了。"))
 	REMOVE_TRAIT(owner, TRAIT_NOFALLDAMAGE2, MAGIC_TRAIT)
 
 /atom/movable/screen/alert/status_effect/buff/darkvision
-	name = "Darkvision"
-	desc = "I can see in the dark somewhat."
+	name = "暗视"
+	desc = "我在黑暗中也能看清一些。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/darkvision
@@ -405,17 +405,17 @@
 	if(assocskill)
 		duration += 5 MINUTES * assocskill
 	. = ..()
-	to_chat(owner, span_warning("The darkness fades somewhat."))
+	to_chat(owner, span_warning("黑暗稍微退去了。"))
 	ADD_TRAIT(owner, TRAIT_DARKVISION, MAGIC_TRAIT)
 
 /datum/status_effect/buff/darkvision/on_remove()
 	. = ..()
-	to_chat(owner, span_warning("The darkness returns to normal."))
+	to_chat(owner, span_warning("黑暗又恢复如常。"))
 	REMOVE_TRAIT(owner, TRAIT_DARKVISION, MAGIC_TRAIT)
 
 /atom/movable/screen/alert/status_effect/buff/longstrider
-	name = "Longstrider"
-	desc = "I can easily walk through rough terrain."
+	name = "长行者"
+	desc = "我能轻松穿过崎岖地形。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/longstrider
@@ -425,17 +425,17 @@
 
 /datum/status_effect/buff/longstrider/on_apply()
 	. = ..()
-	to_chat(owner, span_warning("I am unburdened by the terrain."))
+	to_chat(owner, span_warning("地形不再拖慢我。"))
 	ADD_TRAIT(owner, TRAIT_LONGSTRIDER, MAGIC_TRAIT)
 
 /datum/status_effect/buff/longstrider/on_remove()
 	. = ..()
-	to_chat(owner, span_warning("The rough floors slow my travels once again."))
+	to_chat(owner, span_warning("崎岖地面又再次拖慢了我的脚步。"))
 	REMOVE_TRAIT(owner, TRAIT_LONGSTRIDER, MAGIC_TRAIT)
 
 /atom/movable/screen/alert/status_effect/buff/magearmor
-	name = "Weakened Barrier"
-	desc = "My magical barrier is weakened."
+	name = "削弱的屏障"
+	desc = "我的魔法屏障被削弱了。"
 	icon_state = "stressvg"
 
 /datum/status_effect/buff/magearmor
@@ -449,13 +449,13 @@
 
 /datum/status_effect/buff/magearmor/on_remove()
 	. = ..()
-	to_chat(owner, span_warning("My magical barrier reforms."))
+	to_chat(owner, span_warning("我的魔法屏障重新成形。"))
 	playsound(owner, 'sound/magic/magearmorup.ogg', 75, FALSE)
 	owner.scalearmor = 0
 
 /atom/movable/screen/alert/status_effect/buff/scalearmor
-	name = "Scale Struck"
-	desc = "My scales were struck. They can't take another strike in place of my armour!"
+	name = "鳞甲受击"
+	desc = "我的鳞片受了重击，暂时不能再替我的护甲承受下一击！"
 	icon_state = "stressvg"
 
 /datum/status_effect/buff/scalearmor
@@ -469,33 +469,33 @@
 
 /datum/status_effect/buff/scalearmor/on_remove()
 	. = ..()
-	to_chat(owner, span_warning("My scales could probably stand another blow."))
+	to_chat(owner, span_warning("我的鳞片大概又能再挡下一击了。"))
 	playsound(owner, 'sound/combat/sharpness_loss2.ogg', 75, FALSE)
 	owner.scalearmor = 0
 
 /atom/movable/screen/alert/status_effect/buff/guardbuffone
-	name = "Vigilant Guardsman"
-	desc = "My home. I watch vigilantly and respond swiftly."
+	name = "警觉卫兵"
+	desc = "这里是我的地盘。我时刻警惕，并会迅速作出反应。"
 	icon_state = "guardsman"
 
 /atom/movable/screen/alert/status_effect/buff/barkeepbuff
-	name = "Vigilant Tavernkeep"
-	desc = "My home. I watch vigilantly and respond swiftly."
+	name = "警觉酒馆老板"
+	desc = "这里是我的地盘。我时刻警惕，并会迅速作出反应。"
 	icon_state = "drunk"
 
 /atom/movable/screen/alert/status_effect/buff/knightbuff
-	name = "Sworn Defender"
-	desc = "I've sworn an oath to defend this castle. My resolve will not waver."
+	name = "宣誓守卫"
+	desc = "我已立誓守卫这座城堡，我的决心绝不会动摇。"
 	icon_state = "guardsman"
 
 /atom/movable/screen/alert/status_effect/buff/dungeoneerbuff
-	name = "Ruthless Jailor"
-	desc = "This is my sanctuary. I can overpower any opposition that dares breach it."
+	name = "无情狱吏"
+	desc = "这里是我的领地。我能压倒任何胆敢闯入的敌人。"
 	icon_state = "buff"
 
 /atom/movable/screen/alert/status_effect/buff/wardenbuff
-	name = "Woodsman"
-	desc = "I've trekked these woods for some time now. I find traversal easier here."
+	name = "林地行者"
+	desc = "我已在这片林地间跋涉许久，在这里行动更轻松。"
 	icon_state = "guardsman"
 
 /datum/status_effect/buff/wardenbuff
@@ -504,8 +504,8 @@
 	effectedstats = list(STATKEY_SPD = 1, STATKEY_PER = 3)
 
 /atom/movable/screen/alert/status_effect/buff/viewingbuff
-	name = "Good View"
-	desc = "This area is built to give a better view."
+	name = "视野良好"
+	desc = "这片区域修得更便于观察。"
 	icon_state = "guardsman"
 
 /datum/status_effect/buff/viewingbuff
@@ -573,8 +573,8 @@
 	REMOVE_TRAIT(owner, TRAIT_CIVILIZEDBARBARIAN, id)
 
 /atom/movable/screen/alert/status_effect/holy_empowerement
-	name = "Holy Ground"
-	desc = "These grounds are where I feel the most connection to my patron. Their blessing is strongest here!"
+	name = "圣地"
+	desc = "在这片土地上，我与自己的主神联系最深，祂的赐福也最为强大！"
 	icon_state = "guardsman"
 
 /datum/status_effect/debuff/holy_blessing
@@ -598,8 +598,8 @@
 
 // Lesser Miracle effect
 /atom/movable/screen/alert/status_effect/buff/healing
-	name = "Healing Miracle"
-	desc = "Divine intervention relieves me of my ailments."
+	name = "治愈奇迹"
+	desc = "神圣干预缓解了我的伤痛。"
 	icon_state = "lesser_heal"
 
 /datum/status_effect/buff/viewingbuff/process()
@@ -615,7 +615,7 @@
 	id = "healing"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/healing
 	duration = 10 SECONDS
-	examine_text = "SUBJECTPRONOUN is bathed in a restorative aura!"
+	examine_text = "SUBJECTPRONOUN 沐浴在恢复性的灵光之中！"
 	var/healing_on_tick = 1
 	var/outline_colour = "#c42424"
 	var/tech_healing_modifier = 1
@@ -663,8 +663,8 @@
 // Lesser miracle effect end
 
 /atom/movable/screen/alert/status_effect/buff/healing/campfire
-	name = "Warming Respite"
-	desc = "The warmth of a fire soothes my ails."
+	name = "温暖歇息"
+	desc = "火焰的温暖抚慰了我的伤痛。"
 	icon_state = "campfire"
 
 /datum/status_effect/buff/healing/campfire
@@ -674,13 +674,13 @@
 	duration = 10 SECONDS
 
 /atom/movable/screen/alert/status_effect/buff/campfire_stamina
-	name = "Camp Rest"
-	desc = "A break by the fire restores some of my energy."
+	name = "营火休憩"
+	desc = "在火边歇一会儿让我恢复了些体力。"
 	icon_state = "campfire"
 
 /atom/movable/screen/alert/status_effect/buff/fireplace_stamina
-	name = "Warming Respite"
-	desc = "The warmth of a fire restores some of my energy."
+	name = "温暖歇息"
+	desc = "火焰的温暖让我恢复了些体力。"
 	icon_state = "fireplace"
 
 #define CAMPFIRE_BASE_FILTER "campfire_stamina"
@@ -689,7 +689,7 @@
 	id = "stamina_campfire"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/campfire_stamina
 	duration = 5 SECONDS
-	examine_text = "SUBJECTPRONOUN is enjoying a brief respite."
+	examine_text = "SUBJECTPRONOUN 正享受片刻歇息。"
 	var/healing_on_tick = 5
 	var/outline_colour = "#7e6a3e"
 	var/tech_healing_modifier = 1
@@ -749,41 +749,41 @@
 /datum/status_effect/buff/healing/prayer
 	id = "healing_prayers"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/healing/prayer
-	examine_text = "SUBJECTPRONOUN is burning with divine radiance!"
+	examine_text = "SUBJECTPRONOUN 正燃烧着神圣辉光！"
 	outline_colour = "#b280df"
 	duration = 12 SECONDS
 
 /atom/movable/screen/alert/status_effect/buff/healing/prayer
-	name = "Conviction"
-	desc = "By faith alone, I will mend."
+	name = "信念"
+	desc = "唯凭信仰，我亦能痊愈。"
 	icon_state = "buff"
 
 //BY FAITH ALONE. When Martyr heals via another Tennite praying.
 /datum/status_effect/buff/healing/prayer_power
 	id = "healing_prayers"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/healing/prayer_power
-	examine_text = "SUBJECTPRONOUN is lit by divine radiance!"
+	examine_text = "SUBJECTPRONOUN 被神圣辉光照亮！"
 	outline_colour = "#b280df"
 	duration = 2 SECONDS
 
 /atom/movable/screen/alert/status_effect/buff/healing/prayer_power
-	name = "Blessed Respite"
-	desc = "By faith, I lyve."
+	name = "受福的歇息"
+	desc = "借由信仰，我得以活着。"
 	icon_state = "buff"
 
 // Lay hands orison effect - gentle, slow healing
 #define LAY_HANDS_FILTER "lay_hands_glow"
 
 /atom/movable/screen/alert/status_effect/buff/lay_hands
-	name = "Laying of Hands"
-	desc = "Divine power flows through me, knitting my wounds."
+	name = "按手疗愈"
+	desc = "神圣力量流过我体内，缝合我的伤口。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/lay_hands
 	id = "lay_hands"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/lay_hands
 	duration = 10 SECONDS // Short duration - continuously refreshed while channeling
-	examine_text = "SUBJECTPRONOUN is suffused with divine energy."
+	examine_text = "SUBJECTPRONOUN 全身都充盈着神圣能量。"
 	var/healing_on_tick = 0.3 // Very weak healing compared to normal miracles
 	var/outline_colour = "#FFD700" // Golden color instead of red
 
@@ -796,7 +796,7 @@
 	if (!filter)
 		owner.add_filter(LAY_HANDS_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 50, "size" = 1))
 	playsound(owner, 'sound/magic/churn.ogg', 50, FALSE)
-	to_chat(owner, span_notice("Divine energy suffuses my body..."))
+	to_chat(owner, span_notice("神圣能量充盈着我的身体......"))
 	return TRUE
 
 /datum/status_effect/buff/lay_hands/tick()
@@ -820,7 +820,7 @@
 
 /datum/status_effect/buff/lay_hands/on_remove()
 	owner.remove_filter(LAY_HANDS_FILTER)
-	to_chat(owner, span_notice("The divine energy fades from my body."))
+	to_chat(owner, span_notice("神圣能量正从我的身体中消退。"))
 
 #undef LAY_HANDS_FILTER
 
@@ -830,8 +830,8 @@
 #define BLOODHEAL_DUR_DEFAULT 10 SECONDS
 // Bloodheal miracle effect
 /atom/movable/screen/alert/status_effect/buff/bloodheal
-	name = "Blood Miracle"
-	desc = "Divine intervention is infusing me with lyfe's blood."
+	name = "血之奇迹"
+	desc = "神圣干预正将生命之血注入我体内。"
 	icon_state = "bloodheal"
 
 #define MIRACLE_BLOODHEAL_FILTER "miracle_bloodheal_glow"
@@ -840,7 +840,7 @@
 	id = "bloodheal"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/bloodheal
 	duration = BLOODHEAL_DUR_DEFAULT
-	examine_text = "SUBJECTPRONOUN is bathed in a thick, pungent aura of iron!"
+	examine_text = "SUBJECTPRONOUN 沐浴在浓厚刺鼻的铁腥气息中！"
 	var/healing_on_tick = BLOODHEAL_RESTORE_DEFAULT
 	var/skill_level
 	var/outline_colour = "#c42424"
@@ -907,13 +907,13 @@
 		owner.adjustCloneLoss(-healing_on_tick, 0)
 
 /atom/movable/screen/alert/status_effect/buff/psyhealing
-	name = "Enduring"
-	desc = "I am awash with sentimentality."
+	name = "坚忍"
+	desc = "我心中满溢着情感。"
 	icon_state = "buff"
 
 /atom/movable/screen/alert/status_effect/buff/psyvived
-	name = "Absolved"
-	desc = "I feel a strange sense of peace."
+	name = "宽赦"
+	desc = "我感到一种奇异的平静。"
 	icon_state = "buff"
 
 #define PSYDON_HEALING_FILTER "psydon_heal_glow"
@@ -923,7 +923,7 @@
 	id = "psyhealing"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/psyhealing
 	duration = 15 SECONDS
-	examine_text = "SUBJECTPRONOUN stirs with a sense of ENDURING!"
+	examine_text = "SUBJECTPRONOUN 因坚忍之感而苏醒！"
 	var/healing_on_tick = 1
 	var/outline_colour = "#d3d3d3"
 
@@ -962,7 +962,7 @@
 	id = "psyvived"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/psyvived
 	duration = 30 SECONDS
-	examine_text = "SUBJECTPRONOUN moves with an air of ABSOLUTION!"
+	examine_text = "SUBJECTPRONOUN 周身萦绕着宽赦之意！"
 	var/outline_colour = "#aa1717"
 
 /datum/status_effect/buff/psyvived/on_creation(mob/living/new_owner)
@@ -1030,8 +1030,8 @@
 		owner.adjustCloneLoss(0.15*-healing_on_tick, 0)
 
 /atom/movable/screen/alert/status_effect/buff/gemmuncher
-	name = "Gorged"
-	desc = "I've devoured a gem."
+	name = "饱食"
+	desc = "我吞下了一颗宝石。"
 	icon_state = "buff"
 
 //Lesser stone eating. Far, far less ideal.
@@ -1058,8 +1058,8 @@
 			owner.blood_volume = min(owner.blood_volume+4, BLOOD_VOLUME_NORMAL)
 
 /atom/movable/screen/alert/status_effect/buff/rockmuncher_lesser
-	name = "Sated"
-	desc = "I've devoured a stone."
+	name = "饱腹"
+	desc = "我吞下了一块石头。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/mount_apple_healing
@@ -1094,18 +1094,18 @@
 	owner.update_damage_hud()
 
 /atom/movable/screen/alert/status_effect/buff/convergence
-	name = "Convergence Miracle"
-	desc = "My body converges to whence it found strength and health."
+	name = "汇流奇迹"
+	desc = "我的身体正回归获得力量与健康时的状态。"
 	icon_state = "buff"
 
 /atom/movable/screen/alert/status_effect/buff/stasis
-	name = "Stasis Miracle"
-	desc = "A part of me has been put in stasis."
+	name = "停滞奇迹"
+	desc = "我身体的一部分被置于停滞之中。"
 	icon_state = "buff"
 
 /atom/movable/screen/alert/status_effect/buff/censerbuff
-	name = "Inspired by SYON."
-	desc = "The shard of the great comet had inspired me to ENDURE."
+	name = "受 SYON 启迪"
+	desc = "那枚大彗星碎片激励我去坚忍。"
 	icon_state = "censerbuff"
 
 #define FORTIFY_FILTER "fortify_glow"
@@ -1113,12 +1113,12 @@
 	id = "fortify"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/fortify
 	duration = 1 MINUTES
-	examine_text = "SUBJECTPRONOUN stands alight with divine energy!"
+	examine_text = "SUBJECTPRONOUN 周身闪耀着神圣能量！"
 	var/outline_colour = "#fbe59d"
 
 /atom/movable/screen/alert/status_effect/buff/fortify
-	name = "Fortifying Miracle"
-	desc = "Divine intervention bolsters me and aids my recovery."
+	name = "强化奇迹"
+	desc = "神圣干预强化了我，也加快了我的恢复。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/fortify/on_apply()
@@ -1150,13 +1150,13 @@
 
 #define CRANKBOX_FILTER "crankboxbuff_glow"
 /atom/movable/screen/alert/status_effect/buff/churnerprotection
-	name = "Magick Distorted"
-	desc = "The wailing box is disrupting magicks around me!"
+	name = "魔力紊乱"
+	desc = "哀嚎之箱正在扰乱我周围的魔力！"
 	icon_state = "buff"
 
 /atom/movable/screen/alert/status_effect/buff/churnernegative
-	name = "Magick Distorted"
-	desc = "That infernal contraption is sapping my very arcyne essence!"
+	name = "魔力紊乱"
+	desc = "那台可憎的装置正在抽干我的 Arcyne 本源！"
 	icon_state = "buff"
 
 /datum/status_effect/buff/churnerprotection
@@ -1170,12 +1170,12 @@
 	var/filter = owner.get_filter(CRANKBOX_FILTER)
 	if (!filter)
 		owner.add_filter(CRANKBOX_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 200, "size" = 1))
-	to_chat(owner, span_warning("I feel the wailing box distorting magicks around me!"))
+	to_chat(owner, span_warning("我能感觉到哀嚎之箱正在扭曲我周围的魔力！"))
 	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 
 /datum/status_effect/buff/churnerprotection/on_remove()
 	. = ..()
-	to_chat(owner, span_warning("The wailing box's protection fades..."))
+	to_chat(owner, span_warning("哀嚎之箱的保护消散了......"))
 	owner.remove_filter(CRANKBOX_FILTER)
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 
@@ -1191,20 +1191,20 @@
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_SPELLCOCKBLOCK, MAGIC_TRAIT)
 	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
-	to_chat(owner, span_warning("I feel as if my connection to the Arcyne disappears entirely. The air feels still..."))
-	owner.visible_message("[owner]'s arcyne aura seems to fade.")
+	to_chat(owner, span_warning("我感觉自己与 Arcyne 的联系彻底消失了。空气都像静止了一样......"))
+	owner.visible_message("[owner]身上的 Arcyne 灵光似乎正在消退。")
 
 /datum/status_effect/buff/churnernegative/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_SPELLCOCKBLOCK, MAGIC_TRAIT)
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
-	to_chat(owner, span_warning("I feel my connection to the arcyne surround me once more."))
-	owner.visible_message("[owner]'s arcyne aura seems to return once more.")
+	to_chat(owner, span_warning("我感觉 Arcyne 再次环绕着我。"))
+	owner.visible_message("[owner]身上的 Arcyne 灵光似乎又回来了。")
 
 #define BLESSINGOFSUN_FILTER "sun_glow"
 /atom/movable/screen/alert/status_effect/buff/guidinglight
-	name = "Guiding Light"
-	desc = "Astrata's gaze follows me, lighting the path!"
+	name = "引路明光"
+	desc = "Astrata 的目光追随着我，为我照亮前路！"
 	icon_state = "stressvg"
 
 /datum/status_effect/buff/guidinglight // Hey did u follow us from ritualcircles? Cool, okay this stuff is pretty simple yeah? Most ritual circles use some sort of status effects to get their effects ez.
@@ -1213,7 +1213,7 @@
 	duration = 30 MINUTES // Lasts for 30 minutes, roughly an ingame day. This should be the gold standard for rituals, unless its some particularly powerul effect or one-time effect(Flylord's triage)
 	status_type = STATUS_EFFECT_REFRESH
 	effectedstats = list(STATKEY_PER = 2) // This is for basic stat effects, I would consider these a 'little topping' and not what you should rlly aim for for rituals. Ideally we have cool flavor boons, rather than combat stims.
-	examine_text = "SUBJECTPRONOUN walks with Her Light!"
+	examine_text = "SUBJECTPRONOUN 沐浴在祂的光辉下前行！"
 	var/list/mobs_affected
 	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
 	var/outline_colour = "#ffffff"
@@ -1222,7 +1222,7 @@
 	. = ..()
 	if (!.)
 		return
-	to_chat(owner, span_notice("Light blossoms into being around me!"))
+	to_chat(owner, span_notice("光芒在我身边绽放！"))
 	var/filter = owner.get_filter(BLESSINGOFSUN_FILTER)
 	if (!filter)
 		owner.add_filter(BLESSINGOFSUN_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 60, "size" = 1))
@@ -1233,7 +1233,7 @@
 /datum/status_effect/buff/guidinglight/on_remove()
 	. = ..()
 	playsound(owner, 'sound/items/firesnuff.ogg', 75, FALSE)
-	to_chat(owner, span_notice("The miraculous light surrounding me has fled..."))
+	to_chat(owner, span_notice("环绕我的奇迹之光离去了......"))
 	owner.remove_filter(BLESSINGOFSUN_FILTER)
 	QDEL_NULL(mob_light_obj)
 
@@ -1245,28 +1245,28 @@
 	duration = 25 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/moonlightdance
-	name = "Moonlight Dance"
-	desc = "Noc's stony touch lay upon my mind, bringing me wisdom."
+	name = "月光之舞"
+	desc = "Noc 如石般冰凉的触碰落在我的心智之上，为我带来智慧。"
 	icon_state = "moonlightdance"
 
 
 /datum/status_effect/buff/moonlightdance/on_apply()
 	. = ..()
-	to_chat(owner, span_warning("I see through the Moonlight. Silvery threads dance in my vision."))
+	to_chat(owner, span_warning("我透过月光而视，银色丝线在我眼前舞动。"))
 	ADD_TRAIT(owner, TRAIT_DARKVISION, MAGIC_TRAIT)
 
 
 /datum/status_effect/buff/moonlightdance/on_remove()
 	. = ..()
-	to_chat(owner, span_warning("Noc's silver light leaves my sight."))
+	to_chat(owner, span_warning("Noc 的银辉离开了我的视野。"))
 	REMOVE_TRAIT(owner, TRAIT_DARKVISION, MAGIC_TRAIT)
 
 
 
 
 /atom/movable/screen/alert/status_effect/buff/flylordstriage
-	name = "Flylord's Triage"
-	desc = "Pestra's servants crawl through my pores and wounds!"
+	name = "蝇王急救"
+	desc = "Pestra 的仆从正从我的毛孔与伤口中爬行！"
 	icon_state = "buff"
 
 /datum/status_effect/buff/flylordstriage
@@ -1294,7 +1294,7 @@
 	owner.adjustCloneLoss(-healing_on_tick, 0)
 
 /obj/effect/temp_visual/flies
-	name = "Flylord's triage"
+	name = "蝇王急救"
 	icon_state = "flies"
 	duration = 15
 	plane = GAME_PLANE_UPPER
@@ -1304,13 +1304,13 @@
 
 
 /datum/status_effect/buff/flylordstriage/on_remove()
-	to_chat(owner,span_userdanger("It's finally over..."))
+	to_chat(owner,span_userdanger("终于结束了......"))
 
 
 
 /atom/movable/screen/alert/status_effect/buff/undermaidenbargain
-	name = "Undermaiden's Bargain"
-	desc = "A horrible deal was struck in my name..."
+	name = "Undermaiden 的交易"
+	desc = "有一桩可怕的交易以我的名义缔结了......"
 	icon_state = "buff"
 
 /datum/status_effect/buff/undermaidenbargain
@@ -1320,7 +1320,7 @@
 
 /datum/status_effect/buff/undermaidenbargain/on_apply()
 	. = ..()
-	to_chat(owner, span_danger("You feel as though some horrible deal has been prepared in your name. May you never see it fulfilled..."))
+	to_chat(owner, span_danger("你感觉似乎有一桩可怕的交易正以你的名义备妥。愿你永远不要看见它被兑现......"))
 	playsound(owner, 'sound/misc/bell.ogg', 100, FALSE, -1)
 	ADD_TRAIT(owner, TRAIT_DEATHBARGAIN, id)
 
@@ -1332,28 +1332,28 @@
 /datum/status_effect/buff/undermaidenbargainheal/on_apply()
 	. = ..()
 	owner.remove_status_effect(/datum/status_effect/buff/undermaidenbargain)
-	to_chat(owner, span_warning("You feel the deal struck in your name is being fulfilled..."))
+	to_chat(owner, span_warning("你感到那桩以你之名缔结的交易正在被兑现......"))
 	playsound(owner, 'sound/misc/deadbell.ogg', 100, FALSE, -1)
 	ADD_TRAIT(owner, TRAIT_NODEATH, id)
 	var/dirgeline = rand(1,6)
 	spawn(15)
 		switch(dirgeline)
 			if(1)
-				to_chat(owner, span_cultsmall("She watches the city skyline as her crimson pours into the drain."))
+				to_chat(owner, span_cultsmall("她望着城市天际线，看着自己的鲜血流入下水道。"))
 			if(2)
-				to_chat(owner, span_cultsmall("He only wanted more for his family. He feels comfort on the pavement, the Watchman's blade having met its mark."))
+				to_chat(owner, span_cultsmall("他只想为家人争取更多。守望者的刀锋已经命中，他倒在石路上，反而感到一丝安慰。"))
 			if(3)
-				to_chat(owner, span_cultsmall("A sailor's leg is caught in naval rope. Their last thoughts are of home."))
+				to_chat(owner, span_cultsmall("一名水手的腿被缆绳缠住了。他临终前最后想到的是家。"))
 			if(4)
-				to_chat(owner, span_cultsmall("She sobbed over the Venardine's corpse. The Brigand's mace stemmed her tears."))
+				to_chat(owner, span_cultsmall("她伏在维纳丁人的尸体上哭泣，而强盗的钉锤止住了她的泪水。"))
 			if(5)
-				to_chat(owner, span_cultsmall("A farm son chokes up his last. At his bedside, a sister and mother weep."))
+				to_chat(owner, span_cultsmall("一个农家儿子咽下了最后一口气。床边的姐姐与母亲正在哭泣。"))
 			if(6)
-				to_chat(owner, span_cultsmall("A woman begs at a Headstone. It is your fault."))
+				to_chat(owner, span_cultsmall("一名女子跪在墓碑前哀求。这是你的错。"))
 
 /datum/status_effect/buff/undermaidenbargainheal/on_remove()
 	. = ..()
-	to_chat(owner, span_warning("The Bargain struck in my name has been fulfilled... I am thrown from Necra's embrace, another in my place..."))
+	to_chat(owner, span_warning("以我之名缔结的交易已经兑现......我被 Necra 的怀抱抛出，而另一个人替我承受......"))
 	playsound(owner, 'sound/misc/deadbell.ogg', 100, FALSE, -1)
 	REMOVE_TRAIT(owner, TRAIT_NODEATH, id)
 
@@ -1378,15 +1378,15 @@
 	owner.adjustCloneLoss(-healing_on_tick, 0)
 
 /atom/movable/screen/alert/status_effect/buff/undermaidenbargainheal
-	name = "The Fulfillment"
-	desc = "My bargain is being fulfilled..."
+	name = "契约兑现"
+	desc = "我的交易正在被兑现......"
 	icon_state = "buff"
 
 
 
 /atom/movable/screen/alert/status_effect/buff/lesserwolf
-	name = "Blessing of the Lesser Wolf"
-	desc = "I swell with the embuement of a predator..."
+	name = "次级狼之祝福"
+	desc = "我因掠食者的灌注而膨胀......"
 	icon_state = "buff"
 
 /datum/status_effect/buff/lesserwolf
@@ -1396,19 +1396,19 @@
 
 /datum/status_effect/buff/lesserwolf/on_apply()
 	. = ..()
-	to_chat(owner, span_warning("I feel my leg muscles grow taut, my teeth sharp, I am embued with the power of a predator. Branches and brush reach out for my soul..."))
+	to_chat(owner, span_warning("我感觉腿部肌肉绷紧，牙齿变得锋利，我被掠食者的力量灌注。枝叶与灌木仿佛正伸手攫取我的灵魂......"))
 	ADD_TRAIT(owner, TRAIT_LONGSTRIDER, id)
 	ADD_TRAIT(owner, TRAIT_STRONGBITE, id)
 
 /datum/status_effect/buff/lesserwolf/on_remove()
 	. = ..()
-	to_chat(owner, span_warning("I feel Dendor's blessing leave my body..."))
+	to_chat(owner, span_warning("我感觉 Dendor 的祝福正在离开我的身体......"))
 	REMOVE_TRAIT(owner, TRAIT_LONGSTRIDER, id)
 	REMOVE_TRAIT(owner, TRAIT_STRONGBITE, id)
 
 /atom/movable/screen/alert/status_effect/buff/xylix_pratfall
-	name = "Blessing of the Pratfall"
-	desc = "My body has become a treacherous obstacle."
+	name = "摔跌祝福"
+	desc = "我的身体成了危险的障碍物。"
 	icon_state = "buff"
 
 /obj/effect/xylix_pratfall_proxy
@@ -1484,11 +1484,11 @@
 		return
 
 	var/list/messages = list(
-		"[L] tries to be graceful, but [M] has other plans!",
-		"[L] discovers that stepping on friends is hazardous!",
-		"[L] flails wildly as [M] turns into a slippery obstacle!",
-		"[L] forgets the art of walking thanks to [M]'s treachery!",
-		"[L] meets the floor in a most undignified manner, courtesy of [M]!"
+		"[L]本想优雅通过，可[M]显然另有打算！",
+		"[L]发现踩在同伴身上可不是什么好主意！",
+		"[L]手忙脚乱地挣扎着，因为[M]变成了一个滑溜溜的障碍！",
+		"拜[M]的阴险所赐，[L]连路都不会走了！",
+		"多亏了[M]，[L]以极不体面的姿势亲吻了地板！"
 	)
 
 	L.visible_message(span_warning(pick(messages)))
@@ -1510,15 +1510,15 @@
 	var/speed_bonus_applied = FALSE
 
 /atom/movable/screen/alert/status_effect/buff/stagehands_silence
-	name = "Stangehand's Silence"
-	desc = "The slow quicken. My footsteps are quiet and I can move faster while sneaking."
+	name = "舞台之手的寂静"
+	desc = "缓者亦疾。我的脚步安静无声，潜行时也能移动得更快。"
 
 /datum/status_effect/buff/stagehands_silence/on_apply()
 	. = ..()
 	if(owner?.STASPD < 12)
 		owner.change_stat(STATKEY_SPD, 1)
 		speed_bonus_applied = TRUE
-	to_chat(owner, span_warning("My footsteps feel lighter and quieter. What is that droning sound in my head...?"))
+	to_chat(owner, span_warning("我的脚步变得更轻也更安静了。可脑海里的嗡鸣声又是什么......？"))
 	// inspired by matthiosmuffle
 	ADD_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, "xylixboon")
 	ADD_TRAIT(owner, TRAIT_LIGHT_STEP, "xylixboon")
@@ -1528,13 +1528,13 @@
 	if(speed_bonus_applied)
 		owner?.change_stat(STATKEY_SPD, -1)
 		speed_bonus_applied = FALSE
-	to_chat(owner, span_warning("The droning quiets. My footsteps are noisy, again."))
+	to_chat(owner, span_warning("嗡鸣声平息了。我的脚步又变得吵闹起来。"))
 	REMOVE_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, "xylixboon")
 	REMOVE_TRAIT(owner, TRAIT_LIGHT_STEP, "xylixboon")
 
 /atom/movable/screen/alert/status_effect/buff/pacify
-	name = "Blessing of Eora"
-	desc = "I feel my heart as light as feathers. All my worries have washed away."
+	name = "Eora 的祝福"
+	desc = "我感到心轻如羽，所有忧虑都被冲刷而去。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/pacify
@@ -1544,20 +1544,20 @@
 
 /datum/status_effect/buff/pacify/on_apply()
 	. = ..()
-	to_chat(owner, span_green("Everything feels great!"))
+	to_chat(owner, span_green("一切感觉都好极了！"))
 	owner.add_stress(/datum/stressevent/pacified)
 	ADD_TRAIT(owner, TRAIT_PACIFISM, id)
 	playsound(owner, 'sound/misc/peacefulwake.ogg', 100, FALSE, -1)
 
 /datum/status_effect/buff/pacify/on_remove()
 	. = ..()
-	to_chat(owner, span_warning("My mind is my own again, no longer awash with foggy peace!"))
+	to_chat(owner, span_warning("我的心智又回到自己手中，不再被朦胧的平和所淹没！"))
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, id)
 
 //A lesser variant of Eoran blessing meant for peacecake consumption.
 /atom/movable/screen/alert/status_effect/buff/peacecake
-	name = "Lesser blessing of Eora"
-	desc = "I feel my heart lighten. All my worries ease away."
+	name = "次级 Eora 祝福"
+	desc = "我感到内心轻松了许多，所有忧虑都缓缓散去。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/peacecake
@@ -1567,14 +1567,14 @@
 
 /datum/status_effect/buff/peacecake/on_apply()
 	. = ..()
-	to_chat(owner, span_green("Everything feels better."))
+	to_chat(owner, span_green("一切都感觉好多了。"))
 	owner.add_stress(/datum/stressevent/pacified)
 	ADD_TRAIT(owner, TRAIT_PACIFISM, id)
 	playsound(owner, 'sound/misc/peacefulwake.ogg', 100, FALSE, -1)
 
 /datum/status_effect/buff/peacecake/on_remove()
 	. = ..()
-	to_chat(owner, span_warning("My mind is clear again, no longer clouded with foggy peace!"))
+	to_chat(owner, span_warning("我的心智再次清明，不再被朦胧的平和所笼罩！"))
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, id)
 
 /datum/status_effect/buff/call_to_arms
@@ -1584,8 +1584,8 @@
 	effectedstats = list(STATKEY_STR = 1, STATKEY_WIL = 2, STATKEY_CON = 1)
 
 /atom/movable/screen/alert/status_effect/buff/call_to_arms
-	name = "Call to Arms"
-	desc = span_bloody("FOR GLORY AND HONOR!")
+	name = "战争号召"
+	desc = span_bloody("为荣耀与荣誉而战！")
 	icon_state = "call_to_arms"
 
 /datum/status_effect/buff/call_to_slaughter
@@ -1595,13 +1595,13 @@
 	effectedstats = list(STATKEY_STR = 1, STATKEY_WIL = 2, STATKEY_CON = 1)
 
 /atom/movable/screen/alert/status_effect/buff/call_to_slaughter
-	name = "Call to Slaughter"
-	desc = span_bloody("LAMBS TO THE SLAUGHTER!")
+	name = "屠戮号令"
+	desc = span_bloody("羔羊们，走向屠场！")
 	icon_state = "call_to_slaughter"
 
 /atom/movable/screen/alert/status_effect/buff/xylix_joy
-	name = "Trickster's Joy"
-	desc = "The sound of merriment fills me with fortune."
+	name = "戏谑者之乐"
+	desc = "欢乐的声音让我充满好运。"
 	icon_state = "joy"
 
 /datum/status_effect/buff/xylix_joy
@@ -1613,11 +1613,11 @@
 
 /datum/status_effect/buff/xylix_joy/on_apply()
 	. = ..()
-	to_chat(owner, span_info("The sounds of joy fill me with fortune!"))
+	to_chat(owner, span_info("欢乐之声让我充满好运！"))
 
 /datum/status_effect/buff/xylix_joy/on_remove()
 	. = ..()
-	to_chat(owner, span_info("My fortune returns to normal."))
+	to_chat(owner, span_info("我的运势恢复正常了。"))
 
 /datum/status_effect/buff/vigorized
 	id = "vigorized"
@@ -1626,17 +1626,17 @@
 	effectedstats = list(STATKEY_SPD = 1, STATKEY_INT = 1)
 
 /atom/movable/screen/alert/status_effect/vigorized
-	name = "Vigorized"
-	desc = "I feel a surge of energy inside, quickening my speed and sharpening my focus."
+	name = "活力充盈"
+	desc = "我感到体内涌起一股能量，加快了我的速度，也让我的注意力更加集中。"
 	icon_state = "drunk"
 
 /datum/status_effect/buff/vigorized/on_apply()
 	. = ..()
-	to_chat(owner, span_warning("I feel a surge of energy inside me!"))
+	to_chat(owner, span_warning("我感到体内涌起一股能量！"))
 
 /datum/status_effect/buff/vigorized/on_remove()
 	. = ..()
-	to_chat(owner, span_warning("The surge of energy inside me fades..."))
+	to_chat(owner, span_warning("体内涌起的那股能量正在消退......"))
 
 /datum/status_effect/buff/seelie_drugs
 	id = "seelie drugs"
@@ -1702,7 +1702,7 @@
 	if(bad_guard)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			H.bad_guard(span_suicide("I tried to strike while focused on defense whole! It drains me!"), cheesy = TRUE)
+			H.bad_guard(span_suicide("我明明全神防守，却还试图出手攻击！这让我精力大损！"), cheesy = TRUE)
 
 //Mostly here so the child (limbguard) can have special behaviour.
 /datum/status_effect/buff/clash/proc/guard_struck_by_projectile()
@@ -1740,7 +1740,7 @@
 	var/newdur = world.time - dur
 	var/mob/living/carbon/human/H = owner
 	if(newdur > (initial(duration) - 0.2 SECONDS))	//Not checking exact duration to account for lag and any other tick / timing inconsistencies.
-		H.bad_guard(span_warning("I held my focus for too long. It's left me drained."))
+		H.bad_guard(span_warning("我维持专注太久了，结果把自己耗空了。"))
 	UnregisterSignal(owner, COMSIG_ATOM_BULLET_ACT)
 	UnregisterSignal(owner, COMSIG_MOB_ATTACKED_BY_HAND)
 	UnregisterSignal(owner, COMSIG_MOB_ITEM_ATTACK)
@@ -1754,15 +1754,15 @@
 	UnregisterSignal(owner, COMSIG_LIVING_SWINGDELAY_MOD)
 
 /atom/movable/screen/alert/status_effect/buff/clash
-	name = "Ready to Clash"
-	desc = span_notice("I am on guard, and ready to clash. If I am hit, I will successfully defend. Attacking will make me lose my focus.")
+	name = "准备招架"
+	desc = span_notice("我已架好防势，准备招架。若我被击中，我将成功防住；但若我主动攻击，就会失去专注。")
 	icon_state = "clash"
 
 #define BLOODRAGE_FILTER "bloodrage"
 
 /atom/movable/screen/alert/status_effect/buff/graggar_bloodrage
-	name = "BLOODRAGE"
-	desc = "GRAGGAR! GRAGGAR! GRAGGAR!"
+	name = "血怒"
+	desc = "GRAGGAR！GRAGGAR！GRAGGAR！"
 	icon_state = "bloodrage"
 
 /datum/status_effect/buff/bloodrage
@@ -1793,7 +1793,7 @@
 /datum/status_effect/buff/bloodrage/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_STRENGTH_UNCAPPED, TRAIT_MIRACLE)
-	owner.visible_message(span_warning("[owner] wavers, their rage simmering down."))
+	owner.visible_message(span_warning("[owner]身形摇晃，沸腾的怒火渐渐平息。"))
 	owner.OffBalance(3 SECONDS)
 	owner.remove_filter(BLOODRAGE_FILTER)
 	owner.emote("breathgasp", forced = TRUE)
@@ -1805,8 +1805,8 @@
 	effectedstats = list(STATKEY_CON = 1,STATKEY_WIL = 1)
 
 /atom/movable/screen/alert/status_effect/buff/psydonic_endurance
-	name = "Psydonic Endurance"
-	desc = "I am protected by blessed Psydonian plate armor."
+	name = "Psydonic 坚忍"
+	desc = "我受到受祝 Psydonian 板甲的保护。"
 	icon_state = "buff"
 
 #undef BLOODRAGE_FILTER
@@ -1818,13 +1818,13 @@
 	var/outline_colour = "#EEBBBB"
 	duration = -1
 	tick_interval = -1
-	examine_text = span_good("SUBJECTPRONOUN is bathed in Eora's Light!")
+	examine_text = span_good("SUBJECTPRONOUN 沐浴在 Eora 的圣光之中！")
 	alert_type = null
 
 /datum/status_effect/eoranaura/on_apply()
 	. = ..()
 
-	owner.visible_message(span_userdanger("A tide of Eoran light surges from [owner], it fills you with peace and hope!"))
+	owner.visible_message(span_userdanger("Eora 的光潮自[owner]身上奔涌而出，使你心中充满平和与希望！"))
 
 	var/mutable_appearance/effect = mutable_appearance('icons/effects/effects.dmi', "curse", -JOYBRINGER_LAYER, alpha = 128)
 	effect.appearance_flags = RESET_COLOR
@@ -1856,8 +1856,8 @@
 #undef EORANAURA_FILTER
 
 /atom/movable/screen/alert/status_effect/buff/recuperation
-	name = "Recuperation"
-	desc = "A brief respite for my ailments."
+	name = "休养"
+	desc = "我的伤痛得到了片刻喘息。"
 	icon_state = "recuperation"
 
 #define RECUPERATION_BASE_FILTER "recuperation"
@@ -1900,8 +1900,8 @@
 	duration = 20 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/sermon
-	name = "sermon"
-	desc = "I feel inspired by the sermon!"
+	name = "布道"
+	desc = "我因这场布道而深受鼓舞！"
 	icon_state = "buff"
 
 /datum/status_effect/buff/griefflower
@@ -1911,29 +1911,29 @@
 
 /datum/status_effect/buff/griefflower/on_apply()
 	. = ..()
-	to_chat(owner, span_notice("The Rosa’s ring draws blood, but it’s the memories that truly wound. Failure after failure surging through you like thorns blooming inward."))
+	to_chat(owner, span_notice("Rosa 之环会见血，但真正伤人的却是那些回忆。一次又一次的失败像向内盛开的荆棘般穿透着你。"))
 	ADD_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT)
 
 /datum/status_effect/buff/griefflower/on_remove()
 	. = ..()
-	to_chat(owner, span_notice("You part from the Rosa’s touch. The ache retreats..."))
+	to_chat(owner, span_notice("你脱离了 Rosa 的触碰，疼痛也随之退去......"))
 	REMOVE_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT)
 
 /atom/movable/screen/alert/status_effect/buff/griefflower
-	name = "Rosa Ring"
-	desc = "The Rosa's ring draws blood, but it's the memories that truly wound. Failure after failure surging through you like thorns blooming inward."
+	name = "Rosa 之环"
+	desc = "Rosa 之环会见血，但真正伤人的却是那些回忆。一次又一次的失败像向内盛开的荆棘般穿透着你。"
 	icon_state = "buff"
 
 /atom/movable/screen/alert/status_effect/buff/adrenaline_rush
-	name = "Adrenaline Rush"
-	desc = "The gambit worked! I can do anything! My heart races, the throb of my wounds wavers."
+	name = "肾上腺冲击"
+	desc = "这一搏成功了！我无所不能！心跳如擂，伤口的抽痛都变得模糊。"
 	icon_state = "adrrush"
 
 /datum/status_effect/buff/adrenaline_rush
 	id = "adrrush"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/adrenaline_rush
 	duration = 18 SECONDS
-	examine_text = "SUBJECTPRONOUN is amped up!"
+	examine_text = "SUBJECTPRONOUN 情绪高涨！"
 	effectedstats = list(STATKEY_WIL = 1)
 	var/blood_restore = 30
 
@@ -1961,8 +1961,8 @@
 	duration = 10 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/knowledge
-	name = "runic cunning"
-	desc = "I am magically astute."
+	name = "符文机敏"
+	desc = "我因魔法而思维敏锐。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/magicstrength
@@ -1972,8 +1972,8 @@
 	duration = 20 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/strength
-	name = "arcane reinforced strength"
-	desc = "I am magically strengthened."
+	name = "奥术强化之力"
+	desc = "我的力量被魔法强化了。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/magicstrength/lesser
@@ -1983,8 +1983,8 @@
 	duration = 20 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/strength/lesser
-	name = "lesser arcane strength"
-	desc = "I am magically strengthened."
+	name = "次级奥术之力"
+	desc = "我的力量被魔法强化了。"
 	icon_state = "buff"
 
 
@@ -1995,8 +1995,8 @@
 	duration = 20 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/speed
-	name = "arcane swiftness"
-	desc = "I am magically swift."
+	name = "奥术迅捷"
+	desc = "我的速度被魔法强化了。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/magicspeed/lesser
@@ -2006,8 +2006,8 @@
 	duration = 20 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/speed/lesser
-	name = "arcane swiftness"
-	desc = "I am magically swift."
+	name = "奥术迅捷"
+	desc = "我的速度被魔法强化了。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/magicwillpower
@@ -2017,8 +2017,8 @@
 	duration = 20 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/willpower
-	name = "arcane willpower"
-	desc = "I am magically resilient."
+	name = "奥术意志"
+	desc = "我因魔法而更坚韧。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/magicwillpower/lesser
@@ -2028,8 +2028,8 @@
 	duration = 20 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/willpower/lesser
-	name = "lesser arcane willpower"
-	desc = "I am magically resilient."
+	name = "次级奥术意志"
+	desc = "我因魔法而更坚韧。"
 	icon_state = "buff"
 
 
@@ -2040,8 +2040,8 @@
 	duration = 20 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/constitution
-	name = "arcane constitution"
-	desc = "I feel reinforced by magick."
+	name = "奥术体魄"
+	desc = "我感觉自己被魔力强化了。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/magicconstitution/lesser
@@ -2051,8 +2051,8 @@
 	duration = 20 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/constitution/lesser
-	name = "lesser arcane constitution"
-	desc = "I feel reinforced by magick."
+	name = "次级奥术体魄"
+	desc = "我感觉自己被魔力强化了。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/magicperception
@@ -2062,8 +2062,8 @@
 	duration = 20 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/perception
-	name = "arcane perception"
-	desc = "I can see everything."
+	name = "奥术感知"
+	desc = "我仿佛能看见一切。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/magicperception/lesser
@@ -2073,8 +2073,8 @@
 	duration = 20 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/perception/lesser
-	name = "lesser arcane perception"
-	desc = "I can see somethings."
+	name = "次级奥术感知"
+	desc = "我能看见更多东西。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/nocblessing
@@ -2084,8 +2084,8 @@
 	duration = 30 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/nocblessing
-	name = "Noc's blessing"
-	desc = "Gazing Noc helps me think."
+	name = "Noc 的祝福"
+	desc = "仰望 Noc 让我思绪更清晰。"
 	icon_state = "buff"
 /datum/status_effect/buff/goodloving
 	id = "Good Loving"
@@ -2094,8 +2094,8 @@
 	duration = 60 MINUTES //Note, you can only benefit from this buff ONCE
 
 /atom/movable/screen/alert/status_effect/buff/goodloving
-	name = "Good Loving"
-	desc = "Some good loving has left me feeling very fortunate."
+	name = "美妙欢爱"
+	desc = "一场美妙的欢爱让我感觉自己好运非常。"
 	icon_state = "stressg"
 
 /datum/status_effect/buff/massage
@@ -2105,8 +2105,8 @@
 	duration = 30 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/massage
-	name = "Massage"
-	desc = "My muscles feel relaxed"
+	name = "按摩"
+	desc = "我的肌肉放松了"
 	icon_state = "buff"
 
 /datum/status_effect/buff/goodmassage
@@ -2116,8 +2116,8 @@
 	duration = 30 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/goodmassage
-	name = "Good Massage"
-	desc = "My muscles feel relaxed and better than before"
+	name = "优质按摩"
+	desc = "我的肌肉放松了，感觉比之前更好"
 	icon_state = "buff"
 
 /datum/status_effect/buff/greatmassage
@@ -2127,8 +2127,8 @@
 	duration = 30 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/greatmassage
-	name = "Great Massage"
-	desc = "My body feels better than ever!"
+	name = "极佳按摩"
+	desc = "我的身体前所未有地舒畅！"
 	icon_state = "buff"
 
 
@@ -2139,8 +2139,8 @@
 	duration = 15 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/refocus
-	name = "Refocus"
-	desc = "I've sacrificed some of my learning to help me learn something new"
+	name = "重新聚焦"
+	desc = "我牺牲了一部分所学，好让自己能学会新的东西"
 	icon_state = "buff"
 
 
@@ -2166,5 +2166,5 @@
 	effectedstats = list(STATKEY_CON = 1, STATKEY_WIL = 1)
 
 /atom/movable/screen/alert/status_effect/buff/oath_ring
-	name = "Oathmarked"
-	desc = "The oath drives me forward, so long as the reminder is kept near."
+	name = "誓印加身"
+	desc = "只要这份提醒仍在身边，誓言就会推动我前进。"

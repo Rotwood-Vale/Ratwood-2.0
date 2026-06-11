@@ -1,5 +1,5 @@
 /particles/mist
-	name = "mist"
+	name = "雾气"
 	icon = 'icons/effects/particles/smoke.dmi'
 	icon_state = list("steam_1" = 1, "steam_2" = 1, "steam_3" = 1)
 	count = 500
@@ -19,7 +19,7 @@
 
 // All the smoke variant particles.
 /particles/smoke
-	name = "smoke"
+	name = "烟雾"
 	icon = 'icons/effects/particles/smoke.dmi'
 	icon_state = list("smoke_1" = 1, "smoke_2" = 1, "smoke_3" = 2)
 	width = 100
@@ -36,41 +36,41 @@
 	grow = 0.05
 
 /particles/smoke/burning
-	name = "burning"
+	name = "燃烧"
 	position = list(0, 0, 0)
 
 /particles/smoke/burning/small
-	name = "burning_small"
+	name = "小型燃烧"
 	spawning = 1
 	scale = list(0.8, 0.8)
 	velocity = list(0, 0.4, 0)
 
 /particles/smoke/steam
-	name = "steam"
+	name = "蒸汽"
 	icon_state = list("steam_1" = 1, "steam_2" = 1, "steam_3" = 2)
 	fade = 1.5 SECONDS
 
 /particles/smoke/steam/mild
-	name = "steam_mild"
+	name = "轻微蒸汽"
 	spawning = 1
 	velocity = list(0, 0.3, 0)
 	friction = 0.25
 
 /particles/smoke/steam/bad
-	name = "steam_bad"
+	name = "浑浊蒸汽"
 	icon_state = list("steam_1" = 1, "smoke_1" = 1, "smoke_2" = 1, "smoke_3" = 1)
 	spawning = 2
 	velocity = list(0, 0.25, 0)
 
 /particles/smoke/steam/water_pipe
-	name = "water_pipe"
+	name = "水管喷雾"
 	icon_state = list("steam_1" = 1, "smoke_1" = 1, "smoke_2" = 1, "smoke_3" = 1)
 	spawning = 2
 	velocity = list(0, 0.25, 0)
 	position = generator(GEN_VECTOR, list(-3, -5, 0), list(3, -6.5, 0), NORMAL_RAND)
 
 /particles/smoke/cig
-	name = "cig"
+	name = "香烟烟雾"
 	icon_state = list("steam_1" = 2, "steam_2" = 1, "steam_3" = 1)
 	count = 1
 	spawning = 0.05 // used to pace it out roughly in time with breath ticks
@@ -85,7 +85,7 @@
 	color = "#d0d0d09d"
 
 /particles/smoke/cig/big
-	name = "cig_big"
+	name = "浓烟"
 	icon_state = list("steam_1" = 1, "steam_2" = 2, "steam_3" = 2)
 	gravity = list(0, 0.5, 0)
 	velocity = list(0, 0.1, 0)
@@ -97,7 +97,7 @@
 	friction = 0.75
 
 /particles/smoke/ash
-	name = "cig_ash"
+	name = "烟灰"
 	icon_state = list("ash_1" = 2, "ash_2" = 2, "ash_3" = 1, "smoke_1" = 3, "smoke_2" = 2)
 	count = 500
 	spawning = 1
@@ -108,7 +108,7 @@
 	velocity = generator(GEN_VECTOR, list(-0.1, 0.4, 0), list(0.1, 0.5, 0), NORMAL_RAND)
 
 /particles/sparks
-	name = "sparks"
+	name = "火花"
 	width = 124
 	height = 124
 	count = 16
@@ -125,7 +125,7 @@
 	transform = list(1,0,0,0, 0,1,0,0, 0,0,1,1/5, 0,0,0,1)
 
 /particles/water_spray
-	name = "water_spray"
+	name = "水花喷雾"
 	width = 124
 	height = 124
 	count = 32

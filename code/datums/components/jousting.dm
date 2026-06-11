@@ -48,10 +48,10 @@
 		var/sharp = I.get_sharpness()
 		var/msg
 		if(damage)
-			msg += "[user] [sharp? "impales" : "slams into"] [target] [sharp? "on" : "with"] their [parent]"
+			msg += "[user] [sharp? "刺穿了" : "猛撞了"] [target][sharp? "，用的是" : "，使用了"] [parent]"
 			target.apply_damage(damage, BRUTE, user.zone_selected, 0)
 		if(prob(knockdown_chance))
-			msg += " and knocks [target] [target_buckled? "off of [target.buckled]" : "down"]"
+			msg += "，并将[target][target_buckled? "从[target.buckled]上撞了下来" : "撞倒在地"]"
 			if(target_buckled)
 				target.buckled.unbuckle_mob(target)
 			target.Paralyze(knockdown_time)

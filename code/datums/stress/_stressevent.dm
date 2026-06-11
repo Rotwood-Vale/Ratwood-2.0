@@ -29,10 +29,9 @@
 /datum/stressevent/test
 	timer = 5 SECONDS
 	stressadd = 3
-	desc = span_red("This is a negative test event.")
+	desc = span_red("这是一个负面测试事件。")
 
 /datum/stressevent/testr
 	timer = 5 SECONDS
 	stressadd = -3
-	desc = span_green("This is a positive test event.")
-
+	desc = span_green("这是一个正面测试事件。")

@@ -1,6 +1,6 @@
 /datum/roguestock/stockpile/wood
-	name = "Wood"
-	desc = "Wooden logs cut short for transport."
+	name = "木材"
+	desc = "截短后便于运输的木料。"
 	item_type = /obj/item/grown/log/tree/small
 	held_items = list(5, 7)
 	payout_price = 3
@@ -14,8 +14,8 @@
 	remote_limit = 20 //sometimes people need a lot of wood! And it's not exactly that hard to store or obtain either
 
 /datum/roguestock/stockpile/coal
-	name = "Coal"
-	desc = "Chunks of coal used for fuel and alloying."
+	name = "煤炭"
+	desc = "用于燃料和合金冶炼的煤块。"
 	item_type = /obj/item/rogueore/coal
 	held_items = list(5, 0)
 	payout_price = 4
@@ -28,8 +28,8 @@
 	generation_price = 5
 
 /datum/roguestock/stockpile/cinnabar
-	name = "Cinnabar"
-	desc = "A red mineral used to make quicksilver."
+	name = "朱砂"
+	desc = "一种可用于制取水银的红色矿物。"
 	item_type = /obj/item/rogueore/cinnabar
 	held_items = list(0, 0)
 	payout_price = 5
@@ -42,8 +42,8 @@
 	generation_price = 8
 
 /datum/roguestock/stockpile/stone
-	name = "Stone"
-	desc = "Stones. Used for construction"
+	name = "石头"
+	desc = "石头。可用于建造。"
 	item_type = /obj/item/natural/stone
 	held_items = list(10, 0)
 	payout_price = 1
@@ -57,8 +57,8 @@
 	generation_price = 1 
 
 /datum/roguestock/stockpile/glass
-	name = "Glass Batch"	//'Raw' glass
-	desc = "A mixture of finely ground materials that is used to make glass."
+	name = "玻璃料"	//'Raw' glass
+	desc = "一种由细磨材料混合而成、用于制玻璃的原料。"
 	item_type = /obj/item/natural/clay/glassbatch
 	held_items = list(5, 0)
 	payout_price = 4
@@ -71,8 +71,8 @@
 	generation_price = 4
 
 /datum/roguestock/stockpile/glass
-	name = "Glass Batch"	//'Raw' glass
-	desc = "A mixture of finely ground materials that is used to make glass."
+	name = "玻璃料"	//'Raw' glass
+	desc = "一种由细磨材料混合而成、用于制玻璃的原料。"
 	item_type = /obj/item/natural/clay/glassbatch
 	held_items = list(5, 0)
 	payout_price = 4
@@ -84,8 +84,8 @@
 	passive_generation = 3
 
 /datum/roguestock/stockpile/iron
-	name = "Raw Iron"
-	desc = "Chunks of iron used for smithing."
+	name = "粗铁"
+	desc = "用于锻造的铁块。"
 	item_type = /obj/item/rogueore/iron
 	held_items = list(9, 5)
 	payout_price = 5
@@ -98,8 +98,8 @@
 	generation_price = 8 //high demand!
 
 /datum/roguestock/stockpile/copper
-	name = "Raw Copper"
-	desc = "Chunks of copper used for smithing and alloying."
+	name = "粗铜"
+	desc = "用于锻造和合金冶炼的铜块。"
 	item_type = /obj/item/rogueore/copper
 	held_items = list(6, 8)
 	payout_price = 3
@@ -112,8 +112,8 @@
 	generation_price = 4
 
 /datum/roguestock/stockpile/tin
-	name = "Raw Tin"
-	desc = "Chunks of tin used for smithing and alloying."
+	name = "粗锡"
+	desc = "用于锻造和合金冶炼的锡块。"
 	item_type = /obj/item/rogueore/tin
 	held_items = list(6, 6)
 	payout_price = 4
@@ -126,8 +126,8 @@
 	generation_price = 4
 
 /datum/roguestock/stockpile/gold
-	name = "Raw Gold"
-	desc = "Chunks of unrefined gold."
+	name = "粗金"
+	desc = "未经提炼的金块。"
 	item_type = /obj/item/rogueore/gold
 	held_items = list(0, 0)
 	payout_price = 50
@@ -139,8 +139,8 @@
 	generation_price = 80 //you don't even get to dodge tax with this one, but not blocked just in case the steward strikes a deal with someone 
 
 /datum/roguestock/stockpile/silver
-	name = "Raw Silver"
-	desc = "Chunks of unrefined silver."
+	name = "粗银"
+	desc = "未经提炼的银块。"
 	item_type = /obj/item/rogueore/silver
 	held_items = list(0, 0)
 	payout_price = 75
@@ -153,8 +153,8 @@
 	no_passive = TRUE
 
 /datum/roguestock/stockpile/cloth
-	name = "Cloth"
-	desc = "Lengths of cloth for sewing and tailoring."
+	name = "布料"
+	desc = "用于缝纫和裁缝工作的布匹。"
 	item_type = /obj/item/natural/cloth
 	held_items = list(0, 2)
 	payout_price = 3
@@ -168,8 +168,8 @@
 	remote_limit = 15 //not exactly hard to store, and also you usually need loads of it all at once
 
 /datum/roguestock/stockpile/fibers
-	name = "Fibers"
-	desc = "Strands used to make cloth and other items."
+	name = "纤维"
+	desc = "用于制作布料和其他物品的纤维。"
 	item_type = /obj/item/natural/fibers
 	held_items = list(0, 2)
 	payout_price = 1
@@ -183,8 +183,8 @@
 	remote_limit = 20
 
 /datum/roguestock/stockpile/silk
-	name = "Silk"
-	desc = "Strands of spider silk used to make exotic clothes."
+	name = "丝绸"
+	desc = "用于制作异域服饰的蜘蛛丝。"
 	item_type = /obj/item/natural/silk
 	held_items = list(0, 2)
 	payout_price = 2
@@ -197,8 +197,8 @@
 	generation_price = 2
 //natural/hide/cured must be defined/populated in sstreasury before natural/hide, for istype stockpile check to work
 /datum/roguestock/stockpile/cured
-	name = "Cured Leather"
-	desc = "Cured Leather ready to be worked."
+	name = "鞣制皮革"
+	desc = "已经鞣制完成、可直接加工的皮革。"
 	item_type = /obj/item/natural/hide/cured
 	held_items = list(5, 2)
 	payout_price = 3
@@ -212,8 +212,8 @@
 	remote_limit = 12 //same as cloth! Kind of
 
 /datum/roguestock/stockpile/hide
-	name = "Hide"
-	desc = "Stripped hide from animals."
+	name = "兽皮"
+	desc = "从动物身上剥下的皮。"
 	item_type = /obj/item/natural/hide
 	held_items = list(4, 2)
 	payout_price = 8
@@ -226,8 +226,8 @@
 	generation_price = 10 
 
 /datum/roguestock/stockpile/fur
-	name = "Fur"
-	desc = "Hide with a long winter coat from animals."
+	name = "毛皮"
+	desc = "带有厚实冬毛的动物皮。"
 	item_type = /obj/item/natural/fur
 	held_items = list(2, 9) //a bit of a luxury thing, so you get tons at the start but no generation roundstart
 	payout_price = 10
@@ -239,8 +239,8 @@
 	generation_price = 12
 
 /datum/roguestock/stockpile/viscera
-	name = "Viscera"
-	desc = "Viscera from animals."
+	name = "内脏"
+	desc = "取自动物的内脏。"
 	item_type = /obj/item/alch/viscera
 	held_items = list(2, 4) //only a couple of specific uses, and really easy to get. No need for passive
 	payout_price = 2

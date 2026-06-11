@@ -1,6 +1,6 @@
 // Basic ladder. By default links to the z-level above/below.
 /obj/structure/ladder
-	name = "ladder"
+	name = "梯子"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "ladder11"
@@ -93,22 +93,22 @@
 		return
 
 	if (up && down)
-		var/result = alert("Go up or down [src]?", "Ladder", "Up", "Down", "Cancel")
+		var/result = alert("要沿着[src]向上还是向下？", "梯子", "向上", "向下", "取消")
 		if (!in_range(src, user))
 			return  // nice try
 		switch(result)
-			if("Up")
+			if("向上")
 				travel(TRUE, user, is_ghost, up)
-			if("Down")
+			if("向下")
 				travel(FALSE, user, is_ghost, down)
-			if("Cancel")
+			if("取消")
 				return
 	else if(up)
 		travel(TRUE, user, is_ghost, up)
 	else if(down)
 		travel(FALSE, user, is_ghost, down)
 	else
-		to_chat(user, "<span class='warning'>[src] doesn't seem to lead anywhere!</span>")
+		to_chat(user, "<span class='warning'>[src]看起来通不到任何地方！</span>")
 
 	if(!is_ghost)
 		add_fingerprint(user)
@@ -129,14 +129,14 @@
 
 /obj/structure/ladder/proc/show_fluff_message(going_up, mob/user)
 	if(going_up)
-		user.visible_message("<span class='notice'>[user] climbs up [src].</span>", "<span class='notice'>I climb up [src].</span>")
+		user.visible_message("<span class='notice'>[user]沿着[src]向上爬去。</span>", "<span class='notice'>我沿着[src]向上爬去。</span>")
 	else
-		user.visible_message("<span class='notice'>[user] climbs down [src].</span>", "<span class='notice'>I climb down [src].</span>")
+		user.visible_message("<span class='notice'>[user]沿着[src]向下爬去。</span>", "<span class='notice'>我沿着[src]向下爬去。</span>")
 
 
 // Indestructible away mission ladders which link based on a mapped ID and height value rather than X/Y/Z.
 /obj/structure/ladder/unbreakable
-	name = "sturdy ladder"
+	name = "坚固梯子"
 	desc = ""
 	resistance_flags = INDESTRUCTIBLE
 	var/id
@@ -193,7 +193,7 @@
 		icon_state = "ladder00"
 
 /obj/structure/wallladder
-	name = "wall ladder"
+	name = "墙梯"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "ladderwall"
@@ -221,8 +221,8 @@
 	. = ..()
 
 /obj/structure/rope_ladder
-	name = "rope"
-	desc = "A length of rope that has been lowered against a surface to allow climbing."
+	name = "绳梯"
+	desc = "一段沿着表面垂下的绳索，可供攀爬。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "pillar"
 	anchored = TRUE
@@ -237,9 +237,9 @@
 	var/mob/living/living_user = usr
 	if(!Adjacent(living_user))
 		return
-	living_user.visible_message(span_notice("[living_user] begins removing the rope ladder from the wall..."), span_notice("You begin removing the rope ladder from the wall..."))
+	living_user.visible_message(span_notice("[living_user]开始把绳梯从墙上拆下来……"), span_notice("我开始把绳梯从墙上拆下来……"))
 	if(do_after(living_user, 5 SECONDS, TRUE, src))
 		var/obj/item/rope/rope = new(src.loc)
 		living_user.put_in_hands(rope)
-		living_user.visible_message(span_notice("[living_user] removes the rope ladder from the wall."), span_notice("You remove the rope ladder from the wall."))
+		living_user.visible_message(span_notice("[living_user]把绳梯从墙上拆了下来。"), span_notice("我把绳梯从墙上拆了下来。"))
 		qdel(src)

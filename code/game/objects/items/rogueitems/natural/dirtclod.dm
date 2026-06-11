@@ -1,14 +1,14 @@
 /obj/item/natural/dirtclod
-	name = "clod"
-	desc = "A handful of earth."
+	name = "土块"
+	desc = "一把泥土。"
 	icon_state = "clod1"
 	dropshrink = 0
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/natural/dirtclod/snow
-	name = "packed snow"
-	desc = "A handful of snow"
+	name = "压实雪团"
+	desc = "一把雪。"
 	icon_state = "snow1"
 
 /obj/item/natural/dirtclod/snow/Initialize(mapload)
@@ -16,8 +16,8 @@
 	icon_state = "snow[rand(1,2)]"
 
 /obj/item/natural/dirtclod/sand
-	name = "sand"
-	desc = "A handful of loose sand."
+	name = "沙子"
+	desc = "一把松散的沙子。"
 	icon_state = "sand1"
 
 /obj/item/natural/dirtclod/sand/Initialize(mapload)
@@ -75,7 +75,7 @@
 			new /obj/structure/fluff/clodpile(T)
 
 /obj/item/natural/dirtclod/attack_self(mob/living/user)
-	user.visible_message(span_warning("[user] scatters [src]."))
+	user.visible_message(span_warning("[user]撒开了[src]。"))
 	qdel(src)
 
 /obj/item/natural/dirtclod/Initialize(mapload)
@@ -83,8 +83,8 @@
 	..()
 
 /obj/structure/fluff/clodpile
-	name = "dirt pile"
-	desc = "A pile of dirt."
+	name = "土堆"
+	desc = "一堆泥土。"
 	icon_state = "clodpile"
 	var/dirtamt = 5
 	icon = 'icons/roguetown/items/natural.dmi'
@@ -122,8 +122,8 @@
 	..()
 
 /obj/structure/fluff/sandpile
-	name = "sand pile"
-	desc = "A pile of loose sand."
+	name = "沙堆"
+	desc = "一堆松散的沙子。"
 	icon_state = "sandpile"
 	var/sandamt = 5
 	icon = 'icons/roguetown/items/natural.dmi'

@@ -8,7 +8,7 @@
 
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
-	tutorial = "Picked out of your political value rather than likely any form of love, you have become the Grand Duke's most trusted confidant--and likely friend--throughout your marriage. Your loyalty and perhaps even your love will be tested this day... for the daggers that threaten your beloved are as equally pointed at your own throat."
+	tutorial = "你之所以被选中，多半是出于政治价值，而非什么爱情。经由这场婚姻，你成了大公最信任的知己，也许甚至是朋友。今日，你的忠诚，乃至你的爱意，都将遭受考验……因为那些指向你所爱之人的匕首，同样也正抵在你的喉头。"
 
 	spells = list(/obj/effect/proc_holder/spell/self/convertrole/servant,
 	/obj/effect/proc_holder/spell/self/grant_nobility)
@@ -75,11 +75,11 @@
 	H.change_stat(STATKEY_LCK, 5)
 
 /obj/effect/proc_holder/spell/self/convertrole/servant
-	name = "Recruit Servant"
+	name = "征募仆役"
 	new_role = "Servant"
 	overlay_state = "recruit_servant"
 	recruitment_faction = "Servants"
-	recruitment_message = "Serve the crown, %RECRUIT!"
-	accept_message = "FOR THE CROWN!"
-	refuse_message = "I refuse."
+	recruitment_message = "为王冠效命吧，%RECRUIT！"
+	accept_message = "为了王冠！"
+	refuse_message = "我拒绝。"
 	recharge_time = 100

@@ -1,6 +1,6 @@
 /datum/migrant_role/fablefield/goliard
-	name = "Fablefield Goliard"
-	greet_text = "For years you've travelled to Fablefield, honing your craft at the annual grand festival of tales. You are a respected weaver of glorious and valorous stories, with a tongue and wit as sharp as your blade. Of late, you've been obsessed with these lands in particular... What fantastical adventures could you embark on here, with your proteges?"
+	name = "Fablefield游艺诗人"
+	greet_text = "多年来你一直前往 Fablefield，在一年一度的盛大故事节上磨炼技艺。你是位备受尊敬的英雄故事编织者，口舌与机智都和手中利刃一样锋利。近来你对谷地痴迷不已……在这里，你能与自己的门徒展开怎样的奇幻冒险？"
 	outfit = /datum/outfit/job/roguetown/fablefield/goliard
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
@@ -47,8 +47,8 @@
 	ADD_TRAIT(H, TRAIT_GOODLOVER, TRAIT_GENERIC)
 
 /datum/migrant_role/fablefield/troubadour
-	name = "Fablefield Troubadour"
-	greet_text = "At the last grand festival of tales in Fablefield, you were inspired by a figure who sung of dragons, faeries, gods and heroes. This year, you plan to be the hero of your own story. A talented bard, and good with a blade, you follow your muse with nothing but the highest hopes, although so far these lands aren't quite what you expected..."
+	name = "Fablefield吟游诗人"
+	greet_text = "在 Fablefield 上一届盛大故事节上，一位歌唱巨龙、仙灵、诸神与英雄的人物激励了你。今年，你打算成为自己故事里的英雄。你是位才华横溢的吟游诗人，也擅长使剑，只怀揣着最高的期待追随灵感而来，尽管到目前为止，谷地还不太像你所期待的那样……"
 	outfit = /datum/outfit/job/roguetown/fablefield/troubadour
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS

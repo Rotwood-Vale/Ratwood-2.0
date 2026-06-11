@@ -1,6 +1,6 @@
 /obj/item/parcel
-	name = "parcel wrapping paper"
-	desc = "A sturdy piece of paper used to wrap items for secure delivery. The final size of the parcel depends on the size of the original item."
+	name = "包裹封装纸"
+	desc = "一张结实的包裹纸，用于将物品封装后安全投递。包裹最终的大小取决于原物品的尺寸。"
 	icon = 'modular/Neu_Food/icons/cookware/ration.dmi'
 	icon_state = "ration_wrapper"
 	w_class = WEIGHT_CLASS_TINY
@@ -70,19 +70,19 @@
 
 /obj/item/parcel/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/parcel) || I.w_class > WEIGHT_CLASS_BULKY || contained_item)
-		to_chat(user, span_warning("You can't wrap this in [src]."))
+		to_chat(user, span_warning("你不能用[src]来包这个。"))
 		return
 
 	if(do_after(user, 2 SECONDS, target = src))
 		user.transferItemToLoc(I, src)
 		contained_item = I
-		name = "parcel ([I.name])"
-		desc = "A securely wrapped parcel containing [I.name]."
+		name = "包裹（[I.name]）"
+		desc = "一个包裹严实的邮包，里面装着 [I.name]。"
 		icon_state = I.w_class >= WEIGHT_CLASS_NORMAL ? "ration_large" : "ration_small"
 		dropshrink = 1
 		update_icon()
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
-		to_chat(user, span_notice("You wrap [I] in the parcel wrapper."))
+		to_chat(user, span_notice("你把[I]包进了包裹纸里。"))
 
 /obj/item/parcel/attack_self(mob/user)
 	if(!contained_item)
@@ -91,11 +91,11 @@
 	if(delivery_area_type)
 		var/area/quest_area = delivery_area_type
 		if(ispath(quest_area, /area) && !(user.job in allowed_jobs))
-			to_chat(user, span_warning("This parcel is sealed for delivery to [initial(quest_area.name)] and can only be opened by: [english_list(allowed_jobs)]!"))
+			to_chat(user, span_warning("这个包裹已封装，需投递至 [initial(quest_area.name)]，只能由以下身份开启：[english_list(allowed_jobs)]！"))
 			return FALSE
 
 	if(do_after(user, 2 SECONDS, target = src))
-		to_chat(user, span_notice("You unwrap [contained_item] from the parcel."))
+		to_chat(user, span_notice("你从包裹中拆出了[contained_item]。"))
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
 		user.put_in_hands(contained_item)
 		contained_item.update_icon()
@@ -111,7 +111,7 @@
 	if(!ispath(delivery_area, /area))
 		return
 
-	. += span_info("This parcel is addressed to [initial(delivery_area.name)].")
+	. += span_info("这个包裹的收件地是 [initial(delivery_area.name)]。")
 	. += (user.job in allowed_jobs) ? \
 		span_notice("As [user.job], you're authorized to open this.") : \
 		span_warning("It's sealed with an official guild mark - only authorized personnel should open this!")

@@ -1,6 +1,6 @@
 
 /obj/item/rogue/painting
-	name = "painting"
+	name = "画作"
 	icon_state = "painting"
 	desc = ""
 	w_class = WEIGHT_CLASS_NORMAL
@@ -12,7 +12,7 @@
 /obj/item/rogue/painting/attack_turf(turf/T, mob/living/user)
 	if(isclosedturf(T))
 		if(get_dir(T,user) in GLOB.cardinals)
-			to_chat(user, span_warning("I place [src] on the wall."))
+			to_chat(user, span_warning("我把[src]挂到了墙上。"))
 			var/obj/structure/S = new deployed_structure(user.loc)
 			switch(get_dir(T,user))
 				if(NORTH)
@@ -28,8 +28,8 @@
 	..()
 
 /obj/structure/fluff/walldeco/painting
-	name = "vague painting"
-	desc = "The artist is unknown. The subject is unknown. Maybe a memorial to a corpse that was trampled on the trail to this reality."
+	name = "模糊的画作"
+	desc = "作者不详，题材不详。也许是对某具尸体的纪念，这具尸体在通往此现实的道路上曾遭践踏。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "painting_deployed"
 	anchored = TRUE
@@ -47,42 +47,42 @@
 	..()
 
 /obj/structure/fluff/walldeco/painting/queen
-	name = "queen alexia painting"
-	desc = "It's Queen Alexia I 'the Righteous' Valmont of Ferentia. Twenty years ago she rebelled against her father, King Mattimeo, and had him burned on a cross for heresy after he was seduced by a Baothan succubus."
+	name = "亚历克西娅女王画像"
+	desc = "画中是费伦提亚的亚历克西娅一世“正直者”瓦尔蒙女王。二十年前，在其父马蒂梅奥国王被巴奥莎魅魔诱惑后，她起兵反叛，并以异端罪名将其绑上十字架焚烧。"
 	icon_state = "queenpainting_deployed"
 	stolen_painting = /obj/item/rogue/painting/queen
 
 /obj/item/rogue/painting/queen
 	icon_state = "queenpainting"
-	name = "queen alexia painting"
-	desc = "It's Queen Alexia I 'the Righteous' Valmont of Ferentia. Twenty years ago she rebelled against her father, King Mattimeo, and had him burned on a cross for heresy after he was seduced by a Baothan succubus. These mass-reproduced paintings are devalued."
+	name = "亚历克西娅女王画像"
+	desc = "画中是费伦提亚的亚历克西娅一世“正直者”瓦尔蒙女王。二十年前，在其父马蒂梅奥国王被巴奥莎魅魔诱惑后，她起兵反叛，并以异端罪名将其绑上十字架焚烧。这些大量复制的画作已经贬值。"
 	dropshrink = 0.5
 	sellprice = 200
 	deployed_structure = /obj/structure/fluff/walldeco/painting/queen
 
 /obj/item/rogue/painting/seraphina
 	icon_state = "seraphinapainting"
-	name = "holy priest seraphina painting"
-	desc = "The holy priest Seraphina, first leader of the Sun Cult of Astrata, who unified the ten sects of the gods after the disappearance of PSYDON. Seen as the great unifier of faith as the Age of Rot began a thousand years past."
+	name = "圣职者塞拉菲娜画像"
+	desc = "画中是圣职者塞拉菲娜，她是阿斯特拉塔太阳教派的首任领袖，在普赛顿消失后统一了诸神的十个教派。她被视为信仰的伟大统一者，正值千年前腐朽纪元开启之时。"
 	dropshrink = 0.5
 	sellprice = 200
 	deployed_structure = /obj/structure/fluff/walldeco/painting/seraphina
 
 /obj/structure/fluff/walldeco/painting/seraphina
-	name = "holy priest seraphina painting"
-	desc = "The holy priest Seraphina, first leader of the Sun Cult of Astrata, who unified the ten sects of the gods after the disappearance of PSYDON. Seen as the great unifier of faith as the Age of Rot began a thousand years past."
+	name = "圣职者塞拉菲娜画像"
+	desc = "画中是圣职者塞拉菲娜，她是阿斯特拉塔太阳教派的首任领袖，在普赛顿消失后统一了诸神的十个教派。她被视为信仰的伟大统一者，正值千年前腐朽纪元开启之时。"
 	icon_state = "seraphinapainting_deployed"
 	stolen_painting = /obj/item/rogue/painting/seraphina
 
 /obj/item/rogue/painting/skullzhg
 	icon_state = "skullpainting"
-	name = "morbid painting"
-	desc = "A painting of a candelabra and human skull on a covered table, it is a modestly grim yet tasteful piece of art. Memento mori."
+	name = "阴森画作"
+	desc = "一幅描绘铺着桌布的桌上放有枝形烛台和人头骨的画作，既适度阴森又不失品味。勿忘人终有一死。"
 	sellprice = 200
 	deployed_structure = /obj/structure/fluff/walldeco/painting/skull
 
 /obj/structure/fluff/walldeco/painting/skull
-	name = "morbid painting"
-	desc = "A painting of a candelabra and human skull on a covered table, it is a modestly grim yet tasteful piece of art. Memento mori."
+	name = "阴森画作"
+	desc = "一幅描绘铺着桌布的桌上放有枝形烛台和人头骨的画作，既适度阴森又不失品味。勿忘人终有一死。"
 	icon_state = "skullpainting_deployed"
 	stolen_painting = /obj/item/rogue/painting/skullzhg

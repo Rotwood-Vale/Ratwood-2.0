@@ -1,6 +1,6 @@
 /obj/item/clothing/under/roguetown/platelegs/blacksteel/modern
-	name = "blacksteel plate chausses"
-	desc = "Reinforced leg plates forged of durable blacksteel, using a modern design."
+	name = "黑钢板甲腿铠"
+	desc = "以耐用黑钢锻造、采用现代设计的加固腿甲。"
 	gender = PLURAL
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
@@ -19,8 +19,8 @@
 	dropshrink = 0.7
 
 /obj/item/clothing/under/roguetown/platelegs/blacksteel
-	name = "ancient blacksteel plate chausses"
-	desc = "Reinforced leg plates forged of durable blacksteel."
+	name = "远古黑钢板甲腿铠"
+	desc = "以耐用黑钢锻造的加固腿甲。"
 	gender = PLURAL
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'

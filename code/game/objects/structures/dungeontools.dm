@@ -2,8 +2,8 @@
 
 
 /obj/structure/dungeontool/trigger // A hidden obj that sends a redstone trigger when crossed by a mob with a mind
-	name = "invisible trigger plate"
-	desc = "Used for quietly triggering redstone structures. Only triggered by mobs with a mind"
+	name = "?????"
+	desc = "????????????????????????"
 	icon = 'icons/roguetown/misc/traps.dmi'
 	icon_state = "pressureplate"
 	max_integrity = 9999
@@ -25,8 +25,8 @@
 		spawn(0) O.redstone_triggered()
 
 /obj/structure/dungeontool/triggered // A simple obj that does a thing when activated by redstone. Create subtypes, do not use this parent obj
-	name = "triggered obj"
-	desc = "Does a thing when triggered"
+	name = "????"
+	desc = "????????????"
 	icon = 'icons/roguetown/misc/traps.dmi'
 	icon_state = "base_trap_plate"
 	max_integrity = 9999
@@ -45,11 +45,11 @@
 		return
 	if(!activated)
 		playsound(src, 'sound/blank.ogg', 100)
-		visible_message("sends a message to chat in screen wide range from object by default")
+		visible_message("?????????????????")
 		activated = TRUE
 
 /obj/structure/dungeontool/triggered/thiefdaddmobs
-	name = "triggered for addmobs trigger"
+	name = "???????"
 	redstone_id = "addmobs"
 
 /obj/structure/dungeontool/triggered/thiefdaddmobs/redstone_triggered()
@@ -62,10 +62,10 @@
 		playsound(src, 'sound/foley/smash_rock.ogg', 70)
 		sleep(15)
 		playsound(src, 'sound/foley/smash_rock.ogg', 40)
-		visible_message("That sounded pretty loud...")
+		visible_message("??????????")
 
 /obj/structure/dungeontool/triggered/barracksalert
-	name = "triggered for barracks alert trigger"
+	name = "???????"
 	redstone_id = "barracks"
 
 /obj/structure/dungeontool/triggered/barracksalert/redstone_triggered()
@@ -75,10 +75,10 @@
 		playsound(src, 'sound/foley/equip/equip_armor_chain.ogg', 100)
 
 /obj/structure/dungeontool/triggered/invisibleshutterclosed //useful monster closets
-	name = "invisible shutter (closed)"
+	name = "?????????"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "shutter0"
-	desc = "Can only be opened, but not closed by a redstone trigger."
+	desc = "????????????????????"
 	density = TRUE
 	opacity = TRUE
 	dir = SOUTH
@@ -97,8 +97,8 @@
 		opacity = FALSE
 
 /obj/structure/dungeontool/mover //moves mobs and objs in the dir, checks every 1.5 seconds, used for monster closet
-	name = "mob mover"
-	desc = "moves a mob in the direction indicated."
+	name = "?????"
+	desc = "???????????"
 	icon = 'icons/blanks/32x32.dmi'
 	icon_state = "dir_indicator"
 	density = FALSE

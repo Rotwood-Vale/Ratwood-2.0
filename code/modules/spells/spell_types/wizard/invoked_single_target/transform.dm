@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/shapeshift/dendormole
-	name = "Borrowed Power"
-	desc = "Greater power bestowed upon you, use it to shape into Dendor's special beest."
-	invocations = list("Blood shall feed the flowers!")
+	name = "借来之力"
+	desc = "更高位的力量降临于你，使你得以化作登多尔的特异圣兽。"
+	invocations = list("鲜血将滋养花朵！")
 	invocation_type = "shout"
 	overlay_state = "tamebeast"
 	human_req = FALSE
@@ -32,9 +32,9 @@
 	return TRUE
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/mireboi
-	name = "Crawler Form"
-	desc = "Rare power bestowed by Druids from the manic depths of Dendor's domain, used to take the form of an agile arachnoid critter."
-	invocations = list("Spin and Skitter!")
+	name = "匍行者形态"
+	desc = "由德鲁伊自登多尔疯狂深林中求得的稀有力量，可使你化作敏捷的蛛形异兽。"
+	invocations = list("织网，疾爬！")
 	invocation_type = "shout"
 	overlay_state = "tamebeast"
 	human_req = FALSE

@@ -28,7 +28,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/stun
 
 /atom/movable/screen/alert/status_effect/stun
-	name = "Stunned"
+	name = "眩晕"
 	desc = ""
 	icon_state = "stun"
 
@@ -38,7 +38,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/knocked_down
 
 /atom/movable/screen/alert/status_effect/knocked_down
-	name = "Knocked Down"
+	name = "被击倒"
 	desc = ""
 	icon_state = "knockdown"
 
@@ -51,7 +51,7 @@
 	mob_effect_offset_x = 3
 
 /atom/movable/screen/alert/status_effect/immobilized
-	name = "Immobilized"
+	name = "动弹不得"
 	desc = ""
 	icon_state = "immob"
 
@@ -60,7 +60,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/paralyzed
 
 /atom/movable/screen/alert/status_effect/paralyzed
-	name = "Paralyzed"
+	name = "麻痹"
 	desc = ""
 	icon_state = "paralyze"
 
@@ -140,7 +140,7 @@
 			harpy_skin.obj_broken = FALSE
 
 /atom/movable/screen/alert/status_effect/asleep
-	name = "Asleep"
+	name = "睡着了"
 	desc = ""
 	icon_state = "sleeping"
 
@@ -179,7 +179,7 @@
 		return ..()
 
 /atom/movable/screen/alert/status_effect/stasis
-		name = "Stasis"
+		name = "停滞"
 		desc = ""
 		icon_state = "stasis"
 
@@ -200,18 +200,18 @@
 	return ..()
 
 /atom/movable/screen/alert/status_effect/strandling
-	name = "Choking strand"
+	name = "勒颈线"
 	desc = ""
 	icon_state = "his_grace"
 	alerttooltipstyle = "hisgrace"
 
 /atom/movable/screen/alert/status_effect/strandling/handle_click(location, control, params)
 	. = ..()
-	to_chat(mob_viewer, "<span class='notice'>I attempt to remove the durathread strand from around my neck.</span>")
+	to_chat(mob_viewer, "<span class='notice'>我试着取下缠在脖子上的耐久线。</span>")
 	if(do_after(mob_viewer, 35, null, mob_viewer))
 		if(isliving(mob_viewer))
 			var/mob/living/L = mob_viewer
-			to_chat(mob_viewer, "<span class='notice'>I succesfuly remove the durathread strand.</span>")
+			to_chat(mob_viewer, "<span class='notice'>我成功取下了耐久线。</span>")
 			L.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 
 
@@ -296,7 +296,7 @@
 	ADD_TRAIT(owner, TRAIT_PACIFISM, "gonbolaPacify")
 	ADD_TRAIT(owner, TRAIT_MUTE, "gonbolaMute")
 	ADD_TRAIT(owner, TRAIT_JOLLY, "gonbolaJolly")
-	to_chat(owner, "<span class='notice'>I suddenly feel at peace and feel no need to make any sudden or rash actions...</span>")
+	to_chat(owner, "<span class='notice'>我突然感到平静，不再想做出任何突然或鲁莽的举动……</span>")
 	return ..()
 
 /datum/status_effect/gonbolaPacify/on_remove()
@@ -309,12 +309,12 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = 300
 	tick_interval = 10
-	examine_text = "<span class='warning'>SUBJECTPRONOUN seems slow and unfocused.</span>"
+	examine_text = "<span class='warning'>SUBJECTPRONOUN 看起来反应迟缓，注意力涣散。</span>"
 	var/stun = TRUE
 	alert_type = /atom/movable/screen/alert/status_effect/trance
 
 /atom/movable/screen/alert/status_effect/trance
-	name = "Trance"
+	name = "恍惚"
 	desc = ""
 	icon_state = "high"
 
@@ -329,8 +329,8 @@
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, PROC_REF(hypnotize))
 	ADD_TRAIT(owner, TRAIT_MUTE, "trance")
 	owner.add_client_colour(/datum/client_colour/monochrome/trance)
-	owner.visible_message("[stun ? "<span class='warning'>[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.</span>" : ""]", \
-	"<span class='warning'>[pick("You feel my thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
+	owner.visible_message("[stun ? "<span class='warning'>[owner] 呆立原地，[owner.p_their()] 的目光似乎聚焦在遥远的一点上。</span>" : ""]", \
+	"<span class='warning'>[pick("我感觉自己的思绪慢了下来……", "我突然感到一阵强烈的眩晕……", "我感觉自己仿佛置身梦境之中……","我感到无比放松……")]</span>")
 	return TRUE
 
 /datum/status_effect/trance/on_creation(mob/living/new_owner, _duration, _stun = TRUE)
@@ -343,7 +343,7 @@
 	REMOVE_TRAIT(owner, TRAIT_MUTE, "trance")
 	owner.dizziness = 0
 	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
-	to_chat(owner, "<span class='warning'>I snap out of my trance!</span>")
+	to_chat(owner, "<span class='warning'>我从恍惚中清醒过来！</span>")
 
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	if(!owner.can_hear())
@@ -366,14 +366,14 @@
 		switch(rand(1,5))
 			if(1)
 				if((owner.mobility_flags & MOBILITY_MOVE) && isturf(owner.loc))
-					to_chat(owner, "<span class='warning'>My leg spasms!</span>")
+					to_chat(owner, "<span class='warning'>我的腿痉挛了！</span>")
 					step(owner, pick(GLOB.cardinals))
 			if(2)
 				if(owner.incapacitated())
 					return
 				var/obj/item/I = owner.get_active_held_item()
 				if(I)
-					to_chat(owner, "<span class='warning'>My fingers spasm!</span>")
+					to_chat(owner, "<span class='warning'>我的手指痉挛了！</span>")
 					owner.log_message("used [I] due to a Muscle Spasm", LOG_ATTACK)
 					I.attack_self(owner)
 			if(3)
@@ -389,14 +389,14 @@
 					if(isliving(M))
 						targets += M
 				if(LAZYLEN(targets))
-					to_chat(owner, "<span class='warning'>My arm spasms!</span>")
+					to_chat(owner, "<span class='warning'>我的手臂痉挛了！</span>")
 					owner.log_message(" attacked someone due to a Muscle Spasm", LOG_ATTACK) //the following attack will log itself
 					owner.ClickOn(pick(targets))
 				owner.a_intent = prev_intent
 			if(4)
 				var/prev_intent = owner.a_intent
 				owner.a_intent = INTENT_HARM
-				to_chat(owner, "<span class='warning'>My arm spasms!</span>")
+				to_chat(owner, "<span class='warning'>我的手臂痉挛了！</span>")
 				owner.log_message("attacked [owner.p_them()]self to a Muscle Spasm", LOG_ATTACK)
 				owner.ClickOn(owner)
 				owner.a_intent = prev_intent
@@ -408,7 +408,7 @@
 				for(var/turf/T in oview(owner, 3))
 					targets += T
 				if(LAZYLEN(targets) && I)
-					to_chat(owner, "<span class='warning'>My arm spasms!</span>")
+					to_chat(owner, "<span class='warning'>我的手臂痉挛了！</span>")
 					owner.log_message("threw [I] due to a Muscle Spasm", LOG_ATTACK)
 					owner.throw_item(pick(targets))
 
@@ -431,7 +431,7 @@
 	owner.forceMove(T)
 
 /atom/movable/screen/alert/status_effect/go_away
-	name = "TO THE STARS AND BEYOND!"
+	name = "飞向群星，奔向远方！"
 	desc = ""
 	icon_state = "high"
 
@@ -449,25 +449,25 @@
 	switch(msg_stage)
 		if(0 to 300)
 			if(prob(1))
-				fake_msg = pick("<span class='warning'>[pick("Your head hurts.", "Your head pounds.")]</span>",
-				"<span class='warning'>[pick("You're having difficulty breathing.", "Your breathing becomes heavy.")]</span>",
-				"<span class='warning'>[pick("You feel dizzy.", "Your head spins.")]</span>",
-				"<span notice='warning'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>",
-				"<span class='warning'>[pick("Your head hurts.", "Your mind blanks for a moment.")]</span>",
-				"<span class='warning'>[pick("Your throat hurts.", "You clear my throat.")]</span>")
+				fake_msg = pick("<span class='warning'>[pick("我头疼。", "我头痛欲裂。")]</span>",
+				"<span class='warning'>[pick("我呼吸困难。", "我的呼吸变得沉重。")]</span>",
+				"<span class='warning'>[pick("我感到头晕。", "我一阵天旋地转。")]</span>",
+				"<span notice='warning'>[pick("我咽下多余的痰液。", "我轻咳了一声。")]</span>",
+				"<span class='warning'>[pick("我头疼。", "我脑中突然空白了一瞬。")]</span>",
+				"<span class='warning'>[pick("我喉咙疼。", "我清了清嗓子。")]</span>")
 		if(301 to 600)
 			if(prob(2))
-				fake_msg = pick("<span class='warning'>[pick("Your head hurts a lot.", "Your head pounds incessantly.")]</span>",
-				"<span class='warning'>[pick("Your windpipe feels like a straw.", "Your breathing becomes tremendously difficult.")]</span>",
-				"<span class='warning'>I feel very [pick("dizzy","woozy","faint")].</span>",
-				"<span class='warning'>[pick("You hear a ringing in my ear.", "Your ears pop.")]</span>",
-				"<span class='warning'>I nod off for a moment.</span>")
+				fake_msg = pick("<span class='warning'>[pick("我头疼得厉害。", "我的头持续阵阵作痛。")]</span>",
+				"<span class='warning'>[pick("我的气管像吸管一样狭窄。", "我呼吸变得极其困难。")]</span>",
+				"<span class='warning'>我感到非常[pick("头晕","昏沉","虚弱")]。</span>",
+				"<span class='warning'>[pick("我耳中嗡嗡作响。", "我的耳朵一阵鼓胀作响。")]</span>",
+				"<span class='warning'>我打了一会儿盹。</span>")
 		else
 			if(prob(3))
 				if(prob(50))// coin flip to throw a message or an emote
-					fake_msg = pick("<span class='danger'>[pick("Your head hurts!", "You feel a burning knife inside my brain!", "A wave of pain fills my head!")]</span>",
-					"<span class='danger'>[pick("Your lungs hurt!", "It hurts to breathe!")]</span>",
-					"<span class='warning'>[pick("You feel nauseated.", "You feel like you're going to throw up!")]</span>")
+					fake_msg = pick("<span class='danger'>[pick("我头疼！", "我感觉脑中像有一把燃烧的刀在搅动！", "一阵剧痛灌满我的脑海！")]</span>",
+					"<span class='danger'>[pick("我的肺在作痛！", "连呼吸都疼！")]</span>",
+					"<span class='warning'>[pick("我感到恶心。", "我觉得自己要吐了！")]</span>")
 				else
 					fake_emote = pick("cough", "sniff", "sneeze")
 
@@ -490,8 +490,8 @@
 	return ..()
 
 /atom/movable/screen/alert/status_effect/debuff/feintcd
-	name = "Feint Cooldown"
-	desc = "I used it. I must wait, or risk a lower chance of success."
+	name = "佯攻冷却"
+	desc = "我已经用过了。必须等待，否则成功率会更低。"
 	icon_state = "feintcd"
 
 //---- Bait
@@ -501,13 +501,13 @@
 	duration = 20 SECONDS
 
 /atom/movable/screen/alert/status_effect/debuff/baited
-	name = "Baited"
-	desc = "I won't fall for it again, for now."
+	name = "已中诱饵"
+	desc = "暂时我不会再上当了。"
 	icon_state = "bait"
 
 /atom/movable/screen/alert/status_effect/debuff/baitedcd
-	name = "Bait Cooldown"
-	desc = "I used it. I must wait."
+	name = "诱饵冷却"
+	desc = "我已经用过了。必须等待。"
 	icon_state = "baitcd"
 
 /datum/status_effect/debuff/baitcd
@@ -517,8 +517,8 @@
 
 //---- Clash
 /atom/movable/screen/alert/status_effect/debuff/clashcd
-	name = "Guard Cooldown"
-	desc = "I used it. I must wait."
+	name = "格挡冷却"
+	desc = "我已经用过了。必须等待。"
 	icon_state = "guardcd"
 
 /datum/status_effect/debuff/clashcd
@@ -527,14 +527,14 @@
 	duration = 30 SECONDS
 
 /atom/movable/screen/alert/status_effect/debuff/clashcd
-	name = "Riposte / Guard Cooldown"
-	desc = "I used it. I must wait."
+	name = "还击 / 格挡冷却"
+	desc = "我已经用过了。必须等待。"
 	icon_state = "guardcd"
 
 //---- Exposed
 /atom/movable/screen/alert/status_effect/debuff/exposed
-	name = "Exposed"
-	desc = "My defenses are completely exposed. I can be hit through my parry and dodge to a devastating effect!"
+	name = "破绽大开"
+	desc = "我的防御完全暴露。敌人能穿过我的招架与闪避，造成毁灭性打击！"
 	icon_state = "exposed"
 
 /datum/status_effect/debuff/exposed
@@ -552,8 +552,8 @@
 
 //----  Vulnerable
 /atom/movable/screen/alert/status_effect/debuff/vulnerable
-	name = "Vulnerable"
-	desc = "A mistake. My vulnerabilities are exposed, and I can be hit through my parry and dodge for a powerful blow."
+	name = "脆弱"
+	desc = "一次失误。我的弱点暴露无遗，敌人能穿过我的招架与闪避打出强力一击。"
 	icon_state = "exposed"
 
 /datum/status_effect/debuff/vulnerable
@@ -587,8 +587,8 @@
 	return ..()
 
 /atom/movable/screen/alert/status_effect/debuff/clickcd
-	name = "Action Delayed"
-	desc = "I cannot take another action."
+	name = "行动延迟"
+	desc = "我无法再进行另一个动作。"
 	icon_state = "clickcd"
 
 //---- Strike cd
@@ -598,8 +598,8 @@
 	duration = 30 SECONDS
 
 /atom/movable/screen/alert/status_effect/debuff/precisestrikecd
-	name = "Precise Strike Cooldown"
-	desc = "I used it. I must wait."
+	name = "精准打击冷却"
+	desc = "我已经用过了。必须等待。"
 	icon_state = "strikecd"
 
 //---- Special CD
@@ -614,15 +614,15 @@
 	return ..()
 
 /atom/movable/screen/alert/status_effect/debuff/specialcd
-	name = "Precise Strike Cooldown"
-	desc = "I used it. I must wait."
+	name = "精准打击冷却"
+	desc = "我已经用过了。必须等待。"
 	icon_state = "strikecd"
 
 // Magical mishaps
 // Victim loses common, their default language, or a random language (in order of preference) for the duration
 /atom/movable/screen/alert/status_effect/mishap_langloss
-	name = "Forgotten Tongue"
-	desc = "I can't remember how to speak in-- what was the language even called, again..?"
+	name = "遗忘之语"
+	desc = "我想不起该怎么说那门语言了……那门语言到底叫什么来着……？"
 	icon_state = "mind_control"
 	var/removed_language = null
 
@@ -668,8 +668,8 @@
 
 // Reduces intelligence by 20 (!!) and removes all languages except Aphasia for the duration.
 /atom/movable/screen/alert/status_effect/mishap_feeblemind
-	name = "Feebleminded"
-	desc = "Wuh-- uh..."
+	name = "愚钝"
+	desc = "呜啊……呃……"
 	icon_state = "mind_control"
 
 /datum/status_effect/debuff/mishap_feeblemind
@@ -703,8 +703,8 @@
 
 // Functions as Nimrod, but a bit worse, for the duration, and enforces simple speech.
 /atom/movable/screen/alert/status_effect/mishap_dimwitted
-	name = "Dim-witted"
-	desc = "My thoughts are so slow..."
+	name = "迟钝"
+	desc = "我的思绪变得好慢……"
 	icon_state = "mind_control"
 
 /datum/status_effect/debuff/mishap_dimwitted
@@ -724,7 +724,7 @@
 
 // Reduces some stats, applies a high overlay, increases slurring by 10 and keeps slurring at a minimum of 10.
 /atom/movable/screen/alert/status_effect/mishap_arcane_high
-	name = "Arcyne High"
+	name = "Arcyne 飘然"
 	desc = ""
 	icon_state = "high"
 
@@ -759,8 +759,8 @@
 
 // Increases drunkenness by 50. Prevents drunkenness from falling below 50.
 /atom/movable/screen/alert/status_effect/mishap_arcane_drunkenness
-	name = "Arcyne Drunkenness"
-	desc = "I feel so drunk... But I haven't been drinking! Hah..."
+	name = "Arcyne 醉态"
+	desc = "我感觉醉得厉害……可我明明没喝酒！哈……"
 	icon_state = "drunk"
 
 /datum/status_effect/debuff/mishap_arcane_drunkenness
@@ -792,8 +792,8 @@
 // On application, each limb has a 50% chance of being paralyzed.
 // At least one limb is guaranteed to be paralyzed.
 /atom/movable/screen/alert/status_effect/mishap_arcane_paralysis
-	name = "Arcyne Paralysis"
-	desc = "I can't move parts of my body..."
+	name = "Arcyne 麻痹"
+	desc = "我的身体有些部位动不了了……"
 	icon_state = "paralyze"
 
 /datum/status_effect/debuff/mishap_arcane_paralysis
@@ -849,8 +849,8 @@
 
 // Makes the victim blind... Obviously
 /atom/movable/screen/alert/status_effect/mishap_blindness
-	name = "Arcyne Blindness"
-	desc = "Arcyne darkness clouds my eyes!"
+	name = "Arcyne 致盲"
+	desc = "Arcyne 的黑暗蒙蔽了我的双眼！"
 	icon_state = "blind"
 
 /datum/status_effect/debuff/mishap_blindness
@@ -875,8 +875,8 @@
 
 // Keep putting the user to sleep for the duration.
 /atom/movable/screen/alert/status_effect/mishap_sleepy
-	name = "Arcyne Sleep"
-	desc = "I can't keep myself awake..."
+	name = "Arcyne 嗜睡"
+	desc = "我快撑不住清醒了……"
 	icon_state = "hypnosis"
 
 /datum/status_effect/debuff/mishap_sleepy
@@ -900,8 +900,8 @@
 
 // Makes the victim confused for 5 minutes
 /atom/movable/screen/alert/status_effect/mishap_confused
-	name = "Arcyne Confusion"
-	desc = "Where-- where am I..?"
+	name = "Arcyne 混乱"
+	desc = "这儿是……我是在哪儿……？"
 	icon_state = "mind_control"
 
 /datum/status_effect/debuff/mishap_confused
@@ -950,8 +950,8 @@
 	return (my_stack > CRIT_RESISTANCE_STACKS_PLAYER)
 
 /atom/movable/screen/alert/status_effect/debuff/crit_resistance_cd
-	name = "Critical Resistance"
-	desc = "My body is temporarily resisting critical wounds."
+	name = "暴击抗性"
+	desc = "我的身体暂时在抗拒致命创伤。"
 	icon_state = "debuff"
 
 /datum/status_effect/debuff/yeetcd
@@ -960,6 +960,6 @@
 	duration = 5 SECONDS
 
 /atom/movable/screen/alert/status_effect/debuff/yeetcd
-	name = "Knockback Cooldown"
-	desc = "I have been knocked back recently by an attack and cannot be knocked back again"
+	name = "击退冷却"
+	desc = "我刚被攻击击退过，暂时不会再次被击退"
 	icon_state = "debuff" // Placeholder

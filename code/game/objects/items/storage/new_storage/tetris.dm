@@ -238,27 +238,27 @@
 	if(locked)
 		if(user && !stop_messages)
 			host.add_fingerprint(user)
-			to_chat(user, span_warning("[host] seems to be locked!"))
+			to_chat(user, span_warning("[host]似乎被锁住了！"))
 		return FALSE
 	if(worn_check && !worn_check(parent, user))
 		host.add_fingerprint(user)
 		return FALSE
 	if(LAZYLEN(real_location.contents) >= max_items)
 		if(!stop_messages)
-			to_chat(user, span_warning("[host] is full, make some space!"))
+			to_chat(user, span_warning("[host]已经满了，先腾点空间！"))
 		return FALSE //Storage item is full
 	if(LAZYLEN(can_hold))
 		if(!is_type_in_typecache(storing, can_hold))
 			if(!stop_messages)
-				to_chat(user, span_warning("[host] cannot hold [storing]!"))
+				to_chat(user, span_warning("[host]装不下[storing]！"))
 			return FALSE
 	if(is_type_in_typecache(storing, cant_hold)) //Items which this container can't hold.
 		if(!stop_messages)
-			to_chat(user, span_warning("[host] cannot hold [storing]!"))
+			to_chat(user, span_warning("[host]装不下[storing]！"))
 		return FALSE
 	if((storing.w_class > max_w_class) && !is_type_in_typecache(storing, exception_hold))
 		if(!stop_messages)
-			to_chat(user, span_warning("[storing] is too big for [host]!"))
+			to_chat(user, span_warning("[storing]对[host]来说太大了！"))
 		return FALSE
 	var/atom/recursive_loc = real_location?.loc
 	var/depth = 0
@@ -269,15 +269,15 @@
 			//return false if we are inside of another container, and that container has a smaller max_w_class than us (like if we're a bag in a box)
 			if(biggerfish.max_w_class < max_w_class)
 				if(!stop_messages)
-					to_chat(user, span_warning("[storing] can't fit in [host] while [recursive_loc] is in the way!"))
+					to_chat(user, span_warning("[recursive_loc]挡着时，[storing]放不进[host]！"))
 				return FALSE
 			else if(worn_check && !biggerfish.worn_check(storing, user, stop_messages))
 				if(!stop_messages)
-					to_chat(user, span_warning("[storing] can't fit in [host] while [recursive_loc] is in the way!"))
+					to_chat(user, span_warning("[recursive_loc]挡着时，[storing]放不进[host]！"))
 				return FALSE
 			else if(biggerfish.maximum_depth < depth)
 				if(!stop_messages)
-					to_chat(user, span_warning("[storing] can't fit in [host] while [recursive_loc] is in the way!"))
+					to_chat(user, span_warning("[recursive_loc]挡着时，[storing]放不进[host]！"))
 				return FALSE
 		recursive_loc = recursive_loc.loc
 	var/sum_w_class = storing.w_class
@@ -285,21 +285,21 @@
 		sum_w_class += stored_item.w_class //Adds up the combined w_classes which will be in the storage item if the item is added to it.
 	if(sum_w_class > max_combined_w_class)
 		if(!stop_messages)
-			to_chat(user, span_warning("[storing] won't fit in [host], make some space!"))
+			to_chat(user, span_warning("[storing]放不进[host]，先腾点空间！"))
 		return FALSE
 	if(isitem(host))
 		var/obj/item/host_item = host
 		var/datum/component/storage/storage_internal = storing.GetComponent(/datum/component/storage)
 		if(!allow_big_nesting && (storing.w_class >= host_item.w_class) && storage_internal && !storage_internal.allow_nesting)
 			if(!stop_messages)
-				to_chat(user, span_warning("[host_item] cannot hold [storing] as it's a storage item of the same size!"))
+				to_chat(user, span_warning("[host_item]无法装下[storing]，因为它也是同体积的收纳物！"))
 			return FALSE //To prevent the stacking of same sized storage items
 		if(host_item.StorageBlock(storing, user))
 			return FALSE
 	//SHOULD be handled in unEquip, but better safe than sorry
 	if(HAS_TRAIT(storing, TRAIT_NODROP))
 		if(!stop_messages)
-			to_chat(user, span_warning("\The [storing] is stuck to your hand, you can't put it in \the [host]!"))
+			to_chat(user, span_warning("[storing]黏在你手上了，没法放进[host]！"))
 		return FALSE
 	var/datum/component/storage/concrete/master = master()
 	if(!istype(master))
@@ -396,11 +396,11 @@
 
 	if((storage_flags & STORAGE_NO_EQUIPPED_ACCESS) && (storing.item_flags & IN_INVENTORY))
 		if(!no_message)
-			to_chat(user, span_warning("[storing] is too bulky! I need to set it down before I can access it's contents!"))
+			to_chat(user, span_warning("[storing]太笨重了！我得先把它放下，才能取用里面的东西！"))
 		return FALSE
 	else if((storage_flags & STORAGE_NO_WORN_ACCESS) && (storing.item_flags & IN_INVENTORY) && !(storing in user.held_items))
 		if(!no_message)
-			to_chat(user, span_warning("My arms aren't long enough to reach into [storing] while wearing it!"))
+			to_chat(user, span_warning("穿着[storing]时，我的手臂不够长，够不到里面！"))
 		return FALSE
 
 /datum/component/storage/proc/worn_check_aggressive(obj/item/storing, mob/user, no_message = FALSE)
@@ -410,11 +410,11 @@
 
 	if(storage_flags & STORAGE_NO_EQUIPPED_ACCESS)
 		if(!no_message)
-			to_chat(user, span_warning("[storing] is too bulky! I need to set it down before I can access it's contents!"))
+			to_chat(user, span_warning("[storing]太笨重了！我得先把它放下，才能取用里面的东西！"))
 		return FALSE
 	else if((storage_flags & STORAGE_NO_WORN_ACCESS) && !(storing in user.held_items))
 		if(!no_message)
-			to_chat(user, span_warning("My arms aren't long enough to reach into [storing] while wearing it!"))
+			to_chat(user, span_warning("穿着[storing]时，我的手臂不够长，够不到里面！"))
 		return FALSE
 
 /datum/component/storage/proc/should_block_user_take(obj/item/stored, mob/user, worn_check = FALSE, no_message = FALSE)
@@ -429,11 +429,11 @@
 			depth++
 			if(!biggerfish.worn_check(biggerfish.parent, user, TRUE))
 				if(!no_message)
-					to_chat(user, span_warning("[recursive_loc] is in the way!"))
+					to_chat(user, span_warning("[recursive_loc]挡住了！"))
 				return TRUE
 			else if(biggerfish.maximum_depth <= depth)
 				if(!no_message)
-					to_chat(user, span_warning("[recursive_loc] is in the way!"))
+					to_chat(user, span_warning("[recursive_loc]挡住了！"))
 				return TRUE
 		recursive_loc = recursive_loc.loc
 	return FALSE
@@ -816,10 +816,10 @@
 		storage_master.orient2hud()
 		storage_master.show_to(usr)
 		testing("storage screen variables reset.")
-		to_chat(usr, span_notice("Storage window position has been reset."))
+		to_chat(usr, span_notice("存储窗口位置已重置。"))
 	else if(LAZYACCESS(modifiers, "ctrl"))
 		locked = !locked
-		to_chat(usr, span_notice("Storage window [locked ? "" : "un"]locked."))
+		to_chat(usr, span_notice("存储窗口已[locked ? "" : "解除"]锁定。"))
 	else
 		if(!istype(storage_master))
 			return
@@ -831,7 +831,7 @@
 	if(!istype(storage_master))
 		return
 	if(locked)
-		to_chat(usr, span_warning("The storage window is locked, unlock it first."))
+		to_chat(usr, span_warning("存储窗口已锁定，请先解锁。"))
 		return
 	storage_master = storage_master.master()
 	var/list/modifiers = params2list(params)

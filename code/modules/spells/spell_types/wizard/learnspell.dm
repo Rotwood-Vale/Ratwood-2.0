@@ -1,8 +1,8 @@
 //A spell to choose new spells, upon spawning or gaining levels
 // TODO: Implement per patron spell lists
 /obj/effect/proc_holder/spell/self/learnspell
-	name = "Attempt to learn a new spell"
-	desc = "Weave a new spell"
+	name = "尝试学习新法术"
+	desc = "编织一道新法术"
 	school = "transmutation"
 	overlay_state = "book1"
 	chargedrain = 0
@@ -45,19 +45,19 @@
 		var/obj/effect/proc_holder/spell/spell_item = spell_path
 		choices["[spell_item.name]: [spell_item.cost]"] = spell_path
 
-	var/choice = input("Choose a spell, points left: [user.mind.spell_points - user.mind.used_spell_points]") as null|anything in choices
+	var/choice = input("选择一个法术，剩余点数：[user.mind.spell_points - user.mind.used_spell_points]") as null|anything in choices
 	var/obj/effect/proc_holder/spell/item = choices[choice]
 
 	if(!item)
 		return     // user canceled;
-	if(alert(user, "[item.desc]", "[item.name]", "Learn", "Cancel") == "Cancel") //gives a preview of the spell's description to let people know what a spell does
+	if(alert(user, "[item.desc]", "[item.name]", "学习", "取消") == "取消") //gives a preview of the spell's description to let people know what a spell does
 		return
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == item.type)
-			to_chat(user,span_warning("You already know this one!"))
+			to_chat(user,span_warning("你已经学会这个了！"))
 			return	//already know the spell
 	if(item.cost > user.mind.spell_points - user.mind.used_spell_points)
-		to_chat(user,span_warning("You do not have enough experience to create a new spell."))
+		to_chat(user,span_warning("你的经验不足，无法创造新的法术。"))
 		return		// not enough spell points
 	else
 		user.mind.used_spell_points += item.cost

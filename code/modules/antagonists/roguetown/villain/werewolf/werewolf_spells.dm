@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/self/howl
-	name = "Howl"
-	desc = "Howl to the moon to communicate with my fellow wolves. Do beware, those versed in beasttongue may be listening."
+	name = "嚎叫"
+	desc = "向月亮嚎叫，与其他狼族同胞交流。但要小心，通晓兽语的人也许正在偷听。"
 	overlay_state = "howl"
 	antimagic_allowed = TRUE
 	recharge_time = 600 //1 minute
@@ -13,9 +13,9 @@
 	var/list/howl_channels = list(HOWL_CHANNEL_WEREWOLF, HOWL_CHANNEL_DRUID)
 	var/howl_distance_limit = 50
 	var/howl_distance_volume = 50
-	var/howl_prompt_text = "Howl at the hidden moon..."
-	var/howl_prompt_title = "MOONCURSED"
-	var/howl_announcement_target = "hidden moon"
+	var/howl_prompt_text = "向隐月发出嚎叫……"
+	var/howl_prompt_title = "月咒之裔"
+	var/howl_announcement_target = "隐月"
 
 /obj/effect/proc_holder/spell/self/howl/proc/is_druid_howl_listener(mob/player)
 	if(!player?.mind)
@@ -51,7 +51,7 @@
 
 		// Admin ghost visibility
 		if(IsAdminGhost(player))
-			to_chat(player, span_notice("[speaker_name] howls to the [howl_announcement_target]: [message]"))
+			to_chat(player, span_notice("[speaker_name] 向[howl_announcement_target]嚎叫： [message]"))
 			continue
 
 		// Check each named channel to see if this player qualifies to hear the howl
@@ -63,7 +63,7 @@
 		if(HOWL_CHANNEL_GNOLL in howl_channels)
 			can_hear = can_hear || player.mind.has_antag_datum(/datum/antagonist/gnoll)
 		if(can_hear)
-			to_chat(player, span_boldannounce("[speaker_name] howls to the [howl_announcement_target]: [message]"))
+			to_chat(player, span_boldannounce("[speaker_name] 向[howl_announcement_target]嚎叫： [message]"))
 
 		//sound played for other players
 		if(player == user) continue
@@ -74,8 +74,8 @@
 	user.log_message("howls: [message] ([howl_antag_type])", LOG_GAME)
 
 /obj/effect/proc_holder/spell/self/claws
-	name = "Lupine Claws"
-	desc = "Unsheathe your claws"
+	name = "狼爪"
+	desc = "伸出你的利爪"
 	overlay_state = "claws"
 	antimagic_allowed = TRUE
 	recharge_time = 20 //2 seconds

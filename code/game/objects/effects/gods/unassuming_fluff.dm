@@ -1,7 +1,7 @@
 GLOBAL_LIST_EMPTY(players_in_dream)
 
 /obj/effect/dream_horror
-	name = "Dream Horror"
+	name = "梦魇恐魔"
 	desc = "?????"
 	icon = 'icons/effects/dad.dmi'
 	icon_state = "dad"
@@ -9,20 +9,20 @@ GLOBAL_LIST_EMPTY(players_in_dream)
 /obj/effect/dream_horror/Initialize(mapload)
 	. = ..()
 	if(prob(1))
-		name = "Dad"
-		desc = "Dad is back! He even brought the milk!"
+		name = "爸爸"
+		desc = "爸爸回来了！他连牛奶都带来了！"
 
 /obj/effect/dream_horror/examine(mob/user)
 	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.patron.type == /datum/patron/divine/abyssor)
-			. += span_danger("One of the greatest and eldest of the dreamfiends. It's said creatures of the dream take ages to grow in size... And this one is a true leviathan.")
+			. += span_danger("它是最伟大也最古老的梦魇之一。据说梦境生物需要漫长岁月才会长成庞然巨物……而这一头，是真正的利维坦。")
 
 /datum/stressevent/dream_horror
 	timer = 999 MINUTES
 	stressadd = 20
-	desc = span_userdanger("WHAT IS THAT THING?!")
+	desc = span_userdanger("那东西到底是什么？！")
 
 /proc/teleport_to_dream(mob/living/carbon/human/user, base_probability = 10000, probability = 10)
 	if(!ishuman(user))
@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(players_in_dream)
 		return
 
 	GLOB.players_in_dream |= user
-	original_turf.visible_message(span_danger("[user] seems to vanish into thin air completely."))
+	original_turf.visible_message(span_danger("[user]仿佛凭空彻底消失了。"))
 	playsound(original_turf, 'sound/misc/area.ogg')
 	user.add_stress(/datum/stressevent/dream_horror)
 	user.blind_eyes(2)
@@ -164,8 +164,8 @@ GLOBAL_LIST_EMPTY(players_in_dream)
 	var/turf/original_turf
 
 /atom/movable/screen/alert/status_effect/debuff/dream_teleport
-	name = "A strange place"
-	desc = "The air feels humid, the floor cold and the void whispers to me. Where am I?"
+	name = "奇异之地"
+	desc = "空气湿润，地面冰冷，虚空正向我低语。我这是在哪里？"
 	icon_state = "abyssal"
 
 /datum/status_effect/dream_teleport/on_creation(mob/living/new_owner, turf/origin)

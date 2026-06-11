@@ -1,8 +1,8 @@
 /datum/brewing_recipe/limoncello
-	name = "Limoncello"
-	category = "Liquor"
-	bottle_name = "limoncello"
-	bottle_desc = "A bottle of locally-distilled limoncello. Has a sweet, citrusy and burning flavor."
+	name = "柠檬酒"
+	category = "烈酒"
+	bottle_name = "柠檬酒"
+	bottle_desc = "一瓶本地蒸馏的柠檬酒。口感甜润、带有柑橘清香与灼热余韵。"
 	reagent_to_brew = /datum/reagent/consumable/ethanol/limoncello
 	pre_reqs = /datum/reagent/consumable/ethanol/voddena
 	needed_items = list(/obj/item/reagent_containers/food/snacks/grown/fruit/lemon = 2, /obj/item/reagent_containers/food/snacks/sugar = 1)

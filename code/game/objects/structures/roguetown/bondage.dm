@@ -1,6 +1,6 @@
 /obj/structure/bondage
-	name = "restraint"
-	desc = "A crude restraint meant to hold someone in place."
+	name = "束具"
+	desc = "一种粗糙的束具，用来把人固定在原地。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	anchored = TRUE
 	density = TRUE
@@ -8,7 +8,7 @@
 	max_buckled_mobs = 1
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
-	buckleverb = "strap"
+	buckleverb = "绑上"
 	breakoutextra = 4 MINUTES
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg', 'sound/combat/hits/onwood/woodimpact (2).ogg')
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
@@ -38,7 +38,7 @@
 		return ..()
 
 	if(!istype(M, /mob/living/carbon/human))
-		to_chat(user, span_warning("It doesn't look like [M.p_they()] can fit into this properly!"))
+		to_chat(user, span_warning("[M.p_they()]看起来没法被这样好好固定进去！"))
 		return FALSE
 
 	if(M != user)
@@ -54,17 +54,17 @@
 					break
 
 		if(!valid_restraint)
-			to_chat(user, span_warning("I must grab them more forcefully or restrain them to put them in [src]."))
+			to_chat(user, span_warning("我得抓得更狠，或者先把他们束缚住，才能把人塞进[src]。"))
 			return FALSE
 
-		M.visible_message(span_danger("[user] starts strapping [M] into [src]!"), \
-			span_userdanger("[user] starts strapping you into [src]!"))
+		M.visible_message(span_danger("[user]开始把[M]绑到[src]上！"), \
+			span_userdanger("[user]开始把你绑到[src]上！"))
 
 		if(!do_after(user, strap_other_time, src))
 			return FALSE
 	else
-		M.visible_message(span_notice("[user] starts positioning [user.p_them()]self into [src]..."), \
-			span_notice("I start positioning myself into [src]..."))
+		M.visible_message(span_notice("[user]开始把自己摆进[src]里……"), \
+			span_notice("我开始把自己摆进[src]里……"))
 
 		if(!do_after(user, strap_self_time, src))
 			return FALSE
@@ -76,8 +76,8 @@
 	return ..(M, force, FALSE)
 
 /obj/structure/bondage/chains
-	name = "chains"
-	desc = "Heavy chains bolted into place."
+	name = "锁链"
+	desc = "用螺栓牢牢固定住的沉重锁链。"
 	icon_state = "CHAINS"
 	base_pixel_x = 0
 	base_pixel_y = 0
@@ -87,11 +87,11 @@
 	layer = ABOVE_MOB_LAYER
 	attacked_sound = list('sound/combat/hits/onmetal/metalimpact (1).ogg', 'sound/combat/hits/onmetal/metalimpact (2).ogg')
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
-	buckleverb = "chain"
+	buckleverb = "锁上"
 
 /obj/structure/bondage/x_pillory
-	name = "x-pillory"
-	desc = "A brutal restraint shaped like a cross."
+	name = "十字刑架"
+	desc = "一个十字形的残酷束缚架。"
 	icon_state = "x_pillory"
 	layer = OBJ_LAYER
 	plane = GAME_PLANE
@@ -109,28 +109,28 @@
 /obj/structure/bondage/x_pillory/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
 	// Someone else is unbuckling the victim
 	if(user != buckled_mob)
-		user.visible_message(span_notice("[user] starts unstrapping [buckled_mob] from [src]..."), \
-			span_notice("You start unstrapping [buckled_mob] from [src]..."))
+		user.visible_message(span_notice("[user]开始把[buckled_mob]从[src]上解下来……"), \
+			span_notice("你开始把[buckled_mob]从[src]上解下来……"))
 		if(do_after(user, 3 SECONDS, src))
 			return ..()
 		return
 
 	// Victim trying to unbuckle self
-	to_chat(user, span_warning("You struggle against the tight straps..."))
+	to_chat(user, span_warning("你奋力挣扎着对抗那些勒紧的绑带……"))
 	if(do_after(user, 10 SECONDS, src))
-		user.visible_message(span_warning("[user] manages to unstrap [user.p_them()]self from [src]!"), \
-			span_notice("You manage to unstrap yourself from [src]!"))
+		user.visible_message(span_warning("[user]设法把自己从[src]上解开了！"), \
+			span_notice("你设法把自己从[src]上解开了！"))
 		return ..()
 
 /obj/structure/bondage/gloryhole
-	name = "gloryhole"
-	desc = "A wooden partition with a suspicious hole."
+	name = "木隔板"
+	desc = "一块开了可疑孔洞的木制隔板。"
 	icon_state = "gloryhole"
 	dir = SOUTH
 	density = TRUE
 	layer = MOB_LAYER
 	plane = GAME_PLANE
-	buckleverb = "position"
+	buckleverb = "摆上"
 	var/buckle_offset_x = 0
 	var/buckle_offset_y = 1
 
@@ -138,12 +138,12 @@
 	. = ..()
 	if(isobserver(user))
 		return
-	. += "Right-click to step up to \the [src]."
+	. += "右键可走到[src]前。"
 
 /obj/structure/bondage/gloryhole/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(M && ishuman(M) && !has_buckled_mobs())
 		if(loc != M?.loc)
-			to_chat(M, span_warning("I have to be closer to service \the [src]."))
+			to_chat(M, span_warning("我得再靠近一点才能对着[src]就位。"))
 			return FALSE
 	return ..()
 
@@ -221,8 +221,8 @@
 	return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/bondage/torture_table
-	name = "torture table"
-	desc = "A cruel table meant for restraining captives."
+	name = "刑讯台"
+	desc = "一张专门用来束缚俘虏的残酷桌台。"
 	icon = 'icons/roguetown/misc/64x64.dmi'
 	icon_state = "tort_table"
 	base_pixel_x = -16
@@ -248,22 +248,22 @@
 /obj/structure/bondage/torture_table/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
 	// Someone else is unbuckling the victim
 	if(user != buckled_mob)
-		user.visible_message(span_notice("[user] starts unchaining [buckled_mob] from [src]..."), \
-			span_notice("You start unchaining [buckled_mob] from [src]..."))
+		user.visible_message(span_notice("[user]开始把[buckled_mob]从[src]上解链下来……"), \
+			span_notice("你开始把[buckled_mob]从[src]上解链下来……"))
 		if(do_after(user, 3 SECONDS, src))
 			return ..()
 		return
 
 	// Victim trying to unbuckle self (long struggle)
-	to_chat(user, span_warning("You struggle against the tight chains..."))
+	to_chat(user, span_warning("你奋力挣扎着对抗那些勒紧的锁链……"))
 	if(do_after(user, 3 MINUTES, src))
-		user.visible_message(span_warning("[user] manages to unstrap [user.p_them()]self from [src]!"), \
-			span_notice("You manage to unstrap yourself from [src]!"))
+		user.visible_message(span_warning("[user]设法把自己从[src]上挣脱了！"), \
+			span_notice("你设法把自己从[src]上挣脱了！"))
 		return ..()
 
 /obj/structure/bondage/torture_table/lever
-	name = "torture table lever"
-	desc = "A torture table with a built-in lever mechanism. Right click to use the lever."
+	name = "刑讯台拉杆"
+	desc = "一张带有内置拉杆机构的刑讯台。右键使用拉杆。"
 	icon = 'icons/roguetown/misc/64x64.dmi'
 	icon_state = "tort_table_lever"
 
@@ -272,16 +272,16 @@
 	if(.)
 		return
 	if(!has_buckled_mobs())
-		to_chat(user, span_warning("There is nobody to tighten the chains on..."))
+		to_chat(user, span_warning("这里没人能让你继续拧紧锁链……"))
 		return
 	var/mob/living/L = locate() in buckled_mobs
 	if(!L)
 		return
 	if(user == L)
-		to_chat(user, span_warning("I can't reach the lever..."))
+		to_chat(user, span_warning("我够不到拉杆……"))
 		return
 	playsound(src, 'sound/foley/winch.ogg', 100, extrarange = 3)
-	user.visible_message(span_warning("[user] begins to ratchet the chains on [L]!"), span_warning("You start tightening the chains!"))
+	user.visible_message(span_warning("[user]开始收紧束在[L]身上的锁链！"), span_warning("你开始收紧锁链！"))
 	if(do_after(user, 2 SECONDS, src))
 		var/mob/living/L_double_check = locate() in buckled_mobs
 		if(!L_double_check || L != L_double_check) // they got off, abort
@@ -289,7 +289,7 @@
 		var/def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 		var/obj/item/bodypart/BP = L.get_bodypart(def_zone)
 		if(BP)
-			L.visible_message(span_boldwarning("Chains pull and rip into [L]'s [BP.name]!"), span_userdanger("Chains rip into my [BP.name]!"))
+			L.visible_message(span_boldwarning("锁链猛地收紧，撕进了[L]的[BP.name]！"), span_userdanger("锁链撕进了我的[BP.name]！"))
 			L.emote("agony")
 			BP.add_wound(/datum/wound/fracture)
 			BP.update_disabled()

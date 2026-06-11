@@ -1,10 +1,10 @@
 /datum/patron/inhumen/baotha
 	name = "Baotha"
-	domain = "Hedonism, Debauchery, Addiction, Heartbreak"
-	desc = "The Lady of Debauchery was the only snow elf to have survived Zizo's massacre, having been kept by the Naledi as a concubine. Until one dae, She was consumed by Her depravity and addiction, stealing a shard of SYON from Her captors and ascending to godhood. Her followers desire only to experience mind-rotting pleasures."
-	worshippers = "Widows, Gamblers, Addicts, Scorned Lovers, Far-Gone Prostitutes"
-	virtues = "Lust, Gluttony, Thrill-Seeking"
-	sins = "Chastity, Temperance, Gloom"
+	domain = "享乐、放荡、成瘾、碎心"
+	desc = "放纵之女是唯一从 Zizo 屠杀中活下来的雪精灵，曾被 Naledi 当作侍妾豢养。直到某一天，她彻底沉沦于自己的堕落与瘾欲之中，从囚禁她的人手中盗走了一块 SYON 碎片，并由此登临神位。她的追随者只渴望体验那些足以腐蚀心智的欢愉。"
+	worshippers = "寡妇、赌徒、瘾君子、失意恋人、彻底沉沦的娼妓"
+	virtues = "色欲、暴食、寻求刺激"
+	sins = "贞洁、节制、阴郁"
 	mob_traits = list(TRAIT_DEPRAVED, TRAIT_CRACKHEAD)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/baothavice					= CLERIC_T0,
@@ -19,9 +19,9 @@
 					/obj/effect/proc_holder/spell/invoked/painkiller					= CLERIC_T3,
 	)
 	confess_lines = list(
-		"BAOTHA DEMANDS PLEASURE!",
-		"LIVE, LAUGH, LOVE!",
-		"BAOTHA IS MY JOY!",
+		"BAOTHA 渴求欢愉！",
+		"活着，欢笑，去爱！",
+		"BAOTHA 就是我的快乐！",
 	)
 	storyteller = /datum/storyteller/baotha
 
@@ -33,7 +33,7 @@
 	// Allows prayer near EEEVIL psycross
 	for(var/obj/structure/fluff/psycross/zizocross/cross in view(4, get_turf(follower)))
 		if(cross.divine == TRUE)
-			to_chat(follower, span_danger("That acursed cross interupts my prayers!"))
+			to_chat(follower, span_danger("那座遭诅咒的十字架打断了我的祈祷！"))
 			return FALSE
 		return TRUE
 	// Allows prayers in the bath house - whore.
@@ -48,7 +48,7 @@
 	// Allows praying atop ritual chalk of the god.
 	for(var/obj/structure/ritualcircle/baotha in view(1, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("For Baotha to hear my prayers I must either be in the church of the abandoned, near an inverted psycross, within the town's bathhouse, or actively partaking in one of various types of nose-candy!"))
+	to_chat(follower, span_danger("若想让 Baotha 听见我的祈祷，我必须身处被遗弃者的教堂、倒置的 psycross 附近、镇上的浴场之中，或正沉浸在某种鼻中妙药带来的快意里！"))
 	return FALSE
 
 #define BAOTHA_SUFFERING_DIVIDER 3.535 // max bonus at 50 pain/bleedrate and pain_mod = 1
@@ -63,11 +63,11 @@
 	is_inhumen
 )
 	*is_inhumen = TRUE
-	*message_out = span_info("Hedonistic impulses and emotions throb all about from [target].")
-	*message_self = span_notice("An intoxicating rush of narcotic delight soothes my suffering!")
+	*message_out = span_info("自[target]体内迸发出阵阵享乐冲动与炽烈情绪。")
+	*message_self = span_notice("一阵令人沉醉的麻醉快感抚平了我的痛苦！")
 
 	if(!ishuman(target))
-		*message_self = span_notice("An intoxicating rush of narcotic delight flows through me!")
+		*message_self = span_notice("一阵令人沉醉的麻醉快感流遍了我的全身！")
 		return
 
 	var/mob/living/carbon/human/human_target = target

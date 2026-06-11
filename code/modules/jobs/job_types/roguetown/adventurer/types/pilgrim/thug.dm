@@ -1,6 +1,6 @@
 /datum/advclass/thug
-	name = "Thug"
-	tutorial = "Maybe you've never been the smartest person in town, but you've gotten this far - whether by finding odd-jobs around town carting shit for the soilers, being the meathead that somebody needs to stand behind them and look scary, or simply shaking down the weak with the veiled-or-otherwise threat of a clobbering. You might've had some run-ins with the law for petty crimes here and there, but you're tolerated enough to have a home here."
+	name = "恶棍"
+	tutorial = "也许你从来都不是镇上最聪明的那个人，但你还是混到了今天, 不管是替清道夫在镇里干些搬运脏活的零工，还是给别人当站在背后吓唬人的打手，又或者只是靠拳头或拳头的威胁去敲榨弱者。你大概也因为一些鸡毛蒜皮的小罪跟法律打过几次交道，但大家对你还算容忍，至少这里还有你一个落脚处。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	subclass_social_rank = SOCIAL_RANK_PEASANT
@@ -24,13 +24,13 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather
 	backpack_contents = list(/obj/item/reagent_containers/glass/bottle/rogue/beer = 1)
 
-	var/classes = list("Goon", "Miscreant", "Big Man", "Longshoreman")
-	var/classchoice = input(H, "What kind of thug are you?", "TAKE UP ARMS") as anything in classes
+	var/classes = list("打手", "滑头", "大块头", "码头汉")
+	var/classchoice = input(H, "你是哪种恶棍？", "拿起武器") as anything in classes
 
 	switch(classchoice)
 
-		if("Goon")
-			to_chat(H, span_warning("You're a goon, a low-lyfe thug in a painful world - not good enough for war, not smart enough for peace. What you lack in station you make up for in daring."))
+		if("打手")
+			to_chat(H, span_warning("你是个打手，一个活在苦难世界里的下三滥恶棍, 打仗不够格，求安生又不够聪明。你地位上的不足，全靠胆气去弥补。"))
 			H.set_blindness(0)
 
 			H.change_stat(STATKEY_STR, 2)
@@ -54,25 +54,25 @@
 			H.adjust_skillrank_up_to(/datum/skill/labor/fishing, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/stealing, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			var/options = list("Frypan", "Knuckles", "Navaja", "Bare Hands")
-			var/option_choice = input(H, "Choose your means.", "TAKE UP ARMS") as anything in options
+			var/options = list("平底锅", "指虎", "纳瓦哈刀", "赤手空拳")
+			var/option_choice = input(H, "选择你的家伙。", "拿起武器") as anything in options
 
 			switch(option_choice)
-				if("Frypan")
+				if("平底锅")
 					H.adjust_skillrank_up_to(/datum/skill/craft/cooking, SKILL_LEVEL_EXPERT, TRUE)
 					r_hand = /obj/item/cooking/pan
-				if("Knuckles")
+				if("指虎")
 					H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
 					r_hand = /obj/item/rogueweapon/knuckles
-				if("Navaja")
+				if("纳瓦哈刀")
 					H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 					r_hand = /obj/item/rogueweapon/huntingknife/idagger/navaja
-				if("Bare Hands")
+				if("赤手空拳")
 					H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
 					ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 
-		if("Miscreant")
-			to_chat(H, span_warning("You're smarter than the rest, by a stone's throw - and you know better than to get up close and personal. Unlike most others, you can read."))
+		if("滑头")
+			to_chat(H, span_warning("你比其他人聪明了不止一点半点，而且你知道最好别总跟人贴脸拼命。和大多数同类不同，你还识字。"))
 			H.set_blindness(0)
 
 			H.change_stat(STATKEY_CON, -2)
@@ -98,26 +98,26 @@
 			H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/stealing, SKILL_LEVEL_JOURNEYMAN, TRUE)
 
-			var/options = list("Stone Sling", "Magic Bricks", "Lockpicking Equipment")
-			var/option_choice = input(H, "Choose your means.", "TAKE UP ARMS") as anything in options
+			var/options = list("石索", "魔法砖块", "撬锁工具")
+			var/option_choice = input(H, "选择你的手段。", "拿起武器") as anything in options
 
 			switch(option_choice)
-				if("Stone Sling")
+				if("石索")
 					H.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_EXPERT, TRUE)
 					r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
 					l_hand = /obj/item/quiver/sling
-				if("Magic Bricks")
+				if("魔法砖块")
 					H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_EXPERT, TRUE)
 					H.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/magicians_brick)
-				if("Lockpicking Equipment")
+				if("撬锁工具")
 					H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_EXPERT, TRUE)
 					H.adjust_skillrank_up_to(/datum/skill/misc/stealing, SKILL_LEVEL_EXPERT, TRUE)
 					H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, SKILL_LEVEL_EXPERT, TRUE)
 					ADD_TRAIT(H, TRAIT_LIGHT_STEP, TRAIT_GENERIC)
 					r_hand = /obj/item/lockpickring/mundane
 
-		if("Big Man")
-			to_chat(H, span_warning("More akin to a corn-fed monster than a normal man, your size and strength are your greatest weapons; though they hardly supplement what's missing of your brains."))
+		if("大块头")
+			to_chat(H, span_warning("你与其说是个正常人，不如说更像一头粮食喂大的怪物。你的体型与蛮力就是你最大的武器，虽然它们并不能补上你脑子里缺的那部分。"))
 			H.set_blindness(0)
 
 			ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
@@ -140,24 +140,23 @@
 			H.adjust_skillrank_up_to(/datum/skill/labor/mining, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/labor/lumberjacking, SKILL_LEVEL_JOURNEYMAN, TRUE)
 
-			var/options = list("Hands-On", "Big Axe", "Big Stick")
-			var/option_choice = input(H, "Choose your means.", "TAKE UP ARMS") as anything in options
+			var/options = list("徒手硬干", "大斧头", "大棒子")
+			var/option_choice = input(H, "选择你的家伙。", "拿起武器") as anything in options
 
 			switch(option_choice)
-				if("Hands-On")
+				if("徒手硬干")
 					ADD_TRAIT(H, TRAIT_BASHDOORS, TRAIT_GENERIC)
 					ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
-				if("Big Axe")
+				if("大斧头")
 					H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					r_hand = /obj/item/rogueweapon/greataxe
-				if("Big Stick")
+				if("大棒子")
 					H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					r_hand = /obj/item/rogueweapon/mace
 
-		if("Longshoreman")
-			to_chat(H, span_warning("You answered Abyssor's call when you were young, though in troublesome ways, \
-	pilaging for treasury from anyone who'd cross your path. Now your captain retires from a life of crime, \
-	settling down as do you. Still, there is coin to be made on land."))
+		if("码头汉")
+			to_chat(H, span_warning("你年轻时回应了 阿比索尔 的呼唤，只不过走的是不怎么体面的路子，\
+	见谁挡路就劫谁的财。如今你的船长要从罪恶生涯里抽身上岸，你也一样。不过陆地上，照样有钱可赚。"))
 			H.set_blindness(0)
 
 			ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
@@ -192,21 +191,21 @@
 			H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/stealing, SKILL_LEVEL_JOURNEYMAN, TRUE)
 
-	var/gang = list("Gang Rontz Ratz", "Gang Blortz Volves", "Neverminde")
-	var/gang_choice = input(H, "Want to become a gang member?") as anything in gang
+	var/gang = list("帮派 Rontz Ratz", "帮派 Blortz Volves", "算了")
+	var/gang_choice = input(H, "想加入帮派吗？") as anything in gang
 
 	switch(gang_choice)
-		if("Gang Rontz Ratz")
-			to_chat(H, span_warning("I'm a member of street gang Rontz Ratz, a lot of time has passed and now we have to build up our power again,\
-			those bastards from Blortz Volves will answer for this.\
-			Rontz Rats bite - feel the fight!"))
+		if("帮派 Rontz Ratz")
+			to_chat(H, span_warning("我是街头帮派 隆兹石 Ratz 的一员，已经过去了太久太久，现在我们得重新壮大势力。\
+			Blortz Volves 那帮杂种迟早得付出代价。\
+			Rontz Rats 会咬人, 来感受这场恶斗吧！"))
 			ADD_TRAIT(H, TRAIT_GANG_A, TRAIT_GENERIC)
 			mask = /obj/item/clothing/mask/rogue/ragmask/red
-		if("Gang Blortz Volves")
-			to_chat(H, span_warning("I'm a member of street gang Blortz Volves, a lot of time has passed and now we have to build up our power again, \
-			those bastards from Rontz Ratz will answer for this. \
-			Blortz Wolves howl - enemies cower!"))
+		if("帮派 Blortz Volves")
+			to_chat(H, span_warning("我是街头帮派 布洛兹石 Volves 的一员，已经过去了太久太久，现在我们得重新壮大势力。\
+			Rontz Ratz 那帮杂种迟早得付出代价。 \
+			Blortz Wolves 一嚎叫, 敌人就得发抖！"))
 			ADD_TRAIT(H, TRAIT_GANG_B, TRAIT_GENERIC)
 			mask = /obj/item/clothing/mask/rogue/ragmask/azure
-		if("Neverminde")
+		if("算了")
 			return null

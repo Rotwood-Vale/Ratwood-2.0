@@ -1,7 +1,7 @@
 //T1 Enchantments
 /datum/magic_item/mundane/woodcut
-	name = "woodcutting"
-	description = "It is firm like an tree."
+	name = "伐木"
+	description = "它如树木般坚实。"
 	var/last_used
 
 /datum/magic_item/mundane/woodcut/on_hit_structure(obj/item/i, obj/target, mob/living/user)
@@ -11,8 +11,8 @@
 	. = ..()
 
 /datum/magic_item/mundane/mining
-	name = "mining"
-	description = "It is coated with rock."
+	name = "采矿"
+	description = "它表面覆着岩层。"
 	var/active_item = FALSE
 	var/max_skill = FALSE
 
@@ -32,7 +32,7 @@
 			max_skill = TRUE //they are max level, so we skip giving them skills
 		else
 			user.adjust_skillrank(/datum/skill/labor/mining, 1, TRUE)
-		to_chat(user, span_notice("I feel ready to mine!"))
+		to_chat(user, span_notice("我感觉已经准备好去采矿了！"))
 		active_item = TRUE
 	else
 		return
@@ -44,11 +44,11 @@
 		if (!max_skill)
 			user.adjust_skillrank(/datum/skill/labor/mining, -1, TRUE) //stripping them a level since they weren't max
 		user.change_stat(STATKEY_WIL, -1)
-		to_chat(user, span_notice("I feel mundane once more"))
+		to_chat(user, span_notice("我又恢复平凡了。"))
 
 /datum/magic_item/mundane/xylix
-	name = "Xylix's boon"
-	description = "It almost seems to give off the faint sound of laughter."
+	name = "Xylix 的恩赐"
+	description = "它仿佛隐约散发着笑声。"
 	var/active_item = FALSE
 
 /datum/magic_item/mundane/xylix/on_equip(obj/item/i, mob/living/user, slot)
@@ -59,18 +59,18 @@
 		return
 	else
 		user.STALUC += 1
-		to_chat(user, span_notice("I feel rather lucky"))
+		to_chat(user, span_notice("我感觉自己相当走运。"))
 		active_item = TRUE
 
 /datum/magic_item/mundane/xylix/on_drop(obj/item/i, mob/living/user)
 	if(active_item)
 		active_item = FALSE
 		user.STALUC -= 1
-		to_chat(user, span_notice("I feel mundane once more"))
+		to_chat(user, span_notice("我又恢复平凡了。"))
 
 /datum/magic_item/mundane/unyieldinglight
-	name = "unyielding light"
-	description = "It emits a shining light."
+	name = "不屈之光"
+	description = "它散发着明亮的光芒。"
 	var/active = FALSE
 
 /datum/magic_item/mundane/unyieldinglight/on_use(obj/item/i, mob/living/user)
@@ -78,14 +78,14 @@
 		active = TRUE
 
 		i.light_color = "#3FBAFD"
-		to_chat(user, span_notice("I grip [i] lightly, and it abruptly lights up with shining light"))
+		to_chat(user, span_notice("我轻握 [i]，它突然绽放出耀眼光芒。"))
 		i.set_light(TRUE)
 		i.light_outer_range = 6
 	. = ..()
 
 /datum/magic_item/mundane/holding
-	name = "storage"
-	description = "It seems bigger on the inside."
+	name = "收纳"
+	description = "它里面似乎比外面更大。"
 
 /datum/magic_item/mundane/holding/on_apply(obj/item/i)
 	.=..()
@@ -96,8 +96,8 @@
 	STR.screen_max_columns = STR.screen_max_columns + 2
 
 /datum/magic_item/mundane/revealing
-	name = "revealing"
-	description = "It's light is painfully bright."
+	name = "显露"
+	description = "它的光亮得刺眼。"
 	var/active = FALSE
 
 /datum/magic_item/mundane/revealing/on_apply(obj/item/i)

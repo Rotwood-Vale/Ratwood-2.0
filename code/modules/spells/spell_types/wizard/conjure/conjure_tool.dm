@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/conjure_tool
-	name = "Conjure Tool"
-	desc = "Conjure a tool of your choice in your hand or on the ground"
+	name = "召具术"
+	desc = "在你手中或地上召出一件你所选择的工具。"
 	overlay_icon = 'icons/mob/actions/malummiracles.dmi'
 	action_icon = 'icons/mob/actions/malummiracles.dmi'
 	overlay_state = "conjure_tool"
@@ -20,7 +20,7 @@
 	cost = 1
 	spell_tier = 1 // Spellblade tier.
 
-	invocations = list("O Malum, Grant me your tool!")
+	invocations = list("玛勒姆，赐我工具！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_METAL
 	glow_intensity = GLOW_INTENSITY_LOW
@@ -28,18 +28,18 @@
 	var/obj/item/conjured_tool = null
 
 	var/list/tool_options = list(
-		"Hoe" = /obj/item/rogueweapon/hoe,
-		"Thresher" = /obj/item/rogueweapon/thresher,
-		"Sickle" = /obj/item/rogueweapon/sickle,
-		"Pitchfork" = /obj/item/rogueweapon/pitchfork,
-		"Tongs" = /obj/item/rogueweapon/tongs,
-		"Hammer" = /obj/item/rogueweapon/hammer/iron,
-		"Shovel" = /obj/item/rogueweapon/shovel,
-		"Fishing Rod" = /obj/item/fishingrod,
+		"锄头" = /obj/item/rogueweapon/hoe,
+		"连枷" = /obj/item/rogueweapon/thresher,
+		"镰刀" = /obj/item/rogueweapon/sickle,
+		"草叉" = /obj/item/rogueweapon/pitchfork,
+		"铁钳" = /obj/item/rogueweapon/tongs,
+		"锤子" = /obj/item/rogueweapon/hammer/iron,
+		"铲子" = /obj/item/rogueweapon/shovel,
+		"鱼竿" = /obj/item/fishingrod,
 	)
 
 /obj/effect/proc_holder/spell/invoked/conjure_tool/cast(list/targets, mob/living/user = usr)
-	var/tool_choice = input(user, "Choose a tool", "Conjure Tool") as anything in tool_options
+	var/tool_choice = input(user, "选择一件工具", "Conjure Tool") as anything in tool_options
 	if(!tool_choice)
 		return
 	tool_choice = tool_options[tool_choice]
@@ -59,7 +59,7 @@
 
 /obj/effect/proc_holder/spell/invoked/conjure_tool/Destroy()
 	if(src.conjured_tool)
-		src.visible_message(span_warning("The [src]'s borders begin to shimmer and fade, before it vanishes entirely!"))
+		src.visible_message(span_warning("[src] 的边缘开始闪烁消退，随后彻底消失了！"))
 		qdel(src.conjured_tool)
 		src.conjured_tool = null
 	return ..()

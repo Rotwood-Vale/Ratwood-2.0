@@ -4,9 +4,9 @@
 
 //LISTENSTONE		LISTENSTONE
 /obj/item/listenstone
-	name = "emerald choker"
+	name = "翡翠颈环"
 	icon_state = "listenstone"
-	desc = "An iron and gold choker with an emerald gem."
+	desc = "一条镶有翡翠宝石的铁金颈环。"
 	gripped_intents = null
 	//dropshrink = 0.75
 	possible_item_intents = list(INTENT_GENERIC)
@@ -31,12 +31,12 @@
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	if(loudmouth_listening)
-		to_chat(user, span_info("I quell the Loudmouth's prattling on the scomstone. It may be muted entirely still."))
+		to_chat(user, span_info("我压下了听音石上金口者的聒噪。你仍可将它彻底静音。"))
 		loudmouth_listening = FALSE
 	else
 		listening = !listening
 		speaking = !speaking
-		to_chat(user, span_info("I [speaking ? "unmute" : "mute"] the scomstone."))
+		to_chat(user, span_info("我将通讯石戒[speaking ? "取消静音" : "静音"]了。"))
 		if(listening)
 			loudmouth_listening = TRUE
 	update_icon()

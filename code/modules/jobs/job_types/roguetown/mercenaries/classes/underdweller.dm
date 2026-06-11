@@ -1,8 +1,8 @@
 //The guild. /The/ guild. Underdark explorers. Not as packed as other merc groups, but get explosives, the skills to make more off the bat and a funny hat.
 /datum/advclass/mercenary/underdweller
-	name = "Underdweller"
-	tutorial = "A member of the Underdwellers, you've taken many of the deadliest contracts known to man in literal underground circles. \
-	Drow or Dwarf, you've put your differences aside for coin and adventure."
+	name = "地底行者"
+	tutorial = "身为地底行者的一员，你接过无数真正发生在地底世界、也最致命凶险的契约。\
+	无论是黑暗精灵还是矮人，你们都为了金币与冒险而暂且搁置彼此的宿怨。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
 		/datum/species/dwarf/mountain,
@@ -40,7 +40,7 @@
 		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/smelting = SKILL_LEVEL_APPRENTICE,	//Accompanies mining; they know how to smelt, not make armor though.
 	)
-	extra_context = "This subclass is race-limited to: Dwarves, Dark Elves, Kobolds, Goblins & Verminvolk."
+	extra_context = "该分支仅限矮人、黑暗精灵、狗头人、地精与虫裔选择。"
 
 /datum/outfit/job/roguetown/mercenary/underdweller/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -70,8 +70,8 @@
 
 //Clothing here to avoid overcrowding the hats.dm with snowflake gear. It's just a kettle with a light.
 /obj/item/clothing/head/roguetown/helmet/kettle/minershelm
-	name = "reinforced miners helmet"
-	desc = "A rimmed miners helmet reinforced with leather atop its flimsy thin inner steel, its glowing lamp fueled by magiks from the depths."
+	name = "加固矿工盔"
+	desc = "一顶带宽檐的矿工头盔，薄钢内衬外又以皮革加固，其发光头灯由深渊之下的魔力驱动。"
 	icon_state = "minerslamp"
 	var/on = FALSE
 	light_outer_range = 5 	//Same as a lamptern; can't be extinguished either.
@@ -86,7 +86,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, 'sound/misc/toggle_lamp.ogg', 100)
 	toggle_helmet_light(user)
-	to_chat(user, span_info("I toggle [src] [on ? "on" : "off"]."))
+	to_chat(user, span_info("我把[src][on ? "打开了" : "关上了"]。"))
 
 /obj/item/clothing/head/roguetown/helmet/kettle/minershelm/proc/toggle_helmet_light(mob/living/user)
 	on = !on
@@ -106,8 +106,8 @@
 
 //Detpack. I'm sure you can imagine use cases, outside of carrying it.
 /obj/item/storage/detpack
-	name = "detpack"
-	desc = "A pouch to carry sticks of blasting powder. What sort of lunatic would do that?"
+	name = "爆破包"
+	desc = "一个用来装填爆破火药棒的腰包。到底什么疯子会把这东西挂在身上？"
 	icon_state = "strapbag"
 	item_state = "strapbag"
 	icon = 'icons/roguetown/clothing/storage.dmi'

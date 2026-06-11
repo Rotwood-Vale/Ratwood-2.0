@@ -1,5 +1,5 @@
 /obj/item/clothing/accessory //Ties moved to neck slot items, but as there are still things like medals and armbands, this accessory system is being kept as-is
-	name = "Accessory"
+	name = "配饰"
 	desc = ""
 	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "plasma"
@@ -15,7 +15,7 @@
 	if(!attachment_slot || (U && U.body_parts_covered & attachment_slot))
 		return TRUE
 	if(user)
-		to_chat(user, "<span class='warning'>There doesn't seem to be anywhere to put [src]...</span>")
+		to_chat(user, "<span class='warning'>似乎没有地方可以放[src]……</span>")
 
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/U, user)
 	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
@@ -76,10 +76,10 @@
 	if(istype(user) && user.canUseTopic(src, BE_CLOSE))
 		if(initial(above_suit))
 			above_suit = !above_suit
-			to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] my suit.")
+			to_chat(user, "[src]将会穿在我外衣的[above_suit ? "外面" : "下面"]。")
 
 /obj/item/clothing/accessory/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>\The [src] can be attached to a uniform. Alt-click to remove it once attached.</span>"
+	. += "<span class='notice'>[src]可以附在制服上。附上后按 Alt+点击可将其取下。</span>"
 	if(initial(above_suit))
-		. += "<span class='notice'>\The [src] can be worn above or below my suit. Alt-click to toggle.</span>"
+		. += "<span class='notice'>[src]可以穿在我外衣的上方或下方。按 Alt+点击可切换。</span>"

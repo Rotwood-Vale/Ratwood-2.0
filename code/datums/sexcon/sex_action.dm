@@ -58,7 +58,7 @@
 	if(!isnull(modular_result))
 		return modular_result
 
-	return "chastity device"
+	return "贞操装置"
 
 // Shared guard for actions that must be performed on someone else.
 /datum/sex_action/chastityplay/proc/requires_other_target(mob/living/carbon/human/user, mob/living/carbon/human/target)

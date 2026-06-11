@@ -10,15 +10,15 @@ GLOBAL_LIST_EMPTY(prayers)
 	/// Name of the god
 	var/name
 	/// Domain of the god, such as earth, fire, water, murder etc
-	var/domain = "Bad coding practices"
+	var/domain = "糟糕的编程实践"
 	/// Description of the god
-	var/desc = "A god that ordains you to report this on GitHub - You shouldn't be seeing this, someone forgot to set the description of this patron."
+	var/desc = "一位会命令你去 GitHub 报告这个问题的神明 - 你本不该看到这段文字，说明有人忘了给这位主神填写描述。"
 	/// String that represents who worships this guy
-	var/worshippers = "Shitty coders"
+	var/worshippers = "蹩脚程序员"
 	///Which qualities the god approves of.
-	var/virtues = "Good coding"
+	var/virtues = "优秀编码"
 	///Which qualities the god despises.
-	var/sins = "Spaghetti coding"
+	var/sins = "面条式编码"
 	/// Faith this god belongs to
 	var/datum/faith/associated_faith = /datum/faith
 	/// Whether or not we are accessible in preferences
@@ -84,7 +84,7 @@ GLOBAL_LIST_EMPTY(prayers)
 	// Allows death-bed prayers
 	if(follower.has_status_effect(STATUS_EFFECT_UNCONSCIOUS))
 		if(follower.has_status_effect(STATUS_EFFECT_SLEEPING))
-			to_chat(follower, span_danger("I mustn't be sleeping to pray!"))
+			to_chat(follower, span_danger("我睡着时不能祈祷！"))
 			return FALSE	//Stops praying just by sleeping.
 	. = TRUE
 
@@ -94,7 +94,7 @@ GLOBAL_LIST_EMPTY(prayers)
 	if(!follower || !message)
 		return FALSE
 	if(length(message) < 15)
-		to_chat(follower, span_warning("Your prayer is too weak to be considered!"))
+		to_chat(follower, span_warning("我的祈祷太过微弱，不足以被垂听！"))
 		return FALSE
 	var/prayer = sanitize_hear_message(message)
 	for(var/profanity in profane_words)

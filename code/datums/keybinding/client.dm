@@ -6,8 +6,8 @@
 /datum/keybinding/client/admin_help
 	hotkey_keys = list("F1")
 	name = "admin_help"
-	full_name = "Admin Help"
-	description = "Ask an admin for help."
+	full_name = "管理员求助"
+	description = "向管理员请求帮助。"
 
 /datum/keybinding/client/admin_help/down(client/user)
 	user.get_adminhelp()

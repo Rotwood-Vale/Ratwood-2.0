@@ -1,8 +1,8 @@
 /datum/action/cooldown/mob_cooldown/fire_breath
-	name = "Fire Breath"
+	name = "吐息烈焰"
 	button_icon = 'icons/obj/magic.dmi'
 	button_icon_state = "fireball"
-	desc = "Breathe a line of flames towards the target."
+	desc = "朝目标吐出一道火焰。"
 	cooldown_time = 30 SECONDS
 	/// The range of the fire
 	var/fire_range = 15
@@ -15,7 +15,7 @@
 
 /datum/action/cooldown/mob_cooldown/fire_breath/Activate(atom/target_atom)
 	disable_cooldown_actions()
-	owner.visible_message(span_alert("[owner] inhales deeply, warmth emanating from their form."))
+	owner.visible_message(span_alert("[owner]深深吸气，炽热从其体内散发开来。"))
 	addtimer(CALLBACK(src, PROC_REF(attack_sequence), target_atom), cast_time)
 	StartCooldown()
 	enable_cooldown_actions()
@@ -66,12 +66,12 @@
 
 /// Do something unpleasant to someone we set on fire
 /datum/action/cooldown/mob_cooldown/fire_breath/proc/on_burn_mob(mob/living/barbecued, mob/living/source)
-	to_chat(barbecued, span_userdanger("You are burned by [source]'s fire breath!"))
+	to_chat(barbecued, span_userdanger("我被[source]的火焰吐息灼伤了！"))
 
 /// Shoot three lines of fire in a sort of fork pattern approximating a cone
 /datum/action/cooldown/mob_cooldown/fire_breath/cone
-	name = "Fire Cone"
-	desc = "Breathe several lines of fire directed at a target."
+	name = "锥形烈焰"
+	desc = "朝目标方向喷吐数道火焰。"
 	cooldown_time = 45 SECONDS
 	/// The angles relative to the target that shoot lines of fire
 	var/list/angles = list(-20, 0, 20)
@@ -83,10 +83,10 @@
 
 /// Shoot fire in a whole bunch of directions
 /datum/action/cooldown/mob_cooldown/fire_breath/mass_fire
-	name = "Mass Fire"
+	name = "烈焰横扫"
 	button_icon = 'icons/effects/fire.dmi'
 	button_icon_state = "light"
-	desc = "Breathe flames in all directions."
+	desc = "朝四面八方喷吐烈焰。"
 	cooldown_time = 60.5 SECONDS
 	//click_to_activate = FALSE
 	/// How many fire lines do we produce to turn a full circle?

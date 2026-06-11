@@ -46,111 +46,111 @@
 	icon_file = 'icons/mob/corgi_back.dmi'
 
 /datum/dog_fashion/head/helmet
-	name = "Sergeant REAL_NAME"
+	name = "警长 REAL_NAME"
 	desc = ""
 
 /datum/dog_fashion/head/chef
-	name = "Sous chef REAL_NAME"
+	name = "副厨 REAL_NAME"
 	desc = ""
 
 
 /datum/dog_fashion/head/captain
-	name = "Captain REAL_NAME"
+	name = "队长 REAL_NAME"
 	desc = ""
 
 /datum/dog_fashion/head/kitty
 	name = "Runtime"
-	emote_see = list("coughs up a furball", "stretches")
-	emote_hear = list("purrs")
+	emote_see = list("咳出一团毛球", "伸了个懒腰")
+	emote_hear = list("发出呼噜声")
 	speak = list("Purrr", "Meow!", "MAOOOOOW!", "HISSSSS", "MEEEEEEW")
 	desc = ""
 
 /datum/dog_fashion/head/rabbit
 	name = "Hoppy"
-	emote_see = list("twitches its nose", "hops around a bit")
+	emote_see = list("抽动着鼻子", "蹦跳了几下")
 	desc = ""
 
 /datum/dog_fashion/head/beret
 	name = "Yann"
 	desc = ""
 	speak = list("le woof!", "le bark!", "JAPPE!!")
-	emote_see = list("cowers in fear.", "surrenders.", "plays dead.","looks as though there is a wall in front of him.")
+	emote_see = list("吓得缩成一团。", "投降了。", "开始装死。","像是看到面前有堵墙一样。")
 
 
 /datum/dog_fashion/head/detective
-	name = "Detective REAL_NAME"
+	name = "侦探 REAL_NAME"
 	desc = ""
-	emote_see = list("investigates the area.","sniffs around for clues.","searches for scooby snacks.","takes a candycorn from the hat.")
+	emote_see = list("正在调查周围。","四处嗅闻线索。","寻找着零食。","从帽子里掏出一颗糖果玉米。")
 
 
 /datum/dog_fashion/head/nurse
-	name = "Nurse REAL_NAME"
+	name = "护士 REAL_NAME"
 	desc = ""
 
 /datum/dog_fashion/head/pirate
 	name = "Pirate-title Pirate-name"
 	desc = ""
-	emote_see = list("hunts for treasure.","stares coldly...","gnashes his tiny corgi teeth!")
-	emote_hear = list("growls ferociously!", "snarls.")
+	emote_see = list("正在寻找宝藏。","冷冷地盯着前方……","咬得自己小小的柯基牙齿咯咯作响！")
+	emote_hear = list("凶狠地低吼！", "龇牙咆哮。")
 	speak = list("Arrrrgh!!","Grrrrrr!")
 
 /datum/dog_fashion/head/pirate/New(mob/M)
 	..()
-	name = "[pick("Ol'","Scurvy","Black","Rum","Gammy","Bloody","Gangrene","Death","Long-John")] [pick("kibble","leg","beard","tooth","poop-deck","Threepwood","Le Chuck","corsair","Silver","Crusoe")]"
+	name = "[pick("老","坏血病","黑","朗姆","瘸腿","血腥","坏疽","死神","长约翰")] [pick("狗粮","腿","胡子","牙","臭甲板","Threepwood","Le Chuck","海盗","西尔弗","Crusoe")]"
 
 /datum/dog_fashion/head/ushanka
 	name = "Communist-title Realname"
 	desc = ""
-	emote_see = list("contemplates the failings of the capitalist economic model.", "ponders the pros and cons of vanguardism.")
+	emote_see = list("沉思着资本主义经济模型的失败。", "琢磨着先锋主义的利弊。")
 
 /datum/dog_fashion/head/ushanka/New(mob/M)
 	..()
-	name = "[pick("Comrade","Commissar","Glorious Leader")] [M.real_name]"
+	name = "[pick("同志","政委","光荣领袖")] [M.real_name]"
 
 /datum/dog_fashion/head/warden
-	name = "Officer REAL_NAME"
-	emote_see = list("drools.","looks for donuts.")
+	name = "警官 REAL_NAME"
+	emote_see = list("流着口水。","正在找甜甜圈。")
 	desc = ""
 
 /datum/dog_fashion/head/blue_wizard
-	name = "Grandwizard REAL_NAME"
+	name = "大法师 REAL_NAME"
 	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI NATH!")
 
 /datum/dog_fashion/head/red_wizard
-	name = "Pyromancer REAL_NAME"
+	name = "炎术师 REAL_NAME"
 	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "ONI SOMA!")
 
 /datum/dog_fashion/head/cardborg
 	name = "Borgi"
 	speak = list("Ping!","Beep!","Woof!")
-	emote_see = list("goes rogue.", "sniffs out non-humans.")
+	emote_see = list("开始失控。", "嗅探着非人类。")
 	desc = ""
 
 /datum/dog_fashion/head/ghost
 	name = "\improper Ghost"
 	speak = list("WoooOOOooo~","AUUUUUUUUUUUUUUUUUU")
-	emote_see = list("stumbles around.", "shivers.")
-	emote_hear = list("howls!","groans.")
+	emote_see = list("跌跌撞撞地游荡。", "瑟瑟发抖。")
+	emote_hear = list("发出嚎叫！","呻吟着。")
 	desc = ""
 	obj_icon_state = "sheet"
 
 /datum/dog_fashion/head/santa
-	name = "Santa's Corgi Helper"
-	emote_hear = list("barks Christmas songs.", "yaps merrily!")
-	emote_see = list("looks for presents.", "checks his list.")
+	name = "圣诞老人的柯基助手"
+	emote_hear = list("汪汪唱着圣诞歌。", "欢快地叫个不停！")
+	emote_see = list("寻找着礼物。", "核对着自己的清单。")
 	desc = ""
 
 /datum/dog_fashion/head/cargo_tech
-	name = "Corgi Tech REAL_NAME"
+	name = "柯基技师 REAL_NAME"
 	desc = ""
 
 /datum/dog_fashion/head/reindeer
-	name = "REAL_NAME the red-nosed Corgi"
-	emote_hear = list("lights the way!", "illuminates.", "yaps!")
+	name = "红鼻子柯基 REAL_NAME"
+	emote_hear = list("照亮前路！", "发出亮光。", "汪汪叫着！")
 	desc = ""
 
 /datum/dog_fashion/head/sombrero
-	name = "Segnor REAL_NAME"
+	name = "先生 REAL_NAME"
 	desc = ""
 
 /datum/dog_fashion/head/sombrero/New(mob/M)
@@ -158,19 +158,19 @@
 	desc = ""
 
 /datum/dog_fashion/head/hop
-	name = "Lieutenant REAL_NAME"
+	name = "副官 REAL_NAME"
 	desc = ""
 
 /datum/dog_fashion/head/deathsquad
-	name = "Trooper REAL_NAME"
+	name = "突击兵 REAL_NAME"
 	desc = ""
 
 /datum/dog_fashion/head/clown
-	name = "REAL_NAME the Clown"
+	name = "小丑 REAL_NAME"
 	desc = ""
 	speak = list("HONK!", "Honk!")
-	emote_see = list("plays tricks.", "slips.")
+	emote_see = list("耍着滑稽把戏。", "啪叽一声滑倒了。")
 
 /datum/dog_fashion/back/deathsquad
-	name = "Trooper REAL_NAME"
+	name = "突击兵 REAL_NAME"
 	desc = ""

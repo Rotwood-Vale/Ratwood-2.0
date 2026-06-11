@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/undead
-	name = "deadite saiga"
-	desc = "A deadite saiga, its eyes glow with an eerie light."
+	name = "死灵赛加羚"
+	desc = "一头死灵化的赛加羚，双眼泛着诡异的幽光。"
 	icon = 'modular_hearthstone/icons/mob/saiga_undead.dmi'
 	icon_state = "saiga"
 	icon_living = "saiga"
@@ -61,11 +61,11 @@
 	can_buckle = FALSE
 	can_saddle = FALSE
 	if(is_downed)
-		visible_message(span_danger("[src] has their head smashed to pulp!"))
+		visible_message(span_danger("[src]的脑袋被砸成了肉泥！"))
 		. = ..()
 		update_icon()
 	else
-		visible_message(span_notice("[src] falls down, body brutally battered, yet its head continues that unending stare."))
+		visible_message(span_notice("[src]轰然倒地，身躯被打得惨不忍睹，可它的脑袋依旧维持着那无止尽的凝视。"))
 		is_downed = TRUE
 		move_to_delay = 100
 		icon_state = icon_downed
@@ -79,7 +79,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/undead/proc/reanimation()
 	if(!QDELETED(src) && stat != DEAD)
-		visible_message(span_danger("The deadite saiga stands back up."))
+		visible_message(span_danger("那头死灵赛加羚又站了起来。"))
 		health = maxHealth
 		leg_health = max_leg_health
 		head_health = max_head_health
@@ -109,7 +109,7 @@
 			leg_health = 0
 			legs_broken = TRUE
 			move_to_delay += 10
-			visible_message(span_notice("[src] slows down, its broken legs dragging."))
+			visible_message(span_notice("[src]慢了下来，断裂的腿在地上拖行。"))
 
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/undead/Initialize(mapload)
 	. = ..()

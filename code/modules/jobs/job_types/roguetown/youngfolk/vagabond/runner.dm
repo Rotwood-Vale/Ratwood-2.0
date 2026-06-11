@@ -1,7 +1,7 @@
 /datum/advclass/vagabond_runner
-	name = "Rumbled Runner"
-	examine_name = "Beggar"
-	tutorial = "Ferrying messages in the dark is a dangerous profession at the best of times. You're lucky to have made it out of your last predicament alive, but all you have now is some rags and your trusty feet."
+	name = "亡命信使"
+	examine_name = "乞儿"
+	tutorial = "在黑暗中替人传讯本就是刀口舔血的差事。你能活着从上一次险境里脱身，已经算是走运了；如今你手里剩下的，不过是几件破衣和一双还能跑路的脚。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/vagabond/runner
@@ -36,4 +36,3 @@
 
 	if(prob(10))
 		r_hand = /obj/item/rogue/instrument/flute
-

@@ -1,5 +1,5 @@
 /obj/structure/curtain
-	name = "curtain"
+	name = "帘子"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
 	var/icon_type = "curtain" // used in making the icon state
@@ -59,10 +59,10 @@
 	if(anchored)
 		return TRUE
 
-	user.visible_message("<span class='warning'>[user] cuts apart [src].</span>",
-		"<span class='notice'>I start to cut apart [src].</span>", "<span class='hear'>I hear cutting.</span>")
+	user.visible_message("<span class='warning'>[user]开始拆开[src]。</span>",
+		"<span class='notice'>我开始拆开[src]。</span>", "<span class='hear'>我听见剪裁声。</span>")
 	if(I.use_tool(src, user, 50, volume=100) && !anchored)
-		to_chat(user, "<span class='notice'>I cut apart [src].</span>")
+		to_chat(user, "<span class='notice'>我拆开了[src]。</span>")
 		deconstruct()
 
 	return TRUE
@@ -77,7 +77,7 @@
 			toggle()
 			playsound(loc, 'sound/foley/doors/curtain.ogg', 50, TRUE)
 		else
-			to_chat(user, span_warning("These curtains can't be manipulated from this side."))
+			to_chat(user, span_warning("这些帘子只能从另一侧操作。"))
 	else
 		toggle()
 		playsound(loc, 'sound/foley/doors/curtain.ogg', 50, TRUE)

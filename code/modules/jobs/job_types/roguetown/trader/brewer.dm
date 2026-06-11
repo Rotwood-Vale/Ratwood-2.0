@@ -1,6 +1,6 @@
 /datum/advclass/trader/brewer
-	name = "Brewer"
-	tutorial = "You make your coin peddling imported alcohols from all over the world, though you're no stranger to the craft, and have experience brewing your own ale in a pinch. You have the equipments and know how on how to make your own distiller, too."
+	name = "酒商"
+	tutorial = "你靠贩卖来自世界各地的进口酒水赚钱，不过你自己也并非不懂这门手艺，真到急用时也能亲手酿出自己的麦酒。你甚至还有造一台蒸馏器所需的设备与门道。"
 	outfit = /datum/outfit/job/roguetown/adventurer/brewer
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_CICERONE, TRAIT_HOMESTEAD_EXPERT)
@@ -27,7 +27,7 @@
 
 /datum/outfit/job/roguetown/adventurer/brewer/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You make your coin peddling imported alcohols from all over the world, though you're no stranger to the craft, and have experience brewing your own ale in a pinch. You have the equipments and know how on how to make your own distiller, too."))
+	to_chat(H, span_warning("你靠贩卖来自世界各地的进口酒水赚钱，不过你自己也并非不懂这门手艺，真到急用时也能亲手酿出自己的麦酒。你甚至还有造一台蒸馏器所需的设备与门道。"))
 	mask = /obj/item/clothing/mask/rogue/ragmask/black
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	neck = /obj/item/storage/belt/rogue/pouch/coins/mid

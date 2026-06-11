@@ -1,6 +1,6 @@
 /datum/migrant_role/gronn/chieftain
-	name = "Gronn Chieftain"
-	greet_text = "You are the leader of your tribe. Guide them to glory or try to survive."
+	name = "Gronn酋长"
+	greet_text = "你是部族的领袖。带领他们走向荣耀，或至少设法活下去。"
 	outfit = /datum/outfit/job/roguetown/gronn/chieftain
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi) //we'll see how this goes. Carl/Chocobo can shoot this shit down.
@@ -59,12 +59,12 @@
 
 	if(!H.has_language(/datum/language/gronnic))
 		H.grant_language(/datum/language/gronnic)
-		to_chat(H, span_info("I can speak Gronnic with ,n before my speech."))
+		to_chat(H, span_info("我可以在发言前加上 ,n 来说 Gronnic 语。"))
 
 //Shaman
 /datum/migrant_role/gronn/shaman
-	name = "Gronn Shaman"
-	greet_text = "The wisest and likely oldest of the tribe. You commune with Graggah and unleash powers of the divine. Tending as well to the wounded of the tribe."
+	name = "Gronn萨满"
+	greet_text = "你是部族中最睿智、很可能也是最年长的人。你与 Graggah 沟通，释放神圣之力，也照料部族中的伤者。"
 	outfit = /datum/outfit/job/roguetown/gronn/shaman
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi)
@@ -115,12 +115,12 @@
 
 	if(!H.has_language(/datum/language/gronnic))
 		H.grant_language(/datum/language/gronnic)
-		to_chat(H, span_info("I can speak Gronnic with ,n before my speech."))
+		to_chat(H, span_info("我可以在发言前加上 ,n 来说 Gronnic 语。"))
 
 //Warrior
 /datum/migrant_role/gronn/warrior
-	name = "Gronn Warrior"
-	greet_text = "You are the elite, the best fighters of your tribe. You fight side by side with the Chieftain and ensure his survival."
+	name = "Gronn战士"
+	greet_text = "你是精锐中的精锐，是部族最优秀的战士。你与酋长并肩作战，并确保他能活下来。"
 	outfit = /datum/outfit/job/roguetown/gronn/warrior
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi)
@@ -178,12 +178,12 @@
 
 	if(!H.has_language(/datum/language/gronnic))
 		H.grant_language(/datum/language/gronnic)
-		to_chat(H, span_info("I can speak Gronnic with ,n before my speech."))
+		to_chat(H, span_info("我可以在发言前加上 ,n 来说 Gronnic 语。"))
 
 //Tribal
 /datum/migrant_role/gronn/tribal
-	name = "Gronn Tribal"
-	greet_text = "You are the bulk of the tribe. Skilled with either bow and axe. Or Spear. Well adapted to surviving off the land."
+	name = "Gronn部族民"
+	greet_text = "你是部族中的大多数。你擅长弓与斧，或长矛，也非常适应靠这片土地生存。"
 	outfit = /datum/outfit/job/roguetown/gronn/tribal
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi)
@@ -224,17 +224,17 @@
 
 	if(!H.has_language(/datum/language/gronnic))
 		H.grant_language(/datum/language/gronnic)
-		to_chat(H, span_info("I can speak Gronnic with ,n before my speech."))
+		to_chat(H, span_info("我可以在发言前加上 ,n 来说 Gronnic 语。"))
 
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/classes = list("Tribesman", "Hunter")
-		var/classchoice = input(H, "Choose your archetypes", "Available archetypes") as anything in classes
+		var/classes = list("部族民", "猎手")
+		var/classchoice = input(H, "选择你的原型", "可选原型") as anything in classes
 		
 		switch(classchoice)
-			if("Tribesman")
+			if("部族民")
 				H.set_blindness(0)
-				to_chat(H, span_warning("You are a Tribesman, riding with the Hordes upon Saiga Back, spear and axe in hand. Though you may not be out gathering and finding prey like the hunters, you know how to build and help to set up camp"))
+				to_chat(H, span_warning("你是一名部族民，骑着 Saiga 与大部队同行，手持长矛与斧头。虽然你不像猎手那样外出搜集与追猎猎物，但你知道如何建造并协助搭建营地。"))
 				beltr = /obj/item/rogueweapon/stoneaxe/woodcut
 				l_hand = /obj/item/rogueweapon/spear/bonespear
 				H.adjust_skillrank(/datum/skill/combat/axes, 2, TRUE)
@@ -242,9 +242,9 @@
 				H.adjust_skillrank(/datum/skill/craft/carpentry, 2, TRUE)
 				H.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-			if("Hunter")
+			if("猎手")
 				H.set_blindness(0)
-				to_chat(H, span_warning("You are a Hunter, be it riding in the Hordes upon Saiga in battle, launching arrows upon the poor foe before you, or hunting to keep the tribe fed while on march. "))
+				to_chat(H, span_warning("你是一名猎手，无论是骑着 Saiga 随大部队冲锋作战，向眼前可怜的敌人射出箭矢，还是在行军途中狩猎以养活整个部族，这些都是你的职责。"))
 				beltr = /obj/item/rogueweapon/stoneaxe/boneaxe
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 				l_hand = /obj/item/quiver/arrows
@@ -257,8 +257,8 @@
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 //Slave
 /datum/migrant_role/gronn/slave
-	name = "Gronn Slave"
-	greet_text = "An unlucky soul. Perhaps caught in a pillaging raid, or alone in the wilderness. You have been enslaved by the tribe. Work hard to appease your new masters."
+	name = "Gronn奴隶"
+	greet_text = "你是个倒霉的家伙，也许在一场劫掠中被抓，也许独自在荒野中落单。你已被这个部族奴役，努力劳作去取悦你的新主人吧。"
 	outfit = /datum/outfit/job/roguetown/gronn/slave
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
@@ -289,15 +289,15 @@
 
 	if(!H.has_language(/datum/language/gronnic))
 		H.grant_language(/datum/language/gronnic)
-		to_chat(H, span_info("I can speak Gronnic with ,n before my speech."))
+		to_chat(H, span_info("我可以在发言前加上 ,n 来说 Gronnic 语。"))
 
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/classes = list("Captured Worker", "Captured Artisan","Captured Noble","Captured Bard")
-		var/classchoice = input(H, "Choose your archetypes", "Available archetypes") as anything in classes
+		var/classes = list("被俘工人", "被俘匠人","被俘贵族","被俘吟游诗人")
+		var/classchoice = input(H, "选择你的原型", "可选原型") as anything in classes
 		
 		switch(classchoice)
-			if("Captured Worker")
+			if("被俘工人")
 				H.set_blindness(0)
 				to_chat(H, span_warning(""))
 				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants
@@ -311,7 +311,7 @@
 				H.adjust_skillrank(/datum/skill/craft/masonry, 2, TRUE)
 				H.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
 
-			if("Captured Artisan")
+			if("被俘匠人")
 				H.set_blindness(0)
 				to_chat(H, span_warning(""))
 
@@ -342,7 +342,7 @@
 				H.adjust_skillrank(/datum/skill/craft/engineering, 3, TRUE)
 				H.adjust_skillrank(/datum/skill/craft/ceramics, 2, TRUE)
 
-			if("Captured Noble")
+			if("被俘贵族")
 				H.set_blindness(0)
 				to_chat(H, span_warning(""))
 				id = /obj/item/clothing/ring/silver
@@ -360,7 +360,7 @@
 				H.adjust_skillrank(/datum/skill/misc/reading, 4, TRUE)							
 				ADD_TRAIT(H, TRAIT_GOODLOVER, TRAIT_GENERIC)
 
-			if("Captured Bard")
+			if("被俘吟游诗人")
 				H.set_blindness(0)
 				to_chat(H, span_warning(""))
 				cloak = /obj/item/clothing/cloak/half

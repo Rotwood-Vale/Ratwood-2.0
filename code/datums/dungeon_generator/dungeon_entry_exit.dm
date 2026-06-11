@@ -12,8 +12,8 @@ GLOBAL_LIST_INIT(dungeon_exits, list())
 	claim_free_exit = TRUE
 
 /obj/structure/dungeon_entry
-	name = "The Tomb of Alotheos"
-	desc = "Greedy fool, will you emerge rich and victorious, or be entombed forever?"
+	name = "Alotheos 之墓"
+	desc = "贪婪的蠢货，你会带着财富与胜利归来，还是永远葬身其中？"
 
 	icon = 'icons/roguetown/misc/portal.dmi'
 	icon_state = "portal"
@@ -115,7 +115,7 @@ GLOBAL_LIST_INIT(dungeon_exits, list())
 	movable_travel_z_level(user, get_turf(exit))
 
 /obj/structure/dungeon_exit
-	name = "dungeon exit"
+	name = "地城出口"
 	desc = ""
 
 	obj_flags = INDESTRUCTIBLE
@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(dungeon_exits, list())
 	if(the_other_exit)
 		var/direction_text = get_precise_direction_between(src, the_other_exit)
 		if(direction_text)
-			. += "The exit seems to hum with a faint magical energy, pulling you toward the [direction_text]."
+			. += "这处出口似乎低鸣着微弱魔力，牵引着我朝[direction_text]方向前进。"
 
 /obj/structure/dungeon_exit/Destroy()
 	entry = null

@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/self/magicians_brick
-	name = "Magician's Brick"
-	desc = "Conjure a magical brick in your hand. Its power scale up to your Intelligence\n\
-	The brick lasts until a new one is summoned or the spell is forgotten. This spell has been honed over centuries to bypass anti-magic defenses."
+	name = "魔术师之砖"
+	desc = "在你手中凝出一块魔法砖头。它的威力会随你的智力而提升。\n\
+	砖头会一直存在，直到你召出新的，或忘却这道法术。这门法术经过数世纪打磨，专为绕开反魔防护而生。"
 	overlay_state = "magicians_brick"
 	sound = list('sound/magic/whiteflame.ogg')
 
@@ -14,7 +14,7 @@
 	cost = 2
 	spell_tier = 2 // Spellblade tier.
 
-	invocations = list("Valtarem!")
+	invocations = list("砖来！")
 	invocation_type = "shout"
 
 	glow_color = GLOW_COLOR_ARCANE
@@ -33,20 +33,20 @@
 		var/int_scaling = user.STAINT - 10
 		R.force = R.force + int_scaling
 		R.throwforce = R.throwforce + int_scaling * 2 // 2x scaling for throwing. Let's go.
-		R.name = "magician's brick +[int_scaling]"
+		R.name = "魔术师之砖 +[int_scaling]"
 	user.put_in_hands(R)
 	src.conjured_brick = R
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/magicians_brick/Destroy()
 	if(src.conjured_brick)
-		conjured_brick.visible_message(span_warning("The [conjured_brick]'s borders begin to shimmer and fade, before it vanishes entirely!"))
+		conjured_brick.visible_message(span_warning("[conjured_brick] 的边缘开始闪烁消褪，随后彻底消失了！"))
 		qdel(conjured_brick)
 	return ..()
 
 /obj/item/rogueweapon/magicbrick
-	name = "magician's brick"
-	desc = "A brick formed out of arcane energy. Not a actual brick and cannot be used for construction. Makes for a very deadly melee and throwing weapon."
+	name = "魔术师之砖"
+	desc = "一块由奥术能量凝成的砖头。它并不是真正的砖，无法拿去盖房，但无论近战还是投掷都相当致命。"
 	icon = 'icons/roguetown/items/cooking.dmi'
 	icon_state = "claybrickcook"
 	dropshrink = 0.75

@@ -6,10 +6,10 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 //Retribution. Spend blood to empower your strikes.
 //It's just refluffed divine strike. But worse.
 /obj/effect/proc_holder/spell/self/psydonic_retribution
-	name = "RETRIBUTION"
-	desc = "You siphon a portion of your blood, in exchange for empowering your next strike. \
-	Those struck will find their actions tiring and cumbersome. \
-	<small><span class='bloody'>A greater miracle.</span></small>"
+	name = "清算"
+	desc = "你会抽离自身的一部分鲜血，以换取下一击的强化。 \
+	被击中者会感到行动迟滞而沉重。 \
+	<small><span class='bloody'>高阶神迹。</span></small>"
 	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "RETRIBUTION"
@@ -22,7 +22,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	associated_skill = /datum/skill/magic/holy
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/bloodheal.ogg'
-	invocations = list("*warcry")
+	invocations = list("*战吼")
 	invocation_type = "shout"
 	antimagic_allowed = TRUE
 	miracle = TRUE
@@ -46,8 +46,8 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	var/datum/weakref/buffed_item
 
 /atom/movable/screen/alert/status_effect/buff/psydonic_retribution
-	name = "Retribution"
-	desc = span_bloody("I stand ready! Fight me, fiends!")
+	name = "清算"
+	desc = span_bloody("我已蓄势待发！来战吧，邪祟！")
 	icon_state = "call_to_arms"
 
 /datum/status_effect/psydonic_retribution/on_creation(mob/living/new_owner, obj/item/I)
@@ -78,7 +78,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		return
 	var/mob/living/living_target = target
 	living_target.apply_status_effect(/datum/status_effect/debuff/psydonic_retribution)
-	living_target.visible_message(span_warning("The strike from [user]'s weapon coats [living_target] with shards of crimson!"), vision_distance = COMBAT_MESSAGE_RANGE)
+	living_target.visible_message(span_warning("[user] 的武器一击将猩红碎芒泼洒在了 [living_target] 身上！"), vision_distance = COMBAT_MESSAGE_RANGE)
 	qdel(src)
 
 /datum/status_effect/psydonic_retribution/proc/hand_attack(datum/source, mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
@@ -89,7 +89,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	if(!istype(M.used_intent, INTENT_HARM))
 		return
 	H.apply_status_effect(/datum/status_effect/debuff/psydonic_retribution)
-	H.visible_message(span_warning("The strike from [M]'s fist sprays [H] with droplets of blood!"), vision_distance = COMBAT_MESSAGE_RANGE)
+	H.visible_message(span_warning("[M] 的拳击将点点血珠迸溅到了 [H] 身上！"), vision_distance = COMBAT_MESSAGE_RANGE)
 	qdel(src)
 
 /datum/status_effect/debuff/psydonic_retribution
@@ -99,23 +99,23 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	duration = 30 SECONDS
 
 /atom/movable/screen/alert/status_effect/debuff/psydonic_retribution
-	name = "Retribution"
-	desc = "Some matter of force attempts to stay my hand...\n"
+	name = "清算"
+	desc = "有某种力量在压制我的动作……\n"
 	icon_state = "restrained"
 
 //Inspire. Meant to rally, at the cost of yourself.
 //Ravoxian CtA, with blood cost and weaker. Kind of. As above.
 /obj/effect/proc_holder/spell/self/psydonic_inspire
-	name = "INSPIRE"
-	desc = "At the cost of your own lyfe giving blood, you can inspire your fellow Psydonites. \
-	Such grants them constitution and willpower. \
-	<small><span class='bloody'>A greater miracle.</span></small>"
+	name = "激励"
+	desc = "以自身维系生命的鲜血为代价，你可以鼓舞其他 Psydon 信众。 \
+	这会赐予他们体魄与意志。 \
+	<small><span class='bloody'>高阶神迹。</span></small>"
 	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "INSPIRE"
 	recharge_time = 4 MINUTES
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
-	invocations = list("For the One!!")
+	invocations = list("为唯一者而战！！")
 	invocation_type = "shout"
 	sound = 'sound/magic/holyshield.ogg'
 	releasedrain = 30
@@ -128,7 +128,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	new /obj/effect/decal/cleanable/blood/puddle(user.loc)
 	for(var/mob/living/carbon/target in view(6, get_turf(user)))
 		if(!istype(target.patron, /datum/patron/old_god))
-			to_chat(target, span_danger("A presence witnesses you. For a time, it weeps."))
+			to_chat(target, span_danger("有某种存在注视着你。片刻之间，它在哭泣。"))
 			continue
 		if(!user.faction_check_mob(target))
 			continue
@@ -144,16 +144,16 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	effectedstats = list(STATKEY_WIL = 2, STATKEY_CON = 2)
 
 /atom/movable/screen/alert/status_effect/buff/psydonic_inspire
-	name = "Inspired"
-	desc = span_bloody("The One witnesses us! To arms!")
+	name = "受激励"
+	desc = span_bloody("唯一者正注视着我们！执兵迎敌！")
 	icon_state = "call_to_arms"
 
 //Sacrosanctity. Odd name, but you take damage in exchange to regain blood.
 //Avoid bleedouts by breaking your limbs or something. I 'unno. Follows the flagellant theme.
 /obj/effect/proc_holder/spell/self/psydonic_sacrosanctity
-	name = "SACROSANCTITY"
-	desc = "In exchange for your flesh, you may replenish your lyfe giving blood. \
-	<small><span class='bloody'>A greater miracle.</span></small>"
+	name = "圣血回流"
+	desc = "以自己的血肉为代价，你可以补充维系生命的鲜血。 \
+	<small><span class='bloody'>高阶神迹。</span></small>"
 	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "SACROSANCTITY"
@@ -166,7 +166,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	associated_skill = /datum/skill/magic/holy
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/woundheal_crunch.ogg'
-	invocations = list("*whimper")
+	invocations = list("*呜咽")
 	invocation_type = "shout"
 	antimagic_allowed = TRUE
 	miracle = TRUE
@@ -182,10 +182,10 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 
 //Inviolability. A shield around the user, harming any undead who strike them.
 /obj/effect/proc_holder/spell/self/psydonic_inviolability
-	name = "INVIOLABILITY"
-	desc = "In exchange for your flesh and lyfe giving blood, you are protected from Her puppets. \
-	Any undead striking you are harmed in turn. \
-	<small><span class='bloody'>A greater miracle.</span></small>"
+	name = "不可侵犯"
+	desc = "以自己的血肉与维生之血为代价，你将免受祂那些傀儡的侵扰。 \
+	任何攻击你的不死者都会反受其害。 \
+	<small><span class='bloody'>高阶神迹。</span></small>"
 	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "INVIOLABILITY"
@@ -198,7 +198,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	associated_skill = /datum/skill/magic/holy
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/woundheal_crunch.ogg'
-	invocations = list("*rage")
+	invocations = list("*狂怒")
 	invocation_type = "shout"
 	antimagic_allowed = TRUE
 	miracle = TRUE
@@ -217,8 +217,8 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 #define INVIOLABILITY_FILTER "inviolability_glow"
 
 /atom/movable/screen/alert/status_effect/buff/inviolability
-	name = "Inviolability"
-	desc = "<span class='bloody'>Her puppets have no hold over my form!</span>"
+	name = "不可侵犯"
+	desc = "<span class='bloody'>祂的傀儡再也无法触犯我的形体！</span>"
 	icon_state = "necravow"
 
 /datum/status_effect/buff/inviolability
@@ -237,17 +237,17 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 /datum/status_effect/buff/inviolability/on_remove()
 	. = ..()
 	owner.remove_filter(INVIOLABILITY_FILTER)
-	to_chat(owner, span_warning("I feel so cold..."))
+	to_chat(owner, span_warning("我感觉好冷……"))
 
 #undef INVIOLABILITY_FILTER
 
 //Syonacrum. An ability for arbalists to conjure a special bolt, at the cost of near slaying themselves.
 //Of course, this is limited to arbalist. Why would anyone else need or want this?
 /obj/effect/proc_holder/spell/self/psydonic_lux_bolt
-	name = "SYONACRUM"
-	desc = "A miracle of an ancient order, allowing one to form portions of their lux into suitable implements. \
-	In your case, projectiles, for your beloved sauterelle. The effects of such are only felt shortly after use, so be swift. \
-	<small><span class='bloody'>A greater miracle.</span></small>"
+	name = "圣辉矢铸"
+	desc = "这是古老教团的神迹，允许你将自身一部分 lux 凝成合用之器。 \
+	对你而言，它会化作供心爱弩机使用的投射物。其代价稍后便会显现，所以动作必须快。 \
+	<small><span class='bloody'>高阶神迹。</span></small>"
 	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "SYONACRUM"
@@ -260,7 +260,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	associated_skill = /datum/skill/magic/holy
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/woundheal_crunch.ogg'
-	invocations = list("*scream")
+	invocations = list("*尖啸")
 	invocation_type = "shout"
 	antimagic_allowed = TRUE
 	miracle = TRUE
@@ -278,7 +278,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 
 	if(user.STAPER > 10)
 		var/int_scaling = user.STAPER - 10
-		R.name = "lux bolt +[int_scaling]"//This doesn't do anything, just yet.
+		R.name = "圣辉弩矢 +[int_scaling]"//This doesn't do anything, just yet.
 	user.put_in_hands(R)
 	src.conjured_lux_bolt = R
 	addtimer(CALLBACK(src, PROC_REF(lux_punish), user), wait = 12 SECONDS)
@@ -298,8 +298,8 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/psydonic_lux_bolt/proc/lux_punish(mob/living/carbon/target)
-	target.visible_message(span_notice("[target] shimmers, as if they're to fade away entirely, before snapping back to reality."), \
-		span_userdanger("My own spark, my <b>lyfe</b>, flashes afore me. What have I done?"))
+	target.visible_message(span_notice("[target] 的身形微微闪烁，仿佛几乎要彻底消散，却又猛地被拉回了现实。"), \
+		span_userdanger("我自身的火花，我的<b>生命</b>，骤然在眼前一闪。我都做了什么？"))
 	target.blood_volume = max(target.blood_volume-400, 0)//Take a guess.
 	target.handle_blood()
 	new /obj/effect/decal/cleanable/blood/puddle(target.loc)
@@ -308,14 +308,14 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 
 /obj/effect/proc_holder/spell/self/psydonic_lux_bolt/Destroy()
 	if(src.conjured_lux_bolt)
-		conjured_lux_bolt.visible_message(span_warning("The [conjured_lux_bolt]'s borders begin to buckle and warp, before it disperses entirely!"))
+		conjured_lux_bolt.visible_message(span_warning("[conjured_lux_bolt] 的边缘开始扭曲崩裂，随后彻底消散了！"))
 		qdel(conjured_lux_bolt)
 	return ..()
 
 /obj/item/ammo_casing/caseless/rogue/heavy_bolt/lux
-	name = "lux bolt"
-	desc = "A bolt, formed of pure, unfettered <b>lux</b>. Your own, likely, if you're holding this. \
-	Surely you can understand what's meant to be done?"
+	name = "圣辉弩矢"
+	desc = "一支由纯粹、未受拘束的 <b>lux</b> 凝成的弩矢。若它正握在你手里，那多半就是由你自身凝出的。 \
+	你总该明白它该拿来做什么吧？"
 	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/lux
 	icon_state = "lux_bolt"//Temp sprite. Psydon save me!!!
 	max_integrity = 0.1
@@ -324,7 +324,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 
 //Don't miss, buddy.
 /obj/projectile/bullet/reusable/heavy_bolt/lux
-	name = "lux projectile"
+	name = "圣辉投射物"
 	damage = 10//We handle this by way of the on hit below.
 	damage_type = BURN//Maybe
 	armor_penetration = 100//+20 over standard. Doesn't really matter, though.
@@ -344,13 +344,13 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		if(M.mob_biotypes & probably_not_friendly)
 			M.adjust_fire_stacks(12, /datum/status_effect/fire_handler/fire_stacks/sunder)
 			M.ignite_mob()
-			visible_message(span_warning("[target] erupts in divine flames upon being struck by [src]!"))
+			visible_message(span_warning("[target] 被 [src] 命中后，猛地炸开成一团神圣烈焰！"))
 			M.apply_damage(50, BRUTE, spread_damage = TRUE)
 			M.apply_damage(50, BURN, spread_damage = TRUE)//Yeah, yeah, I know...
 		else
 			M.adjust_fire_stacks(12)
 			M.ignite_mob()
-			visible_message(span_warning("[target] is engulfed in flames upon being struck by [src]!"))
+			visible_message(span_warning("[target] 被 [src] 命中后，瞬间被烈焰吞没！"))
 			M.apply_damage(75, BRUTE, spread_damage = TRUE)
 			M.apply_damage(25, BURN, spread_damage = TRUE)//Again, I KNOW.
 	//Now, the rest. About 1:1 with artillery fireball.

@@ -1,12 +1,12 @@
 /obj/item/clothing/gloves
-	name = "gloves"
+	name = "手套"
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 1
 	body_parts_covered = HANDS
 	slot_flags = ITEM_SLOT_GLOVES
-	attack_verb = list("challenged")
+	attack_verb = list("挑战")
 	var/transfer_prints = FALSE
 	strip_delay = 20
 	equip_delay_other = 40
@@ -26,7 +26,7 @@
 	transfer_blood = 0
 
 /obj/item/clothing/gloves/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("\the [src] are forcing [user]'s hands around [user.p_their()] neck! It looks like the gloves are possessed!"))
+	user.visible_message(span_suicide("[src]正强迫[user]的双手掐住[user.p_their()]脖子！看起来这些手套被附身了！"))
 	return OXYLOSS
 
 /obj/item/clothing/gloves/worn_overlays(isinhands = FALSE)

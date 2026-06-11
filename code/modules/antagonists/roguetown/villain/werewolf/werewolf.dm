@@ -1,22 +1,22 @@
 /datum/antagonist/werewolf
-	name = "Verevolf"
-	roundend_category = "Werewolves"
-	antagpanel_category = "Werewolf"
+	name = "维尔沃夫"
+	roundend_category = "狼人"
+	antagpanel_category = "狼人"
 	job_rank = ROLE_WEREWOLF
 	confess_lines = list(
-		"THE BEAST INSIDE ME!",
-		"BEWARE THE BEAST!",
-		"MY LUPINE MARK!",
+		"我体内的野兽正在咆哮！",
+		"当心那头野兽！",
+		"我的狼之印记！",
 	)
 	rogue_enabled = TRUE
 	var/special_role = ROLE_WEREWOLF
 	var/transformed
 	var/transforming
 	var/untransforming
-	var/wolfname = "Verevolf"
+	var/wolfname = "维尔沃夫"
 
 /datum/antagonist/werewolf/lesser
-	name = "Lesser Verevolf"
+	name = "次级维尔沃夫"
 	increase_votepwr = FALSE
 
 /datum/antagonist/werewolf/lesser/roundend_report()
@@ -24,13 +24,13 @@
 
 /datum/antagonist/werewolf/examine_friendorfoe(datum/antagonist/examined_datum,mob/examiner,mob/examined)
 	if(istype(examined_datum, /datum/antagonist/werewolf/lesser))
-		return span_boldnotice("A young lupine kin.")
+		return span_boldnotice("一名年轻的狼族同胞。")
 	if(istype(examined_datum, /datum/antagonist/werewolf))
-		return span_boldnotice("An elder lupine kin.")
+		return span_boldnotice("一名年长的狼族同胞。")
 	if(examiner.Adjacent(examined))
 		if(istype(examined_datum, /datum/antagonist/vampire))
 			if(transformed)
-				return span_boldwarning("An Ancient Vampire. I must be careful!")
+				return span_boldwarning("一名远古吸血鬼。我必须小心！")
 
 /datum/antagonist/werewolf/on_gain()
 	greet()
@@ -43,7 +43,7 @@
 
 /datum/antagonist/werewolf/on_removal()
 	if(!silent && owner.current)
-		to_chat(owner.current,span_danger("I am no longer a [special_role]!"))
+		to_chat(owner.current,span_danger("我不再是[special_role]了！"))
 	owner.special_role = null
 	return ..()
 
@@ -61,7 +61,7 @@
 		return
 
 /datum/antagonist/werewolf/greet()
-	to_chat(owner.current, span_userdanger("Since a bite long, long ago, Dendor's Madness has welled within me. Before the Moonlight, I will sate my hallowed Hunger."))
+	to_chat(owner.current, span_userdanger("自很久很久以前那一口咬伤之后，那位林野之神的疯狂便在我体内翻涌。待到月光降临，我将满足自己那神圣的饥渴。"))
 	return ..()
 
 /datum/antagonist/werewolf/lesser/greet()
@@ -100,7 +100,7 @@
 		return
 	if(stat >= DEAD) //do shit the natural way i guess
 		return
-	to_chat(src, span_danger("I feel horrible... REALLY horrible..."))
+	to_chat(src, span_danger("我感觉糟透了……真的糟透了……"))
 	mob_timers["puke"] = world.time
 	vomit(1, blood = TRUE, stun = FALSE)
 	return wolfy
@@ -109,25 +109,25 @@
 	if(!istype(target))
 		return
 	if(has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) || has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
-		to_chat(src, span_notice("My power is weakened, I cannot heal!"))
+		to_chat(src, span_notice("我的力量被削弱了，无法治疗自己！"))
 		return
 	if(target.mind)
 		if(target.mind.has_antag_datum(/datum/antagonist/zombie))
-			to_chat(src, span_warning("I should not feed on rotten flesh."))
+			to_chat(src, span_warning("我不该啃食腐烂的血肉。"))
 			return
 		if(target.mind.has_antag_datum(/datum/antagonist/vampire))
-			to_chat(src, span_warning("I should not feed on corrupted flesh."))
+			to_chat(src, span_warning("我不该啃食被污染的血肉。"))
 			return
 		if(target.mind.has_antag_datum(/datum/antagonist/werewolf))
-			to_chat(src, span_warning("I should not feed on my kin's flesh."))
+			to_chat(src, span_warning("我不该啃食同族的血肉。"))
 			return
 
-	to_chat(src, span_warning("I feed on succulent flesh. I feel reinvigorated."))
+	to_chat(src, span_warning("我吞食鲜嫩的血肉，感觉自己重新焕发了活力。"))
 	return src.reagents.add_reagent(/datum/reagent/medicine/healthpot, healing_amount)
 
 /obj/item/clothing/suit/roguetown/armor/skin_armor/werewolf_skin
 	slot_flags = null
-	name = "verevolf's skin"
+	name = "维尔沃夫兽皮"
 	desc = ""
 	icon_state = null
 	body_parts_covered = FULL_BODY
@@ -141,28 +141,28 @@
 	item_flags = DROPDEL
 
 /datum/intent/simple/werewolf
-	name = "claw"
+	name = "利爪"
 	icon_state = "inchop"
 	blade_class = BCLASS_CHOP
-	attack_verb = list("claws", "mauls", "eviscerates")
+	attack_verb = list("抓挠", "撕扯", "开膛破肚")
 	animname = "chop"
 	hitsound = "genslash"
 	penfactor = 50
 	candodge = TRUE
 	canparry = TRUE
-	miss_text = "slashes the air!"
+	miss_text = "扑了个空！"
 	miss_sound = "bluntwooshlarge"
 	item_d_type = "slash"
 
 /datum/intent/mace/smash/werewolf
-	name = "thrash"
-	desc = "A powerful, smash of lycan muscle that deals normal damage but can throw a standing opponent back and slow them down, based on your strength. Ineffective below 10 strength. Slowdown & Knockback scales to your Strength up to 15 (1 - 5 tiles). Cannot be used consecutively more than every 5 seconds on the same target. Prone targets halve the knockback distance."
+	name = "狂击"
+	desc = "以狼人肌力发动的强力猛击，造成正常伤害，并能依照你的力量击退、减速站立目标。力量低于 10 时无效。减速与击退会随你的力量提高，最高按 15 点计算（1 到 5 格）。同一目标每 5 秒内不能连续使用。倒地目标的击退距离减半。"
 	icon_state = "insmash"
 	chargetime = 1
 	penfactor = 60
 
 /obj/item/rogueweapon/werewolf_claw
-	name = "Verevolf Claw"
+	name = "维尔沃夫利爪"
 	desc = ""
 	item_state = null
 	experimental_inhand = FALSE

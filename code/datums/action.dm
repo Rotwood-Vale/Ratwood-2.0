@@ -4,7 +4,7 @@
 #define AB_CHECK_CONSCIOUS 8
 
 /datum/action
-	var/name = "Generic Action"
+	var/name = "通用动作"
 	var/desc = null
 	var/obj/target = null
 	var/check_flags = NONE
@@ -208,85 +208,85 @@
 		current_button.appearance_cache = I.appearance
 
 /datum/action/item_action/toggle_light
-	name = "Toggle Light"
+	name = "切换照明"
 
 /datum/action/item_action/toggle_hood
-	name = "Toggle Hood"
+	name = "切换兜帽"
 
 /datum/action/item_action/toggle_firemode
-	name = "Toggle Firemode"
+	name = "切换射击模式"
 
 /datum/action/item_action/toggle_mode
-	name = "Toggle Mode"
+	name = "切换模式"
 
 /datum/action/item_action/pick_color
-	name = "Choose A Color"
+	name = "选择颜色"
 
 /datum/action/item_action/toggle_mister
-	name = "Toggle Mister"
+	name = "切换喷雾"
 
 /datum/action/item_action/activate_injector
-	name = "Activate Injector"
+	name = "启动注射器"
 
 /datum/action/item_action/toggle_helmet_light
-	name = "Toggle Helmet Light"
+	name = "切换头盔照明"
 
 /datum/action/item_action/toggle_helmet_flashlight
-	name = "Toggle Helmet Flashlight"
+	name = "切换头盔手电"
 
 /datum/action/item_action/toggle_helmet_mode
-	name = "Toggle Helmet Mode"
+	name = "切换头盔模式"
 
 /datum/action/item_action/crew_monitor
-	name = "Interface With Crew Monitor"
+	name = "打开成员监视器"
 
 /datum/action/item_action/toggle
 
 /datum/action/item_action/toggle/New(Target)
 	..()
-	name = "Toggle [target.name]"
+	name = "切换[target.name]"
 	button.name = name
 
 /datum/action/item_action/halt
-	name = "HALT!"
+	name = "停下！"
 
 /datum/action/item_action/toggle_voice_box
-	name = "Toggle Voice Box"
+	name = "切换发声盒"
 
 /datum/action/item_action/change
-	name = "Change"
+	name = "更改"
 
 /datum/action/item_action/adjust
 
 /datum/action/item_action/adjust/New(Target)
 	..()
-	name = "Adjust [target.name]"
+	name = "调整[target.name]"
 	button.name = name
 
 /datum/action/item_action/switch_hud
-	name = "Switch HUD"
+	name = "切换HUD"
 
 /datum/action/item_action/toggle_wings
-	name = "Toggle Wings"
+	name = "切换翅膀"
 
 /datum/action/item_action/toggle_human_head
-	name = "Toggle Human Head"
+	name = "切换人类头部"
 
 /datum/action/item_action/toggle_helmet
-	name = "Toggle Helmet"
+	name = "切换头盔"
 
 /datum/action/item_action/hands_free
 	check_flags = AB_CHECK_CONSCIOUS
 
 /datum/action/item_action/hands_free/activate
-	name = "Activate"
+	name = "激活"
 
 /datum/action/item_action/hands_free/shift_nerves
-	name = "Shift Nerves"
+	name = "转移神经"
 
 /datum/action/item_action/explosive_implant
 	check_flags = NONE
-	name = "Activate Explosive Implant"
+	name = "启动爆炸植入体"
 
 /datum/action/item_action/organ_action
 	check_flags = AB_CHECK_CONSCIOUS
@@ -299,12 +299,12 @@
 
 /datum/action/item_action/organ_action/toggle/New(Target)
 	..()
-	name = "Toggle [target.name]"
+	name = "切换[target.name]"
 	button.name = name
 
 /datum/action/item_action/organ_action/use/New(Target)
 	..()
-	name = "Use [target.name]"
+	name = "使用[target.name]"
 	button.name = name
 
 //Preset for spells
@@ -353,7 +353,7 @@
 	return FALSE
 
 /datum/action/spell_action/proc/examine(mob/user)
-	var/list/inspec = list("<br><span class='notice'><b>[name]</b> intent</span>")
+	var/list/inspec = list("<br><span class='notice'><b>[name]</b> 意图</span>")
 	if(desc)
 		inspec += "\n[desc]"
 	to_chat(user, "[inspec.Join()]")
@@ -380,7 +380,7 @@
 	return
 
 /datum/action/language_menu
-	name = "Language Menu"
+	name = "语言菜单"
 	desc = ""
 	button_icon_state = "language_menu"
 	check_flags = NONE

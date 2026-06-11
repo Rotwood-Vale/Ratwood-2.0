@@ -2,8 +2,8 @@
 // In exchange for martial skills beyond ranged, they can now set traps, too.
 // Footman gets expert in a good bit of martial with STR. Cavalry gets a saiga and CON/WIL setup.
 /datum/advclass/manorguard/skirmisher
-	name = "Skirmisher"
-	tutorial = "You are a professional soldier of the realm, specializing in ranged implements. You sport a keen eye, looking for your enemies weaknesses."
+	name = "游击兵"
+	tutorial = "你是王国的职业军士，专精各类远程兵器。你目光锐利，总在寻找敌人的破绽。"
 	outfit = /datum/outfit/job/roguetown/manorguard/skirmisher
 
 	category_tags = list(CTAG_MENATARMS)
@@ -30,7 +30,7 @@
 		/datum/skill/misc/tracking = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/crafting = SKILL_LEVEL_NOVICE,
 	)
-	extra_context = "Chooses between Light Armor (Dodge Expert) & Medium Armor. Additionally, this subclass can set traps."
+	extra_context = "可在轻甲（闪避专精）与中甲之间选择，并且该子职业还能布设陷阱。"
 
 /datum/outfit/job/roguetown/manorguard/skirmisher/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -42,27 +42,27 @@
 	beltl = /obj/item/rogueweapon/mace/cudgel
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Crossbow","Bow","Sling")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
-		var/armor_options = list("Light Armor", "Medium Armor")
-		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in armor_options
+		var/weapons = list("十字弩","弓","投石索")
+		var/weapon_choice = input(H, "选择你的武器。", "拿起武器") as anything in weapons
+		var/armor_options = list("轻甲", "中甲")
+		var/armor_choice = input(H, "选择你的护甲。", "穿上护甲") as anything in armor_options
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Crossbow")
+			if("十字弩")
 				beltr = /obj/item/quiver/bolts
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-			if("Bow") // They can head down to the armory to sideshift into one of the other bows.
+			if("弓") // They can head down to the armory to sideshift into one of the other bows.
 				beltr = /obj/item/quiver/arrows
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-			if("Sling")
+			if("投石索")
 				beltr = /obj/item/quiver/sling/iron
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling // Both are belt slots and it's not worth setting where the cugel goes for everyone else, sad.
 
 		switch(armor_choice)
-			if("Light Armor")
+			if("轻甲")
 				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-			if("Medium Armor")
+			if("中甲")
 				shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/iron
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 
@@ -78,26 +78,26 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/skirmisher_trap)
 
 		var/helmets = list(
-		"Simple Helmet" 	= /obj/item/clothing/head/roguetown/helmet,
-		"Kettle Helmet" 	= /obj/item/clothing/head/roguetown/helmet/kettle,
-		"Bascinet Helmet"		= /obj/item/clothing/head/roguetown/helmet/bascinet,
-		"Sallet Helmet"		= /obj/item/clothing/head/roguetown/helmet/sallet,
-		"Winged Helmet" 	= /obj/item/clothing/head/roguetown/helmet/winged,
-		"Skull Cap"			= /obj/item/clothing/head/roguetown/helmet/skullcap,
-		"None"
+		"素盔" 	= /obj/item/clothing/head/roguetown/helmet,
+		"锅盔" 	= /obj/item/clothing/head/roguetown/helmet/kettle,
+		"尖顶盔"		= /obj/item/clothing/head/roguetown/helmet/bascinet,
+		"萨莱特盔"		= /obj/item/clothing/head/roguetown/helmet/sallet,
+		"翼盔" 	= /obj/item/clothing/head/roguetown/helmet/winged,
+		"护顶盔"			= /obj/item/clothing/head/roguetown/helmet/skullcap,
+		"无"
 		)
-		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
-		if(helmchoice != "None")
+		var/helmchoice = input(H, "选择你的头盔。", "戴上头盔") as anything in helmets
+		if(helmchoice != "无")
 			head = helmets[helmchoice]
 
 //Skirmisher's tripwire. Just Pioneer's with edits.
 //As with Pioneer, it has exploits. I hate this so much.
 //This does not make use of the sapper check. Just shovels.
 /obj/effect/proc_holder/spell/targeted/skirmisher_trap
-	name = "Set Trap (Delayed)"
-	desc = "After 8 seconds, a trap arms beneath your feet. Wardens and MAAs are immune to setting them off."
+	name = "延时布陷"
+	desc = "8 秒后，一道陷阱会在你脚下完成布设并进入待发状态。守林人与披甲兵不会触发它。"
 	overlay_state = "trap2"//Temp.
-	invocations = list("A rod of iron...")
+	invocations = list("铁枝为引……")
 	range = 0
 	releasedrain = 0
 	recharge_time = 50 SECONDS
@@ -130,7 +130,7 @@
 		return FALSE
 
 	if(pending)
-		to_chat(user, span_warning("I'm already rigging a delayed charge!"))
+		to_chat(user, span_warning("我已经在布设一处延时陷阱了！"))
 		return FALSE
 
 	var/turf/T = get_turf(user)
@@ -143,13 +143,13 @@
 //They're not offensive traps for the most part. Unlike poison gas and explosives.
 /*
 	if(_is_town_area(T))//Inverse. Find a good spot, buddy.
-		to_chat(user, span_warning("I cannot set a trap here; the ground is too soft."))
+		to_chat(user, span_warning("这里的地面太松软了，我没法在此布陷阱。"))
 		revert_cast()
 		return FALSE
 */
 
 	for(var/obj/structure/fluff/traveltile/TT in range(1, T))
-		to_chat(user, span_warning("Should find better place to set up the trap."))
+		to_chat(user, span_warning("我该另找个更合适的地方布设陷阱。"))
 		revert_cast()
 		return FALSE
 
@@ -157,11 +157,11 @@
 //Flare trap is effectively a global alarm. Same as the church bell.
 //Now you can alarm the keep's rooftop on lowpop and such.
 	var/list/trap_choices = list(
-		"Rous"			= /obj/structure/trap/bogtrap/rous,
-		"Flare"			= /obj/structure/trap/bogtrap/flare_trap,
+		"响铃"			= /obj/structure/trap/bogtrap/rous,
+		"照明"			= /obj/structure/trap/bogtrap/flare_trap,
 	)
 
-	var/choice = input(user, "Select the trap type to rig:", "Trap") as null|anything in trap_choices
+	var/choice = input(user, "选择要布设的陷阱类型：", "陷阱") as null|anything in trap_choices
 	if(!choice)
 		revert_cast()
 		return FALSE
@@ -171,20 +171,20 @@
 	pending = TRUE
 
 	user.visible_message(
-		span_notice("[user] kneels, rigging something beneath their feet."),
-		span_notice("I begin setting a [choice] trap.")
+		span_notice("[user] 单膝跪地，在脚边摆弄着什么。"),
+		span_notice("我开始布设一处[choice]陷阱。")
 	)
 	playsound(user, 'sound/misc/clockloop.ogg', 50, TRUE)
 
 	if(!do_after(user, setup_delay, target = T))
 		pending = FALSE
-		to_chat(user, span_warning("I stop setting the trap."))
+		to_chat(user, span_warning("我停止了陷阱布设。"))
 		revert_cast()
 		return FALSE
 
 	for(var/obj/structure/fluff/traveltile/TT in range(1, T))
 		pending = FALSE
-		to_chat(user, span_warning("Should find better place to set up the trap."))
+		to_chat(user, span_warning("我该另找个更合适的地方布设陷阱。"))
 		revert_cast()
 		return FALSE
 
@@ -192,8 +192,8 @@
 	_spawn_trap(T, trap_path)
 
 	user.visible_message(
-		span_warning("A hidden mechanism clicks into place under [user]!"),
-		span_notice("The [choice] trap arms beneath my feet.")
+		span_warning("[user] 脚下传来一声隐蔽的机关咔嗒声！"),
+		span_notice("[choice]陷阱已在我脚下布设完成。")
 	)
 	playsound(T, 'sound/misc/chains.ogg', 50, TRUE)
 

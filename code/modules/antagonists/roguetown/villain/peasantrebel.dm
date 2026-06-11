@@ -2,18 +2,18 @@
 #define INGAME_ROLE_HEAD_UPDATE_PERIOD 300
 
 /datum/antagonist/prebel
-	name = "Peasant Rebel"
-	roundend_category = "peasant rebels"
-	antagpanel_category = "Peasant Rebellion"
+	name = "农民起义者"
+	roundend_category = "农民起义者"
+	antagpanel_category = "农民起义"
 	job_rank = ROLE_PREBEL
 	antag_hud_type = ANTAG_HUD_REV
 	antag_hud_name = "rev"
 	show_in_roundend = FALSE
 	confess_lines = list(
-		"VIVA!",
-		"DEATH TO THE NOBLES!",
-		"STICK IT TO THE MAN!",
-		"NO GODS, NO MASTERS!",
+		"起义万岁！",
+		"贵族都得死！",
+		"狠狠干翻老爷们！",
+		"不要神明，不要主人！",
 	)
 	increase_votepwr = FALSE
 	rogue_enabled = TRUE
@@ -21,9 +21,9 @@
 
 /datum/antagonist/prebel/examine_friendorfoe(datum/antagonist/examined_datum,mob/examiner,mob/examined)
 	if(istype(examined_datum, /datum/antagonist/prebel/head))
-		return span_boldnotice("A revolution leader.")
+		return span_boldnotice("一名革命领袖。")
 	if(istype(examined_datum, /datum/antagonist/prebel))
-		return span_boldnotice("My ally in revolt against the pigs.")
+		return span_boldnotice("我在反抗那群猪猡暴政中的盟友。")
 
 
 /datum/antagonist/prebel/on_gain()
@@ -34,7 +34,7 @@
 	H.add_stress(/datum/stressevent/prebel)
 
 /datum/antagonist/prebel/greet()
-	to_chat(owner, span_danger("I am a peasant rebel! It's time for a change in leadership for this town."))
+	to_chat(owner, span_danger("我是一名农民起义者！这座城镇该换个统治者了。"))
 	if(rev_team)
 		rev_team.update_objectives()
 	owner.announce_objectives()
@@ -90,7 +90,7 @@
 		objectives -= rev_team.objectives
 
 /datum/antagonist/prebel/head
-	name = "Head Rebel"
+	name = "起义领袖"
 	antag_hud_name = "rev_head"
 	increase_votepwr = TRUE
 
@@ -114,14 +114,14 @@
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/rebelconvert
-	name = "RECRUIT REBELS"
+	name = "招募起义者"
 	desc = "!"
 	antimagic_allowed = TRUE
 	recharge_time = 150
 
 /obj/effect/proc_holder/spell/self/rebelconvert/cast(list/targets,mob/user = usr)
 	..()
-	var/inputty = input("Make a speech!", "ROGUETOWN") as text|null
+	var/inputty = input("发表一场演说！", "起义演说") as text|null
 	if(inputty)
 		user.say(inputty, forced = "spell")
 		var/datum/antagonist/prebel/PR = user.mind.has_antag_datum(/datum/antagonist/prebel)
@@ -143,19 +143,19 @@
 	var/datum/team/prebels/RT = mind_datum.rev_team
 	var/shittime = world.time
 	playsound_local(src, 'sound/misc/rebel.ogg', 100, FALSE)
-	var/garbaggio = alert(src, "[offer]","Rebellion", "Yes", "No")
+	var/garbaggio = alert(src, "[offer]","起义", "接受", "拒绝")
 	if(world.time > shittime + 35 SECONDS)
-		to_chat(src,span_danger("Too late."))
+		to_chat(src,span_danger("太迟了。"))
 		return
 	mob_timers["rebeloffer"] = world.time
-	if(garbaggio == "Yes")
+	if(garbaggio == "接受")
 		if(mind_datum.add_revolutionary(mind))
-			RT.offers2join += span_info("<B>[real_name]</B> <span class='blue'>ACCEPTED</span> [guy.real_name]: \"[offer]\"")
-			to_chat(guy,span_blue("[src] joins the revolution."))
+			RT.offers2join += span_info("<B>[real_name]</B> <span class='blue'>已接受</span> [guy.real_name]: \"[offer]\"")
+			to_chat(guy,span_blue("[src] 加入了起义。"))
 	else
-		to_chat(src,span_danger("I reject the offer."))
-		to_chat(guy,span_danger("[src] rejects the offer."))
-		RT.offers2join += span_info("<B>[real_name]</B> <span class='red'>REJECTED</span> [guy.real_name]: \"[offer]\"")
+		to_chat(src,span_danger("我拒绝这份提议。"))
+		to_chat(guy,span_danger("[src] 拒绝了这份提议。"))
+		RT.offers2join += span_info("<B>[real_name]</B> <span class='red'>已拒绝</span> [guy.real_name]: \"[offer]\"")
 
 /datum/antagonist/prebel/proc/add_revolutionary(datum/mind/rev_mind)
 	if(!can_be_converted(rev_mind.current))
@@ -164,13 +164,13 @@
 	return TRUE
 
 /datum/team/prebels
-	name = "Peasant Rebels"
+	name = "农民起义军"
 	var/list/offers2join = list()
 
 /datum/objective/prebel
-	name = "Rebellion"
-	explanation_text = "Put a rebel on the throne with the crown, and make a new decree."
-	team_explanation_text = "Put a rebel on the throne with the crown, and make a new decree."
+	name = "起义"
+	explanation_text = "让一名起义者戴上王冠登上王座，并颁布新的法令。"
+	team_explanation_text = "让一名起义者戴上王冠登上王座，并颁布新的法令。"
 
 /datum/team/prebels/proc/update_objectives(initial = FALSE)
 	if(!(locate(/datum/objective/prebel) in objectives))
@@ -195,17 +195,17 @@
 		var/objective_count = 1
 		for(var/datum/objective/objective in objectives)
 			if(objective.check_completion())
-				to_chat(world, "<B>Goal #[objective_count]</B>: [objective.explanation_text] <span class='greentext'>TRIUMPH!</span>")
+				to_chat(world, "<B>目标 #[objective_count]</B>: [objective.explanation_text] <span class='greentext'>凯旋！</span>")
 			else
-				to_chat(world, "<B>Goal #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>FAIL.</span>")
+				to_chat(world, "<B>目标 #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>失败。</span>")
 				win = FALSE
 			objective_count++
 		if(win)
 			for(var/datum/mind/M in members)
 				if(considered_alive(M))
 					M.adjust_triumphs(5)
-			to_chat(world, span_greentext("The Peasant Rebellion has triumphed!"))
+			to_chat(world, span_greentext("农民起义凯旋了！"))
 		else
-			to_chat(world, span_redtext("The Peasant Rebellion has FAILED!"))
+			to_chat(world, span_redtext("农民起义失败了！"))
 		for(var/X in offers2join)
 			to_chat(world,"[X]")

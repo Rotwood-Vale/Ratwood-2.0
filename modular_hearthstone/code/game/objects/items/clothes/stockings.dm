@@ -1,6 +1,6 @@
 /obj/item/legwears
-	name = "stockings(under)"
-	desc = "A legwear made just for the pure aesthetics. Popular in courts and brothels alike."
+	name = "长袜（内穿）"
+	desc = "纯为美观而制的腿部衣物，在宫廷和妓院里都很流行。"
 	icon = 'modular_hearthstone/icons/obj/items/clothes/stockings.dmi'
 	icon_state = "stockings"
 	slot_flags = ITEM_SLOT_MOUTH
@@ -34,7 +34,7 @@
 				var/datum/bodypart_feature/legwear/legwear_new = new /datum/bodypart_feature/legwear()
 				legwear_new.set_accessory_type(sprite_acc, color, H)
 				legwears_feature = legwear_new
-			user.visible_message(span_notice("[user] tries to put [src] on [H]..."))
+			user.visible_message(span_notice("[user]试着给[H]穿上[src]……"))
 			if(do_after(user, 50, needhand = 1, target = H))
 				var/obj/item/bodypart/chest = H.get_bodypart(BODY_ZONE_CHEST)
 				user.dropItemToGround(src)
@@ -69,8 +69,8 @@
 //Silk variants
 
 /obj/item/legwears/silk
-	name = "silk stockings"
-	desc = "A legwear made just for the pure aesthetics. Made out of thin silk. Popular among nobles."
+	name = "丝绸长袜"
+	desc = "纯为美观而制的腿部衣物。以轻薄丝绸制成，深受贵族喜爱。"
 	icon_state = "silk"
 
 /obj/item/legwears/silk/random/Initialize(mapload)
@@ -95,8 +95,8 @@
 //Fishnets
 
 /obj/item/legwears/fishnet
-	name = "fishnet stockings"
-	desc = "A legwear popular among wenches."
+	name = "网袜"
+	desc = "一种在风尘女子中颇受欢迎的腿部衣物。"
 	icon_state = "fishnet"
 
 /obj/item/legwears/fishnet/random/Initialize(mapload)
@@ -119,8 +119,8 @@
 	color = "#664357"
 
 /obj/item/legwears/thigh_high
-	name = "thigh-high stockings"
-	desc = "A legwear popular among those who plan to venture into colder climates."
+	name = "过膝长袜"
+	desc = "一种在打算前往寒冷地区的人群中颇受欢迎的腿部衣物。"
 	icon_state = "thigh"
 
 /obj/item/legwears/thigh_high/random/Initialize(mapload)
@@ -131,8 +131,8 @@
 	color = "#e6e5e5"
 
 /obj/item/legwears/knee_high
-	name = "knee-high stockings"
-	desc = "A legwear popular among those who enjoy taller boots."
+	name = "及膝长袜"
+	desc = "一种在偏爱高筒靴的人群中颇受欢迎的腿部衣物。"
 	icon_state = "knee"
 
 /obj/item/legwears/knee_high/random/Initialize(mapload)
@@ -145,21 +145,21 @@
 // Supply
 
 /datum/supply_pack/rogue/wardrobe/suits/stockings_white //just paint them yourself ffs
-	name = "White Stockings"
+	name = "白色长袜"
 	cost = 10
 	contains = list(
 					/obj/item/legwears/white,
 				)
 
 /datum/supply_pack/rogue/wardrobe/suits/stockings_thigh_white
-	name = "White Thigh-High Stockings"
+	name = "白色过膝长袜"
 	cost = 10
 	contains = list(
 					/obj/item/legwears/thigh_high/white,
 				)
 
 /datum/supply_pack/rogue/wardrobe/suits/stockings_knee_white
-	name = "White Knee-High Stockings"
+	name = "白色及膝长袜"
 	cost = 10
 	contains = list(
 					/obj/item/legwears/knee_high/white,
@@ -168,7 +168,7 @@
 //Silk
 
 /datum/supply_pack/rogue/wardrobe/suits/stockings_white_silk
-	name = "White Silk Stockings"
+	name = "白色丝绸长袜"
 	cost = 30
 	contains = list(
 					/obj/item/legwears/silk/white,
@@ -177,7 +177,7 @@
 //Fishnets
 
 /datum/supply_pack/rogue/wardrobe/suits/stockings_white_fishnet
-	name = "White Fishnet Stockings"
+	name = "白色网袜"
 	cost = 5
 	contains = list(
 					/obj/item/legwears/fishnet/white,
@@ -186,35 +186,35 @@
 // Craft
 
 /datum/crafting_recipe/roguetown/sewing/stockings_white
-	name = "stockings (1 fibers, 1 cloth)"
+	name = "长袜（1纤维，1布料）"
 	result = list(/obj/item/legwears/white)
 	reqs = list(/obj/item/natural/cloth = 1,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/stockings_thigh_white
-	name = "stockings - thigh (1 fibers, 1 cloth)"
+	name = "长袜-过膝（1纤维，1布料）"
 	result = list(/obj/item/legwears/thigh_high/white)
 	reqs = list(/obj/item/natural/cloth = 1,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/stockings_knee_white
-	name = "stockings - knee (1 fibers, 1 cloth)"
+	name = "长袜-及膝（1纤维，1布料）"
 	result = list(/obj/item/legwears/knee_high)
 	reqs = list(/obj/item/natural/cloth = 1,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/stockings_white_silk
-	name = "silk stockings (1 fibers, 1 silk)"
+	name = "丝绸长袜（1纤维，1丝绸）"
 	result = list(/obj/item/legwears/silk/white)
 	reqs = list(/obj/item/natural/silk = 1,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 5
 
 /datum/crafting_recipe/roguetown/sewing/stockings_white_fishnet
-	name = "fishnet stockings (2 fibers)"
+	name = "网袜（2纤维）"
 	result = list(/obj/item/legwears/fishnet/white)
 	reqs = list(/obj/item/natural/fibers = 2)
 	craftdiff = 3

@@ -1,5 +1,5 @@
 /datum/sex_action/toy_other_masturbate
-	name = "Jerk their toy off"
+	name = "撸弄对方的玩具"
 	// Allow through all clothes, so no body zone accessibility check for clothing
 	check_same_tile = FALSE
 	category = SEX_CATEGORY_HANDS
@@ -22,10 +22,10 @@
 	return TRUE
 
 /datum/sex_action/toy_other_masturbate/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] starts jerking [target]'s toy..."))
+	user.visible_message(span_warning("[user]开始撸弄[target]的玩具了……"))
 
 /datum/sex_action/toy_other_masturbate/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/chosen_verb = pick(list("jerks [target]'s toy", "strokes [target]'s toy", "masturbates [target]'s toy", "jerks off [target]'s toy", "polishes [target]'s toy"))
+	var/chosen_verb = pick(list("撸弄着[target]的玩具", "抚弄着[target]的玩具", "摩擦着[target]的玩具", "套弄着[target]的玩具", "把玩着[target]的玩具"))
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] [chosen_verb]..."))
 	user.sexcon.generic_sex_noise()
 
@@ -36,9 +36,9 @@
 /datum/sex_action/toy_other_masturbate/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/dildo/dildo = get_dildo_on_belt(target)
 	if(dildo)
-		user.visible_message(span_warning("[user] stops jerking \the [dildo]."))
+		user.visible_message(span_warning("[user]停下了撸弄[dildo]的动作。"))
 	else
-		user.visible_message(span_warning("[user] stops jerking the toy."))
+		user.visible_message(span_warning("[user]停下了撸弄那件玩具的动作。"))
 
 /datum/sex_action/toy_other_masturbate/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.sexcon.finished_check())

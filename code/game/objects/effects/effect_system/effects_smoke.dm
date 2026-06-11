@@ -3,7 +3,7 @@
 /////////////////////////////////////////////
 
 /obj/effect/particle_effect/smoke
-	name = "smoke"
+	name = "烟雾"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "smoke"
 	pixel_x = -32
@@ -273,7 +273,7 @@ Zizo Bane sleep powder
 		return 1
 
 /obj/effect/particle_effect/smoke/zizosleep
-	name = "sleep spores"
+	name = "催眠孢子"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "sleep"
 	pixel_x = 0
@@ -408,7 +408,7 @@ Zizo Bane sleep powder
 /*Cleansing smoke*/
 //for the necra censer.
 /obj/effect/particle_effect/smoke/necra_censer
-	name = "cleansing mist"
+	name = "净化雾气"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "extinguish"
 	pixel_x = 0

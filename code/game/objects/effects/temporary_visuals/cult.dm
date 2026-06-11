@@ -6,11 +6,11 @@
 
 /obj/effect/temp_visual/cult/sparks
 	randomdir = 1
-	name = "blood sparks"
+	name = "血色火花"
 	icon_state = "bloodsparkles"
 
 /obj/effect/temp_visual/cult/blood  // The traditional teleport
-	name = "blood jaunt"
+	name = "血遁"
 	duration = 12
 	icon_state = "bloodin"
 
@@ -19,7 +19,7 @@
 
 /obj/effect/temp_visual/dir_setting/cult/phase  // The veil shifter teleport
 	icon = 'icons/effects/cult_effects.dmi'
-	name = "phase glow"
+	name = "相位辉光"
 	duration = 7
 	icon_state = "cultin"
 
@@ -28,11 +28,11 @@
 	icon_state = "cultout"
 
 /obj/effect/temp_visual/cult/sac
-	name = "maw of Nar'Sie"
+	name = "Nar'Sie 之口"
 	icon_state = "sacconsume"
 
 /obj/effect/temp_visual/cult/door
-	name = "unholy glow"
+	name = "亵渎辉光"
 	icon_state = "doorglow"
 	layer = CLOSED_FIREDOOR_LAYER //above closed doors
 
@@ -40,7 +40,7 @@
 	icon_state = "unruneddoorglow"
 
 /obj/effect/temp_visual/cult/turf
-	name = "unholy glow"
+	name = "亵渎辉光"
 	icon_state = "wallglow"
 	layer = ABOVE_NORMAL_TURF_LAYER
 

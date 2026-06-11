@@ -2,8 +2,8 @@
 	force = 21
 	possible_item_intents = list(/datum/intent/shovelscoop, /datum/intent/mace/strike/shovel)
 	gripped_intents = list(/datum/intent/shovelscoop, /datum/intent/mace/strike/shovel, /datum/intent/axe/chop/stone)
-	name = "shovel"
-	desc = "Essential for digging (graves) in this darkened earth."
+	name = "铁锹"
+	desc = "在这片昏暗的大地上掘土挖坟都少不了它。"
 	icon_state = "shovel"
 	icon = 'icons/roguetown/weapons/tools.dmi'
 	sharpness = IS_BLUNT
@@ -44,7 +44,7 @@
 	hitsound = list('sound/combat/hits/blunt/shovel_hit.ogg', 'sound/combat/hits/blunt/shovel_hit2.ogg', 'sound/combat/hits/blunt/shovel_hit3.ogg')
 
 /datum/intent/shovelscoop
-	name = "scoop"
+	name = "铲取"
 	icon_state = "inscoop"
 	chargetime = 0
 	noaa = TRUE
@@ -70,7 +70,7 @@
 				if(D.holie && D.holie.stage >= 3)
 					return
 
-				to_chat(user, span_notice("I tear into the earth, carving out a pit!"))
+				to_chat(user, span_notice("我奋力掘开泥土，挖出了一个坑！"))
 
 				if(do_after(user, 5 SECONDS, target = T))
 					var/obj/structure/closet/dirthole/H = null
@@ -180,7 +180,7 @@
 
 		if(istype(T, /turf/open/floor/rogue/snow) || istype(T, /turf/open/floor/rogue/snowrough) || istype(T, /turf/open/floor/rogue/snowpatchy))
 			T.ChangeTurf(/turf/open/floor/rogue/dirt, flags = CHANGETURF_INHERIT_AIR)
-			to_chat(user, span_warning("You scoop away the snow!"))
+			to_chat(user, span_warning("你把积雪铲开了！"))
 
 		return
 
@@ -202,7 +202,7 @@
 	if(!start_digging)
 		return FALSE
 
-	L.visible_message(span_notice("[L] begins digging on [T]..."))
+	L.visible_message(span_notice("[L]开始在[T]上挖掘..."))
 	// Do the first dig
 	if(!heldclod)
 		if(istype(T, /turf/open/floor/rogue/dirt/road))
@@ -219,7 +219,7 @@
 		if(!(istype(D, /turf/open/floor/rogue/dirt)))
 			break
 		if(!(L.mobility_flags & MOBILITY_STAND))
-			to_chat(L, span_warning("You are knocked down and stop digging."))
+			to_chat(L, span_warning("你被击倒了，停止了挖掘。"))
 			break
 
 		L.changeNext_move(L.used_intent.clickcd)
@@ -275,7 +275,7 @@
 	if(!can_autodig_sand(T) || heldclod)
 		return FALSE
 
-	L.visible_message(span_notice("[L] begins shoveling sand on [T]..."))
+	L.visible_message(span_notice("[L]开始在[T]上铲沙..."))
 	if(!scoop_sand_clod(T))
 		return FALSE
 
@@ -284,7 +284,7 @@
 		if(!can_autodig_sand(current_turf))
 			break
 		if(!(L.mobility_flags & MOBILITY_STAND))
-			to_chat(L, span_warning("You are knocked down and stop digging."))
+			to_chat(L, span_warning("你被击倒了，停止了挖掘。"))
 			break
 
 		L.changeNext_move(L.used_intent.clickcd)
@@ -356,8 +356,8 @@
 
 /obj/item/rogueweapon/shovel/small
 	force = 7
-	name = "spade"
-	desc = "Indispensable for tending the soil."
+	name = "手铲"
+	desc = "照料土壤时不可或缺。"
 	icon_state = "spade"
 	sharpness = IS_BLUNT
 	//dropshrink = 0.8
@@ -371,8 +371,8 @@
 
 /obj/item/rogueweapon/shovel/decrepit
 	force = 8
-	name = "decrepit shovel"
-	desc = "A tool of wrought bronze, for burying the lyfeless. His worshippers would say that death is necessary; that the bod will nourish this world, so that more lyfe may sprout. But to those who know the truth - Her truth, it is nothing more than a mockery."
+	name = "破旧铁锹"
+	desc = "一把锻造青铜的工具，用来埋葬无生者。祂的信徒会说死亡必不可少；肉身会滋养这个世界，让更多生命萌发。但对知晓真相之人来说，对知晓她真理之人来说，这不过是一场拙劣的亵渎。"
 	icon_state = "ashovel"
 	smeltresult = /obj/item/ingot/aaslag
 	color = "#bb9696"
@@ -380,8 +380,8 @@
 
 /obj/item/rogueweapon/shovel/silver
 	force = 25
-	name = "silver shovel"
-	desc = "The only trait that distinguishes a man from a beast is their empathy. To mutilate the dead, regardless of what they've done in lyfe, is to invoke divine wrath. See them buried beneath crossed soil; ferry their spirit to the world beyond Psydonia, and towards their final judgement."
+	name = "银铲"
+	desc = "人之所以异于野兽，唯有共情之心。无论死者生前做过什么，亵渎遗体都会招致神怒。让他们安眠于交覆的泥土之下，将其灵魂渡往 普赛多尼亚 之外的世界，迎向最终的审判。"
 	icon_state = "silvershovel"
 	icon = 'icons/roguetown/weapons/misc32.dmi'
 	is_silver = TRUE
@@ -410,8 +410,8 @@
 	)
 
 /obj/item/burial_shroud
-	name = "winding sheet"
-	desc = "A burial veil for the deceased. It makes transporting bodies slightly more tolerable."
+	name = "裹尸布"
+	desc = "为死者准备的殓葬之布，多少能让搬运遗体这件事好受一点。"
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "shroud_folded"
 	w_class = WEIGHT_CLASS_SMALL
@@ -436,7 +436,7 @@
 
 
 /obj/structure/closet/burial_shroud
-	name = "winding sheet"
+	name = "裹尸布"
 	desc = ""
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "shroud"
@@ -480,15 +480,15 @@
 		if(!ishuman(usr))
 			return
 		if(contents.len)
-			to_chat(usr, "<span class='warning'>There are too many things inside of [src] to fold it up!</span>")
+			to_chat(usr, "<span class='warning'>[src]里面东西太多了，没法把它折起来！</span>")
 			return
-		visible_message("<span class='notice'>[usr] folds up [src].</span>")
+		visible_message("<span class='notice'>[usr]把[src]折叠了起来。</span>")
 		var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
 		usr.put_in_hands(B)
 		qdel(src)
 
 /obj/item/bodybag
-	name = "body bag"
+	name = "裹尸袋"
 	desc = ""
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag_folded"
@@ -513,7 +513,7 @@
 
 /obj/item/bodybag/suicide_act(mob/user)
 	if(isopenturf(user.loc))
-		user.visible_message("<span class='suicide'>[user] is crawling into [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message("<span class='suicide'>[user]正爬进[src]！看起来[user.p_theyre()]像是想要自杀！</span>")
 		var/obj/structure/closet/body_bag/R = new unfoldedbag_path(user.loc)
 		R.add_fingerprint(user)
 		qdel(src)
@@ -524,7 +524,7 @@
 
 
 /obj/structure/closet/body_bag
-	name = "body bag"
+	name = "裹尸袋"
 	desc = ""
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag"
@@ -565,20 +565,20 @@
 		if(!ishuman(usr))
 			return
 		if(opened)
-			to_chat(usr, span_warning("I wrestle with [src], but it won't fold while unzipped."))
+			to_chat(usr, span_warning("我和[src]折腾了一阵，但它没拉上时没法折叠。"))
 			return
 		if(contents.len)
-			to_chat(usr, span_warning("There are too many things inside of [src] to fold it up!"))
+			to_chat(usr, span_warning("[src]里面东西太多了，没法把它折起来！"))
 			return
-		visible_message("<span class='notice'>[usr] folds up [src].</span>")
+		visible_message("<span class='notice'>[usr]把[src]折叠了起来。</span>")
 		var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
 		usr.put_in_hands(B)
 		qdel(src)
 
 /obj/item/rogueweapon/shovel/saperka
-	name = "Saperka"
-	desc = "A compact, steel-headed spade favored by pioneers. \
-	Scarred by a hundred fieldworks, its socket is nicked from prying and the edge has been honed to bite through roots-or armor-in a pinch."
+	name = "萨佩尔卡"
+	desc = "一把紧凑的钢头手铲，深受开拓者喜爱。\
+	历经百次野外作业，它的套口因撬挖而满是缺痕，刃口也被磨得足以在紧要关头劈开树根，甚至护甲。"
 	force = 12//It has a gripped state. USE IT!!!!!
 	force_wielded = 28//It's not just a better battleaxe, now. God I hate this thing.
 	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/mace/smash, /datum/intent/shovelscoop)
@@ -654,9 +654,9 @@
 
 //This is effectively an iron quarterstaff, with silver quality, arc intent and chopping. It's a weird thing, but fluff and soulful for Necrans.
 /obj/item/rogueweapon/shovel/mort_staff
-	name = "\improper mortician's staff"
-	desc = "A heavy, silver shovel's head, paired with a length of silver and boswellia wood. \
-	As with standard Necran practice in the many sects, it has been anointed in censer soot, permitting it to act as a focus."
+	name = "\improper 殓尸人法杖"
+	desc = "一只沉重的银铲头，配上一根银与 boswellia 木制成的长杆。\
+	依照诸多 Necran 教派的惯常做法，它已受香炉烟灰涂抹祝圣，因此能作为施法焦点。"
 	force = 16//Iron quarterstaff level.
 	force_wielded = 22//See above.
 	possible_item_intents = list(SPEAR_BASH, /datum/intent/special/magicarc)//One hand lets you arc divine blast and such.

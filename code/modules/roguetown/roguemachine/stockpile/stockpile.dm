@@ -1,5 +1,5 @@
 /obj/structure/roguemachine/stockpile
-	name = "stockpile"
+	name = "仓储机"
 	desc = ""
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "stockpile_vendor"
@@ -7,8 +7,8 @@
 	blade_dulling = DULLING_BASH
 	pixel_y = 32
 	var/stockpile_index = 1
-	var/current_category = "Raw Materials"
-	var/list/categories = list("Raw Materials", "Foodstuffs", "Fruits", "Seafood")
+	var/current_category = "原材料"
+	var/list/categories = list("原材料", "食材", "水果", "海产")
 	var/datum/withdraw_tab/withdraw_tab = null
 
 /obj/structure/roguemachine/stockpile/Initialize(mapload)
@@ -23,7 +23,7 @@
 
 /obj/structure/roguemachine/stockpile/examine(mob/user)
 	. = ..()
-	. += span_info("Right click to sell everything in front of the stockpile.")
+	. += span_info("右键可出售仓储机前方的全部物品。")
 
 /obj/structure/roguemachine/stockpile/Topic(href, href_list)
 	. = ..()
@@ -45,23 +45,23 @@
 
 
 /obj/structure/roguemachine/stockpile/proc/get_directory_contents()
-	var/contents = "<center>TOWN STOCKPILE<BR>"
+	var/contents = "<center>城镇仓储机<BR>"
 	contents += "--------------<BR>"
 
-	contents += "<a href='?src=[REF(src)];navigate=withdraw'>EXTRACT</a><BR>"
-	contents += "<a href='?src=[REF(src)];navigate=deposit'>FEED</a></center><BR><BR>"
+	contents += "<a href='?src=[REF(src)];navigate=withdraw'>提取</a><BR>"
+	contents += "<a href='?src=[REF(src)];navigate=deposit'>投喂</a></center><BR><BR>"
 
 	return contents
 
 /obj/structure/roguemachine/stockpile/proc/get_withdraw_contents()
-	return withdraw_tab.get_contents("EXTRACT FROM THE STOCKPILE", TRUE)
+	return withdraw_tab.get_contents("从仓储机提取", TRUE)
 
 /obj/structure/roguemachine/stockpile/proc/get_deposit_contents()
-	var/contents = "<center>FEED THE STOCKPILE<BR>"
-	contents += "<a href='?src=[REF(src)];navigate=directory'>(back)</a><BR>"
+	var/contents = "<center>向仓储机投喂<BR>"
+	contents += "<a href='?src=[REF(src)];navigate=directory'>(返回)</a><BR>"
 	contents += "----------<BR>"
 	contents += "</center>"
-	var/selection = "Categories: "
+	var/selection = "分类： "
 	for(var/category in categories)
 		if(category == current_category)
 			selection += "<b>[current_category]</b> "
@@ -153,7 +153,7 @@
 					playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 				if(nopay)
 					SStreasury.economic_output += R.export_price * B.amount // Still count
-					say("Stockpile is full, no payment.")
+					say("仓储机已满，不予付款。")
 				else
 					var/amt = R.payout_price * B.amount
 					SStreasury.economic_output += R.export_price * B.amount
@@ -162,7 +162,7 @@
 					SStreasury.treasury_value += taxed
 					amt -= taxed
 					if(!SStreasury.give_money_account(amt, H, "+[amt] from [R.name] bounty. [taxed]m taxed") && message == TRUE)
-						say("No account found. Submit your fingers to a Meister for inspection.")
+						say("未找到账户。请把手指交给 Meister 检查。")
 					else
 						record_round_statistic(STATS_STOCKPILE_EXPANSES, amt)
 			continue
@@ -190,7 +190,7 @@
 			var/true_value = I.get_real_price()
 			if(nopay)
 				SStreasury.economic_output += true_value // Still count as economic output hah
-				say("Stockpile is full, no payment.")
+				say("仓储机已满，不予付款。")
 			else if(amt)
 				SStreasury.economic_output += true_value
 				var/tax_rate = SStreasury.get_tax_value_for(H)
@@ -198,7 +198,7 @@
 				SStreasury.treasury_value += taxed
 				amt -= taxed
 				if(!SStreasury.give_money_account(amt, H, "+[amt] from [R.name] bounty. [taxed]m taxed") && message == TRUE)
-					say("No account found. Submit your fingers to a Meister for inspection.")
+					say("未找到账户。请把手指交给 Meister 检查。")
 			record_round_statistic(STATS_STOCKPILE_EXPANSES, amt) // Unlike deposit, a treasure minting is equal to both expending and profiting at the same time
 			record_round_statistic(STATS_STOCKPILE_REVENUE, true_value)
 			return
@@ -221,6 +221,6 @@
 	if(ishuman(user))
 		for(var/obj/I in get_turf(src))
 			attemptsell(I, user, FALSE, FALSE)
-		say("Bulk selling in progress...")
+		say("批量出售进行中……")
 		playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 		playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)

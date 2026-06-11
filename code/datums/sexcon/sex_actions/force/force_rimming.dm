@@ -1,5 +1,5 @@
 /datum/sex_action/force_rimming
-	name = "Force them to rim you"
+	name = "强迫对方舔弄自己"
 	require_grab = TRUE
 	stamina_cost = 1.0
 	user_sex_part = SEX_PART_ANUS
@@ -30,10 +30,10 @@
 	return TRUE
 
 /datum/sex_action/force_rimming/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] shoves [target]'s head against [user.p_their()] butt!"))
+	user.visible_message(span_warning("[user]把[target]的脑袋猛按到了[user.p_their()]屁股上！"))
 
 /datum/sex_action/force_rimming/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] forces [target] to rim [user.p_their()] butt."))
+	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()]强迫[target]舔弄[user.p_their()]屁股。"))
 	user.sexcon.oralcourse_noise(target)
 	target.sexcon.do_thrust_animate(user)
 
@@ -48,7 +48,7 @@
 	target.sexcon.handle_passive_ejaculation()
 
 /datum/sex_action/force_rimming/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] pulls [target]'s head away from [user.p_their()] butt."))
+	user.visible_message(span_warning("[user]把[target]的脑袋从[user.p_their()]屁股上拉开了。"))
 
 /datum/sex_action/force_rimming/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user.sexcon.finished_check())

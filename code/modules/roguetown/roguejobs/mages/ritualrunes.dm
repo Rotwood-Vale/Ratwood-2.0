@@ -1,7 +1,7 @@
 #define QDEL_LIST_CONTENTS(L) if(L) { for(var/I in L) qdel(I); L.Cut(); }
 /obj/effect/decal/cleanable/roguerune	// basis for all rituals
-	name = "ritualrune"
-	desc = "Strange symbols pulse upon the ground..."
+	name = "仪式符文"
+	desc = "奇异的符号在地面上脉动闪烁……"
 	anchored = TRUE
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "6"
@@ -147,7 +147,7 @@ GLOBAL_LIST(teleport_runes)
 
 /obj/effect/decal/cleanable/roguerune/proc/fail_invoke()
 	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
-	visible_message(span_warning("The markings pulse with a small flash of light, then fall dark."))
+	visible_message(span_warning("这些印记闪过一丝微光，然后又归于黯淡。"))
 	var/oldcolor = color
 	color = rgb(255, 0, 0)
 	animate(src, color = oldcolor, time = 5)
@@ -155,7 +155,7 @@ GLOBAL_LIST(teleport_runes)
 
 /obj/effect/decal/cleanable/roguerune/attack_hand(mob/living/user)
 	if(rune_in_use)
-		to_chat(user, span_notice("Someone is already using this rune."))
+		to_chat(user, span_notice("已经有人在使用这枚符文了。"))
 		return
 	if(.)
 		return
@@ -164,7 +164,7 @@ GLOBAL_LIST(teleport_runes)
 		if(length(invokers) >= req_invokers)		//Enough invokers? If Yes, invoke
 			invoke(invokers)
 		else
-			to_chat(user, span_danger("You need [req_invokers - length(invokers)] more adjacent invokers to use this rune in such a manner."))	//Needs more invokers, fails invoke
+			to_chat(user, span_danger("你还需要 [req_invokers - length(invokers)] 名相邻的施术者，才能以这种方式使用这枚符文。"))	//Needs more invokers, fails invoke
 			fail_invoke()
 	else
 		var/list/invokers = can_invoke(user)
@@ -199,19 +199,19 @@ GLOBAL_LIST(teleport_runes)
 					rituals += GLOB.t2enchantmentrunerituallist
 			else if(istype(src,/obj/effect/decal/cleanable/roguerune/arcyne))
 				rituals += GLOB.allowedrunerituallist
-			var/ritualnameinput = input(user, "Rituals", "") as null|anything in rituals
+			var/ritualnameinput = input(user, "仪式", "") as null|anything in rituals
 			var/datum/runeritual/pickritual1
 			pickritual1 = rituals[ritualnameinput]
 			if(!pickritual1 || pickritual1 == null)
 				rune_in_use = FALSE
 				return
 			if(pickritual1.tier > src.tier)
-				to_chat(user, span_hierophant_warning("Your ritual rune is not strong enough to perform this ritual."))
+				to_chat(user, span_hierophant_warning("你的仪式符文还不够强，无法施展这个仪式。"))
 				rune_in_use = FALSE
 				return
 			invoke(invokers, pickritual1)
 		else
-			to_chat(user, span_danger("You need [req_invokers - length(invokers)] more adjacent invokers to use this rune in such a manner."))	//Needs more invokers, fails invoke
+			to_chat(user, span_danger("你还需要 [req_invokers - length(invokers)] 名相邻的施术者，才能以这种方式使用这枚符文。"))	//Needs more invokers, fails invoke
 			rune_in_use = FALSE
 			fail_invoke()
 	. = ..()
@@ -252,7 +252,7 @@ GLOBAL_LIST(teleport_runes)
 	atoms_in_range = list()
 	for(var/atom/close_atom as anything in range(runesize, src))
 		if(iswallturf(close_atom))
-			to_chat(usr, span_hierophant_warning("Ritual failed, [src] is blocked by [close_atom]!"))
+			to_chat(usr, span_hierophant_warning("仪式失败，[src]被[close_atom]挡住了！"))
 			fail_invoke()
 			return
 		if(!ismovable(close_atom))
@@ -329,9 +329,9 @@ GLOBAL_LIST(teleport_runes)
 		what_are_we_missing += formatted_thing
 	if(length(what_are_we_missing))
 		// Let them know it screwed up
-		to_chat(usr, span_hierophant_warning("Ritual failed, missing components!"))
+		to_chat(usr, span_hierophant_warning("仪式失败，缺少材料！"))
 		// Then let them know what they're missing
-		to_chat(usr, span_hierophant_warning("You are missing [english_list(what_are_we_missing)] in order to complete the ritual \"[pickritual.name]\"."))
+		to_chat(usr, span_hierophant_warning("你还缺少 [english_list(what_are_we_missing)]，才能完成仪式“[pickritual.name]”。"))
 		fail_invoke()
 		return FALSE
 
@@ -342,21 +342,21 @@ GLOBAL_LIST(teleport_runes)
 	return TRUE
 
 /obj/effect/decal/cleanable/roguerune/arcyne	//arcane
-	name = "Arcane ritual rune"
-	desc = "subtype used for arcane rituals- you should not be seeing this."
+	name = "奥术仪式符文"
+	desc = "用于奥术仪式的子类型，你本不该看到这段。"
 	magictype = "arcyne"
 	can_be_scribed = FALSE
 
 /obj/effect/decal/cleanable/roguerune/arcyne/attack_hand(mob/living/user)
 	if(!isarcyne(user))
-		to_chat(user, span_warning("You aren't able to understand the words of [src]."))
+		to_chat(user, span_warning("你无法理解[src]上的文字。"))
 		return
 	. = ..()
 
 
 /obj/effect/decal/cleanable/roguerune/arcyne/knowledge
-	name = "Knowledge rune"
-	desc = "arcane symbols pulse upon the ground..."
+	name = "知识符文"
+	desc = "奥术符号在地面上脉动闪烁……"
 	icon_state = "6"
 	invocation = "Thal’ un’vethar!"
 	color = "#3A0B61"
@@ -387,13 +387,13 @@ GLOBAL_LIST(teleport_runes)
 			living_invoker.say(invocation, language = /datum/language/common, ignore_spam = TRUE, forced = "cult invocation")
 		if(invoke_damage)
 			living_invoker.apply_damage(invoke_damage, BRUTE)
-			to_chat(living_invoker,  span_italics("[src] saps your strength!"))
+			to_chat(living_invoker,  span_italics("[src]正在抽取你的力量！"))
 	do_invoke_glow()
 
 
 /obj/effect/decal/cleanable/roguerune/arcyne/empowerment
-	name = "Empowerment Array"
-	desc = "arcane symbols pulse upon the ground..."
+	name = "赋能法阵"
+	desc = "奥术符号在地面上脉动闪烁……"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "empowerment"
 	tier = 2
@@ -423,12 +423,12 @@ GLOBAL_LIST(teleport_runes)
 			living_invoker.say(invocation, language = /datum/language/common, ignore_spam = TRUE, forced = "cult invocation")
 		if(invoke_damage)
 			living_invoker.apply_damage(invoke_damage, BRUTE)
-			to_chat(living_invoker,  span_italics("[src] saps your strength!"))
+			to_chat(living_invoker,  span_italics("[src]正在抽取你的力量！"))
 	do_invoke_glow()
 
 /obj/effect/decal/cleanable/roguerune/arcyne/enchantment
-	name = "Imbuement Array"
-	desc = "arcane symbols pulse upon the ground..."
+	name = "灌注法阵"
+	desc = "奥术符号在地面上脉动闪烁……"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "imbuement"
 	tier = 2
@@ -455,12 +455,12 @@ GLOBAL_LIST(teleport_runes)
 			living_invoker.say(invocation, language = /datum/language/common, ignore_spam = TRUE, forced = "cult invocation")
 		if(invoke_damage)
 			living_invoker.apply_damage(invoke_damage, BRUTE)
-			to_chat(living_invoker,  span_italics("[src] saps your strength!"))
+			to_chat(living_invoker,  span_italics("[src]正在抽取你的力量！"))
 	do_invoke_glow()
 
 /obj/effect/decal/cleanable/roguerune/arcyne/enchantment/greater	//used for better quality of learning, grants temporary 2 minute INT bonus.
-	name = "Greater Imbuement Array"
-	desc = "arcane symbols pulse upon the ground..."
+	name = "高阶灌注法阵"
+	desc = "奥术符号在地面上脉动闪烁……"
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "imbuement"
 	tier = 4
@@ -471,8 +471,8 @@ GLOBAL_LIST(teleport_runes)
 
 
 /obj/effect/decal/cleanable/roguerune/arcyne/wall
-	name = "wall accession matrix"
-	desc = "arcane symbols litter the ground- is that a wall of some sort?"
+	name = "墙体构筑矩阵"
+	desc = "奥术符号布满地面——那看起来像是某种墙体？"
 	icon_state = "wall"
 	tier = 2
 	invocation = "Fren’aleth ar’quor!"
@@ -489,7 +489,7 @@ GLOBAL_LIST(teleport_runes)
 /obj/effect/decal/cleanable/roguerune/arcyne/wall/attack_hand(mob/living/user)
 	if(active)
 		QDEL_LIST_CONTENTS(barriers)
-		to_chat(user, span_warning("You deactivate the [src]!"))
+		to_chat(user, span_warning("你解除了[src]！"))
 		playsound(usr, 'sound/magic/teleport_diss.ogg', 75, TRUE)
 		active = FALSE
 		return
@@ -575,12 +575,12 @@ GLOBAL_LIST(teleport_runes)
 			living_invoker.say(invocation, language = /datum/language/common, ignore_spam = TRUE, forced = "cult invocation")
 		if(invoke_damage)
 			living_invoker.apply_damage(invoke_damage, BRUTE)
-			to_chat(living_invoker,  span_italics("[src] saps your strength!"))
+			to_chat(living_invoker,  span_italics("[src]正在抽取你的力量！"))
 	do_invoke_glow()
 
 /obj/effect/decal/cleanable/roguerune/arcyne/wallgreater
-	name = "fortress accession matrix"
-	desc = "A massive sigil- is that a wall in the center?"
+	name = "堡垒构筑矩阵"
+	desc = "一道巨大的印记——中央那是墙体吗？"
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "wall"
 	tier = 3
@@ -643,7 +643,7 @@ GLOBAL_LIST(teleport_runes)
 
 /obj/effect/decal/cleanable/roguerune/arcyne/wallgreater/proc/get_template(/datum/map_template/arcyne_fortress/fortress)
 
-	to_chat(usr, span_hierophant_warning("template retrieving"))
+	to_chat(usr, span_hierophant_warning("模板检索中"))
 	var/datum/map_template/temporary = new fortress
 	template = SSmapping.map_templates[temporary.id]
 	if(!template)
@@ -672,12 +672,12 @@ GLOBAL_LIST(teleport_runes)
 			living_invoker.say(invocation, language = /datum/language/common, ignore_spam = TRUE, forced = "cult invocation")
 		if(invoke_damage)
 			living_invoker.apply_damage(invoke_damage, BRUTE)
-			to_chat(living_invoker,  span_italics("[src] saps your strength!"))
+			to_chat(living_invoker,  span_italics("[src]正在抽取你的力量！"))
 	do_invoke_glow()
 
 /obj/effect/decal/cleanable/roguerune/arcyne/teleport
-	name = "planar convergence matrix"
-	desc = "A large spiraling sigil that seems to thrum with power."
+	name = "位面汇聚矩阵"
+	desc = "一道巨大的螺旋印记，似乎正因力量而低鸣。"
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "portal"
 	tier = 2
@@ -714,7 +714,7 @@ GLOBAL_LIST(teleport_runes)
 			potential_runes[avoid_assoc_duplicate_keys(teleport_rune.listkey, teleportnames)] = teleport_rune
 
 	if(!length(potential_runes))
-		to_chat(user, span_warning("There are no valid runes to teleport to!"))
+		to_chat(user, span_warning("没有可供传送的有效符文！"))
 		log_game("Teleport rune activated by [user] at [COORD(src)] failed - no other teleport runes.")
 		fail_invoke()
 		return
@@ -732,7 +732,7 @@ GLOBAL_LIST(teleport_runes)
 
 	var/turf/target = get_turf(actual_selected_rune)
 	if(target.is_blocked_turf(TRUE))
-		to_chat(user, span_warning("The target rune is blocked. Attempting to teleport to it would be massively unwise."))
+		to_chat(user, span_warning("目标符文被阻挡了。试图传送过去将是极其愚蠢的行为。"))
 		log_game("Teleport rune activated by [user] at [COORD(src)] failed - destination blocked.")
 		fail_invoke()
 		return
@@ -763,10 +763,10 @@ GLOBAL_LIST(teleport_runes)
 			if(do_teleport(user, target, channel = TELEPORT_CHANNEL_CULT))
 				movesuccess = TRUE
 		if(movesuccess)
-			visible_message(span_warning("There is a sharp crack of inrushing air, and everything above the rune disappears!"), null, "<i>You hear a sharp crack.</i>")
-			to_chat(user, span_cult("You[moveuserlater ? "r vision blurs, and with a falling feeling you suddenly appear somewhere else":" send everything above the rune away"]."))
+			visible_message(span_warning("空气猛然炸裂，上方的一切都从符文上消失了！"), null, "<i>你听见了一声锐响。</i>")
+			to_chat(user, span_cult("你[moveuserlater ? "眼前一阵模糊，伴着坠落感突然出现在别处":"将符文上方的一切传送走了"]。"))
 		else
-			to_chat(user, span_cult("You[moveuserlater ? "r vision blurs briefly, but nothing happens":" try send everything above the rune away, but the teleportation fails"]."))
+			to_chat(user, span_cult("你[moveuserlater ? "眼前短暂模糊了一下，但什么都没发生":"试着将符文上方的一切送走，但传送失败了"]。"))
 		if(movesuccess)
 			target.visible_message(span_warning("There is a boom of outrushing air as something appears above the rune!"), null, "<i>You hear a boom.</i>")
 		for(var/atom/invoker in invokers)
@@ -777,13 +777,13 @@ GLOBAL_LIST(teleport_runes)
 				living_invoker.say(invocation, language = /datum/language/common, ignore_spam = TRUE, forced = "cult invocation")
 			if(invoke_damage)
 				living_invoker.apply_damage(invoke_damage, BRUTE)
-				to_chat(living_invoker,  span_italics("[src] saps your strength!"))
+				to_chat(living_invoker,  span_italics("[src]正在抽取你的力量！"))
 	else
 		fail_invoke()
 
 /obj/effect/decal/cleanable/roguerune/arcyne/summoning	//32x32 rune t1(one tile)
-	name = "confinement matrix"
-	desc = "A relatively basic confinement matrix used to hold small things when summoned."
+	name = "拘束矩阵"
+	desc = "一种相对基础的拘束矩阵，用来在召唤时囚禁较小的目标。"
 	ritual_number = TRUE
 	icon_state = "summon"
 	invocation = "Rhegal vex'ultraa!"
@@ -811,7 +811,7 @@ GLOBAL_LIST(teleport_runes)
 
 /obj/effect/decal/cleanable/roguerune/arcyne/summoning/attack_hand(mob/living/user)
 	if(summoning && isarcyne(user))
-		to_chat(user, span_warning("You release the summon from it's containment!"))
+		to_chat(user, span_warning("你把召唤物从拘束中释放了！"))
 		playsound(usr, 'sound/magic/teleport_diss.ogg', 75, TRUE)
 		do_invoke_glow()
 		clear_obstacles(user)
@@ -849,7 +849,7 @@ GLOBAL_LIST(teleport_runes)
 			living_invoker.say(invocation, language = /datum/language/common, ignore_spam = TRUE, forced = "cult invocation")
 		if(invoke_damage)
 			living_invoker.apply_damage(invoke_damage, BRUTE)
-			to_chat(living_invoker,  span_italics("[src] saps your strength!"))
+			to_chat(living_invoker,  span_italics("[src]正在抽取你的力量！"))
 	do_invoke_glow()
 
 /obj/effect/decal/cleanable/roguerune/arcyne/summoning/proc/clear_obstacles(mob/living/user)
@@ -859,8 +859,8 @@ GLOBAL_LIST(teleport_runes)
 		continue
 
 /obj/effect/decal/cleanable/roguerune/arcyne/summoning/mid// 96x96 rune t2(3x3 tile)
-	name = "sealate confinement matrix"
-	desc = "An adept confinement matrix improved with the addition of a sealate matrix; used to hold things when summoned."
+	name = "海印石 拘束矩阵"
+	desc = "一座通过加入 海印石 矩阵改良过的娴熟拘束矩阵，用于在召唤时囚禁目标。"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "sealate"
 	runesize = 1
@@ -871,8 +871,8 @@ GLOBAL_LIST(teleport_runes)
 	can_be_scribed = TRUE
 
 /obj/effect/decal/cleanable/roguerune/arcyne/summoning/adv	//160x160 rune t2(5x5 tile)
-	name = "warded sealate confinement matrix"
-	desc = "An thoroughly warded confinement matrix improved with the addition of a sealate matrix; used to hold larger, dangerous things when summoned."
+	name = "warded 海印石 拘束矩阵"
+	desc = "一座以 海印石 矩阵强化、且被充分施加结界的拘束矩阵，用于在召唤时囚禁更大、更危险的目标。"
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "warded"
 	runesize = 2
@@ -883,8 +883,8 @@ GLOBAL_LIST(teleport_runes)
 	can_be_scribed = TRUE
 
 /obj/effect/decal/cleanable/roguerune/arcyne/summoning/max	//224x224 rune t3(7x7 tile)
-	name = "noc's eye warded sealate confinement matrix"
-	desc = "An thoroughly warded confinement matrix improved with a Noc's eye sealing measure and the addition of a sealate matrix; used to hold the largest, most dangerous things summonable."
+	name = "诺克之眼 warded 海印石 拘束矩阵"
+	desc = "一座以 诺克之眼 封印与 海印石 矩阵双重强化、并施加了重重结界的拘束矩阵，用于囚禁可召唤出的最大、最危险之物。"
 	icon = 'icons/effects/224x224.dmi'
 	icon_state = "huge_runeblued"
 	runesize = 3
@@ -901,7 +901,7 @@ GLOBAL_LIST(teleport_runes)
 
 /obj/effect/decal/cleanable/roguerune/divine/attack_hand(mob/living/user)
 	if(!isdivine(user))
-		to_chat(user, span_warning("You aren't able to understand the words of [src]."))
+		to_chat(user, span_warning("你无法理解[src]上的文字。"))
 		return
 	. = ..()
 
@@ -912,7 +912,7 @@ GLOBAL_LIST(teleport_runes)
 
 /obj/effect/decal/cleanable/roguerune/druid/attack_hand(mob/living/user)
 	if(!isdruid(user))
-		to_chat(user, span_warning("You aren't able to understand the words of [src]."))
+		to_chat(user, span_warning("你无法理解[src]上的文字。"))
 		return
 	. = ..()
 
@@ -922,6 +922,6 @@ GLOBAL_LIST(teleport_runes)
 
 /obj/effect/decal/cleanable/roguerune/blood/attack_hand(mob/living/user)
 	if(!isblood(user))
-		to_chat(user, span_warning("You aren't able to understand the words of [src]."))
+		to_chat(user, span_warning("你无法理解[src]上的文字。"))
 		return
 	. = ..()

@@ -1,7 +1,7 @@
 /datum/advclass/gnoll/shaman
-	name = "Gnoll Shaman"
+	name = "豺狼人萨满"
 	maximum_possible_slots = 1
-	tutorial = "Leader in faith, often the main source of wisdom within a gnoll pack. Few are closer to Graggar himself as you are. You may choose to waylay the hunt, in order to nurture fallen opponents back to health, so they may grow stronger, providing a true challenge in a future fight."
+	tutorial = "你是信仰上的领袖，常常也是整个豺狼人群中智慧的源头。少有人能比你更接近 格拉加 本尊。你也可以暂缓狩猎，把倒下的对手重新养回健康，让他们变得更强，好在未来献上一场真正像样的战斗。"
 	allowed_races = list(/datum/species/gnoll)
 	outfit = /datum/outfit/job/roguetown/gnoll/shaman
 	applies_post_equipment = FALSE

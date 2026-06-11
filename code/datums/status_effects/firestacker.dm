@@ -137,7 +137,7 @@
 	if(owner.on_fire)
 		return
 
-	return "[owner.p_they()] [owner.p_are()] covered in something flammable."
+	return "[owner.p_they()] 身上沾满了可燃物。"
 
 /datum/status_effect/fire_handler/fire_stacks/proc/owner_touched_sparks()
 	SIGNAL_HANDLER
@@ -218,7 +218,7 @@
 
 	on_fire = TRUE
 	if(!silent)
-		owner.visible_message(span_warning("[owner] catches fire!"), span_userdanger("You're set on fire!"))
+		owner.visible_message(span_warning("[owner] 着火了！"), span_userdanger("你着火了！"))
 
 	if(moblight_type)
 		if(moblight)

@@ -1,6 +1,6 @@
 /obj/structure/boatbell
-	name = "bell"
-	desc = "This is the doomspeller of Roguetown."
+	name = "钟"
+	desc = "这是 Roguetown 的丧钟。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "bell"
 	density = FALSE
@@ -17,20 +17,20 @@
 /obj/structure/boatbell/attack_hand(mob/user)
 	if(world.time < last_ring + 50)
 		return
-	user.visible_message(span_info("[user] rings the bell."))
+	user.visible_message(span_info("[user]敲响了钟。"))
 	playsound(src, 'sound/misc/boatbell.ogg', 100, extrarange = 5)
 	last_ring = world.time
 
 /obj/structure/boatbell/fluff/attack_hand(mob/user)
 	if(world.time < last_ring + 50)
 		return
-	user.visible_message(span_info("[user] rings the bell."))
+	user.visible_message(span_info("[user]敲响了钟。"))
 	playsound(src, 'sound/misc/boatbell.ogg', 100, extrarange = 5)
 	last_ring = world.time
 
 /obj/structure/standingbell
-	name = "service bell"
-	desc = "A small mana-infused bell that carries its chime across the city to a select few ears. Use this to call for service."
+	name = "服务铃"
+	desc = "一个注入魔力的小铃铛，其钟声能穿透城镇，传到特定的几个人耳中。用它来召唤服务。"
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "standingbell"
 	density = FALSE
@@ -47,13 +47,13 @@
 
 /obj/structure/standingbell/attack_hand(mob/living/user)
 	if(on_cooldown)
-		to_chat(user, span_warning("The bell has already been rung recently."))
+		to_chat(user, span_warning("这个铃铛刚才才被敲响过。"))
 	else
 		user.changeNext_move(CLICK_CD_INTENTCAP)
-		user.visible_message(span_warning("[user] begins to ring [src]"))
+		user.visible_message(span_warning("[user]开始敲响[src]"))
 		if(do_after(user, 10 SECONDS))
 			on_cooldown = TRUE
-			user.visible_message(span_info("[user] rings [src]"))
+			user.visible_message(span_info("[user]敲响了[src]"))
 			playsound(src, 'sound/misc/bell.ogg', 100, extrarange = 5)
 			addtimer(CALLBACK(src, PROC_REF(reset_cooldown)), cooldown)
 			var/list/rolestonotify = list()
@@ -74,8 +74,8 @@
 					rolestonotify = list("Inquisitor", "Orthodoxist", "Absolver")
 				if("Garrison")
 					rolestonotify = list("Man at Arms", "Sergeant", "Dungeoneer", "Watchman")
-			send_ooc_note(("I hear the distant sounds of [src] ringing. I'm being called to the [localarea]."), job = rolestonotify)
+			send_ooc_note(("我隐约听到了[src]被敲响的声音。有人在[localarea]召唤我。"), job = rolestonotify)
 
 /obj/structure/standingbell/proc/reset_cooldown()
-	visible_message(span_notice ("[src] is ready for use again."))
+	visible_message(span_notice ("[src]可以再次使用了。"))
 	on_cooldown = FALSE

@@ -1,6 +1,6 @@
 
 /obj/effect/decal/cleanable/coom
-	name = "mess"
+	name = "污渍"
 	desc = ""
 	icon = 'icons/roguetown/items/natural.dmi'
 	icon_state = "mess1"
@@ -21,7 +21,7 @@
 		transform = M
 
 /obj/effect/decal/cleanable/blood
-	name = "blood"
+	name = "血迹"
 	desc = ""
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
@@ -47,7 +47,7 @@
 /obj/effect/decal/cleanable/blood/proc/become_dry()
 	if(QDELETED(src))
 		return
-	name = "dry [initial(name)]"
+	name = "干涸的[initial(name)]"
 	color = "#967c69"
 	bloodiness = 0
 
@@ -71,13 +71,13 @@
 	qdel(src)
 
 /obj/effect/decal/cleanable/blood/old
-	name = "dried blood"
+	name = "干涸血迹"
 	desc = ""
 	bloodiness = 0
 	icon_state = "floor1-old"
 
 /obj/effect/decal/cleanable/blood/old/Initialize(mapload)
-	add_blood_DNA(list("Non-human DNA" = random_blood_type())) // Needs to happen before ..()
+	add_blood_DNA(list("非人DNA" = random_blood_type())) // Needs to happen before ..()
 	. = ..()
 	icon_state = "[icon_state]-old" //change from the normal blood icon selected from random_icon_states in the parent's Initialize to the old dried up blood.
 
@@ -105,7 +105,7 @@
 	beauty = -50
 
 /obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose
-	name = "blood"
+	name = "血迹"
 	icon = 'icons/effects/blood.dmi'
 	desc = ""
 	beauty = -50
@@ -136,7 +136,7 @@
 /obj/effect/decal/cleanable/trail_holder/proc/become_dry()
 	if(QDELETED(src))
 		return
-	name = "dry [initial(name)]"
+	name = "干涸的[initial(name)]"
 	color = "#967c69"
 	alpha = 100
 	bloodiness = 0
@@ -145,7 +145,7 @@
 	return TRUE
 
 /obj/effect/decal/cleanable/blood/gibs
-	name = "gibs"
+	name = "碎尸块"
 	desc = ""
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "gib1"
@@ -198,7 +198,7 @@
 	random_icon_states = list("gibmid1", "gibmid2", "gibmid3")
 
 /obj/effect/decal/cleanable/blood/gibs/old
-	name = "old rotting gibs"
+	name = "腐烂的旧碎尸"
 	desc = ""
 	bloodiness = 0
 	already_rotting = TRUE
@@ -207,10 +207,10 @@
 	. = ..()
 	setDir(pick(1,2,4,8))
 	icon_state += "-old"
-	add_blood_DNA(list("Non-human DNA" = random_blood_type()))
+	add_blood_DNA(list("非人DNA" = random_blood_type()))
 
 /obj/effect/decal/cleanable/blood/drip
-	name = "drips of blood"
+	name = "血滴"
 	desc = ""
 	icon_state = "drip1"
 	bloodiness = 0
@@ -253,7 +253,7 @@
 		return TRUE
 
 /obj/effect/decal/cleanable/blood/puddle
-	name = "puddle of blood"
+	name = "一滩血"
 	desc = ""
 	icon_state = "pool1"
 	bloodiness = 0
@@ -304,7 +304,7 @@
 
 //BLOODY/MUDDY/SNOWY FOOTPRINTS
 /obj/effect/decal/cleanable/blood/footprints
-	name = "footprints"
+	name = "脚印"
 	desc = ""
 	icon = 'icons/effects/footprints.dmi'
 	icon_state = "blood1"
@@ -399,10 +399,10 @@
 		if(L.STAINT < 12)
 			return
 	if(shoe_types.len)
-		. += "You recognise the footprints as belonging to:\n"
+		. += "你认出这些脚印属于：\n"
 		for(var/shoe in shoe_types)
 			var/obj/item/clothing/shoes/S = shoe
-			. += "[icon2html(initial(S.icon), user)] Some <B>[initial(S.name)]</B>.\n"
+			. += "[icon2html(initial(S.icon), user)] 某种<B>[initial(S.name)]</B>。\n"
 
 /obj/effect/decal/cleanable/blood/footprints/replace_decal(obj/effect/decal/cleanable/C)
 	if(blood_state != C.blood_state) //We only replace footprints of the same type as us

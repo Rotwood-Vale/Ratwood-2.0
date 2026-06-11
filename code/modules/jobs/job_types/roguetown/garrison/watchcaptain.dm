@@ -1,5 +1,6 @@
 /datum/job/roguetown/watchcaptain
 	title = "Watch Captain"
+	display_title = "守望队长"
 	flag = SHERIFF
 	department_flag = GARRISON
 	faction = "Station"
@@ -8,8 +9,8 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)//I like the idea of making it set you to middle aged, but having the requirement removes it from the latejoin menu which I think is bad for visibility
-	tutorial = "You are the most experienced of the City Watch, leading the city watchmen in maintaining order in hightown and attending to threats and crimes below the keep's attention. \
-				See to those brave city watchmen under your command and fill in the gaps the ducal retinue leave in their wake. Obey the orders of the marshal and the Crown."
+	tutorial = "你是城卫中经验最老到的一位，率领城卫维持上城区秩序，并处理那些尚不值得惊动城堡高层的威胁与罪案。\
+				照看好你麾下那些勇敢的城卫，填补公爵扈从行动后留下的空缺。服从元帅与王权的命令。"
 	display_order = JDO_SHERIFF
 	whitelist_req = TRUE
 	round_contrib_points = 3
@@ -45,9 +46,9 @@
 	id = /obj/item/scomstone/garrison
 
 /datum/advclass/watchcaptain/watchcaptain
-	name = "Watch Captain"
-	tutorial = "You are the most experienced of the City Watch, leading the city watchmen in maintaining order in hightown and attending to threats and crimes below the keep's attention. \
-				See to those brave city watchmen under your command and fill in the gaps knights leave in their wake. Obey the orders of the Knight-Captain and the Crown."
+	name = "守望队长"
+	tutorial = "你是城卫中经验最老到的一位，率领城卫维持上城区秩序，并处理那些尚不值得惊动城堡高层的威胁与罪案。\
+				照看好你麾下那些勇敢的城卫，填补骑士们行动后留下的空缺。服从骑士统领与王权的命令。"
 	outfit = /datum/outfit/job/roguetown/watchcaptain/watchcaptain
 
 	category_tags = list(CTAG_SHERIFF)
@@ -97,29 +98,29 @@
 			)
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Stunmace & Greatshield","Stunmace & Crossbow","Stunmace & Polehammer")	//A better shield or an extra spare stunmace
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("震慑钉头锤与大盾","震慑钉头锤与十字弩","震慑钉头锤与长柄战锤")	//A better shield or an extra spare stunmace
+		var/weapon_choice = input(H, "选择你的武器。", "拿起武器") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Stunmace & Greatshield")
+			if("震慑钉头锤与大盾")
 				r_hand = /obj/item/rogueweapon/mace/stunmace
 				backl = /obj/item/rogueweapon/shield/tower/metal
-			if("Stunmace & Crossbow")
+			if("震慑钉头锤与十字弩")
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				backl = /obj/item/quiver/bolts
 				H.change_stat(STATKEY_SPD, 1)
 				H.change_stat(STATKEY_STR, -1)
 				beltr = /obj/item/rogueweapon/mace/stunmace
-			if("Stunmace & Polehammer")
+			if("震慑钉头锤与长柄战锤")
 				r_hand = /obj/item/rogueweapon/eaglebeak
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				beltr = /obj/item/rogueweapon/mace/stunmace
 
 /obj/effect/proc_holder/spell/self/convertrole/cityguard
-	name = "Recruit City Guard"
+	name = "征募城卫"
 	new_role = "City Guard"
 	overlay_state = "recruit_guard"
 	recruitment_faction = "City Guard"
-	recruitment_message = "Serve the city, %RECRUIT!"
-	accept_message = "FOR THE CITY!"
-	refuse_message = "I refuse."
+	recruitment_message = "为城市而战，%RECRUIT！"
+	accept_message = "为了城市！"
+	refuse_message = "我拒绝。"

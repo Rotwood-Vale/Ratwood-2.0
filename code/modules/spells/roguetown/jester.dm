@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/self/telljoke
-	name = "Comedia"
-	desc = "Say something funny to someone in high spirits, it will brighten their mood."
+	name = "喜剧"
+	desc = "对情绪高涨的人说些滑稽话，好让他们更加开怀。"
 	overlay_state = "comedy"
 	antimagic_allowed = TRUE
 	invocation_type = "shout"
@@ -8,7 +8,7 @@
 
 /obj/effect/proc_holder/spell/self/telljoke/cast(list/targets,mob/user = usr)
 	. = ..()
-	var/joker = input(user, "Say something funny!", "Comedia")
+	var/joker = input(user, "说点好笑的吧！", "Comedia")
 	if(!joker)
 		return FALSE
 	user.say(joker, forced = "spell")
@@ -30,12 +30,12 @@
 					continue
 				if(HAS_TRAIT(H, TRAIT_XYLIX) && !H.has_status_effect(/datum/status_effect/buff/xylix_joy))
 					H.apply_status_effect(/datum/status_effect/buff/xylix_joy)
-					to_chat(H, span_info("The laughter brings a smile to my face, and fortune to my steps!"))
+					to_chat(H, span_info("笑声让我面露笑意，也让幸运落在了我的脚步上！"))
 		sleep(rand(1,5))
 
 /obj/effect/proc_holder/spell/self/telltragedy
-	name = "Tragedia"
-	desc = "Remind someone in low spirits that it could be much worse."
+	name = "悲剧"
+	desc = "提醒那些情绪低落的人，事情本还可以更糟。"
 	overlay_state = "tragedy"
 	antimagic_allowed = TRUE
 	invocation_type = "shout"
@@ -43,7 +43,7 @@
 
 /obj/effect/proc_holder/spell/self/telltragedy/cast(list/targets,mob/user = usr)
 	. = ..()
-	var/joker = input(user, "Say something sad!", "Tragedia")
+	var/joker = input(user, "说点悲伤的吧！", "Tragedia")
 	if(!joker)
 		return FALSE
 	user.say(joker, forced = "spell")

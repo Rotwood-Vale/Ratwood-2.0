@@ -1,8 +1,8 @@
 /datum/advclass/farmermaster
-	name = "Master Farmer"
-	tutorial = "A master farmer, a story simlar to the likes of Goliath and David, \
-	You, a simple peasent, through sheer determination have conquered nature \
-	and made it bow before your green thumb."
+	name = "农耕大师"
+	tutorial = "你是一名农耕大师，活像大卫战胜歌利亚那般的传奇。\
+	你本只是个朴素农人，却凭着一股狠劲征服了自然。\
+	如今万物都要向你那双绿拇指低头。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/farmermaster

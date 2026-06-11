@@ -1,6 +1,6 @@
 /datum/advclass/drunkard
-	name = "Gambler"
-	tutorial = "You are a gambler. Everyone in your life has given up on you, and the stress of losing it all over and over has taken its toll on your body. All you have left to your name are some cards, dice and whatever is in this bottle. At least you're still in Baotha's good graces, whether you reciprocate such feelings or not..."
+	name = "赌徒"
+	tutorial = "你是个赌徒。你生命里的每个人都早已对你失望透顶，而一次又一次输得精光的压力，也把你的身子拖垮了。如今你名下只剩几张牌、几枚骰子，还有这瓶子里装着的玩意。至少你似乎还算得 Baotha 眷顾，至于你自己领不领这份情，那就另说了……"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/drunkard

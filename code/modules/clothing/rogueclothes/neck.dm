@@ -1,5 +1,5 @@
 /obj/item/clothing/neck/roguetown
-	name = "necklace"
+	name = "项链"
 	desc = ""
 	icon = 'icons/roguetown/clothing/neck.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/neck.dmi'
@@ -12,7 +12,7 @@
 /obj/item/clothing/neck/roguetown/examine()
 	. = ..()
 	if(bell)
-		. += span_info("It has a <a href='?src=[REF(src)];removebell=1'>bell</a> attached.")
+		. += span_info("它上面系着一个<a href='?src=[REF(src)];removebell=1'>铃铛</a>。")
 
 /obj/item/clothing/neck/roguetown/Topic(href, href_list)
 	..()
@@ -27,7 +27,7 @@
 	if(!bell)
 		return
 	if(!Adjacent(user))
-		to_chat(user, span_warning("As much as I'd love to snatch that bell, I'm not close enough."))
+		to_chat(user, span_warning("我倒是很想把那铃铛摘下来，可我离得不够近。"))
 		return
 	for(var/obj/item/catbell/bell in src)
 		user.put_in_hands(bell)
@@ -35,15 +35,15 @@
 	bell = FALSE
 	bellsound = FALSE
 	qdel(src.GetComponent(/datum/component/squeak))
-	to_chat(user, span_info("I remove the bell from [src]."))
+	to_chat(user, span_info("我把[src]上的铃铛取了下来。"))
 
 /obj/item/clothing/neck/roguetown/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/catbell))
 		var/obj/item/catbell/bell = I
 		if(src.bellsound || src.bell) //Already has a bell, can't attach another one.
-			to_chat(user, span_info("[src] already has a bell attached!"))
+			to_chat(user, span_info("[src]已经挂着铃铛了！"))
 			return
-		to_chat(user, span_info("I attach \the [bell] to [src]."))
+		to_chat(user, span_info("我把\the [bell]挂到了[src]上。"))
 		src.bell = TRUE
 		src.bellsound = TRUE
 		src.AddComponent(/datum/component/squeak, bell.jingle_sounds, 50, 100, 1)
@@ -59,14 +59,14 @@
 		else
 			snouting = TRUE
 			flags_inv -= HIDESNOUT
-		to_chat(user, span_info("I [snouting ? "make space for my snout in \the [src]" : "wear \the [src] tighter"]."))
+		to_chat(user, span_info("我[snouting ? "给\the [src]留出吻部空间" : "把\the [src]戴得更紧"]."))
 		if(snouting)
 			icon_state = "[initial(icon_state)]_snout"
 		else
 			icon_state = "[initial(icon_state)]"
 	else
 		overarmor = !overarmor
-		to_chat(user, span_info("I [overarmor ? "wear \the [src] over my armor" : "wear \the [src] under my armor"]."))
+		to_chat(user, span_info("我[overarmor ? "把\the [src]穿在护甲外面" : "把\the [src]穿在护甲下面"]."))
 		if(overarmor)
 			alternate_worn_layer = NECK_LAYER
 		else
@@ -77,8 +77,8 @@
 	user.update_inv_shirt()
 
 /obj/item/clothing/neck/roguetown/coif
-	name = "coif"
-	desc = "Cheap and easy to make. It's better than leaving your neck exposed."
+	name = "护头巾"
+	desc = "便宜又容易制作，总比让脖子裸露在外强。"
 	icon_state = "coif"
 	item_state = "coif"
 	color = CLOTHING_BROWN
@@ -96,8 +96,8 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/neck/roguetown/coif/padded
-	name = "padded coif"
-	desc = "A cheap and simple gambeson coif meant to be worn on its own or under a helmet. It's better than nothing."
+	name = "衬垫护头巾"
+	desc = "一顶便宜朴素的棉甲护头巾，可单独佩戴，也可戴在头盔下面。总比没有强。"
 	icon_state = "ccoif"
 	item_state = "ccoif"
 	color = "#ad977d"
@@ -107,8 +107,8 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 
 /obj/item/clothing/neck/roguetown/coif/heavypadding
-	name = "heavy padded coif"
-	desc = "A heavier padded coif meant to be worn on its own or under a helmet. Layered properly, it can last through even the busiest of daes."
+	name = "厚实衬垫护头巾"
+	desc = "一顶更厚实的衬垫护头巾，可单独佩戴，也可戴在头盔下面。层层穿戴妥当后，哪怕在最繁忙的日子里也能撑住。"
 	icon_state = "fullpadded"
 	item_state = "fullpadded"
 	color = "#976E6B"
@@ -155,8 +155,8 @@
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, null, null, (UPD_HEAD|UPD_MASK|UPD_NECK))	//Soundless coif
 
 /obj/item/clothing/neck/roguetown/leather
-	name = "hardened leather gorget"
-	desc = "Sturdy. Durable. Will protect your neck from some good lumbering."
+	name = "硬化皮革护喉"
+	desc = "结实，耐用，能让你的脖子少挨几下狠的。"
 	icon_state = "lgorget"
 	slot_flags = ITEM_SLOT_NECK
 	blocksound = SOFTHIT
@@ -171,8 +171,8 @@
 	salvage_amount = 1
 
 /obj/item/clothing/neck/roguetown/chaincoif
-	name = "chain coif"
-	desc = "Offers superior coverage to a simple gorget, though it sacrifices some protection in return."
+	name = "锁链护头巾"
+	desc = "比普通护喉提供更全面的覆盖，但相应地也牺牲了一些防护。"
 	icon_state = "chaincoif"
 	item_state = "chaincoif"
 	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
@@ -195,21 +195,21 @@
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/chain_equip.ogg', null, (UPD_HEAD|UPD_MASK|UPD_NECK))	//Chain coif.
 
 /obj/item/clothing/neck/roguetown/chaincoif/ancient
-	name = "ancient coif"
-	desc = "Polished gilbranze rings, linked together to form a billowing hood. Let it not be a crown of thorns that saves this dying world, but a crown of ambition; of fettered metal and stained bone, rejuvenated by Zizo's will to herald Her greatest works yet."
+	name = "远古护头巾"
+	desc = "打磨光亮的吉尔青铜环彼此相扣，组成一顶翻卷起伏的罩帽。愿拯救这垂死世界的不是荆棘冠冕，而是野心之冠；由束缚的金属与染污的骨骸构成，在齐佐的意志下焕发生机，宣告她迄今为止最伟大的造物即将到来。"
 	icon_state = "achaincoif"
 	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/clothing/neck/roguetown/chaincoif/ancient/decrepit
-	name = "decrepit coif"
-	desc = "Frayed bronze rings, linked together to form a billowing hood. Shrapnel peppers the linkage; arrowheads and speartips, brought along from a battlefield who's history - and legionnaires - have been lost to tyme."
+	name = "破旧护头巾"
+	desc = "磨损的青铜环彼此相扣，组成一顶翻卷起伏的罩帽。连接处布满弹片、箭镞与矛尖，仿佛全都来自一片连历史与军团兵都已湮没于时光的战场。"
 	max_integrity = ARMOR_INT_SIDE_DECREPIT
 	color = "#bb9696"
 	anvilrepair = null
 
 /obj/item/clothing/neck/roguetown/chaincoif/chainmantle
-	name = "chain mantle"
-	desc = "A thicker and more durable piece of neck protection that also covers the mouth when pulled up."
+	name = "锁链披肩"
+	desc = "一件更厚实耐用的颈部防具，拉起时还能遮住口部。"
 	icon_state = "chainmantle"
 	armor = ARMOR_MAILLE
 	body_parts_covered = NECK|MOUTH
@@ -222,14 +222,14 @@
 	AddComponent(/datum/component/adjustable_clothing, (NECK), null, null, 'sound/foley/equip/equip_armor_chain.ogg', null, (UPD_HEAD|UPD_MASK|UPD_NECK))	//Chain coif.
 
 /obj/item/clothing/neck/roguetown/chaincoif/iron
-	name = "iron chain coif"
-	desc = "A coif of meticulously crafted iron rings. It isn't steel, but metal is metal, and it might just save your life."
+	name = "铁锁链护头巾"
+	desc = "一顶由精工铁环编成的护头巾。虽然不是钢，但金属就是金属，也许真能救你一命。"
 	icon_state = "ichaincoif"
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_SIDE_IRON
 
 /obj/item/clothing/neck/roguetown/chaincoif/full
-	name = "full chain coif"
+	name = "全覆式锁链护头巾"
 	icon_state = "fchaincoif"
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	resistance_flags = FIRE_PROOF
@@ -273,8 +273,8 @@
 	color = "#323232"
 
 /obj/item/clothing/neck/roguetown/bevor
-	name = "bevor"
-	desc = "A series of steel plates designed to protect the neck."
+	name = "护颚"
+	desc = "一组用于保护颈部的钢板。"
 	icon_state = "bevor"
 	armor = ARMOR_PLATE
 	anvilrepair = /datum/skill/craft/armorsmithing
@@ -295,15 +295,15 @@
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/items/visor.ogg', null, (UPD_HEAD|UPD_MASK|UPD_NECK)) // adjustable falling buffe for the bevor
 
 /obj/item/clothing/neck/roguetown/bevor/iron
-	name = "iron bevor"
-	desc = "A series of iron plates designed to protect the neck."
+	name = "铁护颚"
+	desc = "一组用于保护颈部的铁板。"
 	icon_state = "ibevor"
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_SIDE_IRON
 
 /obj/item/clothing/neck/roguetown/gorget
-	name = "gorget"
-	desc = "A series of iron plates designed to protect the neck."
+	name = "护喉"
+	desc = "一组用于保护颈部的铁板。"
 	icon_state = "gorget"
 	armor = ARMOR_PLATE
 	smeltresult = /obj/item/ingot/iron
@@ -319,33 +319,33 @@
 	blocksound = PLATEHIT
 
 /obj/item/clothing/neck/roguetown/gorget/steel
-	name = "steel gorget"
+	name = "钢护喉"
 	smeltresult = /obj/item/ingot/steel
 	max_integrity = ARMOR_INT_SIDE_STEEL
 	icon_state = "sgorget"
 
 /obj/item/clothing/neck/roguetown/gorget/steel/ancient
-	name = "ancient gorget"
-	desc = "Polished gilbranze plates, layered atop one-another to guard the neck. The spine; a sacred leyline between spirit and sinew. It must remain unsevered, lest Her blessings be lost."
+	name = "远古护喉"
+	desc = "打磨光亮的吉尔布兰泽护片层层相叠，以守护颈部。脊柱是灵与肉之间的神圣脉络，绝不可断裂，否则她的赐福也将随之失落。"
 	icon_state = "ancientgorget"
 	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/clothing/neck/roguetown/gorget/steel/ancient/decrepit
-	name = "decrepit gorget"
-	desc = "Frayed bronze plates, shingled together to shroud the neck. Primitive scrapes line the flanks, yet the center seems to've been cored out by a spear's thrust."
+	name = "破旧护喉"
+	desc = "磨损的青铜护片彼此交叠，覆盖住颈部。两侧布满原始粗陋的刮痕，而中央看起来却像是曾被长矛一击贯穿。"
 	max_integrity = ARMOR_INT_SIDE_DECREPIT
 	color = "#bb9696"
 	anvilrepair = null
 
 /obj/item/clothing/neck/roguetown/gorget/copper
-	name = "neck protector"
+	name = "护颈"
 	icon_state = "copperneck"
-	desc = "An antique and simple protection for the neck, used more as an accessory by the common folk. But poor protection is still better than nothing."
+	desc = "一种古旧而朴素的颈部防具，平民更多把它当成配饰。但再差的防护，也总比没有强。"
 	armor = ARMOR_PLATE_BAD
 	smeltresult = /obj/item/ingot/copper
 
 /obj/item/clothing/neck/roguetown/fencerguard
-	name = "fencing guard"
+	name = "击剑守卫"
 	icon_state = "fencercollar"
 	armor = ARMOR_PLATE
 	smeltresult = /obj/item/ingot/steel
@@ -366,7 +366,7 @@
 /obj/item/clothing/neck/roguetown/fencerguard/attack_right(mob/user)
 	..()
 	if(!picked)
-		var/choice = input(user, "Choose a color.", "Otavan colors") as anything in GLOB.colorlist
+		var/choice = input(user, "选择一种颜色。", "奥塔瓦配色") as anything in GLOB.colorlist
 		var/playerchoice = GLOB.colorlist[choice]
 		picked = TRUE
 		detail_color = playerchoice
@@ -391,18 +391,18 @@
 	update_icon()
 
 /obj/item/clothing/neck/roguetown/gorget/forlorncollar
-	name = "vreccale"
-	desc = "Nature knows not of mercy."
+	name = "弗雷卡勒"
+	desc = "自然从不知何为怜悯。"
 	icon_state = "iwolfcollaralt"
 
 /obj/item/clothing/neck/roguetown/gorget/steel/kazengun
-	name = "kazengunite gorget"
-	desc = "A series of interlocking rings of metal set around the throat. Used by the kouken of Kazengun for precisely the same reason as the knights of Psydonia."
+	name = "卡曾郡护喉"
+	desc = "一圈圈相互咬合的金属环围住咽喉。卡曾郡的甲士佩戴它的理由，与普西多尼亚的骑士们别无二致。"
 	icon_state = "kazengunneckguard"
 
 /obj/item/clothing/neck/roguetown/gorget/cursed_collar // minor flavor swap so people know it's a scam shitty knockoff.
-	name = "lesser cursed collar"
-	desc = "A metal collar that seems to radiate an ominous aura. A pale imitation of its artificed counterpart. \nLooks like you'd need someone else's help to take it off."
+	name = "次级诅咒颈圈"
+	desc = "一条似乎散发着不祥气息的金属项圈，是其工造原型的拙劣仿品。\n看起来你得靠别人帮忙才能把它取下来。"
 	icon_state = "cursed_collar"
 	item_state = "cursed_collar"
 	armor = ARMOR_CLOTHING
@@ -421,8 +421,8 @@
 	ADD_TRAIT(src, TRAIT_NO_SELF_UNEQUIP, CURSED_ITEM_TRAIT)
 
 /obj/item/clothing/neck/roguetown/psicross
-	name = "psycross"
-	desc = "'With every broken bone, I swore I lived!'"
+	name = "教十字"
+	desc = "'每断一根骨头，我都发誓自己仍活着！'"
 	icon_state = "psycross"
 	resistance_flags = FIRE_PROOF
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS
@@ -453,82 +453,82 @@
 	return
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen
-	name = "inverted psycross"
-	desc = "A symbol of ambition from an era that had reason to believe in it."
+	name = "倒置普赛圣十字"
+	desc = "一个来自仍有理由相信它的时代的野心象征。"
 	icon_state = "zcross_iron"
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/ancient
-	name = "ancient zcross"
-	desc = "'Ambition. Destiny. Ascension. A mandate, commanded by God, to be fulfilled by Man. She called us forth from the edge of reality - and with Her dying breath, rasped out the final truth; the fire is gone, and the world will soon follow.'"
+	name = "远古齐佐十字"
+	desc = "'野心。命运。升华。神所颁下、由人完成的诫命。她将我们自现实的边缘召来，又在临终前以嘶哑之息吐露最后的真相：火焰已逝，而世界也将很快步其后尘。'"
 	icon_state = "zcross_a"
 	color = "#bb9696"
 
 /obj/item/clothing/neck/roguetown/psicross/undivided
-	name = "see amulet"
-	desc = "An amulet, typically worn by the Holy See's own influential figures. Stalwart for centuries against the darkness. \
-	Both a mark of station and grace."
+	name = "圣座护符"
+	desc = "一枚通常由圣座权势人物佩戴的护符。数百年来始终坚定地对抗黑暗。\
+	既是地位的象征，也是恩典的标记。"
 	icon_state = "undivided"
 
 /obj/item/clothing/neck/roguetown/psicross/astrata
-	name = "amulet of Astrata"
-	desc = "As sure as the sun rises, tomorrow will come."
+	name = "阿斯特拉塔护符"
+	desc = "正如太阳必然升起，明日也终将到来。"
 	icon_state = "astrata"
 
 /obj/item/clothing/neck/roguetown/psicross/silver/astrata
-	name = "imbued amulet of Astrata"
-	desc = "Similar to a normal amulet of Astrata. This one is blessed and made of silver. A queen does not bargain; she does not relent. Neither shall her followers - least of all the members of her clergy - for with PSYDON gone, Astrata bears the burden of His lineage. All of creation is within her scope, and so too is all of the realm within yours. Stay the course, lest she turn her gaze and everything falls to the scourge of heresy."
+	name = "祝圣阿斯特拉塔护符"
+	desc = "与普通的阿斯特拉塔护符相似，只是这一枚由白银制成并受过祝福。女王不会讨价还价，也不会退让。她的追随者更不会如此，尤其是她的神职者们，因为随着普希顿离去，阿斯特拉塔承担起了祂血脉延续的重担。万物皆在她的视界之内，而整个国度同样也在你的职责范围之中。坚定前行吧，否则一旦她移开目光，一切都将坠入异端的灾祸。"
 	icon_state = "astrata"
 
 /obj/item/clothing/neck/roguetown/psicross/noc
-	name = "amulet of Noc"
-	desc = "There is always more to know, more to learn, more to be."
+	name = "诺克护符"
+	desc = "总有更多值得知晓，更多值得学习，更多值得成为。"
 	icon_state = "noc"
 
 /obj/item/clothing/neck/roguetown/psicross/abyssor
-	name = "amulet of Abyssor"
-	desc = "To fear the unknown is to turn away from the greatest mysteries of all."
+	name = "阿比索护符"
+	desc = "畏惧未知，便是背离了最伟大的奥秘。"
 	icon_state = "abyssor"
 	salvage_result = /obj/item/pearl/blue
 	salvage_amount = 1
 
 /obj/item/clothing/neck/roguetown/psicross/dendor
-	name = "amulet of Dendor"
-	desc = "If you need something to worship, then worship life. Every last crawling bit of it."
+	name = "登多尔护符"
+	desc = "如果你非要崇拜什么，那就崇拜生命吧，连最细微、最蠕动的一点都别落下。"
 	icon_state = "dendor"
 
 /obj/item/clothing/neck/roguetown/psicross/necra
-	name = "amulet of Necra"
-	desc = "The certainty of death is a reminder to enjoy the time you have."
+	name = "内克拉护符"
+	desc = "死亡的必然提醒着你，要珍惜自己仍握在手中的时光。"
 	icon_state = "necra"
 
 /obj/item/clothing/neck/roguetown/psicross/pestra
-	name = "amulet of Pestra"
-	desc = "The healthy wear a crown only the sick can see."
+	name = "佩斯特拉护符"
+	desc = "健康之人所戴的王冠，唯有病者方能看见。"
 	icon_state = "pestra"
 
 /obj/item/clothing/neck/roguetown/psicross/ravox
-	name = "amulet of Ravox"
-	desc = "What are you fighting for?"
+	name = "拉沃克斯护符"
+	desc = "你究竟为何而战？"
 	icon_state = "ravox"
 
 /obj/item/clothing/neck/roguetown/psicross/malum
-	name = "amulet of Malum"
-	desc = "From the ashes, creation."
+	name = "玛卢姆护符"
+	desc = "自灰烬之中，万物再生。"
 	icon_state = "malum"
 
 /obj/item/clothing/neck/roguetown/psicross/eora
-	name = "amulet of Eora"
-	desc = "In a world full of horror and hardship, all we have is each other."
+	name = "伊欧拉护符"
+	desc = "在这充满恐惧与苦难的世界里，我们拥有的唯有彼此。"
 	icon_state = "eora"
 
 /obj/item/clothing/neck/roguetown/psicross/xylix
-	name = "amulet of Xylix"
-	desc = "In lyfe a smile is sharper than any blade."
+	name = "赛利克斯护符"
+	desc = "在此生之中，笑容比任何刀锋都更锐利。"
 	icon_state = "xylix"
 
 /obj/item/clothing/neck/roguetown/psicross/wood
-	name = "wooden psycross"
-	desc = "'A man with nothing can still have faith!'"
+	name = "木制教十字"
+	desc = "'一个一无所有的人，也依然可以怀有信仰！'"
 	icon_state = "psycross_w"
 	item_state = "psycross_w"
 	sellprice = 0
@@ -536,14 +536,14 @@
 	salvage_amount = 1
 
 /obj/item/clothing/neck/roguetown/psicross/decrepit
-	name = "decrepit psicross"
-	desc = "'A comet capable of rending all the enemies of humanity apart; oh, how graceful His power was! And His sacrifice, ever so noble! Yet now He slumbers, unaware of the fruits His efforts came to give. And He sighs. And He weeps.'"
+	name = "破旧教十字"
+	desc = "'那是一颗足以将人类的一切敌人撕裂殆尽的彗星；祂的力量何其优雅！祂的牺牲又何其高贵！可如今祂却沉眠不醒，不知晓自己的努力最终结出了怎样的果实。祂叹息着，也哭泣着。'"
 	icon_state = "psycross_a"
 	color = "#bb9696"
 
 /obj/item/clothing/neck/roguetown/psicross/silver
-	name = "silver psycross"
-	desc = "'The horrors persist, but so do I!'"
+	name = "银教十字"
+	desc = "'恐怖仍在延续，而我也一样！'"
 	icon_state = "psycross_s"
 	item_state = "psycross_s"
 	sellprice = 50
@@ -560,54 +560,54 @@
 		REMOVE_TRAIT(user, TRAIT_WORN_SILVER_PSICROSS, REF(src))
 
 /obj/item/clothing/neck/roguetown/psicross/g
-	name = "golden psycross"
-	desc = "'Purity afloat, for paradise awaits!'"
+	name = "金色教十字"
+	desc = "'纯洁高悬，因为乐园正在彼岸等待！'"
 	icon_state = "psycross_g"
 	item_state = "psycross_g"
 	sellprice = 100
 
 /obj/item/clothing/neck/roguetown/psicross/reform
-	name = "reformist psycross"
-	desc = "A psycross with its prongs bent inward. God is dead, but this world HE left is beautiful and worth of loving. ENDURE with every broken bone in your body."
+	name = "改革派教十字"
+	desc = "一枚尖端向内弯折的教十字。神已死去，但祂留下的这个世界依旧美丽，值得被热爱。用你全身每一根断骨去坚持吧。"
 	sellprice = 0
 	icon_state = "psycross_reform"
 
 /obj/item/clothing/neck/roguetown/psicross/pearl //put it as a psycross so it can be used for miracles
-	name = "pearl amulet"
+	name = "珍珠护符"
 	icon_state = "pearlcross"
-	desc = "An amulet made of white pearls, usually worn by fishers or sailors."
+	desc = "一枚由白珍珠制成的护符，通常由渔夫或水手佩戴。"
 	sellprice = 80
 	salvage_result = /obj/item/pearl
 	salvage_amount = 3 // Pearls are easy to cut off from an amulet
 
 /obj/item/clothing/neck/roguetown/psicross/bpearl
-	name = "blue pearl amulet"
+	name = "蓝色珍珠护符"
 	icon_state = "bpearlcross"
-	desc = "An amulet made of rare blue pearls, usually worn by priests and worshippers of Abyssor, or as lucky charms for captains of ships."
+	desc = "一枚由稀有蓝珍珠制成的护符，通常由祭司与阿比索信徒佩戴，也会被船长当作幸运护身符。"
 	sellprice = 220
 	salvage_result = /obj/item/pearl/blue
 	salvage_amount = 3 // Pearls are easy to cut off from an amulet
 
 /obj/item/clothing/neck/roguetown/psicross/shell
-	name = "oyster shell necklace"
+	name = "牡蛎贝壳项链"
 	icon_state = "oyster_necklace"
-	desc = "A necklace of strung-up sea shells, the calming noise they make when they clack together is reminiscent of a shellfish's claws. They remind you that while men no longer live in water, Abyssor will always remember our origins."
+	desc = "一串由海贝穿成的项链，它们相互碰撞时发出的平静声响，让人联想到甲壳类挥动的螯肢。它提醒着你，尽管人类早已不再生活于水中，阿比索却始终记得我们的起源。"
 	sellprice = 25
 	salvage_result = /obj/item/oystershell
 	salvage_amount = 5
 
 /obj/item/clothing/neck/roguetown/psicross/shell/bracelet
-	name = "shell bracelet"
+	name = "贝壳手环"
 	icon_state = "oyster_bracelet"
-	desc = "A beaded bracelet made from sea shells, their rough exterior and glossy interior reminding you that Abyssor's children hide the best gifts at the deepest spots beneath the waves."
+	desc = "一只由海贝串成的手环，粗糙的外壳与光亮的内里提醒着你，阿比索的子嗣总会把最好的馈赠藏在海浪之下最深的地方。"
 	sellprice = 15
 	slot_flags = ITEM_SLOT_WRISTS
 	salvage_result = /obj/item/oystershell
 	salvage_amount = 3
 
 /obj/item/clothing/neck/roguetown/talkstone
-	name = "talkstone"
-	desc = "In moments of quiet it whispers softly, as though deciphering the silence itself."
+	name = "话石"
+	desc = "在寂静时分，它会轻声低语，仿佛正试图解读沉默本身。"
 	icon_state = "talkstone"
 	item_state = "talkstone"
 	dropshrink = 0.75
@@ -617,8 +617,8 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 
 /obj/item/clothing/neck/roguetown/horus
-	name = "amulet of appraisal"
-	desc = "An amulet with a pristine eye embedded into it. Blind to everything, but to that which shines in gold."
+	name = "鉴价护符"
+	desc = "一枚嵌着完美眼眸的护符。它对万物都视而不见，唯独看得到金光闪耀之物。"
 	icon_state = "horus"
 	dropshrink = 0.75
 	resistance_flags = FIRE_PROOF
@@ -627,7 +627,7 @@
 
 /obj/item/clothing/neck/roguetown/horus/examine()
 	. = ..()
-	. += span_info("Click on a turf or an item to see how much it is worth. Avoid tables.")
+	. += span_info("点击地面或物品即可查看其价值，别点桌子。")
 
 /obj/item/clothing/neck/roguetown/horus/afterattack(atom/A, mob/user, params)
 	. = ..()
@@ -635,17 +635,17 @@
 	if(isturf(A))
 		for(var/obj/item/I in A.contents)
 			total_sellprice += I.sellprice
-		to_chat(user, span_notice("Everything on the ground is worth [total_sellprice] mammons."))
+		to_chat(user, span_notice("地上的所有东西一共值 [total_sellprice] 枚马蒙。"))
 	else if(istype(A, /obj/item))
 		var/obj/item/I = A
 		total_sellprice += I.sellprice
 		for(var/obj/item/item in I.contents)
 			total_sellprice += item.sellprice
-		to_chat(user, span_notice("The item and its contents is worth [total_sellprice] mammons."))
+		to_chat(user, span_notice("该物品及其内容物一共值 [total_sellprice] 枚马蒙。"))
 
 /obj/item/clothing/neck/roguetown/shalal
-	name = "desert rider medal"
-	desc = "Made out of the silver from the Zybantine mercenaries' first pay. A tradition is kept between these hired blades: to give this one away to someone is to symbolize a debt in their favor - to be redeemed by any other mercenary in times of need."
+	name = "沙漠骑手徽章"
+	desc = "以赞拜廷佣兵第一次军饷中的银子铸成。这些受雇刀兵之间保留着一项传统：把它送给某人，就象征自己欠了对方一份人情，而在需要之时，任何其他佣兵都应替其偿还。"
 	icon_state = "shalal"
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_RING		//Hey I guess you could pretend it is wrapped around your hand? Just keep it on, don't be a hoe.
 	dropshrink = 0.75
@@ -654,8 +654,8 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 
 /obj/item/clothing/neck/roguetown/ornateamulet
-	name = "ornate amulet"
-	desc = "A beautiful amulet made of solid gold."
+	name = "华美护符"
+	desc = "一枚由纯金打造而成的美丽护符。"
 	icon_state = "ornateamulet"
 	dropshrink = 0.75
 	resistance_flags = FIRE_PROOF
@@ -664,8 +664,8 @@
 
 /obj/item/clothing/neck/roguetown/ornateamulet/noble
 	var/choicename = FALSE
-	name = "heirloom amulet"
-	desc = "An ornate amulet representing a prestigious noble house."
+	name = "传家护符"
+	desc = "一枚代表显赫贵族家族的华美护符。"
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_WRISTS|ITEM_SLOT_HIP
 	sellprice = 10
 
@@ -673,7 +673,7 @@
 	if(choicename)
 		return
 	var/current_time = world.time
-	var/namechoice = input(user, "Input a new name", "Rename Object")
+	var/namechoice = input(user, "输入新名称", "重命名物品")
 	if(namechoice)
 		name = namechoice
 		choicename = TRUE
@@ -683,8 +683,8 @@
 		return
 
 /obj/item/clothing/neck/roguetown/skullamulet
-	name = "skull amulet"
-	desc = "Gold shaped into the form of a skull and strung into an amulet."
+	name = "骷髅护符"
+	desc = "黄金被塑造成骷髅的模样，再串成一枚护符。"
 	icon_state = "skullamulet"
 	dropshrink = 0.75
 	resistance_flags = FIRE_PROOF
@@ -693,16 +693,16 @@
 	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/psicross/naledi
-	name = "naledian psy-bracelet"
-	desc = "A peculiar icon of worship from a foreign land. Forming the three-progned Psydonite cross in a circular ring, this bracelet embodies the Naledian belief of Psydon's eternity."
+	name = "纳莱迪教十字手环"
+	desc = "一件来自异乡的奇特信仰圣徽。它以圆环构成三叉的普希顿教十字，体现着纳莱迪人对普希顿永恒不灭的信念。"
 	icon_state = "psybracelet"
 	item_state = null
 
 /obj/item/clothing/neck/roguetown/collar
-	name = "collar"
+	name = "项圈"
 	icon = 'modular/icons/obj/leashes_collars.dmi'
 	mob_overlay_icon = 'modular/icons/mob/collars_leashes.dmi'
-	desc = "This is a debug parent item. If you are seeing it meow at the coders."
+	desc = "这是一个调试用父物品。如果你看到了它，请去朝程序员喵一声。"
 	icon_state = "collar_rope"
 	item_state = "collar_rope"
 	resistance_flags = FIRE_PROOF
@@ -714,8 +714,8 @@
 	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/collar/leather
-	name = "leather collar"
-	desc = "A sturdy leather collar."
+	name = "皮革颈圈"
+	desc = "一条结实的皮革项圈。"
 	icon = 'modular/icons/obj/leashes_collars.dmi'
 	mob_overlay_icon = 'modular/icons/mob/collars_leashes.dmi'
 	icon_state = "leathercollar"
@@ -726,8 +726,8 @@
 	bell = FALSE
 
 /obj/item/clothing/neck/roguetown/collar/cowbell
-	name = "cowbell collar"
-	desc = "A leather collar with a jingly cowbell attached."
+	name = "牛铃颈圈"
+	desc = "一只皮革颈圈，上面挂着叮当作响的牛铃。"
 	icon = 'modular/icons/obj/leashes_collars.dmi'
 	mob_overlay_icon = 'modular/icons/mob/collars_leashes.dmi'
 	icon_state = "cowbellcollar"
@@ -741,8 +741,8 @@
 		AddComponent(/datum/component/squeak, SFX_CBJINGLE, 50, 100, 1) //We want squeak so wearer jingles if touched while wearing collar
 
 /obj/item/clothing/neck/roguetown/collar/catbell
-	name = "catbell collar"
-	desc = "A leather collar with a jingling catbell attached."
+	name = "猫铃颈圈"
+	desc = "一只皮革颈圈，上面挂着叮铃作响的猫铃。"
 	icon = 'modular/icons/obj/leashes_collars.dmi'
 	mob_overlay_icon = 'modular/icons/mob/collars_leashes.dmi'
 	icon_state = "catbellcollar"
@@ -756,10 +756,10 @@
 		AddComponent(/datum/component/squeak, SFX_COLLARJINGLE, 50, 100, 1) //We want squeak so wearer jingles if touched while wearing collar
 
 /obj/item/clothing/neck/roguetown/collar/feldcollar
-	name = "feldcollar"
+	name = "田工颈圈"
 	icon = 'icons/roguetown/clothing/neck.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/neck.dmi'
-	desc = "A sturdy collar made of leather, commonly worn by field workers."
+	desc = "一条结实的皮革项圈，常由田间劳作的人佩戴。"
 	icon_state = "feldcollar"
 	item_state = "feldcollar"
 	resistance_flags = FIRE_PROOF
@@ -768,10 +768,10 @@
 	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/collar/surgcollar
-	name = "surgcollar"
+	name = "医用颈圈"
 	icon = 'icons/roguetown/clothing/neck.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/neck.dmi'
-	desc = "A specialized collar designed for medical practitioners, with reinforced padding."
+	desc = "一条为医疗从业者设计的专用项圈，带有加固衬垫。"
 	icon_state = "surgcollar"
 	item_state = "surgcollar"
 	resistance_flags = FIRE_PROOF
@@ -780,8 +780,8 @@
 	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/luckcharm
-	name = "luck charm"
-	desc = "A cabbit's foot necklace. Some say it brings good luck. It only feels more lucky when it's worn around the neck."
+	name = "幸运护符"
+	desc = "一条兔猫脚项链。有人说它会带来好运，而把它挂在脖子上时，这份好运似乎更灵验。"
 	icon_state = "luckcharm"
 	sellprice = 15
 	possible_item_intents = list(/datum/intent/use, /datum/intent/special/magicarc)
@@ -808,8 +808,8 @@
 	return
 
 /obj/item/clothing/neck/roguetown/skullamulet/gemerald
-	name = "gemerald skull amulet"
-	desc = "A massive gemerald, meticulously chiseled into a skull and affixed to a chain. </br>It's mocking me, isn't it?"
+	name = "绿宝石骷髅护符"
+	desc = "一块巨大的绿宝石被精细雕琢成骷髅，并固定在链条上。</br>它是在嘲笑我，对吧？"
 	slot_flags = ITEM_SLOT_NECK
 	icon_state = "skullamulet"
 	color = "#00FF00"
@@ -820,8 +820,8 @@
 //
 
 /obj/item/clothing/neck/roguetown/psicross/malum/secret
-	name = "beriddled amulet"
-	desc = "A familiar necklace, blisteringly hot to the touch. Yet, as warm as it gets, the metal does not sear my flesh. </br>It whispers with divine inspiration; should I dare don it?"
+	name = "谜痕护符"
+	desc = "一条熟悉的项链，触手灼热得惊人。然而无论它有多烫，金属都不会灼伤我的皮肉。</br>它低语着神启；我敢把它戴上吗？"
 	icon_state = "malum"
 	sellprice = 333
 	edelay_type = 1
@@ -837,7 +837,7 @@
 	. = ..()
 	if(slot == SLOT_NECK)
 		active_item = TRUE
-		to_chat(user, span_hypnophrase("..the warmth flows through my veins, yet I do not burn; in fact, my mind feels clearer than ever before.. </br>..glowing runes race past my eyes, gradually deciphering into the forge's greatest secrets.. </br>'BLACKSTEEL AND GOLD, SAFFIRA AND BLORTZ - BOUND WITH A PSICROSS O' SILVER, TO FOSTER THE DRAGON'S FURY.' </br>'FOUR ENCHANTED RINGS, BOUND IN SILVER. A GEMERALD, ONYX, AMYTHORTZ, RONTZ - OMNIPOTENT, TOGETHER. </br>'FIVE SLABS OF SILVER, THE REMAINS OF A DRACONIC RING AND WEEPING PSICROSS, A GREAT LOG, AND WHAT LIES WITHIN THIS AMULET; TO SLAY VHESLYN'S DAEMONS.'"))
+		to_chat(user, span_hypnophrase("……暖意流过我的血脉，而我却并未灼伤；恰恰相反，我的头脑比以往任何时候都更清明……</br>……发光的符文自我眼前掠过，渐渐解译为熔炉中最伟大的秘密……</br>'黑钢与黄金，萨菲拉与布洛兹，以白银教十字束缚，方能催发龙之怒火。'</br>'四枚附魔戒指，以白银相系。绿宝石、缟玛瑙、阿密索兹、龙红石，合而为一，即为全能。'</br>'五块白银锭，龙戒残片与泣血教十字，一截巨木，以及这枚护符中所蕴之物；足以诛灭维斯林的恶魔。'"))
 		user.change_stat(STATKEY_INT, 3)
 		user.change_stat(STATKEY_LCK, 3)
 		user.change_stat(STATKEY_STR, -3)
@@ -848,7 +848,7 @@
 /obj/item/clothing/neck/roguetown/psicross/malum/secret/dropped(mob/living/user)
 	..()
 	if(active_item)
-		to_chat(user, span_monkeyhive("..the runes morph into indiscernable smudges, before fading into the world once more. For just a moment, you forget that the heat's blistering within your palm.. </br>..perhaps, this would better fit in the smoldering heat of a forge.."))
+		to_chat(user, span_monkeyhive("……那些符文化作难以分辨的污痕，随后再次消散回这个世界。就在那一瞬间，你几乎忘了掌心中灼烧般的热度……</br>……也许，这东西更适合被放进炽热闷烧的熔炉里……"))
 		user.change_stat(STATKEY_INT, -3)
 		user.change_stat(STATKEY_LCK, -3)
 		user.change_stat(STATKEY_STR, 3)
@@ -860,8 +860,8 @@
 //
 
 /obj/item/clothing/neck/roguetown/psicross/weeping
-	name = "weeping psicross"
-	desc = "'Let His name be naught but forgot'n.' </br>The alloy is familiar, but unmentionable. Blood oozes from cracks within the psicross; ensnared in a perpetual state of half-coagulation. A deathly chill tugs your neck, and your cheeks feel wet - are those tears?"
+	name = "泣血教十字"
+	desc = "'让祂的名字就此被遗忘吧。'</br>这种合金很熟悉，却又不可言说。鲜血自教十字内部的裂缝中渗出，永远停留在半凝固的状态。致命的寒意扯住你的脖颈，你的脸颊也湿漉漉的，那是眼泪吗？"
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_WRISTS
 	icon_state = "psicrossblood"
 	max_integrity = 666
@@ -880,7 +880,7 @@
 	. = ..()
 	if(slot == SLOT_NECK)
 		active_item = TRUE
-		to_chat(user, span_red("As you don the psicross, the chains tighten like a vice around your neck! You're overcome with a sense of terrible anguish - all of humenity's suffering, thrust upon your very spirit! Your chest grows cold, yet your blood boils hotter than magma! Psydonia's villains may be brutal and merciless, but you will be WORSE! </br>You've gone BERSERK!"))
+		to_chat(user, span_red("当你戴上这枚教十字时，锁链如铁钳般骤然勒紧你的脖颈！可怕的痛苦感将你彻底吞没，仿佛人类的一切苦难都被强塞进了你的灵魂！你的胸口冰冷彻骨，血液却沸腾得比熔岩更炽热！普西多尼亚的恶徒或许残暴无情，但你将比他们更甚！</br>你陷入狂暴了！"))
 		user.change_stat(STATKEY_STR, 3)
 		user.change_stat(STATKEY_CON, -3)
 		user.change_stat(STATKEY_WIL, 3)
@@ -894,7 +894,7 @@
 /obj/item/clothing/neck/roguetown/psicross/weeping/dropped(mob/living/user)
 	..()
 	if(active_item)
-		to_chat(user, span_monkeyhive("..and at once, the mania subsides. A familiar warmth creeps back into your chest. Though your mind is clear, the thought lingers; was it truly just a malaise, or something more? </br>..perhaps, this would better fit in the smoldering heat of a forge.."))
+		to_chat(user, span_monkeyhive("……转瞬之间，那股狂乱便退去了。熟悉的暖意重新爬回你的胸口。尽管你的神志已经清明，那个念头却仍挥之不去：方才真只是某种不适，还是别的什么？</br>……也许，这东西更适合被放进炽热闷烧的熔炉里……"))
 		user.change_stat(STATKEY_STR, -3)
 		user.change_stat(STATKEY_CON, 3)
 		user.change_stat(STATKEY_WIL, -3)
@@ -907,10 +907,10 @@
 	return
 
 /obj/item/clothing/neck/roguetown/collar/prisoner
-	name = "castifico collar"
+	name = "卡斯提菲科项圈"
 	icon_state = "castifico_collar"
 	item_state = "castifico_collar"
-	desc = "A metal collar that seals around the neck, making it impossible to remove. It seems to be enchanted with some kind of vile magic..."
+	desc = "一只会锁死在脖子上的金属项圈，几乎不可能自行摘下。它似乎被某种邪恶魔法附了咒……"
 	var/active_item
 	var/bounty_amount
 	resistance_flags = FIRE_PROOF
@@ -933,12 +933,12 @@
 /obj/item/clothing/neck/roguetown/collar/prisoner/proc/timerup(mob/living/carbon/human/user)
 	REMOVE_TRAIT(user, TRAIT_PACIFISM, "castificocollar")
 	REMOVE_TRAIT(user, TRAIT_SPELLCOCKBLOCK, "castificocollar")
-	visible_message(span_warning("The castifico collar opens with a click, falling off of [user]'s neck and clambering apart on the ground, their penance complete."))
-	say("YOUR PENANCE IS COMPLETE.")
+	visible_message(span_warning("卡斯提菲科项圈咔哒一声打开，从[user]颈上脱落，摔在地上四散开来，他们的赎罪结束了。"))
+	say("你的赎罪已经完成。")
 	for(var/name in GLOB.outlawed_players)
 		if(user.real_name == name)
 			GLOB.outlawed_players -= user.real_name
-			priority_announce("[user.real_name] has completed their penance. Justice has been served in the eyes of Ravox.", "PENANCE", 'sound/misc/bell.ogg')
+			priority_announce("[user.real_name] 已完成其赎罪。在拉沃克斯之眼中，正义已然得伸。", "赎罪", 'sound/misc/bell.ogg')
 	playsound(src.loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
 	if(QDELETED(src))
 		return
@@ -950,7 +950,7 @@
 		return
 	else if(slot == SLOT_NECK)
 		active_item = TRUE
-		to_chat(user, span_warning("This accursed collar pacifies me!"))
+		to_chat(user, span_warning("这条受诅咒的项圈让我失去了反抗之意！"))
 		ADD_TRAIT(user, TRAIT_PACIFISM, "castificocollar")
 		ADD_TRAIT(user, TRAIT_SPELLCOCKBLOCK, "castificocollar")
 		if(HAS_TRAIT(user, TRAIT_RITUALIST))
@@ -965,12 +965,12 @@
 		var/timer_minutes = timer / 600
 
 		addtimer(CALLBACK(src, PROC_REF(timerup), user), timer)
-		say("YOUR PENANCE WILL BE COMPLETE IN [timer_minutes] MINUTES.")
+		say("你的赎罪将在 [timer_minutes] 分钟后完成。")
 	return
 
 /obj/item/clothing/neck/roguetown/collar/woolen
-	name = "woolen collar"
-	desc = "A comfortable and thick collar made of wools and cloth, not protective but it sure keeps your neck warm."
+	name = "毛织颈圈"
+	desc = "一条由毛料与布匹制成的厚实舒适项圈，虽然不提供防护，但确实能让你的脖子暖和起来。"
 	icon_state = "woolencollar"
 	item_state = "woolencollar"
 	icon = 'icons/roguetown/clothing/neck.dmi'
@@ -988,11 +988,11 @@
 //You can get these so easily that it's just dumb for them to be so absurd. Especially now with explosive bandits and the like.
 //Now it self repairs as a funny kind of protection. Provides negatives to those who can't wear it, too.
 /obj/item/clothing/neck/roguetown/dragon_scale
-	name = "dragonscale necklace"
-	desc = "A blacksteel chain, laced through a dozen of the Hoardmaster's golden teeth. \
-	Perhaps given as a gift to the wearer, or taken in a fit of mania. It matters not. \
-	Those who don this necklace are given a boon from the Hoardmaster, should they be deemed worthy. <br>\
-	If not, well..."
+	name = "龙鳞项链"
+	desc = "一条黑钢链子，串过了十余枚藏宝主的金牙。\
+	它也许是赐予佩戴者的礼物，也许是在疯狂中夺来的纪念，已无关紧要。\
+	只要被认定为值得之人，戴上这条项链便会得到藏宝主的恩赐。<br>\
+	若是不配，那就……"
 	icon_state = "bktrinket"
 	max_integrity = 666
 	armor = ARMOR_DRAGONSCALE
@@ -1019,7 +1019,7 @@
 	if(slot == SLOT_NECK)
 		active_item = TRUE
 		if(user.mind.special_role == "Bandit")
-			to_chat(user, span_suppradio("The Hoardmaster's wishes begin to mingle with my own. A sense of immense <b>greed</b> fills my mind."))
+			to_chat(user, span_suppradio("藏宝主的意志开始与我的意志交融。巨大的<b>贪欲</b>充斥着我的脑海。"))
 			user.change_stat(STATKEY_LCK, 2)
 			user.add_stress(/datum/stressevent/dragon_scale)
 			ADD_TRAIT(user, TRAIT_DARKVISION, CULT_TRAIT)//Close enough to a cult. No duplicates beyond dreamer.
@@ -1027,7 +1027,7 @@
 			ADD_TRAIT(user, TRAIT_IGNOREDAMAGESLOWDOWN, CULT_TRAIT)//Can't tag 'em to slow 'em.
 			armor = getArmor("blunt" = 100, "slash" = 100, "stab" = 100, "piercing" = 100, "fire" = 50, "acid" = 0)
 		else
-			to_chat(user, span_suicide("The necklace... I can hear a voice mocking me!"))
+			to_chat(user, span_suicide("这条项链……我听见有个声音在嘲弄我！"))
 			ADD_TRAIT(user, TRAIT_PSYCHOSIS, CULT_TRAIT)
 			user.hallucination = INFINITY
 			armor = getArmor("blunt" = 0, "slash" = 0, "stab" = 0, "piercing" = 0, "fire" = 0, "acid" = 0)
@@ -1038,14 +1038,14 @@
 		return
 	active_item = FALSE
 	if(user.mind.special_role == "Bandit")
-		to_chat(user, span_monkeyhive("The Hoardmaster's grip upon my mind lessens. Was I not enough? I can feel the disappointment."))
+		to_chat(user, span_monkeyhive("藏宝主对我心智的掌控减弱了。难道我还不够吗？我能感受到那份失望。"))
 		user.change_stat(STATKEY_LCK, -2)
 		user.remove_stress(/datum/stressevent/dragon_scale)
 		REMOVE_TRAIT(user, TRAIT_DARKVISION, CULT_TRAIT)
 		REMOVE_TRAIT(user, TRAIT_HARDDISMEMBER, CULT_TRAIT)
 		REMOVE_TRAIT(user, TRAIT_IGNOREDAMAGESLOWDOWN, CULT_TRAIT)
 	else
-		to_chat(user, span_suicide("<b>GET IT AWAY FROM ME!!</b>"))
+		to_chat(user, span_suicide("<b>把它从我身边拿开！！</b>"))
 		REMOVE_TRAIT(user, TRAIT_PSYCHOSIS, CULT_TRAIT)
 		user.hallucination = 0
 		armor = getArmor("blunt" = 100, "slash" = 100, "stab" = 100, "piercing" = 100, "fire" = 50, "acid" = 0)
@@ -1059,7 +1059,7 @@
 /obj/item/clothing/neck/roguetown/dragon_scale/process()
 	if(obj_integrity >= max_integrity)
 		STOP_PROCESSING(SSobj, src)
-		src.visible_message(span_notice("[src] warps and bends, as it mends under the Hoardmaster's influence."), vision_distance = 1)
+		src.visible_message(span_notice("[src]在藏宝主的影响下修复着自己，扭曲又弯折。"), vision_distance = 1)
 		return
 	else if(world.time > src.last_repair + src.repair_time)
 		src.last_repair = world.time
@@ -1067,8 +1067,8 @@
 	..()
 
 /obj/item/clothing/neck/roguetown/carved
-	name = "carved amulet"
-	desc = "You shouldn't be seeing this."
+	name = "雕刻护符"
+	desc = "你本不该看到这个。"
 	icon_state = "psycross_w"
 	item_state = "psycross_w"
 	slot_flags = ITEM_SLOT_NECK
@@ -1079,64 +1079,64 @@
 	dropshrink = 0.75
 
 /obj/item/clothing/neck/roguetown/carved/jadeamulet
-	name = "jade amulet"
-	desc = "An amulet carved from jade."
+	name = "玉护符"
+	desc = "一枚由玉雕成的护符。"
 	icon_state = "amulet_jade"
 	slot_flags = ITEM_SLOT_NECK
 	sellprice = 60
 
 /obj/item/clothing/neck/roguetown/carved/turqamulet
-	name = "cerulite amulet"
-	desc = "An amulet carved from cerulite."
+	name = "天青石护符"
+	desc = "一枚由天青石雕成的护符。"
 	icon_state = "amulet_turq"
 	slot_flags = ITEM_SLOT_NECK
 	sellprice = 85
 
 /obj/item/clothing/neck/roguetown/carved/onyxaamulet
-	name = "onyxa amulet"
-	desc = "An amulet carved from onyxa."
+	name = "缟玛瑙护符"
+	desc = "一枚由缟玛瑙雕成的护符。"
 	icon_state = "amulet_onyxa"
 	slot_flags = ITEM_SLOT_NECK
 	sellprice = 40
 
 /obj/item/clothing/neck/roguetown/carved/coralamulet
-	name = "heartstone amulet"
-	desc = "An amulet carved from heartstone."
+	name = "心石护符"
+	desc = "一枚由心石雕成的护符。"
 	icon_state = "amulet_coral"
 	slot_flags = ITEM_SLOT_NECK
 	sellprice = 70
 
 /obj/item/clothing/neck/roguetown/carved/amberamulet
-	name = "amber amulet"
-	desc = "An amulet carved from amber."
+	name = "琥珀护符"
+	desc = "一枚由琥珀雕成的护符。"
 	icon_state = "amulet_amber"
 	slot_flags = ITEM_SLOT_NECK
 	sellprice = 60
 
 /obj/item/clothing/neck/roguetown/carved/opalamulet
-	name = "opal amulet"
-	desc = "An amulet carved from opal."
+	name = "欧泊护符"
+	desc = "一枚由欧泊雕成的护符。"
 	icon_state = "amulet_opal"
 	slot_flags = ITEM_SLOT_NECK
 	sellprice = 90
 
 /obj/item/clothing/neck/roguetown/carved/roseamulet
-	name = "rosestone amulet"
-	desc = "An amulet carved from rosestone."
+	name = "玫瑰石护符"
+	desc = "一枚由玫瑰石雕成的护符。"
 	icon_state = "amulet_rose"
 	slot_flags = ITEM_SLOT_NECK
 	sellprice = 25
 
 /obj/item/clothing/neck/roguetown/carved/shellamulet
-	name = "shell amulet"
-	desc = "An amulet carved from shells."
+	name = "贝壳护符"
+	desc = "一枚由贝壳雕成的护符。"
 	icon_state = "amulet_shell"
 	slot_flags = ITEM_SLOT_NECK
 	sellprice = 25
 
 /obj/item/clothing/neck/roguetown/carved/chitinamulet
-	name = "chitin amulet"
-	desc = "An amulet carved from beetle chitin."
+	name = "甲壳护符"
+	desc = "一枚由甲虫甲壳雕成的护符。"
 	icon_state = "amulet_shell"
 	color = "#7B8C5E"
 	slot_flags = ITEM_SLOT_NECK
@@ -1145,53 +1145,51 @@
 // AP port. 
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/g
-	name = "golden inverted psycross"
-	desc = "'Doth thee wish to live deliciously? Mortality is but a shackle; and if you wish to break free from its steely grasp, all you need to do.. is put thine faith in me.'"
+	name = "金色倒置教十字"
+	desc = "'你可愿活得甘美纵情？死亡不过是一道镣铐；若你想挣脱它冰冷的钳握，你所要做的……不过是把信念托付于我。'"
 	icon_state = "zcross_g"
 	resistance_flags = FIRE_PROOF
 	sellprice = 100
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios
-	name = "amulet of Matthios"
-	desc = "He was but one flame in the dark. Together, his flock shall outblaze the tyrant sun."
+	name = "马西奥斯护符"
+	desc = "他曾只是黑暗中的一簇火焰。而今，他的信众将一同燃得比暴君般的太阳更炽烈。"
 	icon_state = "matthios"
 	resistance_flags = FIRE_PROOF
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_RING
 	smeltresult = null
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar
-	name = "amulet of Graggar"
-	desc = "Blood leads only to glory, and violence begets divinity. Nothing less. Conquest is simply another name for victory."
+	name = "格拉格护符"
+	desc = "鲜血只会通往荣耀，而暴力孕育神性。绝不止于此。征服，不过是胜利的另一种名字。"
 	icon_state = "graggar"
 	resistance_flags = FIRE_PROOF
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_RING
 	smeltresult = null
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/bronze
-	name = "bronze amulet of Graggar"
-	desc = "'EVERYTHING - AND EVERYONE YOU LOVE - WILL BE GONE! WHAT WILL YOU HAVE, AFTER THE LAST FIRE'S BEEN SMOTHERED OUT?!' </br>‎  </br>'..You. I'd still have you.'"
+	name = "青铜格拉格护符"
+	desc = "'一切都会消失，连同你所爱的一切与每一个人！当最后一团火焰也被彻底掐灭之后，你还剩下什么？！'</br>‎  </br>'……你。我至少还会有你。'"
 	icon_state = "graggar_b"
 	item_state = "graggar_b"
 	sellprice = 25
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha
-	name = "amulet of Baotha"
-	desc = "A hollow promise rendered in gold. It weighs heavy with the memory of sweet wine turned to poison, and the comfort of a sorrow that refuses to fade."
+	name = "巴欧萨护符"
+	desc = "一个由黄金铸成的空洞承诺。它沉甸甸地压着甜酒化作毒药的记忆，也承载着那份迟迟不肯消散的悲伤所带来的慰藉。"
 	icon_state = "baotha"
 	resistance_flags = FIRE_PROOF
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_RING
 	smeltresult = null
 
 /obj/item/clothing/neck/roguetown/psicross/ten
-	name = "amulet of Ten"
-	desc = "The Ten eternal, strength in unity. Stalwart for centuries against the darkness."
+	name = "十圣护符"
+	desc = "十圣永恒不灭，团结即为力量。数百年来始终坚定地对抗黑暗。"
 	icon_state = "undivided"
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_RING
 
 /obj/item/clothing/neck/roguetown/psicross/silver/undivided
-	name = "silver amulet of Ten"
-	desc = "Ward of silver, sigil of eternity; by the Ten, I command thee back to Hell!"
+	name = "银十圣护符"
+	desc = "白银为护，永恒为印；以十圣之名，我命你滚回地狱！"
 	icon_state = "undivided_s"
 	sellprice = 50
-
-

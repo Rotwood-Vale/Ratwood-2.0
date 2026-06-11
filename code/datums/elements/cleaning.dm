@@ -37,4 +37,4 @@
 					SEND_SIGNAL(cleaned_human.shoes, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 				SEND_SIGNAL(cleaned_human, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 				cleaned_human.regenerate_icons()
-				to_chat(cleaned_human, span_danger("[AM] cleans your face!"))
+				to_chat(cleaned_human, span_danger("[AM]把我的脸洗干净了！"))

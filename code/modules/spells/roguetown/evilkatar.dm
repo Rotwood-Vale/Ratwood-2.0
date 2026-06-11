@@ -3,12 +3,12 @@
 	school = "transmutation"
 
 /obj/effect/proc_holder/spell/targeted/touch/summonrogueweapon/evil/inhumenblade
-	name = "Inhumen Blade"
-	desc = "Summon an inhumen blade."
+	name = "异种之刃"
+	desc = "召出一把异种之刃。"
 	clothes_req = FALSE
-	drawmessage = "I ask for a weapon forged by the inhumen. \
-	They grant my request and aid me, for their miracles are potent... "
-	dropmessage = "Letting go, I watch the blade lose it's form..."
+	drawmessage = "我祈求一把由异种锻成的兵刃。 \
+	他们应允了我的请求，以强大的神迹向我施以援手……"
+	dropmessage = "当我松开手时，我看着这把利刃慢慢失去了形体……"
 	overlay_state = "boundkatar"
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
@@ -16,7 +16,7 @@
 
 /obj/item/melee/touch_attack/rogueweapon/inhumenblade
 	name = "\improper arcyne push dagger"
-	desc = "This blade throbs, translucent and iridiscent, dark energy ready to aid me in combat..."
+	desc = "这把刀刃微微搏动，半透明而泛着虹彩，幽暗能量已准备在战斗中助我一臂之力……"
 	catchphrase = null
 	icon = 'icons/mob/actions/roguespells.dmi'
 	icon_state = "katar_evil"

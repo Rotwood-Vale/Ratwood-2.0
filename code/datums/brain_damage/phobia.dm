@@ -1,9 +1,9 @@
 /datum/brain_trauma/mild/phobia
-	name = "Phobia"
+	name = "恐惧症"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_warning("I start finding default values very unnerving...")
-	lose_text = span_notice("I no longer feel afraid of default values.")
+	gain_text = span_warning("我开始觉得某些事物令人极度不安……")
+	lose_text = span_notice("我不再对那些事物感到恐惧了。")
 	var/phobia_type
 	var/next_check = 0
 	var/next_scare = 0
@@ -21,9 +21,9 @@
 	if(!phobia_type)
 		phobia_type = pick(SStraumas.phobia_types)
 
-	gain_text = span_warning("I start finding [phobia_type] very unnerving...")
-	lose_text = span_notice("I no longer feel afraid of [phobia_type].")
-	scan_desc += " of [phobia_type]"
+	gain_text = span_warning("我开始对[phobia_type]感到极度不安……")
+	lose_text = span_notice("我不再对[phobia_type]感到恐惧了。")
+	scan_desc += "，对象为 [phobia_type]"
 	trigger_words = SStraumas.phobia_words[phobia_type]
 	trigger_mobs = SStraumas.phobia_mobs[phobia_type]
 	trigger_objs = SStraumas.phobia_objs[phobia_type]
@@ -98,34 +98,34 @@
 		var/regex/reg = regex("(\\b|\\A)[REGEX_QUOTE(word)]'?s*(\\b|\\Z)", "i")
 
 		if(findtext(speech_args[SPEECH_MESSAGE], reg))
-			to_chat(owner, span_warning("I can't bring myself to say the word \"<span class='phobia'>[word]</span>\"!"))
+			to_chat(owner, span_warning("我根本说不出“<span class='phobia'>[word]</span>”这个词！"))
 			speech_args[SPEECH_MESSAGE] = ""
 
 /datum/brain_trauma/mild/phobia/proc/freak_out(atom/reason, trigger_word)
 	next_scare = world.time + 120
 	if(owner.stat == DEAD)
 		return
-	var/message = pick("spooks you to the bone", "shakes you up", "terrifies you", "sends you into a panic", "sends chills down your spine")
+	var/message = pick("把我吓得魂飞魄散", "让我心神大乱", "令我惊恐万分", "让我陷入恐慌", "让我背脊发凉")
 	if(reason)
-		to_chat(owner, span_danger("Seeing [reason] [message]!"))
+		to_chat(owner, span_danger("看到[reason][message]！"))
 	else if(trigger_word)
-		to_chat(owner, span_danger("Hearing \"[trigger_word]\" [message]!"))
+		to_chat(owner, span_danger("听到“[trigger_word]”让我[message]！"))
 	else
-		to_chat(owner, span_danger("Something [message]!"))
+		to_chat(owner, span_danger("有什么东西让我[message]！"))
 	var/reaction = rand(1,4)
 	switch(reaction)
 		if(1)
-			to_chat(owner, span_warning("I are paralyzed with fear!"))
+			to_chat(owner, span_warning("我因恐惧而动弹不得！"))
 			owner.Stun(70)
 			owner.Jitter(8)
 		if(2)
 			owner.emote("scream")
 			owner.Jitter(5)
-			owner.say("AAAAH!!", forced = "phobia")
+			owner.say("啊啊啊！！", forced = "phobia")
 			if(reason)
 				owner.pointed(reason)
 		if(3)
-			to_chat(owner, span_warning("I shut your eyes in terror!"))
+			to_chat(owner, span_warning("我因恐惧而紧紧闭上了双眼！"))
 			owner.Jitter(5)
 			owner.blind_eyes(10)
 		if(4)

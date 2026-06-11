@@ -3,15 +3,15 @@
 #define CTAG_GRENZEL_PRIEST "grenzel_priest"
 
 /datum/migrant_role/grenzel/envoy
-	name = "Envoy"
+	name = "使节"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
-	greet_text = "You are a Grenzelhoftian envoy, traveling with bodyguards and a priest to represent your homeland.\
-	What exactly you have been sent here to speak about- only you know."
+	greet_text = "你是来自 Grenzelhoft 的使节，带着护卫与神父一同出行，代表你的祖国。\
+	你究竟被派来商谈什么，只有你自己知晓。"
 	advclass_cat_rolls = list(CTAG_GRENZEL_ENVOY = 20)
 
 /datum/advclass/grenzel_envoy
-	name = "Envoy"
+	name = "使节"
 	outfit = /datum/outfit/job/roguetown/grenzel/envoy
 	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_GRENZEL_ENVOY)
@@ -72,14 +72,14 @@
 	H.cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 
 /datum/migrant_role/grenzel/bodyguard
-	name = "Leibwächter"
+	name = "贴身护卫"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	advclass_cat_rolls = list(CTAG_GRENZEL_GUARD = 20)
 
 /datum/advclass/grenzel_guard
-	name = "Leibwächter"
-	tutorial = "You are a dilligent soldier in employ of the Envoy for protection and to assure that their mission goes as planned."
+	name = "贴身护卫"
+	tutorial = "你是一名受使节雇佣的勤勉士兵，负责护卫他们，并确保这次任务按计划推进。"
 	outfit = /datum/outfit/job/roguetown/grenzel/doppel
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
 	category_tags = list(CTAG_GRENZEL_GUARD)
@@ -135,20 +135,20 @@
 	)
 
 
-	var/weapons = list("Zweihander","Kriegmesser & Buckler","Halberd","Partizan")
-	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+	var/weapons = list("双手剑","Kriegmesser 与圆盾","戟斧","长戟")
+	var/weapon_choice = input("选择你的武器。", "拿起武器") as anything in weapons
 	switch(weapon_choice)
-		if("Zweihander")
+		if("双手剑")
 			r_hand = /obj/item/rogueweapon/greatsword/grenz
 			backl = /obj/item/rogueweapon/scabbard/gwstrap
-		if("Kriegmesser & Buckler") // Buckler cuz they have no shield skill.
+		if("Kriegmesser 与圆盾") // Buckler cuz they have no shield skill.
 			beltr = /obj/item/rogueweapon/scabbard/sword
 			r_hand = /obj/item/rogueweapon/sword/long/kriegmesser
 			backl = /obj/item/rogueweapon/shield/buckler
-		if("Halberd")
+		if("戟斧")
 			r_hand = /obj/item/rogueweapon/halberd
 			backl = /obj/item/rogueweapon/scabbard/gwstrap
-		if("Partizan")
+		if("长戟")
 			r_hand = /obj/item/rogueweapon/spear/partizan
 			backl = /obj/item/rogueweapon/scabbard/gwstrap
 		else
@@ -159,14 +159,14 @@
 
 
 /datum/migrant_role/grenzel/priest
-	name = "Envoy Priest"
-	greet_text = "Nominally the envoy's spiritual advisor, your real power extends beyond religious matters. Protect interests of the Holy See of the Ten."
+	name = "使节神父"
+	greet_text = "名义上你是使节的灵性顾问，但你的真正权力远不止宗教事务。保护十圣座的利益。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	advclass_cat_rolls = list(CTAG_GRENZEL_PRIEST = 20)
 
 /datum/advclass/grenzel_priest
-	name = "Envoy Priest"
+	name = "使节神父"
 	outfit = /datum/outfit/job/roguetown/grenzel/priest
 	traits_applied = list(TRAIT_CHOSEN, TRAIT_RITUALIST, TRAIT_SOUL_EXAMINE, TRAIT_GRAVEROBBER, TRAIT_HOMESTEAD_EXPERT, TRAIT_MEDICINE_EXPERT)
 	category_tags = list(CTAG_GRENZEL_PRIEST)
@@ -179,6 +179,7 @@
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/staves = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
@@ -197,7 +198,7 @@
 /datum/outfit/job/roguetown/grenzel/priest/pre_equip(mob/living/carbon/human/H)
 	..()
 	if (!(istype(H.patron, /datum/patron/divine/astrata)))
-		to_chat(H, span_warning("I've been blessed by Astrata - She guides my way, as I guide Her flock."))
+		to_chat(H, span_warning("我已受 Astrata 祝福，她指引我的道路，正如我引领她的羊群。"))
 		H.set_patron(/datum/patron/divine/astrata)
 	neck = /obj/item/clothing/neck/roguetown/psicross/astrata
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/priest

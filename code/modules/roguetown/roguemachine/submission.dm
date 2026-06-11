@@ -1,6 +1,6 @@
 //WIP for now it does really nothing, but people will be gaslighted into thinking it does.
 /obj/structure/feedinghole
-	name = "FEEDING HOLE"
+	name = "投喂孔"
 	desc = ""
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "feedinghole"
@@ -22,7 +22,7 @@
 
 	contents += "----------<BR>"
 
-	contents += "Feed the hole<BR>"
+	contents += "向孔中投喂<BR>"
 
 	contents += "</center>"
 
@@ -34,7 +34,7 @@
 	if(ishuman(user))
 		for(var/obj/I in get_turf(src))
 			attemptstockpile(I, user, FALSE, FALSE)
-		say("Bulk stockpiling in progress...")
+		say("批量入库进行中……")
 		playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 		playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 
@@ -60,7 +60,7 @@
 			else
 				var/area/A = GLOB.areas_by_type[R.mint_item]
 				if(!A)
-					say("Couldn't find where to send the submission.")
+					say("找不到提交物该送往何处。")
 					return
 				var/list/turfs = list()
 				for(var/turf/T in A)

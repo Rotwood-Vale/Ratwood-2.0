@@ -1,9 +1,9 @@
 /datum/language/celestial
-	name = "Sama'glos"
-	desc = "(Spoken with ,c) The divine language of celestial beings and the desert kingdoms. Also known as Sandspeak, it carries the wisdom of the heavens and the shifting sands."
-	speech_verb = "says"
-	ask_verb = "asks"
-	exclaim_verb = "yells"
+	name = "萨玛格罗斯语"
+	desc = "(用 ,c 说)天界生灵与沙漠诸王国所使用的神圣语言。它也被称为沙语，承载着苍穹与流沙的智慧。"
+	speech_verb = "说道"
+	ask_verb = "问道"
+	exclaim_verb = "高喊"
 	key = "c"
 	space_chance = 60
 	default_priority = 80

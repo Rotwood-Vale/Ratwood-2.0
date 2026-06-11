@@ -1,9 +1,10 @@
 /datum/job/roguetown/tailor
 	title = "Tailor"
+	display_title = "裁缝"
 	flag = TAILOR
 	department_flag = YEOMEN
 	faction = "Station"
-	tutorial = "You have worked sleepless nights on honing your craft. From sacks, to tapestry and luxurious clothing, there is little you cannot sew into existence. Use your storefront to turn even the ugliest peasant into a proper gentleman; who knows, even the nobility may pay you a visit."
+	tutorial = "你熬过无数不眠之夜，只为将手艺磨练得更精。从布袋、挂毯到华美衣装，几乎没有什么是你缝制不出来的。好好利用你的店面吧，把再寒酸丑陋的农夫也打扮成体面的绅士；谁知道呢，说不定连贵族都会登门求衣。"
 	total_positions = 1
 	spawn_positions = 1
 	display_order = 6
@@ -25,8 +26,8 @@
 	)
 
 /datum/advclass/tailor
-	name = "Tailor"
-	tutorial = "You have worked sleepless nights on honing your craft. From sacks, to tapestry and luxurious clothing, there is little you cannot sew into existence. Use your storefront to turn even the ugliest peasant into a proper gentleman; who knows, even the nobility may pay you a visit."
+	name = "裁缝"
+	tutorial = "你熬过无数不眠之夜，只为将手艺磨练得更精。从布袋、挂毯到华美衣装，几乎没有什么是你缝制不出来的。好好利用你的店面吧，把再寒酸丑陋的农夫也打扮成体面的绅士；谁知道呢，说不定连贵族都会登门求衣。"
 	outfit = /datum/outfit/job/roguetown/tailor/basic
 	category_tags = list(CTAG_TAILOR)
 	subclass_stats = list(

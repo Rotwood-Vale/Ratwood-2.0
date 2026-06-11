@@ -23,8 +23,8 @@ GLOBAL_LIST_EMPTY(mushroom_circles)
 //==============================================================================
 
 /obj/structure/mushroom_sprout
-	name = "fey mushroom sprout"
-	desc = "A colony of tiny pale shoots, faintly alive with fey energy. Water it and it should bloom."
+	name = "妖精蘑菇幼芽"
+	desc = "一簇细小苍白的幼芽，隐隐流动着妖精能量。给它浇水，它应该就会绽放。"
 	anchored = TRUE
 	density = FALSE
 	opacity = FALSE
@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(mushroom_circles)
 	else if(has_grown)
 		growth_progress -= dt * 2
 		if(growth_progress <= -60)
-			visible_message(span_warning("[src] withers back into the blessed soil."))
+			visible_message(span_warning("[src]重新枯萎回了圣土中。"))
 			qdel(src)
 			return
 	if(growth_progress >= 10 MINUTES)
@@ -70,22 +70,22 @@ GLOBAL_LIST_EMPTY(mushroom_circles)
 /obj/structure/mushroom_sprout/examine(mob/user)
 	. = ..()
 	var/time_to_bloom = max((10 MINUTES) - growth_progress, 0)
-	. += span_info("It will bloom into a fey mushroom circle in approximately [DisplayTimeText(time_to_bloom)] if well tended.")
+	. += span_info("若悉心照料，它大约会在[DisplayTimeText(time_to_bloom)]后长成一圈妖精蘑菇。")
 	if(linked_soil)
 		if(linked_soil.blessed_time <= 0)
-			. += span_warning("The soil's blessing is fading; the sprout will not endure without it.")
+			. += span_warning("土壤中的祝福正在消退；若失去它，幼芽将难以存活。")
 		if(linked_soil.water <= 45)
-			. += span_warning("The soil beneath it is thirsty.")
+			. += span_warning("它下方的土壤很干渴。")
 		else if(linked_soil.water <= 150)
-			. += span_info("The soil beneath it is moist.")
+			. += span_info("它下方的土壤很湿润。")
 		else
-			. += span_info("The soil beneath it is wet.")
+			. += span_info("它下方的土壤很潮湿。")
 		if(linked_soil.nutrition <= 45)
-			. += span_warning("The soil beneath it is hungry.")
+			. += span_warning("它下方的土壤很贫瘠。")
 		else if(linked_soil.nutrition <= 150)
-			. += span_info("The soil beneath it is sated.")
+			. += span_info("它下方的土壤还算充足。")
 		else
-			. += span_info("The soil beneath it looks fertile.")
+			. += span_info("它下方的土壤看起来很肥沃。")
 
 /obj/structure/mushroom_sprout/attackby(obj/item/I, mob/living/user, params)
 	if(linked_soil)
@@ -94,7 +94,7 @@ GLOBAL_LIST_EMPTY(mushroom_circles)
 		if(linked_soil.try_handle_fertilizing(I, user, params))
 			return
 	if(istype(I, /obj/item/rogueweapon/shovel))
-		to_chat(user, span_notice("I begin uprooting [src]..."))
+		to_chat(user, span_notice("我开始铲除[src]……"))
 		if(do_after(user, 2 SECONDS, target = src))
 			qdel(src)
 		return
@@ -109,8 +109,8 @@ GLOBAL_LIST_EMPTY(mushroom_circles)
 	qdel(src)
 
 /obj/structure/mushroom_circle
-	name = "mushroom circle"
-	desc = "A ring of pale and purple mushrooms growing in a perfect circle."
+	name = "蘑菇环"
+	desc = "一圈淡白与紫色的蘑菇，恰好长成完美圆环。"
 	anchored = TRUE
 	density = FALSE
 	opacity = FALSE
@@ -125,8 +125,8 @@ GLOBAL_LIST_EMPTY(mushroom_circles)
 // Fey Mushroom Circle — player-grown, teleport-capable subtype
 //==============================================================================
 /obj/structure/mushroom_circle/fey
-	name = "fey mushroom circle"
-	desc = "A magical ring of pale and purple mushrooms that pulse with faint light. Druids of Dendor use these as waypoints to travel across long distances instantly."
+	name = "妖精蘑菇环"
+	desc = "一圈泛着微光的淡白与紫色魔法蘑菇。Dendor 的德鲁伊以它为路标，能瞬间跨越长途。"
 	max_integrity = 200
 	attacked_sound = 'sound/misc/woodhit.ogg'
 	destroy_sound = "plantcross"
@@ -172,8 +172,8 @@ GLOBAL_LIST_EMPTY(mushroom_circles)
 	set_light(0)
 	icon = 'icons/roguetown/misc/foliage.dmi'
 	icon_state = "mushroomcluster"
-	desc = "A withered ring of mushrooms that has lost its fey connection."
-	visible_message(span_warning("[src] begins to wither — the mystical light flickers and dies."))
+	desc = "一圈枯萎的蘑菇，已失去与妖精界的联系。"
+	visible_message(span_warning("[src]开始枯萎，神秘的光芒闪烁几下后熄灭。"))
 	decay_finish_time = world.time + 5 MINUTES
 	decay_timerid = addtimer(CALLBACK(src, PROC_REF(final_decay)), 5 MINUTES, flags = TIMER_STOPPABLE)
 
@@ -187,20 +187,20 @@ GLOBAL_LIST_EMPTY(mushroom_circles)
 	. = ..()
 	if(!active)
 		var/time_to_final_decay = max(decay_finish_time - world.time, 0)
-		. += span_warning("The circle has lost its power and has become overgrown. Its fey connection is severed — it will collapse in [DisplayTimeText(time_to_final_decay)].")
+		. += span_warning("这个蘑菇环已失去力量并彻底疯长。它与妖精界的联系被切断了，还会在[DisplayTimeText(time_to_final_decay)]后崩塌。")
 		return
 	var/time_to_overgrowth = max((90 MINUTES) - maintenance_elapsed, 0)
 	if(maintenance_elapsed > (75 MINUTES))
-		. += span_warning("The mushrooms look unhealthy. Prune them with scissors soon or the circle will become overgrown in [DisplayTimeText(time_to_overgrowth)].")
+		. += span_warning("这些蘑菇看起来状态不佳。尽快用剪刀修剪，否则它会在[DisplayTimeText(time_to_overgrowth)]后疯长。")
 	else
-		. += span_info("The mushrooms glow steadily with fey power. They will become overgrown in [DisplayTimeText(time_to_overgrowth)] if left untended.")
+		. += span_info("这些蘑菇稳定地散发着妖精之力。若无人照料，它会在[DisplayTimeText(time_to_overgrowth)]后疯长。")
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.patron && H.patron.type == /datum/patron/divine/dendor)
 			if(H.get_skill_level(/datum/skill/magic/druidic) >= SKILL_LEVEL_EXPERT)
-				. += span_notice("Hold my amulet of Dendor and press it on this circle to travel to another fey circle.")
+				. += span_notice("手持我的 Dendor 护符，将其按在这个蘑菇环上，就能前往另一处妖精蘑菇环。")
 			else
-				. += span_warning("The fey's mysteries are beyond my current understanding — I need greater druidic training to commune with this circle.")
+				. += span_warning("妖精的奥秘超出我当前的理解，我需要更高深的德鲁伊修行，才能与这个蘑菇环共鸣。")
 
 /obj/structure/mushroom_circle/fey/attackby(obj/item/I, mob/living/user, params)
 	// Only block fey circle USE actions from low-skill users — attacking/chopping is always allowed.
@@ -208,43 +208,43 @@ GLOBAL_LIST_EMPTY(mushroom_circles)
 	if(is_fey_use && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.get_skill_level(/datum/skill/magic/druidic) < SKILL_LEVEL_EXPERT)
-			to_chat(user, span_warning("The fey magic in this circle is beyond my understanding — I need greater druidic training to commune with it."))
+			to_chat(user, span_warning("这个蘑菇环中的妖精魔法超出了我的理解，我需要更高深的德鲁伊修行，才能与它共鸣。"))
 			return
 
 	// Feather rename support — name only, no description editing.
 	if(istype(I, /obj/item/natural/feather))
-		var/new_name = stripped_input(user, "What do you want to name this fey circle?", "Rename Fey Circle", "", MAX_NAME_LEN)
+		var/new_name = stripped_input(user, "你想给这个妖精蘑菇环起什么名字？", "重命名妖精蘑菇环", "", MAX_NAME_LEN)
 		if(!new_name || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE))
 			return
 		var/old_name = name
 		if(old_name == new_name)
-			to_chat(user, span_notice("The fey circle keeps its name."))
+			to_chat(user, span_notice("妖精蘑菇环保留了原名。"))
 		else
 			name = "[new_name] ([initial(name)])"
 			renamedByPlayer = TRUE
-			to_chat(user, span_notice("I rename [old_name] to [new_name]."))
+			to_chat(user, span_notice("我将[old_name]更名为[new_name]。"))
 		return
 
 	// Scissors/bauernwehr maintenance — requires snip intent so attacks don't accidentally maintain it
 	if((istype(I, /obj/item/rogueweapon/huntingknife/scissors) || istype(I, /obj/item/rogueweapon/huntingknife/throwingknife/bauernwehr)) && user.used_intent.type == /datum/intent/snip)
 		if(!active)
-			to_chat(user, span_warning("The circle has already faded — it can't be restored now."))
+			to_chat(user, span_warning("这个蘑菇环已经凋零，现在无法恢复了。"))
 			return
-		to_chat(user, span_notice("I carefully tend to [src]..."))
+		to_chat(user, span_notice("我小心修整着[src]……"))
 		if(do_after(user, 3 SECONDS, target = src))
 			if(!active)
 				return
 			maintenance_elapsed = 0
-			to_chat(user, span_notice("[src] looks well-maintained. The mystical glow brightens."))
+			to_chat(user, span_notice("[src]看起来维护得很好，神秘的微光也更明亮了。"))
 		return
 
 	// Dendor amulet — opens fey teleport menu
 	if(istype(I, /obj/item/clothing/neck/roguetown/psicross/dendor))
 		if(!user.patron || user.patron.type != /datum/patron/divine/dendor)
-			to_chat(user, span_warning("Only a follower of Dendor may commune with this circle."))
+			to_chat(user, span_warning("唯有 Dendor 的信徒才能与这个蘑菇环沟通。"))
 			return
 		if(!active)
-			to_chat(user, span_warning("This circle has waned in power — it can no longer carry you anywhere."))
+			to_chat(user, span_warning("这个蘑菇环的力量已经衰弱，无法再将我送往任何地方。"))
 			return
 		open_teleport_menu(user)
 		return
@@ -255,10 +255,10 @@ GLOBAL_LIST_EMPTY(mushroom_circles)
 	// 30-second per-user cooldown between fey circle uses.
 	if(world.time < (user.mob_timers["feycircle_cooldown"] + 30 SECONDS))
 		var/remaining = (user.mob_timers["feycircle_cooldown"] + 30 SECONDS) - world.time
-		to_chat(user, span_warning("I must wait [DisplayTimeText(remaining)] before the fey energy recharges inside the ring."))
+		to_chat(user, span_warning("我必须等待[DisplayTimeText(remaining)]，让蘑菇环内的妖精能量重新充盈。"))
 		return
 	if(get_turf(user) != get_turf(src))
-		to_chat(user, span_warning("I must stand within the mushroom circle to traverse the fey paths."))
+		to_chat(user, span_warning("我必须站在蘑菇环内，才能穿行妖精路径。"))
 		return
 	var/list/choices = list()
 	for(var/obj/structure/mushroom_circle/fey/C in GLOB.mushroom_circles)
@@ -267,23 +267,23 @@ GLOBAL_LIST_EMPTY(mushroom_circles)
 		choices[C.name] = C
 
 	if(!choices.len)
-		to_chat(user, span_warning("There are no other active fey mushroom circles within the network."))
+		to_chat(user, span_warning("这片网络中没有其他仍然活跃的妖精蘑菇环。"))
 		return
 
-	var/choice = input(user, "Which circle do you wish to travel to?", "Fey Mushroom Circle Network") as null|anything in choices
+	var/choice = input(user, "你想前往哪一个蘑菇环？", "妖精蘑菇环网络") as null|anything in choices
 	if(isnull(choice) || QDELETED(src) || QDELETED(user))
 		return
 
 	var/obj/structure/mushroom_circle/fey/dest = choices[choice]
 	if(QDELETED(dest) || !dest.active)
-		to_chat(user, span_warning("That circle has faded since you made your choice."))
+		to_chat(user, span_warning("在我作出选择后，那座蘑菇环已经消逝了。"))
 		return
 
-	to_chat(user, span_notice("I focus on [dest.name]..."))
+	to_chat(user, span_notice("我将意念聚焦在[dest.name]……"))
 	if(!do_after(user, 3 SECONDS, target = src))
 		return
 	if(QDELETED(dest) || !dest.active)
-		to_chat(user, span_warning("The destination circle faded mid-journey."))
+		to_chat(user, span_warning("目的地蘑菇环在旅途中消逝了。"))
 		return
 
 	var/turf/dest_turf = get_turf(dest)
@@ -298,5 +298,5 @@ GLOBAL_LIST_EMPTY(mushroom_circles)
 		L.forceMove(dest_turf)
 	playsound(dest_turf, 'sound/misc/portalopen.ogg', 50, FALSE)
 
-	to_chat(user, span_notice("I step into the ring, planting my feet firmly and emerge at [dest.name]."))
+	to_chat(user, span_notice("我迈入圆环，稳稳站定，随后便在[dest.name]现身。"))
 	user.mob_timers["feycircle_cooldown"] = world.time

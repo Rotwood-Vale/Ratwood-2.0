@@ -1,8 +1,8 @@
 #define TERRITORIAL_FILTER "territorial_rage"
 
 /atom/movable/screen/alert/status_effect/territorial_rage
-	name = "Territorial Rage"
-	desc = "The heartbeast is tearing you apart!"
+	name = "领地暴怒"
+	desc = "心兽正试图把你撕成碎片！"
 
 /datum/status_effect/territorial_rage
 	id = "territorial_rage"
@@ -20,7 +20,7 @@
 	owner.Immobilize(duration)
 	owner.add_filter(TERRITORIAL_FILTER, 2, list("type" = "outline", "color" = outline_color, "alpha" = 210, "size" = 2))
 	owner.update_icon()
-	to_chat(owner, span_userdanger("The heartbeast's tendrils grab you and start pulling you apart!"))
+	to_chat(owner, span_userdanger("心兽的触须抓住了你，开始把你活活撕裂！"))
 
 	animate(owner, pixel_y = owner.pixel_y + 8, time = 0.5 SECONDS, easing = SINE_EASING)
 
@@ -46,7 +46,7 @@
 		// Lower back down
 		animate(L, pixel_y = L.pixel_y - 8, time = 0.5 SECONDS, easing = SINE_EASING)
 	
-	owner.visible_message(span_danger("The tendrils release [owner]!"))
+	owner.visible_message(span_danger("触须松开了[owner]！"))
 
 /datum/status_effect/territorial_rage/proc/remove_limb(mob/living/carbon/C)
 	if(limb_removed)

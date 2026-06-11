@@ -1,6 +1,6 @@
 
 /obj/effect/proc_holder/spell/aimed
-	name = "aimed projectile spell"
+	name = "瞄准投射法术"
 	var/projectile_type = /obj/projectile/magic/teleport
 	var/deactive_msg = null
 	var/active_msg = null
@@ -22,7 +22,7 @@
 		return
 	var/msg
 	if(!can_cast(user))
-		msg = span_warning("I can no longer cast [name]!")
+		msg = span_warning("我已无法再施放[name]了！")
 		remove_ranged_ability(msg)
 		return
 	if(active)
@@ -37,7 +37,7 @@
 		on_deactivation(user)
 	else
 		if(active_msg)
-			msg = span_notice("[active_msg] <B>Left-click to shoot it at a target!</B>")
+			msg = span_notice("[active_msg] <B>左键点击目标即可发射！</B>")
 		current_amount = projectile_amount
 		active = TRUE
 		add_ranged_ability(user, msg, TRUE)
@@ -96,12 +96,12 @@
 	return
 
 /obj/effect/proc_holder/spell/aimed/fireball // not the one used by RT
-	name = "Fireball"
+	name = "火球术"
 	desc = ""
 	school = "evocation"
 	recharge_time = 60
 	clothes_req = FALSE
-	invocations = list("ONI SOMA")
+	invocations = list("烈焰，降现！")
 	invocation_type = "shout"
 	range = 20
 	cooldown_min = 20 //10 deciseconds reduction per rank
@@ -109,10 +109,10 @@
 	base_icon_state = "fireball"
 	action_icon_state = "fireball0"
 	sound = 'sound/blank.ogg'
-	active_msg = "You prepare to cast your fireball spell!"
-	deactive_msg = "You extinguish your fireball... for now."
+	active_msg = "我已准备好施放火球术！"
+	deactive_msg = "我暂且熄灭了掌中的火球。"
 	active = FALSE
-	charge_invocation = list("inthe name","of god","st michael","and st george")
+	charge_invocation = list("以神之名","借圣米迦勒","与圣乔治","之威")
 	releasedrain = 500
 	chargedrain = 0
 	chargetime = 50

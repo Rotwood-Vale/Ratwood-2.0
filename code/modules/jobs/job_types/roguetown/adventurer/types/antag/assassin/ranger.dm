@@ -1,6 +1,6 @@
 /datum/advclass/assassin_ranger
-	name = "Assassin - Ranger"
-	tutorial = "You spent your life tracking the biggest game of all - mortal men. The direbears you've killed do not even compare to the men you've felled. Track your pray, put down the feral dog, and get your pay.."
+	name = "刺客 - 猎人"
+	tutorial = "你这一生都在追猎最危险的猎物, 那就是凡人。你杀过的恐熊，也比不上那些死在你手下的人。追上你的猎物，宰了那条疯狗，然后拿你的报酬。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/assassin/ranger
@@ -61,21 +61,21 @@
 	beltr = /obj/item/rogueweapon/stoneaxe/woodcut/wardenpick
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Yew Longbow","Crossbow")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("紫杉长弓","十字弩")
+		var/weapon_choice = input(H, "选择你的武器。", "执兵而起") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Yew Longbow")
+			if("紫杉长弓")
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_MASTER, TRUE)
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
 				beltl = /obj/item/quiver/arrows
-			if("Crossbow")
+			if("十字弩")
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_MASTER, TRUE)
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				beltl = /obj/item/quiver/bolts
 
 	if(!istype(H.patron, /datum/patron/inhumen/graggar))
-		var/inputty = input(H, "Would you like to change your patron to Graggar?", "The beast roars", "No") as anything in list("Yes", "No")
-		if(inputty == "Yes")
-			to_chat(H, span_warning("My former deity has abandoned me.. Graggar is my new master."))
+		var/inputty = input(H, "你要将自己的信仰改为 格拉加 吗？", "兽吼回荡", "否") as anything in list("是", "否")
+		if(inputty == "是")
+			to_chat(H, span_warning("我先前侍奉的神明已弃我而去……如今，格拉加 才是我的新主人。"))
 			H.set_patron(/datum/patron/inhumen/graggar)

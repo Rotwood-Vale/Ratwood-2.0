@@ -1,10 +1,10 @@
 /datum/patron/divine/necra
 	name = "Necra"
-	domain = "Death, The Afterlife, Rebirth"
-	desc = "The Undermaiden is the custodian of the Afterlife, where all souls must eventually go. She tasks the lost with the Trials of the Forgotten, where they must ruminate on their lyfe to be reborn. Her followers find resurrection to be abhorrent, choosing to isolate themselves to their graveyards."
-	worshippers = "Gravediggers, Morticians, Disgraced Physicians, Loners"
-	virtues = "Respecting the Dead, Sloth, Fatalism"
-	sins = "Undeath, Humor, Revival"
+	domain = "死亡、来世、重生"
+	desc = "冥下侍女是来世的看守者，所有灵魂终将去往那里。她令迷失者接受“遗忘者试炼”，在那里反复思索自己的一生，方能获得重生。她的追随者将复活视为可憎之举，宁愿守着自己的墓园，与世隔绝。"
+	worshippers = "掘墓人、入殓师、失势医者、独行者"
+	virtues = "敬重死者、怠惰、宿命论"
+	sins = "不死、嬉笑、复生"
 	mob_traits = list(TRAIT_SOUL_EXAMINE, TRAIT_NOSTINK)	//No stink is generic but they deal with dead bodies so.. makes sense, I suppose?
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison				= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/necras_sight				= CLERIC_T0,
@@ -19,9 +19,9 @@
 					/obj/effect/proc_holder/spell/targeted/churn					= CLERIC_T4,//Priest/Acolytes only. Thanks.
 	)
 	confess_lines = list(
-		"ALL SOULS FIND THEIR WAY TO NECRA!",
-		"THE UNDERMAIDEN IS OUR FINAL REPOSE!",
-		"I FEAR NOT DEATH, MY LADY AWAITS ME!",
+		"众魂终将归于 NECRA！",
+		"冥下侍女便是我们最终的安息！",
+		"我无惧死亡，我的女主人正等待着我！",
 	)
 	storyteller = /datum/storyteller/necra
 
@@ -31,7 +31,7 @@
 	// Allows prayer near psycross
 	for(var/obj/structure/fluff/psycross/cross in view(4, get_turf(follower)))
 		if(cross.divine == FALSE)
-			to_chat(follower, span_danger("That defiled cross interupts my prayers!"))
+			to_chat(follower, span_danger("那座被亵渎的 psycross 打断了我的祈祷！"))
 			return FALSE
 		return TRUE
 	// Allows prayer in the church
@@ -40,7 +40,7 @@
 	// Allows prayer near a grave.
 	for(var/obj/structure/closet/dirthole/grave/G in view(4, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("For Necra to hear my prayer I must either pray within the church, near a psycross, or near a grave where we all go to be given our final embrace.."))
+	to_chat(follower, span_danger("若想让 Necra 听见我的祈祷，我必须在教堂内、psycross 附近，或靠近那终将迎来我们所有人的坟墓祈祷……"))
 	return FALSE
 
 /datum/patron/divine/necra/on_lesser_heal(
@@ -51,8 +51,8 @@
 	conditional_buff,
 	situational_bonus
 )
-	*message_out = span_info("A sense of quiet respite radiates from [target]!")
-	*message_self = span_notice("I feel the Undermaiden's gaze turn from me for now!")
+	*message_out = span_info("[target] 身上散发出一股静谧安息的气息！")
+	*message_self = span_notice("我感觉冥下侍女的目光暂时从我身上移开了！")
 
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon = target

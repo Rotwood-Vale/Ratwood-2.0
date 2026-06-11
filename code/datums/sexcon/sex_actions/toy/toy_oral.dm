@@ -1,5 +1,5 @@
 /datum/sex_action/toy_oral
-	name = "Swallow toy"
+	name = "含入玩具"
 	category = SEX_CATEGORY_PENETRATE
 	user_sex_part = SEX_PART_JAWS
 	target_sex_part = SEX_PART_JAWS
@@ -22,11 +22,11 @@
 
 /datum/sex_action/toy_oral/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/dildo/dildo = get_dildo_in_either_hand(user)
-	user.visible_message(span_warning("[user] starts swallowing on \the [dildo]..."))
+	user.visible_message(span_warning("[user]开始把[dildo]含入口中了……"))
 
 /datum/sex_action/toy_oral/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/dildo/dildo = get_dildo_in_either_hand(user)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] blows \the [dildo]..."))
+	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()]含弄着[dildo]……"))
 	user.sexcon.oralcourse_noise(user)
 
 	if(dildo)
@@ -34,7 +34,7 @@
 
 /datum/sex_action/toy_oral/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/dildo/dildo = get_dildo_in_either_hand(user)
-	user.visible_message(span_warning("[user] stops blowing \the [dildo]."))
+	user.visible_message(span_warning("[user]停下了含弄[dildo]的动作。"))
 
 /datum/sex_action/toy_oral/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user.sexcon.finished_check())

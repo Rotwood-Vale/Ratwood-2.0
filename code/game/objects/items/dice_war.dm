@@ -38,7 +38,7 @@
 	return format_big_die_value(v, get_roll_color_for(M))
 
 /datum/dice_war_game/proc/format_hp_value(v)
-	return "<span style='color:#EF5350;font-size:larger;font-weight:bold;'>HP: [v]</span>"
+	return "<span style='color:#EF5350;font-size:larger;font-weight:bold;'>生命：[v]</span>"
 
 /datum/dice_war_game/proc/get_opponent(mob/living/M)
 	for(var/mob/living/P in players)
@@ -50,43 +50,43 @@
 	if(!joiner || !joiner.client)
 		return
 	if(!joining)
-		to_chat(joiner, span_warning("The Dice War has already started."))
+		to_chat(joiner, span_warning("骰子战争已经开始了。"))
 		return
 
 	if(joiner in players)
-		var/list/opts = list("Leave game")
+		var/list/opts = list("离开游戏")
 		if(players.len >= 2)
-			opts += "Start game now"
-		var/choice = input(joiner, "You are already in the lobby. ([players.len]/[max_players] players)", "Dice War") as null|anything in opts
-		if(choice == "Start game now")
+			opts += "立即开始"
+		var/choice = input(joiner, "你已经在大厅中了。([players.len]/[max_players] 名玩家)", "骰子战争") as null|anything in opts
+		if(choice == "立即开始")
 			start_game()
-		else if(choice == "Leave game")
+		else if(choice == "离开游戏")
 			players -= joiner
 			hp -= joiner
-			game_bag.visible_message(span_notice("[joiner] left the pre-game lobby. ([players.len]/[max_players])"))
+			game_bag.visible_message(span_notice("[joiner]离开了赛前大厅。([players.len]/[max_players])"))
 			if(!players.len)
 				cancel_game(joiner)
 		return
 
 	if(players.len >= max_players)
-		to_chat(joiner, span_warning("Dice War is full ([max_players]/[max_players])."))
+		to_chat(joiner, span_warning("骰子战争人数已满（[max_players]/[max_players]）。"))
 		return
 
 	players += joiner
 	hp[joiner] = 50
-	game_bag.visible_message(span_notice("[joiner] joined Dice War! ([players.len]/[max_players] players)"))
+	game_bag.visible_message(span_notice("[joiner]加入了骰子战争！([players.len]/[max_players] 名玩家)"))
 	if(players.len >= max_players)
 		start_game()
 
 /datum/dice_war_game/proc/leave_game(mob/living/leaver)
 	if(!(leaver in players))
-		to_chat(leaver, span_warning("You are not in this Dice War game."))
+		to_chat(leaver, span_warning("你不在这局骰子战争中。"))
 		return
 
 	players -= leaver
 	hp -= leaver
 
-	game_bag.visible_message(span_notice("[leaver] leaves Dice War."))
+	game_bag.visible_message(span_notice("[leaver]离开了骰子战争。"))
 
 	if(!players.len)
 		cancel_game(leaver)
@@ -98,10 +98,10 @@
 		return
 
 	var/mob/living/winner = players[1]
-	end_game_with_winner(winner, "forfeit")
+	end_game_with_winner(winner, "弃权")
 
 /datum/dice_war_game/proc/cancel_game(mob/living/canceller)
-	game_bag.visible_message(span_warning("[canceller] has cancelled Dice War!"))
+	game_bag.visible_message(span_warning("[canceller]取消了骰子战争！"))
 	game_bag.active_game = null
 	qdel(src)
 
@@ -118,13 +118,13 @@
 	for(var/mob/living/P in players)
 		hp[P] = 50
 
-	game_bag.visible_message(span_notice("Dice War begins! [players[1]] vs [players[2]] - 50 HP each."))
+	game_bag.visible_message(span_notice("骰子战争开始！[players[1]] 对阵 [players[2]]，双方各有 50 点生命。"))
 	next_turn()
 
 /datum/dice_war_game/proc/next_turn()
 	if(players.len < 2)
 		if(players.len == 1)
-			end_game_with_winner(players[1], "last fighter standing")
+			end_game_with_winner(players[1], "坚持到最后")
 		else
 			cancel_game(game_bag)
 		return
@@ -140,24 +140,24 @@
 
 	current_player = active
 	can_initiate_turn_roll = TRUE
-	game_bag.visible_message(span_notice("--- [active]'s turn | [get_hp_display()] ---"))
-	to_chat(active, span_notice("Choose Roll Dice from the dice bag menu."))
+	game_bag.visible_message(span_notice("--- [active]的回合 | [get_hp_display()] ---"))
+	to_chat(active, span_notice("从骰袋菜单中选择“掷骰”。"))
 
 /datum/dice_war_game/proc/player_action(mob/living/user, action)
 	if(!(user in players))
-		to_chat(user, span_notice("Current HP: [get_hp_display()]"))
+		to_chat(user, span_notice("当前生命：[get_hp_display()]"))
 		return
 	if(busy)
-		to_chat(user, span_notice("Please wait a moment..."))
+		to_chat(user, span_notice("请稍等片刻……"))
 		return
 	if(user != current_player)
-		input(user, "It's not your turn. HP: [get_hp_display()]", "Dice War") as null|anything in list("OK")
+		input(user, "还没轮到你。生命：[get_hp_display()]", "骰子战争") as null|anything in list("确定")
 		return
 	if(!can_initiate_turn_roll)
-		to_chat(user, span_notice("You have already rolled this turn."))
+		to_chat(user, span_notice("这回合你已经掷过骰了。"))
 		return
-	if(action != "Roll Dice")
-		to_chat(user, span_notice("Choose Roll Dice from the menu."))
+	if(action != "掷骰")
+		to_chat(user, span_notice("请从菜单中选择“掷骰”。"))
 		return
 
 	can_initiate_turn_roll = FALSE
@@ -172,12 +172,12 @@
 
 	var/roll = rand(1, 20)
 	var/got_natural_twenty = (roll == 20)
-	game_bag.visible_message(span_notice("[active] rolls a d20: [format_player_roll_value(active, roll)]!"))
+	game_bag.visible_message(span_notice("[active]掷出了一个20面骰：[format_player_roll_value(active, roll)]！"))
 
 	if(roll == 1)
 		var/old_hp = hp[active]
 		hp[active] = old_hp + 10
-		game_bag.visible_message(span_notice("Second Wind! [active] heals 10 HP ([old_hp] -> [hp[active]])."))
+		game_bag.visible_message(span_notice("回光返照！[active]恢复了 10 点生命（[old_hp] -> [hp[active]]）。"))
 
 	if(roll == 20)
 		var/mob/living/target = get_opponent(active)
@@ -185,17 +185,17 @@
 			var/crit = rand(1, 20)
 			var/crit_color = "#EF5350"
 			hp[target] -= crit
-			game_bag.visible_message(span_danger("Critical Strike! [active] rolls [format_big_die_value(crit, crit_color)] direct damage on [target]!"))
+			game_bag.visible_message(span_danger("暴击！[active]掷出[format_big_die_value(crit, crit_color)]点直接伤害，命中[target]！"))
 			if(hp[target] <= 0)
 				busy = FALSE
-				end_game_with_winner(active, "critical strike")
+				end_game_with_winner(active, "暴击")
 				return
 
 	if(got_natural_twenty)
 		busy = FALSE
 		can_initiate_turn_roll = TRUE
-		game_bag.visible_message(span_notice("Natural 20 bonus turn! [active] may roll again before the opponent acts."))
-		to_chat(active, span_notice("Bonus action: choose Roll Dice again."))
+		game_bag.visible_message(span_notice("天生 20 奖励回合！[active]可在对手行动前再掷一次。"))
+		to_chat(active, span_notice("奖励行动：再次选择“掷骰”。"))
 		return
 
 	if(!pending_roller)
@@ -232,7 +232,7 @@
 		high_roll = roll2
 		low_roll = roll1
 	else if(roll2 == roll1)
-		game_bag.visible_message(span_notice("Clash tied at [format_player_roll_value(p1, roll1)] vs [format_player_roll_value(p2, roll2)]! No base damage dealt."))
+		game_bag.visible_message(span_notice("交锋平手：[format_player_roll_value(p1, roll1)] 对 [format_player_roll_value(p2, roll2)]！未造成基础伤害。"))
 		return
 
 	var/base_damage = high_roll - low_roll
@@ -244,20 +244,20 @@
 	if(high_even == low_even)
 		// Even/Even or Odd/Odd: full damage
 		damage = base_damage
-		game_bag.visible_message(span_notice("In sync clash ([format_player_roll_value(high_mob, high_roll)] vs [format_player_roll_value(low_mob, low_roll)])! [high_mob] deals [damage] damage to [low_mob]."))
+		game_bag.visible_message(span_notice("同步交锋（[format_player_roll_value(high_mob, high_roll)] 对 [format_player_roll_value(low_mob, low_roll)]）！[high_mob]对[low_mob]造成了[damage]点伤害。"))
 	else if(!high_even && low_even)
 		// High odd vs low even: halved damage
 		damage = (base_damage - (base_damage % 2)) / 2
-		game_bag.visible_message(span_notice("Weak overcomes Strong ([format_player_roll_value(high_mob, high_roll)] odd vs [format_player_roll_value(low_mob, low_roll)] even)! Damage halved to [damage]."))
+		game_bag.visible_message(span_notice("以弱胜强（[format_player_roll_value(high_mob, high_roll)]为奇数，对上[format_player_roll_value(low_mob, low_roll)]为偶数）！伤害减半至[damage]。"))
 	else
 		// High even vs low odd: full damage
 		damage = base_damage
-		game_bag.visible_message(span_notice("Power Stroke ([format_player_roll_value(high_mob, high_roll)] even vs [format_player_roll_value(low_mob, low_roll)] odd)! [high_mob] deals [damage] damage."))
+		game_bag.visible_message(span_notice("强力一击（[format_player_roll_value(high_mob, high_roll)]为偶数，对上[format_player_roll_value(low_mob, low_roll)]为奇数）！[high_mob]造成了[damage]点伤害。"))
 
 	if(damage > 0)
 		hp[low_mob] -= damage
 	else
-		game_bag.visible_message(span_notice("No damage gets through."))
+		game_bag.visible_message(span_notice("没有伤害穿透。"))
 
 	damage = max(damage, 0)
 	game_bag.visible_message(span_notice("[low_mob] [format_hp_value(hp[low_mob])] | [high_mob] [format_hp_value(hp[high_mob])]"))
@@ -268,15 +268,15 @@
 			var/mob/living/winner = get_opponent(P)
 			if(!winner)
 				winner = P
-			end_game_with_winner(winner, "combat")
+			end_game_with_winner(winner, "战斗")
 			return TRUE
 	return FALSE
 
 /datum/dice_war_game/proc/end_game_with_winner(mob/living/winner, reason)
 	if(winner)
-		game_bag.visible_message(span_green("<b>--- DICE WAR OVER --- [winner] wins by [reason]!</b>"))
+		game_bag.visible_message(span_green("<b>--- 骰子战争结束 --- [winner]因[reason]获胜！</b>"))
 	else
-		game_bag.visible_message(span_notice("--- DICE WAR OVER ---"))
+		game_bag.visible_message(span_notice("--- 骰子战争结束 ---"))
 	game_bag.active_game = null
 	qdel(src)
 
@@ -287,23 +287,23 @@
 	return jointext(parts, " | ")
 
 /obj/item/storage/pill_bottle/dice/dice_war
-	name = "bag of war dice"
-	desc = "A bag used to play Dice War. Activate in hand (Z) to start or join a game."
+	name = "骰子战争骰袋"
+	desc = "一个用来玩骰子战争的骰袋。手持激活（Z）即可开始或加入游戏。"
 	var/datum/dice_war_game/active_game
 	var/static/dice_war_rules_text = {"<div style='padding:8px;font-family:Verdana,sans-serif;'>
-	<h2 style='text-align:center;margin:0 0 6px 0;'>Dice War</h2>
+	<h2 style='text-align:center;margin:0 0 6px 0;'>骰子战争</h2>
 <br>
-<b>Objective:</b> Reduce your opponent to 0 HP.<br>
+<b>目标：</b>将对手的生命降到 0。<br>
 <br>
-<b>Rules:</b><br>
-- Both players start with 50 HP.<br>
-- Both players roll 1d20, taking turns.<br>
-- Base Damage = difference between the high and low roll. Example: if Player 1 rolls 15 and Player 2 rolls 10, the base damage is 5.<br>
-- Even/Even or Odd/Odd: full damage to lower roll. Example: if a player rolls 12 and the opponent rolls 8, the full damage of 4 is dealt.<br>
-- High Odd vs Low Even: damage is halved. Example: if a player rolls 15 (odd) and the opponent rolls 8 (even), the damage is halved to 3 rounding down.<br>
-- High Even vs Low Odd: Power Stroke, full damage. Example: if a player rolls 16 (even) and the opponent rolls 7 (odd), the full damage of 9 is dealt.<br>
-- Natural 1: heal 10 HP.<br>
-- Natural 20: roll another d20 for direct damage (ignores halving rules).
+<b>规则：</b><br>
+- 双方都以 50 点生命开始。<br>
+- 双方轮流掷 1 枚20面骰。<br>
+- 基础伤害 = 高点数与低点数的差值。例如：若玩家 1 掷出 15，玩家 2 掷出 10，则基础伤害为 5。<br>
+- 同奇同偶：对低点数者造成全部伤害。例如：若一方掷出 12，另一方掷出 8，则造成 4 点完整伤害。<br>
+- 高点为奇、低点为偶：伤害减半。例如：若一方掷出 15（奇数），对手掷出 8（偶数），则伤害减半为 3，向下取整。<br>
+- 高点为偶、低点为奇：强力一击，造成全部伤害。例如：若一方掷出 16（偶数），对手掷出 7（奇数），则造成 9 点完整伤害。<br>
+- 天生 1：恢复 10 点生命。<br>
+- 天生 20：额外再掷一个20面骰造成直接伤害（无视减半规则）。
 </div>"}
 
 /obj/item/storage/pill_bottle/dice/dice_war/proc/show_rules(mob/living/user)
@@ -329,55 +329,55 @@
 			can_show_roll = TRUE
 
 	if(!active_game)
-		menu += "Start Game"
+		menu += "开始游戏"
 	else if(active_game.joining)
 		if(!(user in active_game.players))
-			menu += "Start Game"
+			menu += "开始游戏"
 	else if(can_show_roll)
-		menu += "Roll Dice"
+		menu += "掷骰"
 
 	if(menu.len)
 		menu += gap1
-	menu += "Rules"
+	menu += "规则"
 	menu += gap2
 	if(active_game && (user in active_game.players))
-		menu += "Leave Game"
+		menu += "离开游戏"
 		menu += gap3
-	menu += "End Game"
+	menu += "结束游戏"
 
-	var/choice = input(user, "Select an option.", "Dice War") as null|anything in menu
+	var/choice = input(user, "选择一个选项。", "骰子战争") as null|anything in menu
 	if(!choice)
 		return
 
-	if(choice == "Rules")
+	if(choice == "规则")
 		show_rules(user)
 		return
 
-	if(choice == "End Game")
+	if(choice == "结束游戏")
 		if(active_game)
 			active_game.cancel_game(user)
 		else
-			to_chat(user, span_notice("No Dice War game is currently running."))
+			to_chat(user, span_notice("当前没有正在进行的骰子战争。"))
 		return
 
-	if(choice == "Leave Game")
+	if(choice == "离开游戏")
 		if(active_game)
 			active_game.leave_game(user)
 		else
-			to_chat(user, span_notice("No Dice War game is currently running."))
+			to_chat(user, span_notice("当前没有正在进行的骰子战争。"))
 		return
 
-	if(choice == "Roll Dice")
+	if(choice == "掷骰")
 		if(!active_game)
-			to_chat(user, span_notice("No Dice War game is currently running."))
+			to_chat(user, span_notice("当前没有正在进行的骰子战争。"))
 			return
 		if(!(user == active_game.current_player && active_game.can_initiate_turn_roll && !active_game.joining))
-			to_chat(user, span_notice("You cannot roll right now."))
+			to_chat(user, span_notice("你现在不能掷骰。"))
 			return
-		active_game.player_action(user, "Roll Dice")
+		active_game.player_action(user, "掷骰")
 		return
 
-	if(choice != "Start Game")
+	if(choice != "开始游戏")
 		return
 
 	if(!active_game)
@@ -386,7 +386,7 @@
 		new_game.max_players = 2
 		active_game = new_game
 		new_game.try_join(user)
-		src.visible_message(span_notice("[user] is starting Dice War! 1 more player needed. Activate (Z) the dice bag to join!"))
+		src.visible_message(span_notice("[user]正在发起一局骰子战争！还差 1 名玩家。手持激活（Z）骰袋即可加入！"))
 		return
 
 	if(active_game.joining)

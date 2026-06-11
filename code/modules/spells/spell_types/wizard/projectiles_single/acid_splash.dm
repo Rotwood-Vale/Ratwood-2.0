@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/projectile/acidsplash
-	name = "Acid Splash"
-	desc = "A slow-moving glob of acid that sprays over an area upon impact."
+	name = "酸液飞溅"
+	desc = "射出一团缓慢飞行的酸液，命中时会向周围喷溅开来。"
 	range = 8
 	projectile_type = /obj/projectile/magic/acidsplash
 	overlay_state = "acid_splash"
@@ -18,7 +18,7 @@
 	movement_interrupt = FALSE
 	antimagic_allowed = FALSE //can you use it if you are antimagicked?
 	spell_tier = 2
-	invocations = list("Tabificus!")
+	invocations = list("酸液，飞溅！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_ARCANE
 	glow_intensity = GLOW_INTENSITY_LOW
@@ -32,11 +32,11 @@
 
 /obj/effect/proc_holder/spell/self/acidsplash/cast(mob/user = usr)
 	var/mob/living/target = user
-	target.visible_message(span_warning("[target] hurls a caustic bubble!"), span_notice("You hurl a caustic bubble!"))
+	target.visible_message(span_warning("[target] 掷出了一团腐蚀酸泡！"), span_notice("我掷出了一团腐蚀酸泡！"))
 	. = ..()
 
 /obj/projectile/magic/acidsplash //port. todo: the sounds these came with aren't good and drink_blood sounds like ur slurpin pintle
-	name = "acid bubble"
+	name = "酸泡"
 	icon_state = "green_laser"
 	damage = 15
 	damage_type = BURN
@@ -66,7 +66,7 @@
 /datum/status_effect/buff/acidsplash/on_apply()
 	. = ..()
 	owner.playsound_local(get_turf(owner), 'sound/misc/lava_death.ogg', 35, FALSE, pressure_affected = FALSE)
-	owner.visible_message(span_warning("[owner] is covered in acid!"), span_danger("I am covered in acid!"))
+	owner.visible_message(span_warning("[owner] 被酸液覆盖了！"), span_danger("我被酸液覆盖了！"))
 	owner.emote("scream")
 
 /datum/status_effect/buff/acidsplash/tick()
@@ -74,15 +74,15 @@
 	target.adjustFireLoss(5)
 
 /atom/movable/screen/alert/status_effect/buff/acidsplash
-	name = "Acid Burn"
-	desc = "My skin is burning!"
+	name = "酸蚀灼伤"
+	desc = "我的皮肤正在被酸液灼烧！"
 	icon_state = "debuff"
 
 /obj/effect/temp_visual/acidsplash
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "greenshatter2"
-	name = "horrible acrid brine"
-	desc = "Best not touch this."
+	name = "刺鼻酸液"
+	desc = "最好别碰这东西。"
 	randomdir = TRUE
 	duration = 1 SECONDS
 	layer = ABOVE_ALL_MOB_LAYER

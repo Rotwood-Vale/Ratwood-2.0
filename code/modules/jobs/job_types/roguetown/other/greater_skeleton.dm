@@ -11,7 +11,7 @@
 
 	advclass_cat_rolls = list(CTAG_NSKELETON = 20)
 
-	tutorial = "You are bygone. A wandering has-been. But maybe your luck has not run out, yet..."
+	tutorial = "你早已属于过去，是一具在世间游荡的残余亡骸。不过，也许你的运气还没有彻底耗尽……"
 
 	outfit = /datum/outfit/job/roguetown/greater_skeleton/necro
 	show_in_credits = FALSE
@@ -56,8 +56,8 @@ NECRO SKELETONS
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 
 /datum/advclass/greater_skeleton/necro/shambler
-	name = "Decrepit Shambler"
-	tutorial = "One of many to come. One of many to go."
+	name = "腐朽蹒骸"
+	tutorial = "来者无数，去者亦无数。你不过是其中之一。"
 	outfit = /datum/outfit/job/roguetown/greater_skeleton/necro/shambler
 
 	category_tags = list(CTAG_NSKELETON)

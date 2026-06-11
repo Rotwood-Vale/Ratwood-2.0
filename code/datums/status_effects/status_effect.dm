@@ -167,7 +167,7 @@
 ////////////////
 
 /atom/movable/screen/alert/status_effect
-	name = "Curse of Mundanity"
+	name = "平庸诅咒"
 	desc = ""
 	var/datum/status_effect/attached_effect
 

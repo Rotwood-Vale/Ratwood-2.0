@@ -1,6 +1,6 @@
 /datum/advclass/assassin_poisoner
-	name = "Assassin - Poisoner"
-	tutorial = "You've known you way around poisons, natural or man-made, for most of your life. From brewing antidotes, to creating lethal mixes. You blend in well in even noble courts as a medicine man, hiding your true inentions.."
+	name = "刺客 - 毒师"
+	tutorial = "你大半辈子都在和毒药打交道，无论是天然之毒，还是人造之物。你既会调配解药，也能炮制致命混毒。你甚至能以医者身份混入贵族宫廷之中，把真正的意图深藏不露……"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/assassin/poisoner
@@ -65,7 +65,7 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
 
 	if(!istype(H.patron, /datum/patron/inhumen/graggar))
-		var/inputty = input(H, "Would you like to change your patron to Graggar?", "The beast roars", "No") as anything in list("Yes", "No")
-		if(inputty == "Yes")
-			to_chat(H, span_warning("My former deity has abandoned me.. Graggar is my new master."))
+		var/inputty = input(H, "你要将自己的信仰改为 格拉加 吗？", "兽吼回荡", "否") as anything in list("是", "否")
+		if(inputty == "是")
+			to_chat(H, span_warning("我先前侍奉的神明已弃我而去……如今，格拉加 才是我的新主人。"))
 			H.set_patron(/datum/patron/inhumen/graggar)

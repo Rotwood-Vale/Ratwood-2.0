@@ -30,7 +30,7 @@
 	var/no_passive = FALSE
 	/// Limit on how much the remote stockpile can hold, important resources should be higher.
 	var/remote_limit = 10 
-	var/category = "Raw Materials" // Category for the stockpile
+	var/category = "原材料" // Category for the stockpile
 
 /datum/roguestock/New()
 	..()
@@ -82,16 +82,16 @@
 /datum/roguestock/proc/demand2word()
 	switch(demand)
 		if(160 to 200)
-			return "Scarce"
+			return "稀缺"
 		if(130 to 160)
-			return "High"
+			return "高位"
 		if(110 to 130)
-			return "Growing"
+			return "走高"
 		if(90 to 110)
-			return "Normal"
+			return "正常"
 		if(70 to 90)
-			return "Falling"
+			return "走低"
 		if(40 to 70)
-			return "Low"
+			return "低迷"
 		if(1 to 40)
-			return "Excess"
+			return "过剩"

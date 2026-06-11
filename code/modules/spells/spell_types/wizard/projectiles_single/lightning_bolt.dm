@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt
-	name = "Bolt of Lightning"
-	desc = "Emit a bolt of lightning that burns a target, preventing them from attacking and slowing them down for 6 seconds. \n\
-	Damage is increased by 100% versus simple-minded creechurs."
+	name = "雷霆矢"
+	desc = "射出一道雷霆电矢，灼烧目标，并使其在 6 秒内难以攻击且行动迟缓。\n\
+	对头脑简单的生物伤害提高 100%。"
 	clothes_req = FALSE
 	overlay_state = "lightning"
 	sound = 'sound/magic/lightning.ogg'
@@ -21,7 +21,7 @@
 	glow_color = GLOW_COLOR_LIGHTNING
 	glow_intensity = GLOW_INTENSITY_MEDIUM
 	spell_tier = 2
-	invocations = list("Fulmen!")
+	invocations = list("雷霆，迸发！")
 	invocation_type = "shout"
 	cost = 3
 	xp_gain = TRUE
@@ -49,7 +49,7 @@
 	if(ismob(target))
 		var/mob/M = target
 		if(M.anti_magic_check())
-			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			visible_message(span_warning("[src] 在接触[target]时噗地溃散了！"))
 			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 			qdel(src)
 			return BULLET_ACT_BLOCK
@@ -58,5 +58,5 @@
 			L.Immobilize(0.5 SECONDS)
 			L.apply_status_effect(/datum/status_effect/debuff/clickcd, 3 SECONDS)
 			L.electrocute_act(1, src, 1, SHOCK_NOSTUN)
-			L.apply_status_effect(/datum/status_effect/buff/lightningstruck, 3 SECONDS)
+			L.apply_status_effect(/datum/status_effect/buff/lightningstruck, 6 SECONDS)
 	qdel(src)

@@ -1,5 +1,5 @@
 /datum/sex_action/toy_masturbate
-	name = "Jerk toy off"
+	name = "撸弄玩具"
 	category = SEX_CATEGORY_HANDS
 
 /datum/sex_action/toy_masturbate/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -19,12 +19,12 @@
 /datum/sex_action/toy_masturbate/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/dildo/dildo = get_dildo_in_either_hand(user) || get_dildo_on_belt(user)
 	if(dildo)
-		user.visible_message(span_warning("[user] starts jerking off \the [dildo]..."))
+		user.visible_message(span_warning("[user]开始撸弄[dildo]了……"))
 	else
-		user.visible_message(span_warning("[user] starts jerking off the toy..."))
+		user.visible_message(span_warning("[user]开始撸弄那件玩具了……"))
 
 /datum/sex_action/toy_masturbate/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/chosen_verb = pick(list("jerks [user.p_their()] toy", "strokes [user.p_their()] toy", "masturbates [user.p_their()] toy", "jerks off [user.p_their()] toy", "polishes [user.p_their()] toy"))
+	var/chosen_verb = pick(list("撸弄着[user.p_their()]的玩具", "抚弄着[user.p_their()]的玩具", "摩擦着[user.p_their()]的玩具", "套弄着[user.p_their()]的玩具", "把玩着[user.p_their()]的玩具"))
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] [chosen_verb]..."))
 	user.sexcon.generic_sex_noise()
 
@@ -35,9 +35,9 @@
 /datum/sex_action/toy_masturbate/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/dildo/dildo = get_dildo_in_either_hand(user) || get_dildo_on_belt(user)
 	if(dildo)
-		user.visible_message(span_warning("[user] stops jerking off \the [dildo]."))
+		user.visible_message(span_warning("[user]停下了撸弄[dildo]的动作。"))
 	else
-		user.visible_message(span_warning("[user] stops jerking off the toy."))
+		user.visible_message(span_warning("[user]停下了撸弄那件玩具的动作。"))
 
 /datum/sex_action/toy_masturbate/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user.sexcon.finished_check())

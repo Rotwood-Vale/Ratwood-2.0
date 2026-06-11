@@ -1,5 +1,5 @@
 /obj/structure/spirit_board
-	name = "spirit board"
+	name = "通灵板"
 	desc = ""
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "spirit_board"
@@ -32,16 +32,16 @@
 
 	if(virgin)
 		virgin = FALSE
-		notify_ghosts("Someone has begun playing with a [src.name] in [get_area(src)]!", source = src, header = "Spirit board")
+		notify_ghosts("[get_area(src)]里有人开始摆弄[src.name]了！", source = src, header = "通灵板")
 
-	planchette = input("Choose the letter.", "Seance!") as null|anything in list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
+	planchette = input("选择字母。", "降神会") as null|anything in list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
 	if(!planchette || !Adjacent(M) || next_use > world.time)
 		return
 	M.log_message("picked a letter on [src], which was \"[planchette]\".", LOG_GAME)
 	next_use = world.time + rand(30,50)
 	lastuser = M.ckey
 	//blind message is the same because not everyone brings night vision to seances
-	var/msg = span_notice("The planchette slowly moves... and stops at the letter \"[planchette]\".")
+	var/msg = span_notice("指针缓缓移动……最后停在了字母“[planchette]”上。")
 	visible_message(msg,"",msg)
 
 /obj/structure/spirit_board/proc/spirit_board_checks(mob/M)
@@ -60,7 +60,7 @@
 
 
 	if(light_amount > 0.2)
-		to_chat(M, span_warning("It's too bright here to use [src.name]!"))
+		to_chat(M, span_warning("这里太亮了，没法使用[src.name]！"))
 		return FALSE
 
 	//mobs in range check
@@ -68,12 +68,12 @@
 	for(var/mob/living/L in orange(1,src))
 		if(L.ckey && L.client)
 			if((world.time - L.client.inactivity) < (world.time - 300) || L.stat != CONSCIOUS || L.restrained())//no playing with braindeads or corpses or handcuffed dudes.
-				to_chat(M, span_warning("[L] doesn't seem to be paying attention..."))
+				to_chat(M, span_warning("[L]看起来根本没在专心……"))
 			else
 				users_in_range++
 
 	if(users_in_range < 2)
-		to_chat(M, span_warning("There aren't enough people to use the [src.name]!"))
+		to_chat(M, span_warning("人数不够，没法使用[src.name]！"))
 		return FALSE
 
 	return TRUE

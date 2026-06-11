@@ -1,5 +1,6 @@
 /datum/job/roguetown/tribalshaman
 	title = "Tribal Shaman"
+	display_title = "部落萨满"
 	flag = TRIBALSHAMAN
 	department_flag = TRIBAL
 	selection_color = JCOLOR_TRIBAL
@@ -12,10 +13,10 @@
 	spells = list(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 	display_order = JDO_TRIBALSHAMAN
 	// tutorial = "Ooga chacka ZAP a chacka!"
-	tutorial = "You've seen visions of fire and magma, gnashing claws and red scales. The Dragon's will burns behind your eyes, and Graggar's voice echoes in your dreams. \
-	Your wild hallucinations and prophetic trances set you apart from the rest of your tribe—some fear you, others revere you, but all know you are touched by something greater. \
-	You serve as the spiritual heart of the tribe, guiding the Chief and your kin with fervent, sometimes unsettling, devotion. \
-	Let no one doubt your faith: you are the Dragon's chosen, and you will do anything, no matter how mad, to see Graggar's vision made real."
+	tutorial = "你见过火焰与熔岩的幻景，见过撕咬的利爪与猩红鳞片。巨龙的意志灼烧在你的眼后，而 格拉加 的低语夜夜回荡在你的梦中。 \
+	你狂乱的幻觉与预言般的出神使你与族人截然不同，有人惧你，有人敬你，但所有人都知道，你已被更伟大的存在所触碰。 \
+	你是部族的灵魂核心，以狂热而有时令人不安的虔诚，引导着酋长与同胞。 \
+	不要让任何人怀疑你的信仰：你是巨龙拣选之人，为了让 Graggar 的异象化作现实，无论多么疯狂的事，你都会去做。"
 	outfit = /datum/outfit/job/roguetown/tribalshaman
 	whitelist_req = TRUE
 	min_pq = 8 //High potential for abuse, lovepotion/killersice/greater fireball is not for the faint of heart
@@ -33,8 +34,8 @@
 	)
 
 /datum/advclass/tribalshaman
-	name = "Tribe Shaman"
-	tutorial = "Ooga chacka ZAP a chacka!"
+	name = "部落萨满"
+	tutorial = "你是部族与巨龙之间的通灵者，驾驭奥术、药剂与预兆，将疯癫般的神启化作真正的力量。"
 	outfit = /datum/outfit/job/roguetown/tribalshaman/basic
 
 	subclass_spellpoints = 33

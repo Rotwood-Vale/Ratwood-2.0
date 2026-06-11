@@ -1,35 +1,35 @@
 // Ranger/rogue archetypes
 /datum/statpack/agile/swift
-	name = "Swift"
-	desc = "With the wind in your hair and trouble at your back, your speed has oft been your salvation."
+	name = "迅捷"
+	desc = "发梢掠风，祸患在后，你常常靠速度让自己转危为安。"
 	stat_array = list(STAT_SPEED = 2, STAT_WILLPOWER = 1, STAT_STRENGTH = -1, STAT_CONSTITUTION = -1)
 
 /datum/statpack/agile/hardy
-	name = "Hardy"
-	desc = "Uniquely Pestran fortitude affords you the means to shrug off illnesses and poisons that others might not."
+	name = "坚韧"
+	desc = "独特的佩斯特拉式坚韧让你能轻易扛过旁人未必承受得住的疾病与毒素。"
 	stat_array = list(STAT_CONSTITUTION = 3, STAT_WILLPOWER = 3, STAT_STRENGTH = -2, STAT_SPEED = -2)
 
 /datum/statpack/agile/tricky
-	name = "Tricky"
-	desc = "Swift feet with a mind to match and a tiny sliver of the Ten's own luck."
+	name = "狡黠"
+	desc = "脚步迅捷，脑筋也同样灵光，还沾着一丝来自命运的微薄幸运。"
 	stat_array = list(STAT_PERCEPTION = 1, STAT_INTELLIGENCE = 1, STAT_SPEED = 1, STAT_FORTUNE = 1, STAT_WILLPOWER = -1, STAT_STRENGTH = -1)
 
 /datum/statpack/agile/thug
-	name = "Thuggish"
-	desc = "Your robust physique and keen eyes oft been your most valuable friends in such trying times."
+	name = "悍徒"
+	desc = "在这般艰难时世中，你强健的体魄与敏锐的双眼往往是最可靠的依仗。"
 	stat_array = list(STAT_STRENGTH = 2, STAT_PERCEPTION = 1, STAT_FORTUNE = 1, STAT_CONSTITUTION = -1, STAT_WILLPOWER = -1, STAT_SPEED = -1)
 
 /datum/statpack/agile/wary
-	name = "Wary"
-	desc = "Eyes forward, ever and always. A careful course has always seen you through... so far."
+	name = "警觉"
+	desc = "目视前方，始终如此。谨慎行事总能让你一路撑到现在......至少目前如此。"
 	stat_array = list(STAT_PERCEPTION = 3, STAT_INTELLIGENCE = 3, STAT_STRENGTH = -2, STAT_CONSTITUTION = -2)
 
 /datum/statpack/agile/dextrous
-	name = "Dextrous"
-	desc = "You see. You dash. You spring. You dodge. Can you keep it up?"
+	name = "灵巧"
+	desc = "你看见，你疾冲，你跃起，你闪避。你还能一直这样下去吗？"
 	stat_array = list(STAT_SPEED = 2, STAT_PERCEPTION = 1, STAT_CONSTITUTION = -2, STAT_INTELLIGENCE = -1)
 
 /datum/statpack/agile/deft
-	name = "Deft"
-	desc = "Being quick on the draw has left you weaker when they live past your first strike."
+	name = "干练"
+	desc = "你出手极快，可若敌人撑过第一击，你便会显得后继乏力。"
 	stat_array = list(STAT_PERCEPTION = 1, STAT_SPEED = 1, STAT_WILLPOWER = 1, STAT_STRENGTH = -1)

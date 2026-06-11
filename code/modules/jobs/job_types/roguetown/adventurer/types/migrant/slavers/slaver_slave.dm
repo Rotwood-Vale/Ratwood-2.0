@@ -1,6 +1,6 @@
 /datum/advclass/slaver/slave/service
-	name = "Service Slave"
-	tutorial = "An unlucky slave, captured from their home, moved to the Zybantines and trained for slave labor and obediency, for long enough to where you can only faintly remember who you were before... You are now being transported from the deserts to harsher lands to be sold."
+	name = "侍役奴隶"
+	tutorial = "你是不幸的奴隶，自故乡被掳走，带往 兹班图 接受奴工与顺从训练，久到你几乎只能模糊记得从前的自己……如今你正被从沙漠押往更残酷的土地，等待被售卖。"
 	outfit = /datum/outfit/job/roguetown/slaver/slave/service
 	traits_applied = list(TRAIT_GOODLOVER, TRAIT_EMPATH, TRAIT_BEAUTIFUL, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_SLAVER_SLAVE)
@@ -46,18 +46,18 @@
 	)
 	H.virginity = TRUE
 	H.cmode_music = 'sound/music/combat_zybantine.ogg'
-	var/background = list("Noble(+Reading)", "Commoner(+2 LCK)")
-	var/background_choice = input(H, "Choose your background.", "TAKE UP ARMS") as anything in background
+	var/background = list("贵族（+阅读）", "平民（+2 幸运）")
+	var/background_choice = input(H, "选择你的出身。", "出身抉择") as anything in background
 	switch(background_choice)
-		if("Noble(+Reading)")
+		if("贵族（+阅读）")
 			ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 			H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_EXPERT, TRUE)
-		if("Commoner(+2 LCK)")
+		if("平民（+2 幸运）")
 			H.change_stat(STATKEY_LCK, 2)
 
 /datum/advclass/slaver/slave/battle
-	name = "Battle Slave"
-	tutorial = "An unlucky slave, captured from their home, moved to the Zybantines and trained for slave labor and obediency, for long enough to where you can only faintly remember who you were before... You are now being transported from the deserts to harsher lands to be sold."
+	name = "战斗奴隶"
+	tutorial = "你是不幸的奴隶，自故乡被掳走，带往 兹班图 接受奴工与顺从训练，久到你几乎只能模糊记得从前的自己……如今你正被从沙漠押往更残酷的土地，等待被售卖。"
 	outfit = /datum/outfit/job/roguetown/slaver/slave/battle
 	traits_applied = list(TRAIT_GOODLOVER, TRAIT_BREADY, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_SLAVER_SLAVE)
@@ -106,50 +106,50 @@
 	)
 	H.virginity = TRUE
 	H.cmode_music = 'sound/music/combat_zybantine.ogg'
-	var/armor = list("Medium Armor(+2 CON, +1 WIL)", "Dodge Expert(+2 SPD)")
-	var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in armor
+	var/armor = list("中甲（+2 体质，+1 意志）", "闪避专家（+2 速度）")
+	var/armor_choice = input(H, "选择你的防具。", "披挂迎战") as anything in armor
 	switch(armor_choice)
-		if("Medium Armor(+2 CON, +1 WIL)")
+		if("中甲（+2 体质，+1 意志）")
 			ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 			H.change_stat(STATKEY_CON, 2)
 			H.change_stat(STATKEY_WIL, 1)
-		if("Dodge Expert(+2 SPD)")
+		if("闪避专家（+2 速度）")
 			ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 			H.change_stat(STATKEY_SPD, 2)
-	var/weapon = list("Blades", "Whips and Flails", "Polearms", "Maces", "Axes", "Bows + Crossbows", "FISTS!!!")
-	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapon
+	var/weapon = list("刀剑", "鞭与链枷", "长柄武器", "钉锤", "战斧", "弓与弩", "拳头！！！")
+	var/weapon_choice = input(H, "选择你的武器。", "披挂迎战") as anything in weapon
 	switch(weapon_choice)
-		if("Blades")
+		if("刀剑")
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
-		if("Whips and Flails")
+		if("鞭与链枷")
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
-		if("Polearms")
+		if("长柄武器")
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
-		if("Maces")
+		if("钉锤")
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
-		if("Axes")
+		if("战斧")
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
-		if("Bows + Crossbows")
+		if("弓与弩")
 			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
 			H.change_stat(STATKEY_PER, 2)
-		if("FISTS!!!")
+		if("拳头！！！")
 			ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 			H.change_stat(STATKEY_STR, 1)
 			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
-	var/background = list("Noble(+Reading)", "Commoner(+2 LCK)")
-	var/background_choice = input(H, "Choose your background.", "TAKE UP ARMS") as anything in background
+	var/background = list("贵族（+阅读）", "平民（+2 幸运）")
+	var/background_choice = input(H, "选择你的出身。", "披挂迎战") as anything in background
 	switch(background_choice)
-		if("Noble(+Reading)")
+		if("贵族（+阅读）")
 			ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 			H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_EXPERT, TRUE)
-		if("Commoner(+2 LCK)")
+		if("平民（+2 幸运）")
 			H.change_stat(STATKEY_LCK, 2)
 
 
 /datum/advclass/slaver/slave/arcyne
-	name = "Arcyne Slave"
-	tutorial = "An unlucky slave, captured from their home, moved to the Zybantines and trained for slave labor and obediency, for long enough to where you can only faintly remember who you were before... You are now being transported from the deserts to harsher lands to be sold."
+	name = "奥术奴隶"
+	tutorial = "你是不幸的奴隶，自故乡被掳走，带往 兹班图 接受奴工与顺从训练，久到你几乎只能模糊记得从前的自己……如今你正被从沙漠押往更残酷的土地，等待被售卖。"
 	outfit = /datum/outfit/job/roguetown/slaver/slave/arcyne
 	traits_applied = list(TRAIT_GOODLOVER, TRAIT_ARCYNE_T3, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_SLAVER_SLAVE)
@@ -191,18 +191,18 @@
 	H.cmode_music = 'sound/music/combat_zybantine.ogg'
 	if(H.mind)
 		H?.mind.adjust_spellpoints(24)
-	var/background = list("Noble(+Reading)", "Commoner(+2 LCK)")
-	var/background_choice = input(H, "Choose your background.", "TAKE UP ARMS") as anything in background
+	var/background = list("贵族（+阅读）", "平民（+2 幸运）")
+	var/background_choice = input(H, "选择你的出身。", "披挂迎战") as anything in background
 	switch(background_choice)
-		if("Noble(+Reading)")
+		if("贵族（+阅读）")
 			ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 			H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_EXPERT, TRUE)
-		if("Commoner(+2 LCK)")
+		if("平民（+2 幸运）")
 			H.change_stat(STATKEY_LCK, 2)
 
 /datum/advclass/slaver/slave/craftsman
-	name = "Craftsman Slave"
-	tutorial = "An unlucky slave, captured from their home, moved to the Zybantines and trained for slave labor and obediency, for long enough to where you can only faintly remember who you were before... You are now being transported from the deserts to harsher lands to be sold."
+	name = "工匠奴隶"
+	tutorial = "你是不幸的奴隶，自故乡被掳走，带往 兹班图 接受奴工与顺从训练，久到你几乎只能模糊记得从前的自己……如今你正被从沙漠押往更残酷的土地，等待被售卖。"
 	outfit = /datum/outfit/job/roguetown/slaver/slave/craftsman
 	traits_applied = list(TRAIT_GOODLOVER, TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_SLAVER_SLAVE)
@@ -246,11 +246,11 @@
 	H.cmode_music = 'sound/music/combat_zybantine.ogg'
 	if(H.mind)
 		H?.mind.adjust_spellpoints(24)
-	var/background = list("Noble(+Reading)", "Commoner(+2 LCK)")
-	var/background_choice = input(H, "Choose your background.", "TAKE UP ARMS") as anything in background
+	var/background = list("贵族（+阅读）", "平民（+2 幸运）")
+	var/background_choice = input(H, "选择你的出身。", "披挂迎战") as anything in background
 	switch(background_choice)
-		if("Noble(+Reading)")
+		if("贵族（+阅读）")
 			ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 			H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_EXPERT, TRUE)
-		if("Commoner(+2 LCK)")
+		if("平民（+2 幸运）")
 			H.change_stat(STATKEY_LCK, 2)

@@ -12,7 +12,7 @@
 	mob_effect_layer = MOB_EFFECT_LAYER_OFFBALANCED
 
 /atom/movable/screen/alert/status_effect/off_balanced
-	name = "Off Balanced"
+	name = "失去平衡"
 	desc = ""
 	icon_state = "off_balanced"
 
@@ -36,7 +36,7 @@
 	var/total_damage = 0
 
 /atom/movable/screen/alert/status_effect/in_love
-	name = "In Love"
+	name = "坠入爱河"
 	desc = ""
 	icon_state = "in_love"
 
@@ -83,7 +83,7 @@
 		rewarded = caster
 
 /datum/status_effect/bounty/on_apply()
-	to_chat(owner, span_boldnotice("I hear something behind you talking...</span> <span class='notice'>I have been marked for death by [rewarded]. If you die, they will be rewarded."))
+	to_chat(owner, span_boldnotice("我听见身后有什么东西在低语……</span> <span class='notice'>我已被 [rewarded] 标记为必死之人。若我死去，对方将得到奖赏。"))
 	playsound(owner, 'sound/blank.ogg', 75, FALSE)
 	return ..()
 
@@ -94,9 +94,9 @@
 
 /datum/status_effect/bounty/proc/rewards()
 	if(rewarded && rewarded.mind && rewarded.stat != DEAD)
-		to_chat(owner, span_boldnotice("I hear something behind you talking...</span> <span class='notice'>Bounty claimed."))
+		to_chat(owner, span_boldnotice("我听见身后有什么东西在低语……</span> <span class='notice'>悬赏已领取。"))
 		playsound(owner, 'sound/blank.ogg', 75, FALSE)
-		to_chat(rewarded, span_greentext("I feel a surge of mana flow into you!"))
+		to_chat(rewarded, span_greentext("我感到一股法力涌入体内！"))
 		for(var/obj/effect/proc_holder/spell/spell in rewarded.mind.spell_list)
 			spell.charge_counter = spell.recharge_time
 			spell.update_icon()
@@ -124,8 +124,8 @@
 		owner.put_in_hands(device)
 
 /atom/movable/screen/alert/bugged
-	name = "BUGGED"
-	desc = "AN AUDIO-PARASITE ON ME."
+	name = "被窃听"
+	desc = "我身上有个音频寄生虫。"
 	icon_state = "blackeye"	
 
 /atom/movable/screen/alert/bugged/handle_click()
@@ -134,7 +134,7 @@
 	if(!L.has_status_effect(/datum/status_effect/bugged))
 		return FALSE
 
-	to_chat(L, span_notice("I tug and rip out the parasite."))
+	to_chat(L, span_notice("我用力把寄生虫扯了出来。"))
 	playsound(L, 'sound/foley/flesh_rem.ogg', 100, TRUE, -2)
 
 	L.remove_status_effect(/datum/status_effect/bugged)
@@ -146,8 +146,8 @@
 	alert_type = /atom/movable/screen/alert/status_effect/ugotmail
 
 /atom/movable/screen/alert/status_effect/ugotmail
-	name = "Mail"
-	desc = "I have a letter waiting for me at the HERMES."
+	name = "邮件"
+	desc = "HERMES 那里有一封信在等我。"
 	icon_state = "mail"
 
 //Xylix Gambling
@@ -163,25 +163,25 @@
 	owner.change_stat(STATKEY_LCK, wheeleffect)
 	switch(wheeleffect)
 		if(-5 to -1)
-			to_chat(owner, span_boldnotice("My heart sinks, I feel as though I've lost something!"))
+			to_chat(owner, span_boldnotice("我心头一沉，感觉自己仿佛失去了什么！"))
 		if(0)
-			to_chat(owner, span_boldnotice("My heart beats, I feel as though nothing has changed at all..."))
+			to_chat(owner, span_boldnotice("我的心跳了一下，感觉似乎什么都没有改变……"))
 		if(1 to 5)
-			to_chat(owner, span_boldnotice("My heart flutters, I feel as though I won the lottery!"))
+			to_chat(owner, span_boldnotice("我的心怦然一跳，感觉自己像中了头彩！"))
 
 /datum/status_effect/wheel/on_remove()
 	. = ..()
 	owner.change_stat(STATKEY_LCK, -wheeleffect)
 
 /atom/movable/screen/alert/status_effect/wheel
-	name = "Lucky(?)"
-	desc = "I feel different since my fortune was changed..."
+	name = "幸运(?)"
+	desc = "自从命运改变后，我感觉自己不一样了……"
 	icon_state = "asleep"
 
 /atom/movable/screen/alert/status_effect/compliance
-	name = "Compliant"
-	desc = "I am currently not resisting any attempts to grab me, or to break free from my grasp. It is also effortless to restrain, subdue, and rob me.\n"\
-	+ span_info("Left click the icon to deactivate. Suppress messages under Options tab.")
+	name = "顺从"
+	desc = "我目前不会反抗任何抓取我的尝试，也不会挣脱我抓住的对象。别人也能轻易地束缚、制服并洗劫我。\n"\
+	+ span_info("左键点击图标可关闭。可在选项卡中屏蔽提示信息。")
 	icon_state = "compliance"
 
 // Sadly we can't rely on /atom/movable/screen/Click() to return TRUE at all.
@@ -210,6 +210,6 @@
 	alert_type = /atom/movable/screen/alert/status_effect/carebox
 
 /atom/movable/screen/alert/status_effect/carebox
-	name = "Package"
-	desc = "I have a parcel waiting for me at the HERMES."
+	name = "包裹"
+	desc = "HERMES 那里有一个包裹在等我。"
 	icon_state = "mail"

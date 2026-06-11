@@ -1,6 +1,6 @@
 //Glasses
 /obj/item/clothing/glasses
-	name = "glasses"
+	name = "眼镜"
 	icon = 'icons/obj/clothing/glasses.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags_cover = GLASSESCOVERSEYES
@@ -24,7 +24,7 @@
 /obj/item/clothing/glasses/examine(mob/user)
 	. = ..()
 	if(glass_colour_type && ishuman(user))
-		. += "<span class='notice'>Alt-click to toggle its colors.</span>"
+		. += "<span class='notice'>按 Alt+点击可切换它的颜色。</span>"
 
 /obj/item/clothing/glasses/visor_toggling()
 	..()
@@ -41,7 +41,7 @@
 		user.update_sight()
 
 /obj/item/clothing/glasses/blindfold
-	name = "blindfold"
+	name = "眼罩"
 	desc = ""
 	icon_state = "blindfold"
 	item_state = "blindfold"
@@ -61,7 +61,7 @@
 	user.cure_blind("blindfold_[REF(src)]")
 
 /obj/item/clothing/glasses/blindfold/white
-	name = "blind personnel blindfold"
+	name = "白色眼罩"
 	desc = ""
 	icon_state = "blindfoldwhite"
 	item_state = "blindfoldwhite"

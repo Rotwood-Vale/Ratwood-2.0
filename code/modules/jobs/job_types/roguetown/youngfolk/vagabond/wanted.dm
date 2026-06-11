@@ -1,7 +1,7 @@
 /datum/advclass/vagabond_wanted
-	name = "Wanted"
-	examine_name = "Beggar"
-	tutorial = "The long arm of the law reaches out for you - are you slippery enough to evade its grip this time, or is your head destined to end up in an Excidium's maw?"
+	name = "通缉犯"
+	examine_name = "乞儿"
+	tutorial = "法网正朝你伸来。这一回你还能从它手里滑出去吗，还是说你的脑袋注定要落进某头 灭绝兽 的嘴里？"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/vagabond/wanted
@@ -16,7 +16,7 @@
 		/datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 	)
-	extra_context = "This class starts with a bounty."
+	extra_context = "此子职业开局自带悬赏。"
 
 /datum/outfit/job/roguetown/vagabond/wanted/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -36,11 +36,11 @@
 
 	if (H.mind)
 		H.change_stat(STATKEY_LCK, rand(-2, 2))
-		var/my_crime = input(H, "What is your crime?", "Crime") as text|null
+		var/my_crime = input(H, "你犯下了什么罪？", "罪名") as text|null
 		if (!my_crime)
-			my_crime = "crimes against the Crown"
-		var/list/bounty_cats = list("Meager", "Moderate", "Massive")
-		var/bounty_amount = input(H, "How ample is your bounty?", "Blooded Gold") as anything in bounty_cats
+			my_crime = "对王权的罪行"
+		var/list/bounty_cats = list("薄赏", "中赏", "重赏")
+		var/bounty_amount = input(H, "你的赏金有多高？", "血金悬赏") as anything in bounty_cats
 		var/race = H.dna.species
 		var/gender = H.gender
 		var/list/d_list = H.get_mob_descriptors()
@@ -49,12 +49,12 @@
 		var/descriptor_voice = build_coalesce_description_nofluff(d_list, H, list(MOB_DESCRIPTOR_SLOT_VOICE), "%DESC1%")
 		var/bounty_total = rand(51, 200)
 		switch (bounty_amount)
-			if ("Meager")
+			if ("薄赏")
 				bounty_total = rand(51, 100)
-			if ("Moderate")
+			if ("中赏")
 				bounty_total = rand(101, 150)
-			if ("Massive")
+			if ("重赏")
 				bounty_total = rand(150, 200)
 	
 		add_bounty(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, bounty_total, FALSE, my_crime, "The Justiciary of [SSmapping.map_adjustment.realm_name]")
-		to_chat(H, span_notice("I'm on the run from the law, and there's a [LOWER_TEXT(bounty_amount)] sum of mammons out on my head... better lay low."))
+		to_chat(H, span_notice("我正在逃避律法追捕，而我的脑袋上挂着一笔[LOWER_TEXT(bounty_amount)]的血金悬赏……最好低调点。"))

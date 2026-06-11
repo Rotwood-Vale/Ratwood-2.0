@@ -5,11 +5,11 @@
 /datum/brain_trauma/mild
 
 /datum/brain_trauma/mild/hallucinations
-	name = "Hallucinations"
+	name = "幻觉"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_warning("I feel my grip on reality slipping...")
-	lose_text = span_notice("I feel more grounded.")
+	gain_text = span_warning("我感觉自己正逐渐失去对现实的把握……")
+	lose_text = span_notice("我重新感觉脚踏实地了。")
 
 /datum/brain_trauma/mild/hallucinations/on_life()
 	owner.hallucination = min(owner.hallucination + 10, 50)
@@ -20,11 +20,11 @@
 	..()
 
 /datum/brain_trauma/mild/stuttering
-	name = "Stuttering"
+	name = "口吃"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_warning("Speaking clearly is getting harder.")
-	lose_text = span_notice("I feel in control of my speech.")
+	gain_text = span_warning("清晰说话变得越来越困难了。")
+	lose_text = span_notice("我重新能掌控自己的言语了。")
 
 /datum/brain_trauma/mild/stuttering/on_life()
 	owner.stuttering = min(owner.stuttering + 5, 25)
@@ -35,11 +35,11 @@
 	..()
 
 /datum/brain_trauma/mild/dumbness
-	name = "Dumbness"
+	name = "痴愚"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_warning("I feel dumber.")
-	lose_text = span_notice("I feel smart again.")
+	gain_text = span_warning("我感觉自己变笨了。")
+	lose_text = span_notice("我又感觉自己聪明起来了。")
 
 /datum/brain_trauma/mild/dumbness/on_gain()
 	ADD_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
@@ -59,11 +59,11 @@
 	..()
 
 /datum/brain_trauma/mild/speech_impediment
-	name = "Speech Impediment"
+	name = "语言障碍"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_danger("I can't seem to form any coherent thoughts!")
-	lose_text = span_danger("My mind feels more clear.")
+	gain_text = span_danger("我似乎再也无法组织出连贯的思绪了！")
+	lose_text = span_danger("我的思绪清晰了一些。")
 
 /datum/brain_trauma/mild/speech_impediment/on_gain()
 	ADD_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
@@ -74,11 +74,11 @@
 	..()
 
 /datum/brain_trauma/mild/concussion
-	name = "Concussion"
+	name = "脑震荡"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_warning("My head hurts!")
-	lose_text = span_notice("The pressure inside my head starts fading.")
+	gain_text = span_warning("我头好痛！")
+	lose_text = span_notice("脑中的压迫感开始消退了。")
 
 /datum/brain_trauma/mild/concussion/on_life()
 	if(prob(5))
@@ -93,20 +93,20 @@
 			if(6 to 9)
 				owner.slurring += 30
 			if(10)
-				to_chat(owner, span_notice("I forget for a moment what you were doing."))
+				to_chat(owner, span_notice("我一时间忘了自己刚才在做什么。"))
 				owner.Stun(20)
 			if(11)
-				to_chat(owner, span_warning("I faint."))
+				to_chat(owner, span_warning("我昏过去了。"))
 				owner.Unconscious(80)
 
 	..()
 
 /datum/brain_trauma/mild/healthy
-	name = "Anosognosia"
+	name = "失病识症"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_notice("I feel great!")
-	lose_text = span_warning("I no longer feel perfectly healthy.")
+	gain_text = span_notice("我感觉好极了！")
+	lose_text = span_warning("我不再觉得自己完美健康了。")
 
 /datum/brain_trauma/mild/healthy/on_gain()
 	owner.set_screwyhud(SCREWYHUD_HEALTHY)
@@ -122,18 +122,18 @@
 	..()
 
 /datum/brain_trauma/mild/muscle_weakness
-	name = "Muscle Weakness"
+	name = "肌无力"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_warning("My muscles feel oddly faint.")
-	lose_text = span_notice("I feel in control of my muscles again.")
+	gain_text = span_warning("我的肌肉虚弱得有些反常。")
+	lose_text = span_notice("我重新能控制自己的肌肉了。")
 
 /datum/brain_trauma/mild/muscle_weakness/on_life()
 	var/fall_chance = 1
 	if(owner.m_intent == MOVE_INTENT_RUN)
 		fall_chance += 2
 	if(prob(fall_chance) && (owner.mobility_flags & MOBILITY_STAND))
-		to_chat(owner, span_warning("My leg gives out!"))
+		to_chat(owner, span_warning("我的腿突然发软了！"))
 		owner.Paralyze(35)
 
 	else if(owner.get_active_held_item())
@@ -141,19 +141,19 @@
 		var/obj/item/I = owner.get_active_held_item()
 		drop_chance += I.w_class
 		if(prob(drop_chance) && owner.dropItemToGround(I))
-			to_chat(owner, span_warning("I drop [I]!"))
+			to_chat(owner, span_warning("我把[I]掉到了地上！"))
 
 	else if(prob(3))
-		to_chat(owner, span_warning("I feel a sudden weakness in my muscles!"))
+		to_chat(owner, span_warning("我的肌肉突然一阵无力！"))
 		owner.adjustStaminaLoss(50)
 	..()
 
 /datum/brain_trauma/mild/muscle_spasms
-	name = "Muscle Spasms"
+	name = "肌肉痉挛"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_warning("My muscles feel oddly faint.")
-	lose_text = span_notice("I feel in control of my muscles again.")
+	gain_text = span_warning("我的肌肉虚弱得有些反常。")
+	lose_text = span_notice("我重新能控制自己的肌肉了。")
 
 /datum/brain_trauma/mild/muscle_spasms/on_gain()
 	owner.apply_status_effect(STATUS_EFFECT_SPASMS)
@@ -164,16 +164,16 @@
 	..()
 
 /datum/brain_trauma/mild/nervous_cough
-	name = "Nervous Cough"
+	name = "神经性咳嗽"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_warning("My throat itches incessantly...")
-	lose_text = span_notice("My throat stops itching.")
+	gain_text = span_warning("我的喉咙痒得停不下来……")
+	lose_text = span_notice("我的喉咙终于不痒了。")
 
 /datum/brain_trauma/mild/nervous_cough/on_life()
 	if(prob(12) && !HAS_TRAIT(owner, TRAIT_SOOTHED_THROAT))
 		if(prob(5))
-			to_chat(owner, "<span notice='warning'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")
+			to_chat(owner, "<span notice='warning'>[pick("我突然剧烈咳嗽起来！", "我根本止不住咳嗽！")]</span>")
 			owner.Immobilize(20)
 			owner.emote("cough")
 			addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob, emote), "cough"), 6)
@@ -182,11 +182,11 @@
 	..()
 
 /datum/brain_trauma/mild/expressive_aphasia
-	name = "Expressive Aphasia"
+	name = "表达性失语"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_warning("I lose my grasp on complex words.")
-	lose_text = span_notice("I feel my vocabulary returning to normal again.")
+	gain_text = span_warning("我开始无法掌握复杂词汇了。")
+	lose_text = span_notice("我感觉自己的词汇能力恢复正常了。")
 
 	var/static/list/common_words = world.file2list("strings/1000_most_common.txt")
 
@@ -224,11 +224,11 @@
 	speech_args[SPEECH_MESSAGE] = trim(message)
 
 /datum/brain_trauma/mild/mind_echo
-	name = "Mind Echo"
+	name = "心念回响"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_warning("I feel a faint echo of my thoughts...")
-	lose_text = span_notice("The faint echo fades away.")
+	gain_text = span_warning("我感到自己的思绪正泛起微弱回响……")
+	lose_text = span_notice("那微弱的回响消散了。")
 	var/list/hear_dejavu = list()
 	var/list/speak_dejavu = list()
 

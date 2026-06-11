@@ -1,8 +1,8 @@
 /obj/effect/proc_holder/spell/invoked/raise_undead
-	name = "Raise Greater Undead"
-	desc = "Raise a single greater skeleton that serves you. They are imbued with a fragment of a soul and is more intelligent than usual, simple-minded lesser undead.\n\
-	Should the spell fails to find a suitable soul, a mindless undead will be summoned in its place with decrepit equipment.\n\
-	This will only happen if you are in combat mode, to avoid any accident."
+	name = "唤起高阶亡灵"
+	desc = "唤起一具为你效命的高阶骷髅。它被注入了一缕灵魂残片，比寻常头脑简单的低阶亡灵更具智慧。\n\
+	若法术找不到合适的灵魂，就会转而召出一具装备破旧、毫无心智的亡灵替代。\n\
+	为避免意外，这种情况只会在你处于战斗模式时发生。"
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "skeleton"
@@ -24,15 +24,15 @@
 
 	var/turf/T = get_turf(targets[1])
 	if(!isopenturf(T))
-		to_chat(user, span_warning("The targeted location is blocked. My summon fails to come forth."))
+		to_chat(user, span_warning("目标地点被阻挡了。我的召唤无法显现。"))
 		revert_cast()
 		return FALSE
 
 	var/list/candidates = pollGhostCandidates("Do you want to play as a Lich's skeleton?", ROLE_LICH_SKELETON, null, null, 10 SECONDS, POLL_IGNORE_LICH_SKELETON)
 	if(!LAZYLEN(candidates))
-		var/message = "The depths are hollow."
+		var/message = "深渊空无一物。"
 		if(user.cmode)
-			message += " A decrepit skeleton rises instead."
+			message += " 取而代之爬起的是一具破败骷髅。"
 			backup_summon(T)
 		to_chat(user, span_warning(message))
 		return TRUE

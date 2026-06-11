@@ -2,8 +2,8 @@
 GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 
 /obj/item/reagent_containers/glass/bottle
-	name = "bottle"
-	desc = "A bottle with a cork."
+	name = "瓶子"
+	desc = "一个带软木塞的瓶子。"
 	icon = 'icons/roguetown/items/cooking.dmi'
 	icon_state = "clear_bottle1"
 	amount_per_transfer_from_this = 10
@@ -24,7 +24,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	experimental_onhip = TRUE
 	debris = list(/obj/item/natural/glass_shard = 1)
 	dropshrink = 0.8
-	var/desc_uncorked = "An open bottle. Hopefully the cork is nearby."
+	var/desc_uncorked = "一个打开的瓶子。但愿瓶塞就在附近。"
 	var/fancy		// for bottles with custom descriptors that you don't want to change when bottle manipulated
 	var/glass_on_impact = FALSE // If TRUE, bottle will generate glass shard on impact. Otherwise it won't.
 
@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 		This is just a half-assed bandage fix, and certainly not perfect. You can still transfer liquids in stored open bottles,
 		which deletes the inventory's underlay for that item until you refresh the inventory view.
 		*/
-		to_chat(user, span_warning("I need to take [src] out first!"))
+		to_chat(user, span_warning("我得先把[src]拿出来！"))
 		return
 	toggle_cork(user)
 
@@ -101,14 +101,14 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 		if(!no_snd)
 			playsound(user.loc,'sound/items/recork.ogg', 100, TRUE)
 		if(!no_msg)
-			to_chat(user, span_smallnotice("I carefully press the cork back into the mouth of [src]."))
+			to_chat(user, span_smallnotice("我小心地把瓶塞压回[src]的瓶口。"))
 	reagent_flags = TRANSPARENT
 	reagents.flags = reagent_flags
 	spillable = FALSE
 	GLOB.weather_act_upon_list -= src
 	desc = initial(desc)
 	if(!fancy)
-		desc = "A bottle sealed with a cork."
+		desc = "一个用软木塞封好的瓶子。"
 	update_icon()
 
 /obj/item/reagent_containers/glass/bottle/proc/do_open(mob/user, no_msg = FALSE, no_snd = FALSE)
@@ -116,14 +116,14 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 		if(!no_snd)
 			playsound(user.loc, 'sound/items/uncork.ogg', 100, TRUE)
 		if(!no_msg)
-			to_chat(user, span_smallnotice("I thumb off the cork from [src]."))
+			to_chat(user, span_smallnotice("我用拇指弹开了[src]的瓶塞。"))
 	reagent_flags = OPENCONTAINER
 	reagents.flags = reagent_flags
 	desc += desc_uncorked
 	spillable = TRUE
 	GLOB.weather_act_upon_list |= src
 	if(!fancy)
-		desc = "An open bottle. Hopefully a cork is nearby."
+		desc = "一个打开的瓶子。但愿瓶塞就在附近。"
 	update_icon()
 
 /obj/item/reagent_containers/glass/bottle/on_enter_storage(datum/component/storage/concrete/S, mob/M)
@@ -140,7 +140,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	
 	if(istype(user))
 		if(!user.mob_timers["bottleopen_warn"] || (world.time > (user.mob_timers["bottleopen_warn"] + 0.3 SECONDS)))
-			to_chat(user, span_info("I store [src] <b>uncorked</b>."))
+			to_chat(user, span_info("我把[src]<b>未塞住</b>就收起来了。"))
 			user.mob_timers["bottleopen_warn"] = world.time
 	return
 

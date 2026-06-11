@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/invoked/shepherd
-	name = "Shepherd"
+	name = "牧引"
 	range = 7
 	overlay_state = "psy"
 	releasedrain = 50

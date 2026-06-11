@@ -20,8 +20,8 @@
 
 	// Notify both parties of the bond formation
 	var/mob/living/carbon/human/parent_mob = parent
-	to_chat(parent_mob, span_purple("You feel a warm spiritual connection forming with [bonded_with]."))
-	to_chat(bonded_with, span_purple("You feel a warm spiritual connection forming with [parent_mob]."))
+	to_chat(parent_mob, span_purple("我感到自己正与[bonded_with]建立起一股温暖的灵魂联结。"))
+	to_chat(bonded_with, span_purple("我感到自己正与[parent_mob]建立起一股温暖的灵魂联结。"))
 
 	// Set up termination timer
 	addtimer(CALLBACK(src, PROC_REF(end_bond)), duration)
@@ -73,7 +73,7 @@
 
 	// Emergency health alerts
 	if(bonded_health_percent <= emergency_threshold)
-		to_chat(parent_mob, span_danger("You feel a sharp pain in your chest - [bonded_with] is in serious danger!"))
+		to_chat(parent_mob, span_danger("我的胸口猛然一痛 - [bonded_with] 正身陷险境！"))
 		// Add a subtle screen effect
 		parent_mob.overlay_fullscreen("familial_pain", /atom/movable/screen/fullscreen/painflash, 1)
 		addtimer(CALLBACK(parent_mob, TYPE_PROC_REF(/mob, clear_fullscreen), "familial_pain"), 3 SECONDS)
@@ -81,9 +81,9 @@
 	// Mutual health awareness at close range
 	if(get_dist(parent_mob, bonded_with) <= 7 && parent_mob.z == bonded_with.z)
 		if(bonded_health_percent <= 50)
-			to_chat(parent_mob, span_warning("You sense [bonded_with] is hurt."))
+			to_chat(parent_mob, span_warning("我感知到[bonded_with]受伤了。"))
 		else if(bonded_health_percent >= 90)
-			to_chat(parent_mob, span_notice("You sense [bonded_with] is in good health."))
+			to_chat(parent_mob, span_notice("我感知到[bonded_with]状态安好。"))
 
 /datum/component/familial_bond/proc/provide_location_sense()
 	var/mob/living/carbon/human/parent_mob = parent
@@ -92,7 +92,7 @@
 
 	// Different z-levels
 	if(parent_mob.z != bonded_with.z)
-		to_chat(parent_mob, span_info("You sense [bonded_with] is on a different level of existence."))
+		to_chat(parent_mob, span_info("我感知到[bonded_with]位于另一层存在之中。"))
 		return
 
 	var/distance = get_dist(parent_mob, bonded_with)
@@ -101,7 +101,7 @@
 	// Range check based on bond strength
 	var/effective_range = max_sensing_range * (bond_strength / 100)
 	if(distance > effective_range)
-		to_chat(parent_mob, span_info("Your bond with [bonded_with] is too distant to sense clearly."))
+		to_chat(parent_mob, span_info("我与[bonded_with]的联结过于遥远，已难以清晰感知。"))
 		return
 
 	// Provide detailed location information based on distance
@@ -110,34 +110,34 @@
 
 	switch(distance)
 		if(0 to 3)
-			distance_desc = "very close"
+			distance_desc = "非常近"
 		if(4 to 7)
-			distance_desc = "nearby"
+			distance_desc = "就在附近"
 		if(8 to 15)
-			distance_desc = "some distance away"
+			distance_desc = "有些距离"
 		if(16 to 25)
-			distance_desc = "far"
+			distance_desc = "很远"
 		if(26 to INFINITY)
-			distance_desc = "very far"
+			distance_desc = "极远"
 
 	// Add emotional context based on bond strength
 	var/bond_feeling = ""
 	if(bond_strength >= 80)
-		bond_feeling = " Your connection feels strong and warm."
+		bond_feeling = " 这份联结强烈而温暖。"
 	else if(bond_strength >= 50)
-		bond_feeling = " The bond feels stable."
+		bond_feeling = " 这份纽带十分稳固。"
 	else if(bond_strength >= 30)
-		bond_feeling = " The connection feels somewhat faint."
+		bond_feeling = " 这份联结显得有些微弱。"
 	else
-		bond_feeling = " The bond is weakening."
+		bond_feeling = " 这份纽带正在衰弱。"
 
-	to_chat(parent_mob, span_info("You sense [bonded_with] is [distance_desc] to the [direction_text].[bond_feeling]"))
+	to_chat(parent_mob, span_info("我感知到[bonded_with]位于我的[direction_text]方向[distance_desc]处。[bond_feeling]"))
 
 /datum/component/familial_bond/proc/on_parent_death(mob/living/source)
 	SIGNAL_HANDLER
 
 	if(bonded_with)
-		to_chat(bonded_with, span_danger("You feel a terrible emptiness as your bond with [source] is severed by death."))
+		to_chat(bonded_with, span_danger("随着你与[source]之间的纽带被死亡斩断，我感到可怕的空虚。"))
 		bonded_with.add_stress(/datum/stressevent/bond_death)
 	end_bond()
 
@@ -146,7 +146,7 @@
 
 	var/mob/living/carbon/human/parent_mob = parent
 	if(parent_mob)
-		to_chat(parent_mob, span_danger("You feel a terrible emptiness as your bond with [source] is severed by death."))
+		to_chat(parent_mob, span_danger("随着我与[source]之间的纽带被死亡斩断，我感到可怕的空虚。"))
 		parent_mob.add_stress(/datum/stressevent/bond_death)
 	end_bond()
 
@@ -155,24 +155,24 @@
 
 	// Chance to feel movement of bonded person when very close
 	if(get_dist(source, bonded_with) <= 3 && prob(30))
-		to_chat(bonded_with, span_info("You sense [source] moving nearby."))
+		to_chat(bonded_with, span_info("我感知到[source]正在附近移动。"))
 
 /datum/component/familial_bond/proc/strengthen_bond(amount = 10)
 	bond_strength = min(bond_strength + amount, 100)
 	var/mob/living/carbon/human/parent_mob = parent
-	to_chat(parent_mob, span_purple("Your familial bond grows stronger."))
+	to_chat(parent_mob, span_purple("我的亲族纽带变得更强了。"))
 	if(bonded_with)
-		to_chat(bonded_with, span_purple("Your familial bond grows stronger."))
+		to_chat(bonded_with, span_purple("我的亲族纽带变得更强了。"))
 
 /datum/component/familial_bond/proc/weaken_bond(amount = 15)
 	bond_strength = max(bond_strength - amount, 10)
 	var/mob/living/carbon/human/parent_mob = parent
-	to_chat(parent_mob, span_warning("Your familial bond weakens."))
+	to_chat(parent_mob, span_warning("我的亲族纽带变弱了。"))
 	if(bonded_with)
-		to_chat(bonded_with, span_warning("Your familial bond weakens."))
+		to_chat(bonded_with, span_warning("我的亲族纽带变弱了。"))
 
 	if(bond_strength <= 10)
-		to_chat(parent_mob, span_danger("Your familial bond is nearly broken!"))
+		to_chat(parent_mob, span_danger("我的亲族纽带几乎要断裂了！"))
 		// Chance for early termination if bond is too weak
 		if(prob(25))
 			end_bond()
@@ -181,22 +181,22 @@
 	var/mob/living/carbon/human/parent_mob = parent
 
 	if(parent_mob)
-		to_chat(parent_mob, span_info("Your familial bond fades away, but the memory of connection remains."))
+		to_chat(parent_mob, span_info("我的亲族纽带渐渐消散，但那份联结的记忆仍旧留存。"))
 		parent_mob.add_stress(/datum/stressevent/bond_ended)
 
 	if(bonded_with)
-		to_chat(bonded_with, span_info("Your familial bond fades away, but the memory of connection remains."))
+		to_chat(bonded_with, span_info("我的亲族纽带渐渐消散，但那份联结的记忆仍旧留存。"))
 		bonded_with.add_stress(/datum/stressevent/bond_ended)
 
 	STOP_PROCESSING(SSprocessing, src)
 	qdel(src)
 
 /datum/stressevent/bond_death
-	desc = "Someone I was bonded with has died. I feel empty inside."
+	desc = "与我缔结纽带之人已经死去。我感到内心一片空洞。"
 	stressadd = 6
 	timer = 30 MINUTES
 
 /datum/stressevent/bond_ended
-	desc = "A familial bond has ended, but I feel grateful for the connection we shared."
+	desc = "一段亲族纽带已经终结，但我仍感激我们曾共享的联结。"
 	stressadd = -1
 	timer = 10 MINUTES

@@ -21,50 +21,50 @@
 		QDEL_IN(PB, qdel_in)
 
 /obj/effect/projectile/tracer
-	name = "beam"
+	name = "光束"
 	icon = 'icons/obj/projectiles_tracer.dmi'
 
 /obj/effect/projectile/tracer/laser
-	name = "laser"
+	name = "激光"
 	icon_state = "beam"
 
 /obj/effect/projectile/tracer/laser/blue
 	icon_state = "beam_blue"
 
 /obj/effect/projectile/tracer/disabler
-	name = "disabler"
+	name = "缴械束"
 	icon_state = "beam_omni"
 
 /obj/effect/projectile/tracer/xray
-	name = "\improper X-ray laser"
+	name = "\improper X射线激光"
 	icon_state = "xray"
 
 /obj/effect/projectile/tracer/pulse
-	name = "pulse laser"
+	name = "脉冲激光"
 	icon_state = "u_laser"
 
 /obj/effect/projectile/tracer/plasma_cutter
-	name = "plasma blast"
+	name = "等离子爆流"
 	icon_state = "plasmacutter"
 
 /obj/effect/projectile/tracer/stun
-	name = "stun beam"
+	name = "眩晕光束"
 	icon_state = "stun"
 
 /obj/effect/projectile/tracer/blood
-	name = "blood bolt"
+	name = "血矢"
 	icon_state = "cult"
 
 /obj/effect/projectile/tracer/bloodsteal
-	name = "blood steal"
+	name = "鲜血掠夺"
 	icon_state = "hcult"
 
 /obj/effect/projectile/tracer/heavy_laser
-	name = "heavy laser"
+	name = "重型激光"
 	icon_state = "beam_heavy"
 
 /obj/effect/projectile/tracer/solar_beam
-	name = "solar beam"
+	name = "太阳光束"
 	icon_state = "solar"
 
 //BEAM RIFLE

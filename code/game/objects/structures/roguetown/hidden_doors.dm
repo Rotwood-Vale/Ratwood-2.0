@@ -1,5 +1,5 @@
 /obj/structure/mineral_door/secret
-	name = "wall"
+	name = "墙"
 	icon = 'icons/turf/walls/brick_wall.dmi'
 	resistance_flags = NONE
 	max_integrity = 9999
@@ -50,9 +50,9 @@
 			send_speech(span_purple("[open_phrase]..."), speaking_distance, src, message_language = lang, message_mode = MODE_WHISPER)
 			return TRUE
 		if(findtext(message2recognize, "set phrase"))
-			var/new_pass = stripped_input(H, "What should the new close phrase be?")
+			var/new_pass = stripped_input(H, "新的关闭口令应该是什么？")
 			open_phrase = new_pass
-			send_speech(span_purple("It is done, [flavor_name()]..."), speaking_distance, src, message_language = lang, message_mode = MODE_WHISPER)
+			send_speech(span_purple("已经替你改好了，[flavor_name()]。"), speaking_distance, src, message_language = lang, message_mode = MODE_WHISPER)
 			return TRUE
 
 	if(findtext(message2recognize, open_phrase))

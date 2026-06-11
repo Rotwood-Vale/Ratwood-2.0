@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/snap_freeze // to do: get scroll icon
-	name = "Snap Freeze"
-	desc = "Freeze the air in a small area in an instant, slowing and mildly damaging those affected."
+	name = "瞬凝术"
+	desc = "刹那间冻结一小片区域中的空气，使受影响者减速并受到轻度伤害。"
 	cost = 6
 	xp_gain = TRUE
 	releasedrain = 30
@@ -17,7 +17,7 @@
 	range = 7
 	gesture_required = TRUE // Offensive spell
 	spell_tier = 3
-	invocations = list("Congelare Subitus!")
+	invocations = list("寒气，骤凝！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_ICE
 	glow_intensity = GLOW_INTENSITY_HIGH
@@ -37,8 +37,8 @@
 /obj/effect/temp_visual/snap_freeze
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shieldsparkles"
-	name = "rippeling arcyne ice"
-	desc = "Get out of the way!"
+	name = "涌动的奥术寒冰"
+	desc = "快闪开！"
 	randomdir = FALSE
 	duration = 1 SECONDS
 	layer = MASSIVE_OBJ_LAYER
@@ -71,7 +71,7 @@
 				var/mob/living/carbon/human/H = L
 				H.apply_weather_temperature(-35)	//checks for cold protection before applying temp
 			if(L.anti_magic_check())
-				visible_message(span_warning("The ice fades away around you. [L] "))  //antimagic needs some testing
+				visible_message(span_warning("[L] 周围的寒冰魔力消散了！"))  //antimagic needs some testing
 				playsound(get_turf(L), 'sound/magic/magic_nulled.ogg', 100)
 				return
 			play_cleave = TRUE
@@ -89,7 +89,7 @@
 				else
 					L.apply_status_effect(/datum/status_effect/buff/frost)
 			playsound(affected_turf, "genslash", 80, TRUE)
-			to_chat(L, "<span class='userdanger'>The air chills your bones!</span>")
+			to_chat(L, "<span class='userdanger'>冰寒空气直透我的骨头！</span>")
 
 	if(play_cleave)
 		playsound(T, 'sound/combat/newstuck.ogg', 80, TRUE, soundping = TRUE) // this also kinda sounds like ice ngl

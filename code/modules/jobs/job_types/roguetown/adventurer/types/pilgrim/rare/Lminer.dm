@@ -1,8 +1,8 @@
 //dwarf, master miner
 
 /datum/advclass/minermaster
-	name = "Master Miner"
-	tutorial = "A master miner, you are capable of cutting stone like butter, and forging rocks into anything you can think of"
+	name = "采矿大师"
+	tutorial = "你是一名采矿大师，凿石如切黄油，还能把岩石锻造成你想得到的任何东西。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/minermaster

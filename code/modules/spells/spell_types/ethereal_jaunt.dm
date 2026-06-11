@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt
-	name = "Ethereal Jaunt"
+	name = "虚灵遁行"
 	desc = ""
 
 	school = "transmutation"
@@ -62,7 +62,7 @@
 	steam.start()
 
 /obj/effect/dummy/phased_mob/spell_jaunt
-	name = "water"
+	name = "虚灵流迹"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
 	var/reappearing = FALSE
@@ -88,10 +88,10 @@
 	movedelay = world.time + movespeed
 
 	if(newLoc.flags_1 & NOJAUNT_1)
-		to_chat(user, span_warning("Some strange aura is blocking the way."))
+		to_chat(user, span_warning("有一股奇异的气场挡住了去路。"))
 		return
 	if (locate(/obj/effect/blessing, newLoc))
-		to_chat(user, span_warning("Holy energies block your path!"))
+		to_chat(user, span_warning("神圣能量阻挡了你的去路！"))
 		return
 
 	forceMove(newLoc)

@@ -9,7 +9,7 @@
 /datum/spawners_menu/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "SpawnersMenu", "Spawners Menu", 700, 600)
+		ui = new(user, src, "SpawnersMenu", "生成点菜单", 700, 600)
 		ui.set_state(GLOB.observer_state)
 		ui.open()
 

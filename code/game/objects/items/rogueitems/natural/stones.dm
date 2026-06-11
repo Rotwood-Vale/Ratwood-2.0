@@ -1,133 +1,133 @@
 GLOBAL_LIST_INIT(stone_sharpness_names, list(
-	"Sharp",
-	"Vicious",
-	"Cutthroat",
-	"Keen",
-	"Acute",
-	"Edged",
-	"Fierce",
-	"Stinging",
+	"锋利的",
+	"凶悍的",
+	"夺命的",
+	"锐利的",
+	"尖利的",
+	"有刃的",
+	"猛烈的",
+	"刺痛的",
 ))
 
 GLOBAL_LIST_INIT(stone_sharpness_descs, list(
-	"It has a vicious edge.",
-	"This stone is akin to a knife.",
-	"It has a pointed side.",
-	"It has a serrated edge.",
+	"它有一道凶悍的锋刃。",
+	"这块石头就像一把刀。",
+	"它有一面是尖的。",
+	"它带着锯齿状的刃。",
 ))
 
 GLOBAL_LIST_INIT(stone_bluntness_names, list(
-	"Blunt",
-	"Rotund",
-	"Heavy",
-	"Solid",
-	"Chubby",
-	"Portly",
-	"Meaty",
-	"Dumpy",
-	"Stout",
-	"Plump",
+	"钝重的",
+	"圆滚的",
+	"沉重的",
+	"结实的",
+	"胖墩的",
+	"富态的",
+	"厚实的",
+	"矮胖的",
+	"壮实的",
+	"圆润的",
 ))
 
 GLOBAL_LIST_INIT(stone_bluntness_descs, list(
-	"It is very blunt.",
-	"It is rather hefty.",
-	"It fills the hand.",
-	"It is quite a handfull",
-	"This stone feels like it was made for ME!",
+	"它钝得很。",
+	"它相当有分量。",
+	"握在手里满满当当。",
+	"握着还挺趁手。",
+	"这块石头简直是为我量身定做的！",
 ))
 
 GLOBAL_LIST_INIT(stone_magic_names, list(
-	"Shimmering",
-	"Glowing",
-	"Enchanted",
-	"Ancient",
-	"Mystic",
-	"Enhanced",
-	"Magic",
-	"Mysterious",
-	"Radiant",
-	"Singing",
-	"Beautiful",
-	"Tantalizing",
-	"Allurring",
-	"Wicked",
-	"Mythical",
-	"Baleful",
-	"Heavenly",
-	"Angelic",
-	"Demonic",
-	"Devilish",
-	"Mischievous",
+	"微光闪烁的",
+	"发光的",
+	"附魔的",
+	"古老的",
+	"奥秘的",
+	"增强的",
+	"魔法的",
+	"神秘的",
+	"光芒四射的",
+	"吟唱的",
+	"美丽的",
+	"诱人的",
+	"魅惑的",
+	"邪恶的",
+	"神话般的",
+	"凶煞的",
+	"天堂般的",
+	"天使般的",
+	"恶魔般的",
+	"魔鬼般的",
+	"顽皮的",
 ))
 
 GLOBAL_LIST_INIT(stone_magic_descs, list(
-	"It hums with an energy coming from within.",
-	"It has a faint aura.",
-	"It has an odd sigil on it.",
-	"It has a small red stone pressed into it.",
-	"It is covered in tiny cracks.",
-	"Something about it looks unsafe.",
+	"它内部发出嗡嗡的能量波动。",
+	"它带着一层淡淡的光晕。",
+	"上面刻着一个奇怪的符文。",
+	"上面嵌着一颗小小的红色石头。",
+	"表面布满了细小的裂纹。",
+	"总感觉这东西不太安全。",
 ))
 
 GLOBAL_LIST_INIT(stone_personalities, list(
-	"Hatred",
-	"Idiocy",
-	"Mourning",
-	"Glory",
-	"Rock-Solidness",
-	"Calmness",
-	"Anger",
-	"Rage",
-	"Vainglory",
-	"Risk-aversedness",
-	"Daredevil",
-	"Barbarics",
-	"Fanciness",
-	"Relaxing",
-	"Greed",
-	"Evil",
-	"Good",
-	"Neutrality",
-	"Pride",
-	"Lust",
-	"Sloth",
-	"Victory",
-	"Defeat",
-	"Recoil",
-	"Impact",
-	"Goring",
-	"Destruction",
-	"Hell",
-	"Zizo",
-	"Flames",
-	"Darkness",
-	"Light",
-	"Heroism",
-	"Heaven",
-	"Cowards",
-	"Conquerors",
-	"Conquest",
-	"Horripilation",
-	"Terror",
-	"Earthquakes",
-	"Thunder",
+	"仇恨",
+	"愚蠢",
+	"哀悼",
+	"荣耀",
+	"坚如磐石",
+	"冷静",
+	"愤怒",
+	"暴怒",
+	"虚荣",
+	"规避风险",
+	"胆大妄为",
+	"野蛮",
+	"花哨",
+	"悠闲",
+	"贪婪",
+	"邪恶",
+	"善良",
+	"中立",
+	"骄傲",
+	"色欲",
+	"懒惰",
+	"胜利",
+	"败北",
+	"反冲",
+	"冲击",
+	"穿刺",
+	"毁灭",
+	"地狱",
+	"基佐",
+	"烈焰",
+	"黑暗",
+	"光明",
+	"英雄气概",
+	"天堂",
+	"懦夫",
+	"征服者",
+	"征服",
+	"毛骨悚然",
+	"恐怖",
+	"地震",
+	"雷霆",
 ))
 
 GLOBAL_LIST_INIT(stone_personality_descs, list(
-	"This stone is full of personality!",
-	"They say the intelligent races built their foundations with stones.",
-	"One must wonder: Where did this stone come from?",
-	"If all stones were like this, then they would be some pretty great stones.",
-	"I wish my personality was like this stone's...",
-	"I could sure do a whole lot with this stone.",
-	"I love stones!",
+	"这块石头充满了个性！",
+	"据说智慧种族都是拿石头打地基的。",
+	"真让人好奇：这块石头究竟从何而来？",
+	"如果所有石头都这样，那它们可都是些了不起的石头。",
+	"真希望我的性格也能像这块石头一样……",
+	"有了这块石头，我肯定能干成不少事。",
+	"我爱石头！",
 ))
 
 /obj/item/natural/stone
-	name = "stone"
+	name = "石头"
 	icon_state = "stone1"
-	desc = "A piece of rough ground stone."
+	desc = "一块粗糙打磨过的石头。"
 	gripped_intents = null
 	dropshrink = 0.75
 	possible_item_intents = list(INTENT_GENERIC)
@@ -165,9 +165,9 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 		)
 
 /obj/item/natural/whetstone
-	name = "whetstone"
+	name = "磨刀石"
 	icon_state = "whetstone"
-	desc = "A honed slab made for sharpening blades and striking flames."
+	desc = "一块磨制好的石片，可用于打磨刀刃和击出火花。"
 	force = 12
 	throwforce = 18
 	slot_flags = ITEM_SLOT_MOUTH
@@ -235,18 +235,18 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 			var/picked_desc = pick(desc_jumbler)
 			desc_jumbler -= picked_desc
 
-			stone_title = "[picked_name] [stone_title]" // Prefix and then stone
+			stone_title = "[picked_name][stone_title]" // Prefix and then stone
 			stone_desc += " [picked_desc]" // We put the descs after the original one
 
 	var/personality_modifier = 0
 	switch(stone_personality_rating)
 		if(10 to 22)
 			if(prob(3)) // Stone has a 3 percent chance to have a personality despite missing its roll
-				stone_title = "[stone_title] of [pick(GLOB.stone_personalities)]"
+				stone_title = "[pick(GLOB.stone_personalities)]之[stone_title]"
 				stone_desc += " [pick(GLOB.stone_personality_descs)]"
 				personality_modifier += rand(1,5) // Personality gives a stone some more power too
 		if(23 to 25)
-			stone_title = "[stone_title] of [pick(GLOB.stone_personalities)]"
+			stone_title = "[pick(GLOB.stone_personalities)]之[stone_title]"
 			stone_desc += " [pick(GLOB.stone_personality_descs)]"
 			personality_modifier += rand(1,5) // Personality gives a stone some more power too
 
@@ -262,7 +262,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 	if(prob(5)) // We hit the jackpot, a magical stone! JUST FOR ME!
 		filters += filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(1,255),rand(1,255),rand(1,255)))
 		var/magic_force = rand(1,10) //Roll, we need this seperate for now otherwise people will know the blunt/sharp boosts too
-		stone_title = "[pick(GLOB.stone_magic_names)] [stone_title] +[magic_force]"
+		stone_title = "[pick(GLOB.stone_magic_names)][stone_title] +[magic_force]"
 		stone_desc += " [pick(GLOB.stone_magic_descs)]"
 		bonus_force += magic_force // Add on the magic force modifier
 		magic_power += magic_force
@@ -289,7 +289,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 	var/work_time = (35 - (skill_level * 5))
 	if(istype(W, /obj/item/natural/stone))
 		playsound(src.loc, pick('sound/items/stonestone.ogg'), 100)
-		user.visible_message(span_info("[user] strikes the stones together."))
+		user.visible_message(span_info("[user]将两块石头互相敲击。"))
 		if(prob(10))
 			var/datum/effect_system/spark_spread/S = new()
 			var/turf/front = get_step(user,user.dir)
@@ -324,7 +324,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 					current_stone = next_stone
 				return
 		playsound(src.loc, pick('sound/combat/hits/onrock/onrock (1).ogg', 'sound/combat/hits/onrock/onrock (2).ogg', 'sound/combat/hits/onrock/onrock (3).ogg', 'sound/combat/hits/onrock/onrock (4).ogg'), 100)
-		user.visible_message("<span class='info'>[user] chisels the stone into a block.</span>")
+		user.visible_message("<span class='info'>[user]将石头凿成方块。</span>")
 		if(do_after(user, work_time))
 			new /obj/item/natural/stoneblock(get_turf(src.loc))
 			if(HAS_TRAIT(user, TRAIT_MASTER_MASON)) //double the amount for any in a stone worker role
@@ -335,10 +335,10 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 			user.mind.add_sleep_experience(/datum/skill/craft/masonry, (user.STAINT*0.2))
 		return
 	else if(istype(W, /obj/item/rogueweapon/chisel/assembly))
-		to_chat(user, span_warning("You most use both hands to chisel blocks."))
+		to_chat(user, span_warning("你必须用双手来凿方块。"))
 	else if(user.used_intent.type == /datum/intent/wing/shred && !user.cmode || user.used_intent.type == /datum/intent/wing/cut && !user.cmode)
 		playsound(src.loc, pick('sound/items/sharpen_long1.ogg','sound/items/sharpen_long2.ogg'), 100, TRUE)
-		user.visible_message(span_notice("[user] sharpens [W]!"))
+		user.visible_message(span_notice("[user]打磨了[W]！"))
 		W.add_bintegrity(12, user)
 		if(prob(35))
 			var/datum/effect_system/spark_spread/S = new()
@@ -358,15 +358,15 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 			M.apply_status_effect(/datum/status_effect/buff/rockmuncher, healydoodle)
 			qdel(src)
 			if(M == user)
-				user.visible_message(span_notice("[user] presses the stone to [user]'s body, and it is absorbed."), span_notice("I absorb the stone."))
+				user.visible_message(span_notice("[user]把石头按在自己的身上，石头被吸收了。"), span_notice("我吸收了石头。"))
 			else
-				user.visible_message(span_notice("[user] presses the stone to [M]'s body, and it is absorbed."), span_notice("I press the stone to [M], and it is absorbed."))
+				user.visible_message(span_notice("[user]把石头按在[M]的身上, 石头被吸收了"), span_notice("我把石头按在[M]身上, 石头被吸收了。"))
 
 		if(iskobold(M))
 			if(M == user)
-				user.visible_message(span_warning("[user] is attempting to eat [src]!"), span_warning("I begin to eat [src]!"))
+				user.visible_message(span_warning("[user]正试图吃掉[src]！"), span_warning("我开始吃[src]！"))
 			else
-				user.visible_message(span_warning("[user] begins to force [M] to eat [src]!"), span_warning("I attempt to force [M] to eat [src]!"))
+				user.visible_message(span_warning("[user]开始强迫[M]吃下[src]！"), span_warning("我试图强迫[M]吃下[src]！"))
 			if(do_after(user, 40))
 				M.reagents.add_reagent(/datum/reagent/consumable/nutriment, magic_power*1.2)
 				var/healydoodle_again = magic_power+1
@@ -374,9 +374,9 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 				playsound(get_turf(src), 'modular_azurepeak/sound/spellbooks/icicle.ogg', 100)
 				qdel(src)
 				if(M == user)
-					user.visible_message(span_danger("[user] eats [src]!"), span_danger("I devour [src]!"))
+					user.visible_message(span_danger("[user]吃掉了[src]！"), span_danger("我吞下了[src]！"))
 				else
-					user.visible_message(span_danger("[user] forces [M] to eat [src]!"), span_danger("I force [M] to eat [src]!"))
+					user.visible_message(span_danger("[user]强迫[M]吃掉了[src]！"), span_danger("我强迫[M]吃掉了[src]！"))
 
 
 		else // if theyre not either a construct or kobold, and we're not in cmode, beat them 2 death with rocks.
@@ -385,8 +385,8 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 		return ..()
 
 /obj/item/natural/rock
-	name = "boulder"
-	desc = "A rock protudes from the ground."
+	name = "巨石"
+	desc = "一块露出地面的岩石。"
 	icon_state = "stonebig1"
 	dropshrink = 0
 	throwforce = 25
@@ -417,7 +417,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 /obj/item/natural/rock/Crossed(mob/living/L)
 	if(istype(L) && !L.throwing)
 		if(L.m_intent == MOVE_INTENT_RUN)
-			L.visible_message(span_warning("[L] trips over the boulder!"),span_warning("I trip over the boulder!"))
+			L.visible_message(span_warning("[L] 被巨石绊倒了！"),span_warning("我被巨石绊倒了！"))
 			L.Knockdown(10)
 			L.consider_ambush(always = TRUE)
 	..()
@@ -457,7 +457,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 	var/skill_level = user.get_skill_level(/datum/skill/craft/masonry)
 	var/work_time = (120 - (skill_level * 15))
 	if(istype(W, /obj/item/natural/stone))
-		user.visible_message(span_info("[user] strikes the stone against the boulder."))
+		user.visible_message(span_info("[user]用石头敲击巨石。"))
 		playsound(src.loc, 'sound/items/stonestone.ogg', 100)
 		if(prob(35))
 			var/datum/effect_system/spark_spread/S = new()
@@ -467,7 +467,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 		return
 	if(istype(W, /obj/item/natural/rock))
 		playsound(src.loc, pick('sound/items/stonestone.ogg'), 100)
-		user.visible_message(span_info("[user] strikes the boulders together."))
+		user.visible_message(span_info("[user]将两块巨石互相敲击。"))
 		if(prob(10))
 			var/datum/effect_system/spark_spread/S = new()
 			var/turf/front = get_turf(src)
@@ -490,7 +490,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 		return
 	if( user.used_intent.type == /datum/intent/chisel )
 		playsound(src.loc, pick('sound/combat/hits/onrock/onrock (1).ogg', 'sound/combat/hits/onrock/onrock (2).ogg', 'sound/combat/hits/onrock/onrock (3).ogg', 'sound/combat/hits/onrock/onrock (4).ogg'), 100)
-		user.visible_message("<span class='info'>[user] chisels the boulder into blocks.</span>")
+		user.visible_message("<span class='info'>[user]将巨石凿成石块。</span>")
 		if(do_after(user, work_time))
 			new /obj/item/natural/stoneblock(get_turf(src.loc))
 			new /obj/item/natural/stoneblock(get_turf(src.loc))
@@ -505,7 +505,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 			qdel(src)
 		return
 	else if(istype(W, /obj/item/rogueweapon/chisel/assembly))
-		to_chat(user, span_warning("You most use both hands to chisel blocks."))
+		to_chat(user, span_warning("你必须用双手来凿方块。"))
 	..()
 
 //begin ore loot rocks
@@ -540,8 +540,8 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 	mineralType = /obj/item/roguegem/random
 
 /obj/item/natural/rock/random_ore
-	name = "rock?"
-	desc = "Wait, this shouldn't be here?"
+	name = "石头？"
+	desc = "等等，这东西不该出现在这里吧？"
 	icon_state = "stonerandom"
 
 /obj/item/natural/rock/random/Initialize(mapload)
@@ -561,8 +561,8 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 
 //................	Stone blocks	............... //
 /obj/item/natural/stoneblock
-	name = "stone block"
-	desc = "A rectangular stone block for building."
+	name = "石块"
+	desc = "一块用于建造的长方形石块。"
 	icon = 'icons/roguetown/items/crafting.dmi'
 	icon_state = "stoneblock"
 	drop_sound = 'sound/foley/brickdrop.ogg'
@@ -583,7 +583,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 	. = ..()
 	if(user.get_active_held_item())
 		return
-	to_chat(user, span_warning("I start to collect [src]..."))
+	to_chat(user, span_warning("我开始收集[src]..."))
 	if(move_after(user, bundling_time, target = src))
 		var/stackcount = 0
 		for(var/obj/item/natural/stoneblock/F in get_turf(src))
@@ -605,8 +605,8 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 
 //................ Stone block stack	............... //
 /obj/item/natural/bundle/stoneblock
-	name = "stack of stone blocks"
-	desc = "A stack of stone blocks."
+	name = "一堆石块"
+	desc = "一堆石块"
 	icon_state = "stoneblockbundle1"
 	icon = 'icons/roguetown/items/crafting.dmi'
 	item_state = "block"
@@ -623,7 +623,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 	throwforce = 0	// useless for throwing unless solo
 	throw_range = 2
 	w_class = WEIGHT_CLASS_NORMAL
-	stackname = "stone blocks"
+	stackname = "个石块"
 	stacktype = /obj/item/natural/stoneblock
 	maxamount = 4
 	icon1 = "stoneblockbundle2"
@@ -638,7 +638,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 		stonetotal += stonetotal
 	if( user.used_intent.type == /datum/intent/chisel )
 		playsound(src.loc, pick('sound/combat/hits/onrock/onrock (1).ogg', 'sound/combat/hits/onrock/onrock (2).ogg', 'sound/combat/hits/onrock/onrock (3).ogg', 'sound/combat/hits/onrock/onrock (4).ogg'), 100)
-		user.visible_message("<span class='info'>[user] chisels the rock into blocks.</span>")
+		user.visible_message("<span class='info'>[user]将岩石凿成了石块。</span>")
 		if(do_after(user, 10 SECONDS))
 			for(var/i=1, i<=stonetotal, ++i)
 				new /obj/item/natural/stoneblock(get_turf(src.loc))
@@ -648,4 +648,4 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 			qdel(src)
 		return
 	else if(istype(W, /obj/item/rogueweapon/chisel/assembly))
-		to_chat(user, span_warning("You most use both hands to chisel blocks."))
+		to_chat(user, span_warning("你必须用双手来凿石块。"))

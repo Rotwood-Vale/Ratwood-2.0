@@ -1,12 +1,12 @@
 /datum/antagonist/lich
-	name = "Lich"
-	roundend_category = "Lich"
-	antagpanel_category = "Lich"
+	name = "巫妖"
+	roundend_category = "巫妖"
+	antagpanel_category = "巫妖"
 	job_rank = ROLE_LICH
 	confess_lines = list(
-		"I WILL LIVE ETERNAL!",
-		"I AM BEHIND SEVEN PHYLACTERIES!",
-		"YOU CANNOT KILL ME!",
+		"我将永生不灭！",
+		"七个命匣都护着我！",
+		"你杀不死我！",
 	)
 	rogue_enabled = TRUE
 
@@ -60,7 +60,7 @@
 	return ..()
 
 /datum/antagonist/lich/greet()
-	to_chat(owner.current, span_userdanger("An immortal king cries for new subjects. Subdue and conquer."))
+	to_chat(owner.current, span_userdanger("一位不朽之王正在呼唤新的臣民。去征服，去奴役。"))
 	owner.announce_objectives()
 	..()
 
@@ -80,8 +80,8 @@
 
 /datum/antagonist/lich/proc/skele_look()
 	var/mob/living/carbon/human/L = owner.current
-	L.hairstyle = "Bald"
-	L.facial_hairstyle = "Shaved"
+	L.hairstyle = "光头"
+	L.facial_hairstyle = "剃净"
 	L.update_body()
 	L.update_hair()
 	L.update_body_parts(redraw = TRUE)
@@ -154,7 +154,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_deadite)
 	H.ambushable = FALSE
 
-	addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup), "LICH"), 5 SECONDS)
+	addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup), "巫妖"), 5 SECONDS)
 
 /datum/antagonist/lich/proc/replace_eyes(mob/living/carbon/human/L)
 	var/obj/item/organ/eyes/eyes = L.getorganslot(ORGAN_SLOT_EYES)
@@ -259,8 +259,8 @@
 
 
 /obj/item/phylactery
-	name = "phylactery"
-	desc = "Looks like it is filled with some intense power."
+	name = "命匣"
+	desc = "看起来其中充满了某种强大的力量。"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "soulstone"
 	item_state = "electronic"
@@ -282,7 +282,7 @@
 /obj/item/phylactery/proc/be_consumed(timer)
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = -1) //start shaking
-	visible_message(span_warning("[src] begins to glow and shake violently!"))
+	visible_message(span_warning("[src] 开始发光，并剧烈颤抖起来！"))
 
 	spawn(timer)
 		possessor.owner.current.forceMove(get_turf(src))
@@ -290,18 +290,18 @@
 		qdel(src)
 
 /obj/effect/proc_holder/spell/self/lich_announce
-	name = "Command Will"
-	desc = "Send a booming message to the undead under your will."
+	name = "意志号令"
+	desc = "向你意志之下的不死者发出一条轰鸣般的号令。"
 	recharge_time = 20 SECONDS
 
 /obj/effect/proc_holder/spell/self/lich_announce/cast(list/targets, mob/user)
 	if(user.stat)
 		return FALSE
 
-	var/calltext = input("Send Your Will To Your Undead", "UNDEAD ANNOUNCE") as text|null
+	var/calltext = input("向你的不死仆从传达意志", "不死号令") as text|null
 	if(!calltext)
 		return FALSE
 
-	priority_announce("[calltext]", title = "Your Lich King Commands", sound = 'sound/misc/deadbell.ogg', sender = user, receiver = /mob/living/carbon/human/species/skeleton)
+	priority_announce("[calltext]", title = "巫妖王的号令", sound = 'sound/misc/deadbell.ogg', sender = user, receiver = /mob/living/carbon/human/species/skeleton)
 
 	..()

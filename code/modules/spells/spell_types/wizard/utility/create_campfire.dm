@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/create_campfire
-	name = "Create Campfire"
-	desc = "Creates a magical campfire to cook on. 3 tiles range. Lasts for 10 minutes."
+	name = "生成营火"
+	desc = "生成一团可供烹饪的魔法营火。射程 3 格。持续 10 分钟。"
 	overlay_state = "create_campfire"
 	sound = list('sound/magic/whiteflame.ogg')
 
@@ -20,7 +20,7 @@
 	spell_tier = 1 // Utility, with situational combat use. Great for fighting trolls..
 	ignore_los = FALSE
 
-	invocations = list("Ignis Castrensis Magicae.") // Literally "Magical Campfire"
+	invocations = list("营火，于此燃起！") // Literally "Magical Campfire"
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_FIRE
 	glow_intensity = GLOW_INTENSITY_LOW
@@ -39,7 +39,7 @@
 	return TRUE
 
 /obj/machinery/light/rogue/campfire/create_campfire
-	name = "magical campfire"
+	name = "魔法营火"
 	icon_state = "densefire1"
 	base_state = "densefire"
 	density = FALSE

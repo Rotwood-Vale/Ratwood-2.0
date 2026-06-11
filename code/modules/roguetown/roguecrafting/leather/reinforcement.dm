@@ -1,9 +1,9 @@
 /datum/crafting_recipe/roguetown/leather/reinforcement
 	abstract_type = /datum/crafting_recipe/roguetown/leather/reinforcement
-	category = "Reinforcement"
+	category = "加固"
 
 /datum/crafting_recipe/roguetown/leather/reinforcement/crafteast
-	name = "decorated dopo robe"
+	name = "装饰 dobo 长袍"
 	result = list(/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast)
 	reqs = list(
 		/obj/item/natural/hide/cured = 2,

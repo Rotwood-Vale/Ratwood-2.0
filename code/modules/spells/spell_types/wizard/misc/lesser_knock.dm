@@ -1,9 +1,9 @@
 /obj/effect/proc_holder/spell/targeted/touch/lesserknock
-	name = "Lesser Knock"
-	desc = "A simple spell used to focus the arcyne into an instrument for lockpicking. Can be dispelled by using it on anything that isn't a locked/unlocked door."
+	name = "次级开锁术"
+	desc = "一道简单法术，将奥术聚为开锁工具。若将其用在门之外的东西上，法术就会消散。"
 	clothes_req = FALSE
-	drawmessage = "I prepare to perform a minor arcyne incantation."
-	dropmessage = "I release my minor arcyne focus."
+	drawmessage = "我准备施展一道微弱的奥术咒法。"
+	dropmessage = "我释放了这股微弱的奥术焦点。"
 	school = "transmutation"
 	overlay_state = "rune4"
 	chargedrain = 0
@@ -13,26 +13,26 @@
 	associated_skill = /datum/skill/magic/arcane
 	hand_path = /obj/item/melee/touch_attack/lesserknock
 	spell_tier = 1
-	invocations = list("Parvus Pulso")
+	invocations = list("微启其锁。")
 	invocation_type = "whisper" // It is a fake stealth spell (lockpicking is very loud)
 	hide_charge_effect = TRUE
 	cost = 2 // Utility and needs lockpicking skills
 
 /obj/effect/proc_holder/spell/targeted/touch/lesserknock/miracle
-	name = "Matthiosan Knock"
-	desc = "A simple prayer to the free-god that forms into an instrument for lockpicking. Can be dispelled by using it on anything that isn't a locked/unlocked door." //Slightly more appropriate
+	name = "马西奥斯开锁祷言"
+	desc = "向自由之神献上的一段简短祷词，会凝成一件开锁工具。若将其用在门之外的东西上，法术就会消散。" //Slightly more appropriate
 	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
 	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
 	overlay_state = "lockpick"
 	miracle = TRUE
 	devotion_cost = 30
-	invocations = list("From One to Many")
+	invocations = list("由一化众")
 	invocation_type = "whisper" // It is a fake stealth spell (lockpicking is very loud)
 	associated_skill = /datum/skill/magic/holy
 
 /obj/item/melee/touch_attack/lesserknock
-	name = "Spectral Lockpick"
-	desc = "A faintly glowing lockpick that appears to be held together by the mysteries of the arcyne. To dispel it, simply use it on anything that isn't a door."
+	name = "幽光撬锁针"
+	desc = "一根微微发光的撬锁针，仿佛由奥术的奥秘勉强维系成形。想令其消散，只要把它用在门之外的东西上即可。"
 	catchphrase = null
 	possible_item_intents = list(/datum/intent/use)
 	icon = 'icons/roguetown/items/keys.dmi'

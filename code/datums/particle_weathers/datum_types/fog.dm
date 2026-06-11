@@ -77,11 +77,11 @@
 	transform = new_transform
 
 /datum/particle_weather/fog
-	name = "Fog"
-	desc = "Gentle fog, la la description."
+	name = "雾"
+	desc = "轻柔的雾气缓缓弥散开来。"
 	particleEffectType = /particles/weather/fog
-	warning_message = span_greenannounce("The air is thick and damp, and a rush of cool dry air foretells what approachs.")
-	late_warning_message = span_greenannounce("A cold mist rolls in, swallowing the horizon.")
+	warning_message = span_greenannounce("空气变得潮湿而凝重，一阵凉意预示着雾气将近。")
+	late_warning_message = span_greenannounce("冰冷的雾气翻涌而来，吞没了远方的地平线。")
 	scale_vol_with_severity = TRUE
 	//weather_sounds = list(/datum/looping_sound/rain)
 	//indoor_weather_sounds = list(/datum/looping_sound/indoor_rain)
@@ -126,15 +126,15 @@
 	old_plane = null
 
 /datum/particle_weather/fog/swamp
-	name = "Swamp Fog"
+	name = "沼泽雾"
 	particleEffectType = /particles/weather/fog/swamp
 	probability = 10
 
 /datum/particle_weather/fog/darkness
-	name = "Omen of Darkness Fog"
+	name = "黑暗凶兆之雾"
 	particleEffectType = /particles/weather/dark
 	probability = 1
 /datum/particle_weather/fog/blood
-	name = "Omen of Blood Feat Fog"
+	name = "血之凶兆之雾"
 	particleEffectType = /particles/weather/fog/bloodfog
 	probability = 1

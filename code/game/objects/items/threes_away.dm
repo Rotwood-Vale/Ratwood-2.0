@@ -55,25 +55,25 @@
 	if(!joiner || !joiner.client)
 		return
 	if(!joining)
-		to_chat(joiner, span_warning("The Three's Away game has already started."))
+		to_chat(joiner, span_warning("这局Three's Away对局已经开始了。"))
 		return
 
 	if(joiner in players)
-		var/list/opts = list("Leave game")
+		var/list/opts = list("离开游戏")
 		if(players.len >= 2)
-			opts += "Start game now"
-		var/choice = input(joiner, "You are already in the lobby. ([players.len]/[max_players] players)", "Three's Away") as null|anything in opts
-		if(choice == "Start game now")
+			opts += "立即开始"
+		var/choice = input(joiner, "你已经在大厅里了。([players.len]/[max_players] 名玩家)", "Three's Away 对局") as null|anything in opts
+		if(choice == "立即开始")
 			start_game()
-		else if(choice == "Leave game")
+		else if(choice == "离开游戏")
 			players -= joiner
-			game_bag.visible_message(span_notice("[joiner] left the pre-game lobby. ([players.len]/[max_players])"))
+			game_bag.visible_message(span_notice("[joiner]离开了赛前大厅。([players.len]/[max_players])"))
 			if(!players.len)
 				cancel_game(joiner)
 		return
 
 	if(players.len >= max_players)
-		to_chat(joiner, span_warning("The Three's Away game is full ([max_players]/[max_players])."))
+		to_chat(joiner, span_warning("Three's Away 对局已经满员了([max_players]/[max_players])。"))
 		return
 
 	players += joiner
@@ -81,13 +81,13 @@
 	rolled[joiner] = FALSE
 	busted[joiner] = FALSE
 	ante_doubled[joiner] = FALSE
-	game_bag.visible_message(span_notice("[joiner] joined Three's Away! ([players.len]/[max_players] players)"))
+	game_bag.visible_message(span_notice("[joiner]加入了Three's Away！([players.len]/[max_players] 名玩家)"))
 	if(players.len >= max_players)
 		start_game()
 
 /datum/threes_away_game/proc/leave_game(mob/living/leaver)
 	if(!(leaver in players))
-		to_chat(leaver, span_warning("You are not in this Three's Away game."))
+		to_chat(leaver, span_warning("你不在这局Three's Away里。"))
 		return
 
 	var/leaver_index = players.Find(leaver)
@@ -99,7 +99,7 @@
 	busted -= leaver
 	ante_doubled -= leaver
 
-	game_bag.visible_message(span_notice("[leaver] leaves Three's Away. ([players.len]/[max_players] players remain)"))
+	game_bag.visible_message(span_notice("[leaver]离开了Three's Away。([players.len]/[max_players] 名玩家剩余)"))
 
 	if(!players.len)
 		cancel_game(leaver)
@@ -129,7 +129,7 @@
 			current_player = null
 
 /datum/threes_away_game/proc/cancel_game(mob/living/canceller)
-	game_bag.visible_message(span_warning("[canceller] has cancelled Three's Away!"))
+	game_bag.visible_message(span_warning("[canceller]取消了Three's Away！"))
 	game_bag.active_game = null
 	qdel(src)
 
@@ -148,7 +148,7 @@
 	var/list/names = list()
 	for(var/mob/living/M in players)
 		names += "[M]"
-	game_bag.visible_message(span_notice("Three's Away begins! Players: [jointext(names, ", ")]."))
+	game_bag.visible_message(span_notice("Three's Away 对局开始了！玩家：[jointext(names, ", ")]。"))
 	next_turn()
 
 /datum/threes_away_game/proc/player_is_done(mob/living/M)
@@ -185,8 +185,8 @@
 
 		current_player = active
 		can_initiate_turn_roll = TRUE
-		game_bag.visible_message(span_notice("--- [active]'s turn | [get_score_display()] ---"))
-		to_chat(active, span_notice("Use the dice bag menu and choose Roll Dice."))
+		game_bag.visible_message(span_notice("--- [active]的回合 | [get_score_display()] ---"))
+		to_chat(active, span_notice("打开骰袋菜单并选择“掷骰”。"))
 		return
 
 	end_round()
@@ -202,11 +202,11 @@
 		if(roll_counts[face] > 0)
 			menu += "[face]"
 
-	var/choice = input(active, "Select exactly one die to keep & set aside this roll.", "Three's Away") as null|anything in menu
+	var/choice = input(active, "精确选择一个骰子留下，并在这轮搁到一旁。", "Three's Away 对局") as null|anything in menu
 	if(!choice)
 		for(var/f in 1 to 6)
 			if(roll_counts[f] > 0)
-				to_chat(active, span_notice("No die selected; automatically keeping one [f]."))
+				to_chat(active, span_notice("没有选择骰子；自动保留一个 [f]。"))
 				return f
 		return current_roll[1]
 
@@ -239,13 +239,13 @@
 				count_threes_this_roll++
 		total_threes_rolled += count_threes_this_roll
 
-		game_bag.visible_message(span_notice("[active] rolls ([remaining_dice]d6): [format_big_roll(current_roll, get_roll_color_for(active))]."))
+		game_bag.visible_message(span_notice("[active]掷出了([remaining_dice]枚6面骰)：[format_big_roll(current_roll, get_roll_color_for(active))]。"))
 
 		if(count_threes_this_roll >= 4)
 			busted[active] = TRUE
 			rolled[active] = TRUE
 			ante_doubled[active] = TRUE
-			game_bag.visible_message(span_danger("[active] rolled four or more 3s and BUSTS! Their ante is doubled for the next pot."))
+			game_bag.visible_message(span_danger("[active]掷出了四个或更多的 3，直接爆掉！下个底池里，[active.p_their()]的底注翻倍。"))
 			busy = FALSE
 			if(all_players_done())
 				end_round()
@@ -256,7 +256,7 @@
 		while(total_threes_rolled >= next_three_wipe_threshold)
 			score_total = 0
 			next_three_wipe_threshold += 3
-			game_bag.visible_message(span_notice("[active] has rolled three more 3s during the turn! Their score is wiped to 0 again."))
+			game_bag.visible_message(span_notice("[active]在这一回合里又掷出了三个 3！[active.p_their()]的分数再次清零。"))
 
 		var/kept_now = choose_kept_die(active, current_roll)
 		kept_values += kept_now
@@ -265,12 +265,12 @@
 		remaining_dice--
 		if(remaining_dice < 0)
 			remaining_dice = 0
-		to_chat(active, span_notice("You keep [format_big_die_value(kept_now, get_roll_color_for(active))]. [remaining_dice] roll(s) left."))
+		to_chat(active, span_notice("你保留了 [format_big_die_value(kept_now, get_roll_color_for(active))]。还剩 [remaining_dice] 次掷骰。"))
 
 	scores[active] = score_total
 	rolled[active] = TRUE
 
-	game_bag.visible_message(span_notice("[active] sets aside: [format_big_roll(kept_values, get_roll_color_for(active))]. Final score: [score_total]."))
+	game_bag.visible_message(span_notice("[active]留出的骰子为：[format_big_roll(kept_values, get_roll_color_for(active))]。最终得分：[score_total]。"))
 
 	busy = FALSE
 	if(all_players_done())
@@ -280,25 +280,25 @@
 
 /datum/threes_away_game/proc/player_action(mob/living/user, action)
 	if(!(user in players))
-		to_chat(user, span_notice("Current totals: [get_score_display()]"))
+		to_chat(user, span_notice("当前总分：[get_score_display()]"))
 		return
 	if(busy)
-		to_chat(user, span_notice("Please wait a moment..."))
+		to_chat(user, span_notice("请稍等片刻……"))
 		return
 	if(user != current_player)
-		input(user, "It's not your turn. Totals: [get_score_display()]", "Three's Away") as null|anything in list("OK")
+		input(user, "还没轮到你。总分：[get_score_display()]", "Three's Away 对局") as null|anything in list("确定")
 		return
 	if(current_player_index < 1 || current_player_index > players.len)
-		to_chat(user, span_warning("Turn order is resyncing. Try again in a moment."))
+		to_chat(user, span_warning("回合顺序正在重新同步。稍后再试。"))
 		return
 	if(user != players[current_player_index])
-		to_chat(user, span_warning("It is not your turn yet."))
+		to_chat(user, span_warning("现在还没轮到你。"))
 		return
 	if(!can_initiate_turn_roll)
-		to_chat(user, span_notice("You have already rolled for this turn."))
+		to_chat(user, span_notice("你这回合已经掷过骰了。"))
 		return
-	if(action != "Roll Dice")
-		to_chat(user, span_notice("Choose Roll Dice from the menu."))
+	if(action != "掷骰")
+		to_chat(user, span_notice("请在菜单里选择“掷骰”。"))
 		return
 
 	can_initiate_turn_roll = FALSE
@@ -320,10 +320,10 @@
 		else if(total == best_score)
 			contenders += M
 
-	game_bag.visible_message(span_notice("--- THREE'S AWAY ROUND OVER ---<br>Totals: [get_score_display()]"))
+	game_bag.visible_message(span_notice("--- Three's Away 本轮结束 ---<br>总分：[get_score_display()]"))
 
 	if(!contenders.len)
-		game_bag.visible_message(span_warning("No winner. Everyone busted."))
+		game_bag.visible_message(span_warning("无人获胜。所有人都爆掉了。"))
 		announce_ante_doubles()
 		game_bag.active_game = null
 		qdel(src)
@@ -331,7 +331,7 @@
 
 	if(contenders.len == 1)
 		var/mob/living/champion = contenders[1]
-		game_bag.visible_message(span_green("<b>[champion] wins with the lowest score: [scores[champion]]!</b>"))
+		game_bag.visible_message(span_green("<b>[champion]以最低分 [scores[champion]] 获胜！</b>"))
 		announce_ante_doubles()
 		game_bag.active_game = null
 		qdel(src)
@@ -340,7 +340,7 @@
 	var/list/names = list()
 	for(var/mob/living/M in contenders)
 		names += "[M]"
-	game_bag.visible_message(span_notice("Tie for lowest score ([best_score]) between [jointext(names, ", ")]."))
+	game_bag.visible_message(span_notice("[jointext(names, ", ")] 以最低分 ([best_score]) 打成平手。"))
 	tie_break(contenders)
 
 /datum/threes_away_game/proc/tie_break(list/mob/living/contenders)
@@ -355,7 +355,7 @@
 		var/list/names = list()
 		for(var/mob/living/M in current_contenders)
 			names += "[M]"
-		game_bag.visible_message(span_warning("Tie-break! [jointext(names, ", ")] roll once more. Lowest total wins."))
+		game_bag.visible_message(span_warning("加赛决胜！[jointext(names, ", ")] 再各掷一次。总分最低者获胜。"))
 
 		var/best_total = 999999
 		var/list/mob/living/new_contenders = list()
@@ -365,7 +365,7 @@
 			var/roll_total = 0
 			for(var/v in rolls)
 				roll_total += v
-			game_bag.visible_message(span_notice("[M] tie-break rolls: [format_big_roll(rolls, get_roll_color_for(M))] (total [roll_total])."))
+			game_bag.visible_message(span_notice("[M] 的加赛掷骰：[format_big_roll(rolls, get_roll_color_for(M))]（总分 [roll_total]）。"))
 
 			if(roll_total < best_total)
 				best_total = roll_total
@@ -375,10 +375,10 @@
 
 		current_contenders = new_contenders
 		if(current_contenders.len > 1)
-			game_bag.visible_message(span_notice("Tie-break is still tied at [best_total]. Rolling again."))
+			game_bag.visible_message(span_notice("加赛仍以 [best_total] 平手。继续再掷。"))
 
 	var/mob/living/champion = current_contenders[1]
-	game_bag.visible_message(span_green("<b>[champion] wins the tie-break with the lowest total!</b>"))
+	game_bag.visible_message(span_green("<b>[champion]以最低总分赢下了加赛！</b>"))
 	announce_ante_doubles()
 	game_bag.active_game = null
 	qdel(src)
@@ -389,42 +389,42 @@
 		if(ante_doubled[M])
 			doubled += "[M]"
 	if(doubled.len)
-		game_bag.visible_message(span_warning("Ante doubled next pot for: [jointext(doubled, ", ")]."))
+		game_bag.visible_message(span_warning("下个底池需要双倍底注的玩家：[jointext(doubled, ", ")]。"))
 
 /datum/threes_away_game/proc/get_score_display()
 	var/list/parts = list()
 	for(var/mob/living/M in players)
 		var/state = ""
 		if(busted[M])
-			state = " (BUST)"
+			state = "（爆掉）"
 		else if(rolled[M])
-			state = " (ROLLED)"
+			state = "（已掷）"
 		parts += "[M]: [scores[M]][state]"
 	return jointext(parts, " | ")
 
 /obj/item/storage/pill_bottle/dice/threes_away
-	name = "bag of three's away dice"
-	desc = "A bag used to play Three's Away. Activate in hand (Z) to start or join a game."
+	name = "Three's Away骰袋"
+	desc = "一个用来游玩Three's Away的骰袋。手持激活（Z）即可开始或加入一局游戏。"
 	var/datum/threes_away_game/active_game
 	var/static/threes_away_rules_text = {"<div style='padding:8px;font-family:Verdana,sans-serif;'>
 	<h2 style='text-align:center;margin:0 0 6px 0;'>Three's Away</h2>
 <br>
-<b>Objective:</b> Achieve the lowest score.<br>
+<b>目标：</b>取得最低分。<br>
 <br>
-<b>Rules:</b><br>
-- One at a time, all players roll 5d6.<br>
-- After every roll, players choose one dice that must be set aside.<br>
-- Continue rolling remaining dice until all five are set aside.<br>
-- 3s are worth 0, 1s are valuable low dice.<br>
-- If you roll three 3s during your turn, your score is wiped to 0.<br>
-- If you roll four or more 3s on a roll, you bust and are disqualified.<br>
+<b>规则：</b><br>
+- 玩家依次掷 5 枚6面骰。<br>
+- 每次掷完后，必须选择一个骰子搁到一旁。<br>
+- 持续掷剩余骰子，直到五个骰子都被搁出。<br>
+- 3 记作 0 分，1 是宝贵的低分骰。<br>
+- 如果你在自己的回合内掷出三个 3，你的分数会被清零。<br>
+- 如果你单次掷出四个或更多 3，你会爆掉并失去资格。<br>
 <br>
-<b>Tie-breaking:</b><br>
-If round-end has a tie for lowest score, the tied players are told to roll once more.<br>
-Each tied player rolls a fresh set of 5d6.<br>
-The total of that set is summed.<br>
-Lowest total wins the tie-break.<br>
-If tie-break itself ties, it repeats automatically until one winner remains.<br>
+<b>平局判定：</b><br>
+如果回合结束时最低分出现平手，平手玩家需要再掷一次。<br>
+每位平手玩家都重新掷一组 5 枚6面骰。<br>
+将这一组的总分相加。<br>
+总分最低者赢得加赛。<br>
+如果加赛仍然平手，就会自动重复，直到只剩一名胜者。<br>
 </div>"}
 
 /obj/item/storage/pill_bottle/dice/threes_away/proc/show_rules(mob/living/user)
@@ -450,59 +450,59 @@ If tie-break itself ties, it repeats automatically until one winner remains.<br>
 			can_show_roll = TRUE
 
 	if(!active_game)
-		menu += "Start Game"
+		menu += "开始游戏"
 	else if(active_game.joining)
 		if(!(user in active_game.players))
-			menu += "Start Game"
+			menu += "开始游戏"
 	else if(can_show_roll)
-		menu += "Roll Dice"
+		menu += "掷骰"
 
 	if(menu.len)
 		menu += gap1
-	menu += "Rules"
+	menu += "规则"
 	menu += gap2
 	if(active_game && (user in active_game.players))
-		menu += "Leave Game"
+		menu += "离开游戏"
 		menu += gap3
-	menu += "End Game"
+	menu += "结束游戏"
 
-	var/choice = input(user, "Select an option.", "Three's Away Dice") as null|anything in menu
+	var/choice = input(user, "选择一项操作。", "Three's Away 骰袋") as null|anything in menu
 	if(!choice)
 		return
 
-	if(choice == "Rules")
+	if(choice == "规则")
 		show_rules(user)
 		return
 
-	if(choice == "End Game")
+	if(choice == "结束游戏")
 		if(active_game)
 			active_game.cancel_game(user)
 		else
-			to_chat(user, span_notice("No Three's Away game is currently running."))
+			to_chat(user, span_notice("当前没有正在进行的Three's Away游戏。"))
 		return
 
-	if(choice == "Leave Game")
+	if(choice == "离开游戏")
 		if(active_game)
 			active_game.leave_game(user)
 		else
-			to_chat(user, span_notice("No Three's Away game is currently running."))
+			to_chat(user, span_notice("当前没有正在进行的Three's Away游戏。"))
 		return
 
-	if(choice == "Roll Dice")
+	if(choice == "掷骰")
 		if(!active_game)
-			to_chat(user, span_notice("No Three's Away game is currently running."))
+			to_chat(user, span_notice("当前没有正在进行的Three's Away游戏。"))
 			return
 		if(!(user == active_game.current_player && active_game.can_initiate_turn_roll && !active_game.joining))
-			to_chat(user, span_notice("You cannot roll right now."))
+			to_chat(user, span_notice("你现在不能掷骰。"))
 			return
-		active_game.player_action(user, "Roll Dice")
+		active_game.player_action(user, "掷骰")
 		return
 
-	if(choice != "Start Game")
+	if(choice != "开始游戏")
 		return
 
 	if(!active_game)
-		var/count = input(user, "How many players?\n(2 to 4 players)", "Three's Away") as null|anything in list(2, 3, 4)
+		var/count = input(user, "要几名玩家？\n（2 到 4 名玩家）", "Three's Away 对局") as null|anything in list(2, 3, 4)
 		if(!count)
 			return
 
@@ -511,7 +511,7 @@ If tie-break itself ties, it repeats automatically until one winner remains.<br>
 		new_game.max_players = count
 		active_game = new_game
 		new_game.try_join(user)
-		src.visible_message(span_notice("[user] is starting Three's Away! [count - 1] more player(s) needed. Activate (Z) the dice bag to join!"))
+		src.visible_message(span_notice("[user]开始了一局Three's Away！还需要 [count - 1] 名玩家。激活（Z）骰袋即可加入！"))
 		return
 
 	if(active_game.joining)

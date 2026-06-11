@@ -1,5 +1,6 @@
 /datum/job/roguetown/guardsman
 	title = "City Guard"
+	display_title = "城卫"
 	flag = GUARDSMAN
 	department_flag = GARRISON
 	faction = "Station"
@@ -10,11 +11,11 @@
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
 	job_traits = list(TRAIT_GUARDSMAN, TRAIT_STEELHEARTED)
-	tutorial = "Responsible for the safety of the city and the enforcement of the law, \
-	you patrol the city streets, on the look out for crime and disorder. \
-	Armed with chains and a trusty beating stick, you are charged with catching \
-	thieves, vagrants and troublemakers, confiscating illicit goods, and administering swift and orderly justice.\
-	Obey your Watch Captain's orders, and enforce the Marshal's laws"
+	tutorial = "你负责守护城中安宁并执行律法，\
+	终日在街巷间巡逻，盯防一切罪案与骚乱。\
+	带着锁链和那根趁手的执法棍，你的职责是抓捕\
+	盗贼、流民与惹事之徒，查没违禁之物，并施行迅速而有序的裁断。\
+	服从守望队长的命令，执行元帅颁下的法度。"
 	display_order = JDO_TOWNGUARD
 	whitelist_req = TRUE
 
@@ -43,7 +44,7 @@
 				index = copytext(H.real_name, 1,index)
 			if(!index)
 				index = H.real_name
-			S.name = "watchman halfcloak ([index])"
+			S.name = "城卫半披风（[index]）"
 
 /datum/outfit/job/roguetown/guardsman
 	neck = /obj/item/clothing/neck/roguetown/gorget
@@ -63,12 +64,12 @@
 	id = /obj/item/scomstone/bad/garrison
 
 /datum/advclass/guardsman/cityguard
-	name = "City Guard"
-	tutorial = "Responsible for the safety of the city and the enforcement of the law, \
-	you patrol the city streets, on the look out for crime and disorder. \
-	Armed with chains and a trusty beating stick, you are charged with catching \
-	thieves, vagrants and troublemakers, confiscating illicit goods, and administering swift and orderly justice.\
-	While you may be called upon as members of the garrison by the Marshal and Crown, your true loyalty resides with the Watch Captain and the city."
+	name = "城卫"
+	tutorial = "你负责守护城中安宁并执行律法，\
+	终日在街巷间巡逻，盯防一切罪案与骚乱。\
+	带着锁链和那根趁手的执法棍，你的职责是抓捕\
+	盗贼、流民与惹事之徒，查没违禁之物，并施行迅速而有序的裁断。\
+	即便元帅与王权有时会把你当作驻军调用，你真正效忠的仍是守望队长与这座城市。"
 	outfit = /datum/outfit/job/roguetown/guardsman/cityguard
 
 	category_tags = list(CTAG_WATCH)
@@ -105,21 +106,21 @@
 	..()
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Stunmace & Shield","Polehammer", "Maul - +STR/CON, -SPD/PER/INT", "Crossbow - +SPD/PER, -STR/CON")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("震慑钉头锤与盾","长柄战锤", "大槌，力量/体质提升，速度/感知/智力下降", "十字弩，速度/感知提升，力量/体质下降")
+		var/weapon_choice = input(H, "选择你的武器。", "拿起武器") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Stunmace & Shield")
+			if("震慑钉头锤与盾")
 				r_hand = /obj/item/rogueweapon/mace/stunmace
 				backl = /obj/item/rogueweapon/shield/iron/citywatch
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
-			if("Polehammer")
+			if("长柄战锤")
 				r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
-			if("Maul - +STR/CON, -SPD/PER/INT")
+			if("大槌，力量/体质提升，速度/感知/智力下降")
 				r_hand = /obj/item/rogueweapon/mace/maul
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
@@ -129,7 +130,7 @@
 				H.change_stat(STATKEY_SPD, -1)
 				H.change_stat(STATKEY_PER, -1)
 				H.change_stat(STATKEY_INT, -1)
-			if("Crossbow - +SPD/PER, -STR/CON")
+			if("十字弩，速度/感知提升，力量/体质下降")
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				backl = /obj/item/quiver/heavybluntbolts
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 5, TRUE)

@@ -1,6 +1,7 @@
 
 /datum/job/roguetown/tribalrabble
 	title = "Tribal Rabble"
+	display_title = "部落喽啰"
 	flag = TRIBALRABBLE
 	department_flag = TRIBAL
 	faction = "Station"
@@ -11,10 +12,10 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(/datum/species/goblinp, /datum/species/anthromorphsmall, /datum/species/kobold)
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
-	tutorial = "A gremlin among many other gremlins. You worship the chief as the representation of The Dragon, his chosen as the biggest and the strongest. \
-	There's little to say about you, aside from your proclivity for skullduggery over outright skull smashing, much to your chief's disappointment. Obey when called upon. \
-	This is The Dragon's island, and there's rumor of newcomers, which means more gold for him. \
-	Perhaps if you brought a fresh slave or mammons... The Dragon would finally notice you."
+	tutorial = "在一群小怪胎里，你也只是其中一个小怪胎。你崇拜酋长，将其视作巨龙意志在人间的化身，因为祂所拣选的，自然就是最大最强的那个。 \
+	除了比起正面砸烂别人脑袋，你更偏爱鬼祟伎俩之外，实在没什么特别之处，而这也常叫酋长失望。听到召唤就乖乖服从。 \
+	这里是巨龙之岛，而今有传闻说外来者已抵达，这意味着又有更多金子可供祂攫取。 \
+	说不定只要你献上新鲜的奴隶和更多财货……巨龙终会注意到你。"
 	display_order = JDO_TRIBALRABBLE
 	whitelist_req = TRUE
 
@@ -44,8 +45,8 @@
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/ancient
 
 /datum/advclass/tribalrabble/rabble
-	name = "Hunter"
-	tutorial = "Ooga Chacka Sneaka-Chacka."
+	name = "潜猎者"
+	tutorial = "你靠潜行、攀爬与偷窃活命，比起正面厮杀，你更擅长摸进阴影里把猎物连同财物一起带走。"
 	outfit = /datum/outfit/job/roguetown/tribalrabble/rabble
 	category_tags = list(CTAG_TRIBALRABBLE)
 	traits_applied = list(TRAIT_DODGEEXPERT)

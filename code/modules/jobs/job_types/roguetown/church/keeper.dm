@@ -1,12 +1,13 @@
 /datum/job/roguetown/keeper
 	title = "Keeper"
-	tutorial = "Disfigured, shunned, or simply filled with purpose and dedication for Pestra. \
-	Some of you are horrifically mutated, disfigured, or diseased. \
-	No matter, even the pretty ones feel the toll as it leaves their strength atrophied. \
-	Someone has to harvest the holy blood required to purify lux and perpetuate Pestra's gift of medicine. \
-	Unfortunately, that's you. That's correct, I'm the one tasked with protecting the sacred Heart Beast of Pestra here. \
-	To study it and empower it so that Pestra's medicine may blossom even in the furthest reaches of Ferentia. \
-	Keep in mind you are NOT directly affiliated with the church of the see, the local bishop is not your boss. You answer to the sect of Pestra foremost."
+	display_title = "守护人"
+	tutorial = "有人容貌残缺、遭人厌弃，也有人只是满怀对 佩斯特拉 的使命感与虔敬。 \
+	你们之中有些人严重畸变、毁容，或身染恶疾。 \
+	但无论如何，即便是外表完好的人，也都能感受到那份代价正让自己的力量日渐萎缩。 \
+	总得有人去采集净化 lux 所需的圣血，让 Pestra 赐下的医道得以延续。 \
+	很不幸，那个人就是你。没错，你正是此地负责看护 Pestra 神圣心兽的人。 \
+	你要研究它、滋养它，好让 Pestra 的医术即便在 Ferentia 最偏远的地方也能生根开花。 \
+	记住，你并不直接隶属于圣座教会，本地主教不是你的上司。你首先服从的是 Pestra 的教派本身。"
 	flag = KEEPER
 	department_flag = CHURCHMEN
 	faction = "Station"
@@ -39,14 +40,14 @@
 	)
 
 /datum/advclass/keeper
-	name = "Keeper"
-	tutorial = "Disfigured, shunned, or simply filled with purpose and dedication for Pestra. \
-	Some of you are horrifically mutated, disfigured, or diseased. \
-	No matter, even the pretty ones feel the toll as it leaves their strength atrophied. \
-	Someone has to harvest the holy blood required to purify lux and perpetuate Pestra's gift of medicine. \
-	Unfortunately, that's you. That's correct, I'm the one tasked with protecting the sacred Heart Beast of Pestra here. \
-	To study it and empower it so that Pestra's medicine may blossom even in the furthest reaches of Ferentia. \
-	Keep in mind you are NOT directly affiliated with the church of the see, the local bishop is not your boss. You answer to the sect of Pestra foremost."
+	name = "守护人"
+	tutorial = "有人容貌残缺、遭人厌弃，也有人只是满怀对 佩斯特拉 的使命感与虔敬。 \
+	你们之中有些人严重畸变、毁容，或身染恶疾。 \
+	但无论如何，即便是外表完好的人，也都能感受到那份代价正让自己的力量日渐萎缩。 \
+	总得有人去采集净化 lux 所需的圣血，让 Pestra 赐下的医道得以延续。 \
+	很不幸，那个人就是你。没错，你正是此地负责看护 Pestra 神圣心兽的人。 \
+	你要研究它、滋养它，好让 Pestra 的医术即便在 Ferentia 最偏远的地方也能生根开花。 \
+	记住，你并不直接隶属于圣座教会，本地主教不是你的上司。你首先服从的是 Pestra 的教派本身。"
 	outfit = /datum/outfit/job/roguetown/keeper/basic
 	category_tags = list(CTAG_KEEPER)
 	// No perception as to dissuade picking statpacks to negate the strength penalty.
@@ -94,9 +95,9 @@
 	if(!H || !H.client || !H.mind)
 		return
 
-	var/choice = alert(H, "Choose your path.", "Keeper Doctrine", "Loyalist", "Radical")
+	var/choice = alert(H, "选择你的道路。", "看守人教义", "守旧派", "激进派")
 
-	if(choice == "Radical")
+	if(choice == "激进派")
 		grant_radical_path(H)
 	else
 		grant_old_path(H)
@@ -139,7 +140,7 @@
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)
 
-	to_chat(H, span_notice("I remain on the old path of Pestra's devotion."))
+	to_chat(H, span_notice("我仍走在 佩斯特拉 旧有的虔敬之道上。"))
 
 
 /datum/job/roguetown/keeper/proc/grant_radical_path(mob/living/carbon/human/H)
@@ -159,5 +160,4 @@
 	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/invoked/resurrect/pestra))
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/resurrect/pestra, H)
 
-	to_chat(H, span_notice("I embrace Pestra's radical doctrine."))
-
+	to_chat(H, span_notice("我拥抱 佩斯特拉 的激进教义。"))

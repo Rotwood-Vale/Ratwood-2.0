@@ -1,9 +1,9 @@
 /datum/language/gronnic
-	name = "Gronnic"
-	desc = "(Spoken with ,n) The harsh tongue of the Northern Highlands."
-	speech_verb = "remarks"
-	ask_verb = "inquires"
-	exclaim_verb = "asserts"
+	name = "格隆恩语"
+	desc = "(用 ,n 说)北方高地那种粗犷严厉的语言。"
+	speech_verb = "说道"
+	ask_verb = "询问"
+	exclaim_verb = "断言"
 	key = "n"
 	space_chance = 45
 	default_priority = 90

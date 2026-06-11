@@ -1,11 +1,11 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall
-	name = "Invisible Wall"
+	name = "隐形墙"
 	desc = ""
 	school = "mime"
-	panel = "Mime"
+	panel = "哑剧"
 	summon_type = list(/obj/effect/forcefield/mime)
 	invocation_type = "emote"
-	invocation_emote_self = "<span class='notice'>I form a wall in front of myself.</span>"
+	invocation_emote_self = "<span class='notice'>我在自己面前筑起了一道墙。</span>"
 	summon_lifespan = 300
 	recharge_time = 300
 	clothes_req = FALSE
@@ -20,22 +20,22 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/Click()
 	if(usr && usr.mind)
 		if(!HAS_TRAIT(usr, TRAIT_PERMAMUTE)) // If somehow someone gets ahold of this spell...
-			to_chat(usr, span_warning("I am not a mute!"))
+			to_chat(usr, span_warning("我不是哑剧演员！"))
 			return
-		invocations = list("looks as if a wall is in front of [usr.p_them()].")
+		invocations = list("像是有一道墙挡在了[usr.p_them()]面前。")
 	else
 		invocation_type ="none"
 	invocation(usr) // force invocation because invocation() only gets called on a specific spell (not aoe_turf)
 	..()
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair
-	name = "Invisible Chair"
+	name = "隐形椅"
 	desc = ""
 	school = "mime"
-	panel = "Mime"
+	panel = "哑剧"
 	summon_type = list(/obj/structure/chair/mime)
 	invocation_type = "emote"
-	invocation_emote_self = "<span class='notice'>I conjure an invisible chair and sit down.</span>"
+	invocation_emote_self = "<span class='notice'>我变出一把隐形椅子并坐了下来。</span>"
 	summon_lifespan = 250
 	recharge_time = 300
 	clothes_req = FALSE
@@ -50,9 +50,9 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair/Click()
 	if(usr && usr.mind)
 		if(!HAS_TRAIT(usr, TRAIT_PERMAMUTE))
-			to_chat(usr, span_warning("I am not a mute!"))
+			to_chat(usr, span_warning("我不是哑剧演员！"))
 			return
-		invocations = list("pulls out an invisible chair and sits down.")
+		invocations = list("摸出一把隐形椅子，随后坐了下去。")
 	else
 		invocation_type ="none"
 	invocation(usr)
@@ -68,10 +68,10 @@
 
 
 /obj/effect/proc_holder/spell/targeted/mime/speak
-	name = "Speech"
+	name = "言语"
 	desc = ""
 	school = "mime"
-	panel = "Mime"
+	panel = "哑剧"
 	clothes_req = FALSE
 	human_req = TRUE
 	antimagic_allowed = TRUE
@@ -89,29 +89,29 @@
 		return
 	var/mob/living/carbon/human/H = usr
 	if(H.mind.miming)
-		still_recharging_msg = "<span class='warning'>I can't break your vow of silence that fast!</span>"
+		still_recharging_msg = "<span class='warning'>我没法这么快再次打破沉默誓言！</span>"
 	else
-		still_recharging_msg = "<span class='warning'>You'll have to wait before you can give your vow of silence again!</span>"
+		still_recharging_msg = "<span class='warning'>想再次立下沉默誓言，你还得再等等！</span>"
 	..()
 
 /obj/effect/proc_holder/spell/targeted/mime/speak/cast(list/targets,mob/user = usr)
 	for(var/mob/living/carbon/human/H in targets)
 		H.mind.miming=!H.mind.miming
 		if(H.mind.miming)
-			to_chat(H, "<span class='notice'>I make a vow of silence.</span>")
+			to_chat(H, "<span class='notice'>我立下了沉默誓言。</span>")
 		else
-			to_chat(H, "<span class='notice'>I break your vow of silence.</span>")
+			to_chat(H, "<span class='notice'>我打破了自己的沉默誓言。</span>")
 
 // These spells can only be gotten from the "Guide for Advanced Mimery series" for Mime Traitors.
 
 /obj/effect/proc_holder/spell/targeted/forcewall/mime
-	name = "Invisible Blockade"
+	name = "隐形路障"
 	desc = ""
 	school = "mime"
-	panel = "Mime"
+	panel = "哑剧"
 	wall_type = /obj/effect/forcefield/mime/advanced
 	invocation_type = "emote"
-	invocation_emote_self = "<span class='notice'>I form a blockade in front of myself.</span>"
+	invocation_emote_self = "<span class='notice'>我在自己面前筑起了一道路障。</span>"
 	recharge_time = 600
 	sound =  null
 	clothes_req = FALSE
@@ -125,17 +125,17 @@
 /obj/effect/proc_holder/spell/targeted/forcewall/mime/Click()
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
-			to_chat(usr, "<span class='warning'>I must dedicate myself to silence first!</span>")
+			to_chat(usr, "<span class='warning'>我必须先将自己奉献给沉默！</span>")
 			return
-		invocations = list("looks as if a blockade is in front of [usr.p_them()].")
+		invocations = list("像是有一道路障横在了[usr.p_them()]面前。")
 	else
 		invocation_type ="none"
 	..()
 
 /obj/item/book/granter/spell/mimery_blockade
 	spell = /obj/effect/proc_holder/spell/targeted/forcewall/mime
-	spellname = "Invisible Blockade"
-	name = "Guide to Advanced Mimery Vol 1"
+	spellname = "隐形路障"
+	name = "高级哑剧指南 卷一"
 	desc = ""
 	icon_state ="bookmime"
 	remarks = list("...")

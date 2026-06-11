@@ -1,5 +1,6 @@
 /datum/job/roguetown/niteman
 	title = "Bathmaster"
+	display_title = "浴场主"
 	flag = NITEMASTER
 	department_flag = YEOMEN
 	faction = "Station"
@@ -7,7 +8,7 @@
 	spawn_positions = 1
 	f_title = "Bathmatron"
 	allowed_races = ACCEPTED_RACES
-	tutorial = "You are renting out the bathhouse in a joint operation with the Innkeep. You provide security for the bathwenches and help them to find work--when you're not being a trouble-making rake that others suffer to tolerate."
+	tutorial = "你与酒馆老板一同经营这间浴场，并将其对外出租。你负责为浴女们提供庇护，帮她们招揽营生，前提是你自己别又成了那个惹是生非、让众人勉强忍着的浪荡子。"
 	allowed_sexes = list(MALE, FEMALE)
 	outfit = /datum/outfit/job/roguetown/niteman
 	display_order = JDO_NITEMASTER
@@ -30,8 +31,8 @@
 	)
 
 /datum/advclass/bathmaster
-	name = "Bathmaster"
-	tutorial = "You are renting out the bathhouse in a joint operation with the Innkeep. You provide security for the bathwenches and help them to find work--when you're not being a trouble-making rake that others suffer to tolerate."
+	name = "浴场主"
+	tutorial = "你与酒馆老板一同经营这间浴场，并将其对外出租。你负责为浴女们提供庇护，帮她们招揽营生，前提是你自己别又成了那个惹是生非、让众人勉强忍着的浪荡子。"
 	outfit = /datum/outfit/job/roguetown/niteman/basic
 	category_tags = list(CTAG_BATHMOM)
 	subclass_languages = list(/datum/language/thievescant)

@@ -1,5 +1,5 @@
 /datum/intent/kick
-	name = "kick"
+	name = "踢击"
 	candodge = TRUE
 	canparry = TRUE
 	chargetime = 0
@@ -39,7 +39,7 @@
 		sleep(mmb_intent.swingdelay)
 		if(M.has_status_effect(/datum/status_effect/buff/clash) && ishuman(M))
 			var/mob/living/carbon/human/HT = M
-			HT.bad_guard(span_warning("The kick throws my stance off!"))
+			HT.bad_guard(span_warning("这一脚踢得我架势全乱了！"))
 		if(QDELETED(src) || QDELETED(M))
 			return FALSE
 		if(!M.Adjacent(src))
@@ -71,7 +71,7 @@
 		return FALSE
 	if(IsOffBalanced())
 		if(do_message)
-			to_chat(src, span_warning("I haven't regained my balance yet."))
+			to_chat(src, span_warning("我还没重新站稳。"))
 		return FALSE
 	if(QDELETED(src) || QDELETED(A))
 		return FALSE

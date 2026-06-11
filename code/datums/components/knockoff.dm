@@ -30,7 +30,7 @@
 	if(!wearer.dropItemToGround(I))
 		return
 
-	wearer.visible_message(span_warning("[attacker] knocks off [wearer]'s [I.name]!"),span_danger("[attacker] knocks off your [I.name]!"))
+	wearer.visible_message(span_warning("[attacker] 打落了[wearer]的[I.name]！"),span_danger("[attacker] 打落了你的[I.name]！"))
 
 /datum/component/knockoff/proc/OnEquipped(datum/source, mob/living/carbon/human/H,slot)
 	if(!istype(H))

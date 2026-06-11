@@ -1,6 +1,6 @@
 /obj/item/clothing/gloves/roguetown/elven_gloves
-	name = "woad elven gloves"
-	desc = "The insides are lined with soft, living leaves and soil. They wick away moisture easily."
+	name = "染纹精灵手套"
+	desc = "内里衬着柔软而活着的叶片与泥土。它们很容易吸走湿气。"
 	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
 	icon_state = "welfhand"
@@ -17,8 +17,8 @@
 
 /// Dendor ritual variant of the woad elven gloves — grown from the Treefather's sanctified root.
 /obj/item/clothing/gloves/roguetown/elven_gloves/druidic
-	name = "blessed druid gloves"
-	desc = "Gauntlets woven from roots nurtured by the Treefather's blessing. The living wood absorbs impacts and softens cuts that would otherwise tear through."
+	name = "受祝德鲁伊手套"
+	desc = "由受树父祝福滋养的根须编织而成的护手。活木能吸收冲击，并减轻本会撕裂血肉的劈砍。"
 	armor = list("blunt" = 100, "slash" = 65, "stab" = 130, "piercing" = 20, "fire" = 0, "acid" = 0)
 
 /obj/item/clothing/gloves/roguetown/elven_gloves/druidic/Initialize(mapload)
@@ -35,11 +35,11 @@
 		return
 	H.electrocute_act(30, src)
 	H.mob_timers["kneestinger"] = world.time
-	to_chat(H, span_warning("[name] rejects my grasp — only the Treefather's faithful may bear such a gift!"))
+	to_chat(H, span_warning("[name] 拒绝了我的握持，唯有树父的信徒才配承受这份恩赐！"))
 
 /obj/item/clothing/gloves/roguetown/bandages
-	name = "bandages"
-	desc = "Thickly-woven bandages that've been wrapped around the hands. It soaks up the sweat from your palm, strengthens your fists, and protects your knuckles from dislodged teeth."
+	name = "缠手绷带"
+	desc = "厚织绷带缠在双手上。它会吸收掌心汗水、强化你的拳头，并保护指关节不被打飞的牙齿割伤。"
 	sleeved = 'icons/roguetown/clothing/onmob/gloves.dmi'
 	icon = 'icons/roguetown/clothing/gloves.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/gloves.dmi'
@@ -64,11 +64,11 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/gloves/roguetown/bandages/weighted
-	name = "weighted bandages"
-	desc = "Thickly-woven bandages that've been wrapped around the hands, fitted with padded knuckleweights. It soaks up the sweat from your palm, strengthens your fists, and protects your knuckles from dislodged teeth."
+	name = "配重缠手"
+	desc = "厚织绷带缠在双手上，并配有加垫指节配重。它会吸收掌心汗水、强化你的拳头，并保护指关节不被打飞的牙齿割伤。"
 	unarmed_bonus = 1.225 //Craftable. Given to non-specialized Monks and other certain subclasses. Provides a +25% unarmed damage bonus over plate gauntlets.
 
 /obj/item/clothing/gloves/roguetown/bandages/pugilist
-	name = "pugilistic bandages"
-	desc = "Thickly-woven bandages that've been wrapped around the hands, fitted with alloyed knuckleweights. It soaks up the sweat from your palm, strengthens your fists, and protects your knuckles from dislodged teeth."
+	name = "搏击缠手"
+	desc = "厚织绷带缠在双手上，并配有合金指节配重。它会吸收掌心汗水、强化你的拳头，并保护指关节不被打飞的牙齿割伤。"
 	unarmed_bonus = 1.3 //Non-craftable. Restricted to Monks who've specialized in unarmed combat, and nothing else.

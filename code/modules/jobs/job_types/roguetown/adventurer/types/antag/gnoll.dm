@@ -6,7 +6,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	allowed_races = RACES_NO_CONSTRUCT
-	tutorial = "You have proven yourself worthy to Graggar, and he's granted you his blessing most divine. Now you hunt for worthy opponents, seeking out those strong enough to make you bleed."
+	tutorial = "你已向 格拉加 证明了自己的价值，而他也赐下了至高的祝福。如今你要去追猎配得上你的对手，寻找那些强到足以让你流血的人。"
 	outfit = null
 	outfit_female = null
 	display_order = JDO_GNOLL
@@ -179,30 +179,30 @@
 		H.AddSpell(F)
 		H.AddSpell(I)
 
-		to_chat(H, span_boldwarning("As a Gnoll, roleplaying expectations still apply. Gnolls are cunning hunters, not mindless beasts. \
-									The Dark Star expects much of you; there is little glory in slaughtering the meek."))
-		to_chat(H, span_biginfo("You are not interested in the lowest-hanging fruit, and effortless catches bore your Master. Rushing to take these quarries is <i>beneath you.</i> \n") \
-			+ span_notice("Rather, it is best to seek the worthiest among your prey, and to ensure a thrilling hunt for all involved."))
+		to_chat(H, span_boldwarning("即便身为豺狼人，你依旧要遵守角色扮演要求。豺狼人是狡诈的猎手，不是无脑的野兽。\
+									暗星对你的期许极高，屠戮弱者并无多少荣耀可言。"))
+		to_chat(H, span_biginfo("你对最低垂的果实毫无兴趣，轻而易举的猎获只会让你的主人感到乏味。急着扑向这类猎物，是<i>有失身份</i>的。 \n") \
+			+ span_notice("更好的做法，是去寻找猎物中最有价值的那些，并确保这场追猎对所有参与者而言都足够惊险。"))
 		to_chat(H, span_biginfo("*-------*"))
 
 		var/mode = SSgnoll_scaling.get_gnoll_scaling()
 		if(mode == GNOLL_SCALING_NONE)
-			to_chat(H, span_smallnotice("There will not be any gnoll reinforcements this week, as far as I can tell. ") + span_info("I must rely on cunning over numbers."))
+			to_chat(H, span_smallnotice("依我看，这周不会有任何豺狼人援军到来。") + span_info("我必须依靠狡诈，而不是数量。"))
 		else if(mode != GNOLL_SCALING_DOUBLE)
-			to_chat(H, span_smallnotice("I can expect to be joined by my pack this week. ") + span_info("I should wait for them and group up."))
+			to_chat(H, span_smallnotice("这周我应当会与我的族群会合。") + span_info("我该等他们到了再集结行动。"))
 		else
-			to_chat(H, span_smallnotice("My pack is small this week. ") + span_info("I should regroup with the other gnolls, and avoid reckless fights until we can hunt together."))
-		to_chat(H, span_info("Patience and careful planning are the virtues of my craft. If I can't isolate my mark, it would be wise to stalk another. \n\
-									When tracking difficult marks, I should set up camp and make alliances out in the field."))
-		to_chat(H, span_warning("The Bandit filth are unworthy of my assistance."))
+			to_chat(H, span_smallnotice("这周我的族群规模不大。") + span_info("我该先与其他豺狼人会合，在能一同狩猎前避免鲁莽交战。"))
+		to_chat(H, span_info("耐心与周密谋划，才是我这门技艺真正的美德。若我无法将目标孤立出来，换一只猎物去尾随才更明智。 \n\
+									追踪棘手目标时，我应当在野外扎营，并设法结成同盟。"))
+		to_chat(H, span_warning("那群匪徒渣滓不配得到我的援助。"))
 		to_chat(H, span_biginfo("*------*"))
 
 /mob/living/carbon/human/proc/gnoll_inspect_skin()
-	set name = "Inspect Pelt"
-	set category = "Gnoll"
-	set desc = "Examine your gnoll skin armor"
+	set name = "检查毛皮"
+	set category = "豺狼人"
+	set desc = "查看我的豺狼人皮甲"
 	if(!istype(skin_armor, /obj/item/clothing/suit/roguetown/armor/regenerating/skin/gnoll_armor))
-		to_chat(src, span_warning("You don't have any gnoll skin armor to inspect!"))
+		to_chat(src, span_warning("我身上没有可供检查的豺狼人皮甲！"))
 		return
 	var/obj/item/clothing/suit/roguetown/armor/regenerating/skin/gnoll_armor/GA = skin_armor
 	GA.Topic(null, list("inspect" = "1"), src)

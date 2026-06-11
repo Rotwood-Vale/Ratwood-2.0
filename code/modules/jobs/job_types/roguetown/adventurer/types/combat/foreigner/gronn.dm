@@ -1,10 +1,10 @@
 //Gronnic Itinerant is a combination subclass.
 //A choice between polearms, ranged, or miracles.
 /datum/advclass/foreigner/gronn
-	name = "Gronnic Itinerant"
-	tutorial = "Whether separated from your clan, or otherwise cast aside? You've found your way to Ferentia. \
-	Bound by blood oaths, violence and any other matter of mania that follows your people, how will you possibly adapt? \
-	Perhaps, if another chief were to find you..."
+	name = "格隆恩 流徙者"
+	tutorial = "不论你是与族群失散，还是被故土抛弃，你终究还是来到了 费伦提亚。\
+	血誓、暴力，以及你族裔一并携来的疯狂仍缠着你不放；你究竟要怎样适应这里？\
+	也许，只要还有另一位酋长愿意接纳你……"
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/gronnic
 	subclass_languages = list(/datum/language/gronnic)
@@ -23,10 +23,10 @@
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 	)
-	extra_context = "Inhumen exclusive. \
-	Bruiser provides: +3STR/-2INT, medium armor training, JMAN polearms and JMAN riding, paired with critical resistance. \
-	Archer provides:  +3PER/+2STR, medium armor training, EXPT bows, JMAN tracking. \
-	Zealot provides: +2SPD/+2STR, dodge expert, T2 miracles."
+	extra_context = "仅限 异民。\
+	打手提供：+3 力量 / -2 智力，中甲训练，熟练长柄与骑术，并附带暴击抗性。\
+	射手提供：+3 感知 / +2 力量，中甲训练，大师弓术，熟练追踪。\
+	狂信者提供：+2 速度 / +2 力量，闪避专精，T2 神迹。"
 
 /datum/outfit/job/roguetown/adventurer/gronnic
 	allowed_patrons = ALL_INHUMEN_PATRONS
@@ -44,10 +44,10 @@
 	backpack_contents = list(/obj/item/rogueweapon/scabbard/sheath)
 
 	if(H.mind)
-		var/gronnish_lot = list("Bruiser","Archer", "Zealot")
-		var/lot_choice = input(H, "Choose your LOT", "WHAT WERE YOU") as anything in gronnish_lot
+		var/gronnish_lot = list("打手","射手", "狂信者")
+		var/lot_choice = input(H, "选择你曾经的身份。", "你曾是什么人") as anything in gronnish_lot
 		switch(lot_choice)
-			if("Bruiser")
+			if("打手")
 				//Equipment
 				head = /obj/item/clothing/head/roguetown/helmet/nomadhelmet
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/scale/steppe
@@ -61,7 +61,7 @@
 				//The rest.
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
-			if("Archer")
+			if("射手")
 				//Equipment
 				head = /obj/item/clothing/head/roguetown/hatfur
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/scale/steppe
@@ -74,7 +74,7 @@
 				H.change_stat(STATKEY_STR, 2)
 				//The rest.
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-			if("Zealot")
+			if("狂信者")
 				//Equipment
 				head = /obj/item/clothing/head/roguetown/hatfur
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/Huus_quyaq

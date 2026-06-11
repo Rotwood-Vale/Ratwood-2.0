@@ -1,6 +1,6 @@
 /obj/structure/gate_vertical
-	name = "vertical gate"
-	desc = "A steel gate that blocks north-south."
+	name = "竖直闸门"
+	desc = "一道阻挡南北通行的钢制闸门。"
 	icon = 'icons/roguetown/misc/verticalgate.dmi'
 	icon_state = "gate1"
 	density = TRUE
@@ -85,9 +85,9 @@
 					part.add_wound(/datum/wound/slash/disembowel)
 				part.add_wound(/datum/wound/fracture)
 				part.dismember()
-				M.visible_message(span_warningbig("[M] is crushed by \the [src]!"), span_userdanger("OH [uppertext(M.patron.name)], MY [uppertext(part.name)]!!!"))
+				M.visible_message(span_warningbig("[M]被[src]猛地碾过！"), span_userdanger("愿[uppertext(M.patron.name)]庇佑，我的[uppertext(part.name)]被碾碎了！"))
 			else
-				M.visible_message(span_warningbig("[M] is crushed by \the [src]!"), span_userdanger("OH [uppertext(M.patron.name)], THE PAIN!!!"))
+				M.visible_message(span_warningbig("[M]被[src]猛地碾过！"), span_userdanger("愿[uppertext(M.patron.name)]庇佑，我被闸门碾中了！"))
 			M.emote("agony")
 			step(M, pick(NORTH, SOUTH))
 			M.Knockdown(50)

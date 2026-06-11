@@ -110,10 +110,10 @@
 	//TODO add some bar hud or something, i think i seen a request like that somewhere
 	if(known_skills[S] >= old_level)
 		if(known_skills[S] > old_level)
-			to_chat(current, span_nicegreen("My [S.name] grows to [SSskills.level_names[known_skills[S]]]!"))
+			to_chat(current, span_nicegreen("我的[S.name]提升到了[SSskills.level_names[known_skills[S]]]！"))
 			if(!COOLDOWN_FINISHED(src, level_up))
 				if(current.client?.prefs.floating_text_toggles & XP_TEXT)
-					current.balloon_alert(current, "<font color = '#9BCCD0'>Level up...</font>")
+					current.balloon_alert(current, "<font color = '#9BCCD0'>升级了……</font>")
 				current.playsound_local(current, pick(LEVEL_UP_SOUNDS), 100, TRUE)
 				COOLDOWN_START(src, level_up, XP_SHOW_COOLDOWN)
 			SEND_SIGNAL(current, COMSIG_SKILL_RANK_INCREASED, S, known_skills[S], old_level)
@@ -124,7 +124,7 @@
 			if(istype(known_skills, /datum/skill/craft))
 				record_round_statistic(STATS_CRAFT_SKILLS)
 	else
-		to_chat(current, span_warning("My [S.name] has weakened to [SSskills.level_names[known_skills[S]]]!"))
+		to_chat(current, span_warning("我的[S.name]下降到了[SSskills.level_names[known_skills[S]]]！"))
 
 /datum/skill_holder/proc/adjust_skillrank_up_to(skill, amt, silent = FALSE)
 	var/datum/skill/S = GetSkillRef(skill)
@@ -216,7 +216,7 @@
 		return
 	if(known_skills[skill_ref] >= old_level)
 		SEND_SIGNAL(current, COMSIG_SKILL_RANK_INCREASED, skill_ref, known_skills[skill_ref], old_level)
-		to_chat(current, span_nicegreen("I feel like I've become more proficient at [skill_ref.name]!"))
+		to_chat(current, span_nicegreen("我感觉自己对[skill_ref.name]更熟练了！"))
 		record_round_statistic(STATS_SKILLS_LEARNED)
 		if(istype(skill_ref, /datum/skill/combat))
 			record_round_statistic(STATS_COMBAT_SKILLS)
@@ -225,7 +225,7 @@
 		if(skill == /datum/skill/misc/reading && old_level == SKILL_LEVEL_NONE && current.is_literate())
 			record_round_statistic(STATS_LITERACY_TAUGHT)
 	else
-		to_chat(current, span_warning("I feel like I've become worse at [skill_ref.name]!"))
+		to_chat(current, span_warning("我感觉自己对[skill_ref.name]变得更生疏了！"))
 
 	if(ishuman(current))
 		var/mob/living/carbon/human/H = current
@@ -321,15 +321,15 @@
 	if(get_skill_level(/datum/skill/misc/music) > SKILL_LEVEL_NONE)
 		shown_skills |= music_skill
 	if(!length(shown_skills))
-		to_chat(user, span_warning("I don't have any skills."))
+		to_chat(user, span_warning("我没有任何技能。"))
 		return
 	var/list/sorted_skills = sortList(shown_skills, GLOBAL_PROC_REF(cmp_skills_for_display))
 	var/bc = "#555555"
 	var/msg = {"<table style='border-collapse: collapse; border: 1px solid [bc];'>"}
 	msg += {"<tr style='border-bottom: 1px solid [bc];'>"}
-	msg += {"<td style='padding: 1px 4px; border-right: 1px solid [bc]; color: #aaaaaa;'><b>Skill</b></td>"}
-	msg += {"<td style='padding: 1px 4px; border-right: 1px solid [bc]; color: #aaaaaa;'><b>Level</b></td>"}
-	msg += {"<td style='padding: 1px 4px; border-right: 1px solid [bc]; color: #aaaaaa;'><b>XP</b></td>"}
+	msg += {"<td style='padding: 1px 4px; border-right: 1px solid [bc]; color: #aaaaaa;'><b>技能</b></td>"}
+	msg += {"<td style='padding: 1px 4px; border-right: 1px solid [bc]; color: #aaaaaa;'><b>等级</b></td>"}
+	msg += {"<td style='padding: 1px 4px; border-right: 1px solid [bc]; color: #aaaaaa;'><b>经验</b></td>"}
 	msg += {"<td style='padding: 1px 2px;'></td>"}
 	msg += "</tr>"
 	for(var/datum/skill/i in sorted_skills)
@@ -345,7 +345,7 @@
 		// Progress column
 		var/progress_col
 		if(is_capped)
-			progress_col = "<b style='color: #cc3333;'>CAPPED</b>"
+			progress_col = "<b style='color: #cc3333;'>已封顶</b>"
 		else if(is_legendary)
 			progress_col = "<span style='color: #555555;'>---</span>"
 		else

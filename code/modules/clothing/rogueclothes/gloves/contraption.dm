@@ -10,12 +10,12 @@
 
 // === CONTRAPTION CORE BEHAVIOR ===
 /obj/item/clothing/gloves/roguetown/contraption/proc/battery_collapse(obj/O, mob/living/user)
-	to_chat(user, span_info("The [accepted_power_source.name] powering [src] fizzles into nothing!"))
+	to_chat(user, span_info("为 [src] 供能的 [accepted_power_source.name] 彻底化作了虚无！"))
 	playsound(src, pick('sound/combat/hits/onmetal/grille (1).ogg','sound/combat/hits/onmetal/grille (2).ogg'), 100, FALSE)
 	qdel(src)
 
 /obj/item/clothing/gloves/roguetown/contraption/proc/misfire(obj/O, mob/living/user)
-	to_chat(user, span_danger("[src] spark violently in your hands!"))
+	to_chat(user, span_danger("[src] 在你手中猛烈迸出火花！"))
 	playsound(src, 'sound/misc/bell.ogg', 100)
 	addtimer(CALLBACK(src, PROC_REF(misfire_result), O, user), rand(5, 30))
 
@@ -31,8 +31,8 @@
 
 
 /obj/item/clothing/gloves/roguetown/contraption/voltic
-	name = "voltic contraption gauntlets"
-	desc = "A gauntlet of bronze and brass, fitted with whirring machinery and etched with voltic runes. It hums with unstable energy."
+	name = "伏电机关护手"
+	desc = "由青铜与黄铜制成的护手，装有嗡鸣运转的机械，并刻满伏电符文。它正因不稳定的能量而低鸣。"
 	icon_state = "volticgauntlets"
 	slot_flags = ITEM_SLOT_GLOVES
 	var/activate_sound = 'sound/items/stunmace_gen (2).ogg'
@@ -51,9 +51,9 @@
 /obj/item/clothing/gloves/roguetown/contraption/voltic/attackby(obj/item/I, mob/user, params)
 	if(istype(I, accepted_power_source))
 		if(current_charge)
-			to_chat(user, span_warning("The gauntlets already have a [initial(accepted_power_source.name)] inside!"))
+			to_chat(user, span_warning("护手里已经装有一个 [initial(accepted_power_source.name)] 了！"))
 		else
-			to_chat(user, span_info("You insert the [I.name]. The gauntlets begin to hum with power."))
+			to_chat(user, span_info("你装入了 [I.name]。护手开始因力量而嗡鸣。"))
 			current_charge = charge_per_source
 			playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
 			qdel(I)
@@ -66,9 +66,9 @@
 		return
 	if(cooldowny)
 		if(world.time < cooldowny + cdtime)
-			to_chat(user, span_warning("Nothing happens."))
+			to_chat(user, span_warning("什么也没发生。"))
 			return
-	user.visible_message(span_warning("[user] primes the [src]!"))
+	user.visible_message(span_warning("[user] 启动了 [src]！"))
 	if(activate_sound)
 		playsound(user, activate_sound, 100, FALSE, -1)
 	cooldowny = world.time
@@ -82,7 +82,7 @@
 	update_icon()
 	if(ismob(loc))
 		var/mob/user = loc
-		user.visible_message(span_warning("[src] settles down."))
+		user.visible_message(span_warning("[src] 平静了下来。"))
 		user.update_inv_wear_id()
 
 // === VOLTIC ZAP ===
@@ -90,7 +90,7 @@
 	if (!user)
 		return
 	if (!current_charge)
-		to_chat(user, span_warning("The gauntlets sputter. It needs a [initial(accepted_power_source.name)]!"))
+		to_chat(user, span_warning("护手噼啪作响。它需要一个 [initial(accepted_power_source.name)]！"))
 		playsound(src, 'sound/magic/magic_nulled.ogg', 100)
 		return
 	var/skill = user.get_skill_level(/datum/skill/craft/engineering)
@@ -105,14 +105,14 @@
 	// Find targets in range
 	for (var/mob/living/carbon/C in view(2, user))
 		if (C.anti_magic_check())
-			visible_message(span_warning("The lightning fizzles harmlessly against [C]!"))
+			visible_message(span_warning("电光在 [C] 身上无害地消散了！"))
 			playsound(get_turf(C), 'sound/magic/magic_nulled.ogg', 100)
 			continue
 		if (C == user)
 			continue
 		valid_targets += C
-		user.visible_message(span_warning("[C] is connected to [user] with a voltic link!"),
-		span_warning("You create a static link with [C]."))
+		user.visible_message(span_warning("[C] 与 [user] 之间连起了一道伏电链！"),
+		span_warning("你与 [C] 建立了一道静电链接。"))
 
 	if (!valid_targets.len)
 		return
@@ -138,4 +138,4 @@
 				C.apply_status_effect(/datum/status_effect/buff/lightningstruck, 6 SECONDS)
 		else
 			playsound(user, 'sound/items/stunmace_toggle (3).ogg', 100)
-			user.visible_message(span_warning("The voltaic link fizzles out!"), span_warning("[C] is too far away!"))
+			user.visible_message(span_warning("伏电链接熄灭了！"), span_warning("[C] 太远了！"))

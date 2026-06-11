@@ -1,7 +1,7 @@
 /datum/advclass/vagabond_courier
-	name = "Ambushed Courier"
-	examine_name = "Beggar"
-	tutorial = "Entrusted with a message of great import, your fortunes fell by the roadside at the behest of a group of Matthiosian scum. Bereft of mount and master, you now wander the realm for purpose and sustenance."
+	name = "遇伏信使"
+	examine_name = "乞丐"
+	tutorial = "你曾肩负一封意义重大的书信，却在路上栽在一伙 马西奥斯ian 杂碎手里。失了坐骑，也失了主人，如今你只能在世间漂泊，寻找活下去的理由与口粮。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/vagabond/courier

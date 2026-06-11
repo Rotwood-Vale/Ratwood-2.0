@@ -1,6 +1,6 @@
 /obj/item/clothing/under/roguetown/chainlegs
-	name = "steel chain chausses"
-	desc = "Chain leggings composed of interlinked metal rings."
+	name = "钢制锁甲腿铠"
+	desc = "由环环相扣的金属圆环构成的锁甲护腿。"
 	gender = PLURAL
 	icon_state = "chain_legs"
 	item_state = "chain_legs"
@@ -25,8 +25,8 @@
 	AddComponent(/datum/component/item_equipped_movement_rustle)
 
 /obj/item/clothing/under/roguetown/splintlegs
-	name = "brigandine chausses"
-	desc = "Splint mail and brigandine chausses, designed to protect the legs while still providing almost complete free range of movement."
+	name = "板条腿铠"
+	desc = "由拼甲与板条甲构成的腿铠，在保护双腿的同时几乎不影响自由活动。"
 	icon_state = "splintlegs"
 	item_state = "splintlegs"
 	max_integrity = ARMOR_INT_LEG_BRIGANDINE
@@ -52,8 +52,8 @@
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_STEP)
 
 /obj/item/clothing/under/roguetown/splintlegs/iron
-	name = "splinted leggings"
-	desc = "A pair of leather pants backed with iron splints, offering superior protection while remaining lightweight."
+	name = "拼铁护腿"
+	desc = "一条背衬铁条的皮裤，在保持轻便的同时提供更强防护。"
 	icon_state = "ironsplintlegs"
 	item_state = "ironsplintlegs"
 	max_integrity = ARMOR_INT_LEG_IRON_CHAIN
@@ -71,23 +71,23 @@
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/clothing/under/roguetown/chainlegs/iron
-	name = "iron chain chausses"
+	name = "铁制锁甲腿铠"
 	icon_state = "ichain_legs"
 	max_integrity = ARMOR_INT_LEG_IRON_CHAIN
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/clothing/under/roguetown/chainlegs/skirt
-	name = "steel chain skirt"
-	desc = "A knee-length maille skirt, warding cuts against the thighs without slowing the feet."
+	name = "钢制锁甲裙"
+	desc = "一件及膝锁甲裙，能保护大腿免受斩击，却不会拖慢步伐。"
 	icon_state = "chain_skirt"
 	item_state = "chain_skirt"
 	body_parts_covered = GROIN
 	armor_class = ARMOR_CLASS_LIGHT
 
 /obj/item/clothing/under/roguetown/chainlegs/kilt
-	name = "steel chain kilt"
-	desc = "Interlinked metal rings that drape down all the way to the ankles."
+	name = "钢制锁甲裙铠"
+	desc = "环环相扣的金属圆环一路垂落至脚踝。"
 	icon_state = "chainkilt"
 	item_state = "chainkilt"
 	sleevetype = "chainkilt"
@@ -96,23 +96,23 @@
 	dropshrink = 0.8
 
 /obj/item/clothing/under/roguetown/chainlegs/kilt/ancient
-	name = "ancient chain kilt"
-	desc = "Polished gilbranze rings, linked together with bindings of silk to form a waist's vestment. These undying legionnaires once marched for Vheslyn, and again for Zizo; but now, they are utterly beholden to the whims of their resurrector."
+	name = "远古锁甲裙铠"
+	desc = "抛光的gilbranze环片以丝带相连，组成腰间护衣。这些不死军团士兵曾为Vheslyn而行军，后来又追随Zizo；而如今，他们彻底听命于唤醒他们之人的心意。"
 	icon_state = "achainkilt"
 	sleevetype = "achainkilt"
 	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = /datum/skill/craft/armorsmithing
 
 /obj/item/clothing/under/roguetown/chainlegs/kilt/ancient/decrepit
-	name = "decrepit chain kilt"
-	desc = "Frayed bronze rings, linked together with bindings of rotting leather to form a waist's drape. The maille jingles with every step, singing the hymn to a cadence once savored by marching legionnaires."
+	name = "残破锁甲裙铠"
+	desc = "破旧的青铜圆环以腐朽皮带相连，形成垂挂于腰间的护片。锁甲随着每一步发出叮当声，仿佛唱着昔日军团行军者所钟爱的节律圣歌。"
 	max_integrity = ARMOR_INT_LEG_DECREPIT_CHAIN
 	color = "#bb9696"
 	anvilrepair = null
 
 /obj/item/clothing/under/roguetown/chainlegs/iron/kilt
-	name = "iron chain kilt"
-	desc = "Interlinked metal rings that drape down all the way to the ankles."
+	name = "铁制锁甲裙铠"
+	desc = "环环相扣的金属圆环一路垂落至脚踝。"
 	icon_state = "ichainkilt"
 	item_state = "ichainkilt"
 	sleevetype = "ichainkilt"
@@ -121,8 +121,8 @@
 	dropshrink = 0.8
 
 /obj/item/clothing/under/roguetown/chainlegs/captain
-	name = "captain's chausses"
-	desc = "Cuisses made of plated steel, offering additional protection against blunt force and projectiles. These are specially fitted for the captain."
+	name = "队长腿铠"
+	desc = "以钢板制成的腿甲，对钝击和投射物有额外防护。这一套是专门为队长量身打造的。"
 	icon_state = "capplateleg"
 	item_state = "capplateleg"
 	armor = ARMOR_CUIRASS // Unique armor, uniquely good value coverage.

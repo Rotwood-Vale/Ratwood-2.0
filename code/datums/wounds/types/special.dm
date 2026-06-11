@@ -1,5 +1,5 @@
 /datum/wound/facial
-	name = "facial trauma"
+	name = "面部创伤"
 	sound_effect = 'sound/combat/crit.ogg'
 	severity = WOUND_SEVERITY_SEVERE
 	whp = null
@@ -14,11 +14,11 @@
 	return TRUE
 
 /datum/wound/facial/ears
-	name = "tympanosectomy"
-	check_name = span_danger("EARS")
+	name = "鼓膜切裂"
+	check_name = span_danger("耳部")
 	crit_message = list(
-		"The eardrums are gored!",
-		"The eardrums are ruptured!",
+		"耳膜被刺穿了！",
+		"耳膜破裂了！",
 	)
 	can_sew = FALSE
 	can_cauterize = FALSE
@@ -40,12 +40,12 @@
 		ears.forceMove(affected.drop_location())
 
 /datum/wound/facial/eyes
-	name = "eye evisceration"
-	check_name = span_warning("EYE")
+	name = "眼球毁损"
+	check_name = span_warning("眼部")
 	crit_message = list(
-		"The eye is poked!",
-		"The eye is gouged!",
-		"The eye is destroyed!",
+		"眼睛被刺中了！",
+		"眼球被挖伤了！",
+		"眼睛被毁了！",
 	)
 	woundpain = 30
 	can_sew = FALSE
@@ -66,12 +66,12 @@
 		affected.blind_eyes(5)
 
 /datum/wound/facial/eyes/right
-	name = "right eye evisceration"
-	check_name = span_danger("RIGHT EYE")
+	name = "右眼毁损"
+	check_name = span_danger("右眼")
 	crit_message = list(
-		"The right eye is poked!",
-		"The right eye is gouged!",
-		"The right eye is destroyed!",
+		"右眼被刺中了！",
+		"右眼被挖伤了！",
+		"右眼被毁了！",
 	)
 
 /datum/wound/facial/eyes/right/can_stack_with(datum/wound/other)
@@ -101,12 +101,12 @@
 	do_blinding = FALSE
 
 /datum/wound/facial/eyes/left
-	name = "left eye evisceration"
-	check_name = span_danger("LEFT EYE")
+	name = "左眼毁损"
+	check_name = span_danger("左眼")
 	crit_message = list(
-		"The left eye is poked!",
-		"The left eye is gouged!",
-		"The left eye is destroyed!",
+		"左眼被刺中了！",
+		"左眼被挖伤了！",
+		"左眼被毁了！",
 	)
 
 /datum/wound/facial/eyes/left/can_stack_with(datum/wound/other)
@@ -136,12 +136,12 @@
 	do_blinding = FALSE
 
 /datum/wound/facial/tongue
-	name = "glossectomy"
-	check_name = span_danger("TONGUE")
+	name = "舌切创"
+	check_name = span_danger("舌头")
 	crit_message = list(
-		"The tongue is cut!",
-		"The tongue is severed!",
-		"The tongue flies off in an arc!"
+		"舌头被割开了！",
+		"舌头被切断了！",
+		"舌头打着旋飞了出去！"
 	)
 	woundpain = 20
 	can_sew = FALSE
@@ -163,10 +163,10 @@
 		tongue_up_my_asshole.forceMove(affected.drop_location())
 
 /datum/wound/facial/disfigurement
-	name = "disfigurement"
-	check_name = span_warning("FACE")
+	name = "毁容"
+	check_name = span_warning("面部")
 	severity = 0
-	crit_message = "The face is mangled beyond recognition!"
+	crit_message = "脸被毁得完全认不出来了！"
 	whp = null
 	woundpain = 20
 	mob_overlay = "cut"
@@ -183,11 +183,11 @@
 	REMOVE_TRAIT(affected, TRAIT_DISFIGURED, "[type]")
 
 /datum/wound/facial/disfigurement/nose
-	name = "rhinotomy"
-	check_name = span_warning("NOSE")
+	name = "鼻毁伤"
+	check_name = span_warning("鼻部")
 	crit_message = list(
-		"The nose is mangled beyond recognition!",
-		"The nose is destroyed!",
+		"鼻子被毁得完全认不出来了！",
+		"鼻子被毁了！",
 	)
 	mortal = TRUE
 	woundpain = 10
@@ -202,11 +202,11 @@
 
 
 /datum/wound/cbt
-	name = "testicular torsion"
-	check_name = span_userdanger("<B>NUTCRACK</B>")
+	name = "睾丸扭转"
+	check_name = span_userdanger("<B>碎蛋</B>")
 	crit_message = list(
-		"The testicles are twisted!",
-		"The testicles are torsioned!",
+		"睾丸扭曲了！",
+		"睾丸发生扭转了！",
 	)
 	whp = 50
 	woundpain = 100
@@ -227,20 +227,20 @@
 	. = ..()
 	affected.emote("groin", forced = TRUE)
 	affected.Stun(20)
-	to_chat(affected, span_userdanger("Something twists inside my groin!"))
+	to_chat(affected, span_userdanger("我的胯下有什么东西扭起来了！"))
 	if(affected.gender != MALE)
-		name = "ovarian torsion"
-		check_name = span_userdanger("<B>EGGCRACK</B>")
+		name = "卵巢扭转"
+		check_name = span_userdanger("<B>碎卵</B>")
 		crit_message = list(
-			"The ovaries are twisted!",
-			"The ovaries are torsioned!",
+			"卵巢扭曲了！",
+			"卵巢发生扭转了！",
 		)
 	else
-		name = "testicular torsion"
-		check_name = span_userdanger("<B>NUTCRACK</B>")
+		name = "睾丸扭转"
+		check_name = span_userdanger("<B>碎蛋</B>")
 		crit_message = list(
-			"The testicles are twisted!",
-			"The testicles are torsioned!",
+			"睾丸扭曲了！",
+			"睾丸发生扭转了！",
 		)
 
 /datum/wound/cbt/on_life()
@@ -252,38 +252,38 @@
 		carbon_owner.vomit(1, stun = TRUE)
 
 /datum/wound/cbt/permanent
-	name = "testicular evisceration"
+	name = "睾丸毁损"
 	crit_message = list(
-		"The testicles are destroyed!",
-		"The testicles are eviscerated!",
+		"睾丸被毁了！",
+		"睾丸被彻底挖烂了！",
 	)
 	whp = null
 
 /datum/wound/cbt/permanent/on_mob_gain(mob/living/affected)
 	. = ..()
 	if(affected.gender != MALE)
-		name = "ovarian evisceration"
-		check_name = span_userdanger("<B>EGGCRACK</B>")
+		name = "卵巢毁损"
+		check_name = span_userdanger("<B>碎卵</B>")
 		crit_message = list(
-			"The ovaries are destroyed!",
-			"The ovaries are eviscerated!",
+			"卵巢被毁了！",
+			"卵巢被彻底挖烂了！",
 		)
 	else
-		name = "testicular evisceration"
-		check_name = span_userdanger("<B>NUTCRACK</B>")
+		name = "睾丸毁损"
+		check_name = span_userdanger("<B>碎蛋</B>")
 		crit_message = list(
-			"The testicles are destroyed!",
-			"The testicles are eviscerated!",
+			"睾丸被毁了！",
+			"睾丸被彻底挖烂了！",
 		)
 
 /datum/wound/scarring
-	name = "permanent scarring"
-	check_name = "<span class='userdanger'><B>SCARRED</B></span>"
+	name = "永久疤痕"
+	check_name = "<span class='userdanger'><B>留疤</B></span>"
 	severity = WOUND_SEVERITY_SEVERE
 	crit_message = list(
-		"The whiplash cuts deep!",
-		"The tissue is irreversibly rended!",
-		"The %BODYPART is thoroughly disfigured!",
+		"鞭痕深深裂开血肉！",
+		"组织已被不可逆地撕裂！",
+		"%BODYPART已被彻底毁坏！",
 	)
 	sound_effect = 'sound/combat/crit.ogg'
 	whp = 80
@@ -310,8 +310,8 @@
 /// grievous wounds exist to provide a solution for "two-stage death" - aka where you want someone to DIE IMMEDIATELY upon dismemberment of a crucial bodypart, but not actually lose it.
 /// the spiritual intent here is to provide a little bit of protection from accidental decaps
 /datum/wound/grievous
-	name = "grievous wound"
-	check_name = span_danger("<B>grievous</B>")
+	name = "重创"
+	check_name = span_danger("<B>重创</B>")
 	severity = WOUND_SEVERITY_FATAL
 	whp = 150
 	woundpain = 100
@@ -338,19 +338,19 @@
 		return
 	bodypart_owner?.dismemberable = initial(bodypart_owner?.dismemberable)
 	if (bodypart_owner?.skeletonized)
-		owner?.visible_message(span_smallred("Delicate craze lines creep up along <b>[owner]</b>'s sundered skull..."))
+		owner?.visible_message(span_smallred("细密裂纹沿着<b>[owner]</b>破碎的头骨缓缓蔓延……"))
 	else
-		owner?.visible_message(span_smallred("The musculature around <b>[owner]</b>'s [bodypart_owner.name] relaxes its agonal seizing..."))
+		owner?.visible_message(span_smallred("<b>[owner]</b>的[bodypart_owner.name]周围痉挛的肌肉终于缓缓松弛……"))
 
 /datum/wound/grievous/remove_from_bodypart(force = FALSE)
 	bodypart_owner?.grievously_wounded = FALSE
 	. = ..()
 
 /datum/wound/grievous/pre_decapitation
-	name = "massacred spinal column"
+	name = "碎裂脊柱"
 
 /datum/wound/grievous/pre_skullshatter
-	name = "shattered skull"
+	name = "粉碎颅骨"
 
 //Unique wounds for ooze-people.
 /datum/wound/slime
@@ -460,10 +460,10 @@
 #undef OOZE_UPG_SELFHEAL
 
 /datum/wound/sunder
-	name = "sundered"
-	check_name = "<span class='userdanger'><B>SUNDERED</B></span>"
+	name = "圣焰灼裂"
+	check_name = "<span class='userdanger'><B>灼裂</B></span>"
 	crit_message = list(
-		"The %BODYPART is engulfed in blessed fire!",
+		"%BODYPART被神圣火焰吞没了！",
 	)
 	sound_effect = 'sound/combat/crit.ogg'
 	whp = 80
@@ -474,11 +474,11 @@
 	bypass_bloody_wound_check = FALSE
 
 /datum/wound/sunder/chest
-	name = "sundered lux"
-	check_name = span_artery("<B>SUNDERED LUX</B>")
+	name = "圣焰裂胸"
+	check_name = span_artery("<B>裂胸圣焰</B>")
 	crit_message = list(
-		"Blessed flames erupt from %VICTIM's chest!",
-		"Molten lux splatters out from %VICTIM's sundered ribs!",
+		"神圣火焰自%VICTIM的胸膛喷涌而出！",
+		"熔融圣辉从%VICTIM碎裂的肋骨间飞溅而出！",
 	)
 	severity = WOUND_SEVERITY_FATAL
 	bypass_bloody_wound_check = TRUE
@@ -495,9 +495,9 @@
 		var/mob/living/carbon/carbon_affected = affected
 		carbon_affected.vomit(blood = TRUE)
 	var/goodbye = list(\
-		"PSYDON GRABS MY WEARY... LUX?!",\
-		"MY LUX MELTS AWAY FROM THIS PIERCED HEART!",\
-		"OH, SHIT!"\
+		"PSYDON夺走了我衰竭的……圣辉？！",\
+		"我的圣辉正从这颗被洞穿的心脏中熔散！",\
+		"操，我的天！"\
 	)
 	to_chat(affected, span_userdanger(pick(goodbye)))
 	affected.apply_status_effect(/datum/status_effect/debuff/devitalised)
@@ -505,11 +505,11 @@
 		affected.death()
 
 /datum/wound/sunder/head
-	name = "sundered head"
-	check_name = span_artery("<B>SUNDERED HEAD</B>")
+	name = "圣焰裂首"
+	check_name = span_artery("<B>灼裂头颅</B>")
 	crit_message = list(
-		"Blessed flames erupt from %VICTIM's head!",
-		"%VICTIM's head is set on fire by the SACRED FLAMES!",
+		"神圣火焰自%VICTIM的头颅喷涌而出！",
+		"%VICTIM的头颅被圣焰点燃了！",
 	)
 	severity = WOUND_SEVERITY_FATAL
 	bypass_bloody_wound_check = TRUE
@@ -526,9 +526,9 @@
 		var/mob/living/carbon/carbon_affected = affected
 		carbon_affected.vomit(blood = TRUE)
 	var/goodbye = list(\
-		"MY HEAD, MY HEAD! IT BURNS!!!",\
-		"MY HEAD IS ENGULFED IN FLAMES!!!",\
-		"OH, SHIT!"\
+		"我的头，我的头！在燃烧！！！",\
+		"我的脑袋被火焰吞没了！！！",\
+		"操，我的天！"\
 	)
 	to_chat(affected, span_userdanger(pick(goodbye)))
 	if(HAS_TRAIT(owner, TRAIT_SILVER_WEAK) && !owner.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
@@ -538,13 +538,13 @@
 //Does not disable limbs.
 //High pain. No bleed. All the time. Can sleep it off.
 /datum/wound/burn
-	name = "burns"
-	check_name = "<span class='userdanger'><B>CHARRED</B></span>"
+	name = "烧伤"
+	check_name = "<span class='userdanger'><B>焦灼</B></span>"
 	severity = WOUND_SEVERITY_SEVERE
 	crit_message = list(
-		"The tissue is marred by a horrid burn!",
-		"The smell of burnt flesh surrounds the %BODYPART!",
-		"The %BODYPART is thoroughly burnt!",
+		"组织被可怖的烧伤毁坏了！",
+		"%BODYPART周围弥漫着焦肉味！",
+		"%BODYPART被彻底烧焦了！",
 	)
 	sound_effect = 'sound/combat/sizzle1.ogg'
 	whp = 100
@@ -570,8 +570,8 @@
 	return TRUE
 
 /datum/wound/heatexhaustion
-	name = "heat exhaustion"
-	check_name = span_warning("HEATEXHAUSTION")
+	name = "热衰竭"
+	check_name = span_warning("热衰竭")
 	severity = 0
 	crit_message = ""
 	whp = null
@@ -593,7 +593,7 @@
 	. = ..()
 	start_time = world.time
 	if(!owner.stat)
-		to_chat(owner, span_warning("A wave of heat washes over me... I feel faint."))
+		to_chat(owner, span_warning("热浪席卷了我……我快要晕过去了。"))
 	owner.overlay_fullscreen("heatexhaust", /atom/movable/screen/fullscreen/heatexhaust)
 
 /datum/wound/heatexhaustion/on_life()
@@ -606,27 +606,27 @@
 
 	// If cooled off, remove heat exhaustion
 	if(C.bodytemperature <= BODYTEMP_NORMAL_MAX)
-		to_chat(C, span_notice("Cool air steadies me. The worst of the heat passes."))
+		to_chat(C, span_notice("凉意让我缓过神来，最难熬的热浪过去了。"))
 		C.clear_fullscreen("heatexhaust")
 		qdel(src)
 		return
 
 	// Occasional discomfort message
 	if(!C.stat && prob(5))
-		to_chat(C, span_warning("My vision swims from the heat..."))
+		to_chat(C, span_warning("热得我眼前发花……"))
 
 	// After 2 minute, convert to heatstroke
 	if(world.time >= start_time + duration)
 		var/obj/item/bodypart/BP = bodypart_owner
 		if(BP)
-			to_chat(C, span_userdanger("The heat overwhelms me!"))
+			to_chat(C, span_userdanger("热浪彻底压垮了我！"))
 			BP.add_wound(/datum/wound/heatstroke)
 		C.clear_fullscreen("heatexhaust")
 		qdel(src)
 
 /datum/wound/heatstroke
-	name = "heatstroke"
-	check_name = span_warning("HEATSTROKE")
+	name = "中暑"
+	check_name = span_warning("中暑")
 	severity = 0
 	crit_message = ""
 	whp = null
@@ -658,13 +658,13 @@
 	if(!C.stat && prob(5))
 		if(prob(5))
 			C.vomit(1, blood = FALSE, stun = TRUE)
-		to_chat(owner, span_warning("The world is spinning!"))
+		to_chat(owner, span_warning("天旋地转！"))
 		C.Dizzy(10)
 
 	// If temperature is normal, start cure timer
 	if(C.bodytemperature <= BODYTEMP_NORMAL_MAX)
 		if(!cure_timer)
-			to_chat(C, span_notice("The heat begins to slowly fade from my body..."))
+			to_chat(C, span_notice("体内的热意开始慢慢退去……"))
 			cure_timer = addtimer(CALLBACK(src, PROC_REF(cure_heatstroke)), 2 MINUTES)
 
 	// If overheating again, cancel cure timer
@@ -683,7 +683,7 @@
 		return
 
 	var/mob/living/carbon/C = owner
-	to_chat(owner, span_warning("The world has stopped spinning."))
+	to_chat(owner, span_warning("世界终于不再旋转了。"))
 	C.set_dizziness(0)
 
 /datum/wound/heatstroke/proc/cure_heatstroke()
@@ -692,13 +692,13 @@
 
 	var/mob/living/carbon/human/H = owner
 
-	to_chat(H, span_notice("The world finally stops spinning as the heat leaves me."))
+	to_chat(H, span_notice("随着热意离体，世界终于彻底停止了旋转。"))
 	H.clear_fullscreen("heatstroke")
 	qdel(src)
 
 /datum/wound/frostbite
-	name = "frostbite"
-	check_name = span_blue("FROSTBITE")
+	name = "冻伤"
+	check_name = span_blue("冻伤")
 	severity = 0
 	crit_message = ""
 	whp = null
@@ -738,7 +738,7 @@
 			last_stage_tick = world.time
 
 			if(stage >= 1)
-				to_chat(C, span_notice("The feeling slowly returns to my [BP]..."))
+				to_chat(C, span_notice("[BP]的知觉正慢慢恢复……"))
 				disabling = FALSE
 				update_stage_name()
 			else
@@ -752,9 +752,9 @@
 
 		switch(stage)
 			if(2)
-				to_chat(C, span_userdanger("My [BP] is completely numb..."))
+				to_chat(C, span_userdanger("我的[BP]已经完全麻木了……"))
 			if(3)
-				to_chat(C, span_userdanger("My [BP] feels dead and brittle!"))
+				to_chat(C, span_userdanger("我的[BP]像死掉了一样，又脆又硬！"))
 				disabling = TRUE
 
 	// Damage scaling per stage
@@ -783,12 +783,12 @@
 		if(3)
 			stage_text = "III"
 
-	check_name = span_blue("FROSTBITE ([stage_text])")
+	check_name = span_blue("冻伤（[stage_text]期）")
 
 
 /datum/wound/hypothermia
-	name = "hypothermia"
-	check_name = span_blue("HYPOTHERMIA")
+	name = "失温"
+	check_name = span_blue("失温")
 	severity = 0
 	crit_message = ""
 	whp = 40
@@ -821,20 +821,20 @@
 
 	// If warmed up, remove hypothermia
 	if(C.bodytemperature >= BODYTEMP_NORMAL_MIN)
-		to_chat(C, span_notice("Feeling returns to my body as I warm up."))
+		to_chat(C, span_notice("随着身体回暖，知觉重新回到了四肢。"))
 		C.clear_fullscreen("hypothermia")
 		qdel(src)
 		return
 
 	// Occasional discomfort message
 	if(!C.stat && prob(5))
-		to_chat(C, span_warning("I can't stop shivering..."))
+		to_chat(C, span_warning("我止不住地发抖……"))
 
 	// After 2 minutes, convert to frostbite
 	if(world.time >= start_time + duration)
 		var/obj/item/bodypart/BP = bodypart_owner
 		if(BP)
-			to_chat(C, span_userdanger("I feel pins and needles in [BP]!"))
+			to_chat(C, span_userdanger("[BP]传来一阵针刺般的麻痛！"))
 			BP.add_wound(/datum/wound/frostbite)
 			C.clear_fullscreen("hypothermia")
 		qdel(src)

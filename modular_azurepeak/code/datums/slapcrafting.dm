@@ -107,12 +107,12 @@ with edits to work for roguecode */
 
 	var/atom/final_result = initial(actual_recipe.result)
 
-	to_chat(user, span_notice("You start crafting \a [initial(final_result.name)]..."))
+	to_chat(user, span_notice("你开始制作[initial(final_result.name)]了......"))
 
 	var/error_string = craft_sheet.construct_item_repeatable(user, actual_recipe)
 
 	if(istext(error_string))
-		to_chat(user, span_warning("Crafting failed[error_string]"))
+		to_chat(user, span_warning("制作失败了[error_string]"))
 
 /// Alerts any examiners to the recipe, if they wish to know more.
 /datum/element/slapcrafting/proc/get_examine_info(atom/source, mob/user, list/examine_list)
@@ -129,7 +129,7 @@ with edits to work for roguecode */
 		already_used_names += initial(result.name)
 		string_results += list("\a [initial(result.name)]")
 
-	examine_list["crafting component"] = "You think [source] could be used to make [english_list(string_results)]! Examine again to look at the details..."
+	examine_list["crafting component"] = "你觉得[source]可以用来制作[english_list(string_results)]！再次检视可查看详细内容......"
 
 /// Alerts any examiners to the details of the recipe.
 /datum/element/slapcrafting/proc/get_examine_more_info(atom/source, mob/user, list/examine_list)
@@ -137,7 +137,7 @@ with edits to work for roguecode */
 
 	for(var/datum/crafting_recipe/recipe as anything in slapcraft_recipes)
 		var/atom/result = initial(recipe.result)
-		examine_list += "<a href='byond://?src=[REF(source)];check_recipe=[REF(recipe)]'>See Recipe For [initial(result.name)]</a>"
+		examine_list += "<a href='byond://?src=[REF(source)];check_recipe=[REF(recipe)]'>查看[initial(result.name)]的配方</a>"
 
 /datum/element/slapcrafting/proc/topic_handler(atom/source, user, href_list)
 	SIGNAL_HANDLER
@@ -152,7 +152,7 @@ with edits to work for roguecode */
 
 	var/atom/result = initial(cur_recipe.result)
 
-	to_chat(user, span_notice("You could craft \a [initial(result.name)] by applying one of these items to it!"))
+	to_chat(user, span_notice("你可以把下列某个物品用在它上面，以制作[initial(result.name)]！"))
 
 	// Gotta instance it to copy the lists over.
 	cur_recipe = new cur_recipe()
@@ -182,7 +182,7 @@ with edits to work for roguecode */
 
 	// If we did find ingredients then add them onto the list.
 	if(length(string_ingredient_list))
-		to_chat(user, span_boldnotice("Extra Ingredients:"))
+		to_chat(user, span_boldnotice("额外材料："))
 		to_chat(user, span_danger(span_notice(string_ingredient_list)))
 
 	var/list/tool_list = ""
@@ -196,7 +196,7 @@ with edits to work for roguecode */
 		tool_list += "\a [string]\n"
 
 	if(length(tool_list))
-		to_chat(user, span_boldnotice("Required Tools:"))
+		to_chat(user, span_boldnotice("所需工具："))
 		to_chat(user, span_danger(span_notice(tool_list)))
 
 	qdel(cur_recipe)

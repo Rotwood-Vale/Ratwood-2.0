@@ -1,5 +1,5 @@
 /datum/mob_descriptor/age
-	name = "Age"
+	name = "年龄"
 	slot = MOB_DESCRIPTOR_SLOT_AGE
 	verbage = "%LOOK%"
 
@@ -11,16 +11,16 @@
 /datum/mob_descriptor/age/get_description(mob/living/described)
 	var/mob/living/carbon/human/H = described
 	if(H.age == AGE_OLD)
-		return "old"
+		return "年迈"
 	else if (H.age == AGE_MIDDLEAGED)
-		return "middle-aged"
+		return "中年"
 	else
-		return "adult"
+		return "成年"
 
 /datum/mob_descriptor/penis
-	name = "penis"
+	name = "阴茎"
 	slot = MOB_DESCRIPTOR_SLOT_PENIS
-	verbage = "has"
+	verbage = "有着"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/penis/can_describe(mob/living/described)
@@ -45,46 +45,46 @@
 	var/arousal_modifier
 	switch(penis.penis_size)
 		if(1)
-			adjective = "a small"
+			adjective = "小巧的"
 		if(2)
-			adjective = "an average"
+			adjective = "普通的"
 		if(3)
-			adjective = "a large"
+			adjective = "硕大的"
 	if(H.sexcon)
 		switch(H.sexcon.arousal)
 			if(80 to INFINITY)
-				arousal_modifier = ", throbbing violently"
+				arousal_modifier = "，正在剧烈搏动"
 			if(50 to 80)
-				arousal_modifier = ", turgid and leaky"
+				arousal_modifier = "，胀硬而渗液"
 			if(20 to 50)
-				arousal_modifier = ", stiffened and twitching"
+				arousal_modifier = "，绷紧并微微抽搐"
 			else
-				arousal_modifier = ", soft and flaccid"
+				arousal_modifier = "，柔软而松弛"
 	else
-		arousal_modifier = ", soft and flaccid"
+		arousal_modifier = "，柔软而松弛"
 	var/used_name
 	if(penis.erect_state != ERECT_STATE_HARD && penis.sheath_type != SHEATH_TYPE_NONE)
 		switch(penis.sheath_type)
 			if(SHEATH_TYPE_NORMAL)
 				if(penis.penis_size == 3)
-					used_name = "a fat sheath"
+					used_name = "肥厚的鞘皮"
 				else if(penis.penis_size == 1)
-					used_name = "a meager sheath"
+					used_name = "瘦小的鞘皮"
 				else
-					used_name = "a sheath"
+					used_name = "鞘皮"
 			if(SHEATH_TYPE_SLIT)
-				used_name = "a genital slit"
+				used_name = "生殖裂缝"
 	else
 		used_name = "[adjective] [penis.name][arousal_modifier]"
 	var/branded = ""
 	if(length(penis.branded_writing))
-		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(penis.branded_writing)]</span>"
+		branded = "，烙有<span style='font-size:125%;'>[span_boldwarning(penis.branded_writing)]</span>"
 	return "[used_name][branded]"
 
 /datum/mob_descriptor/testicles
-	name = "balls"
+	name = "睾丸"
 	slot = MOB_DESCRIPTOR_SLOT_TESTICLES
-	verbage = "has"
+	verbage = "有着"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/testicles/can_describe(mob/living/described)
@@ -111,20 +111,20 @@
 	var/adjective
 	switch(testes.ball_size)
 		if(1)
-			adjective = "a small"
+			adjective = "一对小巧的"
 		if(2)
-			adjective = "an average"
+			adjective = "一对普通的"
 		if(3)
-			adjective = "a large"
+			adjective = "一对硕大的"
 	var/branded = ""
 	if(length(testes.branded_writing))
-		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(testes.branded_writing)]</span>"
-	return "[adjective] pair of balls[branded]"
+		branded = "，烙有<span style='font-size:125%;'>[span_boldwarning(testes.branded_writing)]</span>"
+	return "[adjective]睾丸[branded]"
 
 /datum/mob_descriptor/vagina
-	name = "vagina"
+	name = "阴道"
 	slot = MOB_DESCRIPTOR_SLOT_VAGINA
-	verbage = "has"
+	verbage = "有着"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/vagina/can_describe(mob/living/described)
@@ -149,35 +149,35 @@
 	var/arousal_modifier
 	switch(vagina.accessory_type)
 		if(/datum/sprite_accessory/vagina/human)
-			vagina_type = "plain vagina"
+			vagina_type = "普通阴道"
 		if(/datum/sprite_accessory/vagina/hairy)
-			vagina_type = "hairy vagina"
+			vagina_type = "多毛阴道"
 		if(/datum/sprite_accessory/vagina/trimmed)
-			vagina_type = "trimmed vagina"
+			vagina_type = "修整过的阴道"
 		if(/datum/sprite_accessory/vagina/spade)
-			vagina_type = "spade vagina"
+			vagina_type = "铲形阴道"
 		if(/datum/sprite_accessory/vagina/furred)
-			vagina_type = "furred vagina"
+			vagina_type = "覆毛阴道"
 		if(/datum/sprite_accessory/vagina/gaping)
-			vagina_type = "gaping vagina"
+			vagina_type = "张开的阴道"
 		if(/datum/sprite_accessory/vagina/cloaca)
-			vagina_type = "cloaca"
+			vagina_type = "泄殖腔"
 	switch(H.sexcon.arousal)
 		if(80 to INFINITY)
-			arousal_modifier = ", gushing with arousal"
+			arousal_modifier = "，正因情动而汩汩泛湿"
 		if(50 to 80)
-			arousal_modifier = ", slickened with arousal"
+			arousal_modifier = "，正因情动而变得滑润"
 		if(20 to 50)
-			arousal_modifier = ", wet with arousal"
+			arousal_modifier = "，正因情动而湿润"
 	var/branded = ""
 	if(length(vagina.branded_writing))
-		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(vagina.branded_writing)]</span>"
-	return "a [vagina_type][arousal_modifier][branded]"
+		branded = "，烙有<span style='font-size:125%;'>[span_boldwarning(vagina.branded_writing)]</span>"
+	return "[vagina_type][arousal_modifier][branded]"
 
 /datum/mob_descriptor/breasts
-	name = "breasts"
+	name = "乳房"
 	slot = MOB_DESCRIPTOR_SLOT_BREASTS
-	verbage = "has"
+	verbage = "有着"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/breasts/can_describe(mob/living/described)
@@ -199,34 +199,34 @@
 	var/adjective
 	switch(breasts.breast_size)
 		if(0)
-			adjective = "a flat chest"
+			adjective = "平坦的胸膛"
 		if(1)
-			adjective = "a slight"
+			adjective = "一对纤小的"
 		if(2)
-			adjective = "a small"
+			adjective = "一对小巧的"
 		if(3)
-			adjective = "a moderate"
+			adjective = "一对中等的"
 		if(4)
-			adjective = "a large"
+			adjective = "一对丰满的"
 		if(5)
-			adjective = "a generous"
+			adjective = "一对丰硕的"
 		if(6)
-			adjective = "a heavy"
+			adjective = "一对沉甸甸的"
 		if(7)
-			adjective = "a massive"
+			adjective = "一对巨大的"
 		if(8)
-			adjective = "a heaping"
+			adjective = "一对夸张丰满的"
 		if(9)
-			adjective = "an obscene"
+			adjective = "一对过于夸张的"
 		if(10)
-			adjective = "a backbreaking"
+			adjective = "一对压弯脊背的"
 		if(11)
-			adjective = "a stomach-hiding"
+			adjective = "一对遮住腹部的"
 		if(12)
-			adjective = "a torso-sized"
+			adjective = "一对有躯干般大小的"
 	var/branded = ""
 	if(length(breasts.branded_writing))
-		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(breasts.branded_writing)]</span>"
+		branded = "，烙有<span style='font-size:125%;'>[span_boldwarning(breasts.branded_writing)]</span>"
 	if(breasts.breast_size == 0)
 		return "[adjective][branded]"
-	return "[adjective] pair of breasts[branded]"
+	return "[adjective]乳房[branded]"

@@ -45,7 +45,7 @@
 /obj/item/rogueweapon/Initialize(mapload)
 	. = ..()
 	if(!destroy_message)
-		destroy_message = span_warning("\The [src] shatters!")
+		destroy_message = span_warning("[src]碎裂了！")
 
 	if(ispath(special))
 		special = new special()
@@ -63,7 +63,7 @@
 		)
 
 /obj/item/rogueweapon/get_examine_string(mob/user, thats = FALSE)
-	return "[thats? "That's ":""]<b>[get_examine_name(user)]</b> <font size = 1>[get_blade_dulling_text(src)]</font>"
+	return "[thats? "那是":""]<b>[get_examine_name(user)]</b> <font size = 1>[get_blade_dulling_text(src)]</font>"
 
 /obj/item/rogueweapon/obj_break(damage_flag)
 	..()
@@ -108,32 +108,32 @@
 	..()
 
 /obj/item/shaft
-	name = "debug shaft"
-	desc = "you should not see this"
+	name = "调试柄杆"
+	desc = "你本不该看到这个。"
 	icon = 'icons/roguetown/misc/shafts.dmi'
 	icon_state = "woodshaft"
 	grid_height = 32
 	grid_width = 32
 
 /obj/item/shaft/wood
-	name = "wood shaft"
-	desc = "standard, reliable, easy to produce. Weak to slashes, but strong against blunt forces."
+	name = "木柄杆"
+	desc = "标准、可靠、易于制作。面对劈砍较脆弱，但很能承受钝击。"
 
 /obj/item/shaft/reinforced
-	name = "reinforced wood shaft"
-	desc = "A wooden beam with studs and plates. Will hold up considerably well against slashes, but will suffer against stabs."
+	name = "加固木柄杆"
+	desc = "一根钉有铆钉并包着金属片的木杆。相当能扛劈砍，但会更怕刺击。"
 	icon_state = "reinforcedshaft"
 
 /obj/item/shaft/metal
-	name = "metal shaft"
-	desc = "A hefty, forged shaft. Exceptionally difficult to cut, but easier to bend with blunt force."
+	name = "金属柄杆"
+	desc = "一根沉重的锻造柄杆。极难被砍断，但更容易被钝力砸弯。"
 	icon_state = "metalshaft"
 
 /obj/item/rogueweapon/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/shaft) && (blade_dulling != DULLING_SHAFT_GRAND && blade_dulling != DULLING_SHAFT_CONJURED) && (blade_dulling > DULLING_FLOOR))	//hacky
-		user.visible_message(span_info("[user] begins to replace the shaft on [src]..."))
+		user.visible_message(span_info("[user]开始更换[src]的柄杆……"))
 		if(do_after(user, 50))
-			user.visible_message(span_info("[user] replaces the shaft with [W]."))
+			user.visible_message(span_info("[user]用[W]替换了原本的柄杆。"))
 			replace_shaft(W)
 			playsound(user, 'sound/foley/Building-01.ogg', 100)
 	. = ..()

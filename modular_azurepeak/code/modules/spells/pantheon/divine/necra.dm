@@ -3,18 +3,18 @@
 // T1: Avert End (channel on an adjacent target to slowly spend devotion to grant them NODEATH and ticks of oxyloss healing)
 
 /obj/effect/proc_holder/spell/invoked/avert
-	name = "Borrowed Time"
-	desc = "Shield your fellow man from the Undermaiden's gaze, preventing them from slipping into death for as long as your faith and fatigue may muster."
+	name = "借来时光"
+	desc = "为同伴挡住冥下少女的注视，只要你的信仰与体力尚能支撑，便可阻止他们滑入死亡。"
 	overlay_state = "borrowtime"
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	associated_skill = /datum/skill/magic/holy
 	miracle = TRUE
 	devotion_cost = 10
 	var/list/near_death_lines = list(
-		"A haze begins to envelop me, but then suddenly recedes, as if warded back by some great light...",
-		"A terrible weight bears down upon me, as if the wyrld itself were crushing me with its heft...",
-		"The sound of a placid river drifts into hearing, followed by the ominous toll of a ferryman's bell...",
-		"Some vast, immeasurably distant figure looms beyond my perception - I feel it, more than I see. It waits. It watches.",
+		"一阵朦胧薄雾开始将我包裹，却又突然退去，仿佛被某道伟大的光辉驱散......",
+		"一股可怖的重压落在我身上，仿佛整个世界都正以它的重量将我碾碎......",
+		"平静河流的声音飘入耳中，随后便是摆渡人阴森的钟鸣......",
+		"某个庞大到无法估量、远在感知之外的存在正耸立于彼端。我感受到它，甚于看见它。它在等待。它在注视。",
 	)
 
 /obj/effect/proc_holder/spell/invoked/avert/cast(list/targets, mob/living/carbon/human/user)
@@ -26,14 +26,14 @@
 
 	var/mob/living/living_target = target
 	if (!user.Adjacent(target))
-		to_chat(user, span_warning("I must be beside [living_target] to avert Her gaze from [living_target.p_them()]!"))
+		to_chat(user, span_warning("我必须站在[living_target]身旁，才能替[living_target.p_them()]挡开她的注视！"))
 		revert_cast()
 		return FALSE
 
 	// add the no-death trait to them....
-	user.visible_message(span_notice("Whispering motes gently bead from [user]'s fingers as [user.p_they()] place a hand near [living_target], scriptures of the Undermaiden spilling from their lips..."), span_notice("I stand beside [living_target] and utter the hallowed words of Aeon's Intercession, staying Her grasp for just a little while longer..."))
-	to_chat(user, span_small("I must remain still and at [living_target]'s side..."))
-	to_chat(living_target, span_warning("An odd sensation blossoms in my chest, cold and unknown..."))
+	user.visible_message(span_notice("当[user]将手伸向[living_target]近旁时，低语般的光点自[user]指间缓缓凝出，冥下少女的经文也从[user.p_their()]唇边流泻而出......"), span_notice("我立于[living_target]身旁，低诵那永世代求的神圣词句，再多拖住她的手片刻......"))
+	to_chat(user, span_small("我必须保持静止，守在[living_target]身边......"))
+	to_chat(living_target, span_warning("一种奇异的感觉在我胸口绽开，寒冷而陌生......"))
 
 	ADD_TRAIT(living_target, TRAIT_NODEATH, "avert_spell")
 
@@ -53,16 +53,16 @@
 		if (user.devotion?.check_devotion(src))
 			user.devotion?.update_devotion(-10)
 		else
-			to_chat(span_warning("My devotion runs dry - the Intercession fades from my lips!"))
+			to_chat(span_warning("我的虔诚耗尽了，代求之词自我唇边消散！"))
 			break
 
 	REMOVE_TRAIT(living_target, TRAIT_NODEATH, "avert_spell")
 
-	user.visible_message(span_danger("[user]'s concentration breaks, the motes receding from [living_target] and into [user.p_their()] hand once more."), span_danger("My concentration breaks, and the Intercession falls silent."))
+	user.visible_message(span_danger("[user]的专注中断了，那些光点从[living_target]身边退回，再度归入[user.p_their()]掌中。"), span_danger("我的专注断裂了，代求也归于沉寂。"))
 
 /obj/effect/proc_holder/spell/targeted/abrogation
-	name = "Abrogation"
-	desc = "Debuffs targeted undead as long as they remain near you, slowly getting set on fire if they stay."
+	name = "斥绝"
+	desc = "只要目标亡灵仍停留在你附近，便会持续遭受削弱，久留者还会慢慢被点燃。"
 	range = 8
 	overlay_state = "necra"
 	releasedrain = 30
@@ -75,7 +75,7 @@
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/churn.ogg'
 	associated_skill = /datum/skill/magic/holy
-	invocations = list("The Undermaiden abhors you!")
+	invocations = list("冥下少女厌弃你们！")
 	invocation_type = "shout" //can be none, whisper, emote and shout
 	miracle = TRUE
 	devotion_cost = 20
@@ -103,14 +103,14 @@
 				things_to_stun += L
 			if (L.mind.special_role == "Vampire Lord")
 				too_powerful = L
-				user.visible_message(span_warning("[user] suddenly pales before an unseen presence, and gasps!"), span_warning("The sound of rushing blood fills my ears and mind, drowning out my abrogation!"))
+				user.visible_message(span_warning("[user]面对某个不可见的存在突然面色惨白，猛地倒抽一口气！"), span_warning("奔涌的血流声灌满了我的耳朵与脑海，将我的斥绝祷词彻底淹没！"))
 				break
 		if (L.mob_biotypes & MOB_UNDEAD || is_vampire || is_zombie)
 			things_to_churn += L
 
 	if (!too_powerful)
 		if (LAZYLEN(things_to_churn))
-			user.visible_message(span_warning("A frigid blue glower suddenly erupts in [user]'s eyes as a whispered prayer summons forth a winding veil of ghostly mists!"), span_notice("I perform the sacred rite of Abrogation, bringing forth Her servants to harry and weaken the unliving!"))
+			user.visible_message(span_warning("[user]的双眼骤然爆出冰寒蓝芒，低声祈祷唤出了盘旋缠绕的幽灵迷雾！"), span_notice("我施行神圣的斥绝之仪，引来她的侍从骚扰并削弱那些不死之物！"))
 			for(var/mob/living/thing in things_to_churn)
 				thing.apply_status_effect(/datum/status_effect/churned, user, debuff_power)
 		if(LAZYLEN(things_to_stun))
@@ -119,23 +119,23 @@
 				thing.Knockdown(50)
 				thing.emote("scream")
 		if(!LAZYLEN(things_to_churn))
-			to_chat(user, span_notice("The rite of Abrogation passes from my lips in silence, having found nothing to assail."))
+			to_chat(user, span_notice("斥绝之仪自我唇边悄然流过，却没找到任何可供驱逐之物。"))
 			return
 	else
 		user.Stun(25)
 		user.throw_at(get_ranged_target_turf(user, get_dir(user,too_powerful), 7), 7, 1, too_powerful, spin = FALSE)
-		user.visible_message(span_warning("[user] ceases their prayer, suddenly choking upon a gout of blood in their throat!"), span_boldwarning("My vision swims in red!"))
+		user.visible_message(span_warning("[user]的祈祷骤然中断，喉间猛地呛出一口鲜血！"), span_boldwarning("我的视野被一片猩红淹没！"))
 
 /atom/movable/screen/alert/status_effect/churned
-	name = "Churning Essence"
-	desc = "The magicks that bind me into being are being disrupted! I should get away from the source as soon as I can!"
+	name = "翻搅精魂"
+	desc = "维系我存在的魔力正在被扰乱！我得尽快远离源头！"
 	icon_state = "stressvb"
 
 /datum/status_effect/churned
 	id = "necra_churned"
 	alert_type = /atom/movable/screen/alert/status_effect/churned
 	duration = 30 SECONDS
-	examine_text = "<b>SUBJECTPRONOUN is wreathed in a wild frenzy of ghostly motes!</b>"
+	examine_text = "<b>SUBJECTPRONOUN周身缠绕着一阵狂乱翻腾的幽魂微光！</b>"
 	effectedstats = list(STATKEY_STR = -2, STATKEY_CON = -2, STATKEY_WIL = -2, STATKEY_SPD = -2)
 	status_type = STATUS_EFFECT_REFRESH
 	var/datum/weakref/debuffer
@@ -152,7 +152,7 @@
 
 /datum/status_effect/churned/on_apply()
 	var/filter = owner.get_filter(CHURN_FILTER)
-	to_chat(owner, span_warning("Wisps leap from the cloying mists to surround me, their chill disrupting my body! FLEE!"))
+	to_chat(owner, span_warning("微光从黏稠迷雾中跃出，将我团团围住；那股寒意正在扰乱我的身体！快逃！"))
 	if (!filter)
 		owner.add_filter(CHURN_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 200, "size" = 1))
 	return TRUE
@@ -160,7 +160,7 @@
 /datum/status_effect/churned/refresh()
 	. = ..()
 	intensity += 1
-	to_chat(owner, span_boldwarning("The mists intensify, the glowing wisps steadily disrupting my body..."))
+	to_chat(owner, span_boldwarning("迷雾变得更浓了，那些发亮的幽光正持续扰乱我的身体......"))
 
 /datum/status_effect/churned/process()
 	. = ..()
@@ -169,12 +169,12 @@
 	if (prob(33))
 		owner.adjustFireLoss(base_tick * intensity)
 	if (prob(10))
-		to_chat(owner, span_warning("A frenzy of ghostly motes assail my form!"))
+		to_chat(owner, span_warning("一阵狂乱的幽魂微光正在袭扰我的身躯！"))
 		owner.emote("scream")
 
 	var/mob/living/our_debuffer = debuffer.resolve()
 	if (get_dist(our_debuffer, owner) > range)
-		to_chat(owner, span_notice("I've escaped the cloying mists!"))
+		to_chat(owner, span_notice("我逃出那团黏稠迷雾了！"))
 		qdel(src)
 
 /datum/status_effect/churned/on_remove()
@@ -184,8 +184,8 @@
 
 
 /obj/effect/proc_holder/spell/invoked/necra_vow
-	name = "Vow to Necra"
-	desc = "Make a vow to Necra. Your chances of revival or recovery of limb will be greatly reduced. You will harm undeath and heal yourself at a slow rate."
+	name = "向内克拉立誓"
+	desc = "向内克拉立下誓言。你被复活或恢复断肢的可能性将大幅降低，但你将伤害不死者，并缓慢治疗自己。"
 	range = 1
 	overlay_state = "necra"
 	releasedrain = 30
@@ -196,7 +196,7 @@
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/churn.ogg'
 	associated_skill = /datum/skill/magic/holy
-	invocations = list("The Undermaiden Protects.")
+	invocations = list("冥下少女护佑。")
 	invocation_type = "shout"
 	miracle = TRUE
 	devotion_cost = 100
@@ -205,25 +205,25 @@
 	if(ishuman(targets[1]))
 		var/mob/living/carbon/human/H = targets[1]
 		if(HAS_TRAIT(H, TRAIT_ROTMAN) || HAS_TRAIT(H, TRAIT_NOBREATH) || H.mob_biotypes & MOB_UNDEAD)	//No Undead, no Rotcured, no Deathless
-			to_chat(user, span_warning("Necra cares not for the vows of the corrupted."))
+			to_chat(user, span_warning("内克拉不在乎腐化者的誓言。"))
 			revert_cast()
 			return FALSE
 		if(H.has_status_effect(/datum/status_effect/buff/necras_vow) || H.patron?.type != /datum/patron/divine/necra)
-			to_chat(user, span_notice("They have already pledged a vow."))
+			to_chat(user, span_notice("他们已经立下誓言了。"))
 			revert_cast()
 			return FALSE
-		var/choice = alert(H, "You are being asked to pledge a vow. Your chances of revival or recovery of limb will be greatly reduced. You will harm undeath and heal yourself at a slow rate. Do you agree?", "VOW", "Yes", "No")
-		if(choice != "Yes")
-			to_chat(user, span_notice("They declined."))
+		var/choice = alert(H, "有人要求你立下誓言。你被复活或恢复断肢的可能性将大幅降低，但你将伤害不死者，并缓慢治疗自己。你同意吗？", "誓言", "同意", "拒绝")
+		if(choice != "同意")
+			to_chat(user, span_notice("他们拒绝了。"))
 			return TRUE
-		user.visible_message(span_warning("[user] grants [H] the blessing of their promise."))
-		to_chat(H, span_warning("I have committed. There is no going back."))
+		user.visible_message(span_warning("[user]将誓言的祝福赐予了[H]。"))
+		to_chat(H, span_warning("我已经立誓。再无回头路。"))
 		H.apply_status_effect(/datum/status_effect/buff/necras_vow)
 		H.apply_status_effect(/datum/status_effect/buff/healing/necras_vow)
 
 /atom/movable/screen/alert/status_effect/buff/necras_vow
-	name = "Vow to Necra"
-	desc = "I have pledged a promise to Necra. Undeath shall be harmed or lit aflame if they strike me. Rot will not claim me. Lost limbs can only be restored if they are myne."
+	name = "向内克拉立誓"
+	desc = "我已向内克拉立下誓言。不死者若敢伤我，便会受创或燃烧。腐朽不再能夺走我。失去的肢体也只能接回属于我自己的那部分。"
 	icon_state = "necravow"
 
 #define NECRAVOW_FILTER "necravow_glow"
@@ -242,24 +242,24 @@
 		owner.add_filter(NECRAVOW_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 200, "size" = 1))
 	ADD_TRAIT(owner, TRAIT_NECRAS_VOW, TRAIT_MIRACLE)
 	owner.rot_type = null
-	to_chat(owner, span_warning("My limbs feel more alive than ever... I feel whole..."))
+	to_chat(owner, span_warning("我的四肢比以往任何时候都更像活着一般......我感到自己完整无缺......"))
 
 /datum/status_effect/buff/necras_vow/on_remove()
 	. = ..()
 	owner.remove_filter(NECRAVOW_FILTER)
-	to_chat(owner, span_warning("My body feels strange... hollow..."))
+	to_chat(owner, span_warning("我的身体感觉怪异......空洞......"))
 
 #undef NECRAVOW_FILTER
 
 /obj/effect/proc_holder/spell/invoked/necras_sight
-	name = "Necra's Sight"
-	desc = "Mark a psycross or a grave marker, and peer through them."
+	name = "内克拉之视"
+	desc = "标记一座普赛圣十字或墓碑，并透过它们窥视。"
 	releasedrain = 30
 	chargetime = 0 SECONDS
 	recharge_time = 10 SECONDS
 	warnie = "spellwarning"
 	invocation_type = "whisper"
-	invocations = list("Undermaiden guide my gaze...")
+	invocations = list("冥下少女，请引导我的目光......")
 	associated_skill = /datum/skill/magic/holy
 	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
 	overlay_state = "necraeye"
@@ -309,7 +309,7 @@
 	for(var/obj/O as anything in marked_objects)
 		choices[marked_objects[O]] = O
 
-	var/choice = input(user, "Which grave shall we peer through?", "") as null|anything in choices
+	var/choice = input(user, "我们要透过哪座坟墓窥视？", "") as null|anything in choices
 	if(!choice)
 		return FALSE
 
@@ -336,11 +336,11 @@
 	if(!S)
 		return FALSE
 
-	spygrave.visible_message(span_warning("[spygrave] shimmers with an eerie glow."))
+	spygrave.visible_message(span_warning("[spygrave]闪烁起诡异的幽光。"))
 	S.ManualFollow(spygrave)
 
 	user.visible_message(
-		span_danger("[user] blinks, [user.p_their()] eyes rolling back into [user.p_their()] head.")
+		span_danger("[user]眨了眨眼，[user.p_their()]的眼珠猛地翻回了[user.p_their()]眼眶深处。")
 	)
 
 	user.playsound_local(get_turf(user), 'sound/magic/necra_sight.ogg', 80)
@@ -363,10 +363,10 @@
 /obj/effect/proc_holder/spell/invoked/necras_sight/proc/add_to_scry(obj/O, mob/living/carbon/human/user)
 	if(O in marked_objects)
 		marked_objects.Remove(O)
-		to_chat(user, span_info("You let the grave slip from your mind..."))
+		to_chat(user, span_info("你让那座坟墓从记忆中滑走了......"))
 		return
 	var/holyskill = user.get_skill_level(/datum/skill/magic/holy)
-	var/label = input(user, "Name this grave for your sight:", "Mark Holy Object") as text|null
+	var/label = input(user, "为你的视野给这座坟墓命名：", "标记神圣之物") as text|null
 	if(!label || !length(label))
 		label = "[O.name]"
 
@@ -377,18 +377,18 @@
 		for(var/obj/graves as anything in marked_objects)
 			choices[marked_objects[graves]] = graves
 
-		var/removing_object = tgui_input_list(user, "I'm focusing on too many graves already. Do I let one slip from my mind..?", "FORGET", choices, marked_objects[1])
+		var/removing_object = tgui_input_list(user, "我已记住太多坟墓，是否让其中一座从记忆中滑落？", "遗忘", choices, marked_objects[1])
 
 		if(!removing_object)
-			to_chat(user, span_warning("I choose to forget nothing."))
+			to_chat(user, span_warning("我选择什么也不遗忘。"))
 			revert_cast()
 			return FALSE
 
-		to_chat(user, span_warning("[removing_object] slips from my mind...")) // show the labled grave first
+		to_chat(user, span_warning("[removing_object]从我脑海中滑落了……")) // show the labled grave first
 		removing_object = choices[removing_object] 	// then get the correct object from the label...
 		marked_objects -= removing_object 			// ...to remove from the marked list.
 
-	to_chat(user, span_info("I whisper a name and mark the grave for later use..."))
+	to_chat(user, span_info("我轻声低念一个名字，为这座坟墓留下日后可用的标记......"))
 	marked_objects[O] = label
 
 /* /obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance
@@ -476,8 +476,8 @@
 */
 
 /obj/effect/proc_holder/spell/invoked/necra_crows
-	name = "Necra's Crows"
-	desc = "Summon rancorous crows to tear at an opponent!"
+	name = "内克拉的乌鸦"
+	desc = "召来充满怨念的乌鸦撕扯对手！"
 	range = 7
 	sound = list('sound/magic/magnet.ogg')
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
@@ -497,7 +497,7 @@
 	overlay_state = "vengeful_spirit"
 	action_icon_state = "vengeful_spirit"
 	action_icon = 'icons/mob/actions/necramiracles.dmi'
-	invocations = list("Undermaiden, let Your black-winged servants answer my call!!")
+	invocations = list("冥下少女啊，让您黑翼的侍从回应我的呼唤吧！！")
 	invocation_type = "shout"
 
 /obj/effect/proc_holder/spell/invoked/necra_crows/cast(list/targets, mob/living/user)

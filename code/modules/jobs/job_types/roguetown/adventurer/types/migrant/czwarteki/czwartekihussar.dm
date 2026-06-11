@@ -1,6 +1,6 @@
 /datum/advclass/czwarteki/hussar
-	name = "Czwarteki Hussar"
-	tutorial = "You are a Hussar of Czwarteki, under the oath of your lord. You have raised your Retainers to come with you to cross the lands."
+	name = "兹瓦尔特基 骠骑兵"
+	tutorial = "你是 兹瓦尔特基 的骠骑兵，受领主之誓约束。你已召集自己的侍从同行，准备一同穿越诸国大地。"
 	outfit = /datum/outfit/job/roguetown/czwarteki/hussar
 	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
 	category_tags = list(CTAG_CZWAR_HUSSAR)

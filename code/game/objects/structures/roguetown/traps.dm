@@ -1,6 +1,6 @@
 /obj/structure/spike_pit
-	name = "spike pit"
-	desc = "A hole filled with sharp wooden ends that protrude upwards."
+	name = "尖桩陷坑"
+	desc = "一个坑洞，里面满是朝上突出的尖锐木桩。"
 	icon_state = "spike_pit"
 	can_buckle = TRUE
 	icon = 'icons/turf/roguefloor.dmi'
@@ -63,7 +63,7 @@
 
 	if(istype(I, /obj/item/rogueweapon/shovel))
 		playsound(loc,'sound/items/dig_shovel.ogg', 100, TRUE)
-		to_chat(user, span_info("I start covering up \the [name]..."))
+		to_chat(user, span_info("我开始把[name]填平。"))
 		if(do_after(user, 5 SECONDS, src))
 			playsound(loc,'sound/items/empty_shovel.ogg', 100, TRUE)
 			qdel(src)
@@ -75,8 +75,8 @@
 		var/person = buckled_mobs[1].name
 		if(user == buckled_mobs[1])
 			person = "themself"
-		user.visible_message(span_warning("[user.name] starts to pull [person] off \the [name]..."))
+		user.visible_message(span_warning("[user.name]开始把[person]从[name]里拽出来！"))
 		if(do_after(user, 3 SECONDS))
 			unbuckle_mob(buckled_mobs[1], TRUE)
-			user.visible_message(span_warning("[user.name] pulls [person] out of the spikes."))
+			user.visible_message(span_warning("[user.name]把[person]从陷坑里拽了出来！"))
 	. = ..()

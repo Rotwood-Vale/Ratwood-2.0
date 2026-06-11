@@ -1,5 +1,5 @@
 /obj/structure/target_stake
-	name = "target stake"
+	name = "靶桩"
 	desc = ""
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "target_stake"
@@ -46,7 +46,7 @@
 		T.density = TRUE
 		T.layer = OBJ_LAYER + 0.01
 		handle_density()
-		to_chat(user, span_notice("I slide the target into the stake."))
+		to_chat(user, span_notice("我把靶子插进了靶桩。"))
 
 /obj/structure/target_stake/attack_hand(mob/user)
 	. = ..()
@@ -64,10 +64,10 @@
 	if(ishuman(user))
 		if(!user.get_active_held_item())
 			user.put_in_hands(pinned_target)
-			to_chat(user, span_notice("I take the target out of the stake."))
+			to_chat(user, span_notice("我把靶子从靶桩上取了下来。"))
 	else
 		pinned_target.forceMove(user.drop_location())
-		to_chat(user, span_notice("I take the target out of the stake."))
+		to_chat(user, span_notice("我把靶子从靶桩上取了下来。"))
 
 /obj/structure/target_stake/bullet_act(obj/projectile/P)
 	if(pinned_target)

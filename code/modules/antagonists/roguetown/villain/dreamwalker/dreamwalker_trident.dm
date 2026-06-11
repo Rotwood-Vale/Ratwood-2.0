@@ -110,11 +110,11 @@
 		knockup_effect(L)
 	else
 		L.set_resting(TRUE, TRUE)
-		L.visible_message(span_warning("[L] looses their footing as the ground shakes!"))
+		L.visible_message(span_warning("[L] 在大地震颤时失去了立足点！"))
 
 /obj/item/rogueweapon/spear/dreamscape_trident/proc/knockup_effect(mob/living/L)
 	// Animation
 	animate(L, pixel_y = L.pixel_y + 16, time = 3, easing = SINE_EASING)
 	spawn(3)
 		animate(L, pixel_y = L.pixel_y - 16, time = 3, easing = SINE_EASING)
-		L.visible_message(span_warning("[L] is thrown off their feet by the shockwave!"))
+		L.visible_message(span_warning("[L] 被冲击波掀翻在地！"))

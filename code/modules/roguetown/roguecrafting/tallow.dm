@@ -7,7 +7,7 @@
 	skillcraft = /datum/skill/craft/cooking
 
 /datum/crafting_recipe/roguetown/tallow/hearth_tallow
-	name = "render tallow over the hearth (x4) (1 fat)"
+	name = "在壁炉上熬炼兽脂（x4）（1 份脂肪）"
 	result = list(
 				/obj/item/reagent_containers/food/snacks/tallow,
 				/obj/item/reagent_containers/food/snacks/tallow,
@@ -19,11 +19,11 @@
 	structurecraft = /obj/machinery/light/rogue/hearth
 	craftdiff = 0
 	craftsound = 'sound/misc/frying.ogg'
-	verbage_simple = "render"
-	verbage = "renders"
+	verbage_simple = "熬炼"
+	verbage = "熬炼"
 
 /datum/crafting_recipe/roguetown/tallow/campfire_tallow
-	name = "render tallow over the campfire (x3) (1 fat)"
+	name = "在营火上熬炼兽脂（x3）（1 份脂肪）"
 	result = list(
 				/obj/item/reagent_containers/food/snacks/tallow,
 				/obj/item/reagent_containers/food/snacks/tallow,
@@ -34,11 +34,11 @@
 	structurecraft = /obj/machinery/light/rogue/campfire
 	craftdiff = 0
 	craftsound = 'sound/misc/frying.ogg'
-	verbage_simple = "render"
-	verbage = "renders"
+	verbage_simple = "熬炼"
+	verbage = "熬炼"
 
 /datum/crafting_recipe/roguetown/cooking/mobilestove_tallow
-	name = "render tallow over the mobile stove (x3) (1 fat)"
+	name = "在便携炉上熬炼兽脂（x3）（1 份脂肪）"
 	result = list(
 				/obj/item/reagent_containers/food/snacks/tallow,
 				/obj/item/reagent_containers/food/snacks/tallow,
@@ -50,11 +50,11 @@
 	craftdiff = 0
 	craftsound = 'sound/misc/frying.ogg'
 	req_table = FALSE
-	verbage_simple = "render"
-	verbage = "renders"
+	verbage_simple = "熬炼"
+	verbage = "熬炼"
 
 /datum/crafting_recipe/roguetown/tallow/hearth_soft_tallow
-	name = "render soft tallow over the hearth (1 tallow, 1 fat)"
+	name = "在壁炉上熬炼软兽脂（1 份兽脂，1 份脂肪）"
 	result = list(
 				/obj/item/reagent_containers/food/snacks/tallow/soft,
 				)
@@ -66,11 +66,11 @@
 	structurecraft = /obj/machinery/light/rogue/hearth
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 	craftsound = 'sound/misc/frying.ogg'
-	verbage_simple = "render"
-	verbage = "renders"
+	verbage_simple = "熬炼"
+	verbage = "熬炼"
 
 /datum/crafting_recipe/roguetown/tallow/campfire_soft_tallow
-	name = "render soft tallow over the campfire (1 tallow, 1 fat)"
+	name = "在营火上熬炼软兽脂（1 份兽脂，1 份脂肪）"
 	result = list(
 				/obj/item/reagent_containers/food/snacks/tallow/soft,
 				)
@@ -82,11 +82,11 @@
 	structurecraft = /obj/machinery/light/rogue/campfire
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 	craftsound = 'sound/misc/frying.ogg'
-	verbage_simple = "render"
-	verbage = "renders"
+	verbage_simple = "熬炼"
+	verbage = "熬炼"
 
 /datum/crafting_recipe/roguetown/cooking/mobilestove_soft_tallow
-	name = "render soft tallow over the mobile stove (1 tallow, 1 fat)"
+	name = "在便携炉上熬炼软兽脂（1 份兽脂，1 份脂肪）"
 	result = list(
 				/obj/item/reagent_containers/food/snacks/tallow/soft,
 				)
@@ -99,5 +99,5 @@
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 	craftsound = 'sound/misc/frying.ogg'
 	req_table = FALSE
-	verbage_simple = "render"
-	verbage = "renders"
+	verbage_simple = "熬炼"
+	verbage = "熬炼"

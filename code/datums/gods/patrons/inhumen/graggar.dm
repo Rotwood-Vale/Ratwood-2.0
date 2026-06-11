@@ -1,10 +1,10 @@
 /datum/patron/inhumen/graggar
 	name = "Graggar"
-	domain = "Conquest, Cruelty, Kinslaying, Slaughter, Cannibalism, Domination"
-	desc = "The Gorebound Star was a half-orc warlord who sought to strike Ravox down in rage at the cruel fate of His lover. He was decapitated, and His head revived as a mutilated aberration of blue flesh and sickening tendrils. Gazing upon the Star will drive anyone mad."
-	worshippers = "Fallen Warriors, Cannibals, Serial Killers, The Cruel"
-	virtues = "Martial Prowess, Dominance, Violence"
-	sins = "Weakness, Servility, Cowardice"
+	domain = "征服、残酷、弑亲、屠戮、食人、支配"
+	desc = "血缚之星曾是一位半兽人军阀，因爱侣遭受残酷命运而愤怒到想将 Ravox 击落。他被斩首之后，头颅却以蓝色腐肉与令人作呕的触须畸变复生。凡是凝视那颗星的人，都会被逼入疯狂。"
+	worshippers = "堕落战士、食人者、连环杀手、残酷之人"
+	virtues = "武勇、支配、暴力"
+	sins = "软弱、奴性、怯懦"
 	mob_traits = list(TRAIT_HORDE, TRAIT_ORGAN_EATER)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/graggar_bloodrage				= CLERIC_T0,
@@ -15,9 +15,9 @@
 					/obj/effect/proc_holder/spell/invoked/revel_in_slaughter 			= CLERIC_T3,
 	)
 	confess_lines = list(
-		"GRAGGAR IS THE BEAST I WORSHIP!",
-		"THROUGH VIOLENCE, DIVINITY!",
-		"THE GOD OF CONQUEST DEMANDS BLOOD!",
+		"GRAGGAR 就是我所崇拜的凶兽！",
+		"唯有暴力，方可登神！",
+		"征服之神渴求鲜血！",
 	)
 	storyteller = /datum/storyteller/graggar
 
@@ -31,8 +31,8 @@
 	is_inhumen
 )
 	*is_inhumen = TRUE
-	*message_out = span_info("Foul fumes billow outward as [target] is restored!")
-	*message_self = span_notice("A noxious scent burns my nostrils, but I feel better!")
+	*message_out = span_info("肮脏的恶臭烟雾翻涌而出，[target]随之恢复了！")
+	*message_self = span_notice("刺鼻的腥臭灼烧着我的鼻腔，但我感觉好多了！")
 
 	var/bonus = 0
 
@@ -69,7 +69,7 @@
 	// Allows prayer near EEEVIL psycross
 	for(var/obj/structure/fluff/psycross/zizocross/cross in view(4, get_turf(follower)))
 		if(cross.divine == TRUE)
-			to_chat(follower, span_danger("That acursed cross interupts my prayers!"))
+			to_chat(follower, span_danger("那座遭诅咒的十字架打断了我的祈祷！"))
 			return FALSE
 		return TRUE
 	// Allows prayer if actively bleeding.
@@ -81,5 +81,5 @@
 	// Allows praying atop ritual chalk of the god.
 	for(var/obj/structure/ritualcircle/graggar in view(1, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("For Graggar to hear my prayers I must either be in the church of the abandoned, near an inverted psycross, near fresh blood or draw blood of my own!"))
+	to_chat(follower, span_danger("若想让 Graggar 听见我的祈祷，我必须身处被遗弃者的教堂、倒置的 psycross 附近、靠近新鲜血迹，或亲手放出自己的血！"))
 	return FALSE

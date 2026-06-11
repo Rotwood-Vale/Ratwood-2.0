@@ -21,8 +21,8 @@
 	grid_height = 32
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt
-	name = "shirt"
-	desc = "Modest and humble. It lets you walk around in public with your dignity intact."
+	name = "衬衣"
+	desc = "朴素而谦逊，让你在公共场合行走时仍能保有体面。"
 	icon_state = "undershirt"
 	item_state = "undershirt"
 	r_sleeve_status = SLEEVE_NORMAL
@@ -30,8 +30,8 @@
 	body_parts_covered = CHEST|ARMS|VITALS
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/priest
-	name = "undervestments"
-	desc = "A soft garment designed to prevent chafing from wearing heavy robes all dae and night."
+	name = "内法衣"
+	desc = "柔软的内衬衣物，专为整日整夜穿着厚重长袍时防止磨蹭而设计。"
 	icon_state = "priestunder"
 	item_state = "priestunder"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
@@ -96,7 +96,7 @@
 	..()
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/puritan
-	name = "formal silks"
+	name = "丝质衬衣"
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 	icon_state = "puritan_shirt"
 	allowed_race = CLOTHED_RACES_TYPES
@@ -107,20 +107,20 @@
 	salvage_amount = 1
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/artificer
-	name = "tinker suit"
-	desc = "Typical fashion of the best engineers."
+	name = "工匠套装"
+	desc = "顶尖工匠与工程师们的典型穿着。"
 	icon_state = "artishirt"
 	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/lowcut
-	name = "low cut tunic"
-	desc = "A tunic exposing much of the neck and... shoulders?! How scandalous..."
+	name = "低胸束腰衫"
+	desc = "一件露出大半脖颈和……肩膀？！的束腰衫。真是有伤风化……"
 	icon_state = "lowcut"
 
 /obj/item/clothing/suit/roguetown/shirt/shadowshirt
-	name = "silk shirt"
-	desc = "A sleeveless shirt woven from glossy material."
+	name = "丝质衬衣"
+	desc = "由光泽面料编成的无袖衬衣。"
 	icon_state = "shadowshirt"
 	item_state = "shadowshirt"
 	r_sleeve_status = SLEEVE_TORN
@@ -136,8 +136,8 @@
 	armor = ARMOR_PADDED
 
 /obj/item/clothing/suit/roguetown/shirt/apothshirt
-	name = "apothecary shirt"
-	desc = "When trudging through late-autumn forests, one needs to keep warm."
+	name = "药剂师衬衣"
+	desc = "在深秋森林中跋涉时，人总得想办法保暖。"
 	icon_state = "apothshirt"
 	item_state = "apothshirt"
 	r_sleeve_status = SLEEVE_NORMAL
@@ -145,8 +145,8 @@
 	body_parts_covered = CHEST|VITALS
 
 /obj/item/clothing/suit/roguetown/shirt/tunic/noblecoat
-	name = "fancy coat"
-	desc = "A fancy tunic and coat combo. How elegant."
+	name = "华丽外套"
+	desc = "一套华丽的束腰衫与外套组合。真是优雅。"
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	icon_state = "noblecoat"
 	item_state = "noblecoat"
@@ -161,8 +161,8 @@
 	l_sleeve_status = SLEEVE_NORMAL
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/artificer
-	name = "tinker suit"
-	desc = "Typical fashion of the best engineers."
+	name = "工匠套装"
+	desc = "顶尖工匠与工程师们的典型穿着。"
 	icon_state = "artishirt"
 
 //Royal clothing:
@@ -171,8 +171,8 @@
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 	icon = 'icons/roguetown/clothing/shirts_royalty.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts_royalty.dmi'
-	name = "royal gown"
-	desc = "An elaborate ball gown, a favoured fashion of queens and elevated nobility in Enigma."
+	name = "皇家礼裙"
+	desc = "一件繁复的舞会礼裙，是Enigma女王与高阶贵族偏爱的时尚。"
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	icon_state = "royaldress"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts_royalty.dmi'
@@ -209,8 +209,8 @@
 //................ Princess Dress ............... //
 /obj/item/clothing/suit/roguetown/shirt/dress/royal/princess
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	name = "pristine dress"
-	desc = "A flowy, intricate dress made by the finest tailors in the land for the monarch's children."
+	name = "无瑕礼裙"
+	desc = "由这片土地上最出色的裁缝为王室子嗣缝制的飘逸华美礼裙。"
 	icon_state = "princess"
 	boobed = TRUE
 	detail_color = CLOTHING_BLUE
@@ -218,8 +218,8 @@
 //................ Prince Shirt   ............... //
 /obj/item/clothing/suit/roguetown/shirt/dress/royal/prince
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	name = "gilded dress shirt"
-	desc = "A gold-embroidered dress shirt specially tailored for the monarch's children."
+	name = "镀金礼衬衫"
+	desc = "专为王室子嗣量身定制、以金线刺绣的礼衬衫。"
 	icon_state = "prince"
 	boobed = TRUE
 	detail_color = CLOTHING_MAGENTA
@@ -227,10 +227,10 @@
 // End royal clothes
 
 /obj/item/clothing/suit/roguetown/shirt/dress/winterdress_light
-	name = "cold dress"
+	name = "冬日礼裙"
 	icon = 'icons/roguetown/clothing/shirts_royalty.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts_royalty.dmi'
-	desc = "A thick and comfortable dress popular amongst nobility during winter."
+	desc = "厚实舒适、在冬季深受贵族欢迎的礼裙。"
 	body_parts_covered = COVERAGE_FULL
 	icon_state = "winterdress"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts_royalty.dmi'
@@ -246,23 +246,23 @@
 //Is this terrible, yes, but at this point ehhhhhhhh.
 /obj/item/clothing/suit/roguetown/shirt/dress/royal/hand_m
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	name = "gilded dress shirt"
-	desc = "A gold-embroidered dress shirt tailored for the right hand man."
+	name = "镀金礼衬衫"
+	desc = "为君主右手心腹量身裁制、以金线刺绣的礼衬衫。"
 	icon_state = "prince"
 	boobed = TRUE
 	detail_color = CLOTHING_AZURE
 
 /obj/item/clothing/suit/roguetown/shirt/dress/royal/hand_f
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	name = "pristine dress"
-	desc = "A flowy, intricate dress made by the finest tailors in the land for the right hand man."
+	name = "无瑕礼裙"
+	desc = "由这片土地上最出色的裁缝为君主右手心腹缝制的飘逸华美礼裙。"
 	icon_state = "princess"
 	boobed = TRUE
 	detail_color = CLOTHING_AZURE
 
 /obj/item/clothing/suit/roguetown/shirt/dress/silkydress
-	name = "silky dress"
-	desc = "Despite not actually being made of silk, the legendary expertise needed to sew this puts the quality on par."
+	name = "柔缎长裙"
+	desc = "虽并非真正以丝绸制成，但缝制它所需的传奇技艺足以让品质比肩真丝。"
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 	icon_state = "silkydress"
@@ -278,8 +278,8 @@
 /obj/item/clothing/suit/roguetown/shirt/dress/gown
 	icon = 'icons/roguetown/clothing/shirts_gown.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts_gown.dmi'
-	name = "spring gown"
-	desc = "A delicate gown that captures the essence of the season of renewal."
+	name = "春日礼裙"
+	desc = "一件精巧礼裙，恰好捕捉了万物复苏时节的神韵。"
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	icon_state = "springgown"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts_gown.dmi'
@@ -293,8 +293,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/dress/gown/summergown
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	name = "summer gown"
-	desc = "A breezy flowing gown fit for warm weathers."
+	name = "夏日礼裙"
+	desc = "轻盈飘逸，正适合温暖天气的礼裙。"
 	icon_state = "summergown"
 	boobed = TRUE
 	detail_color = "#e395bb"
@@ -305,16 +305,16 @@
 
 /obj/item/clothing/suit/roguetown/shirt/dress/gown/fallgown
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	name = "fall gown"
-	desc = "A solemn long-sleeved gown that signifies the season of year's end."
+	name = "秋日礼裙"
+	desc = "一件庄重的长袖礼裙，象征着岁末时节的来临。"
 	icon_state = "fallgown"
 	boobed = TRUE
 	detail_color = "#8b3f00"
 
 /obj/item/clothing/suit/roguetown/shirt/dress/gown/wintergown
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	name = "winter gown"
-	desc = "A warm elegant gown adorned with soft fur for the cold winter."
+	name = "冬日礼裙"
+	desc = "一件温暖而优雅的礼裙，饰以柔软毛皮，专为寒冬而制。"
 	icon_state = "wintergown"
 	boobed = TRUE
 	detail_color = "#45749d"
@@ -351,7 +351,7 @@
 	..()
 
 /obj/item/clothing/suit/roguetown/shirt/shortshirt
-	name = "shirt"
+	name = "短衬衣"
 	desc = ""
 	icon_state = "shortshirt"
 	item_state = "shortshirt"
@@ -363,7 +363,7 @@
 	..()
 
 /obj/item/clothing/suit/roguetown/shirt/shortshirt/merc
-	name = "shirt"
+	name = "短衬衣"
 	desc = ""
 	icon_state = "shortshirt"
 	item_state = "shortshirt"
@@ -376,8 +376,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/rags
 	slot_flags = ITEM_SLOT_ARMOR
-	name = "rags"
-	desc = "From rags to... nope, still rags."
+	name = "破布衣"
+	desc = "从破布到……不，还是破布。"
 	body_parts_covered = CHEST|GROIN|VITALS
 	color = "#b0b0b0"
 	icon_state = "rags"
@@ -389,7 +389,7 @@
 
 /obj/item/clothing/suit/roguetown/shirt/tribalrag
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
-	name = "tribalrag"
+	name = "部族破布衣"
 	desc = ""
 	body_parts_covered = CHEST|VITALS
 	icon_state = "tribalrag"
@@ -401,8 +401,8 @@
 	dropshrink = null
 
 /obj/item/clothing/suit/roguetown/shirt/robe/archivist
-	name = "scholar's robe"
-	desc = "Robes belonging to seekers of knowledge."
+	name = "学者长袍"
+	desc = "属于求知者的长袍。"
 	icon_state = "archivist"
 	icon = 'icons/roguetown/clothing/shirts.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
@@ -417,8 +417,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/tunic
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	name = "tunic"
-	desc = "Modest and fashionable, with the right colors."
+	name = "束腰衫"
+	desc = "只要颜色搭得对，它既朴素又时髦。"
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	icon_state = "tunic"
 	boobed = FALSE
@@ -453,8 +453,8 @@
 	..()
 /obj/item/clothing/suit/roguetown/shirt/dress
 	slot_flags = ITEM_SLOT_ARMOR
-	name = "dress"
-	desc = "A simple dress worn by women and the bold."
+	name = "连衣裙"
+	desc = "一件简洁的连衣裙，适合女性与胆大之人。"
 	body_parts_covered = CHEST|GROIN|LEGS|VITALS
 	icon_state = "dress"
 	item_state = "dress"
@@ -466,8 +466,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/dress/gen
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
-	name = "dress"
-	desc = "A simple dress worn by women and the bold."
+	name = "丝质内裙"
+	desc = "舒适而优雅，兼具风格与日常穿着的舒适性。"
 	body_parts_covered = CHEST|GROIN|LEGS|VITALS
 	icon_state = "dressgen"
 	item_state = "dressgen"
@@ -487,8 +487,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/dress/silkdress
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
-	name = "chemise"
-	desc = "Comfortable yet elegant, it offers both style and comfort for everyday wear."
+	name = "丝质长裙"
+	desc = "以柔滑面料制成的优雅裙装，适合正式场合与体面出行。"
 	body_parts_covered = CHEST|GROIN|LEGS|VITALS
 	icon_state = "silkdress"
 	item_state = "silkdress"
@@ -526,8 +526,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/dress/gen/sexy
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
-	name = "sheer dress"
-	desc = "A scandalously short dress made of extra fine fibers for a semi-sheer look."
+	name = "轻透短裙"
+	desc = "一件短得有些伤风败俗的裙装，以极细纤维制成，呈现半透明效果。"
 	body_parts_covered = null
 	icon_state = "sexydress"
 	sleevetype = null
@@ -544,8 +544,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/dress/slit
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
-	name = "slitted dress"
-	desc = "A finely sewn dress with a slit to expose the thigh, how scandalous!"
+	name = "开衩长裙"
+	desc = "一件裁缝精良、侧边开衩露出大腿的裙装，真是太伤风败俗了！"
 	icon_state = "slitdress"
 	item_state = "slitdress"
 	r_sleeve_status = SLEEVE_NOMOD
@@ -553,8 +553,8 @@
 	color = CLOTHING_BLACK
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/webs
-	name = "webbed shirt"
-	desc = "Exotic silk finely woven into... this? Might as well be wearing a spiderweb."
+	name = "蛛丝上衣"
+	desc = "异域丝线精细织成了……这玩意？简直像是把蜘蛛网披在身上。"
 	icon_state = "webs"
 	item_state = "webs"
 	r_sleeve_status = SLEEVE_NORMAL
@@ -567,8 +567,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/jester
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	name = "jester's tunick"
-	desc = "Whether it's standup, slapstick, or wrestling nobles to the floor, this tunick can take it all."
+	name = "弄臣戏衣"
+	desc = "无论是说笑话、耍闹剧，还是把贵族摔倒在地，这件戏衣都扛得住。"
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	icon_state = "jestershirt"
 	icon = 'icons/roguetown/clothing/shirts.dmi'
@@ -612,34 +612,34 @@
 
 /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/steward
 	color = null
-	name = "ornate silk dress"
-	desc = "A dress woven of only the finest, softest silks. Golden thread is inlaid with a deep royal crimson, expressing the owner's exquisitve wealth."
+	name = "华饰丝裙"
+	desc = "以最上等、最柔软丝绸织成的裙装。深沉的王室绯红间缀以金线，彰显穿戴者的奢华财富。"
 	icon_state = "stewarddress"
 	item_state = "stewarddress"
 
 /obj/item/clothing/suit/roguetown/shirt/tunic/silktunic
-	name = "ornate silk tunic"
-	desc = "A billowing tunic made of the finest silks and softest fabrics. Inlaid with golden thread, this is the height of fashion for the wealthiest of wearers."
+	name = "华饰丝质束腰衫"
+	desc = "用上等丝绸与最柔软布料制成的飘逸束腰衫。金线嵌饰其间，是最富有者所追逐的时尚顶点。"
 	icon_state = "stewardtunic"
 	item_state = "stewardtunic"
 
 /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/loudmouth
 	color = null
-	name = "crier's garb"
-	desc = "A robe that speaks volumes!"
+	name = "传令官衣装"
+	desc = "一件会替你大声发言的长袍！"
 	icon_state = "loudmouthrobe"
 	item_state = "loudmouthrobe"
 
 //WEDDING CLOTHES
 /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/weddingdress
-	name = "wedding silk dress"
-	desc = "A dress woven from fine silks, with golden threads inlaid in it. Made for that special day."
+	name = "婚礼丝裙"
+	desc = "以精细丝绸织成并嵌有金线的裙装，只为那个特别的日子而制。"
 	icon_state = "weddingdress"
 	item_state = "weddingdress"
 
 /obj/item/clothing/suit/roguetown/shirt/exoticsilkbra
-	name = "exotic silk bra"
-	desc = "An exquisite bra crafted from the finest silk and adorned with gold rings. It leaves little to the imagination."
+	name = "异域丝绸胸衣"
+	desc = "以最上等丝绸制成并饰有金环的精致胸衣，几乎不给想象留下多少空间。"
 	icon_state = "exoticsilkbra"
 	item_state = "exoticsilkbra"
 	body_parts_covered = CHEST
@@ -654,8 +654,8 @@
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 	icon = 'icons/roguetown/clothing/shirts.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
-	name = "noble dress"
-	desc = "An elegant dress fit for nobility, crafted with the finest materials and adorned with intricate details."
+	name = "贵族礼裙"
+	desc = "一件适合贵族穿着的优雅礼裙，以最上等的材料制成并饰有繁复细节。"
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	icon_state = "nobledress"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
@@ -690,8 +690,8 @@
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 	icon = 'icons/roguetown/clothing/shirts.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
-	name = "velvet dress"
-	desc = "A luxurious dress made of the finest velvet, soft to the touch and rich in appearance."
+	name = "天鹅绒礼裙"
+	desc = "以最上等天鹅绒制成的奢华礼裙，触感柔软，外观华贵。"
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	icon_state = "velvetdress"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
@@ -700,8 +700,8 @@
 //Servant Clothing:
 //................ Maid Dress   ............... //
 /obj/item/clothing/suit/roguetown/shirt/dress/maid
-	name = "maid dress"
-	desc = "A dress befitting the housekeeper of a lord's staff. While not as intricate as a royal's, it is indicative of the house's status."
+	name = "女仆裙装"
+	desc = "适合领主宅邸女管事穿着的裙装。虽不如王室服饰那般繁复，却足以体现家门地位。"
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_maids.dmi'
 	r_sleeve_status = SLEEVE_NORMAL
@@ -716,8 +716,8 @@
 
 //................ Servant Gown   ............... //
 /obj/item/clothing/suit/roguetown/shirt/dress/maid/servant
-	name = "servant gown"
-	desc = "A dress worn by those of manors and noble staff. Commonly black, though some estates dye them to their house colors."
+	name = "侍从长裙"
+	desc = "庄园仆役与贵族侍从所穿的裙装。通常为黑色，不过有些宅邸会染成自家的家族色。"
 	icon_state = "maidgown"
 	item_state = "maidgown"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
@@ -725,8 +725,8 @@
 	detail_color = CLOTHING_BLACK
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/formal
-	name = "formal shirt"
-	desc = "A comfortable yet functional dress shirt often worn by the staff of a noble household."
+	name = "礼衬衫"
+	desc = "舒适而实用的礼衬衫，常见于贵族宅邸的仆役穿着。"
 	icon_state = "butlershirt"
 	item_state = "butlershirt"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
@@ -738,8 +738,8 @@
 //kazengite content
 /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt1
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	name = "black foreign shirt"
-	desc = "A shirt typically used by thugs."
+	name = "黑色异域衬衣"
+	desc = "地痞恶徒常穿的一种衬衣。"
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	icon_state = "eastshirt1"
 	icon = 'icons/roguetown/clothing/shirts.dmi'
@@ -753,8 +753,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt2
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	name = "white foreign shirt"
-	desc = "A shirt typically used by foreign gangs."
+	name = "白色异域衬衣"
+	desc = "外来帮派常穿的一种衬衣。"
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	icon_state = "eastshirt2"
 	icon = 'icons/roguetown/clothing/shirts.dmi'
@@ -768,8 +768,8 @@
 
 //tattoo code
 /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats
-	name = "bouhoi bujeog tattoos"
-	desc = "A mystic style of tattoos adopted by the Ruma Clan, emulating a practice performed by warrior monks of the Xinyi Dynasty. They are your way of identifying fellow clan members, an sign of companionship and secretive brotherhood. These are styled into the shape of clouds, created by a mystical ink which shifts and moves in ripples like a pond to harden where your skin is struck. It's movement causes you to shudder."
+	name = "Bouhoi Bujeog纹身"
+	desc = "Ruma氏族沿用的一种神秘纹身，仿效了Xinyi王朝武僧的古老做法。它既是识别同族成员的标记，也是同伴情谊与隐秘兄弟会的象征。纹样呈云形，由神秘墨汁绘成，墨色会像池水波纹般流动，并在你的皮肤受击处瞬间硬化。它的蠕动会让你不寒而栗。"
 	resistance_flags = FIRE_PROOF
 	icon_state = "easttats"
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
@@ -810,7 +810,7 @@
 /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats/process()
 	if(obj_integrity >= max_integrity)
 		STOP_PROCESSING(SSobj, src)
-		src.visible_message(span_notice("The [src] flow more calmly, as they finish resting and regain their strength."), vision_distance = 1)
+		src.visible_message(span_notice("[src]流动得更平缓了，它们已经休息完毕并恢复了力量。"), vision_distance = 1)
 		return
 	else if(world.time > src.last_repair + src.repair_time)
 		src.last_repair = world.time

@@ -3,7 +3,7 @@
 */
 
 /obj/effect/spawner/lootdrop/light_armor_spawner
-	name = "light armor spawner"
+	name = "轻甲生成器"
 	icon_state = "larmor"
 	lootcount = 1
 	loot = list(
@@ -26,7 +26,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/medium_armor_spawner
-	name = "medium armor spawner"
+	name = "中甲生成器"
 	icon_state = "marmor"
 	lootcount = 1
 	loot = list(
@@ -46,7 +46,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/heavy_armor_spawner
-	name = "heavy armor spawner"
+	name = "重甲生成器"
 	icon_state = "harmor"
 	lootcount = 1
 	loot = list(
@@ -60,7 +60,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/helmet_spawner
-	name = "helmet spawner"
+	name = "头盔生成器"
 	icon_state = "helmetarmor"
 	lootcount = 1
 	loot = list(
@@ -87,7 +87,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/armored_gloves_spawner
-	name = "armored gloves spawner"
+	name = "护甲手套生成器"
 	icon_state = "glovearmor"
 	lootcount = 1
 	loot = list(
@@ -100,7 +100,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/armored_boots_spawner
-	name = "armored boots spawner"
+	name = "护甲靴生成器"
 	icon_state = "bootarmor"
 	lootcount = 1
 	loot = list(
@@ -113,7 +113,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/armored_wrists_spawner
-	name = "armored wrists spawner"
+	name = "护甲护腕生成器"
 	icon_state = "wristarmor"
 	lootcount = 1
 	loot = list(
@@ -125,7 +125,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/horny_armor_spawner
-	name = "horny armor spawner"
+	name = "暴露护甲生成器"
 	icon_state = "hornyarmor"
 	lootcount = 1
 	loot = list(
@@ -139,7 +139,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/peasant_weapon_spawner
-	name = "peasant weapon spawner"
+	name = "平民武器生成器"
 	icon_state = "pweapon"
 	lootcount = 1
 	loot = list(
@@ -155,7 +155,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/iron_copper_weapon_spawner
-	name = "iron+copper weapon spawner"
+	name = "铁铜武器生成器"
 	icon_state = "icweapon"
 	lootcount = 1
 	loot = list(
@@ -189,7 +189,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/steel_weapon_spawner
-	name = "steel weapon spawner"
+	name = "钢制武器生成器"
 	icon_state = "steelweapon"
 	lootcount = 1
 	loot = list(
@@ -232,7 +232,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/silver_weapon_spawner //doesn't include psydonian or elven
-	name = "silver weapon spawner"
+	name = "银制武器生成器"
 	icon_state = "silverweapon"
 	lootcount = 1
 	loot = list(
@@ -253,7 +253,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/decrepit_equipment_spawner
-	name = "decrepit equipment spawner"
+	name = "破旧装备生成器"
 	icon_state = "dweapon/armor"
 	lootcount = 1
 	loot = list(
@@ -289,7 +289,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/ancient_equipment_spawner
-	name = "ancient equipment spawner"
+	name = "古代装备生成器"
 	icon_state = "paweapon/armor"
 	lootcount = 1
 	loot = list(
@@ -321,7 +321,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/elven_equipment_spawner
-	name = "elven equipment spawner"
+	name = "精灵装备生成器"
 	icon_state = "eweapon/armor"
 	lootcount = 1
 	loot = list(
@@ -338,7 +338,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/blacksteel_equipment_spawner
-	name = "blacksteel equipment spawner"
+	name = "黑钢装备生成器"
 	icon_state = "bsweapon/armor"
 	lootcount = 1
 	loot = list(
@@ -352,7 +352,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/heresy
-	name = "heretical item spawner"
+	name = "异端物品生成器"
 	icon_state = "heresy"
 	lootcount = 1
 	loot = list(
@@ -422,7 +422,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/zizo
-	name = "zizo item spawner"
+	name = "Zizo物品生成器"
 	icon_state = "heresy"
 	lootcount = 1
 	loot = list(
@@ -449,7 +449,7 @@
 		/obj/item/clothing/neck/roguetown/psicross/inhumen/g = 2,
 	)
 /obj/effect/spawner/lootdrop/graggar
-	name = "graggar item spawner"
+	name = "Graggar物品生成器"
 	icon_state = "heresy"
 	lootcount = 1
 	loot = list(
@@ -468,7 +468,7 @@
 		/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/bronze = 5,
 	)
 /obj/effect/spawner/lootdrop/matt
-	name = "matthios item spawner"
+	name = "Matthios物品生成器"
 	icon_state = "heresy"
 	lootcount = 1
 	loot = list(
@@ -487,7 +487,7 @@
 		/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios = 10,
 	)
 /obj/effect/spawner/lootdrop/baotha//add baothan ritual armor when we get around to that
-	name = "baotha item spawner"
+	name = "Baotha物品生成器"
 	icon_state = "heresy"
 	lootcount = 1
 	loot = list(
@@ -515,12 +515,12 @@
 		/obj/item/storage/belt/rogue/leather/plaquegold/baotha = 10,
 	)
 /obj/item/carvedgem/rose/statue/baotha
-	name = "baothan statuette"
-	desc = "A statue carved out of filthy, filthy rosestone."
+	name = "Baotha小像"
+	desc = "一尊用污秽至极的玫瑰石雕成的小像。"
 	color = "#b85cb3"
 
 /obj/effect/spawner/lootdrop/contraband
-	name = "confiscated item spawner"
+	name = "违禁物品生成器"
 	icon_state = "heresy"
 	loot = list(
 		/obj/item/reagent_containers/powder/herozium = 5,
@@ -542,7 +542,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/spider_cave
-	name = "weirdly specific dunworld spidercave loot drop"
+	name = "地底世界蛛洞专用战利品掉落点"
 	icon_state = "cot"
 	loot = list(
 		/obj/item/rogueweapon/greataxe/dreamscape = 99,

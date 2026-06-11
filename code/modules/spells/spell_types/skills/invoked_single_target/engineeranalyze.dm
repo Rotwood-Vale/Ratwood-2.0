@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/engineeranalyze
-	name = "Analyze"
-	desc = "Examine a structure's details"
+	name = "解析"
+	desc = "检视一处结构的详细状况。"
 	overlay_state = "analyze"
 	releasedrain = 10
 	chargedrain = 0
@@ -22,21 +22,21 @@
 	if(isstructure(targets[1]))
 		var/obj/structure/analyzedstructure = targets[1]
 		var/list/examination = list("<span class='info'>ø ------------ ø")
-		examination += "☼ ANALYZING: [capitalize(analyzedstructure.name)] "
+		examination += "☼ 解析对象：[capitalize(analyzedstructure.name)] "
 		if (length(analyzedstructure.desc) > 1)
-			examination += "☼ Description: [capitalize(analyzedstructure.desc)] "
+			examination += "☼ 描述：[capitalize(analyzedstructure.desc)] "
 		if (analyzedstructure.max_integrity == 0)
-			examination += "☼ Integrity: INDESTRUCTIBLE"
+			examination += "☼ 完整度：不可摧毁"
 		else
 			healthpercent = (analyzedstructure.obj_integrity/analyzedstructure.max_integrity) * 100
-			examination += "☼ Integrity: [healthpercent]% ([analyzedstructure.obj_integrity]/[analyzedstructure.max_integrity]) "
+			examination += "☼ 完整度：[healthpercent]% ([analyzedstructure.obj_integrity]/[analyzedstructure.max_integrity]) "
 		if(analyzedstructure.redstone_structure)
 			if(analyzedstructure.redstone_attached.len > 0)
-				examination += "☼ ATTACHED STRUCTURES "
+				examination += "☼ 已连接结构 "
 				for(var/obj/structure/attachedstructures in analyzedstructure.redstone_attached)
 					examination += "   - [attachedstructures.name] "
 			else
-				examination += "☼ NO ATTACHED STRUCTURES"
+				examination += "☼ 未连接任何结构"
 		examination += "ø ------------ ø</span>"
 		to_chat(user, examination.Join("\n"))
 		return examination
@@ -45,14 +45,14 @@
 	if(isturf(targets[1]) && istype(targets[1], /turf/closed/wall/))
 		var/turf/closed/wall/analyzeturf = targets[1]
 		var/list/examination = list("<span class='info'>ø ------------ ø")
-		examination += "☼ ANALYZING: [capitalize(analyzeturf.name)] "
+		examination += "☼ 解析对象：[capitalize(analyzeturf.name)] "
 		if (length(analyzeturf.desc) > 1)
-			examination += "☼ Description: [capitalize(analyzeturf.desc)] "
+			examination += "☼ 描述：[capitalize(analyzeturf.desc)] "
 		if (analyzeturf.max_integrity == 0)
-			examination += "☼ Integrity: INDESTRUCTIBLE"
+			examination += "☼ 完整度：不可摧毁"
 		else
 			healthpercent = (analyzeturf.turf_integrity/analyzeturf.max_integrity) * 100
-			examination += "☼ Integrity: [healthpercent]% ([analyzeturf.turf_integrity]/[analyzeturf.max_integrity]) "
+			examination += "☼ 完整度：[healthpercent]% ([analyzeturf.turf_integrity]/[analyzeturf.max_integrity]) "
 		examination += "ø ------------ ø</span>"
 		to_chat(user, examination.Join("\n"))
 		return examination

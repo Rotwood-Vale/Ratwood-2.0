@@ -2,8 +2,8 @@
 //Worse damage than arcane bolt, paired with frost bolt's effects.
 //Retains frost bolt's damage. Gets a HORRID arced shot for applying slowdown through groups.
 /obj/effect/proc_holder/spell/invoked/projectile/ice_shard
-	name = "Ice Shard"
-	desc = "A spell to conjure a shard of ice. Wickedly sharp. The bane of creechurs from Zybantium to the lands of the Naledi. A lost art."
+	name = "冰片矢"
+	desc = "凝出一片锋利恶毒的寒冰碎片。自 兹班图 至 纳莱迪 诸地，愚钝生物皆畏其锋。这是一门失落的技艺。"
 	range = 12
 	projectile_type = /obj/projectile/energy/ice_shard
 	overlay_state = "ice_shard"//temp
@@ -22,7 +22,7 @@
 	antimagic_allowed = FALSE //can you use it if you are antimagicked?
 	charging_slowdown = 3
 	spell_tier = 2
-	invocations = list("Hasta Glacialis!")
+	invocations = list("寒冰，成刃！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_ICE
 	glow_intensity = GLOW_INTENSITY_LOW
@@ -43,7 +43,7 @@
 	. = ..()
 
 /obj/projectile/energy/ice_shard
-	name = "shard of ice"
+	name = "冰片"
 	icon_state = "ice_2"
 	damage = 20
 	npc_simple_damage_mult = 2
@@ -54,7 +54,7 @@
 	hitsound = 'sound/combat/hits/pick/genpick (2).ogg'
 
 /obj/projectile/energy/ice_shard/arc
-	name = "arced shard of ice"
+	name = "弧射冰片"
 	damage = 10
 	arcshot = TRUE
 
@@ -63,7 +63,7 @@
 	if(ismob(target))
 		var/mob/M = target
 		if(M.anti_magic_check())
-			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			visible_message(span_warning("[src] 在接触[target]时噗地溃散了！"))
 			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 			qdel(src)
 			return BULLET_ACT_BLOCK

@@ -1,6 +1,6 @@
 /datum/alch_grind_recipe
-	var/name = "generic grind recipe"
-	var/category = "Grinding"
+	var/name = "通用研磨配方"
+	var/category = "研磨"
 	var/picky = TRUE // if TRUE: the item path MUST MATCH, and cannot be a subtype.
 	var/obj/item/valid_input = null //the typepath that, when ground, makes an output
 	var/list/valid_outputs = list() //List of [Itempath = amnt?1] to be created always
@@ -23,11 +23,11 @@
 		    <h1>[name]</h1>
 		"}
 	
-	html += "Put [initial(valid_input.name)] in an Alchemical Mortar.<br>"
-	html += "Grind with a pestle to create:<br>"
+	html += "将[initial(valid_input.name)]放入炼金研钵中。<br>"
+	html += "用杵研磨，可制成：<br>"
 
 	if(valid_outputs.len)
-		html += "<div><strong>Guaranteed Outputs</strong><br>"
+		html += "<div><strong>固定产出</strong><br>"
 		for(var/path as anything in valid_outputs)
 			var/count = valid_outputs[path]
 			if(ispath(path, /obj))
@@ -36,12 +36,12 @@
 		html += "</div>"
 
 	if(bonus_chance_outputs.len)
-		html += "<div><strong>Bonus Outputs</strong><br>"
+		html += "<div><strong>额外产出</strong><br>"
 		for(var/path as anything in bonus_chance_outputs)
 			var/chance = bonus_chance_outputs[path]
 			if(ispath(path, /obj))
 				var/atom/atom = path
-				html += "- [initial(atom.name)] (Chance: [chance]%)<br>"
+				html += "- [initial(atom.name)]（概率：[chance]%）<br>"
 		html += "</div>"
 
 	html += {"

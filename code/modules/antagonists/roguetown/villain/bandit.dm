@@ -1,14 +1,14 @@
 /datum/antagonist/bandit
-	name = "Bandit"
-	roundend_category = "bandits"
-	antagpanel_category = "Bandit"
+	name = "强盗"
+	roundend_category = "强盗"
+	antagpanel_category = "强盗"
 	job_rank = ROLE_BANDIT
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "bandit"
 	confess_lines = list(
-		"FREEDOM!!!",
-		"I WILL NOT LIVE IN YOUR WALLS!",
-		"I WILL NOT FOLLOW YOUR RULES!",
+		"自由！！！",
+		"我绝不会困死在你们的高墙里！",
+		"我绝不会遵从你们的规矩！",
 	)
 	rogue_enabled = TRUE
 	var/favor = 150
@@ -16,7 +16,7 @@
 
 /datum/antagonist/bandit/examine_friendorfoe(datum/antagonist/examined_datum,mob/examiner,mob/examined)
 	if(istype(examined_datum, /datum/antagonist/bandit))
-		return span_boldnotice("Another free man. My ally.")
+		return span_boldnotice("又一个自由人。我的盟友。")
 
 /datum/antagonist/bandit/on_gain()
 	owner.special_role = "Bandit"
@@ -36,7 +36,7 @@
 	ADD_TRAIT(H, TRAIT_SEEPRICES, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_COMMIE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_OUTLAW, TRAIT_GENERIC)//No meisters.
-	to_chat(H, span_alertsyndie("I am a BANDIT!"))
+	to_chat(H, span_alertsyndie("我是个强盗！"))
 /*
 	to_chat(H, span_boldwarning("Long ago I did a crime worthy of my bounty being hung on the wall outside of the local inn. \
 	I live now with fellow free men in reverence to MATTHIOS whose idol grants us boons and wishes when fed the money, treasures, and metals of the civilized wretches. \
@@ -67,6 +67,6 @@
 			var/mob/living/carbon/human/H = owner.current
 			the_name = H.real_name
 		if(!totaldonated)
-			to_chat(world, "[the_name] was a bandit.")
+			to_chat(world, "[the_name] 是一名强盗。")
 		else
-			to_chat(world, "[the_name] was a bandit. Their band stole [totaldonated] mammons worth of loot!")
+			to_chat(world, "[the_name] 是一名强盗。他们的匪帮掠走了价值 [totaldonated] 枚马蒙的战利品！")

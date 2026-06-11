@@ -1,5 +1,6 @@
 /datum/job/roguetown/jester
 	title = "Jester"
+	display_title = "弄臣"
 	flag = JESTER
 	department_flag = COURTIERS
 	faction = "Station"
@@ -8,10 +9,10 @@
 
 	allowed_races = ACCEPTED_RACES
 
-	tutorial = "The Grenzelhofts were known for their Jesters, wisemen with a tongue just as sharp as their wit. \
-		You command a position of a fool, envious of the position your superiors have upon you. \
-		Your cheap tricks and illusions of intelligence will only work for so long, \
-		and someday you'll find yourself at the end of something sharper than you."
+	tutorial = "格伦泽尔霍夫特 家族向来以他们的弄臣闻名，那些人机敏过人，舌头与脑子一样锋利。\
+		你坐在小丑的位置上，嫉妒着上位者凌驾于你头顶的权势。\
+		你那些廉价把戏与装出来的聪明终究骗不了太久，\
+		总有一天，你会撞上比自己更锋利的东西。"
 
 	allowed_ages = ALL_AGES_LIST
 	outfit = /datum/outfit/job/roguetown/jester
@@ -75,4 +76,3 @@
 		ADD_TRAIT(H, TRAIT_EMPATH, TRAIT_GENERIC) // Jester :3
 	else
 		ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC) // Joker >:(
-

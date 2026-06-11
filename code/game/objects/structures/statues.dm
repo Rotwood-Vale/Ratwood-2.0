@@ -1,5 +1,5 @@
 /obj/structure/statue
-	name = "statue"
+	name = "雕像"
 	desc = ""
 	icon_state = ""
 	density = TRUE

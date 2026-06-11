@@ -3,7 +3,7 @@
 */
 
 /obj/effect/spawner/lootdrop/cheap_clutter_spawner
-	name = "cheap clutter spawner"
+	name = "廉价杂物生成器"
 	icon_state = "lowclutter"
 	lootcount = 1
 	loot = list(
@@ -28,7 +28,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/valuable_clutter_spawner
-	name = "valuable clutter spawner"
+	name = "贵重杂物生成器"
 	icon_state = "hiclutter"
 	lootcount = 1
 	loot = list(
@@ -43,7 +43,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/cheap_candle_spawner
-	name = "cheap candle spawner"
+	name = "廉价蜡烛生成器"
 	icon_state = "lowcandle"
 	lootcount = 1
 	loot = list(
@@ -52,7 +52,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/valuable_candle_spawner
-	name = "valuable candle spawner"
+	name = "贵重蜡烛生成器"
 	icon_state = "hicandle"
 	lootcount = 1
 	loot = list(
@@ -65,7 +65,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/cheap_tableware_spawner
-	name = "cheap tableware spawner"
+	name = "廉价餐具生成器"
 	icon_state = "lowtableware"
 	lootcount = 1
 	loot = list(
@@ -80,7 +80,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/valuable_tableware_spawner
-	name = "valuable tableware spawner"
+	name = "贵重餐具生成器"
 	icon_state = "hitableware"
 	lootcount = 1
 	loot = list(
@@ -96,7 +96,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/cheap_jewelry_spawner
-	name = "cheap jewelry spawner"
+	name = "廉价首饰生成器"
 	icon_state = "lowjewlery"
 	lootcount = 1
 	loot = list(
@@ -121,7 +121,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/valuable_jewelry_spawner
-	name = "valuable jewelry spawner"
+	name = "贵重首饰生成器"
 	icon_state = "hijewlery"
 	lootcount = 1
 	loot = list(
@@ -156,7 +156,7 @@
 
 
 /obj/effect/spawner/lootdrop/mobtreasure
-	name = "mobtreasure spawner"
+	name = "生物宝藏生成器"
 	icon_state = "hiclutter"
 	lootcount = 1
 	loot = list(

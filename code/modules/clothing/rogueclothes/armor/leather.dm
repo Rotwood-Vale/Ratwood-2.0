@@ -1,6 +1,6 @@
 /obj/item/clothing/suit/roguetown/armor/leather
-	name = "leather armor"
-	desc = "Flexible cowhide armor. Lightweight, better than nothing."
+	name = "皮甲"
+	desc = "柔韧牛皮甲。轻便，总比没有强。"
 	icon_state = "roguearmor"
 	body_parts_covered = COVERAGE_TORSO
 	armor = ARMOR_LEATHER
@@ -19,8 +19,8 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/vest/winterjacket
-	name = "winter jacket"
-	desc = "The most elegant of furs and vivid of royal dyes combined together into a most classy jacket."
+	name = "冬季夹克"
+	desc = "将最优雅的毛皮与最鲜艳的皇家染料结合而成的华美夹克。"
 	icon_state = "winterjacket"
 	detail_tag = "_detail"
 	color = CLOTHING_WHITE
@@ -53,8 +53,8 @@
 	return ..()
 
 /obj/item/clothing/armor/gambeson/tailcoat
-	name = "tailcoat"
-	desc = "A finely-sewn tailcoat often worn by those on the brink of the upper echelons of Astratan caste."
+	name = "燕尾服"
+	desc = "精细缝制的燕尾服，常由接近阿斯特拉坦上层阶级的人士穿着。"
 	icon = 'icons/roguetown/clothing/armor.dmi'
 	icon_state = "butlercoat"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/armor.dmi'
@@ -66,29 +66,29 @@
 	armor = ARMOR_PADDED
 
 /obj/item/clothing/suit/roguetown/armor/leather/jacket/artijacket
-	name = "artificer jacket"
+	name = "工匠夹克"
 	icon_state = "artijacket"
-	desc = "A thick leather jacket adorned with fur and cog decals. The height of Heartfelt fashion."
+	desc = "厚实皮夹克，饰有毛皮与齿轮纹样。Heartfelt 时尚的巅峰。"
 	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
 	min_cold_protection_temperature = 50
 
 /obj/item/clothing/suit/roguetown/armor/leather/cuirass
-	name = "leather cuirass"
-	desc = "A cuirass made of leather."
+	name = "皮胸甲"
+	desc = "由皮革制成的胸甲。"
 	icon_state = "leather"
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 
 /obj/item/clothing/suit/roguetown/armor/leather/hide
-	name = "hide armor"
-	desc = "A light armor of wildbeast hide. Far more durable than leather."
+	name = "兽皮甲"
+	desc = "由野兽皮制成的轻甲。比普通皮甲耐用得多。"
 	icon_state = "hidearmor"
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM
 	cold_protection = CHEST
 	min_cold_protection_temperature = 50
 
 /obj/item/clothing/suit/roguetown/armor/leather/studded/warden
-	name = "forester's armor"
-	desc = "A hardened leather harness with a large pauldron worn over a maille coat, associated with the wardens."
+	name = "林地守卫甲"
+	desc = "套在锁子甲外、带有大肩甲的硬化皮革挽具，是林地守卫的标志。"
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
@@ -97,16 +97,16 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/studded/warden/upgraded
-	name = "forester's brigandine"
-	desc = "A hardened leather harness with a large pauldron worn over a tasseted brigandine, imbued with Dendor's essence."
+	name = "林地守卫布里甘丁甲"
+	desc = "套在带垂片布里甘丁甲外、带有大肩甲的硬化皮革挽具，灌注了登多尔的精华。"
 	icon_state = "forestbrig"
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + 50
 	equip_delay_self = 4 SECONDS
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/clothing/suit/roguetown/armor/leather/studded
-	name = "studded leather armor"
-	desc = "Studded leather is the most durable of all hides and leathers and about as light."
+	name = "铆钉皮甲"
+	desc = "铆钉皮革是所有兽皮与皮革中最耐用的一种，同时也同样轻便。"
 	icon_state = "studleather"
 	item_state = "studleather"
 	blocksound = SOFTHIT
@@ -120,15 +120,15 @@
 	armor_class = ARMOR_CLASS_LIGHT
 
 /obj/item/clothing/suit/roguetown/armor/leather/studded/psyaltrist
-	name = "cuir-bouilli armor"
-	desc = "Treated, water-boiled and composite-layered leather armor of fine Otavan make."
+	name = "煮革甲"
+	desc = "经处理、水煮并以复合层压工艺制成的优质奥塔凡皮甲。"
 	icon_state = "cuirbouilli"
 	item_state = "cuirbouilli"
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy
-	name = "hardened leather armor"
-	desc = "A heavy steerhide jerkin with enough body to stand on its own. It forms a stiff, protective mantle \
-	for its wearer, shielding from blows and weather alike."
+	name = "硬化皮甲"
+	desc = "厚重的公牛皮短上衣，硬挺得几乎能自行站立。它形成一道坚实而护身的披甲 \
+	为穿戴者抵挡打击与风霜。"
 	icon_state = "roguearmor_belt"
 	item_state = "roguearmor_belt"
 	armor = ARMOR_LEATHER_GOOD
@@ -139,8 +139,8 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
-	name = "hardened leather coat"
-	desc = "A heavy steerhide jerkin that reaches past the hips and better protects the vitals."
+	name = "硬化皮大衣"
+	desc = "厚重的公牛皮短上衣，下摆过胯，能更好地保护要害。"
 	icon_state = "roguearmor_coat"
 	item_state = "roguearmor_coat"
 	body_parts_covered = COVERAGE_ALL_BUT_ARMS
@@ -152,8 +152,8 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/confessor
-	name = "confessional coat"
-	desc = "A sturdy raincoat draped atop of a tightly-fastened boiled leather cuirass. Saint Astratan youths often fashion little pieces of memorabilia and stitch it on the inner pockets of the coat to remind the confessors that their cause is virtuous, and that they mustn't lose sight of what matters."
+	name = "忏悔官大衣"
+	desc = "坚固的雨披外套罩在紧束的煮制皮胸甲之上。圣阿斯特拉坦的年轻人常会缝些纪念小物在大衣内袋里，提醒忏悔官们他们的事业是正直的，不可忘却真正重要之物。"
 	icon_state = "confessorcoat"
 	item_state = "confessorcoat"
 	body_parts_covered = COVERAGE_FULL
@@ -163,8 +163,8 @@
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb
-	name = "megarmach scale coat"
-	desc = "A set of lightweight armor fashioned from the scales of the Zybantine \'megarmach\', an armored reptilian creacher that ambushes prey by the riverside, and drags them deep into Abyssor's domain."
+	name = "巨颚兽鳞甲大衣"
+	desc = "以拜班廷“巨颚兽”的鳞片制成的轻型护甲。那是一种披甲爬行生物，会在河岸伏击猎物并将其拖入深渊主的领地。"
 	icon_state = "pangolin"
 	item_state = "pangolin"
 	cold_protection = null
@@ -173,14 +173,14 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/steppe
-	name = "fur-woven hatanga coat"
-	desc = "A finely woven hatagna coat, replacing much of its scaled armor with fine furs and reinforced padding for lighter rides."
+	name = "毛织哈坦嘎大衣"
+	desc = "精细织成的哈坦嘎大衣，以上好毛皮与强化衬垫取代了大量鳞甲，更适合轻骑穿用。"
 	icon_state = "hatangafur"
 	item_state = "hatangafur"
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/jacket
-	name = "hardened leather jacket"
-	desc = "A heavy leather jacket that covers the arms and protects the vitals."
+	name = "硬化皮夹克"
+	desc = "厚重的皮夹克，可覆盖双臂并保护要害。"
 	icon_state = "leatherjacketo"
 	item_state = "leatherjacketo"
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
@@ -191,8 +191,8 @@
 	sellprice = 25
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter
-	name = "fencing jacket"
-	desc = "A light, flexible button-up leather jacket that will keep your vitals out of harm's way."
+	name = "击剑夹克"
+	desc = "轻便灵活、可系扣的皮夹克，能让你的要害远离伤害。"
 	icon_state = "freijacket"
 	item_state = "freijacket"
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM
@@ -216,8 +216,8 @@
 	update_icon()
 
 /obj/item/clothing/suit/roguetown/armor/leather/trophyfur
-	name = "treated trophy fur robes"
-	desc = "A heavy set of hardened robes, lined with fur. The leather is composed of several creatures that were notably difficult to fell by arrow. A proof or rangership among many."
+	name = "鞣制战利品毛皮袍"
+	desc = "厚重的硬化长袍，内衬毛皮。其皮革取自数种极难以箭矢放倒的生物，是许多游侠身份的证明。"
 	icon_state = "hatanga"
 	item_state = "hatanga"
 	armor = list("blunt" = 90, "slash" = 30, "stab" = 40, "piercing" = 60, "fire" = 0, "acid" = 0)
@@ -228,8 +228,8 @@
 	min_cold_protection_temperature = 50
 
 /obj/item/clothing/suit/roguetown/armor/leather/bikini
-	name = "leather corslet"
-	desc = "Flexible cowhide armor. Lightweight, better than nothing. Trimmed to protect the heart and hips."
+	name = "皮胸衣"
+	desc = "柔韧牛皮甲。轻便，总比没有强。剪裁后专门保护心口与髋部。"
 	body_parts_covered = CHEST|GROIN
 	icon_state = "leatherkini"
 	item_state = "leatherkini"
@@ -238,8 +238,8 @@
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
 
 /obj/item/clothing/suit/roguetown/armor/leather/studded/bikini
-	name = "studded leather corslet"
-	desc = "Studded leather is the most durable of all hides and leathers and about as light. Trimmed to protect the heart and hips."
+	name = "铆钉皮胸衣"
+	desc = "铆钉皮革是所有兽皮与皮革中最耐用的一种，同时也同样轻便。剪裁后专门保护心口与髋部。"
 	body_parts_covered = CHEST|GROIN
 	icon_state = "studleatherkini"
 	item_state = "studleatherkini"
@@ -247,8 +247,8 @@
 	allowed_race = CLOTHED_RACES_TYPES
 
 /obj/item/clothing/suit/roguetown/armor/leather/hide/bikini
-	name = "hide corslet"
-	desc = "A light armor of wildbeast hide. Far more durable than leather. Trimmed to protect the heart and hips."
+	name = "兽皮胸衣"
+	desc = "由野兽皮制成的轻甲，比普通皮甲耐用得多。剪裁后专门保护心口与髋部。"
 	body_parts_covered = CHEST|GROIN
 	icon_state = "hidearmorkini"
 	item_state = "hidearmorkini"
@@ -257,8 +257,8 @@
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
 
 /obj/item/clothing/suit/roguetown/armor/leather/vest
-	name = "leather vest"
-	desc = "A leather vest. Not very protective, but fashionable."
+	name = "皮背心"
+	desc = "一件皮背心。防护性不强，但很时髦。"
 	icon_state = "vest"
 	item_state = "vest"
 	color = "#514339"
@@ -275,8 +275,8 @@
 	armor_class = ARMOR_CLASS_LIGHT
 
 /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor
-	name = "sea jacket"
-	desc = "A sailor's garb."
+	name = "水手夹克"
+	desc = "水手装束。"
 	icon_state = "sailorvest"
 	color = null
 	slot_flags = ITEM_SLOT_ARMOR
@@ -287,8 +287,8 @@
 	color = CLOTHING_WHITE
 
 /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor/nightman
-	name = "silk jacket"
-	desc = "A soft and comfortable jacket."
+	name = "丝绸夹克"
+	desc = "柔软舒适的夹克。"
 	icon_state = "nightman"
 	sleeved = 'icons/roguetown/clothing/onmob/armor.dmi'
 	allowed_sex = list(MALE, FEMALE)
@@ -297,16 +297,16 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/vest/hand
-	name = "hand's vest"
-	desc = "A soft vest of finest fabric."
+	name = "执政官背心"
+	desc = "以上等面料制成的柔软背心。"
 	icon_state = "handcoat"
 	color = null
 	allowed_sex = list(MALE, FEMALE)
 	allowed_race = NON_DWARVEN_RACE_TYPES
 
 /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
-	name = "leather coat"
-	desc = "A stylish coat worn by Duelists of Valoria. Light and flexible, it does not impede the complex movements they are known for. Well padded."
+	name = "皮大衣"
+	desc = "瓦洛里亚决斗者所穿的时髦大衣。轻便灵活，不会妨碍他们著称的复杂动作，而且衬垫充足。"
 	icon = 'icons/roguetown/clothing/armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/armor.dmi'
 	icon_state = "bwleathercoat"
@@ -343,7 +343,7 @@
 	sellprice = 50
 
 /obj/item/clothing/suit/roguetown/armor/leather/newkeep/duchess
-	name = "duchess dress"
+	name = "公爵夫人礼裙"
 	desc = ""
 	icon_state = "duchess"
 	item_state = "duchess"
@@ -351,43 +351,43 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|VITALS
 
 /obj/item/clothing/suit/roguetown/armor/leather/newkeep/duke
-	name = "ducal uniform"
+	name = "公爵制服"
 	desc = ""
 	icon_state = "duke"
 	item_state = "duke"
 	body_parts_covered = CHEST|VITALS|ARMS
 
 /obj/item/clothing/suit/roguetown/armor/leather/newkeep/hand
-	name = "Hand's Jacket"
-	desc = "A heavy coat of fine, yet rugged fabric. Reinforced, because one never knows."
+	name = "执政官夹克"
+	desc = "以精良而耐磨的布料制成的厚重大衣，并经过加固。毕竟世事难料。"
 	icon_state = "hand"
 	item_state = "hand"
 	armor = ARMOR_LEATHER_STUDDED
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 
 /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heir
-	name = "Heir's uniform"
+	name = "继承人制服"
 	desc = ""
 	icon_state = "heir"
 	item_state = "heir"
 	body_parts_covered = BELOW_HEAD
 
 /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heiress
-	name = "Heiress's uniform"
+	name = "女继承人制服"
 	desc = ""
 	icon_state = "heiress"
 	item_state = "heiress"
 	body_parts_covered = BELOW_HEAD
 
 /obj/item/clothing/suit/roguetown/armor/leather/newkeep/councillor
-	name = "councillorial uniform"
+	name = "议政官制服"
 	desc = ""
 	icon_state = "councillor"
 	item_state = "councillor"
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 
 /obj/item/clothing/suit/roguetown/armor/leather/newkeep/magos
-	name = "Magos' Robes"
+	name = "魔导师长袍"
 	desc = ""
 	icon_state = "magos"
 	item_state = "magos"
@@ -395,15 +395,15 @@
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 
 /obj/item/clothing/suit/roguetown/armor/leather/newkeep/steward
-	name = "Steward's Vest"
-	desc = "Smart and modern garb, embroidered with real gold"
+	name = "管家背心"
+	desc = "利落而现代的装束，以真金刺绣。"
 	icon_state = "steward"
 	item_state = "steward"
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	armor = ARMOR_PADDED_BAD
 	
 /obj/item/clothing/head/roguetown/duchess_hood
-	name = "duchess hood"
+	name = "公爵夫人兜帽"
 	icon = 'icons/roguetown/clothing/licensed-infraredbaron/head.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/head.dmi'
 	icon_state = "duchess_hood"
@@ -413,7 +413,7 @@
 	armor = ARMOR_PADDED_BAD
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/fur
-	name = "fur underarmor"
-	desc = "A heavy set of hardened robes, lined with fur. The leather is composed of several creatures that were notably difficult to fell by arrow. A proof or rangership among many."
+	name = "毛皮内甲"
+	desc = "厚重的硬化长袍，内衬毛皮。其皮革取自数种极难以箭矢放倒的生物，是许多游侠身份的证明。"
 	icon_state = "hatanga"
 	item_state = "hatanga"

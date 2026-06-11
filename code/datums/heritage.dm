@@ -13,8 +13,8 @@
 
 //Misfortune
 /datum/family_curse/misfortune
-	name = "Family Misfortune"
-	description = "Bad luck follows this bloodline"
+	name = "家族厄运"
+	description = "这条血脉总被厄运缠身"
 	curse_effects = list(/datum/status_effect/misfortune)
 
 /datum/status_effect/misfortune
@@ -24,16 +24,16 @@
 	effectedstats = list(STATKEY_LCK = -2)
 
 /atom/movable/screen/alert/status_effect/family_curse/misfortune
-	name = "Family Misfortune"
-	desc = "Your family's curse brings ill fortune to your steps."
+	name = "家族厄运"
+	desc = "家族的诅咒让厄运伴随着我的每一步。"
 	icon_state = "debuff"
 
 	var/static/list/misfortune_tips = list(
-		"Dark clouds seem to follow you wherever you go...",
-		"You feel the weight of your family's curse.",
-		"Even simple tasks seem to go wrong more often.",
-		"The fates seem to conspire against you.",
-		"Your ancestors' misdeeds continue to haunt you."
+		"无论我走到哪里，仿佛都有阴云相随……",
+		"我能感到家族诅咒沉重地压在身上。",
+		"就连最简单的事也似乎更容易出错了。",
+		"命运仿佛在合谋与我作对。",
+		"先祖的罪孽至今仍在纠缠着我。"
 	)
 
 /atom/movable/screen/alert/status_effect/family_curse/misfortune/Initialize(mapload, datum/hud/hud_owner)
@@ -44,8 +44,8 @@
 
 // Hunger
 /datum/family_curse/hunger
-	name = "Insatiable Appetite"
-	description = "This bloodline is voracious in its hunger."
+	name = "无尽饥渴"
+	description = "这条血脉饥肠辘辘，永难满足。"
 	curse_effects = list(/datum/status_effect/hunger)
 
 /datum/status_effect/hunger
@@ -54,14 +54,14 @@
 	alert_type = /atom/movable/screen/alert/status_effect/family_curse/hunger
 
 /atom/movable/screen/alert/status_effect/family_curse/hunger
-	name = "Insatiable Appetite"
-	desc = "Your family is cursed with a hunger that is rarely sated."
+	name = "无尽饥渴"
+	desc = "家族被一种极少能够满足的饥饿所诅咒。"
 	icon_state = "debuff"
 
 	var/static/list/hunger_tips = list(
-		"Your stomach growls like a caged volf...",
-		"You feel the weight of your family's curse.",
-		"Even the grandest feast was never enough."
+		"我的胃像笼中的 volf 一样低吼着……",
+		"我能感到家族诅咒沉重地压在身上。",
+		"即便是最丰盛的盛宴也从来无法让我满足。"
 	)
 
 /atom/movable/screen/alert/status_effect/family_curse/hunger/Initialize(mapload, datum/hud/hud_owner)
@@ -83,12 +83,12 @@
 			if(curse.cursed_by)
 				var/mob/curser = curse.cursed_by.resolve()
 				if(curser)
-					curse_info += "[curse.blessing ? "Blessed" : "Cursed"] by: [curser.real_name]<br>"
-			curse_info += "Severity: [curse.severity]/3<br>"
-			curse_info += "Time cursed: [DisplayTimeText(world.time - curse.when_cursed)] ago<br>"
+					curse_info += "[curse.blessing ? "祝福施加者" : "诅咒施加者"]：[curser.real_name]<br>"
+			curse_info += "严重程度：[curse.severity]/3<br>"
+			curse_info += "受影响时长：[DisplayTimeText(world.time - curse.when_cursed)]<br>"
 
 		if(curse_info)
-			var/datum/browser/popup = new(usr, "curse_info", "Family Modifier Details", 300, 200)
+			var/datum/browser/popup = new(usr, "curse_info", "家族状态详情", 300, 200)
 			popup.set_content(curse_info)
 			popup.open()
 
@@ -113,7 +113,7 @@
 	family_curses += new_curse
 
 	// Record curse history
-	curse_history += "The [housename] family was cursed with [new_curse.name] by [curser]"
+	curse_history += "[housename] 家族遭到了 [curser] 施加的[new_curse.name]。"
 
 	// Apply curse effects to all members
 	ApplyCurseEffects(new_curse)
@@ -146,7 +146,7 @@
 		if(FAMILY_FATHER, FAMILY_MOTHER)
 			pass()
 
-	to_chat(person, span_notice("You have joined the [housename] family as [relationship_type]."))
+	to_chat(person, span_notice("我以[relationship_type]的身份加入了[housename]家族。"))
 	return member
 
 /datum/heritage/proc/ConductWedding(datum/family_member/bride, datum/family_member/groom, mob/living/carbon/human/officiant)
@@ -158,7 +158,7 @@
 		return FALSE
 
 	// Announce to all family members
-	var/announcement = "[bride.person?.real_name] and [groom.person?.real_name] have been wed in the [housename] family!"
+	var/announcement = "[bride.person?.real_name]与[groom.person?.real_name]已在[housename]家族中缔结婚姻！"
 
 	for(var/datum/family_member/member in members)
 		if(member.person && member.person?.client)
@@ -365,15 +365,15 @@
 
 	// Direct relationships
 	if(other in parents)
-		return other.person?.pronouns == HE_HIM ? "father" : "mother"
+		return other.person?.pronouns == HE_HIM ? "父亲" : "母亲"
 	if(other in children)
-		return other.person?.pronouns == HE_HIM ? "son" : "daughter"
+		return other.person?.pronouns == HE_HIM ? "儿子" : "女儿"
 	if(other in spouses)
-		return other.person?.pronouns == HE_HIM ? "husband" : "wife"
+		return other.person?.pronouns == HE_HIM ? "丈夫" : "妻子"
 
 	// Sibling check
 	if(AreSiblings(other))
-		return other.person?.pronouns == HE_HIM ? "brother" : "sister"
+		return other.person?.pronouns == HE_HIM ? "兄弟" : "姐妹"
 
 	// Grandparent/Grandchild
 	var/grandparent_rel = GetGrandparentRelation(other)
@@ -408,32 +408,32 @@
 	if(inlaw_rel)
 		return inlaw_rel
 
-	return "distant relative"
+	return "远亲"
 
 /datum/family_member/proc/GetInLawRelation(datum/family_member/other)
 	for(var/datum/family_member/spouse in spouses)
 		// Check direct relationships to spouse's family
 		if(other in spouse.parents)
-			return other.person?.pronouns == HE_HIM ? "father-in-law" : "mother-in-law"
+			return other.person?.pronouns == HE_HIM ? "岳父" : "岳母"
 		if(other in spouse.children)
-			return other.person?.pronouns == HE_HIM ? "son-in-law" : "daughter-in-law"
+			return other.person?.pronouns == HE_HIM ? "女婿" : "儿媳"
 		if(spouse.AreSiblings(other))
-			return other.person?.pronouns == HE_HIM ? "brother-in-law" : "sister-in-law"
+			return other.person?.pronouns == HE_HIM ? "姻亲兄弟" : "姻亲姐妹"
 
 		// Check spouse's grandparents
 		for(var/datum/family_member/spouse_parent in spouse.parents)
 			if(other in spouse_parent.parents)
-				return other.person?.pronouns == HE_HIM ? "grandfather-in-law" : "grandmother-in-law"
+				return other.person?.pronouns == HE_HIM ? "姻亲祖父" : "姻亲祖母"
 
 	// Check if other is married to our sibling
 	for(var/datum/family_member/member in family.members)
 		if(AreSiblings(member) && (other in member.spouses))
-			return other.person?.pronouns == HE_HIM ? "brother-in-law" : "sister-in-law"
+			return other.person?.pronouns == HE_HIM ? "姻亲兄弟" : "姻亲姐妹"
 
 	// Check if other is married to our child (son/daughter-in-law)
 	for(var/datum/family_member/child in children)
 		if(other in child.spouses)
-			return other.person?.pronouns == HE_HIM ? "son-in-law" : "daughter-in-law"
+			return other.person?.pronouns == HE_HIM ? "女婿" : "儿媳"
 
 	return null
 
@@ -453,14 +453,14 @@
 	// Check if other is aunt/uncle of src (sibling of parent)
 	for(var/datum/family_member/parent in parents)
 		if(other.AreSiblings(parent) && other != parent)
-			return other.person?.pronouns == HE_HIM ? "uncle" : "aunt"
+			return other.person?.pronouns == HE_HIM ? "叔伯" : "姑姨"
 	return null
 
 /datum/family_member/proc/GetNieceNephewRelation(datum/family_member/other)
 	// Check if other is niece/nephew of src (child of sibling)
 	for(var/datum/family_member/sibling in family.members)
 		if(AreSiblings(sibling) && (sibling != src) && (other in sibling.children))
-			return other.person?.pronouns == HE_HIM ? "nephew" : "niece"
+			return other.person?.pronouns == HE_HIM ? "侄辈" : "侄女"
 	return null
 
 
@@ -469,9 +469,9 @@
 	for(var/datum/family_member/parent in parents)
 		if(other in parent.parents)
 			if(other.person?.pronouns == HE_HIM)
-				return "grandfather"
+				return "祖父"
 			else
-				return "grandmother"
+				return "祖母"
 	return null
 
 /datum/family_member/proc/GetGrandchildRelation(datum/family_member/other)
@@ -479,9 +479,9 @@
 	for(var/datum/family_member/child in children)
 		if(other in child.children)
 			if(other.person?.pronouns == HE_HIM)
-				return "grandson"
+				return "孙子"
 			else
-				return "granddaughter"
+				return "孙女"
 	return null
 
 
@@ -490,7 +490,7 @@
 	for(var/datum/family_member/my_parent in parents)
 		for(var/datum/family_member/their_parent in other.parents)
 			if(my_parent.AreSiblings(their_parent))
-				return "cousin"
+				return "堂表亲"
 
 	// Second cousins, etc. could be added here
 	return null
@@ -502,18 +502,18 @@
 		for(var/datum/family_member/grandparent in parent.parents)
 			if(other in grandparent.parents)
 				if(other.person?.pronouns == HE_HIM)
-					return "great-grandfather"
+					return "曾祖父"
 				else
-					return "great-grandmother"
+					return "曾祖母"
 
 	// Great-grandchild: child of grandchild
 	for(var/datum/family_member/child in children)
 		for(var/datum/family_member/grandchild in child.children)
 			if(other in grandchild.children)
 				if(other.person?.pronouns == HE_HIM)
-					return "great-grandson"
+					return "曾孙"
 				else
-					return "great-granddaughter"
+					return "曾孙女"
 
 	return null
 
@@ -573,7 +573,7 @@
 		else
 			new_member.adoption_status = TRUE
 
-	to_chat(person, span_notice("You have been added to the [housename] family."))
+	to_chat(person, span_notice("我已被纳入[housename]家族。"))
 	InheritCurses(new_member)
 	return new_member
 
@@ -594,8 +594,8 @@
 		// person1.person?.MarryTo(person2.person)
 		pass()
 
-	to_chat(person1.person, span_love("You are now married to [person2.person?.real_name]!"))
-	to_chat(person2.person, span_love("You are now married to [person1.person?.real_name]!"))
+	to_chat(person1.person, span_love("我现在已经与[person2.person?.real_name]结为夫妻了！"))
+	to_chat(person2.person, span_love("我现在已经与[person1.person?.real_name]结为夫妻了！"))
 
 	return TRUE
 
@@ -620,17 +620,17 @@
 		return null
 
 	var/p_He = lookee.p_they(TRUE)
-	var/relationship_text = "[p_He] is my [relationship]"
+	var/relationship_text = "[p_He]是我的[relationship]"
 
 	if(lookee_member.adoption_status && (relationship in list("son", "daughter", "child")))
-		relationship_text += " (adopted)"
+		relationship_text += "（收养）"
 
 	return span_love(span_bold("[relationship_text]."))
 
 /datum/heritage/proc/FormatFamilyList(checker)
 	var/household = uppertext(housename)
-	var/house_title = "THE [household] HOUSE"
-	. = "<center>[household ? house_title : "Nameless House"]:</center><BR>"
+	var/house_title = "[household] 家族"
+	. = "<center>[household ? house_title : "无名家族"]：</center><BR>"
 	. += "-----<br>"
 
 	// Sort by generation
@@ -655,23 +655,23 @@
 			if(checker_member)
 				relation_text = checker_member.GetRelationshipTo(member)
 				switch(relation_text)
-					if("father", "mother")
+					if("父亲", "母亲")
 						name_color = "4169E1"
-					if("son", "daughter")
+					if("儿子", "女儿")
 						name_color = "32CD32"
-					if("brother", "sister")
+					if("兄弟", "姐妹")
 						name_color = "FFD700"
-					if("husband", "wife")
+					if("丈夫", "妻子")
 						name_color = "FF69B4"
 			if(member.adoption_status)
-				status_text = " (Adopted)"
+				status_text = "（收养）"
 			if(member.spouses.len)
 				var/spouse_names = ""
 				for(var/datum/family_member/spouse in member.spouses)
 					if(spouse_names)
 						spouse_names += ", "
 					spouse_names += spouse.person?.real_name
-				status_text += " (Married to: [spouse_names])"
+				status_text += "（配偶：[spouse_names]）"
 			relation_text = uppertext(relation_text)
 
 			. += "<B><font color=#[name_color];text-shadow:0 0 10px #8d5958, 0 0 20px #8d5958, 0 0 30px #8d5958, 0 0 40px #8d5958, 0 0 50px #e60073, 0 0 60px #8d5958, 0 0 70px #8d5958;>\
@@ -689,17 +689,17 @@
 /datum/heritage/proc/GetGenerationName(generation)
 	switch(generation)
 		if(0)
-			return "Founders"
+			return "开创者"
 		if(1)
-			return "First Generation"
+			return "第一代"
 		if(2)
-			return "Second Generation"
+			return "第二代"
 		if(3)
-			return "Third Generation"
+			return "第三代"
 		if(4)
-			return "Fourth Generation"
+			return "第四代"
 		else
-			return "Generation [generation]"
+			return "第[generation]代"
 
 /datum/heritage/proc/ListFamily(mob/living/carbon/human/checker)
 	if(!checker)
@@ -792,7 +792,7 @@
 	return TRUE
 
 /mob/living/carbon/human/verb/ReturnFamilyList()
-	set name = "List Family"
+	set name = "查看家族"
 	set category = "IC"
 	if(spouse_mob)
 		var/role = spouse_mob.mind?.assigned_role
@@ -800,14 +800,14 @@
 		if(istype(role, /datum/job))
 			var/datum/job/J = role
 			title = J.get_informed_title(spouse_mob)
-		to_chat(src, span_info("[spouse_mob.real_name] the [spouse_mob.dna.species.name] [title] is your lover."))
+		to_chat(src, span_info("[spouse_mob.real_name]，那位[spouse_mob.dna.species.name]的[title]，是我的爱人。"))
 	if(family_datum)
 		family_datum.ListFamily(src)
 	else
-		to_chat(src, "You're not part of any notable family.")
+		to_chat(src, "我并不属于任何显赫家族。")
 
 /mob/living/carbon/human/verb/ToggleFamilyUI()
-	set name = "Family UI"
+	set name = "家族界面"
 	set category = "IC"
 	ShowFamilyUI(FALSE)
 
@@ -817,12 +817,12 @@
 	if(family_datum)
 		family_datum.ApplyUI(src, family_UI)
 	else if(!silent)
-		to_chat(src, "You're not part of any notable family.")
+		to_chat(src, "我并不属于任何显赫家族。")
 
 	family_UI = !family_UI
 
 	if(!silent)
-		to_chat(src, "FamilyUI Toggled [family_UI ? "On" : "Off"]")
+		to_chat(src, "家族界面已切换为[family_UI ? "开启" : "关闭"]。")
 
 /mob/living/carbon/human/proc/ApplySpouseUI(toggle_true = FALSE)
 	if(!spouse_mob || !client)

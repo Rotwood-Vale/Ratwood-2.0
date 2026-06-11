@@ -1,12 +1,12 @@
 /datum/antagonist/dreamwalker
-	name = "Dreamwalker"
-	roundend_category = "Dreamwalker"
-	antagpanel_category = "Dreamwalker"
+	name = "梦行者"
+	roundend_category = "梦行者"
+	antagpanel_category = "梦行者"
 	job_rank = ROLE_DREAMWALKER
 	confess_lines = list(
-		"MY VISION ABOVE ALL!",
-		"I'LL TAKE YOU TO MY REALM!",
-		"HIS FORM IS MAGNICIFENT!",
+		"我的愿景高于一切！",
+		"我会把你带去我的领域！",
+		"祂的形态宏伟绝伦！",
 	)
 	rogue_enabled = TRUE
 
@@ -46,8 +46,8 @@
 	return ..()
 
 /datum/antagonist/dreamwalker/greet()
-	to_chat(owner.current, span_notice("I feel a rare ability awaken within me. I am someone coveted as a champion by most gods. A dreamwalker. Not merely touched by Abyssor's dream, but able to pull materia and power from his realm effortlessly. I shall bring glory to my patron. My mind frays under the influence of dream entities, but surely my resolve is stronger than theirs."))
-	to_chat(owner.current, span_notice("I manifest a piece of ritual chalk... It seems potent. I shall forge a great weapon, one with such power it shall dwarf all others. I must find a target to begin... It should be easy enough if I focus."))
+	to_chat(owner.current, span_notice("我感到体内有一种罕见的能力苏醒了。我是大多数神祇都渴望得到的冠军。一名梦行者。我不只是被 阿比索尔 之梦触及，更能毫不费力地从祂的领域中抽取物质与力量。我将为我的神祇带来荣耀。梦境实体的影响正撕扯我的心智，但我的意志必定比它们更强。"))
+	to_chat(owner.current, span_notice("我具现出了一截仪式粉笔……它看起来力量非凡。我将锻造一把伟大的武器，一把威力足以凌驾于其他一切之上的武器。我必须先找到一个目标……只要我专注起来，这应该并不难。"))
 	owner.announce_objectives()
 	..()
 
@@ -76,7 +76,7 @@
 	body.AddComponent(/datum/component/dreamwalker_mark)
 	var/obj/item/ritechalk/chalk = new()
 	body.put_in_hands(chalk)
-	to_chat(body, span_danger("I feel my connection to the arcyne and divine weaken as dream energies assert themselves..."))
+	to_chat(body, span_danger("随着梦之能量占据上风，我感到自己与奥术和神术的联系正在减弱……"))
 	REMOVE_TRAIT(body, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
 	REMOVE_TRAIT(body, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
 	REMOVE_TRAIT(body, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
@@ -124,7 +124,7 @@
 /datum/component/dreamwalker_repair/Initialize()
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
-	to_chat(parent, span_userdanger("Your body pulses with strange dream energies."))
+	to_chat(parent, span_userdanger("你的身体正随着诡异的梦之能量脉动。"))
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_item_equipped))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_item_dropped))
 	// Register for processing
@@ -162,19 +162,19 @@
 		for(var/obj/item/I in repairing_items)
 			if(istype(I, /obj/item/clothing) && I.peel_count > 0)
 				I.peel_count--
-				I.visible_message(span_notice("The dream energies snap a peeled layer of [I] back in place."))
+				I.visible_message(span_notice("梦之能量将 [I] 被剥落的一层猛地复原归位。"))
 				break
 
 /datum/component/dreamwalker_repair/proc/on_item_equipped(mob/user, obj/item/source, slot)
 	SIGNAL_HANDLER
 	if(source.item_flags & DREAM_ITEM)
-		to_chat(parent, span_notice("[source] pulses in your hands, dream energies passively repairing it."))
+		to_chat(parent, span_notice("[source] 在你手中脉动，梦之能量正被动地修复着它。"))
 		add_item(source)
 
 /datum/component/dreamwalker_repair/proc/on_item_dropped(mob/user, obj/item/source)
 	SIGNAL_HANDLER
 	if(source.item_flags & DREAM_ITEM)
-		to_chat(parent, span_notice("[source] stops pulsing as it leaves your person."))
+		to_chat(parent, span_notice("[source] 一离开你的身体便停止了脉动。"))
 		remove_item(source)
 
 /datum/component/dreamwalker_repair/proc/add_item(obj/item/I)
@@ -199,7 +199,7 @@
 /datum/component/dreamwalker_repair/proc/on_item_broken(obj/item/source)
 	SIGNAL_HANDLER
 	if(source in repairing_items)
-		source.visible_message(span_danger("The [source] shatters, but it seems strange energies are slowly bending the metal back into shape."))
+		source.visible_message(span_danger("[source] 碎裂开来，但某种诡异的能量似乎正缓缓将金属扭回原形。"))
 		start_full_repair(source)
 
 /datum/component/dreamwalker_repair/proc/start_full_repair(obj/item/I)
@@ -213,7 +213,7 @@
 /datum/component/dreamwalker_repair/proc/finish_full_repair(obj/item/I)
 	// Check if the item is still in our inventory and broken
 	if(I && (I in repairing_items) && I.obj_broken)
-		I.visible_message(span_danger("The [I] melds back into a useable shape."))
+		I.visible_message(span_danger("[I] 重新熔合成了可用的形状。"))
 		I.obj_fix()
 		// Restore up to 25% of durability instead of all of it. This is slightly more as I.integrity_failure for MOST things.
 		I.obj_integrity *= 0.25
@@ -223,8 +223,8 @@
 	repair_timers -= I
 
 /obj/structure/portal_jaunt
-	name = "dream rift"
-	desc = "A shimmering portal to another place. You hear countless whispers when you get close, seems dangerous."
+	name = "梦境裂隙"
+	desc = "一道通往别处的闪烁传送门。靠近时你会听见无数低语，似乎相当危险。"
 	icon_state = "shitportal"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	max_integrity = 250
@@ -237,26 +237,26 @@
 /obj/structure/portal_jaunt/Initialize(mapload)
 	. = ..()
 	cooldown = world.time + 4 SECONDS
-	visible_message(span_warning("[src] shimmers into existence!"))
+	visible_message(span_warning("[src] 闪烁着显现出来！"))
 	playsound(src, 'sound/magic/charging_lightning.ogg', 50, TRUE)
 
 /obj/structure/portal_jaunt/attack_hand(mob/user)
 	if(!do_after(user, 1 SECONDS, target = src))
-		to_chat(user, span_warning("I must stand still to use the portal."))
+		to_chat(user, span_warning("我必须站着不动才能使用这道传送门。"))
 		return
 
 	if(world.time < cooldown)
 		var/time_left = (cooldown - world.time) * 0.1
-		to_chat(user, span_warning("The portal is not stable yet. [time_left] seconds remaining."))
+		to_chat(user, span_warning("这道传送门还不稳定。还剩 [time_left] 秒。"))
 		return
 
 	if(uses >= max_uses)
-		to_chat(user, span_warning("The portal collapses as you touch it!"))
+		to_chat(user, span_warning("你一碰到它，传送门就崩塌了！"))
 		qdel(src)
 		return
 
 	if(!linked_turf || !do_teleport(user, linked_turf))
-		to_chat(user, span_warning("The portal flickers but nothing happens."))
+		to_chat(user, span_warning("传送门闪烁了几下，但什么也没有发生。"))
 		return
 
 	uses++
@@ -273,11 +273,11 @@
 			include_teleport_restricted = FALSE
 		)
 
-	visible_message(span_warning("[user] steps through [src]!"))
+	visible_message(span_warning("[user] 穿过了[src]！"))
 	playsound(src, 'sound/magic/lightning.ogg', 50, TRUE)
 
 	if(uses >= max_uses)
-		visible_message(span_danger("[src] collapses in on itself!"))
+		visible_message(span_danger("[src] 向内坍缩了！"))
 		QDEL_IN(src, 1)
 
 // Component to track marked targets and hits
@@ -320,7 +320,7 @@
 
 	if(marked_target)
 		RegisterSignal(marked_target, COMSIG_LIVING_DEATH, PROC_REF(on_target_death))
-		to_chat(parent, span_notice("You begin focusing your dream energy on [marked_target.real_name]."))
+		to_chat(parent, span_notice("你开始将梦之能量集中到 [marked_target.real_name] 身上。"))
 
 		// Remove any existing summon spell
 		if(summon_spell && ishuman(parent))
@@ -342,14 +342,14 @@
 		return
 
 	hit_count++
-	to_chat(user, span_notice("Your dream weapon strikes true. [hit_count]/[max_hits] hits to establish a connection."))
+	to_chat(user, span_notice("你的梦境武器准确命中了目标。[hit_count]/[max_hits] 次命中即可建立连接。"))
 
 	if(hit_count >= max_hits)
 		// Apply the mark status effect
 		marked_target.apply_status_effect(/datum/status_effect/dream_mark, mark_duration)
 		mark_start_time = world.time
-		to_chat(user, span_warning("You've established a strong dream connection with [marked_target]! You'll be able to summon them in 10 minutes."))
-		to_chat(marked_target, span_userdanger("You feel an unnatural connection forming with [user]. Your very essence feels tethered to them."))
+		to_chat(user, span_warning("你已经与 [marked_target] 建立起稳固的梦境连接！10 分钟后你就能召唤他们。"))
+		to_chat(marked_target, span_userdanger("你感到自己与 [user] 之间正在形成一种不自然的联系。你的本质仿佛被系在了他们身上。"))
 
 		create_summon_spell()
 
@@ -359,7 +359,7 @@
 
 	// Check if mark is still active
 	if(!marked_target.has_status_effect(/datum/status_effect/dream_mark))
-		to_chat(parent, span_warning("Your connection with [marked_target] has faded before you could summon them!"))
+		to_chat(parent, span_warning("你还没来得及召唤 [marked_target]，与其之间的联系就已经消散了！"))
 		return
 
 	// Create the summon spell
@@ -367,11 +367,11 @@
 	var/mob/living/carbon/human/H = parent
 	if(H.mind)
 		H.mind.AddSpell(summon_spell)
-		to_chat(H, span_warning("Your connection with [marked_target] is now strong enough to summon them!"))
+		to_chat(H, span_warning("你与 [marked_target] 的联系如今已经强到足以将其召唤过来！"))
 
 /datum/component/dreamwalker_mark/proc/on_target_death()
 	SIGNAL_HANDLER
-	to_chat(parent, span_warning("Your connection with [marked_target] has been severed by death."))
+	to_chat(parent, span_warning("你与 [marked_target] 的联系已被死亡切断。"))
 	set_marked_target(null)
 
 /datum/component/dreamwalker_mark/proc/can_summon()
@@ -383,7 +383,7 @@
 
 	if(world.time < mark_start_time + mark_minimum_duration)
 		var/time_left = ((mark_start_time + mark_minimum_duration) - world.time) * 0.1
-		to_chat(parent, span_warning("The mark is not stable yet. [time_left] seconds remaining."))
+		to_chat(parent, span_warning("这个印记还不稳定。还剩 [time_left] 秒。"))
 		return FALSE
 
 	return TRUE
@@ -395,28 +395,28 @@
 	alert_type = /atom/movable/screen/alert/status_effect/dream_mark
 
 /datum/status_effect/dream_mark/on_apply()
-	to_chat(owner, span_userdanger("You feel your essence being pulled toward another realm. You've been marked by a dreamwalker!"))
+	to_chat(owner, span_userdanger("你感到自己的本质正在被拉向另一个领域。你被一名梦行者标记了！"))
 	return TRUE
 
 /datum/status_effect/dream_mark/on_remove()
-	to_chat(owner, span_notice("The connection to the dream realm fades."))
+	to_chat(owner, span_notice("与梦境领域的联系消散了。"))
 
 /atom/movable/screen/alert/status_effect/dream_mark
-	name = "Dream Marked"
-	desc = "A dreamwalker has established a connection to your essence. They may attempt to summon you once the connection stabilizes."
+	name = "梦痕标记"
+	desc = "一名梦行者已与你的本质建立起联系。待联系稳定后，他们可能会尝试召唤你。"
 	icon_state = "dream_mark"
 
 /obj/item/ingot/sylveric
-	name = "Sylveric ingot"
+	name = "西尔维里克锭"
 	icon = 'icons/roguetown/items/ore.dmi'
 	icon_state = "ingotsylveric"
-	desc = "An impossibly light metal that seems to grow harder and heavier when pressured. Nothing seems to be able to shape this metal."
+	desc = "一种轻得不可思议的金属，受压时似乎会变得更硬、更沉。似乎没有任何东西能够塑造这种金属。"
 
 // Add extra examine text for dreamwalkers
 /obj/item/ingot/sylveric/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_DREAMWALKER))
-		. += span_notice("You can feel the metal resonate with your dream energy. If you strike another sylveric ingot with this one, you can shape it into a weapon.")
+		. += span_notice("你能感到这块金属正与你的梦之能量共鸣。如果你用它去敲击另一块西尔维里克锭，你就能将其塑形成武器。")
 
 // Handle attacking one sylveric ingot with another
 /obj/item/ingot/sylveric/attackby(obj/item/I, mob/living/user, params)
@@ -433,31 +433,31 @@
 
 		// Show weapon selection menu
 		var/list/weapon_options = list(
-			"Dreamreaver Greataxe" = image(icon = 'icons/roguetown/weapons/64.dmi', icon_state = "dreamaxeactive"),
-			"Harmonious Spear" = image(icon = 'icons/roguetown/weapons/64.dmi', icon_state = "dreamspearactive"),
-			"Oozing Sword" = image(icon = 'icons/roguetown/weapons/64.dmi', icon_state = "dreamswordactive"),
-			"Thunderous Trident" = image(icon = 'icons/roguetown/weapons/64.dmi', icon_state = "dreamtriactive")
+			"裂梦巨斧" = image(icon = 'icons/roguetown/weapons/64.dmi', icon_state = "dreamaxeactive"),
+			"和鸣长矛" = image(icon = 'icons/roguetown/weapons/64.dmi', icon_state = "dreamspearactive"),
+			"渗液长剑" = image(icon = 'icons/roguetown/weapons/64.dmi', icon_state = "dreamswordactive"),
+			"雷鸣三叉戟" = image(icon = 'icons/roguetown/weapons/64.dmi', icon_state = "dreamtriactive")
 		)
 
 		var/choice = show_radial_menu(user, src, weapon_options, require_near = TRUE, tooltips = TRUE)
 		if(!choice)
 			return
 
-		to_chat(user, span_notice("You begin focusing your dream energy to shape the sylveric ingots into a [choice]..."))
+		to_chat(user, span_notice("你开始集中梦之能量，将西尔维里克锭塑形成一把 [choice]……"))
 		if(do_after(user, 10 SECONDS, target = src))
 			var/obj/item/new_weapon
 			switch(choice)
-				if("Dreamreaver Greataxe")
+				if("裂梦巨斧")
 					new_weapon = new /obj/item/rogueweapon/greataxe/dreamscape/active(user.loc)
-				if("Harmonious Spear")
+				if("和鸣长矛")
 					new_weapon = new /obj/item/rogueweapon/halberd/glaive/dreamscape/active(user.loc)
-				if("Oozing Sword")
+				if("渗液长剑")
 					new_weapon = new /obj/item/rogueweapon/greatsword/bsword/dreamscape/active(user.loc)
-				if("Thunderous Trident")
+				if("雷鸣三叉戟")
 					new_weapon = new /obj/item/rogueweapon/spear/dreamscape_trident/active(user.loc)
 
 			if(new_weapon)
-				to_chat(user, span_notice("You shape the sylveric ingots into a [choice]."))
+				to_chat(user, span_notice("你将西尔维里克锭塑形成了一把 [choice]。"))
 				user.put_in_hands(new_weapon)
 				qdel(I)
 				qdel(src)
@@ -503,14 +503,14 @@
 			H.adjust_fire_stacks(4)
 			spawn(0)
 				H.ignite_mob()
-			target.visible_message(span_warning("[source] ignites [target] with strange flame!"))
+			target.visible_message(span_warning("[source] 以诡异的火焰点燃了 [target]！"))
 		if("frost")
 			H.apply_status_effect(/datum/status_effect/buff/frostbite)
-			target.visible_message(span_warning("[source] freezes [target] with scalding ice!"))
+			target.visible_message(span_warning("[source] 用灼人的寒冰冻结了 [target]！"))
 		if("poison")
 			if(H.reagents)
 				H.reagents.add_reagent(/datum/reagent/berrypoison, 2)
-				target.visible_message(span_warning("[source] injects [target] with vile ooze!"))
+				target.visible_message(span_warning("[source] 将污秽黏液注入了 [target] 体内！"))
 
 	// Set cooldown
 	next_use = world.time + cooldown_time
@@ -521,7 +521,7 @@
 		return
 
 	// Non-dreamwalker trying to equip a dream weapon
-	to_chat(user, span_userdanger("The weapon rejects your touch, burning with dream energy!"))
+	to_chat(user, span_userdanger("这把武器排斥你的触碰，梦之能量灼烧着你的手！"))
 	user.dropItemToGround(source, TRUE)
 
 	// Apply some damage or negative effect
@@ -533,8 +533,8 @@
 			H.ignite_mob()
 
 /obj/item/rogueweapon/halberd/glaive/dreamscape
-	name = "otherworldly spear"
-	desc = "A strange spear, who knows where it came from. It seems like it is made out of ancient bone."
+	name = "异界长矛"
+	desc = "一把奇异的长矛，没人知道它来自何方。它看起来像是由古老骸骨制成的。"
 	icon_state = "dreamspear"
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = null
@@ -544,7 +544,7 @@
 	wdefense = 8
 
 /obj/item/rogueweapon/halberd/glaive/dreamscape/active
-	desc = "A strange spear, who knows where it came from. Strange harmonious sounds ring out as wind passes through the holes."
+	desc = "一把奇异的长矛，没人知道它来自何方。风穿过孔洞时，会发出奇异而和谐的声响。"
 	icon_state = "dreamspearactive"
 	max_blade_int = 400
 	wdefense = 9
@@ -552,8 +552,8 @@
 	force_wielded = 35
 
 /obj/item/rogueweapon/greatsword/bsword/dreamscape
-	name = "otherworldly sword"
-	desc = "A strange sword made out of a strange reflective metal."
+	name = "异界长剑"
+	desc = "一把由奇异反光金属铸成的奇异长剑。"
 	icon_state = "dreamsword"
 	force = 25
 	force_wielded = 30
@@ -567,8 +567,8 @@
 	alt_intents = list(/datum/intent/effect/daze, /datum/intent/sword/strike, /datum/intent/sword/bash)
 
 /obj/item/rogueweapon/greatsword/bsword/dreamscape/active
-	name = "otherworldly sword"
-	desc = "A strange sword made out of a strange reflective metal. It oozes sickening sludge."
+	name = "异界长剑"
+	desc = "一把由奇异反光金属铸成的奇异长剑。它正渗出令人作呕的污泥。"
 	icon_state = "dreamswordactive"
 	max_integrity = 500
 	force = 30
@@ -576,8 +576,8 @@
 	wdefense = 5
 
 /obj/item/rogueweapon/spear/dreamscape_trident
-	name = "otherworldly trident"
-	desc = "A strange trident. It feels like it shouldn't be an effective weapon, but the dull metal whispers tales of its power to you."
+	name = "异界三叉戟"
+	desc = "一柄奇异的三叉戟。它看起来本不该是一件高效武器，但那暗哑的金属却向你低语着自身的力量。"
 	icon_state = "dreamtri"
 	smeltresult = null
 	max_blade_int = 240
@@ -593,8 +593,8 @@
 	var/shockwave_damage = FALSE
 
 /obj/item/rogueweapon/spear/dreamscape_trident/active
-	name = "Iridescent trident"
-	desc = "A strange trident glimmering with an oily hue. The air shimmers around it."
+	name = "虹彩三叉戟"
+	desc = "一柄泛着油亮色泽的奇异三叉戟。它周围的空气都在微微扭曲闪烁。"
 	icon_state = "dreamtriactive"
 	max_integrity = 480
 	throwforce = 50
@@ -637,8 +637,8 @@
 	neck = /obj/item/clothing/neck/roguetown/bevor
 
 /obj/item/clothing/suit/roguetown/armor/plate/full/dreamwalker
-	name = "otherworldly fullplate"
-	desc = "Strange iridescent full plate. It reflects light as if covered in shiny oil."
+	name = "异界全身板甲"
+	desc = "奇异而带虹彩的全身板甲。它反射光线的样子就像表面覆着一层发亮的油膜。"
 	icon_state = "dreamplate"
 	max_integrity = ARMOR_INT_CHEST_PLATE_ANTAG
 	item_flags = DREAM_ITEM
@@ -650,8 +650,8 @@
 
 /obj/item/clothing/under/roguetown/platelegs/dreamwalker
 	max_integrity = ARMOR_INT_LEG_ANTAG
-	name = "otherworldly legplate"
-	desc = "Strange iridescent leg plate. It reflects light as if covered in shiny oil."
+	name = "异界腿甲"
+	desc = "奇异而带虹彩的腿甲。它反射光线的样子就像表面覆着一层发亮的油膜。"
 	icon_state = "dreamlegs"
 	armor = ARMOR_ASCENDANT
 	item_flags = DREAM_ITEM
@@ -663,8 +663,8 @@
 
 /obj/item/clothing/shoes/roguetown/boots/armor/dreamwalker
 	max_integrity = ARMOR_INT_SIDE_ANTAG
-	name = "otherworldly boots"
-	desc = "Strange iridescent plated boots. It reflects light as if covered in shiny oil."
+	name = "异界金属靴"
+	desc = "奇异而带虹彩的金属靴。它反射光线的样子就像表面覆着一层发亮的油膜。"
 	icon_state = "dreamboots"
 	armor = ARMOR_ASCENDANT
 	item_flags = DREAM_ITEM
@@ -674,8 +674,8 @@
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)
 
 /obj/item/clothing/gloves/roguetown/plate/dreamwalker
-	name = "otherworldly gauntlets"
-	desc = "Strange iridescent plated gauntlets. It reflects light as if covered in shiny oil."
+	name = "异界护手"
+	desc = "奇异而带虹彩的板甲护手。它反射光线的样子就像表面覆着一层发亮的油膜。"
 	icon_state = "dreamgauntlets"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	item_flags = DREAM_ITEM
@@ -685,8 +685,8 @@
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/dreamwalker
-	name = "otherworldly squid helm"
-	desc = "A otherworldly squid helm. It reflects light as if covered in shiny oil."
+	name = "异界鱿盔"
+	desc = "一顶异界的鱿鱼头盔。它反射光线的样子就像表面覆着一层发亮的油膜。"
 	adjustable = CAN_CADJUST
 	icon_state = "dreamsquidhelm"
 	max_integrity = ARMOR_INT_HELMET_ANTAG

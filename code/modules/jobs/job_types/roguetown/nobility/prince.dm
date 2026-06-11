@@ -1,5 +1,6 @@
 /datum/job/roguetown/prince
 	title = "Prince"
+	display_title = "王子"
 	f_title = "Princess"
 	flag = PRINCE
 	department_flag = NOBLEMEN
@@ -12,7 +13,7 @@
 	allowed_ages = list(AGE_ADULT)
 	advclass_cat_rolls = list(CTAG_HEIR = 20)
 
-	tutorial = "You've never felt the gnawing of the winter, never known the bite of hunger and certainly have never known a honest day's work. You are as free as any bird in the sky, and you may revel in your debauchery for as long as your parents remain upon the throne: But someday you'll have to grow up, and that will be the day your carelessness will cost you more than a few mammons."
+	tutorial = "你从未体会过寒冬噬骨的滋味，从未知晓饥饿如何啃咬，更别提什么叫真正辛劳一日。你像天上的飞鸟那样自由，只要父母仍坐在王座上，便可尽情沉溺于放纵享乐之中：但终有一天你必须长大，而到了那天，你的轻率将让你付出的代价远不止几枚马蒙。"
 
 	display_order = JDO_PRINCE
 	give_bank_account = 30
@@ -36,8 +37,8 @@
 	H.verbs |= /mob/living/carbon/human/proc/declarechampion
 
 /datum/advclass/heir/daring
-	name = "Daring Twit"
-	tutorial = "You're a somebody, someone important. It only makes sense you want to make a name for yourself, to gain your own glory so people see how great you really are beyond your bloodline. Plus, if you're beloved by the people for your exploits you'll be chosen! Probably. Shame you're as useful and talented as a squire, despite your delusions to the contrary."
+	name = "莽撞少君"
+	tutorial = "你是个大人物，至少你自己一直这么认为。既然如此，想靠自己的本事闯出名声、挣来荣耀，让人们看见你并非只仰仗血统，也算理所当然。再说了，要是你的壮举真能讨得民心，说不定以后真会被选上呢！大概吧。可惜，抛开你的妄想不谈，你的本事和才能其实也就跟侍从差不多。"
 	outfit = /datum/outfit/job/roguetown/heir/daring
 	category_tags = list(CTAG_HEIR)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
@@ -97,8 +98,8 @@
 			head = /obj/item/clothing/head/roguetown/circlet
 
 /datum/advclass/heir/bookworm
-	name = "Introverted Bookworm"
-	tutorial = "Despite your standing, sociability is not your strong suit, and you have kept mostly to yourself and your books. This hardly makes you a favourite among the lords and ladies of the court, and an exit from your room is often met with amusement from nobility and servants alike. At least you're always welcome in the mage's tower."
+	name = "孤僻书痴"
+	tutorial = "尽管你身份尊贵，交际却从来不是你的长处，你大多时候都只与自己和书卷作伴。这自然让你很难成为宫廷诸位贵胄眼中的宠儿，而你偶尔踏出房门，也往往只会换来贵族和仆从的取笑。至少，法师高塔永远欢迎你。"
 	outfit = /datum/outfit/job/roguetown/heir/bookworm
 	traits_applied = list(TRAIT_ARCYNE_T2, TRAIT_MAGEARMOR, TRAIT_GOODWRITER)
 	category_tags = list(CTAG_HEIR)
@@ -167,8 +168,8 @@
 			head = /obj/item/clothing/head/roguetown/circlet
 
 /datum/advclass/heir/aristocrat
-	name = "Sheltered Aristocrat"
-	tutorial = "Life has been kind to you; you've an entire keep at your disposal, servants to wait on you, and a whole retinue of guards to guard you. You've nothing to prove; just live the good life and you'll be a lord someday, too. A lack of ambition translates into a lacking skillset beyond schooling, though, and your breaks from boredom consist of being a damsel or court gossip."
+	name = "受护贵胄"
+	tutorial = "命运一向待你不薄；整座城堡任你取用，仆从侍立左右，还有整支卫队专门护着你。你无需向任何人证明自己，只要安安稳稳过好日子，将来总也会轮到你坐上领主的位置。不过，没有野心也意味着你除了受过的那些教养外并无多少真本事，而你打发无聊的方式，也不过是扮作娇客或在宫廷里搬弄闲话。"
 	outfit = /datum/outfit/job/roguetown/heir/aristocrat
 	traits_applied = list(TRAIT_SEEPRICES_SHITTY, TRAIT_GOODLOVER, TRAIT_SEWING_EXPERT)
 	category_tags = list(CTAG_HEIR)
@@ -231,8 +232,8 @@
 			head = /obj/item/clothing/head/roguetown/circlet
 
 /datum/advclass/heir/inbred
-	name = "Inbred wastrel"
-	tutorial = "Your bloodline ensures Psydon smiles upon you by divine right, the blessing of nobility... until you were born, anyway. You are a child forsaken, and even though your body boils as you go about your day, your spine creaks, and your drooling form needs to be waited on tirelessly you are still considered more important then the peasant that keeps the town fed and warm. Remind them of that fact when your lungs are particularly pus free."
+	name = "近亲废裔"
+	tutorial = "按理说，你的血统本该让 普赛顿 因神授正统而向你微笑，这便是贵族的祝福……至少在你出生之前一直如此。你是被命运遗弃的孩子，纵然你终日病骨缠身、脊背咯吱作响、涎水横流，还得让人不知疲倦地伺候着，你在地位上依旧比那些让城镇吃饱穿暖的农民更重要。等你今天咳得没那么厉害时，记得把这点提醒给他们。"
 	outfit = /datum/outfit/job/roguetown/heir/inbred
 	traits_applied = list(TRAIT_CRITICAL_WEAKNESS, TRAIT_NORUN, TRAIT_GOODLOVER)
 	category_tags = list(CTAG_HEIR)
@@ -300,8 +301,8 @@
 
 
 /datum/advclass/heir/scamp
-	name = "Nettlesome Scamp"
-	tutorial = "The stories told to you by your bedside of valiant rogues and thieves with hearts of gold saving the worlds. The misunderstood hero. The clammor of Knights, the dull books of the arcyne and the wise never interested you. So you donned the cloak, and with your plump figure learned the arts of stealth. Surely the populace will be forgiving of your antics."
+	name = "恼人顽少"
+	tutorial = "你床边故事里总讲着那些胆大包天、却心怀金子的浪荡侠盗如何拯救世界。那些不被理解的英雄。骑士的喧嚣、奥术与贤者那些乏味书本，从来都勾不起你的兴趣。于是你披上斗篷，用你那略显圆润的身躯学起了潜行之道。想来百姓总会宽恕你这些胡闹把戏的。"
 	outfit = /datum/outfit/job/roguetown/heir/scamp
 	traits_applied = list(TRAIT_SEEPRICES_SHITTY)
 	category_tags = list(CTAG_HEIR)
@@ -371,8 +372,8 @@
 
 
 /mob/living/carbon/human/proc/declarechampion()
-	set name = "Declare Champion"
-	set category = "Noble"
+	set name = "册立冠军"
+	set category = "贵族"
 
 
 	if(stat)
@@ -384,7 +385,7 @@
 		var/list/folksnearby = list()
 		for(var/mob/living/carbon/human/newchampionpotential in (view(1)))
 			folksnearby += newchampionpotential
-		var/target = input(src, "Choose a champion") as null|anything in folksnearby
+		var/target = input(src, "选择一位冠军") as null|anything in folksnearby
 		if(istype(target, /mob/living/carbon))
 			var/mob/living/carbon/guy = target
 			if(!guy)
@@ -393,15 +394,15 @@
 				return
 			if(!guy.mind)
 				return
-			src.say("Be my Champion, [guy]!")
-			var/prompt = alert(guy, "Do wish to be [src]'s Champion?", "Champion", "Yes", "No")
-			if(prompt == "No")
+			src.say("做我的冠军吧，[guy]！")
+			var/prompt = alert(guy, "你愿意成为[src]的冠军吗？", "冠军", "愿意", "不愿")
+			if(prompt == "不愿")
 				return
 
-			guy.say("I serve you, [src]!")
-			src.visible_message(span_warning("[src] begins tying the golden ribbon to [guy]'s wrist."))
+			guy.say("我愿为你效力，[src]！")
+			src.visible_message(span_warning("[src]开始把金色缎带系到[guy]的手腕上。"))
 			if(do_after(src, 10 SECONDS))
-				src.visible_message(span_warning("[src] ties a golden ribbon to [guy]'s wrist."))
+				src.visible_message(span_warning("[src]把一条金色缎带系在了[guy]的手腕上。"))
 				guy.mind.ward = src
 				src.mind.champion = guy
 				var/datum/status_effect/buff/champion/new_champion = guy.apply_status_effect(/datum/status_effect/buff/champion)
@@ -414,15 +415,15 @@
 		for(var/mob/living/carbon/human/championremoval in (view(1)))
 			if(championremoval == src.mind.champion)
 				folksnearby += championremoval
-		var/mob/living/target = input(src, "Choose a champion") as null|anything in folksnearby
+		var/mob/living/target = input(src, "选择一位冠军") as null|anything in folksnearby
 		if(!target)
 			return
 
 		else
-			src.visible_message(span_warning("[src] begins untying the golden ribbon from [src.mind.champion]'s wrist."))
+			src.visible_message(span_warning("[src]开始解下[src.mind.champion]手腕上的金色缎带。"))
 			if(do_after(src, 10 SECONDS))
-				src.visible_message(span_warning("[src] unties a golden ribbon from [src.mind.champion]'s wrist."))
-				src.say("I revoke your championship, [target]!")
+				src.visible_message(span_warning("[src]解下了[src.mind.champion]手腕上的金色缎带。"))
+				src.say("我撤销你的冠军之名，[target]！")
 				src.mind.champion = null
 				if(target.has_status_effect(/datum/status_effect/buff/champion))
 					target.remove_status_effect(/datum/status_effect/buff/champion)
@@ -437,14 +438,14 @@
 	duration = -1
 
 /atom/movable/screen/alert/status_effect/buff/champion
-	name = "Champion"
-	desc = "I am a Chosen by a Heir!"
+	name = "冠军"
+	desc = "我已被一位继承人选为冠军！"
 	icon_state = "buff"
 
 
 /datum/status_effect/buff/champion/on_creation()
 	spawn(5) // sob doesnt work without this??
-		examine_text = "<font color='yellow'>SUBJECTPRONOUN is the Champion Of [owner.mind.ward.real_name]!</font>"
+		examine_text = "<font color='yellow'>SUBJECTPRONOUN是[owner.mind.ward.real_name]的冠军！</font>"
 	return ..()
 
 /datum/status_effect/buff/champion/tick()
@@ -469,8 +470,8 @@
 	duration = -1
 
 /atom/movable/screen/alert/status_effect/buff/ward
-	name = "Ward"
-	desc = "I have declared a champion."
+	name = "受护者"
+	desc = "我已册立了一位冠军。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/ward/tick()

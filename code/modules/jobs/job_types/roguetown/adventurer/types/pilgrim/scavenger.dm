@@ -1,7 +1,7 @@
 /datum/advclass/scavenger/harvester
-	name = "Harvester"
-	tutorial = "Perhaps terrible fate befell your last homestead, or circumstances conspired to drive you away. \
-	Either way, the soil of these lands are rich and fertile, so you hear. Let us hope you can build something to last the winter."
+	name = "垦荒者"
+	tutorial = "也许你上一处家园遭逢惨祸，也许是世事逼得你不得不背井离乡。\
+	不管怎样，你听说这片土地的土壤丰饶肥沃。只盼你这次能建立起一份熬得过寒冬的家业。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/refugee/harvester
@@ -72,9 +72,9 @@
 
 
 /datum/advclass/scavenger/prospector
-	name = "Prospector"
-	tutorial = "Following the promise of rich veins and scrap metal, you come to these lands \
-	to mine and smith, peddling wares to fellow iterant bog-wanderers. Only after building a forge for yourself, of course"
+	name = "淘矿人"
+	tutorial = "循着富矿矿脉与废金属的传闻，你来到这片土地，\
+	一边采矿打铁，一边把货物卖给同样在沼地间漂泊谋生的人。当然，前提还是你得先给自己搭起一座熔炉。"
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/refugee/prospector
 

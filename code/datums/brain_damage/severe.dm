@@ -6,11 +6,11 @@
 	resilience = TRAUMA_RESILIENCE_SURGERY
 
 /datum/brain_trauma/severe/mute
-	name = "Mutism"
+	name = "缄默症"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_warning("I forget how to speak!")
-	lose_text = span_notice("I suddenly remember how to speak.")
+	gain_text = span_warning("我忘记该如何说话了！")
+	lose_text = span_notice("我突然想起该怎么说话了。")
 
 /datum/brain_trauma/severe/mute/on_gain()
 	ADD_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
@@ -21,11 +21,11 @@
 	..()
 
 /datum/brain_trauma/severe/aphasia
-	name = "Aphasia"
+	name = "失语症"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_warning("I have trouble forming words in my head...")
-	lose_text = span_notice("I suddenly remember how languages work.")
+	gain_text = span_warning("我很难在脑海里组织出词句……")
+	lose_text = span_notice("我突然想起语言该如何运作了。")
 	var/datum/language_holder/prev_language
 	var/datum/language_holder/mob_language
 
@@ -44,11 +44,11 @@
 	..()
 
 /datum/brain_trauma/severe/blindness
-	name = "Cerebral Blindness"
+	name = "脑性失明"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_warning("I can't see!")
-	lose_text = span_notice("My vision returns.")
+	gain_text = span_warning("我看不见了！")
+	lose_text = span_notice("我的视力恢复了。")
 
 /datum/brain_trauma/severe/blindness/on_gain()
 	owner.become_blind(TRAUMA_TRAIT)
@@ -59,7 +59,7 @@
 	..()
 
 /datum/brain_trauma/severe/paralysis
-	name = "Paralysis"
+	name = "瘫痪"
 	desc = ""
 	scan_desc = ""
 	gain_text = ""
@@ -76,35 +76,35 @@
 	var/subject
 	switch(paralysis_type)
 		if("full")
-			subject = "your body"
+			subject = "我的身体"
 			paralysis_traits = list(TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_R_ARM, TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG)
 		if("left")
-			subject = "the left side of my body"
+			subject = "我身体的左半边"
 			paralysis_traits = list(TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_L_LEG)
 		if("right")
-			subject = "the right side of my body"
+			subject = "我身体的右半边"
 			paralysis_traits = list(TRAIT_PARALYSIS_R_ARM, TRAIT_PARALYSIS_R_LEG)
 		if("arms")
-			subject = "your arms"
+			subject = "我的双臂"
 			paralysis_traits = list(TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_R_ARM)
 		if("legs")
-			subject = "your legs"
+			subject = "我的双腿"
 			paralysis_traits = list(TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG)
 		if("r_arm")
-			subject = "your right arm"
+			subject = "我的右臂"
 			paralysis_traits = list(TRAIT_PARALYSIS_R_ARM)
 		if("l_arm")
-			subject = "your left arm"
+			subject = "我的左臂"
 			paralysis_traits = list(TRAIT_PARALYSIS_L_ARM)
 		if("r_leg")
-			subject = "your right leg"
+			subject = "我的右腿"
 			paralysis_traits = list(TRAIT_PARALYSIS_R_LEG)
 		if("l_leg")
-			subject = "your left leg"
+			subject = "我的左腿"
 			paralysis_traits = list(TRAIT_PARALYSIS_L_LEG)
 
-	gain_text = span_warning("I can't feel [subject] anymore!")
-	lose_text = span_notice("I can feel [subject] again!")
+	gain_text = span_warning("我再也感觉不到[subject]了！")
+	lose_text = span_notice("我又能感觉到[subject]了！")
 
 /datum/brain_trauma/severe/paralysis/on_gain()
 	..()
@@ -124,11 +124,11 @@
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
 
 /datum/brain_trauma/severe/narcolepsy
-	name = "Narcolepsy"
+	name = "嗜睡症"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_warning("I have a constant feeling of drowsiness...")
-	lose_text = span_notice("I feel awake and aware again.")
+	gain_text = span_warning("我总是有种昏昏欲睡的感觉……")
+	lose_text = span_notice("我又感到清醒而警觉了。")
 
 /datum/brain_trauma/severe/narcolepsy/on_life()
 	..()
@@ -140,26 +140,26 @@
 	if(owner.drowsyness)
 		sleep_chance += 3
 	if(prob(sleep_chance))
-		to_chat(owner, span_warning("I fall asleep."))
+		to_chat(owner, span_warning("我睡着了。"))
 		owner.Sleeping(60)
 	else if(!owner.drowsyness && prob(sleep_chance * 2))
-		to_chat(owner, span_warning("I feel tired..."))
+		to_chat(owner, span_warning("我好累……"))
 		owner.drowsyness += 10
 
 /datum/brain_trauma/severe/monophobia
-	name = "Monophobia"
+	name = "孤独恐惧症"
 	desc = ""
 	scan_desc = ""
 	gain_text = ""
-	lose_text = span_notice("I feel like you could be safe on my own.")
+	lose_text = span_notice("我觉得自己一个人时也能安然无恙了。")
 	var/stress = 0
 
 /datum/brain_trauma/severe/monophobia/on_gain()
 	..()
 	if(check_alone())
-		to_chat(owner, span_warning("I feel really lonely..."))
+		to_chat(owner, span_warning("我觉得好孤单……"))
 	else
-		to_chat(owner, span_notice("I feel safe, as long as you have people around you."))
+		to_chat(owner, span_notice("只要身边还有人，我就会觉得安心。"))
 
 /datum/brain_trauma/severe/monophobia/on_life()
 	..()
@@ -188,18 +188,18 @@
 	switch(rand(1,6))
 		if(1)
 			if(!high_stress)
-				to_chat(owner, span_warning("I feel sick..."))
+				to_chat(owner, span_warning("我觉得恶心……"))
 			else
-				to_chat(owner, span_warning("I feel really sick at the thought of being alone!"))
+				to_chat(owner, span_warning("一想到自己孤身一人，我就恶心得难受！"))
 			addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon, vomit), high_stress), 50) //blood vomit if high stress
 		if(2)
 			if(!high_stress)
-				to_chat(owner, span_warning("I can't stop shaking..."))
+				to_chat(owner, span_warning("我抖个不停……"))
 				owner.dizziness += 20
 				owner.confused += 20
 				owner.Jitter(20)
 			else
-				to_chat(owner, span_warning("I feel weak and scared! If only you weren't alone..."))
+				to_chat(owner, span_warning("我又虚弱又害怕！要是我不是独自一人就好了……"))
 				owner.dizziness += 20
 				owner.confused += 20
 				owner.Jitter(20)
@@ -207,32 +207,32 @@
 
 		if(3, 4)
 			if(!high_stress)
-				to_chat(owner, span_warning("I feel really lonely..."))
+				to_chat(owner, span_warning("我觉得好孤单……"))
 			else
-				to_chat(owner, span_warning("You're going mad with loneliness!"))
+				to_chat(owner, span_warning("我快被孤独逼疯了！"))
 				owner.hallucination += 30
 
 		if(5)
 			if(!high_stress)
-				to_chat(owner, span_warning("My heart skips a beat."))
+				to_chat(owner, span_warning("我的心猛地漏跳了一拍。"))
 				owner.adjustOxyLoss(8)
 			else
 				if(prob(15) && ishuman(owner))
 					var/mob/living/carbon/human/H = owner
 					H.set_heartattack(TRUE)
-					to_chat(H, span_danger("I feel a stabbing pain in my heart!"))
+					to_chat(H, span_danger("我的心口传来一阵刺痛！"))
 				else
-					to_chat(owner, span_danger("I feel my heart lurching in my chest..."))
+					to_chat(owner, span_danger("我感觉心脏在胸腔里一阵猛颤……"))
 					owner.adjustOxyLoss(8)
 		else
 			return
 
 /datum/brain_trauma/severe/discoordination
-	name = "Discoordination"
+	name = "运动失调"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_warning("I can barely control my hands!")
-	lose_text = span_notice("I feel in control of my hands again.")
+	gain_text = span_warning("我几乎控制不住自己的手了！")
+	lose_text = span_notice("我又重新掌控住自己的双手了。")
 
 /datum/brain_trauma/severe/discoordination/on_gain()
 	ADD_TRAIT(owner, TRAIT_MONKEYLIKE, TRAUMA_TRAIT)
@@ -243,11 +243,11 @@
 	..()
 
 /datum/brain_trauma/severe/pacifism
-	name = "Traumatic Non-Violence"
+	name = "创伤性非暴力倾向"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_notice("I feel oddly peaceful.")
-	lose_text = span_notice("I no longer feel compelled to not harm.")
+	gain_text = span_notice("我感到一种异样的平和。")
+	lose_text = span_notice("我不再被某种力量驱使着不去伤害别人了。")
 
 /datum/brain_trauma/severe/pacifism/on_gain()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAUMA_TRAIT)
@@ -258,11 +258,11 @@
 	..()
 
 /datum/brain_trauma/severe/hypnotic_stupor
-	name = "Hypnotic Stupor"
+	name = "催眠性恍惚"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_warning("I feel somewhat dazed.")
-	lose_text = span_notice("I feel like a fog was lifted from my mind.")
+	gain_text = span_warning("我感觉有些恍惚。")
+	lose_text = span_notice("我感觉脑中的迷雾终于散去了。")
 
 /datum/brain_trauma/severe/hypnotic_stupor/on_lose() //hypnosis must be cleared separately, but brain surgery should get rid of both anyway
 	..()

@@ -1,7 +1,7 @@
 /datum/advclass/vagabond_goatherd
-	name = "Lone Herder"
-	examine_name = "Beggar"
-	tutorial = "Having lost your idyllic pastoral existence, only a solitary member of your herd now remains as a reminder of what was. Is your sole charge a friend, or is it food? You decide."
+	name = "孤牧人"
+	examine_name = "乞丐"
+	tutorial = "你那安逸的牧野生活早已不复存在，如今只剩羊群里孤零零的一只，提醒着你曾经拥有什么。它是朋友，还是粮食？由你决定。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/vagabond/goatherd

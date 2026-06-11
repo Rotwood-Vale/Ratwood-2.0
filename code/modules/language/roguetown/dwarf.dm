@@ -1,9 +1,9 @@
 /datum/language/dwarvish
-	name = "Dwarvish"
-	desc = "(Spoken with ,d) The sturdy and guttural tongue of the dwarven clans, echoing through mountain halls and forges. A language of stone, metal, and enduring tradition."
-	speech_verb = "blabbers"
-	ask_verb = "asks"
-	exclaim_verb = "shouts"
+	name = "矮人语"
+	desc = "(用 ,d 说) 矮人氏族那种粗犷而喉音浓重的语言，回荡在群山大厅与锻炉之间。这是一门属于岩石、金属与长久传统的语言。"
+	speech_verb = "嘟囔"
+	ask_verb = "问道"
+	exclaim_verb = "高喊"
 	key = "d"
 	space_chance = 73
 	default_priority = 90

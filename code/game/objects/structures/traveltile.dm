@@ -1,6 +1,6 @@
 
 /obj/structure/fluff/testportal
-	name = "portal"
+	name = "传送门"
 	icon_state = "shitportal"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	density = FALSE
@@ -19,18 +19,18 @@
 		if(T.aportalloc == aportalloc)
 			if(T == src)
 				continue
-			to_chat(user, "<b>I teleport to [T].</b>")
+			to_chat(user, "<b>我被传送到了[T]！</b>")
 			playsound(src, 'sound/misc/portal_enter.ogg', 100, TRUE)
 			user.forceMove(T.loc)
 			fou = TRUE
 			break
 	if(!fou)
-		to_chat(user, "<b>There is no portal connected to this. Report it as a bugs.</b>")
+		to_chat(user, "<b>这个传送门没有通往任何地方。</b>")
 	. = ..()
 
 
 /obj/structure/fluff/traveltile
-	name = "travel"
+	name = "旅行点"
 	icon_state = "travel"
 	icon = 'icons/turf/roguefloor.dmi'
 	density = FALSE
@@ -75,7 +75,7 @@
 			fou = TRUE
 			break
 	if(!fou)
-		to_chat(user, "<b>It is a dead end.</b>")
+		to_chat(user, "<b>没有可前往的目的地。</b>")
 
 /atom/movable
 	var/recent_travel = 0
@@ -97,7 +97,7 @@
 			fou = TRUE
 			break
 	if(!fou)
-		to_chat(user, "<b>It is a dead end.</b>")
+		to_chat(user, "<b>没有可前往的目的地。</b>")
 	. = ..()
 
 /obj/structure/fluff/traveltile/Crossed(atom/movable/AM)
@@ -117,17 +117,17 @@
 			fou = TRUE
 			break
 	if(!fou)
-		to_chat(AM, "<b>It is a dead end.</b>")
+		to_chat(AM, "<b>没有可前往的目的地。</b>")
 
 /obj/structure/fluff/traveltile/proc/try_living_travel(obj/structure/fluff/traveltile/T, mob/living/L)
 	if(!can_go(L))
 		return FALSE
 	if(L.pulledby)
 		return FALSE
-	to_chat(L, "<b>I begin to travel...</b>")
+	to_chat(L, "<b>我开始准备前往那里……</b>")
 	if(do_after(L, 50, needhand = FALSE, target = src))
 		if(L.pulledby)
-			to_chat(L, span_warning("I can't go, something's holding onto me."))
+			to_chat(L, span_warning("被拖拽时我没法使用这个入口。"))
 			return FALSE
 		perform_travel(T, L)
 		return TRUE
@@ -137,9 +137,9 @@
 	if(!L.restrained(ignore_grab = TRUE)) // heavy-handedly prevents using prisoners to metagame camp locations. pulledby would stop this but prisoners can also be kicked/thrown into the tile repeatedly
 		for(var/mob/living/carbon/human/H in hearers(6,src))
 			if(!H.IsUnconscious() && H.stat == CONSCIOUS && !HAS_TRAIT(H, TRAIT_PARALYSIS) && !HAS_TRAIT(H, required_trait) && !HAS_TRAIT(H, TRAIT_BLIND))
-				to_chat(H, "<b>I watch [L.name? L : "someone"] go through a well-hidden entrance.</b>")
+				to_chat(H, "<b>[L.name? L : "某人"]消失在了入口之中！</b>")
 				if(!(H.m_intent == MOVE_INTENT_SNEAK))
-					to_chat(L, "<b>[H.name ? H : "Someone"] watches me pass through the entrance.</b>")
+					to_chat(L, "<b>[H.name ? H : "某人"]注意到了我进入入口。</b>")
 				ADD_TRAIT(H, required_trait, TRAIT_GENERIC)
 
 	var/atom/movable/pullingg = L.pulling
@@ -178,7 +178,7 @@
 				return FALSE // we will only be travelling of our own volition (anti-afk-abuse)
 			return TRUE
 		else
-			to_chat(L, "<b>It is a dead end.</b>")
+			to_chat(L, "<b>我无法使用这个入口。</b>")
 			return FALSE
 /obj/structure/fluff/traveltile/dungeoneer
 	required_trait = TRAIT_DUNGEONMASTER_LABOR_CAMP
@@ -191,15 +191,15 @@
 /obj/structure/fluff/traveltile/inq
 	required_trait = TRAIT_INQUISITION
 /obj/structure/fluff/traveltile/lich
-	desc = "forboding, warping magick. Where could it possibly lead? Somewhere terrible, you must assume..."
+	desc = "一扇通往某处隐秘巢穴的入口，散发着不祥气息。"
 	color = "#fcff5e"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "shitportal"
 	required_trait = TRAIT_LICHLAIR
 
 /obj/structure/fluff/traveltile/dungeon
-	name = "gate"
-	desc = "This gate's enveloping darkness is so oppressive you dread to step through it."
+	name = "地城入口"
+	desc = "一处通往地下深处的入口，踏入其中便会前往另一片区域。"
 	icon = 'icons/roguetown/misc/portal.dmi'
 	icon_state = "portal"
 	density = FALSE
@@ -210,19 +210,19 @@
 	opacity = FALSE
 
 /obj/structure/fluff/traveltile/magicportal
-	desc = "flickering, warping magick"
-	name = "mysterious portal"
+	desc = "一扇闪烁着奥术辉光的传送门。"
+	name = "魔法传送门"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "shitportal"
 
 /obj/structure/fluff/traveltile/magicportal/unstable
-	desc = "flickering, warping magick. Where could it possibly lead?"
-	name = "unstable portal"
+	desc = "一扇不稳定的传送门，能量正剧烈翻涌。"
+	name = "不稳定传送门"
 	color = "#ff0d00"
 
 /obj/structure/fluff/traveltile/rockhillentrance
-	desc = "Awake from this dream. The road to Rockhill awaits."
-	name = "To Rockhill"
+	desc = "一处通往 Rockhill 的入口。"
+	name = "前往 Rockhill"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "underworldportal"
 

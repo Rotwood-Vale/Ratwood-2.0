@@ -1,9 +1,9 @@
 /datum/language/kazengunese
-	name = "Kazengunese"
-	desc = "The language of the islands of Kazengun. With intricate honorifics and complex grammar. The version spoken commonly in Ferentia is a result of centuries of cultural contact between the Kazengunese and Zhongese, and is a trade language combining Zhongese & Kazengunese vocabulary"
-	speech_verb = "says"
-	whisper_verb = "whispers"
-	exclaim_verb = "yells"
+	name = "卡赞贡语"
+	desc = "这是卡赞贡群岛所使用的语言，拥有繁复的敬语体系与复杂的语法。山谷地区常说的版本，则是卡赞贡人与中洲人历经数世纪文化接触后形成的贸易通语，混合了两者的词汇。"
+	speech_verb = "说道"
+	whisper_verb = "低语"
+	exclaim_verb = "高喊"
 	key = "k"
 	space_chance = 30
 	default_priority = 90

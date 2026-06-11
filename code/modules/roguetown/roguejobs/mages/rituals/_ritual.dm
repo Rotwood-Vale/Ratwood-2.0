@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(t4enchantmentrunerituallist,generate_t4enchantment_rituallist()
 	abstract_type = /datum/runeritual
 	var/name
 	var/desc
-	var/category = "Other"
+	var/category = "其他"
 	var/list/required_atoms = list()
 	var/list/result_atoms = list()
 	var/list/banned_atom_types = list()
@@ -145,7 +145,7 @@ GLOBAL_LIST_INIT(t4enchantmentrunerituallist,generate_t4enchantment_rituallist()
 
 /datum/runeritual/proc/generate_html(mob/user)
 	var/client/client = user
-	var/tool = tier >= 2 ? "Arcyne Silver Dagger" : "Arcyne Chalk"
+	var/tool = tier >= 2 ? "奥术银匕首" : "奥术粉笔"
 	if(!istype(client))
 		client = user.client
 	user << browse_rsc('html/book.png')
@@ -165,17 +165,17 @@ GLOBAL_LIST_INIT(t4enchantmentrunerituallist,generate_t4enchantment_rituallist()
 			  <br>
 		"}
 	if(length(required_atoms))
-		html += "<strong>Items Required</strong><br>"
+		html += "<strong>所需物品</strong><br>"
 		for(var/atom/path as anything in required_atoms)
 			var/count = required_atoms[path]
 			if(ispath(path, /datum/reagent))
 				var/datum/reagent/R = path
 				html += "- [FLOOR(count, 1)] [UNIT_FORM_STRING(FLOOR(count, 1))] of [initial(R.name)]<br>"
 			else
-				html += "- [count] counts of [initial(path.name)]<br>"
+				html += "- [count] 个[initial(path.name)]<br>"
 
-	html += "<h1>Steps</h1>"
-	html += "To start any ritual draw the required rune with [tool], then supply with the above items."
+	html += "<h1>步骤</h1>"
+	html += "开始任意仪式时，请先用[tool]绘制所需符文，再备齐上述物品。"
 	html += {"
 		</div>
 		</div>

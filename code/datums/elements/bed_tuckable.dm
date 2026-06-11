@@ -39,7 +39,7 @@
 	if(!tucker.transferItemToLoc(tucked, target_bed.drop_location()))
 		return
 
-	to_chat(tucker, span_notice("You lay [tucked] out on [target_bed]."))
+	to_chat(tucker, span_notice("我把[tucked]铺放在[target_bed]上。"))
 	tucked.dir = target_bed.dir
 	tucked.pixel_x = target_bed.dir & EAST ? -x_offset : x_offset
 	tucked.pixel_y = y_offset

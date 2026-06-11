@@ -1,5 +1,6 @@
 /datum/job/roguetown/cook
 	title = "Cook"
+	display_title = "厨子"
 	flag = COOK
 	department_flag = PEASANTS
 	faction = "Station"
@@ -7,7 +8,7 @@
 	spawn_positions = 1
 
 	allowed_races = ACCEPTED_RACES
-	tutorial = "There are many mouths to feed in town, and most look to you for it. You work under the care of the innkeeper and craft such culinary delights that even the crown stops by from time to time. All the while, you try to get the rest of the staff up to speed as well--before you get too many burn marks on your body from slaving over your hot hearths."
+	tutorial = "镇上有太多人等着吃饭，而大多数人都指望着你。你在酒馆老板的照看下掌勺烹饪，做出的佳肴甚至连王冠之下的人物偶尔都会专程来尝。与此同时，你还得尽量把其余帮工也带上手，好在自己没被灶火烫出满身伤疤之前撑住这一切。"
 
 	outfit = /datum/outfit/job/roguetown/cook
 	display_order = JDO_COOK
@@ -28,8 +29,8 @@
 	spells = list(/obj/effect/proc_holder/spell/invoked/takeapprentice)
 
 /datum/advclass/cook
-	name = "Cook"
-	tutorial = "There are many mouths to feed in town, and most look to you for it. You work under the care of the innkeeper and craft such culinary delights that even the crown stops by from time to time. All the while, you try to get the rest of the staff up to speed as well--before you get too many burn marks on your body from slaving over your hot hearths."
+	name = "厨子"
+	tutorial = "镇上有太多人等着吃饭，而大多数人都指望着你。你在酒馆老板的照看下掌勺烹饪，做出的佳肴甚至连王冠之下的人物偶尔都会专程来尝。与此同时，你还得尽量把其余帮工也带上手，好在自己没被灶火烫出满身伤疤之前撑住这一切。"
 	outfit = /datum/outfit/job/roguetown/cook/basic
 	category_tags = list(CTAG_COOK)
 	subclass_stats = list(

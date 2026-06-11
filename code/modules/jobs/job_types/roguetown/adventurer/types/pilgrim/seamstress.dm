@@ -1,6 +1,6 @@
 /datum/advclass/seamstress
-	name = "Seamster"
-	tutorial = "You know your trade by the passage of a needle through cloth and leather alike. Mend and sew garments for the townsfolk - Coats, pants, hats, hoods, and so much more. So what if you overcharge? You're the reason everyone looks good in the first place."
+	name = "裁缝"
+	tutorial = "你熟知这门手艺，一针既能穿过布匹，也能穿透皮革。为镇民缝补、裁制衣裳吧，外套、裤子、帽子、兜帽，还有更多。收贵一点又怎样？反正大家能穿得体面，全靠你。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/seamstress

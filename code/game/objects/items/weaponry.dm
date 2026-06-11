@@ -1,6 +1,6 @@
 /obj/item/banhammer
 	desc = ""
-	name = "banhammer"
+	name = "封禁锤"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "toyhammer"
 	slot_flags = ITEM_SLOT_BELT
@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 7
-	attack_verb = list("banned")
+	attack_verb = list("封禁")
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF
 
@@ -17,7 +17,7 @@
 	grid_width = 32
 
 /obj/item/banhammer/suicide_act(mob/user)
-		user.visible_message("<span class='suicide'>[user] is hitting [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to ban [user.p_them()]self from life.</span>")
+		user.visible_message("<span class='suicide'>[user]正拿[src]猛敲自己！看起来是在试图把自己从人生里封禁出去。</span>")
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 /*
 oranges says: This is a meme relating to the english translation of the ss13 russian wiki page on lurkmore.
@@ -26,15 +26,15 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 */
 /obj/item/banhammer/attack(mob/M, mob/user)
 	if(user.zone_selected == BODY_ZONE_HEAD)
-		M.visible_message("<span class='danger'>[user] is stroking the head of [M] with a banhammer.</span>", "<span class='danger'>[user] is stroking my head with a banhammer.</span>", "<span class='hear'>I hear a banhammer stroking a head.</span>")
+		M.visible_message("<span class='danger'>[user]正用封禁锤抚摸[M]的脑袋。</span>", "<span class='danger'>[user]正用封禁锤抚摸我的脑袋。</span>", "<span class='hear'>我听见封禁锤在抚摸谁的脑袋。</span>")
 	else
-		M.visible_message("<span class='danger'>[M] has been banned FOR NO REISIN by [user]!</span>", "<span class='danger'>I have been banned FOR NO REISIN by [user]!</span>", "<span class='hear'>I hear a banhammer banning someone.</span>")
+		M.visible_message("<span class='danger'>[M]被[user]以毫无理由的名义封禁了！</span>", "<span class='danger'>我被[user]以毫无理由的名义封禁了！</span>", "<span class='hear'>我听见封禁锤又在封禁谁了。</span>")
 	playsound(loc, 'sound/blank.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
 	if(user.used_intent.type != INTENT_HELP)
 		return ..(M, user)
 
 /obj/item/throwing_star
-	name = "throwing star"
+	name = "飞镖"
 	desc = ""
 	icon_state = "throwingstar"
 	item_state = "eshield0"
@@ -49,12 +49,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	resistance_flags = FIRE_PROOF
 
 /obj/item/throwing_star/ninja
-	name = "ninja throwing star"
+	name = "忍者飞镖"
 	throwforce = 30
 	embedding = list("embedded_pain_multiplier" = 6, "embed_chance" = 100, "embedded_fall_chance" = 0)
 
 /obj/item/staff
-	name = "wizard staff"
+	name = "巫师法杖"
 	desc = ""
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
@@ -66,11 +66,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
 	armor_penetration = 100
-	attack_verb = list("bludgeoned", "whacked", "disciplined")
+	attack_verb = list("痛殴", "猛敲", "教训")
 	resistance_flags = FLAMMABLE
 
 /obj/item/staff/stick
-	name = "stick"
+	name = "木棍"
 	desc = ""
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "cane"

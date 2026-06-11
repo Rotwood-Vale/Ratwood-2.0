@@ -1,6 +1,6 @@
 /datum/advclass/czwarteki/retainer
-	name = "Czwarteki Retainer"
-	tutorial = "You are a Retainer of your Hussar. Called forth into action. You know well how to ride. And tend to your Hussars needs."
+	name = "兹瓦尔特基 侍从"
+	tutorial = "你是那位骠骑兵的侍从，应召随行奔赴前线。你深谙骑术，也负责照料自己骠骑兵主人的诸般需求。"
 	outfit = /datum/outfit/job/roguetown/czwarteki/retainer
 	traits_applied = list(TRAIT_NOBLE, TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED)
 	category_tags = list(CTAG_CZWAR_RETAINER)

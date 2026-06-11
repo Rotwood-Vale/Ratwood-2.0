@@ -26,8 +26,8 @@
 
 
 /atom/movable/screen/alert/status_effect/buff/playing_dirge
-	name = "Playing Dirge"
-	desc = "Terrorizing the world with my craft."
+	name = "正在演奏挽歌"
+	desc = "我正以技艺向世界散播恐惧。"
 	icon_state = "buff"
 
 
@@ -59,8 +59,8 @@
 
 
 /atom/movable/screen/alert/status_effect/buff/playing_melody
-	name = "Playing Melody"
-	desc = "Healing the world with my craft."
+	name = "正在演奏旋律"
+	desc = "我正以技艺抚慰这个世界。"
 	icon_state = "buff"
 
 

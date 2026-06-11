@@ -1,19 +1,19 @@
 #define CTAG_EA_MERCHANT "ea_merchant"
 #define CTAG_EA_GUARD "ea_guard"
 /datum/migrant_role/ea_hasir/merchant
-	name = "EA Hasir-ian Gold Merchant"
+	name = "EA Hasir黄金商人"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	advclass_cat_rolls = list(CTAG_EA_MERCHANT = 20)
-	greet_text = "The esteemed EA-Hasir owns your gold company, Promising only the finest quality gold in grimoria\
-	You've been sent with your caravan to sell golden riches and wonders- at a high price."
+	greet_text = "备受尊崇的 EA-Hasir 掌管着你的黄金商会，只承诺提供格里莫里亚中最上乘的黄金。\
+	你奉命随商队前来贩售金色的财富与奇珍异宝，并开出高昂的价码。"
 
 /datum/advclass/merchant
-	name = "EA Hasir-ian Merchant"
-	tutorial = "You were born into wealth, learning from before you could talk about the basics of mathematics. \
-	Counting coins is a simple pleasure for any person, but you've made it an art form. \
-	EA-Hasir has entrusted you with some of his highest quality gold products- Make him proud, \
-	Rob 'em all blind."
+	name = "EA Hasir商人"
+	tutorial = "你生来富贵，甚至在学会说话之前就开始学习数学基础。\
+	数钱对任何人来说都是简单乐趣，而你却把它变成了一门艺术。\
+	EA-Hasir 将部分最上等的黄金制品托付给你。\
+	别让他失望，把他们的钱都赚光。"
 	outfit = /datum/outfit/job/roguetown/merchant/ea_hasir
 	traits_applied = list(TRAIT_NOBLE, TRAIT_SEEPRICES, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_EA_MERCHANT)
@@ -63,18 +63,18 @@
 	new /obj/structure/handcart/ea_hasir(src)
 
 /datum/migrant_role/ea_hasir/guard
-	name = "EA Hasir-ian Guard"
+	name = "EA Hasir护卫"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	advclass_cat_rolls = list(CTAG_EA_GUARD = 20)
-	greet_text = "The esteemed EA Hasir owns your gold company, Promising only the finest quality gold in grimoria\
-	You've been sent to guard his caravans and earn a tidy profit as you do."
+	greet_text = "备受尊崇的 EA Hasir 掌管着你的黄金商会，只承诺提供格里莫里亚中最上乘的黄金。\
+	你被派来护送他的商队，并在履职之余赚上一笔可观收入。"
 
 /datum/advclass/guard
-	name = "EA Hasir-ian Guard"
-	tutorial = "You're a caravan guard, used to dealing with your average thief and the occasional bandit raid.\
-	EA-Hasir is a reliable employer, and you're guarding a rather high value merchant\
-	Keep them alive, and you may get paid enough to take a much needed break."
+	name = "EA Hasir护卫"
+	tutorial = "你是一名商队护卫，早已习惯应付寻常盗贼和偶发的土匪袭击。\
+	EA-Hasir 是个可靠的雇主，而你这次护送的是位身价不菲的商人。\
+	让他们活下来，你也许就能领到足够的钱，好好歇上一阵子。"
 	outfit = /datum/outfit/job/roguetown/ea_guard
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_BREADY, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_EA_GUARD)

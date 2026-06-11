@@ -6,8 +6,8 @@
 		epicenter = get_turf(epicenter.loc)
 
 	if(log)
-		message_admins("EMP with size ([heavy_range], [light_range]) in area [epicenter.loc.name] ")
-		log_game("EMP with size ([heavy_range], [light_range]) in area [epicenter.loc.name] ")
+		message_admins("[epicenter.loc.name]区域发生了范围为([heavy_range], [light_range])的EMP")
+		log_game("[epicenter.loc.name]区域发生了范围为([heavy_range], [light_range])的EMP")
 
 	if(heavy_range > 1)
 		new /obj/effect/temp_visual/emp/pulse(epicenter)

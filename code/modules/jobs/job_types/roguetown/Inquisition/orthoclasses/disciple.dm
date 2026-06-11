@@ -1,8 +1,8 @@
 //Unarmed central, with a singular exception.
 //These guys get some absurd power.
 /datum/advclass/disciple
-	name = "Disciple"
-	tutorial = "Psydonite monks, practiced in both martiality and scripture. Spilling blood on sacred grounds is considered 'sinful' to the clergymen, though no qualms are spared towards knocking someone's lights out."
+	name = "门徒"
+	tutorial = "你是 普赛顿 的修士，既通武艺，也习经文。神职者将圣地流血视作一种“罪”，但若只是把人打得不省人事，他们可不会有半点顾忌。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/disciple
@@ -30,9 +30,9 @@
 		/datum/skill/magic/holy = SKILL_LEVEL_APPRENTICE,
 	)
 	subclass_stashed_items = list(
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+		"《Psydon 圣典》" = /obj/item/book/rogue/bibble/psy
 	)
-	extra_context = "This subclass can choose from multiple disciplines. The further your chosen discipline strays from unarmed combat, however, the greater your skills in fistfighting and wrestling will atrophy. Taking a Quarterstaff provides a minor bonus to Perception and Intelligence, but removes the 'Critical Resistance' trait."
+	extra_context = "该子职业可从多种修行路数中择一。你所选的路数离徒手格斗越远，你在拳斗与摔跤上的造诣就会萎缩得越厉害。若选择四分杖，则会小幅提升感知与智力，但会失去“重创抗性”特质。"
 
 /datum/outfit/job/roguetown/disciple
 	job_bitflag = BITFLAG_HOLY_WARRIOR
@@ -43,24 +43,24 @@
 /datum/outfit/job/roguetown/disciple/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	..()
 	if(H.mind)
-		var/weapons = list("Discipline - Unarmed", "Katar", "Knuckledusters", "Quarterstaff")
-		var/weapon_choice = input(H,"Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
+		var/weapons = list("修行 - 徒手", "拳刃", "指虎", "四分杖")
+		var/weapon_choice = input(H,"选择你的武器。", "执起 普赛顿 的兵刃。") as anything in weapons
 		switch(weapon_choice)
-			if("Discipline - Unarmed")
+			if("修行 - 徒手")
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 5, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 5, TRUE)
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
-			if("Katar")
+			if("拳刃")
 				r_hand = /obj/item/rogueweapon/katar/psydon
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
-			if("Knuckledusters")
+			if("指虎")
 				r_hand = /obj/item/rogueweapon/knuckles/psydon
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
-			if("Quarterstaff")
+			if("四分杖")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/psy
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted

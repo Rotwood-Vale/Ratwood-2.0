@@ -1,271 +1,271 @@
 /datum/mob_descriptor/face
 	abstract_type = /datum/mob_descriptor/face
-	prefix = "a"
+	prefix = ""
 	slot = MOB_DESCRIPTOR_SLOT_FACE_SHAPE
 
 /datum/mob_descriptor/face/unremarkable
-	name = "Unremarkable"
-	prefix = "an"
+	name = "平平无奇"
+	prefix = ""
 
 /datum/mob_descriptor/face/smooth
-	name = "Smooth"
+	name = "光滑"
 
 /datum/mob_descriptor/face/rough
-	name = "Rough"
+	name = "粗糙"
 
 /datum/mob_descriptor/face/chiseled
-	name = "Chiseled"
+	name = "棱角分明"
 
 /datum/mob_descriptor/face/scarred
-	name = "Scarred"
+	name = "布满疤痕"
 
 /datum/mob_descriptor/face/angular
-	name = "Angular"
-	prefix = "an"
+	name = "棱角突出"
+	prefix = ""
 
 /datum/mob_descriptor/face/gaunt
-	name = "Gaunt"
+	name = "消瘦"
 
 /datum/mob_descriptor/face/round
-	name = "Round"
+	name = "圆润"
 
 /datum/mob_descriptor/face/delicate
-	name = "Delicate"
+	name = "精巧"
 
 /datum/mob_descriptor/face/soft
-	name = "Soft"
+	name = "柔和"
 
 /datum/mob_descriptor/face/sharp
-	name = "Sharp"
+	name = "锐利"
 
 /datum/mob_descriptor/face/sleek
-	name = "Sleek"
+	name = "线条流畅"
 
 /datum/mob_descriptor/face/broad
-	name = "Broad"
+	name = "宽阔"
 
 /datum/mob_descriptor/face/disfigured
-	name = "Disfigured"
+	name = "毁容"
 
 /datum/mob_descriptor/face/tall
-	name = "Tall"
+	name = "长脸"
 
 /datum/mob_descriptor/face/chubby
-	name = "Chubby"
+	name = "肉乎乎"
 
 /datum/mob_descriptor/face/mousy
-	name = "Mousy"
+	name = "畏缩"
 
 /datum/mob_descriptor/face/full
-	name = "Full"
+	name = "饱满"
 
 /datum/mob_descriptor/face/narrow
-	name = "Narrow"
+	name = "狭窄"
 
 /datum/mob_descriptor/face/wrinkled
-	name = "Wrinkled"
+	name = "多皱"
 
 /datum/mob_descriptor/face/emaciated
-	name = "Emaciated"
+	name = "枯槁"
 
 /datum/mob_descriptor/face/skeletal
-	name = "Skeletal"
+	name = "骨相嶙峋"
 
 /datum/mob_descriptor/face/long
-	name = "Long"
+	name = "修长"
 
 /datum/mob_descriptor/face_exp
 	abstract_type = /datum/mob_descriptor/face_exp
-	suffix = "face"
+	suffix = "面容"
 	slot = MOB_DESCRIPTOR_SLOT_FACE_EXPRESSION
 
 /datum/mob_descriptor/face_exp/refined
-	name = "Refined"
+	name = "文雅"
 
 /datum/mob_descriptor/face_exp/disinterested
-	name = "Disinterested"
+	name = "兴致缺缺"
 
 /datum/mob_descriptor/face_exp/sour
-	name = "Sour"
+	name = "阴沉"
 
 /datum/mob_descriptor/face_exp/bright
-	name = "Bright"
+	name = "开朗"
 
 /datum/mob_descriptor/face_exp/starry_eyed
-	name = "Starry-eyed"
+	name = "满怀憧憬"
 
 /datum/mob_descriptor/face_exp/cold
-	name = "Cold"
+	name = "冷淡"
 
 /datum/mob_descriptor/face_exp/haggard
-	name = "Haggard"
+	name = "憔悴"
 
 /datum/mob_descriptor/face_exp/fake
-	name = "Fake"
+	name = "虚伪"
 
 /datum/mob_descriptor/face_exp/bitchy
-	name = "Bitchy"
+	name = "刻薄"
 
 /datum/mob_descriptor/face_exp/spiteful
-	name = "Spiteful"
+	name = "怨毒"
 
 /datum/mob_descriptor/face_exp/warm
-	name = "Warm"
+	name = "温和"
 
 /datum/mob_descriptor/face_exp/salacious
-	name = "Salacious"
+	name = "淫靡"
 
 /datum/mob_descriptor/face_exp/contemptous
-	name = "Contemptous"
+	name = "轻蔑"
 
 /datum/mob_descriptor/face_exp/mocking
-	name = "Mocking"
+	name = "嘲弄"
 
 /datum/mob_descriptor/face_exp/knowing
-	name = "Knowing"
+	name = "洞悉"
 
 /datum/mob_descriptor/face_exp/cocky
-	name = "Cocky"
+	name = "自负"
 
 /datum/mob_descriptor/face_exp/coy
-	name = "Coy"
+	name = "忸怩"
 
 /datum/mob_descriptor/face_exp/frustrated
-	name = "Frustrated"
+	name = "挫败"
 
 // Gnoll muzzle shapes — slot FACE_SHAPE; output e.g. "a scarred muzzle"
 /datum/mob_descriptor/face/gnoll
 	abstract_type = /datum/mob_descriptor/face/gnoll
-	suffix = "muzzle"
+	suffix = "吻部"
 
 /datum/mob_descriptor/face/gnoll/long_muzzle
-	name = "Long"
-	prefix = "a"
+	name = "修长"
+	prefix = ""
 
 /datum/mob_descriptor/face/gnoll/short_muzzle
-	name = "Short"
-	prefix = "a"
+	name = "短小"
+	prefix = ""
 
 /datum/mob_descriptor/face/gnoll/broad_muzzle
-	name = "Broad"
-	prefix = "a"
+	name = "宽阔"
+	prefix = ""
 
 /datum/mob_descriptor/face/gnoll/narrow_muzzle
-	name = "Narrow"
-	prefix = "a"
+	name = "狭窄"
+	prefix = ""
 
 /datum/mob_descriptor/face/gnoll/scarred_muzzle
-	name = "Scarred"
-	prefix = "a"
+	name = "布满疤痕"
+	prefix = ""
 
 /datum/mob_descriptor/face/gnoll/sharp_muzzle
-	name = "Sharp"
-	prefix = "a"
+	name = "尖锐"
+	prefix = ""
 
 /datum/mob_descriptor/face/gnoll/worn_muzzle
-	name = "Worn"
-	prefix = "a"
+	name = "磨损"
+	prefix = ""
 
 /datum/mob_descriptor/face/gnoll/disfigured_muzzle
-	name = "Disfigured"
-	prefix = "a"
+	name = "残损"
+	prefix = ""
 
 // Gnoll expressions — slot FACE_EXPRESSION; output e.g. "a predatory look"
 /datum/mob_descriptor/face_exp/gnoll
 	abstract_type = /datum/mob_descriptor/face_exp/gnoll
-	suffix = "look"
+	suffix = "神情"
 
 /datum/mob_descriptor/face_exp/gnoll/alert
-	name = "Alert"
-	prefix = "an"
+	name = "警觉"
+	prefix = ""
 
 /datum/mob_descriptor/face_exp/gnoll/snarling
-	name = "Snarling"
-	prefix = "a"
+	name = "龇牙咧嘴"
+	prefix = ""
 
 /datum/mob_descriptor/face_exp/gnoll/predatory
-	name = "Predatory"
-	prefix = "a"
+	name = "掠食者般"
+	prefix = ""
 
 /datum/mob_descriptor/face_exp/gnoll/hollow
-	name = "Hollow"
-	prefix = "a"
+	name = "空洞"
+	prefix = ""
 
 /datum/mob_descriptor/face_exp/gnoll/fierce
-	name = "Fierce"
-	prefix = "a"
+	name = "凶悍"
+	prefix = ""
 
 /datum/mob_descriptor/face_exp/gnoll/vacant
-	name = "Vacant"
-	prefix = "a"
+	name = "茫然"
+	prefix = ""
 
 /datum/mob_descriptor/face_exp/gnoll/groveling
-	name = "Groveling"
-	prefix = "a"
+	name = "卑躬屈膝"
+	prefix = ""
 
 /datum/mob_descriptor/face_exp/gnoll/leering
-	name = "Leering"
-	prefix = "a"
+	name = "色眯眯"
+	prefix = ""
 
 /datum/mob_descriptor/face_exp/stern
-	name = "Stern"
+	name = "严厉"
 
 /datum/mob_descriptor/face_exp/genuine
-	name = "Genuine"
+	name = "真诚"
 
 /datum/mob_descriptor/face_exp/jaded
-	name = "Jaded"
+	name = "厌倦"
 
 /datum/mob_descriptor/face_exp/hardened
-	name = "Hardened"
+	name = "老练"
 
 /datum/mob_descriptor/face_exp/hopeful
-	name = "Hopeful"
+	name = "怀抱希望"
 
 /datum/mob_descriptor/face_exp/inquisitive
-	name = "Inquisitive"
+	name = "好奇"
 
 /datum/mob_descriptor/face_exp/suspicious
-	name = "Suspicious"
+	name = "狐疑"
 
 /datum/mob_descriptor/face_exp/tender
-	name = "Tender"
+	name = "温柔"
 
 /datum/mob_descriptor/face_exp/affectionate
-	name = "Affectionate"
+	name = "深情"
 
 /datum/mob_descriptor/face_exp/calm
-	name = "Calm"
+	name = "平静"
 
 /datum/mob_descriptor/face_exp/cutthroat
-	name = "Cutthroat"
+	name = "狠辣"
 
 /datum/mob_descriptor/face_exp/suave
-	name = "Suave"
+	name = "潇洒"
 
 /datum/mob_descriptor/face_exp/humble
-	name = "Humble"
+	name = "谦逊"
 
 /datum/mob_descriptor/face_exp/smug
-	name = "Smug"
+	name = "得意"
 
 /datum/mob_descriptor/face_exp/serene
-	name = "Serene"
+	name = "安详"
 
 /datum/mob_descriptor/face_exp/compassionate
-	name = "Compassionate"
+	name = "怜悯"
 
 /datum/mob_descriptor/face_exp/odious
-	name = "Odious"
+	name = "可憎"
 
 /datum/mob_descriptor/face_exp/selfassured
-	name = "Self-assured"
+	name = "自信"
 
 /datum/mob_descriptor/face_exp/confident
-	name = "Confident"
+	name = "笃定"
 
 /datum/mob_descriptor/face_exp/nervous
-	name = "Nervous"
+	name = "紧张"
 
 /datum/mob_descriptor/face_exp/worried
-	name = "Worried"
+	name = "忧心"

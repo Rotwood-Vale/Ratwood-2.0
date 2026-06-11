@@ -1,8 +1,8 @@
 #define UPGRADE_NOTAX		(1<<0)
 
 /obj/structure/roguemachine/bathvend
-	name = "BRASSFACE"
-	desc = "Sweet, sweet, addiction. Love in the veins, comfort in my heart."
+	name = "黄铜面"
+	desc = "甜美、甜美的成瘾。爱在血脉里流淌，慰藉在我心中安歇。"
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "brassface"
 	density = TRUE
@@ -49,7 +49,7 @@
 			update_icon()
 			return attack_hand(user)
 		else
-			to_chat(user, span_warning("Wrong key."))
+			to_chat(user, span_warning("钥匙不对。"))
 			return
 	if(istype(P, /obj/item/storage/keyring))
 		var/obj/item/storage/keyring/K = P
@@ -93,7 +93,7 @@
 				record_featured_stat(FEATURED_STATS_TAX_PAYERS, human_mob, tax_amt)
 				record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
 		else
-			say("Not enough!")
+			say("不够！")
 			return
 		var/shoplength = PA.contains.len
 		var/l
@@ -112,7 +112,7 @@
 			options += "Enable Paying Taxes"
 		else
 			options += "Stop Paying Taxes"
-		var/select = input(usr, "Please select an option.", "", null) as null|anything in options
+		var/select = input(usr, "请选择一个选项。", "", null) as null|anything in options
 		if(!select)
 			return
 		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
@@ -134,7 +134,7 @@
 	if(!ishuman(user))
 		return
 	if(locked)
-		to_chat(user, span_warning("It's locked. Of course."))
+		to_chat(user, span_warning("锁着呢，当然。"))
 		return
 	user.changeNext_move(CLICK_CD_FAST)
 	playsound(loc, 'sound/misc/gold_menu.ogg', 100, FALSE, -1)

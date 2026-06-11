@@ -9,8 +9,8 @@
 #define TAB_SALTMINE 9
 
 /obj/structure/roguemachine/steward
-	name = "nerve master"
-	desc = "The stewards most trusted friend."
+	name = "总务中枢"
+	desc = "总管最可靠的伙伴。"
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "steward_machine"
 	density = TRUE
@@ -88,7 +88,7 @@
 			update_icon()
 			return
 		else
-			to_chat(user, span_warning("Wrong key."))
+			to_chat(user, span_warning("钥匙不对。"))
 			return
 	if(istype(P, /obj/item/storage/keyring))
 		var/obj/item/storage/keyring/K = P
@@ -102,7 +102,7 @@
 				(locked) ? (icon_state = "steward_machine_off") : (icon_state = "steward_machine")
 				update_icon()
 				return
-		to_chat(user, span_warning("Wrong key."))
+		to_chat(user, span_warning("钥匙不对。"))
 		return
 	if(istype(P, /obj/item/roguecoin/gilbranze))
 		return
@@ -129,7 +129,7 @@
 		if(!D)
 			return
 		if(SStreasury.treasury_value < D.get_import_price())
-			say("Insufficient mammon.")
+			say("玛门不足。")
 			return
 		var/amt = D.get_import_price()
 		SStreasury.treasury_value -= amt
@@ -137,7 +137,7 @@
 		SStreasury.log_to_steward("-[amt] imported [D.name]")
 		record_round_statistic(STATS_STOCKPILE_IMPORTS_VALUE, amt)
 		if(amt >= 100) //Only announce big spending.
-			scom_announce("[realmname] imports [D.name] for [amt] mammon.", )
+			scom_announce("[realmname] 以 [amt] 枚 Mammon 的价格进口了 [D.name]。", )
 		D.raise_demand()
 		addtimer(CALLBACK(src, PROC_REF(do_import), D.type), 10 SECONDS)
 	if(href_list["export"])
@@ -145,7 +145,7 @@
 		if(!D)
 			return
 		if(!SStreasury.do_export(D))
-			say("Insufficient stock.")
+			say("库存不足。")
 			return
 	if(href_list["togglewithdraw"])
 		var/datum/roguestock/D = locate(href_list["togglewithdraw"]) in SStreasury.stockpile_datums
@@ -157,7 +157,7 @@
 		if(!D)
 			return
 		if(!D.percent_bounty)
-			var/newtax = input(usr, "Set a new price for [D.name]", src, D.payout_price) as null|num
+			var/newtax = input(usr, "为 [D.name] 设置新的价格", src, D.payout_price) as null|num
 			if(newtax)
 				if(!usr.canUseTopic(src, BE_CLOSE) || locked)
 					return
@@ -165,10 +165,10 @@
 					return
 				newtax = CLAMP(newtax, 0, 999)
 				if(newtax > D.payout_price)
-					scom_announce("The bounty for [D.name] was increased.")
+					scom_announce("[D.name] 的赏金已提高。")
 				D.payout_price = newtax
 		else
-			var/newtax = input(usr, "Set a new percent for [D.name]", src, D.payout_price) as null|num
+			var/newtax = input(usr, "为 [D.name] 设置新的百分比", src, D.payout_price) as null|num
 			if(newtax)
 				if(!usr.canUseTopic(src, BE_CLOSE) || locked)
 					return
@@ -176,14 +176,14 @@
 					return
 				newtax = CLAMP(newtax, 1, 99)
 				if(newtax > D.payout_price)
-					scom_announce("The bounty for [D.name] was increased.")
+					scom_announce("[D.name] 的赏金已提高。")
 				D.payout_price = newtax
 	if(href_list["setprice"])
 		var/datum/roguestock/D = locate(href_list["setprice"]) in SStreasury.stockpile_datums
 		if(!D)
 			return
 		if(!D.percent_bounty)
-			var/newtax = input(usr, "Set a new price to withdraw [D.name]", src, D.withdraw_price) as null|num
+			var/newtax = input(usr, "为提取 [D.name] 设置新的价格", src, D.withdraw_price) as null|num
 			if(newtax)
 				if(!usr.canUseTopic(src, BE_CLOSE) || locked)
 					return
@@ -191,36 +191,36 @@
 					return
 				newtax = CLAMP(newtax, 0, 999)
 				if(newtax < D.withdraw_price)
-					scom_announce("The withdraw price for [D.name] was decreased.")
+					scom_announce("[D.name] 的提取价格已降低。")
 				D.withdraw_price = newtax
 	if(href_list["setrate"])
 		var/datum/roguestock/D = locate(href_list["setrate"]) in SStreasury.stockpile_datums
 		if(!D)
 			return              //Cheaper prices, no taxes, the price? Commitment. You can only change the rates at day. I'd like to make the window shorter,
 		if(GLOB.tod == "night") //less chance to micromanage, incentivize doing other things at later hours, make it unable to be changed at dusk too, but this needs testing first
-			say("Suppliers will only agree to modifying deals at times when Astrata shines.")
+			say("只有在 阿斯特拉塔 照耀之时，供应商才愿意修改交易。")
 			return
-		var/newrate = input(usr, "Set a new rate for remote imports for [D.name]", src, D.passive_generation) as null|num
+		var/newrate = input(usr, "为 [D.name] 设置新的远程进口速率", src, D.passive_generation) as null|num
 		if(!isnull(newrate))
 			if(!usr.canUseTopic(src, BE_CLOSE) || locked)
 				return
 			if(findtext(num2text(newrate), "."))
 				return
 			newrate = CLAMP(newrate, 0, D.generation_max)
-			scom_announce("[realmname] will [newrate ? "now import [newrate] [D.name] every 5 hours." : "no longer import [D.name] periodically"]")
+			scom_announce("[realmname] 将[newrate ? "每 5 小时进口 [newrate] 个 [D.name]。" : "不再定期进口 [D.name]。"]")
 			D.passive_generation = newrate
 	if(href_list["setlimit"])
 		var/datum/roguestock/D = locate(href_list["setlimit"]) in SStreasury.stockpile_datums
 		if(!D)
 			return
-		var/newlimit = input(usr, "Set a new limit for [D.name]", src, D.stockpile_limit) as null|num
+		var/newlimit = input(usr, "为 [D.name] 设置新的上限", src, D.stockpile_limit) as null|num
 		if(newlimit)
 			if(!usr.canUseTopic(src, BE_CLOSE) || locked)
 				return
 			if(findtext(num2text(newlimit), "."))
 				return
 			newlimit = CLAMP(newlimit, 0, 999)
-			scom_announce("The stockpile limit for [D.name] was changed to [newlimit].")
+			scom_announce("[D.name] 的仓储上限已改为 [newlimit]。")
 			D.stockpile_limit = newlimit
 	if(href_list["givemoney"])
 		var/X = locate(href_list["givemoney"])
@@ -228,7 +228,7 @@
 			return
 		for(var/mob/living/A in SStreasury.bank_accounts)
 			if(A == X)
-				var/newtax = input(usr, "How much to give [X]", src) as null|num
+				var/newtax = input(usr, "要给 [X] 多少？", src) as null|num
 				if(!usr.canUseTopic(src, BE_CLOSE) || locked)
 					return
 				if(findtext(num2text(newtax), "."))
@@ -246,10 +246,10 @@
 		for(var/mob/living/A in SStreasury.bank_accounts)
 			if(A == X)
 				if(SStreasury.check_fine_exemption(A))
-					say("By our Liege's mercy, they can not be fined!")
+					say("奉领主之恩，此人不可罚款！")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
-				var/newtax = input(usr, "How much to fine [X]", src) as null|num
+				var/newtax = input(usr, "要罚 [X] 多少？", src) as null|num
 				if(!usr.canUseTopic(src, BE_CLOSE) || locked)
 					return
 				if(findtext(num2text(newtax), "."))
@@ -266,12 +266,12 @@
 		for(var/list/category in L)
 			for(var/A in category)
 				things += A
-		var/job_to_pay = input(usr, "Select a job", src) as null|anything in things
+		var/job_to_pay = input(usr, "选择一个职业", src) as null|anything in things
 		if(!job_to_pay)
 			return
 		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
 			return
-		var/amount_to_pay = input(usr, "How much to pay every [job_to_pay]", src) as null|num
+		var/amount_to_pay = input(usr, "每位 [job_to_pay] 发多少？", src) as null|num
 		if(!amount_to_pay)
 			return
 		if(amount_to_pay<1)
@@ -290,12 +290,12 @@
 		for(var/list/category in L)
 			for(var/A in category)
 				things += A
-		var/job_to_pay = input(usr, "Select a job", src) as null|anything in things
+		var/job_to_pay = input(usr, "选择一个职业", src) as null|anything in things
 		if(!job_to_pay)
 			return
 		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
 			return
-		var/amount_to_pay = input(usr, "Set daily payment for [job_to_pay] (0 to remove)", src, daily_payments[job_to_pay] ? daily_payments[job_to_pay] : 0) as null|num
+		var/amount_to_pay = input(usr, "设置 [job_to_pay] 的每日薪资（0 为移除）", src, daily_payments[job_to_pay] ? daily_payments[job_to_pay] : 0) as null|num
 		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
 			return
 		if(findtext(num2text(amount_to_pay), "."))
@@ -305,14 +305,14 @@
 		amount_to_pay = CLAMP(amount_to_pay, 0, 999)
 		if(amount_to_pay == 0)
 			daily_payments -= job_to_pay
-			say("Daily payment for [job_to_pay] removed.")
+			say("[job_to_pay] 的每日薪资已移除。")
 		else
 			daily_payments[job_to_pay] = amount_to_pay
-			say("Daily payment for [job_to_pay] set to [amount_to_pay]m.")
+			say("[job_to_pay] 的每日薪资已设为 [amount_to_pay]m。")
 	if(href_list["removedailypay"])
 		var/job_to_remove = href_list["removedailypay"]
 		daily_payments -= job_to_remove
-		say("Daily payment for [job_to_remove] removed.")
+		say("[job_to_remove] 的每日薪资已移除。")
 	if(href_list["togglewages"])
 		var/X = locate(href_list["togglewages"])
 		if(!X)
@@ -327,18 +327,18 @@
 					is_authorized = TRUE
 
 				if(!is_authorized)
-					say("Only the Steward, Clerk, or Ruler may suspend wages.")
+					say("只有 Steward、Clerk 或 Ruler 可以停发工资。")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
 
 				if(HAS_TRAIT(A, TRAIT_WAGES_SUSPENDED))
 					REMOVE_TRAIT(A, TRAIT_WAGES_SUSPENDED, TRAIT_GENERIC)
-					say("[A.real_name]'s wages have been reinstated.")
-					to_chat(A, span_notice("My wages have been reinstated by the Stewardry."))
+					say("[A.real_name] 的工资已恢复。")
+					to_chat(A, span_notice("总务处已恢复我的工资。"))
 				else
 					ADD_TRAIT(A, TRAIT_WAGES_SUSPENDED, TRAIT_GENERIC)
-					say("[A.real_name]'s wages have been suspended.")
-					to_chat(A, span_danger("My wages have been suspended by the Stewardry!"))
+					say("[A.real_name] 的工资已被停发。")
+					to_chat(A, span_danger("总务处已停发我的工资！"))
 				break
 	if(href_list["compact"])
 		compact = !compact
@@ -347,13 +347,13 @@
 	if(href_list["changeautoexport"])
 		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
 			return
-		var/new_autoexport = input(usr, "Set a new autoexport percentage between 0 and 100", src, SStreasury.autoexport_percentage * 100) as null|num
+		var/new_autoexport = input(usr, "设置新的自动出口百分比（0 到 100）", src, SStreasury.autoexport_percentage * 100) as null|num
 		if(!new_autoexport && new_autoexport != 0)
 			return
 		if(findtext(num2text(new_autoexport), "."))
 			return
 		if(new_autoexport < 0 || new_autoexport > 100)
-			to_chat(usr, span_warning("Invalid autoexport percentage. Must be between 0 and 100."))
+			to_chat(usr, span_warning("自动出口百分比无效，必须在 0 到 100 之间。"))
 			return
 		new_autoexport = round(new_autoexport)
 		SStreasury.autoexport_percentage = new_autoexport * 0.01
@@ -388,7 +388,7 @@
 	if(.)
 		return
 	if(locked)
-		to_chat(user, span_warning("It's locked. Of course."))
+		to_chat(user, span_warning("它被锁住了。果然。"))
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	playsound(loc, 'sound/misc/keyboard_enter.ogg', 100, FALSE, -1)
@@ -396,16 +396,16 @@
 	var/contents
 	switch(current_tab)
 		if(TAB_MAIN)
-			contents += "<center>NERVE MASTER<BR>"
+			contents += "<center>总务中枢<BR>"
 			contents += "--------------<BR>"
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_BANK]'>\[Bank\]</a><BR>"
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_STOCK]'>\[Stockpile\]</a><BR>"
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_IMPORT]'>\[Import\]</a><BR>"
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_BOUNTIES]'>\[Bounties\]</a><BR>"
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_PAYDAY]'>\[Daily Payments\]</a><BR>"
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_LOG]'>\[Log\]</a><BR>"
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_STATISTICS]'>\[Statistics\]</a><BR>"
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_SALTMINE]'>\[Salt Mine Report\]</a><BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_BANK]'>\[银行\]</a><BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_STOCK]'>\[仓储\]</a><BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_IMPORT]'>\[进口\]</a><BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_BOUNTIES]'>\[赏金\]</a><BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_PAYDAY]'>\[每日薪资\]</a><BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_LOG]'>\[日志\]</a><BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_STATISTICS]'>\[统计\]</a><BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_SALTMINE]'>\[盐矿报告\]</a><BR>"
 			contents += "</center>"
 		if(TAB_BANK)
 			var/total_deposit = 0
@@ -413,13 +413,13 @@
 				total_deposit += SStreasury.bank_accounts[bank_account]
 			if(total_deposit == 0)
 				total_deposit++ //Division by zero catch
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a>"
-			contents += " <a href='?src=\ref[src];compact=1'>\[Compact: [compact? "ENABLED" : "DISABLED"]\]</a><BR>"
-			contents += "<center>Bank<BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[返回\]</a>"
+			contents += " <a href='?src=\ref[src];compact=1'>\[紧凑：[compact? "启用" : "关闭"]\]</a><BR>"
+			contents += "<center>银行<BR>"
 			contents += "--------------<BR>"
-			contents += "Treasury: [SStreasury.treasury_value]m<BR>"
-			contents += "Reserve Ratio: [round(SStreasury.treasury_value / total_deposit * 100)]%</center><BR>"
-			contents += "<a href='?src=\ref[src];payroll=1'>\[Pay by Class\]</a><BR><BR>"
+			contents += "国库：[SStreasury.treasury_value]m<BR>"
+			contents += "准备金率：[round(SStreasury.treasury_value / total_deposit * 100)]%</center><BR>"
+			contents += "<a href='?src=\ref[src];payroll=1'>\[按职业发放\]</a><BR><BR>"
 			if(compact)
 				for(var/mob/living/carbon/human/A in SStreasury.bank_accounts)
 					if(ishuman(A))
@@ -427,8 +427,8 @@
 						contents += "[tmp.real_name] ([job_filter(tmp.advjob, tmp.job, compact)]) - [SStreasury.bank_accounts[A]]m"
 					else
 						contents += "[A.real_name] - [SStreasury.bank_accounts[A]]m"
-					var/wage_status = HAS_TRAIT(A, TRAIT_WAGES_SUSPENDED) ? "UNSUSPEND" : "SUSPEND"
-					contents += " / <a href='?src=\ref[src];givemoney=\ref[A]'>\[PAY\]</a> <a href='?src=\ref[src];fineaccount=\ref[A]'>\[FINE\]</a> <a href='?src=\ref[src];togglewages=\ref[A]'>\[[wage_status]\]</a><BR><BR>"
+					var/wage_status = HAS_TRAIT(A, TRAIT_WAGES_SUSPENDED) ? "恢复" : "停发"
+					contents += " / <a href='?src=\ref[src];givemoney=\ref[A]'>\[发放\]</a> <a href='?src=\ref[src];fineaccount=\ref[A]'>\[罚款\]</a> <a href='?src=\ref[src];togglewages=\ref[A]'>\[[wage_status]\]</a><BR><BR>"
 			else
 				for(var/mob/living/carbon/human/A in SStreasury.bank_accounts)
 					if(ishuman(A))
@@ -436,21 +436,21 @@
 						contents += "[tmp.real_name] ([job_filter(tmp.advjob, tmp.job, compact)]) - [SStreasury.bank_accounts[A]]m<BR>"
 					else
 						contents += "[A.real_name] - [SStreasury.bank_accounts[A]]m<BR>"
-					var/wage_status = HAS_TRAIT(A, TRAIT_WAGES_SUSPENDED) ? "Unsuspend Wages" : "Suspend Wages"
-					contents += "<a href='?src=\ref[src];givemoney=\ref[A]'>\[Give Money\]</a> <a href='?src=\ref[src];fineaccount=\ref[A]'>\[Fine Account\]</a> <a href='?src=\ref[src];togglewages=\ref[A]'>\[[wage_status]\]</a><BR><BR>"
+					var/wage_status = HAS_TRAIT(A, TRAIT_WAGES_SUSPENDED) ? "恢复工资" : "停发工资"
+					contents += "<a href='?src=\ref[src];givemoney=\ref[A]'>\[发放资金\]</a> <a href='?src=\ref[src];fineaccount=\ref[A]'>\[账户罚款\]</a> <a href='?src=\ref[src];togglewages=\ref[A]'>\[[wage_status]\]</a><BR><BR>"
 		if(TAB_STOCK)
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a>"
-			contents += " <a href='?src=\ref[src];compact=1'>\[Compact: [compact? "ENABLED" : "DISABLED"]\]</a><BR>"
-			contents += "<center>Stockpile<BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[返回\]</a>"
+			contents += " <a href='?src=\ref[src];compact=1'>\[紧凑：[compact? "启用" : "关闭"]\]</a><BR>"
+			contents += "<center>仓储<BR>"
 			contents += "--------------<BR>"
 			if(compact)
-				contents += "Treasury: [SStreasury.treasury_value]m"
-				contents += " / Lord's Tax: [SStreasury.tax_value*100]%"
-				contents += " / Guild's Tax: [SStreasury.queens_tax*100]%</center><BR>"
-				contents += "<center>Auto Export Stockpile Above: "
+				contents += "国库：[SStreasury.treasury_value]m"
+				contents += " / 领主税：[SStreasury.tax_value*100]%"
+				contents += " / 行会税：[SStreasury.queens_tax*100]%</center><BR>"
+				contents += "<center>超出此值自动出口仓储："
 				contents += "<a href='?src=\ref[src];changeautoexport=1'>[SStreasury.autoexport_percentage * 100]%</a></center><BR>"
-				contents += "<center>Current Passive Spending: [SStreasury.get_current_passive_spending()]m </center><BR>"
-				var/selection = "<center>Categories: "
+				contents += "<center>当前被动支出：[SStreasury.get_current_passive_spending()]m </center><BR>"
+				var/selection = "<center>分类："
 				for(var/category in categories)
 					if(category == current_category)
 						selection += "<b>[current_category]</b> "
@@ -463,24 +463,24 @@
 						continue
 					contents += "<b>[A.name]:</b>"
 					contents += " [A.held_items[1]] | [A.held_items[2]]"
-					contents += " || SELL: <a href='?src=\ref[src];setbounty=\ref[A]'>[A.payout_price]m</a>"
-					contents += " / BUY: <a href='?src=\ref[src];setprice=\ref[A]'>[A.withdraw_price]m</a>"
-					contents += " / LIMIT: <a href='?src=\ref[src];setlimit=\ref[A]'>[A.stockpile_limit]</a>"
+					contents += " || 收购：<a href='?src=\ref[src];setbounty=\ref[A]'>[A.payout_price]m</a>"
+					contents += " / 提取：<a href='?src=\ref[src];setprice=\ref[A]'>[A.withdraw_price]m</a>"
+					contents += " / 上限：<a href='?src=\ref[src];setlimit=\ref[A]'>[A.stockpile_limit]</a>"
 					if(!A.no_passive)
-						contents += " / R.P.I.R.: <a href='?src=\ref[src];setrate=\ref[A]'>[A.passive_generation] ([A.generation_price]m)</a>"
+						contents += " / 被动导入：<a href='?src=\ref[src];setrate=\ref[A]'>[A.passive_generation] ([A.generation_price]m)</a>"
 					if(!A.export_only)
 						if(A.importexport_amt)
-							contents += " <a href='?src=\ref[src];import=\ref[A]'>\[IMP [A.importexport_amt] ([A.get_import_price()])\]</a> <a href='?src=\ref[src];export=\ref[A]'>\[EXP [A.importexport_amt] ([A.get_export_price()])\]</a> <BR>"
+							contents += " <a href='?src=\ref[src];import=\ref[A]'>\[进口 [A.importexport_amt] ([A.get_import_price()])\]</a> <a href='?src=\ref[src];export=\ref[A]'>\[出口 [A.importexport_amt] ([A.get_export_price()])\]</a> <BR>"
 					else
 						if(A.importexport_amt)
-							contents += " <a href='?src=\ref[src];export=\ref[A]'>\[EXP [A.importexport_amt] ([A.get_export_price()])\]</a> <BR>"
+							contents += " <a href='?src=\ref[src];export=\ref[A]'>\[出口 [A.importexport_amt] ([A.get_export_price()])\]</a> <BR>"
 
 			else
-				contents += "Treasury: [SStreasury.treasury_value]m<BR>"
-				contents += "Lord's Tax: [SStreasury.tax_value*100]%<BR>"
-				contents += "Guild's Tax: [SStreasury.queens_tax*100]%<BR>"
-				contents += "Current Passive Spending: [SStreasury.get_current_passive_spending()]m</center><BR>"
-				var/selection = "<center>Categories: "
+				contents += "国库：[SStreasury.treasury_value]m<BR>"
+				contents += "领主税：[SStreasury.tax_value*100]%<BR>"
+				contents += "行会税：[SStreasury.queens_tax*100]%<BR>"
+				contents += "当前被动支出：[SStreasury.get_current_passive_spending()]m</center><BR>"
+				var/selection = "<center>分类："
 				for(var/category in categories)
 					if(category == current_category)
 						selection += "<b>[current_category]</b> "
@@ -488,101 +488,101 @@
 						selection += "<a href='?src=[REF(src)];changecat=[category]'>[category]</a> "
 				contents += selection + "<BR>"
 				contents += "--------------<BR>"
-				contents += "Category Passive Spending: [SStreasury.get_current_passive_spending(current_category)]m</center><BR>"
+				contents += "当前分类被动支出：[SStreasury.get_current_passive_spending(current_category)]m</center><BR>"
 				for(var/datum/roguestock/stockpile/A in SStreasury.stockpile_datums)
 					if(A.category != current_category)
 						continue
 					contents += "[A.name]<BR>"
 					contents += "[A.desc]<BR>"
-					contents += "Stockpiled Amount (Local): [A.held_items[1]]<BR>"
-					contents += "Stockpiled Amount (Remote): [A.held_items[2]]<BR>"
-					contents += "Bounty Price: <a href='?src=\ref[src];setbounty=\ref[A]'>[A.payout_price]</a><BR>"
-					contents += "Withdraw Price: <a href='?src=\ref[src];setprice=\ref[A]'>[A.withdraw_price]</a><BR>"
+					contents += "本地库存：[A.held_items[1]]<BR>"
+					contents += "远程库存：[A.held_items[2]]<BR>"
+					contents += "收购价格：<a href='?src=\ref[src];setbounty=\ref[A]'>[A.payout_price]</a><BR>"
+					contents += "提取价格：<a href='?src=\ref[src];setprice=\ref[A]'>[A.withdraw_price]</a><BR>"
 					if(!A.no_passive)
-						contents += "Remote Passive Import Rate: <a href='?src=\ref[src];setrate=\ref[A]'>[A.passive_generation]</a><BR>"
-						contents += "R.P.I.R. Price: [A.generation_price] | Total Rate Price: [A.generation_price * A.passive_generation]<BR>"
-					contents += "Demand: [A.demand2word()]<BR>"
+						contents += "远程被动导入率：<a href='?src=\ref[src];setrate=\ref[A]'>[A.passive_generation]</a><BR>"
+						contents += "导入单价：[A.generation_price] | 总费率价格：[A.generation_price * A.passive_generation]<BR>"
+					contents += "需求：[A.demand2word()]<BR>"
 					if(!A.export_only)
 						if(A.importexport_amt)
-							contents += "<a href='?src=\ref[src];import=\ref[A]'>\[Import [A.importexport_amt] ([A.get_import_price()])\]</a> <a href='?src=\ref[src];export=\ref[A]'>\[Export [A.importexport_amt] ([A.get_export_price()])\]</a> <BR>"
+							contents += "<a href='?src=\ref[src];import=\ref[A]'>\[进口 [A.importexport_amt] ([A.get_import_price()])\]</a> <a href='?src=\ref[src];export=\ref[A]'>\[出口 [A.importexport_amt] ([A.get_export_price()])\]</a> <BR>"
 					else
 						if(A.importexport_amt)
-							contents += " <a href='?src=\ref[src];export=\ref[A]'>\[Export [A.importexport_amt] ([A.get_export_price()])\]</a> <BR>"
-					contents += "<a href='?src=\ref[src];togglewithdraw=\ref[A]'>\[[A.withdraw_disabled ? "Enable" : "Disable"] Withdrawing\]</a><BR><BR>"
+							contents += " <a href='?src=\ref[src];export=\ref[A]'>\[出口 [A.importexport_amt] ([A.get_export_price()])\]</a> <BR>"
+					contents += "<a href='?src=\ref[src];togglewithdraw=\ref[A]'>\[[A.withdraw_disabled ? "启用" : "禁用"]提取\]</a><BR><BR>"
 		if(TAB_IMPORT)
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a>"
-			contents += " <a href='?src=\ref[src];compact=1'>\[Compact: [compact? "ENABLED" : "DISABLED"]\]</a><BR>"
-			contents += "<center>Imports<BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[返回\]</a>"
+			contents += " <a href='?src=\ref[src];compact=1'>\[紧凑：[compact? "启用" : "关闭"]\]</a><BR>"
+			contents += "<center>进口<BR>"
 			contents += "--------------<BR>"
 			if(compact)
-				contents += "Treasury: [SStreasury.treasury_value]m"
-				contents += " / Lord's Tax: [SStreasury.tax_value*100]%"
-				contents += " / Guild's Tax: [SStreasury.queens_tax*100]%</center><BR>"
+				contents += "国库：[SStreasury.treasury_value]m"
+				contents += " / 领主税：[SStreasury.tax_value*100]%"
+				contents += " / 行会税：[SStreasury.queens_tax*100]%</center><BR>"
 				for(var/datum/roguestock/import/A in SStreasury.stockpile_datums)
 					contents += "<b>[A.name]:</b>"
-					contents += " <a href='?src=\ref[src];import=\ref[A]'>\[Import [A.importexport_amt] ([A.get_import_price()])\]</a><BR><BR>"
+					contents += " <a href='?src=\ref[src];import=\ref[A]'>\[进口 [A.importexport_amt] ([A.get_import_price()])\]</a><BR><BR>"
 			else
-				contents += "Treasury: [SStreasury.treasury_value]m<BR>"
-				contents += "Lord's Tax: [SStreasury.tax_value*100]%<BR>"
-				contents += "Guild's Tax: [SStreasury.queens_tax*100]%</center><BR>"
+				contents += "国库：[SStreasury.treasury_value]m<BR>"
+				contents += "领主税：[SStreasury.tax_value*100]%<BR>"
+				contents += "行会税：[SStreasury.queens_tax*100]%</center><BR>"
 				for(var/datum/roguestock/import/A in SStreasury.stockpile_datums)
 					contents += "[A.name]<BR>"
 					contents += "[A.desc]<BR>"
 					if(!A.stable_price)
-						contents += "Demand: [A.demand2word()]<BR>"
-					contents += "<a href='?src=\ref[src];import=\ref[A]'>\[Import [A.importexport_amt] ([A.get_import_price()])\]</a><BR><BR>"
+						contents += "需求：[A.demand2word()]<BR>"
+					contents += "<a href='?src=\ref[src];import=\ref[A]'>\[进口 [A.importexport_amt] ([A.get_import_price()])\]</a><BR><BR>"
 		if(TAB_BOUNTIES)
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a>"
-			contents += "<center>Bounties<BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[返回\]</a>"
+			contents += "<center>赏金<BR>"
 			contents += "--------------<BR>"
-			contents += "Treasury: [SStreasury.treasury_value]m<BR>"
-			contents += "Lord's Tax: [SStreasury.tax_value*100]%</center><BR>"
+			contents += "国库：[SStreasury.treasury_value]m<BR>"
+			contents += "领主税：[SStreasury.tax_value*100]%</center><BR>"
 			for(var/datum/roguestock/bounty/A in SStreasury.stockpile_datums)
 				contents += "[A.name]<BR>"
 				contents += "[A.desc]<BR>"
-				contents += "Total Collected: [SStreasury.minted]<BR>"
+				contents += "累计收集：[SStreasury.minted]<BR>"
 				if(A.percent_bounty)
-					contents += "Bounty Price: <a href='?src=\ref[src];setbounty=\ref[A]'>[A.payout_price]%</a><BR><BR>"
+					contents += "赏金价格：<a href='?src=\ref[src];setbounty=\ref[A]'>[A.payout_price]%</a><BR><BR>"
 				else
-					contents += "Bounty Price: <a href='?src=\ref[src];setbounty=\ref[A]'>[A.payout_price]</a><BR><BR>"
+					contents += "赏金价格：<a href='?src=\ref[src];setbounty=\ref[A]'>[A.payout_price]</a><BR><BR>"
 		if(TAB_LOG)
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a><BR>"
-			contents += "<center>Log<BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[返回\]</a><BR>"
+			contents += "<center>日志<BR>"
 			contents += "--------------</center><BR><BR>"
 			for(var/i = SStreasury.log_entries.len to 1 step -1)
 				contents += "<span class='info'>[SStreasury.log_entries[i]]</span><BR>"
 		if(TAB_STATISTICS)
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a><BR>"
-			contents += "<center>Statistics:<BR>"
-			contents += "Known Economic Output: [SStreasury.economic_output]m<BR>"
-			contents += "Total Rural Tax: [SStreasury.total_rural_tax]m<BR>"
-			contents += "Total Deposit Tax: [SStreasury.total_deposit_tax]m<BR>"
-			contents += "Total Noble Estate Income: [SStreasury.total_noble_income]m<BR>"
-			contents += "Total Import: [SStreasury.total_import]m<BR>"
-			contents += "Total Export: [SStreasury.total_export]m<BR>"
-			contents += "Total Mammons Minted: [SStreasury.minted]m<BR>"
-			contents += "Trade Balance: [SStreasury.total_export - SStreasury.total_import]m<BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[返回\]</a><BR>"
+			contents += "<center>统计：<BR>"
+			contents += "已知经济产出：[SStreasury.economic_output]m<BR>"
+			contents += "总乡税：[SStreasury.total_rural_tax]m<BR>"
+			contents += "总存款税：[SStreasury.total_deposit_tax]m<BR>"
+			contents += "总贵族地产收入：[SStreasury.total_noble_income]m<BR>"
+			contents += "总进口：[SStreasury.total_import]m<BR>"
+			contents += "总出口：[SStreasury.total_export]m<BR>"
+			contents += "已铸造玛门总额：[SStreasury.minted]m<BR>"
+			contents += "贸易差额：[SStreasury.total_export - SStreasury.total_import]m<BR>"
 			contents  += "</center><BR>"
 		if(TAB_PAYDAY)
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a><BR>"
-			contents += "<center>Daily Payments<BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[返回\]</a><BR>"
+			contents += "<center>每日薪资<BR>"
 			contents += "--------------<BR>"
-			contents += "Treasury: [SStreasury.treasury_value]m</center><BR>"
-			contents += "<a href='?src=\ref[src];setdailypay=1'>\[Add/Modify Job Payment\]</a><BR><BR>"
+			contents += "国库：[SStreasury.treasury_value]m</center><BR>"
+			contents += "<a href='?src=\ref[src];setdailypay=1'>\[添加/修改职业薪资\]</a><BR><BR>"
 			if(daily_payments.len)
-				contents += "<center>Configured Payments:</center><BR>"
+				contents += "<center>已配置薪资：</center><BR>"
 				for(var/job_name in daily_payments)
 					var/amt = daily_payments[job_name]
 					var/count = 0
 					for(var/mob/living/carbon/human/H in GLOB.human_list)
 						if(H.job == job_name && !HAS_TRAIT(H, TRAIT_WAGES_SUSPENDED))
 							count++
-					contents += "<b>[job_name]:</b> [amt]m/day"
+					contents += "<b>[job_name]:</b> [amt]m/日"
 					if(count > 0)
-						contents += " ([count] employed, [amt * count]m total/day)"
-					contents += " <a href='?src=\ref[src];removedailypay=[job_name]'>\[Remove\]</a><BR>"
+						contents += "（[count] 在职，每日总计 [amt * count]m）"
+					contents += " <a href='?src=\ref[src];removedailypay=[job_name]'>\[移除\]</a><BR>"
 			else
-				contents += "<center>No daily payments configured.</center><BR>"
+				contents += "<center>未配置每日薪资。</center><BR>"
 		if(TAB_SALTMINE)
 			var/obj/structure/roguemachine/stockpile_saltcamp/stockpile = null
 			stockpile = locate(/obj/structure/roguemachine/stockpile_saltcamp) in GLOB.saltminestockpilemachines // we're assuming there is only ever one of these machines in the world
@@ -590,11 +590,11 @@
 			if(!isnull(stockpile))
 				var/gambled_salt = round(stockpile.salt_spent_on_gambling, 1)
 				var/total_accounts = length(stockpile.salt_accounts)
-				contents += "<center>Die Troyt Salt Mine Report:<BR>"
-				contents += "Total Salt Gambled: [gambled_salt] piles of salt</center><BR>"
+				contents += "<center>特罗伊特盐矿报告:<BR>"
+				contents += "总赌博盐量: [gambled_salt] 堆盐</center><BR>"
 				if(total_accounts > 0)
 					contents += "--------------<BR>"
-					contents += "<table><tr><th>Prisoner Name</th><th>Salt Mined</th><th>Interest Rate</th></tr>"
+					contents += "<table><tr><th>囚犯姓名</th><th>已采盐量</th><th>利率</th></tr>"
 					for(var/i = 1; i <= total_accounts; i++)
 						var/name = stockpile.salt_accounts[i]
 						var/salt = stockpile.salt_accounts[name]
@@ -602,7 +602,7 @@
 						var/interest = stockpile.salt_accounts_interest_max[name] * 100
 						if(salt == 0 && stockpile.salt_ticket_win[name] > 0) // don't show ticket winners who have left the mines
 							continue
-						contents += "<tr><td>[name]</td><td>[salt] salt / [salt_max] max</td><td>[interest]%</a></td>"
+						contents += "<tr><td>[name]</td><td>[salt]盐/[salt_max]上限</td><td>[interest]%</a></td>"
 					contents += "</table>"
 
 	if(!canread)

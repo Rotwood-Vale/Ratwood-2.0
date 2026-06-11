@@ -50,7 +50,7 @@
 					H.Immobilize(20)
 					//hurts you a little bit but doesn't immediately chestfrac  you lmao
 					H.apply_damage(20, BRUTE, "chest", H.run_armor_check("chest", "blunt", damage = 20))
-					audible_message(span_warning("\The [src] shakes under the force of a great impact!"))
+					audible_message(span_warning("[src]在猛烈撞击下剧烈摇晃！"))
 					playsound(src, "meteor", 100, TRUE)
 					addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, Knockdown), 10), 10)
 				else if(is_bigguy && obj_integrity <= max_integrity / 3)	//This charge will wreck it
@@ -63,7 +63,7 @@
 					playsound(src, "genblunt", 100, TRUE)
 					addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, Knockdown), 10), 10)
 				H.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
-				H.visible_message(span_warning("[H] runs into [src]!"), span_warning("I run into [src]!"))
+				H.visible_message(span_warning("[H]一头撞上了[src]！"), span_warning("我一头撞上了[src]！"))
 
 
 /obj/structure/Destroy()
@@ -264,9 +264,9 @@
 	if(do_mob(user, user, adjusted_climb_time))
 		if(src.loc) //Checking if structure has been destroyed
 			if(do_climb(user))
-				user.visible_message(span_warning("[user] climbs onto [src]."), \
-									span_notice("I climb onto [src]."))
-				log_combat(user, src, "climbed onto")
+				user.visible_message(span_warning("[user]爬上了[src]。"), \
+									span_notice("我爬上了[src]。"))
+				log_combat(user, src, "爬上")
 //				if(climb_offset)
 //					user.set_mob_offsets("structure_climb", _x = 0, _y = climb_offset)
 				if(climb_stun)
@@ -275,7 +275,7 @@
 					playsound(src, climb_sound, 100)
 				. = 1
 			else
-				to_chat(user, span_warning("I fail to climb onto [src]."))
+				to_chat(user, span_warning("我没能爬上[src]。"))
 	structureclimber = null
 
 // You can path over a dense structure if it's climbable.
@@ -286,7 +286,7 @@
 	. = ..()
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(obj_broken)
-			. += span_notice("It appears to be broken.")
+			. += span_notice("它看起来已经坏了。")
 		var/examine_status = examine_status(user)
 		if(examine_status)
 			. += examine_status
@@ -296,11 +296,11 @@
 		var/healthpercent = (obj_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)
-				return  "It looks slightly damaged."
+				return  "它看起来只是轻微受损。"
 			if(25 to 50)
-				return  "It appears heavily damaged."
+				return  "它看起来已经严重受损。"
 			if(1 to 25)
-				return  span_warning("It's falling apart!")
+				return  span_warning("它快要散架了！")
 
 /obj/structure/proc/set_climbable(new_climbable)
 	if(new_climbable == climbable)

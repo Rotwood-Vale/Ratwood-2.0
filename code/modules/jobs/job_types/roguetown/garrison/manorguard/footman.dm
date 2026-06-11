@@ -1,7 +1,7 @@
 // Melee goon. STR and martial setup.
 /datum/advclass/manorguard/footsman
-	name = "Footman"
-	tutorial = "You are a professional soldier of the realm, specializing in melee warfare. Stalwart and hardy, your body can both withstand and dish out powerful strikes.."
+	name = "步战披甲兵"
+	tutorial = "你是王国的职业军士，专精近身作战。你坚韧顽强，这副身板既扛得住重击，也打得出重击。"
 	outfit = /datum/outfit/job/roguetown/manorguard/footsman
 
 	category_tags = list(CTAG_MENATARMS)
@@ -42,20 +42,20 @@
 	beltl = /obj/item/rogueweapon/mace/cudgel
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Warhammer & Shield","Axe & Shield","Halberd","Greataxe")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("战锤与盾","斧与盾","戟","双手巨斧")
+		var/weapon_choice = input(H, "选择你的武器。", "拿起武器") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Warhammer & Shield")
+			if("战锤与盾")
 				beltr = /obj/item/rogueweapon/mace/warhammer
 				backl = /obj/item/rogueweapon/shield/iron
-			if("Axe & Shield")
+			if("斧与盾")
 				beltr = /obj/item/rogueweapon/stoneaxe/woodcut/steel
 				backl = /obj/item/rogueweapon/shield/iron
-			if("Halberd")
+			if("戟")
 				r_hand = /obj/item/rogueweapon/halberd
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
-			if("Greataxe")
+			if("双手巨斧")
 				r_hand = /obj/item/rogueweapon/greataxe
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 	backpack_contents = list(
@@ -68,31 +68,31 @@
 	H.verbs |= /mob/proc/haltyell
 
 	if(H.mind)
-		var/armor_options = list("Brigandine Set", "Maille Set")
-		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in armor_options
+		var/armor_options = list("锁片甲套装", "锁子甲套装")
+		var/armor_choice = input(H, "选择你的护甲。", "穿上护甲") as anything in armor_options
 
 		switch(armor_choice)
-			if("Brigandine Set")
+			if("锁片甲套装")
 				armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light/retinue
 				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 				wrists = /obj/item/clothing/wrists/roguetown/splintarms
 				pants = /obj/item/clothing/under/roguetown/splintlegs
 
-			if("Maille Set")
+			if("锁子甲套装")
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/scale
 				shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/iron
 				wrists = /obj/item/clothing/wrists/roguetown/bracers
 				pants = /obj/item/clothing/under/roguetown/chainlegs
 
 		var/helmets = list(
-		"Simple Helmet" 	= /obj/item/clothing/head/roguetown/helmet,
-		"Kettle Helmet" 	= /obj/item/clothing/head/roguetown/helmet/kettle,
-		"Bascinet Helmet"		= /obj/item/clothing/head/roguetown/helmet/bascinet,
-		"Sallet Helmet"		= /obj/item/clothing/head/roguetown/helmet/sallet,
-		"Winged Helmet" 	= /obj/item/clothing/head/roguetown/helmet/winged,
-		"Skull Cap"			= /obj/item/clothing/head/roguetown/helmet/skullcap,
-		"None"
+		"素盔" 	= /obj/item/clothing/head/roguetown/helmet,
+		"锅盔" 	= /obj/item/clothing/head/roguetown/helmet/kettle,
+		"尖顶盔"		= /obj/item/clothing/head/roguetown/helmet/bascinet,
+		"萨莱特盔"		= /obj/item/clothing/head/roguetown/helmet/sallet,
+		"翼盔" 	= /obj/item/clothing/head/roguetown/helmet/winged,
+		"护顶盔"			= /obj/item/clothing/head/roguetown/helmet/skullcap,
+		"无"
 		)
-		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
-		if(helmchoice != "None")
+		var/helmchoice = input(H, "选择你的头盔。", "戴上头盔") as anything in helmets
+		if(helmchoice != "无")
 			head = helmets[helmchoice]

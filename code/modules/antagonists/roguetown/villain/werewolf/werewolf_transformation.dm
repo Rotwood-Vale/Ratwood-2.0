@@ -11,7 +11,7 @@
 			if(isturf(H.loc))
 				var/turf/loc = H.loc
 				if(loc.can_see_sky())
-					to_chat(H, span_userdanger("The moonlight scorns me... It is too late."))
+					to_chat(H, span_userdanger("月光在嘲弄我……已经太迟了。"))
 					owner.current.playsound_local(get_turf(owner.current), 'sound/music/wolfintro.ogg', 80, FALSE, pressure_affected = FALSE)
 					H.flash_fullscreen("redflash3")
 					transforming = world.time // timer
@@ -26,13 +26,13 @@
 		else if (world.time >= transforming + 25 SECONDS) // Stage 2
 			H.flash_fullscreen("redflash3")
 			H.emote("agony", forced = TRUE)
-			to_chat(H, span_userdanger("UNIMAGINABLE PAIN!"))
+			to_chat(H, span_userdanger("难以想象的剧痛！"))
 			H.Stun(30)
 			H.Knockdown(30)
 
 		else if (world.time >= transforming + 10 SECONDS) // Stage 1
 			H.emote("")
-			to_chat(H, span_warning("I can feel my muscles aching, it feels HORRIBLE..."))
+			to_chat(H, span_warning("我能感觉到自己的肌肉正在酸痛抽搐，感觉糟透了……"))
 
 
 	// Werewolf reverts to human form during the day
@@ -49,7 +49,7 @@
 
 			else if (world.time >= untransforming) // Alert player
 				H.flash_fullscreen("redflash1")
-				to_chat(H, span_warning("Daylight shines around me... the curse begins to fade."))
+				to_chat(H, span_warning("日光洒在我身周……诅咒开始消退了。"))
 
 
 /mob/living/carbon/human/species/werewolf/death(gibbed, nocutscene = FALSE)
@@ -115,7 +115,7 @@
 	W.base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
 	W.update_a_intents()
 
-	to_chat(W, span_userdanger("I transform into a horrible beast!"))
+	to_chat(W, span_userdanger("我变成了一头可怕的野兽！"))
 	W.emote("rage")
 
 	if(getorganslot(ORGAN_SLOT_PENIS))
@@ -204,7 +204,7 @@
 	W.RemoveSpell(new /obj/effect/proc_holder/spell/targeted/woundlick)
 	W.regenerate_icons()
 
-	to_chat(W, span_userdanger("I return to my facade."))
+	to_chat(W, span_userdanger("我又回到了自己的伪装之中。"))
 	playsound(W.loc, pick('sound/combat/gib (1).ogg','sound/combat/gib (2).ogg'), 200, FALSE, 3)
 	W.spawn_gibs(FALSE)
 	W.Knockdown(30)

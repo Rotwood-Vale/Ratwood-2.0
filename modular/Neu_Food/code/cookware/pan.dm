@@ -1,6 +1,6 @@
 /obj/item/cooking/pan
-	name = "frypan"
-	desc = "Two in one: Cook and smash heads."
+	name = "煎锅"
+	desc = "一物两用：既能烹饪，又能砸头。"
 	icon = 'modular/Neu_Food/icons/cookware/pan.dmi'
 	lefthand_file = 'modular/Neu_Food/icons/food_lefthand.dmi'
 	righthand_file = 'modular/Neu_Food/icons/food_righthand.dmi'

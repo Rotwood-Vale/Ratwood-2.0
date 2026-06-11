@@ -29,11 +29,11 @@
 	wind                  = 2
 	count                  = 3000
 /datum/particle_weather/snow_gentle
-	name = "Snowfall"
-	desc = "Gentle Snow, la la description."
+	name = "降雪"
+	desc = "轻柔的雪花自天穹缓缓飘落。"
 	particleEffectType = /particles/weather/snow
-	warning_message = span_greenannounce("The air chills across the realm, soft white specs appearing near warm breaths.")
-	late_warning_message = span_greenannounce("Flakes swirl as snow starts to drift down from the sky.")
+	warning_message = span_greenannounce("天地间的空气逐渐寒冷起来，温热的呼吸旁开始浮现细小白点。")
+	late_warning_message = span_greenannounce("雪花开始打着旋，自天穹缓缓飘落。")
 	scale_vol_with_severity = TRUE
 	weather_sounds = list(/datum/looping_sound/snow)
 
@@ -56,11 +56,11 @@
 
 
 /datum/particle_weather/snow_storm
-	name = "Snow storm"
-	desc = "Snow storm, la la description."
+	name = "暴雪"
+	desc = "呼啸的风雪席卷着整片天地。"
 	particleEffectType = /particles/weather/snow/storm
-	warning_message = span_greenannounce("Heavy clouds build in the sky as the air chills across the realm, soft white specs appearing near warm breaths.")
-	late_warning_message = span_greenannounce("Heavy snow begins to fall thick and fast.")
+	warning_message = span_greenannounce("厚重的乌云在天穹聚拢，天地间的空气愈发寒冷，温热的呼吸旁开始浮现细小白点。")
+	late_warning_message = span_greenannounce("厚重的雪幕开始又急又密地落下。")
 	scale_vol_with_severity = TRUE
 	weather_sounds = list(/datum/looping_sound/snow)
 

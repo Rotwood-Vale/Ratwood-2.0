@@ -1,9 +1,9 @@
 //SCOMSTONE                 SCOMSTONE
 
 /obj/item/scomstone
-	name = "scomstone"
+	name = "传讯石"
 	icon_state = "ring_scom"
-	desc = "A heavy ring made of metal. There is a gem embedded in the center - dim, but alive."
+	desc = "一枚沉重的金属戒指，中央嵌着一颗宝石，光芒黯淡，却仿佛活着。"
 	gripped_intents = null
 	dropshrink = 0.6
 	possible_item_intents = list(INTENT_GENERIC)
@@ -31,15 +31,15 @@
 
 /obj/item/scomstone/attack_right(mob/living/carbon/human/user)
 	if(user.restrained() || user.incapacitated())
-		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
+		to_chat(user, span_warning("我被束缚或失去行动能力时无法使用它！"))
 		return
 	if(on_cooldown)
-		to_chat(user, span_warning("The gemstone inside the ring radiates heat. It's still cooling down from its last use."))
+		to_chat(user, span_warning("戒指里的宝石正散发着热量。它还在为上一次使用降温。"))
 		playsound(loc, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
-	visible_message(span_notice ("[user] presses their ring against their mouth."))
-	var/input_text = input(user, "Enter your message:", "Message")
+	visible_message(span_notice ("[user]把戒指贴到了自己的嘴边。"))
+	var/input_text = input(user, "输入你的消息：", "消息")
 	if(!input_text)
 		return
 	var/usedcolor = user.voice_color
@@ -61,30 +61,30 @@
 	//Log message to global broadcast list.
 	GLOB.broadcast_list += list(list(
 	"message"   = input_text,
-	"tag"		= "SCOMSTONE #[scomstone_number]",
+	"tag"		= "SCOM传讯网STONE #[scomstone_number]",
 	"timestamp" = station_time_timestamp("hh:mm:ss")
 	))
 
 /obj/item/scomstone/proc/reset_cooldown(mob/living/carbon/human/user)
-	to_chat(user, span_notice("[src] is ready for use again."))
+	to_chat(user, span_notice("[src]已经可以再次使用了。"))
 	playsound(loc, 'sound/misc/machineyes.ogg', 100, FALSE, -1)
 	on_cooldown = FALSE
 
 /obj/item/scomstone/MiddleClick(mob/user)
 	if(user.restrained() || user.incapacitated())
-		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
+		to_chat(user, span_warning("我被束缚或失去行动能力时无法使用它！"))
 		return
 	if(.)
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	if(loudmouth_listening)
-		to_chat(user, span_info("I quell the Loudmouth's prattling on the scomstone. It may be muted entirely still."))
+		to_chat(user, span_info("我压下了传讯石上金口者的聒噪。你仍可将其彻底静音。"))
 		loudmouth_listening = FALSE
 	else
 		listening = !listening
 		speaking = !speaking
-		to_chat(user, span_info("I [speaking ? "unmute" : "mute"] the scomstone."))
+		to_chat(user, span_info("我将传讯石[speaking ? "解除静音" : "静音"]。"))
 		if(listening)
 			loudmouth_listening = TRUE
 		update_icon()
@@ -104,7 +104,7 @@
 /obj/item/scomstone/examine(mob/user)
 	. = ..()
 	if(scomstone_number)
-		. += "Its designation is #[scomstone_number]."
+		. += "它的编号是 #[scomstone_number]。"
 
 /obj/item/scomstone/proc/repeat_message(message, atom/A, tcolor, message_language)
 	if(A == src)
@@ -134,8 +134,8 @@
 		send_speech(message, hearrange, src, , spans, message_language=language)
 
 /obj/item/scomstone/bad
-	name = "serfstone"
-	desc = "A rusty shoddily-made metal ring. The gem embedded within is barely holding on."
+	name = "农奴石"
+	desc = "一枚粗制滥造、锈迹斑斑的金属戒指，里面嵌着的宝石几乎快撑不住了。"
 	icon_state = "ring_serfscom"
 	listening = FALSE
 	sellprice = 20
@@ -146,9 +146,9 @@
 // garrison scoms/listenstones
 
 /obj/item/scomstone/garrison
-	name = "crownstone"
+	name = "王冠石"
 	icon_state = "ring_crownscom"
-	desc = "A lavish golden ring with the mark of the Crown. Heavy and garish. The gem embedded flickering in excitement."
+	desc = "一枚带有王冠印记的华丽金戒，沉重而张扬。嵌着的宝石正兴奋地闪烁着。"
 	var/garrisonline = TRUE
 	messagereceivedsound = 'sound/misc/garrisonscom.ogg'
 	hearrange = 0
@@ -156,15 +156,15 @@
 
 /obj/item/scomstone/garrison/attack_right(mob/living/carbon/human/user)
 	if(user.restrained() || user.incapacitated())
-		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
+		to_chat(user, span_warning("我被束缚或失去行动能力时无法使用它！"))
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	if(on_cooldown)
-		to_chat(user, span_warning("The gemstone inside the ring radiates heat. It's still cooling down from its last use."))
+		to_chat(user, span_warning("戒指里的宝石正散发着热量。它还在为上一次使用降温。"))
 		playsound(loc, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		return
-	visible_message(span_notice ("[user] presses their ring against their mouth."))
-	var/input_text = input(user, "Enter your message:", "Message")
+	visible_message(span_notice ("[user]把戒指贴到了自己的嘴边。"))
+	var/input_text = input(user, "输入你的消息：", "消息")
 	if(!input_text)
 		return
 	var/usedcolor = user.voice_color
@@ -207,22 +207,22 @@
 
 /obj/item/scomstone/garrison/attack_self(mob/living/user)
 	if(user.restrained() || user.incapacitated())
-		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
+		to_chat(user, span_warning("我被束缚或失去行动能力时无法使用它！"))
 		return
 	if(.)
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	garrisonline = !garrisonline
-	to_chat(user, span_info("I [garrisonline ? "connect to the garrison SCOMline" : "connect to the general SCOMline"]"))
+	to_chat(user, span_info("我[garrisonline ? "接入驻军 SCOM 线路" : "接入常规 SCOM 线路"]。"))
 	update_icon()
 
 /obj/item/scomstone/garrison/update_icon()
 	icon_state = "[initial(icon_state)][garrisonline ? "_on" : ""]"
 
 /obj/item/scomstone/bad/garrison
-	name = "houndstone"
-	desc = "A basic metal ring. It has a well-cut, dismal gem embedded - bearing the mark of the Crown."
+	name = "猎犬石"
+	desc = "一枚朴素的金属戒指，镶着一颗切工考究却色泽阴沉的宝石，上面带有王冠印记。"
 	icon_state = "ring_houndscom"
 	listening = FALSE
 	sellprice = 20

@@ -1,12 +1,13 @@
 /datum/job/roguetown/villager
 	title = "Towner"
+	display_title = "镇民"
 	flag = VILLAGER
 	department_flag = PEASANTS
 	faction = "Station"
 	total_positions = 75
 	spawn_positions = 75
 	allowed_races = ACCEPTED_RACES
-	tutorial = "You've lived in this shithole for effectively all your life. You are not an explorer, nor exactly a warrior in many cases. You're just some average poor bastard who thinks they'll be something someday. Respect the nobles and yeomen alike for they are your superiors - should you find yourself in trouble your Elder is your best hope."
+	tutorial = "你几乎一辈子都窝在这鬼地方。你不是什么探险家，多半也算不上战士。你不过是个寻常穷鬼，心里还做着哪天出人头地的梦。贵族和自耕民都是你的上位者，见了都得放尊重点。要是真惹上麻烦，你最该指望的还是自家的长老。"
 	advclass_cat_rolls = list(CTAG_TOWNER = 20)
 	outfit = null
 	outfit_female = null

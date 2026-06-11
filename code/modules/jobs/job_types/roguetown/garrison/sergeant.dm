@@ -8,8 +8,8 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
-	tutorial = "You are the most experienced of the Crown's Soldiery, leading the men-at-arms in maintaining order and attending to threats and crimes below the court's attention. \
-				See to those under your command and fill in the gaps knights leave in their wake. Obey the orders of your Marshal and the Crown."
+	tutorial = "你是王室军伍中经验最老到的人，率领兵士维持秩序，处理那些尚不值得惊动宫廷的威胁与罪案。\
+				照看好你麾下的人手，填补骑士行动后留下的空缺。服从元帅与王权的命令。"
 	display_order = JDO_SERGEANT
 	whitelist_req = TRUE
 	round_contrib_points = 3
@@ -50,8 +50,8 @@
 
 //Rare-ish anti-armor two hander sword. Kinda alternative of a bastard sword type. Could be cool.
 /datum/advclass/sergeant/sergeant
-	name = "Sergeant-at-Arms"
-	tutorial = "You are a not just anybody but the Sergeant-at-Arms of the Duchy's garrison. While you may have started as some peasant or mercenary, you have advanced through the ranks to that of someone who commands respect and wields it. Take up arms, sergeant!"
+	name = "军士长"
+	tutorial = "你不是寻常兵丁，而是公国驻军中的军士长。也许你出身寒微，只是个农夫或佣兵，但你已一步步爬上军阶，成了能赢得敬畏、也能发号施令的人。执起兵刃吧，军士长！"
 	outfit = /datum/outfit/job/roguetown/sergeant/sergeant
 
 	category_tags = list(CTAG_SERGEANT)
@@ -101,33 +101,33 @@
 		)
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Rhomphaia","Flail & Shield","Halberd","Sabre & Crossbow")	//Bit more unique than footsman, you are a jack-of-all-trades + slightly more 'elite'.
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("罗姆法亚长剑","连枷与盾","戟","军刀与十字弩")	//Bit more unique than footsman, you are a jack-of-all-trades + slightly more 'elite'.
+		var/weapon_choice = input(H, "选择你的武器。", "拿起武器") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Rhomphaia")			//Rare-ish anti-armor two hander sword. Kinda alternative of a bastard sword type. Could be cool.
+			if("罗姆法亚长剑")			//Rare-ish anti-armor two hander sword. Kinda alternative of a bastard sword type. Could be cool.
 				backl = /obj/item/rogueweapon/scabbard/sword
 				l_hand = /obj/item/rogueweapon/sword/long/rhomphaia
 				beltr = /obj/item/rogueweapon/mace/cudgel
-			if("Flail & Shield")	//Tower-shield, higher durability wood shield w/ more coverage. Plus a steel flail; maybe.. less broken that a steel mace?
+			if("连枷与盾")	//Tower-shield, higher durability wood shield w/ more coverage. Plus a steel flail; maybe.. less broken that a steel mace?
 				beltr = /obj/item/rogueweapon/flail/sflail
 				backl = /obj/item/rogueweapon/shield/tower
-			if("Halberd")			//Halberd - basically exact same as MAA. It's a really valid build. Spear thrust + sword chop + bash.
+			if("戟")			//Halberd - basically exact same as MAA. It's a really valid build. Spear thrust + sword chop + bash.
 				r_hand = /obj/item/rogueweapon/halberd
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				beltr = /obj/item/rogueweapon/mace/cudgel
-			if("Sabre & Crossbow")	//Versetile skirmisher class. Considered other swords but sabre felt best without being too strong. (This one gets no cudgel, no space.)
+			if("军刀与十字弩")	//Versetile skirmisher class. Considered other swords but sabre felt best without being too strong. (This one gets no cudgel, no space.)
 				beltr = /obj/item/quiver/bolts
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				r_hand = /obj/item/rogueweapon/sword/sabre
 				l_hand = /obj/item/rogueweapon/scabbard/sword
 
 		var/armors = list(
-			"Brigandine"		= /obj/item/clothing/suit/roguetown/armor/brigandine/retinue,
-			"Steel Cuirass"		= /obj/item/clothing/suit/roguetown/armor/plate/half,
-			"Scalemail"	= /obj/item/clothing/suit/roguetown/armor/plate/scale,
+			"锁子外衣"		= /obj/item/clothing/suit/roguetown/armor/brigandine/retinue,
+			"钢制胸甲"		= /obj/item/clothing/suit/roguetown/armor/plate/half,
+			"鳞甲"	= /obj/item/clothing/suit/roguetown/armor/plate/scale,
 		)
-		var/armorchoice = input(H, "Choose your armor.", "TAKE UP ARMOR") as anything in armors
+		var/armorchoice = input(H, "选择你的护甲。", "穿上护甲") as anything in armors
 		armor = armors[armorchoice]
 
 /obj/effect/proc_holder/spell/invoked/order
@@ -144,8 +144,8 @@
 
 
 /obj/effect/proc_holder/spell/invoked/order/movemovemove
-	name = "Move! Move! Move!"
-	desc = "Orders your underlings to move faster. +5 Speed."
+	name = "快！快！快！"
+	desc = "命令你的下属迅速前进。速度 +5。"
 	overlay_state = "movemovemove"
 
 /obj/effect/proc_holder/spell/invoked/order/movemovemove/cast(list/targets, mob/living/user)
@@ -154,30 +154,30 @@
 		var/mob/living/target = targets[1]
 		var/msg = user.mind.movemovemovetext
 		if(!msg)
-			to_chat(user, span_alert("I must say something to give an order!"))
+			to_chat(user, span_alert("我必须先说点什么，才能下达命令！"))
 			return
 		if(user.job == "Sergeant")
 			if(!(target.job in list("Man at Arms", "Watchman", "Rookie")))
-				to_chat(user, span_alert("I cannot order one not of my ranks!"))
+				to_chat(user, span_alert("我无法命令不属我麾下之人！"))
 				revert_cast()
 				return
 		if(user.job == "Knight Captain")
 			if(!(target.job in list("Knight", "Squire", "Man at Arms")))
-				to_chat(user, span_alert("I cannot order one not of my ranks!"))
+				to_chat(user, span_alert("我无法命令不属我军阶之人！"))
 				revert_cast()
 				return
 		if(user.job == "Janissary Sergeant")
 			if(!(target.job in list("Janissary", "Rookie")))
-				to_chat(user, span_alert("I cannot order one not of my ranks!"))
+				to_chat(user, span_alert("我无法命令不属我麾下之人！"))
 				revert_cast()
 				return
 		if(user.job == "Azeb Agha")
 			if(!(target.job in list("Azeb")))
-				to_chat(user, span_alert("I cannot order one not of my ranks!"))
+				to_chat(user, span_alert("我无法命令不属我麾下之人！"))
 				revert_cast()
 				return
 		if(target == user)
-			to_chat(user, span_alert("I cannot order myself!"))
+			to_chat(user, span_alert("我无法命令我自己！"))
 			revert_cast()
 			return
 		user.say("[msg]")
@@ -196,17 +196,17 @@
 	duration = 1 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/order/movemovemove
-	name = "Move! Move! Move!"
-	desc = "My officer has ordered me to move quickly!"
+	name = "快！快！快！"
+	desc = "我的长官命令我迅速前进！"
 	icon_state = "buff"
 
 /datum/status_effect/buff/order/movemovemove/on_apply()
 	. = ..()
-	to_chat(owner, span_blue("My officer orders me to move!"))
+	to_chat(owner, span_blue("我的长官命令我前进！"))
 
 /obj/effect/proc_holder/spell/invoked/order/takeaim
-	name = "Take aim!"
-	desc = "Orders your underlings to be more precise. +5 Perception."
+	name = "瞄准！"
+	desc = "命令你的下属更精准地出手。感知 +5。"
 	overlay_state = "takeaim"
 
 /datum/status_effect/buff/order/takeaim
@@ -216,13 +216,13 @@
 	duration = 1 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/order/takeaim
-	name = "Take aim!"
-	desc = "My officer has ordered me to take aim!"
+	name = "瞄准！"
+	desc = "我的长官命令我瞄准！"
 	icon_state = "buff"
 
 /datum/status_effect/buff/order/takeaim/on_apply()
 	. = ..()
-	to_chat(owner, span_blue("My officer orders me to take aim!"))
+	to_chat(owner, span_blue("我的长官命令我瞄准！"))
 
 /obj/effect/proc_holder/spell/invoked/order/takeaim/cast(list/targets, mob/living/user)
 	. = ..()
@@ -230,30 +230,30 @@
 		var/mob/living/target = targets[1]
 		var/msg = user.mind.takeaimtext
 		if(!msg)
-			to_chat(user, span_alert("I must say something to give an order!"))
+			to_chat(user, span_alert("我必须先说点什么，才能下达命令！"))
 			return
 		if(user.job == "Sergeant")
 			if(!(target.job in list("Man at Arms", "Watchman", "Rookie")))
-				to_chat(user, span_alert("I cannot order one not of my ranks!"))
+				to_chat(user, span_alert("我无法命令不属我麾下之人！"))
 				revert_cast()
 				return
 		if(user.job == "Knight Captain")
 			if(!(target.job in list("Knight", "Squire", "Man at Arms")))
-				to_chat(user, span_alert("I cannot order one not of my ranks!"))
+				to_chat(user, span_alert("我无法命令不属我军阶之人！"))
 				revert_cast()
 				return
 		if(user.job == "Janissary Sergeant")
 			if(!(target.job in list("Janissary", "Rookie")))
-				to_chat(user, span_alert("I cannot order one not of my ranks!"))
+				to_chat(user, span_alert("我无法命令不属我麾下之人！"))
 				revert_cast()
 				return
 		if(user.job == "Azeb Agha")
 			if(!(target.job in list("Azeb")))
-				to_chat(user, span_alert("I cannot order one not of my ranks!"))
+				to_chat(user, span_alert("我无法命令不属我麾下之人！"))
 				revert_cast()
 				return
 		if(target == user)
-			to_chat(user, span_alert("I cannot order myself!"))
+			to_chat(user, span_alert("我无法命令我自己！"))
 			revert_cast()
 			return
 		user.say("[msg]")
@@ -265,8 +265,8 @@
 
 
 /obj/effect/proc_holder/spell/invoked/order/onfeet
-	name = "On your feet!"
-	desc = "Orders your underlings to stand up."
+	name = "都给我站起来！"
+	desc = "命令你的下属立刻起身。"
 	overlay_state = "onfeet"
 
 /obj/effect/proc_holder/spell/invoked/order/onfeet/cast(list/targets, mob/living/user)
@@ -275,30 +275,30 @@
 		var/mob/living/target = targets[1]
 		var/msg = user.mind.onfeettext
 		if(!msg)
-			to_chat(user, span_alert("I must say something to give an order!"))
+			to_chat(user, span_alert("我必须先说点什么，才能下达命令！"))
 			return
 		if(user.job == "Sergeant")
 			if(!(target.job in list("Man at Arms", "Watchman", "Rookie")))
-				to_chat(user, span_alert("I cannot order one not of my ranks!"))
+				to_chat(user, span_alert("我无法命令不属我麾下之人！"))
 				revert_cast()
 				return
 		if(user.job == "Knight Captain")
 			if(!(target.job in list("Knight", "Squire", "Man at Arms")))
-				to_chat(user, span_alert("I cannot order one not of my ranks!"))
+				to_chat(user, span_alert("我无法命令不属我军阶之人！"))
 				revert_cast()
 				return
 		if(user.job == "Janissary Sergeant")
 			if(!(target.job in list("Janissary", "Rookie")))
-				to_chat(user, span_alert("I cannot order one not of my ranks!"))
+				to_chat(user, span_alert("我无法命令不属我麾下之人！"))
 				revert_cast()
 				return
 		if(user.job == "Azeb Agha")
 			if(!(target.job in list("Azeb")))
-				to_chat(user, span_alert("I cannot order one not of my ranks!"))
+				to_chat(user, span_alert("我无法命令不属我麾下之人！"))
 				revert_cast()
 				return
 		if(target == user)
-			to_chat(user, span_alert("I cannot order myself!"))
+			to_chat(user, span_alert("我无法命令我自己！"))
 			revert_cast()
 			return
 		user.say("[msg]")
@@ -321,13 +321,13 @@
 	duration = 30 SECONDS
 
 /atom/movable/screen/alert/status_effect/buff/order/onfeet
-	name = "On your feet!"
-	desc = "My officer has ordered me to my feet!"
+	name = "都给我站起来！"
+	desc = "我的长官命令我立刻起身！"
 	icon_state = "buff"
 
 /datum/status_effect/buff/order/onfeet/on_apply()
 	. = ..()
-	to_chat(owner, span_blue("My officer orders me to my feet!"))
+	to_chat(owner, span_blue("我的长官命令我立刻起身！"))
 	ADD_TRAIT(owner, TRAIT_NOPAIN, TRAIT_GENERIC)
 
 /datum/status_effect/buff/order/onfeet/on_remove()
@@ -336,8 +336,8 @@
 
 
 /obj/effect/proc_holder/spell/invoked/order/hold
-	name = "Hold!"
-	desc = "Orders your underlings to Endure. +2 Willpower and Constitution."
+	name = "顶住！"
+	desc = "命令你的下属坚守。意志与体质 +2。"
 	overlay_state = "hold"
 
 
@@ -347,40 +347,40 @@
 		var/mob/living/target = targets[1]//someone remind me to make version for desertmap classes
 		var/msg = user.mind.holdtext
 		if(!msg)
-			to_chat(user, span_alert("I must say something to give an order!"))
+			to_chat(user, span_alert("我必须先说点什么，才能下达命令！"))
 			return
 		if(user.job == "Sergeant")
 			if(!(target.job in list("Man at Arms", "Watchman", "Rookie")))
-				to_chat(user, span_alert("I cannot order one not of my ranks!"))
+				to_chat(user, span_alert("我无法命令不属我麾下之人！"))
 				revert_cast()
 				return
 		if(user.job == "Knight Captain")
 			if(!(target.job in list("Knight", "Squire", "Man at Arms")))
-				to_chat(user, span_alert("I cannot order one not of my ranks!"))
+				to_chat(user, span_alert("我无法命令不属我军阶之人！"))
 				revert_cast()
 				return
 		if(user.job == "Watch Captain")
 			if(!(target.job in list("City Guard", "Rookie", "Watchman")))
-				to_chat(user, span_alert("I cannot order one not of my ranks!"))
+				to_chat(user, span_alert("我无法命令不属我麾下之人！"))
 				revert_cast()
 				return
 		if(user.job == "Master Warden")
 			if(!(target.job in list("Warden", "Vanguard")))
-				to_chat(user, span_alert("I cannot order one not of my ranks!"))
+				to_chat(user, span_alert("我无法命令不属我麾下之人！"))
 				revert_cast()
 				return
 		if(user.job == "Janissary Sergeant")
 			if(!(target.job in list("Janissary", "Rookie")))
-				to_chat(user, span_alert("I cannot order one not of my ranks!"))
+				to_chat(user, span_alert("我无法命令不属我麾下之人！"))
 				revert_cast()
 				return
 		if(user.job == "Azeb Agha")
 			if(!(target.job in list("Azeb")))
-				to_chat(user, span_alert("I cannot order one not of my ranks!"))
+				to_chat(user, span_alert("我无法命令不属我麾下之人！"))
 				revert_cast()
 				return
 		if(target == user)
-			to_chat(user, span_alert("I cannot order myself!"))
+			to_chat(user, span_alert("我无法命令我自己！"))
 			revert_cast()
 			return
 		user.say("[msg]")
@@ -397,19 +397,19 @@
 	duration = 1 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/order/hold
-	name = "Hold!"
-	desc = "My officer has ordered me to hold!"
+	name = "顶住！"
+	desc = "我的长官命令我坚守！"
 	icon_state = "buff"
 
 /datum/status_effect/buff/order/hold/on_apply()
 	. = ..()
-	to_chat(owner, span_blue("My officer orders me to hold!"))
+	to_chat(owner, span_blue("我的长官命令我坚守！"))
 
 #define TARGET_FILTER "target_marked"
 
 /obj/effect/proc_holder/spell/invoked/order/focustarget
-	name = "Focus target!"
-	desc = "Tells your underlings to target a vulnerable spot on the enemy. Applies Crit vulnerability on enemy and gives them -2 Fortune."
+	name = "集火目标！"
+	desc = "告诉你的下属锁定敌人的破绽。令敌人更易遭受重创，并使其幸运 -2。"
 	overlay_state = "focustarget"
 
 
@@ -419,10 +419,10 @@
 		var/mob/living/target = targets[1]
 		var/msg = user.mind.focustargettext
 		if(!msg)
-			to_chat(user, span_alert("I must say something to give an order!"))
+			to_chat(user, span_alert("我必须先说点什么，才能下达命令！"))
 			return
 		if(target == user)
-			to_chat(user, span_alert("I cannot order myself to be killed!"))
+			to_chat(user, span_alert("我不能命令别人来杀我自己！"))
 			return
 		user.say("[msg]")
 		target.apply_status_effect(/datum/status_effect/debuff/order/focustarget)
@@ -438,14 +438,14 @@
 	var/outline_colour = "#69050a"
 
 /atom/movable/screen/alert/status_effect/debuff/order/focustarget
-	name = "Targetted"
-	desc = "A officer has marked me for death!"
+	name = "已被标记"
+	desc = "一名长官已将我标为必杀目标！"
 	icon_state = "targetted"
 
 /datum/status_effect/debuff/order/focustarget/on_apply()
 	. = ..()
 	var/filter = owner.get_filter(TARGET_FILTER)
-	to_chat(owner, span_alert("I have been marked for death by a officer!"))
+	to_chat(owner, span_alert("我被一名长官标记为必杀目标了！"))
 	if (!filter)
 		owner.add_filter(TARGET_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 200, "size" = 1))
 	return TRUE
@@ -456,7 +456,7 @@
 
 
 /obj/effect/proc_holder/spell/invoked/order/focustarget
-	name = "Focus target!"
+	name = "集火目标！"
 	overlay_state = "focustarget"
 
 
@@ -464,25 +464,25 @@
 
 
 /mob/living/carbon/human/mind/proc/setorders()
-	set name = "Rehearse Orders"
-	set category = "Voice of Command"
-	mind.movemovemovetext = input("Send a message.", "Move! Move! Move!") as text|null
+	set name = "预演口令"
+	set category = "号令之声"
+	mind.movemovemovetext = input("输入一段口令。", "快！快！快！") as text|null
 	if(!mind.movemovemovetext)
-		to_chat(src, "I must rehearse something for this order...")
+		to_chat(src, "我必须先为这道命令预演一段口令……")
 		return
-	mind.holdtext = input("Send a message.", "Hold!") as text|null
+	mind.holdtext = input("输入一段口令。", "顶住！") as text|null
 	if(!mind.holdtext)
-		to_chat(src, "I must rehearse something for this order...")
+		to_chat(src, "我必须先为这道命令预演一段口令……")
 		return
-	mind.takeaimtext = input("Send a message.", "Take aim!") as text|null
+	mind.takeaimtext = input("输入一段口令。", "瞄准！") as text|null
 	if(!mind.takeaimtext)
-		to_chat(src, "I must rehearse something for this order...")
+		to_chat(src, "我必须先为这道命令预演一段口令……")
 		return
-	mind.onfeettext = input("Send a message.", "On your feet!") as text|null
+	mind.onfeettext = input("输入一段口令。", "都给我站起来！") as text|null
 	if(!mind.onfeettext)
-		to_chat(src, "I must rehearse something for this order...")
+		to_chat(src, "我必须先为这道命令预演一段口令……")
 		return
-	mind.focustargettext = input("Send a message.", "Focus Target!") as text|null
+	mind.focustargettext = input("输入一段口令。", "集火目标！") as text|null
 	if(!mind.focustargettext)
-		to_chat(src, "I must rehearse something for this order...")
+		to_chat(src, "我必须先为这道命令预演一段口令……")
 		return

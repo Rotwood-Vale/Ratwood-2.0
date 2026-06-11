@@ -100,30 +100,30 @@
 	var/fibertext
 	var/item_multiplier = isitem(src)?1.2:1
 	if(M.wear_armor)
-		fibertext = "Material from \a [M.wear_armor]."
+		fibertext = "来自\a [M.wear_armor]的材质。"
 		if(prob(10*item_multiplier) && !LAZYACCESS(fibers, fibertext))
 			LAZYSET(fibers, fibertext, fibertext)
 		if(!(M.wear_armor.body_parts_covered & CHEST))
 			if(M.wear_pants)
-				fibertext = "Fibers from \a [M.wear_pants]."
+				fibertext = "来自\a [M.wear_pants]的纤维。"
 				if(prob(12*item_multiplier) && !LAZYACCESS(fibers, fibertext)) //Wearing a suit means less of the uniform exposed.
 					LAZYSET(fibers, fibertext, fibertext)
 		if(!(M.wear_armor.body_parts_covered & HANDS))
 			if(M.gloves)
-				fibertext = "Material from a pair of [M.gloves.name]."
+				fibertext = "来自一双[M.gloves.name]的材质。"
 				if(prob(20*item_multiplier) && !LAZYACCESS(fibers, fibertext))
 					LAZYSET(fibers, fibertext, fibertext)
 	else if(M.wear_pants)
-		fibertext = "Fibers from \a [M.wear_pants]."
+		fibertext = "来自\a [M.wear_pants]的纤维。"
 		if(prob(15*item_multiplier) && !LAZYACCESS(fibers, fibertext))
 			// "Added fibertext: [fibertext]"
 			LAZYSET(fibers, fibertext, fibertext)
 		if(M.gloves)
-			fibertext = "Material from a pair of [M.gloves.name]."
+			fibertext = "来自一双[M.gloves.name]的材质。"
 			if(prob(20*item_multiplier) && !LAZYACCESS(fibers, fibertext))
 				LAZYSET(fibers, fibertext, fibertext)
 	else if(M.gloves)
-		fibertext = "Material from a pair of [M.gloves.name]."
+		fibertext = "来自一双[M.gloves.name]的材质。"
 		if(prob(20*item_multiplier) && !LAZYACCESS(fibers, fibertext))
 			LAZYSET(fibers, fibertext, fibertext)
 	return TRUE
@@ -149,12 +149,12 @@
 			hasgloves = "(gloves)"
 	var/current_time = time_stamp()
 	if(!LAZYACCESS(hiddenprints, M.key))
-		LAZYSET(hiddenprints, M.key, "First: [M.real_name]\[[current_time]\][hasgloves]. Ckey: [M.ckey]")
+		LAZYSET(hiddenprints, M.key, "首次： [M.real_name]\[[current_time]\][hasgloves]。Ckey： [M.ckey]")
 	else
-		var/laststamppos = findtext(LAZYACCESS(hiddenprints, M.key), " Last: ")
+		var/laststamppos = findtext(LAZYACCESS(hiddenprints, M.key), " 末次： ")
 		if(laststamppos)
 			LAZYSET(hiddenprints, M.key, copytext(hiddenprints[M.key], 1, laststamppos))
-		hiddenprints[M.key] += " Last: [M.real_name]\[[current_time]\][hasgloves]. Ckey: [M.ckey]"	//made sure to be existing by if(!LAZYACCESS);else
+		hiddenprints[M.key] += " 末次： [M.real_name]\[[current_time]\][hasgloves]。Ckey： [M.ckey]"	//made sure to be existing by if(!LAZYACCESS);else
 	var/atom/A = parent
 	A.fingerprintslast = M.ckey
 	return TRUE

@@ -1,6 +1,6 @@
 /datum/advclass/wretch/vigilante
-	name = "Masked Lunatic"
-	tutorial = "You were a disenfranchised pauper, sickened by the rampant corruption of the garrison - or perhaps, just a crazed vagrant in a costume? Whether those brutalized 'thieves' were justified in their acts is up to YOU to decide, not them! You specialize in utilizing your various gadgets and thrown projectiles to dote out JUSTICE, however you see it fit."
+	name = "蒙面狂徒"
+	tutorial = "你曾是被剥夺一切的穷鬼，对驻军横行的腐败深恶痛绝，又或者，你不过是个披着戏装发疯的流浪汉？那些被你修理过的“贼人”是否真该受罚，由你来决定，不是他们！你擅长利用各种小道具与投掷兵器，按自己的方式施行正义。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/wretch/vigilante
@@ -9,7 +9,7 @@
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_DECEIVING_MEEKNESS, TRAIT_PERFECT_TRACKER)
 	maximum_possible_slots = 1 // There can only be one.
-	extra_context = "This class is best experienced without preparation."
+	extra_context = "这个职业最好在毫无准备的情况下亲自体验。"
 	subclass_skills = list(
 		/datum/skill/misc/swimming = SKILL_LEVEL_EXPERT, //To make a clean getaway from the constables
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT, // RUN BOY RUN
@@ -39,16 +39,16 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
 	if(H.mind)
-		var/classes = list("The Watchman", "The Gadgeteer", "I AM JUSTICE INCARNATE!!!")
-		var/classchoice = input(H, "Choose your archetypes", "Available archetypes") as anything in classes
+		var/classes = list("守望者", "机关客", "我即正义化身！！！")
+		var/classchoice = input(H, "选择你的原型。", "可选原型") as anything in classes
 		switch(classchoice)
-			if("The Watchman") //Face-to-face CQC. No crit resist. Pure aura. Rorschach.
+			if("守望者") //Face-to-face CQC. No crit resist. Pure aura. Rorschach.
 				H.set_blindness(0)
 				watchman_equip(H)
-			if("The Gadgeteer") //Make gadgets, be precise and smart. Think ahead before you start swinging. Nite Owl.
+			if("机关客") //Make gadgets, be precise and smart. Think ahead before you start swinging. Nite Owl.
 				H.set_blindness(0)
 				owl_equip(H)
-			if("I AM JUSTICE INCARNATE!!!") //THROW SHIT AT PEOPLE. RANDOM BULLSHIT GO!!!! MOON KNIGHT.
+			if("我即正义化身！！！") //THROW SHIT AT PEOPLE. RANDOM BULLSHIT GO!!!! MOON KNIGHT.
 				H.set_blindness(0)
 				bullshit_equip(H)
 

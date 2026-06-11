@@ -1,6 +1,6 @@
 /obj/item/storage/roguebag
-	name = "sack"
-	desc = "A sack of rough cloth meant for peasantry."
+	name = "麻袋"
+	desc = "一个粗布缝制的袋子，为平民百姓所用。"
 	icon_state = "cbag"
 	item_state = "cbag"
 	icon = 'icons/roguetown/items/misc.dmi'
@@ -18,7 +18,7 @@
 /obj/item/storage/roguebag/examine(mob/user)
 	. = ..()
 	if(contents.len)
-		. += span_notice("[contents.len] thing[contents.len > 1 ? "s" : ""] in the sack.")
+		. += span_notice("麻袋里有 [contents.len] 件东西。")
 
 /obj/item/storage/roguebag/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
@@ -141,8 +141,8 @@
 		/obj/item/rogueweapon/surgery/cautery/branding/crude
 	)
 /obj/item/storage/roguebag/gambling_kit_bundle
-	name = "gambling kit bundle"
-	desc = "A stuffed sack containing gaming essentials for a full table night."
+	name = "赌博套装包"
+	desc = "一个塞得满满的布袋，装着能让整桌人玩上一晚的赌具。"
 	populate_contents = list(
 		/obj/item/storage/pill_bottle/dice,
 		/obj/item/storage/pill_bottle/dice/farkle,

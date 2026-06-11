@@ -28,13 +28,13 @@
 	wind = 2
 
 /datum/particle_weather/heat_wave
-	name = "Heatwave"
-	desc = "The air ripples with brutal, suffocating heat."
+	name = "热浪"
+	desc = "空气因残酷而令人窒息的高温扭曲起伏。"
 
 	particleEffectType = /particles/weather/heat
 
-	warning_message = span_greenannounce("A brutal heatwave rolls across the realm, warping the very air.")
-	late_warning_message = span_greenannounce("The air becomes stifling and unbearably still.")
+	warning_message = span_greenannounce("一阵残酷的热浪横扫大地，连空气本身都被炙烤得扭曲起来。")
+	late_warning_message = span_greenannounce("空气变得闷得令人窒息，沉寂得难以忍受。")
 	scale_vol_with_severity = TRUE
 
 	weather_sounds = list(/datum/looping_sound/sandstorm)
@@ -99,7 +99,7 @@
 
 	COOLDOWN_START(src, heat_ripple_spawn, rand(2,6) SECONDS)
 /obj/effect/temp_visual/heat_ripple
-	name = "heat shimmer"
+	name = "热浪幻景"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "heatwave"
 

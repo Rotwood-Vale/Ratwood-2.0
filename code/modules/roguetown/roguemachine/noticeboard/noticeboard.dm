@@ -1,6 +1,6 @@
 /obj/structure/roguemachine/noticeboard
-	name = "Notice Board"
-	desc = "A large wooden notice board, carrying postings from all across the realm. A ZAD perch sits atop it."
+	name = "告示板"
+	desc = "一块巨大的木制告示板，上面贴满了来自整个王国的告示。顶部还设有一只 ZAD告示台 的栖架。"
 	icon = 'icons/roguetown/misc/64x64.dmi'
 	icon_state = "noticeboard0"
 	density = TRUE
@@ -32,7 +32,7 @@
 		return
 	else
 		GLOB.board_viewers += user
-		to_chat(user, span_smallred("A new posting has been made since I last checked!"))
+		to_chat(user, span_smallred("自我上次查看后，又新增了一张告示！"))
 
 /obj/structure/roguemachine/noticeboard/update_icon()
 	. = ..()
@@ -78,7 +78,7 @@
 	if(user.job in list("Bathmaster","Merchant", "Innkeeper", "Steward", "Court Magician", "Town Crier", "Keeper"))
 		can_premium = TRUE
 	var/contents
-	contents += "<center>NOTICEBOARD<BR>"
+	contents += "<center>告示板<BR>"
 	contents += "--------------<BR>"
 	var/selection = "Categories: "
 	for(var/i = 1, i <= length(categories), i++)
@@ -91,14 +91,14 @@
 			selection += "<a href='?src=[REF(src)];changecategory=[category]'>[category]</a> "
 	contents += selection + "<BR>"
 	if(current_category in list("Postings", "Premium Postings"))
-		contents += "<a href='?src=[REF(src)];makepost=1'>Make a Posting</a>"
+		contents += "<a href='?src=[REF(src)];makepost=1'>发布告示</a>"
 		if(can_premium)
-			contents += " | <a href='?src=[REF(src)];premiumpost=1'>Make a Premium Posting</a><br>"
+			contents += " | <a href='?src=[REF(src)];premiumpost=1'>发布高级告示</a><br>"
 		else
 			contents += "<br>"
-		contents += "<a href='?src=[REF(src)];removepost=1'>Remove my Posting</a><br>"
+		contents += "<a href='?src=[REF(src)];removepost=1'>移除我的告示</a><br>"
 		if(can_remove)
-			contents += "<a href='?src=[REF(src)];authorityremovepost=1'>Authority: Remove a Posting</a>"
+			contents += "<a href='?src=[REF(src)];authorityremovepost=1'>权限：移除告示</a>"
 		var/board_empty = TRUE
 		switch(current_category)
 			if("Postings")
@@ -110,66 +110,66 @@
 					contents += saved_post.banner
 					board_empty = FALSE
 		if(board_empty)
-			contents += "<br><span class='notice'>No postings have been made yet!</span>"
+			contents += "<br><span class='notice'>目前还没有任何告示！</span>"
 	else if(current_category == "Scout Report")
 		var/list/regional_threats = SSregionthreat.get_threat_regions_for_display()
-		contents += "<h2>Scout Report</h2>"
+		contents += "<h2>侦察报告</h2>"
 		contents += "<hr></center>"
 		for(var/T in regional_threats)
 			var/datum/threat_region_display/TRS = T
 			contents += ("<div>[TRS?.region_name]: <font color=[TRS?.danger_color]>[TRS?.danger_level]</font></div>")
 		contents += "<hr>"
-		contents += "Scouts rate how dangerous a region is from Safe -> Low -> Moderate -> Dangerous -> Bleak <br>"
-		contents += "A safe region is safe and travelers are unlikely to be ambushed by common creechurs and brigands <br>"
-		contents += "A low threat region is unlikely to manifest any great threat and brigands and creechurs are often found alone.<br>"
-		contents += "Only certain locations can be rendered safe entirely. <br>"
-		contents += "Regions not listed are beyond the charge of the wardens. Danger will be constant in these regions.<br>"
-		contents += "Danger is reduced by luring villains and creechurs and killing them when they ambush you. The signal horns wardens have been issued can help with this. Take care with using it."
+		contents += "侦察兵将地区危险度划分为：安全 -> 低危 -> 中等 -> 危险 -> 绝望 <br>"
+		contents += "安全地区整体安稳，旅者通常不会遭到常见怪物或强盗伏击。<br>"
+		contents += "低威胁地区通常不会出现重大威胁，强盗和怪物也多半是零散出没。<br>"
+		contents += "只有 Vale Basin、Vale Grove 和 Terrorbog 能被彻底清剿为安全区域。<br>"
+		contents += "未列出的地区不在守望者的管辖范围内，那些地方将长期充满危险。<br>"
+		contents += "通过引诱恶徒与怪物在伏击时现身并将其击杀，可以降低地区危险度。守望者配发的信号号角有助于此事，但使用时务必谨慎。"
 	var/datum/browser/popup = new(user, "NOTICEBOARD", "", 800, 650)
 	popup.set_content(contents)
 	popup.open()
 
 /obj/structure/roguemachine/noticeboard/proc/premium_post(mob/living/carbon/human/guy)
 	if(guy.has_status_effect(/datum/status_effect/debuff/postcooldown))
-		to_chat(guy, span_warning("I must wait a time until my next posting..."))
+		to_chat(guy, span_warning("我得再等一会儿才能发布下一张告示……"))
 		return
-	var/inputtitle = input(guy, "What shall the title of my posting be?", "NOTICEBOARD", null)
+	var/inputtitle = input(guy, "我的告示标题该写什么？", "NOTICEBOARD", null)
 	if(!inputtitle)
 		return
-	var/inputmessage = stripped_multiline_input(guy, "What shall I write for this posting?", "NOTICEBOARD", no_trim=TRUE)
+	var/inputmessage = stripped_multiline_input(guy, "这张告示我要写些什么？", "NOTICEBOARD", no_trim=TRUE)
 	if(inputmessage)
 		if(length(inputmessage) > 2000)
-			to_chat(guy, span_warning("Too long! You shall surely overburden the with this novel!"))
+			to_chat(guy, span_warning("太长了！你这是要让它驮着整本小说跑腿吗！"))
 			return
 	else
 		return
-	var/inputname = input(guy, "What name shall I use on the posting?", "NOTICEBOARD", null)
+	var/inputname = input(guy, "我要在告示上署什么名字？", "NOTICEBOARD", null)
 	if(!inputname)
 		return
-	var/inputrole = input(guy, "What personal title shall I use on the posting?", "NOTICEBOARD", null)
+	var/inputrole = input(guy, "我要在告示上使用什么头衔？", "NOTICEBOARD", null)
 	add_post(inputmessage, inputtitle, inputname, inputrole, guy.real_name, TRUE)
 	guy.apply_status_effect(/datum/status_effect/debuff/postcooldown)
 	message_admins("[ADMIN_LOOKUPFLW(guy)] has made a notice board post. The message was: [inputmessage]")
 	for(var/obj/structure/roguemachine/noticeboard/board in SSroguemachine.noticeboards)
 		if(board != src)
 			playsound(board, 'sound/ambience/noises/birds (7).ogg', 50, FALSE, -1)
-			board.visible_message(span_smallred("A ZAD lands, delivering a new posting!"))
+			board.visible_message(span_smallred("一只 ZAD告示台 落下，送来了一张新告示！"))
 			board.update_icon()
 
 /obj/structure/roguemachine/noticeboard/proc/make_post(mob/living/carbon/human/guy)
 	if(guy.has_status_effect(/datum/status_effect/debuff/postcooldown))
-		to_chat(guy, span_warning("I must wait a time until my next posting..."))
+		to_chat(guy, span_warning("我得再等一会儿才能发布下一张告示……"))
 		return
 	var/inputtitle = stripped_input(guy, "What shall the title of my posting be?", "NOTICEBOARD", null)
 	if(!inputtitle)
 		return
 	if(length(inputtitle) > 50)
-		to_chat(guy, span_warning("Too long! You shall surely overburden the zad with this novel!"))
+		to_chat(guy, span_warning("太长了！你这是要让那只 ZAD告示台 驮着小说跑腿吗！"))
 		return
 	var/inputmessage = stripped_multiline_input(guy, "What shall I write for this posting?", "NOTICEBOARD", no_trim=TRUE)
 	if(inputmessage)
 		if(length(inputmessage) > 2000)
-			to_chat(guy, span_warning("Too long! You shall surely overburden the zad with this novel!"))
+			to_chat(guy, span_warning("太长了！你这是要让那只 ZAD告示台 驮着小说跑腿吗！"))
 			return
 	else
 		return
@@ -177,11 +177,11 @@
 	if(!inputname)
 		return
 	if(length(inputname) > 50)
-		to_chat(guy, span_warning("Too long! You shall surely overburden the zad with this novel!"))
+		to_chat(guy, span_warning("太长了！你这是要让那只 ZAD告示台 驮着小说跑腿吗！"))
 		return
 	var/inputrole = stripped_input(guy, "What personal title shall I use on the posting?", "NOTICEBOARD", null)
 	if(length(inputrole) > 50)
-		to_chat(guy, span_warning("Too long! You shall surely overburden the zad with this novel!"))
+		to_chat(guy, span_warning("太长了！你这是要让那只 ZAD告示台 驮着小说跑腿吗！"))
 		return
 	add_post(inputmessage, inputtitle, inputname, inputrole, guy.real_name, FALSE)
 	guy.apply_status_effect(/datum/status_effect/debuff/postcooldown)
@@ -190,7 +190,7 @@
 		board.update_icon()
 		if(board != src)
 			playsound(board, 'sound/ambience/noises/birds (7).ogg', 50, FALSE, -1)
-			board.visible_message(span_smallred("A ZAD lands, delivering a new posting!"))
+			board.visible_message(span_smallred("一只 ZAD告示台 落下，送来了一张新告示！"))
 
 /obj/structure/roguemachine/noticeboard/proc/remove_post(mob/living/carbon/human/guy)
 	var/list/myposts_list = list()
@@ -201,13 +201,13 @@
 		if(removable_postspremium.truepostername == guy.real_name)
 			myposts_list += removable_postspremium.title
 	if(!myposts_list.len)
-		to_chat(guy, span_warning("There are no posts I can take down."))
+		to_chat(guy, span_warning("没有我能拆下的告示。"))
 		return
-	var/post2remove = input(guy, "Which post shall I take down?", src) as null|anything in myposts_list
+	var/post2remove = input(guy, "我要拆下哪一张告示？", src) as null|anything in myposts_list
 	if(!post2remove)
 		return
 	playsound(loc, 'sound/foley/dropsound/paper_drop.ogg', 50, FALSE, -1)
-	loc.visible_message(span_smallred("[guy] tears down a posting!"))
+	loc.visible_message(span_smallred("[guy]撕下了一张告示！"))
 	for(var/datum/noticeboardpost/removing_post in GLOB.noticeboard_posts)
 		if(post2remove == removing_post.title && removing_post.truepostername == guy.real_name)
 			GLOB.noticeboard_posts -= removing_post
@@ -220,14 +220,14 @@
 		board.update_icon()
 		if(board != src)
 			playsound(board, 'sound/ambience/noises/birds (7).ogg', 50, FALSE, -1)
-			board.visible_message(span_smallred("A ZAD lands, removing an old posting!"))
+			board.visible_message(span_smallred("一只 ZAD告示台 落下，撤走了一张旧告示！"))
 
 /obj/structure/roguemachine/noticeboard/proc/authority_removepost(mob/living/carbon/human/guy)
 	var/list/posts_list = list()
 	for(var/datum/noticeboardpost/removable_posts in GLOB.noticeboard_posts)
 		posts_list += removable_posts.title
 	if(!posts_list.len)
-		to_chat(guy, span_warning("There are no posts I can take down."))
+		to_chat(guy, span_warning("没有我能拆下的告示。"))
 		return
 	var/post2remove = input(guy, "Which post shall I take down?", src) as null|anything in posts_list
 	if(!post2remove)
@@ -272,5 +272,5 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/postcooldown
 
 /atom/movable/screen/alert/status_effect/debuff/postcooldown
-	name = "Recent messenger"
-	desc = "I'll have to wait a bit before making another posting!"
+	name = "刚刚寄信"
+	desc = "我得再等一会儿才能发布下一张告示！"

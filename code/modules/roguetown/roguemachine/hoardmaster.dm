@@ -19,25 +19,25 @@
 	var/namechance = rand(1,6)
 	switch(namechance)
 		if(1)
-			name = "Hoardmaster Skyblue"
+			name = "藏宝主宰 Skyblue"
 		if(2)
-			name = "Hoardmaster Thea"
+			name = "藏宝主宰 Thea"
 		if(3)
-			name = "Hoardmaster Radagon"
+			name = "藏宝主宰 Radagon"
 		if(4)
-			name = "Hoardmaster Shiver"
+			name = "藏宝主宰 Shiver"
 		if(5)
-			name = "Hoardmaster Deathbringer"
+			name = "藏宝主宰 Deathbringer"
 		if(6)
-			name = "Hoardmaster Darkstalker"
+			name = "藏宝主宰 Darkstalker"
 
 /obj/structure/roguemachine/Hoardmaster/examine(mob/user)
 	. = ..()
 	if(user.mind?.has_antag_datum(/datum/antagonist/bandit))
-		. += "Formerly a covetous creature, this one now shares its Hoard with the Freefolk. Protecting the transactor's Hoard, and trading it for Favor."
+		. += "它曾是贪婪的生物，如今却与自由民分享自己的宝藏。它守护交易者的囤藏，并以此换取恩惠。"
 		return
 	else
-		. += "Some mean looking statue of a dragon. Something about it makes me uneasy, like its eyes are following me."
+		. += "一尊面相凶恶的龙形雕像。它让我有些不安，仿佛它的眼睛一直在盯着我。"
 		return
 
 /obj/structure/roguemachine/Hoardmaster/Topic(href, href_list)
@@ -61,7 +61,7 @@
 			B.favor -= cost
 			playsound(loc, 'sound/misc/hoardmasterpurchase.ogg', 80, FALSE, -1)
 		else
-			say("Earn your keep first!")
+			say("先挣出你的身价再来！")
 			return
 		var/shoplength = PA.contains.len
 		var/l
@@ -140,7 +140,7 @@
 
 /obj/structure/roguemachine/hoardbarrier //Blocks sprite locations
 	name = ""
-	desc = "Formerly a covetous creature, this one now shares its Hoard with the Freefolk. Protecting the transactor's Hoard, and trading it for Favor."
+	desc = "它曾是贪婪的生物，如今却与自由民分享自己的宝藏。它守护交易者的囤藏，并以此换取恩惠。"
 	icon = 'icons/roguetown/underworld/underworld.dmi'
 	icon_state = "spiritpart"
 	density = TRUE

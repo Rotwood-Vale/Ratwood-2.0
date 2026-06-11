@@ -1,5 +1,5 @@
 /datum/sex_action/masturbate_container
-	name = "Masturbate into container"
+	name = "对着容器自慰"
 	category = SEX_CATEGORY_HANDS
 	/// Self-action: signal resolver reads user_sex_part as receiver_part. Set so modular_emit_received_sex_action_signal fires correctly.
 	user_sex_part = SEX_PART_COCK | SEX_PART_CUNT
@@ -34,13 +34,13 @@
 	return FALSE
 
 /datum/sex_action/masturbate_container/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] starts masturbating over [user.get_active_held_item()]..."))
+	user.visible_message(span_warning("[user]开始对着[user.get_active_held_item()]自慰……"))
 
 /datum/sex_action/masturbate_container/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/container_name = user.get_active_held_item()
 	if(!container_name)
-		container_name = "container"
-	var/chosen_verb = pick(list("pleasures themself over \the [container_name]", "sensually massages themself over \the [container_name]", "masturbates over \the [container_name]"))
+		container_name = "容器"
+	var/chosen_verb = pick(list("对着\the [container_name]取悦着自己", "隔着\the [container_name]色情地揉弄着自己", "对着\the [container_name]自慰"))
 
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] [chosen_verb]."))
 
@@ -51,7 +51,7 @@
 	user.sexcon.handle_container_ejaculation()
 
 /datum/sex_action/masturbate_container/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] stops masturbating into the container."))
+	user.visible_message(span_warning("[user]停下了对着容器自慰的动作。"))
 
 /datum/sex_action/masturbate_container/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user.sexcon.finished_check())

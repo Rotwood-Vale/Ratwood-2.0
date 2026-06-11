@@ -16,11 +16,11 @@
 	fade = 1.5
 	fadein = 1
 /datum/particle_weather/ashstorm
-	name = "Ashstorm"
-	desc = "firey-ash from a volcano"
+	name = "灰烬风暴"
+	desc = "来自火山的炽热灰烬。"
 	particleEffectType = /particles/weather/ash
-	warning_message = span_greenannounce("A thunderious cataclysm thunders in the distance and the skies grow unnaturally dark.")
-	late_warning_message = span_greenannounce("The air grows hot and gritty. Ash begins to fall from above.")
+	warning_message = span_greenannounce("远方传来灾厄般的轰鸣，天空也变得异常昏暗。")
+	late_warning_message = span_greenannounce("空气变得灼热而粗粝，灰烬开始自上方飘落。")
 	scale_vol_with_severity = TRUE
 	weather_sounds = list(/datum/looping_sound/ash)
 	indoor_weather_sounds = list(/datum/looping_sound/indoor_ash)
@@ -42,4 +42,4 @@
 		L.adjust_bodytemperature(rand(1,3))
 	if(prob(25))
 		L.adjust_fire_stacks(1)
-		to_chat(L, span_danger("You're caught in a haze of burning, flammable ash!"))
+		to_chat(L, span_danger("我被燃烧的可燃灰烬笼罩了！"))

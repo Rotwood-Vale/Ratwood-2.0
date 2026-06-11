@@ -1,8 +1,8 @@
 /datum/brewing_recipe/cabbage
 	name = "Fireleaf"
-	category = "Other"
+	category = "其他"
 	bottle_name = "fireleaf"
-	bottle_desc = "A bottle of locally-brewed fireleaf. Brewed from cabbage, it tastes absolutely awful."
+	bottle_desc = "一瓶本地酿造的 Fireleaf。它以卷心菜酿成，味道糟得惊人。"
 	reagent_to_brew = /datum/reagent/consumable/ethanol/fireleaf
 	needed_reagents = list(/datum/reagent/water = 198)
 	needed_crops = list(/obj/item/reagent_containers/food/snacks/grown/cabbage/rogue = 6)

@@ -14,7 +14,7 @@
 
 // the standard tube light fixture
 /obj/machinery/light
-	name = "light fixture"
+	name = "灯具"
 	icon = 'icons/obj/lighting.dmi'
 	var/overlayicon = 'icons/obj/lighting_overlay.dmi'
 	var/base_state = "tube"		// base description and icon_state
@@ -326,7 +326,7 @@
 	qdel(src)
 
 /obj/machinery/light/floor
-	name = "floor light"
+	name = "地灯"
 	icon = 'icons/obj/lighting.dmi'
 	base_state = "floor"		// base description and icon_state
 	icon_state = "floor"

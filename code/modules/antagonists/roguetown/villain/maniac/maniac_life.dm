@@ -75,7 +75,7 @@
 /datum/antagonist/maniac/proc/handle_mob_hallucination(mob/living/dreamer)
 	if(!dreamer.client)
 		return
-	var/mob_message = pick("It's mom!", "I have to HURRY UP!", "They are CLOSE!","They are NEAR!")
+	var/mob_message = pick("是妈妈！", "我得快一点！", "他们很近了！","他们就在附近！")
 	var/turf/spawning_turf
 	var/list/turf/spawning_turfs = list()
 	for(var/turf/turf in view(dreamer))
@@ -85,7 +85,7 @@
 	if(!spawning_turf)
 		return
 	var/mob_state = pick("mom", "shadow", "deepone")
-	if(mob_message == "It's mom!")
+	if(mob_message == "是妈妈！")
 		mob_state = "mom"
 	var/image/mob_image = image('icons/roguetown/maniac/dreamer_mobs.dmi', spawning_turf, mob_state, FLOAT_LAYER, get_dir(spawning_turf, dreamer))
 	mob_image.plane = GAME_PLANE_UPPER
@@ -123,7 +123,7 @@
 		return
 	if(caught_dreamer)
 		dreamer.Stun(rand(2, 4) SECONDS)
-		var/pain_message = pick("NO!", "THEY GOT ME!", "AGH!")
+		var/pain_message = pick("不！", "他们抓到我了！", "啊！")
 		to_chat(dreamer, span_userdanger("[pain_message]"))
 	sleep(chase_wait)
 	if(!dreamer?.client)

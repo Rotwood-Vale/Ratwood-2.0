@@ -1,6 +1,6 @@
 /datum/advclass/wretch/outlaw
-	name = "Outlaw"
-	tutorial = "You are the person folk fear at night - use your cunning and speed to strike fast and get out with your spoils before anyone notices."
+	name = "亡命徒"
+	tutorial = "你是夜里令人闻风丧胆的家伙，用你的狡诈与速度迅速出手，在任何人察觉前带着赃物全身而退。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/wretch/outlaw
@@ -36,7 +36,7 @@
 
 /datum/outfit/job/roguetown/wretch/outlaw/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are the person folk fear at night - use your cunning and speed to strike fast and get out with your spoils before anyone notices."))
+	to_chat(H, span_warning("你是夜里令人闻风丧胆的家伙，用你的狡诈与速度迅速出手，在任何人察觉前带着赃物全身而退。"))
 	head = /obj/item/clothing/head/roguetown/helmet/kettle
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
@@ -62,26 +62,26 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
 	if(H.mind)
-		var/weapons = list("Rapier","Dagger", "Whip")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("细剑","匕首", "长鞭")
+		var/weapon_choice = input(H, "选择你的武器。", "披甲执兵") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Rapier")
+			if("细剑")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				l_hand = /obj/item/rogueweapon/sword/rapier
-			if("Dagger")
+			if("匕首")
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 				beltl = /obj/item/rogueweapon/scabbard/sheath
 				l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/special // Why were they spawning with an elven dagger in the first place??? Please LMK.
-			if ("Whip")
+			if ("长鞭")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				beltl = /obj/item/rogueweapon/whip
 		wretch_select_bounty(H)
 
 /datum/advclass/wretch/outlaw/marauder
-	name = "Marauder"
-	tutorial = "You are a brigand and a pillager - you prefer to get your coins with direct means from unfortunate victims."
+	name = "掠夺者"
+	tutorial = "你是强盗与劫掠者，更喜欢用最直接的手段从那些倒霉受害者身上榨出钱财。"
 	outfit = /datum/outfit/job/roguetown/wretch/marauder
 	cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg'
 	class_select_category = CLASS_CAT_WARRIOR
@@ -116,7 +116,7 @@
 
 /datum/outfit/job/roguetown/wretch/marauder/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are a brigand and a pillager - you prefer to get your coins with direct means from unfortunate victims."))
+	to_chat(H, span_warning("你是强盗与劫掠者，更喜欢用最直接的手段从那些倒霉受害者身上榨出钱财。"))
 	head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/iron		//iron breastplate so they need to find a way to upgrade it. Only piece of medium armor they get
@@ -138,35 +138,35 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
 	if(H.mind)
-		var/weapons = list("Just A Heater Shield","Dagger + Crossbow", "Militia Warpick + Heater Shield", "Militia Spear + Heater Shield", "Militia War-Axe", "Militia Goedendag", "Flail + Heater Shield")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("单持鸢盾","匕首加弩", "民兵战镐加鸢盾", "民兵长矛加鸢盾", "民兵战斧", "民兵古登达格棍", "链枷加鸢盾")
+		var/weapon_choice = input(H, "选择你的武器。", "披甲执兵") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Just An Iron Shield")
+			if("单持鸢盾")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				backr = /obj/item/rogueweapon/shield/iron
-			if("Dagger + Crossbow")
+			if("匕首加弩")
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 				beltl = /obj/item/rogueweapon/scabbard/sheath
 				l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				beltr = /obj/item/quiver/bolts
-			if ("Militia Warpick + Heater Shield")
+			if ("民兵战镐加鸢盾")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 				beltl = /obj/item/rogueweapon/pick/militia/steel		//this one has axe skill. Other one had MINING.
 				backr = /obj/item/rogueweapon/shield/iron
-			if ("Militia Spear + Heater Shield")
+			if ("民兵长矛加鸢盾")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 				l_hand = /obj/item/rogueweapon/spear/militia
 				backr = /obj/item/rogueweapon/shield/heater
-			if ("Militia War-Axe")
+			if ("民兵战斧")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 				l_hand = /obj/item/rogueweapon/greataxe/militia
-			if ("Militia Goedendag")
+			if ("民兵古登达格棍")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 				l_hand = /obj/item/rogueweapon/woodstaff/militia
-			if ("Flail + Heater Shield")
+			if ("链枷加鸢盾")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				l_hand = /obj/item/rogueweapon/flail/sflail
 				backr = /obj/item/rogueweapon/shield/heater

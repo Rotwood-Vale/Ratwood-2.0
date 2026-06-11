@@ -1,5 +1,5 @@
 /datum/wound/bite
-	name = "bite"
+	name = "咬伤"
 	bleed_rate = 0.5
 	sewn_bleed_rate = 0
 	clotting_threshold = null
@@ -13,11 +13,11 @@
 	passive_healing = 0.5
 
 /datum/wound/bite/small
-	name = "nip"
+	name = "轻咬伤"
 	whp = 15
 
 /datum/wound/bite/large
-	name = "gnarly bite"
+	name = "凶狠咬伤"
 	whp = 40
 	sewn_whp = 15
 	bleed_rate = 1
@@ -33,7 +33,7 @@
 	passive_healing = 0
 
 /datum/wound/dynamic/bite
-	name = "bite"
+	name = "咬伤"
 	bleed_rate = 0.5
 	sewn_bleed_rate = 0
 	clotting_threshold = null
@@ -46,11 +46,11 @@
 	can_cauterize = TRUE
 	passive_healing = 0.5
 	severity_names = list(
-		"shallow" = 3,
-		"deep" = 8,
-		"gnarly" = 12,
-		"lethal" = 15,
-		"impossible" = 20,
+		"浅表" = 3,
+		"深度" = 8,
+		"严重" = 12,
+		"致命" = 15,
+		"骇人" = 20,
 	)
 
 //Bite Omniwounds

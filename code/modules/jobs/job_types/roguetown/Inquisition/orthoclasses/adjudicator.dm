@@ -2,9 +2,9 @@
 //Counting as minor nobles, as 'knights' of the See.
 //They get combination setups. The backbone of the Inquisitor's sect.
 /datum/advclass/psydoniantemplar // A templar, but for the Inquisition
-	name = "Adjudicator"
-	tutorial = "Psydonite knights, clad in fluted chainmaille and blessed with the capacity to invoke lesser miracles. \
-	In lieu of greater miracles and rituals, they compensate through martial discipline and blessed weaponry."
+	name = "裁律骑士"
+	tutorial = "你是 普赛顿 的骑士，身披纵棱锁甲，并被赐予施行低阶神迹的能力。\
+	虽然无缘更高阶的奇迹与仪式，但你以严整武艺与受祝兵装弥补了这一切。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/psydoniantemplar
@@ -35,7 +35,7 @@
 		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
 	)
 	subclass_stashed_items = list(
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+		"《Psydon 圣典》" = /obj/item/book/rogue/bibble/psy
 	)
 
 /datum/outfit/job/roguetown/psydoniantemplar
@@ -67,74 +67,74 @@
 
 /datum/outfit/job/roguetown/psydoniantemplar/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	var/helmets = list("Barbute", "Sallet", "Armet", "Bucket Helm")
-	var/helmet_choice = input(H,"Choose your HELMET.", "TAKE UP PSYDON'S HELMS.") as anything in helmets
+	var/helmets = list("巴布塔盔", "萨莱特盔", "阿米特盔", "桶盔")
+	var/helmet_choice = input(H,"选择你的头盔。", "戴上 普赛顿 的圣盔。") as anything in helmets
 	switch(helmet_choice)
-		if("Barbute")
+		if("巴布塔盔")
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psydonbarbute, SLOT_HEAD, TRUE)
-		if("Sallet")
+		if("萨莱特盔")
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psysallet, SLOT_HEAD, TRUE)
-		if("Armet")
+		if("阿米特盔")
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm, SLOT_HEAD, TRUE)
-		if("Bucket Helm")
+		if("桶盔")
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psybucket, SLOT_HEAD, TRUE)
 
-	var/armors = list("Hauberk", "Cuirass")
-	var/armor_choice = input(H, "Choose your ARMOR.", "TAKE UP PSYDON'S MANTLE.") as anything in armors
+	var/armors = list("锁子甲袍", "胸甲")
+	var/armor_choice = input(H, "选择你的护甲。", "披上 普赛顿 的圣衣。") as anything in armors
 	switch(armor_choice)
-		if("Hauberk")
+		if("锁子甲袍")
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ornate, SLOT_ARMOR, TRUE)
-		if("Cuirass")
+		if("胸甲")
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/ornate, SLOT_ARMOR, TRUE)
 
-	var/weapons = list("Psydonic Longsword + Shield", "Psydonic War Axe + Shield", "Psydonic Whip + Shield",
-		"Psydonic Flail + Shield", "Psydonic Grand Mace + Shortsword", "Psydonic Spear + Handmace", "Psydonic Poleaxe + Shortsword",
-		"Psydonic Halberd + Shortsword", "Psydonic Greatsword + Handmace")
-	var/weapon_choice = input(H,"Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
+	var/weapons = list("Psydonic 长剑 + 盾", "Psydonic 战斧 + 盾", "Psydonic 鞭 + 盾",
+		"Psydonic 连枷 + 盾", "Psydonic 大钉锤 + 短剑", "Psydonic 长矛 + 手锤", "Psydonic 长柄斧 + 短剑",
+		"Psydonic 戟 + 短剑", "Psydonic 巨剑 + 手锤")
+	var/weapon_choice = input(H,"选择你的武器。", "执起 普赛顿 的兵刃。") as anything in weapons
 	switch(weapon_choice)
 		//Typical arms and such.
-		if("Psydonic Longsword + Shield")
+		if("Psydonic 长剑 + 盾")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/long/psysword(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal, SLOT_BACK_L, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
-		if("Psydonic War Axe + Shield")
+		if("Psydonic 战斧 + 盾")
 			H.put_in_hands(new /obj/item/rogueweapon/stoneaxe/battle/psyaxe(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal, SLOT_BACK_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
-		if("Psydonic Whip + Shield")
+		if("Psydonic 鞭 + 盾")
 			H.put_in_hands(new /obj/item/rogueweapon/whip/psywhip_lesser(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal, SLOT_BACK_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
-		if("Psydonic Flail + Shield")
+		if("Psydonic 连枷 + 盾")
 			H.put_in_hands(new /obj/item/rogueweapon/flail/sflail/psyflail(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal, SLOT_BACK_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 		//Polearms and the like.
-		if("Psydonic Grand Mace + Shortsword")
+		if("Psydonic 大钉锤 + 短剑")
 			H.put_in_hands(new /obj/item/rogueweapon/mace/goden/psy(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/sword/short/psy(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
-		if("Psydonic Spear + Handmace")
+		if("Psydonic 长矛 + 手锤")
 			H.put_in_hands(new /obj/item/rogueweapon/spear/psyspear(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/mace/cudgel/psy(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
-		if("Psydonic Poleaxe + Shortsword")
+		if("Psydonic 长柄斧 + 短剑")
 			H.put_in_hands(new /obj/item/rogueweapon/greataxe/psy(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/sword/short/psy(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
-		if("Psydonic Halberd + Shortsword")
+		if("Psydonic 戟 + 短剑")
 			H.put_in_hands(new /obj/item/rogueweapon/halberd/psyhalberd(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/sword/short/psy(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
-		if("Psydonic Greatsword + Handmace")
+		if("Psydonic 巨剑 + 手锤")
 			H.put_in_hands(new /obj/item/rogueweapon/greatsword/psygsword(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/mace/cudgel/psy(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L, TRUE)

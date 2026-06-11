@@ -1,16 +1,16 @@
 /datum/antagonist/ascendant
-	name = "Ascendant"
-	roundend_category = "maniacs"
-	antagpanel_category = "LISTENER"
-	antag_memory = "<b>PSYDON IS DEAD. The Old Pantheon ARE WEAK, and the New Gods ARE FOOLISH. The WORLD IS DYING, AND I AM THE ONLY THING THAT MAY SAVE IT- COMET SYON'S BLADE BLOODY ME UNTIL IT IS DONE.</b>"
+	name = "飞升者"
+	roundend_category = "疯子"
+	antagpanel_category = "倾听者"
+	antag_memory = "<b>普赛顿 已死。旧万神殿软弱无力，而新神愚不可及。这个世界正在死去，而唯有我能拯救它 - 在此事完成之前，让 彗星西昂 的刀刃以鲜血浸透我。</b>"
 	job_rank = ROLE_ASCENDANT
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "villain"
 	confess_lines = list(
-		"Hah- ahah- ahahah! You're LIVING ON A CORPSE!!",
-		"God is coming. God is here.",
-		"I AM GOD.",
-		"THE DECK IS LINED, AND THE RIVER TURNS.",
+		"哈 - 哈哈 - 哈哈哈！你们活在一具尸体上！！",
+		"神要来了。神已在此。",
+		"我就是神。",
+		"牌局已经排定，而河流正在转向。",
 	)
 	rogue_enabled = TRUE
 	/// Traits we apply to the owner
@@ -35,7 +35,7 @@
 	. = ..()
 
 	owner.special_role = ROLE_ASCENDANT
-	owner.special_items["Ascendant"] = pick(possible_weapons)
+	owner.special_items["飞升者武器"] = pick(possible_weapons)
 	if(owner.current)
 		if(ishuman(owner.current))
 
@@ -63,4 +63,3 @@
 			SEND_SOUND(owner.current, 'sound/villain/ascendant_intro.ogg')
 			to_chat(owner.current, span_danger("[antag_memory]"))
 			owner.announce_objectives()
-

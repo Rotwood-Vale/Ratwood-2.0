@@ -1,8 +1,8 @@
 // Thieves' Guild Objective - No = assignments
 
 /datum/objective/thieves_guild_objective
-	name = "Thieves' Guild Objective"
-	explanation_text = "Complete your Thieves' Guild task."
+	name = "盗贼公会目标"
+	explanation_text = "完成我的盗贼公会任务。"
 	var/target_item_path
 	var/target_item_name
 	var/is_mammon
@@ -103,17 +103,17 @@
 		var/mob/living/target
 		target = assassinate_target
 		if(target.mind && target.mind.assigned_role)
-			return "Ensure <b>[target.real_name]</b> ([target.mind.assigned_role]) stays dead until the end of the round."
-	return "Ensure your assigned target stays dead until the end of the round."
+			return "确保 <b>[target.real_name]</b>（[target.mind.assigned_role]）在本轮结束前始终保持死亡。"
+	return "确保我被指定的目标在本轮结束前始终保持死亡。"
 
 /datum/objective/thieves_guild_objective/update_explanation_text()
 	..()
 	if(is_assassinate)
 		explanation_text = src.get_assassinate_explanation()
 	else if(is_mammon)
-		explanation_text = "Have at least <b>[mammon_amount] mammon</b> on your person at the end of the round."
+		explanation_text = "在本轮结束时，我身上至少要带有 <b>[mammon_amount] mammons</b>。"
 	else
-		explanation_text = "Steal and keep <b>[target_item_name]</b> in your possession until the end of the round."
+		explanation_text = "偷到并将 <b>[target_item_name]</b> 持有到本轮结束。"
 
 /datum/objective/thieves_guild_objective/proc/is_target_dead()
 	if(assassinate_target && istype(assassinate_target, /mob/living))
@@ -163,7 +163,7 @@
 	if(is_mammon)
 		var/total_mammon = get_mammons_in_atom(owner.current)
 		if(owner.current && owner.current.client)
-			to_chat(owner.current, "[span_notice("Mammon objective check: you have [total_mammon] mammon counted in all containers.")]")
+			to_chat(owner.current, "[span_notice("Mammon 目标检查：算上所有容器后，我共持有 [total_mammon] mammons。")]")
 		return total_mammon >= mammon_amount
 	if(target_item_path)
 		for(var/obj/item/I in get_all_mob_items(owner.current))

@@ -1,9 +1,9 @@
 /datum/language/merar
-	name = "Merar"
-	desc = "(Spoken with ,f) The desert sands the ancestors used to walk echoes through this raspy tongue that's mostly composed of murrs and mrrps with the occasional meow or hiss if one is getting quite vocal. Hailing from the desert tribes and kingdoms ruled by the swift tabaxi, this language is sharp and direct. With a keen ear you can notice the vague Gizan influence on this language."
-	speech_verb = "murrs"
-	ask_verb = "mrrps"
-	exclaim_verb = "hisses"
+	name = "梅拉尔语"
+	desc = "(用 ,f 说)祖先曾踏过的沙海回响在这门沙哑的语言之中。它多由咕噜声与短促喵鸣组成，若说话者情绪激动，偶尔也会夹杂嘶声或喵叫。它源自沙漠部族与由迅捷塔巴西统治的诸王国，语调锋利而直接。若你耳力敏锐，还能从中听出些许吉赞的影响。"
+	speech_verb = "咕噜"
+	ask_verb = "喵噜着问"
+	exclaim_verb = "嘶声喝道"
 	key = "f"
 	flags = LANGUAGE_HIDE_ICON_IF_UNDERSTOOD | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD
 	space_chance = 80

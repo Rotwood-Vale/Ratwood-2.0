@@ -2,166 +2,166 @@
 	abstract_type = /datum/crafting_recipe/roguetown/gemcarving
 	skillcraft = /datum/skill/craft/masonry
 	tools = list(/obj/item/rogueweapon/chisel)
-	category = "Gem Carving"
+	category = "宝石雕刻"
 
 /datum/crafting_recipe/roguetown/gemcarving/jadefork
-	name = "jade fork"
+	name = "玉石叉"
 	result = /obj/item/kitchen/fork/carved/jade
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/jadespoon
-	name = "jade spoon"
+	name = "玉石勺"
 	result = /obj/item/kitchen/spoon/carved/jade
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/jadecameo
-	name = "jade cameo"
+	name = "玉石浮雕饰牌"
 	result = /obj/item/carvedgem/jade/cameo
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/jadebowl
-	name = "jade bowl"
+	name = "玉石碗"
 	result = /obj/item/reagent_containers/glass/bowl/carved/jade
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/jadecup
-	name = "jade cup"
+	name = "玉石杯"
 	result = /obj/item/reagent_containers/glass/cup/carved/jade
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/jadeplatter
-	name = "jade platter"
+	name = "玉石大盘"
 	result = /obj/item/cooking/platter/carved/jade
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/jadering
-	name = "jade ring"
+	name = "玉石戒指"
 	result = /obj/item/clothing/ring/jade
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/jadeamulet
-	name = "jade amulet"
+	name = "玉石护符"
 	result = /obj/item/clothing/neck/roguetown/carved/jadeamulet
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/jadevase
-	name = "jade vase"
+	name = "玉石花瓶"
 	result = /obj/item/carvedgem/jade/vase
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/jadefigurine
-	name = "jade figurine"
+	name = "玉石小雕像"
 	result = /obj/item/carvedgem/jade/figurine
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/jade/fish
-	name = "jade fish figurine"
+	name = "玉石鱼形小雕像"
 	result = /obj/item/carvedgem/jade/fish
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/jade/tablet
-	name = "jade tablet"
+	name = "玉石碑板"
 	result = /obj/item/carvedgem/jade/tablet
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/jade/teapot
-	name = "jade teapot"
+	name = "玉石茶壶"
 	result = /obj/item/reagent_containers/glass/bucket/pot/carved/teapotjade
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/jade/bust
-	name = "jade bust"
+	name = "玉石胸像"
 	result = /obj/item/carvedgem/jade/bust
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/jade/fancyvase
-	name = "fancy jade vase"
+	name = "精致玉石花瓶"
 	result = /obj/item/carvedgem/jade/fancyvase
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/jade/comb
-	name = "jade comb"
+	name = "玉石梳子"
 	result = /obj/item/carvedgem/jade/comb
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/jade/duck
-	name = "jade duck"
+	name = "玉石鸭子摆件"
 	result = /obj/item/carvedgem/jade/duck
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/jade/bracelet
-	name = "jade bracelets"
+	name = "玉石手镯"
 	result = /obj/item/clothing/wrists/roguetown/gem/jadebracelet
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/jade/circlet
-	name = "jade circlet"
+	name = "玉石头环"
 	result = /obj/item/clothing/head/roguetown/circlet/carvedgem/jade
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/jade/fancycup
-	name = "fancy jade cup"
+	name = "精致玉石杯"
 	result = /obj/item/reagent_containers/glass/cup/carved/jadefancy
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/jade/mask
-	name = "jade mask"
+	name = "玉石面具"
 	result = /obj/item/clothing/mask/rogue/facemask/carved/jademask
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/jade/urn
-	name = "jade urn"
+	name = "玉石骨灰瓮"
 	result = /obj/item/carvedgem/jade/urn
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/jade/statue
-	name = "jade statue"
+	name = "玉石雕像"
 	result = /obj/item/carvedgem/jade/statue
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/jade/obelisk
-	name = "jade obelisk"
+	name = "玉石方尖碑"
 	result = /obj/item/carvedgem/jade/obelisk
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/jade/wyrm
-	name = "jade wyrm"
+	name = "玉石巨龙雕像"
 	result = /obj/item/carvedgem/jade/wyrm
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_MASTER
 
 /datum/crafting_recipe/roguetown/gemcarving/jade/kukri
-	name = "jade kukri"
+	name = "玉石廓尔喀弯刀"
 	result = /obj/item/rogueweapon/huntingknife/stoneknife/kukri
 	reqs = list(/obj/item/roguegem/jade = 1)
 	craftdiff = SKILL_LEVEL_MASTER
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/openclam
-	name = "opened clam"
+	name = "打开的蛤蜊"
 	result = list (
 		/obj/item/carvedgem/shell/openoyster,
 		/obj/item/carvedgem/rose/rawrose
@@ -170,7 +170,7 @@
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/rawshell
-	name = "clam shell (x2)"
+	name = "蛤壳（x2）"
 	result = list (
 		/obj/item/carvedgem/shell/rawshell,
 		/obj/item/carvedgem/shell/rawshell
@@ -179,1093 +179,1093 @@
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/fork
-	name = "shell fork"
+	name = "贝壳叉"
 	result = /obj/item/kitchen/fork/carved/shell
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/spoon
-	name = "shell spoon"
+	name = "贝壳勺"
 	result = /obj/item/kitchen/spoon/carved/shell
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/cameo
-	name = "shell cameo"
+	name = "贝壳浮雕饰牌"
 	result = /obj/item/carvedgem/shell/cameo
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/bowl
-	name = "shell bowl"
+	name = "贝壳碗"
 	result = /obj/item/reagent_containers/glass/bowl/carved/shell
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/cup
-	name = "shell cup"
+	name = "贝壳杯"
 	result = /obj/item/reagent_containers/glass/cup/carved/shell
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/platter
-	name = "shell platter"
+	name = "贝壳大盘"
 	result = /obj/item/cooking/platter/carved/shell
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/ring
-	name = "shell ring"
+	name = "贝壳戒指"
 	result = /obj/item/clothing/ring/shell
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/teapot
-	name = "shell teapot"
+	name = "贝壳茶壶"
 	result = /obj/item/reagent_containers/glass/bucket/pot/carved/teapotshell
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/amulet
-	name = "shell amulet"
+	name = "贝壳护符"
 	result = /obj/item/clothing/neck/roguetown/carved/shellamulet
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/figurine
-	name = "shell figurine"
+	name = "贝壳小雕像"
 	result = /obj/item/carvedgem/shell/figurine
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/tablet
-	name = "shell tablet"
+	name = "贝壳碑板"
 	result = /obj/item/carvedgem/shell/tablet
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/fish
-	name = "shell fish figurine"
+	name = "贝壳鱼形小雕像"
 	result = /obj/item/carvedgem/shell/fish
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/vase
-	name = "shell vase"
+	name = "贝壳花瓶"
 	result = /obj/item/carvedgem/shell/vase
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/bust
-	name = "shell bust"
+	name = "贝壳胸像"
 	result = /obj/item/carvedgem/shell/bust
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/circlet
-	name = "shell circlet"
+	name = "贝壳头环"
 	result = /obj/item/clothing/head/roguetown/circlet/carvedgem/shell
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/bracelet
-	name = "shell bracelets"
+	name = "贝壳手镯"
 	result = /obj/item/clothing/wrists/roguetown/gem/shellbracelet
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/fancycup
-	name = "fancy shell cup"
+	name = "精致贝壳杯"
 	result = /obj/item/reagent_containers/glass/cup/carved/shellfancy
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/fancyvase
-	name = "fancy shell vase"
+	name = "精致贝壳花瓶"
 	result = /obj/item/carvedgem/shell/fancyvase
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/comb
-	name = "shell comb"
+	name = "贝壳梳子"
 	result = /obj/item/carvedgem/shell/comb
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/duck
-	name = "shell duck"
+	name = "贝壳鸭子摆件"
 	result = /obj/item/carvedgem/shell/duck
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/mask
-	name = "shell mask"
+	name = "贝壳面具"
 	result = /obj/item/clothing/mask/rogue/facemask/carved/shellmask
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/urn
-	name = "shell urn"
+	name = "贝壳骨灰瓮"
 	result = /obj/item/carvedgem/shell/urn
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/statue
-	name = "shell statue"
+	name = "贝壳雕像"
 	result = /obj/item/carvedgem/shell/statue
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/obelisk
-	name = "shell obelisk"
+	name = "贝壳方尖碑"
 	result = /obj/item/carvedgem/shell/obelisk
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/turtle
-	name = "turtle carving"
+	name = "海龟雕刻"
 	result = /obj/item/carvedgem/shell/turtle
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_MASTER
 
 /datum/crafting_recipe/roguetown/gemcarving/shell/rungu
-	name = "shell rungu"
+	name = "贝壳隆古棍"
 	result = /obj/item/rogueweapon/mace/cudgel/shellrungu
 	reqs = list(/obj/item/carvedgem/shell/rawshell = 1)
 	craftdiff = SKILL_LEVEL_MASTER
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/spoon
-	name = "rosestone spoon"
+	name = "蔷薇石勺"
 	result = /obj/item/kitchen/spoon/carved/rose
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/fork
-	name = "rosestone fork"
+	name = "蔷薇石叉"
 	result = /obj/item/kitchen/fork/carved/rose
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/cup
-	name = "rosestone cup"
+	name = "蔷薇石杯"
 	result = /obj/item/reagent_containers/glass/cup/carved/rose
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/bowl
-	name = "rosestone bowl"
+	name = "蔷薇石碗"
 	result = /obj/item/reagent_containers/glass/bowl/carved/rose
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/cameo
-	name = "rosestone cameo"
+	name = "蔷薇石浮雕饰牌"
 	result = /obj/item/carvedgem/rose/cameo
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/figurine
-	name = "rosestone figurine"
+	name = "蔷薇石小雕像"
 	result = /obj/item/carvedgem/rose/figurine
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/fish
-	name = "rosestone fish figurine"
+	name = "蔷薇石鱼形小雕像"
 	result = /obj/item/carvedgem/rose/fish
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/vase
-	name = "rosestone vase"
+	name = "蔷薇石花瓶"
 	result = /obj/item/carvedgem/rose/vase
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/tablet
-	name = "rosestone tablet"
+	name = "蔷薇石碑板"
 	result = /obj/item/carvedgem/rose/tablet
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/teapot
-	name = "rosestone teapot"
+	name = "蔷薇石茶壶"
 	result = /obj/item/reagent_containers/glass/bucket/pot/carved/teapotrose
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/ring
-	name = "rosestone ring"
+	name = "蔷薇石戒指"
 	result = /obj/item/clothing/ring/rose
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/amulet
-	name = "rosestone amulet"
+	name = "蔷薇石护符"
 	result = /obj/item/clothing/neck/roguetown/carved/roseamulet
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/platter
-	name = "rosestone platter"
+	name = "蔷薇石大盘"
 	result = /obj/item/cooking/platter/carved/rose
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/bust
-	name = "rosestone bust"
+	name = "蔷薇石胸像"
 	result = /obj/item/carvedgem/rose/bust
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/fancyvase
-	name = "fancy rosestone vase"
+	name = "精致蔷薇石花瓶"
 	result = /obj/item/carvedgem/rose/fancyvase
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/comb
-	name = "rosestone comb"
+	name = "蔷薇石梳子"
 	result = /obj/item/carvedgem/rose/comb
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/duck
-	name = "rosestone duck"
+	name = "蔷薇石鸭子摆件"
 	result = /obj/item/carvedgem/rose/duck
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/bracelet
-	name = "rosestone bracelets"
+	name = "蔷薇石手镯"
 	result = /obj/item/clothing/wrists/roguetown/gem/rosebracelet
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/circlet
-	name = "rosestone circlet"
+	name = "蔷薇石头环"
 	result = /obj/item/clothing/head/roguetown/circlet/carvedgem/rose
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/fancycup
-	name = "fancy rosestone cup"
+	name = "精致蔷薇石杯"
 	result = /obj/item/reagent_containers/glass/cup/carved/rosefancy
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/urn
-	name = "rosestone urn"
+	name = "蔷薇石骨灰瓮"
 	result = /obj/item/carvedgem/rose/urn
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/statue
-	name = "rosestone statue"
+	name = "蔷薇石雕像"
 	result = /obj/item/carvedgem/rose/statue
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/obelisk
-	name = "rosestone obelisk"
+	name = "蔷薇石方尖碑"
 	result = /obj/item/carvedgem/rose/obelisk
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/mask
-	name = "rosestone mask"
+	name = "蔷薇石面具"
 	result = /obj/item/clothing/mask/rogue/facemask/carved/rosemask
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/flower
-	name = "rosestone flower carving"
+	name = "蔷薇石花卉雕刻"
 	result = /obj/item/carvedgem/rose/flower
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_MASTER
 
 /datum/crafting_recipe/roguetown/gemcarving/rose/carp
-	name = "rosestone carp statue"
+	name = "蔷薇石鲤鱼雕像"
 	result = /obj/item/carvedgem/rose/carp
 	reqs = list(/obj/item/carvedgem/rose/rawrose = 1)
 	craftdiff = SKILL_LEVEL_MASTER
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/fork
-	name = "onyxa fork"
+	name = "缟玛瑙叉"
 	result = /obj/item/kitchen/fork/carved/onyxa
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/spoon
-	name = "onyxa spoon"
+	name = "缟玛瑙勺"
 	result = /obj/item/kitchen/spoon/carved/onyxa
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/cameo
-	name = "onyxa cameo"
+	name = "缟玛瑙浮雕饰牌"
 	result = /obj/item/carvedgem/onyxa/cameo
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/cup
-	name = "onyxa cup"
+	name = "缟玛瑙杯"
 	result = /obj/item/reagent_containers/glass/cup/carved/onyxa
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/bowl
-	name = "onyxa bowl"
+	name = "缟玛瑙碗"
 	result = /obj/item/reagent_containers/glass/bowl/carved/onyxa
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/figurine
-	name = "onyxa figurine"
+	name = "缟玛瑙小雕像"
 	result = /obj/item/carvedgem/onyxa/figurine
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/fish
-	name = "onyxa fish figurine"
+	name = "缟玛瑙鱼形小雕像"
 	result = /obj/item/carvedgem/onyxa/fish
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/vase
-	name = "onyxa vase"
+	name = "缟玛瑙花瓶"
 	result = /obj/item/carvedgem/onyxa/vase
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/tablet
-	name = "onyxa tablet"
+	name = "缟玛瑙碑板"
 	result = /obj/item/carvedgem/onyxa/tablet
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/teapot
-	name = "onyxa teapot"
+	name = "缟玛瑙茶壶"
 	result = /obj/item/reagent_containers/glass/bucket/pot/carved/teapotonyxa
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/ring
-	name = "onyxa ring"
+	name = "缟玛瑙戒指"
 	result = /obj/item/clothing/ring/onyxa
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/amulet
-	name = "onyxa amulet"
+	name = "缟玛瑙护符"
 	result = /obj/item/clothing/neck/roguetown/carved/onyxaamulet
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/platter
-	name = "onyxa platter"
+	name = "缟玛瑙大盘"
 	result = /obj/item/cooking/platter/carved/onyxa
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/bust
-	name = "onyxa bust"
+	name = "缟玛瑙胸像"
 	result = /obj/item/carvedgem/onyxa/bust
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/fancyvase
-	name = "fancy onyxa vase"
+	name = "精致缟玛瑙花瓶"
 	result = /obj/item/carvedgem/onyxa/fancyvase
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/comb
-	name = "onyxa comb"
+	name = "缟玛瑙梳子"
 	result = /obj/item/carvedgem/onyxa/comb
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/duck
-	name = "onyxa duck"
+	name = "缟玛瑙鸭子摆件"
 	result = /obj/item/carvedgem/onyxa/duck
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/fancycup
-	name = "fancy onyxa cup"
+	name = "精致缟玛瑙杯"
 	result = /obj/item/reagent_containers/glass/cup/carved/onyxafancy
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/bracelet
-	name = "onyxa bracelets"
+	name = "缟玛瑙手镯"
 	result = /obj/item/clothing/wrists/roguetown/gem/onyxabracelet
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/circlet
-	name = "onyxa circlet"
+	name = "缟玛瑙头环"
 	result = /obj/item/clothing/head/roguetown/circlet/carvedgem/onyxa
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/mask
-	name = "onyxa mask"
+	name = "缟玛瑙面具"
 	result = /obj/item/clothing/mask/rogue/facemask/carved/onyxamask
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/urn
-	name = "onyxa urn"
+	name = "缟玛瑙骨灰瓮"
 	result = /obj/item/carvedgem/onyxa/urn
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/statue
-	name = "onyxa statue"
+	name = "缟玛瑙雕像"
 	result = /obj/item/carvedgem/onyxa/statue
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/obelisk
-	name = "onyxa obelisk"
+	name = "缟玛瑙方尖碑"
 	result = /obj/item/carvedgem/onyxa/obelisk
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/urn
-	name = "onyxa urn"
+	name = "onyxa 骨灰瓮"
 	result = /obj/item/carvedgem/onyxa/urn
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/spider
-	name = "onyxa spider statue"
+	name = "缟玛瑙蜘蛛雕像"
 	result = /obj/item/carvedgem/onyxa/spider
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_MASTER
 
 /datum/crafting_recipe/roguetown/gemcarving/onyxa/snake
-	name = "onyxa snake statue"
+	name = "缟玛瑙蛇雕像"
 	result = /obj/item/carvedgem/onyxa/snake
 	reqs = list(/obj/item/roguegem/onyxa = 1)
 	craftdiff = SKILL_LEVEL_MASTER
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/fork
-	name = "cerulite fork"
+	name = "天青石叉"
 	result = /obj/item/kitchen/fork/carved/turq
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/spoon
-	name = "cerulite spoon"
+	name = "天青石勺"
 	result = /obj/item/kitchen/spoon/carved/turq
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/cameo
-	name = "cerulite cameo"
+	name = "天青石浮雕饰牌"
 	result = /obj/item/carvedgem/turq/cameo
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/bowl
-	name = "cerulite bowl"
+	name = "天青石碗"
 	result = /obj/item/reagent_containers/glass/bowl/carved/turq
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/cup
-	name = "cerulite cup"
+	name = "天青石杯"
 	result = /obj/item/reagent_containers/glass/cup/carved/turq
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/figurine
-	name = "cerulite figurine"
+	name = "天青石小雕像"
 	result = /obj/item/carvedgem/turq/figurine
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/fish
-	name = "cerulite fish figurine"
+	name = "天青石鱼形小雕像"
 	result = /obj/item/carvedgem/turq/fish
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/vase
-	name = "cerulite vase"
+	name = "天青石花瓶"
 	result = /obj/item/carvedgem/turq/vase
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/amulet
-	name = "cerulite amulet"
+	name = "天青石护符"
 	result = /obj/item/clothing/neck/roguetown/carved/turqamulet
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/tablet
-	name = "cerulite tablet"
+	name = "天青石碑板"
 	result = /obj/item/carvedgem/turq/tablet
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/ring
-	name = "cerulite ring"
+	name = "天青石戒指"
 	result = /obj/item/clothing/ring/turq
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/platter
-	name = "cerulite platter"
+	name = "天青石大盘"
 	result = /obj/item/cooking/platter/carved/turq
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/bracelet
-	name = "cerulite bracelets"
+	name = "天青石手镯"
 	result = /obj/item/clothing/wrists/roguetown/gem/turqbracelet
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/circlet
-	name = "cerulite circlet"
+	name = "天青石头环"
 	result = /obj/item/clothing/head/roguetown/circlet/carvedgem/turq
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/fancycup
-	name = "fancy cerulite cup"
+	name = "精致天青石杯"
 	result = /obj/item/reagent_containers/glass/cup/carved/turqfancy
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/fancyvase
-	name = "fancy cerulite vase"
+	name = "精致天青石花瓶"
 	result = /obj/item/carvedgem/turq/fancyvase
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/bust
-	name = "cerulite bust"
+	name = "天青石胸像"
 	result = /obj/item/carvedgem/turq/bust
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/comb
-	name = "cerulite comb"
+	name = "天青石梳子"
 	result = /obj/item/carvedgem/turq/comb
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/duck
-	name = "cerulite duck"
+	name = "天青石鸭子摆件"
 	result = /obj/item/carvedgem/turq/duck
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/urn
-	name = "cerulite urn"
+	name = "天青石骨灰瓮"
 	result = /obj/item/carvedgem/turq/urn
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/statue
-	name = "cerulite statue"
+	name = "天青石雕像"
 	result = /obj/item/carvedgem/turq/statue
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/obelisk
-	name = "cerulite obelisk"
+	name = "天青石方尖碑"
 	result = /obj/item/carvedgem/turq/obelisk
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/mask
-	name = "cerulite mask"
+	name = "天青石面具"
 	result = /obj/item/clothing/mask/rogue/facemask/carved/turqmask
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/ka
-	name = "cerulite ka statue"
+	name = "天青石卡像"
 	result = /obj/item/carvedgem/turq/ka
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_MASTER
 
 /datum/crafting_recipe/roguetown/gemcarving/turq/scarab
-	name = "cerulite scarab"
+	name = "天青石圣甲虫"
 	result = /obj/item/carvedgem/turq/scarab
 	reqs = list(/obj/item/roguegem/turq = 1)
 	craftdiff = SKILL_LEVEL_MASTER
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/fork
-	name = "heartstone fork"
+	name = "心石叉"
 	result = /obj/item/kitchen/fork/carved/coral
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/spoon
-	name = "heartstone spoon"
+	name = "心石勺"
 	result = /obj/item/kitchen/spoon/carved/coral
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/cameo
-	name = "heartstone cameo"
+	name = "心石浮雕饰牌"
 	result = /obj/item/carvedgem/coral/cameo
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/cup
-	name = "heartstone cup"
+	name = "心石杯"
 	result = /obj/item/reagent_containers/glass/cup/carved/coral
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/bowl
-	name = "heartstone bowl"
+	name = "心石碗"
 	result = /obj/item/reagent_containers/glass/bowl/carved/coral
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/figurine
-	name = "heartstone figurine"
+	name = "心石小雕像"
 	result = /obj/item/carvedgem/coral/figurine
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/fish
-	name = "heartstone fish figurine"
+	name = "心石鱼形小雕像"
 	result = /obj/item/carvedgem/coral/fish
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/vase
-	name = "heartstone vase"
+	name = "心石花瓶"
 	result = /obj/item/carvedgem/coral/vase
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/tablet
-	name = "heartstone tablet"
+	name = "心石碑板"
 	result = /obj/item/carvedgem/coral/tablet
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/teapot
-	name = "heartstone teapot"
+	name = "心石茶壶"
 	result = /obj/item/reagent_containers/glass/bucket/pot/carved/teapotcoral
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/platter
-	name = "heartstone platter"
+	name = "心石大盘"
 	result = /obj/item/cooking/platter/carved/coral
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/amulet
-	name = "heartstone amulet"
+	name = "心石护符"
 	result = /obj/item/clothing/neck/roguetown/carved/coralamulet
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/ring
-	name = "heartstone ring"
+	name = "心石戒指"
 	result = /obj/item/clothing/ring/coral
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/bust
-	name = "heartstone bust"
+	name = "心石胸像"
 	result = /obj/item/carvedgem/coral/bust
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/fancyvase
-	name = "fancy heartstone vase"
+	name = "精致心石花瓶"
 	result = /obj/item/carvedgem/coral/fancyvase
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/comb
-	name = "heartstone comb"
+	name = "心石梳子"
 	result = /obj/item/carvedgem/coral/comb
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/duck
-	name = "heartstone duck"
+	name = "心石鸭子摆件"
 	result = /obj/item/carvedgem/coral/duck
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/fancycup
-	name = "fancy heartstone cup"
+	name = "精致心石杯"
 	result = /obj/item/reagent_containers/glass/cup/carved/coralfancy
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/circlet
-	name = "heartstone circlet"
+	name = "心石头环"
 	result = /obj/item/clothing/head/roguetown/circlet/carvedgem/coral
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/bracelet
-	name = "heartstone bracelets"
+	name = "心石手镯"
 	result = /obj/item/clothing/wrists/roguetown/gem/coralbracelet
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/mask
-	name = "heartstone mask"
+	name = "心石面具"
 	result = /obj/item/clothing/mask/rogue/facemask/carved/coralmask
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/statue
-	name = "heartstone statue"
+	name = "心石雕像"
 	result = /obj/item/carvedgem/coral/statue
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/urn
-	name = "heartstone urn"
+	name = "心石骨灰瓮"
 	result = /obj/item/carvedgem/coral/urn
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/obelisk
-	name = "heartstone obelisk"
+	name = "心石方尖碑"
 	result = /obj/item/carvedgem/coral/obelisk
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/jaw
-	name = "shark jaw statue"
+	name = "鲨颚雕像"
 	result = /obj/item/carvedgem/coral/jaw
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_MASTER
 
 /datum/crafting_recipe/roguetown/gemcarving/coral/shark
-	name = "heartstone shark statue"
+	name = "心石鲨鱼雕像"
 	result = /obj/item/carvedgem/coral/shark
 	reqs = list(/obj/item/roguegem/coral = 1)
 	craftdiff = SKILL_LEVEL_MASTER
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/spoon
-	name = "amber spoon"
+	name = "琥珀勺"
 	result = /obj/item/kitchen/spoon/carved/amber
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/fork
-	name = "amber fork"
+	name = "琥珀叉"
 	result = /obj/item/kitchen/fork/carved/amber
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/cameo
-	name = "amber cameo"
+	name = "琥珀浮雕饰牌"
 	result = /obj/item/carvedgem/amber/cameo
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/bowl
-	name = "amber bowl"
+	name = "琥珀碗"
 	result = /obj/item/reagent_containers/glass/bowl/carved/amber
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/cup
-	name = "amber cup"
+	name = "琥珀杯"
 	result = /obj/item/reagent_containers/glass/cup/carved/amber
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/figurine
-	name = "amber figurine"
+	name = "琥珀小雕像"
 	result = /obj/item/carvedgem/amber/figurine
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/fish
-	name = "amber fish figurine"
+	name = "琥珀鱼形小雕像"
 	result = /obj/item/carvedgem/amber/fish
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/tablet
-	name = "amber tablet"
+	name = "琥珀碑板"
 	result = /obj/item/carvedgem/amber/tablet
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/vase
-	name = "amber vase"
+	name = "琥珀花瓶"
 	result = /obj/item/carvedgem/amber/vase
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/teapot
-	name = "amber teapot"
+	name = "琥珀茶壶"
 	result = /obj/item/reagent_containers/glass/bucket/pot/carved/teapotamber
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/platter
-	name = "amber platter"
+	name = "琥珀大盘"
 	result = /obj/item/cooking/platter/carved/amber
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/ring
-	name = "amber ring"
+	name = "琥珀戒指"
 	result = /obj/item/clothing/ring/amber
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/amulet
-	name = "amber amulet"
+	name = "琥珀护符"
 	result = /obj/item/clothing/neck/roguetown/carved/amberamulet
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/bracelet
-	name = "amber bracelets"
+	name = "琥珀手镯"
 	result = /obj/item/clothing/wrists/roguetown/gem/amberbracelet
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/circlet
-	name = "amber circlet"
+	name = "琥珀头环"
 	result = /obj/item/clothing/head/roguetown/circlet/carvedgem/amber
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/fancycup
-	name = "fancy amber cup"
+	name = "精致琥珀杯"
 	result = /obj/item/reagent_containers/glass/cup/carved/amberfancy
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/fancyvase
-	name = "fancy amber vase"
+	name = "精致琥珀花瓶"
 	result = /obj/item/carvedgem/amber/fancyvase
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/bust
-	name = "amber bust"
+	name = "琥珀胸像"
 	result = /obj/item/carvedgem/amber/bust
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/comb
-	name = "amber comb"
+	name = "琥珀梳子"
 	result = /obj/item/carvedgem/amber/comb
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/duck
-	name = "amber duck"
+	name = "琥珀鸭子摆件"
 	result = /obj/item/carvedgem/amber/duck
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/mask
-	name = "amber mask"
+	name = "琥珀面具"
 	result = /obj/item/clothing/mask/rogue/facemask/carved/ambermask
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/obelisk
-	name = "amber obelisk"
+	name = "琥珀方尖碑"
 	result = /obj/item/carvedgem/amber/obelisk
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/urn
-	name = "amber urn"
+	name = "琥珀骨灰瓮"
 	result = /obj/item/carvedgem/amber/urn
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/statue
-	name = "amber statue"
+	name = "琥珀雕像"
 	result = /obj/item/carvedgem/amber/statue
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/beaver
-	name = "amber beaver statue"
+	name = "琥珀海狸雕像"
 	result = /obj/item/carvedgem/amber/beaver
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_MASTER
 
 /datum/crafting_recipe/roguetown/gemcarving/amber/sun
-	name = "amber sun carving"
+	name = "琥珀太阳雕刻"
 	result = /obj/item/carvedgem/amber/sun
 	reqs = list(/obj/item/roguegem/amber = 1)
 	craftdiff = SKILL_LEVEL_MASTER
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/spoon
-	name = "opal spoon"
+	name = "蛋白石勺"
 	result = /obj/item/kitchen/spoon/carved/opal
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/fork
-	name = "opal fork"
+	name = "蛋白石叉"
 	result = /obj/item/kitchen/fork/carved/opal
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/cameo
-	name = "opal cameo"
+	name = "蛋白石浮雕饰牌"
 	result = /obj/item/carvedgem/opal/cameo
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/bowl
-	name = "opal bowl"
+	name = "蛋白石碗"
 	result = /obj/item/reagent_containers/glass/bowl/carved/opal
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/cup
-	name = "opal cup"
+	name = "蛋白石杯"
 	result = /obj/item/reagent_containers/glass/cup/carved/opal
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/teapot
-	name = "opal teapot"
+	name = "蛋白石茶壶"
 	result = /obj/item/reagent_containers/glass/bucket/pot/carved/teapotopal
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/platter
-	name = "opal platter"
+	name = "蛋白石大盘"
 	result = /obj/item/cooking/platter/carved/opal
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/ring
-	name = "opal ring"
+	name = "蛋白石戒指"
 	result = /obj/item/clothing/ring/opal
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/amulet
-	name = "opal amulet"
+	name = "蛋白石护符"
 	result = /obj/item/clothing/neck/roguetown/carved/opalamulet
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/figurine
-	name = "opal figurine"
+	name = "蛋白石小雕像"
 	result = /obj/item/carvedgem/opal/figurine
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/fish
-	name = "opal fish figurine"
+	name = "蛋白石鱼形小雕像"
 	result = /obj/item/carvedgem/opal/fish
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/vase
-	name = "opal vase"
+	name = "蛋白石花瓶"
 	result = /obj/item/carvedgem/opal/vase
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/tablet
-	name = "opal tablet"
+	name = "蛋白石碑板"
 	result = /obj/item/carvedgem/opal/tablet
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/bracelet
-	name = "opal bracelets"
+	name = "蛋白石手镯"
 	result = /obj/item/clothing/wrists/roguetown/gem/opalbracelet
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/circlet
-	name = "opal circlet"
+	name = "蛋白石头环"
 	result = /obj/item/clothing/head/roguetown/circlet/carvedgem/opal
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/fancycup
-	name = "fancy opal cup"
+	name = "精致蛋白石杯"
 	result = /obj/item/reagent_containers/glass/cup/carved/opalfancy
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/bust
-	name = "opal bust"
+	name = "蛋白石胸像"
 	result = /obj/item/carvedgem/opal/bust
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/fancyvase
-	name = "fancy opal vase"
+	name = "精致蛋白石花瓶"
 	result = /obj/item/carvedgem/opal/fancyvase
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/comb
-	name = "opal comb"
+	name = "蛋白石梳子"
 	result = /obj/item/carvedgem/opal/comb
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/duck
-	name = "opal duck"
+	name = "蛋白石鸭子摆件"
 	result = /obj/item/carvedgem/opal/duck
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/mask
-	name = "opal mask"
+	name = "蛋白石面具"
 	result = /obj/item/clothing/mask/rogue/facemask/carved/opalmask
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/obelisk
-	name = "opal obelisk"
+	name = "蛋白石方尖碑"
 	result = /obj/item/carvedgem/opal/obelisk
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/urn
-	name = "opal urn"
+	name = "蛋白石骨灰瓮"
 	result = /obj/item/carvedgem/opal/urn
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/statue
-	name = "opal statue"
+	name = "蛋白石雕像"
 	result = /obj/item/carvedgem/opal/statue
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/crab
-	name = "opal crab sculpture"
+	name = "蛋白石螃蟹雕塑"
 	result = /obj/item/carvedgem/opal/crab
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_MASTER
 
 /datum/crafting_recipe/roguetown/gemcarving/opal/knife
-	name = "opal knife"
+	name = "蛋白石小刀"
 	result = /obj/item/rogueweapon/huntingknife/stoneknife/opalknife
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_MASTER
@@ -1274,7 +1274,7 @@
 
 
 /datum/crafting_recipe/roguetown/gemcarving/chitin/rawchitin
-	name = "carved chitin (x2)"
+	name = "雕刻甲壳（x2）"
 	result = list (
 		/obj/item/carvedgem/chitin/rawchitin,
 		/obj/item/carvedgem/chitin/rawchitin
@@ -1283,103 +1283,103 @@
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/chitin/cameo
-	name = "chitin cameo"
+	name = "甲壳浮雕饰牌"
 	result = /obj/item/carvedgem/chitin/cameo
 	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
 	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/gemcarving/chitin/ring
-	name = "chitin ring"
+	name = "甲壳戒指"
 	result = /obj/item/clothing/ring/chitin
 	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/chitin/figurine
-	name = "chitin figurine"
+	name = "甲壳小雕像"
 	result = /obj/item/carvedgem/chitin/figurine
 	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/chitin/tablet
-	name = "chitin tablet"
+	name = "甲壳碑板"
 	result = /obj/item/carvedgem/chitin/tablet
 	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/chitin/fish
-	name = "chitin fish figurine"
+	name = "甲壳鱼形小雕像"
 	result = /obj/item/carvedgem/chitin/fish
 	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/chitin/vase
-	name = "chitin vase"
+	name = "甲壳花瓶"
 	result = /obj/item/carvedgem/chitin/vase
 	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/chitin/amulet
-	name = "chitin amulet"
+	name = "甲壳护符"
 	result = /obj/item/clothing/neck/roguetown/carved/chitinamulet
 	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
 	craftdiff = SKILL_LEVEL_APPRENTICE
 
 /datum/crafting_recipe/roguetown/gemcarving/chitin/bust
-	name = "chitin bust"
+	name = "甲壳胸像"
 	result = /obj/item/carvedgem/chitin/bust
 	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/chitin/bracelet
-	name = "chitin bracelets"
+	name = "甲壳手镯"
 	result = /obj/item/clothing/wrists/roguetown/gem/chitinbracelet
 	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/chitin/circlet
-	name = "chitin circlet"
+	name = "甲壳头环"
 	result = /obj/item/clothing/head/roguetown/circlet/carvedgem/chitin
 	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/chitin/fancyvase
-	name = "fancy chitin vase"
+	name = "精致甲壳花瓶"
 	result = /obj/item/carvedgem/chitin/fancyvase
 	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/chitin/comb
-	name = "chitin comb"
+	name = "甲壳梳子"
 	result = /obj/item/carvedgem/chitin/comb
 	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/chitin/duck
-	name = "chitin duck"
+	name = "甲壳鸭子摆件"
 	result = /obj/item/carvedgem/chitin/duck
 	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
 /datum/crafting_recipe/roguetown/gemcarving/chitin/urn
-	name = "chitin urn"
+	name = "甲壳骨灰瓮"
 	result = /obj/item/carvedgem/chitin/urn
 	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/chitin/statue
-	name = "chitin statue"
+	name = "甲壳雕像"
 	result = /obj/item/carvedgem/chitin/statue
 	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/chitin/obelisk
-	name = "chitin obelisk"
+	name = "甲壳方尖碑"
 	result = /obj/item/carvedgem/chitin/obelisk
 	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/gemcarving/chitin/beetle
-	name = "chitin beetle sculpture"
+	name = "甲壳甲虫雕塑"
 	result = /obj/item/carvedgem/chitin/beetle
 	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
 	craftdiff = SKILL_LEVEL_MASTER

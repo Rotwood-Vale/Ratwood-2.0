@@ -21,11 +21,11 @@
 	wind        = 5
 	count                  = 150 // 15 particles
 /datum/particle_weather/sand_gentle
-	name = "Dry gusts"
-	desc = "A dry wind kicks sand through the air."
+	name = "干燥阵风"
+	desc = "干燥的风裹挟着沙尘穿空而过。"
 	particleEffectType = /particles/weather/sand/gentle
-	warning_message = span_greenannounce("Dry gusts winds their way across the realm, pulling at loose ground.")
-	late_warning_message = span_greenannounce("The wind groans lowly, carrying specs of sand and dust.")
+	warning_message = span_greenannounce("干燥的阵风掠过大地，卷起地表松散的沙土。")
+	late_warning_message = span_greenannounce("风声低沉呜咽，夹带着细碎的沙尘。")
 	scale_vol_with_severity = TRUE
 	weather_sounds = list(/datum/looping_sound/sandstorm)
 	indoor_weather_sounds = list(/datum/looping_sound/wind)
@@ -137,11 +137,11 @@
 	SSParticleWeather.stopWeather()
 
 /datum/particle_weather/sand_storm
-	name = "Sandstorm"
-	desc = "A howling wall of sand scours the land."
+	name = "沙暴"
+	desc = "呼啸的沙墙横扫着整片大地。"
 	particleEffectType = /particles/weather/sand
-	warning_message = span_greenannounce("Ferocious winds howl their way across the realm, building thick clouds close to the earth.")
-	late_warning_message = span_greenannounce("The wind screams, carrying blinding dust.")
+	warning_message = span_greenannounce("凶猛的狂风呼啸着席卷大地，在地面卷起厚重的沙幕。")
+	late_warning_message = span_greenannounce("狂风尖啸，裹挟着足以遮蔽视线的沙尘。")
 	scale_vol_with_severity = TRUE
 	weather_sounds = list(/datum/looping_sound/sandstorm)
 	indoor_weather_sounds = list(/datum/looping_sound/wind)

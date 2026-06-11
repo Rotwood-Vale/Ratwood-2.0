@@ -7,7 +7,7 @@
 	item_state = ""
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb = list("whips", "lashes")
+	attack_verb = list("抽打", "鞭击")
 	max_integrity = 300
 	equip_sound = 'sound/blank.ogg'
 	content_overlays = FALSE
@@ -32,15 +32,15 @@
 				if(!sheath.sheathed) // if no weapon in there
 					if(sheath.eat_sword(user, K, TRUE))
 						user.visible_message(
-							span_notice("[user] slips [W] into [src]'s sheath."),
-							span_notice("I slip [W] into [src]'s sheath.")
+							span_notice("[user]把[W]滑入了[src]的鞘中。"),
+							span_notice("我把[W]滑入了[src]的鞘中。")
 						)
 						return
 	..()	
 
 /obj/item/storage/belt/rogue/leather
-	name = "belt"
-	desc = "A fine leather strap notched with holes for a buckle to secure itself."
+	name = "腰带"
+	desc = "一条优质皮带，上面打好了孔，用以扣合固定。"
 	icon_state = "leather"
 	item_state = "leather"
 	equip_sound = 'sound/blank.ogg'
@@ -50,37 +50,37 @@
 	dropshrink = 0.8
 
 /obj/item/storage/belt/rogue/leather/plaquegold
-	name = "plaque belt"
+	name = "饰牌腰带"
 	icon_state = "goldplaque"
 	sellprice = 50
 	sewrepair = FALSE
 	anvilrepair = /datum/skill/craft/armorsmithing
 
 /obj/item/storage/belt/rogue/leather/shalal
-	name = "shalal belt"
+	name = "shalal腰带"
 	icon_state = "shalal"
 	sellprice = 5
 
 /obj/item/storage/belt/rogue/leather/shalal/purple
-	name = "purple shalal belt"
+	name = "紫色shalal腰带"
 	icon_state = "shalal"
 	color = CLOTHING_PURPLE
 	sellprice = 5
 
 /obj/item/storage/belt/rogue/leather/black
-	name = "black belt"
+	name = "黑腰带"
 	icon_state = "blackbelt"
 	item_state = "blackbelt"
 	sellprice = 10
 
 /obj/item/storage/belt/rogue/leather/double
-	name = "pair of belts"
-	desc = "A pair of slim black belts worn around the waist."
+	name = "双腰带"
+	desc = "一对缠在腰间的纤细黑色腰带。"
 	icon_state = "belt_double"
 	item_state = "belt_double"
 
 /obj/item/storage/belt/rogue/leather/plaquesilver
-	name = "plaque belt"
+	name = "银饰牌腰带"
 	icon_state = "silverplaque"
 	sellprice = 30
 	sewrepair = FALSE
@@ -88,7 +88,7 @@
 	is_silver = TRUE
 
 /obj/item/storage/belt/rogue/leather/battleskirt
-	name = "cloth military skirt"
+	name = "布制军裙"
 	icon_state = "battleskirt"
 	sewrepair = FALSE
 	detail_tag = "_belt"
@@ -109,34 +109,34 @@
 	color = "#48443b"
 
 /obj/item/storage/belt/rogue/leather/battleskirt/faulds
-	name = "belt with faulds"
+	name = "垂甲腰带"
 	icon_state = "faulds"
 	sewrepair = FALSE
 	detail_tag = "_belt"
 
 /obj/item/storage/belt/rogue/leather/steel
-	name = "steel belt"
+	name = "钢腰带"
 	icon_state = "steelplaque"
 	sellprice = 30
 	sewrepair = FALSE
 	anvilrepair = /datum/skill/craft/armorsmithing
 
 /obj/item/storage/belt/rogue/leather/steel/tasset
-	name = "tasseted belt"
+	name = "腿甲腰带"
 	icon_state = "steeltasset"
 	sellprice = 35
 
 /obj/item/storage/belt/rogue/leather/rope
-	name = "rope belt"
-	desc = "A length of strong rope repurposed into a belt. Better than nothing."
+	name = "绳腰带"
+	desc = "一段结实绳索被改造成腰带。总比没有强。"
 	icon_state = "rope"
 	item_state = "rope"
 	color = "#b9a286"
 	component_type = /datum/component/storage/concrete/roguetown/belt/cloth
 
 /obj/item/storage/belt/rogue/leather/cloth
-	name = "cloth sash"
-	desc = "A strip of cloth tied together at the ends into a makeshift belt. It's better than nothing."
+	name = "布腰带"
+	desc = "一条两端打结的布带，临时充作腰带。总比没有强。"
 	icon_state = "cloth"
 	component_type = /datum/component/storage/concrete/roguetown/belt/cloth
 
@@ -148,14 +148,14 @@
 	component_type = /datum/component/storage/concrete/roguetown/belt
 
 /obj/item/storage/belt/rogue/leather/sash
-	name = "fine sash"		//Like the cloth sash but with better storage. More expensive.
-	desc = "A pliable sash made of wool meant to wrap tightly around the waist, especially popular with travellers who wear loose shirts."
+	name = "精制腰带"		//Like the cloth sash but with better storage. More expensive.
+	desc = "由羊毛制成的柔韧腰带，专门用来紧紧缠住腰身，尤其受穿宽松上衣的旅人欢迎。"
 	icon_state = "clothsash"
 	item_state = "clothsash"
 
 /obj/item/storage/belt/rogue/leather/suspenders/butler
-	name = "suspenders"
-	desc = "A pair of suspenders which go over the shoulders. Used for keeping one's pants in place in an admittably fashionable style."
+	name = "背带"
+	desc = "一副绕过肩膀的背带，用来固定裤子，而且不得不承认还挺时髦。"
 	icon = 'icons/roguetown/clothing/belts.dmi'
 	icon_state = "butlersuspenders"
 	item_state = "butlersuspenders"
@@ -175,8 +175,8 @@
 	sewrepair = TRUE
 
 /obj/item/storage/backpack/rogue/satchel
-	name = "satchel"
-	desc = "Modest, easy on the shoulders, and holds a respectable amount."
+	name = "挎包"
+	desc = "朴素轻便，对肩膀友好，且容量可观。"
 	icon_state = "satchel"
 	item_state = "satchel"
 	icon = 'icons/roguetown/clothing/storage.dmi'
@@ -197,8 +197,8 @@
 	)
 
 /obj/item/storage/backpack/rogue/satchel/otavan
-	name = "otavan leather satchel"
-	desc = "A made to last leather bag from the Psydonian heart of Otava. It's Otava's finest."
+	name = "Otava皮挎包"
+	desc = "来自Otava、经久耐用的皮包，出自Psydon信仰的心脏地带。这就是Otava的上乘工艺。"
 	icon_state = "osatchel"
 	item_state = "osatchel"
 
@@ -224,16 +224,16 @@
 		return TRUE
 
 /obj/item/storage/backpack/rogue/satchel/short
-	name = "short satchel"
-	desc = "A leather satchel that's meant to clip to a belt or to a pair of pants, freeing the shoulders from any weight."
+	name = "短挂挎包"
+	desc = "一种可挂在腰带或裤装上的皮挎包，让肩膀不再承受负重。"
 	icon_state = "satchelshort"
 	item_state = "satchelshort"
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_HIP //Implement a check in the future that prevents more than one being worn at once.
 	component_type = /datum/component/storage/concrete/roguetown/satchelshort
 
 /obj/item/storage/backpack/rogue/satchel/beltpack
-	name = "beltpack" //Satchel that fits on the cloak or belt slot. Should be exceptionally rare for on-spawn loadouts, unless a flag's added to make it incompatable with regular satchels.
-	desc = "A lighter satchel that rests against the rump, freeing the shoulders from any weight. It's traditionally worn in place of a belt or cloak."
+	name = "腰包" //Satchel that fits on the cloak or belt slot. Should be exceptionally rare for on-spawn loadouts, unless a flag's added to make it incompatable with regular satchels.
+	desc = "一种贴在臀后的轻便挎包，让肩膀不必负重。传统上它常被当作腰带或披风位来穿戴。"
 	icon_state = "gamesatchel" //Later down the line, take the unused belt-satchel onmob and rename it to 'gamesatchel'.
 	item_state = "satchel"
 	icon = 'icons/roguetown/clothing/storage.dmi'
@@ -245,8 +245,8 @@
 	component_type = /datum/component/storage/concrete/roguetown/satchel
 
 /obj/item/storage/backpack/rogue/backpack
-	name = "backpack"
-	desc = "One of the best ways to carry many things while keeping your hands free."
+	name = "背包"
+	desc = "携带大量物品同时解放双手的最佳方式之一。"
 	icon_state = "backpack"
 	item_state = "backpack"
 	icon = 'icons/roguetown/clothing/storage.dmi'
@@ -260,8 +260,8 @@
 	component_type = /datum/component/storage/concrete/roguetown/backpack
 
 /obj/item/storage/backpack/rogue/artibackpack
-	name = "Cooling backpack"
-	desc = "A leather backpack with complex pipework coursing through it. It hums and vibrates constantly."
+	name = "冷却背包"
+	desc = "一只内部布满复杂管路的皮背包。它不断发出低鸣并轻微震动。"
 	icon_state = "artibackpack"
 	item_state = "artibackpack" 
 	icon = 'icons/roguetown/clothing/storage.dmi'
@@ -274,8 +274,8 @@
 	component_type = /datum/component/storage/concrete/roguetown/backpack
 
 /obj/item/storage/backpack/rogue/backpack/bagpack
-	name = "rucksack"
-	desc = "A sack tied with some rope. Can be flung over your shoulders, if it's tied shut."
+	name = "行囊"
+	desc = "一只用绳子束起的口袋。只要扎紧了，就能甩到肩上背着走。"
 	icon_state = "rucksack_untied"
 	item_state = "rucksack"
 	component_type = /datum/component/storage/concrete/roguetown/sack/bag
@@ -284,7 +284,7 @@
 
 /obj/item/storage/backpack/rogue/backpack/bagpack/attack_right(mob/user)
 	tied = !tied
-	to_chat(user, span_info("I [tied ? "tighten" : "loosen"] the rucksack."))
+	to_chat(user, span_info("我[tied ? "扎紧" : "松开"]了行囊。"))
 	playsound(src, 'sound/foley/equip/rummaging-01.ogg', 100)
 	update_icon()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
@@ -303,7 +303,7 @@
 		var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 		var/list/things = STR.contents()
 		if(length(things))
-			visible_message(span_warning("The loose bag empties as it is swung around [user]'s shoulder!"))
+			visible_message(span_warning("这只松开的袋子在甩上[user]肩头时把里面的东西全倒了出来！"))
 			STR.quick_empty(user)
 
 /obj/item/storage/backpack/rogue/backpack/bagpack/update_icon()
@@ -314,15 +314,15 @@
 		icon_state = "rucksack_untied"
 
 /obj/item/storage/belt/rogue/leather/plaquegold/steward
-	name = "fancy gold belt"
-	desc = "A dark belt with real gold making up the buckle and highlights. How bougie."
+	name = "华丽金腰带"
+	desc = "一条深色腰带，扣具与装饰都是真金打造。真够阔气。"
 	icon_state = "stewardbelt"
 	item_state = "stewardbelt"
 
 //Knifeblade belts, act as quivers mixed with belts. Lower storage size of a belt, but holds knives without taking space.
 /obj/item/storage/belt/rogue/leather/knifebelt
-	name = "tossblade belt"
-	desc = "A five-slotted belt meant for tossblades. Little room left over."
+	name = "飞刃腰带"
+	desc = "专为飞刀设计的五槽腰带，几乎不剩多少额外空间。"
 	icon_state = "knife"
 	item_state = "knife"
 	strip_delay = 20
@@ -332,9 +332,9 @@
 
 /obj/item/storage/belt/rogue/leather/knifebelt/attack_turf(turf/T, mob/living/user)
 	if(knives.len >= max_storage)
-		to_chat(user, span_warning("Your [src.name] is full!"))
+		to_chat(user, span_warning("你的[src.name]已经满了！"))
 		return
-	to_chat(user, span_notice("You begin to gather the ammunition..."))
+	to_chat(user, span_notice("你开始收拢这些弹药……"))
 	for(var/obj/item/rogueweapon/huntingknife/throwingknife/K in T.contents)
 		if(do_after(user, 5))
 			if(!eatknife(K))
@@ -360,9 +360,9 @@
 				A.forceMove(src)
 			knives += A
 			update_icon()
-			to_chat(usr, span_notice("I discreetly slip [A] into [src]."))
+			to_chat(usr, span_notice("我悄悄把[A]塞进了[src]。"))
 		else
-			to_chat(loc, span_warning("Full!"))
+			to_chat(loc, span_warning("满了！"))
 		return
 	..()
 
@@ -378,7 +378,7 @@
 /obj/item/storage/belt/rogue/leather/knifebelt/examine(mob/user)
 	. = ..()
 	if(knives.len)
-		. += span_notice("[knives.len] inside.")
+		. += span_notice("里面有[knives.len]把。")
 
 /obj/item/storage/belt/rogue/leather/knifebelt/iron/Initialize(mapload)
 	. = ..()
@@ -427,16 +427,16 @@
 	update_icon()
 
 /obj/item/storage/belt/rogue/leather/exoticsilkbelt
-	name = "exotic silk belt"
-	desc = "A gold adorned belt with the softest of silks barely concealing one's bits."
+	name = "异域丝绸腰带"
+	desc = "以黄金点缀、配有极柔软丝绸的腰带，几乎遮不住身上的关键部位。"
 	icon_state = "exoticsilkbelt"
 	var/max_storage = 5
 
 ///////////////////////////////////////////////
 
 /obj/item/storage/hip/headhook
-	name = "head hook"
-	desc = "an iron hook for storing 6 heads"
+	name = "头颅挂钩"
+	desc = "一个能挂放6颗头颅的铁钩。"
 	icon = 'icons/roguetown/clothing/belts.dmi'
 	//mob_overlay_icon = 'icons/roguetown/clothing/onmob/belts.dmi' //N/A uncomment when a mob_overlay icon is made and added
 	icon_state = "ironheadhook"
@@ -453,8 +453,8 @@
 	component_type = /datum/component/storage/concrete/grid/headhook
 
 /obj/item/storage/hip/headhook/bronze
-	name = "bronze head hook"
-	desc = "a bronze hook for storing 12 heads"
+	name = "青铜头颅挂钩"
+	desc = "一个能挂放12颗头颅的青铜钩。"
 	icon = 'icons/roguetown/clothing/belts.dmi'
 	//mob_overlay_icon = 'icons/roguetown/clothing/onmob/belts.dmi'
 	icon_state = "bronzeheadhook"
@@ -470,8 +470,8 @@
 	component_type = /datum/component/storage/concrete/grid/headhook/bronze
 
 /obj/item/clothing/climbing_gear
-	name = "climbing gear"
-	desc = "Lets you do the impossible."
+	name = "攀爬装备"
+	desc = "让你做到本不可能做到的事。"
 	color = null
 	icon = 'icons/roguetown/clothing/storage.dmi'
 	item_state = "climbing_gear" // sprites from lfwb kitbashed with grappler for inventory sprite
@@ -485,8 +485,8 @@
 	playsound(loc, 'sound/items/garrotegrab.ogg', 100, TRUE)
 
 /obj/item/storage/hip/orestore/bronze
-	name = "mechanized ore bag"
-	desc = "a ticking Ore bag for sorting and compressing ore, ingots, and gems"
+	name = "机械化矿石袋"
+	desc = "一只能滴答作响、用于分类压缩矿石、锭块与宝石的矿袋。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	//mob_overlay_icon = 'icons/roguetown/clothing/onmob/belts.dmi'
 	icon_state = "rucksack"

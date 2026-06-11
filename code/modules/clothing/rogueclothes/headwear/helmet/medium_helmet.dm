@@ -2,8 +2,8 @@
 	icon = 'icons/roguetown/clothing/head.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi'
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP
-	name = "helmet"
-	desc = "A helmet that doesn't get any more simple in design."
+	name = "简易头盔"
+	desc = "一顶设计再朴素不过的头盔。"
 	body_parts_covered = HEAD|HAIR|NOSE
 	icon_state = "nasal"
 	sleevetype = null
@@ -43,8 +43,8 @@
 				return list("shrink" = 0.42,"sx" = -3,"sy" = -8,"nx" = 6,"ny" = -8,"wx" = -1,"wy" = -8,"ex" = 3,"ey" = -8,"nturn" = 180,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 1,"sflip" = 0,"wflip" = 0,"eflip" = 8,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/clothing/head/roguetown/helmet/skullcap
-	name = "skull cap"
-	desc = "An iron helmet which covers the top of the head."
+	name = "骷髅帽"
+	desc = "一顶覆盖头顶的铁制护顶盔。"
 	icon_state = "skullcap"
 	body_parts_covered = HEAD|HAIR
 	max_integrity = ARMOR_INT_HELMET_IRON
@@ -52,24 +52,24 @@
 
 // Copper lamellar cap
 /obj/item/clothing/head/roguetown/helmet/coppercap
-	name = "lamellar cap"
-	desc = "A heavy lamellar cap made out of copper. Despite the primitive material, it's an effective design that keeps the head safe."
+	name = "札甲帽"
+	desc = "一顶由铜制成的厚重札甲帽。尽管材质原始，但这种设计依然有效，足以保护头部。"
 	icon_state = "lamellar"
 	smeltresult = /obj/item/ingot/copper
 	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_HELMET_LEATHER
 
 /obj/item/clothing/head/roguetown/helmet/horned
-	name = "horned cap"
-	desc = "An iron helmet with two horns poking out of the sides."
+	name = "角饰帽"
+	desc = "一顶两侧伸出双角的铁盔。"
 	icon_state = "hornedcap"
 	body_parts_covered = HEAD|HAIR
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_HELMET_IRON
 
 /obj/item/clothing/head/roguetown/helmet/winged
-	name = "winged cap"
-	desc = "A helmet with two wings on its sides."
+	name = "翼饰帽"
+	desc = "一顶两侧饰有双翼的头盔。"
 	icon_state = "wingedcap"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
@@ -79,42 +79,42 @@
 	dropshrink = null
 
 /obj/item/clothing/head/roguetown/helmet/kettle
-	name = "kettle helmet"
-	desc = "A steel helmet which protects the top and sides of the head."
+	name = "锅盔"
+	desc = "一顶保护头顶与两侧的钢盔。"
 	icon_state = "kettle"
 	body_parts_covered = HEAD|HAIR|EARS
 	armor = ARMOR_PLATE
 
 /obj/item/clothing/head/roguetown/helmet/kettle/iron
-	name = "iron kettle helmet"
-	desc = "A kettle helmet made of iron. It protects the top and sides of the head."
+	name = "铁锅盔"
+	desc = "一顶铁制锅盔，可保护头顶与头部两侧。"
 	icon_state = "ikettle"
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_HELMET_IRON
 
 /obj/item/clothing/head/roguetown/helmet/kettle/ancient
-	name = "ancient kettle helmet"
-	desc = "A polished gilbranze helmet which protects the top and sides of the head. ZIZO's glare musn't be interceded when matters of unholy war are at hand. Undead ballistaemen practice a curious method of tying dyed cloth around its rim; can they, too, think and associate?"
+	name = "古老的锅盔"
+	desc = "一顶经过打磨的吉尔青铜锅盔，保护着头顶和两侧。当涉及不洁之战时，绝不能阻挡 ZIZO 的凝视。不死弩炮手们践行着一种奇特的方法，将染色的布料系在盔檐周围；难道他们，也能思考和产生联想吗？"
 	icon_state = "ancientkettle"
 	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/clothing/head/roguetown/helmet/kettle/ancient/decrepit
-	name = "decrepit kettle helmet"
-	desc = "A frayed, bronze helmet which protects the top and sides of the head. Atop a resurrected levyman's scalp, it's a sign that forces-most-foul are soon to besiege; and atop a fleshless ballistaeman's skull, it's a sign that you should probably duck."
+	name = "破旧的锅盔"
+	desc = "一顶磨损的青铜锅盔，保护着头顶和两侧。戴在复活的征召兵头皮上，这是极恶势力即将围城的前兆；而戴在毫无血肉的弩炮手头骨上，这多半意味着你该趴下了。"
 	max_integrity = ARMOR_INT_HELMET_DECREPIT
 	color = "#bb9696"
 	anvilrepair = null
 
 /obj/item/clothing/head/roguetown/helmet/kettle/wide
-	name = "wide kettle helmet"
-	desc = "A steel helmet which protects the top and sides of the head. This one looks wider than others."
+	name = "宽檐锅盔"
+	desc = "一顶保护头顶与两侧的钢盔。这顶看起来比其他同类更宽。"
 	icon_state = "kettlewide"
 
 /obj/item/clothing/head/roguetown/helmet/kettle/attackby(obj/item/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
-		var/choice = input(user, "Choose a color.", "Orle") as anything in GLOB.colorlist + GLOB.pridelist
-		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		var/choice = input(user, "选择一种颜色。", "饰边") as anything in GLOB.colorlist + GLOB.pridelist
+		user.visible_message(span_warning("[user]把[W]加到了[src]上。"))
 		user.transferItemToLoc(W, src, FALSE, FALSE)
 		detail_color = GLOB.colorlist[choice]
 		detail_tag = "_detail"
@@ -135,17 +135,17 @@
 		add_overlay(pic)
 
 /obj/item/clothing/head/roguetown/helmet/sallet
-	name = "sallet"
+	name = "萨雷特盔"
 	icon_state = "sallet"
-	desc = "A steel helmet which protects the ears."
+	desc = "一顶保护耳部的钢盔。"
 	smeltresult = /obj/item/ingot/steel
 	body_parts_covered = HEAD|HAIR|EARS
 
 /obj/item/clothing/head/roguetown/helmet/sallet/attackby(obj/item/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
-		var/choice = input(user, "Choose a color.", "Orle") as anything in GLOB.colorlist + GLOB.pridelist
-		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		var/choice = input(user, "选择一种颜色。", "饰边") as anything in GLOB.colorlist + GLOB.pridelist
+		user.visible_message(span_warning("[user]把[W]加到了[src]上。"))
 		user.transferItemToLoc(W, src, FALSE, FALSE)
 		detail_color = GLOB.colorlist[choice]
 		detail_tag = "_detail"
@@ -166,15 +166,15 @@
 		add_overlay(pic)
 
 /obj/item/clothing/head/roguetown/helmet/sallet/iron
-	name = "iron sallet"
+	name = "铁萨勒盔"
 	icon_state = "isallet"
-	desc = "A iron helmet which protects the ears."
+	desc = "一顶保护耳部的铁盔。"
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_HELMET_IRON
 
 /obj/item/clothing/head/roguetown/helmet/sallet/visored
-	name = "visored sallet"
-	desc = "A steel helmet which protects the ears, nose, and eyes."
+	name = "带面罩萨勒盔"
+	desc = "一顶保护耳朵、鼻子与眼睛的钢盔。"
 	icon_state = "sallet_visor"
 	adjustable = CAN_CADJUST
 	flags_inv = HIDEFACE|HIDESNOUT|HIDEHAIR
@@ -185,22 +185,22 @@
 	armor = ARMOR_PLATE
 
 /obj/item/clothing/head/roguetown/helmet/sallet/shishak
-	name = "steel shishak"
-	desc = "A flat decorated steel helmet of Aavnic make with a spike at the top end. A hanging layer of chainmail protects the sides of the head and even the neck."
+	name = "钢希沙克盔"
+	desc = "一顶阿夫尼克风格的平顶装饰钢盔，顶部带有尖刺，垂落的锁子甲层可保护头部两侧甚至颈部。"
 	body_parts_covered = HEAD|EARS|HAIR|NECK
 	max_integrity = ARMOR_INT_HELMET_STEEL + 50
 	icon_state = "shishak"
 
 /obj/item/clothing/head/roguetown/helmet/sallet/shishak
-	name = "steel shishak"
-	desc = "A flat decorated steel helmet of Aavnic make with a spike at the top end. A hanging layer of chainmail protects the sides of the head and even the neck."
+	name = "钢希沙克盔"
+	desc = "一顶阿夫尼克风格的平顶装饰钢盔，顶部带有尖刺，垂落的锁子甲层可保护头部两侧甚至颈部。"
 	body_parts_covered = HEAD|EARS|HAIR|NECK
 	max_integrity = ARMOR_INT_HELMET_STEEL + 50
 	icon_state = "shishak"
 
 /obj/item/clothing/head/roguetown/helmet/sallet/hussarhelm
-	name = "Hussar's Helmet"
-	desc = "A helm worn by the Czwarteki Hussars, ornate in its design and made to protect the user from stray bolts and arrows during charge."
+	name = "骠骑兵头盔"
+	desc = "一顶由察瓦尔泰基骠骑兵佩戴的头盔，造型华丽，设计用于在冲锋时保护佩戴者免受流矢与弩箭袭击。"
 	body_parts_covered = HEAD|EARS|HAIR|NECK
 	max_integrity = ARMOR_INT_HELMET_STEEL + 50
 	icon_state = "hussarhelm"
@@ -211,8 +211,8 @@
 /obj/item/clothing/head/roguetown/helmet/sallet/visored/attackby(obj/item/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
-		var/choice = input(user, "Choose a color.", "Orle") as anything in GLOB.colorlist + GLOB.pridelist
-		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		var/choice = input(user, "选择一种颜色。", "饰边") as anything in GLOB.colorlist + GLOB.pridelist
+		user.visible_message(span_warning("[user]把[W]加到了[src]上。"))
 		user.transferItemToLoc(W, src, FALSE, FALSE)
 		detail_color = GLOB.colorlist[choice]
 		detail_tag = "_detail"
@@ -233,21 +233,21 @@
 		add_overlay(pic)
 
 /obj/item/clothing/head/roguetown/helmet/sallet/visored/iron
-	name = "iron visored sallet"
+	name = "铁带面罩萨勒盔"
 	icon_state = "isallet_visor"
-	desc = "A iron helmet which protects the ears, nose, and eyes."
+	desc = "一顶保护耳朵、鼻子与眼睛的铁盔。"
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_HELMET_IRON
 
 /obj/item/clothing/head/roguetown/helmet/sallet/elven
-	desc = "A steel helmet with a thin gold plating designed for Elven woodland guardians."
+	desc = "一顶覆有薄金镀层、专为精灵林地守卫打造的钢盔。"
 	icon_state = "bascinet_novisor"
 	item_state = "bascinet_novisor"
 	color = COLOR_ASSEMBLY_GOLD
 
 /obj/item/clothing/head/roguetown/helmet/sallet/zyb
-	name = "kulah khud"
-	desc = "A sturdy, conical helm that has served the Empire well throughout its many campaigns. It's a sight to see, thousands of these bobbing as an army marches. The only greater humiliation than losing it is losing one's medallion."
+	name = "库拉赫德"
+	desc = "一顶结实的锥形头盔，在帝国历次征战中都立下过功劳。成千上万顶这样的头盔随军起伏前行时，蔚为壮观。比丢了它更丢脸的，只有把自己的勋章也弄丢。"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
 	icon_state = "raneshen"
@@ -263,29 +263,29 @@
 	block2add = FOV_BEHIND
 
 /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf
-	name = "warden's volfskull helm"
-	desc = "The large, intimidating skull of an elusive white volf, plated with steel on its inner side and given padding - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long game wardens and their descendants."
+	name = "守林人狼首骨盔"
+	desc = "一具巨大而骇人的白色沃尔夫头骨，内侧覆钢并加上衬垫，再配以钢制链甲面罩与亚麻罩巾一同穿戴。这类战利品常与终生狩猎守林人及其后裔联系在一起。"
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
 	icon_state = "skullmet_volf"
 
 /obj/item/clothing/head/roguetown/helmet/sallet/warden/goat
-	name = "warden's ramskull helm"
-	desc = "The large, intimidating horned skull of an elusive vale great ram, plated with steel on its inner side and given padding - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long foresters and their descendants."
+	name = "守林人羊首骨盔"
+	desc = "一具巨大而骇人的山谷巨公羊角骨，内侧覆钢并加上衬垫，再配以钢制链甲面罩与亚麻罩巾一同穿戴。这类战利品常与终生林务守卫及其后裔联系在一起。"
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
 	icon_state = "skullmet_goat"
 
 /obj/item/clothing/head/roguetown/helmet/sallet/warden/bear
-	name = "warden's bearskull helm"
-	desc = "The large, intimidating skull of a common direbear, plated with steel on its inner side and given padding - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long hunters and their descendants."
+	name = "守林人熊首骨盔"
+	desc = "一具巨大而骇人的恐熊头骨，内侧覆钢并加上衬垫，再配以钢制链甲面罩与亚麻罩巾一同穿戴。这类战利品常与终生猎人及其后裔联系在一起。"
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
 	icon_state = "skullmet_bear"
 
 /obj/item/clothing/head/roguetown/roguehood/warden
-	name = "warden's hood"
-	desc = "A hunter's leather hood with two linen layers, sewn larger than usual to accommodate a helmet - or an animal's skull."
+	name = "守林人兜帽"
+	desc = "一顶猎人用皮革兜帽，内有两层亚麻衬里，缝制得比平时更大，好容纳头盔或兽骨头罩。"
 	color = null
 	icon_state = "wardenhood"
 	item_state = "wardenhood"
@@ -301,8 +301,8 @@
 	max_integrity = 200
 
 /obj/item/clothing/head/roguetown/roguehood/warden/antler
-	name = "warden's antlered hood"
-	desc = "A hunter's leather hood with two linen layers, sewn larger than usual to accommodate a helmet, and fitted with the large horns of an elder saiga."
+	name = "守林人鹿角兜帽"
+	desc = "一顶猎人用皮革兜帽，内有两层亚麻衬里，缝制得比平时更大以容纳头盔，并装上了老赛加羚的大角。"
 	icon_state = "wardenhoodalt"
 	item_state = "wardenhoodalt"
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
@@ -312,8 +312,8 @@
 	bloody_icon = 'icons/effects/blood64.dmi'
 
 /obj/item/clothing/head/roguetown/helmet/sallet/beastskull
-	name = "beast skull"
-	desc = "The skull of a horned beast, carved and fashioned into a helmet. An steel skull cap has been inserted on the inside."
+	name = "兽首骨盔"
+	desc = "一颗长角野兽的头骨，被雕琢并制成头盔，内侧还嵌入了一顶钢制护顶帽。"
 	icon_state = "marauder_head"
 	body_parts_covered = HEAD|EARS|HAIR
 	max_integrity = ARMOR_INT_HELMET_STEEL + 50
@@ -324,8 +324,8 @@
 	bloody_icon = 'icons/effects/blood64.dmi'
 
 /obj/item/clothing/head/roguetown/helmet/otavan
-	name = "otavan helmet"
-	desc = "A helmet of Otavan make, similar in structure to a Psydonian Armet but fitted with an angular klappvisier."
+	name = "奥塔瓦头盔"
+	desc = "一顶奥塔瓦制式的头盔，结构类似赛顿式阿米特盔，但配有棱角分明的开缝面罩。"
 	icon_state = "otavahelm"
 	item_state = "otavahelm"
 	adjustable = CAN_CADJUST
@@ -363,8 +363,8 @@
 
 /obj/item/clothing/head/roguetown/helmet/elvenbarbute
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP
-	name = "elven barbute"
-	desc = "It fits snugly on one's elven head, with special slots for their pointier ears."
+	name = "精灵巴布塔盔"
+	desc = "它能紧贴精灵的头部轮廓，并为他们更尖的耳朵留有专门的开槽。"
 	body_parts_covered = FULL_HEAD
 	body_parts_covered = HEAD|HAIR|NOSE
 	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT
@@ -377,14 +377,14 @@
 	block2add = FOV_BEHIND
 
 /obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged
-	name = "winged elven barbute"
-	desc = "A winged version of the elven barbute. They have always been known for their vanity."
+	name = "翼饰精灵巴布塔盔"
+	desc = "精灵巴布塔盔的翼饰版本。他们一向以虚荣闻名。"
 	icon_state = "elven_barbute_winged"
 	item_state = "elven_barbute_winged"
 
 /obj/item/clothing/head/roguetown/helmet/bascinet
-	name = "bascinet"
-	desc = "A steel bascinet helmet. Though it lacks a visor, it still protects the head and ears."
+	name = "盆盔"
+	desc = "一顶钢制盆盔。虽然没有面罩，但仍能保护头部与耳朵。"
 	icon_state = "bascinet_novisor"
 	item_state = "bascinet_novisor"
 	emote_environment = 3
@@ -394,8 +394,8 @@
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface
-	name = "pigface bascinet"
-	desc = "A steel bascinet helmet with a pigface visor that protects the entire head and face. Add a feather to show the colors of your family or allegiance."
+	name = "猪面盆盔"
+	desc = "一顶带猪面面罩的钢制盆盔，可保护整个头部与面部。插上一根羽毛，展示你的家族或效忠色彩。"
 	icon_state = "hounskull"
 	item_state = "hounskull"
 	adjustable = CAN_CADJUST
@@ -413,10 +413,10 @@
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/attackby(obj/item/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/natural/feather) && !detail_tag)
-		var/choice = input(user, "Choose a color.", "Plume") as anything in GLOB.colorlist + GLOB.pridelist
+		var/choice = input(user, "选择一种颜色。", "羽饰") as anything in GLOB.colorlist + GLOB.pridelist
 		detail_color = GLOB.colorlist[choice]
 		detail_tag = "_detail"
-		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		user.visible_message(span_warning("[user]把[W]加到了[src]上。"))
 		user.transferItemToLoc(W, src, FALSE, FALSE)
 		update_icon()
 		if(loc == user && ishuman(user))
@@ -433,8 +433,8 @@
 		add_overlay(pic)
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull
-	name = "hounskull bascinet"
-	desc = "A bascinet with a conical visor, favored by those with snouts and whiskers. Nestle a feather onto the rim to display your allegiance."
+	name = "犬首盆盔"
+	desc = "一顶带锥形面罩的盆盔，深受有吻部和须毛者喜爱。可在边缘插上一根羽毛以展示你的效忠色彩。"
 	icon_state = "bascinet"
 
 
@@ -445,18 +445,18 @@
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull/attackby(obj/item/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/natural/feather) && !detail_tag)
-		var/choice = input(user, "Choose a color.", "Plume") as anything in GLOB.colorlist
+		var/choice = input(user, "选择一种颜色。", "羽饰") as anything in GLOB.colorlist
 		detail_color = GLOB.colorlist[choice]
 		detail_tag = "_detail"
-		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		user.visible_message(span_warning("[user]把[W]加到了[src]上。"))
 		user.transferItemToLoc(W, src, FALSE, FALSE)
 		update_icon()
 		if(loc == user && ishuman(user))
 			var/mob/living/carbon/H = user
 			H.update_inv_head()
 	if(istype(W, /obj/item/natural/cloth) && !altdetail_tag)
-		var/choicealt = input(user, "Choose a color.", "Orle") as anything in GLOB.colorlist + GLOB.pridelist
-		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		var/choicealt = input(user, "选择一种颜色。", "饰边") as anything in GLOB.colorlist + GLOB.pridelist
+		user.visible_message(span_warning("[user]把[W]加到了[src]上。"))
 		user.transferItemToLoc(W, src, FALSE, FALSE)
 		altdetail_color = GLOB.colorlist[choicealt]
 		altdetail_tag = "_detailalt"
@@ -484,8 +484,8 @@
 		add_overlay(pic2)
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
-	name = "\improper Etruscan bascinet"
-	desc = "A steel bascinet helmet with a straight visor, or \"klappvisier\", which can greatly reduce visibility. Though it was first developed in Etrusca, it is also widely used in Grenzelhoft."
+	name = "\improper 伊特鲁斯卡盆盔"
+	desc = "一顶带直式面罩的钢制盆盔，也就是\"掀面式盆盔\"，会大幅限制视野。它虽最早诞生于伊特鲁斯卡，如今也在格伦泽尔霍夫被广泛使用。"
 	icon_state = "klappvisier"
 	item_state = "klappvisier"
 	adjustable = CAN_CADJUST
@@ -500,8 +500,8 @@
 /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan/attackby(obj/item/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
-		var/choice = input(user, "Choose a color.", "Orle") as anything in GLOB.colorlist + GLOB.pridelist
-		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		var/choice = input(user, "选择一种颜色。", "饰边") as anything in GLOB.colorlist + GLOB.pridelist
+		user.visible_message(span_warning("[user]把[W]加到了[src]上。"))
 		user.transferItemToLoc(W, src, FALSE, FALSE)
 		detail_color = GLOB.colorlist[choice]
 		detail_tag = "_detail"
@@ -525,8 +525,8 @@
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
 
 /obj/item/clothing/head/roguetown/helmet/kettle/jingasa
-	name = "jingasa"
-	desc = "A steel-reinforced conical hat with a decorative rim of fabric. It protects the head and ears as much as it shields the eyes from the sun."
+	name = "阵笠"
+	desc = "一顶以钢加固的锥形帽，边缘饰有布料装饰。它在保护头部与耳朵的同时，也能为眼睛遮挡阳光。"
 	icon_state = "kazengunmedhelm"
 	item_state = "kazengunmedhelm"
 	detail_tag = "_detail"
@@ -543,15 +543,15 @@
 
 //............... Eora Helmet ............... //
 /obj/item/clothing/head/roguetown/helmet/sallet/eoran
-	name = "eora helmet"
-	desc = "A simple yet protective helmet forged in the style typical of Eoran worshippers. Upon it lays several laurels of flowers and other colorful ornaments followed by symbols noting the accomplishments and punishments of the owner's chapter."
+	name = "伊欧拉头盔"
+	desc = "一顶朴素却可靠的头盔，锻造风格很典型地属于伊欧拉信徒。其上饰有数圈花环与其他彩色装饰，并附有记述佩戴者所属支部功绩与惩戒的符记。"
 	icon_state = "eorahelmsallet"
 	item_state = "eorahelmsallet"
 
 // Warden Helmets
 /obj/item/clothing/head/roguetown/helmet/bascinet/antler
-	name = "wardens's helmet"
-	desc = "A beastly snouted armet with the large horns of an elder saiga protruding from it. Residents of the realm know not to fear such a sight in the wilds, for they are exclusively associated with the Wardens."
+	name = "守林人头盔"
+	desc = "一顶野性十足、带吻部的阿米特盔，向外伸出老赛加羚的大角。山谷居民在荒野中见到这副模样并不会恐惧，因为它只与罗特伍德守林人相关。"
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden64.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
@@ -578,29 +578,29 @@
 	block2add = FOV_BEHIND
 
 /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf
-	name = "warden's volfskull helm"
-	desc = "The large, intimidating skull of an elusive white volf, plated with steel on its inner side and given padding - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long game wardens and their descendants."
+	name = "守林人狼首骨盔"
+	desc = "一具巨大而骇人的白色沃尔夫头骨，内侧覆钢并加上衬垫，再配以钢制链甲面罩与亚麻罩巾一同穿戴。这类战利品常与终生狩猎守林人及其后裔联系在一起。"
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
 	icon_state = "skullmet_volf"
 
 /obj/item/clothing/head/roguetown/helmet/sallet/warden/goat
-	name = "warden's ramskull helm"
-	desc = "The large, intimidating horned skull of an elusive vale great ram, plated with steel on its inner side and given padding - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long foresters and their descendants."
+	name = "守林人羊首骨盔"
+	desc = "一具巨大而骇人的山谷巨公羊角骨，内侧覆钢并加上衬垫，再配以钢制链甲面罩与亚麻罩巾一同穿戴。这类战利品常与终生林务守卫及其后裔联系在一起。"
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
 	icon_state = "skullmet_goat"
 
 /obj/item/clothing/head/roguetown/helmet/sallet/warden/bear
-	name = "warden's bearskull helm"
-	desc = "The large, intimidating skull of a common direbear, plated with steel on its inner side and given padding - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long hunters and their descendants."
+	name = "守林人熊首骨盔"
+	desc = "一具巨大而骇人的恐熊头骨，内侧覆钢并加上衬垫，再配以钢制链甲面罩与亚麻罩巾一同穿戴。这类战利品常与终生猎人及其后裔联系在一起。"
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
 	icon_state = "skullmet_bear"
 
 /obj/item/clothing/head/roguetown/roguehood/warden
-	name = "warden's hood"
-	desc = "A hunter's leather hood with two linen layers, sewn larger than usual to accommodate a helmet - or an animal's skull."
+	name = "守林人兜帽"
+	desc = "一顶猎人用皮革兜帽，内有两层亚麻衬里，缝制得比平时更大，好容纳头盔或兽骨头罩。"
 	color = null
 	icon_state = "wardenhood"
 	item_state = "wardenhood"
@@ -615,8 +615,8 @@
 	max_integrity = 200
 
 /obj/item/clothing/head/roguetown/roguehood/warden/antler
-	name = "warden's antlered hood"
-	desc = "A hunter's leather hood with two linen layers, sewn larger than usual to accommodate a helmet, and fitted with the large horns of an elder saiga."
+	name = "守林人鹿角兜帽"
+	desc = "一顶猎人用皮革兜帽，内有两层亚麻衬里，缝制得比平时更大以容纳头盔，并装上了老赛加羚的大角。"
 	icon_state = "wardenhoodalt"
 	item_state = "wardenhoodalt"
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
@@ -627,8 +627,8 @@
 
 //Gronn
 /obj/item/clothing/head/roguetown/helmet/nomadhelmet
-	name = "nomad helmet"
-	desc = "An iron helmet with leather to help protect the neck."
+	name = "游牧头盔"
+	desc = "一顶带有皮革护颈的铁盔。"
 	icon_state = "nomadhelmet"
 	item_state = "nomadhelmet"
 	max_integrity = ARMOR_INT_HELMET_LEATHER
@@ -642,8 +642,8 @@
 
 	//----------------- INFAREDBARON/HATS.DM ---------------------
 /obj/item/clothing/head/roguetown/helmet/citywatch
-	name = "city watch helmet"
-	desc = "A heavy helmet. Notably resilient. Issued to the Citywatch."
+	name = "城卫头盔"
+	desc = "一顶厚重的头盔，尤为坚固耐用，配发给城卫使用。"
 	icon = 'icons/roguetown/clothing/licensed-infraredbaron/head.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/armor.dmi'
 	icon_state = "citywatch_helmet"

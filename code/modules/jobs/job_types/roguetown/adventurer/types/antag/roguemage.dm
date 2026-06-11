@@ -1,6 +1,6 @@
 /datum/advclass/roguemage //mage class - like the adventurer mage, but more evil.
-	name = "Rogue Mage"
-	tutorial = "Those fools at the academy laughed at you and cast you from the ivory tower of higher learning and magickal practice. No matter - you will ascend to great power one day, but first you need wealth - vast amounts of it. Show those fools in the town what REAL magic looks like."
+	name = "野法师"
+	tutorial = "学院里那群蠢货曾嘲笑你，把你逐出了高等学识与奥术实践的象牙塔。无妨，总有一天你会登上伟力之巅，但在那之前，你需要财富，大量的财富。去让镇上那群蠢材见识见识，什么才叫真正的魔法。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/bandit/roguemage

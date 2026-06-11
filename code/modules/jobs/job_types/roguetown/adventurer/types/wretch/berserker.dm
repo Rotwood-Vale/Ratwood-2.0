@@ -1,6 +1,6 @@
 /datum/advclass/wretch/berserker
-	name = "Berserker"
-	tutorial = "You are a warrior feared for your brutality, dedicated to using your might for your own gain. Might equals right, and you are the reminder of such a saying."
+	name = "狂战士"
+	tutorial = "你是因残暴而令人畏惧的战士，执意将自己的力量用于满足私欲。强权即公理，而你便是这句老话的活生生写照。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/wretch/berserker
@@ -55,39 +55,39 @@
 		)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 	if(H.mind)
-		var/weapons = list("Discipline - Unarmed","Katar","Knuckledusters","Punch Dagger","Battle Axe","Grand Mace","Falx")
-		var/weapon_choice = input(H, "Choose your WEAPON.", "SPILL THEIR ENTRAILS.") as anything in weapons
+		var/weapons = list("武修徒手","拳刃","指虎","冲拳匕首","战斧","巨锤","法尔克斯弯刃")
+		var/weapon_choice = input(H, "选择你的武器。", "掏出他们的内脏。") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Discipline - Unarmed")
+			if("武修徒手")
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 				ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
-			if("Katar")
+			if("拳刃")
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 				beltr = /obj/item/rogueweapon/katar
-			if("Knuckledusters")
+			if("指虎")
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 				beltr = /obj/item/rogueweapon/knuckles
-			if("Punch Dagger")
+			if("冲拳匕首")
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 				r_hand = /obj/item/rogueweapon/katar/punchdagger
-			if("Battle Axe")
+			if("战斧")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 				beltr = /obj/item/rogueweapon/stoneaxe/battle
-			if("Grand Mace")
+			if("巨锤")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				r_hand = /obj/item/rogueweapon/mace/goden/steel
-			if("Falx")
+			if("法尔克斯弯刃")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/falx
-		var/helmets = list("Berserker's Volfskulle Bascinet","Steel Kettle + Wildguard")
-		var/helmet_choice = input(H, "Choose your HELMET.", "STEEL YOURSELF.") as anything in helmets
+		var/helmets = list("狂战士狼颅盆盔","钢锅盔加荒卫面具")
+		var/helmet_choice = input(H, "选择你的头盔。", "武装自己。") as anything in helmets
 		switch(helmet_choice)
-			if("Berserker's Volfskulle Bascinet")
+			if("狂战士狼颅盆盔")
 				head = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/berserker //Pseudoantagonistic-exclusive. Light AC with an on-wear trait for HELMBITING.
-			if("Steel Kettle + Wildguard")
+			if("钢锅盔加荒卫面具")
 				head = /obj/item/clothing/head/roguetown/helmet/kettle
 				mask = /obj/item/clothing/mask/rogue/wildguard
 		wretch_select_bounty(H)

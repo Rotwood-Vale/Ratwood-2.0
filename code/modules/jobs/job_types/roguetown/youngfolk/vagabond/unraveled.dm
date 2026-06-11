@@ -1,7 +1,7 @@
 /datum/advclass/vagabond_unraveled
-	name = "The Unraveled"
-	examine_name = "Beggar"
-	tutorial = "Once you sought to understand the mind’s decay — now you live within it, a wandering physician bound to his own affliction."
+	name = "心神崩解者"
+	examine_name = "乞儿"
+	tutorial = "你曾试图理解心智如何腐朽，如今却亲身活在这场腐朽之中，成了个被自身病痛束缚的流浪医者。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/roguetown/vagabond/unraveled
@@ -16,7 +16,7 @@
 		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT
 	)
-	extra_context = "Constantly hallucinates."
+	extra_context = "会持续产生幻觉。"
 
 /datum/outfit/job/roguetown/vagabond/unraveled/pre_equip(mob/living/carbon/human/human)
 	..()

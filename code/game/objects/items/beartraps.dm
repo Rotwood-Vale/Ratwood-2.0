@@ -1,7 +1,7 @@
 //Legcuffs
 
 /obj/item/restraints/legcuffs
-	name = "leg cuffs"
+	name = "脚镣"
 	desc = ""
 	gender = PLURAL
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -14,12 +14,12 @@
 
 /obj/item/restraints/legcuffs/beartrap
 	icon = 'icons/roguetown/items/misc.dmi'
-	name = "mantrap"
+	name = "捕兽夹"
 	gender = NEUTER
 	throw_speed = 1
 	throw_range = 1
 	icon_state = "beartrap"
-	desc = "A crude and rusty spring trap, used to snare interlopers, or prey on a hunt. Looks almost like falling apart."
+	desc = "一只粗陋生锈的弹簧陷阱，用来夹住闯入者，或在狩猎时捕获猎物。看起来几乎快散架了。"
 	var/rusty = TRUE // Is it an old trap? Will most likely be destroyed if not handled right
 	var/armed = FALSE // Is it armed?
 	var/trap_damage = 90 // How much brute damage the trap will do to its victim
@@ -41,8 +41,8 @@
 			if(!BP.is_object_embedded(src))
 				BP.add_embedded_object(src)
 			close_trap()
-			C.visible_message(span_boldwarning("[C] triggers \the [src]."), \
-					span_userdanger("I trigger \the [src]!"))
+			C.visible_message(span_boldwarning("[C]触发了[src]。"), \
+					span_userdanger("我触发了[src]！"))
 			C.emote("agony")
 			C.Stun(80)
 			BP.add_wound(/datum/wound/fracture)
@@ -56,16 +56,16 @@
 				used_time -= max((C.get_skill_level(/datum/skill/craft/crafting) * 2 SECONDS), 2 SECONDS)
 			if(do_after(user, used_time, target = src))
 				close_trap(FALSE)
-				C.visible_message(span_notice("[C] disarms \the [src]."), \
-						span_notice("I disarm \the [src]."))
+				C.visible_message(span_notice("[C]解除了[src]。"), \
+						span_notice("我解除了[src]。"))
 				return FALSE
 			else
 				add_mob_blood(C)
 				if(!BP.is_object_embedded(src))
 					BP.add_embedded_object(src)
 				close_trap()
-				C.visible_message(span_boldwarning("[C] triggers \the [src]."), \
-						span_userdanger("I trigger \the [src]!"))
+				C.visible_message(span_boldwarning("[C]触发了[src]。"), \
+						span_userdanger("我触发了[src]！"))
 				C.emote("agony")
 				BP.add_wound(/datum/wound/fracture)
 				BP.update_disabled()
@@ -80,8 +80,8 @@
 		alpha = (90 - skill * 5)
 		qdel(W)
 	if(W.force && armed)
-		user.visible_message("<span class='warning'>[user] triggers \the [src] with [W].</span>", \
-				"<span class='danger'>I trigger \the [src] with [W]!</span>")
+		user.visible_message("<span class='warning'>[user]用[W]触发了[src]。</span>", \
+				"<span class='danger'>我用[W]触发了[src]！</span>")
 		W.take_damage(20)
 		close_trap()
 		if(isliving(user))
@@ -113,7 +113,7 @@
 	icon_state = "[initial(icon_state)][armed]"
 
 /obj/item/restraints/legcuffs/beartrap/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is sticking [user.p_their()] head in the [src.name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user]正把[user.p_their()]脑袋往[src.name]里塞！看起来[user.p_theyre()]是想自杀！</span>")
 	playsound(loc, 'sound/blank.ogg', 50, TRUE, -1)
 	return (BRUTELOSS)
 
@@ -135,9 +135,9 @@
 					grid_width = 64
 					grid_height = 64
 				update_icon()
-				to_chat(user, span_notice("[src] is now [armed ? "armed" : "disarmed"]"))
+				to_chat(user, span_notice("[src]现在已[armed ? "上夹" : "解除"]。"))
 			else
-				user.visible_message(span_warning("You couldn't get the shoddy [src.name] [armed ? "shut close!" : "to open up!"]"))
+				user.visible_message(span_warning("我没能让这破旧的[src.name][armed ? "重新合上！" : "张开！"]"))
 
 /obj/item/restraints/legcuffs/beartrap/proc/close_trap(play_sound = TRUE)
 	armed = FALSE
@@ -159,7 +159,7 @@
 				var/obj/vehicle/ridden_vehicle = L.buckled
 				if(!ridden_vehicle.are_legs_exposed) //close the trap without injuring/trapping the rider if their legs are inside the vehicle at all times.
 					close_trap()
-					ridden_vehicle.visible_message("<span class='danger'>[ridden_vehicle] triggers \the [src].</span>")
+					ridden_vehicle.visible_message("<span class='danger'>[ridden_vehicle]触发了[src]。</span>")
 					return ..()
 			if(L.throwing)
 				return ..()
@@ -186,8 +186,8 @@
 					snap = FALSE
 			if(snap)
 				close_trap()
-				L.visible_message("<span class='danger'>[L] triggers \the [src].</span>", \
-						"<span class='danger'>I trigger \the [src]!</span>")
+				L.visible_message("<span class='danger'>[L]触发了[src]。</span>", \
+						"<span class='danger'>我触发了[src]！</span>")
 				if(L.apply_damage(trap_damage, BRUTE, def_zone, L.run_armor_check(def_zone, "stab", damage = trap_damage)))
 					L.Stun(80)
 	..()
@@ -213,5 +213,5 @@
 // When craftable beartraps get added, make these the ones crafted.
 /obj/item/restraints/legcuffs/beartrap/crafted
 	rusty = FALSE
-	desc = "Curious is the trapmaker's art. Their efficacy unwitnessed by their own eyes."
+	desc = "设陷者的技艺总是耐人寻味。它的成效，往往连制作者自己都无缘亲眼见证。"
 	smeltresult = /obj/item/ingot/iron

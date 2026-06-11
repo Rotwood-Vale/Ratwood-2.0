@@ -96,19 +96,19 @@
 	switch(dominiant_smell_power)
 		if(0 to POLLUTANT_SMELL_NORMAL)
 			if(sniffer.mob_biotypes & MOB_ROBOTIC)
-				smell_string = "Your sensors detect trace amounts of [dominant_pollutant.scent] in the air."
+				smell_string = "我的传感器侦测到空气中有微量的[dominant_pollutant.scent]。"
 			else
-				smell_string = "The subtle [dominant_pollutant.descriptor] of [dominant_pollutant.scent] tickles your nose..."
+				smell_string = "[dominant_pollutant.scent]那淡淡的[dominant_pollutant.descriptor]轻轻撩拨着我的鼻尖……"
 		if(POLLUTANT_SMELL_NORMAL to POLLUTANT_SMELL_STRONG)
 			if(sniffer.mob_biotypes & MOB_ROBOTIC)
-				smell_string = "Your sensors pick up the presence of [dominant_pollutant.scent] in the air."
+				smell_string = "我的传感器捕捉到空气中存在[dominant_pollutant.scent]。"
 			else
-				smell_string = "The [dominant_pollutant.descriptor] of [dominant_pollutant.scent] fills the air."
+				smell_string = "空气中弥漫着[dominant_pollutant.scent]的[dominant_pollutant.descriptor]。"
 		if(POLLUTANT_SMELL_STRONG to INFINITY)
 			if(sniffer.mob_biotypes & MOB_ROBOTIC)
-				smell_string = "Your sensors pick up an intense concentration of [dominant_pollutant.scent]."
+				smell_string = "我的传感器捕捉到了高浓度的[dominant_pollutant.scent]。"
 			else
-				smell_string = "The unmistakable [dominant_pollutant.descriptor] of [dominant_pollutant.scent] bombards your nostrils."
+				smell_string = "[dominant_pollutant.scent]那无法忽视的[dominant_pollutant.descriptor]猛地冲击着我的鼻腔。"
 
 	if(dominant_pollutant.descriptor == SCENT_DESC_ODOR)
 		to_chat(sniffer, span_warning(smell_string))

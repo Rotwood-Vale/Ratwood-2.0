@@ -1,5 +1,5 @@
 /datum/sex_action/tailjob
-	name = "Jerk them off with tail"
+	name = "用尾巴撸弄对方"
 	check_same_tile = FALSE
 	target_sex_part = SEX_PART_COCK
 
@@ -24,10 +24,10 @@
 	return TRUE
 
 /datum/sex_action/tailjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] slides their tail around [target]'s cock..."))
+	user.visible_message(span_warning("[user]用[user.p_their()]的尾巴缠上了[target]的肉棒……"))
 
 /datum/sex_action/tailjob/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] strokes [target]'s cock with their tail."))
+	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()]用[user.p_their()]的尾巴撸弄着[target]的肉棒。"))
 	user.sexcon.make_sucking_noise()
 
 	user.sexcon.perform_sex_action(target, 2, 0, TRUE)
@@ -35,7 +35,7 @@
 	target.sexcon.handle_passive_ejaculation(user)
 
 /datum/sex_action/tailjob/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] stops jerking [target]'s cock."))
+	user.visible_message(span_warning("[user]停下了用尾巴撸弄[target]肉棒的动作。"))
 
 /datum/sex_action/tailjob/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.sexcon.finished_check())

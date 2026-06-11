@@ -1,8 +1,8 @@
 //////////////Church stuff
 
 /obj/item/handheld_bell
-	name = "church bell"
-	desc = "A small bell that rings loudly when used."
+	name = "教会手铃"
+	desc = "一只小铃铛，使用时会发出响亮铃声。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "churchbell"
 	throw_speed = 2
@@ -26,9 +26,9 @@
 
 	for(var/mob/M in view(10, src.loc))
 		if(M.client)
-			to_chat(M, span_notice("The handheld bell rings sharply through the area."))
+			to_chat(M, span_notice("手铃清脆的铃声在周围回荡。"))
 
-	user.visible_message(span_notice("[user] rings [src]."))
+	user.visible_message(span_notice("[user]摇响了[src]。"))
 	ringing = TRUE
 	sleep(cooldown)
 	ringing = FALSE
@@ -45,8 +45,8 @@
 //////////Stationary Church bell
 
 /obj/structure/bell_barrier
-	name = "invisible barrier"
-	desc = "An invisible barrier that prevents movement."
+	name = "无形屏障"
+	desc = "一道阻止通行的无形屏障。"
 	icon = null
 	icon_state = ""
 	density = TRUE
@@ -55,8 +55,8 @@
 	invisibility = INVISIBILITY_MAXIMUM
 
 /obj/structure/stationary_bell
-	name = "church bell"
-	desc = "A large bell that rings out for all to hear."
+	name = "教会钟"
+	desc = "一口大钟，敲响时人人都能听见。"
 	icon = 'icons/roguetown/misc/96x96.dmi'
 	icon_state = "churchbell"
 	anchored = TRUE
@@ -86,8 +86,8 @@
 	if(istype(used_item, /obj/item/rogueweapon/mace/church))
 		playsound(loc, 'sound/misc/bell.ogg', 50, 1)
 		ring_bell()	//sound effect for players within 150 tiles
-		loud_message("The [src] rings, echoing solemnly", hearing_distance = 150)
-		visible_message(span_notice("[user] uses the [used_item] to ring the [src]."))
+		loud_message("[src]被敲响了，庄严回声四处回荡", hearing_distance = 150)
+		visible_message(span_notice("[user]用[used_item]敲响了[src]。"))
 		ringing = TRUE
 		sleep(cooldown)
 		ringing = FALSE
@@ -112,8 +112,8 @@
 			continue
 
 /obj/item/jingle_bells
-	name = "jingling bells"
-	desc = "A set of little bells that make a satisfying ring when jostled."
+	name = "铃铛串"
+	desc = "一串小铃铛，晃动时会发出令人满足的叮当声。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "bells"
 	throwforce = 5

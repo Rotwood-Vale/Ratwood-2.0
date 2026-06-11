@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/wheel
-	name = "The Wheel"
-	desc = "Spins the wheel, either buffing or debuffing the targets fortune."
+	name = "命轮"
+	desc = "转动命轮，为目标的命运施加增益或减益。"
 	overlay_state = "wheel" //Wheel of Fortune
 	releasedrain = 10
 	chargedrain = 0
@@ -25,8 +25,8 @@
 	return FALSE
 
 /obj/effect/proc_holder/spell/invoked/ventriloquism
-	name = "Ventriloquism"
-	desc = "Throw one's voice into a object"
+	name = "腹语术"
+	desc = "将自己的声音投向一件物体。"
 	overlay_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	overlay_state = "ventril"
@@ -41,15 +41,15 @@
 /obj/effect/proc_holder/spell/invoked/ventriloquism/cast(list/targets, mob/user = usr)
 	if(isobj(targets[1]))
 		var/obj/target = targets[1]
-		var/input_message = input(usr, "What shall [target] say?", src) as null|text
+		var/input_message = input(usr, "要让 [target] 说什么？", src) as null|text
 		target.say("[input_message]")
 		return TRUE
 	revert_cast()
 	return FALSE
 
 /obj/effect/proc_holder/spell/invoked/mastersillusion
-	name = "Set Decoy"
-	desc = "Creates a body double of yourself and makes you invisible, after a delay your clone explodes into smoke."
+	name = "设下替身"
+	desc = "制造一个自己的替身并令你隐形，片刻后分身会爆成烟雾。"
 	overlay_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	overlay_state = "disguise"
@@ -68,11 +68,11 @@
 
 /obj/effect/proc_holder/spell/invoked/mastersillusion/cast(list/targets, mob/living/carbon/human/user = usr)
 	if(firstcast)
-		to_chat(user, span_italics("...Oh, oh, thy visage is so grand! Let us prepare it for tricks!"))
+		to_chat(user, span_italics("……噢，噢，你这副容貌可真是出众！让我们拿它来耍点把戏吧！"))
 		clone_icon = get_flat_human_icon("[user.real_name] decoy", null, null, DUMMY_HUMAN_SLOT_MANIFEST, GLOB.cardinals, TRUE, user, TRUE) // We can only set our decoy icon once. This proc is sort of expensive on generation.
 		firstcast = FALSE
-		name = "Master's Illusion"
-		to_chat(user, "There we are... Perfect.")
+		name = "大师幻影"
+		to_chat(user, "好了……完美。")
 		revert_cast()
 		return
 	var/turf/T = get_turf(user)
@@ -85,11 +85,11 @@
 	animate(user, alpha = 0, time = 0 SECONDS, easing = EASE_IN)
 	user.mob_timers[MT_INVISIBILITY] = world.time + invis_time
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon/human, update_sneak_invis), TRUE), invis_time)
-	addtimer(CALLBACK(user, TYPE_PROC_REF(/atom/movable, visible_message), span_warning("[user] fades back into view."), span_notice("You become visible again.")), invis_time)
+	addtimer(CALLBACK(user, TYPE_PROC_REF(/atom/movable, visible_message), span_warning("[user] 重新在视野中显现了出来。"), span_notice("你重新显露了身形。")), invis_time)
 	return TRUE
 
 /mob/living/simple_animal/hostile/rogue/xylixdouble
-	name = "Xylixian Double - You shouldnt be seeing this."
+	name = "Xylix 替身 - 你本不该看到这个。"
 	desc = ""
 	gender = NEUTER
 	mob_biotypes = MOB_HUMANOID
@@ -119,8 +119,8 @@
 
 
 /obj/effect/proc_holder/spell/invoked/mockery
-	name = "Vicious Mockery"
-	desc = "Mock your target, reducing their INT, SPD, STR and WIL for a time."
+	name = "恶毒嘲弄"
+	desc = "嘲弄目标，使其一段时间内降低智力、速度、力量与意志。"
 	overlay_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	overlay_state = "mockery"
@@ -149,31 +149,31 @@
 	if(ishuman(user))
 		switch(pick(1,2,3,4,5,6,7,8,9,10,11,12,13))
 			if(1)
-				user.say("Your mother was a Rous, and your father smelled of jacksberries!", forced = "spell")
+				user.say("你母亲是只 Rous，你父亲闻起来像杰克莓！", forced = "spell")
 			if(2)
-				user.say("What are you going to do for a face when the Archdevil wants his arse back?!", forced = "spell")
+				user.say("等大魔鬼来把屁股讨回去时，你准备用什么当脸面？！", forced = "spell")
 			if(3)
-				user.say("Wandought thine blades stand, much like thine loving parts!", forced = "spell")
+				user.say("你那刀站得倒挺直，和你那话儿一样不中用！", forced = "spell")
 			if(4)
-				user.say("That's a face not even Eora could love!", forced = "spell")
+				user.say("连 Eora 都不会爱上你那张脸！", forced = "spell")
 			if(5)
-				user.say("Your breath smells like raw butter and cheap beer!.", forced = "spell")
+				user.say("你嘴里的味儿像生黄油和廉价啤酒！", forced = "spell")
 			if(6)
-				user.say("I bite mine thumb, ser!", forced = "spell")
+				user.say("我向你咬拇指，阁下！", forced = "spell")
 			if(7)
-				user.say("But enough talk- have at thee!", forced = "spell")
+				user.say("废话少说，来吧！", forced = "spell")
 			if(8)
-				user.say("My grandmother fights better than you!", forced = "spell")
+				user.say("我祖母打得都比你好！", forced = "spell")
 			if(9)
-				user.say("Need you borrow mine spectacles? Come get them!", forced = "spell")
+				user.say("要借我的眼镜吗？有本事自己来拿！", forced = "spell")
 			if(10)
-				user.say("How much sparring did it take to become this awful?!", forced = "spell")
+				user.say("你到底练了多久，才变得这么不堪？！", forced = "spell")
 			if(11)
-				user.say("You may need a smith- for you seem ill-equipped for a battle of wits!", forced = "spell")
+				user.say("你恐怕得去找铁匠了，因为你根本没资格来打一场智斗！", forced = "spell")
 			if(12)
-				user.say("Looks as if thou art PSY-DONE! No? Too soon? Alright.", forced = "spell")
+				user.say("看来你真是 PSY-DONE 了！不？太早了？行吧。", forced = "spell")
 			if(13)
-				user.say("Ravox bring justice to your useless mentor, ser!", forced = "spell")
+				user.say("愿 Ravox 替你那无用的导师降下正义，阁下！", forced = "spell")
 
 /datum/status_effect/debuff/viciousmockery
 	id = "viciousmockery"
@@ -182,13 +182,13 @@
 	effectedstats = list(STATKEY_STR = -1, STATKEY_SPD = -1,STATKEY_WIL = -1, STATKEY_INT = -3)
 
 /atom/movable/screen/alert/status_effect/debuff/viciousmockery
-	name = "Vicious Mockery"
-	desc = "<span class='warning'>THAT ARROGANT BARD! ARGH!</span>\n"
+	name = "恶毒嘲弄"
+	desc = "<span class='warning'>那个狂妄的吟游诗人！啊啊啊！</span>\n"
 	icon_state = "mockery"
 
 /obj/effect/proc_holder/spell/self/xylixslip
-	name = "Xylixian Slip"
-	desc = "Jumps you up to 3 tiles away."
+	name = "Xylix 滑步"
+	desc = "让你跃至最远 3 格外。"
 	overlay_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	overlay_state = "slip"
@@ -218,7 +218,7 @@
 		return FALSE
 
 	if(H.IsOffBalanced())
-		H.visible_message(span_warning("[H] loses their footing!"))
+		H.visible_message(span_warning("[H] 失了脚步！"))
 		var/turnangle = (prob(50) ? 270 : 90)
 		var/turndir = turn(dir, turnangle)
 		var/dist = rand(1, 2)
@@ -231,7 +231,7 @@
 	else
 		var/current_turf = get_turf(H)
 		var/turf/target_turf = get_ranged_target_turf(current_turf, H.dir, leap_dist)
-		H.visible_message(span_warning("[H] slips away!"))
+		H.visible_message(span_warning("[H] 滑走了！"))
 		H.throw_at(target_turf, leap_dist, 1, H, TRUE)
 		if(target_turf.landsound)
 			playsound(target_turf, target_turf.landsound, 100, FALSE)
@@ -241,8 +241,8 @@
 		return TRUE
 
 /obj/effect/proc_holder/spell/invoked/abscond
-	name = "Abscond"
-	desc = "Disappear in a flash of smoke! (With a range of 4 tiles)"
+	name = "遁逸"
+	desc = "在一阵烟雾中消失！（最远 4 格）"
 	releasedrain = 30
 	warnie = "spellwarning"
 	movement_interrupt = TRUE
@@ -334,10 +334,10 @@
 		if(max_range >= get_dist(user, T) && !T.density)
 			if(check_path(get_turf(user), T))	//We check for opaque turfs or non-climbable windows in the way via a simple pathfind.
 				if(get_dist(user, T) < 2 && user.z == T.z)
-					to_chat(user, span_info("Too close!"))
+					to_chat(user, span_info("太近了！"))
 					revert_cast()
 					return FALSE
-				to_chat(user, span_info("I begin to slip away!"))
+				to_chat(user, span_info("我开始滑脱而去了！"))
 				lockon(T, user)
 				if(do_after(user, 3 SECONDS))
 					S.set_up(1, O)
@@ -349,20 +349,20 @@
 					revert_cast()
 				return FALSE
 			else
-				to_chat(user, span_info("The path is blocked!"))
+				to_chat(user, span_info("去路被挡住了！"))
 				revert_cast()
 				return FALSE
 		else if(get_dist(user, T) > max_range)
-			reason = "It's too far."
+			reason = "太远了。"
 			revert_cast()
 			return FALSE
 		else if (T.density)
-			reason = "It's a wall!"
+			reason = "那是一堵墙！"
 			revert_cast()
 			return FALSE
-		to_chat(user, span_info("I cannot slip there! "+"[reason]"))
+		to_chat(user, span_info("我无法滑到那里！"+"[reason]"))
 	else
-		to_chat(user, span_info("I cannot slip there!"))
+		to_chat(user, span_info("我无法滑到那里！"))
 		revert_cast()
 		return
 	. = ..()
@@ -381,8 +381,8 @@
 	destination_turf.add_overlay(tile_effect)
 
 /obj/effect/proc_holder/spell/invoked/mimicry
-	name = "Mimicry"
-	desc = "Play a sound of your choice at the targeted location, or assume the form of an item as a parlor trick, you brilliant jester."
+	name = "拟形戏法"
+	desc = "在目标地点播放你选择的声音，或化作一件物品逗人取乐，你这聪明的小丑。"
 	overlay_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	overlay_state = "mimicry"
@@ -398,40 +398,40 @@
 	miracle = TRUE
 	var/parlor_hand_path = /obj/item/melee/touch_attack/parlor_trick
 	var/list/soundpick = list(
-		"Angry Skeleton" = 'sound/vo/mobs/skel/skeleton_scream (1).ogg',
-		"Armor Break" = 'sound/combat/sharpness_loss1.ogg',
-		"Attack Swing" = 'sound/combat/wooshes/bladed/wooshlarge (1).ogg',
-		"Bell" = 'sound/misc/bell.ogg',
-		"Bell Jingle" = 'sound/items/jinglebell1.ogg',
-		"Broken Door" = 'sound/combat/hits/onwood/destroywalldoor.ogg',
-		"Clap" = 'sound/vo/clap (1).ogg',
-		"Clear Throat" = 'sound/vo/female/gen/clearthroat.ogg',
-		"Defending" = 'sound/combat/clash_initiate.ogg',
-		"Door Unlock" = 'sound/foley/doors/woodlock.ogg',
-		"Explosion" = 'sound/magic/fireball.ogg',
-		"Glass Shatter" = 'sound/combat/hits/onglass/glassbreak (2).ogg',
-		"Goblin Jabber" = 'sound/vo/male/goblin/giggle (2).ogg',
-		"Guard Houndstone" = 'sound/misc/garrisonscom.ogg',
-		"Hallelujah" = 'sound/magic/hallelujah.ogg',
-		"Howl" = 'sound/vo/mobs/wwolf/howl (1).ogg',
-		"Jumping" = 'sound/vo/male/gen/jump.ogg',
-		"Large Creecher Jump" = 'sound/vo/mobs/wwolf/jump (1).ogg',
-		"Lockpick Click" = 'sound/items/pickbad.ogg',
-		"Message" = 'sound/magic/message.ogg',
-		"Psst" = 'sound/vo/psst.ogg',
-		"Rat Chitter/SCOM" = 'sound/vo/mobs/rat/rat_life.ogg',
-		"Relief" = 'sound/ddrelief.ogg',
-		"Scream - Agony" = 'sound/vo/male/old/scream.ogg',
-		"Scream - Rage" = 'sound/vo/female/gen/rage (1).ogg',
-		"Skeleton Laugh" = 'sound/vo/mobs/skel/skeleton_laugh.ogg',
-		"Snap Finger" = 'sound/foley/finger-snap.ogg',
-		"Spider Chitter" = 'sound/vo/mobs/spider/idle (1).ogg',
-		"Stress" = 'sound/ddstress.ogg',
-		"Vicious Mockery" = 'sound/magic/mockery.ogg',
-		"Volf Snarl" = 'sound/vo/mobs/vw/idle (1).ogg',
+		"愤怒骷髅" = 'sound/vo/mobs/skel/skeleton_scream (1).ogg',
+		"护甲碎裂" = 'sound/combat/sharpness_loss1.ogg',
+		"挥击" = 'sound/combat/wooshes/bladed/wooshlarge (1).ogg',
+		"钟声" = 'sound/misc/bell.ogg',
+		"铃铛叮当" = 'sound/items/jinglebell1.ogg',
+		"门板破裂" = 'sound/combat/hits/onwood/destroywalldoor.ogg',
+		"鼓掌" = 'sound/vo/clap (1).ogg',
+		"清嗓" = 'sound/vo/female/gen/clearthroat.ogg',
+		"招架" = 'sound/combat/clash_initiate.ogg',
+		"开锁" = 'sound/foley/doors/woodlock.ogg',
+		"爆炸" = 'sound/magic/fireball.ogg',
+		"玻璃碎裂" = 'sound/combat/hits/onglass/glassbreak (2).ogg',
+		"哥布林喋喋" = 'sound/vo/male/goblin/giggle (2).ogg',
+		"守卫警讯" = 'sound/misc/garrisonscom.ogg',
+		"哈利路亚" = 'sound/magic/hallelujah.ogg',
+		"嚎叫" = 'sound/vo/mobs/wwolf/howl (1).ogg',
+		"跳跃" = 'sound/vo/male/gen/jump.ogg',
+		"大型怪物跃起" = 'sound/vo/mobs/wwolf/jump (1).ogg',
+		"开锁拨片声" = 'sound/items/pickbad.ogg',
+		"讯息" = 'sound/magic/message.ogg',
+		"嘘声" = 'sound/vo/psst.ogg',
+		"老鼠吱吱/SCOM" = 'sound/vo/mobs/rat/rat_life.ogg',
+		"释然" = 'sound/ddrelief.ogg',
+		"惨叫 - 痛苦" = 'sound/vo/male/old/scream.ogg',
+		"惨叫 - 狂怒" = 'sound/vo/female/gen/rage (1).ogg',
+		"骷髅笑声" = 'sound/vo/mobs/skel/skeleton_laugh.ogg',
+		"打响指" = 'sound/foley/finger-snap.ogg',
+		"蜘蛛嘶鸣" = 'sound/vo/mobs/spider/idle (1).ogg',
+		"压力" = 'sound/ddstress.ogg',
+		"恶毒嘲弄" = 'sound/magic/mockery.ogg',
+		"Volf 咆哮" = 'sound/vo/mobs/vw/idle (1).ogg',
 	)
 /obj/item/melee/touch_attack/parlor_trick
-	name = "parlor trick"
+	name = "戏法道具"
 	icon = 'icons/mob/roguehudgrabs.dmi'
 	icon_state = "pulling"
 	icon_state = "grabbing_greyscale"
@@ -474,7 +474,7 @@
 
 /obj/item/melee/touch_attack/parlor_trick/proc/make_copy(atom/target, mob/user)
 	playsound(get_turf(src), 'sound/magic/decoylaugh.ogg', 20, TRUE, -6)
-	to_chat(user, span_notice("Copied [target]."))
+	to_chat(user, span_notice("已复制 [target]。"))
 	var/obj/temp = new /obj()
 	temp.appearance = target.appearance
 	temp.layer = initial(target.layer)
@@ -492,20 +492,20 @@
 		playsound(get_turf(src), 'sound/magic/decoylaugh.ogg', 20, TRUE, -6)
 		qdel(active_dummy)
 		active_dummy_ref = null
-		to_chat(user, span_notice("You deactivate \the [src]."))
+		to_chat(user, span_notice("你停用了 \the [src]。"))
 		new /obj/effect/temp_visual/gravpush(get_turf(src))
 	else
 		playsound(get_turf(src), 'sound/magic/decoylaugh.ogg', 20, TRUE, -6)
 		var/obj/effect/dummy/parlor_trick/C = new/obj/effect/dummy/parlor_trick(user.drop_location())
 		C.activate(user, saved_appearance, src)
-		to_chat(user, span_notice("You activate \the [src]."))
+		to_chat(user, span_notice("你启用了 \the [src]。"))
 		new /obj/effect/temp_visual/gravpush(get_turf(src))
 
 /obj/item/melee/touch_attack/parlor_trick/proc/disrupt(delete_dummy = 1)
 	var/obj/effect/dummy/parlor_trick/active_dummy = active_dummy_ref?.resolve()
 	if(active_dummy)
 		for(var/mob/M in active_dummy)
-			to_chat(M, span_danger("Your parlor trick wanes!"))
+			to_chat(M, span_danger("你的戏法正在消散！"))
 		new /obj/effect/temp_visual/gravpush(loc)
 		eject_all()
 		if(delete_dummy)
@@ -602,16 +602,16 @@
 	for(var/obj/item/melee/touch_attack/parlor_trick/P in user.contents)
 		if(!user.is_holding(P))
 			if(!user.put_in_hands(P))
-				to_chat(user, span_warning("My hands are full!"))
+				to_chat(user, span_warning("我的手满了！"))
 				return null
 		return P
 
 	var/obj/item/melee/touch_attack/parlor_trick/P = new parlor_hand_path(user)
 	if(!user.put_in_hands(P))
 		qdel(P)
-		to_chat(user, span_warning("My hands are full!"))
+		to_chat(user, span_warning("我的手满了！"))
 		return null
-	to_chat(user, span_notice("You channel a parlor trick into your hand."))
+	to_chat(user, span_notice("你将一道戏法引入手中。"))
 	return P
 	
 /obj/effect/proc_holder/spell/invoked/mimicry/cast(list/targets, mob/living/user)
@@ -623,7 +623,7 @@
 		if(!P)
 			revert_cast()
 			return FALSE
-		to_chat(user, span_notice("You channel a parlor trick into your hand. Use it on an object to copy, then right-click yourself to transform."))
+		to_chat(user, span_notice("你将一道戏法引入手中。对物体使用它以进行复制，然后右键自己进行变形。"))
 		return TRUE
 
 	if(isobj(target))
@@ -632,10 +632,10 @@
 			revert_cast()
 			return FALSE
 		P.make_copy(target, user)
-		to_chat(user, span_notice("You channel a parlor trick miacle and copy [target]. Right-click yourself to transform."))
+		to_chat(user, span_notice("你将一道戏法奇迹灌入手中并复制了 [target]。右键自己即可变形。"))
 		return TRUE
 
-	var/pickedsound = input(user, "Choose a sound, my wise bureaucrat.", "Mimic Sound") as anything in soundpick
+	var/pickedsound = input(user, "选择一种声音吧，我聪慧的官僚。", "拟声") as anything in soundpick
 	if(!pickedsound)
 		revert_cast()
 		return FALSE
@@ -644,12 +644,12 @@
 		playsound(T, soundpick[pickedsound], 100)
 		return TRUE
 	else
-		to_chat(user, "<span class='warning'>The trick failed you poor fool.</span>")
+		to_chat(user, "<span class='warning'>戏法辜负了你，可怜的傻瓜。</span>")
 		revert_cast()
 		return FALSE
 
 /obj/effect/proc_holder/spell/invoked/projectile/fetch/miracle
-	name = "Divine Fetch"
+	name = "神圣牵引"
 	miracle = TRUE
 	devotion_cost = 10
 	invocations = list()
@@ -659,13 +659,13 @@
 /obj/effect/proc_holder/spell/invoked/projectile/fetch/miracle/cast(list/targets, mob/living/user)
 	var/turf/T = get_turf(targets[1])
 	if(T.z < user.z)
-		to_chat(user, span_warning("You cannot use Divine Fetch below your floor!"))
+		to_chat(user, span_warning("你不能在低于自己所在楼层的位置使用神圣牵引！"))
 		revert_cast()
 		return FALSE
 	return ..()
 
 /obj/effect/proc_holder/spell/invoked/projectile/repel/miracle
-	name = "Divine Repel"
+	name = "神圣斥退"
 	miracle = TRUE
 	devotion_cost = 14
 	invocations = list()
@@ -674,14 +674,14 @@
 /obj/effect/proc_holder/spell/invoked/projectile/repel/miracle/cast(list/targets, mob/living/user)
 	var/turf/T = get_turf(targets[1])
 	if(T.z < user.z)
-		to_chat(user, span_warning("You cannot use Divine Repel below your floor!"))
+		to_chat(user, span_warning("你不能在低于自己所在楼层的位置使用神圣斥退！"))
 		revert_cast()
 		return FALSE
 	return ..()
 
 /obj/effect/proc_holder/spell/invoked/slick_trick_small/miracle
-	name = "Xylixian Slipsquare"
-	desc = "Create a tiny divine slick patch to trip the unwary."
+	name = "Xylix 滑域"
+	desc = "创造一小片神圣湿滑区域，绊倒疏于防备者。"
 	overlay_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	overlay_state = "slipsquare1"
@@ -693,8 +693,8 @@
 	recharge_time = 30 SECONDS
 
 /obj/effect/proc_holder/spell/invoked/slick_trick/miracle
-	name = "Grand Xylixian Slipsquare"
-	desc = "Flood a wide area with divine slick patches that send victims to the floor."
+	name = "巨型 Xylix 滑域"
+	desc = "让大片区域覆满神圣滑面，将受害者掀翻在地。"
 	overlay_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	overlay_state = "slipsquare2"
@@ -740,8 +740,8 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/xylix_blessed_luck
-	name = "Xylixian Blessed Luck"
-	desc = "Even though you haven't won one of his favors, he still favors you."
+	name = "Xylix 赐福之运"
+	desc = "即便你没有真正赢得他的恩宠，他依旧眷顾着你。"
 	icon_state = "status"
 
 /particles/astartian_favor
@@ -791,8 +791,8 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/astrata_favor
-	name = "Astrata's Favor"
-	desc = "Although it was difficult to obtain, Xylix used it. You are practically immortal."
+	name = "Astrata 的恩泽"
+	desc = "虽然这份恩泽来之不易，但 Xylix 还是动用了它。你几乎如同不朽。"
 	icon_state = "status"
 
 //Noc Jackpot
@@ -814,8 +814,8 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/noc_favor
-	name = "Noc's Favor"
-	desc = "Knowledge, light and shadow of Noc covers you."
+	name = "Noc 的恩泽"
+	desc = "Noc 的知识、光与影笼罩着你。"
 	icon_state = "status"
 
 //Zizo punishment
@@ -835,8 +835,8 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/zizo_unfavor
-	name = "Zizo's Intervention"
-	desc = "Your patron was not attentive enough and caught Zizo's attention. You feel weaker."
+	name = "Zizo 的介入"
+	desc = "你的庇护者不够专注，引来了 Zizo 的注意。你感到自己变弱了。"
 	icon_state = "status"
 
 //Ravox Jackpot
@@ -856,8 +856,8 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/ravox_favor
-	name = "Favor of Ravox"
-	desc = "The power of Ravox supports you."
+	name = "Ravox 的恩泽"
+	desc = "Ravox 的力量支撑着你。"
 	icon_state = "status"
 
 //Malum Jackpot
@@ -901,8 +901,8 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/baotha_favor
-	name = "Baotha's Favor"
-	desc = "You feel euphoric, quick, very flushed and intoxicated."
+	name = "Baotha 的恩泽"
+	desc = "你感到欣快、敏捷，浑身燥热而微醺。"
 	icon_state = "status"
 
 //Graggar Jackpot
@@ -920,7 +920,7 @@
 		BP.add_wound(pick(/datum/wound/dynamic/bruise, /datum/wound/dynamic/slash, /datum/wound/dynamic/puncture))
 		if(prob(25))
 			BP.add_wound(/datum/wound/fracture)
-	owner.visible_message(span_warning("[owner] suddenly winces as flesh tears and bruises under Graggar's wrath!"), span_userdanger("Pain blossoms across my body as Graggar's rage wounds me!"))
+	owner.visible_message(span_warning("[owner] 在 Graggar 的怒火下忽然痛得抽搐，血肉撕裂、瘀伤遍生！"), span_userdanger("Graggar 的怒火将我撕伤，剧痛在我全身绽开！"))
 	. = ..()
 
 /datum/status_effect/graggar_favor/on_remove()
@@ -929,8 +929,8 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/graggar_favor
-	name = "Graggar's Favor"
-	desc = "Violence turns inward. Blood and pain has been inflicted upon you!"
+	name = "Graggar 的恩泽"
+	desc = "暴力转而向内。鲜血与痛苦都降临在你身上！"
 	icon_state = "status"
 
 //Matthios Jackpot
@@ -945,9 +945,9 @@
 	if(meister_balance > 0)
 		var/stolen = min(rand(1, 10), meister_balance)
 		SStreasury.bank_accounts[owner] -= stolen
-		to_chat(owner, span_warning("Matthios skims [stolen] mammon from your meister!"))
+		to_chat(owner, span_warning("Matthios 从你的钱袋里顺走了 [stolen] 枚 Mammon！"))
 	else
-		to_chat(owner, span_notice("Matthios reaches for your meister, but finds it empty. Truly, a poor fool!"))
+		to_chat(owner, span_notice("Matthios 伸手去摸你的钱袋，却发现里面空空如也。真是个穷酸的傻瓜！"))
 	. = ..()
 
 /datum/status_effect/matthios_favor/on_remove()
@@ -956,13 +956,13 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/matthios_favor
-	name = "Matthios' Favor"
-	desc = "The Free-God palms coin from your meister with a crooked grin."
+	name = "Matthios 的恩泽"
+	desc = "那位自由之神带着歪斜的笑意，从你的钱袋里顺走了钱币。"
 	icon_state = "status"
 
 /atom/movable/screen/alert/status_effect/buff/malum_favor
-	name = "Favor of Malum"
-	desc = "Malum lends you his enduring strength and will."
+	name = "Malum 的恩泽"
+	desc = "Malum 将他持久的力量与意志借给了你。"
 	icon_state = "status"
 
 //Eora Jackpot
@@ -989,8 +989,8 @@
 	. = ..()
 
 /atom/movable/screen/alert/status_effect/buff/eora_favor
-	name = "A Favor from Eora"
-	desc = "Eora surrounds you with her love, soothing your wounds and making you glow with divine beauty."
+	name = "Eora 的恩泽"
+	desc = "Eora 以她的爱包裹着你，抚平你的伤口，并令你焕发神性的美丽。"
 	icon_state = "status"
 
 //Necra Jackpot
@@ -1030,8 +1030,8 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/necra_favor
-	name = "Necra's Favor"
-	desc = "Necra's censer-smoke clings to your steps, cleansing the ground around you."
+	name = "Necra 的恩泽"
+	desc = "Necra 香炉中的烟雾缠绕在你的步履之间，净化着你周围的地面。"
 	icon_state = "status"
 
 //Pestra Jackpot
@@ -1050,7 +1050,7 @@
 	owner.adjustToxLoss(-30)
 	owner.apply_status_effect(/datum/status_effect/buff/healing, 5)
 	owner.apply_status_effect(/datum/status_effect/buff/pestra_care)
-	to_chat(owner, span_notice("A wet retch spills forth a leech as Pestra's swarm mends me from within."))
+	to_chat(owner, span_notice("一声湿漉漉的干呕吐出了一条水蛭，Pestra 的虫群正从体内修补着我。"))
 	. = ..()
 
 /datum/status_effect/pestra_favor/on_remove()
@@ -1059,8 +1059,8 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/pestra_favor
-	name = "Pestra's Favor"
-	desc = "A leeching purge and crawling mercy ease poison and knit your wounds."
+	name = "Pestra 的恩泽"
+	desc = "水蛭般的净除与爬行的慈悲缓解了毒素，并将你的伤口缝合。"
 	icon_state = "status"
 
 //Dendor Jackpot
@@ -1074,7 +1074,7 @@
 	owner.electrocute_act(30, owner)
 	owner.emote("painscream")
 	ADD_TRAIT(owner, TRAIT_LONGSTRIDER, XYLIX_LUCK_TRAIT)
-	to_chat(owner, span_warning("You're suddenly jolted with a kneestinger's touch as Dendor's power lets you stride freely on uneven terrain for a short time!"))
+	to_chat(owner, span_warning("你忽然被针刺般的一触电得一颤，Dendor 的力量让你短时间内能在崎岖地面上自由奔行！"))
 	. = ..()
 
 /datum/status_effect/dendor_favor/on_remove()
@@ -1084,8 +1084,8 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/dendor_favor
-	name = "Dendor's Favor"
-	desc = "Dendor's blessing jolts you with a kneestinger's touch and temporarily frees your stride from the grip of the earth."
+	name = "Dendor 的恩泽"
+	desc = "Dendor 的祝福如针刺般电过你的身体，暂时将你的步伐从大地的束缚中解放。"
 	icon_state = "status"
 
 //Abyssor Jackpot
@@ -1105,11 +1105,11 @@
 		owner.Dizzy(10)
 		owner.blur_eyes(10)
 		owner.emote("drown")
-		to_chat(owner, span_warning("Abyssor's depths seize your lungs and drag your breath away, draining your energy!"))
+		to_chat(owner, span_warning("Abyssor 的深渊攫住了你的肺腑，扯走了你的呼吸，也抽干了你的精力！"))
 	else
 		owner.stamina_add(round(owner.max_stamina * 0.8))
 		owner.energy_add(round(owner.max_energy * 0.2))
-		to_chat(owner, span_notice("A cool tide washes over your mind, restoring your energy."))
+		to_chat(owner, span_notice("一股清凉的潮汐拂过你的心神，恢复了你的精力。"))
 	. = ..()
 
 /datum/status_effect/abyssor_favor/on_remove()
@@ -1118,13 +1118,13 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/abyssor_favor
-	name = "Abyssor's Favor"
-	desc = "You awoke something you shouldn't have. It pulls your breath away, or may give you a second wind."
+	name = "Abyssor 的恩泽"
+	desc = "你唤醒了本不该唤醒之物。它会夺走你的呼吸，或者赐你第二口气。"
 	icon_state = "status"
 
 /obj/effect/proc_holder/spell/invoked/xylixlian_luck
-	name = "Xylix's Fortune"
-	desc = "Challenge your luck and your patron"
+	name = "Xylix 的赌运"
+	desc = "向你的运气与庇护者发起挑战。"
 	overlay_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	overlay_state = "xylixfort"
@@ -1145,7 +1145,7 @@
 /obj/effect/proc_holder/spell/invoked/xylixlian_luck/cast(list/targets,mob/living/carbon/human/user = usr)
 	user.play_overhead_indicator('modular_twilight_axis/icons/mob/overhead_effects.dmi', "xylix_fortune", 30, MUTATIONS_LAYER, soundin = 'modular_twilight_axis/sound/slotmachine.ogg', y_offset = 24)
 
-	to_chat(user, span_danger("Xylix gives you a chance to use one of his favors"))
+	to_chat(user, span_danger("Xylix 给了你一次动用他恩泽的机会。"))
 	var/luck_bonus = 0
 	luck_bonus -= used_times * 5
 	luck_bonus += 1.9444 * ((world.time - last_used) / bonus_luck_threshould)
@@ -1170,50 +1170,50 @@
 
 	switch(result)
 		if(NOTHING)
-			to_chat(user, span_danger("You won... Nothing!"))
+			to_chat(user, span_danger("你赢得了……虚无！"))
 		if(XYLIX)
 			user.apply_status_effect(/datum/status_effect/xylix_blessed_luck)
 			new /obj/item/roguecoin/gold(get_turf(user), 1)
-			to_chat(user, span_danger("Xylix's fortune favors you!"))
+			to_chat(user, span_danger("Xylix 的赌运站在你这边！"))
 		if(ASTRATA)
 			user.apply_status_effect(/datum/status_effect/astrata_favor)
-			to_chat(user, span_danger("The Light of Astrata gives you strength!"))
+			to_chat(user, span_danger("Astrata 的光辉赐予了你力量！"))
 		if(NOC)
 			user.apply_status_effect(/datum/status_effect/noc_favor)
-			to_chat(user, span_danger("The shadow of Noc's silver light covers you!"))
+			to_chat(user, span_danger("Noc 银辉的阴影笼罩着你！"))
 		if(ZIZO)
 			user.apply_status_effect(/datum/status_effect/zizo_unfavor)
-			to_chat(user, span_danger("Zizo's face is mocking you!"))
+			to_chat(user, span_danger("Zizo 的面容正在嘲弄你！"))
 		if(RAVOX)
 			user.apply_status_effect(/datum/status_effect/ravox_favor)
-			to_chat(user, span_danger("Ravox blesses you with power!"))
+			to_chat(user, span_danger("Ravox 赐予了你力量！"))
 		if(ABYSSOR)
 			user.apply_status_effect(/datum/status_effect/abyssor_favor)
-			to_chat(user, span_danger("Abyssor's tide turns against or for you in an instant!"))
+			to_chat(user, span_danger("Abyssor 的潮汐转瞬之间便倒向了你，或与你为敌！"))
 		if(MALUM)
 			user.apply_status_effect(/datum/status_effect/malum_favor)
-			to_chat(user, span_danger("Malum reforges your body and gives you energy!"))
+			to_chat(user, span_danger("Malum 重铸了你的身躯，并赐你精力！"))
 		if(EORA)
 			user.apply_status_effect(/datum/status_effect/eora_favor)
-			to_chat(user, span_danger("Eora's love envelops you!"))
+			to_chat(user, span_danger("Eora 的爱意将你环抱！"))
 		if(NECRA)
 			user.apply_status_effect(/datum/status_effect/necra_favor)
-			to_chat(user, span_danger("Necra's censer-smoke follows your steps and purifies the way."))
+			to_chat(user, span_danger("Necra 的香炉烟雾跟随着你的脚步，净化着前行之路。"))
 		if(PESTRA)
 			user.apply_status_effect(/datum/status_effect/pestra_favor)
-			to_chat(user, span_danger("Pestra's swarm stirs in your gut, purging poison and stitching flesh."))
+			to_chat(user, span_danger("Pestra 的虫群在你腹中翻涌，驱散毒素并缝合血肉。"))
 		if(DENDOR)
 			user.apply_status_effect(/datum/status_effect/dendor_favor)
-			to_chat(user, span_danger("Dendor's wild energy courses through you — if you can handle the kneestinger's kiss!"))
+			to_chat(user, span_danger("Dendor 狂野的力量奔流过你的全身，只要你受得住那刺痛之吻！"))
 		if(BAOTHA)
 			user.apply_status_effect(/datum/status_effect/baotha_favor)
-			to_chat(user, span_danger("Baotha's haze grips your body and mind!"))
+			to_chat(user, span_danger("Baotha 的迷雾攫住了你的身心！"))
 		if(GRAGGAR)
 			user.apply_status_effect(/datum/status_effect/graggar_favor)
-			to_chat(user, span_danger("Graggar's fury marks your flesh!"))
+			to_chat(user, span_danger("Graggar 的怒火已在你的血肉上留下烙印！"))
 		if(MATTHIOS)
 			user.apply_status_effect(/datum/status_effect/matthios_favor)
-			to_chat(user, span_danger("Matthios steals from your meister as a lesson in greed!"))
+			to_chat(user, span_danger("Matthios 从你的钱袋里偷走了钱财，好给你上一课何为贪婪！"))
 	return ..()
 
 #undef NOTHING

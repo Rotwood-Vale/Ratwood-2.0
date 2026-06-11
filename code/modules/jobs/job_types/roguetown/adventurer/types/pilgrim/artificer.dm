@@ -1,6 +1,6 @@
 /datum/advclass/artificer
-	name = "Tinkerer"
-	tutorial = "One of the brilliant minds that survived the disaster that befell Heartfelt. Perhaps you weren't able to prevent what happened in your homeland, but with your knowledge and skill, perhaps you can shape what happens from now on in your life as you venture towards a new beginning."
+	name = "巧匠"
+	tutorial = "你是少数从降临在 赤心 的那场灾祸中幸存下来的聪慧之士之一。也许你没能阻止故土发生的一切，但凭借你的知识与技艺，在踏上这段通往新生的旅途后，往后的人生会走向何方，或许还能由你亲手塑造。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/artificer

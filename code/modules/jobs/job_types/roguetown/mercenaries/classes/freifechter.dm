@@ -1,6 +1,6 @@
 /datum/advclass/mercenary/freelancer
-	name = "Freifechter"
-	tutorial = "You are a graduate of the Aavnic Freifechters - \"Freelancers\" - a prestigious fighting guild localized in the independent City-state of Szöréndnížina, recognized as an encomium to Ravox by the Holy See. It has formed an odd thirty yils ago, but its visitors come from all over Western Psydonia. You have swung one weapon ten-thousand times, and not the other way around. This class is for experienced combatants who have a solid grasp on footwork and stamina management, master skills alone won't save your lyfe."
+	name = "自由剑士"
+	tutorial = "你毕业于 阿夫尼克的 的 自由斗剑团，也就是“自由战士”行会。这座享有盛名的武斗公会坐落于独立城邦 Szorendnizina，并被教廷视作献给 拉沃克斯 的一份颂礼。它建立不过三十来年，却已吸引整个西 普赛多尼亚 的访客慕名而来。你将同一件兵器挥练过上万次，而非样样浅尝辄止。这个职业属于真正有经验的战士，懂得步法与体力调配的人；光靠大师级技能，还救不了你的命。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/freelancer
@@ -25,18 +25,18 @@
 
 /datum/outfit/job/roguetown/mercenary/freelancer/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are a graduate of the Freifechters."))
+	to_chat(H, span_warning("你是 自由斗剑团 行会的正式毕业生。"))
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer	//Experimental.
-	var/weapons = list("Modified Training Sword !!!CHALLENGE!!!", "Etruscan Longsword", "Kriegsmesser", "Field Longsword", "Frypan", "Peasant Scythe")
+	var/weapons = list("改制训练剑！！！挑战模式！！！", "Etrusca 长剑", "Kriegsmesser", "野战长剑", "煎锅", "农夫镰刀")
 	if(H.mind)
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapon_choice = input(H, "选择你的武器。", "整备武装") as anything in weapons
 		switch(weapon_choice)
-			if("Modified Training Sword !!!CHALLENGE!!!")		//A sharp feder. Less damage, better defense. Definitely not a good choice.
+			if("改制训练剑！！！挑战模式！！！")		//A sharp feder. Less damage, better defense. Definitely not a good choice.
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 				l_hand = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/long/frei
 				beltr = /obj/item/rogueweapon/huntingknife/idagger
-			if("Etruscan Longsword")		//A longsword with a compound ricasso. Accompanied by a traditional flip knife.
+			if("Etrusca 长剑")		//A longsword with a compound ricasso. Accompanied by a traditional flip knife.
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 				l_hand = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/long/etruscan
@@ -46,16 +46,16 @@
 				l_hand = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/long/kriegmesser
 				beltr = /obj/item/rogueweapon/huntingknife/idagger
-			if("Field Longsword")		//A common longsword.
+			if("野战长剑")		//A common longsword.
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 				l_hand = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/long
 				beltr = /obj/item/rogueweapon/huntingknife/idagger
-			if("Frypan")
+			if("煎锅")
 				H.adjust_skillrank_up_to(/datum/skill/craft/cooking, SKILL_LEVEL_LEGENDARY, TRUE)
 				r_hand = /obj/item/cooking/pan
 				beltr = /obj/item/rogueweapon/huntingknife/idagger
-			if("Peasant Scythe")
+			if("农夫镰刀")
 				H.adjust_skillrank_up_to(/datum/skill/labor/farming, SKILL_LEVEL_LEGENDARY, TRUE)
 				r_hand = /obj/item/rogueweapon/scythe
 				beltr = /obj/item/rogueweapon/huntingknife/idagger
@@ -75,8 +75,8 @@
 	H.merctype = 6
 
 /datum/advclass/mercenary/freelancer/lancer
-	name = "Lancer"
-	tutorial = "You put complete trust in your polearm, the most effective weapon the world has seen. Why wear armour when you cannot be hit? You can choose your polearm, and are exceptionally accurate."
+	name = "枪骑步战士"
+	tutorial = "你将全部信任都交给了长柄兵器，这种世上最高效的武器。既然敌人根本碰不到你，为何还要穿得太厚？你可以选择自己的长兵器，而且出手准得惊人。"
 	outfit = /datum/outfit/job/roguetown/mercenary/freelancer_lancer
 	subclass_languages = list(/datum/language/aavnic)//Your character could not have possibly "graduated" without atleast some basic knowledge of Aavnic.
 	traits_applied = list(TRAIT_BADTRAINER)
@@ -99,20 +99,20 @@
 
 /datum/outfit/job/roguetown/mercenary/freelancer_lancer/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You put complete trust in your polearm, the most effective weapon the world has seen. Why wear armour when you cannot be hit? You can choose your polearm, and are exceptionally accurate."))
+	to_chat(H, span_warning("你将全部信任都交给了长柄兵器，这种世上最高效的武器。既然敌人根本碰不到你，为何还要穿得太厚？你可以选择自己的长兵器，而且出手准得惊人。"))
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter
 	backl = /obj/item/rogueweapon/scabbard/gwstrap
-	var/weapons = list("Graduate's Spear", "Boar Spear", "Lucerne")
+	var/weapons = list("毕业长枪", "猎猪矛", "Lucerne 战锤")
 	if(H.mind)
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapon_choice = input(H, "选择你的武器。", "整备武装") as anything in weapons
 		switch(weapon_choice)
-			if("Graduate's Spear")		//A steel spear with a cool-looking stick & a banner sticking out of it.
+			if("毕业长枪")		//A steel spear with a cool-looking stick & a banner sticking out of it.
 				r_hand = /obj/item/rogueweapon/spear/boar/frei
 				l_hand = /obj/item/rogueweapon/katar/punchdagger/frei
-			if("Boar Spear")
+			if("猎猪矛")
 				r_hand = /obj/item/rogueweapon/spear/boar
 				wrists = /obj/item/rogueweapon/katar/punchdagger
-			if("Lucerne")		//A normal lucerne for the people that get no drip & no bitches.
+			if("Lucerne 战锤")		//A normal lucerne for the people that get no drip & no bitches.
 				r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
 				wrists = /obj/item/rogueweapon/katar/punchdagger
 

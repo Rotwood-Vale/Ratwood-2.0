@@ -1,6 +1,6 @@
 /obj/structure/handcart
-	name = "cart"
-	desc = "A wooden cart that will help you carry many things."
+	name = "手推车"
+	desc = "一辆能帮你运送许多东西的木制手推车。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "cart-empty"
 	density = TRUE
@@ -21,11 +21,11 @@
 
 /obj/structure/handcart/examine(mob/user)
 	. = ..()
-	. += span_info("Clicking and dragging an item onto the handcart from the tile you are on will put every items from the tile you can into the cart.")
+	. += span_info("从你脚下那格把物品点住拖到手推车上，会尽量把那一格能装的东西都装进去。")
 	if(upgrade_level == 1)
-		. += span_notice("This cart has a <i>level 1</i> woodcutters wheelbrace installed.")
+		. += span_notice("这辆手推车装有一个<i>1级</i>伐木工轮架。")
 	else if(upgrade_level == 2)
-		. += span_notice("This cart has a <i>level 2</i> woodcutters wheelbrace installed.")
+		. += span_notice("这辆手推车装有一个<i>2级</i>伐木工轮架。")
 
 /obj/structure/handcart/proc/manage_upgrade()
 	switch(upgrade_level)
@@ -99,11 +99,11 @@
 			qdel(cog)
 			playsound(src, pick('sound/combat/hits/onwood/fence_hit1.ogg', 'sound/combat/hits/onwood/fence_hit2.ogg', 'sound/combat/hits/onwood/fence_hit3.ogg'), 100, FALSE)
 			shake_camera(user, 1, 1)
-			to_chat(user, span_warning("[cog.name] inserted!"))
+			to_chat(user, span_warning("[cog.name]已装入！"))
 			return
 		if(cog.ulevel == 1)
 			if(upgrade_level != 0)
-				to_chat(user, span_warning("This [I] is obsolete."))
+				to_chat(user, span_warning("这个[I]已经过时了。"))
 				return
 			else
 				upgrade = I
@@ -112,11 +112,11 @@
 				qdel(cog)
 				playsound(src, pick('sound/combat/hits/onwood/fence_hit1.ogg', 'sound/combat/hits/onwood/fence_hit2.ogg', 'sound/combat/hits/onwood/fence_hit3.ogg'), 100, FALSE)
 				shake_camera(user, 1, 1)
-				to_chat(user, span_warning("[cog.name] inserted!"))
+				to_chat(user, span_warning("[cog.name]已装入！"))
 				return
 		if(cog.ulevel == 2)
 			if(upgrade_level == 2)
-				to_chat(user, span_warning("This [I] is obsolete."))
+				to_chat(user, span_warning("这个[I]已经过时了。"))
 				return
 			else
 				upgrade = I
@@ -125,7 +125,7 @@
 				qdel(cog)
 				playsound(src, pick('sound/combat/hits/onwood/fence_hit1.ogg', 'sound/combat/hits/onwood/fence_hit2.ogg', 'sound/combat/hits/onwood/fence_hit3.ogg'), 100, FALSE)
 				shake_camera(user, 1, 1)
-				to_chat(user, span_warning("[cog.name] inserted!"))
+				to_chat(user, span_warning("[cog.name]已装入！"))
 				return
 	if(!user.cmode)
 		if(!insertion_allowed(I))
@@ -199,7 +199,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(stuff_shit.len)
 		dump_contents()
-		visible_message(span_info("[user] dumps out [src]!"))
+		visible_message(span_info("[user]把[src]里的东西全倒了出来！"))
 		playsound(loc, 'sound/foley/cartdump.ogg', 100, FALSE, -1)
 	update_icon()
 

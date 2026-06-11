@@ -1,12 +1,12 @@
 // Just store all of the alcohol reagents that isn't base tg here
 /datum/reagent/consumable/ethanol/beer
-	name = "Beer"
+	name = "啤酒"
 	description = ""
 	color = "#a17c10" // rgb: 102, 67, 0
 	nutriment_factor = 0.1
 	boozepwr = 25
-	taste_description = "ale"
-	glass_name = "glass of beer"
+	taste_description = "麦芽酒"
+	glass_name = "一杯啤酒"
 	glass_desc = ""
 
 /datum/reagent/consumable/ethanol/rum

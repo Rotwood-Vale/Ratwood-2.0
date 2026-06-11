@@ -1,17 +1,17 @@
 //Causes fire damage to anyone not standing on a dense object.
 /datum/weather/floor_is_lava
-	name = "the floor is lava"
+	name = "地板变成熔岩"
 	desc = ""
 
-	telegraph_message = span_warning("I feel the ground beneath you getting hot. Waves of heat distort the air.")
+	telegraph_message = span_warning("我感觉脚下的地面正变得滚烫，热浪让空气都扭曲了。")
 	telegraph_duration = 150
 
-	weather_message = span_danger("The floor is lava! Get on top of something!")
+	weather_message = span_danger("地板变成熔岩了！快站到什么东西上面去！")
 	weather_duration_lower = 300
 	weather_duration_upper = 600
 	weather_overlay = "lava"
 
-	end_message = span_danger("The ground cools and returns to its usual form.")
+	end_message = span_danger("地面冷却下来，恢复了原本的模样。")
 	end_duration = 0
 
 	area_type = /area

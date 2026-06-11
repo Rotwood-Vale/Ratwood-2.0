@@ -1,6 +1,6 @@
 /datum/advclass/wretch/licker
-	name = "Licker"
-	tutorial = "You have recently been embraced as a vampire. You do not know whom your sire is, strange urges, unnatural strength, a thirst you can barely control. You were outed as a monster and are now on the run."
+	name = "舔血者"
+	tutorial = "你最近才刚被吸血鬼初拥。你不知道自己的血亲是谁，体内翻涌着诡异的冲动、非人的力量，以及几乎无法控制的饥渴。你的怪物身份已经暴露，如今只能四处逃亡。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/roguetown/wretch/licker
@@ -22,7 +22,7 @@
 		for(var/datum/advclass/CHECKS in SSrole_class_handler.sorted_class_categories[CTAG_LICKER_WRETCH])
 			possible_classes += CHECKS
 
-		var/datum/advclass/C = input(H.client, "What is my class?", "Adventure") as null|anything in possible_classes
+		var/datum/advclass/C = input(H.client, "我将以什么身份行动？", "冒险") as null|anything in possible_classes
 		C.equipme(H)
 
 		H.adjust_skillrank_up_to(/datum/skill/magic/blood, 4, TRUE)

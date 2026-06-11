@@ -1,10 +1,10 @@
 // LIGHT ARMORS
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/atgervi/gronn
-	name = "ravager helm"
-	desc = "A helmet of hardened leather with a carved animal skull to appear similar to a human, A unique design of a distant freezing land \
-			The visage is said to scare the spirits of those defeated in the battle field \
-			and prevent Necra or The Moose from allowing them to haunt."
+	name = "掠袭者头盔"
+	desc = "以硬化皮革制成并雕有兽骨头面，外形近似人类头颅的头盔，来自空寂北境的独特设计。 \
+			据说在伊斯卡恩，这副面容足以惊走战场上败者的亡魂 \
+			并阻止内克拉或驼鹿之灵让他们化作幽魂徘徊。"
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
 	icon_state = "gronnleatherhelm"
@@ -17,9 +17,9 @@
 	min_cold_protection_temperature = 50
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/gronn
-	name = "ravager mantle"
-	desc = "A carefully created mantle of bone and hardened leather. It offers superior protection against the threats of the wild while remaining light, \
-			A popular design is to adorn a shoulder with a wolf pelt and skull. So that a great beast is always with you."
+	name = "掠袭者披肩"
+	desc = "以骨骼与硬化皮革精心制成的披肩。在保持轻便的同时，对荒野威胁提供卓越防护， \
+			伊斯卡恩流行在肩头饰以狼皮与狼头，让伟兽始终伴你左右。"
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
 	icon_state = "gronnleatherarmor"
@@ -29,9 +29,9 @@
 	min_cold_protection_temperature = 50
 
 /obj/item/clothing/under/roguetown/trou/leather/gronn
-	name = "fur pants"
-	desc = "A pair of hardened leather pants with bone reinforcements along the legs, \
-			A wild design that offers superior protection against blunt and slashing. The attack of beasts."
+	name = "毛皮裤"
+	desc = "一条沿腿部加有骨质强化的硬化皮裤， \
+			野性十足的设计，对钝击与劈砍有出色防护，也能抵御野兽的袭击。"
 	icon_state = "gronnleatherpants"
 	item_state = "gronnleatherpants"
 	armor = ARMOR_GRONN_LIGHT
@@ -44,8 +44,8 @@
 	min_cold_protection_temperature = 50
 
 /obj/item/clothing/gloves/roguetown/angle/gronn
-	name = "fur-lined leather gloves"
-	desc = "Thick, padded gloves made for the harshest of climates, and wildest of beasts encountered in the untamed lands."
+	name = "毛衬皮手套"
+	desc = "厚实加垫的手套，为最严酷的气候与荒野中最凶猛的野兽而制。"
 	icon_state = "gronnleathergloves"
 	item_state = "gronnleathergloves"
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
@@ -55,10 +55,10 @@
 	min_cold_protection_temperature = 50
 
 /obj/item/clothing/gloves/roguetown/angle/gronnfur
-	name = "fur-lined bone gloves"
-	desc = "A pair of hardened leather gloves with a bone reinforcement across the wrist\
-			and the back of the hand offering superior protection against\
-			the claws of beasts and the claw of nature and plant common for gatherers."
+	name = "毛衬骨手套"
+	desc = "一双硬化皮手套，腕部加有骨质强化\
+			与手背相连，能提供卓越防护，抵御\
+			野兽之爪，以及采集者常遇见的自然荆棘与植物抓伤。"
 	icon_state = "gronnfurgloves"
 	item_state = "gronnfurgloves"
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
@@ -71,8 +71,8 @@
 
 /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP
-	name = "moose hood"
-	desc = "A deceptively strong hood of hide with a pair of large heavy antlers. It is the reward of the fourth trial of the Iskarn Shamans, To slay a Grinning moose in the final hunt alone and fashion a hood from it's head."
+	name = "驼鹿兜帽"
+	desc = "外表朴素却异常坚固的兽皮兜帽，上有一对沉重巨角。它是伊斯卡恩萨满第四试炼的奖赏: 在最终狩猎中独自猎杀一头咧嘴驼鹿，并以其头颅制成兜帽。"
 	body_parts_covered = HEAD|HAIR|EARS|NOSE
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/32x48/gronn.dmi'
@@ -127,7 +127,7 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	toggle_helmet_light(user)
-	to_chat(user, span_info("I spark [src] [on ? "on" : "off"]."))
+	to_chat(user, span_info("我将 [src] 点[on ? "亮" : "灭"]。"))
 
 /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood/proc/toggle_helmet_light(mob/living/user)
 	on = !on
@@ -157,12 +157,12 @@
 /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/lux))
 		if(adjustable == CADJUSTED)
-			to_chat(user, span_warning("The hood must be up for this to work!"))
+			to_chat(user, span_warning("兜帽必须拉起才能这样做！"))
 			return
 		if(lux_consumed)
-			to_chat(user, span_warning("It has already been infused."))
+			to_chat(user, span_warning("它已经被注入过了。"))
 			return
-		to_chat(user, span_warning("I infuse the hood with the soul energies!"))
+		to_chat(user, span_warning("我将灵魂能量注入兜帽！"))
 		lux_consumed = TRUE
 		set_light_range_power_color(6, 2, lux_color) //The light is doubled
 		if(!on)
@@ -203,16 +203,16 @@
 // MEDIUM ARMOR -- Iron reskins
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/atgervi/gronn/ownel
-	name = "ownel helmet"
-	desc = "A full helmet that protects the eyes and head well, \
-			The slits decorated with a harsh gold dye are said to give those the ability to see keenly like a bird."
+	name = "欧内尔头盔"
+	desc = "一顶能很好保护双眼与头部的全覆面头盔， \
+			据说在格隆，涂有刺眼金色染料的狭缝能赋予佩戴者如鸟般锐利的目光。"
 	icon_state = "gronnhelm"
 	item_state = "gronnhelm"
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/gronn
-	name = "byrine hauberk"
-	desc = "A chain shirt of a foreign design with a leather coat layered over \
-			offering additional protection and superior movement. Often used by sea raiders."
+	name = "拜林长链甲"
+	desc = "格隆风格的链甲衫，外覆皮革外衣 \
+			提供额外防护与更佳行动性。常被海上劫掠者使用。"
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
 	icon_state = "gronnchain"
@@ -220,16 +220,16 @@
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/clothing/gloves/roguetown/chain/gronn
-	name = "byrine gloves"
-	desc = "A pair of leather gloves with chain to protects the wrists and back of the hand."
+	name = "拜林手套"
+	desc = "一副带链片的皮手套，可保护手腕与手背。"
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
 	icon_state = "gronnchaingloves"
 	item_state = "gronnchaingloves"
 
 /obj/item/clothing/under/roguetown/splintlegs/iron/gronn
-	name = "byrine chausses"
-	desc = "A pair of chain pants with a leather subligar for both protection and comfort."
+	name = "拜林锁甲裤"
+	desc = "一条锁甲裤，内衬皮质护裆，兼顾防护与舒适。"
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
 	icon_state = "gronnchainpants"
@@ -239,9 +239,9 @@
 // HEAVY ARMOR -- ditto
 
 /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gronn
-	name = "norsii horned helmet"
-	desc = "A horned iron helmet, An exotic foreign design. \
-		Styled after the appearance of invading knights of legends from a distant land. Brutal and plain."
+	name = "诺尔西角盔"
+	desc = "带角的铁盔，异域风格的独特设计。\
+	其造型仿照传说中自遥远之地入侵而来的骑士形象。粗暴而朴实。"
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/gronn.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
@@ -256,8 +256,8 @@
 	worn_y_dimension = 64
 
 /obj/item/clothing/suit/roguetown/armor/plate/iron/gronn
-	name = "norsii iron plate"
-	desc = "A strange iron chestplate adorned with tassets and roundels. It is said to be a sight to shake armies."
+	name = "诺尔西铁板甲"
+	desc = "饰有垂甲与圆盘护片的奇特铁胸甲，据说那景象足以撼动军阵。"
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
 	icon_state = "gronnplate"
@@ -268,26 +268,26 @@
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/clothing/gloves/roguetown/plate/iron/gronn
-	name = "norsii iron gauntlets"
-	desc = "Iron gauntlets, Simple and protective in design. A single punch leaves a nasty mark."
+	name = "诺尔西铁臂铠"
+	desc = "铁臂铠，设计朴素却实用。挨上一拳就会留下可怕的伤痕。"
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
 	icon_state = "gronnplategloves"
 	item_state = "gronnplategloves"
 
 /obj/item/clothing/under/roguetown/platelegs/iron/gronn
-	name = "norsii iron chausses"
-	desc = "Iron chausses with an added set of leather for comfort and padding, The knees are adorned with a skull like shape and that of the moon."
+	name = "诺尔西铁护腿"
+	desc = "铁制护腿加覆一层皮革以提升舒适与缓冲，膝部饰有骷髅与月相般的纹样。"
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
 	icon_state = "gronnplatepants"
 	item_state = "gronnplatepants"
 
 /obj/item/clothing/shoes/roguetown/boots/armor/iron/gronn
-	name = "norsii iron boots"
-	desc = "Iron boots, tied with leather strapping. \
-			Protective, an ancient legend tells of a great warrior who fought for aeons until a \
-			hero speared him in the foot. Many follow this example by protecting their feet heavily."
+	name = "诺尔西铁靴"
+	desc = "铁靴，以皮带系缚。 \
+			防护出色，一则古老传说讲述了一位伟大战士鏖战千秋，直到 \
+			一名英雄以长矛刺穿了他的脚。许多人因此格外重视足部防护。"
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
 	icon_state = "gronnplateboots"

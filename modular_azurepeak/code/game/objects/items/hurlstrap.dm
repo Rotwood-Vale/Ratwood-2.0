@@ -1,5 +1,5 @@
 /obj/item/hurlstrap
-	name = "hurlbat bandolier"
+	name = "投斧挎带"
 	desc = ""
 	icon_state = "hbstrap0"
 	item_state = "hurlstrap"
@@ -33,7 +33,7 @@
 			tweps += A
 			update_icon()
 		else
-			to_chat(loc, span_warning("Full!"))
+			to_chat(loc, span_warning("满了！"))
 		return
 	..()
 
@@ -41,7 +41,7 @@
 	if(tweps.len)
 		if(user.get_skill_level(/datum/skill/combat/axes)<2)
 			if(do_after(user, 20, target = user)) //Limits those not skilled in axes from using it properly
-				to_chat(user, span_notice("You fumble to draw a throwing weapon..."))
+				to_chat(user, span_notice("你手忙脚乱地抽出了一把投掷武器......"))
 				var/obj/O = tweps[tweps.len]
 				tweps -= O
 				user.put_in_active_hand(O, user.active_hand_index)
@@ -56,7 +56,7 @@
 /obj/item/hurlstrap/examine(mob/user)
 	. = ..()
 	if(tweps.len)
-		. += span_notice("[tweps.len] inside.")
+		. += span_notice("里面有[tweps.len]件。")
 
 /obj/item/hurlstrap/update_icon()
 	switch(tweps.len)

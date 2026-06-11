@@ -1,9 +1,9 @@
 
 /obj/item/roguegem
-	name = "mother of all gems"
+	name = "万宝之母"
 	icon_state = "ruby_cut"
 	icon = 'icons/roguetown/items/gems.dmi'
-	desc = "A debug tool to help us later"
+	desc = "一个供后续调试使用的工具。"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -21,18 +21,18 @@
 
 		if(iskobold(M))
 			if(M == user)
-				user.visible_message(span_warning("[user] is attempting to eat [src]!"), span_warning("I begin to eat [src]!"))
+				user.visible_message(span_warning("[user]正试图吃下[src]！"), span_warning("我开始吃[src]了！"))
 			else
-				user.visible_message(span_warning("[user] begins to force [M] to eat [src]!"), span_warning("I attempt to force [M] to eat [src]!"))
+				user.visible_message(span_warning("[user]开始强迫[M]吃下[src]！"), span_warning("我试图强迫[M]吃下[src]！"))
 			if(do_after(user, 40))
 				var/healydoodle_gems = sellprice*0.6
 				M.apply_status_effect(/datum/status_effect/buff/gemmuncher, healydoodle_gems)
 				playsound(get_turf(src), 'modular_azurepeak/sound/spellbooks/glass.ogg', 100)
 				qdel(src)
 				if(M == user)
-					user.visible_message(span_danger("[user] eats [src]! Egads!"), span_danger("I devour [src]!"))
+					user.visible_message(span_danger("[user]吃下了[src]！天哪！"), span_danger("我把[src]吞了下去！"))
 				else
-					user.visible_message(span_danger("[user] forces [M] to eat [src]! Egads!"), span_danger("I force [M] to eat [src]!"))
+					user.visible_message(span_danger("[user]强迫[M]吃下了[src]！天哪！"), span_danger("我强迫[M]吃下了[src]！"))
 
 		else
 			return ..()
@@ -53,10 +53,10 @@
 	..()
 
 /obj/item/roguegem/green
-	name = "gemerald"
+	name = "祖母绿"
 	icon_state = "emerald_cut"
 	sellprice = 42
-	desc = "Glints with verdant brilliance."
+	desc = "闪烁着翠绿的光辉。"
 
 /obj/item/roguegem/green/Initialize(mapload)
 	. = ..()
@@ -68,10 +68,10 @@
 	)
 
 /obj/item/roguegem/blue
-	name = "blortz"
+	name = "石英"
 	icon_state = "quartz_cut"
 	sellprice = 88
-	desc = "Pale blue, like a frozen tear."
+	desc = "淡蓝如冻结的泪滴。"
 
 /obj/item/roguegem/blue/Initialize(mapload)
 	. = ..()
@@ -83,10 +83,10 @@
 	)
 
 /obj/item/roguegem/yellow
-	name = "toper"
+	name = "黄玉"
 	icon_state = "topaz_cut"
 	sellprice = 34
-	desc = "Its amber hues remind you of the sunset."
+	desc = "它的琥珀色调让你想起落日。"
 
 /obj/item/roguegem/yellow/Initialize(mapload)
 	. = ..()
@@ -98,10 +98,10 @@
 	)
 
 /obj/item/roguegem/violet
-	name = "saffira"
+	name = "蓝宝石"
 	icon_state = "sapphire_cut"
 	sellprice = 56
-	desc = "This gem is admired by many wizards."
+	desc = "这颗宝石深受许多法师喜爱。"
 
 /obj/item/roguegem/violet/Initialize(mapload)
 	. = ..()
@@ -113,10 +113,10 @@
 	)
 
 /obj/item/roguegem/ruby
-	name = "rontz"
+	name = "红宝石"
 	icon_state = "ruby_cut"
 	sellprice = 100
-	desc = "Its facets shine so brightly..."
+	desc = "它的切面闪耀得异常明亮……"
 
 /obj/item/roguegem/ruby/Initialize(mapload)
 	. = ..()
@@ -128,63 +128,63 @@
 	)
 
 /obj/item/roguegem/diamond
-	name = "dorpel"
+	name = "钻石"
 	icon_state = "diamond_cut"
 	sellprice = 121
-	desc = "Beautifully clear, it demands respect."
+	desc = "它清澈得近乎完美，令人肃然起敬。"
 
 /obj/item/roguegem/onyxa
-	name = "onyxa"
-	desc = "A sinister, glimmering stone. Valuable to the drow, it is sometimes used in necromantic rituals. Mirrors made of this are said to never show your own face."
+	name = "奥尼克萨"
+	desc = "一块邪异而闪烁的石头。它对卓尔而言价值不菲，也时常用于死灵仪式。传说以它打造的镜子永远不会映出你自己的脸。"
 	icon = 'icons/roguetown/gems/gem_onyxa.dmi'
 	icon_state = "raw_onyxa"
 	sellprice = 30
 
 /obj/item/roguegem/jade
-	name = "jade"
-	desc = "A dull green gem prized in Lingyue and Kazengun alike. Lingyuese tradition holds that jade is the essence of Psydon, protecting both soul and flesh from decay and corruption."
+	name = "玉"
+	desc = "一块黯淡的绿色宝石，在凌月与风间都备受珍视。凌月传统认为，玉是普希冬本质的凝结，能保护灵魂与血肉免于朽坏和腐化。"
 	icon = 'icons/roguetown/gems/gem_jade.dmi'
 	icon_state = "raw_jade"
 	sellprice = 50
 
 /obj/item/roguegem/oyster
-	name = "fossilized clam"
-	desc = "A fossilized clam shell. It would be a good idea to pry it open with a chisel."
+	name = "化石蛤壳"
+	desc = "一枚石化的蛤壳。用凿子把它撬开或许是个不错的主意。"
 	icon = 'icons/roguetown/gems/gem_shell.dmi'
 	icon_state = "oyster_closed"
 	sellprice = 5
 
 /obj/item/roguegem/coral
-	name = "heartstone"
-	desc = "Jagged like a hound's tooth. Heartstone is speculated to be the crystallized blood of fallen sailors. It is sacred to Abyssorites and is used in numerous Abyssorite rituals."
+	name = "心石"
+	desc = "它的锯齿像猎犬的牙。传说心石是陨落水手鲜血结晶而成的产物。它被阿比索尔信徒奉为圣物，也用于许多阿比索尔仪式。"
 	icon = 'icons/roguetown/gems/gem_coral.dmi'
 	icon_state = "raw_coral"
 	sellprice = 60
 
 /obj/item/roguegem/turq
-	name = "cerulite"
-	desc = "A beautiful teal gem that carves easily. Beloved by mages, its remarkable clarity makes it a favored tool of Naledi’s astrologer-mages in divination."
+	name = "蔚青石"
+	desc = "一块美丽的蓝绿色宝石，很容易雕琢。它深受法师喜爱，而其惊人的澄澈度也让它成为纳雷迪占星法师偏爱的占卜工具。"
 	icon = 'icons/roguetown/gems/gem_turq.dmi'
 	icon_state = "raw_turq"
 	sellprice = 75
 
 /obj/item/roguegem/amber
-	name = "amber"
-	desc = "A chunk of fossilized sunlight. Believed to have been shed during the shattering of the First Sun, its remnants are prized among Astratans. Raaneshi sometimes use fragments as currency, instead of mammon."
+	name = "琥珀"
+	desc = "一块石化的阳光。人们相信它是第一轮太阳碎裂时洒落的残片，因此在阿斯特拉信徒中价值连城。拉阿内希人有时甚至会拿它的碎片代替玛蒙作为货币。"
 	icon = 'icons/roguetown/gems/gem_amber.dmi'
 	icon_state = "raw_amber"
 	sellprice = 50
 
 /obj/item/roguegem/opal
-	name = "opal"
-	desc = "A dazzling gem of great value. Opal is widely speculated to be the crystallized essence left behind by rainbows."
+	name = "欧泊"
+	desc = "一颗耀眼夺目的贵重宝石。人们普遍猜测，欧泊是彩虹消散后遗留下来的结晶精华。"
 	icon = 'icons/roguetown/gems/gem_opal.dmi'
 	icon_state = "raw_opal"
 	sellprice = 80
 
 /obj/item/roguegem/chitin
-	name = "beetle chitin plate"
-	desc = "A thick, iridescent plate of chitin shaved from a giant woolly chafer beetle. Prized by underdeep artisans for its durability and natural luster."
+	name = "甲虫几丁质甲片"
+	desc = "一块厚实而泛着虹彩的几丁质甲片，从巨型绒甲金龟身上剥取而来。它因坚韧耐用和天然光泽而深受幽深地底工匠珍爱。"
 	icon = 'icons/roguetown/gems/gem_shell.dmi'
 	icon_state = "raw_shell"
 	color = "#7B8C5E"
@@ -201,10 +201,10 @@
 
 // Do NOT add these to the stockpile treasures list, they have other uses.
 /obj/item/roguegem/blood_diamond
-	name = "glut"
+	name = "血钻"
 	icon_state = "blood"
 	sellprice = 188
-	desc = "Something about this gem just doesn't sit right with you. Holding it makes the blood leave your fingertips."
+	desc = "这颗宝石让你本能地觉得不对劲。握住它时，你会感觉指尖的血色都被抽离了。"
 
 /obj/item/roguegem/blood_diamond/examine(mob/user)
 	. = ..()
@@ -213,12 +213,12 @@
 
 	var/mob/living/carbon/human/human_user = user
 	if(human_user.patron.type == /datum/patron/inhumen/graggar)
-		. += span_danger("You know this gem well. They are born out of great violence, but only if it involves the mightiest of warriors.")
+		. += span_danger("你对这种宝石十分熟悉。唯有最强大战士卷入的极端暴力，才会孕育出它。")
 
 /obj/item/roguegem/amethyst
-	name = "amythortz"
+	name = "阿米索兹"
 	icon_state = "amethyst"
-	desc = "A deep lavender crystal, it surges with magical energy, yet it's artificial nature means it is worth little."
+	desc = "一块深薰衣草色的晶体，其中奔涌着魔法能量，但它的人造本质也意味着它并不值钱。"
 
 /obj/item/roguegem/amethyst/Initialize(mapload)
 	. = ..()
@@ -230,12 +230,12 @@
 	)
 
 /obj/item/roguegem/amethyst/naledi
-	name = "naledic amythortz"
-	desc = "A deep lavender crystal, crackling with magical energy. To a Disciple, it might simply be a keepsake from pilgrimages abroad: but to a Sojourner, it is the leyline to their arcyne-enchanted form of martial combat. </br>This gemstone can be applied to a yet-unfinished spelltome by those with arcyne potential, in order to recall more spells."
+	name = "纳勒迪阿米索兹"
+	desc = "一块深薰衣草色的晶体，噼啪作响地涌动着魔法能量。对门徒而言，它也许只是一次异乡朝圣带回的纪念物；但对旅者来说，它却是将武技与奥术相融的地脉媒介。</br>拥有奥术潜质者可将这颗宝石嵌入尚未完成的法术书中，以此回忆起更多法术。"
 
 /obj/item/roguegem/random
-	name = "random gem"
-	desc = "You shouldn't be seeing this."
+	name = "随机宝石"
+	desc = "你不该看到这个。"
 	icon = 'icons/roguetown/helpers/spawnerhelpers.dmi'
 	icon_state = "roguegem"
 
@@ -251,10 +251,10 @@
 
 
 /obj/item/riddleofsteel
-	name = "riddle of steel"
+	name = "钢铁之谜"
 	icon_state = "ros"
 	icon = 'icons/roguetown/items/gems.dmi'
-	desc = "Flesh, mind."
+	desc = "血肉，心智。"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -282,9 +282,9 @@
 
 		if(iskobold(M))
 			if(M == user)
-				user.visible_message(span_warning("[user] is attempting to eat [src]!"), span_warning("I begin to eat [src]!"))
+				user.visible_message(span_warning("[user]正试图吃下[src]！"), span_warning("我开始吃[src]了！"))
 			else
-				user.visible_message(span_warning("[user] begins to force [M] to eat [src]!"), span_warning("I attempt to force [M] to eat [src]!"))
+				user.visible_message(span_warning("[user]开始强迫[M]吃下[src]！"), span_warning("我试图强迫[M]吃下[src]！"))
 
 			if(do_after(user, 40))
 				playsound(get_turf(src), 'modular_azurepeak/sound/spellbooks/crystal.ogg', 100)
@@ -294,16 +294,16 @@
 					M.adjustFireLoss(250)//If you somehow put it out immediately, you still contend with this.
 					M.Paralyze(12 SECONDS, ignore_canstun = TRUE)//You lost the coin toss. Suffer the loss.
 					M.ignite_mob()
-					M.visible_message(span_deadsay("[src] explodes in a shower of arcyne fire and energy, violently engulfing [M]!"))
+					M.visible_message(span_deadsay("[src]在一阵奥术火焰与能量中轰然爆开，将[M]猛地吞没！"))
 					M.add_stress(/datum/stressevent/riddle_munch)//You still get the stress, even if you don't get the heal.
 				else//You won the toss, but you still lose. Because this is a waste of a riddle.
 					var/healydoodle_riddle = sellprice*0.5//Not as effective, on a per-value basis. But it's still MUCH better.
 					M.apply_status_effect(/datum/status_effect/buff/gemmuncher, healydoodle_riddle)
 					M.add_stress(/datum/stressevent/riddle_munch)//Why would you do this?
 					if(M == user)
-						user.visible_message(span_danger("[user] eats [src]! Wretched creature!"), span_danger("I devour [src]! Was this a good idea?"))
+						user.visible_message(span_danger("[user]吃下了[src]！可憎的生物！"), span_danger("我把[src]吞了下去！这真是个好主意吗？"))
 					else
-						user.visible_message(span_danger("[user] forces [M] to eat [src]! Oh, the Humenity..."), span_danger("I force [M] to eat [src]! Why did I do that?"))
+						user.visible_message(span_danger("[user]强迫[M]吃下了[src]！这也太没人性了……"), span_danger("我强迫[M]吃下了[src]！我为什么要这么做？"))
 
 		else
 			return ..()
@@ -311,10 +311,10 @@
 		return ..()
 
 /obj/item/pearl
-	name = "pearl"
+	name = "珍珠"
 	icon_state = "pearl"
 	icon = 'icons/roguetown/items/gems.dmi'
-	desc = "A beautiful pearl. Can be strung up into an amulet."
+	desc = "一颗美丽的珍珠。可以串起来做成护符。"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -335,9 +335,9 @@
 	)
 
 /obj/item/pearl/blue
-	name = "Blue pearl"
+	name = "蓝珍珠"
 	icon_state = "bpearl"
-	desc = "A beautiful blue pearl. A bounty of Abyssor. Can be strung up into amulets."
+	desc = "一颗美丽的蓝珍珠，乃阿比索尔的馈赠。可以串起来做成护符。"
 	sellprice = 60
 
 /obj/item/pearl/blue/Initialize(mapload)

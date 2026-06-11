@@ -16,51 +16,51 @@
 
 /datum/crafting_recipe/roguetown/structure/statue
 	reqs = list(/obj/item/natural/stone = 4)
-	verbage_simple = "build"
-	verbage = "builds"
+	verbage_simple = "建造"
+	verbage = "建造"
 	skillcraft = /datum/skill/craft/masonry
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/structure/statue/woman
-	name = "statue (lady)"
+	name = "雕像（女士）"
 	result = /obj/structure/fluff/statue/femalestatue
 
 /datum/crafting_recipe/roguetown/structure/statue/woman
-	name = "statue (lady sitting)"
+	name = "雕像（坐姿女士）"
 	result = /obj/structure/fluff/statue/femalestatue2
 
 /datum/crafting_recipe/roguetown/structure/statue/aasimar
-	name = "statue (aasimar)"
+	name = "雕像（亚斯玛）"
 	result = /obj/structure/fluff/statue/aasimar
 
 /datum/crafting_recipe/roguetown/structure/statue/tiefling
-	name = "statue (tiefling)"
+	name = "雕像（提夫林）"
 	result = /obj/structure/fluff/statue/small
 	reqs = list(/obj/item/natural/stone = 2)
 
 /datum/crafting_recipe/roguetown/structure/statue/gargoyle
-	name = "statue (gargoyle)"
+	name = "雕像（石像鬼）"
 	result = /obj/structure/fluff/statue/gargoyle
 	reqs = list(/obj/item/natural/stone = 2)
 
 /datum/crafting_recipe/roguetown/structure/statue/knight
-	name = "statue (knight, facing left)"
+	name = "雕像（骑士，朝左）"
 	result = /obj/structure/fluff/statue/knight
 
 /datum/crafting_recipe/roguetown/structure/statue/knightr
-	name = "statue (knight, facing right)"
+	name = "雕像（骑士，朝右）"
 	result = /obj/structure/fluff/statue/knight/r
 
 /datum/crafting_recipe/roguetown/structure/statue/knightalt
-	name = "statue (knight, tall, facing left)"
+	name = "雕像（高大骑士，朝左）"
 	result = /obj/structure/fluff/statue/knightalt
 
 /datum/crafting_recipe/roguetown/structure/statue/knightaltr
-	name = "statue (knight, tall, facing right)"
+	name = "雕像（高大骑士，朝右）"
 	result = /obj/structure/fluff/statue/knightalt/r
 
 /datum/crafting_recipe/roguetown/structure/statue/hooded
-	name = "statue (hooded)"
+	name = "雕像（兜帽）"
 	result = /obj/structure/fluff/statue
 	reqs = list(/obj/item/natural/stone = 3)
 
@@ -69,28 +69,28 @@
 	craftdiff = 5
 
 /datum/crafting_recipe/roguetown/structure/statue/grand/valmora
-	name = "statue (grand, Valmora)"
+	name = "雕像（宏伟，瓦莫拉）"
 	result = /obj/structure/fluff/statue/valmora
 
 /datum/crafting_recipe/roguetown/structure/statue/grand/astrata
-	name = "statue (grand, Astrata)"
+	name = "雕像（宏伟，阿斯特拉塔）"
 	result = /obj/structure/fluff/statue/astrata/gold
 
 /datum/crafting_recipe/roguetown/structure/statue/grand/eora
-	name = "statue (grand, Eora)"
+	name = "雕像（宏伟，伊欧拉）"
 	result = /obj/structure/fluff/statue/eora
 
 /datum/crafting_recipe/roguetown/structure/statue/grand/noc
-	name = "statue (grand, Noc)"
+	name = "雕像（宏伟，诺克）"
 	result = /obj/structure/fluff/statue/noc
 
 /datum/crafting_recipe/roguetown/structure/statue/grand/abyssor
-	name = "statue (grand, Abyssor)"
+	name = "雕像（宏伟，阿比索尔）"
 	result = /obj/structure/fluff/statue/abyssor
 	reqs = list(/obj/item/natural/stone = 5)
 	craftdiff = 5
 
 /datum/crafting_recipe/roguetown/structure/statue/grand/abyssor/dolomite
-	name = "statue (grand, Abyssor (dolomite))"
+	name = "雕像（宏伟，阿比索尔，白云石）"
 	result = /obj/structure/fluff/statue/abyssor/dolomite
 

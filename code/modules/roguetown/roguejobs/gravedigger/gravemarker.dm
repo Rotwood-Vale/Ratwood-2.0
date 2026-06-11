@@ -1,30 +1,30 @@
 /datum/crafting_recipe/roguetown/gravemarker
-	name = "grave marker"
+	name = "墓碑标记"
 	result = /obj/structure/gravemarker
 	reqs = list(/obj/item/grown/log/tree/stick = 1)
 	time = 10 SECONDS
-	verbage_simple = "tie together"
-	verbage = "ties together"
+	verbage_simple = "捆扎"
+	verbage = "捆扎"
 	craftsound = 'sound/foley/Building-01.ogg'
 	structurecraft = /obj/structure/closet/dirthole
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/gravemarker/TurfCheck(mob/user, turf/T)
 	if(!(locate(/obj/structure/closet/dirthole) in T))
-		to_chat(user, span_warning("There is no grave here."))
+		to_chat(user, span_warning("这里没有坟墓。"))
 		return FALSE
 	for(var/obj/structure/closet/dirthole/D in T)
 		if(D.stage != 4)
-			to_chat(user, span_warning("The grave isn't covered."))
+			to_chat(user, span_warning("这座坟墓还没填平。"))
 			return FALSE
 	if(locate(/obj/structure/gravemarker) in T)
-		to_chat(user, span_warning("This grave is already hallowed."))
+		to_chat(user, span_warning("这座坟墓已经被祝圣过了。"))
 		return FALSE
 	return TRUE
 
 /obj/structure/gravemarker
-	name = "grave marker"
-	desc = "A simple marker honouring the departed.."
+	name = "墓碑标记"
+	desc = "一块向逝者致意的朴素墓碑标记。"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "gravemarker1"
 	density = FALSE
@@ -39,27 +39,27 @@
 	. = ..()
 	if(wrotesign)
 		if(!user.is_literate())
-			. += "I do not know how to read. Not like this one's name matters much anymore."
+			. += "我不识字。反正这上头的名字如今也没多大意义了。"
 		else
-			. += span_notice("A grave marker. It says... \"[wrotesign]\".")
+			. += span_notice("一块墓碑标记。上面写着... \"[wrotesign]\".")
 
 
 /obj/structure/gravemarker/attackby(obj/item/W, mob/user, params)
 	if(!user.cmode)
 		if(!user.is_literate())
-			to_chat(user, span_warning("I do not know how to write. It shall remain unmarked."))
+			to_chat(user, span_warning("我不会写字。它将继续无名。"))
 			return
 		if((user.used_intent.blade_class == BCLASS_STAB) && (W.wlength == WLENGTH_SHORT))
 			if(wrotesign)
-				to_chat(user, span_warning("Something is already carved here."))
+				to_chat(user, span_warning("这里已经刻了字。"))
 				return
 			else
-				var/inputty = stripped_input(user, "Someone rests here. Perhaps I should carve a name?", "", null, 200)
+				var/inputty = stripped_input(user, "有人长眠于此。或许我该刻下一个名字？", "", null, 200)
 				if(inputty && !wrotesign)
 					wrotesign = inputty
 					name = "[inputty]"
 		else
-			to_chat(user, span_warning("Alas, this will not work. I could carve words, if I stabbed at this with something posessing a short, sharp point. A knife comes to mind."))
+			to_chat(user, span_warning("唉，这样不行。要是用某种短而尖锐的东西去刻，也许能留下字迹。比如一把刀。"))
 			return
 
 /obj/structure/gravemarker/Destroy()
@@ -78,7 +78,7 @@
 	icon_state = "gravemarker[rand(1,3)]"
 	for(var/obj/structure/closet/dirthole/hole in loc)
 		if(pacify_coffin(hole, user))
-			to_chat(user, span_notice("I feel their soul finding peace..."))
+			to_chat(user, span_notice("我感到他们的灵魂终于得到了安宁……"))
 			SEND_SIGNAL(user, COMSIG_GRAVE_CONSECRATED, hole)
 			record_round_statistic(STATS_GRAVES_CONSECRATED)
 	return ..()

@@ -1,5 +1,5 @@
 /obj/item/clothing
-	name = "clothing"
+	name = "衣物"
 	resistance_flags = FLAMMABLE
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	break_sound = 'sound/foley/cloth_rip.ogg'
@@ -87,19 +87,19 @@
 		if(!usr.canUseTopic(src, be_close=TRUE))
 			return
 		if(armor_class == ARMOR_CLASS_HEAVY)
-			to_chat(usr, "AC: <b>HEAVY</b>")
+			to_chat(usr, "护甲等级：<b>重型</b>")
 		if(armor_class == ARMOR_CLASS_MEDIUM)
-			to_chat(usr, "AC: <b>MEDIUM</b>")
+			to_chat(usr, "护甲等级：<b>中型</b>")
 		if(armor_class == ARMOR_CLASS_LIGHT)
-			to_chat(usr, "AC: <b>LIGHT</b>")
+			to_chat(usr, "护甲等级：<b>轻型</b>")
 
 /obj/item/clothing/examine(mob/user)
 	. = ..()
 	if(torn_sleeve_number)
 		if(torn_sleeve_number == 1)
-			. += span_notice("It has one torn sleeve.")
+			. += span_notice("它有一只袖子破了。")
 		else
-			. += span_notice("Both its sleeves have been torn!")
+			. += span_notice("它的两只袖子都被撕破了！")
 
 /obj/item/proc/get_detail_tag() //this is for extra layers on clothes
 	return detail_tag
@@ -158,14 +158,14 @@
 			if(r_sleeve_status == SLEEVE_NOMOD)
 				return
 			if(r_sleeve_status == SLEEVE_TORN)
-				to_chat(user, span_info("It's torn away."))
+				to_chat(user, span_info("它已经被扯掉了。"))
 				return
 			if(!do_after(user, 20, target = user))
 				return
 			if(prob(L.STASTR * 8))
 				torn_sleeve_number += 1
 				r_sleeve_status = SLEEVE_TORN
-				user.visible_message(span_notice("[user] tears [src]."))
+				user.visible_message(span_notice("[user]撕开了[src]。"))
 				playsound(src, 'sound/foley/cloth_rip.ogg', 50, TRUE)
 				if(r_sleeve_zone == BODY_ZONE_R_ARM)
 					body_parts_covered &= ~ARM_RIGHT
@@ -176,20 +176,20 @@
 				user.put_in_hands(Sr)
 				return
 			else
-				user.visible_message(span_warning("[user] tries to tear [src]."))
+				user.visible_message(span_warning("[user]试图撕开[src]。"))
 				return
 		if(user.zone_selected == l_sleeve_zone)
 			if(l_sleeve_status == SLEEVE_NOMOD)
 				return
 			if(l_sleeve_status == SLEEVE_TORN)
-				to_chat(user, span_info("It's torn away."))
+				to_chat(user, span_info("它已经被扯掉了。"))
 				return
 			if(!do_after(user, 20, target = user))
 				return
 			if(prob(L.STASTR * 8))
 				torn_sleeve_number += 1
 				l_sleeve_status = SLEEVE_TORN
-				user.visible_message(span_notice("[user] tears [src]."))
+				user.visible_message(span_notice("[user]撕开了[src]。"))
 				playsound(src, 'sound/foley/cloth_rip.ogg', 50, TRUE)
 				if(l_sleeve_zone == BODY_ZONE_L_ARM)
 					body_parts_covered &= ~ARM_LEFT
@@ -200,7 +200,7 @@
 				user.put_in_hands(Sr)
 				return
 			else
-				user.visible_message(span_warning("[user] tries to tear [src]."))
+				user.visible_message(span_warning("[user]试图撕开[src]。"))
 				return
 	if(loc == L)
 		L.regenerate_clothes()
@@ -249,7 +249,7 @@
 			add_fingerprint(usr)
 
 /obj/item/reagent_containers/food/snacks/clothing
-	name = "temporary moth clothing snack item"
+	name = "临时飞蛾衣物零食"
 	desc = ""
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
 	tastes = list("dust" = 1, "lint" = 1)
@@ -266,7 +266,7 @@
 		if(user == M)
 			return
 		user.changeNext_move(CLICK_CD_MELEE)
-		M.visible_message(span_warning("[user] pats out the flames on [M] with [src]!"))
+		M.visible_message(span_warning("[user]用[src]拍灭了[M]身上的火焰！"))
 		M.adjust_fire_stacks(-2, /datum/status_effect/fire_handler/fire_stacks/divine)
 		M.adjust_fire_stacks(-2)
 		M.adjust_fire_stacks(-2, /datum/status_effect/fire_handler/fire_stacks/sunder)
@@ -437,32 +437,32 @@ BLIND     // can't see anything
 	if (!can_use(M))
 		return
 	if(src.has_sensor == LOCKED_SENSORS)
-		to_chat(usr, "The controls are locked.")
+		to_chat(usr, "控制已锁定。")
 		return 0
 	if(src.has_sensor == BROKEN_SENSORS)
-		to_chat(usr, "The sensors have shorted out!")
+		to_chat(usr, "传感器短路了！")
 		return 0
 	if(src.has_sensor <= NO_SENSORS)
-		to_chat(usr, "This suit does not have any sensors.")
+		to_chat(usr, "这件衣服没有任何传感器。")
 		return 0
 
-	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
-	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
+	var/list/modes = list("关闭", "生命体征二值", "精确生命体征", "追踪信标")
+	var/switchMode = input("选择一个传感器模式：", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
 	if(get_dist(usr, src) > 1)
-		to_chat(usr, span_warning("I have moved too far away!"))
+		to_chat(usr, span_warning("我移动得太远了！"))
 		return
 	sensor_mode = modes.Find(switchMode) - 1
 
 	if (src.loc == usr)
 		switch(sensor_mode)
 			if(0)
-				to_chat(usr, span_notice("I disable my suit's remote sensing equipment."))
+				to_chat(usr, span_notice("我关闭了衣服的远程感应设备。"))
 			if(1)
-				to_chat(usr, span_notice("My suit will now only report whether you are alive or dead."))
+				to_chat(usr, span_notice("我的衣服现在只会报告我是否存活。"))
 			if(2)
-				to_chat(usr, span_notice("My suit will now only report my exact vital lifesigns."))
+				to_chat(usr, span_notice("我的衣服现在会报告我精确的生命体征。"))
 			if(3)
-				to_chat(usr, span_notice("My suit will now report my exact vital lifesigns as well as my coordinate position."))
+				to_chat(usr, span_notice("我的衣服现在会报告我精确的生命体征以及坐标位置。"))
 
 /obj/item/clothing/under/AltClick(mob/user)
 	if(..())
@@ -486,12 +486,12 @@ BLIND     // can't see anything
 	if(!can_use(usr))
 		return
 	if(!can_adjust)
-		to_chat(usr, span_warning("I cannot wear this suit any differently!"))
+		to_chat(usr, span_warning("我没法把这件衣服换个穿法！"))
 		return
 	if(toggle_jumpsuit_adjust())
-		to_chat(usr, span_notice("I adjust the suit to wear it more casually."))
+		to_chat(usr, span_notice("我把这件衣服调整成更随意的穿法。"))
 	else
-		to_chat(usr, span_notice("I adjust the suit back to normal."))
+		to_chat(usr, span_notice("我把这件衣服调整回正常穿法。"))
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		H.update_inv_w_uniform()
@@ -518,7 +518,7 @@ BLIND     // can't see anything
 
 	visor_toggling()
 
-	to_chat(user, span_notice("I adjust \the [src] [up ? "up" : "down"]."))
+	to_chat(user, span_notice("我把[src][up ? "抬起" : "放下"]了。"))
 
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
@@ -557,13 +557,13 @@ BLIND     // can't see anything
 	var/text
 	var/y_offset
 	if(ratio > 0.75 && ratio_newinteg < 0.75)
-		text = "Armor <br><font color = '#8aaa4d'>marred</font>"
+		text = "护甲<br><font color = '#8aaa4d'>出现划痕</font>"
 		y_offset = -5
 	if(ratio > 0.5 && ratio_newinteg < 0.5)
-		text = "Armor <br><font color = '#d4d36c'>damaged</font>"
+		text = "护甲<br><font color = '#d4d36c'>受损</font>"
 		y_offset = 15
 	if(ratio > 0.25 && ratio_newinteg < 0.25)
-		text = "Armor <br><font color = '#a8705a'>sundered</font>"
+		text = "护甲<br><font color = '#a8705a'>碎裂</font>"
 		y_offset = 30
 	if(text)
 		filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, -20, y_offset)
@@ -581,15 +581,15 @@ BLIND     // can't see anything
 		return examine_text
 
 	var/str = ""
-	str += "[colorgrade_rating("🔨 BLUNT ", armor.blunt, elaborate = TRUE)] | "
-	str += "[colorgrade_rating("🪓 SLASH ", armor.slash, elaborate = TRUE)]"
+	str += "[colorgrade_rating("🔨 钝击 ", armor.blunt, elaborate = TRUE)] | "
+	str += "[colorgrade_rating("🪓 挥砍 ", armor.slash, elaborate = TRUE)]"
 	str += "<br>"
-	str += "[colorgrade_rating("🗡️ STAB ", armor.stab, elaborate = TRUE)] | "
-	str += "[colorgrade_rating("🏹 PIERCE ", armor.piercing, elaborate = TRUE)] "
+	str += "[colorgrade_rating("🗡️ 穿刺 ", armor.stab, elaborate = TRUE)] | "
+	str += "[colorgrade_rating("🏹 贯穿 ", armor.piercing, elaborate = TRUE)] "
 
 	if(showcrits && prevent_crits)
 		str += "<br>———————————————<br>"
-		str += "<font color = '#afaeae'><text-align: center>STOPS CRITS: <br>"
+		str += "<font color = '#afaeae'><text-align: center>可防暴击：<br>"
 		var/linebreak_count = 0
 		var/index = 0
 		for(var/flag in prevent_crits)
@@ -616,15 +616,15 @@ BLIND     // can't see anything
 		return get_examine_string(user)
 
 	var/str = ""
-	str += "[colorgrade_rating("🔨 BLUNT  ", armor.blunt, elaborate = TRUE)] | "
-	str += "[colorgrade_rating("🪓 SLASH  ", armor.slash, elaborate = TRUE)]"
+	str += "[colorgrade_rating("🔨 钝击  ", armor.blunt, elaborate = TRUE)] | "
+	str += "[colorgrade_rating("🪓 挥砍  ", armor.slash, elaborate = TRUE)]"
 	str += "<br>"
-	str += "[colorgrade_rating("🗡️ STAB   ", armor.stab, elaborate = TRUE)] | "
-	str += "[colorgrade_rating("🏹 PIERCE ", armor.piercing, elaborate = TRUE)] "
+	str += "[colorgrade_rating("🗡️ 穿刺   ", armor.stab, elaborate = TRUE)] | "
+	str += "[colorgrade_rating("🏹 贯穿 ", armor.piercing, elaborate = TRUE)] "
 
 	if(showcrits && prevent_crits)
 		str += "<br>———————————————<br>"
-		str += "<font color = '#afaeae'><text-align: center>STOPS CRITS: <br>"
+		str += "<font color = '#afaeae'><text-align: center>可防暴击：<br>"
 		var/linebreak_count = 0
 		var/index = 0
 		for(var/flag in prevent_crits)
@@ -657,17 +657,17 @@ BLIND     // can't see anything
 /obj/item/clothing/get_hover_examine_stat_lines(mob/user, self_examine = FALSE)
 	var/list/lines = list()
 	if(armor && (armor.getRating("slash") != 0 || armor.getRating("stab") != 0 || armor.getRating("blunt") != 0 || armor.getRating("piercing") != 0))
-		var/armor_class_text = "None"
+		var/armor_class_text = "无"
 		switch(armor_class)
 			if(ARMOR_CLASS_LIGHT)
-				armor_class_text = "Light"
+				armor_class_text = "轻型"
 			if(ARMOR_CLASS_MEDIUM)
-				armor_class_text = "Medium"
+				armor_class_text = "中型"
 			if(ARMOR_CLASS_HEAVY)
-				armor_class_text = "Heavy"
-		lines += "<b>ARMOR CLASS:</b> [armor_class_text]"
-		lines += "[colorgrade_rating("🔨 BLUNT", armor.blunt, TRUE)] | [colorgrade_rating("🪓 SLASH", armor.slash, TRUE)]"
-		lines += "[colorgrade_rating("🗡️ STAB", armor.stab, TRUE)] | [colorgrade_rating("🏹 PIERCE", armor.piercing, TRUE)]"
+				armor_class_text = "重型"
+		lines += "<b>护甲等级：</b> [armor_class_text]"
+		lines += "[colorgrade_rating("🔨 钝击", armor.blunt, TRUE)] | [colorgrade_rating("🪓 挥砍", armor.slash, TRUE)]"
+		lines += "[colorgrade_rating("🗡️ 穿刺", armor.stab, TRUE)] | [colorgrade_rating("🏹 贯穿", armor.piercing, TRUE)]"
 	if(length(prevent_crits))
 		var/list/prevents = list()
 		for(var/flag in prevent_crits)
@@ -675,11 +675,11 @@ BLIND     // can't see anything
 			if(flag == BCLASS_PICK)
 				prevent_text = "pick"
 			prevents += capitalize(prevent_text)
-		lines += "<b>PREVENTS CRITS:</b> [prevents.Join(", ")]"
+		lines += "<b>防止暴击：</b> [prevents.Join(", ")]"
 	if(self_examine)
 		var/true_durability = get_true_durability_percent_text()
 		if(true_durability)
-			lines += "<b>Durability:</b> [true_durability]"
+			lines += "<b>耐久度：</b> [true_durability]"
 	return lines
 
 // Handle clicks from chat to show the examine details

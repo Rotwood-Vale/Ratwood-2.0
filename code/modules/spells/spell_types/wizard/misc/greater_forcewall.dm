@@ -1,9 +1,9 @@
 /obj/effect/proc_holder/spell/invoked/forcewall/greater
-	name = "Greater Forcewall"
-	desc = "Conjure a 5x1 wall of arcyne force, preventing anyone and anything other than you from moving through it."
+	name = "强力力场墙"
+	desc = "召出一道 `5x1` 的奥术力场墙，除你之外，任何人或物都无法穿过它。"
 	overlay_state = "forcewall"
 	spell_tier = 3 // Full Mage only.
-	invocations = list("Murus Maior!") // Make a greater barrier
+	invocations = list("更高之墙，起！") // Make a greater barrier
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_ARCANE
 	glow_intensity = GLOW_INTENSITY_HIGH
@@ -30,5 +30,5 @@
 		new /obj/effect/temp_visual/trap_wall(affected_turf)
 		addtimer(CALLBACK(src, PROC_REF(new_wall), affected_turf, user), wait = 1 SECONDS)
 
-	user.visible_message("[user] mutters an incantation and a wall of arcyne force manifests out of thin air!")
+	user.visible_message("[user] 低声念诵咒文，一道更宽阔的奥术力场墙凭空显现！")
 	return TRUE

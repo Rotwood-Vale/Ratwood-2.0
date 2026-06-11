@@ -1,6 +1,6 @@
 
 /obj/item/quiver
-	name = "quiver"
+	name = "箭袋"
 	desc = ""
 	icon_state = "quiver0"
 	item_state = "quiver"
@@ -23,9 +23,9 @@
 
 /obj/item/quiver/attack_turf(turf/T, mob/living/user)
 	if(arrows.len >= max_storage)
-		to_chat(user, span_warning("My [src.name] is full!"))
+		to_chat(user, span_warning("我的[src.name]已经满了！"))
 		return
-	to_chat(user, span_notice("I begin to gather the ammunition..."))
+	to_chat(user, span_notice("我开始收拢这些弹药......"))
 	for(var/obj/item/ammo_casing/caseless/rogue/arrow in T.contents)
 		if(do_after(user, 5))
 			if(!eatarrow(arrow))
@@ -46,7 +46,7 @@
 
 	if (!arrows.len)
 		return
-	to_chat(user, span_warning("I begin to take out the arrows from [src], one by one..."))
+	to_chat(user, span_warning("我开始把[src]里的箭一支支取出来......"))
 	for(var/obj/item/ammo_casing/caseless/rogue/arrow in arrows)
 		if(!do_after(user, 0.5 SECONDS))
 			return
@@ -58,7 +58,7 @@
 /obj/item/quiver/attackby(obj/A, loc, params)
 	if(A.type in subtypesof(/obj/item/ammo_casing/caseless/rogue))
 		if(A.type in subtypesof(/obj/item/ammo_casing/caseless/rogue/javelin))
-			to_chat(loc, span_warning("Javelins are too big to fit in a quiver, silly!"))
+			to_chat(loc, span_warning("标枪太大了，塞不进箭袋里，傻瓜！"))
 			return FALSE
 		else if(arrows.len < max_storage)
 			if(ismob(loc))
@@ -69,7 +69,7 @@
 			arrows += A
 			update_icon()
 		else
-			to_chat(loc, span_warning("Full!"))
+			to_chat(loc, span_warning("满了！"))
 		return
 	if(istype(A, /obj/item/gun/ballistic/revolver/grenadelauncher/bow))
 		var/obj/item/gun/ballistic/revolver/grenadelauncher/bow/B = A
@@ -81,7 +81,7 @@
 					if(ismob(loc))
 						var/mob/M = loc
 						if(HAS_TRAIT(M, TRAIT_COMBAT_AWARE))
-							M.balloon_alert(M, "[length(arrows)] left...")
+							M.balloon_alert(M, "还剩[length(arrows)]支......")
 					break
 		return
 	..()
@@ -98,8 +98,8 @@
 /obj/item/quiver/examine(mob/user)
 	. = ..()
 	if(arrows.len)
-		. += span_notice("[arrows.len] inside.")
-	. += span_notice("Click on the ground to pick up ammos on the floor.")
+		. += span_notice("里面有[arrows.len]支。")
+	. += span_notice("点击地面即可拾起地上的弹药。")
 
 /obj/item/quiver/update_icon()
 	if(arrows.len)
@@ -217,7 +217,7 @@
 	update_icon()
 
 /obj/item/quiver/javelin
-	name = "javelinbag"
+	name = "标枪袋"
 	desc = ""
 	icon_state = "javelinbag0"
 	item_state = "javelinbag"
@@ -227,9 +227,9 @@
 
 /obj/item/quiver/javelin/attack_turf(turf/T, mob/living/user)
 	if(arrows.len >= max_storage)
-		to_chat(user, span_warning("My [src.name] is full!"))
+		to_chat(user, span_warning("我的[src.name]已经满了！"))
 		return
-	to_chat(user, span_notice("I begin to gather the ammunition..."))
+	to_chat(user, span_notice("我开始收拢这些弹药......"))
 	for(var/obj/item/ammo_casing/caseless/rogue/javelin in T.contents)
 		if(do_after(user, 5))
 			if(!eatarrow(javelin))
@@ -246,7 +246,7 @@
 			arrows += A
 			update_icon()
 		else
-			to_chat(loc, span_warning("Full!"))
+			to_chat(loc, span_warning("满了！"))
 		return
 	..()
 
@@ -262,7 +262,7 @@
 /obj/item/quiver/javelin/examine(mob/user)
 	. = ..()
 	if(arrows.len)
-		. += span_notice("[arrows.len] inside.")
+		. += span_notice("里面有[arrows.len]支。")
 
 /obj/item/quiver/javelin/update_icon()
 	if(arrows.len)
@@ -292,8 +292,8 @@
 	update_icon()
 
 /obj/item/quiver/sling
-	name = "sling bullet pouch"
-	desc = "This pouch holds the ouch." //i came up with this line on an impulse
+	name = "投石索弹袋"
+	desc = "这个袋子装着让人吃痛的玩意。" //i came up with this line on an impulse
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "slingpouch"
 	item_state = "slingpouch"
@@ -305,9 +305,9 @@
 
 /obj/item/quiver/sling/attack_turf(turf/T, mob/living/user)
 	if(arrows.len >= max_storage)
-		to_chat(user, span_warning("My [src.name] is full!"))
+		to_chat(user, span_warning("我的[src.name]已经满了！"))
 		return
-	to_chat(user, span_notice("I begin to gather the ammunition..."))
+	to_chat(user, span_notice("我开始收拢这些弹药......"))
 	for(var/obj/item/ammo_casing/caseless/rogue/sling_bullet in T.contents)
 		if(do_after(user, 5))
 			if(!eatarrow(sling_bullet))
@@ -324,7 +324,7 @@
 			arrows += A
 			update_icon()
 		else
-			to_chat(loc, span_warning("Full!"))
+			to_chat(loc, span_warning("满了！"))
 		return
 	if(istype(A, /obj/item/gun/ballistic/revolver/grenadelauncher/sling))
 		var/obj/item/gun/ballistic/revolver/grenadelauncher/sling/B = A
@@ -364,8 +364,8 @@
 	update_icon()
 
 /obj/item/quiver/zigs
-	name = "zig box"
-	desc = "A box for all your smoking needs."
+	name = "烟卷盒"
+	desc = "满足你一切抽烟需求的小盒子。"
 	icon = 'icons/roguetown/clothing/storage.dmi'
 	icon_state = "smokebox"
 	item_state = "smokebox"

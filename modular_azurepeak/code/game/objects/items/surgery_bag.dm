@@ -1,6 +1,6 @@
 /obj/item/storage/belt/rogue/surgery_bag
-	name = "surgeon's bag"
-	desc = "Made to hold everything a people-butcher will need. Contains a list of implements... what even IS a Sisrat?"
+	name = "外科医生包"
+	desc = "专为容纳人肉裁缝所需的一切而制作。内含一系列工具......西斯拉特到底是个什么？"
 	icon = 'icons/roguetown/clothing/storage.dmi'
 	mob_overlay_icon = null
 	icon_state = "surgery_bag"

@@ -4,336 +4,336 @@
 	show_obscured = TRUE
 
 /datum/mob_descriptor/stature/man
-	name = "Man/Woman"
+	name = "男人/女人"
 
 /datum/mob_descriptor/stature/man/get_description(mob/living/described)
 	switch(described.pronouns)
 		if(SHE_HER)
-			return "woman"
+			return "女人"
 		if(SHE_HER_M)
-			return "woman"
+			return "女人"
 		if(HE_HIM)
-			return "man"
+			return "男人"
 		if(HE_HIM_F)
-			return "man"
+			return "男人"
 		if(THEY_THEM)
-			return "person"
+			return "人"
 		if(THEY_THEM_F)
-			return "person"
+			return "人"
 		else
-			return "creacher"
+			return "怪家伙"
 
 /datum/mob_descriptor/stature/gentleman
-	name = "Gentleman/Gentlewoman"
+	name = "绅士/淑女"
 
 /datum/mob_descriptor/stature/gentleman/get_description(mob/living/described)
 	switch(described.pronouns)
 		if(SHE_HER)
-			return "gentlewoman"
+			return "淑女"
 		if(SHE_HER_M)
-			return "gentlewoman"
+			return "淑女"
 		if(HE_HIM)
-			return "gentleman"
+			return "绅士"
 		if(HE_HIM_F)
-			return "gentleman"
+			return "绅士"
 		if(THEY_THEM)
-			return "gentleperson"
+			return "雅士"
 		if(THEY_THEM_F)
-			return "gentleperson"
+			return "雅士"
 		else
-			return "gentlecreacher"
+			return "体面怪家伙"
 
 /datum/mob_descriptor/stature/patriarch
-	name = "Patriarch/Matriarch"
+	name = "家长/家母"
 
 /datum/mob_descriptor/stature/patriarch/get_description(mob/living/described)
 	switch(described.pronouns)
 		if(SHE_HER)
-			return "matriarch"
+			return "家母"
 		if(HE_HIM)
-			return "patriarch"
+			return "家长"
 		if(THEY_THEM)
-			return "hierarch"
+			return "尊长"
 		if(THEY_THEM_F)
-			return "hierarch"
+			return "尊长"
 		else
-			return "hierarch"
+			return "尊长"
 
 /datum/mob_descriptor/stature/hag
-	name = "Hag/Codger"
+	name = "老妪/老朽"
 
 /datum/mob_descriptor/stature/hag/get_description(mob/living/described)
 	switch(described.pronouns)
 		if(SHE_HER)
-			return "hag"
+			return "老妪"
 		if(HE_HIM)
-			return "codger"
+			return "老朽"
 		if(THEY_THEM)
-			return "senior"
+			return "长者"
 		if(THEY_THEM_F)
-			return "senior"
+			return "长者"
 		else
-			return "elder"
+			return "长者"
 
 /datum/mob_descriptor/stature/villain
-	name = "Villain/Villainess"
+	name = "恶徒/恶女"
 
 /datum/mob_descriptor/stature/villain/get_description(mob/living/described)
 	switch(described.pronouns)
 		if(SHE_HER)
-			return "villainess"
+			return "恶女"
 		if(HE_HIM)
-			return "villain"
+			return "恶徒"
 		if(THEY_THEM)
-			return "antagonist"
+			return "对头"
 		if(THEY_THEM_F)
-			return "antagonist"
+			return "对头"
 		else
-			return "antagonist"
+			return "对头"
 
 /datum/mob_descriptor/stature/thug
-	name = "Thug"
+	name = "恶棍"
 
 /datum/mob_descriptor/stature/knave
-	name = "Knave"
+	name = "无赖"
 
 /datum/mob_descriptor/stature/wench
-	name = "Wench"
+	name = "泼妇"
 
 /datum/mob_descriptor/stature/snob
-	name = "Snob"
+	name = "势利眼"
 
 /datum/mob_descriptor/stature/slob
-	name = "Slob"
+	name = "邋遢鬼"
 
 /datum/mob_descriptor/stature/brute
-	name = "Brute"
+	name = "粗人"
 
 /datum/mob_descriptor/stature/highbrow
-	name = "Highbrow"
+	name = "高雅之人"
 
 /datum/mob_descriptor/stature/scholar
-	name = "Scholar"
+	name = "学者"
 
 /datum/mob_descriptor/stature/rogue
-	name = "Rogue"
+	name = "浪子"
 
 /datum/mob_descriptor/stature/hermit
-	name = "Hermit"
+	name = "隐士"
 
 /datum/mob_descriptor/stature/pushover
-	name = "Pushover"
+	name = "软柿子"
 
 /datum/mob_descriptor/stature/beguiler
-	name = "Beguiler"
+	name = "蛊惑者"
 
 /datum/mob_descriptor/stature/daredevil
-	name = "Daredevil"
+	name = "亡命徒"
 
 /datum/mob_descriptor/stature/valiant
-	name = "Valiant"
+	name = "英勇之人"
 
 /datum/mob_descriptor/stature/adventurer
-	name = "Adventurer"
+	name = "冒险者"
 
 /datum/mob_descriptor/stature/fiend
-	name = "Fiend"
+	name = "恶徒"
 
 /datum/mob_descriptor/stature/stoic
-	name = "Stoic"
+	name = "坚忍者"
 
 /datum/mob_descriptor/stature/stooge
-	name = "Stooge"
+	name = "跟班"
 
 /datum/mob_descriptor/stature/fool
-	name = "Fool"
+	name = "蠢材"
 
 /datum/mob_descriptor/stature/bookworm
-	name = "Bookworm"
+	name = "书呆子"
 
 /datum/mob_descriptor/stature/lowlife
-	name = "Lowlife"
+	name = "下三滥"
 
 /datum/mob_descriptor/stature/dignitary
-	name = "Dignitary"
+	name = "显贵"
 
 /datum/mob_descriptor/stature/degenerate
-	name = "Degenerate"
+	name = "堕落者"
 
 /datum/mob_descriptor/stature/zealot
-	name = "Zealot"
+	name = "狂热者"
 
 /datum/mob_descriptor/stature/churl
-	name = "Churl"
+	name = "粗鄙之人"
 
 /datum/mob_descriptor/stature/archon
-	name = "Archon"
+	name = "执政官"
 
 /datum/mob_descriptor/stature/vizier
-	name = "Vizier"
+	name = "维齐尔"
 
 /datum/mob_descriptor/stature/blaggard
-	name = "Blaggard"
+	name = "恶棍"
 
 /datum/mob_descriptor/stature/creep
-	name = "Creep"
+	name = "怪胎"
 
 /datum/mob_descriptor/stature/freek
-	name = "Freek"
+	name = "怪人"
 
 /datum/mob_descriptor/stature/weerdoe
-	name = "Weerdoe"
+	name = "怪咖"
 
 /datum/mob_descriptor/stature/plump
-	name = "Plump Figure"
+	name = "丰满身形"
 
 /datum/mob_descriptor/stature/savant
-	name = "Savant"
+	name = "奇才"
 
 /datum/mob_descriptor/stature/pilgrim
-	name = "Pilgrim"
+	name = "朝圣者"
 
 /datum/mob_descriptor/stature/penitent
-	name = "Penitent"
+	name = "忏悔者"
 
 /datum/mob_descriptor/stature/gallant
-	name = "Gallant"
+	name = "豪侠"
 
 /datum/mob_descriptor/stature/firebrand
-	name = "Firebrand"
+	name = "煽动者"
 
 /datum/mob_descriptor/stature/mourner
-	name = "Mourner"
+	name = "哀悼者"
 
 /datum/mob_descriptor/stature/caretaker
-	name = "Caretaker"
+	name = "照料者"
 
 /datum/mob_descriptor/stature/meddler
-	name = "Meddler"
+	name = "搅局者"
 
 /datum/mob_descriptor/stature/dreamer
-	name = "Dreamer"
+	name = "梦想家"
 
 /datum/mob_descriptor/stature/ascetic
-	name = "Ascetic"
+	name = "苦修者"
 
 /datum/mob_descriptor/stature/sort
-	name = "Sort"
+	name = "货色"
 
 /datum/mob_descriptor/stature/sprite
-	name = "Sprite"
+	name = "小精灵"
 
 /datum/mob_descriptor/stature/debutante
-	name = "Debutante"
+	name = "初入社交界的少女"
 
 /datum/mob_descriptor/stature/coquette
-	name = "Coquette"
+	name = "卖弄风情者"
 
 /datum/mob_descriptor/stature/songbird
-	name = "Songbird"
+	name = "百灵"
 
 /datum/mob_descriptor/stature/lad
-	name = "Lad/Lass"
+	name = "小伙/姑娘"
 
 /datum/mob_descriptor/stature/lad/get_description(mob/living/described)
 	switch(described.pronouns)
 		if(SHE_HER)
-			return "lass"
+			return "姑娘"
 		if(SHE_HER_M)
-			return "lass"
+			return "姑娘"
 		if(HE_HIM)
-			return "lad"
+			return "小伙"
 		if(HE_HIM_F)
-			return "lad"
+			return "小伙"
 		if(THEY_THEM)
-			return "lad"
+			return "小子"
 		if(THEY_THEM_F)
-			return "lad"
+			return "小子"
 		else
-			return "lad"
+			return "小子"
 
 /datum/mob_descriptor/stature/beau
-	name = "Beau/Belle"
+	name = "俊男/佳人"
 
 /datum/mob_descriptor/stature/beau/get_description(mob/living/described)
 	switch(described.pronouns)
 		if(SHE_HER)
-			return "belle"
+			return "佳人"
 		if(SHE_HER_M)
-			return "belle"
+			return "佳人"
 		if(HE_HIM)
-			return "beau"
+			return "俊男"
 		if(HE_HIM_F)
-			return "beau"
+			return "俊男"
 		if(THEY_THEM)
-			return "beauty"
+			return "美人"
 		if(THEY_THEM_F)
-			return "beauty"
+			return "美人"
 		else
-			return "beauty"
+			return "美人"
 
 /datum/mob_descriptor/stature/dandy
-	name = "Dandy/Damsel"
+	name = "花花公子/少女"
 
 /datum/mob_descriptor/stature/dandy/get_description(mob/living/described)
 	switch(described.pronouns)
 		if(SHE_HER)
-			return "damsel"
+			return "少女"
 		if(SHE_HER_M)
-			return "damsel"
+			return "少女"
 		if(HE_HIM)
-			return "dandy"
+			return "花花公子"
 		if(HE_HIM_F)
-			return "dandy"
+			return "花花公子"
 		if(THEY_THEM)
-			return "dandy"
+			return "浪荡子"
 		if(THEY_THEM_F)
-			return "dandy"
+			return "浪荡子"
 		else
-			return "dandy"
+			return "浪荡子"
 
 /datum/mob_descriptor/stature/hero
-	name = "Hero/Heroine"
+	name = "英雄/女英雄"
 
 /datum/mob_descriptor/stature/hero/get_description(mob/living/described)
 	switch(described.pronouns)
 		if(SHE_HER)
-			return "heroine"
+			return "女英雄"
 		if(SHE_HER_M)
-			return "heroine"
+			return "女英雄"
 		if(HE_HIM)
-			return "hero"
+			return "英雄"
 		if(HE_HIM_F)
-			return "hero"
+			return "英雄"
 		if(THEY_THEM)
-			return "hero"
+			return "英雄"
 		if(THEY_THEM_F)
-			return "hero"
+			return "英雄"
 		else
-			return "hero"
+			return "英雄"
 
 /datum/mob_descriptor/stature/host
-	name = "Host/Hostess"
+	name = "主人/女主人"
 
 /datum/mob_descriptor/stature/host/get_description(mob/living/described)
 	switch(described.pronouns)
 		if(SHE_HER)
-			return "hostess"
+			return "女主人"
 		if(SHE_HER_M)
-			return "hostess"
+			return "女主人"
 		if(HE_HIM)
-			return "host"
+			return "主人"
 		if(HE_HIM_F)
-			return "host"
+			return "主人"
 		if(THEY_THEM)
-			return "host"
+			return "主人"
 		if(THEY_THEM_F)
-			return "host"
+			return "主人"
 		else
-			return "host"
+			return "主人"
 
 /datum/mob_descriptor/stature/widower
-	name = "Widower/Widow"
+	name = "鳏夫/寡妇"
 
 // Gnoll stature — always returns "gnoll" regardless of pronouns
 /datum/mob_descriptor/stature/gnoll
@@ -345,80 +345,80 @@
 /datum/mob_descriptor/stature/widower/get_description(mob/living/described)
 	switch(described.pronouns)
 		if(SHE_HER)
-			return "widow"
+			return "寡妇"
 		if(SHE_HER_M)
-			return "widow"
+			return "寡妇"
 		if(HE_HIM)
-			return "widower"
+			return "鳏夫"
 		if(HE_HIM_F)
-			return "widower"
+			return "鳏夫"
 		if(THEY_THEM)
-			return "widow"
+			return "遗偶"
 		if(THEY_THEM_F)
-			return "widow"
+			return "遗偶"
 		else
-			return "widow"
+			return "遗偶"
 
 /datum/mob_descriptor/stature/hunter
-	name = "Hunter/Huntress"
+	name = "猎人/女猎手"
 
 /datum/mob_descriptor/stature/hunter/get_description(mob/living/described)
 	switch(described.pronouns)
 		if(SHE_HER)
-			return "huntress"
+			return "女猎手"
 		if(SHE_HER_M)
-			return "huntress"
+			return "女猎手"
 		if(HE_HIM)
-			return "huntsman"
+			return "猎人"
 		if(HE_HIM_F)
-			return "huntsman"
+			return "猎人"
 		if(THEY_THEM)
-			return "hunter"
+			return "猎人"
 		if(THEY_THEM_F)
-			return "hunter"
+			return "猎人"
 		else
-			return "hunter"
+			return "猎人"
 
 /datum/mob_descriptor/stature/bear
-	name = "Bear"
+	name = "熊般的人"
 
 /datum/mob_descriptor/stature/ruffian
-	name = "Ruffian/Broad"
+	name = "恶汉/壮妞"
 
 /datum/mob_descriptor/stature/ruffian/get_description(mob/living/described)
 	switch(described.pronouns)
 		if(SHE_HER)
-			return "broad"
+			return "壮妞"
 		if(SHE_HER_M)
-			return "broad"
+			return "壮妞"
 		if(HE_HIM)
-			return "ruffian"
+			return "恶汉"
 		if(HE_HIM_F)
-			return "ruffian"
+			return "恶汉"
 		if(THEY_THEM)
-			return "ruffian"
+			return "恶徒"
 		if(THEY_THEM_F)
-			return "ruffian"
+			return "恶徒"
 		else
-			return "ruffian"
+			return "恶徒"
 
 /datum/mob_descriptor/stature/wanderer
-	name = "Wanderer"
+	name = "流浪者"
 
 /datum/mob_descriptor/stature/hustler
-	name = "Hustler"
+	name = "钻营者"
 
 /datum/mob_descriptor/stature/samaritan
-	name = "Samaritan"
+	name = "善人"
 
 /datum/mob_descriptor/stature/pupil
-	name = "Pupil"
+	name = "学生"
 
 /datum/mob_descriptor/stature/soldier
-	name = "Soldier"
+	name = "士兵"
 
 /datum/mob_descriptor/stature/recluse
-	name = "Recluse"
+	name = "隐居者"
 
 /datum/mob_descriptor/stature/socialite
-	name = "Socialite"
+	name = "社交名流"

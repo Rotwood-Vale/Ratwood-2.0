@@ -13,15 +13,15 @@ GLOBAL_LIST_EMPTY(inqsupplies)
 	..()
 	switch(category)
 		if(1)
-			category = "✤ RELIQUARY ✤"
+			category = "✤ 圣遗柜 ✤"
 		if(2)
-			category = "✤ SUPPLIES ✤"
+			category = "✤ 补给品 ✤"
 		if(3)
-			category = "✤ ARTICLES ✤"
+			category = "✤ 物品 ✤"
 		if(4)
-			category = "✤ EQUIPMENT ✤"
+			category = "✤ 装备 ✤"
 		if(5)
-			category = "✤ WARDROBE ✤"	
+			category = "✤ 衣装 ✤"	
 	
 	if(name)
 		name = "[initial(name)] - ᛉ [marquescost] ᛉ"

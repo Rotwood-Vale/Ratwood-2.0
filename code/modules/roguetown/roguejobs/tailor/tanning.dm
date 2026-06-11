@@ -1,6 +1,6 @@
 /obj/machinery/tanningrack
-	name = "drying rack"
-	desc = "A rack for drying meats or scraping hides into leather. It can be moved with the help of a wooden stake."
+	name = "晾干架"
+	desc = "一个用于晾干肉类或将兽皮刮制成皮革的架子。可以借助木桩来移动它。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "dryrack"
 	var/obj/item/natural/hide/hide
@@ -15,9 +15,9 @@
 /obj/machinery/tanningrack/examine(mob/user)
 	. = ..()
 	if(hide)
-		. += span_warning("There is a piece of hide ready to be worked. I might need a knife for this.")
+		. += span_warning("上面有一块待处理的兽皮。可能需要一把刀来刮制。")
 	if(!anchored)
-		. += span_warning("It is un-anchored and able to be moved.")
+		. += span_warning("它没有被固定住，可以移动。")
 
 /obj/machinery/tanningrack/attack_hand(mob/user, params)
 	if(hide)
@@ -35,7 +35,7 @@
 			update_icon()
 			return
 		else
-			to_chat(user, span_warning("The rack is already occupied!"))
+			to_chat(user, span_warning("架子上已经有东西了！"))
 			return
 	if((user.used_intent.type == /datum/intent/dagger/cut || user.used_intent.type == /datum/intent/sword/cut || user.used_intent.type == /datum/intent/axe/cut) && hide)
 		if(anchored)
@@ -43,7 +43,7 @@
 			var/work_time = (120 - (skill_level * 15))
 			var/pieces_to_spawn = rand(1, min(skill_level + 1, 6)) //Random number from 1 to skill level
 			var/sound_played = FALSE
-			to_chat(user, span_warning("I begin scraping the hide's skin..."))
+			to_chat(user, span_warning("我开始刮削兽皮..."))
 			if(!do_after(user, work_time, target = user))
 				return
 			playsound(src,pick('sound/items/book_open.ogg','sound/items/book_page.ogg'), 100, FALSE)
@@ -70,20 +70,20 @@
 					new /obj/item/natural/cured/essence(get_turf(user))
 					if(!sound_played)
 						sound_played = TRUE
-						to_chat(user, span_warning("Dendor provides..."))
+						to_chat(user, span_warning("登多尔 降下恩惠……"))
 						playsound(src,pick('sound/items/gem.ogg'), 100, FALSE)
 				new /obj/item/natural/hide/cured(get_turf(user))
 			return
 		else
-			to_chat(user, span_warning("I need to anchor this down with a wooden stake before I can work this hide."))
+			to_chat(user, span_warning("我得先用木桩把它固定住，才能处理这张兽皮。"))
 			return
 	if(istype(I, /obj/item/grown/log/tree/stake))
 		if(anchored)
 			anchored = FALSE
-			to_chat(user, span_warning("The [src] can now be moved."))
+			to_chat(user, span_warning("[src]现在可以移动了。"))
 		else
 			anchored = TRUE
-			to_chat(user, span_warning("You anchor [src]."))
+			to_chat(user, span_warning("你固定好了[src]。"))
 		playsound(src,pick('sound/foley/woodclimb.ogg'), 100, TRUE)
 		return
 	..()

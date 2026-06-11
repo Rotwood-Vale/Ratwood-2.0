@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/bonechill
-	name = "Bone Chill"
-	desc = "Chill the target with necrotic energy. Severely reduces speed and weakens physical prowess."
+	name = "蚀骨寒侵"
+	desc = "以死灵之力冻结目标。会大幅降低速度并削弱肉体能力。"
 	cost = 3
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
@@ -32,10 +32,10 @@
 		var/obj/item/bodypart/affecting = target.get_bodypart(check_zone(user.zone_selected))
 		if(affecting && (affecting.heal_damage(50, 50) || affecting.heal_wounds(50)))
 			target.update_damage_overlays()
-		target.visible_message(span_danger("[target] reforms under the vile energy!"), span_notice("I'm remade by dark magic!"))
+		target.visible_message(span_danger("[target] 在邪异能量中重新塑成！"), span_notice("我被黑暗魔法重新塑造了！"))
 		return TRUE
 
-	target.visible_message(span_info("Necrotic energy floods over [target]!"), span_userdanger("I feel colder as the dark energy floods into me!"))
+	target.visible_message(span_info("死灵能量漫涌过 [target]！"), span_userdanger("黑暗能量灌入体内，我只觉得愈发寒冷！"))
 	if(iscarbon(target))
 		target.apply_status_effect(/datum/status_effect/debuff/chilled)
 	else
@@ -44,7 +44,7 @@
 	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/eyebite
-	name = "Eyebite"
+	name = "噬目术"
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "eye_bite"
@@ -67,7 +67,7 @@
 	if(!isliving(targets[1]))
 		return FALSE
 	var/mob/living/carbon/target = targets[1]
-	target.visible_message(span_info("A loud crunching sound has come from [target]!"), span_userdanger("I feel arcane teeth biting into my eyes!"))
+	target.visible_message(span_info("[target] 身上传来一声响亮的咬碎声！"), span_userdanger("我感觉有奥术獠牙正啃咬我的双眼！"))
 	target.adjustBruteLoss(30)
 	target.blind_eyes(2)
 	target.blur_eyes(10)
@@ -75,8 +75,8 @@
 
 
 /obj/effect/proc_holder/spell/invoked/raise_undead_guard
-	name = "Conjure Undead"
-	desc = "Raises an undead guard in your servitude."
+	name = "召来不死守卫"
+	desc = "唤起一名受你驱使的不死守卫。"
 	clothes_req = FALSE
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
@@ -101,7 +101,7 @@
 
 	var/turf/T = get_turf(targets[1])
 	if(!isopenturf(T))
-		to_chat(user, span_warning("The targeted location is blocked. The summon fails to come forth."))
+		to_chat(user, span_warning("目标位置被阻挡了。召唤未能显现。"))
 		return FALSE
 
 	// Find bones or bone bundle in user's hands
@@ -112,7 +112,7 @@
 			break
 
 	if(!sacrifice)
-		to_chat(user, span_warning("I require some bones in a free hand."))
+		to_chat(user, span_warning("我需要在空着的手里拿着骨头。"))
 		revert_cast()
 		return FALSE
 
@@ -120,7 +120,7 @@
 	if(istype(sacrifice, /obj/item/natural/bundle/bone))
 		var/obj/item/natural/bundle/bone/B = sacrifice
 		if(B.amount < 4)
-			to_chat(user, span_warning("You need at least 4 bones to raise a skeleton."))
+			to_chat(user, span_warning("你至少需要 4 根骨头才能唤起一具骷髅。"))
 			revert_cast()
 			return FALSE
 
@@ -130,7 +130,7 @@
 
 	// Handle single loose bones
 	else if(istype(sacrifice, /obj/item/natural/bone))
-		to_chat(user, span_warning("A single bone isn’t enough to raise a skeleton! You need a bundle of at least four."))
+		to_chat(user, span_warning("单独一根骨头不足以唤起骷髅！你需要至少四根捆成一束。"))
 		revert_cast()
 		return FALSE
 
@@ -142,8 +142,8 @@
 		S.faction |= list("[user.mind.current.real_name]_faction")
 	S.set_command("follow", user)
 
-	T.visible_message(span_notice("<b>[user]</b> raises a skeleton from the ground!"))
-	S.receive_command_text("rises and bows to its master.")
+	T.visible_message(span_notice("<b>[user]</b> 从地里唤起了一具骷髅！"))
+	S.receive_command_text("起身后向自己的主人低头致意。")
 	return TRUE
 
 
@@ -247,17 +247,17 @@
 	var/mob/living/target = targets[1]
 
 	if(!(target.mob_biotypes & MOB_UNDEAD))
-		to_chat(user, span_warning("[target]'s soul is not Hers, yet. I cannot do anything."))
+		to_chat(user, span_warning("[target] 的灵魂尚未归于她。我现在无能为力。"))
 		revert_cast()
 		return FALSE
 
 	if(target.mind)
-		to_chat(user, span_warning("[target]'s mind resists your goadings. It will not do."))
+		to_chat(user, span_warning("[target] 的心智抗拒着你的驱使。这行不通。"))
 		revert_cast()
 		return FALSE
 
 	target.faction = list("[user.mind.current.real_name]_faction") //only user faction
-	target.visible_message(span_notice("[target] turns its head to pay heed to [user]!"))
+	target.visible_message(span_notice("[target] 转过头来，开始听从 [user] 的召唤！"))
 	if(issimple(target))
 		var/mob/living/simple_animal/simple_target = target
 		simple_target.tamed()
@@ -268,7 +268,7 @@
 
 
 /obj/effect/proc_holder/spell/invoked/projectile/sickness
-	name = "Ray of Sickness"
+	name = "病蚀射线"
 	desc = ""
 	clothes_req = FALSE
 	range = 15
@@ -286,8 +286,8 @@
 	recharge_time = 15 SECONDS
 
 /obj/effect/proc_holder/spell/invoked/gravemark
-	name = "Gravemark"
-	desc = "Adds or removes a target from the list of allies exempt from your undead's aggression."
+	name = "墓印"
+	desc = "将目标加入或移出你麾下不死者不会主动攻击的盟友名单。"
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "gravemark"
@@ -305,15 +305,15 @@
 		var/mob/living/target = targets[1]
 		var/faction_tag = "[user.mind.current.real_name]_faction"
 		if (target == user)
-			to_chat(user, span_warning("It would be unwise to make an enemy of your own skeletons."))
+			to_chat(user, span_warning("把自己的骷髅变成敌人可不是什么明智之举。"))
 			return FALSE
 		if(target.mind && target.mind.current)
 			if (faction_tag in target.mind.current.faction)
 				target.mind.current.faction -= faction_tag
-				user.say("Hostis declaratus es.")
+				user.say("我已宣你为敌。")
 			else
 				target.mind.current.faction += faction_tag
-				user.say("Amicus declaratus es.")
+				user.say("我已宣你为友。")
 				target.notify_faction_change()
 		else if(istype(target, /mob/living/simple_animal))
 			if (faction_tag in target.faction)
@@ -327,8 +327,8 @@
 	return FALSE
 
 /obj/effect/proc_holder/spell/invoked/command_undead
-	name = "Command Deadite"
-	desc = "Commands skeletons. Cast on turf to head in that direction ignoring all else. Cast on self to command it to follow, cast on target to attack them, Cast on a lesser skeleton to set to idle-aggressive,"
+	name = "号令不死者"
+	desc = "命令骷髅行动。对地面施放会令其前往该处并无视其他事物；对自己施放会命其跟随；对目标施放会命其攻击；对低阶骷髅施放则可切换其待机攻击姿态。"
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "ZIZO"
@@ -349,13 +349,13 @@
 
 	var/mob/living/summoner = user
 	if(!summoner.mind || !summoner.mind.current)
-		to_chat(user, "<span class='warning'>Your mind is scattered, you cannot command your servants.</span>")
+		to_chat(user, "<span class='warning'>你的心神散乱，无法号令自己的仆从。</span>")
 		return
 
 	// Get the thing they clicked
 	var/atom/target = targets[1]
 	if(!target)
-		to_chat(user, "You must click a location or creature to command your undead.")
+		to_chat(user, "你必须点选一个地点或生物，才能向不死者下令。")
 		return
 	var/faction_tag = "[user.mind.current.real_name]_faction"
 
@@ -378,7 +378,7 @@
 				break
 
 	if(!length(carbon_minions) && !length(simple_minions))
-		to_chat(user, "<span class='warning'>You have no undead under your control nearby.</span>")
+		to_chat(user, "<span class='warning'>你附近没有任何受你控制的不死者。</span>")
 		return
 
 	// Determine command type
@@ -392,7 +392,7 @@
 	else if(isturf(target))
 		command_type = "move"
 	else
-		to_chat(user, "You can only target a location or creature.")
+		to_chat(user, "你只能指定地点或生物作为目标。")
 		return
 
 	// Issue command
@@ -400,11 +400,11 @@
 		M.set_command(command_type, target)
 		switch(command_type)
 			if("follow")
-				M.receive_command_text("begins following [target] faithfully.")
+				M.receive_command_text("开始忠实地跟随 [target]。")
 			if("move")
-				M.receive_command_text("shambles toward an indicated location.")
+				M.receive_command_text("摇晃着朝指定地点前进。")
 			if("attack")
-				M.receive_command_text("snarls and moves to attack [target].")
+				M.receive_command_text("发出低吼，朝 [target] 扑去。")
 
 
 	// -----------------------------------------------------------------
@@ -439,7 +439,7 @@
 			// Set all minions to focus on the enemy target
 			src.process_minions(order_type = "attack", target = target, faction_tag = faction_tag)
 			return
-	to_chat(user, "<span class='notice'>You issue an order to your minions.</span>")
+	to_chat(user, "<span class='notice'>你向自己的爪牙下达了命令。</span>")
 
 //AI processing orders for simple mob undead
 /obj/effect/proc_holder/spell/invoked/command_undead/proc/process_minions(order_type, turf/target_location = null, mob/living/target = null, faction_tag = null)
@@ -460,19 +460,19 @@
 				switch (order_type)
 					if ("goto")
 						minion.ai_controller.set_blackboard_key(BB_TRAVEL_DESTINATION, target_location)
-						minion.visible_message("[minion.name] shambles toward an indicated location.")
+						minion.visible_message("[minion.name] 摇摇晃晃地朝指定地点走去。")
 					if ("follow")
 						minion.ai_controller.set_blackboard_key(BB_FOLLOW_TARGET, target)
-						minion.visible_message("[minion.name] begins following [caster] faithfully.")
+						minion.visible_message("[minion.name] 开始忠实地跟随 [caster]。")
 					if ("aggressive")
 					if ("attack")
 						minion.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
-						minion.visible_message("[minion.name] shambles forward and moves to attack [target].")
+						minion.visible_message("[minion.name] 踉跄着向前扑去，准备攻击 [target]。")
 					if("toggle_stance")
 						if(minion == target) // single minion clicked
 							if("neutral" in minion.faction) // currently passive → switch to aggressive
 								minion.faction -= "neutral"
-								to_chat(caster, "[minion.name] becomes hostile to nearby strangers.")
+								to_chat(caster, "[minion.name] 开始对附近的陌生人显露敌意。")
 							else
 								minion.faction += "neutral"
-								to_chat(caster, "[minion.name] calms down.")
+								to_chat(caster, "[minion.name] 平静了下来。")

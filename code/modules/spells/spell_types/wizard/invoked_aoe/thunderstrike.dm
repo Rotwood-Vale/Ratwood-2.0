@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/thunderstrike
-	name = "Thunderstrike"
-	desc = "Call a high-damage strike of lightning onto an area, followed by lesser aftershocks that ripple outwards in concentric layers."
+	name = "雷殛术"
+	desc = "向一片区域降下一道高伤害雷击，随后更弱的余波会一圈圈向外扩散。"
 	cost = 6 // High damage AOE
 	range = 7
 	releasedrain = 50
@@ -16,7 +16,7 @@
 	associated_skill = /datum/skill/magic/arcane
 	gesture_required = TRUE
 	spell_tier = 3
-	invocations = list("Feri Fulmine Hostem!") // Based on Zeus - Strike the Enemy with Lightning!
+	invocations = list("雷霆，殛敌！") // Based on Zeus - Strike the Enemy with Lightning!
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_LIGHTNING
 	glow_intensity = GLOW_INTENSITY_HIGH
@@ -34,7 +34,7 @@
 	if(centerpoint.z < user.z)
 		source_turf = get_step_multiz(source_turf, DOWN)
 	if(!(centerpoint in view(source_turf)))
-		to_chat(user, span_warning("I can't cast where I can't see!"))
+		to_chat(user, span_warning("我无法向看不见的地方施法！"))
 		return
 	new /obj/effect/temp_visual/trap/thunderstrike(centerpoint) // Setup warning icon
 	addtimer(CALLBACK(src, PROC_REF(thunderstrike_damage), centerpoint, 1), wait = delay1) // Prepare damage proc on a timer, baseline damage
@@ -61,7 +61,7 @@
 	playsound(effect_layer, 'sound/magic/lightning.ogg', 50)
 	for(var/mob/living/L in effect_layer.contents)
 		if(L.anti_magic_check())
-			visible_message(span_warning("The magic fades away around you [L] "))
+			visible_message(span_warning("[L] 周围的雷击魔力消散了！"))
 			playsound(effect_layer, 'sound/magic/magic_nulled.ogg', 100)
 			continue
 		L.electrocute_act(damage * damage_mod, src, 1, SHOCK_NOSTUN) // Hopefully the SHOCK_NOSTUN handles any CC effects this might otherwise cause

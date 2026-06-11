@@ -14,7 +14,7 @@
 #define GUILLOTINE_ACTION_WRENCH     6
 
 /obj/structure/guillotine
-	name = "guillotine"
+	name = "断头台"
 	desc = ""
 	icon = 'icons/obj/guillotine.dmi'
 	icon_state = "guillotine_raised"
@@ -46,8 +46,8 @@
 				blade_status = GUILLOTINE_BLADE_SHARPENING
 				if(do_after(user, 7, target = src))
 					blade_status = GUILLOTINE_BLADE_RAISED
-					user.visible_message("<span class='notice'>[user] sharpens the large blade of the guillotine.</span>",
-						              "<span class='notice'>I sharpen the large blade of the guillotine.</span>")
+					user.visible_message("<span class='notice'>[user]磨利了断头台的巨刃。</span>",
+						              "<span class='notice'>我磨利了断头台的巨刃。</span>")
 					blade_sharpness += 1
 					playsound(src, 'sound/items/sharpen_long1.ogg', 100, TRUE)
 					return
@@ -55,10 +55,10 @@
 					blade_status = GUILLOTINE_BLADE_RAISED
 					return
 			else
-				to_chat(user, "<span class='warning'>The blade is sharp enough!</span>")
+				to_chat(user, "<span class='warning'>刀刃已经够锋利了！</span>")
 				return
 		else
-			to_chat(user, "<span class='warning'>I need to raise the blade in order to sharpen it!</span>")
+			to_chat(user, "<span class='warning'>我得先把刀刃升起来，才能磨利它！</span>")
 			return
 	else
 		return ..()
@@ -68,11 +68,11 @@
 		return FALSE
 
 	if (!istype(M, /mob/living/carbon/human))
-		to_chat(usr, "<span class='warning'>It doesn't look like [M.p_they()] can fit into this properly!</span>")
+		to_chat(usr, "<span class='warning'>[M.p_they()]看起来没法被好好安进这里！</span>")
 		return FALSE // Can't decapitate non-humans
 
 	if (blade_status != GUILLOTINE_BLADE_RAISED)
-		to_chat(usr, "<span class='warning'>I need to raise the blade before placing someone!</span>")
+		to_chat(usr, "<span class='warning'>我得先把刀刃升起来，才能把人放上去！</span>")
 		return FALSE
 
 	return ..(M, force, FALSE)
@@ -115,8 +115,8 @@
 			return
 		if (GUILLOTINE_BLADE_RAISED)
 			if (LAZYLEN(buckled_mobs))
-				user.visible_message(span_warning("[user] begins to pull the lever!"),
-					                 span_warning("I begin to pull the lever!"))
+				user.visible_message(span_warning("[user]开始拉动拉杆！"),
+					                 span_warning("我开始拉动拉杆！"))
 				current_action = GUILLOTINE_ACTION_INUSE
 
 				if (do_after(user, GUILLOTINE_ACTIVATE_DELAY, target = src) && blade_status == GUILLOTINE_BLADE_RAISED)
@@ -159,7 +159,7 @@
 				head.dismember()
 			else
 				H.death()
-			log_combat(user, H, "beheaded", src)
+			log_combat(user, H, "斩首", src)
 			H.regenerate_icons()
 			unbuckle_all_mobs()
 			kill_count += 1
@@ -186,7 +186,7 @@
 					delay_offset++
 		else
 			H.apply_damage(30 * blade_sharpness, BRUTE, head)
-			log_combat(user, H, "dropped the blade on", src, " non-fatally")
+			log_combat(user, H, "落下刀刃砍中", src, "（未致命）")
 			H.emote("scream")
 			// Executor has failed and was ashamed
 			user.add_stress(/datum/stressevent/guillotineexecutorfail)
@@ -215,8 +215,8 @@
 				blade_status = GUILLOTINE_BLADE_SHARPENING
 				if(do_after(user, 7, target = src))
 					blade_status = GUILLOTINE_BLADE_RAISED
-					user.visible_message(span_notice("[user] sharpens the large blade of the guillotine."),
-						                 span_notice("I sharpen the large blade of the guillotine."))
+					user.visible_message(span_notice("[user]磨利了断头台的巨刃。"),
+						                 span_notice("我磨利了断头台的巨刃。"))
 					blade_sharpness += 1
 					playsound(src, 'sound/items/sharpen_long1.ogg', 100, TRUE)
 					return
@@ -224,10 +224,10 @@
 					blade_status = GUILLOTINE_BLADE_RAISED
 					return
 			else
-				to_chat(user, span_warning("The blade is sharp enough!"))
+				to_chat(user, span_warning("刀刃已经够锋利了！"))
 				return
 		else
-			to_chat(user, span_warning("I need to raise the blade in order to sharpen it!"))
+			to_chat(user, span_warning("我得先把刀刃升起来，才能磨利它！"))
 			return
 	else
 		return ..()
@@ -237,11 +237,11 @@
 		return FALSE
 
 	if (!istype(M, /mob/living/carbon/human))
-		to_chat(usr, span_warning("It doesn't look like [M.p_they()] can fit into this properly!"))
+		to_chat(usr, span_warning("[M.p_they()]看起来没法被好好安进这里！"))
 		return FALSE // Can't decapitate non-humans
 
 	if (blade_status != GUILLOTINE_BLADE_RAISED)
-		to_chat(usr, span_warning("I need to raise the blade before placing someone!"))
+		to_chat(usr, span_warning("我得先把刀刃升起来，才能把人放上去！"))
 		return FALSE
 
 	return ..(M, force, FALSE)
@@ -280,7 +280,7 @@
 /obj/structure/guillotine/can_be_unfasten_wrench(mob/user, silent)
 	if (LAZYLEN(buckled_mobs))
 		if (!silent)
-			to_chat(user, span_warning("Can't unfasten, someone's strapped in!"))
+			to_chat(user, span_warning("没法拆下，有人正被绑在上面！"))
 		return FAILED_UNFASTEN
 
 	if (current_action)

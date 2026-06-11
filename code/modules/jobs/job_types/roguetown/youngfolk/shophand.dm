@@ -10,7 +10,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_ages = list(AGE_ADULT)
 
-	tutorial = "You work the largest store in the city by grace of the Merchant who has shackled you to this drudgery. The work of stocking shelves and taking inventory for your employer is mind-numbing and repetitive--but at least you have a roof over your head and comfortable surroundings. With time, perhaps you will one day be more than a glorified servant."
+	tutorial = "你在城里最大的商铺里干活，全靠那位把你拴死在这份苦差事上的商人才有口饭吃。替东家理货、补架、盘点库存的活计既枯燥又重复，不过至少你还有个住处，身边环境也算舒坦。也许时日久了，你终有一天不会只是个被包装得体面的仆役。"
 
 	outfit = /datum/outfit/job/roguetown/shophand
 	display_order = JDO_SHOPHAND
@@ -28,10 +28,10 @@
 	)
 
 /datum/advclass/shophand
-	name = "Shophand"
-	tutorial = "You work the largest store in the Peaks by grace of the Merchant who has shackled you to this drudgery. \
-	The work of stocking shelves and taking inventory for your employer is mind-numbing and repetitive--but at least you have a roof over your head and comfortable surroundings. \
-	With time, perhaps you will one day be more than a glorified servant."
+	name = "店伙计"
+	tutorial = "你在 Peaks 最大的商铺里干活，全靠那位把你拴死在这份苦差事上的商人才有口饭吃。\
+	替东家理货、补架、盘点库存的活计既枯燥又重复，不过至少你还有个住处，身边环境也算舒坦。\
+	也许时日久了，你终有一天不会只是个被包装得体面的仆役。"
 	outfit = /datum/outfit/job/roguetown/shophand/basic
 	category_tags = list(CTAG_SHOPHAND)
 	subclass_stats = list(

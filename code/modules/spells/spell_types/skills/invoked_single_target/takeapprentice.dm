@@ -4,9 +4,9 @@
 // Meant to be used once per round per character. Cannot have more than one apprentice per character.
 // Encourage people to encourage w/ towners to get skills and give them a point of leverage.
 /obj/effect/proc_holder/spell/invoked/takeapprentice
-	name = "Take Apprentice"
-	desc = "You can take on an apprentice, giving them a trait and Novice in corresponding skills. You can only have one apprentice and you cannot take someone who already have a mentor as your apprentice. \n\
-	Should your apprentice disappears completely (e.g. leaving the round), you may take on another apprentice."
+	name = "收学徒"
+	desc = "你可以收下一名学徒，给予其一项特质以及对应技能的新手水平。你只能拥有一名学徒，而且不能收已有导师的人为徒。 \n\
+	若你的学徒彻底消失（例如离开本轮），你便可以再收另一名学徒。"
 	overlay_state = "craft_buff"
 	releasedrain = 50
 	chargedrain = 0
@@ -61,38 +61,38 @@
 	var/list/choices = list()
 	var/mob/living/L = targets[1]
 	if(user.get_apprentice())
-		to_chat(user, span_warning("You already have an apprentice and cannot take another."))
+		to_chat(user, span_warning("你已经有一名学徒了，不能再收第二个。"))
 		revert_cast()
 		return
 	if(L.get_mentor())
-		to_chat(user, span_warning("[L.name] already has a mentor and cannot take another."))
+		to_chat(user, span_warning("[L.name]已经有导师了，不能再拜第二位。"))
 		revert_cast()
 		return
 	if(user == L)
-		to_chat(user, span_warning("You cannot take yourself as an apprentice."))
+		to_chat(user, span_warning("你不能把自己收为学徒。"))
 		revert_cast()
 		return
 	for(var/i in traits_to_skills)
 		if(HAS_TRAIT(user, i) && !HAS_TRAIT(L, i))
 			choices += i
 	if(!length(choices))
-		to_chat(user, span_warning("Somehow, you do not have any traits that [L.name] can learn."))
+		to_chat(user, span_warning("不知为何，你没有任何能传授给[L.name]的特质。"))
 		revert_cast()
-	var/chosen_trait = input(user, "Choose a trait for [L.name] to learn.", "IMPART YOUR KNOWLEDGE") as null|anything in choices
-	if(alert(L, "[user.name] is offering to take you as an apprentice, teaching you the basics of being a [chosen_trait]. Do you accept?", "Apprenticeship", "SERVE AND LEARN", "I REFUSE") == "I REFUSE")
+	var/chosen_trait = input(user, "选择要让[L.name]学习的特质。", "传授你的知识") as null|anything in choices
+	if(alert(L, "[user.name]愿意收你为学徒，教你成为[chosen_trait]的基础。你愿意接受吗？", "拜师", "侍奉并学习", "我拒绝") == "我拒绝")
 		// Daga Kotowaru
-		to_chat(user, span_warning("[L.name] has declined your offer to take them as an apprentice."))
+		to_chat(user, span_warning("[L.name]拒绝了你收徒的提议。"))
 		revert_cast()
 		return
 	if(!chosen_trait)
-		to_chat(user, span_warning("You must choose a trait for [L.name] to learn."))
+		to_chat(user, span_warning("你必须为[L.name]选择一项要学习的特质。"))
 		revert_cast()
 		return
 	// Give the trait and skills.
 	ADD_TRAIT(L, chosen_trait, TRAIT_GENERIC)
 	for(var/skill in traits_to_skills[chosen_trait])
 		// We can just skip the check because it only adjust up to 1 anyway
-		to_chat(L, span_greentext("[user] has taken you as an apprentice, teaching you the basics of being an [chosen_trait]."))
+		to_chat(L, span_greentext("[user]已收你为学徒，开始教你成为[chosen_trait]的基础。"))
 		L.adjust_skillrank_up_to(skill, SKILL_LEVEL_NOVICE)
 		L.set_mentor(user)
 		user.set_apprentice(L)

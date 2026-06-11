@@ -1,6 +1,6 @@
 /datum/advclass/wretch/pyromaniac
-	name = "Pyromaniac"
-	tutorial = "A notorious arsonist with a penchant for fire, you wield your own personal vendetta against the chaotic forces within the realm. Bring mayhem and destruction with flame and misfortune! Just... try not to hit yourself with your explosives - you aren't fireproof, after all."
+	name = "纵火狂"
+	tutorial = "你是臭名昭著、痴迷火焰的纵火犯，怀着私人恩怨向谷地中混乱的诸势力复仇。用烈焰与灾祸带去动乱和毁灭吧！只是……尽量别让自己的爆炸物炸到自己，毕竟你并不防火。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/wretch/pyromaniac
@@ -52,19 +52,19 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
 	if(H.mind)
-		var/weapons = list("Archery", "Crossbows", "LET THERE BE FLAME!!!")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("弓术", "弩术", "让烈焰降临吧！！！")
+		var/weapon_choice = input(H, "选择你的武器。", "披甲执兵") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Archery")
+			if("弓术")
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				beltl = /obj/item/quiver/pyroarrows
-			if("Crossbows")
+			if("弩术")
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 4, TRUE)
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				beltl = /obj/item/quiver/pyrobolts
-			if("LET THERE BE FLAME!!!")
+			if("让烈焰降临吧！！！")
 				H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 2, TRUE)
 				backr = /obj/item/rogueweapon/woodstaff/toper
 				if(H.mind)

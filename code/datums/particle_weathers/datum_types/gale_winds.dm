@@ -3,8 +3,8 @@ GLOBAL_LIST_EMPTY(active_tornadoes)
 GLOBAL_LIST_EMPTY(active_abyssors_rage)
 
 /obj/effect/weather/tornado	//standard tornado, throws people a distance
-	name = "tornado"
-	desc = "A violently spinning column of air."
+	name = "龙卷风"
+	desc = "一股狂暴旋转的气柱。"
 	icon = 'icons/effects/224x224.dmi'
 	icon_state = "Tornado"
 	pixel_x = -100
@@ -33,7 +33,7 @@ GLOBAL_LIST_EMPTY(active_abyssors_rage)
 
 	addtimer(CALLBACK(src, PROC_REF(expire)), lifetime)
 	start_tornado_sound()
-	visible_message(span_danger("[src] forms from violent winds!"))
+	visible_message(span_danger("[src]自狂暴的风势中成形了！"))
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/weather/tornado/Destroy()
@@ -41,7 +41,7 @@ GLOBAL_LIST_EMPTY(active_abyssors_rage)
 	return ..()
 
 /obj/effect/weather/tornado/proc/expire()
-	visible_message(span_danger("[src] runs out of steam!"))
+	visible_message(span_danger("[src]的威势消散了！"))
 	qdel(src)
 
 /obj/effect/weather/tornado/proc/start_tornado_sound()
@@ -100,7 +100,7 @@ GLOBAL_LIST_EMPTY(active_abyssors_rage)
 	try_z_throw(A)
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
-		to_chat(H, span_extremelybig("You are thrown about by [src]!"))
+		to_chat(H, span_extremelybig("我被[src]猛地卷飞了！"))
 		H.set_resting(TRUE, TRUE)
 		H.Immobilize(2 SECONDS)
 
@@ -127,8 +127,8 @@ GLOBAL_LIST_EMPTY(active_abyssors_rage)
 	step(src, current_drift_dir)
 
 /obj/effect/weather/tornado/abyssors_rage	//Hurricane tornado, destroys turfs and structures
-	name = "Abbyssor's wrath"
-	desc = "Blessed be the sleeping one, for their wrath knows no bounds. A violently spinning column of water and air."
+	name = "Abyssor之怒"
+	desc = "愿沉眠者受颂赞，因其怒火无边无际。这是一股狂暴旋转的水气之柱。"
 	color = "#00d8d8"
 	var/destruction_radius = 4
 	var/destruction_cooldown = 5
@@ -175,8 +175,8 @@ GLOBAL_LIST_EMPTY(active_abyssors_rage)
 	qdel(S)
 
 /obj/effect/weather/tornado/dust_devil	//sand based dustdevils, smaller, shorter range, flings people z levels up
-	name = "Dust Devil"
-	desc = "A violently spinning column of dust and sand."
+	name = "尘卷风"
+	desc = "一股狂暴旋转的尘沙之柱。"
 	color= "#5F4B37"
 	radius = 2
 	z_throw_chance = 60

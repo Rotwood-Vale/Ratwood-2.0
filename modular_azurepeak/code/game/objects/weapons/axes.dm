@@ -1,8 +1,8 @@
 /obj/item/rogueweapon/greataxe/dreamscape
 	force = 10
 	force_wielded = 35
-	name = "otherworldly axe"
-	desc = "A strange axe, who knows where it came from. It feels cold and unusually heavy."
+	name = "异界战斧"
+	desc = "一把奇异的斧头，无人知晓它来自何方。它摸起来冰冷，且沉重得异乎寻常。"
 	icon_state = "dreamaxe"
 	minstr = 13
 	max_blade_int = 250
@@ -18,7 +18,7 @@
 	// to do, make this burn you if you don't regularly soak it.
 	force = 15
 	force_wielded = 40
-	desc = "A strange axe, who knows where it came from. It is searing hot to the blade, the hilt is barely able to be held."
+	desc = "一把奇异的斧头，无人知晓它来自何方。它的斧刃灼热滚烫，几乎连握柄都难以持稳。"
 	icon_state = "dreamaxeactive"
 	max_blade_int = 500
 	wdefense = 6

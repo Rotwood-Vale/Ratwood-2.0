@@ -1,5 +1,6 @@
 /datum/job/roguetown/manorguard
 	title = "Man at Arms"
+	display_title = "府卫"
 	flag = MANATARMS
 	department_flag = GARRISON
 	faction = "Station"
@@ -10,9 +11,9 @@
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
 	job_traits = list(TRAIT_GUARDSMAN, TRAIT_STEELHEARTED)
-	tutorial = "Having proven yourself loyal and capable, you are entrusted to defend the town and enforce its laws. \
-				Trained regularly in combat and siege warfare, you deal with threats - both within and without. \
-				Obey your Sergeant-at-Arms, the Marshal, and the Crown. Show the nobles and knights your respect, so that you may earn it in turn. Not as a commoner, but as a soldier.."
+	tutorial = "你已证明自己忠诚且能干，因此被托付以保卫城镇、执行法令。\
+				你长期接受战斗与守城作战训练，负责处理来自内外的威胁。\
+				服从你的军士长、元帅与王权。向贵族与骑士致以应有敬意，如此你也会得到他们的尊重。不是以平民身份，而是以士兵身份。"
 	display_order = JDO_CASTLEGUARD
 	whitelist_req = TRUE
 

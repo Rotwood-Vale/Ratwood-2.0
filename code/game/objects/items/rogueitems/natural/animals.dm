@@ -1,9 +1,9 @@
 
 
 /obj/item/natural/hide
-	name = "hide"
+	name = "兽皮"
 	icon_state = "hide"
-	desc = "Hide from one of Dendor's creachers."
+	desc = "取自 Dendor 某种生物身上的皮。"
 	force = 0
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -13,9 +13,9 @@
 	dropshrink = 0.9
 
 /obj/item/natural/cured/essence
-	name = "essence of wilderness"
+	name = "荒野精华"
 	icon_state = "wessence"
-	desc = "A mystical essence embued with the power of Dendor. Merely holding it transports one's mind to ancient times."
+	desc = "一种注入了 Dendor 力量的神秘精华。仅仅握在手中，思绪便仿佛回到远古时代。"
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
@@ -24,9 +24,9 @@
 	dropshrink = 0.6
 
 /obj/item/natural/fur
-	name = "fur"
+	name = "毛皮"
 	icon_state = "wool1"
-	desc = "Fur from one of Dendor's creachers."
+	desc = "取自 Dendor 某种生物身上的毛皮。"
 	force = 0
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -36,55 +36,55 @@
 	sellprice = 18
 
 /obj/item/natural/fur/goat
-	desc = "from a gote."
+	desc = "取自山羊。"
 	icon_state = "pelt_gote"
 	color = null
 
 /obj/item/natural/fur/wolf
-	desc = "from a volf."
+	desc = "取自狼。"
 	icon_state = "pelt_volf"
 	color = null
 
 /obj/item/natural/fur/fox
-	desc = "from a venard."
+	desc = "取自鹿狐。"
 	icon_state = "pelt_fox"
 	color = null
 
 /obj/item/natural/fur/bobcat
-	desc = "from a lynx."
+	desc = "取自猞猁。"
 	icon_state = "pelt_bobcat"
 	color = null
 
 /obj/item/natural/fur/mole
-	desc = "from a mole."
+	desc = "取自鼹鼠。"
 	icon_state = "pelt_mole"
 	color = null
 
 /obj/item/natural/fur/rat
-	desc = "from a rous."
+	desc = "取自巨鼠。"
 	icon_state = "pelt_rous"
 	color = null
 
 /obj/item/natural/fur/direbear
-	desc = "fur from one of Dendor's mightiest creachers."
+	desc = "取自 Dendor 最强大生物之一的毛皮。"
 	icon_state = "pelt_direbear"
 	color = "#33302b"
 	sellprice = 28
 
 /obj/item/natural/fur/rabbit
-	desc = "from a cabbit."
+	desc = "取自兔。"
 	icon_state = "wool2"
 	color = "#cecac4"
 
 /obj/item/natural/fur/raccoon	
-	desc = "from a raccoon."
+	desc = "取自浣熊。"
 	icon_state = "pelt_raccoon"
 	color = null
 	sellprice = 12
 
 //RTD make this a storage item and make clickign on animals with things put it in storage
 /obj/item/natural/saddle
-	name = "saddle"
+	name = "鞍具"
 	icon_state = "saddle"
 	associated_skill = /datum/skill/misc/riding
 	w_class = WEIGHT_CLASS_BULKY
@@ -106,7 +106,7 @@
 		if(S.can_saddle && !S.ssaddle)
 			testing("yea2")
 			if(!target.has_buckled_mobs())
-				user.visible_message(span_warning("[user] tries to saddle [target]..."))
+				user.visible_message(span_warning("[user]试图给[target]装上鞍具……"))
 				if(do_after(user, 40, target = target))
 					playsound(loc, 'sound/foley/saddledismount.ogg', 100, FALSE)
 					user.dropItemToGround(src)
@@ -122,9 +122,9 @@
 	var/simple_detect_bonus = 0 // A flat percentage bonus to our ability to detect sneaking people only. Use in lieu of giving mobs huge STAPER bonuses if you want them to be observant.
 
 /obj/item/natural/bone
-	name = "bone"
+	name = "骨头"
 	icon_state = "bone"
-	desc = "The meatless remains of the dead. Whether it came from an animal or a person, it all looks the same now."
+	desc = "无肉的遗骸。不论来自动物还是人，如今看来都别无二致。"
 	blade_dulling = 0
 	max_integrity = 20
 	static_debris = null
@@ -137,20 +137,20 @@
 	bundletype = /obj/item/natural/bundle/bone
 
 /obj/item/natural/hide/cured
-	name = "cured leather"
+	name = "鞣制皮革"
 	icon_state = "leather"
-	desc = "A hide piece that has been cured and may now be worked."
+	desc = "一块已经鞣制完成、现在可以加工的皮革。"
 	sellprice = 7
 	bundletype = /obj/item/natural/bundle/curred_hide
 
 /obj/item/natural/bundle/curred_hide
-	name = "bundle of cured leather"
-	desc = "A bunch of cured leather pieces bundled together."
+	name = "一捆鞣制皮革"
+	desc = "捆在一起的一堆鞣制皮革。"
 	icon_state = "leatherroll1"
 	maxamount = 10
 	spitoutmouth = FALSE
 	stacktype = /obj/item/natural/hide/cured
-	stackname = "cured leather"
+	stackname = "鞣制皮革"
 	icon1 = "leatherroll1"
 	icon1step = 5
 	icon2 = "leatherroll2"
@@ -158,17 +158,17 @@
 	dropshrink = 0.9
 
 /obj/item/natural/cured/essence
-	name = "essence of wilderness"
+	name = "荒野精华"
 	icon_state = "wessence"
-	desc = "A large drop of mystical sap said to contain Dendor's own energies, \n\
-	often carried by hunters and other wildsmen as a token of luck. A skilled tailor can imbue it into certain clothing or leather to provide protection."
+	desc = "一大滴据说蕴含 Dendor 本源之力的神秘树液，\n\
+	猎人与其他荒野居民常将其带在身上以求好运。熟练的裁缝可将它注入某些衣物或皮革中以提供防护。"
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
 
 /obj/item/natural/rabbitsfoot
-	name = "rabbit's foot"
+	name = "兔脚"
 	icon_state = "rabbitfoot"
-	desc = "A rabbit's foot. A lucky charm."
+	desc = "一只兔脚。象征好运的护符。"
 	w_class = WEIGHT_CLASS_TINY
 	sellprice = 10

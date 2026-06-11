@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/song/rejuvenation_song
-	name = "Healing Hymn"
-	desc = "Recuperate your allies bodies with your song! Refills health slowly over time!"
+	name = "愈疗圣咏"
+	desc = "以歌声疗愈盟友的身躯！会在一段时间内缓慢恢复生命。"
 	invocations = list("plays a beautiful, stirring song. The world around them becomes more vivid.") 
 	invocation_type = "emote"
 	overlay_state = "melody_t3_base"
@@ -17,7 +17,7 @@
 		return TRUE
 	else
 		revert_cast()
-		to_chat(user, span_warning("I must be playing something to inspire my audience!"))
+		to_chat(user, span_warning("我必须先演奏起来，才能鼓舞我的听众！"))
 		return
 
 

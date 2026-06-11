@@ -1,8 +1,8 @@
 
 /datum/advclass/heartfelt/retinue/physician
-	name = "Heartfeltian Physician"
-	tutorial = "You are the Physician of Heartfelt, once celebrated for your steady hands and healing wisdom, yet powerless to save your barony from its grim fate. \
-	Haunted by those you could not protect, you ascend toward these lands, seeking redemption, renewed purpose, and perhaps a cure for the wounds the world has inflicted."
+	name = "赤心 医师"
+	tutorial = "你是 赤心 的医师，曾因稳健的双手与救人的智慧而备受称颂，却终究无力将男爵领从悲惨命运中挽回。\
+	那些未能救下的人始终萦绕心头，你于是前往这片土地，寻求救赎、重新找回使命，也或许为这世界留下的创伤找出疗方。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/roguetown/heartfelt/retinue/physician

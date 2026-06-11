@@ -1,8 +1,8 @@
 /datum/brewing_recipe/liquor
-	name = "Gin"
-	category = "Liquor"
-	bottle_name = "gin"
-	bottle_desc = "A bottle of locally-distilled gin. Has a strong, piney flavor."
+	name = "金酒"
+	category = "烈酒"
+	bottle_name = "金酒"
+	bottle_desc = "一瓶本地蒸馏的金酒。风味强烈，带有松针般的清香。"
 	reagent_to_brew = /datum/reagent/consumable/ethanol/gin
 	pre_reqs = /datum/reagent/consumable/ethanol/voddena
 	needed_items = list(/obj/item/reagent_containers/food/snacks/grown/berries/rogue = 2)
@@ -12,9 +12,9 @@
 	heat_required = 370
 
 /datum/brewing_recipe/liquor/ricespirit
-	name = "Rice Spirit"
-	bottle_name = "rice spirit"
-	bottle_desc = "A bottle of locally-distilled rice spirit. Has a clean flavor and a dry finish."
+	name = "米烧酒"
+	bottle_name = "米烧酒"
+	bottle_desc = "一瓶本地蒸馏的米烧酒。口感清冽，收尾干爽。"
 	reagent_to_brew = /datum/reagent/consumable/ethanol/ricespirit
 	pre_reqs = /datum/reagent/consumable/ethanol/ricewine
 	needed_items = null

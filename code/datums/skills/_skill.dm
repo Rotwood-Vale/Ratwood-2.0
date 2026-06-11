@@ -1,6 +1,6 @@
 /datum/skill
 	abstract_type = /datum/skill
-	var/name = "Skill"
+	var/name = "技能"
 	var/desc = ""
 
 	var/dream_cost_base = 2
@@ -57,16 +57,15 @@
 		var/msg = ""
 		msg += "[desc] <br>"
 		#ifndef USES_TRAIT_SKILL_GATING
-			msg += span_warning("Note: Trait based skill gating is disabled on this server. The traits exist, but the skill cap will not apply.")
+			msg += span_warning("注意：本服务器已禁用基于特质的技能限制。特质依然存在，但技能等级上限不会生效。")
 		#endif
 		#ifdef USES_TRAIT_SKILL_GATING
 		if(max_untraited_level < SKILL_LEVEL_LEGENDARY)
 			msg += "------ <br>"
-			msg += "This skill is capped at [skill_to_string(max_untraited_level)] without the proper traits. The following traits increase the maximum level you can reach:<br>"
+			msg += "若没有对应特质，这项技能的上限为 [skill_to_string(max_untraited_level)]。以下特质会提高我能达到的最高等级：<br>"
 		if(LAZYLEN(trait_uncap))
 			for(var/trait_name in trait_uncap)
 				var/trait_level = trait_uncap[trait_name]
 				msg += "[span_greentext(trait_name)]: [skill_to_string(trait_level)]. <br>"
 		#endif
 		to_chat(usr, span_info(msg))
-

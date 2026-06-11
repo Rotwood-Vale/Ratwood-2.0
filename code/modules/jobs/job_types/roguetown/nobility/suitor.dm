@@ -1,5 +1,6 @@
 /datum/job/roguetown/suitor
 	title = "Suitor"
+	display_title = "求婚贵胄"
 	flag = SUITOR
 	department_flag = NOBLEMEN
 	faction = "Station"
@@ -9,7 +10,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	advclass_cat_rolls = list(CTAG_CONSORT = 20)
-	tutorial = "You are a noble from a foreign court who has travelled to the realm in order to win the hand of the realm's most eligible bachelor and secure a political ally for your house. Competition is fierce, and it seems you're not the only one vying for the duke's favor..."
+	tutorial = "你是一名来自异国宫廷的贵族，远赴谷地，只为赢得谷地中最炙手可热之人的婚约，并为你的家族争取一位政治盟友。竞争激烈，而看起来，盯上公爵青睐的人显然不止你一个……"
 
 	outfit = /datum/outfit/job/roguetown/suitor
 
@@ -27,8 +28,8 @@
 	job_bitflag = BITFLAG_ROYALTY
 
 /datum/advclass/suitor/envoy
-	name = "Envoy"
-	tutorial = "You're a graceful envoy - fluent in flattery, courtesy, and calculated sincerity. You'll charm your way into the Duke's heart, winning favor with warmth, wit, and well-timed smiles."
+	name = "使节"
+	tutorial = "你是一位举止优雅的使节，精于谄辞、礼法，以及恰到好处的真诚表演。你会用温柔、机智与恰如其分的微笑打动公爵，慢慢赢得他的欢心。"
 	outfit = /datum/outfit/job/roguetown/suitor/envoy
 	category_tags = list(CTAG_CONSORT)
 	traits_applied = list(TRAIT_SEEPRICES, TRAIT_NUTCRACKER, TRAIT_GOODLOVER)
@@ -84,8 +85,8 @@
 		H.mind.add_antag_datum(new_antag)
 
 /datum/advclass/suitor/schemer
-	name = "Schemer"
-	tutorial = "You're a silver-tongued snake - master of whispers, poison, and perfectly timed accidents. Why win hearts when you can twist them? With rivals removed and secrets weaponized, the Duke will have no choice but to choose you."
+	name = "谋士"
+	tutorial = "你是条巧舌如簧的毒蛇，擅长耳语、毒药与拿捏得分毫不差的“意外”。既然能操纵人心，何必费力去赢得它？等到对手被一一清除，秘密又尽为你所用，公爵将别无选择，只能选中你。"
 	outfit = /datum/outfit/job/roguetown/suitor/schemer
 	traits_applied = list(TRAIT_ALCHEMY_EXPERT)
 	category_tags = list(CTAG_CONSORT)
@@ -136,8 +137,8 @@
 		H.mind.add_antag_datum(new_antag)
 
 /datum/advclass/suitor/gallant
-	name = "Gallant"
-	tutorial = "With honor and the flash of your steel, you meet your rivals in open challenge. You'll win the Duke's favor not with whispers or warmth, but with roaring applause."
+	name = "英杰"
+	tutorial = "你以荣誉与寒铁的光芒正面迎战每一位对手。你赢得公爵青睐的方式，不靠耳语，也不靠柔情，而是靠满堂喝彩。"
 	outfit = /datum/outfit/job/roguetown/suitor/gallant
 	category_tags = list(CTAG_CONSORT)
 	traits_applied = list(TRAIT_MEDIUMARMOR)

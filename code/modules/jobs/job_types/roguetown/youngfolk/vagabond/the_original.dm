@@ -1,7 +1,7 @@
 /datum/advclass/vagabond_original
-	name = "The Vagabond"
-	examine_name = "Vagabond"
-	tutorial = "Fate's twists and turns lead many towards a wanderer's life. Find your fortunes in the shadows or in the pockets of another."
+	name = "老流民"
+	examine_name = "流民"
+	tutorial = "命运的弯弯绕绕，把许多人都逼上了漂泊之路。去阴影里找你的活路吧，或者去别人兜里找。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/vagabond/original
@@ -15,7 +15,7 @@
 		/datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 	)
-	extra_context = "FOR and INT are randomised."
+	extra_context = "幸运与智力会随机浮动。"
 
 /datum/outfit/job/roguetown/vagabond/original/pre_equip(mob/living/carbon/human/H)
 	..()

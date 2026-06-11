@@ -12,47 +12,47 @@
 	structurecraft = /obj/machinery/light/rogue/smelter
 
 /datum/crafting_recipe/roguetown/ceramics/clay/claycup
-	name = "clay cup, dyeable"
+	name = "陶土杯，可染色"
 	result = list(/obj/item/natural/clay/claycup)
 	reqs = list(/obj/item/natural/clay = 1)
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/ceramics/clay/claybrick
-	name = "clay brick x2"
+	name = "陶砖 x2"
 	result = list(/obj/item/natural/clay/claybrick, /obj/item/natural/clay/claybrick)
 	reqs = list(/obj/item/natural/clay = 1)
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/ceramics/clay/claybottle
-	name = "clay bottle, dyeable"
+	name = "陶土瓶，可染色"
 	result = list(/obj/item/natural/clay/claybottle)
 	reqs = list(/obj/item/natural/clay = 1)
 	craftdiff = 0
 /datum/crafting_recipe/roguetown/ceramics/clay/clayvase
-	name = "clay vase, dyeable"
+	name = "陶土花瓶，可染色"
 	result = list(/obj/item/natural/clay/clayvase)
 	reqs = list(/obj/item/natural/clay = 2)
 	craftdiff = 0
 /datum/crafting_recipe/roguetown/ceramics/clay/clayfancyvase
-	name = "fancy clay vase, dyeable"
+	name = "精致陶土花瓶，可染色"
 	result = list(/obj/item/natural/clay/clayfancyvase)
 	reqs = list(/obj/item/natural/clay = 2)
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/ceramics/clay/teapot
-	name = "teapot"
+	name = "茶壶"
 	result = list(/obj/item/natural/clay/rawteapot)
 	reqs = list(/obj/item/natural/clay = 2)
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/ceramics/clay/teacup
-	name = "teacup"
+	name = "茶杯"
 	result = list(/obj/item/natural/clay/rawteacup)
 	reqs = list(/obj/item/natural/clay = 1)
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/ceramics/glassraw
-	name = "glass clay"
+	name = "玻璃陶土"
 	tools = list(/obj/item/reagent_containers/glass/mortar, /obj/item/pestle)
 	result = list(/obj/item/natural/clay/glassbatch)
 	reqs = list(/obj/item/natural/clay = 2, /obj/item/ash = 2, /obj/item/alch/stonedust = 1)
@@ -61,14 +61,14 @@
 
 /* Handbook entries organized by category */
 /datum/crafting_recipe/roguetown/ceramics/handbook_materials
-	name = "ceramic materials"
+	name = "陶瓷材料"
 	structurecraft = null
 	craftdiff = 0
-	category = "Ceramic Materials"
+	category = "陶瓷材料"
 	hides_from_books = TRUE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_materials/kneaded_clay
-	name = "kneaded clay"
+	name = "揉制陶土"
 	result = list(/obj/item/natural/clay/kneaded)
 	reqs = list(/obj/item/natural/clay = 2)
 	tools = list(/obj/item/reagent_containers)
@@ -76,7 +76,7 @@
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_materials/refined_clay
-	name = "refined clay"
+	name = "精制陶土"
 	result = list(/obj/item/natural/clay/refined)
 	reqs = list(/obj/item/natural/clay/kneaded = 1, /obj/item/ash = 2, /obj/item/natural/dirtclod/sand = 1)
 	tools = list(/obj/item/reagent_containers)
@@ -84,318 +84,318 @@
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_materials/glass_clay
-	name = "glass batch"
+	name = "玻璃料团"
 	result = list(/obj/item/natural/clay/glassbatch)
 	reqs = list(/obj/item/natural/clay = 2, /obj/item/ash = 2, /obj/item/alch/stonedust = 1)
 	tools = list(/obj/item/reagent_containers/glass/mortar, /obj/item/pestle)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery
-	name = "clay pottery"
+	name = "陶器"
 	structurecraft = null
 	craftdiff = 0
-	category = "Clay Pottery"
+	category = "陶器"
 	hides_from_books = TRUE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/claycup
-	name = "clay canister"
+	name = "陶罐"
 	result = list(/obj/item/natural/clay/claycup)
 	reqs = list(/obj/item/natural/clay = 1)
 	craftdiff = 0
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/claybrick
-	name = "clay brick x2"
+	name = "陶砖 x2"
 	result = list(/obj/item/natural/clay/claybrick, /obj/item/natural/clay/claybrick)
 	reqs = list(/obj/item/natural/clay = 1)
 	craftdiff = 0
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/claybottle
-	name = "clay bottle"
+	name = "陶瓶"
 	result = list(/obj/item/natural/clay/claybottle)
 	reqs = list(/obj/item/natural/clay = 1)
 	craftdiff = 0
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/clayvase
-	name = "clay vase"
+	name = "陶花瓶"
 	result = list(/obj/item/natural/clay/clayvase)
 	reqs = list(/obj/item/natural/clay = 2)
 	craftdiff = 0
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/clayfancyvase
-	name = "fancy clay vase"
+	name = "精致陶花瓶"
 	result = list(/obj/item/natural/clay/clayfancyvase)
 	reqs = list(/obj/item/natural/clay = 2)
 	craftdiff = 0
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/teapot
-	name = "teapot"
+	name = "茶壶"
 	result = list(/obj/item/natural/clay/rawteapot)
 	reqs = list(/obj/item/natural/clay = 2)
 	craftdiff = 0
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/teacup
-	name = "teacup"
+	name = "茶杯"
 	result = list(/obj/item/natural/clay/rawteacup)
 	reqs = list(/obj/item/natural/clay = 1)
 	craftdiff = 0
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/claystatue_1
-	name = "clay statue (style I)"
+	name = "陶像（样式 I）"
 	result = list(/obj/item/roguestatue/clay/design1)
 	reqs = list(/obj/item/natural/clay = 3)
 	craftdiff = 0
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/claystatue_2
-	name = "clay statue (style II)"
+	name = "陶像（样式 II）"
 	result = list(/obj/item/roguestatue/clay/design2)
 	reqs = list(/obj/item/natural/clay = 3)
 	craftdiff = 0
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/claystatue_3
-	name = "clay statue (style III)"
+	name = "陶像（样式 III）"
 	result = list(/obj/item/roguestatue/clay/design3)
 	reqs = list(/obj/item/natural/clay = 3)
 	craftdiff = 0
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/claystatue_4
-	name = "clay statue (style IV)"
+	name = "陶像（样式 IV）"
 	result = list(/obj/item/roguestatue/clay/design4)
 	reqs = list(/obj/item/natural/clay = 3)
 	craftdiff = 0
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/claystatue_5
-	name = "clay statue (style V)"
+	name = "陶像（样式 V）"
 	result = list(/obj/item/roguestatue/clay/design5)
 	reqs = list(/obj/item/natural/clay = 3)
 	craftdiff = 0
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery
-	name = "porcelain pottery"
+	name = "瓷器"
 	structurecraft = null
 	craftdiff = 0
-	category = "Porcelain Pottery"
+	category = "瓷器"
 	hides_from_books = TRUE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/cameo
-	name = "porcelain cameo"
+	name = "瓷制浮雕饰牌"
 	result = list(/obj/item/natural/clay/porcelain/cameo)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/figurine
-	name = "porcelain figurine"
+	name = "瓷制小雕像"
 	result = list(/obj/item/natural/clay/porcelain/figurine)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/fish
-	name = "porcelain fish figurine"
+	name = "瓷制鱼形小雕像"
 	result = list(/obj/item/natural/clay/porcelain/fish)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/tablet
-	name = "porcelain tablet"
+	name = "瓷制碑板"
 	result = list(/obj/item/natural/clay/porcelain/tablet)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/vase
-	name = "porcelain vase"
+	name = "瓷制花瓶"
 	result = list(/obj/item/natural/clay/porcelain/vase)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/fork
-	name = "porcelain fork"
+	name = "瓷叉"
 	result = list(/obj/item/natural/clay/porcelain/fork)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/spoon
-	name = "porcelain spoon"
+	name = "瓷勺"
 	result = list(/obj/item/natural/clay/porcelain/spoon)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/bowl
-	name = "porcelain bowl"
+	name = "瓷碗"
 	result = list(/obj/item/natural/clay/porcelain/bowl)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/cup
-	name = "porcelain teacup"
+	name = "瓷茶杯"
 	result = list(/obj/item/natural/clay/porcelain/cup)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/platter
-	name = "porcelain platter"
+	name = "瓷大盘"
 	result = list(/obj/item/natural/clay/porcelain/platter)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/teapot
-	name = "porcelain teapot"
+	name = "瓷茶壶"
 	result = list(/obj/item/natural/clay/porcelain/teapot)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/bust
-	name = "porcelain bust"
+	name = "瓷制胸像"
 	result = list(/obj/item/natural/clay/porcelain/bust)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/fancy_vase
-	name = "fancy porcelain vase"
+	name = "精致瓷花瓶"
 	result = list(/obj/item/natural/clay/porcelain/fancyvase)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/comb
-	name = "porcelain comb"
+	name = "瓷梳"
 	result = list(/obj/item/natural/clay/porcelain/comb)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/duck
-	name = "porcelain duck"
+	name = "瓷鸭摆件"
 	result = list(/obj/item/natural/clay/porcelain/duck)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/fancy_cup
-	name = "fancy porcelain cup"
+	name = "精致瓷杯"
 	result = list(/obj/item/natural/clay/porcelain/fancycup)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/fancy_ceramic_cup
-	name = "fancy porcelain teacup"
+	name = "精致瓷茶杯"
 	result = list(/obj/item/natural/clay/porcelain/fancyteacup)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/fancy_ceramic_teapot
-	name = "fancy porcelain teapot"
+	name = "精致瓷茶壶"
 	result = list(/obj/item/natural/clay/porcelain/fancyteapot)
 	reqs = list(/obj/item/natural/clay/refined = 2)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/decorative_ceramic_teapot
-	name = "decorative porcelain teapot"
+	name = "装饰瓷茶壶"
 	result = list(/obj/item/natural/clay/porcelain/decorativeteapot)
 	reqs = list(/obj/item/natural/clay/refined = 2)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/mask
-	name = "porcelain mask"
+	name = "瓷面具"
 	result = list(/obj/item/natural/clay/porcelain/mask)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/urn
-	name = "porcelain urn"
+	name = "瓷骨灰瓮"
 	result = list(/obj/item/natural/clay/porcelain/urn)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/statue
-	name = "porcelain statue"
+	name = "瓷雕像"
 	result = list(/obj/item/natural/clay/porcelain/statue)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/obelisk
-	name = "porcelain obelisk"
+	name = "瓷方尖碑"
 	result = list(/obj/item/natural/clay/porcelain/obelisk)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/turtle
-	name = "porcelain turtle carving"
+	name = "瓷龟雕刻"
 	result = list(/obj/item/natural/clay/porcelain/turtle)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/bauble
-	name = "porcelain bauble"
+	name = "瓷饰球"
 	result = list(/obj/item/natural/clay/porcelain/bauble)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery/rungu
-	name = "porcelain rungu"
+	name = "瓷隆古棍"
 	result = list(/obj/item/natural/clay/porcelain/rungu)
 	reqs = list(/obj/item/natural/clay/refined = 1)
 	hides_from_books = FALSE
 
 /* Glassware tab — items blown from heated glass using the blowing rod */
 /datum/crafting_recipe/roguetown/ceramics/handbook_glassware
-	name = "glassware"
+	name = "玻璃器皿"
 	structurecraft = null
 	craftdiff = 0
-	category = "Glassware"
+	category = "玻璃器皿"
 	hides_from_books = TRUE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_glassware/glass_bottle
-	name = "blown glass bottle"
+	name = "吹制玻璃瓶"
 	result = list(/obj/item/reagent_containers/glass/bottle/blown)
 	reqs = list(/obj/item/natural/clay/glassbatch = 1)
 	tools = list(/obj/item/rogueweapon/blowrod)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_glassware/glass_vial
-	name = "blown alchemical vial (x2)"
+	name = "吹制炼金小瓶（x2）"
 	result = list(/obj/item/reagent_containers/glass/bottle/alchemical/blown)
 	reqs = list(/obj/item/natural/clay/glassbatch = 1)
 	tools = list(/obj/item/rogueweapon/blowrod)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_glassware/glass_statue_1
-	name = "glass statue (style I)"
+	name = "玻璃像（样式 I）"
 	result = list(/obj/item/roguestatue/glass/design1)
 	reqs = list(/obj/item/natural/clay/glassbatch = 1)
 	tools = list(/obj/item/rogueweapon/blowrod)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_glassware/glass_statue_2
-	name = "glass statue (style II)"
+	name = "玻璃像（样式 II）"
 	result = list(/obj/item/roguestatue/glass/design2)
 	reqs = list(/obj/item/natural/clay/glassbatch = 1)
 	tools = list(/obj/item/rogueweapon/blowrod)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_glassware/glass_statue_3
-	name = "glass statue (style III)"
+	name = "玻璃像（样式 III）"
 	result = list(/obj/item/roguestatue/glass/design3)
 	reqs = list(/obj/item/natural/clay/glassbatch = 1)
 	tools = list(/obj/item/rogueweapon/blowrod)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_glassware/glass_statue_4
-	name = "glass statue (style IV)"
+	name = "玻璃像（样式 IV）"
 	result = list(/obj/item/roguestatue/glass/design4)
 	reqs = list(/obj/item/natural/clay/glassbatch = 1)
 	tools = list(/obj/item/rogueweapon/blowrod)
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_glassware/glass_statue_5
-	name = "glass statue (style V)"
+	name = "玻璃像（样式 V）"
 	result = list(/obj/item/roguestatue/glass/design5)
 	reqs = list(/obj/item/natural/clay/glassbatch = 1)
 	tools = list(/obj/item/rogueweapon/blowrod)

@@ -1,5 +1,6 @@
 /datum/job/roguetown/monk
 	title = "Acolyte"
+	display_title = "侍僧"
 	flag = MONK
 	department_flag = CHURCHMEN
 	faction = "Station"
@@ -10,7 +11,7 @@
 	allowed_patrons = ALL_DIVINE_PATRONS
 	allowed_sexes = list(MALE, FEMALE)
 	outfit = /datum/outfit/job/roguetown/monk
-	tutorial = "Chores, some more chores- Even more chores.. Oh how the life of a humble acolyte is exhausting… You have faith, but even you know you gave up a life of adventure for that of the security in the Church. Assist the Bishop in their daily tasks, maybe today will be the day something interesting happens."
+	tutorial = "杂务、更多杂务，还有没完没了的杂务……啊，谦卑侍僧的生活可真叫人疲惫不堪。你怀有信仰，但连你自己也知道，你是放弃了冒险人生，换来了教会中的安稳日子。去协助主教处理日常事务吧，也许今天就会是有什么新鲜事发生的一天。"
 
 	display_order = JDO_MONK
 	give_bank_account = TRUE
@@ -34,7 +35,7 @@
 	H.reset_clergy_devotion(CLERIC_T4, CLERIC_REGEN_MAJOR, TRUE, CLERIC_REQ_4)
 	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/invoked/projectile/divineblast))
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast, H)
-	to_chat(H, span_notice("I remain on the old path of devotion."))
+	to_chat(H, span_notice("我仍将走在旧有的虔敬之道上。"))
 
 /datum/job/roguetown/monk/proc/grant_radical_path(mob/living/carbon/human/H)
 	if(!H || !H.mind || !H.patron)
@@ -46,13 +47,13 @@
 	H.reset_clergy_devotion(CLERIC_T4, CLERIC_REGEN_MAJOR, TRUE, CLERIC_REQ_4)
 	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/invoked/projectile/divineblast))
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast, H)
-	to_chat(H, span_notice("I embrace the radical path."))
+	to_chat(H, span_notice("我拥抱激进之道。"))
 
 /datum/job/roguetown/monk/proc/_delayed_path_choice(mob/living/carbon/human/H)
 	if(!H || !H.client || !H.mind)
 		return
 
-	var/choice = alert(H, "Choose your path.", "Acolyte Doctrine", "Loyalist", "Radical")
+	var/choice = alert(H, "选择你的道路。", "侍僧教义", "守旧派", "激进派")
 
 	if(choice == "Radical")
 		grant_radical_path(H)
@@ -90,8 +91,8 @@
 				_delayed_path_choice(H)
 
 /datum/advclass/acolyte
-	name = "Acolyte"
-	tutorial = "Chores, some more chores- Even more chores.. Oh how the life of a humble acolyte is exhausting… You have faith, but even you know you gave up a life of adventure for that of the security in the Church. Assist the Bishop in their daily tasks, maybe today will be the day something interesting happens."
+	name = "侍僧"
+	tutorial = "杂务、更多杂务，还有没完没了的杂务……啊，谦卑侍僧的生活可真叫人疲惫不堪。你怀有信仰，但连你自己也知道，你是放弃了冒险人生，换来了教会中的安稳日子。去协助主教处理日常事务吧，也许今天就会是有什么新鲜事发生的一天。"
 	outfit = /datum/outfit/job/roguetown/monk/basic
 	subclass_languages = list(/datum/language/grenzelhoftian)
 	category_tags = list(CTAG_ACOLYTE)
@@ -115,11 +116,11 @@
 		/datum/skill/magic/holy = SKILL_LEVEL_MASTER,
 	)
 	subclass_stashed_items = list(
-		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
+		"《十神箴行录》" = /obj/item/book/rogue/bibble,
 	)
 
 /datum/outfit/job/roguetown/monk
-	name = "Acolyte"
+	name = "侍僧"
 	jobtype = /datum/job/roguetown/monk
 	has_loadout = TRUE
 	job_bitflag = BITFLAG_HOLY_WARRIOR

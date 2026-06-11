@@ -26,8 +26,8 @@
 	return
 
 /obj/structure/fluff/walldeco/wantedposter
-	name = "bandit notice"
-	desc = "A place for posters displaying the faces of roving bandits. Let's see if there are any this week..."
+	name = "匪徒告示"
+	desc = "这里张贴着四处流窜的匪徒画像。看看这周有没有新的通缉吧……"
 	icon_state = "wanted1"
 	layer = BELOW_MOB_LAYER
 	pixel_y = 32
@@ -48,54 +48,54 @@
 	. = ..()
 	if(user.Adjacent(src))
 		if(SSrole_class_handler.bandits_in_round)
-			. += span_bold("I see that bandits are active in the region.")
+			. += span_bold("我看到这片区域最近有匪徒活动。")
 			user.playsound_local(user, 'sound/misc/notice (2).ogg', 100, FALSE)
 		else
-			. += span_bold("There doesn't seem to be any reports of bandit activity.")
+			. += span_bold("看起来最近没有匪徒活动的报告。")
 
 /obj/structure/fluff/walldeco/innsign
-	name = "tavern sign"
-	desc = "Weathered wood marks a place of respite in a cold and unfeeling world, where one can numb themselves with stale company and yet more stale drink."
+	name = "酒馆招牌"
+	desc = "饱经风霜的木板标志着一个在冰冷无情的世界中供人歇息之处，在那里，人们可以用乏味的同伴和更乏味的酒来麻痹自己。"
 	icon_state = "bar"
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/walldeco/steward
-	name = "steward sign"
-	desc = "Polished wood and leaf gold marks the office of the steward, manager of the city lord's estate and treasury."
+	name = "总管招牌"
+	desc = "抛光木料与金箔标志着总管的办公室，他是城主地产和金库的管理者。"
 	icon_state = "steward"
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/walldeco/bsmith
-	name = "smithy sign"
-	desc = "A small swinging anvil sign marks the smithy, where bloodied coin changes hands for hasty repairs and second hand weaponry."
+		name = "铁匠铺招牌"
+	desc = "一块小型的摇摆铁砧招牌标志着铁匠铺，在那里，沾血的硬币为匆忙的修理和二手武器而转手。"
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "bsmith"
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/walldeco/goblet
-	name = "dining hall sign"
-	desc = "A small swinging sign engraved with a goblet marks a common dining hall, it may lack the majesty of a city tavern, but it serves as a place to eat and rest in relative safety."
+	name = "食堂招牌"
+	desc = "一块刻有酒杯的小型摇摆招牌，标志着一处公共食堂。它或许没有城市酒馆的宏伟，但却是一个能在相对安全中用餐和歇息的地方。"
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "goblet"
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/walldeco/flower
-	name = "bathhouse sign"
-	desc = "In a world of disease and violence a bathhouse is a rare spot of respite, where one can wash away exhausion and sin alike in warm, perfumed waters."
+	name = "浴场招牌"
+	desc = "在一个充满疾病与暴力的世界里，浴室是一处难得的歇息之所，人们可以在温暖芬芳的水中洗去疲惫，也洗去罪孽。"
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "flower"
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/walldeco/barbersign
-	name = "barber surgeon sign"
-	desc = "The iconic swirl of the barber surgeon, where one can exchange coin for continued life."
+	name = "理发师外科医生招牌"
+	desc = "标志性的理发师外科医生旋转纹样，在那里，人们可以用钱币换取生命的延续。"
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "barbersign"
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/walldeco/barbersignreverse
-	name = "barber surgeon sign"
-	desc = "The iconic swirl of the barber surgeon, where one can exchange coin for continued life."
+	name = "理发师外科医生招牌"
+	desc = "标志性的理发师外科医生旋转纹样，在那里，人们可以用钱币换取生命的延续。"
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "barbersignflip"
 	layer = ABOVE_MOB_LAYER
@@ -176,7 +176,7 @@
 	..()
 
 /obj/structure/fluff/walldeco/maidensigil
-	name = "stone sigil"
+	name = "石制纹章"
 	desc = ""
 	icon_state = "maidensigil"
 	mouse_opacity = 0
@@ -208,7 +208,7 @@
 	pixel_y = 32
 
 /obj/structure/fluff/walldeco/chains
-	name = "hanging chains"
+	name = "悬挂锁链"
 	alpha = 180
 	layer = 4.26
 	icon_state = "chains1"
@@ -216,7 +216,7 @@
 	can_buckle = 1
 	buckle_lying = 0
 	breakoutextra = 5 MINUTES
-	buckleverb = "tie"
+	buckleverb = "绑上"
 	smeltresult = /obj/item/rope/chain
 
 /obj/structure/fluff/walldeco/chains/Initialize(mapload)
@@ -309,9 +309,9 @@
 	icon_state = "medposter6"
 
 /obj/structure/fluff/walldeco/alarm
-	name = "le réveil murmure"
+	name = "低语警报器"
 	icon_state = "alarm"
-	desc = "This est un wall-mounted système d'alarme, designed dans les ."
+	desc = "一个安装在墙上的警报装置。"
 	pixel_y = 32
 	var/next_yap = 0
 	var/onoff = 1 //Init on
@@ -322,20 +322,20 @@
 
 	if(!(HAS_TRAIT(user, TRAIT_NOBLE)))
 		playsound(src, 'sound/misc/machineno.ogg', 100, TRUE, -1)
-		say("REMOVE THINE HAND FROM THE ALARM, CREATURE!")
+		say("把你的手从警报器上挪开，卑微生物！")
 		return
 
 	playsound(src, 'sound/misc/bug.ogg', 100, FALSE, -1)
 	if(onoff == 0)
 		onoff = 1
 		icon_state = "alarm"
-		say("Bonjour, le sentinelle est active.")
+		say("警戒模式已重新启动。")
 		next_yap = 0 //They won't believe us unless we yap again
 		return
 	if(onoff == 1)
 		onoff = 0
 		icon_state = "face"
-		say("A moment's rest, merci! Bonne nuit.")
+		say("终于能稍作休息了。晚安。")
 		return
 	else //failsafe
 		onoff = 1
@@ -357,32 +357,32 @@
 
 		if(!(HU in SStreasury.bank_accounts)) //first off- do we not have an account? we'll ALWAYS scream if that's the case
 			playsound(loc, 'sound/misc/gold_license.ogg', 100, TRUE, -1)
-			say("UNKNOWN PERSON IN SECURE AREA- ARRETZ-VOUZ!!")
-			loud_message("The [src] shrieks, sounding an alarm", hearing_distance = 12)
+			say("安全区域发现未知人员，立刻止步！！")
+			loud_message("[src]发出尖叫般的警报声", hearing_distance = 12)
 			next_yap = world.time + 6 SECONDS
 			return
 
 		if(HAS_TRAIT(user, TRAIT_NOBLE))
-			say("Salut, [user.real_name] de Sommet. Thirty-breths silence period active por votre grace.")
+			say("向您致意，[user.real_name]。尊贵静默期三十息，现已生效。")
 			playsound(loc, 'sound/misc/gold_menu.ogg', 100, TRUE, -1)
 			next_yap = world.time + 30 SECONDS
 			return
 
 		if((HU in SStreasury.bank_accounts)) //do we not have an account?
 			playsound(loc, 'sound/misc/gold_menu.ogg', 100, TRUE, -1)
-			say("Yeoman [user.real_name] logged entering zone securisee.")
+			say("已记录侍民[user.real_name]进入安全区域。")
 			return
 
 		else //?????
 			playsound(loc, 'sound/misc/gold_license.ogg', 100, TRUE, -1)
-			say("UNAUTHORIZED PERSON IN SECURE AREA- ARRETZ-VOUZ!!")
-			loud_message("The [src] shrieks, sounding an alarm", hearing_distance = 12)
+			say("安全区域发现未授权人员，立刻止步！！")
+			loud_message("[src]发出尖叫般的警报声", hearing_distance = 12)
 			next_yap = world.time + 6 SECONDS
 
 	else
 		playsound(loc, 'sound/misc/gold_license.ogg', 100, TRUE, -1)
-		say("UNKNOWN CREATURE IN SECURE AREA- ARRETZ-VOUS!!")
-		loud_message("The [src] shrieks, sounding an alarm", hearing_distance = 12)
+		say("安全区域发现未知生物，立刻止步！！")
+		loud_message("[src]发出尖叫般的警报声", hearing_distance = 12)
 		next_yap = world.time + 6 SECONDS
 
 /obj/structure/fluff/walldeco/vinez // overlay vines for more flexibile mapping
@@ -508,8 +508,8 @@
 
 
 /obj/structure/fluff/walldeco/fakewall
-	name = "Wall...?"
-	desc = "It certainly looks like a wall..."
+	name = "墙……？"
+	desc = "它看起来确实像一堵墙……"
 	icon = 'icons/turf/walls/stone_wall.dmi'//change this
 	icon_state = "stone"//change this
 	density = FALSE

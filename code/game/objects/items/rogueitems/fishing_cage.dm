@@ -1,6 +1,6 @@
 /obj/item/fishingcage
-	name = "fishing cage"
-	desc = "A sturdy cage used to catch shellfishes. Put a leech or worm inside and an unfortunate shellfish should be lured inside shortly."
+	name = "捕鱼笼"
+	desc = "一只结实的笼子，用来捕捉贝类。把水蛭或蠕虫放进去后，不幸的贝类很快就会被引诱进来。"
 	icon_state = "fishingcage"
 	icon = 'icons/roguetown/items/misc.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -17,15 +17,15 @@
 
 	var/turf/T = get_step(user, user.dir)
 	if(!istype(T, /turf/open/water))
-		to_chat(user, span_warning("This goes into water!"))
+		to_chat(user, span_warning("这个得放进水里！"))
 		return // We don't need to check non water tiles.
 
-	user.visible_message(span_notice("[user] begins deploying the fishing cage..."), \
-						span_notice("I begin deploying the fishing cage..."))
+	user.visible_message(span_notice("[user]开始布设捕鱼笼……"), \
+						span_notice("我开始布设捕鱼笼……"))
 	var/deploy_speed = get_skill_delay(user.get_skill_level(/datum/skill/labor/fishing), 1, slowest = 6) //in seconds
 
 	if(!is_valid_fishing_spot(T))
-		to_chat(user, span_warning("This body of water seems devoid of aquatic life..."))
+		to_chat(user, span_warning("这片水域似乎没有水生生物……"))
 		return
 	
 	if(istype(T, /turf/open/water))
@@ -35,15 +35,15 @@
 			icon_state = "fishingcage_deployed"
 			anchored = 1
 	else
-		to_chat(user, span_warning("I'm not catching anything if I don't put this on water"))
+		to_chat(user, span_warning("不把它放进水里，我什么也抓不到。"))
 		return
 
 /obj/item/fishingcage/attack_hand(mob/user)
 	if(deployed)
 		var/deploy_speed = get_skill_delay(user.get_skill_level(/datum/skill/labor/fishing), 1, slowest = 6) //in seconds
 		if(caught)
-			user.visible_message(span_notice("[user] begins to harvest from the cage..."), \
-								span_notice("I begin harvesting the from the cage..."))
+			user.visible_message(span_notice("[user]开始从笼中收取猎获……"), \
+								span_notice("我开始从笼中收取猎获……"))
 			if(do_after(user, deploy_speed, target = src))
 				STOP_PROCESSING(SSobj, src)
 				icon_state = "fishingcage_deployed"
@@ -54,8 +54,8 @@
 				caught = null
 				desc = initial(desc)
 		else
-			user.visible_message(span_notice("[user] begins disarming the fishing cage..."), \
-								span_notice("I begin disarming the fishing cage..."))
+			user.visible_message(span_notice("[user]开始拆除捕鱼笼……"), \
+								span_notice("我开始拆除捕鱼笼……"))
 			if(do_after(user, deploy_speed, target = src))
 				STOP_PROCESSING(SSobj, src)
 				deployed = 0
@@ -69,11 +69,11 @@
 
 /obj/item/fishingcage/attackby(obj/item/I, mob/user, params)
 	if(bait)
-		to_chat(user, span_warning("There's bait already on the cage."))
+		to_chat(user, span_warning("笼子里已经放了饵料。"))
 		return
 	if(I.baitpenalty != 100) // We use baitpenalty instead of baitchance so let's just exclude anything with 100
-		user.visible_message(span_notice("[user] starts adding the bait to the fishing cage..."), \
-							span_notice("I start to add [I] to the fishing cage..."))
+		user.visible_message(span_notice("[user]开始把饵料放进捕鱼笼……"), \
+							span_notice("我开始把[I]放进捕鱼笼……"))
 		if(do_after(user, 3 SECONDS, target = src))
 			playsound(src.loc, 'sound/foley/pierce.ogg', 50, FALSE)
 			I.forceMove(src)
@@ -97,5 +97,5 @@
 /obj/item/fishingcage/examine(mob/user)
 	. = ..()
 	if(icon_state == "fishingcage_caught")
-		. += span_warning("Something seems to be inside...")
+		. += span_warning("里面似乎有什么东西……")
 	

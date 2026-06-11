@@ -1,7 +1,7 @@
 /datum/advclass/pioneer
-	name = "Pioneer"
-	tutorial = "Aided by your traps, trusty shovel and explosives, you've not yet met your end. \
-	That has to count for something. They surely keep you around for your charm, though."
+	name = "拓荒工兵"
+	tutorial = "靠着陷阱、顺手的铲子和炸药，你至今还没把自己玩死。\
+	这总归也算一种本事吧。至于他们为什么还肯留你，多半不是因为你长得讨喜。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/bandit/pioneer
@@ -77,8 +77,8 @@
 //This has a serious exploit, but I can't be buggered to fix it. If you know, you know.
 //Average player won't. Others can be banned. I hate slop code.
 /obj/effect/proc_holder/spell/targeted/pioneer/plant_bogtrap_delayed
-	name = "Set Bogtrap (Delayed)"
-	desc = "After 8 seconds, a bogtrap arms beneath your feet."
+	name = "布设沼泽陷阱（延时）"
+	desc = "8 秒后，一枚沼泽陷阱会在我脚下完成布设并启动。"
 	range = 0
 	overlay_state = "trap"//Temp.
 	releasedrain = 0
@@ -87,7 +87,7 @@
 	cast_without_targets = TRUE
 	antimagic_allowed = TRUE
 	associated_skill = /datum/skill/craft/crafting
-	invocations = list("Measure twice, set once...")
+	invocations = list("量两遍，再下套……")
 	invocation_type = "whisper"
 	miracle = FALSE
 	req_items = list(/obj/item/rogueweapon/shovel)
@@ -124,11 +124,11 @@
 		return FALSE
 
 	if(pending)
-		to_chat(user, span_warning("I'm already rigging a delayed charge!"))
+		to_chat(user, span_warning("我已经在布置一枚延时陷阱了！"))
 		return FALSE
 
 	if(!_has_saperka(user))
-		to_chat(user, span_warning("I need my tool to set this trap."))
+		to_chat(user, span_warning("我要有工具才能布设这个陷阱。"))
 		revert_cast()
 		return FALSE
 
@@ -138,23 +138,23 @@
 		return FALSE
 
 	if(_is_town_blocked(T))
-		to_chat(user, span_warning("I cannot set a bogtrap here; the ground is too hard."))
+		to_chat(user, span_warning("我没法在这里布设沼泽陷阱；地面太硬了。"))
 		revert_cast()
 		return FALSE
 
 	for(var/obj/structure/fluff/traveltile/TT in range(1, T))
-		to_chat(user, span_warning("Should find better place to set up the trap."))
+		to_chat(user, span_warning("我得找个更合适的地方来布设陷阱。"))
 		revert_cast()
 		return FALSE
 
 	var/list/trap_choices = list(
-		"Bomb"			= /obj/structure/trap/bogtrap/bomb,
-		"Frost"			= /obj/structure/trap/bogtrap/freeze,
-		"Kneestingers"	= /obj/structure/trap/bogtrap/kneestingers,
-		"Toxic"			= /obj/structure/trap/bogtrap/poison,
+		"爆炸"			= /obj/structure/trap/bogtrap/bomb,
+		"霜冻"			= /obj/structure/trap/bogtrap/freeze,
+		"刺膝"			= /obj/structure/trap/bogtrap/kneestingers,
+		"剧毒"			= /obj/structure/trap/bogtrap/poison,
 	)
 
-	var/choice = input(user, "Select the trap type to rig:", "Bogtrap") as null|anything in trap_choices
+	var/choice = input(user, "选择要布设的陷阱类型：", "沼泽陷阱") as null|anything in trap_choices
 	if(!choice)
 		revert_cast()
 		return FALSE
@@ -164,20 +164,20 @@
 	pending = TRUE
 
 	user.visible_message(
-		span_notice("[user] kneels, rigging something beneath their feet."),
-		span_notice("I begin setting a [choice] bogtrap.")
+		span_notice("[user]跪了下来，正在脚边布置什么东西。"),
+		span_notice("我开始布设一个[choice]沼泽陷阱。")
 	)
 	playsound(user, 'sound/misc/clockloop.ogg', 50, TRUE)
 
 	if(!do_after(user, setup_delay, target = T))
 		pending = FALSE
-		to_chat(user, span_warning("I stop setting the bogtrap."))
+		to_chat(user, span_warning("我停止布设沼泽陷阱。"))
 		revert_cast()
 		return FALSE
 
 	for(var/obj/structure/fluff/traveltile/TT in range(1, T))
 		pending = FALSE
-		to_chat(user, span_warning("Should find better place to set up the trap."))
+		to_chat(user, span_warning("我得找个更合适的地方来布设陷阱。"))
 		revert_cast()
 		return FALSE
 
@@ -185,8 +185,8 @@
 	_spawn_bogtrap(T, trap_path)
 
 	user.visible_message(
-		span_warning("A hidden mechanism clicks into place under [user]!"),
-		span_notice("The [choice] bogtrap arms beneath my feet.")
+		span_warning("[user]脚下传来一声机关暗扣就位的轻响！"),
+		span_notice("[choice]沼泽陷阱已在我脚下完成布设。")
 	)
 	playsound(T, 'sound/misc/chains.ogg', 50, TRUE)
 

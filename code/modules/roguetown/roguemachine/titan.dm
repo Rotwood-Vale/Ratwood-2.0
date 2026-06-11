@@ -14,8 +14,8 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 	return laws[chosen_lawset]["laws"]
 
 /obj/structure/roguemachine/titan
-	name = "throat"
-	desc = "He who wears the crown holds the key to this strange thing. If all else fails, demand the \"secrets of the throat!\""
+	name = "咽喉"
+	desc = "戴上王冠者才能掌控这奇异之物。若别无他法，就高呼“咽喉的秘密！”"
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = ""
 	density = FALSE
@@ -72,7 +72,7 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 	if(findtext(message, "summon crown")) //This must never fail, thus place it before all other modestuffs.
 		if(!SSroguemachine.crown)
 			new /obj/item/clothing/head/roguetown/crown/serpcrown(src.loc)
-			say("The crown is summoned!")
+			say("王冠已被召来！")
 			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 			playsound(src, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 		if(SSroguemachine.crown)
@@ -82,12 +82,12 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 			if(I && !ismob(I.loc))//You MUST MUST MUST keep the Crown on a person to prevent it from being summoned (magical interference)
 				var/area/crown_area = get_area(I)
 				if(crown_area && istype(crown_area, /area/rogue/indoors/town/vault) && notlord) //Anti throat snipe from vault
-					say("The crown is within the vault.")
+					say("王冠在宝库之中。")
 					playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 					return
 				I.anti_stall()
 				I = new /obj/item/clothing/head/roguetown/crown/serpcrown(src.loc)
-				say("The crown is summoned!")
+				say("王冠已被召来！")
 				playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 				playsound(src, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 				return
@@ -95,27 +95,27 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 				var/mob/living/carbon/human/HC = I.loc
 				if(HC.stat != DEAD)
 					if(I in HC.held_items)
-						say("[HC.real_name] holds the crown!")
+						say("[HC.real_name]持有王冠！")
 						playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 						return
 					if(HC.head == I)
-						say("[HC.real_name] wears the crown!")
+						say("[HC.real_name]戴着王冠！")
 						playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 						return
 				else
 					HC.dropItemToGround(I, TRUE) //If you're dead, forcedrop it, then move it.
 			I.forceMove(src.loc)
-			say("The crown is summoned!")
+			say("王冠已被召来！")
 			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 			playsound(src, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 	if(findtext(message, "summon key"))
 		if(nocrown)
-			say("You need the crown.")
+			say("你需要王冠。")
 			playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 			return
 		if(!SSroguemachine.key)
 			new /obj/item/roguekey/lord(src.loc)
-			say("The key is summoned!")
+			say("钥匙已被召来！")
 			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 			playsound(src, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 		if(SSroguemachine.key)
@@ -125,168 +125,168 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 			if(I && !ismob(I.loc))
 				I.anti_stall()
 				I = new /obj/item/roguekey/lord(src.loc)
-				say("The key is summoned!")
+				say("钥匙已被召来！")
 				playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 				playsound(src, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 				return
 			if(ishuman(I.loc))
 				var/mob/living/carbon/human/HC = I.loc
 				if(HC.stat != DEAD)
-					say("[HC.real_name] holds the key!")
+					say("[HC.real_name]持有钥匙！")
 					playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 					return
 				else
 					HC.dropItemToGround(I, TRUE) //If you're dead, forcedrop it, then move it.
 			I.forceMove(src.loc)
-			say("The key is summoned!")
+			say("钥匙已被召来！")
 			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 			playsound(src, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 	switch(mode)
 		if(0)
 			if(findtext(message, "secrets of the throat"))
-				say("My commands are: Make Decree, Make Announcement, Set Taxes, Declare Outlaw, Summon Crown, Summon Key, Make Law, Remove Law, Purge Laws, Purge Decrees, Become Regent, Change Colors, Nevermind")
+				say("我的命令有：发布法令、发布公告、设定税率、宣布法外、召来王冠、召来钥匙、制定律法、移除律法、清除律法、清除法令、成为摄政、改变颜色、算了")
 				playsound(src, 'sound/misc/machinelong.ogg', 100, FALSE, -1)
 			if(findtext(message, "make announcement"))
 				if(nocrown)
-					say("You need the crown.")
+					say("你需要王冠。")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
 				if (world.time < GLOB.last_crown_announcement_time + 2 MINUTES)
-					say(("Tis not yet time for another announcement my liege."))
+					say(("还没到再次发布公告的时候，我的陛下。"))
 					return
 				if(!SScommunications.can_announce(H))
-					say("I must gather my strength!")
+					say("我必须积蓄力量！")
 					return
-				say("Speak and they will listen.")
+				say("开口吧，他们会听见。")
 				playsound(src, 'sound/misc/machineyes.ogg', 100, FALSE, -1)
 				mode = 1
 				return
 			if(findtext(message, "make decree"))
 				if(!SScommunications.can_announce(H))
-					say("I must gather my strength!")
+					say("我必须积蓄力量！")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
 				if(notlord || nocrown)
-					say("You are not my master!")
+					say("你不是我的主人！")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
-				say("Speak and they will obey.")
+				say("开口吧，他们会服从。")
 				playsound(src, 'sound/misc/machineyes.ogg', 100, FALSE, -1)
 				mode = 2
 				return
 			if(findtext(message, "purge decrees"))
 				if(!SScommunications.can_announce(H))
-					say("I must gather my strength!")
+					say("我必须积蓄力量！")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
 				if(notlord || nocrown)
-					say("You are not my master!")
+					say("你不是我的主人！")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
-				say("All decrees shall be purged!")
+				say("所有法令都将被清除！")
 				playsound(src, 'sound/misc/machineyes.ogg', 100, FALSE, -1)
 				purge_decrees()
 				return
 			if(findtext(message, "make law"))
 				if(!SScommunications.can_announce(H))
-					say("I must gather my strength!")
+					say("我必须积蓄力量！")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
 				if(notlord || nocrown)
-					say("You are not my master!")
+					say("你不是我的主人！")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
-				say("Speak and they will obey.")
+				say("开口吧，他们会服从。")
 				playsound(src, 'sound/misc/machineyes.ogg', 100, FALSE, -1)
 				mode = 4
 				return
 			if(findtext(message, "remove law"))
 				if(!SScommunications.can_announce(H))
-					say("I must gather my strength!")
+					say("我必须积蓄力量！")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
 				if(notlord || nocrown)
-					say("You are not my master!")
+					say("你不是我的主人！")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
 				var/message_clean = replacetext(message, "remove law", "")
 				var/law_index = text2num(message_clean) || 0
 				if(!law_index || !GLOB.laws_of_the_land[law_index])
-					say("That law doesn't exist!")
+					say("那条律法并不存在！")
 					return
-				say("That law shall be gone!")
+				say("那条律法将被抹去！")
 				playsound(src, 'sound/misc/machineyes.ogg', 100, FALSE, -1)
 				remove_law(law_index)
 				return
 			if(findtext(message, "purge laws"))
 				if(!SScommunications.can_announce(H))
-					say("I must gather my strength!")
+					say("我必须积蓄力量！")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
 				if(notlord || nocrown)
-					say("You are not my master!")
+					say("你不是我的主人！")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
-				say("All laws shall be purged!")
+				say("所有律法都将被清除！")
 				playsound(src, 'sound/misc/machineyes.ogg', 100, FALSE, -1)
 				purge_laws()
 				return
 			if(findtext(message, "declare outlaw"))
 				if(notlord || nocrown)
-					say("You are not my master!")
+					say("你不是我的主人！")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
-				say("Who should be outlawed?")
+				say("该宣布谁为法外之徒？")
 				playsound(src, 'sound/misc/machinequestion.ogg', 100, FALSE, -1)
 				mode = 3
 				return
 			if(findtext(message, "set taxes"))
 				if(notlord || nocrown)
-					say("You are not my master!")
+					say("你不是我的主人！")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
-				say("The new tax percent shall be...")
+				say("新的税率将会是……")
 				playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 				give_tax_popup(H)
 				return
 			if(findtext(message, "become regent"))
 				if(nocrown)
-					say("You need the crown.")
+					say("你需要王冠。")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
 				if(SSticker.rulermob && SSticker.rulermob == H) //failsafe for edge cases
-					say("No others share the throne with you, master.")
+					say("无人能与你共享王座，主人。")
 					playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 					SSticker.regentmob = null
 					return
 				if(SSticker.rulermob != null)
-					say("The true lord is already present in the realm.")
+					say("真正的领主已经在这片土地上了。")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
 				if(!(HAS_TRAIT(H, TRAIT_NOBLE)))
-					say("You have not the noble blood to be regent.")
+					say("你没有成为摄政的贵族之血。")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
 				if(!(H.job in GLOB.noble_positions))
-					say("You are too estranged from this realm to be regent.")
+					say("你与这片土地过于疏离，无法成为摄政。")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
 				if(SSticker.regentday == GLOB.dayspassed)
-					say("A regent has already been declared this dae!")
+					say("今天已经册立过一位摄政了！")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
 				if(SSticker.regentmob == H)
-					say("You are already the regent!")
+					say("你已经是摄政了！")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
 				become_regent(H)
 				return
 			if(findtext(message, "change colors"))
 				if(notlord || nocrown)
-					say("You are not my master!")
+					say("你不是我的主人！")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
-				say("Choose the colors of your realm, my liege.")
+				say("为你的国度选择颜色吧，我的陛下。")
 				playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 				H.lord_color_choice()
 				return
@@ -309,7 +309,7 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 /obj/structure/roguemachine/titan/proc/give_tax_popup(mob/living/carbon/human/user)
 	if(!Adjacent(user))
 		return
-	var/datum/taxsetter/taxsetter = new("The Generous Lord Decrees")
+	var/datum/taxsetter/taxsetter = new("慷慨领主的谕令")
 	taxsetter.ui_interact(user)
 
 /obj/structure/roguemachine/titan/proc/make_announcement(mob/living/user, raw_message)
@@ -327,7 +327,7 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 	if(P)
 		if(P.rev_team)
 			if(P.rev_team.members.len < 3)
-				to_chat(user, "<span class='warning'>I need more folk on my side to declare victory.</span>")
+				to_chat(user, "<span class='warning'>我这边还需要更多人，才能宣告胜利。</span>")
 			else
 				for(var/datum/objective/prebel/obj in user.mind.get_all_objectives())
 					obj.completed = TRUE
@@ -339,7 +339,7 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 	var/datum/antagonist/prebel/rebel_datum = user.mind?.has_antag_datum(/datum/antagonist/prebel)
 	if(rebel_datum)
 		if(rebel_datum.rev_team?.members.len < 3)
-			to_chat(user, "<span class='warning'>I need more folk on my side to declare victory.</span>")
+			to_chat(user, "<span class='warning'>我这边还需要更多人，才能宣告胜利。</span>")
 		else
 			for(var/datum/objective/prebel/obj in user.mind.get_all_objectives())
 				obj.completed = TRUE

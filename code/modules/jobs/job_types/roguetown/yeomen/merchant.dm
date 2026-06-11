@@ -1,5 +1,6 @@
 /datum/job/roguetown/merchant
 	title = "Merchant"
+	display_title = "商人"
 	flag = MERCHANT
 	department_flag = YEOMEN
 	faction = "Station"
@@ -7,7 +8,7 @@
 	spawn_positions = 1
 	selection_color = JCOLOR_YEOMAN
 	allowed_races = ACCEPTED_RACES
-	tutorial = "You were born into wealth, learning from before you could talk about the basics of mathematics. Counting coins is a simple pleasure for any person, but you've made it an art form. These people are addicted to your wares, and you are the literal beating heart of this economy: Don't let these filth-covered troglodytes ever forget that."
+	tutorial = "你生来富有，还没学会说话前就已开始接触最基础的算术。数钱对任何人来说都是件轻松乐事，而你却把它升华成了一门艺术。这些人离不开你的货物，而你就是这套经济里真正跳动的心脏：别让这些浑身脏污的穴居杂种忘了这一点。"
 
 	display_order = JDO_MERCHANT
 	social_rank = SOCIAL_RANK_YEOMAN
@@ -28,11 +29,11 @@
 	)
 
 /datum/advclass/merchant
-	name = "Merchant"
-	tutorial = "You were born into wealth, learning from before you could talk about the basics of mathematics. \
-	Counting coins is a simple pleasure for any person, but you've made it an art form. \
-	These people are addicted to your wares, and you are the true beating heart of this economy: \
-	Don't let these filth-covered troglodytes ever forget that."
+	name = "商人"
+	tutorial = "你生来富有，还没学会说话前就已开始接触最基础的算术。\
+	数钱对任何人来说都是件轻松乐事，而你却把它升华成了一门艺术。\
+	这些人离不开你的货物，而你就是这套经济里真正跳动的心脏：\
+	别让这些浑身脏污的穴居杂种忘了这一点。"
 	outfit = /datum/outfit/job/roguetown/merchant/basic
 	category_tags = list(CTAG_MERCH)
 	subclass_stats = list(

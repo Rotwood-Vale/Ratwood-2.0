@@ -6,7 +6,7 @@
 	total_positions = 40
 	spawn_positions = 40 //brings back round-start spawn of pilgrims!!!
 	allowed_races = RACES_ALL_KINDS
-	tutorial = "Fleeing misfortune you head your way towards the Duchy. You are not a soldier or an explorer, but a humble migrant trying to look for a better life, if you get to survive the trip that is."
+	tutorial = "为逃离厄运，你踏上了前往谷地的道路。你不是士兵，也不是探险家，只是个想寻条活路的卑微流民，前提是你能活着撑过这段旅程。"
 
 	outfit = null
 	outfit_female = null

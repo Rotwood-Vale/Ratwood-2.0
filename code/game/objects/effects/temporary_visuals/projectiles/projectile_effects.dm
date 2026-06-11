@@ -1,5 +1,5 @@
 /obj/effect/projectile
-	name = "pew"
+	name = "啾"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "nothing"
 	layer = ABOVE_MOB_LAYER

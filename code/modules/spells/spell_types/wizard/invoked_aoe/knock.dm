@@ -1,7 +1,7 @@
 // Spell is perma disabled, consider a Hearthstone / Vanderlin / Whatever port at some point
 /obj/effect/proc_holder/spell/invoked/knock
-	name = "Knock"
-	desc = "Force open adjacent doors, windows and most containers."
+	name = "开锁术"
+	desc = "强行打开邻近的门、窗以及大多数容器。"
 	cost = 3
 	xp_gain = TRUE
 	school = "transmutation"
@@ -14,7 +14,7 @@
 	movement_interrupt = TRUE
 	charging_slowdown = 2
 	spell_tier = 4 // CM / Antag / Lich exclusive
-	invocations = list("Pulso!")
+	invocations = list("开锁显形！")
 	invocation_type = "shout"
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane

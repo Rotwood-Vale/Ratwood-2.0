@@ -56,7 +56,7 @@ GLOBAL_LIST_EMPTY(statpacks)
 				chunk_string += "[modifier][sub_range]"
 
 			var/statlabel = uppertext(copytext(stat, 1, 4))
-			concat += "[chunk_string.Join(" to ")] [statlabel]"
+			concat += "[chunk_string.Join(" 至 ")] [statlabel]"
 
 	result = "([concat.Join(", ")])"
 	return result

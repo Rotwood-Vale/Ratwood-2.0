@@ -9,8 +9,8 @@ GLOBAL_LIST_EMPTY(saltminestockpilemachines)
 GLOBAL_LIST_EMPTY(saltmineticketmachines)
 
 /obj/structure/roguemachine/stockpile_saltcamp
-	name = "XYLIX'S PENANCE"
-	desc = "Xylix determines if we shall be granted freedom, or ignored for eternity."
+	name = "赛利克斯的赎罪"
+	desc = "是否能被赐予自由，还是被永世无视，全由赛利克斯裁定。"
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "stockpile_vendor"
 	density = FALSE
@@ -46,9 +46,9 @@ GLOBAL_LIST_EMPTY(saltmineticketmachines)
 /obj/structure/roguemachine/stockpile_saltcamp/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_DUNGEONMASTER_LABOR_CAMP))
-		. += span_info("The winning tickets from the machine are [span_boldwarning("highly")] sought after as collector items.")
+		. += span_info("机器中开出的中奖票券会被人[span_boldwarning("极其")]热切地当作藏品追捧。")
 	else
-		. += span_info("Right click to deposit all the salt in front of the machine.")
+		. += span_info("右键可存入机器前方的全部盐。")
 
 /obj/structure/roguemachine/stockpile_saltcamp/proc/get_salt_interest(mob/user)
 	if(!user || !ishuman(user))
@@ -271,17 +271,17 @@ GLOBAL_LIST_EMPTY(saltmineticketmachines)
 		if("roll")
 			var/current_balance = get_salt_balance(usr)
 			if(current_balance <= 0)
-				src.say(pick("Eager fool; you need salt to gamble for freedom.", "You are missing your salt.", "A criminal without salt is no criminal at all.", "To play the game, you must first salt the ground."))
+				src.say(pick("急什么，蠢货；你得有盐才能为自由豪赌。", "你没有盐。", "没有盐的罪犯根本算不上罪犯。", "要玩这场游戏，你得先让地面尝到盐。"))
 				return
 			close_ui(usr)
-			src.say("Bow to Xylix and shall luck bless you.")
+			src.say("向赛利克斯俯首，愿好运眷顾你。")
 			if(!roll_for_ticket(usr)) // if we lost the game (like you just did lol), add to spent counter and reset account back to zero
 				salt_spent_on_gambling += current_balance
 				set_salt_balance(usr, 0)
-				src.say(pick("Better luck next tyme, criminal.", "You've lost! May your tears aid your rock culling.", "Such folly, better luck next tyme!", "Ha-ha! You salt drinker, never had a chance to win!"))
+				src.say(pick("下次运气会更好，罪犯。", "你输了！愿你的泪水能帮你筛石。", "何等愚行，下次再试吧！", "哈！你这吃盐的家伙，根本没机会赢！"))
 				return
 			set_salt_balance(usr, 0)
-			src.say("Oh lookie here, we have ourselves a winner!!")
+			src.say("噢快瞧瞧，这儿出了个赢家！！")
 			playsound(src, 'sound/misc/triumph_win_twnn.ogg', 100, FALSE, -1)
 			var/obj/item/detroyt_toll/ive_got_a_golden_ticket = new /obj/item/detroyt_toll(get_turf(src))
 			if(!ive_got_a_golden_ticket) // something something went very very wrong... refund player
@@ -306,13 +306,13 @@ GLOBAL_LIST_EMPTY(saltmineticketmachines)
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	playsound(loc, 'sound/misc/keyboard_enter.ogg', 100, FALSE, -1)
 
-	var/contents = "<center>FEED THE MACHINE - WIN YOUR <font color='#ab8000'>FREEDOM</font><BR>"
+	var/contents = "<center>喂饱机器 - 赢得你的<font color='#ab8000'>自由</font><BR>"
 	contents += "----------<BR>"
-	contents += "DEPOSIT SALT TO INCREASE LUCK<BR>"
-	contents += "CURRENT INTEREST RATE: [get_interest_string(user)]<BR>"
-	contents += "CURRENT ODDS: [get_odds_of_winning_string(user)]<BR>"
+	contents += "投入盐来提升运气<BR>"
+	contents += "当前利率: [get_interest_string(user)]<BR>"
+	contents += "当前几率: [get_odds_of_winning_string(user)]<BR>"
 	contents += "----------<BR>"
-	contents += "<a href='?src=[REF(src)];task=roll'>(ROLL FOR FREEDOM)</a><BR>"
+	contents += "<a href='?src=[REF(src)];task=roll'>(为自由掷运)</a><BR>"
 	contents += "</center>"
 
 	var/datum/browser/popup = new(user, "saltcamp", "", 500, 500)
@@ -327,7 +327,7 @@ GLOBAL_LIST_EMPTY(saltmineticketmachines)
 	if(sound == TRUE)
 		playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 	if(message == TRUE)
-		say("Salt has been deposited. Your chances are now [round(get_odds_of_winning(H),0.5)]% of winning.")
+		say("盐已存入。你当前的胜率为[round(get_odds_of_winning(H),0.5)]%。")
 	return TRUE
 
 /obj/structure/roguemachine/stockpile_saltcamp/attackby(obj/item/P, mob/user, params)
@@ -347,7 +347,7 @@ GLOBAL_LIST_EMPTY(saltmineticketmachines)
 		for(var/obj/I in get_turf(src))
 			found_salt |= attemptsell(I, user, FALSE, FALSE)
 		if(found_salt)
-			say("Salt has been deposited. Your chances are now [round(get_odds_of_winning(user),0.5)]% of winnings.")
+			say("盐已存入。你当前的中奖率为[round(get_odds_of_winning(user),0.5)]%。")
 		playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 		playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 
@@ -511,8 +511,8 @@ GLOBAL_LIST_EMPTY(saltmineticketmachines)
 	popup.open()
 
 /obj/structure/roguemachine/ticket_master
-	name = "Ticket Slide"
-	desc = "Only ticket winners may get to ride the sorrid slide to freedom. Looks like it will strip whoever passes through."
+	name = "票券滑道"
+	desc = "只有持中奖彩票的人才能乘上这条通往自由的破烂滑道。看上去凡是穿过去的人都会被剥个精光。"
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "headeater"
 	density = FALSE
@@ -539,9 +539,9 @@ GLOBAL_LIST_EMPTY(saltmineticketmachines)
 	if(.)
 		return
 	if(out_of_service) // aka the mapper forgot to link the other machine
-		say("Sorry, slide out of service!")
+		say("抱歉，滑道停止服务！")
 	else
-		say("You must first earn your freedom with the ticket.")
+		say("你得先用票券赢得自由。")
 
 /obj/structure/roguemachine/ticket_master/attackby(obj/item/P, mob/user, params)
 	if(!out_of_service && !slide_other_end)
@@ -552,7 +552,7 @@ GLOBAL_LIST_EMPTY(saltmineticketmachines)
 		if(!slide_other_end)
 			out_of_service = TRUE
 	if(out_of_service) // aka the mapper forgot to link the other machine
-		say("Sorry, slide out of service!")
+		say("抱歉，滑道停止服务！")
 		return ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/winner = user
@@ -574,11 +574,11 @@ GLOBAL_LIST_EMPTY(saltmineticketmachines)
 				winner.regenerate_icons()
 				if(do_teleport(winner, T, channel = TELEPORT_CHANNEL_FREE, forced = TRUE))
 					winner.Paralyze(5 SECONDS, ignore_canstun = TRUE)
-					to_chat(winner, span_danger("You are instantly sucked into the slide!"))
+					to_chat(winner, span_danger("你瞬间被吸进了滑道！"))
 				else
-					to_chat(winner, span_danger("Something stops you from being pulled into the slide!"))
+					to_chat(winner, span_danger("有什么东西阻止你被拉进滑道！"))
 		else
-			say("You must first earn your freedom with the ticket.")
+			say("你得先用票券赢得自由。")
 		return FALSE
 	. = ..()
 

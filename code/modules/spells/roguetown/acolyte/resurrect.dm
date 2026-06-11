@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/invoked/resurrect
-	name = "Anastasis"
+	name = "复苏"
 	overlay_state = "revive"
 	releasedrain = 90
 	chargedrain = 0
@@ -42,7 +42,7 @@
 
 		var/validation_result = validate_items(target)
 		if(validation_result != "")
-			to_chat(user, span_warning("[validation_result] on the floor next to or on top of [target]"))
+			to_chat(user, span_warning("[validation_result]，物品必须放在 [target] 身旁或其所在位置。"))
 			revert_cast()
 			return FALSE
 
@@ -66,7 +66,7 @@
 
 		if(!found_structure)
 			var/atom/temp_structure = required_structure
-			to_chat(user, span_warning("I need a holy [initial(temp_structure.name)] near [target]."))
+			to_chat(user, span_warning("我需要在 [target] 附近放置一座圣洁的 [initial(temp_structure.name)]。"))
 			revert_cast()
 			return FALSE
 			//OV edit
@@ -85,20 +85,20 @@
 			return FALSE
 		if(target.mob_biotypes & MOB_UNDEAD && harms_undead) //positive energy harms the undead
 			target.visible_message(
-				span_danger("[target] is unmade by divine magic!"),
-				span_userdanger("I'm unmade by divine magic!")
+				span_danger("[target] 被神圣魔法彻底抹消了！"),
+				span_userdanger("我被神圣魔法抹消了！")
 			)
 			target.gib()
 			return TRUE
 		target.adjustOxyLoss(-target.getOxyLoss()) //Ye Olde CPR
 		if(!target.revive(full_heal = FALSE))
-			to_chat(user, span_warning("Nothing happens."))
+			to_chat(user, span_warning("什么也没有发生。"))
 			revert_cast()
 			return FALSE
 		target.emote("breathgasp")
 		target.Jitter(100)
 		target.update_body()
-		target.visible_message(span_notice("[target] is revived by divine magic!"), span_green("I awake from the void."))
+		target.visible_message(span_notice("[target] 被神圣魔法复活了！"), span_green("我自虚无中醒来。"))
 		if(revive_pq && !HAS_TRAIT(target, TRAIT_IWASREVIVED) && user?.ckey)
 			adjust_playerquality(revive_pq, user.ckey)
 			ADD_TRAIT(target, TRAIT_IWASREVIVED, "[type]")
@@ -114,7 +114,7 @@
 
 /obj/effect/proc_holder/spell/invoked/resurrect/cast_check(skipcharge = 0,mob/user = usr)
 	if(!..())
-		to_chat(user, span_warning("The miracle fizzles."))
+		to_chat(user, span_warning("神迹熄散了。"))
 		return FALSE
 	return TRUE
 
@@ -136,14 +136,14 @@
 		if(have < needed) {
 			var/obj/item/I = item_type
 			var/amount_needed = needed - have
-			missing_items += "[amount_needed] [initial(I.name)][amount_needed > 1 ? "s" : ""] "
+			missing_items += "[amount_needed] 个[initial(I.name)] "
 		}
 
 	if(length(missing_items))
 		var/string = ""
 		for(var/item in missing_items)
 			string += item
-		return "Missing components: [string]."
+		return "缺少材料：[string]。"
 	return ""
 
 /obj/effect/proc_holder/spell/invoked/resurrect/proc/consume_items(atom/center)
@@ -159,8 +159,8 @@
 				qdel(I)
 
 /obj/effect/proc_holder/spell/invoked/resurrect/abyssor
-	name = "Abyssal Revival"
-	desc = "Revive the target at a cost, cast on yourself to check.<br>a dreamfiend will stalk the target and sap their stats until confronted by them."
+	name = "深渊复苏"
+	desc = "付出代价复活目标，对自己施放可查看条件。<br>一头梦魇恶物会持续追猎目标并削弱其属性，直到其亲自面对它。"
 	overlay_icon = 'icons/mob/actions/abyssormiracles.dmi'
 	action_icon = 'icons/mob/actions/abyssormiracles.dmi'
 	overlay_state = "resurrect"
@@ -217,25 +217,25 @@
 	switch(dreamfiend_type)
 		if(/mob/living/simple_animal/hostile/rogue/dreamfiend/ancient)
 			linked_alert.icon_state = "dreamfiend_ancient"
-			linked_alert.name = "Grand Abyssal Curse."
-			linked_alert.desc = "A terrifying presence if felt fraying the edges of my mind. This is a threat I cannot face alone."
+			linked_alert.name = "宏深渊诅咒"
+			linked_alert.desc = "一股骇人的存在正在撕扯我心智的边缘。这种威胁绝非我一人能够面对。"
 		if(/mob/living/simple_animal/hostile/rogue/dreamfiend/major)
 			linked_alert.icon_state = "dreamfiend_major"
-			linked_alert.name = "Major Abyssal Curse."
-			linked_alert.desc = "A great daemon is sapping my mind, a dangerous foe which I must summon to regain my faculties."
+			linked_alert.name = "重深渊诅咒"
+			linked_alert.desc = "一头可怖的大魔正在蚕食我的心智。我必须将其召来并直面，才能找回自己的神智。"
 		if(/mob/living/simple_animal/hostile/rogue/dreamfiend)
 			linked_alert.icon_state = "dreamfiend"
 
 /atom/movable/screen/alert/status_effect/dreamfiend_curse
-	name = "Abyssal Curse."
-	desc = "A nightmare entity has revived you, but now it is draining your vitality. Summon it to confront it."
+	name = "深渊诅咒"
+	desc = "一头梦魇实体令你复生，如今却正不断抽取你的生机。把它召来，亲自面对它。"
 
 /obj/effect/proc_holder/spell/invoked/summon_dreamfiend_curse
-	name = "Confront Terror"
-	desc = "Summon the dreamfiend haunting you to confront it directly"
+	name = "直面梦魇"
+	desc = "召出纠缠着你的梦魇恶物，与其正面对抗。"
 	overlay_state = "terrors"
 	chargetime = 0
-	invocations = list(span_danger("begins to smell of saltwater. You can hear waves crashing nearby..."))
+	invocations = list(span_danger("身上渐渐泛起海盐气息。你能听见浪涛正在附近拍岸……"))
 	invocation_type = "emote"
 	sound = 'modular_azurepeak/sound/mobs/abyssal/abyssal_teleport.ogg'
 	/// Type of dreamfiend to summon
@@ -245,8 +245,8 @@
 
 /obj/effect/proc_holder/spell/invoked/summon_dreamfiend_curse/cast(list/targets, mob/living/user)
 	if (world.time < timed_cooldown)
-		to_chat(user, span_warning("You must gather your strength before you are ready to confront your terror!"))
-		to_chat(user, span_warning("Time remaining: [max(0, timed_cooldown - world.time)/10] seconds."))
+		to_chat(user, span_warning("你必须先重新积蓄力量，才能准备好直面自己的梦魇！"))
+		to_chat(user, span_warning("剩余时间：[max(0, timed_cooldown - world.time)/10] 秒。"))
 		revert_cast()
 		return FALSE
 	// Summon the dreamfiend
@@ -262,12 +262,12 @@
 		user.mind.RemoveSpell(src)
 		return TRUE
 
-	to_chat(user, span_warning("No valid space to manifest the nightmare!"))
+	to_chat(user, span_warning("附近没有可供梦魇显形的有效空间！"))
 	return FALSE
 
 /obj/effect/proc_holder/spell/invoked/resurrect/pestra
-	name = "Putrid Revival"
-	desc = "Revive the target by consuming heartblood. Self cast for more information."
+	name = "腐败复苏"
+	desc = "消耗心血以复活目标。对自己施放可查看更多信息。"
 	sound = 'sound/magic/slimesquish.ogg'
 	required_items = list(
 		/obj/item/heart_blood_canister/filled = 1,
@@ -282,8 +282,8 @@
 
 /obj/effect/proc_holder/spell/invoked/resurrect/eora
 	//Does heartfelt even exist?
-	name = "Heartfelt Revival"
-	desc = "Revive the target at a cost, cast on yourself to check.<br>The target will get hungry faster for a time."
+	name = "暖心复苏"
+	desc = "付出代价复活目标，对自己施放可查看条件。<br>目标会在一段时间内更容易感到饥饿。"
 	required_items = list(
 		/obj/item/reagent_containers/food/snacks/rogue/breadslice/toast = 5
 	)
@@ -295,8 +295,8 @@
 	overlay_state = "eora_revive"
 
 /atom/movable/screen/alert/status_effect/nutrition_drain
-	name = "Metabolic Acceleration"
-	desc = "Your body is burning energy at an accelerated rate!"
+	name = "代谢加速"
+	desc = "你的身体正以加快的速度燃烧能量！"
 	icon_state = "nutrition_drain"
 
 /datum/status_effect/debuff/metabolic_acceleration
@@ -328,8 +328,8 @@
 
 /obj/effect/proc_holder/spell/invoked/resurrect/xylix
 	//Cheap, but wildly unpretictable with possibly far worse effects than other methods.
-	name = "Anastasis?"
-	desc = "Revives the target? Grants them a random debuff from other revivals, small change to be worse or better."
+	name = "复苏？"
+	desc = "也许能复活目标？会随机赋予其其他复苏方式的负面效果，并有小概率变得更糟或稍好。"
 	debuff_type = /datum/status_effect/debuff/random_revival
 	alt_required_items = list(
 		/obj/item/clothing/neck/roguetown/psicross/wood = 1
@@ -406,15 +406,15 @@
 
 		// Teleport to manor
 		owner.forceMove(target_turf)
-		to_chat(owner, span_userdanger("You wake up in an unfamiliar place, stripped of your belongings!"))
+		to_chat(owner, span_userdanger("你在一处陌生之地醒来，身上所有物品都已被剥空！"))
 		owner.Jitter(30)
 	else
 		// Fallback to random debuff if no valid turf found
 		apply_random_debuff()
 
 /atom/movable/screen/alert/status_effect/random_revival
-	name = "Strange Aftereffects"
-	desc = "The revival has left you with unexpected consequences..."
+	name = "诡异后遗症"
+	desc = "这次复苏给你留下了意想不到的后果……"
 
 //Dendor, Malum, Ravox, Noc
 //Fairly generic for now, I might give these more unique effects later!
@@ -431,8 +431,8 @@
 	return ..()
 
 /atom/movable/screen/alert/status_effect/malum_revival
-	name = "Malum's Burden"
-	desc = "Your body feels heavy and slow to recover."
+	name = "Malum 之担"
+	desc = "你的身体沉重无比，恢复起来也格外缓慢。"
 	icon_state = "malum_burden"
 
 /datum/status_effect/debuff/ravox_revival
@@ -448,8 +448,8 @@
 	return ..()
 
 /atom/movable/screen/alert/status_effect/ravox_revival
-	name = "Ravox's Weakness"
-	desc = "Your muscles feel feeble and movements sluggish."
+	name = "Ravox 之衰"
+	desc = "你的肌肉绵软无力，动作也变得迟缓。"
 	icon_state = "ravox_weakness"
 
 /datum/status_effect/debuff/dendor_revival
@@ -465,8 +465,8 @@
 	return ..()
 
 /atom/movable/screen/alert/status_effect/dendor_revival
-	name = "Dendor's Sluggishness"
-	desc = "Your movements are weighted by invisible roots and your body feels fragile."
+	name = "Dendor 之缓"
+	desc = "你的动作仿佛被无形根须缠住，身体也变得脆弱不堪。"
 	icon_state = "dendor_sluggish"
 
 /datum/status_effect/debuff/noc_revival
@@ -489,7 +489,7 @@
 	// Check if outside at night
 	if(istype(get_area(owner), /area/rogue/outdoors) && (GLOB.tod == "night"))
 		if(prob(15))
-			to_chat(owner, span_danger("Moonlight sears your flesh!"))
+			to_chat(owner, span_danger("月光正在灼烧你的血肉！"))
 			owner.adjustFireLoss(15)
 			if(iscarbon(owner))
 				var/mob/living/carbon/C = owner
@@ -497,7 +497,7 @@
 
 				for(var/obj/item/bodypart/BP in C.bodyparts)
 					var/BP_name = BP.name
-					if(!BP_name) BP_name = "Unnamed Bodypart" // Fallback
+					if(!BP_name) BP_name = "未命名部位" // Fallback
 
 					var/bool_can_bloody_wound = BP.can_bloody_wound()
 					var/bool_in_zone = (BP.body_zone in valid_body_zones)
@@ -508,10 +508,10 @@
 
 				if(length(valid_parts))
 					var/obj/item/bodypart/BP = pick(valid_parts)
-					BP.add_wound(/datum/wound/nocburn, FALSE, "looks burnt.")
+					BP.add_wound(/datum/wound/nocburn, FALSE, "看起来像被灼伤了。")
 
 /datum/wound/nocburn
-	name = "light burn"
+	name = "灼烧伤"
 	whp = 15
 	sewn_whp = 5
 	bleed_rate = 0
@@ -526,13 +526,13 @@
 	can_cauterize = FALSE
 
 /atom/movable/screen/alert/status_effect/noc_revival
-	name = "Noc's Moonlit Curse"
-	desc = "Your mind feels clouded and moonlight burns your skin."
+	name = "Noc 的月照诅咒"
+	desc = "你的思绪一片昏沉，而月光会灼伤你的皮肤。"
 	icon_state = "noc_curse"
 
 /obj/effect/proc_holder/spell/invoked/resurrect/malum
-	name = "Diligent Revival"
-	desc = "Revive the target at a cost, cast on yourself to check.<br>Targets willpower and strength will be sapped for a time."
+	name = "勤勉复苏"
+	desc = "付出代价复活目标，对自己施放可查看条件。<br>目标的意志与力量会在一段时间内被削弱。"
 	overlay_icon = 'icons/mob/actions/malummiracles.dmi'
 	action_icon = 'icons/mob/actions/malummiracles.dmi'
 	overlay_state = "resurrect"
@@ -546,8 +546,8 @@
 	sound = 'sound/magic/clang.ogg'
 
 /obj/effect/proc_holder/spell/invoked/resurrect/ravox
-	name = "Just Revival"
-	desc = "Revive the target at a cost, cast on yourself to check.<br>Targets strength and speed will be sapped for a time."
+	name = "公正复苏"
+	desc = "付出代价复活目标，对自己施放可查看条件。<br>目标的力量与速度会在一段时间内被削弱。"
 	overlay_icon = 'icons/mob/actions/ravoxmiracles.dmi'
 	action_icon = 'icons/mob/actions/ravoxmiracles.dmi'
 	overlay_state = "resurrect"
@@ -562,8 +562,8 @@
 	debuff_type = /datum/status_effect/debuff/ravox_revival
 
 /obj/effect/proc_holder/spell/invoked/resurrect/dendor
-	name = "Wild Revival"
-	desc = "Revive the target at a cost, cast on yourself to check.<br>Requires a wise tree or sanctified tree nearby. Targets speed and constitution will be sapped for a time."
+	name = "荒野复苏"
+	desc = "付出代价复活目标，对自己施放可查看条件。<br>需要附近有一棵智者之树或受圣化的树木。目标的速度与体魄会在一段时间内被削弱。"
 	//Herbs that have to do with intelligence mostly. Easier to remember.
 	required_items = list(
 		/obj/item/reagent_containers/food/snacks/grown/manabloom = 3,
@@ -584,12 +584,12 @@
 		return ..()
 	var/mob/living/simple_animal/target = targets[1]
 	if(target.stat != DEAD)
-		to_chat(user, span_warning("[target] is not dead."))
+		to_chat(user, span_warning("[target] 还没有死。"))
 		revert_cast()
 		return FALSE
 	var/validation_result = validate_items(target)
 	if(validation_result != "")
-		to_chat(user, span_warning("[validation_result] on the floor next to or on top of [target]"))
+		to_chat(user, span_warning("[validation_result]，物品必须放在 [target] 身旁或其所在位置。"))
 		revert_cast()
 		return FALSE
 	var/found_structure = FALSE
@@ -607,20 +607,20 @@
 			break
 	if(!found_structure)
 		var/atom/temp_structure = required_structure
-		to_chat(user, span_warning("I need a [initial(temp_structure.name)] near [target]."))
+		to_chat(user, span_warning("我需要在 [target] 附近放置一座 [initial(temp_structure.name)]。"))
 		revert_cast()
 		return FALSE
 	if(!target.revive(full_heal = TRUE))
-		to_chat(user, span_warning("Nothing happens."))
+		to_chat(user, span_warning("什么也没有发生。"))
 		revert_cast()
 		return FALSE
-	target.visible_message(span_notice("[target] is roused by the wild magic!"))
+	target.visible_message(span_notice("[target] 被荒野魔力重新唤醒了！"))
 	consume_items(target)
 	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/resurrect/noc
-	name = "Moonlit Revival"
-	desc = "Revive the target at a cost, cast on yourself to check.<br>Targets intelligence will be sapped for a time, in addition they will be burned by moonlight."
+	name = "月照复苏"
+	desc = "付出代价复活目标，对自己施放可查看条件。<br>目标的智力会在一段时间内被削弱，此外还会被月光灼伤。"
 	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
 	action_icon = 'icons/mob/actions/nocmiracles.dmi'
 	overlay_state = "resurrect"

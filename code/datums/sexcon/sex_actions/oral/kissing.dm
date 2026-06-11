@@ -1,5 +1,5 @@
 /datum/sex_action/kissing
-	name = "Make out with them"
+	name = "与对方热吻"
 	check_same_tile = FALSE
 	user_sex_part = SEX_PART_JAWS
 
@@ -19,10 +19,10 @@
 
 /datum/sex_action/kissing/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	..()
-	user.visible_message(span_warning("[user] starts making out with [target]..."))
+	user.visible_message(span_warning("[user]开始与[target]热吻……"))
 
 /datum/sex_action/kissing/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] makes out with [target]..."))
+	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()]与[target]热吻着……"))
 	if(user.sexcon.force > SEX_FORCE_MID)
 		user.sexcon.oralcourse_noise(target)
 	else
@@ -36,4 +36,4 @@
 
 /datum/sex_action/kissing/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	..()
-	user.visible_message(span_warning("[user] stops making out with [target] ..."))
+	user.visible_message(span_warning("[user]停下了与[target]热吻的动作……"))

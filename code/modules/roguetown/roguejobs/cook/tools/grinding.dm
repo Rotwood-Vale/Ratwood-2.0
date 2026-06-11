@@ -1,7 +1,7 @@
 #define BASE_GRIND_TIME 1 SECONDS
 /obj/item/millstone // Previous structure path means it cannot be crafted on tables
-	name = "millstone"
-	desc = "A millstone used to grind grain into flour."
+	name = "磨石"
+	desc = "用来把谷物磨成面粉的磨石。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "millstone"
 	density = FALSE

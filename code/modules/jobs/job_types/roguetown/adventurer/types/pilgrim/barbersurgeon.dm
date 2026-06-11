@@ -1,6 +1,6 @@
 /datum/advclass/barbersurgeon
-	name = "Barber Surgeon"
-	tutorial = "Wielding crude tools and accumulated knowledge, you are something of a 'freelance physician' even if the local apothecary declined your application, and over the yils have probably cut into more people than the average knight."
+	name = "理发外科医"
+	tutorial = "靠着粗陋的器具和多年积攒下来的经验，你勉强也算得上是一名“自由行医者”，哪怕本地药师根本没收你的申请。年复一年下来，你大概已经给更多人开过刀，甚至比大多数骑士砍过的人还多。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/doctor

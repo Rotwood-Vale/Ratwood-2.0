@@ -16,11 +16,11 @@
 	wind                   = 0.2 // barely affected by wind
 
 /datum/particle_weather/fireflies
-	name = "Fireflies"
-	desc = "Tiny glowing insects drift lazily through the air."
+	name = "萤火虫"
+	desc = "微微发光的小虫在空中悠然飘荡。"
 	particleEffectType = /particles/weather/fireflies
-	warning_message = span_greenannounce("Faint glows appear in the distance across the realm.")
-	late_warning_message = span_greenannounce("Tiny lights begin to flicker in and out nearby.")
+	warning_message = span_greenannounce("远处的旷野间浮现出点点微光。")
+	late_warning_message = span_greenannounce("附近开始有细小的光点忽明忽暗。")
 	scale_vol_with_severity = TRUE
 	weather_sounds = list() // intentionally quiet
 

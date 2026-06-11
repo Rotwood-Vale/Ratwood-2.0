@@ -32,8 +32,8 @@
 	)
 
 /obj/item/rogueweapon/woodstaff/toper
-	name = "toper-focused staff"
-	desc = "An amber focus-gem hewn by pressure immense sits nestled in crown of this staff."
+	name = "托珀石聚焦法杖"
+	desc = "一枚由巨大压力雕琢而成的琥珀色聚焦宝石，安稳镶嵌在这根法杖的杖首。"
 	icon = 'modular_azurepeak/icons/obj/items/staffs.dmi'
 	icon_state = "topazstaff"
 	cast_time_reduction = TOPER_CAST_TIME_REDUCTION
@@ -43,8 +43,8 @@
 	sellprice = 34
 
 /obj/item/rogueweapon/woodstaff/amethyst
-	name = "amethyst-focused staff"
-	desc = "A purple focus-gem hewn by pressure immense sits nestled in crown of this staff."
+	name = "紫水晶聚焦法杖"
+	desc = "一枚由巨大压力雕琢而成的紫色聚焦宝石，安稳镶嵌在这根法杖的杖首。"
 	icon = 'modular_azurepeak/icons/obj/items/staffs.dmi'
 	icon_state = "amethyststaff"
 	cast_time_reduction = TOPER_CAST_TIME_REDUCTION
@@ -53,8 +53,8 @@
 	gripped_intents = list(SPEAR_BASH, /datum/intent/special/magicarc, /datum/intent/mace/smash/wood)
 
 /obj/item/rogueweapon/woodstaff/emerald
-	name = "gemerald-focused staff"
-	desc = "A glistening green focus-gem hewn by pressure immense sits nestled in crown of this staff."
+	name = "翠晶聚焦法杖"
+	desc = "一枚由巨大压力雕琢而成、闪耀着绿辉的聚焦宝石，安稳镶嵌在这根法杖的杖首。"
 	icon = 'modular_azurepeak/icons/obj/items/staffs.dmi'
 	icon_state = "emeraldstaff"
 	cast_time_reduction = EMERALD_CAST_TIME_REDUCTION
@@ -64,20 +64,20 @@
 	sellprice = 42
 
 /obj/item/rogueweapon/woodstaff/emerald/blacksteelstaff
-	name = "blacksteel staff"
-	desc = "A fine wood staff that is reinforced with blacksteel rivets and furnishings often used by War-Magos that have graduated from the Celestial Academy of Magos. Perched atop it is an less efficient though equally beautiful alchemical Dorpel. Perhaps I could enhance it with a better Dorpel?"
+	name = "黑钢法杖"
+	desc = "一根优质木杖，以黑钢铆钉与配件加固，常为毕业于天穹魔导学院的战斗魔导士所用。杖首安置着一枚效率稍逊、却同样美丽的炼金多佩尔石。也许我能用更好的多佩尔石来强化它？"
 	icon_state = "blacksteelstaff"
 	max_integrity = 300 // 100 more integrity than a steel quarterstaff due to it's blacksteel nature. Can't smelt it down though :)
 	sellprice = 60
 
 /obj/item/rogueweapon/woodstaff/emerald/blacksteelstaff/royal
-	name = "ducal blacksteel staff"
-	desc = "A mage's staff that has been reinforced with blacksteel rivets and plating. An extravagent gift for a precocious heir that serves as both casting implement and mark of station. The alchemical Dorpel it uses, however, leaves it as a generally sub-par channeling tool. Perhaps it could be improved with a true Dorpel?"
+	name = "公爵黑钢法杖"
+	desc = "一根以黑钢铆钉与镶板加固的法师法杖。这是赠予早慧继承人的奢华礼物，既是施法器具，也是身份象征。然而它所用的炼金多佩尔石让它整体上仍只是件较为平庸的导能工具。也许换上真正的多佩尔石会更好？"
 	sellprice = 100
 
 /obj/item/rogueweapon/woodstaff/sapphire
-	name = "saffira-focused staff"
-	desc = "A beautiful blue focus-gem hewn by pressure immense sits nestled in crown of this staff."
+	name = "蓝晶聚焦法杖"
+	desc = "一枚由巨大压力雕琢而成的美丽蓝色聚焦宝石，安稳镶嵌在这根法杖的杖首。"
 	icon = 'modular_azurepeak/icons/obj/items/staffs.dmi'
 	icon_state = "sapphirestaff"
 	cast_time_reduction = SAPPHIRE_CAST_TIME_REDUCTION
@@ -87,8 +87,8 @@
 	sellprice = 56
 
 /obj/item/rogueweapon/woodstaff/quartz
-	name = "blortz-focused staff"
-	desc = "A crystal-clear focus-gem hewn by pressure immense sits nestled in crown of this staff."
+	name = "布洛兹石聚焦法杖"
+	desc = "一枚由巨大压力雕琢而成、晶莹通透的聚焦宝石，安稳镶嵌在这根法杖的杖首。"
 	icon = 'modular_azurepeak/icons/obj/items/staffs.dmi'
 	icon_state = "quartzstaff"
 	cast_time_reduction = QUARTZ_CAST_TIME_REDUCTION
@@ -98,8 +98,8 @@
 	sellprice = 88
 
 /obj/item/rogueweapon/woodstaff/ruby
-	name = "ronts-focused staff"
-	desc = "A sanguine focus-gem hewn by pressure immense sits nestled in crown of this staff."
+	name = "隆兹石聚焦法杖"
+	desc = "一枚由巨大压力雕琢而成、血色鲜明的聚焦宝石，安稳镶嵌在这根法杖的杖首。"
 	icon = 'modular_azurepeak/icons/obj/items/staffs.dmi'
 	icon_state = "rubystaff"
 	cast_time_reduction = RUBY_CAST_TIME_REDUCTION
@@ -109,8 +109,8 @@
 	sellprice = 100
 
 /obj/item/rogueweapon/woodstaff/diamond
-	name = "dorpel-focused staff"
-	desc = "A beautifully faceted focus-gem hewn by pressure immense sits nestled in crown of this staff."
+	name = "多佩尔石聚焦法杖"
+	desc = "一枚由巨大压力雕琢而成、切面优美的聚焦宝石，安稳镶嵌在这根法杖的杖首。"
 	icon = 'modular_azurepeak/icons/obj/items/staffs.dmi'
 	icon_state = "diamondstaff"
 	cast_time_reduction = DIAMOND_CAST_TIME_REDUCTION
@@ -120,8 +120,8 @@
 	sellprice = 121
 
 /obj/item/rogueweapon/woodstaff/diamond/blacksteelstaff // Upgraded version, more CDR can be crafted by combining a base Blacksteel Staff with a dorpel
-	name = "refined blacksteel staff"
-	desc = "A fine wood staff that is reinforced with blacksteel rivets and furnishings often used by War-Magos that have graduated from the Celestial Academy of Magos. Perched atop it is a new beautiful Dorpel that shimmers with magical energies."
+	name = "精制黑钢法杖"
+	desc = "一根优质木杖，以黑钢铆钉与配件加固，常为毕业于天穹魔导学院的战斗魔导士所用。杖首安置着一枚崭新而美丽的多佩尔石，闪耀着魔力流光。"
 	icon_state = "blacksteelstaff"
 	max_integrity = 300 // 100 more integrity than a steel quarterstaff due to it's blacksteel nature. Can't smelt it down though :)
 	sellprice = 160
@@ -132,9 +132,9 @@
 	sellprice = 230
 
 /obj/item/rogueweapon/woodstaff/riddle_of_steel
-	name = "\improper Staff of the Riddle-Steel"
-	desc = "Flame dances within the focus-gem of this mighty staff at a rhythm and intensity to match the \
-	mage that wields it."
+	name = "\improper 谜钢法杖"
+	desc = "火焰在这柄强大法杖的聚焦宝石中起舞，其节奏与烈度皆与\
+	持杖法师相呼应。"
 	icon = 'modular_azurepeak/icons/obj/items/staffs.dmi'
 	icon_state = "riddlestaff"
 	cast_time_reduction = RIDDLE_OF_STEEL_CAST_TIME_REDUCTION
@@ -144,7 +144,7 @@
 	sellprice = 400
 
 /obj/item/rogueweapon/woodstaff/riddle_of_steel/magos
-	name = "\improper Staff of the Court Magos"
+	name = "\improper 宫廷魔导士法杖"
 	icon_state = "courtstaff"
 
 /obj/item/rogueweapon/woodstaff/naledi
@@ -162,63 +162,63 @@
 	abstract_type = /datum/crafting_recipe/gemstaff
 
 /datum/crafting_recipe/gemstaff/toper_staff
-	name = "toper-focused staff"
+	name = "托珀石聚焦法杖"
 	result = /obj/item/rogueweapon/woodstaff/toper
 	reqs = list(/obj/item/rogueweapon/woodstaff = 1,
 				/obj/item/roguegem/yellow = 1)
 	craftdiff = 0
 
 /datum/crafting_recipe/gemstaff/amethyst_staff
-	name = "amethyst-focused staff"
+	name = "紫水晶聚焦法杖"
 	result = /obj/item/rogueweapon/woodstaff/amethyst
 	reqs = list(/obj/item/rogueweapon/woodstaff = 1,
 				/obj/item/roguegem/amethyst = 1)
 	craftdiff = 0
 
 /datum/crafting_recipe/gemstaff/emerald_staff
-	name = "gemerald-focused staff"
+	name = "翠晶聚焦法杖"
 	result = /obj/item/rogueweapon/woodstaff/emerald
 	reqs = list(/obj/item/rogueweapon/woodstaff = 1,
 				/obj/item/roguegem/green = 1)
 	craftdiff = 0
 
 /datum/crafting_recipe/gemstaff/sapphire_staff
-	name = "saffira-focused staff"
+	name = "蓝晶聚焦法杖"
 	result = /obj/item/rogueweapon/woodstaff/sapphire
 	reqs = list(/obj/item/rogueweapon/woodstaff = 1,
 				/obj/item/roguegem/violet = 1)
 	craftdiff = 0
 
 /datum/crafting_recipe/gemstaff/quartz_staff
-	name = "blortz-focused staff"
+	name = "布洛兹石聚焦法杖"
 	result = /obj/item/rogueweapon/woodstaff/quartz
 	reqs = list(/obj/item/rogueweapon/woodstaff = 1,
 				/obj/item/roguegem/blue = 1)
 	craftdiff = 0
 
 /datum/crafting_recipe/gemstaff/ruby_staff
-	name = "rontz-focused staff"
+	name = "隆兹石聚焦法杖"
 	result = /obj/item/rogueweapon/woodstaff/ruby
 	reqs = list(/obj/item/rogueweapon/woodstaff = 1,
 				/obj/item/roguegem/ruby = 1)
 	craftdiff = 0
 
 /datum/crafting_recipe/gemstaff/diamond_staff
-	name = "dorpel-focused staff"
+	name = "多佩尔石聚焦法杖"
 	result = /obj/item/rogueweapon/woodstaff/diamond
 	reqs = list(/obj/item/rogueweapon/woodstaff = 1,
 				/obj/item/roguegem/diamond = 1)
 	craftdiff = 0
 
 /datum/crafting_recipe/gemstaff/riddle_of_steel_staff
-	name = "Staff of the Riddlesteel"
+	name = "谜钢法杖"
 	result = /obj/item/rogueweapon/woodstaff/riddle_of_steel
 	reqs = list(/obj/item/rogueweapon/woodstaff = 1,
 				/obj/item/riddleofsteel = 1)
 	craftdiff = 0
 
 /datum/crafting_recipe/gemstaff/blacksteelstaffupgrade
-	name = "Refined Blacksteel Staff"
+	name = "精制黑钢法杖"
 	result = /obj/item/rogueweapon/woodstaff/diamond/blacksteelstaff
 	reqs = list(/obj/item/rogueweapon/woodstaff/emerald/blacksteelstaff = 1,
 				/obj/item/roguegem/diamond = 1)

@@ -1,6 +1,6 @@
 /datum/advclass/minstrel
-	name = "Minstrel"
-	tutorial = "Unlike those so-called 'bards' who traipse around in fancy cloth and swordfight in the woods, you follow the calling of a true musician. You've simply... yet to find a receptive audience."
+	name = "吟游艺人"
+	tutorial = "和那些披着花哨衣裳、跑去树林里舞剑的所谓“诗人”不同，你追随的是真正乐师的道路。你只是……还没找到肯认真听你演奏的观众罢了。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/minstrel
@@ -56,37 +56,37 @@
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
 		belt = /obj/item/storage/belt/rogue/leather/cloth/sash/random
 	if(H.mind)
-		var/weapons = list("Accordion","Bagpipe","Drum","Flute","Guitar","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
-		var/weapon_choice = tgui_input_list(H, "Choose your instrument.", "TAKE UP ARMS", weapons)
+		var/weapons = list("手风琴","风笛","鼓","长笛","吉他","竖琴","手摇风琴","口簧琴","鲁特琴","诗琴","三味线","小号","中提琴","歌声护符")
+		var/weapon_choice = tgui_input_list(H, "选择你的乐器。", "拿起家伙", weapons)
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Accordion")
+			if("手风琴")
 				backr = /obj/item/rogue/instrument/accord
-			if("Bagpipe")
+			if("风笛")
 				backr = /obj/item/rogue/instrument/bagpipe
-			if("Drum")
+			if("鼓")
 				backr = /obj/item/rogue/instrument/drum
-			if("Flute")
+			if("长笛")
 				backr = /obj/item/rogue/instrument/flute
-			if("Guitar")
+			if("吉他")
 				backr = /obj/item/rogue/instrument/guitar
-			if("Harp")
+			if("竖琴")
 				backr = /obj/item/rogue/instrument/harp
-			if("Hurdy-Gurdy")
+			if("手摇风琴")
 				backr = /obj/item/rogue/instrument/hurdygurdy
-			if("Jaw Harp")
+			if("口簧琴")
 				backr = /obj/item/rogue/instrument/jawharp
-			if("Lute")
+			if("鲁特琴")
 				backr = /obj/item/rogue/instrument/lute
-			if("Psyaltery")
+			if("诗琴")
 				backr = /obj/item/rogue/instrument/psyaltery
-			if("Shamisen")
+			if("三味线")
 				backr = /obj/item/rogue/instrument/shamisen
-			if("Trumpet")
+			if("小号")
 				backr = /obj/item/rogue/instrument/trumpet
-			if("Viola")
+			if("中提琴")
 				backr = /obj/item/rogue/instrument/viola
-			if("Vocal Talisman")
+			if("歌声护符")
 				backr = /obj/item/rogue/instrument/vocals
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank_up_to(/datum/skill/misc/music, 6, TRUE)

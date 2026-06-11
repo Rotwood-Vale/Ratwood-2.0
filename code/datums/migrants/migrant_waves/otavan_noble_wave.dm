@@ -1,5 +1,5 @@
 /datum/migrant_wave/otavan_envoy
-	name = "Otavan Emissary"
+	name = "Otava使团"
 	max_spawns = 1
 	shared_wave_type = /datum/migrant_wave/otavan_envoy
 	weight = 50
@@ -11,10 +11,10 @@
 		/datum/migrant_role/otavan/scribe = 1,
 		/datum/migrant_role/otavan/preacher = 1,
 	)
-	greet_text = "You are part of an Otavan diplomatic mission: a small retinue and a Psydonite preacher, ready to represent your homeland."
+	greet_text = "你们是 Otava 外交使团的一员，带着一小队随员与一位 Psydonite 传教士，准备代表自己的祖国。"
 
 /datum/migrant_wave/otavan_envoy_down_one
-	name = "Otavan Emissary"
+	name = "Otava使团"
 	can_roll = FALSE
 	shared_wave_type = /datum/migrant_wave/otavan_envoy
 	downgrade_wave = /datum/migrant_wave/otavan_envoy_down_two
@@ -24,10 +24,10 @@
 		/datum/migrant_role/otavan/guard = 1,
 		/datum/migrant_role/otavan/scribe = 1,
 	)
-	greet_text = "You are part of an Otavan diplomatic mission: a small retinue and a Psydonite preacher, ready to represent your homeland. The Psydonite is dead - you must carry on."
+	greet_text = "你们是 Otava 外交使团的一员，带着一小队随员与一位 Psydonite 传教士，准备代表自己的祖国。那位 Psydonite 已经死了，你们必须继续前行。"
 
 /datum/migrant_wave/otavan_envoy_down_two
-	name = "Otavan Emissary"
+	name = "Otava使团"
 	can_roll = FALSE
 	shared_wave_type = /datum/migrant_wave/otavan_envoy
 	downgrade_wave = /datum/migrant_wave/otavan_envoy_down_three
@@ -37,10 +37,10 @@
 		/datum/migrant_role/otavan/guard = 1,
 		/datum/migrant_role/otavan/preacher = 1,
 	)
-	greet_text = "You are part of an Otavan diplomatic mission: a small retinue and a Psydonite preacher, ready to represent your homeland. The Scribe was swallowed by a troll - nothing is left."
+	greet_text = "你们是 Otava 外交使团的一员，带着一小队随员与一位 Psydonite 传教士，准备代表自己的祖国。书记官被巨魔一口吞下，什么都没剩。"
 
 /datum/migrant_wave/otavan_envoy_down_three
-	name = "Otavan Emissary"
+	name = "Otava使团"
 	can_roll = FALSE
 	shared_wave_type = /datum/migrant_wave/otavan_envoy
 	downgrade_wave = /datum/migrant_wave/otavan_envoy_down_four
@@ -49,10 +49,10 @@
 		/datum/migrant_role/otavan/knight = 1,
 		/datum/migrant_role/otavan/guard = 1,
 	)
-	greet_text = "You are part of an Otavan diplomatic mission: a small retinue and a Psydonite preacher, ready to represent your homeland. The Scribe died to illness, and the Psydonite stayed behind to bury the body."
+	greet_text = "你们是 Otava 外交使团的一员，带着一小队随员与一位 Psydonite 传教士，准备代表自己的祖国。书记官病逝了，而那位 Psydonite 留下来为其下葬。"
 
 /datum/migrant_wave/otavan_envoy_down_four
-	name = "Otavan Emissary"
+	name = "Otava使团"
 	can_roll = FALSE
 	shared_wave_type = /datum/migrant_wave/otavan_envoy
 	downgrade_wave = /datum/migrant_wave/otavan_envoy_down_five
@@ -61,10 +61,10 @@
 		/datum/migrant_role/otavan/knight = 1,
 		/datum/migrant_role/otavan/preacher = 1,
 	)
-	greet_text = "You are part of an Otavan diplomatic mission: a small retinue and a Psydonite preacher, ready to represent your homeland. The Scribe and the Crossbowman fell to brigands - you are almost there!"
+	greet_text = "你们是 Otava 外交使团的一员，带着一小队随员与一位 Psydonite 传教士，准备代表自己的祖国。书记官与重弩手都死于强盗之手，你们就快到了！"
 
 /datum/migrant_wave/otavan_envoy_down_five
-	name = "Otavan Emissary"
+	name = "Otava使团"
 	can_roll = FALSE
 	shared_wave_type = /datum/migrant_wave/otavan_envoy
 	downgrade_wave = /datum/migrant_wave/otavan_envoy_down_six
@@ -72,10 +72,10 @@
 		/datum/migrant_role/otavan/envoy = 1,
 		/datum/migrant_role/otavan/preacher = 1,
 	)
-	greet_text = "You are part of an Otavan diplomatic mission: a small retinue and a Psydonite preacher, ready to represent your homeland. Your Knight and Crossbowman died attempting to aid the Scribe from a wave of Deadites - you must ENDURE."
+	greet_text = "你们是 Otava 外交使团的一员，带着一小队随员与一位 Psydonite 传教士，准备代表自己的祖国。你的骑士与重弩手在试图从一群死徒手中救出书记官时死去，你必须忍耐下去。"
 
 /datum/migrant_wave/otavan_envoy_down_six
-	name = "Otavan Emissary"
+	name = "Otava使团"
 	can_roll = FALSE
 	shared_wave_type = /datum/migrant_wave/otavan_envoy
 	downgrade_wave = /datum/migrant_wave/otavan_envoy_down_seven
@@ -83,14 +83,13 @@
 		/datum/migrant_role/otavan/envoy = 1,
 		/datum/migrant_role/otavan/knight = 1,
 	)
-	greet_text = "You are part of an Otavan diplomatic mission: a small retinue and a Psydonite preacher, ready to represent your homeland. The Crossbowman and the Scribe died in a horrible carriage accident, and the Psydonite drunk himself to dead. Keep your noble cause alive."
+	greet_text = "你们是 Otava 外交使团的一员，带着一小队随员与一位 Psydonite 传教士，准备代表自己的祖国。重弩手和书记官死于可怕的车祸，而那位 Psydonite 也把自己喝死了。让你们高贵的使命继续活下去。"
 
 /datum/migrant_wave/otavan_envoy_down_seven
-	name = "Otavan Emissary"
+	name = "Otava使团"
 	can_roll = FALSE
 	shared_wave_type = /datum/migrant_wave/otavan_envoy
 	roles = list(
 		/datum/migrant_role/otavan/envoy = 1,
 	)
-	greet_text = "You are part of an Otavan diplomatic mission: a small retinue and a Psydonite preacher, ready to represent your homeland. The Knight drowned, the Crossbowman starved, the Scribe broke his neck and the Psydonite turned to Zizo and died - it's only you."
-
+	greet_text = "你们是 Otava 外交使团的一员，带着一小队随员与一位 Psydonite 传教士，准备代表自己的祖国。骑士溺死了，重弩手饿死了，书记官摔断了脖子，而 Psydonite 转向了 Zizo 后也死了，如今只剩下你。"

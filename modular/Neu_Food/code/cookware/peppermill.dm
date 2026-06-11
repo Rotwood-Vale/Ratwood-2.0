@@ -1,6 +1,6 @@
 /obj/item/reagent_containers/peppermill // new with some animated art
-	name = "pepper mill"
-	desc = "Let the lord have his snack; Twist the head until it cracks."
+	name = "胡椒研磨器"
+	desc = "让领主享用他的点心吧；转动研磨器顶部，直到它噼啪作响。"
 	icon = 'modular/Neu_Food/icons/cookware/peppermill.dmi'
 	icon_state = "peppermill"
 	layer = CLOSED_BLASTDOOR_LAYER // obj layer + a little, small obj layering above convenient

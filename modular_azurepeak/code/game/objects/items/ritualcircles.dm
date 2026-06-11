@@ -1,5 +1,5 @@
 /obj/structure/ritualcircle
-	name = "ritual circle"
+	name = "仪式法阵"
 	desc = ""
 	icon = 'icons/roguetown/misc/rituals.dmi'
 	icon_state = "ritual_base"
@@ -11,48 +11,48 @@
 
 /obj/structure/ritualcircle/attack_hand(mob/living/user)
 	if(!allow_dreamwalkers && HAS_TRAIT(user, TRAIT_DREAMWALKER))
-		to_chat(user, span_danger("Only the rune of stirring calls to me now..."))
+		to_chat(user, span_danger("如今唯有激荡符文仍在呼唤我......"))
 		return FALSE
 	return TRUE
 
 /obj/structure/ritualcircle/attack_right(mob/living/carbon/human/user)
-	user.visible_message(span_warning("[user] begins wiping away the rune"))
+	user.visible_message(span_warning("[user]开始擦去这道符文。"))
 	if(do_after(user, 15))
 		playsound(loc, 'sound/foley/cloth_wipe (1).ogg', 100, TRUE)
 		qdel(src)
 
 // This'll be our tutorial ritual for those who want to make more later, let's go into details in comments, mm? - Onutsio
 /obj/structure/ritualcircle/astrata
-	name = "Rune of the Sun" // defines name of the circle itself
+	name = "太阳符文" // defines name of the circle itself
 	icon_state = "astrata_chalky" // the icon state, so, the sprite the runes use on the floor. As of making, we have 6, each needs an active/inactive state.
-	desc = "A Holy Rune of Astrata. Warmth irradiates from the rune." // description on examine
+	desc = "阿斯特拉塔的神圣符文。温暖正从符文中散发出来。" // description on examine
 	var/solarrites = list("Guiding Light") // This is important - This is the var which stores every ritual option available to a ritualist - Ideally, we'd have like, 3 for each God. Right now, just 1.
 
 /obj/structure/ritualcircle/astrata/attack_hand(mob/living/user)
 	if(!..())
 		return
 	if((user.patron?.type) != /datum/patron/divine/astrata)
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不懂施行此仪的正确礼法......"))
 		return
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
-		to_chat(user,span_smallred("I don't know the proper rites for this...")) // You need ritualist to use them
+		to_chat(user,span_smallred("我不懂施行此仪的正确礼法......")) // You need ritualist to use them
 		return
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
-		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more.")) // If you have already done a ritual in the last 30 minutes, you cannot do another.
+		to_chat(user,span_smallred("我今天已经完成了足够多的仪式......若想再次沟通神意，我必须先休息。")) // If you have already done a ritual in the last 30 minutes, you cannot do another.
 		return
-	var/riteselection = input(user, "Rituals of the Sun", src) as null|anything in solarrites // When you use a open hand on a rune, It'll give you a selection of all the rites available from that rune
+	var/riteselection = input(user, "太阳仪礼", src) as null|anything in solarrites // When you use a open hand on a rune, It'll give you a selection of all the rites available from that rune
 	switch(riteselection) // rite selection goes in this section, try to do something fluffy. Presentation is most important here, truthfully.
 		if("Guiding Light") // User selects Guiding Light, begins the stuff for it
 			if(do_after(user, 50)) // just flavor stuff before activation
-				user.say("I beseech the Absolute Order, the Sun and Dae!!")
+				user.say("我向绝对秩序、向太阳与白昼恳求！！")
 				if(do_after(user, 50))
-					user.say("To bring Order to a world of naught!!")
+					user.say("愿秩序降临这虚无之世！！")
 					if(do_after(user, 50))
-						user.say("Place your gaze upon me, oh Radiant one!!")
-						to_chat(user,span_danger("You feel the eye of Astrata turned upon you. Her warmth dances upon your cheek. You feel yourself warming up...")) // A bunch of flavor stuff, slow incanting.
+						user.say("请将目光投向我吧，光耀者！！")
+						to_chat(user,span_danger("你感到阿斯特拉塔的目光落在自己身上。她的温暖轻抚过你的面颊，你觉得自己正在逐渐发热......")) // A bunch of flavor stuff, slow incanting.
 						icon_state = "astrata_active"
 						if(!HAS_TRAIT(user, TRAIT_CHOSEN)) //Priests don't burst into flames.
-							loc.visible_message(span_warning("[user]'s bursts to flames! Embraced by Her Warmth wholly!"))
+							loc.visible_message(span_warning("[user]猛然燃起烈焰！彻底被她的温暖所拥抱！"))
 							playsound(loc, 'sound/combat/hits/burn (1).ogg', 100, FALSE, -1)
 							user.adjust_fire_stacks(10)
 							user.ignite_mob()
@@ -67,39 +67,39 @@
 	var/ritualtargets = view(7, loc) // Range of 7 from the source, which is the rune
 	for(var/mob/living/carbon/human/target in ritualtargets) // defines the target as every human in this range
 		target.apply_status_effect(/datum/status_effect/buff/guidinglight) // applies the status effect
-		to_chat(target,span_cultsmall("Astrata's light guides me forward, drawn to me by the Ritualist's pyre!"))
+		to_chat(target,span_cultsmall("阿斯特拉塔的光辉指引我前行，被仪式师的圣焰牵引而来！"))
 		playsound(target, 'sound/magic/holyshield.ogg', 80, FALSE, -1) // Cool sound!
 // If you want to review a more complicated one, Undermaiden's Bargain is probs the most complicated of the starting set. - Have fun! - Onutsio 🏳️‍⚧️
 
 
 /obj/structure/ritualcircle/noc
-	name = "Rune of the Moon"
+	name = "月亮符文"
 	icon_state = "noc_chalky"
-	desc = "A Holy Rune of Noc. Moonlight shines upon thee."
+	desc = "诺克的神圣符文。月光正照耀着你。"
 	var/lunarrites = list("Moonlight Dance") // list for more to be added later
 
 /obj/structure/ritualcircle/noc/attack_hand(mob/living/user)
 	if(!..())
 		return
 	if((user.patron?.type) != /datum/patron/divine/noc)
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不懂施行此仪的正确礼法......"))
 		return
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不懂施行此仪的正确礼法......"))
 		return
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
-		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more."))
+		to_chat(user,span_smallred("我今天已经完成了足够多的仪式......若想再次沟通神意，我必须先休息。"))
 		return
-	var/riteselection = input(user, "Rituals of the Moon", src) as null|anything in lunarrites
+	var/riteselection = input(user, "月之仪礼", src) as null|anything in lunarrites
 	switch(riteselection) // put ur rite selection here
 		if("Moonlight Dance")
 			if(do_after(user, 50))
-				user.say("I beseech the Father of Secrets, the Moon and Night!!")
+				user.say("我向秘密之父、向明月与长夜祈求！！")
 				if(do_after(user, 50))
-					user.say("To bring Wisdom to a world of naught!!")
+					user.say("愿智慧降临这虚无之世！！")
 					if(do_after(user, 50))
-						user.say("Place your gaze upon me, oh wise one!!")
-						to_chat(user,span_cultsmall("The Moon God's gaze falls upon you. With some effort, it can be drawn upon supplicants."))
+						user.say("请将目光投向我吧，睿智者！！")
+						to_chat(user,span_cultsmall("月神的目光落在了你身上。只要稍加引导，便可将其赐予祈求者。"))
 						playsound(loc, 'sound/magic/holyshield.ogg', 80, FALSE, -1)
 						moonlightdance(src)
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
@@ -110,25 +110,25 @@
 		target.apply_status_effect(/datum/status_effect/buff/moonlightdance)
 
 /obj/structure/ritualcircle/xylix
-	name = "Rune of Trickery"
-	desc = "A Holy Rune of Xylix. The air feels untrustworthy."
+	name = "诡计符文"
+	desc = "赛利克斯的神圣符文。四周的空气都透着一股不可信赖。"
 	icon_state = "xylix_chalky"
 	var/trickeryrites = list("Rite of the Pratfall", "Stagehand's Silence")
 
 /obj/structure/ritualcircle/xylix/attack_hand(mob/living/user)
 	if(!istype(user.patron, /datum/patron/divine/xylix))
-		to_chat(user, span_smallred("I don't know the proper rites for this..."))
+		to_chat(user, span_smallred("我不懂施行此仪的正确礼法......"))
 		return
 
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
-		to_chat(user, span_smallred("I don't know the proper rites for this..."))
+		to_chat(user, span_smallred("我不懂施行此仪的正确礼法......"))
 		return
 
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
-		to_chat(user, span_smallred("I have performed enough rituals for the day..."))
+		to_chat(user, span_smallred("我今天已经完成了足够多的仪式......"))
 		return
 
-	var/riteselection = input(user, "Rituals of Trickery", src) as null|anything in trickeryrites
+	var/riteselection = input(user, "诡计仪礼", src) as null|anything in trickeryrites
 	switch(riteselection)
 		if("Rite of the Pratfall")
 			if(!do_after(user, 40))
@@ -147,7 +147,7 @@
 			playsound(loc, 'sound/magic/decoylaugh.ogg', 90, FALSE)
 
 			icon_state = "xylix_active"
-			loc.visible_message(span_warning("[user] traces a mocking sigil upon the rune."))
+			loc.visible_message(span_warning("[user]在符文上描摹出一道带着嘲弄意味的印记。"))
 
 			for(var/mob/living/M in range(1, src))
 				M.apply_status_effect(/datum/status_effect/buff/xylix_pratfall)
@@ -169,7 +169,7 @@
 			if(!do_after(user, 50))
 				return
 			user.say("--ON WITH THE SHOW!!")
-			to_chat(user, span_cultsmall("Every play needs its stagehands. Xylix will quicken the slow, speed your sneaking, and quiet your footsteps... for a time."))
+			to_chat(user, span_cultsmall("每一场戏都需要幕后杂役。赛利克斯会让迟缓者变快，让你潜行更迅捷，也会让你的脚步暂时悄然无声。"))
 			playsound(loc, 'sound/magic/mockery.ogg', 90, FALSE, -1)
 			icon_state = "xylix_active"
 			stagehands_silence()
@@ -185,13 +185,13 @@
 	icon_state = "xylix_chalky"
 
 /obj/structure/ritualcircle/ravox
-	name = "Rune of Justice"
+	name = "正义符文"
 	icon_state = "ravox_chalky"
-	desc = "A Holy Rune of Ravox. A blade to protect the weak with."
+	desc = "拉沃克斯的神圣符文。象征着守护弱者之刃。"
 
 /obj/structure/ritualcircle/pestra
-	name = "Rune of Plague"
-	desc = "A Holy Rune of Pestra. A sickle to cleanse the weeds, and bring forth life."
+	name = "疫病符文"
+	desc = "佩斯特拉的神圣符文。一把清除杂草、带来新生的镰刀。"
 	icon_state = "pestra_chalky"
 	var/plaguerites = list("Flylord's Triage")
 
@@ -200,15 +200,15 @@
 	if(!..())
 		return
 	if((user.patron?.type) != /datum/patron/divine/pestra)
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不懂施行此仪的正确礼法......"))
 		return
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不懂施行此仪的正确礼法......"))
 		return
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
-		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more."))
+		to_chat(user,span_smallred("我今天已经完成了足够多的仪式......若想再次沟通神意，我必须先休息。"))
 		return
-	var/riteselection = input(user, "Rituals of Plague", src) as null|anything in plaguerites
+	var/riteselection = input(user, "疫病仪礼", src) as null|anything in plaguerites
 	switch(riteselection) // put ur rite selection here
 		if("Flylord's Triage")
 			if(do_after(user, 50))
@@ -217,12 +217,12 @@
 					user.say("Boils, bogeys, rots and pus!!")
 					if(do_after(user, 50))
 						user.say("Blisters, fevers, weeping sores!!")
-						to_chat(user,span_danger("You feel something crawling up your throat, humming and scratching..."))
+						to_chat(user,span_danger("你感到有什么东西正顺着喉咙往上爬，嗡鸣着、抓挠着......"))
 						if(do_after(user, 30))
 							icon_state = "pestra_active"
 							user.say("From your wounds, the fester pours!!")
-							to_chat(user,span_cultsmall("My devotion to the Plague Queen allowing, her servants crawl up from my throat. Come now, father fly..."))
-							loc.visible_message(span_warning("[user] opens their mouth, disgorging a great swarm of flies!"))
+							to_chat(user,span_cultsmall("在我对疫病女王的虔诚许可下，她的侍从自我喉中爬出。来吧，苍蝇之父......"))
+							loc.visible_message(span_warning("[user]张开嘴，猛地吐出一大群苍蝇！"))
 							playsound(loc, 'sound/misc/fliesloop.ogg', 100, FALSE, -1)
 							flylordstriage(src)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
@@ -232,17 +232,17 @@
 /obj/structure/ritualcircle/pestra/proc/flylordstriage(src)
 	var/ritualtargets = view(0, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
-		to_chat(target,span_userdanger("You feel them crawling into your wounds and pores. Their horrific hum rings through your ears as they do their work!"))
+		to_chat(target,span_userdanger("你感到它们正爬进你的伤口与毛孔。它们工作时那可怖的嗡鸣在你耳边回荡不休！"))
 		target.flash_fullscreen("redflash3")
 		target.emote("agony")
 		target.Stun(200)
 		target.Knockdown(200)
-		to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
+		to_chat(target, span_userdanger("难以想象的剧痛！"))
 		target.apply_status_effect(/datum/status_effect/buff/flylordstriage)
 
 /obj/structure/ritualcircle/dendor
-	name = "Rune of Beasts"
-	desc = "A Holy Rune of Dendor. Becoming one with nature is to connect with ones true instinct."
+	name = "野兽符文"
+	desc = "登多尔的神圣符文。与自然合而为一，便是与你真正的本能相连。"
 	icon_state = "dendor_chalky"
 	var/bestialrites = list("Rite of the Lesser Wolf", "Borrowed Madness", "Spider Kinship")
 
@@ -250,15 +250,15 @@
 	if(!..())
 		return
 	if((user.patron?.type) != /datum/patron/divine/dendor)
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
-		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more."))
+		to_chat(user,span_smallred("今日我已行使了足够多的仪礼……必须先歇息，方可再度沟通神意。"))
 		return
-	var/riteselection = input(user, "Rituals of Beasts", src) as null|anything in bestialrites
+	var/riteselection = input(user, "野兽仪礼", src) as null|anything in bestialrites
 	switch(riteselection) // put ur rite selection here
 		if("Rite of the Lesser Wolf")
 			if(do_after(user, 50))
@@ -268,11 +268,11 @@
 					user.say("GRRRR GRRRRHHHH!!")
 					playsound(loc, 'sound/vo/mobs/vw/idle (4).ogg', 100, FALSE, -1)
 					if(do_after(user, 50))
-						loc.visible_message(span_warning("[user] snaps and snarls at the rune. Drool runs down their lip..."))
+						loc.visible_message(span_warning("[user]冲着符文龇牙低吼。涎水顺着唇边淌落......"))
 						playsound(loc, 'sound/vo/mobs/vw/bark (1).ogg', 100, FALSE, -1)
 						if(do_after(user, 30))
 							icon_state = "dendor_active"
-							loc.visible_message(span_warning("[user] snaps their head upward, they let out a howl!"))
+							loc.visible_message(span_warning("[user]猛地仰起头，发出一声长嚎！"))
 							playsound(loc, 'sound/vo/mobs/wwolf/howl (2).ogg', 100, FALSE, -1)
 							lesserwolf(src)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
@@ -280,17 +280,17 @@
 								icon_state = "dendor_chalky"
 		if("Borrowed Madness")
 			if(do_after(user, 50))
-				user.say("I pray for strength...")
+				user.say("我祈求力量……")
 				playsound(loc, 'sound/vo/mobs/vw/idle (1).ogg', 100, FALSE, -1)
 				if(do_after(user, 50))
-					user.say("I pray for pain...")
+					user.say("我祈求痛楚……")
 					playsound(loc, 'sound/vo/mobs/vw/idle (4).ogg', 100, FALSE, -1)
 					if(do_after(user, 50))
-						loc.visible_message(span_warning("[user] produces an eerie sound as they titter quietly, softly weeping. Their body twitches ever so slightly..."))
+						loc.visible_message(span_warning("[user]发出诡异的声响，像是轻轻啜泣，又像低低窃笑。其身躯微微抽动着......"))
 						playsound(loc, 'sound/vo/mobs/vw/bark (1).ogg', 100, FALSE, -1)
 						if(do_after(user, 30))
 							icon_state = "dendor_active"
-							loc.visible_message(span_warning("[user] suddenly snaps their head upward, letting out a twisted howl!"))
+							loc.visible_message(span_warning("[user]突然猛地抬头，发出一声扭曲的嚎叫！"))
 							playsound(loc, 'sound/vo/mobs/wwolf/howl (2).ogg', 100, FALSE, -1)
 							borrowedmadness(src)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
@@ -298,14 +298,14 @@
 								icon_state = "dendor_chalky"
 		if("Spider Kinship")
 			if(do_after(user, 50))
-				user.say("I call to the ruthless wilds,")
+				user.say("我向无情荒野发出呼唤，")
 				playsound(loc, 'sound/vo/mobs/spider/idle (1).ogg', 100, FALSE, -1)
 				if(do_after(user, 50))
-					user.say("... grant me an agile form of your dominion..!")
+					user.say("……赐我你们支配之下那敏捷的形体……！")
 					playsound(loc, 'sound/vo/mobs/spider/idle (3).ogg', 100, FALSE, -1)
 					if(do_after(user, 30))
 						icon_state = "dendor_active"
-						loc.visible_message(span_warning("[user] seizes up, suddenly covered in a mess of silky webs, which then slough away into a sticky pile!"))
+						loc.visible_message(span_warning("[user]浑身一僵，顷刻间被凌乱的丝网覆盖，随后那些蛛网又塌落成一滩黏糊糊的残堆！"))
 						playsound(loc, 'sound/vo/mobs/spider/pain.ogg', 100, FALSE, -1)
 						spiderkinship(src)
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
@@ -321,9 +321,9 @@
 	var/ritualtargets = view(1, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
 		if(!istype(target.patron, /datum/patron/divine/dendor))
-			to_chat(target, span_warning("The ritual's power does not recognize me..."))
+			to_chat(target, span_warning("仪式的力量并不认可我......"))
 			continue
-		to_chat(target, span_userdanger("Do you like hurting other people?"))
+		to_chat(target, span_userdanger("你喜欢伤害别人吗？"))
 		target.flash_fullscreen("redflash3")
 		target.emote("agony")
 		target.Unconscious(200)
@@ -333,18 +333,18 @@
 			var/form_path = /mob/living/carbon/human/species/wildshape/dendormole
 			if(!(form_path in ws.possible_shapes))
 				ws.possible_shapes += form_path
-				to_chat(target, span_notice("The Moss Crawler form stirs within my soul..."))
+				to_chat(target, span_notice("苔行者的形态正在我灵魂深处苏醒......"))
 				addtimer(CALLBACK(src, PROC_REF(remove_ritual_form), target, form_path), 30 MINUTES)
 		else
-			to_chat(target, span_warning("I lack the Beast Form ability to channel this power..."))
+			to_chat(target, span_warning("我缺少驾驭这股力量所需的兽形能力......"))
 
 /obj/structure/ritualcircle/dendor/proc/spiderkinship(src)
 	var/ritualtargets = view(1, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
 		if(!istype(target.patron, /datum/patron/divine/dendor))
-			to_chat(target, span_warning("The ritual's power does not recognize me..."))
+			to_chat(target, span_warning("仪式的力量并不认可我......"))
 			continue
-		to_chat(target, span_userdanger("The webs of madness and nature whisper to me. The webs are eternal. Long live the Nest!"))
+		to_chat(target, span_userdanger("疯狂与自然的蛛网正向我低语。蛛网不朽，巢群长存！"))
 		target.flash_fullscreen("redflash3")
 		target.emote("agony")
 		target.Unconscious(100)
@@ -354,10 +354,10 @@
 			var/form_path = /mob/living/carbon/human/species/wildshape/mirecrawler
 			if(!(form_path in ws.possible_shapes))
 				ws.possible_shapes += form_path
-				to_chat(target, span_notice("The Mire Crawler form stirs within my soul..."))
+				to_chat(target, span_notice("泥沼爬蛛的形态正在我灵魂深处苏醒......"))
 				addtimer(CALLBACK(src, PROC_REF(remove_ritual_form), target, form_path), 30 MINUTES)
 		else
-			to_chat(target, span_warning("I lack the Beast Form ability to channel this power..."))
+			to_chat(target, span_warning("我缺少驾驭这股力量所需的兽形能力......"))
 
 /// Removes a temporary ritual form from the druid's Beast Form wheel when the duration expires.
 /obj/structure/ritualcircle/dendor/proc/remove_ritual_form(mob/living/carbon/human/target, form_path)
@@ -366,13 +366,13 @@
 	var/obj/effect/proc_holder/spell/self/wildshape/ws = target.mind.get_spell(/obj/effect/proc_holder/spell/self/wildshape)
 	if(ws && (form_path in ws.possible_shapes))
 		ws.possible_shapes -= form_path
-		to_chat(target, span_warning("The borrowed form fades from my soul..."))
+		to_chat(target, span_warning("借来的形态正从我的灵魂中消散......"))
 
 
 
 /obj/structure/ritualcircle/malum
-	name = "Rune of Forge"
-	desc = "A Holy Rune of Malum. A hammer and heat, to fix any imperfections with."
+	name = "锻炉符文"
+	desc = "玛勒姆的神圣符文。凭借铁锤与炉火，足以修正一切瑕疵。"
 	icon_state = "malum_chalky"
 	var/forgerites = list("Ritual of Blessed Reforgance")
 
@@ -380,28 +380,28 @@
 	if(!..())
 		return
 	if((user.patron?.type) != /datum/patron/divine/malum)
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
-		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more."))
+		to_chat(user,span_smallred("今日我已行使了足够多的仪礼……必须先歇息，方可再度沟通神意。"))
 		return
-	var/riteselection = input(user, "Rituals of Creation", src) as null|anything in forgerites
+	var/riteselection = input(user, "创造仪礼", src) as null|anything in forgerites
 	switch(riteselection) // put ur rite selection here
 		if("Ritual of Blessed Reforgance")
 			if(do_after(user, 50))
-				user.say("God of craft and heat of the forge!!")
+				user.say("匠作与炉火之神啊！！")
 				if(do_after(user, 50))
-					user.say("Take forth these metals and rebirth them in your furnaces!")
+					user.say("取走这些金属，使其在你的熔炉中重获新生！")
 					if(do_after(user, 50))
-						user.say("Grant unto me the metals in which to forge great works!")
-						to_chat(user,span_danger("You feel a sudden heat rising within you, burning within your chest.."))
+						user.say("赐我可铸伟业之金属！")
+						to_chat(user,span_danger("你感到一股热流骤然自体内升腾，在胸腔中灼烧翻涌......"))
 						if(do_after(user, 30))
 							icon_state = "malum_active"
-							user.say("From your forge, may these creations be remade!!")
-							loc.visible_message(span_warning("A wave of heat rushes out from the ritual circle before [user]. The metal is reforged in a flash of light!"))
+							user.say("愿这些造物自你的炉中再获重铸！！")
+							loc.visible_message(span_warning("一股热浪自[user]身前的法阵奔涌而出。金属在一闪而逝的光辉中重铸成形！"))
 							playsound(loc, 'sound/magic/churn.ogg', 100, FALSE, -1)
 							holyreforge(src)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
@@ -420,19 +420,19 @@
 		new /obj/item/ingot/steelholy(loc)
 
 /obj/structure/ritualcircle/abyssor
-	name = "Rune of Storm"
-	desc = "A Holy Rune of Abyssor. You sense your mind getting pulled into the drawn spiral."
+	name = "风暴符文"
+	desc = "阿比索尔的神圣符文。你感觉自己的心神正被那道螺旋缓缓扯入其中。"
 	icon_state = "abyssor_chalky"
 	var/stormrites = list("Rite of the Tides")
 
 /obj/structure/ritualcircle/abyssor_alt
-	name = "Rune of Stirring"
-	desc = "A Holy Rune of Abyssor. This one seems different to the rest. Something observes."
+	name = "激荡符文"
+	desc = "阿比索尔的神圣符文。这一道与其他的并不相同。有某种存在正在注视。"
 	icon_state = "abyssoralt_active"
 
 /obj/structure/ritualcircle/abyssor_alt_inactive
-	name = "Rune of Stirring"
-	desc = "A Holy Rune of Abyssor. This one seems different to the rest. Something observes."
+	name = "激荡符文"
+	desc = "阿比索尔的神圣符文。这一道与其他的并不相同。有某种存在正在注视。"
 	icon_state = "abyssoralt_chalky"
 	allow_dreamwalkers = TRUE
 	var/stirringrites = list("Rite of the Crystal Spire")
@@ -444,13 +444,13 @@
 		return
 	// Allow both Abyssorites and Dreamwalkers to use the rune
 	if((user.patron?.type) != /datum/patron/divine/abyssor && !HAS_TRAIT(user, TRAIT_DREAMWALKER))
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
-		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more."))
+		to_chat(user,span_smallred("今日我已行使了足够多的仪礼……必须先歇息，方可再度沟通神意。"))
 		return
 
 	// Build available rites based on user's status
@@ -464,17 +464,17 @@
 		var/time_elapsed = STATION_TIME_PASSED() / (1 MINUTES)
 		if(time_elapsed < 30 && ("Rite of the Crystal Spire" in available_rites))
 			var/time_left = 30 - time_elapsed
-			to_chat(user, span_smallred("The veil is too thin to summon crystal spires. Wait another [round(time_left, 0.1)] minutes."))
+			to_chat(user, span_smallred("帷幕还太过稀薄，无法召来水晶尖塔。再等[round(time_left, 0.1)]分钟。"))
 			available_rites -= "Rite of the Crystal Spire"
 
 	if(HAS_TRAIT(user, TRAIT_DREAMWALKER))
 		available_rites += dreamwalker_rites
 
 	if(!length(available_rites))
-		to_chat(user,span_smallred("No rites are currently available."))
+		to_chat(user,span_smallred("当前没有可用的仪礼。"))
 		return
 
-	var/riteselection = input(user, "Rites of his dream", src) as null|anything in available_rites
+	var/riteselection = input(user, "祂之梦仪", src) as null|anything in available_rites
 	switch(riteselection)
 		if("Rite of the Crystal Spire")
 			if(do_after(user, 50))
@@ -484,7 +484,7 @@
 					if(do_after(user, 50))
 						icon_state = "abyssoralt_active"
 						user.say("Let your tempest chase away the craven ones!")
-						to_chat(user, span_cultsmall("A crystalline shard forms at the center of the rune, humming with Abyssor's power."))
+						to_chat(user, span_cultsmall("一块水晶碎片在符文中央凝结成形，嗡嗡震鸣着阿比索尔的力量。"))
 						new /obj/item/abyssal_marker(loc)
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 						spawn(240)
@@ -505,13 +505,13 @@
 				return
 			if(!do_after(user, 5 SECONDS))
 				return
-			user.say("DREAM! DREAM! MANIFEST MY VISION!!")
+			user.say("梦啊！梦啊！显化我的愿景！！")
 			if(!do_after(user, 5 SECONDS))
 				return
-			user.say("DREAM! DREAM! BEND TO MY WILL!!")
+			user.say("梦啊！梦啊！屈从我的意志！！")
 			if(!do_after(user, 5 SECONDS))
 				return
-			user.say("DREAM! DREAM! FORGE MY WEAPON!!")
+			user.say("梦啊！梦啊！铸就我的兵刃！！")
 			if(!do_after(user, 5 SECONDS))
 				return
 
@@ -546,67 +546,67 @@
 
 	if(new_weapon)
 		user.put_in_hands(new_weapon)
-		to_chat(user, span_warning("The dream solidifies into a [choice]!"))
+		to_chat(user, span_warning("梦境凝实成了一把[choice]！"))
 
 		var/current_skill = user.get_skill_level(skill_to_teach)
 		var/current_athletics = user.get_skill_level(/datum/skill/misc/athletics)
 		if(current_skill < 4)
 			user.adjust_skillrank_up_to(skill_to_teach, 4)
-			to_chat(user, span_notice("Knowledge of [skill_to_teach.name] floods your mind!"))
+			to_chat(user, span_notice("关于[skill_to_teach.name]的知识正涌入你的脑海！"))
 		if(current_athletics < 6)
 			user.adjust_skillrank_up_to(/datum/skill/misc/athletics, 6)
-			to_chat(user, span_notice("Your endurance swells!"))
+			to_chat(user, span_notice("你的耐力正在高涨！"))
 	else
-		to_chat(user, span_warning("The dream fails to take shape."))
+		to_chat(user, span_warning("梦境未能成形。"))
 
 /obj/structure/ritualcircle/abyssor_alt_inactive/proc/dreamarmor(mob/living/carbon/human/target)
 	if(!HAS_TRAIT(target, TRAIT_DREAMWALKER))
-		loc.visible_message(span_cult("THE RITE REJECTS ONE WHO DOES NOT BEND THE DREAMS TO THEIR WILL."))
+		loc.visible_message(span_cult("此仪拒绝不以意志扭转梦境之人。"))
 		return
 	target.Stun(60)
 	target.Knockdown(60)
-	to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
+	to_chat(target, span_userdanger("难以想象的剧痛！"))
 	target.emote("Agony")
 	playsound(loc, 'sound/combat/newstuck.ogg', 50)
-	loc.visible_message(span_cult("Ethereal tendrils emerge from the rune, wrapping around [target]'s body. Their form shifts and warps as dream-stuff solidifies into armor."))
+	loc.visible_message(span_cult("虚渺的触须自符文中涌出，缠上[target]的身躯。其形体扭曲变换，梦质凝结成甲。"))
 	spawn(20)
 		playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
 		target.equipOutfit(/datum/outfit/job/roguetown/dreamwalker_armorrite)
 		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
 		spawn(40)
-			to_chat(target, span_purple("Reality is but a fragile dream. You are the dreamer, and your will is law."))
+			to_chat(target, span_purple("现实不过是脆弱易碎的梦。你即梦者，而你的意志便是律法。"))
 
 /obj/structure/ritualcircle/abyssor/attack_hand(mob/living/user)
 	if(!..())
 		return
 	if((user.patron?.type) != /datum/patron/divine/abyssor)
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
-		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more."))
+		to_chat(user,span_smallred("今日我已行使了足够多的仪礼……必须先歇息，方可再度沟通神意。"))
 		return
-	var/riteselection = input(user, "Rite of the Tides", src) as null|anything in stormrites
+	var/riteselection = input(user, "潮汐仪礼", src) as null|anything in stormrites
 	switch(riteselection)
 		if("Rite of the Tides")
 			if(do_after(user, 50))
-				user.say("Deep Father, hear my call!")
+				user.say("深渊之父，聆听我的呼唤！")
 				if(do_after(user, 50))
-					user.say("I beg thee! A deluge upon your annointed!")
+					user.say("我恳求你！让洪涛倾覆你的受膏者之敌！")
 					if(do_after(user, 50))
 						icon_state = "abyssor_active"
-						user.say("Let your waters swallow the land!")
-						to_chat(user, span_cultsmall("A crystalline shard forms at the center of the rune, humming with Abyssor's power."))
+						user.say("让你的洪水吞没这片大地！")
+						to_chat(user, span_cultsmall("一枚结晶碎片在符文中央成形，低鸣着阿比索尔的力量。"))
 						new /obj/item/abyssal_marker/tidal(loc)
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 						spawn(240)
 							icon_state = "abyssor_chalky"
 
 /obj/item/abyssal_marker
-	name = "abyssal marker"
-	desc = "A pulsating crystal shard that hums with otherworldly energy."
+	name = "深渊标记"
+	desc = "一块脉动着的水晶碎片，低鸣着异界能量。"
 	icon = 'icons/roguetown/misc/rituals.dmi'
 	icon_state = "abyssal_marker"
 	w_class = WEIGHT_CLASS_SMALL
@@ -617,7 +617,7 @@
 	var/obj/upgraded_rune_type = /obj/structure/active_abyssor_rune/greater
 
 /obj/item/abyssal_marker/volatile
-	name = "volatile abyssal marker"
+	name = "不稳定深渊标记"
 	effect_desc = " Whispers fill your head. The crystal yearns to be used, it shall bring forth a beautiful dream. The first use shall mark, the second shall unleash. Seems fragile, like it might explode violently with energies when thrown..."
 	faith_locked = FALSE
 	icon_state = "abyssal_marker_volatile"
@@ -625,8 +625,8 @@
 	var/creation_time
 
 /obj/item/abyssal_marker/tidal
-	name = "tidal abyssal marker"
-	desc = "A pulsating crystal shard that hums with the power of the deep. It feels wet to the touch."
+	name = "潮汐深渊标记"
+	desc = "一块脉动着的水晶碎片，低鸣着深渊之力。摸上去湿漉漉的。"
 	icon_state = "abyssal_marker_tidal"
 	effect_desc = " Use in-hand to mark a location, then activate it to break the barrier between the dream and this realm where you put a mark down earlier. This one calls forth the tidal waters of the abyss."
 	rune_type = /obj/structure/active_abyssor_rune/tidal
@@ -641,13 +641,13 @@
 
 /obj/item/abyssal_marker/volatile/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(cooldown > 0 && world.time < creation_time + cooldown)
-		visible_message(span_warning("[src] bounces off the floor. It doesn't seem ready yet."))
+		visible_message(span_warning("[src]在地上弹了一下。它似乎还没准备好。"))
 		return ..()
 
 	var/turf/T = get_turf(hit_atom)
 	if(T)
 		marked_location = T
-		visible_message(span_warning("[src] shatters on impact!"))
+		visible_message(span_warning("[src]一撞即碎！"))
 		playsound(src, 'sound/magic/lightning.ogg', 50, TRUE)
 		var/mob/thrower = throwingdatum?.thrower
 		if(thrower && HAS_TRAIT(thrower, TRAIT_HERESIARCH) && upgraded_rune_type)
@@ -668,14 +668,14 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/c = user
 		if(c.patron.type != /datum/patron/divine/abyssor && faith_locked)
-			to_chat(user, span_warning("My connection to Abyssor's dream is too weak to invoke his power with this crystal."))
+			to_chat(user, span_warning("我与阿比索尔之梦的联系太过微弱，无法借这枚晶体唤起祂的力量。"))
 			return ..()
 		//Heretics get FAR stronger spires!
 		if(HAS_TRAIT(user, TRAIT_HERESIARCH) && upgraded_rune_type)
 			rune_type = upgraded_rune_type
 	if(do_after(user, 2 SECONDS) && !marked_location)
 		marked_location = get_turf(user)
-		to_chat(user, span_notice("You charge the crystal with the essence of this location."))
+		to_chat(user, span_notice("我以此地的本质为这枚晶体充能。"))
 		playsound(src, 'sound/magic/vlightning.ogg', 50, TRUE)
 	else if (marked_location)
 		user.visible_message(span_warning("[user] crushes the [src] in their hands!"))
@@ -685,13 +685,13 @@
 
 /obj/item/abyssal_marker/volatile/attack_self(mob/user)
 	if(cooldown > 0 && world.time < creation_time + cooldown)
-		to_chat(user, span_warning("The crystal is still unstable. It needs more time to attune to this realm. Try again later."))
+		to_chat(user, span_warning("这枚晶体仍不稳定，还需要更多时间与此界调谐。稍后再试。"))
 		return
 	return ..()
 
 /obj/structure/active_abyssor_rune
-	name = "awakened abyssal rune"
-	desc = "A violently pulsating rune emitting storm energy."
+	name = "觉醒的深渊符文"
+	desc = "一枚剧烈脉动、不断逸散风暴能量的符文。"
 	icon = 'icons/roguetown/misc/rituals.dmi'
 	icon_state = "abyssoralt_active"
 	anchored = TRUE
@@ -712,7 +712,7 @@
 /obj/structure/active_abyssor_rune/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/spawn_spire), spawn_time)
-	src.visible_message(span_userdanger("A glowing, pulsating rune etches itself into the ground. Reality cracks visibly around it! Something is coming!"))
+	src.visible_message(span_userdanger("一道发光搏动的符文自行刻入地面。周遭现实清晰可见地裂开了缝隙！有什么东西要来了！"))
 
 /obj/structure/active_abyssor_rune/proc/spawn_spire()
 	new spire_type(get_turf(src))
@@ -721,8 +721,8 @@
 
 // Crystal Spire Structure
 /obj/structure/crystal_spire
-	name = "crystal spire"
-	desc = "A massive crystalline structure pulsing with abyssal energy. Dark ice spreads from its base."
+	name = "水晶尖塔"
+	desc = "一座巨大的晶体结构，脉动着深渊能量。暗色寒冰自其底部蔓延开来。"
 	icon = 'icons/roguetown/misc/rituals.dmi'
 	icon_state = "crystal_spire"
 	anchored = TRUE
@@ -746,15 +746,15 @@
 	pixel_y = 8
 
 /obj/structure/crystal_spire/greater
-	name = "greater crystal spire"
+	name = "巨型水晶尖塔"
 	initial_fiend = /mob/living/simple_animal/hostile/rogue/dreamfiend/ancient/unbound
 	max_integrity = 1000
 	max_radius = 5
 	max_fiends = 7
 
 /obj/structure/crystal_spire/tidal
-	name = "tidal spire"
-	desc = "A massive crystalline structure pulsing with abyssal energy. Salt water spreads from its base."
+	name = "潮汐尖塔"
+	desc = "一座巨大的晶体结构，脉动着深渊能量。咸涩海水自其底部漫开。"
 	icon_state = "crystal_spire_tidal"
 	max_integrity = 300
 	max_fiends = 0
@@ -979,8 +979,8 @@
 	qdel(src)
 
 /obj/structure/ritualcircle/necra
-	name = "Rune of Death"
-	desc = "A Holy Rune of Necra. Quiet acceptance stirs within you."
+	name = "死亡符文"
+	desc = "内克拉的神圣符文。你心中泛起一阵宁静而顺从的接纳。"
 	icon_state = "necra_chalky"
 	var/deathrites = list("Undermaiden's Bargain", "Vow to the Undermaiden", "The Toll")
 	var/coinslot = 0
@@ -1004,13 +1004,13 @@
 	if(!..())
 		return
 	if((user.patron?.type) != /datum/patron/divine/necra)
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
-		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more."))
+		to_chat(user,span_smallred("今日我已行使了足够多的仪礼……必须先歇息，方可再度沟通神意。"))
 		return
 	var/riteselection = input(user, "Rituals of Death", src) as null|anything in deathrites
 	switch(riteselection) // put ur rite selection here
@@ -1022,12 +1022,12 @@
 				playsound(user, 'sound/vo/mobs/ghost/whisper (1).ogg', 100, FALSE, -1)
 				if(do_after(user, 60))
 					loc.visible_message(span_warning("[user] locks up, as though someone had just grabbed them..."))
-					to_chat(user,span_danger("You feel cold breath on the back of your neck..."))
+					to_chat(user,span_danger("你感到一阵冰冷的吐息拂过后颈……"))
 					playsound(user, 'sound/vo/mobs/ghost/death.ogg', 100, FALSE, -1)
 					if(do_after(user, 20))
 						icon_state = "necra_active"
 						user.say("Forgive me, the bargain is intoned!!")
-						to_chat(user,span_cultsmall("My devotion to the Undermaiden has allowed me to strike a bargain for these souls...."))
+						to_chat(user,span_cultsmall("我对冥下少女的虔敬，使我得以为这些灵魂谈成一笔交易……"))
 						playsound(loc, 'sound/vo/mobs/ghost/moan (1).ogg', 100, FALSE, -1)
 						undermaidenbargain(src)
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
@@ -1041,19 +1041,19 @@
 				playsound(user, 'sound/vo/mobs/ghost/whisper (1).ogg', 100, FALSE, -1)
 				if(do_after(user, 60))
 					loc.visible_message(span_warning("[user] locks up, as though someone had just grabbed them..."))
-					to_chat(user,span_danger("You feel cold breath on the back of your neck..."))
+					to_chat(user,span_danger("你感到一阵冰冷的吐息拂过后颈……"))
 					playsound(user, 'sound/vo/mobs/ghost/death.ogg', 100, FALSE, -1)
 					if(do_after(user, 20))
 						icon_state = "necra_active"
 						user.say("This soul pledges themselves to thee!!")
-						to_chat(user,span_cultsmall("My devotion to the Undermaiden has allowed me to anoint a vow for this soul...."))
+						to_chat(user,span_cultsmall("我对冥下少女的虔敬，使我得以为这道灵魂施加誓约……"))
 						if(undermaidenvow(src))
 							playsound(loc, 'sound/vo/mobs/ghost/moan (1).ogg', 100, FALSE, -1)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 							spawn(120)
 								icon_state = "necra_chalky"
 						else
-							loc.visible_message(span_warning("Then... nothing. The Undermaiden does not care for the vows of the damned, or those of other faiths."))
+							loc.visible_message(span_warning("随后……什么也没有。冥下少女并不在意受诅之人的誓言，也不在意其他信仰者的誓言。"))
 		if("The Toll")
 			if(!coinslot)
 				to_chat("This rite requires the toll to be prepared...")
@@ -1065,7 +1065,7 @@
 					folksonrune += persononrune
 			var/target = input(user, "Choose a supplicant") as null|anything in folksonrune
 			if(target)
-				loc.visible_message(span_warning("[user] draws spectral strands of Lux up through the air, tearing the veil between lyfe and death!"))
+				loc.visible_message(span_warning("[user]将一缕缕灵辉般的幽光自空中扯起，撕开生与死之间的帷幕！"))
 				playsound(user, 'sound/vo/mobs/ghost/whisper (3).ogg', 100, FALSE, -1)
 				if(do_after(user, 60))
 					playsound(user, 'sound/vo/mobs/ghost/whisper (1).ogg', 100, FALSE, -1)
@@ -1096,7 +1096,7 @@
 		return
 	target.adjustOxyLoss(-target.getOxyLoss()) //Ye Olde CPR
 	if(!target.revive(full_heal = FALSE))
-		to_chat(user, span_warning("Nothing happens."))
+		to_chat(user, span_warning("什么也没有发生。"))
 		return
 	var/mob/living/carbon/spirit/underworld_spirit = target.get_spirit()
 	if(underworld_spirit)
@@ -1138,8 +1138,8 @@
 
 
 /obj/item/soulthread
-	name = "lux-thread"
-	desc = "Eerie glowing thread, cometh from the grave"
+	name = "灵辉丝线"
+	desc = "诡异发光的丝线，自坟冢而来。"
 	icon = 'icons/roguetown/items/natural.dmi'
 	icon_state = "luxthread"
 	var/strungtogether = 1
@@ -1167,31 +1167,31 @@
 /obj/item/thetoll
 	grid_width = 32
 	grid_height = 32
-	name = "toll"
-	desc = "Proof of ten souls being sent to Necra, formed of a material that is not metal, constantly weeping a minute amount of blood. Ten souls for one, the Ferryman may send one back before Necra fully has them."
+	name = "代价"
+	desc = "这是十道灵魂被送往内克拉的证明，由一种并非金属的材料构成，并不断渗出微量鲜血。十魂换一魂，在内克拉完全收走对方之前，摆渡人仍可送回一人。"
 	icon = 'icons/roguetown/underworld/enigma_husks.dmi'
 	icon_state = "soultoken"
 	sellprice = 30
 
 
 /obj/structure/ritualcircle/eora
-	name = "Rune of Love"
-	desc = "A Holy Rune of Eora. A gentle warmth and joy spreads across your soul."
+	name = "爱之符文"
+	desc = "伊欧拉的神圣符文。温柔的暖意与喜悦缓缓流过你的灵魂。"
 	icon_state = "eora_chalky"
 
 	var/peacerites = list("Rite of Pacification", "Rite of the Open Hearth")
 
 /obj/structure/ritualcircle/eora/attack_hand(mob/living/user)
 	if((user.patron?.type) != /datum/patron/divine/eora)
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
-		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more."))
+		to_chat(user,span_smallred("今日我已行使了足够多的仪礼……必须先歇息，方可再度沟通神意。"))
 		return
-	var/riteselection = input(user, "Rituals of Love", src) as null|anything in peacerites
+	var/riteselection = input(user, "爱之仪礼", src) as null|anything in peacerites
 	switch(riteselection) // put ur rite selection here
 		if("Rite of Pacification")
 			if(do_after(user, 50))
@@ -1213,9 +1213,9 @@
 				if(HAS_TRAIT(persononrune, TRAIT_EXTEROCEPTION))//Only works on Eorans
 					folksonrune += persononrune
 			if(!folksonrune.len)
-				to_chat(user, span_warning("There are no Eorans on the rune to perform this rite on."))
+				to_chat(user, span_warning("符文上没有可供施行此仪礼的伊欧拉信徒。"))
 				return
-			var/target = input(user, "Choose a host") as null|anything in folksonrune
+			var/target = input(user, "选择宿主") as null|anything in folksonrune
 			if(!target)
 				return
 			user.say("I stand before you Mother to beg your ear and swear an oath!!")
@@ -1240,7 +1240,7 @@
 	var/ritualtargets = view(0, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
 		loc.visible_message(span_warning("[target] sways like windchimes in the wind..."))
-		target.visible_message(span_green("I feel the burdens of my heart lifting. Something feels very wrong... I don't mind at all..."))
+		target.visible_message(span_green("我感到心中的重负正在消散。可这感觉很不对劲……但我并不在意……"))
 		target.apply_status_effect(/datum/status_effect/buff/pacify)
 
 /obj/structure/ritualcircle/eora/proc/eoranaura(mob/living/carbon/human/target)
@@ -1257,8 +1257,8 @@
 
 
 /obj/structure/ritualcircle/zizo
-	name = "Rune of Ambition"
-	desc = "A Holy Rune of ZIZO. Ambition at any cost."
+	name = "野心符文"
+	desc = "齐佐的神圣符文。不惜一切代价的野心。"
 	icon_state = "zizo_chalky"
 	var/zizorites = list("Rite of Armaments", "Rite of the Dark Crystal", "Conversion")
 
@@ -1266,13 +1266,13 @@
 	if(!..())
 		return
 	if((user.patron?.type) != /datum/patron/inhumen/zizo)
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
-		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more."))
+		to_chat(user,span_smallred("今日我已行使了足够多的仪礼……必须先歇息，方可再度沟通神意。"))
 		return
 	var/riteselection = input(user, "Rituals of Ambition", src) as null|anything in zizorites
 	switch(riteselection)
@@ -1316,12 +1316,12 @@
 			icon_state = "zizo_active"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 			new /obj/item/necro_relics/necro_crystal(loc)
-			loc.visible_message(span_purple("A dark crystal materializes in the center of the ritual circle, pulsing with necromantic energy!"))
+			loc.visible_message(span_purple("一枚暗色水晶在仪式圆环中央显现，脉动着死灵能量！"))
 			spawn(120)
 				icon_state = "zizo_chalky"
 		if("Conversion")
 			if(!Adjacent(user))
-				to_chat(user, "You must stand close to the rune to receive Zizo's blessing.")
+				to_chat(user, "你必须站到符文近旁，才能接受齐佐的赐福。")
 				return
 			var/list/valids_on_rune = list()
 			for(var/mob/living/carbon/human/peep in range(0, loc))
@@ -1329,7 +1329,7 @@
 					continue
 				valids_on_rune += peep
 			if(!valids_on_rune.len)
-				to_chat(user, "No valid targets on the rune!")
+				to_chat(user, "符文上没有可用目标！")
 				return
 			var/mob/living/carbon/human/target = input(user, "Choose a host") as null|anything in valids_on_rune
 			if(!target || QDELETED(target) || target.loc != loc)
@@ -1352,7 +1352,7 @@
 
 /obj/structure/ritualcircle/zizo/proc/zizoarmaments(mob/living/carbon/human/target)
 	if(!HAS_TRAIT(target, TRAIT_CABAL))
-		loc.visible_message(span_cult("THE RITE REJECTS ONE NOT OF THE CABAL"))
+		target.visible_message(span_cult("此仪拒绝并非秘社之人。"))
 		return
 	target.Stun(60)
 	target.Knockdown(60)
@@ -1371,7 +1371,7 @@
 		if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
 			ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
 		spawn(40)
-			to_chat(target, span_purple("They are ignorant, backwards, without hope. You. You will be powerful."))
+			to_chat(target, span_purple("他们愚昧、落后、毫无希望。而你，你将拥有力量。"))
 
 /datum/outfit/job/roguetown/darksteelrite/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -1388,7 +1388,7 @@
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
 	var/helmets = list("BARBUTE - VISORED", "FROGMOUTH - NECK PROTECTION")
-	var/helmet_choice = input(H, "Choose your helmet.", "PROTECTION FROM THE LADY") as anything in helmets
+	var/helmet_choice = input(H, "选择你的头盔。", "来自那位女士的庇护") as anything in helmets
 	switch(helmet_choice)
 		if("BARBUTE - VISORED")
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/zizo
@@ -1397,18 +1397,18 @@
 
 /obj/structure/ritualcircle/zizo/proc/zizoconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
-		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Zizo's blessing.")
+		to_chat(usr, "所选目标不在符文上！[target.p_they(TRUE)]必须正站在符文中心，才能接受齐佐的赐福。")
 		return
 	if(HAS_TRAIT(target, TRAIT_CABAL))
-		loc.visible_message(span_cult("THE RITE REJECTS ONE ALREADY OF THE CABAL"))
+		loc.visible_message(span_cult("此仪拒绝已归于秘社之人。"))
 		return
 	if(target.already_converted_once)
 		loc.visible_message(span_cult("BLOODY NIMROD!!"))
 		target.apply_damage(150, BRUTE, BODY_ZONE_HEAD)
 		return
-	var/prompt = alert(target, "SUBMISSION OR DEATH",, "SUBMISSION", "DEATH")
-	if(prompt == "SUBMISSION")
-		to_chat(target, span_warning("Images of Her Work most grandoise flood your mind, as the heretical knowledge is seared right into your very body and soul."))
+	var/prompt = alert(target, "臣服，还是死亡",, "臣服", "死亡")
+	if(prompt == "臣服")
+		to_chat(target, span_warning("她那最为宏伟的造业景象灌满了你的心智，异端知识被直接烙进你的血肉与灵魂。"))
 		target.Stun(60)
 		target.Knockdown(60)
 		to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
@@ -1423,7 +1423,7 @@
 			target.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 			spawn(40)
 				playsound(loc, 'sound/misc/boatleave.ogg', 100)
-				to_chat(target, span_purple("They are ignorant, backwards, without hope. You. You will fight in the name of Ambition."))
+				to_chat(target, span_purple("他们愚昧、落后、毫无希望。而你，你将以野心之名而战。"))
 				if(target.devotion == null) // why can't it just go 'huh null? yeah ok dont care let's continue' why do i have to write this
 					target.set_patron(new /datum/patron/inhumen/zizo)
 					target.already_converted_once = TRUE
@@ -1445,8 +1445,8 @@
 						target.mind?.RemoveAllMiracles()
 						C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
 					target.already_converted_once = TRUE
-	if(prompt == "DEATH")
-		to_chat(target, span_warning("Images of Her Work most grandoise flood your mind yet... you choose to reject them. Only final death awaits now, you foolish thing."))
+	if(prompt == "死亡")
+		to_chat(target, span_warning("她那最为宏伟的造业景象灌满了你的心智……而你却选择拒绝。如今等待你的，便只有彻底的死亡了，愚物。"))
 		target.Stun(60)
 		target.Knockdown(60)
 		to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
@@ -1458,8 +1458,8 @@
 
 
 /obj/structure/ritualcircle/matthios
-	name = "Rune of Transaction"
-	desc = "A Holy Rune of Matthios. All has a price."
+	name = "交易符文"
+	desc = "马西奥斯的神圣符文。万事皆有代价。"
 	icon_state = "matthios_chalky"
 	var/matthiosrites = list("Rite of Armaments", "Defenestration", "Conversion")
 
@@ -1468,13 +1468,13 @@
 	if(!..())
 		return
 	if((user.patron?.type) != /datum/patron/inhumen/matthios)
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
-		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more."))
+		to_chat(user,span_smallred("今日我已行使了足够多的仪礼……必须先歇息，方可再度沟通神意。"))
 		return
 	var/riteselection = input(user, "Rituals of Transaction", src) as null|anything in matthiosrites
 	switch(riteselection) // put ur rite selection here
@@ -1492,7 +1492,7 @@
 			user.say("Gold and Silver, he feeds!!")
 			if(!do_after(user, 5 SECONDS))
 				return
-			user.say("Pieces Tens, Hundreds, Thousands. The transactor feeds 'pon them all!!")
+			user.say("零钱也好，百枚也罢，成千上万之财，交易者皆来者不拒！！")
 			if(!do_after(user, 5 SECONDS))
 				return
 			user.say("Arms to claim, Arms to take!!")
@@ -1506,26 +1506,26 @@
 		if("Defenestration")
 			if(!do_after(user, 5 SECONDS))
 				return
-			user.say("The window is open, the transaction is made!!")
+			user.say("窗扉已开，交易既成！！")
 			if(!do_after(user, 5 SECONDS))
 				return
-			user.say("Pieces Tens, Hundreds, Thousands. The transactor feeds 'pon them all!!")
+			user.say("十枚也好，百枚也罢，成千上万之财，交易者皆来者不拒！！")
 			if(!do_after(user, 5 SECONDS))
 				return
-			user.say("The Transactor, feast upon this gluttonous pig!!")
+			user.say("交易者啊，尽情吞吃这头贪婪的肥猪吧！！")
 			if(!do_after(user, 5 SECONDS))
 				return
 			icon_state = "matthios_active"
 			if(defenestration())
-				to_chat(user, span_cultsmall("The ritual is complete, the noble gift of Astrata has been taken!"))
+				to_chat(user, span_cultsmall("仪式完成了，阿斯特拉塔那高贵的赠礼已被夺走！"))
 				user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 			else
-				to_chat(user, span_cultsmall("The ritual fails. A noble must be in the center of the circle!"))
+				to_chat(user, span_cultsmall("仪式失败。圆环中央必须站着一位贵族！"))
 			spawn(120)
 				icon_state = "matthios_chalky"
 		if("Conversion")
 			if(!Adjacent(user))
-				to_chat(user, "You must stand close to the rune to receive Matthios' blessing.")
+				to_chat(user, "你必须站到符文近旁，才能接受马西奥斯的赐福。")
 				return
 			var/list/valids_on_rune = list()
 			for(var/mob/living/carbon/human/peep in range(0, loc))
@@ -1533,7 +1533,7 @@
 					continue
 				valids_on_rune += peep
 			if(!valids_on_rune.len)
-				to_chat(user, "No valid targets on the rune!")
+				to_chat(user, "符文上没有可用目标！")
 				return
 			var/mob/living/carbon/human/target = input(user, "Choose a host") as null|anything in valids_on_rune
 			if(!target || QDELETED(target) || target.loc != loc)
@@ -1655,7 +1655,7 @@
 
 /obj/structure/ritualcircle/matthios/proc/matthiosconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
-		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Matthios' blessing.")
+		to_chat(usr, "所选目标不在符文上！[target.p_they(TRUE)]必须正站在符文中心，才能接受马西奥斯的赐福。")
 		return
 	if(HAS_TRAIT(target, TRAIT_COMMIE))
 		loc.visible_message(span_cult("THE RITE REJECTS ONE WITH GREED IN THEIR HEART ALREADY PRESENT!!"))
@@ -1710,8 +1710,8 @@
 
 
 /obj/structure/ritualcircle/graggar
-	name = "Rune of Violence"
-	desc = "A Holy Rune of Graggar. Fate broken once, His gift is true freedom for all."
+	name = "暴力符文"
+	desc = "格拉加尔的神圣符文。命运既已破碎一次，祂的赐福便是真正属于所有人的自由。"
 	icon_state = "graggar_chalky"
 	var/graggarrites = list("Rite of Armaments", "War Ritual", "Conversion")
 
@@ -1719,13 +1719,13 @@
 	if(!..())
 		return
 	if((user.patron?.type) != /datum/patron/inhumen/graggar)
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
-		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more."))
+		to_chat(user,span_smallred("今日我已行使了足够多的仪礼……必须先歇息，方可再度沟通神意。"))
 		return
 	var/riteselection = input(user, "Rituals of Violence", src) as null|anything in graggarrites
 	switch(riteselection) // put ur rite selection here
@@ -1776,7 +1776,7 @@
 				icon_state = "graggar_chalky"
 		if("Conversion")
 			if(!Adjacent(user))
-				to_chat(user, "You must stand close to the rune to receive Graggar's blessing.")
+				to_chat(user, "你必须站到符文近旁，才能接受格拉加尔的赐福。")
 				return
 			var/list/valids_on_rune = list()
 			for(var/mob/living/carbon/human/peep in range(0, loc))
@@ -1886,7 +1886,7 @@
 
 /obj/structure/ritualcircle/graggar/proc/graggarconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
-		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Graggar's blessing.")
+		to_chat(usr, "所选目标不在符文上！[target.p_they(TRUE)]必须正站在符文中心，才能接受格拉加尔的赐福。")
 		return
 	if(HAS_TRAIT(target, TRAIT_HORDE))
 		loc.visible_message(span_cult("THE RITE REJECTS ONE WITH SLAUGHTER IN THEIR HEART!!"))
@@ -1943,23 +1943,23 @@
 
 
 /obj/structure/ritualcircle/baotha
-	name = "Rune of Hedonism"
-	desc = "A Holy Rune of Baotha. Relief for the broken hearted."
+	name = "享乐符文"
+	desc = "巴奥莎的神圣符文。献给心碎之人的抚慰。"
 	icon_state = "baotha_chalky"
 	var/baotharites = list("Conversion", "Unholy Boon of Fertility", "Rite of Armaments")
 
 /obj/structure/ritualcircle/baotha/attack_hand(mob/living/user)
 	if((user.patron?.type) != /datum/patron/inhumen/baotha)
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
-		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more."))
+		to_chat(user,span_smallred("今日我已行使了足够多的仪礼……必须先歇息，方可再度沟通神意。"))
 		return
 	if(!Adjacent(user))
-		to_chat(user, "You must stand close to the rune to receive Baotha's blessing.")
+		to_chat(user, "你必须站到符文近旁，才能接受巴奥莎的赐福。")
 		return
 	var/riteselection = input(user, "Rituals of Desire", src) as null|anything in baotharites
 	switch(riteselection) // put ur rite selection here
@@ -2035,7 +2035,7 @@
 
 /obj/structure/ritualcircle/baotha/proc/baothaconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
-		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Baotha's blessing.")
+		to_chat(usr, "所选目标不在符文上！[target.p_they(TRUE)]必须正站在符文中心，才能接受巴奥莎的赐福。")
 		return
 	if(HAS_TRAIT(target, TRAIT_DEPRAVED))
 		loc.visible_message(span_cult("THE RITE REJECTS ONE ALREADY DEPRAVED ENOUGH!!"))
@@ -2090,14 +2090,14 @@
 
 /obj/structure/ritualcircle/baotha/proc/baothablessing(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
-		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Baotha's blessing.")
+		to_chat(usr, "所选目标不在符文上！[target.p_they(TRUE)]必须正站在符文中心，才能接受巴奥莎的赐福。")
 		return
 	if(HAS_TRAIT(target, TRAIT_BAOTHA_FERTILITY_BOON))
-		loc.visible_message(span_cult("They have already been blessed!"))
+		loc.visible_message(span_cult("他们已经受过祝福了！"))
 		return
-	var/prompt = alert(target, "The Goddess of corrupted affection is about to give you the boon of fertility; to bear children!",, "Let it happen...", "Resist!")
-	if(prompt == "Let it happen...")
-		to_chat(target, span_warning("A strange feeling of warmth spreads inside your abdomen, growing hotter and hotter untill it almost feels like you are on fire, but pain actually never comes..."))
+	var/prompt = alert(target, "那位腐化爱欲的女神即将赐你生育的恩泽，使你能够孕育子嗣！",, "接受……", "抗拒！")
+	if(prompt == "接受……")
+		to_chat(target, span_warning("一种奇异的暖意在你腹中蔓延开来，越来越热，几乎让你以为自己正被火焚烧，可真正的痛苦却始终没有降临……"))
 		target.Stun(60)
 		target.Knockdown(60)
 		target.sexcon.set_arousal(100)
@@ -2155,17 +2155,17 @@
 
 
 /obj/structure/ritualcircle/psydon//No longer just a decoration.
-	name = "Rune of Enduring"
-	desc = "A Holy Rune of Psydon. It depicts His holy symbol, yet nothing stirs within you."
+	name = "坚忍符文"
+	desc = "普赛顿的神圣符文。其上刻有祂的圣徽，然而你心中毫无触动。"
 	icon_state = "psydon_chalky"
 	var/psydonrites = list("Conversion", "Admonishment", "Freedom")
 
 /obj/structure/ritualcircle/psydon/attack_hand(mob/living/user)
 	if((user.patron?.type) != /datum/patron/old_god)
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
-		to_chat(user,span_smallred("I don't know the proper rites for this..."))
+		to_chat(user,span_smallred("我不知该为此行使何种正确仪礼……"))
 		return
 	if(!HAS_TRAIT(user, TRAIT_INQUISITION))//Just in case someone OUTSIDE of the Inquisition has this combination. A converted ritualist, for example.
 		to_chat(user,span_smallred("This isn't something I'm capable of. The conduction and manipulation of lux is beyond me."))
@@ -2177,7 +2177,7 @@
 	switch(riteselection)
 		if("Conversion")//Convert non-Psydonites to Psydon.
 			if(!Adjacent(user))
-				to_chat(user, "You must stand close to the rune to understand the One's will.")
+				to_chat(user, "你必须站到符文近旁，才能理解那位唯一者的意志。")
 				return
 			var/list/valids_on_rune = list()
 			for(var/mob/living/carbon/human/peep in range(0, loc))
@@ -2253,7 +2253,7 @@
 
 /obj/structure/ritualcircle/psydon/proc/psydonconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
-		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive the One's will.")
+		to_chat(usr, "所选目标不在符文上！[target.p_they(TRUE)]必须正站在符文中心，才能承接那位唯一者的意志。")
 		return
 	if(HAS_TRAIT(target, TRAIT_PSYDONIAN_GRIT))
 		loc.visible_message(span_cult("Anguish already plagues this one's heart."))
@@ -2298,7 +2298,7 @@
 
 /obj/structure/ritualcircle/psydon/proc/psydonadmonishment(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
-		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive the One's admonishment.")
+		to_chat(usr, "所选目标不在符文上！[target.p_they(TRUE)]必须正站在符文中心，才能承受那位唯一者的告诫。")
 		return
 
 	if(!target.mind) //Stopping null lookup runtimes
@@ -2306,7 +2306,7 @@
 		return
 
 	if(HAS_TRAIT(target, TRAIT_SILVER_BLESSED))
-		loc.visible_message(span_warning("[target] has already been saved by the One's admonishment."))
+		loc.visible_message(span_warning("[target]已经受过那位唯一者的告诫而得救。"))
 		return
 
 	if(target.stat == DEAD)
@@ -2320,7 +2320,7 @@
 	//Werewolf deconversion
 	if(Were && !Wereless) //The roundstart elder/alpha werewolf, it cannot be saved
 		to_chat(target, span_userdanger("This wretched rite weighs heavy on my soul. Dendor's blessing shall not be quit of me so easily"))
-		loc.visible_message(span_danger("[target] viscerally rejects the One's admonishment. They cannot be saved."))
+		loc.visible_message(span_danger("[target]本能地排斥那位唯一者的告诫。[target.p_they(TRUE)]已无可救药。"))
 		target.Stun(30)
 		target.Knockdown(30)
 		return
@@ -2353,14 +2353,14 @@
 	else if(Vamp)
 		if(Vamp.generation >= GENERATION_METHUSELAH || HAS_TRAIT(target, TRAIT_BLOODPOOL_BORN)) //Vampire Lords + their bloodpool summons cannot be deconverted.
 			to_chat(target, span_userdanger("This wretched rite weighs heavy on my soul. An insult I shall never forget, for as long as I die."))
-			loc.visible_message(span_danger("[target] viscerally rejects the One's admonishment. They cannot be saved."))
+			loc.visible_message(span_danger("[target]本能地排斥那位唯一者的告诫。[target.p_they(TRUE)]已无可救药。"))
 			target.Stun(30)
 			target.Knockdown(30)
 			return
 
 		if(alert(target, "The rite is burning my nature from my veins! Do I resist the anointment?", "Rite of Admonishment", "YIELD", "RESIST") == "RESIST") //Opt in convert, opt in deconvert
 			to_chat(target, span_userdanger("This wretched rite weighs heavy on my soul. But I am consigned to my reverie, and my heart remains still."))
-			loc.visible_message(span_danger("[target] viscerally rejects the One's admonishment. They refuse to be saved."))
+			loc.visible_message(span_danger("[target]本能地排斥那位唯一者的告诫。[target.p_they(TRUE)]拒绝被拯救。"))
 			target.Stun(30)
 			target.Knockdown(30)
 			return

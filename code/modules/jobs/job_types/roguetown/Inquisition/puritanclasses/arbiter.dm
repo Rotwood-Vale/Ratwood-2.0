@@ -3,10 +3,10 @@
 //Think of it like the radical, obsessive faith guy. Old puritan.
 //Middling skills. Half-half stats. A niche. Outside of their miracles.
 /datum/advclass/puritan/arbiter
-	name = "Arbiter"
-	tutorial = "Unlike Ordinators or Inspectors, Arbiters serve an entirely different purpose. \
-	Drawn from a flock of warrior-priests, they still fight to this day within rot-scoured lands. Uniquely attuned to the rot's touch. \
-	With the aid of rare and dangerous greater miracles, they sniff out the taint. One heretic at a time, to be put to a pyre."
+	name = "裁决官"
+	tutorial = "不同于 Ordinator 或 Inspector，Arbiter 所承担的是截然不同的职责。 \
+	你出身于战斗祭司之列，至今仍在被腐败侵蚀的土地上作战，对那份腐朽之触有着异乎寻常的感应。 \
+	借助稀有而危险的大能神迹，你能嗅出污秽，再把异端一个接一个送上火刑架。"
 	outfit = /datum/outfit/job/roguetown/puritan/arbiter
 	subclass_languages = list(/datum/language/otavan)
 	category_tags = list(CTAG_PURITAN)
@@ -39,7 +39,7 @@
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
 	)
 	subclass_stashed_items = list(
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+		"《Psydon 圣典》" = /obj/item/book/rogue/bibble/psy
 	)
 
 /datum/outfit/job/roguetown/puritan/arbiter/pre_equip(mob/living/carbon/human/H)
@@ -77,33 +77,33 @@
 
 /datum/outfit/job/roguetown/puritan/arbiter/choose_loadout(mob/living/carbon/human/H)
 	. = ..()//Just as with the stats, this has a mixture of weapon choice between Ordinators and Inspectors. A less-used weapon list.
-	var/weapons = list("Psydonic Broadsword", "Daybreak (Whip)", "Stigmata (Halberd)", "Consecratia (Flail)")
-	var/weapon_choice = input(H,"FIND YOUR TRUTHS.", "WIELD THEM IN HIS NAME.") as anything in weapons
+	var/weapons = list("Psydonic 阔剑", "Daybreak（鞭）", "Stigmata（长戟）", "Consecratia（连枷）")
+	var/weapon_choice = input(H,"寻得你的真理。", "以祂之名执兵。") as anything in weapons
 	switch(weapon_choice)
-		if("Psydonic Broadsword")
+		if("Psydonic 阔剑")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/long/kriegmesser/psy/preblessed(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_R, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
-		if("Daybreak (Whip)")
+		if("Daybreak（鞭）")
 			H.put_in_hands(new /obj/item/rogueweapon/whip/antique/psywhip(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
-		if("Stigmata (Halberd)")
+		if("Stigmata（长戟）")
 			H.put_in_hands(new /obj/item/rogueweapon/halberd/psyhalberd/relic(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
-		if("Consecratia (Flail)")
+		if("Consecratia（连枷）")
 			H.put_in_hands(new /obj/item/rogueweapon/flail/sflail/psyflail/relic(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 	//Now, for their 'sect'. They can either choose a heavy gambeson and +1SPD, or inquisitor coat and +1STR.
-	var/sect = list("Ancient - Gilbranze, Gambesons & Speed", "New Age - Silver, Overcoats & Strength")
-	var/sect_choice = input(H,"FIND YOUR SECT", "WHAT ARE WE?") as anything in sect
+	var/sect = list("古派 - Gilbranze、棉甲与速度", "新派 - 白银、外袍与力量")
+	var/sect_choice = input(H,"择定你的教派。", "我们是谁？") as anything in sect
 	switch(sect_choice)
-		if("Ancient - Gilbranze, Gambesons & Speed")
+		if("古派 - Gilbranze、棉甲与速度")
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/arbiter, SLOT_HEAD, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/otavan/psygloves/arbiter, SLOT_GLOVES, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq/arbiter, SLOT_ARMOR, TRUE)
 			H.change_stat(STATKEY_SPD, 1)//We'll probably drop this.
-		if("New Age - Silver, Overcoats & Strength")
+		if("新派 - 白银、外袍与力量")
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/arbiter/vice, SLOT_HEAD, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/otavan/psygloves/arbiter/vice, SLOT_GLOVES, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat/arbiter, SLOT_ARMOR, TRUE)
@@ -115,9 +115,9 @@ Reused from OldRW. But cool. Soulful, even.
 Here because they're unused elsewhere.
 */
 /obj/item/storage/belt/rogue/leather/arbiter
-	name = "webbing"
-	desc = "A leather belt, paired with some Otavan style webbing and pouches. <br>\
-	A style pioneered by an arbiters, a century or two ago. Maintained by those who require much of the same."
+	name = "织带腰具"
+	desc = "一条皮带，搭配若干 奥塔万 风格的织带与小袋。<br>\
+	这种样式由早年某位 Arbiter 首创，历经一两百年后，仍被那些有相同需求的人沿用至今。"
 	icon_state = "overseerbelt"
 	item_state = "overseerbelt"
 	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
@@ -126,9 +126,9 @@ Here because they're unused elsewhere.
 	dropshrink = null
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq/arbiter
-	name = "arbiter gambeson"
-	desc = "A heavy, padded gambeson that provides adequate protection against unarmed innocents. \
-	It reeks of smokepowder and sulphur. Common of sanctification rituals."
+	name = "裁决官棉甲"
+	desc = "一件厚实的衬垫棉甲，足以抵御那些赤手空拳的“无辜者”。\
+	它散发着火药与硫磺的刺鼻气味，那正是圣化仪式里常见的味道。"
 	icon_state = "overseerjacket"
 	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
@@ -136,9 +136,9 @@ Here because they're unused elsewhere.
 	dropshrink = null
 
 /obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat/arbiter
-	name = "arbiter brigandine"
-	desc = "A heavy, reinforced brigandine coat. Set in a tasteful burgundy covering, backed by silver plating. \
-	It's sure not to leave anyone indifferent, for they'll come to know it. In time."
+	name = "裁决官布面甲"
+	desc = "一件厚重而加固的布面甲外袍，外覆得体的酒红色织料，内衬银质甲片。\
+	没人会对它无动于衷，因为迟早，他们都会认得它。"
 	icon_state = "viceseercoat"
 	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
@@ -148,8 +148,8 @@ Here because they're unused elsewhere.
 	dropshrink = null
 
 /obj/item/clothing/gloves/roguetown/otavan/psygloves/arbiter
-	name = "arbiter gloves"
-	desc = "Heavy, thick leather gloves, adorned with bright strips."
+	name = "裁决官手套"
+	desc = "厚实沉重的皮革手套，上头缀着醒目的亮色饰带。"
 	icon_state = "overseergloves"
 	item_state = "overseergloves"
 	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
@@ -162,8 +162,8 @@ Here because they're unused elsewhere.
 	dropshrink = null
 
 /obj/item/clothing/head/roguetown/helmet/arbiter
-	name = "arbiter mask"
-	desc = "An iconic gilbranze mask, depicting the visage of HIM. Weeping, as HE is."
+	name = "裁决官面具"
+	desc = "一副标志性的吉尔青铜面具，描绘着祂的面容，正如祂一般悲泣不止。"
 	icon_state = "overseermask"
 	item_state = "overseermask"
 	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
@@ -180,7 +180,7 @@ Here because they're unused elsewhere.
 	dropshrink = null
 
 /obj/item/clothing/head/roguetown/helmet/arbiter/vice
-	desc = "An iconic, silver mask depicting the visage of HIM. Weeping, as HE is."
+	desc = "一副极具辨识度的银面具，描绘着祂的面容，正如祂自己那般垂泪。"
 	icon_state = "viceseermask"
 	item_state = "viceseermask"
 	is_silver = TRUE
@@ -194,7 +194,7 @@ Here because they're unused elsewhere.
 	if(slot == SLOT_HEAD)
 		active_item = TRUE
 //		ADD_TRAIT(user, TRAIT_ARBITER, TRAIT_GENERIC)
-		to_chat(user, span_red("With such a mask over your face, all judgement is waived. For who but a heretic might argue your purpose?"))
+		to_chat(user, span_red("当这副面具覆上你的脸，一切迟疑的审判都会被豁免。除了异端，又有谁敢质疑你的意志？"))
 	return
 
 /obj/item/clothing/head/roguetown/helmet/arbiter/dropped(mob/living/user)
@@ -203,12 +203,12 @@ Here because they're unused elsewhere.
 		return
 	active_item = FALSE
 //	REMOVE_TRAIT(user, TRAIT_ARBITER, TRAIT_GENERIC)
-	to_chat(user, span_red("As if flooded with sudden clarity, perhaps your actions might require a steady hand..."))
+	to_chat(user, span_red("仿佛骤然清醒过来一般，你开始意识到，自己的举止或许还是该稳当些……"))
 
 /obj/item/clothing/mask/rogue/sack/psy/arbiter
-	name = "arbiter hood"
-	desc = "You wouldn't hide your face if there was another way. It's not as if you've no reason for it. \
-	Would they ever understand? Truly?"
+	name = "裁决官兜帽"
+	desc = "若还有别的路可走，你本不会遮住自己的脸。你这么做并非毫无缘由。\
+	可他们真的会懂吗？当真会吗？"
 	icon_state = "overseerhood"
 	item_state = "overseerhood"
 	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
@@ -220,8 +220,8 @@ Here because they're unused elsewhere.
 	dropshrink = null
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/arbiter
-	name = "heavy trousers"
-	desc = "A pair of heavy, washed-out trousers in grey colors."
+	name = "厚长裤"
+	desc = "一条厚实、颜色洗得发灰的长裤。"
 	icon_state = "overseerpants"
 	item_state = "overseerpants"
 	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'

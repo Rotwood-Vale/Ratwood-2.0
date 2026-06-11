@@ -6,7 +6,7 @@
 // this set is general spawners that have a little bit of everything
 
 /obj/effect/spawner/lootdrop/general_loot_low
-	name = "low tier general loot spawner"
+	name = "低级通用战利品生成器"
 	icon_state = "genlow"
 	lootcount = 1
 	loot = list(
@@ -141,7 +141,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/general_loot_mid
-	name = "mid tier general loot spawner"
+	name = "中级通用战利品生成器"
 	icon_state = "genmid"
 	lootcount = 1
 	loot = list(
@@ -296,7 +296,7 @@
 	)
 
 /obj/effect/spawner/lootdrop/general_loot_hi
-	name = "high tier general loot spawner"
+	name = "高级通用战利品生成器"
 	icon_state = "genhi"
 	lootcount = 1
 	loot = list(
@@ -426,17 +426,17 @@
 //x3 of the above
 
 /obj/effect/spawner/lootdrop/general_loot_low/x3
-	name = "low tier general loot spawnerx3"
+	name = "低级通用战利品生成器x3"
 	icon_state = "genlowx3"
 	lootcount = 3
 
 /obj/effect/spawner/lootdrop/general_loot_mid/x3
-	name = "mid tier general loot spawnerx3"
+	name = "中级通用战利品生成器x3"
 	icon_state = "genmidx3"
 	lootcount = 3
 
 /obj/effect/spawner/lootdrop/general_loot_hi/x3
-	name = "high tier general loot spawnerx3"
+	name = "高级通用战利品生成器x3"
 	icon_state = "genhix3"
 	lootcount = 3
 

@@ -2,11 +2,11 @@
 #define STRANGER 1
 
 /datum/brain_trauma/severe/split_personality
-	name = "Split Personality"
+	name = "双重人格"
 	desc = ""
 	scan_desc = ""
-	gain_text = span_warning("I feel like my mind was split in two.")
-	lose_text = span_notice("I feel alone again.")
+	gain_text = span_warning("我感觉自己的心智被一分为二了。")
+	lose_text = span_notice("我又重新变回孤身一人了。")
 	var/current_controller = OWNER
 	var/initialized = FALSE //to prevent personalities deleting themselves while we wait for ghosts
 	var/mob/living/split_personality/stranger_backseat //there's two so they can swap without overwriting
@@ -33,7 +33,7 @@
 
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s split personality?", ROLE_PAI, null, null, 75, stranger_backseat, POLL_IGNORE_SPLITPERSONALITY)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("你想扮演[owner]的另一个人格吗？", ROLE_PAI, null, null, 75, stranger_backseat, POLL_IGNORE_SPLITPERSONALITY)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		stranger_backseat.key = C.key
@@ -72,8 +72,8 @@
 		free_backseat = stranger_backseat
 
 	log_game("[key_name(current_backseat)] assumed control of [key_name(owner)] due to [src]. (Original owner: [current_controller == OWNER ? owner.key : current_backseat.key])")
-	to_chat(owner, span_danger("I feel my control being taken away... my other personality is in charge now!"))
-	to_chat(current_backseat, span_danger("I manage to take control of my body!"))
+	to_chat(owner, span_danger("我感觉自己的控制权正在被夺走……现在由另一个人格掌控身体了！"))
+	to_chat(current_backseat, span_danger("我成功夺回了自己身体的控制权！"))
 
 	//Body to backseat
 
@@ -115,8 +115,8 @@
 
 
 /mob/living/split_personality
-	name = "split personality"
-	real_name = "unknown conscience"
+	name = "双重人格"
+	real_name = "未知意识"
 	var/mob/living/carbon/body
 	var/datum/brain_trauma/severe/split_personality/trauma
 
@@ -145,11 +145,11 @@
 
 /mob/living/split_personality/Login()
 	..()
-	to_chat(src, span_notice("As a split personality, you cannot do anything but observe. However, you will eventually gain control of my body, switching places with the current personality."))
-	to_chat(src, span_warning("<b>Do not commit suicide or put the body in a deadly position. Behave like you care about it as much as the owner.</b>"))
+	to_chat(src, span_notice("作为另一个人格，我现在除了观察之外什么也做不了。不过，我终将获得这具身体的控制权，并与当前人格交换位置。"))
+	to_chat(src, span_warning("<b>不要自杀，也不要让身体陷入致命处境。请像原主人一样珍惜这具身体。</b>"))
 
 /mob/living/split_personality/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	to_chat(src, span_warning("I cannot speak, my other self is controlling my body!"))
+	to_chat(src, span_warning("我无法说话，我的另一重自我正在控制这具身体！"))
 	return FALSE
 
 /mob/living/split_personality/emote(act, m_type = null, message = null, intentional = FALSE, forced = FALSE, targetted = FALSE, custom_me = FALSE)
@@ -158,11 +158,11 @@
 ///////////////BRAINWASHING////////////////////
 
 /datum/brain_trauma/severe/split_personality/brainwashing
-	name = "Split Personality"
+	name = "双重人格"
 	desc = ""
 	scan_desc = ""
 	gain_text = ""
-	lose_text = span_notice("I are free of my brainwashing.")
+	lose_text = span_notice("我终于摆脱洗脑了。")
 	can_gain = FALSE
 	var/codeword
 	var/objective
@@ -191,7 +191,7 @@
 
 /datum/brain_trauma/severe/split_personality/brainwashing/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s brainwashed mind?", null, null, null, 75, stranger_backseat)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("你想扮演[owner]被洗脑的心智吗？", null, null, null, 75, stranger_backseat)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		stranger_backseat.key = C.key
@@ -214,17 +214,17 @@
 		speech_args[SPEECH_MESSAGE] = "" //oh hey did you want to tell people about the secret word to bring you back?
 
 /mob/living/split_personality/traitor
-	name = "split personality"
-	real_name = "unknown conscience"
+	name = "双重人格"
+	real_name = "未知意识"
 	var/objective
 	var/codeword
 
 /mob/living/split_personality/traitor/Login()
 	..()
-	to_chat(src, span_notice("As a brainwashed personality, you cannot do anything yet but observe. However, you may gain control of my body if you hear the special codeword, switching places with the current personality."))
-	to_chat(src, span_notice("My activation codeword is: <b>[codeword]</b>"))
+	to_chat(src, span_notice("作为被洗脑的人格，我现在还什么都做不了，只能观察。不过，只要我听到那个特殊的暗号，就能夺取身体的控制权，与当前人格交换位置。"))
+	to_chat(src, span_notice("我的激活暗号是：<b>[codeword]</b>"))
 	if(objective)
-		to_chat(src, span_notice("My master left you an objective: <b>[objective]</b>. Follow it at all costs when in control."))
+		to_chat(src, span_notice("我的主人留给我一项目标：<b>[objective]</b>。一旦掌控身体，就要不惜一切代价完成它。"))
 
 #undef OWNER
 #undef STRANGER

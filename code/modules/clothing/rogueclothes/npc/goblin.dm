@@ -1,5 +1,5 @@
 /obj/item/clothing/suit/roguetown/armor/plate/half/iron/goblin
-	name = "goblin mail"
+	name = "哥布林板甲"
 	icon_state = "plate_armor_item"
 	item_state = "plate_armor"
 	icon = 'icons/roguetown/mob/monster/goblins.dmi'
@@ -9,7 +9,7 @@
 	sellprice = 0
 
 /obj/item/clothing/suit/roguetown/armor/leather/goblin
-	name = "goblin armor"
+	name = "哥布林皮甲"
 	icon_state = "leather_armor_item"
 	item_state = "leather_armor"
 	icon = 'icons/roguetown/mob/monster/goblins.dmi'
@@ -18,7 +18,7 @@
 	sellprice = 0
 
 /obj/item/clothing/suit/roguetown/armor/leather/hide/goblin
-	name = "goblin loincloth"
+	name = "哥布林皮裙"
 	icon_state = "cloth_armor"
 	item_state = "cloth_armor"
 	icon = 'icons/roguetown/mob/monster/goblins.dmi'
@@ -28,7 +28,7 @@
 	sellprice = 0
 
 /obj/item/clothing/head/roguetown/helmet/leather/goblin
-	name = "goblin helmet"
+	name = "哥布林皮盔"
 	icon_state = "leather_helm_item"
 	item_state = "leather_helm"
 	icon = 'icons/roguetown/mob/monster/goblins.dmi'
@@ -37,7 +37,7 @@
 	dropshrink = null
 
 /obj/item/clothing/head/roguetown/helmet/goblin
-	name = "goblin helmet"
+	name = "哥布林头盔"
 	icon_state = "plate_helm_item"
 	item_state = "plate_helm"
 	icon = 'icons/roguetown/mob/monster/goblins.dmi'

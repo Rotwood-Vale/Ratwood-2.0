@@ -1,6 +1,6 @@
 /datum/advclass/noble
-	name = "Aristocrat"
-	tutorial = "You are a traveling noble visiting foreign lands. With wealth, come the poor, ready to pilfer you of your hard earned (inherited) coin, so tread lightly unless you want to meet a grizzly end."
+	name = "贵族"
+	tutorial = "你是一名远游异乡的贵族。财富总会引来穷人觊觎，他们巴不得把你辛苦得来（或者说继承得来）的金币摸个精光，所以最好步步小心，免得落得个凄惨下场。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/roguetown/adventurer/noble
@@ -36,7 +36,7 @@
 
 /datum/outfit/job/roguetown/adventurer/noble/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are a traveling noble visiting foreign lands. With wealth, come the poor, ready to pilfer you of your hard earned (inherited) coin, so tread lightly unless you want to meet a grizzly end."))
+	to_chat(H, span_warning("你是一名远游异乡的贵族。财富总会引来穷人觊觎，他们巴不得把你辛苦得来（或者说继承得来）的金币摸个精光，所以最好步步小心，免得落得个凄惨下场。"))
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	belt = /obj/item/storage/belt/rogue/leather/black
 	beltr = /obj/item/flashlight/flare/torch/lantern
@@ -59,8 +59,8 @@
 		H.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)
 
 /datum/advclass/noble/knighte
-	name = "Knight Errant"
-	tutorial = "You are a knight from a distant land, a scion of a noble house visiting these lands for one reason or another."
+	name = "游方骑士"
+	tutorial = "你是一名来自远方国度的骑士，出身某个贵胄家门，因种种缘由来到谷地。"
 	outfit = /datum/outfit/job/roguetown/adventurer/knighte
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
 	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR)
@@ -95,31 +95,31 @@
 /datum/outfit/job/roguetown/adventurer/knighte/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(H.mind)
-		to_chat(H, span_warning("You are a knight from a distant land, a scion of a noble house visiting these lands for one reason or another."))
+		to_chat(H, span_warning("你是一名来自远方国度的骑士，出身某个贵胄家门，因种种缘由来到谷地。"))
 		var/helmets = list(
-			"Pigface Bascinet" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,
-			"Guard Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/guard,
-			"Barred Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/sheriff,
-			"Bucket Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/bucket,
-			"Knight Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight,
-			"Visored Sallet"			= /obj/item/clothing/head/roguetown/helmet/sallet/visored,
-			"Armet"				= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet,
-			"Hounskull Bascinet" 		= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull,
-			"Etruscan Bascinet" 		= /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan,
-			"Slitted Kettle"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle,
-			"Froggemund Helmet"	= /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth,
-			"None"
+			"猪面尖盔" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,
+			"卫兵盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/guard,
+			"栅面盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/sheriff,
+			"桶盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/bucket,
+			"骑士盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight,
+			"遮面沙勒盔"			= /obj/item/clothing/head/roguetown/helmet/sallet/visored,
+			"阿梅特盔"				= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet,
+			"猎犬头尖盔" 		= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull,
+			"伊特鲁斯坎尖盔" 		= /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan,
+			"窄缝锅盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle,
+			"蛙嘴盔"	= /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth,
+			"不戴头盔"
 			)
-		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
-		if(helmchoice != "None")
+		var/helmchoice = input(H, "选择你的头盔。", "整盔披甲") as anything in helmets
+		if(helmchoice != "不戴头盔")
 			head = helmets[helmchoice]
 
 		var/armors = list(
-			"Brigandine"		= /obj/item/clothing/suit/roguetown/armor/brigandine,
-			"Coat of Plates"	= /obj/item/clothing/suit/roguetown/armor/brigandine/coatplates,
-			"Steel Cuirass"		= /obj/item/clothing/suit/roguetown/armor/plate/half,
+			"布面甲"		= /obj/item/clothing/suit/roguetown/armor/brigandine,
+			"札板外套"	= /obj/item/clothing/suit/roguetown/armor/brigandine/coatplates,
+			"钢胸甲"		= /obj/item/clothing/suit/roguetown/armor/plate/half,
 			)
-		var/armorchoice = input(H, "Choose your armor.", "TAKE UP ARMOR") as anything in armors
+		var/armorchoice = input(H, "选择你的护甲。", "整装备战") as anything in armors
 		armor = armors[armorchoice]
 
 	gloves = /obj/item/clothing/gloves/roguetown/chain
@@ -138,31 +138,31 @@
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 	H.set_blindness(0)
 	if(H.mind)
-		var/weapons = list("Longsword","Mace + Shield","Flail + Shield","Billhook","Battle Axe","Greataxe")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("长剑","钉锤与盾","连枷与盾","钩镰枪","战斧","巨斧")
+		var/weapon_choice = input(H, "选择你的武器。", "执兵而起") as anything in weapons
 		switch(weapon_choice)
-			if("Longsword")
+			if("长剑")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				beltr = /obj/item/rogueweapon/sword/long
 				r_hand = /obj/item/rogueweapon/scabbard/sword/noble
-			if("Mace + Shield")
+			if("钉锤与盾")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				beltr = /obj/item/rogueweapon/mace
 				backr = /obj/item/rogueweapon/shield/tower/metal
-			if("Flail + Shield")
+			if("连枷与盾")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				beltr = /obj/item/rogueweapon/flail
 				backr = /obj/item/rogueweapon/shield/tower/metal
-			if("Billhook")
+			if("钩镰枪")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/spear/billhook
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
-			if("Battle Axe")
+			if("战斧")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/stoneaxe/battle
-			if("Greataxe")
+			if("巨斧")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/greataxe
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
@@ -171,8 +171,8 @@
 		H.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)
 
 /datum/advclass/noble/squire
-	name = "Squire Errant"
-	tutorial = "You are a squire who has traveled far in search of a master to train you and a lord to knight you."
+	name = "游方侍从"
+	tutorial = "你是一名远行四方的侍从，正在寻找一位肯磨炼你技艺的师傅，以及一位愿为你授勋的领主。"
 	outfit = /datum/outfit/job/roguetown/adventurer/squire
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_SQUIRE_REPAIR)
@@ -204,11 +204,11 @@
 		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_APPRENTICE,
 	)
-	extra_context = "Chooses between Light Armor (Dodge Expert) and Medium Armor."
+	extra_context = "可在轻甲（闪避专家）与中甲之间二选一。"
 
 /datum/outfit/job/roguetown/adventurer/squire/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are a squire who has traveled far in search of a master to train you and a lord to knight you."))
+	to_chat(H, span_warning("你是一名远行在外的侍从，四处寻找愿意磨炼你技艺的师傅，以及愿意亲手授你骑士身份的领主。"))
 	head = /obj/item/clothing/head/roguetown/roguehood
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	cloak = /obj/item/clothing/cloak/stabard
@@ -219,36 +219,36 @@
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(/obj/item/storage/belt/rogue/pouch/coins/poor = 1, /obj/item/armor_brush = 1, /obj/item/polishing_cream = 1, /obj/item/rogueweapon/hammer/iron = 1, /obj/item/rogueweapon/huntingknife = 1, /obj/item/rogueweapon/scabbard/sheath/noble = 1)
 	if(H.mind)
-		var/armors = list("Light Armor","Medium Armor")
-		var/armor_choice = input(H, "Choose your armor.", "HOW WILL YOU LOOK WHEN YOU DIE") as anything in armors
+		var/armors = list("轻甲","中甲")
+		var/armor_choice = input(H, "选择你的护甲。", "你将披着何等甲胄赴死") as anything in armors
 		switch(armor_choice)
-			if("Light Armor")
+			if("轻甲")
 				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 				armor = /obj/item/clothing/suit/roguetown/armor/leather
 				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 				gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-			if("Medium Armor")
+			if("中甲")
 				shirt = /obj/item/clothing/suit/roguetown/shirt/tunic
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/half/iron
 				pants = /obj/item/clothing/under/roguetown/chainlegs/iron
 				gloves = /obj/item/clothing/gloves/roguetown/chain/iron
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-		var/weapons = list("Arming Sword","Shortsword + Shield","Bow & Arrow","Spear")
-		var/weapon_choice = input(H, "Choose your weapon.", "WHAT WILL YOU SWING BEFORE DEATH") as anything in weapons
+		var/weapons = list("骑士剑","短剑与盾","弓与箭","长矛")
+		var/weapon_choice = input(H, "选择你的武器。", "你赴死前将挥舞何物") as anything in weapons
 		switch(weapon_choice)
-			if("Arming Sword")
+			if("骑士剑")
 				backl = /obj/item/rogueweapon/scabbard/sword/noble
 				r_hand = /obj/item/rogueweapon/sword/iron
-			if("Shortsword + Shield")
+			if("短剑与盾")
 				beltr = /obj/item/rogueweapon/scabbard/sword/noble
 				backl = /obj/item/rogueweapon/shield/wood
 				r_hand = /obj/item/rogueweapon/sword/short/iron
-			if("Bow & Arrow")
+			if("弓与箭")
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				beltr = /obj/item/quiver/arrows
-			if("Spear")
+			if("长矛")
 				r_hand = /obj/item/rogueweapon/spear
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 	H.set_blindness(0)

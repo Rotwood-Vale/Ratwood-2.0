@@ -1,9 +1,9 @@
 //Combination miraclist-ranged-melee.
 //Capable of torture and intended for espionage.
 /datum/advclass/confessor
-	name = "Confessor"
-	tutorial = "Psydonite hunters, unmatched in the fields of subterfuge and investigation. \
-	There is no suspect too powerful to investigate, no room too guarded to infiltrate, and no weakness too hidden to exploit."
+	name = "告解官"
+	tutorial = "你是 普赛顿 的猎手，在潜行与侦缉之道上无人能及。\
+	没有哪个嫌犯强大到无法调查，没有哪个房间戒备森严到无法潜入，也没有哪处弱点隐秘到无法利用。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/confessor
@@ -37,7 +37,7 @@
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 	)
 	subclass_stashed_items = list(
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+		"《Psydon 圣典》" = /obj/item/book/rogue/bibble/psy
 	)
 
 /datum/outfit/job/roguetown/confessor
@@ -48,26 +48,26 @@
 	H.verbs |= /mob/living/carbon/human/proc/faith_test
 	H.verbs |= /mob/living/carbon/human/proc/torture_victim
 	if(H.mind)
-		var/weapons = list("Blessed Psydonic Dagger", "Psydonic Handmace", "Psydonic Shortsword")
-		var/weapon_choice = input(H,"Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
+		var/weapons = list("受祝 Psydonic 匕首", "Psydonic 手锤", "Psydonic 短剑")
+		var/weapon_choice = input(H,"选择你的武器。", "执起 普赛顿 的兵刃。") as anything in weapons
 		switch(weapon_choice)
-			if("Blessed Psydonic Dagger")
+			if("受祝 Psydonic 匕首")
 				l_hand = /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
 				r_hand = /obj/item/rogueweapon/scabbard/sheath
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, 4, TRUE)
-			if("Psydonic Handmace")
+			if("Psydonic 手锤")
 				l_hand = /obj/item/rogueweapon/mace/cudgel/psy
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
-			if("Psydonic Shortsword")
+			if("Psydonic 短剑")
 				l_hand = /obj/item/rogueweapon/sword/short/psy
 				r_hand = /obj/item/rogueweapon/scabbard/sword
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
-		var/quivers = list("Bolts - Steel-Tipped", "Sunderbolts - Silver-Tipped, Halved Damage")
-		var/bolt_choice = input(H,"CHOOSE YOUR MUNITIONS", "TAKE UP PSYDON'S MISSILES.") as anything in quivers
+		var/quivers = list("弩矢 - 钢尖", "裂甲弩矢 - 银尖，伤害减半")
+		var/bolt_choice = input(H,"选择你的弹药。", "执起 普赛顿 的飞矢。") as anything in quivers
 		switch(bolt_choice)
-			if("Bolts - Steel-Tipped")
+			if("弩矢 - 钢尖")
 				beltl = /obj/item/quiver/bolts
-			if("Sunderbolts - Silver-Tipped, Halved Damage")
+			if("裂甲弩矢 - 银尖，伤害减半")
 				beltl = /obj/item/quiver/holybolts
 
 	head = /obj/item/clothing/head/roguetown/roguehood/psydon/confessor

@@ -11,14 +11,14 @@
 	var/time = 0 //time in deciseconds
 	var/parts[] = list() //type paths of items that will be placed in the result
 	var/chem_catalysts[] = list() //like tools but for reagents
-	var/category = "Misc" // Where it shows in the recipe books
+	var/category = "杂项" // Where it shows in the recipe books
 	var/subcategory = CAT_NONE
 	var/always_availible = FALSE //Set to FALSE if it needs to be learned first.
 	var/ontile = FALSE		//crafted on our tile instead of in front of us
 	var/req_table = FALSE
 	var/skillcraft = /datum/skill/craft/crafting
-	var/verbage_simple = "craft"
-	var/verbage = "crafts"
+	var/verbage_simple = "制作"
+	var/verbage = "制作"
 	var/craftsound = 'sound/foley/bandage.ogg'
 	var/subtype_reqs = FALSE
 	var/structurecraft = null
@@ -95,7 +95,7 @@
 		var/datum/skill/S = skillcraft
 		cached_category = initial(S.name)
 	else
-		cached_category = "Other"
+		cached_category = "其他"
 
 	cached_display_data = data
 
@@ -143,7 +143,7 @@
 			<body>
 			<div>
 				<h1>[icon2html(created_stuff, user)][name]</h1>
-				<h4>DESCRIPTION: [initial(created_stuff.desc)]</h4>
+				<h4>描述： [initial(created_stuff.desc)]</h4>
 				<div>
 			"}
 	if (!isnull(created_stationary))
@@ -156,7 +156,7 @@
 			<body>
 			<div>
 				<h1>[icon2html(created_stationary, user)][name]</h1>
-				<h4>DESCRIPTION: [initial(created_stationary.desc)]</h4>
+				<h4>描述： [initial(created_stationary.desc)]</h4>
 				<div>
 			"}
 	var/obj/item/clothing/suit/roguetown/armor/bookarmor = initial(created_stuff)
@@ -165,91 +165,91 @@
 	if(!(bookarmor?.armor == "")&&!isnull(bookarmor?.armor) )
 		var/obj/item/clothing/C = initial(created_stuff)
 		if(C.body_parts_covered)
-			html += "\n<b>COVERAGE: </b>"
+			html += "\n<b>覆盖部位：</b>"
 			html += " | "
 			for(var/zone in body_parts_covered2organ_names(body_parts_covered2organ_names(C.body_parts_covered)))
 				html += "<b>[capitalize(zone)]</b> | "
 			html += "<br>"
 		if(C.prevent_crits)
 			if(length(C.prevent_crits))
-				html += "\n<b>PREVENTS CRITS:</b>"
+				html += "\n<b>防止重创：</b>"
 				for(var/X in C.prevent_crits)
 					if(X == BCLASS_PICK)	//BCLASS_PICK is named "stab", and "stabbing" is its own damage class. Prevents confusion.
 						X = "pick"
 					html += ("\n<b>[capitalize(X)]</b><br>")
-		html += "INTEGRITY: [bookarmor.max_integrity]<br>"
+		html += "耐久： [bookarmor.max_integrity]<br>"
 		if(bookarmor.armor_class == ARMOR_CLASS_HEAVY)
-			html += "<b>AC: </b>HEAVY<br>"
+			html += "<b>护甲等级：</b>重型<br>"
 		if(bookarmor.armor_class == ARMOR_CLASS_MEDIUM)
-			html += "<b>AC: </b>MEDIUM<br>"
+			html += "<b>护甲等级：</b>中型<br>"
 		if(bookarmor.armor_class == ARMOR_CLASS_LIGHT)
-			html += "<b>AC: </b> LIGHT<br>"
+			html += "<b>护甲等级：</b>轻型<br>"
 	else if (!isnull(bookweapon) && bookweapon.force>1)
-		html += "Combat Properties<br>"
+		html += "战斗属性<br>"
 		if(bookweapon.minstr)
-			html += "\n<b>MIN.STR:</b> [bookweapon.minstr]<br>"
+			html += "\n<b>最低力量：</b> [bookweapon.minstr]<br>"
 		
 		if(bookweapon.force)
-			html += "\n<b>FORCE:</b> [bookweapon.force]<br>"
+			html += "\n<b>伤害：</b> [bookweapon.force]<br>"
 		if(bookweapon.gripped_intents && !bookweapon.wielded)
 			if(bookweapon.force_wielded)
-				html += "\n<b>WIELDED FORCE:</b> [bookweapon.force_wielded]<br>"
+				html += "\n<b>双手伤害：</b> [bookweapon.force_wielded]<br>"
 
 		if(bookweapon.wbalance)
-			html += "\n<b>BALANCE: </b>"
+			html += "\n<b>平衡：</b>"
 			if(bookweapon.wbalance == WBALANCE_HEAVY)
-				html += "Heavy<br>"
+				html += "沉重<br>"
 			if(bookweapon.wbalance == WBALANCE_SWIFT)
-				html += "Swift<br>"
+				html += "迅捷<br>"
 			
 
 		if(bookweapon.wlength != WLENGTH_NORMAL)
-			html += "\n<b>LENGTH:</b> "
+			html += "\n<b>长度：</b> "
 			switch(bookweapon.wlength)
 				if(WLENGTH_SHORT)
-					html += "Short<br>"
+					html += "短<br>"
 				if(WLENGTH_LONG)
-					html += "Long<br>"
+					html += "长<br>"
 				if(WLENGTH_GREAT)
-					html += "Great<br>"
+					html += "巨长<br>"
 
 		if(bookweapon.alt_intents)
-			html += "\n<b>GRIP: ALT-GRIP (right click while in hand)</b><br>"
+			html += "\n<b>握法：备用握法（手持时右键）</b><br>"
 		if(bookweapon.gripped_intents)
-			html += "\n<b>TWO-HANDED: Yes</b><br>"
+			html += "\n<b>双手：是</b><br>"
 
 		var/shafttext = get_blade_dulling_text(bookweapon, verbose = TRUE)
 		if(shafttext)
-			html += "\n<b>SHAFT:</b> [shafttext] <br>"
+			html += "\n<b>杆柄：</b> [shafttext] <br>"
 
 		if(bookweapon.twohands_required)
-			html += "\n<b>BULKY</b><br>"
+			html += "\n<b>笨重</b><br>"
 		if(bookweapon.can_parry)
-			html += "\n<b>DEFENSE:</b> [bookweapon.wdefense]<br>"
+			html += "\n<b>防御：</b> [bookweapon.wdefense]<br>"
 		if(bookweapon.associated_skill && bookweapon.associated_skill.name)
-			html += "\n<b>SKILL:</b> [bookweapon.associated_skill.name]<br>"
+			html += "\n<b>技能：</b> [bookweapon.associated_skill.name]<br>"
 		
 		if(bookweapon.intdamage_factor != 1 && bookweapon.force >= 5)
-			html += "\n<b>INTEGRITY DAMAGE:</b> [bookweapon.intdamage_factor * 100]%<br>"
+			html += "\n<b>耐久伤害：</b> [bookweapon.intdamage_factor * 100]%<br>"
 
 	if(craftdiff > 0)
-		html += "<h1></h1>For those of [SSskills.level_names_plain[craftdiff]] skills<br>"
+		html += "<h1></h1>适用于 [SSskills.level_names_plain[craftdiff]] 技艺者<br>"
 	else
-		html += "<h1></h1>Suitable for all skills<br>"	
+		html += "<h1></h1>适用于所有技艺水平<br>"	
 
 	html += {"<div>
-			  <strong>Requirements</strong>
+			  <strong>需求材料</strong>
 			  <br>"}
 
 	for(var/path as anything in reqs)
 		var/count = reqs[path]
 		if(ispath(path, /datum/reagent))
 			var/datum/reagent/R = path
-			html += "- [FLOOR(count, 1)] [UNIT_FORM_STRING(FLOOR(count, 1))] of [initial(R.name)]<br>"
+			html += "- [FLOOR(count, 1)] [UNIT_FORM_STRING(FLOOR(count, 1))] [initial(R.name)]<br>"
 		else if(ispath(path, /obj)) // Prevent a runtime from happening w/ datum atm until it is
 			var/atom/atom = path
 			if(subtype_reqs)
-				html += "- [count] of any [initial(atom.name)]<br>"
+				html += "- [count] 任意 [initial(atom.name)]<br>"
 			else
 				html += "- [count] [initial(atom.name)]<br>"
 
@@ -262,12 +262,12 @@
 		html += {"
 		<br>
 		<div>
-			<strong>Required Tools</strong>
+			<strong>所需工具</strong>
 			<br>
 			  "}
 		for(var/atom/path as anything in tools)
 			if(subtype_reqs)
-				html += "[icon2html(new path, user)] any [initial(path.name)]<br>"
+				html += "[icon2html(new path, user)] 任意 [initial(path.name)]<br>"
 			else
 				html += "[icon2html(new path, user)] [initial(path.name)]<br>"
 		html += {"
@@ -279,12 +279,12 @@
 		html += {"
 		<br>
 		<div>
-			<strong>Required Liquids</strong>
+			<strong>所需液体</strong>
 			<br>
 			  "}
 		for(var/atom/path as anything in chem_catalysts)
 			var/count = chem_catalysts[path]
-			html += "[FLOOR(count, 1)] [UNIT_FORM_STRING(FLOOR(count, 1))] of [initial(path.name)]<br>"
+			html += "[FLOOR(count, 1)] [UNIT_FORM_STRING(FLOOR(count, 1))] [initial(path.name)]<br>"
 		html += {"
 			</div>
 		<div>
@@ -292,16 +292,16 @@
 
 	if(structurecraft)
 		var/obj/structure = structurecraft
-		html += "<strong class=class='scroll'>start the process next to a</strong> <br>[icon2html(new structurecraft, user)] <br> [initial(structure.name)]<br>"
+		html += "<strong class=class='scroll'>在此物旁开始制作</strong> <br>[icon2html(new structurecraft, user)] <br> [initial(structure.name)]<br>"
 	if(req_table)
-		html += "<strong class=class='scroll'>start the process next to a table</strong> <br>"
+		html += "<strong class=class='scroll'>在桌旁开始制作</strong> <br>"
 	if(wallcraft)
-		html += "<strong class=class='scroll'>start the process next to a wall</strong> <br>"
+		html += "<strong class=class='scroll'>在墙旁开始制作</strong> <br>"
 
 	if(final_sellprice)
-		html += "<strong class=class='scroll'>You can sell this for [final_sellprice] mammons at a normal quality</strong> <br>"
+		html += "<strong class=class='scroll'>正常品质下可卖出 [final_sellprice] mammons</strong> <br>"
 	else(
-		html += "<strong class=class='scroll'>This is worthless for export</strong> <br>"
+		html += "<strong class=class='scroll'>此物没有出口价值</strong> <br>"
 	)
 
 	html += {"

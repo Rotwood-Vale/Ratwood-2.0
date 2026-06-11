@@ -1,6 +1,6 @@
 /datum/advclass/vagabond_mage
-	name = "Exiled Apprentice"
-	tutorial = "Your master found you talentless, and cast you from their tower with nothing but your staff and dreams of what could've been."
+	name = "放逐学徒"
+	tutorial = "你的导师认定你毫无天赋，于是把你连同那根法杖和对未竟前程的妄想一起赶出了高塔。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/vagabond/mage

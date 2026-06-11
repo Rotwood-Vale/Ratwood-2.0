@@ -1,17 +1,17 @@
 /obj/item/book/mimery
-	name = "Guide to Dank Mimery"
+	name = "高深拟态戏法指南"
 	desc = ""
 	icon_state ="bookmime"
 
 /obj/item/book/mimery/attack_self(mob/user,)
 	user.set_machine(src)
-	var/dat = "<B>Guide to Dank Mimery</B><BR>"
-	dat += "Teaches one of three classic pantomime routines, allowing a practiced mime to conjure invisible objects into corporeal existence.<BR>"
-	dat += "Once you have mastered your routine, this book will have no more to say to you.<BR>"
+	var/dat = "<B>高深拟态戏法指南</B><BR>"
+	dat += "教授三种经典默剧套路之一，让熟练的默剧演员能够将无形之物具现为实体。<BR>"
+	dat += "一旦你掌握了自己的套路，这本书便再无更多可教。<BR>"
 	dat += "<HR>"
-	dat += "<A href='byond://?src=[REF(src)];invisible_wall=1'>Invisible Wall</A><BR>"
-	dat += "<A href='byond://?src=[REF(src)];invisible_chair=1'>Invisible Chair</A><BR>"
-	dat += "<A href='byond://?src=[REF(src)];invisible_box=1'>Invisible Box</A><BR>"
+	dat += "<A href='byond://?src=[REF(src)];invisible_wall=1'>隐形墙</A><BR>"
+	dat += "<A href='byond://?src=[REF(src)];invisible_chair=1'>隐形椅</A><BR>"
+	dat += "<A href='byond://?src=[REF(src)];invisible_box=1'>隐形箱</A><BR>"
 	user << browse(dat, "window=book")
 
 /obj/item/book/mimery/Topic(href, href_list)
@@ -27,5 +27,5 @@
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null))
 		if (href_list["invisible_chair"])
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair(null))
-	to_chat(usr, "<span class='notice'>The book disappears into thin air.</span>")
+	to_chat(usr, "<span class='notice'>这本书凭空消失了。</span>")
 	qdel(src)

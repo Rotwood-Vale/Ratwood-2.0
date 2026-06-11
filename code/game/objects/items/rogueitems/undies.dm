@@ -1,6 +1,6 @@
 /obj/item/undies
-	name = "briefs"
-	desc = "An absolute necessity."
+	name = "短裤"
+	desc = "绝对必需品。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "briefs"
 	w_class = WEIGHT_CLASS_TINY
@@ -33,7 +33,7 @@
 				var/datum/bodypart_feature/underwear/undies_new = new /datum/bodypart_feature/underwear()
 				undies_new.set_accessory_type(sprite_acc, color, H)
 				undies_feature = undies_new
-			user.visible_message(span_notice("[user] tries to put [src] on [H]..."))
+			user.visible_message(span_notice("[user]试图把[src]给[H]穿上……"))
 			if(do_after(user, 50, needhand = 1, target = H))
 				var/obj/item/bodypart/chest = H.get_bodypart(BODY_ZONE_CHEST)
 				chest.add_bodypart_feature(undies_feature)
@@ -47,90 +47,90 @@
 	return ..()
 
 /obj/item/undies/bikini
-	name = "bikini"
+	name = "比基尼"
 	icon_state = "bikini"
 	covers_breasts = TRUE
 	sprite_acc = /datum/sprite_accessory/underwear/bikini
 
 /obj/item/undies/panties
-	name = "panties"
+	name = "内裤"
 	icon_state = "panties"
 	sprite_acc = /datum/sprite_accessory/underwear/panties
 
 /obj/item/undies/leotard
-	name = "leotard"
+	name = "紧身衣"
 	icon_state = "leotard"
 	covers_breasts = TRUE
 	sprite_acc = /datum/sprite_accessory/underwear/leotard
 
 /obj/item/undies/athletic_leotard
-	name = "athletic leotard"
+	name = "运动紧身衣"
 	icon_state = "athletic_leotard"
 	covers_breasts = TRUE
 	sprite_acc = /datum/sprite_accessory/underwear/athletic_leotard
 
 /obj/item/undies/braies
-	name = "braies"
-	desc = "A pair of linen underpants; Psydonia's most common."
+	name = "亚麻衬裤"
+	desc = "一条亚麻内裤；赛多尼亚最常见的款式。"
 	icon_state = "braies"
 	sprite_acc = /datum/sprite_accessory/underwear/braies
 
 /obj/item/undies/loinclothunder
-	name = "Small Loincloth"
-	desc = "A tight loincloth adjusted to fit like underwear, for those who like a breeze."
+	name = "小号缠裆布"
+	desc = "一条调到如内衣般贴身的紧致缠裆布，适合喜欢透风的人。"
 	icon_state = "loinclothunder"
 	covers_rear = FALSE
 
 // Craft
 
 /datum/crafting_recipe/roguetown/sewing/loinclothunder
-	name = "Small Loincloth (1 cloth)"
+	name = "小号缠裆布（1布）"
 	result = list(/obj/item/undies/loinclothunder)
 	reqs = list(/obj/item/natural/cloth = 1)
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/sewing/loinclothadjusttwo
-	name = "Adjust Small Loincloth to be looser (trousers)"
+	name = "把小号缠裆布改松（裤装）"
 	result = list(/obj/item/clothing/under/roguetown/loincloth)
 	reqs = list(/obj/item/undies/loinclothunder = 1)
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/sewing/undies
-	name = "briefs (1 fibers, 1 cloth)"
+	name = "短裤（1纤维，1布）"
 	result = list(/obj/item/undies)
 	reqs = list(/obj/item/natural/cloth = 1,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/bikini
-	name = "bikini (1 fibers, 2 cloth)"
+	name = "比基尼（1纤维，2布）"
 	result = list(/obj/item/undies/bikini)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/panties
-	name = "panties (1 cloth)"
+	name = "内裤（1布）"
 	result = list(/obj/item/undies/panties)
 	reqs = list(/obj/item/natural/cloth = 1)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/leotard
-	name = "leotard (1 fibers, 1 silk)"
+	name = "紧身衣（1纤维，1丝绸）"
 	result = list(/obj/item/undies/leotard)
 	reqs = list(/obj/item/natural/silk = 1,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/athletic_leotard
-	name = "athletic leotard (1 fibers, 1 silk)"
+	name = "运动紧身衣（1纤维，1丝绸）"
 	result = list(/obj/item/undies/athletic_leotard)
 	reqs = list(/obj/item/natural/silk = 1,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/braies
-	name = "braies (1 cloth)"
+	name = "亚麻衬裤（1布）"
 	result = list(/obj/item/undies/braies)
 	reqs = list(/obj/item/natural/cloth = 1)
 	craftdiff = 2

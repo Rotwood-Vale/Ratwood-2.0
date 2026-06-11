@@ -2,6 +2,7 @@
 
 /datum/job/roguetown/guildmaster
 	title = "Guildmaster"
+	display_title = "工匠行会长"
 	flag = GUILDMASTER
 	department_flag = YEOMEN
 	faction = "Station"
@@ -12,8 +13,8 @@
 	social_rank = SOCIAL_RANK_YEOMAN
 	allowed_races = ACCEPTED_RACES
 
-	tutorial = "You are the leader of the Duchy's Guild of Crafts. You represents the interests of all of the craftsmen underneath you - including the Tailor\
-	the Blacksmiths, the Artificers and the Architects. Other townspeople may look to you for guidance, but they are not under your control. You are an experienced smith and artificer, and can do their work easily. Protect the craftsmen's interests."
+	tutorial = "你是谷地工匠行会的领袖。你代表麾下所有工匠的利益，其中包括裁缝、铁匠、巧匠与建筑师。\
+	镇上的其他居民或许也会向你寻求指引，但他们并不归你管辖。你本身就是经验老到的铁匠与巧匠，足以轻松接手他们的工作。守护工匠们的利益。"
 
 	outfit = /datum/outfit/job/roguetown/guildmaster
 	selection_color = JCOLOR_YEOMAN
@@ -34,9 +35,9 @@
 	spells = list(/obj/effect/proc_holder/spell/invoked/takeapprentice)
 
 /datum/advclass/guildmaster
-	name = "Guildmaster"
-	tutorial = "You are the leader of the Duchy's Guild of Crafts. You represents the interests of all of the craftsmen underneath you - including the Tailor\
-	the Blacksmiths, the Artificers and the Architects. Other townspeople may look to you for guidance, but they are not under your control. You are an experienced smith and artificer, and can do their work easily. Protect the craftsmen's interests."
+	name = "工匠行会长"
+	tutorial = "你是谷地工匠行会的领袖。你代表麾下所有工匠的利益，其中包括裁缝、铁匠、巧匠与建筑师。\
+	镇上的其他居民或许也会向你寻求指引，但他们并不归你管辖。你本身就是经验老到的铁匠与巧匠，足以轻松接手他们的工作。守护工匠们的利益。"
 	outfit = /datum/outfit/job/roguetown/guildmaster/basic
 	category_tags = list(CTAG_GUILDSMASTER)
 	subclass_stats = list(
@@ -109,26 +110,26 @@
 		H.adjust_skillrank(/datum/skill/craft/tanning, 1, TRUE)
 
 /mob/living/carbon/human/proc/guild_announcement()
-	set name = "Announcement"
+	set name = "行会公告"
 	set category = "GUILDMASTER"
 	if(stat)
 		return
-	var/announcementinput = input("Bellow to the realm", "Make an Announcement") as text|null
+	var/announcementinput = input("向谷地高声宣告", "发布公告") as text|null
 	if(announcementinput)
 		if(!src.can_speak_vocal())
-			to_chat(src,span_warning("I can't speak!"))
+			to_chat(src,span_warning("我发不出声音！"))
 			return FALSE
 		if(!istype(get_area(src), /area/rogue/indoors/town/dwarfin))//Nuh uh
-			to_chat(src, span_warning("I can only speak from within the Guild."))
+			to_chat(src, span_warning("我只能在行会内发言。"))
 			return FALSE
 		if (!COOLDOWN_FINISHED(src, guildmaster_announcement))
-			to_chat(src, span_warning("You must wait before speaking again."))
+			to_chat(src, span_warning("我得等一会儿才能再次发言。"))
 			return FALSE
-		visible_message(span_warning("[src] takes a deep breath, preparing to make an announcement.."))
+		visible_message(span_warning("[src] 深吸一口气，准备发布公告……"))
 		if(do_after(src, 15 SECONDS, target = src)) // Reduced to 15 seconds from 30 on the original Herald PR. 15 is well enough time for sm1 to shove you.
 			say(announcementinput)
-			priority_announce("[announcementinput]", "The Guildmaster Heralds", 'sound/misc/bell.ogg', sender = src)
+			priority_announce("[announcementinput]", "行会长宣告", 'sound/misc/bell.ogg', sender = src)
 			COOLDOWN_START(src, guildmaster_announcement, GUILDMASTER_ANNOUNCEMENT_COOLDOWN)
 		else
-			to_chat(src, span_warning("Your announcement was interrupted!"))
+			to_chat(src, span_warning("我的公告被打断了！"))
 			return FALSE

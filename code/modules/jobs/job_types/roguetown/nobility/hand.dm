@@ -1,5 +1,6 @@
 /datum/job/roguetown/hand
 	title = "Hand"
+	display_title = "执政之手"
 	flag = HAND
 	department_flag = NOBLEMEN
 	faction = "Station"
@@ -11,7 +12,7 @@
 	outfit = /datum/outfit/job/roguetown/hand
 	advclass_cat_rolls = list(CTAG_HAND = 20)
 	display_order = JDO_HAND
-	tutorial = "Whether by outstanding merit or petty favoritism, you are the Archduke’s most trusted representative and advisor. Your authority is second only to the Archduke themselves. The weight of your words can shape policy, stir conflict, or silence dissent. Let none forget whose will you carry, and do not fail your benefactor."
+	tutorial = "无论是凭借卓绝功绩，还是出于私心偏爱，你都成了大公最信任的代理人与顾问。你的权威仅次于大公本人。你的话语足以左右政令、挑起纷争，亦或压下异议。务必让所有人记住你究竟代表着谁的意志，也切莫辜负提拔你的人。"
 	whitelist_req = TRUE
 	give_bank_account = 44
 	noble_income = 22
@@ -48,8 +49,8 @@
 
 //Blademaster Hand start
 /datum/advclass/hand/blademaster
-	name = "Blademaster"
-	tutorial = "You have played blademaster and strategist to the Noble-Family for so long that you are a master tactician, something you exploit with potent conviction. Let no man ever forget whose ear you whisper into. You've killed more men with swords than any spymaster could ever claim to."
+	name = "剑术宗师"
+	tutorial = "你为主家兼任剑术宗师与军略家已有多年，早已成长为老辣的战术大师，并以此施展自己的强势意志。别让任何人忘记，你究竟是在谁的耳边低语。你亲手用剑杀过的人，比任何谍务总管能吹嘘的都要多。"
 	outfit = /datum/outfit/job/roguetown/hand/blademaster
 
 	category_tags = list(CTAG_HAND)
@@ -103,9 +104,9 @@
 
 //Spymaster start
 /datum/advclass/hand/spymaster
-	name = "Spymaster"
-	tutorial = " You have played spymaster and confidant to the Noble-Family for so long that you are a vault of intrigue, something you exploit with potent conviction. Let no man ever forget whose ear you whisper into. You've killed more men with those lips than any blademaster could ever claim to."
-	extra_context = "This subclass recieves 'Perfect Tracker' and 'Keen Ears' for free."
+	name = "谍务总管"
+	tutorial = "你长期担任主家的谍务总管与亲信知己，已成了一座装满阴谋诡计的宝库，并以此贯彻自己的强硬意志。别让任何人忘记，你究竟是在谁的耳边低语。死在你这张嘴下的人，比任何剑术宗师能声称斩杀的都更多。"
+	extra_context = "该分支会免费获得“完美追踪者”与“敏锐听觉”。"
 	outfit = /datum/outfit/job/roguetown/hand/spymaster
 
 	category_tags = list(CTAG_HAND)
@@ -166,8 +167,8 @@
 
 //Advisor Start
 /datum/advclass/hand/advisor
-	name = "Advisor"
-	tutorial = "You serve as both scholar and advisor to the Noble-Family, wielding knowledge and magicks with potent ability. Let no man forget whose ear you whisper into, your sage advice has saved more lives than any strategist’s orders or spymaster’s schemes could ever claim to."
+	name = "谋士顾问"
+	tutorial = "你既是主家的学者，也是其顾问，能娴熟运用知识与奥术之力。别让任何人忘记，你究竟是在谁的耳边低语；你那些睿智的谏言所救下的人命，比任何军略家的命令或谍务总管的算计都要更多。"
 	outfit = /datum/outfit/job/roguetown/hand/advisor
 
 	category_tags = list(CTAG_HAND)
@@ -238,29 +239,29 @@
 
 /datum/job/roguetown/hand/proc/know_agents(mob/living/carbon/human/H)
 	if(!GLOB.court_agents.len)
-		to_chat(H, span_boldnotice("You begun the week with no agents."))
+		to_chat(H, span_boldnotice("本周伊始，我麾下没有任何密探。"))
 	else
-		to_chat(H, span_boldnotice("We begun the week with these agents:"))
+		to_chat(H, span_boldnotice("本周伊始，我麾下有这些密探："))
 		for(var/name in GLOB.court_agents)
 			to_chat(H, span_greentext(name))
 
 /datum/job/roguetown/hand/proc/remember_agents()
-	set name = "Remember Agents"
-	set category = "Voice of Command"
+	set name = "回想密探"
+	set category = "号令之声"
 
-	to_chat(usr, span_boldnotice("I have these agents present:"))
+	to_chat(usr, span_boldnotice("我手下现有这些密探："))
 	for(var/name in GLOB.court_agents)
 		to_chat(usr, span_greentext(name))
 	return
 
 /obj/effect/proc_holder/spell/self/convertrole/agent
-	name = "Recruit Agent"
+	name = "征募密探"
 	new_role = "Court Agent"//They get shown as adventurers either way.
 	overlay_state = "recruit_servant"
 	recruitment_faction = "Agents"
-	recruitment_message = "Serve the crown, %RECRUIT!"
-	accept_message = "FOR THE CROWN!"
-	refuse_message = "I refuse."
+	recruitment_message = "为王冠效命吧，%RECRUIT！"
+	accept_message = "为了王冠！"
+	refuse_message = "我拒绝。"
 	recharge_time = 100
 
 /obj/effect/proc_holder/spell/self/convertrole/agent/convert(mob/living/carbon/human/recruit, mob/living/carbon/human/recruiter)

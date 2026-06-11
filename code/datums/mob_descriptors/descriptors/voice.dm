@@ -2,8 +2,8 @@
 	abstract_type = /datum/mob_descriptor/voice
 	slot = MOB_DESCRIPTOR_SLOT_VOICE
 	verbage = "%SPEAK%"
-	prefix = "a"
-	suffix = "voice"
+	prefix = ""
+	suffix = "嗓音"
 	show_obscured = TRUE
 	var/voice_string
 
@@ -11,88 +11,88 @@
 	return "[voice_string ? voice_string : name] [voice_gender]"
 
 /datum/mob_descriptor/voice/ordinary
-	name = "Ordinary"
-	prefix = "an"
+	name = "普通"
+	prefix = ""
 
 /datum/mob_descriptor/voice/monotone
-	name = "Monotone"
+	name = "单调"
 
 /datum/mob_descriptor/voice/deep
-	name = "Deep"
+	name = "低沉"
 
 /datum/mob_descriptor/voice/soft
-	name = "Soft"
+	name = "轻柔"
 
 /datum/mob_descriptor/voice/shrill
-	name = "Shrill"
+	name = "尖利"
 
 /datum/mob_descriptor/voice/sleepy
-	name = "Sleepy"
+	name = "慵懒"
 
 /datum/mob_descriptor/voice/commanding
-	name = "Commanding"
+	name = "威严"
 
 /datum/mob_descriptor/voice/kind
-	name = "Kind"
+	name = "和善"
 
 /datum/mob_descriptor/voice/growly
-	name = "Growly"
+	name = "低吼般"
 
 /datum/mob_descriptor/voice/androgynous
-	name = "Androgynous"
-	prefix = "an"
+	name = "中性"
+	prefix = ""
 
 /datum/mob_descriptor/voice/nasal
-	name = "Nasal"
+	name = "鼻音很重"
 
 /datum/mob_descriptor/voice/refined
-	name = "Refined"
+	name = "文雅"
 
 /datum/mob_descriptor/voice/cheery
-	name = "Cheery"
+	name = "欢快"
 
 /datum/mob_descriptor/voice/dispassionate
-	name = "Dispassionate"
+	name = "冷漠"
 
 /datum/mob_descriptor/voice/gravelly
-	name = "Gravelly"
+	name = "沙哑"
 
 /datum/mob_descriptor/voice/whiny
-	name = "Whiny"
+	name = "带着哭腔"
 
 /datum/mob_descriptor/voice/melodic
-	name = "Melodic"
+	name = "悦耳"
 
 /datum/mob_descriptor/voice/drawling
-	name = "Drawling"
+	name = "拖长音调"
 
 /datum/mob_descriptor/voice/stilted
-	name = "Stilted"
+	name = "生硬"
 
 /datum/mob_descriptor/voice/grave
-	name = "Grave"
+	name = "庄重"
 
 /datum/mob_descriptor/voice/doting
-	name = "Doting"
+	name = "宠溺"
 
 /datum/mob_descriptor/voice/booming
-	name = "Booming"
+	name = "洪亮"
 
 /datum/mob_descriptor/voice/lisping
-	name = "Lisping"
+	name = "口齿含混"
 
 /datum/mob_descriptor/voice/honeyed
-	name = "Honeyed"
+	name = "甜腻"
 
 /datum/mob_descriptor/voice/facetious
-	name = "Facetious"
+	name = "轻佻"
 
 /datum/mob_descriptor/voice/snide
-	name = "Snide"
+	name = "讥讽"
 
 /datum/mob_descriptor/voice/smoker
-	name = "Smoker's"
-	voice_string = "Smoker"
+	name = "烟嗓"
+	voice_string = "烟嗓"
 
 /datum/mob_descriptor/voice/venomous
-	name = "Venomous"
+	name = "恶毒"

@@ -83,7 +83,7 @@
 
 /obj/item/book/rogue/read(mob/user)
 	if(!open)
-		to_chat(user, span_info("Open me first."))
+		to_chat(user, span_info("先把我打开。"))
 		return FALSE
 	. = ..()
 
@@ -107,22 +107,22 @@
 	icon_state = "[base_icon_state]_[open]"
 
 /obj/item/book/rogue/secret/ledger
-	name = "catatoma"
+	name = "卡塔托玛账本"
 	icon_state = "ledger_0"
 	base_icon_state = "ledger"
 	title = "Catatoma"
-	dat = "To create a shipping order, use a papyrus on me."
+	dat = "要创建一份货运订单，请把纸莎草卷轴用在我身上。"
 
 /obj/item/book/rogue/secret/ledger/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/paper/scroll/cargo))
 		if(!open)
-			to_chat(user, span_info("Open me first."))
+			to_chat(user, span_info("先把我打开。"))
 			return FALSE
 		var/obj/item/paper/scroll/cargo/C = I
 		if(C.orders.len > 4)
-			to_chat(user, span_warning("Too much order."))
+			to_chat(user, span_warning("订单太多了。"))
 			return
-		var/picked_cat = input(user, "Categories", "Shipping Ledger") as null|anything in sortList(SSmerchant.supply_cats)
+		var/picked_cat = input(user, "分类", "货运账本") as null|anything in sortList(SSmerchant.supply_cats)
 		if(!picked_cat)
 			testing("yeye")
 			return
@@ -132,7 +132,7 @@
 			if(PA.group == picked_cat)
 				pax += PA
 
-		var/datum/supply_pack/picked_pack = input(user, "Shipments", "Shipping Ledger") as null|anything in sortList(pax)
+		var/datum/supply_pack/picked_pack = input(user, "货单", "货运账本") as null|anything in sortList(pax)
 		if(!picked_pack)
 			return
 
@@ -141,13 +141,13 @@
 		return
 	if(istype(I, /obj/item/paper/scroll))
 		if(!open)
-			to_chat(user, span_info("Open me first."))
+			to_chat(user, span_info("先把我打开。"))
 			return FALSE
 		var/obj/item/paper/scroll/P = I
 		if(P.info)
-			to_chat(user, span_warning("Something is written here already."))
+			to_chat(user, span_warning("这里已经写了东西。"))
 			return
-		var/picked_cat = input(user, "Categories", "Shipping Ledger") as null|anything in sortList(SSmerchant.supply_cats)
+		var/picked_cat = input(user, "分类", "货运账本") as null|anything in sortList(SSmerchant.supply_cats)
 		if(!picked_cat)
 			return
 		var/list/pax = list()
@@ -155,7 +155,7 @@
 			var/datum/supply_pack/PA = SSmerchant.supply_packs[pack]
 			if(PA.group == picked_cat)
 				pax += PA
-		var/datum/supply_pack/picked_pack = input(user, "Shipments", "Shipping Ledger") as null|anything in sortList(pax)
+		var/datum/supply_pack/picked_pack = input(user, "货单", "货运账本") as null|anything in sortList(pax)
 		if(!picked_pack)
 			return
 		var/obj/item/paper/scroll/cargo/C = new(user.loc)
@@ -168,11 +168,11 @@
 	..()
 
 /obj/item/book/rogue/bibble
-	name = "The Verses and Acts of the Ten"
-	desc = "The collected verses and acts of the DIVINE PANTHEON. Split into three parts.</br>The Unsundered - The Era before the Fall, The Exploits of the Diecian Council </br>The Ruin - The Rise of the Enemy, The Death of the One </br> The Dawn - The Foundation of the Ten, The New Hope"
+	name = "十圣诗篇与圣行"
+	desc = "神圣万神殿的诗篇与圣行汇编，分为三部。</br>未裂之世 - 坠落之前的时代，戴西安议会的功业 </br>毁灭 - 敌者的崛起，唯一者的陨落 </br> 黎明 - 十圣的奠基，新希望的降临"
 	icon_state = "bibble_0"
 	base_icon_state = "bibble"
-	title = "The Verses and Acts of the Ten"
+	title = "十圣诗篇与圣行"
 	dat = "gott.json"
 	possible_item_intents = list(
 		/datum/intent/use, 
@@ -181,7 +181,7 @@
 
 /obj/item/book/rogue/bibble/read(mob/user)
 	if(!open)
-		to_chat(user, span_info("Open me first."))
+		to_chat(user, span_info("先把我打开。"))
 		return FALSE
 	if(!user.client || !user.hud_used)
 		return
@@ -191,15 +191,15 @@
 		return
 	if(in_range(user, src) || isobserver(user))
 		user.changeNext_move(CLICK_CD_MELEE)
-		var/list/choices = list("The Unsundered", "The Ruin", "The Dawn")
-		var/section_choice = input(user,"Which section shall I read from?", "DIVINE ENLIGHTENMENT") as anything in choices
+		var/list/choices = list("未裂之世", "毁灭", "黎明")
+		var/section_choice = input(user,"我要读哪一部分？", "神圣启迪") as anything in choices
 		var/chosentxt
 		switch(section_choice)
-			if("The Unsundered")
+			if("未裂之世")
 				chosentxt = 'strings/visage.txt'
-			if("The Ruin")
+			if("毁灭")
 				chosentxt = 'strings/decanomicon.txt'
-			if("The Dawn")
+			if("黎明")
 				chosentxt = 'strings/newdawn.txt'
 		var/m
 		var/list/verses = world.file2list(chosentxt)
@@ -210,12 +210,12 @@
 /obj/item/book/rogue/bibble/attack(atom/M, mob/user)
 	if(user.mind?.assigned_role == "Bishop" && user.used_intent?.type == /datum/intent/bless && isliving(M))
 		if(!user.can_read(src))
-			to_chat(user, span_warning("I don't understand these scribbly black lines."))
+			to_chat(user, span_warning("我看不懂这些潦草的黑色字迹。"))
 			return
 		var/mob/living/to_bless = M
 		to_bless.apply_status_effect(/datum/status_effect/buff/blessed)
 		to_bless.add_stress(/datum/stressevent/blessed)
-		user.visible_message(span_notice("[user] blesses [M]."))
+		user.visible_message(span_notice("[user]祝福了[M]。"))
 		playsound(user, 'sound/magic/bless.ogg', 100, FALSE)
 		return
 
@@ -224,22 +224,22 @@
 	if(user.mind?.assigned_role == "Bishop" && isitem(target) && user.used_intent?.type == /datum/intent/bless)
 		var/datum/component/silverbless/CP = target.GetComponent(/datum/component/silverbless)
 		if(!CP)
-			to_chat(user, span_info("\The [target] can not be blessed."))
+			to_chat(user, span_info("[target]无法被祝圣。"))
 			return
 		else if(!CP.is_blessed && (CP.silver_type & SILVER_TENNITE))
 			playsound(user, 'sound/magic/censercharging.ogg', 100)
-			user.visible_message(span_info("[user] holds \the [src] over \the [target]..."))
+			user.visible_message(span_info("[user]将[src]悬于[target]之上……"))
 			if(do_after(user, 5 SECONDS, target = target))
 				CP.try_bless(BLESSING_TENNITE)
 				new /obj/effect/temp_visual/censer_dust(get_turf(target))
 			return
 		else
-			to_chat(user, span_info("It has already been blessed."))
+			to_chat(user, span_info("它已经被祝圣过了。"))
 			return
 
 /obj/item/book/rogue/bibble/psy
-	name = "Tome of Psydon"
-	desc = "'And HE WEEPS. Not for you, not for me, but for it all.' </br>A leatherbound tome, chronicling the beliefs held by the Orthodoxy; the largest Psydonic denomination in the world. The 'Harlaus Press', a recent invention by Otava's clergymen, has ensured that no corner of Psydonia would remain unlit by His teachings. Inside are three separate testaments, each marked with a velvet strap.. </br>PSALMS - TESTAMENTS OF CLERICAL WISDOM, COMMANDING INTERPRETATION. </br>GENESIS - TESTAMENTS OF PSYDONIA'S CREATION, FOR WHAT ONCE WAS. </br>INVOCATIONS - TESTAMENTS OF WILL, TO EXORCISE AND CHANT."
+	name = "普西顿圣典"
+	desc = "'而祂哭泣。不是为你，不是为我，而是为这一切。' </br>一本皮面典籍，记述着正教会所奉持的信条；这是世上最大的普西顿教派。Otava 神职者近来发明的“哈劳斯印刷机”，确保普西多尼亚的每一处角落都能沐于祂的教诲之光。书中分为三部圣约，各以天鹅绒束带标记。</br>诗篇 - 神职智慧之圣约，昭示诠释。 </br>创世 - 普西多尼亚起源之圣约，记述往昔。 </br>祷文 - 意志之圣约，用以驱邪与咏唱。"
 	icon_state = "psyble_0"
 	base_icon_state = "psyble"
 	title = "psyble"
@@ -251,7 +251,7 @@
 
 /obj/item/book/rogue/bibble/psy/read(mob/living/carbon/human/user)
 	if(!open)
-		to_chat(user, span_info("Open it first."))
+		to_chat(user, span_info("先把它打开。"))
 		return FALSE
 	if(!user.client || !user.hud_used)
 		return
@@ -268,21 +268,21 @@
 			if(m)
 				if(prob(1) && sect == "sect1")
 					user.playsound_local(user, 'sound/misc/psydong.ogg', 100, FALSE)
-					user.say("PSY 23:4... And so, ZEZUS wept; for he had been struck down by the silvered javelin of JVDAS, PSYDON's most devout.")
+					user.say("PSY 23:4……于是 ZEZUS 哭泣了；因为他已被 JVDAS 的镀银标枪击倒，而 JVDAS 正是 PSYDON 最虔诚的信徒。")
 					user.psydo_nyte()
 				else
 					user.say(m)
 
 /obj/item/book/rogue/bibble/psy/MiddleClick(mob/user, params)
 	. = ..()
-	var/sects = list("PSALMS", "GENESIS", "INVOCATIONS")
-	var/sect_choice = input(user, "SELECT YOUR TESTAMENT", "OF PSYDONIA") as anything in sects
+	var/sects = list("诗篇", "创世", "祷文")
+	var/sect_choice = input(user, "选择你的圣约", "普西多尼亚") as anything in sects
 	switch(sect_choice)
-		if("PSALMS")
+		if("诗篇")
 			sect = "sect1"
-		if("GENESIS")
+		if("创世")
 			sect = "sect2"
-		if("INVOCATIONS")
+		if("祷文")
 			sect = "sect3"
 
 /datum/status_effect/buff/blessed
@@ -292,20 +292,20 @@
 	duration = 20 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/blessed
-	name = "Blessed"
+	name = "受祝福"
 	desc = ""
 	icon_state = "buff"
 
 
 /obj/item/book/rogue/law
-	name = "Tome of Justice"
-	desc = "Issued by the Crown of the Kingdom of Ferentia to serve as the legal framework for the realm."
+	name = "正义法典"
+	desc = "由费伦提亚王国王冠颁布，作为此地疆域的法律框架。"
 	icon_state ="lawtome_0"
 	base_icon_state = "lawtome"
 	bookfile = "law_2.json"
 
 /obj/item/book/rogue/cooking
-	name = "Tastes Fit For The Lord"
+	name = "适合领主的风味"
 	desc = ""
 	icon_state ="book_0"
 	base_icon_state = "book"
@@ -313,7 +313,7 @@
 
 		//no more theif stole the books
 /obj/item/book/rogue/knowledge1
-	name = "Book of Knowledge"
+	name = "知识之书"
 	desc = ""
 	icon_state ="book5_0"
 	base_icon_state = "book5"
@@ -321,8 +321,8 @@
 
 
 /obj/item/book/rogue/secret/xylix
-	name = "Book of Gold"
-	desc = "<font color='red'><blink>An ominous book with untold powers.</blink></font>"
+	name = "黄金之书"
+	desc = "<font color='red'><blink>一本不祥之书，蕴藏着难以言说的力量。</blink></font>"
 	icon_state ="xylix_0"
 	base_icon_state = "xylix"
 	bookfile = "xylix.json"
@@ -333,146 +333,146 @@
 		return
 	..()
 	user.update_inv_hands()
-	to_chat(user, span_notice("You feel laughter echo in your head."))
+	to_chat(user, span_notice("你感觉有笑声在脑海中回荡。"))
 
 /obj/item/book/rogue/secret/thefireisgone
-	name = "THE FIRE IS GONE"
-	desc = "{<font color='red'><blink>AN ANCIENT TOME WRITTEN BY THE GODS' GREATEST FOOL</blink></font>}"
+	name = "火焰已逝"
+	desc = "{<font color='red'><blink>由诸神最伟大的愚者所写下的古老典籍</blink></font>}"
 	icon_state ="book6_0"
 	base_icon_state = "book6"
 	bookfile = "thefireisgone.json"
 
 //player made books
 /obj/item/book/rogue/tales1
-	name = "Assorted Tales From Yester Yils"
-	desc = "By Alamere J Wevensworth"
+	name = "旧日逸闻杂谈"
+	desc = "作者：Alamere J Wevensworth"
 	icon_state ="book_0"
 	base_icon_state = "book"
 	bookfile = "tales1.json"
 
 /obj/item/book/rogue/festus
-	name = "Book of Festus"
-	desc = "Unknown Author"
+	name = "费斯图斯之书"
+	desc = "作者不详"
 	icon_state ="book2_0"
 	base_icon_state = "book2"
 	bookfile = "tales2.json"
 
 
 /obj/item/book/rogue/tales3
-	name = "Myths & Legends of the Peaks & Beyond Volume I"
-	desc = "Arbalius The Younger"
+	name = "群峰与彼方的神话传奇 第一卷"
+	desc = "作者：Arbalius the Younger"
 	icon_state ="book3_0"
 	base_icon_state = "book3"
 	bookfile = "tales3.json"
 
 /obj/item/book/rogue/bookofpriests
-	name = "Holy Book of Saphria"
+	name = "萨弗里亚圣书"
 	desc = ""
 	icon_state ="knowledge_0"
 	base_icon_state = "knowledge"
 	bookfile = "holyguide.json"
 
 /obj/item/book/rogue/robber
-	name = "Reading for Robbers"
-	desc = "By Flavius of Dendor"
+	name = "盗匪读本"
+	desc = "作者：Flavius of Dendor"
 	icon_state ="basic_book_0"
 	base_icon_state = "basic_book"
 	bookfile = "tales4.json"
 
 /obj/item/book/rogue/cardgame
-	name = "Graystone's Torment Basic Rules"
-	desc = "By Johnus of Doe"
+	name = "《Graystone's Torment》基础规则"
+	desc = "作者：Johnus of Doe"
 	icon_state ="basic_book_0"
 	base_icon_state = "basic_book"
 	bookfile = "tales5.json"
 
 /obj/item/book/rogue/blackmountain
-	name = "Zabrekalrek, The Black Mountain Saga: Part One"
-	desc = "Written by Gorrek Tale-Writer, translated by Hargrid Men-Speaker."
+	name = "《Zabrekalrek：黑山传奇》第一部"
+	desc = "著者：Gorrek Tale-Writer，译者：Hargrid Men-Speaker。"
 	icon_state ="book6_0"
 	base_icon_state = "book6"
 	bookfile = "tales6.json"
 
 /obj/item/book/rogue/beardling
-	name = "Rock and Stone - ABC & Tales for Beardlings"
-	desc = "Distributed by the Dwarven Federation"
+	name = "石与岩 - 胡须崽的识字书与故事集"
+	desc = "由矮人联邦发行"
 	icon_state ="book8_0"
 	base_icon_state = "book8"
 	bookfile = "tales7.json"
 
 /obj/item/book/rogue/abyssor
-	name = "A Tale of Those Who Live At Sea"
-	desc = "By Bellum Aegir"
+	name = "海上居民的故事"
+	desc = "作者：Bellum Aegir"
 	icon_state ="book2_0"
 	base_icon_state = "book2"
 	bookfile = "tales8.json"
 
 /obj/item/book/rogue/necra
-	name = "Burial Rites for Necra"
-	desc = "By Hunlaf, Gravedigger. Revised by Lenore, Priest of Necra."
+	name = "献给Necra的葬仪"
+	desc = "作者：Hunlaf，掘墓人。修订：Lenore，Necra 祭司。"
 	icon_state ="book6_0"
 	base_icon_state = "book6"
 	bookfile = "tales9.json"
 
 /obj/item/book/rogue/noc
-	name = "Dreamseeker"
-	desc = "By Hunlaf, Gravedigger. Revised by Lenore, Priest of Necra."
+	name = "寻梦者"
+	desc = "作者：Hunlaf，掘墓人。修订：Lenore，Necra 祭司。"
 	icon_state ="book6_0"
 	base_icon_state = "book6"
 	bookfile = "tales10.json"
 
 /obj/item/book/rogue/fishing
-	name = "Fontaine's Advanced Guide to Fishery"
-	desc = "By Ford Fontaine"
+	name = "《Fontaine高等渔业指南》"
+	desc = "作者：Ford Fontaine"
 	icon_state ="book2_0"
 	base_icon_state = "book2"
 	bookfile = "tales11.json"
 
 /obj/item/book/rogue/sword
-	name = "The Six Follies: How To Survive by the Sword"
-	desc = "By Theodore Spillguts"
+	name = "六种愚行：持剑求生之道"
+	desc = "作者：Theodore Spillguts"
 	icon_state ="book5_0"
 	base_icon_state = "book5"
 	bookfile = "tales12.json"
 
 /obj/item/book/rogue/arcyne
-	name = "Latent Magicks, where does Arcyne Power come from?"
-	desc = "By Kildren Birchwood, scholar of Magicks"
+	name = "潜伏魔法：Arcyne之力从何而来？"
+	desc = "作者：Kildren Birchwood，魔法学者"
 	icon_state ="book4_0"
 	base_icon_state = "book4"
 	bookfile = "tales13.json"
 
 /obj/item/book/rogue/nitebeast
-	name = "Legend of the Nitebeast"
-	desc = "By Paquetto the Scholar"
+	name = "夜兽传说"
+	desc = "作者：Paquetto the Scholar"
 	icon_state ="book8_0"
 	base_icon_state = "book8"
 	bookfile = "tales14.json"
 
 /obj/item/book/rogue/naledi1
-	name = "The Path of the War Scholar Volume 1"
-	desc = "By Jatholemew von Rittensquatter, Esq"
+	name = "战学者之路 第一卷"
+	desc = "作者：Jatholemew von Rittensquatter, Esq"
 	icon_state = "knowledge_0"
 	base_icon_state = "knowledge"
 	bookfile = "naledi1.json"
 
 /obj/item/book/rogue/naledi2
-	name = "The Path of the War Scholar Volume 3"
-	desc = "By Jatholemew von Rittensquatter, Esq"
+	name = "战学者之路 第三卷"
+	desc = "作者：Jatholemew von Rittensquatter, Esq"
 	icon_state = "book8_0"
 	base_icon_state = "book8"
 	bookfile = "naledi2.json"
 
 /obj/item/book/rogue/naledi3
-	name = "The Path of the War Scholar Volume 7"
-	desc = "By Jatholemew von Rittensquatter, Esq"
+	name = "战学者之路 第七卷"
+	desc = "作者：Jatholemew von Rittensquatter, Esq"
 	icon_state = "book7_0"
 	base_icon_state = "book7"
 	bookfile = "naledi3.json"
 
 /obj/item/book/rogue/naledi4
-	name = "The Path of the War Scholar Volume 20"
-	desc = "By Jatholemew von Rittensquatter, Esq"
+	name = "战学者之路 第二十卷"
+	desc = "作者：Jatholemew von Rittensquatter, Esq"
 	icon_state = "book6_0"
 	base_icon_state = "book6"
 	bookfile = "naledi4.json"
@@ -486,17 +486,17 @@
 	var/player_book_author_ckey
 	var/is_in_round_player_generated
 	var/list/book_icons = list(
-	"Sickly green with embossed bronze" = "book8",
-	"White with embossed obsidian" = "book7",
-	"Black with embossed quartz" = "book6",
-	"Blue with embossed ruby" = "book5",
-	"Green with embossed amethyst" = "book4",
-	"Purple with embossed emerald" = "book3",
-	"Red with embossed sapphire" = "book2",
-	"Brown with embossed gold" = "book1",
-	"Brown without embossed material" = "basic_book")
-	name = "unknown title"
-	desc = "Penned by an unknown author."
+	"病绿色铜纹压印" = "book8",
+	"白色黑曜压印" = "book7",
+	"黑色石英压印" = "book6",
+	"蓝色红宝压印" = "book5",
+	"绿色紫晶压印" = "book4",
+	"紫色祖母绿压印" = "book3",
+	"红色蓝宝压印" = "book2",
+	"棕色金纹压印" = "book1",
+	"棕色无压印封面" = "basic_book")
+	name = "无名书册"
+	desc = "由一位无名作者写就。"
 	icon_state = "basic_book_0"
 	base_icon_state = "basic_book"
 	override_find_book = TRUE
@@ -514,20 +514,20 @@
 //This needs to check if an input is valid via reject_bad_text, and if not prompt the user again.
 /obj/item/book/rogue/playerbook/proc/prompt_for_contents(mob/living/in_round_player_mob)
 	while(!player_book_author_ckey) // doesn't have to be this, but better than defining a bool.
-		player_book_title = capitalize(STRIP_HTML_SIMPLE(input(in_round_player_mob, "What title do you want to give the book? (max 42 characters)", "Title", "Unknown"), MAX_NAME_LEN))
-		player_book_author = STRIP_HTML_SIMPLE(input(in_round_player_mob, "What do you want the author text to be? (max 42 characters)", "Author", ""), MAX_NAME_LEN)
-		player_book_icon = book_icons[input(in_round_player_mob, "Choose a book style", "Book Style") as anything in book_icons]
+		player_book_title = capitalize(STRIP_HTML_SIMPLE(input(in_round_player_mob, "你想给这本书起什么标题？（最多 42 个字符）", "标题", "未知"), MAX_NAME_LEN))
+		player_book_author = STRIP_HTML_SIMPLE(input(in_round_player_mob, "作者署名要写什么？（最多 42 个字符）", "作者", ""), MAX_NAME_LEN)
+		player_book_icon = book_icons[input(in_round_player_mob, "选择一种书籍样式", "书籍样式") as anything in book_icons]
 		player_book_author_ckey = in_round_player_mob.ckey
 		//This gives the icon_state name, not the descriptive name, i. e. "book8", instead of "Sickly green with embossed Bronze"
-		if(alert("Confirm?:\nTitle: [player_book_title]\nAuthor: [player_book_author]\nBook Cover: [player_book_icon]", "", "Yes", "No") == "No")
+		if(alert("确认？:\n标题：[player_book_title]\n作者：[player_book_author]\n封面：[player_book_icon]", "", "是", "否") == "否")
 			player_book_author_ckey = null
 		message_admins("[player_book_author_ckey]([in_round_player_mob.real_name]) has generated the player book: [player_book_title]")
 
 	name = "[player_book_title]"
-	desc = "By [player_book_author]"
+	desc = "作者：[player_book_author]"
 	icon_state = "[player_book_icon]_0"
 	base_icon_state = "[player_book_icon]"
-	pages = list("<b3><h3>Title: [player_book_title]<br>Author: [player_book_author]</b><h3>[player_book_text]")
+	pages = list("<b3><h3>标题：[player_book_title]<br>作者：[player_book_author]</b><h3>[player_book_text]")
 
 /obj/item/book/rogue/playerbook/proc/pick_random_book()
 	var/list/player_book_titles = SSlibrarian.pull_player_book_titles()
@@ -540,15 +540,15 @@
 	player_book_text = chosen_book["text"]
 
 	name = "[player_book_title]"
-	desc = "By [player_book_author]"
+	desc = "作者：[player_book_author]"
 	icon_state = "[player_book_icon]_0"
 	base_icon_state = "[player_book_icon]"
-	pages = list("<b3><h3>Title: [player_book_title]<br>Author: [player_book_author]</b><h3>[player_book_text]")
+	pages = list("<b3><h3>标题：[player_book_title]<br>作者：[player_book_author]</b><h3>[player_book_text]")
 
 
 /obj/item/manuscript
-	name = "2 page manuscript"
-	desc = "A 2 page written piece aspiring to one dae become a book."
+	name = "2 页手稿"
+	desc = "一份两页的手稿，期望有朝一日能成为一本书。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "manuscript"
 	dir = 2
@@ -563,7 +563,7 @@
 
 /obj/item/manuscript/examine()
 	. = ..()
-	. += span_info("It has [number_of_pages] pages. Use paper to add more. Finish the book with a book crafting kit.")
+	. += span_info("它现在有[number_of_pages]页。可用纸张继续添页，再用制书工具包完成装订。")
 
 /obj/item/manuscript/attackby(obj/item/I, mob/living/user)
 	// why is a book crafting kit using the craft system, but crafting a book isn't? Well the crafting system for *some reason* is made in such a way as to make reworking it to allow you to put reqs vars in the crafted item near *impossible.*
@@ -579,15 +579,15 @@
 		return
 	var/obj/item/paper/P = I
 	if(!(P.info))
-		to_chat(user, "the paper needs to contain text to be added to a manuscript!")
+		to_chat(user, "纸上必须先写有文字，才能加入手稿！")
 		return
 	if(number_of_pages == 8)
-		to_chat(user, "The manuscript pile cannot surpass 8 pages!")
+		to_chat(user, "这摞手稿最多不能超过 8 页！")
 		return
 
 	++number_of_pages
-	name = "[number_of_pages] page manuscript"
-	desc = "A [number_of_pages] page written piece aspiring to one dae become a book."
+	name = "[number_of_pages] 页手稿"
+	desc = "一份[number_of_pages]页的手稿，期望有朝一日能成为一本书。"
 	page_texts += P.info
 	compiled_pages += "<p>[P.info]</p>"
 	qdel(P)
@@ -597,7 +597,7 @@
 
 /obj/item/manuscript/examine(mob/user)
 	. = ..()
-	. += "<a href='?src=[REF(src)];read=1'>Read</a>"
+	. += "<a href='?src=[REF(src)];read=1'>阅读</a>"
 
 /obj/item/manuscript/Topic(href, href_list)
 	..()
@@ -641,7 +641,7 @@
 		user << browse(dat, "window=reading;size=1000x700;can_close=1;can_minimize=0;can_maximize=0;can_resize=0;titlebar=1")
 		onclose(user, "reading", src)
 	else
-		return span_warning("I'm too far away to read it.")
+		return span_warning("离得太远了，没法阅读。")
 
 /obj/item/manuscript/update_icon()
 	. = ..()
@@ -688,22 +688,22 @@
 			return
 		else
 			update_icon()
-			name = "[number_of_pages] page manuscript"
-			desc = "A [number_of_pages] page written piece aspiring to one dae become a book."
+			name = "[number_of_pages] 页手稿"
+			desc = "一份[number_of_pages]页的手稿，期望有朝一日能成为一本书。"
 			return
 
 	. = ..()
 
 /obj/item/book_crafting_kit
-	name = "book crafting kit"
-	desc = "Apply on a written manuscript to create a book."
+	name = "制书工具包"
+	desc = "对写好的手稿使用，以制作成书。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "book_crafting_kit"
 	dropshrink = 0.7
 
 /obj/item/book/rogue/swatchbook
-	name = "Tailor's Swatchbook"
-	desc = "Allows you to pick out an exact hue and shade from the Tailors Guild's inordinately exhaustive all-encompassing selection of known colors. Once selected, use with a dyeing bin to apply the exact swatch."
+	name = "裁缝色卡簿"
+	desc = "允许你从裁缝行会那套繁复得近乎夸张的已知色谱中精确挑选色相与明暗。选定后，可配合染缸使用以套用该色样。"
 	icon_state = "swatchbook_0"
 	base_icon_state = "swatchbook"
 	title = "swatchbook"
@@ -715,7 +715,7 @@
 			return
 		else
 			var/hexcolor = "#FFFFFF"
-			hexcolor = sanitize_hexcolor(color_pick_sanitized(usr, "Choose your dye:", "Dyes", null, 0.2, 1), 6, TRUE)
+			hexcolor = sanitize_hexcolor(color_pick_sanitized(usr, "选择你的染色：", "染料", null, 0.2, 1), 6, TRUE)
 			if(hexcolor == "#000000")
 				swatchbookcolor = "#FFFFFF"
 			else
@@ -725,12 +725,12 @@
 		return
 
 /obj/item/book/rogue/bibble/zizo
-	name = "Lexicon of Her Truth"
-	desc = "By learning Her teachings, we will one day walk in Her footsteps. A volume forbidden to be read by the Holy See, containing a retelling of the mortal lyfe and ascension of ZIZO, the Lady of Ambition - or at least the version recounted by the cultists of her 'Salvation'."
+	name = "她的真理辞典"
+	desc = "只要领悟她的教诲，终有一日我们将踏上她走过的道路。此卷为圣座明令禁阅之书，记述了野心之女士齐佐的凡世生涯与升格历程——或至少，是她那群“救赎”信徒所讲述的版本。"
 	icon = 'icons/roguetown/items/bookszizo.dmi'
 	icon_state = "zizoble_0"
 	base_icon_state = "zizoble"
-	title = "Lexicon of Her Truth"
+	title = "她之真理辞典"
 	dat = "gott.json"
 
 /obj/item/book/rogue/bibble/zizo/attack(mob/living/M, mob/user)
@@ -741,7 +741,7 @@
 
 /obj/item/book/rogue/bibble/zizo/read(mob/living/carbon/human/user)
 	if(!open)
-		to_chat(user, span_info("Open it first."))
+		to_chat(user, span_info("先把它打开。"))
 		return FALSE
 	if(!user.client || !user.hud_used)
 		return

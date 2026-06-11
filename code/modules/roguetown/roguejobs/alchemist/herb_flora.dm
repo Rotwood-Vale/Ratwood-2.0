@@ -1,6 +1,6 @@
 /obj/structure/flora/roguegrass/herb
-	name = "herbbush"
-	desc = "A bush,for an herb. This shouldn't show up."
+	name = "药草丛"
+	desc = "一丛药草灌木。本来不该显示这段描述。"
 	icon = 'icons/roguetown/misc/herbfoliage.dmi'
 	icon_state = "spritemeplz"
 	var/res_replenish
@@ -15,7 +15,7 @@
 
 /obj/structure/flora/roguegrass/herb/Initialize(mapload)
 	. = ..()
-	desc = "An herb. This one looks like [name]."
+	desc = "一株药草。看起来像[name]。"
 	GLOB.herb_locations |= src
 	loot_replenish()
 
@@ -29,7 +29,7 @@
 
 /obj/structure/flora/roguegrass/herb/attack_hand(mob/user)
 	if(harvested)
-		to_chat(user, span_warning("Picked clean; but looks healthy. I should try again later."))
+		to_chat(user, span_warning("已经被采光了，但看起来还很健康。我该晚些再来试试。"))
 	if(isliving(user))
 		var/mob/living/L = user
 		user.changeNext_move(CLICK_CD_INTENTCAP)
@@ -50,7 +50,7 @@
 				//add_filter("picked", 1, alpha_mask_filter(icon = icon('icons/effects/picked_overlay.dmi', "picked_overlay_[rand(1,3)]"), flags = MASK_INVERSE))
 				GLOB.harvested_herbs |= src
 				return
-			user.visible_message(span_notice("[user] searches through [src]."))
+			user.visible_message(span_notice("[user]翻找着[src]。"))
 
 /obj/structure/flora/roguegrass/herb/proc/loot_replenish()
 	if(herbtype)
@@ -62,8 +62,8 @@
 		deltimer(timerid)
 
 /obj/structure/flora/roguegrass/herb/random
-	name = "random herb"
-	desc = "Haha, im in danger."
+	name = "随机药草"
+	desc = "哈哈，我有麻烦了。"
 
 /obj/structure/flora/roguegrass/herb/random/Initialize(mapload)
 	var/type = pick(list(/obj/structure/flora/roguegrass/herb/atropa,

@@ -1,6 +1,6 @@
 /obj/item/bmbstrap
-	name = "Bombdolier"
-	desc = "A strap for carrying grenades. A lunatic's invention, surely."
+	name = "炸弹挎带"
+	desc = "一条用于携带手雷的背带。毫无疑问，这是疯子的发明。"
 	icon_state = "bombdolier1"
 	item_state = "bombdolier"
 	icon = 'modular_azurepeak/icons/obj/items/bombdolier.dmi'
@@ -28,7 +28,7 @@
 			tweps += A
 			update_icon()
 		else
-			to_chat(loc, span_warning("Full!"))
+			to_chat(loc, span_warning("满了！"))
 		return
 	..()
 
@@ -43,7 +43,7 @@
 /obj/item/bmbstrap/examine(mob/user)
 	. = ..()
 	if(tweps.len)
-		. += span_notice("[tweps.len] inside.")
+		. += span_notice("里面有[tweps.len]个。")
 
 /obj/item/bmbstrap/update_icon()
 	switch(tweps.len)

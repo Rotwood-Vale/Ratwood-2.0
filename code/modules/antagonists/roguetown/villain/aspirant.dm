@@ -2,50 +2,50 @@
 #define CHOICE_SKILLS "skills"
 
 /datum/antagonist/aspirant
-	name = "Aspirant"
-	roundend_category = "aspirant"
-	antagpanel_category = "Aspirant"
+	name = "觊觎者"
+	roundend_category = "觊觎者"
+	antagpanel_category = "觊觎者"
 	job_rank = ROLE_ASPIRANT
 	show_in_roundend = FALSE
 	confess_lines = list(
-		"THE CHOSEN MUST TAKE THE THRONE!",
+		"天选者必须登上王座！",
 	)
 	increase_votepwr = FALSE
 	rogue_enabled = TRUE
 	antag_flags = FLAG_FAKE_ANTAG
 
 	var/static/list/equipment_selection = list(
-		"Cloak & Dagger (Poison & Knife)" = CHOICE_POISON_BLADE,
-		"Mace & Lockpicking Skill" = CHOICE_SKILLS
+		"斗篷与匕首（毒药与小刀）" = CHOICE_POISON_BLADE,
+		"钉头锤与开锁技巧" = CHOICE_SKILLS
 	)
 
 /datum/antagonist/aspirant/proc/give_equipment_prompt()
-	var/chosen = input(owner.current, "How shall I rise to power?", "YOUR ADVANTAGE") as anything in equipment_selection
+	var/chosen = input(owner.current, "我该如何攫取权力？", "你的优势") as anything in equipment_selection
 	var/mob/aspirant_mob = owner.current
 	chosen = LAZYACCESS(equipment_selection, chosen)
 	switch(chosen)
 		if(CHOICE_POISON_BLADE)
-			owner.special_items["Poison"] = /obj/item/reagent_containers/glass/bottle/rogue/poison
-			owner.special_items["Killer's Knife"] = /obj/item/rogueweapon/huntingknife/idagger/steel/corroded
-			to_chat(owner, span_notice("I can retrieve my item from a statue, tree or clock by right clicking it."))
+			owner.special_items["毒药"] = /obj/item/reagent_containers/glass/bottle/rogue/poison
+			owner.special_items["杀手小刀"] = /obj/item/rogueweapon/huntingknife/idagger/steel/corroded
+			to_chat(owner, span_notice("我可以通过右键雕像、树木或时钟来取回我的物品。"))
 			aspirant_mob.adjust_skillrank_up_to(/datum/skill/combat/knives, 4, TRUE)	//Expert knives cus you're not getting much else.
 		if(CHOICE_SKILLS)
-			owner.special_items["Mace"] = /obj/item/rogueweapon/mace/cudgel		//Go knock him out lol
-			owner.special_items["Chains"] = /obj/item/rope/chain
-			owner.special_items["Lockpicks"] = /obj/item/lockpickring/mundane
-			to_chat(owner, span_notice("I can retrieve my item from a statue, tree or clock by right clicking it."))
+			owner.special_items["钉头锤"] = /obj/item/rogueweapon/mace/cudgel		//Go knock him out lol
+			owner.special_items["锁链"] = /obj/item/rope/chain
+			owner.special_items["开锁器"] = /obj/item/lockpickring/mundane
+			to_chat(owner, span_notice("我可以通过右键雕像、树木或时钟来取回我的物品。"))
 			aspirant_mob.adjust_skillrank_up_to(/datum/skill/combat/maces, 5)	//Kinda huge with how maces are but - you're kinda not a frag-lord, you're to coup so. Works.
 			aspirant_mob.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, 5)
 
 
 /datum/antagonist/aspirant/supporter
-	name = "Supporter"
+	name = "支持者"
 
 /datum/antagonist/aspirant/loyalist
-	name = "Loyalist"
+	name = "忠臣"
 
 /datum/antagonist/aspirant/ruler
-	name = "Ruler"
+	name = "统治者"
 
 /datum/antagonist/aspirant/on_gain()
 	. = ..()
@@ -54,14 +54,14 @@
 	addtimer(CALLBACK(src, PROC_REF(give_equipment_prompt)), 5 SECONDS)
 
 /datum/antagonist/aspirant/greet()
-	to_chat(owner, span_danger("I have grown weary of being near the throne, but never on it. I have decided that it is time I ruled Enigma."))
+	to_chat(owner, span_danger("我早已厌倦了只在王座旁徘徊，却从未真正坐上去。现在，是时候由我来统治这片国度了。"))
 	..()
 
 /datum/antagonist/aspirant/loyalist/greet()
-	to_chat(owner, span_danger("Long live the [SSticker.rulertype]! I love my ruler. But I have heard that some seek to overthrow them. I cannot let that happen."))
+	to_chat(owner, span_danger("[SSticker.rulertype]万岁！我忠于我的统治者。但我听说有人意图推翻他们。我绝不能让这种事发生。"))
 
 /datum/antagonist/aspirant/supporter/greet()
-	to_chat(owner, span_danger("Long live the [SSticker.rulertype]! But not this one. I have been approached by an Aspirant and swayed to their cause. I must ensure they take the throne."))
+	to_chat(owner, span_danger("[SSticker.rulertype]万岁！但不是这一位。我已被一名觊觎者拉拢，投入其事业。我必须确保他登上王座。"))
 
 /datum/antagonist/aspirant/ruler/greet() // No alert for the ruler to always keep them guessing.
 
@@ -112,8 +112,8 @@
 
 // OBJECTIVES
 /datum/objective/aspirant/coup/one
-	name = "Aspirant"
-	explanation_text = "I must ensure that I am crowned as the Grand Duke."
+	name = "觊觎者"
+	explanation_text = "我必须确保自己被加冕为大公。"
 	triumph_count = 5
 
 /datum/objective/aspirant/coup/one/check_completion()
@@ -123,14 +123,14 @@
 		return FALSE
 
 /datum/objective/aspirant/coup/two
-	name = "Moral"
-	explanation_text = "I am no kinslayer, I must make sure that the Grand Duke doesn't die."
+	name = "道义"
+	explanation_text = "我不是弑亲者，我必须确保大公不会死。"
 	triumph_count = 10
 	var/initialruler
 
 /datum/objective/aspirant/coup/three
-	name = "Hopeful"
-	explanation_text = "I must ensure that the Aspirant takes the throne."
+	name = "希冀"
+	explanation_text = "我必须确保觊觎者登上王座。"
 	var/aspirant
 
 /datum/objective/aspirant/coup/two/check_completion()
@@ -142,8 +142,8 @@
 	else return FALSE
 
 /datum/objective/aspirant/loyal/one
-	name = "Ruler"
-	explanation_text = "I must remain Grand Duke."
+	name = "统治者"
+	explanation_text = "我必须继续作为大公统治。"
 	triumph_count = 3
 
 /datum/objective/aspirant/loyal/one/check_completion()
@@ -153,8 +153,8 @@
 		return FALSE
 
 /datum/objective/aspirant/loyal/two
-	name = "Loyalist"
-	explanation_text = "I must ensure that the Grand Duke continues to reign."
+	name = "忠臣"
+	explanation_text = "我必须确保大公继续统治。"
 	triumph_count = 3
 	var/initialruler
 
@@ -173,16 +173,16 @@
 		var/objective_count = 1
 		for(var/datum/objective/objective in objectives)
 			if(objective.check_completion())
-				to_chat(world, "<B>Goal #[objective_count]</B>: [objective.explanation_text] <span class='greentext'>TRIUMPH!</span>")
+				to_chat(world, "<B>目标 #[objective_count]</B>: [objective.explanation_text] <span class='greentext'>凯旋！</span>")
 				owner.adjust_triumphs(objective.triumph_count)
 			else
-				to_chat(world, "<B>Goal #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>FAIL.</span>")
+				to_chat(world, "<B>目标 #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>失败。</span>")
 				win = FALSE
 			objective_count++
 		if(win)
-			to_chat(world, span_greentext("The Aspirant has ascended! SUCCESS!"))
+			to_chat(world, span_greentext("觊觎者已登上高位！成功！"))
 		else
-			to_chat(world, span_redtext("The Aspirant was thwarted! FAIL!"))
+			to_chat(world, span_redtext("觊觎者被挫败了！失败！"))
 
 /datum/antagonist/aspirant/ruler/roundend_report()
 	to_chat(owner, span_header(" * [name] * "))
@@ -192,16 +192,16 @@
 		var/objective_count = 1
 		for(var/datum/objective/objective in objectives)
 			if(objective.check_completion())
-				to_chat(owner, "<B>Goal #[objective_count]</B>: [objective.explanation_text] <span class='greentext'>TRIUMPH!</span>")
+				to_chat(owner, "<B>目标 #[objective_count]</B>: [objective.explanation_text] <span class='greentext'>凯旋！</span>")
 				owner.adjust_triumphs(objective.triumph_count)
 			else
-				to_chat(owner, "<B>Goal #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>FAIL.</span>")
+				to_chat(owner, "<B>目标 #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>失败。</span>")
 				win = FALSE
 			objective_count++
 		if(win)
-			to_chat(owner, span_greentext("You defended your throne! SUCCESS!"))
+			to_chat(owner, span_greentext("你守住了自己的王座！成功！"))
 		else
-			to_chat(owner, span_redtext("You were deposed! FAIL!"))
+			to_chat(owner, span_redtext("你被废黜了！失败！"))
 
 /datum/antagonist/aspirant/supporter/roundend_report()
 	to_chat(owner, span_header(" * [name] * "))
@@ -211,16 +211,16 @@
 		var/objective_count = 1
 		for(var/datum/objective/objective in objectives)
 			if(objective.check_completion())
-				to_chat(owner, "<B>Goal #[objective_count]</B>: [objective.explanation_text] <span class='greentext'>TRIUMPH!</span>")
+				to_chat(owner, "<B>目标 #[objective_count]</B>: [objective.explanation_text] <span class='greentext'>凯旋！</span>")
 				owner.adjust_triumphs(objective.triumph_count)
 			else
-				to_chat(owner, "<B>Goal #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>FAIL.</span>")
+				to_chat(owner, "<B>目标 #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>失败。</span>")
 				win = FALSE
 			objective_count++
 		if(win)
-			to_chat(owner, span_greentext("Your claimant took the throne! SUCCESS!"))
+			to_chat(owner, span_greentext("你支持的觊觎者登上了王座！成功！"))
 		else
-			to_chat(owner, span_redtext("Your claimant failed! FAIL!"))
+			to_chat(owner, span_redtext("你支持的觊觎者失败了！失败！"))
 
 /datum/antagonist/aspirant/loyalist/roundend_report()
 	to_chat(owner, span_header(" * [name] * "))
@@ -230,13 +230,13 @@
 		var/objective_count = 1
 		for(var/datum/objective/objective in objectives)
 			if(objective.check_completion())
-				to_chat(owner, "<B>Goal #[objective_count]</B>: [objective.explanation_text] <span class='greentext'>TRIUMPH!</span>")
+				to_chat(owner, "<B>目标 #[objective_count]</B>: [objective.explanation_text] <span class='greentext'>凯旋！</span>")
 				owner.adjust_triumphs(objective.triumph_count)
 			else
-				to_chat(owner, "<B>Goal #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>FAIL.</span>")
+				to_chat(owner, "<B>目标 #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>失败。</span>")
 				win = FALSE
 			objective_count++
 		if(win)
-			to_chat(owner, span_greentext("Your ruler retained the throne! SUCCESS!"))
+			to_chat(owner, span_greentext("你的统治者保住了王座！成功！"))
 		else
-			to_chat(owner, span_redtext("Your ruler was deposed! FAIL!"))
+			to_chat(owner, span_redtext("你的统治者被废黜了！失败！"))

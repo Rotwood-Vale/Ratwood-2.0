@@ -5,7 +5,7 @@ LINEN BINS
 */
 
 /obj/item/bedsheet
-	name = "bedsheet"
+	name = "床单"
 	desc = ""
 	icon_state = "sheetwhite"
 	item_state = "sheetwhite"
@@ -18,7 +18,7 @@ LINEN BINS
 	dying_key = DYE_REGISTRY_BEDSHEET
 
 	dog_fashion = /datum/dog_fashion/head/ghost
-	var/list/dream_messages = list("white")
+	var/list/dream_messages = list("白色")
 	var/datum/weakref/signal_sleeper //this is our goldylocks
 
 /obj/item/bedsheet/Initialize(mapload)
@@ -38,14 +38,14 @@ LINEN BINS
 /obj/item/bedsheet/rmb_self(mob/living/user)
 	setDir(turn(dir,180))
 	update_icon()
-	to_chat(user, span_notice("I flip [src]."))
+	to_chat(user, span_notice("我把[src]翻了个面。"))
 
 /obj/item/bedsheet/proc/coverup(mob/living/sleeper)
 	layer = ABOVE_MOB_LAYER
 	plane = -2
 	pixel_x = 0
 	pixel_y = 0
-	visible_message(span_notice("[sleeper] covers with [src]."))
+	visible_message(span_notice("[sleeper]用[src]盖住了自己。"))
 	var/angle = sleeper.lying_prev
 	dir = angle2dir(angle)
 
@@ -62,7 +62,7 @@ LINEN BINS
 	UnregisterSignal(sleeper, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(sleeper, COMSIG_LIVING_SET_RESTING)
 	UnregisterSignal(sleeper, COMSIG_PARENT_QDELETING)
-	to_chat(sleeper, span_notice("I smooth [src] out beneath you."))
+	to_chat(sleeper, span_notice("我把[src]在身下铺平。"))
 	layer = initial(layer)
 	plane = initial(plane)
 	signal_sleeper = null
@@ -118,5 +118,5 @@ LINEN BINS
 
 /obj/item/bedsheet/random
 	icon_state = "random_bedsheet"
-	name = "random bedsheet"
+	name = "随机床单"
 	desc = ""

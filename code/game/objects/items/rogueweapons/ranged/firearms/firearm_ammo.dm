@@ -2,8 +2,8 @@
  * Parent bullet.
  */
 /obj/item/ammo_casing/caseless/bullet
-	name = "PARENT SPHERE"
-	desc = "YOU SHOULD NOT BE SEEING THIS. YELL AT CARL!!!"
+	name = "父类弹丸"
+	desc = "你不该看到这个。快去喊卡尔！！！"
 	projectile_type = /obj/projectile/bullet/firearm
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "musketball"
@@ -13,7 +13,7 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/projectile/bullet/firearm
-	name = "PARENT SMOKEPOWDER PROJECTILE"
+	name = "父类火药投射物"
 	damage = 80//Do you see how infrequently these things fire...
 	armor_penetration = 90//... and yet I need to explain?
 	range = 30//We want this to go a few screens. Regardless.
@@ -36,13 +36,13 @@
  */
 
 /obj/item/ammo_casing/caseless/bullet/lead
-	name = "lead sphere"
-	desc = "A small lead sphere. This should go well with smokepowder."
+	name = "铅弹"
+	desc = "一颗小小的铅球。它和烟火药正好绝配。"
 	projectile_type = /obj/projectile/bullet/firearm/lead
 	caliber = "lead_sphere"
 
 /obj/projectile/bullet/firearm/lead
-	name = "lead sphere"
+	name = "铅弹"
 	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead
 
 /obj/projectile/bullet/firearm/lead/on_hit(atom/target)
@@ -67,8 +67,8 @@
  */
 
 /obj/item/ammo_casing/caseless/bullet/grapeshot
-	name = "grapeshot"
-	desc = "A collection of tiny metal beads. This should go well with smokepowder."
+	name = "霰弹"
+	desc = "一捧细小的金属珠粒。它和烟火药正好绝配。"
 	projectile_type = /obj/projectile/bullet/firearm/grapeshot
 	caliber = "grapeshot"
 	icon_state = "grapeshot"
@@ -76,7 +76,7 @@
 	variance = 30
 
 /obj/projectile/bullet/firearm/grapeshot
-	name = "grapeshot"
+	name = "霰弹"
 	damage = 30
 	range = 15
 	npc_simple_damage_mult = 4//720 potential, if all hit.
@@ -123,8 +123,8 @@
 
 //The actual pouches.
 /obj/item/quiver/bullet
-	name = "lead ball pouch"
-	desc = "This pouch can hold a handful of musket balls, or, perhaps, grapeshot."
+	name = "铅弹袋"
+	desc = "这个小袋能装下一把火枪铅弹，或者一把霰弹。"
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "slingpouch"//Need another sprite.
 	item_state = "slingpouch"
@@ -136,9 +136,9 @@
 
 /obj/item/quiver/bullet/attack_turf(turf/T, mob/living/user)
 	if(arrows.len >= max_storage)
-		to_chat(user, span_warning("My [src.name] is full!"))
+		to_chat(user, span_warning("我的[src.name]已经装满了！"))
 		return
-	to_chat(user, span_notice("I begin to gather the ammunition..."))
+	to_chat(user, span_notice("我开始收拢这些弹药……"))
 	for(var/obj/item/ammo_casing/caseless/bullet in T.contents)
 		if(do_after(user, 5))
 			if(!eatarrow(bullet))
@@ -155,7 +155,7 @@
 			arrows += A
 			update_icon()
 		else
-			to_chat(loc, span_warning("Full!"))
+			to_chat(loc, span_warning("装满了！"))
 		return
 	if(istype(A, /obj/item/gun/ballistic/firearm))
 		var/obj/item/gun/ballistic/firearm/B = A

@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/song/intellectual_interval
-	name = "Intellectual Interval"
-	desc = "A song for thinkers, +3 INT"
+	name = "睿思间奏"
+	desc = "献给思考者的曲子，`+3 智力`。"
 	warnie = "spellwarning"
 	no_early_release = TRUE
 	movement_interrupt = FALSE
@@ -18,7 +18,7 @@
 		return TRUE
 	else
 		revert_cast()
-		to_chat(user, span_warning("I must be playing something to inspire my audience!"))
+		to_chat(user, span_warning("我必须先演奏起来，才能鼓舞我的听众！"))
 		return
 
 /datum/status_effect/buff/playing_melody/intellectual_interval
@@ -32,8 +32,8 @@
 
 
 /atom/movable/screen/alert/status_effect/buff/song/intellectual_interval
-	name = "Intellectual Interval"
-	desc = "This tune is intellectually stimulating."
+	name = "睿思间奏"
+	desc = "这段旋律正不断激发我的思维。"
 	icon_state = "buff"
 	
 

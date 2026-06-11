@@ -1,7 +1,7 @@
 #define ASHEN_FILTER
 /atom/movable/screen/alert/status_effect/buff/ashen_aril
-	name = "Arillean Apotheosis"
-	desc = "Divine power courses through you, enhancing all abilities."
+	name = "阿瑞里安神化"
+	desc = "神圣之力在你体内奔涌，强化着你的一切能力。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/ashen_aril
@@ -27,24 +27,24 @@
 
 	switch(current_boost)
 		if(3 to 5)
-			linked_alert.name = "Arillean Apotheosis"
-			linked_alert.desc = "Divine power courses through you, enhancing all abilities."
+			linked_alert.name = "阿瑞里安神化"
+			linked_alert.desc = "神圣之力在你体内奔涌，强化着你的一切能力。"
 			linked_alert.icon_state = "pom_god"
 		if(1 to 2)
-			linked_alert.name = "Waning Arillean Apotheosis"
-			linked_alert.desc = "The divine power within you is fading."
+			linked_alert.name = "衰退中的阿瑞里安神化"
+			linked_alert.desc = "你体内的神圣之力正在消退。"
 			linked_alert.icon_state = "pom_god"
 		if(0)
-			linked_alert.name = "Arillean Peace"
-			linked_alert.desc = "The calm before the storm."
+			linked_alert.name = "阿瑞里安平宁"
+			linked_alert.desc = "暴风雨来临前的平静。"
 			linked_alert.icon_state = "pom_anxiety"
 		if(-4 to -1)
-			linked_alert.name = "Ashen Scourge"
-			linked_alert.desc = "Your body is turning to ash!"
+			linked_alert.name = "灰烬灾厄"
+			linked_alert.desc = "你的身体正在化为灰烬！"
 			linked_alert.icon_state = "pom_regret"
 		if(-5)
-			linked_alert.name = "Arillean Husk"
-			linked_alert.desc = "Much of your body has deteriorated into ash. It is not through Eora's mercy if you are still alive somehow."
+			linked_alert.name = "阿瑞里安空壳"
+			linked_alert.desc = "你身体的大部分都已朽坏成灰。若你居然还活着，那也绝非 Eora 的怜悯。"
 			linked_alert.icon_state = "pom_regret"
 
 /datum/status_effect/buff/ashen_aril/on_apply()
@@ -65,13 +65,13 @@
 	// Apply Beautiful trait for positive boosts
 	if(current_boost == 5)
 		ADD_TRAIT(owner, TRAIT_BEAUTIFUL, TRAIT_MIRACLE)
-		to_chat(owner, span_notice("You feel divinely empowered and radiant!"))
+		to_chat(owner, span_notice("你感到自己被神力充盈，光彩焕发！"))
 	else if(current_boost == 0)
 		REMOVE_TRAIT(owner, TRAIT_BEAUTIFUL, TRAIT_MIRACLE)
-		to_chat(owner, span_warning("Your divine beauty fades..."))
+		to_chat(owner, span_warning("你那神赐的美丽正在消退……"))
 	else if (current_boost == -5)
 		ADD_TRAIT(owner, TRAIT_UNSEEMLY, TRAIT_MIRACLE)
-		to_chat(owner, span_notice("Your flesh is flaky and disgusting."))
+		to_chat(owner, span_notice("你的血肉正变得干裂剥落，令人作呕。"))
 
 	// Set visual appearance based on boost level
 	switch(current_boost)
@@ -97,7 +97,7 @@
 
 				for(var/obj/item/bodypart/BP in C.bodyparts)
 					var/BP_name = BP.name
-					if(!BP_name) BP_name = "Unnamed Bodypart" // Fallback
+					if(!BP_name) BP_name = "无名肢体" // Fallback
 
 					var/bool_can_bloody_wound = BP.can_bloody_wound()
 					var/bool_in_zone = (BP.body_zone in valid_body_zones)
@@ -110,7 +110,7 @@
 					var/obj/item/bodypart/BP = pick(valid_parts)
 					BP.add_wound(/datum/wound/slash, FALSE, "looks sickly and ashen.")
 					new /obj/item/ash(owner.loc)
-					to_chat(owner, span_warning("Your body cracks as a new wound opens, ash spilling forth."))
+					to_chat(owner, span_warning("你的身体皲裂开来，一道新的伤口张开，灰烬从中簌簌落下。"))
 
 /datum/status_effect/buff/ashen_aril/on_remove()
 	. = ..()
@@ -135,7 +135,7 @@
 	var/waiting_for_prompt = FALSE
 
 /datum/status_effect/buff/eoran_balm_effect/on_apply()
-	to_chat(owner, span_notice("A strange balm courses through my veins, an unnatural warmth spreads through my lifeless body..."))
+	to_chat(owner, span_notice("一股奇异药膏般的力量在我血管中流淌，不自然的暖意正扩散到我这具死寂的身体……"))
 	. = ..()
 
 /datum/status_effect/buff/eoran_balm_effect/tick()
@@ -178,7 +178,7 @@
 
 		M.adjustOxyLoss(-M.getOxyLoss()) // Full oxygen healing
 		if(!M.revive(full_heal = FALSE))
-			M.visible_message(span_warning("[M]'s body shudders but fails to revive!"))
+			M.visible_message(span_warning("[M] 的身体猛然一颤，却仍未能复生！"))
 			M.remove_status_effect(src)
 			return
 
@@ -186,7 +186,7 @@
 		M.Jitter(100)
 		record_round_statistic(STATS_LUX_REVIVALS)
 		M.update_body()
-		M.visible_message(span_notice("[M] is dragged back from Necra's hold!"), span_green("I awake from the void."))
+		M.visible_message(span_notice("[M] 被强行从 Necra 的掌握中拽了回来！"), span_green("我自虚无之中醒来。"))
 
 		M.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)
 		M.apply_status_effect(/datum/status_effect/debuff/revived)
@@ -232,12 +232,12 @@
 	var/filter = owner.get_filter(POM_FILTER)
 	if (!filter)
 		owner.add_filter(POM_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 180, "size" = 1))
-	to_chat(owner, span_warning("My combat prowess is sapped by the tree!"))
+	to_chat(owner, span_warning("我的战斗能力正被这棵树抽走！"))
 
 /datum/status_effect/debuff/pomegranate_aura/on_remove()
 	. = ..()
 	owner.remove_filter(POM_FILTER)
-	to_chat(owner, span_warning("As I leave the influence of the tree, my strength returns."))
+	to_chat(owner, span_warning("当我离开这棵树的影响范围后，力量又回来了。"))
 
 /datum/status_effect/debuff/pomegranate_aura/tick()
 	if(HAS_TRAIT(owner, TRAIT_EORAN_CALM))
@@ -259,14 +259,14 @@
 		var/mob/living/carbon/human/H = owner
 		// Ugly people might get hurt
 		if(HAS_TRAIT(H, TRAIT_UNSEEMLY) && prob(2))
-			to_chat(H, span_warning("The tree's beauty burns your eyes!"))
+			to_chat(H, span_warning("这棵树的美丽灼痛了你的双眼！"))
 			H.Dizzy(5)
 			H.blur_eyes(5)
 			H.adjustBruteLoss(10, 0)
 
 		// Beautiful people might get healed
 		else if(HAS_TRAIT(H, TRAIT_BEAUTIFUL) && prob(10))
-			to_chat(H, span_good("The tree's beauty revitalizes you!"))
+			to_chat(H, span_good("这棵树的美丽令你重新焕发生机！"))
 			H.apply_status_effect(/datum/status_effect/buff/healing, 1)
 
 	// There is no beauty in death. Feed my tree.
@@ -274,8 +274,8 @@
 		owner.blood_volume = max(10, owner.blood_volume - 10)
 
 /atom/movable/screen/alert/status_effect/pomegranate_aura
-	name = "Eora's Blessing"
-	desc = "You feel a sense of peace near this sacred tree."
+	name = "Eora 的祝福"
+	desc = "你在这棵圣树附近感到一阵安宁。"
 	icon_state = "pom_peace"
 
 #undef POM_FILTER
@@ -283,8 +283,8 @@
 #define WILTING_FILTER "wilting_death"
 
 /atom/movable/screen/alert/status_effect/eoran_wilting
-	name = "WILTING"
-	desc = "My limbs are falling off!"
+	name = "枯萎"
+	desc = "我的四肢正在脱落！"
 	icon_state = "pom_death"
 
 /datum/status_effect/debuff/eoran_wilting
@@ -297,7 +297,7 @@
 /datum/status_effect/debuff/eoran_wilting/on_apply()
 	if(isliving(owner))
 		owner.add_filter(WILTING_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 210, "size" = 2))
-		to_chat(owner, span_userdanger("You feel like your limbs are starting to detach horrifically, death is imminent!"))
+		to_chat(owner, span_userdanger("你感觉自己的四肢正可怖地开始脱落，死亡已近在眼前！"))
 	return TRUE
 
 /datum/status_effect/debuff/eoran_wilting/on_remove()
@@ -335,7 +335,7 @@
 		BODY_ZONE_HEAD
 	)
 
-	C.visible_message(span_userdanger("[C]'s limbs wither and fall off in a gruesome display!"))
+	C.visible_message(span_userdanger("[C] 的四肢在可怖景象中枯萎断落！"))
 
 	for(var/zone in dismember_order)
 		var/obj/item/bodypart/BP = C.get_bodypart(zone)
@@ -353,12 +353,12 @@
 	alert_type = /atom/movable/screen/alert/status_effect/pearlescent_aril
 
 /atom/movable/screen/alert/status_effect/pearlescent_aril
-	name = "Pearlescent Cleansing"
-	desc = "Poison heals you!"
+	name = "珠辉净化"
+	desc = "毒素正在治愈你！"
 	icon_state = "pearlescent"
 
 /datum/status_effect/pearlescent_aril/on_apply()
-	to_chat(owner, span_notice("A cleansing warmth spreads through your veins as the aril takes effect."))
+	to_chat(owner, span_notice("当这枚果粒生效时，一股净化的暖流扩散进了你的血脉。"))
 	return ..()
 
 /datum/status_effect/pearlescent_aril/tick()
@@ -380,5 +380,5 @@
 		new /obj/effect/temp_visual/heal(get_turf(C), "#d8d8d8")
 
 /datum/status_effect/pearlescent_aril/on_remove()
-	to_chat(owner, span_warning("The cleansing warmth fades from your veins."))
+	to_chat(owner, span_warning("那股净化的暖意正从你的血脉中褪去。"))
 	..()

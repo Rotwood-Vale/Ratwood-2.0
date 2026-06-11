@@ -114,8 +114,8 @@
 	return FALSE
 
 /turf/closed/wall/mineral/rogue/craftstone
-	name = "stone wall"
-	desc = "A durable wall made from specially-crafted stone."
+	name = "石墙"
+	desc = "一堵由特制石块砌成的坚固墙壁。"
 	icon = 'icons/turf/walls/craftstone.dmi'
 	icon_state = "box"
 	smooth = SMOOTH_MORE
@@ -221,8 +221,8 @@
 	spread_chance = 9
 
 /turf/closed/wall/mineral/rogue/wooddark
-	name = "dark wood wall"
-	desc = "Made from durable, somewhat darker wood." // i am not sure if the wood is really dark
+	name = "深色木墙"
+	desc = "由结实、色泽略深的木头制成。"
 	icon = 'icons/turf/roguewall.dmi'
 	icon_state = "corner"
 	smooth = SMOOTH_FALSE
@@ -357,8 +357,8 @@
 	icon_state = "decowood-vert"
 
 /turf/closed/wall/mineral/rogue/decostone
-	name = "decorated stone wall"
-	desc = "The mason did an excellent job etching details into this wall."
+	name = "雕花石墙"
+	desc = "石匠在这面墙上雕刻了精美的细节。"
 	icon = 'icons/turf/roguewall.dmi'
 	icon_state = "decostone-b"
 	smooth = SMOOTH_MORE

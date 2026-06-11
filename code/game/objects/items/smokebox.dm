@@ -1,6 +1,6 @@
 /obj/item/storage/fancy/shhig
-	name = "Shhig Brand Zigs"
-	desc = "Shhig's Brand Zigs; known for their smooth draw and complex flavour profile. Go on... give them a try. Your life expectancy isn't very high anyway."
+	name = "嘘蛇牌香烟"
+	desc = "嘘蛇牌香烟，以顺滑入口与复杂风味闻名。来吧……试一根。反正你的寿命本来也不算长。"
 	icon = 'icons/roguetown/items/smokebox.dmi'
 	icon_state = "smokebox"
 	item_state = "smokebox"
@@ -26,11 +26,11 @@
 	return
 
 /obj/item/clothing/mask/cigarette/rollie/shhig
-	name = "shhig zig"
-	desc = "This zig has a little indentation of a snake imprinted on to it."
+	name = "嘘蛇香烟"
+	desc = "这支香烟上压着一道小小的蛇形印痕。"
 	list_reagents = list(/datum/reagent/drug/nicotine = 30, /datum/reagent/consumable/shhig = 10)
 
 /datum/reagent/consumable/shhig
-	name = "Shhig Special Formula"
+	name = "嘘蛇特调配方"
 	color = "#d3a308"
-	taste_description = "complex sharpness and notes of honey and venom"
+	taste_description = "层次复杂的辛锐感，以及蜂蜜与毒液的余韵"

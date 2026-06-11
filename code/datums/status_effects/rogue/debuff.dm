@@ -11,8 +11,8 @@
 	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/hungryt1
-	name = "Hungry"
-	desc = "Hunger weakens this living body."
+	name = "饥饿"
+	desc = "饥饿使这具活着的身体变得虚弱。"
 	icon_state = "hunger1"
 
 /datum/status_effect/debuff/hungryt2
@@ -23,8 +23,8 @@
 	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/hungryt2
-	name = "Hungry"
-	desc = "This living body suffers heavily from hunger."
+	name = "饥饿"
+	desc = "这具活着的身体正深受饥饿折磨。"
 	icon_state = "hunger2"
 
 /datum/status_effect/debuff/hungryt3
@@ -35,8 +35,8 @@
 	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/hungryt3
-	name = "Hungry"
-	desc = "My body can barely hold it!"
+	name = "饥饿"
+	desc = "我的身体快撑不住了！"
 	icon_state = "hunger3"
 
 /datum/status_effect/debuff/thirstyt1
@@ -47,8 +47,8 @@
 	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/thirstyt1
-	name = "Thirsty"
-	desc = "I need water."
+	name = "口渴"
+	desc = "我需要水。"
 	icon_state = "thirst1"
 
 /datum/status_effect/debuff/thirstyt2
@@ -59,8 +59,8 @@
 	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/thirstyt2
-	name = "Thirsty"
-	desc = "My mouth feels much drier."
+	name = "口渴"
+	desc = "我的嘴里越来越干。"
 	icon_state = "thirst2"
 
 /datum/status_effect/debuff/thirstyt3
@@ -71,8 +71,8 @@
 	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/thirstyt3
-	name = "Thirsty"
-	desc = "I urgently need water!"
+	name = "口渴"
+	desc = "我急需喝水！"
 	icon_state = "thirst3"
 
 /////////
@@ -135,7 +135,7 @@
 	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt1
-	name = "Dizzy"
+	name = "头晕"
 	desc = ""
 	icon_state = "bleed1"
 
@@ -147,7 +147,7 @@
 	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt2
-	name = "Faint"
+	name = "昏眩"
 	desc = ""
 	icon_state = "bleed2"
 
@@ -159,7 +159,7 @@
 	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt3
-	name = "Drained"
+	name = "枯竭"
 	desc = ""
 	icon_state = "bleed3"
 
@@ -169,8 +169,8 @@
 	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/netted
-	name = "Net"
-	desc = "A net was thrown on me.. how can I move?"
+	name = "网住"
+	desc = "一张网罩在我身上......我还怎么动？"
 	icon_state = "muscles"
 
 /datum/status_effect/debuff/netted
@@ -193,8 +193,8 @@
 		C.remove_movespeed_modifier(MOVESPEED_ID_NET_SLOWDOWN)
 
 /atom/movable/screen/alert/status_effect/debuff/sleepytime
-	name = "Tired"
-	desc = "I should get some rest."
+	name = "疲倦"
+	desc = "我该休息一下了。"
 	icon_state = "sleepy"
 
 /datum/status_effect/debuff/muscle_sore
@@ -203,8 +203,8 @@
 	effectedstats = list(STATKEY_STR = -1, STATKEY_WIL = -1)
 
 /atom/movable/screen/alert/status_effect/debuff/muscle_sore
-	name = "Muscle Soreness"
-	desc = "My muscles need some sleep to recover."
+	name = "肌肉酸痛"
+	desc = "我的肌肉需要靠睡眠来恢复。"
 	icon_state = "muscles"
 
 /datum/status_effect/debuff/devitalised
@@ -220,8 +220,8 @@
 	duration = 30 MINUTES
 
 /atom/movable/screen/alert/status_effect/debuff/devitalised
-	name = "Devitalised"
-	desc = "Something has been taken from me, and it will take time to recover."
+	name = "元气受损"
+	desc = "我被夺走了某些东西，还需要时间恢复。"
 
 /atom/movable/screen/alert/status_effect/debuff/devitalised/lux_ripped
 	name = "Lux Ripped"
@@ -233,8 +233,8 @@
 	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/vamp_dreams
-	name = "Insight"
-	desc = "With some sleep in a coffin I feel like I could become better."
+	name = "顿悟"
+	desc = "只要在棺材里睡上一觉，我感觉自己就能变得更强。"
 	icon_state = "sleepy"
 
 /datum/status_effect/debuff/ritualdefiled
@@ -245,8 +245,8 @@
 
 
 /atom/movable/screen/alert/status_effect/debuff/ritualdefiled
-	name = "Tainted Lux"
-	desc = "My Lux has been tainted in a vile heretic ritual."
+	name = "受污的 Lux"
+	desc = "我的 Lux 在邪恶的异端仪式中被玷污了。"
 
 /// SURRENDERING DEBUFFS
 
@@ -264,8 +264,8 @@
 	REMOVE_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, id)
 
 /atom/movable/screen/alert/status_effect/debuff/breedable
-	name = "Obedient"
-	desc = "They won't hurt me too much..."
+	name = "顺从"
+	desc = "他们不会把我伤得太重......"
 
 /datum/status_effect/debuff/submissive
 	id = "submissive"
@@ -281,8 +281,8 @@
 	owner.remove_movespeed_modifier("SUBMISSIVE")
 
 /atom/movable/screen/alert/status_effect/debuff/submissive
-	name = "Conformable"
-	desc = "Falling in line is my only choice."
+	name = "屈从"
+	desc = "乖乖顺从是我唯一的选择。"
 
 /datum/status_effect/debuff/yield_prompt
 	id = "yieldprompt"
@@ -323,8 +323,8 @@
 	duration = 15 SECONDS
 
 /atom/movable/screen/alert/status_effect/debuff/chilled
-	name = "Chilled"
-	desc = "I can barely feel my limbs!"
+	name = "寒战"
+	desc = "我的四肢几乎失去知觉了！"
 	icon_state = "chilled"
 
 
@@ -334,8 +334,8 @@
 	duration = 30 MINUTES
 
 /atom/movable/screen/alert/status_effect/debuff/ritesexpended
-	name = "Rites Complete"
-	desc = "It will take time before I can next perform a rite."
+	name = "仪式冷却"
+	desc = "我还需要过一段时间才能再次施行仪式。"
 	icon_state = "ritesexpended"
 
 /datum/status_effect/debuff/ritesexpended_heavy
@@ -344,8 +344,8 @@
 	duration = 1 HOURS
 
 /atom/movable/screen/alert/status_effect/debuff/ritesexpended_heavy
-	name = "Rites Complete"
-	desc = "It will take a lot of time before I can perform a next rite. I am drained."
+	name = "仪式冷却"
+	desc = "我要很久以后才能再施行下一次仪式。我已筋疲力尽。"
 	icon_state = "ritesexpended"
 
 /datum/status_effect/debuff/ritesexpended_lesser
@@ -354,8 +354,8 @@
 	duration = 5 MINUTES
 
 /atom/movable/screen/alert/status_effect/debuff/ritesexpended_lesser
-	name = "Rites Complete"
-	desc = "It will be a short period before I can perform another rite."
+	name = "仪式冷却"
+	desc = "稍等片刻后我就能再次施行仪式。"
 	icon_state = "ritesexpended"
 
 /datum/status_effect/debuff/call_to_arms
@@ -365,8 +365,8 @@
 	duration = 2.5 MINUTES
 
 /atom/movable/screen/alert/status_effect/debuff/call_to_arms
-	name = "Ravox's Call to Arms"
-	desc = "His voice keeps ringing in your ears, rocking your soul.."
+	name = "拉沃克斯的战召"
+	desc = "他的声音在你耳边久久回荡，震撼着你的灵魂......"
 	icon_state = "call_to_arms"
 
 /datum/status_effect/debuff/ravox_burden
@@ -376,8 +376,8 @@
 	duration = 12 SECONDS
 
 /atom/movable/screen/alert/status_effect/debuff/ravox_burden
-	name = "Ravox's Burden"
-	desc = "My arms and legs are restrained by divine chains!\n"
+	name = "拉沃克斯的重担"
+	desc = "我的双臂与双腿被神圣锁链束缚！\n"
 	icon_state = "restrained"
 
 /datum/status_effect/debuff/call_to_slaughter
@@ -387,8 +387,8 @@
 	duration = 2.5 MINUTES
 
 /atom/movable/screen/alert/status_effect/debuff/call_to_slaughter
-	name = "Call to Slaughter"
-	desc = "A putrid rotting scent fills your nose as Graggar's call for slaughter rattles you to your core.."
+	name = "屠戮号令"
+	desc = "腐臭的气味灌满你的鼻腔，Graggar 的屠戮号令震得你灵魂发颤......"
 	icon_state = "call_to_slaughter"
 
 //For revive - your body DIDN'T rot, but it did suffer damage. Unlike being rotted, this one is only timed. Not forever.
@@ -399,8 +399,8 @@
 	duration = 15 MINUTES		//Should be long enough to stop someone from running back into battle. Plus, this stacks with body-rot debuff. RIP.
 
 /atom/movable/screen/alert/status_effect/debuff/revived
-	name = "Revival Sickness"
-	desc = "You felt lyfe itself course through you, restoring your lux and your essance. You.. live - but your body aches. It still needs time to recover.."
+	name = "复生虚弱"
+	desc = "你感到生命本身流过全身，修复了你的 Lux 与精华。你......活过来了，但身体仍在疼痛，还需要时间恢复......"
 	icon_state = "revived"
 
 //For de-rot - your body ROTTED. Harsher penalty for longer, can be fully off-set with a cure-rot potion.
@@ -411,8 +411,8 @@
 	duration = 30 MINUTES	//Back to a temporary 30 min duration. It hurts.
 
 /atom/movable/screen/alert/status_effect/debuff/rotted
-	name = "Body Rot Paralysis"
-	desc = "You came back from death, but everything aches.. you can feel it in your muscles. Even in your nose, you can smell something putrid and foul. You live yet, but at what cost..?"
+	name = "尸腐麻痹"
+	desc = "你从死亡中归来，但浑身都在作痛......你能在肌肉里感到这种痛楚，甚至鼻腔里都充满腐败恶臭。你还活着，可代价又是什么......？"
 	icon_state = "rotted_body"
 
 //Replaces the flat-stat change, this should ONLY apply to zombies who have been dead for some time. Makes them easier to kill.
@@ -423,8 +423,8 @@
 	//No duration = infinate in time - this is removed on de-rot miricle OR de-rot surgery. Won't be applied unless you've been a zombie for ~20 min.
 
 /atom/movable/screen/alert/status_effect/debuff/rotted_zombie
-	name = "Decomposing Corpse"
-	desc = "You've been dead for some time.. your body is finally starting to give out on you."
+	name = "腐烂尸体"
+	desc = "你已经死去一段时间了......你的身体终于开始彻底崩坏。"
 	icon_state = "rotted_body"	//Temp holdover, no idea what I'd do for a new icon for this.
 
 /datum/status_effect/debuff/dazed
@@ -443,8 +443,8 @@
 	duration = 10 SECONDS
 
 /atom/movable/screen/alert/status_effect/debuff/dazed
-	name = "Dazed"
-	desc = "You've been smacked on the head very hard. Which way is left, again?"
+	name = "头昏脑涨"
+	desc = "你的脑袋挨了重重一下。等等，左边是哪边来着？"
 	icon_state = "dazed"
 
 /datum/status_effect/debuff/cold
@@ -461,8 +461,8 @@
 	addtimer(CALLBACK(target, TYPE_PROC_REF(/atom, remove_atom_colour), TEMPORARY_COLOUR_PRIORITY, newcolor), 12 SECONDS)
 
 /atom/movable/screen/alert/status_effect/debuff/cold
-	name = "Cold"
-	desc = "Something has chilled me to the bone! It's hard to move."
+	name = "寒冷"
+	desc = "有什么东西让我冷到骨子里了！动起来都变得困难。"
 	icon_state = "muscles"
 
 /*/atom/movable/screen/alert/status_effect/debuff/dazed/shield
@@ -477,8 +477,8 @@
 	duration = 10 SECONDS
 
 /atom/movable/screen/alert/status_effect/debuff/staggered
-	name = "Staggered"
-	desc = "You've been smacked by something big. The force of impact has left you staggered."
+	name = "踉跄"
+	desc = "你被某个大家伙狠狠干了一下，冲击力让你站立不稳。"
 	icon_state = "dazed"
 
 /datum/status_effect/debuff/staggered/on_apply()
@@ -499,8 +499,8 @@
 	duration = -1
 
 /atom/movable/screen/alert/status_effect/debuff/excomm
-	name = "Excommunicated!"
-	desc = "The Ten have forsaken me!"
+	name = "被逐出教会！"
+	desc = "十神已将我遗弃！"
 	icon_state = "muscles"
 	color ="#6d1313"
 
@@ -544,7 +544,7 @@
 		D.passive_devotion_gain = 0
 		D.passive_progression_gain = 0
 
-	to_chat(H, span_boldnotice("I have been excommunicated. I am now unable to gain devotion."))
+	to_chat(H, span_boldnotice("我已被逐出教会，现在无法再获得虔信。"))
 	return ..()
 
 /datum/status_effect/debuff/apostasy/on_remove()
@@ -558,11 +558,11 @@
 			D.passive_devotion_gain = original_passive_devotion_gain
 			D.passive_progression_gain = original_passive_progression_gain
 
-		to_chat(H, span_boldnotice("I have been welcomed back to the Church. I am now able to gain devotion again."))
+		to_chat(H, span_boldnotice("我已被教会重新接纳，现在又能获得虔信了。"))
 
 /atom/movable/screen/alert/status_effect/debuff/apostasy
-	name = "Apostasy!"
-	desc = "Shame upon the member of clergy!"
+	name = "背教！"
+	desc = "神职人员蒙羞！"
 	icon_state = "debuff"
 	color ="#7a0606"
 
@@ -573,8 +573,8 @@
 	duration = 20 MINUTES
 
 /atom/movable/screen/alert/status_effect/debuff/hereticsermon
-	name = "Heretic on sermon!"
-	desc = "I was on the sermon. My patron is not proud of me."
+	name = "异端听道！"
+	desc = "我参加了布道。我的主神并不以我为荣。"
 	icon_state = "debuff"
 	color ="#af9f9f"
 
@@ -604,8 +604,8 @@
 		owner.remove_status_effect(src)
 
 /atom/movable/screen/alert/status_effect/debuff/necranwilloss
-	name = "Necran Deathly calm!"
-	desc = "I am on the edge of my lady's realm. My motivation slackens with such deathly tranquility."
+	name = "Necra 的死寂安宁！"
+	desc = "我正站在吾主领域的边缘，如此死寂的安宁让我意志消沉。"
 	icon_state = "debuff"
 	color ="#af9f9f"
 
@@ -633,14 +633,14 @@
 		owner.remove_status_effect(src)
 
 /atom/movable/screen/alert/status_effect/debuff/deathdoorwilloss
-	name = "Deathly calm!"
-	desc = "I am on the edge of Death's realm. It is hard to feel motivated with such deathly tranquility."
+	name = "死寂安宁！"
+	desc = "我正站在死亡领域的边缘，如此死寂的安宁让人难以提起干劲。"
 	icon_state = "debuff"
 	color ="#af9f9f"
 
 /atom/movable/screen/alert/status_effect/emberwine
-	name = "Aphrodesiac"
-	desc = "The warmth is spreading through my body..."
+	name = "催情"
+	desc = "温热正蔓延至我的全身......"
 	icon_state = "emberwine"
 
 /datum/status_effect/debuff/emberwine
@@ -662,7 +662,7 @@
 	switch(time)
 		if(3)
 			if(prob(50)) //You don't always know...
-				var/msg = pick("I feel sleepy...", "I feel relaxed.", "My eyes feel a little heavy.")
+				var/msg = pick("我觉得好困......", "我感觉放松了。", "我的眼皮有点沉。")
 				to_chat(owner, span_warn(msg))
 
 		if(5)
@@ -689,7 +689,7 @@
 	..()
 
 /atom/movable/screen/alert/status_effect/debuff/knockout
-	name = "Drowsy"
+	name = "困倦"
 
 /datum/status_effect/debuff/lost_naledi_mask
 	id = "naledimask"
@@ -697,8 +697,8 @@
 	effectedstats = list(STATKEY_WIL = -3, STATKEY_LCK = -3)
 
 /atom/movable/screen/alert/status_effect/debuff/naledimask
-	name = "Lost Mask"
-	desc = "Djinns and daemons may claim me at any moment without the mask. It is not safe."
+	name = "失去面具"
+	desc = "没有面具，精灵与恶魔随时都可能找上我。这很危险。"
 	icon_state = "muscles"
 
 /datum/status_effect/debuff/lost_shaman_hood
@@ -707,8 +707,8 @@
 	effectedstats = list(STATKEY_WIL = -3, STATKEY_LCK = -3)
 
 /atom/movable/screen/alert/status_effect/debuff/shamanhood
-	name = "Lost Hood"
-	desc = "The sacred hood is lost. I feel frail and sapped without it."
+	name = "失去兜帽"
+	desc = "圣兜帽遗失了。失去它后我感到虚弱而空乏。"
 
 /datum/status_effect/debuff/lost_oath_ring
 	id = "oath_ring"
@@ -716,8 +716,8 @@
 	effectedstats = list(STATKEY_PER = -2, STATKEY_INT = -2)
 
 /atom/movable/screen/alert/status_effect/debuff/oath_ring
-	name = "Lost Oathmark"
-	desc = "The proof of my oath... it's gone!"
+	name = "失去誓印"
+	desc = "我誓言的证明......不见了！"
 
 ///////////////////////
 /// CLIMBING STUFF ///
@@ -765,7 +765,7 @@
 	if(random_shit_under_climber.len) // branches dont remove open space turf, so we have to check for it separately
 		climber.remove_status_effect(/datum/status_effect/debuff/climbing_lfwb)
 	else if(climber.stamina >= climber.max_stamina) // if we run out of green bar stamina, we fall
-		to_chat(climber, span_dead("I can't hold onto the ledge for any longer!"))
+		to_chat(climber, span_dead("我再也抓不住这处边缘了！"))
 		climber.remove_status_effect(/datum/status_effect/debuff/climbing_lfwb)
 		tile_under_climber.zFall(climber)
 
@@ -782,8 +782,8 @@
 				return
 
 /atom/movable/screen/alert/status_effect/debuff/climbing_lfwb
-	name = "Climbing..."
-	desc = "Guess what, you are climbing, buddy."
+	name = "攀爬中......"
+	desc = "如你所见，你正在攀爬，伙计。"
 	icon_state = "muscles"
 
 /datum/status_effect/debuff/mesmerised
@@ -793,8 +793,8 @@
 	duration = 30 SECONDS
 
 /atom/movable/screen/alert/status_effect/debuff/mesmerised
-	name = "Mesmerised"
-	desc = span_warning("Their beauty is otherworldly..")
+	name = "痴迷"
+	desc = span_warning("那份美丽简直不似凡尘......")
 	icon_state = "acid"
 
 /////////////////////////
@@ -852,18 +852,18 @@
 	if(harpy.pulledby)
 		passenger = harpy.pulling
 		if(harpy.pulledby != passenger)
-			to_chat(harpy, span_bloody("I can't fly while someone's grabbing me like this, AGHH!!"))
+			to_chat(harpy, span_bloody("有人这样抓着我，我没法飞，啊啊！！"))
 			harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
 	if(harpy.buckled)
-		to_chat(harpy, span_bloody("Ha-ha, time to rest my wings!"))
+		to_chat(harpy, span_bloody("哈，这下该让我的翅膀歇歇了！"))
 		harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
 	if(harpy.mind)
 		harpy.mind.add_sleep_experience(/datum/skill/misc/athletics, (harpy.STAINT*0.03), FALSE)
 	if(!(harpy.mobility_flags & MOBILITY_STAND))
-		to_chat(harpy, span_bloody("I can't flap my wings while imbalanced like this! AGHH!!"))
+		to_chat(harpy, span_bloody("我失去平衡成这样，没法扇动翅膀，啊啊！！"))
 		harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
 	if(harpy.stamina >= harpy.max_stamina)
-		to_chat(harpy, span_bloody("I can't flap my wings for much more! AGHH!!"))
+		to_chat(harpy, span_bloody("我已经撑不了多久再扇翅了，啊啊！！"))
 		harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
 
 /datum/status_effect/debuff/harpy_flight/on_remove()
@@ -891,13 +891,13 @@
 	buckled_mob = null
 
 /atom/movable/screen/alert/status_effect/debuff/harpy_flight
-	name = "Flying..."
-	desc = "Tehee!!"
+	name = "飞行中......"
+	desc = "嘻嘻！！"
 	icon_state = "muscles"
 
 /obj/effect/flyer_shadow
-	name = "humanoid shadow"
-	desc = "A shadow cast from something flying above."
+	name = "人形影子"
+	desc = "某个从上方飞过之物投下的影子。"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shadow"
 	anchored = TRUE
@@ -1008,8 +1008,8 @@
 	tile_under_passenger.zFall(passenger)
 
 /atom/movable/screen/alert/status_effect/debuff/harpy_passenger
-	name = "Being carried..."
-	desc = "ARGHHHH GET ME DOWN!!"
+	name = "被带着飞......"
+	desc = "啊啊啊啊放我下去！！"
 	icon_state = "muscles"
 
 //////////////////////////////////////
@@ -1051,8 +1051,8 @@
 	return ..()
 
 /atom/movable/screen/alert/status_effect/debuff/specialcd
-	name = "Special Manouevre Cooldown"
-	desc = "I used it. I must wait."
+	name = "特殊机动冷却"
+	desc = "我刚用过，必须等等。"
 	icon_state = "debuff"
 
 /datum/status_effect/debuff/liver_failure
@@ -1086,7 +1086,7 @@
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_DRUQK, id)
 	owner.add_stress(/datum/stressevent/high)
-	to_chat(owner, span_love("Momentarily, you feel a sharp pain but it quickly shifts into a pleasant feeling washing over you..."))
+	to_chat(owner, span_love("起初你只觉一阵尖锐的痛楚，但它很快化作席卷全身的愉悦......"))
 	owner.overlay_fullscreen("vampirebite", /atom/movable/screen/fullscreen/weedsm)
 	if(owner?.client)
 		if(owner.client.screen && owner.client.screen.len)
@@ -1102,7 +1102,7 @@
 	REMOVE_TRAIT(owner, TRAIT_DRUQK, id)
 	owner.remove_stress(/datum/stressevent/high)
 	owner.clear_fullscreen("vampirebite")
-	owner.visible_message("[owner]'s eyes appear to return to normal.")
+	owner.visible_message("[owner]的眼睛似乎恢复正常了。")
 	if(owner?.client)
 		if(owner.client.screen && owner.client.screen.len)
 			var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/game_world) in owner.client.screen
@@ -1113,8 +1113,8 @@
 			PM.backdrop(owner)
 
 /atom/movable/screen/alert/status_effect/debuff/vampbite
-	name = "Vampire biten"
-	desc = "You are feeling something... Interesting.."
+	name = "吸血鬼之咬"
+	desc = "你感觉到某种......有趣的变化......"
 	icon_state = "acid"
 
 /datum/status_effect/debuff/hobbled
@@ -1124,8 +1124,8 @@
 	duration = 8 SECONDS
 
 /atom/movable/screen/alert/status_effect/debuff/hobbled
-	name = "Hobbled"
-	desc = "You've been struck in the leg! The force has left you staggered!"
+	name = "步履蹒跚"
+	desc = "你的腿被击中了！冲击让你踉跄不稳！"
 	icon_state = "dazed"
 
 /datum/status_effect/debuff/hobbled/on_apply()
@@ -1146,8 +1146,8 @@
 	duration = 100
 
 /atom/movable/screen/alert/status_effect/debuff/freezing
-	name = "Freezing"
-	desc = "It's so cold!"
+	name = "冻僵"
+	desc = "太冷了！"
 	icon_state = "chilled"
 
 /datum/status_effect/debuff/brittle
@@ -1158,18 +1158,18 @@
 /datum/status_effect/debuff/brittle/on_apply()
 	. = ..()
 	var/mob/living/carbon/C = owner
-	to_chat(C, span_warning("My joints stiffen as the cold hardens my frame."))
+	to_chat(C, span_warning("寒冷让我的身躯变硬，关节也随之僵住。"))
 	ADD_TRAIT(C, TRAIT_CRITICAL_WEAKNESS, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/debuff/brittle/on_remove()
 	. = ..()
 	var/mob/living/carbon/C = owner
-	to_chat(C, span_notice("My frame loosens as warmth returns."))
+	to_chat(C, span_notice("暖意回归后，我的身躯重新松弛下来。"))
 	REMOVE_TRAIT(C, TRAIT_CRITICAL_WEAKNESS, STATUS_EFFECT_TRAIT)
 
 /atom/movable/screen/alert/status_effect/debuff/brittle
-	name = "brittle cold"
-	desc = "My frame is so cold it's brittle!"
+	name = "寒脆"
+	desc = "我的身躯冷得发脆！"
 	icon_state = "chilled"
 
 /datum/status_effect/debuff/overheat
@@ -1181,16 +1181,16 @@
 /datum/status_effect/debuff/overheat/on_apply()
 	. = ..()
 	var/mob/living/carbon/C = owner
-	to_chat(C, span_userdanger("My core temperature rises, overheating my frame."))
+	to_chat(C, span_userdanger("我的核心温度正在上升，身躯过热了。"))
 
 /datum/status_effect/debuff/overheat/on_remove()
 	. = ..()
 	var/mob/living/carbon/C = owner
-	to_chat(C, span_userdanger("My core temperature returns to normal."))
+	to_chat(C, span_userdanger("我的核心温度恢复正常了。"))
 
 /atom/movable/screen/alert/status_effect/debuff/overheat
-	name = "overheating"
-	desc = "My frame is overheating!"
+	name = "过热"
+	desc = "我的身躯过热了！"
 	icon_state = "fire"
 
 /datum/status_effect/debuff/kiss_ecstasy
@@ -1200,8 +1200,8 @@
 	duration = 30 SECONDS
 
 /atom/movable/screen/alert/status_effect/debuff/kiss_ecstasy
-	name = "The Kiss"
-	desc = "A terrible sweetness floods my senses."
+	name = "一吻"
+	desc = "可怕的甘甜淹没了我的感官。"
 	icon_state = "vampirebite"
 
 /datum/status_effect/debuff/malodorous_stink

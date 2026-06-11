@@ -1,5 +1,5 @@
 /datum/martial_art
-	var/name = "Martial Art"
+	var/name = "武术"
 	var/id = "" //ID, used by mind/has_martialart
 	var/streak = ""
 	var/max_streak_length = 6

@@ -5,8 +5,8 @@
 GLOBAL_VAR_INIT(mine_collapse_active, 0)
 
 /obj/structure/mine_collapse
-	name = "mineshaft collapse trigger"
-	desc = "You shouldn't be seeing this, however if you are a mapper, placing this down will respawn a generic natural rock wall (override via respawn_rock var)"
+	name = "矿井坍塌触发器"
+	desc = "你不该看到这个；不过如果你是地图编辑者，把它放下后会重新生成通用天然岩壁（可通过 respawn_rock 变量覆盖）。"
 	icon = 'icons/obj/hand_of_god_structures.dmi'
 	icon_state = "trap"
 	density = FALSE
@@ -51,7 +51,7 @@ GLOBAL_VAR_INIT(mine_collapse_active, 0)
 	if(found_near_support_beam(SUPPORT_BEAM_DISTANCE_CHECK))
 		return
 	var/mob/living/carbon/human/steve = AM
-	to_chat(steve, span_danger("You feel rocks fall from the ceiling!"))
+	to_chat(steve, span_danger("你感觉到有岩石从天花板坠落！"))
 	trigger_collapse()
 
 /obj/structure/mine_collapse/proc/found_near_support_beam(radius)
@@ -126,8 +126,8 @@ GLOBAL_VAR_INIT(mine_collapse_active, 0)
 				def_zone = BODY_ZONE_HEAD
 		var/obj/item/bodypart/BP = L.get_bodypart(def_zone)
 		if(BP)
-			L.visible_message(span_boldwarning("Rocks comes crashing down on [L]'s [BP.name]!"), \
-					span_userdanger("Rocks crushes my [BP.name]!"))
+			L.visible_message(span_boldwarning("坠落的岩石猛然砸在了[L]的[BP.name]上！"), \
+					span_userdanger("岩石压碎了我的[BP.name]！"))
 			L.emote("paincrit", forced = TRUE)
 			BP.add_wound(/datum/wound/fracture)
 			BP.update_disabled()
@@ -140,7 +140,7 @@ GLOBAL_VAR_INIT(mine_collapse_active, 0)
 		return
 	playsound(src, 'sound/misc/meteorimpact.ogg', 200, TRUE)
 	if(!triggered_by_neighbor)
-		X.loud_message("The ground shakes, and falling rocks echo", hearing_distance = 14)
+		X.loud_message("地面震颤，落石回响轰鸣", hearing_distance = 14)
 
 	if(GLOB.mine_collapse_active > 7)
 		return

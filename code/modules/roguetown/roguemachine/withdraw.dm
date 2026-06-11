@@ -1,5 +1,5 @@
 /obj/structure/roguemachine/withdraw
-	name = "vomitorium"
+	name = "吐币口"
 	desc = ""
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "submit"

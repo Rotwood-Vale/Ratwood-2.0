@@ -1,5 +1,5 @@
 /datum/sex_action/blowjob
-	name = "Suck them off"
+	name = "为对方口交"
 	check_same_tile = FALSE
 	category = SEX_CATEGORY_PENETRATE
 	user_sex_part = SEX_PART_JAWS
@@ -26,7 +26,7 @@
 	return TRUE
 
 /datum/sex_action/blowjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] starts sucking [target]'s cock..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user]开始含弄[target]的肉棒……"), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = FALSE
 
 /datum/sex_action/blowjob/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -34,9 +34,9 @@
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle
 	if(!user.sexcon.do_knot_action_as_bottom)
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] sucks [target]'s cock..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
+		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)]含弄着[target]的肉棒……"), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	else
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] sucks [target]'s cock, taking the knot into their mouth..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
+		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)]含弄着[target]的肉棒，把肉棒结也一并吞入口中……"), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	if(!do_subtle)
 		user.sexcon.oralcourse_noise(user)
 		user.sexcon.do_thrust_animate(target)
@@ -45,7 +45,7 @@
 	if(!target.sexcon.considered_limp())
 		user.sexcon.perform_deepthroat_oxyloss(user, 1.3)
 	if(target.sexcon.check_active_ejaculation())
-		target.visible_message(span_love("[target] cums into [user]'s mouth!"))
+		target.visible_message(span_love("[target]射进了[user]的嘴里！"))
 		for(var/i = 1; i <= target.sexcon.get_load_bursts(); i++)
 			target.sexcon.cum_into(oral = TRUE, splashed_user = user, knot_action = src, knot_swap_roles = TRUE, knot_btm = user, consume_charge = i == 1 ? TRUE : FALSE)
 			sleep(10)
@@ -53,7 +53,7 @@
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE
 
 /datum/sex_action/blowjob/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] stops sucking [target]'s cock ..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user]停下了对[target]肉棒的含弄……"), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 
 /datum/sex_action/blowjob/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.sexcon.finished_check())

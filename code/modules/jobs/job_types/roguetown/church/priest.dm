@@ -23,9 +23,9 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	allowed_races = RACES_NO_CONSTRUCT		//Too recent arrivals to ascend to priesthood.
 	allowed_patrons = ALL_DIVINE_PATRONS
 	allowed_sexes = list(MALE, FEMALE)
-	tutorial = "The Divine is all that matters in a world of the immoral. \
-	The Weeping God left his children to rule over us mortals--and you will preach their wisdom to any who still heed their will. \
-	The faithless are growing in number. It is up to you to shepard them toward a Gods-fearing future; for you are a Bishop of the Holy See."
+	tutorial = "在这被不义之人充斥的世间，唯有神圣才是真正重要之物。 \
+	哭泣之神早已离我们而去，取而代之的是十神统御凡世，而你要将祂们的智慧传讲给一切仍愿聆听神意之人。无信者正越来越多。 \
+	你必须引领他们走向敬畏诸神的未来，因为你是圣座的一名主教。"
 	whitelist_req = FALSE
 	cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
 
@@ -63,7 +63,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 //Name stuff.
 		var/prev_real_name = H.real_name
 		var/prev_name = H.name
-		var/title = "Prelate"
+		var/title = "主教"
 		H.real_name = "[title] [prev_real_name]"
 		H.name = "[title] [prev_name]"
 
@@ -72,10 +72,10 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 				_delayed_path_choice(H)
 
 /datum/advclass/bishop
-	name = "Bishop"
-	tutorial = "The Divine is all that matters in a world of the immoral. \
-	The Weeping God abandoned us, and in his stead the TEN rule over us mortals--and you will preach their wisdom to any who still heed their will. The faithless are growing in number. \
-	It is up to you to shepherd them toward a Gods-fearing future; for you are a Bishop of the Holy See."
+	name = "主教"
+	tutorial = "在这被不义之人充斥的世间，唯有神圣才是真正重要之物。 \
+	哭泣之神早已离我们而去，取而代之的是十神统御凡世，而你要将祂们的智慧传讲给一切仍愿聆听神意之人。无信者正越来越多。 \
+	你必须引领他们走向敬畏诸神的未来，因为你是圣座的一名主教。"
 	outfit = /datum/outfit/job/roguetown/priest/basic
 	subclass_languages = list(/datum/language/grenzelhoftian)
 	category_tags = list(CTAG_BISHOP)
@@ -100,7 +100,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
 	)
 	subclass_stashed_items = list(
-		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
+		"《十神箴行录》" = /obj/item/book/rogue/bibble,
 	)
 
 /datum/outfit/job/roguetown/priest
@@ -163,12 +163,12 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	for(var/miracle in t3)
 		if(H.mind.has_spell(t3[miracle]))
 			t3.Remove(miracle)
-	var/t4_choice = input(H, "Choose your Tier Four Miracle.", "TAKE UP KNAWLEDGE") as anything in t4
+	var/t4_choice = input(H, "选择你的四阶神迹。", "领受神启") as anything in t4
 	if(t4_choice)
 		var/obj/effect/proc_holder/chosen_miracle = t4[t4_choice]
 		H.mind.AddSpell(new chosen_miracle)
 	for(var/i in 1 to t3_count)
-		var/t3_choice = input(H, "Choose your Tier Three Miracle.", "TAKE UP KNAWLEDGE ([t3_count] CHOICES REMAIN)") as anything in t3
+		var/t3_choice = input(H, "选择你的三阶神迹。", "领受神启（剩余 [t3_count] 次）") as anything in t3
 		if(t3_choice)
 			var/obj/effect/proc_holder/chosen_miracle = t3[t3_choice]
 			H.mind.AddSpell(new chosen_miracle)
@@ -179,9 +179,9 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	if(!H || !H.client || !H.mind)
 		return
 
-	var/choice = alert(H, "Choose your path.", "Bishop Doctrine", "Loyalist", "Radical")
+	var/choice = alert(H, "选择你的道路。", "主教教义", "守旧派", "激进派")
 
-	if(choice == "Radical")
+	if(choice == "激进派")
 		src.grant_radical_path(H)
 	else
 		src.grant_old_path(H)
@@ -193,7 +193,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	H.verbs -= /mob/living/carbon/human/proc/change_patron
 	H.reset_clergy_devotion(CLERIC_T4, CLERIC_REGEN_MAJOR, TRUE, CLERIC_REQ_4)
 	_pick_loyalist_miracles(H)
-	to_chat(H, span_notice("I remain on the old path of devotion."))
+	to_chat(H, span_notice("我仍将走在旧有的虔敬之道上。"))
 
 /datum/job/roguetown/priest/proc/grant_radical_path(mob/living/carbon/human/H)
 	if(!H || !H.mind || !H.patron)
@@ -217,10 +217,11 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/wound_heal, H)
 	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/invoked/takeapprentice))
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/takeapprentice, H)
-	to_chat(H, span_notice("I embrace the radical path."))
+	to_chat(H, span_notice("我拥抱激进之道。"))
 
 /datum/job/priest/vice //just used to change the priest title
 	title = "Vice Priest"
+	display_title = "副司祭"
 	f_title = "Vice Priestess"
 	flag = PRIEST
 	department_flag = CHURCHMEN
@@ -228,16 +229,16 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	spawn_positions = 0
 
 /mob/living/carbon/human/proc/coronate_lord()
-	set name = "Coronate"
+	set name = "加冕"
 	set category = "Priest"
-	to_chat (src, span_warning("The process of crowning a new ruler, and binding his soul to the Throne of the Realm takes a most heavy toil. Any newly coronated Noble Liege will not be able to be revived. You should probably mention this."))
+	to_chat (src, span_warning("为新统治者加冕，并将其灵魂与山谷王座绑定，是一项极其沉重的仪式。任何刚被加冕的高贵领主都将无法再被复活。你最好事先说清这一点。"))
 	if(!mind)
 		return
 	if(world.time < 30 MINUTES)
-		to_chat(src, span_warning("It is a bad omen to coronate so early in the week."))
+		to_chat(src, span_warning("在一周之始便行加冕，是个不祥之兆。"))
 		return FALSE
 	if(!istype(get_area(src), /area/rogue/indoors/town/church/chapel))
-		to_chat(src, span_warning("I need to do this in the chapel."))
+		to_chat(src, span_warning("我得在礼拜堂里举行这件事。"))
 		return FALSE
 	for(var/mob/living/carbon/human/HU in get_step(src, src.dir))
 		if(!HU.mind)
@@ -266,80 +267,80 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		SSticker.regentmob = null
 		var/dispjob = mind.assigned_role
 		removeomen(OMEN_NOLORD)
-		say("By the authority of the gods, I pronounce you Ruler of all the realm!")
-		priority_announce("[real_name] the [dispjob] has named [HU.real_name] the inheritor of [SSmapping.map_adjustment.realm_name]!", title = "Long Live [HU.real_name]!", sound = 'sound/misc/bell.ogg')
+		say("奉诸神之权威，我宣布你为整个山谷的统治者！")
+		priority_announce("[real_name]，现任[dispjob]，已指定 [HU.real_name] 为 [SSmapping.map_adjustment.realm_name] 的继承者！", title = "[HU.real_name] 万岁！", sound = 'sound/misc/bell.ogg')
 		var/datum/job/roguetown/nomoredukes = SSjob.GetJob("Grand Duke")
 		if(nomoredukes)
 			nomoredukes.total_positions = -1000 //We got what we got now.
 
 /mob/living/carbon/human/proc/churchannouncement()
-	set name = "Announcement"
+	set name = "布告"
 	set category = "Priest"
 
 	if(stat)
 		return
 
 	if (!istype(get_area(src), /area/rogue/indoors/town/church/chapel))
-		to_chat(src, span_warning("I need to do this in the chapel."))
+		to_chat(src, span_warning("我得在礼拜堂里进行此事。"))
 		return FALSE
 
-	var/announcementinput = input("Bellow to the realm", "Make an Announcement") as text|null
+	var/announcementinput = input("向整个山谷高声宣告", "发布布告") as text|null
 	if(announcementinput)
 		if(!src.can_speak_vocal())
-			to_chat(src,span_warning("I can't speak!"))
+			to_chat(src,span_warning("我发不出声音！"))
 			return FALSE
 		if (!COOLDOWN_FINISHED(src, priest_announcement))
-			to_chat(src, span_warning("You must wait before speaking again."))
+			to_chat(src, span_warning("你必须稍候片刻，才能再次宣讲。"))
 			return
-		visible_message(span_warning("[src] takes a deep breath, preparing to make an announcement.."))
+		visible_message(span_warning("[src] 深吸了一口气，准备向众人宣告些什么……"))
 		if(do_after(src, 15 SECONDS, target = src)) // Reduced to 15 seconds from 30 on the original Herald PR. 15 is well enough time for sm1 to shove you.
 			say(announcementinput)
-			priority_announce("[announcementinput]", "The Bishop Preaches", 'sound/misc/bell.ogg', sender = src)
+			priority_announce("[announcementinput]", "主教布道", 'sound/misc/bell.ogg', sender = src)
 			COOLDOWN_START(src, priest_announcement, PRIEST_ANNOUNCEMENT_COOLDOWN)
 		else
-			to_chat(src, span_warning("Your announcement was interrupted!"))
+			to_chat(src, span_warning("你的宣告被打断了！"))
 			return FALSE
 
 /obj/effect/proc_holder/spell/self/convertrole/templar
-	name = "Recruit Templar"
+	name = "招募圣殿武士"
 	new_role = "Templar"
 	overlay_state = "recruit_templar"
 	recruitment_faction = "Templars"
-	recruitment_message = "Serve the ten, %RECRUIT!"
-	accept_message = "FOR THE TEN!"
-	refuse_message = "I refuse."
+	recruitment_message = "侍奉十神吧，%RECRUIT！"
+	accept_message = "为了十神！"
+	refuse_message = "我拒绝。"
 
 /obj/effect/proc_holder/spell/self/convertrole/monk
-	name = "Recruit Acolyte"
+	name = "招募侍僧"
 	new_role = "Acolyte"
 	overlay_state = "recruit_acolyte"
 	recruitment_faction = "Church"
-	recruitment_message = "Serve the ten, %RECRUIT!"
-	accept_message = "FOR THE TEN!"
-	refuse_message = "I refuse."
+	recruitment_message = "侍奉十神吧，%RECRUIT！"
+	accept_message = "为了十神！"
+	refuse_message = "我拒绝。"
 
 /mob/living/carbon/human/proc/completesermon()
-	set name = "Sermon"
+	set name = "布道"
 	set category = "Priest"
 
 	if (!mind)
 		return
 
 	if (!istype(get_area(src), /area/rogue/indoors/town/church/chapel))
-		to_chat(src, span_warning("I need to do this in the chapel."))
+		to_chat(src, span_warning("我得在礼拜堂里举行此事。"))
 		return FALSE
 
 	if (!COOLDOWN_FINISHED(src, priest_sermon))
-		to_chat(src, span_warning("You cannot inspire others so early."))
+		to_chat(src, span_warning("你现在还不能如此早地激励众人。"))
 		return
 
-	src.visible_message(span_notice("[src] begins preaching a sermon..."))
+	src.visible_message(span_notice("[src] 开始布道宣讲……"))
 
 	if (!do_after(src, 120, target = src)) // 120 seconds
-		src.visible_message(span_warning("[src] stops preaching."))
+		src.visible_message(span_warning("[src] 停止了布道。"))
 		return
 
-	src.visible_message(span_notice("[src] finishes the sermon, inspiring those nearby!"))
+	src.visible_message(span_notice("[src] 完成了布道，激励了附近众人！"))
 	playsound(src.loc, 'sound/magic/bless.ogg', 80, TRUE)
 	COOLDOWN_START(src, priest_sermon, PRIEST_SERMON_COOLDOWN)
 
@@ -350,70 +351,70 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		if (istype(H.patron, /datum/patron/divine))
 			H.apply_status_effect(/datum/status_effect/buff/sermon)
 			H.add_stress(/datum/stressevent/sermon)
-			to_chat(H, span_notice("You feel a divine affirmation from your patron."))
+			to_chat(H, span_notice("你感受到了来自自己神祇的神圣肯定。"))
 
 		else if (istype(H.patron, /datum/patron/inhumen))
 			H.apply_status_effect(/datum/status_effect/debuff/hereticsermon)
 			H.add_stress(/datum/stressevent/heretic_on_sermon)
-			to_chat(H, span_warning("Your patron seethes with disapproval."))
+			to_chat(H, span_warning("你的神祇因不悦而躁动不安。"))
 
 		else
 			// Other patrons - fluff only
-			to_chat(H, span_notice("Nothing seems to happen to you."))
+			to_chat(H, span_notice("你身上似乎什么也没发生。"))
 
 	return TRUE
 
 /mob/living/carbon/human/proc/churchecancurse(mob/living/carbon/human/H, apostasy = FALSE)
 	if (!H.devotion && apostasy)
-		to_chat(src, span_warning("This one's connection to the ten is too shallow."))
+		to_chat(src, span_warning("此人与十神的联系太过浅薄。"))
 		return FALSE
 
 	//Flavor messages for cursing certain god's faithful.
 	//Dendor works in mysterious ways.
 	if (istype(H.patron, /datum/patron/divine/dendor))
-		to_chat(src, span_warning("The mad god Dendor is felt strongly. The wolf in this one balks and trashes as it is faintly restrained."))
+		to_chat(src, span_warning("你能强烈感受到疯狂之神 登多尔 的存在。此人体内的狼性在微弱的束缚下挣扎翻腾、躁动不安。"))
 		//If we check this here there's no need to apply this trait preemtively to a bunch of people, and allows for greater fluff feedback.
 		ADD_TRAIT(H, TRAIT_CURSE_RESIST, TRAIT_GENERIC)
 
 	//Abyssor's clergy are gripped by his dream.
 	if (istype(H.patron, /datum/patron/divine/abyssor))
-		to_chat(src, span_warning("The Dreamer, Abyssor has his clutches grasped firmly around this one. The light of the ten only barely penetrates the depths."))
+		to_chat(src, span_warning("梦者 阿比索尔 已将这人牢牢攥在掌中。十神之光也只能勉强刺入那深渊般的黑暗。"))
 		ADD_TRAIT(H, TRAIT_CURSE_RESIST, TRAIT_GENERIC)
 
 	//Let's not curse heretical antags.
 	if(HAS_TRAIT(H, TRAIT_HERESIARCH))
-		to_chat(src, span_warning("The patron of this one shields them from being suppressed."))
+		to_chat(src, span_warning("此人的神祇庇护着他，使其免受压制。"))
 		return FALSE
 
 	return TRUE
 
 /mob/living/carbon/human/proc/churcheapostasy(mob/living/carbon/human/H in GLOB.player_list)
-	set name = "Apostasy"
+	set name = "判为叛教"
 	set category = "Priest"
 
 	if (stat)
 		return
 
 	var/found = FALSE
-	var/inputty = input("Put an apostasy on someone, removing their ability to use miracles... (apostasy them again to remove it)", "Sinner Name") as text|null
+	var/inputty = input("对某人施加叛教判罚，剥夺其使用神迹的能力……（再次施加可解除）", "罪人之名") as text|null
 
 	if (!inputty)
 		return
 
 	if (!istype(get_area(src), /area/rogue/indoors/town/church/chapel))
-		to_chat(src, span_warning("I need to do this from the House of the Ten."))
+		to_chat(src, span_warning("我得在十神圣堂中执行此事。"))
 		return FALSE
 
 	if(!src.key)
 		return
 
 	if(!src.mind || !src.mind.do_i_know(name=inputty))
-		to_chat(src, span_warning("I don't know anyone by that name."))
+		to_chat(src, span_warning("我不认识这个名字的人。"))
 		return
 
 	if (inputty in GLOB.apostasy_players)
 		GLOB.apostasy_players -= inputty
-		priority_announce("[real_name] has forgiven [inputty]. Their patron hears their prayer once more!", title = "APOSTASY LIFTED", sound = 'sound/misc/bell.ogg')
+		priority_announce("[real_name] 已宽恕 [inputty]。其信奉的神祇再次聆听到了他们的祈祷！", title = "叛教解除", sound = 'sound/misc/bell.ogg')
 		message_admins("APOSTASY: [real_name] ([ckey]) has used forgiven apostasy at [H.real_name] ([H.ckey])")
 		log_game("APOSTASY: [real_name] ([ckey]) has used forgiven apostasy at [H.real_name] ([H.ckey])")
 
@@ -426,7 +427,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 
 	if (H.real_name == inputty)
 		if (!COOLDOWN_FINISHED(src, priest_apostasy))
-			to_chat(src, span_warning("You must wait until you can mark another."))
+			to_chat(src, span_warning("你必须等待片刻，才能再给下一人打上标记。"))
 			return
 
 		//Check if we can curse this person.
@@ -442,11 +443,11 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		if (istype(H.patron, /datum/patron/divine))
 			H.apply_status_effect(/datum/status_effect/debuff/apostasy, curse_resist)
 			H.add_stress(/datum/stressevent/apostasy)
-			to_chat(H, span_warning("A holy silence falls upon you. Your Patron cannot hear you anymore..."))
+			to_chat(H, span_warning("一阵神圣的寂静降临在你身上。你的神祇再也听不见你的祈祷了……"))
 		else
-			to_chat(H, span_warning("A holy silence falls upon you..."))
+			to_chat(H, span_warning("一阵神圣的寂静降临在你身上……"))
 
-		priority_announce("[real_name] has placed mark of shame upon [inputty]. Their prayers fall on deaf ears.", title = "APOSTASY", sound = 'sound/misc/excomm.ogg')
+		priority_announce("[real_name] 已将羞辱之印加诸 [inputty] 之身。他们的祈祷再也无人聆听。", title = "叛教", sound = 'sound/misc/excomm.ogg')
 		message_admins("APOSTASY: [real_name] ([ckey]) has used apostasy at [H.real_name] ([H.ckey])")
 		log_game("APOSTASY: [real_name] ([ckey]) has used apostasy at [H.real_name] ([H.ckey])")
 		return TRUE
@@ -457,32 +458,32 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	return
 
 /mob/living/carbon/human/proc/churchexcommunicate(mob/living/carbon/human/H in GLOB.player_list)
-	set name = "Excommunicate"
+	set name = "逐出教门"
 	set category = "Priest"
 
 	if (stat)
 		return
 
 	var/found = FALSE
-	var/inputty = input("Excommunicate someone, away from the Ten...  (excommunicate them again to remove it)", "Sinner Name") as text|null
+	var/inputty = input("将某人逐出十神信众之列……（再次施加可解除）", "罪人之名") as text|null
 
 	if (!inputty)
 		return
 
 	if (!istype(get_area(src), /area/rogue/indoors/town/church/chapel))
-		to_chat(src, span_warning("I need to do this from the House of the Ten."))
+		to_chat(src, span_warning("我得在十神圣堂中执行此事。"))
 		return FALSE
 
 	if(!src.key)
 		return
 
 	if(!src.mind || !src.mind.do_i_know(name=inputty))
-		to_chat(src, span_warning("I don't know anyone by that name."))
+		to_chat(src, span_warning("我不认识这个名字的人。"))
 		return
 
 	if (inputty in GLOB.excommunicated_players)
 		GLOB.excommunicated_players -= inputty
-		priority_announce("[real_name] has reconciled [inputty] with the Church. They are once again part of the flock!", title = "RECONCILIATION", sound = 'sound/misc/bell.ogg')
+		priority_announce("[real_name] 已使 [inputty] 与教会重归于好。他们再一次成为羊群中的一员！", title = "重归教门", sound = 'sound/misc/bell.ogg')
 		message_admins("EXCOMMUNICATION: [real_name] ([ckey]) has reconciled [H.real_name] ([H.ckey])")
 		log_game("EXCOMMUNICATION: [real_name] ([ckey]) has reconciled [H.real_name] ([H.ckey])")
 
@@ -493,14 +494,14 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 				if (istype(H.patron, /datum/patron/divine))
 					H.remove_stress(/datum/stressevent/excommunicated)
 					H.remove_status_effect(/datum/status_effect/debuff/excomm)
-					to_chat(H, span_warning("No longer a rotten husk, you walk again in their light."))
+					to_chat(H, span_warning("你不再是腐朽的空壳，你又一次行走在他们的光辉之中。"))
 				else
 					return
 		return
 
 	if (H.real_name == inputty)
 		if (!COOLDOWN_FINISHED(src, priest_excommunicate))
-			to_chat(src, span_warning("You must wait until you can excommunicate another."))
+			to_chat(src, span_warning("你必须等待片刻，才能再逐出另一人。"))
 			return // Anybody can still be excommunicated, so no extra checks here since it's purely RP and not mechanical.
 		found = TRUE
 		ADD_TRAIT(H, TRAIT_EXCOMMUNICATED, TRAIT_GENERIC)
@@ -510,7 +511,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 			if (istype(H.patron, /datum/patron/divine))
 				H.add_stress(/datum/stressevent/excommunicated)
 				H.apply_status_effect(/datum/status_effect/debuff/excomm)
-				to_chat(H, span_warning("Your divine light has been severed. Gods turn their backs to you."))
+				to_chat(H, span_warning("你的神圣之光已被斩断。诸神都将背对你而去。"))
 			else
 				return
 
@@ -518,7 +519,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 			return FALSE
 
 	GLOB.excommunicated_players += inputty
-	priority_announce("[real_name] has excommunicated [inputty]! SHAME!", title = "EXCOMMUNICATION", sound = 'sound/misc/excomm.ogg')
+	priority_announce("[real_name] 已将 [inputty] 逐出教门！蒙羞吧！", title = "逐出教门", sound = 'sound/misc/excomm.ogg')
 	message_admins("EXCOMMUNICATION: [real_name] ([ckey]) has excommunicated [H.real_name] ([H.ckey])")
 	log_game("EXCOMMUNICATION: [real_name] ([ckey]) has excommunicated [H.real_name] ([H.ckey])")
 
@@ -527,42 +528,42 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 /* PRIEST CURSE - powerful debuffs to punish ppl outside church otherwise use apostasy
 code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep that updated if this gets any changes.*/
 /mob/living/carbon/human/proc/churchpriestcurse(mob/living/carbon/human/H in GLOB.player_list)
-	set name = "Divine Curse"
+	set name = "神罚诅咒"
 	set category = "Priest"
 
 	if (stat)
 		return
 
-	var/target_name = input("Who shall receive a curse?", "Target Name") as text|null
+	var/target_name = input("谁将承受诅咒？", "目标姓名") as text|null
 
 	if (!target_name)
 		return
 
 	if (!istype(get_area(src), /area/rogue/indoors/town/church/chapel))
-		to_chat(src, span_warning("I need to do this from the House of the Ten."))
+		to_chat(src, span_warning("我得在十神圣堂中执行此事。"))
 		return FALSE
 
 	if(!src.key)
 		return
 
 	if(!src.mind || !src.mind.do_i_know(name=target_name))
-		to_chat(src, span_warning("I don't know anyone by that name."))
+		to_chat(src, span_warning("我不认识这个名字的人。"))
 		return
 
 	var/list/curse_choices = list(
-		"Curse of Astrata" = /datum/curse/astrata,
-		"Curse of Noc" = /datum/curse/noc,
-		"Curse of Dendor" = /datum/curse/dendor,
-		"Curse of Abyssor" = /datum/curse/abyssor,
-		"Curse of Ravox" = /datum/curse/ravox,
-		"Curse of Necra" = /datum/curse/necra,
-		"Curse of Xylix" = /datum/curse/xylix,
-		"Curse of Pestra" = /datum/curse/pestra,
-		"Curse of Malum" = /datum/curse/malum,
-		"Curse of Eora" = /datum/curse/eora,
+		"Astrata 之咒" = /datum/curse/astrata,
+		"Noc 之咒" = /datum/curse/noc,
+		"Dendor 之咒" = /datum/curse/dendor,
+		"Abyssor 之咒" = /datum/curse/abyssor,
+		"Ravox 之咒" = /datum/curse/ravox,
+		"Necra 之咒" = /datum/curse/necra,
+		"Xylix 之咒" = /datum/curse/xylix,
+		"Pestra 之咒" = /datum/curse/pestra,
+		"Malum 之咒" = /datum/curse/malum,
+		"Eora 之咒" = /datum/curse/eora,
 	)
 
-	var/curse_pick = input("Choose a curse to apply or lift.", "Select Curse") as null|anything in curse_choices
+	var/curse_pick = input("选择要施加或解除的诅咒。", "选择诅咒") as null|anything in curse_choices
 	if (!curse_pick)
 		return
 
@@ -573,18 +574,18 @@ code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep 
 
 		if (H.is_cursed(temp))
 			H.remove_curse(temp)
-			priority_announce("[real_name] has lifted [curse_pick] from [H.real_name]! They are once again part of the flock!", title = "REDEMPTION", sound = 'sound/misc/bell.ogg')
+			priority_announce("[real_name] 已从 [H.real_name] 身上解除 [curse_pick]！他们再一次成为羊群中的一员！", title = "赎免", sound = 'sound/misc/bell.ogg')
 			message_admins("DIVINE CURSE: [real_name] ([ckey]) has removed [curse_pick] from [H.real_name]) ") //[ADMIN_LOOKUPFLW(user)] Maybe add this here if desirable but dunno.
 			log_game("DIVINE CURSE: [real_name] ([ckey]) has removed [curse_pick] from [H.real_name])")
 		else
 			if (length(H.curses) >= 1)
-				to_chat(src, span_syndradio("[H.real_name] is already afflicted by another curse."))
+				to_chat(src, span_syndradio("[H.real_name] 已经遭受了另一种诅咒。"))
 				message_admins("DIVINE CURSE: [real_name] ([ckey]) has attempted to strike [H.real_name] ([H.ckey] with [curse_pick])")
 				log_game("DIVINE CURSE: [real_name] ([ckey]) has attempted to strike [H.real_name] ([H.ckey] with [curse_pick])")
 				return
 
 			if (!COOLDOWN_FINISHED(src, priest_curse))
-				to_chat(src, span_warning("You must wait before invoking a curse again."))
+				to_chat(src, span_warning("你必须等待片刻，才能再次降下诅咒。"))
 				return
 
 			//Check if we can curse this person.
@@ -594,21 +595,21 @@ code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep 
 			COOLDOWN_START(src, priest_curse, PRIEST_CURSE_COOLDOWN)
 			H.add_curse(curse_type)
 
-			priority_announce("[real_name] has stricken [H.real_name] with [curse_pick]! SHAME!", title = "JUDGEMENT", sound = 'sound/misc/excomm.ogg')
+			priority_announce("[real_name] 已以 [curse_pick] 击中 [H.real_name]！蒙羞吧！", title = "神判", sound = 'sound/misc/excomm.ogg')
 			message_admins("DIVINE CURSE: [real_name] ([ckey]) has stricken [H.real_name] ([H.ckey] with [curse_pick])")
 			log_game("DIVINE CURSE: [real_name] ([ckey]) has stricken [H.real_name] ([H.ckey] with [curse_pick])")
 
 		return
 
 /mob/living/carbon/human/proc/change_patron()
-	set name = "Change Patron"
+	set name = "改易信奉"
 	set category = "Priest"
 
 	if(!mind)
 		return
 
 	if(!HAS_TRAIT(src, TRAIT_CLERGYRADICAL))
-		to_chat(src, span_warning("Only a radical bishop may abandon the old doctrine."))
+		to_chat(src, span_warning("唯有激进派主教才可抛弃旧教义。"))
 		return
 
 	var/key = REF(src)
@@ -617,7 +618,7 @@ code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep 
 		next_swap = 0
 
 	if(world.time < next_swap)
-		to_chat(src, span_warning("You must wait before changing patron again."))
+		to_chat(src, span_warning("你必须等待片刻，才能再次改易信奉。"))
 		return
 
 	var/list/god_choice = list()
@@ -638,22 +639,22 @@ code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep 
 	if(!new_patron_type)
 		return
 	if(patron && istype(patron, new_patron_type))
-		to_chat(src, span_info("You already follow [string_choice]."))
+		to_chat(src, span_info("你已在追随 [string_choice]。"))
 		return
 	patron = new new_patron_type()
 	if(devotion && ("patron" in devotion.vars))
 		devotion.patron = patron
 	GLOB.priest_swap_timers[key] = world.time + PRIEST_SWAP_COOLDOWN
 	if(string_choice == "Astrata")
-		to_chat(src, "<font color='yellow'>HEAVEN SHALL THEE RECOMPENSE. THOU BEAREST MY POWER ONCE MORE.</font>")
+		to_chat(src, "<font color='yellow'>天穹必将回报于汝。汝再度承载吾之伟力。</font>")
 	else
-		to_chat(src, "<font color='yellow'>Thou now professes faith in [string_choice].</font>")
-	to_chat(src, "<font color='yellow'>Your miracles remain unchanged.</font>")
+		to_chat(src, "<font color='yellow'>汝今已宣称信奉 [string_choice]。</font>")
+	to_chat(src, "<font color='yellow'>汝之神迹维持不变。</font>")
 
 /obj/effect/proc_holder/spell/invoked/convert_heretic_priest
-	name = "Absolve the Heretic"
-	desc = "Convert a heretic back to the fold of the church. Requires the heretic to be willing, and takes a long time to cast."
-	invocations = list("Show this lost sheep the way back to the flock.")
+	name = "赦免异端"
+	desc = "将一名异端重新带回教会的羊群。需要对方自愿接受，且施法耗时很长。"
+	invocations = list("让这只迷失的羔羊重归羊群。")
 	invocation_type = "whisper"
 	sound = 'sound/magic/bless.ogg'
 	devotion_cost = 100
@@ -670,12 +671,12 @@ code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep 
 		return FALSE
 
 	if(!HAS_TRAIT(target, TRAIT_HERESIARCH))
-		to_chat(user, span_warning("[target] wasn't marked by the enemy as a heretic!"))
+		to_chat(user, span_warning("[target] 并未被敌方标记为异端！"))
 		revert_cast()
 		return FALSE
 
-	if(alert(target, "[user.real_name] is trying to convert you back to the church. Do you accept?", "Conversion Request", "Yes", "No") != "Yes")
-		to_chat(user, span_warning("[target] refused your offer of conversion."))
+	if(alert(target, "[user.real_name] 正试图让你重新归入教会。你接受吗？", "归正请求", "接受", "拒绝") != "接受")
+		to_chat(user, span_warning("[target] 拒绝了你的归正提议。"))
 		revert_cast()
 		return FALSE
 
@@ -719,11 +720,11 @@ code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep 
 	user.apply_status_effect(/datum/status_effect/debuff/devitalised)
 	target.apply_status_effect(/datum/status_effect/debuff/devitalised)
 
-	var/announcement_text = "[user.real_name] has brought [target.real_name] back into the fold of the church! [target.real_name] now follows [user.patron.name]!"
-	priority_announce(announcement_text, title = "REDEMPTION", sound = 'sound/misc/bell.ogg')
+	var/announcement_text = "[user.real_name] 已将 [target.real_name] 带回教会的羊群之中！[target.real_name] 现在信奉 [user.patron.name]！"
+	priority_announce(announcement_text, title = "救赎", sound = 'sound/misc/bell.ogg')
 	message_admins("HERETIC CONVERSION: [user.real_name] ([user.ckey]) has converted [target.real_name] ([target.ckey]) to [user.patron.name]")
 	log_game("HERETIC CONVERSION: [user.real_name] ([user.ckey]) converted [target.real_name] ([target.ckey]) to [user.patron.name]")
-	to_chat(user, span_danger("You've converted [target.name] to follow [user.patron.name]!"))
-	to_chat(target, span_danger("You feel the weight of heresy lift from your soul as you embrace [user.patron.name]!"))
+	to_chat(user, span_danger("你已使 [target.name] 改而信奉 [user.patron.name]！"))
+	to_chat(target, span_danger("当你拥抱 [user.patron.name] 时，你感到异端之重正从灵魂中悄然剥落！"))
 
 	return TRUE

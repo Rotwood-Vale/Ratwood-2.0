@@ -1,9 +1,9 @@
 /datum/virtue/utility/riding
-	name = "Equestrian"
-	desc = "I am skilled at riding animals of all kinds, and have an especially strong bond with one, allowing me to call it from afar and send it away as needed. Should my treasured companion ever die, my mood will not recover."
-	custom_text = "Provides an ability that allows you to select a type of mount to call to your side, and additionally name. Noble characters are able to choose horses. Gains two abilities to send the mount away and call it back as needed (outdoors only). If the chosen mount dies, -10 to mood for the rest of the round (cannot be recovered from in any circumstance)."
+	name = "骑术娴熟"
+	desc = "我擅长驾驭各种动物，并与其中一只建立了格外深厚的联系，得以在远处呼唤它前来，也能在需要时将其遣走。若我珍爱的伙伴死去，我的心境将再也无法恢复。"
+	custom_text = "提供一项能力，可选择一种坐骑召到身边，并为其命名。贵族角色可以选择马匹。还会获得两项能力，用于将坐骑遣走并在需要时呼回（仅限户外）。若所选坐骑死亡，本轮剩余时间内心情-10（任何情况下都无法恢复）。"
 	added_traits = list(TRAIT_EQUESTRIAN)
-	added_stashed_items = list("Saddle" = /obj/item/natural/saddle)
+	added_stashed_items = list("马鞍" = /obj/item/natural/saddle)
 	added_skills = list(
 		list(/datum/skill/misc/riding, SKILL_LEVEL_APPRENTICE, SKILL_LEVEL_APPRENTICE)
 	)
@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 /datum/stressevent/precious_mob_died
 	timer = INFINITY
 	stressadd = 10
-	desc = span_red("There will never be another creature like them. They are lost, and so am I.")
+	desc = span_red("再也不会有像它们那样的生灵了。它们失去了，我也一样。")
 
 /datum/component/precious_creature
 	// Who does this creature belong to?
@@ -88,8 +88,8 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 	riding_datum.vehicle_move_delay = max(1, new_delay)
 
 /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount
-	name = "Choose Mount"
-	desc = "Recall the form of your treasured Saddleborn mount."
+	name = "选择坐骑"
+	desc = "回想你那匹珍贵鞍生坐骑的形貌。"
 	school = "transmutation"
 	overlay_state = "book1"
 	chargedrain = 0
@@ -100,14 +100,14 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 	//list of spells you can learn, it may be good to move this somewhere else eventually
 	var/area/place = get_area(user.loc)
 	if (!place || !place.outdoors)
-		to_chat(user, span_warning("You need to be outside! How do you expect your trusty steed to hear you?"))
+		to_chat(user, span_warning("你得在户外才行！不然你要怎么指望你那匹忠诚坐骑听见你？"))
 		return
 
 	var/list/choices = list()
 
 	var/list/mount_choices = GLOB.virtue_mount_choices.Copy()
 	if (HAS_TRAIT(user, TRAIT_NOBLE))
-		to_chat(user, span_info("As an anointed noble, your steed can also come from pedigree stock."))
+		to_chat(user, span_info("作为受膏的贵族，你的坐骑也可以出身名种良驹。"))
 		mount_choices += GLOB.virtue_mount_choices_noble
 
 	for(var/i = 1, i <= mount_choices.len, i++)
@@ -121,15 +121,15 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 
 	choices = sortList(choices)
 
-	var/choice = input("What form does your treasured steed take?") as null|anything in choices
+	var/choice = input("你那匹珍爱坐骑会以何种形貌现身？") as null|anything in choices
 	var/mob/living/simple_animal/our_chosen_honse = choices[choice]
 
 	if (!our_chosen_honse)
 		return
 
-	var/has_name = alert(user, "Have you named your noble steed?", "Saddleborn", "Yes", "No")
+	var/has_name = alert(user, "你是否已经为这匹珍贵坐骑起名？", "Saddleborn", "是", "否")
 	if (!has_name)
-		has_name = "No"
+		has_name = "否"
 	
 	//spawn in our creature and set it up
 	var/mob/living/simple_animal/the_real_honse = new our_chosen_honse(user.loc)
@@ -137,13 +137,13 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 	the_real_honse.AddComponent(/datum/component/precious_creature, user)
 	user.saddleborn_mount = WEAKREF(the_real_honse)
 
-	if (has_name == "Yes")
-		var/honse_name = input(user, "What is your steed's name?", "Saddleborn")
+	if (has_name == "是")
+		var/honse_name = input(user, "你的坐骑叫什么名字？", "Saddleborn")
 		if (honse_name)
 			the_real_honse.name = honse_name
 			the_real_honse.real_name = honse_name
 
-	user.visible_message(span_info("[user] whistles sharply, and [the_real_honse] pads up from afar to their side."), span_notice("With a trusty whistle, my treasured steed returns to my side."))
+	user.visible_message(span_info("[user]吹出一声尖锐口哨，[the_real_honse]便从远处小跑来到[user]身旁。"), span_notice("随着一声熟悉的口哨，我那匹珍爱的坐骑回到了我身边。"))
 	playsound(user, 'sound/magic/saddleborn-call.ogg', 150, FALSE, 5)
 	if (!user.buckled)
 		the_real_honse.buckle_mob(user, TRUE)
@@ -161,22 +161,22 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 		return FALSE
 
 	if (!user.saddleborn_mount)
-		to_chat(user, span_warning("You have no treasured mount to send away..."))
+		to_chat(user, span_warning("你没有可遣走的珍爱坐骑......"))
 		qdel(src)
 		return FALSE
 
 	var/mob/living/simple_animal/honse = user.saddleborn_mount.resolve()
 	if (!honse || honse.stat == DEAD)
-		to_chat(user, span_warning("Necra has them now..."))
+		to_chat(user, span_warning("它现在已经归内克拉了......"))
 		return FALSE
 
 	if (honse && honse.has_buckled_mobs())
-		to_chat(user, span_warning("Your mount needs to have nobody riding on it first!"))
+		to_chat(user, span_warning("你得先让坐骑背上没人骑着才行！"))
 		return FALSE
 
 	var/area/place = get_area(user.loc)
 	if (!place || !place.outdoors)
-		to_chat(user, span_warning("You need to be outside!"))
+		to_chat(user, span_warning("你得在户外！"))
 		revert_cast()
 		return FALSE
 
@@ -192,12 +192,12 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 /datum/status_effect/buff/healing/saddleborn
 	healing_on_tick = 0.25
 	duration = 5 MINUTES
-	examine_text = "SUBJECTPRONOUN looks well-rested!"
+	examine_text = "SUBJECTPRONOUN看起来休息得很好！"
 	outline_colour = "#f5c2c2"
 
 /obj/effect/proc_holder/spell/self/saddleborn/sendaway
-	name = "Mount: Send Away"
-	desc = "While outside, send your beloved steed away to fend for itself for a time. May take longer in more hostile climates."
+	name = "坐骑：遣走"
+	desc = "在户外时，将你心爱的坐骑遣走，让它暂时自行照料自己。在更危险的地区，这可能需要更久。"
 	school = "transmutation"
 	recharge_time = 1 MINUTES
 	chargedrain = 0
@@ -211,7 +211,7 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 
 	var/mob/living/simple_animal/honse = user.saddleborn_mount.resolve()
 	if (!user.Adjacent(honse))
-		to_chat(user, span_warning("You need to be next to your steed to send them away!"))
+		to_chat(user, span_warning("你得站在坐骑身旁，才能把它遣走！"))
 		return FALSE
 
 	// otherwise, start a do_after then stasis the horse and hurl it into nullspace.
@@ -219,7 +219,7 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 
 	var/area/rogue/place = get_area(user.loc)
 	var/should_heal = (is_centcom_level(user.loc.z) || place.town_area || place.keep_area)
-	user.visible_message(span_info("[user] starts fussing with [honse], preparing to send them away..."), span_notice("I start preparing to send [honse] away to roam freely and safely for a time..."))
+	user.visible_message(span_info("[user]开始围着[honse]忙活，准备把它遣走......"), span_notice("我开始准备把[honse]遣走，让它暂时自由又安全地四处活动......"))
 	honse.Immobilize(11 SECONDS)
 	honse.unbuckle_all_mobs(TRUE)
 	if (do_mob(user, honse, 10 SECONDS, double_progress = TRUE) && check_mount(user))
@@ -228,13 +228,13 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 		if (!honse.has_buckled_mobs()) // just really super make sure we can't nullspace riders with this
 			honse.moveToNullspace() // BANISHED TO THE NULL DIMENSION!! hopefully this doesn't cause problems
 		else
-			honse.visible_message(span_warning("[honse] pads the floor irritably, looking over its shoulder at the rider on its back."))
+			honse.visible_message(span_warning("[honse]烦躁地踏着地面，扭头看向自己背上的骑手。"))
 			return FALSE
 		// add sfx foley for this
-		user.visible_message(span_notice("Patting [honse] on the haunches, [user] sends them trotting away."), span_notice("With a brief pat on the haunches, I send [honse] away to fend for themselves."))
+		user.visible_message(span_notice("[user]轻拍[honse]的后臀，将它送走，让它小跑离去。"), span_notice("我在[honse]后臀上轻轻一拍，让它自行离开。"))
 		if (should_heal)
 			honse.apply_status_effect(/datum/status_effect/buff/healing/saddleborn)
-			to_chat(user, span_info("In these surroundings, they should be able to rest and recouperate a little."))
+			to_chat(user, span_info("在这种环境里，它应该能稍微休息并恢复一下。"))
 		return TRUE
 	else
 		honse.SetImmobilized(0)
@@ -242,8 +242,8 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 		return FALSE
 
 /obj/effect/proc_holder/spell/self/saddleborn/whistle
-	name = "Mount: Whistle"
-	desc = "Call for your trusty seed, summoning it back to your side after a delay. Only works outdoors. May take longer in more hostile climates."
+	name = "坐骑：呼哨"
+	desc = "呼唤你那匹忠诚坐骑，让它在一段延迟后回到你身边。仅限户外使用。在更危险的地区，这可能需要更久。"
 	school = "transmutation"
 	recharge_time = 1 MINUTES
 	chargedrain = 0
@@ -261,7 +261,7 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 	var/dangerous_summon = FALSE // will we try to proc an ambush upon return?
 
 	if (get_dist(honse.loc, user.loc) <= world.view)
-		to_chat(user, span_warning("Your trusty steed is nearby!"))
+		to_chat(user, span_warning("你那匹忠诚坐骑就在附近！"))
 		return
 
 	var/area/rogue/place = get_area(user.loc)
@@ -269,35 +269,35 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 	if (place.threat_region == THREAT_REGION_MOUNT_DECAP)
 		callback_time += 10 SECONDS
 		dangerous_summon = TRUE
-		to_chat(user, span_warning("Mount Decapitation is a dangerous place for a mount to navigate alone..."))
+		to_chat(user, span_warning("断头山地对一匹独自行进的坐骑来说太危险了......"))
 	if (place.warden_area)
 		callback_time += 5 SECONDS
-		to_chat(user, span_warning("The murderwoods are a dangerous place for a mount to navigate alone..."))
+		to_chat(user, span_warning("谋杀林地对一匹独自行进的坐骑来说太危险了......"))
 		dangerous_summon = TRUE
 	if (istype(place, /area/rogue/under/underdark))
 		callback_time += 30 SECONDS
-		to_chat(user, span_warning("The underdark is a <b>VERY</b> dangerous place for a mount to navigate alone..."))
+		to_chat(user, span_warning("幽暗地域对一匹独自行进的坐骑来说是<b>极其</b>危险的地方......"))
 		dangerous_summon = TRUE
 	if (place.keep_area)
 		if (HAS_TRAIT(user, TRAIT_NOBLE))
-			to_chat(user, span_info("A passing servant helps fetch your mount for you!"))
+			to_chat(user, span_info("有位路过的仆从帮你把坐骑牵来了！"))
 			callback_time = 3 SECONDS
 		else
 			callback_time -= 3 SECONDS
-			to_chat(user, span_info("Your mount is trained to linger around town, and the gatekeepers are used to letting lone mounts in these days, helping you fetch it quicker."))
+			to_chat(user, span_info("你的坐骑受过在城镇附近徘徊的训练，而如今守门人也习惯放单独的坐骑进出，这让你能更快把它找回来。"))
 	if (place.town_area)
 		callback_time -= 5 SECONDS
-		to_chat(user, span_info("Your mount is trained to linger around town, helping you fetch it quicker."))
+		to_chat(user, span_info("你的坐骑受过在城镇附近徘徊的训练，这让你能更快把它找回来。"))
 	if (callback_time <= 0)
 		callback_time = 1 SECONDS
 
 	playsound(user, 'sound/magic/saddleborn-call.ogg', 150, FALSE, 5)
-	user.visible_message(span_danger("[user] places their fingers into their mouth and blows a sharp, shrill whistle!"), span_info("I whistle for my trusty steed, and await their return!"))
+	user.visible_message(span_danger("[user]把手指放进口中，吹出一声尖锐刺耳的口哨！"), span_info("我为自己忠诚的坐骑吹响口哨，等待它归来！"))
 	var/honse_base_loc = honse.loc
 	var/area/rogue/honse_place = get_area(honse.loc)
 	honse.unbuckle_all_mobs(TRUE)
 	if (!back_from_the_void && honse_place.outdoors)
-		honse.visible_message(span_notice("[honse] perks its ears up in response to a distant whistle, and darts off..."))
+		honse.visible_message(span_notice("[honse]听见远处的口哨后竖起耳朵，随即飞奔而去......"))
 		playsound(honse, 'sound/magic/saddleborn-call.ogg', 50, FALSE) // distant spooky whistle OooOOOo
 		honse.moveToNullspace() //temporarily shuffle it off into the null dimension, to reflect it running to the player
 	
@@ -306,7 +306,7 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 			honse.remove_status_effect(/datum/status_effect/buff/stasis)
 		
 		if (!back_from_the_void && honse_place && !honse_place.outdoors)
-			to_chat(user, span_warning("...but nothing comes. They musn't have heard your whistling."))
+			to_chat(user, span_warning("......可什么都没来。它一定是没听见你的口哨。"))
 			return TRUE
 		
 		honse.forceMove(user.loc)
@@ -321,7 +321,6 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 		return TRUE
 	else
 		honse.forceMove(honse_base_loc) // put the honse back, and give some info as to what just happened for onlookers
-		honse.visible_message(span_notice("[honse] trundles back into sight with a confused expression, ears swivelling to catch some manner of sound..."))
+		honse.visible_message(span_notice("[honse]带着困惑的神情又慢吞吞地走回视野中，耳朵不停转动，像是在捕捉某种声音......"))
 		revert_cast()
 		return FALSE
-

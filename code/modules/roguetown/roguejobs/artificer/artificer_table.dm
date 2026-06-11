@@ -1,6 +1,6 @@
 /obj/machinery/artificer_table
-	name = "artificer table"
-	desc = "An artificers wood work station, blessed by some odd machination, or perhaps... magic..."
+	name = "工匠工作台"
+	desc = "一张工匠使用的木工台，似乎受到了某种古怪机巧的祝福，或者说……魔法……"
 	icon_state = "art_table"
 	icon = 'icons/roguetown/misc/tables.dmi'
 	var/obj/item/material
@@ -15,7 +15,7 @@
 /obj/machinery/artificer_table/examine(mob/user)
 	. = ..()
 	if(material)
-		. += span_warning("There's a [initial(material.name)] ready to be worked.")
+		. += span_warning("这里有一份[initial(material.name)]已经准备好加工了。")
 
 /obj/machinery/artificer_table/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/natural/wood/plank) || istype(I, /obj/item/ingot)||istype(I, /obj/item/rogueore)||istype(I, /obj/item/storage/backpack/rogue/satchel))
@@ -47,7 +47,7 @@
 			else
 				new material.artrecipe.created_item(get_turf(src))
 			var/obj/item/created_item_instance = new(material.artrecipe.created_item)
-			user.visible_message(span_info("[user] creates \a [created_item_instance.name]."))
+			user.visible_message(span_info("[user]制作出了[created_item_instance.name]。"))
 			user.log_message("crafted [english_list(islist(material.artrecipe.created_item) ? material.artrecipe.created_item : list(material.artrecipe.created_item))] at [src] ([material.artrecipe.type])", LOG_GAME)
 			user.mind.add_sleep_experience(material.artrecipe.appro_skill, (user.STAINT * (material.artrecipe.skill_level * 5))) //may need to be adjusted
 			qdel(material)
@@ -56,7 +56,7 @@
 			return
 		if(skill < material.artrecipe.skill_level)
 			if(prob(max(0, 25 - user.goodluck(2) - (skill * 2))))
-				to_chat(user, span_warning("Ah yes, my incompetence bears fruit."))
+				to_chat(user, span_warning("很好，我的无能终于开花结果了。"))
 				playsound(src,'sound/combat/hits/onwood/destroyfurniture.ogg', 100, FALSE)
 				user.mind.add_sleep_experience(material.artrecipe.appro_skill, (user.STAINT * material.artrecipe.skill_level)) // Getting exp for failing
 				qdel(material)
@@ -86,7 +86,7 @@
 	if(!valid_types.len)
 		return
 
-	var/i_type_choice = input(user, "Choose a type", "Artificer") as null|anything in valid_types
+	var/i_type_choice = input(user, "选择类型", "工匠") as null|anything in valid_types
 	if(!i_type_choice)
 		return
 
@@ -103,7 +103,7 @@
 			appro_recipe -= R
 
 	if(appro_recipe.len)
-		var/datum/chosen_recipe = input(user, "Choose A Creation", "Artificer") as null|anything in sortNames(appro_recipe.Copy())
+		var/datum/chosen_recipe = input(user, "选择要制作的东西", "工匠") as null|anything in sortNames(appro_recipe.Copy())
 		if(!material.artrecipe && chosen_recipe)
 			material.artrecipe = new chosen_recipe.type(material)
 			return TRUE

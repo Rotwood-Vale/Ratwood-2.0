@@ -1,8 +1,8 @@
 //separate dm since hydro is getting bloated already
 
 /obj/structure/glowshroom
-	name = "kneestingers"
-	desc = "Deceptively-delicate stalks sprout from the ground in luminous-green repose. Some scholars claim they're not really a fungus, even if the Dendorites insist otherwise. Either way they hurt like hell."
+	name = "膝刺菇"
+	desc = "看似娇弱的茎从地面长出，泛着幽幽绿光。有些学者声称它们并非真菌，尽管 Dendor 信徒坚持认为它们是。无论如何，碰到它会让人疼得要命。"
 	anchored = TRUE
 	opacity = 0
 	density = FALSE
@@ -18,7 +18,7 @@
 	light_power = 1.5
 	light_color = "#d4fcac"
 /obj/structure/glowshroom/fire_act(added, maxstacks)
-	visible_message(span_warning("[src] catches fire!"))
+	visible_message(span_warning("[src]着火了！"))
 	var/turf/T = get_turf(src)
 	qdel(src)
 	new /obj/effect/hotspot(T)
@@ -126,7 +126,7 @@
 
 /obj/structure/glowshroom/acid_act(acidpwr, acid_volume)
 	. = 1
-	visible_message(span_danger("[src] melts away!"))
+	visible_message(span_danger("[src]融化殆尽了！"))
 	var/obj/effect/decal/cleanable/molten_object/I = new (get_turf(src))
 	I.desc = ""
 	qdel(src)

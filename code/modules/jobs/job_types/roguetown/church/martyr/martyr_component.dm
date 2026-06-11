@@ -63,14 +63,14 @@
 						if(istype(mercyarea, AR))
 							success = TRUE
 			if(success)
-				to_chat(current_holder, span_notice("The weapon fizzles out, its energies dissipating across the holy grounds."))
+				to_chat(current_holder, span_notice("武器上的神能渐渐熄散，消融在圣地之中。"))
 			else
-				to_chat(current_holder, span_notice("The weapon begins to fizzle out, but the energy has nowhere to go!"))
+				to_chat(current_holder, span_notice("武器上的神能开始熄散，却无处可去！"))
 				C.freak_out()
 				if(prob(35))
 					deathprocess()
 				else
-					to_chat(current_holder, span_notice("You manage to endure it, this time."))
+					to_chat(current_holder, span_notice("这一次，你还是硬撑了下来。"))
 		if(STATE_MARTYR)
 			C.freak_out()
 			deathprocess()
@@ -94,20 +94,20 @@
 			if(do_after_mob(H, targets, 70, uninterruptible = 1))
 				switch(i)
 					if(1)
-						current_holder.visible_message(span_warning("[current_holder] twitches and writhes from godly energies!"), span_warning("You can feel the weapon tap into your very being, pulling apart your body!"))
+						current_holder.visible_message(span_warning("[current_holder] 在神性能量中抽搐挣扎！"), span_warning("我能感觉到那武器正深入我的本质，将我的身体撕扯开来！"))
 						current_holder.playsound_local(current_holder, 'sound/health/fastbeat.ogg', 100)
 					if(2)
-						current_holder.visible_message(span_warning("[current_holder]'s body contorts, bones splitting apart, tearing through flesh and fabric!"), span_warning("Your bones break and crack, splintering from your flesh as the power of [H.patron.name] overwhelms you."))
+						current_holder.visible_message(span_warning("[current_holder] 的身躯扭曲变形，骨骼崩裂，撕开了血肉与布料！"), span_warning("[H.patron.name] 的力量将我彻底吞没，我的骨头正碎裂崩响，从血肉中迸开！"))
 						H.emote_scream()
 						playsound(current_holder, pick('sound/combat/fracture/headcrush (1).ogg', 'sound/combat/fracture/fracturewet (1).ogg'), 100)
 					if(3)
-						current_holder.visible_message(span_warning("[current_holder] ceases to move, and lets out one final gasp. It sounds content, despite the state of their body."), span_warning("Your body is nearly gone. Yet a sense of bliss and fulfillment washes over you. [H.patron.name] blessed you with this opportunity. Your Oath is fulfilled."))
+						current_holder.visible_message(span_warning("[current_holder] 停止了动作，吐出了最后一口气。尽管身躯已然残破，那声音里却透着满足。"), span_warning("我的身体几乎已经不剩什么了。可一阵幸福与圆满却涌上心头。[H.patron.name] 赐予了我这个机会。我的誓约已然完成。"))
 						current_holder.playsound_local(current_holder, 'sound/magic/ahh1.ogg', 100)
 
 /datum/component/martyrweapon/proc/killhost()
 	if(current_holder)
 		var/mob/living/carbon/human/H = current_holder
-		current_holder.visible_message(span_info("[current_holder] fades away."), span_info("Your life led up to this moment. In the face of the decay of the world, you endured. Now you rest. You feel your soul shed from its mortal coils, and the embrace of [H.patron.name]"))
+		current_holder.visible_message(span_info("[current_holder] 渐渐消散了。"), span_info("你的一生都将你引向这一刻。面对世界的腐朽，你始终坚持至今。如今，你终于得以安息。你感到灵魂正褪去凡胎束缚，投入 [H.patron.name] 的怀抱。"))
 		H.dust(drop_items = TRUE)
 		is_dying = FALSE
 
@@ -125,18 +125,18 @@
 /datum/component/martyrweapon/proc/timehint()
 	var/result = round((end_activation - world.time) / 600)	//Minutes
 	if(result != last_time && last_time != 30)
-		to_chat(current_holder,span_notice("[result + 1] minute[result ? "s" : ""] left."))
+		to_chat(current_holder,span_notice("还剩 [result + 1] 分钟。"))
 		last_time = result
 		return result
 	if(result == 0)
 		var/resultadv = (end_activation - world.time) / 10	//Seconds
 		if(resultadv < 30 && resultadv > 27 && last_time != 30)
-			to_chat(current_holder,span_notice("30 SECONDS!"))
+			to_chat(current_holder,span_notice("还剩 30 秒！"))
 			last_time = 30
 			return 30
 		else
 			if(resultadv == 10 && last_time != 10)
-				to_chat(current_holder,span_crit("10 SECONDS"))
+				to_chat(current_holder,span_crit("还剩 10 秒！"))
 				last_time = resultadv
 	return 0
 
@@ -172,21 +172,21 @@
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(HAS_TRAIT(user, TRAIT_ROTMAN) || HAS_TRAIT(user, TRAIT_NOBREATH))	//Can't be a Martyr if you're undead already.
-				to_chat(H, span_warn("It burns and sizzles! It does not tolerate my pallid flesh!"))
+				to_chat(H, span_warn("它灼烧着、噼啪作响！它无法容忍我这苍白的血肉！"))
 				H.dropItemToGround(parent)
 				return
 			var/datum/job/J = SSjob.GetJob(H.mind?.assigned_role)
 			if(J.title != "Martyr" && J.title != "Bishop")		//Can't be a Martyr if you're not a Martyr. Or a Bishop.
-				to_chat(H, span_warn("It slips from my grasp. I can't get a hold."))
+				to_chat(H, span_warn("它从我掌中滑脱，我根本握不住它。"))
 				H.dropItemToGround(parent)
 				return
 			else
 				RegisterSignal(user, COMSIG_CLICK_ALT, PROC_REF(altclick), override = TRUE)
 				current_holder = user
 			if(J.title == "Martyr")
-				to_chat(user, span_warning("The blade binds to you."))
+				to_chat(user, span_warning("刀刃已与你绑定。"))
 			if(J.title == "Bishop")
-				to_chat(user, span_warning("You feel the shocking sensation as the sword attempts to bind to you. You know it will kill you. You can still drop it, and leave it for the Oathed."))
+				to_chat(user, span_warning("当这把剑试图与你绑定时，一阵骇人的震击感传遍全身。你知道它会要了你的命。你现在仍能将它放下，把它留给真正立誓之人。"))
 	else
 		RegisterSignal(user, COMSIG_CLICK_ALT, PROC_REF(altclick), override = TRUE)
 		current_holder = user
@@ -206,26 +206,26 @@
 								success = TRUE
 								break
 						if(success)	//The SAFE option
-							if(alert("You are within holy grounds. Do you wish to call your god to aid in its defense? (You will live if the duration ends within the Church.)", "Your Oath", "Yes", "No") == "Yes")
+							if(alert("你此刻身处圣地之中。你是否要呼唤神明协助守卫此地？（若持续时间在教会内结束，你将活下来。）", "你的誓约", "是", "否") == "是")
 								is_activating = TRUE
 								activate(user, STATE_SAFE)
 						else	//The NOT SAFE option
-							if(alert("You are trying to activate the weapon outside of holy grounds. Do you wish to fulfill your Oath of Vengeance? (You will die.)", "Your Oath", "Yes", "No") == "Yes")
-								var/choice = alert("You pray to your god. How many minutes will you ask for? (Shorter length means greater boons)","Your Oath (It is up to you if your death is canon)", "Six", "Two", "Nevermind")
+							if(alert("你正在圣地之外激活这把武器。你是否要履行你的复仇誓约？（你会死。）", "你的誓约", "是", "否") == "是")
+								var/choice = alert("你向自己的神祈祷。你要祈求多少分钟？（持续越短，赐福越强）","你的誓约（是否将你的死亡视为正史由你自行决定）", "六分钟", "两分钟", "算了")
 								switch(choice)
-									if("Six")
+									if("六分钟")
 										is_activating = TRUE
 										activate(user, STATE_MARTYR)
-									if("Two")
+									if("两分钟")
 										is_activating = TRUE
 										activate(user, STATE_MARTYRULT)
-									if("Nevermind")
-										to_chat(user, "You reconsider. It is not the right moment.")
+									if("算了")
+										to_chat(user, "你重新考虑了一下。现在还不是时候。")
 										return
 				else
 					activate(user)
 		else
-			to_chat(user, span_info("You must be holding the sword in your active hand!"))
+			to_chat(user, span_info("你必须把这把剑握在当前使用的手中！"))
 
 //IF it gets dropped, somehow (likely delimbing), turn it off immediately.
 /datum/component/martyrweapon/proc/on_drop(datum/source, mob/user)
@@ -236,17 +236,17 @@
 
 /datum/component/martyrweapon/proc/on_examine(datum/source, mob/user, list/examine_list)
 	if(current_holder && current_holder == user)
-		examine_list += span_notice("It looks to be bound to you. Alt + right click to activate it.")
+		examine_list += span_notice("它似乎已经与你绑定。按住 Alt 再右键即可激活。")
 	if(!is_active && world.time < next_activation)
 		var/time = next_activation - world.time
 		time = time / 10	//Deciseconds to seconds
-		examine_list += span_notice("The time remaining until it is prepared: [round(abs(time) / 60)] minutes.")
+		examine_list += span_notice("距离它准备就绪还需：[round(abs(time) / 60)] 分钟。")
 	else if(!is_active && world.time > next_activation)
-		examine_list += span_notice("It looks ready to be used again.")
+		examine_list += span_notice("它看起来已经可以再次使用了。")
 	if(is_active)
-		examine_list += span_warningbig("It is lit afire by godly energies!")
+		examine_list += span_warningbig("它正被神性能量点燃！")
 		if(user == current_holder)
-			examine_list += span_warningbig("<i>SLAY THE HERETICS! TAKE THEM WITH YOU!</i>")
+			examine_list += span_warningbig("<i>诛灭异端！拉他们一同陪葬！</i>")
 
 /datum/component/martyrweapon/proc/adjust_traits(remove = FALSE)
 	for(var/trait in traits_applied)
@@ -287,7 +287,7 @@
 				H.adjust_skillrank(/datum/skill/combat/unarmed, 6, FALSE)
 				H.adjust_skillrank(/datum/skill/misc/athletics, 6, FALSE)
 				ADD_TRAIT(current_holder, TRAIT_INFINITE_STAMINA, TRAIT_GENERIC)
-				current_holder.visible_message(span_warning("[current_holder] rises up, empowered once more!"), span_warningbig("I rise again! I can feel my god flow through me!"))
+				current_holder.visible_message(span_warning("[current_holder] 再度起身，重新获得了神力加持！"), span_warningbig("我再次站起来了！我能感觉到神明的力量正流淌于我体内！"))
 				flash_lightning(current_holder)
 				current_holder.revive(full_heal = TRUE, admin_revive = TRUE)
 
@@ -330,7 +330,7 @@
 		if(istype(M.patron, /datum/patron/inhumen))
 			var/turf/T = get_step(get_step(M, NORTH), NORTH)
 			T.Beam(M, icon_state="lightning[rand(1,12)]", time = 5)
-			M.visible_message(span_warning("[M] gets struck down by the Ten!"), span_warning("The Ten curse you! You stood too close to one of their devout!"))
+			M.visible_message(span_warning("[M] 被十神降下的雷霆击倒了！"), span_warning("十神诅咒了你！你靠得离他们的虔信者太近了！"))
 			M.electrocution_animation(20)
 			mob_ignite(M)
 			playsound(M, 'sound/magic/lightning.ogg', 100, FALSE)
@@ -353,7 +353,7 @@
 
 //This is called once all the checks are passed and the options are made by the player to commit.
 /datum/component/martyrweapon/proc/activate(mob/user, status_flag)
-	current_holder.visible_message("[span_notice("[current_holder] begins invoking their Oath!")]", span_notice("You begin to invoke your oath."))
+	current_holder.visible_message("[span_notice("[current_holder] 开始宣誓其誓约！")]", span_notice("我开始唤起自己的誓约。"))
 	switch(status_flag)
 		if(STATE_MARTYR)
 			user.playsound_local(user, 'sound/misc/martyrcharge.ogg', 100, FALSE)
@@ -402,13 +402,13 @@
 				if(STATE_MARTYR)
 					SEND_SOUND(H, sound(null))
 					H.cmode_music = 'sound/music/combat_martyr.ogg'
-					to_chat(H, span_warning("I can feel my muscles nearly burst from power! I can jump great heights!"))
+					to_chat(H, span_warning("我能感觉到肌肉几乎要被力量撑裂！我可以跃上极高之处！"))
 					ADD_TRAIT(H, TRAIT_ZJUMP, TRAIT_GENERIC)
 					ADD_TRAIT(H, TRAIT_NOFALLDAMAGE2, TRAIT_GENERIC)
 				if(STATE_MARTYRULT)
 					SEND_SOUND(H, sound(null))
 					H.cmode_music = 'sound/music/combat_martyrult.ogg'
-					to_chat(H, span_warning("I can jump great heights!"))
+					to_chat(H, span_warning("我可以跃上极高之处！"))
 					ADD_TRAIT(H, TRAIT_ZJUMP, TRAIT_GENERIC)
 					ADD_TRAIT(H, TRAIT_NOFALLDAMAGE2, TRAIT_GENERIC)
 			adjust_traits(remove = FALSE)

@@ -51,7 +51,7 @@ GLOBAL_LIST_EMPTY(virtues)
 					increase_by = (maximum_skill - our_skill)
 				recipient.adjust_skillrank(the_skill.type, increase_by, TRUE)
 			else
-				to_chat(recipient, span_notice("My Virtue cannot influence my skill with [LOWER_TEXT(the_skill.name)] any further."))
+				to_chat(recipient, span_notice("我的美德无法再进一步提升我在[LOWER_TEXT(the_skill.name)]上的技艺了。"))
 
 
 /datum/virtue/proc/handle_stashed_items(mob/living/carbon/human/recipient)
@@ -110,5 +110,5 @@ GLOBAL_LIST_EMPTY(virtues)
 		REMOVE_TRAIT(recipient, TRAIT_OUTLANDER, TRAIT_GENERIC)
 	record_featured_object_stat(FEATURED_STATS_VIRTUES, virtue_type.name)
 /datum/virtue/none
-	name = "None"
-	desc = "Without virtue."
+	name = "无"
+	desc = "没有美德。"

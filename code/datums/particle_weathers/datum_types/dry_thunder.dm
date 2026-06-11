@@ -16,11 +16,11 @@
 	minSpawning = 1
 
 /datum/particle_weather/dry_thunderstorm
-	name = "Dry Thunderstorm"
-	desc = "Lightning without rain, la la description."
+	name = "干雷暴"
+	desc = "只有闪电而无雨水的雷暴。"
 	particleEffectType = /particles/weather/static_spark
-	warning_message = span_greenannounce("Dark clouds roll across the sky, echo's of thunder rumbling across the dry realm.")
-	late_warning_message = span_greenannounce("Thunder cracks overhead, but no rain follows.")
+	warning_message = span_greenannounce("乌云滚过天际，干燥的大地上传来阵阵雷鸣。")
+	late_warning_message = span_greenannounce("头顶雷声炸响，却没有半滴雨落下。")
 	scale_vol_with_severity = TRUE
 	weather_sounds = list(/datum/looping_sound/drythunder)
 	indoor_weather_sounds = list(/datum/looping_sound/drythunder/indoors)

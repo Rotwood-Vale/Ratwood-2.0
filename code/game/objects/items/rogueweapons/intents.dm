@@ -5,10 +5,10 @@
 //#define CLICK_CD_RAPID 2
 
 /datum/intent
-	var/name = "intent"
+	var/name = "意图"
 	var/desc = ""
 	var/icon_state = "instrike"
-	var/list/attack_verb = list("hits", "strikes")
+	var/list/attack_verb = list("击打", "打击")
 	var/obj/item/masteritem
 	var/mob/living/mastermob
 	var/unarmed = FALSE
@@ -95,75 +95,75 @@
 
 /datum/intent/proc/examine(mob/user)
 	var/list/inspec = list("----------------------")
-	inspec += "<br><span class='notice'><b>[name]</b> intent</span>"
+	inspec += "<br><span class='notice'><b>[name]</b>意图</span>"
 	if(desc)
 		inspec += "\n[desc]"
 	if(reach != 1)
-		inspec += "\n<b>Reach:</b> [reach] paces"
+		inspec += "\n<b>攻击距离:</b> [reach] 步"
 	if(effective_range)
 		var/suffix
 		switch(effective_range_type)
 			if(EFF_RANGE_EXACT)
-				suffix = "exactly"
+				suffix = "恰好"
 			if(EFF_RANGE_ABOVE)
-				suffix = "at and beyond"
+				suffix = "及更远处"
 			if(EFF_RANGE_BELOW)
-				suffix = "at and within"
+				suffix = "及更近处"
 			else
 				CRASH("effective_range found without a valid effective_range_type on [src] intent by [user]")
-		inspec += "\n<b>Effective Range:</b> [suffix] [effective_range] paces"
+		inspec += "\n<b>有效距离:</b> [suffix] [effective_range] 步"
 	if(damfactor != 1)
-		inspec += "\n<b>Damage:</b> [damfactor]"
+		inspec += "\n<b>伤害:</b> [damfactor]"
 	if(penfactor)
-		inspec += "\n<b>Armor Penetration:</b> [penfactor < 0 ? "NONE" : penfactor]"
+		inspec += "\n<b>护甲穿透:</b> [penfactor < 0 ? "无" : penfactor]"
 	if(get_chargetime())
-		inspec += "\n<b>Charge Time</b>"
+		inspec += "\n<b>蓄力时间</b>"
 	if(movement_interrupt)
-		inspec += "\n<b>Interrupted by Movement</b>"
+		inspec += "\n<b>移动会打断</b>"
 	if(no_early_release)
-		inspec += "\n<b>No Early Release</b>"
+		inspec += "\n<b>不可提前释放</b>"
 	if(chargedrain)
-		inspec += "\n<b>Drain While Charged:</b> [chargedrain]"
+		inspec += "\n<b>蓄满时消耗:</b> [chargedrain]"
 	if(releasedrain)
-		inspec += "\n<b>Drain On Release:</b> [releasedrain]"
+		inspec += "\n<b>释放时消耗:</b> [releasedrain]"
 	if(misscost)
-		inspec += "\n<b>Drain On Miss:</b> [misscost]"
+		inspec += "\n<b>落空时消耗:</b> [misscost]"
 	if(clickcd != CLICK_CD_MELEE)
-		inspec += "\n<b>Recovery Time:</b> "
+		inspec += "\n<b>恢复时间:</b> "
 		if(clickcd < CLICK_CD_MELEE)
-			inspec += "Quick"
+			inspec += "快"
 		if(clickcd > CLICK_CD_MELEE)
-			inspec += "Slow"
+			inspec += "慢"
 	if(blade_class == BCLASS_PEEL)
-		inspec += "\nThis intent will peel the coverage off of your target's armor in non-key areas after [peel_divisor] consecutive hits.\nSome armor may have higher thresholds."
+		inspec += "\n该意图会在连续命中 [peel_divisor] 次后，剥离目标护甲在非关键部位的覆盖。\n部分护甲的阈值可能更高。"
 	if(!allow_offhand)
-		inspec += "\nThis intent requires a free off-hand."
+		inspec += "\n该意图需要空出的副手。"
 	if(blade_class == BCLASS_EFFECT)
 		var/datum/intent/effect/int = src
-		inspec += "\nThis intent will apply a status effect on a successful hit. Damage dealt is not required."
+		inspec += "\n该意图会在成功命中时附加状态效果，不要求造成伤害。"
 		if(length(int.target_parts))
-			inspec += "\nWorks on these bodyparts: "
+			inspec += "\n可作用于以下部位: "
 			var/str
 			for(var/part in int.target_parts)
 				str +="|[bodyzone2readablezone(part)]|"
 			inspec += str
 	if(intent_intdamage_factor != 1)
 		var/percstr = abs(intent_intdamage_factor - 1) * 100
-		inspec += "\nThis intent deals [percstr]% [intent_intdamage_factor > 1 ? "more" : "less"] damage to integrity."
+		inspec += "\n该意图会对耐久造成[percstr]％[intent_intdamage_factor > 1 ? "更多" : "更少"]伤害。"
 	if(sharpness_penalty)
-		inspec += "\nThis intent will cost some sharpness for every attack made."
+		inspec += "\n该意图每次攻击都会额外消耗一些锋利度。"
 	if(blunt_chipping)
 		var/chip_strength
 		switch(blunt_chip_strength)
 			if(BLUNT_CHIP_MINUSCULE)
-				chip_strength = "minuscule"
+				chip_strength = "极少"
 			if(BLUNT_CHIP_WEAK)
-				chip_strength = "middling"
+				chip_strength = "中等"
 			if(BLUNT_CHIP_STRONG)
-				chip_strength = "considerable"
+				chip_strength = "可观"
 			if(BLUNT_CHIP_ABSURD)
-				chip_strength = "significant"
-		inspec += "\nA [chip_strength] sum of damage will bypass armour, if the target has no padded protection."
+				chip_strength = "显著"
+		inspec += "\n若目标没有衬垫防护，将有一部分[chip_strength]的伤害绕过护甲。"
 	inspec += "<br>----------------------"
 
 	to_chat(user, "[inspec.Join()]")
@@ -278,7 +278,7 @@
 	return
 
 /datum/intent/use
-	name = "use"
+	name = "使用"
 	icon_state = "inuse"
 	chargetime = 0
 	noaa = TRUE
@@ -290,7 +290,7 @@
 	blade_class = BCLASS_PUNCH
 
 /datum/intent/give
-	name = "give"
+	name = "给予"
 	candodge = FALSE
 	canparry = FALSE
 	chargedrain = 0
@@ -335,17 +335,17 @@
 
 
 /datum/intent/hit
-	name = "hit"
+	name = "打击"
 	icon_state = "instrike"
-	attack_verb = list("hit", "strike")
+	attack_verb = list("击打", "打击")
 	item_d_type = "blunt"
 	chargetime = 0
 	swingdelay = 0
 
 /datum/intent/stab
-	name = "stab"
+	name = "刺击"
 	icon_state = "instab"
-	attack_verb = list("stab")
+	attack_verb = list("刺击")
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
 	animname = "stab"
 	item_d_type = "stab"
@@ -354,14 +354,14 @@
 	swingdelay = 0
 
 /datum/intent/stab/militia
-	name = "militia stab"
+	name = "民兵刺击"
 	damfactor = 1.1
 	penfactor = 50
 
 /datum/intent/pick //now like icepick intent, we really went in a circle huh
-	name = "pick"
+	name = "啄刺"
 	icon_state = "inpick"
-	attack_verb = list("picks","impales")
+	attack_verb = list("啄刺", "贯穿")
 	hitsound = list('sound/combat/hits/pick/genpick (1).ogg', 'sound/combat/hits/pick/genpick (2).ogg')
 	penfactor = 80
 	animname = "strike"
@@ -372,9 +372,9 @@
 	swingdelay = 12
 
 /datum/intent/pick/bad	//One-handed intents
-	name = "sluggish pick"
+	name = "迟缓啄刺"
 	icon_state = "inpick"
-	attack_verb = list("picks","impales")
+	attack_verb = list("啄刺", "贯穿")
 	hitsound = list('sound/combat/hits/pick/genpick (1).ogg', 'sound/combat/hits/pick/genpick (2).ogg')
 	penfactor = 60
 	animname = "strike"
@@ -385,9 +385,9 @@
 	swingdelay = 16
 
 /datum/intent/pick/ranged
-	name = "ranged pick"
+	name = "远距啄刺"
 	icon_state = "inpick"
-	attack_verb = list("stabs", "impales")
+	attack_verb = list("刺入", "贯穿")
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
 	penfactor = 60
 	damfactor = 1.1
@@ -398,7 +398,7 @@
 	blade_class = BCLASS_PICK
 
 /datum/intent/shoot //shooting crossbows or other guns, no parrydrain
-	name = "shoot"
+	name = "射击"
 	icon_state = "inshoot"
 	tranged = 1
 	warnie = "aimwarn"
@@ -412,10 +412,10 @@
 
 /datum/intent/shoot/prewarning()
 	if(masteritem && mastermob)
-		mastermob.visible_message(span_warning("[mastermob] aims [masteritem]!"))
+		mastermob.visible_message(span_warning("[mastermob]举起了[masteritem]瞄准！"))
 
 /datum/intent/arc
-	name = "arc"
+	name = "弧射"
 	icon_state = "inarc"
 	tranged = 1
 	warnie = "aimwarn"
@@ -435,10 +435,10 @@
 
 /datum/intent/arc/prewarning()
 	if(masteritem && mastermob)
-		mastermob.visible_message(span_warning("[mastermob] aims [masteritem]!"))
+		mastermob.visible_message(span_warning("[mastermob]举起了[masteritem]瞄准！"))
 
 /datum/intent/swing //swinging a sling, no parrydrain
-	name = "swing"
+	name = "甩投"
 	icon_state = "inshoot"
 	tranged = 1
 	warnie = "aimwarn"
@@ -451,15 +451,15 @@
 
 /datum/intent/swing/prewarning()
 	if(masteritem && mastermob)
-		mastermob.visible_message(span_warning("[mastermob] swings [masteritem]!"))
+		mastermob.visible_message(span_warning("[mastermob]甩动着[masteritem]！"))
 
 /datum/intent/unarmed
 	unarmed = TRUE
 
 /datum/intent/unarmed/punch
-	name = "punch"
+	name = "拳击"
 	icon_state = "inpunch"
-	attack_verb = list("punches", "jabs", "clocks", "strikes")
+	attack_verb = list("挥拳", "猛击", "重殴", "打击")
 	chargetime = 0
 	noaa = FALSE
 	animname = "bite"
@@ -472,7 +472,7 @@
 	candodge = TRUE
 	canparry = TRUE
 	blade_class = BCLASS_PUNCH
-	miss_text = "swing a fist at the air"
+	miss_text = "朝空气挥了一拳"
 	miss_sound = "punchwoosh"
 	item_d_type = "blunt"
 	intent_intdamage_factor = 1
@@ -483,31 +483,19 @@
 	if(ismob(target))
 		var/mob/M = target
 		var/list/targetl = list(target)
-		user.visible_message(span_taunt("[user] taunts [M]!"), span_taunt("I taunt [M]!"), ignored_mobs = targetl)
+		user.visible_message(span_taunt("[user] 嘲弄着 [M]!"), span_taunt("我在嘲弄[M]!"), ignored_mobs = targetl)
 		user.emote("taunt")
-		if(M.mind)
-			var/mob/living/L = user
-			var/taunticon = "taunt" // Regular fist
-			var/custom_offset = 21
-			if(istype(L.patron, /datum/patron/inhumen/graggar) || L.get_stress_amount() > 10 || L.get_flaw(/datum/charflaw/paranoid))
-				taunticon = "midfinger" // Very rude, but we're also a Rude Person (or stressed)
-				custom_offset = 23
-
-			if(istype(L.patron, /datum/patron/divine/eora) || HAS_TRAIT(L, TRAIT_PACIFISM))
-				taunticon = "thumbsdown"
-				custom_offset = 24
-
-			L.play_overhead_private_rclickemote(targetl, taunticon, custom_offset)
-			user.changeNext_move(CLICK_CD_FAST)	// Mostly to prevent spamming the animation too heavily.
-			to_chat(M, span_taunt("[user] taunts me!"))
+		if(M.client)
+			if(M.can_see_cone(user))
+				to_chat(M, span_danger("[user]在嘲弄我！"))
 		else
 			M.taunted(user)
 	return
 
 /datum/intent/unarmed/claw
-	name = "claw"
+	name = "抓挠"
 	//icon_state
-	attack_verb = list("mauls", "scratches", "claws")
+	attack_verb = list("撕扯", "抓伤", "抓挠")
 	chargetime = 0
 	animname = "blank22"
 	hitsound = list('sound/combat/hits/punch/punch (1).ogg', 'sound/combat/hits/punch/punch (2).ogg', 'sound/combat/hits/punch/punch (3).ogg')
@@ -518,15 +506,15 @@
 	candodge = TRUE
 	canparry = TRUE
 	blade_class = BCLASS_CUT
-	miss_text = "claw at the air"
+	miss_text = "朝空气抓了一把"
 	miss_sound = "punchwoosh"
 	item_d_type = "slash"
 
 
 /datum/intent/unarmed/shove
-	name = "shove"
+	name = "推搡"
 	icon_state = "inshove"
-	attack_verb = list("shoves", "pushes")
+	attack_verb = list("推搡", "推开")
 	chargetime = 0
 	noaa = TRUE
 	rmb_ranged = TRUE
@@ -539,20 +527,20 @@
 	if(ismob(target))
 		var/mob/M = target
 		var/list/targetl = list(target)
-		user.visible_message(span_blue("[user] shoos [M] away."), span_blue("I shoo [M] away."), ignored_mobs = targetl)
+		user.visible_message(span_blue("[user] 挥手驱赶 [M] 。"), span_blue("我挥手驱赶[M]。"), ignored_mobs = targetl)
 		if(M.mind)
 			var/mob/living/L = user
 			L.play_overhead_private_rclickemote(targetl, "dismiss")
 			user.changeNext_move(CLICK_CD_FAST)	// Mostly to prevent spamming the animation too heavily.
-			to_chat(M, span_blue("[user] shoos me away."))
+			to_chat(M, span_blue("[user]挥手要我走开。"))
 		else
 			M.shood(user)
 	return
 
 /datum/intent/unarmed/grab
-	name = "grab"
+	name = "抓取"
 	icon_state = "ingrab"
-	attack_verb = list("grabs")
+	attack_verb = list("抓住")
 	chargetime = 0
 	noaa = TRUE
 	rmb_ranged = TRUE
@@ -568,18 +556,18 @@
 	if(ismob(target))
 		var/mob/M = target
 		var/list/targetl = list(target)
-		user.visible_message(span_yellow("[user] beckons [M] to come closer."), span_yellow("I beckon [M] to come closer."), ignored_mobs = targetl)
+		user.visible_message(span_yellow("[user]示意[M]靠近。"), span_yellow("我示意[M]靠近。"), ignored_mobs = targetl)
 		if(M.mind)
 			var/mob/living/L = user
 			L.play_overhead_private_rclickemote(targetl, "beckon")
 			user.changeNext_move(CLICK_CD_FAST)	// Mostly to prevent spamming the animation too heavily.
-			to_chat(M, span_yellow("[user] beckons me to come closer."))
+			to_chat(M, span_yellow("[user]示意我靠近。"))
 		else
 			M.beckoned(user)
 	return
 
 /datum/intent/unarmed/help
-	name = "touch"
+	name = "触碰"
 	icon_state = "intouch"
 	chargetime = 0
 	noaa = TRUE
@@ -594,18 +582,18 @@
 	if(ismob(target))
 		var/mob/M = target
 		var/list/targetl = list(target)
-		user.visible_message(span_green("[user] waves friendly at [M]."), span_green("I wave friendly at [M]."), ignored_mobs = targetl)
+		user.visible_message(span_green("[user]友善地朝[M]挥了挥手。"), span_green("我友善地朝[M]挥了挥手。"), ignored_mobs = targetl)
 		if(M.mind)	// Waving at an NPC doesn't need to show this.
 			var/mob/living/L = user
 			L.play_overhead_private_rclickemote(targetl, "wavefriendly")
 			user.changeNext_move(CLICK_CD_FAST)	// Mostly to prevent spamming the animation too heavily.
-			to_chat(M, span_green("[user] gives me a friendly wave."))
+			to_chat(M, span_green("[user]友善地向我挥手。"))
 	return
 
 /datum/intent/simple/headbutt
-	name = "headbutt"
+	name = "头槌"
 	icon_state = "instrike"
-	attack_verb = list("headbutts", "rams")
+	attack_verb = list("头槌猛撞", "撞击")
 	animname = "blank22"
 	blade_class = BCLASS_BLUNT
 	hitsound = "punch_hard"
@@ -617,9 +605,9 @@
 	item_d_type = "blunt"
 
 /datum/intent/simple/claw
-	name = "claw"
+	name = "抓挠"
 	icon_state = "instrike"
-	attack_verb = list("claws", "pecks")
+	attack_verb = list("抓挠", "啄击")
 	animname = "blank22"
 	blade_class = BCLASS_CUT
 	hitsound = "smallslash"
@@ -628,13 +616,13 @@
 	swingdelay = 3
 	candodge = TRUE
 	canparry = TRUE
-	miss_text = "slash the air"
+	miss_text = "朝空气挥了一下"
 	item_d_type = "slash"
 
 /datum/intent/simple/bite
-	name = "bite"
+	name = "啃咬"
 	icon_state = "instrike"
-	attack_verb = list("bites")
+	attack_verb = list("啃咬")
 	animname = "blank22"
 	blade_class = BCLASS_CUT
 	hitsound = "smallslash"
@@ -647,9 +635,9 @@
 
 
 /datum/intent/simple/axe
-	name = "hack"
+	name = "劈砍"
 	icon_state = "instrike"
-	attack_verb = list("hacks at", "chops at", "bashes")
+	attack_verb = list("劈砍", "斩砍", "猛砸")
 	animname = "blank22"
 	blade_class = BCLASS_CUT
 	hitsound = list("genchop", "genslash")
@@ -661,9 +649,9 @@
 	item_d_type = "slash"
 
 /datum/intent/simple/spear
-	name = "spear"
+	name = "枪刺"
 	icon_state = "instrike"
-	attack_verb = list("stabs", "skewers")
+	attack_verb = list("刺击", "穿透")
 	animname = "blank22"
 	blade_class = BCLASS_CUT
 	hitsound = list("genthrust", "genstab")
@@ -675,14 +663,14 @@
 	item_d_type = "stab"
 
 /datum/intent/bless
-	name = "bless"
+	name = "祝福"
 	icon_state = "inbless"
 	no_attack = TRUE
 	candodge = TRUE
 	canparry = TRUE
 
 /datum/intent/weep
-	name = "weep"
+	name = "悲泣"
 	icon_state = "inweep"
 	no_attack = TRUE
 	candodge = FALSE
@@ -694,9 +682,9 @@
 	var/list/target_parts					//Targeted bodyparts which will apply the effect. Leave blank for anywhere on the body.
 
 /datum/intent/effect/daze
-	name = "dazing strike"
+	name = "眩晕打击"
 	icon_state = "indaze"
-	attack_verb = list("dazes")
+	attack_verb = list("击晕")
 	animname = "strike"
 	hitsound = list('sound/combat/hits/blunt/daze_hit.ogg')
 	chargetime = 0

@@ -1,8 +1,8 @@
 /obj/effect/proc_holder/spell/invoked/projectile/arcynebolt
-	name = "Arcyne Bolt"
-	desc = "Shoot out a rapid bolt of arcyne magic. Inflicts blunt damage similar to a slingstone. \n\
-	Damage is increased by 50% versus simple-minded creechurs.\n\
-	Can be fired in an arc over an ally's head with a mage's staff or spellbook on arc intent. It will deals 25% less damage that way."
+	name = "奥术飞矢"
+	desc = "射出一道迅疾的奥术飞矢。造成近似投石索石弹的钝击伤害。\n\
+	对头脑简单的生物伤害提高 50%。\n\
+	若以法师杖或法术书切换至弧射意图，还可越过盟友头顶发射；但那样会少造成 25% 伤害。"
 	clothes_req = FALSE
 	range = 12
 	projectile_type = /obj/projectile/energy/arcynebolt
@@ -18,7 +18,7 @@
 	no_early_release = TRUE
 	movement_interrupt = FALSE
 	spell_tier = 2
-	invocations = list("Magicae Sagitta!")
+	invocations = list("奥术，成矢！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_ARCANE
 	glow_intensity = GLOW_INTENSITY_LOW
@@ -37,7 +37,7 @@
 	. = ..()
 
 /obj/projectile/energy/arcynebolt
-	name = "Arcyne Bolt"
+	name = "奥术飞矢"
 	icon_state = "arcane_barrage"
 	damage = 40
 	woundclass = BCLASS_BLUNT
@@ -47,7 +47,7 @@
 	speed = 1
 
 /obj/projectile/energy/arcynebolt/arc
-	name = "Arced Arcyne Bolt"
+	name = "弧射奥术飞矢"
 	damage = 30 // You cannot modify charge and releasedrain dynamically so lower damage it is.
 	arcshot = TRUE
 
@@ -56,7 +56,7 @@
 	if(ismob(target))
 		var/mob/living/carbon/M = target
 		if(M.anti_magic_check())
-			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			visible_message(span_warning("[src] 在接触[target]时噗地熄散了！"))
 			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 			qdel(src)
 			return BULLET_ACT_BLOCK

@@ -1,4 +1,4 @@
-#define UNIT_FORM_STRING(amount) (amount == 1 ? "dram" : "drams")
+#define UNIT_FORM_STRING(amount) (amount == 1 ? "打兰" : "打兰")
 
 /proc/chem_recipes_do_conflict(datum/chemical_reaction/r1, datum/chemical_reaction/r2)
 	//do the non-list tests first, because they are cheaper

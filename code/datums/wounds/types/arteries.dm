@@ -1,8 +1,8 @@
 /datum/wound/artery
-	name = "severed artery"
-	check_name = span_artery("<B>ARTERY</B>")
+	name = "动脉断裂"
+	check_name = span_artery("<B>动脉</B>")
 	severity = WOUND_SEVERITY_CRITICAL
-	crit_message = "Blood sprays from %VICTIM's %BODYPART!"
+	crit_message = "鲜血从%VICTIM的%BODYPART喷涌而出！"
 	sound_effect = 'sound/combat/crit.ogg'
 	whp = 50
 	sewn_whp = 20
@@ -38,10 +38,10 @@
 	affected.temporary_crit_paralysis(10 SECONDS)
 
 /datum/wound/artery/neck
-	name = "torn carotid"
-	check_name = span_artery("<B>CAROTID</B>")
+	name = "颈动脉撕裂"
+	check_name = span_artery("<B>颈动脉</B>")
 	severity = WOUND_SEVERITY_FATAL
-	crit_message = "Blood sprays from %VICTIM's throat!"
+	crit_message = "鲜血从%VICTIM的喉咙喷涌而出！"
 	whp = 100
 	sewn_whp = 25
 	bleed_rate = 50
@@ -60,8 +60,8 @@
 	REMOVE_TRAIT(affected, TRAIT_GARGLE_SPEECH, "[type]")
 
 /datum/wound/artery/chest
-	name = "aortic dissection"
-	check_name = span_artery("<B>AORTA</B>")
+	name = "主动脉夹层"
+	check_name = span_artery("<B>主动脉</B>")
 	severity = WOUND_SEVERITY_FATAL
 	whp = 100
 	sewn_whp = 35
@@ -77,11 +77,11 @@
 		var/mob/living/carbon/carbon_affected = affected
 		carbon_affected.vomit(blood = TRUE)
 	var/static/list/heartaches = list(
-		"OOHHHH MY HEART!",
-		"MY HEART! IT HURTS!",
-		"I AM DYING!",
-		"MY HEART IS TORN!",
-		"MY HEART IS BLEEDING!",
+		"噢噢噢我的心脏！",
+		"我的心脏！好痛！",
+		"我要死了！",
+		"我的心脏裂开了！",
+		"我的心脏在流血！",
 	)
 	to_chat(affected, span_userdanger("[pick(heartaches)]"))
 
@@ -94,8 +94,8 @@
 		carbon_owner.vomit(1, blood = TRUE, stun = TRUE)
 
 /datum/wound/artery/reattachment
-	name = "replantation"
-	check_name = span_artery("<B>UNSEWN</B>")
+	name = "断肢再植"
+	check_name = span_artery("<B>未缝合</B>")
 	severity = WOUND_SEVERITY_FATAL
 	whp = 100
 	sewn_whp = 25

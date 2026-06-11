@@ -5,7 +5,7 @@ LICH SKELETONS
 /datum/job/roguetown/greater_skeleton/lich
 	title = "Fortified Skeleton"
 	advclass_cat_rolls = list(CTAG_LSKELETON = 20)
-	tutorial = "You are bygone. Your will belongs to your master. Fulfil and kill."
+	tutorial = "你早已死去。你的意志属于主人。去完成命令，去屠戮。"
 
 	outfit = /datum/outfit/job/roguetown/greater_skeleton/lich
 
@@ -22,8 +22,8 @@ LICH SKELETONS
 
 // Melee goon w/ throwables. All-rounder.
 /datum/advclass/greater_skeleton/lich/legionnaire
-	name = "Ancient Legionnaire"
-	tutorial = "A veteran lineman. How far you've fallen."
+	name = "古代军团兵"
+	tutorial = "你曾是久经沙场的老兵。如今却沦落至此。"
 	outfit = /datum/outfit/job/roguetown/greater_skeleton/lich/legionnaire
 
 	category_tags = list(CTAG_LSKELETON)
@@ -70,62 +70,62 @@ LICH SKELETONS
 	)
 
 	H.adjust_blindness(-3)
-	var/weapons = list("Gladius","Khopesh","Shortsword","Axe", "Flail")
-	var/weapons_choice = input(H, "Choose your WEAPON.", "RAGE AGAINST THE LYVING.") as anything in weapons
+	var/weapons = list("短剑","Khopesh 弯刃剑","短剑式直剑","战斧", "链枷")
+	var/weapons_choice = input(H, "选择你的武器。", "向生者发怒。") as anything in weapons
 	switch(weapons_choice)
-		if("Gladius")
+		if("短剑")
 			l_hand = /obj/item/rogueweapon/sword/short/gladius/ancient
 			beltl = /obj/item/rogueweapon/scabbard
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
-		if("Khopesh")
+		if("Khopesh 弯刃剑")
 			l_hand = /obj/item/rogueweapon/sword/sabre/ancient
 			beltl = /obj/item/rogueweapon/scabbard
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
-		if("Shortsword")
+		if("短剑式直剑")
 			l_hand = /obj/item/rogueweapon/sword/short/ancient
 			beltl = /obj/item/rogueweapon/scabbard
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
-		if("Axe")
+		if("战斧")
 			l_hand = /obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
-		if("Flail")
+		if("链枷")
 			l_hand = /obj/item/rogueweapon/flail/sflail/ancient
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
-	var/sidearms = list("Javelins", "Net", "Dagger")
-	var/sidearms_choice = input(H, "Choose your SIDEARM.", "RAGE AGAINST THE LYVING.") as anything in sidearms
+	var/sidearms = list("标枪", "投网", "匕首")
+	var/sidearms_choice = input(H, "选择你的副武器。", "向生者发怒。") as anything in sidearms
 	switch(sidearms_choice)
-		if("Javelins")
+		if("标枪")
 			beltr = /obj/item/quiver/javelin/ancient
-		if("Net")
+		if("投网")
 			beltr = /obj/item/net
-		if("Dagger")
+		if("匕首")
 			beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/ancient
-	var/neckwear = list("Coif", "Gorget")
-	var/neckwear_choice = input(H, "Choose your PROTECTION.", "PROTECT THE SACRED LEYLINE.") as anything in neckwear
+	var/neckwear = list("锁子头巾", "护喉")
+	var/neckwear_choice = input(H, "选择你的护颈。", "守护神圣地脉。") as anything in neckwear
 	switch(neckwear_choice)
-		if("Coif")
+		if("锁子头巾")
 			neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
-		if("Gorget")
+		if("护喉")
 			neck = /obj/item/clothing/neck/roguetown/gorget/steel/ancient
-	var/cloaks = list("Jupon", "Tabard", "Cloak", "Shawl")
-	var/cloaks_choice = input(H, "Choose your CLOAK.", "BARE YOUR MASTER'S HERALDRY.") as anything in cloaks
+	var/cloaks = list("罩袍", "纹章罩衣", "披风", "肩巾")
+	var/cloaks_choice = input(H, "选择你的披挂。", "彰显你主人的纹章。") as anything in cloaks
 	H.set_blindness(0)
 	switch(cloaks_choice)
-		if("Jupon")
+		if("罩袍")
 			cloak = /obj/item/clothing/cloak/stabard/surcoat/lich
-		if("Tabard")
+		if("纹章罩衣")
 			cloak = /obj/item/clothing/cloak/tabard/lich
-		if("Cloak")
+		if("披风")
 			cloak = /obj/item/clothing/cloak/half/lich
-		if("Shawl")
+		if("肩巾")
 			cloak = /obj/item/clothing/cloak/thief_cloak/lich
 
 	H.energy = H.max_energy
 
 // Ranged goon w/ a dumb bow. Ranger, what else is there to say.
 /datum/advclass/greater_skeleton/lich/ballistiares
-	name = "Ancient Ballistiares"
-	tutorial = "Your frame has wept off your skin. Your fingers are mere peaks. Yet your aim remains true."
+	name = "古代弩炮兵"
+	tutorial = "你的血肉早已从骨架上流尽，指节只剩尖峭白骨，可你的准头依旧分毫不差。"
 	outfit = /datum/outfit/job/roguetown/greater_skeleton/lich/ballistiares
 
 	category_tags = list(CTAG_LSKELETON)
@@ -171,51 +171,51 @@ LICH SKELETONS
 	)
 
 	H.adjust_blindness(-3)
-	var/weapons = list("Recurve Bow","Yew Longbow", "Crossbow", "Sling")
-	var/weapons_choice = input(H, "Choose your WEAPON.", "RAGE AGAINST THE LYVING.") as anything in weapons
+	var/weapons = list("反曲弓","紫杉长弓", "十字弩", "投石索")
+	var/weapons_choice = input(H, "选择你的武器。", "向生者发怒。") as anything in weapons
 	switch(weapons_choice)
-		if("Recurve Bow")
+		if("反曲弓")
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 			beltr = /obj/item/quiver/ancient
 			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_MASTER, TRUE)
-		if("Yew Longbow")
+		if("紫杉长弓")
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
 			beltr = /obj/item/quiver/ancient
 			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_MASTER, TRUE)
-		if("Crossbow")
+		if("十字弩")
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 			beltr = /obj/item/quiver/boltsancient
 			H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_MASTER, TRUE)
-		if("Sling")
+		if("投石索")
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
 			beltr = /obj/item/quiver/sling/ancient
 			H.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_MASTER, TRUE)
-	var/neckwear = list("Coif", "Gorget")
-	var/neckwear_choice = input(H, "Choose your PROTECTION.", "PROTECT THE SACRED LEYLINE.") as anything in neckwear
+	var/neckwear = list("锁子头巾", "护喉")
+	var/neckwear_choice = input(H, "选择你的护颈。", "守护神圣地脉。") as anything in neckwear
 	switch(neckwear_choice)
-		if("Coif")
+		if("锁子头巾")
 			neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
-		if("Gorget")
+		if("护喉")
 			neck = /obj/item/clothing/neck/roguetown/gorget/steel/ancient
-	var/cloaks = list("Jupon", "Tabard", "Cloak", "Shawl")
-	var/cloaks_choice = input(H, "Choose your CLOAK.", "BARE YOUR MASTER'S HERALDRY.") as anything in cloaks
+	var/cloaks = list("罩袍", "纹章罩衣", "披风", "肩巾")
+	var/cloaks_choice = input(H, "选择你的披挂。", "彰显你主人的纹章。") as anything in cloaks
 	H.set_blindness(0)
 	switch(cloaks_choice)
-		if("Jupon")
+		if("罩袍")
 			cloak = /obj/item/clothing/cloak/stabard/surcoat/lich
-		if("Tabard")
+		if("纹章罩衣")
 			cloak = /obj/item/clothing/cloak/tabard/lich
-		if("Cloak")
+		if("披风")
 			cloak = /obj/item/clothing/cloak/half/lich
-		if("Shawl")
+		if("肩巾")
 			cloak = /obj/item/clothing/cloak/thief_cloak/lich
 
 	H.energy = H.max_energy
 
 // Heavy/Tanky goon. Can spec into disciples to be either a slow frontline combatant or a heavy armor wearing line holder.
 /datum/advclass/greater_skeleton/lich/bulwark
-	name = "Ancient Death Bulwark"
-	tutorial = "All throughout, you've borne the brunt. And even in death, will you continue."
+	name = "古代死之壁垒"
+	tutorial = "自始至终，你都在承受最沉重的冲击。即便死后，你也仍将如此。"
 	outfit = /datum/outfit/job/roguetown/greater_skeleton/lich/bulwark
 
 	category_tags = list(CTAG_LSKELETON)
@@ -255,10 +255,10 @@ LICH SKELETONS
 	)
 
 	H.adjust_blindness(-3)
-	var/weapons = list("Greatsword - +2 STR / +1 SPD / -3 CON", "Grand Mace - +2 STR / +1 SPD / -3 CON", "Spear + Shield - +2 PER / +1 STR / -1 CON", "Bardiche - +2 PER / +1 STR / -1 CON","Mace + Shield - +3 WIL / HEAVY ARMOR", "Warhammer + Shield - +3 WIL / HEAVY ARMOR")
-	var/weapons_choice = input(H, "Choose your DISCIPLINE.", "RAGE AGAINST THE LYVING.") as anything in weapons
+	var/weapons = list("巨剑 - +2 力量 / +1 速度 / -3 体质", "巨型权杖 - +2 力量 / +1 速度 / -3 体质", "长矛与盾 - +2 感知 / +1 力量 / -1 体质", "长柄战斧 - +2 感知 / +1 力量 / -1 体质","钉锤与盾 - +3 意志 / 重甲", "战锤与盾 - +3 意志 / 重甲")
+	var/weapons_choice = input(H, "选择你的战斗戒律。", "向生者发怒。") as anything in weapons
 	switch(weapons_choice)
-		if("Greatsword - +2 STR / +1 SPD / -3 CON")
+		if("巨剑 - +2 力量 / +1 速度 / -3 体质")
 			l_hand = /obj/item/rogueweapon/greatsword/ancient
 			backl = /obj/item/rogueweapon/scabbard/gwstrap
 			armor = /obj/item/clothing/suit/roguetown/armor/plate/half/ancient
@@ -268,7 +268,7 @@ LICH SKELETONS
 			H.change_stat(STATKEY_SPD, 1)
 			H.change_stat(STATKEY_CON, -3)
 			ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-		if("Grand Mace - +2 STR / +1 SPD / -3 CON")
+		if("巨型权杖 - +2 力量 / +1 速度 / -3 体质")
 			l_hand = /obj/item/rogueweapon/mace/goden/steel/ancient
 			backl = /obj/item/rogueweapon/scabbard/gwstrap
 			armor = /obj/item/clothing/suit/roguetown/armor/plate/half/ancient
@@ -278,7 +278,7 @@ LICH SKELETONS
 			H.change_stat(STATKEY_SPD, 1)
 			H.change_stat(STATKEY_CON, -3)
 			ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-		if("Spear + Shield - +2 PER / +1 STR / -1 CON")
+		if("长矛与盾 - +2 感知 / +1 力量 / -1 体质")
 			l_hand = /obj/item/rogueweapon/spear/ancient
 			r_hand = /obj/item/rogueweapon/shield/gilbranze
 			backl = /obj/item/rogueweapon/scabbard/gwstrap
@@ -290,7 +290,7 @@ LICH SKELETONS
 			H.change_stat(STATKEY_STR, 1)
 			H.change_stat(STATKEY_CON, -1)
 			ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-		if("Bardiche - +2 PER / +1 STR / -1 CON")
+		if("长柄战斧 - +2 感知 / +1 力量 / -1 体质")
 			l_hand = /obj/item/rogueweapon/halberd/bardiche/ancient
 			backl = /obj/item/rogueweapon/scabbard/gwstrap
 			armor = /obj/item/clothing/suit/roguetown/armor/plate/half/ancient
@@ -300,7 +300,7 @@ LICH SKELETONS
 			H.change_stat(STATKEY_STR, 1)
 			H.change_stat(STATKEY_CON, -1)
 			ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-		if("Mace + Shield - +3 WIL / HEAVY ARMOR")
+		if("钉锤与盾 - +3 意志 / 重甲")
 			l_hand = /obj/item/rogueweapon/mace/steel/ancient
 			r_hand = /obj/item/rogueweapon/shield/tower/metal/ancient
 			armor = /obj/item/clothing/suit/roguetown/armor/plate/ancient
@@ -309,7 +309,7 @@ LICH SKELETONS
 			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
 			H.change_stat(STATKEY_WIL, 3)
 			ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
-		if("Warhammer + Shield - +3 WIL / HEAVY ARMOR")
+		if("战锤与盾 - +3 意志 / 重甲")
 			l_hand = /obj/item/rogueweapon/mace/warhammer/steel/ancient
 			r_hand = /obj/item/rogueweapon/shield/tower/metal/ancient
 			armor = /obj/item/clothing/suit/roguetown/armor/plate/ancient
@@ -318,32 +318,32 @@ LICH SKELETONS
 			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
 			H.change_stat(STATKEY_WIL, 3)
 			ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
-	var/neckwear = list("Coif", "Gorget")
-	var/neckwear_choice = input(H, "Choose your PROTECTION.", "PROTECT THE SACRED LEYLINE.") as anything in neckwear
+	var/neckwear = list("锁子头巾", "护喉")
+	var/neckwear_choice = input(H, "选择你的护颈。", "守护神圣地脉。") as anything in neckwear
 	switch(neckwear_choice)
-		if("Coif")
+		if("锁子头巾")
 			neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
-		if("Gorget")
+		if("护喉")
 			neck = /obj/item/clothing/neck/roguetown/gorget/steel/ancient
-	var/cloaks = list("Jupon", "Tabard", "Cloak", "Shawl")
-	var/cloaks_choice = input(H, "Choose your CLOAK.", "BARE YOUR MASTER'S HERALDRY.") as anything in cloaks
+	var/cloaks = list("罩袍", "纹章罩衣", "披风", "肩巾")
+	var/cloaks_choice = input(H, "选择你的披挂。", "彰显你主人的纹章。") as anything in cloaks
 	H.set_blindness(0)
 	switch(cloaks_choice)
-		if("Jupon")
+		if("罩袍")
 			cloak = /obj/item/clothing/cloak/stabard/surcoat/lich
-		if("Tabard")
+		if("纹章罩衣")
 			cloak = /obj/item/clothing/cloak/tabard/lich
-		if("Cloak")
+		if("披风")
 			cloak = /obj/item/clothing/cloak/half/lich
-		if("Shawl")
+		if("肩巾")
 			cloak = /obj/item/clothing/cloak/thief_cloak/lich
 
 	H.energy = H.max_energy
 
 // non-Combat crafter goon. Worse weapons + armor but does base-building. Fortnite.
 /datum/advclass/greater_skeleton/lich/sapper
-	name = "Broken-Bone Sapper"
-	tutorial = "Simple. Obedient. Like an ant in a colony."
+	name = "断骨工兵"
+	tutorial = "简单。顺从。像蚁群里的一只工蚁。"
 	outfit = /datum/outfit/job/roguetown/greater_skeleton/lich/sapper
 
 	category_tags = list(CTAG_LSKELETON)
@@ -404,24 +404,24 @@ LICH SKELETONS
 	beltr = /obj/item/rogueweapon/stoneaxe/woodcut
 	beltl = /obj/item/rogueweapon/pick
 	H.adjust_blindness(-3)
-	var/neckwear = list("Coif", "Gorget")
-	var/neckwear_choice = input(H, "Choose your PROTECTION.", "PROTECT THE SACRED LEYLINE.") as anything in neckwear
+	var/neckwear = list("锁子头巾", "护喉")
+	var/neckwear_choice = input(H, "选择你的护颈。", "守护神圣地脉。") as anything in neckwear
 	switch(neckwear_choice)
-		if("Coif")
+		if("锁子头巾")
 			neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
-		if("Gorget")
+		if("护喉")
 			neck = /obj/item/clothing/neck/roguetown/gorget/steel/ancient
-	var/cloaks = list("Jupon", "Tabard", "Cloak", "Shawl")
-	var/cloaks_choice = input(H, "Choose your CLOAK.", "BARE YOUR MASTER'S HERALDRY.") as anything in cloaks
+	var/cloaks = list("罩袍", "纹章罩衣", "披风", "肩巾")
+	var/cloaks_choice = input(H, "选择你的披挂。", "彰显你主人的纹章。") as anything in cloaks
 	H.set_blindness(0)
 	switch(cloaks_choice)
-		if("Jupon")
+		if("罩袍")
 			cloak = /obj/item/clothing/cloak/stabard/surcoat/lich
-		if("Tabard")
+		if("纹章罩衣")
 			cloak = /obj/item/clothing/cloak/tabard/lich
-		if("Cloak")
+		if("披风")
 			cloak = /obj/item/clothing/cloak/half/lich
-		if("Shawl")
+		if("肩巾")
 			cloak = /obj/item/clothing/cloak/thief_cloak/lich
 
 	H.energy = H.max_energy
@@ -433,8 +433,8 @@ LICH SKELETONS
 // Stronger sidegrade of the Bulwark. Fully armored juggernaut with high Intelligence and Perception for baiting and riposting, but extremely low Speed and complete inability to sprint at all. Crack open the armor, overwhelm and they're dead meat.
 // They lack the easily ability to escape fights including no climbing skill, they're tough and will tire you very fast. They have good armor off-the-bat. They're sturdy and difficult to tire but archers/mages/swarms of people will hardcounter them in open ground.
 /datum/advclass/greater_skeleton/lich/deathknight
-	name = "Venerated Death Knight"
-	tutorial = "Swerve, parry, riposte. The wetness along your mortal wound has dried centuries ago, yet your wit remains unsullied in the slightest. Bring your master's chivalry to the battlefield, through both plate-and-blade."
+	name = "受崇死骑士"
+	tutorial = "闪身，格挡，回击。你致命伤口上的血迹早在数百年前便已干涸，可你的战斗机锋仍未曾有半分蒙尘。披甲执刃，将你主人的骑士道带上战场。"
 	outfit = /datum/outfit/job/roguetown/greater_skeleton/lich/deathknight
 	maximum_possible_slots = 1 //Limited, but powerful. Could serve as either champions or commanders for their necromancer's army.
 
@@ -483,36 +483,36 @@ LICH SKELETONS
 	)
 
 	H.adjust_blindness(-3)
-	var/weapons = list("Greatsword", "Flail + Greatshield")
-	var/weapon_choice = input(H, "Choose your WEAPON.", "RAGE AGAINST THE LYVING.") as anything in weapons
+	var/weapons = list("巨剑", "链枷与巨盾")
+	var/weapon_choice = input(H, "选择你的武器。", "向生者发怒。") as anything in weapons
 	switch(weapon_choice)
-		if("Greatsword")
+		if("巨剑")
 			l_hand = /obj/item/rogueweapon/greatsword/ancient
 			backl = /obj/item/rogueweapon/scabbard/gwstrap
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
-		if("Flail + Greatshield")
+		if("链枷与巨盾")
 			l_hand = /obj/item/rogueweapon/flail/sflail/ancient
 			r_hand = /obj/item/rogueweapon/shield/gilbranze/great
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
-	var/neckwear = list("Coif", "Gorget")
-	var/neckwear_choice = input(H, "Choose your PROTECTION.", "PROTECT THE SACRED LEYLINE.") as anything in neckwear
+	var/neckwear = list("锁子头巾", "护喉")
+	var/neckwear_choice = input(H, "选择你的护颈。", "守护神圣地脉。") as anything in neckwear
 	switch(neckwear_choice)
-		if("Coif")
+		if("锁子头巾")
 			neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
-		if("Gorget")
+		if("护喉")
 			neck = /obj/item/clothing/neck/roguetown/gorget/steel/ancient
-	var/cloaks = list("Jupon", "Tabard", "Cloak", "Shawl")
-	var/cloaks_choice = input(H, "Choose your CLOAK.", "BARE YOUR MASTER'S HERALDRY.") as anything in cloaks
+	var/cloaks = list("罩袍", "纹章罩衣", "披风", "肩巾")
+	var/cloaks_choice = input(H, "选择你的披挂。", "彰显你主人的纹章。") as anything in cloaks
 	H.set_blindness(0)
 	switch(cloaks_choice)
-		if("Jupon")
+		if("罩袍")
 			cloak = /obj/item/clothing/cloak/stabard/surcoat/lich
-		if("Tabard")
+		if("纹章罩衣")
 			cloak = /obj/item/clothing/cloak/tabard/lich
-		if("Cloak")
+		if("披风")
 			cloak = /obj/item/clothing/cloak/half/lich
-		if("Shawl")
+		if("肩巾")
 			cloak = /obj/item/clothing/cloak/thief_cloak/lich
 
 //////////////////
@@ -520,54 +520,54 @@ LICH SKELETONS
 //////////////////
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/artificer/lich
-	name = "sapper's shirt"
-	desc = "A shirt made with roughspun fabrics and leather from beyond your lyfetime, donned by those who are condemned to toil forevermore."
+	name = "工兵衬衣"
+	desc = "一件以粗纺布料与古旧皮革制成的衬衣，穿在那些被判处永世劳作之人的身上。"
 	color = "#d6bbbb"
 
 /obj/item/clothing/under/roguetown/trou/artipants/lich
-	name = "sapper's trousers"
-	desc = "A set of trousers made with leathers and roughspun fabric from beyond your lyfetime, donned by those who are condemned to toil forevermore."
+	name = "工兵长裤"
+	desc = "一条以古旧皮革与粗纺布料制成的长裤，穿在那些被判处永世劳作之人的身上。"
 	color = "#d6bbbb"
 
 /obj/item/clothing/suit/roguetown/armor/leather/jacket/artijacket/lich
-	name = "sapper's jacket"
-	desc = "A jacket of rugged leather adorned with roughspun fabric and fur from beyond your lyfetime, donned by those who are condemned to toil forevermore."
+	name = "工兵短衣"
+	desc = "一件以坚韧皮革、粗纺布料与毛皮拼成的短衣，穿在那些被判处永世劳作之人的身上。"
 	color = "#d6bbbb"
 
 /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/lich
-	name = "ancient hood"
-	desc = "Roughspun fabrics from beyond your lyfetime, worn to keep Astrata's light from touching those who are shunned by it."
+	name = "古旧兜帽"
+	desc = "来自你生前时代之外的粗纺布料，被用来阻隔 阿斯特拉塔 的光辉，不让它照到那些遭她嫌弃之人。"
 	color = CLOTHING_BLACK
 
 /obj/item/clothing/cloak/stabard/surcoat/lich
-	name = "ancient jupon"
-	desc = "Roughspun fabrics from beyond your lyfetime, donned by those who are condemned to march forevermore."
+	name = "古旧罩袍"
+	desc = "来自你生前时代之外的粗纺布料，披在那些被判处永世行军之人的身上。"
 	color = CLOTHING_BLACK
 	detail_tag = "_quad"
 	detail_color = CLOTHING_BURLAP
 
 /obj/item/clothing/cloak/tabard/lich
-	name = "ancient tabard"
-	desc = "Roughspun fabrics from beyond your lyfetime, donned by those who once knew of chivalry's allure."
+	name = "古旧纹章罩衣"
+	desc = "来自你生前时代之外的粗纺布料，披在那些曾知晓骑士荣光诱惑之人的身上。"
 	color = CLOTHING_BLACK
 	detail_tag = "_quad"
 	detail_color = CLOTHING_BURLAP
 
 /obj/item/clothing/cloak/half/lich
-	name = "ancient cloak"
-	desc = "Roughspun fabrics from beyond your lyfetime, donned by those who fear what they've truly become."
+	name = "古旧披风"
+	desc = "来自你生前时代之外的粗纺布料，披在那些畏惧自己真正化为何物之人的身上。"
 	color = CLOTHING_BLACK
 
 /obj/item/clothing/cloak/thief_cloak/lich
-	name = "ancient shawl"
-	desc = "Roughspun fabrics from beyond your lyfetime, donned by those who have embraced the fetters they've truly become."
+	name = "古旧肩巾"
+	desc = "来自你生前时代之外的粗纺布料，披在那些已接受自己真正枷锁之人的身上。"
 	color = CLOTHING_BLACK
 
 // SHIELDS
 
 /obj/item/rogueweapon/shield/gilbranze
-	name = "ancient hoplon shield"
-	desc = "The finest companion to a javelin and gladius; a deceptively thin-yet-sturdy shield of gilbronze. This alloy even this thin, used to once surpass even steel in durability, yet despite aeon's grip being lifted it will never glitter as it once did."
+	name = "古旧圆盾"
+	desc = "标枪与短剑最完美的搭档，一面以吉尔青铜制成、看似轻薄却异常坚固的圆盾。这种合金即便薄如斯时，也曾在耐久上胜过钢铁，可纵使岁月桎梏已解，它也再不会如往昔般闪耀。"
 	icon_state = "ancientshlegion"
 	dropshrink = 0.8
 	force = 15
@@ -591,8 +591,8 @@ LICH SKELETONS
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = -3,"ey" = 3,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
 /obj/item/rogueweapon/shield/gilbranze/decrepit
-	name = "decrepit hoplon shield"
-	desc = "A near-paradoxally thin-yet-somehow-intact shield of fraying bronze, impossibly remaining barely intact; yet in spite of this, a mere press of the thumb alone will bend a dent into it irreversably."
+	name = "朽败圆盾"
+	desc = "一面近乎违背常理、薄得过分却仍勉强完整的残旧青铜圆盾。可即便如此，只消拇指轻轻一压，也会在其表面留下再难恢复的凹痕。"
 	force = 10
 	throwforce = 8
 	max_integrity = 60
@@ -601,9 +601,9 @@ LICH SKELETONS
 	anvilrepair = null
 
 /obj/item/rogueweapon/shield/gilbranze/great
-	name = "ancient hoplon greatshield"
-	desc = "A heavy venerable shield, far taller and thicker than most other contemporaries, yet masterfully crafted O' so much more as well. Rebuking arrow and bolt alike \
-	and yet it serves in a twisted charge against its old purpose to preserve lyfe, serving as a bulwark to herald the march of HER legionnaires to end lyfe."
+	name = "古旧巨圆盾"
+	desc = "一面厚重而庄严的古盾，比同代多数盾牌都更高、更厚，也更为精工。它本可一并挡下箭矢与弩矢 \
+	可如今却扭曲地背离了昔日守护生命的职责，成了她麾下军团兵屠戮生命时的壁垒。"
 	icon_state = "ancientshgreat"
 	force = 30
 	throwforce = 10
@@ -625,9 +625,9 @@ LICH SKELETONS
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = -3,"ey" = 3,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
 /obj/item/rogueweapon/shield/gilbranze/great/decrepit
-	name = "decrepit hoplon greatshield"
-	desc = "A tarnished heavy once-venerable shield of fraying, rusted metal. It has survived unspeakable calamities and eons, once rebuking arrow and bolt alike; yet now its no better than \
-	a battered hunk of metal with dents threatening to rip open. It failed its former owner and it won't be long until its own frail husk is reduced to nothing."
+	name = "朽败巨圆盾"
+	desc = "一面失去光泽、锈蚀斑斑的厚重古盾。它曾熬过不可言说的灾厄与漫长岁月，也曾挡下无数箭矢与弩矢；可如今它不过只是 \
+	一块满布凹痕、随时会被撕裂的破烂铁板。它曾辜负旧主，而它自己脆弱的残躯也很快将归于虚无。"
 	force = 18
 	throwforce = 6
 	max_integrity = 180

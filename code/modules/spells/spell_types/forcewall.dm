@@ -1,10 +1,10 @@
 /obj/effect/proc_holder/spell/targeted/forcewall
-	name = "Forcewall"
+	name = "力场墙"
 	desc = ""
 	school = "transmutation"
 	recharge_time = 100
 	clothes_req = FALSE
-	invocations = list("TARCOL MINTI ZHERI")
+	invocations = list("力场，立起！")
 	invocation_type = "shout"
 	sound = 'sound/blank.ogg'
 	action_icon_state = "shield"

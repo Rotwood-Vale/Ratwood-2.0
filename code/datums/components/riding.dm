@@ -40,7 +40,7 @@
 	if(driver == M)
 		driver = null
 		for(var/mob/living/rider in AM.buckled_mobs.Copy())
-			rider.visible_message(span_warning("[rider] is left without a driver and tumbles off [AM]!"), span_warning("Without a driver, I fall off [AM]!"))
+			rider.visible_message(span_warning("[rider]没了驾驭者，从[AM]上摔了下来！"), span_warning("没了驾驭者，我从[AM]上摔下来了！"))
 			AM.unbuckle_mob(rider, TRUE)
 
 /datum/component/riding/proc/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
@@ -99,8 +99,8 @@
 	var/atom/movable/AM = parent
 	var/mob/AMM = AM
 	if((ride_check_rider_restrained && M.restrained(TRUE)) || (ride_check_rider_incapacitated && M.incapacitated(FALSE, TRUE)) || (ride_check_ridden_incapacitated && istype(AMM) && AMM.incapacitated(FALSE, TRUE)))
-		M.visible_message(span_warning("[M] falls off of [AM]!"), \
-						span_warning("I fall off of [AM]!"))
+		M.visible_message(span_warning("[M]从[AM]上掉了下来！"), \
+						span_warning("我从[AM]上掉了下来！"))
 		AM.unbuckle_mob(M)
 	return TRUE
 
@@ -208,7 +208,7 @@
 		if(!istype(next) || !istype(current))
 			return	//not happening.
 		if(!turf_check(next, current))
-			to_chat(user, span_warning("My [AM] can not go onto [next]!"))
+			to_chat(user, span_warning("我的[AM]不能前往[next]！"))
 			return
 		if(!isturf(AM.loc))
 			return
@@ -262,7 +262,7 @@
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else
-		to_chat(user, span_warning("I'll need an oar in one of my hands to [drive_verb] [AM]."))
+		to_chat(user, span_warning("我得有一只手拿着船桨，才能[drive_verb][AM]。"))
 	return TRUE
 
 /datum/component/riding/proc/Unbuckle(atom/movable/M)
@@ -341,7 +341,7 @@
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(user)
 	user.Paralyze(60)
-	user.visible_message(span_warning("[user] is knocked off of [AM]!"), span_danger("I am knocked off of [AM]!"))
+	user.visible_message(span_warning("[user]被从[AM]上打落了！"), span_danger("我被从[AM]上打落了！"))
 	playsound(AM.loc, 'sound/combat/grabbreak.ogg', 50, TRUE, -1)
 
 /datum/component/riding/cyborg
@@ -352,14 +352,14 @@
 	if(user.incapacitated())
 		var/kick = TRUE
 		if(kick)
-			to_chat(user, span_danger("I fall off of [AM]!"))
+			to_chat(user, span_danger("我从[AM]上掉了下来！"))
 			Unbuckle(user)
 			return
 	if(iscarbon(user))
 		var/mob/living/carbon/carbonuser = user
 		if(!carbonuser.get_num_arms())
 			Unbuckle(user)
-			to_chat(user, span_warning("I can't grab onto [AM] with no hands!"))
+			to_chat(user, span_warning("我没有手，抓不住[AM]！"))
 			return
 
 /datum/component/riding/cyborg/handle_vehicle_layer()
@@ -388,8 +388,8 @@
 	var/turf/target = get_edge_target_turf(AM, AM.dir)
 	var/turf/targetm = get_step(get_turf(AM), AM.dir)
 	M.Move(targetm)
-	M.visible_message(span_warning("[M] is thrown clear of [AM]!"), \
-					span_warning("You're thrown clear of [AM]!"))
+	M.visible_message(span_warning("[M]被从[AM]上甩飞了出去！"), \
+					span_warning("我被从[AM]上甩飞了出去！"))
 	M.throw_at(target, 14, 5, AM)
 	M.Paralyze(60)
 

@@ -1,9 +1,9 @@
 
 /obj/item/natural/feather
-	name = "feather"
+	name = "羽毛"
 	icon_state = "feather"
 	possible_item_intents = list(/datum/intent/use)
-	desc = "A fluffy feather."
+	desc = "一根蓬松的羽毛。"
 	force = 0
 	throwforce = 0
 	obj_flags = null
@@ -23,26 +23,26 @@
 /obj/item/natural/feather/afterattack(obj/O, mob/living/user, proximity)
 	. = ..()
 	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
-		var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
+		var/penchoice = input(user, "你想修改什么？", "重命名还是修改描述？") as null|anything in list("重命名","修改描述")
 		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 			return
-		if(penchoice == "Rename")
-			var/input = stripped_input(user,"What do you want to name \the [O.name]?", ,"", MAX_NAME_LEN)
+		if(penchoice == "重命名")
+			var/input = stripped_input(user,"你想把[O.name]命名为什么？", ,"", MAX_NAME_LEN)
 			var/oldname = O.name
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
 			if(!input)
 				return
 			if(oldname == input)
-				to_chat(user, span_notice("I changed \the [O.name] to... well... \the [O.name]."))
+				to_chat(user, span_notice("我把[O.name]改成了……嗯……还是[O.name]。"))
 			else
 				O.name = "[input] ([initial(O.name)])"
-				to_chat(user, span_notice("\The [oldname] has been successfully been renamed to \the [input]."))
+				to_chat(user, span_notice("[oldname]已成功更名为[input]。"))
 				O.renamedByPlayer = TRUE
 
-		if(penchoice == "Change description")
-			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 250)
+		if(penchoice == "修改描述")
+			var/input = stripped_input(user,"在这里填写[O.name]的描述", ,"", 250)
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
 			O.desc = input
-			to_chat(user, span_notice("I have successfully changed \the [O.name]'s description."))
+			to_chat(user, span_notice("我已成功修改[O.name]的描述。"))

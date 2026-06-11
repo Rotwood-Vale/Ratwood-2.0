@@ -1,9 +1,9 @@
 //dwarf master smith
 
 /datum/advclass/masterblacksmith
-	name = "Master Blacksmith"
-	tutorial = "A master blacksmith, able to forge steel like dough, and gold like clay. \
-	create masterful weapons and armor, be a legend among those who interest in your mighty forge"
+	name = "锻造大师"
+	tutorial = "你是一名锻造大师，钢铁在你手里像面团般可塑，黄金也如陶土般听话。\
+	去打造大师级的兵器与甲胄吧，成为所有向往你那座雄伟熔炉之人心中的传奇。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/masterblacksmith

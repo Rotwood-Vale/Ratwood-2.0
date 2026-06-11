@@ -1,8 +1,8 @@
 /obj/effect/proc_holder/spell/invoked/minion_order
-	name = "Order Minions"
-	desc = "Cast on turf to head in that direction ignoring all else. \
-	Cast on a minion to set to aggressive, cast on self to passive and follow, cast on target to focus them. \
-	Does not work on greater skeletons."
+	name = "号令仆从"
+	desc = "对地面施放可令仆从无视其他事物朝该方向前进。\
+	对仆从施放可切换其攻击姿态，对自己施放可令其被动跟随，对目标施放可令其集火该目标。\
+	对高阶骷髅无效。"
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "ZIZO"
@@ -73,24 +73,24 @@
 				switch (order_type)
 					if ("goto")
 						minion.ai_controller.set_blackboard_key(BB_TRAVEL_DESTINATION, target_location)
-						msg = "go to [target_location]"
+						msg = "前往[target_location]"
 					if ("follow")
 						minion.ai_controller.set_blackboard_key(BB_FOLLOW_TARGET, target)
-						msg = "follow you."
+						msg = "跟随你。"
 					if ("aggressive")
-						msg = "roam free."
+						msg = "自由游荡。"
 					if ("attack")
 						minion.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
-						msg = "attack [target.name]"
+						msg = "攻击[target.name]"
 					if("toggle_stance")
 						if(minion == target) // single minion clicked
 							if("neutral" in minion.faction) // currently passive → switch to aggressive
 								minion.faction -= "neutral"
-								msg = "[minion.name] becomes hostile to nearby strangers."
+								msg = "[minion.name]开始敌视附近的陌生人。"
 							else
 								minion.faction += "neutral"
-								msg = "[minion.name] calms down."
+								msg = "[minion.name]平静了下来。"
 	if(count>0)
-		to_chat(caster, "Ordered [count] minions to " + msg)
+		to_chat(caster, "已命令[count]个仆从" + msg)
 	else
-		to_chat(caster, "We weren't able to order anyone.")
+		to_chat(caster, "我们没能命令任何人。")

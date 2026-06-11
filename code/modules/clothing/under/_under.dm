@@ -1,5 +1,5 @@
 /obj/item/clothing/under
-	name = "under"
+	name = "内搭"
 	icon = 'icons/obj/clothing/under/default.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/under/default.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -60,7 +60,7 @@
 		sensor_mode = pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS)
 		if(ismob(loc))
 			var/mob/M = loc
-			to_chat(M,"<span class='warning'>The sensors on the [src] change rapidly!</span>")
+			to_chat(M,"<span class='warning'>[src]上的传感器快速变化着！</span>")
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
@@ -101,7 +101,7 @@
 		var/obj/item/clothing/accessory/A = I
 		if(attached_accessory)
 			if(user)
-				to_chat(user, "<span class='warning'>[src] already has an accessory.</span>")
+				to_chat(user, "<span class='warning'>[src]已经有一个配饰了。</span>")
 			return
 		else
 
@@ -113,7 +113,7 @@
 				return
 
 			if(user && notifyAttach)
-				to_chat(user, "<span class='notice'>I attach [I] to [src].</span>")
+				to_chat(user, "<span class='notice'>我把[I]别在[src]上。</span>")
 
 			var/accessory_color = attached_accessory.icon_state
 			accessory_overlay = mutable_appearance('icons/mob/clothing/accessories.dmi', "[accessory_color]")
@@ -137,9 +137,9 @@
 		var/obj/item/clothing/accessory/A = attached_accessory
 		attached_accessory.detach(src, user)
 		if(user.put_in_hands(A))
-			to_chat(user, "<span class='notice'>I detach [A] from [src].</span>")
+			to_chat(user, "<span class='notice'>我把[A]从[src]上取下。</span>")
 		else
-			to_chat(user, "<span class='notice'>I detach [A] from [src] and it falls on the floor.</span>")
+			to_chat(user, "<span class='notice'>我把[A]从[src]上取下，它掉到了地上。</span>")
 
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
@@ -150,7 +150,7 @@
 /obj/item/clothing/under/examine(mob/user)
 	. = ..()
 	if(freshly_laundered)
-		. += "It looks fresh and clean."
+		. += "看起来很干净清新。"
 /*	if(can_adjust)
 		if(adjusted == ALT_STYLE)
 			. += "Alt-click on [src] to wear it normally."

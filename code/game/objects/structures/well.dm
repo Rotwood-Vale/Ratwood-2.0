@@ -1,8 +1,8 @@
 //Fluff structures serve no purpose and exist only for enriching the environment. They can be destroyed with a wrench.
 
 /obj/structure/well
-	name = "well"
-	desc = "Far down inside the dark hole, water laps the walls of smooth brickwork."
+	name = "水井"
+	desc = "一口深井，可以从里面打水。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "well"
 	anchored = TRUE
@@ -18,12 +18,12 @@
 	if(istype(I, /obj/item/reagent_containers/glass/bucket))
 		var/obj/item/reagent_containers/glass/bucket/W = I
 		if(W.reagents.holder_full())
-			to_chat(user, span_warning("[W] is full."))
+			to_chat(user, span_warning("[W]已经装满了。"))
 			return
 		if(do_after(user, 1 SECONDS, target = src))
 			var/list/waterl = list(/datum/reagent/water = 250)
 			W.reagents.add_reagent_list(waterl)
-			to_chat(user, "<span class='notice'>I fill [W] from [src].</span>")
+			to_chat(user, "<span class='notice'>我从[src]里给[W]打满了水。</span>")
 			playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 80, FALSE)
 			return
 	else if(istype(I, /obj/item/reagent_containers/glass))
@@ -31,7 +31,7 @@
 	else ..()
 
 /obj/structure/well/poisoned
-	name = "dubious well"
+	name = "毒井"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "well"
@@ -48,12 +48,12 @@
 	if(istype(I, /obj/item/reagent_containers/glass/bucket))
 		var/obj/item/reagent_containers/glass/bucket/W = I
 		if(W.reagents.holder_full())
-			to_chat(user, span_warning("[W] is full."))
+			to_chat(user, span_warning("[W]已经装满了。"))
 			return
 		if(do_after(user, 3 SECONDS, target = src))
 			var/list/waterl = list(/datum/reagent/water = 50, /datum/reagent/organpoison = 50)
 			W.reagents.add_reagent_list(waterl)
-			to_chat(user, "<span class='notice'>I fill [W] from [src]. The water looks vile, am I really going to drink this?</span>")
+			to_chat(user, "<span class='notice'>我从[src]里打起一桶泛着异色的污水。</span>")
 			playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 80, FALSE)
 			return
 	else if(istype(I, /obj/item/reagent_containers/glass))
@@ -61,8 +61,8 @@
 	else ..()
 
 /obj/structure/well/fountain
-	name = "water fountain"
-	desc = "A slightly more civilized alternative to drinking straight from a river."
+	name = "饮水喷泉"
+	desc = "一个比直接从河里喝水稍微文明一点的选择。"
 	icon = 'icons/roguetown/misc/64x64.dmi'
 	icon_state = "fountain"
 	layer = ABOVE_ALL_MOB_LAYER
@@ -92,7 +92,7 @@
 			var/mob/living/carbon/C = user
 			if(C.is_mouth_covered())
 				return
-		user.visible_message(span_info("[user] starts to drink from [src]."))
+		user.visible_message(span_info("[user]开始从[src]喝水。"))
 		playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 100, FALSE)
 		for(var/drink in 1 to 30)
 			if(drink_act(user, L))
@@ -115,8 +115,8 @@
 
 
 /obj/structure/well/fountainswamp
-	name = "water fountain"
-	desc = "Green-tinted bogwater dances through sheets of thick floating algae."
+	name = "沼泽喷泉"
+	desc = "一处带着沼泽腥气的喷泉，看起来水质很差。"
 	icon = 'icons/roguetown/misc/64x64.dmi'
 	icon_state = "fountain"
 	color = "#a3c2a8"
@@ -147,7 +147,7 @@
 			var/mob/living/carbon/C = user
 			if(C.is_mouth_covered())
 				return
-		user.visible_message(span_info("[user] starts to drink from [src]."))
+		user.visible_message(span_info("[user]开始从[src]喝水。"))
 		playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 100, FALSE)
 		drink_act(user, L)
 		return

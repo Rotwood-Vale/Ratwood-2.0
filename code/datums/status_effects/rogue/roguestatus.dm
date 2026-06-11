@@ -8,7 +8,7 @@
 	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/moodbad
-	name = "Stressed"
+	name = "压力沉重"
 	desc = ""
 	icon_state = "stressb"
 
@@ -19,7 +19,7 @@
 	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/moodvbad
-	name = "Max Stress"
+	name = "压力爆表"
 	desc = ""
 	icon_state = "stressvb"
 
@@ -30,7 +30,7 @@
 	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/moodgood
-	name = "Inner Peace"
+	name = "内心平静"
 	desc = ""
 	icon_state = "stressg"
 
@@ -41,6 +41,6 @@
 	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/moodvgood
-	name = "Max Peace"
+	name = "极致平静"
 	desc = ""
 	icon_state = "stressvg"

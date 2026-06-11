@@ -1,6 +1,6 @@
 /turf/open/floor/rogue/dunes
-	name = "sand"
-	desc = "Its course and rough, and it gets everywhere."
+	name = "沙子"
+	desc = "它又粗又糙，而且无处不在。"
 	icon = 'modular_deserttown/icons/desertfloor.dmi'
 	icon_state = "dune1"
 	footstep = FOOTSTEP_CARPET
@@ -199,8 +199,8 @@
 	mouse_opacity = 0
 
 /turf/open/floor/rogue/desert_grass
-	name = "desert grass"
-	desc = "Grass, barely."
+	name = "沙漠草"
+	desc = "勉强能算是草。"
 	icon = 'modular_deserttown/icons/desertfloor.dmi'
 	icon_state = "desertgrass"
 	layer = MID_TURF_LAYER
@@ -278,8 +278,8 @@
 	abstract_type = /turf/open/floor/rogue/deserttile
 
 /turf/open/floor/rogue/naturalstone/sandstone
-	name = "rough sandstone ground"
-	desc = "Rough sandstone that's been exposed to the air either through erosion or the swing of a pickaxe. Dust wisps through the cracks."
+	name = "粗糙的砂岩地面"
+	desc = "因侵蚀或镐头的敲击而暴露在空气中的粗糙砂岩。灰尘从裂缝中飘出。"
 	icon = 'modular_deserttown/icons/desertfloor.dmi'
 	smooth = SMOOTH_MORE
 	canSmoothWith = list(/turf/open/floor/rogue,

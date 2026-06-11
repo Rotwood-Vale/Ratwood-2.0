@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/longstrider
-	name = "Longstrider"
-	desc = "Grant yourself and any creatures adjacent to you free movement through rough terrain for 15 minutes."
+	name = "远行者之步"
+	desc = "赐予自己和相邻生物持续 15 分钟的崎岖地形自由通行能力。"
 	cost = 2
 	xp_gain = TRUE
 	school = "transmutation"
@@ -12,7 +12,7 @@
 	warnie = "spellwarning"
 	no_early_release = TRUE
 	spell_tier = 1 // Not direct combat useful but still good, replicated by polearm
-	invocations = list("Aranea Deambulatio")
+	invocations = list("长步远行。")
 	invocation_type = "whisper"
 	glow_color = GLOW_COLOR_BUFF
 	glow_intensity = GLOW_INTENSITY_LOW
@@ -23,7 +23,7 @@
 
 /obj/effect/proc_holder/spell/invoked/longstrider/cast(list/targets, mob/user = usr)
 
-	user.visible_message("[user] mutters an incantation and a dim pulse of light radiates out from them.")
+	user.visible_message("[user] 低声念出咒文，一圈黯淡光晕自其身上扩散开来。")
 
 	for(var/mob/living/L in range(1, usr))
 		L.apply_status_effect(/datum/status_effect/buff/longstrider)

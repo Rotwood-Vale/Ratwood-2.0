@@ -5,7 +5,7 @@
 		BB_FOLLOW_TARGET = null,
 		BB_ATTACK_TARGET = null,
 		BB_VISION_RANGE = BB_HOSTILE_VISION_RANGE,
-		BB_HOSTILE_ATTACK_WORD = "growls",
+		BB_HOSTILE_ATTACK_WORD = "低吼",
 	)
 	ai_movement = /datum/ai_movement/hybrid_pathing
 
@@ -77,7 +77,7 @@
 		blackboard[BB_HOSTILE_FRIEND] = null
 
 	if(pawn.Adjacent(pawn, new_friend))
-		new_friend.visible_message("<b>[pawn]</b> looks at [new_friend] in a friendly manner!", span_notice("[pawn] looks at you in a friendly manner!"))
+		new_friend.visible_message("<b>[pawn]</b>友好地看着[new_friend]！", span_notice("[pawn]友好地看着我！"))
 	blackboard[BB_HOSTILE_FRIEND] = friend_ref
 	RegisterSignal(new_friend, COMSIG_MOB_SAY, PROC_REF(check_verbal_command))
 
@@ -96,7 +96,7 @@
 	if(blackboard[BB_HOSTILE_FRIEND] == WEAKREF(user))
 		var/mob/living/living_pawn = pawn
 		if(!IS_DEAD_OR_INCAP(living_pawn))
-			examine_text += span_notice("[pawn.p_they(TRUE)] seem[pawn.p_s()] happy to see you!")
+			examine_text += span_notice("[pawn.p_they(TRUE)]见到我时似乎很高兴！")
 
 // next section is regarding commands
 
@@ -166,12 +166,12 @@
 	switch(command)
 		// heel: stop what you're doing, relax and try not to do anything for a little bit
 		if(COMMAND_STOP)
-			pawn.visible_message(span_notice("[pawn] [blackboard[BB_HOSTILE_ATTACK_WORD]] at [commander]'s command, and [pawn.p_they()] stop[pawn.p_s()] obediently, awaiting further orders."))
+			pawn.visible_message(span_notice("[pawn]听从[commander]的命令[blackboard[BB_HOSTILE_ATTACK_WORD]]了一声，随后乖乖停下等待进一步指示。"))
 			blackboard[BB_HOSTILE_ORDER_MODE] = HOSTILE_COMMAND_NONE
 			CancelActions()
 		// fetch: whatever the commander points to, try and bring it back
 		if(COMMAND_FOLLOW)
-			pawn.visible_message(span_notice("[pawn] [blackboard[BB_HOSTILE_ATTACK_WORD]] at [commander]'s command, and [pawn.p_they()] follow[pawn.p_s()] slightly in anticipation."))
+			pawn.visible_message(span_notice("[pawn]听从[commander]的命令[blackboard[BB_HOSTILE_ATTACK_WORD]]了一声，随后带着几分期待跟了上去。"))
 			CancelActions()
 			blackboard[BB_HOSTILE_ORDER_MODE] = HOSTILE_COMMAND_FOLLOW
 			blackboard[BB_FOLLOW_TARGET] = WEAKREF(commander)
@@ -182,7 +182,7 @@
 			queue_behavior(/datum/ai_behavior/follow)
 		// attack: harass whoever the commander points to
 		if(COMMAND_ATTACK)
-			pawn.visible_message(span_danger("[pawn] [blackboard[BB_HOSTILE_ATTACK_WORD]] at [commander]'s command, and [pawn.p_they()] growl[pawn.p_s()] intensely.")) // imagine getting intimidated by a corgi
+			pawn.visible_message(span_danger("[pawn]听从[commander]的命令[blackboard[BB_HOSTILE_ATTACK_WORD]]了一声，随后凶狠地咆哮起来。")) // imagine getting intimidated by a corgi
 			CancelActions()
 			blackboard[BB_HOSTILE_ORDER_MODE] = HOSTILE_COMMAND_ATTACK
 

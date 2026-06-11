@@ -1,7 +1,7 @@
 /datum/advclass/potter
-	name = "Potter"
-	tutorial = "You are a skilled artisan in the manipulation of ceramics, \
-	and their fashioning into a multitude of different objects and valuables, including glass."
+	name = "陶工"
+	tutorial = "你是一名精于陶艺的匠人，\
+	能将陶土塑成各式各样的器物与值钱货色，其中也包括玻璃制品。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/potter

@@ -84,11 +84,11 @@
 	var/is_worn_correctly = ((slot_flags & ITEM_SLOT_ARMOR) && H.wear_armor == src) || ((slot_flags & ITEM_SLOT_CLOAK) && H.cloak == src)
 
 	if(!is_worn_correctly)
-		to_chat(H, span_warning("I should put [src] on properly first."))
+		to_chat(H, span_warning("我应该先把[src]穿好。"))
 		return
 
 	if(H.head)
-		to_chat(H, span_warning("I need to take off my [H.head] first."))
+		to_chat(H, span_warning("我得先脱下[H.head]。"))
 		return
 
 	var/obj/item/clothing/head/hooded/new_hood = new hoodtype()
@@ -168,7 +168,7 @@
 	if(!can_use(usr))
 		return 0
 
-	to_chat(usr, span_notice("I toggle [src]'s [togglename]."))
+	to_chat(usr, span_notice("我切换了[src]的[togglename]。"))
 	if(src.hoodtoggled)
 		src.icon_state = "[initial(icon_state)]"
 		src.hoodtoggled = FALSE
@@ -183,4 +183,4 @@
 
 /obj/item/clothing/suit/toggle/examine(mob/user)
 	. = ..()
-	. += "Alt-click on [src] to toggle the [togglename]."
+	. += "按 Alt+点击[src]即可切换[togglename]。"

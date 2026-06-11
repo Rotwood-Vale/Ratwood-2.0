@@ -1,6 +1,6 @@
 /datum/advclass/witch
-	name = "Witch"
-	tutorial = "You are a witch, seen as wisefolk to some and a demon to many. Ostracized and sequestered for wrongthinks or outright heresy, your potions are what the commonfolk turn to when all else fails, and for this they tolerate you — at an arm's length. Take care not to end 'pon a pyre, for the church condemns your left handed arts."
+	name = "女巫"
+	tutorial = "你是一名女巫，有人把你当作贤者，也有更多人视你为妖魔。因异端思想乃至公然邪说而被排斥、被隔绝于众人之外，可当凡人再无别的法子时，他们最终还是会转而求助于你的药剂，也正因如此，他们才勉强容忍你的存在，当然，始终隔着一臂之遥。小心别落得被绑上火刑柱的下场，教会可从不会宽恕你这条左道。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/witch
@@ -51,28 +51,28 @@
 		H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 6, TRUE)
 
 	var/hats = list(
-		"Witch Hat" 		= /obj/item/clothing/head/roguetown/witchhat,
-		"Witch Hat (Old)"	= /obj/item/clothing/head/roguetown/witchhat/old,
-		"None"
+		"女巫帽" 		= /obj/item/clothing/head/roguetown/witchhat,
+		"女巫帽（旧）"	= /obj/item/clothing/head/roguetown/witchhat/old,
+		"不戴"
 	)
-	var/hatchoice = input(H, "Choose your hat.", "WITCH ATTIRE") as anything in hats
-	if(hatchoice != "None")
+	var/hatchoice = input(H, "选择你的帽子。", "女巫装束") as anything in hats
+	if(hatchoice != "不戴")
 		head = hats[hatchoice]
 
-	var/classes = list("Old Magick", "Godsblood", "Mystagogue")
-	var/classchoice = input("How do your powers manifest?", "THE OLD WAYS") as anything in classes
+	var/classes = list("古老魔法", "神血", "秘仪师")
+	var/classchoice = input("你的力量如何显现？", "古老之道") as anything in classes
 
-	var/shapeshifts = list("Zad", "Cat", "Cat (Black)", "Bat", "Cabbit", "Small Rous", "Lesser Venard", "Lesser Volf", "Frog")
-	var/shapeshiftchoice = input("What form does your second skin take?", "THE OLD WAYS") as anything in shapeshifts
+	var/shapeshifts = list("Zad", "猫", "猫（黑）", "蝙蝠", "Cabbit", "小型 Rous", "小型 Venard", "小型 Volf", "青蛙")
+	var/shapeshiftchoice = input("你的第二层皮会化作什么形态？", "古老之道") as anything in shapeshifts
 
 	switch (classchoice)
-		if("Old Magick")
+		if("古老魔法")
 			// the original witch: arcyne t2 (buffed from t1) with 6 spellpoints
 			ADD_TRAIT(H, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
 			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 			H.mind?.adjust_spellpoints(9) // twelve if you pick arcyne potential
 			neck = null
-		if("Godsblood")
+		if("神血")
 			//miracle witch: capped at t2 miracles. cannot pray to regain devo, but has high innate regen because of it (2 instead of 1 from major)
 			var/datum/devotion/D = new /datum/devotion/(H, H.patron)
 			H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
@@ -101,7 +101,7 @@
 					neck = /obj/item/clothing/neck/roguetown/psicross/xylix
 				else
 					neck = /obj/item/clothing/neck/roguetown/psicross/wood
-		if("Mystagogue")
+		if("秘仪师")
 			// hybrid arcane/holy witch with t1 arcane and t1 miracles, but less spellpoints, lower max devotion and less regen (0.5). Still can't pray.
 			var/datum/devotion/D = new /datum/devotion/(H, H.patron)
 			H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
@@ -138,25 +138,25 @@
 		switch (shapeshiftchoice)
 			if("Zad")
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/witch/crow)
-			if("Cat")
+			if("猫")
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/witch/cat)
-			if("Cat (Black)")
+			if("猫（黑）")
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/witch/cat/black)
-			if("Bat")
+			if("蝙蝠")
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/witch/bat)
-			if("Lesser Volf")
+			if("小型 Volf")
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/witch/lesser_wolf)
-			if("Lesser Venard")
+			if("小型 Venard")
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/witch/lesser_vernard)
-			if("Small Rous")
+			if("小型 Rous")
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/witch/rous)
 			if("Cabbit")
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/witch/cabbit)
-			if("Frog")
+			if("青蛙")
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/witch/frog)
 
 		switch (classchoice)
-			if("Old Magick")
+			if("古老魔法")
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/arcynebolt)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/aerosolize)
@@ -186,13 +186,13 @@
 			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/witch/cast(list/targets, mob/user = usr)
-	user.visible_message(span_warning("[user] begins to twist and contort!"), span_notice("I begin to transform..."))
+	user.visible_message(span_warning("[user]的身形开始扭曲变形！"), span_notice("我开始变形了……"))
 	return ..()
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/witch/Shapeshift(mob/living/caster)
 	// Do-after before transforming
 	if(!do_after(caster, 3 SECONDS, target = caster))
-		to_chat(caster, span_warning("Transformation interrupted!"))
+		to_chat(caster, span_warning("变形被打断了！"))
 		revert_cast(caster)  // Refund the cooldown
 		return
 
@@ -202,21 +202,21 @@
 /obj/effect/proc_holder/spell/targeted/shapeshift/witch/Restore(mob/living/shape)
 	// Check if restrained before allowing revert
 	if(shape.restrained(ignore_grab = FALSE))
-		to_chat(shape, span_warn("I am restrained, I can't transform back!"))
+		to_chat(shape, span_warn("我被束缚住了，没法变回去！"))
 		revert_cast(shape)  // Refund the cooldown
 		return
 
 	// Add do-after for witches when reverting
-	shape.visible_message(span_warning("[shape] begins to shift back!"), span_notice("I begin to transform..."))
+	shape.visible_message(span_warning("[shape]开始变回原状！"), span_notice("我开始变形了……"))
 	if(!do_after(shape, 3 SECONDS, target = shape))
-		to_chat(shape, span_warning("Transformation revert interrupted!"))
+		to_chat(shape, span_warning("恢复原形被打断了！"))
 		revert_cast(shape)  // Refund the cooldown
 		return
 
 	return ..()
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/witch/cat
-	name = "Cat Form"
+	name = "猫形态"
 	desc = ""
 	overlay_state = "cat_transform"
 	gesture_required = TRUE
@@ -235,7 +235,7 @@
 	do_gib = FALSE
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/witch/lesser_wolf
-	name = "Lesser Volf Form"
+	name = "小型 沃尔夫 形态"
 	desc = ""
 	overlay_state = "volf_transform"
 	gesture_required = TRUE
@@ -249,8 +249,8 @@
 	show_true_name = FALSE
 
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf/witch_shifted
-	name = "lesser volf"
-	desc = "A smaller, runtier variant of the classic volf that hounds the woods nearby. Rarely seen around these parts, and doesn't look nearly as dangerous as its larger counterparts. This one has a peculiar intelligence in its yellow eyes..."
+	name = "小型 沃尔夫"
+	desc = "经典 沃尔夫 的一种更小、更瘦弱的变种，时常在附近林地间游荡。这里很少见到它们，而它看上去也远没有那些体型更大的同类危险。只是这只黄色眼睛里，透着股异样的灵性……"
 	STASPD = 15
 	STASTR = 3
 	STACON = 5
@@ -260,8 +260,8 @@
 	defprob = 70
 
 /mob/living/simple_animal/pet/cat/witch_shifted
-	name = "aloof cat"
-	desc = "A bored-seeming feline. This one has a peculiar intelligence in its green eyes..."
+	name = "冷淡的猫"
+	desc = "一只看起来百无聊赖的猫科动物。它那双绿色眼睛里，透着股异样的灵性……"
 	defprob = 90
 	STASPD = 18
 	STASTR = 1
@@ -271,8 +271,8 @@
 	melee_damage_upper = 5
 
 /mob/living/simple_animal/pet/cat/rogue/black/witch_shifted
-	name = "voidblack cat"
-	desc = "Supposedly sacred to Necra, and just as interested in rats as their lesser counterparts. This one has a strange intelligence behind its dark, wide eyes..."
+	name = "漆黑猫"
+	desc = "据说是 内克拉 所钟爱的圣兽，对老鼠的兴趣也不比其他同类少。它那双漆黑而圆睁的眼睛后头，藏着种古怪的聪慧……"
 	defprob = 90
 	STASPD = 18
 	STASTR = 1
@@ -282,31 +282,31 @@
 	melee_damage_upper = 5
 
 /datum/intent/simple/claw/witch_cat
-	name = "scratch"
-	attack_verb = list("scratches", "claws")
+	name = "抓挠"
+	attack_verb = list("抓挠", "claws")
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/witch/lesser_vernard
-	name = "Lesser Vernard Form"
+	name = "小型 Vernard 形态"
 	desc = ""
 	overlay_state = "vernard_transform"
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/rogue/fox/witch_shifted
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/witch/rous
-	name = "Small Rous Form"
+	name = "小型 Rous 形态"
 	desc = ""
 	overlay_state = "rous_transform"
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/smallrat/witch_shifted
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/witch/cabbit
-	name = "Cabbit Form"
+	name = "卡比特形态"
 	desc = ""
 	overlay_state = "cabbit_transform"
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/cabbit/witch_shifted
 
 
 /mob/living/simple_animal/hostile/retaliate/rogue/fox/witch_shifted
-	name = "lesser vernard"
-	desc = "A smaller, runtier variant of the sneaky vernards that skulk the woods nearby. Rarely seen around these parts, and doesn't look nearly as dangerous as its larger counterparts. This one has a peculiar intelligence in its yellow eyes..."
+	name = "小型 vernard"
+	desc = "附近林地中潜行出没的狡黠 vernard 也有这种更小、更瘦弱的变种。这里很少见到它们，而它看上去也远没有那些体型更大的同类危险。只是这只黄色眼睛里，透着股异样的灵性……"
 	defprob = 90
 	STASPD = 18
 	STASTR = 2
@@ -317,8 +317,8 @@
 	defprob = 70
 
 /mob/living/simple_animal/hostile/retaliate/smallrat/witch_shifted
-	name = "small rous"
-	desc = "Supposedly sacred to Pestra, these small and occasionally pestilent creachurs are commonly found in pantries and ships. This one seems to be a bit more smarter than the others..."
+	name = "小型 rous"
+	desc = "据说这些小小的、有时还会传播疫病的生灵是 佩斯特拉 的圣物，通常出没于食品储藏间和船只之中。可这一只看起来似乎比其他同类更聪明一些……"
 	defprob = 90
 	STASPD = 18
 	STASTR = 1
@@ -328,8 +328,8 @@
 	melee_damage_upper = 2
 
 /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/cabbit/witch_shifted
-	name = "lesser cabbit"
-	desc = "Seeing one of these quick beasts is said to bring Xylix's fortune, along with their feet. It looks weak and innocent, and incredibly adorable."
+	name = "小型卡比特"
+	desc = "据说只要见到这种迅捷的小兽，再加上它们的脚，就能招来 赛利克斯 的好运。它看上去弱小无辜，而且可爱得过分。"
 	defprob = 90
 	STASPD = 20
 	STASTR = 1
@@ -339,7 +339,7 @@
 	melee_damage_upper = 2
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/witch/bat
-	name = "Bat Form"
+	name = "蝙蝠形态"
 	desc = ""
 	overlay_state = "bat_transform"
 	recharge_time = 50
@@ -352,7 +352,7 @@
 	show_true_name = FALSE
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/witch/crow
-	name = "Zad Form"
+	name = "Zad 形态"
 	overlay_state = "zad"
 	desc = ""
 	gesture_required = TRUE
@@ -368,18 +368,18 @@
 	sound = 'sound/vo/mobs/bird/birdfly.ogg'
 
 /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/frog
-	name = "frog"
-	desc = "Slimy creature of the bogs."
+	name = "青蛙"
+	desc = "沼地中的黏滑小生物。"
 	icon_state = "frog"
 	icon_living = "frog"
 	icon_dead = "frog_dead"
-	speak = list("ribbit", "croak")
-	speak_emote = list("ribbit", "croak")
-	emote_hear = list("ribbits.", "croaks.")
-	emote_see = list("hops in a circle.", "shakes.")
+	speak = list("呱", "呱呱")
+	speak_emote = list("呱", "呱呱")
+	emote_hear = list("呱。", "呱呱。")
+	emote_see = list("蹦跳了一圈。", "抖了抖身子。")
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/witch/frog
-	name = "Frog Form"
+	name = "青蛙形态"
 	desc = ""
 	overlay_state = "blindness"
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/frog

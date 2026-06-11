@@ -1,6 +1,6 @@
 /datum/advclass/trader/doomsayer
-	name = "Doomsayer"
-	tutorial = "THE WORLD IS ENDING!!! At least, that's what you want your clients to believe. You'll offer them a safe place in the new world, of course - built by yours truly."
+	name = "末日鼓吹者"
+	tutorial = "世界末日要到了！！！至少，你得让客户们相信这一点。当然了，你会在新世界里卖给他们一个安全去处，而且还是由你亲手打造的。"
 	outfit = /datum/outfit/job/roguetown/adventurer/doomsayer
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	category_tags = list(CTAG_PILGRIM, CTAG_COURTAGENT, CTAG_LICKER_WRETCH)
@@ -27,7 +27,7 @@
 
 /datum/outfit/job/roguetown/adventurer/doomsayer/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("THE WORLD IS ENDING!!! At least, that's what you want your clients to believe. You'll offer them a safe place in the new world, of course - built by yours truly."))
+	to_chat(H, span_warning("世界末日要到了！！！至少，你得让客户们相信这一点。当然了，你会在新世界里卖给他们一个安全去处，而且还是由你亲手打造的。"))
 	head = /obj/item/clothing/head/roguetown/roguehood/black
 	mask = /obj/item/clothing/mask/rogue/skullmask
 	shoes = /obj/item/clothing/shoes/roguetown/boots

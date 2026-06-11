@@ -1,7 +1,7 @@
 /datum/advclass/heartfelt/retinue/servant
-	name = "Heartfeltian Servant"		
-	tutorial = "You are Servant of Heartfelt, Serant of a once-prosperous barony now in ruin. \
-	Guided by the Magos, you journey to these lands, seeking aid to restore your domain to its former glory, or perhaps claim a new throne."
+	name = "赤心 仆役"		
+	tutorial = "你是 赤心 的仆役，侍奉着一座昔日繁荣、如今却已倾颓的男爵领。\
+	在 Magos 的引领下，你来到这片土地，寻求援助以重振旧土昔日荣光，或许也为自己夺下一座新的王座。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	outfit = /datum/outfit/job/roguetown/heartfelt/retinue/servant
@@ -63,4 +63,3 @@
 	/obj/item/flint = 1,
 	/obj/item/rogueweapon/scabbard/sheath = 1,
 	)
-

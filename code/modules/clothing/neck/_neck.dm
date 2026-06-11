@@ -1,5 +1,5 @@
 /obj/item/clothing/neck
-	name = "necklace"
+	name = "项链"
 	icon = 'icons/obj/clothing/neck.dmi'
 	body_parts_covered = NECK
 	slot_flags = ITEM_SLOT_NECK
@@ -19,7 +19,7 @@
 //				. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
 /obj/item/clothing/neck/tie
-	name = "tie"
+	name = "领带"
 	desc = ""
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "bluetie"
@@ -28,34 +28,34 @@
 	custom_price = 15
 
 /obj/item/clothing/neck/tie/blue
-	name = "blue tie"
+	name = "蓝色领带"
 	icon_state = "bluetie"
 
 /obj/item/clothing/neck/tie/red
-	name = "red tie"
+	name = "红色领带"
 	icon_state = "redtie"
 
 /obj/item/clothing/neck/tie/black
-	name = "black tie"
+	name = "黑色领带"
 	icon_state = "blacktie"
 
 /obj/item/clothing/neck/tie/horrible
-	name = "horrible tie"
+	name = "糟糕的领带"
 	desc = ""
 	icon_state = "horribletie"
 
 /obj/item/clothing/neck/tie/detective
-	name = "loose tie"
+	name = "松垮领带"
 	desc = ""
 	icon_state = "detective"
 
 /obj/item/clothing/neck/stethoscope
-	name = "stethoscope"
+	name = "听诊器"
 	desc = ""
 	icon_state = "stethoscope"
 
 /obj/item/clothing/neck/stethoscope/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] wont hear much!"))
+	user.visible_message(span_suicide("[user]把[src]贴在[user.p_their()]胸口！看起来[user.p_they()]什么也听不到！"))
 	return OXYLOSS
 
 /obj/item/clothing/neck/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
@@ -63,27 +63,27 @@
 		if(user.used_intent.type == INTENT_HELP)
 			var/body_part = parse_zone(user.zone_selected)
 
-			var/heart_strength = span_danger("no")
-			var/lung_strength = span_danger("no")
+			var/heart_strength = span_danger("没有")
+			var/lung_strength = span_danger("没有")
 
 			var/obj/item/organ/heart/heart = M.getorganslot(ORGAN_SLOT_HEART)
 			var/obj/item/organ/lungs/lungs = M.getorganslot(ORGAN_SLOT_LUNGS)
 
 			if(!(M.stat == DEAD || (HAS_TRAIT(M, TRAIT_FAKEDEATH))))
 				if(heart && istype(heart))
-					heart_strength = span_danger("an unstable")
+					heart_strength = span_danger("不稳定的")
 					if(heart.beating)
-						heart_strength = "a healthy"
+						heart_strength = "健康的"
 				if(lungs && istype(lungs))
-					lung_strength = span_danger("strained")
+					lung_strength = span_danger("吃力的")
 					if(!(M.failed_last_breath || M.losebreath))
-						lung_strength = "healthy"
+						lung_strength = "平稳的"
 
 			if(M.stat == DEAD && heart && world.time - M.timeofdeath < DEFIB_TIME_LIMIT * 10)
-				heart_strength = span_boldannounce("a faint, fluttery")
+				heart_strength = span_boldannounce("微弱颤动的")
 
-			var/diagnosis = (body_part == BODY_ZONE_CHEST ? "You hear [heart_strength] pulse and [lung_strength] respiration." : "You faintly hear [heart_strength] pulse.")
-			user.visible_message(span_notice("[user] places [src] against [M]'s [body_part] and listens attentively."), span_notice("I place [src] against [M]'s [body_part]. [diagnosis]"))
+			var/diagnosis = (body_part == BODY_ZONE_CHEST ? "你听到了[heart_strength]脉搏和[lung_strength]呼吸。" : "你隐约听到了[heart_strength]脉搏。")
+			user.visible_message(span_notice("[user]将[src]贴在[M]的[body_part]上，专注地听着。"), span_notice("我把[src]贴在[M]的[body_part]上。[diagnosis]"))
 			return
 	return ..(M,user)
 
@@ -92,54 +92,54 @@
 ///////////
 
 /obj/item/clothing/neck/scarf //Default white color, same functionality as beanies.
-	name = "white scarf"
+	name = "白色围巾"
 	icon_state = "scarf"
 	desc = ""
 	dog_fashion = /datum/dog_fashion/head
 	custom_price = 10
 
 /obj/item/clothing/neck/scarf/black
-	name = "black scarf"
+	name = "黑色围巾"
 	icon_state = "scarf"
 	color = "#4A4A4B" //Grey but it looks black
 
 /obj/item/clothing/neck/scarf/pink
-	name = "pink scarf"
+	name = "粉色围巾"
 	icon_state = "scarf"
 	color = "#F699CD" //Pink
 
 /obj/item/clothing/neck/scarf/red
-	name = "red scarf"
+	name = "红色围巾"
 	icon_state = "scarf"
 	color = "#D91414" //Red
 
 /obj/item/clothing/neck/scarf/green
-	name = "green scarf"
+	name = "绿色围巾"
 	icon_state = "scarf"
 	color = "#5C9E54" //Green
 
 /obj/item/clothing/neck/scarf/darkblue
-	name = "dark blue scarf"
+	name = "深蓝色围巾"
 	icon_state = "scarf"
 	color = "#1E85BC" //Blue
 
 /obj/item/clothing/neck/scarf/purple
-	name = "purple scarf"
+	name = "紫色围巾"
 	icon_state = "scarf"
 	color = "#9557C5" //Purple
 
 /obj/item/clothing/neck/scarf/yellow
-	name = "yellow scarf"
+	name = "黄色围巾"
 	icon_state = "scarf"
 	color = "#E0C14F" //Yellow
 
 /obj/item/clothing/neck/scarf/orange
-	name = "orange scarf"
+	name = "橙色围巾"
 	icon_state = "scarf"
 	color = "#C67A4B" //Orange
 
 /obj/item/clothing/neck/scarf/cyan
-	name = "cyan scarf"
+	name = "青色围巾"
 	icon_state = "scarf"
 	color = "#54A3CE" //Cyan
 
@@ -147,33 +147,33 @@
 //Striped scarves get their own icons
 
 /obj/item/clothing/neck/scarf/zebra
-	name = "zebra scarf"
+	name = "斑马纹围巾"
 	icon_state = "zebrascarf"
 
 /obj/item/clothing/neck/scarf/christmas
-	name = "christmas scarf"
+	name = "圣诞围巾"
 	icon_state = "christmasscarf"
 
 //The three following scarves don't have the scarf subtype
 //This is because Ian can equip anything from that subtype
 //However, these 3 don't have corgi versions of their sprites
 /obj/item/clothing/neck/stripedredscarf
-	name = "striped red scarf"
+	name = "红色条纹围巾"
 	icon_state = "stripedredscarf"
 	custom_price = 10
 
 /obj/item/clothing/neck/stripedgreenscarf
-	name = "striped green scarf"
+	name = "绿色条纹围巾"
 	icon_state = "stripedgreenscarf"
 	custom_price = 10
 
 /obj/item/clothing/neck/stripedbluescarf
-	name = "striped blue scarf"
+	name = "蓝色条纹围巾"
 	icon_state = "stripedbluescarf"
 	custom_price = 10
 
 /obj/item/clothing/neck/petcollar
-	name = "pet collar"
+	name = "宠物项圈"
 	desc = ""
 	icon_state = "petcollar"
 	var/tagname = null
@@ -184,7 +184,7 @@
 	return ..()
 
 /obj/item/clothing/neck/petcollar/attack_self(mob/user)
-	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
+	tagname = copytext(sanitize(input(user, "你想更改铭牌上的名字吗？", "Name your new pet", "小斑点") as null|text),1,MAX_NAME_LEN)
 	name = "[initial(name)] - [tagname]"
 
 //////////////
@@ -192,7 +192,7 @@
 //////////////
 
 /obj/item/clothing/neck/necklace/dope
-	name = "gold necklace"
+	name = "金项链"
 	desc = ""
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "bling"
@@ -214,7 +214,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(C.get_item_by_slot(SLOT_NECK) == src)
-			to_chat(user, span_warning("I can't untie [src] while wearing it!"))
+			to_chat(user, span_warning("我穿着[src]时没法把它解开！"))
 			return
 		if(user.is_holding(src))
 			var/obj/item/clothing/mask/bandana/newBand = new sourceBandanaType(user)
@@ -222,6 +222,6 @@
 			var/oldName = src.name
 			qdel(src)
 			user.put_in_hand(newBand, currentHandIndex)
-			user.visible_message(span_notice("I untie [oldName] back into a [newBand.name]."), span_notice("[user] unties [oldName] back into a [newBand.name]."))
+			user.visible_message(span_notice("我把[oldName]解开，重新变成[newBand.name]。"), span_notice("[user]把[oldName]解开，重新变成[newBand.name]。"))
 		else
-			to_chat(user, span_warning("I must be holding [src] in order to untie it!"))
+			to_chat(user, span_warning("我必须先把[src]拿在手里才能解开它！"))

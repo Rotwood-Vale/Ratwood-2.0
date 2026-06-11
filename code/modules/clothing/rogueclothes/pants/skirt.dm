@@ -1,7 +1,7 @@
 
 /obj/item/clothing/under/roguetown/skirt
-	name = "skirt"
-	desc = "Long, flowing, and modest."
+	name = "裙子"
+	desc = "修长、飘逸，而且得体。"
 	icon_state = "skirt"
 	item_state = "skirt"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/pants.dmi'
@@ -11,7 +11,7 @@
 	salvage_amount = 1
 
 /obj/item/clothing/under/roguetown/skirt/random
-	name = "skirt"
+	name = "裙子"
 
 /obj/item/clothing/under/roguetown/skirt/random/Initialize(mapload)
 	color = pick("#6b5445", "#435436", "#704542", "#79763f", CLOTHING_BLUE)

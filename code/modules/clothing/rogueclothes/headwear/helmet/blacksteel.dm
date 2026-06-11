@@ -1,6 +1,6 @@
 /obj/item/clothing/head/roguetown/helmet/blacksteel/modern/armet
-	name = "blacksteel armet"
-	desc = "An armet forged of durable blacksteel, utilizing a modern design."
+	name = "黑钢阿米特盔"
+	desc = "一顶以坚固黑钢铸成、采用现代设计的阿米特盔。"
 	body_parts_covered = FULL_HEAD
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
@@ -20,8 +20,8 @@
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)
 
 /obj/item/clothing/head/roguetown/helmet/blacksteel/bucket
-	name = "blacksteel bucket helm"
-	desc = "A bucket helmet forged of durable blacksteel. None shall pass.."
+	name = "黑钢桶盔"
+	desc = "一顶以坚固黑钢铸成的桶盔。无人得以通过……"
 	body_parts_covered = FULL_HEAD
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
@@ -37,8 +37,8 @@
 	smelt_bar_num = 2
 
 /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns
-	name = "crown of psydonian thorns"
-	desc = "Thorns fashioned from pliable yet durable blacksteel - woven and interlinked, fashioned to be worn upon the head."
+	name = "赛顿荆棘冠"
+	desc = "以柔韧而坚固的黑钢编结交织而成的荆棘，专为佩戴于头部而打造。"
 	body_parts_covered = HAIR | HEAD
 	icon_state = "psybarbs"
 	item_state = "psybarbs"
@@ -56,7 +56,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns/attack_self(mob/living/user)
 	. = ..()
-	user.visible_message(span_warning("[user] starts to reshape the [src]."))
+	user.visible_message(span_warning("[user]开始重塑[src]。"))
 	if(do_after(user, 4 SECONDS))
 		var/obj/item/clothing/wrists/roguetown/bracers/psythorns/P = new /obj/item/clothing/wrists/roguetown/bracers/psythorns(get_turf(src.loc))
 		if(user.is_holding(src))
@@ -66,5 +66,5 @@
 		user.adjustBruteLoss(25)
 		qdel(src)
 	else
-		user.visible_message(span_warning("[user] stops reshaping [src]."))
+		user.visible_message(span_warning("[user]停止重塑[src]。"))
 		return

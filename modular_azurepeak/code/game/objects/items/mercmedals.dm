@@ -1,6 +1,6 @@
 /obj/item/merctoken
-	name = "writ of commendation"
-	desc = "A small, palm-fitting bound scroll - a writ of commendation for a mercenary of the Realm."
+	name = "嘉奖状"
+	desc = "一卷小巧到足以置于掌中的装订卷轴，是授予王国佣兵的嘉奖文书。"
 	icon_state = "merctoken"
 	icon = 'modular_azurepeak/icons/clothing/mercmedals.dmi'
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
@@ -18,33 +18,33 @@
 /obj/item/merctoken/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	if(istype(P, /obj/item/natural/thorn) || istype(P, /obj/item/natural/feather))
 		if(!user.can_read(src))
-			to_chat(user, "<span class='warning'>Even a reader would find these verba incomprehensible.</span>")
+			to_chat(user, "<span class='warning'>就算识字之人也会觉得这些词句难以理解。</span>")
 			return
 		if(signed == 1)
-			to_chat(user, "<span class='warning'>This writ has already been signed.</span>")
+			to_chat(user, "<span class='warning'>这份文书已经签过名了。</span>")
 			return
 		if(user.can_read(src))
 			if(user.mind.assigned_role == "Mercenary")
-				to_chat(user, "<span class='warning'>...have I really stooped so low as to sign my own commendation?</span>")
+				to_chat(user, "<span class='warning'>......我竟然已经沦落到给自己的嘉奖状签名了吗？</span>")
 				return
 			if(user.mind.assigned_role != "Mercenary") // AZURE: anyone can hire a mercenary
 				signee = user.real_name
 				signeejob = user.mind.assigned_role
-				visible_message("<span class='warning'>[user] writes their name down on the token.</span>")
+				visible_message("<span class='warning'>[user]在凭证上写下了自己的名字。</span>")
 				playsound(src, 'sound/items/write.ogg', 100, FALSE)
-				desc = "A small, palm-fitting bound scroll that can be sent by mail to the Guild. Most of the fine print is unintelligible, save for one bold SIGNEE: [signee], [signeejob] of The Realm."
+				desc = "一卷小巧到足以置于掌中的装订卷轴，可通过邮递送往公会。大部分细则都难以辨认，唯有一行粗体签署人清晰可见：[signee]，[signeejob]，王国所属。"
 				signed = 1
 				return
 		else
 			if(signed == 0)
-				to_chat(user, "<span class='warning'>This could be signed with a quill... or a thorn, if one was desperate.</span>")
+				to_chat(user, "<span class='warning'>这东西可以用羽笔签署......若实在没办法，用刺也行。</span>")
 				return
 			return
 
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal
-	name = "mercenary medal"
-	desc = "A medal commemorating a job \"well\" done."
+	name = "佣兵勋章"
+	desc = "一枚纪念某份“圆满”差事的勋章。"
 	icon = 'modular_azurepeak/icons/clothing/mercmedals.dmi'
 	icon_state = "gryphon"
 	//dropshrink = 0.75
@@ -53,89 +53,83 @@
 	sellprice = 15
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/grenzelhoft
-	name = "imperial gryphon"
-	desc = "A parody of the brass medal issued to Grenzelhoftian soldiers of great honor and renown. Frequently adopted as medals by other, younger guilds among the mercenaries of PSYDONIA, with slight adjustment."
+	name = "帝国狮鹫"
+	desc = "这是对授予格伦泽尔霍夫特荣耀名将之黄铜勋章的一种戏仿。经稍加改动后，它常被普赛多尼亚佣兵中的其他新兴公会拿来作为自家勋章。"
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/blackoak
-	name = "guardian's seedpouch"
-	desc = "A pouch, sealed tight, bearing the acorn of an oak native to the vale. May your end be a new beginning for the Realm."
+	name = "守望者种囊"
+	desc = "一个被严密封好的小囊，装着谷地本土橡树的橡果。愿你的终结成为王国新的开始。"
 	icon_state = "blackoak_pouch"
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/condottiero
-	name = "condottiero's hilt"
-	desc = "A beautiful silver necklace with pea-sized rontz inlays. Each is a work of art in itself; handcrafted by a master jeweler of Etrusca. This is the blade to which the \
-	condottiero has sworn their lyfe."
+	name = "佣兵队长剑柄"
+	desc = "一条精美的银项链，镶着豌豆大小的隆兹石。每一颗本身都是艺术品，出自伊特鲁斯卡珠宝大师之手。这便是佣兵队长誓以性命追随的剑之象征。"
 	icon_state = "condo_blade"
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/desertrider
-	name = "desert rider's sash"
-	desc = "A luxuriant golden chain worn about the shoulders or neck, a sign of high honor in distant Zybantium. Some claim these are a testament to the origins of the Desert Riders in distant slave-fighting pits, but \
-	others think them marks of favor from the highest echelons of the Empire. The desert riders confirm neither rumour."
+	name = "沙漠骑手绶带"
+	desc = "一条奢华的金链，可披在肩头或绕于颈间，是遥远兹班图的崇高荣誉象征。有人说它见证了沙漠骑手源自遥远奴隶斗坑的出身，也有人认为这是帝国上层授予宠信的标志。沙漠骑手本人对此两不承认。"
 	icon_state = "rider_sash"
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/forlorn
-	name = "laughing volf medal"
-	desc ="A trinket bearing the snarling visage of a volf and bolt, a mark of distinction among the Forlorn Hope. Often taken from the dead and issued anew to the living, each bearing \
-	lyfetymes of nicks and scratches."
+	name = "笑狼勋章"
+	desc ="一枚饰有怒嚎沃尔夫与闪电纹样的小饰物，是死士先锋中的荣誉标识。它们常从死者身上取下，再颁给生者，每一枚都带着经年累月留下的磕痕与刮痕。"
 	icon_state = "forlorn_dogmedal"
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/freifechter
-	name = "freifechter's obol"
-	desc = "A descendant of the oft-forgotten psilen, with a hole through one end for hanging on a string. With the advent of mammon as the Western Continent's currency of choice, \
-	they find new lyfe worn as marks of skill by freifechters."
+	name = "自由斗剑团钱币"
+	desc = "一种久已几近被遗忘的普西伦古币后裔，一端穿有孔洞，可系绳佩戴。随着玛门成为西大陆通行的主要货币，这类旧币又以自由斗剑团技艺标识的身份获得了新生。"
 	icon_state = "freif_obol"
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/atgervi
-	name = "northmanne's idol"
-	desc = "A humble token of tightly-wound canvas, fur, and wood. A piece of home, clutched tight against the chest. Feel its heart beat in tyme with your own. Even here, in this distant realm, \
-	the gods walk, and they walk with you."
+	name = "北地人的偶像"
+	desc = "一枚以紧缠帆布、毛皮与木料制成的朴素护符。那是故乡的一角，被人紧紧按在胸前。感受它的心跳与你自身同拍。纵在这片遥远异域，诸神仍在行走，而他们也与你同在。"
 	icon_state = "atgervi_idol"
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/grudgebearer
-	name = "grudgebearer's keepsake"
-	desc = "\"Fergive? FERGET? PFAH! GO T'HEL!\""
+	name = "怨仇负者遗物"
+	desc = "“原谅？忘掉？呸！下地狱去吧！”"
 	icon_state = "grudge_keepsake"
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/underdweller
-	name = "underdweller's broken compass"
-	desc = "The underdwellers claim this will always point you exactly where you need to go. If it doesn't work, that's just an issue of skill and mindset."
+	name = "地下居者的破损罗盘"
+	desc = "地底住民声称，这东西总会精准指向你该去的地方。要是没用，那问题只在于你的技艺与心境。"
 	icon_state = "under_compass"
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/kazengun
 	// NOT CURRENTLY IMPLEMENTED
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/routier
-	name = "otavan silvered halo"
-	desc = "A fragment of blessed Otavan steel, carefully wrought into an unusual halo-pattern. While it won't do any good against verevolfs or demons, it will remind a distant routier of what they're fighting for: \
-	home, blessed Otava, and their Weeping God, PSYDON."
+	name = "奥塔万镀银光环"
+	desc = "一块受祝福的奥塔万钢片，被精心锻成异样的光环形制。它或许挡不住维尔沃夫或恶魔，却能提醒远行的巡战骑士他们为何而战：家乡、受福的奥塔瓦，以及他们哭泣的神，普赛顿。"
 	icon_state = "routier_halo"
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/steppesman
-	name = "steppesman's ungent"
-	desc = "A tightly sealed vial of dirt. These are taken from the land of the Steppesman’s Kozak, and given to them as they leave by their closest Kin. When their service ends, if they should see its end, the vial may be emptied, and the glass crushed; the end, it says."
+	name = "草原人的土瓶"
+	desc = "一支严密封好的泥土小瓶。泥土取自草原人的科扎克故土，在他们离乡服役时由至亲赠予。若他们能活到役满归来，便可将瓶中泥土倾洒、再将玻璃捏碎，这便是终点，传说如是。"
 	icon_state = "steppe_ungent"
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/vaquero
-	name = "vaquero's ring"
-	desc = "A beautiful gold-and-rontz ring, a masterwork of Etruscan jeweling. This does more than prove you a true vaquero; it shows you are as beautiful as you are dangerous, a crimson stone set against gold. Lyve dangerously, \
-	but lyve all the same."
+	name = "牧侠之戒"
+	desc = "一枚由黄金与隆兹石打造的美丽戒指，是伊特鲁斯卡珠宝工艺的杰作。它不仅证明你是真正的牧侠，也昭示着你既美丽又危险，那颗猩红宝石在黄金映衬下尤为醒目。去危险地活着吧，\
+	但无论如何，仍要活下去。"
 	icon_state = "vaquero_ring"
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/warscholar
-	name = "naledian cross"
-	desc = "'Carve Naledi as the wind does always - whisper to one white stone, and the others will remember where to stand,' \
-	so said PSYDON. <br>Within the splitting arms of the psycross, a marble-white shard is embedded within aurum. \
-	A fracture of the Great City Naledi which fell; a memory of a thousand wailing generations in their fading, dying breaths as a reminder for who you are."
+	name = "纳莱迪十字"
+	desc = "“如风恒常雕琢纳莱迪那般去雕刻它吧，向一块白石低语，其余白石便会记得自己该立于何处。”\
+	普赛顿如是说。<br>在普赛圣十字分裂的臂枝之间，嵌着一枚大理石般洁白的金中碎片。\
+	那是陨落大城纳莱迪的一道裂片；也是千代哀号之众于衰朽将死之息中留下的记忆，提醒你自己是谁。"
 	icon_state = "naledian_psycross"//Temp sprite. Just the Astratan Psyscross, with lower limbs removed.
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/anthrax
-	name = "petrified larvae charm"
-	desc = "The husk of a desiccated beespider larva, passed down within the ranks of those whose names have been struck from dark elven history. The old tyranny's uprooting would be their last act of true valor."
+	name = "石化幼虫护符"
+	desc = "一具干枯蜂蛛幼体的空壳，在那些姓名已被黑暗精灵历史抹去者之间代代相传。推翻旧日暴政，将成为他们最后一次真正的壮举。"
 	icon_state = "spider"
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/oathmarked
-	name = "writ of service"
-	desc = "An old, decaying scroll of some sort. Marked with odd stains and liable to tear if you're too rough."
+	name = "服役文书"
+	desc = "一卷某种古老而腐朽的卷轴。其上布满怪异污渍，稍一用力就可能撕裂。"
 	icon_state = "oathmarked_writ"
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/oathmarked/examine(mob/user)

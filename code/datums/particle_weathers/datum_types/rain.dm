@@ -15,11 +15,11 @@
 	spin                   = 0 // explicitly set spin to 0 - there is a bug that seems to carry generators over from old particle effects
 
 /datum/particle_weather/rain_gentle
-	name = "Rain"
-	desc = "Gentle Rain, la la description."
+	name = "雨"
+	desc = "轻柔的雨丝从天空洒落。"
 	particleEffectType = /particles/weather/rain
-	warning_message = span_greenannounce("Grey clouds gather up above the realm, beholding the gift of life.")
-	late_warning_message = span_greenannounce("Heavy drops begin to fall in rapid succession.")
+	warning_message = span_greenannounce("灰云在天穹上方聚拢，预示着生命的恩赐将至。")
+	late_warning_message = span_greenannounce("沉重的雨滴开始接连不断地坠下。")
 	scale_vol_with_severity = TRUE
 	weather_sounds = list(/datum/looping_sound/rain)
 	indoor_weather_sounds = list(/datum/looping_sound/indoor_rain)
@@ -46,11 +46,11 @@
 	wash_atom(L,CLEAN_WEAK)
 
 /datum/particle_weather/rain_storm
-	name = "Rain Storm"
-	desc = "Gentle Rain, la la description."
+	name = "暴雨"
+	desc = "狂暴的雨幕伴着雷声席卷而来。"
 	particleEffectType = /particles/weather/rain
-	warning_message = span_greenannounce("Dark clouds gather up above the realm, sparks arcing between heavenly reaches.")
-	late_warning_message = span_greenannounce("The wind shifts and the storm breaks.")
+	warning_message = span_greenannounce("乌云在天穹间翻涌，电光于高空彼此窜连。")
+	late_warning_message = span_greenannounce("风向骤变，暴风雨猛然倾落。")
 	scale_vol_with_severity = TRUE
 	weather_sounds = list(/datum/looping_sound/storm)
 	indoor_weather_sounds = list(/datum/looping_sound/indoor_rain)
@@ -207,10 +207,10 @@
 	playsound(get_turf(src),'sound/weather/rain/thunder_1.ogg', 80, TRUE)
 
 /datum/particle_weather/hurricane
-	name = "Hurricane"
-	desc = "Abyssors wrath."
+	name = "飓风"
+	desc = "Abyssor 的怒火。"
 	particleEffectType = /particles/weather/rain
-	warning_message = span_danger("The sky's clouds turn dark as night and form lengthy bands, a spinning wheel far to large for the eye to properly witness.")
+	warning_message = span_danger("天空中的云层暗如深夜并拉成长带，远方旋转的巨轮庞大得让人难以一眼看清。")
 	scale_vol_with_severity = TRUE
 	weather_sounds = list(/datum/looping_sound/hurricane)
 	indoor_weather_sounds = list(/datum/looping_sound/indoor_rain)

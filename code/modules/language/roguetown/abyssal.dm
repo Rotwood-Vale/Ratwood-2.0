@@ -1,9 +1,9 @@
 /datum/language/abyssal
-	name = "Abyssal" // literally greek
-	desc = "(Spoken with ,p) The language of the inhabitants of the sea depths, still in use by those who have moved inland."
-	speech_verb = "states"
-	ask_verb = "ponders"
-	exclaim_verb = "exclaims"
+	name = "深渊语" // literally greek
+	desc = "(用 ,p 说) 海渊居民所使用的语言，那些迁居内陆的人至今仍在使用它。"
+	speech_verb = "说道"
+	ask_verb = "沉吟着问"
+	exclaim_verb = "惊呼"
 	key = "p" // p for ΨOSEIDON
 	flags = LANGUAGE_HIDE_ICON_IF_UNDERSTOOD | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD
 	space_chance = 60

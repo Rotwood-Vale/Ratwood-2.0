@@ -1,6 +1,6 @@
 /obj/item/perfume
-	name = "perfume bottle"
-	desc = "A bottle of pleasantly smelling fragrance."
+	name = "香水瓶"
+	desc = "一瓶闻起来令人愉悦的香氛。"
 	icon = 'icons/roguetown/items/perfume.dmi'
 	icon_state = "perfume-bottle-empty"
 
@@ -36,9 +36,9 @@
 /obj/item/perfume/examine(mob/user)
 	. = ..()
 	if(uses_remaining)
-		. += "It has [uses_remaining] use\s left."
+		. += "还剩[uses_remaining]次使用。"
 	else
-		. += "It is empty."
+		. += "里面空了。"
 
 /obj/item/perfume/afterattack(atom/target, mob/user)
 	. = ..()
@@ -47,16 +47,16 @@
 	if(!ismovable(target))
 		return
 	if(!uses_remaining)
-		to_chat(user, span_warning("\The [src] is empty!"))
+		to_chat(user, span_warning("[src]已经空了！"))
 		update_icon()
 		return
 
 	uses_remaining--
 	update_icon()
 	if(target == user)
-		user.visible_message(span_notice("[user] sprays [user.p_them()]self with \the [src]."), span_notice("You spray yourself with \the [src]."))
+		user.visible_message(span_notice("[user]用[src]朝[user.p_them()]自己喷洒。"), span_notice("你朝自己喷洒了[src]。"))
 	else
-		user.visible_message(span_notice("[user] sprays [target] with \the [src]."), span_notice("You spray [target] with \the [src]."))
+		user.visible_message(span_notice("[user]用[src]朝[target]喷洒。"), span_notice("你朝[target]喷洒了[src]。"))
 	var/turf/my_turf = get_turf(user)
 	my_turf.pollute_turf(fragrance_type, 20)
 	user.changeNext_move(CLICK_CD_RANGE*2)
@@ -69,51 +69,51 @@
 	. = ..()
 
 /obj/item/perfume/lavender
-	name = "lavender perfume"
+	name = "薰衣草香水"
 	fragrance_type = /datum/pollutant/fragrance/lavender
 
 /obj/item/perfume/cherry
-	name = "cherry perfume"
+	name = "樱桃香水"
 	fragrance_type = /datum/pollutant/fragrance/cherry
 
 /obj/item/perfume/rose
-	name = "rose perfume"
+	name = "玫瑰香水"
 	fragrance_type = /datum/pollutant/fragrance/rose
 
 /obj/item/perfume/jasmine
-	name = "jasmine perfume"
+	name = "茉莉香水"
 	fragrance_type = /datum/pollutant/fragrance/jasmine
 
 /obj/item/perfume/mint
-	name = "mint perfume"
+	name = "薄荷香水"
 	fragrance_type = /datum/pollutant/fragrance/mint
 
 /obj/item/perfume/vanilla
-	name = "vanilla perfume"
+	name = "香草香水"
 	fragrance_type = /datum/pollutant/fragrance/vanilla
 
 /obj/item/perfume/pear
-	name = "pear perfume"
+	name = "梨香香水"
 	fragrance_type = /datum/pollutant/fragrance/pear
 
 /obj/item/perfume/strawberry
-	name = "strawberry perfume"
+	name = "草莓香水"
 	fragrance_type = /datum/pollutant/fragrance/strawberry
 
 /obj/item/perfume/cinnamon
-	name = "cinnamon perfume"
+	name = "肉桂香水"
 	fragrance_type = /datum/pollutant/fragrance/cinnamon
 
 // "Premium" perfumes they are more expensive by default
 // No special mechanical effects
 /obj/item/perfume/frankincense
-	name = "frankincense perfume"
+	name = "乳香香水"
 	fragrance_type = /datum/pollutant/fragrance/frankincense
 
 /obj/item/perfume/sandalwood
-	name = "sandalwood perfume"
+	name = "檀香香水"
 	fragrance_type = /datum/pollutant/fragrance/sandalwood
 
 /obj/item/perfume/myrrh
-	name = "myrrh perfume"
+	name = "没药香水"
 	fragrance_type = /datum/pollutant/fragrance/myrrh

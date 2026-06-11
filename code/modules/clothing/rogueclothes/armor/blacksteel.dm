@@ -1,8 +1,8 @@
 //--------------- BLACKSTEEL ---------------------
 
 /obj/item/clothing/suit/roguetown/armor/plate/modern/blacksteel_full_plate
-	name = "blacksteel plate armor"
-	desc = "A suit of Full Plate smithed from durable blacksteel. Using a modern design, the piercing and blunt protection still remain unmatched among its heavy-plated peers."
+	name = "黑钢板甲"
+	desc = "以坚固黑钢锻造的全身板甲。采用现代设计，在穿刺与钝击防护上仍凌驾于同类重甲之上。"
 	body_parts_covered = COVERAGE_FULL
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
@@ -21,8 +21,8 @@
 	smelt_bar_num = 4
 
 /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_full_plate
-	name = "ancient blacksteel plate armor"
-	desc = "A suit of Full Plate smithed from durable blacksteel. With an internally layered gambeson, the piercing and blunt protection is unmatched among its heavy-plated peers."
+	name = "远古黑钢板甲"
+	desc = "以坚固黑钢锻造的全身板甲，内里衬有分层绗缝护甲衣，在穿刺与钝击防护上无与伦比。"
 	body_parts_covered = COVERAGE_FULL
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
@@ -41,8 +41,8 @@
 	smelt_bar_num = 4
 
 /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_half_plate	//This is a cuirass
-	name = "blacksteel cuirass"
-	desc = "A basic cuirass forged from blacksteel. It's somewhat more durable than regular steel."
+	name = "黑钢胸甲"
+	desc = "由黑钢锻造的基础胸甲。它比普通钢材稍微耐用一些。"
 	body_parts_covered = COVERAGE_TORSO
 	icon_state = "grenzelcuirass"
 	item_state = "grenzelcuirass"
@@ -56,8 +56,8 @@
 
 /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_halfplate
 	slot_flags = ITEM_SLOT_ARMOR
-	name = "blacksteel half-plate"
-	desc = "An exceptionally durable set of blacksteel armor that protects the chest, arms, and groin, fitted with a set of pauldrons."
+	name = "黑钢半身板甲"
+	desc = "一套异常坚固的黑钢护甲，配有肩甲，可保护胸部、手臂与腹股沟。"
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	icon = 'icons/roguetown/clothing/armor.dmi'

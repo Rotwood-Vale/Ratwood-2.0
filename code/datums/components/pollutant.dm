@@ -14,7 +14,7 @@
 
 /datum/component/pollutant/Destroy()
 	if(ismob(parent))
-		to_chat(parent, span_notice("The smell that lingered on your body fades."))
+		to_chat(parent, span_notice("萦绕在我身上的气味消散了。"))
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 

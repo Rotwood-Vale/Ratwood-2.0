@@ -27,11 +27,11 @@
 	wind                   = 1
 
 /datum/particle_weather/leaves_gentle
-	name = "Strong Winds"
-	desc = "Gentle Rain, la la description."
+	name = "劲风落叶"
+	desc = "和缓的风卷起林间落叶，轻轻掠过大地。"
 	particleEffectType = /particles/weather/leaves
-	warning_message = span_greenannounce("Light winds blow in through the forests across the realm.")
-	late_warning_message = span_greenannounce("A sudden gust scatters leaves wildly through the air.")
+	warning_message = span_greenannounce("轻风自各地林间吹来，拂过整片大地。")
+	late_warning_message = span_greenannounce("一阵突如其来的风将落叶卷得漫天飞舞。")
 	scale_vol_with_severity = TRUE
 
 	minSeverity = 1
@@ -43,11 +43,11 @@
 	target_trait = PARTICLEWEATHER_LEAVES
 
 /datum/particle_weather/leaves_storm
-	name = "Heavy Winds"
-	desc = "Gentle Rain, la la description."
+	name = "狂风落叶"
+	desc = "强劲的风席卷而来，将林间落叶搅得四散翻飞。"
 	particleEffectType = /particles/weather/leaves
-	warning_message = span_greenannounce("Heavy winds blow in through the forests across the realm.")
-	late_warning_message = span_greenannounce("A sudden gust scatters leaves wildly through the air.")
+	warning_message = span_greenannounce("猛烈的风从林海之间呼啸而过，横扫整片大地。")
+	late_warning_message = span_greenannounce("一阵狂猛的风将落叶卷得漫天乱舞。")
 	scale_vol_with_severity = TRUE
 
 	minSeverity = 4
@@ -59,11 +59,11 @@
 	target_trait = PARTICLEWEATHER_LEAVES
 
 /datum/particle_weather/sakura_gentle
-	name = "Calming winds"
-	desc = "Gentle Rain, la la description."
+	name = "樱风和煦"
+	desc = "柔和的风穿过花木，卷起片片樱瓣。"
 	particleEffectType = /particles/weather/leaves/sakura
-	warning_message = span_greenannounce("Love reigns and a calm wind runs through floral trees")
-	late_warning_message = span_greenannounce("A sudden gust scatters leaves wildly through the air.")
+	warning_message = span_greenannounce("爱意弥漫，一阵和缓的风穿过开花的林木。")
+	late_warning_message = span_greenannounce("忽然袭来的一阵风，将花叶吹得四下飘散。")
 	scale_vol_with_severity = TRUE
 
 	minSeverity = 1
@@ -75,11 +75,11 @@
 	target_trait = PARTICLEWEATHER_SAKURA
 
 /datum/particle_weather/sakura_storm
-	name = "Calming winds"
-	desc = "Gentle Rain, la la description."
+	name = "樱风渐烈"
+	desc = "花木之间风势渐长，漫天樱瓣翻卷不休。"
 	particleEffectType = /particles/weather/leaves/sakura
-	warning_message = span_greenannounce("Love reigns and a heavy wind runs through floral trees")
-	late_warning_message = span_greenannounce("A sudden gust scatters leaves wildly through the air.")
+	warning_message = span_greenannounce("爱意弥漫，强风穿行于繁花林木之间。")
+	late_warning_message = span_greenannounce("忽然袭来的一阵狂风，将花叶吹得漫天乱舞。")
 	scale_vol_with_severity = TRUE
 
 	minSeverity = 4

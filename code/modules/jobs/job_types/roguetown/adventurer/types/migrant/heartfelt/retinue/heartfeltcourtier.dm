@@ -1,8 +1,8 @@
 
 /datum/advclass/heartfelt/retinue/courtier
-	name = "Heartfeltian Courtier"
-	tutorial = "You are a Courtier of Heartfelt, once a respected noblewoman now struggling to survive in a desolate landscape. \
-	With your home in ruins, you look to these lands, hoping to find new purpose or refuge amidst the chaos."
+	name = "赤心 侍廷贵女"
+	tutorial = "你是 赤心 的宫廷贵女，曾受人敬重，如今却不得不在荒凉破败的世道里挣扎求生。\
+	故土既毁，你望向这片土地，希望能在混乱之中寻得新的使命，或至少一处容身之所。"
 	allowed_sexes = list(FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/roguetown/heartfelt/retinue/courtier

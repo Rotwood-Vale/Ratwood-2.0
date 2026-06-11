@@ -1,10 +1,10 @@
 /obj/effect/proc_holder/spell/invoked/projectile/divineblast/unholyblast
-	name = "Unholy Blast"
-	desc = "Channel unholy power and sunder the unbelievers. Deals additional damage to wretched conformists and Psydonites! \n\
-	Damage is increased by 100% versus simple-minded creechurs.\n\
-	Can be fired in an arc over an ally's head with a mage's staff, spellbook or psicross on arc intent. It will deals 25% less damage that way."
+	name = "亵渎冲击"
+	desc = "引导亵渎之力，摧裂不信者。对可悲的顺从者与 普赛顿 信徒会造成额外伤害！\n\
+	对头脑简单的生物伤害提高 100%。\n\
+	若使用法师杖、法术书或 普赛圣十字 并切换为弧射意图，还能越过盟友头顶以弧线射出；但那样会少造成 25% 伤害。"
 	projectile_type = /obj/projectile/energy/unholyblast
-	invocations = list("Fortschritt macht!")
+	invocations = list("亵渎，迸发！")
 
 /obj/projectile/energy/unholyblast
 	name = "Unholy Blast"
@@ -17,7 +17,7 @@
 	speed = 1
 
 /obj/projectile/energy/unholyblast/arc
-	name = "Arced Unholy Blast"
+	name = "弧射亵渎冲击"
 	damage = 15 // Slightly lower base damage
 	arcshot = TRUE
 
@@ -43,8 +43,8 @@
 		if(istype(H.patron, /datum/patron/old_god))
 			damage += 20
 		if(HAS_TRAIT(H, TRAIT_SILVER_WEAK) && !H.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
-			H.visible_message("<font color='white'>The unholy strike weakens the curse temporarily!</font>")
-			to_chat(H, span_userdanger("Silver rebukes my presence! My vitae smolders, and my powers wane!"))
+			H.visible_message("<font color='white'>这道亵渎打击暂时削弱了诅咒！</font>")
+			to_chat(H, span_userdanger("白银正在斥退我的存在！我的血性在灼烧，力量也在衰退！"))
 			H.adjust_fire_stacks(2, /datum/status_effect/fire_handler/fire_stacks/sunder)
 		var/mob/living/carbon/human/caster
 		if (ishuman(firer))
@@ -60,7 +60,7 @@
 					H.adjust_fire_stacks(2)
 					H.ignite_mob()
 				if(/datum/patron/inhumen/graggar)
-					H.visible_message(span_warning("A splatter of blood covers [H]'s face!"), span_warning("A glob of blood splatters my vision!"))
+					H.visible_message(span_warning("一片血污泼了 [H] 满脸！"), span_warning("一团血沫糊住了我的视野！"))
 					H.Dizzy(5)
 					H.blur_eyes(5)
 				if(/datum/patron/inhumen/zizo)
@@ -68,10 +68,9 @@
 						H.adjust_fire_stacks(6)
 						H.ignite_mob()
 					H.Slowdown(3) 
-					H.visible_message(span_warning("Seething ambition sears within [H]'s mind!"), span_warning("Visions of ambition sear into my mind!"))
+					H.visible_message(span_warning("炽沸的野心正灼烧着 [H] 的脑海！"), span_warning("野心的幻景正灼烧着我的脑海！"))
 	else
 		return
-
 
 
 

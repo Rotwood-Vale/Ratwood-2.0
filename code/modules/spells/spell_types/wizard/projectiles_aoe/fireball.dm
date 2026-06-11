@@ -1,10 +1,10 @@
 /obj/effect/proc_holder/spell/invoked/projectile/fireball
-	name = "Fireball"
-	desc = "Shoot out a ball of fire that emits a light explosion on impact, setting the target alight."
+	name = "火球术"
+	desc = "射出一枚火球，命中时会引发一次轻度爆炸，并点燃目标。"
 	clothes_req = FALSE
 	range = 8
 	projectile_type = /obj/projectile/magic/aoe/fireball/rogue
-	overlay_state = "fireball"
+	overlay_state = "火球"
 	sound = list('sound/magic/fireball.ogg')
 	releasedrain = 30
 	chargedrain = 1
@@ -15,7 +15,7 @@
 	movement_interrupt = FALSE
 	charging_slowdown = 3
 	spell_tier = 3 // AOE
-	invocations = list("Sphaera Ignis!")
+	invocations = list("火球，迸发！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_FIRE
 	glow_intensity = GLOW_INTENSITY_HIGH
@@ -45,7 +45,7 @@
 	if(ismob(target))
 		var/mob/living/M = target
 		if(M.anti_magic_check())
-			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			visible_message(span_warning("[src] 在接触[target]时噗地熄散了！"))
 			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 			qdel(src)
 			return BULLET_ACT_BLOCK

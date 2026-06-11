@@ -1,9 +1,9 @@
 /datum/language/grenzelhoftian
-	name = "Grenzelhoftian Imperial"
-	desc = "(Spoken with ,g) The primary language of the Grenzelhoft Emperiate, a robust language filled with hearty words and enthusiastic enunciation."
-	speech_verb = "remarks"
-	ask_verb = "inquires"
-	exclaim_verb = "asserts"
+	name = "格伦泽尔霍夫特帝国语"
+	desc = "(用 ,g 说)格伦泽尔霍夫特帝国的主要语言，一门强健有力、充满豪迈词汇与热情吐字的语言。"
+	speech_verb = "说道"
+	ask_verb = "询问"
+	exclaim_verb = "断言"
 	key = "g"
 	space_chance = 66
 	default_priority = 90

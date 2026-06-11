@@ -1,5 +1,5 @@
 /obj/item/heart_canister
-	name = "alchemical canister"
+	name = "炼金罐"
 	desc = ""
 	icon = 'icons/obj/structures/heart_items.dmi'
 	icon_state = "canister_empty"
@@ -21,16 +21,16 @@
 
 /obj/item/heart_canister/attack_self(mob/user)
 	if(broken)
-		to_chat(user, span_warning("This canister is broken and useless."))
+		to_chat(user, span_warning("这个罐子已经坏了，毫无用处。"))
 		return
 
 	if(filled)
-		to_chat(user, span_warning("This canister is already filled!"))
+		to_chat(user, span_warning("这个罐子已经装满了！"))
 		return
 
 	if(attuned && !filled)
-		var/reset_choice = alert(user, "This canister is already attuned to [current_aspect_name]. Do you want to reset it?", "Canister Reset", "Reset", "Keep")
-		if(reset_choice == "Reset")
+		var/reset_choice = alert(user, "这个罐子已经调谐到[current_aspect_name]。你想重置它吗？", "罐体重置", "重置", "保留")
+		if(reset_choice == "重置")
 			reset_canister(user)
 		return
 
@@ -50,18 +50,18 @@
 	name = initial(name)
 	desc = initial(desc)
 	update_icon()
-	to_chat(user, span_notice("You reset the canister, clearing its attunement."))
+	to_chat(user, span_notice("你重置了这个罐子，清除了它的调谐状态。"))
 
 /obj/item/heart_canister/proc/show_aspect_menu(mob/user)
 	var/list/categories = list(
-		"Archetypes" = "Choose from available archetypes",
-		"Traits" = "Choose from available traits",
-		"Quirks" = "Choose from available quirks",
-		"Cancel" = "Do not attune"
+		"人格原型" = "从可用的人格原型中选择",
+		"特性" = "从可用的特性中选择",
+		"怪癖" = "从可用的怪癖中选择",
+		"取消" = "不进行调谐"
 	)
 
-	var/category_choice = input(user, "Select aspect category to attune:", "Canister Attunement") as null|anything in categories
-	if(!category_choice || category_choice == "Cancel")
+	var/category_choice = input(user, "选择要调谐的属性类别：", "罐体调谐") as null|anything in categories
+	if(!category_choice || category_choice == "取消")
 		return
 
 	show_aspects_in_category(category_choice, user)
@@ -72,21 +72,21 @@
 	var/singular_name = ""
 
 	switch(category)
-		if("Archetypes")
+		if("人格原型")
 			aspects = get_global_archetypes()
-			category_name = "archetypes"
-			singular_name = "archetype"
-		if("Traits")
+			category_name = "人格原型"
+			singular_name = "原型"
+		if("特性")
 			aspects = get_global_traits()
-			category_name = "traits"
-			singular_name = "trait"
-		if("Quirks")
+			category_name = "特性"
+			singular_name = "特性"
+		if("怪癖")
 			aspects = get_global_quirks()
-			category_name = "quirks"
-			singular_name = "quirk"
+			category_name = "怪癖"
+			singular_name = "怪癖"
 
 	if(!aspects.len)
-		to_chat(usr, span_warning("No [category_name] found!"))
+		to_chat(usr, span_warning("未找到任何[category_name]！"))
 		return
 
 	var/list/selection_options = list()
@@ -121,14 +121,14 @@
 		var/obj/item/temp_item = required_item_type
 		var/required_item_name = initial(temp_item.name)
 
-		selection_options["[aspect_name] (Requires: [required_item_name])"] = A
+		selection_options["[aspect_name]（需要：[required_item_name]）"] = A
 
 	// Sort alphabetically
 	selection_options = sortList(selection_options)
-	selection_options["Cancel"] = "CANCEL"
+	selection_options["取消"] = "CANCEL"
 
-	var/choice = input(user, "Select a [singular_name] to attune", "[category_name] Selection") as null|anything in selection_options
-	if(!choice || choice == "Cancel")
+	var/choice = input(user, "选择一个要调谐的[singular_name]", "选择[category_name]") as null|anything in selection_options
+	if(!choice || choice == "取消")
 		return
 
 	var/datum/selected_aspect = selection_options[choice]
@@ -150,17 +150,17 @@
 
 /obj/item/heart_canister/attackby(obj/item/I, mob/user)
 	if(filled)
-		to_chat(user, span_warning("This canister is already filled!"))
+		to_chat(user, span_warning("这个罐子已经装满了！"))
 		return TRUE
 
 	if(!attuned)
-		to_chat(user, span_warning("This canister needs to be attuned to an aspect first! Use in-hand to choose an aspect."))
+		to_chat(user, span_warning("这个罐子必须先调谐到某个属性！手持使用来选择属性。"))
 		return TRUE
 
 	if(!istype(I, required_item_type))
 		var/obj/item/temp_item = required_item_type
 		var/required_item_name = initial(temp_item.name)
-		to_chat(user, span_warning("This canister requires [required_item_name]! You're holding [I.name]."))
+		to_chat(user, span_warning("这个罐子需要[required_item_name]！你现在拿着的是[I.name]。"))
 		return TRUE
 
 	// Correct item - fill the canister
@@ -178,11 +178,11 @@
 	if(!filled && attuned)
 		var/obj/item/temp_item = required_item_type
 		var/required_item_name = initial(temp_item.name)
-		. += span_notice("It is attuned to [current_aspect_name] and requires [required_item_name] to fill.")
+		. += span_notice("它已调谐到[current_aspect_name]，需要[required_item_name]才能装填。")
 	else if(!attuned)
-		. += span_notice("Use in-hand to attune this canister to an aspect.")
+		. += span_notice("手持使用，可将这个罐子调谐到某个属性。")
 	else if (filled)
-		. += span_notice("It is attuned to [current_aspect_name]")
+		. += span_notice("它已调谐到[current_aspect_name]。")
 	ui_interact(user)
 	return .
 
@@ -223,14 +223,14 @@
 	var/required_item_name = initial(temp_item.name)
 
 	if(istype(A, /datum/flesh_archetype))
-		name = "[aspect_name] personality canister"
+		name = "[aspect_name]人格罐"
 	else if(istype(A, /datum/flesh_trait))
-		name = "[aspect_name] trait canister"
+		name = "[aspect_name]特性罐"
 	else if(istype(A, /datum/flesh_quirk))
-		name = "[aspect_name] quirk canister"
+		name = "[aspect_name]怪癖罐"
 
 	update_icon()
-	to_chat(usr, span_notice("You attune the canister to [aspect_name]. It now requires [required_item_name] to fill."))
+	to_chat(usr, span_notice("你将罐子调谐到了[aspect_name]。它现在需要[required_item_name]才能装填。"))
 
 /obj/item/heart_canister/proc/advance_calibration()
 	if(calibrated || broken || !filled)
@@ -272,33 +272,33 @@
 	broken = TRUE
 	calibrated = FALSE
 	filled = FALSE
-	desc = "It's irreversibly damaged."
+	desc = "它已受到不可逆的损坏。"
 	icon_state = "canister_broken"
 	playsound(src, 'sound/foley/glassbreak.ogg', 75, TRUE)
 	update_icon()
 
 /obj/item/heart_blood_canister
-	name = "Heartblood canister"
-	desc = "An empty canister yearning to be filled with chimeric heartbeast blood."
+	name = "心兽血罐"
+	desc = "一个空罐，渴望被嵌合心兽之血填满。"
 	icon = 'icons/obj/structures/heart_items.dmi'
 	icon_state = "blood_canister_empty"
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/heart_blood_canister/filled
-	name = "Full heartblood canister"
-	desc = "A canister full of viscous blood, despite being closed it somehow still exudes a putrid smell. Highly valued, due to their ability to purify lux."
+	name = "满装心兽血罐"
+	desc = "一个装满黏稠血液的罐子，尽管已经封好，却仍莫名散发腐臭。由于能净化灵辉，它价值极高。"
 	icon_state = "blood_canister_filled"
 
 /obj/item/heart_blood_vial
-	name = "Heartblood vial"
-	desc = "An empty vial yearning to be filled with chimeric heartbeast blood."
+	name = "心兽血小瓶"
+	desc = "一个空小瓶，渴望被嵌合心兽之血填满。"
 	icon = 'icons/obj/structures/heart_items.dmi'
 	icon_state = "blood_vial_empty"
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/heart_blood_vial/filled
-	name = "Full heartblood vial"
-	desc = "A vial full of viscous blood, despite being closed it somehow still exudes a putrid smell. Highly valued, due to their ability to purify lux."
+	name = "满装心兽血小瓶"
+	desc = "一只装满黏稠血液的小瓶，尽管已经封好，却仍莫名散发腐臭。由于能净化灵辉，它价值极高。"
 	icon_state = "blood_vial_filled"
 
 /obj/item/heart_canister/ui_interact(mob/user, datum/tgui/ui)
@@ -307,7 +307,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "HeartCanister", "Aspect Canister Examination")
+		ui = new(user, src, "HeartCanister", "属性罐检查")
 		ui.open()
 
 /obj/item/heart_canister/ui_data(mob/user)
@@ -322,7 +322,7 @@
 		)
 		if(istype(aspect_datum_ref, /datum/flesh_quirk))
 			var/datum/flesh_quirk/Q = aspect_datum_ref
-			aspect_data["type"] = "Quirk"
+			aspect_data["type"] = "怪癖"
 			aspect_data["desc"] = Q.description
 
 			var/list/conflicting_names = list()
@@ -334,7 +334,7 @@
 
 		else if(istype(aspect_datum_ref, /datum/flesh_trait))
 			var/datum/flesh_trait/T = aspect_datum_ref
-			aspect_data["type"] = "Trait"
+			aspect_data["type"] = "特性"
 			aspect_data["desc"] = T.description
 
 			var/list/concept_names = list()
@@ -362,7 +362,7 @@
 
 		else if(istype(aspect_datum_ref, /datum/flesh_archetype))
 			var/datum/flesh_archetype/A = aspect_datum_ref
-			aspect_data["type"] = "Archetype"
+			aspect_data["type"] = "原型"
 			aspect_data["desc"] = A.description
 
 			var/list/trait_names = list()

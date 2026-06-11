@@ -1,6 +1,6 @@
 /datum/advclass/wretch/poacher
-	name = "Poacher"
-	tutorial = "You have rejected society and its laws, choosing life in the wilderness instead. Simple thieving highwayman or freedom fighter, you take from those who have and give to the have-nots. Fancy, how the latter includes yourself!"
+	name = "偷猎者"
+	tutorial = "你已拒绝社会及其律法，转而选择荒野中的生活。无论你是拦路劫掠的小贼还是自命不凡的义士，你都从富者手中夺取，再施予穷者。妙的是，后者里也包括你自己！"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/wretch/poacher
@@ -58,46 +58,46 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
 	if(H.mind)
-		var/fashion = list("Cunning Archer", "Ruthless Hunter", "Unrelenting Beastslayer", "Disgraced Warden")
-		var/fashion_choice = input(H, "Who are you todae? This is purely cosmetic.", "BE FASHIONABLE") as anything in fashion
+		var/fashion = list("狡黠弓手", "冷酷猎人", "无情屠兽者", "失势林务官")
+		var/fashion_choice = input(H, "今天你想扮成谁？这只影响外观。", "穿得体面些") as anything in fashion
 		H.set_blindness(0)
 		switch(fashion_choice)
-			if("Cunning Archer") //Robin Hood-esque outfit with a funny hat and a green rain cloak.
+			if("狡黠弓手") //Robin Hood-esque outfit with a funny hat and a green rain cloak.
 				head = /obj/item/clothing/head/roguetown/archercap
 				cloak = /obj/item/clothing/cloak/raincloak/green
-			if("Ruthless Hunter") //Bloodborne-esque outfit with a longcoat and an oddly familiar hat.
+			if("冷酷猎人") //Bloodborne-esque outfit with a longcoat and an oddly familiar hat.
 				head = /obj/item/clothing/head/roguetown/duelhat
 				cloak = /obj/item/clothing/suit/roguetown/armor/longcoat
-			if("Unrelenting Beastslayer") //Classic Poacher look with a dark green hood and a fur cloak.
+			if("无情屠兽者") //Classic Poacher look with a dark green hood and a fur cloak.
 				head = /obj/item/clothing/head/roguetown/roguehood/darkgreen
 				cloak = /obj/item/clothing/cloak/raincloak/furcloak/darkgreen
-			if("Disgraced Warden") //Warden's antlered shroud and warden's cloak. Marginally better protection but makes you look a lot more suspicious.
+			if("失势林务官") //Warden's antlered shroud and warden's cloak. Marginally better protection but makes you look a lot more suspicious.
 				head = /obj/item/clothing/head/roguetown/roguehood/poacher
 				cloak = /obj/item/clothing/cloak/poachercloak
-		var/weapons = list("Dagger", "Axe", "Cudgel")
-		var/weapon_choice = input(H, "Choose your melee weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("匕首", "斧头", "短棍")
+		var/weapon_choice = input(H, "选择你的近战武器。", "披甲执兵") as anything in weapons
 		switch(weapon_choice)
-			if("Dagger")
+			if("匕首")
 				beltr = /obj/item/rogueweapon/scabbard/sheath
 				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel //Poacher already has Expert in Knives, but as a compensation you get a steel-tier dagger, whereas with Axe and Cudgel you get iron-tier weapons.
-			if("Axe")
+			if("斧头")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
 				beltr = /obj/item/rogueweapon/stoneaxe/woodcut
-			if ("Cudgel")
+			if ("短棍")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 				beltr = /obj/item/rogueweapon/mace/cudgel
-		var/rangedweapons = list("Recurve Bow", "Crossbow", "Sling")
-		var/rangedweapon_choice = input(H, "Choose your ranged weapon.", "TAKE UP ARMS") as anything in rangedweapons
+		var/rangedweapons = list("反曲弓", "弩", "投石索")
+		var/rangedweapon_choice = input(H, "选择你的远程武器。", "披甲执兵") as anything in rangedweapons
 		switch(rangedweapon_choice)
-			if("Recurve Bow")
+			if("反曲弓")
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 5, TRUE)
 				beltl = /obj/item/quiver/arrows
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-			if("Crossbow")
+			if("弩")
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 5, TRUE)
 				beltl = /obj/item/quiver/bolts
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-			if ("Sling")
+			if ("投石索")
 				H.adjust_skillrank_up_to(/datum/skill/combat/slings, 5, TRUE)
 				beltl = /obj/item/quiver/sling/iron
 				l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling

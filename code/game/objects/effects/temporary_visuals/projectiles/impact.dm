@@ -1,37 +1,37 @@
 /obj/effect/projectile/impact
-	name = "beam impact"
+	name = "光束冲击"
 	icon = 'icons/obj/projectiles_impact.dmi'
 
 /obj/effect/projectile/impact/laser
-	name = "laser impact"
+	name = "激光冲击"
 	icon_state = "impact_laser"
 
 /obj/effect/projectile/impact/laser/blue
-	name = "laser impact"
+	name = "激光冲击"
 	icon_state = "impact_blue"
 
 /obj/effect/projectile/impact/disabler
-	name = "disabler impact"
+	name = "缴械束冲击"
 	icon_state = "impact_omni"
 
 /obj/effect/projectile/impact/xray
-	name = "\improper X-ray impact"
+	name = "\improper X射线冲击"
 	icon_state = "impact_xray"
 
 /obj/effect/projectile/impact/pulse
-	name = "pulse impact"
+	name = "脉冲冲击"
 	icon_state = "impact_u_laser"
 
 /obj/effect/projectile/impact/plasma_cutter
-	name = "plasma impact"
+	name = "等离子冲击"
 	icon_state = "impact_plasmacutter"
 
 /obj/effect/projectile/impact/stun
-	name = "stun impact"
+	name = "眩晕冲击"
 	icon_state = "impact_stun"
 
 /obj/effect/projectile/impact/heavy_laser
-	name = "heavy laser impact"
+	name = "重型激光冲击"
 	icon_state = "impact_beam_heavy"
 
 /obj/effect/projectile/impact/wormhole

@@ -1,60 +1,60 @@
 /datum/skill/labor
 	abstract_type = /datum/skill/labor
-	name = "Labor"
+	name = "劳作"
 	desc = ""
 	color = "#78c472"
 
 /datum/skill/labor/farming
-	name = "Farming"
-	desc = "Allows you to identify seeds and increases workspeed and success chances on farming-related tasks."
+	name = "农耕"
+	desc = "让我能够辨认种子，并提高农务相关工作的效率与成功率。"
 	dreams = list(
-		"...the smell of dung was once revolting but it now smells like opportunity. The soil is hungry, so you get your hands dirty...",
-		"...you scrape and plow until your muscles ache. The day was long, and soon the apples you plucked today would be rolled into a delicious pie...",
-		"...you kneel in the soil, watering the seeds you've sown. The rows stretch out before you, green and thriving. You are filled with satisfaction, knowing your labor will soon bloom into abundance..."
+		"……粪肥的气味曾令人作呕，如今却闻起来像是机会。土地饥渴难耐，而我也愿意为此双手沾泥……",
+		"……我不断刨地、犁田，直到肌肉酸痛不已。白日漫长，而今天摘下的苹果，很快就会被做成可口的派……",
+		"……我跪在泥土间，为亲手播下的种子浇水。一垄垄作物在眼前延展，青翠而茁壮。想到我的劳作很快就会化作丰收，我心中满是满足……"
 	)
-	expert_name = "Farmer"
+	expert_name = "农夫"
 	max_untraited_level = SKILL_LEVEL_APPRENTICE
 	trait_uncap = list(TRAIT_HOMESTEAD_EXPERT = SKILL_LEVEL_LEGENDARY,
 	TRAIT_SELF_SUSTENANCE = SKILL_LEVEL_JOURNEYMAN)
 
 /datum/skill/labor/mining
-	name = "Mining"
-	desc = "Increases mining speed."
+	name = "采矿"
+	desc = "提高采矿速度。"
 	dreams = list(
-		"...rock crumbles and the wall before you gives way, your pickaxe has become battered and broken from the long day. You've mined into a strangely well lit cavern...",
-		"...the red, gleaming light seeps from the ancient stone, next to its guardian - a bearded hermit of short stature, who riddles you on the strongest of steels...",
-		"...the dwarven master riddles you, 'The strongest metal is the goal; I am harvested from mountains to shoal, yet I am not a metal,' the ancient miner chokes on the ill-air of the underworld, before continuing...",
-		"...the gemstone gleams in his grasp, as the old dwarf chokes out, 'I must be forged in fourths. What am I?'...",
-		"...and then the answer to his riddle comes to you, as if it was there all along. A lump of coal. With a satisfied smile, the dwarf hands you the heart of the mountain..."
+		"……岩石崩裂，面前的石壁轰然让开。漫长的一天让我的鹤嘴镐满是裂痕，残破不堪。就在这时，我挖进了一处亮得古怪的洞窟……",
+		"……古老岩层中渗出赤红闪耀的光芒，它的守望者是一位矮小而蓄须的隐士，正向我提出有关最强钢铁的谜题……",
+		"……那位矮人大师向我发问：‘最坚之材乃吾等所求；我自群山与浅滩中采得，却又并非金属。’这位古老矿工被地底污浊的空气呛得咳嗽，随后继续说道……",
+		"……宝石在他掌中闪闪发亮，老矮人沙哑地问道：‘我必须四分锻成。我是什么？’……",
+		"……随后，谜底忽然来到我心头，仿佛它一直就在那里。一块煤。矮人满意地微笑着，将山之心递到了我手中……"
 	)
-	expert_name = "Miner"
+	expert_name = "矿工"
 	max_untraited_level = SKILL_LEVEL_APPRENTICE
 	trait_uncap = list(TRAIT_HOMESTEAD_EXPERT = SKILL_LEVEL_LEGENDARY,
 	TRAIT_SMITHING_EXPERT = SKILL_LEVEL_LEGENDARY,
 	TRAIT_SELF_SUSTENANCE = SKILL_LEVEL_JOURNEYMAN)
 
 /datum/skill/labor/fishing
-	name = "Fishing"
-	desc = "Increases fishing speed down to a minimum of 2 seconds. Increases the chance of catching a fish. Novice is needed to not suffer a hefty penalty."
+	name = "钓鱼"
+	desc = "提高垂钓速度，最短可降至 2 秒，并提升上鱼概率。至少需要新手水平，才能避免沉重惩罚。"
 	dreams = list(
-		"...you struggle to unknot the fishing line for what feels like hours, your clumsy digits pulling away at it while on a small boat in a chasmic void. A gigantic, calloused, pale hand takes it from you and untangles it immediately in its grasp...",
-		"...the old merchant nods his head, and gives you a small sack of baits: worms, grubs and even slices of cheese - each said to bring you another of Abyssor's bounties..."
+		"……我在深渊般虚空中的小船上，笨拙地试着解开缠成死结的鱼线，感觉像过去了好几个时辰。一只巨大、苍白而布满老茧的手从我手中接过鱼线，顷刻间便将其理顺……",
+		"……老商人点了点头，递给我一小袋鱼饵：蚯蚓、蛆虫，甚至还有几片奶酪。据说每一样都能为我再带来一份 Abyssor 的恩赐……"
 	)
-	expert_name = "Fisher"
+	expert_name = "渔夫"
 	max_untraited_level = SKILL_LEVEL_APPRENTICE
 	trait_uncap = list(TRAIT_HOMESTEAD_EXPERT = SKILL_LEVEL_LEGENDARY,
 	TRAIT_SURVIVAL_EXPERT = SKILL_LEVEL_LEGENDARY,
 	TRAIT_SELF_SUSTENANCE = SKILL_LEVEL_JOURNEYMAN)
 
 /datum/skill/labor/butchering
-	name = "Butchering"
-	desc = "Increases butchering speed. Increases yields from butchering a bodypart. If higher than your Skincrafting skill, will be used to determine the speed, yield and chance of getting an essence of wilderness when tanning hide."
+	name = "屠宰"
+	desc = "提高屠宰速度，增加分解肢体时的收获。若高于剥皮工艺技能，则会改用它决定鞣制兽皮时的速度、产量与获得荒野精华的概率。"
 	dreams = list(
-		"...someone you recognize as a father twists the neck of the family rooster. He keeps you captivated as he guts it, speaking of gore and frugality...",
-		"...your hands are bloodied and as you wipe them on your butcher's apron, a bell rings. A hooded customer enters your butcher's shop, and asks what meats you have for sale with a bemused look at your bloodied attire...",
-		"...you pull the knife through fat, sinew and bone, the carcass giving way under your touch. The butcher's art is the transformation of life into sustenance...",
+		"……一个像是父亲的人拧断了家里公鸡的脖子。他一边开膛，一边谈论血污与节俭，让我看得目不转睛……",
+		"……我的双手沾满鲜血，正用屠夫围裙擦拭时，门铃响了。一位戴兜帽的顾客走进肉铺，瞥了我一眼染血的装束，若有所思地问我今天卖什么肉……",
+		"……刀锋划过油脂、筋络与骨头，尸体在我手下逐渐分解。屠夫之艺，便是将生命转化为养分……",
 	)
-	expert_name = "Butcher"
+	expert_name = "屠夫"
 	max_untraited_level = SKILL_LEVEL_APPRENTICE
 	trait_uncap = list(TRAIT_HOMESTEAD_EXPERT = SKILL_LEVEL_LEGENDARY,
 	TRAIT_SEWING_EXPERT = SKILL_LEVEL_LEGENDARY,
@@ -62,13 +62,13 @@
 	TRAIT_SELF_SUSTENANCE = SKILL_LEVEL_JOURNEYMAN)
 
 /datum/skill/labor/lumberjacking
-	name = "Lumberjacking"
-	desc = "Increases lumberjacking speed. At Novice or higher, guarantee at least two small log from a tree. Higher skills increases minimum yield and chance of getting an essence of wilderness."
+	name = "伐木"
+	desc = "提高伐木速度。达到新手或以上时，至少能从树上获得两根小木料。技能越高，最低产量与获得荒野精华的概率也越高。"
 	dreams = list(
-		"...splinters fly off as a tree falls down on the ground, sending a thundering boom throughout the forest...",
-		"...you pull on a saw, and the bearded lumberjack across from you pulls back on it. The great oak yawns as it threatens to topple over..."
+		"……木屑四散飞溅，大树轰然倒地，雷鸣般的巨响在整片森林中回荡……",
+		"……我拉着锯子，对面的蓄须伐木工也一同发力。参天橡树发出低沉呻吟，摇摇欲坠……"
 	)
-	expert_name = "Lumberjack"
+	expert_name = "伐木工"
 	max_untraited_level = SKILL_LEVEL_APPRENTICE
 	trait_uncap = list(TRAIT_HOMESTEAD_EXPERT = SKILL_LEVEL_LEGENDARY,
 	TRAIT_SELF_SUSTENANCE = SKILL_LEVEL_JOURNEYMAN)

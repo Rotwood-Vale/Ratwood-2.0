@@ -1,6 +1,6 @@
 // Deleted the flavorful desc from Vanderlin until I can think of a better desc.
 /obj/item/recipe_book/leatherworking
-	name = "The Tanned Hide Tome: Mastery of Leather and Craft"
+	name = "鞣革秘典：皮革与工艺精通"
 	icon_state = "book8_0"
 	base_icon_state = "book8"
 
@@ -10,7 +10,7 @@
 	)
 
 /obj/item/recipe_book/sewing
-	name = "Threads of Destiny: A Tailor's Codex"
+	name = "命运丝线：裁缝法典"
 	icon_state = "book7_0"
 	base_icon_state = "book7"
 
@@ -20,14 +20,14 @@
 		)
 
 /obj/item/recipe_book/blacksmithing
-	name = "The Smith’s Legacy"
+	name = "铁匠传承"
 	icon_state = "book3_0"
 	base_icon_state = "book3"
 
 	types = list(/datum/anvil_recipe)
 
 /obj/item/recipe_book/engineering
-	name = "The Artificer's Handbook"
+	name = "工匠手册"
 	icon_state = "book4_0"
 	base_icon_state = "book4"
 
@@ -38,7 +38,7 @@
 // Both are under structures so I will just make them one and add categories
 // Later
 /obj/item/recipe_book/builder
-	name = "The Builder's Handbook - For Carpenters and Masons"
+	name = "建造者手册：木匠与石匠篇"
 	icon_state = "book5_0"
 	base_icon_state = "book5"
 
@@ -92,7 +92,7 @@
 		)
 
 /obj/item/recipe_book/ceramics
-	name = "The Potter's Handbook"
+	name = "陶匠手册"
 	icon_state = "book5_0"
 	base_icon_state = "book5"
 
@@ -103,8 +103,8 @@
 
 // This book should be widely given to everyone
 /obj/item/recipe_book/survival
-	name = "The Survival Handbook"
-	desc = "A book full of recipes and tips for surviving in the wild. Can be used as fuel in a pinch."
+	name = "生存手册"
+	desc = "一本写满野外生存配方与技巧的书。紧急时也可当作燃料使用。"
 	icon_state = "book6_0"
 	base_icon_state = "book6"
 
@@ -115,7 +115,7 @@
 
 // TBD - Cauldron Recipes
 /obj/item/recipe_book/alchemy
-	name = "Secrets of Alchemy"
+	name = "炼金秘要"
 	icon_state = "book3_0"
 	base_icon_state = "book3"
 
@@ -130,8 +130,8 @@
 		)
 
 /obj/item/recipe_book/cooking
-	name = "The Culinary Codex"
-	desc = "A book full of recipes and tips for cooking. This version looks very incomplete, and only contain brewing recipes. Perhaps it will be filled in later?"
+	name = "烹饪法典"
+	desc = "一本写满烹饪配方与技巧的书。这一版看起来还很不完整，目前只包含酿造配方。也许以后会补完？"
 	icon_state = "book2_0"
 	base_icon_state = "book2"
 
@@ -141,7 +141,7 @@
 	)
 
 /obj/item/recipe_book/magic
-	name = "The Magister's Grimoire"
+	name = "大法师魔典"
 	icon_state = "book4_0"
 	base_icon_state = "book4"
 

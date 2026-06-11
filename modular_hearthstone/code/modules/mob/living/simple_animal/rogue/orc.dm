@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/orc
-	name = "Savage Orc"
-	desc = "A fierce, brutish looking creature."
+	name = "野蛮兽人"
+	desc = "一头看起来凶狠而粗野的生物。"
 	icon = 'modular_hearthstone/icons/mob/simple_orcs.dmi'
 	icon_state = "savageorc"
 	icon_living = "savageorc"
@@ -25,14 +25,14 @@
 	minimum_distance = 0
 	limb_destroyer = 1
 	base_intents = list(/datum/intent/simple/axe/orc)
-	attack_verb_continuous = "hacks"
-	attack_verb_simple = "hack"
+	attack_verb_continuous = "劈砍"
+	attack_verb_simple = "劈砍"
 	attack_sound = 'sound/blank.ogg'
 	canparry = TRUE
 	d_intent = INTENT_PARRY
 	defprob = 50
-	speak_emote = list("grunts")
-	speak = list("WAAAGH!", "KRUSH AND KILL!", "Never should have come here!", "Slaughter them all!", "Kill everything!", "Hahaha! Die!")
+	speak_emote = list("咆哮")
+	speak = list("WAAAGH！", "碾碎他们，杀光他们！", "你们根本不该来这里！", "把他们全宰了！", "杀光一切！", "哈哈哈！去死吧！")
 	loot = list(/obj/effect/mob_spawn/human/orc/corpse/savageorc,
 			/obj/item/rogueweapon/stoneaxe/boneaxe,
 			/obj/effect/decal/cleanable/blood)
@@ -61,7 +61,7 @@
 			/obj/effect/decal/cleanable/blood)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/orc/orc_marauder
-	name = "Orc Marauder"
+	name = "兽人掠夺者"
 	icon_state = "orcmarauder"
 	icon_living = "orcmarauder"
 	icon_dead = "orcmarauder"
@@ -110,7 +110,8 @@
 	melee_damage_upper = 30
 	armor_penetration = 35
 	attack_verb_continuous = list("stabs", "slashes", "skewers")
-	attack_verb_simple = "stab"
+	attack_verb_simple = "刺击"
+	attack_verb_continuous = list("刺击", "劈砍", "穿刺")
 	attack_sound = 'sound/blank.ogg'
 	loot = list(/obj/effect/mob_spawn/human/orc/corpse/savageorc,
 			/obj/item/rogueweapon/spear/bonespear,
@@ -167,46 +168,46 @@
 		return ""
 	switch(zone)
 		if(BODY_ZONE_PRECISE_R_EYE)
-			return "right eye"
+			return "右眼"
 		if(BODY_ZONE_PRECISE_L_EYE)
-			return "left eye"
+			return "左眼"
 		if(BODY_ZONE_PRECISE_NOSE)
-			return "nose"
+			return "鼻子"
 		if(BODY_ZONE_PRECISE_MOUTH)
-			return "mouth"
+			return "嘴巴"
 		if(BODY_ZONE_PRECISE_SKULL)
-			return "skull"
+			return "头骨"
 		if(BODY_ZONE_PRECISE_EARS)
-			return "ears"
+			return "耳朵"
 		if(BODY_ZONE_PRECISE_NECK)
-			return "neck"
+			return "脖子"
 		if(BODY_ZONE_PRECISE_L_HAND)
-			return "left hand"
+			return "左手"
 		if(BODY_ZONE_PRECISE_R_HAND)
-			return "right hand"
+			return "右手"
 		if(BODY_ZONE_PRECISE_L_FOOT)
-			return "left foot"
+			return "左脚"
 		if(BODY_ZONE_PRECISE_R_FOOT)
-			return "right foot"
+			return "右脚"
 		if(BODY_ZONE_PRECISE_STOMACH)
-			return "stomach"
+			return "腹部"
 		if(BODY_ZONE_PRECISE_GROIN)
-			return "groin"
+			return "裆部"
 		if(BODY_ZONE_HEAD)
-			return "head"
+			return "头部"
 		if(BODY_ZONE_R_LEG)
-			return "right leg"
+			return "右腿"
 		if(BODY_ZONE_L_LEG)
-			return "left leg"
+			return "左腿"
 		if(BODY_ZONE_R_ARM)
-			return "right arm"
+			return "右臂"
 		if(BODY_ZONE_L_ARM)
-			return "left arm"
+			return "左臂"
 	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/orc/ranged
-	name = "Savage Orc Archer"
-	desc = "A fierce, brutish looking creature. This one has a bow."
+	name = "野蛮兽人弓手"
+	desc = "一头看起来凶狠而粗野的生物。这头带着弓。"
 	icon_state = "orcbow"
 	icon_living = "orcbow"
 	icon_dead = "orcbow"

@@ -29,7 +29,7 @@ GLOBAL_DATUM_INIT(carebox, /datum/carebox, new())
 /datum/carebox/proc/give_carebox(mob/living/carbon/human/human, datum/carebox_table/table)
 	ADD_TRAIT(human, TRAIT_CAREBOX, TRAIT_GENERIC)
 	human.apply_status_effect(/datum/status_effect/carebox)
-	to_chat(human, span_notice("New letter from <b>[table.sender].</b>"))
+	to_chat(human, span_notice("收到一封来自 <b>[table.sender]</b> 的新信件。"))
 	human.playsound_local(human, 'sound/misc/mail.ogg', 100, FALSE, -1)
 
 /datum/carebox/proc/has_carebox(mob/living/carbon/human/human)
@@ -38,7 +38,7 @@ GLOBAL_DATUM_INIT(carebox, /datum/carebox, new())
 /datum/carebox/proc/try_retrieve_carebox(mob/living/carbon/human/human, atom/source)
 	if(!has_carebox(human))
 		return FALSE
-	if(alert(human, "Do you wish to retrieve your special care package?", "", "Yes", "No") == "No")
+	if(alert(human, "你要领取你的特别补给包吗？", "", "是", "否") == "否")
 		return FALSE
 	var/carebox_table_type = get_human_carebox_table(human)
 	if(!carebox_table_type)
@@ -56,7 +56,7 @@ GLOBAL_DATUM_INIT(carebox, /datum/carebox, new())
 	while(remaining_choices > 0)
 		if(!length(result_table))
 			break
-		var/result = input(human, "What did I receive? (Choices: [remaining_choices]) [table.addendum]", "MAIL") as null|anything in result_table
+		var/result = input(human, "我要领取什么？（可选：[remaining_choices]）[table.addendum]", "邮件") as null|anything in result_table
 		if(!result)
 			break
 		var/result_loot = result_table[result]
@@ -88,7 +88,7 @@ GLOBAL_DATUM_INIT(carebox, /datum/carebox, new())
 	// Success
 	REMOVE_TRAIT(human, TRAIT_CAREBOX, TRAIT_GENERIC)
 	human.remove_status_effect(/datum/status_effect/carebox)
-	to_chat(human, span_notice("I collect my package."))
+	to_chat(human, span_notice("我领取了我的包裹。"))
 
 	var/turf/spawn_loc = get_turf(human)
 	playsound(spawn_loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)

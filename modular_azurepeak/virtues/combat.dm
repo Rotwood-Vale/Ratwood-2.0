@@ -1,8 +1,8 @@
 // Arcyne Potential now gives 3 Spellpoints instead of 6 spellpoints so it is less of a "must take" for caster.
 /datum/virtue/combat/magical_potential
-	name = "Arcyne Potential"
-	desc = "I am talented in the Arcyne arts, expanding my capacity for magic. I have become more intelligent from its studies. Other effects depends on what training I chose to focus on at a later age."
-	custom_text = "Classes that has a combat trait (Medium / Heavy Armor Training, Dodge Expert or Critical Resistance) get only prestidigitation. Everyone else get +3 spellpoints and T1 Arcyne Potential if they don't have any Arcyne."
+	name = "奥术潜质"
+	desc = "我在奥术之道上颇有天赋，这拓展了我的施法容量。钻研此道也令我更加聪慧。其他效果则取决于我后来选择专精的训练方向。"
+	custom_text = "拥有战斗特性的职业（中甲/重甲训练、闪避专家或暴击抗性）只会获得戏法术。其他人若尚未掌握奥术，则会获得+3法术点与T1奥术潜质。"
 	added_skills = list(list(/datum/skill/magic/arcane, 1, 6))
 
 /datum/virtue/combat/magical_potential/apply_to_human(mob/living/carbon/human/recipient)
@@ -16,10 +16,10 @@
 		recipient.mind?.adjust_spellpoints(3) // 3 extra spellpoints since you don't get any spell point from the skill anymore
 	
 /datum/virtue/combat/devotee
-	name = "Devotee"
-	desc = "Though not officially of the Church, my relationship with my chosen Patron is strong enough to grant me the most minor of their blessings. I've also kept a psycross of my deity."
+	name = "虔信者"
+	desc = "虽然我并非教会正式成员，但我与所选主神的联系足够深厚，足以让我获得祂最微小的赐福。我还保留了一枚属于自己神祇的普赛圣十字。"
 
-	custom_text = "You gain access to T0 miracles of your patron. As a non-combat role you also receive a minor passive devotion gain. If you already have access to Miracles, you get slightly increased passive devotion gain."
+	custom_text = "你会获得主神的T0神迹。若你是非战斗定位，还会获得少量被动虔诚恢复；若你本就能使用神迹，则会获得小幅额外被动虔诚恢复。"
 
 	added_skills = list(list(/datum/skill/magic/holy, 1, 6))
 
@@ -40,68 +40,68 @@
 		START_PROCESSING(SSobj, our_faith)
 	switch(recipient.patron?.type)
 		if(/datum/patron/divine/astrata)
-			recipient.mind?.special_items["Astrata Psycross"] = /obj/item/clothing/neck/roguetown/psicross/astrata
+			recipient.mind?.special_items["阿斯特拉塔普赛圣十字"] = /obj/item/clothing/neck/roguetown/psicross/astrata
 		if(/datum/patron/divine/abyssor)
-			recipient.mind?.special_items["Abyssor Psycross"] = /obj/item/clothing/neck/roguetown/psicross/abyssor
+			recipient.mind?.special_items["阿比索尔普赛圣十字"] = /obj/item/clothing/neck/roguetown/psicross/abyssor
 		if(/datum/patron/divine/dendor)
-			recipient.mind?.special_items["Dendor Psycross"] = /obj/item/clothing/neck/roguetown/psicross/dendor
+			recipient.mind?.special_items["登多尔普赛圣十字"] = /obj/item/clothing/neck/roguetown/psicross/dendor
 		if(/datum/patron/divine/necra)
-			recipient.mind?.special_items["Necra Psycross"] = /obj/item/clothing/neck/roguetown/psicross/necra
+			recipient.mind?.special_items["内克拉普赛圣十字"] = /obj/item/clothing/neck/roguetown/psicross/necra
 		if(/datum/patron/divine/pestra)
-			recipient.mind?.special_items["Pestra Psycross"] = /obj/item/clothing/neck/roguetown/psicross/pestra
+			recipient.mind?.special_items["佩斯特拉普赛圣十字"] = /obj/item/clothing/neck/roguetown/psicross/pestra
 		if(/datum/patron/divine/eora) 
-			recipient.mind?.special_items["Eora Psycross"] = /obj/item/clothing/neck/roguetown/psicross/eora
+			recipient.mind?.special_items["伊欧拉普赛圣十字"] = /obj/item/clothing/neck/roguetown/psicross/eora
 		if(/datum/patron/divine/xylix) 
-			recipient.mind?.special_items["Xylix Psycross"] = /obj/item/clothing/neck/roguetown/psicross/xylix
+			recipient.mind?.special_items["赛利克斯普赛圣十字"] = /obj/item/clothing/neck/roguetown/psicross/xylix
 		if(/datum/patron/divine/noc)
-			recipient.mind?.special_items["Noc Psycross"] = /obj/item/clothing/neck/roguetown/psicross/noc
+			recipient.mind?.special_items["诺克普赛圣十字"] = /obj/item/clothing/neck/roguetown/psicross/noc
 		if(/datum/patron/divine/ravox)
-			recipient.mind?.special_items["Ravox Psycross"] =/obj/item/clothing/neck/roguetown/psicross/ravox
+			recipient.mind?.special_items["拉沃克斯普赛圣十字"] =/obj/item/clothing/neck/roguetown/psicross/ravox
 		if(/datum/patron/divine/malum)
-			recipient.mind?.special_items["Malum Psycross"] = /obj/item/clothing/neck/roguetown/psicross/malum
+			recipient.mind?.special_items["玛勒姆普赛圣十字"] = /obj/item/clothing/neck/roguetown/psicross/malum
 		if(/datum/patron/old_god)
 			ADD_TRAIT(recipient, TRAIT_PSYDONITE, TRAIT_GENERIC)
-			recipient.mind?.special_items["Psycross"] = /obj/item/clothing/neck/roguetown/psicross
+			recipient.mind?.special_items["普赛圣十字"] = /obj/item/clothing/neck/roguetown/psicross
 
 /datum/virtue/combat/duelist
-	name = "Duelist's Apprentice"
-	desc = "I have trained under a duelist of considerable skill. I have a pair of dueling weapons - both a hunting sword and dagger - stowed away."
-	custom_text = "Guaranteed Journeyman for Swords & Knives."
-	added_stashed_items = list("Duelist's Messer" = /obj/item/rogueweapon/sword/short/messer/iron/virtue,
-								"Duelist's Parrying Dagger" = /obj/item/rogueweapon/huntingknife/idagger/virtue)
+	name = "决斗学徒"
+	desc = "我曾在一位技艺高超的决斗者门下训练。我藏着一对决斗兵器，一把猎剑和一把匕首，以备不时之需。"
+	custom_text = "保证获得剑术与匕首的熟练工等级。"
+	added_stashed_items = list("决斗者梅塞尔刀" = /obj/item/rogueweapon/sword/short/messer/iron/virtue,
+								"决斗者格挡匕首" = /obj/item/rogueweapon/huntingknife/idagger/virtue)
 
 /datum/virtue/combat/duelist/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
 	recipient.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
 
 /datum/virtue/combat/executioner
-	name = "Dungeoneer's Apprentice"
-	desc = "I was set to be a dungeoneer some time ago, and I was taught by one. I have an axe and whip stashed away, should the need arise."
-	custom_text = "Guaranteed Journeyman for Axes & Whips/Flails."
-	added_stashed_items = list("Axe" = /obj/item/rogueweapon/stoneaxe/woodcut,
-								"Whip" = /obj/item/rogueweapon/whip)
+	name = "地牢吏学徒"
+	desc = "我曾被安排去做一名地牢吏，也曾受其亲自教导。我藏着一把斧头和一条鞭子，以备有朝一日派上用场。"
+	custom_text = "保证获得斧术与鞭/链枷的熟练工等级。"
+	added_stashed_items = list("斧头" = /obj/item/rogueweapon/stoneaxe/woodcut,
+								"鞭子" = /obj/item/rogueweapon/whip)
 
 /datum/virtue/combat/executioner/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
 	recipient.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
 
 /datum/virtue/combat/militia
-	name = "Militiaman"
-	desc = "I have trained with the local garrison in case I'm ever to be levied to fight for my lord. I have a spear and mace stashed away in the event I'm called to arms."
-	custom_text = "Guaranteed Journeyman for Polearms & Maces."
-	added_stashed_items = list("Spear" = /obj/item/rogueweapon/spear,
-								"Mace" = /obj/item/rogueweapon/mace)
+	name = "民兵"
+	desc = "我曾与本地守军一同训练，以备某日被征召为领主而战。我藏着一把长矛和一柄钉头锤，等到应召之时便可取用。"
+	custom_text = "保证获得长柄武器与钉头锤的熟练工等级。"
+	added_stashed_items = list("长矛" = /obj/item/rogueweapon/spear,
+								"钉头锤" = /obj/item/rogueweapon/mace)
 
 /datum/virtue/combat/militia/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
 	recipient.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
 
 /datum/virtue/combat/brawler
-	name = "Brawler's Apprentice"
-	desc = "I have trained under a skilled brawler, and have some experience fighting with my fists. I have a katar and some knuckledusters stashed away, too."
-	custom_text = "Guaranteed Journeyman for Unarmed & Wrestling."
-	added_stashed_items = list("Knuckles" = /obj/item/rogueweapon/knuckles/bronzeknuckles,
-								"More Knuckles" = /obj/item/rogueweapon/knuckles/bronzeknuckles)
+	name = "斗殴学徒"
+	desc = "我曾在一位老练斗士门下受训，也积累了些徒手搏斗的经验。我还藏着一把拳刃和几副指虎。"
+	custom_text = "保证获得徒手与摔跤的熟练工等级。"
+	added_stashed_items = list("指虎" = /obj/item/rogueweapon/knuckles/bronzeknuckles,
+								"另一副指虎" = /obj/item/rogueweapon/knuckles/bronzeknuckles)
 
 /datum/virtue/combat/brawler/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
@@ -109,11 +109,11 @@
 
 
 /datum/virtue/combat/bowman
-	name = "Toxophilite"
-	desc = "I've had an interest in archery from a young age, and I always keep a spare bow and quiver around."
-	custom_text = "+1 to Bows, Up to Legendary, Minimum Apprentice"
-	added_stashed_items = list("Recurve Bow" = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve,
-								"Quiver (Arrows)" = /obj/item/quiver/arrows
+	name = "弓艺爱好者"
+	desc = "我自幼便对弓术颇感兴趣，因此总会备着一张弓和一只箭袋。"
+	custom_text = "弓术+1，最高至传奇，至少为学徒。"
+	added_stashed_items = list("反曲弓" = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve,
+								"箭袋（箭矢）" = /obj/item/quiver/arrows
 	)
 
 /datum/virtue/combat/bowman/apply_to_human(mob/living/carbon/human/recipient)
@@ -123,11 +123,11 @@
 		added_skills = list(list(/datum/skill/combat/bows, 1, 6))
 
 /datum/virtue/combat/crossbowman
-	name = "Crossbow Levy"
-	desc = "A crossbow is a simple weapon to use, but that's what makes it so effective. I've always kept a crossbow and some bolts around, just in case."
-	custom_text = "+1 to Crossbows, Up to Legendary, Minimum Apprentice"
-	added_stashed_items = list("Crossbow" = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
-								"Quiver (Bolts)" = /obj/item/quiver/bolts
+	name = "征召弩手"
+	desc = "弩是一种使用简单的武器，而这也正是它高效的原因。我一直备着一把弩和一些弩矢，以防万一。"
+	custom_text = "弩术+1，最高至传奇，至少为学徒。"
+	added_stashed_items = list("弩" = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
+								"箭袋（弩矢）" = /obj/item/quiver/bolts
 	)
 
 /datum/virtue/combat/crossbowman/apply_to_human(mob/living/carbon/human/recipient)
@@ -137,37 +137,37 @@
 		added_skills = list(list(/datum/skill/combat/crossbows, 1, 6))
 
 /datum/virtue/combat/shepherd
-	name = "Capable Shepherd"
-	desc = "Years of protecting my herd from brigands and thieves have taught me how to use the simplest of weapons in self-defense."
-	custom_text = "Guaranteed Journeyman for Staffs & Slings."
-	added_stashed_items = list("Iron Quarterstaff" = /obj/item/rogueweapon/woodstaff/quarterstaff/iron,
-								"Sling" = /obj/item/gun/ballistic/revolver/grenadelauncher/sling,
-								"Pouch of Iron Sling Bullets" = /obj/item/quiver/sling/iron)
+	name = "能干牧人"
+	desc = "多年来，为了保护羊群不受强盗与窃贼侵害，我学会了如何用最朴素的武器来自卫。"
+	custom_text = "保证获得长杖与投石索的熟练工等级。"
+	added_stashed_items = list("铁头长杖" = /obj/item/rogueweapon/woodstaff/quarterstaff/iron,
+								"投石索" = /obj/item/gun/ballistic/revolver/grenadelauncher/sling,
+								"铁制投石索弹袋" = /obj/item/quiver/sling/iron)
 
 /datum/virtue/combat/shepherd/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
 	recipient.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
 
 /*/datum/virtue/combat/tavern_brawler
-	name = "Tavern Brawler"
-	desc = "I've never met a problem my fists couldn't solve."
+	name = "酒馆斗士"
+	desc = "我从没遇过一双拳头解决不了的问题。"
 	added_traits = list(TRAIT_CIVILIZEDBARBARIAN)*/
 
 /datum/virtue/combat/guarded
-	name = "Guarded"
-	desc = "I have long kept my true capabilities and vices a secret. Sometimes being deceptively weak can save one's lyfe."
-	custom_text = "Obfuscates information about you from all sorts of effects, including patron abilities & passives, Assess and other virtues."
+	name = "深藏不露"
+	desc = "长久以来，我始终将真正的才能与恶癖隐藏起来。有时，伪装成弱者反而能救自己一命。"
+	custom_text = "会模糊各种效果对你的信息读取，包括主神能力与被动、评估以及其他美德。"
 	added_traits = list(TRAIT_DECEIVING_MEEKNESS)
 
 /*/datum/virtue/combat/impervious
-	name = "Impervious"
-	desc = "I've spent years shoring up my weakspots, and have become difficult to wound with critical blows."
+	name = "坚不可摧"
+	desc = "我花了许多年弥补自身破绽，如今已很难被致命重创所击倒。"
 	added_traits = list(TRAIT_CRITICAL_RESISTANCE)*/
 
 /datum/virtue/combat/rotcured
-	name = "Rotcured"
-	desc = "I was once afflicted with the accursed rot, and was cured. It has left me changed: my limbs are weaker, but I feel no pain and have no need to breathe..."
-	custom_text = "Colors your body a distinct, sickly green."
+	name = "腐愈者"
+	desc = "我曾被那可憎的腐病所折磨，后来又被治愈。它让我发生了变化：四肢更孱弱了，但我感觉不到疼痛，也不再需要呼吸......"
+	custom_text = "会让你的身体变成一种明显而病态的绿色。"
 	// below is functionally equivalent to dying and being resurrected via astrata T4 - yep, this is what it gives you.
 	added_traits = list(TRAIT_EASYDISMEMBER, TRAIT_NOPAIN, TRAIT_NOPAINSTUN, TRAIT_NOBREATH, TRAIT_TOXIMMUNE, TRAIT_ZOMBIE_IMMUNE, TRAIT_ROTMAN, TRAIT_SILVER_WEAK)
 
@@ -175,28 +175,28 @@
 	recipient.update_body() // applies the rot skin tone stuff
 
 /datum/virtue/combat/dualwielder
-	name = "Dual Wielder"
-	desc = "Whether it was by the Naledi scholars, Etruscan privateers or even the Kazengan senseis. I've been graced with the knowledge of how to wield two weapons at once."
+	name = "双持者"
+	desc = "无论是纳莱迪学者、伊特鲁斯卡私掠者，还是风郡导师，都曾让我受益，教会了我如何同时驾驭两把武器。"
 	added_traits = list(TRAIT_DUALWIELDER)
 
 /datum/virtue/combat/sharp
-	name = "Sentinel of Wits"
-	desc = "Whether it's by having an annoying sibling that kept prodding me with a stick, or years of study and observation, I've become adept at both parrying and dodging stronger opponents, by learning their moves and studying them."
+	name = "机敏卫士"
+	desc = "无论是因为有个老拿棍子戳我的烦人兄弟，还是多年研习与观察所致，我都已学会通过洞察强敌的动作来熟练格挡与闪避。"
 	added_traits = list(TRAIT_SENTINELOFWITS)
 
 /datum/virtue/combat/combat_aware
-	name = "Combat Aware"
-	desc = "The opponent's flick of their wrist. The sound of maille snapping. The desperate breath as the opponent's stamina wanes. All of this is made more clear to you through intuition or experience."
-	custom_text = "Shows a lot more combat information via floating text. Has a toggle."
+	name = "战斗感知"
+	desc = "对手手腕的一抖，锁子甲断裂的声响，以及敌人体力衰竭时那绝望的喘息。这一切都会因你的直觉或经验而变得更加清晰。"
+	custom_text = "会通过浮动文字显示更多战斗信息，并可手动开关。"
 	added_traits = list(TRAIT_COMBAT_AWARE)
 
 /datum/virtue/combat/combat_aware/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.verbs += /mob/living/carbon/human/proc/togglecombatawareness
 
 /datum/virtue/combat/tough_hide
-	name = "Natural Armor"
-	desc = "Whether by natural means or other means, my skin is strong enough to resist being pierced and cut."
-	custom_text = "This will replace your SHIRT slot with a regenerating, unremoveable armor."
+	name = "天然护甲"
+	desc = "无论出于天生还是后天原因，我的皮肤都坚韧得足以抵御穿刺与切割。"
+	custom_text = "这会以一件会再生且无法卸下的护甲替换你的上衣栏位。"
 	added_traits = list(TRAIT_NATURALARMOR)
 
 /datum/virtue/combat/tough_hide/apply_to_human(mob/living/carbon/human/recipient)
@@ -216,20 +216,20 @@
 		TRUE
 	)
 	
-	if(alert(recipient, "Would you like to change the name or description of your skin?", "TOUGH HIDE", "MAKE IT SO", "I RESCIND") == "MAKE IT SO") // Query user
+	if(alert(recipient, "你想更改这层皮肤的名称或描述吗？", "TOUGH HIDE", "就这么办", "我放弃") == "就这么办") // Query user
 		addtimer(CALLBACK(src, .proc/customize_skin, recipient), 1 SECONDS)
 
 /datum/virtue/combat/tough_hide/proc/customize_skin(mob/living/carbon/human/recipient)
 	var/obj/item/clothing/hide = recipient.wear_shirt
 	var/vanished_hide = FALSE
 	if(!QDELETED(hide))
-		var/inputty = stripped_input(recipient, "What would you like to name your hide?", "TOUGH HIDE", null, 200)
+		var/inputty = stripped_input(recipient, "你想给这层皮肤起什么名字？", "TOUGH HIDE", null, 200)
 		if(!QDELETED(hide))
 			if(inputty)
 				hide.name = inputty
 		else
 			vanished_hide = TRUE
-		inputty = stripped_input(recipient, "How would you describe your hide?", "TOUGH HIDE", null, 200)
+		inputty = stripped_input(recipient, "你会如何描述这层皮肤？", "TOUGH HIDE", null, 200)
 		if(!QDELETED(hide))
 			if(inputty)
 				hide.desc = inputty
@@ -239,5 +239,4 @@
 		vanished_hide = TRUE
 
 	if(vanished_hide) //failsafe
-		to_chat(recipient, span_warning("My natural armor vanished! Perhaps some divine intervention might sort things out..."))
-
+		to_chat(recipient, span_warning("我的天然护甲消失了！也许需要某种神圣干预才能解决......"))

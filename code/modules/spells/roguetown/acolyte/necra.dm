@@ -1,7 +1,7 @@
 // Necrite
 /obj/effect/proc_holder/spell/targeted/burialrite
-	name = "Burial Rites"
-	desc = "Consecrate a coffin or a grave. Sending any spirits within to Necras realm."
+	name = "葬仪"
+	desc = "祝圣一具棺木或一座墓穴，将其中停留的灵魂送往 Necra 的国度。"
 	range = 5
 	overlay_state = "consecrateburial"
 	releasedrain = 30
@@ -11,7 +11,7 @@
 	cast_without_targets = TRUE
 	sound = 'sound/magic/churn.ogg'
 	associated_skill = /datum/skill/magic/holy
-	invocations = list("Undermaiden grant thee passage forth and spare the trials of the forgotten.")
+	invocations = list("冥下侍女，赐其归途，免受遗忘者诸般试炼。")
 	invocation_type = "whisper" //can be none, whisper, emote and shout
 	miracle = TRUE
 	devotion_cost = 5 //very weak spell, you can just make a grave marker with a literal stick
@@ -22,19 +22,19 @@
 	for(var/obj/structure/closet/crate/coffin/coffin in view(1))
 		success = pacify_coffin(coffin, user)
 		if(success)
-			user.visible_message("[user] consecrates [coffin]!", "My funeral rites have been performed on [coffin]!")
+			user.visible_message("[user] 祝圣了 [coffin]！", "我已对 [coffin] 行完葬仪！")
 			return
 	for(var/obj/structure/closet/dirthole/hole in view(1))
 		success = pacify_coffin(hole, user)
 		if(success)
-			user.visible_message("[user] consecrates [hole]!", "My funeral rites have been performed on [hole]!")
+			user.visible_message("[user] 祝圣了 [hole]！", "我已对 [hole] 行完葬仪！")
 			record_round_statistic(STATS_GRAVES_CONSECRATED)
 			return
-	to_chat(user, span_red("I failed to perform the rites."))
+	to_chat(user, span_red("我未能完成葬仪。"))
 
 /obj/effect/proc_holder/spell/targeted/churn
-	name = "Churn Undead"
-	desc = "Stuns and explodes undead."
+	name = "翻搅亡骸"
+	desc = "震慑并炸裂不死者。"
 	range = 8//We return it, up from 4...
 	overlay_state = "necra_ult"//Temp.
 	releasedrain = 30
@@ -45,7 +45,7 @@
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/churn.ogg'
 	associated_skill = /datum/skill/magic/holy
-	invocations = list("The Undermaiden rebukes!!")
+	invocations = list("冥下侍女斥退汝等！！")
 	invocation_type = "shout"
 	miracle = TRUE
 	devotion_cost = 150//... with a higher devotion cost, at +100, from 50.
@@ -68,7 +68,7 @@
 			if(L.mind.has_antag_datum(/datum/antagonist/zombie))
 				iszombie = TRUE
 			if(L.mind.special_role == "Vampire Lord" || L.mind.special_role == "Lich")	//Won't detonate Lich's or VLs but will fling them away.
-				user.visible_message(span_warning("[L] overpowers being churned!"), span_userdanger("[L] is too strong, I am churned!"))
+				user.visible_message(span_warning("[L] 压倒了翻搅之力！"), span_userdanger("[L] 太过强大，反倒是我被翻搅了！"))
 				user.Stun(50)
 				user.throw_at(get_ranged_target_turf(user, get_dir(user,L), 7), 7, 1, L, spin = FALSE)
 				return
@@ -77,11 +77,11 @@
 			if(isvampire)
 				vamp_prob -= 59
 			if(prob(vamp_prob))
-				L.visible_message("<span class='warning'>[L] has been churned by Necra's grip!", "<span class='danger'>I've been churned by Necra's grip!")
+				L.visible_message("<span class='warning'>[L] 被 Necra 之握翻搅撕裂！", "<span class='danger'>我被 Necra 之握翻搅撕裂了！")
 				explosion(get_turf(L), light_impact_range = 1, flame_range = 1, smoke = FALSE)
 				L.Stun(50)
 			else
-				L.visible_message(span_warning("[L] resists being churned!"), span_userdanger("I resist being churned!"))
+				L.visible_message(span_warning("[L] 抵住了翻搅之力！"), span_userdanger("我抵住了翻搅之力！"))
 	..()
 	return TRUE
 
@@ -90,8 +90,8 @@
 	DEATH'S DOOR
 */
 /obj/effect/proc_holder/spell/invoked/deaths_door
-	name = "Death's Door"
-	desc = "Opens a one-way portal into a realm on the edge of death, People can be dragged into the portal to prevent their decay. Undead with be set aflame. Those whom enter the domain will find their Will to continue heavily weaken. <br>Necras domain can be left through a portal within to a shrine, or a grave/psycross marked with necra's sight."
+	name = "死门"
+	desc = "开启一道通往濒死边缘之境的单向门户，可将他人拖入其中以阻止尸身腐坏。不死者会在其中燃烧。踏入此域的人会感到求生意志大幅衰弱。<br>离开 Necra 领域的方法，是通过其中通往神龛的出口，或通往被 Necra 之视标记的墓穴/灵十字的出口。"
 	range = 6
 	no_early_release = TRUE
 	chargedrain = 0
@@ -104,7 +104,7 @@
 	recharge_time = 30 SECONDS
 	antimagic_allowed = TRUE
 	sound = 'sound/misc/deadbell.ogg'
-	invocations = list("Necra, show me my destination!")
+	invocations = list("Necra，向我显出归途！")
 	invocation_type = "shout"
 	miracle = TRUE
 	devotion_cost = 30
@@ -115,7 +115,7 @@
 		return FALSE
 
 	if(locate(/obj/structure/deaths_door_portal) in T)
-		to_chat(user, span_warning("A gate already stands here."))
+		to_chat(user, span_warning("这里已经立着一道门扉。"))
 		return FALSE
 
 	new /obj/structure/deaths_door_portal(T, user)
@@ -124,9 +124,9 @@
 
 //Choosing between skulls/respite
 /* /obj/effect/proc_holder/spell/self/necra_spirits
-	name = "Necra's Spirits"
+	name = "Necra 的群灵"
 	overlay_state = "consecrateburial"
-	desc = "The undermaiden holds vengefulspirits within her grasp, allowing you to choose between <b>Her</b> allies."
+	desc = "冥下侍女将复仇群灵握于掌中，让你从 <b>她</b> 的助力中择其一而用。"
 	miracle = TRUE
 	devotion_cost = 100
 	recharge_time = 10 MINUTES
@@ -137,7 +137,7 @@
 
 /obj/effect/proc_holder/spell/self/necra_spirits/cast(list/targets, mob/user)
 	. = ..()
-	var/choice = alert(user, "WHOM ANSWERS THE BELL?", "BRING FORTH SPIRITS", "Skulls", "Respite")
+	var/choice = alert(user, "是谁回应了这钟声？", "唤来群灵", "颅灵", "慰灵")
 	switch(choice)
 		if("Skulls")
 			if(user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance))//No stacking.
@@ -159,8 +159,8 @@
 // Speak with dead
 
 /obj/effect/proc_holder/spell/invoked/speakwithdead
-	name = "Speak with Dead"
-	desc = "Call upon the Undermaiden to let your words reach a departed soul, and hear their whisper in return."
+	name = "与死者交谈"
+	desc = "呼请冥下侍女，让你的话语抵达已逝之魂，并听见他们回返的低语。"
 	range = 5
 	overlay_state = "speakwithdead"
 	releasedrain = 30
@@ -168,14 +168,14 @@
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/churn.ogg'
 	associated_skill = /datum/skill/magic/holy
-	invocations = list("The echoes of the departed stir, speak, O fallen one.")
+	invocations = list("逝者余音已起，开口吧，已陨之人。")
 	invocation_type = "whisper"
 	miracle = TRUE
 	devotion_cost = 30
 
 /obj/effect/proc_holder/spell/invoked/speakwithdead/cast(list/targets, mob/user = usr)
 	if(!targets || !length(targets))
-		to_chat(user, "<font color='red'>To perform a miracle, you are supposed to stay next to their fallen body. If there no soul in the body, there will be no responce.</font>")
+		to_chat(user, "<font color='red'>施行此神迹时，你必须站在死者遗体旁。若躯壳中已无灵魂，便不会有任何回应。</font>")
 		return FALSE
 
 	var/mob/living/target = targets[1]
@@ -183,16 +183,16 @@
 	if(isliving(target) && target.stat == DEAD)
 		return speakwithdead(user, target)
 	else
-		to_chat(user, "<font color='red'>They are not dead. Yet.</font>")
+		to_chat(user, "<font color='red'>他们还没死。至少现在还没有。</font>")
 		return FALSE
 
 /proc/speakwithdead(mob/user, mob/living/target)
 	if(target.stat == DEAD && target.mind)
-		var/message = input(user, "You speak to the spirit of [target.real_name]. What will you say?", "Speak with the Dead") as text|null
+		var/message = input(user, "你正与 [target.real_name] 的灵魂交谈。你要说什么？", "与死者交谈") as text|null
 
 		if(message)
 			if(target.mind.current)
-				to_chat(target.mind.current, "<span style='color:gold'><b>[user.real_name]</b> says: \"[message]\"</span>")
+				to_chat(target.mind.current, "<span style='color:gold'><b>[user.real_name]</b> 说道：\"[message]\"</span>")
 
 			var/mob/dead/observer/ghost = null
 
@@ -209,9 +209,9 @@
 						break
 
 			if (ghost && ghost != target.mind.current)
-				to_chat(ghost, "<span style='color:gold'><b>[user.real_name]</b> says: \"[message]\"</span>")
+				to_chat(ghost, "<span style='color:gold'><b>[user.real_name]</b> 说道：\"[message]\"</span>")
 
-			to_chat(user, "<span style='color:gold'>You say to the spirit: \"[message]\"</span>")
+			to_chat(user, "<span style='color:gold'>你向灵魂说道：\"[message]\"</span>")
 
 			var/mob/replier = null
 			if (ghost && ghost.client)
@@ -220,22 +220,22 @@
 				replier = target.mind.current
 
 			if(replier)
-				var/spirit_message = input(replier, "An acolyte of Necra named [user.real_name] seeks your attention. What is your reply?", "Spirit's Response") as text|null
+				var/spirit_message = input(replier, "一名叫做 [user.real_name] 的 Necra 侍僧正在呼唤你。你要如何回应？", "灵魂的回应") as text|null
 				if(spirit_message)
-					to_chat(user, "<span style='color:silver'><i>The spirit whispers:</i> \"[spirit_message]\"</span>")
+					to_chat(user, "<span style='color:silver'><i>灵魂低语道：</i> \"[spirit_message]\"</span>")
 				else
-					to_chat(user, "<span style='color:#aaaaaa'><i>The spirit chooses to remain silent...</i></span>")
+					to_chat(user, "<span style='color:#aaaaaa'><i>那道灵魂选择保持沉默……</i></span>")
 			else
-				to_chat(user, "<span style='color:#aaaaaa'><i>The spirit cannot answer right now...</i></span>")
+				to_chat(user, "<span style='color:#aaaaaa'><i>那道灵魂此刻无法作答……</i></span>")
 		else
-			to_chat(user, "<span style='color:#aaaaaa'><i>You choose not to speak.</i></span>")
+			to_chat(user, "<span style='color:#aaaaaa'><i>你选择了沉默。</i></span>")
 	else
-		to_chat(user, "<span style='color:#aaaaaa'><i>No spirit answers your call.</i></span>")
+		to_chat(user, "<span style='color:#aaaaaa'><i>没有灵魂回应你的呼唤。</i></span>")
 
 // BODY INTO COIN
 
 /obj/effect/proc_holder/spell/invoked/fieldburials
-	name = "Collect Coins"
+	name = "收取丧资"
 	overlay_state = "consecrateburial"
 	antimagic_allowed = TRUE
 	devotion_cost = 10
@@ -251,12 +251,12 @@
 
 	var/mob/living/target = targets[1]
 	if(target.stat < DEAD)
-		to_chat(user, span_warning("They're still alive!"))
+		to_chat(user, span_warning("他们还活着！"))
 		revert_cast()
 		return FALSE
 
 	if(world.time <= target.mob_timers["lastdied"] + 15 MINUTES)
-		to_chat(user, span_warning("The body is too fresh for the rite."))
+		to_chat(user, span_warning("这具尸体对这项仪式来说还太新鲜。"))
 		revert_cast()
 		return FALSE
 
@@ -264,8 +264,8 @@
 	C.pixel_x = rand(-6, 6)
 	C.pixel_y = rand(-6, 6)
 
-	to_chat(user, span_notice("You gather coins from [target.real_name]'s remains."))
-	to_chat(target, span_danger("Your worldly wealth slips away with the rite..."))
+	to_chat(user, span_notice("你从 [target.real_name] 的遗骸上收取了丧资。"))
+	to_chat(target, span_danger("你尘世的财富正随着仪式一并流逝……"))
 
 	qdel(target)
 
@@ -278,7 +278,7 @@
 
 /*
 /obj/effect/proc_holder/spell/targeted/soulspeak
-	name = "Speak with Soul"
+	name = "与灵交谈"
 	range = 5
 	overlay_state = "speakwithdead"
 	releasedrain = 30
@@ -288,7 +288,7 @@
 	cast_without_targets = TRUE
 	sound = 'sound/magic/churn.ogg'
 	associated_skill = /datum/skill/magic/holy
-	invocations = list("She-Below brooks thee respite, be heard, wanderer.")
+	invocations = list("冥下之主许你片刻歇息，迷途者啊，说出你的声音。")
 	invocation_type = "whisper" //can be none, whisper, emote and shout
 	miracle = TRUE
 	devotion_cost = 30
@@ -303,16 +303,16 @@
 		if(!S.client)
 			continue
 		souloptions += S.livingname
-	var/pickedsoul = input(user, "Which wandering soul shall I commune with?", "Available Souls") as null|anything in souloptions
+	var/pickedsoul = input(user, "我要与哪一道游魂沟通？", "可选灵魂") as null|anything in souloptions
 	if(!pickedsoul)
-		to_chat(user, span_warning("I was unable to commune with a soul."))
+		to_chat(user, span_warning("我未能与任何灵魂建立沟通。"))
 		return
 	for(var/mob/living/carbon/spirit/P in GLOB.mob_list)
 		if(P.livingname == pickedsoul)
-			to_chat(P, "<font color='blue'>You feel yourself being pulled out of the Underworld.</font>")
+			to_chat(P, "<font color='blue'>我感觉自己正被拉离冥界。</font>")
 			sleep(2 SECONDS)
 			if(QDELETED(P) || P.summoned)
-				to_chat(user, "<font color='blue'>Your connection to the soul suddenly disappears!</font>")
+				to_chat(user, "<font color='blue'>我与那道灵魂的联系突然断开了！</font>")
 				return
 			capturedsoul = P
 			break
@@ -330,20 +330,20 @@
 		capturedsoul.density = FALSE
 		addtimer(CALLBACK(src, PROC_REF(return_soul), user, capturedsoul, itemstore), 60 SECONDS)
 		addtimer(CALLBACK(src, PROC_REF(return_soul_warning), user, capturedsoul), 50 SECONDS)
-		to_chat(user, "<font color='blue'>I feel a cold chill run down my spine, a ghastly presence has arrived.</font>")
+		to_chat(user, "<font color='blue'>一股寒意顺着我的脊背爬下，有某种可怖之物已经到来。</font>")
 		return ..()
 
 /obj/effect/proc_holder/spell/targeted/soulspeak/proc/return_soul_warning(mob/user, mob/living/carbon/spirit/soul)
 	if(!QDELETED(user))
-		to_chat(user, span_warning("The soul is being pulled away..."))
+		to_chat(user, span_warning("那道灵魂正被拉扯离去……"))
 	if(!QDELETED(soul))
-		to_chat(soul, span_warning("I'm starting to be pulled away..."))
+		to_chat(soul, span_warning("我开始被拖离此地了……"))
 
 /obj/effect/proc_holder/spell/targeted/soulspeak/proc/return_soul(mob/user, mob/living/carbon/spirit/soul, list/itemstore)
-	to_chat(user, "<font color='blue'>The soul returns to the Underworld.</font>")
+	to_chat(user, "<font color='blue'>那道灵魂回归了冥界。</font>")
 	if(QDELETED(soul))
 		return
-	to_chat(soul, "<font color='blue'>You feel yourself being transported back to the Underworld.</font>")
+	to_chat(soul, "<font color='blue'>我感觉自己正被送回冥界。</font>")
 	soul.drop_all_held_items()
 	for(var/obj/effect/landmark/underworld/A in shuffle(GLOB.landmarks_list))
 		soul.loc = A.loc
@@ -375,8 +375,8 @@
 	return result
 
 /obj/effect/proc_holder/spell/targeted/locate_dead
-	name = "Locate Corpse"
-	desc = "Call upon the Undermaiden to guide you to a lost soul."
+	name = "寻尸"
+	desc = "呼请冥下侍女，为你指引一具迷失灵魂的遗体所在。"
 	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
 	overlay_state = "locatecorpse"
 	action_icon = 'icons/mob/actions/necramiracles.dmi'
@@ -389,7 +389,7 @@
 	miracle = TRUE
 	associated_skill = /datum/skill/magic/holy
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
-	invocations = list("Undermaiden, guide my hand to those who have lost their way.")
+	invocations = list("冥下侍女，引我去往那些迷失归途者身边。")
 	invocation_type = "whisper"
 	recharge_time = 15 SECONDS
 	devotion_cost = 35
@@ -414,13 +414,13 @@
 		var/corpse_name
 
 		if(time_dead < 5 MINUTES)
-			corpse_name = "Fresh corpse "
+			corpse_name = "新鲜尸体 "
 		else if(time_dead < 10 MINUTES)
-			corpse_name = "Recently deceased "
+			corpse_name = "新近亡者 "
 		else if(time_dead < 30 MINUTES)
-			corpse_name = "Long dead "
+			corpse_name = "久死之躯 "
 		else
-			corpse_name = "Forgotten remains of "
+			corpse_name = "被遗忘的遗骸，属于 "
 
 		var/list/d_list = C.get_mob_descriptors()
 		var/trait_desc = "[capitalize(build_coalesce_description_nofluff(d_list, C, list(MOB_DESCRIPTOR_SLOT_TRAIT), "%DESC1%"))]"
@@ -428,17 +428,17 @@
 		var/descriptor_name = "[trait_desc] [stature_desc]"
 
 		if(descriptor_name == " ")
-			descriptor_name = "Unknown"
+			descriptor_name = "未知之人"
 
-		corpse_name += " of \a [descriptor_name]..."
+		corpse_name += "\a [descriptor_name]……"
 		corpses[corpse_name] = C
 
 	if(!length(corpses))
-		to_chat(user, span_warning("The Undermaiden's grasp lets slip."))
+		to_chat(user, span_warning("冥下侍女的指引自你手中滑脱了。"))
 		revert_cast()
 		return .
 
-	var/selected = tgui_input_list(user, "Which body shall I seek?", "Available Bodies", corpses)
+	var/selected = tgui_input_list(user, "你要寻找哪一具遗体？", "可选遗体", corpses)
 
 	if(!selected || QDELETED(src) || QDELETED(user) || QDELETED(corpses[selected]))
 		to_chat(user, span_warning("The Undermaiden's grasp lets slip."))
@@ -450,7 +450,7 @@
 	var/turf/turf_corpse = get_turf(corpse)
 
 	if(!turf_user || !turf_corpse)
-		to_chat(user, span_warning("The Undermaiden's grasp lets slip."))
+		to_chat(user, span_warning("冥下侍女的指引自你手中滑脱了。"))
 		return .
 
 	var/vertical_text = null
@@ -462,10 +462,10 @@
 		var/z_difference = abs(turf_corpse.z - turf_user.z)
 
 		if(turf_corpse.z > turf_user.z)
-			vertical_text = "upwards"
+			vertical_text = "向上"
 			vertical_arrow = necra_repeat_arrow("⇧", z_difference)
 		else
-			vertical_text = "downwards"
+			vertical_text = "向下"
 			vertical_arrow = necra_repeat_arrow("⇩", z_difference)
 
 	if(turf_user.x != turf_corpse.x || turf_user.y != turf_corpse.y)
@@ -473,41 +473,41 @@
 		horizontal_arrow = necra_dir_arrow(direction)
 
 		switch(direction)
-			if(NORTH)      horizontal_text = "north"
-			if(SOUTH)      horizontal_text = "south"
-			if(EAST)       horizontal_text = "east"
-			if(WEST)       horizontal_text = "west"
-			if(NORTHEAST)  horizontal_text = "northeast"
-			if(NORTHWEST)  horizontal_text = "northwest"
-			if(SOUTHEAST)  horizontal_text = "southeast"
-			if(SOUTHWEST)  horizontal_text = "southwest"
+			if(NORTH)      horizontal_text = "北方"
+			if(SOUTH)      horizontal_text = "南方"
+			if(EAST)       horizontal_text = "东方"
+			if(WEST)       horizontal_text = "西方"
+			if(NORTHEAST)  horizontal_text = "东北方"
+			if(NORTHWEST)  horizontal_text = "西北方"
+			if(SOUTHEAST)  horizontal_text = "东南方"
+			if(SOUTHWEST)  horizontal_text = "西南方"
 
 	var/dist = get_dist(turf_user, turf_corpse)
 	var/distance_text
 
 	if(dist > 100)
-		distance_text = "Its presence feels distant."
+		distance_text = "它的气息显得十分遥远。"
 	else if(dist > 50)
-		distance_text = "The pull grows stronger, yet remains far."
+		distance_text = "那股牵引正在增强，但仍远在他处。"
 	else if(dist > 20)
-		distance_text = "You feel the corpse is not far now."
+		distance_text = "你感觉那具尸体已经不算太远。"
 	else if(dist > 0)
-		distance_text = "The corpse is very near."
+		distance_text = "那具尸体已经近在咫尺。"
 	else
-		distance_text = "It is here."
+		distance_text = "它就在这里。"
 
 	var/direction_text = ""
 
 	if(vertical_text)
-		direction_text += "<br>Vertical: <b>[vertical_arrow]</b> [vertical_text]"
+		direction_text += "<br>垂直方向：<b>[vertical_arrow]</b> [vertical_text]"
 
 	if(horizontal_text)
-		direction_text += "<br>Horizontal: <b>[horizontal_arrow]</b> [horizontal_text]"
+		direction_text += "<br>水平方向：<b>[horizontal_arrow]</b> [horizontal_text]"
 
 	if(!length(direction_text))
-		direction_text = "<br><b>•</b> nowhere discernible"
+		direction_text = "<br><b>•</b> 无法辨明方向"
 
 	var/area/corpse_area = get_area(turf_corpse)
-	var/area_text = corpse_area ? corpse_area.name : "an unknown place"
+	var/area_text = corpse_area ? corpse_area.name : "某个未知之地"
 
-	to_chat(user, span_notice("The Undermaiden pulls on your hand.[direction_text]<br>[distance_text] Its resting place lies within <b>[area_text]</b>."))
+	to_chat(user, span_notice("冥下侍女正牵引着你的手。[direction_text]<br>[distance_text] 它安息于 <b>[area_text]</b> 之中。"))

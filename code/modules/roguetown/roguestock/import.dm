@@ -3,8 +3,8 @@
 	stable_price = TRUE
 
 /datum/roguestock/import/crackers
-	name = "Bin of Rations"
-	desc = "Low moisture bread that keeps well."
+	name = "口粮箱"
+	desc = "低含水量、耐储存的面包。"
 	item_type = /obj/item/roguebin/crackers
 	export_price = 100
 	importexport_amt = 1
@@ -28,8 +28,8 @@
 	masterkey = TRUE
 
 /datum/roguestock/import/redpotion
-	name = "Crate of Health Potions"
-	desc = "Red that keeps men alive."
+	name = "治疗药水箱"
+	desc = "救人性命的红色药水。"
 	item_type = /obj/structure/closet/crate/chest/steward/redpotion
 	export_price = 100
 	importexport_amt = 1
@@ -43,8 +43,8 @@
 	new /obj/item/reagent_containers/glass/bottle/rogue/healthpot(src)
 
 /datum/roguestock/import/rotpotion
-	name = "Crate of Rot Cure Potions"
-	desc = "A sought-after crate of rare potions of rot-curing."
+	name = "祛腐药水箱"
+	desc = "一箱稀有而抢手的祛腐药水。"
 	item_type = /obj/structure/closet/crate/chest/steward/rotpotion
 	export_price = 400		//Expensive, 200 each roughly. Four uses total, as only 5u needed to reverse rot. Each bottle is 10u.
 	importexport_amt = 1
@@ -55,8 +55,8 @@
 	new /obj/item/reagent_containers/glass/bottle/alchemical/rogue/rotcure(src)
 
 /datum/roguestock/import/knight
-	name = "Knight Equipment Crate"
-	desc = "Starting kit for a new knight."
+	name = "骑士装备箱"
+	desc = "新任骑士的起始装备。"
 	item_type = /obj/structure/closet/crate/chest/steward/knight
 	export_price = 500
 	importexport_amt = 1
@@ -76,8 +76,8 @@
 	new /obj/item/rogueweapon/sword/long(src)
 
 /datum/roguestock/import/warden
-	name = "Warden Equipment Crate"
-	desc = "Starting kit for a new warden."
+	name = "看守装备箱"
+	desc = "新任看守的起始装备。"
 	item_type = /obj/structure/closet/crate/chest/steward/warden
 	export_price = 250
 	importexport_amt = 1
@@ -92,8 +92,8 @@
 	new /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/warden(src)
 
 /datum/roguestock/import/manatarms
-	name = "Man at Arms Equipment Crate"
-	desc = "Starting kit for a man at arms."
+	name = "兵士装备箱"
+	desc = "新任兵士的起始装备。"
 	item_type = /obj/structure/closet/crate/chest/steward/manatarms
 	export_price = 250
 	importexport_amt = 1
@@ -113,8 +113,8 @@
 	new /obj/item/rogueweapon/spear(src)
 
 /datum/roguestock/import/crossbow
-	name = "Crossbows Crate"
-	desc = "A crate with 3 crossbows with 3 full quivers."
+	name = "十字弩箱"
+	desc = "一箱内含 3 把十字弩和 3 个装满的箭袋。"
 	item_type = /obj/structure/closet/crate/chest/steward/crossbow
 	export_price = 300
 	importexport_amt = 1
@@ -129,8 +129,8 @@
 	new /obj/item/quiver/bolts(src)
 
 /datum/roguestock/import/saigabuck
-	name = "Saigabuck"
-	desc = "One Saigabuck tamed with a saddle from a far away land."
+	name = "雄赛加羚"
+	desc = "一头驯服并配有异乡马鞍的雄赛加羚。"
 	item_type = /obj/structure/closet/crate/chest/steward/saigabuck
 	export_price = 100
 	importexport_amt = 1
@@ -140,8 +140,8 @@
 	new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame/saddled(src)
 
 /datum/roguestock/import/volfcrate
-	name = "Volf Crate"
-	desc = "An angry, feral volf has been stuffed inside this crate. By the time it arrives, it'll likely be starving."
+	name = "沃尔夫箱"
+	desc = "一只愤怒的野生沃尔夫被塞进了这个箱子里。等它送到时，多半已经饿坏了。"
 	item_type = /obj/structure/closet/crate/chest/steward/volfcrate
 	export_price = 300
 	importexport_amt = 1
@@ -151,8 +151,8 @@
 	new /mob/living/simple_animal/hostile/retaliate/rogue/wolf(src)
 
 /datum/roguestock/import/bearcrate
-	name = "Direbear Crate"
-	desc = "A pack of lunatic fools claim to have crammed an entire, full-sized bear inside this crate. Their assurance is that it'll be angry."
+	name = "恐熊箱"
+	desc = "一群疯子声称他们把一整头成年的熊塞进了这个箱子里。他们唯一能保证的是它会很生气。"
 	item_type = /obj/structure/closet/crate/chest/steward/bearcrate
 	export_price = 1000
 	importexport_amt = 1
@@ -162,8 +162,8 @@
 	new /mob/living/simple_animal/hostile/retaliate/rogue/direbear(src)
 
 /datum/roguestock/import/horsecrate
-	name = "Horse Crate"
-	desc = "A strange and unfamiliar mount in Ferentia. Horses, unlike saigas, have uniquely uncloven, single-toed hooves."
+	name = "马匹箱"
+	desc = "谷地里一种陌生的坐骑。与赛加不同，马拥有独特的未分趾单蹄。"
 	item_type = /obj/structure/closet/crate/chest/steward/horsecrate
 	export_price = 500
 	importexport_amt = 1
@@ -179,8 +179,8 @@
 			new /mob/living/simple_animal/hostile/retaliate/rogue/horse/male/black/tame/saddled(src)
 
 /datum/roguestock/import/ponycrate
-	name = "Miniature Pony Crate"
-	desc = "This novelty pony has been bred to be quaint of size, but more than makes up for it as a valiant steed."
+	name = "迷你矮马箱"
+	desc = "这种新奇的小马被培育得格外娇小，但作为英勇坐骑却毫不逊色。"
 	item_type = /obj/structure/closet/crate/chest/steward/ponycrate
 	export_price = 1500
 	importexport_amt = 1
@@ -198,8 +198,8 @@
 	pony.transform = pony.transform.Scale(0.7, 0.7)
 
 /datum/roguestock/import/cow
-	name = "Cow"
-	desc = "Farmer's best friend, reliable provider of milk and meat."
+	name = "奶牛"
+	desc = "农夫最好的伙伴，稳定提供牛奶和肉。"
 	item_type = /obj/structure/closet/crate/chest/steward/cow
 	export_price = 100
 	importexport_amt = 1
@@ -209,8 +209,8 @@
 	new /mob/living/simple_animal/hostile/retaliate/rogue/cow(src)
 
 /datum/roguestock/import/bull
-	name = "Bull"
-	desc = "Horned and aggressive, required to start a herd."
+	name = "公牛"
+	desc = "长角且具有攻击性，是建立牛群所必需的。"
 	item_type = /obj/structure/closet/crate/chest/steward/bull
 	export_price = 100
 	importexport_amt = 1
@@ -220,8 +220,8 @@
 	new /mob/living/simple_animal/hostile/retaliate/rogue/bull(src)
 
 /datum/roguestock/import/goat
-	name = "Doe Goat"
-	desc = "An all-purpose source of milk, hide and fat."
+	name = "母山羊"
+	desc = "牛奶、皮革和脂肪的多用途来源。"
 	item_type = /obj/structure/closet/crate/chest/steward/goat
 	export_price = 100
 	importexport_amt = 1
@@ -231,8 +231,8 @@
 	new /mob/living/simple_animal/hostile/retaliate/rogue/goat(src)
 
 /datum/roguestock/import/goatmale
-	name = "Billy Goat"
-	desc = "Bearded, male goat capable of saddling."
+	name = "公山羊"
+	desc = "长着胡子的公山羊，可以装鞍骑乘。"
 	item_type = /obj/structure/closet/crate/chest/steward/goatmale
 	export_price = 100
 	importexport_amt = 1
@@ -242,8 +242,8 @@
 	new /mob/living/simple_animal/hostile/retaliate/rogue/goatmale(src)
 
 /datum/roguestock/import/chicken
-	name = "Chicken"
-	desc = "A reliable source of egg and meat."
+	name = "鸡"
+	desc = "稳定的蛋和肉来源。"
 	item_type = /obj/structure/closet/crate/chest/steward/chicken
 	export_price = 50
 	importexport_amt = 1
@@ -253,8 +253,8 @@
 	new /mob/living/simple_animal/hostile/retaliate/rogue/chicken(src)
 
 /datum/roguestock/import/farmequip
-	name = "Farm Equipment Crate"
-	desc = "A crate with a pitchfork, sickle, hoe and some seeds."
+	name = "农具箱"
+	desc = "一箱内含草叉、镰刀、锄头和一些种子。"
 	item_type = /obj/structure/closet/crate/chest/steward/farmequip
 	export_price = 100
 	importexport_amt = 1
@@ -269,8 +269,8 @@
 	new /obj/item/seeds/berryrogue(src)
 
 /datum/roguestock/import/blacksmith
-	name = "Smith Crate"
-	desc = "Stone, coal , iron ingot, wood bin, bucket with hammer and tongs."
+	name = "铁匠箱"
+	desc = "石头、煤炭、铁锭、木料箱，还有装着锤子和铁钳的桶。"
 	item_type = /obj/structure/closet/crate/chest/steward/blacksmith
 	export_price = 100
 	importexport_amt = 1
@@ -294,8 +294,8 @@
 	new /obj/item/reagent_containers/glass/bucket(src)
 
 /datum/roguestock/import/craftsman
-	name = "Craftsman Crate"
-	desc = "Handsaw, chisel, hammer."
+	name = "工匠箱"
+	desc = "手锯、凿子、锤子。"
 	item_type = /obj/structure/closet/crate/chest/steward/craftsman
 	export_price = 60
 	importexport_amt = 1
@@ -307,8 +307,8 @@
 	new /obj/item/rogueweapon/handsaw(src)
 
 /datum/roguestock/import/glasscrate
-	name = "Glass Crate"
-	desc = "A crate full of glass for windows, repairs, and works of art.."
+	name = "玻璃箱"
+	desc = "一箱玻璃，可用于窗户、修补和工艺品。"
 	item_type = /obj/structure/closet/crate/chest/steward/glasscrate
 	export_price = 150
 	importexport_amt = 1
@@ -322,8 +322,8 @@
 	new /obj/item/natural/glass(src)
 
 /datum/roguestock/import/tailor
-	name = "Tailor Crate"
-	desc = "A crate with basic tailoring tools."
+	name = "裁缝箱"
+	desc = "一箱基础裁缝工具。"
 	item_type = /obj/structure/closet/crate/chest/steward/tailor
 	export_price = 150
 	importexport_amt = 1
@@ -339,8 +339,8 @@
 	new /obj/item/grown/log/tree/stick(src)
 
 /datum/roguestock/import/keyringsset
-	name = "Man-At-Arms Keyring Set Crate"
-	desc = "A set of keys for new hires."
+	name = "兵士钥匙圈套装箱"
+	desc = "供新雇员使用的一套钥匙。"
 	item_type = /obj/structure/closet/crate/chest/steward/keyringsset
 	export_price = 100
 	importexport_amt = 1
@@ -353,8 +353,8 @@
 	new /obj/item/storage/keyring/guardcastle(src)
 
 /datum/roguestock/import/alcoholset
-	name = "Alcohol Crate"
-	desc = "A crate with a selection of beers and liquors, fit for a party."
+	name = "酒水箱"
+	desc = "一箱精选啤酒与烈酒，适合宴饮。"
 	item_type = /obj/structure/closet/crate/chest/steward/alcoholset
 	export_price = 800
 	importexport_amt = 1
@@ -376,8 +376,8 @@
 	new /obj/item/reagent_containers/glass/bottle/rogue/beer/apfelweinheim(src)
 
 /datum/roguestock/import/minecarttracks
-	name = "Minecart Tracks"
-	desc = "A crate with One hundred minecart tracks and four break tracks"
+	name = "矿车轨道"
+	desc = "一箱内含一百段矿车轨道和四段制动轨道"
 	item_type = /obj/structure/closet/crate/chest/steward/minecarttracks
 	export_price = 310
 	importexport_amt = 1
@@ -390,8 +390,8 @@
 		new /obj/item/rotation_contraption/minecart_rail/railbreak(src)
 
 /datum/roguestock/import/rotationalnetwork
-	name = "Rotational Network"
-	desc = "A crate of ten large gears, sixteen small gears, three gearboxes, three verticle gearboxes, and twenty shafts"
+	name = "传动网络"
+	desc = "一箱内含十个大齿轮、十六个小齿轮、三个齿轮箱、三个垂直齿轮箱和二十根传动轴"
 	item_type = /obj/structure/closet/crate/chest/steward/rotationalnetwork
 	export_price = 362
 	importexport_amt = 1
@@ -410,8 +410,8 @@
 		new /obj/item/rotation_contraption/shaft(src)
 
 /datum/roguestock/import/waterwheels
-	name = "Waterwheels"
-	desc = "A crate of five waterwheels"
+	name = "水轮"
+	desc = "一箱五个水轮"
 	item_type = /obj/structure/closet/crate/chest/steward/waterwheels
 	export_price = 75
 	importexport_amt = 1
@@ -422,8 +422,8 @@
 		new /obj/item/rotation_contraption/waterwheel(src)
 
 /datum/roguestock/import/stoneblocks
-	name = "Stoneblocks"
-	desc = "A crate of twenty Stoneblocks, useful in building"
+	name = "石砖"
+	desc = "一箱二十块石砖，可用于建造"
 	item_type = /obj/structure/closet/crate/chest/steward/stoneblocks
 	export_price = 40
 	importexport_amt = 1
@@ -434,8 +434,8 @@
 		new /obj/item/natural/stoneblock(src)
 
 /datum/roguestock/import/planks
-	name = "Planks"
-	desc = "A crate of twenty planks, useful in building"
+	name = "木板"
+	desc = "一箱二十块木板，可用于建造"
 	item_type = /obj/structure/closet/crate/chest/steward/planks
 	export_price = 60
 	importexport_amt = 1

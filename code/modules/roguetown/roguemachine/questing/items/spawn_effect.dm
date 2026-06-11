@@ -1,5 +1,5 @@
 /obj/effect/quest_spawn
-	name = "quest spawner"
+	name = "任务生成点"
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "x"
 	anchored = TRUE

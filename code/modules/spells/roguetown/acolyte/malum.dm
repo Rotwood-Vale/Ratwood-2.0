@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/vigorousexchange
-	name = "Vigorous Exchange"
-	desc = "Restores the targets Energy, Twice as effective on someone else."
+	name = "活力交换"
+	desc = "恢复目标的体力，对他人施放时效果翻倍。"
 	overlay_icon = 'icons/mob/actions/malummiracles.dmi'
 	action_icon = 'icons/mob/actions/malummiracles.dmi'
 	overlay_state = "vigorous_exchange"
@@ -12,7 +12,7 @@
 	no_early_release = TRUE
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/items/bsmithfail.ogg'
-	invocations = list("Through flame and ash, let vigor rise, by Malum’s hand, let strength reprise!")
+	invocations = list("借火与灰烬之力，让活力再起，凭 Malum 之手，使力量重归！")
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
@@ -24,8 +24,8 @@
 	devotion_cost = 30
 	
 /obj/effect/proc_holder/spell/invoked/heatmetal
-	name = "Heat Metal"
-	desc= "Damages Armor, Forces target to drop a metallic weapon, heats up an ingot in tongs or smelts a single item."
+	name = "炽金"
+	desc= "损伤护甲，迫使目标丢下金属武器，加热钳中的锭料，或熔化单个物品。"
 	overlay_icon = 'icons/mob/actions/malummiracles.dmi'
 	action_icon = 'icons/mob/actions/malummiracles.dmi'
 	overlay_state = "heat_metal"
@@ -38,7 +38,7 @@
 	no_early_release = TRUE
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/items/bsmithfail.ogg'
-	invocations = list("With heat I wield, with flame I claim, Let metal serve in Malum's name!")
+	invocations = list("我执掌炽热，我号令火焰，让金属以 Malum 之名俯首！")
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
@@ -50,8 +50,8 @@
 	devotion_cost = 40
 
 /obj/effect/proc_holder/spell/invoked/hammerfall
-	name = "Hammerfall"
-	desc = "Damages structures in an area while possibly knocking down mobs in the area."
+	name = "熔锤坠击"
+	desc = "破坏一片区域内的建筑，并可能击倒范围内的生物。"
 	overlay_icon = 'icons/mob/actions/malummiracles.dmi'
 	action_icon = 'icons/mob/actions/malummiracles.dmi'
 	overlay_state = "hammerfall"
@@ -64,7 +64,7 @@
 	no_early_release = TRUE
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/items/bsmithfail.ogg'
-	invocations = list("By molten might and hammer's weight, in Malum’s flame, the earth shall quake!")
+	invocations = list("凭熔火之威，借战锤之重，于 Malum 烈焰中令大地震颤！")
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
@@ -88,7 +88,7 @@
 	fallzone = get_turf(targets[1])
 	if(!fallzone)
 		return
-	show_visible_message(usr, "[usr] raises their arm, conjuring a hammer wreathed in molten fire. As they hurl it toward the ground, the earth trembles under its impact, shaking its very foundations!", "You raise your arm, conjuring a hammer wreathed in molten fire. As you hurl it toward the ground, the earth trembles under its impact, shaking its very foundations!")
+	show_visible_message(usr, "[usr] 抬起手臂，唤出一柄缠绕熔火的战锤。随着它被猛然掷向地面，大地在冲击下震颤，连根基都仿佛摇动起来！", "我抬起手臂，唤出一柄缠绕熔火的战锤。随着它被猛然掷向地面，大地在冲击下震颤，连根基都仿佛摇动起来！")
 	for(var/turf/open/visual in view(radius, fallzone))
 		var/obj/effect/temp_visual/lavastaff/Lava = new /obj/effect/temp_visual/lavastaff(visual)
 		animate(Lava, alpha = 255, time = 5)
@@ -97,7 +97,7 @@
 		shake_camera(screenshaken, 5, 5)
 	for(var/mob/living/carbon/shaken in view(radius, fallzone))
 		shaken.apply_effect(1 SECONDS, EFFECT_KNOCKDOWN, 0)
-		show_visible_message(shaken, null, "The ground quakes, making me fall over.")
+		show_visible_message(shaken, null, "地面剧烈震动，让我摔倒在地。")
 	for(var/obj/structure/damaged in view(radius, fallzone))
 		if(istype(damaged, /obj/structure/flora/newbranch))
 			continue
@@ -109,8 +109,8 @@
 		aoemining.take_damage(structure_damage, BRUTE,"blunt",1)
 
 /obj/effect/proc_holder/spell/invoked/craftercovenant
-	name = "The Crafter's Covenant"
-	desc = "Melt a pile of valuables and convert them into a single item. Sacrifice is accepted even if its not valuable enough to make anything."
+	name = "匠造之约"
+	desc = "将一堆贵重物熔化并塑成单件物品。即便祭品价值不足以造出任何东西，Malum 依然会收下它。"
 	overlay_icon = 'icons/mob/actions/malummiracles.dmi'
 	action_icon = 'icons/mob/actions/malummiracles.dmi'
 	overlay_state = "craftercovenant"
@@ -123,7 +123,7 @@
 	no_early_release = TRUE
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/items/bsmithfail.ogg'
-	invocations = list("Coins to ash, flame to form, in Malum’s name, let creation be born!")
+	invocations = list("让钱币化灰，让火焰塑形，以 Malum 之名，令造物诞生！")
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
@@ -158,7 +158,7 @@
 /proc/handle_item_smelting(obj/item/target, mob/user, datum/effect_system/spark_spread/sparks, list/nosmeltore)
 	if (!target.smeltresult) return
 	var/obj/item/itemtospawn = target.smeltresult
-	show_visible_message(user, "After [user]'s incantation, [target] glows brightly and melts into an ingot.", null)
+	show_visible_message(user, "[user] 念毕咒语后，[target] 猛地泛起炽光，随即熔成了一块锭料。", null)
 	new itemtospawn(get_turf(target))
 	sparks.set_up(1, 1, get_turf(target))
 	sparks.start()
@@ -167,7 +167,7 @@
 /proc/handle_living_entity(mob/target, mob/user, list/nosmeltore)
 	var/obj/item/targeteditem = get_targeted_item(user, target)
 	if (!targeteditem || targeteditem.smeltresult == /obj/item/ash || target.anti_magic_check(TRUE,TRUE)) 
-		show_visible_message(user, "After their incantation, [user] points at [target] but it seems to have no effect.", "After your incantation, you point at [target] but it seems to have no effect.")
+		show_visible_message(user, "[user] 念完咒后指向 [target]，可那似乎毫无效果。", "我念完咒后指向 [target]，可那似乎毫无效果。")
 		return
 	if (istype(targeteditem, /obj/item/rogueweapon/tongs))
 		handle_tongs(targeteditem, user)
@@ -224,13 +224,13 @@
 	T.hott = tyme
 	addtimer(CALLBACK(T, TYPE_PROC_REF(/obj/item/rogueweapon/tongs, make_unhot), tyme), 100)
 	T.update_icon()
-	show_visible_message(user, "After [user]'s incantation, the ingot inside [T] starts glowing.", "After your incantation, the ingot inside [T] starts glowing.")
+	show_visible_message(user, "[user] 念毕咒语后，[T] 中的锭料开始发出炽亮红光。", "我念毕咒语后，[T] 中的锭料开始发出炽亮红光。")
 
 /proc/handle_heating_in_hand(mob/living/carbon/target, obj/item/targeteditem, mob/user)
 	var/datum/effect_system/spark_spread/sparks = new()
 	apply_damage_to_hands(target, user)
 	target.dropItemToGround(targeteditem)
-	show_visible_message(target, "[target]'s [targeteditem.name] glows brightly, searing their flesh.", "Your [targeteditem.name] glows brightly, It burns!")
+	show_visible_message(target, "[target] 的 [targeteditem.name] 猛然发亮，灼烧起他们的血肉。", "我的 [targeteditem.name] 猛然发亮，烫得我血肉生疼！")
 	target.emote("painscream")
 	playsound(get_turf(target), 'sound/misc/frying.ogg', 100, FALSE, -1)
 	sparks.set_up(1, 1, get_turf(target))
@@ -265,7 +265,7 @@
 	apply_damage_if_covered(target, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM), targeteditem, ARMS|HANDS, damage_to_apply)
 	apply_damage_if_covered(target, list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG), targeteditem, GROIN|LEGS|FEET, damage_to_apply)
 	apply_damage_if_covered(target, list(BODY_ZONE_HEAD), targeteditem, HEAD|HAIR|NECK|NOSE|MOUTH|EARS|EYES, damage_to_apply)
-	show_visible_message(target, "[target]'s [targeteditem.name] glows brightly, searing their flesh.", "My [targeteditem.name] glows brightly, It burns!")
+	show_visible_message(target, "[target] 的 [targeteditem.name] 猛然发亮，灼烧起他们的血肉。", "我的 [targeteditem.name] 猛然发亮，烫得我血肉生疼！")
 	playsound(get_turf(target), 'sound/misc/frying.ogg', 100, FALSE, -1)
 
 /proc/apply_damage_if_covered(mob/living/carbon/target, list/body_zones, obj/item/clothing/targeteditem, mask, damage)
@@ -289,11 +289,11 @@
 		return
 	if (target == user)
 		target.energy_add(starminatoregen)
-		show_visible_message(usr, "As [user] intones the incantation, vibrant flames swirl around them.", "As you intones the incantation, vibrant flames swirl around you, You feel refreshed.")
+		show_visible_message(usr, "[user] 吟诵咒文时，鲜活的火焰在他们周身盘旋。", "我吟诵咒文时，鲜活的火焰在我周身盘旋。我感到精神一振。")
 	else if (user.energy > (starminatoregen * 2))
 		user.energy_add(-(starminatoregen * 2))
 		target.energy_add(starminatoregen * 2)
-		show_visible_message(target, "As [user] intones the incantation, vibrant flames swirl around them, a dance of energy flowing towards [target].", "As [user] intones the incantation, vibrant flames swirl around them, a dance of energy flowing towards you. You feel refreshed")
+		show_visible_message(target, "[user] 吟诵咒文时，鲜活的火焰在他们周身盘旋，随后化作一道活力之流涌向 [target]。", "[user] 吟诵咒文时，鲜活的火焰在他们周身盘旋，随后化作一道活力之流涌向我。我感到精神一振。")
 
 /obj/effect/proc_holder/spell/invoked/craftercovenant/cast(list/targets, mob/user = usr)
 	. = ..()
@@ -325,7 +325,7 @@
 			doable += list(list(itemtorecord.name, itemtorecord))
 	}
 	if (!doable.len)
-		show_visible_message(usr, "A wave of heat washes over the pile as [user] speaks Malum's name. The pile of valuables crumble into dust.", "A wave of heat washes over the pile as you speak Malum's name. The pile of valuables crumble into dust. Malum accepted your sacrifice. Yet it seems it wasn't enough.")
+		show_visible_message(usr, "[user] 呼唤 Malum 之名时，一阵热浪席卷了这堆祭品。成堆贵重物随之崩解成尘。", "当我呼唤 Malum 之名时，一阵热浪席卷了这堆祭品。成堆贵重物随之崩解成尘。Malum 接受了你的祭品，但显然还远远不够。")
 		return
 	var/list/doablename = list()
 	var/list/item_map = list()
@@ -334,14 +334,14 @@
 		doablename += list(doableextract[1])
 		item_map[doableextract[1]] = doableextract[2]
 	}
-	var/itemchoice = input(user, "Choose your boon", "Available boons") in (doablename)
+	var/itemchoice = input(user, "选择你的恩赐", "可选恩赐") in (doablename)
 	if (itemchoice)
 		var/obj/item/itemtospawn = item_map[itemchoice]
 		if (itemtospawn)
 			new itemtospawn.type(altar)
 			sparks.set_up(1, 1, altar)
 			sparks.start()
-			show_visible_message(usr, "A wave of heat washes over the pile as [user] speaks Malum's name. The pile of valuables crumble into dust, only for the dust to reform into an item as if reborn from the flames. Malum has accepted the offering.", "A wave of heat washes over the pile as you speak Malum's name. The pile of valuables crumble into dust, only for the dust to reform into an item as if reborn from the flames. Malum has accepted the offering.")
+			show_visible_message(usr, "[user] 呼唤 Malum 之名时，一阵热浪席卷了这堆祭品。贵重物崩解成尘，又像自火中重生般重新凝成了一件器物。Malum 接受了这次供奉。", "当我呼唤 Malum 之名时，一阵热浪席卷了这堆祭品。贵重物崩解成尘，又像自火中重生般重新凝成了一件器物。Malum 接受了这次供奉。")
 
 GLOBAL_LIST_EMPTY(anvil_recipe_prices)
 
@@ -393,8 +393,8 @@ GLOBAL_LIST_EMPTY(anvil_recipe_prices)
 	initialize_anvil_recipe_prices() // Precompute recipe prices on startup
 
 /obj/effect/proc_holder/spell/invoked/malum_flame_rogue
-	name = "Malum's Fire"
-	desc = "Ignites target."
+	name = "Malum 之火"
+	desc = "点燃目标。"
 	overlay_icon = 'icons/mob/actions/malummiracles.dmi'
 	action_icon = 'icons/mob/actions/malummiracles.dmi'
 	overlay_state = "malum_fire"
@@ -407,7 +407,7 @@ GLOBAL_LIST_EMPTY(anvil_recipe_prices)
 	chargedloop = null
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/heal.ogg'
-	invocations = list("Flame.")
+	invocations = list("燃。")
 	invocation_type = "whisper"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
@@ -419,7 +419,7 @@ GLOBAL_LIST_EMPTY(anvil_recipe_prices)
 	. = ..()
 	if(isliving(targets[1]))
 		var/mob/living/L = targets[1]
-		user.visible_message("<font color='yellow'>[user] points at [L]!</font>")
+		user.visible_message("<font color='yellow'>[user] 抬手指向了 [L]！</font>")
 		if(L.anti_magic_check(TRUE, TRUE))
 			return FALSE
 		L.adjust_fire_stacks(1, /datum/status_effect/fire_handler/fire_stacks/divine)
@@ -430,10 +430,10 @@ GLOBAL_LIST_EMPTY(anvil_recipe_prices)
 	else if(isobj(targets[1]))
 		var/obj/O = targets[1]
 		if(O.fire_act())
-			user.visible_message("<font color='yellow'>[user] points at [O], igniting it with sacred flames!</font>")
+			user.visible_message("<font color='yellow'>[user] 指向 [O]，以圣焰将其点燃！</font>")
 			return TRUE
 		else
-			to_chat(user, span_warning("You point at [O], but it fails to catch fire."))
+			to_chat(user, span_warning("我指向 [O]，但它没能燃起来。"))
 			return FALSE
 	return FALSE
 

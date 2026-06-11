@@ -1,6 +1,6 @@
 /datum/advclass/mercenary/hangyaku
-	name = "Hangyaku-Kounen"
-	tutorial = "Rebel. Outlaw. Failure. Once, you served the upper echelons of Kazengun society as more than just a 'knight'- you were a champion, a beacon of virtue, a legend in the making. Now you wander distant Psydonia, seeking a fresh start... or fresh coin, at least."
+	name = "叛逆公卿"
+	tutorial = "叛徒。亡命徒。失败者。昔日的你在 风郡 上层社会中并不只是个“武士”，你曾是冠军、德行的旗帜，是一段传奇的雏形。如今你流落遥远的 普赛多尼亚，寻求新的开始……至少，也得先弄到新的钱财。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT //do they have constructs in kazengun?
 	outfit = /datum/outfit/job/roguetown/mercenary/hangyaku
@@ -32,13 +32,13 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN, //doesn't do much, but they're meant to be noblemen.
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 	)
-	extra_context = "This subclass is race-limited from: Constructs."
+	extra_context = "该分支禁止构装体选择。"
 
 /datum/outfit/job/roguetown/mercenary/hangyaku/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
 	has_loadout = TRUE
-	to_chat(H, span_warning("Rebel. Outlaw. Failure. Once, you served the upper echelons of Kazengun society as more than just a 'knight'- you were a champion, a beacon of virtue, a legend in the making. Now you wander distant Psydonia, seeking a fresh start... or fresh coin, at least."))
+	to_chat(H, span_warning("叛徒。亡命徒。失败者。昔日的你在 风郡 上层社会中并不只是个“武士”，你曾是冠军、德行的旗帜，是一段传奇的雏形。如今你流落遥远的 普赛多尼亚，寻求新的开始……至少，也得先弄到新的钱财。"))
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/kabuto
 	belt = /obj/item/storage/belt/rogue/leather/cloth
 	neck = /obj/item/clothing/neck/roguetown/gorget/steel/kazengun
@@ -58,50 +58,50 @@
 
 /datum/outfit/job/roguetown/mercenary/hangyaku/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	var/weapons = list("Sword","Great Mace","Spear","Bow")
-	var/weapon_choice = input(H, "Choose your weapon.", "WHEN STEEL MUST SPEAK...") as anything in weapons
+	var/weapons = list("刀剑","巨型权杖","长枪","弓")
+	var/weapon_choice = input(H, "选择你的武器。", "当钢铁开口之时……") as anything in weapons
 	switch(weapon_choice)
-		if("Sword")
+		if("刀剑")
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword/kazengun/noparry, SLOT_BELT_L, TRUE)	
-		if("Great Mace")
+		if("巨型权杖")
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/mace/goden/kanabo, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
-		if("Spear")
+		if("长枪")
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/spear/naginata, TRUE) 
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
-		if("Bow")
+		if("弓")
 			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve, TRUE) 
 			H.equip_to_slot_or_del(new /obj/item/quiver/arrows, SLOT_BELT_L, TRUE) 
-	var/armors = list("Heavy Armor","Medium Armor")
-	var/armor_choice = input(H, "Choose your armor.", "...THE TONGUE MUST STAY QUIET.") as anything in armors
+	var/armors = list("重甲","中甲")
+	var/armor_choice = input(H, "选择你的护甲。", "……而舌头必须沉默。") as anything in armors
 	switch(armor_choice)
-		if("Heavy Armor")
+		if("重甲")
 			ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/full/samsibsa, SLOT_ARMOR, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk, SLOT_SHIRT, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/chainlegs, SLOT_PANTS, TRUE)
-		if("Medium Armor")
+		if("中甲")
 			ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/brigandine/haraate, SLOT_ARMOR, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy, SLOT_SHIRT, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun, SLOT_PANTS, TRUE)
 			H.change_stat(STATKEY_SPD, 1) //+1 speed for taking the worse armor, which is identical to mounted knight, but with worse armor
-	var/masks = list("Full Mask","Half-Mask")
-	var/mask_choice = input(H, "Choose your mask.", "GREET THE SUN?") as anything in masks
+	var/masks = list("全覆面","半覆面")
+	var/mask_choice = input(H, "选择你的面具。", "向太阳致意？") as anything in masks
 	switch(mask_choice)
-		if("Full Mask")
+		if("全覆面")
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/facemask/steel/kazengun/full, SLOT_WEAR_MASK, TRUE)
-		if("Half-Mask")
+		if("半覆面")
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/facemask/steel/kazengun, SLOT_WEAR_MASK, TRUE)
 
 /datum/advclass/mercenary/chonin
-	name = "Hangyaku-Chonin"
-	tutorial = "Once, you were a farmer, a miner, a seamstress, a commoner. Now the sword is your plow and war your field. You’ve hammered your scythes into spears and recast your knives into swords. Past the door, your daimyo is calling - and destiny awaits."
+	name = "叛逆町人"
+	tutorial = "你曾是农夫、矿工、裁缝，或只是个平民。如今刀剑成了你的犁，战场成了你的田。你把镰刀锻成长枪，把短刀重铸为兵刃。门外，你的大名正在召唤，而命运正等着你。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ALL //do they have constructs in kazengun?
 	outfit = /datum/outfit/job/roguetown/mercenary/chonin
@@ -132,7 +132,7 @@
 	..()
 	H.adjust_blindness(-3)
 	has_loadout = TRUE
-	to_chat(H, span_warning("Once, you were a farmer, a miner, a seamstress, a commoner. Now the sword is your plow and war your field. You’ve hammered your scythes into spears and recast your knives into swords. Past the door, your daimyo is calling - and destiny awaits."))
+	to_chat(H, span_warning("你曾是农夫、矿工、裁缝，或只是个平民。如今刀剑成了你的犁，战场成了你的田。你把镰刀锻成长枪，把短刀重铸为兵刃。门外，你的大名正在召唤，而命运正等着你。"))
 	belt = /obj/item/storage/belt/rogue/leather
 	neck = /obj/item/clothing/neck/roguetown/gorget/steel/kazengun
 	head = /obj/item/clothing/head/roguetown/helmet/kettle/jingasa
@@ -152,10 +152,10 @@
 
 /datum/outfit/job/roguetown/mercenary/chonin/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	var/trades = list("Town Physician","Farmer","Tailor","Laborer","Merchant","Levy") //JMAN COMBAT SKILLS... AND TOWNER TRADES. GOD I HOPE THIS ISN'T A TERRIBLE IDEA.
-	var/trade_choice = input(H, "Choose your former trade.", "WHO ARE YOU?") as anything in trades
+	var/trades = list("城镇医师","农夫","裁缝","工匠劳工","商人","征召兵") //JMAN COMBAT SKILLS... AND TOWNER TRADES. GOD I HOPE THIS ISN'T A TERRIBLE IDEA.
+	var/trade_choice = input(H, "选择你从前的行当。", "你是谁？") as anything in trades
 	switch(trade_choice)
-		if("Town Physician") //alchemy and medicine. that's pretty strong as-is, so...
+		if("城镇医师") //alchemy and medicine. that's pretty strong as-is, so...
 			ADD_TRAIT(H, TRAIT_MEDICINE_EXPERT, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_ALCHEMY_EXPERT, TRAIT_GENERIC)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
@@ -163,7 +163,7 @@
 			H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/woodstaff/militia, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
-		if("Farmer") //farming, cooking, butchery, fishing
+		if("农夫") //farming, cooking, butchery, fishing
 			ADD_TRAIT(H, TRAIT_SURVIVAL_EXPERT, TRAIT_GENERIC)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/labor/farming, SKILL_LEVEL_APPRENTICE, TRUE)
@@ -173,7 +173,7 @@
 			H.adjust_skillrank_up_to(/datum/skill/labor/fishing, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/spear/militia, TRUE)
-		if("Tailor") // sewing/etc.
+		if("裁缝") // sewing/etc.
 			ADD_TRAIT(H, TRAIT_SEWING_EXPERT, TRAIT_GENERIC)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_R, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
@@ -181,7 +181,7 @@
 			H.adjust_skillrank_up_to(/datum/skill/craft/tanning, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/labor/butchering, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/sword/falchion/militia, TRUE)
-		if("Laborer") //physical labor; smelting, pottery, mining. you'll have to get the smithing yourself.
+		if("工匠劳工") //physical labor; smelting, pottery, mining. you'll have to get the smithing yourself.
 			ADD_TRAIT(H, TRAIT_SMITHING_EXPERT, TRAIT_GENERIC)
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/craft/smelting, SKILL_LEVEL_APPRENTICE, TRUE)
@@ -190,14 +190,14 @@
 			H.adjust_skillrank_up_to(/datum/skill/craft/masonry, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/labor/mining, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/pick/militia/steel, TRUE)
-		if("Merchant") //the sneaky one.
+		if("商人") //the sneaky one.
 			ADD_TRAIT(H, TRAIT_SEEPRICES, TRAIT_GENERIC)
 			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/storage/belt/rogue/pouch/coins/mid, SLOT_BELT_L, TRUE) 
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sheath/kazengun, SLOT_BELT_R, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun, TRUE)
-		if("Levy") //straight-up fighter. gets a naginata AND a tanto.
+		if("征召兵") //straight-up fighter. gets a naginata AND a tanto.
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/spear/naginata, TRUE)

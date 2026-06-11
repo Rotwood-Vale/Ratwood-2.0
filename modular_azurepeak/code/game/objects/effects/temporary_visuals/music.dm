@@ -1,5 +1,5 @@
 /obj/effect/temp_visual/music_rogue //color is white by default, set to whatever is needed
-	name = "music"
+	name = "音乐"
 	icon = 'modular_azurepeak/icons/effects/music-note.dmi'
 	icon_state = "music_note"
 	duration = 15
@@ -15,8 +15,8 @@
 	pixel_y = rand(-9, 0)
 
 /atom/movable/screen/alert/status_effect/buff/playing_music
-	name = "Playing Music"
-	desc = "Let the world hear my craft."
+	name = "演奏中"
+	desc = "让世人都听见我的技艺。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/playing_music
@@ -68,7 +68,7 @@
 			// Only apply if the hearer is not the one playing the music
 			if (H != owner && HAS_TRAIT(H, TRAIT_XYLIX) && !H.has_status_effect(/datum/status_effect/buff/xylix_joy))
 				H.apply_status_effect(/datum/status_effect/buff/xylix_joy)
-				to_chat(H, span_info("The music brings a smile to my face, and fortune to my steps!"))
+				to_chat(H, span_info("这音乐令我展露笑容，也让我的步伐更添好运！"))
 
 ////////////////////
 ///HARPY SINGING///
@@ -99,7 +99,7 @@
 
 
 /obj/effect/temp_visual/songs
-	name = "songs"
+	name = "乐曲"
 	icon = 'icons/mob/actions/bardsong_anims.dmi'
 	duration = 15
 	plane = GAME_PLANE_UPPER

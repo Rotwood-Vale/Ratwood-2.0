@@ -69,7 +69,7 @@
 	return ..()
 
 /datum/component/dejavu/proc/rewind()
-	to_chat(parent, "<span class=notice>I remember a time not so long ago...</span>")
+	to_chat(parent, "<span class=notice>我想起了不久之前的时光……</span>")
 
 	//comes after healing so new limbs comically drop to the floor
 	if(starting_turf)
@@ -80,7 +80,7 @@
 	if(rewinds_remaining)
 		addtimer(CALLBACK(src, rewind_type), rewind_interval)
 	else
-		to_chat(parent, "<span class=notice>But the memory falls out of your reach.</span>")
+		to_chat(parent, "<span class=notice>但那段记忆已从我的指间溜走。</span>")
 		qdel(src)
 
 /datum/component/dejavu/proc/rewind_living()

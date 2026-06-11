@@ -5,7 +5,7 @@
 	/// Extra info in the picking prompt
 	var/addendum = ""
 	/// Flavor of the sender of the package
-	var/sender = "Benefactor"
+	var/sender = "资助人"
 
 	/// Amount of loot to pick from 'loot'
 	var/loot_choice = 1
@@ -17,7 +17,7 @@
 	var/list/loot
 
 /datum/carebox_table/wretch
-	addendum = "\nAll packages contain 1 health potion.\nYou will also receive 1 random choice."
+	addendum = "\n所有包裹都含有 1 瓶治疗药水。\n你还会额外获得 1 个随机选项。"
 	cycles = 4
 	random_loot = 1
 	extra_loot = list(

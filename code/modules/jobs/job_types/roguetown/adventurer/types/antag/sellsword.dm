@@ -1,8 +1,8 @@
 //STR/SPD combination sword and board class.
 /datum/advclass/sellsword
-	name = "Sellsword"
-	tutorial = "Perhaps a mercenary, perhaps a deserter, it matters not. At one time, you killed for a master in return for gold. \
-	Now you live with no such master over your head, taking what you please."
+	name = "佣兵剑客"
+	tutorial = "也许你曾是佣兵，也许你曾是逃兵，这都无关紧要。你过去替主人卖命杀人，只为换来金子。\
+	如今你头上再无主子，想拿什么、想杀谁，都只凭你自己。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/bandit/sellsword
@@ -56,12 +56,12 @@
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	id = /obj/item/mattcoin
 	H.adjust_blindness(-3)
-	var/weapons = list("The Deserter (Maces, Shields & Crossbows)","The Mercenary (Swords, Shields & Polearms)", "The Hunter (Axes, Archery, Sneaking, Climbing & Athletics)")
+	var/weapons = list("逃兵路数（锤、盾与十字弩）","佣兵路数（剑、盾与长柄）", "猎手路数（斧、弓术、潜行、攀爬与体能）")
 	if(H.mind)
-		var/weapon_choice = input(H, "Choose your expert-level proficiencies.", "HOW DOTH THOU WALK THROUGH LYFE, SELLSWORD?") as anything in weapons
+		var/weapon_choice = input(H, "选择你的专精路线。", "佣兵，你要走哪条路？") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("The Deserter (Maces, Shields & Crossbows)") 
+			if("逃兵路数（锤、盾与十字弩）") 
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				beltl = /obj/item/rogueweapon/mace/steel
 				beltr = /obj/item/quiver/bolts
@@ -71,7 +71,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
-			if("The Mercenary (Swords, Shields & Polearms)") 
+			if("佣兵路数（剑、盾与长柄）") 
 				backl = /obj/item/rogueweapon/shield/heater
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				beltr = /obj/item/rogueweapon/sword/short/falchion
@@ -80,7 +80,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
-			if("The Hunter (Axes, Archery, Sneaking, Climbing & Athletics)")
+			if("猎手路数（斧、弓术、潜行、攀爬与体能）")
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				beltl = /obj/item/quiver/arrows
 				beltr = /obj/item/rogueweapon/stoneaxe/battle

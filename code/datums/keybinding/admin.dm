@@ -5,8 +5,8 @@
 /datum/keybinding/admin/admin_say
 	hotkey_keys = list("F3")
 	name = "admin_say"
-	full_name = "Admin say"
-	description = "Talk with other admins."
+	full_name = "管理员频道"
+	description = "与其他管理员交谈。"
 
 /datum/keybinding/admin/admin_say/down(client/user)
 	user.get_admin_say()
@@ -15,8 +15,8 @@
 /datum/keybinding/admin/rmbcontext
 	hotkey_keys = list("F4")
 	name = "rmbcontext"
-	full_name = "Admin RMB Context Toggle"
-	description = "Toggles opening a context menu with RMB"
+	full_name = "管理员右键菜单切换"
+	description = "切换是否用右键打开上下文菜单"
 
 /datum/keybinding/admin/rmbcontext/down(client/user)
 	user.set_context_menu_enabled()
@@ -25,8 +25,8 @@
 /datum/keybinding/admin/admin_ghost
 	hotkey_keys = list("F5")
 	name = "admin_ghost"
-	full_name = "Aghost"
-	description = "Go ghost"
+	full_name = "管理员幽灵化"
+	description = "变成幽灵"
 
 /datum/keybinding/admin/admin_ghost/down(client/user)
 	user.admin_ghost()
@@ -35,12 +35,12 @@
 /datum/keybinding/admin/player_panel_new
 	hotkey_keys = list("F6")
 	name = "player_panel_new"
-	full_name = "Player Panel New"
-	description = "Opens up the new player panel"
+	full_name = "新版玩家面板"
+	description = "打开新版玩家面板"
 
 /datum/keybinding/admin/player_panel_new/down(client/user)
 	if(!check_rights(R_ADMIN))
-		to_chat(user, "<span class='warning'>You do not have permission to access the player panel.</span>")
+		to_chat(user, "<span class='warning'>你没有权限访问玩家面板。</span>")
 		return
 	user.holder.player_panel_new()
 	return TRUE
@@ -49,8 +49,8 @@
 /datum/keybinding/admin/toggle_buildmode_self
 	hotkey_keys = list("F7")
 	name = "toggle_buildmode_self"
-	full_name = "Admin Buildmode"
-	description = "Toggles Buildmode"
+	full_name = "管理员建造模式"
+	description = "切换建造模式"
 
 /datum/keybinding/admin/toggle_buildmode_self/down(client/user)
 	user.togglebuildmodeself()
@@ -59,8 +59,8 @@
 /datum/keybinding/admin/stealthmode
 	hotkey_keys = list("F8")
 	name = "stealth_mode"
-	full_name = "Admin Stealth mode"
-	description = "Enters stealth mode (Players see you as 'Administrator' instead of your ckey)"
+	full_name = "管理员潜行模式"
+	description = "进入潜行模式（玩家会看到你是“Administrator”，而不是你的 ckey）"
 
 /datum/keybinding/admin/stealthmode/down(client/user)
 	user.stealth()

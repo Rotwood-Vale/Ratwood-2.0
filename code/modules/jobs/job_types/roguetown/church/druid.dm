@@ -1,5 +1,6 @@
 /datum/job/roguetown/druid
 	title = "Druid"
+	display_title = "德鲁伊"
 	f_title = "Druidess"
 	flag = DRUID
 	department_flag = CHURCHMEN
@@ -12,7 +13,7 @@
 	allowed_patrons = ALL_DIVINE_PATRONS //gets set to dendor on the outfit anyways lol
 	outfit = /datum/outfit/job/roguetown/druid
 	social_rank = SOCIAL_RANK_YEOMAN
-	tutorial = "You have always been drawn to the wild, and the wild drawn to you. When your calling came, it was from Dendor. Your patron claims dominion over all nature--promising bounties to those who act in his name to bring balance to His domain. The forest is the most comfortable place for you, toiling alongside soilsons and soilbrides...although sometimes what lies beyond the gates fills your soul with a feral yearning."
+	tutorial = "你始终被荒野吸引，而荒野也同样回应着你。当那份召唤真正降临时，它来自 登多尔。你的庇主宣称自己统御一切自然，并承诺赐福给那些以祂之名为其领域带回平衡的人。森林才是你最自在的归处，你在那里与农家子弟们一同劳作……尽管有时，高墙之外的世界仍会在你灵魂深处唤起一股野性的渴望。"
 
 	display_order = JDO_DRUID
 	give_bank_account = TRUE
@@ -31,10 +32,10 @@
 	)
 
 /datum/advclass/druid
-	name = "Druid"
-	tutorial = "You have always been drawn to the wild, and the wild drawn to you. When your calling came, it was from Dendor. \
-	Your patron claims dominion over all nature--promising bounties to those who act in his name to bring balance to His domain. \
-	The forest is the most comfortable place for you, toiling alongside soilsons and soilbrides...although sometimes what lies beyond the gates fills your soul with a feral yearning."
+	name = "德鲁伊"
+	tutorial = "你始终被荒野吸引，而荒野也同样回应着你。当那份召唤真正降临时，它来自 登多尔。 \
+	你的庇主宣称自己统御一切自然，并承诺赐福给那些以祂之名为其领域带回平衡的人。 \
+	森林才是你最自在的归处，你在那里与农家子弟们一同劳作……尽管有时，高墙之外的世界仍会在你灵魂深处唤起一股野性的渴望。"
 	outfit = /datum/outfit/job/roguetown/druid/basic
 	category_tags = list(CTAG_DRUID)
 	subclass_languages = list(/datum/language/beast)
@@ -68,7 +69,7 @@
 	)
 
 /datum/outfit/job/roguetown/druid
-	name = "Druid"
+	name = "德鲁伊"
 	jobtype = /datum/job/roguetown/druid
 	allowed_patrons = list(/datum/patron/divine/dendor)
 	has_loadout = TRUE
@@ -116,7 +117,7 @@
 
 	REMOVE_TRAIT(H, TRAIT_CLERGYRADICAL, "job")
 	H.reset_clergy_devotion(CLERIC_T4, CLERIC_REGEN_MAJOR, TRUE, CLERIC_REQ_4)
-	to_chat(H, span_notice("I remain on the old path of devotion."))
+	to_chat(H, span_notice("我仍行于古老的虔信之道。"))
 
 /datum/job/roguetown/druid/proc/grant_radical_path(mob/living/carbon/human/H)
 	if(!H || !H.mind || !H.patron)
@@ -126,15 +127,15 @@
 	H.miracle_points += 3
 	H.church_favor += 1600
 	H.reset_clergy_devotion(CLERIC_T4, CLERIC_REGEN_MAJOR, TRUE, CLERIC_REQ_4)
-	to_chat(H, span_notice("I embrace the radical path."))
+	to_chat(H, span_notice("我拥抱激进之路。"))
 
 /datum/job/roguetown/druid/proc/_delayed_path_choice(mob/living/carbon/human/H)
 	if(!H || !H.client || !H.mind)
 		return
 
-	var/choice = alert(H, "Choose your path.", "Druidic Doctrine", "Loyalist", "Radical")
+	var/choice = alert(H, "选择你的道路。", "德鲁伊教义", "守旧派", "激进派")
 
-	if(choice == "Radical")
+	if(choice == "激进派")
 		grant_radical_path(H)
 	else
 		grant_old_path(H)

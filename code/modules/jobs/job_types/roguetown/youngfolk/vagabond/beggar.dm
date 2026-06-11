@@ -1,7 +1,7 @@
 /datum/advclass/vagabond_beggar
-	name = "Beggar"
-	examine_name = "Beggar"
-	tutorial = "You are without coin and without worth. The pity of others is your bread, and their mercy is your butter. Having sat by waystones and watched many a traveller pass in the hopes for alms, you've nursed a surprising talent for thievery, and have even cajoled knowledge of lockpicking out of an especially sentimental rogue."
+	name = "乞丐"
+	examine_name = "乞丐"
+	tutorial = "你身无分文，也一文不值。别人的怜悯是你的面包，他们的慈悲就是你的黄油。你常年蹲在路碑边，眼巴巴望着旅人经过乞求施舍，也因此养出了惊人的偷窃本事，甚至还从某个格外心软的流氓嘴里哄来了几手撬锁技巧。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/vagabond/beggar
@@ -17,7 +17,7 @@
 	subclass_skills = list(
 		/datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,
 	)
-	extra_context = "Fortune is randomised."
+	extra_context = "运势为随机生成。"
 
 /datum/outfit/job/roguetown/vagabond/beggar/pre_equip(mob/living/carbon/human/H)
 	..()

@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/meteor_storm
-	name = "Meteor Storm"
-	desc = "Summons forth dangerous meteors from the sky to scatter and smash foes."
+	name = "陨星风暴"
+	desc = "自天穹召下危险的陨星，将敌人轰散并砸碎。"
 	overlay_state = "meteor_storm"
 	cost = 9
 	spell_tier = 4 // Highest tier AOE
@@ -19,7 +19,7 @@
 	var/turf/T = get_turf(targets[1])
 //	var/list/affected_turfs = list()
 	playsound(T,'sound/magic/meteorstorm.ogg', 80, TRUE)
-	T.visible_message(span_boldwarning("Fire rains from the sky!"))
+	T.visible_message(span_boldwarning("烈火自天而降！"))
 	sleep(30)
 	create_meteors(T)
 
@@ -34,9 +34,9 @@
 
 /obj/effect/temp_visual/fireball
 	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "meteor"
-	name = "meteor"
-	desc = "Get out of the way!"
+	icon_state = "fireball"
+	name = "陨星"
+	desc = "快躲开！"
 	layer = FLY_LAYER
 	plane = GAME_PLANE_UPPER
 	randomdir = FALSE
@@ -88,16 +88,16 @@
 					L.adjustFireLoss(40)
 					L.adjust_fire_stacks(8)
 					L.ignite_mob()
-					to_chat(L, span_userdanger("You're hit by a meteor!"))
+					to_chat(L, span_userdanger("我被陨星正面砸中了！"))
 				if(1) // Very close
 					L.adjustFireLoss(20)
 					L.adjust_fire_stacks(4)
 					L.ignite_mob()
-					to_chat(L, span_danger("Heat from the meteor sears you!"))
+					to_chat(L, span_danger("陨星带来的高热正在灼烧我！"))
 				if(2) // Nearby
 					L.adjustFireLoss(10)
 					L.adjust_fire_stacks(2)
-					to_chat(L, span_warning("You feel the scorching blast!"))
+					to_chat(L, span_warning("我感受到了那股灼热的冲击！"))
 				if(3) // Edge of the blast
 					L.adjustFireLoss(5)
 					L.adjust_fire_stacks(1)

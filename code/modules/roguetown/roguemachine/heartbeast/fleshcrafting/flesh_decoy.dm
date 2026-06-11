@@ -1,7 +1,7 @@
 /mob/living/simple_animal/flesh_decoy
 	icon = 'icons/obj/structures/heart_items.dmi'
-	name = "flesh decoy"
-	desc = "A fleshy, immoving golem with a nasty grin. You can clearly tell it isn't alive, yet the scent of its putrid flesh is strangely alluring. Can be picked up with middle click."
+	name = "血肉诱饵"
+	desc = "一具由血肉构成、纹丝不动的魔像，脸上挂着狰狞笑容。你能清楚看出它并非活物，可那腐烂血肉的气味却诡异地诱人。可用中键拾起。"
 	icon_state = "flesh_golem"
 	icon_living = "flesh_golem"
 	AIStatus = AI_OFF
@@ -13,8 +13,8 @@
 /obj/item/flesh_decoy
 	icon = 'icons/obj/structures/heart_items.dmi'
 	icon_state = "flesh_golem_item"
-	name = "flesh decoy"
-	desc = "A fleshy, immoving golem with a nasty grin. You can clearly tell it isn't alive, yet the scent of its putrid flesh is strangely alluring."
+	name = "血肉诱饵"
+	desc = "一具由血肉构成、纹丝不动的魔像，脸上挂着狰狞笑容。你能清楚看出它并非活物，可那腐烂血肉的气味却诡异地诱人。"
 	w_class = WEIGHT_CLASS_SMALL
 	var/mob_health = 100
 	var/mob_maxHealth = 100
@@ -35,10 +35,10 @@
 	item.mob_maxHealth = src.maxHealth
 
 	if(user.put_in_hands(item))
-		visible_message(span_notice("[user] picks up [src]."))
+		visible_message(span_notice("[user]捡起了[src]。"))
 		qdel(src)
 	else
-		to_chat(user, span_danger("You can't pick up [src] right now!"))
+		to_chat(user, span_danger("你现在没法捡起[src]！"))
 		qdel(item)
 
 /obj/item/flesh_decoy/dropped(mob/user, silent = FALSE)
@@ -77,7 +77,7 @@
 		mob.health = mob_health
 		mob.maxHealth = mob_maxHealth
 	mob.health = min(mob.health, mob.maxHealth)
-	visible_message(span_notice("[src] plops onto the ground!"))
+	visible_message(span_notice("[src]啪嗒一声落到了地上！"))
 	playsound(T, 'sound/magic/slimesquish.ogg', 50, TRUE)
 	qdel(src)
 

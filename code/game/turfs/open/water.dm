@@ -400,8 +400,8 @@
 
 
 /turf/open/water/bath
-	name = "water"
-	desc = "Soothing water, with soapy bubbles on the surface."
+	name = "水"
+	desc = "令人舒缓的水，表面漂浮着肥皂泡。"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "bathtileW"
 	water_level = 2
@@ -445,8 +445,8 @@
 	..()
 
 /turf/open/water/swamp
-	name = "murk"
-	desc = "Weeds and algae cover the surface of the water."
+	name = "浑浊死水"
+	desc = "水面上覆盖着杂草和藻类。"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "dirtW2"
 	water_level = 2
@@ -556,8 +556,8 @@
 				return .
 
 /turf/open/water/cleanshallow
-	name = "water"
-	desc = "Clear and shallow water, what a blessing!"
+	name = "水"
+	desc = "清澈的浅水，真是天赐之福！"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "rockw2"
 	water_level = 2
@@ -571,8 +571,8 @@
 	.  = ..()
 
 /turf/open/water/river
-	name = "river"
-	desc = "A river of crystal clear water flows swiftly along the contours of the land."
+	name = "河流"
+	desc = "一条清澈见底的河流沿着大地的轮廓奔流不息。"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "rivermove"
 	water_level = 3
@@ -660,8 +660,8 @@
 	return ..()
 
 /turf/open/water/ocean
-	name = "salt water"
-	desc = "The waves lap at the coast, hungry to swallow the land. Doesn't look too deep."
+	name = "海水"
+	desc = "海浪拍打着海岸，贪婪地想要吞噬陆地。看起来并不太深。"
 	icon_state = "ash"
 	icon = 'icons/turf/roguefloor.dmi'
 	water_level = 2
@@ -672,8 +672,8 @@
 	water_reagent = /datum/reagent/water/salty
 
 /turf/open/water/ocean/deep
-	name = "salt water"
-	desc = "Deceptively deep, be careful not to find yourself this far out."
+	name = "海水"
+	desc = "深不可测，当心别让自己漂到如此遥远的海面上。"
 	icon_state = "water"
 	icon = 'icons/turf/roguefloor.dmi'
 	water_level = 3

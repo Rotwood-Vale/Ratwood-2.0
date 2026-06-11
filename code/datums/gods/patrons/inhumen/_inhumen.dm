@@ -5,9 +5,9 @@
 	var/crafting_recipes = list(/datum/crafting_recipe/roguetown/structure/zizo_shrine)			//Allows construction of unique bad shrine.
 	profane_words = list("cock","dick","fuck","shit","pussy","cuck","cunt","asshole", "pintle")	//Same as master but 'Zizo' is allowed now.
 	confess_lines = list(
-		"PSYDON IS THE DEMIURGE!",
-		"THE TEN ARE WORTHLESS COWARDS!",
-		"THE TEN ARE DECEIVERS!",
+		"PSYDON 就是造物伪神！",
+		"THE TEN 都是毫无价值的懦夫！",
+		"THE TEN 全是骗子！",
 	)
 
 /datum/patron/inhumen/on_gain(mob/living/living)

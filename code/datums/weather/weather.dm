@@ -1,15 +1,15 @@
 //The effects of weather occur across an entire z-level. For instance, lavaland has periodic ash storms that scorch most unprotected creatures.
 
 /datum/weather
-	var/name = "space wind"
+	var/name = "太空风暴"
 	var/desc = ""
 
-	var/telegraph_message = span_warning("The wind begins to pick up.") //The message displayed in chat to foreshadow the weather's beginning
+	var/telegraph_message = span_warning("风势开始增强。") //The message displayed in chat to foreshadow the weather's beginning
 	var/telegraph_duration = 300 //In deciseconds, how long from the beginning of the telegraph until the weather begins
 	var/telegraph_sound //The sound file played to everyone on an affected z-level
 	var/telegraph_overlay //The overlay applied to all tiles on the z-level
 
-	var/weather_message = span_danger("The wind begins to blow ferociously!") //Displayed in chat once the weather begins in earnest
+	var/weather_message = span_danger("狂风开始猛烈呼啸！") //Displayed in chat once the weather begins in earnest
 	var/weather_duration = 1200 //In deciseconds, how long the weather lasts once it begins
 	var/weather_duration_lower = 1200 //See above - this is the lowest possible duration
 	var/weather_duration_upper = 1500 //See above - this is the highest possible duration
@@ -17,7 +17,7 @@
 	var/weather_overlay
 	var/weather_color = null
 
-	var/end_message = span_danger("The wind relents its assault.") //Displayed once the weather is over
+	var/end_message = span_danger("风势终于缓了下来。") //Displayed once the weather is over
 	var/end_duration = 50 //In deciseconds, how long the "wind-down" graphic will appear before vanishing entirely
 	var/end_sound
 	var/end_overlay

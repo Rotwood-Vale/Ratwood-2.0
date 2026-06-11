@@ -1,8 +1,8 @@
 /datum/advclass/knight/irregularknight
-	name = "Royal Champion"
-	tutorial = "Your skillset is abnormal for a knight. \
-	Your swift maneuvers and masterful technique impress both lords and ladies alike, and you have a preference for quicker, more elegant blades. \
-	While you are an effective fighting force in medium armor, your evasive skills will only truly shine if you don even lighter protection."
+	name = "王廷冠军"
+	tutorial = "你的技艺对一名骑士而言颇为异类。 \
+	你迅捷的身法与精湛的技巧令诸位贵胄都印象深刻，而你也偏爱更轻快、更优雅的刀剑。 \
+	即使穿着中甲你依旧是可靠的战力，但唯有换上更轻的防护，你那闪避本领才会真正大放异彩。"
 	outfit = /datum/outfit/job/roguetown/knight/irregularknight
 
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT)
@@ -43,69 +43,69 @@
 
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Rapier + Longbow","Estoc + Recurve Bow","Sabre + Buckler","Whip + Crossbow")
-		var/armor_options = list("Light Coat", "Light Brigandine", "Medium Cuirass")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
-		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in armor_options
+		var/weapons = list("细剑 + 长弓","穿甲剑 + 反曲弓","马刀 + 小圆盾","长鞭 + 十字弩")
+		var/armor_options = list("轻便外套", "轻型布面甲", "中型胸甲")
+		var/weapon_choice = input(H, "选择你的武器。", "整备武装") as anything in weapons
+		var/armor_choice = input(H, "选择你的护甲。", "整备武装") as anything in armor_options
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Rapier + Longbow")
+			if("细剑 + 长弓")
 				r_hand = /obj/item/rogueweapon/sword/rapier
 				beltl = /obj/item/rogueweapon/scabbard/sword/royal
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
 				beltr = /obj/item/quiver/arrows
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 
-			if("Estoc + Recurve Bow")
+			if("穿甲剑 + 反曲弓")
 				r_hand = /obj/item/rogueweapon/estoc
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				beltr = /obj/item/quiver/arrows
 				beltl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 
-			if("Sabre + Buckler")
+			if("马刀 + 小圆盾")
 				beltl = /obj/item/rogueweapon/scabbard/sword/royal
 				r_hand = /obj/item/rogueweapon/sword/sabre
 				backl = /obj/item/rogueweapon/shield/buckler
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 
-			if("Whip + Crossbow")
+			if("长鞭 + 十字弩")
 				beltl = /obj/item/rogueweapon/whip
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				beltr = /obj/item/quiver/bolts
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_MASTER, TRUE)
 
 		switch(armor_choice)
-			if("Light Coat")
+			if("轻便外套")
 				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
-			if("Light Brigandine")
+			if("轻型布面甲")
 				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 				pants = /obj/item/clothing/under/roguetown/splintlegs
 				armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light/retinue
-			if("Medium Cuirass")
+			if("中型胸甲")
 				shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
 				pants = /obj/item/clothing/under/roguetown/chainlegs
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted
 
 		var/helmets = list(
-			"Pigface Bascinet" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,
-			"Savoyard Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/guard,
-			"Barred Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/sheriff,
-			"Bucket Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/bucket,
-			"Knight Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight,
-			"Visored Sallet"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored,
-			"Armet"				= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet,
-			"Hounskull Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull,
-			"Etruscan Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan,
-			"Slitted Kettle" = /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle,
-			"Froggemund Helmet"	= /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth,
-			"None"
+			"猪面尖顶盔" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,
+			"卫士盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/guard,
+			"栅面盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/sheriff,
+			"桶盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/bucket,
+			"骑士盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight,
+			"带面罩萨拉德盔"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored,
+			"阿米特盔"				= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet,
+			"犬吻尖顶盔" = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull,
+			"伊特鲁斯坎尖顶盔" = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan,
+			"开缝锅盔" = /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle,
+			"蛙嘴盔"	= /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth,
+			"无"
 		)
 
-		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
-		if(helmchoice != "None")
+		var/helmchoice = input(H, "选择你的头盔。", "整备头盔") as anything in helmets
+		if(helmchoice != "无")
 			head = helmets[helmchoice]
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,

@@ -1,7 +1,7 @@
 // Lich / Vampire shared list only
 /obj/effect/proc_holder/spell/invoked/projectile/bloodlightning
-	name = "Blood Bolt"
-	desc = "Emit a bolt of lightning that burns a target harshly, preventing them from attacking and slowing them down for 8 seconds."
+	name = "血雷矢"
+	desc = "射出一道血色雷矢，猛烈灼烧目标，使其在 8 秒内难以攻击并被减速。"
 	clothes_req = FALSE
 	overlay_state = "bloodlightning"
 	sound = 'sound/magic/vlightning.ogg'
@@ -15,7 +15,7 @@
 	no_early_release = TRUE
 	movement_interrupt = FALSE
 	spell_tier = 2 // Doesn't matter for the most part
-	invocations = list("Sanguis Sagitta!")
+	invocations = list("血雷，贯敌！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_VAMPIRIC
 	glow_intensity = GLOW_INTENSITY_MEDIUM
@@ -44,7 +44,7 @@
 	if(ismob(target))
 		var/mob/M = target
 		if(M.anti_magic_check())
-			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			visible_message(span_warning("[src] 在接触[target]时噗地溃散了！"))
 			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 			qdel(src)
 			return BULLET_ACT_BLOCK

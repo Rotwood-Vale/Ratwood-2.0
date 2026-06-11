@@ -1,9 +1,9 @@
 /datum/language/etruscan
-	name = "Etrusco"
-	desc = "(Spoken with ,u) The language of the inhabitants of the Isles of Etrusca. Fast-paced, for those unused to its emotiveness."
-	speech_verb = "remarks"
-	ask_verb = "inquires"
-	exclaim_verb = "asserts"
+	name = "伊特鲁斯卡语"
+	desc = "(用 ,u 说) 伊特鲁斯卡群岛居民所使用的语言。对不习惯其强烈情感表达的人来说，这门语言语速很快。"
+	speech_verb = "说道"
+	ask_verb = "询问"
+	exclaim_verb = "断言"
 	key = "u"
 	space_chance = 60
 	default_priority = 90

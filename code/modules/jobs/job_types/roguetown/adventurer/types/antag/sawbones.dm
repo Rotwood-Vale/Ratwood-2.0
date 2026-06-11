@@ -1,6 +1,6 @@
 /datum/advclass/sawbones // doctor class. like the pilgrim, but more evil
-	name = "Sawbones"
-	tutorial = "It was an accident! Your patient wasn't using his second kidney, anyway. After an unfortunate 'misunderstanding' with the town and your medical practice, you know practice medicine on the run with your new associates. Business has never been better!"
+	name = "锯骨郎中"
+	tutorial = "那只是个意外！反正你的病人本来也用不上第二个肾。自从你和镇上以及自己的医术行当闹出了一场不幸的“误会”后，你便和新同伙们一起过上了边逃边行医的日子。可别说，生意反倒比以前更好了！"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/bandit/sawbones

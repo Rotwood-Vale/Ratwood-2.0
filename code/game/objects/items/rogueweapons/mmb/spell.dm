@@ -1,5 +1,5 @@
 /datum/intent/spell
-	name = "spell"
+	name = "法术"
 	tranged = 1
 	chargedrain = 0
 	chargetime = 0
@@ -9,7 +9,7 @@
 /datum/intent/spell/can_charge()
 	if(mastermob?.next_move > world.time)
 		if(mastermob.client.last_cooldown_warn + 10 < world.time)
-			to_chat(mastermob, span_warning("I'm not ready to do that yet!"))
+			to_chat(mastermob, span_warning("我还没准备好这么做！"))
 			mastermob.client.last_cooldown_warn = world.time
 		return FALSE
 	return TRUE

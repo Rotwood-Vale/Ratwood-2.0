@@ -1,8 +1,8 @@
 //AKA cryosleep.
 
 /obj/structure/far_travel //Shamelessly jury-rigged from the way Fallout13 handles this.
-	name = "far travel"
-	desc = "Anywhere is better than here.\n(Drag your sprite onto this to exit the round!)"
+	name = "远行"
+	desc = "哪里都比这里好。\n(把你的角色拖到这里即可退出本轮！)"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "fartravel"
 	layer = BELOW_OBJ_LAYER
@@ -22,16 +22,16 @@
 	var/mob/living/carbon/human/departing_mob = dropping
 	var/datum/job/mob_job
 	if(departing_mob != user && departing_mob.client)
-		to_chat(user, "<span class='warning'>This one retains their free will. It's their choice if they want to leave the round or not.</span>")
+		to_chat(user, "<span class='warning'>此人仍保有自由意志。是否离开本轮，应由他们自己决定。</span>")
 		return
 	if(departing_mob.stat == DEAD && !departing_mob.client) //died and respawned or disconnected, no free slots for far-traveling someone that already opened a slot
-		to_chat(user, "<span class='warning'>This one is long dead and has passed unto another place. They have already left.</span>")
+		to_chat(user, "<span class='warning'>此人早已死去并去了别处。他们已经离开了。</span>")
 		return
-	if(alert("Are you sure you want to [departing_mob == user ? "depart the round for good (you" : "send this person away (they"] will be removed from the current round, the job slot freed)?", "Departing", "Confirm", "Cancel") != "Confirm")
+	if(alert("你确定要[departing_mob == user ? "永久离开本轮（你" : "送走此人（对方"]将从当前轮次中移除，并腾出职业栏位）吗？", "离开", "确认", "取消") != "确认")
 		return
 	if(user.incapacitated() || QDELETED(departing_mob) || (departing_mob != user && departing_mob.client) || get_dist(src, dropping) > 2 || get_dist(src, user) > 2)
 		return //Things have changed since the alert happened.
-	user.visible_message("<span class='warning'>[user] [departing_mob == user ? "is trying to depart from [SSticker.realm_name]!" : "is trying to send [departing_mob] away!"]</span>", "<span class='notice'>You [departing_mob == user ? "are trying to depart from [SSticker.realm_name]." : "are trying to send [departing_mob] away."]</span>")
+	user.visible_message("<span class='warning'>[user][departing_mob == user ? "正试图离开[SSticker.realm_name]！" : "正试图送走[departing_mob]！"]</span>", "<span class='notice'>你[departing_mob == user ? "正试图离开[SSticker.realm_name]。" : "正试图送走[departing_mob]。"]</span>")
 	in_use = TRUE
 	if(!do_after(user, 50, target = src))
 		in_use = FALSE
@@ -71,9 +71,9 @@
 	message_admins(dat)
 	log_admin(dat)
 	if(departing_mob.stat == DEAD)
-		departing_mob.visible_message("<span class='notice'>[user] sends the body of [departing_mob] away. They're someone else's problem now.</span>")
+		departing_mob.visible_message("<span class='notice'>[user]把[departing_mob]的尸体送走了。现在这成了别人的麻烦。</span>")
 	else
-		departing_mob.visible_message("<span class='notice'>[departing_mob == user ? "Out of their own volition, " : "Ushered by [user], "][departing_mob] leaves [SSmapping.map_adjustment.realm_name].</span>")
+		departing_mob.visible_message("<span class='notice'>[departing_mob == user ? "出于自己的意志，" : "在[user]的引领下，"][departing_mob]离开了[SSmapping.map_adjustment.realm_name]。</span>")
 		// If departure is a lord, remove them from found_lords to prevent false omen triggers
 	if(departing_mob.mind && departing_mob.ckey)
 		if(departing_mob.mind.assigned_role == "Grand Duke" || departing_mob.mind.assigned_role == "Grand Duchess")
@@ -87,4 +87,3 @@
 		// Move players to lobby/new_player so they can choose if they want to spectate. For potential latency reduction
 		departing_mob.returntolobby()
 	QDEL_NULL(departing_mob)
-

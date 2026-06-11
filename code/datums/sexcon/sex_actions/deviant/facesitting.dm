@@ -1,5 +1,5 @@
 /datum/sex_action/facesitting
-	name = "Sit on their face"
+	name = "坐到对方脸上"
 
 /datum/sex_action/facesitting/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
@@ -22,11 +22,11 @@
 	return TRUE
 
 /datum/sex_action/facesitting/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] sits [user.p_their()] butt on [target]'s face!"))
+	user.visible_message(span_warning("[user]一屁股坐到了[target]脸上！"))
 
 /datum/sex_action/facesitting/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/verbstring = pick(list("rubs", "smushes", "forces"))
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] [verbstring] [user.p_their()] butt against [target] face."))
+	var/verbstring = pick(list("摩擦着", "压挤着", "强行按着"))
+	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()][verbstring][user.p_their()]臀部贴在[target]脸上。"))
 	target.sexcon.make_sucking_noise()
 	user.sexcon.do_thrust_animate(target)
 
@@ -42,7 +42,7 @@
 	target.sexcon.handle_passive_ejaculation()
 
 /datum/sex_action/facesitting/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] gets off [target]'s face."))
+	user.visible_message(span_warning("[user]从[target]脸上挪开了。"))
 
 /datum/sex_action/facesitting/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user.sexcon.finished_check())

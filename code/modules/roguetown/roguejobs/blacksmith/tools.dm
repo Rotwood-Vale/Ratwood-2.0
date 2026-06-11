@@ -2,8 +2,8 @@
 /obj/item/rogueweapon/hammer
 	force = 21
 	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
-	name = "template hammer"
-	desc = "If you see this - scream, cry, piss, run, shit yourself, then report it to a dev. Shouldn't be here."
+	name = "模板锤"
+	desc = "如果你看到了这个，那就尖叫、哭泣、失禁、逃跑、吓得屁滚尿流，然后向开发者报告。它本不该出现在这里。"
 	icon_state = "hammer"
 	icon = 'icons/roguetown/weapons/tools.dmi'
 	sharpness = IS_BLUNT
@@ -30,7 +30,7 @@
 
 /obj/item/rogueweapon/hammer/attack_hand(mob/living/user)
 	if(HAS_TRAIT(user, TRAIT_CURSE_MALUM))
-		to_chat(user, span_warning("Your cursed hands burn at the touch of the hammer!"))
+		to_chat(user, span_warning("你受诅咒的双手一碰到锤子就灼痛起来！"))
 		user.freak_out()
 		return
 	. = ..()
@@ -179,7 +179,7 @@
 
 /obj/item/rogueweapon/hammer/attack_hand(mob/living/user)
 	if(HAS_TRAIT(user, TRAIT_CURSE_MALUM))
-		to_chat(user, span_warning("Your cursed hands burn at the touch of the hammer!"))
+		to_chat(user, span_warning("你受诅咒的双手一碰到锤子就灼痛起来！"))
 		user.freak_out()
 		return
 	. = ..()
@@ -243,53 +243,53 @@
 		to_chat(user, span_warning("I can't tinker on living flesh!"))
 
 /obj/item/rogueweapon/hammer/wood	// wood hammer (mallet)
-	name = "wooden mallet"
-	desc = "A wooden mallet is an artificers second best friend! But it may also come in handy to a smith..."
+	name = "木槌"
+	desc = "木槌是工匠的第二好朋友！不过对铁匠来说，它有时也很好用……"
 	icon_state = "hammer_w"
 	force = 16
 
 /obj/item/rogueweapon/hammer/stone	// stone hammer
-	name = "stone hammer"
-	desc = "A makeshift hammer, made with a crudly chisled-down rock."
+	name = "石锤"
+	desc = "一把临时凑合出来的锤子，由一块粗糙凿削过的石头制成。"
 	icon_state = "hammer_r"
 	force = 18
 	max_integrity = 15
 
 /obj/item/rogueweapon/hammer/ancient
-	name = "ancient hammer"
-	desc = "A hammer of polished gilbronze. Remade masterfully upon a smooth handle, it shall make forth the armaments of HER legionnaries and great works..."
+	name = "古代锤"
+	desc = "一把以抛光 吉尔青铜 打造的锤子。被巧妙地重新装在光滑握柄上，它将继续塑造 HER 军团士兵的武备与伟大造物……"
 	icon_state = "ahammer"
 	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/rogueweapon/hammer/ancient/decrepit
-	name = "decrepit hammer"
-	desc = "A hammer of wrought bronze. It has pounded out the beginning of a thousand legacies; of humble adventurers, of noble legionnaires, and of foolish heroes."
+	name = "衰朽锤"
+	desc = "一把锻造青铜制成的锤子。它曾敲出无数传奇的开端：卑微的冒险者、高贵的军团士兵，以及愚勇的英雄。"
 	force = 12
 	max_integrity = 10
 
 /obj/item/rogueweapon/hammer/copper
-	name = "copper hammer"
-	desc = "A copper hammer, slightly better than a stone hammer."
+	name = "铜锤"
+	desc = "一把铜锤，性能比石锤稍好一些。"
 	icon_state = "hammer_c"
 	force = 20
 	max_integrity = 100
 
 /obj/item/rogueweapon/hammer/iron	// iron hammer
-	name = "hammer"
-	desc = "Each strikes reverberate loudly chanting war!"
+	name = "锤"
+	desc = "每一次敲击都回荡出高声战歌！"
 	icon_state = "hammer_i"
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/rogueweapon/hammer/steel	// steel hammer
-	name = "claw hammer"
-	desc = "Steel to drive the iron nail without mercy."
+	name = "羊角锤"
+	desc = "以钢铁之力将铁钉毫不留情地钉入其中。"
 	icon_state = "hammer_s"
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/rogueweapon/hammer/blacksteel
 	force = 25
-	name = "blacksteel hammer"
-	desc = "A hammer made of blacksteel, to drive even the hardest metals into submission."
+	name = "黑钢锤"
+	desc = "一把由黑钢打造的锤子，足以让最坚硬的金属也低头屈服。"
 	icon = 'icons/roguetown/weapons/tools.dmi'
 	icon_state = "bs_masterhammer"
 	item_state = "bs_masterhammer"
@@ -339,8 +339,8 @@
 /obj/item/rogueweapon/tongs
 	force = 10
 	possible_item_intents = list(/datum/intent/mace/strike)
-	name = "tongs"
-	desc = "A pair of iron jaws used to carry hot ingots."
+	name = "钳子"
+	desc = "一对用于夹持高温金属锭的铁钳。"
 	icon_state = "tongs"
 	icon = 'icons/roguetown/weapons/tools.dmi'
 	sharpness = IS_BLUNT
@@ -413,7 +413,7 @@
 				return list("shrink" = 0.5,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/rogueweapon/tongs/stone
-	name = "stone tongs"
+	name = "石制钳子"
 	icon_state = "stonetongs"
 	force = 5
 	smeltresult = null
@@ -430,8 +430,8 @@
 			icon_state = "stonetongsi0"
 
 /obj/item/rogueweapon/tongs/ancient
-	name = "ancient tongs"
-	desc = "Wrought gilbranze pincers the molten alloy, putting it before the anvil and hammer. Soon, it will fashion a new legacy; one unmarred by this dogmatic millenia."
+	name = "古代钳子"
+	desc = "吉尔青铜 锻成的钳口夹起熔融合金，将其送到铁砧与锤下。很快，它就会锻出新的传奇；一个不再被这教条千年所玷污的传奇。"
 	icon_state = "atongs"
 	smeltresult = /obj/item/ingot/aaslag
 
@@ -446,8 +446,8 @@
 			icon_state = "atongsi0"
 
 /obj/item/rogueweapon/tongs/ancient/decrepit
-	name = "decrepit tongs"
-	desc = "How many ingots of once-pure alloy have these rusted, falling-apart jaws handled? The lyves taken through proxy of weapons once pincered by this tool? Perhaps it's about time that tally incremented yet again."
+	name = "衰朽钳子"
+	desc = "这些锈蚀残破的钳口，究竟夹过多少块曾经纯净的合金锭？又有多少性命，间接葬送在由它所夹持锻成的武器之下？也许，是时候让这个数字再增添一笔了。"
 	force = 5
 	max_integrity = 10
 
@@ -462,8 +462,8 @@
 			icon_state = "atongsi0"
 
 /obj/item/rogueweapon/tongs/blacksteel
-	name = "blacksteel tongs"
-	desc = "A pair of blacksteel jaws almost certainly used as a sign of prestige."
+	name = "黑钢钳子"
+	desc = "一对黑钢钳口，几乎可以肯定更多是身份地位的象征。"
 	icon_state = "bs_tongs"
 	wdefense = 6
 	icon = 'icons/roguetown/weapons/tools.dmi'

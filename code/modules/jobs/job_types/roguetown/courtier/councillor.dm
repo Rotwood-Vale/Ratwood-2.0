@@ -1,5 +1,6 @@
 /datum/job/roguetown/councillor
 	title = "Councillor"
+	display_title = "参议"
 	flag = COUNCILLOR
 	department_flag = NOBLEMEN
 	faction = "Station"
@@ -9,7 +10,7 @@
 	allowed_races = RACES_TOLERATED_UP
 	allowed_sexes = list(MALE, FEMALE)
 	display_order = JDO_COUNCILLOR
-	tutorial = "You may have inherited this position, bought your way into it, or were appointed to it by merit--perish the thought! Whatever the case though, you work as an assistant and agent of the crown in matters of state. Whether this be aiding the steward, the sheriff, or the crown itself, or simply enjoying the free food of the keep, your duties vary day by day. You may be the lowest rung of the ladder, but that rung still towers over everyone else in town."
+	tutorial = "你也许是继承了这个位置，也许是拿钱买来的，又或者真是凭本事获任的, 真叫人不敢细想。不管怎样，你如今都是王权在政务上的助手与代理人。无论是协助总管、治安官、王冠本身，还是单纯享用城堡里的免费饭食，你每天的职责都可能不同。你或许只是阶梯最底下一阶，但这一阶依旧高踞于镇上其他所有人之上。"
 	whitelist_req = FALSE
 	outfit = /datum/outfit/job/roguetown/councillor
 	advclass_cat_rolls = list(CTAG_COUNCILLOR = 2)
@@ -27,8 +28,8 @@
 	)
 
 /datum/advclass/councillor
-	name = "Councillor"
-	tutorial = "You may have inherited this position, bought your way into it, or were appointed to it by merit--perish the thought! Whatever the case though, you work as an assistant and agent of the crown in matters of state. Whether this be aiding the steward, the sheriff, or the crown itself, or simply enjoying the free food of the keep, your duties vary day by day. You may be the lowest rung of the ladder, but that rung still towers over everyone else in town."
+	name = "参议"
+	tutorial = "你也许是继承了这个位置，也许是拿钱买来的，又或者真是凭本事获任的, 真叫人不敢细想。不管怎样，你如今都是王权在政务上的助手与代理人。无论是协助总管、治安官、王冠本身，还是单纯享用城堡里的免费饭食，你每天的职责都可能不同。你或许只是阶梯最底下一阶，但这一阶依旧高踞于镇上其他所有人之上。"
 	outfit = /datum/outfit/job/roguetown/councillor/basic
 	category_tags = list(CTAG_COUNCILLOR)
 	subclass_stats = list(

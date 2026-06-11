@@ -25,8 +25,8 @@ Requirement of the fusilier trait for aiming and gathering coordinates should li
 Also this is later going to the siege mode. But for now, brigands. Woohoo!!!!
 */
 /obj/structure/bombard
-	name = "portable bombard"
-	desc = "A light, portable bombard. Looks as if only a trained hand can aim it..."
+	name = "便携臼炮"
+	desc = "一门轻便、可搬运的臼炮。看起来只有受过训练的人才能瞄准它……"
 	icon = 'icons/roguetown/weapons/stationary/bombard.dmi'
 	icon_state = "smallmortar"
 	anchored = 1
@@ -49,8 +49,8 @@ Also this is later going to the siege mode. But for now, brigands. Woohoo!!!!
 
 //TODO change bombard fluff and desc - I never did this. Whoops!!! - Carl
 /obj/structure/bombard/fixed
-	name = "heavy bombard"
-	desc = "A massive, stationary bombard. Unlike a portable bombard, this one is capable of firing practically anywhere. With enough smokepowder and a dream..."
+	name = "重型臼炮"
+	desc = "一门庞大而固定的重型臼炮。与便携臼炮不同，它几乎能轰击任何地方。只要烟火药够多，再加上一点梦想……"
 	icon = 'icons/roguetown/weapons/stationary/bombard48.dmi'
 	icon_state = "bigmortar"//We'll get a bigger projectile set, for this one, later. That's what the heavy var was for, before.
 	fixed = 1
@@ -78,34 +78,34 @@ Also this is later going to the siege mode. But for now, brigands. Woohoo!!!!
 			Expected Deviancy: <span class='danger'>[offset_per_turfs]%</span></small>"//Just for fluff.
 	else
 		. += "...<br>\
-		<small>As expected, you've no understanding of the smaller details. Someone trained with smokepowder might know...</small>"
+		<small>不出所料，你完全看不懂这些细节。也许受过烟火药训练的人会明白……</small>"
 	if(!heavy)
 		. += "...<br>\
-		<small>This bombard is capable of being packed up, with MMB.</small>"
+		<small>这门臼炮可以用 MMB 拆卸打包。</small>"
 	else
 		. += "...<br>\
-		<small>This bombard is fixed in place. Far too heavy to move!</small>"
+		<small>这门臼炮固定在原地，重得根本无法搬动！</small>"
 
 /obj/structure/bombard/attack_hand(mob/user as mob)
 	if(busy)
-		to_chat(user, "<span class='warning'>Someone else is currently using [src].</span>")
+		to_chat(user, "<span class='warning'>现在有别人正在操作[src]。</span>")
 		return
 	if(firing)
-		to_chat(user, "<span class='warning'>[src]'s barrel is still steaming hot. Wait a few seconds and stop firing it.</span>")
+		to_chat(user, "<span class='warning'>[src]的炮管还在冒着热气。先等几秒，让它停火冷却。</span>")
 		return
 	add_fingerprint(user)
 
 	if(!HAS_TRAIT(user, TRAIT_FUSILIER))
-		to_chat(user, "<span class='warning'>You've no idea how to operate this thing!</span>")
+		to_chat(user, "<span class='warning'>你根本不知道这玩意该怎么操作！</span>")
 		return
 
 	var/area/A = get_area(src)
 	if(!A.outdoors)
-		to_chat(user, "<span class='warning'>You refrain from firing the [src] while indoors.</span>")
+		to_chat(user, "<span class='warning'>你没有在室内发射[src]。</span>")
 		return
 
-	var/choice = alert(user, "Would you like to set the bombard's target?","Bombard Dialing", "Target","Dial","Cancel - Dump Target")
-	if (choice == "Cancel - Dump Target")//Just in case, as a fallback.
+	var/choice = alert(user, "要设定臼炮的目标吗？","臼炮校准", "设定目标","手动校准","取消并清空目标")
+	if (choice == "取消并清空目标")//Just in case, as a fallback.
 		xdial = 0
 		ydial = 0
 		zdial = 0
@@ -113,33 +113,33 @@ Also this is later going to the siege mode. But for now, brigands. Woohoo!!!!
 		yinput = 0
 		return
 
-	if (choice == "Target")
-		var/temp_targ_x = input("Set X-LIP of strike.") as num
+	if (choice == "设定目标")
+		var/temp_targ_x = input("设定打击点的横向偏移。") as num
 		if(xdial + deobfuscate_x(temp_targ_x) > world.maxx || xdial + deobfuscate_x(temp_targ_x) < 0)
-			to_chat(user, "<span class='warning'>You cannot aim at this target, it is outside of your reach.</span>")
+			to_chat(user, "<span class='warning'>你无法瞄准这个目标，它超出了你的射程。</span>")
 			return
-		var/temp_targ_y = input("Set Y-LIP of strike.") as num
+		var/temp_targ_y = input("设定打击点的纵向偏移。") as num
 		if(ydial + deobfuscate_y(temp_targ_y) > world.maxy || ydial + deobfuscate_y(temp_targ_y) < 0)
-			to_chat(user, "<span class='warning'>You cannot aim at this target, it is outside of your reach.</span>")
+			to_chat(user, "<span class='warning'>你无法瞄准这个目标，它超出了你的射程。</span>")
 			return
-		var/temp_targ_z = input("Adjust Z-LIP elevation.") as num
+		var/temp_targ_z = input("调整打击点高度。") as num
 		if(temp_targ_z > 5/*world.maxz*/ || temp_targ_z < 2)//Adjust if we abandon the 5 Z setup.
-			to_chat(user, "<span class='warning'>You cannot adjust the bombard's elevation in such a manner.</span>")
+			to_chat(user, "<span class='warning'>你不能以这种方式调整臼炮仰角。</span>")
 			return
 
 		//Does anything prevent us from actually hitting that area?
 		var/turf/T = locate(deobfuscate_x(temp_targ_x) + xdial, deobfuscate_y(temp_targ_y) + ydial, temp_targ_z)
 		if(get_dist(loc, T) < 10)
-			to_chat(user, "<span class='warning'>You cannot aim at this target, it is too close to your bombard.</span>")
+			to_chat(user, "<span class='warning'>你无法瞄准这个目标，它离你的臼炮太近了。</span>")
 			return
 		if(get_dist(loc, T) > 124 && !heavy)//Heavy bombards, exclusively, can aim anywhere. You can still offset away from the max.
-			to_chat(user, "<span class='warning'>This target is too far away for a light bombard!</span>")
+			to_chat(user, "<span class='warning'>这个目标对轻型臼炮来说太远了！</span>")
 			return
 
 		//Special checks, now. Eventually, we'll do 'is_centcom_level' and 'is_station_level'. When I make those not awful.
 		//We intentionally allow offsets to target protected locations, since it can't go as deep, or reliably.
 		if(!T.can_see_sky())
-			to_chat(user, "<span class='warning'>This location has a ceiling! You cannot aim directly at it! Adjust!</span>")
+			to_chat(user, "<span class='warning'>这个位置上方有天花板！你不能直接瞄准那里！重新调整！</span>")
 			return
 /*		if(T.arcyne_shroud_check())//Has the magos warded the area? Some locations are protected by default, such as his tower...
 			to_chat(user, "<span class='warning'>This target is protected by an arcyne shroud! You cannot aim directly at it! Adjust!</span>")
@@ -149,16 +149,16 @@ Also this is later going to the siege mode. But for now, brigands. Woohoo!!!!
 			return*/
 
 		if(busy)
-			to_chat(user, "<span class='warning'>Someone else is currently using this bombard.</span>")
+			to_chat(user, "<span class='warning'>现在有别人正在操作这门臼炮。</span>")
 			return
 		//All's well? Continue!
 
-		user.visible_message("<span class='notice'>([user] starts adjusting [src]'s firing angle and distance.</span>",
-		"<span class='notice'>You start adjusting [src]'s firing angle and distance to match the new target's location.</span>")
+		user.visible_message("<span class='notice'>([user]开始调整[src]的射角与距离。</span>",
+		"<span class='notice'>你开始调整[src]的射角与距离，让它对准新的目标位置。</span>")
 		busy = 1
 		if(do_after(user, 30, src))
-			user.visible_message("<span class='notice'>([user] finishes adjusting [src]'s firing angle and distance.</span>",
-			"<span class='notice'>You finish adjusting [src]'s firing angle and distance to match the new target's location.</span>")
+			user.visible_message("<span class='notice'>([user]完成了[src]的射角与距离调整。</span>",
+			"<span class='notice'>你完成了[src]的射角与距离调整，使其对准新的目标位置。</span>")
 			playsound(loc, 'sound/combat/shieldraise.ogg', 25, TRUE)
 			busy = 0
 			xinput = deobfuscate_x(temp_targ_x)
@@ -174,41 +174,41 @@ Also this is later going to the siege mode. But for now, brigands. Woohoo!!!!
 		else
 			busy = 0
 
-	if (choice == "Dial")
+	if (choice == "手动校准")
 		if(zdial == null)//Have you even set the elevation? No? GO SET IT!!! HOW DID YOU MANAGE THIS, EVEN? I HATE YOU!!!!!
-			to_chat(user, "<span class='warning'>You've not set the target elevation of your bombard! How do you intend to offset your strike?</span>")
+			to_chat(user, "<span class='warning'>你还没设定臼炮的目标高程！你打算怎么修正落点？</span>")
 			return
-		var/temp_dial_x = input("Set X-LIP adjustement from -10 to 10.") as num
+		var/temp_dial_x = input("将横向偏移修正设为 -10 到 10。") as num
 		if(temp_dial_x + xinput > world.maxx || temp_dial_x + xinput < 0)
-			to_chat(user, "<span class='warning'>You cannot dial to this X-LIP, it is outside of the bombard's reach.</span>")
+			to_chat(user, "<span class='warning'>你无法把横向偏移调到这里，它超出了臼炮射程。</span>")
 			return
 		if(temp_dial_x < -10 || temp_dial_x > 10)
-			to_chat(user, "<span class='warning'>You cannot dial to this target, it is too far away. You need to set [src] up instead.</span>")
+			to_chat(user, "<span class='warning'>你无法将目标修正到这里，它太远了。你得重新布设[src]。</span>")
 			return
-		var/temp_dial_y = input("Set Y-LIP adjustement from -10 to 10.") as num
+		var/temp_dial_y = input("将纵向偏移修正设为 -10 到 10。") as num
 		if(temp_dial_y + yinput > world.maxy || temp_dial_y + yinput < 0)
-			to_chat(user, "<span class='warning'>You cannot dial to this Y-LIP, it is outside of the bombard's reach.</span>")
+			to_chat(user, "<span class='warning'>你无法把纵向偏移调到这里，它超出了臼炮射程。</span>")
 			return
 
 		//As above, we do the checks now to see if this is even possible.
 		var/turf/T = locate(xinput + temp_dial_x, yinput + temp_dial_y, zdial)
 		if(get_dist(loc, T) < 10)
-			to_chat(user, "<span class='warning'>You cannot dial to this LIP, it is too close to your bombard.</span>")
+			to_chat(user, "<span class='warning'>你无法把落点调到这里，它离臼炮太近了。</span>")
 			return
 		if(temp_dial_y < -10 || temp_dial_y > 10)
-			to_chat(user, "<span class='warning'>You cannot dial to this target, it is too far away. You need to set [src] up instead.</span>")
+			to_chat(user, "<span class='warning'>你无法将目标修正到这里，它太远了。你得重新布设[src]。</span>")
 			return
 		if(busy)
-			to_chat(user, "<span class='warning'>Someone else is currently using this bombard.</span>")
+			to_chat(user, "<span class='warning'>现在有别人正在操作这门臼炮。</span>")
 			return
 		//Good to go? Awesome.
 
-		user.visible_message("<span class='notice'>[user] starts dialing [src]'s firing angle and distance.</span>",
-		"<span class='notice'>You start dialing [src]'s firing angle and distance to match the new target's location.</span>")
+		user.visible_message("<span class='notice'>[user]开始拨调[src]的射角与距离。</span>",
+		"<span class='notice'>你开始拨调[src]的射角与距离，使其对准新的目标位置。</span>")
 		busy = 1
 		if(do_after(user, 15, src))
-			user.visible_message("<span class='notice'>[user] finishes dialing [src]'s firing angle and distance.</span>",
-			"<span class='notice'>You finish dialing [src]'s firing angle and distance to match the new target's location.</span>")
+			user.visible_message("<span class='notice'>[user]完成了[src]的射角与距离拨调。</span>",
+			"<span class='notice'>你完成了[src]的射角与距离拨调，使其对准新的目标位置。</span>")
 			busy = 0
 			xdial = temp_dial_x
 			ydial = temp_dial_y
@@ -218,46 +218,46 @@ Also this is later going to the siege mode. But for now, brigands. Woohoo!!!!
 /obj/structure/bombard/attackby(obj/item/O as obj, mob/user as mob)
 	var/area/A = get_area(src)
 	if(!A.outdoors)
-		to_chat(user, "<span class='warning'>You refrain from preparing to fire the [src] while indoors.</span>")
+		to_chat(user, "<span class='warning'>你没有在室内准备发射[src]。</span>")
 		return
 
 	if(istype(O, /obj/item/powderflask))
 		if(powder)
-			user.visible_message("<span class='notice'>The [src] is already filled with smokepowder!</span>")
+			user.visible_message("<span class='notice'>[src]里已经装满烟火药了！</span>")
 			return
 		else
-			user.visible_message("<span class='notice'>[user] begins filling the [src] with smokepowder.</span>")
+			user.visible_message("<span class='notice'>[user]开始往[src]里填装烟火药。</span>")
 			playsound(src, "modular_helmsguard/sound/arquebus/pour_powder.ogg", 80, TRUE)
 			if(do_after(user, 4 SECONDS, src))
-				user.visible_message("<span class='notice'>[user] fills the [src] with smokepowder.</span>")
+				user.visible_message("<span class='notice'>[user]将[src]填满了烟火药。</span>")
 				powder = TRUE
 			return
 
 	if(!powder)
-		to_chat(user, "<span class='danger'>[src] is not filled with smokepowder!</span>")
+		to_chat(user, "<span class='danger'>[src]里还没装烟火药！</span>")
 		return
 
 	if(istype(O, /obj/item/rogueweapon/woodstaff/quarterstaff/bombard_sponge))
 		if(rammed)
-			user.visible_message("<span class='notice'>The [src] is already packed properly with smokepowder!</span>")
+			user.visible_message("<span class='notice'>[src]里的烟火药已经捣实妥当了！</span>")
 			return
 		else
-			user.visible_message("<span class='notice'>[user] begins packing the [src] with smokepowder.</span>")
+			user.visible_message("<span class='notice'>[user]开始把[src]里的烟火药捣实。</span>")
 			playsound(src, "modular_azurepeak/sound/spellbooks/bladescrape.ogg", 80, TRUE)
 			if(do_after(user, 8 SECONDS, src))
-				user.visible_message("<span class='notice'>[user] has finished packing the [src] with smokepowder.</span>")
+				user.visible_message("<span class='notice'>[user]把[src]里的烟火药捣实完毕了。</span>")
 				rammed = TRUE
 			return
 
 	if(!rammed)
-		to_chat(user, "<span class='danger'>[src] has not yet been packed properly with a rod!</span>")
+		to_chat(user, "<span class='danger'>[src]里的装药还没用捣杆压实！</span>")
 		return
 
 	if(istype(O, /obj/item/cannonball))
 		var/obj/item/cannonball/cannonball = O
 
 		if(busy)
-			to_chat(user, "<span class='warning'>Someone else is currently using [src].</span>")
+			to_chat(user, "<span class='warning'>现在有别人正在操作[src]。</span>")
 			return
 /*
 		if(z != 1)
@@ -265,26 +265,26 @@ Also this is later going to the siege mode. But for now, brigands. Woohoo!!!!
 			return
 */
 		if(xinput == 0 && yinput == 0) //Bombard wasn't set
-			to_chat(user, "<span class='warning'>[src] needs to be aimed first.</span>")
+			to_chat(user, "<span class='warning'>[src]得先完成瞄准。</span>")
 			return
 
 		var/turf/T = locate(xinput + xdial + xoffset, yinput + ydial + yoffset, zdial)
 		if(!isturf(T))
-			to_chat(user, "<span class='warning'>You cannot fire [src] at this location.</span>")
+			to_chat(user, "<span class='warning'>你不能朝这个位置发射[src]。</span>")
 			return
 
-		user.visible_message("<span class='notice'>[user] starts loading \a [cannonball.name] into [src].</span>",
-		"<span class='notice'>You start loading \a [cannonball.name] into [src].</span>")
+		user.visible_message("<span class='notice'>[user]开始将一枚[cannonball.name]装入[src]。</span>",
+		"<span class='notice'>你开始将一枚[cannonball.name]装入[src]。</span>")
 		playsound(loc, 'sound/combat/bombard/mortar_reload.ogg', 50, TRUE)
 		busy = 1
 
 		if(do_after(user, 3 SECONDS, src))
-			user.visible_message("<span class='notice'>[user] loads \a [cannonball.name] into [src].</span>",
-			"<span class='notice'>You load \a [cannonball.name] into [src].</span>")
-			visible_message("\icon[src] <span class='danger'>The [name] fires!</span>")
+			user.visible_message("<span class='notice'>[user]将一枚[cannonball.name]装进了[src]。</span>",
+			"<span class='notice'>你将一枚[cannonball.name]装进了[src]。</span>")
+			visible_message("\icon[src] <span class='danger'>[name]开火了！</span>")
 			user.dropItemToGround(cannonball, src)
 			playsound(loc, 'sound/combat/bombard/mortar_fire.ogg', 50, TRUE)//We want this heard from anywhere in reach. Except in the case of heavy bombards.
-			loud_message("The sound of a cannon firing can be heard", hearing_distance = 124)//So account for minimum distance, by +10.
+			loud_message("能听见火炮开火的巨响", hearing_distance = 124)//So account for minimum distance, by +10.
 			busy = 0
 			firing = 1
 			flick(icon_state + "_fire", src)
@@ -294,7 +294,7 @@ Also this is later going to the siege mode. But for now, brigands. Woohoo!!!!
 				shake_camera(M, 3, 1)
 			spawn(travel_time) //What goes up
 				playsound(T, 'sound/combat/bombard/mortar_long_whistle.ogg', 80, TRUE)
-				T.loud_message("The whistle of a bombard shell can be heard above", hearing_distance = 12)//An acceptable range, m'lord.
+				T.loud_message("头顶传来臼炮炮弹掠空的尖啸", hearing_distance = 12)//An acceptable range, m'lord.
 				spawn(45) //Must go down
 					cannonball.detonate(T)
 					qdel(cannonball)
@@ -321,13 +321,13 @@ Also this is later going to the siege mode. But for now, brigands. Woohoo!!!!
 
 /obj/structure/bombard/MiddleClick(mob/user)
 	if(busy)
-		to_chat(user, "<span class='warning'>Someone else is currently using [src].</span>")
+		to_chat(user, "<span class='warning'>现在有别人正在操作[src]。</span>")
 		return
 	if(firing)
-		to_chat(user, "<span class='warning'>The bombard is currently firing, Wait a few seconds for the barrel to cool.</span>")
+		to_chat(user, "<span class='warning'>臼炮正在发射中，先等几秒让炮管冷却。</span>")
 		return
 	if(fixed)
-		to_chat(user, "<span class='warning'>The bombard is fixed in place. You're not able to move it.</span>")
+		to_chat(user, "<span class='warning'>这门臼炮固定在原地，你没法移动它。</span>")
 		return
 
 	xdial = 0//Reset after attempted deconstruction.
@@ -339,11 +339,11 @@ Also this is later going to the siege mode. But for now, brigands. Woohoo!!!!
 	rammed = FALSE
 
 	playsound(loc, 'sound/combat/shieldraise.ogg', 25, TRUE)
-	user.visible_message("<span class='notice'>[user] starts to tear down [src].",
-	"<span class='notice'>You start tearing down [src].")
+	user.visible_message("<span class='notice'>[user]开始拆卸[src]。",
+	"<span class='notice'>你开始拆卸[src]。")
 	if(do_after(user, 40, src))
-		user.visible_message("<span class='notice'>[user] tears down [src].",
-		"<span class='notice'>You tear down [src].")
+		user.visible_message("<span class='notice'>[user]拆下了[src]。",
+		"<span class='notice'>你拆下了[src]。")
 		playsound(loc, 'sound/combat/shieldraise.ogg', 25, TRUE)
 		new /obj/item/bombard_frame(loc)
 		new /obj/item/bombard_barrel(loc)

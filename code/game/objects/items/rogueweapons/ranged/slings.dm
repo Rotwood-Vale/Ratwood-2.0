@@ -63,8 +63,8 @@
 //objs
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/sling
-	name = "sling"
-	desc = "Twisted fibers manifest into a strung pouch capable of hurling stones afar."
+	name = "投石索"
+	desc = "扭绞纤维编成的抛袋与索绳，足以将石块远远甩出。"
 	icon = 'icons/roguetown/weapons/misc32.dmi'
 	icon_state = "sling"
 	item_state = "sling"

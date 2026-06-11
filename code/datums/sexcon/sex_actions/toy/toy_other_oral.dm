@@ -1,5 +1,5 @@
 /datum/sex_action/toy_other_oral
-	name = "Use toy on their mouth"
+	name = "用玩具玩弄对方嘴巴"
 	category = SEX_CATEGORY_PENETRATE
 	target_sex_part = SEX_PART_JAWS
 	var/pegging = FALSE
@@ -23,10 +23,10 @@
 
 /datum/sex_action/toy_other_oral/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/dildo/dildo = !pegging ? get_dildo_in_either_hand(user) : get_dildo_on_belt(user)
-	user.visible_message(span_warning("[user] forces [target]'s to gobble on \the [dildo]..."))
+	user.visible_message(span_warning("[user]强迫[target]把[dildo]含进了嘴里……"))
 
 /datum/sex_action/toy_other_oral/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] forces [target] to suck on the dildo..."))
+	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()]强迫[target]含弄着那根假阳具……"))
 	user.sexcon.oralcourse_noise(target)
 
 	var/obj/item/dildo/dildo = get_dildo_in_either_hand(user)
@@ -35,7 +35,7 @@
 
 /datum/sex_action/toy_other_oral/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/dildo/dildo = pegging ? get_dildo_in_either_hand(user) : get_dildo_on_belt(user)
-	user.visible_message(span_warning("[user] pulls \the [dildo] from [target]'s mouth."))
+	user.visible_message(span_warning("[user]把[dildo]从[target]的嘴里抽了出来。"))
 
 /datum/sex_action/toy_other_oral/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.sexcon.finished_check())
@@ -43,18 +43,18 @@
 	return FALSE
 
 /datum/sex_action/toy_other_oral/pegging
-	name = "Peg their mouth"
+	name = "用玩具抽插对方嘴巴"
 	pegging = TRUE
 
 /datum/sex_action/toy_other_oral/pegging/throat
-	name = "Peg their throat"
+	name = "用玩具抽插对方喉咙"
 	oxy_damage = TRUE
 
 /datum/sex_action/toy_other_oral/pegging/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!oxy_damage)
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pegs [target]'s mouth."))
+		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()]用玩具抽插着[target]的嘴巴。"))
 	else
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pegs [target]'s throat."))
+		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()]用玩具抽插着[target]的喉咙。"))
 		user.sexcon.intercourse_noise(target, TRUE)
 	user.sexcon.oralcourse_noise(target)
 	user.sexcon.do_thrust_animate(target)

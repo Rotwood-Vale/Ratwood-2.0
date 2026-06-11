@@ -1,5 +1,5 @@
 /datum/brain_trauma/hypnosis
-	name = "Hypnosis"
+	name = "催眠"
 	desc = ""
 	scan_desc = ""
 	gain_text = ""
@@ -24,13 +24,13 @@
 	message_admins("[ADMIN_LOOKUPFLW(owner)] was hypnotized with the phrase '[hypnotic_phrase]'.")
 	log_game("[key_name(owner)] was hypnotized with the phrase '[hypnotic_phrase]'.")
 	to_chat(owner, span_reallybighypnophrase("[hypnotic_phrase]"))
-	to_chat(owner, "<span class='notice'>[pick("You feel your thoughts focusing on this phrase... you can't seem to get it out of your head.",\
-												"Your head hurts, but this is all you can think of. It must be vitally important.",\
-												"You feel a part of your mind repeating this over and over. You need to follow these words.",\
-												"Something about this sounds... right, for some reason. You feel like you should follow these words.",\
-												"These words keep echoing in your mind. You find myself completely fascinated by them.")]</span>")
-	to_chat(owner, "<span class='boldwarning'>You've been hypnotized by this sentence. You must follow these words. If it isn't a clear order, you can freely interpret how to do so,\
-										as long as you act like the words are your highest priority.</span>")
+	to_chat(owner, "<span class='notice'>[pick("我感觉自己的思绪正聚焦到这句话上……无论如何也无法将它从脑海中驱散。",\
+												"我的头隐隐作痛，可我满脑子只剩下这句话。它一定至关重要。",\
+												"我感觉心智的一部分正在反复默念着这句话。我必须遵从这些话语。",\
+												"不知为何，这听起来……是对的。我感觉自己应该遵从这些话语。",\
+												"这句话不断在我脑海中回响。我发现自己完全被它迷住了。")]</span>")
+	to_chat(owner, "<span class='boldwarning'>我被这句话催眠了。我必须遵从这些话语。若它不是清晰明确的命令，\
+										我可以自由理解该如何执行，只要我的行动始终把这些话语视作最高优先级。</span>")
 	var/atom/movable/screen/alert/hypnosis/hypno_alert = owner.throw_alert("hypnosis", /atom/movable/screen/alert/hypnosis)
 	hypno_alert.desc = ""
 	..()
@@ -38,7 +38,7 @@
 /datum/brain_trauma/hypnosis/on_lose()
 	message_admins("[ADMIN_LOOKUPFLW(owner)] is no longer hypnotized with the phrase '[hypnotic_phrase]'.")
 	log_game("[key_name(owner)] is no longer hypnotized with the phrase '[hypnotic_phrase]'.")
-	to_chat(owner, span_danger("I suddenly snap out of your hypnosis. The phrase '[hypnotic_phrase]' no longer feels important to you."))
+	to_chat(owner, span_danger("我突然从催眠中清醒了过来。短语“[hypnotic_phrase]”对我而言不再重要了。"))
 	owner.clear_alert("hypnosis")
 	..()
 

@@ -4,46 +4,46 @@
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/skin/normal
-	name = "Normal Skin"
+	name = "普通皮肤"
 
 /datum/mob_descriptor/skin/hairy
-	name = "Hairy Skin"
+	name = "多毛皮肤"
 
 /datum/mob_descriptor/skin/soft
-	name = "Soft Skin"
+	name = "柔软皮肤"
 
 /datum/mob_descriptor/skin/rugged
-	name = "Rugged Skin"
+	name = "粗糙皮肤"
 
 /datum/mob_descriptor/skin/diseased
-	name = "Diseased Skin"
+	name = "病态皮肤"
 
 /datum/mob_descriptor/skin/dry
-	name = "Dry Skin"
+	name = "干燥皮肤"
 
 /datum/mob_descriptor/skin/fine
-	name = "Fine Skin"
+	name = "细嫩皮肤"
 
 /datum/mob_descriptor/skin/wrinkled
-	name = "Wrinkled Skin"
+	name = "多皱皮肤"
 
 /datum/mob_descriptor/skin/sunkissed
-	name = "Sunkissed Skin"
+	name = "日晒皮肤"
 
 /datum/mob_descriptor/skin/aged
-	name = "Aged Skin"
+	name = "衰老皮肤"
 
 /datum/mob_descriptor/skin/pockmarked
-	name = "Pockmarked Skin"
+	name = "麻点皮肤"
 
 /datum/mob_descriptor/skin/dusky
-	name = "Dusky Skin"
+	name = "晦暗皮肤"
 
 /datum/mob_descriptor/skin/irritated
-	name = "Irritated Skin"
+	name = "受刺激的皮肤"
 
 /datum/mob_descriptor/skin/ashen
-	name = "Ashen Skin"
+	name = "灰白皮肤"
 
 /datum/mob_descriptor/scales
 	abstract_type = /datum/mob_descriptor/scales
@@ -51,19 +51,19 @@
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/scales/plain
-	name = "Plain Scales"
+	name = "普通鳞片"
 
 /datum/mob_descriptor/scales/rough
-	name = "Rough Scales"
+	name = "粗糙鳞片"
 
 /datum/mob_descriptor/scales/smooth
-	name = "Smooth Scales"
+	name = "光滑鳞片"
 
 /datum/mob_descriptor/scales/plated
-	name = "Plated Scales"
+	name = "甲片状鳞片"
 
 /datum/mob_descriptor/scales/peeling
-	name = "Peeling Scales"
+	name = "剥落鳞片"
 
 /datum/mob_descriptor/fur
 	abstract_type = /datum/mob_descriptor/fur
@@ -71,40 +71,40 @@
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/fur/plain
-	name = "Plain Fur"
+	name = "普通毛发"
 
 /datum/mob_descriptor/fur/short
-	name = "Short Fur"
+	name = "短毛"
 
 /datum/mob_descriptor/fur/coarse
-	name = "Coarse Fur"
+	name = "粗硬毛发"
 
 /datum/mob_descriptor/fur/bristly
-	name = "Bristly Fur"
+	name = "鬃硬毛发"
 
 /datum/mob_descriptor/fur/fluffy
-	name = "Fluffy Fur"
+	name = "蓬松毛发"
 
 /datum/mob_descriptor/fur/shaggy
-	name = "Shaggy Fur"
+	name = "蓬乱毛发"
 
 /datum/mob_descriptor/fur/silky
-	name = "Silky Fur"
+	name = "丝滑毛发"
 
 /datum/mob_descriptor/fur/lank
-	name = "Lank Fur"
+	name = "油塌毛发"
 
 /datum/mob_descriptor/fur/mangy
-	name = "Mangy Fur"
+	name = "癞皮毛发"
 
 /datum/mob_descriptor/fur/velvety
-	name = "Velvety Fur"
+	name = "绒面毛发"
 
 /datum/mob_descriptor/fur/dense
-	name = "Dense Fur"
+	name = "浓密毛发"
 
 /datum/mob_descriptor/fur/matted
-	name = "Matted Fur"
+	name = "打结毛发"
 
 /datum/mob_descriptor/feathers
 	abstract_type = /datum/mob_descriptor/feathers
@@ -112,19 +112,19 @@
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/feathers/fine
-	name = "Fine Feathers"
+	name = "细致羽毛"
 
 /datum/mob_descriptor/feathers/stiff
-	name = "Stiff Feathers"
+	name = "僵硬羽毛"
 
 /datum/mob_descriptor/feathers/frayed
-	name = "Frayed Feathers"
+	name = "破损羽毛"
 
 /datum/mob_descriptor/feathers/delicate
-	name = "Delicate Feathers"
+	name = "纤细羽毛"
 
 /datum/mob_descriptor/feathers/soft
-	name = "Soft Feathers"
+	name = "柔软羽毛"
 
 /datum/mob_descriptor/chitin
 	abstract_type = /datum/mob_descriptor/chitin
@@ -132,10 +132,10 @@
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/chitin/smooth
-	name = "Smooth Chitin"
+	name = "光滑甲壳"
 
 /datum/mob_descriptor/chitin/hard
-	name = "Hard Chitin"
+	name = "坚硬甲壳"
 
 /datum/mob_descriptor/chitin/fine
-	name = "Fine Chitin"
+	name = "细致甲壳"

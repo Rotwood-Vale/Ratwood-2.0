@@ -1,8 +1,8 @@
 /obj/effect/proc_holder/spell/invoked/projectile/frostbolt // to do: get scroll icon
-	name = "Frost Bolt"
-	desc = "A ray of frozen energy, slowing the first thing it touches and lightly damaging it. \n\
-		Damage is increased by 100% versus simple-minded creechurs.\n\
-		Can be fired in an arc over an ally's head with a mage's staff or spellbook on arc intent. It will deals 25% less damage that way."
+	name = "寒霜箭"
+	desc = "一道冻结能量构成的寒霜射线，会减缓它碰到的第一个目标并造成轻度伤害。\n\
+		对头脑简单的生物伤害提高 100%。\n\
+		若以法师杖或法术书切换至弧射意图，还可越过盟友头顶发射；但那样会少造成 25% 伤害。"
 	range = 8
 	projectile_type = /obj/projectile/magic/frostbolt
 	overlay_state = "frost_bolt"
@@ -21,7 +21,7 @@
 	antimagic_allowed = FALSE //can you use it if you are antimagicked?
 	charging_slowdown = 3
 	spell_tier = 2
-	invocations = list("Sagitta Glaciei!")
+	invocations = list("寒霜，凝矢！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_ICE
 	glow_intensity = GLOW_INTENSITY_LOW
@@ -39,11 +39,11 @@
 		projectile_type = /obj/projectile/magic/frostbolt/arc
 	else
 		projectile_type = /obj/projectile/magic/frostbolt
-	target.visible_message(span_warning("[target] hurls a frosty beam!"), span_notice("You hurl a frosty beam!"))
+	target.visible_message(span_warning("[target] 掷出了一道冰寒射线！"), span_notice("我掷出了一道冰寒射线！"))
 	. = ..()
 
 /obj/projectile/magic/frostbolt
-	name = "Frost Dart"
+	name = "寒霜矢"
 	icon_state = "ice_2"
 	damage = 20
 	npc_simple_damage_mult = 2
@@ -55,7 +55,7 @@
 	var/aoe_range = 0
 
 /obj/projectile/magic/frostbolt/arc
-	name = "Arced Frost Dart"
+	name = "弧射寒霜矢"
 	damage = 15 // You cannot modify charge and releasedrain dynamically so lower damage it is.
 	arcshot = TRUE
 
@@ -64,7 +64,7 @@
 	if(ismob(target))
 		var/mob/M = target
 		if(M.anti_magic_check())
-			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			visible_message(span_warning("[src] 在接触[target]时噗地溃散了！"))
 			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 			qdel(src)
 			return BULLET_ACT_BLOCK

@@ -4,8 +4,8 @@
 	var/list/fishingMods = null
 
 /obj/item/natural/worms
-	name = "worm"
-	desc = "The favorite bait of the courageous fishermen who venture these dark waters."
+	name = "蠕虫"
+	desc = "敢于深入这片黑暗水域的渔夫们最爱的鱼饵。"
 	icon_state = "worm1"
 	throwforce = 10
 	baitpenalty = 10
@@ -25,8 +25,8 @@
 	var/amt = 1
 
 /obj/item/natural/worms/grubs
-	name = "grub"
-	desc = "Bait for the desperate, or the daring."
+	name = "蛆虫"
+	desc = "绝望者，或胆大者，都会拿它当鱼饵。"
 	baitpenalty = 5
 	isbait = TRUE
 	color = null

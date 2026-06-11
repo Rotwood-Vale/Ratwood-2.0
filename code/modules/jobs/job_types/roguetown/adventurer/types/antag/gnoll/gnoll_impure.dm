@@ -1,7 +1,7 @@
 /datum/advclass/gnoll_impure
-	name = "Impure Gnoll"
+	name = "不纯豺狼人"
 	allowed_races = RACES_NO_CONSTRUCT
-	tutorial = "You have proven yourself worthy to Graggar, and he's granted you his blessing most divine. Now you hunt for worthy opponents, seeking out those strong enough to make you bleed."
+	tutorial = "你已向 格拉加 证明了自己的价值，而他也赐下了至高的祝福。如今你要去追猎配得上你的对手，寻找那些强到足以让你流血的人。"
 	min_pq = 0
 	applies_post_equipment = FALSE
 
@@ -51,4 +51,4 @@
 		H.AddSpell(new /obj/effect/proc_holder/spell/self/claws/gnoll)
 		H.set_patron(/datum/patron/inhumen/graggar)
 
-		to_chat(H, span_bignotice("Born out of echoes of violence, I am no true champion of graggar. But whoever summoned me is, even if they don't heed his call. They've bested his mightiests gnolls, ready to provide a worthy challenge. As long as they don't deny me worthy duels, I shall serve them."))
+		to_chat(H, span_bignotice("我诞生于暴力的余响，并非 格拉加 真正的冠军。可召来我的那人却是，即便他们并未回应他的呼唤。他们击败了他最强大的豺狼人，足以献上一场配得上的挑战。只要他们不拒绝我应得的决斗，我便会为其效力。"))

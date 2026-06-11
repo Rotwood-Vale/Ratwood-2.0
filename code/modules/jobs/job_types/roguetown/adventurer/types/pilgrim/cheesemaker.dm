@@ -1,8 +1,8 @@
 /datum/advclass/cheesemaker
-	name = "Cheesemaker"
-	tutorial = "Cheese cheese cheese! You have not just cheese itself, but the crucial beast from whence it comes \
-	As very skilled cook you come with some ingredients to make food and feed the masses. \
-	Take good care of your precious bovine companion, and she will reward you in kind."
+	name = "奶酪师"
+	tutorial = "奶酪，奶酪，还是奶酪！你带来的不只是奶酪本身，还有产出它的关键牲口。\
+	作为一名手艺高明的厨师，你也随身带着一些做饭原料，足以养活大伙。\
+	好好照顾你那头宝贵的母牛吧，她自会回报于你。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/cheesemaker

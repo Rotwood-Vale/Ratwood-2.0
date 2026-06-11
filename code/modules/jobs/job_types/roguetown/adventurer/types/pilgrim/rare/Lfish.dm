@@ -1,8 +1,8 @@
 //human master fisher
 
 /datum/advclass/fishermaster
-	name = "Master Fisher"
-	tutorial = "You are a Master Fisher, you cast your rod with might, and are able to pull fish larger than Eoras Bosom."
+	name = "渔艺大师"
+	tutorial = "你是一名渔艺大师，挥竿有力，连大过 伊欧拉s Bosom 的鱼都能给你钓上来。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/fishermaster

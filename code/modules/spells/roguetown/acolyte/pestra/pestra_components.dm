@@ -73,7 +73,7 @@
 
 	var/obj/effect/proc_holder/spell/invoked/divine_rebirth/new_spell = new()
 	parent_mob.mind.AddSpell(new_spell)
-	to_chat(parent_mob, span_notice("As the infestation of Pestra festers within me, I feel new power well into my core! [new_spell.name] is now available."))
+	to_chat(parent_mob, span_notice("随着 Pestra 的虫灾在我体内溃烂生长，我感到一股新力量正涌入核心！现在可以使用 [new_spell.name] 了。"))
 
 /datum/component/infestation_charges/proc/remove_divine_rebirth()
 	if(!parent_mob?.mind)
@@ -82,7 +82,7 @@
 	var/obj/effect/proc_holder/spell/invoked/divine_rebirth/existing = parent_mob.mind.get_spell(/obj/effect/proc_holder/spell/invoked/divine_rebirth)
 	if(existing)
 		parent_mob.mind.RemoveSpell(existing)
-		to_chat(parent_mob, span_warning("As the infestation of pestra within me wanes, I am robbed of her strongest gift for now. [existing.name] is no longer available."))
+		to_chat(parent_mob, span_warning("随着 Pestra 在我体内的虫灾逐渐衰退，我暂时失去了她最强大的赐礼。现在已无法使用 [existing.name]。"))
 
 /datum/component/infestation_charges/proc/divine_rebirth_cast(mob/living/user, mob/living/target)
 	SIGNAL_HANDLER
@@ -95,7 +95,7 @@
 		heal_spell.update_charges(get_charges())
 	if(parent_spell)
 		parent_spell.update_charge_overlay(get_charges())
-	to_chat(user, span_warning("The divine power leaves me completely exhausted. My body is purified of infestation thoroughly. I won't be able to channel such power again for some time."))
+	to_chat(user, span_warning("神圣之力让我彻底耗尽。我的身体已被完全净化，不再残留虫灾。接下来一段时间内，我都无法再次引导这等力量。"))
 
 /datum/component/pestilent_blade_enchant
 	dupe_mode = COMPONENT_DUPE_UNIQUE
@@ -137,7 +137,7 @@
 
 	if(living_target.has_status_effect(/datum/status_effect/buff/infestation) || prob(infect_prob))
 		living_target.apply_status_effect(/datum/status_effect/debuff/pestilent_plague)
-		living_target.visible_message(span_warning("[living_target]'s infestation erupts into a violent plague!"),span_userdanger("The infestation within me erupts into unbearable agony!"))
+		living_target.visible_message(span_warning("[living_target] 体内的虫灾骤然爆发，化作凶恶瘟疫！"),span_userdanger("我体内的虫灾猛然爆发，带来难以承受的剧痛！"))
 		remove_enchantment()
 
 /datum/component/pestilent_blade_enchant/proc/on_qdel(datum/source)
@@ -148,7 +148,7 @@
 	if(outline_applied)
 		remove_outline()
 	if(parent_weapon)
-		parent_weapon.visible_message(span_infection("The sickly glow fades from [parent_weapon]."))
+		parent_weapon.visible_message(span_infection("[parent_weapon] 上那层病态的微光渐渐消散了。"))
 	qdel(src)
 
 #define BLACK_ROT_FIRE_ICON 'icons/mob/onfireNEW.dmi'
@@ -200,7 +200,7 @@
 
 	//Before everything else, we check immunity. Assuming they've a mind.
 	if(HAS_TRAIT(target, TRAIT_TOXIMMUNE))//For constructs, WWs, VL, DK, etc. Rotcured, too.
-		target.visible_message(span_userdanger("The blight harmlessly passes over [target]! They're immune!"))
+		target.visible_message(span_userdanger("疫蚀从 [target] 身上无害地掠过！对方免疫！"))
 		return
 
 	var/skill_level = parent_mob.get_skill_level(/datum/skill/magic/holy)
@@ -220,7 +220,7 @@
 			stacks_to_apply = high_skill_target_stacks
 
 		target.apply_status_effect(/datum/status_effect/black_rot, stacks_to_apply)
-		target.visible_message(span_userdanger("[target] twitches as a black rot begins to spread across their body!"))
+		target.visible_message(span_userdanger("[target] 抽搐了一下，一层黑腐病开始沿着其身体蔓延！"))
 		parent_mob.apply_status_effect(/datum/status_effect/black_rot, self_rot_stacks)
 
 		var/datum/status_effect/black_rot/self_rot = parent_mob.has_status_effect(/datum/status_effect/black_rot)
@@ -229,9 +229,9 @@
 		else
 			parent_mob.apply_status_effect(/datum/status_effect/black_rot, self_rot_stacks)
 			if(is_offensive)
-				to_chat(parent_mob, span_notice("My touch spreads the rot to [target], but it takes a toll on my own body."))
+				to_chat(parent_mob, span_notice("我的碰触将腐坏传播给了 [target]，但也让自己的身体付出了代价。"))
 			else
-				to_chat(parent_mob, span_notice("The blight lashes out at [target] in defense, but it takes a toll on my own body."))
+				to_chat(parent_mob, span_notice("疫蚀为自卫而反噬了 [target]，但也让我的身体付出了代价。"))
 
 /datum/component/infestation_black_rot/Destroy()
 	parent_mob.RemoveElement(/datum/element/relay_attackers)

@@ -1,7 +1,7 @@
 
 /obj/item/roguestatue
 	icon = 'icons/roguetown/items/valuable.dmi'
-	name = "statue"
+	name = "雕像"
 	icon_state = ""
 	w_class = WEIGHT_CLASS_NORMAL
 	experimental_inhand = FALSE
@@ -10,8 +10,8 @@
 	grid_height = 64
 
 /obj/item/roguestatue/gold
-	name = "gold statue"
-	desc = "A statue made of heavy, gleaming gold!"
+	name = "黄金雕像"
+	desc = "一尊由沉重而闪亮的黄金制成的雕像！"
 	icon_state = "gstatue1"
 	smeltresult = /obj/item/ingot/gold
 	sellprice = 120
@@ -21,8 +21,8 @@
 	icon_state = "gstatue[pick(1,2)]"
 
 /obj/item/roguestatue/gold/loot
-	name = "gold statuette"
-	desc = "A statue made of heavy, gleaming gold!"
+	name = "黄金小雕像"
+	desc = "一尊由沉重而闪亮的黄金制成的雕像！"
 	icon_state = "lstatue1"
 	sellprice = 45
 
@@ -32,8 +32,8 @@
 	icon_state = "lstatue[pick(1,2,3,4)]"
 
 /obj/item/roguestatue/silver
-	name = "silver statue"
-	desc = "A statue made of pure, shimmering silver!"
+	name = "白银雕像"
+	desc = "一尊由纯净闪耀的白银制成的雕像！"
 	icon_state = "sstatue1"
 	smeltresult = /obj/item/ingot/silver
 	sellprice = 90
@@ -43,8 +43,8 @@
 	icon_state = "sstatue[pick(1,2)]"
 
 /obj/item/roguestatue/steel
-	name = "steel statue"
-	desc = "An unyielding statue of resilient steel."
+	name = "钢制雕像"
+	desc = "一尊由坚韧钢材铸成的坚固雕像。"
 	icon_state = "ststatue1"
 	smeltresult = /obj/item/ingot/steel
 	sellprice = 40
@@ -54,8 +54,8 @@
 	icon_state = "ststatue[pick(1,2)]"
 
 /obj/item/roguestatue/decrepit
-	name = "decrepit statue"
-	desc = "A statue of wrought bronze, forged to venerate an ancient champion."
+	name = "衰朽雕像"
+	desc = "一尊锻造青铜制成的雕像，用以纪念某位古老的勇士。"
 	icon_state = "astatue1"
 	smeltresult = /obj/item/ingot/aaslag
 	sellprice = 77
@@ -66,8 +66,8 @@
 	icon_state = "astatue[pick(1,2)]"
 
 /obj/item/roguestatue/iron
-	name = "iron statue"
-	desc = "A forged statue of cast iron!"
+	name = "铁制雕像"
+	desc = "一尊由铸铁打造的雕像！"
 	icon_state = "istatue1"
 	smeltresult = /obj/item/ingot/iron
 	sellprice = 20
@@ -77,8 +77,8 @@
 	icon_state = "istatue[pick(1,2)]"
 
 /obj/item/roguestatue/blacksteel
-	name = "blacksteel statue"
-	desc = "A dark statue of glimmering, resilient blacksteel."
+	name = "黑钢雕像"
+	desc = "一尊由闪亮而坚韧的黑钢铸成的深色雕像。"
 	icon_state = "bsstatue1"
 	smeltresult = /obj/item/ingot/blacksteel
 	sellprice = 160
@@ -100,18 +100,18 @@
 	. = ..()
 	switch(polished)
 		if(1)
-			. += span_info("It has some polishing compound on it.")
+			. += span_info("上面还残留着一些抛光剂。")
 		if(2, 3)
-			. += span_info("It's been thoroughly brushed.")
+			. += span_info("它已经被彻底刷拭过了。")
 		if(4)
-			. += span_green("It's been nicely polished.")
+			. += span_green("它已被细致地抛光过。")
 	if(shoddy_repair)
-		. += span_warning("This item has been field-repaired and needs to be fixed by a proper craftsman.")
+		. += span_warning("这件物品只是被临时修补过，仍需由合格工匠彻底修复。")
 
 /obj/item/polishing_cream
 	icon = 'icons/roguetown/items/misc.dmi'
-	name = "polishing cream"
-	desc = "A pure silver compound made for making the best metals shine."
+	name = "抛光膏"
+	desc = "一种纯银配制的抛光膏，专为让上等金属焕发光泽而制。"
 	icon_state = "cream"
 	w_class = WEIGHT_CLASS_SMALL
 	dropshrink = 0.8
@@ -121,7 +121,7 @@
 
 /obj/item/polishing_cream/examine(mob/user)
 	. = ..()
-	. += span_info("It has [uses] uses left.")
+	. += span_info("还剩 [uses] 次使用次数。")
 
 /obj/item/polishing_cream/attack_obj(obj/O, mob/living/user)
 	if(!isitem(O) || !uses)
@@ -130,7 +130,7 @@
 	if(!thing.anvilrepair)
 		return ..()
 	if((HAS_TRAIT(user, TRAIT_SQUIRE_REPAIR) || HAS_TRAIT(user, TRAIT_SELF_SUSTENANCE) || user.get_skill_level(thing.anvilrepair)) && thing.polished == 0 && obj_integrity <= max_integrity)
-		to_chat(user, span_info("I start applying some compound to \the [thing]..."))
+		to_chat(user, span_info("我开始往[thing]上涂抹抛光膏……"))
 		if(do_after(user, 50 - user.STASPD*2, target = O))
 			thing.polished = 1
 			uses--
@@ -145,8 +145,8 @@
 
 /obj/item/armor_brush
 	icon = 'icons/roguetown/items/misc.dmi'
-	name = "fine brush"
-	desc = "A coarse brush for scrubbing armor thoroughly. Made of the finest Lupin hair."
+	name = "细刷"
+	desc = "一把用来彻底刷洗甲胄的刷子，以最上等的鲁平毛制成。"
 	icon_state = "brush_0"
 	w_class = WEIGHT_CLASS_SMALL
 	smeltresult = null
@@ -157,21 +157,21 @@
 
 /obj/item/armor_brush/examine()
 	. = ..()
-	. += span_info("To polish a weapon or a piece of armor, you must have the knowledge of a squire or how to repair the item. Follow the following steps:")
-	. += span_info("I. Apply polishing cream to the item.")
-	. += span_info("II. Use the coarse side (use the item to flip it) to scrub the item roughly.")
-	. += span_info("III. Use the fine side to gently polish the item.")
-	. += span_info("IV. Wash the item in a wooden bin with water to polish it.")
-	. += span_info("A fully polished item will be slightly stronger and or more durable.")
+	. += span_info("要给武器或护甲抛光，你必须具备侍从级知识，或懂得如何修理该物品。步骤如下：")
+	. += span_info("I. 先将抛光膏涂在物品上。")
+	. += span_info("II. 用粗糙一面（使用物品可翻面）先进行粗刷。")
+	. += span_info("III. 再用细面轻轻抛光物品。")
+	. += span_info("IV. 最后在装水的木桶中清洗物品完成抛光。")
+	. += span_info("完全抛光的物品会略微更强，也可能更耐用。")
 
 /obj/item/armor_brush/attack_self(mob/user)
 	roughness = 1 - roughness
 	if(roughness)
-		to_chat(user, span_info("I flip the brush to the coarse side."))
-		name = "coarse brush"
+		to_chat(user, span_info("我把刷子翻到了粗糙的一面。"))
+		name = "粗刷"
 	else
-		to_chat(user, span_info("I flip the brush to the fine side."))
-		name = "fine brush"
+		to_chat(user, span_info("我把刷子翻到了细致的一面。"))
+		name = "细刷"
 	icon_state = "brush_[roughness]"
 
 /obj/item/armor_brush/attack_obj(obj/O, mob/living/user)
@@ -180,7 +180,7 @@
 	var/obj/item/thing = O
 	if(thing.polished == 1 && roughness)
 		if((HAS_TRAIT(user, TRAIT_SQUIRE_REPAIR) || HAS_TRAIT(user, TRAIT_SELF_SUSTENANCE) || user.get_skill_level(thing.anvilrepair)))
-			to_chat(user, span_info("I start roughly scrubbing the compound on \the [thing]..."))
+			to_chat(user, span_info("我开始粗略地刷开[thing]上的抛光膏……"))
 			playsound(loc,"sound/foley/scrubbing[pick(1,2)].ogg", 100, TRUE)
 			if(do_after(user, 50 - user.STASTR*1.5, target = O))
 				thing.polished = 2
@@ -189,7 +189,7 @@
 
 	else if(thing.polished == 2 && !roughness)
 		if((HAS_TRAIT(user, TRAIT_SQUIRE_REPAIR) || HAS_TRAIT(user, TRAIT_SELF_SUSTENANCE) || user.get_skill_level(thing.anvilrepair)))
-			to_chat(user, span_info("I start gently scrubbing the edges of \the [thing]..."))
+			to_chat(user, span_info("我开始轻柔地打磨[thing]的边缘……"))
 			playsound(loc,"sound/foley/scrubbing[pick(1,2)].ogg", 100, TRUE)
 			if(do_after(user, 50 - user.STASTR*1.5, target = O))
 				thing.polished = 3
@@ -232,7 +232,7 @@
 		UnregisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT)
 
 /obj/effect/temp_visual/armor_glint
-	name = "glint"
+	name = "闪光"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "glint"
 	alpha = 200

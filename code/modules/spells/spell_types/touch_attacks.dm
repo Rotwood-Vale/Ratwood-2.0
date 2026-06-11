@@ -1,8 +1,8 @@
 /obj/effect/proc_holder/spell/targeted/touch
 	var/hand_path = /obj/item/melee/touch_attack
 	var/obj/item/melee/touch_attack/attached_hand = null
-	var/drawmessage = "You channel the power of the spell to my hand."
-	var/dropmessage = "You draw the power out of my hand."
+	var/drawmessage = "我将法术之力引导至掌中。"
+	var/dropmessage = "我将掌中的法术之力抽离出去。"
 	invocation_type = "none" //you scream on connecting, not summoning
 	include_user = TRUE
 	range = -1
@@ -10,7 +10,7 @@
 
 /obj/effect/proc_holder/spell/targeted/touch/Destroy()
 	remove_hand()
-	to_chat(usr, span_notice("The power of the spell dissipates from my hand."))
+	to_chat(usr, span_notice("掌中的法术之力消散了。"))
 	..()
 
 /obj/effect/proc_holder/spell/targeted/touch/proc/remove_hand(recharge = FALSE)
@@ -48,9 +48,9 @@
 	if(!user.put_in_hands(attached_hand))
 		remove_hand(TRUE)
 		if (user.get_num_arms() <= 0)
-			to_chat(user, span_warning("I don't have any usable hands!"))
+			to_chat(user, span_warning("我没有可用的手来承载这道法术！"))
 		else
-			to_chat(user, span_warning("My hands are full!"))
+			to_chat(user, span_warning("我的双手已经拿满了！"))
 		return FALSE
 	if(castdrain)
 		user.stamina_add(castdrain)

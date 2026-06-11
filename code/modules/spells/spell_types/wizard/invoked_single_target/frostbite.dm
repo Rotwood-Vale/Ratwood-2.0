@@ -1,8 +1,8 @@
 // Spell is disabled because of snap freeze + frost bolt existing at the same time
 //Or, was. Now used by Sojourners as an invoked single target spell.
 /obj/effect/proc_holder/spell/invoked/frostbite
-	name = "Frostbite"
-	desc = "Freeze your enemy with an icy blast that does low damage, but reduces the target's Speed for a considerable length of time."
+	name = "冻伤术"
+	desc = "以一股寒流冻结敌人，伤害不高，但会在相当长一段时间内降低目标的速度。"
 	overlay_state = "frostbite"
 	releasedrain = 50
 	chargetime = 12
@@ -17,7 +17,7 @@
 	gesture_required = TRUE
 	associated_skill = /datum/skill/magic/arcane
 	spell_tier = 2
-	invocations = list("Congelationis!")
+	invocations = list("寒流，侵体！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_ICE
 	glow_intensity = GLOW_INTENSITY_LOW

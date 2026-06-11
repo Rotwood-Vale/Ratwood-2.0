@@ -1,5 +1,5 @@
 /datum/migrant_wave/zybantine_noble
-	name = "Zybantine Emir"
+	name = "Zybantine埃米尔"
 	max_spawns = 1
 	shared_wave_type = /datum/migrant_wave/zybantine_noble
 	weight = 40
@@ -10,10 +10,10 @@
 		/datum/migrant_role/zybantine/janissary = 2,
 		/datum/migrant_role/zybantine/advisor = 1,
 	)
-	greet_text = "You are far from home on missive from the Zybantine Empire."
+	greet_text = "你们奉 Zybantine 帝国之命远离家园而来。"
 
 /datum/migrant_wave/zybantine_noble_down_one
-	name = "Zybantine Emir"
+	name = "Zybantine埃米尔"
 	shared_wave_type = /datum/migrant_wave/zybantine_noble
 	can_roll = FALSE
 	downgrade_wave = /datum/migrant_wave/zybantine_noble_down_two
@@ -23,10 +23,10 @@
 		/datum/migrant_role/zybantine/janissary = 1,
 		/datum/migrant_role/zybantine/advisor = 1,
 	)
-	greet_text = "You are far from home on missive from the Zybantine Empire."
+	greet_text = "你们奉 Zybantine 帝国之命远离家园而来。"
 
 /datum/migrant_wave/zybantine_noble_down_two
-	name = "Zybantine Emir"
+	name = "Zybantine埃米尔"
 	shared_wave_type = /datum/migrant_wave/zybantine_noble
 	can_roll = FALSE
 	downgrade_wave = /datum/migrant_wave/zybantine_noble_down_three
@@ -35,10 +35,10 @@
 		/datum/migrant_role/zybantine/amirah = 1,
 		/datum/migrant_role/zybantine/janissary = 2,
 	)
-	greet_text = "You are far from home on missive from the Zybantine Empire."
+	greet_text = "你们奉 Zybantine 帝国之命远离家园而来。"
 
 /datum/migrant_wave/zybantine_noble_down_three
-	name = "Zybantine Emir"
+	name = "Zybantine埃米尔"
 	shared_wave_type = /datum/migrant_wave/zybantine_noble
 	can_roll = FALSE
 	downgrade_wave = /datum/migrant_wave/zybantine_noble_down_four
@@ -47,10 +47,10 @@
 		/datum/migrant_role/zybantine/janissary = 2,
 		/datum/migrant_role/zybantine/advisor = 1,
 	)
-	greet_text = "You are far from home on missive from the Zybantine Empire."
+	greet_text = "你们奉 Zybantine 帝国之命远离家园而来。"
 
 /datum/migrant_wave/zybantine_noble_down_four
-	name = "Zybantine Emir"
+	name = "Zybantine埃米尔"
 	shared_wave_type = /datum/migrant_wave/zybantine_noble
 	can_roll = FALSE
 	downgrade_wave = /datum/migrant_wave/zybantine_noble_down_five
@@ -59,10 +59,10 @@
 		/datum/migrant_role/zybantine/janissary = 1,
 		/datum/migrant_role/zybantine/advisor = 1,
 	)
-	greet_text = "You are far from home on missive from the Zybantine Empire."
+	greet_text = "你们奉 Zybantine 帝国之命远离家园而来。"
 
 /datum/migrant_wave/zybantine_noble_down_five
-	name = "Zybantine Emir"
+	name = "Zybantine埃米尔"
 	shared_wave_type = /datum/migrant_wave/zybantine_noble
 	can_roll = FALSE
 	downgrade_wave = /datum/migrant_wave/zybantine_noble_down_six
@@ -71,10 +71,10 @@
 		/datum/migrant_role/zybantine/amirah = 1,
 		/datum/migrant_role/zybantine/janissary = 1,
 	)
-	greet_text = "You are far from home on missive from the Zybantine Empire."
+	greet_text = "你们奉 Zybantine 帝国之命远离家园而来。"
 
 /datum/migrant_wave/zybantine_noble_down_six
-	name = "Zybantine Emir"
+	name = "Zybantine埃米尔"
 	shared_wave_type = /datum/migrant_wave/zybantine_noble
 	can_roll = FALSE
 	downgrade_wave = /datum/migrant_wave/zybantine_noble_down_seven
@@ -82,10 +82,10 @@
 		/datum/migrant_role/zybantine/emir = 1,
 		/datum/migrant_role/zybantine/amirah = 1,
 	)
-	greet_text = "You are far from home on missive from the Zybantine Empire."
+	greet_text = "你们奉 Zybantine 帝国之命远离家园而来。"
 
 /datum/migrant_wave/zybantine_noble_down_seven
-	name = "Zybantine Emir"
+	name = "Zybantine埃米尔"
 	shared_wave_type = /datum/migrant_wave/zybantine_noble
 	can_roll = FALSE
 	downgrade_wave = /datum/migrant_wave/zybantine_noble_down_eight
@@ -93,10 +93,10 @@
 		/datum/migrant_role/zybantine/emir = 1,
 		/datum/migrant_role/zybantine/advisor = 1,
 	)
-	greet_text = "You are far from home on missive from the Zybantine Empire."
+	greet_text = "你们奉 Zybantine 帝国之命远离家园而来。"
 
 /datum/migrant_wave/zybantine_noble_down_eight
-	name = "Zybantine Emir"
+	name = "Zybantine埃米尔"
 	shared_wave_type = /datum/migrant_wave/zybantine_noble
 	can_roll = FALSE
 	downgrade_wave = /datum/migrant_wave/zybantine_noble_down_nine
@@ -104,13 +104,13 @@
 		/datum/migrant_role/zybantine/emir = 1,
 		/datum/migrant_role/zybantine/janissary = 1,
 	)
-	greet_text = "You are far from home on missive from the Zybantine Empire."
+	greet_text = "你们奉 Zybantine 帝国之命远离家园而来。"
 
 /datum/migrant_wave/zybantine_noble_down_nine
-	name = "Zybantine Emir"
+	name = "Zybantine埃米尔"
 	shared_wave_type = /datum/migrant_wave/zybantine_noble
 	can_roll = FALSE
 	roles = list(
 		/datum/migrant_role/zybantine/emir = 1,
 	)
-	greet_text = "You are far from home on missive from the Zybantine Empire."
+	greet_text = "你们奉 Zybantine 帝国之命远离家园而来。"

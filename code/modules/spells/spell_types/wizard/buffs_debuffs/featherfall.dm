@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/featherfall
-	name = "Featherfall"
-	desc = "Grant yourself and any creatures adjacent to you some defense against falls."
+	name = "羽落术"
+	desc = "赋予你自己和邻近生物一些抵御坠落伤害的能力。"
 	cost = 2
 	xp_gain = TRUE
 	school = "transmutation"
@@ -12,7 +12,7 @@
 	no_early_release = TRUE
 	movement_interrupt = TRUE
 	spell_tier = 1 // Not directly combat useful
-	invocations = list("Lenis Cadere")
+	invocations = list("如羽般轻坠。")
 	invocation_type = "whisper"
 	glow_color = GLOW_COLOR_BUFF
 	glow_intensity = GLOW_INTENSITY_LOW
@@ -23,7 +23,7 @@
 
 /obj/effect/proc_holder/spell/invoked/featherfall/cast(list/targets, mob/user = usr)
 
-	user.visible_message("[user] mutters an incantation and a dim pulse of light radiates out from them.")
+	user.visible_message("[user]低声念诵咒文，一道昏暗的光脉从其身上扩散开来。")
 
 	for(var/mob/living/L in range(1, usr))
 		L.apply_status_effect(/datum/status_effect/buff/featherfall)

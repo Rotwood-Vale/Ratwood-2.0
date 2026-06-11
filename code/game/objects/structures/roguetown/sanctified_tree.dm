@@ -3,8 +3,8 @@
 //==============================================================================
 
 /atom/movable/screen/alert/status_effect/buff/dendor_vigil
-	name = "Dendor's Vigil"
-	desc = "The Treefather's blessing quickens my steps and wards me against natural obstacles."
+	name = "Dendor 的守望"
+	desc = "树父的祝福使我步履更轻，并庇护我免受自然障碍所困。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/dendor_vigil
@@ -20,21 +20,21 @@
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_LONGSTRIDER, "DENDOR_VIGIL")
 	ADD_TRAIT(owner, TRAIT_KNEESTINGER_IMMUNITY, "DENDOR_VIGIL")
-	to_chat(owner, span_green("The Treefather's vigil embraces me — my steps are swift and the thorns will not bite."))
+	to_chat(owner, span_green("树父的守望拥抱着我，我的步伐更迅捷，荆棘也不会再刺伤我。"))
 
 /datum/status_effect/buff/dendor_vigil/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_LONGSTRIDER, "DENDOR_VIGIL")
 	REMOVE_TRAIT(owner, TRAIT_KNEESTINGER_IMMUNITY, "DENDOR_VIGIL")
-	to_chat(owner, span_warning("The Treefather's vigil fades from me."))
+	to_chat(owner, span_warning("树父的守望自我身上消退了。"))
 
 //==============================================================================
 // Blessed Druid Armor (reward from Cat 6 ritual)
 //==============================================================================
 
 /obj/item/clothing/suit/roguetown/armor/leather/druid/blessed
-	name = "blessed druid armor"
-	desc = "Druid armor hallowed by the Treefather's rite. The bark pulses with faint living light; it feels as though the forest itself watches over whoever wears it."
+	name = "受祝福的德鲁伊护甲"
+	desc = "经树父仪式祝圣的德鲁伊护甲。树皮泛着微弱的生命之光，仿佛整片森林都在守望着穿戴它的人。"
 	armor = list("blunt" = 90, "slash" = 70, "stab" = 130, "piercing" = 40, "fire" = 0, "acid" = 0)
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP)
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
@@ -55,7 +55,7 @@
 		return
 	H.electrocute_act(30, src)
 	H.mob_timers["kneestinger"] = world.time
-	to_chat(H, span_warning("[name] rejects my grasp — only the Treefather's faithful may bear such a gift!"))
+	to_chat(H, span_warning("[name]排斥了我的触碰，唯有树父的虔诚信徒才有资格承载这份赠礼！"))
 
 /obj/structure/flora/roguetree/wise/sanctified/proc/is_valid_vigil_follower(mob/living/carbon/human/H)
 	if(!H)
@@ -123,8 +123,8 @@
 // Sanctified Tree
 //==============================================================================
 /obj/structure/flora/roguetree/wise/sanctified
-	name = "sanctified tree"
-	desc = "A great tree consecrated by the Treefather. Its bark glows with faint light, and the air around it thrums with primal holiness. A nexus of druidic power."
+	name = "圣化之树"
+	desc = "一棵由树父祝圣的伟大树木。它的树皮泛着微光，周围空气回荡着原始的神圣气息。这里是德鲁伊力量的枢纽。"
 	examine_plays_music = FALSE
 	pixel_x = -11
 	/// Base max_integrity before nearby-tree bonus.
@@ -254,18 +254,18 @@
 
 	if(tree_data.wedding_active)
 		// Nature's Union ceremony is active — offer cancellation.
-		var/choice = alert(user, "A Nature's Union wedding ceremony is active at this tree. The Treefather's blessing currently joins two souls.\n\nCancel the wedding ceremony?", "Sanctified Tree", "Keep Ceremony", "Cancel Ceremony")
-		if(choice == "Cancel Ceremony" && !QDELETED(src) && !QDELETED(user))
+		var/choice = alert(user, "这棵树上正在举行一场“自然结合”婚礼。树父的祝福此刻正连结着两道灵魂。\n\n要取消这场婚礼吗？", "圣化之树", "保留仪式", "取消仪式")
+		if(choice == "取消仪式" && !QDELETED(src) && !QDELETED(user))
 			tree_data.wedding_active = FALSE
 			tree_data.wedding_officiant_ckey = null
-			to_chat(user, span_warning("The wedding ceremony is dissolved. The Treefather withdraws his blessing."))
+			to_chat(user, span_warning("婚礼仪式已被解散。树父收回了他的祝福。"))
 		return
 
 	if(tree_data.active_ritual)
 		// Show progress and only allow cancellation from the amulet menu.
 		show_ritual_requirements(user, tree_data.active_ritual)
-		var/choice = alert(user, "[get_ritual_display_name(tree_data.active_ritual)] is active.\n\nOffer items by clicking the tree while holding them.\n\nCancel this ritual?", "Sanctified Tree", "Keep Ritual", "Cancel Ritual")
-		if(choice != "Cancel Ritual" || QDELETED(src) || QDELETED(user))
+		var/choice = alert(user, "[get_ritual_display_name(tree_data.active_ritual)]正在进行中。\n\n手持供品点击树木即可献上。\n\n要取消这个仪式吗？", "圣化之树", "保留仪式", "取消仪式")
+		if(choice != "取消仪式" || QDELETED(src) || QDELETED(user))
 			return
 		cancel_ritual(user)
 		return
@@ -289,16 +289,16 @@
 	for(var/cat in list("cat1", "cat8", "cat10", "cat2", "cat5", "cat12", "cat4", "cat7", "cat9", "cat3", "cat6", "cat11"))
 		var/cat_name = get_ritual_display_name(cat)
 		if(is_once_per_tree(cat) && (cat in tree_data.rituals_completed))
-			cat_opts["[cat_name] (completed)"] = null
+			cat_opts["[cat_name]（已完成）"] = null
 			continue
 		cat_opts[cat_name] = cat
 		cat_map[cat_name] = cat
-	var/choice = input(user, "Choose a ritual to perform:", "Sanctified Tree Rituals") as null|anything in cat_opts
+	var/choice = input(user, "选择要进行的仪式：", "圣化之树仪式") as null|anything in cat_opts
 	if(isnull(choice) || QDELETED(src) || QDELETED(user))
 		return
 	var/selected = cat_map[choice]
 	if(!selected)
-		to_chat(user, span_info("That ritual has already been completed on this tree and cannot be repeated."))
+		to_chat(user, span_info("这个仪式已经在这棵树上完成过了，不能重复举行。"))
 		return
 	// Druidic Trickery skill gate for each ritual.
 	if(istype(user, /mob/living/carbon/human))
@@ -309,31 +309,31 @@
 		switch(selected)
 			if("cat8", "cat10")
 				required_level = SKILL_LEVEL_NOVICE
-				required_name = "Novice"
+				required_name = "新手"
 			if("cat2", "cat5", "cat12")
 				required_level = SKILL_LEVEL_APPRENTICE
-				required_name = "Apprentice"
+				required_name = "学徒"
 			if("cat4", "cat7")
 				required_level = SKILL_LEVEL_JOURNEYMAN
-				required_name = "Journeyman"
+				required_name = "熟练"
 			if("cat9", "cat3")
 				required_level = SKILL_LEVEL_EXPERT
-				required_name = "Expert"
+				required_name = "专家"
 			if("cat6")
 				required_level = SKILL_LEVEL_MASTER
-				required_name = "Master"
+				required_name = "大师"
 			if("cat11")
 				required_level = SKILL_LEVEL_LEGENDARY
-				required_name = "Legendary"
+				required_name = "传奇"
 		if(required_level > 0 && druidic_level < required_level)
-			to_chat(user, span_warning("The Treefather will not reveal [get_ritual_display_name(selected)] to one unprepared — [required_name] Druidic Trickery is required."))
+			to_chat(user, span_warning("树父不会向尚未准备好的人揭示[get_ritual_display_name(selected)]的奥秘，你需要[required_name]级德鲁伊秘术。"))
 			return
 	// Once-per-person gate for Floral Conjuration: prevent initiating if already have the spell.
 	if(selected == "cat10" && istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/Hcat10 = user
 		if(Hcat10.mind)
 			for(var/obj/effect/proc_holder/spell/self/conjure_floral_seed/S in Hcat10.mind.spell_list)
-				to_chat(user, span_warning("The Treefather's floral gift is already within me — I cannot receive this blessing twice."))
+				to_chat(user, span_warning("树父的花卉恩赐已经存在于我体内，我不能再次得到这份祝福。"))
 				return
 	if(!confirm_start_ritual(user, selected))
 		return
@@ -344,7 +344,7 @@
 		tree_data.ritual_progress[key] = 0
 	if(selected == "cat1")
 		tree_data.cat1_all_berries = TRUE
-	to_chat(user, span_notice("I begin the [get_ritual_display_name(selected)] ritual. Offer items by clicking the tree while holding them. Use the amulet only if I need to cancel."))
+	to_chat(user, span_notice("我开始进行[get_ritual_display_name(selected)]仪式。手持供品点击树木即可献上；若要取消，再使用护符。"))
 	show_ritual_requirements(user, selected)
 
 /obj/structure/flora/roguetree/wise/sanctified/proc/confirm_start_ritual(mob/living/user, category)
@@ -352,25 +352,25 @@
 	var/list/lines = list()
 	for(var/key in req)
 		lines += "- [req[key]]x [get_offering_desc(key)]"
-	var/text = "Begin [get_ritual_display_name(category)]?\n\nRequired offerings:\n[jointext(lines, "\n")]"
-	var/choice = alert(user, text, "Sanctified Tree Bounty", "Begin", "Cancel")
-	return (choice == "Begin")
+	var/text = "要开始[get_ritual_display_name(category)]吗？\n\n所需供品：\n[jointext(lines, "\n")]"
+	var/choice = alert(user, text, "圣化之树悬赏", "开始", "取消")
+	return (choice == "开始")
 
 /obj/structure/flora/roguetree/wise/sanctified/proc/get_ritual_display_name(category)
 	switch(category)
-		if("cat1") return "Dendor's Harvest"
-		if("cat2") return "Fungal Vigil"
-		if("cat3") return "Fey Weaving"
-		if("cat12") return "Timber's Tithe"
-		if("cat4") return "Treefather's Bulwark"
-		if("cat5") return "Living Light"
-		if("cat6") return "Nature's Temper"
-		if("cat7") return "Soulbind"
-		if("cat8") return "Nature's Union"
-		if("cat9") return "Harvest Bloomstone"
-		if("cat10") return "Floral Conjuration"
-		if("cat11") return "Winged Rebirth"
-	return "Unknown Ritual"
+		if("cat1") return "Dendor 的丰收"
+		if("cat2") return "菌灵守望"
+		if("cat3") return "妖精编织"
+		if("cat12") return "林木什一"
+		if("cat4") return "树父壁垒"
+		if("cat5") return "活体灵光"
+		if("cat6") return "自然之怒"
+		if("cat7") return "魂缚"
+		if("cat8") return "自然结合"
+		if("cat9") return "丰收绽石"
+		if("cat10") return "花卉塑成"
+		if("cat11") return "振翼重生"
+	return "未知仪式"
 
 /// Returns XP awarded to the player upon completing a ritual.
 /obj/structure/flora/roguetree/wise/sanctified/proc/get_ritual_xp(category)
@@ -427,77 +427,77 @@
 
 /obj/structure/flora/roguetree/wise/sanctified/proc/get_offering_desc(key)
 	switch(key)
-		if("food_item") return "Any fresh or rotten produce"
-		if("manabloom_or_manacrystal") return "Mana bloom OR crystalized mana"
-		if("runed_or_leyline") return "Runed artifact OR leyline shard"
-		if("blessed_powder_alt") return "Blessed seed powder"
-		if("enchanted_stone_or_boulder") return "Enchanted stone (magic power 5+) OR boulder"
-		if("boulder_cat4") return "A large boulder"
-		if("any_stone_cat4") return "A stone of any type"
-		if("vital_item") return "Sinew, viscera, bonemeal, or skull"
-		if("ash") return "Ash"
-		if("compost") return "Compost"
-		if("zizobane") return "Zizo's bane mushroom"
-		if("runed_artifact") return "Runed artifact"
-		if("druid_armor") return "Druid armor"
-		if("volf_head") return "Volf head"
-		if("spider_head") return "Spider head"
-		if("tree_seed") return "Tree seed"
-		if("tree_sapling_any") return "Any tree sapling"
-		if("blessed_seed_powder") return "Blessed seed powder"
-		if("holy_water_container") return "Stone mortar or bucket with 30+ drams of blessed water"
+		if("food_item") return "任意新鲜或腐烂的农产品"
+		if("manabloom_or_manacrystal") return "法力花或结晶化法力"
+		if("runed_or_leyline") return "符文造物或地脉碎片"
+		if("blessed_powder_alt") return "受祝圣的种粉"
+		if("enchanted_stone_or_boulder") return "附魔石头（魔力 5+）或巨石"
+		if("boulder_cat4") return "一块大巨石"
+		if("any_stone_cat4") return "任意一种石头"
+		if("vital_item") return "筋腱、内脏、骨粉或头骨"
+		if("ash") return "灰烬"
+		if("compost") return "堆肥"
+		if("zizobane") return "Zizo克星蘑菇"
+		if("runed_artifact") return "符文造物"
+		if("druid_armor") return "德鲁伊护甲"
+		if("volf_head") return "狼头"
+		if("spider_head") return "蜘蛛头"
+		if("tree_seed") return "树种"
+		if("tree_sapling_any") return "任意树苗"
+		if("blessed_seed_powder") return "受祝圣的种粉"
+		if("holy_water_container") return "装有 30+ 打兰祝圣水的石臼或水桶"
 		if("lux") return "Lux"
-		if("leechtick") return "Bloated leech tick"
-		if("bones") return "Bones"
-		if("wedding_flower") return "Eoran peace flower"
-		if("boulder_only") return "A large boulder"
-		if("magic_stone_or_essence") return "An enchanted stone (magic power 5+), essence of wilderness, or essence of lumber"
-		if("blessed_powder") return "Blessed seed powder"
-		if("herb_atropa")    return "Atropa herb"
-		if("herb_matricaria") return "Matricaria herb"
-		if("herb_symphitum") return "Symphitum herb"
-		if("herb_taraxacum") return "Taraxacum herb"
-		if("herb_euphrasia") return "Euphrasia herb"
-		if("herb_paris")     return "Paris herb"
-		if("herb_calendula") return "Calendula herb"
-		if("herb_mentha")    return "Mentha herb"
-		if("herb_urtica")    return "Urtica herb"
-		if("herb_salvia")    return "Salvia herb"
-		if("herb_hypericum") return "Hypericum herb"
-		if("herb_benedictus") return "Benedictus herb"
-		if("herb_valeriana") return "Valeriana herb"
-		if("herb_artemisia") return "Artemisia herb"
-		if("herb_rosa")      return "Rosa herb"
-		if("manabloom_single") return "A mana bloom flower"
-		if("feather") return "Feather"
-		if("bonedust") return "Bone meal"
-		if("essence_of_wilderness") return "Essence of wilderness"
-		if("bloomstone") return "Harvest bloomstone"
+		if("leechtick") return "膨胀的水蛭蜱"
+		if("bones") return "骨头"
+		if("wedding_flower") return "Eora和平花"
+		if("boulder_only") return "一块大巨石"
+		if("magic_stone_or_essence") return "附魔石头（魔力 5+）、荒野精华或木材精华"
+		if("blessed_powder") return "受祝圣的种粉"
+		if("herb_atropa")    return "颠茄草"
+		if("herb_matricaria") return "母菊草"
+		if("herb_symphitum") return "聚合草"
+		if("herb_taraxacum") return "蒲公英草"
+		if("herb_euphrasia") return "小米草"
+		if("herb_paris")     return "重楼草"
+		if("herb_calendula") return "金盏花草"
+		if("herb_mentha")    return "薄荷草"
+		if("herb_urtica")    return "荨麻草"
+		if("herb_salvia")    return "鼠尾草"
+		if("herb_hypericum") return "金丝桃草"
+		if("herb_benedictus") return "本笃草"
+		if("herb_valeriana") return "缬草"
+		if("herb_artemisia") return "艾草"
+		if("herb_rosa")      return "蔷薇花"
+		if("manabloom_single") return "一朵法力花"
+		if("feather") return "羽毛"
+		if("bonedust") return "骨粉"
+		if("essence_of_wilderness") return "荒野精华"
+		if("bloomstone") return "丰收绽石"
 	return key
 
 /obj/structure/flora/roguetree/wise/sanctified/proc/show_ritual_requirements(mob/living/user, category)
 	var/req = get_required_offerings(category)
-	to_chat(user, span_info("=== [get_ritual_display_name(category)] requirements ==="))
+	to_chat(user, span_info("=== [get_ritual_display_name(category)] 所需供品 ==="))
 	if(category == "cat4")
 		var/boulder_cur = tree_data.ritual_progress["boulder_cat4"] || 0
 		var/boulder_needed = req["boulder_cat4"]
 		var/stone_cur = tree_data.ritual_progress["any_stone_cat4"] || 0
 		var/stone_needed = req["any_stone_cat4"]
-		to_chat(user, span_info("  Offer one of the following alternatives:"))
+		to_chat(user, span_info("  任选以下其中一种供奉方式："))
 		if(boulder_cur >= boulder_needed)
-			to_chat(user, span_notice("  [get_offering_desc("boulder_cat4")]: [boulder_cur]/[boulder_needed] (fulfilled)"))
+			to_chat(user, span_notice("  [get_offering_desc("boulder_cat4")]: [boulder_cur]/[boulder_needed]（已满足）"))
 		else
-			to_chat(user, span_warning("  Option A — [get_offering_desc("boulder_cat4")]: [boulder_cur]/[boulder_needed]"))
+			to_chat(user, span_warning("  方案一 - [get_offering_desc("boulder_cat4")]: [boulder_cur]/[boulder_needed]"))
 		if(stone_cur >= stone_needed)
-			to_chat(user, span_notice("  [get_offering_desc("any_stone_cat4")]: [stone_cur]/[stone_needed] (fulfilled)"))
+			to_chat(user, span_notice("  [get_offering_desc("any_stone_cat4")]: [stone_cur]/[stone_needed]（已满足）"))
 		else
-			to_chat(user, span_warning("  Option B — [get_offering_desc("any_stone_cat4")]: [stone_cur]/[stone_needed]"))
+			to_chat(user, span_warning("  方案二 - [get_offering_desc("any_stone_cat4")]: [stone_cur]/[stone_needed]"))
 		return
 	for(var/key in req)
 		var/current = tree_data.ritual_progress[key] || 0
 		var/needed = req[key]
 		if(current >= needed)
-			to_chat(user, span_notice("  [get_offering_desc(key)]: [current]/[needed] (fulfilled)"))
+			to_chat(user, span_notice("  [get_offering_desc(key)]: [current]/[needed]（已满足）"))
 		else
 			to_chat(user, span_warning("  [get_offering_desc(key)]: [current]/[needed]"))
 
@@ -506,7 +506,7 @@
 		return FALSE
 	var/obj/item/held = user.get_active_held_item()
 	if(!held)
-		to_chat(user, span_warning("I am not holding anything to offer."))
+		to_chat(user, span_warning("我手里没有任何可供奉的东西。"))
 		return FALSE
 	var/req = get_required_offerings(tree_data.active_ritual)
 	// For cat4, skip accepting items for the path that is already completed.
@@ -544,7 +544,7 @@
 			if(check_ritual_complete())
 				complete_ritual(user)
 			return TRUE
-		to_chat(user, span_warning("The tree does not need anything from that container right now."))
+		to_chat(user, span_warning("这棵树现在不需要那个容器里的任何东西。"))
 		return FALSE
 	// Single-item mode: consume the held item if it matches any unfulfilled requirement.
 	for(var/key in req)
@@ -567,7 +567,7 @@
 		if(check_ritual_complete())
 			complete_ritual(user)
 		return TRUE
-	to_chat(user, span_warning("The tree does not need [held.name] right now."))
+	to_chat(user, span_warning("这棵树现在不需要[held.name]。"))
 	return FALSE
 
 /obj/structure/flora/roguetree/wise/sanctified/proc/is_harvest_offering(obj/item/held)
@@ -743,7 +743,7 @@
 	if(is_once_per_tree(cat))
 		tree_data.rituals_completed |= cat
 	playsound(get_turf(src), 'sound/ambience/noises/mystical (4).ogg', 70, TRUE)
-	visible_message(span_green("The [src.name] blazes with golden light as [user.name] completes a sacred ritual!"))
+	visible_message(span_green("[user.name]完成神圣仪式时，[src.name]迸发出耀眼的金色光辉！"))
 	// Award Druidic Trickery XP for completing a bounty ritual.
 	var/ritual_xp = get_ritual_xp(cat)
 	if(ritual_xp > 0 && user.mind)
@@ -768,11 +768,11 @@
 	var/cat_name = get_ritual_display_name(tree_data.active_ritual)
 	if(tree_data.ritual_armor && !QDELETED(tree_data.ritual_armor))
 		tree_data.ritual_armor.forceMove(get_turf(src))
-		to_chat(user, span_notice("The offered armor returns to my feet."))
+		to_chat(user, span_notice("献上的护甲回到了我脚边。"))
 		tree_data.ritual_armor = null
 	tree_data.active_ritual = null
 	tree_data.ritual_progress = list()
-	to_chat(user, span_warning("I cancel the [cat_name] ritual. All progress is lost."))
+	to_chat(user, span_warning("我取消了[cat_name]仪式，所有进度都失去了。"))
 
 //==============================================================================
 // Ritual Rewards
@@ -789,7 +789,7 @@
 		new /obj/item/seeds/bush(T)
 		if(prob(50))
 			new /obj/item/seeds/flower(T)
-		to_chat(user, span_green("The roots twist with thorny energy — a wild hedge sapling seed tumbles forth."))
+		to_chat(user, span_green("树根翻涌着荆棘般的能量，一颗野生树篱幼苗种子滚落而出。"))
 		return
 	// Normal reward: 1 misc seed from Dendor's garden + 1 tree seed
 	var/misc = pickweight(list(
@@ -832,7 +832,7 @@
 		/obj/item/seeds/treesap        = 85
 	))
 	new tree_type(T)
-	to_chat(user, span_green("Seeds tumble from the roots — Dendor's harvest is generous."))
+	to_chat(user, span_green("种子自树根间簌簌落下，Dendor 的收成一如既往地慷慨。"))
 
 /// Cat 2 — Fungal Vigil: kneestinger ring + 30-min vigil buff to nearby mobs (repeatable).
 /// Offerings: 10 mana blooms OR crystalized mana.
@@ -854,7 +854,7 @@
 			H.apply_status_effect(/datum/status_effect/buff/dendor_vigil/dendorite)
 		else
 			H.apply_status_effect(/datum/status_effect/buff/dendor_vigil)
-	to_chat(user, span_green("Kneestingers erupt in a ring — the Treefather's vigil strengthens his faithful."))
+	to_chat(user, span_green("膝刺菇环绕而生，树父的守望强化了祂的信徒。"))
 
 /// Cat 3 — Fey Weaving: mushroom fey circle seeds (repeatable).
 /// Offerings: 1 runed artifact or leyline shard + 4 blessed seed powder. Reward: 2 mushroom_fey seeds.
@@ -862,7 +862,7 @@
 	var/turf/T = get_turf(user)
 	new /obj/item/seeds/mushroom_fey(T)
 	new /obj/item/seeds/mushroom_fey(T)
-	to_chat(user, span_green("Two handfuls of mushroom fey spores rise from the roots — the Treefather rewards your patience."))
+	to_chat(user, span_green("两捧妖精蘑菇孢子自树根间升起，树父嘉奖了你的耐心。"))
 
 /// Cat 4 — Treefather's Bulwark: slow aura + integrity boost (once per tree).
 /// Offerings: 5 enchanted stones (magic_power 5+) OR boulders.
@@ -871,7 +871,7 @@
 	tree_data.has_slow_aura = TRUE
 	max_integrity += 100
 	obj_integrity = min(obj_integrity + 100, max_integrity)
-	visible_message(span_green("The bark of [src.name] hardens like ironwood. A silent ward settles around the tree — those who would defile it will find their feet heavy."))
+	visible_message(span_green("[src.name]的树皮硬化得如同铁木。无声的护佑笼罩着它，凡欲亵渎此树者，都会感到双腿沉重。"))
 
 /// Cat 5 — Living Light: passive healing aura + middle-click manual heal (once per tree).
 /// Offerings: 10 mixed sinew/viscera/tailbone/bone/skull + 10 ash + 10 compost.
@@ -880,7 +880,7 @@
 	tree_data.has_heal_aura = TRUE
 	set_light(5, 5, 5, l_color = "#44AA44")
 	add_filter("sanctified_outline", 2, list("type" = "outline", "color" = "#58C86A", "alpha" = 60, "size" = 1))
-	visible_message(span_green("A warm green aura blooms from [src.name]. The Treefather's life flows to those who revere him."))
+	visible_message(span_green("温暖的翠绿灵光自[src.name]绽放而出。树父的生命之力开始流向敬奉祂的人。"))
 
 /// Cat 6 — Nature's Temper: blessed druid armor + possible elven armor piece (once per tree).
 /// Offerings: 5 zizo bane + 2 runed artifacts + druid armor + volf head + spider head +
@@ -888,32 +888,32 @@
 /obj/structure/flora/roguetree/wise/sanctified/proc/reward_cat6(mob/living/user)
 	var/turf/T = get_turf(user)
 	if(!tree_data.ritual_armor || QDELETED(tree_data.ritual_armor))
-		to_chat(user, span_warning("The druid armor offering was lost — something disrupted the ritual."))
+		to_chat(user, span_warning("供奉的德鲁伊护甲遗失了，有什么东西打断了仪式。"))
 		return
 	// Destroy the offered druid armor.
 	qdel(tree_data.ritual_armor)
 	tree_data.ritual_armor = null
 	// Yield blessed druid armor (upgraded chest).
 	var/obj/item/clothing/suit/roguetown/armor/leather/druid/blessed/BA = new(T)
-	to_chat(user, span_green("[BA.name] rises from the ritual — the Treefather has blessed this armor with living power."))
+	to_chat(user, span_green("[BA.name]自仪式中升起，树父已将活生生的力量祝入这件护甲。"))
 	// 50% chance: random wood armor piece from elven black oak mercenaries (excluding chest).
 	if(prob(50))
 		var/list/bonus_pool = list(/obj/item/clothing/head/roguetown/helmet/heavy/elven_helm/druidic, /obj/item/clothing/gloves/roguetown/elven_gloves/druidic, /obj/item/clothing/shoes/roguetown/boots/leather/elven_boots/druidic, /obj/item/clothing/cloak/forrestercloak/blessed)
 		var/bonus_type = pick(bonus_pool)
 		var/obj/item/bonus = new bonus_type(T)
-		to_chat(user, span_green("The roots also yield [bonus.name] — an additional gift."))
+		to_chat(user, span_green("树根间还生出了[bonus.name]，这是额外的赠礼。"))
 
 /// Cat 8 — Nature's Union: begins a wedding ceremony (repeatable).
 /// Offering: 1 eoran peace flower. The betrothed must each bite the same apple,
 /// then offer it to the tree to complete the pact.
 /obj/structure/flora/roguetree/wise/sanctified/proc/reward_cat8(mob/living/user)
 	if(tree_data.wedding_active)
-		to_chat(user, span_warning("A wedding ceremony is already being held at this tree."))
+		to_chat(user, span_warning("这棵树上已经在举行婚礼仪式了。"))
 		return
 	tree_data.wedding_active = TRUE
 	tree_data.wedding_officiant_ckey = user.ckey
-	visible_message(span_green("A peace flower drifts to the roots of [src.name] — the blessings of Dendor and Eora are invoked. Two souls may now offer their bitten apple to be wed beneath this tree."))
-	to_chat(user, span_notice("The ceremony has begun. Both partners should bite the same apple once each, then hand it to the tree to be wed. The one handing the apple over will decide the surname."))
+	visible_message(span_green("一朵和平花飘落至[src.name]树根旁，Dendor 与 Eora 的祝福同时被唤起。如今，两道灵魂已可献上共同咬过的苹果，在此树下缔结婚约。"))
+	to_chat(user, span_notice("仪式已经开始。两位伴侣都要各自咬同一个苹果一口，再把它交给树来完成婚誓。交出苹果的人将决定共同姓氏。"))
 
 /// Cat 9 — Harvest Bloomstone: a 20-use blessed seed powder stone (once per tree).
 /// Offerings: 1 boulder + 1 enchanted stone (magic_power 10+) + 5 blessed seed powders.
@@ -922,49 +922,49 @@
 	var/turf/T = get_turf(user)
 	var/obj/item/alch/bloomstone/B = new(T)
 	user.put_in_hands(B)
-	to_chat(user, span_green("The tree's roots cradle a glowing stone — and the Harvest Bloomstone rises to my hand, brimming in energy with the Treefather's blessing."))
+	to_chat(user, span_green("树根托起一块发光的石头，丰收花绽石随之升入我手中，充盈着树父祝福的能量。"))
 
 /// Cat 10 — Floral Conjuration: grants the Conjure Floral Seed spell (once per tree, once per person).
 /// Offerings: one of every herb (atropa through rosa, 15 total).
 /obj/structure/flora/roguetree/wise/sanctified/proc/reward_cat10(mob/living/user)
 	if(!istype(user, /mob/living/carbon/human))
-		to_chat(user, span_warning("Only a humanoid may receive the Treefather's floral gift."))
+		to_chat(user, span_warning("唯有人形生灵才能接受树父赐下的花卉恩典。"))
 		return
 	var/mob/living/carbon/human/H = user
 	if(!H.mind)
 		return
 	// Once-per-person: don't grant the spell if they already have it.
 	for(var/obj/effect/proc_holder/spell/self/conjure_floral_seed/S in H.mind.spell_list)
-		to_chat(H, span_warning("I already know how to conjure floral seeds — this blessing cannot be received twice."))
+		to_chat(H, span_warning("我已经知晓如何召出花卉种子了，不能重复接受这份赐福。"))
 		return
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/conjure_floral_seed)
-	to_chat(H, span_green("The knowledge of Floral Conjuration flows into my mind — I can call seeds forth with the Treefather's power."))
+	to_chat(H, span_green("花卉塑种的知识流入了我的心中，我现在能借树父之力唤出种子。"))
 
 /// Cat 11 — Winged Rebirth: choose a winged form and add it to Beast Form choices (once per tree).
 /// Offerings: 10 feathers, 10 bonedust, 1 essence of wilderness, 1 harvest bloomstone.
 /obj/structure/flora/roguetree/wise/sanctified/proc/reward_cat11(mob/living/user)
 	if(!istype(user, /mob/living/carbon/human))
-		to_chat(user, span_warning("Only a humanoid may receive the Treefather's trickster blessing."))
+		to_chat(user, span_warning("唯有人形生灵才能接受树父赐下的诡术祝福。"))
 		return
 	var/mob/living/carbon/human/H = user
 	if(!H.mind)
 		return
 	var/obj/effect/proc_holder/spell/self/wildshape/ws = H.mind.get_spell(/obj/effect/proc_holder/spell/self/wildshape)
 	if(!ws)
-		to_chat(H, span_warning("I need the Beast Form miracle before I can bind a new shape."))
+		to_chat(H, span_warning("我得先拥有野兽形态神迹，才能束缚新的形态。"))
 		return
 
 	var/already_has_bat  = (/mob/living/carbon/human/species/wildshape/bat  in ws.possible_shapes)
 	var/already_has_crow = (/mob/living/carbon/human/species/wildshape/crow in ws.possible_shapes)
 	if(already_has_bat && already_has_crow)
-		to_chat(H, span_notice("These winged guises already reside within my soul."))
+		to_chat(H, span_notice("这些有翼形态已经栖息在我的灵魂之中了。"))
 		return
 
 	if(!already_has_bat)
 		ws.possible_shapes += /mob/living/carbon/human/species/wildshape/bat
 	if(!already_has_crow)
 		ws.possible_shapes += /mob/living/carbon/human/species/wildshape/crow
-	to_chat(H, span_green("The knowledge of bat and crow forms take root in my soul. I can now call shift into them through Beast Form."))
+	to_chat(H, span_green("蝙蝠与乌鸦的形态知识在我灵魂中扎下了根。我现在能通过野兽形态化作它们了。"))
 
 /obj/structure/flora/roguetree/wise/sanctified/proc/reward_cat12(mob/living/user)
 	// Spawn 2 blessed logs at the player's feet as the Treefather's gift.
@@ -972,7 +972,7 @@
 	for(var/i in 1 to 2)
 		var/obj/item/grown/log/tree/log = new(T)
 		log.bless_log()
-	to_chat(user, span_green("Through the Treefather's power, the tree's limbs shed and regrow, with blessed logs now at my feet."))
+	to_chat(user, span_green("在树父的力量下，这棵树的枝干脱落又重生，两段受祝福的原木已落在我脚边。"))
 
 //==============================================================================
 // Aura Procs
@@ -1056,27 +1056,27 @@
 	if(H.stat != CONSCIOUS || H.incapacitated())
 		return
 	if(H.has_status_effect(/datum/status_effect/buff/healing))
-		to_chat(H, span_warning("The Treefather's warmth already flows through me."))
+		to_chat(H, span_warning("树父的温暖已经在我体内流动了。"))
 		return
 	var/cooldown_until = tree_data.heal_player_cooldowns[H.ckey]
 	if(cooldown_until && world.time < cooldown_until)
-		to_chat(H, span_warning("The tree's healing has not yet recovered for me — wait a moment."))
+		to_chat(H, span_warning("这棵树赐予我的疗愈尚未恢复，再等一会儿。"))
 		return
 	if(get_dist(H, src) > 1)
-		to_chat(H, span_warning("I must be adjacent to the tree to draw from its power."))
+		to_chat(H, span_warning("我必须贴近这棵树，才能汲取它的力量。"))
 		return
-	to_chat(H, span_notice("I press my palms to the sacred bark and channel the Treefather's warmth."))
+	to_chat(H, span_notice("我将双掌贴在神圣的树皮上，引导树父的暖流。"))
 	if(!do_after(H, 3 SECONDS, target = src))
 		return
 	if(QDELETED(src))
 		return
 	if(H.has_status_effect(/datum/status_effect/buff/healing))
-		to_chat(H, span_warning("The Treefather's warmth already flows through me."))
+		to_chat(H, span_warning("树父的温暖已经在我体内流动了。"))
 		return
 	H.apply_status_effect(/datum/status_effect/buff/healing, 2.5)
 	new /obj/effect/temp_visual/heal_rogue(get_turf(H))
 	playsound(get_turf(src), 'sound/magic/churn.ogg', 50, FALSE)
-	to_chat(H, span_green("The Treefather's warmth flows into my wounds."))
+	to_chat(H, span_green("树父的温暖流入了我的伤口。"))
 	// Per-player cooldown: 5 seconds after the 10-second effect expires
 	tree_data.heal_player_cooldowns[H.ckey] = world.time + 15 SECONDS
 
@@ -1090,15 +1090,15 @@
 
 /datum/status_effect/debuff/sanctified_tree_slow/on_apply()
 	. = ..()
-	to_chat(owner, span_warning("An oppressive weight and gnarled roots press against my feet near this tree, causing my movement to slow down."))
+	to_chat(owner, span_warning("靠近这棵树时，沉重的压迫与盘结树根缠住了我的脚步，让我的行动慢了下来。"))
 
 //==============================================================================
 // Soulbind Broken Status Effect (permanent, applied on tree destruction)
 //==============================================================================
 
 /atom/movable/screen/alert/status_effect/debuff/soulbind_broken
-	name = "Soulbind Broken"
-	desc = "A piece of my soul has been torn away — my body and mind are diminished."
+	name = "魂缚破碎"
+	desc = "我的灵魂被撕下了一角，肉体与心智都因此衰弱。"
 	icon_state = "debuff"
 
 /datum/status_effect/debuff/soulbind_broken
@@ -1110,7 +1110,7 @@
 /datum/status_effect/debuff/soulbind_broken/on_apply()
 	. = ..()
 	playsound(owner, 'sound/magic/soulsteal.ogg', 80, FALSE)
-	to_chat(owner, span_userdanger("A piece of my soul has been torn away — my sacred bond is shattered. I am incredibly weakened."))
+	to_chat(owner, span_userdanger("我的灵魂被撕下了一角，神圣联结已然破碎。我虚弱到了极点。"))
 
 /datum/status_effect/debuff/soulbind_broken/on_remove()
 	. = ..()
@@ -1119,7 +1119,7 @@
 /datum/stressevent/soulbind_tree_loss
 	timer = 60 MINUTES
 	stressadd = 5
-	desc = span_boldred("My soulbound tree has fallen. I feel a permanent part of myself torn away.")
+	desc = span_boldred("与我魂缚相连的圣树已经倒下，我感到自己有一部分被永久撕走了。")
 
 //==============================================================================
 // Soulbind (Cat 7)
@@ -1129,18 +1129,18 @@
 /// The player must then attack the tree with harm intent + empty hand + bleeding arm to confirm.
 /obj/structure/flora/roguetree/wise/sanctified/proc/on_soulbind(mob/living/user)
 	if(!istype(user, /mob/living/carbon/human))
-		to_chat(user, span_warning("Only a living person may soulbind with this tree."))
+		to_chat(user, span_warning("唯有活着的人才能与这棵树进行魂缚。"))
 		return
 	var/mob/living/carbon/human/H = user
 	if(H.ckey in tree_data.soulbound_players)
-		to_chat(H, span_warning("I am already soulbound to this tree."))
+		to_chat(H, span_warning("我已经与这棵树完成魂缚了。"))
 		return
 	// Check once-per-player: has this player soulbound to any sanctified tree?
 	if(HAS_TRAIT(H, "DENDOR_SOULBOUND"))
-		to_chat(H, span_userdanger("My soul is already bound to a sanctified tree. I cannot bind twice."))
+		to_chat(H, span_userdanger("我的灵魂已经绑定在另一棵圣树上，无法再次魂缚。"))
 		return
 	tree_data.awaiting_soulbind_ckey = H.ckey
-	to_chat(H, span_warning("The ritual is set. To complete the soulbind, I must attack this tree with harm intent, my hand empty and my arm bleeding."))
+	to_chat(H, span_warning("仪式已经就绪。要完成魂缚，我必须以伤害意图、空着手、且手臂流血时攻击这棵树。"))
 
 /// Triggered when a player attacks the tree with harm intent + empty hand + bleeding arm.
 /obj/structure/flora/roguetree/wise/sanctified/proc/attempt_soulbind(mob/living/carbon/human/H)
@@ -1149,28 +1149,28 @@
 	if(tree_data.awaiting_soulbind_ckey != H.ckey)
 		return
 	if(HAS_TRAIT(H, "DENDOR_SOULBOUND"))
-		to_chat(H, span_userdanger("My soul is already bound — I cannot bind again."))
+		to_chat(H, span_userdanger("我的灵魂已经有所归属，无法再次魂缚。"))
 		return
 	if(H.ckey in tree_data.soulbound_players)
-		to_chat(H, span_warning("I am already soulbound to this tree."))
+		to_chat(H, span_warning("我已经与这棵树完成魂缚了。"))
 		return
 
 	// Check intent
 	if(H.used_intent?.type != INTENT_HARM)
-		to_chat(H, span_warning("I must punch the tree with my bloodied palm to complete the soulbind."))
+		to_chat(H, span_warning("我要用染血的手掌捶击这棵树，才能完成魂缚。"))
 		return
 	// Check empty active hand
 	if(H.get_active_held_item())
-		to_chat(H, span_warning("My hand must be empty to complete the soulbind."))
+		to_chat(H, span_warning("要完成魂缚，我的手必须空着。"))
 		return
 	// Check arm bleeding
 	var/obj/item/bodypart/r_arm = H.get_bodypart(BODY_ZONE_R_ARM)
 	var/obj/item/bodypart/l_arm = H.get_bodypart(BODY_ZONE_L_ARM)
 	if(!(r_arm?.get_bleed_rate() > 0) && !(l_arm?.get_bleed_rate() > 0))
-		to_chat(H, span_warning("My arm must be bleeding to seal the soulbind in blood."))
+		to_chat(H, span_warning("要以鲜血封缚魂誓，我的手臂必须正在流血。"))
 		return
 
-	to_chat(H, span_notice("I press my bleeding palm against the sacred bark, binding my soul to the sanctified tree."))
+	to_chat(H, span_notice("我将流血的手掌按在神圣树皮上，把自己的灵魂系在这棵圣树之上。"))
 	if(!do_after(H, 3 SECONDS, target = src))
 		return
 	if(QDELETED(src) || QDELETED(H))
@@ -1179,9 +1179,9 @@
 		return
 
 	// Finalize bind
-	var/confirm = alert(H, "You will bind your soul to this sanctified tree. If the tree is destroyed, you will suffer a permanent, irreversible penalty to all your attributes. Proceed?", "Soulbind", "Yes", "No")
-	if(confirm != "Yes" || QDELETED(src) || QDELETED(H))
-		to_chat(H, span_warning("I withdraw from the sacred pact."))
+	var/confirm = alert(H, "你将把自己的灵魂绑定在这棵圣树上。若此树被毁，你的全部属性都将遭受永久且不可逆的削弱。要继续吗？", "魂缚", "是", "否")
+	if(confirm != "是" || QDELETED(src) || QDELETED(H))
+		to_chat(H, span_warning("我退出了这份神圣誓约。"))
 		return
 
 	// 50 brute to active arm
@@ -1204,9 +1204,9 @@
 
 	// Register tree destruction signal is no longer needed — cleanup is handled in Destroy().
 
-	visible_message(span_boldwarning("[H.name]'s hand is pressed against the bark — a flash of gold seals the pact!"))
+	visible_message(span_boldwarning("[H.name]的手按在树皮上，一道金光闪过，契约就此完成！"))
 	playsound(get_turf(src), 'sound/ambience/noises/mystical (4).ogg', 70, TRUE)
-	to_chat(H, span_green("My soul is bound to this sanctified tree. Should it fall, a part of me falls with it."))
+	to_chat(H, span_green("我的灵魂已与这棵圣树相连。若它倒下，我也会随之失去自己的一部分。"))
 
 /// Called when the tree is destroyed while a player is soulbound to it.
 /// Actual debuffing happens via curse_soulbound_players() in Destroy().
@@ -1239,18 +1239,18 @@
 
 	if(!(thegroom && thebride))
 		A.become_rotten()
-		to_chat(user, span_danger("The Treefather's blessing falters — the souls who have bitten the fruit are not present or have already been wed. The apple rots."))
+		to_chat(user, span_danger("树父的祝福动摇了，咬过果实的灵魂并不在场，或已各自成婚。苹果随即腐烂。"))
 		tree_data.wedding_active = FALSE
 		tree_data.wedding_officiant_ckey = null
 		return
 
-	var/surname = input(user, "Enter a shared surname for the couple:", "Nature's Union") as text|null
+	var/surname = input(user, "为这对伴侣输入共同姓氏：", "自然结合") as text|null
 	if(QDELETED(src) || QDELETED(user))
 		return
 	if(!surname || !length(trim(surname)))
 		surname = thegroom.dna.species.random_surname()
 
-	priority_announce("[thegroom.real_name] and [thebride.real_name] have been wed beneath the Treefather's boughs!", title = "Nature's Union!", sound = 'sound/misc/bell.ogg')
+	priority_announce("[thegroom.real_name]与[thebride.real_name]已在树父枝荫之下缔结婚约！", title = "自然结合！", sound = 'sound/misc/bell.ogg')
 
 	var/list/titles = list("Sir", "Ser", "Dame", "Lord", "Lady", "Knight-Captain", "Duke", "Duchess", "Father", "Mother", "Brother", "Sister", "Prelate", "Devotee", "Votary")
 
@@ -1268,15 +1268,15 @@
 	else
 		thebride.real_name = "[bride_name_parts[1]] [surname]"
 
-	to_chat(thegroom, span_notice("Your new shared surname is [surname]."))
-	to_chat(thebride, span_notice("Your new shared surname is [surname]."))
+	to_chat(thegroom, span_notice("你们新的共同姓氏是[surname]。"))
+	to_chat(thebride, span_notice("你们新的共同姓氏是[surname]。"))
 
 	thegroom.marriedto = thebride.real_name
 	thebride.marriedto = thegroom.real_name
 	thegroom.adjust_triumphs(1)
 	thebride.adjust_triumphs(1)
 
-	visible_message(span_green("The [src.name] blazes with golden light — Dendor and Eora both bless this union!"))
+	visible_message(span_green("[src.name]迸发出灿金光辉，Dendor 与 Eora 一同为这场结合赐福！"))
 	playsound(get_turf(src), 'sound/misc/bell.ogg', 80, FALSE)
 	qdel(A)
 	tree_data.wedding_active = FALSE
@@ -1293,33 +1293,33 @@
 		if(istype(T, /obj/structure/flora/roguetree/wise) || istype(T, /obj/structure/flora/roguetree/burnt) || istype(T, /obj/structure/flora/roguetree/stump))
 			continue
 		tree_count++
-	. += span_info("[src] draws strength from [tree_count] nearby living tree\s, granting [integrity_bonus] bonus integrity.")
-	. += span_info("Integrity: [round(obj_integrity)]/[max_integrity]")
+	. += span_info("[src]从附近 [tree_count] 棵活树中汲取力量，获得了 [integrity_bonus] 点额外耐久。")
+	. += span_info("耐久度：[round(obj_integrity)]/[max_integrity]")
 	if(show_ritual_hints)
-		. += span_info("Open the ritual menu with the Dendor amulet to begin any druidic ritual, or start the 'Nature's Union' wedding ceremony; the betrothed must each bite the same apple once and offer it to the tree to seal the pact.")
+		. += span_info("将 Dendor 护符贴在这棵树上，可开启任意德鲁伊仪式，或发起“自然结合”婚礼；订婚者各自咬同一个苹果一口后，将其献给树木即可缔结誓约。")
 	if(!istype(user, /mob/living/carbon/human))
 		return
 	var/mob/living/carbon/human/H = user
 	if(H.patron?.type != /datum/patron/divine/dendor)
 		return
 	if(show_ritual_hints)
-		. += span_notice("Hold the Dendor amulet against this tree to start or cancel a Treefather bounty.")
-		. += span_notice("Alternatively, touch-intent with an empty hand while wearing the amulet opens the ritual menu.")
-		. += span_notice("To offer while a bounty is active, click the tree with the required item in-hand.")
+		. += span_notice("把 Dendor 护符贴在这棵树上，可开始或取消一次树父悬赏。")
+		. += span_notice("或者，在佩戴护符时空手用接触意图触碰树木，也能打开仪式菜单。")
+		. += span_notice("若悬赏已激活，则手持所需供品点击树木即可献上。")
 	if(show_ritual_hints && tree_data?.active_ritual)
-		. += span_notice("Active bounty: [get_ritual_display_name(tree_data.active_ritual)]")
+		. += span_notice("当前悬赏：[get_ritual_display_name(tree_data.active_ritual)]")
 		var/list/req = get_required_offerings(tree_data.active_ritual)
 		for(var/key in req)
 			var/current = tree_data.ritual_progress[key] || 0
 			var/needed = req[key]
 			if(current >= needed)
-				. += span_notice("  [get_offering_desc(key)]: [current]/[needed] (fulfilled)")
+				. += span_notice("  [get_offering_desc(key)]：[current]/[needed]（已满足）")
 			else
 				. += span_warning("  [get_offering_desc(key)]: [current]/[needed]")
 	if(tree_data?.has_slow_aura)
-		. += span_info("A guardian ward repels those who would defile this grove.")
+		. += span_info("一道守护结界正在驱退所有妄图亵渎这片林地的人。")
 	if(tree_data?.has_heal_aura)
-		. += span_info("A healing aura emanates from this tree. Middle-click the tree while adjacent to channel its healing energies.")
+		. += span_info("一股治疗灵光正从这棵树上向外扩散。贴近后中键点击树木即可引导其中的疗愈之力。")
 
 /obj/structure/flora/roguetree/wise/sanctified/attack_hand(mob/user)
 	if(istype(user, /mob/living/carbon/human))
@@ -1336,7 +1336,7 @@
 									istype(H.get_item_by_slot(SLOT_GLOVES), /obj/item/clothing/neck/roguetown/psicross/dendor)
 			if(has_dendor_amulet)
 				if(H.patron?.type != /datum/patron/divine/dendor)
-					to_chat(H, span_warning("Only a follower of Dendor may commune with this sacred tree."))
+					to_chat(H, span_warning("唯有 Dendor 的信徒才能与这棵圣树沟通。"))
 					return
 				open_ritual_menu(H)
 				return
@@ -1347,7 +1347,7 @@
 	if(tree_data?.wedding_active && istype(I, /obj/item/reagent_containers/food/snacks/grown/apple))
 		var/obj/item/reagent_containers/food/snacks/grown/apple/A = I
 		if(A.bitten_names.len < 2)
-			to_chat(user, span_warning("Both partners must bite the apple before offering it to the tree."))
+			to_chat(user, span_warning("两位伴侣都必须先咬过苹果，才能把它献给这棵树。"))
 			return
 		perform_wedding(user, A)
 		return
@@ -1358,7 +1358,7 @@
 			return
 		var/mob/living/carbon/human/H = user
 		if(H.patron?.type != /datum/patron/divine/dendor)
-			to_chat(user, span_warning("Only a follower of Dendor may commune with this sacred tree."))
+			to_chat(user, span_warning("唯有 Dendor 的信徒才能与这棵圣树沟通。"))
 			return
 		open_ritual_menu(user)
 		return
@@ -1373,7 +1373,7 @@
 
 /obj/structure/flora/roguetree/wise/sanctified/obj_destruction(damage_flag)
 	set_light(0)
-	visible_message(span_warning("The sanctified tree's golden light dies as it falls — the Treefather's blessing is broken!"))
+	visible_message(span_warning("圣树倒下时，那层金色辉光也随之熄灭了，树父的赐福就此断绝！"))
 	var/obj/item/grown/log/tree/blessed_log = new(loc)
 	blessed_log.bless_log()
 	return ..()
@@ -1385,8 +1385,8 @@
 // receive rituals, soulbind, or officiate weddings.
 //==============================================================================
 /obj/structure/flora/roguetree/wise/sanctified/wise
-	name = "sanctified wise tree"
-	desc = "An ancient sacred tree directly blessed by a Dendorite acolyte. The Treefather's power flows through its roots — it radiates healing and repels those who would defile the grove — but its deeper mysteries are locked away."
+	name = "圣化睿木"
+	desc = "一棵由 Dendor 侍徒直接祝圣的古老神木。树父的力量沿着根系奔流，既向外散发治愈之光，也排斥所有想要亵渎林苑之人，但它更深层的奥秘仍被封锁着。"
 	examine_plays_music = TRUE
 	show_ritual_hints = FALSE
 
@@ -1402,11 +1402,11 @@
 /obj/structure/flora/roguetree/wise/sanctified/wise/attackby(obj/item/I, mob/living/user, params)
 	// Block ritual menu — this tree holds no further rites.
 	if(istype(I, /obj/item/clothing/neck/roguetown/psicross/dendor))
-		to_chat(user, span_warning("This blessed tree holds no further rites — its power is already given."))
+		to_chat(user, span_warning("这棵受祝福的树已不再承载更多仪式，它的力量早已赐出。"))
 		return
 	// Block wedding initiation — sanctified wise trees cannot officiate ceremonies.
 	if(istype(I, /obj/item/clothing/head/peaceflower))
-		to_chat(user, span_warning("Only a fully sanctified tree may officiate a wedding ceremony."))
+		to_chat(user, span_warning("唯有完全圣化的神树才能主持婚礼仪式。"))
 		return
 	return ..()
 
@@ -1420,6 +1420,6 @@
 									istype(H.get_item_by_slot(SLOT_RING), /obj/item/clothing/neck/roguetown/psicross/dendor) || \
 									istype(H.get_item_by_slot(SLOT_GLOVES), /obj/item/clothing/neck/roguetown/psicross/dendor)
 			if(has_dendor_amulet)
-				to_chat(H, span_warning("This blessed tree holds no further rites — its power is already given."))
+				to_chat(H, span_warning("这棵受祝福的树已不再承载更多仪式，它的力量早已赐出。"))
 				return
 	return ..()

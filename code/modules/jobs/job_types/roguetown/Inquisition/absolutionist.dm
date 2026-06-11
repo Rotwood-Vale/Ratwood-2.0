@@ -1,5 +1,6 @@
 /datum/job/roguetown/absolver
 	title = "Absolver"
+	display_title = "赦罪师"
 	flag = ABSOLVER
 	department_flag = INQUISITION
 	faction = "Station"
@@ -7,7 +8,7 @@
 	spawn_positions = 1
 	allowed_races = RACES_NO_CONSTRUCT
 	allowed_patrons = list(/datum/patron/old_god) //Requires the character to be a practicing Psydonite.
-	tutorial = "Once, you were alone in this monastery; a chapel of stone, protecting a shard of Psydon's divinity. Now, you've a whole sect to shepherd - and their propensity for violence oft-clashes with your own vows of pacifism. Temper the floch with your wisdom, siphon away their wounds with your blessings, and guide the wayard towards absolution."
+	tutorial = "曾经，这座修道院里只有你一人；一座石砌小堂，守护着 普赛顿 神性的一枚碎片。如今，你要牧领整整一个教派，而他们天性中的暴烈，常常与你自己的不杀誓愿相冲。以你的智慧节制教众，以你的祝福抽走他们的伤痛，再引领那些迷途者走向赦罪。"
 	selection_color = JCOLOR_INQUISITION
 	outfit = /datum/outfit/job/roguetown/absolver
 	display_order = JDO_ABSOLVER
@@ -36,8 +37,8 @@
 	)
 
 /datum/advclass/absolver
-	name = "Absolver"
-	tutorial = "Once, you were alone in this monastery; a chapel of stone, protecting a shard of Psydon's divinity. Now, you've a whole sect to shepherd - and their propensity for violence oft-clashes with your own vows of pacifism. Temper the floch with your wisdom, siphon away their wounds with your blessings, and guide the wayard towards absolution."
+	name = "赦罪师"
+	tutorial = "曾经，这座修道院里只有你一人；一座石砌小堂，守护着 普赛顿 神性的一枚碎片。如今，你要牧领整整一个教派，而他们天性中的暴烈，常常与你自己的不杀誓愿相冲。以你的智慧节制教众，以你的祝福抽走他们的伤痛，再引领那些迷途者走向赦罪。"
 	outfit = /datum/outfit/job/roguetown/absolver/basic
 	subclass_languages = list(/datum/language/otavan)
 	category_tags = list(CTAG_ABSOLVER)
@@ -60,7 +61,7 @@
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT, // Psydon's Holiest Guy
 	)
 	subclass_stashed_items = list(
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+		"《Psydon 圣典》" = /obj/item/book/rogue/bibble/psy
 	)
 
 // REMEMBER FLAGELLANT? REMEMBER LASZLO? THIS IS HIM NOW. FEEL OLD YET?

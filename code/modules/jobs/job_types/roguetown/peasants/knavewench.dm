@@ -1,5 +1,6 @@
 /datum/job/roguetown/knavewench // The most aggressively rude name yet.
 	title = "Tapster"
+	display_title = "酒馆伙计"
 	f_title = "Tapster"
 	flag = KNAVEWENCH
 	department_flag = PEASANTS
@@ -8,7 +9,7 @@
 	spawn_positions = 4
 
 	allowed_races = RACES_ALL_KINDS
-	tutorial = "You have a simple role at the city tavern; please. You wait tables and help guests, clean the rooms, grow and brew more drink, and assist in the kitchens as need be. Bring a smile to the masses--and those cheapsake townsfolk and adventures might just give you an extra coin...assuming you've not already pilfered their pouch while they're in a drunken stupor off your latest brew."
+	tutorial = "你在谷地酒馆的职责其实很简单，真的。你得端盘跑堂、招呼客人、打扫房间、种些酿酒作物、继续酿出更多酒水，还要在厨房忙不过来时搭把手。多对众人露点笑脸吧，那些抠门的镇民与冒险客说不定会多赏你一枚铜子……前提是他们还没在醉倒后，被你先一步摸走了钱袋。"
 
 	outfit = /datum/outfit/job/roguetown/knavewench
 	display_order = JDO_KNAVEWENCH
@@ -27,8 +28,8 @@
 	spells = list(/obj/effect/proc_holder/spell/invoked/takeapprentice)
 
 /datum/advclass/tapster
-	name = "Tapster"
-	tutorial = "You have a simple role at the city tavern; please. You wait tables and help guests, clean the rooms, grow and brew more drink, and assist in the kitchens as need be. Bring a smile to the masses--and those cheapsake townsfolk and adventures might just give you an extra coin...assuming you've not already pilfered their pouch while they're in a drunken stupor off your latest brew."
+	name = "酒馆伙计"
+	tutorial = "你在谷地酒馆的职责其实很简单，真的。你得端盘跑堂、招呼客人、打扫房间、种些酿酒作物、继续酿出更多酒水，还要在厨房忙不过来时搭把手。多对众人露点笑脸吧，那些抠门的镇民与冒险客说不定会多赏你一枚铜子……前提是他们还没在醉倒后，被你先一步摸走了钱袋。"
 	outfit = /datum/outfit/job/roguetown/knavewench/basic
 	category_tags = list(CTAG_TAPSTER)
 	// 5 points weighted

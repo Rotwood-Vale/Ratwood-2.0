@@ -1,6 +1,6 @@
 /mob/living/carbon/human/proc/zombie_seek()
-	set name = "Seek Brains"
-	set category = "ZOMBIE"
+	set name = "追寻脑髓"
+	set category = "僵尸"
 
 	if(!mind.has_antag_datum(/datum/antagonist/zombie))
 		return FALSE
@@ -24,7 +24,7 @@
 				closest_dist = total_distance
 				the_dir = get_dir(src, humie)
 	if(!closest_dist)
-		to_chat(src, span_warning("I failed to smell anything..."))
+		to_chat(src, span_warning("我什么气味也没闻到……"))
 		return FALSE
-	to_chat(src, span_warning("[closest_dist] meters away, [dir2text(the_dir)]..."))
+	to_chat(src, span_warning("[closest_dist] 米外，[dir2text(the_dir)]……"))
 	return TRUE

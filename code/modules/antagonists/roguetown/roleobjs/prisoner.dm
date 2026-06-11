@@ -1,6 +1,6 @@
 
 /datum/antagonist/prisoner
-	name = "Prisoner"
+	name = "囚犯"
 	increase_votepwr = FALSE
 	antag_flags = FLAG_FAKE_ANTAG
 
@@ -37,15 +37,14 @@
 
 	if(traitorwin)
 		owner.adjust_triumphs(3)
-		to_chat(owner.current, span_greentext("I've ESCAPED THAT AWFUL CELL! THE WORLD IS MINE!"))
+		to_chat(owner.current, span_greentext("我逃离了那可怕的牢房！这个世界是我的了！"))
 		if(owner.current)
 			owner.current.playsound_local(get_turf(owner.current), 'sound/misc/triumph.ogg', 100, FALSE, pressure_affected = FALSE)
 	else
 		if(considered_alive(owner))
 			owner.adjust_triumphs(1)
-			to_chat(owner.current, span_redtext("I didn't get away this week, but I live to try again!"))
+			to_chat(owner.current, span_redtext("这周我没能逃出去，但我还活着，还能再试一次！"))
 		else
-			to_chat(owner.current, span_redtext("I've escaped... in DEATH!"))
+			to_chat(owner.current, span_redtext("我逃出去了……以死亡的方式！"))
 		if(owner.current)
 			owner.current.playsound_local(get_turf(owner.current), 'sound/misc/fail.ogg', 100, FALSE, pressure_affected = FALSE)
-

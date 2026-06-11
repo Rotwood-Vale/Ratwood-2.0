@@ -1,7 +1,7 @@
 #define CTAG_RUNAWAY_PRISONER "runaway_prisoner"
 
 /datum/migrant_wave/runaway_prisoners
-	name = "Runaway Prisoners"
+	name = "逃亡囚犯"
 	max_spawns = 1
 	shared_wave_type = /datum/migrant_wave/runaway_prisoners
 	downgrade_wave = /datum/migrant_wave/runaway_prisoners_down_one
@@ -9,10 +9,10 @@
 	roles = list(
 		/datum/migrant_role/runaway_prisoner = 4
 	)
-	greet_text = "You've been rotting for years in a cell. Though you escaped, you have nothing - your body atrophied, your mind dulled. But one thing you kknow clearlyu - you are not going back." 
+	greet_text = "你已在牢房中腐烂了多年。虽然你成功逃脱，却早已一无所有，身体萎缩，心神迟钝。但有一件事你无比清楚，你绝不会再回去。"
 
 /datum/migrant_wave/runaway_prisoners_down_one
-	name = "Runaway Prisoners"
+	name = "逃亡囚犯"
 	can_roll = FALSE
 	shared_wave_type = /datum/migrant_wave/runaway_prisoners
 	downgrade_wave = /datum/migrant_wave/runaway_prisoners_down_two
@@ -21,7 +21,7 @@
 	)
 
 /datum/migrant_wave/runaway_prisoners_down_two
-	name = "Runaway Prisoners"
+	name = "逃亡囚犯"
 	can_roll = FALSE
 	shared_wave_type = /datum/migrant_wave/runaway_prisoners
 	downgrade_wave = /datum/migrant_wave/runaway_prisoners_down_three
@@ -30,7 +30,7 @@
 	)
 
 /datum/migrant_wave/runaway_prisoners_down_three
-	name = "Runaway Prisoners"
+	name = "逃亡囚犯"
 	can_roll = FALSE
 	shared_wave_type = /datum/migrant_wave/runaway_prisoners
 	roles = list(
@@ -38,12 +38,12 @@
 	)
 
 /datum/migrant_role/runaway_prisoner
-	name = "Escaped Prisoner"
+	name = "越狱囚犯"
 	grant_lit_torch = TRUE
 	advclass_cat_rolls = list(CTAG_RUNAWAY_PRISONER = 20)
 
 /datum/advclass/runaway_prisoner_commoner
-	name = "Runaway Prisoner (commoner)"
+	name = "逃亡囚犯（平民）"
 	allowed_sexes = list(MALE, FEMALE)
 	outfit = /datum/outfit/job/roguetown/adventurer/runaway_prisoner/commoner
 	traits_applied = list(TRAIT_CRITICAL_RESISTANCE)
@@ -81,7 +81,7 @@
 	)
 
 /datum/advclass/runaway_prisoner_noble
-	name = "Runaway Prisoner (Noble)"
+	name = "逃亡囚犯（贵族）"
 	allowed_sexes = list(MALE, FEMALE)
 	outfit = /datum/outfit/job/roguetown/adventurer/runaway_prisoner/noble
 	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_NOBLE, TRAIT_SEEPRICES)
@@ -109,7 +109,7 @@
 	)
 
 /datum/advclass/runaway_prisoner_mage
-	name = "Runaway Prisoner (Mage)"
+	name = "逃亡囚犯（法师）"
 	allowed_sexes = list(MALE, FEMALE)
 	outfit = /datum/outfit/job/roguetown/adventurer/runaway_prisoner/mage
 	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT)
@@ -153,11 +153,10 @@
 	var/descriptor_height = build_coalesce_description_nofluff(d_list, H, list(MOB_DESCRIPTOR_SLOT_HEIGHT), "%DESC1%")
 	var/descriptor_body = build_coalesce_description_nofluff(d_list, H, list(MOB_DESCRIPTOR_SLOT_BODY), "%DESC1%")
 	var/descriptor_voice = build_coalesce_description_nofluff(d_list, H, list(MOB_DESCRIPTOR_SLOT_VOICE), "%DESC1%")
-	var/my_crime = input(H, "What is your crime?", "Crime") as text|null
-	var/realmname = SSmapping.map_adjustment.realm_name
+	var/my_crime = input(H, "你的罪名是什么？", "罪名") as text|null
 	if (!my_crime)
-		my_crime = "crimes against the Crown"
-	add_bounty(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, rand(100, 200), FALSE, my_crime, "The Justiciary of [realmname]")
+		my_crime = "冒犯王冠之罪"
+	add_bounty(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, rand(100, 200), FALSE, my_crime, "谷地司法庭")
 	if(should_wear_femme_clothes(H))
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
 	else if(should_wear_masc_clothes(H))
@@ -175,11 +174,10 @@
 	var/descriptor_height = build_coalesce_description_nofluff(d_list, H, list(MOB_DESCRIPTOR_SLOT_HEIGHT), "%DESC1%")
 	var/descriptor_body = build_coalesce_description_nofluff(d_list, H, list(MOB_DESCRIPTOR_SLOT_BODY), "%DESC1%")
 	var/descriptor_voice = build_coalesce_description_nofluff(d_list, H, list(MOB_DESCRIPTOR_SLOT_VOICE), "%DESC1%")
-	var/my_crime = input(H, "What is your crime?", "Crime") as text|null
-	var/realmname = SSmapping.map_adjustment.realm_name
+	var/my_crime = input(H, "你的罪名是什么？", "罪名") as text|null
 	if (!my_crime)
-		my_crime = "crimes against the Crown"
-	add_bounty(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, rand(100, 200), FALSE, my_crime, "The Justiciary of [realmname]")
+		my_crime = "冒犯王冠之罪"
+	add_bounty(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, rand(100, 200), FALSE, my_crime, "谷地司法庭")
 	if(should_wear_femme_clothes(H))
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
 	else if(should_wear_masc_clothes(H))
@@ -197,11 +195,10 @@
 	var/descriptor_height = build_coalesce_description_nofluff(d_list, H, list(MOB_DESCRIPTOR_SLOT_HEIGHT), "%DESC1%")
 	var/descriptor_body = build_coalesce_description_nofluff(d_list, H, list(MOB_DESCRIPTOR_SLOT_BODY), "%DESC1%")
 	var/descriptor_voice = build_coalesce_description_nofluff(d_list, H, list(MOB_DESCRIPTOR_SLOT_VOICE), "%DESC1%")
-	var/my_crime = input(H, "What is your crime?", "Crime") as text|null
-	var/realmname = SSmapping.map_adjustment.realm_name
+	var/my_crime = input(H, "你的罪名是什么？", "罪名") as text|null
 	if (!my_crime)
-		my_crime = "crimes against the Crown"
-	add_bounty(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, rand(100, 200), FALSE, my_crime, "The Justiciary of [realmname]")
+		my_crime = "冒犯王冠之罪"
+	add_bounty(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, rand(100, 200), FALSE, my_crime, "谷地司法庭")
 	if(should_wear_femme_clothes(H))
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
 	else if(should_wear_masc_clothes(H))

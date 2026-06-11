@@ -52,13 +52,13 @@
 /datum/component/silverbless/proc/on_examine(datum/source, mob/user, list/examine_list)
 	if(!is_blessed)
 		if(silver_type & SILVER_PSYDONIAN)
-			examine_list += span_info("<font color = '#cfa446'>This object may be blessed by the lingering shard of COMET SYON.</font>")
+			examine_list += span_info("<font color = '#cfa446'>这件物品也许能被 COMET SYON 残留的碎片赐福。</font>")
 		else if(silver_type & SILVER_TENNITE)
-			examine_list += span_info("<font color = '#cfa446'>This object may be blessed by a bishop.</font>")
+			examine_list += span_info("<font color = '#cfa446'>这件物品也许能被主教赐福。</font>")
 	if(is_blessed == BLESSING_PSYDONIAN)
-		examine_list += span_info("<font color = '#46bacf'>This object has been blessed by COMET SYON.</font>")
+		examine_list += span_info("<font color = '#46bacf'>这件物品已受 COMET SYON 赐福。</font>")
 	else if(is_blessed == BLESSING_TENNITE)
-		examine_list += span_info("<font color = '#46bacf'>This object has been blessed by THE TEN.</font>")
+		examine_list += span_info("<font color = '#46bacf'>这件物品已受 THE TEN 赐福。</font>")
 
 /datum/component/silverbless/proc/try_bless(blessing_type)
 	if(!is_blessed)
@@ -72,7 +72,7 @@
 	if(isitem(parent))
 		var/obj/item/I = parent
 		playsound(I, 'sound/magic/holyshield.ogg', 100)
-		I.visible_message(span_notice("[I] glistens with power as dust of COMET SYON lands upon it!"))
+		I.visible_message(span_notice("随着 COMET SYON 的尘埃落在[I]上，它闪耀出力量的光辉！"))
 
 /datum/component/silverbless/proc/apply_bless(blessing_type)
 	var/blessing_divisor = 1

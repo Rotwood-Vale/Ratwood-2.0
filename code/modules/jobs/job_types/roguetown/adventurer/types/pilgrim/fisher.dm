@@ -1,6 +1,6 @@
 /datum/advclass/fisher
-	name = "Fisher"
-	tutorial = "You are a fisherman, with your bag of bait and your fishing rod, you are one of few who can reliably get a stable source of meat around here"
+	name = "渔夫"
+	tutorial = "你是一名渔夫。带着装满鱼饵的袋子和钓竿，你是这地方少数几个能稳定弄到肉食来源的人之一。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/fisher

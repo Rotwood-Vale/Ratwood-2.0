@@ -1,7 +1,7 @@
 
 /obj/item/bait
-	name = "bag of bait"
-	desc = "Horrid smell to me, wonderful smell to big game."
+	name = "饵料袋"
+	desc = "对我来说臭得可怕，对大型猎物来说却香得诱人。"
 	icon_state = "bait"
 	icon = 'icons/roguetown/items/misc.dmi'
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
@@ -28,23 +28,23 @@
 /obj/item/bait/attack_self(mob/user)
 	var/area/A = get_area(user.loc)
 	if(!is_valid_hunting_area(A))
-		to_chat(user, span_warning("I should save [name] for the wilderness..."))
+		to_chat(user, span_warning("我该把[name]留到荒野里再用……"))
 		return
 
 	. = ..()
-	user.visible_message(span_notice("[user] begins deploying the bait..."), \
-						span_notice("I begin deploying the bait..."))
+	user.visible_message(span_notice("[user]开始布设饵料……"), \
+						span_notice("我开始布设饵料……"))
 	if(do_after(user, deploy_speed, target = src)) //rogtodo hunting skill
 		user.dropItemToGround(src)
 		START_PROCESSING(SSobj, src)
-		name = "bait"
+			name = "饵料"
 		icon_state = "[icon_state]1"
 		deployed = 1
 
 /obj/item/bait/attack_hand(mob/user)
 	if(deployed)
-		user.visible_message(span_notice("[user] begins gathering up the bait..."), \
-							span_notice("I begin gathering up the bait..."))
+		user.visible_message(span_notice("[user]开始收拢饵料……"), \
+							span_notice("我开始收拢饵料……"))
 		if(do_after(user, deploy_speed, target = src)) //rogtodo hunting skill
 			STOP_PROCESSING(SSobj, src)
 			name = initial(name)
@@ -102,8 +102,8 @@
 	..()
 
 /obj/item/bait/sweet
-	name = "bag of sweetbait"
-	desc = "This bait doesn't smell as bad as the others. I might even try a bite..."
+	name = "甜饵袋"
+	desc = "这种饵料没别的那么臭。我甚至想尝上一口……"
 	icon_state = "baitp"
 	attracted_types = list(/mob/living/simple_animal/hostile/retaliate/rogue/goat = 33,
 							/mob/living/simple_animal/hostile/retaliate/rogue/goatmale = 33,
@@ -117,8 +117,8 @@
 
 
 /obj/item/bait/bloody
-	name = "bag of bloodbait"
-	desc = "Imagine if vampires got attracted to these!"
+	name = "血饵袋"
+	desc = "想想看，要是吸血鬼也会被这玩意吸引就好玩了！"
 	icon_state = "baitb"
 	attracted_types = list(/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 35,
 							/mob/living/simple_animal/hostile/retaliate/rogue/mole = 20,
@@ -128,14 +128,14 @@
 							/mob/living/simple_animal/hostile/retaliate/rogue/troll/bog = 5)			//RUH-ROH
 
 /obj/item/bait/spider
-	name = "silk bag of bloodbait"
-	desc = "Bait for my little pet!"
+	name = "丝制血饵袋"
+	desc = "给我的小宠物准备的饵料！"
 	icon_state = "baits"
 	attracted_types = list(/mob/living/simple_animal/hostile/retaliate/rogue/drider/tame/saddled = 100)
 
 /obj/item/bait/leech
-	name = "bag of leechbait"
-	desc = "Bait that might attract a little pestran friend."
+	name = "水蛭饵袋"
+	desc = "可能会吸引来一位小小佩斯特拉朋友的饵料。"
 	icon_state = "baitb"
 	attracted_types = list(/obj/item/leechtick = 45,
 							/mob/living/simple_animal/hostile/retaliate/rogue/direbear = 5,

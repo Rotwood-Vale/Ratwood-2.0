@@ -4,8 +4,8 @@
 #define CHEESE_QUIET_TIME 2 MINUTES // How long stuffing a slice of cheese in quieten the SCOM
 
 /obj/structure/roguemachine/scomm
-	name = "SCOM"
-	desc = "The Supernatural Communication Optical Machine is a wonder of magic and technology, able to transmit and receive messages across long distance. There's a button in the MIDDLE for making private jabberline connections."
+	name = "SCOM传讯网"
+	desc = "超自然光学通讯机是魔法与技术共同造就的奇迹，能够在远距离间收发消息。中间的按钮可用于建立私密的密语线连接。"
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "scomm1"
 	density = FALSE
@@ -55,8 +55,8 @@
 	pixel_x = -32
 
 /obj/structure/roguemachine/scomm/receive_only
-	name = "RCOM"
-	desc = "The Receiving Communication Optical Machine is a much cheaper, ubiquitous version of the SCOM, designed only to receive message over long distance. They are oft found outside of the town, especially in older ruins."
+	name = "RCOM传讯网"
+	desc = "接收型光学通讯机是 SCOM传讯网 更廉价、更常见的版本，只能接收远距离消息。它们常见于城外，尤其是古老遗迹附近。"
 	receive_only = TRUE
 
 /obj/structure/roguemachine/scomm/receive_only/r
@@ -69,17 +69,17 @@
 
 /obj/structure/roguemachine/scomm/examine(mob/user)
 	. = ..()
-	. += span_small("The normal line has a delay of [NORMAL_SCOM_TRANSMISSION_DELAY / 10] seconds. The premium garrison line does not suffer from this limitation.")
-	. += span_smallnotice("You see some rats inside scurrying about! Maybe they'd like a slice of cheese?")
+	. += span_small("普通线路有 [NORMAL_SCOM_TRANSMISSION_DELAY / 10] 秒延迟。高级的驻军线路则不受此限制。")
+	. += span_smallnotice("你看见里面有几只老鼠在来回乱窜！也许它们会想吃一片奶酪？")
 	if(scom_number)
-		. += span_smallnotice("Its designation is #[scom_number][scom_tag ? ", labeled as [scom_tag]" : ""].")
-	. += "<a href='?src=[REF(src)];directory=1'>Directory</a>"
-	. += "<b>THE LAWS OF THE LAND:</b>"
+		. += span_smallnotice("它的编号是 #[scom_number][scom_tag ? "，标识为 [scom_tag]" : ""]。")
+	. += "<a href='?src=[REF(src)];directory=1'>名录</a>"
+	. += "<b>国土法令：</b>"
 	if(!length(GLOB.laws_of_the_land))
-		. += span_danger("The land has no laws! <b>We are doomed!</b>")
+		. += span_danger("这片土地没有法律！<b>我们完了！</b>")
 		return
 	if(!user.is_literate())
-		. += span_warning("Uhhh... I can't read them...")
+		. += span_warning("呃……我看不懂这些……")
 		return
 	for(var/i in 1 to length(GLOB.laws_of_the_land))
 		. += span_small("[i]. [GLOB.laws_of_the_land[i]]")
@@ -98,7 +98,7 @@
 	for(var/obj/structure/roguemachine/scomm/X in SSroguemachine.scomm_machines)
 		dat += "#[X.scom_number] [X.scom_tag]<br>"
 
-	var/datum/browser/popup = new(user, "scom_directory", "<center>RAT REGISTER</center>", 387, 420)
+	var/datum/browser/popup = new(user, "scom_directory", "<center>鼠群名录</center>", 387, 420)
 	popup.set_content(dat)
 	popup.open(FALSE)
 
@@ -110,7 +110,7 @@
 		return
 	if(!speaking)
 		return
-	say("The [SSticker.rulertype] Decrees: [pick(GLOB.lord_decrees)]", spans = list("info"))
+	say("[SSticker.rulertype]法令：[pick(GLOB.lord_decrees)]", spans = list("info"))
 
 /obj/structure/roguemachine/scomm/attack_hand(mob/living/user)
 	. = ..()
@@ -120,21 +120,21 @@
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	if(called_by && !calling)
 		calling = called_by
-		calling.say("Jabberline fused.", spans = list("info"))
-		say("Jabberline fused.", spans = list("info"))
+		calling.say("密语线已接通。", spans = list("info"))
+		say("密语线已接通。", spans = list("info"))
 		update_icon()
 		return
 	if(calling)
 		listening = !listening
-		to_chat(user, span_info("I [listening ? "unmute" : "mute"] the input on the SCOM."))
+		to_chat(user, span_info("我将 SCOM传讯网 的输入[listening ? "解除静音" : "静音"]了。"))
 		return
 	if(loudmouth_listening)
-		to_chat(user, span_info("I quell the Loudmouth's prattling on the SCOM. It may be muted entirely still."))
+		to_chat(user, span_info("我压下了 SCOM传讯网 上金口者的聒噪。你仍可将其彻底静音。"))
 		loudmouth_listening = FALSE
 	else
 		listening = !listening
 		speaking = listening
-		to_chat(user, span_info("I [speaking ? "unmute" : "mute"] the SCOM."))
+		to_chat(user, span_info("我将 SCOM传讯网[speaking ? "解除静音" : "静音"]了。"))
 		if(listening)
 			loudmouth_listening = TRUE
 	update_icon()
@@ -142,7 +142,7 @@
 /obj/structure/roguemachine/scomm/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(istype(W, /obj/item/reagent_containers/food/snacks/rogue/cheddarslice))
-		to_chat(user, span_smallnotice("You stuffs a piece of cheese into the SCOM discreetly, quietening the rats for a while..."))
+		to_chat(user, span_smallnotice("你悄悄往 SCOM传讯网 里塞了一块奶酪，让里面的老鼠暂时安静了下来……"))
 		last_cheese = world.time
 		qdel(W)
 
@@ -152,18 +152,18 @@
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	if(called_by && !calling)
-		called_by.say("Jabberline refused.", spans = list("info"))
-		say("Jabberline refused.", spans = list("info"))
+		called_by.say("密语线被拒绝。", spans = list("info"))
+		say("密语线被拒绝。", spans = list("info"))
 		called_by.calling = null
 		called_by = null
 		return
 	if(calling)
 		speaking = !speaking
-		to_chat(user, span_info("I [speaking ? "unmute" : "mute"] the output on the SCOM."))
+		to_chat(user, span_info("我将 SCOM传讯网 的输出[speaking ? "解除静音" : "静音"]了。"))
 		return
 	var/canread = user.can_read(src, TRUE)
 	var/contents
-	contents += "<center>[uppertext(SSticker.rulertype)]'S DECREES<BR>"
+	contents += "<center>[uppertext(SSticker.rulertype)]的法令<BR>"
 	contents += "-----------<BR><BR></center>"
 	for(var/i = GLOB.lord_decrees.len to 1 step -1)
 		contents += "[i]. <span class='info'>[GLOB.lord_decrees[i]]</span><BR>"
@@ -177,16 +177,16 @@
 	if(.)
 		return
 	if((HAS_TRAIT(user, TRAIT_GUARDSMAN) || (user.job == "Watchman") || (user.job == "Warden") || (user.job == "Master Warden") || (user.job == "Councillor") || (user.job == "Squire") || (user.job == "Marshal") || (user.job == "Grand Duke") || (user.job == "Knight Captain") || (user.job == "Grand Duchess") ||(user.job == "Hand") ||(user.job == "Vizier") || (user.job == "Sheikh") || (user.job == "Azeb") || (user.job == "Azebagha")))
-		if(alert("Would you like to swap lines or connect to a jabberline?",, "swap", "jabberline") != "jabberline")
+		if(alert("你想切换线路，还是接入密语线？",, "切换", "密语线") != "密语线")
 			garrisonline = !garrisonline
-			to_chat(user, span_info("I [garrisonline ? "connect to the garrison SCOMline" : "connect to the general SCOMLINE"]"))
+			to_chat(user, span_info("我[garrisonline ? "接入驻军 SCOM 线路" : "接入常规 SCOM 线路"]。"))
 			playsound(loc, 'sound/misc/garrisonscom.ogg', 100, FALSE, -1)
 			update_icon()
 			return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	if(calling)
-		calling.say("Jabberline severed.", spans = list("info"))
+		calling.say("密语线已切断。", spans = list("info"))
 		if(calling.calling == src || calling.called_by == src)
 			var/obj/structure/roguemachine/scomm/old_calling = calling
 			old_calling.called_by = null
@@ -196,38 +196,38 @@
 		calling = null
 		called_by = null
 		speaking = listening
-		to_chat(user, span_info("I cut the jabberline."))
-		say("Jabberline severed.", spans = list("info"))
+		to_chat(user, span_info("我切断了密语线。"))
+		say("密语线已切断。", spans = list("info"))
 		update_icon()
 	else
-		say("Input SCOM designation.", spans = list("info"))
-		var/nightcall = input(user, "Input the number you have been provided with.", "INTERFACING") as null|num
+		say("请输入 SCOM传讯网 编号。", spans = list("info"))
+		var/nightcall = input(user, "输入你拿到的编号。", "连接界面") as null|num
 		if(!nightcall)
 			return
 		if(nightcall == scom_number)
-			to_chat(user, span_warning("Nothing but rats squeaking back at you."))
+			to_chat(user, span_warning("回应你的只有老鼠的吱叫声。"))
 			playsound(src, 'sound/vo/mobs/rat/rat_life.ogg', 100, TRUE, -1)
 			return
 		if(SSroguemachine.scomm_machines.len < nightcall)
-			say("There are no rats running this jabberline.", spans = list("info"))
+			say("没有老鼠在维护这条密语线。", spans = list("info"))
 			return
 		var/obj/structure/roguemachine/scomm/S = SSroguemachine.scomm_machines[nightcall]
 		if(istype(S, /obj/structure/roguemachine/scomm/receive_only))
-			say("The RCOM has no rats to answer jabberlines.")
+			say("RCOM传讯网 里没有老鼠能回应密语线。")
 			return
 		if(istype(S, /obj/item/scomstone))
-			say("The jabberline's rats cannot travel to SCOMstones.") //Check prevents a runtime and leaves room to potentially make scomstones callable by ID later.
+			say("这条密语线的老鼠到不了传讯石。") //Check prevents a runtime and leaves room to potentially make scomstones callable by ID later.
 			playsound(src, 'sound/vo/mobs/rat/rat_life.ogg', 100, TRUE, -1)
 			return
 		if(!S)
-			to_chat(user, span_warning("Nothing but rats squeaking back at you."))
+			to_chat(user, span_warning("回应你的只有老鼠的吱叫声。"))
 			playsound(src, 'sound/vo/mobs/rat/rat_life.ogg', 100, TRUE, -1)
 			return
 		if(S.calling || S.called_by)
-			say("This jabberline's rats are occupied.", spans = list("info"))
+			say("这条密语线上的老鼠正忙着。", spans = list("info"))
 			return
 		if(!S.speaking)
-			say("This jabberline's rats have been gagged.", spans = list("info"))
+			say("这条密语线上的老鼠被堵住嘴了。", spans = list("info"))
 			return
 		calling = S
 		S.called_by = src
@@ -242,18 +242,18 @@
 			calling.ring_ring()
 			ring_ring()
 			sleep(30)
-		say("This jabberline's rats are exhausted.", spans = list("info"))
+		say("这条密语线上的老鼠已经筋疲力尽。", spans = list("info"))
 		calling.called_by = null
 		calling = null
 		update_icon()
 
 /obj/structure/roguemachine/scomm/receive_only/MiddleClick(mob/living/carbon/human/user)
-	to_chat(user, span_warning("The RCOM has no rats to send - it can only receive messages."))
+	to_chat(user, span_warning("RCOM传讯网 里没有能送信的老鼠，它只能接收消息。"))
 	return
 
 /obj/structure/roguemachine/scomm/obj_break(damage_flag)
 	..()
-	calling?.say("Jabberline severed.", spans = list("info"))
+	calling?.say("密语线已切断。", spans = list("info"))
 	calling?.speaking = calling?.listening
 	calling?.called_by = null
 	calling?.calling = null
@@ -324,14 +324,14 @@
 	if(!listening)
 		return
 	if(receive_only)
-		to_chat(speaker, span_warning("This RCOM is receive only!"))
+		to_chat(speaker, span_warning("这台 RCOM传讯网 只能接收消息！"))
 		return
 	if(last_cheese && (last_cheese + CHEESE_QUIET_TIME >= world.time))
-		to_chat(speaker, span_warning("The rats seems to be busy nibbling on something!"))
+		to_chat(speaker, span_warning("那些老鼠似乎正忙着啃什么东西！"))
 		return
 	if(world.time < last_message + NORMAL_SCOM_PER_MESSAGE_DELAY)
 		var/time_remaining = round((last_message + NORMAL_SCOM_PER_MESSAGE_DELAY - world.time) / 10)
-		to_chat(speaker, span_warning("The SCOM's rats are still recovering. Wait [time_remaining] more second[time_remaining != 1 ? "s" : ""]."))
+		to_chat(speaker, span_warning("SCOM传讯网 里的老鼠还在恢复。再等 [time_remaining] 秒。"))
 		return
 	var/mob/living/carbon/human/H = speaker
 	var/usedcolor = H.voice_color
@@ -385,13 +385,13 @@
 	if(dictating)
 		return
 	dictating = TRUE
-	repeat_message("THE LAWS OF THE LAND ARE...", tcolor = COLOR_RED)
+	repeat_message("国土法令如下……", tcolor = COLOR_RED)
 	INVOKE_ASYNC(src, PROC_REF(dictation))
 
 /obj/structure/roguemachine/scomm/proc/dictation()
 	if(!length(GLOB.laws_of_the_land))
 		sleep(2)
-		repeat_message("THE LAND HAS NO LAWS!", tcolor = COLOR_RED)
+		repeat_message("这片土地没有法律！", tcolor = COLOR_RED)
 		dictating = FALSE
 		return
 	for(var/i in 1 to length(GLOB.laws_of_the_land))

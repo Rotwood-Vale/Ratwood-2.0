@@ -11,7 +11,7 @@
 #define MAX_HOLE_SIZE LARGE_HOLE
 
 /obj/structure/fence
-	name = "fence"
+	name = "栅栏"
 	desc = ""
 	density = TRUE
 	anchored = TRUE
@@ -32,9 +32,9 @@
 
 	switch(hole_size)
 		if(MEDIUM_HOLE)
-			. += "There is a large hole in \the [src]."
+			. += "[src]上有一个大洞。"
 		if(LARGE_HOLE)
-			. += "\The [src] has been completely cut through."
+			. += "[src]已经被彻底剪穿了。"
 
 /obj/structure/fence/end
 	icon_state = "end"
@@ -59,29 +59,29 @@
 /obj/structure/fence/attackby(obj/item/W, mob/user)
 	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if(!cuttable)
-			to_chat(user, span_warning("This section of the fence can't be cut!"))
+			to_chat(user, span_warning("这段栅栏没法剪开！"))
 			return
 		if(invulnerable)
-			to_chat(user, span_warning("This fence is too strong to cut through!"))
+			to_chat(user, span_warning("这道栅栏太坚固了，切不开！"))
 			return
 		var/current_stage = hole_size
 		if(current_stage >= MAX_HOLE_SIZE)
-			to_chat(user, span_warning("This fence has too much cut out of it already!"))
+			to_chat(user, span_warning("这道栅栏已经被剪开太多了！"))
 			return
 
-		user.visible_message(span_danger("\The [user] starts cutting through \the [src] with \the [W]."),\
-		span_danger("I start cutting through \the [src] with \the [W]."))
+		user.visible_message(span_danger("[user]开始用[W]剪开[src]。"),\
+		span_danger("我开始用[W]剪开[src]。"))
 
 		if(do_after(user, CUT_TIME*W.toolspeed, target = src))
 			if(current_stage == hole_size)
 				switch(++hole_size)
 					if(MEDIUM_HOLE)
-						visible_message(span_notice("\The [user] cuts into \the [src] some more."))
-						to_chat(user, span_info("I could probably fit myself through that hole now. Although climbing through would be much faster if it was even bigger."))
+						visible_message(span_notice("[user]又把[src]剪开了一些。"))
+						to_chat(user, span_info("现在这个洞我大概能钻过去了。不过要是再大一点，翻过去会快得多。"))
 						set_climbable(TRUE)
 					if(LARGE_HOLE)
-						visible_message(span_notice("\The [user] completely cuts through \the [src]."))
-						to_chat(user, span_info("The hole in \the [src] is now big enough to walk through."))
+						visible_message(span_notice("[user]把[src]彻底剪穿了。"))
+						to_chat(user, span_info("[src]上的洞现在已经大到可以直接走过去了。"))
 						set_climbable(FALSE)
 
 				update_cut_status()
@@ -104,7 +104,7 @@
 //FENCE DOORS
 
 /obj/structure/fence/door
-	name = "fence door"
+	name = "栅栏门"
 	desc = ""
 	icon_state = "door_closed"
 	cuttable = FALSE
@@ -129,10 +129,10 @@
 /obj/structure/fence/door/proc/toggle(mob/user)
 	switch(open)
 		if(FALSE)
-			visible_message(span_notice("\The [user] opens \the [src]."))
+			visible_message(span_notice("[user]打开了[src]。"))
 			open = TRUE
 		if(TRUE)
-			visible_message(span_notice("\The [user] closes \the [src]."))
+			visible_message(span_notice("[user]关上了[src]。"))
 			open = FALSE
 
 	update_door_status()

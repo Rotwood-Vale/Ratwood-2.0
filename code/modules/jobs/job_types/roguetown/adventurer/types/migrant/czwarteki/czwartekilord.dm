@@ -1,6 +1,6 @@
 /datum/advclass/czwarteki/lord
-	name = "Czwarteki Lord"
-	tutorial = "You are one of many Lords within the Czwarteki Commonwealth, be it to have come for Diplomacy, War, or simple passing through to assist in old alliances. You are to lead your Retinue and bring honor to the Commonwealth."
+	name = "兹瓦尔特基 领主"
+	tutorial = "你是 兹瓦尔特基 联邦诸多领主中的一位。此来或为外交，或为战争，或只是路经此地以履行旧日盟约。你要率领自己的扈从，为联邦带来荣耀。"
 	outfit = /datum/outfit/job/roguetown/czwarteki/lord
 	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
 	category_tags = list(CTAG_CZWAR_LORD)

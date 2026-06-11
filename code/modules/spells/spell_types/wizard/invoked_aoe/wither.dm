@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/wither
-	name = "Wither"
-	desc = "Lashes out a delayed line of dark magic, lowering the physical prowess of all in it's path."
+	name = "枯萎术"
+	desc = "释放出一条延迟爆发的黑暗魔线，削弱路径上所有人的体魄。"
 	cost = 3
 	releasedrain = 50
 	overlay_state = "wither" // just using the curse blob, it's placeholder.
@@ -15,7 +15,7 @@
 	associated_skill = /datum/skill/magic/arcane
 	gesture_required = TRUE // Offensive spell
 	spell_tier = 3 // AOE
-	invocations = list("Arescentem!")
+	invocations = list("枯萎，蔓延！")
 	invocation_type = "shout"
 	glow_color = "#b884f8" // evil ass purple
 	glow_intensity = GLOW_INTENSITY_HIGH
@@ -35,7 +35,7 @@
 	var/turf/source_turf = get_turf(user)
 
 	if(T.z != user.z)
-		to_chat(user, span_warning("You can't cast this spell on a different z-level!"))
+		to_chat(user, span_warning("我无法对不同 z 层施放这个法术！"))
 		return FALSE
 
 	var/list/affected_turfs = getline(source_turf, T)
@@ -56,7 +56,7 @@
 	playsound(damage_turf, 'sound/magic/shadowstep_destination.ogg', 50)
 	for(var/mob/living/L in damage_turf.contents)
 		if(L.anti_magic_check())
-			visible_message(span_warning("The magic fades away around you [L] "))  //antimagic needs some testing
+			visible_message(span_warning("[L] 周围的枯萎魔力消散了！"))  //antimagic needs some testing
 			playsound(damage_turf, 'sound/magic/magic_nulled.ogg', 100)
 			return
 		L.adjustFireLoss(damage)

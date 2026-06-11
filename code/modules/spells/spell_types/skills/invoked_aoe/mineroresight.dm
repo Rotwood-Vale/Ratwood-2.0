@@ -1,7 +1,7 @@
 // a skill to help miners find medium to high quality rock and to sort out boulders before breaking them
 /obj/effect/proc_holder/spell/invoked/mineroresight
-	name = "Miner's Ore Sight"
-	desc = "check for good ore"
+	name = "矿脉洞察"
+	desc = "探查附近更有价值的矿脉。"
 	overlay_state = "analyze"
 	releasedrain = 10
 	chargedrain = 0

@@ -1,7 +1,7 @@
 /datum/advclass/vagabond_deprived
-	name = "Deprived"
-	examine_name = "Beggar"
-	tutorial = "You have nothing left but your trusty shield and club - war took away everything you had but will you manage to reclaim what was yours or succumb to the horrors of Psydonia."
+	name = "失乡者"
+	examine_name = "乞丐"
+	tutorial = "你如今只剩下那面可信的盾和一根木棒。战争夺走了你拥有的一切，但你究竟还能夺回本该属于自己的东西，还是终会屈服于 普赛多尼亚 的恐怖之下？"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/vagabond/deprived

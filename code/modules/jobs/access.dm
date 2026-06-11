@@ -170,156 +170,156 @@
 /proc/get_region_accesses_name(code)
 	switch(code)
 		if(0)
-			return "All"
+			return "全部"
 		if(1) //station general
-			return "General"
+			return "综合"
 		if(2) //security
-			return "Security"
+			return "安保"
 		if(3) //medbay
-			return "Medbay"
+			return "医疗"
 		if(4) //research
-			return "Research"
+			return "研究"
 		if(5) //engineering and maintenance
-			return "Engineering"
+			return "工程"
 		if(6) //supply
-			return "Supply"
+			return "后勤"
 		if(7) //command
-			return "Command"
+			return "指挥"
 
 /proc/get_access_desc(A)
 	switch(A)
 		if(ACCESS_CARGO)
-			return "Cargo Bay"
+			return "货运区"
 		if(ACCESS_SECURITY)
-			return "Security"
+			return "安保"
 		if(ACCESS_BRIG)
-			return "Holding Cells"
+			return "拘留室"
 		if(ACCESS_COURT)
-			return "Courtroom"
+			return "法庭"
 		if(ACCESS_FORENSICS_LOCKERS)
-			return "Forensics"
+			return "法证室"
 		if(ACCESS_MEDICAL)
-			return "Medical"
+			return "医疗部"
 		if(ACCESS_GENETICS)
-			return "Genetics Lab"
+			return "遗传实验室"
 		if(ACCESS_MORGUE)
-			return "Morgue"
+			return "停尸房"
 		if(ACCESS_TOX)
-			return "R&D Lab"
+			return "研发实验室"
 		if(ACCESS_TOX_STORAGE)
-			return "Toxins Lab"
+			return "毒素实验室"
 		if(ACCESS_CHEMISTRY)
-			return "Chemistry Lab"
+			return "化学实验室"
 		if(ACCESS_RD)
-			return "RD Office"
+			return "研究主管办公室"
 		if(ACCESS_BAR)
 			return "Bar"
 		if(ACCESS_JANITOR)
-			return "Custodial Closet"
+			return "清洁储物间"
 		if(ACCESS_ENGINE)
-			return "Engineering"
+			return "工程部"
 		if(ACCESS_ENGINE_EQUIP)
-			return "Power and Engineering Equipment"
+			return "电力与工程设备"
 		if(ACCESS_MAINT_TUNNELS)
-			return "Maintenance"
+			return "维护区"
 		if(ACCESS_EXTERNAL_AIRLOCKS)
-			return "External Airlocks"
+			return "外部气闸"
 		if(ACCESS_CHANGE_IDS)
-			return "ID Console"
+			return "ID 控制台"
 		if(ACCESS_AI_UPLOAD)
-			return "AI Chambers"
+			return "AI 控制室"
 		if(ACCESS_TELEPORTER)
-			return "Teleporter"
+			return "传送室"
 		if(ACCESS_EVA)
 			return "EVA"
 		if(ACCESS_HEADS)
-			return "Bridge"
+			return "舰桥"
 		if(ACCESS_CAPTAIN)
-			return "Captain"
+			return "舰长室"
 		if(ACCESS_ALL_PERSONAL_LOCKERS)
-			return "Personal Lockers"
+			return "个人储物柜"
 		if(ACCESS_CHAPEL_OFFICE)
-			return "Chapel Office"
+			return "教堂办公室"
 		if(ACCESS_TECH_STORAGE)
-			return "Technical Storage"
+			return "技术储藏室"
 		if(ACCESS_ATMOSPHERICS)
-			return "Atmospherics"
+			return "大气系统"
 		if(ACCESS_CREMATORIUM)
-			return "Crematorium"
+			return "火葬间"
 		if(ACCESS_ARMORY)
-			return "Armory"
+			return "军械库"
 		if(ACCESS_CONSTRUCTION)
-			return "Construction"
+			return "建造区"
 		if(ACCESS_KITCHEN)
-			return "Kitchen"
+			return "??"
 		if(ACCESS_HYDROPONICS)
-			return "Hydroponics"
+			return "水培区"
 		if(ACCESS_LIBRARY)
-			return "Library"
+			return "图书馆"
 		if(ACCESS_LAWYER)
-			return "Law Office"
+			return "律师事务所"
 		if(ACCESS_ROBOTICS)
-			return "Robotics"
+			return "机器人学"
 		if(ACCESS_VIROLOGY)
-			return "Virology"
+			return "病毒学"
 		if(ACCESS_CMO)
-			return "CMO Office"
+			return "首席医官办公室"
 		if(ACCESS_QM)
-			return "Quartermaster"
+			return "军需官室"
 		if(ACCESS_SURGERY)
-			return "Surgery"
+			return "手术室"
 		if(ACCESS_THEATRE)
-			return "Theatre"
+			return "??"
 		if(ACCESS_RESEARCH)
-			return "Science"
+			return "科学部"
 		if(ACCESS_MINING)
-			return "Mining"
+			return "采矿区"
 		if(ACCESS_MAILSORTING)
-			return "Cargo Office"
+			return "货运办公室"
 		if(ACCESS_VAULT)
-			return "Main Vault"
+			return "主金库"
 		if(ACCESS_MINING_STATION)
-			return "Mining EVA"
+			return "采矿 EVA"
 		if(ACCESS_XENOBIOLOGY)
-			return "Xenobiology Lab"
+			return "异种生物实验室"
 		if(ACCESS_HOP)
-			return "HoP Office"
+			return "人事主管办公室"
 		if(ACCESS_HOS)
-			return "HoS Office"
+			return "安保主管办公室"
 		if(ACCESS_CE)
-			return "CE Office"
+			return "首席工程师办公室"
 		if(ACCESS_APOTHECARY)
-			return "Archivist"
+			return "档案官"
 		if(ACCESS_RC_ANNOUNCE)
-			return "RC Announcements"
+			return "无线公告"
 		if(ACCESS_KEYCARD_AUTH)
-			return "Keycode Auth."
+			return "钥码认证"
 		if(ACCESS_TCOMSAT)
-			return "Telecommunications"
+			return "通信系统"
 		if(ACCESS_GATEWAY)
-			return "Gateway"
+			return "传送门"
 		if(ACCESS_SEC_DOORS)
-			return "Brig"
+			return "禁闭室"
 		if(ACCESS_MINERAL_STOREROOM)
-			return "Mineral Storage"
+			return "矿物仓库"
 		if(ACCESS_MINISAT)
-			return "AI Satellite"
+			return "AI 卫星站"
 		if(ACCESS_WEAPONS)
-			return "Weapon Permit"
+			return "武器许可"
 		if(ACCESS_NETWORK)
-			return "Network Access"
+			return "网络权限"
 		if(ACCESS_CLONING)
-			return "Cloning Room"
+			return "克隆室"
 		if(ACCESS_MECH_MINING)
-			return "Mining Mech Access"
+			return "采矿机甲权限"
 		if(ACCESS_MECH_MEDICAL)
-			return "Medical Mech Access"
+			return "医疗机甲权限"
 		if(ACCESS_MECH_SECURITY)
-			return "Security Mech Access"
+			return "安保机甲权限"
 		if(ACCESS_MECH_SCIENCE)
-			return "Science Mech Access"
+			return "科研机甲权限"
 		if(ACCESS_MECH_ENGINE)
-			return "Engineering Mech Access"
+			return "工程机甲权限"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)

@@ -141,7 +141,7 @@
 	if(!valid_turfs.len)
 		return
 
-	heart_beast.visible_message(span_warning("[heart_beast] shudders and releases a colorful discharge!"))
+	heart_beast.visible_message(span_warning("[heart_beast]浑身一颤，喷出一团五彩分泌物！"))
 
 	var/num_projectiles = rand(3, 6)
 	for(var/i = 1 to num_projectiles)
@@ -196,7 +196,7 @@
 	happiness = max(happiness - (max_happiness * 0.05), 0)
 
 	if(happiness <= 20 && prob(20))
-		heart_beast.visible_message(span_warning("[heart_beast] seems discontent..."))
+		heart_beast.visible_message(span_warning("[heart_beast]显得有些不满……"))
 
 /datum/component/chimeric_heart_beast/proc/update_blood_overlay()
 	var/blood_percent = blood_pool / max_blood_pool
@@ -224,13 +224,13 @@
 		heart_beast.say(current_task.question)
 		playsound(heart_beast, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 		set_current_listener(user)
-		heart_beast.visible_message(span_warning("Tendrils from [heart_beast] extend towards [user] attentively!"))
+		heart_beast.visible_message(span_warning("[heart_beast]的触须专注地朝[user]伸了过去！"))
 	else if (!satisfied)
 		playsound(heart_beast, 'sound/misc/machineno.ogg', 100, FALSE, -1)
-		heart_beast.visible_message(span_warning("The [heart_beast] seems too grumpy to learn right now... perhaps it wants something else first."))
+		heart_beast.visible_message(span_warning("[heart_beast]现在脾气太差，不想学习……也许它得先要点别的东西。"))
 	else if (!current_task)
 		playsound(heart_beast, 'sound/misc/machineno.ogg', 100, FALSE, -1)
-		heart_beast.visible_message(span_warning("The [heart_beast] seems tired. waving you away."))
+		heart_beast.visible_message(span_warning("[heart_beast]看起来累了，挥动触须把你赶开。"))
 
 /datum/component/chimeric_heart_beast/proc/on_item_interact(datum/source, obj/item/I, mob/user)
 	SIGNAL_HANDLER
@@ -252,10 +252,10 @@
 
 /datum/component/chimeric_heart_beast/proc/try_fill_blood_container(obj/item/empty_container, mob/user, amount, filled_type)
 	if(blood_pool < amount)
-		to_chat(user, span_warning("The blood pool is too low to fill [empty_container]."))
+		to_chat(user, span_warning("血池储量太低，无法装满[empty_container]。"))
 		return FALSE
 
-	to_chat(user, span_info("You begin filling up [empty_container] with blood from the pool."))
+	to_chat(user, span_info("你开始用血池里的血液灌装[empty_container]。"))
 
 	if(do_after(user, 5 SECONDS))
 		if(blood_pool >= amount)
@@ -265,9 +265,9 @@
 			user.put_in_hands(newcan)
 			return TRUE
 		else
-			to_chat(user, span_warning("The blood pool ran dry while you were filling [empty_container]."))
+			to_chat(user, span_warning("你在灌装[empty_container]时，血池已经见底了。"))
 			return FALSE
-	to_chat(user, span_warning("You stop filling [empty_container]."))
+	to_chat(user, span_warning("你停止了灌装[empty_container]。"))
 	return FALSE
 
 /datum/component/chimeric_heart_beast/proc/set_current_listener(mob/user)
@@ -278,7 +278,7 @@
 /datum/component/chimeric_heart_beast/proc/clear_listener()
 	current_listener = null
 	listener_timeout_time = 0
-	heart_beast.visible_message(span_notice("The tendrils from [heart_beast] retract, no longer focused on anyone."))
+	heart_beast.visible_message(span_notice("[heart_beast]的触须缩了回去，不再专注于任何人。"))
 
 /datum/component/chimeric_heart_beast/proc/on_hear(datum/source, mob/speaker, raw_message)
 	SIGNAL_HANDLER
@@ -381,7 +381,7 @@
 /datum/component/chimeric_heart_beast/proc/upgrade_language_tier()
 	if(current_language_progress >= max_language_progress && language_tier != max_language_tier)
 		language_tier++
-		heart_beast.visible_message(span_notice("[heart_beast] seems to resonate with newfound understanding!"))
+		heart_beast.visible_message(span_notice("[heart_beast]似乎因新获得的理解而共鸣起来！"))
 		playsound(heart_beast, 'sound/misc/machinelong.ogg', 100, FALSE, -1)
 		current_language_progress = 0
 
@@ -393,64 +393,64 @@
 	if(prob(language_tier * 25))
 		switch(score)
 			if(0 to 49)
-				heart_beast.visible_message(span_warning("[heart_beast] seems only moderately satisfied."))
+				heart_beast.visible_message(span_warning("[heart_beast]看起来只是勉强满意。"))
 			if(50 to 74)
-				heart_beast.visible_message(span_notice("[heart_beast] pulses gently, seeming satisfied."))
+				heart_beast.visible_message(span_notice("[heart_beast]轻轻搏动着，似乎很满意。"))
 			if(75 to 100)
-				heart_beast.visible_message(span_cult("[heart_beast] pulses strongly, seeming deeply satisfied!"))
+				heart_beast.visible_message(span_cult("[heart_beast]强烈地搏动着，显得无比满足！"))
 
 	switch(language_tier)
 		if(1)
 			success_responses = list(
-				"Grok...",
-				"Know... yes...",
-				"Pattern... good...",
-				"Understand... flow..."
+				"懂……",
+				"知道……是……",
+				"规律……好……",
+				"理解……流动……"
 			)
 			failure_responses = list(
-				"Bad... pattern...",
-				"No... know...",
-				"Wrong... shape...",
-				"Confuse... RrRrrhhh..."
+				"坏……规律……",
+				"不……知道……",
+				"错……形状……",
+				"混乱……呃噜噜……"
 			)
 		if(2)
 			success_responses = list(
-				"Understanding flows...",
-				"Knowledge accepted.",
-				"The pattern clarifies.",
-				"Yes... I see..."
+				"理解在流动……",
+				"知识已接受。",
+				"规律清晰起来了。",
+				"是的……我明白了……"
 			)
 			failure_responses = list(
-				"Incomprehensible...",
-				"The meaning eludes...",
-				"Pattern unclear.",
-				"Not right..."
+				"无法理解……",
+				"含义溜走了……",
+				"规律不清晰。",
+				"不对……"
 			)
 		if(3)
 			success_responses = list(
-				"The understanding flows gracefully.",
-				"Your knowledge is accepted with gratitude.",
-				"The pattern becomes beautifully clear.",
-				"I comprehend your meaning fully."
+				"理解优雅地流过。",
+				"我怀着感激接受了你的知识。",
+				"这规律变得清晰而美妙。",
+				"我完全理解你的意思。"
 			)
 			failure_responses = list(
-				"Your meaning remains obscure to me.",
-				"The pattern fails to resolve clearly.",
-				"I cannot extract understanding from this.",
-				"This answer lacks coherence."
+				"你的意思对我而言仍然晦涩。",
+				"这规律仍无法清晰成形。",
+				"我无法从中提取理解。",
+				"这个回答缺乏连贯性。"
 			)
 		if(4)
 			success_responses = list(
-				"The essence of understanding flows through me with perfect clarity.",
-				"Your wisdom is gratefully accepted and integrated into my being.",
-				"The grand pattern of existence clarifies before our shared consciousness.",
-				"With this knowledge, we approach true unity of thought and purpose."
+				"理解的本质以完美的清晰度流过我。",
+				"我怀着感激接受你的智慧，并将其融入自身。",
+				"存在的宏大纹理在我们共享的意识前变得清晰。",
+				"凭借这份知识，我们正接近思想与目的的真正统一。"
 			)
 			failure_responses = list(
-				"Even at our heightened state, this answer fails to convey meaningful understanding.",
-				"The pattern remains frustratingly opaque despite our connection.",
-				"This response lacks the coherence expected at our level of communion.",
-				"I cannot integrate this fragmented thought into our shared understanding."
+				"即便在我们更高的状态下，这个回答仍未能传达有意义的理解。",
+				"尽管我们彼此相连，这规律仍令人沮丧地晦暗不明。",
+				"这个回答缺少与我们此等共鸣层次相称的连贯性。",
+				"我无法将这碎裂的思绪纳入我们的共同理解。"
 			)
 
 	if(type == "success")

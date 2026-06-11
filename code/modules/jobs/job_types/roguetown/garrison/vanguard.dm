@@ -1,5 +1,6 @@
 /datum/job/roguetown/vanguard
 	title = "Vanguard"
+	display_title = "先锋守卒"
 	flag = BOGGUARD
 	department_flag = GARRISON
 	faction = "Station"
@@ -10,10 +11,10 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
-	tutorial = "Either a fresh lowborn recruit with something to prove or paying off your crimes with a mandated tour of duty, you have been assigned to the lowtown bastion. \
-	You have a roof over your head, meagre coin in your pocket, and a thankless job protecting the outskirts of town against what lurks beyond.\
-	You are subordinate to the aloof Master Warden and his cadre of Wardens above you, and may be called upon as members of the garrison by the Marshal and Crown. \
-	Serve their will as the first line of defence from threats beyond the borders of civilisation, hold the vanguard bastion, and try to survive another day. Maybe you'll make it into the Wardens some day."
+	tutorial = "不论你是想证明自己的卑微新兵，还是被迫服役来偿还罪责的犯人，你如今都被派往下城区堡垒。\
+	你有片瓦遮头，口袋里有点微薄军饷，还有一份没人感激的苦差，要替镇郊挡住荒野之外潜伏的威胁。\
+	你隶属于那位冷淡的守林总长及其麾下守林人，也可能被元帅与王权当作驻军成员调遣。\
+	按他们的意志行事，充当文明边境之外第一道防线，守住先锋堡垒，再努力多活一天。说不定哪天你也能跻身守林人之列。"
 	display_order = JDO_TOWNGUARD
 	whitelist_req = TRUE
 
@@ -46,9 +47,9 @@
 	job_bitflag = BITFLAG_GARRISON
 
 /datum/advclass/vanguard/archer
-	name = "Vanguard Archer"
-	tutorial = "You are well versed in the ways of handling a bow. \
-	You will stand in the back, and protect the front with arrows."	
+	name = "先锋弓手"
+	tutorial = "你对弓术之道已算熟稔。\
+	你将站在后方，用箭雨掩护前线。"	
 	outfit = /datum/outfit/job/roguetown/vanguard/archer
 	category_tags = list(CTAG_VANGUARD)
 	traits_applied = list(TRAIT_DODGEEXPERT)
@@ -97,9 +98,9 @@
 
 
 /datum/advclass/vanguard/footman
-	name = "Vanguard Footman"
-	tutorial = "You are adequately briefed on the ways of wielding pointy sticks. \
-	You will stand in the front, and protect."
+	name = "先锋步卒"
+	tutorial = "你对各种尖头长兵器的用法已经受过足够训练。\
+	你将立于前线，担起守御。"
 	outfit = /datum/outfit/job/roguetown/vanguard/footman
 	category_tags = list(CTAG_VANGUARD)
 	traits_applied = list(TRAIT_MEDIUMARMOR)

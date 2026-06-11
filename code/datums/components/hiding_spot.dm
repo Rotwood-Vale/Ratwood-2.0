@@ -6,11 +6,11 @@
 	/// Reference to whatever is hiding inside parent
 	var/datum/weakref/hider
 	/// Message you get when the spot is occupied
-	var/occupied_message = "Someone is already hiding in %LOCATION!"
+	var/occupied_message = "已经有人藏在%LOCATION里了！"
 	/// Message you get when you hide inside
-	var/hide_message = "I hide in %LOCATION!"
+	var/hide_message = "我躲进了%LOCATION里！"
 	/// Message you get when you unhide from
-	var/unhide_message = "I come out from %LOCATION!"
+	var/unhide_message = "我从%LOCATION里钻了出来！"
 
 /*
  * Component Arguments:
@@ -64,7 +64,7 @@
 		return
 
 	if(locate(/obj/structure/bars) in get_turf(parent))
-		to_chat(potential_hider, span_warning("This hiding spot is blocked!"))
+		to_chat(potential_hider, span_warning("这个藏身处被堵住了！"))
 		return
 
 	if(hider?.resolve())
@@ -111,9 +111,9 @@
 	var/mob/living/found_mob = hider?.resolve()
 	if(!found_mob)
 		examine_list += span_notice(\
-			"Some structures can be used as hiding places. \
-			Toggle the 'SNEAK' button on your HUD, then click the structure to hide in it. \
-			You can stop hiding by clicking the structure again, or by moving out of it.")
+			"有些结构可以用作藏身处。\
+			打开 HUD 上的 'SNEAK' 按钮，然后点击该结构即可躲进去。\
+			再次点击该结构，或主动移动离开，即可结束躲藏。")
 		return
 
 	escape_hidingspot(found_mob)

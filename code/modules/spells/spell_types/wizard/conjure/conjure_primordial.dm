@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/invoked/conjure_primordial
-	name = "Conjure Primordial"
-	desc = "Consume a handful of fire, water, or air essentia and conjures that type of Primordial.\n\
-	This spell cannot be refunded."
+	name = "唤生元初灵"
+	desc = "消耗一把火、水或风的精质，并召出对应类型的元初灵。\n\
+	这道法术无法返还。"
 	clothes_req = FALSE
 	overlay_state = "rune0"
 	range = 7
@@ -24,12 +24,12 @@
 /obj/effect/proc_holder/spell/invoked/conjure_primordial/cast(list/targets, mob/living/user)
 	. = ..()
 	if(length(conjured_mobs) >= 2)
-		to_chat(user, span_warning("You can not possibly maintain your focus on any more primordials!"))
+		to_chat(user, span_warning("我不可能再分神维持更多元初灵了！"))
 		revert_cast()
 		return
 	var/turf/T = get_turf(targets[1])
 	if(!isopenturf(T))
-		to_chat(user, span_warning("The targeted location is blocked. My summon fails to come forth."))
+		to_chat(user, span_warning("目标地点被阻挡了。我的召唤无法显现。"))
 		revert_cast()
 		return
 
@@ -40,7 +40,7 @@
 			break
 
 	if(!sacrifice)
-		to_chat(user, span_warning("I require some essentia in a free hand."))
+		to_chat(user, span_warning("我需要在空着的手里握有一些精质。"))
 		revert_cast()
 		return
 	if(!spellsgranted)
@@ -71,11 +71,11 @@
 		conjured_mobs -= conjured
 
 /obj/effect/proc_holder/spell/invoked/minion_order/primordial
-	name = "Order Primordial"
+	name = "号令元初灵"
 	refundable = FALSE
 /obj/effect/proc_holder/spell/invoked/primordialmark
-	name = "Primordial Mark"
-	desc = "Cast on turf to activate nearby primordials special ability. Cast on others to mark them as friendly to primordials, or remove their existing mark."
+	name = "元初印记"
+	desc = "对地面施放可激活附近元初灵的特殊能力；对其他目标施放可将其标记为元初灵的友方，或移除其已有标记。"
 	overlay_state = "primetriangle"
 	refundable = FALSE
 	range = 7
@@ -92,29 +92,29 @@
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 		if (target == user)
-			to_chat(user, span_warning("It would be unwise to make an enemy of your own primordials"))
+			to_chat(user, span_warning("把自己的元初灵变成敌人可不是什么明智之举。"))
 			return FALSE
 		if(target.mind && target.mind.current)
 			if (faction_tag in target.mind.current.faction)
 				target.mind.current.faction -= faction_tag
-				user.say("Hostis declaratus es.")
+				user.say("我已宣你为敌。")
 			else
 				target.mind.current.faction += faction_tag
-				user.say("Amicus declaratus es.")
+				user.say("我已宣你为友。")
 				target.notify_faction_change()
 		else if(istype(target, /mob/living/simple_animal))
 			if (faction_tag in target.faction)
 				target.faction -= faction_tag
-				user.say("Hostis declaratus es.")
+				user.say("我已宣你为敌。")
 			else
 				target.faction |= faction_tag
-				user.say("Amicus declaratus es.")
+				user.say("我已宣你为友。")
 				target.notify_faction_change()
 		return TRUE
 	else if(isturf(targets[1]))
 		var/turf/T = get_turf(targets[1])
 		for(var/mob/living/simple_animal/hostile/retaliate/rogue/primordial/primordial in oview(3, T))
 			if(faction_tag in primordial.faction)
-				to_chat(user,"[primordial.name] will focus their ability on the marked tile!")
+				to_chat(user,"[primordial.name] 会将能力集中施放在被标记的地块上！")
 				primordial.ability(T, user)
 	return FALSE

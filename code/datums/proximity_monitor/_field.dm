@@ -166,8 +166,8 @@
 
 //DEBUG FIELD ITEM
 /obj/item/multitool/field_debug
-	name = "strange multitool"
-	desc = "Seems to project a colored field!"
+	name = "奇怪的多功能工具"
+	desc = "它似乎会投射出一片有色力场！"
 	var/operating = FALSE
 	var/datum/proximity_monitor/advanced/debug/current = null
 
@@ -183,7 +183,7 @@
 
 /obj/item/multitool/field_debug/attack_self(mob/user)
 	operating = !operating
-	to_chat(user, span_notice("You turn [src] [operating? "on":"off"]."))
+	to_chat(user, span_notice("我把[src][operating? "打开":"关闭"]了。"))
 	if(!istype(current) && operating)
 		setup_debug_field()
 	else if(!operating)

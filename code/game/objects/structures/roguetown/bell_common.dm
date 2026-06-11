@@ -1,6 +1,6 @@
 /obj/structure/bell_common
-	name = "bell"
-	desc = "A good way to get someone's attention... or piss them off."
+	name = "铃铛"
+	desc = "引起某人注意的好方法...或者激怒他们。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "bell_common"
 	density = FALSE
@@ -11,7 +11,7 @@
 /obj/structure/bell_common/attack_hand(mob/user)
 	if(world.time < last_ring + 15)
 		return
-	user.visible_message(span_info("[user] starts ringing the bell."))
+	user.visible_message(span_info("[user]开始摇铃铛。"))
 	playsound(src, 'sound/misc/bell_common.ogg', 100, extrarange = 8, ignore_walls = TRUE)
 	flick("bell_commonpressed", src)
 	last_ring = world.time

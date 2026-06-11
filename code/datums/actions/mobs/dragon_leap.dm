@@ -1,8 +1,8 @@
 /datum/action/cooldown/mob_cooldown/dragon_leap
-	name = "Dragon Leap"
+	name = "龙跃"
 	button_icon = 'icons/obj/magic.dmi'
 	button_icon_state = "fireball"
-	desc = "Leap towards the enemy!"
+	desc = "朝敌人猛扑过去！"
 	cooldown_time = 15 SECONDS
 	var/cast_time	= 1 SECONDS
 	
@@ -11,7 +11,7 @@
 /datum/action/cooldown/mob_cooldown/dragon_leap/Activate(atom/target)
 	var/dist = get_dist(owner, target)
 	if(can_see(owner, target, range) && dist < range && dist > 1) //can see, in range and not adjacent
-		owner.visible_message(span_alert("[owner] leans back on its haunches, eyeing [target]."))
+		owner.visible_message(span_alert("[owner]后腿微屈，紧盯着[target]。"))
 		disable_cooldown_actions()
 		addtimer(CALLBACK(src, PROC_REF(leap_target), target), cast_time)
 		StartCooldown()
@@ -42,14 +42,14 @@
 		open_turfs += possible_turf
 
 	if(!length(open_turfs))//They are in the perfect no jumping spot. We lose.
-		owner.visible_message(span_alert("[owner] roars in frustration."))
+		owner.visible_message(span_alert("[owner]恼怒地咆哮起来。"))
 		return
 
 	var/turf/final_turf = get_closest_atom(/turf, open_turfs, owner)
-	owner.visible_message(span_alert("[owner] leaps into the air and lands near [target]!"))
+	owner.visible_message(span_alert("[owner]跃入空中，落在了[target]附近！"))
 	owner.throw_at(target = final_turf, range = range, speed = 0.3, thrower = owner, spin = 0, diagonals_first = FALSE, callback = null, force = 1)
 
 /datum/action/cooldown/mob_cooldown/dragon_leap/proc/leapt_on_target(mob/living/victim)
-	owner.visible_message(span_alert("[owner] leaps into the air and lands atop [victim]!"))
+	owner.visible_message(span_alert("[owner]跃入空中，重重扑到了[victim]身上！"))
 	if(!QDELETED(victim))
 		victim.OffBalance(30)

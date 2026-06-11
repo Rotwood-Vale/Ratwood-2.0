@@ -1,9 +1,9 @@
 /datum/language/canilunzt
-	name = "Canilunzt"
-	desc = "(Spoken with ,l) A somewhat simple language consisting of heavily articulate barks, growls, yaps, and combined movements of the tail and ears. It's natively spoken by the Lupian and Venardine. Its parlance has been loosely compared to the Grenzel language group."
-	speech_verb = "rrrfts"
-	ask_verb = "rurs"
-	exclaim_verb = "snaps"
+	name = "卡尼伦兹特语"
+	desc = "(用 ,l 说) 这是一种相对直白的语言，由清晰有力的吠叫、低吼、短促犬吠，以及尾巴与耳朵的配合动作共同构成。它是卢皮安与维纳丁的母语，其表达方式常被宽泛地拿来与格伦泽尔语系相比。"
+	speech_verb = "呜噜"
+	ask_verb = "呜声发问"
+	exclaim_verb = "龇声喝道"
 	key = "l"
 	flags = LANGUAGE_HIDE_ICON_IF_UNDERSTOOD | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD
 	space_chance = 80

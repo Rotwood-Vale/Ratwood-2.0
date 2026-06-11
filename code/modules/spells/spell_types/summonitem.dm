@@ -1,10 +1,10 @@
 /obj/effect/proc_holder/spell/targeted/summonitem
-	name = "Instant Summons"
+	name = "即时召回"
 	desc = ""
 	school = "transmutation"
 	recharge_time = 100
 	clothes_req = FALSE
-	invocations = list("GAR YOK")
+	invocations = list("归来我手。")
 	invocation_type = "whisper"
 	range = -1
 	cooldown_min = 100
@@ -27,26 +27,26 @@
 				if(SEND_SIGNAL(item, COMSIG_ITEM_MARK_RETRIEVAL) & COMPONENT_BLOCK_MARK_RETRIEVAL)
 					continue
 				if(HAS_TRAIT(item, TRAIT_NODROP))
-					message += "Though it feels redundant, "
+					message += "虽然这显得有些多余，"
 				marked_item = 		item
-				message += "You mark [item] for recall.</span>"
-				name = "Recall [item]"
+				message += "你为[item]烙下了召回印记。</span>"
+				name = "召回[item]"
 				break
 
 			if(!marked_item)
 				if(hand_items)
-					message = span_warning("I'm not holding anything that can be marked for recall!")
+					message = span_warning("我手里没有任何可供烙下召回印记的物品！")
 				else
-					message = span_warning("I must hold the desired item in my hands to mark it for recall!")
+					message = span_warning("我必须把想要标记的物品握在手里，才能为它烙下召回印记！")
 
 		else if(marked_item && (marked_item in hand_items)) //unlinking item to the spell
-			message = span_notice("I remove the mark on [marked_item] to use elsewhere.")
-			name = "Instant Summons"
+			message = span_notice("我解除了[marked_item]上的印记，好将它用于别处。")
+			name = "即时召回"
 			marked_item = 		null
 
 		else if(marked_item && QDELETED(marked_item)) //the item was destroyed at some point
-			message = span_warning("I sense my marked item has been destroyed!")
-			name = "Instant Summons"
+			message = span_warning("我感觉那件被标记的物品已经毁坏了！")
+			name = "即时召回"
 			marked_item = 		null
 
 		else	//Getting previously marked item
@@ -75,20 +75,20 @@
 								var/obj/item/bodypart/part = X
 								if(item_to_retrieve in part.embedded_objects)
 									part.remove_embedded_object(item_to_retrieve)
-									to_chat(C, span_warning("The [item_to_retrieve] that was embedded in your [L] has mysteriously vanished. How fortunate!"))
+									to_chat(C, span_warning("嵌在你[L]身上的[item_to_retrieve]神秘地消失了。真是走运！"))
 									break
 						item_to_retrieve = item_to_retrieve.loc
 					infinite_recursion += 1
 			if(!item_to_retrieve)
 				return
 			if(item_to_retrieve.loc)
-				item_to_retrieve.loc.visible_message(span_warning("The [item_to_retrieve.name] suddenly disappears!"))
+				item_to_retrieve.loc.visible_message(span_warning("[item_to_retrieve.name]突然消失了！"))
 			if(!L.put_in_hands(item_to_retrieve))
 				item_to_retrieve.forceMove(L.drop_location())
-				item_to_retrieve.loc.visible_message(span_warning("The [item_to_retrieve.name] suddenly appears!"))
+				item_to_retrieve.loc.visible_message(span_warning("[item_to_retrieve.name]突然出现了！"))
 				playsound(get_turf(L), 'sound/blank.ogg', 50, TRUE)
 			else
-				item_to_retrieve.loc.visible_message(span_warning("The [item_to_retrieve.name] suddenly appears in [L]'s hand!"))
+				item_to_retrieve.loc.visible_message(span_warning("[item_to_retrieve.name]突然出现在[L]手中！"))
 				playsound(get_turf(L), 'sound/blank.ogg', 50, TRUE)
 		if(message)
 			to_chat(L, message)

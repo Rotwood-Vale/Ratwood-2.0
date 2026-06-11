@@ -28,9 +28,9 @@
 
 /datum/storyteller/psydon
 	name = "Psydon"
-	vote_desc = "Peace reigns. No villains will be present. His children can rest easy, for they have earned their respite"
-	desc = "Psydon will do little, events will be common as he takes a hands-off approach to the world. Consider this the 'extended' experience."
-	welcome_text = "A temperate breeze rolls through the quiet streets.."
+	vote_desc = "和平主宰一切。不会有恶人现身。祂的子民终于得以安歇，因为他们已赢得片刻喘息。"
+	desc = "Psydon 几乎不会干预世事，事件会较为常见，因为祂对世界采取放任态度。可将其视为一种“延展版”体验。"
+	welcome_text = "一阵温和的微风吹过寂静的街道……"
 	weight = 6
 	always_votable = TRUE
 	color_theme = "#80ced8"
@@ -47,9 +47,9 @@
 
 /datum/storyteller/astrata
 	name = "Astrata"
-	vote_desc = "Order reigns. All occurrences are perfectly balanced out, without bias. Her favor shines upon nobility and their decrees."
-	desc = "Astrata will provide a balanced and varied experience. Consider this the default experience."
-	welcome_text = "The warmth of daelight rouses you from your slumber.."
+	vote_desc = "秩序主宰一切。所有事件都被完美平衡，不偏不倚。她的恩泽照耀着贵族与他们的法令。"
+	desc = "Astrata 会带来均衡而多样的体验。可将其视作默认体验。"
+	welcome_text = "日光的暖意将我从沉眠中唤醒……"
 	weight = 6
 	always_votable = TRUE
 	follower_modifier = LOWER_FOLLOWER_MODIFIER
@@ -58,28 +58,28 @@
 
 	influence_sets = list(
 	"Set 1" = list(
-		STATS_LAWS_AND_DECREES_MADE = list("name" = "Laws and decrees:", "points" = 2.75, "capacity" = 45),
+		STATS_LAWS_AND_DECREES_MADE = list("name" = "颁布的法律与法令：", "points" = 2.75, "capacity" = 45),
 	),
 	"Set 2" = list(
-		STATS_ALIVE_NOBLES = list("name" = "Number of nobles:", "points" = 2.5, "capacity" = 60),
+		STATS_ALIVE_NOBLES = list("name" = "贵族人数：", "points" = 2.5, "capacity" = 60),
 	),
 	"Set 3" = list(
-		STATS_NOBLE_DEATHS = list("name" = "Noble deaths:", "points" = -3.75, "capacity" = -60),
-		STATS_PEOPLE_SMITTEN = list("name" = "People smitten:", "points" = 4, "capacity" = 40),
+		STATS_NOBLE_DEATHS = list("name" = "贵族死亡数：", "points" = -3.75, "capacity" = -60),
+		STATS_PEOPLE_SMITTEN = list("name" = "遭神罚者：", "points" = 4, "capacity" = 40),
 	),
 	"Set 4" = list(
-		STATS_ASTRATA_REVIVALS = list("name" = "Holy revivals:", "points" = 6, "capacity" = 75),
-		STATS_PRAYERS_MADE = list("name" = "Prayers made:", "points" = 2.25, "capacity" = 65),
+		STATS_ASTRATA_REVIVALS = list("name" = "神圣复苏次数：", "points" = 6, "capacity" = 75),
+		STATS_PRAYERS_MADE = list("name" = "祈祷次数：", "points" = 2.25, "capacity" = 65),
 	),
 	"Set 5" = list(
-		STATS_TAXES_COLLECTED = list("name" = "Taxes collected:", "points" = 0.2, "capacity" = 80),
+		STATS_TAXES_COLLECTED = list("name" = "征收的税款：", "points" = 0.2, "capacity" = 80),
 	))
 
 /datum/storyteller/noc
 	name = "Noc"
-	vote_desc = "Knowledge reigns. Occurrences are tame, but remain suspectable to arcyne intervention. His favor shines upon those who dream for greater ambitions."
-	desc = "Noc will try to send more magical events."
-	welcome_text = "The air crackles with arcyne energy.."
+	vote_desc = "知识主宰一切。事件整体平稳，却仍可能受 arcyne 干预。祂的恩泽照耀着追逐更高理想之人。"
+	desc = "Noc 会尝试带来更多魔法相关事件。"
+	welcome_text = "空气中噼啪作响，弥漫着 arcyne 能量……"
 	weight = 4
 	always_votable = TRUE
 	color_theme = "#F0F0F0"
@@ -93,24 +93,24 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_BOOKS_PRINTED = list("name" = "Books printed:", "points" = 2, "capacity" = 40),
+			STATS_BOOKS_PRINTED = list("name" = "印制的书籍：", "points" = 2, "capacity" = 40),
 		),
 		"Set 2" = list(
-			STATS_LITERACY_TAUGHT = list("name" = "Literacy taught:", "points" = 20, "capacity" = 140),
+			STATS_LITERACY_TAUGHT = list("name" = "传授的识字教育：", "points" = 20, "capacity" = 140),
 		),
 		"Set 3" = list(
-			STATS_BOOKS_BURNED = list("name" = "Books burned:", "points" = -2, "capacity" = -50),
+			STATS_BOOKS_BURNED = list("name" = "焚毁的书籍：", "points" = -2, "capacity" = -50),
 		),
 		"Set 4" = list(
-			STATS_SKILLS_DREAMED = list("name" = "Skills dreamed:", "points" = 0.325, "capacity" = 100),
+			STATS_SKILLS_DREAMED = list("name" = "梦中习得的技能：", "points" = 0.325, "capacity" = 100),
 		),
 	)
 
 /datum/storyteller/ravox
 	name = "Ravox"
-	vote_desc = "Glory reigns. Raids, villains, and omens are more likely to occur. His favor shines upon clashing steel and the cries of war."
-	desc = "Ravox will cause raids to happen naturally instead of only when people are dying a lot."
-	welcome_text = "\"The trumpets of Zericho are echoing in the distance..\""
+	vote_desc = "荣耀主宰一切。袭击、恶人和凶兆更容易降临。祂的恩泽照耀着钢铁交击与战争呐喊。"
+	desc = "Ravox 会让袭击自然发生，而不只是在大量人员死亡时才出现。"
+	welcome_text = "“Zericho 的号角正在远方回响……”"
 	weight = 4
 	always_votable = TRUE
 	color_theme = "#228822"
@@ -132,24 +132,24 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_COMBAT_SKILLS = list("name" = "Combat skills learned:", "points" = 1.065, "capacity" = 90),
+			STATS_COMBAT_SKILLS = list("name" = "习得的战斗技能：", "points" = 1.065, "capacity" = 90),
 		),
 		"Set 2" = list(
-			STATS_PARRIES = list("name" = "Parries made:", "points" = 0.052, "capacity" = 100),
+			STATS_PARRIES = list("name" = "成功招架次数：", "points" = 0.052, "capacity" = 100),
 		),
 		"Set 3" = list(
-			STATS_WARCRIES = list("name" = "Warcries made:", "points" = 0.35, "capacity" = 50),
+			STATS_WARCRIES = list("name" = "战吼次数：", "points" = 0.35, "capacity" = 50),
 		),
 		"Set 4" = list(
-			STATS_YIELDS = list("name" = "Yields made:", "points" = -4.25, "capacity" = -40),
+			STATS_YIELDS = list("name" = "投降次数：", "points" = -4.25, "capacity" = -40),
 		),
 	)
 
 /datum/storyteller/abyssor
 	name = "Abyssor"
-	vote_desc = "Water reigns. Occurrences are tame, though their temperance oft-sways with the tide's flow. His favor shines upon the fished, leeched, and drowned."
-	desc = "Abyssor likes to send water and trade-related events."
-	welcome_text = "The horizon grows dark, as its clouds gather for a coming storm.."
+	vote_desc = "流水主宰一切。事件整体平稳，却常随潮汐起伏而变化。祂的恩泽照耀着捕鱼者、吸蛭者与溺亡者。"
+	desc = "Abyssor 喜欢降下与水和贸易相关的事件。"
+	welcome_text = "天际逐渐昏暗，乌云为将至的风暴汇聚……"
 	weight = 4
 	always_votable = TRUE
 	color_theme = "#3366CC"
@@ -162,29 +162,29 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_FISH_CAUGHT = list("name" = "Fish caught:", "points" = 1.75, "capacity" = 85),
+			STATS_FISH_CAUGHT = list("name" = "捕获的鱼：", "points" = 1.75, "capacity" = 85),
 		),
 		"Set 2" = list(
-			STATS_WATER_CONSUMED = list("name" = "Water consumed:", "points" = 0.014, "capacity" = 90),
+			STATS_WATER_CONSUMED = list("name" = "饮用的水量：", "points" = 0.014, "capacity" = 90),
 		),
 		"Set 3" = list(
-			STATS_ABYSSOR_REMEMBERED = list("name" = "Abyssor remembered:", "points" = 1.1, "capacity" = 50),
-			STATS_ALIVE_AXIAN = list("name" = "Number of axians:", "points" = 8, "capacity" = 70),
+			STATS_ABYSSOR_REMEMBERED = list("name" = "铭记 Abyssor 次数：", "points" = 1.1, "capacity" = 50),
+			STATS_ALIVE_AXIAN = list("name" = "axian 人数：", "points" = 8, "capacity" = 70),
 		),
 		"Set 4" = list(
-			STATS_LEECHES_EMBEDDED = list("name" = "Leeches embedded:", "points" = 0.75, "capacity" = 70),
+			STATS_LEECHES_EMBEDDED = list("name" = "附着的水蛭：", "points" = 0.75, "capacity" = 70),
 		),
 		"Set 5" = list(
-			STATS_PEOPLE_DROWNED = list("name" = "People drowned:", "points" = 12, "capacity" = 75),
-			STATS_BATHS_TAKEN = list("name" = "Baths taken:", "points" = 4.5, "capacity" = 60),
+			STATS_PEOPLE_DROWNED = list("name" = "溺亡人数：", "points" = 12, "capacity" = 75),
+			STATS_BATHS_TAKEN = list("name" = "沐浴次数：", "points" = 4.5, "capacity" = 60),
 		)
 	)
 
 /datum/storyteller/xylix
 	name = "Xylix"
-	vote_desc = "Unpredictability reigns. Nothing is set in stone, yet everything is possible. His favor shines upon acts of chance and whimsy."
-	desc = "Xylix is a wildcard, spinning the wheels of fate."
-	welcome_text = "\"..well, that's what happens out of too much spice and wine!\""
+	vote_desc = "无常主宰一切。没有什么注定不变，但一切皆有可能。祂的恩泽照耀着机缘与奇想之举。"
+	desc = "Xylix 是不可预测的变数，拨动着命运之轮。"
+	welcome_text = "“……好吧，这就是香料和美酒过量后的下场！”"
 	weight = 4
 	always_votable = TRUE
 	event_repetition_multiplier = 0
@@ -204,25 +204,25 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_LAUGHS_MADE = list("name" = "Laughs had:", "points" = 0.225, "capacity" = 85),
+			STATS_LAUGHS_MADE = list("name" = "欢笑次数：", "points" = 0.225, "capacity" = 85),
 		),
 		"Set 2" = list(
-			STATS_PEOPLE_MOCKED = list("name" = "People mocked:", "points" = 5, "capacity" = 60),
+			STATS_PEOPLE_MOCKED = list("name" = "嘲弄他人次数：", "points" = 5, "capacity" = 60),
 		),
 		"Set 3" = list(
-			STATS_CRITS_MADE = list("name" = "Crits made:", "points" = 0.26, "capacity" = 90),
+			STATS_CRITS_MADE = list("name" = "造成重创次数：", "points" = 0.26, "capacity" = 90),
 		),
 		"Set 4" = list(
-			STATS_SONGS_PLAYED = list("name" = "Songs played:", "points" = 0.675, "capacity" = 70),
-			STATS_MOAT_FALLERS = list("name" = "Moat fallers:", "points" = 4, "capacity" = 50),
+			STATS_SONGS_PLAYED = list("name" = "演奏的歌曲：", "points" = 0.675, "capacity" = 70),
+			STATS_MOAT_FALLERS = list("name" = "跌入护城河者：", "points" = 4, "capacity" = 50),
 		)
 	)
 
 /datum/storyteller/necra
 	name = "Necra"
-	vote_desc = "Death reigns. Occurrences happen less often, and villains are less likely. Her favor shines upon those who put the deathless back into their graves."
-	desc = "Necra takes things very slow, rarely bringing in newcomers."
-	welcome_text = "\"In the fief of Zenmarke, there was the odor of decay..\""
+	vote_desc = "死亡主宰一切。事件发生得更少，恶人也更难出现。她的恩泽照耀着将不死者重新送回坟墓之人。"
+	desc = "Necra 的节奏极慢，极少带来新的来客。"
+	welcome_text = "“在 Zenmarke 的封地中，弥漫着腐朽的气息……”"
 	weight = 4
 	always_votable = TRUE
 	color_theme = "#888888"
@@ -244,28 +244,28 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_DEATHS = list("name" = "Total deaths:", "points" = 1.35, "capacity" = 100),
+			STATS_DEATHS = list("name" = "死亡总数：", "points" = 1.35, "capacity" = 100),
 		),
 		"Set 2" = list(
-			STATS_GRAVES_CONSECRATED = list("name" = "Graves consecrated:", "points" = 3.75, "capacity" = 80),
+			STATS_GRAVES_CONSECRATED = list("name" = "祝圣的坟墓：", "points" = 3.75, "capacity" = 80),
 		),
 		"Set 3" = list(
-			STATS_GRAVES_ROBBED = list("name" = "Graves robbed:", "points" = -3.75, "capacity" = -40),
+			STATS_GRAVES_ROBBED = list("name" = "被盗掘的坟墓：", "points" = -3.75, "capacity" = -40),
 		),
 		"Set 4" = list(
-			STATS_DEADITES_KILLED = list("name" = "Deadites killed:", "points" = 6.25, "capacity" = 90),
+			STATS_DEADITES_KILLED = list("name" = "击杀的 deadite：", "points" = 6.25, "capacity" = 90),
 		),
 		"Set 5" = list(
-			STATS_VAMPIRES_KILLED = list("name" = "Vampires killed:", "points" = 12.5, "capacity" = 70),
-			STATS_SKELETONS_KILLED = list("name" = "Skeletons killed:", "points" = 5, "capacity" = 50),
+			STATS_VAMPIRES_KILLED = list("name" = "击杀的吸血鬼：", "points" = 12.5, "capacity" = 70),
+			STATS_SKELETONS_KILLED = list("name" = "击杀的骷髅：", "points" = 5, "capacity" = 50),
 		)
 	)
 
 /datum/storyteller/pestra
 	name = "Pestra"
-	vote_desc = "Health reigns. Occurrences are tame, yet swayable with practiced hands. Her favor shines upon stitches and alchemists"
-	desc = "Pestra keeps things simple, with a slight bias towards alchemy."
-	welcome_text = "The clattering of instruments, and the churning of alchemical wonders.."
+	vote_desc = "安康主宰一切。事件整体平稳，却也会因熟练之手而偏转。她的恩泽照耀着缝合者与炼金术士。"
+	desc = "Pestra 让一切保持简明，但会稍稍偏向炼金相关内容。"
+	welcome_text = "器械碰撞作响，炼金奇迹在沸腾翻涌……"
 	color_theme = "#AADDAA"
 	preferred_gnoll_mode = GNOLL_SCALING_DOUBLE
 
@@ -277,28 +277,28 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_POTIONS_BREWED = list("name" = "Potions brewed:", "points" = 5.25, "capacity" = 80),
+			STATS_POTIONS_BREWED = list("name" = "酿制的药剂：", "points" = 5.25, "capacity" = 80),
 		),
 		"Set 2" = list(
-			STATS_WOUNDS_SEWED = list("name" = "Wounds sewed up:", "points" = 0.48, "capacity" = 100),
+			STATS_WOUNDS_SEWED = list("name" = "缝合的伤口：", "points" = 0.48, "capacity" = 100),
 		),
 		"Set 3" = list(
-			STATS_LUX_HARVESTED = list("name" = "Lux extracted:", "points" = 8, "capacity" = 70),
-			STATS_LUX_REVIVALS = list("name" = "Lux revivals:", "points" = 16, "capacity" = 70),
+			STATS_LUX_HARVESTED = list("name" = "提取的 Lux：", "points" = 8, "capacity" = 70),
+			STATS_LUX_REVIVALS = list("name" = "Lux 复生次数：", "points" = 16, "capacity" = 70),
 		),
 		"Set 4" = list(
-			STATS_ROT_CURED = list("name" = "Rot cured:", "points" = 5, "capacity" = 70),
+			STATS_ROT_CURED = list("name" = "治愈的腐败：", "points" = 5, "capacity" = 70),
 		),
 		"Set 5" = list(
-			STATS_FOOD_ROTTED = list("name" = "Food rotted:", "points" = 0.26, "capacity" = 80),
+			STATS_FOOD_ROTTED = list("name" = "腐坏的食物：", "points" = 0.26, "capacity" = 80),
 		)
 	)
 
 /datum/storyteller/malum
 	name = "Malum"
-	vote_desc = "Effort reigns. Divine intervention occurs more often. His favor shines upon masterworks and mineshafts."
-	desc = "Malum believes in hard work, intervening more often than others."
-	welcome_text = "The pounding of red-hot steel, and the laboring of a hundred calloused hands.."
+	vote_desc = "劳作主宰一切。神明干预会更常出现。祂的恩泽照耀着杰作与矿井。"
+	desc = "Malum 崇尚辛勤劳动，因此比其他神更常出手干预。"
+	welcome_text = "炽热钢铁被反复锻打，百双满是老茧的手正在辛劳……"
 	color_theme = "#D4A56C"
 	preferred_gnoll_mode = GNOLL_SCALING_DOUBLE
 
@@ -318,25 +318,25 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_MASTERWORKS_FORGED = list("name" = "Masterworks forged:", "points" = 7, "capacity" = 85),
+			STATS_MASTERWORKS_FORGED = list("name" = "锻造的杰作：", "points" = 7, "capacity" = 85),
 		),
 		"Set 2" = list(
-			STATS_ROCKS_MINED = list("name" = "Rocks mined:", "points" = 0.26, "capacity" = 100),
+			STATS_ROCKS_MINED = list("name" = "开采的岩石：", "points" = 0.26, "capacity" = 100),
 		),
 		"Set 3" = list(
-			STATS_CRAFT_SKILLS = list("name" = "Craft skills learned:", "points" = 0.55, "capacity" = 90),
+			STATS_CRAFT_SKILLS = list("name" = "习得的工艺技能：", "points" = 0.55, "capacity" = 90),
 		),
 		"Set 4" = list(
-			STATS_BEARDS_SHAVED = list("name" = "Beards shaved:", "points" = -4, "capacity" = -40),
-			STATS_ALIVE_DWARVES = list("name" = "Number of dwarfs:", "points" = 4, "capacity" = 45),
+			STATS_BEARDS_SHAVED = list("name" = "剃掉的胡须：", "points" = -4, "capacity" = -40),
+			STATS_ALIVE_DWARVES = list("name" = "矮人人数：", "points" = 4, "capacity" = 45),
 		),
 	)
 
 /datum/storyteller/eora
 	name = "Eora"
-	vote_desc = " Love reigns. Positive affairs occur more often, and raids will rarely transpire. Her favor shines upon romance."
-	desc = "Eora hates death and promotes love. Raids will never naturally progress, only death will bring them."
-	welcome_text = "\"Love is in the air? Nay; tis the smell of freshly-baked pies upon the windowsills!\""
+	vote_desc = " 爱意主宰一切。正面的际遇更常出现，而袭击鲜少发生。她的恩泽照耀着恋情。"
+	desc = "Eora 憎恶死亡并鼓励爱意。袭击不会自然升级，只有死亡才会将其引来。"
+	welcome_text = "“空气里弥漫着爱意？不，那是窗台上新鲜烤派的香气！”"
 	color_theme = "#9966CC"
 	preferred_gnoll_mode = GNOLL_SCALING_DOUBLE
 
@@ -360,21 +360,21 @@
 			STATS_KISSES_MADE = list("points" = 7, "capacity" = 70),
 		),
 		"Set 2" = list(
-			STATS_PLEASURES = list("name" = "Pleasures had:", "points" = 5, "capacity" = 50),
+			STATS_PLEASURES = list("name" = "享乐次数：", "points" = 5, "capacity" = 50),
 		),
 		"Set 3" = list(
-			STATS_HUGS_MADE = list("name" = "Hugs made:", "points" = 2.5, "capacity" = 70),
+			STATS_HUGS_MADE = list("name" = "拥抱次数：", "points" = 2.5, "capacity" = 70),
 		),
 		"Set 4" = list(
-			STATS_CLINGY_PEOPLE = list("name" = "Clingy people:", "points" = 6.5, "capacity" = 75),
+			STATS_CLINGY_PEOPLE = list("name" = "黏人者：", "points" = 6.5, "capacity" = 75),
 		)
 	)
 
 /datum/storyteller/dendor
 	name = "Dendor"
-	vote_desc = " Nature reigns. Overgrowth and Verevolves are more likely to occur. His favor shines upon harvests and lycanthropes."
-	desc = "Dendor likes to send nature-themed events."
-	welcome_text = "The cackling of perched zads, and the glimmer of morning dew.."
+	vote_desc = " 自然主宰一切。过度生长与 Verevolves 更容易出现。祂的恩泽照耀着丰收与狼人。"
+	desc = "Dendor 喜欢降下自然主题的事件。"
+	welcome_text = "栖枝 zads 的咯咯怪笑，与晨露闪烁的微光……"
 	weight = 4
 	always_votable = TRUE
 	color_theme = "#664422"
@@ -396,17 +396,17 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_TREES_CUT = list("name" = "Trees felled:", "points" = -0.35, "capacity" = -45),
+			STATS_TREES_CUT = list("name" = "砍倒的树木：", "points" = -0.35, "capacity" = -45),
 
 		),
 		"Set 2" = list(
-			STATS_PLANTS_HARVESTED = list("name" = "Plants harvested:", "points" = 0.75, "capacity" = 100),
+			STATS_PLANTS_HARVESTED = list("name" = "收获的植物：", "points" = 0.75, "capacity" = 100),
 		),
 		"Set 3" = list(
-			STATS_FOREST_DEATHS = list("name" = "Forest deaths:", "points" = 6, "capacity" = 90),
+			STATS_FOREST_DEATHS = list("name" = "森林中的死亡：", "points" = 6, "capacity" = 90),
 		),
 		"Set 4" = list(
-			STATS_WEREVOLVES = list("name" = "Number of werevolves:", "points" = 12.5, "capacity" = 65),
+			STATS_WEREVOLVES = list("name" = "werevolves 数量：", "points" = 12.5, "capacity" = 65),
 		),
 	)
 
@@ -414,9 +414,9 @@
 
 /datum/storyteller/zizo
 	name = "Zizo"
-	vote_desc = "Chaos reigns. Villains are assured, and Deadites are far more vicious. Her favor shines upon corpses; be they holy, noble, or reanimated."
-	desc = "Zizo thrives on risk and reward, favoring the daring and unpredictable."
-	welcome_text = "A breeze of morbid air, ferrying the howls of the damned.."
+	vote_desc = "混沌主宰一切。恶人必将现身，而 deadite 也会更加凶残。她的恩泽照耀着尸体，无论圣洁、尊贵，还是复苏之躯。"
+	desc = "Zizo 以风险与回报为食，偏爱大胆而难测之人。"
+	welcome_text = "一阵阴森的风拂过，携来受诅者的哀嚎……"
 	weight = 4
 	always_votable = TRUE
 	color_theme = "#CC4444"
@@ -443,27 +443,27 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_NOBLE_DEATHS = list("name" = "Nobles killed:", "points" = 5.5, "capacity" = 80),
+			STATS_NOBLE_DEATHS = list("name" = "死去的贵族：", "points" = 5.5, "capacity" = 80),
 		),
 		"Set 2" = list(
-			STATS_DEADITES_WOKEN_UP = list("name" = "Deadites woken up:", "points" = 4, "capacity" = 85),
+			STATS_DEADITES_WOKEN_UP = list("name" = "唤醒的 deadite：", "points" = 4, "capacity" = 85),
 		),
 		"Set 3" = list(
-			STATS_CLERGY_DEATHS = list("name" = "Clergy killed:", "points" = 12, "capacity" = 70),
+			STATS_CLERGY_DEATHS = list("name" = "死去的教士：", "points" = 12, "capacity" = 70),
 		),
 		"Set 4" = list(
-			STATS_TORTURES = list("name" = "Tortures performed:", "points" = 5.25, "capacity" = 70),
+			STATS_TORTURES = list("name" = "施行的折磨：", "points" = 5.25, "capacity" = 70),
 		),
 		"Set 5" = list(
-			STATS_BOOKS_BURNED = list("name" = "Books burned:", "points" = -5, "capacity" = -50),
+			STATS_BOOKS_BURNED = list("name" = "焚毁的书籍：", "points" = -5, "capacity" = -50),
 		),
 	)
 
 /datum/storyteller/baotha
 	name = "Baotha"
-	vote_desc = "Spice reigns. Occurrences are more erratic and negative. Her favor shines upon drunkards and addicts."
-	desc = "Baotha revels in chaos, making events and reality unpredictable."
-	welcome_text = "The sickly sweet aromas of liqour and spice fills the air.."
+	vote_desc = "香料主宰一切。事件会更加混乱且负面。她的恩泽照耀着醉鬼与瘾君子。"
+	desc = "Baotha 沉迷混沌，使事件与现实都变得难以预测。"
+	welcome_text = "空气中弥漫着甜得发腻的酒香与香料气息……"
 	weight = 4
 	always_votable = TRUE
 	color_theme = "#9933FF"
@@ -489,30 +489,30 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_DRUGS_SNORTED = list("name" = "Drugs snorted:", "points" = 4, "capacity" = 85),
+			STATS_DRUGS_SNORTED = list("name" = "吸食的药物：", "points" = 4, "capacity" = 85),
 		),
 		"Set 2" = list(
-			STATS_ALCOHOL_CONSUMED = list("name" = "Alcohol consumed:", "points" = 0.042, "capacity" = 90),
+			STATS_ALCOHOL_CONSUMED = list("name" = "饮下的酒精：", "points" = 0.042, "capacity" = 90),
 		),
 		"Set 3" = list(
-			STATS_ALCOHOLICS = list("name" = "Number of alcoholics:", "points" = 3.25, "capacity" = 60),
+			STATS_ALCOHOLICS = list("name" = "酒鬼人数：", "points" = 3.25, "capacity" = 60),
 		),
 		"Set 4" = list(
-			STATS_JUNKIES = list("name" = "Number of junkies:", "points" = 9, "capacity" = 70),
+			STATS_JUNKIES = list("name" = "瘾君子人数：", "points" = 9, "capacity" = 70),
 		),
 		"Set 5" = list(
-			STATS_KNOTTED_NOT_LUPIANS = list("name" = "Knottings by non-Lupians:", "points" = 2.5, "capacity" = 50),
+			STATS_KNOTTED_NOT_LUPIANS = list("name" = "非 Lupian 的结缔次数：", "points" = 2.5, "capacity" = 50),
 		),
 		"Set 6" = list(
-			STATS_IMPREGNATIONS = list("name" = "Impregnations:", "points" = 5, "capacity" = 50),
+			STATS_IMPREGNATIONS = list("name" = "受孕次数：", "points" = 5, "capacity" = 50),
 		),
 	)
 
 /datum/storyteller/graggar
 	name = "Graggar"
-	vote_desc = " Inhumenity reigns. Villains are assured, and raids occur far more often. His favor shines upon bloodshed and cannibalism."
-	desc = "Graggar encourages war and conquest, making combat the solution to all."
-	welcome_text = "Plumes of smoke are blown through the streets, reeking of ash and blood.."
+	vote_desc = " Inhumenity 主宰一切。恶人必将现身，袭击也会更加频繁。祂的恩泽照耀着流血与食人。"
+	desc = "Graggar 鼓励战争与征服，使战斗成为解决一切的手段。"
+	welcome_text = "滚滚烟柱穿过街巷，散发着灰烬与鲜血的腥味……"
 	weight = 4
 	always_votable = TRUE
 	color_theme = "#8B3A3A"
@@ -536,17 +536,17 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_BLOOD_SPILT = list("name" = "Blood spilt:", "points" = 0.03, "capacity" = 60),
+			STATS_BLOOD_SPILT = list("name" = "流下的鲜血：", "points" = 0.03, "capacity" = 60),
 		),
 		"Set 2" = list(
-			STATS_ORGANS_EATEN = list("name" = "Organs eaten:", "points" = 5, "capacity" = 70),
+			STATS_ORGANS_EATEN = list("name" = "吞食的内脏：", "points" = 5, "capacity" = 70),
 		),
 		"Set 3" = list(
-			STATS_DEATHS = list("name" = "Deaths:", "points" = 5, "capacity" = 115),
-			STATS_ASSASSINATIONS = list("name" = "Sucessful assassinations:", "points" = 20, "capacity" = 100),
+			STATS_DEATHS = list("name" = "死亡人数：", "points" = 5, "capacity" = 115),
+			STATS_ASSASSINATIONS = list("name" = "成功刺杀次数：", "points" = 20, "capacity" = 100),
 		),
 		"Set 4" = list(
-			STATS_PEOPLE_GIBBED = list("name" = "People gibbed:", "points" = 3.5, "capacity" = 55),
+			STATS_PEOPLE_GIBBED = list("name" = "被碎尸者：", "points" = 3.5, "capacity" = 55),
 		)
 	)
 
@@ -554,9 +554,9 @@
 
 /datum/storyteller/matthios
 	name = "Matthios"
-	vote_desc = "Thievery reigns. Banditry runs rampant. His favor shines upon thefts and offerings to a certain shrine."
-	desc = "Matthios manipulates wealth and corruption, rewarding those who make deals."
-	welcome_text = "The jingling of mammons, and the dripping of ink from freshly-signed bounties.."
+	vote_desc = "盗窃主宰一切。匪盗横行无忌。祂的恩泽照耀着偷盗与献给某座神龛的供奉。"
+	desc = "Matthios 操弄财富与腐化，奖赏那些愿意交易的人。"
+	welcome_text = "钱币叮当作响，刚签好的悬赏文书上墨迹尚未滴干……"
 	weight = 4
 	always_votable = TRUE
 	color_theme = "#8B4513"
@@ -580,18 +580,18 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_ITEMS_PICKPOCKETED = list("name" = "Items pickpocketed:", "points" = 4.5, "capacity" = 80),
+			STATS_ITEMS_PICKPOCKETED = list("name" = "扒窃得手的物品：", "points" = 4.5, "capacity" = 80),
 		),
 		"Set 2" = list(
-			STATS_SHRINE_VALUE = list("name" = "Value offered to his idol:", "points" = 0.08, "capacity" = 70),
+			STATS_SHRINE_VALUE = list("name" = "献给神像的价值：", "points" = 0.08, "capacity" = 70),
 		),
 		"Set 3" = list(
-			STATS_GREEDY_PEOPLE = list("name" = "Number of greedy people:", "points" = 6.5, "capacity" = 70),
-			STATS_KLEPTOMANIACS = list("name"= "Number of kleptomaniacs:", "points" = 5, "capacity" = 25)
+			STATS_GREEDY_PEOPLE = list("name" = "贪婪者人数：", "points" = 6.5, "capacity" = 70),
+			STATS_KLEPTOMANIACS = list("name"= "盗窃癖人数：", "points" = 5, "capacity" = 25)
 		),
 		"Set 4" = list(
-			STATS_LOCKS_PICKED = list("name" = "Locks picked:", "points" = 3.75, "capacity" = 80),
-			STATS_GRAVES_ROBBED = list("name" = "Graves robbed:", "points" = 5.25, "capacity" = 60),
+			STATS_LOCKS_PICKED = list("name" = "撬开的锁：", "points" = 3.75, "capacity" = 80),
+			STATS_GRAVES_ROBBED = list("name" = "盗掘的坟墓：", "points" = 5.25, "capacity" = 60),
 		)
 	)
 

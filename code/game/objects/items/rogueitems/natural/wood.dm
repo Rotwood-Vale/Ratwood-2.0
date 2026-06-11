@@ -1,7 +1,7 @@
 /obj/item/grown/log/tree
 	icon = 'icons/roguetown/items/natural.dmi'
-	name = "log"
-	desc = "A big tree log. It's very heavy and cumbersome, best cut into pieces for more uses."
+	name = "原木"
+	desc = "一根巨大的原木。它非常沉重且笨拙，最好劈成小块，以便派上更多用场。"
 	icon_state = "log"
 	blade_dulling = DULLING_CUT
 	attacked_sound = 'sound/misc/woodhit.ogg'
@@ -25,7 +25,7 @@
 	if(blessed)
 		return FALSE
 	blessed = TRUE
-	name = "blessed log"
+	name = "受祝福的原木"
 	add_atom_colour("#88ffaa", FIXED_COLOUR_PRIORITY)
 	add_filter("blessed_log_outline", 2, list("type" = "outline", "color" = "#58C86A", "alpha" = 95, "size" = 1))
 	return TRUE
@@ -37,8 +37,8 @@
 /obj/item/grown/log/tree/examine(mob/user)
 	. = ..()
 	if(blessed)
-		. += span_green("This log bears Dendor's blessing.")
-		. += span_info("Blessed timber has a big chance to yield 1 extra small log, and a smaller chance to yield 2 extra small logs when chopped.")
+		. += span_green("这根原木承载着 Dendor 的祝福。")
+		. += span_info("受祝福的原木在劈开时，有较高概率额外产出1根小原木，并有较低概率额外产出2根小原木。")
 
 /obj/item/grown/log/tree/Initialize(mapload)
 	. = ..()
@@ -58,7 +58,7 @@
 	var/planking_time = (40 - (skill_level * 5))
 	if(lumber_amount && I.tool_behaviour == TOOL_SAW)
 		playsound(get_turf(src.loc), 'sound/foley/sawing.ogg', 100)
-		user.visible_message("<span class='notice'>[user] starts sawing [src] to smaller pieces.</span>")
+		user.visible_message("<span class='notice'>[user]开始将[src]锯成小块。</span>")
 		if(do_after(user, planking_time))
 			new /obj/item/grown/log/tree/small(get_turf(src.loc))
 			new /obj/item/grown/log/tree/small(get_turf(src.loc))
@@ -89,18 +89,18 @@
 				new /obj/item/grown/log/tree/small/essence(get_turf(user))
 				if(!sound_played)
 					sound_played = TRUE
-					to_chat(user, span_warning("Dendor weeps..."))
+					to_chat(user, span_warning("Dendor 在哭泣……"))
 					playsound(src,pick('sound/items/gem.ogg'), 100, FALSE)
 		if(blessed)
 			if(prob(50))
-				to_chat(user, span_notice("Dendor's blessing preserves abundant timber, nearly doubling my yield."))
+				to_chat(user, span_notice("Dendor 的祝福保留了大量的木材，让我的收获几乎翻倍。"))
 				new /obj/item/grown/log/tree/small(get_turf(src))
 				new /obj/item/grown/log/tree/small(get_turf(src))
 			else if(prob(80))
-				to_chat(user, span_notice("Dendor's blessing preserves more usable timber for my efforts."))
+				to_chat(user, span_notice("Dendor 的祝福为我留下了更多可用的木材。"))
 				new /obj/item/grown/log/tree/small(get_turf(src))
 		if(!skill_level)
-			to_chat(user, span_info("Due to inexperience, I ruin some of the timber..."))
+			to_chat(user, span_info("由于经验不足，我糟蹋了一些木材..."))
 		user.mind.add_sleep_experience(/datum/skill/labor/lumberjacking, (user.STAINT*0.5))
 		playsound(src, destroy_sound, 100, TRUE)
 		qdel(src)
@@ -108,8 +108,8 @@
 	..()
 
 /obj/item/grown/log/tree/small
-	name = "small log"
-	desc = "Piece of lumber cut from a larger log. Suitable for building."
+	name = "小原木"
+	desc = "一段从大原木上锯下的木料。可用于建造。"
 	icon_state = "logsmall"
 	grid_width = 64
 	grid_height = 96
@@ -188,7 +188,7 @@
 		woodtotal += pick(1,2)
 	if(I.tool_behaviour == TOOL_SAW)
 		playsound(get_turf(src.loc), 'sound/foley/sawing.ogg', 100)
-		user.visible_message("<span class='notice'>[user] starts sawing planks from [src].</span>")
+		user.visible_message("<span class='notice'>[user]开始把[src]锯成木板。</span>")
 		if(do_after(user, planking_time))
 			if(user.is_holding(src))
 				user.dropItemToGround(src)
@@ -197,7 +197,7 @@
 			var/lumber_skill = user.get_skill_level(/datum/skill/labor/lumberjacking)
 			if(prob(lumber_skill + user.goodluck(2)))
 				new /obj/item/grown/log/tree/small/essence(get_turf(src.loc))
-				to_chat(user, span_warning("Dendor weeps..."))
+				to_chat(user, span_warning("Dendor 在哭泣……"))
 				playsound(src, pick('sound/items/gem.ogg'), 100, FALSE)
 			user.mind.add_sleep_experience(/datum/skill/craft/carpentry, (user.STAINT*0.5))
 			new /obj/effect/decal/cleanable/debris/woody(get_turf(src))
@@ -206,8 +206,8 @@
 	..()
 
 /obj/item/grown/log/tree/bowpartial
-	name = "crude bowstave"
-	desc = "A partially completed bow, waiting to be strung."
+	name = "粗制弓胚"
+	desc = "一把尚未完成的弓，正等待上弦。"
 	icon_state = "bowpartial"
 	max_integrity = 30
 	firefuel = 10 MINUTES
@@ -230,8 +230,8 @@
 		)
 
 /obj/item/grown/log/tree/bowpartial/recurve
-	name = "recurve bowstave"
-	desc = "An incomplete recurve bow, waiting to be strung."
+	name = "反曲弓胚"
+	desc = "一把尚未完成的反曲弓，正等待上弦。"
 	icon = 'icons/roguetown/items/64x.dmi'
 	icon_state = "recurve_bowstave"
 
@@ -242,8 +242,8 @@
 		)
 
 /obj/item/grown/log/tree/bowpartial/longbow
-	name = "long bowstave"
-	desc = "An incomplete longbow, waiting to be strung."
+	name = "长弓弓胚"
+	desc = "一把尚未完成的长弓，正等待上弦。"
 	icon = 'icons/roguetown/items/64x.dmi'
 	icon_state = "long_bowstave"
 
@@ -254,9 +254,9 @@
 		)
 
 /obj/item/grown/log/tree/stick
-	name = "stick"
+	name = "木棍"
 	icon_state = "stick1"
-	desc = "A tree branch perhaps."
+	desc = "可能是根树枝。"
 	blade_dulling = 0
 	max_integrity = 20
 	static_debris = null
@@ -309,7 +309,7 @@
 		)
 
 /obj/item/grown/log/tree/stick/attack_self(mob/living/user)
-	user.visible_message(span_warning("[user] snaps [src]."))
+	user.visible_message(span_warning("[user]折断了[src]。"))
 	playsound(user,'sound/items/seedextract.ogg', 100, FALSE)
 	qdel(src)
 
@@ -317,7 +317,7 @@
 	. = ..()
 	if(user.get_active_held_item())
 		return
-	to_chat(user, span_warning("I start to collect [src]..."))
+	to_chat(user, span_warning("我开始收集[src]..."))
 	if(move_after(user, 4 SECONDS, target = src))
 		var/stackcount = 0
 		for(var/obj/item/grown/log/tree/stick/F in get_turf(src))
@@ -342,21 +342,21 @@
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	if(user.used_intent?.blade_class == BCLASS_CUT)
 		playsound(get_turf(src.loc), 'sound/items/wood_sharpen.ogg', 100)
-		user.visible_message(span_notice("[user] starts sharpening [src]."))
+		user.visible_message(span_notice("[user]开始削尖[src]。"))
 		if(do_after(user, 4 SECONDS))
-			user.visible_message(span_notice("[user] sharpens [src]."))
+			user.visible_message(span_notice("[user]削尖了[src]。"))
 			var/obj/item/grown/log/tree/stake/S = new /obj/item/grown/log/tree/stake(get_turf(src.loc))
 			if(user.is_holding(src))
 				user.dropItemToGround(src)
 				user.put_in_hands(S)
 			qdel(src)
 		else
-			user.visible_message(span_warning("[user] sharpens [src]."))
+			user.visible_message(span_warning("[user]削尖了[src]。"))
 		return
 	if(istype(I, /obj/item/grown/log/tree/stick))
 		var/obj/item/natural/B = I
 		var/obj/item/natural/bundle/stick/N = new(src.loc)
-		to_chat(user, "I tie the sticks into a bundle.")
+		to_chat(user, "我把木棍捆在了一起。")
 		qdel(B)
 		qdel(src)
 		user.put_in_hands(N)
@@ -366,16 +366,16 @@
 			if(B.amount < B.maxamount)
 				B.amount++
 				B.update_bundle()
-				user.visible_message("[user] adds [src] to [I].", "I add [src] to [I].")
+				user.visible_message("[user]把[src]塞进[I]。", "我把[src]塞进[I]。")
 				qdel(src)
 			else
-				to_chat(user, "I can't add any more sticks to the bundle without it falling apart.")
+				to_chat(user, "我不能再往这捆里加木棍了，不然它就要散架了。")
 			return
 
 /obj/item/grown/log/tree/stake
-	name = "stake"
+	name = "木桩"
 	icon_state = "stake"
-	desc = "A sharpened piece of wood, fantastic for piercing"
+	desc = "一截削尖的木头，非常适合用来穿刺。"
 	grid_width = 32
 	grid_height = 64
 	force = 10
@@ -407,8 +407,8 @@
 
 //................	Lumber essence	............... //
 /obj/item/grown/log/tree/small/essence
-	name = "essence of lumber"
-	desc = "A mystical essence embued with the power of Dendor. Very good source of fuel."
+	name = "木材精华"
+	desc = "一种注入了 Dendor 力量的神秘精华。是极佳的燃料来源。"
 	icon_state = "lessence"
 	static_debris = null
 	firefuel = 60 MINUTES // Extremely poweful fuel.
@@ -423,8 +423,8 @@
 ////////////
 
 /obj/item/natural/wood/plank
-	name = "wooden plank"
-	desc = "A flat piece of wood, useful for flooring."
+	name = "木板"
+	desc = "一块扁平的木头，适合铺设地板。"
 	icon = 'icons/roguetown/items/crafting.dmi'
 	icon_state = "plank"
 	grid_width = 64
@@ -447,7 +447,7 @@
 /obj/item/natural/wood/plank/attack_right(mob/living/user)
 	if(user.get_active_held_item())
 		return
-	to_chat(user, span_warning("I start to collect [src]..."))
+	to_chat(user, span_warning("我开始收集[src]……"))
 	if(move_after(user, 4 SECONDS, target = src))
 		var/stackcount = 0
 		for(var/obj/item/natural/wood/plank/F in get_turf(src))
@@ -468,8 +468,8 @@
 			qdel(F)
 
 /obj/item/natural/bundle/plank
-	name = "stack of wooden planks"
-	desc = "Several planks in a neat pile."
+	name = "一叠木板"
+	desc = "几块木板整齐地堆叠在一起。"
 	icon_state = "plankbundle1"
 	item_state = "plankbundle"
 	icon = 'icons/roguetown/items/crafting.dmi'
@@ -482,7 +482,7 @@
 	throw_range = 2
 	firefuel = 10 MINUTES
 	w_class = WEIGHT_CLASS_BULKY
-	stackname = "plank"
+	stackname = "块木板"
 	stacktype = /obj/item/natural/wood/plank
 	maxamount = 6
 	icon1 = "plankbundle2"

@@ -12,7 +12,7 @@
 	return list(P1, P2)
 
 /obj/effect/portal
-	name = "portal"
+	name = "传送门"
 	desc = ""
 	icon_state = "portal"
 	anchored = TRUE
@@ -30,7 +30,7 @@
 	var/last_effect = 0
 
 /obj/effect/portal/anom
-	name = "wormhole"
+	name = "虫洞"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
 	layer = RIPPLE_LAYER
@@ -179,7 +179,7 @@
 	return real_target
 
 /obj/effect/portal/permanent
-	name = "permanent portal"
+	name = "永久传送门"
 	desc = ""
 	var/id // var edit or set id in map editor
 	hardlinked = FALSE // dont qdel my portal nerd
@@ -211,7 +211,7 @@
 	. = ..()
 
 /obj/effect/portal/permanent/one_way // doesn't have a return portal
-	name = "one-way portal"
+	name = "单向传送门"
 	desc = ""
 	var/list/possible_exits = list()
 	var/keep // if this is a portal that should be kept

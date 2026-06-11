@@ -15,11 +15,11 @@
 
 
 /datum/particle_weather/blood_rain_gentle
-	name = "Strange Rain"
-	desc = "Gentle Rain, la la description."
+	name = "诡异血雨"
+	desc = "柔和的血雨自天而降，透着说不出的不祥。"
 	particleEffectType = /particles/weather/blood_rain
-	warning_message = span_greenannounce("The air grows heavy- something is very wrong.")
-	late_warning_message = span_userdanger("A metallic scent fills the air. Something is wrong with the sky...")
+	warning_message = span_greenannounce("空气愈发沉重，有什么地方大不对劲。")
+	late_warning_message = span_userdanger("空气中弥漫着金属腥味。天空出问题了……")
 	scale_vol_with_severity = TRUE
 	weather_sounds = list(/datum/looping_sound/rain)
 	indoor_weather_sounds = list(/datum/looping_sound/indoor_rain)
@@ -45,11 +45,11 @@
 			M.add_stress(/datum/stressevent/bloodrain)
 
 /datum/particle_weather/blood_rain_storm
-	name = "Strange Rainstorm"
-	desc = "Gentle Rain, la la description."
+	name = "诡异血暴雨"
+	desc = "倾盆血雨自天穹砸落，整片天空都透着凶兆。"
 	particleEffectType = /particles/weather/blood_rain
-	warning_message = span_greenannounce("The air grows heavy- something is very wrong.")
-	late_warning_message = span_greenannounce("A metallic scent fills the air. Something is wrong with the sky...")
+	warning_message = span_greenannounce("空气愈发沉重，有什么地方大不对劲。")
+	late_warning_message = span_greenannounce("空气中弥漫着金属腥味。天空出问题了……")
 	scale_vol_with_severity = TRUE
 	weather_sounds = list(/datum/looping_sound/storm)
 	indoor_weather_sounds = list(/datum/looping_sound/indoor_rain)

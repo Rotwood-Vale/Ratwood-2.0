@@ -36,12 +36,12 @@
 
 //cushion
 /obj/item/cushion/desert1
-	name = "desert cushion"
+	name = "沙漠坐垫"
 	icon = 'modular_deserttown/icons/cushions.dmi'
 	icon_state = "desertcushion1"
 
 /obj/item/cushion/desert2
-	name = "desert cushion"
+	name = "沙漠坐垫"
 	icon = 'modular_deserttown/icons/cushions.dmi'
 	icon_state = "desertcushion2"
 
@@ -74,8 +74,8 @@
 
 
 /obj/structure/fermentation_keg/sandpot
-	name = "sand pot"
-	desc = "A common clay pot used for storing and sometimes fermenting fluids. Favoured over wooden barrels in the desert of Zybantium due to the relative scarcity of wood."
+	name = "沙陶罐"
+	desc = "一种常见的黏土罐，用于储存，有时也用于发酵液体。在兹班提姆沙漠中，因木材相对稀缺，它比木桶更受欢迎。"
 	icon = 'modular_deserttown/icons/pots.dmi'
 	icon_state = "sandpot1"
 
@@ -344,7 +344,7 @@
 //bush
 
 /obj/structure/flora/roguegrass/bush/desert
-	name = "saigahorn"
+	name = "沙羚角"
 	desc = ""
 	icon = 'modular_deserttown/icons/flora.dmi'
 	icon_state = "saigahorn1"
@@ -367,8 +367,8 @@
 	icon_state = "bushshrub[pick(1,2)]"
 
 /obj/structure/flora/roguetree/palm
-	name = "palm tree"
-	desc = "Scant, precious shade."
+	name = "棕榈树"
+	desc = "稀少而宝贵的荫凉。"
 	icon = 'modular_deserttown/icons/bigpalm.dmi'
 	icon_state = "palm1"
 	stump_type = /obj/structure/flora/roguetree/stump/palm

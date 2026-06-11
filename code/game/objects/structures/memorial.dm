@@ -13,7 +13,7 @@ This memorial has been designed for him and any future coders to perish.
 */
 
 /obj/structure/fluff/arc
-	name = "Tomb of the Unknown Employee"
+	name = "无名员工之墓"
 	desc = ""
 	icon_state = "memorial"
 	density = TRUE
@@ -37,7 +37,7 @@ So should you read this and should you get the chance, raise a glass in his memo
 That’s how he would have wanted it.
 */
 /obj/item/clothing/accessory/medal/gold/ordom
-	name = "Tomb of the Paperwork Employee"
+	name = "文书员工之墓"
 	desc = ""
 	icon_state = "memorial"
 	density = TRUE

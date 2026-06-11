@@ -1,5 +1,5 @@
 /obj/effect/bump_teleporter
-	name = "bump-teleporter"
+	name = "触碰传送器"
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x2"
 	var/id = null			//id of this bump_teleporter.

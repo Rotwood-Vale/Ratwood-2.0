@@ -1,6 +1,6 @@
 /obj/item/speakerinq
-	name = "secret whisperer"
-	desc = "Sweet secrets whispered so freely."
+	name = "密语者"
+	desc = "甜美的秘密被如此轻易地低语而出。"
 	var/speaking = TRUE
 	sellprice = 20
 	icon = 'icons/roguetown/items/misc.dmi'
@@ -17,7 +17,7 @@
 	sleeved = 'icons/roguetown/clothing/onmob/neck.dmi'
 	grid_width = 32
 	grid_height = 32
-	var/fakename = "secret whisperer"
+	var/fakename = "密语者"
 
 /obj/item/speakerinq/proc/repeat_message(message, atom/A, tcolor, message_language)
 	if(A == src)
@@ -51,7 +51,7 @@
 	. = ..()
 	switch(slot)
 		if(SLOT_RING)
-			fakename = "silver signet ring"	
+			fakename = "银质印戒"	
 			name = fakename
 	return TRUE		
 
@@ -78,7 +78,7 @@
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	speaking = !speaking
-	to_chat(user, span_info("I [speaking ? "unsilence" : "silence"] the whisperer."))
+	to_chat(user, span_info("我将密语低语器[speaking ? "解除禁言" : "禁言"]了。"))
 	if(speaking)
 		icon_state = "[initial(icon_state)]_active"
 	else

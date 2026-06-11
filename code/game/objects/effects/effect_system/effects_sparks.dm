@@ -20,7 +20,7 @@
 
 
 /obj/effect/particle_effect/sparks
-	name = "sparks"
+	name = "火花"
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "sparks"
 	anchored = TRUE
@@ -81,11 +81,11 @@
 //electricity
 
 /obj/effect/particle_effect/sparks/electricity
-	name = "lightning"
+	name = "闪电"
 	icon_state = "electricity"
 
 /obj/effect/particle_effect/sparks/quantum
-	name = "quantum sparks"
+	name = "量子火花"
 	icon_state = "quantum_sparks"
 
 /datum/effect_system/lightning_spread

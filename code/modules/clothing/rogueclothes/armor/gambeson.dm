@@ -2,8 +2,8 @@
 
 /obj/item/clothing/suit/roguetown/armor/gambeson
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
-	name = "gambeson"
-	desc = "A large shirt meant to be worn below armor."
+	name = "绗缝护甲衣"
+	desc = "用于穿在盔甲里面的大号护衣。"
 	icon_state = "gambeson"
 	body_parts_covered = COVERAGE_FULL
 	armor = ARMOR_PADDED
@@ -25,7 +25,7 @@
 	color = "#646464"
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/lord
-	name = "arming jacket"
+	name = "武装短衣"
 	icon_state = "dgamb"
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	allowed_sex = list(MALE, FEMALE)
@@ -33,23 +33,23 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/shadowrobe
-	name = "stalker robe"
-	desc = "A thick robe in royal purple, befitting the hand, while remaining easy for them to slip about in.."
+	name = "潜猎者长袍"
+	desc = "厚实的皇家紫长袍，配得上王手之位，同时也方便其悄然行动。"
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	icon_state = "shadowrobe"
 
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/light
-	name = "light gambeson"
-	desc = "A thin barely-padded gambeson, typically worn by the peasantry as cheap yet fashionable armor for the whole body. May stop an arrow."
+	name = "轻型绗缝护甲衣"
+	desc = "薄而几乎没有衬垫的绗缝护甲衣，平民常把它当作廉价却体面的全身护甲。或许能挡下一箭。"
 	armor = ARMOR_PADDED_BAD
 	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
 	prevent_crits = null // It won't help, like, at all.
 	sellprice = 10
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
-	name = "padded gambeson"
-	desc = "A gambeson with additional padding layers, hardened to make it more durable. It still does not compare to leather or metal, but it will probably stop a crossbow bolt, so it's typically worn to complement proper armor."
+	name = "加厚绗缝护甲衣"
+	desc = "增加了额外衬层并经硬化处理的绗缝护甲衣，更加耐用。它仍比不上皮革或金属，但多半能挡下一支弩矢，因此通常用来搭配正式护甲。"
 	icon_state = "gambesonp"
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)
 	armor = ARMOR_PADDED_GOOD
@@ -68,7 +68,7 @@
 		return
 
 	if(shifted)
-		if(alert("Would you like to wear your gambeson normally? -Restores greyscaling, new style.",, "Yes", "No") != "Yes")
+		if(alert("你想正常穿着这件绗缝护甲衣吗？- 恢复染色, 新款式。",, "是", "否") != "是")
 			return
 		icon_state = "gambesonp"
 		color = "#976E6B"
@@ -80,7 +80,7 @@
 			H.update_inv_armor()
 		return
 
-	if(alert("Would you like to wear your gambeson traditionally? -Removes Greyscaling, old style.",, "Yes", "No") != "Yes")
+	if(alert("你想按传统方式穿着这件绗缝护甲衣吗？ -恢复染色, 旧款式。",, "是", "否") != "是")
 		return
 	icon_state = "gambesonpold"
 	color = null
@@ -92,8 +92,8 @@
 		H.update_inv_armor()
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
-	name = "royal gambeson"
-	desc = "A fancy gambeson for royalty. Adorned with extra details and padded for extra protection."
+	name = "皇家绗缝护甲衣"
+	desc = "为王室准备的华贵绗缝护甲衣，额外装饰并增加了衬垫防护。"
 	icon_state = "royalgamb"
 	color = "#FFFFFF"
 	allowed_race = NON_DWARVEN_RACE_TYPES
@@ -131,8 +131,8 @@
 		L.update_inv_armor()
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan
-	name = "fencing gambeson"
-	desc = "A large shirt with heavy padding meant to be used below armor. Will probably stop an arrow, unlikely to stop a bolt."
+	name = "击剑绗缝护甲衣"
+	desc = "带厚实衬垫的大号护衣，适合穿在盔甲里面。大概能挡住箭矢，但未必挡得住弩矢。"
 	icon_state = "fancygamb"
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	color = "#5058c1"
@@ -146,7 +146,7 @@
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan/attack_right(mob/user)
 	..()
 	if(!picked)
-		var/choice = input(user, "Choose a color.", "Otavan colors") as anything in GLOB.colorlist
+		var/choice = input(user, "选择一种颜色。", "奥塔凡配色") as anything in GLOB.colorlist
 		var/playerchoice = GLOB.colorlist[choice]
 		picked = TRUE
 		detail_color = playerchoice
@@ -171,8 +171,8 @@
 		add_overlay(pic)
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter
-	name = "padded fencing shirt"
-	desc = "A strong loosely worn quilted shirt that places little weight on the arms, usually worn underneath a strong leather vest. It won't cover your legs."
+	name = "加垫击剑衬衣"
+	desc = "结实而宽松的绗缝衬衣，对手臂负担很小，通常穿在坚固皮背心里面。它护不到你的腿。"
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	icon_state = "fencingshirt"
 	color = "#FFFFFF"
@@ -186,7 +186,7 @@
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter/attack_right(mob/user)
 	..()
 	if(!picked)
-		var/choice = input(user, "Choose a color.", "Fencing colors") as anything in GLOB.colorlist
+		var/choice = input(user, "选择一种颜色。", "击剑配色") as anything in GLOB.colorlist
 		var/playerchoice = GLOB.colorlist[choice]
 		picked = TRUE
 		detail_color = playerchoice
@@ -218,8 +218,8 @@
 		add_overlay(pic2)
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah
-	name = "padded caftan"
-	desc = "A long overcoat commonly worn in Naledi, Kazengun, Gronn and Aavnr - but mostly associated with steppesmen and raiders. This specific kind rivals a gambeson in protection."
+	name = "加垫长袍"
+	desc = "一种常见于纳雷迪、卡曾贡、格隆与阿夫纳尔的长外衣，但更多让人联想到草原民与劫掠者。这一款在防护上足以媲美绗缝护甲衣。"
 	icon_state = "chargah"
 	color = "#ffffff"
 	boobed = TRUE
@@ -227,8 +227,8 @@
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	name = "grenzelhoftian hip-shirt"
-	desc = "Padded shirt for extra comfort and protection, adorned in vibrant colors."
+	name = "格伦泽尔霍夫长摆衬衣"
+	desc = "为额外舒适与防护而制的加垫衬衣，并饰以鲜艳色彩。"
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	icon_state = "grenzelshirt"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
@@ -247,7 +247,7 @@
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft/attack_right(mob/user)
 	..()
 	if(!picked)
-		var/choice = input(user, "Choose a color.", "Grenzelhoft colors") as anything in GLOB.colorlist
+		var/choice = input(user, "选择一种颜色。", "格伦泽尔霍夫配色") as anything in GLOB.colorlist
 		var/playerchoice = GLOB.colorlist[choice]
 		picked = TRUE
 		detail_color = playerchoice
@@ -267,14 +267,14 @@
 		add_overlay(pic)
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/zyb
-	name = "desert coat"
-	desc = "A slim-fitting sherwani, a Zybantine-styled coat meant to endure in the desert's climate."
+	name = "沙漠长衣"
+	desc = "修身的谢尔瓦尼式长衣，拜班廷风格，专为耐受沙漠气候而制。"
 	icon_state = "sherwani"
 	color = CLOTHING_DARKDRAB
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
-	name = "padded desert coat"
-	desc = "A slim-fitting sherwani, a Zybantine-styled coat meant to endure in the desert's climate. This one is heavily padded, meant for a warrior to wear."
+	name = "加垫沙漠长衣"
+	desc = "修身的谢尔瓦尼式长衣，拜班廷风格，专为耐受沙漠气候而制。这一件填充厚实，专供战士穿着。"
 	icon_state = "sherwani"
 	color = "#eec39a"
 	shiftable = FALSE
@@ -284,10 +284,10 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant
-	name = "hierophant's shawl"
+	name = "大祭司披巾"
 	icon_state = "desertrobe"
 	item_state = "desertrobe"
-	desc = "A thick robe intervowen with spell-laced fabrics. Thick and protective while remaining light and breezy; the perfect gear for protecting one from the threats of the sun, the desert and the daemons, yet still allowing one to cast spells aptly."
+	desc = "厚袍中交织着附有咒法的织物。它厚实而有防护，却仍轻盈透气；既能抵御烈日、沙漠与恶魔的威胁，又不妨碍施法。"
 	naledicolor = TRUE
 	shiftable = FALSE
 	cold_protection = null
@@ -296,10 +296,10 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex
-	name = "pontifex's kaftan"
+	name = "教宗长衫"
 	icon_state = "monkleather"
 	item_state = "monkleather"
-	desc = "Tight boiled leathers that stretch and fit to one's frame perfectly."
+	desc = "紧身的煮制皮甲，能完美贴合穿戴者的身形。"
 	shiftable = FALSE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
@@ -307,8 +307,8 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
-	name = "inquisitorial leather tunic"
-	desc = "The finest leather tunic. Made to ENDURE, Made to Inquire, come heretic or hellfire."
+	name = "宗审庭皮束衣"
+	desc = "最上乘的皮束衣。为忍耐而制，为审问而制，无论面对异端还是地狱烈焰。"
 	icon_state = "leathertunic"
 	color = null
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)
@@ -317,8 +317,8 @@
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/shadowrobe
-	name = "stalker robe"
-	desc = "A robe-like gambeson of moth-eaten cloth and cheap purple dye. No self-respecting elf would be seen wearing this."
+	name = "潜猎者长袍"
+	desc = "由虫蛀布料与廉价紫染做成的袍式绗缝衣。任何有自尊的精灵都不会穿它。"
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	icon_state = "shadowrobe"
 	armor = ARMOR_PADDED_GOOD

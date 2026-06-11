@@ -1,5 +1,5 @@
 /datum/sex_action/force_thighjob
-	name = "Jerk them off with thighs"
+	name = "用大腿替对方撸弄"
 	target_sex_part = SEX_PART_COCK
 
 /datum/sex_action/force_thighjob/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -19,10 +19,10 @@
 	return TRUE
 
 /datum/sex_action/force_thighjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] moves [user.p_their()] thighs between [target]'s cock..."))
+	user.visible_message(span_warning("[user]把[user.p_their()]双腿夹上了[target]的肉棒……"))
 
 /datum/sex_action/force_thighjob/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] jerks [target]'s cock with [user.p_their()] thighs..."))
+	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()]用[user.p_their()]双腿夹弄着[target]的肉棒……"))
 	user.sexcon.outercourse_noise(user)
 	user.sexcon.do_thrust_animate(target)
 
@@ -31,7 +31,7 @@
 	target.sexcon.handle_passive_ejaculation(user)
 
 /datum/sex_action/force_thighjob/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] stops jerking [target] off with [user.p_their()] thighs..."))
+	user.visible_message(span_warning("[user]停下了用[user.p_their()]双腿夹弄[target]肉棒的动作……"))
 
 /datum/sex_action/force_thighjob/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.sexcon.finished_check())

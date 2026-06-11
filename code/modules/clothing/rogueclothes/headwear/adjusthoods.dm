@@ -2,7 +2,7 @@
 // REAL hoods
 
 /obj/item/clothing/head/roguetown/roguehood
-	name = "hood"
+	name = "兜帽"
 	desc = ""
 	color = CLOTHING_BROWN
 	icon_state = "basichood"
@@ -37,7 +37,7 @@
 
 /obj/item/clothing/head/roguetown/roguehood/MiddleClick(mob/user)
 	overarmor = !overarmor
-	to_chat(user, span_info("I [overarmor ? "wear \the [src] under my hair" : "wear \the [src] over my hair"]."))
+	to_chat(user, span_info("我把\the [src][overarmor ? "戴在头发里面" : "戴在头发外面"]。"))
 	if(overarmor)
 		alternate_worn_layer = HOOD_LAYER //Below Hair Layer
 	else
@@ -63,7 +63,7 @@
 	..()
 
 /obj/item/clothing/head/roguetown/roguehood/reinforced
-	name = "reinforced hood"
+	name = "加固兜帽"
 	armor = ARMOR_REINFORCED_HOOD
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	max_integrity = 120//+20 over base. -30 from previous value.
@@ -75,8 +75,8 @@
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/head/roguetown/roguehood/shalal
-	name = "keffiyeh"
-	desc = "A protective covering worn by those native to the desert."
+	name = "库菲亚头巾"
+	desc = "沙漠原住民佩戴的防护头巾。"
 	color = "#b8252c"
 	icon_state = "shalal"
 	item_state = "shalal"
@@ -107,8 +107,8 @@
 	color = CLOTHING_PURPLE
 
 /obj/item/clothing/head/roguetown/roguehood/shalal/hijab
-	name = "hijab"
-	desc = "Flowing like blood from a wound, this tithe of cloth-and-silk spills out to the shoulders. It carries the telltale mark of Naledian stitcheries."
+	name = "希贾布头巾"
+	desc = "如伤口涌出的鲜血般垂落，这份布与丝的献礼披至肩头。其上带有纳莱迪针线活的鲜明印记。"
 	item_state = "hijab"
 	icon_state = "deserthood"
 	flags_inv = HIDEEARS|HIDEHAIR	//Does not hide face.
@@ -116,8 +116,8 @@
 	block2add = null
 
 /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/zyb
-	name = "padded headscarf"
-	desc = "A common sight amongst those travelling the long desert routes, it offers protection from the heat and a modicum of it against the beasts that prowl its more comfortable nites."
+	name = "衬垫头巾"
+	desc = "常见于长途穿越沙漠的人们，既能抵御酷热，也多少能防住那些在凉爽夜里游荡的野兽。"
 	max_integrity = 100
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_NECK
@@ -128,8 +128,8 @@
 	nudist_approved = FALSE // armored
 
 /obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood
-	name = "heavy hood"
-	desc = "This thick lump of burlap completely shrouds your head, protecting it from harsh weather and nosey protagonists alike."
+	name = "厚实兜帽"
+	desc = "这团厚实的粗麻布把你的头裹得严严实实，既能抵御恶劣天气，也能挡住爱管闲事的主角们。"
 	color = CLOTHING_BROWN
 	body_parts_covered = HEAD|HAIR|EARS|NECK
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_NECK
@@ -142,14 +142,14 @@
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/yoruku
-	name = "shadowed hood"
-	desc = "It sits just so, obscuring the face just enough to spoil recognition."
+	name = "暗影兜帽"
+	desc = "它的位置恰到好处，刚好把面容遮得难以辨认。"
 	color = CLOTHING_BLACK
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_NECK
 
 /obj/item/clothing/head/roguetown/roguehood/poacher
-	name = "weathered warden's hood"
-	desc = "A leather hood, sewn larger than usual to accommodate a helmet. There's dried blood on its broken left antler. The price for true freedom, paid with someone else's life."
+	name = "风化守林人兜帽"
+	desc = "一顶皮革兜帽，缝得比寻常更大，好容纳头盔。折断的左鹿角上沾着干涸血迹。真正自由的代价，总是由别人的性命来支付。"
 	color = null
 	icon_state = "poacherhood"
 	item_state = "poacherhood"
@@ -166,8 +166,8 @@
 	toggle_icon_state = TRUE
 	max_integrity = 200
 
-	name = "weathered warden's hood"
-	desc = "A leather hood, sewn larger than usual to accommodate a helmet. There's some dried blood on its broken left antler. The price for true freedom, paid with someone else's life."
+	name = "风化守林人兜帽"
+	desc = "一顶皮革兜帽，缝得比寻常更大，好容纳头盔。折断的左鹿角上残留着些许干血。真正自由的代价，总是由别人的性命来支付。"
 	icon_state = "poacherhood"
 	item_state = "poacherhood"
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
@@ -176,8 +176,8 @@
 // Holy Hoods
 
 /obj/item/clothing/head/roguetown/roguehood/astrata
-	name = "sun hood"
-	desc = "A hood worn by those who favor Astrata. Praise the firstborn sun!"
+	name = "太阳兜帽"
+	desc = "一顶由崇奉阿斯特拉塔者佩戴的兜帽。赞美初升之阳！"
 	color = null
 	icon_state = "astratahood"
 	item_state = "astratahood"
@@ -194,8 +194,8 @@
 	salvage_amount = 1
 
 /obj/item/clothing/head/roguetown/roguehood/abyssor
-	name = "depths hood"
-	desc = "A hood worn by the followers of Abyssor, with a unique, coral-shaped mask. How do they even see out of this?"
+	name = "深渊兜帽"
+	desc = "一顶由阿比索尔信徒佩戴的兜帽，带有独特的珊瑚状面具。他们到底是怎么看见外面的？"
 	color = null
 	icon_state = "abyssorhood"
 	item_state = "abyssorhood"
@@ -211,7 +211,7 @@
 	salvage_amount = 1
 
 /obj/item/clothing/head/roguetown/roguehood/ravoxgorget
-	name = "ravox's tabard gorget"
+	name = "拉沃克斯罩袍护喉"
 	color = null
 	icon_state = "ravoxgorget"
 	item_state = "ravoxgorget"
@@ -225,8 +225,8 @@
 
 //............... Feldshers Hood ............... //
 /obj/item/clothing/head/roguetown/roguehood/feld
-	name = "feldsher's hood"
-	desc = "My cure is most effective."
+	name = "军医兜帽"
+	desc = "我的疗法最为有效。"
 	icon_state = "feldhood"
 	item_state = "feldhood"
 	body_parts_covered = HEAD|EARS|NOSE
@@ -236,8 +236,8 @@
 
 //............... Physicians Hood ............... //
 /obj/item/clothing/head/roguetown/roguehood/phys
-	name = "physicker's hood"
-	desc = "My cure is mostly effective."
+	name = "医师兜帽"
+	desc = "我的疗法大多时候都有效。"
 	icon_state = "surghood"
 	item_state = "surghood"
 	body_parts_covered = HEAD|EARS|NOSE
@@ -248,8 +248,8 @@
 //Agnostic variants for use in the loadout.
 
 /obj/item/clothing/head/roguetown/roguehood/shroudscarlet
-	name = "scarlet shroud"
-	desc = "A billowing hood, carrying the aroma of granulated rosas."
+	name = "猩红罩巾"
+	desc = "一顶飘逸的兜帽，带着研碎玫瑰的气息。"
 	icon_state = "feldhood"
 	item_state = "feldhood"
 	body_parts_covered = HEAD|EARS|NOSE
@@ -258,8 +258,8 @@
 	salvage_amount = 1
 
 /obj/item/clothing/head/roguetown/roguehood/shroudblack
-	name = "black shroud"
-	desc = "A billowing hood, carrying the aroma of smoldering charcoal."
+	name = "黑色罩巾"
+	desc = "一顶飘逸的兜帽，带着阴燃木炭的气息。"
 	icon_state = "surghood"
 	item_state = "surghood"
 	body_parts_covered = HEAD|EARS|NOSE
@@ -268,8 +268,8 @@
 	salvage_amount = 1
 
 /obj/item/clothing/head/roguetown/roguehood/shroudwhite
-	name = "white shroud"
-	desc = "A billowing hood, carrying the aroma of snow."
+	name = "白色罩巾"
+	desc = "一顶飘逸的兜帽，带着白雪的气息。"
 	icon_state = "whitehood"
 	item_state = "whitehood"
 	body_parts_covered = HEAD|EARS|NOSE
@@ -280,8 +280,8 @@
 //Psydonite hoods.
 
 /obj/item/clothing/head/roguetown/roguehood/psydon
-	name = "psydonian hood"
-	desc = "A hood worn by Psydon's disciples, oft-worn in conjunction with its matching tabard. Made with spell-laced fabric to provide some protection."
+	name = "赛顿兜帽"
+	desc = "一顶由赛顿门徒佩戴的兜帽，常与配套罩袍一同穿着。布料掺入施法纤维，能提供些许防护。"
 	icon_state = "psydonhood"
 	item_state = "psydonhood"
 	color = null
@@ -301,8 +301,8 @@
 	nudist_approved = FALSE // armored
 
 /obj/item/clothing/head/roguetown/roguehood/psydon/confessor
-	name = "confessional hood"
-	desc = "A loose-fitting piece of leatherwear that can be tightened on the move. Keeps rain, blood, and the tears of the sullied away."
+	name = "告解者兜帽"
+	desc = "一件宽松的皮制衣物，能在行进间收紧。它能挡住雨水、鲜血，以及污秽者的泪水。"
 	icon_state = "confessorhood"
 	item_state = "confessorhood"
 	color = null
@@ -321,8 +321,8 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/head/roguetown/roguehood/hierophant
-	name = "hierophant's pashmina"
-	desc = "A thick hood that covers one's entire head, should they desire, or merely acts as a scarf otherwise. Made with spell-laced fabric to provide some protection against daemons and mortals alike."
+	name = "大祭司披巾"
+	desc = "一顶厚实兜帽，既可在需要时罩住整个头部，也可只当围巾使用。布料掺入施法纤维，能同时抵御恶魔与凡人。"
 	max_integrity = 100
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	armor = ARMOR_SPELLSINGER
@@ -334,8 +334,8 @@
 	salvage_amount = 1
 
 /obj/item/clothing/head/roguetown/roguehood/pontifex
-	name = "pontifex's pashmina"
-	desc = "A slim hood with thin, yet dense fabric. Stretchy and malleable, allowing for full flexibility and mobility. Made with spell-laced fabric to provide some protection against daemons and mortals alike."
+	name = "教宗披巾"
+	desc = "一顶纤薄兜帽，布料虽薄却致密，富有弹性又柔韧，保证活动自如。布料掺入施法纤维，能同时抵御恶魔与凡人。"
 	max_integrity = 100
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	armor = ARMOR_SPELLSINGER
@@ -347,13 +347,13 @@
 	nudist_approved = FALSE // armored
 
 /obj/item/clothing/head/roguetown/roguehood/sojourner
-	name = "sojourner's shroud"
-	desc = "A traditional garment, carried by those who survived the lonesome pilgrimage through Naledi's cursed dunes. \
-	Like a helmet, it will ward off killing blows; but unlike a helmet, it will keep the mistakes out of your incantations. </br>\
-	'..We had our tests; we had our places of sin and vice. We were to look out for brother and sister, arm-in-arm, to ensure none of us fell. \
-	And yet we all did. We all allowed that to become what is. \
-	The daemons that roam our streets, that snatch our children from our bed, that eat our wives and break our husbands. \
-	They are us, our own creations and perversions. They are humanity as humanity sees itself, made manifest through our own twisted arcyne magicks..'"
+	name = "旅者罩巾"
+	desc = "一件传统衣物，由那些穿越纳莱迪诅咒沙丘、熬过孤寂朝圣的人所携带。 \
+	像头盔一样，它能挡下致命一击；但与头盔不同，它也能避免你的咒文出错。 </br>\
+	'..我们曾受试炼；我们也曾有纵欲与堕落之地。我们本该肩并着肩守望兄弟姐妹，确保无人坠落。 \
+	可我们全都失足了。我们全都放任一切变成如今这副模样。 \
+	那些游荡街头、从床边掳走孩子、吞食妻子并折断丈夫的恶魔。 \
+	它们就是我们，是我们亲手造出的扭曲与堕落。它们是人类眼中的人类，由我们自身扭曲的奥术显化而成..'"
 	icon_state = "surghood"
 	item_state = "surghood"
 	color = "#a88d8d"

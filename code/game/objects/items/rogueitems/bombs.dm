@@ -1,7 +1,7 @@
 
 /obj/item/bomb
-	name = "bottle bomb"
-	desc = "A fiery explosion waiting to be coaxed from its glass prison."
+	name = "瓶装炸弹"
+	desc = "一场炽烈爆炸，正等待着从它的玻璃牢笼中被引发。"
 	icon_state = "bbomb"
 	icon = 'icons/roguetown/items/misc.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
@@ -86,17 +86,17 @@
 		return
 	
 	I.visible_message(
-		span_warning("[user] begins to prepare [src].."),
-		span_notice("I begin to set-up [src] with [I].")
+		span_warning("[user]开始布置[src]……"),
+		span_notice("我开始用[I]布置[src]。")
 	)
 
 	qdel(I)
 
 	if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/crafting), TRUE, src))
-		to_chat(user, span_warning("I stop preparing [src]."))
+		to_chat(user, span_warning("我停止布置[src]了。"))
 		new /obj/item/natural/fibers(user.loc)
 		if(prob(10))
-			to_chat(user, span_warningbig("Uh oh."))
+			to_chat(user, span_warningbig("糟了。"))
 			light()
 		return
 	
@@ -117,14 +117,14 @@
 	qdel(src)
 
 	I.visible_message(
-		span_warning("[user] finishes setting up [trip]."),
-		span_notice("I finish setting up [trip]. I can extend it by one step longer.")
+		span_warning("[user]完成了[trip]的布置。"),
+		span_notice("我完成了[trip]的布置。还能再把它延长一格。")
 	)
 	return
 
 /obj/item/bomb/tripbomb
-	name = "trip bomb"
-	desc = "A detonation waiting to be coaxed from its glass prison. This one lies in wait."
+	name = "绊线炸弹"
+	desc = "一场爆炸正等待着从它的玻璃牢笼中被引发。而这一个正潜伏着。"
 	icon_state = "bbomb"
 	w_class = WEIGHT_CLASS_NORMAL
 	anchored = TRUE
@@ -143,9 +143,9 @@
 /obj/item/bomb/tripbomb/attackby(obj/item/I, mob/user, params)
 	if(user.used_intent.blade_class == BCLASS_CUT && I.wlength == WLENGTH_SHORT)
 		if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/crafting), TRUE, src))
-			to_chat(user, span_warning("I stop slicing [src]."))
+			to_chat(user, span_warning("我停止拆解[src]了。"))
 			if(!prob(user.get_skill_level(/datum/skill/craft/crafting) * 10))
-				to_chat(user, span_warningbig("Oh no."))
+				to_chat(user, span_warningbig("糟了。"))
 				light()
 		for(var/list/obj/item/tripwire/t_wire in wire_trigger)
 			QDEL_NULL(t_wire)
@@ -172,8 +172,8 @@
 	bomb.light()
 
 /obj/item/tripwire
-	name = "fibre tripwire"
-	desc = "You almost missed it - phew. Best cut it with a blade to disarm it."
+	name = "纤维绊线"
+	desc = "你差点就没发现它了，呼。最好用刀刃割断来解除它。"
 	icon = 'icons/roguetown/items/misc.dmi'	
 	icon_state = "wire"
 	anchored = TRUE
@@ -186,9 +186,9 @@
 /obj/item/tripwire/attackby(obj/item/I, mob/user, params)
 	if(user.used_intent.blade_class == BCLASS_CUT && I.wlength == WLENGTH_SHORT)
 		if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/crafting), TRUE, src))
-			to_chat(user, span_warning("I stop slicing [src]."))
+			to_chat(user, span_warning("我停止拆解[src]了。"))
 			if(!prob(user.get_skill_level(/datum/skill/craft/crafting) * 10))
-				to_chat(user, span_warningbig("Oh no."))
+				to_chat(user, span_warningbig("糟了。"))
 				payload.light()
 
 		for(var/list/obj/item/tripwire/t_wire in payload.wire_trigger)
@@ -204,10 +204,10 @@
 
 	if(istype(I, /obj/item/natural/fibers))
 		if(payload.wire_trigger.len == 2)
-			to_chat(user, span_warning("I can not extend [src] anymore."))
+			to_chat(user, span_warning("[src]已经不能再延长了。"))
 			return ..()
 		if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/crafting), TRUE, src))
-			to_chat(user, span_warning("I stop extending [src]."))
+			to_chat(user, span_warning("我停止延长[src]了。"))
 			return ..()
 
 		var/obj/item/tripwire/wire = new /obj/item/tripwire(get_ranged_target_turf(src, dir, 1))
@@ -227,20 +227,20 @@
 	var/mob/living/carbon/human/victim = O
 	if(victim.STALUC >= 10)
 		if(prob((victim.STALUC - 10) * 10))
-			to_chat(victim, span_warning("Your foot narrowly misses [src]. Be careful!"))
+			to_chat(victim, span_warning("你的脚险些碰到[src]。小心点！"))
 			return
 	playsound(victim, 'sound/items/knife_open.ogg', 100, TRUE)
 	victim.visible_message(
-		span_warningbig("[victim] steps on [src]!"),
-		span_warningbig("I feel the snapping of twine under my boot!")
+		span_warningbig("[victim]踩中了[src]！"),
+		span_warningbig("我感觉到靴底下的细绳绷断了！")
 	)
 	payload.light()
 	for(var/list/obj/item/tripwire/t_wire in payload.wire_trigger)
 		QDEL_NULL(t_wire)
 
 /obj/item/bomb/smoke
-	name = "smoke bomb"
-	desc = "A soft sphere with an alchemical mixture and a dispersion mechanism hidden inside. Any pressure will detonate it."
+	name = "烟雾弹"
+	desc = "一个柔软球体，内部藏有炼金混合物与散布机构。任何压力都会引爆它。"
 	icon_state = "smokebomb"
 	icon = 'icons/roguetown/items/misc.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
@@ -290,8 +290,8 @@
 
 
 /obj/item/tntstick
-	name = "blastpowder stick"
-	desc = "A bit of blastpowder in paper shell..."
+	name = "爆粉棒"
+	desc = "包在纸壳里的少量爆粉……"
 	icon_state = "tnt_stick"
 	var/lit_state = "tnt_stick-lit"
 	icon = 'icons/roguetown/items/misc.dmi'
@@ -350,7 +350,7 @@
 				snuff()
 			else
 				explosion(T, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 6, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
-				loud_message("A muted explosion echos in the ears of those whom hear it", hearing_distance = 14)
+				loud_message("一声沉闷的爆炸在听见者耳中回响", hearing_distance = 14)
 				qdel(src) //IMPORTANT!! go into walls /turf/closed/wall/ and see /turf/closed/wall/ex_act. Its bounded with /proc/explosion. Same for /obj/structure and /obj/structure/ex_act because if you going to fuck intergity or whatever this shit called players will skin you alive for breaking their equipment and keys
 		else //also /turf/open/floor/ex_act for comment above
 			if(prob(prob2fail))
@@ -362,8 +362,8 @@
 		explode(TRUE)
 
 /obj/item/satchel_bomb
-	name = "blastpowder satchel"
-	desc = "A satchel full of blastpowder..."
+	name = "爆粉挎包"
+	desc = "一个装满爆粉的挎包……"
 	icon_state = "satchel_bomb"
 	var/lit_state = "satchel_bomb-lit"
 	icon = 'icons/roguetown/items/misc.dmi'
@@ -424,7 +424,7 @@
 				snuff()
 			else
 				explosion(T, devastation_range = 5, heavy_impact_range = 6, light_impact_range = 10, flame_range = 2, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
-				loud_message("A loud explosion rings in the ears of those whom hear it", hearing_distance = 28)
+				loud_message("一声巨响在所有听见者耳中炸开", hearing_distance = 28)
 				qdel(src)
 
 		else
@@ -437,8 +437,8 @@
 		explode(TRUE)
 
 /obj/item/impact_grenade
-	name = "impact grenade"
-	desc = "Some substance, hidden under paper"
+	name = "碰炸手雷"
+	desc = "某种物质，被包藏在纸张之下。"
 	dropshrink = 0.6
 	icon_state = "impact_grenade"
 	icon = 'icons/roguetown/items/misc.dmi'
@@ -467,8 +467,8 @@
 	explodes() 
 
 /obj/item/impact_grenade/explosion
-	name = "Impact grenade"
-	desc = "Some substance, hidden under some paper and skin. This one sparks..."
+	name = "碰炸手雷"
+	desc = "某种物质，被包藏在纸张与外皮之下。这个正在冒火花……"
 
 /obj/item/impact_grenade/explosion/explodes()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -478,8 +478,8 @@
 		qdel(src)
 
 /obj/item/smokeshell
-	name = "gas belcher shell"
-	desc = "a metal shell for spraying gas out"
+	name = "喷气壳"
+	desc = "一个用来喷出气体的金属弹壳。"
 	dropshrink = 0.6
 	icon_state = "smokeshell_blank"
 	icon = 'icons/roguetown/items/misc.dmi'
@@ -490,8 +490,8 @@
 	grid_height = 32
 
 /obj/item/impact_grenade/smoke
-	name = "gas belcher"
-	desc = "A gas belcher. This one emits clouds of harmless smoke..."
+	name = "喷气器"
+	desc = "一个喷气器。这个会喷出无害烟雾……"
 	dropshrink = 0.6
 	icon_state = "smokeshell_blue"
 	var/datum/effect_system/smoke_spread/smoke_type = /datum/effect_system/smoke_spread
@@ -509,32 +509,32 @@
 	..() // stop processing and delete self
 
 /obj/item/impact_grenade/smoke/poison_gas
-	name = "poison gas belcher"
-	desc = "A gas belcher. The smell of this one makes you to gasp..."
+	name = "毒气喷气器"
+	desc = "一个喷气器。这个的气味会让你喘不过气……"
 	icon_state = "smokeshell_green"
 	smoke_type = /datum/effect_system/smoke_spread/poison_gas
 
 /obj/item/impact_grenade/smoke/healing_gas
-	name = "healing gas belcher"
-	desc = "A gas belcher.  The smell of this one reminds you the taste of red..."
+	name = "疗愈喷气器"
+	desc = "一个喷气器。这个的气味让你想起红色的味道……"
 	icon_state = "smokeshell_red"
 	smoke_type = /datum/effect_system/smoke_spread/healing_gas
 
 
 /obj/item/impact_grenade/smoke/fire_gas
-	name = "burning gas belcher"
-	desc = "A gas belcher. It smells like chicken and burns your hand..."
+	name = "燃烧喷气器"
+	desc = "一个喷气器。它闻起来像鸡肉，还会灼伤你的手……"
 	icon_state = "smokeshell_orange"
 	smoke_type = /datum/effect_system/smoke_spread/fire_gas
 
 /obj/item/impact_grenade/smoke/blind_gas
-	name = "blinding gas belcher"
-	desc = "A gas belcher. The smell from this makes your eyes water."
+	name = "致盲喷气器"
+	desc = "一个喷气器。这东西的气味会让你眼泪直流。"
 	icon_state = "smokeshell_blue"
 	smoke_type = /datum/effect_system/smoke_spread/blind_gas
 
 /obj/item/impact_grenade/smoke/mute_gas
-	name = "silent gas belcher"
-	desc = "A gas belcher. The smell from this makes your mind blank and your tongue still."
+	name = "静默喷气器"
+	desc = "一个喷气器。这东西的气味会让你脑中一片空白，舌头也动弹不得。"
 	icon_state = "smokeshell_purple"
 	smoke_type = /datum/effect_system/smoke_spread/mute_gas	

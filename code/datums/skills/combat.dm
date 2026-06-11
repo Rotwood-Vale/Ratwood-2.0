@@ -1,6 +1,6 @@
 /datum/skill/combat
 	abstract_type = /datum/skill/combat
-	name = "Combat"
+	name = "战斗"
 	desc = ""
 	dream_cost_base = 2
 	dream_cost_per_level = 1
@@ -8,133 +8,145 @@
 	max_skillbook_level = 3
 
 /datum/skill/combat/knives
-	name = "Knife-fighting"
-	desc = "Increases your chance to successfully parry and bypass your opponent's parry by 20% with knives, and your chance to bypass dodge by 10%. At Apprentice or above, you will not fumble while taking out knives from a bandolier."
+	name = "匕首战斗"
+	desc = "使用匕首时，我成功招架与绕过对手招架的几率提高 20%，绕过闪避的几率提高 10%。达到学徒或更高等级后，我从弹带中抽出匕首时不会失手。"
 	dreams = list(
-		"...a barkeep whistles as he cleans glasses and a drunkard snores, passed out on the counter. The rest of the tavern focuses on you with bated breath as your dagger darts between your fingers in an impressive display of legerdemain...",
-		"...a flash of steel through the sky, and another, and another. Blades pass between your juggling hands as if you were pulling on singular, thick rope...",
-		"...you tuck the blade away in your cloak, and offer yourself up for inspection. While small, the invisible blade cannot be parried..."
+		"...酒保一边擦着杯子一边吹口哨，醉汉趴在柜台上打着鼾。整间酒馆都屏住呼吸望着你，你的匕首在指间来回穿梭，展露出令人惊叹的巧手把戏……",
+		"...寒光划过天际，一道，又一道，再一道。刀刃在你抛接的双手间来回穿梭，仿佛你正牵引着一根粗实的绳索……",
+		"...你把刀刃藏回斗篷中，坦然任人搜查。那把隐而不见的小刀，终究无法被招架……"
 	)
-	expert_name = "Shanker"
+	expert_name = "捅刺者"
 
 
 /datum/skill/combat/swords
-	name = "Sword-fighting"
-	desc = "Increases your chance to successfully parry and bypass your opponent's parry by 20% with swords, and your chance to bypass dodge by 10%."
+	name = "剑术"
+	desc = "使用剑类时，我成功招架与绕过对手招架的几率提高 20%，绕过闪避的几率提高 10%。"
 	dreams = list(
-		"...your heavy blade swings in a wide arc, cleaving through the air with a roar. Each landed strike hits with bone shattering force. Your opponent's shield crumples under the weight, and your blade finds its mark - crushing through armor, flesh, and will alike...",
-		"...a shining length of ivory steel. A token. A symbol. More than just a weapon. Blood runs thick in the wash-bin. Sparks fly from the grindstone. You maintain the blade and it maintains your honour...",
-		"...the rapier dances in your hand, a whisper of steel cutting through the air. Every thrust is precise, every parry and riposte flowing in perfect rhythm, simply awaiting the moment to seal your their fate with a single, fatal strike..."
+		"...你的重刃划出宽阔弧线，咆哮着撕开空气。每一次命中的斩击都带着碎骨之力。对手的盾牌在那重量下凹陷，而你的剑终于命中目标，将护甲、血肉与意志一并碾碎……",
+		"...那是一截闪耀着光泽的象牙色钢刃。它是信物，是象征，不只是一件武器。洗槽中血水翻涌，磨石上火星四溅。你保养着刀剑，而它也守护着你的荣誉……",
+		"...细剑在你手中舞动，宛如一缕低语般的钢光划开空气。每一次刺击都精准无比，每一次招架与回击都流畅得恰到好处，只待那一瞬以致命一击封死对方的命运……"
 	)
-	expert_name = "Swordsman"
+	expert_name = "剑士"
 
 /datum/skill/combat/polearms
-	name = "Polearms"
-	desc = "Increases your chance to successfully parry and bypass your opponent's parry by 20% with polearms, and your chance to bypass dodge by 10%."
+	name = "长柄武器"
+	desc = "使用长柄武器时，我成功招架与绕过对手招架的几率提高 20%，绕过闪避的几率提高 10%。"
 	dreams = list(
-	"...the pale volf snaps its jaws, but to no avail. Your weapon has the superior reach and you jab at it with precision until it bleeds and retreats back into the woods...",
-	"...armed with your trusty staff, you hike through the muck and mire with ease. It serves not only as a weapon but a tool, its sturdy length offering support as you press onward, unfazed by the thick, unrelenting muck...",
-	"...the billhook hums through the air, its hooked blade striking with chilling precision. It rends through chain and leather. With each twist, your strikes become inevitable, seamless. A relentless dance of destruction, merciless and fluid..."
+	"...那头苍白的 volf 张口撕咬，却徒劳无功。你的武器拥有更长的距离优势，你精准地一刺又一刺，直到它鲜血淋漓地退回林中……",
+	"...手持那根可靠的长杖，你轻松踏过污泥与沼泽。它不只是兵器，也是工具；坚实的长度在你前行时给予支撑，让你无惧那厚重而无休无止的泥泞……",
+	"...钩镰在空中低鸣，弯钩刀刃以冰冷的精准掠过。锁甲与皮革都被它撕裂。随着每一次扭转，你的攻击愈发无可避免、毫无滞涩，宛如一场无情而流畅的毁灭之舞……"
 	)
-	expert_name = "Polewielder"
+	expert_name = "长兵使"
 
 /datum/skill/combat/maces
-	name = "Maces"
-	desc = "Increases your chance to successfully parry and bypass your opponent's parry by 20% with maces, and your chance to bypass dodge by 10%."
+	name = "钝器"
+	desc = "使用钝器时，我成功招架与绕过对手招架的几率提高 20%，绕过闪避的几率提高 10%。"
 	dreams = list(
-	"...darkness surrounds you. You smash, again and again against the walls, the ominous thuds ringing through your skull with each strike. The wall trembles and with a final earth-shaking smash, light breaks through and you emerge into freedom...",
-	"...'I am ineffable. I am unpierceable.' The wicked white guardian says. And so, you shatter its skull in a single blow with your mace, for it was not unbludgeonable...",
-	"...the air trembles with each of your mighty blows, each strike echoing like the final toll of a bell. This is your symphony. Revel in its brutal beauty, its crushing simplicity...",
-	"...'This blade is a masterwork of Malum's craftsmanship,' the elf declared. Moments later his head was abruptly transformed into pavement decor under the crushing weight of your brutish tool..."
+		"...黑暗将你包围。你一下一下猛砸着墙壁，每一击沉闷的回响都在脑中轰鸣。墙体开始颤抖，终于在最后那撼地的一击后，光芒破入，你也重获自由……",
+		"...“我不可言喻，我不可刺穿。”那邪恶的白色守卫如此说道。于是你用钉锤一击砸碎了它的头颅，因为它终究不是不可被重击粉碎的……",
+		"...每一次沉重挥击都让空气震颤，每一击的回响都宛如丧钟的最后一声。这便是你的交响。沉醉于它残酷的美感，沉醉于它粉碎一切的纯粹……",
+		"...“这把刀刃是 Malum 工艺的杰作。”那精灵如此宣称。片刻之后，他的脑袋就在你粗暴工具的重压下，突然成了路面上的装饰……"
 	)
-	expert_name = "Macer"
+	expert_name = "钉锤手"
 
 /datum/skill/combat/axes
-	name = "Axes"
-	desc = "Increases your chance to successfully parry and bypass your opponent's parry by 20% with axes, and your chance to bypass dodge by 10%."
+	name = "斧术"
+	desc = "使用斧类时，我成功招架与绕过对手招架的几率提高 20%，绕过闪避的几率提高 10%。"
 	dreams = list(
-	"...bones are like trees. The bigger they are, the harder they fall. With a monstrous swing, the skeleton is decapitated and you have saved the town from its evil...",
-	"...stuck in the flesh, you rip away at your weapon. It comes loose. Blood splatters across your armor and cloak and the side of your face. Hunting is no easy job, but the old man's teachings are effective...",
-	"...your axe descends, and another tree falls. Wet sap runs down your face as you hack and chop relentlessly turning the forest into a thicket, then the thicket until it is an open plains. It's only when you pause and look down that you see the shattered bones, the torn flesh and the mangled faces. The town square has turned crimson, drenched in the aftermath of your fury...",
-	"...the heft of iron pulls upon your arm. It knows where it wishes to be - all you have to do is guide its fall. Knowing this, your axe feels lighter than you remember...",
-	"...despite the insurmountable challenge, you fear nothing, for the axe is thy companion eternal. Problem solving is quite simple, really..."
+		"...骨头就像树木。长得越高大，倒下时就越惨烈。随着你怪物般的一记挥斩，那具骷髅身首异处，而你也将城镇从邪恶中解救出来……",
+		"...武器卡进血肉之中，你猛力把它扯出。它终于松脱。鲜血溅满你的护甲、斗篷，还有半边脸。狩猎从来不是轻松的营生，但老人的教诲确实有效……",
+		"...你的斧头落下，又一棵树随之倒下。湿润的树液沿着脸颊淌落，你不停砍伐，将森林削成灌木丛，再把灌木丛夷成开阔平原。直到你停下低头，才发现那并非木屑，而是碎骨、裂肉与扭曲的面孔。镇广场已被你的怒火染成猩红……",
+		"...铁器的分量牵扯着你的手臂。它知道自己想去向何处，而你只需引导它落下。明白这一点后，你的斧头忽然比记忆中轻了许多……",
+		"...即便面对无法逾越的艰难险阻，你也毫无惧意，因为斧头便是你永恒的伙伴。说到底，解决问题其实很简单……"
 	)
-	expert_name = "Axer"
+	expert_name = "斧手"
 
 /datum/skill/combat/whipsflails
-	name = "Whips & Flails"
-	desc = "Increases your chance to successfully parry and bypass your opponent's parry by 20% with whips or flails, and your chance to bypass dodge by 10%."
+	name = "鞭与链枷"
+	desc = "使用鞭子或链枷时，我成功招架与绕过对手招架的几率提高 20%，绕过闪避的几率提高 10%。"
 	dreams = list(
-	"...the sing-song of your flail cleaves through the air and rouses something primal, but the down swing of your hand quickly puts it to sleep...",
-	"...with a whistle and a snap and a crack, another bruise is left on flesh. With a sharp pull, you strike down again. They will be tamed..."
+		"...你手中链枷的尖啸划裂空气，唤起某种原始本能，可手腕落下的下一击又迅速让它安静下来……",
+		"...随着一声呼啸、一声爆响、一声脆裂，血肉上又添了一道瘀痕。你猛然回拉，再次抽落。他们终将被驯服……"
 	)
-	expert_name = "Whipper"
+	expert_name = "鞭手"
 
 /datum/skill/combat/bows
-	name = "Archery"
-	desc = "Alongside perception, increases the speed you draw back a bow and have it ready to shoot. Does not influence damage or chance to hit."
+	name = "弓术"
+	desc = "配合感知属性时，我能更快地张弓搭箭并做好射击准备。不会影响伤害或命中几率。"
 	dreams = list(
-	"...the cold wind on the balcony bristles against your left so you adjust your aim towards it. Your fingers relax and your bow exhales a quiet sigh. Moments later, your mark drops to the cobblestone streets below. Dead...",
-	"...your fingers sting as you let loose another arrow and it glances off the pale knight's breastplate. You aim at their visor and pray to whatever gods you hold dear that this one will make it through...",
-	"...it takes half a minute for an experienced arbalist to cock and load a crossbow. You could kill five men with three arrows in half that time..."
+		"...阳台上的冷风从左侧掠来，你便顺势微调了准头。手指一松，弓弦发出一声低低的叹息。片刻之后，你的目标倒在下方的鹅卵石街道上，死得悄无声息……",
+		"...又一箭离弦，你的手指被弓弦勒得刺痛，可箭只擦过那名苍白骑士的胸甲。你瞄准他的面甲缝隙，向自己信奉的一切神明祈祷这一箭能够穿透过去……",
+		"...一名熟练的弩手要花半分钟才能上弦装填一把十字弩。而同样的时间里，你已经能用三支箭杀掉五个人了……"
 	)
-	expert_name = "Bower"
+	expert_name = "弓手"
 
 /datum/skill/combat/crossbows
-	name = "Crossbows"
-	desc = "Alongside perception, increases the speed you ready a crossbow and have it ready to shoot. Does not influence damage or chance to hit."
+	name = "弩术"
+	desc = "配合感知属性时，我能更快地架好十字弩并做好射击准备。不会影响伤害或命中几率。"
 	dreams = list(
-	"...you put your foot down and pull on the string. You wind the crossbow back with all your might. It feels like the thing is mocking you, impossible to pull taut. Only when a seasoned arbalist reminds you to pull from your back, and not your knees, do you make progress...",
-	"...the crossbow is a deadly marvel of engineering, waiting for your guidance. You steady your breath, finger poised on the trigger. The world narrows as you take aim, the perfect shot soon to come..."
+		"...你踩稳脚步，奋力去拉那弓弦，拼尽全力地给十字弩上弦。它却像在嘲笑你一般，怎么也绷不紧。直到一位老练弩手提醒你该用后背发力，而不是膝盖，你才终于有所进展……",
+		"...十字弩是一件致命的工程奇迹，只等着你去驾驭。你稳住呼吸，手指轻搭在扳机上。随着瞄准，世界逐渐收束成一线，而那完美的一击即将到来……"
 	)
-	expert_name = "Crossbower"
+	expert_name = "弩手"
 
 /datum/skill/combat/wrestling
-	name = "Wrestling"
-	desc = "Alongside strength, improves your chance of grabbing, and avoiding a grab from an opponent."
+	name = "摔跤"
+	desc = "配合力量属性时，我擒抱对手以及挣脱对方擒抱的几率都会提高。"
 	dreams = list(
-	"...you grab him by the shirt and twist your hand with a mighty shove, working your opponent to the ground. The dirt fills your lungs but you feel his resistance give way as he coughs, a smile of approval crossing his face...",
-	"...the dirt gets in your lungs and you can feel your legs quiver. You can't stand. You hear the clanking of plate, and see mighty boots stop in front of you. With a yank at their leg, your would-be killer is brought tumbling to the ground..."
+		"...你一把揪住他的衣领，手腕一拧，再猛地一推，将对手摔翻在地。泥土灌进你的肺里，可你能感觉到他的反抗在咳嗽中一点点瓦解，而那张脸上甚至浮现出一丝赞许的笑……",
+		"...泥土呛进肺里，你感到双腿发颤，根本无法起身。甲片碰撞声渐近，一双沉重战靴停在你面前。你猛地拽住那条腿一扯，原本要杀你的人反而翻滚着摔倒在地……"
 	)
-	expert_name = "Wrestler"
+	expert_name = "摔角手"
 
 /datum/skill/combat/unarmed
-	name = "Unarmed"
-	desc = "Increases your chance to bypass your opponent's parry by 20% with unarmed or unarmed weapons such as katars, and your chance to bypass dodge by 10%. Parrying while unarmed does not work currently."
+	name = "徒手"
+	desc = "徒手或使用拳刃等徒手武器时，我绕过对手招架的几率提高 20%，绕过闪避的几率提高 10%。当前徒手招架尚不起作用。"
 	dreams = list(
-	"...the wet and harsh sound of skin against bone and clattering teeth reaches your ears before your mind processes what just happened. You got knocked out with a mighty blow to the jaw...",
-	"...your nails are claws, your hands are weapons. A silent watcher in pale plate armor nods with approval at your ferocity..."
+		"...在你意识到发生了什么之前，皮肉撞上骨头、牙齿相互碰撞的湿重声响已先一步传入耳中。你被一记沉重的下巴重拳直接打昏了……",
+		"...你的指甲便是利爪，你的双手便是兵器。一名身披苍白板甲的沉默旁观者，对你的凶狠点头表示赞许……"
 	)
-	expert_name = "Puncher"
+	expert_name = "拳师"
 
 /datum/skill/combat/shields
-	name = "Shields"
-	desc = "Increases your chance to bypass your opponent's parry by 20% with shields, and your chance to bypass dodge by 10%."
+	name = "盾术"
+	desc = "使用盾牌时，我绕过对手招架的几率提高 20%，绕过闪避的几率提高 10%。"
 	dreams = list(
-	"...a terrible lizard unleashes a torrent of fire upon you. Yet, you stand firm, a living bastion, unyielding and stalwart...",
-	"...the half-moon crest upon your shield shines even in the bright of Astrata's day. You catch a gleam on it, and reflexively pull it upwards. An arrow bounces off..."
+		"...一头可怖的巨蜥朝你喷吐出洪流般的烈焰，而你依旧屹立不动，宛如一座不屈不挠、坚不可摧的活体堡垒……",
+		"...即便是在 Astrata 明耀的白昼下，你盾上的半月徽记依旧熠熠生辉。你瞥见那一抹反光，本能地将盾牌上提，一支箭当即被弹飞……"
 	)
-	expert_name = "Shieldbearer"
+	expert_name = "持盾者"
 
 /datum/skill/combat/slings
-	name = "Slings"
-	desc = "Alongside perception, increases the speed you ready a sling and have it ready to shoot. Does not influence damage or chance to hit."
+	name = "投石索"
+	desc = "配合感知属性时，我能更快地甩动投石索并做好发射准备。不会影响伤害或命中几率。"
 	dreams = list(
-	"...you recall an old maxim you read in a dusty tome within the archives: if you can throw, you can sling...",
-	"...the perched archers ruthlessly repel the peasant rebellion. Hope for fairness is almost forlorn, until with a soft crack, a hailing of iron bullets clatter against the foe's helmets...",
-	"...your arm tires from the toils of practice. Swinging rapidly has left your arm numb. With weary eyes, you glance aside to witness a hunter practice their craft with a brief overhand toss. Absorbing the technique, you mimic it, and effortlessly cast a powerful stone square onto the target..."
+		"...你想起自己曾在档案馆那本积满灰尘的古书里读过一句格言：若你会投掷，便也会用投石索……",
+		"...高处据守的弓手无情地压制着农民叛军，公正的希望几乎彻底破灭。直到一声轻脆裂响过后，成片铁弹叮当作响地砸上敌人的头盔……",
+		"...长久练习让你的手臂酸痛不堪，快速甩动更是让整条胳膊发麻。你疲惫地侧目望去，看见一名猎人用一个简短的过肩动作练习投掷。你领会了那技巧，依样模仿，轻而易举便将一枚沉重石弹精准砸向目标……"
 	)
-	expert_name = "Slinger"
+	expert_name = "投石手"
+
+/datum/skill/combat/staves
+	name = "长杖"
+	desc = "使用长杖时，我成功招架与绕过对手招架的几率提高 20%，绕过闪避的几率提高 10%。"
+	dreams = list(
+		"...你在溪流边练习时，水中的倒影也跟着荡起涟漪。每一个动作都像某种古老而半被遗忘的套路，每一次打击、招架与虚晃，都让水面像绸缎般裂开。Psydonia 正在倾听……",
+		"...你踏上那条被遗忘的道路，手中长杖敲击着石面。当那些匪徒咧嘴笑着拦到面前时，你连步伐都未曾停顿。长杖一旋，旧日本能微微闪现，其中一人便倒了下去。其余人迟疑不前，他们看到的不再是疲惫老旅人，而是一堂久被遗忘的教训……",
+		"...垂死的僧人把一根染血的齐眉棍塞进你掌中。“世界不是石头，”他嘶哑地说，“而是水。”你挥出一击，长杖竟如流水般顺势而动，找到了你从未察觉过的路径……",
+		"...在摇曳的火把光下，你与一道沉默身影过招。对方的长杖如蛇般盘绕、突刺、消失，接着一切骤然陷入黑暗。你惊醒过来，努力回想着那最后一击的轨迹……",
+		"...偷牛贼闯进了农庄。你没有剑，手里只有一截结实树枝。他们一个接一个倒下，长杖击碎骨头也击裂血肉。你终于明白，暴力是一种任何人都听得懂的语言……"
+	)
+	expert_name = "杖术师"
 
 /datum/skill/combat/firearms
-	name = "Firearms"
-	desc = "Alongside perception, increases the speed you ready a firearm and have it prepared to shoot. Does not influence damage or chance to hit. \
-	Additionally, it reduces the chances for failure of the weapon."
+	name = "火器"
+	desc = "配合感知属性时，我能更快地整备火器并使其进入待发状态。不会影响伤害或命中几率。 \
+	此外，它还能降低武器哑火或失效的几率。"
 	dreams = list(
-	"...he tells you to stand straight, the stock to your shoulder. When it kicks, by the Ten, it hurts like hell. But the target? Well, the target is no more...",
-	"...measuring the powder isn't an exact science, the grizzled mercenary explains. It's by eye and ear, once you've the understanding. His nub of an arm argues otherwise..."
+		"...他让你站直，把枪托顶紧肩窝。后坐力袭来时，以 Ten 之名，那一下痛得要命。可目标呢？好吧，目标已经不复存在了……",
+		"...那名满脸风霜的佣兵解释说，装药量并不是门精确科学。等你真正懂了，就会知道该靠眼和耳去判断。可他残缺的手臂却像是在讲述另一个故事……"
 	)
-	expert_name = "Gunner"
+	expert_name = "枪手"
 	randomable_dream_xp = FALSE
 	max_untraited_level = SKILL_LEVEL_JOURNEYMAN//Minimum to use these properly.
 	trait_uncap = list(TRAIT_FUSILIER = SKILL_LEVEL_LEGENDARY)

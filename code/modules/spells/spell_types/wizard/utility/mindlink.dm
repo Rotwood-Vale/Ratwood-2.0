@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/mindlink
-	name = "Mindlink"
-	desc = "Establish a telepathic link with an ally for three minutes. Use ,y before a message to communicate telepathically."
+	name = "心灵链接"
+	desc = "与一名盟友建立持续三分钟的心灵链接。发言前输入 ,y 即可进行心灵交流。"
 	clothes_req = FALSE
 	overlay_state = "mindlink"
 	associated_skill = /datum/skill/magic/arcane
@@ -8,7 +8,7 @@
 	xp_gain = TRUE
 	recharge_time = 3 MINUTES
 	spell_tier = 3
-	invocations = list("Mens Nexu")
+	invocations = list("心念相连。")
 	invocation_type = "whisper"
 
 	// Charged spell variables
@@ -32,7 +32,7 @@
 		for(var/people in user.mind.known_people)
 			possible_targets += people
 	else
-		to_chat(user, span_warning("You have no known people to establish a mindlink with!"))
+		to_chat(user, span_warning("没有我认识的人可供建立心灵链接！"))
 		revert_cast()
 		return FALSE
 
@@ -43,7 +43,7 @@
 
 	user.emote("me", 1, "'s eyes briefly glow with an otherworldly light.", TRUE, custom_me = TRUE)
 
-	var/first_target_name = input(user, "Choose the first person to link", "Mindlink") as null|anything in possible_targets
+	var/first_target_name = input(user, "选择第一个链接对象", "心灵链接") as null|anything in possible_targets
 
 	if(!first_target_name)
 		revert_cast()
@@ -57,7 +57,7 @@
 
 	possible_targets -= first_target_name
 
-	var/second_target_name = input(user, "Choose the second person to link", "Mindlink") as null|anything in possible_targets
+	var/second_target_name = input(user, "选择第二个链接对象", "心灵链接") as null|anything in possible_targets
 
 	if(!second_target_name)
 		revert_cast()
@@ -71,18 +71,18 @@
 
 	// Check if either target is a zad
 	if(istype(first_target, /mob/living/simple_animal/hostile/retaliate/bat/crow) || istype(second_target, /mob/living/simple_animal/hostile/retaliate/bat/crow))
-		to_chat(user, span_warning("Zads are immune to mindlinks!"))
+		to_chat(user, span_warning("扎德不受心灵链接影响！"))
 		revert_cast()
 		return FALSE
 
-	user.visible_message(span_notice("[user] touches their temples and concentrates..."), span_notice("I establish a mental connection between [first_target] and [second_target]..."))
+	user.visible_message(span_notice("[user]轻触太阳穴，凝神专注......"), span_notice("我在[first_target]与[second_target]之间建立起一道心灵连接......"))
 
 	// Create the mindlink
 	var/datum/mindlink/link = new(first_target, second_target)
 	GLOB.mindlinks += link
 
-	to_chat(first_target, span_notice("A mindlink has been established with [second_target]! Use ,m before a message to communicate telepathically."))
-	to_chat(second_target, span_notice("A mindlink has been established with [first_target]! Use ,m before a message to communicate telepathically."))
+	to_chat(first_target, span_notice("你已与[second_target]建立心灵链接！发言前输入 ,m 即可进行心灵交流。"))
+	to_chat(second_target, span_notice("你已与[first_target]建立心灵链接！发言前输入 ,m 即可进行心灵交流。"))
 
 	addtimer(CALLBACK(src, PROC_REF(break_link), link), 3 MINUTES)
 	return TRUE
@@ -91,8 +91,8 @@
 	if(!link)
 		return
 
-	to_chat(link.owner, span_warning("The mindlink with [link.target] fades away..."))
-	to_chat(link.target, span_warning("The mindlink with [link.owner] fades away..."))
+	to_chat(link.owner, span_warning("你与[link.target]之间的心灵链接逐渐消散......"))
+	to_chat(link.target, span_warning("你与[link.owner]之间的心灵链接逐渐消散......"))
 
 	GLOB.mindlinks -= link
 	qdel(link)
@@ -101,8 +101,8 @@
 	if(new_type == /mob/living/simple_animal/hostile/retaliate/bat/crow)
 		for(var/datum/mindlink/link in GLOB.mindlinks)
 			if(shifter == link.owner || shifter == link.target)
-				to_chat(link.owner, span_warning("The mindlink breaks as [shifter] transforms into a zad!"))
-				to_chat(link.target, span_warning("The mindlink breaks as [shifter] transforms into a zad!"))
+				to_chat(link.owner, span_warning("[shifter]化作扎德，心灵链接随之断裂！"))
+				to_chat(link.target, span_warning("[shifter]化作扎德，心灵链接随之断裂！"))
 				GLOB.mindlinks -= link
 				qdel(link)
 

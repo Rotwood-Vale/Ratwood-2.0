@@ -1,6 +1,6 @@
 /obj/item/clothing/under/roguetown/tights
-	name = "tights"
-	desc = "A pair of form-fitting tights."
+	name = "紧身裤"
+	desc = "一条贴身合体的紧身裤。"
 	gender = PLURAL
 	icon_state = "tights"
 	item_state = "tights"
@@ -20,7 +20,7 @@
 	color = CLOTHING_PURPLE
 
 /obj/item/clothing/under/roguetown/tights/jester
-	desc = "Funny tights!"
+	desc = "滑稽的紧身裤！"
 	color = "#1E3B20"
 
 /obj/item/clothing/under/roguetown/tights/lord
@@ -40,19 +40,19 @@
 	..()
 
 /obj/item/clothing/under/roguetown/tights/sailor
-	name = "sailor's pants"
+	name = "水手裤"
 	icon_state = "sailorpants"
 	salvage_amount = 1
 
 /obj/item/clothing/under/roguetown/tights/puritan
-	name = "formal breeches"
+	name = "礼装马裤"
 	icon_state = "monkpants"
 	item_state = "monkpants"
 	color = CLOTHING_BLACK
 
 /obj/item/clothing/under/roguetown/webs
-	name = "webbing"
-	desc = "a fine webbing made from spidersilk, popular fashion within the underdark"
+	name = "蛛丝下装"
+	desc = "由蛛丝织成的精细下装，是幽暗地域中颇受欢迎的时尚。"
 	gender = PLURAL
 	icon_state = "webs"
 	item_state = "webs"
@@ -62,7 +62,7 @@
 	salvage_amount = 1
 
 /obj/item/clothing/under/roguetown/loincloth
-	name = "large loincloth"
+	name = "宽大兜裆布"
 	desc = ""
 	icon_state = "loincloth"
 	item_state = "loincloth"

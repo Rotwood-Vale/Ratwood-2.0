@@ -1,13 +1,14 @@
 // Wretch, soft antagonists. Giving them a significant boon in stats due to their general presence as driving antagonists.
 /datum/job/roguetown/wretch
 	title = "Wretch"
+	display_title = "流放者"
 	flag = WRETCH
 	department_flag = WANDERERS
 	faction = "Station"
 	total_positions = 5
 	spawn_positions = 5
 	allowed_races = RACES_ALL_KINDS
-	tutorial = "Somewhere in your lyfe, you fell to the wrong side of civilization. Hounded by the consequences of your actions, you spend your daes prowling the roads for easy marks and loose purses, scraping to get by."
+	tutorial = "在人生的某个岔路口，你坠进了文明的背阴面。过往恶行的后果一路追着你不放，你只能终日游荡在道路之间，盯着落单的倒霉鬼和松散的钱袋，勉强混口饭吃。"
 	outfit = null
 	outfit_female = null
 	display_order = JDO_WRETCH
@@ -63,9 +64,9 @@
 
 // Proc for wretch to select a bounty
 /proc/wretch_select_bounty(mob/living/carbon/human/H)
-	var/bounty_poster = input(H, "Who placed a bounty on you?", "Bounty Poster") as anything in list("The Justiciary of [SSmapping.map_adjustment.realm_name]", "The Grenzelhoftian Holy See", "The Otavan Orthodoxy")
+	var/bounty_poster = input(H, "是谁悬赏通缉了你？", "悬赏发布者") as anything in list("[SSmapping.map_adjustment.realm_name]司法庭", "格伦泽尔霍夫特 神圣教廷", "奥塔瓦 正教会")
 	// Felinid said we should gate it at 100 or so on at the lowest, so that wretch cannot ezmode it.
-	var/bounty_severity = input(H, "How severe are your crimes?", "Bounty Amount") as anything in list("Misdeed", "Harm towards lyfe (+1 FOR)", "Horrific atrocities (+1 ALL STATS)")
+	var/bounty_severity = input(H, "你的罪行有多严重？", "悬赏金额") as anything in list("轻罪", "伤人害命（+1 幸运）", "骇人暴行（全属性+1）")
 	var/race = H.dna.species
 	var/gender = H.gender
 	var/list/d_list = H.get_mob_descriptors()
@@ -74,12 +75,12 @@
 	var/descriptor_voice = build_coalesce_description_nofluff(d_list, H, list(MOB_DESCRIPTOR_SLOT_VOICE), "%DESC1%")
 	var/bounty_total = rand(100, 400) // Just in case
 	switch(bounty_severity)
-		if("Misdeed")
+		if("轻罪")
 			bounty_total = rand(100, 200)
-		if("Harm towards lyfe (+1 FOR)")
+		if("伤人害命（+1 幸运）")
 			bounty_total = rand(200, 300)
 			H.change_stat("fortune", 1)
-		if("Horrific atrocities (+1 ALL STATS)")
+		if("骇人暴行（全属性+1）")
 			bounty_total = rand(300, 400) // Let's not make it TOO profitable
 			H.change_stat("strength", 1)
 			H.change_stat("perception", 1)
@@ -88,15 +89,15 @@
 			H.change_stat("willpower", 1)
 			H.change_stat("speed", 1)
 			H.change_stat("fortune", 1)
-			if(bounty_poster == "The Justiciary of [SSmapping.map_adjustment.realm_name]")
+			if(bounty_poster == "[SSmapping.map_adjustment.realm_name]司法厅")
 				GLOB.outlawed_players += H.real_name
 			else
 				GLOB.excommunicated_players += H.real_name
-	var/my_crime = input(H, "What is your crime?", "Crime") as text|null
+	var/my_crime = input(H, "你的罪名是什么？", "罪名") as text|null
 	if (!my_crime)
-		my_crime = "crimes against the Crown"
+		my_crime = "冒犯王权之罪"
 	add_bounty(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, bounty_total, FALSE, my_crime, bounty_poster)
-	to_chat(H, span_danger("You are playing an Antagonist role. By choosing to spawn as a Wretch, you are expected to actively create conflict with other players. Failing to play this role with the appropriate gravitas may result in punishment for Low Roleplay standards."))
+	to_chat(H, span_danger("你正在扮演一名对抗性角色。既然选择以流寇身份加入，你就应当主动与其他玩家制造冲突。若未能以符合该身份分量的方式进行扮演，可能会因低质量角色扮演而受到处罚。"))
 	H.playsound_local(get_turf(H), 'sound/music/traitor.ogg', 60, FALSE, pressure_affected = FALSE)
 
 /proc/update_wretch_slots()

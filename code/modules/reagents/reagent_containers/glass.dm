@@ -308,7 +308,7 @@
 /obj/item/reagent_containers/glass/proc/onfill(obj/target, mob/user, silent = FALSE)
 
 /obj/item/reagent_containers/glass/bucket
-	name = "bucket"
+	name = "木桶"
 	desc = ""
 	icon = 'icons/roguetown/items/misc.dmi'
 	lefthand_file = 'modular/Neu_Food/icons/food_lefthand.dmi'
@@ -375,7 +375,7 @@
 	..()
 	if (slot == SLOT_HEAD)
 		if(reagents.total_volume)
-			to_chat(user, span_danger("[src]'s contents spill all over you!"))
+			to_chat(user, span_danger("[src]里的东西全洒在你身上了！"))
 			reagents.reaction(user, TOUCH)
 			reagents.clear_reagents()
 		reagents.flags = NONE

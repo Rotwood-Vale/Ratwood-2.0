@@ -62,13 +62,13 @@
 			var/minsleft = fueluse / 600
 			minsleft = round(minsleft)
 			if(minsleft <= 1)
-				minsleft = "less than a minute"
+				minsleft = "不到一分钟"
 			else
-				minsleft = "[round(minsleft)] minutes"
-			. += span_info("The fire will last for [minsleft].")
+				minsleft = "[round(minsleft)]分钟"
+			. += span_info("火焰还能持续[minsleft]。")
 		else
 			if(initial(fueluse) > 0)
-				. += span_warning("The fire is burned out and hungry...")
+				. += span_warning("火焰已经燃尽，正渴望燃料...")
 
 
 /obj/machinery/light/rogue/extinguish()
@@ -139,7 +139,7 @@
 	if(cookonme && on)
 		if(istype(W, /obj/item/reagent_containers/food/snacks))
 			if(istype(W, /obj/item/reagent_containers/food/snacks/egg))
-				to_chat(user, "<span class='warning'>I wouldn't be able to cook this over the fire...</span>")
+				to_chat(user, "<span class='warning'>这个没法放在火上烤……</span>")
 				return FALSE
 			var/obj/item/A = user.get_inactive_held_item()
 			if(A)
@@ -154,15 +154,15 @@
 					if(user.get_skill_level(/datum/skill/craft/cooking))
 						prob2spoil = 1
 					var/already_rolled = FALSE
-					user.visible_message("<span class='notice'>[user] starts to cook [W] over [src].</span>")
+					user.visible_message("<span class='notice'>[user]开始在[src]上烹调[W]。</span>")
 					for(var/i in 1 to 6)
 						if(do_after(user, 30 / cooktime_divisor, target = src))
 							var/obj/item/reagent_containers/food/snacks/S = W
 							var/obj/item/C
 							if(prob(prob2spoil) && !already_rolled)
-								user.visible_message("<span class='warning'>[user] burns [S].</span>")
+								user.visible_message("<span class='warning'>[user]把[S]烤糊了。</span>")
 								if(user.client?.prefs.showrolls)
-									to_chat(user, "<span class='warning'>Critfail... [prob2spoil]%.</span>")
+									to_chat(user, "<span class='warning'>大失败……[prob2spoil]%。</span>")
 								C = S.cooking(1000, 1000, null)
 							else
 								already_rolled = TRUE
@@ -178,27 +178,27 @@
 					return
 	if(W.firefuel && !no_refuel)
 		if(W.smeltresult) // For things with actual smelt results - functionally no differences
-			if(alert(usr, "Fuel [src] with [W]?", "ROGUETOWN", "Fuel", "Smelt") != "Fuel")
+			if(alert(usr, "要用[W]给[src]添燃料吗？", "燃料操作", "添燃料", "冶炼") != "添燃料")
 				return TRUE
-		if(alert(usr, "Fuel [src] with [W]?", "ROGUETOWN", "Yes", "No") != "Yes")
+		if(alert(usr, "要用[W]给[src]添燃料吗？", "燃料操作", "是", "否") != "是")
 			return TRUE
 		if(!W)
 			return
 		if(user.get_active_held_item() != W)
-			to_chat(user, span_warning("That item is no longer in my hand..."))
+			to_chat(user, span_warning("那件物品已经不在我手里了……"))
 			return
 
 		user.dropItemToGround(W)
 
 		if(initial(fueluse))
 			if(fueluse > initial(fueluse) - 5 SECONDS)
-				to_chat(user, "<span class='warning'>[src] is fully fueled.</span>")
+				to_chat(user, "<span class='warning'>[src]的燃料已经满了。</span>")
 				return
 		else
 			if(!on)
 				return
 		qdel(W)
-		user.visible_message("<span class='warning'>[user] feeds [W] to [src].</span>")
+		user.visible_message("<span class='warning'>[user]把[W]添进了[src]。</span>")
 		if(initial(fueluse))
 			fueluse = fueluse + W.firefuel
 			if(fueluse > initial(fueluse)) //keep it at the max
@@ -214,7 +214,7 @@
 				update_icon()
 				update_turf_heat()
 				qdel(W)
-				src.visible_message("<span class='warning'>[user] snuffs the fire.</span>")
+				src.visible_message("<span class='warning'>[user]熄灭了火焰。</span>")
 				return
 			if(user.used_intent?.type != INTENT_SPLASH)
 				W.spark_act()

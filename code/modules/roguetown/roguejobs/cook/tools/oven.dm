@@ -1,8 +1,8 @@
 
 /obj/machinery/light/rogue/oven
 	icon = 'icons/roguetown/misc/lighting.dmi'
-	name = "oven"
-	desc = "With enough room for up to five whole pies, this humble yet wondrous invention has fed civilization since time immemorial."
+	name = "烤炉"
+	desc = "这个朴素而奇妙的发明足以容纳最多五个完整的馅饼，自古以来便滋养着文明。"
 	icon_state = "oven1"
 	base_state = "oven"
 	density = FALSE
@@ -37,7 +37,7 @@
 			W.forceMove(src)
 			food += W
 			playsound(get_turf(src.loc), 'sound/items/wood_sharpen.ogg', 50) // neu cooking
-			user.visible_message(span_warning("[user] puts something in the oven."))
+			user.visible_message(span_warning("[user]往烤炉里放了什么东西。"))
 			need_underlay_update = TRUE
 			update_icon()
 			return
@@ -51,7 +51,7 @@
 		for(var/obj/item/I in food)
 			if(I.pottery_fragile && I.pottery_baked_at && world.time >= (I.pottery_baked_at + 1 MINUTES))
 				if(prob(30))
-					visible_message(span_warning("[I] starts to crack from the prolonged heat and shatters!"))
+					visible_message(span_warning("[I]因长时间受热开始开裂并碎裂！"))
 					playsound(src, 'sound/foley/glassbreak.ogg', 75, TRUE)
 					food -= I
 					qdel(I)
@@ -67,7 +67,7 @@
 				food -= I
 				qdel(I)
 				food += C
-				visible_message(span_notice("Something smells good!"))
+				visible_message(span_notice("有什么东西闻起来很香！"))
 				need_underlay_update = TRUE
 		update_icon()
 

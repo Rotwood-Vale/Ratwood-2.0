@@ -1,8 +1,8 @@
 /datum/brewing_recipe/jack_wine
-	name = "Wine, Jackberry"
-	category = "Fruit"
-	bottle_name = "jackberry wine"
-	bottle_desc = "A bottle of locally-brewed jackberry wine. Has a sweet, fruity flavor with a hint of tartness."
+	name = "葡萄酒，杰克莓"
+	category = "水果"
+	bottle_name = "杰克莓酒"
+	bottle_desc = "一瓶本地酿制的杰克莓酒。口感香甜果香浓郁，并带着一丝酸意。"
 	reagent_to_brew = /datum/reagent/consumable/ethanol/jackberrywine
 	needed_reagents = list(/datum/reagent/water = 198)
 	needed_crops = list(/obj/item/reagent_containers/food/snacks/grown/berries/rogue = 6)
@@ -17,10 +17,10 @@
 	)
 
 /datum/brewing_recipe/plum_wine
-	name = "Wine, Umeshu (Plum)"
-	category = "Fruit"
-	bottle_name = "umeshu wine"
-	bottle_desc = "A bottle of locally-brewed plum wine. Has a sweet, slightly sour flavor."
+	name = "葡萄酒，Umeshu（李子）"
+	category = "水果"
+	bottle_name = "umeshu 酒"
+	bottle_desc = "一瓶本地酿制的李子酒。口感香甜，略带酸味。"
 	reagent_to_brew = /datum/reagent/consumable/ethanol/plum_wine
 	needed_reagents = list(/datum/reagent/water = 198)
 	needed_items = list(/obj/item/reagent_containers/food/snacks/grown/fruit/plum = 4, /obj/item/reagent_containers/food/snacks/sugar = 2)
@@ -35,10 +35,10 @@
 	)
 
 /datum/brewing_recipe/tangerine_wine
-	name = "Wine, Tangerine"
-	category = "Fruit"
-	bottle_name = "tangerine wine"
-	bottle_desc = "A bottle of locally-brewed tangerine wine. Has a bittersweet, citrusy flavor."
+	name = "葡萄酒，橘子"
+	category = "水果"
+	bottle_name = "橘子酒"
+	bottle_desc = "一瓶本地酿制的橘子酒。口感酸甜微苦，带着鲜明的柑橘风味。"
 	reagent_to_brew = /datum/reagent/consumable/ethanol/tangerine
 	needed_reagents = list(/datum/reagent/water = 198)
 	needed_items = list(/obj/item/reagent_containers/food/snacks/grown/fruit/tangerine = 4, /obj/item/reagent_containers/food/snacks/sugar = 2)
@@ -53,10 +53,10 @@
 	)
 
 /datum/brewing_recipe/raspberry_wine
-	name = "Wine, Raspberry"
-	category = "Fruit"
-	bottle_name = "raspberry wine"
-	bottle_desc = "A bottle of locally-brewed raspberry wine. Has a sweet, tart flavor."
+	name = "葡萄酒，覆盆子"
+	category = "水果"
+	bottle_name = "覆盆子酒"
+	bottle_desc = "一瓶本地酿制的覆盆子酒。口感香甜而酸爽。"
 	reagent_to_brew = /datum/reagent/consumable/ethanol/raspberry
 	needed_reagents = list(/datum/reagent/water = 198)
 	needed_items = list(/obj/item/reagent_containers/food/snacks/grown/fruit/raspberry = 4, /obj/item/reagent_containers/food/snacks/sugar = 2)
@@ -71,10 +71,10 @@
 	)
 
 /datum/brewing_recipe/blackberry_wine
-	name = "Wine, Blackberry"
-	category = "Fruit"
-	bottle_name = "blackberry wine"
-	bottle_desc = "A bottle of locally-brewed blackberry wine. Has a bitter, tart flavor."
+	name = "葡萄酒，黑莓"
+	category = "水果"
+	bottle_name = "黑莓酒"
+	bottle_desc = "一瓶本地酿制的黑莓酒。口感微苦而酸。"
 	reagent_to_brew = /datum/reagent/consumable/ethanol/blackberry
 	needed_reagents = list(/datum/reagent/water = 198)
 	needed_items = list(/obj/item/reagent_containers/food/snacks/grown/fruit/blackberry = 4, /obj/item/reagent_containers/food/snacks/sugar = 2)
@@ -89,10 +89,10 @@
 	)
 
 /datum/brewing_recipe/whipwine
-	name = "Wine, Whip"
-	category = "Other"
+	name = "葡萄酒，Whip"
+	category = "其他"
 	bottle_name = "vale whip-wine" // knockoff divine whip wine (magical penis wine)
-	bottle_desc = "A bottle of locally-brewed Whipwine. Said to be based off a Kazengun recipe. It has a particularly... leathery flavor."
+	bottle_desc = "一瓶本地酿制的 Whipwine。据说是基于 Kazengun 的配方改制而来。它有着格外……皮革般的风味。"
 	reagent_to_brew = /datum/reagent/consumable/ethanol/whipwine
 	needed_reagents = list(/datum/reagent/water = 198)
 	needed_items = list(
@@ -107,10 +107,10 @@
 	sell_value = 30
 
 /datum/brewing_recipe/luxintenebre
-	name = "Wine, Lux"
-	category = "Other"
+	name = "葡萄酒，Lux"
+	category = "其他"
 	bottle_name = "luxintebere" // knockoff divine whip wine (magical penis wine)
-	bottle_desc = "A potentially heretickal brew, Lux, when fermented, breaks down into Vitae, which can further ferment into a delectable wine."
+	bottle_desc = "一种可能带有异端色彩的酿品，Lux 在发酵后会分解为 Vitae，而 Vitae 还能进一步发酵成可口的美酒。"
 	reagent_to_brew = /datum/reagent/consumable/ethanol/luxwine
 	needed_reagents = list(/datum/reagent/water = 198) // standard
 	needed_items = list(

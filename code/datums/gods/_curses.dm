@@ -39,8 +39,8 @@
 	return FALSE
 
 /datum/curse
-	var/name = "Debug Curse"
-	var/description = "This is a debug curse."
+	var/name = "调试诅咒"
+	var/description = "这是一个调试用诅咒。"
 	var/trait
 
 /datum/curse/proc/on_life(mob/living/carbon/human/owner)
@@ -51,14 +51,14 @@
 
 /datum/curse/proc/on_gain(mob/living/carbon/human/owner, curse_resist = FALSE)
 	ADD_TRAIT(owner, trait, TRAIT_CURSE)
-	to_chat(owner, span_userdanger("Something is wrong... I feel cursed."))
+	to_chat(owner, span_userdanger("有哪里不对劲……我感到自己被诅咒了。"))
 	to_chat(owner, span_danger(description))
 	owner.playsound_local(get_turf(owner), 'sound/misc/excomm.ogg', 80, FALSE, pressure_affected = FALSE)
 	return
 
 /datum/curse/proc/on_loss(mob/living/carbon/human/owner, curse_resist = FALSE)
 	REMOVE_TRAIT(owner, trait, TRAIT_CURSE)
-	to_chat(owner, span_userdanger("Something has changed... I feel relieved."))
+	to_chat(owner, span_userdanger("有什么变了……我感到如释重负。"))
 	owner.playsound_local(get_turf(owner), 'sound/misc/bell.ogg', 80, FALSE, pressure_affected = FALSE)
 	qdel(src)
 	return
@@ -68,76 +68,76 @@
 //////////////////////
 
 /datum/curse/astrata
-	name = "Curse of Astrata"
-	description = "I am forsaken by the Sun. I will find no rest under Her unwavering gaze."
+	name = "Astrata 的诅咒"
+	description = "我已被太阳所弃。在她毫不动摇的注视下，我永远得不到安歇。"
 	trait = TRAIT_CURSE_ASTRATA
 
 /datum/curse/noc
-	name = "Curse of Noc"
-	description = "I am forsaken by the Moon. I will find no salvation in His grace."
+	name = "Noc 的诅咒"
+	description = "我已被明月所弃。在他的恩泽中，我再寻不到救赎。"
 	trait = TRAIT_CURSE_NOC
 
 /datum/curse/dendor
-	name = "Curse of Dendor"
-	description = "I am forsaken by the Treefather. Reason and common sense abandon me."
+	name = "Dendor 的诅咒"
+	description = "我已被树父所弃。理智与常识正离我而去。"
 	trait = TRAIT_CURSE_DENDOR //Needs something unique but come up with it later:tm:
 
 /datum/curse/abyssor
-	name = "Curse of Abyssor"
-	description = "I am forsaken by the Dreamer. His domain will surely become my grave."
+	name = "Abyssor 的诅咒"
+	description = "我已被梦者所弃。祂的领域终将化为我的葬身之地。"
 	trait = TRAIT_CURSE_ABYSSOR
 
 /datum/curse/ravox
-	name = "Curse of Ravox"
-	description = "I am forsaken by the Justicar. My opponents will show me no clemency."
+	name = "Ravox 的诅咒"
+	description = "我已被裁决者所弃。我的敌手绝不会对我心慈手软。"
 	trait = TRAIT_CURSE_RAVOX
 
 /datum/curse/necra
-	name = "Curse of Necra"
-	description = "I am forsaken by the Undermaiden. Even the lightest strike could send me into Her embrace."
+	name = "Necra 的诅咒"
+	description = "我已被冥下侍女所弃。哪怕最轻微的一击，也可能将我送入她的怀抱。"
 	trait = TRAIT_CURSE_NECRA //Should be crit weakness still just flavour:tm:
 
 /datum/curse/xylix
-	name = "Curse of Xylix"
-	description = "I am forsaken by the Trickster. Misfortune follows me on every step."
+	name = "Xylix 的诅咒"
+	description = "我已被诡术者所弃。厄运将步步紧随于我。"
 	trait = TRAIT_CURSE_XYLIX
 
 /datum/curse/pestra
-	name = "Curse of Pestra"
-	description = "I am forsaken by the Plaguemother. Sickness overwhelms my body rendering even simplest of tasks into a challenge."
+	name = "Pestra 的诅咒"
+	description = "我已被疫母所弃。病痛席卷我的身体，让最简单的事情也成了折磨。"
 	trait = TRAIT_CURSE_PESTRA
 
 /datum/curse/malum
-	name = "Curse of Malum"
-	description = "I am forsaken by the Maker. My hands tremble and fog overwhelms my mind."
+	name = "Malum 的诅咒"
+	description = "我已被造物主所弃。我的双手颤抖不止，迷雾笼罩了我的思绪。"
 	trait = TRAIT_CURSE_MALUM
 
 /datum/curse/eora
-	name = "Curse of Eora"
-	description = "I am forsaken by the Lover. There is no beauty to be found for me in this world."
+	name = "Eora 的诅咒"
+	description = "我已被爱者所弃。这个世界于我而言，再无半点美丽可言。"
 	trait = TRAIT_CURSE_EORA
 
 ////////////////////////////
 ///   ASCENDANT CURSES   ///
 ////////////////////////////
 /datum/curse/zizo
-	name = "Curse of Zizo"
-	description = "I am forsaken by the Architect. Her grasp reaches for my heart."
+	name = "Zizo 的诅咒"
+	description = "我已被构筑者所弃。她的手掌正向我的心脏逼近。"
 	trait = TRAIT_CURSE_ZIZO
 
 /datum/curse/graggar
-	name = "Curse of Graggar"
-	description = "I am forsaken by the Warlord. Bloodlust is only thing I know for real."
+	name = "Graggar 的诅咒"
+	description = "我已被战主所弃。如今我所真正知晓的，只有嗜血。"
 	trait = TRAIT_CURSE_GRAGGAR
 
 /datum/curse/matthios
-	name = "Curse of Matthios"
-	description = "I am forsaken by the Dragon. Greed will be my only salvation."
+	name = "Matthios 的诅咒"
+	description = "我已被巨龙所弃。贪婪将成为我唯一的救赎。"
 	trait = TRAIT_CURSE_MATTHIOS
 
 /datum/curse/baotha
-	name = "Curse of Baotha"
-	description = "I am forsaken by the Heartbreaker. I am drowning in her promises."
+	name = "Baotha 的诅咒"
+	description = "我已被碎心者所弃。我正溺死在她的许诺之中。"
 	trait = TRAIT_CURSE_BAOTHA
 
 //////////////////////

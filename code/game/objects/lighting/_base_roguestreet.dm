@@ -1,6 +1,6 @@
 /obj/machinery/light/roguestreet
-	name = "street lamp" // Crafted through metalizing brazier(/obj/machinery/light/rogue/firebowl) and Standing Fire (/obj/machinery/light/rogue/firebowl/standing)
-	desc = "An obelisk of caste iron with an eerily glowing lamp attached to it. A promise of new technology at the dawn of a new age."
+	name = "街灯" // Crafted through metalizing brazier(/obj/machinery/light/rogue/firebowl) and Standing Fire (/obj/machinery/light/rogue/firebowl/standing)
+	desc = "一座铸铁方尖碑，上面附着一盏发出诡异光芒的灯。这是新时代曙光中新技术的前景。"
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "slamp1"
 	base_state = "slamp"
@@ -12,7 +12,7 @@
 	bulb_colour = "#58dd90"
 	bulb_power = 0.95
 	destroy_sound = "sound/foley/machinebreak.ogg" // A nice zappy noise for electric lights.
-	destroy_message = "The lamp sparks as it is smashed!" // Some flavor for when it's destroyed.
+	destroy_message = "灯被砸碎时迸出火花！" // Some flavor for when it's destroyed.
 	blade_dulling = DULLING_BASH
 	max_integrity = 250
 	pass_flags = LETPASSTHROW
@@ -27,8 +27,8 @@
 	resistance_flags = INDESTRUCTIBLE // This item is not craftable yet, setting for anti-grief
 
 /obj/machinery/light/roguestreet/walllamp
-	name = "wall lamp" // Crafted through metalizing sconce.
-	desc = "An eerily glowing lamp attached to the wall via a caste iron frame. A promise of new technology at the dawn of a new age."
+	name = "壁灯" // Crafted through metalizing sconce.
+	desc = "一盏通过铸铁支架固定在墙上的诡异发光壁灯。它预示着新时代黎明中新技术的到来。"
 	icon_state = "wlamp1"
 	base_state = "wlamp"
 	brightness = 7.8
@@ -53,8 +53,8 @@
 	resistance_flags = INDESTRUCTIBLE // This item is not craftable yet, setting for anti-grief
 
 /obj/machinery/light/roguestreet/orange/walllamp
-	name = "wall lamp"
-	desc = "An eerily glowing lamp attached to the wall via a caste iron frame. A promise of new technology at the dawn of a new age."
+	name = "壁灯"
+	desc = "一盏通过铸铁支架固定在墙上的诡异发光壁灯。它预示着新时代黎明中新技术的到来。"
 	icon_state = "o_wlamp1"
 	base_state = "o_wlamp"
 	brightness = 7.8
@@ -97,8 +97,8 @@
 
 
 /obj/machinery/light/oldlight
-	name = "ancyent lightbar"
-	desc = "Two frustums hold a glaring death-light. Solid and unyielding."
+	name = "远古光条灯"
+	desc = "两个截锥体托举着刺目的死光，坚固而不可撼动。"
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "celestial_light"
 	brightness = 10

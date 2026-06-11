@@ -12,25 +12,25 @@
 	dropshrink = 0.9
 
 /obj/item/bouquet/rosa
-	name = "rosa bouquet"
-	desc = "Affections bundled together in string."
+	name = "玫瑰花束"
+	desc = "被细绳束起的爱意。"
 	item_state = "bouquet_rosa"
 	icon_state = "bouquet_rosa"
 
 /obj/item/bouquet/salvia
-	name = "salvia bouquet"
+	name = "鼠尾草花束"
 	desc = ""
 	item_state = "bouquet_salvia"
 	icon_state = "bouquet_salvia"
 
 /obj/item/bouquet/matricaria
-	name = "matricaria bouquet"
+	name = "洋甘菊花束"
 	desc = ""
 	item_state = "bouquet_matricaria"
 	icon_state = "bouquet_matricaria"
 
 /obj/item/bouquet/calendula
-	name = "calendula bouquet"
+	name = "金盏花花束"
 	desc = ""
 	item_state = "bouquet_calendula"
 	icon_state = "bouquet_calendula"
@@ -52,12 +52,12 @@
 	grid_height = 32
 
 /obj/item/flowercrown/rosa
-	name = "crown of rosa"
+	name = "玫瑰花冠"
 	desc = ""
 	item_state = "rosa_crown"
 	icon_state = "rosa_crown"
 
 /obj/item/flowercrown/salvia
-	name = "crown of salvia"
+	name = "鼠尾草花冠"
 	item_state = "salvia_crown"
 	icon_state = "salvia_crown"

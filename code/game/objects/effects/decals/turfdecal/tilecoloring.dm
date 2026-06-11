@@ -1,40 +1,40 @@
 /obj/effect/turf_decal/tile
-	name = "tile decal"
+	name = "地砖贴花"
 	icon_state = "tile_corner"
 	layer = TURF_PLATING_DECAL_LAYER
 	alpha = 110
 
 /obj/effect/turf_decal/tile/blue
-	name = "blue corner"
+	name = "蓝色角标"
 	color = "#52B4E9"
 
 /obj/effect/turf_decal/tile/green
-	name = "green corner"
+	name = "绿色角标"
 	color = "#9FED58"
 
 /obj/effect/turf_decal/tile/yellow
-	name = "yellow corner"
+	name = "黄色角标"
 	color = "#EFB341"
 
 /obj/effect/turf_decal/tile/red
-	name = "red corner"
+	name = "红色角标"
 	color = "#DE3A3A"
 
 /obj/effect/turf_decal/tile/bar
-	name = "bar corner"
+	name = "酒吧角标"
 	color = "#791500"
 	alpha = 130
 
 /obj/effect/turf_decal/tile/purple
-	name = "purple corner"
+	name = "紫色角标"
 	color = "#D381C9"
 
 /obj/effect/turf_decal/tile/brown
-	name = "brown corner"
+	name = "棕色角标"
 	color = "#A46106"
 
 /obj/effect/turf_decal/tile/neutral
-	name = "neutral corner"
+	name = "中性色角标"
 	color = "#D4D4D4"
 	alpha = 50
 
@@ -47,7 +47,7 @@
 	color = "#FFFFFF"
 
 /obj/effect/turf_decal/trimline/white/line
-	name = "trim decal"
+	name = "边饰贴花"
 	icon_state = "trimline"
 
 /obj/effect/turf_decal/trimline/white/corner

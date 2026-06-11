@@ -1,6 +1,6 @@
 /obj/item/reagent_containers/lux
-	name = "lux"
-	desc = "The stuff of lyfe and souls, retrieved from within a hopefully-willing donor. It's a bit clammy and squishy, like a half-fried egg."
+	name = "灵辉"
+	desc = "生命与灵魂之物，从一个大概自愿的供体体内取出。它有点湿黏又软塌塌的，像半熟的煎蛋。"
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "lux"
 	item_state = "lux"
@@ -12,8 +12,8 @@
 	dropshrink = 0.7
 
 /datum/reagent/vitae
-	name = "Vitae"
-	description = "The extracted and processed essence of life."
+	name = "命髓"
+	description = "提取并加工后的生命精华。"
 	color = "#7d8e98" // rgb: 96, 165, 132
 	overdose_threshold = 10
 	metabolization_rate = 0.1
@@ -31,8 +31,8 @@
 	..()
 
 /obj/item/reagent_containers/lux_impure
-	name = "impure lux"
-	desc = "The stuff of lyfe and souls, retrieved from within a hopefully-willing donor. It's eerie and impure, requiring purification."
+	name = "不纯灵辉"
+	desc = "生命与灵魂之物，从一个大概自愿的供体体内取出。它令人不安且不纯净，需要净化。"
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "lux_impure"
 	item_state = "lux_impure"

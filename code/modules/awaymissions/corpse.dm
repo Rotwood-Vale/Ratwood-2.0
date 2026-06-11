@@ -12,7 +12,7 @@
 	var/death = TRUE //Kill the mob
 	var/roundstart = TRUE //fires on initialize
 	var/instant = FALSE	//fires on New
-	var/flavour_text = "The mapper forgot to set this!"
+	var/flavour_text = "地图作者忘记设置这个了！"
 	var/faction = null
 	var/permanent = FALSE	//If true, the spawner will not disappear upon running out of uses.
 	var/random = FALSE		//Don't set a name or gender, just go random
@@ -33,15 +33,15 @@
 	if(!SSticker.HasRoundStarted() || !loc || !ghost_usable)
 		return
 	if(!uses)
-		to_chat(user, "<span class='warning'>This spawner is out of charges!</span>")
+		to_chat(user, "<span class='warning'>这个生成点已经没有次数了！</span>")
 		return
 	if(is_banned_from(user.key, banType))
-		to_chat(user, "<span class='warning'>I are jobanned!</span>")
+		to_chat(user, "<span class='warning'>我被禁用这个幽灵角色了！</span>")
 		return
 	if(QDELETED(src) || QDELETED(user))
 		return
-	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
-	if(ghost_role == "No" || !loc)
+	var/ghost_role = alert("成为[mob_name]？（警告，你将无法再被克隆！）",,"是","否")
+	if(ghost_role == "否" || !loc)
 		return
 	log_game("[key_name(user)] became [mob_name]")
 	create(ckey = user.ckey)

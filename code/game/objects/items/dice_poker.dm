@@ -28,23 +28,23 @@
 /proc/dice_poker_rank_name(rank)
 	switch(rank)
 		if(DICE_POKER_RANK_FIVE_KIND)
-			return "Five-of-a-Kind"
+			return "五同号"
 		if(DICE_POKER_RANK_FOUR_KIND)
-			return "Four-of-a-Kind"
+			return "四同号"
 		if(DICE_POKER_RANK_FULL_HOUSE)
-			return "Full House"
+			return "葫芦"
 		if(DICE_POKER_RANK_STRAIGHT_6)
-			return "Six High Straight"
+			return "六高顺子"
 		if(DICE_POKER_RANK_STRAIGHT_5)
-			return "Five High Straight"
+			return "五高顺子"
 		if(DICE_POKER_RANK_TRIPS)
-			return "Three-of-a-Kind"
+			return "三同号"
 		if(DICE_POKER_RANK_TWO_PAIR)
-			return "Two Pairs"
+			return "两对"
 		if(DICE_POKER_RANK_PAIR)
-			return "Pair"
+			return "一对"
 		else
-			return "Nothing"
+			return "散牌"
 
 /proc/dice_poker_sorted_desc(list/L)
 	var/list/out = L.Copy()
@@ -59,12 +59,12 @@
 /proc/dice_poker_eval(list/hand) as list
 	var/list/result = list(
 		"rank" = DICE_POKER_RANK_NOTHING,
-		"name" = "Nothing",
+		"name" = "散牌",
 		"vector" = list()
 	)
 
 	if(!hand || hand.len != 5)
-		result["name"] = "Invalid"
+		result["name"] = "无效"
 		return result
 
 	var/list/counts = list(0, 0, 0, 0, 0, 0)
@@ -273,13 +273,13 @@
 	if(!M || !(M in players))
 		return
 	if(joining)
-		to_chat(M, span_notice("The game has not started yet."))
+		to_chat(M, span_notice("游戏尚未开始。"))
 		return
 	var/list/hand = hands[M]
 	if(!hand || hand.len != 5)
-		to_chat(M, span_notice("You do not have a rolled hand yet."))
+		to_chat(M, span_notice("你还没有掷出手牌。"))
 		return
-	to_chat(M, span_notice("Your hidden hand: [format_colored_hand(M)]"))
+	to_chat(M, span_notice("你的隐藏手牌：[format_colored_hand(M)]"))
 
 /datum/dice_poker_game/proc/get_next_unresponded(list/pool, mob/living/current, list/responded)
 	if(!pool || !pool.len)
@@ -307,30 +307,30 @@
 	if(!joiner || !joiner.client)
 		return
 	if(!joining)
-		to_chat(joiner, span_warning("The Dice Poker game has already started."))
+		to_chat(joiner, span_warning("骰子扑克已经开始了。"))
 		return
 
 	if(joiner in players)
-		var/list/opts = list("Leave game")
+		var/list/opts = list("离开游戏")
 		if(players.len >= 2)
-			opts += "Start game now"
-		var/choice = input(joiner, "You are already in the lobby. ([players.len]/[max_players] players)", "Dice Poker") as null|anything in opts
-		if(choice == "Start game now")
+			opts += "立即开始"
+		var/choice = input(joiner, "你已经在大厅中了。([players.len]/[max_players] 名玩家)", "骰子扑克") as null|anything in opts
+		if(choice == "立即开始")
 			start_game()
-		else if(choice == "Leave game")
+		else if(choice == "离开游戏")
 			players -= joiner
 			round_wins -= joiner
 			hands -= joiner
 			rolls_used -= joiner
 			selected_reroll -= joiner
 			bet_caps -= joiner
-			game_bag.visible_message(span_notice("[joiner] left the pre-game lobby. ([players.len]/[max_players])"))
+			game_bag.visible_message(span_notice("[joiner]离开了赛前大厅。([players.len]/[max_players])"))
 			if(!players.len)
 				cancel_game(joiner)
 		return
 
 	if(players.len >= max_players)
-		to_chat(joiner, span_warning("Dice Poker is full ([max_players]/[max_players])."))
+		to_chat(joiner, span_warning("骰子扑克人数已满（[max_players]/[max_players]）。"))
 		return
 
 	players += joiner
@@ -345,13 +345,13 @@
 	raise_spent[joiner] = 0
 	raised_this_round[joiner] = FALSE
 
-	game_bag.visible_message(span_notice("[joiner] joined Dice Poker! ([players.len]/[max_players] players)"))
+	game_bag.visible_message(span_notice("[joiner]加入了骰子扑克！（[players.len]/[max_players] 名玩家）"))
 	if(players.len == max_players)
 		start_game()
 
 /datum/dice_poker_game/proc/leave_game(mob/living/leaver)
 	if(!(leaver in players))
-		to_chat(leaver, span_warning("You are not in this Dice Poker game."))
+		to_chat(leaver, span_warning("你不在这局骰子扑克中。"))
 		return
 
 	players -= leaver
@@ -366,7 +366,7 @@
 	raise_spent -= leaver
 	raised_this_round -= leaver
 
-	game_bag.visible_message(span_notice("[leaver] leaves Dice Poker."))
+	game_bag.visible_message(span_notice("[leaver]离开了骰子扑克。"))
 
 	if(!players.len)
 		cancel_game(leaver)
@@ -378,14 +378,14 @@
 		return
 
 	if(players.len < 2)
-		end_game_with_winner(players.len ? players[1] : null, "forfeit")
+		end_game_with_winner(players.len ? players[1] : null, "弃权")
 		return
 
 	if(phase == "showdown" || phase == "reroll_select" || phase == "initial_roll")
 		if(round_active && round_active.len)
 			round_active -= leaver
 			if(round_active.len == 1)
-				award_round_win(round_active[1], null, "forfeit")
+				award_round_win(round_active[1], null, "弃权")
 				return
 
 	if(current_player == leaver)
@@ -395,7 +395,7 @@
 			current_player_index = 1
 
 /datum/dice_poker_game/proc/cancel_game(mob/living/canceller)
-	game_bag.visible_message(span_warning("[canceller] has cancelled Dice Poker!"))
+	game_bag.visible_message(span_warning("[canceller]取消了骰子扑克！"))
 	game_bag.active_game = null
 	qdel(src)
 
@@ -425,7 +425,7 @@
 		raised_this_round[P] = FALSE
 		hands[P] = list()
 
-	game_bag.visible_message(span_notice("Dice Poker begins! Best of three rounds."))
+	game_bag.visible_message(span_notice("骰子扑克开始！三局两胜。"))
 	start_round()
 
 /datum/dice_poker_game/proc/start_round()
@@ -460,39 +460,39 @@
 	round_starter = current_player
 	can_take_action = TRUE
 
-	game_bag.visible_message(span_notice("--- DICE POKER ROUND [round_number] --- Score: [get_round_score_display()]"))
-	game_bag.visible_message(span_notice("[current_player] starts this round."))
-	to_chat(current_player, span_notice("Use the dice bag and choose Roll Dice."))
+	game_bag.visible_message(span_notice("--- 骰子扑克 第 [round_number] 轮 --- 比分：[get_round_score_display()]"))
+	game_bag.visible_message(span_notice("[current_player]率先开始本轮。"))
+	to_chat(current_player, span_notice("使用骰袋并选择“掷骰”。"))
 
 /datum/dice_poker_game/proc/player_action(mob/living/user, action)
 	if(!(user in players))
-		to_chat(user, span_notice("Current score: [get_round_score_display()]"))
+		to_chat(user, span_notice("当前比分：[get_round_score_display()]"))
 		return
 	if(busy)
-		to_chat(user, span_notice("Please wait a moment..."))
+		to_chat(user, span_notice("请稍等片刻……"))
 		return
 	if(!can_take_action)
-		to_chat(user, span_notice("Please wait for the current action to resolve."))
+		to_chat(user, span_notice("请等待当前动作结算完毕。"))
 		return
 	if(user != current_player)
-		to_chat(user, span_notice("It's not your turn. Current phase: [phase]."))
+		to_chat(user, span_notice("还没轮到你。当前阶段：[phase]。"))
 		return
 
-	if(action == "Roll Dice")
+	if(action == "掷骰")
 		if(phase != "initial_roll")
-			to_chat(user, span_notice("Roll Dice is only available in the first-roll phase."))
+			to_chat(user, span_notice("“掷骰”只在首掷阶段可用。"))
 			return
 		do_initial_roll(user)
 		return
 
-	if(action == "Select Re-roll")
+	if(action == "选择重掷")
 		if(phase != "reroll_select")
-			to_chat(user, span_notice("Re-roll selection is not active right now."))
+			to_chat(user, span_notice("当前未开放重掷选择。"))
 			return
 		do_select_and_reroll(user)
 		return
 
-	to_chat(user, span_notice("That option is not available right now."))
+	to_chat(user, span_notice("该选项当前不可用。"))
 
 /datum/dice_poker_game/proc/do_initial_roll(mob/living/roller)
 	if(roller != current_player)
@@ -500,7 +500,7 @@
 	if(!(roller in round_active))
 		return
 	if(rolls_used[roller] >= 1)
-		to_chat(roller, span_notice("You already made your first roll this round."))
+		to_chat(roller, span_notice("这回合你已经完成首掷。"))
 		return
 
 	busy = TRUE
@@ -514,8 +514,8 @@
 	rolls_used[roller] = 1
 	selected_reroll[roller] = list()
 
-	to_chat(roller, span_notice("Your first hand: [format_colored_hand(roller)]"))
-	game_bag.visible_message(span_notice("[roller] has rolled their first hand."))
+	to_chat(roller, span_notice("你的首轮手牌：[format_colored_hand(roller)]"))
+	game_bag.visible_message(span_notice("[roller]已完成首轮掷骰。"))
 
 	busy = FALSE
 
@@ -533,7 +533,7 @@
 			current_player = next_unrolled
 		current_player_index = players.Find(current_player)
 		can_take_action = TRUE
-		to_chat(current_player, span_notice("Your turn: choose Roll Dice."))
+		to_chat(current_player, span_notice("轮到你了：请选择“掷骰”。"))
 		return
 
 	phase = "reroll_select"
@@ -543,21 +543,21 @@
 	current_player_index = players.Find(current_player)
 	can_take_action = TRUE
 
-	game_bag.visible_message(span_notice("Both first rolls are in. Re-roll selection phase begins."))
-	to_chat(current_player, span_notice("Choose Select Re-roll."))
+	game_bag.visible_message(span_notice("双方首掷已完成。重掷选择阶段开始。"))
+	to_chat(current_player, span_notice("请选择“选择重掷”。"))
 
 /datum/dice_poker_game/proc/do_betting_phase(mob/living/opener)
 	if(opener != current_player)
 		return
 	if(!round_active || round_active.len < 2)
 		if(round_active && round_active.len == 1)
-			award_round_win(round_active[1], null, "all others folded")
+			award_round_win(round_active[1], null, "其余人都弃牌")
 		return
 
 	busy = TRUE
 	can_take_action = FALSE
 
-	var/context = (phase == "initial_bet") ? "Initial Bet" : "Betting"
+	var/context = (phase == "initial_bet") ? "初始下注" : "下注"
 	var/mob/living/surrender_winner = perform_raise_chain(round_active.Copy(), opener, context)
 	if(surrender_winner)
 		busy = FALSE
@@ -575,8 +575,8 @@
 		if(current_player_index < 1)
 			current_player_index = 1
 		can_take_action = TRUE
-		game_bag.visible_message(span_notice("Initial bet locked at [current_bet]. First roll phase begins."))
-		to_chat(current_player, span_notice("Choose Roll Dice."))
+		game_bag.visible_message(span_notice("初始赌注锁定为 [current_bet]。首掷阶段开始。"))
+		to_chat(current_player, span_notice("请选择“掷骰”。"))
 		return
 
 	phase = "reroll_select"
@@ -587,10 +587,10 @@
 	if(current_player_index < 1)
 		current_player_index = 1
 	can_take_action = TRUE
-	game_bag.visible_message(span_notice("Bet accepted at [current_bet]. Re-roll selection phase begins."))
-	to_chat(current_player, span_notice("Choose Select Re-roll."))
+	game_bag.visible_message(span_notice("赌注以 [current_bet] 成交。重掷选择阶段开始。"))
+	to_chat(current_player, span_notice("请选择“选择重掷”。"))
 
-/datum/dice_poker_game/proc/perform_raise_chain(list/participants, mob/living/starter, context = "Betting")
+/datum/dice_poker_game/proc/perform_raise_chain(list/participants, mob/living/starter, context = "下注")
 	if(!participants || participants.len < 2)
 		return null
 
@@ -620,17 +620,17 @@
 			return null
 
 		var/cap_remaining = get_remaining_raise_cap(acting)
-		var/list/options = list("Accept", "Surrender")
+		var/list/options = list("接受", "弃牌")
 		if(!raised_this_round[acting] && cap_remaining >= 1)
-			options += "Raise"
+			options += "加注"
 
-		var/prompt = "[context]. Current bet: [current_bet]."
-		var/choice = input(acting, prompt, "Dice Poker") as null|anything in options
+		var/prompt = "[context]。当前赌注：[current_bet]。"
+		var/choice = input(acting, prompt, "骰子扑克") as null|anything in options
 		if(!choice)
-			choice = "Accept"
+			choice = "接受"
 
-		if(choice == "Surrender")
-			game_bag.visible_message(span_warning("[acting] surrenders this hand."))
+		if(choice == "弃牌")
+			game_bag.visible_message(span_warning("[acting]弃掉了这一手。"))
 			participants -= acting
 			round_active -= acting
 			responded -= acting
@@ -639,13 +639,13 @@
 			acting = get_next_player_in(participants, acting)
 			continue
 
-		if(choice == "Raise")
+		if(choice == "加注")
 			var/raise_amt = prompt_raise_amount(acting, cap_remaining)
 			if(raise_amt > 0)
 				current_bet += raise_amt
 				raise_spent[acting] = raise_spent[acting] + raise_amt
 				raised_this_round[acting] = TRUE
-				game_bag.visible_message(span_notice("[acting] raises by [raise_amt]. New bet: [current_bet]."))
+				game_bag.visible_message(span_notice("[acting]加注了 [raise_amt]。新赌注为：[current_bet]。"))
 				for(var/mob/living/P3 in participants)
 					responded[P3] = FALSE
 				responded[acting] = TRUE
@@ -659,7 +659,7 @@
 	if(raise_cap < 1)
 		return 0
 	var/list/raise_choices = build_raise_choices(raise_cap)
-	var/amt_txt = input(actor, "Raise by how much? (cap [raise_cap])", "Dice Poker") as null|anything in raise_choices
+	var/amt_txt = input(actor, "要加注多少？（上限 [raise_cap]）", "骰子扑克") as null|anything in raise_choices
 	if(!amt_txt)
 		return 0
 	return max(text2num("[amt_txt]"), 0)
@@ -687,7 +687,7 @@
 		busy = FALSE
 		return
 
-	to_chat(actor, span_notice("Current hand: [format_colored_hand(actor)]"))
+	to_chat(actor, span_notice("当前手牌：[format_colored_hand(actor)]"))
 
 	var/list/sel = list()
 	while(TRUE)
@@ -697,17 +697,17 @@
 			var/mark = "( )"
 			if(i in sel)
 				mark = "(X)"
-			var/line = "[mark] Die [i]: [hand[i]]"
+			var/line = "[mark] 第 [i] 颗骰子：[hand[i]]"
 			menu += line
 			choice_to_index[line] = i
-		menu += "Reroll All"
-		menu += "Done"
+		menu += "全部重掷"
+		menu += "完成"
 
-		var/choice = input(actor, "Select dice to re-roll. Toggle entries, then Done.", "Dice Poker") as null|anything in menu
-		if(!choice || choice == "Done")
+		var/choice = input(actor, "选择要重掷的骰子。切换条目后点“完成”。", "骰子扑克") as null|anything in menu
+		if(!choice || choice == "完成")
 			break
 
-		if(choice == "Reroll All")
+		if(choice == "全部重掷")
 			sel = list(1, 2, 3, 4, 5)
 			break
 
@@ -726,14 +726,14 @@
 		playsound(game_bag, 'sound/items/cup_dice_roll.ogg', 75, TRUE)
 		for(var/i3 in sel)
 			hand[i3] = rand(1, 6)
-		game_bag.visible_message(span_notice("[actor] re-rolls [sel.len] die/dice."))
+		game_bag.visible_message(span_notice("[actor]重掷了 [sel.len] 颗骰子。"))
 	else
-		game_bag.visible_message(span_notice("[actor] keeps all dice (no re-roll)."))
+		game_bag.visible_message(span_notice("[actor]保留了全部骰子（未重掷）。"))
 
 	hands[actor] = hand
 	rolls_used[actor] = max(rolls_used[actor], 2)
 	reroll_done[actor] = TRUE
-	to_chat(actor, span_notice("Your final hand: [format_colored_hand(actor)]"))
+	to_chat(actor, span_notice("你的最终手牌：[format_colored_hand(actor)]"))
 
 	busy = FALSE
 
@@ -751,7 +751,7 @@
 			current_player = next_pending
 		current_player_index = players.Find(current_player)
 		can_take_action = TRUE
-		to_chat(current_player, span_notice("Your turn: choose Select Re-roll."))
+		to_chat(current_player, span_notice("轮到你了：请选择“选择重掷”。"))
 		return
 
 	phase = "showdown"
@@ -761,7 +761,7 @@
 	if(!round_active || round_active.len < 1)
 		return
 	if(round_active.len == 1)
-		award_round_win(round_active[1], null, "all others folded")
+		award_round_win(round_active[1], null, "其余人都弃牌")
 		return
 
 	var/sd_cycles = 0
@@ -776,7 +776,7 @@
 			var/eval_rank = eval_p["rank"]
 			var/eval_name = dice_poker_rank_name(eval_rank)
 			var/colored_eval_name = format_player_colored_text(P, eval_name)
-			reveal_parts += "[P] has [format_colored_hand(P)] ([colored_eval_name])"
+			reveal_parts += "[P]掷出了 [format_colored_hand(P)]（[colored_eval_name]）"
 
 			if(!best_eval)
 				best_eval = eval_p
@@ -791,20 +791,20 @@
 				leaders += P
 
 		var/reveal_text = jointext(reveal_parts, " | ")
-		game_bag.visible_message(span_notice("Reveal: [reveal_text]."))
+		game_bag.visible_message(span_notice("亮牌：[reveal_text]。"))
 
 		if(leaders.len == 1)
-			award_round_win(leaders[1], null, "better hand")
+			award_round_win(leaders[1], null, "牌型更大")
 			return
 
 		sd_cycles++
 		if(sd_cycles > max_sudden_death_cycles)
 			var/mob/living/forced_winner = pick(leaders)
-			game_bag.visible_message(span_warning("Sudden Death exceeded [max_sudden_death_cycles] cycles. [forced_winner] is awarded the hand to prevent a stall."))
+			game_bag.visible_message(span_warning("猝死局超过 [max_sudden_death_cycles] 轮。为防止僵局，本手判给 [forced_winner]。"))
 			award_round_win(forced_winner, null, "sudden death limit")
 			return
 
-		game_bag.visible_message(span_warning("Perfect draw among [leaders.len] player(s). Sudden Death triggers: forced re-roll."))
+		game_bag.visible_message(span_warning("[leaders.len] 名玩家完全平局。触发猝死局：强制重掷。"))
 		round_active = leaders.Copy()
 
 		var/mob/living/sd_winner = sudden_death_cycle(round_active.Copy())
@@ -843,7 +843,7 @@
 /datum/dice_poker_game/proc/choose_reroll_indexes(mob/living/M, force_one = FALSE)
 	var/list/hand = hands[M]
 	var/list/sel = list()
-	to_chat(M, span_notice("Current Sudden Death hand: [format_colored_hand(M)]"))
+	to_chat(M, span_notice("当前猝死局手牌：[format_colored_hand(M)]"))
 	while(TRUE)
 		var/list/menu = list()
 		var/list/choice_to_index = list()
@@ -851,15 +851,15 @@
 			var/mark = "( )"
 			if(i in sel)
 				mark = "(X)"
-			var/line = "[mark] Die [i]: [hand[i]]"
+			var/line = "[mark] 第 [i] 颗骰子：[hand[i]]"
 			menu += line
 			choice_to_index[line] = i
-		menu += "Reroll All"
-		menu += "Done"
-		var/choice = input(M, "Sudden Death re-roll selection.", "Dice Poker") as null|anything in menu
-		if(!choice || choice == "Done")
+		menu += "全部重掷"
+		menu += "完成"
+		var/choice = input(M, "猝死局重掷选择。", "骰子扑克") as null|anything in menu
+		if(!choice || choice == "完成")
 			break
-		if(choice == "Reroll All")
+		if(choice == "全部重掷")
 			sel = list(1, 2, 3, 4, 5)
 			break
 		var/j = choice_to_index[choice]
@@ -872,7 +872,7 @@
 	if(force_one && !sel.len)
 		var/forced_idx = rand(1, 5)
 		sel += forced_idx
-		to_chat(M, span_warning("Sudden Death requires at least one re-roll. Die [forced_idx] will be re-rolled."))
+		to_chat(M, span_warning("猝死局至少需要重掷一颗骰子。第 [forced_idx] 颗将被重掷。"))
 
 	return sel
 
@@ -896,10 +896,10 @@
 		for(var/i in indexes)
 			hand[i] = rand(1, 6)
 		hands[M] = hand
-		to_chat(M, span_notice("Sudden Death hand: [format_colored_hand(M)]"))
-		game_bag.visible_message(span_notice("[M] re-rolls [indexes.len] die/dice in Sudden Death."))
+		to_chat(M, span_notice("猝死局手牌：[format_colored_hand(M)]"))
+		game_bag.visible_message(span_notice("[M]在猝死局中重掷了 [indexes.len] 颗骰子。"))
 	else
-		game_bag.visible_message(span_notice("[M] keeps all dice in Sudden Death."))
+		game_bag.visible_message(span_notice("[M]在猝死局中保留了全部骰子。"))
 
 /datum/dice_poker_game/proc/award_round_win(mob/living/winner, mob/living/loser, reason)
 	if(!winner)
@@ -911,10 +911,10 @@
 	else
 		last_round_loser = get_next_player_in(players, winner)
 
-	game_bag.visible_message(span_green("<b>[winner] wins the round ([reason])! Score: [get_round_score_display()].</b>"))
+	game_bag.visible_message(span_green("<b>[winner]赢下本轮（[reason]）！比分：[get_round_score_display()]。</b>"))
 
 	if(round_wins[winner] >= 2)
-		end_game_with_winner(winner, "best of three")
+		end_game_with_winner(winner, "三局两胜")
 		return
 
 	phase = "initial_roll"
@@ -931,43 +931,43 @@
 	phase = "game_over"
 	can_take_action = FALSE
 	if(winner)
-		game_bag.visible_message(span_green("<b>--- DICE POKER OVER --- [winner] wins by [reason]! Final score: [get_round_score_display()].</b>"))
+		game_bag.visible_message(span_green("<b>--- 骰子扑克结束 --- [winner]以[reason]获胜！最终比分：[get_round_score_display()]。</b>"))
 	else
-		game_bag.visible_message(span_warning("--- DICE POKER OVER ---"))
+		game_bag.visible_message(span_warning("--- 骰子扑克结束 ---"))
 	game_bag.active_game = null
 	qdel(src)
 
 
 /obj/item/storage/pill_bottle/dice/dice_poker
-	name = "bag of dice poker dice"
-	desc = "A bag used to play Dice Poker. Activate in hand (Z) to start or join a game."
+	name = "骰子扑克骰袋"
+	desc = "一个用来玩骰子扑克的骰袋。手持激活（Z）即可开始或加入游戏。"
 	var/datum/dice_poker_game/active_game
 	var/static/dice_poker_rules_text = {"<div style='padding:8px;font-family:Verdana,sans-serif;'>
-	<h2 style='text-align:center;margin:0 0 6px 0;'>Dice Poker</h2>
+	<h2 style='text-align:center;margin:0 0 6px 0;'>骰子扑克</h2>
 <br>
-<b>Objective:</b> Win 2 out of 3 rounds with the stronger hand.<br>
+<b>目标：</b>在三局两胜中，以更强的牌型赢下 2 局。<br>
 <br>
-<b>Round Flow:</b><br>
-1) First roll (5d6 each).<br>
-2) Select dice to re-roll once.<br>
-3) Reveal and compare hands.<br>
+<b>回合流程：</b><br>
+1) 首掷一次（每人 5 枚6面骰）。<br>
+2) 选择要重掷的骰子，各可重掷一次。<br>
+3) 亮牌并比较牌型。<br>
 <br>
-<b>Hand Rankings (Low to High):</b><br>
-Nothing: Five mismatched dice.<br>
-Pair: Two dice of the same value.<br>
-Two Pairs: Two separate pairs.<br>
-Three-of-a-Kind: Three dice of the same value.<br>
-Five High Straight: Values 1, 2, 3, 4, 5.<br>
-Six High Straight: Values 2, 3, 4, 5, 6.<br>
-Full House: Three-of-a-kind plus a pair.<br>
-Four-of-a-Kind: Four dice of the same value.<br>
-Five-of-a-Kind: All five dice show the same value.<br>
+<b>牌型大小（从低到高）：</b><br>
+散牌：五颗骰子互不成型。<br>
+一对：两颗同点数骰子。<br>
+两对：两组不同的对子。<br>
+三条：三颗同点数骰子。<br>
+五高顺：1、2、3、4、5。<br>
+六高顺：2、3、4、5、6。<br>
+葫芦：三条加一对。<br>
+四条：四颗同点数骰子。<br>
+五条：五颗骰子全部相同。<br>
 <br>
-<b>Nothing:</b> Any non-pair hand that is not a 5-die straight; compared by highest dice (kickers).<br>
+<b>散牌：</b>凡是不成对子且不是五连顺的手牌，按最大散张依次比较。<br>
 <br>
-<b>Tie Rule:</b><br>
-If hands are perfectly equal (including kickers), Sudden Death starts:
-forced re-roll, repeating until someone wins.<br>
+<b>平局规则：</b><br>
+若双方手牌完全相同（包括散张比较），则进入猝死局：
+强制重掷，直到有人分出胜负。<br>
 </div>"}
 
 /obj/item/storage/pill_bottle/dice/dice_poker/proc/show_rules(mob/living/user)
@@ -1000,82 +1000,82 @@ forced re-roll, repeating until someone wins.<br>
 		can_check_hand = TRUE
 
 	if(!active_game)
-		menu += "Start Game"
+		menu += "开始游戏"
 	else if(active_game.joining)
 		if(!(user in active_game.players))
-			menu += "Join Game"
+			menu += "加入游戏"
 	else
 		if(can_roll)
-			menu += "Roll Dice"
+			menu += "掷骰"
 		if(can_reroll)
-			menu += "Select Re-roll"
+			menu += "选择重掷"
 		if(can_check_hand)
 			if(menu.len)
 				menu += spacers[spacer_index]
 				spacer_index++
-			menu += "Check My Hand"
+			menu += "查看我的手牌"
 
 	if(menu.len)
 		menu += spacers[spacer_index]
 		spacer_index++
-	menu += "Rules"
+	menu += "规则"
 	menu += spacers[spacer_index]
 	spacer_index++
 	if(active_game && (user in active_game.players))
-		menu += "Leave Game"
+		menu += "离开游戏"
 		menu += spacers[spacer_index]
 		spacer_index++
-	menu += "End Game"
+	menu += "结束游戏"
 
-	var/choice = input(user, "Select an option.", "Dice Poker") as null|anything in menu
+	var/choice = input(user, "选择一个选项。", "骰子扑克") as null|anything in menu
 	if(!choice)
 		return
 
-	if(choice == "Rules")
+	if(choice == "规则")
 		show_rules(user)
 		return
 
-	if(choice == "End Game")
+	if(choice == "结束游戏")
 		if(active_game)
 			active_game.cancel_game(user)
 		else
-			to_chat(user, span_notice("No Dice Poker game is currently running."))
+			to_chat(user, span_notice("当前没有正在进行的骰子扑克。"))
 		return
 
-	if(choice == "Leave Game")
+	if(choice == "离开游戏")
 		if(active_game)
 			active_game.leave_game(user)
 		else
-			to_chat(user, span_notice("No Dice Poker game is currently running."))
+			to_chat(user, span_notice("当前没有正在进行的骰子扑克。"))
 		return
 
-	if(choice == "Roll Dice")
+	if(choice == "掷骰")
 		if(active_game)
-			active_game.player_action(user, "Roll Dice")
+			active_game.player_action(user, "掷骰")
 		return
 
-	if(choice == "Select Re-roll")
+	if(choice == "选择重掷")
 		if(active_game)
-			active_game.player_action(user, "Select Re-roll")
+			active_game.player_action(user, "选择重掷")
 		return
 
-	if(choice == "Check My Hand")
+	if(choice == "查看我的手牌")
 		if(active_game && !active_game.joining && (user in active_game.players))
 			active_game.show_private_hand(user)
 		else
-			to_chat(user, span_notice("You are not in an active Dice Poker game."))
+			to_chat(user, span_notice("你不在当前进行中的骰子扑克对局里。"))
 		return
 
-	if(choice == "Join Game")
+	if(choice == "加入游戏")
 		if(active_game && active_game.joining)
 			active_game.try_join(user)
 		return
 
-	if(choice != "Start Game")
+	if(choice != "开始游戏")
 		return
 
 	if(!active_game)
-		var/count = input(user, "How many players?\n(2 to 4 players)", "Dice Poker") as null|anything in list(2, 3, 4)
+		var/count = input(user, "需要几名玩家？\n（2 到 4 名玩家）", "骰子扑克") as null|anything in list(2, 3, 4)
 		if(!count)
 			return
 
@@ -1084,7 +1084,7 @@ forced re-roll, repeating until someone wins.<br>
 		new_game.max_players = count
 		active_game = new_game
 		new_game.try_join(user)
-		src.visible_message(span_notice("[user] is starting Dice Poker! [count - 1] more player(s) needed. Activate (Z) the dice bag to join!"))
+		src.visible_message(span_notice("[user]正在发起骰子扑克！还需要 [count - 1] 名玩家。手持激活（Z）骰袋即可加入！"))
 		return
 
 	if(active_game.joining)

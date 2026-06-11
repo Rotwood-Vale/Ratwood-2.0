@@ -1,10 +1,10 @@
 /obj/item/black_rose
 	icon = 'icons/mob/actions/pestramiracles.dmi'
 	icon_state = "rot"
-	name = "black rose"
-	desc = "A sickly-sweet scented rose. Like honeyed rotten meat. It's dim petals seem laced with a black ooze that retreats away from your fingers."
+	name = "黑玫瑰"
+	desc = "一朵散发着病态甜香的玫瑰，像涂了蜜的腐肉。它黯淡的花瓣间仿佛缠着黑色黏浆，而那黏浆会从你的指尖旁退开。"
 	w_class = WEIGHT_CLASS_SMALL
-	var/effect_desc = "You know this can be implanted with the cure rot miracle within a follower of Pestra. It protects her followers."
+	var/effect_desc = "你知道这东西可以被植入 佩斯特拉 信徒体内，用于承载祛腐神迹。它会庇护她的追随者。"
 
 /obj/item/black_rose/examine(mob/user)
 	. = ..()

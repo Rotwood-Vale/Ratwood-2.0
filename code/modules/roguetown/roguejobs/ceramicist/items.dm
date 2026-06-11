@@ -3,8 +3,8 @@
 /obj/item/rogueweapon/blowrod
 	force = 10
 	possible_item_intents = list(/datum/intent/mace/strike)
-	name = "blowing rod"
-	desc = "A blowing rod for shaping glass."
+	name = "吹制杆"
+	desc = "一根用于塑形玻璃的吹制杆。"
 	icon_state = "blowJobRod" // sorry not sorry
 	icon = 'icons/roguetown/weapons/tools.dmi'
 	sharpness = IS_BLUNT
@@ -23,13 +23,13 @@
 	if(!G)
 		return FALSE
 	if(loaded_glass)
-		to_chat(user, span_warning("There is already heated glass on the blowing rod."))
+		to_chat(user, span_warning("吹制杆上已经有一团热玻璃了。"))
 		return FALSE
 	if(!user.transferItemToLoc(G, src) && G.loc != src)
 		G.forceMove(src)
 	loaded_glass = G
 	update_icon()
-	to_chat(user, span_notice("I attach [G] to the blowing rod."))
+	to_chat(user, span_notice("我把[G]装到了吹制杆上。"))
 	return TRUE
 
 /obj/item/rogueweapon/blowrod/proc/detach_heated_glass(mob/living/user)
@@ -41,7 +41,7 @@
 	G.forceMove(get_turf(user))
 	if(user)
 		user.put_in_hands(G)
-		to_chat(user, span_notice("I remove [G] from the blowing rod."))
+		to_chat(user, span_notice("我把[G]从吹制杆上取了下来。"))
 	return TRUE
 
 /obj/item/rogueweapon/blowrod/attack_self(mob/living/user)
@@ -72,10 +72,10 @@
 			T.hott = world.time
 			addtimer(CALLBACK(T, TYPE_PROC_REF(/obj/item/rogueweapon/tongs, make_unhot), T.hott), 10 SECONDS)
 			T.update_icon()
-			to_chat(user, span_notice("I remove [G_detach] from the blowing rod with the tongs."))
+			to_chat(user, span_notice("我用钳子把[G_detach]从吹制杆上取了下来。"))
 			return TRUE
 		else
-			to_chat(user, span_warning("The tongs are not holding heated glass or rod is empty."))
+			to_chat(user, span_warning("钳子里没有夹着热玻璃，或者吹制杆是空的。"))
 			return TRUE
 	return ..()
 
@@ -158,7 +158,7 @@
 
 	var/obj/item/natural/glass/heated/G = loaded_glass
 	if(!G)
-		to_chat(user, span_warning("I need to attach heated glass to the blowing rod first."))
+		to_chat(user, span_warning("我得先把热玻璃装到吹制杆上。"))
 		return
 
 	if(!G.selected_recipe)
@@ -178,7 +178,7 @@
 		if(!recipe_map.len)
 			for(var/datum/glass_blow_recipe/R_cleanup0 in generated_recipes)
 				qdel(R_cleanup0)
-			to_chat(user, span_warning("I can't shape this into anything useful."))
+			to_chat(user, span_warning("我没法把它塑形成什么有用的东西。"))
 			return
 
 		var/choice = show_radial_menu(user, src, radial_choices, require_near = TRUE, tooltips = TRUE)
@@ -199,7 +199,7 @@
 
 	var/skill_level = user.get_skill_level(/datum/skill/craft/ceramics)
 	if(skill_level < G.selected_recipe.craftdiff)
-		to_chat(user, span_warning("I need [SSskills.level_names_plain[G.selected_recipe.craftdiff]] pottery skill for this glasswork."))
+		to_chat(user, span_warning("这件玻璃活需要我具备 [SSskills.level_names_plain[G.selected_recipe.craftdiff]] 级陶艺技能。"))
 		QDEL_NULL(G.selected_recipe)
 		G.blow_progress = 0
 		return
@@ -207,13 +207,13 @@
 	// Glassblowing is twice as slow as pottery wheel spinning - same skill scaling formula, but doubled
 	var/base_per_blow = max(1, round(G.selected_recipe.base_time / G.blows_required))
 	var/time_to_blow = max(12, 2 * (base_per_blow + (SKILL_LEVEL_JOURNEYMAN - skill_level) * 4))
-	to_chat(user, span_notice("I blow and shape the heated glass ([G.blow_progress + 1]/[G.blows_required])..."))
+	to_chat(user, span_notice("我吹制并塑形热玻璃（[G.blow_progress + 1]/[G.blows_required]）……"))
 	playsound(src, "bubbles", 65, FALSE)
 	if(!do_after(user, time_to_blow, target = src))
 		return
 
 	if(loaded_glass != G)
-		to_chat(user, span_warning("I lose control of the glasswork."))
+		to_chat(user, span_warning("我失去了对这件玻璃制品的控制。"))
 		return
 
 	// Glassblowing has twice the failure chance of pottery wheel
@@ -231,7 +231,7 @@
 			if(SKILL_LEVEL_EXPERT)
 				failure_chance = 20
 		if(prob(failure_chance))
-			user.visible_message(span_warning("[user] loses control of the glass — it cracks and shatters!"), span_warning("I lose control of the molten glass — it cracks and shatters!"))
+			user.visible_message(span_warning("[user]失去了对玻璃的控制，它裂开并粉碎了！"), span_warning("我失去了对熔融玻璃的控制，它裂开并粉碎了！"))
 			playsound(src, 'sound/foley/glassbreak.ogg', 75, TRUE)
 			loaded_glass = null
 			update_icon()
@@ -242,7 +242,7 @@
 
 	G.blow_progress++
 	if(G.blow_progress < G.blows_required)
-		to_chat(user, span_notice("The glass form is taking shape."))
+		to_chat(user, span_notice("玻璃的形状正在逐渐成形。"))
 		return
 
 	var/final_craftdiff = G.selected_recipe.craftdiff
@@ -252,7 +252,7 @@
 	for(var/i in 1 to G.selected_recipe.result_count)
 		var/obj/item/result = new G.selected_recipe.result_type(drop_turf)
 		apply_glass_quality(result, glass_quality_tier, skill_level)
-	user.visible_message(span_notice("[user] finishes shaping molten glass into [final_recipe_name]."), span_notice("I finish shaping the glass into [final_recipe_name]."))
+	user.visible_message(span_notice("[user]完成了对熔融玻璃的塑形，做出了[final_recipe_name]。"), span_notice("我完成了玻璃塑形，做出了[final_recipe_name]。"))
 
 	loaded_glass = null
 	update_icon()
@@ -277,7 +277,7 @@
 	var/recipe_icon_state = "glassBatch"
 
 /datum/glass_blow_recipe/statue_1
-	name = "glass statue (style I)"
+	name = "玻璃雕像（款式 I）"
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 	base_time = 42
 	result_type = /obj/item/roguestatue/glass/design1
@@ -285,7 +285,7 @@
 	recipe_icon_state = "statueglass1"
 
 /datum/glass_blow_recipe/statue_2
-	name = "glass statue (style II)"
+	name = "玻璃雕像（款式 II）"
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 	base_time = 42
 	result_type = /obj/item/roguestatue/glass/design2
@@ -293,7 +293,7 @@
 	recipe_icon_state = "statueglass2"
 
 /datum/glass_blow_recipe/statue_3
-	name = "glass statue (style III)"
+	name = "玻璃雕像（款式 III）"
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 	base_time = 42
 	result_type = /obj/item/roguestatue/glass/design3
@@ -301,7 +301,7 @@
 	recipe_icon_state = "statueglass3"
 
 /datum/glass_blow_recipe/statue_4
-	name = "glass statue (style IV)"
+	name = "玻璃雕像（款式 IV）"
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 	base_time = 42
 	result_type = /obj/item/roguestatue/glass/design4
@@ -309,7 +309,7 @@
 	recipe_icon_state = "statueglass4"
 
 /datum/glass_blow_recipe/statue_5
-	name = "glass statue (style V)"
+	name = "玻璃雕像（款式 V）"
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 	base_time = 42
 	result_type = /obj/item/roguestatue/glass/design5
@@ -317,7 +317,7 @@
 	recipe_icon_state = "statueglass5"
 
 /datum/glass_blow_recipe/pane
-	name = "glass pane"
+	name = "玻璃板"
 	craftdiff = SKILL_LEVEL_NOVICE
 	base_time = 20
 	result_type = /obj/item/natural/glass
@@ -325,7 +325,7 @@
 	recipe_icon_state = "glasspane"
 
 /datum/glass_blow_recipe/bottle
-	name = "glass bottle"
+	name = "玻璃瓶"
 	craftdiff = SKILL_LEVEL_NOVICE
 	base_time = 28
 	result_type = /obj/item/reagent_containers/glass/bottle/blown
@@ -333,7 +333,7 @@
 	recipe_icon_state = "clear_bottle1"
 
 /datum/glass_blow_recipe/alch_vial
-	name = "alchemical vial"
+	name = "炼金小瓶"
 	craftdiff = SKILL_LEVEL_NOVICE
 	base_time = 24
 	result_type = /obj/item/reagent_containers/glass/bottle/alchemical/blown

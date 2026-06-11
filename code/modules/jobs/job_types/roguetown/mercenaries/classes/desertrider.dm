@@ -1,6 +1,6 @@
 /datum/advclass/mercenary/desert_rider
-	name = "Desert Rider Janissary"
-	tutorial = "The Janissaries are the Empire's elite infantry units, wielding mace and shield. We do not break."
+	name = "沙海骑手耶尼切里"
+	tutorial = "耶尼切里是帝国最精锐的步战部队，执钉锤与坚盾而战。我们绝不溃退。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/desert_rider
@@ -34,7 +34,7 @@
 
 /datum/outfit/job/roguetown/mercenary/desert_rider/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("The Janissaries are the Empire's elite infantry units, wielding mace and shield. We do not break."))
+	to_chat(H, span_warning("耶尼切里是帝国最精锐的步战部队，执钉锤与坚盾而战。我们绝不溃退。"))
 	head = /obj/item/clothing/head/roguetown/helmet/sallet/zyb
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/scale
@@ -51,24 +51,24 @@
 		/obj/item/rogueweapon/scabbard/sheath,
 		/obj/item/storage/belt/rogue/pouch/coins/poor
 		)
-	var/weapons = list("Mace and Shield","Shamshir and Shield","Spear and Shield","Axe and Shield")
+	var/weapons = list("钉锤与盾","弯刀与盾","长矛与盾","斧与盾")
 	if(H.mind)
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapon_choice = input(H, "选择你的武器。", "整备武装") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Mace and Shield")
+			if("钉锤与盾")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 				backl = /obj/item/rogueweapon/shield/tower/zyb
 				beltr = /obj/item/rogueweapon/mace/steel
-			if("Shamshir and Shield")
+			if("弯刀与盾")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 				backl = /obj/item/rogueweapon/shield/tower/zyb
 				beltr = /obj/item/rogueweapon/scabbard/sword
-			if("Spear and Shield")
+			if("长矛与盾")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 				r_hand = /obj/item/rogueweapon/spear
 				backl = /obj/item/rogueweapon/shield/tower/zyb
-			if("Axe and Shield")
+			if("斧与盾")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)	//lets see if people pick it!
 				r_hand = /obj/item/rogueweapon/stoneaxe/woodcut
 				backl = /obj/item/rogueweapon/shield/tower/zyb
@@ -81,8 +81,8 @@
 	H.merctype = 4
 
 /datum/advclass/mercenary/desert_rider/zeybek
-	name = "Desert Rider Zeybek"
-	tutorial = "Zybantine 'Blade Dancers' are famed and feared the world over. Their expertise in blades both long and short is well known."
+	name = "沙海骑手泽伊贝克"
+	tutorial = "兹班图 的“刃舞者”闻名天下，也令世人畏惧。他们在长短兵刃上的造诣众所周知。"
 	outfit = /datum/outfit/job/roguetown/mercenary/desert_rider_zeybek
 	traits_applied = list(TRAIT_DODGEEXPERT,TRAIT_DUALWIELDER)
 	subclass_stats = list(
@@ -110,7 +110,7 @@
 
 /datum/outfit/job/roguetown/mercenary/desert_rider_zeybek/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("Zybantine 'Blade Dancers' are famed and feared the world over. Their expertise in blades both long and short is well known."))
+	to_chat(H, span_warning("兹班图 的“刃舞者”闻名天下，也令世人畏惧。他们在长短兵刃上的造诣众所周知。"))
 	head = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/zyb
 	neck = /obj/item/clothing/neck/roguetown/leather
 	mask = /obj/item/clothing/mask/rogue/facemask/ancient
@@ -129,24 +129,24 @@
 		/obj/item/flashlight/flare/torch,
 		/obj/item/storage/belt/rogue/pouch/coins/poor
 		)
-	var/weapons = list("Shamshir and Javelin","Whips and Knives", "Recurve Bow")
+	var/weapons = list("弯刀与标枪","长鞭与匕首", "反曲弓")
 	if(H.mind)
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapon_choice = input(H, "选择你的武器。", "整备武装") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Shamshir and Javelin")
+			if("弯刀与标枪")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				r_hand = /obj/item/rogueweapon/sword/sabre/shamshir
 				backl = /obj/item/quiver/javelin/iron
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				beltr = /obj/item/rogueweapon/scabbard/sword
-			if("Whips and Knives")	///They DO enslave people after all
+			if("长鞭与匕首")	///They DO enslave people after all
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 				beltr = /obj/item/rogueweapon/whip
 				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying
 				beltl = /obj/item/rogueweapon/scabbard/sword
-			if("Recurve Bow")
+			if("反曲弓")
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				beltl = /obj/item/quiver/arrows
@@ -158,8 +158,8 @@
 	H.merctype = 4
 
 /datum/advclass/mercenary/desert_rider/almah
-	name = "Desert Rider Almah"
-	tutorial = "Almah are those skilled in both magyck and swordsmanship, but excelling in nothing."
+	name = "沙海骑手阿尔玛"
+	tutorial = "阿尔玛是同时精于魔法与剑术的人，却又在任何一门上都谈不上登峰造极。"
 	outfit = /datum/outfit/job/roguetown/mercenary/desert_rider_almah
 	traits_applied = list(TRAIT_ARCYNE_T2, TRAIT_MAGEARMOR)
 	subclass_stats = list(
@@ -187,7 +187,7 @@
 
 /datum/outfit/job/roguetown/mercenary/desert_rider_almah/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("Almah are those skilled in both magyck and swordsmanship, but excelling in nothing."))
+	to_chat(H, span_warning("阿尔玛是同时精于魔法与剑术的人，却又在任何一门上都谈不上登峰造极。"))
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/repulse)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)

@@ -1,6 +1,6 @@
 /obj/structure/roguemachine/potionseller
-	name = "POTION SELLER"
-	desc = "The stomach of this thing can been stuffed with fluids for you to buy."
+	name = "药剂贩子"
+	desc = "这东西的腹腔可以灌满液体，供你购买。"
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "streetvendor1"
 	density = TRUE
@@ -33,7 +33,7 @@
 	if(is_crafted) // spawn a key
 		var/obj/item/roguekey/key = new /obj/item/roguekey/physician(get_turf(src))
 		key.lockid = "random_potion_peddler_id_[rand(1,9999999)]" // I know, not foolproof
-		key.name = "potion seller key"
+		key.name = "药剂贩子钥匙"
 		keycontrol = key.lockid
 	update_icon()
 
@@ -52,14 +52,14 @@
 
 /obj/structure/roguemachine/potionseller/proc/insert(obj/item/P, mob/living/user)
 	if(!istype(P, /obj/item/reagent_containers/glass/bottle))
-		to_chat(user, span_warning("Not a container."))
+		to_chat(user, span_warning("这不是容器。"))
 		return
 	var/obj/item/reagent_containers/glass/bottle/B = P
 	if(!B.reagents.total_volume)
-		to_chat(user, span_warning("Nothing to add."))
+		to_chat(user, span_warning("没有东西可以加入。"))
 		return
 	if(reagents.maximum_volume < B.reagents.total_volume + reagents.total_volume)
-		to_chat(user, span_warning("Machine is filled to the lid."))
+		to_chat(user, span_warning("机器已经装到满盖了。"))
 		return
 	testing("startadd")
 	for(var/datum/reagent/to_add in B.reagents.reagent_list)
@@ -99,7 +99,7 @@
 			if(!locked)
 				insert(P, user)
 			else
-				to_chat(user, span_warning("Wrong key."))
+				to_chat(user, span_warning("钥匙不对。"))
 				return
 	if(istype(P, /obj/item/storage/keyring))
 		var/obj/item/storage/keyring/K = P
@@ -112,12 +112,12 @@
 	if(!locked)
 		insert(P, user)
 	else if(inserted)
-		to_chat(user, span_warning("Something is already inside!"))
+		to_chat(user, span_warning("里面已经有东西了！"))
 	else if(istype(P, /obj/item/reagent_containers/glass/bottle))
 		if(user.transferItemToLoc(P, src))
 			inserted = P
 			return attack_hand(user)
-		to_chat(user, span_warning("[P] is stuck to your hand!"))
+		to_chat(user, span_warning("[P]粘在你手上了！"))
 	..()
 
 /obj/structure/roguemachine/potionseller/Topic(href, href_list)
@@ -127,30 +127,30 @@
 		if(!R || !ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE) || !locked)
 			return
 		if(!inserted)
-			say("MY POTIONS NEEDS A BOTTLE TO FILL, TRAVELER")
+			say("我的药剂需要瓶子来装，旅人。")
 			return
 		var/price = held_items[R.type]["PRICE"]
 		if(price > budget)
-			say("MY POTIONS ARE TOO EXPENSIVE FOR YOU, TRAVELER")
+			say("我的药剂对你来说太贵了，旅人。")
 			return
 		var/quantity = 0
 		var/volume = reagents.get_reagent_amount(R)
 		var/buyer_volume = inserted.reagents.maximum_volume - inserted.reagents.total_volume
 		if(buyer_volume < 1)
-			say("[uppertext("\the [inserted]")] IS TOO SMALL FOR MY POTIONS, TRAVELER")
+			say("[uppertext("\the [inserted]")] 对我的药剂来说太小了，旅人。")
 			return
 		if(price > 0)
 			var/budget_vol = round(budget / price)
 			if(budget_vol > volume)
 				budget_vol = volume
-			quantity = input(usr, "How many dram to buy (can afford [budget_vol] [UNIT_FORM_STRING(budget_vol)])?", "\The [held_items[R.type]["NAME"]]") as num|null
+			quantity = input(usr, "要买多少打兰？（你买得起 [budget_vol] [UNIT_FORM_STRING(budget_vol)]）", "\The [held_items[R.type]["NAME"]]") as num|null
 		else
-			quantity = input(usr, "How many dram to pour?", "\The [held_items[R.type]["NAME"]]") as num|null
+			quantity = input(usr, "要倒出多少打兰？", "\The [held_items[R.type]["NAME"]]") as num|null
 		if(!usr.Adjacent(src))
 			return
 		quantity = round(quantity)
 		if(quantity <= 0)
-			to_chat(usr, span_warning("The machine cannot pour such an small amount"))
+			to_chat(usr, span_warning("这台机器倒不出这么少的量。"))
 			return
 		if(quantity > buyer_volume)
 			quantity = buyer_volume
@@ -163,7 +163,7 @@
 				wgain += price
 				record_round_statistic(STATS_PEDDLER_REVENUE, price)
 			else
-				say("MY POTIONS ARE TOO EXPENSIVE FOR YOU, TRAVELER")
+				say("我的药剂对你来说太贵了，旅人。")
 				return
 		inserted.reagents.add_reagent(R.type, quantity)
 		reagents.remove_reagent(R.type, quantity, FALSE)
@@ -181,7 +181,7 @@
 		var/volume = reagents.get_reagent_amount(R)
 		var/buyer_volume = sold_bottle.reagents.maximum_volume - sold_bottle.reagents.total_volume
 		var/vol_max = min(buyer_volume,volume)
-		quantity = input(usr, "How many dram to pour into \the [sold_bottle] ([vol_max] [UNIT_FORM_STRING(vol_max)] free)?", "\The [held_items[R.type]["NAME"]]") as num|null
+		quantity = input(usr, "要向[sold_bottle]中倒入多少打兰？（还可装 [vol_max] [UNIT_FORM_STRING(vol_max)]）", "\The [held_items[R.type]["NAME"]]") as num|null
 		quantity = round(text2num(quantity))
 		if(quantity <= 0 || !usr.Adjacent(src))
 			qdel(sold_bottle)
@@ -221,7 +221,7 @@
 			var/prename
 			if(held_items[R.type]["NAME"])
 				prename = held_items[R.type]["NAME"]
-			var/newname = input(usr, "SET A NEW NAME FOR THIS POTION", src, prename)
+			var/newname = input(usr, "为这瓶药剂设置新名称", src, prename)
 			if(newname)
 				held_items[R.type]["NAME"] = newname
 	if(href_list["setprice"])
@@ -232,7 +232,7 @@
 			var/preprice
 			if(held_items[R]["PRICE"])
 				preprice = held_items[R]["PRICE"]
-			var/newprice = input(usr, "SET A NEW PRICE FOR THIS POTION PER DRAM (0 IS FREE)", src, preprice) as null|num
+			var/newprice = input(usr, "设置这瓶药剂每打兰的新价格（0 为免费）", src, preprice) as null|num
 			if(newprice)
 				if(newprice < 0.1)
 					return attack_hand(usr)
@@ -243,7 +243,7 @@
 		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
 			return
 		if(ishuman(usr))
-			var/newprice = input(usr, "SET A NEW PRICE FOR BOTTLES (0 IS FREE)", src, bottle_price) as null|num
+			var/newprice = input(usr, "设置瓶子的价格（0 为免费）", src, bottle_price) as null|num
 			bottle_price = round(newprice)
 			if(bottle_price < 0)
 				bottle_price = 0
@@ -252,11 +252,11 @@
 			return
 		if(ishuman(usr))
 			if(bottle_sold_max < 1)
-				say("MY BOTTLES ARE ALL SOLD OUT, TRAVELER")
+				say("我的瓶子全都卖光了，旅人。")
 				return
 			if(bottle_price > 0)
 				if(budget < bottle_price)
-					say("MY BOTTLES ARE TOO EXPENSIVE FOR YOU, TRAVELER")
+					say("我的瓶子对你来说太贵了，旅人。")
 					return
 				budget -= bottle_price
 				wgain += bottle_price
@@ -281,29 +281,29 @@
 	var/canread = user.can_read(src, TRUE)
 	var/contents
 	if(canread)
-		contents = "<center>POTION SELLER, FIRST ITERATION<BR>"
+		contents = "<center>药剂贩子，一号机型<BR>"
 		if(!locked)
-			contents += "UNLOCKED<BR><a href='?src=[REF(src)];setbottleprice=1'>SET BOTTLE PRICE:</a> [bottle_price ? bottle_price : "FREE"]<HR>"
+			contents += "未上锁<BR><a href='?src=[REF(src)];setbottleprice=1'>设置瓶价：</a> [bottle_price ? bottle_price : "免费"]<HR>"
 		else if(!inserted)
-			contents += "No container inserted<BR><a href='?src=[REF(src)];buybottle=1'>[bottle_price ? "Buy bottle for [bottle_price] mammons" : "Take a FREE bottle"]</a><HR>"
+			contents += "未插入容器<BR><a href='?src=[REF(src)];buybottle=1'>[bottle_price ? "花费 [bottle_price] 玛门购买瓶子" : "免费拿取一个瓶子"]</a><HR>"
 		else
-			contents += "Container: <a href='?src=[REF(src)];eject=1'>[inserted]</a> ([round(inserted.reagents.total_volume)]/[round(inserted.reagents.maximum_volume)] DRAMS)<HR>"
+			contents += "容器：<a href='?src=[REF(src)];eject=1'>[inserted]</a> ([round(inserted.reagents.total_volume)]/[round(inserted.reagents.maximum_volume)] 打兰)<HR>"
 		if(locked)
-			contents += "<a href='?src=[REF(src)];change=1'>Stored Mammon:</a> [budget]<BR>"
+			contents += "<a href='?src=[REF(src)];change=1'>已存入玛门：</a> [budget]<BR>"
 		else
-			contents += "<a href='?src=[REF(src)];withdrawgain=1'>Stored Profits:</a> [wgain]<BR>"
+			contents += "<a href='?src=[REF(src)];withdrawgain=1'>已存利润：</a> [wgain]<BR>"
 	else
-		contents = "<center>[stars("POTION SELLER, FIRST ITERATION")]<BR>"
+		contents = "<center>[stars("药剂贩子，一号机型")]<BR>"
 		if(!locked)
-			contents += "[stars("UNLOCKED")]<BR><a href='?src=[REF(src)];setbottleprice=1'>[stars("SET BOTTLE PRICE:")]</a> [bottle_price ? bottle_price : stars("FREE")]<HR>"
+			contents += "[stars("未上锁")]<BR><a href='?src=[REF(src)];setbottleprice=1'>[stars("设置瓶价：")]</a> [bottle_price ? bottle_price : stars("免费")]<HR>"
 		else if(!inserted)
-			contents += "[stars("No container inserted")]<BR><a href='?src=[REF(src)];buybottle=1'>[bottle_price ? stars("Buy bottle for [bottle_price] mammons") : stars("Take a FREE bottle")]</a><HR>"
+			contents += "[stars("未插入容器")]<BR><a href='?src=[REF(src)];buybottle=1'>[bottle_price ? stars("花费 [bottle_price] 玛门购买瓶子") : stars("免费拿取一个瓶子")]</a><HR>"
 		else
-			contents += "[stars("Container")]: <a href='?src=[REF(src)];eject=1'>[stars("[inserted]")]</a> ([round(inserted.reagents.total_volume)]/[round(inserted.reagents.maximum_volume)] [stars("DRAMS")])<HR>"
+			contents += "[stars("容器")]: <a href='?src=[REF(src)];eject=1'>[stars("[inserted]")]</a> ([round(inserted.reagents.total_volume)]/[round(inserted.reagents.maximum_volume)] [stars("打兰")])<HR>"
 		if(locked)
-			contents += "<a href='?src=[REF(src)];change=1'>[stars("Stored Mammon:")]</a> [budget]<BR>"
+			contents += "<a href='?src=[REF(src)];change=1'>[stars("已存入玛门：")]</a> [budget]<BR>"
 		else
-			contents += "<a href='?src=[REF(src)];withdrawgain=1'>[stars("Stored Profits:")]</a> [wgain]<BR>"
+			contents += "<a href='?src=[REF(src)];withdrawgain=1'>[stars("已存利润：")]</a> [wgain]<BR>"
 
 	contents += "</center>"
 
@@ -314,20 +314,20 @@
 		if(volume < 1) // do not sell reagents less than 1 dram
 			continue
 		if(!namer)
-			held_items[I]["NAME"] = "thing"
-			namer = "thing"
+			held_items[I]["NAME"] = "东西"
+			namer = "东西"
 		if(locked)
-			var/buy = !price ? "TAKE" : "BUY"
-			price = !price ? "FREE" : "[price] per dram"
+			var/buy = !price ? "拿取" : "购买"
+			price = !price ? "免费" : "每打兰 [price]"
 			if(canread)
 				contents += "[namer] ([volume] [UNIT_FORM_STRING(volume)]) - [price] <a href='?src=[REF(src)];buy=[REF(I)]'>[buy]</a>"
 			else
 				contents += "[stars(namer)] - [stars(price)] <a href='?src=[REF(src)];buy=[REF(I)]'>[stars("[buy]")]</a>"
 		else
 			if(canread)
-				contents += "<a href='?src=[REF(src)];setname=[REF(I)]'>[namer]</a> ([volume] [UNIT_FORM_STRING(volume)]) - <a href='?src=[REF(src)];setprice=[REF(I)]'>[price] per dram</a> <a href='?src=[REF(src)];retrieve=[REF(I)]'>TAKE</a>"
+				contents += "<a href='?src=[REF(src)];setname=[REF(I)]'>[namer]</a> ([volume] [UNIT_FORM_STRING(volume)]) - <a href='?src=[REF(src)];setprice=[REF(I)]'>每打兰 [price]</a> <a href='?src=[REF(src)];retrieve=[REF(I)]'>取出</a>"
 			else
-				contents += "<a href='?src=[REF(src)];setname=[REF(I)]'>[stars(namer)]</a> - <a href='?src=[REF(src)];setprice=[REF(I)]'>[price] [stars("per dram")]</a> <a href='?src=[REF(src)];retrieve=[REF(I)]'>[stars("TAKE")]</a>"
+				contents += "<a href='?src=[REF(src)];setname=[REF(I)]'>[stars(namer)]</a> - <a href='?src=[REF(src)];setprice=[REF(I)]'>[price] [stars("每打兰")]</a> <a href='?src=[REF(src)];retrieve=[REF(I)]'>[stars("取出")]</a>"
 		contents += "<BR>"
 
 	var/datum/browser/popup = new(user, "VENDORTHING", "", 370, 300)

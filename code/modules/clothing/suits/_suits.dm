@@ -1,6 +1,6 @@
 /obj/item/clothing/suit
 	icon = 'icons/obj/clothing/suits.dmi'
-	name = "suit"
+	name = "外衣"
 	var/fire_resist = T0C+100
 	armor = list("blunt" = 0, "slash" = 0, "stab" = 0,  "piercing" = 0, "fire" = 0, "acid" = 0)
 	drop_sound = 'sound/blank.ogg'

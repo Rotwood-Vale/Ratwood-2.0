@@ -1,6 +1,6 @@
 /obj/item/natural/glass
-	name = "glass"
-	desc = "Windowpanes for construction work."
+	name = "玻璃"
+	desc = "用于建筑施工的窗玻璃。"
 	icon = 'icons/roguetown/items/crafting.dmi'
 	icon_state = "glasspane"
 	dropshrink = 0.8
@@ -18,8 +18,8 @@
 	sellprice = 6
 
 /obj/item/natural/glass/heated
-	name = "heated glass"
-	desc = "A glowing gather of molten glass, workable with a blowing rod while hot."
+	name = "热玻璃"
+	desc = "一团发光的熔融玻璃，趁热时可用吹杆加工。"
 	icon_state = "glasspane"
 	color = "#ffb36a"
 	w_class = WEIGHT_CLASS_SMALL
@@ -51,9 +51,9 @@
 	
 	// Check if user has heat protection before picking up
 	if(!has_heat_protection(user))
-		user.visible_message(span_warning("[user] tries to grab the heated glass but quickly pulls back from the heat!"), \
-							span_warning("I try to grab the heated glass, but it's too hot!"))
-		to_chat(user, span_danger("The searing heat burns my hands!"))
+		user.visible_message(span_warning("[user]试图抓起热玻璃，却又被烫得迅速缩回了手！"), \
+							span_warning("我试图抓起热玻璃，但它太烫了！"))
+		to_chat(user, span_danger("灼人的高温烧伤了我的双手！"))
 		user.apply_damage(15, BURN, pick(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND))
 		return TRUE
 	
@@ -73,7 +73,7 @@
 	if(istype(I, /obj/item/rogueweapon/tongs))
 		var/obj/item/rogueweapon/tongs/T = I
 		if(T.hingot)
-			to_chat(user, span_warning("[T] are already holding something!"))
+			to_chat(user, span_warning("[T]已经夹着东西了！"))
 			return TRUE
 		if(!user.transferItemToLoc(src, T) && src.loc != T)
 			src.forceMove(T)
@@ -81,7 +81,7 @@
 		T.hott = world.time
 		addtimer(CALLBACK(T, TYPE_PROC_REF(/obj/item/rogueweapon/tongs, make_unhot), T.hott), 10 SECONDS)
 		T.update_icon()
-		to_chat(user, span_notice("I carefully grasp [src] with the tongs."))
+		to_chat(user, span_notice("我用钳子小心地夹住了[src]。"))
 		return TRUE
 	return ..()
 
@@ -102,7 +102,7 @@
 /obj/item/natural/glass/attack_right(mob/user)
 	if(user.get_active_held_item())
 		return
-	to_chat(user, span_warning("I start to collect [src]..."))
+	to_chat(user, span_warning("我开始收集[src]……"))
 	if(move_after(user, 4 SECONDS, target = src))
 		var/stackcount = 0
 		for(var/obj/item/natural/glass/F in get_turf(src))
@@ -123,8 +123,8 @@
 
 //................	Glass panes stack	............... //
 /obj/item/natural/bundle/glass
-	name = "stack of glass"
-	desc = "A stack of fragile glass panes."
+	name = "一摞玻璃"
+	desc = "一摞脆弱的玻璃板。"
 	icon = 'icons/roguetown/items/crafting.dmi'
 	experimental_inhand = FALSE
 	icon_state = "glasspane1"
@@ -142,7 +142,7 @@
 	resistance_flags = null
 	firemod = null
 	w_class = WEIGHT_CLASS_HUGE
-	stackname = "glass"
+	stackname = "玻璃"
 	stacktype = /obj/item/natural/glass
 	maxamount = 3
 	icon1 = "glasspane1"
@@ -162,8 +162,8 @@
 
 //................	Glass shard	............... //
 /obj/item/natural/glass_shard
-	name = "shard"
-	desc = "A sharp shard of glass."
+	name = "碎玻璃"
+	desc = "一片锋利的玻璃碎片。"
 	icon = 'icons/roguetown/items/crafting.dmi'
 	experimental_inhand = FALSE
 	icon_state = "shard1"
@@ -174,7 +174,7 @@
 	throwforce = 5
 	resistance_flags = null
 	w_class = WEIGHT_CLASS_TINY
-	attack_verb = list("stabbed", "slashed", "sliced", "cut")
+	attack_verb = list("刺", "劈", "划", "割")
 	max_integrity = 40
 	smeltresult = /obj/item/natural/glass/heated
 	dropshrink = 0.8
@@ -188,4 +188,3 @@
 	if(istype(L))
 		playsound(loc, 'sound/foley/glass_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
 	return ..()
-

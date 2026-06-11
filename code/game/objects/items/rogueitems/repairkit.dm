@@ -3,8 +3,8 @@
 ///////////////
 
 /obj/item/construction/repairkit/structure
-	name = "structure repair kit"
-	desc = "a structure repairkit, able to broken doors and windows. A skilled carpenter can use this to reinforce them as well"
+	name = "建筑修理工具包"
+	desc = "一套用于修理破损门窗的建筑修理工具包。技艺高超的木匠还能用它来加固它们。"
 	icon = 'icons/roguetown/items/crafting.dmi'
 	icon_state = "strucrepairkit"
 	grid_width = 32
@@ -33,8 +33,8 @@
 		var/obj/structure/mineral_door/doorrepair = O
 		if(doorrepair.obj_integrity < doorrepair.max_integrity)
 			to_chat(user, span_warning("[doorrepair.obj_integrity]"))	
-			user.visible_message(span_notice("[user] starts repairing [doorrepair.name]."), \
-			span_notice("I start repairing [doorrepair.name]."))
+			user.visible_message(span_notice("[user]开始修理[doorrepair.name]。"), \
+			span_notice("我开始修理[doorrepair.name]。"))
 			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 			if(do_after(user, (150 / user.get_skill_level(/datum/skill/craft/carpentry)), target = O)) // making this generic carpentry, even though it could be masonry
 				qdel(I)
@@ -51,14 +51,14 @@
 					doorrepair.obj_integrity += 1000
 				else
 					doorrepair.obj_integrity = doorrepair.max_integrity							
-				user.visible_message(span_notice("[user] repaired [doorrepair.name]."), \
-				span_notice("I repaired [doorrepair.name]."))	
+				user.visible_message(span_notice("[user]修好了[doorrepair.name]。"), \
+				span_notice("我修好了[doorrepair.name]。"))	
 	if(istype(O, /obj/structure/roguewindow/))
 		var/obj/structure/roguewindow/windowrepair = O
 		if(windowrepair.obj_integrity < windowrepair.max_integrity)
 			to_chat(user, span_warning("[windowrepair.obj_integrity]"))	
-			user.visible_message(span_notice("[user] starts repairing [windowrepair.name]."), \
-			span_notice("I start repairing [windowrepair.name]."))
+			user.visible_message(span_notice("[user]开始修理[windowrepair.name]。"), \
+			span_notice("我开始修理[windowrepair.name]。"))
 			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 			if(do_after(user, (150 / user.get_skill_level(/datum/skill/craft/carpentry)), target = O)) // making this generic carpentry, even though it could be masonry
 				qdel(I)
@@ -73,5 +73,5 @@
 					windowrepair.obj_integrity += 500
 				else
 					windowrepair.obj_integrity = windowrepair.max_integrity						
-				user.visible_message(span_notice("[user] repaired [windowrepair.name]."), \
-				span_notice("I repaired [windowrepair.name]."))	
+				user.visible_message(span_notice("[user]修好了[windowrepair.name]。"), \
+				span_notice("我修好了[windowrepair.name]。"))	

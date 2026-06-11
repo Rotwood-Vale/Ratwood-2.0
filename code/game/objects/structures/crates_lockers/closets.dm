@@ -1,5 +1,5 @@
 /obj/structure/closet
-	name = "closet"
+	name = "储物柜"
 	desc = ""
 	icon_state = "generic"
 	density = TRUE
@@ -131,7 +131,7 @@
 /obj/structure/closet/proc/can_open(mob/living/user)
 	if(welded || locked)
 		if(user)
-			to_chat(user, span_warning("Locked.") )
+			to_chat(user, span_warning("锁着。") )
 		return FALSE
 //	var/turf/T = get_turf(src)
 //	for(var/mob/living/L in T)
@@ -276,7 +276,7 @@
 		var/obj/item/lockpickring/pickring = W
 		if(pickring.picks.len)
 			pickring.removefromring(user)
-			to_chat(user, span_warning("You clumsily drop a lockpick off the ring as you try to pick the lock with it."))
+			to_chat(user, span_warning("我手一滑，把开锁针从锁针环上弄掉了。"))
 		return
 	if(istype(W,/obj/item/skeleton_key))
 		tryskeletonlock(user)
@@ -290,10 +290,10 @@
 	if(opened)
 		return
 	if(!keylock)
-		to_chat(user, span_warning("There's no lock on this."))
+		to_chat(user, span_warning("这上面没有锁。"))
 		return
 	if(obj_broken)
-		to_chat(user, span_warning("The lock is obj_broken."))
+		to_chat(user, span_warning("这把锁已经坏了。"))
 		return
 	if(istype(I,/obj/item/storage/keyring))
 		var/obj/item/storage/keyring/R = I
@@ -321,13 +321,13 @@
 
 /obj/structure/closet/proc/trypicklock(obj/item/I, mob/user)
 	if(opened)
-		to_chat(user, "<span class='warning'>This cannot be picked while it is open.</span>")
+		to_chat(user, "<span class='warning'>开着的时候没法撬锁。</span>")
 		return
 	if(!keylock)
-		to_chat(user, "<span class='warning'>There's no lock on this.</span>")
+		to_chat(user, "<span class='warning'>这上面没有锁。</span>")
 		return
 	if(obj_broken)
-		to_chat(user, "<span class='warning'>The lock is obj_broken.</span>")
+		to_chat(user, "<span class='warning'>这把锁已经坏了。</span>")
 		return
 	else
 		var/lockprogress = 0
@@ -362,12 +362,12 @@
 			if(prob(pickchance))
 				lockprogress += moveup
 				playsound(src.loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
-				to_chat(user, "<span class='warning'>Click...</span>")
+				to_chat(user, "<span class='warning'>咔哒……</span>")
 				if(L.mind)
 					add_sleep_experience(L, /datum/skill/misc/lockpicking, L.STAINT/2)
 				if(lockprogress >= locktreshold)
 					picked = TRUE
-					to_chat(user, "<span class='deadsay'>The locking mechanism gives.</span>")
+					to_chat(user, "<span class='deadsay'>锁芯松开了。</span>")
 					record_featured_stat(FEATURED_STATS_CRIMINALS, user)
 					record_round_statistic(STATS_LOCKS_PICKED)
 					togglelock(user)
@@ -377,7 +377,7 @@
 			else
 				playsound(loc, 'sound/items/pickbad.ogg', 40, TRUE)
 				I.take_damage(1, BRUTE, "blunt")
-				to_chat(user, "<span class='warning'>Clack.</span>")
+				to_chat(user, "<span class='warning'>咔嗒。</span>")
 				add_sleep_experience(L, /datum/skill/misc/lockpicking, L.STAINT/4)
 				continue
 		if(!picked)
@@ -392,13 +392,13 @@
 
 /obj/structure/closet/proc/tryskeletonlock(mob/user)
 	if(opened)
-		to_chat(user, "<span class='warning'>This cannot be cracked while it is open.</span>")
+		to_chat(user, "<span class='warning'>开着的时候没法破解它。</span>")
 		return
 	if(!keylock)
-		to_chat(user, "<span class='warning'>There's no lock on this.</span>")
+		to_chat(user, "<span class='warning'>这上面没有锁。</span>")
 		return
 	if(obj_broken)
-		to_chat(user, "<span class='warning'>The lock is obj_broken.</span>")
+		to_chat(user, "<span class='warning'>这把锁已经坏了。</span>")
 		return
 	else
 		do_sparks(3, FALSE, src)
@@ -432,16 +432,16 @@
 	var/list/targets = list(O, src)
 	add_fingerprint(user)
 	user.visible_message(
-		span_warning("[user] [actuallyismob ? "tries to ":""]stuff [O] into [src]."),
-		span_warning("I [actuallyismob ? "try to ":""]stuff [O] into [src]."),
-		span_hear("I hear clanging.")
+		span_warning("[user][actuallyismob ? "试图把" : "开始把"][O]塞进[src]。"),
+		span_warning("我[actuallyismob ? "试图把" : "开始把"][O]塞进[src]。"),
+		span_hear("我听见一阵碰撞声。")
 	)
 	if(actuallyismob)
 		if(do_after_mob(user, targets, 40))
 			user.visible_message(
-				span_notice("[user] stuffs [O] into [src]."),
-				span_notice("I stuff [O] into [src]."),
-				span_hear("I hear a loud bang.")
+				span_notice("[user]把[O]塞进了[src]。"),
+				span_notice("我把[O]塞进了[src]。"),
+				span_hear("我听见一声闷响。")
 			)
 			O.forceMove(T)
 			close()
@@ -455,7 +455,7 @@
 	if(locked)
 		if(message_cooldown <= world.time)
 			message_cooldown = world.time + 50
-			to_chat(user, span_warning("I'm trapped!"))
+			to_chat(user, span_warning("我被困住了！"))
 		return
 	container_resist(user)
 
@@ -475,7 +475,7 @@
 /obj/structure/closet/verb/verb_toggleopen()
 	set src in view(1)
 	set hidden = 1
-	set name = "Toggle Open"
+	set name = "切换开合"
 
 	if(!usr.canUseTopic(src, BE_CLOSE) || !isturf(loc))
 		return
@@ -483,7 +483,7 @@
 	if(iscarbon(usr))
 		return toggle(usr)
 	else
-		to_chat(usr, span_warning("This mob type can't use this verb."))
+		to_chat(usr, span_warning("这种生物没法这么做。"))
 
 // Objects that try to exit a locker by stepping were doing so successfully,
 // and due to an oversight in turf/Enter() were going through walls.  That
@@ -510,7 +510,7 @@
 	//okay, so the closet is either welded or locked... resist!!!
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message(span_warning("[src] shakes violently!"))
+	user.visible_message(span_warning("[src]剧烈晃动起来！"))
 
 /obj/structure/closet/proc/bust_open()
 	welded = FALSE //applies to all lockers
@@ -538,21 +538,21 @@
 /obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	if(locked)
-		user.visible_message(span_warning("[user] unlocks [src]."), \
-			span_notice("I unlock [src]."))
+		user.visible_message(span_warning("[user]打开了[src]的锁。"), \
+			span_notice("我打开了[src]的锁。"))
 		playsound(src, 'sound/foley/doors/lock.ogg', 100)
 		locked = 0
 	else
-		user.visible_message(span_warning("[user] locks [src]."), \
-			span_notice("I lock [src]."))
+		user.visible_message(span_warning("[user]锁上了[src]。"), \
+			span_notice("我锁上了[src]。"))
 		playsound(src, 'sound/foley/doors/lock.ogg', 100)
 		locked = 1
 
 /obj/structure/closet/emag_act(mob/user)
 	if(secure && !obj_broken)
-		user.visible_message(span_warning("Sparks fly from [src]!"),
-						span_warning("I scramble [src]'s lock, breaking it open!"),
-						span_hear("I hear a faint electrical spark."))
+		user.visible_message(span_warning("[src]迸出了火花！"),
+						span_warning("我扰乱了[src]的锁，把它强行破开了！"),
+						span_hear("我听见一阵轻微的电火花声。"))
 		playsound(src, "sparks", 50, TRUE)
 		obj_broken = TRUE
 		locked = FALSE
@@ -599,16 +599,16 @@
 		if(locked)
 			togglelock(user, TRUE)
 		if(!open(user))
-			to_chat(user, span_warning("It won't budge!"))
+			to_chat(user, span_warning("它纹丝不动！"))
 			return
 	step_towards(user, T2)
 	T1 = get_turf(user)
 	if(T1 == T2)
 		user.resting = TRUE //so people can jump into crates without slamming the lid on their head
 		if(!close(user))
-			to_chat(user, span_warning("I can't get [src] to close!"))
+			to_chat(user, span_warning("我没法让[src]关上！"))
 			user.resting = FALSE
 			return
 		user.resting = FALSE
 		togglelock(user)
-		T1.visible_message(span_warning("[user] dives into [src]!"))
+		T1.visible_message(span_warning("[user]一头钻进了[src]！"))

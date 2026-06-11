@@ -1,6 +1,6 @@
 /datum/world_trait
-	var/name = "World Trait"
-	var/desc = "World Trait Description"
+	var/name = "世界特性"
+	var/desc = "世界特性描述"
 	var/processes = FALSE
 
 	var/list/tracked_items = list()

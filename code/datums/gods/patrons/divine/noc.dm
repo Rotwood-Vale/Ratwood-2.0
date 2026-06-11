@@ -1,10 +1,10 @@
 /datum/patron/divine/noc
 	name = "Noc"
-	domain = "The Night, The Moon, Knowledge, Magic, Secrets"
-	desc = "The Father of Secrets is the glorious moonlight that grants us power through knowledge. We are granted visions of His vault of secrets, and given the ability to wield the Arcyne through His benevolence."
-	worshippers = "Wizards, Scholars, Night Owls"
-	virtues = "Wisdom, Curiosity, Pursuit of Arcyne"
-	sins = "Ignorance, Censorship, Bookburning"
+	domain = "黑夜、月亮、知识、魔法、秘密"
+	desc = "秘密之父是辉煌的月光，祂通过知识赐予我们力量。祂让我们得见祂那秘藏宝库的幻象，又以祂的仁慈赐予我们驾驭 Arcyne 的能力。"
+	worshippers = "巫师、学者、夜猫子"
+	virtues = "智慧、好奇、求索 Arcyne"
+	sins = "无知、审查、焚书"
 	mob_traits = list(TRAIT_NIGHT_OWL, TRAIT_NOCSIGHT)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison				= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/targeted/touch/prestidigitation	= CLERIC_T0,
@@ -17,9 +17,9 @@
 					/obj/effect/proc_holder/spell/invoked/resurrect/noc				= CLERIC_T4,
 	)
 	confess_lines = list(
-		"NOC IS NIGHT!",
-		"NOC SEES ALL!",
-		"I SEEK THE MYSTERIES OF THE MOON!",
+		"NOC 即是黑夜！",
+		"NOC 洞察万物！",
+		"我寻求月亮的奥秘！",
 	)
 	storyteller = /datum/storyteller/noc
 
@@ -29,7 +29,7 @@
 	// Allows prayer near psycross
 	for(var/obj/structure/fluff/psycross/cross in view(4, get_turf(follower)))
 		if(cross.divine == FALSE)
-			to_chat(follower, span_danger("That defiled cross interupts my prayers!"))
+			to_chat(follower, span_danger("那座被亵渎的 psycross 打断了我的祈祷！"))
 			return FALSE
 		return TRUE
 	// Allows prayer in the church
@@ -41,7 +41,7 @@
 	// Allows praying atop ritual chalk of the god.
 	for(var/obj/structure/ritualcircle/noc in view(1, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("For Noc to hear my prayer I must either be in his blessed moonlight, within the church, or near a psycross."))
+	to_chat(follower, span_danger("若想让 Noc 听见我的祈祷，我必须沐浴在祂赐福的月光下、身处教堂内，或在 psycross 附近。"))
 	return FALSE
 
 /datum/patron/divine/noc/on_lesser_heal(
@@ -52,8 +52,8 @@
 	conditional_buff,
 	situational_bonus
 )
-	*message_out = span_info("A shroud of soft moonlight falls upon [target]!")
-	*message_self = span_notice("I'm shrouded in gentle moonlight!")
+	*message_out = span_info("柔和的月光洒落在 [target] 身上！")
+	*message_self = span_notice("温柔的月光正笼罩着我！")
 
 	if(GLOB.tod == "night")
 		*conditional_buff = TRUE

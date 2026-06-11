@@ -1,5 +1,5 @@
 /obj/effect/blessing
-	name = "holy blessing"
+	name = "神圣祝福"
 	desc = ""
 	icon = 'icons/effects/effects.dmi'
 	icon_state = null

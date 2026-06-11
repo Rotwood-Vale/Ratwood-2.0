@@ -1,6 +1,6 @@
 /obj/item/clothing/gloves/roguetown/blacksteel/modern/plategloves
-	name = "blacksteel plate gauntlets"
-	desc = "A set of plate gauntlets forged of blacksteel, using a modern design."
+	name = "黑钢板甲护手"
+	desc = "以黑钢锻造、采用现代设计的一套板甲护手。"
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
 	sleeved = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
@@ -17,8 +17,8 @@
 	smeltresult = /obj/item/ingot/blacksteel
 
 /obj/item/clothing/gloves/roguetown/blacksteel/plategloves
-	name = "ancient blacksteel plate gauntlets"
-	desc = "A set of plate gauntlets forged of blacksteel."
+	name = "远古黑钢板甲护手"
+	desc = "一套以黑钢锻造的板甲护手。"
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bkgloves"

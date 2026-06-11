@@ -6,7 +6,7 @@
 	var/item_type
 	var/verbed
 
-/datum/component/cursed_item/Initialize(god_trait, item_class, verbiage = "PUNISHED")
+/datum/component/cursed_item/Initialize(god_trait, item_class, verbiage = "惩戒")
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -24,8 +24,7 @@
 	var/mob/living/carbon/human/user = I.loc
 	if(!HAS_TRAIT(user, required_trait))
 		spawn(0)
-			to_chat(user, "<font color='red'>UNWORTHY HANDS TOUCHING THIS [item_type], CEASE OR BE [verbed]!</font>")
+			to_chat(user, "<font color='red'>不配之手胆敢触碰此[item_type]，立刻住手，否则必遭[verbed]！</font>")
 			user.adjust_fire_stacks(5)
 			user.ignite_mob()
 			user.Stun(40)
-

@@ -1,6 +1,6 @@
 /obj/item/clothing/head/roguetown/antlerhood
-	name = "antlerhood"
-	desc = "A hood suited for druids and shamans."
+	name = "鹿角兜帽"
+	desc = "一顶适合德鲁伊与萨满佩戴的兜帽。"
 	color = null
 	flags_inv = HIDEEARS|HIDEHAIR
 	icon_state = "antlerhood"
@@ -21,7 +21,7 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/head/roguetown/beekeeper
-	name = "beekeeper's hood"
+	name = "养蜂人的兜帽"
 	desc = ""
 	flags_inv = HIDEEARS|HIDEHAIR
 	icon_state = "beekeeper"
@@ -42,8 +42,8 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/head/roguetown/nochood
-	name = "moon hood"
-	desc = "A hood worn by those who favor Noc with a mask in the shape of a crescent."
+	name = "月兜帽"
+	desc = "一顶由 Noc 信徒佩戴的兜帽，配有新月形面具。"
 	color = null
 	icon_state = "nochood"
 	item_state = "nochood"
@@ -54,8 +54,8 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/head/roguetown/necrahood
-	name = "death shroud"
-	desc = "Wisps of dark fabric that cover your entire head and flutter gently in the breeze. Often worn by those who usher the dead to the afterlife."
+	name = "死亡罩巾"
+	desc = "暗色布缕垂落，遮住你的整个头部，并在微风中轻轻飘动。常为引渡亡者前往来世之人所佩戴。"
 	color = null
 	icon_state = "necrahood"
 	item_state = "necrahood"
@@ -66,8 +66,8 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/head/roguetown/necramask
-	name = "death mask"
-	desc = "A hood with a decorated jaw bone at the chin, normally worn by some followers of Necra as a form of devotion"
+	name = "死者面具"
+	desc = "一顶在下巴处饰有颌骨装饰的兜帽，一些 Necra 的追随者会将其作为虔敬的象征佩戴。"
 	color = null
 	icon_state = "deathface"
 	item_state = "deathface"
@@ -83,8 +83,8 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/head/roguetown/dendormask
-	name = "briarmask"
-	desc = "A mask of wood and thorns worn by druids in service to Dendor."
+	name = "荆棘面具"
+	desc = "一副由木头与荆棘制成、供侍奉 Dendor 的德鲁伊佩戴的面具。"
 	color = null
 	icon_state = "dendormask"
 	item_state = "dendormask"
@@ -100,7 +100,7 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/head/roguetown/necromhood
-	name = "necromancers hood"
+	name = "死灵法师兜帽"
 	color = null
 	icon_state = "necromhood"
 	item_state = "necromhood"
@@ -111,8 +111,8 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/head/roguetown/menacing
-	name = "sack hood"
-	desc = "A hood commonly worn by executioners to hide their face; The stigma of such a role, and all the grisly work it entails, makes many executioners outcasts in their own right."
+	name = "麻袋兜帽"
+	desc = "一种刽子手常戴来遮掩面容的兜帽；这种身份的污名，以及其所涉及的一切血腥工作，使许多刽子手本身也成了被排斥之人。"
 	icon_state = "menacing"
 	item_state = "menacing"
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
@@ -131,8 +131,8 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/head/roguetown/jester
-	name = "jester's hat"
-	desc = "A funny-looking hat with jingly bells attached to it."
+	name = "弄臣帽子"
+	desc = "一顶模样滑稽、缀着叮当作响铃铛的帽子。"
 	icon_state = "jester"
 	item_state = "jester"
 	detail_tag = "_detail"

@@ -50,7 +50,7 @@
 	splatter_type = "xsplatter"
 
 /obj/effect/temp_visual/dir_setting/speedbike_trail
-	name = "speedbike trails"
+	name = "极速车尾迹"
 	icon_state = "ion_fade"
 	layer = BELOW_MOB_LAYER
 	duration = 10
@@ -84,7 +84,7 @@
 	duration = 3
 
 /obj/effect/temp_visual/dir_setting/ninja
-	name = "ninja shadow"
+	name = "忍者残影"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "uncloak"
 	duration = 9
@@ -96,14 +96,14 @@
 	icon_state = "shadow"
 
 /obj/effect/temp_visual/dir_setting/ninja/phase
-	name = "ninja energy"
+	name = "忍者能量"
 	icon_state = "phasein"
 
 /obj/effect/temp_visual/dir_setting/ninja/phase/out
 	icon_state = "phaseout"
 
 /obj/effect/temp_visual/dir_setting/wraith
-	name = "blood"
+	name = "鲜血"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "phase_shift2"
 	duration = 12
@@ -148,7 +148,7 @@
 	update_icon()
 
 /obj/effect/temp_visual/bsa_splash
-	name = "\improper Bluespace energy wave"
+	name = "\improper 蓝空能量波"
 	desc = ""
 	icon = 'icons/effects/beam_splash.dmi'
 	icon_state = "beam_splash_l"
@@ -165,7 +165,7 @@
 			icon_state = "beam_splash_e"
 
 /obj/effect/temp_visual/wizard
-	name = "water"
+	name = "水流"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "reappear"
 	duration = 5
@@ -241,36 +241,36 @@
 	duration = 2
 
 /obj/effect/temp_visual/revenant
-	name = "spooky lights"
+	name = "幽异光点"
 	icon_state = "purplesparkles"
 
 /obj/effect/temp_visual/revenant/cracks
-	name = "glowing cracks"
+	name = "发光裂痕"
 	icon_state = "purplecrack"
 	duration = 6
 
 /obj/effect/temp_visual/gravpush
-	name = "gravity wave"
+	name = "重力波"
 	icon_state = "shieldsparkles"
 	duration = 5
 
 /obj/effect/temp_visual/telekinesis
-	name = "telekinetic force"
+	name = "念动力场"
 	icon_state = "empdisable"
 	duration = 5
 
 /obj/effect/temp_visual/emp
-	name = "emp sparks"
+	name = "电磁脉冲火花"
 	icon_state = "empdisable"
 
 /obj/effect/temp_visual/emp/pulse
-	name = "emp pulse"
+	name = "电磁脉冲波"
 	icon_state = "emppulse"
 	duration = 8
 	randomdir = 0
 
 /obj/effect/temp_visual/bluespace_fissure
-	name = "bluespace fissure"
+	name = "蓝空裂隙"
 	icon_state = "bluestream_fade"
 	duration = 9
 
@@ -299,7 +299,7 @@
 	duration = 20
 
 /obj/effect/temp_visual/heal //color is white by default, set to whatever is needed
-	name = "healing glow"
+	name = "治愈辉光"
 	icon_state = "heal"
 	duration = 15
 	plane = GAME_PLANE_UPPER
@@ -313,14 +313,14 @@
 	pixel_y = rand(-9, 0)
 
 /obj/effect/temp_visual/kinetic_blast
-	name = "kinetic explosion"
+	name = "动能爆裂"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "kinetic_blast"
 	layer = ABOVE_ALL_MOB_LAYER
 	duration = 4
 
 /obj/effect/temp_visual/explosion
-	name = "explosion"
+	name = "爆炸"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "explosion"
 	pixel_x = -32
@@ -332,14 +332,14 @@
 	duration = 4
 
 /obj/effect/temp_visual/blob
-	name = "blob"
+	name = "团块"
 	icon_state = "blob_attack"
 	alpha = 140
 	randomdir = 0
 	duration = 6
 
 /obj/effect/temp_visual/desynchronizer
-	name = "desynchronizer field"
+	name = "失同步力场"
 	icon_state = "chronofield"
 	duration = 3
 
@@ -381,7 +381,7 @@
 	duration = 6
 
 /obj/effect/temp_visual/heart
-	name = "heart"
+	name = "心形"
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "heart"
 	duration = 25
@@ -393,7 +393,7 @@
 	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = 25)
 
 /obj/effect/temp_visual/love_heart
-	name = "love heart"
+	name = "爱心"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "heart"
 	duration = 25
@@ -416,7 +416,7 @@
 	animate(I, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/bleed
-	name = "bleed"
+	name = "出血"
 	icon = 'icons/effects/bleed.dmi'
 	icon_state = "bleed0"
 	duration = 10

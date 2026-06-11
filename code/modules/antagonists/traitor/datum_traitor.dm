@@ -2,9 +2,9 @@
 #define TRAITOR_AI	  "AI"
 
 /datum/antagonist/traitor
-	name = "Traitor"
-	roundend_category = "traitors"
-	antagpanel_category = "Traitor"
+	name = "叛徒"
+	roundend_category = "叛徒"
+	antagpanel_category = "叛徒"
 	job_rank = ROLE_TRAITOR
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
@@ -29,7 +29,7 @@
 	//Remove malf powers.
 	UnregisterSignal(owner.current, COMSIG_MOVABLE_HEAR, PROC_REF(handle_hearing))
 	if(!silent && owner.current)
-		to_chat(owner.current,"<span class='danger'>I are no longer the [special_role]!</span>")
+		to_chat(owner.current,"<span class='danger'>我不再是[special_role]了！</span>")
 	owner.special_role = null
 	return ..()
 
@@ -141,7 +141,7 @@
 			.=2
 
 /datum/antagonist/traitor/greet()
-	to_chat(owner.current, "<span class='alertsyndie'>I are the [owner.special_role].</span>")
+	to_chat(owner.current, "<span class='alertsyndie'>我是[owner.special_role]。</span>")
 	owner.announce_objectives()
 	if(should_give_codewords)
 		give_codewords()
@@ -169,15 +169,15 @@
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
-	to_chat(traitor_mob, "<U><B>The Syndicate have provided you with the following codewords to identify fellow agents:</B></U>")
-	to_chat(traitor_mob, "<B>Code Phrase</B>: <span class='blue'>[phrases]</span>")
-	to_chat(traitor_mob, "<B>Code Response</B>: <span class='red'>[responses]</span>")
+	to_chat(traitor_mob, "<U><B>辛迪加向你提供了以下暗号，用以识别其他特工：</B></U>")
+	to_chat(traitor_mob, "<B>暗号词</B>: <span class='blue'>[phrases]</span>")
+	to_chat(traitor_mob, "<B>暗号应答</B>: <span class='red'>[responses]</span>")
 
-	antag_memory += "<b>Code Phrase</b>: <span class='blue'>[phrases]</span><br>"
-	antag_memory += "<b>Code Response</b>: <span class='red'>[responses]</span><br>"
+	antag_memory += "<b>暗号词</b>: <span class='blue'>[phrases]</span><br>"
+	antag_memory += "<b>暗号应答</b>: <span class='red'>[responses]</span><br>"
 
-	to_chat(traitor_mob, "Use the codewords during regular conversation to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
-	to_chat(traitor_mob, "<span class='alertwarning'>I memorize the codewords, allowing you to recognise them when heard.</span>")
+	to_chat(traitor_mob, "在日常交谈中使用这些暗号，以识别其他特工。不过仍要谨慎行事，因为任何人都可能是你的敌人。")
+	to_chat(traitor_mob, "<span class='alertwarning'>我已经记住了这些暗号，因此当我听见时就能辨认出来。</span>")
 
 /datum/antagonist/traitor/proc/equip(silent = FALSE)
 	if(traitor_kind == TRAITOR_HUMAN)
@@ -199,9 +199,9 @@
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
 			if(objective.check_completion())
-				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
+				objectives_text += "<br><B>目标 #[count]</B>: [objective.explanation_text] <span class='greentext'>成功！</span>"
 			else
-				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+				objectives_text += "<br><B>目标 #[count]</B>: [objective.explanation_text] <span class='redtext'>失败。</span>"
 				traitorwin = FALSE
 			count++
 
@@ -217,9 +217,9 @@
 	var/special_role_text = LOWER_TEXT(name)
 
 	if(traitorwin)
-		result += "<span class='greentext'>The [special_role_text] was successful!</span>"
+		result += "<span class='greentext'>[special_role_text]成功了！</span>"
 	else
-		result += "<span class='redtext'>The [special_role_text] has failed!</span>"
+		result += "<span class='redtext'>[special_role_text]失败了！</span>"
 		SEND_SOUND(owner.current, 'sound/blank.ogg')
 
 	return result.Join("<br>")
@@ -228,8 +228,7 @@
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
-	var message = "<br><b>The code phrases were:</b> <span class='bluetext'>[phrases]</span><br>\
-					<b>The code responses were:</b> <span class='redtext'>[responses]</span><br>"
+	var message = "<br><b>本局暗号词为：</b> <span class='bluetext'>[phrases]</span><br>\
+					<b>本局暗号应答为：</b> <span class='redtext'>[responses]</span><br>"
 
 	return message
-

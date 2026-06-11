@@ -1,7 +1,7 @@
 /datum/advclass/vagabond_scholar
-	name = "Destitute Scholar"
-	examine_name = "Beggar"
-	tutorial = "Knowledge is often both a boon and a curse. Whatever you know has left you with little to your name but your wits, and even then..."
+	name = "落魄学者"
+	examine_name = "乞丐"
+	tutorial = "知识往往既是恩赐，也是诅咒。无论你知晓了什么，到头来留给你的也只剩下一点脑子而已，甚至连这点东西……"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/vagabond/scholar

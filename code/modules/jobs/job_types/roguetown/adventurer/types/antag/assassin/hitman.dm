@@ -1,6 +1,6 @@
 /datum/advclass/assassin_hitman
-	name = "Assassin - Professional Hitman"
-	tutorial = "You are no street-thug or yoeman, you have honed your trade for years if not outright decades. Your craft? Blending in anywhere possible, waiting for your target to be alone, and finishing the hit. After all, dead men tell no tales."
+	name = "刺客 - 职业杀手"
+	tutorial = "你可不是什么街头混混或乡野粗汉。你钻研这门营生已有多年，甚至数十年之久。你的本事？便是融入任何地方，耐心等目标落单，然后干净利落地下手。毕竟，死人是不会开口的。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/assassin/hitman
@@ -59,7 +59,7 @@
 	beltl = /obj/item/rogueweapon/knuckles
 
 	if(!istype(H.patron, /datum/patron/inhumen/graggar))
-		var/inputty = input(H, "Would you like to change your patron to Graggar?", "The beast roars", "No") as anything in list("Yes", "No")
-		if(inputty == "Yes")
-			to_chat(H, span_warning("My former deity has abandoned me.. Graggar is my new master."))
+		var/inputty = input(H, "你要将自己的信仰改为 格拉加 吗？", "兽吼回荡", "否") as anything in list("是", "否")
+		if(inputty == "是")
+			to_chat(H, span_warning("我先前侍奉的神明已弃我而去……如今，格拉加 才是我的新主人。"))
 			H.set_patron(/datum/patron/inhumen/graggar)

@@ -1,6 +1,6 @@
 /obj/machinery/light/rogue/cauldron
-	name = "cauldron"
-	desc = "Bubble, Bubble, toil and trouble. A great iron cauldron for brewing potions."
+	name = "炼药锅"
+	desc = "咕嘟咕嘟，辛劳与烦恼。一口用于炼制魔药的大铁锅。"
 	icon = 'icons/roguetown/misc/alchemy.dmi'
 	icon_state = "cauldron1"
 	base_state = "cauldron"
@@ -94,11 +94,11 @@
 					// Handle skillgating
 					if(!lastuser)
 						brewing = 0
-						src.visible_message(span_info("The cauldron can't brew anything without an alchemist to guide it."))
+						src.visible_message(span_info("没有炼金术士的指引，炼药锅什么都炼制不出来。"))
 						return
 					if(found_recipe.skill_required > lastuser?.get_skill_level(/datum/skill/craft/alchemy))
 						brewing = 0
-						src.visible_message(span_warning("The ingredients in the cauldron melds together into a disgusting mess! Perhaps a more skilled alchemist is needed for this recipe."))
+						src.visible_message(span_warning("锅中的材料混合成了一团恶心的烂泥！也许需要更高明的炼金术士才能处理这个配方。"))
 						if(reagents)
 							src.reagents.remove_reagent(/datum/reagent/water, in_cauldron)
 						for(var/obj/item/ing in src.ingredients)
@@ -117,7 +117,7 @@
 						for(var/itempath in found_recipe.output_items)
 							new itempath(get_turf(src))
 					//handle player perception and reset for next time
-					src.visible_message("<span class='info'>The cauldron finishes boiling with a faint [found_recipe.smells_like] smell.</span>")
+					src.visible_message("<span class='info'>炼药锅沸腾完毕，散发出一股淡淡的[found_recipe.smells_like]气味。</span>")
 					lastuser.log_message("brewed [found_recipe.type] in [src] (REAGENTS: [english_list(found_recipe.output_reagents, "none")]) (ITEMS: [english_list(found_recipe.output_items, "none")])", LOG_GAME)
 					record_featured_stat(FEATURED_STATS_ALCHEMISTS, lastuser)
 					record_round_statistic(STATS_POTIONS_BREWED)
@@ -130,21 +130,21 @@
 					qdel(found_recipe)
 				else
 					brewing = 0
-					src.visible_message("<span class='info'>The ingredients in the [src] fail to meld together at all...</span>")
+					src.visible_message("<span class='info'>[src]中的材料完全无法融合...</span>")
 					playsound(src,'sound/misc/smelter_fin.ogg', 30, FALSE)
 
 /obj/machinery/light/rogue/cauldron/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/alch))
 		if(ingredients.len >= maxingredients)
-			to_chat(user, "<span class='warning'>Nothing else can fit.</span>")
+			to_chat(user, "<span class='warning'>再也装不下别的东西了。</span>")
 			return FALSE
 		if(!isnull(locate(I.type) in ingredients))
-			to_chat(user, "<span class='warning'>There is already \a [I] in [src]! That would ruin the mixture!</span>")
+			to_chat(user, "<span class='warning'>[src]里已经有一份[I]了！这会毁了混合物的！</span>")
 			return FALSE
 		if(!user.transferItemToLoc(I,src))
-			to_chat(user, "<span class='warning'>[I] is stuck to my hand!</span>")
+			to_chat(user, "<span class='warning'>[I]粘在我手上了！</span>")
 			return FALSE
-		to_chat(user, "<span class='info'>I add [I] to [src].</span>")
+		to_chat(user, "<span class='info'>我把[I]加入[src]。</span>")
 		ingredients += I
 		brewing = 0
 		lastuser = user
@@ -162,10 +162,10 @@
 /obj/machinery/light/rogue/cauldron/attack_hand(mob/user, params)
 	if(on)
 		if(ingredients.len)
-			to_chat(user, "<span class='warning'>Something's brewing.</span>")
+			to_chat(user, "<span class='warning'>正在炼制什么。</span>")
 			return
 		else
-			to_chat(user, "<span class='info'>Nothing's brewing.</span>")
+			to_chat(user, "<span class='info'>什么都没在炼。</span>")
 			return
 	else
 		if(ingredients.len)
@@ -173,9 +173,9 @@
 			ingredients -= I
 			I.loc = user.loc
 			user.put_in_active_hand(I)
-			user.visible_message("<span class='info'>[user] pulls [I] from [src].</span>")
+			user.visible_message("<span class='info'>[user]从[src]中取出[I]。</span>")
 			return
-		to_chat(user, "<span class='info'>It's empty.</span>")
+		to_chat(user, "<span class='info'>它是空的。</span>")
 		return ..()
 
 /obj/machinery/light/rogue/cauldron/onkick(mob/user)
@@ -186,15 +186,15 @@
 	if(reagents)
 		chem_splash(loc, 2, list(reagents))
 		if(HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
-			user.visible_message("<span class='info'>[user] tailslams [src] over, spilling it's contents!</span>")
+			user.visible_message("<span class='info'>[user]用尾巴猛击[src]，里面的东西洒了一地！</span>")
 		else
-			user.visible_message("<span class='info'>[user] kicks [src], spilling it's contents!</span>")
+			user.visible_message("<span class='info'>[user]踢翻了[src]，里面的东西洒了一地！</span>")
 	playsound(src, 'sound/items/beartrap2.ogg', 100, FALSE)
 	return ..()
 
 /obj/machinery/light/rogue/cauldron/folding
-	name = "folding cauldron"
-	desc = "Bubble, Bubble, toil and trouble. A great protable bronze cauldron for brewing potions."
+	name = "折叠炼药锅"
+	desc = "咕嘟咕嘟，辛劳与烦恼。一口适合炼制魔药的大号便携青铜锅。"
 	icon = 'icons/roguetown/misc/gadgets.dmi'
 	icon_state = "FoldingCauldronDeployed1"
 	base_state = "FoldingCauldronDeployed"
@@ -204,11 +204,11 @@
 
 /obj/machinery/light/rogue/cauldron/folding/examine()
 	. = ..()
-	. += span_blue("Right-Click to fold the cauldron. Empty it first.")
+	. += span_blue("右键折叠炼药锅。请先清空它。")
 
 /obj/machinery/light/rogue/cauldron/folding/attack_right(mob/user)
 	if(do_after(user, 5 SECONDS, target = src))
-		user.visible_message(span_notice("[user] folds [src]."), span_notice("You fold [src]."))
+		user.visible_message(span_notice("[user]折叠了[src]。"), span_notice("我折叠了[src]。"))
 		new /obj/item/folding_table_stored/alchcauldron(drop_location())
 		qdel(src)
 		return ..()

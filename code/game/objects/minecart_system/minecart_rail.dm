@@ -1,6 +1,6 @@
 /obj/structure/minecart_rail
-	name = "cart rail"
-	desc = "Carries carts along the track."
+	name = "矿车轨道"
+	desc = "让矿车沿着轨道前进。"
 	icon = 'icons/obj/track.dmi'
 	icon_state = "track"
 	//layer = TRAM_RAIL_LAYER
@@ -15,12 +15,12 @@
 	var/secondary_direction
 
 	var/static/list/directions = list(
-		"Downwards Left Turn" = SOUTHWEST,
-		"Downwards Right Turn" = SOUTHEAST,
-		"Upwards Left Turn" = NORTHWEST,
-		"Upwards Right Turn" = NORTHEAST,
-		"Up and Down" = NORTH,
-		"Left and Right" = WEST,
+		"下行左转" = SOUTHWEST,
+		"下行右转" = SOUTHEAST,
+		"上行左转" = NORTHWEST,
+		"上行右转" = NORTHEAST,
+		"上下直行" = NORTH,
+		"左右直行" = WEST,
 	)
 	/// Bitflag of directions that a minecart ON this rail can travel to
 	var/minecart_dirs
@@ -101,11 +101,11 @@
 	. = ..()
 	var/obj/item/held_item = user.get_active_held_item()
 	if(held_item?.type == /obj/item/contraption/linker)
-		var/rotateoption = input(user, "Do you want to rotate the tracks or its triggered rotation?", "Choose a your mode", ) as null|anything in list("rotate","trigger")
-		if(rotateoption == "rotate")
+		var/rotateoption = input(user, "要旋转轨道本身，还是设置其受触发时的旋转？", "选择模式", ) as null|anything in list("旋转","触发")
+		if(rotateoption == "旋转")
 			rotate_direction(user)
 			return
-		if(rotateoption == "trigger")
+		if(rotateoption == "触发")
 			triggered_rotate_direction(user)
 			return
 		if(!rotateoption)
@@ -114,8 +114,8 @@
 		return
 
 /obj/structure/minecart_rail/proc/triggered_rotate_direction(mob/user)
-	var/list/triggeredchoices = list("Downwards Left Turn", "Downwards Right Turn", "Upwards Left Turn", "Upwards Right Turn", "Up and Down", "Left and Right")
-	var/triggeredchoice = input(user, "Rotate the rail towards a direction when triggered.", "Choose a Direction") as null|anything in triggeredchoices
+	var/list/triggeredchoices = list("下行左转", "下行右转", "上行左转", "上行右转", "上下直行", "左右直行")
+	var/triggeredchoice = input(user, "设置轨道在触发时转向哪个方向。", "选择方向") as null|anything in triggeredchoices
 	if(!triggeredchoice)
 		return
 	playsound(src, 'sound/misc/ratchet.ogg', 20, TRUE)
@@ -124,8 +124,8 @@
 
 
 /obj/structure/minecart_rail/proc/rotate_direction(mob/user)
-	var/list/choices = list("Downwards Left Turn", "Downwards Right Turn", "Upwards Left Turn", "Upwards Right Turn", "Up and Down", "Left and Right")
-	var/choice = input(user, "Choose a direction to move to", "Choose a Direction", ) as null|anything in choices
+	var/list/choices = list("下行左转", "下行右转", "上行左转", "上行右转", "上下直行", "左右直行")
+	var/choice = input(user, "选择要转向的方向", "选择方向", ) as null|anything in choices
 	if(!choice)
 		return
 	playsound(src, 'sound/misc/ratchet.ogg', 20, TRUE)
@@ -188,10 +188,10 @@
 	. = ..()
 	. += rail_examine()
 	if(secondary_direction)
-		. += span_smallnotice("When activated, this rail will switch to [dir2text(secondary_direction)].")
+		. += span_smallnotice("激活后，这段轨道会切换为[dir2text(secondary_direction)]。")
 
 /obj/structure/minecart_rail/proc/rail_examine()
-	return span_notice("Connect this rail to shafts to give momentum to carts that pass over.")
+	return span_notice("将这段轨道连接到传动轴上，可为经过的矿车提供动量。")
 
 /obj/structure/minecart_rail/set_connection_dir()
 	if(ISDIAGONALDIR(dir))
@@ -200,8 +200,8 @@
 	. = ..()
 
 /obj/structure/minecart_rail/railbreak
-	name = "cart rail brake"
-	desc = "Stops carts in their tracks. On the tracks. Requires rotational power to function."
+	name = "矿车制动轨"
+	desc = "让矿车在轨道上刹停。需要旋转动力才能运作。"
 	icon_state = "track_break"
 	can_buckle = TRUE
 	buckle_requires_restraints = TRUE
@@ -209,7 +209,7 @@
 	//buckle_lying = NO_BUCKLE_LYING
 
 /obj/structure/minecart_rail/railbreak/rail_examine()
-	return span_notice("Connect this rail to shafts to stop carts that pass over it. Currently [force_disabled ? "disabled" : (rotations_per_minute ? "powered" : "unpowered")].")
+	return span_notice("将这段轨道连接到传动轴上，可让经过的矿车停下。当前为[force_disabled ? "停用" : (rotations_per_minute ? "已供能" : "未供能")]。")
 
 /obj/structure/minecart_rail/railbreak/redstone_triggered(mob/user)
 	force_disabled = !force_disabled

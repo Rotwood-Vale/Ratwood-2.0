@@ -1,6 +1,6 @@
 /obj/item/clothing/head/roguetown/priestmask
-	name = "solar visage"
-	desc = "The sanctified helm of the most devoted. Thieves beware."
+	name = "太阳圣容"
+	desc = "最虔诚信徒所佩戴的圣化头盔。窃贼当心。"
 	color = null
 	icon_state = "priesthead"
 	item_state = "priesthead"
@@ -16,8 +16,8 @@
 //Eora content from Stonekeep
 
 /obj/item/clothing/head/roguetown/eoramask
-	name = "eoran mask"
-	desc = "A silver mask in the likeness of a rabbit. Usually worn by the faithful of Eora during their rituals, but it's not like anyone's going to stop you. Right?"
+	name = "Eora 面具"
+	desc = "一副仿兔首造型的银面具。通常由 Eora 的信徒在仪式中佩戴，不过也没人真会阻止你戴上它，对吧？"
 	color = null
 	icon_state = "eoramask"
 	item_state = "eoramask"
@@ -49,9 +49,8 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.head)
-			to_chat(user, "<span class='warning'>I need some time to remove the mask peacefully.</span>")
+			to_chat(user, "<span class='warning'>我要花点时间，才能安稳地把这副面具摘下来。</span>")
 			if(do_after(user, 50))
 				return ..()
 			return
 	return ..()
-

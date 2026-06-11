@@ -1,7 +1,7 @@
 // Lich / Vampire shared list only
 /obj/effect/proc_holder/spell/invoked/projectile/bloodsteal
-	name = "Blood Steal"
-	desc = "Steal another's blood for your own collection."
+	name = "夺血术"
+	desc = "夺取他人的鲜血，纳入你自己的血池。"
 	clothes_req = FALSE
 	overlay_state = "bloodsteal"
 	sound = 'sound/magic/vlightning.ogg'
@@ -15,7 +15,7 @@
 	no_early_release = TRUE
 	movement_interrupt = FALSE
 	spell_tier = 2
-	invocations = list("Sanguis Furtum!")
+	invocations = list("鲜血，归我！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_VAMPIRIC
 	glow_intensity = GLOW_INTENSITY_MEDIUM
@@ -44,7 +44,7 @@
 	if(ismob(target))
 		var/mob/M = target
 		if(M.anti_magic_check())
-			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			visible_message(span_warning("[src] 在接触[target]时噗地溃散了！"))
 			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 			qdel(src)
 			return BULLET_ACT_BLOCK
@@ -52,8 +52,8 @@
 			var/mob/living/carbon/human/H = target
 			H.blood_volume = max(H.blood_volume-45, 0)
 			H.handle_blood()
-			H.visible_message(span_danger("[target] has their blood ripped from their body!!"), \
-					span_userdanger("My blood erupts from my body!"), \
+			H.visible_message(span_danger("[target] 的鲜血被硬生生从体内抽了出来！！"), \
+					span_userdanger("我的鲜血正从体内猛然喷涌而出！"), \
 					span_hear("..."), COMBAT_MESSAGE_RANGE, target)
 			new /obj/effect/decal/cleanable/blood/puddle(H.loc)
 			sender.adjust_bloodpool(400)

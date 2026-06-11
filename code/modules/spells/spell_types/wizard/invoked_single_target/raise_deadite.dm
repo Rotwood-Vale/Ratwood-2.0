@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/raise_deadite
-	name = "Raise Deadite"
-	desc = "Infuse the target with quick acting Rot, raising them as a deadite. They will not be friendly to you."
+	name = "唤起尸鬼"
+	desc = "将迅速发作的腐坏灌入目标体内，使其化作尸鬼复起。它不会对你友善。"
 	cost = 3
 	xp_gain = TRUE
 	releasedrain = 60
@@ -13,7 +13,7 @@
 	no_early_release = TRUE
 	movement_interrupt = FALSE
 	spell_tier = 2
-	invocations = list("Vivere Putrescere!")
+	invocations = list("腐生，再起！")
 	invocation_type = "shout"
 	charging_slowdown = 2
 	chargedloop = /datum/looping_sound/invokegen
@@ -24,18 +24,18 @@
 	. = ..()
 	var/mob/living/potential_deadite = targets[1]
 	if(HAS_TRAIT(potential_deadite, TRAIT_ZOMBIE_IMMUNE))
-		to_chat(user, span_notice("They can not be raised!"))
+		to_chat(user, span_notice("它无法被复活！"))
 		revert_cast()
 		return
 	if(potential_deadite.stat < DEAD && !potential_deadite.InCritical())
-		to_chat(user, span_notice("They aren't dead enough yet!"))
+		to_chat(user, span_notice("这具尸体还不够彻底地死去！"))
 		revert_cast()
 		return
 	
 	if(ishuman(potential_deadite) && potential_deadite.mind)
 		var/mob/living/carbon/human/human_target = potential_deadite
 		playsound(get_turf(human_target), 'sound/magic/magnet.ogg', 80, TRUE, soundping = TRUE)
-		user.visible_message("[user] mutters an incantation and [human_target] twitches with unnatural life!")
+		user.visible_message("[user]低声念诵咒文，[human_target]以违逆天理的生命抽搐了起来！")
 		human_target.blood_volume = BLOOD_VOLUME_NORMAL
 		human_target.setOxyLoss(0, updating_health = FALSE, forced = TRUE)
 		human_target.setToxLoss(0, updating_health = FALSE, forced = TRUE)
@@ -51,11 +51,11 @@
 	else if (potential_deadite.type in GLOB.animal_to_undead)
 		var/undead_type = GLOB.animal_to_undead[potential_deadite.type]
 		playsound(get_turf(potential_deadite), 'sound/magic/magnet.ogg', 80, TRUE, soundping = TRUE)
-		user.visible_message("[user] mutters an incantation and [potential_deadite] twitches with unnatural life!")
+		user.visible_message("[user]低声念诵咒文，[potential_deadite]以违逆天理的生命抽搐了起来！")
 		new undead_type(potential_deadite.loc)
-		potential_deadite.visible_message(span_danger("[potential_deadite] walks again... As a terrifying deadite!"))
+		potential_deadite.visible_message(span_danger("[potential_deadite]再度行走于世……化为一具恐怖的活尸！"))
 		qdel(potential_deadite)
 	else
-		to_chat(user, span_notice("They can not be raised!"))
+		to_chat(user, span_notice("它无法被这样唤起！"))
 		revert_cast()
 		return

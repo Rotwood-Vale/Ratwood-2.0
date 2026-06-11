@@ -1,5 +1,5 @@
 /datum/sex_action/force_milk_genitals
-	name = "Forcibly milk cock"
+	name = "强行榨取下体"
 	check_same_tile = FALSE
 	category = SEX_CATEGORY_HANDS
 	/// Target's genitals are being stimulated; set so modular_emit_received_sex_action_signal can resolve receiver_part.
@@ -35,13 +35,13 @@
 	return FALSE
 
 /datum/sex_action/force_milk_genitals/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] starts masturbating [target] over [user.get_active_held_item()]..."))
+	user.visible_message(span_warning("[user]开始隔着[user.get_active_held_item()]撸弄[target]的下体……"))
 
 /datum/sex_action/force_milk_genitals/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.getorganslot(ORGAN_SLOT_PENIS))
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] jerks [target]'s cock into the [user.get_active_held_item()]..."))
+		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()]隔着[user.get_active_held_item()]撸弄[target]的肉棒……"))
 	else
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] fingers [target]'s cunt over the [user.get_active_held_item()]..."))
+		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()]隔着[user.get_active_held_item()]抚弄[target]的阴部……"))
 	user.sexcon.generic_sex_noise()
 
 	user.sexcon.perform_sex_action(target, 2, 4, TRUE)
@@ -50,9 +50,9 @@
 
 /datum/sex_action/force_milk_genitals/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.getorganslot(ORGAN_SLOT_PENIS))
-		user.visible_message(span_warning("[user] stops jerking [target] into the container."))
+		user.visible_message(span_warning("[user]停下了隔着容器撸弄[target]肉棒的动作。"))
 	else
-		user.visible_message(span_warning("[user] stops fingering [target] over the container."))
+		user.visible_message(span_warning("[user]停下了隔着容器抚弄[target]阴部的动作。"))
 
 /datum/sex_action/force_milk_genitals/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.sexcon.finished_check())

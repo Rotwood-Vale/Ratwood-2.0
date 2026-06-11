@@ -53,7 +53,7 @@
 
 //Spells
 /obj/item/rune/spell
-	name = "rune"
+	name = "符文"
 	pages_to_mastery = 3
 	var/spell
 	var/spellname = "no spell"
@@ -82,38 +82,38 @@
 	spell = /obj/effect/proc_holder/spell/invoked/projectile/fireball
 	spellname = "fireball"
 	// icon_state = "fire_rune"
-	name = "fire rune"
-	desc = "Warm with power."
-	remarks = list("To understand these archaic things...", "Just catching them on fire won't do...", "Accounting for crosswinds... really?", "I think I just burned my hand...")
+	name = "火焰符文"
+	desc = "散发着温热的力量。"
+	remarks = list("要理解这些古老之物……", "光把它们点着可不行……", "还得把侧风算进去……真的？", "我好像刚把手烧到了……")
 
 /obj/item/rune/spell/water_rune
 	spell = /obj/effect/proc_holder/spell/targeted/ethereal_jaunt
 	spellname = "ethereal jaunt"
 	// icon_state = "water_rune"
-	name = "water rune"
-	desc = "A bit moist."
-	remarks = list("To understand these archaic things...", "Mana flows through all living things...", "This spell will fatigue me...", "The spell should flow like water...")
+	name = "水之符文"
+	desc = "有些潮湿。"
+	remarks = list("To understand these archaic things...", "法力流淌于一切活物之中……", "这个法术会让我疲惫……", "法术应如流水般流转……")
 
 /obj/item/rune/spell/air_rune
 	spell = /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt
 	spellname = "lightning"
 	// icon_state = "air_rune"
-	name = "air rune"
-	desc = "Cool to the touch."
-	remarks = list("To understand these archaic things...", "Done properly this could...", "I think I just shocked my hand...")
+	name = "风之符文"
+	desc = "摸起来很凉。"
+	remarks = list("To understand these archaic things...", "若施放得当，这也许能……", "我好像刚把手电麻了……")
 
 /obj/item/rune/spell/earth_rune
 	spell = /obj/effect/proc_holder/spell/invoked/projectile/fetch
 	spellname = "fetch"
 	// icon_state = "earth_rune"
-	name = "earth rune"
-	desc = "Heavier than it looks."
-	remarks = list("To understand these archaic things...", "I can only pull, not push...", "My mind feels like mud...")
+	name = "土之符文"
+	desc = "比看起来更沉。"
+	remarks = list("To understand these archaic things...", "我只能拉，不能推……", "我的脑子像泥浆一样沉重……")
 
 /obj/item/rune/spell/blank_rune
 	spell = null
 	spellname = "arcane magic"
 	// icon_state = "blank_rune"
-	name = "rune essence"
-	desc = "The source of magic in our world."
-	remarks = list("My head hurts...", "I'll never understand this!", "I don't want to look away...")
+	name = "符文精华"
+	desc = "我们这个世界中魔法的源头。"
+	remarks = list("我头好痛……", "我永远也搞不懂这个！", "我不想把视线移开……")

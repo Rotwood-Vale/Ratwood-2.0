@@ -1,5 +1,5 @@
 /obj/structure/fluff/canopy
-	name = "Canopy"
+	name = "顶棚"
 	desc = ""
 	icon = 'modular_hearthstone/icons/obj/decor.dmi'
 	icon_state = "canopy"
@@ -63,56 +63,56 @@
 ///Crafting
 
 /datum/crafting_recipe/roguetown/structure/display_booth01
-	name = "display booth"
+	name = "展示摊位"
 	result = list(/obj/structure/fluff/canopy, /obj/structure/table/wood/crafted)
 	reqs = list(/obj/item/grown/log/tree/small = 2,
 				/obj/item/natural/cloth = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
+	verbage_simple = "搭建"
+	verbage = "搭建"
 
 /datum/crafting_recipe/roguetown/structure/display_booth02
-	name = "display booth green"
+	name = "绿色展示摊位"
 	result = list(/obj/structure/fluff/canopy/green, /obj/structure/table/wood/crafted)
 	reqs = list(/obj/item/grown/log/tree/small = 2,
 				/obj/item/natural/cloth = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
+	verbage_simple = "搭建"
+	verbage = "搭建"
 
 
 /datum/crafting_recipe/roguetown/structure/booth
-	name = "market booth"
+	name = "集市摊位"
 	result = list(/obj/structure/fluff/canopy/booth)
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/natural/cloth = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
+	verbage_simple = "搭建"
+	verbage = "搭建"
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/booth02
-	name = "market booth"
+	name = "集市摊位"
 	result = list(/obj/structure/fluff/canopy/booth/booth02)
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/natural/cloth = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
+	verbage_simple = "搭建"
+	verbage = "搭建"
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/booth_green
-	name = "green market booth"
+	name = "绿色集市摊位"
 	result = list(/obj/structure/fluff/canopy/booth/booth_green)
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/natural/cloth = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
+	verbage_simple = "搭建"
+	verbage = "搭建"
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/structure/booth_green_02
-	name = "green market booth02"
+	name = "绿色集市摊位02"
 	result = list(/obj/structure/fluff/canopy/booth/booth_green02)
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/natural/cloth = 2)
-	verbage_simple = "construct"
-	verbage = "constructs"
+	verbage_simple = "搭建"
+	verbage = "搭建"
 	craftdiff = 0
 
 /obj/structure/fluff/canopy/MouseDrop(over_object, src_location, over_location)
@@ -120,7 +120,7 @@
 	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
 		if(!ishuman(usr))
 			return
-		visible_message(span_notice("[usr] tears down [src]."))
+		visible_message(span_notice("[usr]拆除了[src]。"))
 		if(do_after(usr, 30, target = src))
 			playsound(src,'sound/foley/dropsound/cloth_drop.ogg', 100, FALSE)
 			new /obj/item/grown/log/tree/small  (get_turf(src))

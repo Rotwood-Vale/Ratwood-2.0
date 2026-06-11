@@ -6,7 +6,7 @@
 // multiple stair objects can be chained together; the Z level transition will happen on the final stair object in the chain
 
 /obj/structure/stairs
-	name = "stairs"
+	name = "楼梯"
 	icon = 'icons/obj/stairs.dmi'
 	icon_state = "stairs"
 	anchored = TRUE
@@ -57,7 +57,7 @@
 	return FALSE
 
 /obj/structure/stairs/stone
-	name = "stone stairs"
+	name = "石阶"
 	icon = 'icons/obj/stairs.dmi'
 	icon_state = "stonestairs"
 	max_integrity = 600
@@ -168,7 +168,7 @@
 //purely cosmetic curved stairs (kinda confusing to set up right, compare the DIR to regular chairs. Correct version depends on if it's going up or down)
 
 /obj/structure/stairs/cw
-	name = "curved stairs"
+	name = "弧形楼梯"
 	icon = 'icons/obj/stairscurve.dmi'
 	icon_state = "woodCW"
 
@@ -177,7 +177,7 @@
 	icon_state = "woodCWdown"
 
 /obj/structure/stairs/ccw
-	name = "curved stairs"
+	name = "弧形楼梯"
 	icon = 'icons/obj/stairscurve.dmi'
 	icon_state = "woodCCW"
 
@@ -186,7 +186,7 @@
 	icon_state = "woodCCWdown"
 
 /obj/structure/stairs/stone/ccw
-	name = "curved stairs"
+	name = "弧形楼梯"
 	icon = 'icons/obj/stairscurve.dmi'
 	icon_state = "stoneCCW"
 
@@ -195,7 +195,7 @@
 	icon_state = "stoneCCWdown"
 
 /obj/structure/stairs/stone/cw
-	name = "curved stairs"
+	name = "弧形楼梯"
 	icon = 'icons/obj/stairscurve.dmi'
 	icon_state = "stoneCW"
 

@@ -1,5 +1,6 @@
 /datum/job/roguetown/magician
 	title = "Court Magician"
+	display_title = "宫廷法师"
 	flag = WIZARD
 	department_flag = COURTIERS
 	selection_color = JCOLOR_COURTIER
@@ -11,9 +12,9 @@
 	allowed_sexes = list(MALE, FEMALE)
 	spells = list(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 	display_order = JDO_MAGICIAN
-	tutorial = "Your creed is one dedicated to the conquering of the arcane arts and the constant thrill of knowledge. \
-		You owe your life to the Lord, for it was his coin that allowed you to continue your studies in these dark times. \
-		In return, you have proven time and time again as justicar and trusted advisor to their reign."
+	tutorial = "你的信条在于征服奥术之艺，并永远追逐知识带来的悸动。\
+		你这条命都欠着领主，因为正是他的金钱让你得以在这黑暗时代继续钻研学问。\
+		作为回报，你一次又一次证明了自己既是其统治下的裁断者，也是值得信赖的顾问。"
 	outfit = /datum/outfit/job/roguetown/magician
 	whitelist_req = TRUE
 	give_bank_account = 47
@@ -32,10 +33,10 @@
 	)
 
 /datum/advclass/courtmage
-	name = "Court Magician"
-	tutorial = "Your creed is one dedicated to the conquering of the arcane arts and the constant thrill of knowledge. \
-		You owe your life to the Lord, for it was his coin that allowed you to continue your studies in these dark times. \
-		In return, you have proven time and time again as justicar and trusted advisor to their reign."
+	name = "宫廷法师"
+	tutorial = "你的信条在于征服奥术之艺，并永远追逐知识带来的悸动。\
+		你这条命都欠着领主，因为正是他的金钱让你得以在这黑暗时代继续钻研学问。\
+		作为回报，你一次又一次证明了自己既是其统治下的裁断者，也是值得信赖的顾问。"
 	outfit = /datum/outfit/job/roguetown/magician/basic
 
 	subclass_spellpoints = 36

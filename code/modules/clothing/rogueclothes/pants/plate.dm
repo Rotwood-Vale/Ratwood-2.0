@@ -1,6 +1,6 @@
 /obj/item/clothing/under/roguetown/platelegs
-	name = "steel plate chausses"
-	desc = "Reinforced armor to protect the legs."
+	name = "钢制板甲腿铠"
+	desc = "用于保护双腿的加固甲胄。"
 	gender = PLURAL
 	icon_state = "plate_legs"
 	item_state = "plate_legs"
@@ -27,29 +27,29 @@
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_STEP)
 
 /obj/item/clothing/under/roguetown/platelegs/iron
-	name = "iron plate chausses"
-	desc = "Reinforced armor to protect the legs."
+	name = "铁制板甲腿铠"
+	desc = "用于保护双腿的加固甲胄。"
 	icon_state = "iplate_legs"
 	item_state = "iplate_legs"
 	max_integrity = ARMOR_INT_LEG_IRON_PLATE
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/clothing/under/roguetown/platelegs/ancient
-	name = "ancient plate chausses"
-	desc = "Polished gilbranze plates, layered atop silken chausses. Only the few who had embraced undeath were spared from Zizo's ascension; now, they command the undying legionnaires who march forth to sunder creation in Her name."
+	name = "远古板甲腿铠"
+	desc = "抛光的gilbranze甲片层叠于丝质腿铠之上。唯有少数拥抱不死之人得以在Zizo升格时幸存；如今，他们统御着那些奉她之名进军、誓要撕裂造物的不死军团。"
 	icon_state = "ancientplate_legs"
 	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/clothing/under/roguetown/platelegs/ancient/decrepit
-	name = "decrepit plate chausses"
-	desc = "Frayed bronze plates, shingled over chausses of rotting leather-and-maille. Voided bowels are all that remains of its former legionnaire."
+	name = "残破板甲腿铠"
+	desc = "破旧的青铜甲片叠覆在腐坏的皮革与锁甲腿铠之上。昔日军团士兵所剩下的，只有一副空空如也的腹腔。"
 	max_integrity = ARMOR_INT_LEG_DECREPIT_PLATE
 	color = "#bb9696"
 	anvilrepair = null
 
 /obj/item/clothing/under/roguetown/platelegs/graggar
-	name = "vicious leggings"
-	desc = "Plate chausses which stir with the innate violence driving our world"
+	name = "凶暴护腿"
+	desc = "这副板甲腿铠涌动着推动世界运转的原初暴力。"
 	icon_state = "graggarplatelegs"
 	armor = ARMOR_ASCENDANT
 	max_integrity = ARMOR_INT_LEG_ANTAG
@@ -60,8 +60,8 @@
 
 /obj/item/clothing/under/roguetown/platelegs/matthios
 	max_integrity = ARMOR_INT_LEG_ANTAG
-	name = "gilded leggings"
-	desc = "But my outside to behold:"
+	name = "镀金护腿"
+	desc = "且看我这副外在之貌："
 	icon_state = "matthioslegs"
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
 	armor = ARMOR_ASCENDANT
@@ -80,8 +80,8 @@
 
 /obj/item/clothing/under/roguetown/platelegs/zizo
 	max_integrity = ARMOR_INT_LEG_ANTAG
-	name = "avantyne garments"
-	desc = "Leg garments worn by true anointed of the Dame of Ambition. In Her name."
+	name = "Avantyne下装"
+	desc = "唯有野心之女士真正受膏者才会穿上的腿部衣装。奉她之名。"
 	icon_state = "zizocloth"
 	armor = ARMOR_ASCENDANT
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
@@ -102,8 +102,8 @@
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_STEP)
 
 /obj/item/clothing/under/roguetown/platelegs/skirt
-	name = "steel plate tassets"
-	desc = "A set of hanging plates of steel to protect the hips and thighs without too much burden."
+	name = "钢制垂腿甲"
+	desc = "一组悬挂式钢板，用来保护髋部与大腿，同时不过分增加负担。"
 	gender = PLURAL
 	icon_state = "plate_skirt"
 	item_state = "plate_skirt"

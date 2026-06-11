@@ -6,8 +6,8 @@
 #define DRUGRADE_NOTAX				(1<<5)
 
 /obj/structure/roguemachine/drugmachine
-	name = "PURITY"
-	desc = "You want to destroy your life."
+	name = "纯净"
+	desc = "你想毁掉自己的人生。"
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "purity"
 	density = TRUE
@@ -35,7 +35,7 @@
 			update_icon()
 			return attack_hand(user)
 		else
-			to_chat(user, span_warning("Wrong key."))
+			to_chat(user, span_warning("钥匙不对。"))
 			return
 	if(istype(P, /obj/item/storage/keyring))
 		var/right_key = FALSE
@@ -47,7 +47,7 @@
 				update_icon()
 				return attack_hand(user)
 		if(!right_key)
-			to_chat(user, span_warning("Wrong key."))
+			to_chat(user, span_warning("钥匙不对。"))
 			return
 	if(istype(P, /obj/item/roguecoin/gilbranze))
 		return
@@ -99,7 +99,7 @@
 				else
 					record_round_statistic(STATS_TAXES_EVADED, tax_amt)
 			else
-				say("Not enough!")
+				say("不够！")
 				return
 		var/obj/item/I = new O(get_turf(src))
 		human_mob.put_in_hands(I)
@@ -123,7 +123,7 @@
 		else
 			if(!(drugrade_flags & DRUGRADE_MONEYB))
 				options += "Unlock 50% Cut (105)"
-		var/select = input(usr, "Please select an option.", "", null) as null|anything in options
+		var/select = input(usr, "请选择一个选项。", "", null) as null|anything in options
 		if(!select)
 			return
 		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
@@ -131,22 +131,22 @@
 		switch(select)
 			if("Withdraw Cut")
 				if(secret_budget < 1)
-					say("There is no mammon to move, Master.")
+					say("没有可转移的玛门，主人。")
 					return
 				options = list("To Bank (Taxed)", "Direct")
-				select = input(usr, "Please select an option.", "", null) as null|anything in options
+				select = input(usr, "请选择一个选项。", "", null) as null|anything in options
 				if(!select)
 					return
 				if(!usr.canUseTopic(src, BE_CLOSE) || locked)
 					return
 				if(secret_budget < 1)
-					say("There is no mammon to move, Master.")
+					say("没有可转移的玛门，主人。")
 					return
 				switch(select)
 					if("To Bank (Taxed)")
 						var/mob/living/carbon/human/H = usr
 						if(!(SStreasury.generate_money_account(floor(secret_budget), H))) //We returned false on executing the transfer
-							say("I could not put your cut in your account, Master. My apologies.")
+							say("我无法把你的分成存入账户，主人。请恕罪。")
 							return
 						secret_budget = 0
 					if("Direct")
@@ -162,7 +162,7 @@
 				if(drugrade_flags & DRUGRADE_MONEYA)
 					return
 				if(budget < 30)
-					say("Ask again when you're serious.")
+					say("等你认真些再来问。")
 					playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 					return
 				budget -= 30
@@ -172,7 +172,7 @@
 				if(drugrade_flags & DRUGRADE_MONEYB)
 					return
 				if(budget < 105)
-					say("Ask again when you're serious.")
+					say("等你认真些再来问。")
 					playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 					return
 				budget -= 105

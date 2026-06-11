@@ -4,7 +4,7 @@
 #define UNIQUE_EFFECT 3 //The tile has some sort of unique effect when crossed.
 //stone tiles for boss arenas
 /obj/structure/stone_tile
-	name = "stone tile"
+	name = "石砖"
 	icon = 'icons/turf/boss_floors.dmi'
 	icon_state = "pristine_tile1"
 	layer = ABOVE_OPEN_TURF_LAYER
@@ -74,96 +74,96 @@
 	return
 
 /obj/structure/stone_tile/block
-	name = "stone block"
+	name = "石块"
 	icon_state = "pristine_block1"
 	tile_key = "pristine_block"
 	tile_random_sprite_max = 4
 
 /obj/structure/stone_tile/slab
-	name = "stone slab"
+	name = "石板"
 	icon_state = "pristine_slab1"
 	tile_key = "pristine_slab"
 	tile_random_sprite_max = 4
 
 /obj/structure/stone_tile/center
-	name = "stone center tile"
+	name = "中央石砖"
 	icon_state = "pristine_center1"
 	tile_key = "pristine_center"
 	tile_random_sprite_max = 4
 
 /obj/structure/stone_tile/surrounding
-	name = "stone surrounding slab"
+	name = "边缘石板"
 	icon_state = "pristine_surrounding1"
 	tile_key = "pristine_surrounding"
 	tile_random_sprite_max = 2
 
 /obj/structure/stone_tile/surrounding_tile
-	name = "stone surrounding tile"
+	name = "边缘石砖"
 	icon_state = "pristine_surrounding_tile1"
 	tile_key = "pristine_surrounding_tile"
 	tile_random_sprite_max = 2
 
 //cracked stone tiles
 /obj/structure/stone_tile/cracked
-	name = "cracked stone tile"
+	name = "裂纹石砖"
 	icon_state = "cracked_tile1"
 	tile_key = "cracked_tile"
 
 /obj/structure/stone_tile/block/cracked
-	name = "cracked stone block"
+	name = "裂纹石块"
 	icon_state = "cracked_block1"
 	tile_key = "cracked_block"
 
 /obj/structure/stone_tile/slab/cracked
-	name = "cracked stone slab"
+	name = "裂纹石板"
 	icon_state = "cracked_slab1"
 	tile_key = "cracked_slab"
 	tile_random_sprite_max = 1
 
 /obj/structure/stone_tile/center/cracked
-	name = "cracked stone center tile"
+	name = "中央裂纹石砖"
 	icon_state = "cracked_center1"
 	tile_key = "cracked_center"
 
 /obj/structure/stone_tile/surrounding/cracked
-	name = "cracked stone surrounding slab"
+	name = "边缘裂纹石板"
 	icon_state = "cracked_surrounding1"
 	tile_key = "cracked_surrounding"
 	tile_random_sprite_max = 1
 
 /obj/structure/stone_tile/surrounding_tile/cracked
-	name = "cracked stone surrounding tile"
+	name = "边缘裂纹石砖"
 	icon_state = "cracked_surrounding_tile1"
 	tile_key = "cracked_surrounding_tile"
 
 //burnt stone tiles
 /obj/structure/stone_tile/burnt
-	name = "burnt stone tile"
+	name = "焦黑石砖"
 	icon_state = "burnt_tile1"
 	tile_key = "burnt_tile"
 
 /obj/structure/stone_tile/block/burnt
-	name = "burnt stone block"
+	name = "焦黑石块"
 	icon_state = "burnt_block1"
 	tile_key = "burnt_block"
 
 /obj/structure/stone_tile/slab/burnt
-	name = "burnt stone slab"
+	name = "焦黑石板"
 	icon_state = "burnt_slab1"
 	tile_key = "burnt_slab"
 
 /obj/structure/stone_tile/center/burnt
-	name = "burnt stone center tile"
+	name = "中央焦黑石砖"
 	icon_state = "burnt_center1"
 	tile_key = "burnt_center"
 
 /obj/structure/stone_tile/surrounding/burnt
-	name = "burnt stone surrounding slab"
+	name = "边缘焦黑石板"
 	icon_state = "burnt_surrounding1"
 	tile_key = "burnt_surrounding"
 
 /obj/structure/stone_tile/surrounding_tile/burnt
-	name = "burnt stone surrounding tile"
+	name = "边缘焦黑石砖"
 	icon_state = "burnt_surrounding_tile1"
 	tile_key = "burnt_surrounding_tile"
 

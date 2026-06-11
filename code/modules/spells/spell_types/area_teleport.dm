@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/targeted/area_teleport
-	name = "Area teleport"
+	name = "区域传送"
 	desc = ""
 	nonabstract_req = TRUE
 
@@ -25,7 +25,7 @@
 	var/A = null
 
 	if(!randomise_selection)
-		A = input("Area to teleport to", "Teleport", A) as null|anything in GLOB.teleportlocs
+		A = input("要传送到哪个区域？", "传送", A) as null|anything in GLOB.teleportlocs
 	else
 		A = pick(GLOB.teleportlocs)
 	if(!A)
@@ -49,7 +49,7 @@
 					L+=T
 
 		if(!L.len)
-			to_chat(usr, span_warning("The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."))
+			to_chat(usr, span_warning("法术矩阵不知为何无法定位到合适的传送落点。"))
 			return
 
 		if(target && target.buckled)

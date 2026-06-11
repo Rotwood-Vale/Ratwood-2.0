@@ -2,10 +2,10 @@
 #define VIABLE_MOB_CHECK(X) (isliving(X))
 
 /obj/structure/meathook
-	name = "meathook"
+	name = "肉钩"
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "meathook"
-	desc = "A hook used to secure livestock for butchering."
+	desc = "一种用来固定牲畜、便于屠宰的钩子。"
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 250
@@ -14,12 +14,12 @@
 
 /obj/structure/meathook/examine()
 	. = ..()
-	. += span_notice("Improves the yield of butchering. Also increases speed by 25%.")
+	. += span_notice("能提高屠宰产出，并额外提升 25% 速度。")
 
 /obj/structure/meathook/attack_hand(mob/user)
 	if(VIABLE_MOB_CHECK(user.pulling) && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
-		L.visible_message(span_danger("[user] starts hanging [L] on [src]!"), span_danger("[user] starts hanging you on [src]]!"), span_hear("I hear the sound of clanging chains..."))
+		L.visible_message(span_danger("[user]开始把[L]挂到[src]上！"), span_danger("[user]开始把你挂到[src]上！"), span_hear("我听见锁链碰撞的声音……"))
 		if(do_mob(user, src, 60))
 			if(has_buckled_mobs())
 				return
@@ -36,7 +36,7 @@
 					if(ispath(item, /obj/item/reagent_containers/food/snacks))
 						L.guaranteed_butcher_results[item] += 1
 			playsound(src.loc, 'sound/foley/butcher.ogg', 25, TRUE)
-			L.visible_message(span_danger("[user] hangs [L] on [src]!"), span_danger("[user] hangs you on [src]]!"))
+			L.visible_message(span_danger("[user]把[L]挂到了[src]上！"), span_danger("[user]把你挂到了[src]上！"))
 			L.forceMove(drop_location())
 			L.emote("scream")
 			L.add_splatter_floor()
@@ -65,22 +65,22 @@
 	if(buckled_mob)
 		var/mob/living/M = buckled_mob
 		if (M != user)
-			M.visible_message(span_notice("[user] is trying to pull [M] free of [src]!"),\
-				span_notice("[user] is trying to pull you off [src]! It hurts!"),\
-				span_hear("I hear the sound of tearing flesh and pained whimpering..."))
+			M.visible_message(span_notice("[user]正试图把[M]从[src]上扯下来！"),\
+				span_notice("[user]正试图把你从[src]上扯下来！好痛！"),\
+				span_hear("我听见血肉撕裂和痛苦呜咽的声音……"))
 			if(!do_after(user, 300, target = src))
 				if(M && M.buckled)
-					M.visible_message(span_notice("[user] fails to free [M]!"),\
-					span_notice("[user] fails to pull you off of [src]!"))
+					M.visible_message(span_notice("[user]没能把[M]救下来！"),\
+					span_notice("[user]没能把你从[src]上扯下来！"))
 				return
 		else
-			M.visible_message(span_warning("[M] struggles to break free from [src]!"),\
-				span_notice("I struggle to break free from [src], tearing my legs! (Stay still for two minutes.)"),\
-				span_hear("I hear the sound of tearing flesh and pained whimpering..."))
+			M.visible_message(span_warning("[M]拼命挣扎着想从[src]上脱身！"),\
+				span_notice("我拼命想从[src]上挣脱，双腿都快被撕裂了！（保持不动两分钟。）"),\
+				span_hear("我听见血肉撕裂和痛苦呜咽的声音……"))
 			M.adjustBruteLoss(30)
 			if(!do_after(M, 1200, target = src))
 				if(M && M.buckled)
-					to_chat(M, span_warning("I fail to free myself!"))
+					to_chat(M, span_warning("我没能挣脱自己！"))
 				return
 			if(!M.buckled)
 				return
@@ -105,7 +105,7 @@
 	M.pixel_y = 0
 	M.pixel_x = 0
 	M.adjustBruteLoss(30)
-	src.visible_message(span_danger("[M] falls free of [src]!"))
+	src.visible_message(span_danger("[M]从[src]上摔脱了下来！"))
 	unbuckle_mob(M,force=1)
 	M.emote("scream")
 	M.AdjustParalyzed(20)

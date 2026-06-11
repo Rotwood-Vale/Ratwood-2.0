@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/glass/bucket/pot
 	force = 10
-	name = "pot"
-	desc = "A pot made out of iron. It can hold a lot of liquid."
+	name = "锅"
+	desc = "一口铁制的锅，能装很多液体。"
 	icon = 'modular/Neu_Food/icons/cookware/pot.dmi'
 	lefthand_file = 'modular/Neu_Food/icons/food_lefthand.dmi'
 	righthand_file = 'modular/Neu_Food/icons/food_righthand.dmi'

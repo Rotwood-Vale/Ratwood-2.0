@@ -1,6 +1,6 @@
 /atom/movable/screen/alert/status_effect/buff/healing/spider_cocoon
-	name = "Spider loogies"
-	desc = "Arachnid weave is stitching some of my wounds up slowly."
+	name = "蜘蛛黏丝"
+	desc = "蛛丝编织物正缓慢缝合着我的部分伤口。"
 	icon_state = "buff"
 
 #define COCOON_FILTER "cocoon_glow"
@@ -9,7 +9,7 @@
 	id = "healing_spider"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/healing/spider_cocoon
 	duration = 1800 SECONDS
-	examine_text = "SUBJECTPRONOUN is covered in spider silk... eww!"
+	examine_text = "SUBJECTPRONOUN浑身都裹满了蛛丝......呃啊！"
 	healing_on_tick = 1
 	outline_colour = "#4e4c4c00"
 	var/blood_healing_on_tick = 20

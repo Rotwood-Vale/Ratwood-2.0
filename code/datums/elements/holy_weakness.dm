@@ -34,16 +34,15 @@
 		return
 
 	if(!(cursed_mob in entered))
-		to_chat(cursed_mob, span_danger("Leave this holy place!"))
+		to_chat(cursed_mob, span_danger("离开这片神圣之地！"))
 		entered |= cursed_mob
 
 	if (!prob(6.25))
 		return
 
-	to_chat(cursed_mob, span_warning("You don't belong in this holy place!"))
+	to_chat(cursed_mob, span_warning("这片神圣之地不欢迎我！"))
 
 	cursed_mob.apply_damage(20, BURN)
 	cursed_mob.adjust_fire_stacks(6)
 	cursed_mob.ignite_mob()
-
 

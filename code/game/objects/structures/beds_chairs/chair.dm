@@ -1,5 +1,5 @@
 /obj/structure/chair
-	name = "chair"
+	name = "椅子"
 	desc = ""
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair"
@@ -112,7 +112,7 @@
 
 /obj/structure/chair/wood
 	icon_state = "chair1"
-	name = "chair"
+	name = "椅子"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
 	resistance_flags = FLAMMABLE
@@ -130,7 +130,7 @@
 	item_chair = /obj/item/chair/wood/wings
 
 /obj/structure/chair/comfy
-	name = "comfy chair"
+	name = "舒适椅"
 	desc = ""
 	icon_state = "comfychair"
 	color = rgb(255,255,255)
@@ -183,7 +183,7 @@
 	color = rgb(255,251,0)
 
 /obj/structure/chair/comfy/shuttle
-	name = "shuttle seat"
+	name = "穿梭机座椅"
 	desc = ""
 	icon_state = "shuttle_chair"
 
@@ -207,7 +207,7 @@
 //Stool
 
 /obj/structure/chair/stool
-	name = "stool"
+	name = "凳子"
 	desc = ""
 	icon_state = "stool"
 	can_buckle = 0
@@ -224,7 +224,7 @@
 			return
 		if(!usr.canUseTopic(src, BE_CLOSE))
 			return
-		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>I grab \the [src.name].</span>")
+		usr.visible_message("<span class='notice'>[usr]拿起了[src.name]。</span>", "<span class='notice'>我拿起了[src.name]。</span>")
 		var/obj/item/C = new item_chair(loc)
 		item_chair = null
 		TransferComponents(C)
@@ -232,13 +232,13 @@
 		qdel(src)
 
 /obj/structure/chair/stool/bar
-	name = "bar stool"
+	name = "吧台凳"
 	desc = ""
 	icon_state = "bar"
 	item_chair = /obj/item/chair/stool/bar
 
 /obj/item/chair
-	name = "chair"
+	name = "椅子"
 	desc = ""
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair_toppled"
@@ -257,7 +257,7 @@
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
 /obj/item/chair/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins hitting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user]开始拿[src]猛砸自己！看起来[user.p_theyre()]是在试图自杀！</span>")
 	playsound(src,hitsound,50,TRUE)
 	return BRUTELOSS
 
@@ -272,17 +272,17 @@
 /obj/item/chair/proc/plant(mob/user)
 	var/turf/T = get_turf(loc)
 	if(!isfloorturf(T))
-		to_chat(user, "<span class='warning'>I need ground to plant this on!</span>")
+		to_chat(user, "<span class='warning'>我得把它放在地面上才行！</span>")
 		return
 	for(var/obj/A in T)
 		if(istype(A, /obj/structure/chair))
-			to_chat(user, "<span class='warning'>There is already a chair here!</span>")
+			to_chat(user, "<span class='warning'>这里已经有一把椅子了！</span>")
 			return
 		if(A.density && !(A.flags_1 & ON_BORDER_1))
-			to_chat(user, "<span class='warning'>There is already something here!</span>")
+			to_chat(user, "<span class='warning'>这里已经有东西挡着了！</span>")
 			return
 
-	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>I right \the [name].</span>")
+	user.visible_message("<span class='notice'>[user]把[src.name]扶正了。</span>", "<span class='notice'>我把[name]扶正了。</span>")
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
 	TransferComponents(C)
 	C.setDir(user.dir)
@@ -296,7 +296,7 @@
 	if(!proximity)
 		return
 	if(prob(break_chance))
-		user.visible_message("<span class='warning'>[src] is smashed to pieces!</span>")
+		user.visible_message("<span class='warning'>[src]被砸得四分五裂！</span>")
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			if(C.health < C.maxHealth*0.5)
@@ -308,14 +308,14 @@
 	origin_type = /obj/structure/chair/greyscale
 
 /obj/item/chair/stool
-	name = "stool"
+	name = "凳子"
 	icon_state = "stool_toppled"
 	item_state = "stool"
 	origin_type = /obj/structure/chair/stool
 	break_chance = 0 //It's too sturdy.
 
 /obj/item/chair/stool/bar
-	name = "bar stool"
+	name = "吧台凳"
 	icon_state = "bar_toppled"
 	item_state = "stool_bar"
 	origin_type = /obj/structure/chair/stool/bar
@@ -324,7 +324,7 @@
 	return //sturdy enough to ignore a god
 
 /obj/item/chair/wood
-	name = "wooden chair"
+	name = "木椅"
 	icon_state = "wooden_chair_toppled"
 	item_state = "woodenchair"
 	resistance_flags = FLAMMABLE
@@ -340,7 +340,7 @@
 	icon_state = "wooden_chair_wings_toppled"
 	origin_type = /obj/structure/chair/wood/wings
 /obj/structure/chair/mime
-	name = "invisible chair"
+	name = "隐形椅子"
 	desc = ""
 	anchored = FALSE
 	icon_state = null

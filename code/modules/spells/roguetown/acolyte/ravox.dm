@@ -2,8 +2,8 @@
 
 //Divine Strike - Enhance your held weapon to have the next strike do extra damage and slow the target. Undead debuffed more.
 /obj/effect/proc_holder/spell/self/divine_strike
-	name = "Divine Strike"
-	desc = "Bless your next strike to do extra damage and slow the target."
+	name = "神圣一击"
+	desc = "赐福你的下一次攻击，使其造成额外伤害并拖慢目标。"
 	overlay_icon = 'icons/mob/actions/ravoxmiracles.dmi'
 	action_icon = 'icons/mob/actions/ravoxmiracles.dmi'
 	overlay_state = "divine_strike"
@@ -16,7 +16,7 @@
 	associated_skill = /datum/skill/magic/holy
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/timestop.ogg'
-	invocations = list("By Ravox, stand and fight!")
+	invocations = list("以 Ravox 之名，起身而战！")
 	invocation_type = "shout"
 	antimagic_allowed = TRUE
 	miracle = TRUE
@@ -64,7 +64,7 @@
 		return
 	var/mob/living/living_target = target
 	living_target.apply_status_effect(/datum/status_effect/debuff/ravox_burden)
-	living_target.visible_message(span_warning("The strike from [user]'s weapon causes [living_target] to go stiff!"), vision_distance = COMBAT_MESSAGE_RANGE)
+	living_target.visible_message(span_warning("[user] 的武器重击让 [living_target] 的身躯骤然僵住！"), vision_distance = COMBAT_MESSAGE_RANGE)
 	qdel(src)
 
 /datum/status_effect/divine_strike/proc/hand_attack(datum/source, mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
@@ -75,19 +75,19 @@
 	if(!istype(M.used_intent, INTENT_HARM))
 		return
 	H.apply_status_effect(/datum/status_effect/debuff/ravox_burden)
-	H.visible_message(span_warning("The strike from [M]'s fist causes [H] to go stiff!"), vision_distance = COMBAT_MESSAGE_RANGE)
+	H.visible_message(span_warning("[M] 的一记重拳让 [H] 的身躯骤然僵住！"), vision_distance = COMBAT_MESSAGE_RANGE)
 	qdel(src)
 
 //Call to Arms - AoE buff for all people surrounding you.
 /obj/effect/proc_holder/spell/self/call_to_arms
-	name = "Call to Arms"
-	desc = "Grants you and all allies nearby a buff to their strength, willpower, and constitution."
+	name = "号召执兵"
+	desc = "为你与附近所有盟友赋予力量、意志与体魄上的增益。"
 	overlay_icon = 'icons/mob/actions/ravoxmiracles.dmi'
 	action_icon = 'icons/mob/actions/ravoxmiracles.dmi'
 	overlay_state = "call_to_arms"
 	recharge_time = 5 MINUTES
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
-	invocations = list("FOR GLORY AND HONOR!")
+	invocations = list("为了荣光与荣耀！")
 	invocation_type = "shout"
 	sound = 'sound/magic/timestop.ogg'
 	releasedrain = 30
@@ -100,7 +100,7 @@
 			target.apply_status_effect(/datum/status_effect/debuff/call_to_arms)	//Debuffs inhumen worshipers.
 			continue
 		if(istype(target.patron, /datum/patron/old_god))
-			to_chat(target, span_danger("You feel a hot-wave wash over you, leaving as quickly as it came.."))	//No effect on Psydonians!
+			to_chat(target, span_danger("你只觉得一阵热浪掠过全身，却又转瞬即逝……"))	//No effect on Psydonians!
 			continue
 		if(!user.faction_check_mob(target))
 			continue
@@ -111,8 +111,8 @@
 
 //Persistence - Harms the shit out of an undead mob/player while causing bleeding/pain wounds to clot at higher rate for living ones. Basically a 'shittier' yet still good greater heal effect.
 /obj/effect/proc_holder/spell/invoked/persistence
-	name = "Persistence"
-	desc = "Harms Undead and encourages the livings wounds to close faster."
+	name = "坚忍"
+	desc = "伤害不死者，并促使活人的伤口更快闭合。"
 	overlay_icon = 'icons/mob/actions/ravoxmiracles.dmi'
 	action_icon = 'icons/mob/actions/ravoxmiracles.dmi'
 	overlay_state = "persistence"
@@ -123,7 +123,7 @@
 	warnie = "sydwarning"
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/timestop.ogg'
-	invocations = list("Ravox deems your persistence worthy!")
+	invocations = list("Ravox 认可你的坚忍！")
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
@@ -142,16 +142,16 @@
 				phy.pain_mod *= 1.5
 				addtimer(VARSET_CALLBACK(phy, bleed_mod, phy.bleed_mod /= 1.5), 19 SECONDS)
 				addtimer(VARSET_CALLBACK(phy, pain_mod, phy.pain_mod /= 1.5), 19 SECONDS)
-				human_target.visible_message(span_danger("[target]'s wounds become inflammed as their vitality is sapped away!"), span_userdanger("Ravox inflammes my wounds and weakens my body!"))
+				human_target.visible_message(span_danger("[target] 的伤口猛然发炎溃痛，生命力也被抽走了！"), span_userdanger("Ravox 令我的伤口灼痛发炎，并削弱了我的身体！"))
 				return ..()
 			return FALSE
 
-		target.visible_message(span_info("Warmth radiates from [target] as their wounds seal over!"), span_notice("The pain from my wounds fade as warmth radiates from my soul!"))
+		target.visible_message(span_info("[target] 身上泛起暖意，伤口也随之缓缓闭合！"), span_notice("暖意自我的灵魂中流淌开来，伤口的疼痛也渐渐退去了！"))
 		var/situational_bonus = 0.25
 		for(var/obj/effect/decal/cleanable/blood/O in oview(5, target))
 			situational_bonus = min(situational_bonus + 0.015, 1)
 		if(situational_bonus > 0.25)
-			to_chat(user, "Channeling Ravox's power is easier in these conditions!")
+			to_chat(user, "在这种环境下，引导 Ravox 的力量要容易得多！")
 
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
@@ -172,13 +172,13 @@
 	return FALSE
 
 /atom/movable/screen/alert/status_effect/buff/divine_strike
-	name = "Divine Strike"
-	desc = "Your next attack deals additional damage and slows your target."
+	name = "神圣一击"
+	desc = "你的下一次攻击会造成额外伤害，并拖慢目标。"
 	icon_state = "stressvg"
 
 /obj/effect/proc_holder/spell/invoked/tug_of_war
-	name = "Tug of War"
-	desc = "Casts out a chain that tries to pull the target closer."
+	name = "角力之链"
+	desc = "放出一条锁链，试图将目标拖拽到更近处。"
 	overlay_icon = 'icons/mob/actions/ravoxmiracles.dmi'
 	action_icon = 'icons/mob/actions/ravoxmiracles.dmi'
 	overlay_state = "ravox_tug"
@@ -191,7 +191,7 @@
 	associated_skill = /datum/skill/magic/holy
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/timestop.ogg'
-	invocations = list("By Ravox, let your sins guide you to justice!")
+	invocations = list("以 Ravox 之名，让你的罪孽引你走向审判！")
 	invocation_type = "shout"
 	antimagic_allowed = FALSE
 	miracle = TRUE
@@ -225,16 +225,16 @@
 			var/holymod = user.get_skill_level(/datum/skill/magic/holy) * 10
 			pull_distance += floor((user.get_skill_level(/datum/skill/magic/holy) - 1) / 2)	//+1 pull dist at Jman and Master Holy skill
 			chance += holymod
-			user.visible_message(span_boldwarning("[user] yanks on a transluscent chain sticking out of [target]!"))
+			user.visible_message(span_boldwarning("[user] 猛地一扯，从 [target] 身上延伸出的半透明锁链随之绷紧！"))
 			if(count > 3)	//More than half of the stats are in our favor.
 				pull_distance++
 				slowdown++
 			if(prob(chance))
 				H.throw_at(user, pull_distance, 1, H, FALSE)
-				H.visible_message(span_warning("[H]'s body moves on its own!"))
+				H.visible_message(span_warning("[H] 的身体不受控制地被拖动了！"))
 				user.Beam(target,icon_state="chain",time=5)
 			else
-				H.visible_message(span_warning("[H] holds firm!"))
+				H.visible_message(span_warning("[H] 硬生生稳住了身形！"))
 			H.Slowdown(slowdown)
 			return TRUE
 		revert_cast()
@@ -244,8 +244,8 @@
 
 
 /obj/effect/proc_holder/spell/invoked/challenge
-	name = "Challenge"
-	desc = "Bring an opponent with you to Ravoxian Trial. Engage in 3 minute combat."
+	name = "裁决挑战"
+	desc = "将一名对手一并带入 Ravox 的审判试炼，进行三分钟决斗。"
 	overlay_icon = 'icons/mob/actions/ravoxmiracles.dmi'
 	action_icon = 'icons/mob/actions/ravoxmiracles.dmi'
 	overlay_state = "ravoxchallenge"
@@ -260,7 +260,7 @@
 	associated_skill = /datum/skill/magic/holy
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/timestop.ogg'
-	invocations = list("By Ravox, I challenge you!!")
+	invocations = list("以 Ravox 之名，我向你发起挑战！！")
 	chargedloop = /datum/looping_sound/invokeholy
 	invocation_type = "shout"
 	antimagic_allowed = TRUE
@@ -275,7 +275,7 @@ GLOBAL_LIST_EMPTY(arenafolks) // we're just going to use a list and add to it. S
 	var/turf/challengedspawnpoint
 	var/arenacount = GLOB.arenafolks.len
 	if(arenacount >= 2)
-		to_chat(user, span_italics("The arena is not yet ready for the next trial! Wait your turn!"))
+		to_chat(user, span_italics("竞技场尚未准备好迎接下一场审判！耐心等候。"))
 		revert_cast()
 		return FALSE
 
@@ -301,13 +301,13 @@ GLOBAL_LIST_EMPTY(arenafolks) // we're just going to use a list and add to it. S
 		do_teleport(target, challengedspawnpoint)
 		GLOB.arenafolks += user
 		GLOB.arenafolks += target
-		storedchallengerturf.visible_message((span_cult("[user] calls upon the Ravoxian rite of Trial! [target] and [user] are brought to Trial!")))
+		storedchallengerturf.visible_message((span_cult("[user] 呼唤了 Ravox 的审判仪式！[target] 与 [user] 一同被带入了试炼！")))
 
 		new /obj/structure/fluff/ravox/challenger/recall(storedchallengerturf)
 		new /obj/structure/fluff/ravox/challenged/recall(storedchallengedturf)
 
-		to_chat(user, span_userdanger("THE TRIAL IS CALLED, IMPRESS US, PROSECUTOR!!"))
-		to_chat(target, span_userdanger("A TRIAL OF RAVOX BEGINS. IMPRESS US, DEFENDANT!!"))
+		to_chat(user, span_userdanger("审判已经开始，取悦我们吧，原告！！"))
+		to_chat(target, span_userdanger("Ravox 的审判开始了。取悦我们吧，被告！！"))
 
 		user.cmode_change('sound/music/ravoxarena.ogg')
 		target.cmode_change('sound/music/ravoxarena.ogg')
@@ -368,24 +368,24 @@ GLOBAL_LIST_EMPTY(arenafolks) // we're just going to use a list and add to it. S
 				var/mob/living/M = AM
 				M.Paralyze(10)
 				M.adjustBruteLoss(20)
-				to_chat(M, "<span class='danger'>You're slammed into the floor by Ravox's strength!!</span>")
+				to_chat(M, "<span class='danger'>你被 Ravox 的力量狠狠砸向了地面！！</span>")
 		else
 			new sparkle_path(get_turf(AM), get_dir(src, AM)) //created sparkles will disappear on their own
 			if(isliving(AM))
 				var/mob/living/M = AM
 				M.Paralyze(5)
-				to_chat(M, "<span class='danger'>You're thrown back by Ravox's strength!!</span>")
+				to_chat(M, "<span class='danger'>你被 Ravox 的力量猛地掀飞了出去！！</span>")
 			AM.safe_throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromflag - 2, 0, distfromflag))), 3, maxthrow))), 1,null, force = repulse_force)
 
 
 /obj/structure/fluff/ravox/challenger
-	name = "Flag of the challenger"
-	desc = "Where the challenger will return after the trial is decided."
+	name = "挑战者之旗"
+	desc = "审判结束后，挑战者将回到这里。"
 	icon_state = "ravoxchallenger"
 
 /obj/structure/fluff/ravox/challenged
-	name = "Flag of the challenged"
-	desc = "Where the challenged will return after the trial is decided."
+	name = "应战者之旗"
+	desc = "审判结束后，应战者将回到这里。"
 	icon_state = "ravoxchallenged"
 
 

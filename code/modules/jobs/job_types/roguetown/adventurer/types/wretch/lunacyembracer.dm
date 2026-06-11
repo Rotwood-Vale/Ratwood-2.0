@@ -1,6 +1,6 @@
 /datum/advclass/wretch/lunacyembracer
-	name = "Lunacy Embracer"
-	tutorial = "You have rejected and terrorized civilization in the name of nature. You run wild under the moon, a terror to the townsfolk and a champion of Dendor's wild domain."
+	name = "拥月狂徒"
+	tutorial = "你以自然之名拒斥并恐吓文明。你在月下肆意奔行，是镇民眼中的噩梦，也是 登多尔 荒野领域的狂热斗士。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	disallowed_races = list(
@@ -136,5 +136,5 @@
 	C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR)
 
 	H.cmode_music = 'sound/music/combat_berserker.ogg'
-	to_chat(H, span_danger("You have abandoned your humanity to run wild under the moon. The call of nature fills your soul!"))
+	to_chat(H, span_danger("你已舍弃自己的人性，只为在月下狂奔肆虐。自然的呼唤正充满你的灵魂！"))
 	wretch_select_bounty(H)

@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/self/suicidebomb
-	name = "Calcic Outburst"
-	desc = "Explode in a wonderful blast of osseous shrapnel."
+	name = "钙骨迸爆"
+	desc = "以一场骇人的骨片爆裂将自己引爆。"
 	overlay_state = "tragedy"
 	chargedrain = 0
 	chargetime = 0
@@ -21,12 +21,12 @@
 		return FALSE
 	if(user.stat == DEAD)
 		return FALSE
-	if(alert(user, "Do you wish to sacrifice this vessel in a powerful explosion?", "ELDRITCH BLAST", "Yes", "No") == "No")
+	if(alert(user, "你是否要以这具躯壳为祭，引发一场威力惊人的爆炸？", "诡异爆裂", "是", "否") == "否")
 		return FALSE
 	playsound(get_turf(user), 'sound/magic/antimagic.ogg', 100)
 	user.visible_message(
-		span_danger("[user] begins to shake violently, a blindingly bright light beginning to emanate from them!"), 
-		span_danger("Powerful energy begins to expand outwards from inside me!")
+		span_danger("[user] 的身躯开始剧烈颤抖，刺目的强光正从其体内迸射而出！"), 
+		span_danger("狂暴的能量正从我体内向外膨胀！")
 	)
 
 	user.Immobilize(5 SECONDS)
@@ -44,7 +44,7 @@
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/suicidebomb/lesser
-	name = "Lesser Calcic Outburst"
+	name = "次级钙骨迸爆"
 	exp_heavy = 0
 	exp_light = 2
 	exp_flash = 2

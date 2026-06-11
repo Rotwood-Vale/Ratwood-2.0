@@ -1,6 +1,6 @@
 /datum/advclass/knave //sneaky bastards - ranged classes of two flavors archers and rogues
-	name = "Knave"
-	tutorial = "Not all followers of Matthios take by force. Thieves, poachers, and ne'er-do-wells of all forms steal from others from the shadows, long gone before their marks realize their misfortune."
+	name = "无赖"
+	tutorial = "并非所有 马西奥斯 的追随者都会明抢。窃贼、偷猎者和各色不三不四之徒都懂得藏身暗处，从别人手里偷走东西，等受害者回过神来时，他们早已远走高飞。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/bandit/knave
@@ -52,12 +52,12 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather
 	id = /obj/item/mattcoin
 	H.adjust_blindness(-3)
-	var/weapons = list("Crossbow & Dagger", "Bow & Sword")
+	var/weapons = list("十字弩与匕首", "弓与剑")
 	if(H.mind)
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapon_choice = input(H, "选择你的武器。", "执兵而起") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Crossbow & Dagger") //Rogue
+			if("十字弩与匕首") //Rogue
 				backl= /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow //we really need to make this not a grenade launcher subtype
 				beltr = /obj/item/quiver/bolts
 				cloak = /obj/item/clothing/cloak/raincloak/mortus //cool cloak
@@ -71,7 +71,7 @@
 							/obj/item/rogueweapon/scabbard/sheath = 1
 							) //rogue gets lockpicks
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
-			if("Bow & Sword") //Poacher
+			if("弓与剑") //Poacher
 				backl= /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				l_hand = /obj/item/rogueweapon/sword/short
 				r_hand = /obj/item/restraints/legcuffs/beartrap

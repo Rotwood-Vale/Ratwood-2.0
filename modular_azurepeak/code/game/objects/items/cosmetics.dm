@@ -1,22 +1,22 @@
 /obj/item/azure_lipstick
 	gender = PLURAL
-	name = "red lipstick"
-	desc = "A blend of wax, pigment, and oil meant to be applied to the lips."
+	name = "红色唇膏"
+	desc = "由蜡、颜料与油脂调和而成，供涂抹于双唇之上。"
 	icon = 'modular_azurepeak/icons/obj/items/cosmetics.dmi'
 	icon_state = "lipstick"
 	w_class = WEIGHT_CLASS_TINY
 	var/colour = "red"
 
 /obj/item/azure_lipstick/purple
-	name = "purple lipstick"
+	name = "紫色唇膏"
 	colour = "purple"
 
 /obj/item/azure_lipstick/jade
-	name = "jade lipstick"
+	name = "翠玉色唇膏"
 	colour = "lime"
 
 /obj/item/azure_lipstick/black
-	name = "black lipstick"
+	name = "黑色唇膏"
 	colour = "black"
 
 /obj/item/azure_lipstick/Initialize(mapload)
@@ -36,18 +36,18 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.is_mouth_covered())
-			to_chat(user, span_warning("Remove [ H == user ? "your" : "[H.p_their()]" ] mask!"))
+			to_chat(user, span_warning("先摘下[ H == user ? "你的" : "[H.p_their()]" ]面罩！"))
 			return
 		if(H == user)
 			if(H.lip_style)	//if you already have lipstick on
-				to_chat(user, span_notice("I wipe off the lipstick with [src]."))
+				to_chat(user, span_notice("我用[src]擦掉了唇膏。"))
 				H.lip_style = null
 				H.update_body()
 				return
 			
 			user.visible_message(
-				span_notice("[user] does [user.p_their()] lips with \the [src]."),
-				span_notice("I take a moment to apply \the [src]. Perfect!")
+				span_notice("[user]用[src]涂抹着[user.p_their()]的双唇。"),
+				span_notice("我花了点时间涂上[src]。完美！")
 			)
 			if(H.getorganslot(ORGAN_SLOT_SNOUT))
 				H.lip_style = "lipstick_nosides"
@@ -58,26 +58,26 @@
 		else
 			if(H.lip_style) // if they already have lipstick on
 				user.visible_message(
-					span_warning("[user] begins to wipe [H]'s lipstick off with \the [src]."),
-					span_notice("I begin to wipe off [H]'s lipstick...")
+					span_warning("[user]开始用[src]擦去[H]的唇膏。"),
+					span_notice("我开始擦掉[H]的唇膏......")
 				)
 				if(do_after(user, 10, target = H))
 					user.visible_message(
-						span_notice("[user] wipes [H]'s lipstick off with \the [src]."),
-						span_notice("I wipe off [H]'s lipstick.")
+						span_notice("[user]用[src]擦掉了[H]的唇膏。"),
+						span_notice("我擦掉了[H]的唇膏。")
 					)
 					H.lip_style = null
 					H.update_body()
 				return
 			
 			user.visible_message(
-				span_warning("[user] begins to do [H]'s lips with \the [src]."),
-				span_notice("I begin to apply \the [src] on [H]'s lips...")
+				span_warning("[user]开始用[src]涂抹[H]的双唇。"),
+				span_notice("我开始把[src]涂在[H]的嘴唇上......")
 			)
 			if(do_after(user, 20, target = H))
 				user.visible_message(
-					span_notice("[user] does [H]'s lips with \the [src]."),
-					span_notice("I apply \the [src] on [H]'s lips.")
+					span_notice("[user]用[src]涂抹了[H]的双唇。"),
+					span_notice("我把[src]涂在了[H]的嘴唇上。")
 				)
 				if(H.getorganslot(ORGAN_SLOT_SNOUT))
 					H.lip_style = "lipstick_nosides"
@@ -86,4 +86,4 @@
 				H.lip_color = colour
 				H.update_body()
 	else
-		to_chat(user, span_warning("Where are the lips on that?"))
+		to_chat(user, span_warning("那东西的嘴唇到底在哪？"))

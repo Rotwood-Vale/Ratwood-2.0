@@ -1,5 +1,5 @@
 /datum/job/roguetown/orphan
-	tutorial = "The world is not a kind place, and many have lost everything in the pursuit of even a meagre existence. Vagabonds are such individuals, and start with next to nothing but their skills and wits."
+	tutorial = "这世道从不仁慈，许多人为了求一条勉强糊口的活路，最终连最后一点东西也失去了。流浪汉正是这样的人，他们开局几乎一无所有，只剩手艺与机灵。"
 	outfit = null
 	outfit_female = null
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)

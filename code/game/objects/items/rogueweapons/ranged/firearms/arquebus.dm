@@ -1,7 +1,7 @@
 /obj/item/gun/ballistic/firearm/arquebus
-	name = "arquebus rifle"
-	desc = "A smokepowder weapon that shoots an armor piercing metal ball. \
-	A true work of art, manufactured by a conclave of smiths deep within the rot plagued lands of Naledi."
+	name = "火绳枪"
+	desc = "一把以烟火药发射破甲金属弹丸的武器。\
+	它是真正的工艺杰作，由 Naledi 腐疫横行的深处之地里一群铁匠密会所铸。"
 	icon = 'modular_helmsguard/icons/weapons/arquebus.dmi'
 	icon_state = "arquebus"
 	item_state = "arquebus"
@@ -9,10 +9,10 @@
 	grid_width = 96
 
 /obj/item/gun/ballistic/firearm/arquebus_pistol
-	name = "arquebus pistol"
-	desc = "A small smokepowder weapon, balanced for use in a single hand. \
-	Even with great power, men squabbled until the conclave smiths of Naledi relented, producing these in limited batches. \
-	This is an incredibly rare example of such. Each tailored to its user's will."
+	name = "火绳手铳"
+	desc = "一把小型烟火药武器，平衡得足以单手使用。\
+	即便拥有如此威力，人们仍争执不休，直到 Naledi 密会的铁匠们终于让步，限量打造了这类兵器。\
+	眼前这一把便是其中极其稀罕的成品，每一把都依照持用者的意志量身而制。"
 	icon = 'icons/roguetown/weapons/guns32.dmi'
 	icon_state = "pistol"
 	item_state = "pistol"
@@ -25,7 +25,7 @@
 	walking_stick = FALSE
 	bigboy = FALSE
 	gripsprite = FALSE
-	cartridge_wording = "lead ball"
+	cartridge_wording = "铅弹"
 	grid_height = 32
 	grid_width = 96
 	experimental_onhip = TRUE

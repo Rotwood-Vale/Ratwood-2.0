@@ -21,28 +21,28 @@
 		can_be_blunt = _can_be_blunt
 
 /datum/component/butchering/proc/startButcher(obj/item/source, mob/living/M, mob/living/user)
-	to_chat(user, span_notice("I begin to butcher [M]..."))
+	to_chat(user, span_notice("我开始肢解[M]……"))
 	playsound(M.loc, butcher_sound, 50, TRUE, -1)
 	if(do_mob(user, M, speed) && M.Adjacent(source))
 		Butcher(user, M)
 
 /datum/component/butchering/proc/startNeckSlice(obj/item/source, mob/living/carbon/human/H, mob/living/user)
-	user.visible_message(span_danger("[user] is slitting [H]'s throat!"), \
-					span_danger("I start slicing [H]'s throat!"), \
-					span_hear("I hear a cutting noise!"), ignored_mobs = H)
-	H.show_message(span_danger("My throat is being slit by [user]!"), MSG_VISUAL, \
-					"<span class = 'danger'>Something is cutting into my neck!</span>", NONE)
+	user.visible_message(span_danger("[user] 正在割开[H]的喉咙！"), \
+					span_danger("我开始割开[H]的喉咙！"), \
+					span_hear("我听见了切割声！"), ignored_mobs = H)
+	H.show_message(span_danger("[user] 正在割开我的喉咙！"), MSG_VISUAL, \
+					"<span class = 'danger'>有什么东西正在切入我的脖颈！</span>", NONE)
 	log_combat(user, H, "starts slicing the throat of")
 
 	playsound(H.loc, butcher_sound, 50, TRUE, -1)
 	if(do_mob(user, H, CLAMP(500 / source.force, 30, 100)) && H.Adjacent(source))
 		if(H.has_status_effect(/datum/status_effect/neck_slice))
-			user.show_message(span_warning("[H]'s neck has already been already cut, you can't make the bleeding any worse!"), MSG_VISUAL, \
-							span_warning("Their neck has already been already cut, you can't make the bleeding any worse!"))
+			user.show_message(span_warning("[H]的脖颈早已被割开了，你没法让出血更严重了！"), MSG_VISUAL, \
+							span_warning("对方的脖颈早已被割开了，你没法让出血更严重了！"))
 			return
 
-		H.visible_message(span_danger("[user] slits [H]'s throat!"), \
-					span_danger("[user] slits my throat..."))
+		H.visible_message(span_danger("[user] 割开了[H]的喉咙！"), \
+					span_danger("[user] 割开了我的喉咙……"))
 		log_combat(user, H, "finishes slicing the throat of")
 		H.apply_damage(source.force, BRUTE, BODY_ZONE_HEAD)
 		H.bleed_rate = CLAMP(H.bleed_rate + 20, 0, 30)
@@ -58,10 +58,10 @@
 		for(var/_i in 1 to amount)
 			if(!prob(final_effectiveness))
 				if(butcher)
-					to_chat(butcher, span_warning("I fail to harvest some of the [initial(bones.name)] from [meat]."))
+					to_chat(butcher, span_warning("我没能从[meat]身上取下部分[initial(bones.name)]。"))
 			else if(prob(bonus_chance))
 				if(butcher)
-					to_chat(butcher, span_info("I harvest some extra [initial(bones.name)] from [meat]!"))
+					to_chat(butcher, span_info("我从[meat]身上额外取下了一些[initial(bones.name)]！"))
 				for(var/i in 1 to 2)
 					new bones (T)
 			else
@@ -74,8 +74,8 @@
 			new sinew (T)
 		meat.guaranteed_butcher_results.Remove(sinew)
 	if(butcher)
-		butcher.visible_message(span_notice("[butcher] butchers [meat]."), \
-								span_notice("I butcher [meat]."))
+		butcher.visible_message(span_notice("[butcher] 肢解了[meat]。"), \
+								span_notice("我肢解了[meat]。"))
 	ButcherEffects(meat)
 	meat.harvest(butcher)
 	meat.gib(FALSE, FALSE, TRUE)

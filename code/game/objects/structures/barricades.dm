@@ -9,7 +9,7 @@
 //Barricades/cover
 
 /obj/structure/barricade
-	name = "chest high wall"
+	name = "齐胸矮墙"
 	desc = ""
 	anchored = TRUE
 	density = TRUE
@@ -31,7 +31,7 @@
 			if(!I.tool_start_check(user, amount=0))
 				return
 
-			to_chat(user, "<span class='notice'>I begin repairing [src]...</span>")
+			to_chat(user, "<span class='notice'>我开始修理[src]……</span>")
 			if(I.use_tool(src, user, 40, volume=40))
 				obj_integrity = CLAMP(obj_integrity + 20, 0, max_integrity)
 	else
@@ -57,7 +57,7 @@
 /////BARRICADE TYPES///////
 
 /obj/structure/barricade
-	name = "wooden barricade"
+	name = "木制路障"
 	desc = ""
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodenbarricade"
@@ -65,7 +65,7 @@
 	var/drop_amount = 3
 
 /obj/structure/barricade/rogue
-	name = "wooden barricade"
+	name = "木制路障"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "woodenbarricade_r"
@@ -74,13 +74,13 @@
 	drop_amount = 0
 
 /obj/structure/barricade/rogue/crude
-	name = "crude plank barricade"
+	name = "粗陋木板路障"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "woodenbarricade_r2"
 	max_integrity = 40
 
 /obj/structure/barricade/crude
-	name = "crude plank barricade"
+	name = "粗陋木板路障"
 	desc = ""
 	icon_state = "woodenbarricade-old"
 	drop_amount = 1
@@ -93,8 +93,8 @@
 	max_integrity = 75
 
 /obj/structure/barricade/mineshaft
-	name = "mineshaft support"
-	desc = "This'll stop those tremors from triggering."
+	name = "矿井支架"
+	desc = "这东西能防止那些震动引发塌方。"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodenbarricade_mineshaft"
 	bar_material = WOOD

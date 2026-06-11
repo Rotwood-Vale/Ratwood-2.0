@@ -1,6 +1,6 @@
 /obj/item/carvedgem
-	name = "bug beaver"
-	desc = "You shouldn't be seeing this."
+	name = "错误海狸"
+	desc = "你本不该看到这个。"
 	icon = 'icons/roguetown/gems/gem_amber.dmi'
 	icon_state = "beaver_amber"
 	sellprice = 0
@@ -11,110 +11,110 @@
 //.....................Shell......................//
 
 /obj/item/carvedgem/shell
-	name = "shell base"
-	desc = "if you encountered this, it's a bug!"
+	name = "贝壳底坯"
+	desc = "如果你看到了这个，那就是出错了！"
 	icon = 'icons/roguetown/gems/gem_shell.dmi'
 	icon_state = "raw_shell"
 
 /obj/item/carvedgem/shell/openoyster
-	name = "open fossilized clam"
-	desc = "A clamshell that has recently been opened. You could split the shell in two with a chisel."
+	name = "打开的化石蛤壳"
+	desc = "一个刚被打开的蛤壳。你可以用凿子把壳一分为二。"
 	icon_state = "oyster_open"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 10
 
 /obj/item/carvedgem/shell/rawshell
-	name = "clamshell"
-	desc = "A piece of a fossilized clamshell. Although not as valuable as other gems, it holds a special place in Coastal and Sea Elven cultures. The origin of these clams is still under heavy speculation."
+	name = "蛤壳"
+	desc = "一片化石蛤壳。虽然不如其他宝石珍贵，但它在海岸居民与海精灵文化中有着特殊地位。这类蛤的起源至今仍众说纷纭。"
 	icon_state = "raw_shell"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 5
 
 /obj/item/carvedgem/shell/cameo
-	name = "shell cameo"
-	desc = "A cameo carved out of shell depicting...someone? Use your imagination on who it could be."
+	name = "贝壳浮雕"
+	desc = "一枚以贝壳雕成的浮雕，描绘着……某个人？至于是谁，就靠你想象了。"
 	icon_state = "cameo_shell"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 15
 
 /obj/item/carvedgem/shell/figurine
-	name = "shell figurine"
-	desc = "A small figurine carved out of shell."
+	name = "贝壳小像"
+	desc = "一尊以贝壳雕成的小像。"
 	icon_state = "figurine_shell"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 20
 
 /obj/item/carvedgem/shell/fish
-	name = "shell fish figurine"
-	desc = "A small fish figurine carved out of shell."
+	name = "贝壳鱼像"
+	desc = "一尊以贝壳雕成的小鱼像。"
 	icon_state = "fish_shell"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 20
 
 /obj/item/carvedgem/shell/vase
-	name = "shell vase"
-	desc = "A vase carved out of shell."
+	name = "贝壳花瓶"
+	desc = "一个以贝壳雕成的花瓶。"
 	icon_state = "vase_shell"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 20
 
 /obj/item/carvedgem/shell/tablet
-	name = "shell tablet"
-	desc = "A tablet carved out of shell."
+	name = "贝壳板"
+	desc = "一块以贝壳雕成的板片。"
 	icon_state = "tablet_shell"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 20
 
 /obj/item/carvedgem/shell/bust
-	name = "shell bust"
-	desc = "A bust carved out of shell."
+	name = "贝壳半身像"
+	desc = "一尊以贝壳雕成的半身像。"
 	icon_state = "bust_shell"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 25
 
 /obj/item/carvedgem/shell/fancyvase
-	name = "fancy shell vase"
-	desc = "A fancy vase carved out of shell."
+	name = "华美贝壳花瓶"
+	desc = "一个以贝壳雕成的华美花瓶。"
 	icon_state = "fancyvase_shell"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 25
 
 /obj/item/carvedgem/shell/comb
-	name = "shell comb"
-	desc = "A luxurious comb carved out of shell."
+	name = "贝壳梳"
+	desc = "一把以贝壳雕成的奢华梳子。"
 	icon_state = "comb_shell"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 25
 
 /obj/item/carvedgem/shell/duck
-	name = "shell duck"
-	desc = "An adorable little duck carved out of shell."
+	name = "贝壳小鸭"
+	desc = "一只由贝壳雕成的可爱小鸭。"
 	icon_state = "duck_shell"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 25
 
 /obj/item/carvedgem/shell/urn
-	name = "shell urn"
-	desc = "A large decorative urn carved out of shell."
+	name = "贝壳瓮"
+	desc = "一个以贝壳雕成的大型装饰瓮。"
 	icon_state = "urn_shell"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 30
 
 /obj/item/carvedgem/shell/statue
-	name = "shell statue"
-	desc = "A statue carved out of shell."
+	name = "贝壳雕像"
+	desc = "一尊以贝壳雕成的雕像。"
 	icon_state = "statue_shell"
 	grid_height = 64
 	grid_width = 32
@@ -122,136 +122,136 @@
 
 
 /obj/item/carvedgem/shell/obelisk
-	name = "shell statue"
-	desc = "An obelisk carved out of shell."
+	name = "贝壳方尖碑"
+	desc = "一座以贝壳雕成的方尖碑。"
 	icon_state = "obelisk_shell"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 30
 
 /obj/item/carvedgem/shell/turtle
-	name = "turtle carving"
-	desc = "A medium-sized carving of a sea turtle made out of clamshell. Sea turtle eggs have unfortunately become a delicacy for Grenzelhoftians, causing their population to rapidly decline."
+	name = "海龟雕件"
+	desc = "一件以蛤壳雕成的中型海龟雕件。遗憾的是，海龟蛋已成了 Grenzelhoftians 的珍馐，导致其数量迅速下降。"
 	icon_state = "turtle_shell"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 35
 //.....................Rose......................//
 /obj/item/carvedgem/rose/
-	name = "rose base"
-	desc = "if you are seeing this, it's a bug, report it to coders"
+	name = "玫瑰石底坯"
+	desc = "如果你看到了这个，那就是出错了，请向代码人员报告。"
 	icon = 'icons/roguetown/gems/gem_rose.dmi'
 	icon_state = "raw_rose"
 	grid_height = 32
 	grid_width = 32
 
 /obj/item/carvedgem/rose/rawrose
-	name = "rosestone"
-	desc = "Pink and lustrous, these pearls produced by fossilized clamshells are valued by Eorans: and are usually gifted to expecting mothers and newlyweds."
+	name = "玫瑰石"
+	desc = "这些由化石蛤壳孕育出的珍珠色泽粉润、光彩莹泽，深受 Eorans 珍视，常被赠予准母亲与新婚伴侣。"
 	icon_state = "raw_rose"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 15
 
 /obj/item/carvedgem/rose/cameo
-	name = "rosestone cameo"
-	desc = "A cameo carved out of rosestone depicting...someone? Use your imagination on who it could be."
+	name = "玫瑰石浮雕"
+	desc = "一枚以玫瑰石雕成的浮雕，描绘着……某个人？至于是谁，就靠你想象了。"
 	icon_state = "cameo_rose"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 20
 
 /obj/item/carvedgem/rose/figurine
-	name = "rosestone figurine"
-	desc = "A small figurine carved out of rosestone."
+	name = "玫瑰石小像"
+	desc = "一尊以玫瑰石雕成的小像。"
 	icon_state = "figurine_rose"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 25
 
 /obj/item/carvedgem/rose/fish
-	name = "rosestone fish figurine"
-	desc = "A small fish figurine carved out of rosestone."
+	name = "玫瑰石鱼像"
+	desc = "一尊以玫瑰石雕成的小鱼像。"
 	icon_state = "fish_rose"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 25
 
 /obj/item/carvedgem/rose/vase
-	name = "rosestone vase"
-	desc = "A vase carved out of rosestone."
+	name = "玫瑰石花瓶"
+	desc = "一个以玫瑰石雕成的花瓶。"
 	icon_state = "vase_rose"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 25
 
 /obj/item/carvedgem/rose/tablet
-	name = "rosestone tablet"
-	desc = "A tablet carved out of rosestone."
+	name = "玫瑰石板"
+	desc = "一块以玫瑰石雕成的板片。"
 	icon_state = "tablet_rose"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 25
 
 /obj/item/carvedgem/rose/bust
-	name = "rosestone bust"
-	desc = "A bust carved out of rosestone."
+	name = "玫瑰石半身像"
+	desc = "一尊以玫瑰石雕成的半身像。"
 	icon_state = "bust_rose"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 30
 
 /obj/item/carvedgem/rose/fancyvase
-	name = "fancy rosestone vase"
-	desc = "A fancy vase carved out of rosestone."
+	name = "华美玫瑰石花瓶"
+	desc = "一个以玫瑰石雕成的华美花瓶。"
 	icon_state = "fancyvase_rose"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 30
 
 /obj/item/carvedgem/rose/comb
-	name = "rosestone comb"
-	desc = "A luxurious comb carved out of rosestone."
+	name = "玫瑰石梳"
+	desc = "一把以玫瑰石雕成的奢华梳子。"
 	icon_state = "comb_rose"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 30
 
 /obj/item/carvedgem/rose/duck
-	name = "rosestone duck"
-	desc = "An adorable little duck carved out of rosestone."
+	name = "玫瑰石小鸭"
+	desc = "一只由玫瑰石雕成的可爱小鸭。"
 	icon_state = "duck_rose"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 30
 
 /obj/item/carvedgem/rose/urn
-	name = "rosestone urn"
-	desc = "A large decorative urn carve out of rosestone."
+	name = "玫瑰石瓮"
+	desc = "一个以玫瑰石雕成的大型装饰瓮。"
 	icon_state = "urn_rose"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 35
 
 /obj/item/carvedgem/rose/statue
-	name = "rosestone statue"
-	desc = "A statue carved out of rosestone."
+	name = "玫瑰石雕像"
+	desc = "一尊以玫瑰石雕成的雕像。"
 	icon_state = "statue_rose"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 35
 
 /obj/item/carvedgem/rose/obelisk
-	name = "rosestone obelisk"
-	desc = "An obelisk carved out of rosestone."
+	name = "玫瑰石方尖碑"
+	desc = "一座以玫瑰石雕成的方尖碑。"
 	icon_state = "obelisk_rose"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 35
 
 /obj/item/carvedgem/rose/flower
-	name = "rosestone flower carving"
-	desc = " A carving of a beautiful flower made out of rosestone. Eora would be proud of such artistry."
+	name = "玫瑰石花卉雕件"
+	desc = "一件以玫瑰石雕成的美丽花朵。Eora 也会为这样的技艺感到骄傲。"
 	icon_state = "flower_rose"
 	dropshrink = 0.8
 	grid_height = 64
@@ -259,8 +259,8 @@
 	sellprice = 40
 
 /obj/item/carvedgem/rose/carp
-	name = "rosestone carp statue"
-	desc = "A medium-sized carving of a carp made out of rosestone. The fish have been selectively bred by Eorans to bring out beautiful patterns in their scales, but have become invasive in some regions due to carelessness."
+	name = "玫瑰石鲤鱼雕像"
+	desc = "一件以玫瑰石雕成的中型鲤鱼雕像。Eorans 通过选育让这种鱼的鳞片呈现华美纹样，但因人为疏忽，它们在某些地区已成为入侵物种。"
 	icon_state = "carp_rose"
 	grid_height = 64
 	grid_width = 64
@@ -269,112 +269,112 @@
 //.....................Jade......................//
 
 /obj/item/carvedgem/jade
-	name = "jade base"
-	desc =  "if you are seeing this, it's a bug, report it to coders"
+	name = "玉石底坯"
+	desc =  "如果你看到了这个，那就是出错了，请向代码人员报告。"
 	icon = 'icons/roguetown/gems/gem_jade.dmi'
 	icon_state = "cutgem_jade"
 	grid_height = 32
 	grid_width = 32
 
 /obj/item/carvedgem/jade/cameo
-	name = "jade cameo"
-	desc = "A cameo carved out of jade depicting...someone? Use your imagination on who it could be."
+	name = "玉石浮雕"
+	desc = "一枚以玉石雕成的浮雕，描绘着……某个人？至于是谁，就靠你想象了。"
 	icon_state = "cameo_jade"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 55
 
 /obj/item/carvedgem/jade/figurine
-	name = "jade figurine"
-	desc = "A small figurine carved out of jade."
+	name = "玉石小像"
+	desc = "一尊以玉石雕成的小像。"
 	icon_state = "figurine_jade"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 60
 
 /obj/item/carvedgem/jade/fish
-	name = "jade fish figurine"
-	desc = "A small fish figurine carved out of jade."
+	name = "玉石鱼像"
+	desc = "一尊以玉石雕成的小鱼像。"
 	icon_state = "fish_jade"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 60
 
 /obj/item/carvedgem/jade/tablet
-	name = "jade tablet"
-	desc = "A tablet carved out of jade."
+	name = "玉石板"
+	desc = "一块以玉石雕成的板片。"
 	icon_state = "tablet_jade"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 60
 
 /obj/item/carvedgem/jade/vase
-	name = "jade vase"
-	desc = "A vase carved out of jade."
+	name = "玉石花瓶"
+	desc = "一个以玉石雕成的花瓶。"
 	icon_state = "vase_jade"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 60
 
 /obj/item/carvedgem/jade/bust
-	name = "jade bust"
-	desc = "A bust carved out of jade."
+	name = "玉石半身像"
+	desc = "一尊以玉石雕成的半身像。"
 	icon_state = "bust_jade"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 65
 
 /obj/item/carvedgem/jade/fancyvase
-	name = "fancy jade vase"
-	desc = "A fancy vase carved out of jade."
+	name = "华美玉石花瓶"
+	desc = "一个以玉石雕成的华美花瓶。"
 	icon_state = "fancyvase_jade"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 65
 
 /obj/item/carvedgem/jade/comb
-	name = "jade comb"
-	desc = "A luxurious comb carved out of jade."
+	name = "玉石梳"
+	desc = "一把以玉石雕成的奢华梳子。"
 	icon_state = "comb_jade"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 65
 
 /obj/item/carvedgem/jade/duck
-	name = "jade duck"
-	desc = "An adorable little duck carved out of jade."
+	name = "玉石小鸭"
+	desc = "一只由玉石雕成的可爱小鸭。"
 	icon_state = "duck_jade"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 65
 
 /obj/item/carvedgem/jade/urn
-	name = "jade urn"
-	desc = "A large decorative urn carved out of jade."
+	name = "玉石瓮"
+	desc = "一个以玉石雕成的大型装饰瓮。"
 	icon_state = "urn_jade"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 70
 
 /obj/item/carvedgem/jade/statue
-	name = "jade statue"
-	desc = "A statue carved out of jade."
+	name = "玉石雕像"
+	desc = "一尊以玉石雕成的雕像。"
 	icon_state = "statue_jade"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 70
 
 /obj/item/carvedgem/jade/obelisk
-	name = "jade obelisk"
-	desc = "An obelisk carved out of jade."
+	name = "玉石方尖碑"
+	desc = "一座以玉石雕成的方尖碑。"
 	icon_state = "obelisk_jade"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 70
 
 /obj/item/carvedgem/jade/wyrm
-	name = "jade wyrm"
-	desc = "A large sculpture of a wyrm made out of jade. Few wyrms remain in Faience, but their legacies continue to live on in the art of humens."
+	name = "玉石飞龙"
+	desc = "一尊以玉石雕成的大型飞龙雕塑。如今 Faience 中已鲜有飞龙踪影，但它们的遗产仍在人类艺术中长存。"
 	icon_state = "dragon_jade"
 	grid_height = 64
 	grid_width = 32
@@ -383,120 +383,120 @@
 //.....................Onyxa......................//
 
 /obj/item/carvedgem/onyxa
-	name = "onyxa base"
-	desc = "if you are seeing this, it's a bug, report it to coders"
+	name = "缟玛瑙底坯"
+	desc = "如果你看到了这个，那就是出错了，请向代码人员报告。"
 	icon = 'icons/roguetown/gems/gem_onyxa.dmi'
 	icon_state = "cutgem_onyxa"
 	grid_height = 32
 	grid_width = 32
 
 /obj/item/carvedgem/onyxa/cameo
-	name = "onyxa cameo"
-	desc = "A cameo carved out of onyxa depicting...someone? Use your imagination on who it could be."
+	name = "缟玛瑙浮雕"
+	desc = "一枚以缟玛瑙雕成的浮雕，描绘着……某个人？至于是谁，就靠你想象了。"
 	icon_state = "cameo_onyxa"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 35
 
 /obj/item/carvedgem/onyxa/figurine
-	name = "onyxa figurine"
-	desc = "A small figurine carved out of onyxa."
+	name = "缟玛瑙小像"
+	desc = "一尊以缟玛瑙雕成的小像。"
 	icon_state = "figurine_onyxa"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 40
 
 /obj/item/carvedgem/onyxa/fish
-	name = "onyxa fish figurine"
-	desc = "A small fish figurine carved out of onyxa."
+	name = "缟玛瑙鱼像"
+	desc = "一尊以缟玛瑙雕成的小鱼像。"
 	icon_state = "fish_onyxa"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 40
 
 /obj/item/carvedgem/onyxa/vase
-	name = "onyxa vase"
-	desc = "A vase carved out of onyxa."
+	name = "缟玛瑙花瓶"
+	desc = "一个以缟玛瑙雕成的花瓶。"
 	icon_state = "vase_onyxa"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 40
 
 /obj/item/carvedgem/onyxa/tablet
-	name = "onyxa tablet"
-	desc = "A tablet carved out of onyxa."
+	name = "缟玛瑙板"
+	desc = "一块以缟玛瑙雕成的板片。"
 	icon_state = "tablet_onyxa"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 40
 
 /obj/item/carvedgem/onyxa/bust
-	name = "onyxa bust"
-	desc = "A bust carved out of onyxa."
+	name = "缟玛瑙半身像"
+	desc = "一尊以缟玛瑙雕成的半身像。"
 	icon_state = "bust_onyxa"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 45
 
 /obj/item/carvedgem/onyxa/fancyvase
-	name = "fancy onyxa vase"
-	desc = "A fancy vase carved out of onyxa."
+	name = "华美缟玛瑙花瓶"
+	desc = "一个以缟玛瑙雕成的华美花瓶。"
 	icon_state = "fancyvase_onyxa"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 45
 
 /obj/item/carvedgem/onyxa/comb
-	name = "onyxa comb"
-	desc = "A luxurious comb carved out of onyxa."
+	name = "缟玛瑙梳"
+	desc = "一把以缟玛瑙雕成的奢华梳子。"
 	icon_state = "comb_onyxa"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 45
 
 /obj/item/carvedgem/onyxa/duck
-	name = "onyxa duck"
-	desc = "An adorable little duck carved out of onyxa."
+	name = "缟玛瑙小鸭"
+	desc = "一只由缟玛瑙雕成的可爱小鸭。"
 	icon_state = "duck_onyxa"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 45
 
 /obj/item/carvedgem/onyxa/urn
-	name = "onyxa urn"
-	desc = "A large decorative urn carved out of onyxa."
+	name = "缟玛瑙瓮"
+	desc = "一个以缟玛瑙雕成的大型装饰瓮。"
 	icon_state = "urn_onyxa"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 50
 
 /obj/item/carvedgem/onyxa/statue
-	name = "onyxa statue"
-	desc = "A statue carved out of onyxa."
+	name = "缟玛瑙雕像"
+	desc = "一尊以缟玛瑙雕成的雕像。"
 	icon_state = "statue_onyxa"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 50
 
 /obj/item/carvedgem/onyxa/obelisk
-	name = "onyxa obelisk"
-	desc = "An obelisk carved out of onyxa."
+	name = "缟玛瑙方尖碑"
+	desc = "一座以缟玛瑙雕成的方尖碑。"
 	icon_state = "obelisk_onyxa"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 50
 
 /obj/item/carvedgem/onyxa/snake
-	name = "onyxa snake statue"
-	desc = "A flying horned snake carved out of onyxa. Once considered a sacred animal of Subterra, now considered vermin."
+	name = "缟玛瑙蛇像"
+	desc = "一尊以缟玛瑙雕成的飞翼角蛇雕像。它曾被视作 Subterra 的圣兽，如今却只被当成害兽。"
 	icon_state = "snake_onyxa"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 55
 
 /obj/item/carvedgem/onyxa/spider
-	name = "onyxa spider statue"
-	desc = " A spider carved out of onyxa. Their webs once inspired the patterns the Drow had painted on themselves long ago."
+	name = "缟玛瑙蜘蛛像"
+	desc = "一尊以缟玛瑙雕成的蜘蛛。很久以前，卓尔曾以它们的蛛网为灵感，在自己身上绘出纹样。"
 	icon_state = "spider_onyxa"
 	grid_height = 64
 	grid_width = 32
@@ -505,120 +505,120 @@
 //.....................Cerulite......................//
 
 /obj/item/carvedgem/turq
-	name = "cerulite base"
-	desc = "if you are seeing this, it's a bug, report it to coders"
+	name = "蔚蓝石底坯"
+	desc = "如果你看到了这个，那就是出错了，请向代码人员报告。"
 	icon = 'icons/roguetown/gems/gem_turq.dmi'
 	icon_state = "cutgem_turq"
 	grid_height = 32
 	grid_width = 32
 
 /obj/item/carvedgem/turq/cameo
-	name = "cerulite cameo"
-	desc = "A cameo carved out of cerulite depicting...someone? Use your imagination on who it could be."
+	name = "蔚蓝石浮雕"
+	desc = "一枚以蔚蓝石雕成的浮雕，描绘着……某个人？至于是谁，就靠你想象了。"
 	icon_state = "cameo_turq"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 80
 
 /obj/item/carvedgem/turq/figurine
-	name = "cerulite figurine"
-	desc = "A small figurine carved out of cerulite."
+	name = "蔚蓝石小像"
+	desc = "一尊以蔚蓝石雕成的小像。"
 	icon_state = "figurine_turq"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 85
 
 /obj/item/carvedgem/turq/fish
-	name = "cerulite fish figurine"
-	desc = "A small fish figurine carved out of cerulite."
+	name = "蔚蓝石鱼像"
+	desc = "一尊以蔚蓝石雕成的小鱼像。"
 	icon_state = "fish_turq"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 85
 
 /obj/item/carvedgem/turq/vase
-	name = "cerulite vase"
-	desc = "A vase carved out of cerulite."
+	name = "蔚蓝石花瓶"
+	desc = "一个以蔚蓝石雕成的花瓶。"
 	icon_state = "vase_turq"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 85
 
 /obj/item/carvedgem/turq/tablet
-	name = "cerulite tablet"
-	desc = "A tablet carved out of cerulite."
+	name = "蔚蓝石板"
+	desc = "一块以蔚蓝石雕成的板片。"
 	icon_state = "tablet_turq"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 85
 
 /obj/item/carvedgem/turq/bust
-	name = "cerulite bust"
-	desc = "A bust carved out of cerulite."
+	name = "蔚蓝石半身像"
+	desc = "一尊以蔚蓝石雕成的半身像。"
 	icon_state = "bust_turq"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 90
 
 /obj/item/carvedgem/turq/fancyvase
-	name = "fancy cerulite vase"
-	desc = "A fancy vase carved out of cerulite."
+	name = "华美蔚蓝石花瓶"
+	desc = "一个以蔚蓝石雕成的华美花瓶。"
 	icon_state = "fancyvase_turq"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 90
 
 /obj/item/carvedgem/turq/comb
-	name = "cerulite comb"
-	desc = "A luxurious comb carved out of cerulite."
+	name = "蔚蓝石梳"
+	desc = "一把以蔚蓝石雕成的奢华梳子。"
 	icon_state = "comb_turq"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 90
 
 /obj/item/carvedgem/turq/duck
-	name = "cerulite duck"
-	desc = "An adorable little duck carved out of cerulite."
+	name = "蔚蓝石小鸭"
+	desc = "一只由蔚蓝石雕成的可爱小鸭。"
 	icon_state = "duck_turq"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 90
 
 /obj/item/carvedgem/turq/urn
-	name = "cerulite urn"
-	desc = "A large decorative urn carved out of cerulite."
+	name = "蔚蓝石瓮"
+	desc = "一个以蔚蓝石雕成的大型装饰瓮。"
 	icon_state = "urn_turq"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 95
 
 /obj/item/carvedgem/turq/statue
-	name = "cerulite statue"
-	desc = "A statue carved out of cerulite."
+	name = "蔚蓝石雕像"
+	desc = "一尊以蔚蓝石雕成的雕像。"
 	icon_state = "statue_turq"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 95
 
 /obj/item/carvedgem/turq/obelisk
-	name = "cerulite obelisk"
-	desc = "An obelisk carved out of cerulite."
+	name = "蔚蓝石方尖碑"
+	desc = "一座以蔚蓝石雕成的方尖碑。"
 	icon_state = "obelisk_turq"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 95
 
 /obj/item/carvedgem/turq/ka
-	name = "cerulite ka statue"
-	desc = "A large carving of a ka spirit from Lakkarian myth. Believed to help guide the recently parted to Necra's domain."
+	name = "蔚蓝石卡灵像"
+	desc = "一尊以蔚蓝石雕成的大型卡灵雕像，源自 Lakkarian 神话。人们相信它能引导新逝者前往 Necra 的国度。"
 	icon_state = "ka_turq"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 100
 
 /obj/item/carvedgem/turq/scarab
-	name = "cerulite scarab"
-	desc = "A large carving of a scarab made out of cerulite. An insect sacred to Lakkarians. Scarabs are commonly seen at Lakkarian temples and mastabas."
+	name = "蔚蓝石圣甲虫"
+	desc = "一件以蔚蓝石雕成的大型圣甲虫。它是 Lakkarians 的神圣昆虫，在他们的神庙与陵台间随处可见。"
 	icon_state = "scarab_turq"
 	dropshrink = 0.8
 	grid_height = 64
@@ -628,120 +628,120 @@
 // heartstone //
 
 /obj/item/carvedgem/coral
-	name = "heartstone base"
-	desc = "if you are seeing this, it's a bug, report it to coders"
+	name = "心石底坯"
+	desc = "如果你看到了这个，那就是出错了，请向代码人员报告。"
 	icon = 'icons/roguetown/gems/gem_coral.dmi'
 	icon_state = "cutgem_coral"
 	grid_height = 32
 	grid_width = 32
 
 /obj/item/carvedgem/coral/cameo
-	name = "heartstone cameo"
-	desc = "A cameo carved out of heartstone depicting...someone? Use your imagination on who it could be.."
+	name = "心石浮雕"
+	desc = "一枚以心石雕成的浮雕，描绘着……某个人？至于是谁，就靠你想象了。"
 	icon_state = "cameo_coral"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 65
 
 /obj/item/carvedgem/coral/figurine
-	name = "heartstone figurine"
-	desc = "A small figurine carved out of heartstone."
+	name = "心石小像"
+	desc = "一尊以心石雕成的小像。"
 	icon_state = "figurine_coral"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 70
 
 /obj/item/carvedgem/coral/fish
-	name = "heartstone fish figurine"
-	desc = "A small fish figurine carved out of heartstone."
+	name = "心石鱼像"
+	desc = "一尊以心石雕成的小鱼像。"
 	icon_state = "fish_coral"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 70
 
 /obj/item/carvedgem/coral/vase
-	name = "heartstone vase"
-	desc = "A vase carved out of heartstone."
+	name = "心石花瓶"
+	desc = "一个以心石雕成的花瓶。"
 	icon_state = "vase_coral"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 70
 
 /obj/item/carvedgem/coral/tablet
-	name = "heartstone tablet"
-	desc = "A tablet carved out of heartstone."
+	name = "心石板"
+	desc = "一块以心石雕成的板片。"
 	icon_state = "tablet_coral"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 70
 
 /obj/item/carvedgem/coral/bust
-	name = "heartstone bust"
-	desc = "A bust carved out of heartstone."
+	name = "心石半身像"
+	desc = "一尊以心石雕成的半身像。"
 	icon_state = "bust_coral"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 75
 
 /obj/item/carvedgem/coral/fancyvase
-	name = "fancy heartstone vase"
-	desc = "A fancy vase carved out of heartstone."
+	name = "华美心石花瓶"
+	desc = "一个以心石雕成的华美花瓶。"
 	icon_state = "fancyvase_coral"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 75
 
 /obj/item/carvedgem/coral/comb
-	name = "heartstone comb"
-	desc = "A luxurious comb carved out of heartstone."
+	name = "心石梳"
+	desc = "一把以心石雕成的奢华梳子。"
 	icon_state = "comb_coral"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 75
 
 /obj/item/carvedgem/coral/duck
-	name = "heartstone duck"
-	desc = "An adorable little duck carved out of heartstone."
+	name = "心石小鸭"
+	desc = "一只由心石雕成的可爱小鸭。"
 	icon_state = "duck_coral"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 75
 
 /obj/item/carvedgem/coral/urn
-	name = "heartstone urn"
-	desc = "A large decorative urn carved out of heartstone."
+	name = "心石瓮"
+	desc = "一个以心石雕成的大型装饰瓮。"
 	icon_state = "urn_coral"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 80
 
 /obj/item/carvedgem/coral/statue
-	name = "heartstone statue"
-	desc = "A statue carved out of heartstone."
+	name = "心石雕像"
+	desc = "一尊以心石雕成的雕像。"
 	icon_state = "statue_coral"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 80
 
 /obj/item/carvedgem/coral/obelisk
-	name = "heartstone obelisk"
-	desc = "An obelisk carved out of heartstone."
+	name = "心石方尖碑"
+	desc = "一座以心石雕成的方尖碑。"
 	icon_state = "obelisk_coral"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 80
 
 /obj/item/carvedgem/coral/jaw
-	name = "shark jaw statue"
-	desc = "A statue of a shark's jaw carved out of heartstone. Its probably best if you don't touch the teeth."
+	name = "鲨颌雕像"
+	desc = "一尊以心石雕成的鲨鱼下颌雕像。你最好别去碰那些牙齿。"
 	icon_state = "jaw_coral"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 85
 
 /obj/item/carvedgem/coral/shark
-	name = "heartstone shark statue"
-	desc = "A statue of a shark carved out of heartstone. Some sailors believe them to be agents of Abyssor."
+	name = "心石鲨鱼雕像"
+	desc = "一尊以心石雕成的鲨鱼雕像。有些水手相信它们是 Abyssor 的使者。"
 	icon_state = "shark_coral"
 	grid_height = 64
 	grid_width = 64
@@ -750,8 +750,8 @@
 // amber //
 
 /obj/item/carvedgem/amber
-	name = "amber base"
-	desc = "if you are seeing this, it's a bug, report it to coders"
+	name = "琥珀底坯"
+	desc = "如果你看到了这个，那就是出错了，请向代码人员报告。"
 	icon = 'icons/roguetown/gems/gem_amber.dmi'
 	icon_state = "cutgem_amber"
 	grid_height = 32
@@ -760,112 +760,112 @@
 
 
 /obj/item/carvedgem/amber/cameo
-	name = "amber cameo"
-	desc = "A cameo carved out of amber depicting... someone? Use your imagination on who it could be..."
+	name = "琥珀浮雕"
+	desc = "一枚以琥珀雕成的浮雕，描绘着……某个人？至于是谁，就靠你想象了。"
 	icon_state = "cameo_amber"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 55
 
 /obj/item/carvedgem/amber/figurine
-	name = "amber figurine"
-	desc = "A small figurine carved out of amber."
+	name = "琥珀小像"
+	desc = "一尊以琥珀雕成的小像。"
 	icon_state = "figurine_amber"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 60
 
 /obj/item/carvedgem/amber/fish
-	name = "amber fish figurine"
-	desc = "A small fish figurine carved out of amber."
+	name = "琥珀鱼像"
+	desc = "一尊以琥珀雕成的小鱼像。"
 	icon_state = "fish_amber"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 60
 
 /obj/item/carvedgem/amber/tablet
-	name = "amber tablet"
-	desc = "A tablet carved out of amber."
+	name = "琥珀板"
+	desc = "一块以琥珀雕成的板片。"
 	icon_state = "tablet_amber"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 60
 
 /obj/item/carvedgem/amber/vase
-	name = "amber vase"
-	desc = "A vase carved out of amber."
+	name = "琥珀花瓶"
+	desc = "一个以琥珀雕成的花瓶。"
 	icon_state = "vase_amber"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 60
 
 /obj/item/carvedgem/amber/bust
-	name = "amber bust"
-	desc = "A bust carved out of amber."
+	name = "琥珀半身像"
+	desc = "一尊以琥珀雕成的半身像。"
 	icon_state = "bust_amber"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 65
 
 /obj/item/carvedgem/amber/fancyvase
-	name = "fancy amber vase"
-	desc = "A fancy vase carved out of amber."
+	name = "华美琥珀花瓶"
+	desc = "一个以琥珀雕成的华美花瓶。"
 	icon_state= "fancyvase_amber"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 65
 
 /obj/item/carvedgem/amber/comb
-	name = "amber comb"
-	desc = "A luxurious comb carved out of amber."
+	name = "琥珀梳"
+	desc = "一把以琥珀雕成的奢华梳子。"
 	icon_state = "comb_amber"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 65
 
 /obj/item/carvedgem/amber/duck
-	name = "amber duck"
-	desc = "An adorable little duck carved out of amber."
+	name = "琥珀小鸭"
+	desc = "一只由琥珀雕成的可爱小鸭。"
 	icon_state = "duck_amber"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 65
 
 /obj/item/carvedgem/amber/urn
-	name = "amber urn"
-	desc = "A large decorative urn carved out of amber."
+	name = "琥珀瓮"
+	desc = "一个以琥珀雕成的大型装饰瓮。"
 	icon_state = "urn_amber"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 70
 
 /obj/item/carvedgem/amber/statue
-	name = "amber statue"
-	desc = "A statue carved out of amber."
+	name = "琥珀雕像"
+	desc = "一尊以琥珀雕成的雕像。"
 	icon_state = "statue_amber"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 70
 
 /obj/item/carvedgem/amber/obelisk
-	name = "amber obelisk"
-	desc = "An obelisk carved out of amber."
+	name = "琥珀方尖碑"
+	desc = "一座以琥珀雕成的方尖碑。"
 	icon_state = "obelisk_amber"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 70
 
 /obj/item/carvedgem/amber/beaver
-	name = "amber beaver statue"
-	desc = "A medium-sized carving of a beaver made out of amber. Beavers known to build dams and congregate around shipwrecks. Some sailors consider them to be a bad omen."
+	name = "琥珀海狸雕像"
+	desc = "一件以琥珀雕成的中型海狸雕像。海狸以筑坝和聚集在沉船附近而闻名，有些水手将它们视作凶兆。"
 	icon_state = "beaver_amber"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 75
 
 /obj/item/carvedgem/amber/sun
-	name = "amber sun carving"
-	desc = "A shining sun carved out of amber. This would look nice on a church altar."
+	name = "琥珀太阳雕件"
+	desc = "一轮以琥珀雕成的耀眼太阳。摆在教堂祭坛上想必会很好看。"
 	icon_state = "sun_amber"
 	grid_height = 32
 	grid_width = 32
@@ -874,112 +874,112 @@
 // opal
 
 /obj/item/carvedgem/opal
-	name = "opal base"
-	desc = "if you are seeing this, it's a bug, report it to coders"
+	name = "蛋白石底坯"
+	desc = "如果你看到了这个，那就是出错了，请向代码人员报告。"
 	icon = 'icons/roguetown/gems/gem_opal.dmi'
 	icon_state = "cutgem_opal"
 	grid_height = 32
 	grid_width = 32
 
 /obj/item/carvedgem/opal/cameo
-	name = "opal cameo"
-	desc = "A cameo carved out of opal depicting...someone? Use your imagination on who it could be."
+	name = "蛋白石浮雕"
+	desc = "一枚以蛋白石雕成的浮雕，描绘着……某个人？至于是谁，就靠你想象了。"
 	icon_state = "cameo_opal"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 85
 
 /obj/item/carvedgem/opal/figurine
-	name = "opal figurine"
-	desc = "A small figurine carved out of opal."
+	name = "蛋白石小像"
+	desc = "一尊以蛋白石雕成的小像。"
 	icon_state = "figurine_opal"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 90
 
 /obj/item/carvedgem/opal/fish
-	name = "opal fish figurine"
-	desc = "A small fish figurine carved out of opal."
+	name = "蛋白石鱼像"
+	desc = "一尊以蛋白石雕成的小鱼像。"
 	icon_state = "fish_opal"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 90
 
 /obj/item/carvedgem/opal/vase
-	name = "opal vase"
-	desc = "A vase carved out of opal."
+	name = "蛋白石花瓶"
+	desc = "一个以蛋白石雕成的花瓶。"
 	icon_state = "vase_opal"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 90
 
 /obj/item/carvedgem/opal/tablet
-	name = "opal tablet"
-	desc = "A tablet carved out of opal."
+	name = "蛋白石板"
+	desc = "一块以蛋白石雕成的板片。"
 	icon_state = "tablet_opal"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 90
 
 /obj/item/carvedgem/opal/fancyvase
-	name = "fancy opal vase"
-	desc = "A fancy vase carved out of opal."
+	name = "华美蛋白石花瓶"
+	desc = "一个以蛋白石雕成的华美花瓶。"
 	icon_state = "fancyvase_opal"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 95
 
 /obj/item/carvedgem/opal/bust
-	name = "opal bust"
-	desc = "A bust carved out of opal."
+	name = "蛋白石半身像"
+	desc = "一尊以蛋白石雕成的半身像。"
 	icon_state = "bust_opal"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 95
 
 /obj/item/carvedgem/opal/comb
-	name = "opal comb"
-	desc = "A luxurious comb carved out of opal."
+	name = "蛋白石梳"
+	desc = "一把以蛋白石雕成的奢华梳子。"
 	icon_state = "comb_opal"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 95
 
 /obj/item/carvedgem/opal/duck
-	name = "opal duck"
-	desc = "An adorable little duck carved out of opal."
+	name = "蛋白石小鸭"
+	desc = "一只由蛋白石雕成的可爱小鸭。"
 	icon_state = "duck_opal"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 95
 
 /obj/item/carvedgem/opal/obelisk
-	name = "opal obelisk"
-	desc = "An obelisk carved out of opal."
+	name = "蛋白石方尖碑"
+	desc = "一座以蛋白石雕成的方尖碑。"
 	icon_state = "obelisk_opal"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 100
 
 /obj/item/carvedgem/opal/statue
-	name = "opal statue"
-	desc = "A statue carved out of opal."
+	name = "蛋白石雕像"
+	desc = "一尊以蛋白石雕成的雕像。"
 	icon_state = "statue_opal"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 100
 
 /obj/item/carvedgem/opal/urn
-	name = "opal urn"
-	desc = "A large decorative urn carved out of opal."
+	name = "蛋白石瓮"
+	desc = "一个以蛋白石雕成的大型装饰瓮。"
 	icon_state = "urn_opal"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 100
 
 /obj/item/carvedgem/opal/crab
-	name = "opal crab sculpture"
-	desc = "A large sculpture of a crab carved out of opal. Don't stick your fingers in its pincers, that's a terrible idea."
+	name = "蛋白石螃蟹雕塑"
+	desc = "一尊以蛋白石雕成的大型螃蟹雕塑。别把手指伸进它的螯里，那绝对是个糟主意。"
 	icon_state = "crab_opal"
 	grid_height = 64
 	grid_width = 64
@@ -988,8 +988,8 @@
 //.....................Chitin......................//
 
 /obj/item/carvedgem/chitin
-	name = "chitin base"
-	desc = "if you are seeing this, it's a bug, report it to coders"
+	name = "虫甲底坯"
+	desc = "如果你看到了这个，那就是出错了，请向代码人员报告。"
 	icon = 'icons/roguetown/gems/gem_shell.dmi'
 	icon_state = "raw_shell"
 	color = "#7B8C5E"
@@ -997,112 +997,112 @@
 	grid_width = 32
 
 /obj/item/carvedgem/chitin/rawchitin
-	name = "carved chitin"
-	desc = "A piece of beetle chitin that has been carved into a workable shape. Underdeep dwellers use it as a substitute for bone and shell."
+	name = "雕琢虫甲"
+	desc = "一块被雕琢成可加工形状的甲虫几丁质。深地居民常拿它代替骨头和贝壳使用。"
 	icon_state = "raw_shell"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 10
 
 /obj/item/carvedgem/chitin/cameo
-	name = "chitin cameo"
-	desc = "A cameo carved out of beetle chitin depicting...someone? Use your imagination on who it could be."
+	name = "虫甲浮雕"
+	desc = "一枚以甲虫几丁质雕成的浮雕，描绘着……某个人？至于是谁，就靠你想象了。"
 	icon_state = "cameo_shell"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 15
 
 /obj/item/carvedgem/chitin/figurine
-	name = "chitin figurine"
-	desc = "A small figurine carved out of beetle chitin."
+	name = "虫甲小像"
+	desc = "一尊以甲虫几丁质雕成的小像。"
 	icon_state = "figurine_shell"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 20
 
 /obj/item/carvedgem/chitin/fish
-	name = "chitin fish figurine"
-	desc = "A small fish figurine carved out of beetle chitin."
+	name = "虫甲鱼像"
+	desc = "一尊以甲虫几丁质雕成的小鱼像。"
 	icon_state = "fish_shell"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 20
 
 /obj/item/carvedgem/chitin/vase
-	name = "chitin vase"
-	desc = "A vase carved out of beetle chitin."
+	name = "虫甲花瓶"
+	desc = "一个以甲虫几丁质雕成的花瓶。"
 	icon_state = "vase_shell"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 20
 
 /obj/item/carvedgem/chitin/tablet
-	name = "chitin tablet"
-	desc = "A tablet carved out of beetle chitin."
+	name = "虫甲板"
+	desc = "一块以甲虫几丁质雕成的板片。"
 	icon_state = "tablet_shell"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 20
 
 /obj/item/carvedgem/chitin/bust
-	name = "chitin bust"
-	desc = "A bust carved out of beetle chitin."
+	name = "虫甲半身像"
+	desc = "一尊以甲虫几丁质雕成的半身像。"
 	icon_state = "bust_shell"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 25
 
 /obj/item/carvedgem/chitin/fancyvase
-	name = "fancy chitin vase"
-	desc = "A fancy vase carved out of beetle chitin."
+	name = "华美虫甲花瓶"
+	desc = "一个以甲虫几丁质雕成的华美花瓶。"
 	icon_state = "fancyvase_shell"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 25
 
 /obj/item/carvedgem/chitin/comb
-	name = "chitin comb"
-	desc = "A luxurious comb carved out of beetle chitin."
+	name = "虫甲梳"
+	desc = "一把以甲虫几丁质雕成的奢华梳子。"
 	icon_state = "comb_shell"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 25
 
 /obj/item/carvedgem/chitin/duck
-	name = "chitin duck"
-	desc = "An adorable little duck carved out of beetle chitin."
+	name = "虫甲小鸭"
+	desc = "一只由甲虫几丁质雕成的可爱小鸭。"
 	icon_state = "duck_shell"
 	grid_height = 32
 	grid_width = 32
 	sellprice = 25
 
 /obj/item/carvedgem/chitin/urn
-	name = "chitin urn"
-	desc = "A large decorative urn carved out of beetle chitin."
+	name = "虫甲瓮"
+	desc = "一个以甲虫几丁质雕成的大型装饰瓮。"
 	icon_state = "urn_shell"
 	grid_height = 64
 	grid_width = 64
 	sellprice = 30
 
 /obj/item/carvedgem/chitin/statue
-	name = "chitin statue"
-	desc = "A statue carved out of beetle chitin."
+	name = "虫甲雕像"
+	desc = "一尊以甲虫几丁质雕成的雕像。"
 	icon_state = "statue_shell"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 30
 
 /obj/item/carvedgem/chitin/obelisk
-	name = "chitin obelisk"
-	desc = "An obelisk carved out of beetle chitin."
+	name = "虫甲方尖碑"
+	desc = "一座以甲虫几丁质雕成的方尖碑。"
 	icon_state = "obelisk_shell"
 	grid_height = 64
 	grid_width = 32
 	sellprice = 30
 
 /obj/item/carvedgem/chitin/beetle
-	name = "chitin beetle sculpture"
-	desc = "A detailed sculpture of a woolly chafer beetle carved from its own chitin. A common trinket among underdeep settlers."
+	name = "虫甲甲虫雕塑"
+	desc = "一尊用其自身甲壳雕成的绒鳃金龟精致雕塑。这是深地定居者间常见的小饰物。"
 	icon_state = "turtle_shell" // reusing turtle sprite with green tint
 	grid_height = 64
 	grid_width = 64

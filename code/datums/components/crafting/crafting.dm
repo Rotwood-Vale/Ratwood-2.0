@@ -58,22 +58,22 @@
 	var/quality_multiplier = 1.0
 	switch(quality_tier)
 		if(0)
-			quality_prefix = "crude "
+			quality_prefix = "粗劣的 "
 			quality_multiplier = 0.4
 		if(1)
-			quality_prefix = "rough "
+			quality_prefix = "粗糙的 "
 			quality_multiplier = 0.6
 		if(2)
 			quality_prefix = ""
 			quality_multiplier = 0.8
 		if(3)
-			quality_prefix = "fine "
+			quality_prefix = "精良的 "
 			quality_multiplier = 1.04
 		if(4)
-			quality_prefix = "flawless "
+			quality_prefix = "无瑕的 "
 			quality_multiplier = 1.28
 		if(5)
-			quality_prefix = "masterwork "
+			quality_prefix = "大师之作 "
 			quality_multiplier = 1.6
 	// Apply quality prefix to name for tiers 3 and above
 	if(quality_prefix && quality_tier >= 3)
@@ -264,18 +264,18 @@
 	return TRUE
 
 /atom/proc/SelectDiagDirection()
-	var/list/options = list("NORTHWEST", "SOUTHWEST", "SOUTHEAST", "NORTHEAST")
-	var/select = input(usr, "Please select a direction.", "", null) in options
+	var/list/options = list("西北", "西南", "东南", "东北")
+	var/select = input(usr, "请选择一个方向。", "", null) in options
 	if(!select)
 		return FALSE
 	switch(select)
-		if("NORTHWEST")
+		if("西北")
 			return NORTHWEST
-		if("SOUTHWEST")
+		if("西南")
 			return SOUTHWEST
-		if("SOUTHEAST")
+		if("东南")
 			return SOUTHEAST
-		if("NORTHEAST")
+		if("东北")
 			return NORTHEAST
 	return FALSE
 
@@ -288,7 +288,7 @@
 
 /datum/component/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
 	if (HAS_TRAIT(user, TRAIT_CURSE_MALUM))
-		to_chat(user, span_warning("Your cursed hands tremble and fail to craft... Malum forbids it."))
+		to_chat(user, span_warning("你被诅咒的双手颤抖不止，根本无法制作任何东西……Malum 不允许如此。"))
 		return
 	if(user.doing)
 		return
@@ -303,39 +303,39 @@
 		N = R.result
 	result_name = N.name
 	if(isopenturf(T) && R.wallcraft)
-		to_chat(user, span_warning("Need to craft this on a wall."))
+		to_chat(user, span_warning("这东西得靠着墙制作。"))
 		return
 	if(!isopenturf(T) || R.ontile)
 		T = get_turf(user.loc)
 	if(!R.TurfCheck(user, T))
-		to_chat(user, span_warning("I can't craft here."))
+		to_chat(user, span_warning("我没法在这里制作。"))
 		return
 	if(isturf(R.result))
 		for(var/obj/structure/fluff/traveltile/TT in range(7, user))
-			to_chat(user, span_warning("I can't craft here."))
+			to_chat(user, span_warning("我没法在这里制作。"))
 			return
 	if(ispath(R.result, /obj/structure) || ispath(R.result, /obj/machinery))
 		for(var/obj/structure/fluff/traveltile/TT in range(7, user))
-			to_chat(user, span_warning("I can't craft here."))
+			to_chat(user, span_warning("我没法在这里制作。"))
 			return
 		for(var/obj/structure/S in T)
 			if(R.buildsame && istype(S, R.result))
 				if(user.dir == S.dir)
-					to_chat(user, span_warning("Something is in the way."))
+					to_chat(user, span_warning("有东西挡住了。"))
 					return
 				continue
 			if(R.structurecraft && istype(S, R.structurecraft))
 				continue
 			if(S.density && !R.ignoredensity)
-				to_chat(user, span_warning("Something is in the way."))
+				to_chat(user, span_warning("有东西挡住了。"))
 				return
 		for(var/obj/machinery/M in T)
 			if(M.density)
-				to_chat(user, span_warning("Something is in the way."))
+				to_chat(user, span_warning("有东西挡住了。"))
 				return
 	if(R.req_table)
 		if(!(locate(/obj/structure/table) in T))
-			to_chat(user, span_warning("I need to make this on a table."))
+			to_chat(user, span_warning("我得在桌上制作这个。"))
 			return
 	if(R.structurecraft)
 		if(!(locate(R.structurecraft) in T))
@@ -343,7 +343,7 @@
 			if(ispath(R.structurecraft, /obj/))
 				var/obj/O = R.structurecraft
 				str = initial(O.name)
-			to_chat(user, span_warning("I'm missing a structure I need: \the <b>[str]</b>"))
+			to_chat(user, span_warning("我缺少所需的结构：<b>[str]</b>"))
 			return
 	if(check_contents(R, contents))
 		if(check_tools(user, R, contents))
@@ -372,9 +372,9 @@
 					prob2craft = CLAMP(prob2craft, 0, 99)
 					if(!prob(prob2craft))
 						if(user.client?.prefs.showrolls)
-							to_chat(user, span_danger("I've failed to craft \the [result_name]... [prob2craft]%"))
+							to_chat(user, span_danger("我没能做出[result_name]…… [prob2craft]%"))
 							continue
-						to_chat(user, span_danger("I've failed to craft \the [result_name]."))
+						to_chat(user, span_danger("我没能做出[result_name]。"))
 						continue
 					var/list/parts = del_reqs(R, user)
 					if(islist(R.result))
@@ -394,7 +394,7 @@
 								X.OnCrafted(user.dir, user)
 								X.add_fingerprint(user)
 								if(R.loud)
-									X.loud_message("Construction sounds can be heard")
+									X.loud_message("能听见施工的动静。")
 						else
 							var/atom/movable/I = new R.result (T)
 							// Apply pottery quality if this is a pottery item
@@ -406,8 +406,8 @@
 							else
 								I.OnCrafted(user.dir, user)
 							I.add_fingerprint(user)
-					user.visible_message(span_notice("[user] [R.verbage] \a [result_name]!"), \
-										span_notice("I [R.verbage_simple] \a [result_name]!"))
+					user.visible_message(span_notice("[user] [R.verbage]了[result_name]!"), \
+										span_notice("我[R.verbage_simple]了[result_name]!"))
 					user.log_message("crafted [result_name] ([R.type])", LOG_GAME)
 					if(user.mind && R.skillcraft)
 						if(isliving(user))
@@ -435,7 +435,7 @@
 			else
 				for(var/obj/O as anything in R.tools)
 					str += "[initial(O.name)]"
-		to_chat(usr, span_warning("I'm missing a tool. I need: <b>[str]</b>"))
+		to_chat(usr, span_warning("我缺少工具。我需要：<b>[str]</b>"))
 		return FALSE
 	return FALSE
 
@@ -640,13 +640,13 @@
 /datum/component/personal_crafting/ui_interact(mob/user, datum/tgui/ui)
 	var/area/A = get_area(user)
 	if(!A.can_craft_here())
-		to_chat(user, span_warning("You cannot craft here."))
+		to_chat(user, span_warning("你不能在这里制作。"))
 		if(ui) ui.close()
 		return
 
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "MiaCraft", "Crafting Menu", 700, 800)
+		ui = new(user, src, "MiaCraft", "制作菜单", 700, 800)
 		ui.set_state(GLOB.not_incapacitated_turf_state)
 		ui.open()
 
@@ -689,7 +689,7 @@
 		return
 	var/area/A = get_area(user)
 	if(!A.can_craft_here())
-		to_chat(user, span_warning("I can't craft here."))
+		to_chat(user, span_warning("我没法在这里制作。"))
 		return
 
 	var/list/data = list()
@@ -710,15 +710,15 @@
 				if(R.skillcraft)
 					catty |= initial(R.skillcraft:name)
 				else
-					catty |= "Other"
+					catty |= "其他"
 	if(!data.len)
-		to_chat(user, span_warning("There is nothing I can craft."))
+		to_chat(user, span_warning("没有任何我能制作的东西。"))
 		return
 	if(!catty.len)
 		return
 	var/t
 	if(catty.len > 1)
-		t=input(user, "CHOOSE SKILL") as null|anything in catty
+		t=input(user, "选择技能分类") as null|anything in catty
 	else
 		t=pick(catty)
 	if(t)
@@ -728,11 +728,11 @@
 				if(t == initial(X.skillcraft:name))
 					realdata += X
 			else
-				if(t == "Other")
+				if(t == "其他")
 					realdata += X
 		if(realdata.len)
 			realdata = sortNames(realdata)
-			var/r = input(user, "What should I craft?") as null|anything in realdata
+			var/r = input(user, "我要制作什么？") as null|anything in realdata
 			if(r)
 				construct_item_repeatable(user, r)
 				user.mind.lastrecipe = r
@@ -741,12 +741,11 @@
 
 
 /client/verb/toggle_legacycraft()
-	set name = "Toggle legacy craft"
-	set category = "Options"
-	set desc = "Toggles between legacy and miacraft"
+	set name = "切换旧版制作界面"
+	set category = "选项"
+	set desc = "在旧版制作界面与 MiaCraft 界面之间切换"
 	set hidden = 1
 	usr.client.legacycraft = !legacycraft
 
 /client
 	var/legacycraft = FALSE
-

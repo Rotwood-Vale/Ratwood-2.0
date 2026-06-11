@@ -9,7 +9,7 @@
 
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
-	tutorial = "How does it feel to be the rat in the cage? You're alone and at the mercy of your captors, kept around as a hostage. You spend your days waiting for the oft chance someone comes to pay your ransom. Might as well start praying to whatever god you find solace in."
+	tutorial = "当笼中的老鼠是什么滋味？你孤身一人，只能任凭看守摆布，被当作人质活着。你日复一日地等着，盼望总有那么一线机会，会有人替你付清赎金。趁现在，最好赶紧向任何还能给你慰藉的神明祈祷吧。"
 
 	outfit = /datum/outfit/job/roguetown/prisonerr
 	bypass_jobban = TRUE
@@ -43,7 +43,7 @@
 
 // Prisoner-specific subclasses, inheriting from towner roles
 /datum/outfit/job/roguetown/prisoner_farmer
-	name = "Prisoner Farmer"
+	name = "囚犯农夫"
 
 /datum/outfit/job/roguetown/prisoner_farmer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H) return
@@ -78,11 +78,11 @@
 /datum/advclass/prisoner_farmer
 	parent_type = /datum/advclass
 	outfit = /datum/outfit/job/roguetown/prisoner_farmer
-	name = "Prisoner Farmer"
+	name = "囚犯农夫"
 	category_tags = list(CTAG_PRISONER)
 
 /datum/outfit/job/roguetown/prisoner_thug
-	name = "Prisoner Thug"
+	name = "囚犯恶棍"
 
 /datum/outfit/job/roguetown/prisoner_thug/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H) return
@@ -111,11 +111,11 @@
 /datum/advclass/prisoner_thug
 	parent_type = /datum/advclass
 	outfit = /datum/outfit/job/roguetown/prisoner_thug
-	name = "Prisoner Thug"
+	name = "囚犯恶棍"
 	category_tags = list(CTAG_PRISONER)
 
 /datum/outfit/job/roguetown/prisoner_carpenter
-	name = "Prisoner Carpenter"
+	name = "囚犯木匠"
 
 /datum/outfit/job/roguetown/prisoner_carpenter/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H) return
@@ -144,11 +144,11 @@
 /datum/advclass/prisoner_carpenter
 	parent_type = /datum/advclass
 	outfit = /datum/outfit/job/roguetown/prisoner_carpenter
-	name = "Prisoner Carpenter"
+	name = "囚犯木匠"
 	category_tags = list(CTAG_PRISONER)
 
 /datum/outfit/job/roguetown/prisoner_blacksmith
-	name = "Prisoner Blacksmith"
+	name = "囚犯铁匠"
 
 /datum/outfit/job/roguetown/prisoner_blacksmith/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H) return
@@ -171,11 +171,11 @@
 /datum/advclass/prisoner_blacksmith
 	parent_type = /datum/advclass
 	outfit = /datum/outfit/job/roguetown/prisoner_blacksmith
-	name = "Prisoner Blacksmith"
+	name = "囚犯铁匠"
 	category_tags = list(CTAG_PRISONER)
 
 /datum/outfit/job/roguetown/prisoner_hunter
-	name = "Prisoner Hunter"
+	name = "囚犯猎人"
 
 /datum/outfit/job/roguetown/prisoner_hunter/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H) return
@@ -209,15 +209,14 @@
 /datum/advclass/prisoner_hunter
 	parent_type = /datum/advclass
 	outfit = /datum/outfit/job/roguetown/prisoner_hunter
-	name = "Prisoner Hunter"
+	name = "囚犯猎人"
 	category_tags = list(CTAG_PRISONER)
 
 /datum/outfit/job/roguetown/prisoner_minstrel
-	name = "Prisoner Minstrel"
+	name = "囚犯吟游者"
 
 /datum/outfit/job/roguetown/prisoner_minstrel/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H) return
-	if(H) to_chat(H, "DEBUG: prisoner_minstrel pre_equip called")
 	..() // Call base prisoner outfit for collar/loincloth
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 3, TRUE)
@@ -242,13 +241,13 @@
 /datum/advclass/prisoner_minstrel
 	parent_type = /datum/advclass
 	outfit = /datum/outfit/job/roguetown/prisoner_minstrel
-	name = "Prisoner Minstrel"
+	name = "囚犯吟游者"
 	category_tags = list(CTAG_PRISONER)
 
 /datum/advclass/prisoner_butcher
 	parent_type = /datum/advclass
 	outfit = /datum/outfit/job/roguetown/prisoner_butcher
-	name = "Prisoner Butcher"
+	name = "囚犯屠夫"
 	category_tags = list(CTAG_PRISONER)
 
 /datum/outfit/job/roguetown/prisoner_butcher/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -271,7 +270,7 @@
 /datum/advclass/prisoner_cheesemaker
 	parent_type = /datum/advclass
 	outfit = /datum/outfit/job/roguetown/prisoner_cheesemaker
-	name = "Prisoner Cheesemaker"
+	name = "囚犯奶酪匠"
 	category_tags = list(CTAG_PRISONER)
 
 /datum/outfit/job/roguetown/prisoner_cheesemaker/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -298,7 +297,7 @@
 /datum/advclass/prisoner_seamstress
 	parent_type = /datum/advclass
 	outfit = /datum/outfit/job/roguetown/prisoner_seamstress
-	name = "Prisoner Seamster"
+	name = "囚犯缝纫工"
 	category_tags = list(CTAG_PRISONER)
 
 /datum/outfit/job/roguetown/prisoner_seamstress/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -320,7 +319,7 @@
 /datum/advclass/prisoner_potter
 	parent_type = /datum/advclass
 	outfit = /datum/outfit/job/roguetown/prisoner_potter
-	name = "Prisoner Potter"
+	name = "囚犯陶工"
 	category_tags = list(CTAG_PRISONER)
 
 /datum/outfit/job/roguetown/prisoner_potter/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -343,7 +342,7 @@
 /datum/advclass/prisoner_towndoctor
 	parent_type = /datum/advclass
 	outfit = /datum/outfit/job/roguetown/prisoner_towndoctor
-	name = "Prisoner Barber Surgeon"
+	name = "囚犯理发医师"
 	category_tags = list(CTAG_PRISONER)
 
 /datum/outfit/job/roguetown/prisoner_towndoctor/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -367,7 +366,7 @@
 /datum/advclass/prisoner_drunkard
 	parent_type = /datum/advclass
 	outfit = /datum/outfit/job/roguetown/prisoner_drunkard
-	name = "Prisoner Gambler"
+	name = "囚犯赌徒"
 	category_tags = list(CTAG_PRISONER)
 
 /datum/outfit/job/roguetown/prisoner_drunkard/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -387,7 +386,7 @@
 /datum/advclass/prisoner_witch
 	parent_type = /datum/advclass
 	outfit = /datum/outfit/job/roguetown/prisoner_witch
-	name = "Prisoner Witch"
+	name = "囚犯女巫"
 	category_tags = list(CTAG_PRISONER)
 
 /datum/outfit/job/roguetown/prisoner_witch/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -424,7 +423,7 @@
 /datum/advclass/prisoner_miner
 	parent_type = /datum/advclass
 	outfit = /datum/outfit/job/roguetown/prisoner_miner
-	name = "Prisoner Miner"
+	name = "囚犯矿工"
 	category_tags = list(CTAG_PRISONER)
 
 /datum/outfit/job/roguetown/prisoner_miner/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -454,7 +453,7 @@
 /datum/advclass/prisoner_woodcutter
 	parent_type = /datum/advclass
 	outfit = /datum/outfit/job/roguetown/prisoner_woodcutter
-	name = "Prisoner Woodcutter"
+	name = "囚犯伐木工"
 	category_tags = list(CTAG_PRISONER)
 
 /datum/outfit/job/roguetown/prisoner_woodcutter/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -487,4 +486,3 @@
 		pants = /obj/item/clothing/under/roguetown/tights/random
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/random
 		armor = /obj/item/clothing/suit/roguetown/shirt/tunic/random
-

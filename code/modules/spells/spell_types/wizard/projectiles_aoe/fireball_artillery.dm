@@ -1,8 +1,8 @@
 /obj/effect/proc_holder/spell/invoked/projectile/fireball/artillery
-	name = "Artillery Fireball"
-	desc = "A arc-able fireball that seemingly does far more damage to structures than people. \n\
-	Damage is increased by 100% versus simple-minded creechurs.\n\
-	Can be fired in an arc over an ally's head with a mage's staff or spellbook on arc intent. It will deals an additional 30% damage that way"
+	name = "攻城火球"
+	desc = "一枚可进行弧射的火球，看起来对建筑造成的伤害远比对人更高。\n\
+	对头脑简单的生物伤害提高 100%。\n\
+	若以法师杖或法术书切换至弧射意图，还可越过盟友头顶发射；那样会额外提高 30% 伤害。"
 	clothes_req = FALSE
 	cost = 6
 	range = 8
@@ -18,7 +18,7 @@
 	movement_interrupt = FALSE
 	charging_slowdown = 3
 	spell_tier = 4 // Court mage can have this as a treat
-	invocations = list("Ignis Sphaera directa!")
+	invocations = list("攻城火球，直落！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_FIRE
 	glow_intensity = GLOW_INTENSITY_HIGH
@@ -36,7 +36,7 @@
 	. = ..()
 
 /obj/projectile/magic/aoe/fireball/rogue/artillery
-	name = "Artillery Fireball"
+	name = "攻城火球"
 	exp_heavy = 0
 	exp_light = 0
 	exp_flash = 0
@@ -51,7 +51,7 @@
 	aoe_range = 0
 
 /obj/projectile/magic/aoe/fireball/rogue/artillery/arc
-	name = "Arced Artillery Fireball"
+	name = "弧射攻城火球"
 	damage = 55 // 5 damage more than actual fireball on arc'd fire hit
 	arcshot = TRUE
 
@@ -60,7 +60,7 @@
 	if(ismob(target))
 		var/mob/M = target
 		if(M.anti_magic_check())
-			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			visible_message(span_warning("[src] 在接触[target]时噗地熄散了！"))
 			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 			qdel(src)
 			return BULLET_ACT_BLOCK

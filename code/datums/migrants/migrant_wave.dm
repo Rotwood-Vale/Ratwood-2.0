@@ -1,7 +1,7 @@
 /datum/migrant_wave
 	abstract_type = /datum/migrant_wave
 	/// Name of the wave
-	var/name = "MIGRANT WAVE"
+	var/name = "移民波次"
 	/// Assoc list of roles types to amount
 	var/list/roles = list()
 	/// If defined, this is the minimum active migrants required to roll the wave
@@ -44,75 +44,75 @@
 	return amount
 
 /datum/migrant_wave/pilgrim
-	name = "Pilgrimage"
+	name = "朝圣之旅"
 	downgrade_wave = /datum/migrant_wave/pilgrim_down_one
 	roles = list(
 		/datum/migrant_role/pilgrim = 4,
 	)
-	greet_text = "Fleeing from misfortune and hardship, you and a handful of survivors get closer to the realm, looking for refuge and work, finally almost being there, almost..."
+	greet_text = "为逃离不幸与苦难，你与几名幸存者正逐渐接近谷地，寻找庇护与工作。你们终于快要到了，几乎就快到了……"
 
 /datum/migrant_wave/pilgrim_down_one
-	name = "Pilgrimage"
+	name = "朝圣之旅"
 	downgrade_wave = /datum/migrant_wave/pilgrim_down_two
 	can_roll = FALSE
 	roles = list(
 		/datum/migrant_role/pilgrim = 3,
 	)
-	greet_text = "Fleeing from misfortune and hardship, you and a handful of survivors get closer to the realm, looking for refuge and work, finally almost being there, almost..."
+	greet_text = "为逃离不幸与苦难，你与几名幸存者正逐渐接近谷地，寻找庇护与工作。你们终于快要到了，几乎就快到了……"
 
 /datum/migrant_wave/pilgrim_down_two
-	name = "Pilgrimage"
+	name = "朝圣之旅"
 	downgrade_wave = /datum/migrant_wave/pilgrim_down_three
 	can_roll = FALSE
 	roles = list(
 		/datum/migrant_role/pilgrim = 2,
 	)
-	greet_text = "Fleeing from misfortune and hardship, you and a handful of survivors get closer to the realm, looking for refuge and work, finally almost being there, almost..."
+	greet_text = "为逃离不幸与苦难，你与几名幸存者正逐渐接近谷地，寻找庇护与工作。你们终于快要到了，几乎就快到了……"
 
 /datum/migrant_wave/pilgrim_down_three
-	name = "Pilgrimage"
+	name = "朝圣之旅"
 	can_roll = FALSE
 	roles = list(
 		/datum/migrant_role/pilgrim = 1,
 	)
-	greet_text = "Fleeing from misfortune and hardship, you and a handful of survivors get closer to the realm, looking for refuge and work, finally almost being there, almost..."
+	greet_text = "为逃离不幸与苦难，你与几名幸存者正逐渐接近谷地，寻找庇护与工作。你们终于快要到了，几乎就快到了……"
 
 /datum/migrant_wave/adventurer
-	name = "Adventure Party"
+	name = "冒险小队"
 	downgrade_wave = /datum/migrant_wave/adventurer_down_one
 	roles = list(
 		/datum/migrant_role/adventurer = 4,
 	)
-	greet_text = "Together with a party of trusted friends we decided to venture out, seeking thrills, glory and treasure, ending up on a dark and lonesome road, perhaps getting ourselves into more than what we bargained for."
+	greet_text = "你与一群值得信赖的伙伴结伴远行，追寻刺激、荣耀与财富，最终闯进了谷地下方那片迷雾弥漫、湿冷阴郁的沼泽，也许还把自己卷进了远超预想的麻烦之中。"
 
 /datum/migrant_wave/adventurer_down_one
-	name = "Adventure Party"
+	name = "冒险小队"
 	downgrade_wave = /datum/migrant_wave/adventurer_down_two
 	can_roll = FALSE
 	roles = list(
 		/datum/migrant_role/adventurer = 3,
 	)
-	greet_text = "Together with a party of trusted friends we decided to venture out, seeking thrills, glory and treasure, ending up on a dark and lonesome road, perhaps getting ourselves into more than what we bargained for."
+	greet_text = "你与一群值得信赖的伙伴结伴远行，追寻刺激、荣耀与财富，最终闯进了谷地下方那片迷雾弥漫、湿冷阴郁的沼泽，也许还把自己卷进了远超预想的麻烦之中。"
 
 /datum/migrant_wave/adventurer_down_two
-	name = "Adventure Party"
+	name = "冒险小队"
 	downgrade_wave = /datum/migrant_wave/adventurer_down_three
 	can_roll = FALSE
 	roles = list(
 		/datum/migrant_role/adventurer = 2,
 	)
-	greet_text = "Together with a party of trusted friends we decided to venture out, seeking thrills, glory and treasure, ending up on a dark and lonesome road, perhaps getting ourselves into more than what we bargained for."
+	greet_text = "你与一群值得信赖的伙伴结伴远行，追寻刺激、荣耀与财富，最终闯进了谷地下方那片迷雾弥漫、湿冷阴郁的沼泽，也许还把自己卷进了远超预想的麻烦之中。"
 
 /datum/migrant_wave/adventurer_down_three
-	name = "Adventure Party"
+	name = "冒险小队"
 	can_roll = FALSE
 	roles = list(
 		/datum/migrant_role/adventurer = 1,
 	)
-	greet_text = "Together with a party of trusted friends we decided to venture out, seeking thrills, glory and treasure, ending up on a dark and lonesome road, perhaps getting ourselves into more than what we bargained for."
+	greet_text = "你与一群值得信赖的伙伴结伴远行，追寻刺激、荣耀与财富，最终闯进了谷地下方那片迷雾弥漫、湿冷阴郁的沼泽，也许还把自己卷进了远超预想的麻烦之中。"
 
 /datum/migrant_wave/bandit
-	name = "Bandit Raid"
+	name = "强盗袭击"
 	downgrade_wave = /datum/migrant_wave/bandit_down_one
 	can_roll = FALSE
 	weight = 16
@@ -122,7 +122,7 @@
 	)
 
 /datum/migrant_wave/bandit_down_one
-	name = "Bandit Raid"
+	name = "强盗袭击"
 	downgrade_wave = /datum/migrant_wave/bandit_down_two
 	can_roll = FALSE
 	spawn_landmark = "Bandit"
@@ -131,7 +131,7 @@
 	)
 
 /datum/migrant_wave/bandit_down_two
-	name = "Bandit Raid"
+	name = "强盗袭击"
 	downgrade_wave = /datum/migrant_wave/bandit_down_three
 	can_roll = FALSE
 	spawn_landmark = "Bandit"
@@ -140,7 +140,7 @@
 	)
 
 /datum/migrant_wave/bandit_down_three
-	name = "Bandit Raid"
+	name = "强盗袭击"
 	can_roll = FALSE
 	spawn_landmark = "Bandit"
 	roles = list(
@@ -148,7 +148,7 @@
 	)
 
 /datum/migrant_wave/assassin
-	name = "Assassin Hit"
+	name = "刺客袭杀"
 	downgrade_wave = /datum/migrant_wave/assassin
 	can_roll = FALSE
 	weight = 12
@@ -157,7 +157,7 @@
 	)
 
 /datum/migrant_wave/gnolls
-	name = "Gnoll raid"
+	name = "豺狼人袭击"
 	downgrade_wave = /datum/migrant_wave/gnolls
 	can_roll = FALSE
 	weight = 12

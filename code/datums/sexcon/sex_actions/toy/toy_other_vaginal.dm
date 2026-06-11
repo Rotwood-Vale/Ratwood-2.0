@@ -1,5 +1,5 @@
 /datum/sex_action/toy_other_vagina
-	name = "Use toy on their cunt"
+	name = "用玩具玩弄对方阴部"
 	category = SEX_CATEGORY_PENETRATE
 	target_sex_part = SEX_PART_CUNT
 	var/pegging = FALSE
@@ -26,10 +26,10 @@
 
 /datum/sex_action/toy_other_vagina/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/dildo/dildo = !pegging ? get_dildo_in_either_hand(user) : get_dildo_on_belt(user)
-	user.visible_message(span_warning("[user] shoves \the [dildo] in [target]'s cunt..."))
+	user.visible_message(span_warning("[user]把[dildo]塞进了[target]的阴部里……"))
 
 /datum/sex_action/toy_other_vagina/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pleasures [target]'s cunt..."))
+	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()]玩弄着[target]的阴部……"))
 	user.sexcon.outercourse_noise(target, TRUE)
 
 	user.sexcon.perform_sex_action(target, 2, 4, TRUE)
@@ -41,7 +41,7 @@
 
 /datum/sex_action/toy_other_vagina/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/dildo/dildo = !pegging ? get_dildo_in_either_hand(user) : get_dildo_on_belt(user)
-	user.visible_message(span_warning("[user] pulls out \the [dildo] from [target]'s cunt."))
+	user.visible_message(span_warning("[user]把[dildo]从[target]的阴部里抽了出来。"))
 
 /datum/sex_action/toy_other_vagina/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.sexcon.finished_check())
@@ -49,11 +49,11 @@
 	return FALSE
 
 /datum/sex_action/toy_other_vagina/pegging
-	name = "Peg their cunt"
+	name = "用玩具抽插对方阴部"
 	pegging = TRUE
 
 /datum/sex_action/toy_other_vagina/pegging/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pegs [target]'s cunt."))
+	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()]用玩具抽插着[target]的阴部。"))
 	user.sexcon.outercourse_noise(target, TRUE)
 	user.sexcon.do_thrust_animate(target)
 

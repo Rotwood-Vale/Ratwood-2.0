@@ -2,7 +2,7 @@
 #define VIABLE_MOB_CHECK(X) (isliving(X))
 
 /obj/structure/kitchenspike_frame
-	name = "meatspike frame"
+	name = "肉钩架"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "spikeframe"
 	desc = ""
@@ -11,10 +11,10 @@
 	max_integrity = 200
 
 /obj/structure/kitchenspike
-	name = "meat spike"
+	name = "肉钩"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "spike"
-	desc = "A slender curved hook designed for suspending corpses. Found in kitchens, butcheries, and dungeons alike."
+	desc = "一只细长弯曲的钩子，专为悬挂尸体而设计。厨房、屠宰场和地牢里都能见到。"
 	density = TRUE
 	anchored = TRUE
 	buckle_lying = 0
@@ -23,11 +23,11 @@
 
 /obj/structure/kitchenspike/crowbar_act(mob/living/user, obj/item/I)
 	if(has_buckled_mobs())
-		to_chat(user, span_warning("I can't do that while something's on the spike!"))
+		to_chat(user, span_warning("钩子上挂着东西时我没法这么做！"))
 		return TRUE
 
 	if(I.use_tool(src, user, 20, volume=100))
-		to_chat(user, span_notice("I pry the spikes out of the frame."))
+		to_chat(user, span_notice("我把肉钩从架子上撬了下来。"))
 		deconstruct(TRUE)
 	return TRUE
 
@@ -43,7 +43,7 @@
 			if(user.pulling != L)
 				return
 			playsound(src.loc, 'sound/blank.ogg', 25, TRUE)
-			L.visible_message(span_danger("[user] slams [L] onto the meat spike!"), span_danger("[user] slams you onto the meat spike!"), span_hear("You hear a squishy wet noise."))
+			L.visible_message(span_danger("[user]把[L]猛地砸上了肉钩！"), span_danger("[user]把你猛地砸上了肉钩！"), span_hear("我听见一阵湿黏的噗嗤声。"))
 			L.forceMove(drop_location())
 			L.emote("scream")
 			L.add_splatter_floor()
@@ -69,23 +69,23 @@
 	if(buckled_mob)
 		var/mob/living/M = buckled_mob
 		if(M != user)
-			M.visible_message(span_notice("[user] tries to pull [M] free of [src]!"),\
-				span_notice("[user] is trying to pull you off [src], opening up fresh wounds!"),\
-				span_hear("I hear a squishy wet noise."))
+			M.visible_message(span_notice("[user]试图把[M]从[src]上扯下来！"),\
+				span_notice("[user]正试图把你从[src]上扯下来，这会重新撕开伤口！"),\
+				span_hear("我听见一阵湿黏的噗嗤声。"))
 			if(!do_after(user, 300, target = src))
 				if(M && M.buckled)
-					M.visible_message(span_notice("[user] fails to free [M]!"),\
-					span_notice("[user] fails to pull you off of [src]."))
+					M.visible_message(span_notice("[user]没能把[M]救下来！"),\
+					span_notice("[user]没能把你从[src]上扯下来。"))
 				return
 
 		else
-			M.visible_message(span_warning("[M] struggles to break free from [src]!"),\
-			span_notice("I struggle to break free from [src], exacerbating my wounds! (Stay still for two minutes.)"),\
-			span_hear("I hear a wet squishing noise..."))
+			M.visible_message(span_warning("[M]拼命想从[src]上挣脱！"),\
+			span_notice("我拼命想从[src]上挣脱，只会让伤口更严重！(保持不动两分钟。)"),\
+			span_hear("我听见一阵湿漉漉的挤压声……"))
 			M.adjustBruteLoss(30)
 			if(!do_after(M, 1200, target = src))
 				if(M && M.buckled)
-					to_chat(M, span_warning("I fail to free myself!"))
+					to_chat(M, span_warning("我没能挣脱出来！"))
 				return
 		if(!M.buckled)
 			return
@@ -97,7 +97,7 @@
 	animate(M, transform = m180, time = 3)
 	M.pixel_y = M.get_standard_pixel_y_offset(180)
 	M.adjustBruteLoss(30)
-	src.visible_message(span_danger("[M] falls free of [src]!"))
+	src.visible_message(span_danger("[M]从[src]上摔了下来！"))
 	unbuckle_mob(M,force=1)
 	M.emote("scream")
 	M.AdjustParalyzed(20)

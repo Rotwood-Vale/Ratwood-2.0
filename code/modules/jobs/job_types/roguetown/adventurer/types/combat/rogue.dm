@@ -1,6 +1,6 @@
 /datum/advclass/rogue
-	name = "Treasure Hunter"
-	tutorial = "You are a treasure hunter trained in hunting for valuables. Discern what is treasure or not, your fortune could be hidden anywhere."
+	name = "寻宝客"
+	tutorial = "你是一名受过专业训练的寻宝客，专擅发掘值钱之物。识得何物才是真正的宝藏，因为你的财运可能藏在任何角落。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/rogue
@@ -34,7 +34,7 @@
 
 /datum/outfit/job/roguetown/adventurer/rogue/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are a treasure hunter trained in hunting for valuables. Discern what is treasure or not, your fortune could be hidden anywhere."))
+	to_chat(H, span_warning("你是一名受过专业训练的寻宝客，专擅发掘值钱之物。识得何物才是真正的宝藏，因为你的财运可能藏在任何角落。"))
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor
 	backl = /obj/item/storage/backpack/rogue/satchel
@@ -53,21 +53,21 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	if(H.mind)
-		var/weapons = list("Sabre","Whip")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("军刀","鞭")
+		var/weapon_choice = input(H, "选择你的武器。", "执兵而起") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Sabre")
+			if("军刀")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				beltr = /obj/item/rogueweapon/sword/sabre
 				r_hand = /obj/item/rogueweapon/scabbard/sword
-			if("Whip")
+			if("鞭")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				beltr = /obj/item/rogueweapon/whip
 
 /datum/advclass/rogue/thief
-	name = "Thief"
-	tutorial = "You are a scoundrel and a thief. A master in getting into places you shouldn't be and taking things that aren't rightfully yours."
+	name = "盗贼"
+	tutorial = "你是个无赖，也是个窃贼。最擅长潜入那些你本不该进去的地方，再把原本不属于你的东西据为己有。"
 	outfit = /datum/outfit/job/roguetown/adventurer/thief
 	subclass_languages = list(/datum/language/thievescant)
 	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
@@ -98,7 +98,7 @@
 
 /datum/outfit/job/roguetown/adventurer/thief/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are a scoundrel and a thief. A master in getting into places you shouldn't be and taking things that aren't rightfully yours."))
+	to_chat(H, span_warning("你是个无赖，也是个窃贼。最擅长潜入那些你本不该进去的地方，再把原本不属于你的东西据为己有。"))
 	armor = /obj/item/clothing/suit/roguetown/armor/leather
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	backl = /obj/item/storage/backpack/rogue/backpack
@@ -120,8 +120,8 @@
 		)
 
 /datum/advclass/rogue/bard
-	name = "Bard"
-	tutorial = "You make your fortune in brothels, flop houses, and taverns – gaining fame for your songs and legends. If there is any truth to them, that is."
+	name = "吟游诗人"
+	tutorial = "你在妓院、下榻客店与酒馆间讨生活，靠歌谣与传奇博得名声。至于那些故事里究竟有几分真，那就难说了。"
 	outfit = /datum/outfit/job/roguetown/adventurer/bard
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander3.ogg'
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_GOODLOVER, TRAIT_EMPATH)
@@ -148,7 +148,7 @@
 
 /datum/outfit/job/roguetown/adventurer/bard/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You make your fortune in brothels, flop houses, and taverns – gaining fame for your songs and legends. If there is any truth to them, that is."))
+	to_chat(H, span_warning("你在妓院、下榻客店与酒馆间讨生活，靠歌谣与传奇博得名声。至于那些故事里究竟有几分真，那就难说了。"))
 	head = /obj/item/clothing/head/roguetown/bardhat
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
@@ -168,46 +168,46 @@
 	var/datum/inspiration/I = new /datum/inspiration(H)
 	I.grant_inspiration(H, bard_tier = BARD_T3)
 	if(H.mind)
-		var/weapons = list("Accordion","Bagpipe", "Banjo","Drum","Flute","Guitar","Harmonica","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
-		var/weapon_choice = tgui_input_list(H, "Choose your instrument.", "TAKE UP ARMS", weapons)
+		var/weapons = list("手风琴","风笛", "班卓琴","鼓","长笛","吉他","口琴","竖琴","手摇风琴","口簧琴","鲁特琴","诗琴","三味线","小号","中提琴","歌声护符")
+		var/weapon_choice = tgui_input_list(H, "选择你的乐器。", "执起乐器", weapons)
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Accordion")
+			if("手风琴")
 				backr = /obj/item/rogue/instrument/accord
-			if("Bagpipe")
+			if("风笛")
 				backr = /obj/item/rogue/instrument/bagpipe
-			if("Banjo")
+			if("班卓琴")
 				backr = /obj/item/rogue/instrument/banjo
-			if("Drum")
+			if("鼓")
 				backr = /obj/item/rogue/instrument/drum
-			if("Flute")
+			if("长笛")
 				backr = /obj/item/rogue/instrument/flute
-			if("Guitar")
+			if("吉他")
 				backr = /obj/item/rogue/instrument/guitar
-			if("Harmonica")
+			if("口琴")
 				backr = /obj/item/rogue/instrument/harmonica
-			if("Harp")
+			if("竖琴")
 				backr = /obj/item/rogue/instrument/harp
-			if("Hurdy-Gurdy")
+			if("手摇风琴")
 				backr = /obj/item/rogue/instrument/hurdygurdy
-			if("Jaw Harp")
+			if("口簧琴")
 				backr = /obj/item/rogue/instrument/jawharp
-			if("Lute")
+			if("鲁特琴")
 				backr = /obj/item/rogue/instrument/lute
-			if("Psyaltery")
+			if("诗琴")
 				backr = /obj/item/rogue/instrument/psyaltery
-			if("Shamisen")
+			if("三味线")
 				backr = /obj/item/rogue/instrument/shamisen
-			if("Trumpet")
+			if("小号")
 				backr = /obj/item/rogue/instrument/trumpet
-			if("Viola")
+			if("中提琴")
 				backr = /obj/item/rogue/instrument/viola
-			if("Vocal Talisman")
+			if("歌声护符")
 				backr = /obj/item/rogue/instrument/vocals
 
 /datum/advclass/rogue/swashbuckler
-	name = "Swashbuckler"
-	tutorial = "You are a daring rogue of the seas! Swashbucklers wield agile swordplay and acrobatic prowess - fighting dirty to outmaneuver foes with flair."
+	name = "海上浪客"
+	tutorial = "你是纵横海上的大胆浪客！海上浪客以灵巧剑技与腾挪身法见长，出手下作却潇洒非常，总能漂亮地把敌人玩弄于股掌之间。"
 	outfit = /datum/outfit/job/roguetown/adventurer/swashbuckler
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander3.ogg'
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_NUTCRACKER, TRAIT_DECEIVING_MEEKNESS)
@@ -233,7 +233,7 @@
 
 /datum/outfit/job/roguetown/adventurer/swashbuckler/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are a daring rogue of the seas! Swashbucklers wield agile swordplay and acrobatic prowess - fighting dirty to outmaneuver foes with flair."))
+	to_chat(H, span_warning("你是纵横海上的大胆浪客！海上浪客以灵巧剑技与腾挪身法见长，出手下作却潇洒非常，总能漂亮地把敌人玩弄于股掌之间。"))
 	head = /obj/item/clothing/head/roguetown/helmet/tricorn
 	pants = /obj/item/clothing/under/roguetown/tights/sailor
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor

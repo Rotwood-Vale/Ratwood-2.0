@@ -1,7 +1,7 @@
 /datum/reagent/consumable/ethanol/beer/emberwine
-	name = "Emberwine"
+	name = "余烬酒"
 	boozepwr = 20
-	taste_description = "searing sweetness"
+	taste_description = "灼热的甜味"
 	taste_mult = 0.5
 	quality = DRINK_VERYGOOD
 	metabolization_rate = 0.02 * REAGENTS_METABOLISM
@@ -27,13 +27,13 @@
 
 /datum/reagent/consumable/ethanol/beer/emberwine/on_mob_life(mob/living/carbon/human/C)
 	var/datum/sex_controller/S = C.sexcon
-	var/high_message = pick("Your stomach feels hot.", "Your skin feels prickly to the touch.", "Your loins throb involuntarily.", "Your heart beats irregularly.", "You feel cold sweat running down your neck.")
+	var/high_message = pick("我的胃里一阵灼热。", "我的皮肤触碰起来有些发麻。", "我的下体不由自主地抽动着。", "我的心跳变得紊乱。", "我感觉冷汗顺着脖颈滑落。")
 	switch(current_cycle)
 		if(0 to 19)
 			current_cycle++
 			return //Dormant
 		if(20)
-			to_chat(C, "<span class='aphrodisiac'>You feel a warm glow spreading through your stomach.</span>")
+			to_chat(C, "<span class='aphrodisiac'>我感觉一股温热的暖流正在胃里蔓延。</span>")
 		if(21 to 25)
 			S.adjust_arousal(5)
 		if(26 to INFINITY)
@@ -51,20 +51,20 @@
 						if(3)
 							C.Immobilize(30)
 							C.set_blurriness(5)
-							to_chat(C, "<span class='warning'>Your armor chaffs uncomfortably against your skin and makes it difficult to breathe.</span>")
+							to_chat(C, "<span class='warning'>护甲不适地磨蹭着我的皮肤，让我呼吸都变得困难。</span>")
 						if(2)
 							C.Immobilize(15)
 							C.set_blurriness(2)
-							to_chat(C, "<span class='warning'>Your armor chaffs uncomfortably against your skin.</span>")
+							to_chat(C, "<span class='warning'>护甲不适地磨蹭着我的皮肤。</span>")
 			S.adjust_charge(8)
 	return ..()
 
 /datum/reagent/consumable/ethanol/beer/emberwine/overdose_start(mob/living/carbon/human/C)
 	if(current_cycle < 20)
 		current_cycle = 20
-		to_chat(C, "<span class='aphrodisiac'>You feel a warm glow spreading through your stomach.</span>")
+		to_chat(C, "<span class='aphrodisiac'>我感觉一股温热的暖流正在胃里蔓延。</span>")
 		sleep(10)
-	to_chat(C, "<span class='aphrodisiac'>The glow in your stomach spreads, rushing to your head and warming your face.</span>")
+	to_chat(C, "<span class='aphrodisiac'>胃里的热流迅速扩散，直冲上脑，让我的脸都热了起来。</span>")
 	metabolization_rate = 0.2 //Purges faster while overdosing because this is really debilitating
 	C.emote("sexmoanhvy", forced = TRUE)
 	C.sexcon.aphrodisiac += 1
@@ -79,7 +79,7 @@
 
 /datum/reagent/consumable/ethanol/beer/emberwine/addiction_act_stage3(mob/living/carbon/human/C)
 	if(prob(20))
-		to_chat(C, span_danger("I have an intense craving for [name]."))
+		to_chat(C, span_danger("我对[name]生出了强烈的渴求。"))
 		C.sexcon.adjust_arousal(5)
 	if(istype(C, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = C
@@ -95,11 +95,11 @@
 	if(S.aphrodisiac < 1.5)
 		S.aphrodisiac = 1.5
 	if(prob(10))
-		to_chat(C, span_boldannounce("The feeling in your loins has subsided to a dull ache. Only more [name] would scratch the itch..."))
+		to_chat(C, span_boldannounce("下体的感觉已经化作隐隐的酸胀。唯有更多[name]才能止住这股瘙痒……"))
 	return
 
 /datum/reagent/erpjuice
-	name = "Erotic Fluid"
+	name = "情欲液"
 	reagent_state = LIQUID
 	color = "#ebebeb"
 	metabolization_rate = 0.1
@@ -114,9 +114,9 @@
 	..()
 
 /datum/reagent/erpjuice/cum
-	description = "A thick, sticky, cream like fluid. produced during an orgasm."
-	taste_description = "salty and tangy"
+	description = "一种在高潮时分泌出的浓稠、黏滑、近似乳脂的液体。"
+	taste_description = "咸涩微酸"
 
 /datum/reagent/erpjuice/femcum
-	description = "A slightly milky fluid, thin and watery in texture."
-	taste_description = "faintly sweet and mineraly"
+	description = "一种略带乳白的液体，质地稀薄而水润。"
+	taste_description = "微甜且带着矿物味"

@@ -10,7 +10,7 @@
  */
 
 /obj/item/storage/backpack
-	name = "backpack"
+	name = "背包"
 	desc = ""
 	icon_state = "backpack"
 	item_state = "backpack"

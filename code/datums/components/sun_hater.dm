@@ -28,7 +28,7 @@
 	
 	// If theyre holding a parasol
 	if(H.is_holding_item_of_type(/obj/item/rogueweapon/mace/parasol))
-		to_chat(H, span_danger("My parasol shields me from the Sun-Tyrant's scorn."))
+		to_chat(H, span_danger("我的阳伞替我挡下了 Sun-Tyrant 的恶意。"))
 		return
 
 	// Check if outside and in light
@@ -37,12 +37,12 @@
 		if(T.can_see_sky())
 			if(!in_sunlight)
 				in_sunlight = TRUE
-				to_chat(H, span_danger("The sunlight burns my flesh!"))
+				to_chat(H, span_danger("阳光灼烧着我的血肉！"))
 
 			apply_sunlight_damage(H)
 		else
 			if(in_sunlight)
-				to_chat(H, span_notice("The scorching gaze of the Sun-Tyrant burns me no more."))
+				to_chat(H, span_notice("Sun-Tyrant 那灼人的注视终于不再灼烧我了。"))
 			in_sunlight = FALSE
 	else
 		in_sunlight = FALSE
@@ -54,7 +54,7 @@
 		if(H.bloodpool > disguise_comp.min_bloodpool * 2)
 			return
 		disguise_comp.force_undisguise(H)
-		to_chat(H, span_warning("The sunlight breaks my disguise!"))
+		to_chat(H, span_warning("阳光击碎了我的伪装！"))
 
 	// Apply fire damage
 	H.fire_act(1, burn_damage)

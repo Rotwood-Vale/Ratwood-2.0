@@ -19,14 +19,14 @@ GLOBAL_LIST_INIT(capstone_pool, list(
 
 
 /datum/crafting_recipe/roguetown/structure/ascendant
-	name = "ascendant's altar"
+	name = "飞升者祭坛"
 	result = /obj/structure/ascendant_altar
 	reqs = list(
 		/obj/item/bodypart = 2,
 		/obj/item/organ/stomach = 1,
 	)
-	verbage_simple = "construct"
-	verbage = "constructs"
+	verbage_simple = "构筑"
+	verbage = "构筑"
 	craftsound = 'sound/foley/Building-01.ogg'
 	skillcraft = null
 	always_availible = FALSE
@@ -42,19 +42,19 @@ GLOBAL_LIST_INIT(capstone_pool, list(
 /obj/structure/ascendant_altar/examine(mob/user)
 	. = ..()
 	if(!user.mind?.has_antag_datum(/datum/antagonist/ascendant))
-		. += "It almost looks like it's waiting for something- but I don't know what."
+		. += "它看起来几乎像是在等待什么 - 但我不知道那是什么。"
 		return
 
 	var/obj/item/next_artefact = LAZYACCESS(GLOB.psydon_pool, 1)
 	var/obj/item/next_capstone = LAZYACCESS(GLOB.psydon_pool, 1)
 	if(next_artefact)
-		. += "The next artefact I must find is \a [initial(next_artefact.name)]."
+		. += "我必须找到的下一件圣物是 \a [initial(next_artefact.name)]。"
 	else
-		. += span_danger("I have all the artefacts I need!")
+		. += span_danger("我已经集齐了所需的全部圣物！")
 	if(next_capstone)
-		. += "The next capstone to ascend in power is \a [initial(next_capstone.name)]."
+		. += "让我力量再度升华的下一块基石是 \a [initial(next_capstone.name)]。"
 	else
-		. += span_danger("I have all the capstones I need!")
+		. += span_danger("我已经集齐了所需的全部基石！")
 
 /obj/structure/ascendant_altar/proc/consume_artefact(obj/item/I, mob/living/user)
 	var/next_artefact = LAZYACCESS(GLOB.psydon_pool, 1)
@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(capstone_pool, list(
 		return FALSE
 	. = TRUE
 	if(ascendpoints >= 4) // we already have 4 points, stop already!
-		to_chat(user, span_danger("There are nO MORE ARTEFACts to collect. It is time for my BUSINESS to be DONE."))
+		to_chat(user, span_danger("已经没有更多圣物可供收集了。现在该去完成我的大业了。"))
 		return
 	ascendpoints++
 
@@ -82,9 +82,9 @@ GLOBAL_LIST_INIT(capstone_pool, list(
 			ADD_TRAIT(user, TRAIT_DECEIVING_MEEKNESS, TRAIT_GENERIC)
 			ADD_TRAIT(user, TRAIT_EMPATH, TRAIT_GENERIC)
 			ADD_TRAIT(user, TRAIT_STEELHEARTED, TRAIT_GENERIC)
-			to_chat(user, span_userdanger("I bow my head in humility as I begin my journey. MAJOR ARCANA : TEMPERANCE, UPRIGHT."))
+			to_chat(user, span_userdanger("我在启程之初谦卑地低下头。大阿卡纳：节制，正位。"))
 		if(2)
-			to_chat(user, span_userdanger("The world around me means LESS and LESS- I realize how SMALL everything is. MAJOR ARCANA : QUEEN OF CUPS, REVERSED."))
+			to_chat(user, span_userdanger("我周围的世界变得越来越无足轻重 - 我意识到万物是多么渺小。大阿卡纳：圣杯王后，逆位。"))
 			ADD_TRAIT(user, TRAIT_NOSTINK, TRAIT_GENERIC)
 			ADD_TRAIT(user, TRAIT_NOMOOD, TRAIT_GENERIC)
 			ADD_TRAIT(user, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
@@ -93,11 +93,11 @@ GLOBAL_LIST_INIT(capstone_pool, list(
 			ADD_TRAIT(user, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fireball)
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt)
-			to_chat(user, span_userdanger("I have many enemies- AND they HAVE NOTHING. TEN OF SWORDS, UPRIGHT"))
+			to_chat(user, span_userdanger("我有许多敌人 - 而他们一无所有。宝剑十，正位。"))
 		if(4)
 			ADD_TRAIT(user, TRAIT_STABLEHEART, TRAIT_GENERIC)
 			ADD_TRAIT(user, TRAIT_STABLELIVER, TRAIT_GENERIC)
-			to_chat(user, span_userdanger("My insides BECOME like INCONGRUOUS STONE. Lines of vapour cross me over. I can NOT be mortal, I am BEYOND MORTAL, I AM I AM I AM I AM NEARING COMPLETION. MAJOR ARCANA : STRENGTH"))
+			to_chat(user, span_userdanger("我的内里化作怪异之石。缕缕蒸汽穿过我的身躯。我不可能仍是凡人，我已超越凡人，我正在、正在、正在、正在接近完成。大阿卡纳：力量"))
 	GLOB.psydon_pool.Cut(1, 2) // remove the first item
 	qdel(I)
 
@@ -116,7 +116,7 @@ GLOBAL_LIST_INIT(capstone_pool, list(
 	else if(consume_capstone(I, user))
 		return
 	else
-		to_chat(user, span_userdanger("This item is USELESS to me..."))
+		to_chat(user, span_userdanger("这件物品对我毫无用处……"))
 
 /obj/structure/ascendant_altar/proc/consume_capstone(obj/item/I, mob/living/user)
 	var/obj/item/next_capstone = LAZYACCESS(GLOB.capstone_pool, 1)
@@ -145,53 +145,53 @@ GLOBAL_LIST_INIT(capstone_pool, list(
 	switch(ascend_stage)
 		if(1)
 			ADD_TRAIT(user, TRAIT_LONGSTRIDER, TRAIT_GENERIC)
-			to_chat(user, span_danger("The first capstone. My mind opens. The world around me seems to get smaller. A corpse. We are living on a corpse. And this deadite must be dealt with the same as the rest. My pace stiffens."))
+			to_chat(user, span_danger("第一块基石。我的心智豁然开启。周遭的世界仿佛变小了。一具尸体。我们活在一具尸体之上。而这个死物也必须像其他一切那样被处理掉。我的步伐变得僵硬。"))
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/churn)
 			addomen(ASCEND_FIRST)
-			priority_announce("The leylines begin to tremble in unnatural perversion - MAJOR ARCANA: THE FOOL, UPRIGHT.", "THE DREAMER", 'sound/villain/dreamer_warning.ogg')
+			priority_announce("地脉开始以反常扭曲的方式震颤 - 大阿卡纳：愚者，正位。", "梦者", 'sound/villain/dreamer_warning.ogg')
 		if(2)
-			to_chat(user, span_danger("The second capstone. Stuck in filth- FILTH AND SHIT! I grab the rotted, fetted thing and begin to peel it back. LAYER BY LAYER- THE COMET SYON. THE ARCHDEVIL. IS HE DEAD, OR SLEEPING? ..."))
+			to_chat(user, span_danger("第二块基石。陷在污秽里 - 污秽与粪秽！我抓住那腐烂、发臭之物，开始将它一层层剥开。彗星西昂。那位大魔。祂是死了，还是在沉睡？……"))
 			sleep(30)
-			to_chat(user, span_userdanger("IS HE WEAK - OR A COWARD??"))
+			to_chat(user, span_userdanger("祂是虚弱 - 还是怯懦？？"))
 			sleep(20)
-			to_chat(user, span_userdanger("GOD IS COMING."))
+			to_chat(user, span_userdanger("神要来了。"))
 			sleep(10)
-			to_chat(user, span_userdanger("GODISCOMINGGODISCOMING"))
+			to_chat(user, span_userdanger("神要来了神要来了"))
 			new /obj/item/rogueweapon/sword/long/judgement/ascendant
 			addomen(ASCEND_WAKENING)
 			ADD_TRAIT(user, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 			ADD_TRAIT(user, TRAIT_ANTIMAGIC, TRAIT_GENERIC)
-			priority_announce("The sky begins to turn quicker - MAJOR ARCANA: THE HANGED MAN, REVERSED", "THE DREAMER ", 'sound/villain/dreamer_warning.ogg')
+			priority_announce("天空开始转得更快了 - 大阿卡纳：倒吊人，逆位", "梦者", 'sound/villain/dreamer_warning.ogg')
 		if(3)
-			to_chat(user, span_danger("AGONY. SPLITTING HEADACHE. THROBBING OF THE SOUL."))
+			to_chat(user, span_danger("剧痛。撕裂般的头痛。灵魂在搏动。"))
 			user.flash_fullscreen("redflash3")
 			user.emote("agony", forced = TRUE)
 			sleep(20)
-			to_chat(user, span_userdanger("THEW ORLD is not real. my BREATH IS gone. my heart barely baeats. my veins are empty."))
+			to_chat(user, span_userdanger("这世W界并不真实。我的呼吸消失了。我的心脏几乎不再跳动。我的血脉空空如也。"))
 			sleep(50)
-			to_chat(user, span_userdanger("i am god. i am god. i am god. i am god. i am god. i am god. i am god. i am god. i am god. i am god. i am god. i am god."))
+			to_chat(user, span_userdanger("我是神。 我是神。 我是神。 我是神。 我是神。 我是神。 我是神。 我是神。 我是神。 我是神。 我是神。 我是神。"))
 			sleep(30)
-			to_chat(user, span_userdanger("i am god i am god i am go di am ogod I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD"))
+			to_chat(user, span_userdanger("我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神"))
 			user.flash_fullscreen("redflash3")
 			user.emote("agony", forced = TRUE)
 			user.Stun(30)
 			user.Knockdown(30)
 			sleep(30)
-			to_chat(user, span_userdanger("i am god i am god i am go di am ogod I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD"))
+			to_chat(user, span_userdanger("我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神"))
 			user.flash_fullscreen("redflash3")
 			user.emote("agony", forced = TRUE)
 			user.Stun(100)
 			user.Knockdown(100)
 			for(var/i = 1, i <= 10, i++)
 				spawn((i - 1) * 5)
-					to_chat(user, span_userdanger("I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD "))
+					to_chat(user, span_userdanger("我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 我是神 "))
 			sleep(30)
 			user.flash_fullscreen("redflash3")
 
 //all goes dark. tp them over. give them their stats.
 			user.emote("agony", forced = TRUE)
 			user.SetSleeping(10 SECONDS)
-			to_chat(user, span_reallybig("THE WORLD GOES DARK!"))
+			to_chat(user, span_reallybig("世界陷入黑暗！"))
 			var/turf/location = get_spawn_turf_for_job("Pilgrim")
 			user.forceMove(location)
 			user.Stun(50)
@@ -207,17 +207,17 @@ GLOBAL_LIST_INIT(capstone_pool, list(
 			heavensaysdanger() //Roger, our deal is honored; you will be rewarded in heaven.
 			addomen(ASCEND_ASCENDANT)
 			sleep(15 SECONDS)
-			to_chat(user, span_mind_control("i muST go O TO THE TRHORne. THE THRONE. THE THRONE. MY KINGDO M. AWAITS. PSYd ONIA IS DEAD. I MUST ASC end "))
+			to_chat(user, span_mind_control("我必S须前往王O座。王座。王座。我的王国在等待。普赛多尼亚 已死。我必须升 asc "))
 
 			qdel(src)
 
 /obj/structure/ascendant_altar/attack_right(mob/living/user)
 	if(!user.mind?.has_antag_datum(/datum/antagonist/ascendant))
-		to_chat(user, span_userdanger("I have no idea what this is."))
+		to_chat(user, span_userdanger("我完全不知道这是什么。"))
 		return
-	to_chat(user, span_userdanger("I have collected [ascend_stage] capstones and [ascendpoints] artefacts."))
+	to_chat(user, span_userdanger("我已经收集了 [ascend_stage] 块基石与 [ascendpoints] 件圣物。"))
 
 /obj/structure/ascendant_altar/proc/heavensaysdanger()
-	priority_announce("THE DREAMER HAS ASCENDED - MAJOR ARCANA : T$yh3 TOW##ER, RE v3RSED", "GOD IS COMING", 'sound/villain/ascendant_intro.ogg')
+	priority_announce("梦者 已然升格 - MAJOR ARCANA : T$yh3 TOW##ER, RE v3RSED", "神要来了", 'sound/villain/ascendant_intro.ogg')
 	sleep(15 SECONDS)
-	to_chat(world, span_danger("The ground underneath THE THRONE shakes. The sky is opening."))
+	to_chat(world, span_danger("王座下方的大地在震动。天空正在裂开。"))

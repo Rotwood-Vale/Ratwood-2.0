@@ -26,8 +26,8 @@
 	craftdiff = 2
 
 /turf/closed/wall/mineral/rogue/sandbrick
-	name = "sandbrick wall"
-	desc = "A wall of smooth, unyielding bricks."
+	name = "沙砖墙"
+	desc = "一堵由光滑而坚硬的砖块砌成的墙。"
 	icon = 'modular_deserttown/icons/sandbrick_wall.dmi'
 	icon_state = "sandbrick"
 	smooth = SMOOTH_MORE

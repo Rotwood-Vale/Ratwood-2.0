@@ -1,7 +1,7 @@
 /datum/advclass/builder
-	name = "Builder"
-	tutorial = "You are a skilled carpenter and mason, able to manipulate wood and stone to suit your needs, \
-	building forts and stores, carpenting floors, putting up crosses and repairing broken doors. You can do it all with enough logs or rocks"
+	name = "工匠"
+	tutorial = "你是一名手艺高超的木匠兼石匠，能将木材与石料塑造成你所需的一切。\
+	修堡垒，搭仓房，铺木地板，竖十字架，修破门，只要有足够的木头和石块，这些活你都做得来。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/builder

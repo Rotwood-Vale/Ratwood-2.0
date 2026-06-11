@@ -1,5 +1,5 @@
 /datum/wound/slash
-	name = "slash"
+	name = "割伤"
 	whp = 30
 	sewn_whp = 10
 	bleed_rate = 0.4
@@ -14,7 +14,7 @@
 	can_cauterize = TRUE
 
 /datum/wound/slash/small
-	name = "small slash"
+	name = "轻微割伤"
 	whp = 15
 	sewn_whp = 5
 	bleed_rate = 0.2
@@ -26,7 +26,7 @@
 	sew_threshold = 25
 
 /datum/wound/slash/large
-	name = "gruesome slash"
+	name = "可怖割伤"
 	whp = 40
 	sewn_whp = 12
 	bleed_rate = 1
@@ -38,7 +38,7 @@
 	sew_threshold = 75
 
 /datum/wound/dynamic/slash
-	name = "slash"
+	name = "割伤"
 	whp = 15
 	sewn_whp = 5
 	bleed_rate = 1
@@ -54,10 +54,10 @@
 	can_sew = TRUE
 	can_cauterize = TRUE
 	severity_names = list(
-		"light" = 5,
-		"deep" = 10,
-		"gnarly" = 15,
-		"lethal" = 20,
+		"轻微" = 5,
+		"深层" = 10,
+		"严重" = 15,
+		"致命" = 20,
 	)
 
 //Slash Omniwounds
@@ -92,12 +92,12 @@
 #undef SLASH_ARMORED_BLEED_CLAMP
 
 /datum/wound/slash/disembowel
-	name = "disembowelment"
-	check_name = span_userdanger("<B>GUTS</B>")
+	name = "开膛"
+	check_name = span_userdanger("<B>开膛</B>")
 	severity = WOUND_SEVERITY_FATAL
 	crit_message = list(
-		"%VICTIM spills %P_THEIR organs!",
-		"%VICTIM spills %P_THEIR entrails!",
+		"%VICTIM 的内脏流了一地！",
+		"%VICTIM 的肠子流了一地！",
 	)
 	sound_effect = 'sound/combat/crit2.ogg'
 	whp = 100
@@ -150,8 +150,8 @@
 			cavity.cavity_item = null
 
 /datum/wound/slash/incision
-	name = "incision"
-	check_name = span_bloody("<B>INCISION</B>")
+	name = "切口"
+	check_name = span_bloody("<B>切口</B>")
 	severity = WOUND_SEVERITY_SUPERFICIAL
 	whp = 40
 	sewn_whp = 12
@@ -172,15 +172,15 @@
 	return TRUE
 
 /datum/wound/slash/incision/construct
-	name = "open hatch"
-	check_name = span_bloody("<B>OPEN HATCH</B>")
+	name = "打开舱盖"
+	check_name = span_bloody("<B>打开舱盖</B>")
 	bleed_rate = 0
 	sewn_bleed_rate = 0.0
 	bypass_bloody_wound_check = TRUE
 
 /datum/wound/slash/vein
-	name= "vein"
-	check_name = span_bloody("<B>VEIN</B")
+	name= "静脉"
+	check_name = span_bloody("<B>静脉</B")
 	severity = WOUND_SEVERITY_LIGHT
 	whp = 40
 	sewn_whp = 12
@@ -194,7 +194,7 @@
 
 
 /datum/wound/dynamic/lashing
-	name = "lashing"
+	name = "鞭痕"
 	whp = 30
 	sewn_whp = 12
 	bleed_rate = 0
@@ -205,10 +205,10 @@
 	can_sew = TRUE
 	can_cauterize = FALSE	//Ouch owie oof
 	severity_names = list(
-		"light" = 5,
-		"deep" = 10,
-		"gnarly" = 15,
-		"lethal" = 20,
+		"轻微" = 5,
+		"深层" = 10,
+		"严重" = 15,
+		"致命" = 20,
 	)
 
 //Lashing (Whip) Omniwounds
@@ -243,7 +243,7 @@
 #undef LASHING_ARMORED_BLEED_CLAMP
 
 /datum/wound/dynamic/punish
-	name = "flogging"
+	name = "鞭笞伤"
 	whp = 30
 	sewn_whp = 12
 	bleed_rate = 0
@@ -254,10 +254,10 @@
 	can_sew = TRUE
 	can_cauterize = FALSE	//Ouch owie oof
 	severity_names = list(
-		"light" = 5,
-		"deep" = 10,
-		"gnarly" = 15,
-		"lethal" = 20,
+		"轻微" = 5,
+		"深层" = 10,
+		"严重" = 15,
+		"致命" = 20,
 	)
 
 //Special Punish omniwounds for whip (or anything else if desired) intent.
@@ -292,7 +292,7 @@
 #undef PUNISH_ARMORED_BLEED_CLAMP
 
 /datum/wound/lashing
-	name = "lashing"
+	name = "鞭痕"
 	whp = 30
 	sewn_whp = 12
 	bleed_rate = 0.6
@@ -309,7 +309,7 @@
 	can_cauterize = TRUE
 
 /datum/wound/lashing/small
-	name = "superficial lashing"
+	name = "表浅鞭痕"
 	whp = 15
 	sewn_whp = 5
 	bleed_rate = 0.2
@@ -323,7 +323,7 @@
 	sew_threshold = 30
 
 /datum/wound/lashing/large
-	name = "excruciating lashing"
+	name = "剧痛鞭痕"
 	whp = 45
 	sewn_whp = 15
 	bleed_rate = 1.2 //Intended for combat, might kill if used for punishment. Force can be controlled by not charging the whip lash fully.

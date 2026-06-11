@@ -1,5 +1,5 @@
 /obj/structure/displaycase
-	name = "display case"
+	name = "展示柜"
 	icon_state = "glassbox0"
 	desc = ""
 	density = TRUE
@@ -36,11 +36,11 @@
 /obj/structure/displaycase/examine(mob/user)
 	. = ..()
 	if(alert)
-		. += "<span class='notice'>Hooked up with an anti-theft system.</span>"
+		. += "<span class='notice'>已接入防盗系统。</span>"
 	if(showpiece)
-		. += "<span class='notice'>There's [showpiece] inside.</span>"
+		. += "<span class='notice'>里面陈列着[showpiece]。</span>"
 	if(trophy_message)
-		. += "The plaque reads:\n [trophy_message]"
+		. += "铭牌上写着：\n [trophy_message]"
 
 
 /obj/structure/displaycase/proc/dump()
@@ -77,39 +77,39 @@
 /obj/structure/displaycase/attackby(obj/item/W, mob/user, params)
 	if(W.GetID() && !obj_broken && openable)
 		if(allowed(user))
-			to_chat(user,  "<span class='notice'>I [open ? "close":"open"] [src].</span>")
+			to_chat(user,  "<span class='notice'>我[open ? "关上了":"打开了"][src]。</span>")
 			toggle_lock(user)
 		else
-			to_chat(user,  "<span class='alert'>Access denied.</span>")
+			to_chat(user,  "<span class='alert'>拒绝访问。</span>")
 	else if(W.tool_behaviour == TOOL_WELDER && user.used_intent.type == INTENT_HELP && !obj_broken)
 		if(obj_integrity < max_integrity)
 			if(!W.tool_start_check(user, amount=5))
 				return
 
-			to_chat(user, "<span class='notice'>I begin repairing [src]...</span>")
+			to_chat(user, "<span class='notice'>我开始修理[src]……</span>")
 			if(W.use_tool(src, user, 40, amount=5, volume=50))
 				obj_integrity = max_integrity
 				update_icon()
-				to_chat(user, "<span class='notice'>I repair [src].</span>")
+				to_chat(user, "<span class='notice'>我修好了[src]。</span>")
 		else
-			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
+			to_chat(user, "<span class='warning'>[src]本来就完好无损！</span>")
 		return
 	else if(!alert && W.tool_behaviour == TOOL_CROWBAR && openable) //Only applies to the lab cage and player made display cases
 		if(obj_broken)
 			if(showpiece)
-				to_chat(user, "<span class='warning'>Remove the displayed object first!</span>")
+				to_chat(user, "<span class='warning'>先把里面展示的物品取出来！</span>")
 			else
-				to_chat(user, "<span class='notice'>I remove the destroyed case.</span>")
+				to_chat(user, "<span class='notice'>我拆除了这个已经损坏的展示柜。</span>")
 				qdel(src)
 		else
-			to_chat(user, "<span class='notice'>I start to [open ? "close":"open"] [src]...</span>")
+			to_chat(user, "<span class='notice'>我开始[open ? "关上":"打开"][src]……</span>")
 			if(W.use_tool(src, user, 20))
-				to_chat(user,  "<span class='notice'>I [open ? "close":"open"] [src].</span>")
+				to_chat(user,  "<span class='notice'>我[open ? "关上了":"打开了"][src]。</span>")
 				toggle_lock(user)
 	else if(open && !showpiece)
 		if(user.transferItemToLoc(W, src))
 			showpiece = W
-			to_chat(user, "<span class='notice'>I put [W] on display.</span>")
+			to_chat(user, "<span class='notice'>我把[W]放进了展示柜里。</span>")
 			update_icon()
 	else
 		return ..()
@@ -124,7 +124,7 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (showpiece && (obj_broken || open))
-		to_chat(user, "<span class='notice'>I deactivate the hover field built into the case.</span>")
+		to_chat(user, "<span class='notice'>我关闭了展示柜内置的悬浮力场。</span>")
 		log_combat(user, src, "deactivates the hover field of")
 		dump()
 		src.add_fingerprint(user)
@@ -137,13 +137,13 @@
 		if (user.used_intent.type == INTENT_HELP)
 			user.examinate(src)
 			return
-		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", null, null, COMBAT_MESSAGE_RANGE)
+		user.visible_message("<span class='danger'>[user]踹了展示柜一脚。</span>", null, null, COMBAT_MESSAGE_RANGE)
 		log_combat(user, src, "kicks")
 		user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 		take_damage(2)
 
 /obj/structure/displaycase/trophy
-	name = "trophy display case"
+	name = "战利品展示柜"
 	desc = ""
 	var/placer_key = ""
 	var/added_roundstart = TRUE
@@ -171,26 +171,26 @@
 	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
 		if(added_roundstart)
 			is_locked = !is_locked
-			to_chat(user, "<span class='notice'>I [!is_locked ? "un" : ""]lock the case.</span>")
+			to_chat(user, "<span class='notice'>我[!is_locked ? "打开了" : "锁上了"]展示柜。</span>")
 		else
-			to_chat(user, "<span class='warning'>The lock is stuck shut!</span>")
+			to_chat(user, "<span class='warning'>锁芯卡死了，根本打不开！</span>")
 		return
 
 	if(is_locked)
-		to_chat(user, "<span class='warning'>The case is shut tight with an old fashioned physical lock. Maybe you should ask the curator for the key?</span>")
+		to_chat(user, "<span class='warning'>这展示柜被一把老式机械锁严严实实锁住了。也许你该去找馆长要钥匙？</span>")
 		return
 
 	if(!added_roundstart)
-		to_chat(user, "<span class='warning'>You've already put something new in this case!</span>")
+		to_chat(user, "<span class='warning'>你已经往这个展示柜里放过新的东西了！</span>")
 		return
 
 	if(user.transferItemToLoc(W, src))
 
 		if(showpiece)
-			to_chat(user, "<span class='notice'>I press a button, and [showpiece] descends into the floor of the case.</span>")
+			to_chat(user, "<span class='notice'>我按下一个按钮，[showpiece]便沉进了展示柜底部。</span>")
 			QDEL_NULL(showpiece)
 
-		to_chat(user, "<span class='notice'>I insert [W] into the case.</span>")
+		to_chat(user, "<span class='notice'>我把[W]放进了展示柜里。</span>")
 		showpiece = W
 		added_roundstart = FALSE
 		update_icon()
@@ -199,37 +199,37 @@
 
 		trophy_message = W.desc //default value
 
-		var/chosen_plaque = stripped_input(user, "What would you like the plaque to say? Default value is item's description.", "Trophy Plaque")
+		var/chosen_plaque = stripped_input(user, "你想让铭牌上写什么？默认内容为物品描述。", "战利品铭牌")
 		if(chosen_plaque)
 			if(user.Adjacent(src))
 				trophy_message = chosen_plaque
-				to_chat(user, "<span class='notice'>I set the plaque's text.</span>")
+				to_chat(user, "<span class='notice'>我设置好了铭牌文字。</span>")
 			else
-				to_chat(user, "<span class='warning'>I are too far to set the plaque's text!</span>")
+				to_chat(user, "<span class='warning'>我离得太远，没法设置铭牌文字！</span>")
 
 		SSpersistence.SaveTrophy(src)
 		return TRUE
 
 	else
-		to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you can't put it in the [src.name]!</span>")
+		to_chat(user, "<span class='warning'>[W]黏在你的手上了，没法把它放进[src.name]里！</span>")
 
 	return
 
 /obj/structure/displaycase/trophy/dump()
 	if (showpiece)
 		if(added_roundstart)
-			visible_message("<span class='danger'>The [showpiece] crumbles to dust!</span>")
+			visible_message("<span class='danger'>[showpiece]碎成了一地尘灰！</span>")
 			new /obj/item/ash(loc)
 			QDEL_NULL(showpiece)
 		else
 			..()
 
 /obj/item/key/displaycase
-	name = "display case key"
+	name = "展示柜钥匙"
 	desc = ""
 
 /obj/item/showpiece_dummy
-	name = "Cheap replica"
+	name = "廉价仿制品"
 
 /obj/item/showpiece_dummy/Initialize(mapload, path)
 	. = ..()

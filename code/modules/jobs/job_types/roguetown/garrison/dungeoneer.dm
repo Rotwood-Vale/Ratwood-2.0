@@ -1,5 +1,6 @@
 /datum/job/roguetown/dungeoneer
 	title = "Dungeoneer"
+	display_title = "典狱官"
 	flag = DUNGEONEER
 	department_flag = GARRISON
 	faction = "Station"
@@ -13,9 +14,9 @@
 	display_order = JDO_DUNGEONEER
 	advclass_cat_rolls = list(CTAG_DUNGEONEER = 2)
 
-	tutorial = "Sometimes at night you stare into the vacant room and feel the loneliness of your existence crawl into whatever remains of your loathsome soul. \
-				You will never know hunger, thirst or want for anything with the mammons you make: Just as you’ll never forget the sounds a saw makes cutting through the bone, what a drowning man will gurgle out between the blood and teeth strangling his breath. \
-				You are the monster that is called when civility has run it's course. Everything owed to the current ruler, serve your master well and answer to no other authority in your pursuits far away from Astrata's light. They shall fear."
+	tutorial = "有时到了夜里，你会盯着那间空屋，感到自己这条命的孤寂一点点爬进那点所剩无几、令人作呕的残魂里。\
+				你靠这份差事赚来的马蒙永远够你吃喝不愁，可你也永远忘不了锯子锯开骨头时发出的声响，忘不了一个溺水者在血沫与碎牙间挤出的咕噜声。\
+				当文明手段走到尽头时，被唤来的就是你这样的怪物。你的一切都归现任统治者所有，远离 Astrata 光辉之处，侍奉你的主人，除此之外再不受任何权威拘束。他们会畏惧你。"
 
 	announce_latejoin = FALSE
 	outfit = /datum/outfit/job/roguetown/dungeoneer
@@ -51,8 +52,8 @@
 	job_bitflag = BITFLAG_GARRISON
 
 /datum/advclass/dungeoneer
-	name = "Dungeoneer"
-	tutorial = "Penance, filthy sense of sadism or a queer outlook on justice, something has led you to don the shunned mask and fulfill the whims of the your patron ruler. Their whims are your guidance, as you've no 'moral quandaries' to care for."
+	name = "典狱官"
+	tutorial = "无论是赎罪、肮脏的施虐欲，还是对公义抱着某种扭曲看法，总之有什么东西驱使你戴上这张遭人厌弃的面具，去满足你那位君主庇护者的意志。对你而言，他们的意志就是唯一指引，因为你从不在乎什么“道德困境”。"
 	outfit = /datum/outfit/job/roguetown/dungeoneer/base
 
 	category_tags = list(CTAG_DUNGEONEER)

@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/darkvision
-	name = "Darkvision"
-	desc = "Enhance the night vision of yourself and everyone around you for 5 minutes per level in the associated skill."
+	name = "黑暗视觉"
+	desc = "强化你与周围所有人的夜视能力，持续时间为关联技能每级 5 分钟。"
 	overlay_state = "darkvision"
 	clothes_req = FALSE
 	school = "transmutation"
@@ -12,7 +12,7 @@
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
 	spell_tier = 1
-	invocations = list("Nox Oculus")
+	invocations = list("黑夜之眼，向我敞开。")
 	invocation_type = "whisper"
 	glow_color = GLOW_COLOR_BUFF
 	glow_intensity = GLOW_INTENSITY_LOW

@@ -1,6 +1,6 @@
 /datum/advclass/brigand //Strength class, starts with a selection of weapon classes and medium armor training
-	name = "Brigand"
-	tutorial = "Cast from society, you use your powerful physical might and endurance to take from those who are weaker from you."
+	name = "悍匪"
+	tutorial = "你被社会所遗弃，于是便靠着强横的体魄与耐力，从那些比你更弱的人手里掠夺一切。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/bandit/brigand
@@ -55,19 +55,19 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/hide
 	id = /obj/item/mattcoin
 	H.adjust_blindness(-3)
-	var/weapons = list("The Brigand (Axes, Maces & Whips/Flails)","Common Soldiery (Polearms & Swords)", "The Nefarious Dusthead (Knives, Climbing & Athletics)")
+	var/weapons = list("悍匪路数（斧、锤与鞭枷）","兵卒路数（长柄与刀剑）", "恶棍路数（匕首、攀爬与体能）")
 	if(H.mind)
-		var/weapon_choice = input(H, "Choose your expert-level proficiencies.", "HOW DOTH THOU WALK THROUGH LYFE, BRIGAND?") as anything in weapons
+		var/weapon_choice = input(H, "选择你的专精路线。", "悍匪，你要走哪条路？") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("The Brigand (Axes, Maces & Whips/Flails)") //Battle axe & whip.
+			if("悍匪路数（斧、锤与鞭枷）") //Battle axe & whip.
 				beltl = /obj/item/rogueweapon/whip/nagaika
 				beltr = /obj/item/rogueweapon/stoneaxe/battle
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			if("Common Soldiery (Polearms & Swords)") //Steel arming sword & shield.
+			if("兵卒路数（长柄与刀剑）") //Steel arming sword & shield.
 				backl= /obj/item/rogueweapon/shield/iron
 				beltr = /obj/item/rogueweapon/sword
 				beltl = /obj/item/rogueweapon/scabbard/sword
@@ -75,7 +75,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			if("The Nefarious Dusthead (Knives, Climbing & Athletics)") //Dagger, athletics, and OK lockpicking. You will never be a Knave. This is mostly a for-fun class, where else have you seen a knife strength build?
+			if("恶棍路数（匕首、攀爬与体能）") //Dagger, athletics, and OK lockpicking. You will never be a Knave. This is mostly a for-fun class, where else have you seen a knife strength build?
 				beltr = /obj/item/rogueweapon/huntingknife/idagger/steel
 				backl = /obj/item/rogueweapon/whip
 				beltl = /obj/item/lockpickring/mundane

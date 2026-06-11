@@ -1,10 +1,10 @@
 /datum/world_trait/skeleton_siege
-	name = "Skeleton Siege"
-	desc = "Skeletons are attacking the town."
+	name = "骷髅围城"
+	desc = "骷髅正在袭击城镇。"
 
 /datum/world_trait/goblin_siege
-	name = "Goblin Siege"
-	desc = "Goblins are attacking the town."
+	name = "哥布林围城"
+	desc = "哥布林正在袭击城镇。"
 
 /*
 /datum/world_trait/rousman_siege

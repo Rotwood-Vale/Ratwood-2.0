@@ -1,10 +1,10 @@
 /datum/patron/divine/abyssor
 	name = "Abyssor"
-	domain = "The Seas, Dreams, Purity, Cleansing"
-	desc = "The Pure Tide disappeared into a slumber, without considering that His dreams would inspire followers of His Divine Absence. The twisted minds and bodies of the Dreamers have corrupted His realm, though through His waters may we be cleansed. If He awakens, the world will be cleansed in full."
-	worshippers = "Fishermen, Axians, Lamia, Dreamers, Madmen"
-	virtues = "Dreaming, Open-Mindedness, Purity"
-	sins = "Forgetfulness, Deception, Taking Name in Vain"
+	domain = "海洋、梦境、纯净、净化"
+	desc = "Pure Tide 沉入了长眠，却未曾想到，祂的梦会召来那些因祂神圣缺席而追随祂的人。Dreamers 扭曲的心智与肉体玷污了祂的领域，但也唯有借由祂的水域，我们方可得到洗净。若祂苏醒，世界将被彻底净化。"
+	worshippers = "渔民、Axians、Lamia、Dreamers、疯子"
+	virtues = "做梦、开放心胸、纯净"
+	sins = "遗忘、欺瞒、妄称其名"
 	mob_traits = list(TRAIT_ABYSSOR_SWIM, TRAIT_SEA_DRINKER)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/aquatic_compulsion	= CLERIC_T0,
@@ -20,9 +20,9 @@
 					/obj/effect/proc_holder/spell/invoked/resurrect/abyssor		= CLERIC_T4,
 	)
 	confess_lines = list(
-		"ABYSSOR COMMANDS THE WAVES!",
-		"THE OCEAN'S FURY IS ABYSSOR'S WILL!",
-		"I AM DRAWN BY THE PULL OF THE TIDE!",
+		"ABYSSOR 号令海浪！",
+		"海洋的怒涛即是 ABYSSOR 的意志！",
+		"我正被潮汐的牵引所召唤！",
 	)
 
 	storyteller = /datum/storyteller/abyssor
@@ -33,7 +33,7 @@
 	// Allows prayer near psycross
 	for(var/obj/structure/fluff/psycross/cross in view(4, get_turf(follower)))
 		if(cross.divine == FALSE)
-			to_chat(follower, span_danger("That defiled cross interupts my prayers!"))
+			to_chat(follower, span_danger("那座被亵渎的十字架打断了我的祈祷！"))
 			return FALSE
 		return TRUE
 	// Allows prayer in the church
@@ -42,7 +42,7 @@
 	// Allows prayer near any body of water turf.
 	for(var/turf/open/water in view(4, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("For Abyssor to hear my prayer I must either pray within the church, near a psycross, or at any body of water so that the tides of prayer may flow.."))
+	to_chat(follower, span_danger("若想让 Abyssor 听见我的祈祷，我必须在教堂内、psycross 附近，或任意一片水域旁祈祷，好让祈祷的潮汐得以流动……"))
 	return FALSE
 
 /datum/patron/divine/abyssor/on_lesser_heal(
@@ -53,8 +53,8 @@
 	conditional_buff,
 	situational_bonus
 )
-	*message_out = span_info("A mist of salt-scented vapour settles on [target]!")
-	*message_self = span_notice("I'm invigorated by healing vapours!")
+	*message_out = span_info("一阵带着咸味的雾气笼罩在[target]身上！")
+	*message_self = span_notice("治疗的雾气令我精神焕发！")
 
 	if(istype(get_turf(target), /turf/open/water))
 		*conditional_buff = TRUE

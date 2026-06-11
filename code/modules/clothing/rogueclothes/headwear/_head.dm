@@ -1,5 +1,5 @@
 /obj/item/clothing/head/roguetown
-	name = "hat"
+	name = "帽子"
 	desc = ""
 	icon = 'icons/roguetown/clothing/head.dmi'
 	icon_state = "top_hat"

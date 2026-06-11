@@ -1,5 +1,6 @@
 /datum/job/roguetown/lunatic
 	title = "Lunatic"
+	display_title = "疯子"
 	flag = LUNATIC
 	department_flag = PEASANTS
 	faction = "Station"
@@ -16,7 +17,7 @@
 	bypass_jobban = FALSE
 	min_pq = 100 //the magic of an allowlist server.
 	max_pq = null
-	tutorial = "The Lunatic, shunned by society and a magnet for misfortune. Your task is simple yet perilous: survive by any means, though your very existence invites danger from every corner. It is said that these lands drive those most familiar with it, the most insane."
+	tutorial = "你是疯子，是被社会唾弃、也最容易招来厄运的人。你的任务简单，却凶险万分：不择手段地活下去，因为你只要还存在于这世上，危险就会从四面八方自己找上门来。人们说，这片谷地最先逼疯的，永远是那些自以为最了解它的人。"
 	display_order = JDO_LUNATIC
 	social_rank = SOCIAL_RANK_PEASANT
 	cmode_music = 'sound/music/combat_bum.ogg'
@@ -29,8 +30,8 @@
 	)
 
 /datum/advclass/lunatic
-	name = "Lunatic"
-	tutorial = "The Lunatic, shunned by society and a magnet for misfortune. Your task is simple yet perilous: survive by any means, though your very existence invites danger from every corner. It is said that these lands drive those most familiar with it, the most insane."
+	name = "疯子"
+	tutorial = "你是疯子，是被社会唾弃、也最容易招来厄运的人。你的任务简单，却凶险万分：不择手段地活下去，因为你只要还存在于这世上，危险就会从四面八方自己找上门来。人们说，这片谷地最先逼疯的，永远是那些自以为最了解它的人。"
 	outfit = /datum/outfit/job/roguetown/lunatic/basic
 	category_tags = list(CTAG_LUNATIC)
 	subclass_stats = list(

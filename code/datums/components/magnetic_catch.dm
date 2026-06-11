@@ -16,7 +16,7 @@
 			RegisterSignal(i, COMSIG_MOVABLE_PRE_THROW, PROC_REF(throw_react))
 
 /datum/component/magnetic_catch/proc/examine(datum/source, mob/user, list/examine_list)
-	examine_list += "It has been installed with inertia dampening to prevent coffee spills."
+	examine_list += "它安装了惯性阻尼装置，以防咖啡泼洒。"
 
 /datum/component/magnetic_catch/proc/crossed_react(datum/source, atom/movable/thing)
 	RegisterSignal(thing, COMSIG_MOVABLE_PRE_THROW, PROC_REF(throw_react), TRUE)

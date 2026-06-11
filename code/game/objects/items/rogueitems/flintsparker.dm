@@ -1,6 +1,6 @@
 /obj/item/flint
-	name = "flint sparker"
-	desc = "A piece of flint and an iron striker, witness to the dances of fire and stone."
+	name = "打火石"
+	desc = "一块燧石和一根铁制打火器，见证了火与石的共舞。"
 	icon_state = "flint"
 	gripped_intents = null
 	//dropshrink = 0.75

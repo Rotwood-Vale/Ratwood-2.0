@@ -61,9 +61,9 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 		var/mob/living/owner_mob = owner_ref?.resolve()
 		if(owner_mob)
 			if(old_member && old_member != user.real_name)
-				to_chat(owner_mob, span_notice("[user.real_name] replaced [old_member] on [instrument.name] in your band lobby."))
+				to_chat(owner_mob, span_notice("[user.real_name]在你的乐队大厅中用[instrument.name]顶替了[old_member]。"))
 			else
-				to_chat(owner_mob, span_notice("[user.real_name] joined your band lobby with [instrument.name]."))
+				to_chat(owner_mob, span_notice("[user.real_name]带着[instrument.name]加入了你的乐队大厅。"))
 	return TRUE
 
 /datum/instrument_band_lobby/proc/remove_member_by_id(member_id)
@@ -95,8 +95,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
 /datum/instrument_band_lobby/proc/get_title()
 	if(owner_name)
-		return "[owner_name]'s Band"
-	return "Unnamed Band"
+		return "[owner_name]的乐队"
+	return "无名乐队"
 
 /datum/instrument_band_lobby/proc/is_within_range(atom/reference, range = 10)
 	if(!reference)
@@ -317,7 +317,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 		var/datum/instrument_band_lobby/owned_lobby = member_id ? GLOB.instrument_band_lobbies[member_id] : null
 		if(groupplaying && owned_lobby && owned_lobby.owner_id == member_id)
 			owned_lobby.stop_all_playing_members()
-			to_chat(user, span_notice("You ended the band performance."))
+			to_chat(user, span_notice("你结束了乐队演奏。"))
 			return
 		playing = FALSE
 		groupplaying = FALSE
@@ -334,44 +334,44 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 		var/loop_notice
 		var/volume_selection
 		while(TRUE)
-			loop_state = "Off"
+			loop_state = "关"
 			if(loop_enabled)
-				loop_state = "On"
-			loop_label = "Song Loop: [loop_state]"
-			volume_label = "Volume: [curvol]"
-			playdecision = input(user, "How do you want to play?", "Music") as null|anything in list("Play Song", " ", "Band Lobby", "  ", loop_label, "   ", volume_label)
+				loop_state = "开"
+			loop_label = "曲目循环：[loop_state]"
+			volume_label = "音量：[curvol]"
+			playdecision = input(user, "你想怎么演奏？", "音乐") as null|anything in list("演奏曲目", " ", "乐队大厅", "  ", loop_label, "   ", volume_label)
 			if(!playdecision)
 				return
 			if(playdecision == " " || playdecision == "  " || playdecision == "   ")
 				continue
 			if(playdecision == loop_label)
 				loop_enabled = !loop_enabled
-				loop_notice = "disabled"
+				loop_notice = "关闭"
 				if(loop_enabled)
-					loop_notice = "enabled"
-				to_chat(user, span_notice("Song loop [loop_notice]."))
+					loop_notice = "开启"
+				to_chat(user, span_notice("曲目循环已[loop_notice]。"))
 				continue
 			if(playdecision == volume_label)
-				volume_selection = input(user, "How loud should this instrument be? (10-100)", "Music Volume", curvol) as num|null
+				volume_selection = input(user, "这件乐器要多响？（10-100）", "音乐音量", curvol) as num|null
 				if(isnull(volume_selection) || !user)
 					return
 				volume_selection = clamp(round(volume_selection), 10, 100)
 				if(volume_selection == curvol)
-					to_chat(user, span_notice("Volume is already set to [curvol]."))
+					to_chat(user, span_notice("音量已经是[curvol]。"))
 				else
 					curvol = volume_selection
-					to_chat(user, span_notice("Instrument volume set to [curvol]."))
+					to_chat(user, span_notice("乐器音量已设为[curvol]。"))
 				continue
 			break
-		groupplaying = (playdecision == "Band Lobby")
+		groupplaying = (playdecision == "乐队大厅")
 		if(!groupplaying)
 			var/choice
 			while(TRUE)
 				var/list/options = song_list.Copy()
 				if(user.mind && user.get_skill_level(/datum/skill/misc/music) >= 4)
 					options[" "] = " "
-					options["Upload New Song"] = "upload"
-				choice = input(user, "Which song?", "Music", name) as null|anything in options
+					options["上传新曲"] = "upload"
+				choice = input(user, "要演奏哪首曲子？", "音乐", name) as null|anything in options
 				if(!choice || !user)
 					return
 				if(choice == " ")
@@ -381,12 +381,12 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			if(playing || !(src in user.held_items) && !(not_held) || user.get_inactive_held_item())
 				return
 				
-			if(choice == "Upload New Song" || choice == "upload")
+			if(choice == "上传新曲" || choice == "upload")
 				if(lastfilechange && world.time < lastfilechange + 3 MINUTES)
-					say("NOT YET!")
+					say("还不行！")
 					return
 				playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
-				var/infile = input(user, "CHOOSE A NEW SONG", src) as null|file
+				var/infile = input(user, "选择一首新曲", src) as null|file
 
 				if(!infile)
 					return
@@ -398,15 +398,15 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 				var/file_size = length(infile)
 				message_admins("[ADMIN_LOOKUPFLW(user)] uploaded a song [filename] of size [file_size / 1000000] (~MB).")
 				if(file_ext != ".ogg")
-					to_chat(user, span_warning("SONG MUST BE AN OGG."))
+					to_chat(user, span_warning("曲目文件必须为 ogg。"))
 					return
 				if(file_size > 6485760)
-					to_chat(user, span_warning("TOO BIG. 6 MEGS OR LESS."))
+					to_chat(user, span_warning("文件太大，必须不超过 6 MB。"))
 					return
 				lastfilechange = world.time
 				fcopy(infile,"data/jukeboxuploads/[user.ckey]/[filename]")
 				curfile = file("data/jukeboxuploads/[user.ckey]/[filename]")
-				var/songname = input(user, "Name your song:", "Song Name") as text|null
+				var/songname = input(user, "给你的曲子命名：", "曲名") as text|null
 				if(songname)
 					song_list[songname] = curfile
 				return
@@ -446,7 +446,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 				soundloop.volume = clamp(curvol, 10, 100)
 				soundloop.repeat_sound = loop_enabled
 				if(!soundloop.start(user))
-					to_chat(user, span_warning("Could not play - no sound channels available. Try again in a moment."))
+					to_chat(user, span_warning("无法播放，当前没有可用音频通道。稍后再试。"))
 					return
 				playing = TRUE
 				user.apply_status_effect(/datum/status_effect/buff/playing_music, stressevent, note_color)
@@ -462,15 +462,15 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			open_band_lobby_menu(user, stressevent, note_color)
 
 /obj/item/rogue/instrument/proc/open_band_lobby_menu(mob/living/user, stressevent, note_color)
-	var/choice = input(user, "Band Lobby", "Band Lobby") as null|anything in list("Register My Band", "Search Bands", "Start My Band", "Leave Band")
+	var/choice = input(user, "乐队大厅", "乐队大厅") as null|anything in list("注册我的乐队", "搜索乐队", "开始我的乐队", "离开乐队")
 	if(!choice)
 		return
 
-	if(choice == "Register My Band")
+	if(choice == "注册我的乐队")
 		if(src.playing)
-			to_chat(user, span_warning("Stop playing first."))
+			to_chat(user, span_warning("先停止演奏。"))
 			return
-		var/song_choice = input(user, "Pick your song for this band slot", "Band Lobby", name) as null|anything in song_list
+		var/song_choice = input(user, "为这个乐队位置选择你的曲目", "乐队大厅", name) as null|anything in song_list
 		if(!song_choice)
 			return
 		var/song_file = song_list[song_choice]
@@ -486,10 +486,10 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			GLOB.instrument_band_lobbies[member_id] = lobby
 		lobby.register_owner(user, src, song_file)
 		groupplaying = TRUE
-		to_chat(user, span_notice("Registered [lobby.get_title()] with [name]."))
+		to_chat(user, span_notice("已用[name]注册[lobby.get_title()]。"))
 		return
 
-	if(choice == "Search Bands")
+	if(choice == "搜索乐队")
 		var/list/search_results = list()
 		var/member_id = instrument_band_member_id(user)
 		for(var/lobby_id in GLOB.instrument_band_lobbies)
@@ -501,18 +501,18 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			var/list/active_slots = lobby.get_active_slots()
 			if(!active_slots.len)
 				continue
-			var/own_suffix = (lobby.owner_id == member_id) ? " (Your Band)" : ""
-			search_results["[lobby.get_title()][own_suffix] ([active_slots.len] members)"] = lobby
+			var/own_suffix = (lobby.owner_id == member_id) ? "（你的乐队）" : ""
+			search_results["[lobby.get_title()][own_suffix]（[active_slots.len]人）"] = lobby
 		if(!search_results.len)
-			to_chat(user, span_warning("No active band lobbies found within 10 tiles."))
+			to_chat(user, span_warning("10 格内没有找到活跃的乐队大厅。"))
 			return
-		var/picked_lobby_name = input(user, "Choose a band to join", "Band Lobby") as null|anything in search_results
+		var/picked_lobby_name = input(user, "选择要加入的乐队", "乐队大厅") as null|anything in search_results
 		if(!picked_lobby_name)
 			return
 		var/datum/instrument_band_lobby/chosen_lobby = search_results[picked_lobby_name]
 		if(!chosen_lobby)
 			return
-		var/join_song_choice = input(user, "Pick your song for this band slot", "Band Lobby", name) as null|anything in song_list
+		var/join_song_choice = input(user, "为这个乐队位置选择你的曲目", "乐队大厅", name) as null|anything in song_list
 		if(!join_song_choice)
 			return
 		var/join_song = song_list[join_song_choice]
@@ -521,19 +521,19 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 		curfile = join_song
 		chosen_lobby.add_or_replace_member(user, src, join_song)
 		groupplaying = TRUE
-		to_chat(user, span_notice("Joined [chosen_lobby.get_title()] with [name]."))
+		to_chat(user, span_notice("已用[name]加入[chosen_lobby.get_title()]。"))
 		return
 
-	if(choice == "Start My Band")
+	if(choice == "开始我的乐队")
 		var/member_id = instrument_band_member_id(user)
 		if(!member_id)
 			return
 		var/datum/instrument_band_lobby/owned_lobby = GLOB.instrument_band_lobbies[member_id]
 		if(!owned_lobby || owned_lobby.owner_id != member_id)
-			to_chat(user, span_warning("You do not own a band lobby."))
+			to_chat(user, span_warning("你并没有拥有一个乐队大厅。"))
 			return
 		if(!curfile)
-			var/owner_song_choice = input(user, "Pick your song for this band slot", "Band Lobby", name) as null|anything in song_list
+			var/owner_song_choice = input(user, "为这个乐队位置选择你的曲目", "乐队大厅", name) as null|anything in song_list
 			if(!owner_song_choice)
 				return
 			curfile = song_list[owner_song_choice]
@@ -543,7 +543,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
 		var/list/slots = owned_lobby.get_active_slots()
 		if(!slots.len)
-			to_chat(user, span_warning("Nobody is registered in your band lobby."))
+			to_chat(user, span_warning("你的乐队大厅里还没有人登记。"))
 			return
 
 		var/list/instruments_to_start = list()
@@ -600,7 +600,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			instruments_to_start += slot_instrument
 
 		if(!instruments_to_start.len)
-			to_chat(user, span_warning("No ready band members to start."))
+			to_chat(user, span_warning("没有准备好开始的乐队成员。"))
 			return
 
 		if(!do_after(user, 1))
@@ -624,7 +624,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			band_instrument.soundloop.repeat_sound = band_instrument.loop_enabled
 			if(!band_instrument.soundloop.start(play_source, sync_anchor))
 				if(isliving(play_source))
-					to_chat(play_source, span_warning("Could not play [band_instrument.name] - no sound channels available."))
+					to_chat(play_source, span_warning("无法播放[band_instrument.name]，当前没有可用音频通道。"))
 				continue
 			band_instrument.playing = TRUE
 			band_instrument.groupplaying = TRUE
@@ -646,10 +646,10 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			var/this_color = bandmate_notecolors[bandmate_mob]
 			bandmate_mob.apply_status_effect(/datum/status_effect/buff/playing_music, this_stress, this_color)
 
-		to_chat(user, span_notice("Your band has started playing."))
+		to_chat(user, span_notice("你的乐队开始演奏了。"))
 		return
 
-	if(choice == "Leave Band")
+	if(choice == "离开乐队")
 		var/member_id = instrument_band_member_id(user)
 		if(!member_id)
 			return
@@ -668,11 +668,11 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			for(var/obj/item/rogue/instrument/held_instrument in user.held_items)
 				held_instrument.groupplaying = FALSE
 		groupplaying = FALSE
-		to_chat(user, span_notice("Left all band lobbies."))
+		to_chat(user, span_notice("已离开所有乐队大厅。"))
 
 /obj/item/rogue/instrument/accord //made all the instruments in alphabetical order bcuz why not?
-	name = "accordion"
-	desc = "A harmonious vessel of nostalgia and celebration."
+	name = "手风琴"
+	desc = "一件承载怀旧与欢庆的和谐乐器。"
 	icon_state = "accordion"
 	song_list = list("Her Healing Tears" = 'sound/music/instruments/accord (1).ogg',
 	"Peddler's Tale" = 'sound/music/instruments/accord (2).ogg',
@@ -683,8 +683,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Beloved Blue" = 'sound/music/instruments/accord (7).ogg')
 
 /obj/item/rogue/instrument/drum
-	name = "drum"
-	desc = "Fashioned from taut skins across a sturdy frame, pulses like a giant heartbeat."
+	name = "鼓"
+	desc = "紧绷的皮面覆在结实鼓架上，搏动声宛如巨人的心跳。"
 	icon_state = "drum"
 	song_list = list("Barbarian's Moot" = 'sound/music/instruments/drum (1).ogg',
 	"Muster the Wardens" = 'sound/music/instruments/drum (2).ogg',
@@ -694,8 +694,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Old Time Battles" = 'sound/music/instruments/drum (6).ogg') // BG3 Song
 
 /obj/item/rogue/instrument/flute
-	name = "flute"
-	desc = "A row of slender hollow tubes of varying lengths that produce a light airy sound when blown across."
+	name = "长笛"
+	desc = "一排长短不一的细长空管，吹奏时会发出轻盈空灵的声音。"
 	icon_state = "flute"
 	song_list = list("Half-Dragon's Ten Mammon" = 'sound/music/instruments/flute (1).ogg',
 	"'The Local Favorite'" = 'sound/music/instruments/flute (2).ogg',
@@ -709,8 +709,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Old Time Battles" = 'modular_azurepeak/sound/music/instruments/flute (10).ogg') //Baldur's Gate 3 Song
 
 /obj/item/rogue/instrument/guitar
-	name = "guitar"
-	desc = "This is a guitar, chosen instrument of wanderers and the heartbroken." // YIPPEE I LOVE GUITAR
+	name = "吉他"
+	desc = "这是一把吉他，流浪者与伤心人最偏爱的乐器。" // YIPPEE I LOVE GUITAR
 	icon_state = "guitar"
 	song_list = list("Fire-Cast Shadows" = 'sound/music/instruments/guitar (1).ogg',
 	"The Forced Hand" = 'sound/music/instruments/guitar (2).ogg',
@@ -728,8 +728,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Daisies in Bloom" = 'sound/music/instruments/guitar (14).ogg')
 
 /obj/item/rogue/instrument/harp
-	name = "harp"
-	desc = "A harp of elven craftsmanship."
+	name = "竖琴"
+	desc = "一把出自精灵工艺的竖琴。"
 	icon_state = "harp"
 	song_list = list("Through Thine Window, He Glanced" = 'sound/music/instruments/harb (1).ogg',
 	"The Lady of Red Silks" = 'sound/music/instruments/harb (2).ogg',
@@ -741,8 +741,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Determination" = 'sound/music/instruments/harb (8).ogg')
 
 /obj/item/rogue/instrument/hurdygurdy
-	name = "hurdy-gurdy"
-	desc = "A knob-driven, wooden string instrument that reminds you of the oceans far."
+	name = "手摇琴"
+	desc = "一种以摇柄驱动的木制弦乐器，总让人想起遥远的海洋。"
 	icon_state = "hurdygurdy"
 	song_list = list("Ruler's One Ring" = 'sound/music/instruments/hurdy (1).ogg',
 	"Tangled Trod" = 'sound/music/instruments/hurdy (2).ogg',
@@ -752,8 +752,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"We Shall Sail Together" = 'sound/music/instruments/hurdy (6).ogg')
 
 /obj/item/rogue/instrument/lute
-	name = "lute"
-	desc = "Its graceful curves were designed to weave joyful melodies."
+	name = "鲁特琴"
+	desc = "它优雅的曲线仿佛天生就是为了织出欢快旋律。"
 	icon_state = "lute"
 	song_list = list("A Knight's Return" = 'sound/music/instruments/lute (1).ogg',
 	"Amongst Fare Friends" = 'sound/music/instruments/lute (2).ogg',
@@ -767,8 +767,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Old Time Battles" = 'modular_azurepeak/sound/music/instruments/lute (10).ogg') //Baldur's Gate 3 Song
 
 /obj/item/rogue/instrument/psyaltery
-	name = "psyaltery"
-	desc = "A traditional form of boxed zither or box-harp that may be played plucked, with a plectrum or with hammers. They are particularly associated with divine beings, aasimars and liturgies."
+	name = "圣咏琴"
+	desc = "一种传统箱式齐特琴或箱式竖琴，可用手拨、拨片或小槌演奏。它们尤其常与神圣存在、亚斯玛以及礼拜仪式联系在一起。"
 	icon_state = "psyaltery"
 	song_list = list(
 	"Disciples Tower" = 'sound/music/instruments/psyaltery (1).ogg',
@@ -783,8 +783,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Chevalier de Naledi" = 'sound/music/instruments/psyaltery (10).ogg')
 
 /obj/item/rogue/instrument/shamisen
-	name = "shamisen"
-	desc = "The shamisen, or simply «three strings», is an kazengunese stringed instrument with a washer, which is usually played with the help of a bachi."
+	name = "三味线"
+	desc = "三味线，字面意为“三根弦”，是一种卡赞郡风格的弦乐器，通常借助拨子演奏。"
 	icon_state = "shamisen"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
@@ -812,15 +812,15 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Koshiro" = 'sound/music/instruments/shamisen (8).ogg')
 
 /obj/item/rogue/instrument/vocals/harpy_vocals
-	name = "harpy's song"
-	desc = "The blessed essence of harpysong. How did you get this... you monster!"
+	name = "鹰身女妖之歌"
+	desc = "鹰身女妖歌声的神圣精华。你到底是怎么弄到这东西的……你这个怪物！"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "harpysong"		//Pulsating heart energy thing.
 	not_held = TRUE
 
 /obj/item/rogue/instrument/trumpet
-	name = "trumpet"
-	desc = "A long brass tube twisted around with a flared end. It has a few valves to press on the top."
+	name = "小号"
+	desc = "一根盘绕成形、末端外张的黄铜长管，上方装着几个可按压的活塞。"
 	icon_state = "trumpet"
 	song_list = list("Royal Entrance" = 'sound/music/instruments/trumpet (1).ogg',
 	"Royal Exit" = 'sound/music/instruments/trumpet (2).ogg',
@@ -831,8 +831,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Honoring the Fallen" = 'sound/music/instruments/trumpet (7).ogg')
 
 /obj/item/rogue/instrument/bagpipe
-	name = "bagpipe"
-	desc = "A commonly used woodwind instrument using enclosed reeds fed from a constant reservoir of air in the form of a bag."
+	name = "风笛"
+	desc = "一种常见的木管乐器，以袋囊储气，持续为封闭簧片供风。"
 	grid_width = 64
 	grid_height = 32
 	w_class = WEIGHT_CLASS_NORMAL
@@ -846,8 +846,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Otavan Madame" = 'sound/music/instruments/bagpipe (7).ogg')
 
 /obj/item/rogue/instrument/banjo
-	name = "banjo"
-	desc = "A stringed instrument with a thin membrane stretched over a circular-bodied frame, typically played by plucking or strumming. It has a certain twangy sound commonly heard in folk music."
+	name = "班卓琴"
+	desc = "一种在圆形共鸣框上绷着薄膜的弦乐器，通常以拨奏或扫弦演奏，带有民间音乐里常见的清脆弹跳音色。"
 	grid_width = 64
 	grid_height = 32
 	w_class = WEIGHT_CLASS_NORMAL
@@ -861,8 +861,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Tangled in th' Reeds" = 'sound/music/instruments/banjo (7).ogg')
 
 /obj/item/rogue/instrument/harmonica
-	name = "harmonica"
-	desc = "A small, rectangular wind instrument played by blowing air through reeds."
+	name = "口琴"
+	desc = "一种小巧的矩形吹奏乐器，通过气流穿过簧片发声。"
 	grid_width = 32
 	grid_height = 32
 	w_class = WEIGHT_CLASS_SMALL
@@ -876,8 +876,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"To Our Friends Felled" = 'sound/music/instruments/harmonica (7).ogg')
 
 /obj/item/rogue/instrument/jawharp
-	name = "jaw harp"
-	desc = "A vibrating reed attached to a sturdy frame, originally crafted in the Gronn Steppes. It produces a buzzing sound that mimics the winds of the plains."
+	name = "口簧琴"
+	desc = "一根振动簧片固定在结实框架上，最初打造于格隆草原。它会发出仿佛平原之风般的嗡鸣。"
 	dropshrink = 0.6
 	grid_width = 32
 	grid_height = 32
@@ -898,8 +898,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 				return list("shrink" = 0.1,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/rogue/instrument/viola
-	name = "viola"
-	desc = "The prim and proper Viola, every prince's first instrument taught."
+	name = "中提琴"
+	desc = "端庄而雅正的中提琴，是每位王子最先学习的乐器。"
 	icon_state = "viola"
 	song_list = list("Far Flung Tale" = 'sound/music/instruments/viola (1).ogg',
 	"G Major Cello Suite No. 1" = 'sound/music/instruments/viola (2).ogg',
@@ -912,11 +912,11 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
 
 /obj/item/rogue/instrument/vocals
-	name = "vocalist's talisman"
-	desc = "This talisman emanates a soft shimmer of light. When held, it can amplify and even change a bard's voice."
+	name = "歌者护符"
+	desc = "这枚护符散发着柔和微光。握在手中时，它能放大，甚至改变吟游诗人的嗓音。"
 	icon_state = "vtalisman"
 	song_list = list("Harpy's Call (Feminine)" = 'sound/music/instruments/vocalsf (1).ogg',
-	"Necra's Lullaby (Feminine)" = 'sound/music/instruments/vocalsf (2).ogg',
+	"Necra 的摇篮曲（女声）" = 'sound/music/instruments/vocalsf (2).ogg',
 	"Death Touched Aasimar (Feminine)" = 'sound/music/instruments/vocalsf (3).ogg',
 	"Our Mother, Our Divine (Feminine)" = 'sound/music/instruments/vocalsf (4).ogg',
 	"Wed, Forever More (Feminine)" = 'sound/music/instruments/vocalsf (5).ogg',

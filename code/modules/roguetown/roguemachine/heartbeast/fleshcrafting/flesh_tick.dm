@@ -1,16 +1,16 @@
 /obj/item/leechtick
 	icon = 'icons/obj/structures/heart_items.dmi'
 	icon_state = "leechtick"
-	name = "leech tick"
-	desc = "A pestran invader of Abyssor's divine sea. These are well known to latch onto the corpses of underwater leviathans. More than a pest, leechticks suck the soul out of those that disturb them, digesting the lux of assailants."
+	name = "水蛭蜱"
+	desc = "一种来自 阿比索尔 神圣之海、受 佩斯特拉 影响的入侵生物。众所周知，它们会附着在海中巨兽的尸骸上。它们不只是害虫，任何惊扰它们的人都会被吸走灵魂与灵辉。"
 	// Don't lower the size, they'll make effective throwing weapons otherwise.
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/leechtick_bloated
 	icon_state = "leechthick"
 	icon = 'icons/obj/structures/heart_items.dmi'
-	name = "bloated leech tick"
-	desc = "This leechtick has feasted on lux and digested it. A crazy person might use this for revival..."
+	name = "胀满水蛭蜱"
+	desc = "这只水蛭蜱饱食灵辉，并已将其消化。疯子也许会拿它去复生……"
 	sellprice = 40
 	w_class = WEIGHT_CLASS_TINY
 	dropshrink = 0.85
@@ -154,7 +154,7 @@
 		return
 	var/mob/living/L = parent
 	if(prob(25))
-		to_chat(L, span_notice("The leech tick skitters across my body!"))
+		to_chat(L, span_notice("水蛭蜱在我身上飞快乱爬！"))
 	L.adjustBruteLoss(1, 0)
 	current_zone = pick(possible_zones)
 	update_overlay()
@@ -225,8 +225,8 @@
 	qdel(src)
 
 /atom/movable/screen/alert/status_effect/debuff/leech_schizophrenia
-	name = "Aural Echoes"
-	desc = "You hear faint whispers that don't belong to you. Your mind feels maladjusted and unsettled."
+	name = "耳畔回响"
+	desc = "你听见了不属于自己的微弱低语。你的心神变得紊乱而不安。"
 
 /datum/status_effect/debuff/leech_schizophrenia
 	id = "leech_schizophrenia"

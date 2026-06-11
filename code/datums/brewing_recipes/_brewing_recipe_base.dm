@@ -1,7 +1,7 @@
 /datum/brewing_recipe
 	abstract_type = /datum/brewing_recipe
-	var/name = "Alcohols"
-	var/category = "Other"
+	var/name = "酒类"
+	var/category = "其他"
 	///the type path of the reagent
 	var/reagent_to_brew = /datum/reagent/consumable/ethanol
 	///pre-reqs: Essentially do we need past recipes made of this, uses the reagent_to_brew var to know if this has been done
@@ -35,7 +35,7 @@
 	///the heat we need to be kept at
 	var/heat_required
 	// The name & description on the bottle, if any. Lowercase for the name. 
-	var/bottle_name = "generic brew"
+	var/bottle_name = "普通酿造酒"
 	var/bottle_desc = null
 
 /datum/brewing_recipe/proc/after_finish_attackby(mob/user, obj/item/attacked_item, atom/source)
@@ -56,38 +56,38 @@
 		  <div>
 		    <h1>[name]</h1>
 		    <div>
-			  <h2>Brewing Time: [brew_time / 10] Seconds </h2>
-			  <h2>Requirements</h2>
+			  <h2>酿造时间：[brew_time / 10] 秒 </h2>
+			  <h2>需求材料</h2>
 		"}
 	if(ages)
-		html += "<h2>Will Continue to age after brewing.</h2>"
+		html += "<h2>酿成后还会继续陈化。</h2>"
 	if(helpful_hints)
 		html += "<strong>[helpful_hints]</stong><br>"
 	if(pre_reqs)
-		html += "<strong>Requires that you have just made [initial(pre_reqs.name)] in the [heat_required ? "Distiller" : "Keg"].</stong><br>"
+		html += "<strong>需要我刚刚在[heat_required ? "蒸馏器" : "酒桶"]中制成过[initial(pre_reqs.name)]。</stong><br>"
 	if(heat_required)
-		html += "<strong>Requires that this be made in a distiller thats atleast [heat_required - 273.1]C.</stong><br>"
+		html += "<strong>需要在温度至少为 [heat_required - 273.1]C 的蒸馏器中制作。</stong><br>"
 
 	if(length(needed_crops) || length(needed_items))
-		html += "<h3>Items Required</h3>"
+		html += "<h3>所需物品</h3>"
 		for(var/atom/path as anything in needed_crops)
 			var/count = needed_crops[path]
-			html += "[count] parts [initial(path.name)]<br>"
+			html += "[count] 份 [initial(path.name)]<br>"
 		for(var/atom/path as anything in needed_items)
 			var/count = needed_items[path]
-			html += "[count] parts [initial(path.name)]<br>"
+			html += "[count] 份 [initial(path.name)]<br>"
 		html += "<br>"
 	if(length(needed_reagents))
-		html += "<h3>Liquids Required</h3>"
+		html += "<h3>所需液体</h3>"
 		for(var/atom/path as anything in needed_reagents)
 			var/count = needed_reagents[path]
-			html += "[FLOOR(count, 1)] [UNIT_FORM_STRING(FLOOR(count, 1))] of [initial(path.name)]<br>"
+			html += "[FLOOR(count, 1)] [UNIT_FORM_STRING(FLOOR(count, 1))] [initial(path.name)]<br>"
 		html += "<br>"
 
 	if(brewed_amount)
-		html += "Produces: [FLOOR((per_brew_amount * brewed_amount), 1)] [UNIT_FORM_STRING(FLOOR((per_brew_amount * brewed_amount), 1))] of [name]"
+		html += "产出：[FLOOR((per_brew_amount * brewed_amount), 1)] [UNIT_FORM_STRING(FLOOR((per_brew_amount * brewed_amount), 1))] [name]"
 	if(brewed_item)
-		html += "Produces:[icon2html(new brewed_item, user)] [(brewed_item_count)] [initial(brewed_item.name)]"
+		html += "产出：[icon2html(new brewed_item, user)] [(brewed_item_count)] [initial(brewed_item.name)]"
 	html += {"
 		</div>
 		<div>
@@ -95,9 +95,9 @@
 
 	if(ages)
 		for(var/datum/reagent/path as anything in age_times)
-			html += "After aging for [age_times[path] * 0.1] Seconds, becomes [initial(path.name)].<br>"
+			html += "陈化 [age_times[path] * 0.1] 秒后，会变成 [initial(path.name)]。<br>"
 	if(sell_value)
-		html += "A barrel sells for: [sell_value] mammons.<br>"
+		html += "一桶可卖出：[sell_value] mammons。<br>"
 
 	html += {"
 		</div>

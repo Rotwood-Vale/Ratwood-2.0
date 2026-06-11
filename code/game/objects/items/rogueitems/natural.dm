@@ -16,23 +16,23 @@
 /obj/item/natural/attackby(obj/item/W, mob/living/user)
 	if(istype(W, /obj/item/natural/bundle))
 		if(item_flags & IN_STORAGE)
-			to_chat(user, span_warning("It's hard to find [W] in my bag."))
+			to_chat(user, span_warning("在我的包里寻找[W]太困难了。"))
 			return
 		var/obj/item/natural/bundle/B = W
 		if(istype(src, B.stacktype))
 			if(B.amount < B.maxamount)
 				B.amount++
 				B.update_bundle()
-				user.visible_message("[user] adds [src] to [W].")
+				user.visible_message("[user]将[src]添加进[W]中。")
 				qdel(src)
 			else
-				to_chat(user, "There's not enough space in [W].")
+				to_chat(user, "[W]里已经没有空间了。")
 			return
 	else if(istype(W, /obj/item/natural/))
 		var/obj/item/natural/B = W
 		if(B.bundletype == src.bundletype && src.bundletype != null)
 			var/obj/item/natural/bundle/N = new bundletype(src.loc)
-			to_chat(user, "You tie the [N.stackname] into a bundle.")
+			to_chat(user, "你把[N.stackname]缠成捆。")
 			qdel(B)
 			qdel(src)
 			user.put_in_hands(N)
@@ -41,8 +41,8 @@
 
 
 /obj/item/natural/bundle
-	name = "bundle"
-	desc = "You shouldn't be seeing this."
+	name = "捆"
+	desc = "你不应该看见这个。"
 	possible_item_intents = list(/datum/intent/use)
 	force = 0
 	throwforce = 0
@@ -57,7 +57,7 @@
 	var/icon2step = 6
 	var/icon3 = null
 	var/stacktype = /obj/item/natural/fibers/
-	var/stackname = "fibers"
+	var/stackname = "根纤维"
 	var/base_width = 32
 	var/base_height = 32
 
@@ -75,13 +75,13 @@
 				src.amount = maxamount
 				src.update_bundle()
 				B.update_bundle()
-				to_chat(user, "There's not enough space in [src].")
+				to_chat(user, "[src]中没有足够的空间了。")
 				if(B.amount == 1)
 					var/obj/H = new stacktype(src.loc)
 					user.put_in_hands(H)
 					qdel(B)
 			else
-				to_chat(user, "I add the [W] to the [src].")
+				to_chat(user, "我把[W]添加进了[src]中。")
 				src.amount += B.amount
 				update_bundle()
 				qdel(B)
@@ -89,12 +89,12 @@
 		if(item_flags & IN_STORAGE)
 			return
 		if(src.amount < src.maxamount)
-			to_chat(user, "I add the [W] to the [src].")
+			to_chat(user, "我把[W]添加进了[src]中。")
 			src.amount++
 			update_bundle()
 			qdel(W)
 		else
-			to_chat(user, "There's not enough space in [src].")
+			to_chat(user, "[src]中没有足够的空间了。")
 	else
 		return ..()
 
@@ -128,7 +128,7 @@
 			amount -= 1
 			var/obj/F = new stacktype(src.loc)
 			H.put_in_hands(F)
-			user.visible_message("[user] removes [F] from [src].", "I remove [F] from [src].")
+			user.visible_message("[user]从[src]中拿出了[F]。", "我从[src]中拿出了[F]。")
 	update_bundle()
 
 /obj/item/natural/bundle/attack_turf(turf/T, mob/living/user)
@@ -138,9 +138,9 @@
 			stackables += I
 	if(stackables.len)
 		if(amount >= maxamount)
-			to_chat(user, span_info("[src] can't hold any more without falling apart."))
+			to_chat(user, span_info("[src]已经满得不能再装了，再装就要散开了。"))
 			return
-		to_chat(user, span_info("I begin filling [src]..."))
+		to_chat(user, span_info("我开始填充[src]..."))
 		for(var/obj/I in stackables)
 			if(amount >= maxamount)
 				break
@@ -157,9 +157,9 @@
 /obj/item/natural/bundle/examine(mob/user)
 	. = ..()
 	if(amount == maxamount )
-		to_chat(user, span_notice("There are [amount] [stackname] in this bundle. It can not take any more."))
+		to_chat(user, span_notice("这堆里面有 [amount] [stackname]，已经不能再加入任何东西了。"))
 	else
-		to_chat(user, span_notice("There are [amount] [stackname] in this bundle."))
+		to_chat(user, span_notice("这堆里面有 [amount] [stackname]。"))
 
 /obj/item/natural/bundle/proc/update_bundle()
 	if(firefuel != 0)

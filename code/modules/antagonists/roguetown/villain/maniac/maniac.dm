@@ -1,17 +1,17 @@
 
 /datum/antagonist/maniac
-	name = "Maniac"
-	roundend_category = "maniacs"
-	antagpanel_category = "Maniac"
-	antag_memory = "<b>Recently I've been visited by a lot of VISIONS. They're all about another WORLD, ANOTHER life. I will do EVERYTHING to know the TRUTH, and return to the REAL world.</b>"
+	name = "疯子"
+	roundend_category = "疯子"
+	antagpanel_category = "疯子"
+	antag_memory = "<b>最近我不断被各种幻象侵扰。它们全都指向另一个世界，另一段人生。我会不惜一切代价知晓真相，并回到真正的世界。</b>"
 	job_rank = ROLE_MANIAC
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "villain"
 	confess_lines = list(
-		"I gave them no time to squeal.",
-		"I shant quit ripping them.",
-		"They deserve to be put at my blade.",
-		"Do what thou wilt shall be the whole of the law.",
+		"我没给他们留下半点尖叫求饶的时间。",
+		"我绝不会停下将他们撕开的手。",
+		"他们活该死在我的刀刃之下。",
+		"汝欲所行者，即为律法之全部。",
 	)
 	rogue_enabled = FALSE
 	/// Traits we apply to the owner
@@ -85,8 +85,8 @@
 /datum/antagonist/maniac/on_gain()
 	. = ..()
 	owner.special_role = ROLE_MANIAC
-	owner.special_items["Maniac"] = pick(possible_weapons)
-	owner.special_items["Surgical Kit"] = /obj/item/storage/belt/rogue/surgery_bag/full
+	owner.special_items["疯子武器"] = pick(possible_weapons)
+	owner.special_items["手术包"] = /obj/item/storage/belt/rogue/surgery_bag/full
 	if(owner.current)
 		if(ishuman(owner.current))
 			var/mob/living/carbon/human/dreamer = owner.current
@@ -116,7 +116,7 @@
 	STOP_PROCESSING(SSobj, src)
 	if(owner.current)
 		if(!silent)
-			to_chat(owner.current,span_danger("I am no longer a MANIAC!"))
+			to_chat(owner.current,span_danger("我不再是疯子了！"))
 		if(ishuman(owner.current))
 			var/mob/living/carbon/human/dreamer = owner.current
 			dreamer.STASTR = STASTR
@@ -190,16 +190,16 @@
 		trey_liam.SetSleeping(25 SECONDS)
 		trey_liam.add_stress(/datum/stressevent/maniac_woke_up)
 		sleep(1.5 SECONDS)
-		to_chat(trey_liam, span_deadsay("<span class='reallybig'>... WHERE AM I? ...</span>"))
+		to_chat(trey_liam, span_deadsay("<span class='reallybig'>……我这是在哪？……</span>"))
 		sleep(1.5 SECONDS)
 		var/static/list/slop_lore = list(
-			span_deadsay("... Rockhill? No ... It doesn't exist ..."),
-			span_deadsay("... My name is Trey. Trey Liam, Liamtific Troverseer ..."),
-			span_deadsay("... I'm on NT Liam, a self Treystaining ship, used to Treyserve what Liamains of roguemanity ..."),
-			span_deadsay("... Launched into the Grim Darkness, Fart Grimness preserves their grimness ... Their edge ..."),
-			span_deadsay("... Keeps them alive in the grim future, where there is only grimdarkness ..."),
-			span_deadsay("... There is no hope left. Only the Space Station 13 lets me live in the Trey Liam ..."),
-			span_deadsay("... What have I done!? ..."),
+			span_deadsay("……[SSmapping.map_adjustment.realm_name]？不……这里并不存在……"),
+			span_deadsay("……我叫特雷。特雷·利亚姆，利亚姆提菲克·特罗维希尔……"),
+			span_deadsay("……我在 NT“利亚姆”号 上，一艘能够自我维持的船，用来保存 roguemanity 残存的一切……"),
+			span_deadsay("……被发射进无尽黑暗之中，法特·格里姆尼斯 保存着他们的 冷酷……他们的锋芒……"),
+			span_deadsay("……让他们在那只有暗黑的残酷未来里继续活下去……"),
+			span_deadsay("……已经不剩下任何希望了。只有太空站13 还能让我活在特雷·利亚姆之中……"),
+			span_deadsay("……我都做了些什么！？……"),
 		)
 		for(var/slop in slop_lore)
 			to_chat(trey_liam, slop)
@@ -207,7 +207,7 @@
 	else
 		INVOKE_ASYNC(src, PROC_REF(cant_wake_up), dreamer)
 	sleep(15 SECONDS)
-	to_chat(world, span_deadsay("<span class='reallybig'>The Maniac has TRIUMPHED!</span>"))
+	to_chat(world, span_deadsay("<span class='reallybig'>疯子凯旋了！</span>"))
 	SSticker.declare_completion()
 
 /datum/antagonist/maniac/proc/agony(mob/living/carbon/dreamer)
@@ -224,7 +224,7 @@
 		spawnturf = get_turf(trey)
 	if(spawnturf)
 		var/mob/living/carbon/human/trey_liam = new /mob/living/carbon/human/species/human/northern(spawnturf)
-		trey_liam.fully_replace_character_name(trey_liam.name, "Trey Liam")
+		trey_liam.fully_replace_character_name(trey_liam.name, "特雷·利亚姆")
 		trey_liam.gender = MALE
 		trey_liam.skin_tone = "ffe0d1"
 		trey_liam.hair_color = "999999"
@@ -243,10 +243,10 @@
 /datum/antagonist/maniac/proc/cant_wake_up(mob/living/dreamer)
 	if(!iscarbon(dreamer))
 		return
-	to_chat(dreamer, span_deadsay("<span class='reallybig'>I CAN'T WAKE UP.</span>"))
+	to_chat(dreamer, span_deadsay("<span class='reallybig'>我醒不过来。</span>"))
 	sleep(2 SECONDS)
 	for(var/i in 1 to 10)
-		to_chat(dreamer, span_deadsay("<span class='reallybig'>ICANTWAKEUP</span>"))
+		to_chat(dreamer, span_deadsay("<span class='reallybig'>我醒不过来</span>"))
 		sleep(0.5 SECONDS)
 	var/obj/item/organ/brain/brain = dreamer.getorganslot(ORGAN_SLOT_BRAIN)
 	var/obj/item/bodypart/head/head = dreamer.get_bodypart(BODY_ZONE_HEAD)
@@ -268,9 +268,9 @@
 		for(var/datum/objective/objective in objectives)
 			objective.update_explanation_text()
 			if(objective.check_completion())
-				to_chat(world, "<B>Goal #[count]</B>: [objective.explanation_text] <span class='greentext'>TRIUMPH!</span>")
+				to_chat(world, "<B>目标 #[count]</B>: [objective.explanation_text] <span class='greentext'>凯旋！</span>")
 			else
-				to_chat(world, "<B>Goal #[count]</B>: [objective.explanation_text] <span class='redtext'>Failure.</span>")
+				to_chat(world, "<B>目标 #[count]</B>: [objective.explanation_text] <span class='redtext'>失败。</span>")
 				traitorwin = FALSE
 			count += objective.triumph_count
 
@@ -283,10 +283,10 @@
 		if(count)
 			if(owner)
 				owner.adjust_triumphs(count)
-		to_chat(world, span_greentext("The [special_role_text] has TRIUMPHED!"))
+		to_chat(world, span_greentext("[special_role_text]凯旋了！"))
 		if(owner?.current)
 			owner.current.playsound_local(get_turf(owner.current), 'sound/misc/triumph.ogg', 100, FALSE, pressure_affected = FALSE)
 	else
-		to_chat(world, span_redtext("The [special_role_text] has FAILED!"))
+		to_chat(world, span_redtext("[special_role_text]失败了！"))
 		if(owner?.current)
 			owner.current.playsound_local(get_turf(owner.current), 'sound/misc/fail.ogg', 100, FALSE, pressure_affected = FALSE)

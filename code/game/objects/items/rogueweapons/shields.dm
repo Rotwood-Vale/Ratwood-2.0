@@ -42,7 +42,7 @@
 		if(istype(attackby_item, /obj/item/rogueweapon))
 			if(!COOLDOWN_FINISHED(src, shield_bang))
 				return
-			user.visible_message(span_danger("[user] bangs [src] with [attackby_item]!"))
+			user.visible_message(span_danger("[user]用[attackby_item]猛砸[src]！"))
 			playsound(user.loc, 'sound/combat/shieldbang.ogg', 50, TRUE)
 			COOLDOWN_START(src, shield_bang, SHIELD_BANG_COOLDOWN)
 			return
@@ -68,13 +68,13 @@
 		if(obj_broken) // No blocking with a broken shield you fool
 			return FALSE
 		if((owner.client?.chargedprog == 100 && owner.used_intent?.tranged) || prob(coverage))
-			owner.visible_message(span_danger("[owner] expertly blocks [hitby] with [src]!"))
+			owner.visible_message(span_danger("[owner]用[src]熟练地挡下了[hitby]！"))
 			src.take_damage(floor(damage / 4))
 			return TRUE
 	return FALSE
 
 /datum/intent/shield/bash
-	name = "bash"
+	name = "盾击"
 	icon_state = "inbash"
 	hitsound = list('sound/combat/shieldbash_wood.ogg')
 	chargetime = 0
@@ -86,7 +86,7 @@
 	hitsound = list('sound/combat/parry/shield/metalshield (1).ogg')
 
 /datum/intent/shield/block
-	name = "block"
+	name = "格挡"
 	icon_state = "inblock"
 	tranged = 1 //we can't attack directly with this intent, but we can charge it
 	tshield = 1
@@ -107,8 +107,8 @@
 	hitsound = list('sound/combat/parry/shield/metalshield (1).ogg')
 
 /obj/item/rogueweapon/shield/wood
-	name = "wooden shield"
-	desc = "A sturdy wooden shield. Will block anything you can imagine."
+	name = "木盾"
+	desc = "一面结实的木盾。能挡下你能想到的任何东西。"
 	icon_state = "woodsh"
 	dropshrink = 0.8
 	anvilrepair = /datum/skill/craft/carpentry
@@ -134,13 +134,13 @@
 		..()
 		return
 
-	var/picked_name = input(user, "Choose a Heraldry", "ROGUETOWN", name) as null|anything in sortList(istates)
+	var/picked_name = input(user, "选择纹章", "纹章", name) as null|anything in sortList(istates)
 	if(!picked_name)
 		picked_name = "none"
 	var/mutable_appearance/M = mutable_appearance('icons/roguetown/weapons/shield_heraldry.dmi', "[icon_state]_[picked_name]")
 	M.appearance_flags = NO_CLIENT_COLOR
 	add_overlay(M)
-	if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
+	if(alert("你满意这面纹章吗？", "纹章", "满意", "重选") != "满意")
 		cut_overlays()
 
 	update_icon()
@@ -155,8 +155,8 @@
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
 /obj/item/rogueweapon/shield/tower
-	name = "tower shield"
-	desc = "A gigantic, iron reinforced shield that covers the entire body, a design-copy of the Aasimar shields of an era gone by."
+	name = "塔盾"
+	desc = "一面覆盖全身的巨型铁加固盾牌，仿制自逝去年代的亚斯玛盾式。"
 	icon_state = "shield_tower"
 	force = 6
 	throwforce = 10
@@ -173,8 +173,8 @@
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/rogueweapon/shield/tower/holysee
-	name = "see shield"
-	desc = "A final, staunch line against the darkness. For it's not what is before the shield-carrier that matters, but the home behind them."
+	name = "圣座塔盾"
+	desc = "对抗黑暗的最后一道坚固防线。因为对持盾者而言，真正重要的不是身前之敌，而是身后之家。"
 	icon_state = "gsshield"
 	force = 20
 	throwforce = 10
@@ -215,8 +215,8 @@
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
 /obj/item/rogueweapon/shield/tower/metal
-	name = "kite shield"
-	desc = "A kite-shaped iron shield. Reliable and sturdy."
+	name = "鸢盾"
+	desc = "一面鸢形铁盾。可靠而坚固。"
 	icon_state = "kitesh"
 	force = 20
 	throwforce = 10
@@ -245,8 +245,8 @@
 	return ..()
 
 /obj/item/rogueweapon/shield/tower/metal/ancient
-	name = "ancient shield"
-	desc = "A venerable scutum, plated with polished gilbranze. An undying legionnaire's closest friend; that which rebukes arrow-and-bolt alike with unphasing prejudice. It is a reminder - one of many - that Her ambition cannot be stopped."
+	name = "远古盾"
+	desc = "一面覆有抛光吉尔青铜的古老方盾。它是不死军团士兵最亲密的伙伴；无论箭矢还是弩矢，都会被它冷酷无情地弹开。它只是无数提醒中的一个，宣告她的野心无人能阻。"
 	icon_state = "ancientsh"
 	smeltresult = /obj/item/ingot/aaslag
 
@@ -260,8 +260,8 @@
 	return ..()
 
 /obj/item/rogueweapon/shield/tower/metal/ancient/decrepit
-	name = "decrepit shield"
-	desc = "A hefty tower shield, wrought from frayed bronze. Looped with dried kelp and reeking of saltwater, you'd assume that this had been fished out from the remains of a long-sunken warship.. alongside its former legionnaire."
+	name = "破旧盾"
+	desc = "一面由磨损青铜打造的沉重塔盾。其上缠着干枯海藻，散发咸腥海味，让人不禁以为它是从某艘沉没已久的战船残骸里打捞出来的……连同它昔日的主人一起。"
 	max_integrity = 120
 	wdefense = 9
 	blade_dulling = DULLING_SHAFT_CONJURED
@@ -269,8 +269,8 @@
 	anvilrepair = null
 
 /obj/item/rogueweapon/shield/tower/metal/psy
-	name = "Covenant"
-	desc = "A Psydonian endures. A Psydonian preserves themselves. A Psydonian preserves His flock."
+	name = "圣约"
+	desc = "普赛顿之民忍耐不屈。普赛顿之民保全自身。普赛顿之民守护祂的羊群。"
 	icon_state = "psyshield"
 	force = 15
 	throwforce = 5
@@ -300,8 +300,8 @@
 	)
 
 /obj/item/rogueweapon/shield/tower/zyb
-	name = "rider shield"
-	desc = "A shield of Zybantine design. Clever usage of wood, iron, and leather make an impressive match for any weapon."
+	name = "骑盾"
+	desc = "一面齐班提风格的盾牌。木材、铁与皮革被巧妙结合，使其足以应对各类武器。"
 	icon_state = "desert_rider"
 	possible_item_intents = list(SHIELD_BASH_METAL, SHIELD_BLOCK)
 	force = 25
@@ -322,14 +322,14 @@
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
 /obj/item/rogueweapon/shield/tower/spidershield
-	name = "spider shield"
-	desc = "A bulky shield of spike-like lengths molten together. The motifs evoke anything but safety and protection."
+	name = "蜘蛛盾"
+	desc = "一面由尖刺般的金属条熔接而成的厚重盾牌。它的纹样让人联想到的绝不是安全与庇护。"
 	icon_state = "spidershield"
 	coverage = 55
 
 /obj/item/rogueweapon/shield/buckler
-	name = "buckler"
-	desc = "A sturdy buckler shield. Will block anything you can imagine."
+	name = "小圆盾"
+	desc = "一面结实的小圆盾。能挡下你能想到的任何东西。"
 	icon_state = "bucklersh"
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK
 	force = 20
@@ -351,12 +351,12 @@
 /obj/item/rogueweapon/shield/buckler/equipped(mob/user, slot, initial)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_GNARLYDIGITS))
-		to_chat(user, span_danger("Woe! the handle of the [src] is too small for me to hold onto!"))
+		to_chat(user, span_danger("糟了！[src]的握把太小，我抓不住！"))
 		forceMove(user.loc)
 
 /obj/item/rogueweapon/shield/buckler/examine(mob/living/user)
 	. = ..()
-	. += "Buckler uses the skill of your active weapon to parry. Otherwise it uses your shields skill."
+	. += "小圆盾会使用你当前主手武器的招架技能；否则改用你的盾牌技能。"
 
 /obj/item/rogueweapon/shield/buckler/proc/bucklerskill(mob/living/user)
 	if(!ishuman(user))
@@ -384,23 +384,23 @@
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
 /obj/item/rogueweapon/shield/buckler/ancient
-	name = "ancient buckler"
-	desc = "A rounded parrying shield, cast from polished gilbranze. Despite its unseemly, brittle appearance, the scars inflicted by \
-	reflected blades only faintly mar the unnatural craftsmanship."
+	name = "远古小圆盾"
+	desc = "它曾领先于时代，如今却已被时代抛下。工匠锤击留下的痕迹仍在斑驳表面上可见，然而 \
+	锈蚀与腐朽连这点记忆都不肯放过。"
 	icon_state = "ancient_buckler"
 	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/rogueweapon/shield/buckler/ancient/decrepit
-	name = "decrepit buckler"
-	desc = "An object once before its time, now out of it. The artisan's hammerstrikes are still visible in the mottled surface, yet \
-	the encroach of rust and rot threatens even this memory."
+	name = "破旧的小圆盾"
+	desc = "它曾领先于时代，如今却已被时代抛下。工匠锤击留下的痕迹仍在斑驳表面上可见，然而 \
+	锈蚀与腐朽连这点记忆都不肯放过。"
 	force = 12
 	throwforce = 6
 	max_integrity = 40
 
 /obj/item/rogueweapon/shield/heater
-	name = "heater shield"
-	desc = "A sturdy wood and leather shield. Made to not be too encumbering while still providing good protection."
+	name = "熨斗盾"
+	desc = "一面结实的木皮盾。设计上尽量减轻负担，同时仍能提供不错的防护。"
 	icon_state = "heatersh"
 	force = 15
 	throwforce = 10
@@ -422,8 +422,8 @@
 
 
 /obj/item/rogueweapon/shield/iron
-	name = "iron shield"
-	desc = "A heavy iron shield. It's cheaper than steel, but more encumbering."
+	name = "铁盾"
+	desc = "一面沉重的铁盾。它比钢盾便宜，但也更累赘。"
 	icon_state = "ironsh"
 	force = 20
 	throwforce = 25 // "I can do this all day."
@@ -448,22 +448,22 @@
 #undef SHIELD_BANG_COOLDOWN
 
 /obj/item/rogueweapon/shield/iron/steppesman
-	name = "steppesman shield"
-	desc = "A banded iron shield decorated with traditional Aavnic colours, often seen in the hands of the Steppesmen."
+	name = "草原民铁盾"
+	desc = "一面饰有传统阿夫尼配色的箍铁盾牌，常见于草原民手中。"
 	icon_state = "ironsh_steppeman"
 	max_integrity = 250 //+30
 
 /obj/item/rogueweapon/shield/iron/nomad
-	name = "nomad shield"
-	desc = "A slim shield, likely wrought of gilbranze and iron alike. An unholy combination. \
-	The work is of another lyfe, not yet seen since the first era."
+	name = "游牧盾"
+	desc = "一面纤薄的盾牌，似乎同时以吉布兰泽与铁打造而成。那是种不祥的组合。 \
+	它的工艺仿佛来自另一个时代，自第一纪元后便再未现世。"
 	icon_state = "ironsh_nomad"//Temp, but it works.
 	coverage = 40//+10
 	max_integrity = 200//-20
 
 /*/obj/item/rogueweapon/shield/buckler/freelancer
-	name = "fencer's wrap"
-	desc = "A traditional Etruscan quilted cloth square with a woolen cover. It can be used to daze and distract people with its bright colours and hanging steel balls."
+	name = "击剑披布"
+	desc = "一块传统的伊特鲁里亚绗缝方布，外覆羊毛。它可以凭借鲜艳色彩与垂挂钢球来晃花并干扰对手。"
 	force = 10
 	throwforce = 10
 	coverage = 15
@@ -471,8 +471,8 @@
 	possible_item_intents = list(SHIELD_BLOCK, FENCER_DAZE) */
 
 /obj/item/rogueweapon/shield/capbuckler // unique, better buckler for knight captain
-	name = "'Order'"
-	desc = "A special buckler shield made out of blacksteel for the captain of the guard, adorned with the realm's crest."
+	name = "“秩序”"
+	desc = "一面为卫队长打造的特制黑钢小圆盾，饰有谷地徽记。"
 	icon_state = "capbuckler"
 	icon = 'icons/roguetown/weapons/special/captain.dmi'
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK
@@ -495,7 +495,7 @@
 
 /obj/item/rogueweapon/shield/capbuckler/examine(mob/living/user)
 	. = ..()
-	. += "Buckler uses the skill of your active weapon to parry. Otherwise it uses your shields skill."
+	. += "小圆盾会使用你当前主手武器的招架技能；否则改用你的盾牌技能。"
 
 /obj/item/rogueweapon/shield/capbuckler/proc/bucklerskill(mob/living/user)
 	if(!ishuman(user))
@@ -524,8 +524,8 @@
 
 
 /obj/item/rogueweapon/shield/steam
-	name = "steam shield"
-	desc = "A sturdy wood shield that's been highly modified by an artificer. It seems to have several pipes and gears built into it."
+	name = "蒸汽盾"
+	desc = "一面被工匠大幅改造过的结实木盾。其内部似乎嵌入了多根管道与齿轮。"
 	icon_state = "artificershield"
 	force = 15
 	throwforce = 10
@@ -541,7 +541,7 @@
 /obj/item/rogueweapon/shield/steam/attack_self(mob/user)
 	if(cooldowny)
 		if(world.time < cooldowny + cdtime)
-			to_chat(user, span_warning("[src] hisses weakly, It's still building up steam!"))
+			to_chat(user, span_warning("[src]发出微弱的嘶响，它还在积攒蒸汽！"))
 			return
 	if(prob(25))
 		smoke_path = /obj/effect/particle_effect/smoke/bad
@@ -550,8 +550,8 @@
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
-	user.visible_message(span_notice("Loud whizzing clockwork and the hiss of steam comes from within [src]."))
-	to_chat(user, span_warning("[user] activates a mechanism on [src]!"))
+	user.visible_message(span_notice("[src]内部传出刺耳的齿轮嗡鸣与蒸汽嘶响。"))
+	to_chat(user, span_warning("[user]启动了[src]上的一个机关！"))
 	sleep(15)
 	playsound(user, 'sound/items/steamrelease.ogg', 100, FALSE, -1)
 	cooldowny = world.time
@@ -572,17 +572,17 @@
 				var/mob/living/M = AM
 				M.Paralyze(10)
 				M.adjustFireLoss(25)
-				to_chat(M, span_danger("You're slammed into the floor by [user]!"))
+				to_chat(M, span_danger("我被[user]猛地砸倒在地！"))
 		else
 			if(isliving(AM))
 				var/mob/living/M = AM
 				M.adjustFireLoss(25)
-				to_chat(M, span_danger( "You're thrown back by [user]!"))
+				to_chat(M, span_danger("我被[user]猛地掀飞了出去！"))
 			AM.safe_throw_at(throwtarget, 4, 2, user, TRUE, force = MOVE_FORCE_OVERPOWERING)
 
 /obj/item/rogueweapon/shield/steam/proc/steamready(mob/user)
 	playsound(user, 'sound/items/steamcreation.ogg', 100, FALSE, -1)
-	to_chat(user, span_warning("[src] is ready to be used again!"))
+	to_chat(user, span_warning("[src]已经可以再次使用了！"))
 /obj/item/rogueweapon/shield/steam/getonmobprop(tag)
 	. = ..()
 	if(tag)

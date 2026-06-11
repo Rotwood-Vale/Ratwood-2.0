@@ -1,6 +1,6 @@
 /obj/structure/roguemachine/vendor
-	name = "PEDDLER"
-	desc = "The stomach of this thing can been stuffed with fun things for you to buy."
+	name = "货郎"
+	desc = "这东西的肚子里可以塞满有趣的小玩意供你购买。"
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "streetvendor1"
 	density = TRUE
@@ -65,7 +65,7 @@
 			playsound(loc, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
 			return attack_hand(user)
 		else
-			to_chat(user, span_warning("Full."))
+			to_chat(user, span_warning("满了。"))
 			return
 
 /obj/structure/roguemachine/vendor/attackby(obj/item/P, mob/user, params)
@@ -90,7 +90,7 @@
 			if(!locked)
 				insert(P, user)
 			else
-				to_chat(user, span_warning("Wrong key."))
+				to_chat(user, span_warning("钥匙不对。"))
 				return
 	if(istype(P, /obj/item/storage/keyring))
 		var/obj/item/storage/keyring/K = P
@@ -131,7 +131,7 @@
 				budget -= price
 				wgain += price
 			else
-				say("NO MONEY NO HONEY!")
+				say("没钱就没门！")
 				return
 
 		record_round_statistic(STATS_PEDDLER_REVENUE, held_items[O]["PRICE"])
@@ -184,7 +184,7 @@
 			return
 
 		var/prename = held_items[matches[1]]["NAME"]
-		var/newname = input(usr, "SET A NEW NAME FOR THIS PRODUCT", src, prename)
+		var/newname = input(usr, "为这件商品设置新名称", src, prename)
 		// explicit null check: input returns null on cancel; empty string allowed? we block empty.
 		if(newname != null && newname != "")
 			for(var/obj/item/I in matches)
@@ -202,7 +202,7 @@
 			return
 
 		var/preprice = held_items[matches[1]]["PRICE"] || 0
-		var/newprice = input(usr, "SET A NEW PRICE FOR THIS PRODUCT", src, preprice) as null|num
+		var/newprice = input(usr, "为这件商品设置新价格", src, preprice) as null|num
 		// explicit null check so 0 is accepted
 		if(newprice != null)
 			// validation: no negative prices, no decimals
@@ -225,17 +225,17 @@
 	var/contents
 
 	if(canread)
-		contents = "<center>THE PEDDLER, THIRD ITERATION<BR>"
+		contents = "<center>小贩机，第三代<BR>"
 		if(locked)
-			contents += "<a href='?src=[REF(src)];change=1'>Stored Mammon:</a> [budget]<BR>"
+			contents += "<a href='?src=[REF(src)];change=1'>已存入玛门：</a> [budget]<BR>"
 		else
-			contents += "<a href='?src=[REF(src)];withdrawgain=1'>Stored Profits:</a> [wgain]<BR>"
+			contents += "<a href='?src=[REF(src)];withdrawgain=1'>已存利润：</a> [wgain]<BR>"
 	else
-		contents = "<center>[stars("THE PEDDLER, THIRD ITERATION")]<BR>"
+		contents = "<center>[stars("小贩机，第三代")]<BR>"
 		if(locked)
-			contents += "<a href='?src=[REF(src)];change=1'>[stars("Stored Mammon:")]</a> [budget]<BR>"
+			contents += "<a href='?src=[REF(src)];change=1'>[stars("已存入玛门：")]</a> [budget]<BR>"
 		else
-			contents += "<a href='?src=[REF(src)];withdrawgain=1'>[stars("Stored Profits:")]</a> [wgain]<BR>"
+			contents += "<a href='?src=[REF(src)];withdrawgain=1'>[stars("已存利润：")]</a> [wgain]<BR>"
 
 	contents += "</center>"
 
@@ -256,14 +256,14 @@
 
 		if(locked)
 			if(canread)
-				contents += "[icon2html(rep, user)] [namer] x[count] - [price] <a href='?src=[REF(src)];buy=[REF(rep)]'>BUY</a>"
+				contents += "[icon2html(rep, user)] [namer] x[count] - [price] <a href='?src=[REF(src)];buy=[REF(rep)]'>购买</a>"
 			else
-				contents += "[icon2html(rep, user)] [stars(namer)] x[count] - [price] <a href='?src=[REF(src)];buy=[REF(rep)]'>[stars("BUY")]</a>"
+				contents += "[icon2html(rep, user)] [stars(namer)] x[count] - [price] <a href='?src=[REF(src)];buy=[REF(rep)]'>[stars("购买")]</a>"
 		else
 			if(canread)
-				contents += "[icon2html(rep, user)] <a href='?src=[REF(src)];setname=[REF(rep)]'>[namer]</a> x[count] - <a href='?src=[REF(src)];setprice=[REF(rep)]'>[price]</a> <a href='?src=[REF(src)];retrieve=[REF(rep)]'>TAKE</a>"
+				contents += "[icon2html(rep, user)] <a href='?src=[REF(src)];setname=[REF(rep)]'>[namer]</a> x[count] - <a href='?src=[REF(src)];setprice=[REF(rep)]'>[price]</a> <a href='?src=[REF(src)];retrieve=[REF(rep)]'>取出</a>"
 			else
-				contents += "[icon2html(rep, user)] <a href='?src=[REF(src)];setname=[REF(rep)]'>[stars(namer)]</a> x[count] - <a href='?src=[REF(src)];setprice=[REF(rep)]'>[price]</a> <a href='?src=[REF(src)];retrieve=[REF(rep)]'>[stars("TAKE")]</a>"
+				contents += "[icon2html(rep, user)] <a href='?src=[REF(src)];setname=[REF(rep)]'>[stars(namer)]</a> x[count] - <a href='?src=[REF(src)];setprice=[REF(rep)]'>[price]</a> <a href='?src=[REF(src)];retrieve=[REF(rep)]'>[stars("取出")]</a>"
 
 		contents += "<BR>"
 
@@ -328,11 +328,11 @@
 						namer += "s" //add a plural s!
 						break
 
-			say("[namer] for sale! [held_items[I]["PRICE"]] mammons!")
+			say("[namer]出售中！售价 [held_items[I]["PRICE"]] 玛门！")
 
 /obj/structure/roguemachine/vendor/centcom
-	name = "LANDLORD"
-	desc = "Give this thing money, and you will immediately buy a neat property in the capital."
+	name = "房东"
+	desc = "给这东西钱，你就能立刻在首都买下一处体面的房产。"
 	max_integrity = 0
 	icon_state = "streetvendor1"
 	keycontrol = "dhjlashfdg"
@@ -354,19 +354,19 @@
 			if(!cachey[user]["trisawarded"])
 				cachey[user]["trisawarded"] = 1
 				user.adjust_triumphs(1)
-				say("[user] has purchased a prole dwelling.")
+				say("[user]买下了一处平民住宅。")
 				playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 		if(cachey[user]["moneydonate"] > 499)
 			if(cachey[user]["trisawarded"] < 2)
 				cachey[user]["trisawarded"] = 2
 				user.adjust_triumphs(1)
-				say("[user] has been upgraded to a space in a serf apartment.")
+				say("[user]已升级到农奴公寓中的一个房间。")
 				playsound(src, pick('sound/misc/machinetalk.ogg'), 100, FALSE, -1)
 		if(cachey[user]["moneydonate"] > 999)
 			if(cachey[user]["trisawarded"] < 3)
 				cachey[user]["trisawarded"] = 3
 				user.adjust_triumphs(1)
-				say("[user] HAS BEEN UPGRADED TO A NOBLE BEDCHAMBER!")
+				say("[user]已升级到一间贵族卧房！")
 				playsound(src, 'sound/misc/machinelong.ogg', 100, FALSE, -1)
 
 /obj/structure/roguemachine/vendor/inn

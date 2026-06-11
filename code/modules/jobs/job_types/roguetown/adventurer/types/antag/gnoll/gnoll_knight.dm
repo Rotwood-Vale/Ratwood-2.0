@@ -1,7 +1,7 @@
 /datum/advclass/gnoll/knight
-	name = "Gnoll Knight"
+	name = "豺狼人骑士"
 	maximum_possible_slots = 2
-	tutorial = "You were forged in the fires of the volcano, burn marks have long since healed, but the armor hammered against your muscle isn't so fleeting."
+	tutorial = "你曾在火山烈焰中被锻造成形。灼痕早已愈合，可那身与血肉一同锤炼出来的甲胄，却远没有那么容易褪去。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(/datum/species/gnoll)
 	outfit = /datum/outfit/job/roguetown/gnoll/knight

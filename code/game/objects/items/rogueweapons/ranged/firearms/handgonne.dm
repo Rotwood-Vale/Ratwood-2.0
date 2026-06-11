@@ -1,8 +1,8 @@
 /obj/item/gun/ballistic/firearm/handgonne
-	name = "handgonne"
-	desc = "A tube of steel and hope. \
-	An invention of Grenzelhoft siege smiths, independent of the Naledi conclave, yet reliant on smokepowder all the same. \
-	Etched into the stock is a workshop stamp, though the production number is scratched off..."
+	name = "手炮"
+	desc = "一根由钢铁与希望铸成的铁筒。\
+	它出自格伦泽霍夫攻城铁匠之手，虽独立于 Naledi 的匠人密会之外，却同样依赖烟火药。\
+	枪托上刻着工坊印记，只是编号已经被人磨去了……"
 	icon = 'modular_helmsguard/icons/weapons/handgonne.dmi'
 	icon_state = "handgonne"
 	item_state = "handgonne"
@@ -53,7 +53,7 @@
 		if(prob(accident_chance))
 			user.flash_fullscreen("whiteflash")
 			user.apply_damage(rand(5,15), BURN, pick(BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND))
-			user.visible_message(span_danger("[user] accidentally burnt themselves while firing the [src]."))
+			user.visible_message(span_danger("[user]在发射[src]时不慎把自己烧伤了。"))
 			user.emote("painscream")
 			if(prob(60))
 				user.dropItemToGround(src)
@@ -61,7 +61,7 @@
 				user.Immobilize(30)
 
 		if(prob(accident_chance))
-			user.visible_message(span_danger("[user] is knocked back by the recoil!"))
+			user.visible_message(span_danger("[user]被后坐力猛地震退了！"))
 			user.throw_at(knockback, rand(1,2), 7)
 			if(prob(accident_chance))
 				user.dropItemToGround(src)
@@ -69,10 +69,10 @@
 				user.Immobilize(30)
 
 /obj/item/gun/ballistic/firearm/flintgonne
-	name = "flintgonne"
-	desc = "A smokepowder rifle of Aavnic make. \
-	This particular example is forged in large quantities for the newly formed Royal Strelki, to be used against the recent inhumen revolts in the region. \
-	Its presence further south is rare, but not unheard of. A true blend of cost-effectiveness."
+	name = "燧发枪"
+	desc = "一把阿夫尼制式的烟火药长枪。\
+	这一型正为新组建的皇家 Strelki 大量打造，专门用于镇压近来在当地爆发的异族叛乱。\
+	它在更南方虽然罕见，却也并非闻所未闻，实在是成本与效能兼顾的典范。"
 	icon = 'modular_helmsguard/icons/weapons/flintgonne.dmi'//Not Helmsguard. OldRW original, I think? But it's no better a place to put it.
 	icon_state = "flintgonne"
 	item_state = "flintgonne"
@@ -125,7 +125,7 @@
 		if(prob(accident_chance))
 			user.flash_fullscreen("whiteflash")
 			user.apply_damage(rand(5,15), BURN, pick(BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND))
-			user.visible_message(span_danger("[user] accidentally burnt themselves while firing the [src]."))
+			user.visible_message(span_danger("[user]在发射[src]时不慎把自己烧伤了。"))
 			user.emote("painscream")
 			if(prob(60))
 				user.dropItemToGround(src)
@@ -133,7 +133,7 @@
 				user.Immobilize(30)
 
 		if(prob(accident_chance))
-			user.visible_message(span_danger("[user] is knocked back by the recoil!"))
+			user.visible_message(span_danger("[user]被后坐力猛地震退了！"))
 			user.throw_at(knockback, rand(1,2), 7)
 			if(prob(accident_chance))
 				user.dropItemToGround(src)
@@ -141,9 +141,9 @@
 				user.Immobilize(30)
 
 /obj/item/gun/ballistic/firearm/flintgonne/fusil
-	name = "fusil"
-	desc = "A smokepowder rifle of Otavii modification, provided in scant numbers to the even fewer fuseliers that remain. \
-	A pairing of a Naledi-borne arquebus, with a similar mechanism to an Aavnic flintgonne."
+	name = "燧枪"
+	desc = "一把经奥塔维改制的烟火药长枪，只少量配发给数量更加稀少的燧枪兵。\
+	它结合了出自 Naledi 的火绳枪本体，以及与阿夫尼燧发枪相近的击发机构。"
 	icon = 'modular_helmsguard/icons/weapons/fusil.dmi'//Not Helmsguard. Again. But no better a place to put it.
 	icon_state = "fusil"//Flintgonne and Arquebus kitbash.
 	item_state = "fusil"

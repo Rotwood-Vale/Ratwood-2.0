@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/transform_tree
-	name = "Transform Tree"
-	desc = "Transform a normal tree into a wise tree of Dendor."
+	name = "化树为智"
+	desc = "将一棵普通树木转化为 Dendor 的智者古树。"
 	invocation_type = "whisper"
 	overlay_state = "entangle"
 	range = 1
@@ -31,19 +31,19 @@
 					break
 
 	if(!target)
-		to_chat(H, span_warning("You must target a normal, living tree adjacent to you!"))
+		to_chat(H, span_warning("你必须选中身旁一棵普通且活着的树木！"))
 		return
 
 	if(uses <= 0)
-		to_chat(H, span_warning("Your blessing has been exhausted!"))
+		to_chat(H, span_warning("你的赐福已经耗尽了！"))
 		H.mind.RemoveSpell(src)
 		return
 
-	H.visible_message(span_notice("[H] begins chanting to transform the tree."), \
-					span_notice("You begin the transformation ritual..."))
+	H.visible_message(span_notice("[H] 开始低声吟唱，准备转化这棵树。"), \
+					span_notice("我开始进行转化仪式……"))
 
 	if(!do_after(H, 10 SECONDS, target = target))
-		to_chat(H, span_warning("The ritual was interrupted!"))
+		to_chat(H, span_warning("仪式被打断了！"))
 		return
 
 	var/turf/T = get_turf(target)
@@ -67,11 +67,11 @@
 	uses--
 	SEND_SIGNAL(user, COMSIG_TREE_TRANSFORMED)
 	if(uses > 0)
-		to_chat(H, span_notice("You transform the tree into a wise tree. [uses] use\s remaining."))
+		to_chat(H, span_notice("我将这棵树转化成了智者古树。还剩 [uses] 次使用机会。"))
 	else
-		to_chat(H, span_notice("You transform the tree into a wise tree."))
+		to_chat(H, span_notice("我将这棵树转化成了智者古树。"))
 	playsound(T, 'sound/ambience/noises/mystical (4).ogg', 50, TRUE)
 
 	if(uses <= 0)
-		to_chat(H, span_warning("Dendor's blessing fades from you."))
+		to_chat(H, span_warning("Dendor 的赐福自我身上消退了。"))
 		H.mind.RemoveSpell(src)

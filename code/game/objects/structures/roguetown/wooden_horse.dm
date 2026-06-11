@@ -1,6 +1,6 @@
 /obj/structure/wooden_horse
-	name = "wooden saiga"
-	desc = "This tireless steed promises a less than pleasant journey, should you dare to ride it."
+	name = "刑具木马"
+	desc = "一种让人骑坐其上的酷刑架，受刑者会被自身重量慢慢折磨得痛不欲生。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "wooden_horse"
 	base_pixel_x = 0
@@ -99,7 +99,7 @@
 		return ..()
 
 	if(!istype(M, /mob/living/carbon/human))
-		to_chat(usr, span_warning("It doesn't look like [M.p_they()] can fit onto this properly!"))
+		to_chat(usr, span_warning("[M.p_they()]没法被绑到这上面。"))
 		return FALSE
 
 	// If we are NOT buckling ourselves, we need restraints (chains/grabs)
@@ -117,18 +117,18 @@
 					break
 
 		if(!valid_restraint)
-			to_chat(usr, span_warning("I must grab them more forcefully or handcuff them to put them on [src]."))
+			to_chat(usr, span_warning("除非对方被束缚或被牢牢制服，否则我没法把其绑上[src]。"))
 			return FALSE
 
-		M.visible_message(span_danger("[usr] starts strapping [M] onto [src]!"), \
-			span_userdanger("[usr] starts strapping you onto [src]!"))
+		M.visible_message(span_danger("[usr]开始把[M]绑到[src]上！"), \
+			span_userdanger("[usr]开始把我绑到[src]上！"))
 
 		if(!do_after(usr, 5 SECONDS, src))
 			return FALSE
 	else
 		// If we ARE buckling ourselves, we skip restraint checks
-		M.visible_message(span_notice("[usr] starts climbing onto [src]..."), \
-			span_notice("You start climbing onto [src]..."))
+		M.visible_message(span_notice("[usr]开始爬上[src]。"), \
+			span_notice("我开始爬上[src]。"))
 		if(!do_after(usr, 3 SECONDS, src))
 			return FALSE
 
@@ -152,19 +152,19 @@
 /obj/structure/wooden_horse/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
 	// Someone else is unbuckling the victim
 	if(user != buckled_mob)
-		user.visible_message(span_notice("[user] starts unstrapping [buckled_mob] from [src]..."), \
-			span_notice("You start unstrapping [buckled_mob] from [src]..."))
+		user.visible_message(span_notice("[user]开始把[buckled_mob]从[src]上解下来。"), \
+			span_notice("我开始把[buckled_mob]从[src]上解下来。"))
 		if(do_after(user, 3 SECONDS, src))
 			return ..()
 		return
 
 	// Victim trying to unbuckle self
-	to_chat(user, span_warning("You struggle against the tight straps..."))
+	to_chat(user, span_warning("我要花上一阵子才能把自己从这玩意上挣下来。"))
 
 	// Delay to self-unbuckle
 	if(do_after(user, 10 SECONDS, src))
-		user.visible_message(span_warning("[user] manages to unstrap [user.p_them()]self from [src]!"), \
-			span_notice("You manage to unstrap yourself from [src]!"))
+		user.visible_message(span_warning("[user]终于从[src]上挣脱了下来！"), \
+			span_notice("我终于从[src]上挣脱了下来！"))
 		return ..()
 
 /obj/structure/wooden_horse/process(delta_time)
@@ -200,11 +200,11 @@
 			// Flavor
 			if(world.time >= next_flavor_time)
 				next_flavor_time = world.time + 2 MINUTES
-				to_chat(victim, span_warning("The sharp edge of the [name] digs agonizingly into your nethers!"))
+				to_chat(victim, span_warning("[name]正一点点碾磨着我的胯下与胸腹。"))
 
 /obj/structure/wooden_horse/mobile
-	name = "wooden horse"
-	desc = "An affordable means of transportation for all walks of life, though few wish to ride. Watching the galloping of unlucky riders is one of the favorite pastimes of local nobility."
+	name = "木马"
+	desc = "对各阶层来说都算负担得起的“代步工具”，不过几乎没人真想骑上去。看那些倒霉骑手颠簸受罪，是本地贵族最爱的消遣之一。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "wooden_horse2"
 	anchored = FALSE

@@ -1,6 +1,6 @@
 /datum/advclass/wretch/plaguebearer
-	name = "Malpractitioner"
-	tutorial = "A disgraced physician forced into exile and years of hardship, you have turned to a private practice. Operating beyond the bounds of the law, you work with traitors, heretics, and common criminals as easily as your peers would treat a peasant or craftsman."
+	name = "黑医"
+	tutorial = "你曾是声名扫地的医师，被迫流亡并历经多年困苦，如今转而经营起地下私医。你游走于法外，为叛徒、异端与寻常罪犯行医，就像你的同行会为农夫或工匠诊治那样自然。"
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/wretch/plaguebearer
 	cmode_music = 'sound/music/combat_physician.ogg'
@@ -8,7 +8,7 @@
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_CICERONE, TRAIT_NOSTINK, TRAIT_MEDICINE_EXPERT, TRAIT_ALCHEMY_EXPERT)
 	maximum_possible_slots = 1 //They spawn with killer's ice lol I'm limiting this shit 
-	extra_context = "This subclass has a choice of starting with a poisonable dagger and a bow with poison arrows, a poisonable dagger and magic, or a rapier and the ability to dodge well."
+	extra_context = "该子职业开局可在以下路线中选择：可淬毒匕首加毒箭弓、可淬毒匕首加魔法，或细剑加高超闪避能力。"
 	subclass_stats = list(
 		STATKEY_INT = 4,
 		STATKEY_PER = 3,
@@ -56,26 +56,26 @@
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
 	if(H.mind)
-		var/primary_weapons = list("A Poison Dagger", "A Rapier and Agility")
-		var/primary_weapon_choice = input(H, "Choose your signature weapon.", "TOOLS OF YOUR TRADE") as anything in primary_weapons
+		var/primary_weapons = list("淬毒匕首", "细剑与敏捷")
+		var/primary_weapon_choice = input(H, "选择你的招牌武器。", "你的行当工具") as anything in primary_weapons
 		H.set_blindness(0)
 		switch(primary_weapon_choice)
-			if("A Poison Dagger")
+			if("淬毒匕首")
 				backpack_contents += /obj/item/rogueweapon/huntingknife/idagger/steel/corroded
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
-				var/additional_weapons = list("Archery", "Magic")
-				var/additional_weapon_choice = input(H, "Effective, but risky. What gives you range?", "TOOLS OF YOUR TRADE") as anything in additional_weapons
+				var/additional_weapons = list("弓术", "魔法")
+				var/additional_weapon_choice = input(H, "够致命，但也冒险。你用什么来拉开距离？", "你的行当工具") as anything in additional_weapons
 				switch(additional_weapon_choice)
-					if("Archery")
+					if("弓术")
 						H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 						backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 						beltl = /obj/item/quiver/poisonarrows
-					if("Magic")
+					if("魔法")
 						H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_EXPERT, TRUE)
 						backr = /obj/item/rogueweapon/woodstaff/toper
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/acidsplash)
-			if("A Rapier and Agility")
+			if("细剑与敏捷")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 				beltl = /obj/item/rogueweapon/scabbard/sword

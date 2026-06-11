@@ -9,16 +9,16 @@
 	var/infected_wake = FALSE
 	// Doesn't hurt making this a static list.
 	var/static/list/infection_messages = list(
-		"I can feel rot creeping up in the back of my throat. An oily, coppery taste flooding my mouth.",
-		"My skin feels cold and clammy. I can feel my veins hardening up like cold steel.",
-		"A deep hunger gnaws at my stomach. Nothing sates it.",
-		"The color drains from the world as I view it, momentarily.",
-		"I keep hearing whispers. Is she calling for me?",
-		"My joints ache with a strange stiffness. It hurts to move.",
-		"My mind is fraying, who am I?",
-		"I can feel my pulse slowing. I've never felt this calm.",
-		"There's a strange numbness spreading through my limbs, I'm bleeding but I can't tell where.",
-		"I can smell my own flesh, it smells foul."
+		"我能感觉到腐朽正沿着喉咙深处缓缓爬上来。嘴里灌满了油腻而带着铜腥味的味道。",
+		"我的皮肤又冷又湿。我能感觉到血管正像寒钢一样一点点硬化。",
+		"一种深沉的饥饿正在啃噬我的胃。没有任何东西能填满它。",
+		"我眼中的世界有那么一瞬间褪去了所有色彩。",
+		"我一直听见低语声。是她在呼唤我吗？",
+		"我的关节因为一种怪异的僵硬而隐隐作痛。每动一下都疼。",
+		"我的心智正在崩裂，我到底是谁？",
+		"我能感觉到自己的脉搏正在放慢。我从未如此平静过。",
+		"一股怪异的麻木感正在四肢蔓延开来，我明明在流血，却不知道伤口究竟在哪。",
+		"我能闻到自己身上的血肉气味，那味道腐臭难闻。"
 	)
 
 /datum/status_effect/zombie_infection/on_creation(mob/living/new_owner, time_to_transform = 5 MINUTES, from_infected_wake = "wound")
@@ -61,8 +61,8 @@
 	return TRUE
 
 /atom/movable/screen/alert/status_effect/zombie_infection
-	name = "Zombie Infection"
-	desc = "You feel a coldness spreading through your body. You're turning into one of -them-!"
+	name = "僵尸感染"
+	desc = "你感觉一股寒意正在体内扩散。你正在变成那些东西中的一员！"
 	icon_state = "zombie"
 
 // Updated proc to use status effect
@@ -83,9 +83,9 @@
 
 	switch(infection_type)
 		if("bite")
-			to_chat(src, span_danger("A growing cold seeps into my body. I feel horrible... REALLY horrible..."))
+			to_chat(src, span_danger("一股不断扩散的寒意正渗入我的身体。我感觉糟透了……真的糟透了……"))
 		if("wound")
 			flash_fullscreen("redflash3")
-			to_chat(src, span_danger("Ow! It hurts. I feel horrible... REALLY horrible..."))
+			to_chat(src, span_danger("噢！好痛。我感觉糟透了……真的糟透了……"))
 
 	return TRUE

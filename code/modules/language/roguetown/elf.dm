@@ -1,9 +1,9 @@
 /datum/language/elvish
-	name = "Elvish"
-	desc = "(Spoken with ,e) The elegant and flowing language of the elven people, known for its melodic quality and ancient heritage. Spoken with grace and precision."
-	speech_verb = "states"
-	ask_verb = "questions"
-	exclaim_verb = "shouts"
+	name = "精灵语"
+	desc = "(用 ,e 说) 精灵一族那优雅而流畅的语言，以旋律般的音韵与古老传承而闻名。说出口时总带着从容与精准。"
+	speech_verb = "轻述"
+	ask_verb = "询问"
+	exclaim_verb = "高喊"
 	key = "e"
 	space_chance = 66
 	default_priority = 80

@@ -3,16 +3,16 @@
 #define COMBAT_TAG_DURATION 30 SECONDS
 
 /obj/item/clothing/suit/roguetown/armor/regenerating
-	name = "regenerating armour"
-	desc = "Abstract parent. Contact developer if you see this."
+	name = "再生护甲"
+	desc = "抽象父类。若你能看到这个，请联系开发者。"
 	icon_state = null
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 
 	/// Feedback messages
-	var/repairmsg_begin = "My armour begins to slowly mend its abuse.."
-	var/repairmsg_continue = "My armour mends some of its abuse.."
-	var/repairmsg_stop = "My armour stops mending from the onslaught!"
-	var/repairmsg_end = "My armour has become taut with newfound vigor!"
+	var/repairmsg_begin = "我的护甲开始缓缓修复受损……"
+	var/repairmsg_continue = "我的护甲修复了部分损伤……"
+	var/repairmsg_stop = "在猛攻之下，我的护甲停止修复了！"
+	var/repairmsg_end = "我的护甲已重新绷紧，焕发新生！"
 
 	/// Combat timer that prevents you from healing while taking damage
 	var/combat_timer
@@ -69,7 +69,7 @@
 // SKIN ARMOUR
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin
-	name = "regenerating skin"
+	name = "再生皮肤"
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 
@@ -86,10 +86,10 @@
 	armor = ARMOR_PADDED
 	nudist_approved = TRUE
 
-	repairmsg_begin = "My skin begins to slowly mend its abuse.."
-	repairmsg_continue = "My skin mends some of its abuse.."
-	repairmsg_stop = "My skin stops mending from the onslaught!"
-	repairmsg_end = "My skin has become taut with newfound vigor!"
+	repairmsg_begin = "我的皮肤开始缓缓修复受损……"
+	repairmsg_continue = "我的皮肤修复了部分损伤……"
+	repairmsg_stop = "在猛攻之下，我的皮肤停止修复了！"
+	repairmsg_end = "我的皮肤重新绷紧，焕发新生！"
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/Initialize(mapload)
 	..()
@@ -102,20 +102,20 @@
 	qdel(src)
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/disciple
-	name = "disciple's skin"
-	desc = "It's far more than just an oath. </br>'AEON, PSYDON, ADONAI - ENTROPY, HUMENITY, DIVINITY. A TRINITY THAT IS ONE, \
-	YET THREE; KNOWN BY ALL, YET FORGOTTEN TO TYME.' </br>'A CORPSE. \
-	I AM LIVING ON A FUCKING CORPSE. HE IS THE WORLD, AND THE WORLD IS ROTTING AWAY. \
-	HEAVEN CLOSED ITS GATES TO US, LONG AGO.' </br>'YET, HIS CHILDREN PERSIST; AND AS LONG AS THEY DO, SO MUST I. \
-	HAPPINESS MUST BE FOUGHT FOR.'"
+	name = "门徒之肤"
+	desc = "它远不只是一句誓言。 </br>'AEON、PSYDON、ADONAI - 熵、众生、人神性。三位一体， \
+	既为一，又为三; 为众所知，却被时光遗忘。' </br>'一具尸体。 \
+	我他妈正活在一具尸体上。祂便是世界，而世界正在腐烂。 \
+	天堂早已对我们关闭了大门。' </br>'然而，祂的孩子们仍在坚持; 只要他们还在，我也必须坚持。 \
+	幸福必须靠战斗去争取。'"
 	armor = list("blunt" = 30, "slash" = 50, "stab" = 50, "piercing" = 20, "fire" = 0, "acid" = 0) //Custom value; padded gambeson's slash- and stab- armor.
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 	repair_time = 20 SECONDS
 	max_integrity = 300
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak
-	name = "tough skin"
-	desc = "My skin has always been tough enough to stop most cuts and bruises, with time it will mend."
+	name = "坚韧皮肤"
+	desc = "我的皮肤向来够硬，足以挡下大多数划伤与瘀伤，只要给它时间就会愈合。"
 	armor = list("blunt" = 30, "slash" = 50, "stab" = 50, "piercing" = 20, "fire" = 0, "acid" = 0)
 	max_integrity = 300
 	body_parts_covered = FULL_BODY

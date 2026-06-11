@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/targeted/emplosion
-	name = "Emplosion"
+	name = "电磁爆震"
 	desc = ""
 
 	var/emp_heavy = 2

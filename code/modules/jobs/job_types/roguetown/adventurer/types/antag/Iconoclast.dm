@@ -1,6 +1,6 @@
 /datum/advclass/iconoclast //Support Cleric, Heavy armor, unarmed, miracles.
-	name = "Iconoclast"
-	tutorial = "Trained by an Ecclesial sect, you uphold the Ideological purity of the Matthian Creed. Take from the wealthy, give to the worthless, empower. They will look up to you, in search of the God of Robbery's guidance. Be their light in the dark."
+	name = "破像者"
+	tutorial = "你受某个教会派系训练，誓要捍卫 马西奥斯 信条在理念上的纯粹。向富者夺取，施予无用之人，再将其扶起。他们会仰望你，寻求这位盗掠之神的指引。去做他们黑暗中的那道光。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	outfit = /datum/outfit/job/roguetown/bandit/iconoclast
@@ -41,7 +41,7 @@
 /datum/outfit/job/roguetown/bandit/iconoclast/pre_equip(mob/living/carbon/human/H)
 	..()
 	if (!(istype(H.patron, /datum/patron/inhumen/matthios)))	//This is the only class that forces Matthios. Needed for miracles + limited slot.
-		to_chat(H, span_warning("Matthios embraces me.. I must uphold his creed. I am his light in the darkness."))
+		to_chat(H, span_warning("马西奥斯 正拥我入怀……我必须践行他的信条。我便是他于黑暗中的光。"))
 		H.set_patron(/datum/patron/inhumen/matthios)
 	belt = /obj/item/storage/belt/rogue/leather
 	pants = /obj/item/clothing/under/roguetown/trou/leather

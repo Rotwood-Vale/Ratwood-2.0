@@ -2,8 +2,8 @@
 //newtree
 
 /obj/structure/flora/roguetree
-	name = "old tree"
-	desc = "An old wicked tree that not even elves could love."
+	name = "古树"
+	desc = "一棵连精灵都爱不起来的古老邪树。"
 	icon = 'icons/roguetown/misc/foliagetall.dmi'
 	icon_state = "t1"
 	opacity = 1
@@ -148,17 +148,17 @@
 	return TRUE
 
 /obj/structure/flora/roguetree/wise
-	name = "sacred tree"
-	desc = "A blessed primordial tree, ancient beyond years. Said to be the very embodiment of the Tree Father himself—whose presence alone imbues druids with wild energies."
+	name = "圣树"
+	desc = "一棵受祝福的原初古树，古老得超越岁月。传说它正是树父本身的化身，仅仅站在它身旁，德鲁伊便会被灌注野性的能量。"
 	icon_state = "mystical"
 	max_integrity = 400
 	var/activated = FALSE
 	var/cooldown = FALSE
 	var/retaliation_messages = list(
-		"LEAVE FOREST ALONE!",
-		"DENDOR PROTECTS!",
-		"NATURE'S WRATH!",
-		"BEGONE, INTERLOPER!"
+		"别再伤害森林了！",
+		"Dendor 庇护此地！",
+		"自然之怒！",
+		"滚开，闯入者！"
 	)
 
 /obj/structure/flora/roguetree/wise/Initialize(mapload)
@@ -222,7 +222,7 @@
 			continue
 		H.add_stress(/datum/stressevent/treefather_loss)
 		var/tree_dir = dir2text(get_dir(H, src))
-		to_chat(H, span_boldwarning("A sacred tree has fallen to my [tree_dir]! The land's natural energies feel disrupted."))
+		to_chat(H, span_boldwarning("我[tree_dir]方向的一棵圣树倒下了！这片土地的自然能量似乎受到了扰乱。"))
 		playsound(H, 'sound/misc/jack_killing_2.ogg', 60, FALSE)
 
 /obj/structure/flora/roguetree/wise/proc/fling_nearby_mobs()
@@ -241,8 +241,8 @@
 	return ..()
 
 /obj/structure/flora/roguetree/burnt
-	name = "burnt tree"
-	desc = "Maybe lightning, maybe war, took the life of this once lively tree."
+	name = "烧焦的树"
+	desc = "也许是闪电，也许是战火，夺去了这棵曾经生机勃勃的树木的生命。"
 	icon = 'icons/roguetown/misc/96x96.dmi'
 	icon_state = "t1"
 	stump_type = /obj/structure/flora/roguetree/stump/burnt
@@ -259,8 +259,8 @@
 	return TRUE
 
 /obj/structure/flora/roguetree/stump/burnt
-	name = "tree stump"
-	desc = "This stump is burnt. Maybe someone was trying to get coal the easy way."
+	name = "烧焦树桩"
+	desc = "这截树桩已经被烧得焦黑。也许有人想用最省事的办法烧出木炭。"
 	icon_state = "st1"
 	icon = 'icons/roguetown/misc/96x96.dmi'
 	stump_type = null
@@ -272,7 +272,7 @@
 	icon_state = "st[rand(1,2)]"
 
 /obj/structure/flora/roguetree/stump/pine
-	name = "pine stump"
+	name = "松树桩"
 	icon_state = "dead4"
 	icon = 'icons/obj/flora/pines.dmi'
 	static_debris = list(/obj/item/rogueore/coal/charcoal = 1)
@@ -284,8 +284,8 @@
 	icon_state = "dead[rand(4,5)]"
 
 /obj/structure/flora/roguetree/underworld
-	name = "screaming tree"
-	desc = "Human faces everywhere."
+	name = "尖啸树"
+	desc = "到处都是人的脸。"
 	icon = 'icons/roguetown/misc/foliagetall.dmi'
 	icon_state = "screaming1"
 	opacity = 1
@@ -296,8 +296,8 @@
 	icon_state = "screaming[rand(1,3)]"
 
 /obj/structure/flora/roguetree/stump
-	name = "tree stump"
-	desc = "Someone cut this tree down."
+	name = "树桩"
+	desc = "有人把这棵树砍倒了。"
 	icon_state = "t1stump"
 	opacity = 0
 	max_integrity = 100
@@ -327,7 +327,7 @@
 		playsound(src, 'sound/items/dig_shovel.ogg', 80, TRUE)
 		if(!do_after(user, dig_time, target = user))
 			return
-		to_chat(user, span_notice("I dig up [src]."))
+		to_chat(user, span_notice("我把[src]挖了出来。"))
 		new lumber(get_turf(src))
 		playsound(src, destroy_sound, 100, TRUE)
 		qdel(src)
@@ -345,12 +345,12 @@
 				new /obj/item/grown/log/tree/small/essence(get_turf(src))
 				if(!essense_sound_played)
 					essense_sound_played = TRUE
-					to_chat(user, span_warning("Dendor watches over us..."))
+					to_chat(user, span_warning("Dendor 正看顾着我们……"))
 					playsound(src,pick('sound/items/gem.ogg'), 100, FALSE)
 			else
 				new lumber(get_turf(src))
 		if(!skill_level)
-			to_chat(user, span_info("I could have gotten more timber were I more skilled..."))
+			to_chat(user, span_info("要是我更熟练一些，本可以弄到更多木料……"))
 		user.mind.add_sleep_experience(/datum/skill/labor/lumberjacking, (user.STAINT*0.5))
 		playsound(src, destroy_sound, 100, TRUE)
 		qdel(src)
@@ -359,8 +359,8 @@
 		..()
 
 /obj/structure/flora/roguetree/stump/log
-	name = "ancient log"
-	desc = "The rotten remains of a tree that suffered nature's cruelty ages ago."
+	name = "远古朽木"
+	desc = "一截早在久远年代便被自然残酷摧折的树木遗骸。"
 	icon_state = "log1"
 	opacity = 0
 	max_integrity = 200
@@ -374,15 +374,15 @@
 	icon_state = "log[rand(1,2)]"
 
 	AddComponent(/datum/component/hiding_spot, \
-		"Someone is already hiding inside %LOCATION!", \
-		"I hide inside %LOCATION!", \
-		"I come out from inside %LOCATION!")
+		"已经有人躲在%LOCATION里了！", \
+		"我躲进了%LOCATION里！", \
+		"我从%LOCATION里钻了出来！")
 
 //newbushes
 
 /obj/structure/flora/roguegrass
-	name = "grass"
-	desc = "Green, soft, and lively."
+	name = "草"
+	desc = "翠绿、柔软，充满生机。"
 	icon = 'icons/roguetown/misc/foliage.dmi'
 	icon_state = "grass1"
 	attacked_sound = "plantcross"
@@ -414,7 +414,7 @@
 		icon_state = "fullgrass_[rand(1, 3)]"
 
 /obj/structure/flora/roguegrass/reedbush
-	name = "reed bush"
+	name = "芦丛"
 	icon = 'icons/obj/flora/ausflora.dmi'
 	icon_state = "reedbush_1"
 	max_integrity = 1
@@ -424,14 +424,14 @@
 	icon_state = "reedbush_[rand(1, 4)]"
 
 /obj/structure/flora/roguegrass/water
-	name = "grass"
-	desc = "This grass is sodden and muddy."
+	name = "草"
+	desc = "这片草地湿漉漉的，满是泥泞。"
 	icon_state = "swampgrass"
 	max_integrity = 5
 
 /obj/structure/flora/roguegrass/water/reeds
-	name = "reeds"
-	desc = "This plant thrives in water, and shelters dangers."
+	name = "芦苇"
+	desc = "这种植物在水中繁茂生长，掩藏着危险。"
 	icon_state = "reeds"
 	opacity = 1
 	max_integrity = 10
@@ -463,8 +463,8 @@
 
 
 /obj/structure/flora/roguegrass/bush
-	name = "bush"
-	desc = "A bush. It's crawling with spiders, but maybe there’s something useful inside..."
+	name = "灌木丛"
+	desc = "一丛灌木。上面爬满了蜘蛛，但也许里面藏着什么有用的东西..."
 	icon_state = "bush2"
 	layer = ABOVE_ALL_MOB_LAYER
 	var/res_replenish
@@ -487,7 +487,7 @@
 						/obj/item/reagent_containers/food/snacks/grown/berries/rogue/poison=3,
 						/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweed=1))
 		else
-			desc += "Sadly, years of harvest inside this town have left it fruitless."
+			desc += "可惜，在这座城镇里多年的采摘已让它寸草不生。"
 	loot_replenish()
 	pixel_x += rand(-3,3)
 	return ..()
@@ -506,7 +506,7 @@
 		var/mob/living/L = AM
 		if(L.m_intent == MOVE_INTENT_RUN && (L.mobility_flags & MOBILITY_STAND))
 			if(!ishuman(L))
-				to_chat(L, span_warning("I'm cut on a thorn!"))
+				to_chat(L, span_warning("我被荆棘划伤了！"))
 				L.apply_damage(5, BRUTE)
 
 			else
@@ -518,10 +518,10 @@
 						var/obj/item/natural/thorn/TH = new(src.loc)
 						BP.add_embedded_object(TH, silent = TRUE)
 						BP.receive_damage(10)
-						to_chat(H, span_danger("\A [TH] impales my [BP.name]!"))
+						to_chat(H, span_danger("[TH]刺穿了我的[BP.name]！"))
 				else
 					var/obj/item/bodypart/BP = pick(H.bodyparts)
-					to_chat(H, span_warning("A thorn [pick("slices","cuts","nicks")] my [BP.name]."))
+					to_chat(H, span_warning("一根荆棘[pick("划过","割破","划伤")]了我的[BP.name]。"))
 					BP.receive_damage(10)
 
 /obj/structure/flora/roguegrass/bush/attack_hand(mob/user)
@@ -542,13 +542,13 @@
 				if(B)
 					B = new B(user.loc)
 					user.put_in_hands(B)
-					user.visible_message(span_notice("[user] finds [B] in [src]."))
+					user.visible_message(span_notice("[user]在[src]中找到了[B]。"))
 					return
-			user.visible_message(span_warning("[user] searches through [src]."))
+			user.visible_message(span_warning("[user]在[src]里摸索着。"))
 			if(looty.len)
 				attack_hand(user)
 			if(!looty.len)
-				to_chat(user, span_warning("Picked clean... I should try later."))
+				to_chat(user, span_warning("被摘光了... 我该晚点再来。"))
 
 /obj/structure/flora/roguegrass/bush/update_icon()
 	icon_state = "bush[rand(2, 4)]"
@@ -570,8 +570,8 @@
 	return 1
 
 /obj/structure/flora/roguegrass/bush/westleach
-	name = "westleach bush"
-	desc = "Large, red leaves peek out of it with an alluring aroma."
+	name = "红叶灌木"
+	desc = "粗大的红叶从中探出，散发着诱人的气味。"
 	icon_state = "bush1"
 
 /obj/structure/flora/roguegrass/bush/westleach/update_icon()
@@ -587,8 +587,8 @@
 	return ..()
 
 /obj/structure/flora/roguegrass/bush/wall
-	name = "great bush"
-	desc = "A bush. This one’s roots are thick enough to block the way."
+	name = "巨灌木"
+	desc = "一丛灌木。这株的根系厚实得足以挡住去路。"
 	opacity = TRUE
 	density = TRUE
 	climbable = FALSE
@@ -629,8 +629,8 @@
 	icon_state = "bush[pick(5,6)]winter"
 
 /obj/structure/flora/rogueshroom
-	name = "mushroom"
-	desc = "Mushrooms are the only happy beings in this land."
+	name = "蘑菇"
+	desc = "蘑菇大概是这片土地上唯一真正快乐的东西。"
 	icon = 'icons/roguetown/misc/foliagetall.dmi'
 	icon_state = "mush1"
 	opacity = 0
@@ -692,8 +692,8 @@
 	. = ..()
 
 /obj/structure/flora/shroomstump
-	name = "shroom stump"
-	desc = "It was a very happy shroom. Not anymore."
+	name = "菇桩"
+	desc = "它曾是一朵非常快乐的蘑菇。现在不是了。"
 	icon_state = "mush1stump"
 	opacity = 0
 	max_integrity = 100
@@ -725,8 +725,8 @@
 	return ..()
 
 /obj/structure/roguerock
-	name = "rock"
-	desc = "A rock protuding from the ground."
+	name = "岩石"
+	desc = "一块从地面突起的石头。"
 	icon_state = "rock1"
 	icon = 'icons/roguetown/misc/foliage.dmi'
 	opacity = 0
@@ -751,8 +751,8 @@
 //Thorn bush
 
 /obj/structure/flora/roguegrass/thorn_bush
-	name = "thorn bush"
-	desc = "A thorny bush. Watch your step!"
+	name = "荆棘丛"
+	desc = "一丛带刺灌木。走路当心。"
 	icon_state = "thornbush"
 	layer = ABOVE_ALL_MOB_LAYER
 	blade_dulling = DULLING_CUT
@@ -767,8 +767,8 @@
 
 // fyrituis bush -- STONEKEEP PORT
 /obj/structure/flora/roguegrass/pyroclasticflowers
-	name = "odd group of flowers"
-	desc = "A cluster of dangerously combustible flowers."
+	name = "奇异花丛"
+	desc = "一簇极其易燃的危险花朵。"
 	icon_state = "pyroflower1"
 	layer = ABOVE_ALL_MOB_LAYER
 	max_integrity = 1
@@ -812,16 +812,16 @@
 				if(B)
 					B = new B(user.loc)
 					user.put_in_hands(B)
-					user.visible_message("<span class='notice'>[user] finds [B] in [src].</span>")
+					user.visible_message("<span class='notice'>[user]在[src]中找到了[B]。</span>")
 					return
-			user.visible_message("<span class='warning'>[user] searches through [src].</span>")
+			user.visible_message("<span class='warning'>[user]在[src]里翻找着。</span>")
 			if(!looty.len)
-				to_chat(user, "<span class='warning'>Picked clean... I should try later.</span>")
+				to_chat(user, "<span class='warning'>已经被摘光了……我该晚些再来。</span>")
 
 // swarmpweed bush -- STONEKEEP PORT
 /obj/structure/flora/roguegrass/swampweed
-	name = "bunch of swampweed"
-	desc = "a green root good for smoking."
+	name = "一丛沼烟草"
+	desc = "一种适合拿来抽的绿色根茎。"
 	icon_state = "swampweed1"
 	layer = ABOVE_ALL_MOB_LAYER
 	max_integrity = 1
@@ -864,15 +864,15 @@
 					if(HAS_TRAIT(user, TRAIT_WOODWALKER))
 						var/obj/item/C = new B.type(user.loc)
 						user.put_in_hands(C)
-					user.visible_message("<span class='notice'>[user] finds [HAS_TRAIT(user, TRAIT_WOODWALKER) ? "two of " : ""][B] in [src].</span>")
+					user.visible_message("<span class='notice'>[user]在[src]中找到了[HAS_TRAIT(user, TRAIT_WOODWALKER) ? "两份" : ""][B]。</span>")
 					return
-			user.visible_message("<span class='warning'>[user] searches through [src].</span>")
+			user.visible_message("<span class='warning'>[user]在[src]里翻找着。</span>")
 			if(!looty.len)
-				to_chat(user, "<span class='warning'>Picked clean... I should try later.</span>")
+				to_chat(user, "<span class='warning'>已经被摘光了……我该晚些再来。</span>")
 
 /obj/structure/flora/roguegrass/pumpkin
-	name = "bunch of wild pumpkins"
-	desc = "Wild pumpkins overgrown with vines."
+	name = "野南瓜丛"
+	desc = "被藤蔓疯长缠绕着的野生南瓜。"
 	icon_state = "pumpkin1"
 	max_integrity = 1
 	climbable = FALSE
@@ -905,20 +905,20 @@
 				if(B)
 					B = new B(user.loc)
 					user.put_in_hands(B)
-					user.visible_message("<span class='notice'>[user] finds [B] in [src].</span>")
+					user.visible_message("<span class='notice'>[user]在[src]中找到了[B]。</span>")
 					if(!looty.len)
-						to_chat(user, "<span class='warning'>There is nothing else to find.</span>")
+						to_chat(user, "<span class='warning'>已经没有别的可找了。</span>")
 						qdel(src)
 					return
-			user.visible_message("<span class='warning'>[user] searches through [src].</span>")
+			user.visible_message("<span class='warning'>[user]在[src]里翻找着。</span>")
 
 // cute underdark mushrooms from dreamkeep
 
 /obj/structure/flora/rogueshroom/unhappy
-	name = "corpse fungus"
+	name = "尸腐菌"
 	icon_state = "scarymush"
 	icon = 'icons/roguetown/misc/foliagemushroom48x64.dmi'
-	desc = "This mushroom looks alive and thinking, giving you mush to think about."
+	desc = "这朵蘑菇看上去像是活着、甚至会思考，让你也不由得多想了几分。"
 	random_mush_zone = FALSE
 	max_integrity = 240
 	pixel_x = -8
@@ -927,7 +927,7 @@
 	var/mush_light_color = "#850707"
 	var/int_req = 14
 	var/trait_required = TRAIT_WOODSMAN
-	var/special_examine = "Upon closer inspection, the pulsing rhythm of its cap matches a humen heartbeat. You recall these grow atop corpses, mimicing the cadence of that specific person."
+	var/special_examine = "仔细看去，它菌盖搏动的节律竟与人类心跳一致。你想起这种东西会长在尸体上，模仿那具尸体生前独有的节拍。"
 	var/list/abyssal_screams = list(
 		'modular_azurepeak/sound/mobs/abyssal/abyssal_attack.ogg',
 		'modular_azurepeak/sound/mobs/abyssal/abyssal_attack2.ogg',
@@ -974,41 +974,41 @@
 		. += span_infection("\n[special_examine]")
 
 /obj/structure/flora/rogueshroom/unhappy/white
-	name = "marrow-cap"
+	name = "骨髓盖菇"
 	icon_state = "scarymush1"
-	desc = "You swear these mushrooms weren't so vile, it's as if Baotha herself lifted the veil."
+	desc = "你发誓这些蘑菇以前没这么邪门，简直像是 Baotha 亲手掀开了某层遮蔽。"
 	mush_light_range = 4
 	mush_light_power = 2
 	mush_light_color = "#e2e2e2"
 	int_req = 0
-	special_examine = "You recall the gathering of wildsmasters recently. It hasn't been long, but these mushrooms were always believed to be happy and colorful. The spores of this one are rumoured to be the cause, it's like... they collectively made a decision to stop fooling humenkind."
+	special_examine = "你想起了最近那场荒野大师的集会。明明没过去多久，可人们一直都以为这些蘑菇应当是快乐而色彩鲜艳的。据说罪魁祸首就是这朵菇的孢子，就好像……它们集体决定不再继续愚弄人类了一样。"
 	static_debris = list(/obj/item/natural/fibers = 1, /obj/item/grown/log/tree/small = 1)
 	rare_mush_bonus_drop = /mob/living/simple_animal/hostile/rogue/mirespider_lurker/mushroom
 	mush_animate = FALSE
 
 /obj/structure/flora/rogueshroom/unhappy/fat
-	name = "canker stool"
+	name = "溃疡菌凳"
 	icon_state = "scarymush2"
-	desc = "A pale mushroom with weeping sores. You feel strangely watched."
+	desc = "一朵苍白的蘑菇，表面布满渗液的疮口。你莫名觉得自己正被什么盯着。"
 	mush_light_range = 0
 	mush_light_power = 0
 	mush_light_color = null
 	int_req = 20
 	max_integrity = 480
-	special_examine = "To the world of academics, it appears as if this mushroom has many eyes, one in each sore. Yet, upon dissection, it is as if the eyes have melted away."
+	special_examine = "在学者眼中，这种蘑菇仿佛每一处疮口里都长着一只眼睛。然而一旦解剖开来，那些眼睛却又像早已融化消失了一样。"
 	static_debris = list(/obj/item/grown/log/tree = 1)
 	rare_mush_bonus_drop = /obj/item/rogueore/iron
 	mush_animate = TRUE
 
 /obj/structure/flora/rogueshroom/unhappy/angel
-	name = "grieving angel"
+	name = "悲泣天使菇"
 	icon_state = "angelmush"
-	desc = "Each of these mushrooms is believed to have sprouted out of angel tears in the long past."
+	desc = "人们相信，这种蘑菇上的每一朵都源自久远年代里天使落下的泪滴。"
 	mush_light_range = 3
 	mush_light_power = 3
 	mush_light_color = "#e2e2e2"
 	int_req = 10
-	special_examine = "This mushroom has an identical appearance to a highly murderous mushroom, called the weeping angel, but luckily that one isn't native to these lands."
+	special_examine = "这种蘑菇与一种极度凶残的“哭泣天使菇”外形完全相同，不过幸运的是，后者并非这片土地上的原生物种。"
 	static_debris = null
 	mush_animate = FALSE
 
@@ -1033,10 +1033,10 @@
 		set_light(mush_light_range, mush_light_range, mush_light_power, l_color = mush_light_color)
 
 /obj/structure/flora/rogueshroom/happy
-	name = "underdark mushroom"
+	name = "幽暗蘑菇"
 	icon_state = "happymush1"
 	icon = 'icons/roguetown/misc/foliagetall.dmi'
-	desc = "Mushrooms might be the happiest beings in this god forsaken place."
+	desc = "蘑菇大概是这片受诅之地里少数还算快乐的生灵。"
 
 /obj/structure/flora/rogueshroom/happy/mushroom2
 	icon_state = "happymush2"
@@ -1061,14 +1061,14 @@
 	set_light(3, 3, 3, l_color ="#5D3FD3")
 
 /obj/structure/flora/rogueshroom/unhappy/metal
-	name = "metallic mushroom"
+	name = "金属蘑菇"
 	icon_state = "metal"
 	icon = 'icons/roguetown/misc/foliagemushroom60x64.dmi'
-	desc = "An incomprehensible metal mushroom. It has a strange sheen. It seems nigh indestructible, but stubbornness can fell anything."
+	desc = "一朵难以理解的金属蘑菇，表面泛着奇异光泽。它近乎坚不可摧，但只要够执拗，什么都能被放倒。"
 	max_integrity = 3250
 	pixel_x = -14
 	blade_dulling = DULLING_PICK
-	special_examine = "Huh, strange."
+	special_examine = "嗯，真古怪。"
 	mush_light_range = 0
 	mush_light_power = 0
 	mush_light_color = null
@@ -1078,15 +1078,15 @@
 	mush_scream = FALSE
 
 /obj/structure/flora/mushroomcluster
-	name = "mushroom cluster"
-	desc = "A large cluster of mushrooms with a strange glow."
+	name = "蘑菇簇"
+	desc = "一大簇泛着奇异微光的蘑菇。"
 	icon = 'icons/roguetown/misc/foliage.dmi'
 	icon_state = "mushroomcluster"
 	density = TRUE
 	max_integrity = 60
 
 /obj/structure/flora/mushroomcluster/unhappy
-	desc = "A cluster of mushrooms native to the underdark."
+	desc = "一簇原生于幽暗地底的蘑菇。"
 	icon_state = "mushroomclusterunhappy"
 
 /obj/structure/flora/mushroomcluster/New(loc)
@@ -1094,19 +1094,19 @@
 	set_light(1.5, 1.5, 1.5, l_color ="#5D3FD3")
 
 /obj/structure/flora/tinymushrooms
-	name = "small mushroom cluster"
-	desc = "A cluster of tiny mushrooms that are growing in a suspicious circle shape."
+	name = "小蘑菇圈"
+	desc = "一簇细小蘑菇，正长成某种可疑的环状。"
 	icon = 'icons/roguetown/misc/foliage.dmi'
 	icon_state = "tinymushrooms"
 	max_integrity = 30
 
 /obj/structure/flora/tinymushrooms/unhappy
 	icon_state = "tinymushrooms"
-	desc = "A cluster of tiny mushrooms native to the underdark."
+	desc = "一簇原生于幽暗地底的小蘑菇。"
 	icon_state = "tinymushroomsunhappy"
 
 /obj/structure/flora/roguetree/pine
-	name = "pine tree"
+	name = "松树"
 	icon_state = "pine1"
 	desc = ""
 	icon = 'icons/obj/flora/pines.dmi'
@@ -1124,7 +1124,7 @@
 	qdel(src)
 
 /obj/structure/flora/roguetree/pine/dead
-	name = "burnt pine tree"
+	name = "枯死松树"
 	icon_state = "dead1"
 	max_integrity = 50
 	static_debris = list(/obj/item/rogueore/coal/charcoal = 1)
@@ -1149,7 +1149,7 @@
 #define COLOR_JUNGLE			"#9bb6ae"
 
 /obj/structure/flora/roguetree/jungle//version with mechanics this time
-	name = "jungle tree"
+	name = "丛林树"
 	color = COLOR_JUNGLE
 	// desc = "Scant, precious shade."
 	stump_type = /obj/structure/flora/roguetree/stump/palm
@@ -1180,7 +1180,7 @@
 //bushes
 
 /obj/structure/flora/roguegrass/bush/jungle
-	name = "jungle bush"
+	name = "丛林灌木"
 	desc = ""
 	color = COLOR_JUNGLE
 	icon = 'icons/obj/flora/jungleflora.dmi'
@@ -1196,8 +1196,8 @@
 		icon_state = "bushc[rand(1, 3)]"
 
 /obj/structure/flora/roguegrass/herb/random
-	name = "random herb"
-	desc = "Haha, im in danger."
+	name = "随机药草"
+	desc = "哈，我有麻烦了。"
 
 /obj/structure/flora/roguegrass/bush/jungle/large
 	color = COLOR_JUNGLE
@@ -1219,7 +1219,7 @@
 //Jungle grass
 
 /obj/structure/flora/roguegrass/jungle
-	name = "jungle grass"
+	name = "丛林草"
 	desc = ""
 	color = COLOR_JUNGLE
 	icon = 'icons/obj/flora/jungleflora.dmi'

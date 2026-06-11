@@ -1,5 +1,5 @@
 /obj/effect/waterfall
-	name = "waterfall"
+	name = "瀑布"
 	icon = 'icons/effects/waterfall.dmi'
 	icon_state = "waterfall_temp"
 	pixel_y = 32
@@ -19,7 +19,7 @@
 	water_reagent = /datum/reagent/rogueacid
 
 /particles/mist
-	name = "mist"
+	name = "雾气"
 	icon = 'icons/effects/particles/smoke.dmi'
 	icon_state = list("steam_1" = 1, "steam_2" = 1, "steam_3" = 1)
 	count = 500

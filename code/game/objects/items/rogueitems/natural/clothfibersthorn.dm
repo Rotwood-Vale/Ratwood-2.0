@@ -1,8 +1,8 @@
 /obj/item/natural/fibers
-	name = "fibers"
+	name = "纤维"
 	icon_state = "fibers"
 	possible_item_intents = list(/datum/intent/use)
-	desc = "Plant fibers. Peasants make their living turning these into clothing."
+	desc = "植物纤维。农民们将它制成衣物来谋生。"
 	force = 0
 	throwforce = 0
 	obj_flags = null
@@ -61,7 +61,7 @@
 		is_legendary = TRUE //they do
 	if(is_legendary)
 		bundling_time = 2 //if legendary skill, the move_after is fast, 0.2 seconds
-	to_chat(user, span_warning("I start to collect [src]..."))
+	to_chat(user, span_warning("我开始收集[src]..."))
 	if(move_after(user, bundling_time, target = src))
 		var/fibercount = 0
 		for(var/obj/item/natural/fibers/F in get_turf(src))
@@ -80,10 +80,10 @@
 			qdel(F)
 
 /obj/item/natural/silk
-	name = "silk"
+	name = "蛛丝"
 	icon_state = "fibers"
 	possible_item_intents = list(/datum/intent/use)
-	desc = "Strands of spider silk. Clothing made with this is considered exotic in all places but the Underdark."
+	desc = "一缕缕蜘蛛丝。除深地之外，用它制成的衣物在任何地方都算得上异域珍品。"
 	force = 0
 	throwforce = 0
 	obj_flags = null
@@ -100,7 +100,7 @@
 	bundletype = /obj/item/natural/bundle/silk
 
 /obj/item/natural/silk/attack_right(mob/user)
-	to_chat(user, span_warning("I start to collect [src]..."))
+	to_chat(user, span_warning("我开始收集[src]..."))
 	if(move_after(user, bundling_time, target = src))
 		var/silkcount = 0
 		for(var/obj/item/natural/silk/F in get_turf(src))
@@ -121,7 +121,7 @@
 
 /client/verb/bloodnda()
 	set category = "DEBUGTEST"
-	set name = "bloodnda"
+	set name = "血液 DNA"
 	set desc = ""
 
 	var/obj/item/I
@@ -135,10 +135,10 @@
 #endif
 
 /obj/item/natural/cloth
-	name = "cloth"
+	name = "布"
 	icon_state = "cloth"
 	possible_item_intents = list(/datum/intent/use)
-	desc = "A bolt of woven fibers. Useful as bandages and in dozens upon dozens of crafts."
+	desc = "一匹织成的纤维。可用作绷带，以及数十种工艺的原料。"
 	force = 0
 	throwforce = 0
 	obj_flags = null
@@ -172,7 +172,7 @@
 /obj/item/natural/cloth/attack_right(mob/user)
 	if(user.get_active_held_item())
 		return
-	to_chat(user, span_warning("I start to collect [src]..."))
+	to_chat(user, span_warning("我开始收集[src]..."))
 	if(move_after(user, bundling_time, target = src))
 		var/clothcount = 0
 		for(var/obj/item/natural/cloth/F in get_turf(src))
@@ -194,14 +194,14 @@
 /obj/item/natural/cloth/examine(mob/user)
 	. = ..()
 	if(wet)
-		. += span_notice("It's wet!")
+		. += span_notice("它是湿的！")
 
 // CLEANING
 
 /obj/item/natural/cloth/attack_obj(obj/O, mob/living/user)
 	testing("attackobj")
 	if(user.client && ((O in user.client.screen) && !user.is_holding(O)))
-		to_chat(user, span_warning("I need to take that [O.name] off before cleaning it!"))
+		to_chat(user, span_warning("我需要先把[O.name]取下来才能清理！"))
 		return
 	if(istype(O, /obj/effect/decal/cleanable))
 		var/cleanme = TRUE
@@ -211,12 +211,12 @@
 			add_blood_DNA(O.return_blood_DNA())
 		if(prob(33 + (wet*10)) && cleanme)
 			wet = max(wet-1, 0)
-			user.visible_message(span_info("[user] wipes \the [O.name] with [src]."), span_info("I wipe \the [O.name] with [src]."))
+			user.visible_message(span_info("[user]用[src]擦拭[O.name]。"))
 			qdel(O)
 		playsound(user, "clothwipe", 100, TRUE)
 	else
 		if(prob(30 + (wet*10)))
-			user.visible_message(span_info("[user] wipes \the [O.name] with [src]."), span_info("I wipe \the [O.name] with [src]."))
+			user.visible_message(span_info("[user]用[src]擦拭[O.name]。"), span_info("我用[src]擦拭[O.name]。"))
 
 			if(O.return_blood_DNA())
 				add_blood_DNA(O.return_blood_DNA())
@@ -233,7 +233,7 @@
 	if(istype(T, /turf/open/water))
 		return ..()
 	if(prob(30 + (wet*10)))
-		user.visible_message(span_info("[user] wipes \the [T.name] with [src]."), span_info("I wipe \the [T.name] with [src]."))
+		user.visible_message(span_info("[user]用[src]擦拭[T.name]。"), span_info("我用[src]擦拭[T.name]。"))
 		if(wet)
 			for(var/obj/effect/decal/cleanable/C in T)
 				qdel(C)
@@ -259,39 +259,39 @@
 	if(!istype(C))
 		return ..()
 	if(C.reagents.has_reagent(/datum/reagent/medicine/healthpot, 10) && !medicine_amount)
-		to_chat(user, span_notice("Soaking the [src] in lyfeblood..."))
+		to_chat(user, span_notice("将[src]浸泡在治疗药水中..."))
 		if(do_after(user, 3 SECONDS, target = src))
 			C.reagents.remove_reagent(/datum/reagent/medicine/healthpot, 10)
 			medicine_quality = 1
 			medicine_amount += 10
-			desc += " It has been soaked in lyfeblood."
+			desc += " 它已被治疗药水浸泡。"
 			detail_color = "#ff0000"
 			update_icon()
 	if(C.reagents.has_reagent(/datum/reagent/medicine/stronghealth, 10) && !medicine_amount)
-		to_chat(user, span_notice("Soaking the [src] in strong lyfeblood..."))
+		to_chat(user, span_notice("将[src]浸泡在强效治疗药水中..."))
 		if(do_after(user, 3 SECONDS, target = src))
 			C.reagents.remove_reagent(/datum/reagent/medicine/stronghealth, 10)
 			medicine_quality = 2
 			medicine_amount += 10
-			desc += " It has been soaked in strong lyfeblood."
+			desc += " 它已被强效治疗药水浸泡。."
 			detail_color = "#820000"
 			update_icon()
 	if(C.reagents.has_reagent(/datum/reagent/consumable/ethanol/aqua_vitae, 10) && !medicine_amount)
-		to_chat(user, span_notice("Soaking the [src] in aqua vitae..."))
+		to_chat(user, span_notice("将[src]浸泡在生命之水中..."))
 		if(do_after(user, 3 SECONDS, target = src))
 			C.reagents.remove_reagent(/datum/reagent/consumable/ethanol/aqua_vitae, 10)
 			medicine_quality = 0.5 //slower than health potions, more healing overall. Good for fractures or other big wounds.
 			medicine_amount += 60
-			desc += " It has been soaked in aqua vitae."
+			desc += " 它已被生命之水浸泡。"
 			detail_color = "#6e6e6e"
 			update_icon()
 	if(C.reagents.has_reagent(/datum/reagent/water/blessed, 10) && !medicine_amount)
-		to_chat(user, span_notice("Soaking the [src] in blessed water..."))
+		to_chat(user, span_notice("将[src]浸泡在圣水中..."))
 		if(do_after(user, 3 SECONDS, target = src))
 			C.reagents.remove_reagent(/datum/reagent/water/blessed, 10)
 			medicine_quality = 0.2 //cheap, easy to get, doesn't even heal wounds if it's not on a bandage
 			medicine_amount += 20
-			desc += " It has been soaked in blessed water."
+			desc += " 它已被祝福之水浸泡。"
 			detail_color = "#6a9295"
 			update_icon()
 
@@ -314,7 +314,7 @@
 	if(!affecting)
 		return
 	if(affecting.bandage)
-		to_chat(user, span_warning("There is already a bandage."))
+		to_chat(user, span_warning("那里已经有一块绷带了。"))
 		return
 	var/used_time = bandage_speed
 	used_time -= ((user.get_skill_level(/datum/skill/misc/medicine) * 0.15) * bandage_speed) //15% time reduction per level
@@ -328,14 +328,14 @@
 	H.update_damage_overlays()
 
 	if(M == user)
-		user.visible_message(span_notice("[user] bandages [user.p_their()] [affecting]."), span_notice("I bandage my [affecting.name]."))
+		user.visible_message(span_notice("[user]用绷带包扎好了自己的[affecting]。"), span_notice("我用绷带包扎好了自己的[affecting.name]。"))
 	else
-		user.visible_message(span_notice("[user] bandages [M]'s [affecting]."), span_notice("I bandage [M]'s [affecting.name]."))
+		user.visible_message(span_notice("[user]用绷带包扎好了[M]的[affecting]。"), span_notice("我用绷带包扎好了[M]的[affecting.name]。"))
 
 /obj/item/natural/thorn
-	name = "thorn"
+	name = "荆棘"
 	icon_state = "thorn"
-	desc = "The sharp and pointy growth of many a bush. It's somewhat shaped like a needle."
+	desc = "许多灌木上长出的尖锐突起，形状有点像针。"
 	force = 10
 	throwforce = 0
 	possible_item_intents = list(/datum/intent/stab)
@@ -345,7 +345,7 @@
 	max_integrity = 20
 
 /obj/item/natural/thorn/attack_self(mob/living/user)
-	user.visible_message(span_warning("[user] snaps [src]."))
+	user.visible_message(span_warning("[user]折断了[src]。"))
 	playsound(user,'sound/items/seedextract.ogg', 100, FALSE)
 	qdel(src)
 
@@ -367,10 +367,10 @@
 				L.consider_ambush()
 
 /obj/item/natural/bundle/fibers
-	name = "fiber bundle"
+	name = "一捆纤维"
 	icon_state = "fibersroll1"
 	possible_item_intents = list(/datum/intent/use)
-	desc = "Numerous plant fibers are bundled together in a tight coil."
+	desc = "许多的植物纤维被紧紧地捆成了一个线圈。"
 	force = 0
 	throwforce = 0
 	maxamount = 6
@@ -397,10 +397,10 @@
 	grid_width = 64
 
 /obj/item/natural/bundle/silk
-	name = "silken weave"
+	name = "蛛丝卷"
 	icon_state = "fibersroll1"
 	possible_item_intents = list(/datum/intent/use)
-	desc = "Multiple lengths of spider silk have been tied neatly together into a tight coil."
+	desc = "多缕蜘蛛丝被整齐束起，卷成紧实的一团。"
 	force = 0
 	throwforce = 0
 	maxamount = 6
@@ -418,10 +418,10 @@
 	icon2step = 6
 
 /obj/item/natural/bundle/cloth
-	name = "bundle of cloth"
+	name = "一捆布"
 	icon_state = "clothroll1"
 	possible_item_intents = list(/datum/intent/use)
-	desc = "Multiple bolts of fabric have been rolled up together for easier transport."
+	desc = "多匹布料被卷在一起，以便运输。"
 	force = 0
 	throwforce = 0
 	maxamount = 10
@@ -432,7 +432,7 @@
 	spitoutmouth = FALSE
 	experimental_inhand = FALSE
 	stacktype = /obj/item/natural/cloth
-	stackname = "cloth"
+	stackname = "匹布"
 	icon1 = "clothroll1"
 	icon1step = 5
 	icon2 = "clothroll2"
@@ -442,10 +442,10 @@
 	dropshrink = 0.9
 
 /obj/item/natural/bundle/stick
-	name = "bundle of sticks"
+	name = "一捆木棍"
 	icon_state = "stickbundle1"
 	possible_item_intents = list(/datum/intent/use)
-	desc = "Stick alone: Weak. Stick together: Strong."
+	desc = "一棍易折，十棍难断。"
 	maxamount = 10
 	force = 0
 	throwforce = 0
@@ -456,7 +456,7 @@
 	spitoutmouth = FALSE
 	experimental_inhand = FALSE
 	stacktype = /obj/item/grown/log/tree/stick
-	stackname = "sticks"
+	stackname = "根木棍"
 	icon1 = "stickbundle1"
 	icon1step = 4
 	icon2 = "stickbundle2"
@@ -468,7 +468,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(user.used_intent?.blade_class == BCLASS_CUT)
 		playsound(get_turf(src.loc), 'sound/items/wood_sharpen.ogg', 100)
-		user.visible_message(span_info("[user] starts sharpening the sticks in [src]..."), span_info("I start sharpening the sticks in [src]...."))
+		user.visible_message(span_info("[user]开始削尖[src]里的木棍..."), span_info("我开始削尖[src]里的木棍..."))
 		for(var/i in 1 to (amount - 1))
 			if(!do_after(user, 20))
 				break
@@ -498,10 +498,10 @@
 		return
 
 /obj/item/natural/bundle/bone
-	name = "stack of bones"
+	name = "一堆骨头"
 	icon_state = "bonestack1"
 	possible_item_intents = list(/datum/intent/use)
-	desc = "These remains of the dead have been bundled together."
+	desc = "这些死者的遗骸被捆在了一起。"
 	force = 0
 	throwforce = 0
 	maxamount = 6
@@ -516,7 +516,7 @@
 	spitoutmouth = FALSE
 	experimental_inhand = FALSE
 	stacktype = /obj/item/natural/bone
-	stackname = "bones"
+	stackname = "根骨头"
 	icon1 = "bonestack1"
 	icon2 = "bonestack2"
 
@@ -534,21 +534,21 @@
 	if(istype(I, /obj/item/natural/bone))
 		var/obj/item/natural/bundle/bone/F = new(src.loc)
 		H.put_in_hands(F)
-		H.visible_message("[user] ties the bones into a bundle.")
+		H.visible_message("[user]把骨头扎成了一捆。")
 		qdel(I)
 		qdel(src)
 	if(istype(I, /obj/item/natural/bundle/bone))
 		var/obj/item/natural/bundle/bone/B = I
 		if(B.amount < B.maxamount)
-			H.visible_message("[user] adds the [src] to the bundle.")
+			H.visible_message("[user]把[src]加进了骨捆里。")
 			B.amount += 1
 			B.update_bundle()
 			qdel(src)
 	..()*/
 
 /obj/item/natural/bowstring
-	name = "fibre bowstring"
-	desc = "Wax-fed fibrous thread has been spun and dressed into a continuous loop."
+	name = "纤维弓弦"
+	desc = "浸蜡后的纤维丝线被绞成一体，制成了闭合的弓弦。"
 	icon_state = "fibers"
 	possible_item_intents = list(/datum/intent/use)
 	force = 0
@@ -578,8 +578,8 @@
 		)
 
 /obj/item/natural/bundle/worms
-	name = "worms"
-	desc = "Multiple tiny creatures of the earth squirm and writhe together in a small pile."
+	name = "一堆蠕虫"
+	desc = "一小堆泥土中的微小生物正在其中蠕动翻卷。"
 	color = "#964B00"
 	maxamount = 12
 	icon_state = "worm2"
@@ -589,11 +589,11 @@
 	icon2step = 12
 	icon3 = "worm6"
 	stacktype = /obj/item/natural/worms
-	stackname = "worms"
+	stackname = "蠕虫"
 	bundling_time = 1 SECONDS
 
 /obj/item/natural/worms/attack_right(mob/user)
-	to_chat(user, span_warning("I start to collect [src]..."))
+	to_chat(user, span_warning("我开始收集[src]……"))
 	if(move_after(user, bundling_time, target = src))
 		var/wormcount = 0
 		for(var/obj/item/natural/worms/F in get_turf(src))
@@ -610,5 +610,3 @@
 				user.put_in_hands(B)
 		for(var/obj/item/natural/worms/F in get_turf(src))
 			qdel(F)
-
-

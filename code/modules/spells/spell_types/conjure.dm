@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure
-	name = "Conjure"
+	name = "召唤"
 	desc = ""
 
 	var/list/summon_type = list() //determines what exactly will be summoned
@@ -48,7 +48,7 @@
 	return
 
 /obj/effect/proc_holder/spell/targeted/conjure_item
-	name = "Summon weapon"
+	name = "召唤武器"
 	desc = ""
 	invocation_type = "none"
 	include_user = TRUE

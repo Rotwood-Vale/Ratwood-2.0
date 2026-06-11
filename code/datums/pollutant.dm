@@ -51,78 +51,78 @@
 
 ///Smoke coming from cigarettes and fires
 /datum/pollutant/smoke //and mirrors
-	name = "Smoke"
+	name = "烟雾"
 	pollutant_flags = POLLUTANT_APPEARANCE | POLLUTANT_SMELL | POLLUTANT_BREATHE_ACT
 	smell_intensity = 1
 	descriptor = SCENT_DESC_SMELL
-	scent = "smoke"
+	scent = "烟味"
 
 /datum/pollutant/fragrance
 	smell_intensity = 2
 	pollutant_flags = POLLUTANT_SMELL
 
-	name = "debug fragrance"
-	scent = "debug scent"
+	name = "调试香气"
+	scent = "调试气味"
 	color = "#000000"
 
-	descriptor = "fragrance"
+	descriptor = "香气"
 
 /datum/pollutant/fragrance/lavender
-	name = "lavender"
-	scent = "lavender"
+	name = "薰衣草"
+	scent = "薰衣草"
 	color = "#967bb6"
 
 /datum/pollutant/fragrance/cherry
-	name = "cherry"
-	scent = "cherries"
+	name = "樱桃"
+	scent = "樱桃"
 	color = "#B62625"
 
 /datum/pollutant/fragrance/rose
-	name = "rose"
-	scent = "roses"
+	name = "玫瑰"
+	scent = "玫瑰"
 	color = "#F33A6A"
 
 /datum/pollutant/fragrance/jasmine
-	name = "jasmine"
-	scent = "jasmine"
+	name = "茉莉"
+	scent = "茉莉"
 	color = "#F8DE7E"
 
 /datum/pollutant/fragrance/mint
-	name = "mint"
-	scent = "mint"
+	name = "薄荷"
+	scent = "薄荷"
 	color = "#3EB489"
 
 /datum/pollutant/fragrance/vanilla
-	name = "vanilla"
-	scent = "vanilla"
+	name = "香草"
+	scent = "香草"
 	color = "#dfd8ba"
 
 /datum/pollutant/fragrance/pear
-	name = "pear"
-	scent = "pear"
+	name = "梨"
+	scent = "梨香"
 	color = "#d1e231"
 
 /datum/pollutant/fragrance/strawberry
-	name = "strawberry"
-	scent = "strawberries"
+	name = "草莓"
+	scent = "草莓"
 	color = "#fc5a8d"
 
 /datum/pollutant/fragrance/cinnamon
-	name = "cinnamon"
-	scent = "cinnamon"
+	name = "肉桂"
+	scent = "肉桂"
 	color = "#d2691e"
 
 /datum/pollutant/fragrance/frankincense
-	name = "frankincense"
-	scent = "frankincense"
+	name = "乳香"
+	scent = "乳香"
 	color = "#dea670"
 
 /datum/pollutant/fragrance/sandalwood
-	name = "sandalwood"
-	scent = "sandalwood"
+	name = "檀香"
+	scent = "檀香"
 	color = "#e9e1c2"
 
 /datum/pollutant/fragrance/myrrh
-	name = "myrrh"
-	scent = "myrrh"
+	name = "没药"
+	scent = "没药"
 	color = "#9e8574"

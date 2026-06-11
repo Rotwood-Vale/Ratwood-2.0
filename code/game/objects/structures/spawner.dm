@@ -1,5 +1,5 @@
 /obj/structure/spawner
-	name = "monster nest"
+	name = "怪物巢穴"
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "hole"
 	max_integrity = 100
@@ -11,7 +11,7 @@
 	var/max_mobs = 5
 	var/spawn_time = 300 //30 seconds default
 	var/mob_types = list(/mob/living/simple_animal/hostile/rogue/werewolf)
-	var/spawn_text = "emerges from"
+	var/spawn_text = "从中钻出"
 	var/faction = list("hostile")
 	var/spawner_type = /datum/component/spawner
 

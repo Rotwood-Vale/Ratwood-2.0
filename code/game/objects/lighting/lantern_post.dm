@@ -1,6 +1,6 @@
 /obj/machinery/light/rogue/lanternpost
-	name = "lantern post"
-	desc = "A small lamptern dangles from a wooden post. The metal frame around the inner flame casts shadows on its surroundings."
+	name = "灯笼柱"
+	desc = "一盏小灯笼悬挂在木柱上。火焰周围的金属框架向四周投下斑驳的影子。"
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "streetlantern1"
 	base_state = "streetlantern"
@@ -63,11 +63,11 @@
 		if(torchy)
 			if(LR.on && !on)
 				if(torchy.fuel <= 0)
-					to_chat(user, span_warning("The mounted lantern is burned out."))
+					to_chat(user, span_warning("固定在上面的灯笼已经烧尽了。"))
 					return
 				else
 					torchy.spark_act()
-					user.visible_message(span_info("[user] lights [src]."))
+					user.visible_message(span_info("[user]点燃了[src]。"))
 					playsound(src.loc, 'sound/items/firelight.ogg', 100)
 					on = TRUE
 					update()
@@ -77,7 +77,7 @@
 			if(!LR.on && on)
 				if(LR.fuel > 0)
 					LR.spark_act()
-					user.visible_message(span_info("[user] lights [LR] in [src]."))
+					user.visible_message(span_info("[user]点燃了[src]中的[LR]。"))
 					user.update_inv_hands()
 		else
 			if(LR.on)

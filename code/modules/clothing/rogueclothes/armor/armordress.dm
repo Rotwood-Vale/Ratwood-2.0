@@ -5,8 +5,8 @@
 
 /obj/item/clothing/suit/roguetown/armor/armordress
 	slot_flags = ITEM_SLOT_ARMOR
-	name = "padded dress"
-	desc = "This dress has been padded with leather for extra protection. Bolts and arrows punch right through it."
+	name = "衬垫连衣裙"
+	desc = "这件连衣裙内衬了皮革来增强防护。弩箭和箭矢还是会轻易穿透。"
 	body_parts_covered = COVERAGE_FULL
 	icon_state = "armordress"
 	armor = ARMOR_LEATHER
@@ -28,10 +28,10 @@
 
 //................ Winter Dress ............... //
 /obj/item/clothing/suit/roguetown/armor/armordress/winterdress
-	name = "winter dress"
+	name = "冬季连衣裙"
 	icon = 'icons/roguetown/clothing/shirts_royalty.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts_royalty.dmi'
-	desc = "A thick, padded, and comfortable dress popular amongst nobility during winter."
+	desc = "厚实、衬垫充足且舒适的连衣裙，深受冬季贵族欢迎。"
 	body_parts_covered = COVERAGE_FULL
 	icon_state = "winterdress"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts_royalty.dmi'
@@ -54,7 +54,7 @@
 		add_overlay(pic)
 
 /obj/item/clothing/suit/roguetown/armor/armordress/winterdress/monarch //For the duchess nobody else
-	desc = "A thick, padded, and comfortable dress to maintain both temperature and safety when leaving the keep."
+	desc = "一件厚实、衬垫充足且舒适的连衣裙，离开城堡时既保暖又安全。"
 	armor = ARMOR_PADDED_GOOD
 
 /obj/item/clothing/suit/roguetown/armor/armordress/winterdress/monarch/lordcolor(primary,secondary)

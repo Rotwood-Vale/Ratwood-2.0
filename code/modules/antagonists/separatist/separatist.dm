@@ -1,8 +1,8 @@
 /datum/team/nation
-	name = "Nation"
+	name = "国度"
 
 /datum/antagonist/separatist
-	name = "Separatists"
+	name = "分离主义者"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	var/datum/team/nation/nation
@@ -16,4 +16,4 @@
 	return nation
 
 /datum/antagonist/separatist/greet()
-	to_chat(owner, "<B>I are a separatist! [nation.name] forever! Protect the sovereignty of your newfound land with your comrades in arms!</B>")
+	to_chat(owner, "<B>我是一名分离主义者！[nation.name] 万岁！和你的战友一起捍卫这片新生土地的主权！</B>")

@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat/gethsmane
-	name = "fretensis"
+	name = "弗雷滕西斯"
 	health = 100
 	maxHealth = 100
 	STASTR = 8
@@ -19,4 +19,3 @@
 		var/mob/living/L = target
 		if(L.reagents)
 			L.reagents.add_reagent(/datum/reagent/toxin/spewium, 3) //this won't do much til u get 29u then uhhh bye lol
-

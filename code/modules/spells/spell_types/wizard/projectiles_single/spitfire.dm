@@ -1,9 +1,9 @@
 
 /obj/effect/proc_holder/spell/invoked/projectile/spitfire
-	name = "Spitfire"
-	desc = "Shoot out a low-powered ball of fire that ignites a target with a small amount of fire on impact. \n\
-	Damage is increased by 100% versus simple-minded creechurs.\n\
-	Can be fired in an arc over an ally's head with a mage's staff or spellbook on arc intent. It will deals 25% less damage that way."
+	name = "吐焰火球"
+	desc = "射出一枚低威力火球，命中时会点燃目标并附着少量火焰。 \n\
+	对头脑简单的生物伤害提高 100%。\n\
+	若以法师杖或法术书切换至弧射意图，还可越过盟友头顶发射；但那样会少造成 25% 伤害。"
 	clothes_req = FALSE
 	range = 8
 	projectile_type = /obj/projectile/magic/aoe/fireball/spitfire
@@ -19,7 +19,7 @@
 	no_early_release = TRUE
 	movement_interrupt = FALSE
 	spell_tier = 2
-	invocations = list("Evomere Flammas!")
+	invocations = list("吐焰而出！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_FIRE
 	glow_intensity = GLOW_INTENSITY_LOW
@@ -38,7 +38,7 @@
 	. = ..()
 
 /obj/projectile/magic/aoe/fireball/spitfire
-	name = "Spitfire"
+	name = "吐焰火球"
 	exp_heavy = 0
 	exp_light = 0
 	exp_flash = 0
@@ -53,7 +53,7 @@
 	aoe_range = 0
 
 /obj/projectile/magic/aoe/fireball/spitfire/arc
-	name = "Arced Spitfire"
+	name = "弧射吐焰火球"
 	damage = 12 // 25% damage penalty
 	arcshot = TRUE
 
@@ -62,12 +62,12 @@
 	if(ismob(target))
 		var/mob/living/M = target
 		if(M.anti_magic_check())
-			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			visible_message(span_warning("[src] 在接触[target]时噗地熄散了！"))
 			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 			qdel(src)
 			return BULLET_ACT_BLOCK
 		if(M.has_status_effect(/datum/status_effect/buff/frost) || M.has_status_effect(/datum/status_effect/buff/frostbite))
-			visible_message(span_warning("[src] extinguishes on contact with [target]!"))
+			visible_message(span_warning("[src] 在接触[target]时熄灭了！"))
 			playsound(get_turf(target), 'sound/items/firesnuff.ogg', 100)
 			M.remove_status_effect(/datum/status_effect/buff/frost)
 			M.remove_status_effect(/datum/status_effect/buff/frostbite)

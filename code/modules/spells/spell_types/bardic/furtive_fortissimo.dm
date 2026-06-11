@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/song/furtive_fortissimo
-	name = "Furtive Fortissimo"
-	desc = "With cat like tread, apply light steps to audience members"
+	name = "潜行强奏"
+	desc = "以猫般轻盈的步伐施加轻步效果于听众。"
 	invocations = list("plays a sneaky, playful tune. The world draws closer to listen, in on the joke.") 
 	invocation_type = "emote"
 	overlay_state = "bardsong_t1_base"
@@ -17,7 +17,7 @@
 		return TRUE
 	else
 		revert_cast()
-		to_chat(user, span_warning("I must be playing something to inspire my audience!"))
+		to_chat(user, span_warning("我必须先演奏起来，才能鼓舞我的听众！"))
 		return
 
 /datum/status_effect/buff/playing_melody/furtive_fortissimo
@@ -26,8 +26,8 @@
 
 
 /atom/movable/screen/alert/status_effect/buff/song/furtive_fortissimo
-	name = "Furtive Fortissimo"
-	desc = "With cat like tread, the sneaking song begins."
+	name = "潜行强奏"
+	desc = "如猫般轻巧的潜行之歌已经奏响。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/song/furtive_fortissimo

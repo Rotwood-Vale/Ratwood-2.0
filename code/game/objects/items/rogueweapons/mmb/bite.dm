@@ -1,5 +1,5 @@
 /datum/intent/bite
-	name = "bite"
+	name = "啃咬"
 	candodge = TRUE
 	canparry = TRUE
 	chargedrain = 0
@@ -8,7 +8,7 @@
 	unarmed = TRUE
 	noaa = FALSE
 	animname = "bite"
-	attack_verb = list("bites")
+	attack_verb = list("啃咬")
 
 /datum/intent/bite/on_mmb(atom/target, mob/living/user, params)
 	var/datum/species/dullahan/user_species
@@ -30,10 +30,10 @@
 		return
 	if(!get_location_accessible(user, BODY_ZONE_PRECISE_MOUTH, grabs="other"))
 		if(!HAS_TRAIT(user, TRAIT_BITERHELM))
-			to_chat(user, span_warning("My mouth is blocked."))
+			to_chat(user, span_warning("我的嘴被堵住了。"))
 			return
 	if(HAS_TRAIT(user, TRAIT_NO_BITE))
-		to_chat(user, span_warning("I can't bite."))
+		to_chat(user, span_warning("我无法啃咬。"))
 		return
 	if(!user_species || (user_species && !user_species.headless))
 		user.face_atom(target)
@@ -60,10 +60,10 @@
 ///Initial bite on target
 /mob/living/carbon/onbite(mob/living/carbon/human/user)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("I don't want to harm [src]!"))
+		to_chat(user, span_warning("我不想伤害[src]！"))
 		return FALSE
 	if(!user.can_bite())
-		to_chat(user, span_warning("My mouth has something in it."))
+		to_chat(user, span_warning("我嘴里塞着东西。"))
 		return FALSE
 
 	var/datum/intent/bite/bitten = new()
@@ -77,7 +77,7 @@
 	var/def_zone = check_zone(user.zone_selected)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
 	if(!affecting)
-		to_chat(user, span_warning("Nothing to bite."))
+		to_chat(user, span_warning("没有能下口的地方。"))
 		return
 
 	next_attack_msg.Cut()
@@ -95,7 +95,7 @@
 		var/armor_block = run_armor_check(user.zone_selected, "stab",blade_dulling=BCLASS_BITE)
 		if(!apply_damage(dam2do, BRUTE, def_zone, armor_block, user))
 			nodmg = TRUE
-			next_attack_msg += span_warning("Armor stops the damage.")
+			next_attack_msg += span_warning("护甲挡下了伤害。")
 		else if(!nodmg && (HAS_TRAIT(user, TRAIT_VAMPBITE)))
 			var/ramount = 15
 			var/rid = /datum/reagent/vampsolution
@@ -104,8 +104,8 @@
 	var/datum/wound/caused_wound
 	if(!nodmg)
 		caused_wound = affecting.bodypart_attacked_by(BCLASS_BITE, dam2do, user, user.zone_selected, crit_message = TRUE)
-	visible_message(span_danger("[user] bites [src]'s [parse_zone(user.zone_selected)]![next_attack_msg.Join()]"), \
-					span_userdanger("[user] bites my [parse_zone(user.zone_selected)]![next_attack_msg.Join()]"))
+	visible_message(span_danger("[user]咬住了[src]的[parse_zone(user.zone_selected)]！[next_attack_msg.Join()]"), \
+					span_userdanger("[user]咬住了我的[parse_zone(user.zone_selected)]！[next_attack_msg.Join()]"))
 
 	next_attack_msg.Cut()
 //nodmg if they don't have an open wound
@@ -120,7 +120,7 @@
 			*/
 			if(istype(user.dna.species, /datum/species/werewolf))
 				if(HAS_TRAIT(src, TRAIT_SILVER_BLESSED))
-					to_chat(user, span_warning("BLEH! [bite_victim] tastes of SILVER! My gift cannot take hold."))
+					to_chat(user, span_warning("呸！[bite_victim]身上是白银的味道！我的恩赐无法生效。"))
 				else
 					if(caused_wound?.werewolf_infect_attempt())
 						to_chat(user, span_danger("You feel your beastly gift trickling from your mouth into [bite_victim]'s wound..."))
@@ -136,13 +136,13 @@
 			if(zombie_antag && zombie_antag.has_turned)
 				zombie_antag.last_bite = world.time
 				if(bite_victim.zombie_infect_attempt())   // infect_attempt on bite
-					to_chat(user, span_danger("You feel your gift trickling from your mouth into [bite_victim]'s wound..."))
+					to_chat(user, span_danger("你感觉自己的恩赐正从口中渗入[bite_victim]的伤口……"))
 
 	var/obj/item/grabbing/bite/B = new()
 	user.equip_to_slot_or_del(B, SLOT_MOUTH)
 	if(user.mouth == B)
 		var/used_limb = src.find_used_grab_limb(user)
-		B.name = "[src]'s [parse_zone(used_limb)]"
+		B.name = "[src]的[parse_zone(used_limb)]"
 		var/obj/item/bodypart/BP = get_bodypart(check_zone(used_limb))
 		LAZYADD(BP.grabbedby, B)
 		B.grabbed = src
@@ -170,7 +170,7 @@
 	return TRUE
 
 /obj/item/grabbing/bite
-	name = "bite"
+	name = "啃咬"
 	icon_state = "bite"
 	d_type = "stab"
 	slot_flags = ITEM_SLOT_MOUTH
@@ -271,7 +271,7 @@
 			if(zombie_antag && zombie_antag.has_turned)
 				var/datum/antagonist/zombie/existing_zombie = C.mind?.has_antag_datum(/datum/antagonist/zombie) //If the bite target is a zombie
 				if(!existing_zombie && caused_wound?.zombie_infect_attempt())   // infect_attempt on wound
-					to_chat(user, span_danger("You feel your gift trickling into [C]'s wound...")) //message to the zombie they infected the target
+					to_chat(user, span_danger("你感觉自己的恩赐正渗入[C]的伤口……")) //message to the zombie they infected the target
 
 			/*
 				LAMIA CHEW. VENOM INJECTION.
@@ -280,7 +280,7 @@
 				if(C.reagents)
 					var/poison = user.STACON/4
 					C.reagents.add_reagent(/datum/reagent/lam_venom, poison)
-					to_chat(user, span_necrosis("You inject venom into [C]!"))
+					to_chat(user, span_necrosis("你将毒液注入了[C]体内！"))
 
 /*
 	Code below is for a zombie smashing the brains of unit. The code expects the brain to be part of the head which is not the case with AP. Kept for posterity in case it's used in an overhaul.
@@ -294,18 +294,18 @@
 						var/obj/item/bodypart/head/HE = limb_grabbed
 						if(HE.brain)
 							QDEL_NULL(HE.brain)
-							C.visible_message("<span class='danger'>[user] consumes [C]'s brain!</span>", \
-								"<span class='userdanger'>[user] consumes my brain!</span>", "<span class='hear'>I hear a sickening sound of chewing!</span>", COMBAT_MESSAGE_RANGE, user)
-							to_chat(user, "<span class='boldnotice'>Braaaaaains!</span>")
+							C.visible_message("<span class='danger'>[user]吃掉了[C]的脑子！</span>", \
+								"<span class='userdanger'>[user]吃掉了我的脑子！</span>", "<span class='hear'>我听见一阵令人作呕的咀嚼声！</span>", COMBAT_MESSAGE_RANGE, user)
+							to_chat(user, "<span class='boldnotice'>脑子啊啊啊啊！</span>")
 							if(!user.mob_timers["zombie_tri"])
 								user.mob_timers["zombie_tri"] = world.time
 							playsound(C.loc, 'sound/combat/fracture/headcrush (2).ogg', 100, FALSE, -1)
 							return*/
 	else
-		C.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
-	C.visible_message(span_danger("[user] bites [C]'s [parse_zone(sublimb_grabbed)]![C.next_attack_msg.Join()]"), \
-					span_userdanger("[user] bites my [parse_zone(sublimb_grabbed)]![C.next_attack_msg.Join()]"), span_hear("I hear a sickening sound of chewing!"), COMBAT_MESSAGE_RANGE, user)
-	to_chat(user, span_danger("I bite [C]'s [parse_zone(sublimb_grabbed)].[C.next_attack_msg.Join()]"))
+		C.next_attack_msg += " <span class='warning'>护甲挡下了伤害。</span>"
+	C.visible_message(span_danger("[user]咬住了[C]的[parse_zone(sublimb_grabbed)]！[C.next_attack_msg.Join()]"), \
+					span_userdanger("[user]咬住了我的[parse_zone(sublimb_grabbed)]！[C.next_attack_msg.Join()]"), span_hear("我听见令人作呕的咀嚼声！"), COMBAT_MESSAGE_RANGE, user)
+	to_chat(user, span_danger("我咬住了[C]的[parse_zone(sublimb_grabbed)]。[C.next_attack_msg.Join()]"))
 	C.next_attack_msg.Cut()
 	log_combat(user, C, "limb chewed [sublimb_grabbed] ")
 
@@ -316,7 +316,7 @@
 		return
 
 	if(!limb_grabbed.get_bleed_rate())
-		to_chat(user, span_warning("Sigh. It's not bleeding."))
+		to_chat(user, span_warning("唉，那里没有流血。"))
 		return
 
 	if(HAS_TRAIT(user, TRAIT_VAMPBITE))

@@ -1,7 +1,7 @@
 //A skill to help others learn new skills by forgetting old ones
 /obj/effect/proc_holder/spell/invoked/refocusstudies
-	name = "Refocus Studies"
-	desc = "Help another refocus their studies. Sacrifice a skill level in a skill above Journeyman to gain 3 sleep advancement points and a 30 minutes buff that will increase intelligence by +2 but reduce willpower by 1."
+	name = "重整学业"
+	desc = "帮助他人重新整理学业方向。牺牲一项高于熟手的技能等级，换取 3 点睡眠成长点数，并获得持续 30 分钟的增益，使智力 +2、意志 -1。"
 	overlay_state = "book3"
 	releasedrain = 50
 	chargedrain = 0
@@ -73,40 +73,40 @@
 
 	if(isliving(targets[1]))
 		if(L == usr)
-			to_chat(L, span_warning("I can not refocus my studies, only others."))
+			to_chat(L, span_warning("我不能重整自己的学业，只能帮助他人。"))
 			return
 		else
 			if(L in range(1, usr))
-				to_chat(usr, span_notice("My student needs some time to select a lesson."))
-				var/chosen_skill = input(L, "Choose which skills to sacrifice, you will get back 3 sleep points and a buff to help you study", "Choose a skill") as null|anything in choices
+				to_chat(usr, span_notice("我的学生需要一点时间来选择要舍弃的学业。"))
+				var/chosen_skill = input(L, "选择要舍弃哪项技能，你将返还 3 点睡眠点数，并获得帮助学习的增益。", "选择技能") as null|anything in choices
 				var/datum/skill/item = choices[chosen_skill]
 				if(!item)
 					return  // student canceled
-				if(alert(L, "Are you sure> you want lose a level in [item.name]?", "Learning", "Sacrifice", "Cancel") == "Cancel")
+				if(alert(L, "你确定要失去 [item.name] 的一个等级吗？", "重整学业", "舍弃", "取消") == "取消")
 					return
 				if(L.has_status_effect(/datum/status_effect/buff/refocus))
-					to_chat(L, span_warning("I've refocused too recently"))
-					to_chat(usr, span_warning("My student cannot be refocused so soon"))
+					to_chat(L, span_warning("我最近才刚重整过学业。"))
+					to_chat(usr, span_warning("我的学生这么快还无法再次重整学业。"))
 					return // cannot teach the same student twice
 				if(L.get_skill_level(item) < SKILL_LEVEL_JOURNEYMAN)
-					to_chat(L, span_warning("I don't have enough skill in [item.name] to sacrifice it."))
-					to_chat(usr, span_warning("I try teaching [L] [item.name] but my student couldnt grasp the lesson!"))
+					to_chat(L, span_warning("我在 [item.name] 上的造诣还不够，无法舍弃它。"))
+					to_chat(usr, span_warning("我试图教导 [L] 重整 [item.name]，但我的学生没能领会这堂课！"))
 					return // some basic skill will not require you novice level
 				else
-					to_chat(L, span_notice("[usr] starts teach me how to refocus my efforts, I slowly lose my grasp on [item.name]!"))
-					to_chat(usr, span_notice("[L] gets to listen carefully to my lesson about refocusing, they slowly lose their grasp on [item.name]."))
+					to_chat(L, span_notice("[usr] 开始教我如何重新聚焦自己的精力，我对 [item.name] 的掌握正慢慢流失！"))
+					to_chat(usr, span_notice("[L] 正认真聆听我关于重整学业的讲授，他们对 [item.name] 的掌握正慢慢流失。"))
 					if(do_after(usr, teachingtime, target = L))
-						user.visible_message("<font color='yellow'>[user] teaches [L] a lesson.</font>")
-						to_chat(usr, span_notice("My student has refocused, but lost insight on [item.name]!"))
+						user.visible_message("<font color='yellow'>[user] 为 [L] 上了一课。</font>")
+						to_chat(usr, span_notice("我的学生已完成重整学业，但失去了对 [item.name] 的一部分领悟！"))
 						L.adjust_skillrank(item, -1, FALSE)
 						L.apply_status_effect(/datum/status_effect/buff/refocus)
 						L.mind.sleep_adv.sleep_adv_points += 3
 					else
-						to_chat(usr, span_warning("[L] got distracted and wandered off!"))
-						to_chat(L, span_warning("I must be more focused on my studies!"))
+						to_chat(usr, span_warning("[L] 分了心，走神离开了！"))
+						to_chat(L, span_warning("我必须把更多注意力放回学业上！"))
 						return
 			else
-				to_chat(usr, span_warning("My student can barely hear me from there."))
+				to_chat(usr, span_warning("我的学生在那个距离几乎听不清我说话。"))
 				return
 	else
 		revert_cast()

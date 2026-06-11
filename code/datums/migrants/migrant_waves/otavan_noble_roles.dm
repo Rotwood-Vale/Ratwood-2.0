@@ -5,15 +5,15 @@
 #define CTAG_OTAVAN_SCRIBE "otavan_scribe"
 
 /datum/migrant_role/otavan/envoy
-	name = "Émissaire"
+	name = "使节"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
-	greet_text = "You are an Otavan Emissary, traveling with a small retinue and a Psydonite preacher to represent your homeland.\
-	What exactly you have been sent here to speak about- only you know."
+	greet_text = "你是来自 Otava 的使节，带着一小队随员与一位 Psydonite 传教士出行，代表自己的祖国。\
+	你究竟被派来此地商谈什么，只有你自己知道。"
 	advclass_cat_rolls = list(CTAG_OTAVAN_ENVOY = 20)
 
 /datum/advclass/otavan_envoy
-	name = "Émissaire"
+	name = "使节"
 	outfit = /datum/outfit/job/roguetown/otavan/envoy
 	traits_applied = list(TRAIT_NOBLE, TRAIT_DODGEEXPERT, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_OTAVAN_ENVOY)
@@ -78,14 +78,14 @@
 	H.cmode_music = 'sound/music/combat_routier.ogg'
 
 /datum/migrant_role/otavan/knight
-	name = "Gendarme"
+	name = "骑士"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = NON_DWARVEN_RACE_TYPES
 	advclass_cat_rolls = list(CTAG_OTAVAN_KNIGHT = 20)
 
 /datum/advclass/otavan_knight
-	name = "Gendarme"
-	tutorial = "Whether through merit, blood or renown, you became a knight in service of the Otavan court. Now, tasked with escorting the Émissaire and protecting them at all cost, you ride into these lands."
+	name = "骑士"
+	tutorial = "无论是凭借功绩、血统还是名望，你都成为了效力于 Otava 宫廷的骑士。如今你奉命护送使节，不惜一切代价保护其安全，正策马进入谷地。"
 	outfit = /datum/outfit/job/roguetown/otavan/knight
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_NOBLE, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_OTAVAN_KNIGHT)
@@ -145,14 +145,14 @@
 	H.cmode_music = 'sound/music/combat_routier.ogg'
 
 /datum/migrant_role/otavan/guard
-	name = "Otavan Arbalétrier"
-	greet_text = "With sharp eyes and a strong body, you are one of the many famous Heavy Crossbowmen that fill the ranks of the Otavan Principality. Keep the Emmisary safe, with sword and bolts."
+	name = "Otava重弩手"
+	greet_text = "你目光锐利、身强体壮，是 Otava 亲王国赫赫有名的重弩手之一。用你的剑与弩矢保护使节的安全。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	advclass_cat_rolls = list(CTAG_OTAVAN_GUARD = 20)
 
 /datum/advclass/otavan_guard
-	name = "Otavan Arbalétrier"		//Modified skirmisher, main focus is crossbow and swords.
+	name = "Otava重弩手"		//Modified skirmisher, main focus is crossbow and swords.
 	outfit = /datum/outfit/job/roguetown/otavan/guard
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_OTAVAN_GUARD)
@@ -210,14 +210,14 @@
 	H.grant_language(/datum/language/otavan)
 
 /datum/migrant_role/otavan/preacher
-	name = "Psydonite Preacher"
-	greet_text = "A loyal member of the Psydonite Inquisition, you have mingled with politics long enough to become an active volunteer in assisting diplomatic missions and providing His sermon to wherever the Émissaire goes. Aid him, and make sure that he does not ignore His gospel."
+	name = "Psydonite传教士"
+	greet_text = "你是 Psydonite 宗教裁判所的一名忠诚成员，长期周旋于政治之中，如今主动协助外交使命，并将祂的圣训带到使节所到之处。帮助他，并确保他不会忽视祂的福音。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	advclass_cat_rolls = list(CTAG_OTAVAN_PREACHER = 20)
 
 /datum/advclass/otavan_preacher
-	name = "Psydonite Preacher"		//Basically a middle ground between a disciple and an adventurer monk. Staves and preaching!
+	name = "Psydonite传教士"		//Basically a middle ground between a disciple and an adventurer monk. Staves and preaching!
 	outfit = /datum/outfit/job/roguetown/otavan/preacher
 	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_STEELHEARTED, TRAIT_SILVER_BLESSED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_OTAVAN_PREACHER)
@@ -228,7 +228,8 @@
 		STATKEY_WIL = 2,
 	)
 	subclass_skills = list(
-		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,		//everybody was kung-fu fighting. Jman bc you're defending yourself, punk. Roleplay.
+		/datum/skill/combat/staves = SKILL_LEVEL_JOURNEYMAN,		//everybody was kung-fu fighting. Jman bc you're defending yourself, punk. Roleplay.
+		/datum/skill/combat/polearms = SKILL_LEVEL_NOVICE,		//no powergaming. Staves or bust.
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
@@ -246,7 +247,7 @@
 /datum/outfit/job/roguetown/otavan/preacher/pre_equip(mob/living/carbon/human/H)
 	..()
 	if (!(istype(H.patron, /datum/patron/old_god)))		//PSYDON ENDURE PURITY AFLOAT PSYDON PSYDON ENDURE PSYDON OTAVA PSYDON WAH WAH WAH
-		to_chat(H, span_warning("PSYDON has taught me to ENDURE whatever it takes - and HE guides my hand and words."))
+		to_chat(H, span_warning("PSYDON 教会了我不惜一切代价去忍耐，而祂将指引我的双手与言辞。"))
 		H.set_patron(/datum/patron/old_god)
 	r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/psy
 	head = /obj/item/clothing/head/roguetown/roguehood/psydon
@@ -276,14 +277,14 @@
 	H.grant_language(/datum/language/otavan)
 
 /datum/migrant_role/otavan/scribe
-	name = "Otavan Scribe"
+	name = "Otava书记官"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
-	greet_text = "Coin, quill, and words, these have defined your life since you were a mere youngling. Now? You are the renowned Scribe to this diplomatic mission's Emissary. Take notes, ask questions, and give funds when asked."
+	greet_text = "钱币、羽笔与文字，自你年幼时起便定义了你的人生。如今？你已是这支外交使团中使节麾下声名在外的书记官。做记录、提问题，并在被要求时拨付资金。"
 	advclass_cat_rolls = list(CTAG_OTAVAN_SCRIBE = 20)
 
 /datum/advclass/otavan_scribe
-	name = "Otavan Scribe"
+	name = "Otava书记官"
 	outfit = /datum/outfit/job/roguetown/otavan/scribe
 	traits_applied = list(TRAIT_NOBLE, TRAIT_SEEPRICES, TRAIT_CICERONE, TRAIT_INTELLECTUAL, TRAIT_OUTLANDER)	//booksmart, moneysmart, winesmart
 	category_tags = list(CTAG_OTAVAN_SCRIBE)

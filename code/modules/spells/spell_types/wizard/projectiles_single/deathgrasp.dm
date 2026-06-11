@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/projectile/deathgrasp //Fetch + Frost Bolt, exclusive to Ancient Champion. Instant cast, but can't fetch objects and has much more punishing CD. Try not to miss.
-	name = "Death's Grasp"
-	desc = "Shoot out an unholy projectile that draws in the target struck towards the caster. The target struck will be slowed for some time."
+	name = "死亡之握"
+	desc = "射出一道亵渎飞弹，将命中的目标拽向施法者。被命中的目标还会暂时减速。"
 	clothes_req = FALSE
 	range = 15
 	projectile_type = /obj/projectile/magic/deathgrasp
@@ -16,7 +16,7 @@
 	no_early_release = TRUE
 	charging_slowdown = 1
 	spell_tier = 2
-	invocations = list("Nauk-avurn!")
+	invocations = list("死握，缠身！")
 	invocation_type = "shout"
 	hide_charge_effect = TRUE
 	chargedloop = /datum/looping_sound/invokeascendant
@@ -31,12 +31,12 @@
 	effectedstats = list("speed" = -4) //Skillcheck for dodgemaxxers: if they switch from Dodge to Parry, they'll live.
 
 /atom/movable/screen/alert/status_effect/buff/deathgrasped
-	name = "Grasped"
-	desc = "My legs are held down by invisible hands."
+	name = "遭到攫握"
+	desc = "我的双腿被无形之手死死按住了。"
 	icon_state = "debuff"
 
 /obj/projectile/magic/deathgrasp
-	name = "grasp of death"
+	name = "死亡之握"
 	icon_state = "cursehand0"
 	range = 15
 
@@ -46,7 +46,7 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if(L.anti_magic_check() || !firer)
-			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
+			L.visible_message(span_warning("[src] 在接触[target]时消散了！"))
 			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 			qdel(src)
 			return BULLET_ACT_BLOCK

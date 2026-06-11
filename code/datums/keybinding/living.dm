@@ -7,7 +7,7 @@
 	hotkey_keys = list("Q")
 	classic_keys = list("Q") // PAGEUP
 	name = "swap_left"
-	full_name = "Swap to left hand"
+	full_name = "切换到左手"
 	description = ""
 
 /datum/keybinding/living/swap_left/down(client/user)
@@ -28,7 +28,7 @@
 	hotkey_keys = list("E")
 	classic_keys = list("E") // PAGEUP
 	name = "swap_right"
-	full_name = "Swap to right hand"
+	full_name = "切换到右手"
 	description = ""
 
 /datum/keybinding/living/swap_right/down(client/user)
@@ -49,7 +49,7 @@
 	hotkey_keys = list()
 	classic_keys = list()
 	name = "swap_hands"
-	full_name = "Swap hands"
+	full_name = "切换双手"
 	description = ""
 
 /datum/keybinding/living/swap_hands/down(client/user)
@@ -65,8 +65,8 @@
 	hotkey_keys = list()
 	classic_keys = list()
 	name = "activate_inhand"
-	full_name = "Activate in-hand"
-	description = "Uses whatever item you have inhand"
+	full_name = "激活手持物"
+	description = "使用我当前手中的物品"
 
 /datum/keybinding/living/activate_inhand/down(client/user)
 	var/mob/M = user.mob
@@ -80,7 +80,7 @@
 /datum/keybinding/living/drop_item
 	hotkey_keys = list("Z")
 	name = "drop_item"
-	full_name = "Drop Item"
+	full_name = "丢下物品"
 	description = ""
 
 /datum/keybinding/living/drop_item/down(client/user)
@@ -97,8 +97,8 @@
 /datum/keybinding/living/sprint
 	hotkey_keys = list()
 	name = "sprint"
-	full_name = "Sprint"
-	description = "Sprinting can be dangerous to your health if you aren't careful."
+	full_name = "冲刺"
+	description = "若不够小心，冲刺可能会危及我的健康。"
 
 /datum/keybinding/living/sprint/down(client/user)
 	var/mob/M = user.mob
@@ -113,8 +113,8 @@
 /datum/keybinding/living/sneak
 	hotkey_keys = list()
 	name = "sneak"
-	full_name = "Sneak"
-	description = "Press this hotkey to sneak around, which has many uses."
+	full_name = "潜行"
+	description = "按下这个热键进入潜行状态，它有许多用途。"
 
 /datum/keybinding/living/sneak/down(client/user)
 	var/mob/M = user.mob
@@ -130,8 +130,8 @@
 /datum/keybinding/living/submit
 	hotkey_keys = list("ShiftX")
 	name = "yield"
-	full_name = "Yield"
-	description = "Yield to your enemy, which may save your life or end it quicker."
+	full_name = "投降"
+	description = "向敌人投降，也许能保住性命，也可能只是更快送命。"
 
 /datum/keybinding/living/submit/down(client/user)
 	var/mob/living/L = user.mob
@@ -145,8 +145,8 @@
 /datum/keybinding/living/toggle_compliance
 	hotkey_keys = list()
 	name = "toggle_compliance"
-	full_name = "Toggle Compliance Mode"
-	description = "At-will, silent toggle to fail defense rolls, both when getting grabbed/tackled, and when others resist out your grabs. Additionally speeds up restraining you and stripping you. Dangerous in combat!"
+	full_name = "切换顺从模式"
+	description = "静默切换为主动放弃防御，无论是被抓取、被扑倒，还是别人挣脱我的控制时都会生效。同时也会让他人更快束缚我、扒下我的装备。战斗中非常危险！"
 
 /datum/keybinding/living/toggle_compliance/down(client/user)
 	var/mob/living/L = user.mob
@@ -158,8 +158,8 @@
 /datum/keybinding/living/resist
 	hotkey_keys = list("X")
 	name = "cancelresist"
-	full_name = "Resist"
-	description = "Spam this to resist against a grab."
+	full_name = "挣扎"
+	description = "连续按这个键来挣脱抓取。"
 
 /datum/keybinding/living/resist/down(client/user)
 	var/mob/living/L = user.mob
@@ -171,8 +171,8 @@
 /datum/keybinding/living/defendtoggle
 	hotkey_keys = list("C")
 	name = "defendtoggle"
-	full_name = "Combat Mode"
-	description = "Initiates combat mode. Enables certain RMB intents. Allows to dodge and parry."
+	full_name = "战斗模式"
+	description = "切换进入战斗模式，启用部分右键意图，并允许闪避与招架。"
 
 /datum/keybinding/living/defendtoggle/down(client/user)
 	var/mob/living/L = user.mob
@@ -183,8 +183,8 @@
 /datum/keybinding/living/dodgeparry
 	hotkey_keys = list("ShiftC")
 	name = "dodgeparry"
-	full_name = "Dodge/Parry"
-	description = "Change between dodging and parrying."
+	full_name = "闪避/招架"
+	description = "在闪避与招架之间切换。"
 
 /datum/keybinding/living/dodgeparry/down(client/user)
 	var/mob/living/L = user.mob
@@ -198,8 +198,8 @@
 /datum/keybinding/living/restd
 	hotkey_keys = list("V")
 	name = "standrest"
-	full_name = "Toggle Stand/Rest"
-	description = "Toggle between standing and laying on the floor."
+	full_name = "切换站立/休息"
+	description = "在站立与躺地之间切换。"
 	var/lastrest = 0
 
 /datum/keybinding/living/restd/down(client/user)
@@ -216,8 +216,8 @@
 /datum/keybinding/living/standu
 	hotkey_keys = list()
 	name = "stand"
-	full_name = "Stand Up"
-	description = "Stand up from a prone position."
+	full_name = "起身"
+	description = "从倒地状态站起来。"
 	var/lastrest = 0
 
 /datum/keybinding/living/standu/down(client/user)
@@ -234,8 +234,8 @@
 /datum/keybinding/living/rest
 	hotkey_keys = list()
 	name = "rest"
-	full_name = "Lay Down"
-	description = "Lay down on the floor."
+	full_name = "躺下"
+	description = "躺到地上。"
 	var/lastrest = 0
 
 /datum/keybinding/living/rest/down(client/user)
@@ -252,8 +252,8 @@
 /datum/keybinding/living/lookup
 	hotkey_keys = list("ShiftF")
 	name = "lookup"
-	full_name = "Look up"
-	description = "Look at what's above you, if you are under an open space."
+	full_name = "向上看"
+	description = "若头顶是开阔空间，就查看我上方有什么。"
 	var/lastrest = 0
 
 /datum/keybinding/living/lookup/down(client/user)
@@ -268,8 +268,8 @@
 /datum/keybinding/living/search
 	hotkey_keys = list("ShiftG")
 	name = "search"
-	full_name = "Search"
-	description = "Search the area around you for hidden items or compartments."
+	full_name = "搜索"
+	description = "搜索周围区域，寻找隐藏物品或暗格。"
 
 /datum/keybinding/living/search/down(client/user)
 	var/mob/living/L = user.mob
@@ -281,7 +281,7 @@
 /datum/keybinding/living/pixel_shift_layerup
 	hotkey_keys = list("CtrlShiftNortheast")
 	name = "pixel_shift_layerup"
-	full_name = "Pixel-Shift Layer Up"
+	full_name = "像素层级上移"
 	description = ""
 	var/lastrest = 0
 
@@ -295,14 +295,14 @@
 		M.is_shifted = TRUE
 		M.pixelshift_layer = M.pixelshift_layer + 0.01
 		M.layer = LYING_MOB_LAYER + M.pixelshift_layer
-		to_chat(user, span_info("Shifted pixel layer up: [M.pixelshift_layer]"))
+		to_chat(user, span_info("像素层级已上移至：[M.pixelshift_layer]"))
 		M.update_transform()
 	return TRUE
 
 /datum/keybinding/living/pixel_shift_layerdown
 	hotkey_keys = list("CtrlShiftSoutheast")
 	name = "pixel_shift_layerdown"
-	full_name = "Pixel-Shift Layer Down"
+	full_name = "像素层级下移"
 	description = ""
 	var/lastrest = 0
 
@@ -316,6 +316,6 @@
 		M.is_shifted = TRUE
 		M.pixelshift_layer = M.pixelshift_layer - 0.01
 		M.layer = LYING_MOB_LAYER + M.pixelshift_layer
-		to_chat(user, span_info("Shifted pixel layer down: [M.pixelshift_layer]"))
+		to_chat(user, span_info("像素层级已下移至：[M.pixelshift_layer]"))
 		M.update_transform()
 	return TRUE

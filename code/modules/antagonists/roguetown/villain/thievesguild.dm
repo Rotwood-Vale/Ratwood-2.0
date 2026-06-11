@@ -1,22 +1,22 @@
 // Thieves' Guild antagonist for RT
 
 /datum/antagonist/thievesguild
-	name = "Thieves' Guild"
-	roundend_category = "thievesguild"
+	name = "盗贼公会"
+	roundend_category = "盗贼公会"
 	antagpanel_category = "Roguetown"
 	show_name_in_check_antagonists = TRUE
 	can_coexist_with_others = TRUE
 	confess_lines = list(
-		"I am a member of the Thieves' Guild!",
-		"I work for the underground crime syndicate!",
-		"I am a thief and proud of it!",
-		"The Thieves' Guild has chosen me as their operative!",
-		"I am a criminal mastermind in training!",
-		"I serve the shadowy organization known as the Thieves' Guild!",
-		"I am a rogue and a scoundrel!",
-		"The Thieves' Guild has recruited me for their schemes!",
-		"I am a member of the secret crime network!",
-		"I work in the shadows for the Thieves' Guild!"
+		"我是盗贼公会的一员！",
+		"我为地下犯罪组织效力！",
+		"我是个贼，而且以此为荣！",
+		"盗贼公会选中了我做他们的行动成员！",
+		"我正在接受成为犯罪策士的训练！",
+		"我侍奉那个名为盗贼公会的阴影组织！",
+		"我是个游荡恶徒，也是个无赖！",
+		"盗贼公会招募我来执行他们的诡计！",
+		"我是秘密犯罪网络中的一员！",
+		"我在阴影中为盗贼公会效力！"
 	)
 
 /datum/antagonist/thievesguild/on_gain()
@@ -29,18 +29,18 @@
 		owner.current.adjust_skillrank(/datum/skill/misc/lockpicking, 3, TRUE)
 		owner.current.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
 		// Only add items to special inventory, do not spawn them directly
-		owner.special_items["Lockpick Ring"] = /obj/item/lockpickring/mundane
-		owner.special_items["Strong Poison"] = /obj/item/reagent_containers/glass/bottle/rogue/strongpoison
+		owner.special_items["开锁戒"] = /obj/item/lockpickring/mundane
+		owner.special_items["强效毒药"] = /obj/item/reagent_containers/glass/bottle/rogue/strongpoison
 		// Assign objective if not already present
 		if(!objectives.len)
 			var/datum/objective/thieves_guild_objective/obj = new /datum/objective/thieves_guild_objective(owner = owner)
 			objectives += obj
 			// Add objective to memory
-			owner.store_memory("Objective: [obj.explanation_text]")
+			owner.store_memory("目标：[obj.explanation_text]")
 			// Show objective to player
-			to_chat(owner.current, "<span class='danger'>You have been chosen as an operative of a secret crime guild. Carry out your orders quietly and avoid suspicion.</span>")
-			to_chat(owner.current, "<span class='danger'>Your objective: [obj.explanation_text]</span>")
-			to_chat(owner.current, "<span class='notice'>You can view your objective again in the Notes tab under Memory.</span>")
+			to_chat(owner.current, "<span class='danger'>你已被选为一个秘密犯罪公会的行动成员。安静地执行命令，避免引起怀疑。</span>")
+			to_chat(owner.current, "<span class='danger'>你的目标：[obj.explanation_text]</span>")
+			to_chat(owner.current, "<span class='notice'>你可以稍后在“笔记”页签的“记忆”中再次查看这个目标。</span>")
 
 /datum/antagonist/thievesguild/apply_innate_effects(mob/living/mob_override)
 	..()

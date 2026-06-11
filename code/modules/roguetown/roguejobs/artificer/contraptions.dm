@@ -1,6 +1,6 @@
 /obj/item/contraption
-	name = "random piece of machinery"
-	desc = "A cog with teeth meticulously crafted for tight interlocking."
+	name = "随机机械零件"
+	desc = "一枚齿牙打磨精细、用于严密咬合的齿轮。"
 	icon_state = "gear"
 	var/on_icon
 	var/off_icon
@@ -56,19 +56,19 @@
 	var/mob/living/player = user
 	var/skill = player.get_skill_level(/datum/skill/craft/engineering)
 	if(current_charge)
-		. += span_warning("The contraption has [current_charge] charges left.")
+		. += span_warning("这件装置还剩 [current_charge] 次充能。")
 	if(!current_charge)
-		. += span_warning("This contraption requires a new [initial(accepted_power_source.name)] to function.")
+		. += span_warning("这件装置需要一个新的[initial(accepted_power_source.name)]才能运作。")
 	if(misfire_chance && skill < 6)
 		if(skill > 2)
-			. += span_warning("You calculate this contraptions chance of failure to be anywhere between [max(0, (misfire_chance - skill) - rand(4))]% and [max(2, (misfire_chance - skill) + rand(3))]%.")
+			. += span_warning("你估算这件装置的故障概率大约介于 [max(0, (misfire_chance - skill) - rand(4))]% 到 [max(2, (misfire_chance - skill) + rand(3))]% 之间。")
 		else
-			. += span_warning("It seems slightly unstable...")
+			. += span_warning("它看起来有些不稳定……")
 	if(skill >= 6 && sneaky_misfire_chance)
-		. += span_warning("This contraption has a chance for catastrophic failure in the hands of the inexperient.")
+		. += span_warning("这件装置若落在缺乏经验的人手里，有可能发生灾难性故障。")
 
 /obj/item/contraption/proc/battery_collapse(obj/O, mob/living/user)
-	to_chat(user, span_info("The [accepted_power_source.name] wastes away into nothing."))
+	to_chat(user, span_info("[accepted_power_source.name]耗尽后化为了乌有。"))
 	playsound(src, pick('sound/combat/hits/onmetal/grille (1).ogg', 'sound/combat/hits/onmetal/grille (2).ogg', 'sound/combat/hits/onmetal/grille (3).ogg'), 100, FALSE)
 	shake_camera(user, 1, 1)
 	var/datum/effect_system/spark_spread/S = new()
@@ -79,7 +79,7 @@
 
 /obj/item/contraption/proc/misfire(obj/O, mob/living/user)
 	user.mind.add_sleep_experience(/datum/skill/craft/engineering, (user.STAINT * 5))
-	to_chat(user, span_info("Oh fuck."))
+	to_chat(user, span_info("糟了。"))
 	playsound(src, 'sound/misc/bell.ogg', 100)
 	addtimer(CALLBACK(src, PROC_REF(misfire_result), O, user), rand(5, 30))
 
@@ -109,17 +109,17 @@
 		shake_camera(user, 1, 1)
 		S.set_up(1, 1, front)
 		S.start()
-		to_chat(user, "<span class='warning'>[cog.name] inserted!</span>")
+		to_chat(user, "<span class='warning'>已插入[cog.name]！</span>")
 	if(istype(I, accepted_power_source))
 		user.changeNext_move(CLICK_CD_FAST)
 		S.set_up(1, 1, front)
 		S.start()
 		if(current_charge)
-			to_chat(user, span_info("I try to insert the [I.name] but theres already \a [initial(accepted_power_source.name)] inside!"))
+			to_chat(user, span_info("我试着插入[I.name]，但里面已经有一个[initial(accepted_power_source.name)]了！"))
 			playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
 			shake_camera(user, 1, 1)
 		else
-			to_chat(user, span_info("I insert the [I.name] and the [name] starts ticking."))
+			to_chat(user, span_info("我插入了[I.name]，[name]随即开始滴答作响。"))
 			current_charge = charge_per_source
 			playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
 			qdel(I)
@@ -131,7 +131,7 @@
 /obj/item/contraption/proc/hammer_action(obj/item/I, mob/user)
 	user.changeNext_move(CLICK_CD_FAST)
 	flick(off_icon, src)
-	user.visible_message(span_info("[user] beats the [name] into submission!"))
+	user.visible_message(span_info("[user]把[name]敲得服服帖帖！"))
 	playsound(src, pick('sound/combat/hits/onmetal/sheet (1).ogg', 'sound/combat/hits/onmetal/sheet (2).ogg', 'sound/combat/hits/onmetal/grille (1).ogg', 'sound/combat/hits/onmetal/grille (2).ogg', 'sound/combat/hits/onmetal/grille (3).ogg'), 100, TRUE)
 	shake_camera(user, 1, 1)
 	var/datum/effect_system/spark_spread/S = new()
@@ -157,14 +157,14 @@
 /obj/item/contraption/attack_obj(obj/O, mob/living/user)
 	if(!current_charge)
 		flick(off_icon, src)
-		to_chat(user, span_info("The contraption beeps! It requires \a [initial(accepted_power_source.name)]!"))
+		to_chat(user, span_info("这件装置发出了哔哔声！它需要一个[initial(accepted_power_source.name)]！"))
 		playsound(src, 'sound/magic/magic_nulled.ogg', 100, TRUE)
 		return
 
 //Shamelessly stolen multitool code
 /obj/item/contraption/linker
-	name = "engineering wrench"
-	desc = "This strange contraption is able to connect machinery through an unknown calibration method, allowing them to communicate over long distances."
+	name = "工程扳手"
+	desc = "这件奇特的装置能通过某种未知的校准方法连接机械，让它们在远距离间彼此联动。"
 	icon = 'icons/obj/wrenches.dmi'
 	icon_state = "brasswrench"
 	w_class = WEIGHT_CLASS_SMALL
@@ -176,8 +176,8 @@
 	grid_height = 32
 
 /obj/item/contraption/linker/master
-	name = "Guild Master's Wrench"
-	desc = "Able to do more advanced linking than a standard wrench. Keep it out of apprentice's hands"
+	name = "公会大师扳手"
+	desc = "能够完成比标准扳手更高级的链接操作。别让学徒碰它。"
 	charge_per_source = 200
 
 /obj/item/contraption/linker/hammer_action(obj/item/I, mob/user)
@@ -191,17 +191,17 @@
 /obj/item/contraption/linker/examine(mob/user)
 	. = ..()
 	if(user.get_skill_level(/datum/skill/craft/engineering) >= 3)
-		. += span_notice("Its buffer [buffer ? "contains [buffer]." : "is empty."]")
+		. += span_notice("它的缓冲区[buffer ? "中存有[buffer]。" : "是空的。"]")
 	else
-		. += span_notice("All you can make out is a bunch of gibberish.")
+		. += span_notice("你只能辨认出一堆胡言乱语。")
 
 /obj/item/contraption/linker/attack_self(mob/user)
 	. = ..()
 	if(user.get_skill_level(/datum/skill/craft/engineering) >= 3)
-		to_chat(user, "You wipe [src] of its stored buffer.")
+		to_chat(user, "你清除了[src]中存储的缓冲内容。")
 		remove_buffer(src)
 	else
-		to_chat(user, span_warning("I have no idea how to use [src]!"))
+		to_chat(user, span_warning("我完全不知道该怎么用[src]！"))
 
 /obj/item/contraption/linker/proc/set_buffer(datum/buffer)
 	if(src.buffer)
@@ -225,8 +225,8 @@
 
 
 /obj/item/contraption/wood_metalizer
-	name = "wood metalizer"
-	desc = "A creation of genious or insanity. This cursed contraption is somehow able to turn wood into metal."
+	name = "木转金属器"
+	desc = "一项天才或疯子的造物。这件受诅咒的装置不知为何能把木头变成金属。"
 	icon_state = "metalizer"
 	on_icon = "metalizer_flick"
 	off_icon = "metalizer_off"
@@ -251,7 +251,7 @@
 	if(!current_charge)
 		return
 	if(!O.metalizer_result)
-		to_chat(user, span_info("The [name] refuses to function."))
+		to_chat(user, span_info("[name]拒绝运作。"))
 		playsound(user, 'sound/items/flint.ogg', 100, FALSE)
 		flick(off_icon, src)
 		var/datum/effect_system/spark_spread/S = new()
@@ -293,8 +293,8 @@
 	qdel(src)
 
 /obj/item/contraption/smelter
-	name = "portable smelter"
-	desc = "Furnaces are a thing of the past. The future is here!"
+	name = "便携熔炉"
+	desc = "传统熔炉已经过时了。未来就在这里！"
 	icon_state = "smelter"
 	on_icon = "smelter_flick"
 	off_icon = "smelter_off"
@@ -337,7 +337,7 @@
 	if(!current_charge)
 		return
 	if(!O.smeltresult)
-		to_chat(user, span_info("The [name] refuses to function."))
+		to_chat(user, span_info("[name]拒绝运作。"))
 		playsound(user, 'sound/items/flint.ogg', 100, FALSE)
 		flick(off_icon, src)
 		var/datum/effect_system/spark_spread/S = new()
@@ -364,8 +364,8 @@
 	return
 
 /obj/item/contraption/folding_table_stored
-	name = "folding table"
-	desc = "A folding table, useful for setting up a temporary workspace."
+	name = "折叠桌"
+	desc = "一张折叠桌，适合搭建临时工作台。"
 	icon = 'icons/roguetown/misc/gadgets.dmi'
 	icon_state = "foldingTableStored"
 	w_class = WEIGHT_CLASS_SMALL
@@ -378,7 +378,7 @@
 	//deploy the table if the user clicks on it with an open turf in front of them
 	var/turf/target_turf = get_step(user,user.dir)
 	if(target_turf.is_blocked_turf(TRUE) || (locate(/mob/living) in target_turf))
-		to_chat(user, span_danger("I can't deploy the folding table here!"))
+		to_chat(user, span_danger("我不能在这里展开折叠桌！"))
 		return NONE
 	if(isopenturf(target_turf))
 		deploy_folding_table(user, target_turf)
@@ -386,13 +386,13 @@
 	return NONE
 
 /obj/item/contraption/folding_table_stored/proc/deploy_folding_table(mob/user, atom/location)
-	to_chat(user, "<span class='notice'>You deploy the folding table.</span>")
+	to_chat(user, "<span class='notice'>你展开了折叠桌。</span>")
 	new /obj/structure/table/wood/folding(location)
 	qdel(src)
 
 /obj/item/contraption/shears
-	name = "amputation shears"
-	desc = "A powered shear used for achieving a clean separation between limb and patient. Keeping the patient still is imperative to aligning the blades."
+	name = "截肢剪"
+	desc = "一把依靠动力运作的剪具，用于将肢体与患者干净利落地分离。要让刀刃对准，务必让患者保持不动。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "shears"
 	on_icon = "shears"
@@ -413,25 +413,25 @@
 
 	var/targeted_zone = check_zone(user.zone_selected)
 	if(targeted_zone == BODY_ZONE_CHEST || targeted_zone == BODY_ZONE_HEAD)
-		to_chat(user, span_warning("I can't amputate that!"))
+		to_chat(user, span_warning("我没法切掉那个！"))
 		return
 
 	var/mob/living/carbon/patient = amputee
 
 	if(HAS_TRAIT(patient, TRAIT_NODISMEMBER))
-		to_chat(user, span_warning("[patient]'s limbs look too sturdy to amputate."))
+		to_chat(user, span_warning("[patient]的肢体看起来太结实了，没法截断。"))
 		return
 
 	var/obj/item/bodypart/limb_snip_candidate
 
 	limb_snip_candidate = patient.get_bodypart(targeted_zone)
 	if(!limb_snip_candidate)
-		to_chat(user, span_warning("[patient] is already missing that limb, what more do you want?"))
+		to_chat(user, span_warning("[patient]本来就少了那条肢体，你还想怎样？"))
 		return
 
 	var/amputation_speed_mod = 1
 
-	patient.visible_message(span_danger("[user] begins to secure [src] around [patient]'s [limb_snip_candidate.name]."), span_userdanger("[user] begins to secure [src] around your [limb_snip_candidate.name]!"))
+	patient.visible_message(span_danger("[user]开始把[src]固定到[patient]的[limb_snip_candidate.name]上。"), span_userdanger("[user]开始把[src]固定到你的[limb_snip_candidate.name]上！"))
 	playsound(get_turf(patient), 'sound/misc/ratchet.ogg', 20, TRUE)
 	if(patient.stat >= UNCONSCIOUS || patient.buckled || locate(/obj/structure/table/optable) in get_turf(patient))
 		amputation_speed_mod *= 0.5
@@ -442,12 +442,12 @@
 	if(do_after(user, 15 SECONDS * amputation_speed_mod * skill_modifier, target = patient))
 		playsound(get_turf(patient), 'sound/misc/guillotine.ogg', 20, TRUE)
 		limb_snip_candidate.drop_limb(TRUE)
-		user.visible_message(span_danger("[src] violently slams shut, amputating [patient]'s [limb_snip_candidate.name]."), span_notice("You amputate [patient]'s [limb_snip_candidate.name] with [src]."))
+		user.visible_message(span_danger("[src]猛然闭合，切断了[patient]的[limb_snip_candidate.name]。"), span_notice("你用[src]切掉了[patient]的[limb_snip_candidate.name]。"))
 		charge_deduction(amputee, user, 1)
 
 /obj/item/contraption/lock_imprinter
-	name = "lock imprinter"
-	desc = "A useful contraption that facilitates a locksmith's job on already installed locks."
+	name = "锁印器"
+	desc = "一件实用装置，能帮助锁匠处理已经安装好的锁。"
 	icon_state = "imprinter"
 	on_icon = "imprinter_flick"
 	off_icon = "imprinter_off"
@@ -469,14 +469,14 @@
 	var/mob/living/player = user
 	var/skill = player.get_skill_level(/datum/skill/craft/engineering)
 	if(skill >= 2)
-		. += span_warning("The [name] is currently in [mode] mode.")
+		. += span_warning("[name]当前处于[mode]模式。")
 		if(skill >= 4)
 			if(stored_lock_id)
-				. += span_warning("The current stored Lock ID is [stored_lock_id].")
+				. += span_warning("当前存储的锁 ID 是 [stored_lock_id]。")
 			else
-				. += span_warning("There is no stored Lock ID.")
+				. += span_warning("当前没有存储锁 ID。")
 		else
-			. += span_warning("I cannot yet fully understand this contraption.")
+			. += span_warning("我还不能完全理解这件装置。")
 
 /obj/item/contraption/lock_imprinter/attackby(obj/item/I, mob/user, params)
 	..()
@@ -491,7 +491,7 @@
 		S.start()
 		stored_lock_id = the_key.lockid
 		stored_lock_hash = the_key.lockhash
-		user.visible_message(span_notice("[user] inserts \a [the_key] into the [name] and it starts ticking..."))
+		user.visible_message(span_notice("[user]把[the_key]插进了[name]里，它开始滴答作响……"))
 		addtimer(CALLBACK(src, PROC_REF(play_clock_sound)), 5)
 
 /obj/item/contraption/lock_imprinter/attack_obj(obj/O, mob/living/user)
@@ -505,9 +505,9 @@
 			valid_lock = TRUE
 			if(mode == "Examiner")
 				if(O.lockid)
-					to_chat(user, span_warning("The [name] identifies this lock's ID as [O.lockid]."))
+					to_chat(user, span_warning("[name]识别出这把锁的 ID 为 [O.lockid]。"))
 				else
-					to_chat(user, span_warning("The [name] identifies an absense of a lock or lock ID."))
+					to_chat(user, span_warning("[name]没有识别到锁，或没有识别到锁 ID。"))
 				playsound(loc, 'sound/misc/beep.ogg', 50, TRUE)
 				flick(off_icon, src)
 				break
@@ -516,7 +516,7 @@
 				O.lockhash = stored_lock_hash
 				flick(on_icon, src)
 				shake_camera(user, 1, 1)
-				user.visible_message(span_notice("[user] holds the [name] up to the [O.name] causing sparks to fly!"))
+				user.visible_message(span_notice("[user]把[name]贴近[O.name]，顿时火花四溅！"))
 				playsound(src, pick('sound/combat/hits/onmetal/sheet (1).ogg', 'sound/combat/hits/onmetal/sheet (2).ogg', 'sound/combat/hits/onmetal/grille (1).ogg', 'sound/combat/hits/onmetal/grille (2).ogg', 'sound/combat/hits/onmetal/grille (3).ogg'), 100, TRUE)
 				charge_deduction(O, user, 1)
 				var/datum/effect_system/spark_spread/S = new()
@@ -542,7 +542,7 @@
 					playsound(user, 'sound/foley/doors/lock.ogg', 150, TRUE)
 					message_admins("[user] has used [name] to lock [O] in [ADMIN_VERBOSEJMP(front)]")
 					log_game("[user] has used [name] to lock [O] in [ADMIN_VERBOSEJMP(front)]")
-				user.visible_message(span_notice("[user] holds the [name] up to the [O.name] causing sparks to fly!"))
+				user.visible_message(span_notice("[user]把[name]贴近[O.name]，顿时火花四溅！"))
 				var/datum/effect_system/spark_spread/S = new()
 				S.set_up(1, 1, front)
 				S.start()
@@ -556,7 +556,7 @@
 					misfire(O, user)
 				break
 		if(!valid_lock)
-			to_chat(user, span_info("The [name] refuses to function."))
+			to_chat(user, span_info("[name]拒绝运作。"))
 			playsound(user, 'sound/items/flint.ogg', 100, FALSE)
 			flick(off_icon, src)
 			var/datum/effect_system/spark_spread/S = new()
@@ -567,7 +567,7 @@
 /obj/item/contraption/lock_imprinter/hammer_action(obj/item/I, mob/user)
 	user.changeNext_move(CLICK_CD_FAST)
 	flick(off_icon, src)
-	user.visible_message(span_info("[user] beats the [name] into submission!"))
+	user.visible_message(span_info("[user]把[name]敲得服服帖帖！"))
 	playsound(src, pick('sound/combat/hits/onmetal/sheet (1).ogg', 'sound/combat/hits/onmetal/sheet (2).ogg', 'sound/combat/hits/onmetal/grille (1).ogg', 'sound/combat/hits/onmetal/grille (2).ogg', 'sound/combat/hits/onmetal/grille (3).ogg'), 100, TRUE)
 	shake_camera(user, 1, 1)
 	var/datum/effect_system/spark_spread/S = new()

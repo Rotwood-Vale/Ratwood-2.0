@@ -22,8 +22,8 @@
 /datum/keybinding/human/quick_equipbelt
 	hotkey_keys = list("ShiftB")
 	name = "quick_equipbelt"
-	full_name = "Quick equip belt"
-	description = "Put held thing in belt or take out most recent thing from belt"
+	full_name = "快捷腰带收纳"
+	description = "将手持物放入腰带，或从腰带中取出最近放入的物品"
 
 /datum/keybinding/human/quick_equipbelt/down(client/user)
 	. = ..()
@@ -36,8 +36,8 @@
 /datum/keybinding/human/bag_equip_backl
 	hotkey_keys = list("ShiftQ")
 	name = "bag_equip_backl"
-	full_name = "Bag Equip Left"
-	description = "Put held item in the left backpack slot or take out the most recent item from the left backpack slot"
+	full_name = "左侧背包快捷收纳"
+	description = "将手持物放入左侧背包槽位，或从左侧背包槽位取出最近放入的物品"
 
 /datum/keybinding/human/bag_equip_backl/down(client/user)
 	. = ..()
@@ -50,8 +50,8 @@
 /datum/keybinding/human/bag_equip_backr
 	hotkey_keys = list("ShiftE")
 	name = "bag_equip_backr"
-	full_name = "Bag Equip Right"
-	description = "Put held item in the right backpack slot or take out the most recent item from the right backpack slot"
+	full_name = "右侧背包快捷收纳"
+	description = "将手持物放入右侧背包槽位，或从右侧背包槽位取出最近放入的物品"
 
 /datum/keybinding/human/bag_equip_backr/down(client/user)
 	. = ..()
@@ -64,8 +64,8 @@
 /datum/keybinding/human/bag_equip_beltl
 	hotkey_keys = list("AltQ")
 	name = "bag_equip_beltl"
-	full_name = "Belt Equip Left"
-	description = "Put held item in the left belt slot or take out the most recent item from the left belt slot"
+	full_name = "左侧腰带槽快捷收纳"
+	description = "将手持物放入左侧腰带槽位，或从左侧腰带槽位取出最近放入的物品"
 
 /datum/keybinding/human/bag_equip_beltl/down(client/user)
 	. = ..()
@@ -78,8 +78,8 @@
 /datum/keybinding/human/bag_equip_beltr
 	hotkey_keys = list("AltE")
 	name = "bag_equip_beltr"
-	full_name = "Belt Equip Right"
-	description = "Put held item in the right belt slot or take out the most recent item from the right belt slot"
+	full_name = "右侧腰带槽快捷收纳"
+	description = "将手持物放入右侧腰带槽位，或从右侧腰带槽位取出最近放入的物品"
 
 /datum/keybinding/human/bag_equip_beltr/down(client/user)
 	. = ..()
@@ -92,8 +92,8 @@
 /datum/keybinding/human/fixeye
 	hotkey_keys = list("F")
 	name = "fix_eye"
-	full_name = "Fixed Eye"
-	description = "Focus in a direction."
+	full_name = "固定视角"
+	description = "将视线固定在一个方向。"
 
 /datum/keybinding/human/fixeye/down(client/user)
 	. = ..()
@@ -106,8 +106,8 @@
 /datum/keybinding/human/set_temp_ft
 	hotkey_keys = list("Unbound")
 	name = "set_pose"
-	full_name = "Set Temporary Flavortext"
-	description = "Changes the temporary flavortext."
+	full_name = "设置临时风味文本"
+	description = "修改临时风味文本。"
 
 /datum/keybinding/human/set_temp_ft/down(client/user)
 	. = ..()

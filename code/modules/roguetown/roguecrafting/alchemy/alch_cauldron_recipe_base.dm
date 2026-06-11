@@ -1,8 +1,8 @@
 /datum/alch_cauldron_recipe
 	abstract_type = /datum/alch_cauldron_recipe // This is an abstract type, it should not be instantiated directly.
 	var/name = "" //The name of the recipe, kinda there just in case.
-	var/category = "Potions"
-	var/smells_like = "nothing" //cauldron emits this smell when done, and alchemists can sniff ingredients to find what they do
+	var/category = "药剂"
+	var/smells_like = "无味" //cauldron emits this smell when done, and alchemists can sniff ingredients to find what they do
 	var/skill_required = SKILL_LEVEL_APPRENTICE // Minimum skill to create this recipe successfully (It just won't mix otherwise) - Minimum Apprentice 
 	var/list/output_reagents = list() //list of paths of new reagents to create in the cauldron. Remember, 1 oz is 3 units! [reagent = amnt]
 	var/list/output_items = list() //List of paths for new items that should be created, [path = chance to be created]
@@ -23,23 +23,23 @@
 		    <h1>[name]</h1>
 		"}
 
-	html += "Requires [SSskills.level_names_plain[skill_required]] level of skills<br>"
+	html += "需要[SSskills.level_names_plain[skill_required]]级技能<br>"
 	
-	html += "Boil 30+ ounces of water in a Cauldron.<br>"
+	html += "在炼药锅中煮沸 30 盎司以上的水。<br>"
 
-	html += "Add at least two ingredients with the smell of [smells_like]<br>"
+	html += "加入至少两种带有[smells_like]气味的材料<br>"
 
 	if(output_reagents.len)
-		html += "<div><strong>Creates:</strong><br>"
+		html += "<div><strong>产出：</strong><br>"
 		for(var/path as anything in output_reagents)
 			var/count = output_reagents[path]
 			if(ispath(path, /datum/reagent))
 				var/datum/reagent/R = path
-				html += "[FLOOR(count, 1)] [UNIT_FORM_STRING(FLOOR(count, 1))] of [initial(R.name)]<br>"
+				html += "[FLOOR(count, 1)] [UNIT_FORM_STRING(FLOOR(count, 1))] 的 [initial(R.name)]<br>"
 		html += "</div>"
 
 	if(output_items.len)
-		html += "<div><strong>Guaranteed Outputs</strong><br>"
+		html += "<div><strong>固定产出</strong><br>"
 		for(var/path as anything in output_items)
 			var/count = output_items[path]
 			if(ispath(path, /obj))

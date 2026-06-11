@@ -1,9 +1,9 @@
 /obj/item/clothing/cloak
-	name = "cloak"
+	name = "斗篷"
 	icon = 'icons/roguetown/clothing/cloaks.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	slot_flags = ITEM_SLOT_CLOAK
-	desc = "Protects you from the weather and your identity from everyone else."
+	desc = "既能为你遮风挡雨，也能向旁人隐藏身份。"
 	edelay_type = 1
 	equip_delay_self = 10
 	bloody_icon_state = "bodyblood"
@@ -24,8 +24,8 @@
 ////////////////////////
 
 /obj/item/clothing/cloak/tabard
-	name = "tabard"
-	desc = "A long vest meant for knights."
+	name = "罩袍"
+	desc = "一种为骑士准备的长款外罩。"
 	icon_state = "tabard"
 	item_state = "tabard"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/detailed/tabards.dmi'
@@ -54,8 +54,8 @@
 			STR.remove_from_storage(I, get_turf(src))
 
 /obj/item/clothing/cloak/abyssortabard
-	name = "abyssorite tabard"
-	desc = "A tabard worn by Abyssorite devouts."
+	name = "Abyssor信徒罩袍"
+	desc = "Abyssor虔诚信徒所穿的罩袍。"
 	icon_state = "abyssortabard"
 	item_state = "abyssortabard"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
@@ -72,7 +72,7 @@
 
 /obj/item/clothing/cloak/abyssortabard/MiddleClick(mob/user)
 	overarmor = !overarmor
-	to_chat(user, span_info("I [overarmor ? "wear the tabard over my armor" : "wear the tabard under my armor"]."))
+	to_chat(user, span_info("我[overarmor ? "把罩袍穿在护甲外" : "把罩袍穿在护甲内"]。"))
 	if(overarmor)
 		alternate_worn_layer = TABARD_LAYER
 	else
@@ -81,8 +81,8 @@
 	user.update_inv_armor()
 
 /obj/item/clothing/cloak/reformtabard
-	name = "reformist tabard"
-	desc = "A white psycross on black background. A tabard worn by the mourning, daring to live on despite their endless grief. May our memory of HIM mend our bleeding hearts."
+	name = "改革派罩袍"
+	desc = "黑底白色Psy十字。它属于那些仍在哀悼、却敢于在无尽悲伤中继续活下去的人。愿我们对祂的追忆抚平仍在流血的心。"
 	icon_state = "reformtabard"
 	item_state = "reformtabard"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
@@ -98,8 +98,8 @@
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/cloak/psydontabard
-	name = "psydonian tabard"
-	desc = "A tabard worn by Psydon's disciples. Delicate stitchwork professes the psycross with pride."
+	name = "Psydon罩袍"
+	desc = "Psydon门徒所穿的罩袍。精致的刺绣自豪地彰显着Psy十字。"
 	icon_state = "psydontabard"
 	item_state = "psydontabard"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
@@ -116,8 +116,8 @@
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/cloak/psydontabard/alt
-	name = "opened psydonian tabard"
-	desc = "A tabard worn by Psydon's disciples, peeled back to reveal its enduring innards."
+	name = "敞开的Psydon罩袍"
+	desc = "Psydon门徒所穿的罩袍，衣襟被翻开，露出其坚忍不屈的内里。"
 	body_parts_covered = GROIN
 	icon_state = "psydontabardalt"
 	item_state = "psydontabardalt"
@@ -126,7 +126,7 @@
 
 /obj/item/clothing/cloak/psydontabard/MiddleClick(mob/user)
 	overarmor = !overarmor
-	to_chat(user, span_info("I [overarmor ? "wear the tabard over my armor" : "wear the tabard under my armor"]."))
+	to_chat(user, span_info("我[overarmor ? "把罩袍穿在护甲外" : "把罩袍穿在护甲内"]。"))
 	if(overarmor)
 		alternate_worn_layer = TABARD_LAYER
 	else
@@ -138,23 +138,23 @@
 /obj/item/clothing/cloak/psydontabard/attack_right(mob/user)
 	switch(open_wear)
 		if(FALSE)
-			name = "opened psydonian tabard"
-			desc = "A tabard worn by Psydon's disciples, peeled back to reveal its enduring innards."
+			name = "敞开的Psydon罩袍"
+			desc = "Psydon门徒所穿的罩袍，衣襟被翻开，露出其坚忍不屈的内里。"
 			body_parts_covered = GROIN
 			icon_state = "psydontabardalt"
 			item_state = "psydontabardalt"
 			open_wear = TRUE
 			flags_inv = HIDECROTCH // BARE YOUR CHEST, NOT YOUR WEEN!
-			to_chat(usr, span_warning("ENDURING, like the MARTYRS who'll guide the faithful-and-pious to PARADISE."))
+			to_chat(usr, span_warning("现在以激进方式穿着！"))
 		if(TRUE)
-			name = "psydonian tabard"
-			desc = "A tabard worn by Psydon's disciples. Delicate stitchwork professes the psycross with pride."
+			name = "Psydon罩袍"
+			desc = "Psydon门徒所穿的罩袍。精致的刺绣自豪地彰显着Psy十字。"
 			body_parts_covered = CHEST|GROIN
 			icon_state = "psydontabard"
 			item_state = "psydontabard"
 			flags_inv = HIDECROTCH|HIDEBOOB
 			open_wear = FALSE
-			to_chat(usr, span_warning("VEILED, like the CORPSES who've been shepherded by your steel to the AFTERLYFE."))
+			to_chat(usr, span_warning("现在以正常方式穿着！"))
 	update_icon()
 	if(user)
 		if(ishuman(user))
@@ -173,7 +173,7 @@
 
 /obj/item/clothing/cloak/tabard/MiddleClick(mob/user)
 	overarmor = !overarmor
-	to_chat(user, span_info("I [overarmor ? "wear the tabard over my armor" : "wear the tabard under my armor"]."))
+	to_chat(user, span_info("我[overarmor ? "把罩袍穿在护甲外" : "把罩袍穿在护甲内"]。"))
 	if(overarmor)
 		alternate_worn_layer = TABARD_LAYER
 	else
@@ -187,39 +187,39 @@
 	if(picked)
 		return
 	var/the_time = world.time
-	var/design = input(user, "Select a design.","Tabard Design") as null|anything in list("None", "Symbol", "Split", "Quadrants", "Boxes", "Diamonds")
+	var/design = input(user, "选择一种样式。","罩袍样式") as null|anything in list("无", "徽记", "分割", "四分", "方格", "菱纹")
 	if(!design)
 		return
 	if(world.time > (the_time + 30 SECONDS))
 		return
 	var/symbol_chosen = FALSE
-	if(design == "Symbol")
+	if(design == "徽记")
 		design = null
-		design = input(user, "Select a symbol.","Tabard Design") as null|anything in list("chalice","psy","peace","z","imp","skull","widow","arrow")
+		design = input(user, "选择一个徽记。","罩袍样式") as null|anything in list("chalice","psy","peace","z","imp","skull","widow","arrow")
 		if(!design)
 			return
 		design = "_[design]"
 		symbol_chosen = TRUE
-	var/colorone = input(user, "Select a primary color.","Tabard Design") as null|anything in CLOTHING_COLOR_NAMES
+	var/colorone = input(user, "选择主色。","罩袍样式") as null|anything in CLOTHING_COLOR_NAMES
 	if(!colorone)
 		return
 	var/colortwo
-	if(design != "None")
-		colortwo = input(user, "Select a primary color.","Tabard Design") as null|anything in CLOTHING_COLOR_NAMES
+	if(design != "无")
+		colortwo = input(user, "选择副色。","罩袍样式") as null|anything in CLOTHING_COLOR_NAMES
 		if(!colortwo)
 			return
 	if(world.time > (the_time + 30 SECONDS))
 		return
-	if(design != "None")
+	if(design != "无")
 		detail_tag = design
 	switch(design)
-		if("Split")
+		if("分割")
 			detail_tag = "_spl"
-		if("Quadrants")
+		if("四分")
 			detail_tag = "_quad"
-		if("Boxes")
+		if("方格")
 			detail_tag = "_box"
-		if("Diamonds")
+		if("菱纹")
 			detail_tag = "_dim"
 	boobed_detail = !symbol_chosen
 	color = clothing_color2hex(colorone)
@@ -229,7 +229,7 @@
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_cloak()
-	if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
+	if(alert("你对自己的纹章满意吗？", "纹章", "满意", "重选") != "满意")
 		detail_color = initial(detail_color)
 		color = initial(color)
 		boobed_detail = initial(boobed_detail)
@@ -270,27 +270,27 @@
 	if(picked)
 		return
 	var/the_time = world.time
-	var/design = input(user, "Select a design.","Tabard Design") as null|anything in list("Default", "Gold Cross", "Jeruah", "BlackGold", "BlackWhite")
+	var/design = input(user, "选择一种样式。","罩袍样式") as null|anything in list("默认", "金十字", "杰鲁亚", "黑金", "黑白")
 	if(!design)
 		return
 	if(world.time > (the_time + 30 SECONDS))
 		return
-	if(design == "Gold Cross")
+	if(design == "金十字")
 		detail_color = "#b5b004"
-	if(design == "Jeruah")
+	if(design == "杰鲁亚")
 		detail_color = "#b5b004"
 		color = "#249589"
-	if(design == "BlackGold")
+	if(design == "黑金")
 		detail_color = CLOTHING_YELLOW
 		color = CLOTHING_BLACK
-	if(design == "BlackWhite")
+	if(design == "黑白")
 		detail_color = CLOTHING_WHITE
 		color = CLOTHING_BLACK
 	update_icon()
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_cloak()
-	if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
+	if(alert("你对自己的纹章满意吗？", "纹章", "满意", "重选") != "满意")
 		detail_color = initial(detail_color)
 		color = initial(color)
 		update_icon()
@@ -351,22 +351,22 @@
 	if(picked)
 		return
 	var/the_time = world.time
-	var/design = input(user, "Select a design.","Tabard Design") as null|anything in list("Default", "RedBlack", "BlackRed")
+	var/design = input(user, "选择一种样式。","罩袍样式") as null|anything in list("默认", "红黑", "黑红")
 	if(!design)
 		return
 	if(world.time > (the_time + 30 SECONDS))
 		return
-	if(design == "RedBlack")
+	if(design == "红黑")
 		detail_color = CLOTHING_BLACK
 		color = CLOTHING_RED
-	if(design == "BlackRed")
+	if(design == "黑红")
 		detail_color = CLOTHING_RED
 		color = CLOTHING_BLACK
 	update_icon()
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_cloak()
-	if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
+	if(alert("你对自己的纹章满意吗？", "纹章", "满意", "重选") != "满意")
 		detail_color = initial(detail_color)
 		color = initial(color)
 		update_icon()
@@ -377,7 +377,7 @@
 	picked = TRUE
 
 /obj/item/clothing/cloak/tabard/retinue
-	desc = "A tabard with the lord's heraldic colors."
+	desc = "带有领主纹章配色的罩袍。"
 	color = CLOTHING_AZURE
 	detail_tag = "_quad"
 	detail_color = CLOTHING_WHITE
@@ -386,25 +386,25 @@
 	if(picked)
 		return
 	var/the_time = world.time
-	var/chosen = input(user, "Select a design.","Tabard Design") as null|anything in list("Split", "Quadrants", "Boxes", "Diamonds")
+	var/chosen = input(user, "选择一种样式。","罩袍样式") as null|anything in list("分割", "四分", "方格", "菱纹")
 	if(world.time > (the_time + 10 SECONDS))
 		return
 	if(!chosen)
 		return
 	switch(chosen)
-		if("Split")
+		if("分割")
 			detail_tag = "_spl"
-		if("Quadrants")
+		if("四分")
 			detail_tag = "_quad"
-		if("Boxes")
+		if("方格")
 			detail_tag = "_box"
-		if("Diamonds")
+		if("菱纹")
 			detail_tag = "_dim"
 	update_icon()
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_cloak()
-	if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
+	if(alert("你对自己的纹章满意吗？", "纹章", "满意", "重选") != "满意")
 		detail_tag = initial(detail_tag)
 		update_icon()
 		if(ismob(loc))
@@ -441,15 +441,15 @@
 		add_overlay(pic)
 
 /obj/item/clothing/cloak/tabard/retinue/captain //Because of his other snowflake cloak we can't actually use the naming normally.
-	name = "captain's tabard"
+	name = "队长罩袍"
 
 //////////////////////////
 /// SOLDIER TABARD
 ////////////////////////
 
 /obj/item/clothing/cloak/stabard
-	name = "surcoat"
-	desc = "An outer garment commonly worn by soldiers."
+	name = "士兵罩袍"
+	desc = "士兵们常穿的一种外罩衣物。"
 	icon_state = "stabard"
 	alternate_worn_layer = TABARD_LAYER
 	body_parts_covered = CHEST|GROIN
@@ -468,7 +468,7 @@
 
 /obj/item/clothing/cloak/stabard/MiddleClick(mob/user)
 	overarmor = !overarmor
-	to_chat(user, span_info("I [overarmor ? "wear the tabard over my armor" : "wear the tabard under my armor"]."))
+	to_chat(user, span_info("我[overarmor ? "把罩袍穿在护甲外" : "把罩袍穿在护甲内"]。"))
 	if(overarmor)
 		alternate_worn_layer = TABARD_LAYER
 	else
@@ -480,27 +480,27 @@
 	if(picked)
 		return
 	var/the_time = world.time
-	var/design = input(user, "Select a design.","Tabard Design") as null|anything in list("None","Split", "Quadrants", "Boxes", "Diamonds")
+	var/design = input(user, "选择一种样式。","罩袍样式") as null|anything in list("无","分割", "四分", "方格", "菱纹")
 	if(!design)
 		return
-	var/colorone = input(user, "Select a primary color.","Tabard Design") as null|anything in CLOTHING_COLOR_NAMES
+	var/colorone = input(user, "选择主色。","罩袍样式") as null|anything in CLOTHING_COLOR_NAMES
 	if(!colorone)
 		return
 	var/colortwo
-	if(design != "None")
-		colortwo = input(user, "Select a primary color.","Tabard Design") as null|anything in CLOTHING_COLOR_NAMES
+	if(design != "无")
+		colortwo = input(user, "选择副色。","罩袍样式") as null|anything in CLOTHING_COLOR_NAMES
 		if(!colortwo)
 			return
 	if(world.time > (the_time + 30 SECONDS))
 		return
 	switch(design)
-		if("Split")
+		if("分割")
 			detail_tag = "_spl"
-		if("Quadrants")
+		if("四分")
 			detail_tag = "_quad"
-		if("Boxes")
+		if("方格")
 			detail_tag = "_box"
-		if("Diamonds")
+		if("菱纹")
 			detail_tag = "_dim"
 	color = clothing_color2hex(colorone)
 	if(colortwo)
@@ -509,7 +509,7 @@
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_cloak()
-	if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
+	if(alert("你对自己的纹章满意吗？", "纹章", "满意", "重选") != "满意")
 		detail_color = initial(detail_color)
 		color = initial(color)
 		boobed_detail = initial(boobed_detail)
@@ -522,8 +522,8 @@
 	picked = TRUE
 
 /obj/item/clothing/cloak/stabard/guard
-	name = "guard tabard"
-	desc = "A tabard with the lord's heraldic colors."
+	name = "守卫罩袍"
+	desc = "带有领主纹章配色的罩袍。"
 	color = CLOTHING_AZURE
 	detail_tag = "_spl"
 	detail_color = CLOTHING_WHITE
@@ -532,25 +532,25 @@
 	if(picked)
 		return
 	var/the_time = world.time
-	var/chosen = input(user, "Select a design.","Tabard Design") as null|anything in list("Split", "Quadrants", "Boxes", "Diamonds")
+	var/chosen = input(user, "选择一种样式。","罩袍样式") as null|anything in list("分割", "四分", "方格", "菱纹")
 	if(world.time > (the_time + 10 SECONDS))
 		return
 	if(!chosen)
 		return
 	switch(chosen)
-		if("Split")
+		if("分割")
 			detail_tag = "_spl"
-		if("Quadrants")
+		if("四分")
 			detail_tag = "_quad"
-		if("Boxes")
+		if("方格")
 			detail_tag = "_box"
-		if("Diamonds")
+		if("菱纹")
 			detail_tag = "_dim"
 	update_icon()
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_cloak()
-	if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
+	if(alert("你对自己的纹章满意吗？", "纹章", "满意", "重选") != "满意")
 		detail_tag = initial(detail_tag)
 		update_icon()
 		if(ismob(loc))
@@ -587,14 +587,14 @@
 	return ..()
 
 /obj/item/clothing/cloak/stabard/bog
-	name = "bogman tabard"
-	desc = "A tabard colored in a glorius green of the mighty protectors of the BOG." // THE BOG DESERVES A BETTER DESCRIPTION!
+	name = "沼民罩袍"
+	desc = "一件以沼泽伟大守护者那荣耀绿色染成的罩袍。" // THE BOG DESERVES A BETTER DESCRIPTION!
 	color = CLOTHING_GREEN
 	detail_color = CLOTHING_DARK_GREEN
 
 /obj/item/clothing/cloak/stabard/grenzelhoft
-	name = "grenzelhoft mercenary tabard"
-	desc = "A tabard bearing the colors of the Grenzelhoft emperiate mercenary guild."
+	name = "Grenzelhoft佣兵罩袍"
+	desc = "一件采用Grenzelhoft帝国佣兵公会配色的罩袍。"
 	color = CLOTHING_YELLOW
 	detail_color = CLOTHING_RED
 	detail_tag = "_box"
@@ -623,7 +623,7 @@
 ////////////////////////
 
 /obj/item/clothing/cloak/stabard/surcoat
-	name = "jupon"
+	name = "战袍"
 	icon_state = "surcoat"
 
 /obj/item/clothing/cloak/stabard/surcoat/bailiff
@@ -636,27 +636,27 @@
 	if(picked)
 		return
 	var/the_time = world.time
-	var/design = input(user, "Select a design.","Tabard Design") as null|anything in list("None","Split", "Quadrants", "Boxes", "Diamonds")
+	var/design = input(user, "选择一种样式。","罩袍样式") as null|anything in list("无","分割", "四分", "方格", "菱纹")
 	if(!design)
 		return
-	var/colorone = input(user, "Select a primary color.","Tabard Design") as null|anything in CLOTHING_COLOR_NAMES
+	var/colorone = input(user, "选择主色。","罩袍样式") as null|anything in CLOTHING_COLOR_NAMES
 	if(!colorone)
 		return
 	var/colortwo
-	if(design != "None")
-		colortwo = input(user, "Select a primary color.","Tabard Design") as null|anything in CLOTHING_COLOR_NAMES
+	if(design != "无")
+		colortwo = input(user, "选择副色。","罩袍样式") as null|anything in CLOTHING_COLOR_NAMES
 		if(!colortwo)
 			return
 	if(world.time > (the_time + 30 SECONDS))
 		return
 	switch(design)
-		if("Split")
+		if("分割")
 			detail_tag = "_spl"
-		if("Quadrants")
+		if("四分")
 			detail_tag = "_quad"
-		if("Boxes")
+		if("方格")
 			detail_tag = "_box"
-		if("Diamonds")
+		if("菱纹")
 			detail_tag = "_dim"
 	color = clothing_color2hex(colorone)
 	if(colortwo)
@@ -665,7 +665,7 @@
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_cloak()
-	if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
+	if(alert("你对自己的纹章满意吗？", "纹章", "满意", "重选") != "满意")
 		detail_color = initial(detail_color)
 		color = initial(color)
 		detail_tag = initial(detail_tag)
@@ -686,7 +686,7 @@
 		add_overlay(pic)
 
 /obj/item/clothing/cloak/stabard/surcoat/guard
-	desc = "A surcoat with the lord's heraldic colors."
+	desc = "带有领主纹章配色的战袍。"
 	color = CLOTHING_AZURE
 	detail_tag = "_quad"
 	detail_color = CLOTHING_WHITE
@@ -695,25 +695,25 @@
 	if(picked)
 		return
 	var/the_time = world.time
-	var/chosen = input(user, "Select a design.","Tabard Design") as null|anything in list("Split", "Quadrants", "Boxes", "Diamonds")
+	var/chosen = input(user, "选择一种样式。","罩袍样式") as null|anything in list("分割", "四分", "方格", "菱纹")
 	if(world.time > (the_time + 10 SECONDS))
 		return
 	if(!chosen)
 		return
 	switch(chosen)
-		if("Split")
+		if("分割")
 			detail_tag = "_spl"
-		if("Quadrants")
+		if("四分")
 			detail_tag = "_quad"
-		if("Boxes")
+		if("方格")
 			detail_tag = "_box"
-		if("Diamonds")
+		if("菱纹")
 			detail_tag = "_dim"
 	update_icon()
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_cloak()
-	if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
+	if(alert("你对自己的纹章满意吗？", "纹章", "满意", "重选") != "满意")
 		detail_tag = initial(detail_tag)
 		update_icon()
 		if(ismob(loc))
@@ -744,8 +744,8 @@
 	color = CLOTHING_BLACK
 
 /obj/item/clothing/cloak/lordcloak
-	name = "lordly cloak"
-	desc = "Ermine trimmed, handed down."
+	name = "领主斗篷"
+	desc = "饰有白鼬毛边，代代相传。"
 	icon_state = "lord_cloak"
 	item_state = "lord_cloak"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
@@ -789,8 +789,8 @@
 	return ..()
 
 /obj/item/clothing/cloak/darkcloak
-	name = "dark cloak"
-	desc = "It'll warm up your flesh, but not your cold, dead heart."
+	name = "黑斗篷"
+	desc = "它能温暖你的皮肉，却温暖不了你冰冷死寂的心。"
 	icon_state = "dark_cloak"
 	item_state = "dark_cloak"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
@@ -807,8 +807,8 @@
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/cloak/darkcloak/bear
-	name = "direbear cloak"
-	desc = "Made from the finest, warmest bear pelt. It might be worth more than your life."
+	name = "恐熊斗篷"
+	desc = "由最上等、最暖和的熊皮制成。它或许比你的命还值钱。"
 	icon_state = "bear_cloak"
 	item_state = "bear_cloak"
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
@@ -821,7 +821,7 @@
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/cloak/darkcloak/bear/light
-	name = "light direbear cloak"
+	name = "轻型恐熊斗篷"
 	icon_state = "bbear_cloak"
 	item_state = "bbear_cloak"
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
@@ -829,14 +829,14 @@
 	salvage_amount = 3
 
 /obj/item/clothing/cloak/darkcloak/bear/wardenmaster
-	name = "Warden trophy-cloak"
-	desc = "Made from the mightiest, most ferocious black direbear pelt. The mark of a distinguished huntsman."
+	name = "守林总长战利斗篷"
+	desc = "由最强壮、最凶猛的黑色恐熊毛皮制成，是杰出猎手的象征。"
 	sellprice = 80
 	color = "#99a39d"
 
 /obj/item/clothing/cloak/darkcloak/minotaur
-	name = "minotaur cloak"
-	desc = "Minotaur fur and straw roughly sewn into a long mantle."
+	name = "牛头怪斗篷"
+	desc = "牛头怪毛皮与稻草被粗糙地缝成一件长披肩。"
 	icon_state = "mino"
 	item_state = "mino"
 	salvage_result = /obj/item/natural/hide/cured
@@ -846,8 +846,8 @@
 	color = CLOTHING_RED
 
 /obj/item/clothing/cloak/apron/maid
-	name = "maid apron"
-	desc = "The frilly apron of a housemaster. It has pockets to store small things."
+	name = "女仆围裙"
+	desc = "宅邸管事穿的荷叶边围裙，上面有能放小东西的口袋。"
 	detail_color = "_detail"
 	slot_flags = ITEM_SLOT_ARMOR | ITEM_SLOT_CLOAK
 	detail_color = CLOTHING_BLACK
@@ -859,8 +859,8 @@
 	grid_height = 64
 
 /obj/item/clothing/cloak/apron
-	name = "apron"
-	desc = "An apron used by many workshop workers."
+	name = "围裙"
+	desc = "许多工坊工人都会使用的围裙。"
 	icon_state = "apron"
 	item_state = "apron"
 	color = "#c9c3bd"
@@ -876,8 +876,8 @@
 	dropshrink = null
 
 /obj/item/clothing/cloak/apron/blacksmith
-	name = "leather apron"
-	desc = "A leather apron used by those who temper metals and work forges."
+	name = "皮围裙"
+	desc = "由锻冶金属、操作熔炉之人使用的皮围裙。"
 	icon_state = "leather_apron"
 	item_state = "leather_apron"
 	body_parts_covered = CHEST|GROIN
@@ -889,8 +889,8 @@
 	color = CLOTHING_BROWN
 
 /obj/item/clothing/cloak/apron/waist
-	name = "apron"
-	desc = "An apron used by many workshop workers."
+	name = "腰围裙"
+	desc = "一条系在腰间的简便围裙，方便干活时使用。"
 	color = "#c9c3bd" //default spawns are less eye-searingly white
 	icon_state = "waistpron"
 	item_state = "waistpron"
@@ -906,8 +906,8 @@
 
 
 /obj/item/clothing/cloak/apron/cook
-	name = "cook apron"
-	desc = "An apron meant to show how clean the cook is."
+	name = "厨师围裙"
+	desc = "一条专门用来彰显厨师有多干净的围裙。"
 	icon_state = "aproncook"
 	item_state = "aproncook"
 	body_parts_covered = GROIN
@@ -928,8 +928,8 @@
 	return TRUE*/
 
 /obj/item/clothing/cloak/raincloak
-	name = "rain cloak"
-	desc = "This one will help against the rainy weather."
+	name = "雨披"
+	desc = "这件能帮你抵挡雨天。"
 	icon_state = "rain_cloak"
 	item_state = "rain_cloak"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
@@ -947,7 +947,7 @@
 	color = CLOTHING_RED
 
 /obj/item/clothing/cloak/raincloak/mortus
-	desc = "You're always shrouded by death."
+	desc = "死亡始终笼罩着你。"
 	color = CLOTHING_BLACK
 
 /obj/item/clothing/cloak/raincloak/brown
@@ -969,8 +969,8 @@
 	color = CLOTHING_DARKDRAB
 
 /obj/item/clothing/head/hooded/rainhood
-	name = "hood"
-	desc = "This one will shelter me from the weather and my identity too."
+	name = "兜帽"
+	desc = "它既能替我遮挡风雨，也能掩住我的身份。"
 	icon_state = "rain_hood"
 	item_state = "rain_hood"
 	slot_flags = ITEM_SLOT_HEAD
@@ -984,8 +984,8 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 /obj/item/clothing/cloak/raincloak/furcloak
-	name = "fur cloak"
-	desc = "This glorious cloak is made of animal fur. Very soft and warm."
+	name = "毛皮斗篷"
+	desc = "这件华美斗篷由兽皮制成，十分柔软而温暖。"
 	icon_state = "furgrey"
 	inhand_mod = FALSE
 	hoodtype = /obj/item/clothing/head/hooded/rainhood/furhood
@@ -1010,8 +1010,8 @@
 	color = "#264d26"
 
 /obj/item/clothing/cloak/raincloak/furcloak/woad
-	name = "Warden's fur cloak"
-	desc = "Usually sewn by the very wardens that wear them, this hue of blue is made to alart denizens of the forest to their presence."
+	name = "靛纹斗篷"
+	desc = "一件以靛蓝染色的毛皮斗篷，既保暖又带着浓厚的林地风格。"
 	color = "#597fb9"
 
 /obj/item/clothing/head/hooded/rainhood/furhood
@@ -1023,16 +1023,16 @@
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/cloak/lepoardcloak
-	name = "Leopard Cloak"
-	desc = "This Regal Cloak is made from the fur of a Lepoard. Worn by those of only the most wealth and prestige."
+	name = "豹皮斗篷"
+	desc = "这件华贵斗篷由豹皮制成，唯有最富有、最显赫之人才配穿戴。"
 	icon_state = "lepoardcape"
 	inhand_mod = FALSE
 	salvage_result = /obj/item/natural/fur
 	allowed_race = NON_DWARVEN_RACE_TYPES
 
 /obj/item/clothing/cloak/cape
-	name = "cape"
-	desc = "A beautiful, flowing cape. Too bad it tangles too much on the vegetation."
+	name = "披风"
+	desc = "一件美丽而飘逸的披风。可惜太容易被植被挂住。"
 	icon_state = "cape"
 	item_state = "cape"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
@@ -1084,26 +1084,26 @@
 	allowed_race = CLOTHED_RACES_TYPES
 
 /obj/item/clothing/cloak/cape/inquisitor
-	name = "arbiter cloak"
-	desc = "The cloak of an Otavii arbiter, a class of warrior-priests within the Inquisition. \
-	Just as with the owner, the cloak has likely weathered some horrid sights."
+	name = "仲裁者斗篷"
+	desc = "Otava仲裁者所披的斗篷，他们是宗教裁判所中的一种战士祭司。 \
+	正如它的主人一样，这件斗篷多半也见过一些骇人的景象。"
 	icon_state = "inquisitor_cloak"
 	icon = 'icons/roguetown/clothing/cloaks.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 
 /obj/item/clothing/cloak/cape/rogue
-	name = "cape"
+	name = "盗贼披风"
 	icon_state = "roguecape"
 	item_state = "roguecape"
 
 /obj/item/clothing/cloak/cape/hood
-	name = "hooded cape"
+	name = "连兜帽披风"
 	icon_state = "hoodcape"
 	item_state = "hoodcape"
 
 /obj/item/clothing/cloak/chasuble
-	name = "chasuble"
+	name = "祭披"
 	desc = ""
 	icon_state = "chasuble"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -1114,7 +1114,7 @@
 
 
 /obj/item/clothing/cloak/stole
-	name = "stole"
+	name = "圣带"
 	desc = ""
 	icon_state = "stole_gold"
 	item_state = "stole_gold"
@@ -1135,8 +1135,8 @@
 	icon_state = "stole_purple"
 
 /obj/item/clothing/cloak/black_cloak
-	name = "fur overcoat"
-	desc = "A very thick, baggy set of robes trimmed with fur, meant to be worn over one's clothing."
+	name = "黑色斗篷"
+	desc = "黑得深沉的斗篷，仿佛会把整个人都藏进阴影里。"
 	icon_state = "black_cloak"
 	body_parts_covered = CHEST|GROIN|VITALS|ARMS
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
@@ -1147,7 +1147,7 @@
 	salvage_result = /obj/item/natural/fur
 
 /obj/item/clothing/cloak/heartfelt
-	name = "red cloak"
+	name = "心念斗篷"
 	desc = ""
 	icon_state = "heartfelt_cloak"
 	body_parts_covered = CHEST|GROIN|VITALS|ARMS
@@ -1162,8 +1162,8 @@
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/cloak/undivided
-	name = "see cloak"
-	desc = "A symbol of the See. The last daes are upon us, lamb. Do you yet cling to hope?"
+	name = "教廷斗篷"
+	desc = "教廷的象征。终末之日已近在眼前，羔羊啊。你仍要执着于希望吗？"
 	icon_state = "seecloak"
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
@@ -1171,7 +1171,7 @@
 
 //don't make a subtype of this unless you can account for it flipping side to side when you right click
 /obj/item/clothing/cloak/half
-	name = "halfcloak"
+	name = "半斗篷"
 	desc = ""
 	icon_state = "halfcloak"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
@@ -1210,7 +1210,7 @@
 	color = CLOTHING_ORANGE
 
 /obj/item/clothing/cloak/half/rider
-	name = "rider cloak"
+	name = "骑手斗篷"
 	icon_state = "guardcloak"
 	color = CLOTHING_AZURE
 	allowed_race = NON_DWARVEN_RACE_TYPES
@@ -1220,7 +1220,7 @@
 	color = CLOTHING_RED
 
 /obj/item/clothing/cloak/half/vet
-	name = "town watch cloak"
+	name = "城镇守卫斗篷"
 	icon_state = "guardcloak"
 	color = CLOTHING_AZURE
 	allowed_race = NON_DWARVEN_RACE_TYPES
@@ -1237,8 +1237,8 @@
 	return ..()
 
 /obj/item/clothing/cloak/shadowcloak
-	name = "stalker cloak"
-	desc = "A heavy leather cloak held together by a gilded pin, depicting the Grand Duke's house. The sign of a faithful servant."
+	name = "潜猎者斗篷"
+	desc = "一件厚实的皮斗篷，以镀金别针扣住，上面刻着大公家徽。这是忠诚侍从的标志。"
 	icon_state = "shadowcloak"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
@@ -1255,8 +1255,8 @@
 	max_heat_protection_temperature = 600
 
 /obj/item/clothing/cloak/thief_cloak
-	name = "rapscallion's shawl"
-	desc = "A simple shawl clasped with an ersatz fastener. Practical and functional, though the fabric is rough and wearing bare."
+	name = "无赖披巾"
+	desc = "一条用廉价扣件固定的简单披巾。实用好使，只是布料粗糙而且已经磨旧。"
 	icon_state = "thiefcloak"
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	color = CLOTHING_ORANGE
@@ -1268,8 +1268,8 @@
 	var/overarmor = TRUE
 
 /obj/item/clothing/cloak/templar/psydon
-	name = "psydon tabard"
-	desc = "An outer garment commonly worn by soldiers. This one has the symbol of Psydon on it."
+	name = "Psydon罩袍"
+	desc = "士兵常穿的一种外罩衣物，这件上面带有Psydon的标志。"
 	icon_state = "tabard_weeping"
 	alternate_worn_layer = TABARD_LAYER
 	body_parts_covered = CHEST|GROIN
@@ -1281,8 +1281,8 @@
 	flags_inv = HIDECROTCH|HIDEBOOB
 
 /obj/item/clothing/cloak/templar/astrata
-	name = "astratan tabard"
-	desc = "An outer garment commonly worn by soldiers. This one has the symbol of Astrata on it."
+	name = "Astrata罩袍"
+	desc = "士兵常穿的一种外罩衣物，这件上面带有Astrata的标志。"
 	icon_state = "tabard_astrata_alt"
 	alternate_worn_layer = TABARD_LAYER
 	body_parts_covered = CHEST|GROIN
@@ -1294,8 +1294,8 @@
 	flags_inv = HIDECROTCH|HIDEBOOB
 
 /obj/item/clothing/cloak/templar/noc
-	name = "noc tabard"
-	desc = "An outer garment commonly worn by soldiers. This one has the symbol of Noc on it."
+	name = "Noc罩袍"
+	desc = "士兵常穿的一种外罩衣物，这件上面带有Noc的标志。"
 	icon_state = "tabard_noc"
 	alternate_worn_layer = TABARD_LAYER
 	body_parts_covered = CHEST|GROIN
@@ -1307,8 +1307,8 @@
 	flags_inv = HIDECROTCH|HIDEBOOB
 
 /obj/item/clothing/cloak/templar/dendor
-	name = "dendor tabard"
-	desc = "An outer garment commonly worn by soldiers. This one has the symbol of Dendor on it."
+	name = "Dendor罩袍"
+	desc = "士兵常穿的一种外罩衣物，这件上面带有Dendor的标志。"
 	icon_state = "tabard_dendor"
 	alternate_worn_layer = TABARD_LAYER
 	body_parts_covered = CHEST|GROIN
@@ -1320,8 +1320,8 @@
 	flags_inv = HIDECROTCH|HIDEBOOB
 
 /obj/item/clothing/cloak/templar/necra
-	name = "necra tabard"
-	desc = "An outer garment commonly worn by soldiers. This one has the symbol of Necra on it."
+	name = "Necra罩袍"
+	desc = "士兵常穿的一种外罩衣物，这件上面带有Necra的标志。"
 	icon_state = "tabard_necra"
 	alternate_worn_layer = TABARD_LAYER
 	body_parts_covered = CHEST|GROIN
@@ -1333,8 +1333,8 @@
 	flags_inv = HIDECROTCH|HIDEBOOB
 
 /obj/item/clothing/cloak/templar/abyssor
-	name = "abyssor tabard"
-	desc = "An outer garment commonly worn by soldiers. This one has the symbol of Abyssor on it."
+	name = "Abyssor罩袍"
+	desc = "士兵常穿的一种外罩衣物，这件上面带有Abyssor的标志。"
 	icon_state = "tabard_abyssor"
 	alternate_worn_layer = TABARD_LAYER
 	body_parts_covered = CHEST|GROIN
@@ -1346,8 +1346,8 @@
 	flags_inv = HIDECROTCH|HIDEBOOB
 
 /obj/item/clothing/cloak/templar/malum
-	name = "malum tabard"
-	desc = "An outer garment commonly worn by soldiers. This one has the symbol of Malum on it."
+	name = "Malum罩袍"
+	desc = "士兵常穿的一种外罩衣物，这件上面带有Malum的标志。"
 	icon_state = "tabard_malum"
 	alternate_worn_layer = TABARD_LAYER
 	body_parts_covered = CHEST|GROIN
@@ -1359,8 +1359,8 @@
 	flags_inv = HIDECROTCH|HIDEBOOB
 
 /obj/item/clothing/cloak/volfmantle
-	name = "volf mantle"
-	desc = "A warm cloak made using the hide and head of a slain volf. A status symbol if ever there was one."
+	name = "沃尔夫披肩"
+	desc = "用被猎杀沃尔夫的皮与头制成的温暖斗篷。如果这都不算身份象征，那就没什么算了。"
 	icon_state = "volfpelt"
 	item_state = "volfpelt"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
@@ -1378,8 +1378,8 @@
 	dropshrink = null
 
 /obj/item/clothing/cloak/wickercloak
-	name = "wicker cloak"
-	desc = "A makeshift cloak constructed with mud, sticks and fibers."
+	name = "柳枝斗篷"
+	desc = "用泥巴、树枝和纤维临时搭成的斗篷。"
 	icon_state = "wicker_cloak"
 	item_state = "wicker_cloak"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
@@ -1395,8 +1395,8 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/cloak/tribal
-	name = "tribal pelt"
-	desc = "A haphazardly cured pelt of a creecher, thrown on top of one's body or armor, to serve as additional protection against the cold. Itchy."
+	name = "部族毛皮"
+	desc = "一张随意硝制过的怪物皮，披在身体或护甲外侧，可额外御寒。就是有点扎人。"
 	icon_state = "tribal"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
@@ -1411,8 +1411,8 @@
 	dropshrink = null
 
 /obj/item/clothing/cloak/lordcloak/ladycloak
-	name = "ladylike shortcloak"
-	desc = "Ermine trimmed, handed down."
+	name = "淑女短斗篷"
+	desc = "短小精致的淑女斗篷，既得体又能衬出高贵气质。"
 	icon_state = "shortcloak"
 	item_state = "shortcloak"
 	detail_tag = "_detail"
@@ -1420,8 +1420,8 @@
 	cold_protection = ARM_LEFT | ARM_RIGHT
 
 /obj/item/clothing/cloak/matron
-	name = "matron cloak"
-	desc = "A cloak that only the meanest of old crones bother to wear."
+	name = "主母斗篷"
+	desc = "只有最刻薄的老妪才会费心去穿的斗篷。"
 	icon_state = "matroncloak"
 	icon = 'icons/roguetown/clothing/cloaks.dmi'
 	mob_overlay_icon ='icons/roguetown/clothing/onmob/cloaks.dmi'
@@ -1437,8 +1437,8 @@
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/cloak/battlenun
-	name = "nun vestments"
-	desc = "Chaste, righteous, merciless to the wicked."
+	name = "修女法衣"
+	desc = "贞洁、正直，对恶人绝不留情。"
 	icon_state = "battlenun"
 	item_state = "battlenun"
 	alternate_worn_layer = TABARD_LAYER
@@ -1447,7 +1447,7 @@
 
 /obj/item/clothing/cloak/templar/MiddleClick(mob/user)
 	overarmor = !overarmor
-	to_chat(user, span_info("I [overarmor ? "wear the tabard over my armor" : "wear the tabard under my armor"]."))
+	to_chat(user, span_info("我[overarmor ? "把罩袍穿在护甲外" : "把罩袍穿在护甲内"]。"))
 	if(overarmor)
 		alternate_worn_layer = TABARD_LAYER
 	else
@@ -1456,8 +1456,8 @@
 	user.update_inv_armor()
 
 /obj/item/clothing/cloak/templar/eora
-	name = "eora tabard"
-	desc = "An outer garment commonly worn by soldiers. This one has the symbol of Eora on it."
+	name = "Eora罩袍"
+	desc = "士兵常穿的一种外罩衣物，这件上面带有Eora的标志。"
 	icon_state = "tabard_eora"
 	alternate_worn_layer = TABARD_LAYER
 	body_parts_covered = CHEST|GROIN
@@ -1469,8 +1469,8 @@
 	flags_inv = HIDECROTCH|HIDEBOOB
 
 /obj/item/clothing/cloak/templar/pestra
-	name = "pestra tabard"
-	desc = "An outer garment commonly worn by soldiers. This one has the symbol of Pestra on it."
+	name = "Pestra罩袍"
+	desc = "士兵常穿的一种外罩衣物，这件上面带有Pestra的标志。"
 	icon_state = "tabard_pestra"
 	alternate_worn_layer = TABARD_LAYER
 	body_parts_covered = CHEST|GROIN
@@ -1482,8 +1482,8 @@
 	flags_inv = HIDECROTCH|HIDEBOOB
 
 /obj/item/clothing/cloak/cleric/ravox
-	name = "ravox tabard"
-	desc = "An outer garment commonly worn by soldiers. This one has the symbol of Ravox on it."
+	name = "Ravox罩袍"
+	desc = "士兵常穿的一种外罩衣物，这件上面带有Ravox的标志。"
 	icon_state = "tabard_ravox"
 	alternate_worn_layer = TABARD_LAYER
 	body_parts_covered = CHEST|GROIN
@@ -1495,8 +1495,8 @@
 	flags_inv = HIDECROTCH|HIDEBOOB
 
 /obj/item/clothing/cloak/templar/ravox
-	name = "justice tabard"
-	desc = "An underarmor vestments with a neck cover, worn by templars of Ravox."
+	name = "正义罩袍"
+	desc = "带护颈的内甲法衣，由Ravox圣殿骑士穿戴。"
 	icon_state = "justicetabard"
 	body_parts_covered = CHEST|GROIN
 	boobed = TRUE
@@ -1507,8 +1507,8 @@
 	flags_inv = HIDECROTCH|HIDEBOOB
 
 /obj/item/clothing/cloak/templar/xylix
-	name = "xylix tabard"
-	desc = "An outer garment commonly worn by soldiers. This one has the symbol of Xylix on it."
+	name = "Xylix罩袍"
+	desc = "士兵常穿的一种外罩衣物，这件上面带有Xylix的标志。"
 	icon_state = "tabard_xylix"
 	alternate_worn_layer = TABARD_LAYER
 	body_parts_covered = CHEST|GROIN
@@ -1520,7 +1520,7 @@
 	flags_inv = HIDECROTCH|HIDEBOOB
 
 /obj/item/clothing/cloak/cape/blkknight
-	name = "blood cape"
+	name = "黑骑士披风"
 	icon_state = "bkcape"
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
@@ -1532,7 +1532,7 @@
 
 
 /obj/item/clothing/head/roguetown/helmet/heavy/blkknight
-	name = "blacksteel helmet"
+	name = "黑钢头盔"
 	icon_state = "bkhelm"
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
@@ -1543,8 +1543,8 @@
 /obj/item/clothing/head/roguetown/helmet/heavy/blkknight/attackby(obj/item/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/natural/feather) && !detail_tag)
-		var/choice = input(user, "Choose a color.", "Plume") as anything in GLOB.colorlist
-		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		var/choice = input(user, "选择一种颜色。", "羽饰") as anything in GLOB.colorlist
+		user.visible_message(span_warning("[user]把[W]装到了[src]上。"))
 		user.transferItemToLoc(W, src, FALSE, FALSE)
 		detail_color = GLOB.colorlist[choice]
 		detail_tag = "_detail"
@@ -1553,8 +1553,8 @@
 			var/mob/living/carbon/H = user
 			H.update_inv_head()
 	if(istype(W, /obj/item/natural/cloth) && !altdetail_tag)
-		var/choicealt = input(user, "Choose a color.", "Orle") as anything in GLOB.colorlist
-		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		var/choicealt = input(user, "选择一种颜色。", "饰边") as anything in GLOB.colorlist
+		user.visible_message(span_warning("[user]把[W]装到了[src]上。"))
 		user.transferItemToLoc(W, src, FALSE, FALSE)
 		altdetail_color = GLOB.colorlist[choicealt]
 		altdetail_tag = "_detailalt"
@@ -1580,21 +1580,21 @@
 
 
 /obj/item/clothing/cloak/tabard/blkknight
-	name = "blood sash"
+	name = "血绶带"
 	icon_state = "bksash"
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
 	dropshrink = null
 
 /obj/item/clothing/under/roguetown/platelegs/blk
-	name = "blacksteel legs"
+	name = "黑钢腿甲"
 	icon_state = "bklegs"
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
 	sleeved = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
 
 /obj/item/clothing/gloves/roguetown/plate/blk
-	name = "blacksteel gaunties"
+	name = "黑钢臂铠"
 	icon_state = "bkgloves"
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
@@ -1602,8 +1602,8 @@
 
 /obj/item/clothing/suit/roguetown/armor/plate/blkknight
 	slot_flags = ITEM_SLOT_ARMOR
-	name = "darkened steel plate"
-	desc = "A darkened half-plate piece with added arm coverage."
+	name = "黑钢板甲"
+	desc = "一件以黑钢打造的厚重板甲，足以让穿戴者看起来如灾厄降临。"
 	body_parts_covered = CHEST|GROIN|VITALS|ARMS
 	r_sleeve_status = SLEEVE_NOMOD
 	l_sleeve_status = SLEEVE_NOMOD
@@ -1613,7 +1613,7 @@
 	sleeved = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
 
 /obj/item/clothing/shoes/roguetown/boots/armor/blkknight
-	name = "darkened steel boots"
+	name = "黑钢战靴"
 	icon_state = "bkboots"
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
@@ -1622,8 +1622,8 @@
 //Short hoods for guards
 
 /obj/item/clothing/cloak/stabard/guardhood
-	name = "guard hood"
-	desc = "A hood with the lord's heraldic colors."
+	name = "守卫兜帽"
+	desc = "带有领主纹章配色的兜帽。"
 	color = CLOTHING_AZURE
 	detail_tag = "_spl"
 	detail_color = CLOTHING_WHITE
@@ -1635,19 +1635,19 @@
 	if(picked)
 		return
 	var/the_time = world.time
-	var/chosen = input(user, "Select a design.","Tabard Design") as null|anything in list("Split")
+	var/chosen = input(user, "选择一种样式。","罩袍样式") as null|anything in list("分割")
 	if(world.time > (the_time + 10 SECONDS))
 		return
 	if(!chosen)
 		return
 	switch(chosen)
-		if("Split")
+		if("分割")
 			detail_tag = "_spl"
 	update_icon()
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_cloak()
-	if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
+	if(alert("你对自己的纹章满意吗？", "纹章", "满意", "重选") != "满意")
 		detail_tag = initial(detail_tag)
 		update_icon()
 		if(ismob(loc))
@@ -1684,17 +1684,17 @@
 	return ..()
 
 /obj/item/clothing/cloak/stabard/guardhood/elder
-	name = "elder's hood"
+	name = "长老兜帽"
 
 /obj/item/clothing/cloak/hierophant
-	name = "hierophant's sash"
+	name = "大祭司绶带"
 	icon_state = "naledisash"
 	item_state = "naledisash"
-	desc = "A limp piece of fabric traditionally used to fasten bags that are too baggy, but in modern days has become more of a fashion statement than anything."
+	desc = "一条柔软布带，传统上用于束紧过于宽松的袋子，但在如今更多只是一种时尚宣言。"
 
 /obj/item/clothing/cloak/stabard/grenzelmage
-	name = "grenzelhoftian magos mantle"
-	desc = "A fashionable Mantle often worn by Celestial Academy Magos."
+	name = "Grenzelhoft法师披肩"
+	desc = "一件时髦的披肩，常见于天穹学院的法师穿着。"
 	color = CLOTHING_WHITE
 	detail_color = CLOTHING_WHITE
 	detail_tag = "_spl"
@@ -1703,8 +1703,8 @@
 	body_parts_covered = CHEST
 
 /obj/item/clothing/cloak/wardencloak
-	name = "warden cloak"
-	desc = "A cloak worn by the Wardens of the realm's Forests"
+	name = "守林人斗篷"
+	desc = "山谷森林守林人所穿的斗篷。"
 	icon_state = "wardencloak"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
@@ -1717,8 +1717,8 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/cloak/poachercloak
-	name = "weathered warden cloak"
-	desc = "A worn-out cloak, which once kept its wearer warm and dry, now merely keeps blood off their clothes."
+	name = "风化守林人斗篷"
+	desc = "一件破旧的斗篷，曾经为穿戴者保暖避雨，如今只能勉强让血别溅到衣服上。"
 	icon_state = "poachercloak"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
@@ -1727,8 +1727,8 @@
 	inhand_mod = TRUE
 
 /obj/item/clothing/cloak/graggar
-	name = "vicious cloak"
-	desc = "The only motive force in this rotten world is violence. Be its wielder, not its victim."
+	name = "凶暴斗篷"
+	desc = "这腐败世界里唯一真正推动万物的力量就是暴力。去成为它的掌控者，而不是牺牲品。"
 	icon_state = "graggarcloak"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
@@ -1745,8 +1745,8 @@
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "CLOAK", "RENDERED ASUNDER")
 
 /obj/item/clothing/cloak/forrestercloak
-	name = "forrester cloak"
-	desc = "A cloak worn by the Black Oaks of the vale."
+	name = "林务官斗篷"
+	desc = "山谷黑橡守林者所穿的斗篷。"
 	icon_state = "forestcloak"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
@@ -1759,15 +1759,15 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/cloak/forrestercloak/snow
-	name = "snow cloak"
-	desc = "A cloak meant to keep one's body warm in the cold of the mountains as well as the dampness of the vale."
+	name = "雪斗篷"
+	desc = "一件能在山中严寒与山谷湿气里保持身体温暖的斗篷。"
 	icon_state = "snowcloak"
 	cold_protection = CHEST | GROIN | ARM_LEFT | ARM_RIGHT
 
 /// Dendor ritual reward variant of the forrester cloak — hallowed by the Treefather.
 /obj/item/clothing/cloak/forrestercloak/blessed
-	name = "blessed forrester cloak"
-	desc = "A forrester cloak hallowed by the Treefather's rite. Living wood fibres are woven through the cloth and it seems to breathe with the quiet life of the forest."
+	name = "赐福林务官斗篷"
+	desc = "一件受树父仪式祝圣的林务官斗篷。活木纤维编织在布料之中，仿佛与森林静谧的生命一同呼吸。"
 	color = "#73c47a"
 
 /obj/item/clothing/cloak/forrestercloak/blessed/Initialize(mapload)
@@ -1784,11 +1784,11 @@
 		return
 	H.electrocute_act(30, src)
 	H.mob_timers["kneestinger"] = world.time
-	to_chat(H, span_warning("[name] rejects my grasp — only the Treefather's faithful may bear such a gift!"))
+	to_chat(H, span_warning("[name]拒绝了我的触碰，唯有树父的信徒才配承此赠礼！"))
 
 /obj/item/clothing/cloak/poncho
-	name = "cloth poncho"
-	desc = "A loose garment that is usually draped across ones upper body. No one's quite sure of its cultural origin."
+	name = "布制披衫"
+	desc = "一种通常披在上半身的宽松衣物。没人真正说得清它最初来自哪种文化。"
 	icon_state = "poncho"
 	item_state = "poncho"
 	alternate_worn_layer = TABARD_LAYER
@@ -1803,8 +1803,8 @@
 //eastern update
 
 /obj/item/clothing/cloak/eastcloak1
-	name = "cloud-cutter's cloak"
-	desc = "A brown cloak with white swirls. Some Kazengites may recognize it as an old militaristic symbol."
+	name = "斩云者斗篷"
+	desc = "一件带白色云纹的棕色斗篷。有些人会认出这是一种古老的军事象征。"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
 	icon_state = "eastcloak1"
 	item_state = "eastcloak1"
@@ -1815,8 +1815,8 @@
 	allowed_race = NON_DWARVEN_RACE_TYPES
 
 /obj/item/clothing/cloak/eastcloak2
-	name = "leather cloak"
-	desc = "A brown cloak. There's nothing special on it."
+	name = "皮斗篷"
+	desc = "一件棕色斗篷，没什么特别之处。"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
 	icon_state = "eastcloak2"
 	item_state = "eastcloak2"
@@ -1827,8 +1827,8 @@
 	allowed_race = NON_DWARVEN_RACE_TYPES
 
 /obj/item/clothing/cloak/psyaltrist
-	name = "psyalter's stole"
-	desc = "A silk stole embroidered with silver fillagree and with concealed pockets in its back worn over a hymnal-scroll. It is worn as the traditional garb of a graduate of the choir leaders of the cathedrals of Otava and is a symbol of their station."
+	name = "诗班长圣带"
+	desc = "一条丝质圣带，绣有银饰花纹，背后还藏有暗袋，可披在圣歌卷轴外。它是Otava大教堂诗班领袖学成后的传统装束，也是其身份象征。"
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	icon_state = "psaltertabard"
 	item_state = "psaltertabard"
@@ -1840,8 +1840,8 @@
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
 /obj/item/clothing/cloak/ordinatorcape
-	name = "ordinator cape"
-	desc = "A flowing red cape complete with an ornately patterned steel shoulderguard. Made to last. Made to ENDURE. Made to LYVE."
+	name = "训令官披风"
+	desc = "一件飘逸的红披风，配有纹饰华美的钢制肩甲。为持久而造。为坚忍而造。为生存而造。"
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	icon_state = "ordinatorcape"
@@ -1854,8 +1854,8 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/cloak/absolutionistrobe
-	name = "absolver's robe"
-	desc = "Absolve them of their pain. Absolve them of their longing. Lyve, as PSYDON lyves."
+	name = "赦罪者长袍"
+	desc = "宽恕他们的痛苦。宽恕他们的渴望。如同PSYDON一般地生存。"
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	icon_state = "absolutionistrobe"
@@ -1868,8 +1868,8 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/cloak/cotehardie
-	name = "fitted coat"
-	desc = "Also known as a cotehardie: a long-sleeved tunic worn by peasants and nobles alike. It's used by men and women, in both summer and winter. It won't drop any items inside when unequipped."
+	name = "修身外套"
+	desc = "也被称作cotehardie：一种无论平民还是贵族都会穿的长袖外衣，男女皆宜，四季可用。脱下时，里面装着的东西不会掉出来。"
 	color = "#586849"
 	icon_state = "cotehardie"
 	item_state = "cotehardie"
@@ -1892,7 +1892,7 @@
 
 /obj/item/clothing/cloak/cotehardie/MiddleClick(mob/user)
 	overarmor = !overarmor
-	to_chat(user, span_info("I [overarmor ? "wear the coat over my armor" : "wear the coat under my armor"]."))
+	to_chat(user, span_info("我[overarmor ? "把外套穿在护甲外" : "把外套穿在护甲内"]。"))
 	if(overarmor)
 		alternate_worn_layer = TABARD_LAYER
 	else
@@ -1901,8 +1901,8 @@
 	user.update_inv_armor()
 
 /obj/item/clothing/cloak/captain
-	name = "captain's cape"
-	desc = "A cape with a gold embroided heraldry of the realm."
+	name = "队长披风"
+	desc = "一件绣有山谷金色纹章的披风。"
 	icon = 'icons/roguetown/clothing/special/captain.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/captain.dmi'
 	sleeved = 'icons/roguetown/clothing/special/onmob/captain.dmi'
@@ -1934,8 +1934,8 @@
 	return ..()
 
 /obj/item/clothing/cloak/kazengun
-	name = "jinbaori"
-	desc = "A simple kind of Kazengunite surcoat, worn here in these distant battlefields, so far from its homelands, to differentiate friend from foe."
+	name = "阵羽织"
+	desc = "一种简朴的东境战袍，在这片遥远战场上用来分辨敌我。"
 	icon_state = "kazenguncoat"
 	item_state = "kazenguncoat"
 	detail_tag = "_detail"
@@ -1953,8 +1953,8 @@
 		add_overlay(pic)
 
 /obj/item/clothing/cloak/duelistcape
-	name = "duelist cape"
-	desc = "A short cape favored by duelists."
+	name = "决斗者披风"
+	desc = "决斗者偏爱的一种短披风。"
 	icon_state = "duelistcape"
 	item_state = "duelistcape"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
@@ -1973,8 +1973,8 @@
 	dropshrink = null
 
 /obj/item/clothing/cloak/citywatch
-	name = "citywatch cape"
-	desc = "A handsome cloak, denoting a certain cosmipolitan authority"
+	name = "城巡披风"
+	desc = "一件体面的披风，彰显着某种都市权威。"
 	icon = 'icons/roguetown/clothing/licensed-infraredbaron/cloaks.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/cloaks.dmi'
 	icon_state = "citywatch_cape"
@@ -1982,8 +1982,8 @@
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 
 /obj/item/clothing/cloak/citywatchcaptain
-	name = "citywatch captain's cloak"
-	desc = "A most handsome cloak, denoting a certain superlative cosmipolitan authority"
+	name = "城巡队长斗篷"
+	desc = "一件极为体面的斗篷，彰显着更上一层的都市权威。"
 	icon_state = "shortcloak"
 	item_state = "shortcloak"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER

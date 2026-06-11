@@ -9,9 +9,9 @@
 	spawn_positions = 1
 	selection_color = JCOLOR_TRIBAL
 	allowed_races = list(/datum/species/goblinp, /datum/species/anthromorphsmall, /datum/species/kobold, /datum/species/dracon, /datum/species/halforc)
-	tutorial = "You're the Chief of the local island tribe. A representation of The Dragon's rule, as you are the biggest and strongest. You ensure the spread of his dominion over others where you can, while ensuring none disturb his slumber. \
-	There's news of an arriving duchy seeking to lay claim to The Dragon's island. \
-	Have your subjects sneak through the caves and elsewhere, robbing and kidnapping passersby. Spread His will upon the weak fools. Bring gold and slaves to your tribe in The Dragon's name!"
+	tutorial = "你是本地岛上部族的酋长，也是 The Dragon 统治意志的象征，因为你最强、也最有资格发号施令。你要尽可能扩张祂对众人的支配，同时确保无人惊扰祂的沉眠。\
+	如今有消息称，一支新来的公国势力正打算染指 The Dragon 的岛屿。\
+	命你的族人潜入洞窟与四野，劫掠路人、掳走弱者。将祂的意志施加在这些愚蠢的凡人身上，并以 The Dragon 之名为部族带回黄金与奴隶！"
 	allowed_sexes = list(MALE, FEMALE)
 	advclass_cat_rolls = list(CTAG_TRIBALCHIEFTAIN = 20)
 
@@ -71,36 +71,36 @@
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 	if(H.mind)
-		var/weapons = list("Ancient Bardiche","Ancient Greatmace","Ancient Spear & Shield", "Ancient Javelins & Shield")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("远古长柄战斧","远古巨权杖","远古长矛与盾", "远古标枪与盾")
+		var/weapon_choice = input(H, "选择你的武器。", "整备武装") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Ancient Bardiche")
+			if("远古长柄战斧")
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				r_hand = /obj/item/rogueweapon/halberd/bardiche/ancient
-			if("Ancient Greatmace") 
+			if("远古巨权杖") 
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				r_hand = /obj/item/rogueweapon/mace/goden/steel/ancient
-			if("Ancient Spear & Shield") 
+			if("远古长矛与盾") 
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				r_hand = /obj/item/rogueweapon/spear/ancient
-			if("Ancient Javelins & Shield")
+			if("远古标枪与盾")
 				beltr = /obj/item/quiver/javelin/ancient
 				backr = /obj/item/rogueweapon/shield/tower // Both are belt slots and it's not worth setting where the cugel goes for everyone else, sad.
 				
-		var/weapons2 = list("Club","Mace","Axe")
-		var/weapon_choice2 = input(H, "Choose your sidearm.", "TAKE UP ARMS") as anything in weapons2
+		var/weapons2 = list("棍棒","钉头锤","手斧")
+		var/weapon_choice2 = input(H, "选择你的副武器。", "整备武装") as anything in weapons2
 		switch(weapon_choice2)
-			if("Club")
+			if("棍棒")
 				beltl = /obj/item/rogueweapon/mace/cudgel/shellrungu
-			if("Axe")
+			if("手斧")
 				beltl = /obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient
-			if("Mace")
+			if("钉头锤")
 				beltl = /obj/item/rogueweapon/mace/steel/ancient
 
 /datum/advclass/tribalchieftain/warrior
-	name = "Valiant Warrior"
-	tutorial = "Ooga Chacka BESTA chacka!"
+	name = "英勇战士"
+	tutorial = "你是部族中最受酋长信任的勇士之一，披挂最好的战甲，手握最沉重的古兵，准备替巨龙与部族撕开前路。"
 	// outfit = /datum/outfit/job/roguetown/tribalchieftain/warrior
 	category_tags = list(CTAG_TRIBALCHIEFTAIN)
 	traits_applied = list(TRAIT_DNR, TRAIT_HEAVYARMOR, TRAIT_TRIBAL, TRAIT_DARKVISION)

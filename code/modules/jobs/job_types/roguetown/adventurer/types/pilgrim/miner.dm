@@ -1,6 +1,6 @@
 /datum/advclass/miner
-	name = "Miner"
-	tutorial = "Swing the pick. Heave. Swing. Heave. Deep underground where the days lose their meaning, the work is grueling, the tunnels cramped, and the stale air full of coal dust, yet tales abound of the lucky few who persevered, and found enough precious gems to set them for life."
+	name = "矿工"
+	tutorial = "挥镐。发力。再挥。再发力。深入地下之后，日子早已失去意义；劳作沉重难熬，隧道狭窄逼仄，滞涩的空气里满是煤尘。可传闻总在流传，说那些少数坚持到底的幸运儿，终能挖出足够的珍贵宝石，从此一生无忧。"
 
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS

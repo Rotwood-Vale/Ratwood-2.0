@@ -1,6 +1,6 @@
 //The effect when you wrap a dead body in gift wrap
 /obj/effect/spresent
-	name = "strange present"
+	name = "奇怪的礼物"
 	desc = ""
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "strangepresent"
@@ -8,25 +8,25 @@
 	anchored = FALSE
 
 /obj/effect/beam
-	name = "beam"
+	name = "光束"
 	var/def_zone
 	pass_flags = PASSTABLE
 
 
 /obj/effect/spawner
-	name = "object spawner"
+	name = "物件生成器"
 
 /obj/effect/list_container
-	name = "list container"
+	name = "列表容器"
 
 /obj/effect/list_container/mobl
-	name = "mobl"
+	name = "生物列表"
 	var/master = null
 
 	var/list/container = list(  )
 
 /obj/effect/overlay/thermite
-	name = "thermite"
+	name = "铝热剂"
 	desc = ""
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "2" //what?
@@ -48,7 +48,7 @@
 	blend_mode = BLEND_ADD
 
 /obj/effect/abstract/marker
-	name = "marker"
+	name = "标记"
 	icon = 'icons/effects/effects.dmi'
 	anchored = TRUE
 	icon_state = "wave3"
@@ -63,11 +63,11 @@
 	. = ..()
 
 /obj/effect/abstract/marker/at
-	name = "active turf marker"
+	name = "活动地块标记"
 
 
 /obj/effect/dummy/lighting_obj
-	name = "lighting fx obj"
+	name = "照明特效物件"
 	desc = ""
 	icon_state = "nothing"
 	light_color = "#FFFFFF"
@@ -88,7 +88,7 @@
 		QDEL_IN(src, _duration)
 
 /obj/effect/dummy/lighting_obj/moblight
-	name = "mob lighting fx"
+	name = "生物照明特效"
 
 /obj/effect/dummy/lighting_obj/moblight/Initialize(mapload, _color, _range, _power, _duration)
 	. = ..()

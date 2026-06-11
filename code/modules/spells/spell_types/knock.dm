@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/aoe_turf/knock
-	name = "Knock"
+	name = "开锁术"
 	desc = ""
 	base_icon_state = ""
 	action_icon_state = "knock"
@@ -7,7 +7,7 @@
 	school = "transmutation"
 	recharge_time = 100
 	clothes_req = FALSE
-	invocations = list("AULIE OXIN FIERA")
+	invocations = list("诸锁皆开。")
 	invocation_type = "whisper"
 	range = 3
 	cooldown_min = 300 //20 deciseconds reduction per rank

@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/aerosolize
-	name = "Aerosolize" //once again renamed to fit better :)
-	desc = "Turns a container of liquid into a smoke containing the reagents of that liquid."
+	name = "雾化术" //once again renamed to fit better :)
+	desc = "将一容器液体化作烟雾，其中仍含有那液体本身的试剂成分。"
 	overlay_state = "aerosolize"
 	releasedrain = 50
 	chargetime = 3
@@ -14,7 +14,7 @@
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
 	spell_tier = 2
-	invocations = list("Converti in Nebulam!")
+	invocations = list("化作烟雾！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_ARCANE
 	glow_intensity = GLOW_INTENSITY_LOW
@@ -37,18 +37,18 @@
 					smoke.set_up(R, 1, T, FALSE)
 					smoke.start()
 
-					user.visible_message(span_warning("[user] sprays the contents of the [held_item], creating a cloud!"), span_warning("You spray the contents of the [held_item], creating a cloud!"))
+					user.visible_message(span_warning("[user] 将 [held_item] 里的东西喷洒开来，化作一团烟雾！"), span_warning("我将 [held_item] 里的东西喷洒开来，化作一团烟雾！"))
 					con.reagents.clear_reagents() //empty the container
 					playsound(user, 'sound/magic/webspin.ogg', 100)
 				else
-					to_chat(user, "<span class='warning'>The [held_item] is empty!</span>")
+					to_chat(user, "<span class='warning'>[held_item] 是空的！</span>")
 					revert_cast()
 			else
-				to_chat(user, "<span class='warning'>I can't get access to the contents of this [held_item]!</span>")
+				to_chat(user, "<span class='warning'>我没法取用 [held_item] 里的内容！</span>")
 				revert_cast()
 		else
-			to_chat(user, "<span class='warning'>I need to hold a container to cast this!</span>")
+			to_chat(user, "<span class='warning'>我必须手持一个容器才能施放此术！</span>")
 			revert_cast()
 	else
-		to_chat(user, "<span class='warning'>I couldn't find a good place for this!</span>")
+		to_chat(user, "<span class='warning'>我找不到合适的位置来施放这个法术！</span>")
 		revert_cast()

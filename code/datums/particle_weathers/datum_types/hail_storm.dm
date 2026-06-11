@@ -15,11 +15,11 @@
 	spin					= 0 // explicitly set spin to 0 - there is a bug that seems to carry generators over from old particle effects
 
 /datum/particle_weather/hail
-	name = "Hail"
-	desc = "Hailstorm"
+	name = "冰雹"
+	desc = "冰雹暴"
 	particleEffectType = /particles/weather/hail
-	warning_message = span_greenannounce("The upper air chills and freezes as clouds gather above.")
-	late_warning_message = span_greenannounce("Hard pellets of ice begin to strike the ground.")
+	warning_message = span_greenannounce("高空中的空气愈发寒冷凝结，乌云正在头顶聚拢。")
+	late_warning_message = span_greenannounce("坚硬的冰粒开始噼啪砸向地面。")
 	scale_vol_with_severity = TRUE
 	weather_sounds = list(/datum/looping_sound/hail)
 	indoor_weather_sounds = list(/datum/looping_sound/indoor_hail)
@@ -46,7 +46,7 @@
 		var/armor_block = L.run_armor_check(BODY_ZONE_HEAD, "blunt", blade_dulling=BCLASS_BLUNT)
 		if(L.apply_damage(rand(5, 10), BRUTE, BODY_ZONE_HEAD, armor_block))
 			if(prob(25))
-				to_chat(L, span_danger("You're being assailed by an onslaught of hail!"))
+				to_chat(L, span_danger("我正遭受一阵冰雹的猛袭！"))
 		else
 			if(prob(25))
-				to_chat(L, span_warning("Rocks of ice plink off of your headcover."))
+				to_chat(L, span_warning("冰块噼里啪啦地敲打着我的头部遮挡。"))

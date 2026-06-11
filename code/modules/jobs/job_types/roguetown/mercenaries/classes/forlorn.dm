@@ -1,6 +1,6 @@
 /datum/advclass/mercenary/forlorn
-	name = "Forlorn Hope Mercenary"
-	tutorial = "The Order of the Forlorn Hope, a holy order founded in the name of Noc and the banishment of the rot. Now it is riddled with the wounded, the veterans and the landless of the Vakran civil war. Take up the banner and fight again in the name of the Ten, or use the pretense of faith and zealotry to make ends meet by any means necessary."
+	name = "绝望先锋佣兵"
+	tutorial = "绝望先锋团原是奉 诺克 之名、以驱逐腐败为誓建立的圣战修会。如今其中却充斥着伤残者、老兵，以及 Vakran 内战后失去土地的人。你既可以再度举起旗帜，以十神之名重返战场，也可以借着信仰与狂热的幌子，不择手段地混口饭吃。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
 		/datum/species/lupian,
@@ -40,7 +40,7 @@
 		/datum/skill/combat/shields = SKILL_LEVEL_EXPERT,	// This was arguably the OG shield + 1hand weapon merc. If this is too much, we can cut it back again.
 		// I don't want anyone to suffer FOMO because they picked another weapon choice. Therefore shield is no longer gated behind weapon choice
 	)
-	extra_context = "This subclass gains Expert skill in their weapon of choice."
+	extra_context = "该分支会在所选武器上获得专家级熟练。"
 
 /datum/outfit/job/roguetown/mercenary/forlorn/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -67,9 +67,9 @@
 
 /datum/outfit/job/roguetown/mercenary/forlorn/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	var/weapons = list("Warhammer", // The OG
-	"crossbow", )
-	var/weapon_choice = input(H, "Choose your weapon.", "ARMS OF THE ORDER") as anything in weapons
+	var/weapons = list("战锤", // The OG
+	"十字弩", )
+	var/weapon_choice = input(H, "选择你的武器。", "修会军备") as anything in weapons
 	switch(weapon_choice)
 		if("Warhammer")
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/mace/warhammer/steel, SLOT_BELT_L)

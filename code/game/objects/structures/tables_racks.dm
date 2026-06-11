@@ -13,7 +13,7 @@
  */
 
 /obj/structure/table
-	name = "table"
+	name = "桌子"
 	desc = ""
 	icon_state = "table"
 	density = TRUE
@@ -40,12 +40,12 @@
 /obj/structure/table/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/hiding_spot, \
-		"Someone is already hiding under %LOCATION!", \
-		"I hide under %LOCATION!", \
-		"I come out from under %LOCATION!")
+		"已经有人躲在%LOCATION下面了！", \
+		"我躲到了%LOCATION下面！", \
+		"我从%LOCATION下面钻了出来！")
 
 /obj/structure/table/proc/deconstruction_hints(mob/user)
-	return span_notice("The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.")
+	return span_notice("桌面是用<b>螺丝</b>固定的，而主体上的<b>螺栓</b>也清晰可见。")
 
 /obj/structure/table/update_icon()
 	if(smooth)
@@ -62,19 +62,19 @@
 		if(isliving(user.pulling))
 			var/mob/living/pushed_mob = user.pulling
 			if(pushed_mob.buckled)
-				to_chat(user, span_warning("[pushed_mob] is on [pushed_mob.buckled]!"))
+				to_chat(user, span_warning("[pushed_mob]正被绑在[pushed_mob.buckled]上！"))
 				return
 			if(user.used_intent.type == INTENT_GRAB)
 				if(user.grab_state < GRAB_AGGRESSIVE)
-					to_chat(user, span_warning("I need a better grip to do that!"))
+					to_chat(user, span_warning("我得抓得更牢才能这么做！"))
 					return
 				if(user.grab_state >= GRAB_NECK)
 					tableheadsmash(user, pushed_mob)
 				else
 					tablepush(user, pushed_mob)
 			if(user.used_intent.type == INTENT_HELP)
-				pushed_mob.visible_message(span_notice("[user] begins to place [pushed_mob] onto [src]..."), \
-									span_danger("[user] begins to place [pushed_mob] onto [src]..."))
+				pushed_mob.visible_message(span_notice("[user]开始把[pushed_mob]放到[src]上……"), \
+									span_danger("[user]开始把[pushed_mob]放到[src]上……"))
 				if(do_after(user, 35, target = pushed_mob))
 					tableplace(user, pushed_mob)
 				else
@@ -83,8 +83,8 @@
 		else if(user.pulling.pass_flags & PASSTABLE)
 			user.Move_Pulled(src)
 			if (user.pulling.loc == loc)
-				user.visible_message(span_notice("[user] places [user.pulling] onto [src]."),
-					span_notice("I place [user.pulling] onto [src]."))
+				user.visible_message(span_notice("[user]把[user.pulling]放到了[src]上。"),
+					span_notice("我把[user.pulling]放到了[src]上。"))
 				user.stop_pulling()
 	return ..()
 
@@ -114,13 +114,13 @@
 /obj/structure/table/proc/tableplace(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
 	pushed_mob.set_resting(TRUE, TRUE)
-	pushed_mob.visible_message(span_notice("[user] places [pushed_mob] onto [src]."), \
-								span_notice("[user] places [pushed_mob] onto [src]."))
-	log_combat(user, pushed_mob, "places", null, "onto [src]")
+	pushed_mob.visible_message(span_notice("[user]把[pushed_mob]放到了[src]上。"), \
+								span_notice("[user]把[pushed_mob]放到了[src]上。"))
+	log_combat(user, pushed_mob, "放到", null, "[src]上")
 
 /obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_danger("Throwing [pushed_mob] onto the table might hurt them!"))
+		to_chat(user, span_danger("把[pushed_mob]摔到桌上可能会伤到他们！"))
 		return
 	var/added_passtable = FALSE
 	if(!(pushed_mob.pass_flags & PASSTABLE))
@@ -137,9 +137,9 @@
 	if(user.mind?.martial_art.smashes_tables && user.mind?.martial_art.can_use(user))
 		deconstruct(FALSE)
 	playsound(pushed_mob, "sound/effects/tableslam.ogg", 90, TRUE)
-	pushed_mob.visible_message(span_danger("[user] slams [pushed_mob] onto \the [src]!"), \
-								span_danger("[user] slams you onto \the [src]!"))
-	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
+	pushed_mob.visible_message(span_danger("[user]将[pushed_mob]狠狠摔在了[src]上！"), \
+								span_danger("[user]把你狠狠摔在了[src]上！"))
+	log_combat(user, pushed_mob, "摔到桌上", null, "[src]上")
 
 /obj/structure/table/proc/tableheadsmash(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.Knockdown(30)
@@ -149,20 +149,20 @@
 	if(user.mind?.martial_art.smashes_tables && user.mind?.martial_art.can_use(user))
 		deconstruct(FALSE)
 	playsound(pushed_mob, "sound/effects/tableheadsmash.ogg", 90, TRUE)
-	pushed_mob.visible_message(span_danger("[user] smashes [pushed_mob]'s head against \the [src]!"),
-								span_danger("[user] smashes your head against \the [src]"))
-	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
+	pushed_mob.visible_message(span_danger("[user]把[pushed_mob]的头猛砸在[src]上！"),
+								span_danger("[user]把你的头猛砸在了[src]上！"))
+	log_combat(user, pushed_mob, "猛砸头部", null, "在[src]上")
 
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(I.tool_behaviour == TOOL_SCREWDRIVER && deconstruction_ready)
-			to_chat(user, span_notice("I start disassembling [src]..."))
+			to_chat(user, span_notice("我开始拆卸[src]……"))
 			if(I.use_tool(src, user, 20, volume=50))
 				deconstruct(TRUE)
 			return
 
 		if(I.tool_behaviour == TOOL_WRENCH && deconstruction_ready)
-			to_chat(user, span_notice("I start deconstructing [src]..."))
+			to_chat(user, span_notice("我开始分解[src]……"))
 			if(I.use_tool(src, user, 40, volume=50))
 				playsound(src.loc, 'sound/blank.ogg', 50, TRUE)
 				deconstruct(TRUE, 1)
@@ -175,7 +175,7 @@
 			for(var/obj/item/dumped_item in T.contents)
 				dumped += "[dumped_item]"
 			SEND_SIGNAL(I, COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
-			user.visible_message(span_notice("[user] empties [I] on [src]."))
+			user.visible_message(span_notice("[user]把[I]里的东西倒在了[src]上。"))
 			user.log_message("emptied [I] onto [src] (CONTENTS: [english_list(dumped)])", LOG_GAME)
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
@@ -204,8 +204,8 @@
 					C.Flip()
 			else if(istype(I, /obj/item/toy/cards/cardhand))
 				var/obj/item/toy/cards/cardhand/H = I
-				user.visible_message("<span class='notice'>[user] lays [user.p_their()] hand of cards face-up on the table.</span>",
-					"<span class='notice'>I lay my cards face-up on the table.</span>")
+				user.visible_message("<span class='notice'>[user]将手中的牌面朝上摊在了桌上。</span>",
+					"<span class='notice'>我把牌面朝上摊在了桌上。</span>")
 
 				var/turf/T = get_turf(src)
 				if(!T)
@@ -254,7 +254,7 @@
  */
 
 /obj/structure/table/wood
-	name = "wooden table"
+	name = "木桌"
 	desc = ""
 	icon = 'icons/roguetown/misc/tables.dmi'
 	icon_state = "tablewood"
@@ -346,7 +346,7 @@
 	icon_state = "map6"
 
 /obj/structure/table/church
-	name = "stone table"
+	name = "石桌"
 	desc = ""
 	icon = 'icons/roguetown/misc/tables.dmi'
 	icon_state = "churchtable"
@@ -386,7 +386,7 @@
 	icon_state = "churchtable_mid_alt"
 
 /obj/structure/table/finestone
-	name = "fine stone table"
+	name = "精制石桌"
 	desc = ""
 	icon = 'icons/roguetown/misc/tables.dmi'
 	icon_state = "stonetable_small"
@@ -396,7 +396,7 @@
 	debris = list(/obj/item/natural/stoneblock = 1)
 
 /obj/structure/table/vtable
-	name = "ancient wooden table"
+	name = "古木桌"
 	desc = ""
 	icon = 'icons/roguetown/misc/tables.dmi'
 	icon_state = "vtable"
@@ -411,7 +411,7 @@
 	debris = list(/obj/item/grown/log/tree/small = 1)
 
 /obj/structure/table/fine
-	name = "wooden table"
+	name = "木桌"
 	desc = ""
 	icon = 'icons/roguetown/misc/tables.dmi'
 	icon_state = "tablefine"
@@ -422,14 +422,14 @@
 	climb_offset = 10
 
 /obj/structure/table/finer
-	name = "wooden table"
+	name = "木桌"
 	desc = ""
 	icon = 'icons/roguetown/misc/tables.dmi'
 	icon_state = "tablefine2"
 
 /obj/structure/table/cooling //cooling table made by artificers
-	name = "Cooling Table"
-	desc = "Used to keep your food cool and rot free"
+	name = "冷却桌"
+	desc = "用来让食物保持低温、不易腐坏。"
 	icon = 'icons/roguetown/misc/tables.dmi'
 	icon_state = "tablewood_alt"
 	resistance_flags = FLAMMABLE
@@ -444,7 +444,7 @@
 	..(FALSE)
 
 /obj/structure/table/wood/fancy
-	name = "fancy table"
+	name = "华美桌"
 	desc = ""
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "fancy_table"
@@ -506,8 +506,8 @@
 	smooth_icon = 'icons/obj/smooth_structures/fancy_table_royalblue.dmi'
 
 /obj/structure/table/wood/folding
-	name = "folding table"
-	desc = "A folding table, useful for setting up a temporary workspace."
+	name = "折叠桌"
+	desc = "一张折叠桌，适合搭起临时工作台。"
 	icon = 'icons/roguetown/misc/gadgets.dmi'
 	icon_state = "foldingtableDeployed"
 	resistance_flags = FLAMMABLE
@@ -519,10 +519,10 @@
 
 /obj/structure/table/wood/folding/examine()
 	. = ..()
-	. += span_blue("Right-Click to fold the table.")
+	. += span_blue("右键折叠桌子。")
 
 /obj/structure/table/wood/folding/attack_right(mob/user)
-	user.visible_message(span_notice("[user] folds [src]."), span_notice("You fold [src]."))
+	user.visible_message(span_notice("[user]折起了[src]。"), span_notice("我把[src]折起来。"))
 	new /obj/item/folding_table_stored(drop_location())
 	qdel(src)
 	return ..()
@@ -531,7 +531,7 @@
  * Racks
  */
 /obj/structure/rack
-	name = "rack"
+	name = "架子"
 	desc = ""
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
@@ -648,7 +648,7 @@
 
 
 /obj/structure/table/optable
-	name = "operating table"
+	name = "手术台"
 	desc = ""
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "optable"
@@ -664,7 +664,7 @@
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
 	pushed_mob.set_resting(TRUE, TRUE)
-	visible_message("<span class='notice'>[user] has laid [pushed_mob] on [src].</span>")
+	visible_message("<span class='notice'>[user]将[pushed_mob]放到了[src]上。</span>")
 	check_patient()
 
 /obj/structure/table/optable/proc/check_patient()

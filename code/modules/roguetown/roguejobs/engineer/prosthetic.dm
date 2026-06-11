@@ -3,7 +3,7 @@
 		return
 
 	if(user.zone_selected != body_zone)
-		to_chat(user, span_warning("[src] isn't the right type for [parse_zone(user.zone_selected)]."))
+		to_chat(user, span_warning("[src]并不适用于[parse_zone(user.zone_selected)]。"))
 		return -1
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
@@ -12,132 +12,132 @@
 
 	if(user.temporarilyRemoveItemFromInventory(src))
 		attach_limb(H)
-		user.visible_message(span_notice("[user] attaches [src] to [H]."))
+		user.visible_message(span_notice("[user]将[src]安装到了[H]身上。"))
 		return 1
 
 /obj/item/contraption/bronzeprosthetic
-	name = "bronze prosthetic"
-	desc = "A prosthetic made of bronze. Use it in your hand to determine what limb it will function as."
+	name = "青铜义肢"
+	desc = "一件由青铜制成的义肢。在手中使用它，以决定它要作为哪条肢体。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prb_blank"
 
 /obj/item/contraption/ironprosthetic
-	name = "iron prosthetic"
-	desc = "A prosthetic made of iron. Use it in your hand to determine what limb it will function as."
+	name = "铁制义肢"
+	desc = "一件由铁制成的义肢。在手中使用它，以决定它要作为哪条肢体。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pri_blank"
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/contraption/steelprosthetic
-	name = "steel prosthetic"
-	desc = "A prosthetic made of steel. Use it in your hand to determine what limb it will function as."
+	name = "钢制义肢"
+	desc = "一件由钢制成的义肢。在手中使用它，以决定它要作为哪条肢体。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prs_blank"
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/contraption/goldprosthetic
-	name = "golden prosthetic"
-	desc = "A prosthetic made of gold. Use it in your hand to determine what limb it will function as."
+	name = "金制义肢"
+	desc = "一件由黄金制成的义肢。在手中使用它，以决定它要作为哪条肢体。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prc_blank"
 	smeltresult = /obj/item/ingot/gold
 
 /obj/item/contraption/bronzeprosthetic/attack_self(mob/user)
 	. = ..()
-	var/choice = input(user, "Choose the side and the limb") as null|anything in list("Left Arm", "Right Arm", "Left Leg", "Right Leg", "Cancel")
+	var/choice = input(user, "选择部位与肢体") as null|anything in list("左臂", "右臂", "左腿", "右腿", "取消")
 	switch(choice)
-		if("Cancel")
+		if("取消")
 			return
 		if(null)
 			return
-		if("Left Arm")
+		if("左臂")
 			new /obj/item/bodypart/l_arm/prosthetic/bronzeleft(get_turf(src.loc))
 			qdel(src)
 			return
-		if("Right Arm")
+		if("右臂")
 			new /obj/item/bodypart/r_arm/prosthetic/bronzeright(get_turf(src.loc))
 			qdel(src)
 			return
-		if("Left Leg")
+		if("左腿")
 			new /obj/item/bodypart/l_leg/prosthetic/bronzeleft(get_turf(src.loc))
 			qdel(src)
 			return
-		if("Right Leg")
+		if("右腿")
 			new /obj/item/bodypart/r_leg/prosthetic/bronzeright(get_turf(src.loc))
 			qdel(src)
 			return
 
 /obj/item/contraption/ironprosthetic/attack_self(mob/user)
 	. = ..()
-	var/choice = input(user, "Choose the side and the limb") as null|anything in list("Left Arm", "Right Arm", "Left Leg", "Right Leg", "Cancel")
+	var/choice = input(user, "选择部位与肢体") as null|anything in list("左臂", "右臂", "左腿", "右腿", "取消")
 	switch(choice)
-		if("Cancel")
+		if("取消")
 			return
 		if(null)
 			return
-		if("Left Arm")
+		if("左臂")
 			new /obj/item/bodypart/l_arm/prosthetic/iron(get_turf(src.loc))
 			qdel(src)
 			return
-		if("Right Arm")
+		if("右臂")
 			new /obj/item/bodypart/r_arm/prosthetic/iron(get_turf(src.loc))
 			qdel(src)
 			return
-		if("Left Leg")
+		if("左腿")
 			new /obj/item/bodypart/l_leg/prosthetic/iron(get_turf(src.loc))
 			qdel(src)
 			return
-		if("Right Leg")
+		if("右腿")
 			new /obj/item/bodypart/r_leg/prosthetic/iron(get_turf(src.loc))
 			qdel(src)
 			return
 
 /obj/item/contraption/steelprosthetic/attack_self(mob/user)
 	. = ..()
-	var/choice = input(user, "Choose the side and the limb") as null|anything in list("Left Arm", "Right Arm", "Left Leg", "Right Leg", "Cancel")
+	var/choice = input(user, "选择部位与肢体") as null|anything in list("左臂", "右臂", "左腿", "右腿", "取消")
 	switch(choice)
-		if("Cancel")
+		if("取消")
 			return
 		if(null)
 			return
-		if("Left Arm")
+		if("左臂")
 			new /obj/item/bodypart/l_arm/prosthetic/steel(get_turf(src.loc))
 			qdel(src)
 			return
-		if("Right Arm")
+		if("右臂")
 			new /obj/item/bodypart/r_arm/prosthetic/steel(get_turf(src.loc))
 			qdel(src)
 			return
-		if("Left Leg")
+		if("左腿")
 			new /obj/item/bodypart/l_leg/prosthetic/steel(get_turf(src.loc))
 			qdel(src)
 			return
-		if("Right Leg")
+		if("右腿")
 			new /obj/item/bodypart/r_leg/prosthetic/steel(get_turf(src.loc))
 			qdel(src)
 			return
 
 /obj/item/contraption/goldprosthetic/attack_self(mob/user)
 	. = ..()
-	var/choice = input(user, "Choose the side and the limb") as null|anything in list("Left Arm", "Right Arm", "Left Leg", "Right Leg", "Cancel")
+	var/choice = input(user, "选择部位与肢体") as null|anything in list("左臂", "右臂", "左腿", "右腿", "取消")
 	switch(choice)
-		if("Cancel")
+		if("取消")
 			return
 		if(null)
 			return
-		if("Left Arm")
+		if("左臂")
 			new /obj/item/bodypart/l_arm/prosthetic/gold(get_turf(src.loc))
 			qdel(src)
 			return
-		if("Right Arm")
+		if("右臂")
 			new /obj/item/bodypart/r_arm/prosthetic/gold(get_turf(src.loc))
 			qdel(src)
 			return
-		if("Left Leg")
+		if("左腿")
 			new /obj/item/bodypart/l_leg/prosthetic/gold(get_turf(src.loc))
 			qdel(src)
 			return
-		if("Right Leg")
+		if("右腿")
 			new /obj/item/bodypart/r_leg/prosthetic/gold(get_turf(src.loc))
 			qdel(src)
 			return
@@ -145,8 +145,8 @@
 /////     ARMS     /////
 
 /obj/item/bodypart/l_arm/prosthetic/woodleft
-	name = "wooden left arm"
-	desc = "A left arm of wood."
+	name = "木制左臂"
+	desc = "一条木制左臂。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pr_arm"
 	item_state = "pr_arm"
@@ -166,8 +166,8 @@
 	dismember_wound = /datum/wound/bruise/large
 
 /obj/item/bodypart/l_arm/prosthetic/iron
-	name = "iron left arm"
-	desc = "A left arm of iron."
+	name = "铁制左臂"
+	desc = "一条铁制左臂。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pri_arm"
 	prosthetic_prefix = "pri"
@@ -185,8 +185,8 @@
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/bodypart/l_arm/prosthetic/steel
-	name = "steel left arm"
-	desc = "A left arm of steel."
+	name = "钢制左臂"
+	desc = "一条钢制左臂。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prs_arm"
 	prosthetic_prefix = "prs"
@@ -204,8 +204,8 @@
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/bodypart/l_arm/prosthetic/bronzeleft
-	name = "bronze left arm"
-	desc = "A replacement left arm, engineered out of bronze."
+	name = "青铜左臂"
+	desc = "一条以青铜打造的替代左臂。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "bp_arm"
 	prosthetic_prefix = "prs"
@@ -226,8 +226,8 @@
 	dismember_wound = /datum/wound/bruise/large
 
 /obj/item/bodypart/l_arm/prosthetic/gold
-	name = "golden left arm"
-	desc = "A left arm of cogs and gold."
+	name = "金制左臂"
+	desc = "一条由齿轮与黄金构成的左臂。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prc_arm"
 	prosthetic_prefix = "prc"
@@ -247,8 +247,8 @@
 	prosthetic_attachment(M, user)
 
 /obj/item/bodypart/r_arm/prosthetic/woodright
-	name = "wooden right arm"
-	desc = "A right arm of wood."
+	name = "木制右臂"
+	desc = "一条木制右臂。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pr_arm"
 	limb_material = "wood"
@@ -267,8 +267,8 @@
 	dismember_wound = /datum/wound/bruise/large
 
 /obj/item/bodypart/r_arm/prosthetic/iron
-	name = "iron right arm"
-	desc = "A right arm of iron."
+	name = "铁制右臂"
+	desc = "一条铁制右臂。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pri_arm"
 	prosthetic_prefix = "pri"
@@ -286,8 +286,8 @@
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/bodypart/r_arm/prosthetic/steel
-	name = "steel right arm"
-	desc = "A right arm of steel."
+	name = "钢制右臂"
+	desc = "一条钢制右臂。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prs_arm"
 	prosthetic_prefix = "prs"
@@ -305,8 +305,8 @@
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/bodypart/r_arm/prosthetic/bronzeright
-	name = "bronze right arm"
-	desc = "A replacement right arm, engineered out of bronze."
+	name = "青铜右臂"
+	desc = "一条以青铜打造的替代右臂。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "bp_arm"
 	prosthetic_prefix = "prs"
@@ -327,8 +327,8 @@
 	dismember_wound = /datum/wound/bruise/large
 
 /obj/item/bodypart/r_arm/prosthetic/gold
-	name = "golden right arm"
-	desc = "A right arm of cogs and gold."
+	name = "金制右臂"
+	desc = "一条由齿轮与黄金构成的右臂。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prc_arm"
 	prosthetic_prefix = "prc"
@@ -350,8 +350,8 @@
 /////     LEGS     /////
 
 /obj/item/bodypart/l_leg/prosthetic
-	name = "wooden left leg"
-	desc = "A left leg made of wood."
+	name = "木制左腿"
+	desc = "一条木制左腿。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pr_leg"
 	resistance_flags = FLAMMABLE
@@ -370,8 +370,8 @@
 	dismember_wound = /datum/wound/bruise/large
 
 /obj/item/bodypart/l_leg/prosthetic/iron
-	name = "iron left leg"
-	desc = "A left leg of iron."
+	name = "铁制左腿"
+	desc = "一条铁制左腿。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pri_leg"
 	prosthetic_prefix = "pri"
@@ -389,8 +389,8 @@
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/bodypart/l_leg/prosthetic/steel
-	name = "steel left leg"
-	desc = "A left leg of steel."
+	name = "钢制左腿"
+	desc = "一条钢制左腿。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prs_leg"
 	prosthetic_prefix = "prs"
@@ -408,8 +408,8 @@
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/bodypart/l_leg/prosthetic/bronzeleft
-	name = "bronze left leg"
-	desc = "A replacement left leg, engineered out of bronze."
+	name = "青铜左腿"
+	desc = "一条以青铜打造的替代左腿。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "bp_leg"
 	prosthetic_prefix = "prs"
@@ -427,8 +427,8 @@
 	smeltresult = /obj/item/ingot/bronze
 
 /obj/item/bodypart/l_leg/prosthetic/gold
-	name = "golden left leg"
-	desc = "A left leg of cogs and gold."
+	name = "金制左腿"
+	desc = "一条由齿轮与黄金构成的左腿。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prc_leg"
 	prosthetic_prefix = "prc"
@@ -447,8 +447,8 @@
 	prosthetic_attachment(M, user)
 
 /obj/item/bodypart/r_leg/prosthetic
-	name = "wooden right leg"
-	desc = "A right leg made of wood."
+	name = "木制右腿"
+	desc = "一条木制右腿。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pr_leg"
 	resistance_flags = FLAMMABLE
@@ -465,8 +465,8 @@
 	dismember_wound = /datum/wound/bruise/large
 
 /obj/item/bodypart/r_leg/prosthetic/iron
-	name = "iron right leg"
-	desc = "A right leg of iron."
+	name = "铁制右腿"
+	desc = "一条铁制右腿。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pri_leg"
 	prosthetic_prefix = "pri"
@@ -485,8 +485,8 @@
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/bodypart/r_leg/prosthetic/steel
-	name = "steel right leg"
-	desc = "A right leg of steel."
+	name = "钢制右腿"
+	desc = "一条钢制右腿。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prs_leg"
 	prosthetic_prefix = "prs"
@@ -505,8 +505,8 @@
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/bodypart/r_leg/prosthetic/bronzeright
-	name = "bronze right leg"
-	desc = "A replacement right leg, engineered out of bronze."
+	name = "青铜右腿"
+	desc = "一条以青铜打造的替代右腿。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "bp_leg"
 	prosthetic_prefix = "prs"
@@ -525,8 +525,8 @@
 	smeltresult = /obj/item/ingot/bronze
 
 /obj/item/bodypart/r_leg/prosthetic/gold
-	name = "golden right leg"
-	desc = "A right leg of cogs and gold."
+	name = "金制右腿"
+	desc = "一条由齿轮与黄金构成的右腿。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prc_leg"
 	prosthetic_prefix = "prc"

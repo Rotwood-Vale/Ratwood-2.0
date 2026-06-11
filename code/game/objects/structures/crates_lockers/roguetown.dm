@@ -1,5 +1,5 @@
 /obj/structure/closet/crate/chest
-	name = "chest"
+	name = "宝箱"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "chest3s"
@@ -20,14 +20,14 @@
 	base_icon_state = "chest3"
 
 /obj/structure/closet/crate/chest/inqreliquary
-	name = "otavan reliquary"
-	desc = "A foreboding red chest with a intricate lock design. It seems to only fit a very specific key. Choose wisely."
+	name = "奥塔凡圣匣"
+	desc = "一只令人不安的红色匣柜，锁孔结构异常繁复，似乎只适配某一把特定钥匙。可得慎选。"
 	icon_state = "chestweird1"
 	base_icon_state = "chestweird1"
 
 /obj/structure/closet/crate/chest/inqcrate
-	name = "otavan chest"
-	desc = "A foreboding red chest with black dye-washed silver embellishments."
+	name = "奥塔凡宝箱"
+	desc = "一只令人不安的红色宝箱，镶着被黑染浸过的银饰。"
 	icon_state = "chestweird2"
 	base_icon_state = "chestweird2"	
 
@@ -71,7 +71,7 @@
 		new I(src)
 
 /obj/structure/closet/crate/roguecloset
-	name = "closet"
+	name = "柜橱"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
 	base_icon_state = "closet"
@@ -113,8 +113,8 @@
 	icon_state = "closetlord"
 
 /obj/structure/closet/crate/drawer
-	name = "drawer"
-	desc = "A wooden drawer."
+	name = "抽屉柜"
+	desc = "一个木制抽屉柜。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "drawer5"
 	base_icon_state = "drawer5"
@@ -130,8 +130,8 @@
 	allow_dense = FALSE
 
 /obj/structure/closet/crate/drawer/inn
-	name = "drawer"
-	desc = "A wooden drawer."
+	name = "抽屉柜"
+	desc = "一个木制抽屉柜。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "drawer5"
 	base_icon_state = "drawer5"
@@ -139,42 +139,42 @@
 	pixel_y = 16
 
 /obj/structure/closet/crate/drawer/drawer1 // five unique dresser sprites needing five different structures for five different crafting recipes
-	name = "drawer"
-	desc = "A wooden drawer."
+	name = "抽屉柜"
+	desc = "一个木制抽屉柜。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "drawer1"
 	base_icon_state = "drawer1"
 
 /obj/structure/closet/crate/drawer/drawer2
-	name = "drawer"
-	desc = "A wooden drawer."
+	name = "抽屉柜"
+	desc = "一个木制抽屉柜。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "drawer2"
 	base_icon_state = "drawer2"
 
 /obj/structure/closet/crate/drawer/drawer3
-	name = "drawer"
-	desc = "A wooden drawer."
+	name = "抽屉柜"
+	desc = "一个木制抽屉柜。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "drawer3"
 	base_icon_state = "drawer3"
 
 /obj/structure/closet/crate/drawer/drawer4
-	name = "drawer"
-	desc = "A wooden drawer."
+	name = "抽屉柜"
+	desc = "一个木制抽屉柜。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "drawer4"
 	base_icon_state = "drawer4"
 
 //Stonekeep port
 /obj/structure/closet/crate/chest/crate
-	name = "crate"
+	name = "板条箱"
 	base_icon_state = "woodchest"
 	icon_state = "woodchest"
 
 /obj/structure/closet/crate/chest/wicker
-	name = "wicker basket"
-	desc = "Fibers interwoven to make a cheap storage bin."
+	name = "柳条篮"
+	desc = "纤维编织而成的廉价储物箱。"
 	base_icon_state = "wicker"
 	icon_state = "wicker"
 	open_sound = 'sound/items/book_open.ogg'
@@ -182,22 +182,22 @@
 	close_sound = 'sound/items/book_close.ogg'
 
 /obj/structure/closet/crate/chest/neu
-	name = "sturdy oak chest"
+	name = "结实橡木箱"
 	icon_state = "chest_neu"
 	base_icon_state = "chest_neu"
 
 /obj/structure/closet/crate/chest/neu_iron
-	name = "reinforced chest"
+	name = "加固宝箱"
 	icon_state = "chestiron_neu"
 	base_icon_state = "chestiron_neu"
 
 /obj/structure/closet/crate/chest/neu_fancy
-	name = "fancy chest"
+	name = "华饰宝箱"
 	icon_state = "chestfancy_neu"
 	base_icon_state = "chestfancy_neu"
 
 /obj/structure/closet/crate/chest/old_crate
-	name = "old crate"
+	name = "旧木箱"
 	base_icon_state = "woodchestalt"
 	icon_state = "woodchestalt"
 
@@ -220,7 +220,7 @@
  * Done to prevent nobles taking regency just to loot blacksteel
 */
 /obj/structure/closet/crate/roguecloset/lord/duke_preset
-	desc = "Covered in strange runic symbols that seem to pulse with some sort of energy in the dark."
+	desc = "表面覆满了奇异的符文，在黑暗中似乎会鼓动着某种能量。"
 	/// Set to TRUE after it has spawned the gear.
 	var/has_spawned_gear = FALSE
 

@@ -46,7 +46,7 @@
 	var/time = 5 MINUTES
 	var/debuff = /datum/status_effect/debuff/addiction
 	var/needsate_text
-	var/sated_text = "That's much better..."
+	var/sated_text = "这下好多了……"
 	var/unsate_time
 	var/stress_event = /datum/stressevent/vice  // Specific stress event type for this vice
 
@@ -97,17 +97,17 @@
 	duration = 100
 
 /atom/movable/screen/alert/status_effect/debuff/addiction //generic
-	name = "Addiction"
+	name = "成瘾"
 	desc = ""
 	icon_state = "debuff"
 
 /// ALCOHOLIC
 
 /datum/charflaw/addiction/alcoholic
-	name = "Alcoholic"
-	desc = "Drinking alcohol is my favorite thing."
+	name = "酒鬼"
+	desc = "喝酒是我最喜欢的事。"
 	time = 90 MINUTES
-	needsate_text = "Time for a drink."
+	needsate_text = "该来一杯了。"
 	stress_event = /datum/stressevent/vice/alcoholic
 	debuff = /datum/status_effect/debuff/addiction/alcoholic
 
@@ -117,17 +117,17 @@
 	effectedstats = list(STATKEY_INT = -1, STATKEY_WIL = -1)
 
 /atom/movable/screen/alert/status_effect/debuff/addiction/alcoholic
-	name = "Alcohol Withdrawal"
-	desc = "I've started to feel hungover. The best way to chase a hangover is another drink."
+	name = "酒精戒断"
+	desc = "我开始觉得宿醉上头了。要赶走宿醉，最好的办法就是再来一杯。"
 	icon_state = "alcoholic"
 
 /// KLEPTOMANIAC
 
 /datum/charflaw/addiction/kleptomaniac
-	name = "Thief-borne"
-	desc = "As a child I had to rely on theft to survive. Whether that changed or not, I just can't get over it."
+	name = "盗贼习性"
+	desc = "小时候我得靠偷窃活下去。不管后来变没变，我就是改不了这毛病。"
 	time = 60 MINUTES
-	needsate_text = "I need to STEAL something! I'll die if I don't!"
+	needsate_text = "我得去偷点什么！不然我会死的！"
 	stress_event = /datum/stressevent/vice/kleptomaniac
 	debuff = /datum/status_effect/debuff/addiction/kleptomaniac
 
@@ -137,17 +137,17 @@
 	effectedstats = list(STATKEY_LCK = -2)
 
 /atom/movable/screen/alert/status_effect/debuff/addiction/kleptomaniac
-	name = "Kleptomaniac"
-	desc = "I haven't picked any pockets recently. My fingers are itching to steal."
+	name = "盗窃癖"
+	desc = "我已经有段时间没摸过别人的口袋了，手指痒得想偷东西。"
 	icon_state = "kleptomaniac"
 
 /// JUNKIE
 
 /datum/charflaw/addiction/junkie
-	name = "Junkie"
-	desc = "I need a REAL high to take the pain of this rotten world away."
+	name = "瘾君子"
+	desc = "我需要来一场真正的飘飘欲仙，才能忘掉这腐烂世界的痛苦。"
 	time = 90 MINUTES
-	needsate_text = "Time to get really high."
+	needsate_text = "该狠狠干一口了。"
 	stress_event = /datum/stressevent/vice/junkie
 	debuff = /datum/status_effect/debuff/addiction/junkie
 
@@ -157,17 +157,17 @@
 	effectedstats = list(STATKEY_STR = -1, STATKEY_CON = -1)
 
 /atom/movable/screen/alert/status_effect/debuff/addiction/junkie
-	name = "Drug Withdrawal"
-	desc = "It's been too long since my last bump. I need a hit of something strong."
+	name = "药瘾发作"
+	desc = "距离我上次来一口已经太久了。我得整点够劲的东西。"
 	icon_state = "junkie"
 
 /// Smoker
 
 /datum/charflaw/addiction/smoker
-	name = "Smoker"
-	desc = "I need to smoke something to take the edge off."
+	name = "烟鬼"
+	desc = "我得抽点什么，才能缓缓神。"
 	time = 90 MINUTES
-	needsate_text = "Time for a flavorful smoke."
+	needsate_text = "该来一口够味的烟了。"
 	stress_event = /datum/stressevent/vice/smoker
 	debuff = /datum/status_effect/debuff/addiction/smoker
 
@@ -177,17 +177,17 @@
 	effectedstats = list(STATKEY_STR = -1, STATKEY_CON = -1)
 
 /atom/movable/screen/alert/status_effect/debuff/addiction/smoker
-	name = "Blacklung"
-	desc = "I need a smoke. Gotta take the edge off."
+	name = "黑肺"
+	desc = "我得抽上一口，得缓缓这股劲。"
 	icon_state = "smoker"
 
 /// GOD-FEARING
 
 /datum/charflaw/addiction/godfearing
-	name = "Devout Follower"
-	desc = "I need to pray to my Patron in their realm, it will make me and my prayers stronger."
+	name = "虔诚信徒"
+	desc = "我得在主的领域里向祂祈祷，这会让我和我的祈祷都更有力量。"
 	time = 60 MINUTES
-	needsate_text = "Time to pray to my Patron."
+	needsate_text = "该向我的主祈祷了。"
 	stress_event = /datum/stressevent/vice/godfearing
 	debuff = /datum/status_effect/debuff/addiction/godfearing
 
@@ -197,17 +197,17 @@
 	effectedstats = list(STATKEY_WIL = -2)
 
 /atom/movable/screen/alert/status_effect/debuff/addiction/godfearing
-	name = "Godfearing"
-	desc = "It's been too long since my last prayer. My patron is going to turn their gaze away from me."
+	name = "惧神"
+	desc = "距离我上次祈祷已经太久了。我的主就要把目光从我身上移开。"
 	icon_state = "godfearing"
 
 /// SADIST
 
 /datum/charflaw/addiction/sadist
-	name = "Sadist"
-	desc = "There is no greater pleasure than the suffering of another."
+	name = "施虐狂"
+	desc = "没有什么比他人的痛苦更令人愉悦。"
 	time = 60 MINUTES
-	needsate_text = "I need to hear someone whimper."
+	needsate_text = "我得听见谁在呜咽。"
 	stress_event = /datum/stressevent/vice/sadist
 	debuff = /datum/status_effect/debuff/addiction/sadist
 
@@ -217,17 +217,17 @@
 	effectedstats = list(STATKEY_WIL = -1, STATKEY_LCK = -1)
 
 /atom/movable/screen/alert/status_effect/debuff/addiction/sadist
-	name = "Sadist"
-	desc = "I need to hear someone whimper. Only the cries of another will make me feel better."
+	name = "施虐渴求"
+	desc = "我得听见谁在呜咽。唯有他人的哭喊才能让我好受。"
 	icon_state = "sadist"
 
 /// MASOCHIST
 
 /datum/charflaw/addiction/masochist
-	name = "Masochist"
-	desc = "I love the feeling of pain, so much I can't get enough of it."
+	name = "受虐狂"
+	desc = "我喜欢疼痛的感觉，喜欢到怎么都不够。"
 	time = 60 MINUTES
-	needsate_text = "I need someone to HURT me."
+	needsate_text = "我需要有人来伤害我。"
 	stress_event = /datum/stressevent/vice/masochist
 	debuff = /datum/status_effect/debuff/addiction/masochist
 
@@ -237,17 +237,17 @@
 	effectedstats = list(STATKEY_CON = -1, STATKEY_WIL = -1)
 
 /atom/movable/screen/alert/status_effect/debuff/addiction/masochist
-	name = "Masochist"
-	desc = "I deserve to suffer. No, I NEED to suffer."
+	name = "受虐渴求"
+	desc = "我就该受苦。不，我必须受苦。"
 	icon_state = "masochist"
 
 /// NYMPHOMANIAC
 
 /datum/charflaw/addiction/lovefiend
-	name = "Nymphomaniac"
-	desc = "I must make love!"
+	name = "性欲亢进"
+	desc = "我必须做爱！"
 	time = 90 MINUTES
-	needsate_text = "I'm feeling randy."
+	needsate_text = "我情欲翻涌。"
 	stress_event = /datum/stressevent/vice/nympho
 	debuff = /datum/status_effect/debuff/addiction/nympho
 
@@ -257,16 +257,16 @@
 	effectedstats = list(STATKEY_WIL = -1, STATKEY_LCK = -1)
 
 /atom/movable/screen/alert/status_effect/debuff/addiction/nympho
-	name = "Nymphomania"
-	desc = "I must make love. My loins burn with unsated desire."
+	name = "性欲亢进"
+	desc = "我必须做爱。欲火灼烧着我的下腹，迟迟不得满足。"
 	icon_state = "nymphomaniac"
 
 /datum/charflaw/addiction/baothamarked
 	name = "Baothan Marked"
-	desc = "I've been branded by a Baothan mark."
+	desc = "我被 Baothan 的印记烙上了标记。"
 	time = 45 MINUTES
-	needsate_text = "My brand burns painfully."
-	sated_text = "The brand's glow lessens, relief washing over me..."
+	needsate_text = "我的印记正痛苦地灼烧着。"
+	sated_text = "印记的光芒渐渐黯淡，宽慰感涌上心头……"
 	stress_event = /datum/stressevent/vice/baothamarked
 	debuff = /datum/status_effect/debuff/addiction/baothamarked
 
@@ -277,5 +277,5 @@
 
 /atom/movable/screen/alert/status_effect/debuff/addiction/baothamarked
 	name = "Baothan Mania"
-	desc = "That accursed rune. It burns brightly across my flesh, searing my loins with a painful desire for release."
+	desc = "那道遭诅咒的符印。它在我的血肉上灼灼发亮，把我下腹烧得满是痛苦而难耐的释放欲望。"
 	icon_state = "nymphomaniac"

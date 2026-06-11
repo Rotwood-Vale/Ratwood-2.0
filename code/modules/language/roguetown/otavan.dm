@@ -1,9 +1,9 @@
 /datum/language/otavan
-	name = "Otavais"
-	desc = "\"(Spoken with ,v)\"The language of the Sovereignty of Otava, renowned for their chevaliers and for hosting the stricter sects of Psydon worshippers. A \"Language of Love\", as it has been called before.()"
-	speech_verb = "remarks"
-	ask_verb = "inquires"
-	exclaim_verb = "asserts"
+	name = "奥塔瓦语"
+	desc = "\"(用 ,v 说)\"奥塔瓦主权国所使用的语言，以其骑士闻名，也因容纳了普赛顿信徒中更为严苛的教派而著称。它也曾被称作“爱情之语”。"
+	speech_verb = "说道"
+	ask_verb = "询问"
+	exclaim_verb = "断言"
 	key = "v"
 	space_chance = 75
 	default_priority = 90

@@ -1,6 +1,6 @@
 /datum/advclass/torso
-	name = "Torso"
-	tutorial = "Some horrible accident in the forest away all of your limbs!\nSurvival will be a true TRIUMPH."
+	name = "躯干求生者"
+	tutorial = "森林里那场可怕的意外夺走了你的全部四肢！\n想活下去，将会是一场真正的壮举。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/torso

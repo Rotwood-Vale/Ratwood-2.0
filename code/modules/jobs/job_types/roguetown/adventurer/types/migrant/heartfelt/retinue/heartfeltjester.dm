@@ -1,8 +1,8 @@
 
 /datum/advclass/heartfelt/retinue/jester
-	name = "Heartfeltian Jester"
-	tutorial = "You are the Jester of Heartfelt, a bringer of laughter in brighter days, now left to wander through the ashes of a fallen home. \
-	Though grief weighs heavy beneath your painted smile, you turn your steps toward these lands—hoping your wit, charm, and cunning may yet carve out a place for joy amidst the ruin."
+	name = "赤心 弄臣"
+	tutorial = "你是 赤心 的弄臣，曾在更明亮的年月里为众人带来欢笑，如今却只能徘徊在故乡的灰烬之间。\
+	纵使涂彩笑容之下尽是沉重哀伤，你仍踏上前往此地的路，希望凭机敏、魅力与狡黠，在废墟之中再为欢乐留出一席之地。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/roguetown/heartfelt/retinue/jester

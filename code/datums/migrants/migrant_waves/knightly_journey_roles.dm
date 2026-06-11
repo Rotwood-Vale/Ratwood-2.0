@@ -2,7 +2,7 @@
 #define CTAG_KG_SQUIRE "CTAG_KG_SQUIRE"
 
 /datum/migrant_role/kj_knight
-	name = "Knight"
+	name = "骑士"
 	advclass_cat_rolls = list(CTAG_KJ_KNIGHT = 20)
 
 /datum/migrant_role/kj_knight/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
@@ -16,18 +16,18 @@
 				index = copytext(H.real_name, 1,index)
 			if(!index)
 				index = H.real_name
-			S.name = "knight tabard ([index])"
+			S.name = "骑士罩袍（[index]）"
 		var/prev_real_name = H.real_name
 		var/prev_name = H.name
-		var/honorary = "Ser"
+		var/honorary = "爵士"
 		if(H.pronouns == SHE_HER || H.pronouns == THEY_THEM_F)
-			honorary = "Dame"
+			honorary = "女爵"
 		H.real_name = "[honorary] [prev_real_name]"
 		H.name = "[honorary] [prev_name]"
 
 /datum/advclass/kj_knight
-	name = "Knight"
-	tutorial = "You are a knight from a distant land, a scion of a noble house visiting these lands for one reason or another."
+	name = "骑士"
+	tutorial = "你是一位来自遥远国度的骑士，出身于高贵家族，因为某种缘由来到 Rockwood 谷地。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/roguetown/adventurer/knighte_expert
@@ -63,30 +63,30 @@
 /datum/outfit/job/roguetown/adventurer/knighte_expert/pre_equip(mob/living/carbon/human/H)
 	..()
 	var/helmets = list(
-		"Pigface Bascinet" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,
-		"Guard Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/guard,
-		"Barred Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/sheriff,
-		"Bucket Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/bucket,
-		"Knight Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight,
-		"Visored Sallet"			= /obj/item/clothing/head/roguetown/helmet/sallet/visored,
-		"Armet"				= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet,
-		"Hounskull Bascinet" 		= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull,
-		"Etruscan Bascinet" 		= /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan,
-		"Slitted Kettle"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle,
-		"None"
+		"猪脸护鼻盔" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,
+		"卫兵头盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/guard,
+		"格栅头盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/sheriff,
+		"桶盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/bucket,
+		"骑士头盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight,
+		"带面罩沙勒盔"			= /obj/item/clothing/head/roguetown/helmet/sallet/visored,
+		"阿米特盔"				= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet,
+		"犬面护鼻盔" 		= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull,
+		"伊特鲁里亚护鼻盔" 		= /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan,
+		"开缝锅盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle,
+		"无"
 		)
-	var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
-	if(helmchoice != "None")
+	var/helmchoice = input(H, "选择你的头盔。", "戴上头盔") as anything in helmets
+	if(helmchoice != "无")
 		head = helmets[helmchoice]
 
 	var/armors = list(
-		"Brigandine"		= /obj/item/clothing/suit/roguetown/armor/brigandine,
-		"Coat of Plates"	= /obj/item/clothing/suit/roguetown/armor/brigandine/coatplates,
-		"Steel Cuirass"		= /obj/item/clothing/suit/roguetown/armor/plate/half,
-		"Fluted Cuirass"	= /obj/item/clothing/suit/roguetown/armor/plate/half/fluted,
-		"Scalemail"		= /obj/item/clothing/suit/roguetown/armor/plate/scale,
+		"布面甲"		= /obj/item/clothing/suit/roguetown/armor/brigandine,
+		"板片外套"	= /obj/item/clothing/suit/roguetown/armor/brigandine/coatplates,
+		"钢胸甲"		= /obj/item/clothing/suit/roguetown/armor/plate/half,
+		"槽纹胸甲"	= /obj/item/clothing/suit/roguetown/armor/plate/half/fluted,
+		"鳞甲"		= /obj/item/clothing/suit/roguetown/armor/plate/scale,
 		)
-	var/armorchoice = input(H, "Choose your armor.", "TAKE UP ARMOR") as anything in armors
+	var/armorchoice = input(H, "选择你的护甲。", "穿上护甲") as anything in armors
 	armor = armors[armorchoice]
 
 	gloves = /obj/item/clothing/gloves/roguetown/chain
@@ -107,48 +107,48 @@
 		)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 	H.set_blindness(0)
-	var/weapons = list("Longsword + Shield","Mace + Shield","Flail + Shield","Billhook","Lance + Kite Shield","Battle Axe","Greataxe")
-	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+	var/weapons = list("长剑+盾牌","钉头锤+盾牌","连枷+盾牌","钩镰枪","骑枪+鸢盾","战斧","双手巨斧")
+	var/weapon_choice = input(H, "选择你的武器。", "拿起武器") as anything in weapons
 	switch(weapon_choice)
-		if("Longsword + Shield")
+		if("长剑+盾牌")
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_MASTER, TRUE)
 			beltr = /obj/item/rogueweapon/sword/long
 			r_hand = /obj/item/rogueweapon/scabbard/sword/noble
 			backr = /obj/item/rogueweapon/shield/tower/metal
-		if("Mace + Shield")
+		if("钉头锤+盾牌")
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_MASTER, TRUE)
 			beltr = /obj/item/rogueweapon/mace
 			backr = /obj/item/rogueweapon/shield/tower/metal
-		if("Flail + Shield")
+		if("连枷+盾牌")
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_MASTER, TRUE)
 			beltr = /obj/item/rogueweapon/flail
 			backr = /obj/item/rogueweapon/shield/tower/metal
-		if("Billhook")
+		if("钩镰枪")
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 			r_hand = /obj/item/rogueweapon/spear/billhook
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
-		if("Lance + Kite Shield")
+		if("骑枪+鸢盾")
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_MASTER, TRUE)
 			r_hand = /obj/item/rogueweapon/spear/lance
 			backr = /obj/item/rogueweapon/shield/tower/metal
-		if("Battle Axe")
+		if("战斧")
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 			r_hand = /obj/item/rogueweapon/stoneaxe/battle
-		if("Greataxe")
+		if("双手巨斧")
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 			r_hand = /obj/item/rogueweapon/greataxe
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
 
 /datum/migrant_role/kj_squire
-	name = "Squire"
+	name = "侍从"
 	advclass_cat_rolls = list(CTAG_KG_SQUIRE = 20)
 
 /datum/advclass/kj_squire
-	name = "Squire"
+	name = "侍从"
 	outfit = /datum/outfit/job/roguetown/adventurer/squire
 	traits_applied = list(TRAIT_SQUIRE_REPAIR, TRAIT_MEDIUMARMOR, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_KG_SQUIRE)

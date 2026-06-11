@@ -1,7 +1,7 @@
 
 /obj/effect/proc_holder/spell/invoked/song/dirge_fortune
-	name = "Misfortunate Melody"
-	desc = "Play a dirge which inflicts misfortune upon thy foes. -2 LUCK to non-audience members nearby. "
+	name = "厄运挽歌"
+	desc = "奏出一曲降下厄运的哀歌。附近不属于听众的人会受到 `-2 LUCK`。"
 	invocations = list("plays the world's saddest song. The world around them seems to sulk.") 
 	invocation_type = "emote"
 	overlay_state = "dirge_t1_base"
@@ -18,7 +18,7 @@
 		return TRUE
 	else
 		revert_cast()
-		to_chat(user, span_warning("I must be playing something to inspire my audience!"))
+		to_chat(user, span_warning("我必须先演奏起来，才能影响我的听众！"))
 		return
 
 
@@ -36,6 +36,6 @@
 	duration = 15 SECONDS
 
 /atom/movable/screen/alert/status_effect/debuff/song/dirge_misfortune
-	name = "Dirge of Misfortune"
+	name = "厄运挽歌"
 	desc = "I can feel the sky laughing at my back. This music is reminding me of my fleeting, insignificant life."
 	icon_state = "restrained"

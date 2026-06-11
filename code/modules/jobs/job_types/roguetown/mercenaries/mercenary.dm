@@ -7,7 +7,7 @@
 	spawn_positions = 8
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
-	tutorial = "Blood stains your hands and the coins you hold. You are a sell-sword, a mercenary, a contractor of war. Where you come from, what you are, who you serve.. none of it matters. What matters is that the mammon flows to your pocket."
+	tutorial = "鲜血沾在你的双手上，也浸在你握着的钱币里。你是卖剑为生之人，是佣兵，是把战争当差事接下来的承包者。你来自何方、是何出身、效忠何人……都不重要。真正重要的，只有钱财是否流进了你的口袋。"
 	display_order = JDO_MERCENARY
 	selection_color = JCOLOR_WANDERER
 	min_pq = 2		//Will be handled by classes if PQ limiting is needed. --But Until then, learn escalation, mercs.

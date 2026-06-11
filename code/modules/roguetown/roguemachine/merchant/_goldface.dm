@@ -13,8 +13,8 @@
 #define UPGRADE_NOTAX		(1<<0)
 
 /obj/structure/roguemachine/goldface
-	name = "GOLDFACE"
-	desc = "Gilded tombs do worms enfold."
+	name = "金面"
+	desc = "镀金的墓穴，终会被蠕虫包裹。"
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "streetvendor1"
 	density = TRUE
@@ -27,7 +27,7 @@
 	var/upgrade_flags
 	var/current_cat = "1"
 	// Motto displayed at the top of the vendor interface
-	var/motto = "GOLDFACE - In the name of greed."
+	var/motto = "金面 - 以贪欲之名。"
 	lockid = "merchant"
 	// Which job can access profit from this vendor
 	var/profit_id = list("Merchant", "Shophand")
@@ -72,12 +72,12 @@
 	var/extra_fee = 0 // Extra Guild Fees on purchases. Meant to make publicface very unprofitable.
 
 /obj/structure/roguemachine/goldface/public
-	name = "SILVERFACE"
+	name = "银面"
 	extra_fee = 0.5
 	profit_margin = 0.5
 	is_public = TRUE
 	locked = FALSE
-	motto = "SILVERFACE - Commerce for all."
+	motto = "银面 - 人人皆可经商。"
 	// There's no profit but this is for futureproofing
 	profit_id = list("Merchant", "Shophand")
 	value_record_key = STATS_SILVERFACE_VALUE_SPENT
@@ -102,12 +102,12 @@
 
 /obj/structure/roguemachine/goldface/public/examine()
 	. = ..()
-	. += "<span class='info'>A public version of the GOLDFACE. The guild charges a hefty fee for its usage. When locked, can be used to browse the inventory a merchant has.</span>"
-	. += "<span class='info'>An agreement between the Guild of Craft and the Merchant's Guild mandates that certain protected goods are sold in a separate vendor that can be locked by the guildmembers.</span>"
-	. += "<span class='info'>The vendor can be locked by a key. The merchant make no profit whatsoever from the public vendor as the guild charges an exorbitant markup for automated handling.</span>"
+	. += "<span class='info'>GOLDFACE 的公开版。公会会为其使用收取高额费用。上锁时，仍可用来浏览商人当前的货品清单。</span>"
+	. += "<span class='info'>工艺公会与商人公会之间的协议规定，某些受保护商品必须通过独立贩卖机出售，并可由公会成员上锁。</span>"
+	. += "<span class='info'>这台贩卖机可以用钥匙上锁。由于公会会为自动化处理收取极高加价，商人无法从公开贩卖机中获得任何利润。</span>"
 
 /obj/structure/roguemachine/goldface/public/smith
-	name = "Smithy's SILVERFACE"
+	name = "铁匠的银面"
 	lockid = "crafterguild"
 	profit_id = list("Guildsman", "Guildmaster", "Tailor")
 	categories = list(
@@ -122,10 +122,10 @@
 
 /obj/structure/roguemachine/goldface/public/smith/examine()
 	. = ..()
-	. += span_info("This can be locked by a guild's key")
+	. += span_info("它可以用公会钥匙锁上。")
 
 /obj/structure/roguemachine/goldface/public/tailor
-	name = "Tailor's SILVERFACE"
+	name = "裁缝的银面"
 	lockid = "tailor"
 	profit_id = list("Guildsman", "Guildmaster", "Tailor")
 	categories = list(
@@ -138,10 +138,10 @@
 
 /obj/structure/roguemachine/goldface/public/tailor/examine()
 	. = ..()
-	. += span_info("This can be locked by a tailor's key")
+	. += span_info("它可以用裁缝钥匙锁上。")
 
 /obj/structure/roguemachine/goldface/public/apothecary
-	name = "Apothecary's SILVERFACE"
+	name = "药剂师的银面"
 	lockid = "physician"
 	profit_id = list("Head Physician","Apothecary")
 	categories = list(
@@ -151,7 +151,7 @@
 
 /obj/structure/roguemachine/goldface/public/apothecary/examine()
 	. = ..()
-	. += span_info("This can be locked by a physician's key")
+	. += span_info("它可以用医师钥匙锁上。")
 
 /obj/structure/roguemachine/goldface/Initialize(mapload)
 	. = ..()
@@ -175,7 +175,7 @@
 			update_icon()
 			return attack_hand(user)
 		else
-			to_chat(user, span_warning("Wrong key."))
+			to_chat(user, span_warning("钥匙不对。"))
 			return
 	else if(istype(P, /obj/item/storage/keyring))
 		var/right_key = FALSE
@@ -187,7 +187,7 @@
 				update_icon()
 				return attack_hand(user)
 		if(!right_key)
-			to_chat(user, span_warning("Wrong key."))
+			to_chat(user, span_warning("钥匙不对。"))
 			return
 	if(istype(P, /obj/item/roguecoin/gilbranze))
 		return
@@ -222,7 +222,7 @@
 			cost = cost + tax_amt
 		cost = round(cost)
 		if(budget < cost)
-			say("Not enough!")
+			say("不够！")
 			return
 		budget -= cost
 		wgain += profit
@@ -262,7 +262,7 @@
 			options += "Enable Paying Taxes"
 		else
 			options += "Stop Paying Taxes"
-		var/select = input(usr, "Please select an option.", "", null) as null|anything in options
+		var/select = input(usr, "请选择一个选项。", "", null) as null|anything in options
 		if(!select)
 			return
 		if(!usr.canUseTopic(src, BE_CLOSE) || (locked & !is_public))
@@ -283,7 +283,7 @@
 	if(!ishuman(user))
 		return
 	if(locked && !is_public)
-		to_chat(user, span_warning("It's locked. Of course."))
+		to_chat(user, span_warning("锁着呢，当然。"))
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	playsound(loc, 'sound/misc/gold_menu.ogg', 100, FALSE, -1)
@@ -292,17 +292,17 @@
 	contents = "<center>[motto]<BR>"
 
 	if(locked)
-		contents += "<a href='?src=[REF(src)];withdrawgain=1'>Stored Profits:</a> [wgain]<BR>"
+		contents += "<a href='?src=[REF(src)];withdrawgain=1'>已存利润：</a> [wgain]<BR>"
 	else
-		contents += "<a href='?src=[REF(src)];change=1'>MAMMON LOADED:</a> [budget]<BR>"
+		contents += "<a href='?src=[REF(src)];change=1'>已装入玛门：</a> [budget]<BR>"
 
 	var/mob/living/carbon/human/H = user
 	if(H.job in profit_id)
 		if(!is_public)
 			if(canread)
-				contents += "<a href='?src=[REF(src)];secrets=1'>Secrets</a>"
+				contents += "<a href='?src=[REF(src)];secrets=1'>秘项</a>"
 			else
-				contents += "<a href='?src=[REF(src)];secrets=1'>[stars("Secrets")]</a>"
+				contents += "<a href='?src=[REF(src)];secrets=1'>[stars("秘项")]</a>"
 	contents += "</center><BR>"
 
 	if(current_cat == "1")
@@ -320,7 +320,7 @@
 		contents += "</table>"
 	else
 		contents += "<center>[current_cat]<BR></center>"
-		contents += "<center><a href='?src=[REF(src)];changecat=1'>\[RETURN\]</a><BR><BR></center>"
+		contents += "<center><a href='?src=[REF(src)];changecat=1'>\[返回\]</a><BR><BR></center>"
 		var/list/pax = list()
 		for(var/pack in SSmerchant.supply_packs)
 			var/datum/supply_pack/PA = SSmerchant.supply_packs[pack]
@@ -337,7 +337,7 @@
 			if(is_public && locked)
 				contents += "[quantified_name]<BR>"
 			else
-				contents += "[quantified_name] - ([costy])<a href='?src=[REF(src)];buy=[PA.type]'>BUY</a><BR>"
+				contents += "[quantified_name] - ([costy])<a href='?src=[REF(src)];buy=[PA.type]'>购买</a><BR>"
 
 	if(!canread)
 		contents = stars(contents)

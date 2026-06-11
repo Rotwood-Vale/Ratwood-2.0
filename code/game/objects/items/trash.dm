@@ -19,16 +19,16 @@
 	return ..()
 
 /obj/item/trash/plate
-	name = "plate"
+	name = "盘子"
 	icon_state = "plate"
 	resistance_flags = NONE
 
 /obj/item/trash/pistachios
-	name = "pistachios pack"
+	name = "开心果包"
 	icon_state = "pistachios_pack"
 
 /obj/item/trash/candle
-	name = "candle"
+	name = "蜡烛"
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle4"
 

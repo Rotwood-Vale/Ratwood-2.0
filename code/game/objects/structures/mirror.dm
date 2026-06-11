@@ -1,7 +1,7 @@
 //wip wip wup
 /obj/structure/mirror
-	name = "mirror"
-	desc = "Mirror, mirror, on the wall..."
+	name = "镜子"
+	desc = "镜子啊镜子，墙上的镜子……"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "mirror"
 	density = FALSE
@@ -34,16 +34,16 @@
 		return
 
 	if(!HAS_TRAIT(H, TRAIT_MIRROR_MAGIC))
-		to_chat(H, span_warning("You look into the mirror but see only your normal reflection."))
+		to_chat(H, span_warning("我看向镜中，却只见自己寻常的倒影。"))
 		if(HAS_TRAIT(user, TRAIT_BEAUTIFUL))
 			H.add_stress(/datum/stressevent/beautiful)
-			to_chat(H, span_smallgreen("I look great!"))
+			to_chat(H, span_smallgreen("我看起来真不错！"))
 			// Apply Xylix buff when examining someone with the beautiful trait
 			if(HAS_TRAIT(H, TRAIT_XYLIX) && !H.has_status_effect(/datum/status_effect/buff/xylix_joy))
 				H.apply_status_effect(/datum/status_effect/buff/xylix_joy)
-				to_chat(H, span_info("My beauty brings a smile to my face, and fortune to my steps!"))
+				to_chat(H, span_info("我的美貌让我面带笑意，脚步也更添好运！"))
 		if(HAS_TRAIT(H, TRAIT_UNSEEMLY))
-			to_chat(H, span_warning("Another reminder of my own horrid visage."))
+			to_chat(H, span_warning("又一次提醒我自己那可憎的容貌。"))
 			H.add_stress(/datum/stressevent/unseemly)
 		return
 	else
@@ -79,9 +79,9 @@
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
 
-	to_chat(user, span_notice("I begin repairing [src]..."))
+	to_chat(user, span_notice("我开始修理[src]……"))
 	if(I.use_tool(src, user, 10, volume=50))
-		to_chat(user, span_notice("I repair [src]."))
+		to_chat(user, span_notice("我修好了[src]。"))
 		obj_broken = 0
 		icon_state = initial(icon_state)
 		desc = initial(desc)
@@ -90,7 +90,7 @@
 
 
 /obj/structure/mirror/magic
-	name = "magic mirror"
+	name = "魔镜"
 	desc = ""
 	icon_state = "magic_mirror"
 	var/list/choosable_races = list()
@@ -126,14 +126,14 @@
 	var/mob/living/carbon/human/H = user
 	var/should_update = FALSE
 
-	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "race", "gender", "hair", "eyes", "accessory", "face detail")
+	var/choice = input(user, "想改变什么？", "魔法梳妆") as null|anything in list("名字", "种族", "性别", "发型", "眼睛", "配饰", "面部细节")
 
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 
 	switch(choice)
-		if("name")
-			var/newname = copytext(sanitize_name(input(H, "Who are we again?", "Name change", H.name) as null|text),1,MAX_NAME_LEN)
+		if("名字")
+			var/newname = copytext(sanitize_name(input(H, "我们叫什么来着？", "更改名字", H.name) as null|text),1,MAX_NAME_LEN)
 
 			if(!newname)
 				return
@@ -146,9 +146,9 @@
 			if(H.mind)
 				H.mind.name = newname
 
-		if("race")
+		if("种族")
 			var/newrace
-			var/racechoice = input(H, "What are we again?", "Race change") as null|anything in choosable_races
+			var/racechoice = input(H, "我们是什么来着？", "更改种族") as null|anything in choosable_races
 			newrace = GLOB.species_list[racechoice]
 
 			if(!newrace)
@@ -158,7 +158,7 @@
 			H.set_species(newrace, icon_update=0)
 
 			if(H.dna.species.use_skintones)
-				var/new_s_tone = input(user, "Choose your skin tone:", "Race change")  as null|anything in GLOB.skin_tones
+				var/new_s_tone = input(user, "选择你的肤色：", "更改种族")  as null|anything in GLOB.skin_tones
 				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
 
@@ -167,7 +167,7 @@
 					H.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
 
 			if(MUTCOLORS in H.dna.species.species_traits)
-				var/new_mutantcolor = input(user, "Choose your skin color:", "Race change","#"+H.dna.features["mcolor"]) as color|null
+				var/new_mutantcolor = input(user, "选择你的皮肤颜色：", "更改种族","#"+H.dna.features["mcolor"]) as color|null
 				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
 				if(new_mutantcolor)
@@ -177,20 +177,20 @@
 						H.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 
 					else
-						to_chat(H, span_notice("Invalid color. Your color is not bright enough."))
+						to_chat(H, span_notice("无效颜色。你选的颜色不够明亮。"))
 
 			H.update_body()
 			H.update_hair()
 			H.update_body_parts()
 
-		if("hair")
-			var/hairchoice = alert(H, "Hairstyle or hair color?", "Change Hair", "Style", "Color")
+		if("发型")
+			var/hairchoice = alert(H, "要改发型还是发色？", "更改头发", "样式", "颜色")
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
-			if(hairchoice == "Style") //So you just want to use a mirror then?
+			if(hairchoice == "样式") //So you just want to use a mirror then?
 				..()
 			else
-				var/new_hair_color = input(H, "Choose your hair color", "Hair Color","#"+H.hair_color) as color|null
+				var/new_hair_color = input(H, "选择你的发色", "发色","#"+H.hair_color) as color|null
 				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
 				if(new_hair_color)
@@ -198,14 +198,14 @@
 					H.facial_hair_color = H.hair_color
 					H.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
 				if(H.gender == "male")
-					var/new_face_color = input(H, "Choose your facial hair color", "Hair Color","#"+H.facial_hair_color) as color|null
+					var/new_face_color = input(H, "选择你的面部毛发颜色", "发色","#"+H.facial_hair_color) as color|null
 					if(new_face_color)
 						H.facial_hair_color = sanitize_hexcolor(new_face_color)
 						H.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)
 				H.update_hair()
 
-		if("eyes")
-			var/new_eye_color = color_pick_sanitized(user, "Choose your eye color", "Eye Color", H.eye_color)
+		if("眼睛")
+			var/new_eye_color = color_pick_sanitized(user, "选择你的眼睛颜色", "眼睛颜色", H.eye_color)
 			if(new_eye_color)
 				new_eye_color = sanitize_hexcolor(new_eye_color, 6, TRUE)
 				var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
@@ -219,14 +219,14 @@
 				H.update_body_parts()
 				should_update = TRUE
 
-		if("accessory")
+		if("配饰")
 			var/datum/customizer_choice/bodypart_feature/accessory/accessory_choice = CUSTOMIZER_CHOICE(/datum/customizer_choice/bodypart_feature/accessory)
-			var/list/valid_accessories = list("none")
+			var/list/valid_accessories = list("无")
 			for(var/accessory_type in accessory_choice.sprite_accessories)
 				var/datum/sprite_accessory/accessory/acc = new accessory_type()
 				valid_accessories[acc.name] = accessory_type
 
-			var/new_style = input(user, "Choose your accessory", "Accessory Styling") as null|anything in valid_accessories
+			var/new_style = input(user, "选择你的配饰", "配饰造型") as null|anything in valid_accessories
 			if(new_style)
 				var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 				if(head && head.bodypart_features)
@@ -236,20 +236,20 @@
 						break
 
 					// Add new accessory if not "none"
-					if(new_style != "none")
+					if(new_style != "无")
 						var/datum/bodypart_feature/accessory/accessory_feature = new()
 						accessory_feature.set_accessory_type(valid_accessories[new_style], H.hair_color, H)
 						head.add_bodypart_feature(accessory_feature)
 					should_update = TRUE
 
-		if("face detail")
+		if("面部细节")
 			var/datum/customizer_choice/bodypart_feature/face_detail/face_choice = CUSTOMIZER_CHOICE(/datum/customizer_choice/bodypart_feature/face_detail)
-			var/list/valid_details = list("none")
+			var/list/valid_details = list("无")
 			for(var/detail_type in face_choice.sprite_accessories)
 				var/datum/sprite_accessory/face_detail/detail = new detail_type()
 				valid_details[detail.name] = detail_type
 
-			var/new_detail = input(user, "Choose your face detail", "Face Detail") as null|anything in valid_details
+			var/new_detail = input(user, "选择你的面部细节", "面部细节") as null|anything in valid_details
 			if(new_detail)
 				var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 				if(head && head.bodypart_features)
@@ -259,7 +259,7 @@
 						break
 
 					// Add new face detail if not "none"
-					if(new_detail != "none")
+					if(new_detail != "无")
 						var/datum/bodypart_feature/face_detail/detail_feature = new()
 						detail_feature.set_accessory_type(valid_details[new_detail], H.hair_color, H)
 						head.add_bodypart_feature(detail_feature)
@@ -272,8 +272,8 @@
 	return
 
 /obj/item/handmirror
-	name = "hand mirror"
-	desc = "Mirror, mirror, in my hand, who's the fairest in the land?"
+	name = "手镜"
+	desc = "镜啊镜，掌中之镜，天下谁人最美丽？"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "handmirror"
 	grid_width = 32
@@ -287,19 +287,19 @@
 	var/mob/living/carbon/human/H = user
 
 	if(HAS_TRAIT(H, TRAIT_MIRROR_MAGIC))
-		to_chat(H, span_info("You gaze into the mirror, concentrating on the glamoring magicks limning your form..."))
+		to_chat(H, span_info("我凝视镜中，专注于勾勒塑形我身躯的幻魅魔法……"))
 		if(do_after(H, 3 SECONDS))
 			perform_mirror_transform(H)
 		return
 
 	if(HAS_TRAIT(user, TRAIT_BEAUTIFUL))
 		H.add_stress(/datum/stressevent/beautiful)
-		H.visible_message(span_notice("[H] admires [H.p_their()] reflection in [src]."), span_smallgreen("I look great!"))
+		H.visible_message(span_notice("[H]欣赏着[H.p_their()]在[src]中的倒影。"), span_smallgreen("我看起来真不错！"))
 	if(HAS_TRAIT(H, TRAIT_UNSEEMLY))
-		to_chat(H, span_warning("Another reminder of my own horrid visage."))
+		to_chat(H, span_warning("又一次提醒我自己那可憎的容貌。"))
 		H.add_stress(/datum/stressevent/unseemly)
 	// Apply Xylix buff when examining someone with the beautiful trait
 	if(HAS_TRAIT(H, TRAIT_XYLIX) && !H.has_status_effect(/datum/status_effect/buff/xylix_joy) && H.has_stress_event(/datum/stressevent/beautiful))
 		H.apply_status_effect(/datum/status_effect/buff/xylix_joy)
-		to_chat(H, span_info("My beauty brings a smile to my face, and fortune to my steps!"))
+		to_chat(H, span_info("我的美貌让我面带笑意，脚步也更添好运！"))
 	return

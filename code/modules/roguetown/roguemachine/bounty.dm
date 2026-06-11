@@ -1,6 +1,6 @@
 /obj/structure/roguemachine/bounty
-	name = "EXCIDIUM"
-	desc = "Created by a fanatical sect of devout followers of Ravox, this machine sets bounties."
+	name = "灭绝机"
+	desc = "这台机器由一支狂热崇奉拉沃克斯的虔信教派打造，用于设立悬赏。"
 	icon = 'icons/roguetown/topadd/statue1.dmi'
 	icon_state = "baldguy"
 	density = FALSE
@@ -40,7 +40,7 @@
 
 	// Main Menu
 	var/list/choices = list("Consult Bounties", "Set Bounty", "Print List of Bounties", "Remove Bounty", "Collect Change")
-	var/selection = input(user, "The Excidium listens", src) as null|anything in choices
+	var/selection = input(user, "灭绝兽 正在聆听", src) as null|anything in choices
 
 	if(!Adjacent(user, src)) // User can move while selecting, sanity check
 		return
@@ -72,7 +72,7 @@
 		qdel(P)
 		update_icon()
 		playsound(loc, 'sound/misc/gold_misc.ogg', 100, TRUE, -1)
-		say("The amount loaded is now [budget].")
+		say("当前装入金额为 [budget]。")
 		return attack_hand(user)
 	..()
 
@@ -92,7 +92,7 @@
 		popup.open()
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(user_moved))
 	else
-		say("No bounties are currently active.")
+		say("当前没有有效悬赏。")
 
 /// Subscribes to COMSIG_MOVABLE_MOVED to prevent the user from having bounty screen open when not adjacent to the machine
 /obj/structure/roguemachine/bounty/proc/user_moved(mob/former_user)
@@ -115,14 +115,14 @@
 			bounty_list += removable_bounties.target
 
 	if(!bounty_list.len)
-		say("You have no active bounty listings to remove.")
+		say("你没有可移除的有效悬赏。")
 		return
 
-	var/target_name = input(user, "Whose name shall be struck from the wanted list?", src) as null|anything in bounty_list
+	var/target_name = input(user, "要将谁的名字从通缉名单上划去？", src) as null|anything in bounty_list
 	if(!target_name)
 		return
 
-	say("Removing [target_name] from bounty list...")
+	say("正在将[target_name]从悬赏名单中移除……")
 
 	for(var/datum/bounty/removing_bounty in GLOB.head_bounties)
 		if(removing_bounty.target == target_name && user.real_name == removing_bounty.employer)
@@ -130,7 +130,7 @@
 			scom_announce("The bounty posting on [target_name] has been removed.")
 			message_admins("[ADMIN_LOOKUPFLW(user)] has removed the bounty on [ADMIN_LOOKUPFLW(target_name)]")
 			return
-	say("Error. Bounty no longer active.")
+	say("错误。该悬赏已不再有效。")
 
 ///Sets a bounty on a target player through user input.
 ///@param user: The player setting the bounty.
@@ -142,38 +142,38 @@
 			if(H.real_name in user.mind.known_people)
 				eligible_players[H.real_name] = H
 	else
-		to_chat(user, span_warning("I don't know anyone."))
+		to_chat(user, span_warning("我一个人都不认识。"))
 		return
 
-	var/choice = input(user, "Whose name shall be etched on the wanted list?", src) as null|anything in eligible_players
+	var/choice = input(user, "要将谁的名字刻上通缉名单？", src) as null|anything in eligible_players
 	if(isnull(choice))
-		say("No target selected.")
+		say("未选择目标。")
 		return
 
 	var/mob/living/carbon/human/target = eligible_players[choice]
 
-	var/amount = input(user, "How many mammons shall be stained red for their demise?", src) as null|num
+	var/amount = input(user, "要为他们的死亡染红多少玛门？", src) as null|num
 	if(isnull(amount))
-		say("Invalid amount.")
+		say("金额无效。")
 		return
 	if(amount < 100)
-		say("Insufficient amount. Bounty must be at least 100 mammon.")
+		say("金额不足。悬赏至少需要 100 玛门。")
 		return
 	if(amount > 500)
-		say("Insufficient amount. Bounties cannot be more than 500 mammon.")
+		say("金额不足。悬赏不能超过 500 玛门。")
 		return
 
 	// Has user enough money?
 	if(budget < amount)
-		say("Insufficient funds.")
+		say("资金不足。")
 		return
 
-	var/reason = input(user, "For what sins do you summon the hounds of hell?", src) as null|text
+	var/reason = input(user, "你因何等罪孽召来地狱猎犬？", src) as null|text
 	if(isnull(reason) || reason == "")
-		say("No reason given.")
+		say("未给出理由。")
 		return
 
-	var/confirm = input(user, "Do you dare unleash this darkness upon the world? Your name will be known.", src) as null|anything in list("Yes", "No")
+	var/confirm = input(user, "你真敢将这份黑暗释放到世间吗？你的名字会为人所知。", src) as null|anything in list("Yes", "No")
 	if(isnull(confirm) || confirm == "No") return
 
 	// Deduct money from user
@@ -198,7 +198,7 @@
 
 	//Announce it locally and on scomm
 	playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
-	var/bounty_announcement = "The Excidium hungers for [target]."
+	var/bounty_announcement = "The 灭绝兽 hungers for [target]."
 	say(bounty_announcement)
 	scom_announce(bounty_announcement)
 
@@ -343,7 +343,7 @@
 
 /obj/structure/roguemachine/bounty/proc/print_bounty_scroll(mob/living/carbon/human/user)
 	if(!GLOB.head_bounties.len)
-		say("No bounties are currently active.")
+		say("当前没有有效悬赏。")
 		return
 
 	var/cost = 50
@@ -362,12 +362,12 @@
 	var/obj/item/paper/scroll/bounty/scroll = new(get_turf(src))
 	scroll.update_bounty_text()
 	playsound(src, 'sound/items/scroll_open.ogg', 100, TRUE)
-	visible_message(span_notice("The [src] prints out a weathered scroll."))
-	say("Your scroll is ready.")
+	visible_message(span_notice("[src]打印出一卷风化的卷轴。"))
+	say("你的卷轴准备好了。")
 
 /obj/item/paper/scroll/bounty
-	name = "enchanted bounty scroll"
-	desc = "A weathered scroll enchanted to list the active bounties from the Excidium."
+	name = "附魔悬赏卷轴"
+	desc = "一卷附魔的风化卷轴，用于列出 灭绝兽 当前的有效悬赏。"
 	icon_state = "scroll"
 	open = FALSE
 
@@ -377,7 +377,7 @@
 		update_bounty_text()
 
 /obj/item/paper/scroll/bounty/proc/update_bounty_text()
-	var/scroll_text = "<center>WANTED BY THE EXCIDIUM</center><br><br>"
+	var/scroll_text = "<center>灭绝机 悬赏名单</center><br><br>"
 
 	for(var/datum/bounty/saved_bounty in GLOB.head_bounties)
 		scroll_text += saved_bounty.banner
@@ -386,7 +386,7 @@
 	info = scroll_text
 
 /obj/structure/chair/freedomchair
-	name = "LIBERTAS"
+	name = "自由机"
 	desc = "A chair-shaped machine normally used to place cursed collars onto a prisoner's neck. \
 	This one's been tampered with, and now does the opposite - re-purposed to remove those wretched iron collars."
 	icon = 'icons/roguetown/misc/machines.dmi'
@@ -397,20 +397,20 @@
 	anchored = TRUE
 
 /obj/structure/chair/freedomchair/crafted
-	desc = "A chair-shaped machine normally used to place cursed collars onto a prisoner's neck. This one's clearly been tampered with, and looks suspicious."
+	desc = "这是一台通常用于给囚犯脖子套上诅咒项圈的椅形机器。这一台显然被动过手脚，看起来很可疑。"
 
 /obj/structure/chair/freedomchair/crafted/attack_right(mob/living/carbon/human/A)
 	var/mob/living/carbon/human/M = null
 	for(var/l in buckled_mobs)
 		M = l
 	if(!ismob(M))
-		say("CANNOT BEGIN WITHOUT SUBJECT BUCKLED.")
+		say("未将对象固定，无法开始。")
 		return
 	if(!ishuman(M))
-		say("NON-HUMAN ENTITY. ABORT. ABORT.")
+		say("非人实体。中止。中止。")
 		return
 	if(!M.buckled)
-		say("SUBJECT... NOT PROPERLY SECURED...")
+		say("对象……未被妥善固定……")
 		return
 	if(!do_after(A, 3 SECONDS, TRUE, M))
 		return
@@ -421,13 +421,13 @@
 	var/obj/item/clothing/neck/old_mask = M.get_item_by_slot(SLOT_NECK)
 	if(old_mask)
 		if(istype(old_mask, /obj/item/clothing/neck/roguetown/collar/prisoner))
-			say("ERROR: UNLAWFUL SYSTEM TAMPERING DETECTED... ENGAGING SELF DESTRUCT...")
+			say("错误：检测到非法系统篡改……启动自毁……")
 			sleep(1 SECONDS)
 			explosion(src, light_impact_range = 1, flame_range = 1)
 			M.dropItemToGround(old_mask, TRUE)
 			qdel(src)
 	else
-		say("ANALYSIS COMPLETE. NO CURSED COLLAR FOUND. ABORT.")
+		say("分析完成。未发现诅咒项圈。中止。")
 		return
 
 /obj/structure/chair/freedomchair/attack_right(mob/living/carbon/human/A)
@@ -452,15 +452,15 @@
 	var/obj/item/clothing/neck/old_mask = M.get_item_by_slot(SLOT_NECK)
 	if(old_mask)
 		if(istype(old_mask, /obj/item/clothing/neck/roguetown/collar/prisoner))
-			say("COLLAR DISCARDED. FREEDOM, AT LAST...")
+			say("项圈已解除。终于获得自由……")
 			M.dropItemToGround(old_mask, TRUE)
 	else
-		say("ANALYSIS COMPLETE. NO CURSED COLLAR FOUND. ABORT.")
+		say("分析完成。未发现诅咒项圈。中止。")
 		return
 
 /obj/structure/chair/arrestchair
-	name = "CASTIFICO"
-	desc = "A chair-shaped machine that collects bounties, for a greater reward, in exchange for a penalty that some might consider worse than death."
+	name = "惩戒机"
+	desc = "这是一台用于领取悬赏的椅形机器，能换来更高报酬，但代价在某些人看来比死亡更可怕。"
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "evilchair"
 	blade_dulling = DULLING_BASH
@@ -478,29 +478,29 @@
 		if(HAS_TRAIT(A, TRAIT_OUTLAW)) // TRAIT_OUTLAW_NOFACE
 			var/def_zone = "[(A.active_hand_index == 2) ? "r" : "l" ]_arm"
 			playsound(A, 'sound/combat/hits/bladed/genstab (1).ogg', 100, FALSE, -1)
-			loc.visible_message(span_warning("The castifico snaps at [A]'s hand!"))
-			to_chat(A, span_danger("The machine wants YOU!"))
+			loc.visible_message(span_warning("Castifico 猛地咬向[A]的手！"))
+			to_chat(A, span_danger("这台机器要的就是你！"))
 			A.flash_fullscreen("redflash3")
 			A.Stun(10)
 			A.apply_damage(10, BRUTE, def_zone)
 			A.emote("whimper")
 			return
 	if(!ismob(M))
-		say("Cannot begin skull structure analysis without a subject buckled to the Castifico.")
+		say("若没有对象被固定在 Castifico 上，无法开始颅骨结构分析。")
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		return
 	if(!ishuman(M))
-		say("Subject is non-human entity. Aborting...")
+		say("对象为非人实体。正在中止……")
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		return
 	if(!M.buckled)
-		say("Subject is not properly secured for analysis.")
+		say("对象未被妥善固定，无法分析。")
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		return
 	var/obj/item/bodypart/head/headcheck
 	headcheck = M.get_bodypart(check_zone(BODY_ZONE_HEAD))
 	if(!headcheck)
-		say("Subject is missing cranium. Aborting...")
+		say("对象缺失颅骨。正在中止……")
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		return
 	if(!do_after(A, 5 SECONDS, TRUE, M))
@@ -518,18 +518,18 @@
 			reward_amount += b.amount
 			GLOB.head_bounties -= b
 
-	say(pick(list("Performing intra-cranial inspection...", "Analyzing skull structure...", "Commencing cephalic dissection...")))
+	say(pick(list("正在进行颅内检查……", "正在分析颅骨结构……", "开始头部解剖……")))
 
 	sleep(1 SECONDS)
 
 	if(M.stat == DEAD)
 		reward_amount = reward_amount / 2
-		say("Subject is deceased. Rewarding half of posted bounty amount.")
+		say("对象已死亡。发放已发布悬赏金额的一半。")
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		sleep(1 SECONDS)
 
 	INVOKE_ASYNC(src, PROC_REF(giveup), M)
-	say("Assessing value of lyfe...")
+	say("正在评估生命价值……")
 	sleep(10 SECONDS)
 
 	var/list/headcrush = list('sound/combat/fracture/headcrush (2).ogg', 'sound/combat/fracture/headcrush (3).ogg', 'sound/combat/fracture/headcrush (4).ogg')
@@ -544,7 +544,7 @@
 	sleep(2 SECONDS)
 
 	if(correct_head)
-		say("A bounty has been sated.")
+		say("一笔悬赏已被结清。")
 		budget2change((reward_amount))
 
 		var/obj/item/clothing/neck/old_mask = M.get_item_by_slot(SLOT_NECK)
@@ -555,16 +555,16 @@
 		M.equip_to_slot_or_del(prisonmask, SLOT_NECK, TRUE)
 		playsound(src.loc, 'sound/items/beartrap.ogg', 100, TRUE, -1)
 	else
-		say("This skull carries no reward, you fool.")
+		say("这颗头骨不值赏金，蠢货。")
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 
 	if(!submission)
 		if(M.Adjacent(src))
-			say("Resistance detected...")
+			say("检测到反抗……")
 			src.Shake()
 			var/obj/item/bodypart/head/victim_head = M.get_bodypart(BODY_ZONE_HEAD)
-			message_admins("[M.real_name] was killed by the Excidium.")
-			log_admin("[M.real_name] was killed by the Excidium.")
+			message_admins("[M.real_name] was killed by the 灭绝兽.")
+			log_admin("[M.real_name] was killed by the 灭绝兽.")
 			playsound(src, 'sound/combat/vite.ogg', 100, FALSE, -1)
 			victim_head.skeletonize()
 			submission = TRUE
@@ -576,8 +576,8 @@
 
 /obj/structure/chair/arrestchair/proc/giveup(mob/living/carbon/human/M)
 	if(alert(M, "Do you submit to the Mask, or do you die? You have 10 seconds to decide.", "CHOICE OF LYFE", "Submit", "Perish") == "Perish")
-		message_admins("[M.real_name] chose to die to the Excidium.")
-		log_admin("[M.real_name] opted to die to the Excidium.")
+		message_admins("[M.real_name] chose to die to the 灭绝兽.")
+		log_admin("[M.real_name] opted to die to the 灭绝兽.")
 		if(M.Adjacent(src))	//No buffering this for later
 			submission = FALSE
 

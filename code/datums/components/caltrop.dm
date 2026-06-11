@@ -53,11 +53,11 @@
 
 		if(cooldown < world.time - 10) //cooldown to avoid message spam.
 			if(!H.incapacitated(ignore_restraints = TRUE))
-				H.visible_message(span_danger("[H] steps on [A]."), \
-						span_danger("I step on [A]!"))
+				H.visible_message(span_danger("[H]踩到了[A]。"), \
+						span_danger("我踩到了[A]！"))
 			else
-				H.visible_message(span_danger("[H] slides on [A]!"), \
-						span_danger("I slide on [A]!"))
+				H.visible_message(span_danger("[H]在[A]上滑倒了！"), \
+						span_danger("我在[A]上滑倒了！"))
 
 			cooldown = world.time
 		H.Paralyze(60)

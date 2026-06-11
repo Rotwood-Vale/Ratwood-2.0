@@ -1,6 +1,6 @@
 /datum/advclass/gnoll/berserker
-	name = "Gnoll Berserker"
-	tutorial = "You are a warrior feared for your brutality, dedicated to using your might for your own gain. Might equals right, and you are the reminder of such a saying."
+	name = "豺狼人狂战士"
+	tutorial = "你是个因残暴而令人畏惧的战士，一心只想把自己的力量化作私欲的利爪。强权即公理，而你便是这句话最鲜活的证明。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(/datum/species/gnoll)
 	outfit = /datum/outfit/job/roguetown/gnoll/berserker

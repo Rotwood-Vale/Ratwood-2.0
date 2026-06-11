@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/shadowstep
-	name = "Shadowstep"
-	desc = "Project your shadow to swap places with it, teleporting several feet away."
+	name = "影踏"
+	desc = "投出自己的影子并与之交换位置，让你瞬移到数步之外。"
 	cost = 3
 	xp_gain = TRUE
 	releasedrain = 30
@@ -90,7 +90,7 @@
 		if(max_range >= get_dist(user, T) && !T.density)
 			if(check_path(get_turf(user), T))	//We check for opaque turfs or non-climbable windows in the way via a simple pathfind.
 				if(get_dist(user, T) < 2 && user.z == T.z)
-					to_chat(user, span_info("Too close!"))
+					to_chat(user, span_info("太近了！"))
 					revert_cast()
 					return
 
@@ -102,11 +102,11 @@
 					turf_list.len--
 				for(var/turf/turf in turf_list)
 					if(turf.density)
-						to_chat(user, span_warning("There's something in the way!"))//A check before the other checks, for hacky LoS, without including doors.
+						to_chat(user, span_warning("有什么东西挡住了去路！"))//A check before the other checks, for hacky LoS, without including doors.
 						revert_cast()
 						return
 
-				to_chat(user, span_info("I begin to meld with the shadows.."))
+				to_chat(user, span_info("我开始与阴影融为一体……"))
 				lockon(T, user)
 				if(do_after(user, 5 SECONDS))
 					tp(user)
@@ -115,18 +115,18 @@
 					revert_cast()
 				return
 			else
-				to_chat(user, span_info("The path is blocked!"))
+				to_chat(user, span_info("路径被阻挡了！"))
 				revert_cast()
 				return
 		else if(get_dist(user, T) > max_range)
-			reason = "It's too far."
+			reason = "那里太远了。"
 			revert_cast()
 		else if (T.density)
-			reason = "It's a wall!"
+			reason = "那是一堵墙！"
 			revert_cast()
-		to_chat(user, span_info("I cannot shadowstep there! "+"[reason]"))
+		to_chat(user, span_info("我无法影踏到那里！[reason]"))
 	else
-		to_chat(user, span_info("I cannot shadowstep there!"))
+		to_chat(user, span_info("我无法影踏到那里！"))
 		revert_cast()
 	. = ..()
 

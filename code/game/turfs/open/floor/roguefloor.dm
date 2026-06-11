@@ -21,8 +21,8 @@
 
 /turf/open/floor/rogue/ruinedwood
 	icon_state = "wooden_floor"
-	name = "wooden floorboards"
-	desc = "Interlocking wooden floorboards scratched with thousands of steps."
+	name = "木地板"
+	desc = "互相咬合的木地板上布满了万千脚步留下的划痕。"
 	footstep = FOOTSTEP_WOOD
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_WOOD_CLAW
@@ -72,8 +72,8 @@
 	slowdown = 0
 
 /turf/open/floor/rogue/twig
-	name = "twig flooring"
-	desc = "Bundles of twigs have been laid flat against the ground. They creak and crackle with the slightest weight."
+	name = "树枝地板"
+	desc = "一捆捆树枝被平铺在地面上，稍一承重便吱嘎作响、噼啪开裂。"
 	icon_state = "twig"
 	footstep = FOOTSTEP_GRASS
 	barefootstep = FOOTSTEP_SOFT_BAREFOOT
@@ -446,8 +446,8 @@
 	roguesmooth(adjacencies)
 
 /turf/open/floor/rogue/grassyel
-	name = "yellow grass"
-	desc = "Grass, blessed by Astrata's light."
+	name = "黄草地"
+	desc = "受到 Astrata 之光祝福的草地。"
 	icon_state = "grass_yel"
 	layer = MID_TURF_LAYER
 	footstep = FOOTSTEP_GRASS
@@ -473,8 +473,8 @@
 	roguesmooth(adjacencies)
 
 /turf/open/floor/rogue/grass
-	name = "grass"
-	desc = "Grass, sodden with mud and bogwater."
+	name = "草地"
+	desc = "浸透了泥浆和沼泽水的草地。"
 	icon_state = "grass"
 	layer = MID_TURF_LAYER
 	footstep = FOOTSTEP_GRASS
@@ -509,8 +509,8 @@
 	roguesmooth(adjacencies)
 
 /turf/open/floor/rogue/dirt/ambush
-	name = "dirt"
-	desc = "The dirt is pocked with the scars of countless wars."
+	name = "泥土"
+	desc = "泥土上布满了无数战争留下的疮痍。"
 	icon_state = "dirt"
 	layer = MID_TURF_LAYER
 	footstep = FOOTSTEP_GRASS
@@ -537,8 +537,8 @@
 	spread_chance = 8
 
 /turf/open/floor/rogue/dirt
-	name = "dirt"
-	desc = "The dirt is pocked with the scars of countless wars."
+	name = "泥土"
+	desc = "泥土上布满了无数战争留下的疮痍。"
 	icon_state = "dirt"
 	layer = MID_TURF_LAYER
 	footstep = FOOTSTEP_GRASS
@@ -705,8 +705,8 @@
 		bloodiness = 20
 
 /turf/open/floor/rogue/dirt/road
-	name = "dirt"
-	desc = "The dirt is pocked with the scars of countless steps."
+	name = "土路"
+	desc = "泥土上布满了无数脚步踩踏的痕迹。"
 	icon_state = "road"
 	layer = MID_TURF_LAYER
 	footstep = FOOTSTEP_SAND
@@ -972,8 +972,8 @@
 
 /turf/open/floor/rogue/blocks
 	icon_state = "blocks"
-	name = "stone flooring"
-	desc = "These rough stone slabs have been arranged in a neat grid for a rustic yet tidy charm."
+	name = "石板地面"
+	desc = "这些粗糙的石板被整齐地排列成网格，兼具质朴与整洁的魅力。"
 	footstep = FOOTSTEP_STONE
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
@@ -1008,12 +1008,12 @@
 
 /turf/open/floor/rogue/blocks/stonered
 	icon_state = "stoneredlarge"
-	name = "large red tiles"
-	desc = "Large red earthen tiles carefully set in a pleasantly symmetrical pattern."
+	name = "大块红地砖"
+	desc = "精心铺设的大块红色陶土砖，构成令人愉悦的对称图案。"
 /turf/open/floor/rogue/blocks/stonered/tiny
 	icon_state = "stoneredtiny"
-	name = "square red tiles"
-	desc = "Small square earthen tiles carefully arranged in a somewhat plain pattern."
+	name = "方形红地砖"
+	desc = "精心排列的小方形陶土砖，图案略显朴素。"
 
 /turf/open/floor/rogue/blocks/green
 	icon_state = "greenblocks"
@@ -1149,8 +1149,8 @@
 
 /turf/open/floor/rogue/church
 	icon_state = "church"
-	name = "polished tile floor"
-	desc = "Glazed tiling that has withstood the decades with barely a scratch despite the steady accumulation of dirt and grime."
+	name = "抛光瓷砖地板"
+	desc = "尽管灰尘和污垢不断堆积，这些釉面瓷砖历经数十年却几乎毫无刮痕。"
 	footstep = FOOTSTEP_STONE
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
@@ -1334,8 +1334,8 @@
 
 /turf/open/floor/rogue/cobble
 	icon_state = "cobblestone1"
-	name = "cobblestone"
-	desc = "Stone bricks carefully inlaid upon the ground for a more refined and resilient path."
+	name = "圆石路"
+	desc = "精心铺设在地面上的石砖，铺成了一条更精致、更经久耐用的道路。"
 	footstep = FOOTSTEP_STONE
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
@@ -1367,8 +1367,8 @@
 	icon_state = "cobblestone[rand(1,3)]"
 
 /turf/open/floor/rogue/cobble/mossy
-	name = "mossy cobblestone"
-	desc = "Dirt and moss have crept between the gaps of this stone-brick flooring."
+	name = "长满苔藓的鹅卵石"
+	desc = "泥土和苔藓爬满了这石砖地面的缝隙。"
 	icon_state = "mossystone1"
 	footstep = FOOTSTEP_STONE
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -1432,8 +1432,8 @@
 
 /turf/open/floor/rogue/cobblerock
 	icon_state = "cobblerock"
-	name = "cobbled rock path"
-	desc = "A crude path of lumpy rocks that allows feet and cart wheels alike to escape the treacherous mud."
+	name = "碎石小路"
+	desc = "一条由坑洼不平的石头铺成的简陋小路，让行人和车轮都能逃脱泥泞的困扰。"
 	footstep = FOOTSTEP_STONE
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
@@ -1528,7 +1528,7 @@
 
 /turf/open/floor/rogue/tile
 	icon_state = "chess"
-	desc = "Feet march across a grid of plots and schemes."
+	desc = "脚步踏过布满阴谋与诡计的棋盘格地板。"
 	landsound = 'sound/foley/jumpland/tileland.wav'
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -1606,8 +1606,8 @@
 
 /turf/open/floor/rogue/concrete
 	icon_state = "concretefloor1"
-	name = "slab flooring"
-	desc = "Solid stone slabs have been carefully carved and laid to rest with nary a hair's breadth between them."
+	name = "石板地板"
+	desc = "坚固的石板经过精心雕刻铺设，彼此之间几乎没有一丝缝隙。"
 	landsound = 'sound/foley/jumpland/stoneland.wav'
 	footstep = FOOTSTEP_STONE
 	barefootstep = FOOTSTEP_HARD_BAREFOOT

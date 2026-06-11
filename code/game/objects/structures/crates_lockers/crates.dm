@@ -1,5 +1,5 @@
 /obj/structure/closet/crate
-	name = "crate"
+	name = "木箱"
 	desc = ""
 	icon_state = "crate"
 	req_access = null
@@ -50,8 +50,8 @@
 	. = ..()
 
 /obj/structure/closet/crate/coffin
-	name = "casket"
-	desc = "Death basket."
+	name = "棺匣"
+	desc = "一具装殓死者的棺匣。"
 	icon_state = "casket"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
@@ -71,13 +71,13 @@
 	lockid = "psy_bog_dung_lootkey_two"
 
 /obj/structure/closet/crate/coffin/vampire
-	name = "sleep casket"
-	desc = "A fancy coffin."
+	name = "安眠棺匣"
+	desc = "一具做工讲究的棺匣。"
 	icon_state = "vcasket"
 
 /obj/structure/closet/crate/coffin/royal
-	name = "gilded casket"
-	desc = "A coffin made of fine wood and gilded metals."
+	name = "鎏金棺匣"
+	desc = "一具以精木与鎏金金属打造的棺匣。"
 	icon_state = "rcasket"
 
 /obj/structure/closet/crate/coffin/royal/keylock
@@ -85,8 +85,8 @@
 	keylock = 1
 
 /obj/structure/closet/crate/coffin/royal/keylock/psydon
-	name = "divine casket"
-	desc = "A coffin made of fine wood and gilded metals that depict a psycross. It emits a strange aura.."
+	name = "圣徽棺匣"
+	desc = "一具以精木与鎏金金属打造、饰有灵十字纹样的棺匣。它散发着一股奇异气息。"
 	locked = 1
 	keylock = 1
 	max_integrity = 9999

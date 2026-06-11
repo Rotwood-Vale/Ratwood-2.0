@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/targeted/turf_teleport
-	name = "Turf Teleport"
+	name = "地块传送"
 	desc = ""
 	nonabstract_req = TRUE
 

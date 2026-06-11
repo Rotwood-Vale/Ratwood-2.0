@@ -1,6 +1,6 @@
 /obj/structure/roguemachine/contractledger
-	name = "Grand Contract Ledger"
-	desc = "A massive ledger book with gilded edges, sitting atop a pedestal with the Mercenary's Guild banner. Its myriad enchanted pages are filled with various contracts and bounties issued by Mercenary's Guild, with arcane scripts that appears and fades as contracts are issued and completed."
+	name = "大契约账册"
+	desc = "一本边缘镀金的巨大账册，置于悬挂佣兵公会旗帜的基座之上。其无数附魔书页记载着佣兵公会发布的各类契约与悬赏，奥术文字会随着契约的发布与完成而浮现、消退。"
 	icon = 'code/modules/roguetown/roguemachine/questing/questing.dmi'
 	icon_state = "contractledger"
 	density = TRUE
@@ -13,7 +13,7 @@
 	. = ..()
 	input_point = locate(x, y - 1, z)
 	var/obj/effect/decal/marker_export/marker = new(get_turf(input_point))
-	marker.desc = "Place completed contract scrolls here to turn them in."
+	marker.desc = "将已完成的契约卷轴放在这里以提交。"
 	marker.layer = ABOVE_OBJ_LAYER
 
 /obj/structure/roguemachine/contractledger/attackby(obj/item/P, mob/living/carbon/human/user, params)
@@ -43,12 +43,12 @@
 	if(!ishuman(user))
 		return
 	// Inshallah I'll make this TGUI one day.
-	var/contents = "<center><h2>Grand Contract Ledger</h2>"
-	contents += "<a href='?src=[REF(src)];consultcontracts=1'>Consult Contracts</a><br>"
-	contents += "<a href='?src=[REF(src)];turnincontract=1'>Turn in Contract</a><br>"
-	contents += "<a href='?src=[REF(src)];abandoncontract=1'>Abandon Contract</a><br>"
+	var/contents = "<center><h2>大契约账册</h2>"
+	contents += "<a href='?src=[REF(src)];consultcontracts=1'>查阅契约</a><br>"
+	contents += "<a href='?src=[REF(src)];turnincontract=1'>提交契约</a><br>"
+	contents += "<a href='?src=[REF(src)];abandoncontract=1'>放弃契约</a><br>"
 	if(user.job == "Steward" || user.job == "Clerk" || user.job == "Merchant"|| user.job == "Shophand")
-		contents += "<a href='?src=[REF(src)];printcontracts=1'>Print Issued Contracts</a><br>"
+		contents += "<a href='?src=[REF(src)];printcontracts=1'>打印已发布契约</a><br>"
 	contents += "</center>"
 	var/datum/browser/popup = new(user, "Grand Contract Ledger", "", 500, 300)
 	popup.set_content(contents)
@@ -56,7 +56,7 @@
 
 /obj/structure/roguemachine/contractledger/proc/consult_contracts(mob/user)
 	if(!(user in SStreasury.bank_accounts))
-		say("You have no bank account.")
+		say("你没有银行账户。")
 		return
 
 	var/list/difficulty_data = list(
@@ -69,9 +69,9 @@
 	var/list/difficulty_choices = list()
 	for(var/difficulty in difficulty_data)
 		var/deposit = difficulty_data[difficulty]["deposit"]
-		difficulty_choices["[difficulty] ([deposit] mammon deposit)"] = difficulty
+		difficulty_choices["[difficulty]（押金 [deposit] 玛门）"] = difficulty
 
-	var/selection = tgui_input_list(user, "Select contract difficulty (deposit required)", "CONTRACTS", difficulty_choices)
+	var/selection = tgui_input_list(user, "选择契约难度（需要押金）", "契约", difficulty_choices)
 	if(!selection)
 		return
 
@@ -80,18 +80,18 @@
 	var/deposit = difficulty_data[actual_difficulty]["deposit"]
 
 	if(SStreasury.bank_accounts[user] < deposit)
-		say("Insufficient balance funds. You need [deposit] mammons in your meister.")
+		say("余额不足。你的账户里需要有 [deposit] 枚玛门。")
 		return
 
 	var/type_choices = GLOB.global_quest_types
 
-	var/type_selection = tgui_input_list(user, "Select contract type", "CONTRACTS", type_choices[actual_difficulty])
+	var/type_selection = tgui_input_list(user, "选择契约类型", "契约", type_choices[actual_difficulty])
 
 	if(!type_selection)
 		return
 
 	if(user.mind.active_quest >= QUEST_MAX_ACTIVE_QUESTS)
-		say("You have reached the maximum number of active quests. You can take up to [QUEST_MAX_ACTIVE_QUESTS] active quests at a time.")
+		say("你已达到当前可接任务上限。你同时最多只能拥有 [QUEST_MAX_ACTIVE_QUESTS] 个进行中的任务。")
 		return
 
 	// Instantiate appropriate quest subtype
@@ -111,7 +111,7 @@
 			attached_quest = new /datum/quest/kill/outlaw()
 
 	if(!attached_quest)
-		to_chat(user, span_warning("Invalid quest type selected!"))
+		to_chat(user, span_warning("选择的任务类型无效！"))
 		return
 
 	// Configure quest
@@ -129,13 +129,13 @@
 	// Find appropriate landmark
 	var/obj/effect/landmark/quest_spawner/chosen_landmark = find_quest_landmark(actual_difficulty, type_selection)
 	if(!chosen_landmark)
-		to_chat(user, span_warning("No suitable location found for this contract!"))
+		to_chat(user, span_warning("未找到适合此契约的地点！"))
 		qdel(attached_quest)
 		return
 
 	// Generate quest content (spawns mobs/items)
 	if(!attached_quest.generate(chosen_landmark))
-		to_chat(user, span_warning("Failed to generate quest content!"))
+		to_chat(user, span_warning("生成任务内容失败！"))
 		qdel(attached_quest)
 		return
 
@@ -143,7 +143,7 @@
 	var/obj/item/paper/scroll/quest/spawned_scroll = new(get_turf(src))
 	user.put_in_hands(spawned_scroll)
 	user.mind.active_quest += 1
-	to_chat(user, span_notice("You have taken [user.mind.active_quest] active quests."))
+	to_chat(user, span_notice("你当前已接取 [user.mind.active_quest] 个进行中的任务。"))
 	log_quest(user.ckey, user.mind, user, "Take [attached_quest.quest_type]")
 	spawned_scroll.base_icon_state = attached_quest.get_scroll_icon()
 	spawned_scroll.assigned_quest = attached_quest
@@ -247,7 +247,7 @@
 		var/mob/quester = scroll.quester_ref.resolve()
 		if(quester?.mind?.active_quest >= 1)
 			quester.mind.active_quest -= 1
-			to_chat(quester, span_notice("You now have [quester.mind.active_quest] active quests."))
+			to_chat(quester, span_notice("你现在有 [quester.mind.active_quest] 个进行中的任务。"))
 			log_quest(quester.ckey, quester.mind, quester, "Finish [scroll.assigned_quest.quest_type]")
 
 		qdel(scroll.assigned_quest)
@@ -272,18 +272,18 @@
 
 	if(reward > 0)
 		say(reward != original_reward ? \
-			"Your handler assistance-increased reward of [reward] mammons has been dispensed! The difference is [reward - original_reward] mammons." : \
-			"Your reward of [reward] mammons has been dispensed.")
+			"你的报酬已发放，共 [reward] 玛门，其中包含协办加成；加成部分为 [reward - original_reward] 玛门。" : \
+			"你的 [reward] 玛门报酬已经发放。")
 
 /obj/structure/roguemachine/contractledger/proc/abandon_contract(mob/user)
 	var/obj/item/paper/scroll/quest/abandoned_scroll = locate() in input_point
 	if(!abandoned_scroll)
-		to_chat(user, span_warning("No contract scroll found in the input area!"))
+		to_chat(user, span_warning("输入区域里没有找到契约卷轴！"))
 		return
 
 	var/datum/quest/quest = abandoned_scroll.assigned_quest
 	if(!quest)
-		to_chat(user, span_warning("This scroll doesn't have an assigned contract!"))
+		to_chat(user, span_warning("这张卷轴没有绑定任何契约！"))
 		return
 
 	if(quest.complete)
@@ -298,7 +298,7 @@
 		SStreasury.bank_accounts[giver] += refund
 		SStreasury.treasury_value -= refund
 		SStreasury.log_entries += "-[refund] from treasury (contract refund to handler)"
-		to_chat(user, span_notice("The deposit has been returned to the contract giver."))
+		to_chat(user, span_notice("押金已退还给契约发布者。"))
 	// Otherwise try quest receiver
 	else if(quest.quest_receiver_reference)
 		var/mob/receiver = quest.quest_receiver_reference.resolve()
@@ -306,12 +306,12 @@
 			SStreasury.bank_accounts[receiver] += refund
 			SStreasury.treasury_value -= refund
 			SStreasury.log_entries += "-[refund] from treasury (contract refund to volunteer)"
-			to_chat(user, span_notice("You receive a [refund] mammon refund for abandoning the contract."))
+			to_chat(user, span_notice("你因放弃契约收到了 [refund] 玛门的退款。"))
 		else
 			cash_in(refund)
 			SStreasury.treasury_value -= refund
 			SStreasury.log_entries += "-[refund] from treasury (contract refund)"
-			to_chat(user, span_notice("Your refund of [refund] mammon has been dispensed."))
+			to_chat(user, span_notice("你的 [refund] 玛门退款已经发放。"))
 
 	// Clean up quest items
 	if(quest.quest_type == QUEST_COURIER && quest.target_delivery_item)
@@ -326,7 +326,7 @@
 
 
 	user.mind.active_quest -= 1
-	to_chat(user, span_notice("You now have [user.mind.active_quest] active quests."))
+	to_chat(user, span_notice("你现在有 [user.mind.active_quest] 个进行中的任务。"))
 	log_quest(user.ckey, user.mind, user, "Abandon [abandoned_scroll.assigned_quest.quest_type]")
 	abandoned_scroll.assigned_quest = null
 	qdel(quest)
@@ -339,25 +339,25 @@
 			active_quests += quest_scroll
 
 	if(!length(active_quests))
-		say("No active contracts found.")
+		say("没有找到正在进行的契约。")
 		return
 
 	var/obj/item/paper/scroll/report = new(get_turf(src))
-	report.name = "Guild Contract Report"
-	report.desc = "A list of currently active contracts issued by the Mercenary's Guild."
+	report.name = "公会契约报告"
+	report.desc = "一份由佣兵公会发布、当前仍在生效的契约清单。"
 
-	var/report_text = "<center><b>MERCENARY'S GUILD - ACTIVE CONTRACTS</b></center><br><br>"
-	report_text += "<i>Generated on [station_time_timestamp()]</i><br><br>"
+	var/report_text = "<center><b>佣兵公会 - 生效中契约</b></center><br><br>"
+	report_text += "<i>生成时间：[station_time_timestamp()]</i><br><br>"
 
 	for(var/obj/item/paper/scroll/quest/quest_scroll in active_quests)
 		var/datum/quest/quest = quest_scroll.assigned_quest
 		var/area/quest_area = get_area(quest_scroll)
-		report_text += "<b>Title:</b> [quest.title].<br>"
-		report_text += "<b>Recipient:</b> [quest.quest_receiver_name ? quest.quest_receiver_name : "Unclaimed"].<br>"
-		report_text += "<b>Type:</b> [quest.quest_type].<br>"
-		report_text += "<b>Difficulty:</b> [quest.quest_difficulty].<br>"
+		report_text += "<b>标题：</b> [quest.title]。<br>"
+		report_text += "<b>领取者：</b> [quest.quest_receiver_name ? quest.quest_receiver_name : "无人领取"]。<br>"
+		report_text += "<b>类型：</b> [quest.quest_type]。<br>"
+		report_text += "<b>难度：</b> [quest.quest_difficulty]。<br>"
 		report_text += "<b>Last Known Location:</b> [quest_area ? quest_area.name : "Unknown Location"].<br>"
-		report_text += "<b>Reward:</b> [quest.reward_amount] mammons.<br><br>"
+		report_text += "<b>报酬：</b> [quest.reward_amount] 玛门。<br><br>"
 
 	report.info = report_text
-	say("Contract report printed.")
+	say("契约报告已打印。")

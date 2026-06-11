@@ -1,12 +1,12 @@
 /obj/structure/trap
-	name = "IT'S A TRAP"
+	name = "这是个陷阱"
 	desc = ""
 	icon = 'icons/obj/hand_of_god_structures.dmi'
 	icon_state = "trap"
 	density = FALSE
 	anchored = TRUE
 	alpha = 60 //initially quite hidden when not "recharging"
-	var/flare_message = span_warning("the trap flares brightly!")
+	var/flare_message = span_warning("陷阱骤然亮起！")
 	var/last_trigger = 0
 	var/time_between_triggers = 600 //takes a minute to recharge
 	var/charges = INFINITY
@@ -25,7 +25,7 @@
 
 /obj/structure/trap/Initialize(mapload)
 	. = ..()
-	flare_message = span_warning("[src] flares brightly!")
+	flare_message = span_warning("[src]骤然亮起！")
 	spark_system = new
 	spark_system.set_up(4,1,src)
 	spark_system.attach(src)
@@ -51,7 +51,7 @@
 	if(user.mind && (user.mind in immune_minds))
 		return
 	if(get_dist(user, src) <= FLOOR((luser.STAPER-4)/4,1))
-		to_chat(user,span_notice("I reveal and temporarily disarm \the [src]"))
+		to_chat(user,span_notice("我发现并暂时解除了[src]。"))
 		flare()
 
 /obj/structure/trap/attack_hand(mob/user)
@@ -62,26 +62,26 @@
 		if(!BP)
 			return FALSE
 		if(C.get_skill_level(/datum/skill/craft/crafting) < 1)
-			C.visible_message(span_notice("I don't know how to disarm \the [src]."))
+			C.visible_message(span_notice("我不知道该怎么解除[src]。"))
 			return FALSE
 		else
 			used_time = 14 SECONDS
 			if(C.mind)
 				used_time -= max((C.get_skill_level(/datum/skill/craft/crafting) * 2 SECONDS), 2 SECONDS)
-				C.visible_message(span_notice("[C] begins disarming \the [src]."), \
-						span_notice("I start disarming \the [src]."))
+				C.visible_message(span_notice("[C]开始解除[src]。"), \
+						span_notice("我开始解除[src]。"))
 			if(do_after(user, used_time, target = src))
 				armed = FALSE
 				update_icon()
 				alpha = 255
-				C.visible_message(span_notice("[C] disarms \the [src]."), \
-						span_notice("I disarm \the [src]."))
+				C.visible_message(span_notice("[C]解除了[src]。"), \
+						span_notice("我解除了[src]。"))
 				return FALSE
 	if(iscarbon(user) && !armed && isturf(loc))
 		if(!BP)
 			return FALSE
 		if(C.get_skill_level(/datum/skill/craft/crafting) < 1)
-			C.visible_message(span_notice("I don't know how to arm \the [src]."))
+			C.visible_message(span_notice("我不知道该怎么布设[src]。"))
 			return FALSE
 		else
 			used_time = 8 SECONDS
@@ -91,8 +91,8 @@
 				armed = TRUE
 				update_icon()
 				alpha = 35
-				C.visible_message(span_notice("[C] arms \the [src]."), \
-						span_notice("I arm \the [src]."))
+				C.visible_message(span_notice("[C]布设了[src]。"), \
+						span_notice("我布设了[src]。"))
 				return FALSE
 	..()
 
@@ -135,7 +135,7 @@
 	return
 
 /obj/structure/trap/stun
-	name = "shock trap"
+	name = "电击陷阱"
 	desc = ""
 	icon_state = "trap-shock"
 	var/stun_time = 100
@@ -145,7 +145,7 @@
 	L.Paralyze(stun_time)
 
 /obj/structure/trap/stun/hunter
-	name = "bounty trap"
+	name = "赏金陷阱"
 	desc = ""
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "bounty_trap_on"
@@ -158,7 +158,7 @@
 /obj/structure/trap/stun/hunter/Initialize(mapload)
 	. = ..()
 	time_between_triggers = 10
-	flare_message = span_warning("[src] snaps shut!")
+	flare_message = span_warning("[src]猛地夹合！")
 
 /obj/structure/trap/stun/hunter/Crossed(atom/movable/AM)
 	caught = TRUE
@@ -173,7 +173,7 @@
 		caught = FALSE
 
 /obj/item/bountytrap
-	name = "bounty trap"
+	name = "赏金陷阱"
 	desc = ""
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "bounty_trap_off"
@@ -198,7 +198,7 @@
 	var/turf/T = get_turf(src)
 	if(!user || !user.transferItemToLoc(src, T))//visibly unequips
 		return
-	to_chat(user, "<span class=notice>I set up [src]. Examine while close to disarm it.</span>")
+	to_chat(user, "<span class=notice>我布设好了[src]。靠近检视即可解除它。</span>")
 	stored_trap.forceMove(T)//moves trap to ground
 	forceMove(stored_trap)//moves item into trap
 
@@ -208,40 +208,40 @@
 	. = ..()
 
 /obj/structure/trap/fire
-	name = "flame trap"
+	name = "火焰陷阱"
 	desc = ""
 	icon_state = "trap-fire"
 
 /obj/structure/trap/fire/trap_effect(mob/living/L)
-	to_chat(L, span_danger("<B>Spontaneous combustion!</B>"))
+	to_chat(L, span_danger("<B>自燃了！</B>"))
 	L.Paralyze(20)
 	new /obj/effect/hotspot(get_turf(src))
 
 /obj/structure/trap/chill
-	name = "frost trap"
+	name = "霜冻陷阱"
 	desc = ""
 	icon_state = "trap-frost"
 
 /obj/structure/trap/chill/trap_effect(mob/living/L)
-	to_chat(L, span_danger("<B>You're frozen solid!</B>"))
+	to_chat(L, span_danger("<B>我被彻底冻僵了！</B>"))
 	L.Paralyze(20)
 	L.adjust_bodytemperature(-100)
 	L.apply_status_effect(/datum/status_effect/freon)
 
 /obj/structure/trap/damage
-	name = "earth trap"
+	name = "震地陷阱"
 	desc = ""
 	icon_state = "trap-earth"
 
 /obj/structure/trap/damage/trap_effect(mob/living/L)
-	to_chat(L, span_danger("<B>The ground quakes beneath your feet!</B>"))
+	to_chat(L, span_danger("<B>脚下的大地猛然震动！</B>"))
 	L.Paralyze(100)
 	L.adjustBruteLoss(35)
 	var/obj/structure/flora/rock/giant_rock = new(get_turf(src))
 	QDEL_IN(giant_rock, 200)
 
 /obj/structure/trap/ward
-	name = "divine ward"
+	name = "神圣结界"
 	desc = ""
 	icon_state = "ward"
 	density = TRUE
@@ -252,14 +252,14 @@
 	QDEL_IN(src, time_between_triggers)
 
 /obj/structure/trap/saw_blades // vanderlin traps and AP traps below
-	name = "saw plate trap"
+	name = "锯盘压板陷阱"
 	icon = 'icons/roguetown/misc/traps.dmi'
 	icon_state = "saw_trap_plate"
 	time_between_triggers = 100
 	max_integrity = 500
 
 /obj/structure/trap/saw_blades/trap_effect(mob/living/L)
-	to_chat(L, span_danger("<B>A whirling blade erupts from beneath your feet!</B>"))
+	to_chat(L, span_danger("<B>一片旋转利刃猛地从我脚下窜出！</B>"))
 	def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	L.apply_damage(trap_damage, BRUTE, def_zone, L.run_armor_check(def_zone, "stab", damage = trap_damage))
 	playsound(src, 'sound/gore/flesh_eat_01.ogg', 70, TRUE)
@@ -268,15 +268,15 @@
 	QDEL_IN(saw, 100)
 
 /obj/structure/sawblade_trap
-	name = "saw blade"
-	desc = "A fast spinning saw blade, propelled by some unknown mechanism"
+	name = "锯刃"
+	desc = "一片高速旋转的锯刃，由某种未知机关驱动。"
 	icon = 'icons/roguetown/misc/traps.dmi'
 	icon_state = "trap_saw"
 	density = FALSE
 	anchored = TRUE
 
 /obj/structure/trap/bomb // fire can RR easily, dangerous
-	name = "bomb plate trap"
+	name = "爆炸压板陷阱"
 	icon = 'icons/roguetown/misc/traps.dmi'
 	icon_state = "bomb_trap_plate"
 	time_between_triggers = 100
@@ -287,7 +287,7 @@
 	explosion(src, light_impact_range = 1, flame_range = 2, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
 
 /obj/structure/trap/flame // fire can RR easily, dangerous
-	name = "flamejet plate trap"
+	name = "喷焰压板陷阱"
 	icon = 'icons/roguetown/misc/traps.dmi'
 	icon_state = "trap_plate"
 	time_between_triggers = 100
@@ -295,11 +295,11 @@
 
 /obj/structure/trap/flame/trap_effect(mob/living/L)
 	..()
-	to_chat(L,span_danger("The ground suddenly erupts in flame!"))
+	to_chat(L,span_danger("地面突然喷涌出烈焰！"))
 	new /obj/effect/hotspot(get_turf(src))
 
 /obj/structure/trap/shock
-	name = "lightning plate trap"
+	name = "雷击压板陷阱"
 	icon = 'icons/roguetown/misc/traps.dmi'
 	icon_state = "shock_trap_plate"
 	time_between_triggers = 100
@@ -312,7 +312,7 @@
 	L.Paralyze(stun_time)
 
 /obj/structure/trap/wall_projectile
-	name = "arrow plate trap"
+	name = "箭矢压板陷阱"
 	icon = 'icons/roguetown/misc/traps.dmi'
 	icon_state = "arrow_trap_plate"
 	time_between_triggers = 100
@@ -343,14 +343,14 @@
 	var/obj/projectile/suprise = new fired(get_step_towards2(home_wall,src))
 	suprise.preparePixelProjectile(L,home_wall)
 	suprise.fire()
-	to_chat(L, span_danger("\The [suprise] erupts from a hidden slit in \the [home_wall]!"))
+	to_chat(L, span_danger("[suprise]从[home_wall]上的暗槽里猛地射了出来！"))
 
 /obj/structure/trap/wall_projectile/Destroy()
 	home_wall = null
 	. = ..()
 
 /obj/structure/trap/wall_projectile/frostbolt
-	name = "frost plate trap"
+	name = "霜箭压板陷阱"
 	fired = /obj/projectile/magic/frostbolt/wall_projectile
 
 /obj/projectile/magic/frostbolt/wall_projectile
@@ -359,21 +359,21 @@
 	armor_penetration = 5
 
 /obj/structure/trap/wall_projectile/acidsplash
-	name = "acid plate trap"
+	name = "酸液压板陷阱"
 	fired = /obj/projectile/magic/acidsplash/wall_projectile
 
 /obj/projectile/magic/acidsplash/wall_projectile
 	speed = 6
 
 /obj/structure/trap/rock_fall
-	name = "rock fall trap"
+	name = "落石陷阱"
 	icon = 'icons/roguetown/misc/traps.dmi'
 	icon_state = "rockfall_trap_plate"
 	time_between_triggers = 100
 	max_integrity = 500
 
 /obj/structure/trap/rock_fall/trap_effect(mob/living/L)
-	to_chat(L, span_danger("<B>The ground above you shakes violently!</B>"))
+	to_chat(L, span_danger("<B>头顶的地面剧烈震动起来！</B>"))
 	def_zone = BODY_ZONE_HEAD
 	L.apply_damage(trap_damage, BRUTE, def_zone, L.run_armor_check(def_zone, "stab", damage = trap_damage))
 	playsound(src, 'sound/foley/smash_rock.ogg', 70, TRUE)
@@ -382,14 +382,14 @@
 	QDEL_IN(giant_rock, 100)
 
 /obj/structure/trap/water
-	name = "water trap"
+	name = "水流陷阱"
 	icon = 'icons/roguetown/misc/traps.dmi'
 	icon_state = "water_trap_plate"
 	time_between_triggers = 100
 	max_integrity = 500
 
 /obj/structure/trap/water/trap_effect(mob/living/L)
-	to_chat(L, span_danger("<B>You are doused and knocked off your feet by a torrent of water!</B>"))
+	to_chat(L, span_danger("<B>激流把我浇得透湿，还把我冲翻在地！</B>"))
 	for(var/obj/O in L.contents) //Checks for light sources in the mob's inventory. Tyvm to LynxSolstice for the extinguish code
 		O.extinguish() //Extinguishes light sources on the mob hit by the trap.
 	playsound(src, 'sound/foley/water_land2.ogg', 70, TRUE)
@@ -398,7 +398,7 @@
 	QDEL_IN(spray, 100)
 
 /obj/structure/trap/curse
-	name = "deactivated trap" //Im not activated guys I swear Im a broken trap I dont work
+	name = "失效陷阱" //Im not activated guys I swear Im a broken trap I dont work
 	icon = 'icons/roguetown/misc/traps.dmi'
 	icon_state = "base_trap_plate"
 	time_between_triggers = 100
@@ -406,7 +406,7 @@
 	alpha = 255
 
 /obj/structure/trap/curse/hidden
-	name = "curse trap"
+	name = "诅咒陷阱"
 	icon = 'icons/roguetown/misc/traps.dmi'
 	icon_state = "base_trap_plate"
 	time_between_triggers = 100
@@ -414,7 +414,7 @@
 	alpha = 35
 
 /obj/structure/trap/curse/trap_effect(mob/living/L)
-	to_chat(L, span_danger("<B>A cruel joke has been played on you!</B>"))
+	to_chat(L, span_danger("<B>我被狠狠戏弄了一番！</B>"))
 	L.add_stress(/datum/stressevent/thefool)
 	playsound(src, 'sound/magic/mockery.ogg', 60, TRUE)
 	L.apply_status_effect(/datum/status_effect/debuff/viciousmockery)
@@ -422,15 +422,15 @@
 /datum/stressevent/thefool
 	timer = 10 MINUTES
 	stressadd = 2
-	desc = span_boldgreen("I've been made a fool of.")
+	desc = span_boldgreen("我被耍得团团转。")
 
 // BANDIT THING STARTS HERE //
 /obj/structure/trap/bogtrap
-	name = "trapbog"
-	desc = "A cleverly concealed device with a nasty surprise."
+	name = "陷足夹"
+	desc = "一种隐藏巧妙、内藏恶意惊喜的机关。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "beartrap"
-	name = "mantrap"
+	name = "捕人夹"
 	time_between_triggers = 100 //feel free to add more than 1 use
 	max_integrity = 100
 	trap_damage = 60
@@ -553,7 +553,7 @@
 	if(user.mind && (user.mind in immune_minds))
 		return
 	if(get_dist(user, src) <= FLOOR((L.STAPER-4)/4,1))
-		to_chat(user, span_notice("I spot the [src]."))
+		to_chat(user, span_notice("我发现了[src]。"))
 		show_personal_reveal(user)
 
 
@@ -565,33 +565,33 @@
 	. = ..()
 
 /obj/structure/trap/bogtrap/freeze
-	name = "trapbog (frost)"
+	name = "捕人夹（霜冻）"
 
 /obj/structure/trap/bogtrap/freeze/trap_effect(mob/living/L)
-	to_chat(L, span_danger("<B>You're frozen solid!</B>"))
+	to_chat(L, span_danger("<B>我被彻底冻僵了！</B>"))
 	L.Paralyze(50)
 	L.adjust_bodytemperature(-100)
 	playsound(src, 'sound/misc/explode/bottlebomb (1).ogg', 60, TRUE)
 
 
 /obj/structure/trap/bogtrap/bomb
-	name = "trapbog (blast)"
+	name = "捕人夹（爆裂）"
 
 /obj/structure/trap/bogtrap/bomb/trap_effect(mob/living/L)
-	to_chat(L, span_danger("<B>A buried charge detonates!</B>"))
+	to_chat(L, span_danger("<B>地下炸药轰然引爆！</B>"))
 	explosion(src, light_impact_range = 1, flame_range = 3, smoke = TRUE)
 	playsound(src, 'sound/misc/explode/bottlebomb (1).ogg', 200, TRUE)
 
 //kneestingers
 
 /obj/structure/trap/bogtrap/kneestingers
-	name = "trapbog (kneestingers)"
-	desc = "A hidden charge that bursts into a patch of kneestingers."
+	name = "捕人夹（刺膝草）"
+	desc = "一种隐藏机关，会炸出一片刺膝草。"
 	charges = 1
 
 /obj/structure/trap/bogtrap/kneestingers/trap_effect(mob/living/L)
 	var/turf/center = get_turf(src)
-	to_chat(L, span_danger("<B>Something skitters out from the ground!</B>"))
+	to_chat(L, span_danger("<B>有什么东西从地里窜了出来！</B>"))
 	playsound(src, 'sound/items/beartrap.ogg', 200, TRUE)
 
 	for(var/dx in -1 to 1)
@@ -604,11 +604,11 @@
 //Poison tr*p
 
 /obj/structure/trap/bogtrap/poison
-	name = "trapbog (toxic)"
+	name = "捕人夹（毒雾）"
 	charges = 1
 
 /obj/structure/trap/bogtrap/poison/trap_effect(mob/living/L)
-	to_chat(L, span_danger("<B>A noxious cloud engulfs you!</B>"))
+	to_chat(L, span_danger("<B>一团毒雾将我吞没！</B>"))
 	L.Paralyze(30)
 	new /obj/effect/particle_effect/smoke/poison_gas(get_turf(src))
 	playsound(src, 'sound/items/beartrap.ogg', 200, TRUE)
@@ -616,12 +616,12 @@
 //Rous nest. Spawns a rather large rous.
 
 /obj/structure/trap/bogtrap/rous
-	name = "trapbog (rous)"
+	name = "捕人夹（鼠巢）"
 	charges = 1
 	retinue_planted = TRUE
 
 /obj/structure/trap/bogtrap/rous/trap_effect(mob/living/L)
-	to_chat(L, span_danger("<B>You step atop a hidden cage!</B>"))
+	to_chat(L, span_danger("<B>我踩上了一个隐藏的笼子！</B>"))
 	playsound(src, 'sound/items/beartrap.ogg', 200, TRUE)
 
 	L.AdjustKnockdown(5)
@@ -631,7 +631,7 @@
 //A better, RP friendly blind gas.
 
 /obj/structure/trap/bogtrap/flare_trap
-	name = "trapbog (flare)"
+	name = "捕人夹（信号弹）"
 	charges = 1
 	retinue_planted = TRUE
 
@@ -644,5 +644,5 @@
 		L.adjust_blindness(3)
 		L.emote("scream")
 //Church bell range. A bit far? Sure. Don't step on it.
-	loud_message("A flare can be seen shooting into the air, followed by a sharp crack", hearing_distance = 150)
+	loud_message("一道信号弹冲天而起，紧接着传来一声锐响", hearing_distance = 150)
 //The entire town knows you're here, now, buddy.

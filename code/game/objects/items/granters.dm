@@ -16,7 +16,7 @@
 		if(remarks.len)
 			to_chat(user, span_notice("[pick(remarks)]"))
 		else
-			to_chat(user, span_notice("I keep reading..."))
+			to_chat(user, span_notice("我继续读了下去……"))
 		return TRUE
 	return FALSE
 
@@ -26,13 +26,13 @@
 	return FALSE
 
 /obj/item/book/granter/proc/on_reading_start(mob/user)
-	to_chat(user, span_notice("I start reading [name]..."))
+	to_chat(user, span_notice("我开始阅读[name]……"))
 
 /obj/item/book/granter/proc/on_reading_stopped(mob/user)
-	to_chat(user, span_notice("I stop reading..."))
+	to_chat(user, span_notice("我停止了阅读……"))
 
 /obj/item/book/granter/proc/on_reading_finished(mob/user)
-	to_chat(user, span_notice("I finish reading [name]!"))
+	to_chat(user, span_notice("我读完了[name]！"))
 
 /obj/item/book/granter/proc/onlearned(mob/user)
 	used = TRUE
@@ -40,7 +40,7 @@
 
 /obj/item/book/granter/attack_self(mob/living/user)
 	if(reading)
-		to_chat(user, span_warning("I'm already reading this!"))
+		to_chat(user, span_warning("我已经在读这本了！"))
 		return FALSE
 	if(!user.can_read(src))
 		return FALSE
@@ -51,7 +51,7 @@
 			to_chat(user, span_warning("You can't make sense of the sprawling runes!"))
 			return FALSE */
 	if(used && oneuse)
-		to_chat(user, span_warning("This fount of knowledge was not meant to be sipped from twice!"))
+		to_chat(user, span_warning("这眼知识之泉本就不是为让人啜饮两次而存在的！"))
 		recoil(user)
 		return FALSE
 	on_reading_start(user)
@@ -73,7 +73,7 @@
 	grid_height = 32
 
 	var/spell
-	var/spellname = "conjure bugs"
+	var/spellname = "召来虫群"
 
 /obj/item/book/granter/spell/already_known(mob/user)
 	if(!spell)
@@ -81,15 +81,15 @@
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == spell)
 			if(user.mind)
-				to_chat(user,span_warning("You've already read this one!"))
+				to_chat(user,span_warning("这本我已经读过了！"))
 			return TRUE
 	return FALSE
 
 /obj/item/book/granter/spell/on_reading_start(mob/user)
-	to_chat(user, span_notice("I start reading about casting [spellname]..."))
+	to_chat(user, span_notice("我开始阅读有关施放[spellname]的内容……"))
 
 /obj/item/book/granter/spell/on_reading_finished(mob/user)
-	to_chat(user, span_notice("I feel like you've experienced enough to cast [spellname]!"))
+	to_chat(user, span_notice("我感觉自己已经掌握了足够的心得，能够施放[spellname]了！"))
 	var/obj/effect/proc_holder/spell/S = new spell
 	user.mind.AddSpell(S)
 	user.log_message("learned the spell [spellname] ([S])", LOG_ATTACK, color="orange")
@@ -109,22 +109,22 @@
 
 /obj/item/book/granter/action
 	var/granted_action
-	var/actionname = "catching bugs" //might not seem needed but this makes it so you can safely name action buttons toggle this or that without it fucking up the granter, also caps
+	var/actionname = "抓虫" //might not seem needed but this makes it so you can safely name action buttons toggle this or that without it fucking up the granter, also caps
 
 /obj/item/book/granter/action/already_known(mob/user)
 	if(!granted_action)
 		return TRUE
 	for(var/datum/action/A in user.actions)
 		if(A.type == granted_action)
-			to_chat(user, span_warning("I already know all about [actionname]!"))
+			to_chat(user, span_warning("关于[actionname]的内容我早就全都懂了！"))
 			return TRUE
 	return FALSE
 
 /obj/item/book/granter/action/on_reading_start(mob/user)
-	to_chat(user, span_notice("I start reading about [actionname]..."))
+	to_chat(user, span_notice("我开始阅读有关[actionname]的内容……"))
 
 /obj/item/book/granter/action/on_reading_finished(mob/user)
-	to_chat(user, span_notice("I feel like you've got a good handle on [actionname]!"))
+	to_chat(user, span_notice("我感觉自己已经把[actionname]掌握得相当不错了！"))
 	var/datum/action/G = new granted_action
 	G.Grant(user)
 	onlearned(user)
@@ -141,7 +141,7 @@
 	for(var/crafting_recipe_type in crafting_recipe_types)
 		var/datum/crafting_recipe/R = crafting_recipe_type
 		user.mind.teach_crafting_recipe(crafting_recipe_type)
-		to_chat(user,span_notice("I learned how to make [initial(R.name)]."))
+		to_chat(user,span_notice("我学会了如何制作[initial(R.name)]。"))
 
 
 /obj/item/book/granter/trait
@@ -150,7 +150,7 @@
 
 /obj/item/book/granter/trait/attack_self(mob/living/user)
 	if(required_language && !user.has_language(required_language))
-		to_chat(user, span_warning("I can't make heads or tails of the writing in this book."))
+		to_chat(user, span_warning("这本书里的文字我完全看不明白。"))
 		return FALSE
 	return ..()
 
@@ -158,43 +158,43 @@
 	if(!granted_trait)
 		return TRUE
 	if(HAS_TRAIT(user, granted_trait))
-		to_chat(user, span_warning("I already know these techniques!"))
+		to_chat(user, span_warning("这些技法我已经会了！"))
 		return TRUE
 	return FALSE
 
 /obj/item/book/granter/trait/on_reading_start(mob/user)
-	to_chat(user, span_notice("I start studying the diagrams and written techniques within..."))
+	to_chat(user, span_notice("我开始钻研其中的图示与书写技法……"))
 
 /obj/item/book/granter/trait/on_reading_finished(mob/user)
-	to_chat(user, span_notice("I feel I have grasped the techniques described in [name]."))
+	to_chat(user, span_notice("我感觉自己已经掌握了[name]中记述的技法。"))
 	ADD_TRAIT(user, granted_trait, TRAIT_GENERIC)
 	onlearned(user)
 
 
 /obj/item/book/granter/trait/kazengunite_smith
-	name = "Kajutsu no Densho"
-	desc = "A worn manual of Kazengunite smithing techniques, dense with diagrams and characters. The cover bears the mark of the Kouken order. Requires knowledge of Kazengunese to decipher."
+	name = "风间锻造传书"
+	desc = "一本磨损严重的风间锻造技法手册，满布图示与文字。封面印有Kouken流派的标记。需要懂得风间语才能解读。"
 	icon = 'icons/roguetown/items/books.dmi'
 	icon_state = "basic_book_0"
 	granted_trait = TRAIT_KAZENGUNITE_SMITH
 	required_language = /datum/language/kazengunese
 	pages_to_mastery = 10
 	remarks = list(
-		"The opening chapter describes the smelting of tamahagane — a bloom steel drawn from iron-rich sand fed slowly into a clay furnace over three days of unbroken fire. Only from this is true Kazengunite steel born.",
-		"A dense passage explains tanren: the bloom is broken apart, sorted by carbon content, then folded repeatedly under the hammer. Each fold doubles the layers. The text warns against over-folding — too many passes burns away the very quality one seeks.",
-		"The kobuse method is illustrated at length: a jacket of harder steel is wrapped around a softer core, then welded shut by hammer. The hard edge holds; the soft spine absorbs. Neither alone would suffice.",
-		"Several pages are devoted to tsuchioki — the application of a clay and charcoal paste before quenching. Thick along the spine, thin along the edge. The differential cooling shapes the hardened zone, the yakiba.",
-		"A vivid account of yaki-ire: the blade is heated until it no longer draws a magnet, then plunged edge-first into water. The author warns the smith to trust the colour of the steel, not the count of heartbeats.",
-		"The armor chapters begin with kozane — individual scales no larger than a thumb, each pierced and lacquered many times over before assembly. The text emphasises that the lacquer is not decoration; it is armour against rust.",
-		"Detailed instructions on odoshi follow: the silk or leather cords that lace the kozane together in offset rows. The pattern distributes force across the surface. An improperly laced row, the author notes, collapses under a single good blow.",
-		"The kabuto section describes the shaping of the hachi — the bowl — from triangular plates riveted at their edges and finished with a turned peak. Each rivet must be peened flush, then lacquered over. A proud rivet will catch a blade.",
-		"A short but precise section covers the kote — gauntlet construction. Chain segments are riveted between small rectangular plates along the back of the hand and fingers. The inside of the wrist is lined with padded fabric; the steel protects only what needs protecting.",
-		"The final chapter addresses the nodowa, or gorget: rings of small chain, backed by a stiffened collar, fastened at the throat with a silk drawcord. The author notes that the gorget is the most often neglected piece, and the most often fatal omission.",
+		"开篇章节讲述了玉钢的冶炼法：将富含铁质的砂矿缓缓投入粘土炉中，让炉火三昼夜不熄，炼出块炼钢。唯有如此，才称得上真正的风间钢。",
+		"接下来一大段都在解释锻炼法：先将钢块打碎，按含碳量分类，再在锤下反复折叠。每折一次，层数便翻倍。书中警告不可过度折叠，因为次数太多反会烧掉工匠苦苦追求的品质。",
+		"书里详细图解了甲伏锻法：以较硬的钢包裹较软的钢芯，再用锤锻焊合。硬刃负责持锋，软背负责吸震。两者缺一不可。",
+		"另有数页专讲覆土工序，即淬火前将黏土与木炭调成的糊料涂在刀身上。刀背涂厚，刃口涂薄。正是这种差异冷却塑造了硬化区，也就是刃纹。",
+		"关于烧入的记述尤为生动：刀身加热至不再吸附磁石后，便将刃口先行投入水中。作者告诫铁匠，要相信钢色，而非心跳的次数。",
+		"护甲章节先从小札讲起：每一片甲片都不过拇指大小，却要在组装前反复打孔、上漆。书中特意强调，漆并非装饰，而是防锈的护甲。",
+		"随后便是威毛的详细说明：用丝绳或皮绳把小札交错串连成排。这种编法能把冲击分散到整片甲面。作者指出，只要有一排系得不正，经不起一下重击便会垮掉。",
+		"兜盔部分讲的是钵体的成形：以三角形钢板沿边铆接，再收出向上的峰形。每一枚铆钉都必须铆平后再上漆。只要有一颗翘起，便会勾住来刃。",
+		"还有一段虽短却精确地讲解了籠手的结构：手背与手指处以小块长方钢板配合链甲铆接，手腕内侧则衬以软垫布料。钢铁只该保护真正需要保护的地方。",
+		"最后一章论及护喉，即以细小链环配合加硬护领制成，并用丝绳在喉前系紧。作者说，这是最常被忽视的一件护具，也往往是最致命的疏漏。",
 	)
 
 //! --BLACKSTONE SCROLLS-- !/
 /obj/item/book/granter/spell/blackstone/
-	desc = "A scroll of potential known only to those that can decipher its secrets."
+	desc = "一卷蕴藏潜能的卷轴，唯有能解读其秘密之人方知其价值。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	oneuse = TRUE
 	drop_sound = 'sound/foley/dropsound/paper_drop.ogg'
@@ -203,184 +203,184 @@
 /obj/item/book/granter/spell/blackstone/onlearned(mob/living/carbon/user)
 	..()
 	if(oneuse == TRUE)
-		name = "siphoned scroll"
-		desc = "A scroll once inscribed with magical scripture. The surface is now barren of knowledge, siphoned by someone else. It's utterly useless."
+		name = "被抽空的卷轴"
+		desc = "这张卷轴曾写满魔法经文，如今其中知识已被他人抽走，表面空空如也。它已经毫无用处。"
 		icon_state = "scroll"
-		user.visible_message(span_warning("[src] has had its magic ink ripped from the scroll!"))
+		user.visible_message(span_warning("[src]上的魔法墨迹被硬生生抽离了！"))
 
 /obj/item/book/granter/spell/blackstone/fireball
-	name = "Scroll of Fireball"
+	name = "火球术卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/projectile/fireball
-	spellname = "fireball"
+	spellname = "火球术"
 	icon_state ="scrollred"
 	remarks = list("Ignis et oleum..", "Flammam continere ad momentum..", "Flammam iactare..", "Sit flamma constructum..")
 
 /obj/item/book/granter/spell/blackstone/greaterfireball
-	name = "Scroll of Greater Fireball"
+	name = "高等火球术卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/projectile/fireball/greater
-	spellname = "greater fireball"
+	spellname = "高等火球术"
 	icon_state ="scrollred"
 	remarks = list("Ignis et oleum..", "Flammam continere ad momentum..", "Flammam iactare..", "Sit flamma constructum..")
 
 /obj/item/book/granter/spell/blackstone/lightning
-	name = "Scroll of Lightning"
+	name = "闪电术卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt
-	spellname = "lightning"
+	spellname = "闪电术"
 	icon_state ="scrollyellow"
 	remarks = list("Essentia fulgurum digitorum..", "Fulgur de nubibus desuper..", "Fulgur eiecit digitos..", "Praecipe intus aedificatur..")
 
 /obj/item/book/granter/spell/blackstone/fetch
-	name = "Scroll of Fetch"
+	name = "摄物术卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/projectile/fetch
-	spellname = "fetch"
+	spellname = "摄物术"
 	icon_state ="scrollpurple"
 	remarks = list("Returnus Revico..", "Manus de reverti..", "Menus de returnus..")
 
 /obj/item/book/granter/spell/blackstone/invisibility
-	name = "Scroll of Invisibility"
+	name = "隐形术卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/invisibility
-	spellname = "invisibility"
+	spellname = "隐形术"
 	icon_state ="scrollpurple"
 	remarks = list("Pallium nihilum..", "Occultare veritatem..", "Veritatem removan menor..")
 
 /obj/item/book/granter/spell/blackstone/skeleton//BEWARE this is the super powerful LICH player skeleton spawner
-	name = "Scroll of Raise Skeleton"
+	name = "唤骷卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/raise_undead
-	spellname = "Raise Skeleton"
+	spellname = "唤骷"
 	icon_state ="scrolldarkred"
 	remarks = list("Redi damnatos..", "Exitio ad Necram scriptor exolvuntur..", "Ossa in propinquus..")
 
 /obj/item/book/granter/spell/blackstone/sicknessray
-	name = "Scroll of Sickness Ray"
+	name = "病蚀射线卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/projectile/sickness
-	spellname = "Ray of Sickness"
+	spellname = "病蚀射线"
 	icon_state ="scrollgreen"
 	remarks = list("Foe rubiginem meam..", "Pestilentia in terris..", "Trabes putrida..")
 
 /obj/item/book/granter/spell/blackstone/bonechill
-	name = "Scroll of Bone Chill"
+	name = "蚀骨寒意卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/bonechill
-	spellname = "Bone Chill"
+	spellname = "蚀骨寒意"
 	icon_state ="scrolldarkred"
 	remarks = list("Mediolanum ventis..", "Sana damnatorum..", "Frigidus ossa mortuorum..")
 
 /obj/item/book/granter/spell/blackstone/acidsplash
-	name = "Scroll of Acid Splash"
+	name = "酸液飞溅卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/projectile/acidsplash
-	spellname = "Acid Splash"
+	spellname = "酸液飞溅"
 	icon_state ="scrolldarkred"
 	remarks = list("Lapides corrodunt..", "Spuma venenosa..", "Guttae flavescentes..")
 
 /obj/item/book/granter/spell/blackstone/spitfire
-	name = "Scroll of Spitfire"
+	name = "吐焰术卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/projectile/spitfire
-	spellname = "Spitfire"
+	spellname = "吐焰术"
 	icon_state ="scrollred"
 	remarks = list("Ignis et oleum..", "Flammam continere ad momentum..", "Flammam iactare..", "Sit flamma constructum..")
 
 /obj/item/book/granter/spell/blackstone/lesserknock
-	name = "Scroll of Lesser Knock"
+	name = "次级开锁术卷轴"
 	spell = /obj/effect/proc_holder/spell/targeted/touch/lesserknock
-	spellname = "Lesser Knock"
+	spellname = "次级开锁术"
 	icon_state ="scrollred"
 	remarks = list("Clavis vetusta portam..", "Perdita numquam..", "Manus tremens..")
 
 /obj/item/book/granter/spell/blackstone/repel
-	name = "Scroll of Repel"
+	name = "斥退术卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/projectile/repel
-	spellname = "Repel"
+	spellname = "斥退术"
 	icon_state ="scrolldarkred"
 	remarks = list("Ventos adversos..", "Terra sibilat..", "Lapides vetusti..")
 
 
 /obj/item/book/granter/spell/blackstone/aerosolize
-	name = "Scroll of Aerosolize"
+	name = "雾化术卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/aerosolize
-	spellname = "Aerosolize"
+	spellname = "雾化术"
 	icon_state ="scrolldarkred"
 	remarks = list("Lapides corrodunt..", "Spuma venenosa..", "Guttae flavescentes..")
 
 
 /obj/item/book/granter/spell/blackstone/guidance
-	name = "Scroll of Guidance"
+	name = "指引术卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/guidance
-	spellname = "Guidance"
+	spellname = "指引术"
 	icon_state ="scrolldarkred"
 	remarks = list("Lux in tenebris..", "Passus certus umbras non timet..", "Anima viam scit..")
 
 /obj/item/book/granter/spell/blackstone/frostbolt
-	name = "Scroll of Frostbolt"
+	name = "寒霜箭卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/projectile/frostbolt
-	spellname = "Frostbolt"
+	spellname = "寒霜箭"
 	icon_state ="scrolldarkred"
 	remarks = list("Gelum serpentibus..", "Crystallum in silentio..", "Nullum ardor glaciem..")
 
 /obj/item/book/granter/spell/blackstone/fortitude
-	name = "Scroll of Fortitude"
+	name = "坚韧术卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/fortitude
-	spellname = "Fortitude"
+	spellname = "坚韧术"
 	icon_state ="scrolldarkred"
 	remarks = list("Animus in adversis..", "Gravitas oneris..", "Vita renascitur..")
 
 /obj/item/book/granter/spell/blackstone/message
-	name = "Scroll of Message"
+	name = "传讯术卷轴"
 	spell = /obj/effect/proc_holder/spell/self/message
-	spellname = "Message"
+	spellname = "传讯术"
 	icon_state ="scrolldarkred"
 	remarks = list("Verba volant..", "Vincula inter mentes..", "Inter verba et silentium..")
 
 /obj/item/book/granter/spell/blackstone/ensnare
-	name = "Scroll of Ensnare"
+	name = "缠缚术卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/ensnare
-	spellname = "Ensnare"
+	spellname = "缠缚术"
 	icon_state ="scrolldarkred"
 	remarks = list("Qui intrat..", "Radices in tenebris..", "Nexus occultus..")
 
 /obj/item/book/granter/spell/blackstone/forcewall_weak
-	name = "Scroll of Forcewall"
+	name = "力墙术卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/forcewall
-	spellname = "Forcewall"
+	spellname = "力墙术"
 	icon_state ="scrolldarkred"
 	remarks = list("Murus non solum hostem..", "Manus invisibiles saxa invicem..", "Infracta moenia..")
 
 /obj/item/book/granter/spell/blackstone/featherfall
-	name = "Scroll of Featherfall"
+	name = "羽落术卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/featherfall
-	spellname = "Featherfall"
+	spellname = "羽落术"
 	icon_state ="scrolldarkred"
 	remarks = list("In silentio cadit..", "Alis levitas..", "Plumis taciti dolores..")
 
 /obj/item/book/granter/spell/blackstone/enlarge
-	name = "Scroll of Enlarge"
+	name = "巨化术卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/enlarge
-	spellname = "Enlarge"
+	spellname = "巨化术"
 	icon_state ="scrolldarkred"
 	remarks = list("Immensum agitur..", "Montes tremunt..", "Quantitas expanditur..")
 
 /obj/item/book/granter/spell/blackstone/leap
-	name = "Scroll of Leap"
+	name = "腾跃术卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/leap
-	spellname = "Leap"
+	spellname = "腾跃术"
 	icon_state ="scrolldarkred"
 	remarks = list("Altitudinem revelat..", "Cuius pedes in aere volant..", "In levitate audacia..")
 
 /obj/item/book/granter/spell/blackstone/familiar //Find Familiar Scroll
-	name = "Scroll of Find Familiar"
+	name = "寻得魔宠卷轴"
 	spell = /obj/effect/proc_holder/spell/self/findfamiliar
-	spellname = "Find Familiar"
+	spellname = "寻得魔宠"
 	icon_state ="scrolldarkred"
 	oneuse = FALSE
 
 /obj/item/book/granter/spell/blackstone/mirror_transform
-	name = "Scroll of Mirror Transform"
+	name = "镜像变形卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/mirror_transform
-	spellname = "Mirror Transform"
+	spellname = "镜像变形"
 	icon_state ="scrolldarkred"
 	remarks = list("Aspectum rebis adopta..", "Fac me novum..", "Pulcher ero..")
 
 //scroll for giving the reader 3 spell points, this should be dungeon loot
 /obj/item/book/granter/spell_points
-	name = "Arcyne Insight"
+	name = "奥术洞见"
 	icon_state = "scrollpurple"
 	icon = 'icons/roguetown/items/misc.dmi'
 	oneuse = TRUE
@@ -391,27 +391,27 @@
 /obj/item/book/granter/spell_points/on_reading_finished(mob/user)
 	var/arcaneskill = user.get_skill_level(/datum/skill/magic/arcane)
 	if(arcaneskill >= SKILL_LEVEL_NOVICE) //Required arcane skill of NOVICE or higher to use the granter
-		to_chat(user, span_notice("I absorb the insights on the scroll, and feel more adept at spellcraft!"))
+		to_chat(user, span_notice("我吸收了卷轴中的感悟，感觉自己对施法更娴熟了！"))
 		user.mind.adjust_spellpoints(spellpoints)
 		onlearned(user)
 	else
-		to_chat(user, span_notice("I don't know what to make of this."))
+		to_chat(user, span_notice("我完全弄不明白这上面写了什么。"))
 
 /obj/item/book/granter/spell_points/onlearned(mob/living/carbon/user)
 	..()
 	if(oneuse == TRUE)
-		name = "siphoned scroll"
-		desc = "A scroll once inscribed with magical scripture. The surface is now barren of knowledge, siphoned by someone else. It's utterly useless."
+		name = "被抽空的卷轴"
+		desc = "这张卷轴曾写满魔法经文，如今其中知识已被他人抽走，表面空空如也。它已经毫无用处。"
 		icon_state = "scroll"
-		user.visible_message(span_warning("[src] has had its magic ink ripped from the scroll!"))
+		user.visible_message(span_warning("[src]上的魔法墨迹被硬生生抽离了！"))
 
 /obj/item/book/granter/spell_points/voiddragon
-	name = "Arcyne Void Insight"
+	name = "虚空奥术洞见"
 	spellpoints = 6
 
 /obj/item/book/granter/spell/blackstone/skeleton/lesser
-	name = "Scroll of Lesser Raise Skeletons"
+	name = "次级唤骷卷轴"
 	spell = /obj/effect/proc_holder/spell/invoked/raise_undead_formation
-	spellname = "Raise Lesser Skeletons"
+	spellname = "次级唤骷"
 	icon_state ="scrolldarkred"
 	remarks = list("Redi damnatos..", "Exitio ad Necram scriptor exolvuntur..", "Ossa in propinquus..")

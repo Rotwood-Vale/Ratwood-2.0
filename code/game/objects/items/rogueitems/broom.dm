@@ -1,6 +1,6 @@
 /obj/item/broom
-	name = "broom"
-	desc = "A broom, made from a bundle of twigs."
+	name = "扫帚"
+	desc = "一把用细枝捆成的扫帚。"
 	icon = 'icons/roguetown/weapons/tools.dmi'
 	icon_state = "broom"
 	possible_item_intents = list(/datum/intent/use)
@@ -29,7 +29,7 @@
 	testing("attackobj")
 	if(do_after(user, 30, target = O))
 		if(istype(O, /obj/effect/decal/cleanable/dirt))
-			user.visible_message("<span class='notice'>[user] sweeps \the [O.name].</span>", "<span class='notice'>I sweep \the [O.name].</span>")
+			user.visible_message("<span class='notice'>[user]清扫了[O.name]。</span>", "<span class='notice'>我清扫了[O.name]。</span>")
 			playsound(user, "clothwipe", 100, TRUE)
 			qdel(O)
 		if(istype(O, /obj/effect/decal/cleanable/blood))
@@ -41,7 +41,7 @@
 		if(istype(T, /turf/open/water))
 			..()
 		for(var/obj/effect/decal/cleanable/dirt/C in T)
-			user.visible_message("<span class='notice'>[user] sweeps \the [T.name].</span>", "<span class='notice'>I sweep \the [T.name].</span>")
+			user.visible_message("<span class='notice'>[user]清扫了[T.name]。</span>", "<span class='notice'>我清扫了[T.name]。</span>")
 			playsound(user, "clothwipe", 100, TRUE)
 			qdel(C)
 		for(var/obj/effect/decal/cleanable/blood/O in T)

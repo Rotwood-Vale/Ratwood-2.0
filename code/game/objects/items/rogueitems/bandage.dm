@@ -1,8 +1,8 @@
 /obj/item/natural/cloth/bandage
-	name = "bandage"
+	name = "绷带"
 	icon = 'icons/roguetown/items/surgery.dmi'
 	icon_state = "bandageroll"
-	desc = "A fabric treated and specially made to help with bleeding wounds. Better and faster at stopping bleeding than your regular piece of cloth."
+	desc = "一种经过处理的特殊布料，专门用来处理流血的伤口。比起普通的布片，它能更好更快地止血。"
 	bundletype = /obj/item/natural/bundle/cloth/bandage
 	bandage_effectiveness = 0.25
 	bandage_health = 300 //High HP so it can last some time on more serious wounds like arteries, total of 225 blood soaked
@@ -12,13 +12,13 @@
 	return
 
 /obj/item/natural/bundle/cloth/bandage
-	name = "roll of bandages"
+	name = "绷带卷"
 	icon = 'icons/roguetown/items/surgery.dmi'
 	icon_state = "bandageroll1"
-	desc = "A roll of joined bandages for easier carrying. A bleeding man's best friend."
+	desc = "一卷拼接好的绷带，方便携带。流血者的最佳伙伴。"
 	maxamount = 4 //balanced...? You'd die of bloodloss before all of them were dirty.
 	stacktype = /obj/item/natural/cloth/bandage
-	stackname = "bandages"
+	stackname = "卷绷带"
 	icon1 = "bandageroll1"
 	icon1step = 3
 	icon2 = "bandageroll2"

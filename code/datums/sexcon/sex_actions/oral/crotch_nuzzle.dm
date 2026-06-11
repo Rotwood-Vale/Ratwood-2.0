@@ -1,5 +1,5 @@
 /datum/sex_action/crotch_nuzzle
-	name = "Nuzzle their crotch"
+	name = "蹭弄对方胯间"
 	user_sex_part = SEX_PART_JAWS
 	target_sex_part = SEX_PART_COCK|SEX_PART_CUNT
 
@@ -18,16 +18,16 @@
 	return TRUE
 
 /datum/sex_action/crotch_nuzzle/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] moves [user.p_their()] head against [target]'s crotch..."))
+	user.visible_message(span_warning("[user]把[user.p_their()]脑袋贴向[target]的胯间……"))
 
 /datum/sex_action/crotch_nuzzle/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] nuzzles [target]'s crotch..."))
+	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()]蹭弄着[target]的胯间……"))
 
 	user.sexcon.perform_sex_action(target, 0.5, 0, TRUE)
 	target.sexcon.handle_passive_ejaculation(user)
 
 /datum/sex_action/crotch_nuzzle/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] stops nuzzling [target]'s crotch..."))
+	user.visible_message(span_warning("[user]停下了对[target]胯间的蹭弄……"))
 
 /datum/sex_action/crotch_nuzzle/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.sexcon.finished_check())

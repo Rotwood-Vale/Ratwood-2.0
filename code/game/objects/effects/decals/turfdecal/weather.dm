@@ -1,23 +1,23 @@
 /obj/effect/turf_decal/weather
-	name = "sandy floor"
+	name = "沙地地面"
 	icon_state = "sandyfloor"
 
 /obj/effect/turf_decal/weather/snow
-	name = "snowy floor"
+	name = "积雪地面"
 	icon_state = "snowyfloor"
 
 /obj/effect/turf_decal/weather/snow/corner
-	name = "snow corner piece"
+	name = "积雪角块"
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow_corner"
 
 /obj/effect/turf_decal/weather/dirt
-	name = "dirt siding"
+	name = "泥土地边"
 	icon = 'icons/turf/decals.dmi'
 	icon_state = "dirt_side"
 
 /obj/effect/turf_decal/weather/sand
-	name = "sand siding"
+	name = "沙地边缘"
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "sand_side"
 

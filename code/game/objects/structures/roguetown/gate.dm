@@ -1,8 +1,8 @@
 GLOBAL_LIST_EMPTY(biggates)
 
 /obj/structure/gate
-	name = "gate"
-	desc = "A strong steel gate."
+	name = "闸门"
+	desc = "一道坚固的钢制闸门。"
 	icon = 'icons/roguetown/misc/gate.dmi'
 	icon_state = "gate1"
 	density = TRUE
@@ -127,8 +127,8 @@ GLOBAL_LIST_EMPTY(biggates)
 					def_zone = BODY_ZONE_HEAD
 			var/obj/item/bodypart/BP = L.get_bodypart(def_zone)
 			if(BP)
-				L.visible_message(span_boldwarning("[src] comes crashing down on [L]'s [BP.name]!"), \
-						span_userdanger("[src] crushes my [BP.name]!"))
+				L.visible_message(span_boldwarning("[src]猛地夹上了[L]的[BP.name]！"), \
+						span_userdanger("[src]猛地夹上了我的[BP.name]！"))
 				L.emote("agony")
 				BP.add_wound(/datum/wound/fracture)
 				BP.update_disabled()
@@ -144,8 +144,8 @@ GLOBAL_LIST_EMPTY(biggates)
 	update_icon()
 
 /obj/structure/winch
-	name = "winch"
-	desc = "A gatekeeper's only, and most important responsibility."
+	name = "绞盘"
+	desc = "一套用来升降闸门的绞盘装置。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "winch"
 	density = TRUE
@@ -179,7 +179,7 @@ GLOBAL_LIST_EMPTY(biggates)
 /obj/structure/winch/attack_hand(mob/user)
 	. = ..()
 	if(!attached_gate)
-		to_chat(user, span_warning("The chain is not attached to anything."))
+		to_chat(user, span_warning("这座绞盘没有连接到任何闸门。"))
 		return
 	if(attached_gate.isSwitchingStates)
 		return
@@ -187,13 +187,13 @@ GLOBAL_LIST_EMPTY(biggates)
 		var/mob/living/L = user
 		L.changeNext_move(CLICK_CD_INTENTCAP)
 		var/used_time = 105 - (L.STASTR * 10)
-		user.visible_message(span_warning("[user] cranks the winch."))
+		user.visible_message(span_warning("[user]开始转动[src]。"))
 		playsound(src, 'sound/foley/winch.ogg', 100, extrarange = 3)
 		if(do_after(user, used_time, target = user))
 			attached_gate.toggle()
 
 /obj/structure/gate/psy_vault
-	name = "\improper HIS vault"
+	name = "\improper HIS 闸门"
 	redstone_id = "swamp_psy_dungeon_hour"
 	max_integrity = 9999
 

@@ -211,7 +211,7 @@
 		things = typecache_filter_list(things, typecacheof(I.type))
 	var/len = length(things)
 	if(!len)
-		to_chat(M, span_warning("I failed to pick up anything with [parent]!"))
+		to_chat(M, span_warning("我没能用[parent]拾起任何东西！"))
 		return
 //	var/datum/progressbar/progress = new(M, len, I.loc)
 //	var/list/rejections = list()
@@ -297,11 +297,11 @@
 	var/turf/T = get_step(user, user.dir)
 	for(var/obj/structure/S in T) // Is there a structure in the way that isn't a chest, table, rack, or handcart? Can't dump the sack out on that
 		if(S.density && !istype(S, /obj/structure/table) && !istype(S, /obj/structure/closet/crate) && !istype(S, /obj/structure/rack) && !istype(S, /obj/structure/bars) && !istype(S, /obj/structure/handcart))
-			to_chat(user, "<span class='warning'>Something in the way.</span>")
+			to_chat(user, "<span class='warning'>前面有东西挡着。</span>")
 			return
 
 	if(istype(T, /turf/closed)) // Is there an impassible turf in the way? Don't dump the sack out on that
-		to_chat(user, "<span class='warning'>Something in the way.</span>")
+		to_chat(user, "<span class='warning'>前面有东西挡着。</span>")
 		return
 
 	var/list/dumped = list()
@@ -587,7 +587,7 @@
 		handle_show_valid_items(source, user)
 
 /datum/component/storage/proc/handle_show_valid_items(datum/source, user)
-	to_chat(user, span_notice("[source] can hold: [can_hold_description]"))
+	to_chat(user, span_notice("[source]可容纳： [can_hold_description]"))
 
 /datum/component/storage/proc/mousedrop_onto(datum/source, atom/over_object, mob/M)
 	set waitfor = FALSE
@@ -690,45 +690,45 @@
 		return FALSE
 	if(real_location.contents.len >= max_items)
 		if(!stop_messages)
-			to_chat(M, span_warning("[host] is full, make some space!"))
+			to_chat(M, span_warning("[host]已经满了，先腾些空间吧！"))
 		return FALSE //Storage item is full
 	if(length(can_hold))
 		if(!is_type_in_typecache(I, can_hold))
 			if(!stop_messages)
-				to_chat(M, span_warning("[host] cannot hold [I]!"))
+				to_chat(M, span_warning("[host]装不下[I]！"))
 			return FALSE
 	if(is_type_in_typecache(I, cant_hold)) //Check for specific items which this container can't hold.
 		if(!stop_messages)
-			to_chat(M, span_warning("[host] cannot hold [I]!"))
+			to_chat(M, span_warning("[host]装不下[I]！"))
 		return FALSE
 	if(I.w_class > max_w_class && !is_type_in_typecache(I, exception_hold))
 		if(!stop_messages)
-			to_chat(M, span_warning("[I] is too big for [host]!"))
+			to_chat(M, span_warning("[I]对[host]来说太大了！"))
 		return FALSE
 	var/datum/component/storage/biggerfish = real_location.loc.GetComponent(/datum/component/storage)
 	if(biggerfish && biggerfish.max_w_class < max_w_class)//return false if we are inside of another container, and that container has a smaller max_w_class than us (like if we're a bag in a box)
 		if(!stop_messages)
-			to_chat(M, span_warning("[I] can't fit in [host] while [real_location.loc] is in the way!"))
+			to_chat(M, span_warning("[real_location.loc]挡着时，[I]没法放进[host]！"))
 		return FALSE
 	var/sum_w_class = I.w_class
 	for(var/obj/item/_I in real_location)
 		sum_w_class += _I.w_class //Adds up the combined w_classes which will be in the storage item if the item is added to it.
 	if(sum_w_class > max_combined_w_class)
 		if(!stop_messages)
-			to_chat(M, span_warning("[I] won't fit in [host], make some space!"))
+			to_chat(M, span_warning("[I]塞不进[host]，先腾些空间吧！"))
 		return FALSE
 	if(isitem(host))
 		var/obj/item/IP = host
 		var/datum/component/storage/STR_I = I.GetComponent(/datum/component/storage)
 		if((I.w_class >= IP.w_class) && STR_I && !allow_big_nesting)
 			if(!stop_messages)
-				to_chat(M, span_warning("[IP] cannot hold [I] as it's a storage item of the same size!"))
+				to_chat(M, span_warning("[IP]无法容纳[I]，因为它也是同等大小的收纳物！"))
 			return FALSE //To prevent the stacking of same sized storage items.
 		if(IP.StorageBlock(I, M))
 			return FALSE
 	if(HAS_TRAIT(I, TRAIT_NODROP)) //SHOULD be handled in unEquip, but better safe than sorry.
 		if(!stop_messages)
-			to_chat(M, span_warning("\the [I] is stuck to your hand, you can't put it in \the [host]!"))
+			to_chat(M, span_warning("[I]黏在你的手上了，你没法把它放进[host]！"))
 		return FALSE
 	var/datum/component/storage/concrete/master = master()
 	if(!istype(master))
@@ -759,11 +759,11 @@
 		playsound(parent, "rustle", 50, TRUE, -5)
 	for(var/mob/viewing in viewers(user, null))
 		if(M == viewing)
-			to_chat(usr, span_notice("I tuck [I] [insert_preposition]to [parent]."))
+			to_chat(usr, span_notice("我把[I]塞进[parent]。"))
 		else if(in_range(M, viewing)) //If someone is standing close enough, they can tell what it is...
-			viewing.show_message(span_notice("[M] tucks [I] [insert_preposition]to [parent]."), MSG_VISUAL)
+			viewing.show_message(span_notice("[M]把[I]塞进了[parent]。"), MSG_VISUAL)
 		else
-			viewing.show_message(span_notice("[M] tucks something [insert_preposition]to [parent]."), MSG_VISUAL)
+			viewing.show_message(span_notice("[M]往[parent]里塞了什么东西。"), MSG_VISUAL)
 
 /datum/component/storage/proc/update_icon()
 	if(isobj(parent))
@@ -936,7 +936,7 @@
 	if(!isliving(user) || !user.CanReach(parent))
 		return
 	if(locked)
-		to_chat(user, span_warning("[parent] seems to be locked!"))
+		to_chat(user, span_warning("[parent]似乎被锁住了！"))
 		return
 
 	var/atom/A = parent
@@ -953,9 +953,9 @@
 		A.add_fingerprint(user)
 		remove_from_storage(I, get_turf(user))
 		if(!user.put_in_hands(I))
-			to_chat(user, span_notice("I fumble for [I] and it falls on the floor."))
+			to_chat(user, span_notice("我手忙脚乱地去抓[I]，结果它掉到了地上。"))
 			return
-		user.visible_message(span_warning("[user] draws [I] from [parent]!"), span_notice("I draw [I] from [parent]."))
+		user.visible_message(span_warning("[user]从[parent]里抽出了[I]！"), span_notice("我从[parent]里抽出了[I]。"))
 		return
 
 /datum/component/storage/proc/action_trigger(datum/signal_source, datum/action/source)
@@ -966,8 +966,8 @@
 	collection_mode = (collection_mode+1)%3
 	switch(collection_mode)
 		if(COLLECT_SAME)
-			to_chat(user, span_notice("[parent] now picks up all items of a single type at once."))
+			to_chat(user, span_notice("[parent]现在会一次拾取同一类型的所有物品。"))
 		if(COLLECT_EVERYTHING)
-			to_chat(user, span_notice("[parent] now picks up all items in a tile at once."))
+			to_chat(user, span_notice("[parent]现在会一次拾取同一格上的全部物品。"))
 		if(COLLECT_ONE)
-			to_chat(user, span_notice("[parent] now picks up one item at a time."))
+			to_chat(user, span_notice("[parent]现在会一次只拾取一件物品。"))

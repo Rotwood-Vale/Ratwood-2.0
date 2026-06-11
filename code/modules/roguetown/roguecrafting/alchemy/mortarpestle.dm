@@ -1,6 +1,6 @@
 /obj/item/pestle
-	name = "pestle"
-	desc = "A small, round-end stone tool oft used by physicians to crush and mix medicine."
+	name = "研杵"
+	desc = "一种小巧的、圆头石制工具，常被医师用来捣碎和混合药物。"
 	icon = 'icons/roguetown/misc/alchemy.dmi'
 	icon_state = "pestle"
 	force = 7
@@ -20,12 +20,12 @@
 	always_availible = TRUE      // shows for anyone who has the ingredients; craftdiff gates who can actually make it
 	skillcraft = /datum/skill/magic/druidic
 	subtype_reqs = FALSE
-	verbage_simple = "prepare"
-	verbage = "prepares"
+	verbage_simple = "制备"
+	verbage = "制备"
 	craftsound = 'sound/foley/mortarpestle.ogg'
 
 /datum/crafting_recipe/roguetown/druidic/blessedseedpowder
-	name = "blessed seed powder"
+	name = "祝圣种子粉"
 	result = list(/obj/item/alch/blessedseedpowder)
 	reqs = list(
 		/obj/item/seeds/treesap = 1,
@@ -37,8 +37,8 @@
 	craft_xp_override = 5
 
 /obj/item/reagent_containers/glass/mortar
-	name = "alchemical mortar"
-	desc = "A small, thick-walled stone bowl made for grinding things up inside."
+	name = "炼金研钵"
+	desc = "一个用于研磨物品的小型厚壁石碗。"
 	icon = 'icons/roguetown/misc/alchemy.dmi'
 	icon_state = "mortar"
 	dropshrink = 0.75
@@ -55,18 +55,18 @@
 /obj/item/reagent_containers/glass/mortar/examine()
 	. += ..()
 	if(to_grind)
-		. += ("[to_grind] is inside the mortar.")
-	. += span_notice("Left click with a pestle to grind the item inside into alchemical ingredients. Middle Click with a pestle to grind or juice them. Right click to remove it.")
+		. += ("[to_grind]在研钵里。")
+	. += span_notice("使用研杵左键点击可将内部物品研磨成炼金材料。使用研杵中键点击可研磨或榨汁。右键点击可将其取出。")
 
 /obj/item/reagent_containers/glass/mortar/attack_right(mob/user)
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	if(to_grind)
-		to_chat(user, "<span class='notice'>I remove [to_grind] from the mortar.</span>")
+		to_chat(user, "<span class='notice'>我从研钵中取出了[to_grind]。</span>")
 		if(!user.put_in_hands(to_grind))
-			to_chat(user, span_warning("My hands are full! I drop [to_grind] on the ground"))
+			to_chat(user, span_warning("我的手满了！我把[to_grind]掉在了地上。"))
 		to_grind = null
 		return
-	to_chat(user, "<span class='notice'>It's empty.</span>")
+	to_chat(user, "<span class='notice'>它是空的。</span>")
 
 /obj/item/reagent_containers/glass/mortar/MiddleClick(mob/user)
 	if(!ishuman(user))
@@ -74,18 +74,18 @@
 	var/mob/living/carbon/human/H = user
 	var/pestle = H.get_active_held_item()
 	if(!istype(pestle, /obj/item/pestle))
-		to_chat(user, "<span class='warning'>You need a pestle to grind!</span>")
+		to_chat(user, "<span class='warning'>你需要一根研杵来研磨！</span>")
 		return
 	if(!to_grind)
-		to_chat(user, "<span class='warning'>There's nothing to grind.</span>")
+		to_chat(user, "<span class='warning'>没有什么可研磨的。</span>")
 		return
 	if((!to_grind.juice_results && !to_grind?.grind_results?.len)) // A lot of reagents are grindable but empty
-		to_chat(user, "<span class='warning'>You don't think that will work!</span>")
+		to_chat(user, "<span class='warning'>你觉得那不会有效！</span>")
 		return
 	if(to_grind.juice_results) //prioritize juicing
 		to_grind.on_juice()
 		reagents.add_reagent_list(to_grind.juice_results)
-		to_chat(user, span_notice("I juice [to_grind] into a fine liquid."))
+		to_chat(user, span_notice("我把[to_grind]榨成了细腻的汁液。"))
 		if(to_grind.reagents) //food and pills
 			to_grind.reagents.trans_to(src, to_grind.reagents.total_volume, transfered_by = user)
 			onfill(to_grind, user, silent = FALSE)
@@ -94,34 +94,34 @@
 	if(to_grind.grind_results.len) // grind, if there's a grind result
 		to_grind.on_grind()
 		reagents.add_reagent_list(to_grind.grind_results)
-		to_chat(user, span_notice("I break [to_grind] into powder."))
+		to_chat(user, span_notice("我把[to_grind]磨成了粉末。"))
 		QDEL_NULL(to_grind)
 		return
 
 /obj/item/reagent_containers/glass/mortar/attackby(obj/item/I, mob/living/carbon/human/user)
 	if(istype(I,/obj/item/pestle))
 		if(!to_grind)
-			to_chat(user, "<span class='warning'>There's nothing to grind.</span>")
+			to_chat(user, "<span class='warning'>没有什么可研磨的。</span>")
 			return
 		if((to_grind.type == /obj/item/seeds/treesap) && reagents.get_reagent_amount(/datum/reagent/water/blessed) >= 10)
 			if(!ishuman(user) || user.get_skill_level(/datum/skill/magic/druidic) < SKILL_LEVEL_NOVICE)
-				to_chat(user, span_warning("I lack the druidic knowledge to draw Dendor's blessing from these seeds."))
+				to_chat(user, span_warning("我缺乏德鲁伊的知识，无法从这些种子中提取 登多尔 的祝福。"))
 				return
-			user.visible_message(span_info("[user] grinds [to_grind] into the blessed water, drawing out Dendor's blessing."))
+			user.visible_message(span_info("[user]将[to_grind]研磨进圣水，提取出 登多尔 的祝福。"))
 			playsound(loc, 'sound/foley/mortarpestle.ogg', 100, FALSE)
 			if(do_after(user, 10, target = src))
 				reagents.remove_reagent(/datum/reagent/water/blessed, 10)
 				new /obj/item/alch/blessedseedpowder(get_turf(src))
 				QDEL_NULL(to_grind)
-				to_chat(user, span_notice("The seeds absorb Dendor's blessing, forming luminous powder."))
+				to_chat(user, span_notice("种子吸收了 登多尔 的祝福，形成了发光粉末。"))
 				if(user.mind)
 					user.mind.add_sleep_experience(/datum/skill/magic/druidic, 5)
 			return
 		var/datum/alch_grind_recipe/foundrecipe = find_recipe()
 		if(foundrecipe == null)
-			to_chat(user, "<span class='warning'>You don't think that will work!</span>")
+			to_chat(user, "<span class='warning'>你觉得那不会有效！</span>")
 			return
-		user.visible_message("<span class='info'>[user] begins grinding up [to_grind].</span>")
+		user.visible_message("<span class='info'>[user]开始研磨[to_grind]。</span>")
 		playsound(loc, 'sound/foley/mortarpestle.ogg', 100, FALSE)
 		if(do_after(user, 10, target = src))
 			user.log_message("ground [to_grind] into [english_list(foundrecipe.valid_outputs, "nothing")] with [src]", LOG_GAME)
@@ -148,14 +148,14 @@
 		if(user.used_intent.type == INTENT_POUR) //Something like a glass. Player probably wants to transfer TO it.
 			testing("attackobj2")
 			if(!I.reagents.total_volume)
-				to_chat(user, span_warning("[I] is empty!"))
+				to_chat(user, span_warning("[I]是空的！"))
 				return
 
 			if(reagents.holder_full())
-				to_chat(user, span_warning("[src] is full."))
+				to_chat(user, span_warning("[src]已满。"))
 				return
-			user.visible_message(span_notice("[user] pours [I] into [src]."), \
-							span_notice("I pour [I] into [src]."))
+			user.visible_message(span_notice("[user]把[I]倒入[src]。"), \
+							span_notice("我把[I]倒入[src]。"))
 			if(user.m_intent != MOVE_INTENT_SNEAK)
 				if(poursounds)
 					playsound(user.loc,pick(poursounds), 100, TRUE)
@@ -175,17 +175,17 @@
 		if(is_drainable() && (user.used_intent.type == /datum/intent/fill)) //A dispenser. Transfer FROM it TO us.
 			testing("attackobj3")
 			if(!reagents.total_volume)
-				to_chat(user, span_warning("[src] is empty!"))
+				to_chat(user, span_warning("[src]是空的！"))
 				return
 
 			if(I.reagents.holder_full())
-				to_chat(user, span_warning("[I] is full."))
+				to_chat(user, span_warning("[I]已满。"))
 				return
 			if(user.m_intent != MOVE_INTENT_SNEAK)
 				if(fillsounds)
 					playsound(user.loc,pick(fillsounds), 100, TRUE)
-			user.visible_message(span_notice("[user] fills [I] with [src]."), \
-								span_notice("I fill [I] with [src]."))
+			user.visible_message(span_notice("[user]用[src]装满了[I]。"), \
+								span_notice("我用[src]装满了[I]。"))
 			for(var/i in 1 to 10)
 				if(do_after(user, 8, target = src))
 					if(I.reagents.holder_full())
@@ -198,17 +198,17 @@
 
 			return
 	if(to_grind)
-		to_chat(user, "<span class='warning'>[src] is full!</span>")
+		to_chat(user, "<span class='warning'>[src]已满！</span>")
 		return
 	var/recipe = find_recipe(I)
 	if(recipe == null && I.grind_results == null && I.juice_results == null)
-		to_chat(user, "<span class='warning'>[I] can't be ground!!</span>")
+		to_chat(user, "<span class='warning'>[I]不能被研磨！！</span>")
 		return
 	if(!user.transferItemToLoc(I,src))
-		to_chat(user, "<span class='warning'>[I] is stuck to my hand!</span>")
+		to_chat(user, "<span class='warning'>[I]粘在我手上了！</span>")
 		return
 	if(!istype(I,/obj/item/pestle) && !to_grind && user.transferItemToLoc(I,src))
-		to_chat(user, "<span class='info'>I add [I] to [src].</span>")
+		to_chat(user, "<span class='info'>我把[I]加入到[src]中。</span>")
 		to_grind = I
 		return
 	..()

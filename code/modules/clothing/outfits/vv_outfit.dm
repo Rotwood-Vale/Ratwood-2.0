@@ -107,10 +107,10 @@
 		O.backpack_contents = typecounts
 		//TODO : Copy varedits from backpack stuff too.
 	//Copy to outfit cache
-	var/outfit_name = stripped_input(usr,"Enter the outfit name")
+	var/outfit_name = stripped_input(usr,"输入套装名称")
 	O.name = outfit_name
 	GLOB.custom_outfits += O
-	to_chat(usr,"Outfit registered, use select equipment to equip it.")
+	to_chat(usr,"套装备份已登记，使用 select equipment 即可装备。")
 
 /datum/outfit/varedit/post_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()

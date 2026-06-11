@@ -7,7 +7,7 @@
 
 /datum/intent/shoot/bow/can_charge(atom/clicked_object)
 	if(mastermob?.get_num_arms(FALSE) < 2 || mastermob.get_inactive_held_item())
-		to_chat(mastermob, span_warning("I need a free hand to draw [masteritem]!"))
+		to_chat(mastermob, span_warning("我需要一只空着的手来拉开[masteritem]！"))
 		return FALSE
 	if(istype(clicked_object, /obj/item/quiver) && istype(mastermob?.get_active_held_item(), /obj/item/gun/ballistic))
 		return FALSE
@@ -16,7 +16,7 @@
 
 /datum/intent/shoot/bow/prewarning()
 	if(mastermob)
-		mastermob.visible_message(span_warning("[mastermob] draws [masteritem]!"))
+		mastermob.visible_message(span_warning("[mastermob]拉开了[masteritem]！"))
 		playsound(mastermob, pick('sound/combat/Ranged/bow-draw-01.ogg'), 100, FALSE)
 
 /datum/intent/shoot/bow/get_chargetime() //this handles how long it takes for us to fully aim our bow. damage is handled below in /obj/item/gun/ballistic/revolver/grenadelauncher/bow/process_fire
@@ -45,7 +45,7 @@
 
 /datum/intent/arc/bow/can_charge(atom/clicked_object)
 	if(mastermob?.get_num_arms(FALSE) < 2 || mastermob.get_inactive_held_item())
-		to_chat(mastermob, span_warning("I need a free hand to draw [masteritem]!"))
+		to_chat(mastermob, span_warning("我需要一只空着的手来拉开[masteritem]！"))
 		return FALSE
 	if(istype(clicked_object, /obj/item/quiver) && istype(mastermob?.get_active_held_item(), /obj/item/gun/ballistic))
 		return FALSE
@@ -53,7 +53,7 @@
 
 /datum/intent/arc/bow/prewarning()
 	if(mastermob)
-		mastermob.visible_message(span_warning("[mastermob] draws [masteritem] in an arc!"))
+		mastermob.visible_message(span_warning("[mastermob]弧形拉开了[masteritem]！"))
 		playsound(mastermob, pick('sound/combat/Ranged/bow-draw-01.ogg'), 100, FALSE)
 
 /datum/intent/arc/bow/get_chargetime() //same calc as above, but with a higher absolute floor for how fast you can shoot
@@ -78,9 +78,9 @@
 //bow objs ฅ^•ﻌ•^ฅ
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow
-	name = "shortbow"
-	desc = "This simply hewn shortbow is functional enough. What it lacks in poundage or accuracy, \
-	it makes up for with a decently swift draw."
+	name = "短弓"
+	desc = "这把制作朴素的短弓勉强够用。它虽在弓力与精度上有所欠缺， \
+	但尚算迅捷的开弓速度弥补了这一点。"
 	icon = 'icons/roguetown/weapons/32.dmi'
 	icon_state = "bow"
 	item_state = "bow"
@@ -115,7 +115,7 @@
 									/datum/intent/arc/bow/heavy,
 									INTENT_GENERIC,
 									)
-		desc += " <b>Has a heavy draw.</b>"
+		desc += " <b>弓力沉重。</b>"
 	else
 		return
 
@@ -214,7 +214,7 @@
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(user.get_inactive_held_item() || user.get_num_arms(FALSE) < 2)
-		to_chat(user, span_warning("I need a free hand to fire \the [src]!"))
+		to_chat(user, span_warning("我需要一只空着的手来发射[src]！"))
 		return FALSE
 	if(user.client)
 		if(user.client.chargedprog >= 100)
@@ -265,8 +265,8 @@
 	start_empty = TRUE
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-	name = "recurve bow"
-	desc = "A medium length composite bow of glued horn, wood, and sinew with a good balance of strength, speed and accuracy."
+	name = "反曲弓"
+	desc = "一把中等长度的复合弓，由角、木材与筋腱胶合而成，在威力、速度与精度之间取得了良好平衡。"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "recurve_bow"
 	force = 9
@@ -362,9 +362,9 @@
 					"westabove" = 0,)
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
-	name = "yew longbow"
-	desc = "A sturdy warbow made of a tillered yew stave. It's difficult to handle, but the \
-	power is worth the effort."
+	name = "紫杉长弓"
+	desc = "一把由整形紫杉弓臂制成的坚固战弓。它不易驾驭，但那份 \
+	威力值得付出这番力气。"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "longbow"
 	slot_flags = ITEM_SLOT_BACK
@@ -442,21 +442,22 @@
 //Unique Bows
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/warden
-	name = "blackhorn bow"
-	desc = "When a northern black-horned saiga is old enough, it will shed its two-metre long antlers. As time passes, they harden progressively more but keep a degree of flexibility that can outdo even yew.\
-		Wardens often collect such antlers in the rare occasion they are found and send them to be filed, strung and treated by a master bowyer. Such tradition carries merit even todae, \
-		and thus one can see the realm's wardens carrying their endemic blackhorn bows with pride."
+	name = "黑角弓"
+	desc = "北方的黑角赛加兽一旦年岁足够，便会脱落那对长达两米的巨角。随着时日推移，它们会愈发坚硬，\
+		却仍保有一种甚至胜过紫杉的柔韧。守望者偶尔寻得这种角材时，常会将其收集起来，交由制弓大师削整、上弦、处理。这样的传统至今仍有价值，\
+		于是人们仍能看到谷地的守望者自豪地携着他们那种本地特有的黑角弓。"
 	icon_state = "recurve_warden"
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow/warden
-	name = "blackhorn longbow"
-	desc = "When a northern black-horned saiga is old enough, it will shed its two-metre long antlers. As time passes, they harden progressively more but keep a degree of flexibility that can outdo even yew.\
-		Wardens often collect such antlers in the rare occasion they are found and send them to be filed, strung and treated by a master bowyer. The end result is a war bow such as this one."
+	name = "黑角长弓"
+	desc = "北方的黑角赛加兽一旦年岁足够，便会脱落那对长达两米的巨角。随着时日推移，它们会愈发坚硬，\
+		却仍保有一种甚至胜过紫杉的柔韧。守望者偶尔寻得这种角材时，常会将其收集起来，交由制弓大师削整、上弦、处理。最终成品，\
+		便是眼前这样的战弓。"
 	icon_state = "longbow_warden"
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/steppesman
-	name = "aavnic riding bow"
-	desc = "A short recurve warbow made for the express purpose of shooting on saigaback, a skill every archer in Aavnr takes much more seriously than their Northern counterparts. Every seasoned Druzhina is themselves a good bowyer and usually makes their own bow, this one is made with the purpure-ish crimson wood of a Vörötslevé tree."
+	name = "阿夫尼骑弓"
+	desc = "一把专为骑乘赛加兽射击而打造的短型反曲战弓，这项技艺在阿夫纳的每位弓手眼中都远比北方同侪重要得多。每位老练的杜鲁日纳本身往往也是好弓匠，通常会亲手制作自己的弓；这一把便是以沃勒茨列维树带紫红色的深红木打造。"
 	icon_state = "recurve_riding"
 
 /datum/intent/shoot/bow/short
@@ -472,8 +473,8 @@
 
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow/eora
-	name = "eoran harp-bow"
-	desc = "Strings to pluck."
+	name = "艾欧拉竖琴弓"
+	desc = "琴弦，亦可为弓弦。"
 	icon = 'icons/roguetown/weapons/special/boweoran64.dmi'
 	icon_state = "harpbow"
 	dropshrink = 0
@@ -483,8 +484,8 @@
 	damfactor = 1.25
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/eora//subtype of recurve bow for the sprite sizes, but stats of a shortbow
-	name = "eoran harp-bow"
-	desc = "Strings to pluck."
+	name = "艾欧拉竖琴弓"
+	desc = "琴弦，亦可为弓弦。"
 	icon = 'icons/roguetown/weapons/special/boweoran64.dmi'
 	icon_state = "harpbowb"
 	dropshrink = 0

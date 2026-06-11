@@ -1,8 +1,8 @@
 //Eora content from Stonekeep
 
 /obj/item/clothing/head/peaceflower
-	name = "eoran bud"
-	desc = "A flower of gentle petals, associated with Eora or Necra. Usually adorned as a headress or laid at graves as a symbol of love or peace."
+	name = "Eora 花苞"
+	desc = "一朵花瓣柔和的花，与 Eora 或 Necra 相关。通常被佩作头饰，或置于墓前，象征爱与安宁。"
 	icon = 'icons/roguetown/items/produce.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
 	icon_state = "peaceflower"
@@ -38,8 +38,8 @@
 	effectedstats = list(STATKEY_STR = 1, STATKEY_PER = 1) // These are the stats that the eoran tree affect
 
 /atom/movable/screen/alert/status_effect/buff/peaceflower
-	name = "Eoran Bud"
-	desc = "Eora's beauty fills me with a sharpened clarity."
+	name = "Eora 花苞"
+	desc = "Eora 的美丽令我的心神变得澄澈而敏锐。"
 	icon_state = "buff"
 
 /obj/item/clothing/head/peaceflower/proc/peace_check(mob/living/user)
@@ -47,7 +47,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.head || src == C.wear_mask)
-			to_chat(user, "<span class='warning'>I feel at peace. <b style='color:pink'>Why would I want anything else?</b></span>")
+			to_chat(user, "<span class='warning'>我感到无比平静。<b style='color:pink'>我为何还会想要别的东西？</b></span>")
 			return TRUE
 	return FALSE
 
@@ -61,8 +61,8 @@
 
 
 /obj/effect/proc_holder/spell/invoked/bud
-	name = "Eoran Bloom"
-	desc = "Tries to grow an Eoran bud on the target tile or on the targets head, forcing their thoughts away from violence until removed."
+	name = "Eora 绽放"
+	desc = "尝试在目标地块，或目标的头顶长出一枚 Eora 花苞，在它被移除前令其思绪远离暴力。"
 	clothes_req = FALSE
 	range = 7
 	overlay_state = "love"
@@ -84,23 +84,23 @@
 		if(!C.get_item_by_slot(SLOT_HEAD))
 			var/obj/item/clothing/head/peaceflower/F = new(get_turf(C))
 			C.equip_to_slot_if_possible(F, SLOT_HEAD, TRUE, TRUE)
-			to_chat(C, "<span class='info'>A flower of Eora blooms on my head. I feel at peace.</span>")
+			to_chat(C, "<span class='info'>一朵 Eora 之花在我头顶绽放。我感到无比平和。</span>")
 			return TRUE
 		else
-			to_chat(user, "<span class='warning'>The target's head is covered. The flowers of Eora need an open space to bloom.</span>")
+			to_chat(user, "<span class='warning'>目标的头部被遮住了。Eora 之花需要一片开阔处才能绽放。</span>")
 			revert_cast()
 			return FALSE
 	var/turf/T = get_turf(targets[1])
 	if(!isclosedturf(T))
 		new /obj/item/clothing/head/peaceflower(T)
 		return TRUE
-	to_chat(user, "<span class='warning'>The targeted location is blocked. The flowers of Eora refuse to grow.</span>")
+	to_chat(user, "<span class='warning'>目标位置被阻挡了。Eora 之花拒绝在此生长。</span>")
 	revert_cast()
 	return FALSE
 
 /obj/effect/proc_holder/spell/invoked/eoracurse
-	name = "Eora's Curse"
-	desc = "Makes the target both high and drunk."
+	name = "Eora 的诅咒"
+	desc = "令目标同时陷入恍惚与醉意。"
 	overlay_state = "curse2"
 	releasedrain = 50
 	chargetime = 30
@@ -120,7 +120,7 @@
 		var/mob/living/carbon/target = targets[1]
 		target.apply_status_effect(/datum/status_effect/buff/druqks)
 		target.apply_status_effect(/datum/status_effect/buff/drunk)
-		target.visible_message("<span class='info'>A purple haze shrouds [target]!</span>", "<span class='notice'>I feel much calmer.</span>")
+		target.visible_message("<span class='info'>一阵紫色雾气笼罩了 [target]！</span>", "<span class='notice'>我感觉平静多了。</span>")
 		//target.blur_eyes(10)
 		return TRUE
 	revert_cast()
@@ -197,7 +197,7 @@
 		L.update_damage_overlays()
 		//Potentially bite ourselves :(
 		if(prob(wound_chance))
-			L.visible_message(span_danger("[L]'s wounds bleed profusely!"))
+			L.visible_message(span_danger("[L] 的伤口鲜血狂涌！"))
 			BP.add_wound(/datum/wound/bite/small)
 
 /datum/component/eora_bond/proc/on_heal(datum/source, healing_on_tick, healing_datum)
@@ -249,12 +249,12 @@
 // Heartweave Spell
 // =====================
 /obj/effect/proc_holder/spell/invoked/heartweave
-	name = "Heartweave"
-	desc = "Forge a symbiotic bond between two souls."
+	name = "心丝共织"
+	desc = "在两道灵魂之间结成共生之纽带。"
 	overlay_state = "bliss"
 	range = 1
 	chargetime = 0.5 SECONDS
-	invocations = list("By Eora's grace, let our fates intertwine!")
+	invocations = list("借 Eora 之恩，让我们的命运交缠吧！")
 	sound = 'sound/magic/magnet.ogg'
 	recharge_time = 60 SECONDS
 	miracle = TRUE
@@ -266,7 +266,7 @@
 
 	var/datum/component/eora_bond/existing = user.GetComponent(/datum/component/eora_bond)
 	if(existing)
-		to_chat(user, span_warning("You are already bonded!"))
+		to_chat(user, span_warning("你已经与他人结下了纽带！"))
 		revert_cast()
 		return FALSE
 
@@ -275,13 +275,13 @@
 		return FALSE
 
 	if(!do_after(user, 2 SECONDS, target = target))
-		to_chat(user, span_warning("The bond requires focused concentration!"))
+		to_chat(user, span_warning("缔结纽带需要全神贯注！"))
 		revert_cast()
 		return FALSE
 
-	var/consent = alert(target, "[user] offers a lifebond. Accept?", "Heartweave", "Yes", "No")
-	if(consent != "Yes" || QDELETED(target))
-		to_chat(user, span_warning("The bond was rejected."))
+	var/consent = alert(target, "[user] 向你献上生命连结。接受吗？", "心丝共织", "接受", "拒绝")
+	if(consent != "接受" || QDELETED(target))
+		to_chat(user, span_warning("这道纽带被拒绝了。"))
 		revert_cast()
 		return FALSE
 
@@ -291,8 +291,8 @@
 	target.AddComponent(/datum/component/eora_bond/partner, target, user, holy_skill)
 
 	user.visible_message(
-		span_notice("A golden tether forms between [user] and [target]!"),
-		span_notice("You feel [target]'s life force linked to yours.")
+		span_notice("[user] 与 [target] 之间结起了一道金色丝缕！"),
+		span_notice("你感到 [target] 的生命力与自己连结在了一起。")
 	)
 	return TRUE
 
@@ -309,8 +309,8 @@
 	var/outline_colour = "#FF69B4"
 
 /atom/movable/screen/alert/status_effect/eora_bond
-	name = "Eora's Bond"
-	desc = "Your life force is linked to another soul."
+	name = "Eora 之绊"
+	desc = "你的生命力与另一道灵魂相连。"
 
 /datum/status_effect/eora_bond/on_apply()
 	var/filter = owner.get_filter(HEARTWEAVE_FILTER)
@@ -354,7 +354,7 @@
 /datum/component/blessed_food/proc/on_food_eaten(datum/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER
 	if(eater == caster)
-		eater.visible_message(span_notice("The divine energy fizzles harmlessly around [caster]."))
+		eater.visible_message(span_notice("神圣能量在 [caster] 身边无害地噼啪消散。"))
 		return
 
 	eater.apply_status_effect(/datum/status_effect/buff/healing, (quality + (skill / 5)) * bitesize_mod)
@@ -362,9 +362,9 @@
 		eater.apply_status_effect(/datum/status_effect/buff/haste, 55 SECONDS)
 
 /obj/effect/proc_holder/spell/invoked/bless_food
-	name = "Bless Food"
-	invocations = list("Eora, nourish this offering!")
-	desc = "Bless a food item. Items that take longer to eat heal slower. Skilled clergy can bless food more often. Finer food heals more. Eoran masters can make food a golden hue."
+	name = "祝福食物"
+	invocations = list("Eora，请滋养这份供品！")
+	desc = "祝福一件食物。进食耗时越久的食物，治疗速度越慢。熟练的教士能更频繁地祝福食物。越精致的食物治疗效果越强。Eora 的大师甚至能令食物染上金辉。"
 	sound = 'sound/magic/magnet.ogg'
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	devotion_cost = 25
@@ -376,7 +376,7 @@
 /obj/effect/proc_holder/spell/invoked/bless_food/cast(list/targets, mob/living/user)
 	var/obj/item/target = targets[1]
 	if(!istype(target, /obj/item/reagent_containers/food/snacks))
-		to_chat(user, span_warning("You can only bless food!"))
+		to_chat(user, span_warning("你只能祝福食物！"))
 		revert_cast()
 		return FALSE
 
@@ -386,7 +386,7 @@
 	if(ishuman(H))
 		patron = user.patron
 	target.AddComponent(/datum/component/blessed_food, user, holy_skill, patron)
-	to_chat(user, span_notice("You bless [target] with Eora's love!"))
+	to_chat(user, span_notice("你以 Eora 的慈爱祝福了 [target]！"))
 	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/bless_food/start_recharge()
@@ -404,9 +404,9 @@
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/effect/proc_holder/spell/invoked/pomegranate
-	name = "Amaranth Sanctuary"
-	invocations = list("Eora, provide sanctuary for your beauty!")
-	desc = "Grow a pomegranate tree that, when tended to, grows Aurils with a variety of effects. Additionally heals beautiful people and HEAVILY debuffs both STR and PER for everyone in visible range."
+	name = "绯榴圣域"
+	invocations = list("Eora，请为你的美丽降下庇护！")
+	desc = "种出一棵石榴树，只要悉心照料，便会结出具有各种效果的 Auril。除此之外，它还会治疗美丽之人，并对视野范围内的所有人大幅削弱力量与感知。"
 	sound = 'sound/magic/magnet.ogg'
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	devotion_cost = 500
@@ -423,21 +423,21 @@
 		my_little_tree = null
 
 	if(my_little_tree)
-		to_chat(user, span_warning("I cannot maintain more than a single tree for Eora. I must get rid of the other first, however painful."))
+		to_chat(user, span_warning("我无法同时为 Eora 维系超过一棵树。无论多么不忍，我都得先处理掉另一棵。"))
 		revert_cast()
 		return FALSE
 
 	var/turf/T = get_turf(targets[1])
 	if(!isopenturf(T))
-		to_chat(user, span_warning("The targeted location is blocked. Eora's seed cannot sprout here."))
+		to_chat(user, span_warning("目标位置被阻挡了。Eora 的种子无法在这里萌芽。"))
 		revert_cast()
 		return FALSE
 	if(!(istype(T, /turf/open/floor/rogue/grass) || istype(T, /turf/open/floor/rogue/dirt) || istype(T, /turf/open/floor/rogue/grassyel) || istype(T, /turf/open/floor/rogue/grassred) || istype(T, /turf/open/floor/rogue/grasscold) || istype(T, /turf/open/floor/rogue/desert_grass)))
-		to_chat(user, span_warning("The tree cannot grow here. It must be planted on dirt or grass!"))
+		to_chat(user, span_warning("这棵树无法在这里生长。它必须种在泥土或草地上！"))
 		revert_cast()
 		return FALSE
 
-	to_chat(user, span_notice("I begin growing Eora's sacred tree here. I should stop and reconsider if I don't want my only tree here."))
+	to_chat(user, span_notice("我开始在这里培育 Eora 的圣树了。若我并不想把唯一的一棵种在这里，现在就该停手再想想。"))
 	if(do_after(user, 30 SECONDS, FALSE))
 		var/obj/structure/eoran_pomegranate_tree/tree = new /obj/structure/eoran_pomegranate_tree(T)
 		my_little_tree = tree
@@ -449,8 +449,8 @@
 #define FRUITING 3
 
 /obj/structure/eoran_pomegranate_tree
-	name = "pomegranate tree"
-	desc = "A mystical tree blessed by Eora."
+	name = "石榴圣树"
+	desc = "一棵受 Eora 祝福的神秘树木。"
 	icon = 'modular_azurepeak/icons/obj/items/eora_tree.dmi'
 	icon_state = "sprout"
 	anchored = TRUE
@@ -503,8 +503,8 @@
 		if(iscarbon(user))
 			var/mob/living/carbon/human/sacrifice = user
 			user.visible_message(
-				span_danger("[user] begins altruistically channeling the crimson aril's power to restore the tree."),
-				span_info("I begin channeling the crimson aril's power into the tree using my own blood.")
+				span_danger("[user] 开始无私地引导绯红果粒之力来修复这棵树。"),
+				span_info("我开始用自己的鲜血，把绯红果粒的力量灌入树中。")
 			)
 			if(!do_after(sacrifice, 15 SECONDS))
 				return
@@ -517,10 +517,10 @@
 		if(iscarbon(user))
 			var/mob/living/carbon/c = user
 			if(c.patron.type != /datum/patron/divine/eora)
-				to_chat(user, span_warning("The tree rejects your offering. Only followers of Eora may offer ash."))
+				to_chat(user, span_warning("这棵树拒绝了你的供奉。只有 Eora 的追随者才能向它献上灰烬。"))
 				return TRUE
 		if(ash_offered)
-			to_chat(user, span_warning("Covering the tree in additional ash seems to anger it, leaves flare out and the ash flutters to the floor. The aura is renewed."))
+			to_chat(user, span_warning("继续往树上覆灰似乎激怒了它，叶片猛然舒张，灰烬纷纷抖落在地，光环也重新燃起。"))
 			qdel(I)
 			ash_offered = FALSE
 			aura_range = 7
@@ -529,18 +529,18 @@
 		qdel(I)
 		ash_offered = TRUE
 		ash_effect_start_time = world.time
-		to_chat(user, span_notice("The tree shudders as you coats its leaves in ash. The leaves seem to wilt ever so slightly whilst its aura starts to wane."))
+		to_chat(user, span_notice("当你将灰烬覆上叶片时，这棵树微微颤抖。叶子仿佛略微枯萎了一些，而它的光环也开始减弱。"))
 		update_icon()
 		return TRUE
 
 	if(istype(I, /obj/item/rogueweapon/huntingknife/scissors) || (istype(I, /obj/item/rogueweapon/huntingknife/throwingknife/bauernwehr) && user.used_intent.type == /datum/intent/snip))
 		if(prune_count >= 1)
-			to_chat(user, span_warning("The tree has been fully pruned already!"))
+			to_chat(user, span_warning("这棵树已经被修剪到极致了！"))
 			return TRUE
 		var/skill = get_farming_skill(user)
 		var/prune_time = 10 SECONDS - (skill * 2.5 SECONDS)
 
-		to_chat(user, span_notice("You begin pruning the tree..."))
+		to_chat(user, span_notice("你开始修剪这棵树……"))
 
 		if(do_after(user, prune_time, target = src))
 			prune_count++
@@ -550,14 +550,14 @@
 				var/mob/living/carbon/C = user
 				add_sleep_experience(user, /datum/skill/labor/farming, C.STAINT * 0.5)
 			
-			to_chat(user, span_notice("You prune some branches."))
+			to_chat(user, span_notice("你修去了几根枝条。"))
 			update_icon()
 			return TRUE
 
 	if(istype(I, /obj/item/reagent_containers) && !istype(I, /obj/item/reagent_containers/food/snacks))
 		var/obj/item/reagent_containers/container = I
-		if(water_happiness >= 40)
-			to_chat(user, span_warning("The tree can't absorb any more water right now!"))
+		if(water_happiness >= 25)
+			to_chat(user, span_warning("这棵树现在已经无法再吸收更多水分了！"))
 			return TRUE
 
 		var/water_type = null
@@ -567,7 +567,7 @@
 			water_type = /datum/reagent/water/blessed
 
 		if(!water_type)
-			to_chat(user, span_warning("The tree accepts only fresh, clean or blessed water."))
+			to_chat(user, span_warning("这棵树只接受新鲜洁净的清水。"))
 			return
 
 		var/remaining_cap = 40 - water_happiness
@@ -583,7 +583,7 @@
 			happiness = min(happiness + actual_gain, 100)
 			update_happiness_tier()
 
-			to_chat(user, span_notice("You water the tree."))
+			to_chat(user, span_notice("你给这棵树浇了水。"))
 			update_icon()
 			return TRUE
 
@@ -593,7 +593,7 @@
 			return TRUE
 
 		if(fertilizer_happiness >= 25)
-			to_chat(user, span_warning("The tree can't absorb any more nutrients right now!"))
+			to_chat(user, span_warning("这棵树现在已经无法再吸收更多养分了！"))
 			return TRUE
 
 		var/remaining_cap = 25 - fertilizer_happiness
@@ -611,18 +611,18 @@
 			happiness = min(happiness + actual_gain, 100)
 			update_happiness_tier()
 
-			to_chat(user, span_notice("You fertilize the tree."))
+			to_chat(user, span_notice("你为这棵树施了肥。"))
 			update_icon()
 			return TRUE
 
 	if(istype(I, /obj/item/roguegem/ruby) || istype(I, /obj/item/alch/transisdust) || istype(I, /obj/item/reagent_containers/food/snacks/eoran_aril/opalescent))
 
 		if(I.type in tree_offerings)
-			to_chat(user, span_warning("This object has already been offered to the tree!"))
+			to_chat(user, span_warning("这个物品已经献给过这棵树了！"))
 			return TRUE
 
 		if(length(tree_offerings) >= 3)
-			to_chat(user, span_warning("The tree has received enough offerings for now!"))
+			to_chat(user, span_warning("这棵树暂时已经收到了足够的供奉！"))
 			return TRUE
 
 		qdel(I)
@@ -631,7 +631,7 @@
 		happiness = min(happiness + 10, 100)
 		update_happiness_tier()
 
-		to_chat(user, span_notice("The tree accepts your offering gracefully with a flutter of its leaves."))
+		to_chat(user, span_notice("树叶轻轻一颤，这棵树优雅地接受了你的供奉。"))
 		update_icon()
 		return TRUE
 
@@ -644,7 +644,7 @@
 				if(c.patron.type == /datum/patron/divine/eora)
 					c.apply_status_effect(/datum/status_effect/debuff/eoran_wilting)
 				else
-					to_chat(c, span_warning("A divine curse strikes you for destroying the sacred tree!"))
+					to_chat(c, span_warning("你因摧毁圣树而遭到了神圣诅咒！"))
 					c.adjustFireLoss(100)
 					c.ignite_mob()
 					c.add_stress(/datum/stressevent/psycurse)
@@ -656,44 +656,44 @@
 	if(ash_offered)
 		ash_offered = FALSE
 		aura_range = 7
-		visible_message(span_notice("The tree shudders as it is harmmed, ash previously covering the leaves is shaken off, and the aura ignites once more."))
+		visible_message(span_notice("树身在受创时猛地一颤，原本覆在叶片上的灰烬被尽数震落，光环也再度燃起。"))
 	else
-		visible_message(span_notice("The tree shudders as it is harmed. You feel dread emanating from it."))
+		visible_message(span_notice("这棵树在受创时颤抖起来。一股令人不安的恐惧自它体内弥漫而出。"))
 	. = ..()
 
 /obj/structure/eoran_pomegranate_tree/examine(mob/user)
 	. = ..()
 	if(!ash_offered)
-		. += span_warning("The leaves emit a bright weakening aura, perhaps covering them with ash can prevent this.")
+		. += span_warning("叶片正散发出明亮而削弱他人的光环，也许覆上灰烬就能阻止这一点。")
 	else
-		. += span_warning("The leaves are ashen and dampened, emitting no aura. Perhaps more ash can fix this somehow.")
+		. += span_warning("叶片已覆满灰烬而显得黯淡，不再散发光环。或许再添些灰烬会带来别的变化。")
 
 	if(happiness_tier == 1)
-		. += span_warning("The tree seems neglected.")
+		. += span_warning("这棵树似乎长期遭到忽视，枝条都已枯萎。")
 	else if(happiness_tier == 2)
-		. += span_info("The tree appears content and healthy.")
+		. += span_info("这棵树看起来安宁而健康。")
 	else if(happiness_tier == 3)
-		. += span_good("The tree radiates vibrant energy.")
+		. += span_good("这棵树正散发着旺盛蓬勃的生机。")
 	else if(happiness_tier == 4)
-		. += span_good("The tree bustles with an incandescent light. You feel... perfection.")
+		. += span_good("这棵树通体流转着炽亮的辉光。你感到……完美。")
 
-	if(water_happiness < 40)
-		. += span_info("It could use more water.")
+	if(water_happiness < 25)
+		. += span_info("它还需要更多水分。")
 	else
-		. += span_info("It is fully slaked.")
+		. += span_info("它已经喝得很饱了。")
 
 	if(fertilizer_happiness < 25)
-		. += span_info("The roots could use more nutrients.")
+		. += span_info("它的根系还需要更多养分。")
 	else
-		. += span_info("It is fully sated.")
+		. += span_info("它已经被彻底滋养。")
 
 	if(prune_count < 1)
-		. += span_info("The branches look messy. Perhaps something to snip them can right this mess.")
+		. += span_info("枝条看起来有些凌乱。也许一把剪刀能理顺这团纷乱。")
 	else
-		. += span_info("The branches are elaborately pruned.")
+		. += span_info("枝条已经被精心修剪妥当。")
 
 	if(length(tree_offerings) < 3)
-		. += span_info("The tree yearns for an offering. Whispers enter your mind. A red crystal that shimmers... Something that sculpts one's form... A glittering seed...")
+		. += span_info("这棵树仍渴望供奉。低语钻入你的脑海：一枚闪烁的红晶……某种能塑造形体之物……一粒闪闪发亮的种子……")
 
 	if(growth_stage == FRUITING && user.get_skill_level(/datum/skill/labor/farming) >= SKILL_LEVEL_JOURNEYMAN)
 		if(fruit_ready)
@@ -736,7 +736,7 @@
 
 	if(!fruit_doubled && (world.time - creation_time) >= 40 MINUTES)
 		fruit_doubled = TRUE
-		visible_message(span_notice("The tree has matured and now bears more fruit!"))
+		visible_message(span_notice("这棵树已经彻底成熟，如今能结出更多果实了！"))
 
 	if(growth_progress >= 50)
 		var/list/current_mobs = list()
@@ -806,7 +806,7 @@
 /obj/structure/eoran_pomegranate_tree/proc/advance_stage(new_stage)
 	growth_stage = new_stage
 	update_icon()
-	visible_message(span_notice("The [name] grows larger!"))
+	visible_message(span_notice("[name] 长大了一圈！"))
 
 	if(new_stage == FRUITING)
 		spawn_fruit()
@@ -822,7 +822,7 @@
 
 /obj/structure/eoran_pomegranate_tree/proc/ripen_fruit()
 	fruit_ready = TRUE
-	visible_message(span_notice("The fruit on [src] glows with a warm light!"))
+	visible_message(span_notice("[src] 上的果实开始散发出温暖的光辉！"))
 	update_icon()
 
 /obj/structure/eoran_pomegranate_tree/update_icon()
@@ -859,8 +859,8 @@
 	return ..()
 
 /atom/movable/screen/alert/status_effect/pomegranate_fatigue
-	name = "Divine Fatigue"
-	desc = "The sacred energy of the pomegranate leaves you weakened."
+	name = "神力疲乏"
+	desc = "石榴中蕴含的神圣力量令你感到虚弱。"
 
 /obj/structure/eoran_pomegranate_tree/attack_hand(mob/living/user)
 	if(!fruit_ready || !fruit)
@@ -870,8 +870,8 @@
 		return
 
 	user.visible_message(
-		span_notice("[user] carefully picks the fruit."),
-		span_notice("You gently pick the glowing pomegranate.")
+		span_notice("[user] 小心翼翼地摘下了果实。"),
+		span_notice("你轻轻摘下了那枚发光的石榴。")
 	)
 
 	if(iscarbon(user))
@@ -893,19 +893,19 @@
 // Check if user can pick fruit
 /obj/structure/eoran_pomegranate_tree/proc/can_pick_fruit(mob/living/user)
 	if(!fruit_ready)
-		to_chat(user, span_warning("The fruit isn't ripe yet!"))
+		to_chat(user, span_warning("这枚果实还没成熟！"))
 		return FALSE
 
 	// Eoran alignment check
 	if(!(user.patron.type == /datum/patron/divine/eora))
-		to_chat(user, span_warning("The fruit vanishes as you reach for it!"))
+		to_chat(user, span_warning("当你伸手去摘时，这枚果实直接消失了！"))
 		return FALSE
 
 	return TRUE
 
 /obj/item/fruit_of_eora
-	name = "pomegranate"
-	desc = "A mystical pomegranate glowing with inner light. It feels warm to the touch."
+	name = "石榴"
+	desc = "一枚散发内在辉光的神秘石榴。触手生温。"
 	icon = 'modular_azurepeak/icons/obj/items/eora_pom.dmi'
 	icon_state = "pom"
 	var/fruit_tier = 1
@@ -923,19 +923,19 @@
 /obj/item/fruit_of_eora/proc/update_pom()
 	switch(fruit_tier)
 		if(1)
-			name = "rotten pomegranate"
-			desc = "A rotten pomegranate."
+			name = "腐坏石榴"
+			desc = "一枚已经腐坏的石榴。"
 			icon_state = "rotten"
 		if(2)
-			name = "blemished pomegranate"
-			desc = "A blemished pomegranate, it's blue like azure."
+			name = "瑕疵石榴"
+			desc = "一枚带着瑕疵的石榴，通体泛着天青般的蓝色。"
 			icon_state = "blemished"
 		if(3)
-			desc = "A vibrant pomegranate pulsing with inner light. It radiates warmth."
+			desc = "一枚生机盎然、内蕴光辉搏动的石榴。它正散发着暖意。"
 			icon_state = "pom"
 		if(4)
-			name = "golden pomegranate"
-			desc = "A flawless golden pomegranate blazing with divine light. It feels alive, thumping like a beating heart."
+			name = "金色石榴"
+			desc = "一枚完美无瑕、燃烧着神圣光辉的金色石榴。它仿佛活着一般，像心脏那样跳动不止。"
 			icon_state = "golden"
 
 /obj/item/fruit_of_eora/proc/generate_arils()
@@ -993,7 +993,7 @@
 			!(locate(/obj/structure/table/optable) in src.loc) && \
 			!(locate(/obj/item/storage/bag/tray) in src.loc) \
 			)
-			to_chat(user, span_warning("I need to use a table."))
+			to_chat(user, span_warning("我需要借助一张桌子。"))
 			return FALSE
 		open_fruit(user)
 		return TRUE
@@ -1003,7 +1003,7 @@
 	if(opened)
 		return
 
-	to_chat(user, span_notice("You carefully cut open the pomegranate, revealing glowing seeds within."))
+	to_chat(user, span_notice("你小心地剖开石榴，露出了里面发光的种子。"))
 	playsound(src, 'modular/Neu_Food/sound/slicing.ogg', 60, TRUE, -1)
 	opened = TRUE
 
@@ -1017,7 +1017,7 @@
 		&& ((living_user.patron.type == /datum/patron/divine/eora) || HAS_TRAIT(living_user, TRAIT_CHOSEN))\
 		&& user.get_stress_event(/datum/stressevent/psyprayer)\
 		&& !HAS_TRAIT(living_user, TRAIT_EORAN_PITY))
-		to_chat(user, span_notice("Eora responds to your prayer, granting you a seed to nurture!"))
+		to_chat(user, span_notice("Eora 回应了你的祈祷，赐予你一枚可供培育的种子！"))
 		new /obj/item/reagent_containers/eoran_seed(loc)
 		ADD_TRAIT(living_user, TRAIT_EORAN_PITY, TRAIT_GENERIC)
 
@@ -1025,8 +1025,8 @@
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/eoran_aril
-	name = "eoran aril"
-	desc = "A glowing seed from the fruit of Eora. It pulses with divine energy."
+	name = "Eora 果粒"
+	desc = "一枚来自 Eora 果实的发光种子。它正随着神圣能量轻轻搏动。"
 	icon = 'modular_azurepeak/icons/obj/items/eora_pom.dmi'
 	dropshrink = 0.7
 	icon_state = "auric"
@@ -1034,12 +1034,12 @@
 	faretype = FARE_NEUTRAL
 	w_class = WEIGHT_CLASS_TINY
 	drop_sound = 'sound/foley/dropsound/food_drop.ogg'
-	var/effect_desc = "Unknown effects."
+	var/effect_desc = "效果未知。"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
 
 /obj/item/reagent_containers/food/snacks/eoran_aril/attack(mob/living/M, mob/living/user, def_zone)
 	if(M != user)
-		to_chat(user, span_info("The seed glows hot with Eora's rage as you try to forcefully feed her gift to another."))
+		to_chat(user, span_info("当你试图强行把她的馈赠塞给别人时，这枚种子因 Eora 的怒意而灼热发烫。"))
 		return
 	. = ..()
 
@@ -1061,10 +1061,10 @@
 
 //--TIER 1--
 /obj/item/reagent_containers/food/snacks/eoran_aril/crimson
-	name = "crimson aril"
-	desc = "A blood-red seed that seems to pulse with vitality."
+	name = "绯红果粒"
+	desc = "一枚血红色的种子，仿佛正随着生命力一同脉动。"
 	icon_state = "crimson"
-	effect_desc = "This fruit heals for a blood price. This seed can be fed to others at the cost of your own blood."
+	effect_desc = "此果实会以鲜血为代价治疗伤势。将这枚种子喂给别人时，将消耗你自己的鲜血。"
 
 	var/heal_amount = 35
 	var/blood_loss = 225
@@ -1096,8 +1096,8 @@
 		. = ..()
 		return
 	user.visible_message(
-		span_danger("[user] begins altruistically channeling the crimson aril's power to restore [M]."),
-		span_info("I begin channeling the crimson aril's power into [M] using my own blood.")
+		span_danger("[user] 开始无私地引导绯红果粒的力量，为 [M] 恢复伤势。"),
+			span_info("我开始用自己的鲜血，将绯红果粒的力量灌入 [M] 体内。")
 	)
 	if(!do_mob(user, M, time = 2 SECONDS, double_progress = TRUE))
 		return
@@ -1120,10 +1120,10 @@
 	return
 
 /obj/item/reagent_containers/food/snacks/eoran_aril/roseate
-	name = "roseate aril"
-	desc = "A pink seed that radiates beauty and grace."
+	name = "玫彩果粒"
+	desc = "一枚散发着美丽与优雅气息的粉色种子。"
 	icon_state = "roseate"
-	effect_desc = "Grants fleeting beauty. Rejects the ugly."
+	effect_desc = "赐予转瞬即逝的美丽。会排斥丑陋者。"
 
 	var/beauty_duration = 10 MINUTES
 
@@ -1139,8 +1139,8 @@
 	alert_type = /atom/movable/screen/alert/status_effect/eora_grace
 
 /atom/movable/screen/alert/status_effect/eora_grace
-	name = "Eora's grace"
-	desc = "You feel beautiful."
+	name = "Eora 的恩宠"
+	desc = "你感到自己美得动人。"
 
 /datum/status_effect/buff/eora_grace/on_apply()
 	if(ishuman(owner))
@@ -1154,26 +1154,26 @@
 		REMOVE_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
 
 /obj/item/reagent_containers/food/snacks/eoran_aril/opalescent
-	name = "opalescent aril"
-	desc = "An iridescent seed that shifts colors in the light."
+	name = "乳辉果粒"
+	desc = "一枚在光线下会不断变换色彩的虹彩种子。"
 	icon_state = "opalescent"
-	effect_desc = "Transforms held gems into rubies."
+	effect_desc = "会将手中持有的宝石转化为红宝石。"
 	
 /obj/item/reagent_containers/food/snacks/eoran_aril/opalescent/apply_effects(mob/living/eater)
 	for(var/obj/item/roguegem/G in eater.held_items)
 		var/obj/item/roguegem/ruby/new_gem = new(eater.loc)
 		qdel(G)
 		eater.put_in_hands(new_gem)
-		to_chat(eater, span_notice("The [G] transforms into a rontz in your hand!"))
+		to_chat(eater, span_notice("[G] 在你手中变成了一颗 rontz！"))
 		//Probably best not to allow 2 at once...
 		break
 
 // TIER 2
 /obj/item/reagent_containers/food/snacks/eoran_aril/cerulean
-	name = "cerulean aril"
-	desc = "A deep blue seed that smells of the ocean."
+	name = "蔚蓝果粒"
+	desc = "一枚深蓝色的种子，带着海洋的气息。"
 	icon_state = "cerulean"
-	effect_desc = "Excellent fishing bait that attracts treasure."
+	effect_desc = "极佳的钓饵，能吸引宝藏上钩。"
 	baitpenalty = 5
 	isbait = TRUE
 	fishingMods=list(
@@ -1186,10 +1186,10 @@
 	)
 
 /obj/item/reagent_containers/food/snacks/eoran_aril/fractal
-	name = "fractal aril"
-	desc = "A geometrically perfect seed that hurts to look at."
+	name = "分形果粒"
+	desc = "一枚几何结构完美到令人目眩刺痛的种子。"
 	icon_state = "fractal"
-	effect_desc = "At a cost to constitution, Eora's mercy will melt unsightfulness away..."
+	effect_desc = "以体质为代价，Eora 的慈悲会将丑陋悄然融去……"
 
 /obj/item/reagent_containers/food/snacks/eoran_aril/fractal/apply_effects(mob/living/eater)
 	if(ishuman(eater))
@@ -1197,20 +1197,20 @@
 		if(HAS_TRAIT(H, TRAIT_UNSEEMLY))
 			REMOVE_TRAIT(H, TRAIT_UNSEEMLY, TRAIT_VIRTUE)
 			H.change_stat(STATKEY_CON, -1)
-			to_chat(eater, span_good("You feel your imperfections melt away, but your body feels more fragile."))
+			to_chat(eater, span_good("你感到自己的缺陷正在融化消散，但身体也变得更加脆弱。"))
 
 // TIER 3
 /obj/item/reagent_containers/food/snacks/eoran_aril/auric
-	name = "auric aril"
-	desc = "A golden seed that radiates warmth and life."
+	name = "鎏金果粒"
+	desc = "一枚散发着温暖与生命气息的金色种子。"
 	icon_state = "auric"
-	effect_desc = "Key ingredient in revival potions."
+	effect_desc = "复生药剂的关键材料。"
 
 /obj/item/reagent_containers/food/snacks/eoran_aril/ashen
-	name = "ashen aril"
-	desc = "A grey seed that feels glacial to the touch. An IMMENSE sense of dread can be felt just looking at it."
+	name = "灰烬果粒"
+	desc = "一枚触手冰寒的灰色种子。仅仅注视着它，就会感到一股巨大的恐惧。"
 	icon_state = "ashen"
-	effect_desc = "The forbidden aril. This one is not meant for you."
+	effect_desc = "禁忌的果粒。它并非为你而生。"
 
 /obj/item/reagent_containers/food/snacks/eoran_aril/ashen/apply_effects(mob/living/carbon/eater)
 	if(ishuman(eater))
@@ -1232,10 +1232,10 @@
 				H.apply_status_effect(/datum/status_effect/buff/ashen_aril, 5, 6 MINUTES)
 
 /obj/item/reagent_containers/food/snacks/eoran_aril/ochre
-	name = "ochre aril"
-	desc = "A blood-red seed that seems to pulse menacingly."
+	name = "赭红果粒"
+	desc = "一枚血红色的种子，正以威胁般的节奏搏动着。"
 	icon_state = "ochre"
-	effect_desc = "Return two nearby corpses in view from necra's embrace, at the cost of your own life."
+	effect_desc = "以你自己的生命为代价，将视野内附近两具尸体从 Necra 的怀抱中唤回。"
 
 /obj/item/reagent_containers/food/snacks/eoran_aril/ochre/apply_effects(mob/living/carbon/eater)
 	if(ishuman(eater))
@@ -1278,7 +1278,7 @@
 		INVOKE_ASYNC(GLOBAL_PROC_REF(revive_ochre_target), target)
 
 /proc/revive_ochre_target(mob/living/carbon/human/target)
-	to_chat(world, span_userdanger("ATTEMPTING REVIVAL FOR [target]"))
+	to_chat(world, span_userdanger("正在尝试复活 [target]"))
 	if(QDELETED(target) || target.stat != DEAD)
 		return FALSE
 
@@ -1297,28 +1297,28 @@
 		target.emote("breathgasp")
 		target.Jitter(100)
 		target.update_body()
-		target.visible_message(span_notice("[target] is revived by divine magic!"), span_green("I awake from the void."))
+		target.visible_message(span_notice("[target] 被神圣魔法复活了！"), span_green("我自虚无之中醒来。"))
 
 		ADD_TRAIT(target, TRAIT_IWASREVIVED, "ochre_aril")
 		target.apply_status_effect(/datum/status_effect/debuff/metabolic_acceleration)
 		return TRUE
 	else
-		target.visible_message(span_warning("The magic falters, and nothing happens."))
+		target.visible_message(span_warning("魔法摇晃着溃散了，什么也没有发生。"))
 		return FALSE
 
 //This is meant to be given guaranteed with T4 pommes for priests but given we don't have eoran priests yet I will implement this when we do.
 /obj/item/reagent_containers/lux/eoran_aril
-	name = "incandescent aril"
-	desc = "A blindingly bright seed that radiates pure life energy. It imitates lux, the essence of life."
+	name = "炽耀果粒"
+	desc = "一枚亮得刺眼的种子，散发着纯粹的生命能量。它模仿着作为生命本源的 lux。"
 	icon = 'modular_azurepeak/icons/obj/items/eora_pom.dmi'
 	icon_state = "incandescent"
 	dropshrink = 0.7
 
 /obj/item/reagent_containers/food/snacks/eoran_aril/pearlescent
-	name = "pearlescent aril"
-	desc = "A milky-white seed that pulses with purifying energy."
+	name = "珠辉果粒"
+	desc = "一枚乳白色的种子，随着净化之力脉动不休。"
 	icon_state = "pearlescent"
-	effect_desc = "Transforms poisons within your body into lifeblood at the cost of diluting strong lifeblood."
+	effect_desc = "会将你体内的毒素转化为生命之血，但代价是稀释过于浓烈的生命之血。"
 
 /obj/item/reagent_containers/food/snacks/eoran_aril/pearlescent/attack(mob/living/M, mob/living/user, def_zone)
 	if(ishuman(M))
@@ -1327,8 +1327,8 @@
 	return
 
 /obj/item/reagent_containers/eoran_seed
-	name = "Satin aril"
-	desc = "A silky soft seed from Eora's sacred tree. It can be used to propagate her gift in fertile soil."
+	name = "缎柔果粒"
+	desc = "一枚来自 Eora 圣树、触感如丝般柔滑的种子。可在肥沃土壤中播下，延续她的恩赐。"
 	icon = 'modular_azurepeak/icons/obj/items/eora_pom.dmi'
 	icon_state = "roseate"
 
@@ -1340,21 +1340,21 @@
 
 	// Location checks
 	if(!isopenturf(T))
-		to_chat(user, span_warning("The seed needs open space to grow!"))
+		to_chat(user, span_warning("这枚种子需要开阔的空间才能生长！"))
 		return
 	if(!(istype(T, /turf/open/floor/rogue/grass) || istype(T, /turf/open/floor/rogue/dirt) || istype(T, /turf/open/floor/rogue/grassyel) || istype(T, /turf/open/floor/rogue/grassred) || istype(T, /turf/open/floor/rogue/grasscold) || istype(T, /turf/open/floor/rogue/desert_grass)))
-		to_chat(user, span_warning("The seed must be planted on dirt or grass!"))
+		to_chat(user, span_warning("这枚种子必须种在泥土或草地上！"))
 		return
 
 	// Planting process
-	to_chat(user, span_notice("You begin to plant the seed in [T]. It pulses gently..."))
+	to_chat(user, span_notice("你开始将种子种入 [T]。它正轻轻搏动着……"))
 	if(!do_after(user, 30 SECONDS, target))
-		to_chat(user, span_warning("Planting was interrupted!"))
+		to_chat(user, span_warning("栽种被打断了！"))
 		return
 
 	// Re-check conditions after delay
 	if(!isopenturf(T) || !(istype(T, /turf/open/floor/rogue/grass) || istype(T, /turf/open/floor/rogue/dirt) || istype(T, /turf/open/floor/rogue/grassyel) || istype(T, /turf/open/floor/rogue/grassred) || istype(T, /turf/open/floor/rogue/grasscold) || istype(T, /turf/open/floor/rogue/desert_grass)))
-		to_chat(user, span_warning("The ground is no longer suitable!"))
+		to_chat(user, span_warning("这片土地已经不再适合栽种了！"))
 		return
 
 	// Create tree and consume seed
@@ -1368,14 +1368,14 @@
 
 //Remove their ability to feel bad, restore a small amount of hunger / thirst if they're already starving.
 /obj/effect/proc_holder/spell/invoked/eora_blessing
-	name = "Eora's Blessing"
-	desc = "Bestow a person with Eora's calm, if only for a little while."
+	name = "Eora 的祝福"
+	desc = "将 Eora 的安宁赐予一人，哪怕只持续短短片刻。"
 	sound = 'sound/magic/eora_bless.ogg'
 	devotion_cost = 80
 	recharge_time = 5 MINUTES
 	miracle = TRUE
 	invocation_type = "shout"
-	invocations = list("Let the beauty of lyfe fill you whole.")
+	invocations = list("让生命之美将你彻底充盈。")
 	overlay_state = "eora_bless"
 	associated_skill = /datum/skill/magic/holy
 
@@ -1431,6 +1431,6 @@
 	return ..()
 
 /atom/movable/screen/alert/status_effect/buff/eora_blessing
-	name = "Eora's Calm"
-	desc = "A refreshing calm. All your troubles have washed away. Why can't it always be like this?"
+	name = "Eora 的宁静"
+	desc = "一阵令人神清气爽的安宁。你的烦恼仿佛都被冲刷殆尽。为什么不能永远如此呢？"
 	icon_state = "eora_bless"

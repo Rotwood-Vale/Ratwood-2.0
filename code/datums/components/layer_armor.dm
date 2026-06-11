@@ -121,7 +121,7 @@
 				shred_layer(damage_flag)
 
 /datum/component/layeredarmor/proc/on_examine(datum/source, mob/user, list/examine_list)
-	examine_list += span_info("<br>Remaining hits until a layer is shredded:")
+	examine_list += span_info("<br>距离护层被撕裂还需承受的命中数：")
 	for(var/type in damtypes)
 		var/ratio = 1
 		if(damtype_shred_ratio[type] > 1)
@@ -143,24 +143,24 @@
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.dna.species.type in race_repair)
-				examine_list += span_info("<i>My people and I can try to repair this.</i>")
+				examine_list += span_info("<i>我与我的族人能够尝试修复它。</i>")
 			else
-				examine_list += span_info("This is all too foreign for me to repair.")
+				examine_list += span_info("这东西对我而言太陌生了，我无法修复。")
 				return
 	//What can we repair them with?
 	if(length(repair_items))
 		if(!HAS_TRAIT(user, TRAIT_TRAINED_SMITH))
-			examine_list += span_info("The layers on this armor can be repaired on:")
+			examine_list += span_info("这件护甲的护层可在以下物件上修复：")
 			var/dat = "| "
 			for(var/item in repair_items)
 				var/obj/O = item
 				dat += "<b>[O::name]</b> | "
 			examine_list += span_info("[dat]<br>")
 		else
-			examine_list += span_info("I can repair the layers anywhere.")
+			examine_list += span_info("我可以在任何地方修复这些护层。")
 	//What skills are needed?
 	if(length(repair_skills))
-		examine_list += span_info("The layers on this armor requires these skills to be repaired:")
+		examine_list += span_info("修复这件护甲的护层需要以下技能：")
 		for(var/skill in repair_skills)
 			examine_list += span_info("[SSskills.all_skills[skill]] — [SSskills.level_names_plain[repair_skills[skill]]]")
 
@@ -182,7 +182,7 @@
 				for(var/itemrepair in repair_items)
 					var/obj/OR = itemrepair
 					str = "[initial(OR.name)] "
-				to_chat(user, span_warn("I require \a [str]."))
+				to_chat(user, span_warn("我需要\a [str]。"))
 				return
 
 		if(length(race_repair))
@@ -190,7 +190,7 @@
 				can_do = TRUE
 			else
 				can_do = FALSE
-				to_chat(user,span_warn("These layers are too foreign to me."))
+				to_chat(user,span_warn("这些护层对我而言太陌生了。"))
 				return
 		else
 			can_do = TRUE
@@ -199,12 +199,12 @@
 			for(var/skill in repair_skills)
 				if(H.get_skill_level(skill) < repair_skills[skill])	//Checking their skill level vs skill threshold
 					can_do = FALSE
-					to_chat(user,span_warn("I'm not skilled enough to repair the layers, but I could be."))
+					to_chat(user,span_warn("我的技艺还不足以修复这些护层，但以后也许可以。"))
 					return
 
 		if(H.STAINT < 10)
 			can_do = FALSE
-			to_chat(user,span_warn("This craft's layers are too fine for my level of intelligence."))
+			to_chat(user,span_warn("这件工艺品的护层太过精细，不是我这点聪明才智能处理的。"))
 			return
 
 		if(can_do)
@@ -214,11 +214,11 @@
 	if(repair_check())
 		for(var/damtype in repairable_damtypes)
 			if(damtype)
-				user.visible_message(span_warn("[user] repairs the [damtype] layers on [parent]."), span_warn("I repair the [damtype] layers."))
+				user.visible_message(span_warn("[user] 修复了[parent]的[damtype]护层。"), span_warn("我修复了[damtype]护层。"))
 				playsound(user, repair_sound, 100)
 				add_layer(damtype, layer_repair)
 	else
-		to_chat(user,span_warn("There's nothing to repair."))
+		to_chat(user,span_warn("没有什么可修的。"))
 
 /datum/component/layeredarmor/proc/add_hit(damtype)
 	if(damtype in damtypes)
@@ -240,7 +240,7 @@
 		else if(I.armor.vars[damtype] > 0)
 			I.armor.vars[damtype] -= shred_amt
 		playsound(I, shred_sound, 100)
-		I.visible_message(span_warning("A <b>[damtype]</b> layer is shredded from [I]!"))
+		I.visible_message(span_warning("[I]上的一层<b>[damtype]</b>护层被撕裂了！"))
 		adjusthits(damtype, I.armor.vars[damtype])
 
 /datum/component/layeredarmor/proc/adjusthits(damtype, newarmor)

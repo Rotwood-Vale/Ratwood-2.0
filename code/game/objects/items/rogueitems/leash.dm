@@ -11,8 +11,8 @@
 	alert_type = /atom/movable/screen/alert/status_effect/leash_owner
 
 /atom/movable/screen/alert/status_effect/leash_owner
-	name = "Leash Master"
-	desc = "You've got a leash, and a cute pet on the other end!"
+	name = "牵绳主人"
+	desc = "你手里握着牵绳，另一端还有只可爱的小宠物！"
 	icon_state = "leash_master" //These call icons that don't exist, so no icon comes up. Which is good.
 		//As a result, the descriptions also don't proc, which is fine.
 
@@ -21,8 +21,8 @@
 	alert_type = /atom/movable/screen/alert/status_effect/leash_freepet
 
 /atom/movable/screen/alert/status_effect/leash_freepet
-	name = "Escaped Pet"
-	desc = "You're on a leash, but you've no Master. If anyone grabs the leash they'll gain control!"
+	name = "逃脱的宠物"
+	desc = "你还拴在牵绳上，但已经没有主人了。谁抓住牵绳，谁就能控制你！"
 	icon_state = "leash_freepet"
 
 
@@ -33,15 +33,15 @@
 	alert_type = /atom/movable/screen/alert/status_effect/leash_pet
 
 /atom/movable/screen/alert/status_effect/leash_pet
-	name = "Leashed Pet"
-	desc = "You're on the leash now! Be good for your Master now.."
+	name = "被牵住的宠物"
+	desc = "你现在被牵住了！可要乖乖听主人的话……"
 	icon_state = "leash_pet"
 
 
 /datum/status_effect/leash_pet/on_apply()
 	redirect_component = owner
 	if(!owner.stat)
-		to_chat(owner, span_userdanger("You have been leashed!"))
+		to_chat(owner, span_userdanger("你被拴上牵绳了！"))
 	return ..()
 
 ///// OBJECT /////
@@ -49,8 +49,8 @@
 //The component variables are used for hooks, used later.
 
 /obj/item/leash
-	name = "rope leash"
-	desc = "A simple rope with a knot at the end for easy attachment onto bindings."
+	name = "绳制牵绳"
+	desc = "一条简单的绳索，末端打了个结，便于系在束缚物上。"
 	icon = 'modular/icons/obj/leashes_collars.dmi'
 	icon_state = "leash"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -71,15 +71,15 @@
 	var/var/last_yank = null
 
 /obj/item/leash/leather
-	name = "leather leash"
-	desc = "A strip of treated leather with a metal clasp on the end for easy clipping onto bindings."
+	name = "皮制牵绳"
+	desc = "一条经过处理的皮带，末端带有金属扣，便于夹在束缚物上。"
 	icon = 'modular/icons/obj/leashes_collars.dmi'
 	icon_state = "leatherleash"
 	item_state = "leatherleash"
 
 /obj/item/leash/chain
-	name = "chain leash"
-	desc = "A durable metal chain with a metal clasp on the end for easy clipping onto bindings."
+	name = "链式牵绳"
+	desc = "一条结实的金属链，末端带有金属扣，便于夹在束缚物上。"
 	icon = 'modular/icons/obj/leashes_collars.dmi'
 	icon_state = "chainleash"
 	item_state = "chainleash"
@@ -94,11 +94,11 @@
 	if(!leash_pet.get_item_by_slot(SLOT_NECK)) //The pet has slipped their collar and is not the pet anymore.
 		for(var/mob/viewing in viewers(leash_pet, null))
 			if(viewing == leash_master)
-				to_chat(leash_master, "<span class='notice'>[leash_pet] has escaped their collar!!</span>", 1)
+				to_chat(leash_master, "<span class='notice'>[leash_pet]挣脱项圈了！！</span>", 1)
 			else if(viewing == leash_pet)
-				to_chat(leash_pet, "<span class='notice'>You have slipped free of your collar!</span>")
+				to_chat(leash_pet, "<span class='notice'>你从项圈里滑脱了！</span>")
 			else
-				viewing.show_message("<span class='notice'>[leash_pet] has slipped out of their collar!</span>")
+				viewing.show_message("<span class='notice'>[leash_pet]从项圈里挣脱了！</span>")
 		leash_pet.remove_status_effect(/datum/status_effect/leash_pet)
 		w_class = WEIGHT_CLASS_SMALL
 
@@ -119,24 +119,24 @@
 /obj/item/leash/attack(mob/living/carbon/C, mob/living/user)
 	var/obj/item/collar = C.get_item_by_slot(SLOT_NECK)
 	if(C.has_status_effect(/datum/status_effect/leash_pet))
-		to_chat(user, span_notice("[C] has already been leashed."))
+		to_chat(user, span_notice("[C]已经被拴住了。"))
 		return
 
 	if(C.cmode && C.mobility_flags & MOBILITY_STAND)
-		to_chat(user, span_warning("I can't leash them, they're too tense!"))
+		to_chat(user, span_warning("我没法给他们套牵绳，他们太紧张了！"))
 		return
 
 	if(src.leash_pet != null)
-		to_chat(user, span_warning("This leash is already attached to [leash_pet]!"))
+		to_chat(user, span_warning("这条牵绳已经拴在[leash_pet]身上了！"))
 		return
 
 	if((collar && collar:leashable == TRUE) || istype(C.get_item_by_slot(SLOT_HANDCUFFED), /obj/item/rope/chain))
-		var/leash_attempt_message = "[user] raises \the [src] to [C]'s neck!"
+		var/leash_attempt_message = "[user]把[src]抬向了[C]的脖子！"
 		for(var/mob/viewing in viewers(C, null))
 			if(viewing == C)
-				to_chat(C, "<span class='warning'>[user] begins raising \the [src] to my neck!</span>")
+				to_chat(C, "<span class='warning'>[user]开始把[src]套向我的脖子！</span>")
 			else if(viewing == user)
-				to_chat(user, "<span class='warning'>I begin raising \the [src] to [C]'s neck!</span>")
+				to_chat(user, "<span class='warning'>我开始把[src]套向[C]的脖子！</span>")
 			else
 				viewing.show_message("<span class='warning'>[leash_attempt_message]</span>", 1)
 
@@ -144,7 +144,7 @@
 		if(C.handcuffed)
 			leashtime = 5
 		if(do_mob(user, C, leashtime)) //do_mob adds a progress bar, but then we also check to see if they have a collar
-			log_combat(user, C, "leashed", addition="playfully")
+			log_combat(user, C, "拴上牵绳", addition="嬉闹地")
 			C.apply_status_effect(/datum/status_effect/leash_pet)//Has now been leashed
 			leash_pet = C //Save pet reference for later
 			w_class = WEIGHT_CLASS_BULKY //This plus ITEM_SLOT_POCKET prevents putting into backpacks and other storage while still fitting on belt. When process kills, weightclass is returned to smol and backpackable.
@@ -157,12 +157,12 @@
 //				leash_pet.add_movespeed_modifier(/datum/movespeed_modifier/leash)
 			for(var/mob/viewing in viewers(user, null))
 				if(viewing == user)
-					to_chat(user, span_warning("You have hooked a leash onto [leash_pet]!"))
+					to_chat(user, span_warning("你把牵绳扣在了[leash_pet]身上！"))
 				else
-					viewing.show_message(span_warning("[leash_pet] has been leashed by [user]!"), 1)
+					viewing.show_message(span_warning("[leash_pet]被[user]拴上了牵绳！"), 1)
 			START_PROCESSING(SSfastprocess, src) // The original while loop here ran every 2 deciseconds, and so does SSfastprocess.
 	else //No collar, no fun
-		var/leash_message = pick("[C] needs a collar before you can attach a leash to it.")
+		var/leash_message = pick("[C]得先戴上项圈，你才能把牵绳拴上去。")
 		to_chat(user, span_notice("[leash_message]"))
 
 //Called when the leash is used in hand
@@ -176,8 +176,8 @@
 		return
 	//Yank the pet. Yank em in close.
 	apply_tug_mob_to_mob(leash_pet, leash_master, 1)
-	log_combat(leash_master, leash_pet, "leash-yanked")
-	leash_pet.visible_message(span_warning("[leash_master] yanks [leash_pet] closer with \the [src.name]."))
+	log_combat(leash_master, leash_pet, "猛拽牵绳")
+	leash_pet.visible_message(span_warning("[leash_master]用[src.name]把[leash_pet]猛地拽近了。"))
 
 //Figure this out in leashs part 2
 /*
@@ -220,8 +220,8 @@
 		return
 	if(get_dist(leash_pet, leash_master) > 3)
 		leash_pet.visible_message(
-			span_warning("[leash_pet] is pulled to the ground by their leash!"),
-			span_warning("You are pulled to the ground by your leash!")
+			span_warning("[leash_pet]被牵绳拽倒在地！"),
+			span_warning("你被牵绳拽倒在地！")
 		)
 		leash_pet.apply_effect(20, EFFECT_KNOCKDOWN, 0)
 
@@ -232,12 +232,12 @@
 	if(!leash_pet)
 		return
 	if(get_dist(leash_pet, leash_master) > 5)
-		var/leash_break_message = "The leash snapped free from [leash_pet]!"
+		var/leash_break_message = "牵绳从[leash_pet]身上崩开了！"
 		for(var/mob/viewing in viewers(leash_pet, null))
 			if(viewing == leash_master)
-				to_chat(leash_master, "<span class='warning'>The leash snapped free from your pet!</span>")
+				to_chat(leash_master, "<span class='warning'>牵绳从你的宠物身上崩开了！</span>")
 			if(viewing == leash_pet)
-				to_chat(leash_pet, "<span class='warning'>Your leash has popped from your collar!</span>")
+				to_chat(leash_pet, "<span class='warning'>你的牵绳从项圈上弹开了！</span>")
 			else
 				viewing.show_message("<span class='warning'>[leash_break_message]</span>", 1)
 		leash_pet.apply_effect(20, EFFECT_KNOCKDOWN, 0)
@@ -297,12 +297,12 @@
 	if(!leash_pet)
 		return
 	if(get_dist(src, leash_pet) > 5)
-		var/leash_break_message = "The leash snapped free from [leash_pet]!"
+		var/leash_break_message = "拴绳从[leash_pet]身上崩开了！"
 		for(var/mob/viewing in viewers(leash_pet, null))
 			if(viewing == leash_master)
-				to_chat(leash_master, "<span class='warning'>The leash snapped free from your pet!</span>")
+				to_chat(leash_master, "<span class='warning'>拴绳从我的宠物身上崩开了！</span>")
 			if(viewing == leash_pet)
-				to_chat(leash_pet, "<span class='warning'>Your leash has popped from your collar!</span>")
+				to_chat(leash_pet, "<span class='warning'>我的拴绳从项圈上脱开了！</span>")
 			else
 				viewing.show_message("<span class='warning'>[leash_break_message]</span>", 1)
 
@@ -327,7 +327,7 @@
 			return  //Dom still has the leash as it turns out. Cancel the proc.
 	if(!leash_pet)
 		return
-	user.visible_message(span_notice("\The [user] drops \the [src]."), span_notice("You drop \the [src]."))
+	user.visible_message(span_notice("[user]丢下了[src]。"), span_notice("我丢下了[src]。"))
 	//DOM HAS DROPPED LEASH. PET IS FREE. SCP HAS BREACHED CONTAINMENT.
 //	leash_pet.remove_movespeed_modifier(/datum/movespeed_modifier/leash)
 	if(leash_pet)
@@ -409,8 +409,8 @@
 	multiplicative_slowdown = 5 */
 
 /obj/item/catbell
-	name = "catbell"
-	desc = "A small jingly catbell."
+	name = "猫铃"
+	desc = "一只叮当作响的小猫铃。"
 	icon = 'modular/icons/obj/leashes_collars.dmi'
 	icon_state = "catbell"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -426,15 +426,15 @@
 	var/list/jingle_sounds = SFX_COLLARJINGLE
 
 /obj/item/catbell/cow
-	name = "cowbell"
-	desc = "A small jingly cowbell"
+	name = "牛铃"
+	desc = "一只叮当作响的小牛铃。"
 	icon_state = "cowbell"
 	jingle_sounds = SFX_CBJINGLE
 
 /obj/item/catbell/attack_self(mob/living/user)
 	if(world.time < last_ring + 15)
 		return
-	user.visible_message(span_info("[user] starts ringing the [src]."))
+	user.visible_message(span_info("[user]开始摇响[src]。"))
 	playsound(src, 'sound/items/jinglebell1.ogg', 100, extrarange = 8, ignore_walls = TRUE)
 	flick("bell_commonpressed", src)
 	last_ring = world.time
@@ -444,34 +444,34 @@
 /obj/item/catbell/attack(mob/living/carbon/target, mob/living/user)
 	var/obj/item/clothing/neck/roguetown/collar/leather/collar = target.get_item_by_slot(SLOT_NECK)
 	if(!istype(collar))
-		to_chat(user, "[target] needs a collar to attach the bell!")
+		to_chat(user, "[target]得先戴着项圈，才能挂上铃铛！")
 		return
 	if(collar.bell)
-		to_chat(user, "[target]'s collar already has a bell!")
+		to_chat(user, "[target]的项圈上已经有铃铛了！")
 		return
-	target.visible_message(span_warning("[user] raises \the [src] to [target]'s neck!"), span_warning("[user] begins raising \the [src] to my neck!"), span_hear("I hear \a [src] jingling."), ignored_mobs = user)
-	to_chat(user, span_warning("I begin raising \the [src] to [target]'s neck!"))
+	target.visible_message(span_warning("[user]开始把[src]抬向[target]的脖子！"), span_warning("[user]开始把[src]抬向我的脖子！"), span_hear("我听见[src]叮当作响。"), ignored_mobs = user)
+	to_chat(user, span_warning("我开始把[src]抬向[target]的脖子！"))
 	if(!do_mob(user, target, target.handcuffed ? 0.5 SECONDS : 5 SECONDS))
 		return
 	log_combat(user, target, "put a bell on")
-	user.visible_message(span_warning("[target] has had \a [src] clipped onto [target.p_their()] [collar.name] by [user]!"), span_warning("I clip \a [src] onto [target]'s [collar.name]!"))
+	user.visible_message(span_warning("[user]把[src]扣在了[target]的[collar.name]上！"), span_warning("我把[src]扣在了[target]的[collar.name]上！"))
 	collar.bell = TRUE
 	collar.bellsound = TRUE
 	collar.AddComponent(/datum/component/squeak, jingle_sounds, 50, 100, 1)
 	if(istype(src, /obj/item/catbell/cow))
 		collar.icon_state = /obj/item/clothing/neck/roguetown/collar/cowbell::icon_state
-		collar.desc = "A leather collar with a jingly cowbell attached."
-		collar.name = "cowbell collar"
+		collar.desc = "一条挂着叮当作响牛铃的皮项圈。"
+		collar.name = "牛铃项圈"
 	else
 		collar.icon_state = /obj/item/clothing/neck/roguetown/collar/catbell::icon_state
-		collar.desc = "A leather collar with a jingling catbell attached."
-		collar.name = "catbell collar"
+		collar.desc = "一条挂着叮当作响猫铃的皮项圈。"
+		collar.name = "猫铃项圈"
 	target.update_inv_neck()
 	forceMove(collar) // move us inside the collar so that if we salvage it, we get the bell back
 
 
 /datum/crafting_recipe/roguetown/smithing/catbell
-	name = "catbell"
+	name = "猫铃"
 	result = /obj/item/catbell
 	reqs = list(/obj/item/ingot/iron = 1)
 	category = "Smithing"
@@ -479,7 +479,7 @@
 	always_availible = TRUE
 
 /datum/crafting_recipe/roguetown/smithing/cowbell
-	name = "cowbell"
+	name = "牛铃"
 	result = /obj/item/catbell/cow
 	reqs = list(/obj/item/ingot/iron = 1)
 	category = "Smithing"

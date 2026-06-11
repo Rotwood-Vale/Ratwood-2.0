@@ -1,7 +1,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/plate/baotha
-	name = "baothan cuirass"
-	desc = "A mighty muscled cuirass. Powerful Baothan Magycks protect the exposed flesh that glints tantalising between plates."
+	name = "巴欧萨胸甲"
+	desc = "肌肉线条夸张的胸甲。强大的巴欧萨魔法守护着甲片间若隐若现的裸露肌肤。"
 	icon = 'icons/roguetown/clothing/special/baotha.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/baotha.dmi'
 	icon_state = "baothachest"
@@ -26,8 +26,8 @@
 
 /obj/item/clothing/under/roguetown/platelegs/baotha
 	max_integrity = ARMOR_INT_LEG_ANTAG
-	name = "baothan leg-plates"
-	desc = "Powerful Baothan Magycks protect the exposed flesh that glints tantalising between the plates."
+	name = "巴欧萨腿甲"
+	desc = "强大的巴欧萨魔法守护着甲片间若隐若现的裸露肌肤。"
 	icon = 'icons/roguetown/clothing/special/baotha.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/baotha.dmi'
 	icon_state = "baotha_legs"
@@ -52,8 +52,8 @@
 // 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_STEP)
 
 /obj/item/clothing/wrists/roguetown/bracers/baotha
-	name = "baothan bracers"
-	desc = "Gilded bracers that protect the arms."
+	name = "巴欧萨臂甲"
+	desc = "镀金臂甲，保护双臂。"
 	body_parts_covered = ARMS
 	icon = 'icons/roguetown/clothing/special/baotha.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/baotha.dmi'
@@ -70,8 +70,8 @@
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "BRACER")
 
 /obj/item/clothing/suit/roguetown/armor/leather/studded/baotha
-	name = "baothan straps"
-	desc = "Black leather wraps tightly around flesh, cold studs digging in, leaving marks."
+	name = "巴欧萨束带"
+	desc = "黑色皮革紧缠肌肤，冰冷铆钉陷入其间，留下痕迹。"
 	icon = 'icons/roguetown/clothing/special/baotha.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/baotha.dmi'
 	icon_state = "baothashirt"
@@ -91,8 +91,8 @@
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "WRAPPING")
 
 /obj/item/clothing/head/roguetown/helmet/heavy/baotha
-	name = "helm of desire"
-	desc = "Look upon thy beauty and despair"
+	name = "欲望之盔"
+	desc = "凝望汝之美貌，而后绝望。"
 	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT|HIDEHAIR|HIDEFACIALHAIR
 	icon = 'icons/roguetown/clothing/special/baotha.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/baotha64.dmi'
@@ -132,8 +132,8 @@
 
 
 /obj/item/storage/belt/rogue/leather/plaquegold/baotha
-	name = "baothan hip-links"
-	desc = "Baothan magicks keep your equipment held snug without obscuring the view."
+	name = "巴欧萨胯链"
+	desc = "巴欧萨魔法让你的装备稳妥贴身，又不遮挡风景。"
 	icon = 'icons/roguetown/clothing/feet.dmi'
 	icon_state = "anklets"
 	color = "#9c7373"
@@ -150,8 +150,8 @@
 	qdel(src)
 
 /obj/item/clothing/gloves/roguetown/chain/baotha
-	name = "baothan bracelets"
-	desc = "Powerful baothan magicks protect the exposed flesh beneath."
+	name = "巴欧萨腕环"
+	desc = "强大的巴欧萨魔法守护着下方裸露的肌肤。"
 	icon = 'icons/roguetown/clothing/feet.dmi'
 	icon_state = "anklets"
 	color = "#9c7373"
@@ -172,8 +172,8 @@
 	qdel(src)
 
 // /obj/item/clothing/shoes/roguetown/boots/armor/baotha
-// 	name = "baothan anklets"
-// 	desc = "Powerful baothan magicks protect the exposed flesh beneath."
+// 	name = "巴欧萨踝环"
+// 	desc = "强大的巴欧萨魔法守护着下方裸露的肌肤。"
 // 	icon = 'icons/roguetown/clothing/feet.dmi'
 // 	icon_state = "anklets"
 // 	mob_overlay_icon = null
@@ -192,8 +192,8 @@
 // 	qdel(src)
 
 /obj/item/clothing/shoes/roguetown/anklets/baotha
-	name = "baothan anklets"
-	desc = "Powerful baothan magicks protect the exposed flesh beneath."
+	name = "巴欧萨踝环"
+	desc = "强大的巴欧萨魔法守护着下方裸露的肌肤。"
 	color = "#9c7373"
 // 	mob_overlay_icon = null
 	armor = ARMOR_ASCENDANT
@@ -216,8 +216,8 @@
 	qdel(src)
 
 /obj/item/clothing/neck/roguetown/gorget/boatha
-	name = "blacksteel collar"
-	desc = "Submission to darkness."
+	name = "黑钢项圈"
+	desc = "臣服于黑暗。"
 	icon_state = "iwolfcollaralt"
 	armor = ARMOR_ASCENDANT
 	max_integrity = ARMOR_INT_SIDE_ANTAG
@@ -245,7 +245,7 @@
 // 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "WHIP")
 
 /obj/item/rogueweapon/whip/spiderwhip/baotha
-	desc = "This one hums faintly to you. A song from your childhood?"
+	desc = "这一条正对你微微低鸣。那是你童年的歌？"
 	minstr = 8
 
 /obj/item/rogueweapon/whip/spiderwhip/baotha/Initialize(mapload)

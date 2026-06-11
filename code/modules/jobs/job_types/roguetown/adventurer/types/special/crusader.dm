@@ -1,5 +1,5 @@
 /datum/advclass/crusader
-	name = "Crusader"
+	name = "十字军战士"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/crusader
@@ -7,10 +7,9 @@
 
 	maximum_possible_slots = 1 // Disabled Role
 
-	tutorial = "The crusaders... Knights who have pledged \
-	their wealth and lands to the church, taking up the banner \
-	of one of the rival Orders dedicated to retaking the holy land. \
-	The 451st crusade is sure to be the last."
+	tutorial = "十字军……那些将财富与土地尽数献给教会的骑士，举起了互相竞争的某个骑士团旗帜，\
+	誓要重新夺回圣地。\
+	第 451 次十字军东征，必将成为最后一次。"
 
 	category_tags = list(CTAG_DISABLED)
 	subclass_stats = list(
@@ -39,7 +38,7 @@
 	)
 
 /datum/outfit/job/roguetown/adventurer/crusader
-	name = "Crusader"
+	name = "十字军战士"
 
 /datum/outfit/job/roguetown/adventurer/crusader/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -92,25 +91,25 @@
 	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR)	//Minor regen, can level up to T4.
 
 /obj/item/clothing/cloak/stabard/crusader
-	name = "surcoat of the golden order"
+	name = "金色骑士团罩袍"
 	icon_state = "crusader_surcoat"
 	icon = 'icons/roguetown/clothing/special/crusader.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/crusader.dmi'
 	sleeved = 'icons/roguetown/clothing/special/onmob/crusader.dmi'
 
 /obj/item/clothing/cloak/stabard/crusader/t
-	name = "surcoat of the silver order"
+	name = "银色骑士团罩袍"
 	icon_state = "crusader_surcoatt2"
 
 /obj/item/clothing/cloak/cape/crusader
-	name = "desert cape"
+	name = "沙漠披风"
 	icon_state = "crusader_cloak"
 	icon = 'icons/roguetown/clothing/special/crusader.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/crusader.dmi'
 	sleeved = 'icons/roguetown/clothing/special/onmob/crusader.dmi'
 
 /obj/item/clothing/head/roguetown/helmet/heavy/crusader
-	name = "bucket helm"
+	name = "桶盔"
 	icon_state = "crusader_helm"
 	icon = 'icons/roguetown/clothing/special/crusader.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/crusader.dmi'

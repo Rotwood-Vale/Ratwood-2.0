@@ -1,7 +1,7 @@
 // Help apothecary kickstart, one of each seed. Don't want to make it too easy.
 /obj/structure/closet/crate/chest/old_crate/apothseed
-	name = "apothecary's herb seed crate"
-	desc = "A wooden crate used to store basic herbs."
+	name = "药剂师草药种子箱"
+	desc = "用于存放基础草药的木箱。"
 
 /obj/structure/closet/crate/chest/old_crate/apothseed/Initialize(mapload)
 	. = ..()
@@ -26,8 +26,8 @@
 // Basic potion ingredients for initial supply of red & blue potions.
 // Everything else should be acquired by them.
 /obj/structure/closet/crate/chest/old_crate/apoth_initial_pot
-	name = "apothecary's potion ingredient crate"
-	desc = "Labeled: WEEKLY HERB SUPPLY."
+	name = "药剂师药剂原料箱"
+	desc = "标签上写着：每周草药补给。"
 
 /obj/structure/closet/crate/chest/old_crate/apoth_initial_pot/Initialize(mapload)
 	. = ..()

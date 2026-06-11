@@ -1,11 +1,11 @@
 /obj/structure/fluff/walldeco/mageguild
-	name = "Mage's Guild Banner"
-	desc = "The white hot flame of a mage's light on a mage blue background, these banners mark the colleges and laboratories of the Mage's Guild."
+	name = "法师公会旗帜"
+	desc = "炽白的法师之光映在法师蓝的底色上，这些旗帜标志着法师公会的各大学院与实验室。"
 	icon_state = "mageguild"
 
 /obj/structure/fluff/walldeco/mageguild2
-	name = "Mage's Guild Banner"
-	desc = "The white hot flame of a mage's light on a black background, these banners mark the colleges and laboratories of the Mage's Guild."
+	name = "法师公会旗帜"
+	desc = "炽白的法师之光映在黑色底色上，这些旗帜标志着法师公会的各大学院与实验室。"
 	icon_state = "mageguild2"
 
 /obj/effect/turf_decal/magedecal
@@ -14,8 +14,8 @@
 
 //adapted from forcefields.dm, this needs to be destructible
 /obj/structure/arcyne_wall
-	desc = "A wall of pure arcyne force."
-	name = "Arcyne Wall"
+	desc = "一道由纯粹奥术力量构成的墙。"
+	name = "奥术之墙"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "arcynewall"
 	break_sound = 'sound/combat/hits/onstone/stonedeath.ogg'
@@ -47,8 +47,8 @@
 	return FALSE
 
 /obj/structure/arcyne_wall/greater
-	desc = "An immensely strong wall of pure arcyne force."
-	name = "Greater Arcyne Wall"
+	desc = "一道由纯粹奥术力量构成、异常坚固的高墙。"
+	name = "高阶奥术之墙"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "arcynewall"
 	break_sound = 'sound/combat/hits/onstone/stonedeath.ogg'
@@ -75,7 +75,7 @@
 
 //A non-deadbolt version. Wowsers!!!
 /obj/structure/mineral_door/wood/arcyne
-	desc = "arcyne door"
+	desc = "奥术之门"
 	icon_state = "arcyne"
 	base_state = "arcyne"
 	max_integrity = 2000
@@ -90,7 +90,7 @@
 
 
 /obj/structure/mineral_door/wood/deadbolt/arcyne
-	desc = "arcyne door"
+	desc = "奥术之门"
 	icon_state = "arcyne"
 	base_state = "arcyne"
 	keylock = FALSE
@@ -111,20 +111,20 @@
 		return
 	if(user == caster)
 		lock_toggle(user)
-		to_chat(user, span_warning("The lock to this door is broken."))
+		to_chat(user, span_warning("这扇门的锁坏掉了。"))
 		return
 	if(brokenstate)
-		to_chat(user, span_warning("There isn't much left of this door."))
+		to_chat(user, span_warning("这扇门已经没剩下多少了。"))
 		return
 	if(get_dir(src,user) == lockdir)
 		lock_toggle(user)
 	else
-		to_chat(user, span_warning("The door doesn't lock from this side."))
+		to_chat(user, span_warning("这扇门不能从这一侧上锁。"))
 
 
 /obj/structure/well/fountain/mana
-	name = "mana fountain"
-	desc = "This fountain produces a strange blue liquid. It seems faintly magical. Attempts to bottle it seems to cause it to inexplicably turn into water."
+	name = "法力喷泉"
+	desc = "这座喷泉会产出一种奇异的蓝色液体，隐约透着魔力。试图把它装瓶时，它似乎会莫名其妙地变成普通清水。"
 	icon = 'icons/roguetown/misc/64x64.dmi'
 	icon_state = "manafountain"
 	layer = ABOVE_ALL_MOB_LAYER
@@ -142,7 +142,7 @@
 			var/mob/living/carbon/C = user
 			if(C.is_mouth_covered())
 				return
-		user.visible_message(span_info("[user] starts to drink from [src]."))
+		user.visible_message(span_info("[user]开始饮用[src]中的液体。"))
 		playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 100, FALSE)
 		for(var/drink in 1 to 25)
 			if(drink_mana(user, L))
@@ -165,8 +165,8 @@
 
 /obj/machinery/light/rogue/forge/arcane
 	icon = 'icons/roguetown/misc/forge.dmi'
-	name = "infernal forge"
-	desc = "This forge uses cycling magma from an internal core to heat things."
+	name = "炼狱熔炉"
+	desc = "这座熔炉依靠内部核心循环涌动的岩浆来加热物品。"
 	icon_state = "infernal0"
 	base_state = "infernal"
 	heat_time = 30 SECONDS
@@ -185,8 +185,8 @@
 		update_icon()
 
 /obj/structure/leyline
-	name = "inactive leyline"
-	desc = "A curious arrangement of stones."
+	name = "失活地脉"
+	desc = "一组奇特排列的石头。"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "inactiveleyline"
 	var/active = FALSE
@@ -205,64 +205,64 @@
 	if(.)
 		return
 	if(last_process + time_between_uses > world.time)
-		to_chat(user, span_notice("The leyline appears to be drained of energy."))
+		to_chat(user, span_notice("这条地脉似乎已经被抽干了能量。"))
 		return
 	if(!isarcyne(user))
 		if(!active)
-			to_chat(user, span_notice("I wave a hand through the circle of rocks. Nothing happens."))
+			to_chat(user, span_notice("我把手挥过石环，什么都没有发生。"))
 			return
 		else
 			if(prob(60) && (!guardian))
 				if(do_after(user, 60))
-					to_chat(user, span_notice("I reach out towards the active leyline, peering within- and something peers back!"))
+					to_chat(user, span_notice("我朝活化地脉伸出手，向内窥探——而某种东西也在回望我！"))
 					sleep(2 SECONDS)
 					guardian = new /mob/living/simple_animal/hostile/retaliate/rogue/leylinelycan(src.loc, src)
-					src.visible_message(span_danger("[src] emerges from the leyline rupture!"))
+					src.visible_message(span_danger("[src]从地脉裂口中现身了！"))
 			else
 				if(do_after(user, 60))
-					to_chat(user, span_notice("I reach out towards the active leyline, and it shatters! A large, usable piece of it drops at your feet."))
+					to_chat(user, span_notice("我伸手触碰活化地脉，它随即碎裂！一大块可用碎片落在了你的脚边。"))
 					new /obj/item/magic/leyline(user.loc)
 					active = FALSE
 					icon_state = "inactiveleyline"
-					name = "inactive leyline"
-					desc = "A curious arrangement of stones."
+					name = "失活地脉"
+					desc = "一组奇特排列的石头。"
 					update_icon()
 					last_process = world.time
 
 	else
 		if(!active)
-			to_chat(user, span_notice("I wave a hand through the circle of rocks, and pulse my arcyne magic through it. The leyline activates!"))
+			to_chat(user, span_notice("我将手挥过石环，并把奥术魔力注入其中。地脉被激活了！"))
 			icon_state = "leylinerupture"
-			name = "active leyline"
-			desc = "An active tear into the leyline. It gives off plenty of energy"
+			name = "活化地脉"
+			desc = "一道活化的地脉裂口，正源源不断地散发出能量。"
 			active = TRUE
 			update_icon()
 		else
 			if(guardian)
 				if(do_after(user, 60))
-					to_chat(user, span_danger("The leyline is abuzz with energy in a feedback from the [guardian]! It lashes out at me!"))
+					to_chat(user, span_danger("地脉因[guardian]的反馈而嗡鸣震荡，它朝我反噬而来！"))
 					user.electrocute_act(10)
 
 			if(prob(60) && (!guardian))
 				if(do_after(user, 60))
-					to_chat(user, span_notice("I reach out towards the active leyline, peering within- and something peers back!"))
+					to_chat(user, span_notice("我朝活化地脉伸出手，向内窥探——而某种东西也在回望我！"))
 					sleep(2 SECONDS)
 					guardian = new /mob/living/simple_animal/hostile/retaliate/rogue/leylinelycan(src.loc, src)
-					src.visible_message(span_danger("[guardian] emerges from the leyline rupture!"))
+					src.visible_message(span_danger("[guardian]从地脉裂口中现身了！"))
 
 			else
 				if(do_after(user, 60))
-					to_chat(user, span_notice("I reach out towards the active leyline, and it shatters! A large, usable piece of it drops at your feet."))
+					to_chat(user, span_notice("我伸手触碰活化地脉，它随即碎裂！一大块可用碎片落在了你的脚边。"))
 					new /obj/item/magic/leyline(user.loc)
 					active = FALSE
 					icon_state = "inactiveleyline"
-					name = "inactive leyline"
-					desc = "A curious arrangement of stones."
+					name = "失活地脉"
+					desc = "一组奇特排列的石头。"
 					update_icon()
 					last_process = world.time
 
 /obj/structure/manaflower
-	name = "manaflower"
+	name = "法力花"
 	desc = ""
 	icon = 'icons/roguetown/misc/crops.dmi'
 	icon_state = "manabloom2"
@@ -274,7 +274,7 @@
 
 /obj/structure/manaflower/attack_hand(mob/living/carbon/human/user)
 	playsound(src.loc, "plantcross", 80, FALSE, -1)
-	user.visible_message(span_warning("[user] harvests [src]."))
+	user.visible_message(span_warning("[user]采下了[src]。"))
 	if(do_after(user, 3 SECONDS, target = src))
 		new /obj/item/reagent_containers/food/snacks/grown/manabloom (get_turf(src))
 		qdel(src)
@@ -283,8 +283,8 @@
 
 
 /obj/structure/voidstoneobelisk
-	name = "Voidstone Obelisk"
-	desc = "A smooth unnatural Obelisk, looking at it provides the sense of unease."
+	name = "虚空石方尖碑"
+	desc = "一座光滑而不自然的方尖碑，仅仅注视它就会令人不安。"
 	icon = 'icons/mob/summonable/32x32.dmi'
 	icon_state = "dormantobelisk"
 	anchored = TRUE
@@ -300,20 +300,20 @@
 	if(user.used_intent.no_attack)
 		return 0
 	log_combat(user, src, "attacked", I)
-	var/verbu = "hits"
+	var/verbu = "击打"
 	verbu = pick(user.used_intent.attack_verb)
 	if(newforce > 1)
 		if(user.stamina_add(5))
-			user.visible_message(span_danger("[user] [verbu] [src] with [I]!"))
-	user.visible_message(span_danger("[src] comes to life, archaic stone shifting into position!"))
+			user.visible_message(span_danger("[user]用[I][verbu][src]！"))
+	user.visible_message(span_danger("[src]活了过来，古老石体开始错动重组！"))
 	sleep(2)
 	new /mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk(src.loc)
 	qdel(src)
 
 /obj/structure/voidstoneobelisk/attack_hand(mob/living/carbon/human/user)
-	to_chat(user, span_notice("You reach out to touch the abberant obelisk..."))
+	to_chat(user, span_notice("你伸手触碰那座畸异的方尖碑……"))
 	if(do_after(user, 3 SECONDS, target = src))
-		user.visible_message(span_danger("[src] comes to life, archaic stone shifting into position!"))
+		user.visible_message(span_danger("[src]活了过来，古老石体开始错动重组！"))
 		sleep(2)
 		new /mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk(src.loc)
 		qdel(src)

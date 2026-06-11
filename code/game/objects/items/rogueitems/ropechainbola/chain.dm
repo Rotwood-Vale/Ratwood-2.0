@@ -1,14 +1,14 @@
 /datum/intent/whips
-	name = "strike"
+	name = "抽击"
 	blade_class = BCLASS_BLUNT
-	attack_verb = list("whips", "strikes", "smacks")
+	attack_verb = list("抽打", "击打", "猛砸")
 	penfactor = 0 //40
 	chargetime = 5
 	item_d_type = "slash"
 
 /obj/item/rope/chain
-	name = "chain"
-	desc = "A heavy iron chain."
+	name = "铁链"
+	desc = "一条沉重的铁链。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "chain"
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_WRISTS

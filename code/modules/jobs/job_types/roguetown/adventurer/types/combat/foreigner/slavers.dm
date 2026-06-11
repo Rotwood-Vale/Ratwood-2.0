@@ -1,8 +1,8 @@
 //Why is this not in the Zybantium file? We'll be expanding this to other groups.
 /datum/advclass/foreigner/slaver
-	name = "Zybantine Slaver"
-	tutorial = "In parts of Psydonia, the practice of slavery is still a common sight. \
-	You hail from the Zybantine Empire, where the market of flesh is ancient and unbroken, and your coin is earned in the trade of living souls."
+	name = "兹班图的 奴贩"
+	tutorial = "在 普赛多尼亚 的某些地方，奴隶买卖依旧司空见惯。\
+	你来自 Zybantine 帝国，那里的血肉市场古老而从未断绝，而你的钱财正是靠贩卖活生生的灵魂换来的。"
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/slaver
 	subclass_languages = list(/datum/language/celestial)
@@ -27,8 +27,8 @@
 
 /datum/outfit/job/roguetown/adventurer/slaver/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("In parts of Psydonia, the practice of slavery is still a common sight. \
-	You hail from the Zybantine Empire, where the market of flesh is ancient and unbroken, and your coin is earned in the trade of living souls."))
+	to_chat(H, span_warning("在 普赛多尼亚 的某些地方，奴隶买卖依旧司空见惯。\
+	你来自 Zybantine 帝国，那里的血肉市场古老而从未断绝，而你的钱财正是靠贩卖活生生的灵魂换来的。"))
 	mask = /obj/item/clothing/mask/rogue/facemask/steel
 	head = /obj/item/clothing/head/roguetown/roguehood/shalal/purple
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
@@ -50,8 +50,8 @@
 
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant/civilian
-	name = "shawl"
-	desc = "Thick and protective while remaining light and breezy; the perfect garb for protecting one from the hot sun and the harsh sands of Naledi."
+	name = "披巾"
+	desc = "厚实而护身，却依旧轻便透气；正是用来抵御 纳莱迪 炽烈日头与粗砺风沙的理想衣装。"
 	color = CLOTHING_BLACK
 
 /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/black

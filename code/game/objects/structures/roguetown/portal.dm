@@ -1,7 +1,7 @@
 
 /obj/structure/portal
-	name = "gate"
-	desc = "This gate's enveloping darkness is too oppressive to pass through."
+	name = "门扉"
+	desc = "这道门扉周围的黑暗太过压迫，让人无法穿过。"
 	icon = 'icons/roguetown/misc/portal.dmi'
 	icon_state = "portal"
 	density = TRUE

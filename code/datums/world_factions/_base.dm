@@ -3,8 +3,8 @@
 ///so when we actually get them switching won't be hard
 
 /datum/world_faction
-	var/name = "World"
-	var/desc = "The entirety of the world"
+	var/name = "世界"
+	var/desc = "整个世界"
 
 	var/faction_name
 

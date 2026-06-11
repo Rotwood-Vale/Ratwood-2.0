@@ -1,6 +1,6 @@
 /obj/item/reagent_containers/glass/bottle/waterskin
-	name = "waterskin"
-	desc = "A leather waterskin."
+	name = "水袋"
+	desc = "一个皮制水袋。"
 	icon_state = "waterskin"
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10)
@@ -16,16 +16,16 @@
 	fillsounds = list('sound/items/fillcup.ogg')
 	poursounds = list('sound/items/fillbottle.ogg')
 	sewrepair = TRUE
-	desc_uncorked = "A leather waterskin. The cap on the mouth is off."
+	desc_uncorked = "一个皮制水袋。袋口的盖子已打开。"
 
 /obj/item/reagent_containers/glass/bottle/waterskin/milk // Filled subtype used by the cheesemaker
 	list_reagents = list(/datum/reagent/consumable/milk = 64)
 
 /obj/item/reagent_containers/glass/bottle/waterskin/purifier
-	name = "purifying waterskin"
-	desc = "Bronze tubes spiral about from the mouth of this waterskin in complex, dizzying patterns."
+	name = "净水水袋"
+	desc = "青铜管沿着这只水袋的袋口盘旋延展，构成复杂而令人目眩的图样。"
 	icon_state = "water-purifier"
-	desc_uncorked = "Bronze tubes spiral about from the mouth of this waterskin in complex, dizzying patterns. The cap on the mouth is off."
+	desc_uncorked = "青铜管沿着这只水袋的袋口盘旋延展，构成复杂而令人目眩的图样。袋口的盖子已打开。"
 	var/filtered_reagents = list(/datum/reagent/water/gross) // List of liquids it turns into drinkable water
 
 /obj/item/reagent_containers/glass/bottle/waterskin/purifier/onfill(obj/target, mob/user, silent = FALSE)
@@ -42,10 +42,10 @@
 				reagents.add_reagent(/datum/reagent/water, amt2clean)
 		if (!silent)
 			playsound(user, 'sound/items/waterfilter.ogg', 40, TRUE)
-			to_chat(user, span_hear("I hear whizzing clockwork and gurgling water within [src]."))
+			to_chat(user, span_hear("我听见[src]内部传来发条嗡鸣与水流咕噜声。"))
 			if (prob(25))
 				new /obj/effect/temp_visual/small_smoke(user.loc)
-				user.visible_message(span_notice("A cloud of steam momentarily envelops [user]!"), span_notice("The device sputters and spews a cloud of steam." + span_warning(" How annoying!")))
+				user.visible_message(span_notice("一团蒸汽短暂笼罩了[user]！"), span_notice("装置噼啪作响，喷出一团蒸汽。" + span_warning(" 真烦人！")))
 
 
 /obj/item/reagent_containers/glass/bottle/waterskin/purifier/proc/hasdirtywater()

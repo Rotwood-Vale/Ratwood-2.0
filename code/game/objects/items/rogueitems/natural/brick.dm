@@ -1,6 +1,6 @@
 /obj/item/natural/brick
-	name = "brick"
-	desc = "A cooked red brick."
+	name = "砖块"
+	desc = "一块烧制好的红砖。"
 	icon = 'icons/roguetown/items/cooking.dmi'	//It's because these are cooked via clay. Don't ask questions.
 	icon_state = "claybrickcook"
 	gripped_intents = null
@@ -25,7 +25,7 @@
 	. = ..()
 	if(user.get_active_held_item())
 		return
-	to_chat(user, span_warning("I start to collect [src]..."))
+	to_chat(user, span_warning("我开始收集[src]……"))
 	if(move_after(user, bundling_time, target = src))
 		var/stackcount = 0
 		for(var/obj/item/natural/brick/F in get_turf(src))
@@ -46,8 +46,8 @@
 			qdel(F)
 
 /obj/item/natural/bundle/brick
-	name = "stack of bricks"
-	desc = "A stack of bricks."
+	name = "一摞砖块"
+	desc = "整齐堆起的一摞砖。"
 	icon_state = "brickbundle1"
 	icon = 'icons/roguetown/items/cooking.dmi'	//It's because these are cooked via clay. Don't ask questions.
 	experimental_inhand = FALSE
@@ -63,7 +63,7 @@
 	throwforce = 0	// useless for throwing unless solo
 	throw_range = 2
 	w_class = WEIGHT_CLASS_NORMAL
-	stackname = "bricks"
+	stackname = "砖块"
 	stacktype = /obj/item/natural/brick
 	maxamount = 4
 	icon1 = "brickbundle2"

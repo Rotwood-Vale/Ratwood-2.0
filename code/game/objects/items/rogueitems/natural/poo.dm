@@ -1,6 +1,6 @@
 /obj/item/natural/poo
-	name = "nightsoil"
-	desc = "It smells awful."
+	name = "粪肥"
+	desc = "闻起来臭得要命。"
 	icon_state = "humpoo"
 	dropshrink = 0.75
 	throwforce = 0
@@ -8,11 +8,11 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/natural/poo/cow
-	name = "cow pie"
-	desc = "It smells awful, but I know it's just digested grass... Right?"
+	name = "牛粪"
+	desc = "闻起来臭得要命，但我知道这只是消化过的草……对吧？"
 	icon_state = "cowpoo"
 
 /obj/item/natural/poo/horse
-	name = "droppings"
-	desc = "It smells awful, but I know it's just digested grass."
+	name = "粪便"
+	desc = "闻起来臭得要命，但我知道这只是消化过的草。"
 	icon_state = "horsepoo"

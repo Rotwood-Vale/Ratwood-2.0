@@ -2,164 +2,164 @@
 	smell_intensity = 2
 	pollutant_flags = POLLUTANT_SMELL
 
-	name = "debug food smell"
-	scent = "smell"
+	name = "调试食物气味"
+	scent = "气味"
 	color = "#000000"
 
-	descriptor = "smell"
+	descriptor = "气味"
 
 /datum/pollutant/food/apple_pie
-	name = "apple pie"
-	scent = "apple pie"
+	name = "苹果派"
+	scent = "苹果派"
 
 /datum/pollutant/food/fish_pie
-	name = "fish pie"
-	scent = "fish pie"
+	name = "鱼肉派"
+	scent = "鱼肉派"
 
 /datum/pollutant/food/meat_pie
-	name = "meat pie"
-	scent = "meat pie"
+	name = "肉派"
+	scent = "肉派"
 
 /datum/pollutant/food/pot_pie
-	name = "pot pie"
-	scent = "pot pie"
+	name = "炖派"
+	scent = "炖派"
 
 /datum/pollutant/food/berry_pie
-	name = "berry pie"
-	scent = "berry pie"
+	name = "莓果派"
+	scent = "莓果派"
 
 /datum/pollutant/food/crab_pie
-	name = "crab pie"
-	scent = "crab pie"
+	name = "蟹肉派"
+	scent = "蟹肉派"
 
 /datum/pollutant/food/bread
-	name = "fresh baked bread"
-	scent = "fresh baked bread"
+	name = "新鲜出炉的面包"
+	scent = "新鲜出炉的面包"
 
 /datum/pollutant/food/bun
-	name = "fresh baked buns"
-	scent = "fresh baked buns"
+	name = "新鲜出炉的面包卷"
+	scent = "新鲜出炉的面包卷"
 
 /datum/pollutant/food/pastry
-	name = "fresh baked pastry"
-	scent = "fresh baked pastry"
+	name = "新鲜出炉的点心"
+	scent = "新鲜出炉的点心"
 
 /datum/pollutant/food/pie_base
-	name = "fresh baked pie crust"
-	scent = "fresh baked pie crust"
+	name = "新鲜出炉的派皮"
+	scent = "新鲜出炉的派皮"
 
 /datum/pollutant/food/toast
-	name = "cooked toast"
-	scent = "cooked toast"
+	name = "烤吐司"
+	scent = "烤吐司"
 
 /datum/pollutant/food/raisin_bread
-	name = "fresh baked loaf of raisin bread"
-	scent = "fresh baked loaf of raisin bread"
+	name = "新鲜出炉的一条葡萄干面包"
+	scent = "新鲜出炉的一条葡萄干面包"
 
 /datum/pollutant/food/cheese_bun
-	name = "fresh baked cheese buns"
-	scent = "fresh baked cheese buns"
+	name = "新鲜出炉的芝士面包卷"
+	scent = "新鲜出炉的芝士面包卷"
 
 /datum/pollutant/food/biscuit
-	name = "fresh baked biscuits"
-	scent = "fresh baked biscuits"
+	name = "新鲜出炉的饼干"
+	scent = "新鲜出炉的饼干"
 
 /datum/pollutant/food/prezzel
-	name = "fresh baked prezzel"
-	scent = "fresh baked prezzel"
+	name = "新鲜出炉的椒盐卷饼"
+	scent = "新鲜出炉的椒盐卷饼"
 
 /datum/pollutant/food/cake
-	name = "fresh baked cake"
-	scent = "fresh baked cake"
+	name = "新鲜出炉的蛋糕"
+	scent = "新鲜出炉的蛋糕"
 
 /datum/pollutant/food/frosted_cake
-	name = "fresh baked frosted cake"
-	scent = "fresh baked frosted cake"
+	name = "新鲜出炉的糖霜蛋糕"
+	scent = "新鲜出炉的糖霜蛋糕"
 
 /datum/pollutant/food/honey_cake
-	name = "fresh baked honey cake"
-	scent = "fresh baked honey cake"
+	name = "新鲜出炉的蜂蜜蛋糕"
+	scent = "新鲜出炉的蜂蜜蛋糕"
 
 /datum/pollutant/food/cheese_cake
-	name = "fresh baked cheese cake"
-	scent = "fresh baked cheese cake"
+	name = "新鲜出炉的乳酪蛋糕"
+	scent = "新鲜出炉的乳酪蛋糕"
 
 /datum/pollutant/food/baked_potato
-	name = "baked potatos"
-	scent = "baked potatos"
+	name = "烤土豆"
+	scent = "烤土豆"
 
 /datum/pollutant/food/truffles
-	name = "cooked truffles"
-	scent = "cooked truffles"
+	name = "熟松露"
+	scent = "熟松露"
 
 /datum/pollutant/food/fried_bacon
-	name = "fried bacon"
-	scent = "fried bacon"
+	name = "煎培根"
+	scent = "煎培根"
 
 /datum/pollutant/food/fried_meat
-	name = "fried meat"
-	scent = "fried meat"
+	name = "煎肉"
+	scent = "煎肉"
 
 /datum/pollutant/food/cooked_chicken
-	name = "cooked chicken"
-	scent = "cooked chicken"
+	name = "熟鸡肉"
+	scent = "熟鸡肉"
 
 /datum/pollutant/food/fried_chicken
-	name = "fried chicken"
-	scent = "fried chicken"
+	name = "炸鸡"
+	scent = "炸鸡"
 
 /datum/pollutant/food/fried_sausage
-	name = "fried sausage"
-	scent = "fried sausage"
+	name = "煎香肠"
+	scent = "煎香肠"
 
 /datum/pollutant/food/fried_cabbage
-	name = "fried cabbage"
-	scent = "fried cabbage"
+	name = "炒卷心菜"
+	scent = "炒卷心菜"
 
 /datum/pollutant/food/fried_onion
-	name = "fried onion"
-	scent = "fried onion"
+	name = "炒洋葱"
+	scent = "炒洋葱"
 
 /datum/pollutant/food/roasted_seeds
-	name = "roasted seeds"
-	scent = "roasted seeds"
+	name = "烤种子"
+	scent = "烤种子"
 
 /datum/pollutant/food/muffin
-	name = "fresh baked muffin"
-	scent = "fresh baked muffin"
+	name = "新鲜出炉的玛芬"
+	scent = "新鲜出炉的玛芬"
 
 /datum/pollutant/food/fried_rat
-	name = "fried rats"
-	scent = "fried rats"
+	name = "炸老鼠"
+	scent = "炸老鼠"
 
 /datum/pollutant/food/fried_crow
-	name = "fried crows"
-	scent = "fried crows"
+	name = "炸乌鸦"
+	scent = "炸乌鸦"
 
 /datum/pollutant/food/fried_butter
-	name = "fried butter"
-	scent = "fried butter"
+	name = "炸黄油"
+	scent = "炸黄油"
 
 // Other server have multiple different fish but logically most fresh fish don't really smell much when cooked
 /datum/pollutant/food/cooked_fish
-	name = "cooked fish"
-	scent = "cooked fish"
+	name = "熟鱼肉"
+	scent = "熟鱼肉"
 
 // Fried crab, especially soft shell crab, has a very distinct smell
 /datum/pollutant/food/fried_crab
-	name = "fried crab"
-	scent = "fried crab"
+	name = "炸螃蟹"
+	scent = "炸螃蟹"
 
 // Fried shellfish meat has a distinct
 /datum/pollutant/food/fried_shellfish
-	name = "fried shellfish"
-	scent = "fried shellfish"
+	name = "炸贝肉"
+	scent = "炸贝肉"
 
 // Special smell just for you
 /datum/pollutant/food/fried_crab_cake
-	name = "fried crab cake"
-	scent = "fried crab cake"
+	name = "炸蟹饼"
+	scent = "炸蟹饼"
 
 /datum/pollutant/food/roasted_seeds
-	name = "toasted seeds"
-	scent = "toasted seeds"
+	name = "烘香种子"
+	scent = "烘香种子"

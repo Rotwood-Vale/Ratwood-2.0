@@ -1,8 +1,8 @@
 
 /obj/machinery/anvil
 	icon = 'icons/roguetown/misc/forge.dmi'
-	name = "iron anvil"
-	desc = "It's surface is marred by countless hammer strikes."
+	name = "铁砧"
+	desc = "它的表面布满了无数次锤击留下的痕迹。"
 	icon_state = "anvil"
 	var/hott = null
 	var/obj/item/current_workpiece
@@ -20,7 +20,7 @@
 /obj/machinery/anvil/examine(mob/user)
 	. = ..()
 	if(current_workpiece && hott)
-		. += span_warning("[current_workpiece] is too hot to touch.")
+		. += span_warning("[current_workpiece]烫得无法触碰。")
 
 /obj/machinery/anvil/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/rogueweapon/tongs))
@@ -46,7 +46,7 @@
 			// Pick up ingot with tongs
 			if(istype(current_workpiece, /obj/item/ingot))
 				if(T.hingot)
-					to_chat(user, span_warning("You're already holding something with your tongs!"))
+					to_chat(user, span_warning("你的钳子上已经有东西了！"))
 					return
 				current_workpiece.forceMove(T)
 				T.hingot = current_workpiece
@@ -103,7 +103,7 @@
 			while(current_workpiece && forging_comp?.forging_stage == FORGING_STAGE_ACTIVE)
 				// Blades don't need to be hot, only check for ingots
 				if(!hott && istype(current_workpiece, /obj/item/ingot))
-					to_chat(user, span_warning("It's too cold."))
+					to_chat(user, span_warning("它太冷了。"))
 					return
 
 				var/used_str = user.STASTR
@@ -154,7 +154,7 @@
 			return
 
 	if(W.anvilrepair)
-		user.visible_message(span_info("[user] places [W] on the anvil."))
+		user.visible_message(span_info("[user]把[W]放在了铁砧上。"))
 		W.forceMove(src.loc)
 		return
 	..()
@@ -228,7 +228,7 @@
 
 			var/smith_exp = user.get_skill_level(recipe.appro_skill)
 			if(smith_exp < recipe.craftdiff)
-				if(alert(user, "This recipe needs [SSskills.level_names_plain[recipe.craftdiff]] skill.","IT'S TOO DIFFICULT!","CONFIRM","CANCEL") != "CONFIRM")
+				if(alert(user, "该配方需要[SSskills.level_names_plain[recipe.craftdiff]]技能。","太难了！","确认","取消") != "确认")
 					return TRUE
 
 			// Half to check this again because we alert()ed
@@ -239,7 +239,7 @@
 			var/datum/component/forging/existing_forging = current_workpiece.GetComponent(/datum/component/forging)
 			var/recipe_reset = FALSE
 			if(existing_forging)
-				if(alert(user, "This item already has an active recipe ([existing_forging.current_recipe.name]). Change to [recipe.name]?","CHANGE RECIPE?","CONFIRM","CANCEL") != "CONFIRM")
+				if(alert(user, "该物品已有一个激活的配方（[existing_forging.current_recipe.name]）。是否更改为[recipe.name]？","更改配方？","确认","取消") != "CONFIRM")
 					return TRUE
 
 				// Remove existing forging component and any quenchable components
@@ -278,7 +278,7 @@
 	if(current_workpiece)
 		// Blades are never hot, so only check hott for ingots
 		if(hott && istype(current_workpiece, /obj/item/ingot))
-			to_chat(user, span_warning("It's too hot."))
+			to_chat(user, span_warning("太烫了。"))
 			return
 		else
 			var/obj/item/I = current_workpiece

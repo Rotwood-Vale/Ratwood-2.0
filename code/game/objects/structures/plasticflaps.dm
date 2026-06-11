@@ -1,6 +1,6 @@
 /obj/structure/plasticflaps
-	name = "iron bars"
-	desc = "It seems pretty rusty."
+	name = "铁栏杆"
+	desc = "看起来相当锈。"
 	gender = PLURAL
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "bars_passage"
@@ -20,20 +20,20 @@
 /obj/structure/plasticflaps/examine(mob/user)
 	. = ..()
 	if(anchored)
-		. += span_notice("[src] are <b>screwed</b> to the floor.")
+		. += span_notice("[src]被<b>拧</b>在了地板上。")
 	else
-		. += span_notice("[src] are no longer <i>screwed</i> to the floor, and the flaps can be <b>cut</b> apart.")
+		. += span_notice("[src]已经不再<i>拧</i>在地板上了，现在可以把这些栏杆<b>拆开</b>。")
 
 /obj/structure/plasticflaps/screwdriver_act(mob/living/user, obj/item/W)
 	if(..())
 		return TRUE
 	add_fingerprint(user)
-	var/action = anchored ? "unscrews [src] from" : "screws [src] to"
-	var/uraction = anchored ? "unscrew [src] from " : "screw [src] to"
-	user.visible_message(span_warning("[user] [action] the floor."), span_notice("I start to [uraction] the floor..."), span_hear("I hear rustling noises."))
+	var/action = anchored ? "把[src]从地板上拧下来" : "把[src]拧到地板上"
+	var/uraction = anchored ? "把[src]从地板上拧下来" : "把[src]拧到地板上"
+	user.visible_message(span_warning("[user]开始[action]。"), span_notice("我开始[uraction]……"), span_hear("我听见一阵金属摩擦声。"))
 	if(W.use_tool(src, user, 100, volume=100, extra_checks = CALLBACK(src, PROC_REF(check_anchored_state), anchored)))
 		setAnchored(!anchored)
-		to_chat(user, span_notice("I [anchored ? "unscrew" : "screw"] [src] from the floor."))
+		to_chat(user, span_notice("我[anchored ? "把[src]从地板上拧下来了" : "把[src]拧到地板上了"]。"))
 		return TRUE
 	else
 		return TRUE

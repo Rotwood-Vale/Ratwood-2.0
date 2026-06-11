@@ -1,6 +1,6 @@
 /datum/advclass/hedgeknight //heavy knight class - just like black knight adventurer class. starts with heavy armor training and plate, but less weapon skills than brigand, sellsword and knave
-	name = "Hedge Knight"
-	tutorial = "A noble fallen from grace, your tarnished armor sits upon your shoulders as a heavy reminder of the life you've lost. Take back what is rightfully yours."
+	name = "落魄骑士"
+	tutorial = "你本是失势贵族，肩头那身失了光彩的甲胄沉甸甸地压着，时时提醒你失去了怎样的人生。去把本该属于你的东西夺回来。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/roguetown/bandit/hedgeknight
@@ -55,25 +55,25 @@
 					)
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Master Swordsman","Master Spearman","Master Cleaver","Master Bludgeoner")
-		var/weapon_choice = input(H, "Choose your proficiency.", "TRAINED BY VETERANS") as anything in weapons
+		var/weapons = list("剑术大师","枪术大师","斩劈大师","钝击大师")
+		var/weapon_choice = input(H, "选择你的专精。", "老兵所授") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Master Swordsman")
+			if("剑术大师")
 				beltr = /obj/item/rogueweapon/sword/long/death
 				beltl = /obj/item/rogueweapon/scabbard/sword/noble
 				backl = /obj/item/rogueweapon/shield/tower/metal
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			if("Master Spearman")
+			if("枪术大师")
 				r_hand = /obj/item/rogueweapon/spear/death
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)	//No shields, you have a two-hander!
-			if("Master Cleaver")
+			if("斩劈大师")
 				beltl = /obj/item/rogueweapon/stoneaxe/battle
 				backl = /obj/item/rogueweapon/shield/tower/metal
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)		//No shields, 'cause of things like greataxes.
-			if("Master Bludgeoner")
+			if("钝击大师")
 				beltl = /obj/item/rogueweapon/mace/steel
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)

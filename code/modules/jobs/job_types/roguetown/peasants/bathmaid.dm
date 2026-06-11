@@ -1,5 +1,6 @@
 /datum/job/roguetown/nightmaiden
 	title = "Bathhouse Attendant"
+	display_title = "浴场侍者"
 	f_title = "Bathhouse Attendant"
 	flag = WENCH
 	department_flag = PEASANTS
@@ -12,7 +13,7 @@
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED)
 
 
-	tutorial = "Dancing, music, or practicioners of the body. You've worked up a reputation as an entertainer, and sometime in life, the bathmaster has chosen to onboard you for one of these talents. In the bathhouse, your place on the hierarchy is determined by how long you've been in the game - and how much mammon you're worth."
+	tutorial = "舞蹈、乐曲，或是侍奉肉身的技艺。你已靠这些本事积攒出了一点取悦他人的名声，也正因如此，在某个人生节点上，浴场主人看中了你，招你来施展其中一门长处。在浴场里，你在阶序中的位置，取决于你混迹这行有多久，以及你到底值多少马蒙。"
 
 	outfit = /datum/outfit/job/roguetown/nightmaiden
 	advclass_cat_rolls = list(CTAG_NIGHTMAIDEN = 20)
@@ -33,12 +34,12 @@
 	)
 
 /datum/outfit/job/roguetown/nightmaiden
-	name = "Bathhouse Attendant"
+	name = "浴场侍者"
 	// This is just a base outfit, the actual outfits are defined in the advclasses
 
 /datum/advclass/nightmaiden
-	name = "Bath Attendant"
-	tutorial = "A fresh initiate, most would decry the humble bath maid as a desperate fool tempting others into bedsheets for money--only sometimes, you say! You work underneath your betters in the communal bathhouse, keeping it and the guests in turn as tidy as they please. Wash laundry, tend mild wounds, and deftly wash your patrons with soap, for this is your craft."
+	name = "浴场侍者"
+	tutorial = "你还是个新入行的学徒。大多数人会把卑微的浴场女侍骂成那种为钱引人上床的可怜蠢货，不过你会辩解说，那也只是偶尔！你在公共浴场里侍奉地位高于你的人，按客人的心意把场子与来客都收拾得妥妥帖帖。洗衣、处理些轻伤，再熟练地用香皂为客人擦洗身子，这便是你的手艺。"
 	outfit = /datum/outfit/job/roguetown/nightmaiden/attendant
 	category_tags = list(CTAG_NIGHTMAIDEN)
 	traits_applied = list(TRAIT_NUTCRACKER, TRAIT_CICERONE)
@@ -89,8 +90,8 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/massage)
 
 /datum/advclass/nightmaiden/concubine
-	name = "Concubine"
-	tutorial = "Unlike your fellow bath attendants who maintain a professional facade, you have abandoned all pretense. You are a prized possession of the nobility, adorned in exotic silks and gold. Your role is to provide companionship, entertainment, and pleasure. Working underneath the finespun courtesans, you're a step above the bath attendants in your craft."
+	name = "侍妾"
+	tutorial = "与你那些还维持着体面门面的浴场同伴不同，你已把所有伪装都抛开了。你是贵族们珍爱的私产，披戴着异域丝绸与黄金饰物。你的职责就是提供陪伴、取乐与欢愉。在那些精致名妓手下做事时，你的行当地位也确实比普通浴场侍者高上一层。"
 	outfit = /datum/outfit/job/roguetown/nightmaiden/concubine
 	category_tags = list(CTAG_NIGHTMAIDEN)
 	traits_applied = list(TRAIT_LIGHT_STEP, TRAIT_BEAUTIFUL)
@@ -141,46 +142,46 @@
 
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/massage)
-		var/weapons = list("Accordion","Bagpipe", "Banjo","Drum","Flute","Guitar","Harmonica","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
-		var/weapon_choice = input(H, "Choose your instrument.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("手风琴","风笛", "班卓琴","鼓","长笛","吉他","口琴","竖琴","手摇琴","口簧琴","鲁特琴","圣咏琴","三味线","小号","中提琴","咏声护符")
+		var/weapon_choice = input(H, "选择你的乐器。", "拿起家伙") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Accordion")
+			if("手风琴")
 				backr = /obj/item/rogue/instrument/accord
-			if("Bagpipe")
+			if("风笛")
 				backr = /obj/item/rogue/instrument/bagpipe
-			if("Banjo")
+			if("班卓琴")
 				backr = /obj/item/rogue/instrument/banjo
-			if("Drum")
+			if("鼓")
 				backr = /obj/item/rogue/instrument/drum
-			if("Flute")
+			if("长笛")
 				backr = /obj/item/rogue/instrument/flute
-			if("Guitar")
+			if("吉他")
 				backr = /obj/item/rogue/instrument/guitar
-			if("Harmonica")
+			if("口琴")
 				backr = /obj/item/rogue/instrument/harmonica
-			if("Harp")
+			if("竖琴")
 				backr = /obj/item/rogue/instrument/harp
-			if("Hurdy-Gurdy")
+			if("手摇琴")
 				backr = /obj/item/rogue/instrument/hurdygurdy
-			if("Jaw Harp")
+			if("口簧琴")
 				backr = /obj/item/rogue/instrument/jawharp
-			if("Lute")
+			if("鲁特琴")
 				backr = /obj/item/rogue/instrument/lute
-			if("Psyaltery")
+			if("圣咏琴")
 				backr = /obj/item/rogue/instrument/psyaltery
-			if("Shamisen")
+			if("三味线")
 				backr = /obj/item/rogue/instrument/shamisen
-			if("Trumpet")
+			if("小号")
 				backr = /obj/item/rogue/instrument/trumpet
-			if("Viola")
+			if("中提琴")
 				backr = /obj/item/rogue/instrument/viola
-			if("Vocal Talisman")
+			if("咏声护符")
 				backr = /obj/item/rogue/instrument/vocals
 
 /datum/advclass/nightmaiden/dominatrix
-	name = "Tickler"
-	tutorial = "There is a thin, blurred line where pain meets pleasure. You cater to a specific kind of client, the kind who like to walk that line. You have practiced the art of pain and domination and made it your own. Still, you will always be the whore and they the client. What power do you really have?"
+	name = "调教师"
+	tutorial = "痛楚与欢愉相接之处，有一道纤细而模糊的界线。你服侍的，正是那类喜欢踩在线上的客人。你将疼痛与支配的技艺练成了自己的本事。可说到底，你始终还是妓子，而他们仍旧是客人。你真正握有的权力，又有多少呢？"
 	outfit = /datum/outfit/job/roguetown/nightmaiden/dominatrix
 	//maximum_possible_slots = 1 //It could be funny to have a gang of them, probably fine
 	category_tags = list(CTAG_NIGHTMAIDEN)
@@ -227,8 +228,8 @@
 	H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE) //tempted to make it 3. Need to provide aftercare yknow
 
 /datum/advclass/nightmaiden/courtesan
-	name = "Courtesan"
-	tutorial = "Overcoming mind games, deceit and competition, you came into your own as one of the bathhouse's most prized moneymakers and socialites. Dressed in lavish gifts left behind by your patrons, not just anyone can have you. Under the matron, you do most of the social heavylifting and provide entertainment of all forms - behind a heavy price tag. "
+	name = "名妓"
+	tutorial = "你熬过了心机、欺骗与竞争，终于成长为浴场里最值钱、也最擅交际的摇钱树之一。你穿戴着恩客们遗留下来的华美赠礼，不是谁都能轻易碰得到你。在鸨母手下，你承担了大半对外应酬的重担，也提供形形色色的娱乐，只不过一切都标着高昂的价码。 "
 	outfit = /datum/outfit/job/roguetown/nightmaiden/courtesan
 	category_tags = list(CTAG_NIGHTMAIDEN)
 	traits_applied = list(TRAIT_KEENEARS, TRAIT_BEAUTIFUL)
@@ -293,44 +294,44 @@
 		shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short
 
 	if(H.mind)
-		var/weapons = list("Accordion","Bagpipe", "Banjo","Drum","Flute","Guitar","Harmonica","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
-		var/weapon_choice = input(H, "Choose your instrument.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("手风琴","风笛", "班卓琴","鼓","长笛","吉他","口琴","竖琴","手摇琴","口簧琴","鲁特琴","圣咏琴","三味线","小号","中提琴","咏声护符")
+		var/weapon_choice = input(H, "选择你的乐器。", "拿起家伙") as anything in weapons
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/massage)
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Accordion")
+			if("手风琴")
 				backr = /obj/item/rogue/instrument/accord
-			if("Bagpipe")
+			if("风笛")
 				backr = /obj/item/rogue/instrument/bagpipe
-			if("Banjo")
+			if("班卓琴")
 				backr = /obj/item/rogue/instrument/banjo
-			if("Drum")
+			if("鼓")
 				backr = /obj/item/rogue/instrument/drum
-			if("Flute")
+			if("长笛")
 				backr = /obj/item/rogue/instrument/flute
-			if("Guitar")
+			if("吉他")
 				backr = /obj/item/rogue/instrument/guitar
-			if("Harmonica")
+			if("口琴")
 				backr = /obj/item/rogue/instrument/harmonica
-			if("Harp")
+			if("竖琴")
 				backr = /obj/item/rogue/instrument/harp
-			if("Hurdy-Gurdy")
+			if("手摇琴")
 				backr = /obj/item/rogue/instrument/hurdygurdy
-			if("Jaw Harp")
+			if("口簧琴")
 				backr = /obj/item/rogue/instrument/jawharp
-			if("Lute")
+			if("鲁特琴")
 				backr = /obj/item/rogue/instrument/lute
-			if("Psyaltery")
+			if("圣咏琴")
 				backr = /obj/item/rogue/instrument/psyaltery
-			if("Shamisen")
+			if("三味线")
 				backr = /obj/item/rogue/instrument/shamisen
-			if("Trumpet")
+			if("小号")
 				backr = /obj/item/rogue/instrument/trumpet
-			if("Viola")
+			if("中提琴")
 				backr = /obj/item/rogue/instrument/viola
-			if("Vocal Talisman")
+			if("咏声护符")
 				backr = /obj/item/rogue/instrument/vocals
 
 /obj/item/soap/bath
-	name = "herbal soap"
-	desc = "A soap made from various herbs."
+	name = "草本香皂"
+	desc = "由多种草药制成的香皂。"

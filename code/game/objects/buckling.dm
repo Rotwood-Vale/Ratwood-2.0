@@ -5,7 +5,7 @@
 	var/list/mob/living/buckled_mobs = null //list()
 	var/max_buckled_mobs = 1
 	var/buckle_prevents_pull = FALSE
-	var/buckleverb = "sit"
+	var/buckleverb = "坐上"
 	var/sleepy = 0
 
 //Interaction
@@ -17,7 +17,7 @@
 		if(buckled_mobs.len > 1)
 			if(istype(src, /mob/living/simple_animal))
 				return
-			var/unbuckled = input(user, "Who do you wish to remove?","?") as null|mob in sortNames(buckled_mobs)
+			var/unbuckled = input(user, "你想把谁移下来？","选择目标") as null|mob in sortNames(buckled_mobs)
 			if(user_unbuckle_mob(unbuckled,user))
 				return 1
 		else
@@ -60,9 +60,9 @@
 	M.buckling = src
 	if(!M.can_buckle() && !force)
 		if(M == usr)
-			to_chat(M, span_warning("I am unable to [buckleverb] on [src]."))
+			to_chat(M, span_warning("我没法待在[src]上。"))
 		else
-			to_chat(usr, span_warning("I am unable to [buckleverb] [M] on [src]."))
+			to_chat(usr, span_warning("我没法把[M]安置到[src]上。"))
 		M.buckling = null
 		return FALSE
 
@@ -130,23 +130,23 @@
 	. = buckle_mob(M, check_loc = check_loc)
 	if(.)
 		if(M == user)
-			M.visible_message(span_notice("[M] [buckleverb]s on [src]."),\
-				span_notice("I [buckleverb] on [src]."))
+			M.visible_message(span_notice("[M]待在了[src]上。"),\
+				span_notice("我待在了[src]上。"))
 		else
-			M.visible_message(span_warning("[user] [buckleverb]s [M] on [src]!"),\
-				span_warning("[user] [buckleverb]s me on [src]!"))
+			M.visible_message(span_warning("[user]把[M]安置到了[src]上！"),\
+				span_warning("[user]把我安置到了[src]上！"))
 
 /atom/movable/proc/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	var/mob/living/M = unbuckle_mob(buckled_mob)
 	if(M)
 		if(M != user)
-			M.visible_message(span_notice("[user] pulls [M] from [src]."),\
-				span_notice("[user] pulls me from [src]."),\
-				span_hear("I hear metal clanking."))
+			M.visible_message(span_notice("[user]把[M]从[src]上拉了下来。"),\
+				span_notice("[user]把我从[src]上拉了下来。"),\
+				span_hear("我听见一阵金属碰撞声。"))
 		else
-			M.visible_message(span_notice("[M] gets off of [src]."),\
-				span_notice("I get off of [src]."),\
-				span_hear("I hear metal clanking."))
+			M.visible_message(span_notice("[M]从[src]上离开了。"),\
+				span_notice("我从[src]上离开了。"),\
+				span_hear("我听见一阵金属碰撞声。"))
 		add_fingerprint(user)
 		if(isliving(M.pulledby))
 			var/mob/living/L = M.pulledby

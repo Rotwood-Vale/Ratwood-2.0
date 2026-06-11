@@ -6,10 +6,10 @@
 */
 
 /obj/effect/proc_holder/spell/invoked/projectile/airblade
-	name = "Air Blade"
-	desc = "Slash the air with your weapon, forming an arcyne blade in the air that can strike enemies at range. \n\
-	Damage type depends on your current intent. It defaults to cut, but change to blunt if it is Blunt / Smash, and stabbing if it is stab / pick\n\
-	Damage is increased by 50% versus simple-minded creechurs."
+	name = "风刃"
+	desc = "挥动武器斩开空气，在空中凝成一道可远程斩敌的奥术风刃。\n\
+	伤害类型取决于你当前的攻击意图。默认为劈砍；若为钝击/猛砸则改为钝击，若为刺击/镐刺则改为穿刺。\n\
+	对头脑简单的生物伤害提高 50%。"
 	clothes_req = FALSE
 	range = 6
 	projectile_type = /obj/projectile/energy/airblade
@@ -24,7 +24,7 @@
 	no_early_release = TRUE
 	movement_interrupt = FALSE
 	spell_tier = 2
-	invocations = list("Aeris Gladios!")
+	invocations = list("风刃，出鞘！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_ARCANE
 	glow_intensity = GLOW_INTENSITY_LOW
@@ -58,7 +58,7 @@
 
 
 /obj/projectile/energy/airblade
-	name = "Air Blade (Cut)"
+	name = "风刃（斩）"
 	icon_state = "air_blade_cut"
 	damage = 40
 	woundclass = BCLASS_CUT
@@ -68,13 +68,13 @@
 	speed = 1
 
 /obj/projectile/energy/airblade/blunt
-	name = "Air Blade (Blunt)"
+	name = "风刃（钝）"
 	icon_state = "air_blade_blunt"
 	woundclass = BCLASS_BLUNT
 	hitsound = 'sound/combat/hits/blunt/shovel_hit2.ogg' // Different sound for blunt
 
 /obj/projectile/energy/airblade/stab
-	name = "Air Blade (Stab)"
+	name = "风刃（刺）"
 	icon_state = "air_blade_stab"
 	woundclass = BCLASS_STAB
 	hitsound = 'sound/combat/hits/bladed/genstab (3).ogg' // Different sound for stab
@@ -84,7 +84,7 @@
 	if(ismob(target))
 		var/mob/living/carbon/M = target
 		if(M.anti_magic_check())
-			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			visible_message(span_warning("[src] 在接触[target]时噗地溃散了！"))
 			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 			qdel(src)
 			return BULLET_ACT_BLOCK

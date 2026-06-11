@@ -1,6 +1,6 @@
 /datum/advclass/trader/scholar
-	name = "Traveling Scholar"
-	tutorial = "You are a scholar traveling the world in order to write a book about your ventures. Although not quite as dedicated to your studies as some, you trade in stories and tales of your travels."
+	name = "游方学者"
+	tutorial = "你是一名走遍四方的学者，打算将一路见闻写成一本书。虽说你未必像某些人那般将求学看得至高无上，但你同样靠售卖旅途中积攒的故事与传闻谋生。"
 	outfit = /datum/outfit/job/roguetown/adventurer/scholar
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2, TRAIT_INTELLECTUAL, TRAIT_SEEPRICES_SHITTY, TRAIT_GOODWRITER, TRAIT_ALCHEMY_EXPERT, TRAIT_MEDICINE_EXPERT, TRAIT_SMITHING_EXPERT, TRAIT_SEWING_EXPERT, TRAIT_SURVIVAL_EXPERT, TRAIT_HOMESTEAD_EXPERT)
@@ -45,7 +45,7 @@
 
 /datum/outfit/job/roguetown/adventurer/scholar/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are a scholar traveling the world in order to write a book about your ventures. Although not quite as dedicated to your studies as some, you trade in stories and tales of your travels."))
+	to_chat(H, span_warning("你是一名走遍四方的学者，打算将一路见闻写成一本书。虽说你未必像某些人那般将求学看得至高无上，但你同样靠售卖旅途中积攒的故事与传闻谋生。"))
 	head = /obj/item/clothing/head/roguetown/roguehood/black
 	mask = /obj/item/clothing/mask/rogue/spectacles
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots

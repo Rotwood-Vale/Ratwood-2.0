@@ -3,10 +3,10 @@
 	list_reagents = list(/datum/reagent/rotcure = 20)	//Should be enough for 2 usages.
 
 /datum/reagent/rotcure
-	name = "Rot-Cure"
-	description = "A putrid substance that appears to be in perpetual motion. It smells and looks of living-sludge."
+	name = "腐坏解药"
+	description = "一种仿佛永远都在蠕动的腐臭物质。它闻起来、看起来都像活着的淤泥。"
 	color = "#034212"
-	taste_description = "living sludge"
+	taste_description = "活淤泥"
 	overdose_threshold = 21	//Stops people from downing too much of it.
 	metabolization_rate = 0.1
 

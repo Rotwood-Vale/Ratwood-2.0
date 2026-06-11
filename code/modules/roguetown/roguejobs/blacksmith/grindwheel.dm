@@ -1,6 +1,6 @@
 /obj/structure/fluff/grindwheel
-	name = "grinding wheel"
-	desc = "Steadily hums when operated, a massive wheel of grinding stone."
+	name = "磨轮"
+	desc = "运转时发出稳定的嗡嗡声，一块巨大的磨石轮。"
 	icon = 'icons/roguetown/misc/forge.dmi'
 	icon_state = "grindwheel"
 	density = TRUE
@@ -20,7 +20,7 @@
 		playsound(src, pick('sound/misc/slide_wood (2).ogg', 'sound/misc/slide_wood (1).ogg'), 100, FALSE)
 		if(do_after(user, wood_time, target = src))
 			if(prob(max(40 - (skill_level * 10), 0)) || !skill_level) //Chance maxes at level 4
-				to_chat(user, span_info("Curses! I ruined this piece of wood..."))
+				to_chat(user, span_info("该死！我把这块木头弄坏了……"))
 				playsound(src,'sound/combat/hits/onwood/destroyfurniture.ogg', 100, FALSE)
 			else
 				new /obj/item/natural/wood/plank(get_turf(src))

@@ -1,6 +1,6 @@
 /datum/advclass/trader/peddler
-	name = "Peddler"
-	tutorial = "You make your coin peddling in spices and performing back-alley 'medical' procedures. Hope your patient didn't need that kidney."
+	name = "货郎"
+	tutorial = "你靠贩卖香料和做些巷子里的“医术”活计来赚钱。只希望你的病人并不真的需要那颗肾。"
 	outfit = /datum/outfit/job/roguetown/adventurer/peddler
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	class_select_category = CLASS_CAT_TRADER
@@ -27,7 +27,7 @@
 
 /datum/outfit/job/roguetown/adventurer/peddler/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You make your coin peddling in spices and performing back-alley 'medical' procedures. Hope your patient didn't need that kidney."))
+	to_chat(H, span_warning("你靠贩卖香料和做些巷子里的“医术”活计来赚钱。只希望你的病人并不真的需要那颗肾。"))
 	head = /obj/item/clothing/head/roguetown/roguehood
 	mask = /obj/item/clothing/mask/rogue/facemask/steel
 	shoes = /obj/item/clothing/shoes/roguetown/boots

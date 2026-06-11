@@ -22,13 +22,13 @@
 	var/mob/living/carbon/human/H = parent
 	if ((H.wear_mask?.flags_inv & HIDEFACE) && (H.head?.flags_inv & HIDEFACE) && user == parent)
 		return
-	examine_list += span_warning("[H]'s face is horrifying!")
+	examine_list += span_warning("[H]的面容骇人至极！")
 	if(!iscarbon(user))
 		return
 
 	var/mob/living/carbon/carbon_user = user
 	if(!HAS_TRAIT(carbon_user, TRAIT_EORAN_CALM) && !HAS_TRAIT(carbon_user, TRAIT_EORAN_SERENE))
-		to_chat(carbon_user, span_userdanger("By [carbon_user.patron?.name]! They are disgusting!!!"))
+		to_chat(carbon_user, span_userdanger("以[carbon_user.patron?.name]之名！这也太恶心了！！！"))
 		carbon_user.stress_freakout()
 
 /datum/component/hideous_face/proc/check_life()

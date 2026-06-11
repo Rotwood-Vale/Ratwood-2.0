@@ -1,10 +1,10 @@
 /datum/patron/inhumen/matthios
 	name = "Matthios"
-	domain = "Greed, Theft, Dragons, True Freedom"
-	desc = "The Manyfaced Matthios has no true form. Some see Him as a merry highwayman, some as a god of beggars, and others the father of all dragons. One thing is certain: His followers despise Astrata's nobility."
-	worshippers = "Highwaymen, Downtrodden Peasants, Merchants, Slaves, Kobolds"
-	virtues = "Varies; usually greed and commerce"
-	sins = "Nobility, Sloth, Submitting to \"Unjust Hierarchies\""
+	domain = "贪婪、盗窃、巨龙、真正的自由"
+	desc = "千面之 Matthios 没有真正固定的形态。有人视祂为快活的拦路强盗，有人视祂为乞者之神，还有人认为祂是群龙之父。但有一点可以确定：祂的追随者都憎恶 Astrata 的贵族统治。"
+	worshippers = "拦路强盗、受压迫的农民、商人、奴隶、Kobolds"
+	virtues = "因人而异；通常是贪婪与贸易"
+	sins = "贵族、懒惰、屈从于“不公的等级秩序”"
 	crafting_recipes = list(/datum/crafting_recipe/roguetown/sewing/bandithood)
 	mob_traits = list(TRAIT_COMMIE, TRAIT_MATTHIOS_EYES, TRAIT_SEEPRICES_SHITTY)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
@@ -17,9 +17,9 @@
 					/obj/effect/proc_holder/spell/invoked/churnwealthy					= CLERIC_T3,
 	)
 	confess_lines = list(
-		"MATTHIOS STEALS FROM THE WORTHLESS!",
-		"MATTHIOS IS JUSTICE!",
-		"MATTHIOS IS MY LORD!",
+		"MATTHIOS 从无价值之人手中夺取一切！",
+		"MATTHIOS 即是正义！",
+		"MATTHIOS 是我的主！",
 	)
 	storyteller = /datum/storyteller/matthios
 
@@ -32,7 +32,7 @@
 	// Allows prayer near EEEVIL psycross
 	for(var/obj/structure/fluff/psycross/zizocross/cross in view(4, get_turf(follower)))
 		if(cross.divine == TRUE)
-			to_chat(follower, span_danger("That acursed cross interupts my prayers!"))
+			to_chat(follower, span_danger("那座遭诅咒的十字架打断了我的祈祷！"))
 			return FALSE
 		return TRUE
 	// Allows prayer if the user has more than 100 mammon on them.
@@ -48,7 +48,7 @@
 	// Allows praying atop ritual chalk of the god.
 	for(var/obj/structure/ritualcircle/matthios in view(1, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("For Matthios to hear my prayers I must either be in the church of the abandoned, near an inverted psycross, flaunting wealth upon me of at least 100 mammon, or offer a coin of at least five mammon up to him!"))
+	to_chat(follower, span_danger("若想让 Matthios 听见我的祈祷，我必须身处被遗弃者的教堂、倒置的 psycross 附近，身怀至少 100 mammons 的财富，或向祂献上一枚至少值五 mammons 的钱币！"))
 	return FALSE
 
 /datum/patron/inhumen/matthios/on_lesser_heal(
@@ -61,8 +61,8 @@
 	is_inhumen
 )
 	*is_inhumen = TRUE
-	*message_out = span_info("A wreath of... strange light passes over [target]?")
-	*message_self = span_notice("I'm bathed in a... strange holy light?")
+	*message_out = span_info("一圈……奇异的光辉拂过了[target]？")
+	*message_self = span_notice("我正沐浴在……某种奇怪的圣光里？")
 
 	if(HAS_TRAIT(target, TRAIT_COMMIE))
 		*conditional_buff = TRUE

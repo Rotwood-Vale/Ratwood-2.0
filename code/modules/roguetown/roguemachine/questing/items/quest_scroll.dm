@@ -1,8 +1,8 @@
 #define WHISPER_COOLDOWN 10 SECONDS
 /obj/item/paper/scroll/quest
-	name = "enchanted contract scroll"
-	desc = "A scroll oft known as a \"whispering scroll\". Enchanted with magicks to make it whisper to its bearer when opened the location of its target.\n\
-	The magical protections make it resistant to damage and tampering. It will only whisper when carried on the person of the contract bearer."
+	name = "附魔契约卷轴"
+	desc = "一份常被称作\"低语卷轴\"的卷轴。附有魔法，打开时会向持有者低声告知目标所在。\n\
+	卷轴上的魔法防护使其难以被破坏或篡改。只有由契约持有人随身携带时，它才会低语。"
 	icon = 'code/modules/roguetown/roguemachine/questing/questing.dmi'
 	icon_state = "scroll_quest"
 	var/base_icon_state = "scroll_quest"
@@ -82,33 +82,33 @@
 		message = "[last_compass_direction]"
 		if(last_z_level_hint)
 			message += " ([last_z_level_hint])"
-		to_chat(quest_bearer, span_info("The scroll whispers to you, the target is [message]"))
+		to_chat(quest_bearer, span_info("卷轴低语着告诉你，目标位于 [message]。"))
 
 /obj/item/paper/scroll/quest/examine(mob/user)
 	. = ..()
 	if(!assigned_quest)
 		return
 	if(!assigned_quest.quest_receiver_reference)
-		. += span_notice("This contract hasn't been claimed yet. Open it to claim it for yourself!")
+		. += span_notice("这份契约尚未被领取。打开它即可将其据为己有！")
 	else if(assigned_quest.complete)
-		. += span_notice("\nThis contract is complete! Return it to the Notice Board to claim your reward.")
-		. += span_info("\nPlace it on the marked area next to the book.")
+		. += span_notice("\n这份契约已经完成！把它带回告示板领取报酬。")
+		. += span_info("\n把它放到账册旁边的标记区域。")
 	else
-		. += span_notice("\nThis contract is still in progress.")
+		. += span_notice("\n这份契约仍在进行中。")
 
 /obj/item/paper/scroll/quest/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	if(P.get_sharpness())
-		to_chat(user, span_warning("The enchanted scroll resists your attempts to tear it."))
+		to_chat(user, span_warning("这张附魔卷轴抗拒你撕毁它的尝试。"))
 		return
 	if(istype(P, /obj/item/paper)) // Prevent merging with other papers/scrolls
-		to_chat(user, span_warning("The magical energies prevent you from combining this with other scrolls."))
+		to_chat(user, span_warning("魔法能量阻止你将它与其他卷轴合并。"))
 		return
 	if(istype(P, /obj/item/natural/thorn) || istype(P, /obj/item/natural/feather))
 		if(!open)
-			to_chat(user, span_warning("You need to open the scroll first."))
+			to_chat(user, span_warning("你得先打开卷轴。"))
 			return
 		if(!assigned_quest)
-			to_chat(user, span_warning("This contract scroll doesn't accept modifications."))
+			to_chat(user, span_warning("这张契约卷轴不接受修改。"))
 			return
 	..()
 
@@ -137,7 +137,7 @@
 	assigned_quest.quest_receiver_reference = WEAKREF(user)
 	assigned_quest.quest_receiver_name = user.real_name
 
-	to_chat(user, span_notice("You claim this contract for yourself!"))
+	to_chat(user, span_notice("你将这份契约据为己有！"))
 	update_quest_text()
 	refresh_compass(user) // Update compass after claiming
 
@@ -145,34 +145,34 @@
 	if(!assigned_quest)
 		return
 
-	var/scroll_text = "<center>HELP NEEDED</center><br>"
+	var/scroll_text = "<center>悬赏求助</center><br>"
 	scroll_text += "<center><b>[assigned_quest.get_title()]</b></center><br><br>"
-	scroll_text += "<b>Issued by:</b> [assigned_quest.quest_giver_name ? "[assigned_quest.quest_giver_name]" : "The Mercenary's Guild"].<br>"
-	scroll_text += "<b>Issued to:</b> [assigned_quest.quest_receiver_name ? assigned_quest.quest_receiver_name : "whoever it may concern"].<br>"
-	scroll_text += "<b>Type:</b> [assigned_quest.quest_type] contract.<br>"
-	scroll_text += "<b>Difficulty:</b> [assigned_quest.quest_difficulty].<br><br>"
+	scroll_text += "<b>发布者：</b> [assigned_quest.quest_giver_name ? "[assigned_quest.quest_giver_name]" : "佣兵公会"]。<br>"
+	scroll_text += "<b>接取者：</b> [assigned_quest.quest_receiver_name ? assigned_quest.quest_receiver_name : "有缘者"]。<br>"
+	scroll_text += "<b>类型：</b> [assigned_quest.quest_type] 契约。<br>"
+	scroll_text += "<b>难度：</b> [assigned_quest.quest_difficulty]。<br><br>"
 
 	if(last_compass_direction)
-		scroll_text += "<b>Direction:</b> The target is [last_compass_direction]. "
+		scroll_text += "<b>方向：</b> 目标 [last_compass_direction]。 "
 		if(last_z_level_hint)
 			scroll_text += " ([last_z_level_hint])"
 		scroll_text += "<br>"
 
-	scroll_text += "<b>Objective:</b> [assigned_quest.get_objective_text()]<br>"
+	scroll_text += "<b>目标：</b> [assigned_quest.get_objective_text()]<br>"
 
 	// Show progress if applicable
 	if(assigned_quest.progress_required > 1)
-		scroll_text += "<b>Progress:</b> [assigned_quest.progress_current]/[assigned_quest.progress_required]<br>"
+		scroll_text += "<b>进度：</b> [assigned_quest.progress_current]/[assigned_quest.progress_required]<br>"
 
-	scroll_text += "<b>Location:</b> [assigned_quest.get_location_text()]<br>"
-	scroll_text += "<br><b>Reward:</b> [assigned_quest.reward_amount] mammon upon completion<br>"
+	scroll_text += "<b>地点：</b> [assigned_quest.get_location_text()]<br>"
+	scroll_text += "<br><b>报酬：</b> 完成后可得 [assigned_quest.reward_amount] 玛门<br>"
 
 	if(assigned_quest.complete)
-		scroll_text += "<br><center><b>CONTRACT COMPLETE</b></center>"
-		scroll_text += "<br><b>Return this scroll to the Notice Board to claim your reward!</b>"
-		scroll_text += "<br><i>Place it on the marked area next to the book.</i>"
+		scroll_text += "<br><center><b>契约完成</b></center>"
+		scroll_text += "<br><b>将此卷轴带回告示板领取报酬！</b>"
+		scroll_text += "<br><i>把它放到账册旁边的标记区域。</i>"
 	else
-		scroll_text += "<br><i>The magic in this scroll will update as you progress.</i>"
+		scroll_text += "<br><i>卷轴中的魔法会随着你的进展自动更新。</i>"
 
 	info = scroll_text
 	update_icon()
@@ -197,18 +197,18 @@
 
 	var/turf/user_turf = user ? get_turf(user) : get_turf(src)
 	if(!user_turf)
-		last_compass_direction = "No signal detected"
+		last_compass_direction = "未检测到信号"
 		last_z_level_hint = ""
 		return
 
 	// Reset compass values
-	last_compass_direction = "Searching for target..."
+	last_compass_direction = "正在搜寻目标……"
 	last_z_level_hint = ""
 
 	// Get target location from quest datum
 	var/turf/target_turf = assigned_quest.get_target_location()
 	if(!target_turf)
-		last_compass_direction = "location unknown"
+		last_compass_direction = "位置未知"
 		last_z_level_hint = ""
 		return
 
@@ -218,8 +218,8 @@
 	if(target_turf.z != user_turf.z)
 		var/z_diff = abs(target_turf.z - user_turf.z)
 		last_z_level_hint = target_turf.z > user_turf.z ? \
-			"[z_diff] level\s above you" : \
-			"[z_diff] level\s below you"
+			"在你上方 [z_diff] 层" : \
+			"在你下方 [z_diff] 层"
 
 	// Calculate direction from user to target
 	var/dx = target_turf.x - user_turf.x  // EAST direction
@@ -228,29 +228,29 @@
 
 	// If very close, don't show direction
 	if(distance <= 7)
-		last_compass_direction = "is nearby"
+		last_compass_direction = "就在附近"
 		last_z_level_hint = ""
 		return
 
 	// Get precise direction text
 	var/direction_text = get_precise_direction_between(user_turf, target_turf)
 	if(!direction_text)
-		direction_text = "unknown direction"
+		direction_text = "方向不明"
 
 	// Determine distance description
 	var/distance_text
 	switch(distance)
 		if(0 to 14)
-			distance_text = "very close"
+			distance_text = "非常靠近"
 		if(15 to 40)
-			distance_text = "close"
+			distance_text = "接近"
 		if(41 to 100)
 			distance_text = ""
 		if(101 to INFINITY)
-			distance_text = "far away"
+			distance_text = "非常遥远"
 
-	last_compass_direction = "[distance_text] to the [direction_text]"
+	last_compass_direction = "[distance_text]，位于[direction_text]方向"
 	if(!last_z_level_hint)
-		last_z_level_hint = "on this level"
+		last_z_level_hint = "与你处于同一层"
 
 #undef WHISPER_COOLDOWN

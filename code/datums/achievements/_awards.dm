@@ -4,7 +4,7 @@
 	var/desc = ""
 	///Found in /datum/asset/spritesheet/simple/achievements
 	var/icon = "default"
-	var/category = "Normal"
+	var/category = "普通"
 
 	///What ID do we use on the hub?
 	var/hub_id
@@ -50,7 +50,7 @@
 
 /datum/award/achievement/on_unlock(mob/user)
 	. = ..()
-	to_chat(user, span_greenannounce("<B>Achievement unlocked: [name]!</B>"))
+	to_chat(user, span_greenannounce("<B>成就已解锁：[name]！</B>"))
 
 ///Scores are for leaderboarded things, such as killcount of a specific boss
 /datum/award/score

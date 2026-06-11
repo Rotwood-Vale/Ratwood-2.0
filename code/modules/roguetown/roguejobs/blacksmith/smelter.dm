@@ -7,8 +7,8 @@
 
 /obj/machinery/light/rogue/smelter
 	icon = 'icons/roguetown/misc/forge.dmi'
-	name = "stone furnace"
-	desc = "A stone furnace, weathered by time and heat."
+	name = "石炉"
+	desc = "一座被岁月与高温侵蚀过的石制熔炉。"
 	icon_state = "cavesmelter0"
 	base_state = "cavesmelter"
 	anchored = TRUE
@@ -41,10 +41,10 @@
 
 /obj/machinery/light/rogue/smelter/examine(mob/user, params)
 	. = ..()
-	. += span_info("It can hold up to [max_contained_items] ores at a time.")
-	. += span_info("Left click to insert an item. If it is a fuel item, a prompt will show on whether you want to fuel or smelt it. Right click on the furnace to put an item inside for smelting only.")
+	. += span_info("它一次最多能容纳 [max_contained_items] 份矿石。")
+	. += span_info("左键可放入物品。若放入的是燃料物品，会弹出提示询问你是想添燃料还是直接熔炼。右键点击熔炉则只会将物品放进去用于熔炼。")
 	if(length(contained_items))
-		. += span_notice("Peeking inside, you can see:")
+		. += span_notice("往里一看，你能看到：")
 		for(var/obj/item/item as anything in contained_items)
 			. += span_info("- [item]")
 
@@ -53,17 +53,17 @@
 		var/obj/item/rogueweapon/tongs/tongs = attacking_item
 		if(tongs.hingot)
 			if(length(contained_items) >= max_contained_items)
-				to_chat(user, span_warn("\The [src] is already full!"))
+				to_chat(user, span_warn("[src]已经满了！"))
 				return
 			add_item(tongs.hingot, user)
 			tongs.hingot = null
 			tongs.update_icon()
 		else
 			if(actively_smelting) // Prevents an exp gain exploit. - Foxtrot
-				to_chat(user, span_warning("\The [src] is currently smelting. Wait for it to finish, or douse it with water to retrieve items from it."))
+				to_chat(user, span_warning("[src]正在熔炼。等它完成，或者用水把它浇灭后再把里面的东西取出来。"))
 				return
 			if(!length(contained_items))
-				to_chat(user, span_warn("Nothing to retrieve from inside."))
+				to_chat(user, span_warn("里面没什么可取出的。"))
 				return
 			var/obj/item/item_to_remove = contained_items[contained_items.len]
 			contained_items -= item_to_remove
@@ -73,7 +73,7 @@
 				if(!istype(tongs.hingot, /obj/item/rogueore) && tongs.hingot?.smelted) // Burning items to ash won't level smelting.
 					var/mob/living/L = user
 					user.mind.add_sleep_experience(/datum/skill/craft/smelting, L.STAINT * 2, FALSE)// Smelting is already a timesink, this is justified to accelerate levelling
-			user.visible_message(span_info("[user] retrieves \the [item_to_remove] from \the [src]."), span_info("You retrieve \the [item_to_remove] from \the [src]."))
+			user.visible_message(span_info("[user] retrieves \the [item_to_remove] from \the [src]."), span_info("你从[src]中取出了[item_to_remove]。"))
 			if(on)
 				var/tyme = world.time
 				tongs.hott = tyme
@@ -82,7 +82,7 @@
 		return
 
 	if(istype(attacking_item, /obj/item/rogueweapon/hammer))
-		to_chat(user, span_warning("\The [attacking_item] should be used at an anvil, not \the [src]!"))
+		to_chat(user, span_warning("[attacking_item]应该在铁砧上使用，而不是对着[src]！"))
 		return
 
 	if(attacking_item.firefuel)
@@ -94,7 +94,7 @@
 		add_item(attacking_item, user) // Adds the item to the smelter's contained_items list, if it can be smelted.
 		return
 
-	to_chat(user, span_warning("\The [attacking_item] cannot be smelted."))
+	to_chat(user, span_warning("[attacking_item]不能被熔炼。"))
 
 /obj/machinery/light/rogue/smelter/attack_right(mob/user)
 	var/obj/item/held_item = user.get_active_held_item()
@@ -110,7 +110,7 @@
 // Gaining experience from just retrieving bars with your hands would be a hard-to-patch exploit.
 /obj/machinery/light/rogue/smelter/attack_hand(mob/user, params)
 	if(on)
-		to_chat(user, span_warning("It's too hot to retrieve bars with your hands."))
+		to_chat(user, span_warning("太烫了，不能直接徒手取出金属条。"))
 		return
 
 	if(length(contained_items))
@@ -118,7 +118,7 @@
 		contained_items -= item
 		item.loc = user.loc
 		user.put_in_active_hand(item)
-		user.visible_message(span_info("[user] retrieves \the [item] from \the [src]."))
+		user.visible_message(span_info("[user]从[src]中取出了[item]。"))
 		return
 
 	return ..()
@@ -128,7 +128,7 @@
 		return
 
 	if(length(contained_items) >= max_contained_items)
-		to_chat(user, span_warning("\The [smelting_item.name] can be smelted, but \the [src] is full."))
+		to_chat(user, span_warning("[smelting_item.name]可以熔炼，但[src]已经满了。"))
 		return
 
 	user.dropItemToGround(smelting_item)
@@ -161,7 +161,7 @@
 			5 = GREAT
 			6 = EXCELLENT
 		*/
-	user.visible_message(span_warning("[user] puts something in \the [src]."))
+	user.visible_message(span_warning("[user]往[src]里放了什么东西。"))
 	smelting_progress = 0
 
 /obj/machinery/light/rogue/smelter/process()
@@ -195,7 +195,7 @@
 			contained_items += result
 			qdel(item)
 	playsound(src,'sound/misc/smelter_fin.ogg', 100, FALSE)
-	visible_message(span_notice("\The [src] finished smelting."))
+	visible_message(span_notice("[src]熔炼完成了。"))
 	smelting_progress = smelting_ticks + 1
 	actively_smelting = FALSE
 
@@ -206,8 +206,8 @@
 
 /obj/machinery/light/rogue/smelter/great
 	icon = 'icons/roguetown/misc/forge.dmi'
-	name = "great furnace"
-	desc = "The pinnacle of dwarven engineering and the miracle of Malum's blessed fire crystal, allowing for greater alloys to be made."
+	name = "巨型熔炉"
+	desc = "矮人工程学的巅峰之作，也是马鲁姆赐福火晶的奇迹，使其能够冶炼更高阶的合金。"
 	icon_state = "smelter0"
 	base_state = "smelter"
 	anchored = TRUE
@@ -289,8 +289,8 @@
 
 /obj/machinery/light/rogue/smelter/bronze
 	icon = 'icons/roguetown/misc/forge.dmi'
-	name = "bronze melter"
-	desc = "An object of humen make, this furnace is capable of making bronze or iron."
+	name = "青铜熔炉"
+	desc = "一件人类制造的器物，这座熔炉能够炼出青铜或铁。"
 	icon_state = "brosmelter0"
 	base_state = "brosmelter"
 	anchored = TRUE
@@ -342,8 +342,8 @@
 
 /obj/machinery/light/rogue/smelter/hiron
 	icon = 'icons/roguetown/misc/forge.dmi'
-	name = "iron bloomery"
-	desc = "An object of humen make, this furnace is capable of making high quantities of iron."
+	name = "炼铁炉"
+	desc = "一件人类制造的器物，这座熔炉能够大量炼铁。"
 	icon_state = "hironsmelter0"
 	base_state = "hironsmelter"
 	anchored = TRUE

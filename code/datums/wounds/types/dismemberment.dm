@@ -1,6 +1,6 @@
 /datum/wound/dismemberment
-	name = "bleeding stump"
-	check_name = span_danger("<B>STUMP</B>")
+	name = "流血残端"
+	check_name = span_danger("<B>残端</B>")
 	severity = WOUND_SEVERITY_CRITICAL
 	whp = 75
 	sewn_whp = 25
@@ -23,31 +23,31 @@
 	return TRUE
 
 /datum/wound/dismemberment/head
-	name = "neck stump"
-	check_name = span_danger("<B>NECK STUMP</B>")
+	name = "颈部残端"
+	check_name = span_danger("<B>颈部残端</B>")
 	mob_overlay = "dis_head"
 
 /datum/wound/dismemberment/r_arm
-	name = "right arm stump"
-	check_name = span_danger("<B>RIGHT ARM STUMP</B>")
+	name = "右臂残端"
+	check_name = span_danger("<B>右臂残端</B>")
 	mob_overlay = "dis_ra"
 
 /datum/wound/dismemberment/l_arm
-	name = "left arm stump"
-	check_name = span_danger("<B>LEFT ARM STUMP</B>")
+	name = "左臂残端"
+	check_name = span_danger("<B>左臂残端</B>")
 	mob_overlay = "dis_la"
 
 /datum/wound/dismemberment/r_leg
-	name = "right leg stump"
-	check_name = span_danger("<B>RIGHT LEG STUMP</B>")
+	name = "右腿残端"
+	check_name = span_danger("<B>右腿残端</B>")
 	mob_overlay = "dis_rl"
 
 /datum/wound/dismemberment/l_leg
-	name = "left leg stump"
-	check_name = span_danger("<B>LEFT LEG STUMP</B>")
+	name = "左腿残端"
+	check_name = span_danger("<B>左腿残端</B>")
 	mob_overlay = "dis_ll"
 
 /datum/wound/dismemberment/taur
-	name = "taur stump"
-	check_name = span_danger("<B>TAUR STUMP</B>")
+	name = "兽躯残端"
+	check_name = span_danger("<B>兽躯残端</B>")
 	mob_overlay = "dis_taur"

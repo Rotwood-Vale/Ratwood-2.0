@@ -1,8 +1,8 @@
 /obj/item/rogueweapon/mace/parasol
 	force = 6
 	force_wielded = 6
-	name = "paper parasol"
-	desc = "A delicate instrument intended to shield one's delicate head from the rain and sun."
+	name = "纸伞"
+	desc = "一件精巧的器具，专为替娇贵的脑袋遮雨挡阳而制。"
 	icon = 'icons/roguetown/items/parasols32.dmi'
 	icon_state = "parasol1"
 	wbalance = WBALANCE_SWIFT
@@ -33,8 +33,8 @@
 				return list("shrink" = 0.8,"sx" = -6,"sy" = 8,"nx" = 6,"ny" = 9,"wx" = 0,"wy" = 7,"ex" = -1,"ey" = 9,"northabove" = 1,"southabove" = 1,"eastabove" = 1,"westabove" = 1,"nturn" = -50,"sturn" = 40,"wturn" = 50,"eturn" = -50,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 
 /obj/item/rogueweapon/mace/parasol/noble
-	name = "fine parasol"
-	desc = "A delicate instrument intended to shield one's delicate head from the rain and sun. This one is a beautiful luxurious white and gold, with fringes."
+	name = "精致阳伞"
+	desc = "一件精巧的器具，专为替娇贵的脑袋遮雨挡阳而制。这把则是华美的白金配色，还缀有流苏。"
 	icon = 'icons/roguetown/items/parasols64.dmi'
 	icon_state = "parasol1"
 	max_integrity = 75 // Fashion over function

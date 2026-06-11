@@ -1,5 +1,5 @@
 /datum/antagonist/suitor
-	name = "Suitor"
+	name = "求婚者"
 	increase_votepwr = FALSE
 
 /datum/antagonist/suitor/get_antag_cap_weight()
@@ -22,7 +22,7 @@
 	return ..()
 
 /datum/antagonist/suitor/greet()
-	to_chat(owner.current, span_userdanger("I've been sent here with a purpose. I must secure a marriage with the local duke in order to bolster my house's relations with the realm, by any means necessary."))
+	to_chat(owner.current, span_userdanger("我带着使命来到这里。我必须不惜一切代价与本地公爵缔结婚姻，以巩固我家族与这个国度的关系。"))
 	owner.announce_objectives()
 	..()
 
@@ -44,13 +44,12 @@
 
 	if(traitorwin)
 		owner.adjust_triumphs(3)
-		to_chat(owner.current, span_greentext("I've successfully married into the throne and secured an alliance for my house!"))
-		to_chat(world, span_greentext("[owner.current.real_name] successfully married [marriagepartner] and secured an alliance with the realm for their house!"))
+		to_chat(owner.current, span_greentext("我成功与王座联姻，为我的家族争取到了一份同盟！"))
+		to_chat(world, span_greentext("[owner.current.real_name] 成功与 [marriagepartner] 缔结婚姻，并为其家族争取到了与这个国度的同盟！"))
 		if(owner?.current)
 			owner.current.playsound_local(get_turf(owner.current), 'sound/misc/triumph.ogg', 100, FALSE, pressure_affected = FALSE)
 	else
-		to_chat(owner.current, span_redtext("I've failed to secure a marriage into the throne of the realm! My house will be disappointed!"))
-		to_chat(world, span_redtext("[owner.current.real_name] failed to secure a marriage with the throne!"))
+		to_chat(owner.current, span_redtext("我没能与这个国度的王座缔结婚姻！我的家族一定会失望！"))
+		to_chat(world, span_redtext("[owner.current.real_name] 没能与王座缔结婚姻！"))
 		if(owner?.current)
 			owner.current.playsound_local(get_turf(owner.current), 'sound/misc/fail.ogg', 100, FALSE, pressure_affected = FALSE)
-

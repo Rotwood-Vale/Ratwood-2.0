@@ -1,5 +1,5 @@
 /obj/structure/chair/bench
-	name = "bench"
+	name = "长凳"
 	icon_state = "bench"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	buildstackamount = 1
@@ -13,9 +13,9 @@
 /obj/structure/chair/bench/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/hiding_spot, \
-		"Someone is already hiding under %LOCATION!", \
-		"I hide under %LOCATION!", \
-		"I come out from under %LOCATION!")
+		"已经有人藏在%LOCATION下面了！", \
+		"我藏到了%LOCATION下面！", \
+		"我从%LOCATION下面钻了出来！")
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
 	AddElement(/datum/element/connect_loc, loc_connections)
 	handle_layer()
@@ -55,7 +55,7 @@
 		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/chair/smallbench
-	name = "small bench"
+	name = "小长凳"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "benchsmall"
 	buildstackamount = 1
@@ -171,7 +171,7 @@
 	item_chair = null
 
 /obj/item/chair/rogue
-	name = "chair"
+	name = "椅子"
 	icon = 'icons/roguetown/items/chairs.dmi'
 	icon_state = "chair2"
 	origin_type = /obj/structure/chair/wood/rogue
@@ -279,8 +279,8 @@
 
 
 /obj/structure/chair/stool/rogue
-	name = "stool"
-	desc = "Three stubby legs nailed to the underside of a small round seat. Stable, if simple."
+	name = "凳子"
+	desc = "三条粗短的木凳腿钉在一个小圆座的底面。虽然简陋，但很稳当。"
 	icon_state = "barstool"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	item_chair = /obj/item/chair/stool/bar/rogue
@@ -291,8 +291,8 @@
 	can_buckle = TRUE
 
 /obj/item/chair/stool/bar/rogue
-	name = "stool"
-	desc = "Three stubby legs nailed to the underside of a small round seat. Stable, if simple."
+	name = "凳子"
+	desc = "三条粗短的木凳腿钉在一个小圆座的底面。虽然简陋，但很稳当。"
 	icon_state = "baritem"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	origin_type = /obj/structure/chair/stool/rogue
@@ -335,9 +335,9 @@
 /obj/structure/bed/rogue/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/hiding_spot, \
-		"Someone is already hiding under %LOCATION!", \
-		"I hide under %LOCATION!", \
-		"I come out from under %LOCATION!")
+		"??????%LOCATION????", \
+		"????%LOCATION???", \
+		"??%LOCATION???????")
 
 /obj/structure/bed/rogue/proc/damage_bed(dam_value)
 	if(broken_matress)
@@ -350,9 +350,9 @@
 		broken_percentage = 100 // clamp
 		broken_matress = TRUE
 		sleepy = 1 //Worse than a bedroll, better than nothing
-		visible_message(span_warning("\The [src] gives an violent snap. It looks broken!"))
+		visible_message(span_warning("[src]猛地一声脆响，看来已经坏了！"))
 		playsound(src, 'sound/misc/mat/bed break.ogg', 50, TRUE, ignore_walls = FALSE)
-		desc += " The bed looks stained and has seen better daes."
+		desc += " 这张床污迹斑斑，显然早已风光不再。"
 	else
 		playsound(src, pick(list('sound/misc/mat/bed squeak (1).ogg','sound/misc/mat/bed squeak (2).ogg','sound/misc/mat/bed squeak (3).ogg')), 25, TRUE, ignore_walls = FALSE)
 		if(broken_percentage > 10)
@@ -369,8 +369,8 @@
 		rotcomp.HandRot(rotcomp,user,ROTATION_CLOCKWISE)
 
 /obj/structure/bed/rogue/shit
-	name = "straw bed"
-	desc = "A rough bed of straw. It's scratchy, and probably hides lots of bugs, but at least it's dry and warm."
+	name = "稻草床"
+	desc = "一张粗糙的稻草床。它扎人得很，里面大概还藏着不少虫子，但至少干燥又暖和。"
 	icon_state = "shitbed"
 	sleepy = 1
 	metalizer_result = null
@@ -384,8 +384,8 @@
 	M.reset_offsets("bed_buckle")
 
 /obj/structure/bed/rogue/bedroll
-	name = "bedroll"
-	desc = "So you can sleep on the ground in relative peace."
+	name = "铺盖卷"
+	desc = "让我至少能相对安稳地睡在地上。"
 	icon_state = "bedroll"
 	attacked_sound = 'sound/foley/cloth_rip.ogg'
 	break_sound = 'sound/foley/cloth_rip.ogg'
@@ -394,14 +394,14 @@
 
 /obj/structure/bed/rogue/bedroll/attack_hand(mob/user, params)
 	..()
-	user.visible_message(span_notice("[user] begins rolling up \the [src]."))
+	user.visible_message(span_notice("[user]开始卷起[src]。"))
 	if(do_after(user, 2 SECONDS, TRUE, src))
 		var/obj/item/bedroll/new_bedroll = new /obj/item/bedroll(get_turf(src))
 		new_bedroll.color = src.color
 		qdel(src)
 
 /obj/item/bedroll
-	name = "rolled bedroll"
+	name = "卷起的铺盖卷"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "bedroll_r"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -414,16 +414,16 @@
 	..()
 	var/turf/T = get_turf(loc)
 	if(!isfloorturf(T))
-		to_chat(user, span_warning("I need ground to plant this on!"))
+		to_chat(user, span_warning("我得把它铺在地面上才行！"))
 		return
 	for(var/obj/A in T)
 		if(istype(A, /obj/structure))
-			to_chat(user, span_warning("I need some free space to deploy a [src] here!"))
+			to_chat(user, span_warning("这里得先腾出些空位，我才能铺开[src]！"))
 			return
 		if(A.density && !(A.flags_1 & ON_BORDER_1))
-			to_chat(user, span_warning("There is already something here!</span>"))
+			to_chat(user, span_warning("这里已经有东西挡着了！</span>"))
 			return
-	user.visible_message(span_notice("[user] begins placing \the [src] down on the ground."))
+	user.visible_message(span_notice("[user]开始把[src]铺到地上。"))
 	if(do_after(user, 2 SECONDS, TRUE, src))
 		var/obj/structure/bed/rogue/bedroll/new_bedroll = new /obj/structure/bed/rogue/bedroll(get_turf(src))
 		new_bedroll.color = src.color

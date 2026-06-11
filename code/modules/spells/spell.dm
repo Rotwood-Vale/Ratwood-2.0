@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/proc/InterceptClickOn(mob/living/caller, params, atom/A)
 	if(caller.ranged_ability != src || ranged_ability_user != caller) //I'm not actually sure how these would trigger, but, uh, safety, I guess?
-		to_chat(caller, span_info("<b>[caller.ranged_ability.name]</b> has been disabled."))
+		to_chat(caller, span_info("<b>[caller.ranged_ability.name]</b> 已被禁用。"))
 		caller.ranged_ability.remove_ranged_ability()
 		return TRUE //TRUE for failed, FALSE for passed.
 	if(ranged_clickcd_override >= 0)
@@ -136,9 +136,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	update_icon()
 
 /obj/effect/proc_holder/spell
-	name = "Spell"
+	name = "法术"
 	desc = ""
-	panel = "Spells"
+	panel = "法术"
 	var/sound = null //The sound the spell makes when it is cast
 	anchored = TRUE // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
 	pass_flags = PASSTABLE
@@ -154,7 +154,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	var/recharge_time = 50 //recharge time in deciseconds if charge_type = "recharge" or starting charges if charge_type = "charges"
 	var/charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
-	var/still_recharging_msg = span_notice("The spell is still recharging.")
+	var/still_recharging_msg = span_notice("法术仍在充能。")
 
 	var/cast_without_targets = FALSE
 	var/breaks_invisibility = TRUE
@@ -249,7 +249,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0, mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 	if(player_lock)
 		if(!user.mind || !(src in user.mind.spell_list) && !(src in user.mob_spell_list))
-			to_chat(user, span_warning("I shouldn't have this spell! Something's wrong..."))
+			to_chat(user, span_warning("我不该拥有这个法术！出问题了……"))
 			return FALSE
 	else
 		if(!(src in user.mob_spell_list))
@@ -258,7 +258,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	var/turf/T = get_turf(user)
 	if(is_centcom_level(T.z) && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
-		to_chat(user, span_warning("I can't cast this spell here!"))
+		to_chat(user, span_warning("我不能在这里施放这个法术！"))
 		return FALSE
 
 	if(!skipcharge)
@@ -267,63 +267,63 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			return FALSE
 
 	if(user.stat && !stat_allowed)
-		to_chat(user, span_warning("Not when I am incapacitated!"))
+		to_chat(user, span_warning("我失去行动能力时不能这么做！"))
 		return FALSE
 
 	if(!ignore_cockblock && HAS_TRAIT(user, TRAIT_SPELLCOCKBLOCK))
-		to_chat(user, span_warning("I can't cast spells!"))
+		to_chat(user, span_warning("我无法施法！"))
 		return FALSE
 
 	if(HAS_TRAIT(user, TRAIT_CURSE_NOC))
-		to_chat(user, span_warning("My magicka has left me..."))
+		to_chat(user, span_warning("我的魔力已经离我而去……"))
 		return FALSE
 
 	if(!antimagic_allowed)
 		var/antimagic = user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE)
 		if(antimagic && !HAS_TRAIT(user, TRAIT_SPELL_DISPERSION))
 			if(isatom(antimagic))
-				to_chat(user, span_notice("[antimagic] is interfering with my magic."))
+				to_chat(user, span_notice("[antimagic] 正在干扰我的魔法。"))
 			else
-				to_chat(user, span_warning("Magic seems to flee from you, you can't gather enough power to cast this spell."))
+				to_chat(user, span_warning("魔法似乎在逃离你，我无法聚集足够的力量施放这个法术。"))
 			return FALSE
 
 	if(!phase_allowed && istype(user.loc, /obj/effect/dummy))
-		to_chat(user, span_warning("[name] cannot be cast unless I am completely manifested in the material plane!"))
+		to_chat(user, span_warning("只有在我完全显现于物质位面时才能施放[name]！"))
 		return FALSE
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if((invocation_type == "whisper" || invocation_type == "shout") && (!H.can_speak_vocal() || !H.getorganslot(ORGAN_SLOT_TONGUE)))
-			to_chat(user, span_warning("I can't get the words out!"))
+			to_chat(user, span_warning("我说不出咒语！"))
 			return FALSE
 		// Spells cannot be cast using sign language (check specifically for SIGNLANG flag)
 		if((invocation_type == "whisper" || invocation_type == "shout"))
 			var/datum/language/default_lang = H.get_default_language()
 			if(default_lang && (initial(default_lang.flags) & SIGNLANG))
-				to_chat(user, span_warning("I cannot cast spells using [initial(default_lang.name)]! I need to speak the words aloud!"))
+				to_chat(user, span_warning("我不能用[initial(default_lang.name)]来施法！我必须把咒语大声念出来！"))
 				return FALSE
 
 		if(HAS_TRAIT(H, TRAIT_PARALYSIS) && !stat_allowed)
-			to_chat(user, span_warning("My body is paralyzed!"))
+			to_chat(user, span_warning("我的身体麻痹了！"))
 			return FALSE
 
 		if(miracle && !H.devotion?.check_devotion(src))
-			to_chat(H, span_warning("I don't have enough devotion!"))
+			to_chat(H, span_warning("我的虔诚不足！"))
 			return FALSE
 		if(gesture_required)
 			if(H.handcuffed)
-				to_chat(user, span_warning("[name] cannot be cast with my hands tied up!"))
+				to_chat(user, span_warning("双手被绑时我无法施放[name]！"))
 				return FALSE
 			if(!H.has_active_hand())
-				to_chat(user, span_warning("I can't cast this without functional hands!"))
+				to_chat(user, span_warning("没有能用的手我无法施放这个法术！"))
 				return FALSE
 
 	else
 		if(clothes_req || human_req)
-			to_chat(user, span_warning("This spell can only be cast by humans!"))
+			to_chat(user, span_warning("这个法术只能由人类施放！"))
 			return FALSE
 		if(nonabstract_req && (isbrain(user)))
-			to_chat(user, span_warning("This spell can only be cast by physical beings!"))
+			to_chat(user, span_warning("这个法术只能由实体生物施放！"))
 			return FALSE
 
 	if(req_items.len)
@@ -339,14 +339,15 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				var/obj/item/M = I
 				missing_names.Add(M.name)
 		if(!met_requirement)
-			to_chat(user, span_warning("I'm missing [missing_names.Join(", ")] to cast this."))
+			var/missing_list = missing_names.Join(", ")
+			to_chat(user, span_warning("我缺少[missing_list]，无法施放此法术。"))
 			return FALSE
 
 	if(req_inhand)
 		if(!istype(user.get_active_held_item(), req_inhand))
 			var/obj/item/M = req_inhand
 			var/req_name = M.name
-			to_chat(user, span_warning("I'm missing [req_name] in my hand to cast this."))
+			to_chat(user, span_warning("我手中缺少[req_name]，无法施放此法术。"))
 			return FALSE
 
 	if(!skipcharge)
@@ -373,7 +374,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if("charges")
 			if(!charge_counter)
 				if(!silent)
-					to_chat(user, span_warning("[name] has no charges left!"))
+					to_chat(user, span_warning("[name] 已没有剩余次数！"))
 				return FALSE
 	return TRUE
 
@@ -406,7 +407,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
-	still_recharging_msg = span_warning("[name] is still recharging!")
+	still_recharging_msg = span_warning("[name] 仍在充能！")
 	charge_counter = recharge_time
 
 /obj/effect/proc_holder/spell/Destroy()
@@ -453,7 +454,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			else
 				radius = 1
 			if(get_dist(targets[1], user) > radius)
-				to_chat(user, span_warning("It's too far!"))
+				to_chat(user, span_warning("太远了！"))
 				revert_cast()
 				return
 			var/atom/A = targets[1]
@@ -464,7 +465,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			if(A.z < user.z)
 				source_turf = get_step_multiz(source_turf, DOWN)
 			if(!(target_turf in view(source_turf)))
-				to_chat(user, span_warning("I do not have line of sight! Casting on nearest tile."))
+				to_chat(user, span_warning("我没有视线！将改为施放到最近的地块。"))
 				var/list/possible_targets = getline(source_turf, target_turf)
 				for(var/i = possible_targets.len; i > 0; i--) // Since turfs added by the getline are in ordered by distance, we need to start from the end
 					var/atom/closest_tile = possible_targets[i]
@@ -488,7 +489,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			var/mob/living/L = user
 			if(L.has_status_effect(/datum/status_effect/buff/clash))
 				var/mob/living/carbon/human/H = user
-				H.bad_guard(span_warning("I can't focus while casting spells!"), cheesy = TRUE)
+				H.bad_guard(span_warning("我在施法时无法集中注意！"), cheesy = TRUE)
 		if(action)
 			action.UpdateButtonIcon()
 		return TRUE
@@ -543,7 +544,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(devotion_cost && ishuman(user))
 		var/mob/living/carbon/human/devotee = user
 		devotee.devotion?.update_devotion(-devotion_cost)
-		to_chat(devotee, "<font color='purple'>I [devotion_cost > 0 ? "lost" : "gained"] [abs(devotion_cost)] devotion.</font>")
+		var/devotion_verb = devotion_cost > 0 ? "失去" : "获得"
+		to_chat(devotee, "<font color='purple'>我[devotion_verb]了[abs(devotion_cost)]点虔诚。</font>")
 	//Add xp based on the fatigue used -- AZURE EDIT: REMOVED!! THIS SHIT WAS TINY AND SUUUUCKED
 	/* if(xp_gain)
 		adjust_experience(usr, associated_skill, round(get_fatigue_drain() * MAGIC_XP_MULTIPLIER)) */
@@ -628,7 +630,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 						continue
 					possible_targets += M
 
-				//targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
+				//targets += input("选择法术目标。", "选择目标") as mob in possible_targets
 				//Adds a safety check post-input to make sure those targets are actually in range.
 				var/mob/M
 				if(!random_target)
@@ -761,19 +763,19 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	perform(null,user=user)
 
 /obj/effect/proc_holder/spell/self/basic_heal //This spell exists mainly for debugging purposes, and also to show how casting works
-	name = "Lesser Heal"
+	name = "次级治疗"
 	desc = ""
 	human_req = TRUE
 	clothes_req = FALSE
 	recharge_time = 100
-	invocations = list("Victus sano!")
+	invocations = list("伤痛，平息。")
 	invocation_type = "whisper"
 	school = "restoration"
 	sound = 'sound/blank.ogg'
 
 /obj/effect/proc_holder/spell/self/basic_heal/cast(mob/living/carbon/human/user) //Note the lack of "list/targets" here. Instead, use a "user" var depending on mob requirements.
 	//Also, notice the lack of a "for()" statement that looks through the targets. This is, again, because the spell can only have a single target.
-	user.visible_message(span_warning("A wreath of gentle light passes over [user]!"), span_notice("I wreath myself in healing light!"))
+	user.visible_message(span_warning("一圈柔和的光辉拂过[user]！"), span_notice("我让治疗之光环绕自身！"))
 	user.adjustBruteLoss(-10)
 	user.adjustFireLoss(-10)
 

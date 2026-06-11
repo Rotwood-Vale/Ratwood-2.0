@@ -4,7 +4,7 @@
 #define MUSIC_MAXLINECHARS 50
 
 /datum/song
-	var/name = "Untitled"
+	var/name = "未命名"
 	var/list/lines = new()
 	var/tempo = 5			// delay between notes
 
@@ -145,52 +145,51 @@
 	var/dat = ""
 
 	if(lines.len > 0)
-		dat += "<H3>Playback</H3>"
+		dat += "<H3>播放</H3>"
 		if(!playing)
-			dat += "<A href='?src=[REF(src)];play=1'>Play</A> <SPAN CLASS='linkOn'>Stop</SPAN><BR><BR>"
-			dat += "Repeat Song: "
+			dat += "<A href='?src=[REF(src)];play=1'>播放</A> <SPAN CLASS='linkOn'>停止</SPAN><BR><BR>"
+			dat += "重复曲目："
 			dat += repeat > 0 ? "<A href='?src=[REF(src)];repeat=-10'>-</A><A href='?src=[REF(src)];repeat=-1'>-</A>" : "<SPAN CLASS='linkOff'>-</SPAN><SPAN CLASS='linkOff'>-</SPAN>"
-			dat += " [repeat] times "
+			dat += " [repeat] 次 "
 			dat += repeat < max_repeats ? "<A href='?src=[REF(src)];repeat=1'>+</A><A href='?src=[REF(src)];repeat=10'>+</A>" : "<SPAN CLASS='linkOff'>+</SPAN><SPAN CLASS='linkOff'>+</SPAN>"
 			dat += "<BR>"
 		else
-			dat += "<SPAN CLASS='linkOn'>Play</SPAN> <A href='?src=[REF(src)];stop=1'>Stop</A><BR>"
-			dat += "Repeats left: <B>[repeat]</B><BR>"
+			dat += "<SPAN CLASS='linkOn'>播放</SPAN> <A href='?src=[REF(src)];stop=1'>停止</A><BR>"
+			dat += "剩余重复次数：<B>[repeat]</B><BR>"
 	if(!edit)
-		dat += "<BR><B><A href='?src=[REF(src)];edit=2'>Show Editor</A></B><BR>"
+		dat += "<BR><B><A href='?src=[REF(src)];edit=2'>显示编辑器</A></B><BR>"
 	else
-		dat += "<H3>Editing</H3>"
-		dat += "<B><A href='?src=[REF(src)];edit=1'>Hide Editor</A></B>"
-		dat += " <A href='?src=[REF(src)];newsong=1'>Start a New Song</A>"
-		dat += " <A href='?src=[REF(src)];import=1'>Import a Song</A><BR><BR>"
+		dat += "<H3>编辑</H3>"
+		dat += "<B><A href='?src=[REF(src)];edit=1'>隐藏编辑器</A></B>"
+		dat += " <A href='?src=[REF(src)];newsong=1'>开始新曲</A>"
+		dat += " <A href='?src=[REF(src)];import=1'>导入曲谱</A><BR><BR>"
 		var/bpm = round(600 / tempo)
-		dat += "Tempo: <A href='?src=[REF(src)];tempo=[world.tick_lag]'>-</A> [bpm] BPM <A href='?src=[REF(src)];tempo=-[world.tick_lag]'>+</A><BR><BR>"
+		dat += "速度：<A href='?src=[REF(src)];tempo=[world.tick_lag]'>-</A> [bpm] 拍/分钟 <A href='?src=[REF(src)];tempo=-[world.tick_lag]'>+</A><BR><BR>"
 		var/linecount = 0
 		for(var/line in lines)
 			linecount += 1
-			dat += "Line [linecount]: <A href='?src=[REF(src)];modifyline=[linecount]'>Edit</A> <A href='?src=[REF(src)];deleteline=[linecount]'>X</A> [line]<BR>"
-		dat += "<A href='?src=[REF(src)];newline=1'>Add Line</A><BR><BR>"
+			dat += "第[linecount]行：<A href='?src=[REF(src)];modifyline=[linecount]'>编辑</A> <A href='?src=[REF(src)];deleteline=[linecount]'>X</A> [line]<BR>"
+		dat += "<A href='?src=[REF(src)];newline=1'>新增一行</A><BR><BR>"
 		if(help)
-			dat += "<B><A href='?src=[REF(src)];help=1'>Hide Help</A></B><BR>"
+			dat += "<B><A href='?src=[REF(src)];help=1'>隐藏帮助</A></B><BR>"
 			dat += {"
-					Lines are a series of chords, separated by commas (,), each with notes separated by hyphens (-).<br>
-					Every note in a chord will play together, with chord timed by the tempo.<br>
+					每一行由一串和弦组成，和弦之间用逗号 (,) 分隔，每个和弦中的音符用连字符 (-) 分隔。<br>
+					同一和弦中的所有音符会同时演奏，和弦时值由当前速度决定。<br>
 					<br>
-					Notes are played by the names of the note, and optionally, the accidental, and/or the octave number.<br>
-					By default, every note is natural and in octave 3. Defining otherwise is remembered for each note.<br>
-					Example: <i>C,D,E,F,G,A,B</i> will play a C major scale.<br>
-					After a note has an accidental placed, it will be remembered: <i>C,C4,C,C3</i> is <i>C3,C4,C4,C3</i><br>
-					Chords can be played simply by seperating each note with a hyphon: <i>A-C#,Cn-E,E-G#,Gn-B</i><br>
-					A pause may be denoted by an empty chord: <i>C,E,,C,G</i><br>
-					To make a chord be a different time, end it with /x, where the chord length will be length<br>
-					defined by tempo / x: <i>C,G/2,E/4</i><br>
-					Combined, an example is: <i>E-E4/4,F#/2,G#/8,B/8,E3-E4/4</i>
+					音符通过音名表示，也可以额外写上升降号和八度数字。<br>
+					默认情况下，每个音都是 3 组的自然音；若你改过某个音，它会记住这个设定。<br>
+					例如：<i>C,D,E,F,G,A,B</i> 会演奏一段 C 大调音阶。<br>
+					音符一旦加上升降号，就会被记住：<i>C,C4,C,C3</i> 实际上是 <i>C3,C4,C4,C3</i><br>
+					和弦只需用连字符连接各个音符即可：<i>A-C#,Cn-E,E-G#,Gn-B</i><br>
+					空和弦代表停顿：<i>C,E,,C,G</i><br>
+					若想让某个和弦时值不同，可在结尾写上 /x，和弦时值会变成速度 / x：<i>C,G/2,E/4</i><br>
+					综合示例：<i>E-E4/4,F#/2,G#/8,B/8,E3-E4/4</i>
 					<br>
-					Lines may be up to [MUSIC_MAXLINECHARS] characters.<br>
-					A song may only contain up to [MUSIC_MAXLINES] lines.<br>
+					每一行最多可有 [MUSIC_MAXLINECHARS] 个字符。<br>
+					一首曲子最多只能包含 [MUSIC_MAXLINES] 行。<br>
 					"}
 		else
-			dat += "<B><A href='?src=[REF(src)];help=2'>Show Help</A></B><BR>"
+			dat += "<B><A href='?src=[REF(src)];help=2'>显示帮助</A></B><BR>"
 
 	var/datum/browser/popup = new(user, "instrument", instrumentObj.name, 700, 500)
 	popup.set_content(dat)
@@ -208,12 +207,12 @@
 		else
 			tempo = sanitize_tempo(5) // default 120 BPM
 		if(lines.len > MUSIC_MAXLINES)
-			to_chat(usr, "Too many lines!")
+			to_chat(usr, "行数太多！")
 			lines.Cut(MUSIC_MAXLINES + 1)
 		var/linenum = 1
 		for(var/l in lines)
 			if(length(l) > MUSIC_MAXLINECHARS)
-				to_chat(usr, "Line [linenum] too long!")
+				to_chat(usr, "第[linenum]行太长了！")
 				lines.Remove(l)
 			else
 				linenum++
@@ -235,15 +234,15 @@
 	else if(href_list["import"])
 		var/t = ""
 		do
-			t = html_encode(input(usr, "Please paste the entire song, formatted:", text("[]", name), t)  as message)
+			t = html_encode(input(usr, "请粘贴整首曲谱，按规定格式输入：", text("[]", name), t)  as message)
 			if(!usr.canUseTopic(instrumentObj, BE_CLOSE, FALSE, NO_TK))
 				return
 
 			if(length(t) >= MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
-				var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
+				var/cont = input(usr, "你的输入太长了！还要继续编辑吗？", "", "继续") in list("继续", "取消")
 				if(!usr.canUseTopic(instrumentObj, BE_CLOSE, FALSE, NO_TK))
 					return
-				if(cont == "no")
+				if(cont == "取消")
 					break
 		while(length(t) > MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
 		ParseSong(t)
@@ -271,7 +270,7 @@
 		INVOKE_ASYNC(src, PROC_REF(playsong), usr)
 
 	else if(href_list["newline"])
-		var/newline = html_encode(input("Enter your line: ", instrumentObj.name) as text|null)
+		var/newline = html_encode(input("输入这一行：", instrumentObj.name) as text|null)
 		if(!newline || !usr.canUseTopic(instrumentObj, BE_CLOSE, FALSE, NO_TK))
 			return
 		if(lines.len > MUSIC_MAXLINES)
@@ -288,7 +287,7 @@
 
 	else if(href_list["modifyline"])
 		var/num = round(text2num(href_list["modifyline"]),1)
-		var/content = html_encode(input("Enter your line: ", instrumentObj.name, lines[num]) as text|null)
+		var/content = html_encode(input("输入这一行：", instrumentObj.name, lines[num]) as text|null)
 		if(!content || !usr.canUseTopic(instrumentObj, BE_CLOSE, FALSE, NO_TK))
 			return
 		if(length(content) > MUSIC_MAXLINECHARS)
@@ -325,7 +324,7 @@
 
 
 /obj/structure/piano
-	name = "space minimoog"
+	name = "迷你魔音琴"
 	icon = 'icons/obj/musician.dmi'
 	icon_state = "minimoog"
 	anchored = TRUE
@@ -340,11 +339,11 @@
 	song = new("piano", src)
 
 	if(prob(50) && icon_state == initial(icon_state))
-		name = "space minimoog"
+		name = "迷你魔音琴"
 		desc = ""
 		icon_state = "minimoog"
 	else
-		name = "space piano"
+		name = "钢琴"
 		desc = ""
 		icon_state = "piano"
 
@@ -369,7 +368,7 @@
 		return
 
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, span_warning("I don't have the dexterity to do this!"))
+		to_chat(user, span_warning("我的手还不够灵巧，做不了这事！"))
 		return 1
 	user.set_machine(src)
 	song.interact(user)

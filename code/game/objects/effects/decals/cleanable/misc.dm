@@ -13,11 +13,11 @@
 	return ..()
 
 /obj/effect/decal/cleanable/dirt/dust
-	name = "dust"
+	name = "灰尘"
 	desc = ""
 
 /obj/effect/decal/cleanable/greenglow
-	name = "glowing goo"
+	name = "发光黏液"
 	desc = ""
 	icon_state = "greenglow"
 	light_power = 3
@@ -33,7 +33,7 @@
 	reagents.add_reagent(pick(/datum/reagent/uranium, /datum/reagent/uranium/radium), 5)
 
 /obj/effect/decal/cleanable/dirt/cobweb
-	name = "cobweb"
+	name = "蛛网"
 	desc = ""
 	icon = 'modular/Mapping/icons/webbing.dmi'
 	icon_state = "cobweb1"
@@ -48,7 +48,7 @@
 	icon_state = "cobweb2"
 
 /obj/effect/decal/cleanable/molten_object
-	name = "gooey grey mass"
+	name = "灰色黏糊团"
 	desc = ""
 	gender = NEUTER
 	icon = 'icons/effects/effects.dmi'
@@ -57,13 +57,13 @@
 	beauty = -150
 
 /obj/effect/decal/cleanable/molten_object/large
-	name = "big gooey grey mass"
+	name = "大团灰色黏糊物"
 	icon_state = "big_molten"
 	beauty = -300
 
 //Vomit (sorry)
 /obj/effect/decal/cleanable/vomit
-	name = "vomit"
+	name = "呕吐物"
 	desc = ""
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "vomit_1"
@@ -72,7 +72,7 @@
 	alpha = 160
 
 /obj/effect/decal/cleanable/vomit/old
-	name = "dried vomit"
+	name = "干涸的呕吐物"
 	desc = ""
 
 /obj/effect/decal/cleanable/vomit/old/Initialize(mapload)
@@ -80,13 +80,13 @@
 	icon_state += "-old"
 
 /obj/effect/decal/cleanable/chem_pile
-	name = "chemical pile"
+	name = "化学品堆"
 	desc = ""
 	gender = NEUTER
 	icon_state = "ash"
 
 /obj/effect/decal/cleanable/shreds
-	name = "shreds"
+	name = "碎布条"
 	desc = ""
 	icon_state = "shreds"
 	gender = PLURAL
@@ -104,7 +104,7 @@
 	. = ..()
 
 /obj/effect/decal/cleanable/glitter
-	name = "generic glitter pile"
+	name = "一堆亮粉"
 	desc = ""
 	icon = 'icons/effects/atmospherics.dmi'
 	icon_state = "plasma_old"
@@ -112,40 +112,40 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/decal/cleanable/glitter/pink
-	name = "pink glitter"
+	name = "粉色亮粉"
 	icon_state = "plasma"
 
 /obj/effect/decal/cleanable/glitter/white
-	name = "white glitter"
+	name = "白色亮粉"
 	icon_state = "nitrous_oxide"
 
 /obj/effect/decal/cleanable/glitter/blue
-	name = "blue glitter"
+	name = "蓝色亮粉"
 	icon_state = "freon"
 
 /obj/effect/decal/cleanable/plasma
-	name = "stabilized plasma"
+	name = "稳定等离子体"
 	desc = ""
 	icon_state = "flour"
 	icon = 'icons/effects/tomatodecal.dmi'
 	color = "#2D2D2D"
 
 /obj/effect/decal/cleanable/insectguts
-	name = "insect guts"
+	name = "虫子内脏"
 	desc = ""
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
 
 /obj/effect/decal/cleanable/confetti
-	name = "confetti"
+	name = "彩纸屑"
 	desc = ""
 	icon = 'icons/effects/confetti_and_decor.dmi'
 	icon_state = "confetti"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT //the confetti itself might be annoying enough
 
 /obj/effect/decal/cleanable/confetti/xylix
-	desc = "A colorful scatter of confetti made of dyed parchment. It smells funny."
+	desc = "由染色羊皮纸制成的彩色纸屑撒了一地，闻起来怪怪的。"
 	icon = 'icons/effects/confetti.dmi'
 	mouse_opacity = MOUSE_OPACITY_ICON
 	random_icon_states = list("confetti1", "confetti2", "confetti3")
@@ -162,7 +162,7 @@
 	setDir(pick(GLOB.cardinals))
 
 /obj/effect/decal/cleanable/debris/glassy
-	name = "glass shards"
+	name = "玻璃碎片"
 	icon_state = "tiny"
 	beauty = -100
 /obj/effect/decal/cleanable/debris/glassy/Crossed(mob/living/L)
@@ -170,11 +170,11 @@
 	playsound(loc,'sound/foley/glass_step.ogg', 50, FALSE)
 
 /obj/effect/decal/cleanable/debris/stony
-	name = "stone chippings"
+	name = "碎石屑"
 	icon_state = "pebbly"
 
 /obj/effect/decal/cleanable/debris/woody	// sawdust gets cleared by weather
-	name = "sawdust"
+	name = "锯末"
 	icon_state = "woody"
 /obj/effect/decal/cleanable/debris/woody/Initialize(mapload)
 	START_PROCESSING(SSprocessing, src)

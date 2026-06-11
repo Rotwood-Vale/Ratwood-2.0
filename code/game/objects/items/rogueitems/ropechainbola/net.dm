@@ -1,6 +1,6 @@
 /obj/item/net
-	name = "net"
-	desc = "A weighed net used to entrap foes. Can be thrown to ensnare a target's legs and slow them down. Victims can struggle out of it and it will fall off after a short time."
+	name = "捕网"
+	desc = "一张缀有配重、用来困住敌人的网。可投掷出去缠住目标的腿，让其减速。受害者可以挣脱，且它会在短时间后自行脱落。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "net"
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_WRISTS
@@ -46,12 +46,12 @@
 
 /obj/item/net/proc/ensnare(mob/living/carbon/C)
 	if(!C.legcuffed && C.get_num_legs(FALSE) >= 2)
-		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
+		visible_message("<span class='danger'>[src]缠住了[C]！</span>")
 		C.legcuffed = src
 		forceMove(C)
 		C.update_inv_legcuffed()
 		SSblackbox.record_feedback("tally", "handcuffs", 1, type)
-		to_chat(C, "<span class='danger'>\The [src] entraps you!</span>")
+		to_chat(C, "<span class='danger'>[src]困住了你！</span>")
 		C.Knockdown(knockdown)
 		C.apply_status_effect(/datum/status_effect/debuff/netted)
 		playsound(src, 'sound/blank.ogg', 50, TRUE)

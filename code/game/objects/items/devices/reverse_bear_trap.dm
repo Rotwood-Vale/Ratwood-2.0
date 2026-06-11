@@ -1,5 +1,5 @@
 /obj/item/reverse_bear_trap
-	name = "reverse bear trap"
+	name = "反向捕熊夹"
 	desc = ""
 	icon = 'icons/obj/device.dmi'
 	icon_state = "reverse_bear_trap"
@@ -54,26 +54,26 @@
 				var/fear_string
 				switch(time_left)
 					if(0 to 5)
-						fear_string = "agonizingly"
+						fear_string = "痛苦万分地"
 					if(5 to 20)
-						fear_string = "desperately"
+						fear_string = "绝望地"
 					if(20 to 40)
-						fear_string = "panickedly"
+						fear_string = "惊慌失措地"
 					if(40 to 50)
-						fear_string = "shakily"
+						fear_string = "颤抖着"
 					if(50 to 60)
 						fear_string = ""
-				C.visible_message(span_danger("[C] fiddles with and pulls at [src]..."), \
-				span_danger("I [fear_string] try to pull at [src]..."), "<i>I hear clicking and ticking.</i>")
+				C.visible_message(span_danger("[C]慌忙摆弄并拉扯着[src]……"), \
+				span_danger("我[fear_string]试着把[src]扯下来……"), "<i>我听见了咔哒声和滴答声。</i>")
 				if(!do_after(user, 20, target = src))
 					struggling = FALSE
 					return
 				if(!prob(escape_chance))
-					to_chat(user, span_warning("It doesn't budge!"))
+					to_chat(user, span_warning("它纹丝不动！"))
 					escape_chance++
 				else
-					user.visible_message(span_warning("The lock on [user]'s [name] pops open!"), \
-					span_danger("I force open the padlock!"), "<i>I hear a single, pronounced click!</i>")
+					user.visible_message(span_warning("[user]头上[name]的锁猛地弹开了！"), \
+					span_danger("我硬生生撬开了挂锁！"), "<i>我听见一声清脆而响亮的咔哒声！</i>")
 					REMOVE_TRAIT(src, TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
 				struggling = FALSE
 			else
@@ -83,30 +83,30 @@
 
 /obj/item/reverse_bear_trap/attack(mob/living/target, mob/living/user)
 	if(target.get_item_by_slot(SLOT_HEAD))
-		to_chat(user, span_warning("Remove [target.p_their()] headgear first!"))
+		to_chat(user, span_warning("先把[target.p_their()]的头部装备摘掉！"))
 		return
-	target.visible_message(span_warning("[user] starts forcing [src] onto [target]'s head!"), \
-	span_danger("[target] starts forcing [src] onto your head!"), "<i>I hear clanking.</i>")
-	to_chat(user, span_danger("I start forcing [src] onto [target]'s head..."))
+	target.visible_message(span_warning("[user]开始把[src]强行往[target]头上套！"), \
+	span_danger("[target]开始把[src]强行套到你头上！"), "<i>我听见金属碰撞声。</i>")
+	to_chat(user, span_danger("我开始把[src]强行往[target]头上套……"))
 	if(!do_after(user, 30, target = target) || target.get_item_by_slot(SLOT_HEAD))
 		return
-	target.visible_message(span_warning("[user] forces and locks [src] onto [target]'s head!"), \
-	span_danger("[target] locks [src] onto your head!"), "<i>I hear a click, and then a timer ticking down.</i>")
-	to_chat(user, span_danger("I force [src] onto [target]'s head and click the padlock shut."))
+	target.visible_message(span_warning("[user]把[src]强行套到[target]头上并锁死了！"), \
+	span_danger("[target]把[src]锁死在了你头上！"), "<i>我听见一声咔哒，接着是倒计时的滴答声。</i>")
+	to_chat(user, span_danger("我把[src]强行套到[target]头上，并咔哒一声扣死了挂锁。"))
 	user.dropItemToGround(src)
 	target.equip_to_slot_if_possible(src, SLOT_HEAD)
 	arm()
-	notify_ghosts("[user] put a reverse bear trap on [target]!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, ghost_sound = 'sound/blank.ogg', notify_volume = 75, header = "Reverse bear trap armed")
+	notify_ghosts("[user]给[target]套上了一个反向捕熊夹！", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, ghost_sound = 'sound/blank.ogg', notify_volume = 75, header = "反向捕熊夹已启动")
 
 /obj/item/reverse_bear_trap/proc/snap()
 	reset()
 	var/mob/living/carbon/human/H = loc
 	if(!istype(H) || H.get_item_by_slot(SLOT_HEAD) != src)
-		visible_message(span_warning("[src]'s jaws snap open with an ear-piercing crack!"))
+		visible_message(span_warning("[src]的夹口伴着刺耳爆响猛然弹开！"))
 		playsound(src, 'sound/blank.ogg', 75, TRUE)
 	else
 		var/mob/living/carbon/human/jill = loc
-		jill.visible_message(span_boldwarning("[src] goes off in [jill]'s mouth, ripping [jill.p_their()] head apart!"), span_danger("[src] goes off!"))
+		jill.visible_message(span_boldwarning("[src]在[jill]口中猛然爆开，硬生生把[jill.p_their()]的脑袋撕碎了！"), span_danger("[src]爆开了！"))
 		jill.emote("scream")
 		playsound(src, 'sound/blank.ogg', 75, TRUE, frequency = 0.5)
 		playsound(src, 'sound/blank.ogg', 50, TRUE, frequency = 0.5)

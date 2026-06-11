@@ -1,5 +1,5 @@
 /obj/item/teleportation_scroll
-	name = "scroll of teleportation"
+	name = "传送卷轴"
 	desc = ""
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
@@ -11,19 +11,19 @@
 	resistance_flags = FLAMMABLE
 
 /obj/item/teleportation_scroll/apprentice
-	name = "lesser scroll of teleportation"
+	name = "次级传送卷轴"
 	uses = 1
 
 
 
 /obj/item/teleportation_scroll/attack_self(mob/user)
 	user.set_machine(src)
-	var/dat = "<B>Teleportation Scroll:</B><BR>"
-	dat += "Number of uses: [src.uses]<BR>"
+	var/dat = "<B>传送卷轴：</B><BR>"
+	dat += "剩余使用次数：[src.uses]<BR>"
 	dat += "<HR>"
-	dat += "<B>Four uses, use them wisely:</B><BR>"
-	dat += "<A href='byond://?src=[REF(src)];spell_teleport=1'>Teleport</A><BR>"
-	dat += "Kind regards,<br>Wizards Federation<br><br>P.S. Don't forget to bring your gear, you'll need it to cast most spells.<HR>"
+	dat += "<B>共有四次机会，请谨慎使用：</B><BR>"
+	dat += "<A href='byond://?src=[REF(src)];spell_teleport=1'>传送</A><BR>"
+	dat += "谨致问候，<br>巫师联合会<br><br>附言：别忘了带上你的装备，大多数法术施放时都用得上。<HR>"
 	user << browse(dat, "window=scroll")
 	onclose(user, "scroll")
 	return
@@ -48,7 +48,7 @@
 
 	var/A
 
-	A = input(user, "Area to jump to", "BOOYEA", A) as null|anything in GLOB.teleportlocs
+	A = input(user, "要传送到哪个区域", "传送卷轴", A) as null|anything in GLOB.teleportlocs
 	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !A || !uses)
 		return
 	var/area/thearea = GLOB.teleportlocs[A]
@@ -63,11 +63,11 @@
 			L += T
 
 	if(!L.len)
-		to_chat(user, "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.")
+		to_chat(user, "法术矩阵因未知原因无法定位合适的传送目的地。")
 		return
 
 	if(do_teleport(user, pick(L), forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
 		smoke.start()
 		uses--
 	else
-		to_chat(user, "The spell matrix was disrupted by something near the destination.")
+		to_chat(user, "目的地附近有某种东西扰乱了法术矩阵。")

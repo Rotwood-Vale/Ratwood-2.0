@@ -1,6 +1,6 @@
 /datum/advclass/mage
-	name = "Sorcerer"
-	tutorial = "Spellslingers are mages that focus on more potent spells, greater athleticism, and the art of the staff. Arcane Alchemists instead turned their studies to mixing magic and alchemy, the basics of medicine, and rely on creativity instead of arcane might."
+	name = "咒法使"
+	tutorial = "咒法使专精于更强力的法术、更出色的体能，以及长杖之艺。奥术炼金师则将学问投向了魔法与炼金的结合、基础医术，以及以巧思而非纯粹奥术伟力来达成目的。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/mage
@@ -31,7 +31,7 @@
 
 /datum/outfit/job/roguetown/adventurer/mage/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are a learned mage and a scholar, having spent your life studying the arcane and its ways."))
+	to_chat(H, span_warning("你是一名博学的法师与学者，毕生都在钻研奥术及其门径。"))
 	head = /obj/item/clothing/head/roguetown/roguehood/mage
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	pants = /obj/item/clothing/under/roguetown/trou/leather
@@ -59,10 +59,10 @@
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
 	if(H.mind)
-		var/weapons = list("Spellslinger","Arcane Alchemist")
-		var/weapon_choice = input(H, "Choose your path.", "WHO ARE YOU?") as anything in weapons
+		var/weapons = list("咒法使","奥术炼金师")
+		var/weapon_choice = input(H, "选择你的道路。", "你要成为什么人？") as anything in weapons
 		switch(weapon_choice)
-			if("Arcane Alchemist")
+			if("奥术炼金师")
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/aerosolize)
 				H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 3, TRUE)
@@ -73,7 +73,7 @@
 				H.change_stat("intelligence", 1)
 				ADD_TRAIT(H, TRAIT_ALCHEMY_EXPERT, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_SEEDKNOW, TRAIT_GENERIC)
-			if("Spellslinger")
+			if("咒法使")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 2, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 3, TRUE)
@@ -83,8 +83,8 @@
 				H.change_stat("willpower", 2)
 
 /datum/advclass/mage/spellblade
-	name = "Spellblade"
-	tutorial = "You are skilled in both the arcyne art and the art of the blade. But you are not a master of either nor could you channel your magick in armor."
+	name = "魔剑士"
+	tutorial = "你同时擅长奥术与剑技，但无论哪一门都算不上宗师，更无法穿着甲胄引导魔力。"
 	outfit = /datum/outfit/job/roguetown/adventurer/spellblade
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2)
 	subclass_stats = list(
@@ -107,7 +107,7 @@
 
 /datum/outfit/job/roguetown/adventurer/spellblade/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are skilled in both the arcyne art and the art of the blade. But you are not a master of either nor could you channel your magick in armor."))
+	to_chat(H, span_warning("你同时精于奥术与兵刃之道，但两者都还称不上宗师，而且一旦披甲，你也无法顺畅引导自己的魔力。"))
 	head = /obj/item/clothing/head/roguetown/bucklehat
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	pants = /obj/item/clothing/under/roguetown/trou/leather
@@ -125,47 +125,47 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
 	H.cmode_music = 'sound/music/cmode/adventurer/combat_outlander3.ogg'
 	if(H.mind)
-		var/weapons = list("Longsword", "Falchion & Wooden Shield", "Messer & Wooden Shield", "Hwando", "Spear", "Whip", "Battle Axe", "Mace")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("长剑", "弯刀与木盾", "单刃刀与木盾", "环刀", "长矛", "鞭", "战斧", "钉锤")
+		var/weapon_choice = input(H, "选择你的武器。", "执兵而起") as anything in weapons
 		switch(weapon_choice)
-			if("Longsword")
+			if("长剑")
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/long
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			if("Falchion & Wooden Shield")
+			if("弯刀与木盾")
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				backr = /obj/item/rogueweapon/shield/wood
 				r_hand = /obj/item/rogueweapon/sword/short/falchion
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_APPRENTICE, TRUE)
-			if("Messer & Wooden Shield")
+			if("单刃刀与木盾")
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				backr = /obj/item/rogueweapon/shield/wood
 				r_hand = /obj/item/rogueweapon/sword/short/messer/iron
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_APPRENTICE, TRUE)
-			if("Hwando")
+			if("环刀")
 				r_hand = /obj/item/rogueweapon/sword/sabre/mulyeog // Meant to not have the special foreign scabbards.
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				armor = /obj/item/clothing/suit/roguetown/armor/basiceast
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			if("Spear")
+			if("长矛")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/spear
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
-			if("Whip")
+			if("鞭")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 				r_hand = /obj/item/rogueweapon/whip
-			if("Battle Axe")
+			if("战斧")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 				backr = /obj/item/rogueweapon/stoneaxe/battle
-			if("Mace")
+			if("钉锤")
 				beltr = /obj/item/rogueweapon/mace
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
@@ -174,8 +174,8 @@
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
 
 /datum/advclass/mage/spellsinger
-	name = "Spellsinger"
-	tutorial = "You belong to a school of bards renowned for their study of both the arcane and the arts."
+	name = "咒歌者"
+	tutorial = "你出身于一个以同时钻研奥术与艺道而闻名的吟游学派。"
 	outfit = /datum/outfit/job/roguetown/adventurer/spellsinger
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2, TRAIT_EMPATH, TRAIT_GOODLOVER)
@@ -198,7 +198,7 @@
 	)
 /datum/outfit/job/roguetown/adventurer/spellsinger/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You belong to a school of bards renowned for their study of both the arcane and the arts."))
+	to_chat(H, span_warning("你出身于一个以同时钻研奥术与艺道而闻名的吟游学派。"))
 	head = /obj/item/clothing/head/roguetown/spellcasterhat
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	pants = /obj/item/clothing/under/roguetown/trou/leather
@@ -224,46 +224,46 @@
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
 	if(H.mind)
-		var/weapons = list("Accordion","Bagpipe", "Banjo","Drum","Flute","Guitar","Harmonica","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
-		var/weapon_choice = tgui_input_list(H, "Choose your instrument.", "TAKE UP ARMS", weapons)
+		var/weapons = list("手风琴","风笛", "班卓琴","鼓","长笛","吉他","口琴","竖琴","手摇风琴","口簧琴","鲁特琴","诗琴","三味线","小号","中提琴","歌声护符")
+		var/weapon_choice = tgui_input_list(H, "选择你的乐器。", "执起乐器", weapons)
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Accordion")
+			if("手风琴")
 				backr = /obj/item/rogue/instrument/accord
-			if("Bagpipe")
+			if("风笛")
 				backr = /obj/item/rogue/instrument/bagpipe
-			if("Banjo")
+			if("班卓琴")
 				backr = /obj/item/rogue/instrument/banjo
-			if("Drum")
+			if("鼓")
 				backr = /obj/item/rogue/instrument/drum
-			if("Flute")
+			if("长笛")
 				backr = /obj/item/rogue/instrument/flute
-			if("Guitar")
+			if("吉他")
 				backr = /obj/item/rogue/instrument/guitar
-			if("Harmonica")
+			if("口琴")
 				backr = /obj/item/rogue/instrument/harmonica
-			if("Harp")
+			if("竖琴")
 				backr = /obj/item/rogue/instrument/harp
-			if("Hurdy-Gurdy")
+			if("手摇风琴")
 				backr = /obj/item/rogue/instrument/hurdygurdy
-			if("Jaw Harp")
+			if("口簧琴")
 				backr = /obj/item/rogue/instrument/jawharp
-			if("Lute")
+			if("鲁特琴")
 				backr = /obj/item/rogue/instrument/lute
-			if("Psyaltery")
+			if("诗琴")
 				backr = /obj/item/rogue/instrument/psyaltery
-			if("Shamisen")
+			if("三味线")
 				backr = /obj/item/rogue/instrument/shamisen
-			if("Trumpet")
+			if("小号")
 				backr = /obj/item/rogue/instrument/trumpet
-			if("Viola")
+			if("中提琴")
 				backr = /obj/item/rogue/instrument/viola
-			if("Vocal Talisman")
+			if("歌声护符")
 				backr = /obj/item/rogue/instrument/vocals
 
 /datum/advclass/mage/spellthief
-	name = "Arcane Trickster"
-	tutorial = "Some Rogues enhance their fine-honed skills of stealth and agility with spells, learning magical tricks to aid them in their trade. Some use their talents as pickpockets and burglars, while others are pranksters."
+	name = "奥术诡术师"
+	tutorial = "有些盗贼会以法术强化自己千锤百炼的潜行与灵巧本领，学会各类魔法把戏来辅助营生。有人拿这些天赋去当扒手与窃贼，也有人纯粹拿来戏弄旁人。"
 	outfit = /datum/outfit/job/roguetown/adventurer/spellthief
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
@@ -298,7 +298,7 @@
 
 /datum/outfit/job/roguetown/adventurer/spellthief/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("Some Rogues enhance their fine-honed skills of stealth and agility with spells, learning magical tricks to aid them in their trade. Some use their talents as pickpockets and burglars, while others are pranksters."))
+	to_chat(H, span_warning("有些盗贼会以法术强化自己千锤百炼的潜行与灵巧本领，学会各类魔法把戏来辅助营生。有人拿这些天赋去当扒手与窃贼，也有人纯粹拿来戏弄旁人。"))
 	head = /obj/item/clothing/head/roguetown/witchhat //you can tell they're a spellthief by the pointy hat!
 	mask = /obj/item/clothing/mask/rogue/shepherd //to stay sneaky while wearing a pointy hat
 	armor = /obj/item/clothing/suit/roguetown/armor/leather

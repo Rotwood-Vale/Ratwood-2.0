@@ -5,10 +5,10 @@
  * Trays - Agouri
  *///wip
 /obj/item/storage/bag/tray
-	name = "tray"
+	name = "托盘"
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "tray"
-	desc = "A servant's most treasured helper, able to hold several platters of food, cutlery, bottles and cups. Don't trip!"
+	desc = "仆人们最为珍视的得力帮手，能盛放好几盘食物、餐具、瓶子和杯子。可别绊倒了！"
 	force = 5
 	throwforce = 10
 	throw_speed = 3
@@ -19,7 +19,7 @@
 	var/tray_display_dummies = list()
 
 /obj/item/storage/bag/tray/psy
-	name = "tray"
+	name = "托盘"
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "tray_psy"
 	desc = ""
@@ -95,8 +95,8 @@
 	update_icon()
 
 /obj/item/storage/meatbag
-	name = "game satchel"
-	desc = "A cloth and leather satchel for storing the fruit of one's hunt."
+	name = "猎获挎袋"
+	desc = "一个用布料与皮革制成的挎袋，用来存放狩猎所得。"
 	icon_state = "gamesatchel"
 	icon = 'icons/roguetown/clothing/storage.dmi'
 	slot_flags = ITEM_SLOT_BACK_L|ITEM_SLOT_BACK_R|ITEM_SLOT_HIP

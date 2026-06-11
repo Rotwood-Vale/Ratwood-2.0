@@ -1,5 +1,5 @@
 /obj/effect/temp_visual/heal_rogue //color is white by default, set to whatever is needed
-	name = "healing glow"
+	name = "治疗辉光"
 	icon = 'modular_azurepeak/icons/effects/miracle-healing.dmi'
 	icon_state = "heal_pantheon"
 	duration = 15
@@ -15,7 +15,7 @@
 	pixel_y = rand(-9, 0)
 
 /obj/effect/temp_visual/psyheal_rogue //color is white by default, set to whatever is needed
-	name = "enduring glow"
+	name = "持久辉光"
 	icon = 'modular_azurepeak/icons/effects/miracle-healing.dmi'
 	icon_state = "heal_psycross"
 	duration = 15
@@ -31,7 +31,7 @@
 	pixel_y = rand(-9, 0)
 
 /obj/effect/temp_visual/heal_blood
-	name = "bloodheal glow"
+	name = "血愈辉光"
 	icon = 'modular_azurepeak/icons/effects/miracle-healing.dmi'
 	icon_state = "heal_blood"
 	duration = 15
@@ -47,5 +47,5 @@
 	pixel_y = rand(-9, 0)
 
 /obj/effect/temp_visual/heal_rogue/campfire
-	name = "campfire heal"
+	name = "营火治愈"
 	icon_state = "heal_campfire"

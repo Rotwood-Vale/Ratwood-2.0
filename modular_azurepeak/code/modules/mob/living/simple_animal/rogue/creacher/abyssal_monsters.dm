@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/rogue/dreamfiend
 	icon = 'modular_hearthstone/icons/mob/abyssal_small.dmi'
-	name = "minor dream fiend"
+	name = "小型梦魇魔"
 	icon_state = "dreamfiend"
 	icon_living = "dreamfiend"
 	icon_dead = "dreamfiend"
@@ -33,7 +33,7 @@
 
 /mob/living/simple_animal/hostile/rogue/dreamfiend/major
 	icon = 'modular_hearthstone/icons/mob/abyssal_medium.dmi'
-	name = "major dream fiend"
+	name = "大型梦魇魔"
 	pixel_x = -4
 
 	STACON = 15
@@ -51,8 +51,8 @@
 
 /mob/living/simple_animal/hostile/rogue/dreamfiend/ancient
 	icon = 'modular_hearthstone/icons/mob/abyssal_large.dmi'
-	name = "ancient dream fiend"
-	desc = "A truly horrifying creature. It makes you dizzy just looking at it."
+	name = "远古梦魇魔"
+	desc = "这是真正骇人的生物。仅仅看着它就足以令你头晕目眩。"
 	pixel_x = -16
 
 	health = ANCIENT_DREAMFIEND_HEALTH
@@ -149,7 +149,7 @@
 	return FALSE
 
 /mob/living/simple_animal/hostile/rogue/dreamfiend/proc/return_to_abyssor()
-	src.visible_message(span_notice("The [src] starts to fade out of reality!"))
+	src.visible_message(span_notice("[src]开始从现实中渐渐褪去！"))
 	if(do_after(src, desummon_timer, FALSE, target = src))
 		qdel(src)
 
@@ -170,7 +170,7 @@
 		F.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, main_target)
 		F.ai_controller.set_blackboard_key(BB_MAIN_TARGET, main_target)
 	if(main_target)
-		src.visible_message(span_notice("some dreamfiends split forth front the body of the [src] following after [main_target]... countless teeth bared with hostility!"))
+		src.visible_message(span_notice("几只梦魇魔从[src]的躯体中分裂而出，追向[main_target]......无数獠牙狰狞毕露！"))
 	qdel(src)
 
 /mob/living/simple_animal/hostile/rogue/dreamfiend/ancient/death()
@@ -183,8 +183,8 @@
 	qdel(src)
 
 /obj/effect/decal/cleanable/dreamfiend_ichor
-	name = "vile ichor"
-	desc = "this dark shifting liquid looks impossibly deep"
+	name = "污秽黑血"
+	desc = "这团漆黑涌动的液体看起来深不见底"
 	icon = 'modular_hearthstone/icons/mob/abyssal_small.dmi'
 	icon_state = "dreamfiend_dead"
 	beauty = -100
@@ -201,9 +201,9 @@
 	icon = 'modular_hearthstone/icons/mob/abyssal_large.dmi'
 
 /datum/intent/simple/dreamfiend_ancient
-	name = "devastating bite"
+	name = "毁灭撕咬"
 	icon_state = "inchop"
-	attack_verb = list("eviscerates", "tears at")
+	attack_verb = list("开膛破肚", "撕咬")
 	animname = "cut"
 	blade_class = BCLASS_CHOP
 	hitsound = list('modular_azurepeak/sound/mobs/abyssal/abyssal_attack.ogg','modular_azurepeak/sound/mobs/abyssal/abyssal_attack2.ogg')
@@ -224,7 +224,7 @@
 	new /obj/effect/decal/cleanable/dreamfiend_ichor/large(loc)
 	for(var/i in 1 to 2)
 		new /mob/living/simple_animal/hostile/rogue/dreamfiend/unbound(loc)
-	src.visible_message(span_notice("Some dreamfiends split forth front the body of the [src]!"))
+	src.visible_message(span_notice("几只梦魇魔从[src]的躯体中分裂而出！"))
 	qdel(src)
 
 /mob/living/simple_animal/hostile/rogue/dreamfiend/ancient/unbound

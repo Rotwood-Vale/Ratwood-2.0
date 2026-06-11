@@ -1,6 +1,6 @@
 /obj/effect/spell_rune
-	name = "Spell Rune"
-	desc = "A rune indicating a mage is about to cast a spell. Run!!!"
+	name = "施法符文"
+	desc = "这道符文表明有法师即将施法。快跑！！！"
 	icon = 'icons/mob/actions/roguespells.dmi'
 	icon_state = ""
 	pixel_y = 32

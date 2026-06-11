@@ -1,14 +1,14 @@
 /datum/crafting_recipe/roguetown/fleshcrafting
 	abstract_type = /datum/crafting_recipe/roguetown/fleshcrafting
 	req_table = FALSE
-	verbage_simple = "assembles"
+	verbage_simple = "组装"
 	skillcraft = /datum/skill/labor/butchering
 	subtype_reqs = TRUE
 	structurecraft = /obj/structure/roguemachine/chimeric_heart_beast
 
 /datum/crafting_recipe/roguetown/fleshcrafting/decoy
-	name = "flesh decoy (2x fresh meat)"
-	category = "Flesh"
+	name = "血肉诱饵（2 份鲜肉）"
+	category = "血肉"
 	result = list(/obj/item/flesh_decoy)
 	reqs = list(/obj/item/reagent_containers/food/snacks/rogue/meat = 2)
 	structurecraft = null
@@ -17,8 +17,8 @@
 	tech_unlocked = FALSE
 
 /datum/crafting_recipe/roguetown/fleshcrafting/decoy_alt
-	name = "flesh decoy (2x viscera)"
-	category = "Flesh"
+	name = "血肉诱饵（2 份内脏）"
+	category = "血肉"
 	result = list(/obj/item/flesh_decoy)
 	reqs = list(/obj/item/alch/viscera = 2)
 	structurecraft = null
@@ -27,15 +27,15 @@
 	tech_unlocked = FALSE
 
 /datum/crafting_recipe/roguetown/fleshcrafting/flesh_node
-	name = "flesh node (1x rotten meat)"
-	category = "Flesh"
+	name = "血肉节点（1 份腐肉）"
+	category = "血肉"
 	result = list(/obj/item/flesh_node)
 	reqs = list(/obj/item/reagent_containers/food/snacks/rogue/meat_rotten = 1)
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/fleshcrafting/lungs
-	name = "Lungs"
-	category = "Flesh"
+	name = "肺"
+	category = "血肉"
 	result = list(/obj/item/organ/lungs)
 	reqs = list(/obj/item/flesh_node = 2,
 				/obj/item/heart_blood_vial/filled
@@ -45,8 +45,8 @@
 	tech_unlocked = FALSE
 
 /datum/crafting_recipe/roguetown/fleshcrafting/heart
-	name = "Heart"
-	category = "Flesh"
+	name = "心脏"
+	category = "血肉"
 	result = list(/obj/item/organ/heart)
 	reqs = list(/obj/item/flesh_node = 2,
 				/obj/item/heart_blood_vial/filled
@@ -56,8 +56,8 @@
 	tech_unlocked = FALSE
 
 /datum/crafting_recipe/roguetown/fleshcrafting/liver
-	name = "Liver"
-	category = "Flesh"
+	name = "肝脏"
+	category = "血肉"
 	result = list(/obj/item/organ/liver)
 	reqs = list(/obj/item/flesh_node = 2,
 				/obj/item/heart_blood_vial/filled
@@ -68,8 +68,8 @@
 
 
 /datum/crafting_recipe/roguetown/fleshcrafting/eyes
-	name = "Eyes"
-	category = "Flesh"
+	name = "眼球"
+	category = "血肉"
 	result = list(/obj/item/organ/eyes)
 	reqs = list(/obj/item/flesh_node = 1,
 				/obj/item/heart_blood_vial/filled
@@ -79,8 +79,8 @@
 	tech_unlocked = FALSE
 
 /datum/crafting_recipe/roguetown/fleshcrafting/tongue
-	name = "Tongue"
-	category = "Flesh"
+	name = "舌头"
+	category = "血肉"
 	result = list(/obj/item/organ/tongue)
 	reqs = list(/obj/item/flesh_node = 1,
 				/obj/item/heart_blood_vial/filled
@@ -90,8 +90,8 @@
 	tech_unlocked = FALSE
 
 /datum/crafting_recipe/roguetown/fleshcrafting/black_rose
-	name = "Black Rose"
-	category = "Flesh"
+	name = "黑玫瑰"
+	category = "血肉"
 	result = list(/obj/item/black_rose)
 	reqs = list(/obj/item/heart_blood_canister/filled = 5,
 				/obj/item/reagent_containers/food/snacks/rogue/meat_rotten = 15)
@@ -100,7 +100,7 @@
 	tech_unlocked = FALSE
 
 /datum/crafting_recipe/roguetown/fleshcrafting/leechbait
-	name = "leechbait"
+	name = "水蛭饵"
 	craftdiff = 1
 	result = list(
 		/obj/item/bait/leech,
@@ -115,7 +115,7 @@
 	structurecraft = null
 
 /datum/crafting_recipe/roguetown/fleshcrafting/imperfect_gnoll
-	name = "vilespawn flesh"
+	name = "邪孽血肉"
 	craftdiff = 1
 	result = list(
 		/obj/item/reagent_containers/food/snacks/rogue/meat/steak/vilespawn

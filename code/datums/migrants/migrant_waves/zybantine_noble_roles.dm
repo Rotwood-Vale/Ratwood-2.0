@@ -4,15 +4,15 @@
 #define CTAG_ZYBANTINE_ADVISOR "zybantine_advisor"
 
 /datum/migrant_role/zybantine/emir
-	name = "Emir"
+	name = "埃米尔"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	advclass_cat_rolls = list(CTAG_ZYBANTINE_EMIR = 20)
-	greet_text = "You are an envoy from the zybantine Empire, traveling with bodyguards and your personal advisor to represent your homeland.\
-	What exactly you have been sent here to speak about- only you know."
+	greet_text = "你是来自 Zybantine 帝国的使者，带着护卫和你的私人顾问一同出行，代表自己的祖国。\
+	你究竟被派来此地商谈什么，只有你自己知道。"
 
 /datum/advclass/zybantine_emir
-	name = "Emir"
+	name = "埃米尔"
 	outfit = /datum/outfit/job/roguetown/zybantine/emir
 	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_ZYBANTINE_EMIR)
@@ -68,13 +68,13 @@
 	H.adjust_skillrank(/datum/skill/misc/riding, 3, TRUE)
 
 /datum/migrant_role/zybantine/amirah
-	name = "Amirah"
+	name = "阿米拉"
 	allowed_sexes = list(FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	advclass_cat_rolls = list(CTAG_ZYBANTINE_AMIRAH = 20)
 
 /datum/advclass/zybantine_amirah
-	name = "Amirah"
+	name = "阿米拉"
 	outfit = /datum/outfit/job/roguetown/zybantine/amirah
 	traits_applied = list(TRAIT_NOBLE, TRAIT_SEEPRICES, TRAIT_NUTCRACKER, TRAIT_GOODLOVER, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_ZYBANTINE_AMIRAH)
@@ -126,14 +126,14 @@
 	H.adjust_skillrank(/datum/skill/misc/music, 5, TRUE)
 
 /datum/migrant_role/zybantine/janissary
-	name = "Janissary Bodyguard"
-	greet_text = "You are a dilligent soldier in employ of the Emir for protection and to assure that their mission goes as planned."
+	name = "耶尼切里护卫"
+	greet_text = "你是一名受埃米尔雇佣的勤勉士兵，负责保护他，并确保这次使命按计划进行。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	advclass_cat_rolls = list(CTAG_ZYBANTINE_JANISSARY = 20)
 
 /datum/advclass/zybantine_janissary
-	name = "Janissary Bodyguard"
+	name = "耶尼切里护卫"
 	outfit = /datum/outfit/job/roguetown/zybantine/janissary
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_BREADY, TRAIT_LONGSTRIDER, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_ZYBANTINE_JANISSARY)
@@ -186,14 +186,14 @@
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 
 /datum/migrant_role/zybantine/advisor
-	name = "Advisor"
-	greet_text = "You are the Emir's advisor and loyal protector."
+	name = "顾问"
+	greet_text = "你是埃米尔的顾问，也是他忠诚的保护者。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	advclass_cat_rolls = list(CTAG_ZYBANTINE_ADVISOR = 20)
 
 /datum/advclass/zybantine_advisor
-	name = "Advisor"
+	name = "顾问"
 	outfit = /datum/outfit/job/roguetown/zybantine/advisor
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT, TRAIT_PERFECT_TRACKER, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_ZYBANTINE_ADVISOR)

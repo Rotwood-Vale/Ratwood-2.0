@@ -1,9 +1,9 @@
 /obj/effect/countdown
-	name = "countdown"
-	desc = "We're leaving together\n\
-		But still it's farewell\n\
-		And maybe we'll come back\n\
-		To Earth, who can tell?"
+	name = "倒计时"
+	desc = "我们一同离去\n\
+		但此刻仍是告别\n\
+		也许我们终会归来\n\
+		至于大地，谁又说得准？"
 
 	invisibility = INVISIBILITY_OBSERVER
 	anchored = TRUE
@@ -20,7 +20,7 @@
 
 /obj/effect/countdown/examine(mob/user)
 	. = ..()
-	. += "This countdown is displaying: [displayed_text]."
+	. += "这个倒计时当前显示：[displayed_text]。"
 
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A
@@ -64,7 +64,7 @@
 	return
 
 /obj/effect/countdown/hourglass
-	name = "hourglass countdown"
+	name = "沙漏倒计时"
 
 /obj/effect/countdown/hourglass/get_value()
 	var/obj/item/hourglass/H = attached_to

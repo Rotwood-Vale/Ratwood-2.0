@@ -1,5 +1,5 @@
 /obj/structure/closet/crate/chest/trapped
-	name = "chest"
+	name = "宝箱"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "chest3s"
@@ -37,7 +37,7 @@
 		return
 	var/mob/living/luser = user
 	if(get_dist(user, src) <= FLOOR((luser.STAPER-4)/4,1))
-		to_chat(user,span_notice("\the [src] is trapped!"))
+		to_chat(user,span_notice("[src]被设了陷阱！"))
 		return
 
 /obj/structure/closet/crate/chest/trapped/proc/trap_effect(mob/living/L)
@@ -51,7 +51,7 @@
 		if(!BP)
 			return FALSE
 		if(locked)
-			C.visible_message(span_notice("\the [src] is locked."))
+			C.visible_message(span_notice("[src]被锁住了。"))
 			playsound(src, 'sound/foley/doors/lock.ogg', 100)
 			return FALSE
 		if(C.get_skill_level(/datum/skill/craft/crafting) < 1)
@@ -63,12 +63,12 @@
 			used_time = 14 SECONDS
 			if(C.mind)
 				used_time -= max((C.get_skill_level(/datum/skill/craft/crafting) * 2 SECONDS), 2 SECONDS)
-				C.visible_message(span_notice("[C] begins disarming \the [src]."), \
-						span_notice("I start disarming \the [src]."))
+				C.visible_message(span_notice("[C]开始解除[src]上的陷阱。"), \
+						span_notice("我开始解除[src]上的陷阱。"))
 			if(do_after(user, used_time, target = src))
 				armed = FALSE
-				C.visible_message(span_notice("[C] disarms \the [src]."), \
-						span_notice("I disarm \the [src]."))
+				C.visible_message(span_notice("[C]解除了[src]上的陷阱。"), \
+						span_notice("我解除了[src]上的陷阱。"))
 				return FALSE
 	if(iscarbon(user) && !armed && isturf(loc))
 		user.changeNext_move(CLICK_CD_MELEE)
@@ -79,7 +79,7 @@
 	explosion(src, light_impact_range = 1, flame_range = 2, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
 
 /obj/structure/closet/crate/chest/trapped/locked
-	name = "chest"
+	name = "宝箱"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "chest3s"

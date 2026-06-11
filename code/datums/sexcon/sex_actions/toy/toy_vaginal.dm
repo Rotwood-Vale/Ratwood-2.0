@@ -1,5 +1,5 @@
 /datum/sex_action/toy_vagina
-	name = "Pleasure cunt with toy"
+	name = "用玩具取悦阴部"
 	user_sex_part = SEX_PART_CUNT
 	category = SEX_CATEGORY_PENETRATE
 	target_sex_part = SEX_PART_CUNT
@@ -26,11 +26,11 @@
 
 /datum/sex_action/toy_vagina/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/dildo/dildo = get_dildo_in_either_hand(user)
-	user.visible_message(span_warning("[user] shoves \the [dildo] in [user.p_their()] cunt..."))
+	user.visible_message(span_warning("[user]把[dildo]塞进了[user.p_their()]的阴部里……"))
 
 /datum/sex_action/toy_vagina/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/dildo/dildo = get_dildo_in_either_hand(user)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pleasures [user.p_their()] cunt \the [dildo]."))
+	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()]用[dildo]玩弄着[user.p_their()]的阴部。"))
 	user.sexcon.outercourse_noise(user, TRUE)
 
 	user.sexcon.perform_sex_action(user, 2, 4, TRUE)
@@ -42,7 +42,7 @@
 
 /datum/sex_action/toy_vagina/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/dildo/dildo = get_dildo_in_either_hand(user)
-	user.visible_message(span_warning("[user] pulls out \the [dildo] from [user.p_their()] cunt."))
+	user.visible_message(span_warning("[user]把[dildo]从[user.p_their()]的阴部里抽了出来。"))
 
 /datum/sex_action/toy_vagina/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user.sexcon.finished_check())

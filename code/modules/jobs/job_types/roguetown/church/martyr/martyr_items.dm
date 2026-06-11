@@ -8,8 +8,8 @@
 	item_state = "martyrsword"
 	lefthand_file = 'icons/mob/inhands/weapons/roguemartyr_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/roguemartyr_righthand.dmi'
-	name = "martyr sword"
-	desc = "A relic from the Holy See's own vaults. It simmers with godly energies, and will only yield to the hands of those who have taken the Oath."
+	name = "殉道之剑"
+	desc = "一件出自圣座金库的圣遗物。其上翻涌着神性能量，只会向立下誓约之人屈服。"
 	max_blade_int = 200
 	max_integrity = 300
 	parrysound = "bladedmedium"
@@ -66,21 +66,21 @@
 		if(J.title == "Bishop" || J.title == "Martyr")
 			return ..()
 		else if (H.job in GLOB.church_positions)
-			to_chat(user, span_warning("You feel a jolt of holy energies just for a split second, and then the sword slips from your grasp! You are not devout enough."))
+			to_chat(user, span_warning("你只感到一瞬圣能电流掠过全身，随后剑便从掌中滑脱！你的虔诚还不够。"))
 			return FALSE
 		else if(istype(H.patron, /datum/patron/inhumen))
 			var/datum/component/martyrweapon/marty = GetComponent(/datum/component/martyrweapon)
-			to_chat(user, span_warning("YOU FOOL! IT IS ANATHEMA TO YOU! GET AWAY!"))
+			to_chat(user, span_warning("蠢货！此物于你而言乃是绝罚！快离开！"))
 			H.Stun(40)
 			H.Knockdown(40)
 			if(marty.is_active) //Inhumens are touching this while it's active, very fucking stupid of them
-				visible_message(span_warning("[H] lets out a painful shriek as the sword lashes out at them!"))
+				visible_message(span_warning("[H] 被长剑反噬，发出痛苦的尖叫！"))
 				H.emote("agony")
 				H.adjust_fire_stacks(5)
 				H.ignite_mob()
 			return FALSE
 		else	//Everyone else
-			to_chat(user, span_warning("A painful jolt across your entire body sends you to the ground. You cannot touch this thing."))
+			to_chat(user, span_warning("一阵痛苦的冲击贯穿全身，将你掀倒在地。你碰不得这东西。"))
 			H.emote("groan", forced = TRUE)
 			H.Stun(10)
 			return FALSE
@@ -103,8 +103,8 @@
 			if("onbelt") return list("shrink" = 0.6,"sx" = -2,"sy" = -5,"nx" = 0,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = -3,"ey" = -5,"nturn" = 180,"sturn" = 180,"wturn" = 0,"eturn" = 90,"nflip" = 0,"sflip" = 0,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/clothing/cloak/martyr
-	name = "martyr cloak"
-	desc = "An elegant cloak in the colors of Astrata. Looks like it can only fit Humen-sized people."
+	name = "殉道披风"
+	desc = "一件采用 阿斯特拉塔 配色的优雅披风，看起来只适合人类体型的人穿着。"
 	color = null
 	icon_state = "martyrcloak"
 	item_state = "martyrcloak"
@@ -116,8 +116,8 @@
 	flags_inv = HIDECROTCH|HIDEBOOB
 
 /obj/item/clothing/suit/roguetown/armor/plate/full/holysee
-	name = "holy silver plate"
-	desc = "Silver-clad plate for the guardians and the warriors, for the spears and shields of the Ten."
+	name = "圣银板甲"
+	desc = "为守卫与战士打造的镀银板甲，乃十神枪盾之军所披戴。"
 	icon = 'icons/roguetown/clothing/special/martyr.dmi'
 	icon_state = "silverarmor"
 	item_state = "silverarmor"
@@ -130,8 +130,8 @@
 	smelt_bar_num = 4
 
 /obj/item/clothing/under/roguetown/platelegs/holysee
-	name = "holy silver chausses"
-	desc = "Plate leggings of silver forged for the Holy See's forces. A sea of silver to descend upon evil."
+	name = "圣银护腿"
+	desc = "为圣座军势锻造的银制板甲护腿，如银潮般压向邪恶。"
 	icon = 'icons/roguetown/clothing/special/martyr.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/martyr.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_pants.dmi'
@@ -144,8 +144,8 @@
 	smelt_bar_num = 3
 
 /obj/item/clothing/head/roguetown/helmet/heavy/holysee
-	name = "holy silver bascinet"
-	desc = "Branded by the Holy See, these helms are worn by it's chosen warriors. A bastion of hope in the dark nite."
+	name = "圣银尖盔"
+	desc = "这些头盔烙有圣座印记，由其钦选战士佩戴，是黑夜中希望的堡垒。"
 	icon = 'icons/roguetown/clothing/special/martyr.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/martyrbascinet.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
@@ -165,8 +165,8 @@
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
 
 /obj/item/clothing/cloak/holysee
-	name = "holy silver vestments"
-	desc = "A set of vestments worn by the Holy See's forces, silver embroidery and seals of light ordain it as a bastion against evil."
+	name = "圣银法衣"
+	desc = "一套由圣座军势穿着的法衣，银线刺绣与光辉封印使其成为抵御邪恶的堡垒。"
 	icon = 'icons/roguetown/clothing/special/martyr.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/martyr.dmi'
 	icon_state = "silvertabard"
@@ -195,7 +195,7 @@
 
 /obj/item/clothing/cloak/holysee/MiddleClick(mob/user)
 	overarmor = !overarmor
-	to_chat(user, span_info("I [overarmor ? "wear the tabard over my armor" : "wear the tabard under my armor"]."))
+	to_chat(user, span_info("[overarmor ? "我将罩袍披在护甲外" : "我将罩袍穿在护甲内"]。"))
 	if(overarmor)
 		alternate_worn_layer = TABARD_LAYER
 	else

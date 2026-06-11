@@ -16,8 +16,8 @@
 			L.add_stress(stress2give)
 
 /obj/structure/roguemachine/musicbox
-	name = "wax music device"
-	desc = "A marvelous device invented to record sermons. Aleksandar Gemrald Sparks invented this machine to discover prophecies of Psydon's return but failed. It now brings us strange music from another realm."
+	name = "蜡筒音乐机"
+	desc = "一台为了记录布道而发明的奇妙装置。它如今为我们带来了来自异界的奇异音乐。"
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "music0"
 	density = TRUE
@@ -100,59 +100,59 @@
 
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 
-	var/button_selection = input(user, "What button do I press?", "\The [src]") as null | anything in list("Stop/Start","Change Song","Change Volume")
+	var/button_selection = input(user, "我要按哪个按钮？", "[src]") as null | anything in list("停止/开始","更换曲目","调节音量")
 	if(!Adjacent(user))
 		return
 	if(!button_selection)
-		to_chat(user, span_info("I change my mind..."))
+		to_chat(user, span_info("我改变主意了……"))
 		return
-	user.visible_message(span_info("[user] presses a button on \the [src]."),span_info("I press a button on \the [src]."))
+	user.visible_message(span_info("[user]按下了[src]上的一个按钮。"),span_info("我按下了[src]上的一个按钮。"))
 	playsound(loc, pick('sound/misc/keyboard_select (1).ogg','sound/misc/keyboard_select (2).ogg','sound/misc/keyboard_select (3).ogg','sound/misc/keyboard_select (4).ogg'), 100, FALSE, -1)
 
-	if(button_selection=="Stop/Start")
+	if(button_selection=="停止/开始")
 		toggle_music()
 
-	if(button_selection=="Change Song")
-		var/songlists_selection = input(user, "Which song list?", "\The [src]") as null | anything in list("OTHERWORLDLY", "GENERIC", "OLDSCHOOL")
+	if(button_selection=="更换曲目")
+		var/songlists_selection = input(user, "选择哪一组曲目？", "[src]") as null | anything in list("异界", "通用", "旧式")
 		playsound(loc, pick('sound/misc/keyboard_select (1).ogg','sound/misc/keyboard_select (2).ogg','sound/misc/keyboard_select (3).ogg','sound/misc/keyboard_select (4).ogg'), 100, FALSE, -1)
-		user.visible_message(span_info("[user] presses a button on \the [src]."),span_info("I press a button on \the [src]."))
+		user.visible_message(span_info("[user]按下了[src]上的一个按钮。"),span_info("我按下了[src]上的一个按钮。"))
 		var/chosen_songlists_selection = null
 		switch(songlists_selection)
-			if("OTHERWORLDLY")
+			if("异界")
 				chosen_songlists_selection = songlist_otherworldly
-			if("GENERIC")
+			if("通用")
 				chosen_songlists_selection = songlist_generic
-			if("OLDSCHOOL")
+			if("旧式")
 				chosen_songlists_selection = songlist_oldschool
-		var/song_selection = input(user, "Which song do I play?", "\The [src]") as null | anything in chosen_songlists_selection
+		var/song_selection = input(user, "我要播放哪首曲子？", "[src]") as null | anything in chosen_songlists_selection
 		if(!Adjacent(user))
 			return
 		if(!song_selection)
-			to_chat(user, span_info("I change my mind..."))
+			to_chat(user, span_info("我改变主意了……"))
 			return
 		playsound(loc, pick('sound/misc/keyboard_select (1).ogg','sound/misc/keyboard_select (2).ogg','sound/misc/keyboard_select (3).ogg','sound/misc/keyboard_select (4).ogg'), 100, FALSE, -1)
-		user.visible_message(span_info("[user] presses a button on \the [src]."),span_info("I press a button on \the [src]."))
+		user.visible_message(span_info("[user]按下了[src]上的一个按钮。"),span_info("我按下了[src]上的一个按钮。"))
 		curfile = chosen_songlists_selection[song_selection]
 		stop_playing()
 		start_playing()
 
-	if(button_selection=="Change Volume")
-		var/volume_selection = input(user, "How loud do you wish me to be?", "\The [src] (Volume Currently : [curvol]/[100])") as num|null
+	if(button_selection=="调节音量")
+		var/volume_selection = input(user, "你想把音量调到多大？", "[src]（当前音量：[curvol]/[100]）") as num|null
 		if(!Adjacent(user))
 			return
 		if(!volume_selection)
-			to_chat(user, span_info("I change my mind..."))
+			to_chat(user, span_info("我改变主意了……"))
 			return
 		if(volume_selection == curvol)
-			to_chat(user, span_info("The dial is already set to that volume!"))
+			to_chat(user, span_info("旋钮本来就在这个音量上！"))
 			return
 		playsound(loc, pick('sound/misc/keyboard_select (1).ogg','sound/misc/keyboard_select (2).ogg','sound/misc/keyboard_select (3).ogg','sound/misc/keyboard_select (4).ogg'), 100, FALSE, -1)
-		user.visible_message(span_info("[user] presses a button on \the [src]."),span_info("I press a button on \the [src]."))
+		user.visible_message(span_info("[user]按下了[src]上的一个按钮。"),span_info("我按下了[src]上的一个按钮。"))
 		volume_selection = clamp(volume_selection, 1, 100)
 		if(curvol<volume_selection)
-			to_chat(user, span_info("I make \the [src] get louder."))
+			to_chat(user, span_info("我把[src]调得更响了。"))
 		else
-			to_chat(user, span_info("I make \the [src] get quieter."))
+			to_chat(user, span_info("我把[src]调得更轻了。"))
 		curvol = volume_selection
 		stop_playing()
 		start_playing()

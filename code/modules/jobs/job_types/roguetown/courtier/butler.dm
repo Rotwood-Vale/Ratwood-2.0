@@ -1,5 +1,6 @@
 /datum/job/roguetown/butler // really need to re-name all these when the codebase isn't a fork and search will update for the peasants...
 	title = "Seneschal"
+	display_title = "总管"
 	flag = BUTLER
 	department_flag = COURTIERS
 	faction = "Station"
@@ -8,7 +9,7 @@
 
 	allowed_races = ACCEPTED_RACES
 
-	tutorial = "Servitude unto death; that is your motto. You are the manor's major-domo, commanding over the house servants and seeing to the administrative affairs, day to day of the estate. This role has style options for chief butlers and head maids."
+	tutorial = "侍奉至死，这便是你的信条。你是庄园的内务总管，统领宅邸仆役，打点这片产业日复一日的行政事务。这个职位还允许你在首席男仆与女仆长两种风格间作出选择。"
 	outfit = /datum/outfit/job/roguetown/seneschal
 	advclass_cat_rolls = list(CTAG_SENESCHAL = 20)
 	display_order = JDO_BUTLER
@@ -29,8 +30,8 @@
 	category_tags = list(CTAG_SENESCHAL)
 
 /datum/advclass/seneschal/seneschal
-	name = "Seneschal"
-	tutorial = "While still expected to fill in for the duties of the household servantry as needed, you have styled yourself as a figure beyond them."
+	name = "总管"
+	tutorial = "虽然你仍需在必要时亲自补上宅邸仆役的差事，但你早已把自己塑造成凌驾于他们之上的人物。"
 	outfit = /datum/outfit/job/roguetown/seneschal/seneschal
 	subclass_stats = list(
 		STATKEY_INT = 2,
@@ -80,8 +81,8 @@
 	id = /obj/item/scomstone/bad
 
 /datum/advclass/seneschal/headmaid
-	name = "Head Maid"
-	tutorial = "Whether you were promoted from one or just like the frills, you stylize yourself as a head maid. Your duties and talents remain the same, though."
+	name = "女仆长"
+	tutorial = "无论你是真的从女仆里升上来的，还是单纯偏爱那一身花边，你都把自己打扮成了女仆长的模样。不过你的职责与本领并无不同。"
 	outfit = /datum/outfit/job/roguetown/seneschal/headmaid
 	subclass_stats = list(
 		STATKEY_INT = 2,
@@ -115,8 +116,8 @@
 	id = /obj/item/scomstone/bad
 
 /datum/advclass/seneschal/chiefbutler
-	name = "Chief Butler"
-	tutorial = "You are the ruling class of butler and your ability to clear your throat and murmur 'I say' is without peer. Your duties and talents as seneschal remain the same, though."
+	name = "首席男仆"
+	tutorial = "你是男仆中的上等人物，清嗓子再低声来一句“容我一言”的本事无人能及。不过作为总管，你的职责与才能依旧不变。"
 	outfit = /datum/outfit/job/roguetown/seneschal/chiefbutler
 	subclass_stats = list(
 		STATKEY_INT = 2,

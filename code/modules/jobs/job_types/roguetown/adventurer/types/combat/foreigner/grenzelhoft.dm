@@ -2,12 +2,12 @@
 //Big sword. Lack of armour. Tear that guy in half and toss him across the room!!!!
 //Before you complain, go look at Battlemaster.
 /datum/advclass/foreigner/bluthund
-	name = "Grenzelhoft Bluthund"
-	tutorial = "Grenzelhoftian mercenaries are one of a kind. \
-	In a world of cheats, blaggards and broken oaths? They stand firm. \
-	A guild of individuals who, once under contract, will follow it to the letter. \
-	For some reason, whether glory or madness, you'd gone against that. Branded an outcast - a 'bluthund'. \
-	You yet retain your equipment, for they could not strip that of you. Unlike your titles."
+	name = "格伦泽尔霍夫特 血犬"
+	tutorial = "格伦泽尔霍夫特 的佣兵自成一格。 \
+	在这充满欺诈、无赖与背誓者的世道里，他们仍会站稳脚跟。 \
+	那是一个由个体组成的行会，一旦签下契约，便会逐字逐句履行到底。 \
+	可不知是出于荣耀还是疯狂，你偏偏违逆了这一切，于是被烙成弃徒, 一条“血犬”。 \
+	不过他们终究没能夺走你的装备，只夺走了你的头衔。"
 	allowed_races = RACES_ALL_KINDS
 	traits_applied = list(TRAIT_STEELHEARTED)
 	outfit = /datum/outfit/job/roguetown/adventurer/bluthund
@@ -50,16 +50,16 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	if(H.mind)
-		var/grenzel_purpose = list("Zweihander","Hellebardier (Halberd)","Armbrustschütze (Crossbow + Messer)", "Eagle's Beak")
-		var/weapon_choice = input(H, "Choose your ALLY", "WOE THE CONTRACT") as anything in grenzel_purpose
+		var/grenzel_purpose = list("双手剑士","戟兵（长戟）","弩手（十字弩 + 单刃刀）", "鹰嘴锤")
+		var/weapon_choice = input(H, "选择你的惯用兵器。", "契约既毁，祸亦随之") as anything in grenzel_purpose
 		switch(weapon_choice)
-			if("Zweihander")
+			if("双手剑士")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 				r_hand = /obj/item/rogueweapon/greatsword/grenz
-			if("Hellebardier (Halberd)")
+			if("戟兵（长戟）")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 				r_hand = /obj/item/rogueweapon/halberd
-			if("Armbrustschütze (Crossbow + Messer)")
+			if("弩手（十字弩 + 单刃刀）")
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/tracking, 3, TRUE)
@@ -69,6 +69,6 @@
 				beltr = /obj/item/rogueweapon/scabbard
 				H.change_stat(STATKEY_STR, -1)
 				H.change_stat(STATKEY_PER, 2) // so the boy can aim his crossbow and see further, maintain +7 stats total.
-			if("Eagle's Beak")
+			if("鹰嘴锤")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 				r_hand = /obj/item/rogueweapon/eaglebeak

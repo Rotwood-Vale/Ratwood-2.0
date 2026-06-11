@@ -15,23 +15,23 @@
 			S.cd = "/character[i]"
 			S["real_name"] >> name
 			if(!name)
-				name = "Slot[i]"
+				name = "存档位[i]"
 			choices[name] = i
 
-	choices += "Choose A Name"
+	choices += "自己取名"
 
-	var/choice = tgui_input_list(src, "Would you like to play as one of your characters or choose a name yourself?","CHOOSE A HERO", choices)
+	var/choice = tgui_input_list(src, "你想使用已有角色，还是自己取一个名字？","选择英雄", choices)
 	if(QDELETED(src))
 		return
 
-	if(!client?.prefs || choice == "Choose A Name")
+	if(!client?.prefs || choice == "自己取名")
 		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup)), 3 SECONDS)
 		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, choose_pronouns_and_body)), 7 SECONDS)
 		return
 	else
 		choice = choices[choice]
 		if(!client.prefs.load_character(choice))
-			to_chat(src, span_userdanger("Char load failed, choosing name, body and pronouns now."))
+			to_chat(src, span_userdanger("角色加载失败，现在将改为选择名字、身体与代称。"))
 			addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup)), 3 SECONDS)
 			addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, choose_pronouns_and_body)), 7 SECONDS)
 		else

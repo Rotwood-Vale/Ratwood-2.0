@@ -1,6 +1,6 @@
 /obj/item/clothing/head/roguetown/paddedcap
-	name = "padded cap"
-	desc = "A modest arming cap."
+	name = "衬垫帽"
+	desc = "一顶朴素的武装软帽。"
 	icon_state = "armingcap"
 	item_state = "armingcap"
 	sleevetype = null
@@ -19,8 +19,8 @@
 
 /obj/item/clothing/head/roguetown/helmet/leather
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP
-	name = "leather helmet"
-	desc = "A helmet made of leather."
+	name = "皮革头盔"
+	desc = "一顶皮革制成的头盔。"
 	body_parts_covered = HEAD|HAIR|EARS|NOSE
 	icon_state = "leatherhelm"
 	armor = ARMOR_LEATHER
@@ -36,8 +36,8 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 	
 /obj/item/clothing/head/roguetown/helmet/leather/chapeau
-	name = "Chapeau a Naled"
-	desc = "A leather cap, armored with layers of especially crafted armored coins each baring wards against supernatural forces. The heavy closeable, face-obscuring flaps are both practical, to protect from sand and dust and frigid nights--and to ensure the Otavan aids were not violating Naledi customs with their uncovered faces.</br>They are heavily associated with the Poet-Historian Aalis Petit and her writings and songs about the campaign into Naledi and through her, adventurous bards of Otava. "
+	name = "纳莱德便帽"
+	desc = "一顶皮帽，以层层特制甲币加固，每一枚都刻有抵御超自然力量的护符。厚实可闭合的遮面垂片既很实用，能抵御风沙与寒夜，也能确保来自奥塔瓦的援助者不会因露面而触犯纳莱迪的习俗。</br>它与诗史学家阿莉丝·珀蒂及其记述纳莱迪远征的文字歌谣紧密相关，也因此常见于奥塔瓦的冒险吟游者。 "
 	icon_state = "chapnaled"
 	var/open_wear = TRUE
 	flags_inv = HIDEHAIR
@@ -85,8 +85,8 @@
 
 /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP
-	name = "volf helmet"
-	desc = "A leather helmet fashioned from a volf's head."
+	name = "沃尔夫头盔"
+	desc = "一顶由沃尔夫头颅制成的皮革头盔。"
 	body_parts_covered = HEAD|HAIR|EARS
 	icon_state = "volfhead"
 	item_state = "volfhead"
@@ -94,8 +94,8 @@
 	min_cold_protection_temperature = 50
 
 /obj/item/clothing/head/roguetown/helmet/leather/saiga
-	name = "saiga skull"
-	desc = "The skull of a fearsome saiga. Looks like it could withstand some damage."
+	name = "赛加骨盔"
+	desc = "一颗骇人的赛加羚头骨。看起来足以承受不少伤害。"
 	icon_state = "saigahead"
 	item_state = "saigahead"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
@@ -110,8 +110,8 @@
 	dropshrink = null
 
 /obj/item/clothing/head/roguetown/helmet/leather/advanced
-	name = "hardened leather helmet"
-	desc = "Sturdy, durable, flexible. A comfortable and reliable hood made of hardened leather."
+	name = "硬化皮革头盔"
+	desc = "结实、耐用、灵活。一顶由硬化皮革制成、舒适可靠的头盔。"
 	icon_state = "leatherhelm"
 	max_integrity = ARMOR_INT_HELMET_HARDLEATHER
 	sellprice = 15
@@ -125,8 +125,8 @@
 	salvage_result = /obj/item/natural/hide/cured
 
 /obj/item/clothing/head/roguetown/spellcasterhat
-	name = "spellsinger hat"
-	desc = "An oddly shaped hat made of tightly-sewn leather, commonly worn by spellswords."
+	name = "咒剑士帽"
+	desc = "一顶造型古怪、由紧密缝制皮革制成的帽子，常见于咒剑士。"
 	icon_state = "spellcasterhat"
 	item_state = "spellcasterhat"
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
@@ -141,8 +141,8 @@
 
 // Grenzel unique drip head. Pretend it is a secrete (A type of hat with a hidden helmet underneath). Same stats as kettle
 /obj/item/clothing/head/roguetown/grenzelhofthat
-	name = "grenzelhoft plume hat"
-	desc = "Whether it's monsters or fair maidens, a true Grenzelhoftian slays both. This hat contains a hidden metallic cap underneath to protect the head from blows."
+	name = "格伦泽尔霍夫羽饰帽"
+	desc = "无论怪物还是佳人，真正的格伦泽尔霍夫人都能一并征服。这顶帽子下方藏有金属内帽，可保护头部免受打击。"
 	icon_state = "grenzelhat"
 	item_state = "grenzelhat"
 	icon = 'icons/roguetown/clothing/head.dmi'
@@ -166,7 +166,7 @@
 /obj/item/clothing/head/roguetown/grenzelhofthat/attack_right(mob/user)
 	..()
 	if(!picked)
-		var/choice = input(user, "Choose a color.", "Grenzelhoft colors") as anything in GLOB.colorlist
+		var/choice = input(user, "选择一种颜色。", "格伦泽尔霍夫配色") as anything in GLOB.colorlist
 		var/playerchoice = GLOB.colorlist[choice]
 		picked = TRUE
 		detail_color = playerchoice
@@ -194,19 +194,19 @@
 
 //................ Briar Thorns ............... //	- Dendor Briar
 /obj/item/clothing/head/roguetown/padded/briarthorns
-	name = "briar thorns"
-	desc = "The pain of wearing it might distract you from the whispers of a mad God overpowering your sanity..."
+	name = "荆棘冠"
+	desc = "佩戴它带来的痛楚，也许能让你暂时忽略那位疯狂之神侵蚀理智的低语……"
 	icon_state = "briarthorns"
 
 /obj/item/clothing/head/roguetown/padded/briarthorns/pickup(mob/living/user)
 	. = ..()
-	to_chat(user, span_warning ("The thorns prick me."))
+	to_chat(user, span_warning ("荆棘刺痛了我。"))
 	user.adjustBruteLoss(4)
 
 //kazengite update
 /obj/item/clothing/head/roguetown/mentorhat
-	name = "worn bamboo hat"
-	desc = "A reinforced bamboo hat."
+	name = "旧竹笠"
+	desc = "一顶经过加固的竹笠。"
 	icon_state = "easthat"
 	item_state = "easthat"
 	armor = ARMOR_SPELLSINGER
@@ -216,8 +216,8 @@
 	body_parts_covered = HEAD|HAIR|EARS|NOSE|EYES
 
 /obj/item/clothing/head/roguetown/horsey
-	name = "head bit"
-	desc = "A restraining head piece made of reinforced leather."
+	name = "头部嚼具"
+	desc = "一件由加固皮革制成的束缚头具。"
 	icon_state = "hbit"
 	item_state = "hbit"
 	body_parts_covered = HEAD|FACE
@@ -225,8 +225,8 @@
 
 //Leather padded hood, ported from Scarlet Reach by RoachwithaRoach, from vide noir
 /obj/item/clothing/head/roguetown/helmet/leather/armorhood
-	name = "padded leather hood"
-	desc = "A padded leather hood with buckles."
+	name = "衬垫皮革兜帽"
+	desc = "一顶带搭扣的衬垫皮革兜帽。"
 	icon = 'modular_stonehedge/icons/clothing/armor/head.dmi'
 	mob_overlay_icon = 'modular_stonehedge/icons/clothing/armor/onmob/head.dmi'
 	icon_state = "studhood"
@@ -244,8 +244,8 @@
 	block2add = FOV_BEHIND
 
 /obj/item/clothing/head/roguetown/helmet/leather/armorhood/advanced
-	name = "studded leather hood"
-	desc = "A thick studded leather hood with buckles."
+	name = "铆钉皮革兜帽"
+	desc = "一顶厚实、带搭扣的铆钉皮革兜帽。"
 	icon_state = "studhood" //make into new sprite
 	item_state = "studhood"
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_NECK

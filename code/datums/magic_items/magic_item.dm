@@ -1,6 +1,6 @@
 /datum/magic_item
-	var/name = "Name of Magical Item Effect"
-	var/description = "A MAGICAL ITEM, WOW!"
+	var/name = "魔法物品效果名称"
+	var/description = "一个魔法物品，哇哦！"
 
 /datum/magic_item/proc/do_literally_anything_thanks()
 	return

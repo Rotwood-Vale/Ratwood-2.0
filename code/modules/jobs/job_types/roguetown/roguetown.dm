@@ -66,7 +66,7 @@
 			H.set_patron(default_patron || pick(preferredgods))
 		else
 			H.set_patron(default_patron || pick(possiblegods))
-		var/change_message = span_warning("[old_patron] had not endorsed my practices in my younger years. I've since grown accustomed to [H.patron].")
+		var/change_message = span_warning("[old_patron] 在我年轻时并不认可我的行径。时至今日，我已逐渐适应了 [H.patron] 的道路。")
 		if(H.client)
 			to_chat(H, change_message)
 		else
@@ -87,7 +87,7 @@
 		if(H.ckey)
 			H.mind?.job_bitflag = job_bitflag
 			if(check_crownlist(H.ckey))
-				H.mind.special_items["Champion Circlet"] = /obj/item/clothing/head/roguetown/crown/sparrowcrown
+				H.mind.special_items["冠军头环"] = /obj/item/clothing/head/roguetown/crown/sparrowcrown
 			give_special_items(H)
 		// Ensure Wretches are granted their antagonist datum at post-equip
 		if(H.mind.assigned_role == "Wretch" && !H.mind.has_antag_datum(/datum/antagonist/wretch))

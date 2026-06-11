@@ -18,13 +18,13 @@
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
 			C.unequip_everything()
-			C.visible_message(span_warning("[C]'s belongings fall off of [C.p_them()] as they shrink down!"),
-			span_danger("My belongings fall away as everything grows bigger!"))
+			C.visible_message(span_warning("[C]缩小时，身上的东西全都掉了下来！"),
+			span_danger("随着周围的一切都变大了，我身上的东西纷纷掉落！"))
 			if(ishuman(C))
 				var/mob/living/carbon/human/H = C
 				H.physiology.damage_resistance -= 100//carbons take double damage while shrunk
-	parent_atom.visible_message(span_warning("[parent_atom] shrinks down to a tiny size!"),
-	span_danger("Everything grows bigger!"))
+	parent_atom.visible_message(span_warning("[parent_atom]缩小到了微不足道的尺寸！"),
+	span_danger("周围的一切都变大了！"))
 	QDEL_IN(src, shrink_time)
 
 

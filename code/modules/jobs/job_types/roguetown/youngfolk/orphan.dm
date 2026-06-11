@@ -9,7 +9,7 @@
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_ADULT)
 
-	tutorial = "Dozens of people end up down on their luck in the kingdom of Psydonia every day. They sometimes make something of themselves but much more often die in the streets."
+	tutorial = "在 普赛多尼亚 王国里，每天都有几十号人走到穷途末路。他们偶尔也能挣出一点出路，但更多时候只是悄无声息地死在街头。"
 
 	outfit = /datum/outfit/job/roguetown/orphan
 	display_order = JDO_ORPHAN

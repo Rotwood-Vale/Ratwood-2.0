@@ -1,5 +1,6 @@
 /datum/job/roguetown/squire
 	title = "Squire"
+	display_title = "侍从"
 	flag = SQUIRE
 	department_flag = GARRISON
 	faction = "Station"
@@ -11,9 +12,8 @@
 	advclass_cat_rolls = list(CTAG_SQUIRE = 20)
 	job_traits = list(TRAIT_SQUIRE_REPAIR)
 
-	tutorial = "Your folks said you were going to be something, they had better aspirations for you than the life of a peasant. You practiced the basics \
-		in the field alongside your friends, swordfighting with sticks, chasing rabbits with grain flail, and helping around the house lifting heavy \
-		bags of grain. The Knight took notice of your potential and brought you on as his personal ward. You're going to be something someday."
+	tutorial = "你的家人总说你将来会有出息，他们对你的期待从来不止是做个农夫。你曾和伙伴们一起在田野里练基本功，拿木棍比剑，挥着连枷追兔子，也帮家里搬沉重的谷袋。\
+		骑士看中了你的潜力，把你收作亲自照看的侍从。总有一天，你会成就些什么。"
 	outfit = /datum/outfit/job/roguetown/squire
 	display_order = JDO_SQUIRE
 	give_bank_account = TRUE
@@ -46,9 +46,9 @@
 		addtimer(CALLBACK(L, TYPE_PROC_REF(/mob, cloak_and_title_setup)), 50)
 
 /datum/advclass/squire/lancer
-	name = "Lancer Squire"
-	tutorial = "A hopeful for the next generation of knightly mounted lancers and infantry pike specialists, \
-	your training with polearms sets you apart from other squires."
+	name = "枪骑侍从"
+	tutorial = "你是下一代骑士枪骑兵与步战长枪手的候补。\
+	你在长柄兵器上的训练，让你与其他侍从显得截然不同。"
 	outfit = /datum/outfit/job/roguetown/squire/lancer
 
 	category_tags = list(CTAG_SQUIRE)
@@ -97,9 +97,9 @@
 		)
 
 /datum/advclass/squire/footman
-	name = "Footman Squire"
-	tutorial = "Your training has been singularly focused on the intricacies of sword, a weapon whose versatility \
-	belies the difficulty of its use."
+	name = "步战侍从"
+	tutorial = "你的训练几乎全都围绕剑术展开。\
+	剑这种武器看似灵活百搭，真正用好却并不轻松。"
 	outfit = /datum/outfit/job/roguetown/squire/footman
 
 	category_tags = list(CTAG_SQUIRE)
@@ -146,21 +146,20 @@
 
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Iron Sword","Cudgel",)
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("铁剑","棍棒",)
+		var/weapon_choice = input(H, "选择你的武器。", "拿起武器") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Iron Sword")
+			if("铁剑")
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/iron
-			if("Cudgel")
+			if("棍棒")
 				beltr = /obj/item/rogueweapon/mace/cudgel
 
 /datum/advclass/squire/skirmisher
-	name = "Irregular Squire"
-	tutorial = "As militaries become more flexible and tactics more moderne the importance of irregular troops \
-	has become more apparent, and hopefuls such as yourself have been trained into the future of elite skirmisher \
-	troops."
+	name = "游击侍从"
+	tutorial = "随着军队编制愈发灵活、战术也日趋新式，不规则部队的重要性正日益凸显。\
+	像你这样的年轻候补，正被训练成未来的精锐游击兵。"
 	outfit = /datum/outfit/job/roguetown/squire/skirmisher
 
 	category_tags = list(CTAG_SQUIRE)

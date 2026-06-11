@@ -12,8 +12,8 @@
 	var/base_icon_state
 	var/can_spawn = TRUE
 	resistance_flags = FLAMMABLE
-	var/list/categories = list("All") // Default categories
-	var/current_category = "All"      // Default selected category
+	var/list/categories = list("全部") // Default categories
+	var/current_category = "全部"      // Default selected category
 	var/current_recipe = null         // Currently viewed recipe
 	var/search_query = ""             // Current search query
 
@@ -23,7 +23,7 @@
 	generate_categories()
 
 /obj/item/recipe_book/proc/generate_categories()
-	categories = list("All") // Reset and add default
+	categories = list("全部") // Reset and add default
 
 	// Gather categories from recipes themselves
 	for(var/atom/path as anything in types)
@@ -280,13 +280,13 @@
 		</style>
 
 		<body>
-			<h1>Recipe Book</h1>
+			<h1>配方书</h1>
 
 			<div class="book-content">
 				<div class="sidebar">
 					<!-- Search box (now with live filtering) -->
 					<input type="text" class="search-box" id="searchInput"
-						placeholder="Search recipes..." value="[search_query]">
+						placeholder="搜索配方..." value="[search_query]">
 
 					<!-- Categories -->
 					<div class="categories">
@@ -327,7 +327,7 @@
 
 				// Check if this recipe belongs to the current category
 				var/should_show = TRUE
-				if(current_category != "All")
+				if(current_category != "全部")
 					var/category = get_recipe_category(sub_path)
 					if(category != current_category)
 						should_show = FALSE
@@ -352,7 +352,7 @@
 			html += "<a class='recipe-link' href='byond://?src=\ref[src];action=view_recipe&recipe=[path]' style='[display_style]'>[recipe_name]</a>"
 
 	html += {"
-						<div id="noMatchesMsg" class="no-matches">No matching recipes found.</div>
+						<div id="noMatchesMsg" class="no-matches">未找到匹配的配方。</div>
 					</div>
 				</div>
 
@@ -363,7 +363,7 @@
 	if(current_recipe)
 		html += generate_recipe_html(current_recipe, user)
 	else
-		html += "<div class='recipe-content'><p>Select a recipe from the list to view details.</p></div>"
+		html += "<div class='recipe-content'><p>从列表中选择一个配方以查看详情。</p></div>"
 
 	html += {"
 				</div>
@@ -423,13 +423,13 @@
 
 /obj/item/recipe_book/proc/generate_recipe_html(path, mob/user)
 	if(!ispath(path))
-		return "<div class='recipe-content'><p>Invalid recipe selected.</p></div>"
+		return "<div class='recipe-content'><p>所选配方无效。</p></div>"
 
 	var/html = "<div class='recipe-content'>"
 
 	// Get recipe details
-	var/recipe_name = "Unknown Recipe"
-	var/recipe_description = "No description available."
+	var/recipe_name = "未知配方"
+	var/recipe_description = "暂无描述。"
 	var/recipe_html = ""
 
 	// Create a temporary instance to get the actual recipe content that would normally be shown in show_menu

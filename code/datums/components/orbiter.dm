@@ -98,7 +98,7 @@
 	orbiter.transform = initial_transform
 	orbiter.forceMove(get_turf(parent))
 	if(!istype(orbiter, /mob/dead/observer/screye))
-		to_chat(orbiter, span_notice("Now orbiting [parent]."))
+		to_chat(orbiter, span_notice("现在开始环绕[parent]。"))
 
 ///Move the orbiter in a circle with pixel offsets. The sprite size does not shift the circle.
 /datum/component/orbiter/proc/animate_pixel_orbit(atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments)

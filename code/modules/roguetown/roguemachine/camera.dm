@@ -1,6 +1,6 @@
 /obj/structure/roguemachine/camera
-	name = "eerie face"
-	desc = "these eerie trinkets dangle from awnings, etched into the shape of a leering face. Hung above protected areas, to give interlopers a forboding sense of Being Watched..."
+	name = "诡异面孔"
+	desc = "这些诡异的小饰物悬挂在檐下，被雕成一张狞笑的面孔。它们挂在受保护区域上方，让闯入者油然生出一种被监视的阴森感……"
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "camera-mid"
 	density = FALSE
@@ -31,7 +31,7 @@
 	set_light(1, 1, 1, l_color = "#ff0d0d")
 	SSroguemachine.cameras += src
 	number = SSroguemachine.cameras.len
-	name = "face #[number]"
+	name = "面孔 #[number]"
 
 /obj/structure/roguemachine/camera/Destroy()
 	set_light(0)

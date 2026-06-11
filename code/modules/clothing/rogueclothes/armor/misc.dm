@@ -1,8 +1,8 @@
 //................ Corset.................... //
 /obj/item/clothing/suit/roguetown/armor/corset
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
-	name = "corset"
-	desc = "A leather binding to constrict one's figure... and lungs."
+	name = "束身衣"
+	desc = "束紧身形……也束紧肺部的皮革绑具。"
 	icon_state = "corset"
 	armor_class = ARMOR_CLASS_LIGHT
 	body_parts_covered = CHEST
@@ -11,8 +11,8 @@
 
 
 /obj/item/clothing/suit/roguetown/armor/longcoat
-	name = "longcoat"
-	desc = "A padded longcoat meant to keep you warm in the frigid winters"
+	name = "长大衣"
+	desc = "带衬垫的长大衣，专为在严冬中为你保暖而制。"
 	icon_state = "longcoat"
 	color = CLOTHING_BLACK
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
@@ -38,8 +38,8 @@
 	color = "#3c3a38"
 
 /obj/item/clothing/suit/roguetown/armor/workervest
-	name = "striped tunic"
-	desc = "This cheap tunic is often used by sturdy laborous men and women."
+	name = "条纹束衣"
+	desc = "这件廉价束衣常被结实勤劳的男女穿着。"
 	icon_state = "workervest"
 	armor = ARMOR_PADDED_BAD
 	blocksound = SOFTHIT
@@ -62,8 +62,8 @@
 	..()
 
 /obj/item/clothing/suit/roguetown/armor/silkcoat
-	name = "silk coat"
-	desc = "A padded dressing made from the finest silks."
+	name = "丝绸外衣"
+	desc = "由最上等丝绸制成的加垫外衣。"
 	icon_state = "bliaut"
 	color = null
 	armor = ARMOR_SPELLSINGER

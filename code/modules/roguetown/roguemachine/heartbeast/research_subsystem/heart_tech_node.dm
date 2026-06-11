@@ -1,7 +1,7 @@
 /datum/chimeric_tech_node
 	// Make sure this identifier is unique
-	var/name = "Base Node"
-	var/description = "This is the default description."
+	var/name = "基础节点"
+	var/description = "这是默认描述。"
 	var/tech_path // The path of the actual implementation datum/object
 	var/string_id = "BASE_NODE" // Used to find the datums in the tech subsytem
 
@@ -17,16 +17,16 @@
 
 /// HEALING MIRACLE TECHS
 /datum/chimeric_tech_node/awaken_healing
-	name = "Awaken divine regeneration"
-	description = "Increases the healing of most healing miracles significantly."
+	name = "唤醒神圣再生"
+	description = "显著提升大多数治疗神迹的治疗效果。"
 	string_id = "HEAL_TIER1"
 	required_tier = 1
 	cost = 15
 	selection_weight = 15
 
 /datum/chimeric_tech_node/enhanced_healing
-	name = "Enhance divine regeneration"
-	description = "Increases the healing of most healing miracles slightly."
+	name = "强化神圣再生"
+	description = "小幅提升大多数治疗神迹的治疗效果。"
 	string_id = "HEAL_TIER2"
 	required_tier = 3
 	cost = 85
@@ -34,8 +34,8 @@
 	prerequisites = list("HEAL_TIER1")
 
 /datum/chimeric_tech_node/awaken_resurrection
-	name = "Awaken divine resurrection"
-	description = "Decreases the cooldown of resurrection miracles significantly."
+	name = "唤醒神圣复生"
+	description = "显著缩短复生类神迹的冷却时间。"
 	string_id = "REVIVE_TIER1"
 	required_tier = 2
 	cost = 40
@@ -43,8 +43,8 @@
 	prerequisites = list("HEAL_TIER1")
 
 /datum/chimeric_tech_node/enhanced_resurrection
-	name = "Enhance divine resurrection"
-	description = "Decreases the cost of resurrection miracles significantly."
+	name = "强化神圣复生"
+	description = "显著降低复生类神迹的消耗。"
 	string_id = "REVIVE_TIER2"
 	required_tier = 3
 	cost = 120
@@ -53,8 +53,8 @@
 
 // CRAFTING RECIPE TECHS
 /datum/chimeric_tech_node/residual_frankenbrew
-	name = "Impure lux filtration"
-	description = "Allows making a small amount of revival elixer for fulmenor chairs out of impure lux."
+	name = "不纯 lux 过滤"
+	description = "允许从不纯 lux 中提炼出少量供 fulmenor 椅使用的复生药剂。"
 	string_id = "LUX_FILTRATION"
 	required_tier = 1
 	cost = 5
@@ -62,8 +62,8 @@
 	is_recipe_node = TRUE
 
 /datum/chimeric_tech_node/meat_decoy
-	name = "meat decoys"
-	description = "Allows making flesh decoys out of fresh meat to distract hostile, unintelligent creechurs."
+	name = "肉诱饵"
+	description = "允许用新鲜肉块制作血肉诱饵，以分散敌对、低智 creechurs 的注意力。"
 	string_id = "FLESH_DECOYS"
 	required_tier = 1
 	cost = 5
@@ -71,8 +71,8 @@
 	is_recipe_node = TRUE
 
 /datum/chimeric_tech_node/viscera_decoy
-	name = "Visceral decoys"
-	description = "Allows making flesh decoys out of viscera instead of fresh meat."
+	name = "脏器诱饵"
+	description = "允许用内脏而非新鲜肉块制作血肉诱饵。"
 	string_id = "VISCERA_DECOYS"
 	required_tier = 1
 	cost = 5
@@ -81,8 +81,8 @@
 	prerequisites = list("FLESH_DECOYS")
 
 /datum/chimeric_tech_node/black_rose
-	name = "Black Rose Synthesis"
-	description = "Allows crafting of black roses from corrupted flesh and beast blood. It is believed heartbeasts were in part created by Pestra herself to control the black rot that lingers within these roses."
+	name = "黑玫瑰合成"
+	description = "允许用腐化血肉与兽血制作黑玫瑰。人们相信，heartbeasts 某种程度上正是由 佩斯特拉 亲手塑造，以压制这些玫瑰中潜伏的黑腐。"
 	string_id = "BLACK_ROSE"
 	required_tier = 4
 	cost = 100
@@ -91,8 +91,8 @@
 	is_recipe_node = TRUE
 
 /datum/chimeric_tech_node/corpse_ticks
-	name = "Corpse Ticks"
-	description = "Allows leechticks to attach to dead bodies to extract their lux"
+	name = "尸蜱"
+	description = "允许 leechticks 附着在尸体上，抽取其中的 lux。"
 	string_id = "CORPSE_TICKS"
 	required_tier = 1
 	cost = 5
@@ -100,16 +100,16 @@
 
 /// INFESTATION CHARGE CAPACITY TECHS
 /datum/chimeric_tech_node/infestation_capacity_1
-	name = "Enhanced Infestation Capacity"
-	description = "Increases maximum infestation charges to 5."
+	name = "强化感染容量"
+	description = "将感染的最大充能提升至 5。"
 	string_id = "INFESTATION_TIER1"
 	required_tier = 1
 	cost = 20
 	selection_weight = 10
 
 /datum/chimeric_tech_node/infestation_capacity_2
-	name = "Superior Infestation Capacity"
-	description = "Increases maximum infestation charges to 9."
+	name = "卓越感染容量"
+	description = "将感染的最大充能提升至 9。"
 	string_id = "INFESTATION_TIER2"
 	required_tier = 2
 	cost = 30
@@ -117,8 +117,8 @@
 	prerequisites = list("INFESTATION_TIER1")
 
 /datum/chimeric_tech_node/infestation_capacity_3
-	name = "Reveal The Divine Gift Of Pestra"
-	description = "Increases maximum infestation charges to 10. At 10 charges, Master pestrans gain access to Divine Rebirth."
+	name = "揭示 佩斯特拉 的神赐"
+	description = "将感染的最大充能提升至 10。达到 10 层充能时，高阶 佩斯特拉 信徒可获得 Divine Rebirth。"
 	string_id = "INFESTATION_TIER3"
 	required_tier = 3
 	cost = 50
@@ -126,16 +126,16 @@
 	prerequisites = list("INFESTATION_TIER2")
 
 /datum/chimeric_tech_node/infestation_rot_snacks
-	name = "Food Contamination"
-	description = "Allows infestation to be cast on food items, rotting them and granting half a charge."
+	name = "食物污染"
+	description = "允许对食物施加感染，使其腐烂，并获得半层充能。"
 	string_id = "INFESTATION_ROT_SNACKS"
 	required_tier = 1
 	cost = 8
 	selection_weight = 4
 
 /datum/chimeric_tech_node/infestation_rot_multiple_1
-	name = "Spread Contamination"
-	description = "Infestation now affects 1 additional nearby food item when cast on snacks."
+	name = "扩散污染"
+	description = "当感染施加在零食上时，现在会额外影响附近 1 个食物。"
 	string_id = "INFESTATION_ROT_MULTIPLE_1"
 	required_tier = 2
 	cost = 25
@@ -143,8 +143,8 @@
 	prerequisites = list("INFESTATION_ROT_SNACKS")
 
 /datum/chimeric_tech_node/infestation_rot_multiple_2
-	name = "Mass Contamination"
-	description = "Infestation now affects 3 additional nearby food items when cast on snacks."
+	name = "群体污染"
+	description = "当感染施加在零食上时，现在会额外影响附近 3 个食物。"
 	string_id = "INFESTATION_ROT_MULTIPLE_2"
 	required_tier = 3
 	cost = 40
@@ -152,8 +152,8 @@
 	prerequisites = list("INFESTATION_ROT_MULTIPLE_1")
 
 /datum/chimeric_tech_node/infestation_attack_vector
-	name = "Virulent blade"
-	description = "Pestilent blade now has a small chance to trigger when landing a successful blow, even whilst the target isn't infected."
+	name = "毒烈之刃"
+	description = "Pestilent blade 现在在成功命中时有小概率触发，即使目标尚未被感染。"
 	string_id = "INFESTATION_ATTACK_VECTOR"
 	required_tier = 1
 	cost = 5

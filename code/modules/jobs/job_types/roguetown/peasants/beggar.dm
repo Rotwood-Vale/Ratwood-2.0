@@ -1,5 +1,6 @@
 /datum/job/roguetown/beggar
 	title = "Beggar"
+	display_title = "乞丐"
 	flag = BEGGAR
 	department_flag = PEASANTS
 	faction = "Station"
@@ -15,7 +16,7 @@
 	min_pq = -30
 	max_pq = null
 
-	tutorial = "The stench of your piss-laden clothes doesn't bug you anymore, the glances of disgust and loathing others give you is just a friendly greeting after all! The only reason you've not been killed already is because Volfs are known to be repelled by the stench of decaying flesh. You're going to be a solemn reminder what happens when something unwanted is born into this world."
+	tutorial = "你那身浸透尿骚味的破衣早已熏不着自己了，旁人投来的厌恶与嫌憎目光，如今在你眼里都像是一种亲切问候！你之所以还没被人顺手宰掉，不过是因为据说 沃尔夫 会厌恶腐肉的臭气。你会成为一个活生生的沉痛提醒，告诉世人：这世上若有不该降生之物落地，会变成什么模样。"
 	display_order = JDO_VAGRANT
 	show_in_credits = FALSE
 	can_random = FALSE
@@ -67,8 +68,8 @@
 		H.STALUC = rand(1, 20)
 		H.change_stat(STATKEY_CON, -rand(0, 2))
 		H.change_stat(STATKEY_WIL, -rand(0, 2))
-		H.real_name = "[H.real_name] the Wise"
-		H.name = "[H.name] the Wise"
+		H.real_name = "[H.real_name] 贤者"
+		H.name = "[H.name] 贤者"
 		H.facial_hairstyle = "Knowledge"
 		H.update_hair()
 		H.age = AGE_OLD
@@ -126,10 +127,10 @@
 	ADD_TRAIT(H, TRAIT_NASTY_EATER, TRAIT_GENERIC)
 
 /datum/outfit/job/roguetown/vagrant
-	name = "Beggar"
+	name = "乞丐"
 	/// Whether or not we get wise gear and stats
 	var/is_wise = FALSE
 
 /datum/outfit/job/roguetown/vagrant/wise
-	name = "Wise Beggar"
+	name = "贤者乞丐"
 	is_wise = TRUE

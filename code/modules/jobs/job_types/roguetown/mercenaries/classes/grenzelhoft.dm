@@ -1,6 +1,6 @@
 /datum/advclass/mercenary/grenzelhoft
-	name = "Doppelsoldner"
-	tutorial = "You are a Doppelsöldner - \"Double-pay Mercenary\" - an experienced frontline swordsman trained by the Zenitstadt fencing guild."
+	name = "双饷佣兵"
+	tutorial = "你是一名 双饷佣兵，也就是所谓的“双饷佣兵”，是由 天顶城 剑术行会训练出的资深前线剑士。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/grenzelhoft
@@ -35,16 +35,16 @@
 
 /datum/outfit/job/roguetown/mercenary/grenzelhoft/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are a Doppelsöldner - \"Double-pay Mercenary\" - an experienced frontline swordsman trained by the Zenitstadt fencing guild."))
+	to_chat(H, span_warning("你是一名 双饷佣兵，也就是所谓的“双饷佣兵”，是由 天顶城 剑术行会训练出的资深前线剑士。"))
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_half_plate
 	if(H.mind)
-		var/weapons = list("Zweihander", "Kriegmesser & Buckler")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("双手巨剑", "战刀与小圆盾")
+		var/weapon_choice = input(H, "选择你的武器。", "整备武装") as anything in weapons
 		switch(weapon_choice)
-			if("Zweihander")
+			if("双手巨剑")
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				r_hand = /obj/item/rogueweapon/greatsword/grenz
-			if("Kriegmesser & Buckler") // Buckler cuz they have no shield skill.
+			if("战刀与小圆盾") // Buckler cuz they have no shield skill.
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/long/kriegmesser
 				backl = /obj/item/rogueweapon/shield/buckler
@@ -68,8 +68,8 @@
 	H.merctype = 7
 
 /datum/advclass/mercenary/grenzelhoft/halberdier
-	name = "Hellebardier"
-	tutorial = "You're an experienced soldier skilled in the use of polearms and axes. Your equals make up the bulk of the mercenary guild's forces."
+	name = "戟兵"
+	tutorial = "你是身经百战的老兵，擅使长柄武器与战斧。像你这样的人构成了佣兵行会武装的中坚。"
 	outfit = /datum/outfit/job/roguetown/mercenary/grenzelhoft_halberdier
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
 	subclass_stats = list(
@@ -97,18 +97,18 @@
 
 /datum/outfit/job/roguetown/mercenary/grenzelhoft_halberdier/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You're an experienced soldier skilled in the use of polearms and axes. Your equals make up the bulk of the mercenary guild's forces."))
+	to_chat(H, span_warning("你是身经百战的老兵，擅使长柄武器与战斧。像你这样的人构成了佣兵行会武装的中坚。"))
 	backl = /obj/item/rogueweapon/scabbard/gwstrap
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_half_plate
 	if(H.mind)
-		var/weapons = list("Halberd", "Partizan", "Eagle's Beak")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("戟斧", "战戟", "鹰喙锤")
+		var/weapon_choice = input(H, "选择你的武器。", "拿起武器") as anything in weapons
 		switch(weapon_choice)
-			if("Halberd")
+			if("戟斧")
 				r_hand = /obj/item/rogueweapon/halberd
-			if("Partizan")
+			if("战戟")
 				r_hand = /obj/item/rogueweapon/spear/partizan
-			if("Eagle's Beak")
+			if("鹰喙锤")
 				r_hand = /obj/item/rogueweapon/eaglebeak
 	//General gear regardless of class.
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
@@ -131,8 +131,8 @@
 
 //crossbow and axe class. Rearguard. Utility skills, no medium armor, no dodge expert. This is NOT a go-face-first-into-war class.
 /datum/advclass/mercenary/grenzelhoft/crossbowman
-	name = "Armbrustschütze"
-	tutorial = "You're a proved marksman with a crossbow, and learned how to set up camp and defenses in the wild. The guild needs you."
+	name = "弩手"
+	tutorial = "你是一名久经证明的十字弩射手，也学会了如何在荒野中扎营并布设防线。行会需要你这样的人。"
 	outfit = /datum/outfit/job/roguetown/mercenary/grenzelhoft_crossbowman
 	traits_applied = list( TRAIT_STEELHEARTED)
 	subclass_stats = list(
@@ -165,17 +165,17 @@
 
 /datum/outfit/job/roguetown/mercenary/grenzelhoft_crossbowman/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You're a proved marksman with a crossbow, and learned how to set up camp and defenses in the wild. The guild needs you."))
+	to_chat(H, span_warning("你是一名久经证明的十字弩射手，也学会了如何在荒野中扎营并布设防线。行会需要你这样的人。"))
 	beltr = /obj/item/quiver/bolts
 	beltl = /obj/item/rogueweapon/stoneaxe/woodcut/steel
 	r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 	if(H.mind)
-		var/armor_options = list("Light Brigandine", "Studded Leather Vest")
-		var/armor_choice = input(H, "Choose your armor.", "DRESS UP") as anything in armor_options
+		var/armor_options = list("轻型布面甲", "铆钉皮背心")
+		var/armor_choice = input(H, "选择你的护甲。", "整备着装") as anything in armor_options
 		switch(armor_choice)
-			if("Light Brigandine")
+			if("轻型布面甲")
 				armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light	// find a smithy to fix it
-			if("Studded Leather Vest")
+			if("铆钉皮背心")
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/studded		// or maintain it yourself!
 	//General gear regardless of class.
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
@@ -197,8 +197,8 @@
 	H.merctype = 7
 
 /datum/advclass/mercenary/grenzelhoft/mage
-	name = "Gefechtsgelehrter"
-	tutorial = "You are a Gefechtsgelehrter - \"Combat Scholar\" - A proud magos from the Celestial Academy of Magos, who's skills in Siege Magic and Arcyne Physics are unmatched."
+	name = "战阵学者"
+	tutorial = "你是一名 战阵学者，也就是“战阵学者”，是出身 天穹魔导学院 的骄傲法师，其在攻城魔法与奥术力学上的造诣无可匹敌。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/grenzelhoft_mage
@@ -232,7 +232,7 @@
 
 /datum/outfit/job/roguetown/mercenary/grenzelhoft_mage/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are a Gefechtsgelehrter - \"Combat Scholar\" - A proud magos from the Celestial Academy of Magos, who's skills in Siege Magic and Arcyne Physics are unmatched."))
+	to_chat(H, span_warning("你是一名 战阵学者，也就是“战阵学者”，是出身 天穹魔导学院 的骄傲法师，其在攻城魔法与奥术力学上的造诣无可匹敌。"))
 	belt = /obj/item/storage/belt/rogue/leather/battleskirt
 	backl = /obj/item/rogueweapon/woodstaff/emerald/blacksteelstaff
 	cloak = /obj/item/clothing/cloak/stabard/grenzelmage

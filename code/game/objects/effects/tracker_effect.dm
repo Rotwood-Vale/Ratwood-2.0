@@ -18,7 +18,7 @@
 //object that moves constantly toward a target.
 
 /obj/effect/tracker
-	name = "tracker"
+	name = "追踪体"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "soul2"
 	mouse_opacity = 0
@@ -39,11 +39,11 @@
 	INVOKE_ASYNC(src, PROC_REF(process_step))
 
 /obj/effect/tracker/soul
-	name = "soul"
+	name = "灵魂"
 	icon_state = "soul2"
 
 /obj/effect/tracker/drain
-	name = "blood"
+	name = "鲜血"
 	color = "red"
 
 /obj/effect/tracker/proc/process_step()

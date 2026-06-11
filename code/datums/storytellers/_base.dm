@@ -6,13 +6,13 @@
 ///The storyteller datum. He operates with the SSgamemode data to run events
 /datum/storyteller
 	/// Name of our storyteller.
-	var/name = "Badly coded storyteller"
+	var/name = "糟糕透顶的叙述者"
 	/// Description of our storyteller.
-	var/desc = "Report this to the coders."
+	var/desc = "把这个问题报告给代码人员。"
 	/// Description of our storyteller, shown when pressing (?) during a vote.
-	var/vote_desc = "Do what thou wilt."
+	var/vote_desc = "随心所欲。"
 	/// Text that the players will be greeted with when this storyteller is chosen.
-	var/welcome_text = "Lift your Eyes to the Horizon." //changing this quote to match the one from the original eris PR.
+	var/welcome_text = "向地平线抬起双眼。" //changing this quote to match the one from the original eris PR.
 	/// This is the multiplier for repetition penalty in event weight. The lower the harsher it is
 	var/event_repetition_multiplier = 0.6
 	///if the event is forced regardless
@@ -248,4 +248,3 @@
 			weight_total -= event.reoccurence_penalty_multiplier * weight_total * (1 - (event_repetition_multiplier ** occurences))
 		/// Write it
 		event.calculated_weight = weight_total
-

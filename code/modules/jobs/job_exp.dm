@@ -59,13 +59,13 @@ GLOBAL_PROTECT(exp_to_update)
 
 /client/proc/get_exp_report()
 	if(!CONFIG_GET(flag/use_exp_tracking))
-		return "Tracking is disabled in the server configuration file."
+		return "服务器配置文件中已禁用时长追踪。"
 	var/list/play_records = prefs.exp
 	if(!play_records.len)
 		set_exp_from_db()
 		play_records = prefs.exp
 		if(!play_records.len)
-			return "[key] has no records."
+			return "[key] 没有任何记录。"
 	var/return_text = list()
 	return_text += "<UL>"
 	var/list/exp_data = list()
@@ -88,7 +88,7 @@ GLOBAL_PROTECT(exp_to_update)
 			else
 				exp_data[category] = 0
 	if(prefs.db_flags & DB_FLAG_EXEMPT)
-		return_text += "<LI>Exempt (all jobs auto-unlocked)</LI>"
+		return_text += "<LI>豁免（全部职业自动解锁）</LI>"
 
 	for(var/dep in exp_data)
 		if(exp_data[dep] > 0)
@@ -98,7 +98,7 @@ GLOBAL_PROTECT(exp_to_update)
 			else
 				return_text += "<LI>[dep] [get_exp_format(exp_data[dep])] </LI>"
 	if(CONFIG_GET(flag/use_exp_restrictions_admin_bypass) && check_rights_for(src,R_ADMIN))
-		return_text += "<LI>Admin (all jobs auto-unlocked)</LI>"
+		return_text += "<LI>管理员（全部职业自动解锁）</LI>"
 	return_text += "</UL>"
 	var/list/jobs_locked = list()
 	var/list/jobs_unlocked = list()
@@ -112,11 +112,11 @@ GLOBAL_PROTECT(exp_to_update)
 				var/xp_req = job.get_exp_req_amount()
 				jobs_locked += "[job.title] [get_exp_format(text2num(calc_exp_type(job.get_exp_req_type())))] / [get_exp_format(xp_req)] as [job.get_exp_req_type()])"
 	if(jobs_unlocked.len)
-		return_text += "<BR><BR>Jobs Unlocked:<UL><LI>"
+		return_text += "<BR><BR>已解锁职业：<UL><LI>"
 		return_text += jobs_unlocked.Join("</LI><LI>")
 		return_text += "</LI></UL>"
 	if(jobs_locked.len)
-		return_text += "<BR><BR>Jobs Not Unlocked:<UL><LI>"
+		return_text += "<BR><BR>尚未解锁的职业：<UL><LI>"
 		return_text += jobs_locked.Join("</LI><LI>")
 		return_text += "</LI></UL>"
 	return return_text
@@ -124,7 +124,7 @@ GLOBAL_PROTECT(exp_to_update)
 
 /client/proc/get_exp_living()
 	if(!prefs.exp)
-		return "No data"
+		return "无数据"
 	var/exp_living = text2num(prefs.exp[EXP_TYPE_LIVING])
 	return get_exp_format(exp_living)
 
@@ -216,41 +216,41 @@ GLOBAL_PROTECT(exp_to_update)
 			var/rolefound = FALSE
 			play_records[EXP_TYPE_LIVING] += minutes
 			if(announce_changes)
-				to_chat(src,span_notice("I got: [minutes] Living EXP!"))
+				to_chat(src,span_notice("我获得了：[minutes] 分钟生存经验！"))
 			if(mob.mind.assigned_role)
 				for(var/job in SSjob.name_occupations)
 					if(mob.mind.assigned_role == job)
 						rolefound = TRUE
 						play_records[job] += minutes
 						if(announce_changes)
-							to_chat(src,span_notice("I got: [minutes] [job] EXP!"))
+							to_chat(src,span_notice("我获得了：[minutes] 分钟 [job] 经验！"))
 				if(!rolefound)
 					for(var/role in GLOB.exp_specialmap[EXP_TYPE_SPECIAL])
 						if(mob.mind.assigned_role == role)
 							rolefound = TRUE
 							play_records[role] += minutes
 							if(announce_changes)
-								to_chat(mob,span_notice("I got: [minutes] [role] EXP!"))
+								to_chat(mob,span_notice("我获得了：[minutes] 分钟 [role] 经验！"))
 				if(mob.mind.special_role && !(mob.mind.datum_flags & DF_VAR_EDITED))
 					var/trackedrole = mob.mind.special_role
 					play_records[trackedrole] += minutes
 					if(announce_changes)
-						to_chat(src,span_notice("I got: [minutes] [trackedrole] EXP!"))
+						to_chat(src,span_notice("我获得了：[minutes] 分钟 [trackedrole] 经验！"))
 			if(!rolefound)
-				play_records["Unknown"] += minutes
+				play_records["未知"] += minutes
 		else
 			if(holder && !holder.deadmined)
 				play_records[EXP_TYPE_ADMIN] += minutes
 				if(announce_changes)
-					to_chat(src,span_notice("I got: [minutes] Admin EXP!"))
+					to_chat(src,span_notice("我获得了：[minutes] 分钟管理经验！"))
 			else
 				play_records[EXP_TYPE_GHOST] += minutes
 				if(announce_changes)
-					to_chat(src,span_notice("I got: [minutes] Ghost EXP!"))
+					to_chat(src,span_notice("我获得了：[minutes] 分钟幽魂经验！"))
 	else if(isobserver(mob))
 		play_records[EXP_TYPE_GHOST] += minutes
 		if(announce_changes)
-			to_chat(src,span_notice("I got: [minutes] Ghost EXP!"))
+			to_chat(src,span_notice("我获得了：[minutes] 分钟幽魂经验！"))
 	else if(minutes)	//Let "refresh" checks go through
 		return
 

@@ -1,5 +1,5 @@
 /datum/intent/jump
-	name = "jump"
+	name = "跳跃"
 	candodge = FALSE
 	canparry = FALSE
 	chargedrain = 0
@@ -12,7 +12,7 @@
 
 /mob/living/proc/jump_action(atom/A)
 	if(istype(get_turf(src), /turf/open/water))
-		to_chat(src, span_warning("I can't jump while floating."))
+		to_chat(src, span_warning("漂浮时我无法跳跃。"))
 		return FALSE
 
 	if(!A || QDELETED(A) || !A.loc)
@@ -25,16 +25,16 @@
 		return FALSE
 
 	if(pulledby && pulledby != src)
-		to_chat(src, span_warning("I'm unable to jump while grabbed."))
+		to_chat(src, span_warning("被人抓住时我无法跳跃。"))
 		return FALSE
 
 	if(IsOffBalanced())
-		to_chat(src, span_warning("I haven't regained my balance yet."))
+		to_chat(src, span_warning("我还没重新站稳。"))
 		return FALSE
 
 	if(!(mobility_flags & MOBILITY_STAND))
 		if(!HAS_TRAIT(src, TRAIT_LEAPER))// The Jester cares not for such social convention.
-			to_chat(src, span_warning("I should stand up first."))
+			to_chat(src, span_warning("我得先站起来。"))
 			return FALSE
 
 	if(!isatom(A))
@@ -42,16 +42,16 @@
 
 	if(A.z != z)
 		if(!HAS_TRAIT(src, TRAIT_ZJUMP))
-			to_chat(src, span_warning("That's too high for me..."))
+			to_chat(src, span_warning("那对我来说太高了……"))
 			return FALSE
 
 	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
 	if(animal_mount && animal_mount.has_buckled_mobs() && animal_mount.buckled_mobs.len > 1)
-		to_chat(src, span_warning("[animal_mount] is carrying too much weight to jump."))
+		to_chat(src, span_warning("[animal_mount]负重太多，跳不起来。"))
 		return FALSE
 
 	if(has_status_effect(/datum/status_effect/debuff/exposed))
-		to_chat(src, span_warning("I'm exposed and lost my footing! I can't jump!"))
+		to_chat(src, span_warning("我破绽大开，已经失了脚步！没法跳了！"))
 		return FALSE
 
 	SEND_SIGNAL(src, COMSIG_LIVING_ONJUMP, A)
@@ -217,7 +217,7 @@
 /mob/living/proc/can_jump(atom/A)
 	var/turf/our_turf = get_turf(src)
 	if(istype(our_turf, /turf/open/water))
-		to_chat(src, span_warning("I'm floating in [our_turf]."))
+		to_chat(src, span_warning("我正漂在[our_turf]里。"))
 		return FALSE
 	if(!A || QDELETED(A) || !A.loc)
 		return FALSE
@@ -226,13 +226,13 @@
 	if(get_num_legs() < 2)
 		return FALSE
 	if(pulledby && pulledby != src)
-		to_chat(src, span_warning("I'm being grabbed."))
+		to_chat(src, span_warning("我正被人抓着。"))
 		return FALSE
 	if(IsOffBalanced())
-		to_chat(src, span_warning("I haven't regained my balance yet."))
+		to_chat(src, span_warning("我还没重新站稳。"))
 		return FALSE
 	if(!(mobility_flags & MOBILITY_STAND) && !HAS_TRAIT(src, TRAIT_LEAPER))// The Jester cares not for such social convention.
-		to_chat(src, span_warning("I should stand up first."))
+		to_chat(src, span_warning("我得先站起来。"))
 		return FALSE
 	if(A.z != z && !HAS_TRAIT(src, TRAIT_ZJUMP))
 		return FALSE

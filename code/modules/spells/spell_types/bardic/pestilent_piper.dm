@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/song/pestilent_piedpiper
-	name = "Pestilent Pied Piper"
-	desc = "Play a dirge inspired by Pestra. Leaving the droning of insects in their ears! (-1 WIL -2 CON non-audience members)"
+	name = "疫病吹笛人"
+	desc = "奏出一曲受佩斯特拉启发的哀歌，让虫群的嗡鸣残留在敌人耳畔！非听众成员将受到 `-1 意志 -2 体质`。"
 	overlay_state = "dirge_t2_base"
 	action_icon_state = "dirge_t2_base"
 	warnie = "spellwarning"
@@ -19,7 +19,7 @@
 		return TRUE
 	else
 		revert_cast()
-		to_chat(user, span_warning("I must be playing something to inspire my audience!"))
+		to_chat(user, span_warning("我必须先演奏起来，才能影响我的听众！"))
 		return
 
 
@@ -37,8 +37,8 @@
 
 
 /atom/movable/screen/alert/status_effect/debuff/song/pestilentpiper
-	name = "Musical Droning!"
-	desc = "This music is terrifying! My heart catches in my throat as I am magically weakened!"
+	name = "虫鸣缠耳！"
+	desc = "这曲乐声令人胆寒！魔法削弱着我，我的心都提到了嗓子眼！"
 	icon_state = "debuff"
 
 /datum/status_effect/debuff/song/pestilentpiper

@@ -20,8 +20,8 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 			L.add_stress(stress2give)
 
 /obj/item/dmusicbox
-	name = "dwarven music box"
-	desc = "It is essential that the deepest caves be tuned to the right frequency of vibrations."
+	name = "矮人音乐盒"
+	desc = "最深的洞窟必须调谐到恰到好处的振动频率，这一点至关重要。"
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "mbox0"
 	gripped_intents = list(INTENT_GENERIC)
@@ -84,17 +84,17 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(lastfilechange)
 		if(world.time < lastfilechange + 3 MINUTES)
-			say("NOT YET!")
+			say("还不行！")
 			return
 	if(!loaded)
-		say("ONE COIN, A COPPER COIN FOR AN AFTERNOON OF JOY!")
+		say("一枚硬币！一枚铜币，换来一下午的欢乐！")
 		return
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	INVOKE_ASYNC(src, PROC_REF(upload_file), user) // call as thread to avoid halting while waiting for user file input
 
 /obj/item/dmusicbox/proc/upload_file(mob/user)
 	set waitfor = FALSE
-	var/infile = input(user, "CHOOSE A NEW SONG", src) as null|file
+	var/infile = input(user, "选择一首新曲子", src) as null|file
 
 	if(!infile)
 		return
@@ -103,7 +103,7 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 		return
 
 	if(world.time < GLOB.musicboxes_last_upload + 30 SECONDS)
-		say("NOT YET!")
+		say("还不行！")
 		return
 
 	var/filename = "[infile]"
@@ -111,10 +111,10 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 	var/file_size = length(infile)
 
 	if(file_ext != ".ogg")
-		to_chat(user, span_warning("SONG MUST BE AN OGG."))
+		to_chat(user, span_warning("歌曲必须为 ogg 格式。"))
 		return
 	if(file_size > 6485760)
-		to_chat(user, span_warning("TOO BIG. 6 MEGS OR LESS."))
+		to_chat(user, span_warning("文件太大，必须不超过 6 MB。"))
 		return
 	lastfilechange = world.time
 	GLOB.musicboxes_last_upload = world.time
@@ -122,7 +122,7 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 	if(fexists(logged_filename))
 		fdel(logged_filename)
 	if(!fcopy(infile, logged_filename))
-		to_chat(user, span_warning("Could not upload song."))
+		to_chat(user, span_warning("无法上传歌曲。"))
 		return
 	if(QDELETED(user) || QDELETED(src)) // clean up uploaded file if object/user was deleted while upload was in progress
 		if(fexists(logged_filename))
@@ -134,9 +134,9 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 			fdel(logged_filename)
 			curfile = null
 		if(!curfile)
-			user.log_message("attempted to upload jukebox song: [logged_filename]", LOG_GAME)
+			user.log_message("尝试上传点唱机曲目：[logged_filename]", LOG_GAME)
 		else
-			user.log_message("uploaded jukebox song: [logged_filename]", LOG_GAME)
+			user.log_message("已上传点唱机曲目：[logged_filename]", LOG_GAME)
 	else
 		curfile = null
 
@@ -153,10 +153,10 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 		if(curfile)
 			var/new_channel = find_free_channel()
 			if(!new_channel)
-				to_chat(user, span_warning("TOO MANY MUSIC BOXES IN USE AT THE SAME TIME IN THE WORLD."))
+				to_chat(user, span_warning("世上同时启用的音乐盒太多了。"))
 				return
 			if(world.time < GLOB.musicboxes_last_play + 10 SECONDS)
-				to_chat(user, span_warning("STILL WARMING UP..."))
+				to_chat(user, span_warning("还在预热中……"))
 				return
 			GLOB.musicboxes_last_play = world.time
 			playing = TRUE
@@ -164,12 +164,12 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 			soundloop.set_mid_sounds(list(curfile))
 			soundloop.cursound = null
 			soundloop.start()
-			user.log_message("played jukebox song: [curfile]", LOG_GAME)
+			user.log_message("播放了点唱机曲目：[curfile]", LOG_GAME)
 	else
 		playing = FALSE
 		soundloop.stop()
 		if(curfile)
-			user.log_message("stopped jukebox song: [curfile]", LOG_GAME)
+			user.log_message("停止了点唱机曲目：[curfile]", LOG_GAME)
 	update_icon()
 
 /obj/item/dmusicbox/proc/find_free_channel()

@@ -4,17 +4,17 @@
 
 	var/obj/shapeshift_holder/H = locate() in caster
 	if(H)
-		to_chat(caster, span_warning("You're already shapeshifted!"))
+		to_chat(caster, span_warning("我已经处于变形状态了！"))
 		return
 
 	if(!do_after(caster, (SHAPESHIFT_MOVEAFTER - caster.get_vampire_generation()) SECONDS, target = caster))
-		to_chat(caster, span_userdanger("You are unable to concentrate enough to shapeshift!"))
+		to_chat(caster, span_userdanger("我无法集中足够的精神完成变形！"))
 		return
 
 	return ..()
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/vampire/bat
-	name = "Bat Form"
+	name = "蝙蝠形态"
 	desc = ""
 	recharge_time = 50
 	cooldown_min = 50
@@ -26,7 +26,7 @@
 	convert_damage = FALSE
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/gaseousform
-	name = "Mist Form"
+	name = "雾形"
 	desc = ""
 	recharge_time = 50
 	cooldown_min = 50
@@ -35,7 +35,7 @@
 	convert_damage = FALSE
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/crow
-	name = "Zad Form"
+	name = "Zad 形态"
 	overlay_state = "zad"
 	desc = ""
 	gesture_required = TRUE
@@ -49,11 +49,11 @@
 	shifted_speed_increase = 1.25
 	show_true_name = FALSE
 	convert_damage = FALSE
-	invocations = list("Zad formus!")
+	invocations = list("Zad，赐我此形！")
 	invocation_type = "shout"
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/rat
-	name = "Rat Form"
+	name = "鼠形"
 	desc = ""
 	recharge_time = 5 SECONDS
 	cooldown_min = 5 SECONDS
@@ -62,7 +62,7 @@
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/smallrat
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/cabbit
-	name = "Cabbit Form"
+	name = "兔蟹形态"
 	desc = ""
 	recharge_time = 5 SECONDS
 	cooldown_min = 5 SECONDS

@@ -1,5 +1,6 @@
 /datum/job/roguetown/barkeep
 	title = "Innkeeper"
+	display_title = "酒馆老板"
 	flag = BARKEEP
 	department_flag = YEOMEN
 	faction = "Station"
@@ -8,7 +9,7 @@
 
 	allowed_races = ACCEPTED_RACES
 
-	tutorial = "Adventurers and warriors alike have two exit plans; the early grave or even earlier retirement. As the proud owner of this fine establishment, you took the latter: The local tavern, inn, and bathhouse! You even have an assortment of staff to help you, and plenty of business from the famished townsfolk looking to eat, weary travelers looking to rest, and characters of dubious repute seeking their own sort of success. Your bladework has gotten a little rusty, and the church across the street gives you the odd evil eye for the extra 'delights' of the bathhouse--but, well...you can't win 'em all!"
+	tutorial = "无论是冒险者还是战士，人生的退路通常只有两条：要么早早埋进土里，要么更早金盆洗手。身为这间体面产业的主人，你选了后者：本地的酒馆、旅店与浴场都归你打理！你手下还有一批帮工，既不缺前来填饱肚子的饥饿镇民，也不缺想歇脚的疲惫旅人，更少不了那些名声暧昧、来此谋求自己那份“成就”的人物。你的刀法多少有些生疏了，而街对面的教会也总会因浴场里那些额外的“乐子”朝你投来嫌恶目光，不过嘛……人总不能样样都占全。"
 	social_rank = SOCIAL_RANK_YEOMAN
 	outfit = /datum/outfit/job/roguetown/barkeep
 	display_order = JDO_BARKEEP
@@ -27,8 +28,8 @@
 	spells = list(/obj/effect/proc_holder/spell/invoked/takeapprentice)
 
 /datum/advclass/barkeep
-	name = "Innkeeper"
-	tutorial = "Adventurers and warriors alike have two exit plans; the early grave or even earlier retirement. As the proud owner of this fine establishment, you took the latter: The local tavern, inn, and bathhouse! You even have an assortment of staff to help you, and plenty of business from the famished townsfolk looking to eat, weary travelers looking to rest, and characters of dubious repute seeking their own sort of success. Your bladework has gotten a little rusty, and the church across the street gives you the odd evil eye for the extra 'delights' of the bathhouse--but, well...you can't win 'em all!"
+	name = "酒馆老板"
+	tutorial = "无论是冒险者还是战士，人生的退路通常只有两条：要么早早埋进土里，要么更早金盆洗手。身为这间体面产业的主人，你选了后者：本地的酒馆、旅店与浴场都归你打理！你手下还有一批帮工，既不缺前来填饱肚子的饥饿镇民，也不缺想歇脚的疲惫旅人，更少不了那些名声暧昧、来此谋求自己那份“成就”的人物。你的刀法多少有些生疏了，而街对面的教会也总会因浴场里那些额外的“乐子”朝你投来嫌恶目光，不过嘛……人总不能样样都占全。"
 	outfit = /datum/outfit/job/roguetown/barkeep/basic
 	category_tags = list(CTAG_INNKEEPER)
 	subclass_stats = list(

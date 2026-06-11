@@ -68,12 +68,12 @@
 	var/btm_forced = knot_swap_roles && btm_sexcon.do_knot_action_as_bottom && !user_sexcon.do_knot_action
 	if(user_sexcon.considered_limp())
 		if(!user.sexcon.knotted_status)
-			to_chat(user, span_notice("My [user.sexcon.get_knot_synonym()] was too soft to tie."))
+			to_chat(user, span_notice("我的[user.sexcon.get_knot_synonym()]太软了，没法结住。"))
 		if(!btm.sexcon.knotted_status)
 			if(btm_forced)
-				to_chat(btm, span_notice("They are too soft to knot..."))
+				to_chat(btm, span_notice("对方太软了，没法结住……"))
 			else
-				to_chat(btm, span_notice("I feel their deflated [user.sexcon.get_knot_synonym()] slip out."))
+				to_chat(btm, span_notice("我感觉对方瘪软下去的[user.sexcon.get_knot_synonym()]滑了出去。"))
 		return
 
 	var/target_knotted_part = SEX_PART_NULL
@@ -120,23 +120,23 @@
 		btm.Stun(80) // stun for dramatic effect
 	if(btm_forced)
 		var/knot_word_force = user.sexcon.get_knot_synonym()
-		btm.visible_message(span_notice("[btm] forces [btm.p_them()]self down onto [user]'s [knot_word_force]!"), span_notice("I force myself down onto their [knot_word_force]!"))
-		to_chat(user, span_notice("They forced themselves onto my [user.sexcon.get_knot_synonym()]!"))
+		btm.visible_message(span_notice("[btm]强行把自己往[user]的[knot_word_force]上压了下去！"), span_notice("我强行把自己压上了对方的[knot_word_force]！"))
+		to_chat(user, span_notice("对方强行把自己压上了我的[user.sexcon.get_knot_synonym()]！"))
 	else
 		var/knot_word_tie = user.sexcon.get_knot_synonym()
-		user.visible_message(span_notice("[user] ties their [knot_word_tie] inside of [btm]!"), span_notice("I tie my [knot_word_tie] inside of [btm]."))
+		user.visible_message(span_notice("[user]把[user.p_their()]的[knot_word_tie]结在了[btm]体内！"), span_notice("我把自己的[knot_word_tie]结在了[btm]体内。"))
 	if(btm.stat != DEAD)
 		switch(btm.sexcon.knotted_part) // this is not a smart way to do this in hindsight, but it is fast at least
 			if(SEX_PART_CUNT,SEX_PART_ANUS,SEX_PART_JAWS,SEX_PART_SLIT_SHEATH)
-				to_chat(btm, btm_forced ? span_userdanger("You forced their knot inside yourself!") : span_userdanger("You have been knotted!"))
+				to_chat(btm, btm_forced ? span_userdanger("我把对方的结强行压进了自己体内！") : span_userdanger("我被结住了！"))
 			if(SEX_PART_CUNT|SEX_PART_ANUS|SEX_PART_JAWS|SEX_PART_SLIT_SHEATH)
-				to_chat(btm, span_userdanger("You have been quad-knotted!"))
+				to_chat(btm, span_userdanger("我被四重结住了！"))
 			if(SEX_PART_CUNT|SEX_PART_ANUS,SEX_PART_CUNT|SEX_PART_JAWS,SEX_PART_CUNT|SEX_PART_SLIT_SHEATH,SEX_PART_ANUS|SEX_PART_SLIT_SHEATH,SEX_PART_ANUS|SEX_PART_JAWS,SEX_PART_JAWS|SEX_PART_SLIT_SHEATH)
-				to_chat(btm, span_userdanger("You have been double-knotted!"))
+				to_chat(btm, span_userdanger("我被双重结住了！"))
 			else
-				to_chat(btm, span_userdanger("You have been triple-knotted!"))
+				to_chat(btm, span_userdanger("我被三重结住了！"))
 		if(we_got_baothad)
-			to_chat(btm, span_userdanger("Baothan magick infuses within, you can't think straight!"))
+			to_chat(btm, span_userdanger("Baothan 的魔力灌入体内，我已经没法正常思考了！"))
 	if(!btm.has_status_effect(/datum/status_effect/knot_tied)) // only apply status if we don't have it already
 		btm.apply_status_effect(/datum/status_effect/knot_tied)
 	if(!user.has_status_effect(/datum/status_effect/knotted)) // only apply status if we don't have it already
@@ -157,8 +157,8 @@
 	penor.add_mob_blood(top)
 	playsound(get_turf(top), 'sound/combat/dismemberment/dismem (5).ogg', 80, TRUE)
 	playsound(get_turf(top), 'sound/vo/male/tomscream.ogg', 80, TRUE)
-	to_chat(top, span_userdanger("You feel a sharp pain as your [top.sexcon.get_knot_synonym()] is torn asunder!"))
-	to_chat(btm, span_userdanger("You feel their [top.sexcon.get_knot_synonym()] withdraw faster than you can process!"))
+	to_chat(top, span_userdanger("我的[top.sexcon.get_knot_synonym()]被硬生生扯裂，传来一阵剧痛！"))
+	to_chat(btm, span_userdanger("我还没反应过来，就感觉对方的[top.sexcon.get_knot_synonym()]猛地抽了出去！"))
 	knot_remove(forceful_removal = TRUE, notify = FALSE)
 	log_combat(btm, top, "Top had their cock ripped off (knot tugged too far)")
 	return TRUE
@@ -199,8 +199,8 @@
 		top.sexcon.perform_sex_action(btm, penis?.penis_size > DEFAULT_PENIS_SIZE ? 6.0 : 3.0, 2, FALSE)
 		btm.sexcon.handle_passive_ejaculation()
 		if(prob(50))
-			to_chat(top, span_love("I feel [btm] tightening over my [top.sexcon.get_knot_synonym()]."))
-			to_chat(btm, span_love("I feel [top] rubbing inside."))
+			to_chat(top, span_love("我感觉[btm]正紧紧收束在我的[top.sexcon.get_knot_synonym()]上。"))
+			to_chat(btm, span_love("我感觉[top]正在里面磨蹭。"))
 		return
 	if(top.pulling == btm || btm.pulling == top)
 		return
@@ -252,7 +252,7 @@
 			top.sexcon.try_do_pain_effect(PAIN_MILD_EFFECT, FALSE)
 			if(top.sexcon.tugging_knot_blocked && (top.mobility_flags & MOBILITY_STAND)) // only knock down if standing and knot area is blocked
 				top.Knockdown(10)
-				to_chat(top, span_warning("I trip trying to move while my [top.sexcon.get_knot_synonym()] is covered."))
+				to_chat(top, span_warning("我的[top.sexcon.get_knot_synonym()]被遮着，移动时一下子绊倒了。"))
 				top.sexcon.tugging_knot_blocked = FALSE // reset blocked state in the case either character stip off again
 				top.sexcon.tugging_knot_check = 0 // check clothes again on the next step
 			top.Stun(15)
@@ -366,17 +366,17 @@
 			if(notify)
 				var/knot_word_yank = top.sexcon.get_knot_synonym()
 				if(btm_removed)
-					btm.visible_message(span_notice("[btm] yanks [btm.p_them()]self free from [top]'s [knot_word_yank]!"), span_notice("I yank myself free from [top]'s [knot_word_yank]!"))
+					btm.visible_message(span_notice("[btm]猛地把自己从[top]的[knot_word_yank]上扯了出来！"), span_notice("我猛地把自己从[top]的[knot_word_yank]上扯了出来！"))
 				else
-					top.visible_message(span_notice("[top] yanks their [knot_word_yank] out of [btm]!"), span_notice("I yank my [knot_word_yank] out from [btm]."))
+					top.visible_message(span_notice("[top]猛地把[top.p_their()]的[knot_word_yank]从[btm]体内扯了出来！"), span_notice("我猛地把自己的[knot_word_yank]从[btm]体内扯了出来。"))
 			btm.sexcon.try_do_pain_effect(PAIN_HIGH_EFFECT, FALSE)
 		else if(notify)
 			playsound(btm, 'sound/misc/mat/insert (1).ogg', 50, TRUE, -2, ignore_walls = FALSE)
 			var/knot_word_slip = top.sexcon.get_knot_synonym()
 			if(btm_removed)
-				btm.visible_message(span_notice("[btm] slips free from [top]'s [knot_word_slip]!"), span_notice("I slip free from [top]'s [knot_word_slip]."))
+				btm.visible_message(span_notice("[btm]从[top]的[knot_word_slip]上轻轻滑脱了出来！"), span_notice("我从[top]的[knot_word_slip]上轻轻滑脱了出来。"))
 			else
-				top.visible_message(span_notice("[top] slips their [knot_word_slip] out of [btm]!"), span_notice("I slip my [knot_word_slip] out from [btm]."))
+				top.visible_message(span_notice("[top]将[top.p_their()]的[knot_word_slip]从[btm]体内缓缓滑了出来！"), span_notice("我将自己的[knot_word_slip]从[btm]体内缓缓滑了出来。"))
 			btm.emote("painmoan", forced = TRUE)
 			btm.sexcon.try_do_pain_effect(PAIN_MILD_EFFECT, FALSE)
 		add_cum_floor(get_turf(btm))
@@ -384,7 +384,7 @@
 			var/datum/status_effect/facial/internal/creampie = btm.has_status_effect(/datum/status_effect/facial/internal)
 			if(!creampie)
 				btm.apply_status_effect(/datum/status_effect/facial/internal)
-				btm.visible_message(span_love("[btm] takes a load inside them!"), span_love("I take a load inside me!"))
+				btm.visible_message(span_love("[btm]被灌进了一大股液体！"), span_love("我被灌进了一大股液体！"))
 			else
 				creampie.refresh_cum()
 			if(top?.dna?.species?.id == "gnoll")
@@ -401,7 +401,7 @@
 			var/datum/status_effect/facial/facial = btm.has_status_effect(/datum/status_effect/facial)
 			if(!facial)
 				btm.apply_status_effect(/datum/status_effect/facial)
-				btm.visible_message(span_love("[btm] takes a load down their throat!"), span_love("I take a load down my throat!"))
+				btm.visible_message(span_love("[btm]吞下了一大股液体！"), span_love("我吞下了一大股液体！"))
 			else
 				facial.refresh_cum()
 			if(btm.reagents)
@@ -489,7 +489,7 @@
 	effectedstats = list("strength" = -1, "willpower" = -2, "speed" = -2, "intelligence" = -3)
 
 /atom/movable/screen/alert/status_effect/knot_tied
-	name = "Knotted"
+	name = "被结住"
 	icon_state = "knotted"
 
 /datum/status_effect/knot_fucked_stupid
@@ -500,8 +500,8 @@
 	effectedstats = list("intelligence" = -10)
 
 /atom/movable/screen/alert/status_effect/knot_fucked_stupid
-	name = "Fucked Stupid"
-	desc = "Mmmph I can't think straight..."
+	name = "被操傻了"
+	desc = "唔嗯……我已经没法正常思考了……"
 	icon_state = "knotted_stupid"
 
 /datum/status_effect/knot_gaped
@@ -535,8 +535,8 @@
 	cum_chalice.reagents.add_reagent(contents_to_drip,1)
 
 /atom/movable/screen/alert/status_effect/knot_gaped
-	name = "Gaped"
-	desc = "You were forcefully withdrawn from. Warmth runs freely down your thighs..."
+	name = "被撑开"
+	desc = "有什么东西被强行抽离了。温热的液体正顺着我的大腿不断流下……"
 
 
 /atom/movable/screen/alert/status_effect/knot_tied/handle_click()
@@ -550,7 +550,7 @@
 			var/do_forceful_removal = L.cmode || L.sexcon.arousal > MAX_AROUSAL / 4 || L.sexcon.manual_arousal > SEX_MANUAL_AROUSAL_PARTIAL // bottom forced the knot, so bottom can wrench free
 			top.sexcon.knot_remove(forceful_removal = do_forceful_removal, remover = L)
 	else if(L.sexcon.knotted_status == KNOTTED_AS_BTM)
-		to_chat(L, span_warning("I can't pull free!"))
+		to_chat(L, span_warning("我挣脱不出来！"))
 	return FALSE
 /datum/status_effect/knotted
 	id = "knotted"
@@ -558,8 +558,8 @@
 	alert_type = /atom/movable/screen/alert/status_effect/knotted
 
 /atom/movable/screen/alert/status_effect/knotted
-	name = "Knotted"
-	desc = "I have to be careful where I step..."
+	name = "已结住"
+	desc = "我走路时得格外小心……"
 	icon_state = "knotted"
 
 /atom/movable/screen/alert/status_effect/knotted/handle_click()
@@ -581,10 +581,10 @@
 
 /datum/status_effect/jaw_gaped/on_apply()
 	ADD_TRAIT(owner, TRAIT_GARGLE_SPEECH, "jaw_gaped")
-	to_chat(owner, span_warning("My jaw... It stings!"))
+	to_chat(owner, span_warning("我的下颌……好痛！"))
 	return ..()
 
 /datum/status_effect/jaw_gaped/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_GARGLE_SPEECH, "jaw_gaped")
 	if(owner.stat == CONSCIOUS)
-		to_chat(owner, span_warning("I finally feel my jaw again."))
+		to_chat(owner, span_warning("我终于又感觉到自己的下颌了。"))

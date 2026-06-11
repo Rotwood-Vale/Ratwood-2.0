@@ -1,7 +1,7 @@
 // Elven unique mercenary type; should be scary in a way solo but easy to kill with a group or bow.
 /datum/advclass/mercenary/blackoak
-	name = "Black Oak's Guardian"
-	tutorial = "A shady guardian of the Black Oaks. Half mercenary band, half irregular militia fighting for control of their ancestral elven homeland of the Peaks. Thankfully, you are not here today to shed the blood of the Duke's men — unless someone pays you to..."
+	name = "黑橡 守卫"
+	tutorial = "你是 黑橡 阵营中一名潜行的守卫者。这支人马一半是佣兵团，一半是为争夺群峰间祖传精灵故土而战的非正规民兵。所幸，你今天来这里并不是为了屠戮公爵麾下的人马，除非……有人出钱让你这么做。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
 		/datum/species/human/halfelf,
@@ -12,7 +12,7 @@
 	class_select_category = CLASS_CAT_RACIAL
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_blackoak.ogg'
-	extra_context = "This subclass is race-restricted to: Half-Elves, Elves, Dark Elves."
+	extra_context = "该分支仅限半精灵、精灵与黑暗精灵选择。"
 	traits_applied = list(TRAIT_AZURENATIVE, TRAIT_OUTDOORSMAN, TRAIT_RACISMISBAD, TRAIT_MEDIUMARMOR)
 	subclass_stats = list(
 		STATKEY_STR = 3,
@@ -63,21 +63,21 @@
 		)
 
 	if(H.mind)
-		var/weapons = list("Elven Swordspear and Longsword","Elven Curveblade and Shortsword",)
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("精灵剑矛与长剑","精灵曲刃大剑与短剑",)
+		var/weapon_choice = input(H, "选择你的武器。", "整备武装") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Elven Swordspear and Longsword")
+			if("精灵剑矛与长剑")
 				r_hand = /obj/item/rogueweapon/spear/naginata/elf
 				l_hand = /obj/item/rogueweapon/sword/long/elf
-			if("Elven Curveblade and Shortsword")
+			if("精灵曲刃大剑与短剑")
 				r_hand = /obj/item/rogueweapon/greatsword/elf
 				l_hand = /obj/item/rogueweapon/sword/short/elf
 
 	H.merctype = 2
 /datum/advclass/mercenary/blackoak/ranger
-	name = "Black Oak's Ranger"
-	tutorial = "A shady guardian of the Black Oaks. Half mercenary band, half irregular militia fighting for control of their ancestral elven homeland of the Peaks. Thankfully, you are not here today to shed the blood of the Duke's men — unless someone pays you to..."
+	name = "黑橡 游侠"
+	tutorial = "你是 黑橡 阵营中一名潜行的守卫者。这支人马一半是佣兵团，一半是为争夺群峰间祖传精灵故土而战的非正规民兵。所幸，你今天来这里并不是为了屠戮公爵麾下的人马，除非……有人出钱让你这么做。"
 	outfit = /datum/outfit/job/roguetown/mercenary/blackoak_ranger
 	traits_applied = list(TRAIT_AZURENATIVE, TRAIT_OUTDOORSMAN, TRAIT_RACISMISBAD, TRAIT_DODGEEXPERT)
 	subclass_stats = list(

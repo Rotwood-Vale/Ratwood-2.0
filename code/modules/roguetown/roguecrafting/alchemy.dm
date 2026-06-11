@@ -1,28 +1,28 @@
 /datum/crafting_recipe/roguetown/alchemy
 	abstract_type = /datum/crafting_recipe/roguetown/alchemy
 	req_table = FALSE
-	verbage_simple = "mix"
+	verbage_simple = "调配"
 	skillcraft = /datum/skill/craft/alchemy
 	subtype_reqs = TRUE
 	structurecraft = /obj/structure/fluff/alch
 
 /datum/crafting_recipe/roguetown/alchemy/bbomb
-	name = "bottle bomb"
-	category = "Table"
+	name = "瓶装炸弹"
+	category = "台面"
 	result = list(/obj/item/bomb)
 	reqs = list(/obj/item/reagent_containers/glass/bottle = 1, /obj/item/ash = 2, /obj/item/rogueore/coal = 1, /obj/item/natural/cloth = 1)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/alchemy/ozium
 	name = "ozium"
-	category = "Table"
+	category = "台面"
 	result = list(/obj/item/reagent_containers/powder/ozium)
 	reqs = list(/obj/item/ash = 2, /datum/reagent/berrypoison = 2, /obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry = 1)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/alchemy/ozium_3x
 	name = "ozium (x3)"
-	category = "Table"
+	category = "台面"
 	result = list(/obj/item/reagent_containers/powder/ozium,
 					/obj/item/reagent_containers/powder/ozium,
 					/obj/item/reagent_containers/powder/ozium)
@@ -30,15 +30,15 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/alchemy/moon
-	name = "moondust"
-	category = "Table"
+	name = "月尘"
+	category = "台面"
 	result = list(/obj/item/reagent_containers/powder/moondust)
 	reqs = list(/obj/item/ash = 2, /obj/item/reagent_containers/food/snacks/grown/rogue/pipeweeddry = 1, /datum/reagent/berrypoison = 2)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/alchemy/moon_3x
-	name = "moondust (x3)"
-	category = "Table"
+	name = "月尘 (x3)"
+	category = "台面"
 	result = list(/obj/item/reagent_containers/powder/moondust,
 					/obj/item/reagent_containers/powder/moondust,
 					/obj/item/reagent_containers/powder/moondust
@@ -47,69 +47,69 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/alchemy/salt
-	name = "salt pile"
-	category = "Table"
+	name = "盐堆"
+	category = "台面"
 	result = list(/obj/item/reagent_containers/powder/salt)
 	reqs = list(/obj/item/ash = 1, /datum/reagent/water = 10, /obj/item/reagent_containers/food/snacks/fat = 1)
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/alchemy/salt_2
-	name = "salt pile"
-	category = "Table"
+	name = "盐堆"
+	category = "台面"
 	result = list(/obj/item/reagent_containers/powder/salt)
 	reqs = list(/obj/item/ash = 1, /datum/reagent/water = 10, /obj/item/reagent_containers/food/snacks/rogue/meat/mince = 1)
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/alchemy/quicksilver
-	name = "quicksilver"
-	category = "Table"
+	name = "水银"
+	category = "台面"
 	result = list(/obj/item/quicksilver = 1)
 	reqs = list(/obj/item/reagent_containers/food/snacks/grown/rogue/fyritius/bloodied = 1, /datum/reagent/water/blessed = 45, /obj/item/natural/cloth = 1, /obj/item/alch/silverdust = 1)
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/alchemy/qsabsolution
-	name = "absolving silver"
-	category = "Transmutation"
+	name = "净罪银"
+	category = "转化"
 	req_table = FALSE
 	result = list(/obj/item/quicksilver/luxinfused = 1)
 	reqs = list(/obj/item/reagent_containers/food/snacks/grown/rogue/fyritius/bloodied = 1, /datum/reagent/water/blessed = 45, /obj/item/natural/cloth = 1, /obj/item/alch/silverdust = 1)
 	craftdiff = 0
-	verbage_simple = "transmute"
+	verbage_simple = "转化"
 	structurecraft = null
 
 /datum/crafting_recipe/roguetown/alchemy/transisdust
 	name = "sui dust"
-	category = "Table"
+	category = "台面"
 	result = list(/obj/item/alch/transisdust)
 	reqs = list(/obj/item/herbseed/taraxacum = 1, /obj/item/herbseed/euphrasia = 1, /obj/item/herbseed/hypericum = 1, /obj/item/herbseed/salvia = 1)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/alchemy/menthazig
-	name = "handmade mentha zig"
-	category = "Table"
+	name = "手工 mentha 烟卷"
+	category = "台面"
 	result = list(/obj/item/clothing/mask/cigarette/rollie/mentha/crafted)
 	reqs = list(/obj/item/clothing/mask/cigarette/rollie/nicotine = 1, /obj/item/alch/mentha = 1)
 	craftdiff = 1
 
 //Hard to craft but feasable, will give ONE vial but that has 10 units so, enough to cure 2 people if they ration it.
 /datum/crafting_recipe/roguetown/alchemy/curerot
-	name = "rot cure potion"
-	category = "Table"
+	name = "腐烂治疗药剂"
+	category = "台面"
 	result = list(/obj/item/reagent_containers/glass/bottle/alchemical/rogue/rotcure = 1)
 	reqs = list(/obj/item/reagent_containers/glass/bottle/alchemical = 1, /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius = 1, /obj/item/alch/golddust = 1, /obj/item/alch/viscera = 2)
 	craftdiff = 5	//Master-level
 
 /datum/crafting_recipe/roguetown/alchemy/paralytic_venom
-	name = "paralytic venom activation"
-	category = "Table"
+	name = "麻痹毒液活化"
+	category = "台面"
 	result = list(/obj/item/reagent_containers/glass/bottle/alchemical/spidervenom_paralytic = 1)
 	reqs = list(/obj/item/reagent_containers/spidervenom_inert = 2, /obj/item/reagent_containers/powder/moondust, /obj/item/reagent_containers/glass/bottle/alchemical)
 	craftdiff = 5
-	verbage_simple = "mix"
+	verbage_simple = "调配"
 
 /datum/crafting_recipe/roguetown/alchemy/revival_potion
-	name = "Revival potion"
-	category = "Table"
+	name = "复生药剂"
+	category = "台面"
 	result = list(/obj/item/reagent_containers/glass/bottle/revival = 1)
 	reqs = list(/obj/item/reagent_containers/food/snacks/eoran_aril/auric = 1,
 				/obj/item/alch/viscera = 2,
@@ -117,93 +117,93 @@
 				/obj/item/reagent_containers/spidervenom_inert = 1,
 				/obj/item/alch/horn = 1)
 	craftdiff = 5
-	verbage_simple = "mix"
+	verbage_simple = "调配"
 
 /datum/crafting_recipe/roguetown/alchemy/revival_potion_spider
-	name = "Revival potion"
-	category = "Table"
+	name = "复生药剂"
+	category = "台面"
 	result = list(/obj/item/reagent_containers/glass/bottle/revival = 1)
 	reqs = list(/obj/item/reagent_containers/food/snacks/eoran_aril/auric = 1,
 				/obj/item/alch/viscera = 2,
 				/obj/item/reagent_containers/glass/bottle/alchemical,
 				/obj/item/reagent_containers/spidervenom_inert = 3)
 	craftdiff = 5
-	verbage_simple = "mix"
+	verbage_simple = "调配"
 
 /// bottle craft
 
 /datum/crafting_recipe/roguetown/alchemy/glassbottles
-	name = "alchemy bottles"
-	category = "Containers"
+	name = "炼金瓶"
+	category = "容器"
 	result = list(/obj/item/reagent_containers/glass/bottle/alchemical, /obj/item/reagent_containers/glass/bottle/alchemical, /obj/item/reagent_containers/glass/bottle/alchemical, /obj/item/reagent_containers/glass/bottle/alchemical, /obj/item/reagent_containers/glass/bottle/alchemical, /obj/item/reagent_containers/glass/bottle/alchemical)
 	reqs = list(/obj/item/natural/stone = 1, /obj/item/natural/dirtclod = 1)
 	craftdiff = 1
-	verbage_simple = "forge"
+	verbage_simple = "制作"
 
 /datum/crafting_recipe/roguetown/alchemy/glassbottles2
-	name = "glass bottles"
-	category = "Containers"
+	name = "玻璃瓶"
+	category = "容器"
 	result = list(/obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/bottle)
 	reqs = list(/obj/item/natural/stone = 1, /obj/item/natural/dirtclod = 1)
 	craftdiff = 1
-	verbage_simple = "forge"
+	verbage_simple = "制作"
 
 /// transmutation
 
 /datum/crafting_recipe/roguetown/alchemy/distill
-	name = "distill water"
-	category = "Transmutation"
+	name = "蒸馏水"
+	category = "转化"
 	result = list(/obj/item/reagent_containers/glass/bottle/rogue/water = 1)
 	reqs = list(/obj/item/reagent_containers/glass/bottle = 1, /datum/reagent/water/gross = 48)
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/alchemy/w2w
-	name = "water to wine"
-	category = "Transmutation"
+	name = "水转酒"
+	category = "转化"
 	result = list(/obj/item/reagent_containers/glass/bottle/rogue/wine = 1)
 	reqs = list(/obj/item/reagent_containers/glass/bottle = 1, /datum/reagent/water = 48)
 	craftdiff = 3 //WHO THE FUCK THOUGHT SETTING THIS AT 2 WAS A GOOD IDEA? MAKE IT MAKE SENSE.
-	verbage_simple = "transmute"
+	verbage_simple = "转化"
 
 /datum/crafting_recipe/roguetown/alchemy/g2wes
-	name = "grain to westleach"
-	category = "Transmutation"
+	name = "谷物转 Westleach"
+	category = "转化"
 	result = list(/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweed = 1)
 	reqs = list(/obj/item/reagent_containers/food/snacks/grown/wheat = 2)
 	craftdiff = 3
-	verbage_simple = "transmute"
+	verbage_simple = "转化"
 
 /datum/crafting_recipe/roguetown/alchemy/w2swa
-	name = "westleach to swampweed"
-	category = "Transmutation"
+	name = "Westleach 转 Swampweed"
+	category = "转化"
 	result = list(/obj/item/reagent_containers/food/snacks/grown/rogue/swampweed = 1)
 	reqs = list(/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweed = 2)
 	craftdiff = 3
-	verbage_simple = "transmute"
+	verbage_simple = "转化"
 
 /datum/crafting_recipe/roguetown/alchemy/f2gra
-	name = "fiber to grain"
-	category = "Transmutation"
+	name = "纤维转谷物"
+	category = "转化"
 	result = list(/obj/item/reagent_containers/food/snacks/grown/wheat = 1)
 	reqs = list(/obj/item/natural/fibers = 4)
 	craftdiff = 3
-	verbage_simple = "transmute"
+	verbage_simple = "转化"
 
 /datum/crafting_recipe/roguetown/alchemy/b2app
-	name = "berry to apple"
-	category = "Transmutation"
+	name = "浆果转苹果"
+	category = "转化"
 	result = list(/obj/item/reagent_containers/food/snacks/grown/apple = 1)
 	reqs = list(/obj/item/reagent_containers/food/snacks/grown/berries/rogue = 2)
 	craftdiff = 3
-	verbage_simple = "transmute"
+	verbage_simple = "转化"
 
 /datum/crafting_recipe/roguetown/alchemy/c2sto
-	name = "clay to stone"
-	category = "Transmutation"
+	name = "黏土转石料"
+	category = "转化"
 	result = list(/obj/item/natural/stone = 1)
 	reqs = list(/obj/item/natural/clay = 2)
 	craftdiff = 2
-	verbage_simple = "transmute"
+	verbage_simple = "转化"
 
 /datum/crafting_recipe/roguetown/alchemy/s2cto
 	name = "stone to clay"
@@ -214,80 +214,80 @@
 	verbage_simple = "transmute"
 
 /datum/crafting_recipe/roguetown/alchemy/s2coa
-	name = "stone to coal"
-	category = "Transmutation"
+	name = "石料转煤炭"
+	category = "转化"
 	result = list(/obj/item/rogueore/coal = 1)
 	reqs = list(/obj/item/natural/stone = 4)
 	craftdiff = 4
-	verbage_simple = "transmute"
+	verbage_simple = "转化"
 
 /datum/crafting_recipe/roguetown/alchemy/c2irn
-	name = "coal to iron"
-	category = "Transmutation"
+	name = "煤炭转铁矿"
+	category = "转化"
 	result = list(/obj/item/rogueore/iron = 1)
 	reqs = list(/obj/item/rogueore/coal = 2)
 	craftdiff = 4
-	verbage_simple = "transmute"
+	verbage_simple = "转化"
 
 /datum/crafting_recipe/roguetown/alchemy/i2gol
-	name = "iron to gold"
-	category = "Transmutation"
+	name = "铁转黄金"
+	category = "转化"
 	result = list(/obj/item/rogueore/gold = 1)
 	reqs = list(/obj/item/rogueore/iron = 4)
 	craftdiff = 5
-	verbage_simple = "transmute"
+	verbage_simple = "转化"
 
 /datum/crafting_recipe/roguetown/alchemy/g2top
-	name = "gold to toper"
-	category = "Transmutation"
+	name = "黄金转 托珀石"
+	category = "转化"
 	result = list(/obj/item/roguegem/yellow = 1)
 	reqs = list(/obj/item/rogueore/gold = 2, /obj/item/natural/stone = 1)
 	craftdiff = 5
-	verbage_simple = "transmute"
+	verbage_simple = "转化"
 
 /datum/crafting_recipe/roguetown/alchemy/t2gem
-	name = "toper to gemerald"
-	category = "Transmutation"
+	name = "托珀石 转 翠晶"
+	category = "转化"
 	result = list(/obj/item/roguegem/green = 1)
 	reqs = list(/obj/item/roguegem/yellow = 1, /obj/item/rogueore/gold = 2)
 	craftdiff = 5
-	verbage_simple = "transmute"
+	verbage_simple = "转化"
 
 /datum/crafting_recipe/roguetown/alchemy/g2saf
-	name = "gemerald to saffira"
-	category = "Transmutation"
+	name = "翠晶 转 蓝晶"
+	category = "转化"
 	result = list(/obj/item/roguegem/violet = 1)
 	reqs = list(/obj/item/roguegem/green = 1, /obj/item/rogueore/gold = 2)
 	craftdiff = 5
-	verbage_simple = "transmute"
+	verbage_simple = "转化"
 
 /datum/crafting_recipe/roguetown/alchemy/s2blo
-	name = "saffira to blortz"
-	category = "Transmutation"
+	name = "蓝晶 转 布洛兹石"
+	category = "转化"
 	result = list(/obj/item/roguegem/blue = 1)
 	reqs = list(/obj/item/roguegem/violet = 1, /obj/item/rogueore/gold = 2)
 	craftdiff = 5
-	verbage_simple = "transmute"
+	verbage_simple = "转化"
 
 /datum/crafting_recipe/roguetown/alchemy/r2dia
-	name = "blortz to diamond"
-	category = "Transmutation"
+	name = "布洛兹石 转钻石"
+	category = "转化"
 	result = list(/obj/item/roguegem/diamond = 1)
 	reqs = list(/obj/item/roguegem/blue = 2, /obj/item/rogueore/gold = 2)
 	craftdiff = 5
-	verbage_simple = "transmute"
+	verbage_simple = "转化"
 
 /datum/crafting_recipe/roguetown/alchemy/d2ros
-	name = "diamond to riddle of steel" /// holy grail requires legendary. (sell price on average is 350. rontz and diamond worth 100 each. you get to legndary you deserve 150-200 profit)
-	category = "Transmutation"
+	name = "钻石转 Riddle of Steel" /// holy grail requires legendary. (sell price on average is 350. rontz and diamond worth 100 each. you get to legndary you deserve 150-200 profit)
+	category = "转化"
 	result = list(/obj/item/riddleofsteel = 1)
 	reqs = list(/obj/item/roguegem/diamond = 2, /obj/item/rogueore/iron = 1, /obj/item/rogueore/coal = 1)
 	craftdiff = 6
-	verbage_simple = "transmute"
+	verbage_simple = "转化"
 
 /datum/crafting_recipe/roguetown/alchemy/frankenbrew
-	name = "reanimation elixir"
-	category = "Table"
+	name = "再生灵药"
+	category = "台面"
 	result = list(
 		/obj/item/reagent_containers/glass/bottle/frankenbrew,
 		/obj/item/reagent_containers/glass/bottle/frankenbrew
@@ -300,11 +300,11 @@
 		/datum/reagent/water = 98
 	)
 	craftdiff = 4
-	verbage_simple = "mix"
+	verbage_simple = "调配"
 
 /datum/crafting_recipe/roguetown/alchemy/frankenbrew_small
-	name = "reanimation elixir (impure lux)"
-	category = "Table"
+	name = "再生灵药 (不纯 Lux)"
+	category = "台面"
 	result = list(
 		/obj/item/reagent_containers/glass/bottle/frankenbrew/third
 	)
@@ -316,12 +316,12 @@
 		/datum/reagent/water = 49
 	)
 	craftdiff = 4
-	verbage_simple = "mix"
+	verbage_simple = "调配"
 	required_tech_node = "LUX_FILTRATION"
 	tech_unlocked = FALSE
 
 /datum/crafting_recipe/roguetown/alchemy/bandage
-	name = "bandages (alchemy)"
+	name = "绷带（炼金）"
 	result = list(/obj/item/natural/cloth/bandage)
 	reqs = list(
 		/obj/item/natural/cloth = 1,
@@ -330,7 +330,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/alchemy/glut
-	name = "glut (from gnoll flesh)"
+	name = "Glut（来自豺狼人肉）"
 	craftdiff = 4
 	result = list(
 		/obj/item/roguegem/blood_diamond
@@ -341,7 +341,7 @@
 	subtype_reqs = TRUE
 
 /datum/crafting_recipe/roguetown/alchemy/gnoll_flesh
-	name = "gnoll flesh (from glut)"
+	name = "豺狼人肉（来自 Glut）"
 	craftdiff = 4
 	result = list(
 		/obj/item/reagent_containers/food/snacks/rogue/meat/steak/gnoll

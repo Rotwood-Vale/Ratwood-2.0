@@ -1,21 +1,21 @@
 /obj/effect/mob_spawn/human/orc
 
-	mob_name = "Orc"
+	mob_name = "兽人"
 	mob_type = /mob/living/carbon/human/species/halforc
 	mob_species = /datum/species/halforc
 	brute_damage = 80
 
 /obj/effect/mob_spawn/human/orc/corpse/savageorc
-	mob_name = "Savage Orc"
-	name = "Savage Orc"
+	mob_name = "野蛮兽人"
+	name = "野蛮兽人"
 	skin_tone = SKIN_COLOR_GROONN
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
 	outfit = /datum/outfit/savageorc
 
 /obj/effect/mob_spawn/human/orc/corpse/savageorc2
-	mob_name = "Savage Orc"
-	name = "Savage Orc"
+	mob_name = "野蛮兽人"
+	name = "野蛮兽人"
 	skin_tone = SKIN_COLOR_GROONN
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
@@ -33,8 +33,8 @@
 	head = /obj/item/clothing/head/roguetown/helmet/leather
 
 /obj/effect/mob_spawn/human/orc/corpse/orcmarauder
-	mob_name = "Orc Marauder"
-	name = "Orc Marauder"
+	mob_name = "兽人掠夺者"
+	name = "兽人掠夺者"
 	skin_tone = SKIN_COLOR_GROONN
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
@@ -47,8 +47,8 @@
 	head = /obj/item/clothing/head/roguetown/helmet/leather
 
 /obj/effect/mob_spawn/human/orc/corpse/orcravager
-	mob_name = "Orc Ravager"
-	name = "Orc Ravager"
+	mob_name = "兽人蹂躏者"
+	name = "兽人蹂躏者"
 	skin_tone = SKIN_COLOR_GROONN
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
@@ -62,7 +62,6 @@
 	gloves = /obj/item/clothing/gloves/roguetown/chain/iron
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron
 	mask = /obj/item/clothing/mask/rogue/skullmask
-
 
 
 

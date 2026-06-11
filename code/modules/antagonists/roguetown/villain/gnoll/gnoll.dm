@@ -1,7 +1,7 @@
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/gnoll_armor
 	slot_flags = null
-	name = "gnoll skin"
-	desc = "an impenetrable hide of graggar's fury"
+	name = "豺狼人兽皮"
+	desc = "格拉加尔 狂怒所化、坚不可摧的兽皮"
 	mob_overlay_icon = 'icons/roguetown/mob/monster/gnoll.dmi'
 	icon = 'icons/roguetown/mob/monster/gnoll.dmi'
 	icon_state = "berserker"
@@ -23,9 +23,9 @@
 	RegisterSignal(loc, list(COMSIG_SPECIES_ATTACKED_BY, COMSIG_LIVING_ARMOR_CHECKED, COMSIG_MOB_APPLY_DAMGE), PROC_REF(on_attacked_by), override = TRUE)
 
 /datum/antagonist/gnoll
-	name = "Gnoll"
-	roundend_category = "Gnolls"
-	antagpanel_category = "Gnolls"
+	name = "豺狼人"
+	roundend_category = "豺狼人"
+	antagpanel_category = "豺狼人"
 	job_rank = ROLE_GNOLL
 	var/datum/weakref/tracked_target_ref = null
 
@@ -124,10 +124,10 @@
 	if(!target)
 		return null
 	if(target.has_flaw(/datum/charflaw/hunted))
-		return "Hunted flaw"
+		return "被猎印记"
 	if(target.job in get_gnoll_tracking_combat_roles())
-		return "Combat fallback"
-	return "Direct scent"
+		return "战斗职业后备"
+	return "直接气味"
 
 /datum/antagonist/gnoll/proc/is_examine_marked_target(mob/living/target)
 	if(!target)
@@ -136,12 +136,12 @@
 		return TRUE
 	if(get_tracked_target() != target)
 		return FALSE
-	return get_tracked_target_source(target) == "Combat fallback"
+	return get_tracked_target_source(target) == "战斗职业后备"
 
 /datum/antagonist/gnoll/antag_listing_status()
 	var/base_status = ..()
 	var/mob/living/target = get_tracked_target()
-	var/target_display = "None"
+	var/target_display = "无"
 
 	if(target)
 		var/source = get_tracked_target_source(target)
@@ -150,12 +150,12 @@
 			target_display += " ([source])"
 
 	if(base_status)
-		return "[base_status] | Tracked: [target_display]"
-	return "Tracked: [target_display]"
+		return "[base_status] | 已追踪: [target_display]"
+	return "已追踪: [target_display]"
 
 /mob/living/carbon/human/proc/gnoll_can_feed_heal()
 	if(has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) || has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
-		to_chat(src, span_notice("My power is weakened, I cannot heal!"))
+		to_chat(src, span_notice("我的力量被削弱了，无法治疗自己！"))
 		return FALSE
 	return TRUE
 
@@ -166,28 +166,28 @@
 		return
 	if(target.mind)
 		if(target.mind.has_antag_datum(/datum/antagonist/zombie))
-			to_chat(src, span_warning("I should not feed on rotten flesh."))
+			to_chat(src, span_warning("我不该啃食腐烂的血肉。"))
 			return
 		if(target.mind.has_antag_datum(/datum/antagonist/vampire))
-			to_chat(src, span_warning("I should not feed on corrupted flesh."))
+			to_chat(src, span_warning("我不该啃食被污染的血肉。"))
 			return
 		if(target.mind.has_antag_datum(/datum/antagonist/gnoll))
-			to_chat(src, span_warning("I should not feed on my kin's flesh."))
+			to_chat(src, span_warning("我不该啃食同族的血肉。"))
 			return
 
-	to_chat(src, span_warning("I feed on succulent flesh. I feel reinvigorated."))
+	to_chat(src, span_warning("我吞食鲜嫩的血肉，感觉自己重新焕发了活力。"))
 	return src.reagents.add_reagent(/datum/reagent/medicine/healthpot, healing_amount)
 
 /mob/living/carbon/human/proc/gnoll_bloodpool_feed(healing_amount = 6)
 	if(!gnoll_can_feed_heal())
 		return FALSE
 
-	to_chat(src, span_warning("I lap from the blood. Through Graggar's grace I am renewed."))
+	to_chat(src, span_warning("我舔食鲜血。蒙 格拉加尔 之恩，我得以重获新生。"))
 	src.reagents.add_reagent(/datum/reagent/medicine/healthpot, healing_amount)
 	return TRUE
 
 /obj/item/rogueweapon/werewolf_claw/gnoll
-	name = "Gnoll Claw"
+	name = "豺狼人利爪"
 	// We are smarter, we can use our solid, steel-like claws to defend ourselves.
 	wdefense = 5
 	force = 30
@@ -202,43 +202,43 @@
 	wlength = WLENGTH_SHORT
 
 /datum/intent/simple/werewolf/gnoll
-	name = "claw"
+	name = "利爪"
 	icon_state = "inchop"
 	blade_class = BCLASS_CHOP
-	attack_verb = list("claws", "mauls", "eviscerates")
+	attack_verb = list("抓挠", "撕咬", "开膛破肚")
 	animname = "chop"
 	hitsound = "genslash"
 	penfactor = 20
 	candodge = TRUE
 	canparry = TRUE
-	miss_text = "slashes the air!"
+	miss_text = "扑了个空！"
 	miss_sound = "bluntwooshlarge"
 	item_d_type = "slash"
 	damfactor = 1.2
 
 /datum/intent/mace/smash/werewolf/gnoll
-	name = "thrash"
-	desc = "A powerful smash of savage muscle that deals normal damage, but can throw a standing opponent back and slow them down, based on your strength. Ineffective below 10 strength. Slowdown & Knockback scales to your Strength up to 15 (1 - 5 tiles). Cannot be used consecutively more than every 5 seconds on the same target. Prone targets halve the knockback distance."
+	name = "狂击"
+	desc = "以野蛮肌力发动的强力猛击，造成正常伤害，并能依照你的力量击退、减速站立目标。力量低于 10 时无效。减速与击退会随你的力量提高，最高按 15 点计算（1 到 5 格）。同一目标每 5 秒内不能连续使用。倒地目标的击退距离减半。"
 	icon_state = "insmash"
 	chargetime = 1
 	penfactor = 0
 
 /datum/intent/simple/gnoll_cut
-	name = "cutting claw"
+	name = "裂割爪"
 	hitsound = "genslash"
 	penfactor = 60
 	candodge = TRUE
 	canparry = TRUE
-	miss_text = "slashes the air!"
+	miss_text = "扑了个空！"
 	miss_sound = "bluntwooshlarge"
 	icon_state = "incut"
-	attack_verb = list("cuts", "slashes")
+	attack_verb = list("切开", "劈裂")
 	animname = "cut"
 	blade_class = BCLASS_CUT
 	item_d_type = "slash"
 
 /datum/intent/mace/strike/gnoll
-	name = "armor rending strike"
-	miss_text = "strikes the air!"
+	name = "裂甲重击"
+	miss_text = "挥空了！"
 	miss_sound = "bluntwooshlarge"
-	attack_verb = list("punches", "strikes", "tears")
+	attack_verb = list("猛击", "重创", "撕裂")

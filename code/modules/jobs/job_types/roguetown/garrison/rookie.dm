@@ -1,5 +1,6 @@
 /datum/job/roguetown/rookie
 	title = "Rookie"
+	display_title = "新兵"
 	flag = ROOKIE
 	department_flag = GARRISON
 	faction = "Station"
@@ -11,9 +12,9 @@
 	advclass_cat_rolls = list(CTAG_ROOKIE = 20)
 	job_traits = list(TRAIT_SQUIRE_REPAIR, TRAIT_GUARDSMAN)
 
-	tutorial = "Odd-jobs, running messages, fixing dents and talking to locals; the Guard can always use a spare pair of hands, eyes and ears. Assist your fellow guards in dealing with threats - both within and without. \
-				Given a brief introduction in weapons and guardwork, the rest of your training is to be picked up on the job. \
-				Obey your superiors (everyone who isn't you) and show the nobles your respect. Keep an eye out, try to learn a thing or two, then one day you might live to make an adequate soldier."
+	tutorial = "打杂、跑腿、修补甲胄、同本地人打交道，卫队总少不了多一双手、多一双眼、多一对耳朵。协助你的同袍应对内外威胁。\
+				你只受过一丁点兵器和卫务训练，剩下的本事都得在差事里慢慢学。\
+				服从你的上级，也就是除了你自己以外的所有人，并向贵族表示敬意。放机灵点，多学点东西，说不定哪天你就能活着熬成个像样的士兵。"
 
 	outfit = /datum/outfit/job/roguetown/rookie
 	display_order = JDO_SQUIRE
@@ -44,8 +45,8 @@
 
 
 /datum/advclass/rookie/frontline
-	name = "Frontline Recruit"
-	tutorial = "The quickest way to learn is also the deadliest."
+	name = "前线新兵"
+	tutorial = "学得最快的路子，往往也是死得最快的路子。"
 	outfit = /datum/outfit/job/roguetown/rookie/footman
 
 	category_tags = list(CTAG_ROOKIE)
@@ -101,24 +102,24 @@
 		)
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Sword and Shield","Cudgel and Shield","Spear")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("剑与盾","棍棒与盾","长矛")
+		var/weapon_choice = input(H, "选择你的武器。", "拿起武器") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Sword and Shield")
+			if("剑与盾")
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/short/iron
 				backl = /obj/item/rogueweapon/shield/iron
-			if("Cudgel and Shield")
+			if("棍棒与盾")
 				r_hand = /obj/item/rogueweapon/mace/cudgel
 				backl = /obj/item/rogueweapon/shield/iron
-			if("Spear")
+			if("长矛")
 				r_hand = /obj/item/rogueweapon/spear
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 
 /datum/advclass/rookie/backline
-	name = "Backline Recruit"
-	tutorial = "Keep your distance, watch carefully, and stick 'em when they ain't lookin'"
+	name = "后线新兵"
+	tutorial = "保持距离，盯紧局势，趁他们没看见时狠狠干上一下。"
 	outfit = /datum/outfit/job/roguetown/rookie/skirmisher
 
 	category_tags = list(CTAG_ROOKIE)
@@ -173,27 +174,26 @@
 		)
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Crossbow","Bow","Sling")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
-		var/armor_options = list("Light Armor", "Medium Armor")
-		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in armor_options
+		var/weapons = list("十字弩","弓","投石索")
+		var/weapon_choice = input(H, "选择你的武器。", "拿起武器") as anything in weapons
+		var/armor_options = list("轻甲", "中甲")
+		var/armor_choice = input(H, "选择你的护甲。", "穿上护甲") as anything in armor_options
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Crossbow")
+			if("十字弩")
 				beltr = /obj/item/quiver/bolts
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-			if("Bow")
+			if("弓")
 				beltr = /obj/item/quiver/arrows
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-			if("Sling")
+			if("投石索")
 				beltr = /obj/item/quiver/sling/iron
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
 
 		switch(armor_choice)
-			if("Light Armor")
+			if("轻甲")
 				armor = /obj/item/clothing/suit/roguetown/armor/leather
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-			if("Medium Armor")
+			if("中甲")
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/half/iron
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-

@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/song/accelakathist
-	name = "Accelerating Akathist"
-	desc = "Accelerate your allies with your bardic song!"
+	name = "加速圣颂"
+	desc = "用你的吟游之歌加速盟友！"
 	invocations = list("plays a blisteringly fast series of notes!") 
 	invocation_type = "emote"
 	overlay_state = "bardsong_t3_base"
@@ -17,7 +17,7 @@
 		return TRUE
 	else
 		revert_cast()
-		to_chat(user, span_warning("I must be playing something to inspire my audience!"))
+		to_chat(user, span_warning("我必须先演奏点什么，才能激励我的听众！"))
 		return
 
 
@@ -32,7 +32,7 @@
 	)
 	
 /atom/movable/screen/alert/status_effect/buff/song/accelakathist
-	name = "Accelerating Akathist"
+	name = "加速圣颂"
 	desc = "I can feel the rhythm!"
 	icon_state = "buff"
 

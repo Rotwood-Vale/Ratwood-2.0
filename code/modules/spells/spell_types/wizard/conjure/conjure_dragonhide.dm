@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/self/conjure_armor/dragonhide
-	name = "Conjure Dragonhide"
-	desc = "Conjure a Dragonhide Barrier. Granting long-lasting protection from attacks and an especial affinity against flames. Your armor slot must be free to use this.\n\
-	The barrier lasts until it is broken, a new one is summoned, or the spell is forgotten."
+	name = "召出龙鳞障衣"
+	desc = "召出一层龙鳞障衣，为你长时间抵御攻击，并赋予对火焰的特殊抗性。施放此术时，你的护甲位必须空着。\n\
+	这层障衣会持续存在，直到它破碎、你召出新的，或你忘却这道法术。"
 	overlay_state = "conjure_dragonhide"
 	sound = list('sound/magic/whiteflame.ogg')
 
@@ -18,7 +18,7 @@
 	cost = 4 // upgrade on ring, + firestack immunity pretty dang good.
 	spell_tier = 2 // Spellblade tier.
 
-	invocations = list("Equitare Draconis") // google translate latin 'ride the dragon' - If someone literate wants to change this, feel free to.
+	invocations = list("披上龙鳞！") // google translate latin 'ride the dragon' - If someone literate wants to change this, feel free to.
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_METAL
 	glow_intensity = GLOW_INTENSITY_MEDIUM
@@ -30,15 +30,15 @@
 
 /obj/effect/proc_holder/spell/self/conjure_armor/conjure_dragonhide/Destroy()
 	if(src.conjured_armor)
-		conjured_armor.visible_message(span_warning("The [conjured_armor]'s borders begin to shimmer and fade, before it vanishes entirely!"))
+		conjured_armor.visible_message(span_warning("[conjured_armor] 的边缘开始闪烁消褪，随后彻底消失了！"))
 		qdel(conjured_armor)
 	return ..()
 
 
 
 /obj/item/clothing/suit/roguetown/dragonhide
-	name = "dragonhide"
-	desc = "An arcyne art first mastered by the 'dragonsbreath magisters' of Lirvas. This barrier protects best against the heat."
+	name = "龙鳞障衣"
+	desc = "最早由利尔瓦斯的“龙息法师”掌握的奥术技艺。这层障衣对高热的防护尤为出色。"
 	max_integrity = 200
 	break_sound = 'sound/foley/breaksound.ogg'
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
@@ -63,7 +63,7 @@
 
 /obj/item/clothing/suit/roguetown/dragonhide/proc/dispel()
 	if(!QDELETED(src))
-		src.visible_message(span_warning("The [src]'s borders begin to shimmer and fade, before it vanishes entirely!"))
+		src.visible_message(span_warning("[src] 的边缘开始闪烁消褪，随后彻底消失了！"))
 		qdel(src)
 
 /obj/item/clothing/suit/roguetown/dragonhide/obj_break()
@@ -90,12 +90,12 @@
 	id = "dragonscaled"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/dragonhide
 	duration = -1
-	examine_text = "<font color='red'>SUBJECTPRONOUN is covered in ashy scales!</font>"
+	examine_text = "<font color='red'>SUBJECTPRONOUN 浑身覆着灰烬般的鳞片！</font>"
 	var/outline_colour = "#c23d09"
 
 /atom/movable/screen/alert/status_effect/buff/dragonhide
-	name = "Dragonhide"
-	desc = "Flames dance at my heels, yet do not sting!"
+	name = "龙鳞护体"
+	desc = "火焰在我脚边起舞，却再也灼伤不了我！"
 
 /datum/status_effect/buff/dragonhide/on_apply()
 	. = ..()
@@ -108,6 +108,5 @@
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_NOFIRE, TRAIT_GENERIC)
 	owner.remove_filter(DRAGONHIDE_FILTER)
-
 
 

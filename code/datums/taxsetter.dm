@@ -3,8 +3,8 @@
  */
 
 /// Since duke/steward have different announcements
-/datum/taxsetter/var/good_announcement_text = "The Generous Lord Decrees"
-/datum/taxsetter/var/bad_announcement_text = "The Tyrannical Lord Dictates"
+/datum/taxsetter/var/good_announcement_text = "慷慨的领主颁令"
+/datum/taxsetter/var/bad_announcement_text = "暴虐的领主下旨"
 
 /datum/taxsetter/New(good_announcement_text = null, bad_announcement_text = null)
 	. = ..()
@@ -16,7 +16,7 @@
 /datum/taxsetter/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "TaxSetter", "Set Taxes")
+		ui = new(user, src, "TaxSetter", "设置税赋")
 		ui.open()
 
 /datum/taxsetter/ui_static_data(mob/user)

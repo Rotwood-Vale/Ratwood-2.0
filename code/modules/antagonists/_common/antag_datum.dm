@@ -1,8 +1,8 @@
 GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist
-	var/name = "Antagonist"
-	var/roundend_category = "other villains"				//Section of roundend report, datums with same category will be displayed together, also default header for the section
+	var/name = "反派"
+	var/roundend_category = "其他反派"				//Section of roundend report, datums with same category will be displayed together, also default header for the section
 	var/show_in_roundend = TRUE								//Set to false to hide the antagonists from roundend report
 	var/prevent_roundtype_conversion = TRUE		//If false, the roundtype will still convert with this antag active
 	var/datum/mind/owner						//Mind that owns this datum
@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	//Antag panel properties
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
-	var/antagpanel_category = "Uncategorized"	//Antagpanel will display these together, REQUIRED
+	var/antagpanel_category = "未分类"	//Antagpanel will display these together, REQUIRED
 	var/show_name_in_check_antagonists = FALSE //Will append antagonist name in admin listings - use for categories that share more than one antag type
 	var/increase_votepwr = TRUE
 	var/rogue_enabled = FALSE
@@ -101,8 +101,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	set waitfor = FALSE
 	if(owner && owner.current)
 		if(requires_confirmation && !silent && owner.current.client)
-			var/response = tgui_alert(owner.current, "You have been selected as a [name]. Do you accept this role?", "Antagonist Confirmation", list("Accept", "Decline"), timeout = 30 SECONDS)
-			if(response != "Accept")
+			var/response = tgui_alert(owner.current, "你被选为了[name]。你接受这个身份吗？", "反派确认", list("接受", "拒绝"), timeout = 30 SECONDS)
+			if(response != "接受")
 				log_admin("[key_name(owner)] declined the [name] antagonist role.")
 				message_admins("[key_name_admin(owner)] declined the [name] antagonist role.")
 				on_removal()
@@ -126,10 +126,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
 
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [name]?", "[name]", null, job_rank, 50, owner.current)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("你想扮演[name]吗？", "[name]", null, job_rank, 50, owner.current)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
+		to_chat(owner, "你的角色已被幽灵接管！如果你以后想避免这种情况，请申诉你的岗位封禁！")
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(owner)]) to replace a jobbanned player.")
 		owner.current.ghostize(0)
 		owner.current.key = C.key
@@ -174,17 +174,17 @@ GLOBAL_LIST_EMPTY(antagonists)
 				break
 
 	if(objectives.len == 0 || objectives_complete)
-		report += span_greentextbig("The [name] was successful!")
+		report += span_greentextbig("[name]成功了！")
 	else
 		testing("redtext")
-		report += span_redtextbig("The [name] has failed!")
+		report += span_redtextbig("[name]失败了！")
 	report += "<br>"
 
 	return report.Join("<br>")
 
 //Displayed at the start of roundend_category section, default to roundend_category header
 /datum/antagonist/proc/roundend_report_header()
-	return 	"<span class='header'>The [roundend_category] were:</span><br>"
+	return 	"<span class='header'>以下是[roundend_category]：</span><br>"
 
 //Displayed at the end of roundend_category section
 /datum/antagonist/proc/roundend_report_footer()
@@ -247,14 +247,14 @@ GLOBAL_LIST_EMPTY(antagonists)
 			return
 
 /datum/antagonist/proc/edit_memory(mob/user)
-	var/new_memo = copytext(trim(input(user,"Write new memory", "Memory", antag_memory) as null|message),1,MAX_MESSAGE_LEN)
+	var/new_memo = copytext(trim(input(user,"写下新的记忆", "记忆", antag_memory) as null|message),1,MAX_MESSAGE_LEN)
 	if (isnull(new_memo))
 		return
 	antag_memory = new_memo
 
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom
-	antagpanel_category = "Custom"
+	antagpanel_category = "自定义"
 	show_name_in_check_antagonists = TRUE //They're all different
 	var/datum/team/custom_team
 
@@ -265,7 +265,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return custom_team
 
 /datum/antagonist/custom/admin_add(datum/mind/new_owner,mob/admin)
-	var/custom_name = stripped_input(admin, "Custom antagonist name:", "Custom antag", "Antagonist")
+	var/custom_name = stripped_input(admin, "自定义反派名称：", "自定义反派", "反派")
 	if(custom_name)
 		name = custom_name
 	else
@@ -274,5 +274,5 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 // Register Thieves' Guild antagonist for admin panel and roundstart selection
 /datum/antagonist/thievesguild
-	antagpanel_category = "Thieves' Guild"
+	antagpanel_category = "盗贼公会"
 	show_name_in_check_antagonists = TRUE

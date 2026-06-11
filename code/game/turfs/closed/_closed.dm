@@ -358,20 +358,20 @@
 	if(wallclimb)
 		var/skill = user.get_skill_level(/datum/skill/misc/climbing)
 		if(skill >= climbdiff)
-			. += span_info("I <b>can</b> climb this wall.")
+			. += span_info("我<b>可以</b>爬上这堵墙。")
 			if(skill == 6)
-				. += span_info("I <b>can</b> move along the ledge here.")
+				. += span_info("我<b>可以</b>沿着这里的岩架移动。")
 			else if(skill > climbdiff)
-				. += span_info("I <b>can</b> move along the ledge here.")
+				. += span_info("我<b>可以</b>沿着这里的岩架移动。")
 			else
-				. += span_info("I <b>cannot</b> move along the ledge here.")
+				. += span_info("我<b>不能</b>沿着这里的岩架移动。")
 		else if(abs(skill - climbdiff) == 1)
-			. += span_info("I cannot climb this wall, but I could with the help of a table or a chair.")
-			. += span_info("I <b>cannot</b> move along the ledge here.")
+			. += span_info("我爬不上这堵墙，但借助桌子或椅子也许可以。")
+			. += span_info("我<b>不能</b>沿着这里的岩架移动。")
 		else
-			. += span_info("I <b>cannot</b> climb this wall.")
+			. += span_info("我<b>不能</b>爬上这堵墙。")
 	else
-		. += span_info("This wall cannot be climbed.")
+		. += span_info("这堵墙无法攀爬。")
 
 /turf/closed/attack_ghost(mob/dead/observer/user)
 	if(!user.Adjacent(src))

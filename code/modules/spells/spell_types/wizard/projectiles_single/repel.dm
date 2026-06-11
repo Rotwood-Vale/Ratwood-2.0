@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/projectile/repel
-	name = "Repel"
-	desc = "Shoot out a magical bolt that pushes out the target struck away from the caster."
+	name = "斥退术"
+	desc = "射出一道魔力飞矢，将命中的目标从施法者身边猛然推开。"
 	clothes_req = FALSE
 	range = 15
 	projectile_type = /obj/projectile/magic/repel
@@ -18,7 +18,7 @@
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
 	spell_tier = 2
-	invocations = list("Exmoveo!")
+	invocations = list("退散！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_DISPLACEMENT
 	glow_intensity = GLOW_INTENSITY_LOW
@@ -26,7 +26,7 @@
 	xp_gain = TRUE
 
 /obj/projectile/magic/repel
-	name = "bolt of repeling"
+	name = "斥退飞矢"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "curseblob"
 	range = 15
@@ -52,7 +52,7 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if(L.anti_magic_check() || !firer)
-			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
+			L.visible_message(span_warning("[src] 在接触[target]时消散了！"))
 			return BULLET_ACT_BLOCK
 		L.throw_at(throw_target, 7, 4)
 		new /datum/magic_throw_slip_watcher(L)

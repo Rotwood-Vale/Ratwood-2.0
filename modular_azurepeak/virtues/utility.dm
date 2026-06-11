@@ -1,46 +1,44 @@
 /datum/virtue/utility/noble
-	name = "Nobility"
-	desc = "By birth, blade or brain, I am noble known to the royalty of these lands, and have all the benefits associated with it. \
-			I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
+	name = "贵胄"
+	desc = "无论凭借出身、武勇还是才智，我都是这片土地上受王室认可的贵族，也享有与之相称的一切好处。我还巧妙地藏起了一笔可观钱财，以及一件家传遗物。"
 	added_traits = list(TRAIT_NOBLE)
 	added_skills = list(list(/datum/skill/misc/reading, 1, 6))
-	added_stashed_items = list("Heirloom Amulet" = /obj/item/clothing/neck/roguetown/ornateamulet/noble,
-								"Hefty Coinpurse" = /obj/item/storage/belt/rogue/pouch/coins/virtuepouch)
-	triumph_cost = 7
+	added_stashed_items = list("传家护符" = /obj/item/clothing/neck/roguetown/ornateamulet/noble,
+								"厚实钱袋" = /obj/item/storage/belt/rogue/pouch/coins/virtuepouch)
 
 /datum/virtue/utility/noble/apply_to_human(mob/living/carbon/human/recipient)
 	SStreasury.noble_incomes[recipient] += 15
 
 /datum/virtue/utility/socialite
-	name = "Socialite"
-	desc = "I thrive in social settings, easily reading the emotions of others and charming those around me. My presence is always felt at any gathering."
-	custom_text = "Incompatible with Ugly virtue. Grants empathic insight."
+	name = "社交名流"
+	desc = "我在社交场合如鱼得水，能轻易读出他人情绪，也总能迷住身边的人。无论什么聚会，我的存在感都不会被忽视。"
+	custom_text = "与“丑陋”美德不兼容。获得共情洞察。"
 	added_traits = list(TRAIT_BEAUTIFUL, TRAIT_GOODLOVER, TRAIT_EMPATH)
 	added_stashed_items = list(
-		"Hand Mirror" = /obj/item/handmirror)
+		"手镜" = /obj/item/handmirror)
 
 /datum/virtue/utility/socialite/handle_traits(mob/living/carbon/human/recipient)
 	..()
 	if(HAS_TRAIT(recipient, TRAIT_UNSEEMLY))
-		to_chat(recipient, "Your attractiveness is cancelled out! You become normal.")
+		to_chat(recipient, "你的吸引力被抵消了！你变得平平无奇。")
 		if(HAS_TRAIT(recipient, TRAIT_BEAUTIFUL))
 			REMOVE_TRAIT(recipient, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
 		REMOVE_TRAIT(recipient, TRAIT_UNSEEMLY, TRAIT_VIRTUE)
 
 /datum/virtue/utility/deadened
-	name = "Deadened"
-	desc = "Some terrible incident colours my past, and now, I feel nothing."
+	name = "麻木"
+	desc = "过去那场可怖的变故深深染透了我的人生，而如今，我已感受不到任何东西。"
 	added_traits = list(TRAIT_NOMOOD, TRAIT_DETACHED)
 
 /datum/virtue/utility/light_steps
-	name = "Light Steps"
-	desc = "Years of skulking about have left my steps quiet, and my hunched gait quicker."
+	name = "轻步无声"
+	desc = "多年的潜行摸索让我的脚步变得安静，也让我的蜷身步态快了不少。"
 	added_traits = list(TRAIT_LIGHT_STEP)
 	added_skills = list(list(/datum/skill/misc/sneaking, 3, 6))
 
 /datum/virtue/utility/resident
-	name = "Resident"
-	desc = "I'm a resident of these lands. I have an account in the city's treasury and a home in the city."
+	name = "居民"
+	desc = "我是这片土地上的居民。我在城市金库里有账户，也在城里有一处住处。"
 	added_traits = list(TRAIT_RESIDENT)
 
 /datum/virtue/utility/resident/apply_to_human(mob/living/carbon/human/recipient)
@@ -75,23 +73,23 @@
 			recipient.mind.i_know_person(MF)
 
 /datum/virtue/utility/failed_squire
-	name = "Failed Squire"
-	desc = "I was once a squire in training, but failed to achieve knighthood. Though my dreams of glory were dashed, I retained my knowledge of equipment maintenance and repair, including how to polish arms and armor."
+	name = "落选侍从"
+	desc = "我曾是受训中的侍从，却未能最终成为骑士。虽然荣光之梦早已破碎，但我仍保留着维护与修理装备的知识，包括如何擦亮武器和甲胄。"
 	added_traits = list(TRAIT_SQUIRE_REPAIR)
 	added_stashed_items = list(
-		"Hammer" = /obj/item/rogueweapon/hammer/iron,
-		"Polishing Cream" = /obj/item/polishing_cream,
-		"Fine Brush" = /obj/item/armor_brush
+		"锤子" = /obj/item/rogueweapon/hammer/iron,
+		"抛光膏" = /obj/item/polishing_cream,
+		"细刷" = /obj/item/armor_brush
 	)
 
 /datum/virtue/utility/failed_squire/apply_to_human(mob/living/carbon/human/recipient)
-	to_chat(recipient, span_notice("Though you failed to become a knight, your training in equipment maintenance and repair remains useful."))
-	to_chat(recipient, span_notice("You can retrieve your hammer and polishing tools from a tree, statue, or clock."))
+	to_chat(recipient, span_notice("尽管你没能成为骑士，但你在装备维护与修理上的训练依旧派得上用场。"))
+	to_chat(recipient, span_notice("你可以从树、雕像或时钟里取回自己的锤子和抛光工具。"))
 
 /datum/virtue/utility/linguist
-	name = "Intellectual"
-	desc = "I've spent my life surrounded by various books or sophisticated foreigners, be it through travel or other fortunes beset on my life. I've picked up several tongues and wits, and keep a journal closeby. I can tell people's exact prowess."
-	custom_text = "Maximizes Assess benefits with a bonus of the target's Stats. Allows the choice of 3 languages to learn upon joining. +1 INT."
+	name = "学识渊博"
+	desc = "我一生都浸润在书卷与各地见闻之中，不论是旅行还是命运的安排，都让我结识了许多博学之士与异乡人。我因此学会了多种语言，也养成了随身记述的习惯。我能准确判断他人的本事。"
+	custom_text = "将“评估”收益提升至最大，并额外获知目标属性加成。开局可额外选择学习3种语言。+1智力。"
 	added_traits = list(TRAIT_INTELLECTUAL)
 	added_skills = list(list(/datum/skill/misc/reading, 3, 6))
 	added_stashed_items = list(
@@ -136,53 +134,53 @@
 		var/lang_count = 3
 		var/count = lang_count
 		for(var/i in 1 to lang_count)
-			var/chosen_language = input(recipient, "Choose your extra spoken language.", "VIRTUE: [count] LEFT") as null|anything in choices
+			var/chosen_language = input(recipient, "选择你额外掌握的口语。", "美德：剩余[count]次") as null|anything in choices
 			if(chosen_language)
 				var/language_type = choices[chosen_language]
 				recipient.grant_language(language_type)
 				choices -= chosen_language
-				to_chat(recipient, span_info("I recall my knowledge of [chosen_language]..."))
+				to_chat(recipient, span_info("我回想起了[chosen_language]的知识……"))
 				count--
 
 /datum/virtue/utility/deathless
-	name = "Deathless"
-	desc = "Some fell magick has rendered me inwardly unliving - I do not hunger, and I do not breathe."
+	name = "不朽"
+	desc = "某种邪异魔法使我内里近乎不死不生，我不再饥饿，也无需呼吸。"
 	added_traits = list(TRAIT_NOHUNGER, TRAIT_NOBREATH)
 
 /datum/virtue/utility/deathless/handle_traits(mob/living/carbon/human/recipient)
 	..()
 	if(HAS_TRAIT(recipient, TRAIT_HEMOPHAGE))
-		to_chat(recipient, "My reliance on lyfeblood cannot be severed!")
+		to_chat(recipient, "我对生命之血的依赖无法被切断！")
 		REMOVE_TRAIT(recipient, TRAIT_NOHUNGER, TRAIT_VIRTUE)
 
 /datum/virtue/utility/feral_appetite
-	name = "Feral Appetite"
-	desc = "Raw, toxic or spoiled food doesn't bother my superior digestive system."
+	name = "野性食欲"
+	desc = "生食、有毒食物或腐坏食物都奈何不了我强韧的消化系统。"
 	added_traits = list(TRAIT_NASTY_EATER)
 
 /datum/virtue/utility/feral_appetite/handle_traits(mob/living/carbon/human/recipient)
 	..()
 	if(HAS_TRAIT(recipient, TRAIT_HEMOPHAGE))
-		to_chat(recipient, "My reliance on lyfeblood cannot be severed!")
+		to_chat(recipient, "我对生命之血的依赖无法被切断！")
 		REMOVE_TRAIT(recipient, TRAIT_NASTY_EATER, TRAIT_VIRTUE)
 
 /datum/virtue/utility/night_vision
-	name = "Night-eyed"
-	desc = "I have eyes able to see through cloying darkness. Incompatible with the vice Colorblind."
+	name = "夜视"
+	desc = "我的双眼足以看穿令人窒闷的黑暗。与“色盲”癖性不兼容。"
 	added_traits = list(TRAIT_DARKVISION)
-	custom_text = "Adds a button to toggle colorblindness to aid seeing in the dark. Taking this with the Colorblind vice will permanently colorblind you."
+	custom_text = "新增一个切换色盲视效的按钮，以便在黑暗中视物。若同时选择“色盲”癖性，你将永久处于色盲状态。"
 
 /datum/virtue/utility/night_vision/apply_to_human(mob/living/carbon/human/recipient)
 	if(recipient.charflaw)
 		if(recipient.charflaw.type == /datum/charflaw/colorblind)
-			to_chat(recipient, "Your eyes have become permanently colorblind.")
+			to_chat(recipient, "你的双眼已永久失去辨色能力。")
 		else
 			recipient.verbs += /mob/living/carbon/human/proc/toggleblindness
 
 /datum/virtue/utility/performer
-	name = "Performer"
-	desc = "Music, artistry and the act of showmanship carried me through life. I've hidden a favorite instrument of mine, know how to please anyone I touch, and how to crack the eggs of hecklers."
-	custom_text = "Comes with a stashed instrument of your choice. You choose the instrument after spawning in."
+	name = "表演者"
+	desc = "音乐、艺术与表演伴我走过一生。我藏好了一件自己最喜爱的乐器，也懂得如何取悦他人，以及如何让起哄者闭嘴。"
+	custom_text = "自带一件你预先藏好的乐器。进入游戏后可自行选择乐器种类。"
 	added_traits = list(TRAIT_NUTCRACKER, TRAIT_GOODLOVER)
 	added_skills = list(list(/datum/skill/misc/music, 4, 6)) //Allows them uplaod custom music
 
@@ -198,35 +196,35 @@
 		instruments[instr.name] = instrument_type
 		qdel(instr)  // Clean up the temporary instance
 
-	var/chosen_name = input(recipient, "What instrument did I stash?", "STASH") as null|anything in instruments
+	var/chosen_name = input(recipient, "我藏了哪件乐器？", "藏匿物") as null|anything in instruments
 	if(chosen_name)
 		var/instrument_type = instruments[chosen_name]
 		recipient.mind?.special_items[chosen_name] = instrument_type
 
 /datum/virtue/utility/mean
-	name = "Acquired Tastes"
-	desc = "Despite your unorthodox tastes, you know how to keep a partner off-guard and on their back. Sometimes accidents happen in the heat of passion or you enjoy making them, sharing a bed with you is a gamble. You're always prepared to handle a guest with the toys you keep stashed."
+	name = "后天嗜好"
+	desc = "尽管你的嗜好颇为离经叛道，你仍懂得如何让床伴措手不及、败下阵来。激情之中总会发生些“意外”，或许你也乐在其中；与你同床，本就是一场赌局。好在你总备着些私藏“小玩意”来招待客人。"
 	added_traits = list(TRAIT_DEATHBYSNUSNU, TRAIT_NUTCRACKER)
 	added_stashed_items = list("Bag of Fetish Gear" = /obj/item/storage/roguebag/fetish)
 
 /datum/virtue/utility/larcenous
-	name = "Larcenous"
-	desc = "Whether it was asked of you, or by a calling for the rush deep within your hollow heart, you seek things that don't belong you. You know how to work a lock, and have stashed a ring of them, for just the occasion."
+	name = "惯偷"
+	desc = "无论是受人所托，还是你那空洞心中对刺激的渴望驱使，你总会去觊觎不属于自己的东西。你知道该如何开锁，也早已为此偷偷藏好了一串钥匙。"
 	added_stashed_items = list("Lockpick Ring" = /obj/item/lockpickring/mundane)
 	added_skills = list(list(/datum/skill/misc/lockpicking, 3, 6))
 
 /datum/virtue/utility/granary
-	name = "Cunning Provisioner"
+	name = "精明补给者"
 	added_traits = list(TRAIT_HOMESTEAD_EXPERT)
-	desc = "You've worked in or around the docks enough to steal away a sack of supplies that no one would surely miss, just in case. You've picked up on some cooking and fishing tips in your spare time, as well."
+	desc = "你曾在码头或其周边讨生活，顺手摸走一袋没人会在意的补给，以备不时之需。闲暇时，你也学会了些烹饪与钓鱼的门道。"
 	added_stashed_items = list("Bag of Food" = /obj/item/storage/roguebag/food)
 	added_skills = list(list(/datum/skill/craft/cooking, 3, 6),
 						list(/datum/skill/labor/fishing, 2, 6))
 
 /datum/virtue/utility/forester
-	name = "Forester"
+	name = "林地行者"
 	added_traits = list(TRAIT_HOMESTEAD_EXPERT)
-	desc = "The forest is your home, or at least, it used to be. You always long to return and roam free once again, and you have not forgotten your knowledge on how to be self sufficient."
+	desc = "森林才是你的家，至少曾经如此。你始终渴望重返林间、再度自由游荡，也未曾忘记如何自给自足地活下去。"
 	added_stashed_items = list("Trusty hoe" = /obj/item/rogueweapon/hoe)
 	added_skills = list(list(/datum/skill/craft/cooking, 2, 2),
 						list(/datum/skill/misc/athletics, 2, 2),
@@ -236,9 +234,9 @@
 	)
 
 /datum/virtue/utility/homesteader
-	name = "Pilgrim (-3 TRI)"
+	name = "朝圣者（-3 TRI）"
 	added_traits = list(TRAIT_HOMESTEAD_EXPERT)
-	desc= "As they say, 'hearth is where the heart is'. You are intimately familiar with the labors of lyfe, and have stowed away everything necessary to start anew: a hunting dagger, your trusty hoe, and a sack of assorted supplies."
+	desc= "正如人们所说，“心安之处即为家园”。你深谙生活劳作之道，也早已藏好重新开始所需的一切：猎刀、趁手的锄头，以及一袋杂项补给。"
 	triumph_cost = 3
 	added_stashed_items = list(
 		"Hoe" = /obj/item/rogueweapon/hoe,
@@ -254,44 +252,44 @@
 	)
 
 /datum/virtue/utility/ugly
-	name = "Ugly"
-	desc = "Be it your family's habits in and out of womb, your own choices or Xylix's cruel roll of fate, you have been left unbearable to look at. Stuck to the unseen pits and crevices of the town, you've grown used to the foul odours of lyfe that often follow you. Corpses do not stink for you, and that is all the company you might find."
-	custom_text = "Incompatible with Beautiful virtue."
+	name = "丑陋"
+	desc = "无论是家族恶习、你自己的选择，还是赛利克斯残酷命运的掷骰，你都变得令人不忍直视。蜷缩在城镇无人问津的角落缝隙中，你早已习惯那些伴随你而来的恶臭。尸体对你而言并不发臭，而那大概也是你唯一能拥有的“陪伴”。"
+	custom_text = "与“美貌”美德不兼容。"
 	added_traits = list(TRAIT_UNSEEMLY, TRAIT_NOSTINK)
 
 /datum/virtue/utility/ugly/handle_traits(mob/living/carbon/human/recipient)
 	..()
 	if(HAS_TRAIT(recipient, TRAIT_BEAUTIFUL))
-		to_chat(recipient, "Your repulsiveness is cancelled out! You become normal.")
+		to_chat(recipient, "你的丑陋被抵消了！你恢复成了常人模样。")
 		REMOVE_TRAIT(recipient, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
 		REMOVE_TRAIT(recipient, TRAIT_UNSEEMLY, TRAIT_VIRTUE)
 
 /datum/virtue/utility/secondvoice
-	name = "Second Voice"
-	desc = "From performance, deception, or by a need to change yourself in uncanny ways, you've acquired a second, perfect voice. You may switch between them at any point."
-	custom_text = "Grants access to a new 'Memory' tab. It will have the options for setting and changing your voice."
+	name = "第二嗓音"
+	desc = "或因表演，或因欺瞒，又或是出于某种怪异的自我改造，你获得了第二副完美的嗓音。你可随时在两种声音间切换。"
+	custom_text = "解锁新的“记忆”标签页，可在其中设置并切换你的声音。"
 
 /datum/virtue/utility/secondvoice/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.verbs += /mob/living/carbon/human/proc/changevoice
 	recipient.verbs += /mob/living/carbon/human/proc/swapvoice
 
 /datum/virtue/utility/keenears
-	name = "Keen Ears"
-	desc = "Cowering from authorities, loved ones or by a generous gift of the gods, you've adapted a keen sense of hearing, and can identify the speakers even when they are out of sight, their whispers ringing louder."
+	name = "灵敏听觉"
+	desc = "无论是为躲避当局、亲友，还是神明慷慨却古怪的馈赠，你都练就了敏锐的听觉。即便看不见说话者，你也能辨认其身份，他们的低语在你耳中更是格外清晰。"
 	added_traits = list(TRAIT_KEENEARS)
-	custom_text = "You can identify known people who speak even when they are out of sight. You can hear people speaking normally above and below you, regardless of obstacles in the way. You can hear whispers from one tile further."
+	custom_text = "即使目标不在视野中，你也能辨认出熟人说话的声音。无视障碍，你都能听见上下楼层的正常交谈。你还能多隔1格听见悄声细语。"
 
 /datum/virtue/utility/tracker
-	name = "Sleuth"
-	desc = "You realised long ago that the ability to find a man is as helpful to aid the law as it is to evade it."
+	name = "侦探"
+	desc = "你很早就明白，追踪一个人的能力，既能用来维护法律，也同样能用来逃避它。"
 	added_skills = list(list(/datum/skill/misc/tracking, 3, 6))
 	added_traits = list(TRAIT_SLEUTH)
-	custom_text = "- Upon right clicking a track, you will Mark the person who made them <i>(Expert skill required, not exclusive to this Virtue)</i>.\n- Further tracks found will be automatically highlighted as theirs, along with the person themselves, if they are not sneaking or invisible at the time.\n- Reduces the cooldown for tracking, allows track examining right away, and movement no longer cancels tracking.\n- As a bonus, you'll be able to read people's noble gossip regardless of <i>your</i> noble status."
+	custom_text = "- 右键点击痕迹后，你可标记留下它的人<i>（需要专家技能，且并非该美德独占）</i>。\n- 之后发现的同一目标痕迹会自动高亮；若其当前未潜行或隐形，目标本人也会一并高亮。\n- 缩短追踪冷却，可立即检查痕迹，且移动不再打断追踪。\n- 额外地，无论<i>你自己</i>是否具有贵族身份，都能阅读他人的贵族流言。"
 
 /datum/virtue/utility/bronzearm_r
-	name = "Bronze Arm (R)"
-	desc = "Through connections or wealth, my arm had been replaced by one of bronze and gears, that can grip and hold onto things. I've learned just a bit of Engineering as a result."
-	custom_text = "Replaces your Right arm with a prosthetic Bronze one. Incompatible with Wood Arm (R) vice"
+	name = "青铜臂（右）"
+	desc = "凭借人脉或财富，我的一只手臂被替换成了由青铜与齿轮构成的义肢，能够抓握并持物。也因此，我顺带学会了一点工程学。"
+	custom_text = "将你的右臂替换为青铜义肢。与“木臂（右）”癖性不兼容。"
 	added_skills = list(list(/datum/skill/craft/engineering, 1, 6))
 
 /datum/virtue/utility/bronzearm_r/apply_to_human(mob/living/carbon/human/recipient)
@@ -302,15 +300,15 @@
 		qdel(O)
 	if(recipient.charflaw)
 		if(recipient.charflaw.type == /datum/charflaw/limbloss/arm_r)
-			to_chat(recipient, span_info("In my foolishness I believed a sharlatan who wished to trade in my wooden arm for one of bronze. It fell apart. Now I've no arm at all."))
+			to_chat(recipient, span_info("我愚蠢地信了个骗子，竟想把我的木臂换成一条青铜臂。结果它散架了。如今我连手臂都没了。"))
 		else
 			var/obj/item/bodypart/r_arm/prosthetic/bronzeright/L = new()
 			L.attach_limb(recipient)
 
 /datum/virtue/utility/bronzearm_l
-	name = "Bronze Arm (L)"
-	desc = "Through connections or wealth, my arm had been replaced by one of bronze and gears, that can grip and hold onto things. I've learned just a bit of Engineering as a result."
-	custom_text = "Replaces your Left arm with a prosthetic Bronze one. Incompatible with Wood Arm (L) vice"
+	name = "青铜臂（左）"
+	desc = "凭借人脉或财富，我的一只手臂被替换成了由青铜与齿轮构成的义肢，能够抓握并持物。也因此，我顺带学会了一点工程学。"
+	custom_text = "将你的左臂替换为青铜义肢。与“木臂（左）”癖性不兼容。"
 	added_skills = list(list(/datum/skill/craft/engineering, 1, 6))
 
 /datum/virtue/utility/bronzearm_l/apply_to_human(mob/living/carbon/human/recipient)
@@ -321,38 +319,38 @@
 		qdel(O)
 	if(recipient.charflaw)
 		if(recipient.charflaw.type == /datum/charflaw/limbloss/arm_l)
-			to_chat(recipient, span_info("In my foolishness I believed a sharlatan who wished to trade in my wooden arm for one of bronze. It fell apart. Now I've no arm at all."))
+			to_chat(recipient, span_info("我愚蠢地信了个骗子，竟想把我的木臂换成一条青铜臂。结果它散架了。如今我连手臂都没了。"))
 		else
 			var/obj/item/bodypart/l_arm/prosthetic/bronzeleft/L = new()
 			L.attach_limb(recipient)
 
 /datum/virtue/utility/woodwalker
-	name = "Woodwalker"
-	desc = "After years of training in the wilds, I've learned to traverse the woods confidently, without breaking any twigs. I can even step lightly on leaves without falling, and I can gather twice as many things from bushes. I can also sleep comfortably on a tree branch."
+	name = "林行者"
+	desc = "在荒野中历经多年锻炼后，我已学会自信地穿行林地而不折断枝条。我甚至能轻踏树叶而不坠落，还能从灌木中采集到双倍的收获。我也能舒舒服服地睡在树枝上。"
 	added_traits = list(TRAIT_WOODWALKER, TRAIT_OUTDOORSMAN)
 
 /datum/virtue/heretic/zchurch_keyholder
-	name = "Defiled Keyholder"
-	desc = "The 'Holy' See has their blood-stained grounds, and so do we. Underneath their noses, we pray to the true gods - I know the location of the local heretic conclave. Secrecy is paramount. If found out, I will surely be killed."
+	name = "亵渎钥匙持有者"
+	desc = "“神圣”圣座有他们染血的地盘，我们也有我们的。在他们眼皮底下，我们向真正的诸神祈祷，我知道本地异端密会的所在。保密至关重要；一旦暴露，我必死无疑。"
 	added_traits = list(TRAIT_ZURCH)
 
 /datum/virtue/utility/mountable
-	name = "Mountable"
-	desc = "You have trained or been trained into a suitable mount. People may ride you as they would a saiga."
+	name = "可骑乘"
+	desc = "你受过训练，或被训练成了合适的坐骑。别人可以像骑赛加羚一样骑乘你。"
 	added_traits = list(TRAIT_PONYGIRL_RIDEABLE)
 
 /datum/virtue/utility/tolerant
-	name = "Tolerant"
-	desc = "Whether fostered through travel or care, you just don't see an issue with certain folks."
-	custom_text = "Prevents you from experiencing negative stress events when looking at select species."
+	name = "耐受"
+	desc = "无论是因旅行见识，还是因相处照料，你对某些族类就是不觉得有什么问题。"
+	custom_text = "当你看到特定种族时，不会触发负面压力事件。"
 	added_traits = list(TRAIT_TOLERANT)
 
 // Apprentice-level virtues - provide broad skill sets without traits or items
 // Max skill level is Apprentice (level 2), allowing varied work without full progression
 
 /datum/virtue/utility/survivalist_novice
-	name = "Novice Survivalist"
-	desc = "I've lived in the wilds and learned to survive off the land. I can hunt, track, fish, trap, and butcher game - all the skills needed to live beyond civilization's walls."
+	name = "新手求生者"
+	desc = "我曾在荒野中生活，学会了靠土地求生。我会狩猎、追踪、钓鱼、设陷与屠宰猎物，这些都是在文明高墙之外活下去所必需的本领。"
 	added_skills = list(
 		list(/datum/skill/misc/tracking, 1, 2),
 		list(/datum/skill/labor/butchering, 1, 2),
@@ -369,8 +367,8 @@
 	)
 
 /datum/virtue/utility/homesteader_novice
-	name = "Novice Homesteader"
-	desc = "I know how to maintain a homestead - farming the land, cooking meals, chopping wood, and all the daily labors needed to be self-sufficient."
+	name = "新手定居者"
+	desc = "我懂得如何维持一处家园，耕种土地、烹煮饭食、劈柴劳作，以及一切自给自足所需的日常辛劳。"
 	added_skills = list(
 		list(/datum/skill/labor/farming, 1, 2),
 		list(/datum/skill/craft/cooking, 1, 2),
@@ -387,8 +385,8 @@
 	)
 
 /datum/virtue/utility/artisan_novice
-	name = "Novice Artisan"
-	desc = "I've learned the fundamentals of crafting - working with metal, fabric, and clay. I'm a jack of all trades in the workshop, though master of none."
+	name = "新手工匠"
+	desc = "我学会了制作工艺的基础，能处理金属、布料与黏土。在工坊里我称得上样样都会一点，却样样都不算精通。"
 	added_skills = list(
 		list(/datum/skill/craft/crafting, 1, 2),
 		list(/datum/skill/craft/blacksmithing, 1, 2),
@@ -402,8 +400,8 @@
 	)
 
 /datum/virtue/utility/healer_novice
-	name = "Novice Healer"
-	desc = "I've studied the healing arts - tending wounds, brewing remedies, and understanding the basics of medicine and alchemy."
+	name = "新手医者"
+	desc = "我钻研过疗愈之术，懂得包扎伤口、调配药剂，并理解医学与炼金术的基础。"
 	added_skills = list(
 		list(/datum/skill/misc/medicine, 1, 2),
 		list(/datum/skill/craft/alchemy, 1, 2),
@@ -413,4 +411,3 @@
 		list(/datum/skill/craft/cooking, 1, 2),
 		list(/datum/skill/combat/knives, 1, 2)
 	)
-

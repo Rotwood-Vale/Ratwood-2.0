@@ -20,8 +20,8 @@
 //==============================================================================
 
 /obj/structure/bush_sapling
-	name = "bush sapling"
-	desc = "A small bush sapling, ready for planting. It draws from the soil while it takes root."
+	name = "灌木幼苗"
+	desc = "一株可供种植的小灌木幼苗。它会在扎根时从土壤中汲取养分。"
 	anchored = TRUE
 	density = FALSE
 	opacity = FALSE
@@ -91,24 +91,24 @@
 /obj/structure/bush_sapling/proc/wither_and_die()
 	STOP_PROCESSING(SSprocessing, src)
 	dead = TRUE
-	name = "dead bush sapling"
+	name = "枯死的灌木幼苗"
 	density = FALSE
 	opacity = FALSE
 	pixel_x = 0
 	icon = 'icons/roguetown/misc/crops.dmi'
 	icon_state = "apple3"
-	visible_message(span_warning("[src] withers and dies from poor soil conditions."))
+	visible_message(span_warning("[src]因土壤条件太差而枯萎死去了。"))
 
 /obj/structure/bush_sapling/proc/advance_stage()
 	growth_progress = 0
 	stage++
 	switch(stage)
 		if(BUSHSAP_STAGE_BUDDING)
-			name = "bush sprout"
+			name = "萌芽灌木"
 			icon = 'icons/roguetown/misc/foliage.dmi'
 			icon_state = "bush2"
 		if(BUSHSAP_STAGE_MATURE)
-			name = "bush"
+			name = "灌木"
 			for(var/obj/structure/soil/S in get_turf(src))
 				qdel(S)
 			linked_soil = null
@@ -163,15 +163,15 @@
 		return linked_soil.examine(user)
 	. = ..()
 	if(dead)
-		. += span_warning("It has withered and died. Shovel it out to clear the spot.")
+		. += span_warning("它已经枯死，显然没法再继续生长了。")
 		return
 	// Standalone mature bush — soil already removed when it transitioned.
 	if(stage == BUSHSAP_STAGE_MATURE)
 		var/time_to_hedge = max(BUSHSAP_HEDGE_TIME - growth_progress, 0)
 		if(growth_progress >= BUSHSAP_HEDGE_TIME * 0.7)
-			. += span_warning("It is looking overgrown. Shear it soon, or it will become a tall hedge in [DisplayTimeText(time_to_hedge)].")
+			. += span_warning("它很快就会长成高篱，大约还需要[DisplayTimeText(time_to_hedge)]。")
 		else
-			. += span_notice("A mature bush. Shear it with scissors to keep it manageable, or leave it to grow into a taller hedge in [DisplayTimeText(time_to_hedge)].")
+			. += span_notice("它正稳步生长成高篱，大约还需要[DisplayTimeText(time_to_hedge)]。")
 
 /obj/structure/bush_sapling/attack_hand(mob/user)
 	// Stage-3: pickable like a wild bush
@@ -188,11 +188,11 @@
 				if(B)
 					B = new B(user.loc)
 					user.put_in_hands(B)
-					user.visible_message(span_notice("[user] finds [B] in [src]."))
+					user.visible_message(span_notice("[user]在[src]里找到了[B]。"))
 					return
-			user.visible_message(span_warning("[user] searches through [src]."))
+			user.visible_message(span_warning("[user]翻找着[src]。"))
 			if(!looty.len)
-				to_chat(user, span_warning("Picked clean... I should try later."))
+				to_chat(user, span_warning("这里面什么也没找到。"))
 		return
 	return ..()
 
@@ -205,20 +205,20 @@
 
 	// Shearing at stage 3 — requires snip intent so the player opts in deliberately
 	if((istype(I, /obj/item/rogueweapon/huntingknife/scissors) || istype(I, /obj/item/rogueweapon/huntingknife/throwingknife/bauernwehr)) && user.used_intent.type == /datum/intent/snip && stage == BUSHSAP_STAGE_MATURE && !dead)
-		to_chat(user, span_notice("I begin trimming [src]..."))
+		to_chat(user, span_notice("我开始修剪[src]。"))
 		if(do_after(user, 3 SECONDS, target = src))
 			var/num_fibers = rand(1, 2)
 			for(var/i in 1 to num_fibers)
 				new /obj/item/natural/fibers(user.loc)
-			to_chat(user, span_notice("I trim back the overgrowth and collect [num_fibers] [num_fibers == 1 ? "fiber" : "fibers"]."))
+			to_chat(user, span_notice("我从中剪下了[num_fibers]束[num_fibers == 1 ? "纤维" : "纤维"]。"))
 			growth_progress = 0  // resets hedge-growth timer
 		return
 
 	// Shovelling out
 	if(istype(I, /obj/item/rogueweapon/shovel))
-		to_chat(user, span_notice("I begin uprooting [src]..."))
+		to_chat(user, span_notice("我开始把[src]铲掉。"))
 		if(do_after(user, 3 SECONDS, target = src))
-			to_chat(user, span_notice("I remove [src]."))
+			to_chat(user, span_notice("我铲掉了[src]。"))
 			qdel(src)
 		return
 
@@ -229,8 +229,8 @@
 //==============================================================================
 
 /obj/structure/flower_sprout
-	name = "flower sprout"
-	desc = "A freshly planted flower seed. Water it and step back."
+	name = "花苗"
+	desc = "一株刚种下的花苗，只要浇水就会慢慢开花。"
 	anchored = TRUE
 	density = FALSE
 	opacity = FALSE
@@ -252,9 +252,9 @@
 /obj/structure/flower_sprout/examine(mob/user)
 	. = ..()
 	if(watered)
-		. += span_info("Already watered — it should bloom soon.")
+		. += span_info("已经浇过水了，它应该很快就会开花。")
 	else
-		. += span_info("It needs watering to start growing.")
+		. += span_info("给它浇点水，它应该很快就会开花。")
 
 /obj/structure/flower_sprout/attackby(obj/item/I, mob/living/user, params)
 	if(!watered && istype(I, /obj/item/reagent_containers))
@@ -262,21 +262,21 @@
 		var/water_amt = RC.reagents.get_reagent_amount(/datum/reagent/water)
 		var/holy_amt  = RC.reagents.get_reagent_amount(/datum/reagent/water/holywater)
 		if(water_amt + holy_amt <= 0)
-			to_chat(user, span_warning("[RC] doesn't have any water in it."))
+			to_chat(user, span_warning("[RC]里没有水。"))
 			return
 		if(water_amt > 0)
 			RC.reagents.remove_reagent(/datum/reagent/water, min(1, water_amt))
 		else
 			RC.reagents.remove_reagent(/datum/reagent/water/holywater, min(1, holy_amt))
 		watered = TRUE
-		to_chat(user, span_notice("I water [src]. It should bloom soon."))
+		to_chat(user, span_notice("我给[src]浇了水，它应该很快就会开花。"))
 		timerid = addtimer(CALLBACK(src, PROC_REF(bloom)), 5 MINUTES, flags = TIMER_STOPPABLE)
 		return
 	if(watered && istype(I, /obj/item/reagent_containers))
-		to_chat(user, span_info("Already watered; just needs time now."))
+		to_chat(user, span_info("它已经浇过水了。"))
 		return
 	if(istype(I, /obj/item/rogueweapon/shovel))
-		to_chat(user, span_notice("I begin uprooting [src]..."))
+		to_chat(user, span_notice("我开始把[src]铲掉。"))
 		if(do_after(user, 2 SECONDS, target = src))
 			qdel(src)
 		return
@@ -291,17 +291,17 @@
 // Subtypes — one per flower variety
 
 /obj/structure/flower_sprout/yellow
-	name = "yellow flower sprout"
+	name = "黄花苗"
 	bloom_type = /obj/structure/flora/ausbushes/ywflowers
 
 /obj/structure/flower_sprout/brflower
-	name = "blue & red flower sprout"
+	name = "棕花苗"
 	bloom_type = /obj/structure/flora/ausbushes/brflowers
 
 /obj/structure/flower_sprout/ppflower
-	name = "purple & pink flower sprout"
+	name = "粉紫花苗"
 	bloom_type = /obj/structure/flora/ausbushes/ppflowers
 
 /obj/structure/flower_sprout/lavender
-	name = "lavender sprout"
+	name = "薰衣草苗"
 	bloom_type = /obj/structure/flora/ausbushes/lavendergrass

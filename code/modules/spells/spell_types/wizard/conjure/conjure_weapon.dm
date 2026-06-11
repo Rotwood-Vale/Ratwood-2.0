@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/invoked/conjure_weapon
-	name = "Conjure Weapon"
-	desc = "Conjure a weapon of your choice in your hand. The weapon will be unsummoned should you conjure a new one or unbind the spell.\n\
-	At 12 int or above, conjure steel-tier weapons, otherwise conjure iron-tier weapons. Melee weapons only."
+	name = "召兵术"
+	desc = "在你手中召出一件你所选择的武器。若你再次召兵，或解除法术绑定，这把武器就会消散。\n\
+	若 `INT` 达到 12 或更高，则召出钢阶武器，否则召出铁阶武器。仅限近战武器。"
 	overlay_state = "conjure_weapon"
 	sound = list('sound/magic/whiteflame.ogg')
 
@@ -19,7 +19,7 @@
 	cost = 2
 	spell_tier = 2 // Spellblade tier.
 
-	invocations = list("Conjura Telum!") // I was offered Me Armare (Arm Myself) but Conjura Telum (Conjure Weapon) is more suitable.
+	invocations = list("兵刃，显现！") // I was offered Me Armare (Arm Myself) but Conjura Telum (Conjure Weapon) is more suitable.
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_METAL
 	glow_intensity = GLOW_INTENSITY_LOW
@@ -27,39 +27,39 @@
 	var/obj/item/rogueweapon/conjured_weapon = null
 
 	var/list/iron_weapons = list(
-		"Iron Short Sword" = /obj/item/rogueweapon/sword/short/iron,
-		"Iron Messer" = /obj/item/rogueweapon/sword/short/messer/iron,
-		"Claymore" = /obj/item/rogueweapon/greatsword/zwei,
-		"Cudgel" = /obj/item/rogueweapon/mace/cudgel,
-		"Iron Warhammer" = /obj/item/rogueweapon/mace/warhammer,
-		"Iron Dagger" = /obj/item/rogueweapon/huntingknife/idagger,
-		"Iron Axe" = /obj/item/rogueweapon/stoneaxe/woodcut,
-		"Iron Greataxe" = /obj/item/rogueweapon/greataxe,
-		"Iron Flail" = /obj/item/rogueweapon/flail,
-		"Iron Spear" = /obj/item/rogueweapon/spear,
-		"Whip" = /obj/item/rogueweapon/whip,
+		"铁制短剑" = /obj/item/rogueweapon/sword/short/iron,
+		"铁制弯刀" = /obj/item/rogueweapon/sword/short/messer/iron,
+		"双手巨剑" = /obj/item/rogueweapon/greatsword/zwei,
+		"短棍" = /obj/item/rogueweapon/mace/cudgel,
+		"铁制战锤" = /obj/item/rogueweapon/mace/warhammer,
+		"铁制匕首" = /obj/item/rogueweapon/huntingknife/idagger,
+		"铁斧" = /obj/item/rogueweapon/stoneaxe/woodcut,
+		"铁制巨斧" = /obj/item/rogueweapon/greataxe,
+		"铁制链枷" = /obj/item/rogueweapon/flail,
+		"铁矛" = /obj/item/rogueweapon/spear,
+		"鞭子" = /obj/item/rogueweapon/whip,
 	)
 	// There's no way I am putting Lucerne in iron tier I am gonna misclassify it as steel on purpose
 
 	// Trying to keep the list manageable so 1 / 2 iconic thing from each family is fine
 	var/list/steel_weapons = list(
-		"Steel Sabre" = /obj/item/rogueweapon/sword/sabre,
-		"Steel Rapier" = /obj/item/rogueweapon/sword/rapier,
-		"Longsword" = /obj/item/rogueweapon/sword/long,
-		"Zweihander" = /obj/item/rogueweapon/greatsword/grenz,
-		"Battle Axe" = /obj/item/rogueweapon/stoneaxe/battle,
-		"Steel Dagger" = /obj/item/rogueweapon/huntingknife/idagger/steel,
-		"Halberd" = /obj/item/rogueweapon/halberd,
-		"Steel Warhammer" = /obj/item/rogueweapon/mace/warhammer/steel,
-		"Steel Flail" = /obj/item/rogueweapon/flail/sflail,
-		"Whip" = /obj/item/rogueweapon/whip,
+		"钢制军刀" = /obj/item/rogueweapon/sword/sabre,
+		"钢制刺剑" = /obj/item/rogueweapon/sword/rapier,
+		"长剑" = /obj/item/rogueweapon/sword/long,
+		"双手长剑" = /obj/item/rogueweapon/greatsword/grenz,
+		"战斧" = /obj/item/rogueweapon/stoneaxe/battle,
+		"钢制匕首" = /obj/item/rogueweapon/huntingknife/idagger/steel,
+		"长柄斧" = /obj/item/rogueweapon/halberd,
+		"钢制战锤" = /obj/item/rogueweapon/mace/warhammer/steel,
+		"钢制链枷" = /obj/item/rogueweapon/flail/sflail,
+		"鞭子" = /obj/item/rogueweapon/whip,
 	)
 
 /obj/effect/proc_holder/spell/invoked/conjure_weapon/cast(list/targets, mob/living/user = usr)
 	var/list/weapons = iron_weapons
 	if(user.STAINT >= 12)
 		weapons = steel_weapons
-	var/weapon_choice = input(user, "Choose a weapon", "Conjure Weapon") as anything in weapons
+	var/weapon_choice = input(user, "选择一件武器", "Conjure Weapon") as anything in weapons
 	if(!weapon_choice)
 		return
 	if(src.conjured_weapon)
@@ -79,6 +79,6 @@
 
 /obj/effect/proc_holder/spell/invoked/conjure_weapon/Destroy()
 	if(src.conjured_weapon)
-		conjured_weapon.visible_message(span_warning("The [conjured_weapon]'s borders begin to shimmer and fade, before it vanishes entirely!"))
+		conjured_weapon.visible_message(span_warning("[conjured_weapon] 的边缘开始闪烁消退，随后彻底消失了！"))
 		qdel(src.conjured_weapon)
 	return ..()

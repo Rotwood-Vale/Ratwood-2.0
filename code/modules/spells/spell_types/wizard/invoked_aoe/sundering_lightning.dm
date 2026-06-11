@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/sundering_lightning
-	name = "Sundering Lightning"
-	desc = "Summons forth dangerous rapid lightning strikes."
+	name = "裂空雷击"
+	desc = "召下危险而迅疾的连环雷击。"
 	overlay_state = "lightning_sunder"
 	cost = 9
 	spell_tier = 4 // Highest tier AOE
@@ -22,7 +22,7 @@
 	var/turf/T = get_turf(targets[1])
 //	var/list/affected_turfs = list()
 	playsound(T,'sound/weather/rain/thunder_1.ogg', 80, TRUE)
-	T.visible_message(span_boldwarning("The air feels crackling and charged!"))
+	T.visible_message(span_boldwarning("空气中满是噼啪作响的电荷！"))
 	sleep(30)
 	create_lightning(T)
 
@@ -46,8 +46,8 @@
 /obj/effect/temp_visual/lightning
 	icon = 'icons/effects/32x96.dmi'
 	icon_state = "lightning"
-	name = "lightningbolt"
-	desc = "ZAPP!!"
+	name = "雷击"
+	desc = "噼啪作响！！"
 	layer = FLY_LAYER
 	plane = GAME_PLANE_UPPER
 	randomdir = FALSE
@@ -79,4 +79,4 @@
 		if(L.anti_magic_check())
 			continue
 		L.electrocute_act(65)	//a little over half the damage of thunderstrike, but doesn't degrade on each subsequent ring.
-		to_chat(L, span_userdanger("You're hit by lightning!!!"))
+		to_chat(L, span_userdanger("我被雷霆击中了！！！"))

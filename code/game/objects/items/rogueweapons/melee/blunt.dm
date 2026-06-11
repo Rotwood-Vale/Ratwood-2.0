@@ -1,9 +1,9 @@
 //intent datums ฅ^•ﻌ•^ฅ
 
 /datum/intent/mace/strike
-	name = "strike"
+	name = "打击"
 	blade_class = BCLASS_BLUNT
-	attack_verb = list("strikes", "hits")
+	attack_verb = list("打击", "砸中")
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 	chargetime = 0
 	penfactor = BLUNT_DEFAULT_PENFACTOR
@@ -17,9 +17,9 @@
 	blunt_chip_strength = BLUNT_CHIP_WEAK
 
 /datum/intent/mace/smash
-	name = "smash"
+	name = "猛砸"
 	blade_class = BCLASS_SMASH
-	attack_verb = list("smashes")
+	attack_verb = list("猛砸")
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	damfactor = 1 // It now has CC effective
@@ -31,7 +31,7 @@
 	//We want chipping, m'lord.
 	blunt_chipping = TRUE
 	blunt_chip_strength = BLUNT_CHIP_STRONG
-	desc = "A powerful, charged up strike that deals normal damage but can throw a standing opponent back and slow them down, based on your strength. Ineffective below 10 strength. Slowdown & Knockback scales to your Strength up to 14 (1 - 4 tiles). Cannot be used consecutively more than every 5 seconds on the same target. Prone targets halve the knockback distance. Not fully charging the attack limits knockback to 1 tile."
+	desc = "一次强力蓄力打击，造成正常伤害的同时，还会根据你的力量把站立目标击退并拖慢。力量低于 10 时无效。减速与击退效果会随力量提升，最高按 14 力量计算（1 到 4 格）。对同一目标每 5 秒最多连续生效一次。倒地目标的击退距离减半。若未完全蓄力，则击退最多只有 1 格。"
 
 /datum/intent/mace/smash/spec_on_apply_effect(mob/living/H, mob/living/user, params)
 	var/chungus_khan_str = user.STASTR
@@ -65,9 +65,9 @@
 	reach = 2
 
 /datum/intent/mace/rangedthrust
-	name = "thrust"
+	name = "刺击"
 	blade_class = BCLASS_STAB
-	attack_verb = list("thrusts")
+	attack_verb = list("刺击")
 	animname = "stab"
 	icon_state = "instab"
 	reach = 2
@@ -88,8 +88,8 @@
 	force_wielded = 25
 	possible_item_intents = list(/datum/intent/mace/strike)
 	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/effect/daze)
-	name = "mace"
-	desc = "Helps anyone fall asleep."
+	name = "钉头锤"
+	desc = "能帮任何人快速入睡。"
 	icon_state = "mace"
 	icon = 'icons/roguetown/weapons/blunt32.dmi'
 	item_state = "mace_greyscale"
@@ -125,9 +125,9 @@
 /obj/item/rogueweapon/mace/bronze
 	force = 23
 	force_wielded = 29
-	name = "bronze mace"
+	name = "青铜钉头锤"
 	color = "#f9d690"
-	desc = "An antiquital staff, crested with a studded sphere of bronze. Bludgeons were the first implements made for the explicit purpose of killing another; fittingly, this was the second."
+	desc = "一根带有青铜钉球头的古风长柄武器。钝器是人类最早专为杀戮同类而打造的工具，而这把恰好像是紧随其后的第二种。"
 	wbalance = WBALANCE_HEAVY
 	smeltresult = /obj/item/ingot/bronze
 	max_integrity = 250
@@ -136,8 +136,8 @@
 /obj/item/rogueweapon/mace/church
 	force = 25
 	force_wielded = 30
-	name = "bell ringer"
-	desc = "This heavy hammer is used to ring the church's bell."
+	name = "鸣钟锤"
+	desc = "这把重锤是用来敲响教堂大钟的。"
 	icon_state = "churchmace"
 	wbalance = WBALANCE_HEAVY
 	smeltresult = /obj/item/ingot/steel
@@ -146,8 +146,8 @@
 /obj/item/rogueweapon/mace/steel
 	force = 25
 	force_wielded = 32
-	name = "steel mace"
-	desc = "This steel mace is objectively superior to an iron one."
+	name = "钢钉头锤"
+	desc = "这把钢制钉头锤客观上比铁制款更好。"
 	icon_state = "smace"
 	wbalance = WBALANCE_HEAVY
 	smeltresult = /obj/item/ingot/steel
@@ -155,14 +155,14 @@
 	smelt_bar_num = 2
 
 /obj/item/rogueweapon/mace/steel/ancient
-	name = "ancient mace"
-	desc = "Polished gilbranze, perched atop a reinforced shaft. Break the unenlightened into naught-but-giblets; like a potter's vessels, dashed against the rocks."
+	name = "远古钉头锤"
+	desc = "抛光吉尔布兰兹锻成的锤头，立于加固长柄之上。把愚昧者砸成碎肉，就像陶匠的器皿被狠狠摔在岩石上一样。"
 	icon_state = "amace"
 	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/rogueweapon/mace/steel/ancient/decrepit
-	name = "decrepit mace"
-	desc = "Frayed bronze, perched atop a rotwooden shaft. His sacrifice had drowned Old Syon, and - in its wake - left Man bereft of all it had accomplished. With all other prayers falling upon deaf ears, Man had crafted this idol in tribute to its new God; violence."
+	name = "破旧钉头锤"
+	desc = "残旧青铜锤头立于腐朽木柄之上。祂的牺牲淹没了旧西翁，也让人类在余波中失去了曾经创造的一切。当其他祈祷都落入无声之耳后，人类便打造了这尊献给新神的偶像：暴力。"
 	force = 17
 	force_wielded = 21
 	max_integrity = 180
@@ -173,8 +173,8 @@
 /obj/item/rogueweapon/mace/steel/silver
 	force = 30
 	force_wielded = 35
-	name = "silver mace"
-	desc = "A heavy flanged mace, forged from pure silver. For a lord, it's the perfect symbol of authority; a decorative piece for the courts. For a paladin, however, there's no better implement for shattering avantyne-maille into a putrid pile of debris."
+	name = "白银钉头锤"
+	desc = "一把由纯银锻成的沉重翼棱钉头锤。对领主而言，它是完美的权威象征，是宫廷中的装饰之物；但对圣武士而言，没有比它更适合把阿凡廷链甲砸成一堆恶臭碎片的武器了。"
 	icon_state = "silvermace"
 	wbalance = WBALANCE_HEAVY
 	smeltresult = /obj/item/ingot/silver
@@ -197,8 +197,8 @@
 /obj/item/rogueweapon/mace/woodclub
 	force = 15
 	force_wielded = 18
-	name = "wooden club"
-	desc = "A primitive cudgel carved of a stout piece of treefall."
+	name = "木棍"
+	desc = "一根由结实枯木削成的原始棍棒。"
 	icon_state = "club1"
 	//dropshrink = 0.75
 	wbalance = WBALANCE_NORMAL
@@ -226,8 +226,8 @@
 	reach = 2
 
 /obj/item/rogueweapon/mace/cudgel
-	name = "cudgel"
-	desc = "A stubby little club for used by guards, brigands, and various criminals. Perfect to cripple someone on a budget."
+	name = "警棍"
+	desc = "一根短粗的小棍棒，常被卫兵、强盗和各类罪犯使用。想省钱把人打残时再合适不过。"
 	force = 22
 	icon_state = "cudgel"
 	force_wielded = 25
@@ -245,16 +245,16 @@
 
 // Non-lethal mace-striking (Made for cudgel specifically. Don't put this on everything. Yeah, I mean you.)
 /datum/intent/mace/strike/wallop
-	name = "wallop"
+	name = "重殴"
 	blade_class = BCLASS_TWIST	//I know, it's weird, but this lets you dislocate limbs and works fine w/ -100 pen factor of blunt weapons.
-	attack_verb = list("twamps", "thwacks", "wallops")
+	attack_verb = list("猛殴", "痛击", "狠砸")
 	damfactor = 1.3		// High damage mod to give high chance of dislocation against unarmored targets.
 	intent_intdamage_factor = 0.5	// Purposefully bad at damaging armor.
 	icon_state = "inbash"	// Wallop is too long for a button; placeholder.
 
 /obj/item/rogueweapon/mace/cudgel/shellrungu
-	name = "shell rungu"
-	desc = "A ceremonial rungu carved out of clam shell. Not intended for combat. Its used in various Sea and Coastal Elven rituals and ceremonies."
+	name = "贝壳棍"
+	desc = "一根由蛤壳雕成的仪式用棍，不是为了战斗而造。它常用于海精灵与沿海精灵的各类仪式和庆典。"
 	icon = 'icons/roguetown/gems/gem_shell.dmi'
 	icon_state = "rungu_shell"
 
@@ -262,8 +262,8 @@
 	sellprice = 35
 
 /obj/item/rogueweapon/mace/cudgel/psy
-	name = "psydonic handmace"
-	desc = "A shorter variant of the flanged silver mace, rebalanced for one-handed usage. It isn't uncommon for these sidearms to mysteriously 'vanish' from an Adjudicator's belt, only to be 'rediscovered' - and subsequently kept - by a Confessor."
+	name = "普赛顿手锤"
+	desc = "翼棱银锤的短柄变体，经过重新配重以便单手使用。这类副武器常会神秘地从裁决官腰间“消失”，随后又被某位告解者“找回”，并顺理成章地留为己用。"
 	force = 25
 	force_wielded = 30
 	minstr = 9
@@ -296,8 +296,8 @@
 	)
 
 /obj/item/rogueweapon/mace/cudgel/psy/old
-	name = "enduring handmace"
-	desc = "A shorthanded mace and convenient sleeping aid, its grown harder to swing with age, though it hasn't lost reliability."
+	name = "耐战手锤"
+	desc = "一把短柄钉头锤，也是一件方便的催眠工具。它随着年月渐长而更难挥舞，但可靠性丝毫未减。"
 	force = 20
 	force_wielded = 25
 	wbalance = WBALANCE_NORMAL
@@ -308,8 +308,8 @@
 	return
 
 /obj/item/rogueweapon/mace/cudgel/copper
-	name = "copper bludgeon"
-	desc = "An extremely crude weapon for cruder bastards."
+	name = "铜棒"
+	desc = "一件极其粗陋的武器，专为更粗陋的混账准备。"
 	force = 15
 	icon_state = "cbludgeon"
 	force_wielded = 20
@@ -317,8 +317,8 @@
 	wdefense = 2
 
 /obj/item/rogueweapon/mace/cudgel/justice
-	name = "'Justice'"
-	desc = "The icon of the right of office of the Marshal. While mostly ceremonial in design, it serves it's purpose in dishing out some much needed justice."
+	name = "“正义”"
+	desc = "元帅职权的象征。尽管设计上更偏礼仪用途，但拿来施以急需的正义也并非不行。"
 	force = 30
 	icon_state = "justice"
 	force_wielded = 30
@@ -341,8 +341,8 @@
 				return list("shrink" = 0.4,"sx" = -3,"sy" = -4,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 70,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 1,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/rogueweapon/mace/wsword
-	name = "wooden sword"
-	desc = "This wooden sword is great for training."
+	name = "木剑"
+	desc = "这把木剑非常适合训练。"
 	force = 5
 	force_wielded = 8
 	icon_state = "wsword"
@@ -375,8 +375,8 @@
 	force_wielded = 30
 	possible_item_intents = list(/datum/intent/mace/strike)
 	gripped_intents = list(/datum/intent/mace/strike/goden, /datum/intent/mace/smash/goden, /datum/intent/mace/rangedthrust, /datum/intent/effect/daze)
-	name = "Goedendag"
-	desc = "Good morning."
+	name = "古登达格棒"
+	desc = "早安。"
 	icon_state = "goedendag"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	slot_flags = null
@@ -408,8 +408,8 @@
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/rogueweapon/mace/goden/steel
-	name = "grand mace"
-	desc = "Good morning, sire."
+	name = "巨型钉头锤"
+	desc = "早安，阁下。"
 	icon_state = "polemace"
 	force = 15
 	force_wielded = 35
@@ -418,24 +418,23 @@
 	wdefense_wbonus = 5
 
 /obj/item/rogueweapon/mace/goden/steel/ancient
-	name = "ancient grand mace"
-	desc = "A twisting polehammer, forged in polished gilbranze. What did you think this was all about? This destruction, this war, this sacrifice; it was all to prepare Man for its true ascension."
+	name = "远古巨型钉头锤"
+	desc = "一柄以抛光吉尔布兰兹锻成的扭曲长柄战锤。你以为这一切究竟是为了什么？这些毁灭、这些战争、这些牺牲，都是为了让人类迎来真正的飞升。"
 	icon_state = "ancient_supermace"
 	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/rogueweapon/mace/goden/steel/ancient/decrepit
-	name = "decrepit grand mace"
-	desc = "Good nite, sire."
+	name = "破旧巨型钉头锤"
+	desc = "晚安，阁下。"
 	force = 12
 	force_wielded = 22
-	max_integrity = 180
 	blade_dulling = DULLING_SHAFT_CONJURED
 	color = "#bb9696"
 	anvilrepair = null
 
 /obj/item/rogueweapon/mace/goden/deepduke
-	name = "deep duke's staff"
-	desc = "A staff made of seaglass and sturdy but unusual metal, holding no power after its misled owner's death. More useful as a bashing tool than a magic focus."
+	name = "深海公爵手杖"
+	desc = "一根由海玻璃与坚固却奇异的金属制成的手杖，在其误入歧途的主人死后已不再蕴含力量。如今它更像一件砸人的工具，而非法术媒介。"
 	icon = 'icons/roguetown/mob/monster/pufferboss.dmi'
 	icon_state = "pufferprod"
 	force = 15
@@ -446,15 +445,15 @@
 	smelt_bar_num = 2
 
 /obj/item/rogueweapon/mace/goden/kanabo
-	name = "kanabo"
-	desc = "A steel-banded wooden club, made to break the enemy in spirit as much as in flesh. One of the outliers among the many more elegant weapons of Kazengun."
+	name = "铁包棒"
+	desc = "一根包有钢箍的木棍，既为击碎敌人的血肉，也为摧垮敌人的意志。它在风格更为雅致的风间郡诸兵器中，算得上相当异类。"
 	icon_state = "kanabo"
 	gripped_intents = list(/datum/intent/mace/strike/goden, /datum/intent/mace/smash/goden, /datum/intent/stab, /datum/intent/effect/daze)
 	max_integrity = 225 // it's strong wood, but it's still wood.
 
 /obj/item/rogueweapon/mace/goden/psy
-	name = "psydonic grand mace"
-	desc = "An ornate mace, plated in a ceremonial veneer of silver. Even the unholy aren't immune to discombobulation."
+	name = "普赛顿巨型钉头锤"
+	desc = "一把华丽钉头锤，表面覆有礼仪用途的银层。就连不洁之物也无法免疫它带来的头晕目眩。"
 	icon_state = "psymace"
 	force = 15
 	force_wielded = 35
@@ -486,8 +485,8 @@
 	)
 
 /obj/item/rogueweapon/mace/goden/psy/old
-	name = "enduring mace"
-	desc = "An ornate mace, its silver tarnished by neglect. Even without HIS holy blessing, its weight ENDURES."
+	name = "耐战钉头锤"
+	desc = "一把华丽钉头锤，它的银层因疏于保养而失去光泽。即便失去了祂的圣佑，它的分量依旧坚挺。"
 	icon_state = "psymace"
 	force = 15
 	force_wielded = 30
@@ -510,8 +509,8 @@
 	force = 20
 	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/mace/warhammer/pick)
 	gripped_intents = null
-	name = "warhammer"
-	desc = "Made to punch through armor and skull alike."
+	name = "战锤"
+	desc = "专为砸穿护甲与头骨而生。"
 	icon_state = "iwarhammer"
 	wbalance = WBALANCE_HEAVY
 	smeltresult = /obj/item/ingot/iron
@@ -520,8 +519,8 @@
 /obj/item/rogueweapon/mace/warhammer/steel
 	force = 25
 	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/mace/warhammer/pick, /datum/intent/mace/warhammer/stab)
-	name = "steel warhammer"
-	desc = "A fine steel warhammer, makes a satisfying sound when paired with a knight's helm."
+	name = "钢战锤"
+	desc = "一把上好的钢制战锤，和骑士头盔碰在一起时会发出令人满意的声响。"
 	icon_state = "swarhammer"
 	smeltresult = /obj/item/ingot/steel
 	wdefense = 4
@@ -538,14 +537,14 @@
 	return ..()
 
 /obj/item/rogueweapon/mace/warhammer/steel/ancient
-	name = "ancient warhammer"
-	desc = "A macehead of polished gilbranze, spiked and perched atop a reinforced shaft. An elegant weapon from a more civilized age; when Man lived in harmony with one-another, and when 'the undying' was nothing more than a nitemare's thought."
+	name = "远古战锤"
+	desc = "一颗抛光吉尔布兰兹打造的带刺锤头，安置在加固长柄之上。这是一件来自更文明年代的优雅武器，那时人类彼此和睦共处，“不死者”也不过是噩梦中的妄想。"
 	icon_state = "awarhammer"
 	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/rogueweapon/mace/warhammer/steel/ancient/decrepit
-	name = "decrepit warhammer"
-	desc = "A macehead of frayed bronze, spiked and perched atop a thin shaft. To see such a knightly implement abandoned to decay and neglect; that wounds the heart greater than any well-poised strike."
+	name = "破旧战锤"
+	desc = "一颗残旧青铜带刺锤头，安置在细长柄杆之上。看着这样一件骑士兵器被弃置于腐朽与荒废之中，比任何精准一击都更令人心痛。"
 	force = 17
 	max_integrity = 180
 	blade_dulling = DULLING_SHAFT_CONJURED
@@ -553,8 +552,8 @@
 	anvilrepair = null
 
 /obj/item/rogueweapon/mace/warhammer/steel/silver
-	name = "silver warhammer"
-	desc = "A heavy warhammer, forged from pure silver. It follows the Otavan design of a 'lucerene'; a shortened polehammer with a pronounced spike, rebalanced for one-handed usage. Resplendent in presentation, righteous in purpose."
+	name = "白银战锤"
+	desc = "一把由纯银锻成的沉重战锤。它遵循奥塔凡“lucerene”的设计，是一种缩短版的长柄战锤，拥有醒目的尖刺，并重新配重以适应单手使用。外观华美，使命正当。"
 	icon_state = "silverhammer"
 	force = 30
 	force_wielded = 30
@@ -577,10 +576,10 @@
 
 
 /datum/intent/mace/warhammer/stab
-	name = "thrust"
+	name = "刺击"
 	icon_state = "instab"
 	blade_class = BCLASS_STAB
-	attack_verb = list("thrusts", "stabs")
+	attack_verb = list("刺击", "捅刺")
 	animname = "stab"
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
 	no_early_release = TRUE
@@ -589,10 +588,10 @@
 	item_d_type = "stab"
 
 /datum/intent/mace/warhammer/pick
-	name = "pick"
+	name = "啄击"
 	icon_state = "inpick"
 	blade_class = BCLASS_PICK
-	attack_verb = list("picks", "impales")
+	attack_verb = list("凿穿", "贯穿")
 	animname = "stab"
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 	misscost = 1
@@ -609,8 +608,8 @@
 	force_wielded = 32//-3 compared to grand mace(steel goden). Better intents.
 	possible_item_intents = list(/datum/intent/mace/strike)
 	gripped_intents = list(/datum/intent/maul, /datum/intent/maul/crush, /datum/intent/effect/daze, /datum/intent/effect/hobble)
-	name = "maul"
-	desc = "Who would need something this large? It looks like it was made for tearing down walls, rather than men."
+	name = "大槌"
+	desc = "谁会需要这么大的家伙？它看起来更像是拿来拆墙，而不是拆人的。"
 	icon_state = "sledge"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	wlength = WLENGTH_LONG
@@ -641,9 +640,9 @@
 				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 
 /obj/item/rogueweapon/mace/maul/grand
-	name = "grand maul"
-	desc = "You could probably crack a man's spine just by tapping them with this. \
-	Only a lunatic would carry something so heavy, however."
+	name = "巨槌"
+	desc = "光是拿这东西轻轻一敲，恐怕都足以把人的脊骨砸裂。 \
+	不过，只有疯子才会扛着这么沉的家伙到处跑。"
 	icon_state = "cross"
 	force_wielded = 36//+1 compared to grand mace.
 	smeltresult = /obj/item/ingot/steel
@@ -654,9 +653,9 @@
 
 //Malumite maul. Intended for Templars.
 /obj/item/rogueweapon/mace/maul/grand/malum
-	name = "Kargrund Maul"
-	desc = "Forged from the legacy of dwarven rock-hammers, this maul’s holy steel and divine runes grant it immense power. \
-	Unwieldy to those weak of arm or faith, its mighty blows have the strength to shatter both stone and skull alike."
+	name = "卡尔格伦德巨槌"
+	desc = "承袭矮人碎岩巨锤的遗泽而铸，这柄大槌因圣钢与神圣符文而拥有惊人威能。 \
+	对臂力不足或信仰不坚者来说它沉重难驭，但它的猛击足以同时粉碎岩石与头骨。"
 	icon_state = "malumhammer"
 	is_silver = TRUE
 	minstr = 8//Handled by the unique interaction below. Inverted to start, since they spawn with it, and funny stuff can happen.
@@ -683,9 +682,9 @@
 
 //Dwarvish mauls. Unobtanium outside of Grudgebearer. Do not change that.
 /obj/item/rogueweapon/mace/maul/steel
-	name = "dwarvish maul"
-	desc = "An incredibly heavy, oversized hammer. The owner is not compensating, for this maul will do the speaking. \
-	This one has been well balanced, allowing for a weaker wielder to make use of it."
+	name = "矮人大槌"
+	desc = "一把沉重得夸张的超大铁锤。持有者并不是在虚张声势，因为这柄大槌自会替他开口。 \
+	这一把的重心调校得相当出色，让臂力较弱的人也能勉强驾驭。"
 	icon_state = "dwarfhammer"
 	smeltresult = /obj/item/ingot/steel
 	minstr = 11//+2STR from Grudgebearer Soldier. Should cover this.
@@ -694,9 +693,9 @@
 	max_integrity = 340
 
 /obj/item/rogueweapon/mace/maul/spiked
-	name = "spiked maul"
-	desc = "Covered in spikes, such is the weapon of a Dwarvish smith. \
-	This one has been well balanced, allowing for a weaker wielder to make use of it."
+	name = "带刺大槌"
+	desc = "通体覆满尖刺，这正是矮人工匠钟爱的兵器模样。 \
+	这一把的重心调校得相当出色，让臂力较弱的人也能勉强驾驭。"
 	icon_state = "spiky"
 	gripped_intents = list(/datum/intent/maul/spiked, /datum/intent/maul/crush, /datum/intent/effect/daze, /datum/intent/effect/hobble)
 	wdefense_wbonus = 3//7
@@ -706,10 +705,10 @@
 
 //Intents for the mauls.
 /datum/intent/effect/hobble
-	name = "hobbling strike"
+	name = "绊足打击"
 	icon_state = "incrack"//Temp. Just so it's easy to differentiate.
-	attack_verb = list("hobbles")
-	animname = "strike"
+	attack_verb = list("绊伤")
+	animname = "打击"
 	hitsound = list('sound/combat/hits/blunt/shovel_hit3.ogg')
 	swingdelay = 6
 	damfactor = 0.8
@@ -720,9 +719,9 @@
 	target_parts = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)//Intentionally leaving out feet. If you know, you know.
 
 /datum/intent/maul
-	name = "strike"
+	name = "打击"
 	blade_class = BCLASS_BLUNT
-	attack_verb = list("strikes", "hammers", "wallops")
+	attack_verb = list("打击", "猛锤", "痛殴")
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 	chargetime = 0
 	swingdelay = 0
@@ -736,9 +735,9 @@
 	blunt_chip_strength = BLUNT_CHIP_STRONG
 
 /datum/intent/maul/crush
-	name = "crush"
+	name = "碾压"
 	blade_class = BCLASS_SMASH
-	attack_verb = list("crushes")
+	attack_verb = list("碾压")
 	chargetime = 5
 	damfactor = 1.7
 	intent_intdamage_factor = 1.5//10% more than standard.
@@ -746,9 +745,9 @@
 	blunt_chipping = TRUE
 	blunt_chip_strength = BLUNT_CHIP_ABSURD
 	icon_state = "incrush"
-	desc = "This can throw a standing opponent and slow them down. \
-	5 second cooldown on consecutive targets. Prone targets halve the knockback distance. \
-	Not fully charging the attack limits knockback to 1 tile."
+	desc = "这一击能把站立目标击飞并使其减速。 \
+	对同一目标连续生效有 5 秒冷却，倒地目标的击退距离减半。 \
+	若未完全蓄力，击退距离最多只有 1 格。"
 
 //We making it out of the vale with this one. RAAAAAA
 /datum/intent/maul/crush/spec_on_apply_effect(mob/living/H, mob/living/user, params)
@@ -776,9 +775,8 @@
 		force = H.move_force)
 
 /datum/intent/maul/spiked
-	name = "perforating strike"
-	attack_verb = list("rends", "hammers", "wallops")
+	name = "穿透打击"
+	attack_verb = list("撕裂", "猛锤", "痛殴")
 	blade_class = BCLASS_PIERCE//TEAR CHUNKS OFF OF THEM. THROW IT ACROSS THE ROOM.
 	hitsound = list('sound/combat/hits/bladed/genthrust (1).ogg', 'sound/combat/hits/bladed/genthrust (2).ogg')
 	icon_state = "intear"
-

@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/leap
-	name = "Leap"
-	desc = "You empower your target's legs to allow them to leap to great heights. This allows your target to jump up floor levels, however does not prevent the damage from falling down one."
+	name = "腾跃术"
+	desc = "强化目标的双腿，使其能高高跃起，甚至跳上更高楼层；但这并不能免除从高处跌落时受到的伤害。"
 	cost = 2
 	releasedrain = 35
 	chargedrain = 1
@@ -11,7 +11,7 @@
 	movement_interrupt = FALSE
 	gesture_required = TRUE // Mobility spell
 	spell_tier = 1
-	invocations = list("Saltus!")
+	invocations = list("跃起吧！")
 	invocation_type = "whisper"
 	hide_charge_effect = TRUE
 	charging_slowdown = 3
@@ -24,16 +24,16 @@
 	if(isliving(targets[1]))
 		var/mob/living/carbon/target = targets[1]
 		if(HAS_TRAIT(target,TRAIT_ZJUMP))
-			to_chat(user, "<span class='warning'>They're already able to jump that high!</span>")
+			to_chat(user, "<span class='warning'>对方本就已经能跳得这么高了！</span>")
 			revert_cast()
 			return
 		ADD_TRAIT(target, TRAIT_ZJUMP, MAGIC_TRAIT)
-		to_chat(target, span_warning("My legs feel stronger! I feel like I can jump up high!"))
+		to_chat(target, span_warning("我的双腿变得更有力了！我感觉自己能一跃而起！"))
 		addtimer(CALLBACK(src, PROC_REF(remove_buff), target), wait = 20 SECONDS)
 		return TRUE
 	
 
 /obj/effect/proc_holder/spell/invoked/leap/proc/remove_buff(mob/living/carbon/target)
 	REMOVE_TRAIT(target, TRAIT_ZJUMP, MAGIC_TRAIT)
-	to_chat(target, span_warning("My legs feel remarkably weaker."))
+	to_chat(target, span_warning("我的双腿忽然变得沉重无力。"))
 	target.Immobilize(5)

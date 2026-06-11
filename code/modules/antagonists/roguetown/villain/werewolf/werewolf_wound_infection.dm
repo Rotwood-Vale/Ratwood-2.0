@@ -16,7 +16,7 @@
 		return
 	if(human_owner.stat >= DEAD) //forget it
 		return
-	to_chat(human_owner, span_danger("I feel horrible... REALLY horrible..."))
+	to_chat(human_owner, span_danger("我感觉糟透了……真的糟透了……"))
 	human_owner.mob_timers["puke"] = world.time
 	human_owner.vomit(1, blood = TRUE, stun = FALSE)
 	werewolf_infection_timer = addtimer(CALLBACK(src, PROC_REF(wake_werewolf)), werewolf_infection_time, TIMER_STOPPABLE)
@@ -36,7 +36,7 @@
 		return FALSE
 	werewolf_infection_timer = null
 	owner.flash_fullscreen("redflash3")
-	to_chat(owner, span_danger("It hurts... Is this really the end for me?"))
+	to_chat(owner, span_danger("好痛……这真的就是我的结局了吗？"))
 	owner.emote("scream") // heres your warning to others bro
 	owner.Knockdown(1)
 	return wolfy

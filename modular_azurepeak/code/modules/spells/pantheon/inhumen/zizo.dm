@@ -1,8 +1,8 @@
 // T1: (fires a bone splinter at a target for brute and bleeding if you're not holding bones in your other hand, fires a significantly stronger bone lance if you are)
 
 /obj/effect/proc_holder/spell/invoked/projectile/profane
-	name = "Profane"
-	desc = "Fire forth a splinter of unholy bone, tearing flesh and causing bleeding. If you hold pieces of bone in your other hand, you will coax a much stronger lance of bone into being."
+	name = "渎骨"
+	desc = "射出一枚不洁骨刺，撕裂血肉并造成流血。若你的另一只手握着骨片，便能诱导出威力强得多的骨矛。"
 	clothes_req = FALSE
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
@@ -50,14 +50,14 @@
 	P.fire()
 
 	if (big_cast)
-		user.visible_message(span_danger("[user] conjures and hurls a vicious lance of bone towards [target]!"), span_notice("I hurl forth a vicious lance of profaned bone at [target]!"))
+		user.visible_message(span_danger("[user]凝出一支凶恶骨矛，朝[target]猛然掷去！"), span_notice("我朝[target]掷出了一支凶恶的渎化骨矛！"))
 	else
-		user.visible_message(span_danger("[user] directs forth a splinter of bone towards [target]!"), span_notice("I fling forth a shard of profaned bone at [target]!"))
+		user.visible_message(span_danger("[user]朝[target]射出了一枚骨刺！"), span_notice("我朝[target]掷出了一枚渎化骨片！"))
 
 	projectile_type = initial(projectile_type)
 
 /obj/projectile/magic/profane
-	name = "profaned bone splinter"
+	name = "渎化骨刺"
 	icon_state = "chronobolt"
 	damage = 20
 	damage_type = BRUTE
@@ -65,7 +65,7 @@
 	var/embed_prob = 10
 
 /obj/projectile/magic/profane/major
-	name = "profaned bone lance"
+	name = "渎化骨矛"
 	damage = 35
 	embed_prob = 30
 
@@ -78,7 +78,7 @@
 		victim_limb.add_embedded_object(our_splinter, FALSE, TRUE)
 
 /obj/item/bone/splinter
-	name = "bone splinter"
+	name = "骨刺"
 	embedding = list(
 		"embed_chance" = 100,
 		"embedded_pain_chance" = 25,
@@ -87,7 +87,7 @@
 
 /obj/item/bone/splinter/dropped(mob/user, silent)
 	. = ..()
-	to_chat(user, span_danger("[src] crumbles into dust..."))
+	to_chat(user, span_danger("[src]碎成了尘埃......"))
 	qdel(src)
 
 // T2: just use lesser animate undead for now
@@ -107,8 +107,8 @@
 // T3: Rituos (usable once per sleep cycle, allows you to choose any 1 arcane spell to use for the duration w/ an associated devotion cost. each time you change it, 1 of your limbs is skeletonized, if all of your limbs are skeletonized, you gain access to arcane magic. continuing to use rituos after being fully skeletonized gives you additional spellpoints). Gives you the MOB_UNDEAD flag (needed for skeletonize to work) on first use.
 
 /obj/effect/proc_holder/spell/invoked/rituos
-	name = "Rituos"
-	desc = "Do a ritual for she of Z that skeletonises a part of your body and bestows upon you arcyne magycks until you next sleep. Once your whole body has become skeletonised you gain full access to the Arcyne, bolstering your knowledge of spells with each additional ritual."
+	name = "仪式术"
+	desc = "为齐佐女士举行一道仪式，将你身体的一部分化为骸骨，并在你下次睡眠前赐予你奥术魔法。一旦你的全身都化为骸骨，你便可获得完整的奥术通行权，而每一次额外仪式都会继续增强你的法术知识。"
 	clothes_req = FALSE
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
@@ -138,7 +138,7 @@
 		return FALSE
 
 	if(user.mind.has_rituos)
-		to_chat(user, span_warning("I have not the mental fortitude to enact the Lesser Work again. I must rest first..."))
+		to_chat(user, span_warning("我已没有足够的心智再度施行这道小业。必须先休息......"))
 		return FALSE
 
 	// Find a bodypart to skeletonize
@@ -151,7 +151,7 @@
 		potential_bodypart += limb
 
 	if(!length(potential_bodypart) && rituos_counter < 4)
-		to_chat(user, span_warning("I have no remaining limbs to offer to the ritual!"))
+		to_chat(user, span_warning("我已经没有可献给仪式的肢体了！"))
 		return FALSE
 
 	var/obj/item/bodypart/part_to_bonify
@@ -161,17 +161,17 @@
 		part_to_bonify = pick(potential_bodypart)
 
 	if(!part_to_bonify)
-		to_chat(user, span_warning("I have no remaining limbs to offer to the ritual!"))
+		to_chat(user, span_warning("我已经没有可献给仪式的肢体了！"))
 		return FALSE
 
 	if(!(user.mob_biotypes & MOB_UNDEAD))
-		user.visible_message(span_warning("The pallor of the grave descends across [user]'s skin in a wave of arcyne energy..."), span_boldwarning("A deathly chill overtakes my body at my first culmination of the Lesser Work! I feel my heart slow down in my chest..."))
+		user.visible_message(span_warning("墓地般的苍白随着一波奥术能量覆上了[user]的肌肤......"), span_boldwarning("当我第一次完成“小业”时，一股死寂的寒意吞没了我的身体！我能感觉到心脏在胸腔中慢了下来......"))
 		user.mob_biotypes |= MOB_UNDEAD
-		to_chat(user, span_smallred("I have forsaken the living. I am now closer to a deadite than a mortal... but I still yet draw breath and bleed."))
+		to_chat(user, span_smallred("我已背弃生者。如今的我更接近死灵，而非凡人......但我仍会呼吸，也仍会流血。"))
 
 	part_to_bonify.skeletonize(FALSE)
 	user.update_body_parts()
-	user.visible_message(span_warning("Faint runes flare beneath [user]'s skin before [user.p_their()] flesh suddenly slides away from [user.p_their()] [part_to_bonify.name]!"), span_notice("I feel arcyne power surge throughout my frail mortal form, as the Rituos takes its terrible price from my [part_to_bonify.name]."))
+	user.visible_message(span_warning("微弱的符文在[user]皮肤下闪烁，随后[user.p_their()] [part_to_bonify.name]上的血肉骤然从骨头上滑落！"), span_notice("我感到奥术力量在这脆弱的凡躯中奔涌，而Rituos正从我的[part_to_bonify.name]上索取它可怖的代价。"))
 
 	user.mind.has_rituos = TRUE
 	rituos_counter++
@@ -189,27 +189,27 @@
 			user.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 			user.grant_language(/datum/language/undead)
 			user.mind?.adjust_spellpoints(6)
-			user.visible_message(span_boldwarning("[user]'s form swells with terrible power as they cast away almost all of the remnants of their mortal flesh, arcyne runes glowing upon their exposed bones..."), span_notice("I HAVE DONE IT! I HAVE COMPLETED HER LESSER WORK! I stand at the cusp of unspeakable power, but something is yet missing..."))
+			user.visible_message(span_boldwarning("[user]的形体随着可怖力量一同膨胀，几乎将所有残余凡肉尽数抛弃，裸露的骨骼上闪烁着奥术符文......"), span_notice("我做到了！我完成了她的“小业”！我已站在难以言喻的力量边缘，可似乎仍少了些什么......"))
 			ADD_TRAIT(user, TRAIT_NOHUNGER, "[type]")
 			ADD_TRAIT(user, TRAIT_NOBREATH, "[type]")
 			ADD_TRAIT(user, TRAIT_OVERTHERETIC, "[type]")
 			if(prob(33))
-				to_chat(user, span_small("...what have I done?"))
+				to_chat(user, span_small("......我都做了什么？"))
 			user.mind?.RemoveSpell(src)
 
 // T3 Lacrima (plunge your hand into someone's ribs to rip out their impure lux for your diabolical uses)
 
 /obj/effect/proc_holder/spell/targeted/touch/lacrima
-	name = "Lacrima"
-	desc = "Wreath your hand in inhumen energies.\n \
-	USE on a mind-inhabited victim who is alyve, floored, whose lux is intact to plunge your hand into their chest, shattering their ribs and will alike in order to forcefully tear the lux from their chest.\n \
-	DISARM on a PURE lux to convert it into IMPURE lux, in order to deprive it of those who need it or to fuel your wicked necromantic relics."
+	name = "泪痕"
+	desc = "让你的手缠绕上异端能量。\n \
+	以“使用”对仍活着、倒地且灵辉完好的心智生灵施放，将手刺入其胸膛，粉碎其肋骨与意志，强行把灵辉从胸中扯出。\n \
+	以“缴械”对纯净灵辉施放，可将其转化为污秽灵辉，以夺走他人所需之物，或为你邪恶的死灵遗物充能。"
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "lacrima"
 	clothes_req = FALSE
-	drawmessage = "I pray to ZIZO for but a sliver of Her power, wreathing my hand in inhumen energies!"
-	dropmessage = "I allow the energies upon my hand to dissipate."
+	drawmessage = "我向ZIZO祈求一缕她的力量，让异端能量缠上我的手掌！"
+	dropmessage = "我让手上的能量缓缓散去。"
 	chargedrain = 0
 	chargetime = 0
 	releasedrain = 5
@@ -223,8 +223,8 @@
 	miracle = FALSE
 
 /obj/item/melee/touch_attack/lacrima
-	name = "\improper lux ripper"
-	desc = "ZIZO's will is to perverse the lux of the lyving. With but a mere shred of HER power, you will do exactly that."
+	name = "\improper 灵辉裂割器"
+	desc = "齐佐的意志，就是扭曲生者的灵辉。凭借她赐下的一缕微力，你便能做到这一点。"
 	catchphrase = null
 	possible_item_intents = list(/datum/intent/use, INTENT_DISARM)
 	icon = 'icons/mob/roguehudgrabs.dmi'
@@ -244,33 +244,33 @@
 			if(istype(target, /obj/item/reagent_containers/lux))
 				perverse_lux(target, user)
 			else
-				to_chat(user, span_info("That's not pure lux."))
+				to_chat(user, span_info("那不是纯净灵辉。"))
 
 /obj/item/melee/touch_attack/lacrima/proc/lux_rip(mob/living/carbon/human/target, mob/living/carbon/human/user)
 	var/break_time = 100
 	var/tear_time = 50
 
 	if(target == user)
-		to_chat(user, span_alert("I shouldn't rip out my own lux! I need that."))
+		to_chat(user, span_alert("我不该把自己的灵辉扯出来！那玩意我还得用。"))
 		return
 	if(!target.mind)
-		to_chat(user, span_info("This one's lux is weak and insufficient. I need a victim with higher conscious!"))
+		to_chat(user, span_info("此人的灵辉太过微弱，不足以提取。我需要一个意识更完整的受害者！"))
 		return
 	if(target.stat == DEAD || !isliving(target))
-		to_chat(user, span_info("Only lyving creachers may have their lux torn."))
+		to_chat(user, span_info("只有活着的生物才能被扯出灵辉。"))
 		return
 	if(!target.Adjacent(user))
-		to_chat(user, span_info("I need to be next to [target] to rip out their lux."))
+		to_chat(user, span_info("我得站到[target]身旁，才能扯出其灵辉。"))
 		return
 	if((target.mobility_flags & MOBILITY_STAND))
-		to_chat(user, span_info("My target must be lying down to have their lux torn."))
+		to_chat(user, span_info("目标必须倒在地上，我才能扯出他们的灵辉。"))
 		return
 	if(target.has_status_effect(/datum/status_effect/debuff/devitalised) || (target.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped) || target.mob_biotypes & MOB_UNDEAD)) //can't farm your skeletons
-		to_chat(user, span_notice("This one's lux is already disturbed!"))
+		to_chat(user, span_notice("此人的灵辉已经被扰乱了！"))
 		return
 	else
-		to_chat(user, span_alert("I begin reaching my hand towards [target], preparing to tear their lux from their body..."))
-		user.visible_message(span_alert("[user] reaches towards [target]'s chest, inhumen flames wreathing [user.p_their()] hand..."))
+		to_chat(user, span_alert("我开始把手伸向[target]，准备将其灵辉从体内扯出......"))
+		user.visible_message(span_alert("[user]将手探向[target]的胸膛，[user.p_their()]的手被异端火焰缠绕着......"))
 	var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
 	if(!chest.has_wound(/datum/wound/fracture/chest))
 		if(!do_after(user, break_time, target = target))
@@ -279,14 +279,14 @@
 			if(!HAS_TRAIT(target, TRAIT_NOPAIN))
 				target.emote("painscream")
 			target.apply_damage(50, BRUTE, BODY_ZONE_CHEST)
-			user.visible_message(span_alert("[user] plunges their fist into [target]'s ribcage, phasing through it spectacularly!"))
+			user.visible_message(span_alert("[user]将拳头猛地刺入[target]的胸腔，惊人地穿过了肋骨！"))
 	if(!do_after(user, tear_time, target = target))
 		return
 	if(!HAS_TRAIT(target, TRAIT_NOPAIN))
 		target.emote("painscream")
 		target.add_stress(/datum/stressevent/myfuckingluxman)
 	playsound(src, 'sound/items/blackmirror_needle.ogg', 60, FALSE, 3)
-	user.visible_message(span_alert("[user] tears a glob of lux from [target]'s chest!"))
+	user.visible_message(span_alert("[user]从[target]胸中硬生生扯出了一团灵辉！"))
 	new /obj/item/reagent_containers/lux_impure(target.loc)
 	SEND_SIGNAL(user, COMSIG_LUX_EXTRACTED, target)
 	record_featured_stat(FEATURED_STATS_CRIMINALS, user)
@@ -295,7 +295,7 @@
 	qdel(src)
 
 /datum/stressevent/myfuckingluxman
-	desc = span_boldred("THE ESSENCE OF MY LYFE HAS BEEN DEFILED!!")
+	desc = span_boldred("我生命的本质被玷污了！！")
 	stressadd = 30
 	timer = 15 MINUTES
 
@@ -303,9 +303,9 @@
 	var/perverse_time = 20
 
 	if(!target.Adjacent(user))
-		to_chat(user, span_info("I need to get closer."))
+		to_chat(user, span_info("我得再靠近些。"))
 		return
-	to_chat(user, span_alert("I begin molding the [target] in my hands, perversing it with inhumen energies..."))
+	to_chat(user, span_alert("我开始在手中揉塑[target]，用异端能量将其扭曲......"))
 	if(!do_after(user, perverse_time, target = target))
 		return
 	else
@@ -314,8 +314,8 @@
 		user.put_in_hands(new /obj/item/reagent_containers/lux_impure, forced = TRUE)
 
 /obj/effect/proc_holder/spell/self/zizo_snuff
-	name = "Snuff Lights"
-	desc = "Extinguish all lights in range, with your Miracles skill increasing range."
+	name = "熄灯"
+	desc = "熄灭范围内的所有光源；你的神迹技能越高，范围越大。"
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "snuff_lights"
@@ -323,7 +323,7 @@
 	chargedrain = 0
 	chargetime = 0
 	chargedloop = /datum/looping_sound/invokeholy
-	invocations = list("Embrace the darkness!")
+	invocations = list("拥抱黑暗吧！")
 	invocation_type = "shout"
 	sound = 'sound/magic/zizo_snuff.ogg'
 	associated_skill = /datum/skill/magic/holy
@@ -357,8 +357,8 @@
 
 // Ancient Champion-exclusive: An evil variant of Repulse. Longer charge time and CD, but greater maxthrow, push range and the affected people lose 50 stamina. The undead are immune.
 /obj/effect/proc_holder/spell/invoked/churnliving //Repulse variant.
-	name = "Churn Lyving"
-	desc = "Conjure forth a wave of necrotic energy, repelling non-undead around you and greatly damaging their stamina."
+	name = "翻搅生者"
+	desc = "唤出一股死灵能量波，将你周围的非不死者击退，并重创其体力。"
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "churn_living"
@@ -420,13 +420,13 @@
 				M.set_resting(TRUE, TRUE)
 				M.adjustBruteLoss(20)
 				M.stamina_add(50) //50 stamina drain, x2 of Frostbolt's. The spell is very telegraphed.
-				to_chat(M, "<span class='danger'>You're slammed into the floor by [user]! You feel enfeebled!</span>")
+				to_chat(M, "<span class='danger'>你被[user]狠狠砸在地上！你感到一阵虚弱！</span>")
 		else
 			new sparkle_path(get_turf(AM), get_dir(user, AM)) //created sparkles will disappear on their own
 			if(isliving(AM))
 				var/mob/living/M = AM
 				M.set_resting(TRUE, TRUE)
-				to_chat(M, "<span class='danger'>You're thrown back by [user]!</span>")
+				to_chat(M, "<span class='danger'>你被[user]猛地击飞了出去！</span>")
 			AM.safe_throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user, force = repulse_force)//So stuff gets tossed around at the same time.
 	return TRUE
 
@@ -434,8 +434,8 @@
 // Heresiarch-exclusive: Perfect Reanimation. Anastasis but evil. Requires a heart and a zizocross structure to revive somebody.
 
 /obj/effect/proc_holder/spell/invoked/evil_resurrect
-	name = "Perfect Reanimation" //Wretch Heresiarch-exclusive variant of Anastasis
-	desc = "Rip the target's soul out of Necra's grasp and revive them at a cost of a humanoid being's heart. The target's attributes will be temporarily reduced."
+	name = "完全复生术" //Wretch Heresiarch-exclusive variant of Anastasis
+	desc = "以一颗类人生物的心脏为代价，将目标的灵魂从内克拉手中夺回并使其复生。目标的属性会暂时下降。"
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "revival"
@@ -477,7 +477,7 @@
 
 		var/validation_result = validate_items(target)
 		if(validation_result != "")
-			to_chat(user, span_warning("[validation_result] on the floor next to or on top of [target]"))
+			to_chat(user, span_warning("我需要把[validation_result]放在[target]旁边的地上，或直接放在[target]身上。"))
 			revert_cast()
 			return FALSE
 
@@ -501,7 +501,7 @@
 
 		if(!found_structure)
 			var/atom/temp_structure = required_structure
-			to_chat(user, span_warning("I need an unholy [initial(temp_structure.name)] near [target]."))
+			to_chat(user, span_warning("我需要在[target]附近准备一座不净的[initial(temp_structure.name)]。"))
 			revert_cast()
 			return FALSE
 		var/mob/living/carbon/spirit/underworld_spirit = target.get_spirit()
@@ -514,18 +514,18 @@
 			revert_cast()
 			return FALSE
 		if(target.mob_biotypes & MOB_UNDEAD) //no effect on undead
-			to_chat(user, span_warning("[target] is undead. Nothing happens."))
+			to_chat(user, span_warning("[target]是不死者。什么也没有发生。"))
 			revert_cast()
 			return FALSE
 		target.adjustOxyLoss(-target.getOxyLoss()) //Ye Olde CPR
 		if(!target.revive(full_heal = FALSE))
-			to_chat(user, span_warning("Nothing happens."))
+			to_chat(user, span_warning("什么也没有发生。"))
 			revert_cast()
 			return FALSE
 		target.emote("agony")
 		target.Jitter(100)
 		target.update_body()
-		target.visible_message(span_notice("[target] is reanimated by unholy magic!"), span_warning("My soul is snatched from Necra's grasp. Damnation continues."))
+		target.visible_message(span_notice("[target]被渎圣魔法重新唤醒了！"), span_warning("我的灵魂被从内克拉手中硬生生拽了回来。诅咒仍在继续。"))
 		if(revive_pq && !HAS_TRAIT(target, TRAIT_IWASREVIVED) && user?.ckey)
 			adjust_playerquality(revive_pq, user.ckey)
 			ADD_TRAIT(target, TRAIT_IWASREVIVED, "[type]")
@@ -541,7 +541,7 @@
 
 /obj/effect/proc_holder/spell/invoked/evil_resurrect/cast_check(skipcharge = 0,mob/user = usr)
 	if(!..())
-		to_chat(user, span_warning("The miracle fizzles."))
+		to_chat(user, span_warning("神迹熄灭了。"))
 		return FALSE
 	return TRUE
 

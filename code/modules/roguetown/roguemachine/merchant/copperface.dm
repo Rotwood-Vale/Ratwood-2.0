@@ -11,9 +11,9 @@
 // This provides especially wretches reasons to harrass adventurers and get vital items they usually can't out of town like lockpicks, red or prosthetics
 
 /obj/structure/roguemachine/goldface/copperface
-	name = "COPPERFACE"
-	desc = "Never gets tired, does not ask questions, only minor signs of tampering. Alas, fashioned with copper of low quality."
-	motto = "COPPERFACE - Everyone has a price."
+	name = "铜面"
+	desc = "不知疲倦，不问缘由，只有些许被动过手脚的痕迹。唉，可惜是用劣质铜铸成的。"
+	motto = "铜面 - 人人都有价。"
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "copperface"
 	lockid = null // Not lockable

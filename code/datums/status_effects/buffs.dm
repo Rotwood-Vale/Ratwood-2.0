@@ -6,12 +6,12 @@
 	alert_type = /atom/movable/screen/alert/status_effect/shadow_mend
 
 /atom/movable/screen/alert/status_effect/shadow_mend
-	name = "Shadow Mend"
+	name = "阴影愈合"
 	desc = ""
 	icon_state = "shadow_mend"
 
 /datum/status_effect/shadow_mend/on_apply()
-	owner.visible_message("<span class='notice'>Violet light wraps around [owner]'s body!</span>", "<span class='notice'>Violet light wraps around my body!</span>")
+	owner.visible_message("<span class='notice'>紫罗兰色的光芒缠绕着 [owner] 的身体！</span>", "<span class='notice'>紫罗兰色的光芒缠绕着我的身体！</span>")
 	playsound(owner, 'sound/blank.ogg', 50, TRUE)
 	return ..()
 
@@ -20,7 +20,7 @@
 	owner.adjustFireLoss(-15)
 
 /datum/status_effect/shadow_mend/on_remove()
-	owner.visible_message("<span class='warning'>The violet light around [owner] glows black!</span>", "<span class='warning'>The tendrils around you cinch tightly and reap their toll...</span>")
+	owner.visible_message("<span class='warning'>[owner] 周围的紫罗兰色光芒转为漆黑！</span>", "<span class='warning'>缠绕着我的触须骤然收紧，开始索取代价……</span>")
 	playsound(owner, 'sound/blank.ogg', 50, TRUE)
 	owner.apply_status_effect(STATUS_EFFECT_VOID_PRICE)
 
@@ -32,7 +32,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/void_price
 
 /atom/movable/screen/alert/status_effect/void_price
-	name = "Void Price"
+	name = "虚空代价"
 	desc = ""
 	icon_state = "shadow_mend"
 
@@ -53,7 +53,7 @@
 		power_to_give = new_power_per_tick
 
 /atom/movable/screen/alert/status_effect/power_regen
-	name = "Power Regeneration"
+	name = "能量再生"
 	desc = ""
 	icon_state = "power_regen"
 
@@ -63,16 +63,16 @@
 	alert_type = /atom/movable/screen/alert/status_effect/wish_granters_gift
 
 /datum/status_effect/wish_granters_gift/on_apply()
-	to_chat(owner, "<span class='notice'>Death is not my end! The Wish Granter's energy suffuses you, and you begin to rise...</span>")
+	to_chat(owner, "<span class='notice'>死亡并非我的终点！许愿者的能量充盈着你，你开始重新站起……</span>")
 	return ..()
 
 /datum/status_effect/wish_granters_gift/on_remove()
 	owner.revive(full_heal = TRUE, admin_revive = TRUE)
-	owner.visible_message("<span class='warning'>[owner] appears to wake from the dead, having healed all wounds!</span>", "<span class='notice'>I have regenerated.</span>")
+	owner.visible_message("<span class='warning'>[owner] 仿佛自死亡中苏醒，所有伤口都已愈合！</span>", "<span class='notice'>我已再生。</span>")
 	owner.update_mobility()
 
 /atom/movable/screen/alert/status_effect/wish_granters_gift
-	name = "Wish Granter's Immortality"
+	name = "许愿者的不朽"
 	desc = ""
 	icon_state = "wish_granter"
 
@@ -90,7 +90,7 @@
 	var/last_staminaloss = 0
 
 /atom/movable/screen/alert/status_effect/blooddrunk
-	name = "Blood-Drunk"
+	name = "嗜血狂醉"
 	desc = "" //not true, and the item description mentions its actual effect
 	icon_state = "blooddrunk"
 
@@ -210,10 +210,10 @@
 
 
 /datum/status_effect/sword_spin/on_apply()
-	owner.visible_message("<span class='danger'>[owner] begins swinging the sword with inhuman strength!</span>")
+	owner.visible_message("<span class='danger'>[owner] 以非人的力量挥舞起长剑！</span>")
 	var/oldcolor = owner.color
 	owner.color = "#ff0000"
-	owner.add_stun_absorption("bloody bastard sword", duration, 2, "doesn't even flinch as the sword's power courses through them!", "You shrug off the stun!", " glowing with a blazing red aura!")
+	owner.add_stun_absorption("bloody bastard sword", duration, 2, "任凭剑中力量流转全身，也丝毫不为所动！", "我硬扛住了这次眩晕！", " 周身燃起炽烈的红色光辉！")
 	owner.spin(duration,1)
 	animate(owner, color = oldcolor, time = duration, easing = EASE_IN)
 	addtimer(CALLBACK(owner, TYPE_PROC_REF(/atom, update_atom_colour)), duration)
@@ -229,7 +229,7 @@
 		slashy.attack(M, owner)
 
 /datum/status_effect/sword_spin/on_remove()
-	owner.visible_message("<span class='warning'>[owner]'s inhuman strength dissipates and the sword's runes grow cold!</span>")
+	owner.visible_message("<span class='warning'>[owner] 身上的非人之力消散，剑上的符文也随之冷却！</span>")
 
 
 //Used by changelings to rapidly heal
@@ -251,7 +251,7 @@
 	owner.adjustOxyLoss(-10)
 
 /atom/movable/screen/alert/status_effect/fleshmend
-	name = "Fleshmend"
+	name = "血肉愈合"
 	desc = ""
 	icon_state = "fleshmend"
 
@@ -283,7 +283,7 @@
 		owner.confused = max(0, owner.confused - 1)
 
 /atom/movable/screen/alert/status_effect/regenerative_core
-	name = "Regenerative Core Tendrils"
+	name = "再生核心触须"
 	desc = ""
 	icon_state = "regenerative_core"
 
@@ -307,10 +307,10 @@
 /datum/status_effect/antimagic
 	id = "antimagic"
 	duration = 10 SECONDS
-	examine_text = "<span class='notice'>They seem to be covered in a dull, grey aura.</span>"
+	examine_text = "<span class='notice'>其周身似乎笼罩着一层暗淡的灰色灵光。</span>"
 
 /datum/status_effect/antimagic/on_apply()
-	owner.visible_message("<span class='notice'>[owner] is coated with a dull aura!</span>")
+	owner.visible_message("<span class='notice'>[owner] 被一层暗淡的灵光笼罩！</span>")
 	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 	//glowing wings overlay
 	playsound(owner, 'sound/blank.ogg', 75, FALSE)
@@ -318,5 +318,5 @@
 
 /datum/status_effect/antimagic/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
-	owner.visible_message("<span class='warning'>[owner]'s dull aura fades away...</span>")
+	owner.visible_message("<span class='warning'>[owner] 身上暗淡的灵光消散了……</span>")
 

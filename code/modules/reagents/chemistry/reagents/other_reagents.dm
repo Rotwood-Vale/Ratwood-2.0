@@ -96,13 +96,13 @@
 	shot_glass_icon_state = "shotglassred"
 
 /datum/reagent/water
-	name = "Water"
-	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen."
+	name = "水"
+	description = "一种由氢和氧组成的无处不在的化学物质。"
 	color = "#6a9295"
-	taste_description = "water"
+	taste_description = "水"
 	var/cooling_temperature = 2
 	glass_icon_state = "glass_clear"
-	glass_name = "glass of water"
+	glass_name = "一杯水"
 	glass_desc = ""
 	shot_glass_icon_state = "shotglassclear"
 	var/hydration = 12

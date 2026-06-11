@@ -80,12 +80,12 @@
 	/// Bypasses positioning and exposure checks entirely
 	var/freeuse = FALSE
 	// Moved here from proc/get_generic_force_adjective to reduce list initialization/destruction
-	var/static/list/stealth_force_adjectives 	= list("subtly", "sneakily", "covertly", "stealthily", "quietly")
-	var/static/list/low_force_adjectives 		= list("gently", "carefully", "tenderly", "gingerly", "delicately", "lazily")
-	var/static/list/mid_force_adjectives 		= list("firmly", "vigorously", "eagerly", "steadily", "intently")
-	var/static/list/high_force_adjectives 		= list("roughly", "carelessly", "forcefully", "fervently", "fiercely")
-	var/static/list/extreme_force_adjectives 	= list("brutally", "violently", "relentlessly", "savagely", "mercilessly")
-	var/static/list/ludicrous_force_adjectives 	= list("madly", "uncontrollably", "desperately", "deliriously", "freekishly")
+	var/static/list/stealth_force_adjectives 	= list("隐秘地", "偷偷地", "悄悄地", "无声地", "谨慎地")
+	var/static/list/low_force_adjectives 		= list("轻柔地", "小心地", "温柔地", "怯生生地", "细致地", "慵懒地")
+	var/static/list/mid_force_adjectives 		= list("稳稳地", "有力地", "急切地", "平稳地", "专注地")
+	var/static/list/high_force_adjectives 		= list("粗暴地", "大意地", "强硬地", "炽烈地", "凶狠地")
+	var/static/list/extreme_force_adjectives 	= list("残暴地", "暴烈地", "不停地", "野蛮地", "毫不留情地")
+	var/static/list/ludicrous_force_adjectives 	= list("疯狂地", "失控地", "饥渴地", "癫狂地", "狂乱地")
 
 /datum/sex_controller/New(mob/living/carbon/human/owner)
 	user = owner
@@ -358,14 +358,14 @@
 	if(user.client.prefs.edging == FALSE)
 		return FALSE
 	var/resist_msg = pick(
-		"[user] trembles and hisses, \"With every broken bone, I swore I lyved... HE hath gifted me the strength to ENDURE!\"",
-		"[user] bows [user.p_their()] head and forces the urge back, clinging to faith as the night closes in.",
-		"[user] gasps, \"PSYDON yet LYVES and PSYDON yet ENDURES,\" and denies [user.p_them()]self release.",
-		"[user] clenches hard and steadies [user.p_their()] breathing, choosing the Saints' discipline over indulgence.",
-		"[user] shudders and whispers a penitent prayer, meeting suffering with patience instead of surrender.",
+		"[user]颤抖着嘶声道：\"每一根断骨我都曾发誓要活下去……是 HE 赐予了我 ENDURE 的力量！\"",
+		"[user]低下[user.p_their()]的头，将那股冲动强压了回去，在夜色逼近之时仍死死抓住自己的信仰。",
+		"[user]喘息着说道：\"PSYDON 仍在 LYVES，PSYDON 仍在 ENDURES，\"硬是拒绝让[user.p_them()]self释放出来。",
+		"[user]死死绷紧身体，稳住[user.p_their()]的呼吸，选择了 Saints 的戒律而非放纵。",
+		"[user]浑身一颤，低声念出悔罪的祷词，以忍耐迎向痛苦，而非屈服。",
 	)
 	user.visible_message(span_boldwarning(resist_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
-	to_chat(user, span_notice("PSYDON, grant me silence and endurance; I will not yield."))
+	to_chat(user, span_notice("PSYDON，赐我沉默与忍耐；我绝不会屈服。"))
 	set_arousal(60)
 	user.emote("groan", forced = TRUE)
 	return TRUE
@@ -385,7 +385,7 @@
 			if(!facial)
 				splashed_user.apply_status_effect(/datum/status_effect/facial)
 				if(splashed_user != user) // don't announce self-ejaculation (e.g. chastity overflow)
-					splashed_user.visible_message(span_love("[splashed_user] takes a load on their face!"), span_love("I take a load on my face!"))
+					splashed_user.visible_message(span_love("[splashed_user]被喷了满脸！"), span_love("我被喷了满脸！"))
 			else
 				facial.refresh_cum()
 		else
@@ -393,7 +393,7 @@
 			if(!external)
 				splashed_user.apply_status_effect(/datum/status_effect/facial/external)
 				if(splashed_user != user) // don't announce self-ejaculation (e.g. chastity overflow)
-					splashed_user.visible_message(span_love("[splashed_user] takes a load on their body!"), span_love("I take a load on my body!"))
+					splashed_user.visible_message(span_love("[splashed_user]身上沾满了液体！"), span_love("我身上沾满了液体！"))
 			else
 				external.refresh_cum()
 		if(user.has_flaw(/datum/charflaw/malodorous) && !splashed_user.has_flaw(/datum/charflaw/malodorous))
@@ -425,9 +425,9 @@
 		if(!splashed_type)
 			splashed_user.apply_status_effect(status_type)
 			if(oral)
-				splashed_user.visible_message(span_love("[splashed_user] takes a load down their throat!"), span_love("I take a load down my throat!"))
+				splashed_user.visible_message(span_love("[splashed_user]吞下了一大股液体！"), span_love("我吞下了一大股液体！"))
 			else
-				splashed_user.visible_message(span_love("[splashed_user] takes a load inside them!"), span_love("I take a load inside me!"))
+				splashed_user.visible_message(span_love("[splashed_user]被灌进了一大股液体！"), span_love("我被灌进了一大股液体！"))
 		else
 			splashed_type.refresh_cum()
 		if(oral && splashed_user.reagents) //cum fills hunger if taking it orally
@@ -459,7 +459,7 @@
 	var/datum/status_effect/creampie_leak/existing = target.has_status_effect(/datum/status_effect/creampie_leak/long) || target.has_status_effect(/datum/status_effect/creampie_leak)
 	if(existing)
 		existing.orifice |= orifice
-		to_chat(target, span_love("I feel another warmth beginning to leak out of me."))
+		to_chat(target, span_love("我感觉又有一股温热正开始从体内渗出。"))
 		existing.duration = world.time + initial(existing.duration) // refresh timer
 		return
 	if(use_long)
@@ -498,7 +498,7 @@
 		user.reagents.add_reagent(drip_type, 1)
 	apply_cum_consumed_buff(user)
 
-	user.visible_message(span_love("[user] laps up the fluids leaking from [source]!"), span_love("I lap up the fluids leaking from [source]!"))
+	user.visible_message(span_love("[user]舔食起从[source]体内渗出的液体！"), span_love("我舔食起从[source]体内渗出的液体！"))
 
 	if(drip.duration <= world.time + 6 SECONDS)
 		if(istype(drip, /datum/status_effect/creampie_leak/long))
@@ -563,13 +563,13 @@
 /datum/status_effect/facial/proc/clean_up(datum/source, strength)
 	if(strength >= CLEAN_WEAK && !QDELETED(owner))
 		if(!owner.has_stress_event(/datum/stressevent/bathcleaned))
-			to_chat(owner, span_notice("I feel much cleaner now!"))
+			to_chat(owner, span_notice("我现在感觉干净多了！"))
 			owner.add_stress(/datum/stressevent/bathcleaned)
 		owner.remove_status_effect(src)
 
 /datum/status_effect/creampie_leak/on_apply()
 	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_up))
-	to_chat(owner, span_love("I feel a warmth beginning to leak out of me."))
+	to_chat(owner, span_love("我感觉有一股温热正开始从体内渗出。"))
 	return ..()
 
 /datum/status_effect/creampie_leak/on_remove()
@@ -578,7 +578,7 @@
 
 /datum/status_effect/creampie_leak/proc/clean_up(datum/source, strength)
 	if(strength >= CLEAN_WEAK && !QDELETED(owner))
-		to_chat(owner, span_notice("I feel much cleaner now."))
+		to_chat(owner, span_notice("我现在感觉干净多了。"))
 		owner.remove_status_effect(src)
 
 /datum/status_effect/creampie_leak/tick()
@@ -602,24 +602,24 @@
 	if(modular_try_handle_chastity_ejaculation())
 		return
 	if((has_chastity_cage() || has_chastity_anal()) && prob(50))
-		var/self_mess_msg = "[user] spills over [user.p_their()] own chastity!"
+		var/self_mess_msg = "[user]喷得[user.p_their()]自己的贞操装置里到处都是！"
 		user.visible_message(span_love(self_mess_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
 		cum_onto(user)
 		return
 	if(user.getorganslot(ORGAN_SLOT_PENIS) && knotted_status == KNOTTED_AS_TOP && knotted_owner == user && ishuman(knotted_recipient) && !QDELETED(knotted_recipient) && knotted_recipient?.sexcon)
 		var/orifice = knotted_part_partner
 		var/is_oral_knot = (orifice & SEX_PART_JAWS) != SEX_PART_NULL
-		var/knotted_climax_msg = is_oral_knot ? "[user] climaxes down [knotted_recipient]'s throat!" : "[user] climaxes deep inside [knotted_recipient]!"
+		var/knotted_climax_msg = is_oral_knot ? "[user]朝着[knotted_recipient]的喉咙深处高潮了！" : "[user]在[knotted_recipient]体内深处高潮了！"
 		user.visible_message(span_love(knotted_climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
 		cum_into(oral = is_oral_knot, splashed_user = knotted_recipient, orifice = orifice, skip_knot_try = TRUE)
 		return
-	var/climax_msg = "[user] makes a mess!"
+	var/climax_msg = "[user]喷得到处都是！"
 	var/modular_climax_msg = modular_get_chastity_climax_message(climax_msg)
 	if(istext(modular_climax_msg))
 		climax_msg = modular_climax_msg
 	else
 		if(has_chastity_cage() || has_chastity_anal())
-			climax_msg = "[user] climaxes and makes a mess in their chastity device!"
+			climax_msg = "[user]在[user.p_their()]的贞操装置里高潮了，弄得一片狼藉！"
 	user.visible_message(span_love(climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
 	playsound(user, 'sound/misc/mat/endout.ogg', suppress_moan ? 12 : 50, TRUE, ignore_walls = FALSE)
 	var/semen_vol = get_semen_volume()
@@ -643,7 +643,7 @@
 		return
 	if(C && istype(C))
 		log_combat(user, user, "Ejaculated into a container")
-		user.visible_message(span_love("[user] spills into [C]!"))
+		user.visible_message(span_love("[user]把液体喷进了[C]里！"))
 		playsound(user, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
 		if(user.getorganslot(ORGAN_SLOT_PENIS))
 			C.reagents.add_reagent(/datum/reagent/erpjuice/cum, get_semen_volume())
@@ -713,7 +713,7 @@
 	if(consume_charge)
 		adjust_charge(-CHARGE_FOR_CLIMAX)
 	else
-		to_chat(user, span_love("<i>Spurt!</i>"))
+		to_chat(user, span_love("<i>喷出来了！</i>"))
 	if(user.has_flaw(/datum/charflaw/addiction/lovefiend))
 		user.sate_addiction(/datum/charflaw/addiction/lovefiend)
 	if(user.has_flaw(/datum/charflaw/addiction/baothamarked))
@@ -766,12 +766,12 @@
 			if(!user.mob_timers["cumtri"])
 				user.mob_timers["cumtri"] = world.time
 				user.adjust_triumphs(1)
-				to_chat(user, span_love("Our loving is a true TRIUMPH!"))
+				to_chat(user, span_love("我们的欢爱是一场真正的 TRIUMPH！"))
 		if(user_goodlover)
 			if(!effective_target.mob_timers["cumtri"])
 				effective_target.mob_timers["cumtri"] = world.time
 				effective_target.adjust_triumphs(1)
-				to_chat(effective_target, span_love("Our loving is a true TRIUMPH!"))
+				to_chat(effective_target, span_love("我们的欢爱是一场真正的 TRIUMPH！"))
 	var/user_beautiful = HAS_TRAIT(user, TRAIT_BEAUTIFUL)
 	var/user_ugly = HAS_TRAIT(user, TRAIT_UNSEEMLY) || HAS_TRAIT(user, TRAIT_DISFIGURED)
 	var/target_beautiful = HAS_TRAIT(effective_target, TRAIT_BEAUTIFUL)
@@ -805,9 +805,9 @@
 	charge = clamp(amount, 0, get_max_charge())
 	var/after_empty = (charge < CHARGE_FOR_CLIMAX)
 	if(empty && !after_empty)
-		to_chat(user, span_notice("I feel like I'm not so spent anymore"))
+		to_chat(user, span_notice("我感觉自己似乎没那么精疲力尽了。"))
 	if(!empty && after_empty)
-		to_chat(user, span_notice("I'm spent!"))
+		to_chat(user, span_notice("我已经精疲力尽了！"))
 
 /datum/sex_controller/proc/adjust_charge(amount)
 	set_charge(charge + amount)
@@ -818,7 +818,7 @@
 	adjust_charge(dt * CHARGE_RECHARGE_RATE)
 	if(is_spent())
 		if(arousal > 60)
-			to_chat(user, span_warning("I'm too spent!"))
+			to_chat(user, span_warning("我已经太累了！"))
 			adjust_arousal(-20)
 		adjust_arousal(-dt * SPENT_AROUSAL_RATE)
 
@@ -870,7 +870,7 @@
 	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
 		arousal_amt *=1.5
 		if(prob(10))
-			var/lovermessage = pick("This feels so good!","I am in heaven!","This is too good to be possible!","By the ten!","I can't stop, too good!")
+			var/lovermessage = pick("感觉太舒服了！","我简直像在天堂！","这舒服得简直不像真的！","By the ten!","我停不下来，太美妙了！")
 			to_chat(action_target, span_love(lovermessage))
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))
 		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
@@ -964,19 +964,19 @@
 	if(allow_intimate_item_reaction && user?.chastity_device && HAS_TRAIT(user, TRAIT_CHASTITY_SPIKED))
 		return
 	if(pain_amt >= PAIN_HIGH_EFFECT)
-		var/pain_msg = pick(list("IT HURTS!!!", "IT NEEDS TO STOP!!!", "I CAN'T TAKE IT ANYMORE!!!"))
+		var/pain_msg = pick(list("好痛啊！！！", "快停下！！！", "我已经受不了了！！！"))
 		to_chat(user, span_boldwarning(pain_msg))
 		user.flash_fullscreen("redflash2")
 		if(prob(70) && user.stat == CONSCIOUS)
-			user.visible_message(span_warning("[user] shudders in pain!"))
+			user.visible_message(span_warning("[user]因疼痛而猛地一颤！"))
 	else if(pain_amt >= PAIN_MED_EFFECT)
-		var/pain_msg = pick(list("It hurts!", "It pains me!"))
+		var/pain_msg = pick(list("好痛！", "痛死我了！"))
 		to_chat(user, span_boldwarning(pain_msg))
 		user.flash_fullscreen("redflash1")
 		if(prob(40) && user.stat == CONSCIOUS)
-			user.visible_message(span_warning("[user] shudders in pain!"))
+			user.visible_message(span_warning("[user]因疼痛而猛地一颤！"))
 	else if(pain_amt >= PAIN_MILD_EFFECT)
-		var/pain_msg = pick(list("It hurts a little...", "It stings...", "I'm aching..."))
+		var/pain_msg = pick(list("有点痛……", "刺痛起来了……", "我浑身都在发疼……"))
 		to_chat(user, span_warning(pain_msg))
 
 /datum/sex_controller/proc/check_active_ejaculation()
@@ -1010,8 +1010,8 @@
 				damage_from_pain(chaffepain)
 				try_do_pain_effect(chaffepain)
 				last_moan = 0
-				M.visible_message(("<span class='love_mid'>[M] squirms uncomfortably in [M.p_their()] restraints.</span>"), \
-					("<span class='love_extreme'>I feel [M.handcuffed] rub uncomfortably against my skin.</span>"))
+				M.visible_message(("<span class='love_mid'>[M]在[M.p_their()]的束缚中不安地扭动着身体。</span>"), \
+					("<span class='love_extreme'>我感觉[M.handcuffed]正不舒服地磨蹭着我的皮肤。</span>"))
 			if(arousal < ACTIVE_EJAC_THRESHOLD)
 				adjust_arousal(0.25)
 			else
@@ -1149,44 +1149,44 @@
 	dat += "<center><a href='?src=[REF(src)];task=speed_down'>\<</a> [speed_name] <a href='?src=[REF(src)];task=speed_up'>\></a> ~|~ <a href='?src=[REF(src)];task=force_down'>\<</a> [force_name] <a href='?src=[REF(src)];task=force_up'>\></a>"
 	if(got_cock)
 		dat += " ~|~ <a href='?src=[REF(src)];task=manual_arousal_down'>\<</a> [manual_arousal_name] <a href='?src=[REF(src)];task=manual_arousal_up'>\></a>"
-	dat += "</center><center><a href='?src=[REF(src)];task=toggle_finished'>[do_until_finished ? "UNTIL IM FINISHED" : "UNTIL I STOP"]</a>"
+	dat += "</center><center><a href='?src=[REF(src)];task=toggle_finished'>[do_until_finished ? "直到我结束" : "直到我停下"]</a>"
 	if(got_cock && !got_pussy)
-		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "PINTLE EXPOSED" : "PINTLE CONCEALED"]</a>"
+		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "下体已露出" : "下体已遮住"]</a>"
 	else if(!got_cock && got_pussy)
-		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "PUSSY EXPOSED" : "PUSSY CONCEALED"]</a>"
+		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "阴部已露出" : "阴部已遮住"]</a>"
 	else
-		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "CROTCH EXPOSED" : "CROTCH CONCEALED"]</a>"
-	dat += " ~|~ <a href='?src=[REF(src)];task=toggle_freeuse'>[freeuse ? "FREEUSE ON" : "FREEUSE OFF"]</a>"
+		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "胯部已露出" : "胯部已遮住"]</a>"
+	dat += " ~|~ <a href='?src=[REF(src)];task=toggle_freeuse'>[freeuse ? "随意使用打开" : "随意使用关闭"]</a>"
 	if(current_action && !desire_stop)
 		var/datum/sex_action/action = SEX_ACTION(current_action)
 		if(action.subtle_supported)
 			if(do_subtle_action)
-				dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING SUBTLY</a>"
+				dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>正在隐秘进行</a>"
 			else
-				dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING VISIBLY</a>"
+				dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>正在明显进行</a>"
 		if(action.knot_on_finish)
 			if((action.user_sex_part & SEX_PART_COCK) && knot_penis_type())
 				if(do_knot_action)
-					dat += " | <a href='?src=[REF(src)];task=toggle_knot'><font color='#d146f5'>USING KNOT</font></a>"
+					dat += " | <a href='?src=[REF(src)];task=toggle_knot'><font color='#d146f5'>使用结</font></a>"
 				else
-					dat += " | <a href='?src=[REF(src)];task=toggle_knot'><font color='#eac8de'>NOT USING KNOT</font></a>"
+					dat += " | <a href='?src=[REF(src)];task=toggle_knot'><font color='#eac8de'>不使用结</font></a>"
 			else if((action.target_sex_part & SEX_PART_COCK) && target?.sexcon?.knot_penis_type())
 				if(do_knot_action_as_bottom)
-					dat += " | <a href='?src=[REF(src)];task=toggle_knot_bottom'><font color='#d146f5'>FORCING KNOT</font></a>"
+					dat += " | <a href='?src=[REF(src)];task=toggle_knot_bottom'><font color='#d146f5'>强行结住</font></a>"
 				else
-					dat += " | <a href='?src=[REF(src)];task=toggle_knot_bottom'><font color='#eac8de'>NOT FORCING KNOT</font></a>"
-	dat += "</center><center><a href='?src=[REF(src)];task=set_arousal'>SET AROUSAL</a> | <a href='?src=[REF(src)];task=freeze_arousal'>[arousal_frozen ? "UNFREEZE AROUSAL" : "FREEZE AROUSAL"]</a></center>"
+					dat += " | <a href='?src=[REF(src)];task=toggle_knot_bottom'><font color='#eac8de'>不强行结住</font></a>"
+	dat += "</center><center><a href='?src=[REF(src)];task=set_arousal'>设置欲望</a> | <a href='?src=[REF(src)];task=freeze_arousal'>[arousal_frozen ? "解除欲望冻结" : "冻结欲望"]</a></center>"
 	if(target == user)
-		dat += "<center>Doing unto yourself</center>"
+		dat += "<center>对自己这么做</center>"
 	else
-		dat += "<center>Doing unto [target]'s</center>"
+		dat += "<center>对[target]这么做</center>"
 	if(current_action && !desire_stop)
-		dat += "<center><a href='?src=[REF(src)];task=stop'>Stop</a></center>"
+		dat += "<center><a href='?src=[REF(src)];task=stop'>停止</a></center>"
 	else
 		dat += "<br>"
-	dat += "<center><a href='?src=[REF(src)];task=category_misc'>[action_category == SEX_CATEGORY_MISC ? "<font color='#eac8de'>OTHER</font>" : "OTHER"]</a> | "
-	dat += "<a href='?src=[REF(src)];task=category_hands'>[action_category == SEX_CATEGORY_HANDS ? "<font color='#eac8de'>HANDS</font>" : "HANDS"]</a> | "
-	dat += "<a href='?src=[REF(src)];task=category_penetrate'>[action_category == SEX_CATEGORY_PENETRATE ? "<font color='#eac8de'>PENETRATE</font>" : "PENETRATE"]</a></center>"
+	dat += "<center><a href='?src=[REF(src)];task=category_misc'>[action_category == SEX_CATEGORY_MISC ? "<font color='#eac8de'>其他</font>" : "其他"]</a> | "
+	dat += "<a href='?src=[REF(src)];task=category_hands'>[action_category == SEX_CATEGORY_HANDS ? "<font color='#eac8de'>手部</font>" : "手部"]</a> | "
+	dat += "<a href='?src=[REF(src)];task=category_penetrate'>[action_category == SEX_CATEGORY_PENETRATE ? "<font color='#eac8de'>插入</font>" : "插入"]</a></center>"
 	dat += "<table width='100%'><td width='50%'></td><td width='50%'></td><tr>"
 	var/i = 0
 	var/user_is_incapacitated = user.incapacitated()
@@ -1217,7 +1217,7 @@
 			dat += "</tr><tr>"
 
 	dat += "</tr></table>"
-	var/datum/browser/popup = new(user, "sexcon", "<center>Sate Desire</center>", 500, 550)
+	var/datum/browser/popup = new(user, "sexcon", "<center>宣泄欲望</center>", 500, 550)
 	popup.set_content(dat.Join())
 	popup.open()
 	return
@@ -1251,7 +1251,7 @@
 			update_exposure()
 		if("toggle_bottom_exposed")
 			if(user.incapacitated(ignore_restraints = TRUE))
-				to_chat(user, span_warning("I can't do that right now!"))
+				to_chat(user, span_warning("我现在做不到这个！"))
 			else
 				bottom_exposed = !bottom_exposed
 				update_exposure()
@@ -1259,7 +1259,7 @@
 			freeuse = !freeuse
 			to_chat(user, span_notice("Positioning and exposure checks are now [freeuse ? "disabled" : "enabled"]."))
 		if("set_arousal")
-			var/amount = input(user, "Value above 120 will immediately cause orgasm!", "Set Arousal", arousal) as num
+			var/amount = input(user, "数值高于 120 会立刻导致高潮！", "设置欲望", arousal) as num
 			if(aphrodisiac > 1 && amount > 0)
 				set_arousal(amount * aphrodisiac)
 			else
@@ -1572,40 +1572,40 @@
 /datum/sex_controller/proc/get_force_string()
 	switch(force)
 		if(SEX_FORCE_LOW)
-			return "<font color='#eac8de'>GENTLE</font>"
+			return "<font color='#eac8de'>轻柔</font>"
 		if(SEX_FORCE_MID)
-			return "<font color='#e9a8d1'>FIRM</font>"
+			return "<font color='#e9a8d1'>有力</font>"
 		if(SEX_FORCE_HIGH)
-			return "<font color='#f05ee1'>ROUGH</font>"
+			return "<font color='#f05ee1'>粗暴</font>"
 		if(SEX_FORCE_EXTREME)
-			return "<font color='#d146f5'>BRUTAL</font>"
+			return "<font color='#d146f5'>残暴</font>"
 		if(SEX_FORCE_LUDICROUS)
-			return "<font color='#d61a43'>FERAL</font>"
+			return "<font color='#d61a43'>野性</font>"
 /datum/sex_controller/proc/get_speed_string()
 	switch(speed)
 		if(SEX_SPEED_LOW)
-			return "<font color='#eac8de'>SLOW</font>"
+			return "<font color='#eac8de'>缓慢</font>"
 		if(SEX_SPEED_MID)
-			return "<font color='#e9a8d1'>STEADY</font>"
+			return "<font color='#e9a8d1'>平稳</font>"
 		if(SEX_SPEED_HIGH)
-			return "<font color='#f05ee1'>QUICK</font>"
+			return "<font color='#f05ee1'>快速</font>"
 		if(SEX_SPEED_EXTREME)
-			return "<font color='#d146f5'>UNRELENTING</font>"
+			return "<font color='#d146f5'>不停</font>"
 		if(SEX_SPEED_LUDICROUS)
-			return "<font color='#d61a43'>FURIOUS</font>"
+			return "<font color='#d61a43'>狂乱</font>"
 /datum/sex_controller/proc/get_manual_arousal_string()
 	switch(manual_arousal)
 		if(SEX_MANUAL_AROUSAL_DEFAULT)
-			return "<font color='#eac8de'>NATURAL</font>"
+			return "<font color='#eac8de'>自然</font>"
 		if(SEX_MANUAL_AROUSAL_UNAROUSED)
-			return "<font color='#e9a8d1'>UNAROUSED</font>"
+			return "<font color='#e9a8d1'>未勃起</font>"
 		if(SEX_MANUAL_AROUSAL_PARTIAL)
-			return "<font color='#f05ee1'>PARTIALLY ERECT</font>"
+			return "<font color='#f05ee1'>半勃起</font>"
 		if(SEX_MANUAL_AROUSAL_FULL)
-			return "<font color='#d146f5'>FULLY ERECT</font>"
+			return "<font color='#d146f5'>完全勃起</font>"
 
 /datum/sex_controller/proc/get_knot_synonym()
-	return pick(list("knot", "knot", "bulb", "plug"))
+	return pick(list("结", "结", "鼓胀结", "塞头"))
 
 /datum/sex_controller/proc/get_generic_force_adjective(is_stealth = FALSE)
 	if(is_stealth)
@@ -1666,8 +1666,8 @@
 	effectedstats = list("speed" = -2)
 
 /atom/movable/screen/alert/status_effect/quivering
-	name = "Quivering"
-	desc = "I can barely walk..."
+	name = "发颤"
+	desc = "我几乎都快走不动路了……"
 	icon_state = "quivering"
 
 /datum/proc/werewolf_sex_infect_attempt(mob/living/carbon/human/top, mob/living/carbon/human/bottom)
@@ -1689,7 +1689,7 @@
 
 	if(WWtop && WWtop.transformed && !WWbottom)
 		if(prob(infection_probability))
-			var/answer = tgui_alert(top, "Infect your mate?", "Please answer in [DisplayTimeText(200)]!", list("Yae","Nae"),200)
+			var/answer = tgui_alert(top, "要感染你的伴侣吗？", "请在 [DisplayTimeText(200)] 内作答！", list("Yae","Nae"),200)
 			if(!answer || answer == "Nae")
 				return
 			if(answer == "Yae")
@@ -1699,7 +1699,7 @@
 
 	if(WWbottom && WWbottom.transformed && !WWtop)
 		if(prob(infection_probability))
-			var/answer = tgui_alert(bottom, "Infect your mate?", "Please answer in [DisplayTimeText(200)]!", list("Yae","Nae"),200)
+			var/answer = tgui_alert(bottom, "要感染你的伴侣吗？", "请在 [DisplayTimeText(200)] 内作答！", list("Yae","Nae"),200)
 			if(!answer || answer == "Nae")
 				return
 			if(answer == "Yae")
@@ -1724,7 +1724,7 @@
 
 	if(ZMtop && ZMtop.has_turned && !ZMbottom)
 		if(prob(infection_probability))
-			var/answer = tgui_alert(top, "Spread HER gift?", "Please answer in [DisplayTimeText(200)]!", list("Yae","Nae"),200)
+			var/answer = tgui_alert(top, "要传播 HER 的恩赐吗？", "请在 [DisplayTimeText(200)] 内作答！", list("Yae","Nae"),200)
 			if(!answer || answer == "Nae")
 				return
 			if(answer == "Yae")
@@ -1733,7 +1733,7 @@
 
 	if(ZMbottom && ZMbottom.has_turned && !ZMtop)
 		if(prob(infection_probability))
-			var/answer = tgui_alert(bottom, "Spread HER gift?", "Please answer in [DisplayTimeText(200)]!", list("Yae","Nae"),200)
+			var/answer = tgui_alert(bottom, "要传播 HER 的恩赐吗？", "请在 [DisplayTimeText(200)] 内作答！", list("Yae","Nae"),200)
 			if(!answer || answer == "Nae")
 				return
 			if(answer == "Yae")

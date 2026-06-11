@@ -6,7 +6,7 @@
 
 
 /obj/effect/particle_effect/foam
-	name = "foam"
+	name = "泡沫"
 	icon_state = "foam"
 	opacity = 0
 	anchored = TRUE
@@ -23,20 +23,20 @@
 	var/slippery_foam = TRUE
 
 /obj/effect/particle_effect/foam/metal
-	name = "aluminium foam"
+	name = "铝泡沫"
 	metal = ALUMINUM_FOAM
 	icon_state = "mfoam"
 	slippery_foam = FALSE
 
 /obj/effect/particle_effect/foam/metal/smart
-	name = "smart foam"
+	name = "智能泡沫"
 
 /obj/effect/particle_effect/foam/metal/iron
-	name = "iron foam"
+	name = "铁泡沫"
 	metal = IRON_FOAM
 
 /obj/effect/particle_effect/foam/metal/resin
-	name = "resin foam"
+	name = "树脂泡沫"
 	metal = RESIN_FOAM
 
 /obj/effect/particle_effect/foam/long_life
@@ -210,7 +210,7 @@
 	anchored = TRUE
 	layer = EDGED_TURF_LAYER
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	name = "foamed metal"
+	name = "泡沫金属"
 	desc = ""
 	gender = PLURAL
 	max_integrity = 20
@@ -234,7 +234,7 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-	to_chat(user, "<span class='warning'>I hit [src] but bounce off it!</span>")
+	to_chat(user, "<span class='warning'>我打在[src]上，却被弹开了！</span>")
 	playsound(src.loc, 'sound/blank.ogg', 100, TRUE)
 
 /obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target)

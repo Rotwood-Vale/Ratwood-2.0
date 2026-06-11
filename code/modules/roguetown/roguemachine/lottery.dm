@@ -1,6 +1,6 @@
 /obj/structure/roguemachine/lottery_roguetown
-	name = "XYLIX'S FORTUNE"
-	desc = "An infinite, yawning hole that makes or breaks men. Come and play!"
+	name = "赛利克斯的鸿运"
+	desc = "一个深不见底、能成就也能毁掉人的巨洞。来玩吧！"
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "lottery"
 	density = FALSE
@@ -25,7 +25,7 @@
 
 /obj/structure/roguemachine/lottery_roguetown/attack_hand(mob/living/user) //empty hand
 
-	src.say("Your current tithe is [src.gamblingprice] mammons. Care to spin?")
+	src.say("你当前的贡金是 [src.gamblingprice] 玛门。要来转一把吗？")
 	playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 	return
 
@@ -41,18 +41,18 @@
 		return
 	if(istype(P, /obj/item/roguecoin))
 		if(src.gamblingprice + (P.sellprice * P.quantity) > src.maxtithing)
-			say("This puts the starting tithe over [src.maxtithing] mammons.")
+			say("这会让起始贡金超过 [src.maxtithing] 玛门。")
 			playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 			return
 		if(src.gamblingprice + (P.sellprice * P.quantity) < src.mintithing)
-			say("This is below [src.mintithing] mammons.")
+			say("这低于 [src.mintithing] 玛门。")
 			playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 			return
 
 		else
 			src.gamblingprice += (P.sellprice * P.quantity)
 			qdel(P)
-			src.say("Your current tithe is now [src.gamblingprice] mammons. Care to spin?")
+			src.say("你当前的贡金现在是 [src.gamblingprice] 玛门。要来转一把吗？")
 			playsound(src, 'sound/misc/machinequestion.ogg', 100, FALSE, -1)
 			return
 
@@ -71,7 +71,7 @@
 
 	else
 		src.diceroll = rand(1,100)
-		src.say(pick("Around and around I go, where I stop, only I know.", "Xylix smiles upon your idiocy, child.", "The wheel of fate spins, and spins.", "Oh, you poor fool.", "This is going to hurt for one of us.", "I laugh, you cry; I weep, you cheer..", "I will be your fool; I'll perform for you...", "Let's go gambling!", "Around and around, folly abounds.", "Dance with ruin and wealth."))
+		src.say(pick("Around and around I go, where I stop, only I know.", "赛利克斯 smiles upon your idiocy, child.", "The wheel of fate spins, and spins.", "Oh, you poor fool.", "This is going to hurt for one of us.", "I laugh, you cry; I weep, you cheer..", "I will be your fool; I'll perform for you...", "Let's go gambling!", "Around and around, folly abounds.", "Dance with ruin and wealth."))
 		playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 		playsound(src, 'sound/misc/letsgogambling.ogg', 100, FALSE, -1)
 		src.gamblingprob += (user.STALUC - src.probpenalty)
@@ -128,10 +128,10 @@
 
 	else
 		if(gamblingprice <= 0)
-			say("Poor thing, you are coinless.")
+			say("可怜的小东西，你一枚硬币都没有。")
 			return
 		if(gamblingprice < 0)
-			say("Your peasant's tithe is NEGATIVE.")
+			say("你的平民贡金是负数。")
 			return
 		var/list/choicez = list()
 		if(gamblingprice > 10)
@@ -139,7 +139,7 @@
 		if(gamblingprice > 5)
 			choicez += "SILVER"
 		choicez += "BRONZE"
-		var/selection = input(user, "Make a Selection", src) as null|anything in choicez
+		var/selection = input(user, "进行选择", src) as null|anything in choicez
 		if(!selection)
 			return
 		var/mod = 1
@@ -147,7 +147,7 @@
 			mod = 10
 		if(selection == "SILVER")
 			mod = 5
-		var/coin_amt = input(user, "Sayyid, you have [src.gamblingprice] mammon in tithes. You may withdraw [floor(gamblingprice/mod)] [selection] COINS.", src) as null|num
+		var/coin_amt = input(user, "大人，你有 [src.gamblingprice] 玛门贡金。你可以提取 [floor(gamblingprice/mod)] 枚[selection]币。", src) as null|num
 		coin_amt = round(coin_amt)
 		if(coin_amt < 1)
 			return
@@ -206,7 +206,7 @@
 			src.say("...though 'tis difficult to argue what happened after that didn't benefit Her.")
 			playsound(src, 'sound/misc/bug.ogg', 100, FALSE, -1)
 		if(5)
-			src.say("Oh, Psydon?")
+			src.say("Oh, 普赛顿?")
 			playsound(src, 'sound/misc/machinequestion.ogg', 100, FALSE, -1)
 			sleep(30)
 			src.say("To be honest, I'm about PSY-DONE with this whole debate! Ha-ha-h- ...No? Too soon? Alright.")

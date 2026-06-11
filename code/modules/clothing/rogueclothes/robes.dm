@@ -1,6 +1,6 @@
 /obj/item/clothing/suit/roguetown/shirt/robe
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT|ITEM_SLOT_CLOAK
-	name = "robe"
+	name = "长袍"
 	desc = ""
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|VITALS
 	icon_state = "white_robe"
@@ -19,36 +19,36 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/shirt/robe/astrata
-	name = "sun robe"
+	name = "日辉长袍"
 	icon_state = "astratarobe"
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/suit/roguetown/shirt/robe/abyssor //thanks to cre for abyssor clothing sprites
-	name = "depths robe"
+	name = "深渊长袍"
 	icon_state = "abyssorrobe"
 
 /obj/item/clothing/suit/roguetown/shirt/robe/noc
-	name = "moon robe"
+	name = "月辉长袍"
 	icon_state = "nocrobe"
 
 /obj/item/clothing/suit/roguetown/shirt/robe/necromancer
-	name = "necromancer robes"
+	name = "死灵法师长袍"
 	icon_state = "necromrobe"
 
 /obj/item/clothing/suit/roguetown/shirt/robe/dendor
-	name = "briar robe"
+	name = "荆棘长袍"
 	icon_state = "dendorrobe"
 
 /obj/item/clothing/suit/roguetown/shirt/robe/necra
-	name = "mourning robe"
+	name = "悼亡长袍"
 	icon_state = "necrarobe"
 
 /obj/item/clothing/suit/roguetown/shirt/robe/black
 	color = CLOTHING_BLACK
 
 /obj/item/clothing/suit/roguetown/shirt/robe/priest
-	name = "solar vestments"
-	desc = "Holy vestments sanctified by divine hands. Caution is advised if not a faithful."
+	name = "圣日法衣"
+	desc = "由神圣之手祝圣的法衣。若你并非信徒，最好谨慎一些。"
 	icon_state = "priestrobe"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
@@ -65,17 +65,17 @@
 	if(!HAS_TRAIT(user, TRAIT_CHOSEN)) //Requires this cus it's a priest-only thing.
 		return
 	ADD_TRAIT(user, TRAIT_MONK_ROBE, TRAIT_GENERIC)
-	to_chat(user, span_notice("With my vows to poverty and my vestments, I feel vigorous - empowered by my God!"))
+	to_chat(user, span_notice("持守清贫誓言并披上法衣后，我感到精力充沛，仿佛得到了神明加护！"))
 
 /obj/item/clothing/suit/roguetown/shirt/robe/priest/dropped(mob/living/user)
 	..()
 	REMOVE_TRAIT(user, TRAIT_MONK_ROBE, TRAIT_GENERIC)
-	to_chat(user, span_notice("I must lay down my robes and rest; even God's chosen must rest.."))
+	to_chat(user, span_notice("我必须脱下长袍稍作歇息；即便是神选之人也需要休息……"))
 
 //This for adventurers. Base type, same armor. No holy-bonus.
 /obj/item/clothing/suit/roguetown/shirt/robe/monk
-	name = "nomadic monk vestments"
-	desc = "Nomadic vestments, worn by those who pursue faith above all else. The burlap is thickly-woven and padded, in order to ward off whatever threats may arise during one's pilgrimage: be it a biting chill or a volley of arrows."
+	name = "游僧法衣"
+	desc = "为将信仰置于万事之上的人所穿的游行法衣。厚织并加垫的粗麻布可抵御朝圣途中可能遭遇的各种威胁，无论是刺骨严寒还是箭雨齐发。"
 	icon_state = "priestunder"
 	item_state = "priestunder"
 	icon = 'icons/roguetown/clothing/shirts.dmi'
@@ -88,8 +88,8 @@
 
 //This is for templars/psydonites. Gives a boon for wearing it to counter-act giving up plate and such.
 /obj/item/clothing/suit/roguetown/shirt/robe/monk/holy
-	name = "holy monk vestments"
-	desc = "Holy vestments, worn by those who pursue faith above all else. Hundreds of heavy leather strips have been meticulously sheared-and-stitched onto the cloth, resulting in unparalleled comfort and protection. It's said that those who 'don the cloth' will never tire; a boon of unbreakable faith."
+	name = "圣洁僧侣法衣"
+	desc = "圣洁法衣，属于将信仰置于一切之上的人。数百条厚重皮革被细致裁切并缝在布面上，带来无与伦比的舒适与防护。据说披上此衣者将永不知疲倦，这是坚不可摧之信念的恩赐。"
 	icon_state = "monkvestments"
 	item_state = "monkvestments"
 	icon = 'icons/roguetown/clothing/armor.dmi'
@@ -103,12 +103,12 @@
 	if(!HAS_TRAIT(user, TRAIT_CIVILIZEDBARBARIAN))	//Requires this cus it's a monk-only thing.
 		return
 	ADD_TRAIT(user, TRAIT_MONK_ROBE, TRAIT_GENERIC)
-	to_chat(user, span_notice("With my vows to poverty and my vestments, I feel vigorous - empowered by my God!"))
+	to_chat(user, span_notice("持守清贫誓言并披上法衣后，我感到精力充沛，仿佛得到了神明加护！"))
 
 /obj/item/clothing/suit/roguetown/shirt/robe/monk/holy/dropped(mob/living/user)
 	..()
 	REMOVE_TRAIT(user, TRAIT_MONK_ROBE, TRAIT_GENERIC)
-	to_chat(user, span_notice("I must lay down my robes and rest; even God's chosen must rest.."))
+	to_chat(user, span_notice("我必须脱下长袍稍作歇息；即便是神选之人也需要休息……"))
 
 /obj/item/clothing/suit/roguetown/shirt/robe/courtmage
 	color = "#6c6c6c"
@@ -133,21 +133,21 @@
 	color = "#c1b144"
 
 /obj/item/clothing/suit/roguetown/shirt/robe/merchant
-	name = "guilder jacket"
+	name = "行会外衣"
 	icon_state = "merrobe"
 	sellprice = 30
 	color = null
 
 /obj/item/clothing/suit/roguetown/shirt/robe/nun
-	name = "nun's habit"
+	name = "修女服"
 	color = null
 	icon_state = "nun"
 	item_state = "nun"
 	allowed_sex = list(MALE, FEMALE)
 
 /obj/item/clothing/suit/roguetown/shirt/robe/wizard
-	name = "wizard's robe"
-	desc = "Billowy, oversized robes with golden star designs. Perfect for the practicing magos."
+	name = "法师长袍"
+	desc = "宽大飘逸并绣有金色星纹的长袍，非常适合习艺中的法师。"
 	icon_state = "wizardrobes"
 	icon = 'icons/roguetown/clothing/shirts.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
@@ -156,8 +156,8 @@
 	sellprice = 100
 
 /obj/item/clothing/suit/roguetown/shirt/robe/physician
-	name = "plague coat"
-	desc = "Medicum morbo adhibere."
+	name = "瘟疫医师外衣"
+	desc = "以医术对抗病痛。"
 	icon_state = "physcoat"
 	slot_flags = ITEM_SLOT_ARMOR
 	flags_inv = HIDEBOOB|HIDETAIL
@@ -166,15 +166,15 @@
 //Eora content from Stonekeep
 
 /obj/item/clothing/suit/roguetown/shirt/robe/eora
-	name = "eoran robe"
-	desc = "Holy robes, intended for use by followers of Eora"
+	name = "Eora长袍"
+	desc = "供Eora信徒穿着的圣袍。"
 	icon_state = "eorarobes"
 	flags_inv = HIDEBOOB|HIDECROTCH
 	var/fanatic_wear = FALSE
 
 /obj/item/clothing/suit/roguetown/shirt/robe/eora/alt
-	name = "open eoran robe"
-	desc = "Used by more radical followers of the Eoran Church"
+	name = "敞开的Eora长袍"
+	desc = "由Eora教会中更激进的信徒所穿。"
 	body_parts_covered = null
 	icon_state = "eorastraps"
 	flags_inv = HIDEBOOB
@@ -183,29 +183,29 @@
 /obj/item/clothing/suit/roguetown/shirt/robe/eora/attack_right(mob/user)
 	switch(fanatic_wear)
 		if(FALSE)
-			name = "open eoran robe"
-			desc = "Used by more radical followers of the Eoran Church"
+			name = "敞开的Eora长袍"
+			desc = "由Eora教会中更激进的信徒所穿。"
 			body_parts_covered = null
 			icon_state = "eorastraps"
 			fanatic_wear = TRUE
 			flags_inv = HIDEBOOB
-			to_chat(usr, span_warning("Now wearing radically!"))
+			to_chat(usr, span_warning("现在以激进方式穿着！"))
 		if(TRUE)
-			name = "eoran robe"
-			desc = "Holy robes, intended for use by followers of Eora"
+			name = "Eora长袍"
+			desc = "供Eora信徒穿着的圣袍。"
 			body_parts_covered = CHEST|GROIN|ARMS|LEGS|VITALS
 			icon_state = "eorarobes"
 			fanatic_wear = FALSE
 			flags_inv = HIDEBOOB|HIDECROTCH
-			to_chat(usr, span_warning("Now wearing normally!"))
+			to_chat(usr, span_warning("现在以正常方式穿着！"))
 	update_icon()
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_armor()
 
 /obj/item/clothing/suit/roguetown/shirt/robe/hierophant
-	name = "hierophant's kandys"
-	desc = "A thin piece of fabric worn under a robe to stop chafing and keep ones dignity if a harsh blow of wind comes through. Despite the light fabric, it offers decent protection."
+	name = "大祭司坎迪斯袍"
+	desc = "穿在长袍内侧的一层薄布，可防止摩擦，也能在狂风袭来时保住体面。尽管布料轻薄，却仍能提供不错的保护。"
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)
 	armor = ARMOR_PADDED_GOOD
@@ -216,8 +216,8 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/shirt/robe/pointfex
-	name = "pointfex's qaba"
-	desc = "A slimmed down, tighter fitting robe made of fine silks and fabrics. Somehow you feel more mobile in it than in the nude. Despite the light fabric, it offers decent protection."
+	name = "最高祭司卡巴袍"
+	desc = "以精细丝绸与布料制成的修身紧致长袍。不知为何，穿着它时你比赤身裸体还更灵活。尽管布料轻薄，却仍有可观防护。"
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)
 	armor = ARMOR_PADDED_GOOD
@@ -230,38 +230,38 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/shirt/robe/feld
-	name = "feldsher's robe"
-	desc = "Red to hide the blood."
+	name = "军医长袍"
+	desc = "做成红色，好把血迹遮住。"
 	icon_state = "feldrobe"
 	item_state = "feldrobe"
 
 /obj/item/clothing/suit/roguetown/shirt/robe/phys
-	name = "physicker's robe"
-	desc = "Part robe, part butcher's apron."
+	name = "医师长袍"
+	desc = "一半像长袍，一半像屠夫围裙。"
 	icon_state = "surgrobe"
 	item_state = "surgrobe"
 
 // Agnostic versions of the unused robes, for use in the Loadout.
 
 /obj/item/clothing/suit/roguetown/shirt/robe/tabardscarlet
-	name = "scarlet tabard"
-	desc = "Sleeveless robes, hued like rosas."
+	name = "绯红罩袍"
+	desc = "无袖长袍，颜色如玫瑰一般。"
 	color = null
 	icon_state = "feldrobe"
 	item_state = "feldrobe"
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 
 /obj/item/clothing/suit/roguetown/shirt/robe/tabardblack
-	name = "black tabard"
-	desc = "Sleeveless robes, tinged like charcoal."
+	name = "黑色罩袍"
+	desc = "无袖长袍，色泽如木炭。"
 	color = null
 	icon_state = "surgrobe"
 	item_state = "surgrobe"
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 
 /obj/item/clothing/suit/roguetown/shirt/robe/tabardwhite
-	name = "white tabard"
-	desc = "Sleeveless robes, white like bone."
+	name = "白色罩袍"
+	desc = "无袖长袍，白得如同骨骼。"
 	color = null
 	icon_state = "whiterobe"
 	item_state = "whiterobe"

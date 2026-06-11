@@ -1,12 +1,12 @@
 /datum/antagonist/unbound_death_knight
-	name = "Unbound Death Knight"
-	roundend_category = "Unbound Death Knight"
-	antagpanel_category = "Unbound Death Knight"
+	name = "无羁死亡骑士"
+	roundend_category = "无羁死亡骑士"
+	antagpanel_category = "无羁死亡骑士"
 	job_rank = ROLE_UNBOUND_DEATHKNIGHT
 	confess_lines = list(
-		"I WILL LIVE ETERNAL!",
-		"YOU CANNOT KILL ME!",
-		"I AM ALREADY DEAD YOU MORON!"
+		"我将永生不灭！",
+		"你杀不死我！",
+		"我早就已经死了，你这蠢货！"
 	)
 	rogue_enabled = TRUE
 
@@ -23,8 +23,8 @@
 
 	var/mob/living/carbon/human/L = owner.current
 	QDEL_NULL(L.charflaw)
-	L.hairstyle = "Bald"
-	L.facial_hairstyle = "Shaved"
+	L.hairstyle = "光头"
+	L.facial_hairstyle = "剃净"
 	L.mob_biotypes = MOB_UNDEAD
 	var/obj/item/organ/eyes/eyes = L.getorganslot(ORGAN_SLOT_EYES)
 	if (eyes)
@@ -67,19 +67,19 @@
 
 /datum/antagonist/unbound_death_knight/greet()
 	sleep(5 SECONDS) // Lets all other messages finish before we start.
-	to_chat(owner, span_warning("You feel the power of unknown energy course through you."))
+	to_chat(owner, span_warning("你感到一股未知能量的力量正流经全身。"))
 	sleep(1 SECONDS)
-	to_chat(owner, span_warning("You are... Awake? But how?"))
+	to_chat(owner, span_warning("你……醒来了？可这怎么可能？"))
 	sleep(1 SECONDS)
-	to_chat(owner, span_warning("The realization of what is happening slowly overwhelms you with horror..."))
+	to_chat(owner, span_warning("你逐渐意识到正在发生什么，恐惧也随之将你彻底吞没……"))
 	sleep(2 SECONDS)
-	to_chat(owner, "<span class='pulsedeath'>Your master is gone!</span>")
+	to_chat(owner, "<span class='pulsedeath'>你的主人已经不在了！</span>")
 	sleep(1 SECONDS)
-	to_chat(owner, "<span class='pulsedeath'>You have no orders!</span>")
+	to_chat(owner, "<span class='pulsedeath'>你没有命令可遵从！</span>")
 	sleep(1 SECONDS)
-	to_chat(owner, "<span class='pulsedeath'>You have no goal!</span>")
+	to_chat(owner, "<span class='pulsedeath'>你没有目标！</span>")
 	sleep(2 SECONDS)
-	to_chat(owner, "<span class='pulsedeath'>You have no reason to be here. But you are awake.</span>")
+	to_chat(owner, "<span class='pulsedeath'>你没有任何理由留在这里。但你已经醒来了。</span>")
 
 /datum/antagonist/unbound_death_knight/proc/forge_objectives()
 	var/list/hoomans = list()
@@ -95,7 +95,7 @@
 	INVOKE_ASYNC(src, PROC_REF(greet)) // Solvful text while we wait 30 seconds for poll to finish
 	// Firstly, we will try finding targets for protect/kill.
 	var/list/targets = pollCandidates(
-		"Would you like to be a target for a death knight?", 
+		"你愿意成为一名死亡骑士的目标吗？", 
 		ignore_category = POLL_IGNORE_DEATHKNIGHT_TARGET, 
 		group = hoomans
 	)
@@ -124,14 +124,14 @@
 		objectives += lordscommandment
 	else // "Freeform" objective is assigned if no players opt in
 		var/datum/objective/free = new /datum/objective
-		free.name = "Protect area"
+		free.name = "守卫区域"
 		if(prob(50))
-			free.explanation_text = "Keep the living out of the Northern Hamlet."
+			free.explanation_text = "将活人阻挡在北方村庄之外。"
 		else
-			free.explanation_text = "Defend the Northern Hamlet against trespassers."
+			free.explanation_text = "保卫北方村庄，抵御一切擅闯者。"
 		objectives += free
 
-	to_chat(owner, "<span class='pulsedeath'>Suddenly, you remember your master's last commandment...</span>")
+	to_chat(owner, "<span class='pulsedeath'>就在这时，你想起了主人留下的最后一道诫命……</span>")
 	owner.announce_objectives()
 
 /datum/outfit/job/roguetown/unbound_deathknight/pre_equip(mob/living/carbon/human/H)
@@ -170,33 +170,34 @@
 	H.adjust_blindness(-3)
 
 	var/helmets = list(
-		"Pigface Bascinet" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/black,
-		"Guard Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/guard/black,
-		"Barred Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/sheriff/black,
-		"Bucket Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/bucket/black,
-		"Knight Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/black,
-		"Visored Sallet"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored/black,
-		"Armet"				= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/black,
-		"Hounskull Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull/black,
-		"Etruscan Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan/black,
-		"Slitted Kettle"	= /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle/black,
+		"无" = null,
+		"猪面盔" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/black,
+		"守卫头盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/guard/black,
+		"栅栏盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/sheriff/black,
+		"桶盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/bucket/black,
+		"骑士头盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/black,
+		"带面罩萨莱盔"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored/black,
+		"阿梅特盔"				= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/black,
+		"犬面猪鼻盔" = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull/black,
+		"伊特鲁里亚盔" = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan/black,
+		"开缝锅盔"	= /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle/black,
 	)
-	var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
-	if(helmchoice != "None")
+	var/helmchoice = input(H, "选择你的头盔。", "戴上头盔") as anything in helmets
+	if(helmchoice != "无")
 		head = helmets[helmchoice]
 
-	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in list("Longsword", "Warhammer", "Halberd")
+	var/weapon_choice = input(H, "选择你的武器。", "拿起兵器") as anything in list("长剑", "战锤", "戟斧")
 	switch(weapon_choice)
-		if("Longsword")
+		if("长剑")
 			beltl = /obj/item/rogueweapon/scabbard/sword/noble
 			l_hand = /obj/item/rogueweapon/sword/long/death
 			backl = /obj/item/rogueweapon/shield/tower/metal
 			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
-		if ("Warhammer")
+		if ("战锤")
 			beltr = /obj/item/rogueweapon/mace/warhammer/steel
 			backl = /obj/item/rogueweapon/shield/tower/metal
 			H.adjust_skillrank(/datum/skill/combat/maces, 1, TRUE)
-		if("Halberd")
+		if("戟斧")
 			backl = /obj/item/rogueweapon/scabbard/gwstrap
 			r_hand = /obj/item/rogueweapon/halberd
 			H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)

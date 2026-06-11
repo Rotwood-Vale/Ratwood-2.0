@@ -32,11 +32,11 @@
 
 /datum/element/tipped_item/proc/start_dipping(obj/item/dipper, obj/item/reagent_containers/attacked_container, mob/living/attacker, params)
 	var/reagentlog = attacked_container.reagents
-	attacker.visible_message(span_danger("[attacker] is dipping \the [dipper] in [attacked_container]!"), "You dip \the [dipper] in \the [attacked_container]!", vision_distance = 2)
+	attacker.visible_message(span_danger("[attacker]正把[dipper]浸进[attacked_container]里！"), "我把[dipper]浸进了[attacked_container]里！", vision_distance = 2)
 	if(!do_after(attacker, 2 SECONDS, target = attacked_container))
 		return
 	attacked_container.reagents.trans_to(dipper, 1, transfered_by = attacker)
-	attacker.visible_message(span_danger("[attacker] dips \the [dipper] in \the [attacked_container]!"), "You dip \the [dipper] in \the [attacked_container]!", vision_distance = 2)
+	attacker.visible_message(span_danger("[attacker]把[dipper]浸进了[attacked_container]里！"), "我把[dipper]浸进了[attacked_container]里！", vision_distance = 2)
 	log_combat(attacker, dipper, "poisoned", addition="with [reagentlog]")
 
 /datum/element/tipped_item/proc/on_armor_blocked(obj/item/source)
@@ -58,4 +58,4 @@
 /datum/element/tipped_item/proc/on_examine(atom/movable/source, mob/user, list/examine_list)
 	if(source.reagents.total_volume)
 		var/reagent_color = mix_color_from_reagents(source.reagents.reagent_list)
-		examine_list += span_red("Has been dipped in <font color=[reagent_color]>something</font>!")
+		examine_list += span_red("已经浸上了<font color=[reagent_color]>某种东西</font>！")

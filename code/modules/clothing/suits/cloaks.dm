@@ -1,7 +1,7 @@
 //Cloaks. No, not THAT kind of cloak.
 
 /obj/item/clothing/neck/cloak
-	name = "brown cloak"
+	name = "棕色斗篷"
 	desc = ""
 	icon = 'icons/obj/clothing/cloaks.dmi'
 	icon_state = "qmcloak"
@@ -11,40 +11,40 @@
 	flags_inv = HIDESUITSTORAGE
 
 /obj/item/clothing/neck/cloak/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user]正用[src]勒[user.p_them()]自己！看起来[user.p_theyre()]在试图自杀！</span>")
 	return(OXYLOSS)
 
 /obj/item/clothing/neck/cloak/hos
-	name = "head of security's cloak"
+	name = "安全主管斗篷"
 	desc = ""
 	icon_state = "hoscloak"
 
 /obj/item/clothing/neck/cloak/qm
-	name = "quartermaster's cloak"
+	name = "军需官斗篷"
 	desc = ""
 
 /obj/item/clothing/neck/cloak/cmo
-	name = "chief medical officer's cloak"
+	name = "首席医疗官斗篷"
 	desc = ""
 	icon_state = "cmocloak"
 
 /obj/item/clothing/neck/cloak/ce
-	name = "chief engineer's cloak"
+	name = "首席工程师斗篷"
 	desc = ""
 	icon_state = "cecloak"
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/neck/cloak/rd
-	name = "research director's cloak"
+	name = "研究主管斗篷"
 	desc = ""
 	icon_state = "rdcloak"
 
 /obj/item/clothing/neck/cloak/cap
-	name = "captain's cloak"
+	name = "舰长斗篷"
 	desc = ""
 	icon_state = "capcloak"
 
 /obj/item/clothing/neck/cloak/hop
-	name = "head of personnel's cloak"
+	name = "人事主管斗篷"
 	desc = ""
 	icon_state = "hopcloak"

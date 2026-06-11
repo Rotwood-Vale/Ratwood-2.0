@@ -1,10 +1,10 @@
 /obj/effect/proc_holder/spell/targeted/tesla
-	name = "Tesla Blast"
+	name = "特斯拉爆击"
 	desc = ""
 	charge_type = "recharge"
 	recharge_time	= 300
 	clothes_req = TRUE
-	invocations = list("UN'LTD P'WAH!")
+	invocations = list("无尽雷威，听我号令！")
 	invocation_type = "shout"
 	range = 7
 	cooldown_min = 30
@@ -23,7 +23,7 @@
 
 /obj/effect/proc_holder/spell/targeted/tesla/proc/StartChargeup(mob/user = usr)
 	ready = TRUE
-	to_chat(user, span_notice("I start gathering the power."))
+	to_chat(user, span_notice("我开始汇聚这股力量。"))
 	Snd = new/sound('sound/blank.ogg',channel = 7)
 	halo = halo || mutable_appearance('icons/effects/effects.dmi', "electricity", EFFECTS_LAYER)
 	user.add_overlay(halo)
@@ -42,7 +42,7 @@
 
 /obj/effect/proc_holder/spell/targeted/tesla/revert_cast(mob/user = usr, message = 1)
 	if(message)
-		to_chat(user, span_notice("No target found in range."))
+		to_chat(user, span_notice("攻击范围内没有找到目标。"))
 	Reset(user)
 	..()
 
@@ -52,7 +52,7 @@
 	Snd=sound(null, repeat = 0, wait = 1, channel = Snd.channel) //byond, why you suck?
 	playsound(get_turf(user),Snd,50,FALSE)// Sorry MrPerson, but the other ways just didn't do it the way i needed to work, this is the only way.
 	if(get_dist(user,target)>range)
-		to_chat(user, span_warning("[target.p_theyre(TRUE)] too far away!"))
+		to_chat(user, span_warning("[target.p_theyre(TRUE)]离得太远了！"))
 		Reset(user)
 		return
 
@@ -67,7 +67,7 @@
 	var/mob/living/carbon/current = target
 	if(current.anti_magic_check())
 		playsound(get_turf(current), 'sound/blank.ogg', 50, TRUE, -1)
-		current.visible_message(span_warning("[current] absorbs the spell, remaining unharmed!"), span_danger("I absorb the spell, remaining unharmed!"))
+		current.visible_message(span_warning("[current] 吸收了这道法术，毫发无伤！"), span_danger("我吸收了这道法术，毫发无伤！"))
 	else if(bounces < 1)
 		current.electrocute_act(bolt_energy,"Lightning Bolt",flags = SHOCK_NOGLOVES)
 		playsound(get_turf(current), 'sound/blank.ogg', 50, TRUE, -1)

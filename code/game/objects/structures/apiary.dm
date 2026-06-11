@@ -1,5 +1,5 @@
 /obj/effect/bees
-	name = "bees"
+	name = "蜜蜂"
 	icon = 'icons/obj/structures/apiary.dmi'
 	icon_state = "bee"
 	pass_flags = PASSTABLE | PASSMOB
@@ -152,8 +152,8 @@
 /obj/effect/bees/proc/attack_mob(mob/living/carbon/human/H)
 	var/obj/item/bodypart/affecting = H.get_bodypart(pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD))
 
-	H.visible_message("<span class='danger'>[src] stings [H] in the [affecting.name]!</span>", \
-					  "<span class='userdanger'>You feel a sharp stinging pain in your [affecting.name]!</span>")
+	H.visible_message("<span class='danger'>[src]蜇了[H]的[affecting.name]！</span>", \
+					  "<span class='userdanger'>你的[affecting.name]传来一阵尖锐的刺痛！</span>")
 
 	H.adjustToxLoss(1)
 
@@ -205,8 +205,8 @@
 	create_new_queen()
 
 /obj/structure/apiary
-	name = "apiary"
-	desc = "A structure housing bees that produce honey and pollinate plants."
+	name = "蜂箱"
+	desc = "一座饲养蜜蜂、产蜜并为植物授粉的设施。"
 	icon = 'icons/obj/structures/apiary.dmi'
 	icon_state = "beebox-empty"
 
@@ -299,7 +299,7 @@
 
 /obj/structure/apiary/attack_hand(mob/user)
 	if(queen_bee && user.a_intent == INTENT_HELP && is_wearing_bee_protection(user))
-		user.visible_message("[user] carefully reaches into [src].", "You carefully extract the queen bee from [src].")
+		user.visible_message("[user]小心翼翼地把手伸进了[src]。", "你小心地从[src]中取出了蜂后。")
 
 		if(!do_after(user, 5 SECONDS, src))
 			return
@@ -331,7 +331,7 @@
 		agitate_bees(80, user)
 		return
 
-	user.visible_message("[user] starts to collect combs from [src].", "You start to collect combs from [src]")
+	user.visible_message("[user]开始从[src]中收取蜂巢脾。", "你开始从[src]中收取蜂巢脾。")
 
 	if(!do_after(user, 2.5 SECONDS, src))
 		return
@@ -349,7 +349,7 @@
 /obj/structure/apiary/attackby(obj/item/I, mob/user, params) 
 	if(istype(I, /obj/item/queen_bee))
 		if(queen_bee)
-			to_chat(user, span_warning("There's already a queen!"))
+			to_chat(user, span_warning("里面已经有蜂后了！"))
 			return
 		new /obj/structure/apiary/starter(get_turf(src))
 		qdel(src)
@@ -404,9 +404,9 @@
 		if(prob(disease_severity / 10) && bee_count > 0)
 			bee_count--
 			if(prob(10))
-				visible_message(span_warning("A bee falls from [src], twitching."))
+				visible_message(span_warning("一只蜜蜂从[src]中坠落下来，微微抽搐着。"))
 				var/obj/effect/decal/cleanable/insect/dead_bee = new(get_turf(src))
-				dead_bee.name = "dead bee"
+				dead_bee.name = "死蜂"
 
 	else if(disease_type == "foulbrood")
 		// Foulbrood prevents new bees from being created
@@ -421,7 +421,7 @@
 
 
 	if(disease_severity >= 100)
-		visible_message(span_warning("[src] colony collapses from disease!"))
+		visible_message(span_warning("[src]的蜂群因疾病而彻底崩溃了！"))
 		bee_count = 0
 		outside_bees = 0
 		for(var/obj/effect/bees/B in bee_objects)
@@ -453,7 +453,7 @@
 		disease_type = pick("varroa_mites", "foulbrood", "wax_moths")
 		has_disease = TRUE
 		disease_severity = 10
-		visible_message(span_warning("The bees in [src] seem agitated."))
+		visible_message(span_warning("[src]里的蜜蜂看起来变得烦躁不安。"))
 
 /obj/structure/apiary/proc/agitate_bees(chance, mob/user)
 	if(prob(chance) && bee_count > 0)
@@ -461,7 +461,7 @@
 		bee_count -= agitated_count
 		outside_bees += agitated_count
 
-		visible_message(span_warning("Bees swarm out of [src] angrily!"))
+		visible_message(span_warning("蜜蜂愤怒地从[src]中涌了出来！"))
 
 		for(var/i in 1 to agitated_count)
 			var/obj/effect/bees/B = new(get_turf(src))
@@ -534,7 +534,7 @@
 	swarm_progress += 0.1
 
 	if(swarm_progress > 80 && prob(10))
-		visible_message(span_warning("The bees in [src] are extremely active!"))
+		visible_message(span_warning("[src]里的蜜蜂异常活跃！"))
 
 	if(swarm_progress >= 100)
 		create_swarm()
@@ -562,7 +562,7 @@
 	bee_count -= swarm_size
 
 	// Announce the swarm
-	visible_message(span_warning("A swarm of bees emerges from [src]!"))
+	visible_message(span_warning("一群蜜蜂从[src]中分蜂而出！"))
 
 	// Create a visual swarm effect
 	var/obj/effect/bee_swarm/swarm = new(get_turf(src))
@@ -637,7 +637,7 @@
 	new_queen.bee_color = pick("#FFD700", "#FFA500", "#FFFF00", "#DAA520")
 	new_queen.bee_disease_resistance = rand(80, 120)/100
 
-	visible_message(span_notice("A new queen bee emerges from [src]!"))
+	visible_message(span_notice("一只新的蜂后从[src]中诞生了！"))
 
 	// Insert the queen into the hive
 	insert_queen(new_queen)
@@ -646,12 +646,12 @@
 	queen_bee = new_queen
 	queen_deceased = FALSE
 	max_bees = 30 + (queen_bee.bee_efficiency * 10) // Queen efficiency affects max colony size
-	visible_message(span_notice("The bees in [src] welcome their new queen!"))
+	visible_message(span_notice("[src]里的蜜蜂迎来了它们的新蜂后！"))
 	new_queen.forceMove(src)
 
 /obj/item/queen_bee
-	name = "queen bee"
-	desc = "The heart of a bee colony."
+	name = "蜂后"
+	desc = "蜂群真正的核心。"
 	icon = 'icons/obj/structures/apiary.dmi'
 	icon_state = "queen_bee"
 
@@ -677,12 +677,12 @@
 		queen_health -= 0.05
 
 	if(queen_health <= 0)
-		visible_message(span_warning("[src] dies of old age!"))
+		visible_message(span_warning("[src]因年老而死！"))
 		qdel(src)
 
 /obj/item/bee_smoker
-	name = "bee smoker"
-	desc = "A device used to calm bees with smoke."
+	name = "养蜂烟熏器"
+	desc = "一种利用烟雾安抚蜜蜂的装置。"
 	icon = 'icons/obj/structures/apiary.dmi'
 	icon_state = "smoker"
 	w_class = WEIGHT_CLASS_SMALL
@@ -692,16 +692,16 @@
 
 /obj/item/bee_smoker/attack_self(mob/user)
 	if(!active && fuel > 0)
-		to_chat(user, span_notice("You light [src]."))
+		to_chat(user, span_notice("你点燃了[src]。"))
 		active = TRUE
 		update_icon()
 		process_smoker(user)
 	else if(active)
-		to_chat(user, span_notice("You extinguish [src]."))
+		to_chat(user, span_notice("你熄灭了[src]。"))
 		active = FALSE
 		update_icon()
 	else
-		to_chat(user, span_warning("[src] is out of fuel!"))
+		to_chat(user, span_warning("[src]没燃料了！"))
 
 /obj/item/bee_smoker/proc/process_smoker(mob/user)
 	if(!active)
@@ -710,7 +710,7 @@
 	if(fuel <= 0)
 		active = FALSE
 		update_icon()
-		to_chat(user, span_warning("[src] runs out of fuel!"))
+		to_chat(user, span_warning("[src]的燃料耗尽了！"))
 		return
 
 	// Create smoke effects
@@ -741,7 +741,7 @@
 	if(istype(I, /obj/item/natural/bundle/cloth))
 		var/obj/item/natural/bundle/cloth/C = I
 		if(C.amount >= 1 && fuel < max_fuel)
-			to_chat(user, span_notice("You stuff some cloth into [src]."))
+			to_chat(user, span_notice("你往[src]里塞了些布料。"))
 			C.use(1)
 			fuel = min(fuel + 5, max_fuel)
 			return TRUE
@@ -749,8 +749,8 @@
 
 
 /obj/item/magnifying_glass
-	name = "magnifying glass"
-	desc = "A tool for detailed inspection."
+	name = "放大镜"
+	desc = "一件用于细致检查的工具。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "magnifying_glass"
 
@@ -768,41 +768,41 @@
 	if(istype(target, /obj/structure/apiary))
 		var/obj/structure/apiary/A = target
 
-		to_chat(user, span_notice("You carefully inspect [A]."))
+		to_chat(user, span_notice("你仔细检查了[A]。"))
 
 		if(A.has_disease)
 			switch(A.disease_type)
 				if("varroa_mites")
-					to_chat(user, span_warning("You spot tiny mites crawling on the bees!"))
+					to_chat(user, span_warning("你发现有细小的螨虫正爬在蜜蜂身上！"))
 				if("foulbrood")
-					to_chat(user, span_warning("The honeycomb has a foul smell and appears discolored!"))
+					to_chat(user, span_warning("蜂巢散发着腐臭气味，而且明显已经变色了！"))
 				if("wax_moths")
-					to_chat(user, span_warning("You see small moths and their larvae in the hive!"))
+					to_chat(user, span_warning("你看见蜂巢里有小蛾子和它们的幼虫！"))
 
 			// Report severity
 			if(A.disease_severity < 30)
-				to_chat(user, span_notice("The infection appears to be mild."))
+				to_chat(user, span_notice("感染看起来还算轻微。"))
 			else if(A.disease_severity < 70)
-				to_chat(user, span_warning("The infection is moderately severe."))
+				to_chat(user, span_warning("感染程度已经相当明显。"))
 			else
-				to_chat(user, span_danger("The infection is very severe! The colony may collapse soon!"))
+				to_chat(user, span_danger("感染非常严重！蜂群可能很快就会崩溃！"))
 		else
-			to_chat(user, span_notice("The bees appear to be healthy."))
+			to_chat(user, span_notice("这些蜜蜂看起来很健康。"))
 
 
 		// Report on bee count
 		if(A.bee_count + A.outside_bees == 0)
-			to_chat(user, span_warning("The hive is empty!"))
+			to_chat(user, span_warning("蜂巢是空的！"))
 		else if(A.bee_count + A.outside_bees < 5)
-			to_chat(user, span_warning("The colony is very small."))
+			to_chat(user, span_warning("这支蜂群规模非常小。"))
 		else if(A.bee_count + A.outside_bees < 15)
-			to_chat(user, span_notice("The colony is moderate in size."))
+			to_chat(user, span_notice("这支蜂群规模中等。"))
 		else
-			to_chat(user, span_notice("The colony is thriving with many bees!"))
+			to_chat(user, span_notice("这支蜂群十分兴旺，蜜蜂数量众多！"))
 
 /obj/item/bee_treatment
-	name = "bee medication"
-	desc = "A treatment for bee diseases."
+	name = "蜂群药剂"
+	desc = "一种用来治疗蜂群疾病的药剂。"
 	icon = 'icons/roguetown/items/cooking.dmi'
 	icon_state = "clear_vial1"
 	var/treatment_type = "general"
@@ -817,10 +817,10 @@
 		var/obj/structure/apiary/A = target
 
 		if(!A.has_disease)
-			to_chat(user, span_notice("The bees don't appear to need treatment."))
+			to_chat(user, span_notice("这些蜜蜂看起来并不需要治疗。"))
 			return
 
-		to_chat(user, span_notice("You apply [src] to [A]."))
+		to_chat(user, span_notice("你将[src]施用在了[A]上。"))
 
 		// Treatment effectiveness
 		var/effectiveness = treatment_strength
@@ -837,9 +837,9 @@
 			A.has_disease = FALSE
 			A.disease_severity = 0
 			A.treatment_progress = 0
-			to_chat(user, span_notice("The bees appear to be recovering!"))
+			to_chat(user, span_notice("这些蜜蜂看起来正在恢复！"))
 		else
-			to_chat(user, span_notice("The treatment seems to be having some effect."))
+			to_chat(user, span_notice("治疗似乎已经开始起效了。"))
 
 		// Agitate bees when treated
 		A.agitate_bees(20, user)
@@ -849,47 +849,47 @@
 
 // Specific disease treatments
 /obj/item/bee_treatment/antiviral
-	name = "bee antiviral"
-	desc = "A treatment for viral bee diseases like foulbrood."
+	name = "蜂群抗病毒剂"
+	desc = "用于治疗腐臭病等蜂群病毒性疾病的药剂。"
 	treatment_type = "foulbrood"
 	treatment_strength = 40
 
 /obj/item/bee_treatment/miticide
-	name = "bee miticide"
-	desc = "A treatment for varroa mites that infest bee colonies."
+	name = "蜂螨杀灭剂"
+	desc = "一种用于清除侵染蜂群的瓦螨的药剂。"
 	treatment_type = "varroa_mites"
 	treatment_strength = 40
 
 /obj/item/bee_treatment/insecticide
-	name = "targeted insecticide"
-	desc = "A treatment for wax moths and other hive pests."
+	name = "定向杀虫剂"
+	desc = "一种用来对付蜡螟和其他蜂巢害虫的药剂。"
 	treatment_type = "wax_moths"
 	treatment_strength = 40
 
 /obj/item/reagent_containers/food/snacks/rogue/honey/ambrosia
-	name = "relaxing honey"
-	desc = "Sweet honey with subtle relaxing properties."
+	name = "舒缓蜂蜜"
+	desc = "一种带有细微安神效果的甜蜜蜂蜜。"
 	icon_state = "greyscale_honey"
 	honey_color = COLOR_GREEN_GRAY
 	list_reagents = list(/datum/reagent/consumable/honey = 5, /datum/reagent/consumable/nutriment = 3, /datum/reagent/drug/space_drugs = 2)
 
 /obj/item/reagent_containers/food/snacks/rogue/honey/healing
-	name = "medicinal honey"
-	desc = "Sweet honey with healing properties."
+	name = "药用蜂蜜"
+	desc = "一种带有疗愈效果的甜蜜蜂蜜。"
 	icon_state = "greyscale_honey"
 	honey_color = COLOR_MAROON
 	list_reagents = list(/datum/reagent/consumable/honey = 5, /datum/reagent/consumable/nutriment = 3)
 
 /obj/item/reagent_containers/food/snacks/rogue/honey/toxic
-	name = "strange honey"
-	desc = "This honey has an unusual smell and appearance."
+	name = "奇异蜂蜜"
+	desc = "这蜂蜜的气味和外观都透着一股古怪。"
 	icon_state = "greyscale_honey"
 	honey_color = "#CF3600"
 	list_reagents = list(/datum/reagent/consumable/honey = 5, /datum/reagent/toxin = 2)
 
 /obj/item/reagent_containers/food/snacks/rogue/honey/luminescent
-	name = "glowing honey"
-	desc = "This honey gives off a soft bioluminescent glow."
+	name = "发光蜂蜜"
+	desc = "这蜂蜜散发着柔和的生物荧光。"
 	icon_state = "greyscale_honey"
 	honey_color = "#CCFF99"
 	list_reagents = list(/datum/reagent/consumable/honey = 5, /datum/reagent/consumable/nutriment = 3)
@@ -899,8 +899,8 @@
 	light_color = "#CCFF99"
 
 /obj/effect/bee_swarm
-	name = "bee swarm"
-	desc = "A buzzing swarm of bees looking for a place to build a new hive."
+	name = "蜂群"
+	desc = "一团嗡嗡作响的蜂群，正在寻找建立新巢的地方。"
 	icon = 'icons/obj/structures/apiary.dmi'
 	icon_state = "bee"
 	density = FALSE
@@ -959,12 +959,12 @@
 
 	established = TRUE
 
-	visible_message(span_notice("The swarm has established a new hive!"))
+	visible_message(span_notice("这群蜜蜂建立起了一个新蜂巢！"))
 	qdel(src)
 
 /obj/effect/bee_swarm/proc/swarm_timeout()
 	if(!established)
-		visible_message(span_notice("The bee swarm disperses without finding a suitable home."))
+		visible_message(span_notice("这群蜜蜂没能找到合适的新家，最终散去了。"))
 		qdel(src)
 
 /obj/effect/bee_swarm/update_overlays()
@@ -982,8 +982,8 @@
 		overlays += bee
 
 /obj/structure/beehive/wild
-	name = "wild beehive"
-	desc = "A natural bee colony formed in the wild."
+	name = "野生蜂巢"
+	desc = "一个在野外自然形成的蜂群巢穴。"
 	icon = 'icons/obj/structures/apiary.dmi'
 	icon_state = "wild_hive"
 	density = TRUE
@@ -1038,7 +1038,7 @@
 	addtimer(CALLBACK(src, PROC_REF(send_out_bees)), rand(100, 300))
 
 /obj/structure/beehive/wild/attack_hand(mob/user)
-	user.visible_message(span_warning("[user] disturbs [src]!"), span_warning("You disturb the wild beehive!"))
+	user.visible_message(span_warning("[user]惊动了[src]！"), span_warning("你惊动了这个野生蜂巢！"))
 
 	var/protected = is_wearing_bee_protection(user)
 
@@ -1046,11 +1046,11 @@
 		agitate_bees(user)
 
 	if(protected && prob(30))
-		to_chat(user, span_notice("You manage to extract some honey!"))
+		to_chat(user, span_notice("你成功取出了一些蜂蜜！"))
 		new /obj/item/reagent_containers/food/snacks/rogue/honey/wild(get_turf(src))
 
 /obj/structure/beehive/wild/proc/agitate_bees(mob/target)
-	visible_message(span_danger("Bees swarm out of [src] angrily!"))
+	visible_message(span_danger("蜜蜂愤怒地从[src]中蜂拥而出！"))
 
 	// Release angry bees
 	var/release_count = min(bee_count, rand(3, 8))
@@ -1130,11 +1130,10 @@
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/rogue/honey/wild
-	name = "wild honey"
-	desc = "Sweet wild honey. It has a more complex flavor than regular honey."
+	name = "野生蜂蜜"
+	desc = "甜美的野生蜂蜜。它的风味比普通蜂蜜更加复杂。"
 	icon_state = "greyscale_honey"
 	honey_color = "#6d4633"
 	list_reagents = list(/datum/reagent/consumable/honey = 7, /datum/reagent/consumable/nutriment = 3)
 
 /obj/effect/decal/cleanable/insect
-

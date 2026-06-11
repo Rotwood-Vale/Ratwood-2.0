@@ -1,6 +1,6 @@
 /turf/open/floor/carpet
-	name = "carpet"
-	desc = "Plush fabric softens your step. Did you remember to wipe your shoes?"
+	name = "地毯"
+	desc = "长毛绒布让你的脚步轻柔了几分。你记得擦鞋了吗？"
 	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "carpet"
 	broken_states = list("damaged")

@@ -1,5 +1,5 @@
 /datum/round_event_control/antagonist/migrant_wave/gnolls
-	name = "Gnolls Migration"
+	name = "豺狼人迁徙"
 	typepath = /datum/round_event/migrant_wave/gnolls
 	wave_type = /datum/migrant_wave/gnolls
 	max_occurrences = 2
@@ -23,4 +23,4 @@
 			if(!player.client)
 				continue
 
-			to_chat(player, span_danger("Graggar demands blood, gnolls flock to [SSmapping.map_adjustment.realm_name]!"))
+			to_chat(player, span_danger("Graggar 渴求鲜血，豺狼人正涌向谷地！"))

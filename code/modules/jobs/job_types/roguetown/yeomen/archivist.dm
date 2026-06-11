@@ -1,6 +1,7 @@
 /datum/job/roguetown/archivist
 	title = "Archivist"
-	tutorial = "The Archivist meticulously preserves and organizes ancient scrolls and tomes, safeguarding the collective knowledge of the realm for generations to come. Nobles and Peasants alike often seek your expertise on matters of history and fact, and your keenly-kept records on the events of this week will likely stand a testament to your Duke's benevolence and their realm's prosperity...or not. After all, you hold the true power: The power to dictate how the future generations will look back on these coming days."
+	display_title = "档案官"
+	tutorial = "你谨慎地保存并整理古老卷轴与典籍，将这片土地累积的知识封存下来，留待后世承继。无论贵族还是农夫，都会为了历史与事实前来向你求证；而你为本周诸事留下的详尽记录，终将成为公爵仁德与领地繁荣的见证……又或者并非如此。毕竟，真正握着权力的人是你：由你来决定后世会如何回望这些时日。"
 	flag = ARCHIVIST
 	department_flag = YEOMEN
 	faction = "Station"
@@ -38,9 +39,9 @@
 	)
 
 /datum/advclass/archivist
-	name = "Archivist"
-	tutorial = "The Archivist meticulously preserves and organizes ancient scrolls and tomes, safeguarding the collective knowledge of the realm for generations to come. Nobles and Peasants alike often seek your expertise on matters of history and fact, and your keenly-kept records on the events of this week will likely stand a testament to your Duke's benevolence and their realm's prosperity...or not. After all, you hold the true power: \
-	The power to dictate how the future generations will look back on these coming days."
+	name = "档案官"
+	tutorial = "你谨慎地保存并整理古老卷轴与典籍，将这片土地累积的知识封存下来，留待后世承继。无论贵族还是农夫，都会为了历史与事实前来向你求证；而你为本周诸事留下的详尽记录，终将成为公爵仁德与领地繁荣的见证……又或者并非如此。毕竟，真正握着权力的人是你：\
+	由你来决定后世会如何回望这些时日。"
 	outfit = /datum/outfit/job/roguetown/archivist/basic
 	subclass_languages = list(
 		/datum/language/elvish,

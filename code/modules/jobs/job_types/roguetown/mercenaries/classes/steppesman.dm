@@ -1,8 +1,8 @@
 /datum/advclass/mercenary/steppesman
-	name = "Liga Aavnik"
-	tutorial = "As part of your mandatory service to your Kozak's Hetmen, your yearly rotation brings you from service in the Motherland's Vanguard, \
-	to serve in the Liga Aavnik, the unified mercenary army of the Northern Steppe, with you; taking part in the Ferentine front. \
-	Bring gold, and glory to the homeland. Chest' cherez pobedu."
+	name = "阿夫尼克 联盟军"
+	tutorial = "作为对你所属 哥萨克 赫特曼履行的强制服役之一环，你在这一年的轮调中离开故土先锋军， \
+	转而加入北方草原的统一佣兵军 阿夫尼克 联盟，并投身 费伦提亚的 战线。 \
+	为祖国带回黄金与荣耀。Chest' cherez pobedu."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/steppesman
@@ -10,7 +10,7 @@
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_league.ogg'
 	subclass_languages = list(/datum/language/aavnic)
-	extra_context = "This subclass has 5 loadouts with various stats, skills & equipment."
+	extra_context = "该分支拥有 5 种不同的配装路线，属性、技能与装备各不相同。"
 	subclass_skills = list(
 	//Universal skills
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
@@ -51,18 +51,18 @@
 	H.adjust_blindness(-3)
 	var/classchoice
 	if(H.mind)
-		var/classes = list("Starshina - Saber Veteran", "Obyvatel' - Elite Sapper", "Gromoverzhets - Pálya Sapper", "Zastrel'shchik - Light Archer", "Plastunsky - Light Infantry")
-		classchoice = input(H, "Choose your archetypes", "Available archetypes") as anything in classes
+		var/classes = list("Starshina - 军士长", "Obyvatel' - 精锐工兵", "Gromoverzhets - 爆雷工兵", "Zastrel'shchik - 轻装弓手", "Plastunsky - 潜踪步兵")
+		classchoice = input(H, "选择你的战斗流派。", "可选流派") as anything in classes
 	
 	if (H.mind)
 		H.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)
 
 		switch(classchoice)
-			if("Starshina - Saber Veteran")	//Tl;dr - medium armor class for Mount and Blade larpers who still get a saiga. Akin to Vaquero with specific drip.
+			if("Starshina - 军士长")	//Tl;dr - medium armor class for Mount and Blade larpers who still get a saiga. Akin to Vaquero with specific drip.
 				H.set_blindness(0)
-				to_chat(H, span_warning("The Starshina are the Junior officer class of the Northern steppe Kozaks, veterans of conflicts across all of Grimoria. \
-				Your extended time in the service grants you your shishka, shield, and armor- but make no mistake. \
-				You are not some filthy Grenzel noble sipping on his bitters. Head the charge, Zoloto i slava."))
+				to_chat(H, span_warning("军士长 是北方草原 哥萨克 中的初级军官阶层，历经 Grimoria 各地战火的老兵。 \
+				漫长的服役岁月为你赢来了你的尖顶盔、盾牌与甲胄，但别搞错了。 \
+				你可不是什么坐着喝苦酒的 Grenzel 贵族。带头冲锋吧，Zoloto i slava。"))
 				shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot/steppesman
 				head = /obj/item/clothing/head/roguetown/helmet/sallet/shishak
 				gloves = /obj/item/clothing/gloves/roguetown/chain
@@ -88,19 +88,19 @@
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 				H.dna.species.soundpack_m = new /datum/voicepack/male/evil() 	//Fits in my head all too well.
 				var/masks = list(
-				"Humen" 	= /obj/item/clothing/mask/rogue/facemask/steel/steppesman,
-				"Beast"		= /obj/item/clothing/mask/rogue/facemask/steel/steppesman/anthro,
-				"None"
+				"人形" 	= /obj/item/clothing/mask/rogue/facemask/steel/steppesman,
+				"兽形"		= /obj/item/clothing/mask/rogue/facemask/steel/steppesman/anthro,
+				"无"
 		)
-				var/maskchoice = input("What fits your face?", "MASK SELECTION") as anything in masks
-				if(maskchoice != "None")
+				var/maskchoice = input("哪种更适合你的脸型？", "面具选择") as anything in masks
+				if(maskchoice != "无")
 					mask = masks[maskchoice]
 
-			if("Obyvatel' - Elite Sapper")	//Tl;dr - medium armor sappers with less mobility in exchange for their different statblock and equipment.
+			if("Obyvatel' - 精锐工兵")	//Tl;dr - medium armor sappers with less mobility in exchange for their different statblock and equipment.
 				H.set_blindness(0)
-				to_chat(H, span_warning("The Obyvatel' are a uniquely trained unit of Kozaky footmen, learned in the arts of destruction, and fortification. \
-				They are often the first to follow the Starshina into battle, and; are likely the first to fall. \
-				You are the shield, and your brothers are the sword. Dvigaytes' ni dlya kogo." ))
+				to_chat(H, span_warning("精锐工兵 是一支训练方式独特的 哥萨克 步兵部队，精于破坏与筑垒之术。 \
+				他们往往最先跟随 Starshina 投入战斗，也往往最先倒下。 \
+				你是盾，而你的弟兄们是剑。Dvigaytes' ni dlya kogo." ))
 				shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot/steppesman
 				head = /obj/item/clothing/head/roguetown/helmet/sallet/shishak
 				gloves = /obj/item/clothing/gloves/roguetown/chain
@@ -135,19 +135,19 @@
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 				H.dna.species.soundpack_m = new /datum/voicepack/male/evil()
 				var/masks = list(
-				"Humen" 	= /obj/item/clothing/mask/rogue/facemask/steel/steppesman,
-				"Beast"		= /obj/item/clothing/mask/rogue/facemask/steel/steppesman/anthro,
-				"None"
+				"人形" 	= /obj/item/clothing/mask/rogue/facemask/steel/steppesman,
+				"兽形"		= /obj/item/clothing/mask/rogue/facemask/steel/steppesman/anthro,
+				"无"
 		)
-				var/maskchoice = input("What fits your face?", "MASK SELECTION") as anything in masks
-				if(maskchoice != "None")
+				var/maskchoice = input("哪种更适合你的脸型？", "面具选择") as anything in masks
+				if(maskchoice != "无")
 					mask = masks[maskchoice]
 
-			if("Gromoverzhets - Pálya Sapper")	//Tl;dr - these guys fucking EXPLODE. No whip. No dagger. Less skills. Three TNT sticks. Impact of choice. Godspeed.
+			if("Gromoverzhets - 爆雷工兵")	//Tl;dr - these guys fucking EXPLODE. No whip. No dagger. Less skills. Three TNT sticks. Impact of choice. Godspeed.
 				H.set_blindness(0)
-				to_chat(H, span_warning("The Gromoverzhets are a smaller branch of the Obyvatel' \
-				solely responsible for the handling, and frequent use- of the Company's explosives. \
-				Let common sense be your guide, and your throwing arm; strong. Ne ubivay sebya, pozhaluysta."))
+				to_chat(H, span_warning("爆雷工兵 是 精锐工兵 中规模较小的一支， \
+				专门负责连队爆炸物的保管与频繁使用。 \
+				让常识指引你，也让你的投掷手臂足够有力。Ne ubivay sebya, pozhaluysta."))
 				shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 				head = /obj/item/clothing/head/roguetown/papakha
 				gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
@@ -183,35 +183,35 @@
 				ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)//No armour skill. They get BOMBS.
 				H.dna.species.soundpack_m = new /datum/voicepack/male/evil()
 				var/masks = list(
-				"Humen" 	= /obj/item/clothing/mask/rogue/facemask/steel/steppesman,
-				"Beast"		= /obj/item/clothing/mask/rogue/facemask/steel/steppesman/anthro,
-				"None"
+				"人形" 	= /obj/item/clothing/mask/rogue/facemask/steel/steppesman,
+				"兽形"		= /obj/item/clothing/mask/rogue/facemask/steel/steppesman/anthro,
+				"无"
 		)
-				var/maskchoice = input("What fits your face?", "MASK SELECTION") as anything in masks
-				if(maskchoice != "None")
+				var/maskchoice = input("哪种更适合你的脸型？", "面具选择") as anything in masks
+				if(maskchoice != "无")
 					mask = masks[maskchoice]
 
 				var/special_grenade = list(
-				"EXPLOSIVE"			= /obj/item/impact_grenade/explosion,
-				"DUST"				= /obj/item/impact_grenade/smoke,
-				"POISON"			= /obj/item/impact_grenade/smoke/poison_gas,
-				"CONFLAGRATION"		= /obj/item/impact_grenade/smoke/fire_gas,
-				"BLINDING"			= /obj/item/impact_grenade/smoke/blind_gas,
-				"None"
+				"爆裂"			= /obj/item/impact_grenade/explosion,
+				"烟尘"				= /obj/item/impact_grenade/smoke,
+				"毒雾"			= /obj/item/impact_grenade/smoke/poison_gas,
+				"烈焰"		= /obj/item/impact_grenade/smoke/fire_gas,
+				"致盲"			= /obj/item/impact_grenade/smoke/blind_gas,
+				"无"
 		)
-				var/grenade_choice = input("What impact grenade do you carry?", "IMPACT SELECTION") as anything in special_grenade
-				if(grenade_choice != "None")
+				var/grenade_choice = input("你要携带哪种触发手雷？", "手雷选择") as anything in special_grenade
+				if(grenade_choice != "无")
 					r_hand = special_grenade[grenade_choice]
 				else//Do they not take a grenade? Engineering skill and alchemy. They're a bomb factory.
 					H.adjust_skillrank_up_to(/datum/skill/craft/engineering, 2, TRUE)	//Eeyup.
 					H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 2, TRUE)	//This ain't a pie factory.
 
 
-			if("Zastrel'shchik - Light Archer")	//Tl;dr - light armor class for Tatar-style archery.
+			if("Zastrel'shchik - 轻装弓手")	//Tl;dr - light armor class for Tatar-style archery.
 				H.set_blindness(0)
-				to_chat(H, span_warning("The Gromoverzhets are a smaller branch of the Obyvatel' \
-				solely responsible for the handling, and frequent use- of the Company's explosives. \
-				Let common sense be your guide, and your throwing arm; strong. Ne ubivay sebya, pozhaluysta."))
+				to_chat(H, span_warning("轻装弓手 是北方草原上精于游骑与射术的轻装弓手。 \
+				他们依赖速度、视野与精准，在战场边缘不断消磨敌人。 \
+				保持机动，别让任何人追上你。"))
 				shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot/steppesman
 				head = /obj/item/clothing/head/roguetown/helmet/sallet/shishak
 				gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
@@ -237,12 +237,12 @@
 				H.change_stat(STATKEY_SPD, 2)
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 
-			if("Plastunsky - Light Infantry")		//Tl;dr - Old Steppesman whip build, light armor, be the glass canon you always wanted to be. Live your life, king.
+			if("Plastunsky - 潜踪步兵")		//Tl;dr - Old Steppesman whip build, light armor, be the glass canon you always wanted to be. Live your life, king.
 				H.set_blindness(0)
-				to_chat(H, span_warning("Being an Aavnic, and part of a Kozak is not a title one earns, nor is born with. It's a way of life. \
-				Eccentric frontiersmen who look Noble, and Peasant in the eye, in the same light. \
-				Freshly conscripted, these men serve as Plastunsky, and carry whatever they brought along to the fight. \
-				Peasant levy as they may seem- they are the bane of civilized warriors. Pust' chetyre zverya vedut tebya." ))
+				to_chat(H, span_warning("成为 阿夫尼克的、成为 哥萨克，并非一种头衔，也非单靠出身就能拥有，而是一种活法。 \
+				这些离经叛道的边地人看待贵族与农夫时，目光里并无差别。 \
+				新近征召而来的他们以 Plastunsky 之名上阵，带着自己能拿得出的全部家当投入战斗。 \
+				他们看似不过是农兵杂牌，却正是文明战士最厌恶的克星。Pust' chetyre zverya vedut tebya." ))
 				shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 				head = /obj/item/clothing/head/roguetown/papakha	//No helm
 				gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
@@ -264,15 +264,15 @@
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_OUTDOORSMAN, TRAIT_GENERIC)
 				H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()		//Semi-crazed warrior vibe.
-				var/weapons = list("Lándzsa", "Flail")
-				var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+				var/weapons = list("Lándzsa 长枪", "链枷")
+				var/weapon_choice = input("选择你的武器。", "整备武装") as anything in weapons
 				switch(weapon_choice)
-					if("Lándzsa")//Funny banner weapon & punchdagger, with whip I suppose.
+					if("Lándzsa 长枪")//Funny banner weapon & punchdagger, with whip I suppose.
 						r_hand = /obj/item/rogueweapon/spear/boar/aav
 						l_hand = /obj/item/rogueweapon/katar/punchdagger/aav
 						backl = /obj/item/rogueweapon/scabbard/gwstrap
 						H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)		//Use of the weapon.
-					if("Flail")//Or boring flail and buckler, whip.
+					if("链枷")//Or boring flail and buckler, whip.
 						beltl = /obj/item/rogueweapon/flail
 						beltr = /obj/item/rogueweapon/shield/buckler //Doesn't get good shield skill + no armor, so they get this to compensate for no parry on whip.
 						H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)	//Old whip skill.

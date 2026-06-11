@@ -3,7 +3,7 @@
 	slot = MOB_DESCRIPTOR_SLOT_PROMINENT
 
 /datum/mob_descriptor/prominent/none
-	name = "None"
+	name = "无"
 
 /datum/mob_descriptor/prominent/none/can_describe(mob/living/described)
 	return FALSE
@@ -26,9 +26,9 @@
 		if(CUSTOM_PREFIX_HAS)
 			return null
 		if(CUSTOM_PREFIX_HAS_A)
-			return "a "
+			return null
 		if(CUSTOM_PREFIX_HAS_AN)
-			return "an "
+			return null
 		if(CUSTOM_PREFIX_IS)
 			return null
 		if(CUSTOM_PREFIX_LOOKS)
@@ -49,73 +49,73 @@
 			return "%LOOK%"
 
 /datum/mob_descriptor/prominent/custom/one
-	name = "Custom #1"
+	name = "自定义 #1"
 	custom_index = 1
 
 /datum/mob_descriptor/prominent/custom/two
-	name = "Custom #2"
+	name = "自定义 #2"
 	custom_index = 2
 
 /datum/mob_descriptor/prominent/hunched_over
-	name = "Hunched Over"
+	name = "佝偻"
 	verbage = "%ARE%"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/crooked_nose
-	name = "Crooked Nose"
+	name = "歪鼻"
 	verbage = "%HAVE%"
-	prefix = "a"
+	prefix = ""
 
 /datum/mob_descriptor/prominent/drooling
-	name = "Drooling"
+	name = "流着口水"
 	verbage = "%ARE%"
 
 /datum/mob_descriptor/prominent/lazy_eye
-	name = "Lazy Eye"
+	name = "斗鸡眼"
 	verbage = "%HAVE%"
-	prefix = "a"
+	prefix = ""
 
 /datum/mob_descriptor/prominent/bloodshot_eye
-	name = "Bloodshot Eyes"
+	name = "布满血丝的眼睛"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/baggy_eye
-	name = "Baggy Eyes"
+	name = "浮肿的眼袋"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/deadfish_eye
-	name = "Dead Fish Eyes"
+	name = "死鱼眼"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/twitchy
-	name = "Twitchy"
+	name = "抽搐不安"
 	verbage = "%ARE%"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/clumsy
-	name = "Clumsy"
+	name = "笨拙"
 	verbage = "%ARE%"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/unkempt
-	name = "Unkempt"
+	name = "邋遢"
 	verbage = "%ARE%"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/tidy
-	name = "Tidy"
+	name = "整洁"
 	verbage = "%ARE%"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/eloquent
-	name = "Eloquent"
+	name = "善辩"
 	verbage = "%ARE%"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/thick_tail
-	name = "Thick Tail"
+	name = "粗尾巴"
 	verbage = "%HAVE%"
-	prefix = "a"
+	prefix = ""
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/thick_tail/can_describe(mob/living/described)
@@ -127,204 +127,204 @@
 	return TRUE
 
 /datum/mob_descriptor/prominent/cleft_lip
-	name = "Cleft Lip"
+	name = "唇裂"
 	verbage = "%HAVE%"
-	prefix = "a"
+	prefix = ""
 
 /datum/mob_descriptor/prominent/physically_deformed
-	name = "Physically Deformed"
+	name = "身体畸形"
 	verbage = "%ARE%"
 
 /datum/mob_descriptor/prominent/extensive_scars
-	name = "Extensive Scarring"
+	name = "大片疤痕"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/move_strange
-	name = "Moves Strangely"
+	name = "动作古怪"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/ghoulish_appearance
-	name = "Ghoulish Appearance"
+	name = "食尸鬼般的外貌"
 	verbage = "%HAVE%"
-	prefix = "a"
+	prefix = ""
 
 /datum/mob_descriptor/prominent/prominent_chest
-	name = "Prominent Chest"
+	name = "胸部突出"
 	verbage = "%HAVE%"
-	prefix = "a"
+	prefix = ""
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/prominent_bottom
-	name = "Prominent Posterior"
+	name = "丰满的臀部"
 	verbage = "%HAVE%"
-	prefix = "a"
+	prefix = ""
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/prominent_potbelly
-	name = "Prominent Potbelly"
+	name = "明显的大肚腩"
 	verbage = "%HAVE%"
-	prefix = "a"
+	prefix = ""
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/prominent_thighs
-	name = "Prominent Thighs"
+	name = "丰满的大腿"
 	verbage = "%HAVE%"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/prominent_shoulders
-	name = "Prominent Shoulders"
+	name = "宽阔的肩膀"
 	verbage = "%HAVE%"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/prominent_jawline
-	name = "Prominent Jawline"
+	name = "分明的下颌线"
 	verbage = "%HAVE%"
-	prefix = "a"
+	prefix = ""
 
 /datum/mob_descriptor/prominent/prominent_ears
-	name = "Prominent Ears"
+	name = "招风耳"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/cold_gaze
-	name = "Cold Gaze"
+	name = "冷淡的目光"
 	verbage = "%HAVE%"
-	prefix = "a"
+	prefix = ""
 
 /datum/mob_descriptor/prominent/piercing_gaze
-	name = "Piercing Gaze"
+	name = "锐利的目光"
 	verbage = "%HAVE%"
-	prefix = "a"
+	prefix = ""
 
 /datum/mob_descriptor/prominent/innocent_gaze
-	name = "Innocent Gaze"
+	name = "无辜的目光"
 	verbage = "%HAVE%"
-	prefix = "an"
+	prefix = ""
 
 /datum/mob_descriptor/prominent/promiscuous_mannerisms
-	name = "Sensual Manners"
+	name = "风情举止"
 	verbage = "%HAVE%"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/intimidating_presence
-	name = "Intimidating Presence"
+	name = "压迫感"
 	verbage = "%HAVE%"
-	prefix = "an"
+	prefix = ""
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/meek_presence
-	name = "Meek Presence"
+	name = "怯懦气质"
 	verbage = "%HAVE%"
-	prefix = "a"
+	prefix = ""
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/adorable_presence
-	name = "Adorable Presence"
+	name = "可爱气质"
 	verbage = "%HAVE%"
-	prefix = "an"
+	prefix = ""
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/lordly_presence
-	name = "Lordly Presence"
+	name = "贵胄气度"
 	verbage = "%HAVE%"
-	prefix = "a"
+	prefix = ""
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/doting_presence
-	name = "Doting Presence"
+	name = "关切气质"
 	verbage = "%HAVE%"
-	prefix = "a"
+	prefix = ""
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/aristocratic_haughtiness
-	name = "Aristocratic Haughtiness"
+	name = "贵族式傲慢"
 	verbage = "%HAVE%"
-	prefix = "an"
+	prefix = ""
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/ghastly_pale
-	name = "Ghastly Pale"
+	name = "惨白"
 	verbage = "%ARE%"
 
 /datum/mob_descriptor/prominent/elaborate_tattoos
-	name = "Elaborate Tattoos"
+	name = "繁复纹身"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/ritual_tattoos
-	name = "Ritual Tattoos"
+	name = "仪式纹身"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/tribal_tattoos
-	name = "Tribal Tattoos"
+	name = "部族纹身"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/slave_tattoos
-	name = "Slave Tattoos"
+	name = "奴隶纹身"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/enigmatic_tattoos
-	name = "Enigmatic Tattoos"
+	name = "神秘纹身"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/mean_look
-	name = "Mean Look"
+	name = "凶相"
 	verbage = "%HAVE%"
-	prefix = "a"
+	prefix = ""
 
 /datum/mob_descriptor/prominent/haughty_atmosphere
-	name = "Haughty Atmosphere"
+	name = "傲慢气场"
 	verbage = "%HAVE%"
-	prefix = "a"
+	prefix = ""
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/untrustworthy
-	name = "Untrustworthy"
-	verbage = "appears"
+	name = "不可信"
+	verbage = "显得"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/ratty_hair
-	name = "Ratty Hair"
+	name = "乱蓬蓬的头发"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/predatory_look
-	name = "Predatory Look"
+	name = "掠食者般的目光"
 	verbage = "%HAVE%"
-	prefix = "a"
+	prefix = ""
 
 /datum/mob_descriptor/prominent/chaste_mannerism
-	name = "Chaste Mannerisms"
+	name = "端庄举止"
 	verbage = "%HAVE%"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/whimsy
-	name = "Air of Whimsy"
+	name = "异想天开的气息"
 	verbage = "%HAVE%"
-	prefix = "an"
-	suffix = "about %HIM%"
+	prefix = ""
+	suffix = "环绕在 %HIM% 身边"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/prominent/dim_look
-	name = "Dim Look"
+	name = "呆滞神情"
 	verbage = "%HAVE%"
-	prefix = "a"
+	prefix = ""
 
 /datum/mob_descriptor/prominent/canine_features
-	name = "Canine Features"
+	name = "犬科特征"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/feline_features
-	name = "Feline Features"
+	name = "猫科特征"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/hyaenidae_features
-	name = "Hyaenidae Features"
+	name = "鬣犬科特征"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/equine_features
-	name = "Equine Features"
+	name = "马科特征"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/bovine_features
-	name = "Bovine Features"
+	name = "牛科特征"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/ursine_features
@@ -332,49 +332,49 @@
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/cervine_features
-	name = "Cervine Features"
+	name = "鹿科特征"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/lapine_features
-	name = "Lapine Features"
+	name = "兔科特征"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/rodent_features
-	name = "Rodent Features"
+	name = "啮齿类特征"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/primate_features
-	name = "Primate Features"
+	name = "灵长类特征"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/marsupial_features
-	name = "Marsupial Features"
+	name = "有袋类特征"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/lizard_features
-	name = "Lizard Features"
+	name = "蜥蜴特征"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/avian_features
-	name = "Avian Features"
+	name = "鸟类特征"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/amphibian_features
-	name = "Amphibian Features"
+	name = "两栖类特征"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/insectoid_features
-	name = "Instectoid Features"
+	name = "昆虫类特征"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/marine_features
-	name = "Marine Features"
+	name = "海生特征"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/vulpine_features
-	name = "Vulpine Features"
+	name = "狐类特征"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/prominent_ears
-	name = "Prominent Ears"
+	name = "招风耳"
 	verbage = "%HAVE%"

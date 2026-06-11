@@ -1,7 +1,7 @@
 /obj/item/natural/clay
-	name = "clay"
+	name = "黏土"
 	icon_state = "clay"
-	desc = "A handful of damp, malleable clay"
+	desc = "一把湿润而可塑的黏土。"
 	gripped_intents = null
 	dropshrink = 0.75
 	possible_item_intents = list(INTENT_GENERIC)
@@ -54,7 +54,7 @@
 		return FALSE
 	if(!is_wet || !needs_knead_after_wet)
 		return FALSE
-	to_chat(user, span_notice("I knead the wet clay to make it workable..."))
+	to_chat(user, span_notice("我揉捏湿润的黏土，让它变得可用……"))
 	playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
 	if(!do_after(user, get_knead_time(user, 1.5 SECONDS), target = src))
 		return FALSE
@@ -62,20 +62,20 @@
 	return TRUE
 
 /obj/item/natural/clay/kneaded
-	name = "kneaded clay"
-	desc = "Well-worked clay made pliable for pottery. Prepared by wetting two lumps of raw clay with a water source and thoroughly kneading them together until smooth. Requires: 2x raw clay, water. Worked at a potter's wheel into basic clayware."
+	name = "揉制黏土"
+	desc = "充分揉制、适合陶艺塑形的黏土。将两团原黏土用水润湿后，反复揉合至表面光滑而成。需要：2 份原黏土、清水。可在陶轮上加工成基础陶器。"
 	icon_state = "kneaded_clay"
 
 /obj/item/natural/clay/refined_partial
-	name = "partially refined clay"
-	desc = "Clay mixed with refining materials, but not fully worked yet."
+	name = "半精炼黏土"
+	desc = "已经混入精炼材料，但尚未彻底处理的黏土。"
 	icon_state = "partialrefined_clay"
 
 // '''Clay''' for making glass.
 /obj/item/natural/clay/glassbatch
-	name = "glass batch"
+	name = "玻璃料"
 	icon_state = "glassBatch"
-	desc = "A precisely weighed mixture of ground silica (clay), flux (ash), and stabilizer (stone powder), prepared by grinding all components together with a mortar and pestle. Requires: 2x clay, 2x ash, 1x stone powder. Heat in a smelter to yield heated glass, then shape with a blowing rod."
+	desc = "一种配比精确的混合料，由研磨后的硅质原料（黏土）、助熔剂（灰）与稳定剂（石粉）混合而成，需用研钵与杵将全部材料一同碾碎。需要：2 份黏土、2 份灰、1 份石粉。放入熔炉加热后会得到热玻璃，再用吹制杆塑形。"
 	smeltresult = /obj/item/natural/glass/heated 	// Pulled from the furnace with tongs for blowing.
 	grind_results = list(/datum/reagent/iron = 15)
 	sellprice = 5
@@ -88,8 +88,8 @@
 	..() // The ..() refers to calling the parent class's (obj/item/natural) Initialize() proc.
 
 /obj/item/natural/clay/refined
-	name = "refined clay"
-	desc = "Fine clay tempered through repeated cycles of wetting, kneading and resting with ash and sand to produce a smooth, dense body fit for porcelain. Requires: 1x kneaded clay, 2x ash, 1x sand. Wet before each addition and knead thoroughly after. Worked at a potter's wheel into fine porcelain."
+	name = "精炼黏土"
+	desc = "经过反复润湿、揉制与静置，并掺入灰和沙进行回火的细黏土，可形成致密平滑、适合烧制瓷器的坯体。需要：1 份揉制黏土、2 份灰、1 份沙。每次加入材料前都要重新润湿，并在加入后彻底揉匀。可在陶轮上加工成精细瓷器。"
 	icon_state = "refined_clay"
 
 /obj/item/natural/clay/refined/Initialize(mapload)
@@ -114,12 +114,12 @@
 	var/obj/item/reagent_containers/water_container = W
 	if(istype(water_container) && !is_wet)
 		if(isturf(loc) && !found_table)
-			to_chat(user, span_notice("I need a table to work this clay."))
+			to_chat(user, span_notice("我需要一张桌子来处理这团黏土。"))
 			return TRUE
 		if(!consume_wetting_water(water_container))
-			to_chat(user, span_notice("Needs more water to work it."))
+			to_chat(user, span_notice("它需要更多水才能继续处理。"))
 			return TRUE
-		to_chat(user, span_notice("I wet the clay so it can be worked again."))
+		to_chat(user, span_notice("我把黏土重新润湿，好继续处理。"))
 		playsound(get_turf(user), 'modular/Neu_Food/sound/splishy.ogg', 80, TRUE, -1)
 		set_wet_state(TRUE)
 		needs_knead_after_wet = TRUE
@@ -127,15 +127,15 @@
 
 	if(src.type == /obj/item/natural/clay && W.type == /obj/item/natural/clay)
 		if(!is_wet)
-			to_chat(user, span_warning("This clay is too dry. I need to wet it first."))
+			to_chat(user, span_warning("这团黏土太干了，我得先把它弄湿。"))
 			return
 		if(needs_knead_after_wet)
-			to_chat(user, span_warning("I should knead the wetted clay first before adding more clay."))
+			to_chat(user, span_warning("我得先把润湿后的黏土揉开，才能继续加黏土。"))
 			return
 		if(isturf(loc) && !found_table)
-			to_chat(user, span_notice("I need a table to knead this properly."))
+			to_chat(user, span_notice("我需要一张桌子才能好好揉制它。"))
 			return
-		to_chat(user, span_notice("I knead the clay together..."))
+		to_chat(user, span_notice("我开始把黏土揉合在一起……"))
 		playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
 		if(!do_after(user, get_knead_time(user, 2 SECONDS), target = src))
 			return
@@ -148,29 +148,29 @@
 		return
 
 	if(user.get_skill_level(/datum/skill/craft/ceramics) < SKILL_LEVEL_JOURNEYMAN)
-		to_chat(user, span_warning("I need journeyman pottery knowledge to refine clay."))
+		to_chat(user, span_warning("我要有熟练陶艺知识，才能精炼黏土。"))
 		return ..()
 
 	if(!(istype(src, /obj/item/natural/clay/kneaded) || istype(src, /obj/item/natural/clay/refined_partial)))
 		return ..()
 
 	if(!is_wet)
-		to_chat(user, span_warning("The clay has dried out. I need to wet it again first."))
+		to_chat(user, span_warning("黏土已经干了，我得先重新弄湿它。"))
 		return
 
 	if(needs_knead_after_wet)
-		to_chat(user, span_warning("I should knead the wetted clay first before mixing more ingredients."))
+		to_chat(user, span_warning("我得先把润湿后的黏土揉开，才能继续混入其他材料。"))
 		return
 
 	if(isturf(loc) && !found_table)
-		to_chat(user, span_notice("I need a table to keep kneading this."))
+		to_chat(user, span_notice("我需要一张桌子才能继续揉制它。"))
 		return
 
 	if(istype(W, /obj/item/ash))
 		if(ash_kneads >= 2)
-			to_chat(user, span_warning("This clay already has enough ash mixed in."))
+			to_chat(user, span_warning("这团黏土里已经混入足够的灰了。"))
 			return
-		to_chat(user, span_notice("I knead ash into the clay..."))
+		to_chat(user, span_notice("我把灰揉进黏土里……"))
 		playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
 		if(!do_after(user, get_knead_time(user, 1.5 SECONDS), target = src))
 			return
@@ -180,11 +180,11 @@
 		qdel(W)
 		if(user.mind)
 			user.mind.add_sleep_experience(/datum/skill/craft/ceramics, 1, FALSE)
-		to_chat(user, span_notice("The clay now has [ash_kneads]/2 ash mixed in."))
+		to_chat(user, span_notice("这团黏土里现在已经混入 [ash_kneads]/2 份灰了。"))
 		if(ash_kneads >= 2 && sand_added)
 			var/obj/item/natural/clay/refined/refined_clay = new(loc)
 			refined_clay.is_wet = FALSE
-			to_chat(user, span_notice("The clay is now fully refined and ready for porcelain work."))
+			to_chat(user, span_notice("这团黏土已经完全精炼好，可以拿来制作瓷器了。"))
 			qdel(src)
 			return
 		if(istype(src, /obj/item/natural/clay/kneaded))
@@ -198,15 +198,15 @@
 	if(istype(W, /obj/item/natural/stone) || istype(W, /obj/item/natural/dirtclod/sand) || istype(W, /obj/item/alch/stonedust))
 		var/is_stonedust = istype(W, /obj/item/alch/stonedust)
 		if(is_stonedust && user.get_skill_level(/datum/skill/craft/ceramics) < SKILL_LEVEL_JOURNEYMAN)
-			to_chat(user, span_warning("I need journeyman pottery knowledge to prepare glass batches."))
+			to_chat(user, span_warning("我要有熟练陶艺知识，才能调制玻璃料。"))
 			return ..()
 		if(ash_kneads < 2)
-			to_chat(user, span_warning("I need to knead in 2 ash before adding sand."))
+			to_chat(user, span_warning("我得先揉进 2 份灰，才能再加沙子。"))
 			return
 		if(sand_added)
-			to_chat(user, span_warning("This clay already has enough sand mixed in."))
+			to_chat(user, span_warning("这团黏土里已经混入足够的沙子了。"))
 			return
-		to_chat(user, span_notice("I knead the final mineral temper into the clay to refine it."))
+		to_chat(user, span_notice("我把最后的矿物回火料揉进黏土中，进一步精炼它。"))
 		playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
 		if(!do_after(user, get_knead_time(user, 2 SECONDS), target = src))
 			return
@@ -220,11 +220,11 @@
 			if(is_stonedust)
 				var/obj/item/natural/clay/glassbatch/glass_batch = new(loc)
 				glass_batch.is_wet = FALSE
-				to_chat(user, span_notice("The clay mixture is now ready to be smelted into glass."))
+				to_chat(user, span_notice("这份黏土混合料现在已经可以拿去熔成玻璃了。"))
 			else
 				var/obj/item/natural/clay/refined/refined_clay = new(loc)
 				refined_clay.is_wet = FALSE
-				to_chat(user, span_notice("The clay is now fully refined and ready for porcelain work."))
+				to_chat(user, span_notice("这团黏土已经完全精炼好，可以拿来制作瓷器了。"))
 			qdel(src)
 			return
 		if(istype(src, /obj/item/natural/clay/kneaded))
@@ -234,7 +234,7 @@
 			partial.is_wet = FALSE
 			qdel(src)
 			return
-		to_chat(user, span_notice("This clay is partially refined. I need more ash to finish it."))
+		to_chat(user, span_notice("这团黏土只完成了部分精炼。我还需要更多灰才能完成它。"))
 		return
 
 	return ..()
@@ -314,4 +314,4 @@
 		burning = burning + input
 		if(burning >= burntime && color != burned_color)
 			color = burned_color
-			name = "burned [name]"
+			name = "烧坏的[name]"

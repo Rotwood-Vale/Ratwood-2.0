@@ -1,10 +1,10 @@
 
 /datum/weather/rain
-	name = "rain"
+	name = "雨"
 	desc = ""
 
 	telegraph_duration = 10 SECONDS
-	telegraph_message = span_warning("The sky begins to weep.")
+	telegraph_message = span_warning("天空开始落泪。")
 	telegraph_sound = 'sound/blank.ogg'
 
 	weather_message = ""

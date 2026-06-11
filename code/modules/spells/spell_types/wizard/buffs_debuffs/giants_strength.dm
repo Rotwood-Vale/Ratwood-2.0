@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/invoked/giants_strength
-	name = "Giant's Strength"
+	name = "巨人之力"
 	overlay_state = "giantsstrength"
-	desc = "Strengthen the target. (+3 Strength)" // Design Note: +3 instead of +5 for direct damage stats
+	desc = "强化目标。`+3 力量`" // Design Note: +3 instead of +5 for direct damage stats
 	cost = 4 // Direct DPS stats
 	xp_gain = TRUE
 	releasedrain = 60
@@ -13,7 +13,7 @@
 	school = "transmutation"
 	overlay_state = "giants_strength"
 	spell_tier = 2
-	invocations = list("Vis Gigantis.") // Vis - Strength. Gigantis - Singular possessive form.
+	invocations = list("巨人之力，加诸其身。") // Vis - Strength. Gigantis - Singular possessive form.
 	invocation_type = "whisper"
 	glow_color = GLOW_COLOR_BUFF
 	glow_intensity = GLOW_INTENSITY_LOW
@@ -34,19 +34,19 @@
 	playsound(get_turf(spelltarget), 'sound/magic/haste.ogg', 80, TRUE, soundping = TRUE)
 
 	if(spelltarget != user)
-		user.visible_message("[user] mutters an incantation and [spelltarget] 's muscles strengthen and grow.")
-		to_chat(user, span_notice("With another person as a conduit, my spell's duration is doubled."))
+		user.visible_message("[user] 低声念诵咒文，[spelltarget] 的肌肉随之隆起壮大。")
+		to_chat(user, span_notice("借由他人作为媒介，我的法术持续时间翻倍了。"))
 		spelltarget.apply_status_effect(/datum/status_effect/buff/giants_strength/other)
 	else
-		user.visible_message("[user] mutters an incantation and their muscles strengthen and grow.")
+		user.visible_message("[user] 低声念诵咒文，肌肉随之隆起壮大。")
 		spelltarget.apply_status_effect(/datum/status_effect/buff/giants_strength)
 
 	return TRUE
 
 #define GIANTSSTRENGTH_FILTER "giantsstrength_glow"
 /atom/movable/screen/alert/status_effect/buff/giants_strength
-	name = "Giant's Strength"
-	desc = "My muscles are strengthened. (+3 Strength)"
+	name = "巨人之力"
+	desc = "我的肌肉被强化了。`+3 力量`"
 	icon_state = "buff"
 
 /datum/status_effect/buff/giants_strength
@@ -65,12 +65,12 @@
 	if (!filter)
 		owner.add_filter(GIANTSSTRENGTH_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 200, "size" = 1))
 		ADD_TRAIT(owner, TRAIT_STRENGTH_UNCAPPED, TRAIT_MIRACLE)
-	to_chat(owner, span_warning("My muscles strengthen."))
+	to_chat(owner, span_warning("我的肌肉正变得更加强壮。"))
 
 
 /datum/status_effect/buff/giants_strength/on_remove()
 	. = ..()
-	to_chat(owner, span_warning("My strength fades away..."))
+	to_chat(owner, span_warning("我的力量正在渐渐消退……"))
 	owner.remove_filter(GIANTSSTRENGTH_FILTER)
 	REMOVE_TRAIT(owner, TRAIT_STRENGTH_UNCAPPED, TRAIT_MIRACLE)
 

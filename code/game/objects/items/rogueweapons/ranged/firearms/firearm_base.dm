@@ -10,9 +10,9 @@ This is combined with their accuracy bonus, bypassing PER value.
 At least, it should. Fingers crossed.
 */
 /obj/item/ramrod
-	name = "ramrod"
+	name = "通条"
 	icon = 'modular_helmsguard/icons/obj/items/arquebus_items.dmi'
-	desc = "A ramrod used for reloading a firearm. Don't lose this."
+	desc = "用于给火器装填的通条。可别弄丢了。"
 	icon_state = "ramrod"
 	item_state = "ramrod"
 	slot_flags = SLOT_BELT_L | SLOT_BELT_R | ITEM_SLOT_HIP
@@ -21,11 +21,11 @@ At least, it should. Fingers crossed.
 	grid_width = 32
 
 /obj/item/powderflask
-	name = "powderflask"
+	name = "火药瓶"
 	icon = 'modular_helmsguard/icons/obj/items/arquebus_items.dmi'
-	desc = "For the layman, smokepowder is an arcyne bit of trickery. \
-	Its creation is an art lost within most of Grimoria, only seen in the likes of Zybantium. \
-	And yet? You've a flask of it. Guard it well."
+	desc = "对门外汉而言，烟火药简直像某种奥术把戏。 \
+	它的制法在格里莫里亚大多数地区都已失传，只在齐班提姆之类的地方尚能见到。 \
+	可如今？你手里就有一瓶。务必看紧它。"
 	icon_state = "powderflask"
 	item_state = "powderflask"
 	slot_flags = SLOT_BELT_L | SLOT_BELT_R | ITEM_SLOT_NECK | ITEM_SLOT_HIP
@@ -35,8 +35,8 @@ At least, it should. Fingers crossed.
 	dropshrink = 0.6
 
 /obj/item/gun/ballistic/firearm
-	name = "PARENT FIREARM"
-	desc = "IF YOU ARE SEEING THIS, YELL AT CARL!!!"
+	name = "火器原型"
+	desc = "如果你看到了这个，请去喊卡尔！！！"
 	icon = 'modular_helmsguard/icons/weapons/arquebus.dmi'
 	icon_state = "arquebus"
 	item_state = "arquebus"
@@ -102,13 +102,13 @@ At least, it should. Fingers crossed.
 	else
 		if(myrod)
 			playsound(src, "sound/items/sharpen_short1.ogg",  100)
-			to_chat(user, "<span class='warning'>I draw the ramrod from the [src]!</span>")
+			to_chat(user, "<span class='warning'>我从[src]里抽出了通条！</span>")
 			var/obj/item/ramrod/AM
 			for(AM in src)
 				user.put_in_hands(AM)
 				myrod = null
 		else
-			to_chat(user, "<span class='warning'>There is no rod stowed in the [src]!</span>")
+			to_chat(user, "<span class='warning'>[src]里没有收着通条！</span>")
 
 
 /datum/intent/shoot/firearm
@@ -185,49 +185,49 @@ At least, it should. Fingers crossed.
 
 	if(istype(A, /obj/item/ammo_casing))
 		if(chambered)
-			to_chat(user, "<span class='warning'>There is already a [chambered] in the [src]!</span>")
+			to_chat(user, "<span class='warning'>[src]里已经装着[chambered]了！</span>")
 			return
 		if(!gunpowder)
-			to_chat(user, "<span class='warning'>You must fill the [src] with smokepowder first!</span>")
+			to_chat(user, "<span class='warning'>我得先往[src]里装入烟火药！</span>")
 			return
 		if((loc == user) && (user.get_inactive_held_item() != src))
 			return
 		playsound(src, "modular_helmsguard/sound/arquebus/insert.ogg",  100)
-		user.visible_message("<span class='notice'>[user] forces a [A] down the barrel of the [src].</span>")
+		user.visible_message("<span class='notice'>[user]把[A]硬塞进了[src]的枪管。</span>")
 		..()
 
 	if(istype(A, /obj/item/powderflask))
 		if(gunpowder)
-			user.visible_message("<span class='notice'>The [src] is already filled with smokepowder!</span>")
+			user.visible_message("<span class='notice'>[src]里已经装满烟火药了！</span>")
 			return
 		else
 			playsound(src, "modular_helmsguard/sound/arquebus/pour_powder.ogg",  100)
 			if(do_after(user, load_time_skill, src))
-				user.visible_message("<span class='notice'>[user] fills the [src] with smokepowder.</span>")
+				user.visible_message("<span class='notice'>[user]往[src]里装填了烟火药。</span>")
 				gunpowder = TRUE
 			return
 	if(istype(A, /obj/item/ramrod))
 		var/obj/item/ramrod/R=A
 		if(!reloaded)
 			if(chambered)
-				user.visible_message("<span class='notice'>[user] begins ramming the [R.name] down the barrel of the [src] .</span>")
+				user.visible_message("<span class='notice'>[user]开始用[R.name]将装药捣入[src]的枪管。</span>")
 				playsound(src, "modular_helmsguard/sound/arquebus/ramrod.ogg",  100)
 				if(do_after(user, load_time_skill, src))
-					user.visible_message("<span class='notice'>[user] has finished reloading the [src].</span>")
+					user.visible_message("<span class='notice'>[user]完成了[src]的装填。</span>")
 					reloaded = TRUE
 				return
 		if(reloaded && !myrod)
 			user.transferItemToLoc(R, src)
 			myrod = R
 			playsound(src, "modular_helmsguard/sound/arquebus/musketload.ogg",  100)
-			user.visible_message("<span class='notice'>[user] stows the [R.name] under the barrel of the [src].</span>")
+			user.visible_message("<span class='notice'>[user]把[R.name]收到了[src]的枪管下方。</span>")
 		if(!chambered && !myrod)
 			user.transferItemToLoc(R, src)
 			myrod = R
 			playsound(src, "modular_helmsguard/sound/arquebus/musketload.ogg",  100)
-			user.visible_message("<span class='notice'>[user] stows the [R.name] under the barrel of the [src] without chambering it.</span>")
+			user.visible_message("<span class='notice'>[user]把[R.name]收到了[src]的枪管下方，但没有完成装填。</span>")
 		if(!myrod == null)
-			to_chat(user, span_warning("There's already a [R.name] inside of the [name]."))
+			to_chat(user, span_warning("[name]里面已经有一根[R.name]了。"))
 			return
 
 /obj/item/gun/ballistic/firearm/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
@@ -277,7 +277,7 @@ At least, it should. Fingers crossed.
 	if(prob(accident_chance))
 		user.flash_fullscreen("whiteflash")
 		user.apply_damage(rand(5,15), BURN, pick(BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND))
-		user.visible_message("<span class='danger'>[user] accidentally burnt themselves while firing the [src].</span>")
+		user.visible_message("<span class='danger'>[user]在发射[src]时不慎把自己烧伤了。</span>")
 		user.emote("painscream")
 		if(prob(60))
 			user.dropItemToGround(src)
@@ -285,7 +285,7 @@ At least, it should. Fingers crossed.
 			user.Immobilize(30)
 
 	if(prob(accident_chance))
-		user.visible_message("<span class='danger'>[user] is knocked back by the recoil!</span>")
+		user.visible_message("<span class='danger'>[user]被[src]的后坐力震退了！</span>")
 		user.throw_at(knockback, rand(1,2), 7)
 		if(prob(accident_chance))
 			user.dropItemToGround(src)
@@ -304,14 +304,14 @@ At least, it should. Fingers crossed.
 	return ..()
 
 /obj/item/ammo_box/magazine/internal/firearm
-	name = "firearm internal magazine"
+	name = "火器内置弹仓"
 	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead
 	caliber = "lead_sphere"
 	max_ammo = 1
 	start_empty = TRUE
 
 /obj/effect/particle_effect/smoke/arquebus
-	name = "smoke"
+	name = "烟雾"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "smoke"
 	pixel_x = -32

@@ -4,11 +4,11 @@
 
 
 /obj/item/mundane/puzzlebox/easy
-	name = "\improper wooden puzzle-box"
-	desc = "A puzzle box."
+	name = "\improper 木制谜盒"
+	desc = "一个谜盒。"
 	icon = 'modular_azurepeak/icons/obj/items/mundanities.dmi'
 	icon_state = "wood_box"
-	var/fluff_desc = "Wow."
+	var/fluff_desc = "哇。"
 	var/list/finished_ckeys = list()
 	var/dice_roll = null
 	var/alert = null
@@ -20,27 +20,27 @@
 /obj/item/mundane/puzzlebox/easy/Initialize(mapload)
 	. = ..()
 	dice_roll = rand(6,15)
-	fluff_desc = pick("It, frankly, looks rather depressing.","I can see an engraving of Psydon sending the Comet Syon on the side.","It doesn't look so difficult.","It's dusty and boring.","Why do I want to play with this for hours?","I could probably get a vagrant to solve this.","It looks like it was made for fools.")
+	fluff_desc = pick("坦白说，它看起来相当令人沮丧。","我能看见侧面刻着普赛顿送出Syon彗星的雕纹。","看起来似乎没那么难。","它又脏又无聊。","为什么我会想花上几个小时摆弄这玩意？","我大概能找个流浪汉把它解开。","看起来像是给傻子做的。")
 	desc += "[fluff_desc]"
 
 
 /obj/item/mundane/puzzlebox/easy/attack_self(mob/living/user)
 	var/ckey = user.ckey
 	if(ckey in finished_ckeys)
-		to_chat(user, span_warning("I've already tried my hand at [src]."))
+		to_chat(user, span_warning("我已经试过解开[src]了。"))
 		return
 	playsound(src.loc, 'sound/items/wood_sharpen.ogg', 75, TRUE)
 	playsound(src.loc, 'sound/items/visor.ogg', 75, TRUE)
-	if (alert(user, "My fingers trace the outside of this box. It looks of average difficulty. Do I try to solve it?", "ROGUETOWN", "Yes", "No") != "Yes")
+	if (alert(user, "我的手指摩挲着盒子的外壁。它看起来难度适中。我要试着解开它吗？", "ROGUETOWN", "是", "否") != "是")
 		return
 	if(do_after(user,70, target = src))
 		if((dice_roll) <= user.STAINT)
-			to_chat(user, span_notice("I solve [src] fairly easily. I feel rather satisfied."))
+			to_chat(user, span_notice("我相当轻松地解开了[src]。我感到颇为满足。"))
 			user.add_stress(/datum/stressevent/puzzle_easy)
 			finished_ckeys += ckey
 			playsound(src.loc, 'sound/foley/doors/lock.ogg', 75, TRUE)
 		else
-			to_chat(user, span_warning("I can't solve \the [src]. Cack! Frustrated, I leave it alone."))
+			to_chat(user, span_warning("我解不开[src]。啧！我恼火地把它丢在一边。"))
 			user.add_stress(/datum/stressevent/puzzle_fail)
 			finished_ckeys += ckey
 			playsound(src.loc, 'sound/foley/doors/lockrattle.ogg', 75, TRUE)
@@ -49,7 +49,7 @@
 //medium
 
 /obj/item/mundane/puzzlebox/medium
-	name = "\improper ebony puzzle-box"
+	name = "\improper 乌木谜盒"
 	icon = 'modular_azurepeak/icons/obj/items/mundanities.dmi'
 	icon_state = "ebon_box"
 	var/fluff_desc = null
@@ -64,26 +64,26 @@
 /obj/item/mundane/puzzlebox/medium/Initialize(mapload)
 	. = ..()
 	dice_roll = rand(6,20)
-	fluff_desc = pick("Its surface shines with polished ebony.","I can see an engraving of a Snow-Elf on the side.","It looks like it could challenge an average man.","I wish my personality was like this box's.","Why do I want to play with this for hours?","I could probably sell this to a wizard's apprentice.","It looks...sufficient.")
+	fluff_desc = pick("它的表面闪着抛光乌木的光泽。","我能看见侧面刻着一位雪精灵。","看起来足以难住一般人。","真希望我的性格能像这盒子一样。","为什么我会想花上几个小时摆弄这玩意？","我大概能把它卖给某个巫师学徒。","它看起来......还算像样。")
 	desc += "[fluff_desc]"
 
 /obj/item/mundane/puzzlebox/medium/attack_self(mob/living/user)
 	var/ckey = user.ckey
 	if(ckey in finished_ckeys)
-		to_chat(user, span_warning("I've already tried my hand at [src]."))
+		to_chat(user, span_warning("我已经试过解开[src]了。"))
 		return
 	playsound(src.loc, 'sound/items/wood_sharpen.ogg', 75, TRUE)
 	playsound(src.loc, 'sound/items/visor.ogg', 75, TRUE)
-	if (alert(user, "My fingers trace the outside of this box. It looks of average difficulty. Do I try to solve it?", "ROGUETOWN", "Yes", "No") != "Yes")
+	if (alert(user, "我的手指摩挲着盒子的外壁。它看起来难度适中。我要试着解开它吗？", "ROGUETOWN", "是", "否") != "是")
 		return
 	if(do_after(user,70, target = src))
 		if((dice_roll) <= user.STAINT)
-			to_chat(user, span_notice("I solve [src] fairly easily. I feel rather satisfied."))
+			to_chat(user, span_notice("我相当轻松地解开了[src]。我感到颇为满足。"))
 			user.add_stress(/datum/stressevent/puzzle_medium)
 			finished_ckeys += ckey
 			playsound(src.loc, 'sound/foley/doors/lock.ogg', 75, TRUE)
 		else
-			to_chat(user, span_warning("I can't solve [src]. Frustrated, I leave it alone."))
+			to_chat(user, span_warning("我解不开[src]。我恼火地把它丢在一边。"))
 			user.add_stress(/datum/stressevent/puzzle_fail)
 			finished_ckeys += ckey
 			playsound(src.loc, 'sound/foley/doors/lockrattle.ogg', 75, TRUE)
@@ -94,7 +94,7 @@
 
 
 /obj/item/mundane/puzzlebox/impossible //literally nearly impossible to solve - if you do, you get a fairly lengthy buff and a stat boost.
-	name = "\improper royal puzzle-box"
+	name = "\improper 皇家谜盒"
 	icon = 'modular_azurepeak/icons/obj/items/mundanities.dmi'
 	icon_state = "grimace_box"
 	var/fluff_desc = null
@@ -108,25 +108,25 @@
 /obj/item/mundane/puzzlebox/impossible/Initialize(mapload)
 	. = ..()
 	dice_roll = rand(11,20)
-	fluff_desc = pick("It, frankly, looks nearly impossible.","Its centerpiece is that of Astrata banishing a heretic from this world.","Without doubt, this is rather befuddling.","It looks arcane and nearly-impossible.","Why do I feel like I could try for hours and not succeed at this?","Even a bored archivist would probably have trouble with this one.","It looks nearly impossible.")
+	fluff_desc = pick("坦白说，它看起来几乎不可能解开。","它中央刻着阿斯特拉塔将异端逐出世间的图案。","毫无疑问，这玩意让人相当迷惑。","它看起来充满奥秘，几乎不可能解开。","为什么我觉得自己试上几个小时也不会成功？","就连无聊透顶的档案员大概也会在这玩意前犯难。","它看起来几乎不可能解开。")
 	desc += "[fluff_desc]"
 
 /obj/item/mundane/puzzlebox/impossible/attack_self(mob/living/user)
 	var/ckey = user.ckey
 	if(ckey in finished_ckeys)
-		to_chat(user, span_warning("I've already tried my hand at [src]."))
+		to_chat(user, span_warning("我已经试过解开[src]了。"))
 		return
 	playsound(src.loc, 'sound/items/wood_sharpen.ogg', 75, TRUE)
 	playsound(src.loc, 'sound/items/visor.ogg', 75, TRUE)
-	if (alert(user, "My fingers trace the outside of this box. It looks nearly impossible. Do I try to solve it?", "ROGUETOWN", "Yes", "No") != "Yes")
+	if (alert(user, "我的手指摩挲着盒子的外壁。它看起来几乎不可能解开。我要试着解开它吗？", "ROGUETOWN", "是", "否") != "是")
 		return
 	if(do_after(user,100, target = src))
 		if((dice_roll) + 4 <= user.STAINT)
-			to_chat(user, span_notice("After much deliberation, I solve \the [src]!"))
+			to_chat(user, span_notice("经过长久思索，我解开了[src]！"))
 			user.add_stress(/datum/stressevent/puzzle_impossible)
 			finished_ckeys += ckey
 			playsound(src.loc, 'sound/foley/doors/lockrattle.ogg', 75, TRUE)
-			to_chat(user, span_notice("As I pop open \the [src], I feel a tingling wave run from my head to my feet. A piece of an azure crystal tumbles out. When I grab it, it's gone- and I suddenly feel invigorated."))
+			to_chat(user, span_notice("当我打开[src]时，一阵酥麻从头顶流窜到脚底。一块蔚蓝色水晶碎片滚了出来。我伸手一抓，它却消失无踪，而我忽然感到精神振奋。"))
 			user.STAINT += rand(1,5)
 			user.STASTR += rand(1,5)
 			user.STASPD += rand(1,5)
@@ -136,7 +136,7 @@
 			playsound(src.loc, 'sound/foley/doors/lock.ogg', 75, TRUE)
 			playsound(src.loc, 'sound/items/visor.ogg', 75, TRUE)
 		else
-			to_chat(user, span_warning("I can't even start to solve [src]. Feeling like an absolute fool, I put it aside."))
+			to_chat(user, span_warning("我甚至无从开始解开[src]。我感觉自己蠢透了，只好把它搁到一边。"))
 			user.add_stress(/datum/stressevent/puzzle_fail)
 			finished_ckeys += ckey
 			playsound(src.loc, 'sound/foley/doors/lockrattle.ogg', 75, TRUE)
@@ -145,8 +145,8 @@
 // food cans
 
 /obj/item/reagent_containers/food/snacks/canned
-	name = "corrugated tinpot"
-	desc = "Corrugated tinplate concealing tinfood."
+	name = "波纹铁罐"
+	desc = "波纹马口铁里封着罐头食物。"
 	icon = 'modular_azurepeak/icons/obj/items/tincans.dmi'
 	icon_state = "acan_s"
 	sellprice = 70
@@ -183,42 +183,42 @@
 
 
 /obj/item/reagent_containers/food/snacks/canned/proc/name_desc() //rename and new description upon opening
-	name = "saltpot"
-	desc += " It has been opened, revealing a salty-smelling mush on the inside. Somehow still seems like it'll last forever."
+	name = "盐罐"
+	desc += " 它已经被打开了，里面露出一团散发咸味的糊状物。不知为何，看起来依旧能放到天荒地老。"
 
 
 /obj/item/reagent_containers/food/snacks/canned/attackby(obj/A, mob/living/user, loc, params)
 
 	if(src.can_sealed == 0)
-		to_chat(user, span_warning("It's already open!"))
+		to_chat(user, span_warning("它已经打开了！"))
 
 	if(src.can_sealed == 1)
 
 //		if(A.type in subtypesof(/obj/item/rogueweapon/huntingknife)) //knife
 		if(istype(A, /obj/item/rogueweapon/huntingknife))
-			to_chat(user, span_notice("I dig in the blade and start opening the top of the container..."))
+			to_chat(user, span_notice("我把刀刃嵌进去，开始撬开容器的顶部......"))
 			playsound(src.loc, 'sound/items/canned_food_open.ogg', 75, TRUE)
 			if(do_after(user,50, target = src))
 				update_icon()
 				src.name_desc()
 				src.can_sealed = 0
 				update_icon()
-				to_chat(user, span_notice("The scent of salty food hits my nostrils as I tear the flimsy top off of the saltpot."))
+				to_chat(user, span_notice("当我扯下盐罐脆薄的顶部时，一股咸味食物的气味扑进了我的鼻腔。"))
 				return
 
 //		if(A.type in subtypesof(/obj/item/natural/stone)) //in case someone wants to bash it open with a BOULDER i guess
 		if(istype(A, /obj/item/natural/stone))
-			to_chat(user, span_notice("I start messily bashing the can open..."))
+			to_chat(user, span_notice("我开始乱七八糟地把罐头砸开......"))
 			playsound(src.loc, 'sound/items/canned_food_open.ogg', 75, TRUE)
 			if(do_after(user,70, target = src))
 				src.name_desc()
 				src.can_sealed = 0
 				update_icon()
-				to_chat(user, span_notice("The scent of salty food hits my nostrils as I bash the saltpot open."))
+				to_chat(user, span_notice("当我把盐罐砸开时，一股咸味食物的气味扑进了我的鼻腔。"))
 				return
 
 		else
-			to_chat(user, span_warning("I can't open \the [src] with this..."))
+			to_chat(user, span_warning("我没法用这个打开[src]......"))
 			return FALSE
 
 
@@ -239,7 +239,7 @@
 		return
 
 	if(bitecount == 4)
-		to_chat(user, span_warning("Empty."))
+		to_chat(user, span_warning("空了。"))
 		sellprice = 10 //u ate da FOOD
 		return
 	..()
@@ -248,5 +248,5 @@
 
 	if(bitecount == 4) //if it empty, throw up da empty sprite
 		icon_state = "acan_e"
-		name = "empty saltpot"
-		desc = "Corrugated tinplate and disgusting-smelling slime."
+		name = "空盐罐"
+		desc = "只剩波纹马口铁与散发恶臭的黏糊残渣。"

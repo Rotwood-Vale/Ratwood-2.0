@@ -4,20 +4,20 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 
 /obj/item/clothing/head/roguetown/crown/fakecrown
-	name = "fake crown"
-	desc = "You shouldn't be seeing this."
+	name = "假王冠"
+	desc = "你本不该看到这个。"
 	icon_state = "serpcrown"
 
 /obj/item/clothing/head/roguetown/crown/surplus
-	name = "crown"
+	name = "王冠"
 	icon_state = "serpcrowno"
 	sellprice = 100
 	allowed_race = list(/datum/species/goblinp)
 	dropshrink = null
 
 /obj/item/clothing/head/roguetown/crown/byos
-	name = "ancient crown"
-	desc = "ooga chacka..."
+	name = "远古王冠"
+	desc = "乌嘎 恰卡……"
 	color = "#ffe6db"
 	icon_state = "serpcrowno"
 	sellprice = 100
@@ -25,7 +25,7 @@
 	dropshrink = null
 
 /obj/item/clothing/head/roguetown/crown/sparrowcrown
-	name = "champion's circlet"
+	name = "冠军头环"
 	desc = ""
 	icon_state = "sparrowcrown"
 	//dropshrink = 0
@@ -34,7 +34,7 @@
 	sellprice = 50
 
 /obj/item/clothing/head/roguetown/nyle
-	name = "jewel of nyle"
+	name = "奈尔宝珠"
 	icon_state = "nile"
 	body_parts_covered = null
 	slot_flags = ITEM_SLOT_HEAD
@@ -45,13 +45,13 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 
 /obj/item/clothing/head/roguetown/nyle/consortcrown
-	name = "gem-encrusted crown"
+	name = "镶宝王冠"
 	icon_state = "consortcrown"
 	item_state = "consortcrown"
 	sellprice = 100
 
 /obj/item/clothing/head/roguetown/circlet
-	name = "golden circlet"
+	name = "金色头环"
 	icon_state = "circlet"
 	item_state = "circlet"
 	sewrepair = FALSE
@@ -59,62 +59,62 @@
 	sellprice = 50
 
 /obj/item/clothing/head/roguetown/circlet/carvedgem
-	name = "generic carved gem circlet"
-	desc = "You shouldn't see this."
+	name = "通用雕刻宝石头环"
+	desc = "你本不该看到这个。"
 	smeltresult = null
 	salvage_result = null
 
 /obj/item/clothing/head/roguetown/circlet/carvedgem/jade
-	name = "jade circlet"
-	desc = "An ornate circlet carved out of jade."
+	name = "玉头环"
+	desc = "一顶由玉雕成的华美头环。"
 	icon_state = "circlet_jade"
 	sellprice = 65
 
 /obj/item/clothing/head/roguetown/circlet/carvedgem/amber
-	name = "amber circlet"
-	desc = "An ornate circlet carved out of amber."
+	name = "琥珀头环"
+	desc = "一顶由琥珀雕成的华美头环。"
 	icon_state = "circlet_amber"
 	sellprice = 65
 
 /obj/item/clothing/head/roguetown/circlet/carvedgem/shell
-	name = "shell circlet"
-	desc = "An ornate circlet carved out of shell."
+	name = "贝壳头环"
+	desc = "一顶由贝壳雕成的华美头环。"
 	icon_state = "circlet_shell"
 	sellprice = 25
 
 /obj/item/clothing/head/roguetown/circlet/carvedgem/rose
-	name = "rosestone circlet"
-	desc = "An ornate circlet carved out of rosestone."
+	name = "玫瑰石头环"
+	desc = "一顶由玫瑰石雕成的华美头环。"
 	icon_state = "circlet_rose"
 	sellprice = 30
 
 /obj/item/clothing/head/roguetown/circlet/carvedgem/turq
-	name = "cerulite circlet"
-	desc = "An ornate circlet carved out of cerulite."
+	name = "天青石头环"
+	desc = "一顶由天青石雕成的华美头环。"
 	icon_state = "circlet_turq"
 	sellprice = 90
 
 /obj/item/clothing/head/roguetown/circlet/carvedgem/onyxa
-	name = "onyxa circlet"
-	desc = "An ornate circlet carved out of onyxa."
+	name = "缟玛瑙头环"
+	desc = "一顶由缟玛瑙雕成的华美头环。"
 	icon_state = "circlet_onyxa"
 	sellprice = 45
 
 /obj/item/clothing/head/roguetown/circlet/carvedgem/coral
-	name = "heartstone circlet"
-	desc = "An ornate circlet carved out of heartstone."
+	name = "心石头环"
+	desc = "一顶由心石雕成的华美头环。"
 	icon_state = "circlet_coral"
 	sellprice = 75
 
 /obj/item/clothing/head/roguetown/circlet/carvedgem/opal
-	name = "opal circlet"
-	desc = "An ornate circlet carved out of opal."
+	name = "欧泊头环"
+	desc = "一顶由欧泊雕成的华美头环。"
 	icon_state = "circlet_opal"
 	sellprice = 95
 
 /obj/item/clothing/head/roguetown/circlet/carvedgem/chitin
-	name = "chitin circlet"
-	desc = "An ornate circlet carved out of beetle chitin."
+	name = "甲壳头环"
+	desc = "一顶由甲虫甲壳雕成的华美头环。"
 	icon_state = "circlet_shell"
 	color = "#7B8C5E"
 	sellprice = 20

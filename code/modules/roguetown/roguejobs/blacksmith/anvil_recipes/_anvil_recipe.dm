@@ -1,7 +1,7 @@
 /datum/anvil_recipe
 	abstract_type = /datum/anvil_recipe
 	var/name
-	var/category = "Misc"
+	var/category = "杂项"
 	var/list/additional_items = list()
 	var/material_quality = 0 // Quality of the bar(s) used. Accumulated per added ingot.
 	var/num_of_materials = 1 // Total number of materials used. Quality divided among them.
@@ -56,7 +56,7 @@
 	if(!(bookarmor.armor == "")&&!isnull(bookarmor.armor) )
 		var/obj/item/clothing/C = initial(new created_item)
 		if(C.body_parts_covered)
-			html += "\n<b>COVERAGE: </b>"
+			html += "\n<b>覆盖部位： </b>"
 			html += " | "
 			if(C.body_parts_covered == C.body_parts_covered_dynamic)
 				for(var/zone in body_parts_covered2organ_names(C.body_parts_covered))
@@ -74,7 +74,7 @@
 					html += "<b><font color = '#470000'>[capitalize(zone)]</font></b> | "
 			html += "<br>"
 		if(C.body_parts_inherent)
-			html += "<b>CANNOT BE PEELED: </b>"
+			html += "<b>不可剥离： </b>"
 			var/list/inherentList = body_parts_covered2organ_names(C.body_parts_inherent)
 			if(length(inherentList) == 1)
 				html += "<b><font color = '#000833'>[capitalize(inherentList[1])]</font></b><br>"
@@ -85,84 +85,84 @@
 			html += "<br>"
 		if(C.prevent_crits)
 			if(length(C.prevent_crits))
-				html += "\n<b>PREVENTS CRITS:</b>"
+				html += "\n<b>防止重创：</b>"
 				for(var/X in C.prevent_crits)
 					if(X == BCLASS_PICK)	//BCLASS_PICK is named "stab", and "stabbing" is its own damage class. Prevents confusion.
-						X = "pick"
+						X = "凿击"
 					html += ("\n<b>[capitalize(X)]</b><br>")
-		html += "INTEGRITY: [bookarmor.max_integrity]<br>"
+		html += "耐久： [bookarmor.max_integrity]<br>"
 		if(bookarmor.armor_class == ARMOR_CLASS_HEAVY)
-			html += "<b>AC: </b>HEAVY<br>"
+			html += "<b>护甲等级： </b>重甲<br>"
 		if(bookarmor.armor_class == ARMOR_CLASS_MEDIUM)
-			html += "<b>AC: </b>MEDIUM<br>"
+			html += "<b>护甲等级： </b>中甲<br>"
 		if(bookarmor.armor_class == ARMOR_CLASS_LIGHT)
-			html += "<b>AC: </b> LIGHT<br>"
+			html += "<b>护甲等级： </b>轻甲<br>"
 	else if (!isnull(bookweapon) && bookweapon.force>1)
-		html += "Combat Properties<br>"
+		html += "战斗属性<br>"
 		if(bookweapon.minstr)
-			html += "\n<b>MIN.STR:</b> [bookweapon.minstr]<br>"
+			html += "\n<b>最低力量：</b> [bookweapon.minstr]<br>"
 		
 		if(bookweapon.force)
-			html += "\n<b>FORCE:</b> [bookweapon.force]<br>"
+			html += "\n<b>威力：</b> [bookweapon.force]<br>"
 		if(bookweapon.gripped_intents && !bookweapon.wielded)
 			if(bookweapon.force_wielded)
-				html += "\n<b>WIELDED FORCE:</b> [bookweapon.force_wielded]<br>"
+				html += "\n<b>双手威力：</b> [bookweapon.force_wielded]<br>"
 
 		if(bookweapon.wbalance)
-			html += "\n<b>BALANCE: </b>"
+			html += "\n<b>平衡： </b>"
 			if(bookweapon.wbalance == WBALANCE_HEAVY)
-				html += "Heavy<br>"
+				html += "沉重<br>"
 			if(bookweapon.wbalance == WBALANCE_SWIFT)
-				html += "Swift<br>"
+				html += "迅捷<br>"
 			
 
 		if(bookweapon.wlength != WLENGTH_NORMAL)
-			html += "\n<b>LENGTH:</b> "
+			html += "\n<b>长度：</b> "
 			switch(bookweapon.wlength)
 				if(WLENGTH_SHORT)
-					html += "Short<br>"
+					html += "短<br>"
 				if(WLENGTH_LONG)
-					html += "Long<br>"
+					html += "长<br>"
 				if(WLENGTH_GREAT)
-					html += "Great<br>"
+					html += "巨型<br>"
 
 		if(bookweapon.alt_intents)
-			html += "\n<b>GRIP: ALT-GRIP (right click while in hand)</b><br>"
+			html += "\n<b>握持：替代握法（手持时右键）</b><br>"
 		if(bookweapon.gripped_intents)
-			html += "\n<b>TWO-HANDED: Yes</b><br>"
+			html += "\n<b>双手：是</b><br>"
 
 		var/shafttext = get_blade_dulling_text(bookweapon, verbose = TRUE)
 		if(shafttext)
-			html += "\n<b>SHAFT:</b> [shafttext] <br>"
+			html += "\n<b>杆柄：</b> [shafttext] <br>"
 
 		if(bookweapon.twohands_required)
-			html += "\n<b>BULKY</b><br>"
+			html += "\n<b>笨重</b><br>"
 		if(bookweapon.can_parry)
-			html += "\n<b>DEFENSE:</b> [bookweapon.wdefense]<br>"
+			html += "\n<b>防御：</b> [bookweapon.wdefense]<br>"
 		if(bookweapon.associated_skill && bookweapon.associated_skill.name)
-			html += "\n<b>SKILL:</b> [bookweapon.associated_skill.name]<br>"
+			html += "\n<b>技能：</b> [bookweapon.associated_skill.name]<br>"
 		
 		if(bookweapon.intdamage_factor != 1 && bookweapon.force >= 5)
-			html += "\n<b>INTEGRITY DAMAGE:</b> [bookweapon.intdamage_factor * 100]%<br>"
+			html += "\n<b>耐久伤害：</b> [bookweapon.intdamage_factor * 100]%<br>"
 
 	
 	if(craftdiff > 0)
-		html += "<h1></h1>For those of [SSskills.level_names_plain[craftdiff]] skills<br>"
+		html += "<h1></h1>适用于 [SSskills.level_names_plain[craftdiff]] 级熟练度<br>"
 	else
-		html += "<h1></h1>Suitable for all skills<br>"
+		html += "<h1></h1>适用于所有熟练度<br>"
 
 	if(appro_skill == /datum/skill/craft/engineering) // SNOWFLAKE!!!
-		html += "in Engineering<br>"
+		html += "工程制造<br>"
 
 	html += {"<div>
 		      <strong>Requirements</strong>
 			  <br>"}
 
-	html += "[icon2html(new req_bar, user)] Start with [initial(req_bar.name)] on an anvil.<br>"
-	html += "Hammer the material.<br>"
+	html += "[icon2html(new req_bar, user)] 先将 [initial(req_bar.name)] 放上铁砧。<br>"
+	html += "锤打材料。<br>"
 	for(var/atom/path as anything in additional_items)
-		html += "[icon2html(new path, user)] then add [initial(path.name)]<br>"
-		html += "Hammer the material.<br>"
+		html += "[icon2html(new path, user)] 然后加入 [initial(path.name)]<br>"
+		html += "锤打材料。<br>"
 
 	html += {"
 		</div>
@@ -170,14 +170,14 @@
 		"}
 
 	if(createditem_num > 1)
-		html += "<strong class=class='scroll'>and then you get</strong> <br> [createditem_num] [icon2html(new created_item, user)]  [initial(created_item.name)]<br>"
+		html += "<strong class=class='scroll'>最终得到</strong> <br> [createditem_num] [icon2html(new created_item, user)]  [initial(created_item.name)]<br>"
 	else
-		html += "<strong class=class='scroll'>and then you get</strong> <br> [icon2html(new created_item, user)]   [initial(created_item.name)]<br>"
+		html += "<strong class=class='scroll'>最终得到</strong> <br> [icon2html(new created_item, user)]   [initial(created_item.name)]<br>"
 
 	if(created_item.sellprice)
-		html += "<strong class=class='scroll'>You can sell this for [created_item.sellprice] mammons at a normal quality</strong> <br>"
+		html += "<strong class=class='scroll'>普通品质下可卖出 [created_item.sellprice] mammons</strong> <br>"
 	else
-		html += "<strong class=class='scroll'>This is worthless for export</strong> <br>"
+		html += "<strong class=class='scroll'>该物品无法用于出口</strong> <br>"
 
 	html += {"
 		</div>

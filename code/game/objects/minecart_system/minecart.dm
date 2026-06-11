@@ -1,6 +1,6 @@
 /obj/structure/closet/crate/miningcar
-	name = "mine cart"
-	desc = "A cart for use on rails. Or off rails, if you're so inclined."
+	name = "矿车"
+	desc = "一辆供轨道使用的车。若你乐意，离轨也能照用。"
 	icon = 'icons/obj/track.dmi'
 	icon_state = "minecart"
 	base_icon_state = "minecart"
@@ -32,9 +32,9 @@
 /obj/structure/closet/crate/miningcar/examine(mob/user)
 	. = ..()
 	if(on_rails)
-		. += span_notice("You can give this a bump to send it on its way, or drag it off the rails to drag it around.")
+		. += span_notice("你可以轻推它让它上路，或把它拖离轨道四处拖行。")
 	else
-		. += span_notice("Drag this onto a mine cart rail to set it on the rails.")
+		. += span_notice("把它拖到矿车轨道上，让它落轨。")
 
 /obj/structure/closet/crate/miningcar/Move(atom/newloc, direct, glide_size_override, update_dir)
 	if(isnull(newloc))
@@ -91,16 +91,16 @@
 		return
 	if(obj_integrity <= max_integrity * 0.05)
 		smacked.visible_message(
-			span_danger("[src] smashes into [smacked], breaking into pieces!"),
-			span_userdanger("You are smacked by [src] as it breaks into pieces!"),
+			span_danger("[src]猛地撞上了[smacked]，当场碎裂！"),
+			span_userdanger("你被[src]猛地撞上，它当场碎裂了！"),
 		)
 		//playsound(src, 'sound/effects/break_stone.ogg', 50, vary = TRUE)
 		momentum = 0
 
 	else
 		smacked.visible_message(
-			span_danger("[src] smashes into [smacked]!"),
-			span_userdanger("You are smacked by [src]!"),
+			span_danger("[src]猛地撞上了[smacked]！"),
+			span_userdanger("你被[src]撞中了！"),
 		)
 	//playsound(src, 'sound/effects/bang.ogg', 50, vary = TRUE)
 	take_damage(max_integrity * 0.05)
@@ -336,10 +336,10 @@
 	SSmove_manager.stop_looping(src, SSminecarts)
 	set_is_platform(FALSE)
 	if(momentum >= 12)
-		visible_message(span_warning("[src] comes to a violent halt!"))
+		visible_message(span_warning("[src]猛然停了下来！"))
 		throw_contents()
 	else
-		visible_message(span_notice("[src] comes to a slow stop."))
+		visible_message(span_notice("[src]缓缓停了下来。"))
 	momentum = 0
 	return MOVELOOP_SKIP_STEP
 
@@ -351,9 +351,9 @@
 		// There is a break and it is powered, so STOP
 		if(stop_break && !stop_break.force_disabled && stop_break.rotations_per_minute)
 			if(momentum >= 8)
-				visible_message(span_notice("[src] comes to a sudden stop."))
+				visible_message(span_notice("[src]骤然停了下来。"))
 			else
-				visible_message(span_notice("[src] comes to a stop."))
+				visible_message(span_notice("[src]停了下来。"))
 			SSmove_manager.stop_looping(src, SSminecarts)
 			set_is_platform(FALSE)
 			momentum = 0
@@ -366,7 +366,7 @@
 		SSmove_manager.stop_looping(src, SSminecarts)
 		set_is_platform(FALSE)
 		momentum = 0
-		visible_message(span_notice("[src] comes to a slow stop."))
+		visible_message(span_notice("[src]缓缓停了下来。"))
 		return
 
 	// Handles slowing down the move loop / cart
@@ -454,7 +454,7 @@
 
 	if(!length(to_yeet))
 		if(!was_open)
-			visible_message(span_warning("[src] breaks open!"))
+			visible_message(span_warning("[src]裂开了！"))
 		return
 
 	var/throw_distance = clamp(ceil(momentum / 3) - 4, 1, 255)
@@ -464,10 +464,10 @@
 			yeeten.throw_at(some_distant_turf, throw_distance, 3 + FLOOR(momentum * 0.01, 1))
 
 	if(was_open)
-		visible_message(span_warning("[src] spills its contents!"))
+		visible_message(span_warning("[src]里的东西洒了一地！"))
 	else
 		// Update this message if someone allows multiple people to ride one minecart
-		visible_message(span_warning("[src] breaks open, spilling its contents[yeet_rider ? " and throwing its rider":""]!"))
+		visible_message(span_warning("[src]裂开了，里面的东西全洒了出来[yeet_rider ? "，骑手也被甩飞了":""]！"))
 
 	for(var/obj/structure/minecart_rail/rail in get_turf(src))
 		update_rail_state(TRUE)

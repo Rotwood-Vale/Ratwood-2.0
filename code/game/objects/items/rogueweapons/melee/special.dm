@@ -1,9 +1,9 @@
 /// INTENT DATUMS	v
 /datum/intent/lordbash
-	name = "bash"
+	name = "重砸"
 	blade_class = BCLASS_BLUNT
 	icon_state = "inbash"
-	attack_verb = list("bashes", "strikes")
+	attack_verb = list("重砸", "痛击")
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
@@ -12,14 +12,14 @@
 	blunt_chip_strength = BLUNT_CHIP_WEAK
 
 /datum/intent/lord_electrocute
-	name = "electrocute"
+	name = "电击"
 	blade_class = null
 	icon_state = "inuse"
 	tranged = TRUE
 	noaa = TRUE
 
 /datum/intent/lord_silence
-	name = "silence"
+	name = "缄默"
 	blade_class = null
 	icon_state = "inuse"
 	tranged = TRUE
@@ -32,8 +32,8 @@
 	force_wielded = 20
 	possible_item_intents = list(/datum/intent/lordbash, /datum/intent/lord_electrocute, /datum/intent/lord_silence)
 	gripped_intents = list(/datum/intent/lordbash)
-	name = "master's rod"
-	desc = "Bend the knee. Can't be used outside of the manor."
+	name = "领主权杖"
+	desc = "俯首屈膝。无法在庄园外使用。"
 	icon_state = "scepter"
 	icon = 'icons/roguetown/weapons/misc32.dmi'
 	sharpness = IS_BLUNT
@@ -71,7 +71,7 @@
 		var/mob/living/carbon/human/HU = user
 
 		if(HU.job != "Grand Duke")
-			to_chat(user, span_danger("The rod doesn't obey me."))
+			to_chat(user, span_danger("这柄权杖不听我使唤。"))
 			return
 
 		if(ishuman(target))
@@ -79,46 +79,46 @@
 			var/area/target_area = get_area(H)
 
 			if(!istype(target_area, /area/rogue/indoors/town/manor))
-				to_chat(user, span_danger("The rod cannot be used on targets outside of the manor!"))
+				to_chat(user, span_danger("这柄权杖不能对庄园外的目标使用！"))
 				return
 
 			if(H == HU)
 				return
 
 			if(!COOLDOWN_FINISHED(src, scepter))
-				to_chat(user, span_danger("The [src] is not ready yet! [round(COOLDOWN_TIMELEFT(src, scepter) / 10, 1)] seconds left!"))
+				to_chat(user, span_danger("[src]还没准备好！还剩 [round(COOLDOWN_TIMELEFT(src, scepter) / 10, 1)] 秒！"))
 				return
 
 			if(H.anti_magic_check())
-				to_chat(user, span_danger("Something is disrupting the rod's power!"))
+				to_chat(user, span_danger("有什么东西正在干扰权杖的力量！"))
 				return
 
 			if(!(H in SStreasury.bank_accounts))
-				to_chat(user, span_danger("The target must have a Nervelock account!"))
+				to_chat(user, span_danger("目标必须拥有 Nervelock 账户！"))
 				return
 
 			if(istype(user.used_intent, /datum/intent/lord_electrocute))
-				HU.visible_message(span_warning("[HU] electrocutes [H] with the [src]."))
+				HU.visible_message(span_warning("[HU]用[src]电击了[H]。"))
 				user.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
 				H.electrocute_act(5, src)
 				COOLDOWN_START(src, scepter, 20 SECONDS)
-				to_chat(H, span_danger("I'm electrocuted by the scepter!"))
+				to_chat(H, span_danger("我被权杖电击了！"))
 				return
 
 			if(istype(user.used_intent, /datum/intent/lord_silence))
-				HU.visible_message("<span class='warning'>[HU] silences [H] with \the [src].</span>")
+				HU.visible_message("<span class='warning'>[HU]用[src]让[H]失声了。</span>")
 				H.set_silence(20 SECONDS)
 				COOLDOWN_START(src, scepter, 10 SECONDS)
-				to_chat(H, "<span class='danger'>I'm silenced by the scepter!</span>")
+				to_chat(H, "<span class='danger'>我被权杖噤声了！</span>")
 				return
 
 /obj/item/rogueweapon/mace/stunmace
 	force = 25
 	force_wielded = 25
-	name = "stunmace"
+	name = "震击钉头锤"
 	icon = 'icons/roguetown/weapons/misc32.dmi'
 	icon_state = "stunmace0"
-	desc = "Pain is our currency here."
+	desc = "在这里，痛苦就是通用货币。"
 	gripped_intents = null
 	wlength = WLENGTH_NORMAL
 	w_class = WEIGHT_CLASS_NORMAL
@@ -196,9 +196,9 @@
 		force_wielded = 25
 	else
 		if(charge <= 33)
-			to_chat(user, span_warning("It's out of juice."))
+			to_chat(user, span_warning("它没剩多少电了。"))
 			return
-		user.visible_message(span_warning("[user] flicks [src] on."))
+		user.visible_message(span_warning("[user]启动了[src]。"))
 		on = TRUE
 		charge--
 		force = 6
@@ -250,8 +250,8 @@
 	force_wielded = 30
 	possible_item_intents = list(SPEAR_BASH, SPEAR_CUT_1H)
 	gripped_intents = list(/datum/intent/pick/ranged, /datum/intent/spear/thrust, SPEAR_BASH)
-	name = "militia goedendag"
-	desc = "Clubs - and their spiked descendants - are older than most languages and civilizations. Tyme hasn't made them any less deadly, however. "
+	name = "民兵古登棒"
+	desc = "棍棒，以及它们那些带刺的后裔，比大多数语言与文明都更加古老。不过岁月并未让它们少上一分致命。"
 	icon_state = "peasantwarclub"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	smeltresult = /obj/item/rogueore/coal
@@ -270,8 +270,8 @@
 				return list("shrink" = 0.8,"sx" = 8,"sy" = 0,"nx" = -1,"ny" = 0,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 
 /obj/item/rogueweapon/greataxe/militia
-	name = "militia war axe"
-	desc = "Shovels have always held some manner of importance in a militiaman's lyfe. Instead of digging corpsepits, however, this poleaxe will now fill them up."
+	name = "民兵长柄战斧"
+	desc = "铲子在民兵的生涯里始终有其意义。只不过这把长柄战斧如今不再负责挖尸坑，而是负责把尸坑填满。"
 	icon_state = "peasantwaraxe"
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
 	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/axe/chop/battle/greataxe, /datum/intent/sword/peel/big, SPEAR_BASH)
@@ -285,8 +285,8 @@
 	wbalance = WBALANCE_HEAVY
 
 /obj/item/rogueweapon/greataxe/militia/silver
-	name = "silver militia shovelaxe"
-	desc = "'Do you think Psydon stays in Heaven because He too lives in fear of what He's created?' </br>A silver shovel, improvised - perhaps, by the hands of a particularly desperate gravedigger - to fill a polearm's duty."
+	name = "银制民兵铲战斧"
+	desc = "“你觉得普赛顿留在天界，是不是也因为祂害怕自己造出的东西？” </br>一把银铲，也许出自某个走投无路的掘墓人之手，被临时改造成了一件长柄兵器。"
 	icon_state = "silvershovelwaraxe"
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
 	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/axe/chop/battle/greataxe, /datum/intent/sword/peel/big, SPEAR_BASH)
@@ -327,8 +327,8 @@
 	force_wielded = 30
 	possible_item_intents = list(SPEAR_THRUST_1H, SPEAR_CUT_1H)
 	gripped_intents = list(SPEAR_THRUST, SPEAR_CUT, SPEAR_BASH)
-	name = "militia spear"
-	desc = "Pitchforks and hoes traditionally till the soil. In tymes of peril, however, it isn't uncommon for a militiaman to pound them into polearms."
+	name = "民兵战矛"
+	desc = "干草叉与锄头本来是用来翻耕土地的。但在危难之时，民兵把它们改造成长柄武器也并不稀奇。"
 	icon_state = "peasantwarspear"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	minstr = 8
@@ -358,7 +358,7 @@
 					load_hay()
 					update_icon()
 					user.regenerate_icons()
-					visible_message(span_warning("[user] grabs a clump of [target] and wraps it around \the [src]!"))
+					visible_message(span_warning("[user]抓起一团[target]，将它缠到了[src]上！"))
 					playsound(src, 'sound/misc/hay_collect.ogg', 100)
 					qdel(target)
 					break
@@ -466,8 +466,8 @@
 	force_wielded = 25
 	possible_item_intents = list(SPEAR_BASH)
 	gripped_intents = list(/datum/intent/spear/cut/scythe, SPEAR_BASH, MACE_STRIKE)
-	name = "scythe"
-	desc = "The bane of fields, the trimmer of grass, the harvester of wheat, and - depending on who you ask - the shepherd of souls to the afterlyfe."
+	name = "战镰"
+	desc = "田野的克星，草叶的修剪者，小麦的收割人，或者按某些人的说法，还是将灵魂送往来世的牧者。"
 	icon_state = "peasantscythe"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	pixel_y = -16
@@ -500,8 +500,8 @@
 
 
 /obj/item/rogueweapon/pick/militia
-	name = "militia warpick"
-	desc = "At the end of the dae, a knight's bascinet isn't much different than a particularly large stone. After all, both tend to rupture with sobering ease when introduced to a sharpened pickend."
+	name = "民兵长战镐"
+	desc = "说到底，骑士的尖顶盔和一块特别大的石头也没多大区别。毕竟两者在遇上磨尖的镐头时，都会轻易裂开。"
 	force = 20
 	force_wielded = 25
 	possible_item_intents = list(/datum/intent/pick/bad)
@@ -523,8 +523,8 @@
 /obj/item/rogueweapon/pick/militia/steel
 	force = 25
 	force_wielded = 30
-	name = "militia steel warpick"
-	desc = "At the end of the dae, a knight's bascinet isn't much different than a particularly large stone. After all, both tend to rupture with sobering ease when introduced to a sharpened pickend. This one is honed out of steel parts."
+	name = "民兵钢制长战镐"
+	desc = "说到底，骑士的尖顶盔和一块特别大的石头也没多大区别。毕竟两者在遇上磨尖的镐头时，都会轻易裂开。这把则是用钢制部件打磨而成。"
 	icon_state = "milsteelpick"
 	max_blade_int = 180
 	max_integrity = 600
@@ -536,8 +536,8 @@
 	wbalance = WBALANCE_HEAVY
 
 /obj/item/rogueweapon/sword/falchion/militia
-	name = "maciejowski"
-	desc = "Fittingly coined as a 'peasant's falchion', this hunting sword's blade has been retempered to hunt the most dangerous game. Those jagged edges are perfect for tearing into flesh-and-maille."
+	name = "马切约夫斯基猎刀"
+	desc = "这把猎剑被恰如其分地称作“农夫的弯刀”，其刃身经过重新回火，专为猎杀最危险的猎物而生。那布满锯齿的刃缘正适合撕开血肉与锁甲。"
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/strike)
 	icon_state = "maciejowski"
 	gripped_intents = list(/datum/intent/rend, /datum/intent/sword/chop/militia, /datum/intent/sword/peel, /datum/intent/sword/strike)
@@ -549,15 +549,15 @@
 	wbalance = WBALANCE_HEAVY
 
 /datum/intent/peculate
-	name = "peculate"
+	name = "夺貌"
 	hitsound = null
-	desc = "Thieve the appearance of another."
+	desc = "窃取他人的外貌。"
 	icon_state = "peculate"
 
 //Unique assassin/antag dagger.
 /obj/item/rogueweapon/huntingknife/idagger/steel/profane
-	name = "profane dagger"
-	desc = "A profane dagger made of cursed black steel. Whispers emanate from the gem on its hilt."
+	name = "亵渎匕首"
+	desc = "一把由受诅黑钢打造的亵渎匕首。低语不断自其柄首宝石中渗出。"
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust, /datum/intent/peculate)
 	sellprice = 250
 	icon_state = "pdagger"
@@ -568,7 +568,7 @@
 /obj/item/rogueweapon/huntingknife/idagger/steel/profane/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_ASSASSIN))
-		. += "profane dagger whispers, \"[span_danger("Here we are!")]\""
+		. += "亵渎匕首低语道：“[span_danger("我们到了！")]”"
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/profane/pickup(mob/living/M)
 	. = ..()
@@ -576,35 +576,35 @@
 		var/mob/living/carbon/human/H = M
 		if (!HAS_TRAIT(H, TRAIT_ASSASSIN)) // Non-assassins don't like holding the profane dagger.
 			H.add_stress(/datum/stressevent/profane)
-			to_chat(M, "<span class='danger'>Your breath chills as you pick up the dagger. You feel a sense of morbid wrongness!</span>")
+			to_chat(M, "<span class='danger'>当你拾起这把匕首时，呼吸都变得冰冷。你感到一种不祥而悖逆的异样！</span>")
 			var/message = pick(
-				"<span class='danger'>Help me...</span>",
-				"<span class='danger'>Save me...</span>",
-				"<span class='danger'>It's cold...</span>",
-				"<span class='danger'>Free us...please...</span>",
-				"<span class='danger'>Necra...deliver...us...</span>")
+				"<span class='danger'>救救我……</span>",
+				"<span class='danger'>救我出去……</span>",
+				"<span class='danger'>好冷……</span>",
+				"<span class='danger'>放了我们吧……求你了……</span>",
+				"<span class='danger'>Necra……带……我们走……</span>")
 //			H.visible_message("profane dagger whispers, \"[message]\"")
-			to_chat(M, "profane dagger whispers, \"[message]\"")
+			to_chat(M, "亵渎匕首低语道：“[message]”")
 		else
 			var/message = pick(
-				"<span class='danger'>Why...</span>",
-				"<span class='danger'>...Who sent you?</span>",
-				"<span class='danger'>...You will burn for what you've done...</span>",
-				"<span class='danger'>I hate you...</span>",
-				"<span class='danger'>Someone stop them!</span>",
-				"<span class='danger'>Guards! Help!</span>",
-				"<span class='danger'>...What's that in your hand?</span>",
-				"<span class='danger'>...You love me...don't you?</span>",
-				"<span class='danger'>Wait...don't I know you?</span>",
-				"<span class='danger'>I thought you were...my friend...</span>",
-				"<span class='danger'>How long have I been in here...</span>")
+				"<span class='danger'>为什么……</span>",
+				"<span class='danger'>……是谁派你来的？</span>",
+				"<span class='danger'>……你会为自己做过的事付出代价……</span>",
+				"<span class='danger'>我恨你……</span>",
+				"<span class='danger'>谁来阻止他们！</span>",
+				"<span class='danger'>卫兵！救命！</span>",
+				"<span class='danger'>……你手里拿着什么？</span>",
+				"<span class='danger'>……你爱我……不是吗？</span>",
+				"<span class='danger'>等等……我是不是认识你？</span>",
+				"<span class='danger'>我还以为你是……我的朋友……</span>",
+				"<span class='danger'>我已经被困在这里多久了……</span>")
 //			H.visible_message("profane dagger whispers, \"[message]\"")
-			to_chat(M, "profane dagger whispers, \"[message]\"")
+			to_chat(M, "亵渎匕首低语道：“[message]”")
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/profane/pre_attack(mob/living/carbon/human/target, mob/living/user = usr, params)
 	if(!istype(target))
 		return FALSE
-	if(target.has_flaw(/datum/charflaw/assassintarget)) // Check to see if the dagger will do 20 damage or 14
+	if(target.has_flaw(/datum/charflaw/hunted)) // Check to see if the dagger will do 20 damage or 14
 		force = 20 * 2	//vs trait havers, 2x damage over a steel knife
 	else
 		force = 20 + 4	//vs non-trait havers, 4 more damage over a steel knife
@@ -617,11 +617,11 @@
 	if(target.stat == DEAD || (target.health < target.crit_threshold)) // Trigger soul steal or identity theft if the target is either dead or in crit
 		if(istype(user.used_intent, /datum/intent/peculate))
 			if(!ishuman(user)) // carbons don't have all features of a human
-				to_chat(user, span_danger("You can't do that!"))
+				to_chat(user, span_danger("你做不到那样！"))
 				return
 			var/obj/item/bodypart/head/target_head = target.get_bodypart(BODY_ZONE_HEAD)
 			if(QDELETED(target_head))
-				to_chat(user, span_notice("I need their head or else I can't confirm the blood-bounty!"))
+				to_chat(user, span_notice("我得拿到他们的头，否则就没法确认这笔血赏！"))
 				return
 
 			var/datum/beam/transfer_beam = user.Beam(target, icon_state = "drain_life", time = 6 SECONDS)
@@ -631,7 +631,7 @@
 				get_sfx("changeling_absorb"), //todo: turn sound keys into defines.
 				100,
 			)
-			to_chat(user, span_danger("I start absorbing [target]'s identity."))
+			to_chat(user, span_danger("我开始夺取 [target] 的身份。"))
 			if(!do_after(user, 3 SECONDS, target = target))
 				qdel(transfer_beam)
 				return
@@ -654,14 +654,14 @@
 			var/mob/living/carbon/human/human_user = user
 
 			human_user.copy_physical_features(target)
-			to_chat(user, span_purple("I take on a new face.."))
+			to_chat(user, span_purple("我披上了一副新的面孔……"))
 			ADD_TRAIT(target, TRAIT_DISFIGURED, TRAIT_GENERIC)
 
 			return
 
-		if(target.has_flaw(/datum/charflaw/assassintarget)) // The profane dagger only thirsts for those who are hunted, by flaw or by zizoid curse.
+		if(target.has_flaw(/datum/charflaw/hunted)) // The profane dagger only thirsts for those who are hunted, by flaw or by zizoid curse.
 			if(target.client == null) //See if the target's soul has left their body
-				to_chat(user, "<span class='danger'>Your target's soul has already escaped its corpse...you try to call it back!</span>")
+				to_chat(user, "<span class='danger'>你目标的灵魂早已逃离尸身……你试图把它重新唤回来！</span>")
 				get_profane_ghost(target,user) //Proc to capture a soul that has left the body.
 			else
 				user.adjust_triumphs(1)
@@ -672,13 +672,13 @@
 	record_round_statistic(STATS_ASSASSINATIONS)
 	var/mob/dead/observer/profane/S = new /mob/dead/observer/profane(src)
 	S.AddComponent(/datum/component/profaned, src)
-	S.name = "soul of [target.real_name]"
-	S.real_name = "soul of [target.real_name]"
+	S.name = "[target.real_name]的灵魂"
+	S.real_name = "[target.real_name]的灵魂"
 	S.deadchat_name = target.real_name
 	S.ManualFollow(src)
 	S.key = target.key
 	S.language_holder = target.language_holder.copy(S)
-	target.visible_message("<span class='danger'>[target]'s soul is pulled from their body and sucked into the profane dagger!</span>", "<span class='danger'>My soul is trapped within the profane dagger. Damnation!</span>")
+	target.visible_message("<span class='danger'>[target] 的灵魂被硬生生从体内扯出，吸进了那把亵渎匕首！</span>", "<span class='danger'>我的灵魂被困进了亵渎匕首里。该死！</span>")
 	playsound(src, 'sound/magic/soulsteal.ogg', 100, extrarange = 5)
 	blade_int = max_blade_int // Stealing a soul successfully sharpens the blade.
 	obj_fix(max_integrity) // And fixes the dagger. No blacksmith required!
@@ -701,11 +701,11 @@
 /obj/item/rogueweapon/huntingknife/idagger/steel/profane/proc/release_profane_souls(mob/user) // For ways to release the souls trapped within a profane dagger, such as a Necrite burial rite. Returns the number of freed souls.
 	var/freed_souls = 0
 	for(var/mob/dead/observer/profane/A in src) // for every trapped soul in the dagger, whether they have left the game or not
-		to_chat(A, "<b>I have been freed from my vile prison, I await Necra's cold grasp. Salvation!</b>")
+		to_chat(A, "<b>我已从那可憎的牢笼中解脱，如今只待 Necra 冰冷的掌握降临。得救了！</b>")
 		A.returntolobby() //Send the trapped soul back to the lobby
-		user.visible_message("<span class='warning'>The [A.name] flows out from the profane dagger, finally free of its grasp.</span>")
+		user.visible_message("<span class='warning'>[A.name] 自亵渎匕首中流泻而出，终于摆脱了它的掌控。</span>")
 		freed_souls += 1
-	user.visible_message("<span class='warning'>The profane dagger shatters into putrid smoke!</span>")
+	user.visible_message("<span class='warning'>亵渎匕首炸裂成一团腐臭烟雾！</span>")
 	qdel(src) // Delete the dagger. Forevermore.
 	return freed_souls
 
@@ -724,10 +724,10 @@
 //Standard of the keep.
 //Big ol' flag that they keep to give bonuses, used by the manorguard standard bearer.
 /obj/item/rogueweapon/spear/keep_standard
-	name = "ducal standard"
-	desc = "The local lord's banner, fashioned to a blacksteel pike and turned into a deadly instrument of war. \
-	The man who wields this is said to bring great fortune to his house, and those who keep him safe. \
-	<small>Runes glow near the head of the pike. A sure sign of the arcyne.</small>"
+	name = "公爵战旗"
+	desc = "本地领主的旗帜，被装在黑钢长枪上，化作致命的战争兵器。 \
+	据说执掌此旗之人会为其家门，以及守护他的人，带来莫大好运。 \
+	<small>枪锋附近有符文微微泛光。这无疑是奥术的征兆。</small>"
 	force = 12//Use this in TWO HANDS.
 	force_wielded = 34//+4. +1 from boar spear.
 	throwforce = 32//It'll be funny. Trust.
@@ -750,9 +750,9 @@
 //At least, when I make them into their own weapon class.
 //May as well make it unique, in some regard, until that point.
 /obj/item/rogueweapon/spear/keep_standard/poleaxe
-	desc = "The local lord's banner, fashioned to a poleaxe and turned into a deadly instrument of war. \
-	The man who wields this is said to bring great fortune to his house, and those who keep him safe. \
-	<small>Runes glow near the head of the weapon, visible for the faintest of moments. A sure sign of the arcyne.</small>"
+	desc = "本地领主的旗帜，被装在长柄战斧上，化作致命的战争兵器。 \
+	据说执掌此旗之人会为其家门，以及守护他的人，带来莫大好运。 \
+	<small>武器顶端附近的符文偶尔会在瞬息之间亮起。这无疑是奥术的征兆。</small>"
 	force_wielded = 30//-4. You know why. Look at the intents.
 	minstr = 12//+1 over the eagle's beak.
 	max_blade_int = 200//+20 over the eagle's beak. -60 from the pike.
@@ -785,19 +785,19 @@
 		return
 	active_item = TRUE
 	if(user.job == "Man at Arms" || user.job == "Janissary")
-		to_chat(user, span_suppradio("The standard's runes pulse, accepting me as its <b>master</b>."))
+		to_chat(user, span_suppradio("战旗上的符文脉动着，承认我是它的<b>主人</b>。"))
 		user.change_stat(STATKEY_LCK, 3)
 		user.add_stress(/datum/stressevent/keep_standard)
 		ADD_TRAIT(user, TRAIT_HARDDISMEMBER, TRAIT_GENERIC)//KEEP AT IT!!
 		ADD_TRAIT(user, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)//AND KEEP UP!!!
 		if(HAS_TRAIT(user, TRAIT_STANDARD_BEARER))
-			to_chat(user, span_suppradio("<small>It remains ready for your word. You need only ask.</small>"))
+			to_chat(user, span_suppradio("<small>它依然随时听候你的号令。你只需开口。</small>"))
 			user.verbs |= /mob/proc/standard_position
 			user.verbs |= /mob/proc/standard_recuperate
 			user.verbs |= /mob/proc/standard_steady
 			user.verbs |= /mob/proc/standard_rally
 	else
-		to_chat(user, span_suicide("The standard's runes pulse, rejecting me as its <b>master</b>."))
+		to_chat(user, span_suicide("战旗上的符文脉动着，拒绝承认我是它的<b>主人</b>。"))
 
 /obj/item/rogueweapon/spear/keep_standard/dropped(mob/living/user)
 	..()
@@ -807,19 +807,19 @@
 		return
 	active_item = FALSE
 	if(user.job == "Man at Arms" || user.job == "Janissary")
-		to_chat(user, span_monkeyhive("The standard's runes pulse, rhythmically, as if sad to see you release your control."))
+		to_chat(user, span_monkeyhive("战旗上的符文有节奏地脉动着，仿佛因你放开掌控而感到惋惜。"))
 		user.change_stat(STATKEY_LCK, -3)
 		user.remove_stress(/datum/stressevent/keep_standard)
 		REMOVE_TRAIT(user, TRAIT_HARDDISMEMBER, TRAIT_GENERIC)
 		REMOVE_TRAIT(user, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
 		if(HAS_TRAIT(user, TRAIT_STANDARD_BEARER))
-			to_chat(user, span_monkeyhive("<small>You feel ill. Was that a mistake?</small>"))
+			to_chat(user, span_monkeyhive("<small>我感到一阵不适。方才那是个错误吗？</small>"))
 			user.verbs -= /mob/proc/standard_position
 			user.verbs -= /mob/proc/standard_recuperate
 			user.verbs -= /mob/proc/standard_steady
 			user.verbs -= /mob/proc/standard_rally
 	else
-		to_chat(user, span_suicide("The standard's runes pulse, as if sighing in relief once I let go."))
+		to_chat(user, span_suicide("我一松手，战旗上的符文便脉动起来，像是终于松了口气。"))
 
 /obj/item/rogueweapon/spear/keep_standard/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armor_penetration)
 	. = ..()
@@ -830,7 +830,7 @@
 /obj/item/rogueweapon/spear/keep_standard/process()
 	if(obj_integrity >= max_integrity)
 		STOP_PROCESSING(SSobj, src)
-		src.visible_message(span_notice("[src] warps and bends, mending as the implement's runes pulse..."), vision_distance = 1)
+		src.visible_message(span_notice("[src]在符文脉动中扭曲弯折，自行修复如初……"), vision_distance = 1)
 		return
 	else if(world.time > src.last_repair + src.repair_time)
 		src.last_repair = world.time

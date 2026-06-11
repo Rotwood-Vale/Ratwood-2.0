@@ -29,7 +29,7 @@
 
 //trees
 /obj/structure/flora/tree
-	name = "tree"
+	name = "树"
 	desc = ""
 	density = TRUE
 	pixel_x = -16
@@ -41,15 +41,15 @@
 		if(W.get_sharpness() && W.force > 0)
 			if(W.hitsound)
 				playsound(get_turf(src),  W.hitsound, 100, FALSE, FALSE)
-			user.visible_message(span_notice("[user] begins to cut down [src] with [W]."),span_notice("I begin to cut down [src] with [W]."), span_hear("I hear the sound of sawing."))
+			user.visible_message(span_notice("[user]开始用[W]砍倒[src]。"),span_notice("我开始用[W]砍倒[src]。"), span_hear("我听见了锯木声。"))
 			if(do_after(user, 1000/W.force, target = src)) //5 seconds with 20 force, 8 seconds with a hatchet, 20 seconds with a shard.
-				user.visible_message(span_notice("[user] fells [src] with the [W]."),span_notice("I fell [src] with the [W]."), span_hear("I hear the sound of a tree falling."))
+				user.visible_message(span_notice("[user]用[W]砍倒了[src]。"),span_notice("我用[W]砍倒了[src]。"), span_hear("我听见了树木倒下的声音。"))
 				playsound(get_turf(src), 'sound/blank.ogg', 100 , FALSE, FALSE)
 				for(var/i=1 to log_amount)
 					new /obj/item/grown/log/tree(get_turf(src))
 
 				var/obj/structure/flora/stump/S = new(loc)
-				S.name = "[name] stump"
+				S.name = "[name]树桩"
 
 				qdel(src)
 
@@ -57,7 +57,7 @@
 		return ..()
 
 /obj/structure/flora/stump
-	name = "stump"
+	name = "树桩"
 	desc = "" //running naked through the trees
 	icon_state = "tree_stump"
 	density = FALSE
@@ -83,7 +83,7 @@
 	. = ..()
 
 /obj/structure/flora/tree/jungle
-	name = "tree"
+	name = "树"
 	icon_state = "tree"
 	desc = ""
 	icon = 'icons/obj/flora/jungletrees.dmi'
@@ -120,7 +120,7 @@
 
 //grass
 /obj/structure/flora/grass
-	name = "grass"
+	name = "草"
 	desc = ""
 	icon = 'icons/obj/flora/snowflora.dmi'
 	gender = PLURAL	//"this is grass" not "this is a grass"
@@ -150,7 +150,7 @@
 
 //bushes
 /obj/structure/flora/bush
-	name = "bush"
+	name = "灌木"
 	desc = ""
 	icon = 'icons/obj/flora/snowflora.dmi'
 	icon_state = "snowbush1"
@@ -163,7 +163,7 @@
 // ausbush
 
 /obj/structure/flora/ausbushes
-	name = "bush"
+	name = "灌木"
 	desc = ""
 	icon = 'icons/obj/flora/ausflora.dmi'
 	icon_state = "firstbush_1"
@@ -252,7 +252,7 @@
 	. = ..()
 	if(iscarbon(user))
 		user.add_stress(/datum/stressevent/flower_view)
-		to_chat(user, span_green("The soft haze of lavender soothes my mind."))
+		to_chat(user, span_green("薰衣草柔和的香雾抚慰了我的心神。"))
 
 /obj/structure/flora/ausbushes/ywflowers
 	icon_state = "ywflowers_1"
@@ -269,7 +269,7 @@
 	. = ..()
 	if(iscarbon(user))
 		user.add_stress(/datum/stressevent/flower_view)
-		to_chat(user, span_green("The cheerful yellow blooms lift my mood."))
+		to_chat(user, span_green("明快的黄色花朵让我心情舒畅。"))
 
 /obj/structure/flora/ausbushes/brflowers
 	icon_state = "brflowers_1"
@@ -286,7 +286,7 @@
 	. = ..()
 	if(iscarbon(user))
 		user.add_stress(/datum/stressevent/flower_view)
-		to_chat(user, span_green("The vivid blooms catch my eye and brighten my spirit."))
+		to_chat(user, span_green("鲜艳的花簇映入眼帘，令我精神一振。"))
 
 /obj/structure/flora/ausbushes/ppflowers
 	icon_state = "ppflowers_1"
@@ -303,7 +303,7 @@
 	. = ..()
 	if(iscarbon(user))
 		user.add_stress(/datum/stressevent/flower_view)
-		to_chat(user, span_green("The delicate purple and pink petals bring me a quiet joy."))
+		to_chat(user, span_green("淡紫与粉色的娇嫩花瓣带给我静谧的喜悦。"))
 
 /obj/structure/flora/ausbushes/sparsegrass
 	icon_state = "sparsegrass_1"
@@ -320,7 +320,7 @@
 	. = ..()
 
 /obj/item/twohanded/required/kirbyplants
-	name = "potted plant"
+	name = "盆栽"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
 	desc = ""
@@ -361,12 +361,12 @@
 
 
 /obj/item/twohanded/required/kirbyplants/dead
-	name = "RD's potted plant"
+	name = "研发主管的盆栽植物"
 	desc = ""
 	icon_state = "plant-25"
 
 /obj/item/twohanded/required/kirbyplants/photosynthetic
-	name = "photosynthetic potted plant"
+	name = "自养盆栽"
 	desc = ""
 	icon_state = "plant-09"
 	light_color = "#2cb2e8"
@@ -394,7 +394,7 @@
 //Jungle grass
 
 /obj/structure/flora/grass/jungle
-	name = "jungle grass"
+	name = "丛林草"
 	desc = ""
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "grassa"
@@ -423,7 +423,7 @@
 //Jungle bushes
 
 /obj/structure/flora/junglebush
-	name = "bush"
+	name = "灌木"
 	desc = ""
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "busha"
@@ -446,7 +446,7 @@
 	layer = ABOVE_ALL_MOB_LAYER
 
 /obj/structure/flora/rock/pile/largejungle
-	name = "rocks"
+	name = "岩石"
 	icon_state = "rocks"
 	icon = 'icons/obj/flora/largejungleflora.dmi'
 	density = FALSE
@@ -456,10 +456,6 @@
 /obj/structure/flora/rock/pile/largejungle/Initialize(mapload)
 	. = ..()
 	icon_state = "[initial(icon_state)][rand(1,3)]"
-
-
-
-
 
 
 

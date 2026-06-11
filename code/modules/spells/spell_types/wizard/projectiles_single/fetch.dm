@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/projectile/fetch
-	name = "Fetch"
-	desc = "Shoot out a magical bolt that draws in the target struck towards the caster."
+	name = "牵引术"
+	desc = "射出一道魔力飞矢，将命中的目标拉向施法者。"
 	clothes_req = FALSE
 	range = 15
 	projectile_type = /obj/projectile/magic/fetch
@@ -15,7 +15,7 @@
 	no_early_release = TRUE
 	charging_slowdown = 1
 	spell_tier = 2
-	invocations = list("Recolligere")
+	invocations = list("牵引归来。")
 	invocation_type = "whisper"
 	hide_charge_effect = TRUE // essential for rogue mage
 	chargedloop = /datum/looping_sound/invokegen
@@ -28,7 +28,7 @@
 	if(ismob(target))
 		var/mob/M = target
 		if(M.anti_magic_check())
-			visible_message(span_warning("[target] repells the fetch!"))
+			visible_message(span_warning("[target] 弹开了这道牵引术！"))
 			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 			qdel(src)
 			return BULLET_ACT_BLOCK

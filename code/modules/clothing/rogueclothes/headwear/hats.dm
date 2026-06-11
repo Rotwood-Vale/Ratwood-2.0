@@ -1,7 +1,7 @@
 // Hats not meant to have armor
 /obj/item/clothing/head/roguetown/strawhat
-	name = "straw hat"
-	desc = "It's scratchy and rustic, but at least it keeps the sun off your head while you toil in the fields."
+	name = "草编帽子"
+	desc = "它粗糙又朴实，但至少能在你田间劳作时替你挡住头顶的太阳。"
 	icon_state = "strawhat"
 	nudist_approved = TRUE
 	salvage_result = /obj/item/natural/fibers
@@ -10,13 +10,13 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/head/roguetown/puritan
-	name = "buckled hat"
+	name = "扣饰帽子"
 	icon_state = "puritan_hat"
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/puritan/armored
-	name = "puritan's hat" //Puritan hat subtype, meant for the Exorcist's heaviest classes. Steel skullcap-tier protection.
-	desc = "A buckled capotain, woven atop a steel skull cap. Discrete enough to wear for a diplomatic affair, but durable enough to thwart a heathen's blade."
+	name = "清修者帽子" 
+	desc = "一顶带扣高筒帽，织在钢制护顶盔之上。它低调得足以出席外交场合，却也结实得足以挡下异教徒的刀刃。"
 	icon_state = "puritan_hat"
 	sewrepair = FALSE
 	armor = ARMOR_PLATE
@@ -31,49 +31,49 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/head/roguetown/nightman
-	name = "teller's hat"
+	name = "说书人帽子"
 	icon_state = "tophat"
 	color = CLOTHING_BLACK
 	nudist_approved = TRUE
 	dropshrink = null
 
 /obj/item/clothing/head/roguetown/bardhat
-	name = "bard's hat"
+	name = "吟游诗人的帽子"
 	icon_state = "bardhat"
 	nudist_approved = TRUE
 	heat_protection = HEAD
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/head/roguetown/smokingcap
-	name = "smoking cap"
+	name = "便帽帽"
 	icon_state = "smokingc"
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/fancyhat
-	name = "fancy hat"
-	desc = "A fancy looking hat with colorful feathers sticking out of it."
+	name = "华丽帽子"
+	desc = "一顶外观华丽的帽子，上面插着五彩羽毛。"
 	icon_state = "fancy_hat"
 	item_state = "fancyhat"
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/fedora
-	name = "archeologist's hat"
-	desc = "A strangely-shaped hat with dust caked onto its aged leather."
+	name = "考古学家的帽子"
+	desc = "一顶造型古怪的帽子，陈旧的皮革上蒙着尘土。"
 	icon_state = "curator"
 	item_state = "curator"
 	nudist_approved = TRUE
 	salvage_result = /obj/item/natural/hide/cured
 
 /obj/item/clothing/head/roguetown/hatfur
-	name = "fur hat"
-	desc = "A comfortable warm hat lined with fur."
+	name = "毛皮帽子"
+	desc = "一顶衬有毛皮、舒适暖和的帽子。"
 	icon_state = "hatfur"
 	nudist_approved = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = 50
 
 /obj/item/clothing/head/roguetown/papakha
-	name = "papakha"
+	name = "帕帕哈帽"
 	icon_state = "papakha"
 	item_state = "papakha"
 	armor = ARMOR_CLOTHING
@@ -96,16 +96,16 @@
 	min_cold_protection_temperature = 50
 
 /obj/item/clothing/head/roguetown/hatblu
-	name = "fur hat"
-	desc = "A blue hat lined with fur."
+	name = "毛皮帽子"
+	desc = "一顶衬有毛皮的蓝色帽子。"
 	icon_state = "hatblu"
 	nudist_approved = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = 50
 
 /obj/item/clothing/head/roguetown/fisherhat
-	name = "straw hat"
-	desc = "A hat worn by fishermen to protect from the sun."
+	name = "草编帽子"
+	desc = "渔夫为了遮阳而佩戴的一顶帽子。"
 	icon_state = "fisherhat"
 	item_state = "fisherhat"
 	nudist_approved = TRUE
@@ -115,7 +115,7 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/head/roguetown/flathat
-	name = "flat hat"
+	name = "平顶帽"
 	icon_state = "flathat"
 	item_state = "flathat"
 	nudist_approved = TRUE
@@ -124,8 +124,8 @@
 	dropshrink = null
 
 /obj/item/clothing/head/roguetown/chaperon
-	name = "chaperon hat"
-	desc = "A utilitarian yet fashionable hat traditionally made from a hood. Usually worn as a status symbol."
+	name = "头巾帽"
+	desc = "一种由兜帽传统演变而来的实用又时髦的帽子，通常作为身份象征佩戴。"
 	icon_state = "chaperon"
 	item_state = "chaperon"
 	nudist_approved = TRUE
@@ -135,23 +135,23 @@
 	color = CLOTHING_BROWN
 
 /obj/item/clothing/head/roguetown/cookhat
-	name = "cook hat"
-	desc = "A hat which designates one as well-versed in the arts of cooking."
+	name = "厨师帽子"
+	desc = "一顶表明佩戴者精通烹饪之道的帽子。"
 	icon_state = "chef"
 	item_state = "chef"
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/chaperon/greyscale
-	name = "chaperon hat"
-	desc = "A utilitarian yet fashionable hat traditionally made from a hood. This one has been treated to take dyes more easily."
+	name = "头巾帽"
+	desc = "一种由兜帽传统演变而来的实用又时髦的帽子。这顶经过处理，更容易上染。"
 	icon_state = "chap_alt"
 	item_state = "chap_alt"
 	color = "#dbcde0"
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/chaperon/noble
-	name = "noble's chaperon"
-	desc = "A decorated chaperon worn by the more influential members of society."
+	name = "贵族头巾帽"
+	desc = "一顶装饰华美的头巾帽，通常由社会中更有影响力的人士佩戴。"
 	icon_state = "noblechaperon"
 	item_state = "noblechaperon"
 	detail_tag = "_detail"
@@ -169,8 +169,8 @@
 		add_overlay(pic)
 
 /obj/item/clothing/head/roguetown/chaperon/noble/bailiff
-	name = "Marshal's chaperon"
-	desc = "A noble's chaperon made for the local Marshal. \"How terribly unfortunate you are!\""
+	name = "治安官头巾帽"
+	desc = "一顶为本地治安官打造的贵族头巾帽。\"你可真是不走运啊！\""
 	color = "#641E16"
 	detail_color = "#b68e37ff"
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
@@ -178,38 +178,38 @@
 	nudist_approved = FALSE // armored
 
 /obj/item/clothing/head/roguetown/chaperon/noble/guildmaster
-	name = "Guildmaster's chapereon"
-	desc = "A noble's chaperon made for the guildmaster."
+	name = "公会长头巾帽"
+	desc = "一顶为公会长打造的贵族头巾帽。"
 	color = "#1b1717ff"
 	detail_color = "#b68e37ff"
 
 /obj/item/clothing/head/roguetown/chaperon/noble/hand
-	name = "hand's chaperon"
-	desc = "A noble's chaperon made for the right hand man. \"Heavy is the head that bears the crown.\""
+	name = "副手头巾帽"
+	desc = "一顶为掌权者副手打造的贵族头巾帽。\"欲戴王冠，必承其重。\""
 	color = CLOTHING_AZURE
 	detail_color = CLOTHING_WHITE
 
 /obj/item/clothing/head/roguetown/chaperon/councillor
-	name = "chaperon hat"
-	desc = "A fancy hat worn by nobles."
+	name = "头巾帽"
+	desc = "一顶贵族佩戴的华美帽子。"
 	icon_state = "chap_alt"
 	item_state = "chap_alt"
 	color = "#7dcea0"
 
 /obj/item/clothing/head/roguetown/chaperon/greyscale/elder
-	name = "elder's chaperon hat"
+	name = "长老头巾帽"
 	color = "#007fff"
 
 /obj/item/clothing/head/roguetown/chef
-	name = "chef's hat"
-	desc = "A hat which designates one as well-versed in the arts of cooking."
+	name = "主厨帽子"
+	desc = "一顶表明佩戴者精通烹饪之道的帽子。"
 	icon_state = "chef"
 	nudist_approved = TRUE
 	//dropshrink = 0.75
 
 /obj/item/clothing/head/roguetown/armingcap
-	name = "cap"
-	desc = "A light cap made of leather, usually worn under a helmet."
+	name = "皮帽"
+	desc = "一顶由皮革制成的轻便帽，通常戴在头盔下面。"
 	icon_state = "armingcap"
 	item_state = "armingcap"
 	flags_inv = HIDEEARS
@@ -221,8 +221,8 @@
 	dropshrink = null
 
 /obj/item/clothing/head/roguetown/knitcap
-	name = "knit cap"
-	desc = "A simple knitted cap."
+	name = "针织帽"
+	desc = "一顶简单的针织帽。"
 	icon_state = "knitcap"
 	nudist_approved = TRUE
 	//dropshrink = 0.75
@@ -233,8 +233,8 @@
 	color = "#cb3434"
 
 /obj/item/clothing/head/roguetown/headband
-	name = "headband"
-	desc = "A simple headband to keep sweat out of your eyes."
+	name = "头带"
+	desc = "一条简单的头带，用来防止汗水流进眼睛里。"
 	icon_state = "headband"
 	item_state = "headband"
 	//dropshrink = 0.75
@@ -242,8 +242,8 @@
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/headband/bloodied
-	name = "bloodied headband"
-	desc = "A headband that's been soaked in the blood of a terrible nitebeast. The coagulative properties of cursed blood has stiffened the cloth, gifting it a texture not unlike spongy leather. Wearing it emboldens you with determination."
+	name = "染血头带"
+	desc = "一条浸透可怖夜兽之血的头带。诅咒之血的凝结特性让布料硬化，质感近似柔韧皮革。佩戴它会让你心中涌起决绝的勇气。"
 	icon_state = "headband"
 	item_state = "headband"
 	color = "#851a16"
@@ -270,8 +270,8 @@
 		REMOVE_TRAIT(user, TRAIT_ZOMBIE_IMMUNE, TRAIT_GENERIC)
 
 /obj/item/clothing/head/roguetown/headband/monk
-	name = "monk's headband"
-	desc = "A winding length of cloth, meticulously lined with heavy leather strips. Errant impacts are thwarted, yet not a degree of vision is impaired; valuable traits, for the Monk who must enlighten their villains with a white-knuckled sermon. </br>'..I kick ass for the Lord!'"
+	name = "修士头带"
+	desc = "一条盘绕缠裹的布带，细致嵌着厚皮条。零碎打击会被挡开，视野却丝毫不受影响；这正适合修士，他们要用紧握的布道让恶徒顿悟。 </br>'..我为主而狠狠干架！'"
 	icon_state = "headband"
 	color = "#bfb8a9"
 	resistance_flags = FIRE_PROOF
@@ -285,13 +285,13 @@
 	dynamic_hair_suffix = null
 
 /obj/item/clothing/head/roguetown/headband/monk/barbarian
-	name = "hunter's headband"
-	desc = "A winding length of cloth, meticulously lined with heavy leather strips. Errant impacts are thwarted, yet not a degree of vision is impaired; valuable traits, for those who have taken the mantle of confronting monsters with overwhelming strength. </br>'..All it takes for evil to triumph is for good men to do nothing.'"
+	name = "猎手头带"
+	desc = "一条盘绕缠裹的布带，细致嵌着厚皮条。零碎打击会被挡开，视野却丝毫不受影响；这正适合那些以蛮力直面怪物的人。 </br>'..邪恶得逞，只因善人无所作为。'"
 	max_integrity = ARMOR_INT_HELMET_LEATHER //Far less durable than the Monk's variant. Remember that the Barbarian retrieves solid weapon skills and armor, even as a pugilist.
 
 /obj/item/clothing/head/roguetown/inqhat
-	name = "inquisitorial hat"
-	desc = "A fine leather slouch, beplumed with a crimson feather and fitted with a hidden steel skull cap. It serves as a reminder that the Holy Otavan Inquisition triumphs in one avenue above all else - fashion. </br>'To keep ones vision away from the heavens, and focused on the sin beneath the soil.'"
+	name = "审判官帽子"
+	desc = "一顶上等皮革软帽，插着绯红羽毛，内里还嵌有隐藏的钢制护顶帽。它提醒着人们，神圣奥塔瓦宗审庭在某一方面凌驾众人之上: 时尚。 </br>'让目光远离苍穹，只专注于泥土之下的罪恶。'"
 	icon_state = "inqhat"
 	item_state = "inqhat"
 	max_integrity = ARMOR_INT_HELMET_HARDLEATHER
@@ -308,8 +308,8 @@
 	color = CLOTHING_RED
 
 /obj/item/clothing/head/roguetown/maidband
-	name = "maid headband"
-	desc = "A pleated cloth headband. It has gained widespread popularity from nobles travelling with their servants."
+	name = "女仆头带"
+	desc = "一条带褶的布质头带。它因贵族出行时常带着仆从而广受欢迎。"
 	icon = 'icons/roguetown/clothing/head.dmi'
 	icon_state = "maidband"
 	item_state = "maidband"
@@ -319,7 +319,7 @@
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/priesthat
-	name = "priest's hat"
+	name = "祭司帽子"
 	desc = ""
 	icon_state = "priest"
 	//dropshrink = 0
@@ -332,15 +332,15 @@
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/reqhat
-	name = "serpent crown"
+	name = "蛇王冠"
 	desc = ""
 	icon_state = "reqhat"
 	sellprice = 100
 	anvilrepair = /datum/skill/craft/armorsmithing
 
 /obj/item/clothing/head/roguetown/headdress
-	name = "nemes"
-	desc = "A foreign silk headdress."
+	name = "涅墨斯头饰"
+	desc = "一顶异域丝质头饰。"
 	icon_state = "headdress"
 	sellprice = 10
 	nudist_approved = TRUE
@@ -349,30 +349,30 @@
 	icon_state = "headdressalt"
 
 /obj/item/clothing/head/roguetown/nun
-	name = "nun's veil"
-	desc = "A humble hat for the faithful."
+	name = "修女面纱"
+	desc = "一顶献给虔信者的朴素帽饰。"
 	icon_state = "nun"
 	sellprice = 5
 	nudist_approved = TRUE
 	dropshrink = null
 
 /obj/item/clothing/head/roguetown/hennin
-	name = "hennin"
-	desc = "A hat typically worn by women in nobility."
+	name = "亨宁高帽"
+	desc = "贵族女性常戴的一种帽子。"
 	icon_state = "hennin"
 	sellprice = 19
 	dynamic_hair_suffix = "+generic"
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/bucklehat //lifeweb sprite
-	name = "folded hat"
-	desc = "A plain leather hat with decorative buckle. Made popular by the ne'er-do-wells of Etrusca."
+	name = "折边帽子"
+	desc = "一顶朴素的皮帽，饰有装饰性搭扣。它因伊特鲁斯卡的不法之徒而流行起来。"
 	icon_state = "bucklehat"
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/duelhat //lifeweb sprite
-	name = "duelist's hat"
-	desc = "A feathered leather hat, to show them all your superiority."
+	name = "决斗者帽子"
+	desc = "一顶插羽的皮帽，好让所有人都看出你的高人一等。"
 	icon_state = "duelhat"
 	color = COLOR_ALMOST_BLACK
 	detail_tag = "_detail"
@@ -380,16 +380,16 @@
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/duelisthat
-	name = "duelist's hat"
-	desc = "A feathered leather hat, to show them all your superiority."
+	name = "决斗者帽子"
+	desc = "一顶插羽的皮帽，好让所有人都看出你的高人一等。"
 	icon_state = "duelisthat"
 	detail_tag = "_detail"
 	detail_color = COLOR_SILVER
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/wizhat
-	name = "wizard hat"
-	desc = "Used to distinguish dangerous wizards from senile old men."
+	name = "法师帽子"
+	desc = "用来区分危险法师和痴呆老头的帽子。"
 	icon_state = "wizardhat"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
@@ -414,9 +414,9 @@
 	icon_state = "wizardhatgen"
 
 /obj/item/clothing/head/roguetown/wizhat/gen/wise
-	name = "wise hat"
+	name = "智者帽子"
 	sellprice = 100
-	desc = "Only the wisest of nimrods wear this."
+	desc = "只有最有智慧的笨蛋才会戴这个。"
 
 /obj/item/clothing/head/roguetown/wizhat/gen/wise/equipped(mob/user, slot)
 	. = ..()
@@ -425,7 +425,7 @@
 	var/mob/living/carbon/wise = user
 	if(slot == SLOT_HEAD)
 		wise.change_stat(STATKEY_INT, 2, "wisehat")
-		to_chat(wise, span_green("I gain wisdom."))
+		to_chat(wise, span_green("我获得了智慧。"))
 
 /obj/item/clothing/head/roguetown/wizhat/gen/wise/dropped(mob/user)
 	. = ..()
@@ -434,22 +434,22 @@
 	var/mob/living/carbon/human/wise = user
 	if(wise.get_item_by_slot(SLOT_HEAD) == src)
 		wise.change_stat(STATKEY_INT, -2, "wisehat")
-		to_chat(wise, span_red("I lose wisdom."))
+		to_chat(wise, span_red("我失去了智慧。"))
 
 /obj/item/clothing/head/roguetown/shawl
-	name = "shawl"
-	desc = "Keeps the hair in check, and looks proper."
+	name = "披巾"
+	desc = "能把头发收拾利落，也显得很得体。"
 	icon_state = "shawl"
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/articap
-	name = "artificer's cap"
-	desc = "A sporting cap with a small gear adornment. Popular fashion amongst engineers."
+	name = "工匠帽"
+	desc = "一顶运动风便帽，饰有一个小齿轮。很受工程师欢迎。"
 	icon_state = "articap"
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/brimmed
-	desc = "A simple brimmed hat that provides some relief from the sun."
+	desc = "一顶简单的宽檐帽，能稍微缓解烈日曝晒。"
 	icon_state = "brimmed"
 	nudist_approved = TRUE
 	heat_protection = HEAD
@@ -461,7 +461,7 @@
 	..()
 
 /obj/item/clothing/head/roguetown/witchhat
-	name = "witch hat"
+	name = "女巫帽子"
 	desc = ""
 	icon_state = "witch"
 	item_state = "witch"
@@ -472,28 +472,28 @@
 	detail_color = CLOTHING_BROWN
 
 /obj/item/clothing/head/roguetown/witchhat/old
-	name = "decrepit witch hat"
-	desc = "When shall we three meet again; in thunder lightning or in rain."
+	name = "破旧女巫帽子"
+	desc = "我们三人何时再会；在雷鸣、电闪，还是雨中。"
 	icon_state = "witchold"
 	item_state = "witchold"
 	color = CLOTHING_WHITE
 
 /obj/item/clothing/head/roguetown/archercap
-	name = "archer's cap"
-	desc = "For the merry men."
+	name = "弓手帽"
+	desc = "献给那些快活的绿林好汉。"
 	icon_state = "archercap"
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/physician
-	name = "doctor's hat"
-	desc = "My cure is most effective."
+	name = "医生帽子"
+	desc = "我的疗法最为有效。"
 	icon_state = "physhat"
 	nudist_approved = TRUE
 
 
 /obj/item/clothing/head/roguetown/helmet/tricorn
 	slot_flags = ITEM_SLOT_HEAD
-	name = "tricorn"
+	name = "三角帽"
 	desc = ""
 	body_parts_covered = HEAD|HAIR|EARS|NOSE
 	icon_state = "tricorn"
@@ -510,16 +510,16 @@
 
 /obj/item/clothing/head/roguetown/helmet/tricorn/skull
 	icon_state = "tricorn_skull"
-	desc = "It has a skull sewn onto it. A clear sign of piracy"
+	desc = "上面缝着一颗骷髅头，这是海盗的明显标志。"
 
 /obj/item/clothing/head/roguetown/helmet/tricorn/lucky
-	name = "lucky tricorn"
-	desc = "A weathered tricorn that has seen many skirmishes. You'd feel lucky with this on your head."
+	name = "幸运三角帽"
+	desc = "一顶饱经风霜的三角帽，经历过无数次冲突。把它戴在头上，你会觉得自己走运起来。"
 	armor = ARMOR_LEATHER
 
 /obj/item/clothing/head/roguetown/helmet/bandana
 	slot_flags = ITEM_SLOT_HEAD
-	name = "bandana"
+	name = "头巾"
 	desc = ""
 	body_parts_covered = HEAD|HAIR|EARS|NOSE
 	icon_state = "bandana"
@@ -533,8 +533,8 @@
 	salvage_amount = 1
 
 /obj/item/clothing/head/roguetown/veiled
-	name = "nurse's veil"
-	desc = "A chirurgeon's bonnet, veiled with petal-stuffed linen. The stitchwork is often donned by the likes of wandering plague doctors and clerics; especially, those who're beholden to Pestra and Psydon."
+	name = "护士面纱"
+	desc = "一顶医师便帽，蒙着塞有花瓣的亚麻面纱。这种针线活常见于游方瘟疫医生与教士，尤其是那些侍奉佩丝特拉与赛顿的人。"
 	icon_state = "veil"
 	item_state = "veil"
 	detail_tag = "_detail"
@@ -564,16 +564,16 @@
 	AddComponent(/datum/component/adjustable_clothing, (NECK|HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/foley/equip/cloak (3).ogg', null, (UPD_HEAD|UPD_MASK))
 
 /obj/item/clothing/head/roguetown/veiled/loudmouth
-	name = "loudmouth's headcover"
-	desc = "Said to be worn by only the loudest and proudest. The mask is adjustable."
+	name = "大嗓门头罩"
+	desc = "据说只有最吵闹、最招摇的人才会戴。面罩可调节。"
 	icon_state = "loudmouth"
 	item_state = "loudmouth"
 	color = CLOTHING_RED
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/scarf
-	name = "scarf"
-	desc = "A simple scarf, designed to be worn upon the shoulders."
+	name = "围巾"
+	desc = "一条简单的围巾，设计成披在肩上穿戴。"
 	item_state = "hijab_t"
 	icon_state = "deserthood_t"
 	color = "#b8252c"
@@ -599,7 +599,7 @@
 
 /obj/item/clothing/head/roguetown/scarf/MiddleClick(mob/user)
 	overarmor = !overarmor
-	to_chat(user, span_info("I [overarmor ? "wear \the [src] under my hair" : "wear \the [src] over my hair"]."))
+	to_chat(user, span_info("我把\the [src][overarmor ? "戴在头发里面" : "戴在头发外面"]。"))
 	if(overarmor)
 		alternate_worn_layer = HOOD_LAYER //Below Hair Layer
 	else
@@ -609,8 +609,8 @@
 
 // The exact same as the Grenzelhoft hat w/ the cap, but capless; no armor stats. Allows for drip with the helmet aesthetic PR
 /obj/item/clothing/head/roguetown/caplessgrenzelhofthat
-	name = "capless grenzelhoft plume hat"
-	desc = "Whether it's monsters or fair maidens, a true Grenzelhoftian slays both. This one lacks any protection beneath."
+	name = "无内帽格伦泽尔霍夫羽饰帽"
+	desc = "无论怪物还是佳人，真正的格伦泽尔霍夫人都能一并征服。只是这顶下面没有任何防护。"
 	icon_state = "grenzelhat"
 	item_state = "grenzelhat"
 	icon = 'icons/roguetown/clothing/head.dmi'

@@ -3,8 +3,8 @@
 ////////////
 
 /obj/item/construction/nail
-	name = "Nail"
-	desc = "A small nail, used for securing wood down to things"
+	name = "钉子"
+	desc = "一枚小钉子，用来把木头固定在别的东西上。"
 	icon = 'icons/roguetown/items/crafting.dmi'
 	icon_state = "nails1"
 	grid_width = 32
@@ -27,7 +27,7 @@
 /obj/item/construction/nail/attack_right(mob/living/user)
 	if(user.get_active_held_item())
 		return
-	to_chat(user, span_warning("I start to collect [src]..."))
+	to_chat(user, span_warning("我开始收集[src]……"))
 	if(move_after(user, 4 SECONDS, target = src))
 		var/stackcount = 0
 		for(var/obj/item/construction/nail/F in get_turf(src))
@@ -48,8 +48,8 @@
 			qdel(F)
 
 /obj/item/construction/bundle/nail
-	name = "pile of nails"
-	desc = "Several nails in a pile."
+	name = "一堆钉子"
+	desc = "堆在一起的几枚钉子。"
 	icon_state = "nail1"
 	item_state = "plankbundle"
 	icon = 'icons/roguetown/items/crafting.dmi'
@@ -63,7 +63,7 @@
 	throw_range = 5
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_TINY
-	stackname = "nail"
+	stackname = "钉子"
 	stacktype = /obj/item/construction/nail
 	maxamount = 5
 	icon1 = "nails3"

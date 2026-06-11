@@ -1,8 +1,8 @@
 #define MAX_LEECH_EVILNESS 10
 
 /obj/item/natural/worms/leech
-	name = "leech"
-	desc = "A disgusting, blood-sucking parasite."
+	name = "水蛭"
+	desc = "一种恶心的吸血寄生虫。"
 	icon = 'icons/roguetown/items/surgery.dmi'
 	icon_state = "leech"
 	dropshrink = 0.8
@@ -126,34 +126,34 @@
 	. = ..()
 	switch(blood_storage/blood_maximum)
 		if(0.8 to INFINITY)
-			. += span_bloody("<B>[p_theyre(TRUE)] fat and engorged with blood.</B>")
+			. += span_bloody("<B>[p_theyre(TRUE)]肥硕鼓胀，吸满了鲜血。</B>")
 		if(0.5 to 0.8)
-			. += span_bloody("[p_theyre(TRUE)] well fed.")
+			. += span_bloody("[p_theyre(TRUE)]吃得很饱。")
 		if(0.1 to 0.5)
-			. += span_warning("[p_they(TRUE)] want[p_s()] a meal.")
+			. += span_warning("[p_they(TRUE)]想进食了。")
 		if(-INFINITY to 0.1)
-			. += span_dead("[p_theyre(TRUE)] starved.")
+			. += span_dead("[p_theyre(TRUE)]饿死了。")
 	if(!giving)
-		. += span_warning("[p_theyre(TRUE)] [pick("slurping", "sucking", "inhaling")].")
+		. += span_warning("[p_theyre(TRUE)] [pick("吮吸着", "抽吸着", "吞饮着")]。")
 	else
-		. += span_notice("[p_theyre(TRUE)] [pick("vomiting", "gorfing", "exhaling")].")
+		. += span_notice("[p_theyre(TRUE)] [pick("反呕着", "干呕着", "呼吐着")]。")
 	if(drainage)
 		START_PROCESSING(SSobj, src)
 
 /obj/item/natural/worms/leech/attack(mob/living/M, mob/user)
 	if(ishuman(M))
 		if(!giving && M.stat == DEAD)
-			to_chat(user, span_warning("They are deceased. Only running blood may be extracted."))
+			to_chat(user, span_warning("它们已经死了。只有流动的血液才能被抽取。"))
 			return
 		if(!giving && !M.mind && !mindless_attach)
-			to_chat(user, span_warning("They are mindless. The [src] won't attach."))
+			to_chat(user, span_warning("对方毫无意识，[src]不会附着上去。"))
 			return
 		var/mob/living/carbon/human/H = M
 		var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 		if(!affecting)
 			return
 		if(!get_location_accessible(H, check_zone(user.zone_selected)))
-			to_chat(user, span_warning("Something in the way."))
+			to_chat(user, span_warning("有东西挡着。"))
 			return
 		var/used_time = (70 - (user.get_skill_level(/datum/skill/misc/medicine) * 10))/2
 		if(!do_mob(user, H, used_time))
@@ -164,9 +164,9 @@
 		src.forceMove(H)
 		affecting.add_embedded_object(src, silent = TRUE, crit_message = FALSE)
 		if(M == user)
-			user.visible_message(span_notice("[user] places [src] on [user.p_their()] [affecting]."), span_notice("I place a leech on my [affecting]."))
+			user.visible_message(span_notice("[user]把[src]放到了[user.p_their()]的[affecting]上。"), span_notice("我把一只水蛭放到了自己的[affecting]上。"))
 		else
-			user.visible_message(span_notice("[user] places [src] on [M]'s [affecting]."), span_notice("I place a leech on [M]'s [affecting]."))
+			user.visible_message(span_notice("[user]把[src]放到了[M]的[affecting]上。"), span_notice("我把一只水蛭放到了[M]的[affecting]上。"))
 		return
 	return ..()
 
@@ -183,27 +183,27 @@
 		"#ff31e4" = 1,
 	)
 	var/static/list/all_adjectives = list(
-		"blood-sucking" = 20,
-		"disgusting" = 10,
-		"vile" = 8,
-		"repugnant" = 4,
-		"revolting" = 4,
-		"grotesque" = 4,
-		"hideous" = 4,
-		"stupid" = 2,
-		"dumb" = 2,
-		"demonic" = 1,
+		"吸血的" = 20,
+		"恶心的" = 10,
+		"卑劣的" = 8,
+		"令人作呕的" = 4,
+		"骇人的" = 4,
+		"怪诞的" = 4,
+		"丑恶的" = 4,
+		"愚蠢的" = 2,
+		"呆笨的" = 2,
+		"恶魔般的" = 1,
 		"graggoid" = 1,
 		"zizoid" = 1,
 	)
 	var/static/list/all_descs = list(
-		"What a disgusting creature." = 10,
-		"Fucking gross." = 5,
-		"Slippery..." = 3,
-		"So yummy and full of blood." = 3,
-		"I love this leech!" = 2,
-		"It is so beautiful." = 2,
-		"I wish I was a leech." = 1,
+		"真是个恶心的东西。" = 10,
+		"恶心得要命。" = 5,
+		"滑溜溜的..." = 3,
+		"看起来很美味，满是鲜血。" = 3,
+		"我喜欢这只水蛭！" = 2,
+		"它真漂亮。" = 2,
+		"真希望我也是只水蛭。" = 1,
 	)
 	var/list/possible_adjectives = all_adjectives.Copy()
 	var/list/possible_descs = all_descs.Copy()
@@ -213,15 +213,15 @@
 	switch(evilness_rating)
 		if(MAX_LEECH_EVILNESS to INFINITY) //maximized evilness holy shit
 			color = "#ff0000"
-			adjectives += pick("evil", "malevolent", "misanthropic")
-			descs += span_danger("This one is bursting with hatred!")
+			adjectives += pick("邪恶的", "恶毒的", "憎人的")
+			descs += span_danger("这只充满了仇恨！")
 		if(5) //this leech is painfully average, it gets no adjectives
 			if(prob(3))
-				adjectives += pick("average", "ordinary", "boring")
-				descs += "This one is extremely boring to look at."
+				adjectives += pick("平平无奇的", "普通的", "无聊的")
+				descs += "这只看起来无聊透顶。"
 		if(-INFINITY to 1) //this leech is pretty terrible at being a leech
-			adjectives += pick("pitiful", "pathetic", "depressing")
-			descs += span_dead("This one yearns for nothing but death.")
+			adjectives += pick("可怜的", "可悲的", "消沉的")
+			descs += span_dead("这只一心求死。")
 		else
 			var/adjective_amount = 1
 			if(prob(5))
@@ -240,14 +240,14 @@
 	if(evilness_rating < 10)
 		color = pickweight(all_colors)
 	if(length(adjectives))
-		name = "[english_list(adjectives)] [name]"
+		name = "[jointext(adjectives, " ")] [name]"
 	if(length(descs))
 		desc = "[desc] [jointext(descs, " ")]"
 	return TRUE
 
 /obj/item/natural/worms/leech/cheele
-	name = "cheele"
-	desc = "A beautiful, blood-infusing altruistic organism made by Pestra herself."
+	name = "奇勒"
+	desc = "一只由佩丝特拉亲手造出的美丽生物，会无私地向宿主注入鲜血。"
 	icon_state = "cheele"
 	color = null
 	consistent = TRUE
@@ -272,11 +272,11 @@
 	. = ..()
 	giving = !giving
 	if(giving)
-		user.visible_message(span_notice("[user] squeezes [src]."),\
-							span_notice("I squeeze [src]. It will now infuse blood."))
+		user.visible_message(span_notice("[user]挤压了[src]。"),\
+							span_notice("我挤压了[src]。它现在会注入血液。"))
 	else
-		user.visible_message(span_notice("[user] squeezes [src]."),\
-							span_notice("I squeeze [src]. It will now extract blood."))
+		user.visible_message(span_notice("[user]挤压了[src]。"),\
+							span_notice("我挤压了[src]。它现在会抽取血液。"))
 
 #undef MAX_LEECH_EVILNESS
 
@@ -284,8 +284,8 @@
 	return
 
 /obj/item/natural/worms/leech/abyssoid
-	name = "abyssoid leech"
-	desc = "A holy leech sent by Abyssor himself."
+	name = "深渊水蛭"
+	desc = "由阿比索尔亲自降下的神圣水蛭。"
 	icon_state = "leech"
 	drainage = 0
 	blood_sucking = 0
@@ -304,4 +304,4 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/V = user
 		if(prob(3))
-			V.say(pick("PRAISE ABYSSOR!", "REMEMBER ABYSSOR!", "ABYSSOR LIVES!", "GLORY TO ABYSSOR!", "ABYSSOR IS COMING!"))
+			V.say(pick("赞美 阿比索尔！", "铭记 阿比索尔！", "阿比索尔 长存！", "荣耀归于 阿比索尔！", "阿比索尔 即将降临！"))

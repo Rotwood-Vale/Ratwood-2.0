@@ -1,7 +1,7 @@
 // WOE: SPELLBLADE DODGE EXPERT POLEARM BUILD UPON YE.
 /datum/advclass/wretch/blackoakwyrm
-	name = "Black Oak Pariah"
-	tutorial = "Carrying extreme beliefs not even befit of the Black Oaks, you have decided to secede yourself from the group and everyone else. This land was once great...and now, wave after wave of monsters and outsiders trample your home. Your people were the ones that settled these lands, and the foreign-backed Crown, deceitful and arrogant, has denied your people the rewards they deserve! Your extensive training in the Black Oaks has given you skill in both glaives and magycks. A bounty from the crown follows you, as you had already done enough to be officially condemned by the group that was not committed to the cause due to the lure of coin."
+	name = "黑橡 弃徒"
+	tutorial = "你怀抱着连 黑橡 都无法容忍的极端信念，于是决定背离这个团体，也背离所有其他人。这片土地曾经伟大……而如今，一波又一波的怪物与外来者正践踏着你的家园。最初在这片土地上定居的是你们的族人，可那个受外邦支持、虚伪又傲慢的王冠却拒绝给予你们应得的报偿！你在 黑橡 中接受过广泛训练，精通长柄武器与魔法。王冠的悬赏一路跟随着你，因为你早已做下足够多的事，正式被那些受金钱诱惑、对大业不够忠诚的人判为有罪。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
 		/datum/species/human/halfelf,
@@ -41,7 +41,7 @@
 		/datum/skill/labor/farming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 	)
-	extra_context = "This subclass is race-limited to: Half-Elves, Elves, Dark Elves."
+	extra_context = "该子职业的种族限制为：半精灵、精灵、黑暗精灵。"
 
 /datum/outfit/job/roguetown/wretch/blackoak/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -72,14 +72,14 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
 
-		var/weapons = list("Elven Swordspear and Longsword","Elven Curveblade and Shortsword",)
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("精灵剑矛与长剑","精灵弯刃大剑与短剑",)
+		var/weapon_choice = input(H, "选择你的武器。", "披甲执兵") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Elven Swordspear and Longsword")
+			if("精灵剑矛与长剑")
 				r_hand = /obj/item/rogueweapon/spear/naginata/elf
 				l_hand = /obj/item/rogueweapon/sword/long/elf
-			if("Elven Curveblade and Shortsword")
+			if("精灵弯刃大剑与短剑")
 				r_hand = /obj/item/rogueweapon/greatsword/elf
 				l_hand = /obj/item/rogueweapon/sword/short/elf
 

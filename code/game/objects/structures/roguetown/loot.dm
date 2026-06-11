@@ -1,6 +1,6 @@
 /obj/structure/loot/pile
-	name = "loot pile"
-	desc = "Looters don't read, and readers don't loot"
+	name = "战利品堆"
+	desc = "劫掠者不读书，读书人不劫掠。"
 	icon = 'icons/roguetown/mob/monster/wraith.dmi'
 	icon_state = "hauntpile"
 	layer = ABOVE_ALL_MOB_LAYER
@@ -57,7 +57,7 @@
 		if(B)
 			B = new B(user.loc)
 			user.put_in_hands(B)
-			user.visible_message(span_notice("[user] finds [B] in the [src]."))
+			user.visible_message(span_notice("[user]在[src]里找到了[B]。"))
 			if(!loot.len)
 				qdel(src)
 			return

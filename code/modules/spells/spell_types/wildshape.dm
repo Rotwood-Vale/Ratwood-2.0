@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/self/wildshape
-	name = "Beast Form"
-	desc = "Take on the form of one of Dendor's sacred beasts."
+	name = "兽形"
+	desc = "化作登多尔所钟爱的圣兽之一。"
 	overlay_state = "tamebeast"
 	clothes_req = FALSE
 	human_req = FALSE
@@ -8,7 +8,7 @@
 	chargetime = 0
 	recharge_time = 30 SECONDS
 	cooldown_min = 50
-	invocations = list("Treefather grant me your form!")
+	invocations = list("树父啊，赐我你的形态！")
 	invocation_type = "shout"
 	action_icon_state = "shapeshift"
 	associated_skill = /datum/skill/magic/holy
@@ -29,7 +29,7 @@
 /obj/effect/proc_holder/spell/self/wildshape/cast(list/targets, mob/living/carbon/human/user = usr)
 	. = ..()
 	if(user.has_status_effect(/datum/status_effect/debuff/submissive))
-		to_chat(user, span_warning("Your will is too broken to change form."))
+		to_chat(user, span_warning("你的意志破碎得太厉害了，无法改变形态。"))
 		return FALSE
 
 	if(istype(user, /mob/living/carbon/human/species/wildshape))

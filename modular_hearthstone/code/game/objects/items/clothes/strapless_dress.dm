@@ -3,8 +3,8 @@
 	body_parts_covered = CHEST|GROIN
 	icon = 'modular_hearthstone/icons/obj/items/clothes/dress.dmi'
 	mob_overlay_icon = 'modular_hearthstone/icons/obj/items/clothes/on_mob/dress.dmi'
-	name = "strapless dress"
-	desc = "A form-fitting strapless dress with a high, revealing cut. It hugs every curve and hides almost nothing."
+	name = "抹胸连衣裙"
+	desc = "一件贴身的抹胸连衣裙，开衩很高，颇为暴露。它勾勒出每一道曲线，几乎遮不住什么。"
 	flags_inv = HIDEBOOB|HIDECROTCH
 	icon_state = "strapless"
 	sleevetype = null
@@ -30,8 +30,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/alt
 	mob_overlay_icon = 'modular_hearthstone/icons/obj/items/clothes/on_mob/dress.dmi'
-	name = "strapless dress"
-	desc = "A form-fitting strapless dress with a high, revealing cut. It hugs every curve and hides almost nothing."
+	name = "抹胸连衣裙"
+	desc = "一件贴身的抹胸连衣裙，开衩很高，颇为暴露。它勾勒出每一道曲线，几乎遮不住什么。"
 	flags_inv = HIDEBOOB|HIDECROTCH
 	icon_state = "strapless2"
 	icon = 'modular_hearthstone/icons/obj/items/clothes/dress.dmi'
@@ -41,14 +41,14 @@
 //SUPPLY
 
 /datum/supply_pack/rogue/wardrobe/suits/strapless_dress //just paint them yourself ffs
-	name = "Strapless Dresses"
+	name = "抹胸连衣裙"
 	cost = 10
 	contains = list(
 					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless,
 				)
 
 /datum/supply_pack/rogue/wardrobe/suits/strapless_dress_alt
-	name = "Alternative Strapless Dresses"
+	name = "另一款抹胸连衣裙"
 	cost = 10
 	contains = list(
 					/obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/alt,

@@ -3,243 +3,243 @@
 	slot = MOB_DESCRIPTOR_SLOT_TRAIT
 
 /datum/mob_descriptor/trait/moderate
-	name = "Moderate"
-	prefix = "is very"
+	name = "匀称"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/mundane
-	name = "Mundane"
-	prefix = "is very"
+	name = "寻常"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/middling
-	name = "Middling"
-	prefix = "is very"
+	name = "中规中矩"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/tall
-	name = "Tall"
-	prefix = "is very"
+	name = "高挑"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/short
-	name = "Short"
-	prefix = "is very"
+	name = "矮小"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/dainty
-	name = "Dainty"
-	prefix = "is very"
+	name = "纤巧"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/towering
-	name = "Towering"
-	prefix = "is very"
+	name = "魁伟"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/giant
-	name = "Giant"
-	prefix = "is a"
+	name = "巨人般"
+	prefix = "像个"
 
 /datum/mob_descriptor/trait/tiny
-	name = "Tiny"
-	prefix = "is very"
+	name = "娇小"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/stout
-	name = "Stout"
-	prefix = "is very"
+	name = "敦实"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/cadaverous
-	name = "Cadaverous"
-	prefix = "is very"
+	name = "尸瘦"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/lanky
-	name = "Lanky"
-	prefix = "is very"
+	name = "瘦高"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/wide
-	name = "Wide"
-	prefix = "is very"
+	name = "宽阔"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/thin
-	name = "Thin"
-	prefix = "is very"
+	name = "瘦削"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/zardish
 	name = "Zardish"
-	prefix = "is very"
+	prefix = "很"
 
 
 /datum/mob_descriptor/trait/lupian
 	name = "Lupian"
-	prefix = "is very"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/venardic
 	name = "Venardic"
-	prefix = "is very"
+	prefix = "很"
 
 
 /datum/mob_descriptor/trait/feline
-	name = "Feline"
-	prefix = "is very"
+	name = "猫科般"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/elven
-	name = "Elven"
-	prefix = "is very"
+	name = "精灵般"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/rousley
 	name = "Rousley"
-	prefix = "is very"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/pale
-	name = "Pale"
-	prefix = "is very"
+	name = "苍白"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/tanned
-	name = "Tanned"
-	prefix = "is very"
+	name = "黝黑"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/dusky
-	name = "Dusky"
-	prefix = "is very"
+	name = "晦暗"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/blessed
-	name = "Blessed"
-	prefix = "is very"
+	name = "受福"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/accursed
-	name = "Accursed"
-	prefix = "is a"
+	name = "受诅者"
+	prefix = "是个"
 
 /datum/mob_descriptor/trait/aquatic
-	name = "Aquatic"
-	prefix = "is very"
+	name = "水栖般"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/volfish
 	name = "Volfish"
-	prefix = "is very"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/graceful
-	name = "Graceful"
-	prefix = "is very"
+	name = "优雅"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/lapine
-	name = "Lapine"
-	prefix = "is very"
+	name = "兔裔般"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/scrappy
-	name = "Scrappy"
-	prefix = "is very"
+	name = "泼辣"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/curious
-	name = "Curious"
-	prefix = "is very"
+	name = "好奇"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/craven
-	name = "Craven"
-	prefix = "is very"
+	name = "怯懦"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/grinning
-	name = "Grinning"
-	prefix = "is very"
+	name = "咧笑着"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/crestfallen
-	name = "Crestfallen"
-	prefix = "is very"
+	name = "垂头丧气"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/dour
-	name = "Dour"
-	prefix = "is very"
+	name = "阴郁"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/cheery
-	name = "Cheery"
-	prefix = "is very"
+	name = "欢快"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/simian
-	name = "Simian"
-	prefix = "is very"
+	name = "猿猴般"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/bovine
-	name = "Bovine"
-	prefix = "is very"
+	name = "牛裔般"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/cervine
-	name = "Cervine"
-	prefix = "is very"
+	name = "鹿科般"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/ursine
-	name = "Ursine"
-	prefix = "is very"
+	name = "熊科般"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/stern
-	name = "Stern"
-	prefix = "is very"
+	name = "严峻"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/jaunty
-	name = "Jaunty"
-	prefix = "is very"
+	name = "神气"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/meek
-	name = "Meek"
-	prefix = "is very"
+	name = "温顺"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/sly
-	name = "Sly"
-	prefix = "is very"
+	name = "狡黠"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/fervent
-	name = "Fervent"
-	prefix = "is very"
+	name = "炽烈"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/coy
-	name = "Coy"
-	prefix = "is very"
+	name = "忸怩"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/harrowed
-	name = "Harrowed"
-	prefix = "is very"
+	name = "憔悴"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/horned
-	name = "Horned"
-	prefix = "is very"
+	name = "有角"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/snoutly
-	name = "Snoutly"
-	prefix = "is very"
+	name = "长吻"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/tailed
-	name = "Tailed"
-	prefix = "is very"
+	name = "有尾"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/fanged
-	name = "Fanged"
-	prefix = "is very"
+	name = "獠牙外露"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/tusked
-	name = "Tusked"
-	prefix = "is very"
+	name = "有獠牙"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/clawed
-	name = "Clawed"
-	prefix = "is very"
+	name = "利爪森然"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/furred
-	name = "Furred"
-	prefix = "is very"
+	name = "多毛"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/feathered
-	name = "Feathered"
-	prefix = "is very"
+	name = "披羽"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/scaly
-	name = "Scaly"
-	prefix = "is very"
+	name = "覆鳞"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/crimson
-	name = "Crimson"
-	prefix = "is very"
+	name = "猩红"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/cerulean
-	name = "Cerulean"
-	prefix = "is very"
+	name = "蔚蓝"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/emerald
-	name = "Emerald"
-	prefix = "is very"
+	name = "翠绿"
+	prefix = "很"
 
 /datum/mob_descriptor/trait/amber
-	name = "Amber"
-	prefix = "is very"
+	name = "琥珀色"
+	prefix = "很"

@@ -1,10 +1,10 @@
 /datum/advclass/elder
-	name = "Town Elder"
+	name = "镇中长者"
 	maximum_possible_slots = 1
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_OLD)
-	tutorial = "You are as venerable and ancient as the trees themselves, wise even for your years spent with the first Wardens. The people look up to you both as a teacher and a guide to solve lesser issues before violence is involved. Not everything must end in bloodshed, no matter how much the retinue wish it were the case. Lead your fellow townsfolk in these troubling times lest they incur wrath of the nobility with their ignorance."
+	tutorial = "你如古树般德高望重、年岁悠长，早在最初那批守望者的时代便已积累了非凡见识。人们仰赖你，不仅把你当作师者，也把你看作在事态演变成暴力前，能化解许多小纷争的引路人。并非每件事都必须以流血收场，不管随从们有多希望如此。在这动荡时日里，引领你的镇民吧，免得他们因无知而招来贵族的怒火。"
 	outfit = /datum/outfit/job/roguetown/elder
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE	//not a noble, but similar ranking
 	cmode_music = 'sound/music/cmode/towner/combat_retired.ogg'

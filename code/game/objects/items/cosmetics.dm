@@ -1,6 +1,6 @@
 /obj/item/lipstick
 	gender = PLURAL
-	name = "red lipstick"
+	name = "红色口红"
 	desc = ""
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "lipstick"
@@ -9,31 +9,38 @@
 	var/open = FALSE
 
 /obj/item/lipstick/purple
-	name = "purple lipstick"
+	name = "紫色口红"
 	colour = "purple"
 
 /obj/item/lipstick/jade
 	//It's still called Jade, but theres no HTML color for jade, so we use lime.
-	name = "jade lipstick"
+	name = "翠玉口红"
 	colour = "lime"
 
 /obj/item/lipstick/black
-	name = "black lipstick"
+	name = "黑色口红"
 	colour = "black"
 
 /obj/item/lipstick/random
-	name = "lipstick"
+	name = "口红"
 	icon_state = "random_lipstick"
 
 /obj/item/lipstick/random/Initialize(mapload)
 	. = ..()
 	icon_state = "lipstick"
 	colour = pick("red","purple","lime","black","green","blue","white")
-	name = "[colour] lipstick"
+	switch(colour)
+		if("red") name = "红色口红"
+		if("purple") name = "紫色口红"
+		if("lime") name = "翠玉口红"
+		if("black") name = "黑色口红"
+		if("green") name = "绿色口红"
+		if("blue") name = "蓝色口红"
+		if("white") name = "白色口红"
 
 /obj/item/lipstick/attack_self(mob/user)
 	cut_overlays()
-	to_chat(user, span_notice("I twist \the [src] [open ? "closed" : "open"]."))
+	to_chat(user, span_notice("我将[src][open ? "旋紧" : "旋开"]了。"))
 	open = !open
 	if(open)
 		var/mutable_appearance/colored_overlay = mutable_appearance(icon, "lipstick_uncap_color")
@@ -53,34 +60,34 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.is_mouth_covered())
-			to_chat(user, span_warning("Remove [ H == user ? "your" : "[H.p_their()]" ] mask!"))
+			to_chat(user, span_warning("先摘下[ H == user ? "我的" : "[H.p_their()]的" ]面罩！"))
 			return
 		if(H.lip_style)	//if they already have lipstick on
-			to_chat(user, span_warning("I need to wipe off the old lipstick first!"))
+			to_chat(user, span_warning("我得先擦掉旧口红！"))
 			return
 		if(H == user)
 			user.visible_message(
-				span_notice("[user] does [user.p_their()] lips with \the [src]."),
-				span_notice("I take a moment to apply \the [src]. Perfect!")
+				span_notice("[user]用[src]涂抹了[user.p_their()]的嘴唇。"),
+				span_notice("我仔细涂上了[src]。完美！")
 			)
 			H.lip_style = "lipstick"
 			H.lip_color = colour
 			H.update_body()
 		else
 			user.visible_message(
-				span_warning("[user] begins to do [H]'s lips with \the [src]."),
-				span_notice("I begin to apply \the [src] on [H]'s lips...")
+				span_warning("[user]开始给[H]涂抹[src]。"),
+				span_notice("我开始给[H]涂抹[src]……")
 			)
 			if(do_after(user, 20, target = H))
 				user.visible_message(
-					span_notice("[user] does [H]'s lips with \the [src]."),
-					span_notice("I apply \the [src] on [H]'s lips.")
+					span_notice("[user]给[H]涂好了[src]。"),
+					span_notice("我给[H]涂好了[src]。")
 				)
 				H.lip_style = "lipstick"
 				H.lip_color = colour
 				H.update_body()
 	else
-		to_chat(user, span_warning("Where are the lips on that?"))
+		to_chat(user, span_warning("那东西的嘴唇在哪？"))
 
 //you can wipe off lipstick with paper!
 /obj/item/paper/attack(mob/M, mob/user)
@@ -93,18 +100,18 @@
 			if(!H.lip_style)
 				return
 			if(H == user)
-				to_chat(user, span_notice("I wipe off the lipstick with [src]."))
+				to_chat(user, span_notice("我用[src]擦掉了口红。"))
 				H.lip_style = null
 				H.update_body()
 			else
 				user.visible_message(
-					span_warning("[user] begins to wipe [H]'s lipstick off with \the [src]."),
-					span_notice("I begin to wipe off [H]'s lipstick...")
+					span_warning("[user]开始用[src]擦掉[H]的口红。"),
+					span_notice("我开始擦掉[H]的口红……")
 				)
 				if(do_after(user, 10, target = H))
 					user.visible_message(
-						span_notice("[user] wipes [H]'s lipstick off with \the [src]."),
-						span_notice("I wipe off [H]'s lipstick.")
+						span_notice("[user]用[src]擦掉了[H]的口红。"),
+						span_notice("我擦掉了[H]的口红。")
 					)
 					H.lip_style = null
 					H.update_body()

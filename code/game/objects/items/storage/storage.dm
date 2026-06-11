@@ -1,5 +1,5 @@
 /obj/item/storage
-	name = "storage"
+	name = "储物容器"
 	w_class = WEIGHT_CLASS_NORMAL
 	var/rummage_if_nodrop = TRUE
 	var/component_type = /datum/component/storage/concrete

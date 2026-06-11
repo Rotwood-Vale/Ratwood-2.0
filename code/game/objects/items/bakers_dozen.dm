@@ -47,35 +47,35 @@
 	if(!joiner || !joiner.client)
 		return
 	if(!joining)
-		to_chat(joiner, span_warning("The Baker's Dozen game has already started."))
+		to_chat(joiner, span_warning("这局“面包师十三”已经开始了。"))
 		return
 
 	if(joiner in players)
-		var/list/opts = list("Leave game")
+		var/list/opts = list("离开牌局")
 		if(players.len >= 2)
-			opts += "Start game now"
-		var/choice = input(joiner, "You are already in the lobby. ([players.len]/[max_players] players)", "Baker's Dozen") as null|anything in opts
-		if(choice == "Start game now")
+			opts += "立即开始"
+		var/choice = input(joiner, "你已经在大厅里了。([players.len]/[max_players] 名玩家)", "面包师十三") as null|anything in opts
+		if(choice == "立即开始")
 			start_game()
-		else if(choice == "Leave game")
+		else if(choice == "离开牌局")
 			players -= joiner
-			game_bag.visible_message(span_notice("[joiner] left the pre-game lobby. ([players.len]/[max_players])"))
+			game_bag.visible_message(span_notice("[joiner]离开了赛前大厅。([players.len]/[max_players])"))
 			if(!players.len)
 				cancel_game(joiner)
 		return
 
 	if(players.len >= max_players)
-		to_chat(joiner, span_warning("The Baker's Dozen game is full ([max_players]/[max_players])."))
+		to_chat(joiner, span_warning("“面包师十三”已经满员了。([max_players]/[max_players])"))
 		return
 
 	players += joiner
-	game_bag.visible_message(span_notice("[joiner] joined Baker's Dozen! ([players.len]/[max_players] players)"))
+	game_bag.visible_message(span_notice("[joiner]加入了“面包师十三”！([players.len]/[max_players] 名玩家)"))
 	if(players.len >= max_players)
 		start_game()
 
 /datum/bakers_dozen_game/proc/leave_game(mob/living/leaver)
 	if(!(leaver in players))
-		to_chat(leaver, span_warning("You are not in this Baker's Dozen game."))
+		to_chat(leaver, span_warning("你不在这局“面包师十三”里。"))
 		return
 
 	var/leaver_index = players.Find(leaver)
@@ -87,7 +87,7 @@
 	stayed -= leaver
 	busted -= leaver
 
-	game_bag.visible_message(span_notice("[leaver] leaves Baker's Dozen. ([players.len]/[max_players] players remain)"))
+	game_bag.visible_message(span_notice("[leaver]离开了“面包师十三”。(剩余 [players.len]/[max_players] 名玩家)"))
 
 	if(!players.len)
 		cancel_game(leaver)
@@ -117,7 +117,7 @@
 			current_player = null
 
 /datum/bakers_dozen_game/proc/cancel_game(mob/living/canceller)
-	game_bag.visible_message(span_warning("[canceller] has cancelled Baker's Dozen!"))
+	game_bag.visible_message(span_warning("[canceller]取消了“面包师十三”！"))
 	game_bag.active_game = null
 	qdel(src)
 
@@ -134,7 +134,7 @@
 	var/list/names = list()
 	for(var/mob/living/M in players)
 		names += "[M]"
-	game_bag.visible_message(span_notice("Baker's Dozen begins! Target: [target_score]. Players: [jointext(names, ", ")]."))
+	game_bag.visible_message(span_notice("“面包师十三”开始了！目标点数：[target_score]。玩家：[jointext(names, ", ")]。"))
 	next_turn()
 
 /datum/bakers_dozen_game/proc/player_is_done(mob/living/M)
@@ -176,61 +176,61 @@
 		current_player = active
 		can_take_turn_action = TRUE
 
-		game_bag.visible_message(span_notice("--- [active]'s turn | [get_score_display()] ---"))
+		game_bag.visible_message(span_notice("--- [active]的回合 | [get_score_display()] ---"))
 		if(mandatory_rolls[active] < 2)
-			to_chat(active, span_notice("Opening phase: choose Roll Opening Dice from the dice bag menu."))
+			to_chat(active, span_notice("起手阶段：从骰袋菜单里选择“投起手骰”。"))
 		else
-			to_chat(active, span_notice("Choose Hit or Stay from the dice bag menu. Target: [target_score]."))
+			to_chat(active, span_notice("从骰袋菜单里选择“补牌”或“停牌”。目标点数：[target_score]。"))
 		return
 
 	end_round()
 
 /datum/bakers_dozen_game/proc/player_action(mob/living/user, action)
 	if(!(user in players))
-		to_chat(user, span_notice("Current totals: [get_score_display()]"))
+		to_chat(user, span_notice("当前总点数：[get_score_display()]"))
 		return
 
 	if(busy)
-		to_chat(user, span_notice("Please wait a moment..."))
+		to_chat(user, span_notice("请稍等片刻……"))
 		return
 
 	if(user != current_player)
-		input(user, "It's not your turn. Totals: [get_score_display()]", "Baker's Dozen") as null|anything in list("OK")
+		input(user, "还没轮到你。当前总点数：[get_score_display()]", "面包师十三") as null|anything in list("确定")
 		return
 	if(current_player_index < 1 || current_player_index > players.len)
-		to_chat(user, span_warning("Turn order is resyncing. Try again in a moment."))
+		to_chat(user, span_warning("回合顺序正在重新同步。稍后再试。"))
 		return
 	if(user != players[current_player_index])
-		to_chat(user, span_warning("It is not your turn yet."))
+		to_chat(user, span_warning("现在还没轮到你。"))
 		return
 	if(!can_take_turn_action)
-		to_chat(user, span_notice("You have already acted this turn."))
+		to_chat(user, span_notice("你这回合已经行动过了。"))
 		return
 
 	if(player_is_done(user))
-		to_chat(user, span_notice("You're done for this round. Totals: [get_score_display()]"))
+		to_chat(user, span_notice("你这轮已经结束了。当前总点数：[get_score_display()]"))
 		next_turn()
 		return
 
 	if(mandatory_rolls[user] < 2)
-		if(action != "Roll Opening Dice")
-			to_chat(user, span_notice("Choose Roll Opening Dice from the menu."))
+		if(action != "投起手骰")
+			to_chat(user, span_notice("请从菜单中选择“投起手骰”。"))
 			return
 		can_take_turn_action = FALSE
 		do_opening_rolls(user)
 		return
 
-	if(action == "Stay")
+	if(action == "停牌")
 		can_take_turn_action = FALSE
 		stayed[user] = TRUE
-		game_bag.visible_message(span_notice("[user] stays at [scores[user]]."))
+		game_bag.visible_message(span_notice("[user]以 [scores[user]] 点停牌。"))
 		if(all_players_done())
 			end_round()
 		else
 			next_turn()
 		return
-	if(action != "Hit - roll 1d6")
-		to_chat(user, span_notice("Choose Hit or Stay from the menu."))
+	if(action != "补牌 - 掷1枚6面骰")
+		to_chat(user, span_notice("请从菜单中选择“补牌”或“停牌”。"))
 		return
 	can_take_turn_action = FALSE
 	do_roll(user, FALSE)
@@ -256,13 +256,13 @@
 	if(mandatory)
 		mandatory_rolls[active]++
 
-	game_bag.visible_message(span_notice("[active] rolls [format_big_die_value(roll, get_roll_color_for(active))]! Total: [scores[active]] / [target_score]."))
+	game_bag.visible_message(span_notice("[active]掷出了[format_big_die_value(roll, get_roll_color_for(active))]！总点数：[scores[active]] / [target_score]。"))
 
 	if(scores[active] > target_score)
 		busted[active] = TRUE
-		game_bag.visible_message(span_danger("[active] busts at [scores[active]]!"))
+		game_bag.visible_message(span_danger("[active]爆牌了，点数来到 [scores[active]]！"))
 	else if(scores[active] == target_score)
-		game_bag.visible_message(span_green("<b>[active] hit BAKER'S DOZEN exactly!</b>"))
+		game_bag.visible_message(span_green("<b>[active]正好命中“面包师十三”！</b>"))
 
 	busy = FALSE
 
@@ -288,17 +288,17 @@
 		else if(total == best_total)
 			contenders += M
 
-	game_bag.visible_message(span_notice("--- BAKER'S DOZEN ROUND OVER ---<br>Totals: [get_score_display()]"))
+	game_bag.visible_message(span_notice("--- “面包师十三”本轮结束 ---<br>总点数：[get_score_display()]"))
 
 	if(!contenders.len)
-		game_bag.visible_message(span_warning("Everyone busted. No winner this round."))
+		game_bag.visible_message(span_warning("所有人都爆牌了。本轮无人获胜。"))
 		game_bag.active_game = null
 		qdel(src)
 		return
 
 	if(contenders.len == 1)
 		var/mob/living/champion = contenders[1]
-		game_bag.visible_message(span_green("<b>[champion] wins with [scores[champion]]!</b>"))
+		game_bag.visible_message(span_green("<b>[champion]以 [scores[champion]] 点获胜！</b>"))
 		game_bag.active_game = null
 		qdel(src)
 		return
@@ -310,14 +310,14 @@
 		var/list/names = list()
 		for(var/mob/living/M in contenders)
 			names += "[M]"
-		game_bag.visible_message(span_warning("Tie at [scores[contenders[1]]] between [jointext(names, ", ")]! Tie-break roll!"))
+		game_bag.visible_message(span_warning("[jointext(names, ", ")]同以 [scores[contenders[1]]] 点打平！开始加赛掷骰！"))
 
 		var/list/new_contenders = list()
 		var/best_total = -1
 		for(var/mob/living/M in contenders)
 			var/roll = rand(1, 6)
 			scores[M] += roll
-			game_bag.visible_message(span_notice("[M] tie-break rolls [format_big_die_value(roll, get_roll_color_for(M))] -> [scores[M]] total."))
+			game_bag.visible_message(span_notice("[M]在加赛中掷出[format_big_die_value(roll, get_roll_color_for(M))] -> 总点数 [scores[M]]。"))
 			if(scores[M] > best_total)
 				best_total = scores[M]
 				new_contenders = list(M)
@@ -325,7 +325,7 @@
 				new_contenders += M
 
 		if(!new_contenders.len)
-			game_bag.visible_message(span_warning("Tie-break ended with no active contenders."))
+			game_bag.visible_message(span_warning("加赛结束时没有有效竞争者。"))
 			game_bag.active_game = null
 			qdel(src)
 			return
@@ -333,7 +333,7 @@
 		contenders = new_contenders
 
 	var/mob/living/champion = contenders[1]
-	game_bag.visible_message(span_green("<b>[champion] wins Baker's Dozen with [scores[champion]]!</b>"))
+	game_bag.visible_message(span_green("<b>[champion]以 [scores[champion]] 点赢得了“面包师十三”！</b>"))
 	game_bag.active_game = null
 	qdel(src)
 
@@ -342,30 +342,30 @@
 	for(var/mob/living/M in players)
 		var/state = ""
 		if(busted[M])
-			state = " (BUST)"
+			state = "（爆牌）"
 		else if(stayed[M])
-			state = " (STAY)"
+			state = "（停牌）"
 		else if(scores[M] == target_score)
-			state = " (BAKER'S DOZEN)"
+			state = "（面包师十三）"
 		parts += "[M]: [scores[M]][state]"
 	return jointext(parts, " | ")
 
 /obj/item/storage/pill_bottle/dice/bakers_dozen
-	name = "bag of baker's dozen dice"
-	desc = "A set of dice for Baker's Dozen. Activate in hand (Z) to start or join a game."
+	name = "面包师十三骰袋"
+	desc = "一套用于“面包师十三”的骰子。手持时激活（Z）即可开始或加入一局游戏。"
 	var/datum/bakers_dozen_game/active_game
 	var/static/bakers_dozen_rules_text = {"<div style='padding:8px;font-family:Verdana,sans-serif;'>
-<h2 style='text-align:center;margin:0 0 6px 0;'>Baker's Dozen</h2>
+<h2 style='text-align:center;margin:0 0 6px 0;'>面包师十三</h2>
 <br>
-<b>Objective:</b> A blackjack-style d6 game for 1-4 players where the target is to get as close to 13 as possible.<br>
+<b>目标：</b> 一种适合 1 到 4 名玩家的类黑杰克6面骰游戏，目标是尽可能接近 13 点。<br>
 <br>
-<b>Rules:</b><br>
-- Each player must roll 2d6 (one die at a time).<br>
-- After the two mandatory rolls, players may either roll one d6 (hit) or stay.<br>
-- Going over 13 is an immediate bust.<br>
-- The round ends when every player has stayed, hits exactly 13, or busted.<br>
-- Highest non-bust total wins.<br>
-- If top totals tie, tied players repeatedly roll one extra d6 each until whoever gets the highest.<br>
+<b>规则：</b><br>
+- 每位玩家都必须先投 2 次6面骰（一次一颗）。<br>
+- 两次强制投掷结束后，玩家可以选择再投 1 颗6面骰（补牌）或停牌。<br>
+- 一旦超过 13 点，立即爆牌。<br>
+- 当所有玩家都停牌、正好达到 13 点或爆牌时，本轮结束。<br>
+- 未爆牌者中点数最高的玩家获胜。<br>
+- 若最高点数相同，则打平玩家持续各自加投 1 颗6面骰，直到有人点数最高为止。<br>
 </div>"}
 
 /obj/item/storage/pill_bottle/dice/bakers_dozen/proc/show_rules(mob/living/user)
@@ -395,84 +395,84 @@
 			can_show_actions = TRUE
 
 	if(!active_game)
-		menu += "Start Game"
+		menu += "开始游戏"
 	else if(active_game.joining)
 		if(!(user in active_game.players))
-			menu += "Start Game"
+			menu += "开始游戏"
 	else if(can_show_opening_roll)
-		menu += "Roll Opening Dice"
+		menu += "投起手骰"
 	else if(can_show_actions)
-		menu += "Hit - roll 1d6"
+		menu += "补牌 - 掷1枚6面骰"
 		menu += gap1
-		menu += "Stay"
+		menu += "停牌"
 
 	if(menu.len)
 		menu += gap2
-	menu += "Rules"
+	menu += "规则"
 	menu += gap3
 	if(active_game && (user in active_game.players))
-		menu += "Leave Game"
+		menu += "离开游戏"
 		menu += gap4
-	menu += "End Game"
+	menu += "结束游戏"
 
-	var/choice = input(user, "Select an option.", "Baker's Dozen Dice") as null|anything in menu
+	var/choice = input(user, "请选择一个选项。", "面包师十三骰袋") as null|anything in menu
 
 	if(!choice)
 		return
 
-	if(choice == "Rules")
+	if(choice == "规则")
 		show_rules(user)
 		return
 
-	if(choice == "End Game")
+	if(choice == "结束游戏")
 		if(active_game)
 			active_game.cancel_game(user)
 		else
-			to_chat(user, span_notice("No Baker's Dozen game is currently running."))
+			to_chat(user, span_notice("当前没有正在进行的“面包师十三”对局。"))
 		return
 
-	if(choice == "Leave Game")
+	if(choice == "离开游戏")
 		if(active_game)
 			active_game.leave_game(user)
 		else
-			to_chat(user, span_notice("No Baker's Dozen game is currently running."))
+			to_chat(user, span_notice("当前没有正在进行的“面包师十三”对局。"))
 		return
 
-	if(choice == "Roll Opening Dice")
+	if(choice == "投起手骰")
 		if(!active_game)
-			to_chat(user, span_notice("No Baker's Dozen game is currently running."))
+			to_chat(user, span_notice("当前没有正在进行的“面包师十三”对局。"))
 			return
 		if(!(user == active_game.current_player && active_game.can_take_turn_action && !active_game.joining && active_game.mandatory_rolls[user] < 2))
-			to_chat(user, span_notice("You cannot roll opening dice right now."))
+			to_chat(user, span_notice("你现在还不能投起手骰。"))
 			return
-		active_game.player_action(user, "Roll Opening Dice")
+		active_game.player_action(user, "投起手骰")
 		return
 
-	if(choice == "Hit - roll 1d6")
+	if(choice == "补牌 - 掷1枚6面骰")
 		if(!active_game)
-			to_chat(user, span_notice("No Baker's Dozen game is currently running."))
+			to_chat(user, span_notice("当前没有正在进行的“面包师十三”对局。"))
 			return
 		if(!(user == active_game.current_player && active_game.can_take_turn_action && !active_game.joining))
-			to_chat(user, span_notice("You cannot hit right now."))
+			to_chat(user, span_notice("你现在还不能补牌。"))
 			return
-		active_game.player_action(user, "Hit - roll 1d6")
+		active_game.player_action(user, "补牌 - 掷1枚6面骰")
 		return
 
-	if(choice == "Stay")
+	if(choice == "停牌")
 		if(!active_game)
-			to_chat(user, span_notice("No Baker's Dozen game is currently running."))
+			to_chat(user, span_notice("当前没有正在进行的“面包师十三”对局。"))
 			return
 		if(!(user == active_game.current_player && active_game.can_take_turn_action && !active_game.joining))
-			to_chat(user, span_notice("You cannot stay right now."))
+			to_chat(user, span_notice("你现在还不能停牌。"))
 			return
-		active_game.player_action(user, "Stay")
+		active_game.player_action(user, "停牌")
 		return
 
-	if(choice != "Start Game")
+	if(choice != "开始游戏")
 		return
 
 	if(!active_game)
-		var/count = input(user, "How many players?\n(2 to 4 players)", "Baker's Dozen") as null|anything in list(2, 3, 4)
+		var/count = input(user, "要几名玩家？\n（2 到 4 名玩家）", "面包师十三") as null|anything in list(2, 3, 4)
 		if(!count)
 			return
 
@@ -482,7 +482,7 @@
 		active_game = new_game
 		new_game.try_join(user)
 
-		src.visible_message(span_notice("[user] is starting Baker's Dozen! [count - 1] more player(s) needed. Activate (Z) the dice bag to join!"))
+		src.visible_message(span_notice("[user]开始了一局“面包师十三”！还需要 [count - 1] 名玩家。激活（Z）骰袋即可加入！"))
 		return
 
 	if(active_game.joining)

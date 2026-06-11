@@ -1,45 +1,45 @@
 /datum/book_entry/magic1
-	name = "Chapter I: Gathering Materials"
-	category = "Instructions"
+	name = "第一章：收集材料"
+	category = "说明"
 
 /datum/book_entry/magic1/inner_book_html(mob/user)
 	return {"
 	<div>
-	<h2>Gathering Materials:</h2>
-	To summon creatures and enchant items, you must gather the appropriate materials. This includes:
+	<h2>收集材料：</h2>
+	要召唤生物并附魔物品，你必须收集合适的材料。其中包括：
 	<ul>
-		<li> Manacrystals - Obtained from using prestidigitation on manafountains & spawn randomly around map</li>
-		<li> Manabloom flowers - Randomly spawn in the swamp, can be grown,</li>
-		<li> Obsidian shards - Obtained from using prestidigitation on lava turfs,</li>
-		<li> Runed Artifacts - Can be randomly found in the swamp.</li>
-		<li> Leyline Shards - inactive leylines spawn around the map. interact with them to activate them, and again to recieve a shard (Potentially getting attacked by a leyline lycan)</li>
+		<li> 法力晶体 - 可通过对法力泉使用戏法术获得，也会随机生成在地图各处</li>
+		<li> 法绽花 - 会在沼泽中随机生成，也可以自行种植，</li>
+		<li> 黑曜石碎片 - 可通过对熔岩地块使用戏法术获得，</li>
+		<li> 符文遗物 - 可以在沼泽中随机找到。</li>
+		<li> 地脉碎片 - 未激活的地脉会生成在地图各处。与它们交互可将其激活，再次交互即可获得碎片（但你可能会遭到地脉狼人攻击）</li>
 	</ul>
 	<p>
-		Rumors has it that there is a mana fountain in the western part of the swamp, and a leyline in the eastern part of the swamp.
+		传闻沼泽西部有一座法力泉，而沼泽东部则有一条地脉。
 	</p>
 	<p>
-		Then you can use them to create various arcana items and summons, which can be used in turn to make Arcanic meld that unlock accesses to more powerful summons and enchantments.
+		之后你就可以用它们制作各种奥术物品与召唤物，而这些又能进一步制成奥术融印，以解锁更强大的召唤与附魔。
 	</p>
 	</div>
 	"}
 
 /datum/book_entry/magic2
-	name = "Chapter II: Binding Creatures"
-	category = "Instructions"
+	name = "第二章：束缚生物"
+	category = "说明"
 
 /datum/book_entry/magic2/inner_book_html(mob/user)
 	return {"
 	<div>
-	<h2>Binding Creatures:</h2>
-	Creatures you summon are SOULLESS AUTOMATONS, incapable of complex thoughts. A wise mage who wishes to make use of their services must
-	bind them into services with a BINDING SHACKLES. Once binding shackles are made - one need only apply arcanic melds to them to strengthen the shackles.
-	Such that more powerful creechurs can be binded. Binding shackles are split into five tiers, each tier able to bind a stronger creature.
+	<h2>束缚生物：</h2>
+	你召唤出的生物都是没有灵魂的自动机，无法进行复杂思考。睿智的法师若想驱使它们为自己效力，
+	就必须用束缚镣铐将它们束缚起来。一旦制成束缚镣铐，你只需对其施加奥术融印，便可强化枷锁。
+	这样就能束缚更强大的生物。束缚镣铐分为五个等级，每个等级都能束缚更强的生物。
 	<ul>
-		<li> Planar Binding Shackles - Tier 1 </li>
-		<li> Greater Planar Binding Shackles - Tier 2 </li>
-		<li> Woven Planar Binding Shackles - Tier 3 </li>
-		<li> Confluent Planar Binding Shackles - Tier 4 </li>
-		<li> Aberrant Planar Binding Shackles - Tier 5 </li>
+		<li> 位面束缚镣铐 - 第 1 阶 </li>
+		<li> 高等位面束缚镣铐 - 第 2 阶 </li>
+		<li> 织纹位面束缚镣铐 - 第 3 阶 </li>
+		<li> 汇流位面束缚镣铐 - 第 4 阶 </li>
+		<li> 畸变位面束缚镣铐 - 第 5 阶 </li>
 	</ul>
 	</div>
 	"}

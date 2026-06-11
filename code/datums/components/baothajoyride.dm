@@ -78,7 +78,7 @@
 	REMOVE_TRAIT(owner, TRAIT_NOPAIN, "baotha_joyride")
 
 /atom/movable/screen/alert/status_effect/baotha_joyride
-	name = "Joyride"
-	desc = "At the tip of the tongue, Baotha's blessing in purest form."
+	name = "极乐驰行"
+	desc = "唇舌之间，是 Baotha 最纯粹的祝福。"
 
 #undef JOYRIDE_FILTER

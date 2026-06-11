@@ -1,9 +1,9 @@
 /datum/language/aavnic
-	name = "Aavnic"
-	desc = "The most spoken language in the Steppes of Aavnr, abundant within the Potentate and often used by Nomads. The tribes that settled in Aavnr for millennia have been perfecting their uniquely complex tongue; foreigners find it incredibly difficult to pick the language up, let alone master it."
-	speech_verb = "enounces"
-	whisper_verb = "whispers"
-	exclaim_verb = "remarks"
+	name = "阿夫尼克语"
+	desc = "这是阿夫纳尔草原上使用最广的语言，在统领国境内极为常见，也常被游牧民使用。定居于阿夫纳尔数千年的诸部族不断打磨这门独特而复杂的语言；对外来者而言，别说精通，就连入门都异常困难。"
+	speech_verb = "说道"
+	whisper_verb = "低语"
+	exclaim_verb = "高声说道"
 	key = "a"
 	space_chance = 20
 	default_priority = 90

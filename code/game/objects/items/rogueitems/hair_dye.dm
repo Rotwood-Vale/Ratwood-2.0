@@ -1,6 +1,6 @@
 /obj/item/hair_dye_cream
-	name = "hair dye cream"
-	desc = "A cream that can be used to dye and style hair with various colors and gradients."
+	name = "染发膏"
+	desc = "一种可用多种颜色与渐变来染发并做造型的膏体。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "cream"
 	dropshrink = 0.8
@@ -14,18 +14,18 @@
 		return
 	var/mob/living/carbon/human/H = M
 	
-	var/list/choices = list("hair color", "facial hair color", "natural gradient", "natural gradient color", "dye gradient", "dye gradient color")
-	var/chosen = input(user, "What would you like to dye?", "Hair Dye") as null|anything in choices
+	var/list/choices = list("头发颜色", "胡须颜色", "自然渐变", "自然渐变颜色", "染色渐变", "染色渐变颜色")
+	var/chosen = input(user, "你想染哪里？", "染发") as null|anything in choices
 	
 	if(!chosen || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 		
 	switch(chosen)
-		if("hair color")
-			var/new_hair_color = color_pick_sanitized(user, "Choose your hair color", "Hair Color", H.hair_color)
+		if("头发颜色")
+			var/new_hair_color = color_pick_sanitized(user, "选择头发颜色", "头发颜色", H.hair_color)
 			if(new_hair_color)
 				if(!do_after(user, 30 SECONDS, target = H))
-					to_chat(user, span_warning("The dyeing was interrupted!"))
+					to_chat(user, span_warning("染发被打断了！"))
 					return
 				var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 				if(head && head.bodypart_features)
@@ -59,13 +59,13 @@
 						H.update_body()
 						H.update_hair()
 						H.update_body_parts()
-						user.visible_message(span_notice("[user] dyes [H]'s hair."), span_notice("You dye [H == user ? "your" : "[H]'s"] hair."))
+						user.visible_message(span_notice("[user]给[H]染了头发。"), span_notice("你给[H == user ? "自己" : "[H]"]染了头发。"))
 
-		if("facial hair color")
-			var/new_facial_color = color_pick_sanitized(user, "Choose your facial hair color", "Facial Hair Color", H.facial_hair_color)
+		if("胡须颜色")
+			var/new_facial_color = color_pick_sanitized(user, "选择胡须颜色", "胡须颜色", H.facial_hair_color)
 			if(new_facial_color)
 				if(!do_after(user, 30 SECONDS, target = H))
-					to_chat(user, span_warning("The dyeing was interrupted!"))
+					to_chat(user, span_warning("染发被打断了！"))
 					return
 				var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 				if(head && head.bodypart_features)
@@ -93,18 +93,18 @@
 						H.update_body()
 						H.update_hair()
 						H.update_body_parts()
-						user.visible_message(span_notice("[user] dyes [H]'s facial hair."), span_notice("You dye [H == user ? "your" : "[H]'s"] facial hair."))
+						user.visible_message(span_notice("[user]给[H]染了胡须。"), span_notice("你给[H == user ? "自己" : "[H]"]染了胡须。"))
 
-		if("natural gradient")
+		if("自然渐变")
 			var/datum/customizer_choice/bodypart_feature/hair/head/humanoid/hair_choice = CUSTOMIZER_CHOICE(/datum/customizer_choice/bodypart_feature/hair/head/humanoid)
 			var/list/valid_gradients = list()
 			for(var/gradient_type in GLOB.hair_gradients)
 				valid_gradients[gradient_type] = gradient_type
 			
-			var/new_style = input(user, "Choose your natural gradient", "Hair Gradient") as null|anything in valid_gradients
+			var/new_style = input(user, "选择自然渐变", "头发渐变") as null|anything in valid_gradients
 			if(new_style)
 				if(!do_after(user, 30 SECONDS, target = H))
-					to_chat(user, span_warning("The dyeing was interrupted!"))
+					to_chat(user, span_warning("染发被打断了！"))
 					return
 				var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 				if(head && head.bodypart_features)
@@ -130,13 +130,13 @@
 						head.add_bodypart_feature(new_hair)
 						use_cream()
 						H.update_hair()
-						user.visible_message(span_notice("[user] dyes [H]'s natural gradient."), span_notice("You dye [H == user ? "your" : "[H]'s"] natural gradient."))
+						user.visible_message(span_notice("[user]给[H]染了自然渐变。"), span_notice("你给[H == user ? "自己" : "[H]"]染了自然渐变。"))
 
-		if("natural gradient color")
-			var/new_gradient_color = color_pick_sanitized(user, "Choose your natural gradient color", "Natural Gradient Color", H.hair_color)
+		if("自然渐变颜色")
+			var/new_gradient_color = color_pick_sanitized(user, "选择自然渐变颜色", "自然渐变颜色", H.hair_color)
 			if(new_gradient_color)
 				if(!do_after(user, 30 SECONDS, target = H))
-					to_chat(user, span_warning("The dyeing was interrupted!"))
+					to_chat(user, span_warning("染发被打断了！"))
 					return
 				var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 				if(head && head.bodypart_features)
@@ -165,18 +165,18 @@
 						head.add_bodypart_feature(new_hair)
 						use_cream()
 						H.update_hair()
-						user.visible_message(span_notice("[user] dyes [H]'s natural gradient."), span_notice("You dye [H == user ? "your" : "[H]'s"] natural gradient."))
+						user.visible_message(span_notice("[user]给[H]染了自然渐变。"), span_notice("你给[H == user ? "自己" : "[H]"]染了自然渐变。"))
 
-		if("dye gradient")
+		if("染色渐变")
 			var/datum/customizer_choice/bodypart_feature/hair/head/humanoid/hair_choice = CUSTOMIZER_CHOICE(/datum/customizer_choice/bodypart_feature/hair/head/humanoid)
 			var/list/valid_gradients = list()
 			for(var/gradient_type in GLOB.hair_gradients)
 				valid_gradients[gradient_type] = gradient_type
 			
-			var/new_style = input(user, "Choose your dye gradient", "Hair Gradient") as null|anything in valid_gradients
+			var/new_style = input(user, "选择染色渐变", "头发渐变") as null|anything in valid_gradients
 			if(new_style)
 				if(!do_after(user, 30 SECONDS, target = H))
-					to_chat(user, span_warning("The dyeing was interrupted!"))
+					to_chat(user, span_warning("染发被打断了！"))
 					return
 				var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 				if(head && head.bodypart_features)
@@ -202,13 +202,13 @@
 						head.add_bodypart_feature(new_hair)
 						use_cream()
 						H.update_hair()
-						user.visible_message(span_notice("[user] dyes [H]'s gradient."), span_notice("You dye [H == user ? "your" : "[H]'s"] gradient."))
+						user.visible_message(span_notice("[user]给[H]染了渐变。"), span_notice("你给[H == user ? "自己" : "[H]"]染了渐变。"))
 
-		if("dye gradient color")
-			var/new_gradient_color = color_pick_sanitized(user, "Choose your dye gradient color", "Dye Gradient Color", H.hair_color)
+		if("染色渐变颜色")
+			var/new_gradient_color = color_pick_sanitized(user, "选择染色渐变颜色", "染色渐变颜色", H.hair_color)
 			if(new_gradient_color)
 				if(!do_after(user, 30 SECONDS, target = H))
-					to_chat(user, span_warning("The dyeing was interrupted!"))
+					to_chat(user, span_warning("染发被打断了！"))
 					return
 				var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 				if(head && head.bodypart_features)
@@ -237,7 +237,7 @@
 						head.add_bodypart_feature(new_hair)
 						use_cream()
 						H.update_hair()
-						user.visible_message(span_notice("[user] dyes [H]'s gradient."), span_notice("You dye [H == user ? "your" : "[H]'s"] gradient."))
+						user.visible_message(span_notice("[user]给[H]染了渐变。"), span_notice("你给[H == user ? "自己" : "[H]"]染了渐变。"))
 
 /obj/item/hair_dye_cream/proc/use_cream()
 	uses_remaining--

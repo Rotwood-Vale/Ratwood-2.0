@@ -1,9 +1,9 @@
 /datum/language/undead
-	name = "Zizo Chant"
+	name = "齐佐咏唱"
 	desc = ""
-	speech_verb = "chants"
-	ask_verb = "questions"
-	exclaim_verb = "wails"
+	speech_verb = "吟唱"
+	ask_verb = "质问"
+	exclaim_verb = "哀嚎"
 	key = "w"
 	space_chance = 75 //very high due to the potential length of each syllable
 	sentence_chance = 10
@@ -164,4 +164,3 @@
 "aig",
 "ile",
 "tea")
-

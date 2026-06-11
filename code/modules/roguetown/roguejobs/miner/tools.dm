@@ -3,8 +3,8 @@
 	force_wielded = 21
 	possible_item_intents = list(/datum/intent/pick/bad)
 	gripped_intents = list(/datum/intent/pick)
-	name = "iron pick"
-	desc = "This tool is essential to mine in the dark depths."
+	name = "铁镐"
+	desc = "这件工具是在幽暗深处采矿的必需品。"
 	icon_state = "pick"
 	icon = 'icons/roguetown/weapons/tools.dmi'
 	sharpness = IS_BLUNT
@@ -30,8 +30,8 @@
 				return list("shrink" = 0.5,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/rogueweapon/pick/steel
-	name = "steel pick"
-	desc = "With a reinforced handle and sturdy shaft, this is a superior tool for delving in the darkness."
+	name = "钢镐"
+	desc = "它有加固的握柄和坚固的镐柄，是深入黑暗矿脉时更为上乘的工具。"
 	force = 21
 	force_wielded = 28
 	icon_state = "steelpick"
@@ -41,8 +41,8 @@
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/rogueweapon/pick/blacksteel
-	name = "blacksteel pick"
-	desc = "Glimmering with silver-y black, this is a pretigious tool for miners delving in the darkness."
+	name = "黑钢镐"
+	desc = "它泛着银黑色的微光，是矿工深入黑暗时所用的名贵工具。"
 	force_wielded = 30
 	icon_state = "blacksteelpick1"
 	item_state = "blacksteelpick1"
@@ -53,8 +53,8 @@
 
 
 /obj/item/rogueweapon/pick/stone
-	name = "stone pick"
-	desc = "Stone versus sharp stone, who wins?"
+	name = "石镐"
+	desc = "石头对上尖石，究竟谁更胜一筹？"
 	force = 12
 	force_wielded = 17
 	icon_state = "stonepick"
@@ -64,8 +64,8 @@
 	smeltresult = null
 
 /obj/item/rogueweapon/pick/decrepit
-	name = "decrepit pick"
-	desc = "A chisel of wrought bronze, which once labored to gather the ores necessary for an ancient alloy; such was lost in the aftermath of Her ascension."
+	name = "衰朽镐"
+	desc = "一把锻造青铜制成的凿镐，曾被用来采集铸造某种古老合金所需的矿石；而那一切都在她升格之后湮没了。"
 	force = 12
 	force_wielded = 17
 	icon_state = "apick"
@@ -77,8 +77,8 @@
 	sellprice = 15
 
 /obj/item/rogueweapon/pick/copper
-	name = "copper pick"
-	desc = "A copper pick, slightly better than a stone pick."
+	name = "铜镐"
+	desc = "一把铜镐，性能比石镐稍好一些。"
 	force = 15
 	force_wielded = 19
 	icon_state = "cpick"

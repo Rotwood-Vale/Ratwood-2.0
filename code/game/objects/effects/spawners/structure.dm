@@ -5,7 +5,7 @@ again.
 */
 
 /obj/effect/spawner/structure
-	name = "map structure spawner"
+	name = "地图结构生成器"
 	var/list/spawn_list
 
 /obj/effect/spawner/structure/Initialize(mapload)

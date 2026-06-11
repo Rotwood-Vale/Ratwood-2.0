@@ -1,7 +1,7 @@
 /datum/migrant_role
 	abstract_type = /datum/migrant_role
 	/// Name of the role
-	var/name = "MIGRANT ROLE"
+	var/name = "移民身份"
 	/// Restricts species if the list is not null
 	var/list/allowed_races
 	/// Restricts species on the list
@@ -34,26 +34,26 @@
 	return
 
 /datum/migrant_role/pilgrim
-	name = "Pilgrim"
+	name = "朝圣者"
 	advclass_cat_rolls = list(CTAG_PILGRIM = 20)
 
 /datum/migrant_role/adventurer
-	name = "Adventurer"
+	name = "冒险者"
 	advclass_cat_rolls = list(CTAG_ADVENTURER = 20)
 
 /datum/migrant_role/bandit
-	name = "Bandit"
+	name = "强盗"
 	antag_datum = /datum/antagonist/bandit
 	advclass_cat_rolls = list(CTAG_BANDIT = 20)
 	grant_lit_torch = TRUE
 
 /datum/migrant_role/assassin
-	name = "Assassin"
+	name = "刺客"
 	antag_datum = /datum/antagonist/assassin
 	advclass_cat_rolls = list(CTAG_ASSASSIN = 20)
 
 /datum/migrant_role/gnoll
-	name = "Gnoll"
+	name = "豺狼人"
 	antag_datum = /datum/antagonist/gnoll
 	advclass_cat_rolls = list(CTAG_GNOLL = 20)
 
@@ -62,4 +62,3 @@
 
 /datum/outfit/job/roguetown/cloak/surcoat/pre_equip(mob/living/carbon/human/H)
 	cloak = /obj/item/clothing/cloak/stabard/surcoat
-

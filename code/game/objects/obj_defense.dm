@@ -95,7 +95,7 @@
 /obj/bullet_act(obj/projectile/P)
 	. = ..()
 	playsound(src.loc, P.hitsound, 50, TRUE)
-	visible_message(span_danger("[src] is hit by \a [P]!"), null, null, COMBAT_MESSAGE_RANGE)
+	visible_message(span_danger("[src]被[P]击中了！"), null, null, COMBAT_MESSAGE_RANGE)
 	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
 		take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armor_penetration)
 	P.handle_drop() //AZURE PEAK: Make sure reusable projectiles don't disappear on hit
@@ -107,7 +107,7 @@
 
 /obj/attack_animal(mob/living/simple_animal/M)
 	if(!M.melee_damage_upper && !M.obj_damage)
-		M.emote("custom", message = "[M.friendly_verb_continuous] [src].")
+		M.emote("custom", message = "[M.friendly_verb_continuous]着[src]。")
 		return 0
 	else
 		var/play_soundeffect = 1
@@ -236,7 +236,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(break_message)
 		visible_message(break_message)
 	SEND_SIGNAL(src, COMSIG_ITEM_BROKEN)
-	balloon_alert_to_viewers("<font color = '#bb2b2b'>[src]<br>breaks!</font>")
+	balloon_alert_to_viewers("<font color = '#bb2b2b'>[src]<br>坏掉了！</font>")
 
 /// Called after obj is repaired (needle/hammer for items). Do not call unless obj_broken is true to avoid breaking armor.
 /obj/proc/obj_fix(mob/user, full_repair = TRUE)

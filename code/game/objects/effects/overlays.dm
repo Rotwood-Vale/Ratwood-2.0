@@ -1,8 +1,8 @@
 /obj/effect/overlay
-	name = "overlay"
+	name = "覆盖层"
 
 /obj/effect/overlay/beam//Not actually a projectile, just an effect.
-	name="beam"
+	name="光束"
 	icon='icons/effects/beam.dmi'
 	icon_state="b_beam"
 	var/atom/BeamSource
@@ -12,7 +12,7 @@
 	QDEL_IN(src, 10)
 
 /obj/effect/overlay/palmtree_r
-	name = "palm tree"
+	name = "棕榈树"
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "palm1"
 	density = TRUE
@@ -20,7 +20,7 @@
 	anchored = TRUE
 
 /obj/effect/overlay/palmtree_l
-	name = "palm tree"
+	name = "棕榈树"
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "palm2"
 	density = TRUE
@@ -29,13 +29,13 @@
 
 /obj/effect/overlay/coconut
 	gender = PLURAL
-	name = "coconuts"
+	name = "椰子"
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "coconuts"
 
 /obj/effect/overlay/sparkles
 	gender = PLURAL
-	name = "sparkles"
+	name = "闪光"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shieldsparkles"
 	anchored = TRUE

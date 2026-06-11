@@ -9,19 +9,19 @@ Additionally, these differ from the concepts, because I wish to see them in prac
 */
 //This is a 'solid shot'. Does nothing, as of now.
 /obj/item/cannonball
-	name = "\improper bombard charge (SOL)"
-	desc = "A hefty bombard charge. Capped by a solid end."
+	name = "\improper 臼炮装药（实心）"
+	desc = "一枚沉重的臼炮装药，前端封着实心弹头。"
 	icon = 'icons/roguetown/weapons/stationary/bombard_projectiles.dmi'
 	icon_state = "basic"
 
 /obj/item/cannonball/proc/detonate(turf/T)
-	loud_message("An explosion echos in the ears of those whom hear it", hearing_distance = 32)
+	loud_message("爆炸的回响震得闻者双耳嗡鸣", hearing_distance = 32)
 	forceMove(T)
 
 //HE charge. This WILL delimb and cause many issues.
 /obj/item/cannonball/explosive
-	name = "\improper bombard charge (HE)"
-	desc = "A hefty bombard charge. It's capped by a flat nose."
+	name = "\improper 臼炮装药（高爆）"
+	desc = "一枚沉重的臼炮装药，前端封着平头弹帽。"
 	icon_state = "explosive"
 
 /obj/item/cannonball/explosive/detonate(turf/T)
@@ -31,8 +31,8 @@ Additionally, these differ from the concepts, because I wish to see them in prac
 //Flare charge. Blinds in a wide radius.
 //Intended to alert to number of players in area, but I'll do that later.
 /obj/item/cannonball/flare
-	name = "\improper bombard charge (FLR)"
-	desc = "A hefty bombard charge. Covered by copper bands and capped by an odd nose."
+	name = "\improper 臼炮装药（照明）"
+	desc = "一枚沉重的臼炮装药，表面缠着铜箍，前端封着奇异的弹帽。"
 	icon_state = "flare"
 
 /obj/item/cannonball/flare/detonate(turf/T)
@@ -44,9 +44,9 @@ Additionally, these differ from the concepts, because I wish to see them in prac
 
 //Incendiary charge. Drops a huge blanket of flame across a wide area.
 /obj/item/cannonball/incendiary
-	name = "\improper bombard charge (INC)"
-	desc = "A hefty bombard charge. The end is leaking some matter of substance. \
-	You'll need to light this with a torch, before firing it. Be quick!"
+	name = "\improper 臼炮装药（燃烧）"
+	desc = "一枚沉重的臼炮装药，尾端正渗出某种可燃物。\
+	你得在发射前先用火把把它点燃。动作要快！"
 	icon_state = "incendiary"
 	var/prepared = FALSE
 	var/time_to_go = 100
@@ -94,8 +94,8 @@ Additionally, these differ from the concepts, because I wish to see them in prac
 //SMOKE CHARGES
 //The normal sort.
 /obj/item/cannonball/smoke
-	name = "\improper bombard charge (SMK)"
-	desc = "A hefty bombard charge. It's capped by a flat nose."
+	name = "\improper 臼炮装药（烟幕）"
+	desc = "一枚沉重的臼炮装药，前端封着平头弹帽。"
 	icon_state = "basic"
 
 /obj/item/cannonball/smoke/detonate(turf/T)
@@ -107,8 +107,8 @@ Additionally, these differ from the concepts, because I wish to see them in prac
 
 //The poison sort.
 /obj/item/cannonball/smoke_poison
-	name = "\improper bombard charge (SMK-P)"
-	desc = "A hefty bombard charge. It's capped by a flat nose."
+	name = "\improper 臼炮装药（毒烟）"
+	desc = "一枚沉重的臼炮装药，前端封着平头弹帽。"
 	icon_state = "poison"
 
 /obj/item/cannonball/smoke_poison/detonate(turf/T)
@@ -120,9 +120,9 @@ Additionally, these differ from the concepts, because I wish to see them in prac
 
 //The emberwine sort.
 /obj/item/cannonball/smoke_emberwine
-	name = "\improper bombard charge (SMK-E)"
-	desc = "A hefty bombard charge. It's capped by a needle nose, and poorly bound in some cloth. \
-	Whatever is contained within should stay that way, and you far from it."
+	name = "\improper 臼炮装药（烬酒烟）"
+	desc = "一枚沉重的臼炮装药，前端封着尖锥弹帽，还草草裹了几层破布。\
+	里头装的东西最好别放出来，而你也最好离它远些。"
 	icon_state = "emberwine"
 
 /obj/item/cannonball/smoke_emberwine/Initialize(mapload)
@@ -141,9 +141,9 @@ Additionally, these differ from the concepts, because I wish to see them in prac
 
 //The custom sort.
 /obj/item/cannonball/smoke_custom
-	name = "\improper bombard charge (SMK-C)"
-	desc = "A hefty bombard charge. It's capped by a flat nose, and meant for a payload to be inserted before firing. \
-	In the absence of a payload, it has a rather small smoke charge inside."
+	name = "\improper 臼炮装药（混装）"
+	desc = "一枚沉重的臼炮装药，前端封着平头弹帽，设计上可在发射前装入额外载荷。\
+	若没有装入载荷，它内部也自带一份不算大的烟幕药剂。"
 	icon_state = "anychem_empty"
 	possible_item_intents = list(INTENT_POUR, INTENT_FILL, INTENT_SPLASH, INTENT_GENERIC)
 
@@ -180,9 +180,9 @@ Additionally, these differ from the concepts, because I wish to see them in prac
 //CANISTER CHARGES
 //The actual proper canister charge, which disperses a huge chunk of shrapnel.
 /obj/item/cannonball/canister
-	name = "\improper bombard charge (FLK)"
-	desc = "A hefty bombard charge. It's fitted with a fluted, almost hollow sounding nose. \
-	Nasty thing, outlawed in all reasonable realms of the land..."
+	name = "\improper 臼炮装药（榴霰）"
+	desc = "一枚沉重的臼炮装药，装着带凹槽、敲起来近乎空心的弹帽。\
+	这是种恶毒玩意，在任何还算讲理的国度里都属禁物……"
 	icon_state = "braced"
 
 /obj/item/cannonball/canister/detonate(turf/T)
@@ -193,9 +193,9 @@ Additionally, these differ from the concepts, because I wish to see them in prac
 
 //A secondary type of 'canister' charge. Small explosions on all turfs in view.
 /obj/item/cannonball/cluster
-	name = "\improper bombard charge (CLS)"
-	desc = "A hefty bombard charge. Rather than a nose piece, it's a bundle of small impact grenades. \
-	Nasty thing, outlawed in all reasonable realms of the land..."
+	name = "\improper 臼炮装药（集束）"
+	desc = "一枚沉重的臼炮装药，前端不是普通弹帽，而是一束小型碰炸榴弹。\
+	这是种恶毒玩意，在任何还算讲理的国度里都属禁物……"
 	icon_state = "cluster"
 
 /obj/item/cannonball/cluster/detonate(turf/T)
@@ -214,7 +214,7 @@ The canister effect, when using canister shot or adjacent stuff.
 	canister_shrapnel.do_shrapnel(src, target)
 
 /obj/projectile/canister_shrap
-	name = "\improper canister shrapnel"
+	name = "\improper 榴霰破片"
 	icon_state = "bullet"
 	damage = 5//Very many of them, but very low damage and AP.
 	range = 12//We want this to go beyond screen, in case of far misses.

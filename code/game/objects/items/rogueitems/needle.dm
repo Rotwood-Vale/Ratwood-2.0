@@ -31,9 +31,9 @@
 #define AUTO_SEW_DELAY CLICK_CD_MELEE
 
 /obj/item/needle
-	name = "needle"
+	name = "针"
 	icon_state = "needle"
-	desc = "This sharp needle can sew wounds, mend clothing, and stab someone if you’re desperate."
+	desc = "这根锋利的针可以缝合伤口、修补衣物，若你走投无路，也能拿来扎人。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
@@ -61,11 +61,11 @@
 	. = ..()
 	if(!infinite)
 		if(stringamt > 0)
-			. += span_bold("It has [stringamt] uses left.")
+			. += span_bold("还剩[stringamt]次使用。")
 		else
-			. += span_bold("It has no uses left.")
+			. += span_bold("已经没有可用次数了。")
 	else
-		. += "Can be used indefinitely."
+		. += "可无限次使用。"
 
 /obj/item/needle/Initialize(mapload)
 	. = ..()
@@ -90,15 +90,15 @@
 /obj/item/needle/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/natural/fibers))
 		if(infinite || maxstring - stringamt <= 0) //is the needle infinite OR does it have all of its uses left
-			to_chat(user, span_warning("The needle has no need to be refilled."))
+			to_chat(user, span_warning("这根针不需要再补线了。"))
 			return
 
-		to_chat(user, "I begin threading the needle with additional fibers...")
+		to_chat(user, "我开始用额外纤维给针穿线……")
 		if(do_after(user, 6 SECONDS - user.get_skill_level(/datum/skill/craft/sewing), target = I))
 			var/refill_amount
 			refill_amount = min(5, (maxstring - stringamt))
 			stringamt += refill_amount
-			to_chat(user, "I replenish the needle's thread by [refill_amount] uses!")
+			to_chat(user, "我为这根针补充了[refill_amount]次线材使用次数！")
 			qdel(I)
 		return
 	return ..()
@@ -109,15 +109,15 @@
 	var/obj/item/I = O
 	if(can_repair)
 		if(stringamt < 1)
-			to_chat(user, span_warning("The needle has no thread left!"))
+			to_chat(user, span_warning("针上已经没线了！"))
 			return
 		if(I.sewrepair && I.max_integrity)
 			if(I.obj_integrity == I.max_integrity)
-				to_chat(user, span_warning("This is not broken."))
-				to_chat(user, span_warning("I can't do anything else to fix this right now - I should see a skilled craftsman."))
+				to_chat(user, span_warning("这东西没坏。"))
+				to_chat(user, span_warning("我现在没法再继续修它了，最好去找个熟练工匠。"))
 				return
 			if(!I.ontable())
-				to_chat(user, span_warning("I should put this on a table first."))
+				to_chat(user, span_warning("我应该先把它放到桌上。"))
 				return
 			// basic principles: instead of failing and doing nothing, we instead do something but much less.
 			// if the item is broken and we fix it at low skill, we cap the quality of our repair to 60% total integrity
@@ -130,7 +130,7 @@
 			var/obj/item/clothing/cloth = I
 			var/integrity_percentage = (cloth.obj_integrity / cloth.max_integrity) * 100
 			if (!istype(cloth, /obj/item/clothing))
-				to_chat(user, span_warning("I can't repair that with a needle."))
+				to_chat(user, span_warning("我没法用针修那个。"))
 				return
 
 			if(HAS_TRAIT(user, TRAIT_SQUIRE_REPAIR) || HAS_TRAIT(user, TRAIT_SELF_SUSTENANCE))
@@ -138,22 +138,22 @@
 
 			// if we're stupid and the object isn't broken and it's had a field repair, we can't fix it any further for the moment
 			if (unskilled && !cloth.obj_broken && cloth.shoddy_repair && integrity_percentage >= 60)
-				to_chat(user, span_warning("I can't do anything else to fix this right now - I should see a skilled craftsman."))
+				to_chat(user, span_warning("我现在没法再继续修它了，最好去找个熟练工匠。"))
 				return
 
 			if(!do_after(user, sewtime, target = I))
 				return
 
 			var/total_repair = BASE_SEW_REPAIR + skill * SEW_REPAIR_PER_LEVEL
-			var/repair_line = "[user] repairs [cloth]!"
+			var/repair_line = "[user]修好了[cloth]！"
 			var/total_XP = failed ? XP_ON_FAIL : XP_ON_SUCCESS
 
 			if (failed)
 				total_repair = total_repair * 0.5 // 50% reduction on failed repairs, but we still repair!
-				repair_line = "[user] makes a little progress towards repairing [cloth]..."
+				repair_line = "[user]朝修好[cloth]又推进了一点……"
 
 			if(cloth.body_parts_covered != cloth.body_parts_covered_dynamic)
-				user.visible_message(span_info("[user] repairs [cloth]'s coverage!"))
+				user.visible_message(span_info("[user]修补了[cloth]的覆盖部位！"))
 				cloth.repair_coverage()
 
 			if(total_XP)
@@ -168,14 +168,14 @@
 			if(cloth.obj_broken)
 				var/do_fix = FALSE
 				if(unskilled && integrity_percentage >= 60)
-					user.visible_message(span_info("[user] finishes field-repairing [I]."))
-					to_chat(user, span_warning("I should get this properly fixed by a skilled craftsman later."))
+					user.visible_message(span_info("[user]完成了对[I]的应急修补。"))
+					to_chat(user, span_warning("之后我该找个熟练工匠把它彻底修好。"))
 					cloth.shoddy_repair = TRUE
 					do_fix = TRUE
 				else if (!unskilled && integrity_percentage >= 100)
-					user.visible_message(span_info("[user] fully repairs [I]."))
+					user.visible_message(span_info("[user]彻底修好了[I]。"))
 					if (cloth.shoddy_repair)
-						to_chat(user, span_notice("My skilled hand has fully repaired this item."))
+						to_chat(user, span_notice("凭借娴熟手艺，我已把这件物品彻底修好。"))
 						cloth.shoddy_repair = FALSE
 					do_fix = TRUE
 
@@ -185,7 +185,7 @@
 					return
 			else if (!cloth.obj_broken && !unskilled && cloth.shoddy_repair && integrity_percentage >= 100)
 				cloth.shoddy_repair = FALSE
-				to_chat(user, span_notice("My skilled hand has fully repaired this item."))
+				to_chat(user, span_notice("凭借娴熟手艺，我已把这件物品彻底修好。"))
 
 			if(do_after(user, AUTO_SEW_DELAY, target = I))
 				attack_obj(I, user)
@@ -198,7 +198,7 @@
 	var/mob/living/doctor = user
 	var/mob/living/carbon/human/patient = target
 	if(stringamt < 1)
-		to_chat(user, span_warning("The needle has no thread left!"))
+		to_chat(user, span_warning("针上已经没线了！"))
 		return
 	var/list/sewable
 	var/obj/item/bodypart/affecting
@@ -210,15 +210,15 @@
 		//OV edit end
 		affecting = patient.get_bodypart(check_zone(doctor.zone_selected))
 		if(!affecting)
-			to_chat(doctor, span_warning("That limb is missing."))
+			to_chat(doctor, span_warning("那条肢体已经缺失了。"))
 			return FALSE
 		sewable = affecting.get_sewable_wounds()
 	else
 		sewable = patient.get_sewable_wounds()
 	if(!length(sewable))
-		to_chat(doctor, span_warning("There aren't any wounds to be sewn."))
+		to_chat(doctor, span_warning("没有需要缝合的伤口。"))
 		return FALSE
-	var/datum/wound/target_wound = sewable.len > 1 ? input(doctor, "Which wound?", "[src]") as null|anything in sewable : sewable[1]
+	var/datum/wound/target_wound = sewable.len > 1 ? input(doctor, "缝哪一处伤口？", "[src]") as null|anything in sewable : sewable[1]
 	if(!target_wound)
 		return FALSE
 
@@ -238,7 +238,7 @@
 		var/bleedreduction = max((doctor_skill / 2), 1)	//Half of medicine skill, or 1, whichever is higher.
 		target_wound.set_bleed_rate(max( (target_wound.bleed_rate - bleedreduction), 0))
 		if(target_wound.bleed_rate == 0 && !informed)
-			patient.visible_message(span_smallgreen("One last drop of blood trickles from the [(target_wound.name)] on [patient]'s [affecting.name] before it closes."), span_smallgreen("The throbbing warmth coming out of [target_wound] soothes and stops. It no longer bleeds."))
+			patient.visible_message(span_smallgreen("[patient]的[affecting.name]上那处[(target_wound.name)]在闭合前滴下最后一滴血。"), span_smallgreen("从[target_wound]涌出的温热搏动渐渐平息，不再流血了。"))
 			informed = TRUE
 		if(istype(target_wound, /datum/wound/dynamic))
 			var/datum/wound/dynamic/dynwound = target_wound
@@ -253,33 +253,33 @@
 		use(1)
 		target_wound.sew_wound()
 		if(patient == doctor)
-			doctor.visible_message(span_notice("[doctor] sews \a [target_wound.name] on [doctor.p_them()]self."), span_notice("I stitch \a [target_wound.name] on my [affecting]."))
+			doctor.visible_message(span_notice("[doctor]缝合了[doctor.p_them()]自己身上的[target_wound.name]。"), span_notice("我缝合了自己[affecting]上的[target_wound.name]。"))
 		else
 			if(affecting)
-				doctor.visible_message(span_notice("[doctor] sews \a [target_wound.name] on [patient]'s [affecting.name]."), span_notice("I stitch \a [target_wound.name] on [patient]'s [affecting.name]."))
+				doctor.visible_message(span_notice("[doctor]缝合了[patient]的[affecting.name]上的[target_wound.name]。"), span_notice("我缝合了[patient]的[affecting.name]上的[target_wound.name]。"))
 			else
-				doctor.visible_message(span_notice("[doctor] sews \a [target_wound.name] on [patient]."), span_notice("I stitch \a [target_wound.name] on [patient]."))
+				doctor.visible_message(span_notice("[doctor]缝合了[patient]身上的[target_wound.name]。"), span_notice("我缝合了[patient]身上的[target_wound.name]。"))
 		log_combat(doctor, patient, "sew", "needle")
 		return TRUE
 	return FALSE
 
 /obj/item/needle/thorn
-	name = "needle"
+	name = "针"
 	icon_state = "thornneedle"
-	desc = "This rough needle can be used to sew cloth and wounds."
+	desc = "这根粗糙的针可以用来缝布料和伤口。"
 	stringamt = 5
 	maxstring = 5
 	anvilrepair = null
 
 /obj/item/needle/pestra
-	name = "needle of pestra"
-	desc = span_green("This needle has been blessed by the goddess of medicine herself!")
+	name = "佩斯特拉之针"
+	desc = span_green("这根针得到了医药女神本人的祝福！")
 	infinite = TRUE
 
 /obj/item/needle/decrepit
-	name = "decrepit needle"
+	name = "破旧的针"
 	icon_state = "aneedle"
-	desc = "This decrepit old needle doesn't seem helpful for much."
+	desc = "这根破旧的老针看起来派不上什么大用场。"
 	stringamt = 5
 	maxstring = 5
 

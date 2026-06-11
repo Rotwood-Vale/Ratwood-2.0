@@ -22,10 +22,10 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/c = user
 		if(c.patron.type == /datum/patron/divine/pestra)
-			. += span_info("The divine beast of Pestra. For untold ages, these beasts remained behind locked doors, allowing the sect of Pestra to lengthen their lifespan.")
-			. += span_infection("Yet the others grew restless, desiring pure lux for their own...")
-			. += span_info("Now, they are employed in most regions of the world where the light of the ten shines. Decreasing suffering.")
-			. += span_infection("For the great beast of pestra, made through the ingenuity of humenkind influences all divine magic within a region.")
+			. += span_info("佩斯特拉的神圣之兽。难以计数的岁月里，这些巨兽一直被封存在重门之后，让 佩斯特拉 教派得以延长寿命。")
+			. += span_infection("但其余的人终究坐不住了，渴求将纯净 lux 据为己有……")
+			. += span_info("如今，在十光照耀的大多数地区，都能见到它们被投入使用，以此减轻痛苦。")
+			. += span_infection("因为这头由 humenkind 奇思巧技造就的 佩斯特拉 巨兽，会影响一整个地区内的所有神圣法术。")
 
 /obj/structure/roguemachine/chimeric_heart_beast/proc/initialize_personality()
 	// Pick random archetype
@@ -98,7 +98,7 @@
 
 	// Set royal title if applicable
 	if(locate(/datum/flesh_quirk/royal) in quirks)
-		royal_title = pick("Majesty", "Great One", "Master", "Overlord", "Eminence")
+		royal_title = pick("陛下", "伟大者", "主人", "霸主", "尊上")
 
 	// TURN THIS INTO A ROUND END MESSAGE LATER BECAUSE IT IS NICE TO KNOW WHAT QUIRKS THE BEAST HAD..
 
@@ -145,19 +145,19 @@
 /obj/structure/roguemachine/chimeric_heart_beast/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/meat))
 		if(!(I.item_flags & FRESH_FOOD_ITEM))
-			to_chat(user, span_warning("The beast doesn't seem to like this dusty piece of meat..."))
+			to_chat(user, span_warning("这头巨兽似乎不喜欢这块沾满灰尘的肉……"))
 			return ..()
 		if(being_fed)
-			to_chat(user, span_warning("Someone is already feeding [src]!"))
+			to_chat(user, span_warning("已经有人在给[src]喂食了！"))
 			return TRUE
 
 		var/datum/component/chimeric_heart_beast/heart_component = GetComponent(/datum/component/chimeric_heart_beast)
 		if(heart_component && heart_component.happiness >= heart_component.max_happiness * 0.9)
-			to_chat(user, span_warning("[src] seems content and uninterested in food."))
+			to_chat(user, span_warning("[src]看起来已经很满足了，对食物毫无兴趣。"))
 			return TRUE
 
 		being_fed = TRUE
-		user.visible_message(span_notice("[user] starts feeding [I] to [src]."), span_notice("You start feeding [I] to [src]."))
+		user.visible_message(span_notice("[user]开始给[src]喂[I]。"), span_notice("我开始给[src]喂[I]。"))
 		if(!do_after(user, 3 SECONDS, target = src))
 			being_fed = FALSE
 			return TRUE
@@ -175,7 +175,7 @@
 
 	heart_component.happiness = min(heart_component.happiness + (heart_component.max_happiness * 0.2), heart_component.max_happiness)
 
-	visible_message(span_notice("[user] feeds [meat] to [src]. It seems pleased!"))
+	visible_message(span_notice("[user]把[meat]喂给了[src]。它看起来很满意！"))
 	playsound(src, 'sound/misc/eat.ogg', 100, TRUE)
 	qdel(meat)
 	heart_component.update_blood_output()
@@ -192,7 +192,7 @@
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "ChimericTechWeb", "Chimeric Tech Web")
+		ui = new(user, src, "ChimericTechWeb", "嵌合科技树")
 		ui.open()
 
 // Probably don't need static data for this

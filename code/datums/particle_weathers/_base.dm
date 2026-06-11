@@ -54,16 +54,16 @@
 	// ==== Modify these ====
 
 	/// name of weather
-	var/name = "space wind"
+	var/name = "空间狂风"
 	/// description of weather
-	var/desc = "Heavy gusts of wind blanket the area, periodically knocking down anyone caught in the open."
+	var/desc = "强劲阵风席卷整片区域，任何暴露在外的人都可能时不时被掀翻在地。"
 
 	//messages to send at different severities
 	var/list/weather_messages = list()
 	//warning message that plays when weather is picked
 	var/warning_message
 	//warning message just before weather fires
-	var/late_warning_message = span_greenannounce("The realms wind blows as weather begins to turn.")
+	var/late_warning_message = span_greenannounce("界域之风吹起，天气即将转变。")
 	// Sounds to play at different severities - order from lowest to highest
 	var/list/weather_sounds = list()
 	var/list/indoor_weather_sounds = list()

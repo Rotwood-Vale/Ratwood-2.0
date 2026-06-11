@@ -1,11 +1,11 @@
 //The League, but in space. Or something.
 //Whip-javelin saiga-archer maniacs!
 /datum/advclass/foreigner/aavnik
-	name = "Aavnik Nitkov"
-	tutorial = "A niktov. The slang for one who's done much, against both common good and their fellow man. \
-	You're a brigand, of some sort. Perhaps not known, or violent in the same nature as all the others. \
-	Yet, all the same, you're outcast from the people you'd once called your own. \
-	What could you have done for them to toss you aside? Where had you failed?"
+	name = "阿夫尼克 流逐者"
+	tutorial = "Niktov，是对那种做下太多坏事、既害了公义也害了同胞之人的俚语称呼。\
+	你算是某种意义上的匪徒，也许并不出名，也不似别的恶棍那般嗜血凶残。\
+	可无论如何，你终究还是被那些你曾视作自己人的族群所放逐。\
+	你究竟做了什么，才会让他们把你弃若敝履？你又是在哪一步走岔了路？"
 	allowed_races = RACES_ALL_KINDS
 	traits_applied = list(TRAIT_STEELHEARTED)
 	outfit = /datum/outfit/job/roguetown/adventurer/aavnik
@@ -32,9 +32,9 @@
 		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
 	)
 
-	extra_context = "This subclass provides the player with four loadouts. \
-	Choosing the path of the saiga provides the Equestrian trait. \
-	All others provide medium armour training."
+	extra_context = "该子职业为玩家提供四种配置。\
+	选择 Saiga 骑射手之路会获得骑术特质。\
+	其余路线则都会提供中甲训练。"
 
 /datum/outfit/job/roguetown/adventurer/aavnik/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -60,10 +60,10 @@
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 
 	if(H.mind)
-		var/aavnik_purpose = list("Saiga Archer","Footman","Axeman","Pikeman")
-		var/purpose_choice = input(H, "Choose your FALL", "WHY YOU LEFT") as anything in aavnik_purpose
+		var/aavnik_purpose = list("赛加骑射手","步战兵","斧兵","长枪兵")
+		var/purpose_choice = input(H, "选择你的求生之道。", "你为何离开") as anything in aavnik_purpose
 		switch(purpose_choice)
-			if("Saiga Archer")
+			if("赛加骑射手")
 				H.change_stat(STATKEY_SPD, 1)
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/riding, 4, TRUE)
@@ -73,20 +73,20 @@
 				var/turf/TU = get_turf(H)
 				if(TU)
 					new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled(TU)
-			if("Footman")
+			if("步战兵")
 				H.change_stat(STATKEY_STR, 1)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 3, TRUE)
 				r_hand = /obj/item/rogueweapon/sword/sabre/steppesman
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				backl = /obj/item/rogueweapon/shield/buckler
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-			if("Axeman")
+			if("斧兵")
 				H.change_stat(STATKEY_STR, 1)
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, 3, TRUE)
 				r_hand = /obj/item/rogueweapon/stoneaxe/battle/steppesman
 				backl = /obj/item/rogueweapon/shield/buckler
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-			if("Pikeman")
+			if("长枪兵")
 				H.change_stat(STATKEY_STR, 1)
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
 				r_hand = /obj/item/rogueweapon/spear/boar/aav
@@ -95,7 +95,7 @@
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 
 /obj/item/rogueweapon/scabbard/sheath/aavnik
-	name = "dagger sheath"
+	name = "匕首鞘"
 
 /obj/item/rogueweapon/scabbard/sheath/aavnik/Initialize(mapload)
 	. = ..()

@@ -4,11 +4,11 @@
 /datum/brain_trauma/special
 
 /datum/brain_trauma/special/godwoken
-	name = "Godwoken Syndrome"
+	name = "神启综合征"
 	desc = ""
 	scan_desc = ""
-	gain_text = "<span class='notice'>I feel a higher power inside your mind...</span>"
-	lose_text = "<span class='warning'>The divine presence leaves your head, no longer interested.</span>"
+	gain_text = "<span class='notice'>我感到脑海中有一股更高的力量……</span>"
+	lose_text = "<span class='warning'>那道神圣存在离开了我的脑海，不再对我感兴趣。</span>"
 
 /datum/brain_trauma/special/godwoken/on_life()
 	..()
@@ -48,11 +48,11 @@
 	voice_of_god(message, owner, list("colossus","yell"), 2.5, include_owner, FALSE)
 
 /datum/brain_trauma/special/bluespace_prophet
-	name = "Bluespace Prophecy"
+	name = "Bluespace 预兆"
 	desc = ""
 	scan_desc = ""
-	gain_text = "<span class='notice'>I feel the bluespace pulsing around you...</span>"
-	lose_text = "<span class='warning'>The faint pulsing of bluespace fades into silence.</span>"
+	gain_text = "<span class='notice'>我感到 Bluespace 正在我周围脉动……</span>"
+	lose_text = "<span class='warning'>Bluespace 那微弱的脉动渐渐归于寂静。</span>"
 	var/next_portal = 0
 
 /datum/brain_trauma/special/bluespace_prophet/on_life()
@@ -91,7 +91,7 @@
 		second.seer = owner
 
 /obj/effect/hallucination/simple/bluespace_stream
-	name = "bluespace stream"
+	name = "Bluespace 流"
 	desc = ""
 	image_icon = 'icons/effects/effects.dmi'
 	image_state = "bluestream"
@@ -107,25 +107,25 @@
 /obj/effect/hallucination/simple/bluespace_stream/attack_hand(mob/user)
 	if(user != seer || !linked_to)
 		return
-	var/slip_in_message = pick("slides sideways in an odd way, and disappears", "jumps into an unseen dimension",\
-		"sticks one leg straight out, wiggles [user.p_their()] foot, and is suddenly gone", "stops, then blinks out of reality", \
-		"is pulled into an invisible vortex, vanishing from sight")
-	var/slip_out_message = pick("silently fades in", "leaps out of thin air","appears", "walks out of an invisible doorway",\
-		"slides out of a fold in spacetime")
-	to_chat(user, "<span class='notice'>I try to align with the bluespace stream...</span>")
+	var/slip_in_message = pick("以一种古怪的姿势横滑了一下，随后消失不见", "跳进了一个看不见的维度里",\
+		"伸直了一条腿，晃了晃[user.p_their()]的脚，突然就不见了", "停顿了一下，随后从现实中闪灭了", \
+		"被卷进了一道无形的漩涡，消失在视野中")
+	var/slip_out_message = pick("无声地渐渐显现出来", "凭空一跃而出","忽然出现了", "从一道看不见的门中走了出来",\
+		"从时空的褶皱中滑了出来")
+	to_chat(user, "<span class='notice'>我试着与这道 Bluespace 流对齐……</span>")
 	if(do_after(user, 20, target = src))
 		new /obj/effect/temp_visual/bluespace_fissure(get_turf(src))
 		new /obj/effect/temp_visual/bluespace_fissure(get_turf(linked_to))
 		user.forceMove(get_turf(linked_to))
-		user.visible_message("<span class='warning'>[user] [slip_in_message].</span>", null, null, null, user)
-		user.visible_message("<span class='warning'>[user] [slip_out_message].</span>", "<span class='notice'>...and find your way to the other side.</span>")
+		user.visible_message("<span class='warning'>[user][slip_in_message]。</span>", null, null, null, user)
+		user.visible_message("<span class='warning'>[user][slip_out_message]。</span>", "<span class='notice'>……然后我抵达了另一端。</span>")
 
 /datum/brain_trauma/special/tenacity
-	name = "Tenacity"
+	name = "坚韧"
 	desc = ""
 	scan_desc = ""
-	gain_text = "<span class='warning'>I suddenly stop feeling pain.</span>"
-	lose_text = "<span class='warning'>I realize you can feel pain again.</span>"
+	gain_text = "<span class='warning'>我突然感觉不到疼痛了。</span>"
+	lose_text = "<span class='warning'>我意识到自己又能感受到疼痛了。</span>"
 
 /datum/brain_trauma/special/tenacity/on_gain()
 	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
@@ -138,11 +138,11 @@
 	..()
 
 /datum/brain_trauma/special/death_whispers
-	name = "Functional Cerebral Necrosis"
+	name = "功能性脑坏死"
 	desc = ""
 	scan_desc = ""
-	gain_text = "<span class='warning'>I feel dead inside.</span>"
-	lose_text = "<span class='notice'>I feel alive again.</span>"
+	gain_text = "<span class='warning'>我感觉自己从内到外都死寂了。</span>"
+	lose_text = "<span class='notice'>我感觉自己又活了过来。</span>"
 	var/active = FALSE
 
 /datum/brain_trauma/special/death_whispers/on_life()
@@ -165,11 +165,11 @@
 	active = FALSE
 
 /datum/brain_trauma/special/existential_crisis
-	name = "Existential Crisis"
+	name = "存在危机"
 	desc = ""
 	scan_desc = ""
-	gain_text = "<span class='notice'>I feel less real.</span>"
-	lose_text = "<span class='warning'>I feel more substantial again.</span>"
+	gain_text = "<span class='notice'>我感觉自己没那么真实了。</span>"
+	lose_text = "<span class='warning'>我感觉自己又重新变得真实了。</span>"
 	var/obj/effect/abstract/sync_holder/veil/veil
 	var/next_crisis = 0
 
@@ -189,13 +189,13 @@
 		return
 	var/duration = rand(50, 450)
 	veil = new(owner.drop_location())
-	to_chat(owner, "<span class='warning'>[pick("You stop thinking for a moment. Therefore you are not.",\
-												"To be or not to be...",\
-												"Why exist?",\
-												"You stop keeping it real.",\
-												"Your grip on existence slips.",\
-												"Do you even exist?",\
-												"You simply fade away.")]</span>")
+	to_chat(owner, "<span class='warning'>[pick("我有那么一瞬间停止了思考，于是我便不复存在。",\
+												"存在，还是不存在……",\
+												"为何而存在？",\
+												"我不再维系自身的真实。",\
+												"我对存在的把握正在滑落。",\
+												"我真的存在吗？",\
+												"我只是缓缓淡去了。")]</span>")
 	owner.forceMove(veil)
 	SEND_SIGNAL(owner, COMSIG_MOVABLE_SECLUDED_LOCATION)
 	for(var/thing in owner)
@@ -206,20 +206,20 @@
 
 /datum/brain_trauma/special/existential_crisis/proc/fade_in()
 	QDEL_NULL(veil)
-	to_chat(owner, "<span class='notice'>I fade back into reality.</span>")
+	to_chat(owner, "<span class='notice'>我重新淡回了现实之中。</span>")
 	next_crisis = world.time + 600
 
 //base sync holder is in desynchronizer.dm
 /obj/effect/abstract/sync_holder/veil
-	name = "non-existence"
+	name = "非存在"
 	desc = ""
 
 /datum/brain_trauma/special/beepsky
-	name = "Criminal"
+	name = "罪犯"
 	desc = ""
 	scan_desc = ""
-	gain_text = "<span class='warning'>Justice is coming for you.</span>"
-	lose_text = "<span class='notice'>I were absolved for your crimes.</span>"
+	gain_text = "<span class='warning'>正义正向我逼近。</span>"
+	lose_text = "<span class='notice'>我的罪行得到了赦免。</span>"
 	clonable = FALSE
 	random_gain = FALSE
 	var/obj/effect/hallucination/simple/securitron/beepsky
@@ -253,7 +253,7 @@
 		return
 	if(get_dist(owner, beepsky) <= 1)
 		owner.playsound_local(owner, 'sound/blank.ogg', 50)
-		owner.visible_message("<span class='warning'>[owner]'s body jerks as if it was shocked.</span>", "<span class='danger'>I feel the fist of the LAW.</span>")
+		owner.visible_message("<span class='warning'>[owner]的身体猛地一抽，像是被电击了一般。</span>", "<span class='danger'>我感受到了 LAW 的铁拳。</span>")
 		owner.take_bodypart_damage(0,0,rand(40, 70))
 		QDEL_NULL(beepsky)
 	if(prob(20) && get_dist(owner, beepsky) <= 8)
@@ -276,7 +276,7 @@
 	if(prob(60))
 		forceMove(get_step_towards(src, victim))
 		if(prob(5))
-			to_chat(victim, "<span class='name'>[name]</span> exclaims, \"<span class='robotic'>Level 10 infraction alert!\"</span>")
+			to_chat(victim, "<span class='name'>[name]</span>高声说道：\"<span class='robotic'>十级违规警报！</span>\"")
 
 /obj/effect/hallucination/simple/securitron/Destroy()
 	STOP_PROCESSING(SSfastprocess,src)

@@ -8,9 +8,9 @@
 	allowed_races = RACES_TOLERATED_UP
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
-	tutorial = "Having proven yourself both loyal and capable, you have been knighted to serve the realm as the royal family's sentry. \
-	You listen to your Liege, the Marshal, and the Knight Captain, defending your Lord and realm - the last beacon of chivalry in these dark times. \
-	You're wholly dedicated to the standing Regent and their safety. Do not fail."
+	tutorial = "你已证明自己既忠诚又堪用，因此受封为骑士，作为王室的哨卫守护王国。\
+	你听命于君主、元帅与骑士统领，捍卫你的领主与领地，那是这黑暗时代里最后的骑士精神灯塔。\
+	你的一切都献给当下的摄政者及其安危。切莫失职。"
 	display_order = JDO_KNIGHT
 	whitelist_req = TRUE
 	outfit = /datum/outfit/job/roguetown/knight
@@ -40,9 +40,9 @@
 		var/mob/living/carbon/human/H = L
 		var/prev_real_name = H.real_name
 		var/prev_name = H.name
-		var/honorary = "Ser"
+		var/honorary = "爵士"
 		if(should_wear_femme_clothes(H))
-			honorary = "Dame"
+			honorary = "女爵"
 		H.real_name = "[honorary] [prev_real_name]"
 		H.name = "[honorary] [prev_name]"
 
@@ -72,8 +72,8 @@
 	H.verbs |= /mob/living/carbon/human/proc/take_squire
 
 /mob/living/carbon/human/proc/take_squire()
-	set name = "Take Squire"
-	set category = "Noble"
+	set name = "收侍从"
+	set category = "贵族"
 
 	if(stat)
 		return
@@ -85,7 +85,7 @@
 		for(var/mob/living/carbon/human/potential_squires in (view(1)))
 			if(potential_squires.job == "Squire")
 				folksnearby += potential_squires
-		var/target = input(src, "Take as Squire") as null|anything in folksnearby
+		var/target = input(src, "收谁为侍从？") as null|anything in folksnearby
 		if(istype(target, /mob/living/carbon))
 			var/mob/living/carbon/guy = target
 			if(!guy)
@@ -94,15 +94,15 @@
 				return
 			if(!guy.mind)
 				return
-			src.say("Are you not my squire, [guy]?")
+			src.say("你不正是我的侍从吗，[guy]？")
 
-			var/prompt = alert(guy, "Do wish to be [src]'s squire?", "Squire", "Aye, m'lord!", "Nae, m'lord!")
-			if(prompt == "Nae, m'lord!")
-				guy.say("I hold no oath of service to you, [src]. You are mistaken.")
+			var/prompt = alert(guy, "你愿意成为[src]的侍从吗？", "侍从", "愿意，大人！", "不愿，大人！")
+			if(prompt == "不愿，大人！")
+				guy.say("我并未向你立下效忠誓言，[src]。你认错人了。")
 				return
 
 			else
-				guy.say("It is as you say, [src], I am your squire.")
+				guy.say("正如你所说，[src]，我是你的侍从。")
 				guy.mind.knight = src
 				src.mind.squire = guy
 				var/datum/status_effect/buff/knight_prox/new_knight = src.apply_status_effect(/datum/status_effect/buff/knight_prox)
@@ -120,13 +120,13 @@ Firstly, the squire's buffs and boons or whatever.
 	duration = -1
 
 /atom/movable/screen/alert/status_effect/buff/squire_prox
-	name = "Oath of Service"
-	desc = "I am in service to a knight. We shan't fail, whatever our duty is."
+	name = "效忠誓约"
+	desc = "我正侍奉一位骑士。无论职责为何，我们都不会失手。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/squire_prox/on_creation()
 	spawn(5)//Why are you so gross and hacky?
-		examine_text = span_slime("<small>SUBJECTPRONOUN is the squire of [owner.mind.knight.real_name].</small>")
+		examine_text = span_slime("<small>SUBJECTPRONOUN是[owner.mind.knight.real_name]的侍从。</small>")
 	return ..()
 
 /datum/status_effect/buff/squire_prox/tick()
@@ -145,12 +145,12 @@ Firstly, the squire's buffs and boons or whatever.
 
 /datum/stressevent/lost_knight
 	stressadd = 8
-	desc = span_cultsmall("My knight! Where have they gone?!")
+	desc = span_cultsmall("我的骑士！他们去哪了？！")
 	timer = 30 MINUTES//How could you have failed them, so horribly?
 
 /datum/stressevent/squire_prox
 	stressadd = -3
-	desc = span_green("I am near my knight.")
+	desc = span_green("我就在我的骑士身旁。")
 	timer = 1 MINUTES
 
 /*
@@ -162,13 +162,13 @@ Now, the knight's.
 	duration = -1
 
 /atom/movable/screen/alert/status_effect/buff/knight_prox
-	name = "Oath of Service"
-	desc = "I have a squire in my service. They're in good hands."
+	name = "效忠誓约"
+	desc = "我麾下有一名侍从。他正由我亲自照看。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/knight_prox/on_creation()
 	spawn(5)//Why are you so gross and hacky?
-		examine_text = span_slime("<small>SUBJECTPRONOUN is the knight of [owner.mind.squire.real_name], their ward.</small>")
+		examine_text = span_slime("<small>SUBJECTPRONOUN是[owner.mind.squire.real_name]的骑士与监护人。</small>")
 	return ..()
 
 /datum/status_effect/buff/knight_prox/tick()
@@ -187,10 +187,10 @@ Now, the knight's.
 
 /datum/stressevent/lost_squire
 	stressadd = 8
-	desc = span_cultsmall("My squire! Where have they gone?!")
+	desc = span_cultsmall("我的侍从！他们去哪了？！")
 	timer = 30 MINUTES//Maybe keep them alive?
 
 /datum/stressevent/knight_prox
 	stressadd = -3
-	desc = span_green("I am near my squire.")
+	desc = span_green("我就在我的侍从身旁。")
 	timer = 1 MINUTES

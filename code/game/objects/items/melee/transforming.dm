@@ -6,8 +6,8 @@
 	var/throwforce_on = 20
 	var/icon_state_on = "axe1"
 	var/hitsound_on = 'sound/blank.ogg'
-	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	var/list/attack_verb_off = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	var/list/attack_verb_on = list("攻击", "劈砍", "刺击", "切开", "撕裂", "扯裂", "剁碎", "割伤")
+	var/list/attack_verb_off = list("攻击", "劈砍", "刺击", "切开", "撕裂", "扯裂", "剁碎", "割伤")
 	w_class = WEIGHT_CLASS_SMALL
 	var/bonus_active = FALSE //If the faction damage bonus is active
 	var/list/nemesis_factions //Any mob with a faction that exists in this list will take bonus damage/effects
@@ -72,9 +72,9 @@
 /obj/item/melee/transforming/proc/transform_messages(mob/living/user, supress_message_text)
 	playsound(user, 'sound/blank.ogg', 35, TRUE)  //changed it from 50% volume to 35% because deafness
 	if(!supress_message_text)
-		to_chat(user, span_notice("[src] [active ? "is now active":"can now be concealed"]."))
+		to_chat(user, span_notice("[src][active ? "现在已启动" : "现在可以藏起了"]。"))
 
 /obj/item/melee/transforming/proc/clumsy_transform_effect(mob/living/user)
 	if(clumsy_check && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-		to_chat(user, span_warning("I accidentally cut myself with [src], like a doofus!"))
+		to_chat(user, span_warning("我像个傻子一样，不小心被[src]划伤了！"))
 		user.take_bodypart_damage(5,5)

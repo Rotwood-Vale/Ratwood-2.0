@@ -2,8 +2,8 @@
 	var/stockpile_index = -1
 	var/budget = 0
 	var/compact = TRUE
-	var/current_category = "Raw Materials"
-	var/list/categories = list("Raw Materials", "Foodstuffs", "Fruits", "Seafood")
+	var/current_category = "原材料"
+	var/list/categories = list("原材料", "食材", "水果", "海产")
 	var/obj/structure/roguemachine/parent_structure = null
 
 /datum/withdraw_tab/New(stockpile_param, obj/structure/roguemachine/structure_param)
@@ -14,15 +14,15 @@
 /datum/withdraw_tab/proc/get_contents(title, show_back)
 	var/contents = "<center>[title]<BR>"
 	if(show_back)
-		contents += "<a href='?src=[REF(parent_structure)];navigate=directory'>(back)</a><BR>"
+		contents += "<a href='?src=[REF(parent_structure)];navigate=directory'>(返回)</a><BR>"
 
 	contents += "--------------<BR>"
-	contents += "<a href='?src=[REF(parent_structure)];change=1'>Stored Mammon: [budget]</a><BR>"
-	contents += "<a href='?src=[REF(parent_structure)];compact=1'>Compact Mode: [compact ? "ENABLED" : "DISABLED"]</a></center><BR>"
+	contents += "<a href='?src=[REF(parent_structure)];change=1'>已存入玛门：[budget]</a><BR>"
+	contents += "<a href='?src=[REF(parent_structure)];compact=1'>紧凑模式：[compact ? "启用" : "关闭"]</a></center><BR>"
 	var/mob/living/user = usr
 	if (user && HAS_TRAIT(user, TRAIT_FOOD_STIPEND))
-		contents += "<center><b>TREASURY-LINE ACTIVE.</b></center><BR>"
-	var/selection = "Categories: "
+		contents += "<center><b>国库线路已启用。</b></center><BR>"
+	var/selection = "分类： "
 	for(var/category in categories)
 		if(category == current_category)
 			selection += "<b>[current_category]</b> "
@@ -37,11 +37,11 @@
 				continue
 			var/remote_stockpile = stockpile_index == 1 ? 2 : 1
 			if(!A.withdraw_disabled)
-				contents += "<b>[A.name] (Max: [A.stockpile_limit]):</b> <a href='?src=[REF(parent_structure)];withdraw=[REF(A)]'>LCL: [A.held_items[stockpile_index]] at [A.withdraw_price]m</a> /"
-				contents += "<a href='?src=[REF(parent_structure)];withdraw=[REF(A)];remote=1'>RMT: [A.held_items[remote_stockpile]] at [A.withdraw_price+A.transport_fee]m</a><BR>"
+				contents += "<b>[A.name]（上限：[A.stockpile_limit]）：</b> <a href='?src=[REF(parent_structure)];withdraw=[REF(A)]'>本地：库存 [A.held_items[stockpile_index]]，价格 [A.withdraw_price] 玛门</a> /"
+				contents += "<a href='?src=[REF(parent_structure)];withdraw=[REF(A)];remote=1'>远程：库存 [A.held_items[remote_stockpile]]，价格 [A.withdraw_price+A.transport_fee] 玛门</a><BR>"
 
 			else
-				contents += "<b>[A.name]:</b> Withdrawing Disabled..."
+				contents += "<b>[A.name]：</b> 已禁止提取……"
 
 	else
 		for(var/datum/roguestock/stockpile/A in SStreasury.stockpile_datums)
@@ -49,14 +49,14 @@
 				continue
 			contents += "[A.name]<BR>"
 			contents += "[A.desc]<BR>"
-			contents += "Stockpiled Amount (Local): [A.held_items[stockpile_index]]<BR>"
+			contents += "本地库存：[A.held_items[stockpile_index]]<BR>"
 			var/remote_stockpile = stockpile_index == 1 ? 2 : 1
-			contents += "Stockpiled Amount (Remote): [A.held_items[remote_stockpile]]<BR>"
+			contents += "远程库存：[A.held_items[remote_stockpile]]<BR>"
 			if(!A.withdraw_disabled)
-				contents += "<a href='?src=[REF(parent_structure)];withdraw=[REF(A)]'>\[Withdraw Local ([A.withdraw_price])\] </a>"
-				contents += "<a href='?src=[REF(parent_structure)];withdraw=[REF(A)];remote=1'>\[Withdraw Remote ([A.withdraw_price+A.transport_fee])\]</a><BR><BR>"
+				contents += "<a href='?src=[REF(parent_structure)];withdraw=[REF(A)]'>\[提取本地（[A.withdraw_price]）\] </a>"
+				contents += "<a href='?src=[REF(parent_structure)];withdraw=[REF(A)];remote=1'>\[提取远程（[A.withdraw_price+A.transport_fee]）\]</a><BR><BR>"
 			else
-				contents += "Withdrawing Disabled...<BR><BR>"
+				contents += "已禁止提取……<BR><BR>"
 
 	return contents
 
@@ -76,7 +76,7 @@
 		if(D.withdraw_disabled)
 			return FALSE
 		if(D.held_items[source_stockpile] <= 0)
-			parent_structure.say("Insufficient stock.")
+			parent_structure.say("库存不足。")
 		else if(total_price > budget)
 			var/mob/living/user = usr
 			if (user && HAS_TRAIT(user, TRAIT_FOOD_STIPEND))
@@ -85,14 +85,14 @@
 					SStreasury.log_to_steward("-[D.withdraw_price]m worth of goods withdrawn direct from vomitorium (keep stipend)")
 					var/obj/item/I = new D.item_type(parent_structure.loc)
 					I.from_stockpile = TRUE
-					to_chat(user, span_info("[parent_structure] chitters and squeaks into the treasury ratlines."))
+					to_chat(user, span_info("[parent_structure]朝着国库鼠道发出叽喳吱叫。"))
 					if(!user.put_in_hands(I))
 						I.forceMove(get_turf(user))
 					playsound(parent_structure.loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 				else
-					parent_structure.say("The treasury is barren. Please insert coinage.")
+					parent_structure.say("国库空空如也。请投入硬币。")
 			else
-				parent_structure.say("Insufficient mammon.")
+				parent_structure.say("玛门不足。")
 		else
 			D.held_items[source_stockpile]--
 			budget -= total_price

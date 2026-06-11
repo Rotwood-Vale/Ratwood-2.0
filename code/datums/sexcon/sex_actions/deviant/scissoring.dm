@@ -1,5 +1,5 @@
 /datum/sex_action/scissoring
-	name = "Scissor them"
+	name = "与对方磨阴"
 	user_sex_part = SEX_PART_CUNT
 	target_sex_part = SEX_PART_CUNT
 
@@ -26,10 +26,10 @@
 	return TRUE
 
 /datum/sex_action/scissoring/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] spreads [user.p_their()] legs and aligns [user.p_their()] cunt against [target]'s own!"))
+	user.visible_message(span_warning("[user]分开[user.p_their()]双腿，将[user.p_their()]阴部贴上了[target]的阴部！"))
 
 /datum/sex_action/scissoring/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] scissors with [target]'s cunt."))
+	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()]与[target]的阴部彼此磨蹭。"))
 	user.sexcon.outercourse_noise(target, TRUE)
 	user.sexcon.do_thrust_animate(target)
 
@@ -44,7 +44,7 @@
 	target.sexcon.handle_passive_ejaculation()
 
 /datum/sex_action/scissoring/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] stops scissoring with [target]."))
+	user.visible_message(span_warning("[user]停下了与[target]磨阴的动作。"))
 
 /datum/sex_action/scissoring/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.sexcon.finished_check())

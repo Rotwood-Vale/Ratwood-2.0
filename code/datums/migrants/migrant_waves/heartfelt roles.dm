@@ -1,12 +1,12 @@
 /datum/migrant_role/heartfelt/lord
-	name = "Lord of Heartfelt"
+	name = "Heartfelt领主"
 	advclass_cat_rolls = list(CTAG_HFT_LORD = 20)
 	allowed_races = RACES_NO_CONSTRUCT
 	show_wanderer_examine = FALSE
 	advjob_examine = FALSE
 
 /datum/migrant_role/heartfelt/hand
-	name = "Hand of Heartfelt"
+	name = "Heartfelt执政之手"
 	advclass_cat_rolls = list(CTAG_HFT_HAND = 20)
 	allowed_races = ACCEPTED_RACES
 	grant_lit_torch = TRUE
@@ -14,7 +14,7 @@
 	advjob_examine = FALSE
 
 /datum/migrant_role/heartfelt/knight
-	name = "Knight of Heartfelt"
+	name = "Heartfelt骑士"
 	advclass_cat_rolls = list(CTAG_HFT_KNIGHT = 20)
 	allowed_races = RACES_NO_CONSTRUCT
 	grant_lit_torch = FALSE
@@ -33,19 +33,19 @@
 				index = copytext(H.real_name, 1,index)
 			if(!index)
 				index = H.real_name
-			S.name = "knight tabard ([index])"
+			S.name = "骑士罩袍（[index]）"
 		var/prev_real_name = H.real_name
 		var/prev_name = H.name
-		var/honorary = "Ser"
+		var/honorary = "爵士"
 		if(H.pronouns == SHE_HER || H.pronouns == THEY_THEM_F)
-			honorary = "Dame"
+			honorary = "女爵"
 		GLOB.chosen_names -= prev_real_name
 		H.real_name = "[honorary] [prev_real_name]"
 		H.name = "[honorary] [prev_name]"
 		GLOB.chosen_names += H.real_name
 
 /datum/migrant_role/heartfelt/retinue
-	name = "Heartfeltian Retinue"
+	name = "Heartfelt扈从"
 	advclass_cat_rolls = list(CTAG_HFT_RETINUE = 20)
 	allowed_races = ACCEPTED_RACES
 	grant_lit_torch = FALSE

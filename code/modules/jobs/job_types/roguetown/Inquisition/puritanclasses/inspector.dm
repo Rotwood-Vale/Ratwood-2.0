@@ -2,8 +2,8 @@
 //Respectable assortment of skills, stats, and equipment; good at both subterfuge and combat.
 //Functions very well on their own, and even better with a full sect.
 /datum/advclass/puritan/inspector
-	name = "Inspector"
-	tutorial = "Investigators and diplomats, oft-selected from Confessors who've shown their aptitude in a variety of skills. A precise strike is all that's needed to forward the Orthodoxy's missive; whether it's struck with a diplomat's charm or a rapier's tip, however, is up to you."
+	name = "监察官"
+	tutorial = "你们既是调查者，也是外交使，常从那些在多种技艺上展露才能的告解官中被拣选而出。要推动正统教会的谕令，往往只需一次精准出手；至于是靠外交家的辞锋，还是靠刺剑的锋尖，那就由你自己决定。"
 	outfit = /datum/outfit/job/roguetown/puritan/inspector
 	subclass_languages = list(/datum/language/otavan)
 	category_tags = list(CTAG_PURITAN)
@@ -41,7 +41,7 @@
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
 	)
 	subclass_stashed_items = list(
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+		"《Psydon 圣典》" = /obj/item/book/rogue/bibble/psy
 	)
 
 /datum/outfit/job/roguetown/puritan/inspector/pre_equip(mob/living/carbon/human/H)
@@ -80,32 +80,32 @@
 
 /datum/outfit/job/roguetown/puritan/inspector/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	var/weapons = list("Psydonic Longsword", "Psydonic Rapier", "Daybreak (Whip)", "Stigmata (Halberd)", "Eucharist (Rapier)")
-	var/weapon_choice = input(H,"FLOURISH YOUR SILVER.", "WIELD THEM IN HIS NAME.") as anything in weapons
+	var/weapons = list("Psydonic 长剑", "Psydonic 刺剑", "Daybreak（鞭）", "Stigmata（长戟）", "Eucharist（刺剑）")
+	var/weapon_choice = input(H,"亮出你的银兵。", "以祂之名执兵。") as anything in weapons
 	switch(weapon_choice)
-		if("Psydonic Longsword")
+		if("Psydonic 长剑")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/long/psysword/preblessed(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
-		if("Psydonic Rapier")
+		if("Psydonic 刺剑")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/psy/preblessed(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
-		if("Daybreak (Whip)")
+		if("Daybreak（鞭）")
 			H.put_in_hands(new /obj/item/rogueweapon/whip/antique/psywhip(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 5, TRUE)
-		if("Stigmata (Halberd)")
+		if("Stigmata（长戟）")
 			H.put_in_hands(new /obj/item/rogueweapon/halberd/psyhalberd/relic(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 5, TRUE)
-		if("Eucharist (Rapier)")
+		if("Eucharist（刺剑）")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/psy/relic(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
-	var/quivers = list("Bolts - Steel-Tipped", "Sunderbolts - Silver-Tipped, Halved Damage")
-	var/bolt_choice = input(H,"CHOOSE YOUR MUNITIONS.", "TAKE UP PSYDON'S MISSILES.") as anything in quivers
+	var/quivers = list("弩矢 - 钢尖", "裂甲弩矢 - 银尖，伤害减半")
+	var/bolt_choice = input(H,"选择你的弹药。", "执起 普赛顿 的飞矢。") as anything in quivers
 	switch(bolt_choice)
-		if("Bolts - Steel-Tipped")
+		if("弩矢 - 钢尖")
 			H.equip_to_slot_or_del(new /obj/item/quiver/bolts, SLOT_BELT_R, TRUE)
-		if("Sunderbolts - Silver-Tipped, Halved Damage")
+		if("裂甲弩矢 - 银尖，伤害减半")
 			H.equip_to_slot_or_del(new /obj/item/quiver/holybolts, SLOT_BELT_R, TRUE)

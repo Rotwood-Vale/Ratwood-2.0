@@ -4,9 +4,9 @@
 //He gets a big 'fuck off' crossbow.
 //Entirely focused around range. Knives for good measure.
 /datum/advclass/arbalist
-	name = "Arbalist"
-	tutorial = "They'd pulled you from the line. To be a Confessor was your fate. Now? You're one of the Inquisitor's sharpest, of eye and steady hand alike. \
-	Armed with your beloved sauterelle, you'll drive back the dark. One stake at a time."
+	name = "劲弩手"
+	tutorial = "你曾被从队列中抽调出来，本该成为一名告解官。如今？你已成了审判官手下眼最锐、手最稳的人之一。 \
+	手执你心爱的 sauterelle，你会一枚一枚地将圣桩送出，把黑暗逐步逼退。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/arbalist
@@ -36,7 +36,7 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 	)
 	subclass_stashed_items = list(
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+		"《Psydon 圣典》" = /obj/item/book/rogue/bibble/psy
 	)
 
 /datum/outfit/job/roguetown/arbalist
@@ -77,8 +77,8 @@
 //Stake belt. Here because nothing else uses it. It's just a throwing knife belt, but for stake bolts.
 //A better way to carry them, since these are unobtanium.
 /obj/item/storage/belt/rogue/leather/stakebelt
-	name = "stake bolt belt"
-	desc = "A five-slotted belt meant for stake bolts. Little room left over."
+	name = "圣桩弩矢腰带"
+	desc = "一条专为圣桩弩矢设计的五槽腰带，几乎没有多余空间。"
 	icon_state = "blackknife"
 	item_state = "blackknife"
 	strip_delay = 20
@@ -96,9 +96,9 @@
 				A.forceMove(src)
 			stakes += A
 			update_icon()
-			to_chat(usr, span_notice("I discreetly slip [A] into [src]."))
+			to_chat(usr, span_notice("我不动声色地把 [A] 塞进了 [src]。"))
 		else
-			to_chat(loc, span_warning("Full!"))
+			to_chat(loc, span_warning("满了！"))
 		return
 	..()
 
@@ -114,7 +114,7 @@
 /obj/item/storage/belt/rogue/leather/stakebelt/examine(mob/user)
 	. = ..()
 	if(stakes.len)
-		. += span_notice("[stakes.len] inside.")
+		. += span_notice("里面有 [stakes.len] 支。")
 
 /obj/item/storage/belt/rogue/leather/stakebelt/Initialize(mapload)
 	. = ..()

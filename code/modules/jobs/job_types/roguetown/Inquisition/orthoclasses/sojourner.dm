@@ -2,10 +2,10 @@
 //They don't need much else. They're stupid powerful.
 //Do not numberfuck them if you can help it. I beg you.
 /datum/advclass/sojourner
-	name = "Sojourner"
-	tutorial = "Naledi scholars, bereft of their home, were sent around Grimoria searching for purpose. They'd found it in Otava, \
-	within the hallowed halls that honed their gifts and refined the knowledge they'd held. Attached to the Inquisitor, you've one purpose. \
-	Show them that the fall wasn't pointless."
+	name = "旅居者"
+	tutorial = "失去故土的 纳莱迪 学者被送往 Grimoria 各地寻找意义。他们最终在 奥塔瓦 找到了答案， \
+	在那片神圣殿堂之中，他们磨砺天赋，也淬炼自己原本掌握的学识。追随审判官的你如今只有一个目标。 \
+	向世人证明，那场沦亡并非毫无意义。"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/sojourner
@@ -36,10 +36,10 @@
 		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
 	)
 	subclass_stashed_items = list(
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+		"《Psydon 圣典》" = /obj/item/book/rogue/bibble/psy
 	)
-	extra_context = "This subclass has multiple unique spells, including one in the form of an 'arcyne barrier'. \
-	So long as it's active, the user is immune to magic, yet still capable of casting it."
+	extra_context = "该子职业拥有多种独特法术，其中一种表现为“奥术屏障”。 \
+	只要它处于激活状态，使用者便会免疫魔法，同时仍可继续施法。"
 
 /datum/outfit/job/roguetown/sojourner
 	job_bitflag = BITFLAG_HOLY_WARRIOR

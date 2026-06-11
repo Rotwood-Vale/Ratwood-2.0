@@ -1,8 +1,8 @@
 
 /datum/advclass/heartfelt/retinue/armorer
-	name = "Heartfeltian Armorer"
-	tutorial = "You are the Heartfeltian's Armorer destined for greatness, but fate intervened with the barony's downfall,\
-	With your home in ruins, you look to these lands, hoping to find new purpose or refuge amidst the chaos."
+	name = "赤心 铸甲师"
+	tutorial = "你是 赤心 的铸甲师，本该成就一番伟业，却被男爵领的覆灭生生打断。\
+	如今故土已成废墟，你望向这片土地，希望能在混乱之中寻得新的使命，或至少一处容身之所。"
 	allowed_sexes = list(MALE, FEMALE)
 	outfit = /datum/outfit/job/roguetown/heartfelt/retinue/armorer
 	maximum_possible_slots = 1
@@ -43,12 +43,12 @@
 	)
 
 	subclass_stashed_items = list(
-		"Blacksteel and Steel Stash" = /obj/item/storage/roguebag/heartfelt/armorer
+		"黑钢与钢锭储备" = /obj/item/storage/roguebag/heartfelt/armorer
 	)
 
 /datum/outfit/job/roguetown/heartfelt/retinue/armorer/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You start with a stash of items for setting up a forge. Alongside some bars for smithing."))
+	to_chat(H, span_warning("你开局会携带一批用来搭建铁匠炉的物资，以及一些可供锻造的金属锭。"))
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/rogueweapon/hammer/iron
 	beltl = /obj/item/rogueweapon/tongs
@@ -71,18 +71,18 @@
 
 	if(H.mind)
 		var/molds = list(
-			"Iron sword mold" = /obj/item/mold/sword,
-			"Iron axe mold" = /obj/item/mold/axe,
-			"Iron mace mold" = /obj/item/mold/mace,
-			"Iron knife mold" = /obj/item/mold/knife,
-			"Iron polearm mold" = /obj/item/mold/polearm,
-			"Iron plate" = /obj/item/mold/plate
+			"铁剑模具" = /obj/item/mold/sword,
+			"铁斧模具" = /obj/item/mold/axe,
+			"铁锤模具" = /obj/item/mold/mace,
+			"铁刀模具" = /obj/item/mold/knife,
+			"长柄武器模具" = /obj/item/mold/polearm,
+			"铁板甲模具" = /obj/item/mold/plate
 		)
 		var/mold_names = list()
 		for (var/name in molds)
 			mold_names += name
 		for (var/i = 1 to 2)
-			var/mold_choice = input(H, "Choose your starting molds", "Select") as anything in mold_names
+			var/mold_choice = input(H, "选择你的起始模具", "选择") as anything in mold_names
 			if (i == 1)
 				l_hand = molds[mold_choice]
 			else

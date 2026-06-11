@@ -2,7 +2,7 @@
 #define ZOMBIE_BITE_CONVERSION_TIME 1.5 MINUTES
 
 /datum/antagonist/zombie
-	name = "Deadite"
+	name = "尸鬼"
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "zombie"
 	show_in_roundend = FALSE
@@ -74,12 +74,12 @@
 /datum/antagonist/zombie/examine_friendorfoe(datum/antagonist/examined_datum,mob/examiner,mob/examined)
 	if(istype(examined_datum, /datum/antagonist/vampire))
 		if(!SEND_SIGNAL(examined_datum.owner, COMSIG_DISGUISE_STATUS))
-			return span_boldnotice("Another deadite.")
+			return span_boldnotice("另一个亡者。")
 	if(istype(examined_datum, /datum/antagonist/zombie))
 		var/datum/antagonist/zombie/fellow_zombie = examined_datum
-		return span_boldnotice("Another deadite. [fellow_zombie.has_turned ? "My ally." : span_warning("Hasn't turned yet.")]")
+		return span_boldnotice("另一个亡者。[fellow_zombie.has_turned ? "我的盟友。" : span_warning("尚未完全转化。")]")
 	if(istype(examined_datum, /datum/antagonist/skeleton))
-		return span_boldnotice("Another deadite.")
+		return span_boldnotice("另一个亡者。")
 
 //Housekeeping/saving variables from pre-zombie
 
@@ -212,7 +212,7 @@
 			zombie.STAINT = max(zombie.STAINT - 3, 1)
 			for(var/trait in traits_rotman)
 				ADD_TRAIT(zombie, trait, "[type]")
-			to_chat(zombie, span_green("I no longer crave for flesh... <i>But I still feel ill.</i>"))
+			to_chat(zombie, span_green("我不再渴求血肉了…… <i>但我仍旧感觉不适。</i>"))
 		else
 			if(!was_i_undead)
 				zombie.mob_biotypes &= ~MOB_UNDEAD
@@ -221,7 +221,7 @@
 			zombie.faction += "neutral"
 			zombie.regenerate_organs()
 			if(has_turned)
-				to_chat(zombie, span_green("I no longer crave for flesh..."))
+				to_chat(zombie, span_green("我不再渴求血肉了……"))
 
 		for(var/obj/item/bodypart/zombie_part as anything in zombie.bodyparts) //Cure all limbs
 			zombie_part.rotted = FALSE
@@ -299,7 +299,7 @@
 //Add claws here if wanted.
 
 	zombie.update_body()
-	to_chat(zombie, span_narsiesmall("Hungry... so hungry... I CRAVE FLESH!"))
+	to_chat(zombie, span_narsiesmall("饥饿……太饿了……我渴求血肉！"))
 	zombie.cmode_music = 'sound/music/combat_weird.ogg'
 
 
@@ -358,7 +358,7 @@
 		qdel(src)
 
 /datum/antagonist/zombie/greet()
-	to_chat(owner.current, span_userdanger("Death is not the end..."))
+	to_chat(owner.current, span_userdanger("死亡并非终点……"))
 	return ..()
 
 /*
@@ -397,7 +397,7 @@
 		zombie.adjustBruteLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
 		zombie.adjustFireLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
 		zombie.heal_wounds(INFINITY) // Heal all non-permanent wounds
-		to_chat(zombie, span_userdanger("Your bones snap back into place and your flesh knits itself back together as you rise again in undeath."))
+		to_chat(zombie, span_userdanger("当你以不死之身再次起身时，你的骨骼猛然复位，血肉也重新缝合在了一起。"))
 
 	zombie.stat = UNCONSCIOUS // Start unconscious
 	zombie.updatehealth() // Then check if the mob should wake up
@@ -439,4 +439,3 @@
 	if(HAS_TRAIT(src, TRAIT_ZOMBIE_IMMUNE))
 		return
 	return mind.add_antag_datum(/datum/antagonist/zombie)
-

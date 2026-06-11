@@ -36,7 +36,7 @@
  */
 
 /obj/item/toy/snappop
-	name = "powder pack"
+	name = "粉包"
 	desc = ""
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "snappop"
@@ -48,8 +48,8 @@
 	s.set_up(n, c, src)
 	s.start()
 	new ash_type(loc)
-	visible_message("<span class='warning'>[src] explodes!</span>",
-		"<span class='hear'>I hear a explosion!</span>")
+	visible_message("<span class='warning'>[src]炸开了！</span>",
+		"<span class='hear'>我听见一声爆响！</span>")
 	playsound(src, 'sound/blank.ogg', 50, TRUE)
 	qdel(src)
 
@@ -64,11 +64,11 @@
 	if(ishuman(H)) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
 		if(M.m_intent == MOVE_INTENT_RUN)
-			to_chat(M, "<span class='danger'>I step on the snap pop!</span>")
+			to_chat(M, "<span class='danger'>我踩到了粉包！</span>")
 			pop_burst(2, 0)
 
 /obj/item/toy/snappop/phoenix
-	name = "magic powder pack"
+	name = "魔法粉包"
 	desc = ""
 	ash_type = /obj/item/ash/snappop_phoenix
 
@@ -94,10 +94,10 @@
 	var/card_throwforce = 0
 	var/card_throw_speed = 1
 	var/card_throw_range = 7
-	var/list/card_attack_verb = list("attacked")
+	var/list/card_attack_verb = list("攻击")
 
 /obj/item/toy/cards/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!</span>")
+	user.visible_message("<span class='suicide'>[user]正用[src]割开[user.p_their()]的手腕！看来[user.p_they()]这手牌真是烂透了！</span>")
 	playsound(src, 'sound/blank.ogg', 50, TRUE)
 	return BRUTELOSS
 
@@ -105,8 +105,46 @@
 	if(!istype(sourceobj))
 		return
 
+/obj/item/toy/cards/proc/get_display_cardname(raw_name)
+	if(!raw_name)
+		return raw_name
+	var/static/list/major_arcana = list(
+		"The Magician" = "魔术师", "The High Priestess" = "女祭司", "The Empress" = "女皇", "The Emperor" = "皇帝",
+		"The Hierophant" = "教皇", "The Lover" = "恋人", "The Chariot" = "战车", "Justice" = "正义",
+		"The Hermit" = "隐者", "The Wheel of Fortune" = "命运之轮", "Strength" = "力量", "The Hanged Man" = "倒吊人",
+		"Death" = "死神", "Temperance" = "节制", "The Devil" = "恶魔", "The Tower" = "高塔",
+		"The Star" = "星星", "The Moon" = "月亮", "The Sun" = "太阳", "Judgement" = "审判",
+		"The World" = "世界", "The Fool" = "愚者"
+	)
+	if(major_arcana[raw_name])
+		return major_arcana[raw_name]
+	var/of_pos = findtext(raw_name, " of ")
+	if(of_pos)
+		var/rank = copytext(raw_name, 1, of_pos)
+		var/suit = copytext(raw_name, of_pos + 4)
+		var/display_suit = suit
+		var/display_rank = rank
+		switch(suit)
+			if("Hearts") display_suit = "红桃"
+			if("Spades") display_suit = "黑桃"
+			if("Clubs") display_suit = "梅花"
+			if("Diamonds") display_suit = "方片"
+			if("Pentacles") display_suit = "星币"
+			if("Swords") display_suit = "宝剑"
+			if("Wands") display_suit = "权杖"
+			if("Cups") display_suit = "圣杯"
+		switch(rank)
+			if("Ace") display_rank = "A"
+			if("Jack") display_rank = "杰克"
+			if("Queen") display_rank = "王后"
+			if("King") display_rank = "国王"
+			if("Page") display_rank = "侍者"
+			if("Knight") display_rank = "骑士"
+		return "[display_suit][display_rank]"
+	return raw_name
+
 /obj/item/toy/cards/deck
-	name = "deck of cards"
+	name = "一副纸牌"
 	desc = ""
 	icon = 'icons/obj/toy.dmi'
 	deckstyle = "syndicate"
@@ -120,7 +158,7 @@
 
 /obj/item/toy/cards/deck/examine()
 	. = ..()
-	. += span_smallnotice("Use the deck in your hand to shuffle the cards. Draw a card by clicking on it with an empty hand.")
+	. += span_smallnotice("把牌组拿在手里即可洗牌。空手点击牌组即可抽一张牌。")
 
 /obj/item/toy/cards/deck/Initialize(mapload)
 	. = ..()
@@ -148,7 +186,7 @@
 			return
 	var/choice = null
 	if(cards.len == 0)
-		to_chat(user, "<span class='warning'>There are no more cards to draw!</span>")
+		to_chat(user, "<span class='warning'>已经没有牌可以抽了！</span>")
 		return
 	var/obj/item/toy/cards/singlecard/H = new/obj/item/toy/cards/singlecard(user.loc)
 	choice = cards[1]
@@ -159,7 +197,7 @@
 	src.cards -= choice
 	H.pickup(user)
 	user.put_in_hands(H)
-	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>I draw a card from the deck.</span>")
+	user.visible_message("<span class='notice'>[user]从牌堆中抽了一张牌。</span>", "<span class='notice'>我从牌堆中抽了一张牌。</span>")
 	update_icon()
 
 /obj/item/toy/cards/deck/update_icon()
@@ -176,7 +214,7 @@
 	if(cooldown < world.time - 25)
 		cards = shuffle(cards)
 		playsound(src, 'sound/items/cardshuffle.ogg', 100, TRUE)
-		user.visible_message("<span class='notice'>[user] shuffles the deck.</span>", "<span class='notice'>I shuffle the deck.</span>")
+		user.visible_message("<span class='notice'>[user]洗了洗牌。</span>", "<span class='notice'>我洗了洗牌。</span>")
 		cooldown = world.time
 
 /obj/item/toy/cards/deck/attackby(obj/item/I, mob/living/user, params)
@@ -184,25 +222,25 @@
 		var/obj/item/toy/cards/singlecard/SC = I
 		if(SC.parentdeck == src)
 			if(!user.temporarilyRemoveItemFromInventory(SC))
-				to_chat(user, "<span class='warning'>The card is stuck to your hand, you can't add it to the deck!</span>")
+				to_chat(user, "<span class='warning'>这张牌黏在你手上了，没法放回牌堆！</span>")
 				return
 			cards += SC.cardname
-			user.visible_message("<span class='notice'>[user] adds a card to the bottom of the deck.</span>","<span class='notice'>I add the card to the bottom of the deck.</span>")
+			user.visible_message("<span class='notice'>[user]把一张牌塞回了牌堆底部。</span>","<span class='notice'>我把这张牌塞回了牌堆底部。</span>")
 			qdel(SC)
 		else
-			to_chat(user, "<span class='warning'>I can't mix cards from other decks!</span>")
+			to_chat(user, "<span class='warning'>我不能把别的牌组的牌混进来！</span>")
 		update_icon()
 	else if(istype(I, /obj/item/toy/cards/cardhand))
 		var/obj/item/toy/cards/cardhand/CH = I
 		if(CH.parentdeck == src)
 			if(!user.temporarilyRemoveItemFromInventory(CH))
-				to_chat(user, "<span class='warning'>The hand of cards is stuck to your hand, you can't add it to the deck!</span>")
+				to_chat(user, "<span class='warning'>这手牌黏在你手上了，没法放回牌堆！</span>")
 				return
 			cards += CH.currenthand
-			user.visible_message("<span class='notice'>[user] puts [user.p_their()] hand of cards in the deck.</span>", "<span class='notice'>I put the hand of cards in the deck.</span>")
+			user.visible_message("<span class='notice'>[user]把[user.p_their()]手里的牌放回了牌堆。</span>", "<span class='notice'>我把手里的牌放回了牌堆。</span>")
 			qdel(CH)
 		else
-			to_chat(user, "<span class='warning'>I can't mix cards from other decks!</span>")
+			to_chat(user, "<span class='warning'>我不能把别的牌组的牌混进来！</span>")
 		update_icon()
 	else
 		return ..()
@@ -215,20 +253,20 @@
 	if(Adjacent(usr))
 		if(over_object == M && loc != M)
 			M.put_in_hands(src)
-			to_chat(usr, "<span class='notice'>I pick up the deck.</span>")
+			to_chat(usr, "<span class='notice'>我拿起了这副牌。</span>")
 
 		else if(istype(over_object, /atom/movable/screen/inventory/hand))
 			var/atom/movable/screen/inventory/hand/H = over_object
 			if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
-				to_chat(usr, "<span class='notice'>I pick up the deck.</span>")
+				to_chat(usr, "<span class='notice'>我拿起了这副牌。</span>")
 
 	else
-		to_chat(usr, "<span class='warning'>I can't reach it from here!</span>")
+		to_chat(usr, "<span class='warning'>我从这儿够不着它！</span>")
 
 
 
 /obj/item/toy/cards/cardhand
-	name = "hand of cards"
+	name = "手牌"
 	desc = ""
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "syndicate_hand2"
@@ -242,11 +280,11 @@
 	interact(user)
 
 /obj/item/toy/cards/cardhand/interact(mob/user)
-	var/dat = "You have:<BR>"
+	var/dat = "你手上有：<BR>"
 	for(var/t in currenthand)
-		dat += "<A href='?src=[REF(src)];pick=[t]'>A [t].</A><BR>"
-	dat += "Which card will you remove next?"
-	var/datum/browser/popup = new(user, "cardhand", "Hand of Cards", 400, 240)
+		dat += "<A href='?src=[REF(src)];pick=[t]'>一张 [get_display_cardname(t)]。</A><BR>"
+	dat += "接下来你要拿出哪张牌？"
+	var/datum/browser/popup = new(user, "cardhand", "手牌", 400, 240)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.set_content(dat)
 	popup.open()
@@ -271,7 +309,7 @@
 			C.apply_card_vars(C,O)
 			C.pickup(cardUser)
 			cardUser.put_in_hands(C)
-			cardUser.visible_message("<span class='notice'>[cardUser] draws a card from [cardUser.p_their()] hand.</span>", "<span class='notice'>I take the [C.cardname] from your hand.</span>")
+			cardUser.visible_message("<span class='notice'>[cardUser]从[cardUser.p_their()]手牌中抽出了一张牌。</span>", "<span class='notice'>我从手牌里拿出了 [get_display_cardname(C.cardname)]。</span>")
 
 			interact(cardUser)
 			if(src.currenthand.len < 3)
@@ -288,7 +326,7 @@
 				qdel(src)
 				N.pickup(cardUser)
 				cardUser.put_in_hands(N)
-				to_chat(cardUser, "<span class='notice'>I also take [currenthand[1]] and hold it.</span>")
+				to_chat(cardUser, "<span class='notice'>我也把 [get_display_cardname(currenthand[1])] 一并拿出来握在手里。</span>")
 				cardUser << browse(null, "window=cardhand")
 		return
 
@@ -296,7 +334,7 @@
 	if(istype(C))
 		if(C.parentdeck == src.parentdeck)
 			src.currenthand += C.cardname
-			user.visible_message("<span class='notice'>[user] adds a card to [user.p_their()] hand.</span>", "<span class='notice'>I add the [C.cardname] to your hand.</span>")
+			user.visible_message("<span class='notice'>[user]往[user.p_their()]手牌里添了一张牌。</span>", "<span class='notice'>我把 [get_display_cardname(C.cardname)] 加进了手牌。</span>")
 			qdel(C)
 			if(currenthand.len > 4)
 				src.icon_state = "[deckstyle]_hand5"
@@ -305,7 +343,7 @@
 			else if(currenthand.len > 2)
 				src.icon_state = "[deckstyle]_hand3"
 		else
-			to_chat(user, "<span class='warning'>I can't mix cards from other decks!</span>")
+			to_chat(user, "<span class='warning'>我不能把别的牌组的牌混进来！</span>")
 	else
 		return ..()
 
@@ -322,7 +360,7 @@
 	newobj.resistance_flags = sourceobj.resistance_flags
 
 /obj/item/toy/cards/singlecard
-	name = "card"
+	name = "纸牌"
 	desc = ""
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "singlecard_down_syndicate"
@@ -337,13 +375,13 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/cardUser = user
 		if(cardUser.is_holding(src))
-			cardUser.visible_message("<span class='notice'>[cardUser] checks [cardUser.p_their()] card.</span>", "<span class='notice'>The card reads: [cardname].</span>")
+			cardUser.visible_message("<span class='notice'>[cardUser]看了看[user.p_their()]手里的牌。</span>", "<span class='notice'>牌面写着：[get_display_cardname(cardname)]。</span>")
 		else
-			. += "<span class='warning'>You need to have the card in your hand to check it!</span>"
+			. += "<span class='warning'>你得把这张牌拿在手里才能查看！</span>"
 
 
 /obj/item/toy/cards/singlecard/verb/Flip()
-	set name = "Flip Card"
+	set name = "翻牌"
 	set hidden = 1
 	set src in range(1)
 	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
@@ -352,15 +390,15 @@
 		src.flipped = 1
 		if (cardname)
 			src.icon_state = "sc_[cardname]_[deckstyle]"
-			src.name = src.cardname
+			src.name = get_display_cardname(src.cardname)
 		else
 			src.icon_state = "sc_Ace of Spades_[deckstyle]"
-			src.name = "What Card"
+			src.name = "未知纸牌"
 		src.pixel_x = 5
 	else if(flipped)
 		src.flipped = 0
 		src.icon_state = "singlecard_down_[deckstyle]"
-		src.name = "card"
+		src.name = "纸牌"
 		src.pixel_x = -5
 
 /obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user, params)
@@ -372,19 +410,19 @@
 			H.currenthand += src.cardname
 			H.parentdeck = C.parentdeck
 			H.apply_card_vars(H,C)
-			to_chat(user, "<span class='notice'>I combine the [C.cardname] and the [src.cardname] into a hand.</span>")
+			to_chat(user, "<span class='notice'>我把 [get_display_cardname(C.cardname)] 和 [get_display_cardname(src.cardname)] 合成了一手牌。</span>")
 			qdel(C)
 			qdel(src)
 			H.pickup(user)
 			user.put_in_active_hand(H)
 		else
-			to_chat(user, "<span class='warning'>I can't mix cards from other decks!</span>")
+			to_chat(user, "<span class='warning'>我不能把别的牌组的牌混进来！</span>")
 
 	if(istype(I, /obj/item/toy/cards/cardhand/))
 		var/obj/item/toy/cards/cardhand/H = I
 		if(H.parentdeck == parentdeck)
 			H.currenthand += cardname
-			user.visible_message("<span class='notice'>[user] adds a card to [user.p_their()] hand.</span>", "<span class='notice'>I add the [cardname] to your hand.</span>")
+			user.visible_message("<span class='notice'>[user]往[user.p_their()]手牌里添了一张牌。</span>", "<span class='notice'>我把 [get_display_cardname(cardname)] 加进了手牌。</span>")
 			qdel(src)
 			H.interact(user)
 			if(H.currenthand.len > 4)
@@ -394,7 +432,7 @@
 			else if(H.currenthand.len > 2)
 				H.icon_state = "[deckstyle]_hand3"
 		else
-			to_chat(user, "<span class='warning'>I can't mix cards from other decks!</span>")
+			to_chat(user, "<span class='warning'>我不能把别的牌组的牌混进来！</span>")
 	else
 		return ..()
 
@@ -426,8 +464,8 @@
 */
 
 /obj/item/toy/cards/deck/syndicate
-	name = "cards"
-	desc = "a pack of cards."
+	name = "纸牌"
+	desc = "一叠纸牌。"
 	icon_state = "deck_syndicate_full"
 	deckstyle = "syndicate"
 	card_hitsound = 'sound/blank.ogg'
@@ -435,12 +473,12 @@
 	card_throwforce = 10
 	card_throw_speed = 1
 	card_throw_range = 7
-	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
+	card_attack_verb = list("攻击", "切开", "剁切", "劈划", "割伤")
 	resistance_flags = NONE
 
 /obj/item/toy/cards/deck/tarot
-	name = "tarot deck"
-	desc = "The Mouthpiece of Xylix, given to mortals long ago. See fate. Never bend a corner."
+	name = "塔罗牌组"
+	desc = "赛立克斯赐予凡人的代言之物。借此窥见命运。切莫折角。"
 	icon_state = "deck_tarot_full"
 	deckstyle = "tarot"
 

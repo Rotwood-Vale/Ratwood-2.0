@@ -1,7 +1,7 @@
 /obj/item/clothing/under/roguetown/heavy_leather_pants
-	name = "hardened leather trousers"
-	desc = "Thick hide cut and sewn into a pair of very protective trousers. The dense leather can \
-	turn away errant chops."
+	name = "硬化皮裤"
+	desc = "厚实兽皮裁切缝成一条防护力极强的长裤。致密皮革足以\
+	挡开偏斜而来的劈砍。"
 	gender = PLURAL
 	icon_state = "roguepants"
 	item_state = "roguepants"
@@ -21,9 +21,8 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/shorts
-	name = "hardened leather shorts"
-	desc = "A thick hide pair of shorts, favored by some for their ease of motion in spite of \
-	being less protective than full trousers."
+	name = "硬化皮短裤"
+	desc = "一条由厚皮制成的短裤，虽然不如长裤防护周全，却因行动便利而受到一些人喜爱。"
 	icon_state = "rogueshorts"
 	item_state = "rogueshorts"
 	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
@@ -33,15 +32,15 @@
 	cold_protection = GROIN
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
-	name = "otavan leather trousers"
-	desc = "padded leather armor made by Otavan tailors, its quality is remarkable."
+	name = "Otava皮裤"
+	desc = "由Otava裁缝制成的带垫皮甲长裤，品质十分出众。"
 	icon_state = "fencerpants"
 	cold_protection = GROIN | LEG_RIGHT | LEG_LEFT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
-	name = "fencing breeches"
-	desc = "A pair of loose breeches with leather reinforcements on the waist and legs. Worn with a cup."
+	name = "击剑马裤"
+	desc = "一条宽松马裤，在腰部与腿部做了皮革加固，并配有护裆。"
 	icon_state = "fencingbreeches"
 	detail_tag = "_detail"
 	color = "#FFFFFF"
@@ -64,8 +63,8 @@
 	update_icon()
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants
-	name = "grenzelhoftian paumpers"
-	desc = "Padded pants for extra comfort and protection, adorned in vibrant colors."
+	name = "Grenzelhoft绗缝裤"
+	desc = "带垫长裤，提供额外舒适与防护，并装点着鲜亮色彩。"
 	icon_state = "grenzelpants"
 	item_state = "grenzelpants"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
@@ -82,7 +81,7 @@
 /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants/attack_right(mob/user)
 	..()
 	if(!picked)
-		var/choice = input(user, "Choose a color.", "Grenzelhoft colors") as anything in GLOB.colorlist
+		var/choice = input(user, "选择一种颜色。", "格伦泽尔霍夫配色") as anything in GLOB.colorlist
 		var/playerchoice = GLOB.colorlist[choice]
 		picked = TRUE
 		detail_color = playerchoice
@@ -102,21 +101,21 @@
 		add_overlay(pic)
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants1
-	name = "cut-throat's pants"
-	desc = "Foreign pants, with leather insewns."
+	name = "割喉客长裤"
+	desc = "带有内缝皮革的异域长裤。"
 	icon_state = "eastpants1"
 	allowed_race = NON_DWARVEN_RACE_TYPES
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants2
-	name = "strange ripped pants"
-	desc = "Weird pants typically worn by the destitute in Kazengun. Or, those looking to make a fashion statement."
+	name = "古怪破裤"
+	desc = "Kazengun穷苦人常穿的古怪裤子。或者，是想借此张扬时尚态度的人。"
 	icon_state = "eastpants2"
 	allowed_race = NON_DWARVEN_RACE_TYPES
 
 //Gronn
 /obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants
-	name = "nomad pants"
-	desc = "Tight fitting leather pants worn under clothing of the steppes."
+	name = "游牧长裤"
+	desc = "穿在草原服饰内侧的贴身皮裤。"
 	icon_state = "nomadpants"
 	max_integrity = ARMOR_INT_LEG_HARDLEATHER
 	armor = ARMOR_LEATHER
@@ -125,24 +124,24 @@
 	dropshrink = null
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun //no, not 'eastpants3', silly!
-	name = "gambeson trousers"
-	desc = "A form of Kazengunite peasant's trousers. The fabric used in their manufacture is strong, and could probably turn away a few blows."
+	name = "衬甲长裤"
+	desc = "Kazengun农民常穿的一种长裤。所用布料相当结实，大概能挡下几记攻击。"
 	icon_state = "baggypants"
 	item_state = "baggypants"
 	heat_protection = GROIN | LEG_RIGHT | LEG_LEFT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/shadowpants
-	name = "silk tights"
-	desc = "Form-fitting legwear. Almost too form-fitting."
+	name = "丝质紧身裤"
+	desc = "贴身的腿部衣物，几乎贴得有些过头。"
 	icon_state = "shadowpants"
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	heat_protection = GROIN | LEG_RIGHT | LEG_LEFT
 	max_heat_protection_temperature = 600
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/bronzeskirt
-	name = "bronze chain skirt"
-	desc = "A knee-length maille skirt, made with hundreds of small bronze rings. It wards cuts against the thighs without slowing the feet."
+	name = "青铜锁甲裙"
+	desc = "一件及膝锁甲裙，由数百枚小型青铜环打造而成。它能保护大腿免受斩击，却不会拖慢步伐。"
 	icon_state = "chain_skirt"
 	item_state = "chain_skirt"
 	color = "#f9d690"

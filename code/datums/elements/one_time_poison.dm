@@ -30,4 +30,4 @@
 /datum/element/one_time_poison/proc/on_examine(atom/movable/source, mob/user, list/examine_list)
 	if(source.reagents.total_volume)
 		var/reagent_color = mix_color_from_reagents(source.reagents.reagent_list)
-		examine_list += span_red("Has been dipped in <font color=[reagent_color]>something</font>!")
+		examine_list += span_red("已经浸上了<font color=[reagent_color]>某种东西</font>！")

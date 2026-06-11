@@ -1,5 +1,5 @@
 /obj/item/kitchen/fork
-	name = "wooden fork"
+	name = "木叉"
 	icon = 'modular/Neu_Food/icons/cookware/fork.dmi'
 	icon_state = "fork_wooden"
 	flags_1 = CONDUCT_1

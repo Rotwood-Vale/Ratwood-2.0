@@ -1,10 +1,10 @@
 /datum/patron/divine/eora
 	name = "Eora"
-	domain = "Love, Family, Beauty"
-	desc = "The Lady of the Hearth blesses our Love, unconditional of for whom it is for. Marriage is Astrata's Tyranny encroaching on Eora's domain. Her followers are oft promiscuous, bards especially so."
-	worshippers = "Lovers, Doting Parents, Bards, Hopeless Romantics"
-	virtues = "Compassion, Beauty, Art"
-	sins = "Dispassion, Overindulgence, Sadism"
+	domain = "爱、家庭、美丽"
+	desc = "炉边夫人赐福于我们的爱情，不问那爱究竟献给谁。婚姻不过是 Astrata 的暴政侵入 Eora 领域的体现。她的追随者往往风流多情，尤其是吟游诗人。"
+	worshippers = "恋人、溺爱子女的父母、吟游诗人、无可救药的浪漫主义者"
+	virtues = "怜悯、美丽、艺术"
+	sins = "冷漠、纵欲、施虐"
 	mob_traits = list(TRAIT_EMPATH, TRAIT_EXTEROCEPTION)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/massage				= CLERIC_T0,
@@ -20,9 +20,9 @@
 					/obj/effect/proc_holder/spell/invoked/resurrect/eora		= CLERIC_T4,
 	)
 	confess_lines = list(
-		"EORA BRINGS US TOGETHER!",
-		"HER BEAUTY IS EVEN IN THIS TORMENT!",
-		"I LOVE YOU, EVEN AS YOU TRESPASS AGAINST ME!",
+		"EORA 让我们相聚！",
+		"即便在这苦难之中，她的美也依旧存在！",
+		"哪怕你冒犯了我，我依然爱你！",
 	)
 	traits_tier = list(TRAIT_EORAN_CALM = CLERIC_T0, TRAIT_EORAN_SERENE = CLERIC_T2)
 	storyteller = /datum/storyteller/eora
@@ -33,7 +33,7 @@
 	// Allows prayer near psycross
 	for(var/obj/structure/fluff/psycross/cross in view(4, get_turf(follower)))
 		if(cross.divine == FALSE)
-			to_chat(follower, span_danger("That defiled cross interupts my prayers!"))
+			to_chat(follower, span_danger("那座被亵渎的十字架打断了我的祈祷！"))
 			return FALSE
 		return TRUE
 	// Allows prayer near eoran sacred tree
@@ -53,7 +53,7 @@
 	// Allows player to pray while wearing eoran bud.
 	if(HAS_TRAIT(follower, TRAIT_EORAN_CONTENTED))
 		return TRUE
-	to_chat(follower, span_danger("For Eora to hear my prayer I must either pray within the church, near a psycross, offering her poppy flowers, or wearing one of her blessed flowers atop my head.."))
+	to_chat(follower, span_danger("若想让 Eora 听见我的祈祷，我必须在教堂内、psycross 附近向她献上罂粟花，或将她祝福过的花佩戴在头上……"))
 	return FALSE
 
 /datum/patron/divine/eora/on_lesser_heal(
@@ -64,8 +64,8 @@
 	conditional_buff,
 	situational_bonus
 )
-	*message_out = span_info("An emanance of love blossoms around [target]!")
-	*message_self = span_notice("I'm filled with the restorative warmth of love!")
+	*message_out = span_info("爱的光辉在[target]周围绽放开来！")
+	*message_self = span_notice("爱的温暖充盈着我，抚平了我的伤痛！")
 
 	var/bonus = 0
 

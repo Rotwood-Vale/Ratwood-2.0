@@ -4,7 +4,7 @@
 			snouting = FALSE
 		else
 			snouting = TRUE
-		to_chat(user, span_info("I [snouting ? "make space for my snout in \the [src]" : "wear \the [src] tighter"]."))
+		to_chat(user, span_info("我[snouting ? "给\the [src]留出吻部空间" : "把\the [src]戴得更紧"]."))
 		if(snouting)
 			icon_state = "[initial(icon_state)]_snout"
 		else
@@ -12,7 +12,7 @@
 		user.update_inv_wear_mask()
 	else
 		overarmor = !overarmor
-		to_chat(user, span_info("I [overarmor ? "wear \the [src] under my hair" : "wear \the [src] over my hair"]."))
+		to_chat(user, span_info("我[overarmor ? "把\the [src]戴在头发下面" : "把\the [src]戴在头发外面"]."))
 		if(overarmor)
 			alternate_worn_layer = HOOD_LAYER //Below Hair Layer
 		else
@@ -52,7 +52,7 @@
 	. = ..()
 
 /obj/item/clothing/mask/rogue/spectacles
-	name = "spectacles"
+	name = "眼镜"
 	icon_state = "glasses"
 	break_sound = "glassbreak"
 	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
@@ -66,9 +66,9 @@
 //	block2add = FOV_BEHIND
 
 /obj/item/clothing/mask/rogue/spectacles/inq
-	name = "otavan nocshade lens-pair"
+	name = "奥塔瓦夜影镜片"
 	icon_state = "bglasses"
-	desc = "Made to both ENDURE and incite debate within those few Noc-Sainted within Otava. Noc-lit walks, yae or nae? The lenses look like they can be brushed aside with a carefully guided right-pointer finger led motion."
+	desc = "它既为耐用而造，也注定会在奥塔瓦那少数蒙受诺克圣恩之人中引发争论。究竟该不该在诺克之光下夜行？这些镜片看起来可以用右手食指小心一拨便移开。"
 	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
 	max_integrity = 300
 	integrity_failure = 0.5
@@ -102,11 +102,11 @@
 	..()
 
 	if(!lensmoved)
-		to_chat(user, span_info("You discreetly slide the inner lenses out of the way."))
+		to_chat(user, span_info("你悄悄将内层镜片拨到一边。"))
 		REMOVE_TRAIT(user, TRAIT_NOCSHADES, "redlens")
 		lensmoved = TRUE
 		return
-	to_chat(user, span_info("You discreetly slide the inner lenses back into place."))
+	to_chat(user, span_info("你悄悄将内层镜片拨回原位。"))
 	ADD_TRAIT(user, TRAIT_NOCSHADES, "redlens")
 	lensmoved = FALSE
 
@@ -119,7 +119,7 @@
 		lensmoved = FALSE
 
 /obj/item/clothing/mask/rogue/spectacles/golden
-	name = "golden spectacles"
+	name = "金色眼镜"
 	icon_state = "goggles"
 	break_sound = "glassbreak"
 	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
@@ -139,11 +139,11 @@
 		if (user.get_skill_level(/datum/skill/craft/engineering) >= 2)
 			ADD_TRAIT(user, TRAIT_ENGINEERING_GOGGLES, "[type]")
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/engineeranalyze)
-			to_chat(user, span_notice("Time to build"))
+			to_chat(user, span_notice("该开工了。"))
 			active_item = TRUE
 			return
 		else
-			to_chat(user, span_notice("I can't understand these words and numbers before my eyes"))
+			to_chat(user, span_notice("我看不懂眼前这些文字和数字。"))
 			return
 	else
 		return
@@ -158,7 +158,7 @@
 		active_item = FALSE
 		REMOVE_TRAIT(user, TRAIT_ENGINEERING_GOGGLES, "[type]")
 		user.mind.RemoveSpell(new /obj/effect/proc_holder/spell/invoked/engineeranalyze)
-		to_chat(user, span_notice("Time to stop working"))
+		to_chat(user, span_notice("该停工了。"))
 
 /obj/item/clothing/mask/rogue/spectacles/Initialize(mapload)
 	..()
@@ -170,9 +170,9 @@
 	..()
 
 /obj/item/clothing/mask/rogue/spectacles/goggles
-	name = "sand goggles"
+	name = "防沙护目镜"
 	icon_state = "goggles_sandstorm"
-	desc = "A set of goggles of an older design, made to protect the wearer from sandstorms."
+	desc = "一副样式较旧的护目镜，用来保护佩戴者免受沙暴侵袭。"
 	break_sound = "glassbreak"
 	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
 	max_integrity = 35
@@ -194,8 +194,8 @@
 	user.update_fov_angles()
 
 /obj/item/clothing/mask/rogue/eyepatch
-	name = "eyepatch"
-	desc = "An eyepatch, fitted for the right eye."
+	name = "眼罩"
+	desc = "一只适配右眼的眼罩。"
 	icon_state = "eyepatch"
 	max_integrity = 20
 	integrity_failure = 0.5
@@ -205,13 +205,13 @@
 	nudist_approved = TRUE
 
 /obj/item/clothing/mask/rogue/eyepatch/left
-	desc = "An eyepatch, fitted for the left eye."
+	desc = "一只适配左眼的眼罩。"
 	icon_state = "eyepatch_l"
 	block2add = FOV_LEFT
 
 /obj/item/clothing/mask/rogue/lordmask
-	name = "golden halfmask"
-	desc = "Half of your face turned gold."
+	name = "金色半面具"
+	desc = "仿佛半张脸都化作了黄金。"
 	icon_state = "lmask"
 	sellprice = 50
 	anvilrepair = /datum/skill/craft/armorsmithing
@@ -222,13 +222,13 @@
 	icon_state = "lmask_l"
 
 /obj/item/clothing/mask/rogue/lordmask/tarnished
-	name = "tarnished golden halfmask"
-	desc = "Runes and wards, meant for daemons; the gold has somehow rusted in unnatural, impossible agony. The gold is now worthless, but that is not why the Naledi wear them."
+	name = "斑驳金色半面具"
+	desc = "这些符文与护印本为恶魔而设；黄金却以一种违背常理的方式锈蚀，仿佛承受着不可能存在的痛苦。如今这黄金已不值分文，但纳莱迪人佩戴它们的理由从来不在这里。"
 	sellprice = 20
 
 /obj/item/clothing/mask/rogue/sack
-	name = "sack mask"
-	desc = "A brown sack with eyeholes cut into it."
+	name = "麻袋面具"
+	desc = "一个挖了眼洞的棕色麻袋。"
 	icon_state = "sackmask"
 	blocksound = SOFTHIT
 	break_sound = 'sound/foley/cloth_rip.ogg'
@@ -246,13 +246,13 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/mask/rogue/sack/psy
-	name = "psydonic sack mask"
-	desc = "An ordinary brown sack. This one has eyeholes cut into it, bearing a crude chalk drawing of Psydon's cross upon its visage. Unsettling for most."
+	name = "普希顿麻袋面具"
+	desc = "一个普通的棕色麻袋。这一个被挖出了眼洞，表面还粗糙地用粉笔画着普希顿的教十字，看上去足以令大多数人不安。"
 	icon_state = "sackmask_psy"
 
 /obj/item/clothing/mask/rogue/facemask/steel/confessor
-	name = "strange mask"
-	desc = "It is said that the original version of this mask was used for obscure rituals prior to the fall of the Empire of the Holy Celestia, and now it has been repurposed as a veil for the cunning hand of the Otavan Orthodoxy.<br> <br>Others say it is a piece of heresy, a necessary evil, capable of keeping its user safe from left-handed magicks. You can taste copper whenever you draw breath."
+	name = "古怪面具"
+	desc = "据说这副面具的最初版本曾在圣赛勒斯提亚帝国覆灭前用于隐秘仪式，如今则被重新用作奥塔瓦正教密探的遮面之物。<br> <br>也有人说它本身就是一件异端之物，却又是必要之恶，能让佩戴者免遭左道邪法侵害。每当你呼吸时，口中都会泛起一股铜味。"
 	icon_state = "confessormask"
 	max_integrity = 200
 	equip_sound = 'sound/items/confessormaskon.ogg'
@@ -274,7 +274,7 @@
 /obj/item/clothing/mask/rogue/facemask/steel/confessor/attackby(obj/item/I, mob/user, params)
 	. = ..()
 	if(istype(I, /obj/item/clothing/mask/rogue/spectacles/inq))
-		user.visible_message(span_warning("[user] starts to insert [I]'s lenses into [src]."))
+		user.visible_message(span_warning("[user]开始把[I]的镜片装进[src]里。"))
 		if(do_after(user, 4 SECONDS))
 			var/obj/item/clothing/mask/rogue/facemask/steel/confessor/lensed/P = new /obj/item/clothing/mask/rogue/facemask/steel/confessor/lensed(get_turf(src.loc))
 			if(user.is_holding(src))
@@ -284,12 +284,12 @@
 			qdel(src)
 			qdel(I)
 		else
-			user.visible_message(span_warning("[user] stops inserting the lenses into [src]."))
+			user.visible_message(span_warning("[user]停止把镜片装进[src]里。"))
 		return
 
 /obj/item/clothing/mask/rogue/facemask/steel/confessor/lensed
-	name = "stranger mask"
-	desc = "It is said that the original version of this mask was used for obscure rituals prior to the fall of the Empire of the Holy Celestia, and now it has been repurposed as a veil for the cunning hand of the Otavan Orthodoxy.<br> <br>Others say it is a piece of heresy, a necessary evil, capable of keeping its user safe from left-handed magicks. You can taste copper whenever you draw breath."
+	name = "更古怪面具"
+	desc = "据说这副面具的最初版本曾在圣赛勒斯提亚帝国覆灭前用于隐秘仪式，如今则被重新用作奥塔瓦正教密探的遮面之物。<br> <br>也有人说它本身就是一件异端之物，却又是必要之恶，能让佩戴者免遭左道邪法侵害。每当你呼吸时，口中都会泛起一股铜味。"
 	icon_state = "confessormask_lens"
 	var/lensmoved = TRUE
 
@@ -303,11 +303,11 @@
 /obj/item/clothing/mask/rogue/facemask/steel/confessor/lensed/attack_right(mob/user, slot)
 	..()
 	if(!lensmoved)
-		to_chat(user, span_info("You discreetly slide the inner lenses out of the way."))
+		to_chat(user, span_info("你悄悄将内层镜片拨到一边。"))
 		REMOVE_TRAIT(user, TRAIT_NOCSHADES, "redlens")
 		lensmoved = TRUE
 		return
-	to_chat(user, span_info("You discreetly slide the inner lenses back into place."))
+	to_chat(user, span_info("你悄悄将内层镜片拨回原位。"))
 	ADD_TRAIT(user, TRAIT_NOCSHADES, "redlens")
 	lensmoved = FALSE
 
@@ -319,8 +319,8 @@
 			return
 
 /obj/item/clothing/mask/rogue/wildguard
-	name = "wild guard"
-	desc = "A mask shaped after the snarling beasts of Dendor."
+	name = "荒野守卫"
+	desc = "一副仿照登多尔咆哮野兽制成的面具。"
 	icon_state = "wildguard"
 	blocksound = PLATEHIT
 	break_sound = 'sound/foley/breaksound.ogg'
@@ -338,7 +338,7 @@
 	sewrepair = FALSE
 
 /obj/item/clothing/mask/rogue/facemask
-	name = "iron mask"
+	name = "铁面具"
 	icon_state = "imask"
 	max_integrity = 100
 	blocksound = PLATEHIT
@@ -369,33 +369,33 @@
 		H.update_fov_angles()
 
 /obj/item/clothing/mask/rogue/facemask/shadowfacemask
-	name = "spider rider's mask"
-	desc = "A metal mask adorned with arachnid iconography. A grim visage crafted by a grim race."
+	name = "蛛骑士面具"
+	desc = "一副饰有蛛形纹样的金属面具。阴森的面容，出自阴森的种族之手。"
 	icon_state = "shadowfacemask"
 
 /obj/item/clothing/mask/rogue/facemask/ancient
-	name = "ancient mask"
-	desc = "Polished gilbranze, molded into an intimidating visage. Touch the cheek; it is warm, like flesh. But it is not flesh. Not yet."
+	name = "远古面具"
+	desc = "打磨光亮的吉尔布兰泽被塑成一张威吓十足的面容。指尖触及面颊时，它温热得宛如血肉。但那并不是血肉。至少现在还不是。"
 	max_integrity = 200
 	icon_state = "ancientmask"
 	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/clothing/mask/rogue/facemask/ancient/decrepit
-	name = "decrepit mask"
-	desc = "Frayed bronze, molded into an unblinking visage. Only the statues, buried within the innards of Mount Decapitation, share its wrinkled lip and sneer of cold command."
+	name = "破旧面具"
+	desc = "磨损的青铜被塑成一张永不眨眼的面容。唯有那些深埋于断首山腹地的雕像，才与它同样有着起皱的嘴角与冷酷发号施令的讥笑。"
 	max_integrity = 75
 	color = "#bb9696"
 	anvilrepair = null
 
 /obj/item/clothing/mask/rogue/facemask/copper
-	name = "copper mask"
+	name = "铜面具"
 	icon_state = "cmask"
-	desc = "A heavy copper mask that conceals and protects the face, though not very effectively."
+	desc = "一副厚重的铜面具，能遮蔽并保护面部，只是效果算不上好。"
 	armor = ARMOR_PLATE_BAD
 	smeltresult = /obj/item/ingot/copper
 
 /obj/item/clothing/mask/rogue/facemask/hound
-	name = "hound mask"
+	name = "猎犬面具"
 	icon_state = "imask_snout"
 	max_integrity = 100
 	blocksound = PLATEHIT
@@ -410,8 +410,8 @@
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/clothing/mask/rogue/facemask/psydonmask
-	name = "psydonic mask"
-	desc = "A silver mask, forever locked in a rigor of uncontestable joy. The Order of Saint Xylix can't decide on whether it's meant to represent Psydon's 'mirthfulness,' 'theatricality,' or the unpredictable melding of both."
+	name = "普希顿面具"
+	desc = "一副银制面具，永远凝固着一种无可置疑的欢愉神情。圣赛利克斯教团至今拿不准，它究竟象征着普希顿的“欢悦”、“戏剧性”，还是二者难以捉摸的交融。"
 	icon_state = "psydonmask"
 	item_state = "psydonmask"
 
@@ -478,73 +478,73 @@
 */
 
 /obj/item/clothing/mask/rogue/facemask/steel
-	name = "steel mask"
+	name = "钢面具"
 	icon_state = "smask"
 	max_integrity = 200
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/clothing/mask/rogue/facemask/steel/hound
-	name = "steel hound mask"
-	desc = "A steel mask, made for those who have snouts, protecting the eyes, nose and muzzle while obscuring the face."
+	name = "钢猎犬面具"
+	desc = "一副为有吻部者打造的钢面具，可保护眼睛、鼻子与口鼻，同时遮住面容。"
 	icon_state = "smask_snout"
 
 /obj/item/clothing/mask/rogue/facemask/steel/steppesman
-	name = "steppesman war mask"
-	desc = "A steel mask shaped like the face of a rather charismatic fellow! Pronounced cheeks, a nose, and a large mustache. Well, people outside of Aavnr don't think you'd look charismatic at all wearing this."
+	name = "草原人战面具"
+	desc = "一副钢制面具，被塑造成一张颇具魅力的汉子面孔！高耸的颧骨、挺直的鼻梁，还有一撇醒目的大胡子。不过嘛，阿夫纳尔以外的人多半不会觉得戴上它的你有多迷人。"
 	max_integrity = 250
 	icon_state = "steppemask"
 	layer = HEAD_LAYER
 
 /obj/item/clothing/mask/rogue/facemask/steel/steppesman/anthro
-	name = "steppesman beast mask"
-	desc = "A steel mask shaped like the face of a rather charismatic beastman! Pronounced cheeks, a nose, and small spikes for whiskers. Well, people outside of Aavnr don't think you'd look charismatic at all wearing this."
+	name = "草原人兽面具"
+	desc = "一副钢制面具，被塑造成一张颇具魅力的兽人面孔！高耸的颧骨、鼻梁，以及充作胡须的细小尖刺一应俱全。不过嘛，阿夫纳尔以外的人多半不会觉得戴上它的你有多迷人。"
 	icon_state = "steppemask_snout"
 
 /obj/item/clothing/mask/rogue/facemask/steel/steppesman
-	name = "steppesman war mask"
-	desc = "A steel mask shaped like the face of a rather charismatic fellow! Pronounced cheeks, a nose, and a large mustache. Well, people outside of Aavnr don't think you'd look charismatic at all wearing this."
+	name = "草原人战面具"
+	desc = "一副钢制面具，被塑造成一张颇具魅力的汉子面孔！高耸的颧骨、挺直的鼻梁，还有一撇醒目的大胡子。不过嘛，阿夫纳尔以外的人多半不会觉得戴上它的你有多迷人。"
 	max_integrity = 250
 	icon_state = "steppemask"
 	layer = HEAD_LAYER
 
 /obj/item/clothing/mask/rogue/facemask/steel/steppesman/anthro
-	name = "steppesman beast mask"
-	desc = "A steel mask shaped like the face of a rather charismatic beastman! Pronounced cheeks, a nose, and small spikes for whiskers. Well, people outside of Aavnr don't think you'd look charismatic at all wearing this."
+	name = "草原人兽面具"
+	desc = "一副钢制面具，被塑造成一张颇具魅力的兽人面孔！高耸的颧骨、鼻梁，以及充作胡须的细小尖刺一应俱全。不过嘛，阿夫纳尔以外的人多半不会觉得戴上它的你有多迷人。"
 	icon_state = "steppebeast"
 
 /obj/item/clothing/mask/rogue/facemask/goldmask
-	name = "Gold Mask"
+	name = "黄金面具"
 	icon_state = "goldmask"
 	max_integrity = 150
 	sellprice = 100
 	smeltresult = /obj/item/ingot/gold
 
 /obj/item/clothing/mask/rogue/facemask/yoruku_oni
-	name = "oni mask"
-	desc = "A wood mask carved in the visage of demons said to stalk the mountains of Kazengun."
+	name = "鬼面具"
+	desc = "一副木制面具，雕成据说游荡于卡曾郡山中的恶鬼模样。"
 	icon_state = "oni"
 
 /obj/item/clothing/mask/rogue/facemask/yoruku_kitsune
-	name = "kitsune mask"
-	desc = "A wood mask carved in the visage of the fox spirits said to ply their tricks in the forests of Kazengun."
+	name = "狐面具"
+	desc = "一副木制面具，雕成据说在卡曾郡森林中施展恶作剧的狐灵模样。"
 	icon_state = "kitsune"
 
 /obj/item/clothing/mask/rogue/facemask/steel/kazengun
-	name = "soldier's half-mask"
-	desc = "\"The first lesson of war is that it would be better to live in peace.\""
+	name = "士兵半面具"
+	desc = "战争的第一课，就是若能和平度日便再好不过。"
 	block2add = null
 	armor = ARMOR_PLATE_BAD // because it's only half
 	icon_state = "kazengunmouthguard"
 	item_state = "kazengunmouthguard"
 
 /obj/item/clothing/mask/rogue/facemask/steel/kazengun/full
-	name = "ogre mask"
-	desc = "\"The second lesson: Rich men have dreams. Poor men die to make them come true.\""
+	name = "食人魔面具"
+	desc = "第二课：富人做梦，穷人为让梦成真而死。"
 	icon_state = "kazengunfaceguard"
 	item_state = "kazengunfaceguard"
 
 /obj/item/clothing/mask/rogue/shepherd
-	name = "halfmask"
+	name = "半面具"
 	icon_state = "shepherd"
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	block2add = null
@@ -559,16 +559,16 @@
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/rummaging-03.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask
 
 /obj/item/clothing/mask/rogue/shepherd/shadowmask
-	name = "purple halfmask"
+	name = "紫色半面具"
 	icon_state = "shadowmask"
-	desc = "For when one wants to conceal their face while performing dastardly deeds in the name of the crown."
+	desc = "适合那些以王冠之名行龌龊勾当时遮住自己面孔的人。"
 
 /obj/item/clothing/mask/rogue/shepherd/shadowmask/delf
-	desc = "Tiny drops of white dye mark its front, not unlike teeth. A smile that leers from shadow."
+	desc = "前方点缀着细小的白色染斑，像极了牙齿，仿佛有一道笑容自阴影中狞望而来。"
 
 /obj/item/clothing/mask/rogue/physician
-	name = "plague mask"
-	desc = "What better laboratory than the blood-soaked battlefield?"
+	name = "瘟疫面具"
+	desc = "还有什么实验室，能比血流成河的战场更合适呢？"
 	icon_state = "physmask"
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	body_parts_covered = FACE|EYES|MOUTH
@@ -588,8 +588,8 @@
 	REMOVE_TRAIT(user, TRAIT_NOSTINK, "[type]")
 
 /obj/item/clothing/mask/rogue/skullmask
-	name = "skull mask"
-	desc = "A mask in the shape of a skull, designed to terrify."
+	name = "骷髅面具"
+	desc = "一副骷髅造型的面具，专为恫吓旁人而制。"
 	icon_state = "skullmask"
 	max_integrity = 100
 	blocksound = PLATEHIT
@@ -610,7 +610,7 @@
 	sewrepair = FALSE
 
 /obj/item/clothing/mask/rogue/ragmask
-	name = "rag mask"
+	name = "碎布面具"
 	icon_state = "ragmask"
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
@@ -634,10 +634,10 @@
 	color = CLOTHING_BLACK
 
 /obj/item/clothing/mask/rogue/lordmask/naledi
-	name = "war scholar's mask"
+	name = "战学者面具"
 	item_state = "naledimask"
 	icon_state = "naledimask"
-	desc = "Runes and wards, meant for daemons; the gold has somehow rusted in unnatural, impossible agony. The most prominent of these etchings is in the shape of the Naledian psycross. Armored to protect the wearer's face."
+	desc = "这些符文与护印本为恶魔而设；黄金却以一种违背常理的方式锈蚀，仿佛承受着不可能存在的痛苦。其间最醒目的刻痕，是纳莱迪教十字的形状。它经过装甲加固，可保护佩戴者的面部。"
 	max_integrity = 100
 	armor = ARMOR_PLATE
 	flags_inv = HIDEFACE|HIDESNOUT
@@ -645,10 +645,10 @@
 	sellprice = 0
 
 /obj/item/clothing/mask/rogue/lordmask/naledi/sojourner
-	name = "sojourner's mask"
+	name = "旅者面具"
 	item_state = "naledimask"
 	icon_state = "naledimask"
-	desc = "A golden mask, gnarled by the sustained agonies of djinnic corruption; yet as long as its Naledian hexes endure, so too will its wearer. Hand-fitted shingles flank the sides to repel incoming strikes. </br>'..Clad with the stereotype of abruptly disappearing without any forewarning, the typical Sojourner is in constant pursuit of diversifying their erudition. One might arrive to learn the local witch's recipe of sanctifying atropa extract and spend yils in the community trying to master it, while another might work alongside the region's Orthodoxic chapter to slay a lycker lord in exchange for his archive, only to vanish the very next day..'"
+	desc = "一副黄金面具，因灯灵腐化所带来的长期痛苦而扭曲变形；但只要其上的纳莱迪咒印仍在，佩戴者也会同样存续。两侧以手工贴合的甲片加固，用以弹开来袭打击。</br>'……典型的旅者总带着毫无预警便会突然消失的刻板印象，他们也始终在追求让自己的学识更加多元。有人会为了学习本地女巫净化颠茄萃取物的配方而来到此地，并在社区里耗费多年试图掌握它；也有人会与当地正教教团并肩作战，斩杀一位莱克领主以换取其藏书档案，却又在第二天悄然无踪……'"
 	max_integrity = 150
 	armor = ARMOR_PLATE
 	flags_inv = HIDEFACE|HIDESNOUT
@@ -656,7 +656,7 @@
 	sellprice = 0
 
 /obj/item/clothing/mask/rogue/exoticsilkmask
-	name = "exotic silk mask"
+	name = "异域丝绸面具"
 	icon_state = "exoticsilkmask"
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
@@ -671,8 +671,8 @@
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/rummaging-03.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask
 
 /obj/item/clothing/mask/rogue/blindfold
-	name = "blindfold"
-	desc = "A strip of cloth tied around the eyes to block vision."
+	name = "蒙眼布"
+	desc = "一条系在眼前、用来遮蔽视线的布条。"
 	icon_state = "blindfold"
 	item_state = "blindfold"
 	body_parts_covered = EYES
@@ -683,12 +683,12 @@
 	icon = 'icons/obj/clothing/glasses.dmi'
 
 /obj/item/clothing/mask/rogue/blindfold/fake
-	desc = "A strip of cloth tied around the eyes. It's too transparent to block vision."
+	desc = "一条系在眼前的布条，但过于透薄，挡不住视线。"
 	tint = 0
 
 /obj/item/clothing/mask/rogue/duelmask
-	name = "duelist's mask"
-	desc = "A black cloth mask for those masked duelists, doesn't grant any protection, but covers your eyes, and your identity... somehow."
+	name = "决斗者面具"
+	desc = "一副供蒙面决斗者佩戴的黑布面具，虽然不给任何防护，却不知怎地既遮住了你的眼睛，也遮住了你的身份……"
 	icon_state = "duelmask"
 	flags_inv = HIDEFACE
 	body_parts_covered = EYES
@@ -700,8 +700,8 @@
 	nudist_approved = TRUE
 
 /obj/item/clothing/mask/rogue/horsey
-	name = "head blinders"
-	desc = "Keeps the wearer focused ahead. Made of reinforced leather."
+	name = "头部遮眼具"
+	desc = "让佩戴者专注于前方。由加固皮革制成。"
 	icon_state = "hblinders"
 	item_state = "hblinders"
 	body_parts_covered = HEAD
@@ -710,9 +710,9 @@
 //gemcarved masks from Vanderlin
 
 /obj/item/clothing/mask/rogue/facemask/carved
-	name = "carved mask"
+	name = "雕刻面具"
 	icon_state = "ancientmask"
-	desc = "You shouldn't be seeing this."
+	desc = "你本不该看到这个。"
 	max_integrity = 50
 	blocksound = PLATEHIT
 	break_sound = 'sound/foley/breaksound.ogg'
@@ -730,64 +730,64 @@
 	salvage_result = null
 
 /obj/item/clothing/mask/rogue/facemask/carved/jademask
-	name = "jade mask "
+	name = "玉面具"
 	icon_state = "mask_jade"
-	desc = "A jade mask that both conceals and protects the face."
+	desc = "一副既能遮蔽又能保护面部的玉面具。"
 	sellprice = 70
 
 /obj/item/clothing/mask/rogue/facemask/carved/jademask
-	name = "jade mask"
+	name = "玉面具"
 	icon_state = "mask_jade"
-	desc = "A jade mask that both conceals and protects the face."
+	desc = "一副既能遮蔽又能保护面部的玉面具。"
 	sellprice = 70
 
 /obj/item/clothing/mask/rogue/facemask/carved/turqmask
-	name = "cerulite mask"
+	name = "天青石面具"
 	icon_state = "mask_turq"
-	desc = "A cerulite mask that both conceals and protects the face."
+	desc = "一副既能遮蔽又能保护面部的天青石面具。"
 	sellprice = 95
 
 /obj/item/clothing/mask/rogue/facemask/carved/rosemask
-	name = "rosestone mask"
+	name = "玫瑰石面具"
 	icon_state = "mask_rose"
-	desc = "A rosestone mask that both conceals and protects the face."
+	desc = "一副既能遮蔽又能保护面部的玫瑰石面具。"
 	sellprice = 35
 
 /obj/item/clothing/mask/rogue/facemask/carved/shellmask
-	name = "shell mask"
+	name = "贝壳面具"
 	icon_state = "mask_shell"
-	desc = "A shell mask that both conceals and protects the face."
+	desc = "一副既能遮蔽又能保护面部的贝壳面具。"
 	sellprice = 30
 
 /obj/item/clothing/mask/rogue/facemask/carved/coralmask
-	name = "heartstone mask"
+	name = "心石面具"
 	icon_state = "mask_coral"
-	desc = "An heartstone mask that both conceals and protects the face."
+	desc = "一副既能遮蔽又能保护面部的心石面具。"
 	sellprice = 80
 
 /obj/item/clothing/mask/rogue/facemask/carved/ambermask
-	name = "amber mask"
+	name = "琥珀面具"
 	icon_state = "mask_amber"
-	desc = "A amber mask that both conceals and protects the face."
+	desc = "一副既能遮蔽又能保护面部的琥珀面具。"
 	sellprice = 70
 
 /obj/item/clothing/mask/rogue/facemask/carved/onyxamask
-	name = "onyxa mask"
+	name = "缟玛瑙面具"
 	icon_state = "mask_onyxa"
-	desc = "An onyxa mask that both conceals and protects the face."
+	desc = "一副既能遮蔽又能保护面部的缟玛瑙面具。"
 	sellprice = 50
 
 /obj/item/clothing/mask/rogue/facemask/carved/opalmask
-	name = "opal mask"
+	name = "欧泊面具"
 	icon_state = "mask_opal"
-	desc = "An opal mask that both conceals and protects the face."
+	desc = "一副既能遮蔽又能保护面部的欧泊面具。"
 	sellprice = 100
 
 /obj/item/clothing/mask/rogue/xylixmask
-	name = "jester mask"
+	name = "丑角面具"
 	item_state = "xylixmask"
 	icon_state = "xylixmask"
-	desc = "A ceramic mask, forever stuck with the joyful smile its patron god favors. Alt+RMB changes style, Shift+RMB toggles snout form, and Shift+MMB toggles identity concealment."
+	desc = "一副陶制面具，永远凝固着其所侍神明偏爱的欢快笑容。Alt+右键切换样式，Shift+右键切换吻部形态，Shift+中键切换身份隐藏。"
 	max_integrity = 50
 	armor = null
 	flags_inv = HIDEFACE|HIDESNOUT
@@ -819,7 +819,7 @@
 /obj/item/clothing/mask/rogue/xylixmask/proc/toggle_identity(mob/user)
 	hide_identity = !hide_identity
 	update_identity_flags(user)
-	to_chat(user, span_notice("I [hide_identity ? "conceal" : "reveal"] my identity with \the [src]."))
+	to_chat(user, span_notice("我用\the [src][hide_identity ? "隐藏" : "显露"]自己的身份。"))
 	return TRUE
 
 /obj/item/clothing/mask/rogue/xylixmask/proc/apply_mask_style(style, mob/user)
@@ -871,7 +871,7 @@
 		return
 	next_honk = world.time + 1 SECONDS
 	playsound(src, 'sound/misc/honkmask.ogg', 70, TRUE)
-	to_chat(user, span_notice("The mask's nose is squeezed! It emits a squeaky honk."))
+	to_chat(user, span_notice("面具的鼻子被捏了一下，发出吱吱的鸣响。"))
 /obj/item/clothing/mask/rogue/xylixmask/dropped(mob/user)
 	..()
 	if(ishuman(user))
@@ -891,7 +891,7 @@
 
 /obj/item/clothing/mask/rogue/xylixmask/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt+RMB opens the style radial menu.")
-	. += span_notice("Shift+RMB toggles the snout version of the selected style.")
-	. += span_notice("Shift+MMB toggles identity concealment.")
-	. += span_notice("When using the harlequin styles: Right-click to honk.")
+	. += span_notice("按下 Alt+右键可打开样式环形菜单。")
+	. += span_notice("按下 Shift+右键可切换所选样式的吻部版本。")
+	. += span_notice("按下 Shift+中键可切换身份隐藏。")
+	. += span_notice("使用丑角样式时：右键可以按响喇叭。")

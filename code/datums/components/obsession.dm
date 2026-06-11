@@ -23,7 +23,7 @@
 	last_known_health = (target.health / target.maxHealth) * 100
 
 	var/mob/living/carbon/human/parent_mob = parent
-	to_chat(parent_mob, span_purple("You feel an intense emotional connection forming with [target]. Their wellbeing becomes deeply important to you."))
+	to_chat(parent_mob, span_purple("我感到自己正与[target]建立起强烈的情感联结。他们的安危对我而言变得无比重要。"))
 
 	// Initial positive mood from forming the bond
 	parent_mob.add_stress(/datum/stressevent/empathic_bond_formed)
@@ -73,7 +73,7 @@
 
 	// React to health changes
 	if(health_change < -15) // Significant health loss
-		to_chat(parent_mob, span_danger("You feel a wave of distress - [obsession_target] is being hurt!"))
+		to_chat(parent_mob, span_danger("一阵痛苦涌上心头 - [obsession_target] 正在受伤！"))
 		parent_mob.add_stress(/datum/stressevent/obsession_target_hurt)
 
 		// Visual distress effect
@@ -81,7 +81,7 @@
 		addtimer(CALLBACK(parent_mob, TYPE_PROC_REF(/mob, clear_fullscreen), "empathic_distress"), 5 SECONDS)
 
 	else if(health_change > 15) // Significant healing
-		to_chat(parent_mob, span_notice("You feel relief as [obsession_target] recovers."))
+		to_chat(parent_mob, span_notice("随着[obsession_target]恢复，我感到如释重负。"))
 		parent_mob.add_stress(/datum/stressevent/obsession_target_healed)
 		parent_mob.remove_stress(/datum/stressevent/obsession_target_hurt)
 
@@ -105,12 +105,12 @@
 	if(distance > max_comfortable_distance || different_z)
 		if(!separation_anxiety_active)
 			separation_anxiety_active = TRUE
-			to_chat(parent_mob, span_warning("You feel anxious being separated from [obsession_target]."))
+			to_chat(parent_mob, span_warning("与[obsession_target]分离让我感到焦虑。"))
 			parent_mob.add_stress(/datum/stressevent/separation_anxiety)
 	else
 		if(separation_anxiety_active)
 			separation_anxiety_active = FALSE
-			to_chat(parent_mob, span_notice("You feel calmer now that [obsession_target] is nearby."))
+			to_chat(parent_mob, span_notice("[obsession_target]就在附近，我的心情平静了不少。"))
 			parent_mob.remove_stress(/datum/stressevent/separation_anxiety)
 			parent_mob.add_stress(/datum/stressevent/proximity_comfort)
 
@@ -127,15 +127,15 @@
 
 	// Provide feedback on obsession level changes
 	if(obsession_intensity >= 120 && prob(5))
-		to_chat(parent_mob, span_warning("Your thoughts keep returning to [obsession_target]. You can't stop thinking about them."))
+		to_chat(parent_mob, span_warning("我的思绪总是不由自主地回到[obsession_target]身上，根本停不下来。"))
 	else if(obsession_intensity <= 60 && prob(5))
-		to_chat(parent_mob, span_notice("You feel slightly more at ease about [obsession_target]."))
+		to_chat(parent_mob, span_notice("一想到[obsession_target]，我稍微安心了一些。"))
 
 /datum/component/empathic_obsession/proc/enter_panic_mode()
 	panic_mode = TRUE
 	var/mob/living/carbon/human/parent_mob = parent
 
-	to_chat(parent_mob, span_userdanger("You feel overwhelming panic - [obsession_target] is in mortal danger!"))
+	to_chat(parent_mob, span_userdanger("压倒性的恐慌席卷而来 - [obsession_target] 命在旦夕！"))
 	parent_mob.add_stress(/datum/stressevent/obsession_panic)
 
 	// Strong visual effect
@@ -144,13 +144,13 @@
 	// Compulsive behavior - try to move toward target if possible
 	if(get_dist(parent_mob, obsession_target) <= 20 && parent_mob.z == obsession_target.z)
 		parent_mob.create_walk_to(5 SECONDS, obsession_target)
-		to_chat(parent_mob, span_danger("You feel compelled to reach [obsession_target] immediately!"))
+		to_chat(parent_mob, span_danger("我强烈地想立刻赶到[obsession_target]身边！"))
 
 /datum/component/empathic_obsession/proc/exit_panic_mode()
 	panic_mode = FALSE
 	var/mob/living/carbon/human/parent_mob = parent
 
-	to_chat(parent_mob, span_notice("You feel intense relief as [obsession_target] seems to be recovering."))
+	to_chat(parent_mob, span_notice("[obsession_target]似乎正在恢复，我感到极大的宽慰。"))
 	parent_mob.remove_stress(/datum/stressevent/obsession_panic)
 	parent_mob.add_stress(/datum/stressevent/crisis_relief)
 	parent_mob.clear_fullscreen("empathic_panic")
@@ -162,7 +162,7 @@
 	if(!parent_mob)
 		return
 
-	to_chat(parent_mob, span_userdanger("You feel a devastating emptiness as [source] dies. Part of you dies with them."))
+	to_chat(parent_mob, span_userdanger("随着[source]死去，毁灭般的空虚吞没了我。仿佛我的一部分也一同死去了。"))
 
 	// Severe negative mood effects
 	parent_mob.add_stress(/datum/stressevent/obsession_death)
@@ -185,7 +185,7 @@
 	if(!parent_mob)
 		return
 
-	to_chat(parent_mob, span_purple("You feel overwhelming joy and relief as [source] returns to life!"))
+	to_chat(parent_mob, span_purple("随着[source]重返人世，压倒性的喜悦与宽慰涌上心头！"))
 	parent_mob.add_stress(/datum/stressevent/obsession_revival)
 	parent_mob.remove_stress(/datum/stressevent/obsession_death)
 	panic_mode = FALSE
@@ -203,7 +203,7 @@
 	var/mob/living/carbon/human/parent_mob = parent
 
 	if(parent_mob)
-		to_chat(parent_mob, span_info("Your intense emotional connection to [obsession_target] gradually fades, though the memory remains."))
+		to_chat(parent_mob, span_info("我对[obsession_target]那股强烈的情感联结渐渐消退了，但回忆仍在。"))
 		parent_mob.add_stress(/datum/stressevent/obsession_ended)
 
 		// Clear all obsession-related mood events
@@ -225,51 +225,51 @@
 // Missing mood events for the empathic obsession component
 
 /datum/stressevent/empathic_bond_formed
-	desc = "I feel a deep emotional connection with someone special."
+	desc = "我与某个特别之人之间生出了深厚的情感联结。"
 	stressadd = -3
 	timer = 30 MINUTES
 
 /datum/stressevent/obsession_target_hurt
-	desc = "Someone I care deeply about is hurt! I feel their pain."
+	desc = "我深深在乎的人受伤了！我仿佛也感受到了他们的痛楚。"
 	stressadd = 4
 	timer = 10 MINUTES
 
 /datum/stressevent/obsession_target_healed
-	desc = "I feel relief knowing someone important to me is recovering."
+	desc = "想到对我重要的人正在恢复，我感到宽慰。"
 	stressadd = -2
 	timer = 5 MINUTES
 
 /datum/stressevent/separation_anxiety
-	desc = "I feel anxious being away from someone I'm emotionally connected to."
+	desc = "远离与我心意相连之人，让我感到焦虑。"
 	stressadd = 3
 	timer = 0 // Persistent while active
 
 /datum/stressevent/proximity_comfort
-	desc = "I feel calm and comfortable being near someone I care about."
+	desc = "待在我所关心的人身边，让我感到平静而安心。"
 	stressadd = -2
 	timer = 5 MINUTES
 
 /datum/stressevent/obsession_panic
-	desc = "I'm overwhelmed with panic about someone's safety!"
+	desc = "一想到某人的安危，我就被恐慌彻底淹没！"
 	stressadd = 6
 	timer = 0 // Persistent while active
 
 /datum/stressevent/crisis_relief
-	desc = "I feel intense relief that a crisis has passed."
+	desc = "危机过去后，我感到无比宽慰。"
 	stressadd = -4
 	timer = 15 MINUTES
 
 /datum/stressevent/obsession_death
-	desc = "Someone I was deeply connected to has died. I feel devastated."
+	desc = "与我深深相连之人已经死去。我心如刀割。"
 	stressadd = 8
 	timer = 60 MINUTES
 
 /datum/stressevent/obsession_revival
-	desc = "Someone precious to me has returned to life! I feel overwhelming joy!"
+	desc = "我珍视之人重返人世！我感到难以言喻的喜悦！"
 	stressadd = -6
 	timer = 30 MINUTES
 
 /datum/stressevent/obsession_ended
-	desc = "An intense emotional connection has faded, but I remember it fondly."
+	desc = "一段强烈的情感联结已经消散，但我仍珍藏着那份回忆。"
 	stressadd = -1
 	timer = 10 MINUTES

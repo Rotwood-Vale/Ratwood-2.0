@@ -5,8 +5,8 @@
 #define OIL_CONSUMED 5 // Amount of oil consumed per deep fry (1 fat = 4 fry)
 
 /obj/machinery/light/rogue/firebowl
-	name = "brazier"
-	desc = "A solid stone brazier. It's as sturdy as the mountains themselves."
+	name = "火盆"
+	desc = "一个坚固的石制火盆，像山岳一样牢靠。"
 	icon = 'icons/roguetown/misc/lighting.dmi'
 	icon_state = "stonefire1"
 	bulb_colour = "#ffa35c"
@@ -40,8 +40,8 @@
 	if(!on)
 
 		if(icon_state == "[base_state]over")
-			user.visible_message("<span class='notice'>[user] starts to pick up [src]...</span>", \
-				"<span class='notice'>I start to pick up [src]...</span>")
+			user.visible_message("<span class='notice'>[user]开始搬起[src]...</span>", \
+				"<span class='notice'>我开始搬起[src]...</span>")
 			if(do_after(user, 30, target = src))
 				icon_state = "[base_state]0"
 			return
@@ -50,15 +50,15 @@
 	icon_state = "stonefire0"
 	base_state = "stonefire"
 	status = LIGHT_BURNED
-	desc = "The fire is gone!"
+	desc = "火已经熄灭了！"
 
 /obj/machinery/light/rogue/firebowl/stump
 	icon_state = "stumpfire1"
 	base_state = "stumpfire"
-	desc = "Somewhat crude, but it lights the long winding paths throughout the land."
+	desc = "有些简陋，却照亮了这片土地上蜿蜒漫长的小路。"
 
 /obj/machinery/light/rogue/firebowl/church
-	desc = "A wide metal bowl mounted on a stand for a healthy roaring flame."
+	desc = "一个宽阔的金属火盆，架在底座上，燃起旺盛的火焰。"
 	icon_state = "churchfire1"
 	base_state = "churchfire"
 
@@ -67,11 +67,11 @@
 	base_state = "churchfire"
 	soundloop = null
 	status = LIGHT_BURNED
-	desc = "The fire is gone!"
+	desc = "火已经熄灭了！"
 
 /obj/machinery/light/rogue/firebowl/standing
-	name = "standing fire"
-	desc = "Wrought metal spun into a surprisingly stable stand for a large candle to sit upon."
+	name = "立式烛火"
+	desc = "锻打金属被塑造成一个出奇稳固的支架，用来托住大蜡烛。"
 	icon_state = "standing1"
 	base_state = "standing"
 	bulb_colour = "#ff9648"
@@ -85,19 +85,19 @@
 	icon_state = "standingb1"
 	base_state = "standingb"
 	bulb_colour = "#7b60f3"
-	desc = "Soft and blue like the moon's light."
+	desc = "柔和的蓝色，如同月光。"
 
 /obj/machinery/light/rogue/firebowl/standing/green
 	icon_state = "standingg1"
 	base_state = "standingg"
 	bulb_colour = "#8ee2a7"
-	desc = "Soft and green like... well, nothing you can really think of right now."
+	desc = "柔和的绿色……嗯，你一时也想不出像什么。"
 
 /obj/machinery/light/rogue/firebowl/standing/red
 	icon_state = "standingr1"
 	base_state = "standingr"
 	bulb_colour = "#f02929"
-	desc = "An unearthly red, wafting a faint scent of brimstone."
+	desc = "一种非尘世的赤红色，隐约飘来硫磺气味。"
 
 
 /obj/machinery/light/rogue/firebowl/standing/proc/knock_over() //use this later for jump impacts and shit
@@ -113,31 +113,31 @@
 		if(icon_state == "[base_state]over")
 			playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
 			if(HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
-				user.visible_message("<span class='warning'>[user] slams [src] with [user.p_their()] tail!</span>", \
-					"<span class='warning'>I slap [src] with my tail!</span>")
+				user.visible_message("<span class='warning'>[user]用[user.p_their()]尾巴猛抽[src]！</span>", \
+					"<span class='warning'>我用尾巴抽打[src]！</span>")
 			else
-				user.visible_message("<span class='warning'>[user] kicks [src]!</span>", \
-					"<span class='warning'>I kick [src]!</span>")
+				user.visible_message("<span class='warning'>[user]踢了[src]！</span>", \
+					"<span class='warning'>我踢了[src]！</span>")
 			return
 		if(prob(L.STASTR * 8))
 			playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
 			if(HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
-				user.visible_message("<span class='warning'>[user] slaps [src] with [user.p_their()] tail, toppling it!</span>", \
-					"<span class='warning'>I slam [src], toppling it!</span>")
+				user.visible_message("<span class='warning'>[user]用[user.p_their()]尾巴抽翻了[src]！</span>", \
+					"<span class='warning'>我猛抽[src]，把它掀翻了！</span>")
 			else
-				user.visible_message("<span class='warning'>[user] kicks over [src]!</span>", \
-					"<span class='warning'>I kick over [src]!</span>")
+				user.visible_message("<span class='warning'>[user]把[src]踢翻了！</span>", \
+					"<span class='warning'>我把[src]踢翻了！</span>")
 			burn_out()
 			knock_over()
 		else
 			playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
 			if(HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
-				user.visible_message("<span class='warning'>[user] slams [src] with [user.p_their()] tail!</span>", \
-					"<span class='warning'>I tailslam [src]!</span>")
+				user.visible_message("<span class='warning'>[user]用[user.p_their()]尾巴猛抽[src]！</span>", \
+					"<span class='warning'>我用尾巴猛抽[src]！</span>")
 
 /obj/machinery/light/rogue/campfire/fireplace
-	name = "fireplace"
-	desc = "A warm fire dances between a pile of half-burnt logs upon a bed of glowing embers."
+	name = "壁炉"
+	desc = "温暖的火焰在半燃的木柴与发光余烬之间跃动。"
 	icon_state = "wallfire1"
 	base_state = "wallfire"
 	light_outer_range = 4 //slightly weaker than a torch
@@ -151,7 +151,7 @@
 
 /obj/machinery/light/rogue/campfire/fireplace/attack_right(mob/user)
 	if(isliving(user) && on)
-		user.visible_message(span_warning("[user] snuffs [src]."))
+		user.visible_message(span_warning("[user]熄灭了[src]。"))
 		burn_out()
 		return TRUE
 	return ..()
@@ -164,14 +164,14 @@
 	var/mob/living/carbon/human/H = user
 
 	if(istype(H))
-		H.visible_message("<span class='info'>[H] warms [user.p_their()] hand over the fire.</span>")
+		H.visible_message("<span class='info'>[H]在火上暖了暖自己的手。</span>")
 
 		if(do_after(H, 15, target = src) && H.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT - 75)
 			H.adjust_bodytemperature(75)
 	return TRUE //fires that are on always have this interaction with lmb unless its a torch
 
 /obj/machinery/light/rogue/campfire/fireplace/inn
-	name = "grand fireplace"
+	name = "大壁炉"
 	healing_range = 6
 
 /obj/machinery/light/rogue/campfire/fireplace/crafted
@@ -190,8 +190,8 @@
 	bulb_colour = "#6e90ff"
 
 /obj/machinery/light/rogue/candle
-	name = "candles"
-	desc = "Tiny flames flicker to the slightest breeze and offer enough light to see."
+	name = "蜡烛"
+	desc = "微弱的火焰随风摇曳，提供足够的光亮让人看清周围。"
 	icon_state = "wallcandle1"
 	base_state = "wallcandle"
 	crossfire = FALSE
@@ -201,8 +201,8 @@
 	fueluse = 0
 
 /obj/machinery/light/rogue/candle/off
-	name = "candles"
-	desc = "Cold wax sticks in sad half-melted repose. All they need is a spark."
+	name = "蜡烛"
+	desc = "冰冷的蜡泪半融半凝，凄然静止。它们只缺一点火星。"
 	icon_state = "wallcandle0"
 	base_state = "wallcandle"
 	crossfire = FALSE
@@ -235,7 +235,7 @@
 
 /obj/machinery/light/rogue/candle/attack_hand(mob/user)
 	if(isliving(user) && on)
-		user.visible_message(span_warning("[user] snuffs [src]."))
+		user.visible_message(span_warning("[user]熄灭了[src]。"))
 		burn_out()
 		return TRUE //fires that are on always have this interaction with lmb unless its a torch
 	. = ..()
@@ -251,7 +251,7 @@
 	bulb_colour = "#7b60f3"
 	icon_state = "wallcandleb1"
 	base_state = "wallcandleb"
-	desc = "Tiny bluish flames flicker gently like the stars themselves."
+	desc = "细小的蓝色火焰轻轻闪烁，仿佛群星本身。"
 
 /obj/machinery/light/rogue/candle/blue/r
 	pixel_y = 0
@@ -265,7 +265,7 @@
 	bulb_colour = "#60f382"
 	icon_state = "wallcandleg1"
 	base_state = "wallcandleg"
-	desc = "Tiny greenish flames flicker with unearthly warmth."
+	desc = "细小的绿色火焰闪烁着非尘世的暖意。"
 
 /obj/machinery/light/rogue/candle/green/r
 	pixel_y = 0
@@ -279,7 +279,7 @@
 	bulb_colour = "#f02929"
 	icon_state = "wallcandler1"
 	base_state = "wallcandler"
-	desc = "Tiny red flames flicker hatefully in the dark."
+	desc = "细小的红色火焰在黑暗中带着恶意闪烁。"
 
 /obj/machinery/light/rogue/candle/red/r
 	pixel_y = 0
@@ -300,7 +300,7 @@
 	pixel_y = 0
 
 /obj/machinery/light/rogue/candle/floorcandle
-	name = "candles"
+	name = "蜡烛"
 	icon = 'icons/roguetown/items/lighting.dmi'
 	icon_state = "floorcandle1"
 	base_state = "floorcandle"
@@ -326,8 +326,8 @@
 	bulb_colour = "#ff13d8ff"
 
 /obj/machinery/light/rogue/torchholder
-	name = "sconce"
-	desc = "A wall-mounted fixture that allows a torch to illuminate the area while freeing the hands for other tasks."
+	name = "壁式火把架"
+	desc = "一个安装在墙上的装置，可将火把置于其上照亮周围，同时腾出双手从事其他工作。"
 	icon_state = "torchwall1"
 	var/torch_off_state = "torchwall0"
 	base_state = "torchwall"
@@ -427,11 +427,11 @@
 		if(torchy)
 			if(LR.on && !on)
 				if(torchy.fuel <= 0)
-					to_chat(user, "<span class='warning'>The mounted torch is burned out.</span>")
+					to_chat(user, "<span class='warning'>固定在上面的火把已经烧尽了。</span>")
 					return
 				else
 					torchy.spark_act()
-					user.visible_message("<span class='info'>[user] lights [src].</span>")
+					user.visible_message("<span class='info'>[user]点燃了[src]。</span>")
 					playsound(src.loc, 'sound/items/firelight.ogg', 100)
 					on = TRUE
 					update()
@@ -441,7 +441,7 @@
 			if(!LR.on && on)
 				if(LR.fuel > 0)
 					LR.spark_act()
-					user.visible_message("<span class='info'>[user] lights [LR] in [src].</span>")
+					user.visible_message("<span class='info'>[user]点燃了[src]中的[LR]。</span>")
 					user.update_inv_hands()
 		else
 			if(LR.on)
@@ -464,8 +464,8 @@
 	. = ..()
 
 /obj/machinery/light/rogue/chand
-	name = "chandelier"
-	desc = "A dazzling and resplendant array of candles held aloft by a dozen slender metal arms joined together and suspended from the ceiling."
+	name = "枝形吊灯"
+	desc = "十余根纤细金属臂托举着一簇耀眼华美的蜡烛，并将其悬挂于天花板下。"
 	icon_state = "chand1"
 	base_state = "chand"
 	icon = 'icons/roguetown/misc/tallwide.dmi'
@@ -482,15 +482,15 @@
 
 /obj/machinery/light/rogue/chand/attack_hand(mob/user)
 	if(isliving(user) && on)
-		user.visible_message("<span class='warning'>[user] snuffs [src].</span>")
+		user.visible_message("<span class='warning'>[user]熄灭了[src]。</span>")
 		burn_out()
 		return TRUE //fires that are on always have this interaction with lmb unless its a torch
 	. = ..()
 
 
 /obj/machinery/light/rogue/hearth
-	name = "hearth"
-	desc = "A hearth of stones carefully arranged to support a pan or a pot above a steady bed of embers."
+	name = "炉灶"
+	desc = "用石头精心砌成的炉灶，可将煎锅或炖锅稳稳地架在余烬之上。"
 	icon_state = "hearth1"
 	base_state = "hearth"
 	density = TRUE
@@ -527,22 +527,22 @@
 	if(attachment)
 		if(istype(attachment, /obj/item/cooking/pan))
 			if(food)
-				. += "There's \a [attachment.name] on it with \a [food.name] in it."
+				. += "上面有一个[attachment.name]，里面放着[food.name]。"
 			else
-				. += "There's \a [attachment.name] on it."
+				. += "上面有一个[attachment.name]。"
 		else if(istype(attachment, /obj/item/reagent_containers/glass/bucket/pot))
 			var/isboiling = attachment.reagents.chem_temp > MIN_STEW_TEMPERATURE
 			if(isboiling)
-				. += "There's \a [attachment.name] on it, it is boiling." // This is common shorthand for the contents don't nitpick
+				. += "上面有一个[attachment.name]，正在沸腾。" // This is common shorthand for the contents don't nitpick
 			else
-				. += "There's \a [attachment.name] on it. It is not boiling"
-		. += span_notice("Right click to start fanning the flame and make it cook faster.")
+				. += "上面有一个[attachment.name]，没有沸腾。"
+		. += span_notice("右键点击煽火，加快烹饪速度。")
 
 /obj/machinery/light/rogue/hearth/attack_right(mob/user)
 	var/datum/skill/craft/cooking/cs = user?.get_skill_level(/datum/skill/craft/cooking)
 	var/cooktime_divisor = get_cooktime_divisor(cs)
 	while(do_after(user, 2 SECONDS / cooktime_divisor, target = src))
-		to_chat(user, span_info("I fan the flame on [src].")) // Until line combine is on by default gotta do this to avoid spam
+		to_chat(user, span_info("我煽了煽 [src]的火焰。")) // Until line combine is on by default gotta do this to avoid spam
 		try_cook(cooktime_divisor)
 
 /obj/machinery/light/rogue/hearth/attackby(obj/item/W, mob/living/user, params)
@@ -562,22 +562,22 @@
 		if(istype(attachment, /obj/item/reagent_containers/glass/crucible))
 			var/obj/item/reagent_containers/glass/crucible/crucible = attachment
 			if(crucible.hot)
-				to_chat(user, span_warning("The crucible is too hot to add ingots! Wait for it to cool down."))
+				to_chat(user, span_warning("坩埚太烫了，无法放入锭！等它冷却下来。"))
 				return
 
 			if(istype(W, /obj/item/ingot/iron) || istype(W, /obj/item/ingot/steel))
 				if(crucible.get_total_ingots() >= crucible.max_ingots)
-					to_chat(user, span_warning("The crucible is full."))
+					to_chat(user, span_warning("坩埚已满。"))
 					return
 
-				user.visible_message(span_info("[user] places an ingot into the crucible."))
+				user.visible_message(span_info("[user]将一块锭放入坩埚中。"))
 				if(do_after(user, 10, target = src))
 					var/ingot_type = W.type
 					if(crucible.add_ingot(ingot_type, user) > 0)
 						qdel(W)
 				return
 		if(istype(W, /obj/item/reagent_containers/glass/bowl))
-			to_chat(user, "<span class='notice'>Remove the pot from the hearth first.</span>")
+			to_chat(user, "<span class='notice'>先把锅从炉灶上拿开。</span>")
 			return
 		if(istype(attachment, /obj/item/cooking/pan))
 			if(W.type in subtypesof(/obj/item/reagent_containers/food/snacks))
@@ -608,22 +608,22 @@
 				var/obj/item/reagent_containers/food/snacks/S = W
 				if(S.fat_yield)
 					if(pot.reagents.has_reagent(/datum/reagent/water))
-						to_chat(user, span_warning("You can't render fat in a pot with water!"))
+						to_chat(user, span_warning("你不能在有水的锅里炼油！"))
 						return
 					if(do_after(user, 2 SECONDS / cooktime_divisor, target = src))
-						user.visible_message(span_info("[user] melts [S] in the pot.</span>"))
+						user.visible_message(span_info("[user]在锅里融化[S]。"))
 						qdel(S)
 						pot.reagents.add_reagent(/datum/reagent/consumable/oil/tallow, S.fat_yield)
 						return
 				if(pot.reagents.has_reagent(/datum/reagent/consumable/oil/tallow) && S.deep_fried_type)
 					if(!pot.reagents.has_reagent(/datum/reagent/consumable/oil/tallow, OIL_CONSUMED))
-						to_chat(user, span_notice("Not enough tallow."))
+						to_chat(user, span_notice("油不够。"))
 						return
 					if(pot.reagents.has_reagent(/datum/reagent/water))
-						to_chat(user, span_warning("You can't deep fry in a pot with water!"))
+						to_chat(user, span_warning("你不能在有水的锅里油炸！"))
 						return
 					if(do_after(user, DEEP_FRY_TIME / cooktime_divisor, target = src))
-						user.visible_message(span_info("[user] deep fries [S] in the pot.</span>"))
+						user.visible_message(span_info("[user]在锅里油炸了[S]。"))
 						add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
 						new S.deep_fried_type(src.loc)
 						qdel(S)
@@ -633,13 +633,13 @@
 				for(var/I in R.inputs)
 					if(istype(W, I))
 						if(!pot.reagents.has_reagent(/datum/reagent/water, VOLUME_PER_STEW_COOK + VOLUME_PER_STEW_COOK_AFTER))
-							to_chat(user, span_notice("Not enough water."))
+							to_chat(user, span_notice("水不够。"))
 							return
 						if(pot.reagents.chem_temp < MIN_STEW_TEMPERATURE)
-							to_chat(user, span_notice("[pot] isn't boiling!</span>"))
+							to_chat(user, span_notice("[pot]还没沸腾！"))
 							return
 						if(do_after(user, 2 SECONDS / cooktime_divisor, target = src))
-							user.visible_message(span_info("[user] places [W] into the pot.</span>"))
+							user.visible_message(span_info("[user]把[W]放入锅中。"))
 							add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
 							qdel(W)
 							playsound(src.loc, 'sound/items/Fish_out.ogg', 20, TRUE)
@@ -695,7 +695,7 @@
 		if(on)
 			var/mob/living/carbon/human/H = user
 			if(istype(H))
-				H.visible_message("<span class='info'>[H] warms [user.p_their()] hand over the fire.</span>")
+				H.visible_message("<span class='info'>[H]在火边暖手。</span>")
 
 				if(do_after(H, 15, target = src) && H.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT - 75)
 					H.adjust_bodytemperature(75)
@@ -743,7 +743,7 @@
 
 /obj/machinery/light/rogue/hearth/onkick(mob/user)
 	if(isliving(user) && on)
-		user.visible_message(span_info("[user] snuffs [src]."))
+		user.visible_message(span_info("[user]踢灭了[src]。"))
 		burn_out()
 
 /obj/machinery/light/rogue/hearth/Destroy()
@@ -751,8 +751,8 @@
 	. = ..()
 
 /obj/machinery/light/rogue/hearth/mobilestove // thanks to Reen and Ppooch for their help on this. If any of this is slopcode, its my slopcode, not theirs. They only made improvements.
-	name = "mobile stove"
-	desc = "A portable bronze stovetop. The underside is covered in an esoteric pattern of small tubes. Whatever heats the hob is hidden inside the body of the device"
+	name = "便携炉灶"
+	desc = "一台便携式青铜炉面。底部布满玄奥的小管纹路，加热炉面的东西隐藏在装置内部。"
 	icon_state = "hobostove1"
 	base_state = "hobostove"
 	brightness = 4
@@ -794,7 +794,7 @@
 			boilloop.stop()
 	else
 		if(!on)
-			user.visible_message(span_notice("[user] begins packing up \the [src]."))
+			user.visible_message(span_notice("[user]开始收起[src]。"))
 			if(!do_after(user, 2 SECONDS, TRUE, src))
 				return
 			var/obj/item/mobilestove/new_mobilestove = new /obj/item/mobilestove(get_turf(src))
@@ -805,11 +805,11 @@
 		var/mob/living/carbon/human/H = user
 		if(!istype(user))
 			return
-		H.visible_message(span_notice("[user] begins packing up \the [src]. It's still hot!"))
+		H.visible_message(span_notice("[user]开始收起[src]。它还很烫！"))
 		if(!do_after(H, 40, target = src))
 			return
 		var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-		to_chat(H, span_warning("HOT! I burned myself!"))
+		to_chat(H, span_warning("好烫！我把自己烫伤了！"))
 		if(affecting && affecting.receive_damage( 0, 5 ))        // 5 burn damage
 			H.update_damage_overlays()
 		var/obj/item/mobilestove/new_mobilestove = new /obj/item/mobilestove(get_turf(src))
@@ -819,8 +819,8 @@
 		return
 
 /obj/item/mobilestove
-	name = "packed stove"
-	desc = "A portable bronze stovetop. The underside is covered in an esoteric pattern of small tubes. Whatever heats the hob is hidden inside the body of the device"
+	name = "收起的炉灶"
+	desc = "一台便携式青铜炉面。底部布满玄奥的小管纹路，加热炉面的东西隐藏在装置内部。"
 	icon = 'icons/roguetown/misc/lighting.dmi'
 	icon_state = "hobostovep"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -832,24 +832,24 @@
 	..()
 	var/turf/T = get_turf(loc)
 	if(!isfloorturf(T))
-		to_chat(user, span_warning("I need ground to plant this on!"))
+		to_chat(user, span_warning("我得把它放在地面上！"))
 		return
 	for(var/obj/A in T)
 		if(istype(A, /obj/structure))
-			to_chat(user, span_warning("I need some free space to deploy a [src] here!"))
+			to_chat(user, span_warning("这里需要留出一些空位才能展开[src]！"))
 			return
 		if(A.density && !(A.flags_1 & ON_BORDER_1))
-			to_chat(user, span_warning("There is already something here!</span>"))
+			to_chat(user, span_warning("这里已经有东西了！</span>"))
 			return
-	user.visible_message(span_notice("[user] begins placing \the [src] down on the ground."))
+	user.visible_message(span_notice("[user]开始把[src]放到地上。"))
 	if(do_after(user, 2 SECONDS, TRUE, src))
 		var/obj/machinery/light/rogue/hearth/mobilestove/new_mobilestove = new /obj/machinery/light/rogue/hearth/mobilestove(get_turf(src))
 		new_mobilestove.color = src.color
 		qdel(src)
 
 /obj/machinery/light/rogue/campfire
-	name = "campfire"
-	desc = "Oily smoke curls from a weak sputtering flame."
+	name = "篝火"
+	desc = "油腻的烟雾从微弱噼啪作响的火焰中卷起。"
 	icon_state = "badfire1"
 	base_state = "badfire"
 	density = FALSE
@@ -880,7 +880,7 @@
 			if(distance > healing_range || human.construct)
 				continue
 			if(!human.has_status_effect(stamina_status_effect))
-				to_chat(human, span_info("The warmth of the fire comforts me, affording me a short rest. I would need to lie down on a bed to get a better rest."))
+				to_chat(human, span_info("火焰的温暖安抚着我，让我得以短暂休息。若想休息得更好，我得躺到床上去。"))
 			human.apply_status_effect(stamina_status_effect)
 			human.add_stress(/datum/stressevent/campfire)
 			if(human.resting && !human.cmode)
@@ -895,13 +895,13 @@
 						break
 				if(valid_bed)
 					if(!human.has_status_effect(/datum/status_effect/buff/campfire))
-						to_chat(human, span_info("Settling in by the flames lifts the burdens of the week."))
+						to_chat(human, span_info("在火边安顿下来，仿佛卸下了一周的重担。"))
 					human.apply_status_effect(/datum/status_effect/buff/campfire)
 
 /obj/machinery/light/rogue/campfire/onkick(mob/user)
 	if(isliving(user) && on)
 		var/mob/living/L = user
-		L.visible_message("<span class='info'>[L] snuffs [src].</span>")
+		L.visible_message("<span class='info'>[L]熄灭了[src]。</span>")
 		burn_out()
 
 /obj/machinery/light/rogue/campfire/attack_hand(mob/user)
@@ -912,7 +912,7 @@
 	if(on)
 		var/mob/living/carbon/human/H = user
 		if(ishuman(H))
-			H.visible_message("<span class='info'>[H] warms [user.p_their()] hand near the fire.</span>")
+			H.visible_message("<span class='info'>[H]在火边暖了暖[user.p_their()]手。</span>")
 			if(H.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT - 75)
 				H.adjust_bodytemperature(75)
 			var/first_go = TRUE
@@ -924,14 +924,14 @@
 				H.apply_status_effect(/datum/status_effect/buff/healing/campfire, buff_strength)
 				H.add_stress(/datum/stressevent/campfire)
 				if(first_go)
-					to_chat(H, span_good("The warmth of the fire comforts me, affording me a short rest."))
+					to_chat(H, span_good("火焰的温暖安抚着我，让我得以稍作休息。"))
 					first_go = FALSE
 		return TRUE //fires that are on always have this interaction with lmb unless its a torch
 
 /obj/machinery/light/rogue/campfire/densefire
 	icon_state = "densefire1"
 	base_state = "densefire"
-	desc = "A ring of stones offers the fire enough protection from the wind to keep the dark at bay and the body warm."
+	desc = "一圈石头为火焰挡住了足够的风，让黑暗无法逼近，也让身体保持温暖。"
 	density = TRUE
 	layer = 2.8
 	brightness = 5
@@ -956,14 +956,14 @@
 
 
 /obj/machinery/light/rogue/campfire/pyre
-	name = "pyre"
+	name = "火刑柴堆"
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "pyre1"
 	base_state = "pyre"
 	brightness = 10
 	fueluse = 30 MINUTES
 	layer = BELOW_MOB_LAYER
-	buckleverb = "crucifie"
+	buckleverb = "绑上火刑柱"
 	can_buckle = 1
 	buckle_lying = 0
 	dir = NORTH
@@ -991,22 +991,22 @@
 //Prestidigitation wisps are fun to decorate with!
 
 /obj/effect/wisp
-	name = "will-o'-the-wisp"
-	desc = "A small, fiery ball of light made up of mystical energy."
+	name = "鬼火"
+	desc = "一团由神秘能量构成的微小火焰光球。"
 	light_outer_range =  4
 	light_color = "#3FBAFD"
 	icon = 'icons/roguetown/items/lighting.dmi'
 	icon_state = "wisp"
 
 /obj/effect/wisp/infernal
-	name = "Infernal Wisp"
-	desc = "An ominous manifestation of latent ambient magick"
+	name = "地狱鬼火"
+	desc = "潜伏于环境中的魔力所显现出的不祥化身。"
 	light_color = "#ff0008"
 	color = "#ff0008"
 
 /obj/effect/wisp/geothermal
-	name = "Odd Wisp"
-	desc = "A peculiar natural phenomena, seemingly related to the roiling lava below"
+	name = "奇异鬼火"
+	desc = "一种奇特的自然现象，似乎与下方翻涌的熔岩有关。"
 	light_color = "#ff5630"
 	color = "#ff5630"
 

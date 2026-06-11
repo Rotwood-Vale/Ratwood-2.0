@@ -1,6 +1,6 @@
 /obj/effect/decal/cleanable/sigil
-	name = "sigils"
-	desc = "Strange runics."
+	name = "印记"
+	desc = "奇异的符文痕迹。"
 	icon_state = "center"
 	icon = 'icons/effects/sigils.dmi'
 

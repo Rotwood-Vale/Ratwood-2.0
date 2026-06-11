@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/self/light
-	name = "Light"
-	desc = "Summons a condensed orb of light."
+	name = "照明术"
+	desc = "召唤一颗凝聚的光球。"
 	overlay_state = "light"
 	releasedrain = 50
 	chargetime = 1
@@ -15,7 +15,7 @@
 	cost = 1
 	miracle = FALSE
 
-	invocations = list("Evoca Lucem.") // Summon Light 
+	invocations = list("光辉，凝现。") // Summon Light 
 	invocation_type = "whisper" //can be none, whisper, emote and shout
 
 	var/obj/item/item
@@ -27,7 +27,7 @@
 		QDEL_NULL(item)
 	if(user.dropItemToGround(user.get_active_held_item()))
 		user.put_in_hands(make_item(), TRUE)
-		user.visible_message(span_info("An orb of light condenses in [user]'s hand!"), span_info("You condense an orb of pure light!"))
+		user.visible_message(span_info("一颗光球在[user]手中凝聚！"), span_info("你凝聚出一颗纯粹的光球！"))
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/light/Destroy()
@@ -42,8 +42,8 @@
 	return item
 
 /obj/item/flashlight/flare/light
-	name = "condensed light"
-	desc = "An orb of condensed light."
+	name = "凝聚光球"
+	desc = "一颗凝聚而成的光球。"
 	w_class = WEIGHT_CLASS_NORMAL
 	light_outer_range = 10
 	light_color = LIGHT_COLOR_WHITE

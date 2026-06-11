@@ -1,5 +1,5 @@
 /obj/item/clothing/mask
-	name = "mask"
+	name = "面罩"
 	icon = 'icons/obj/clothing/masks.dmi'
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_MASK
@@ -16,7 +16,7 @@
 	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
 		TOGGLE_BITFIELD(clothing_flags, VOICEBOX_DISABLED)
 		var/status = !CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED)
-		to_chat(user, span_notice("I turn the voice box in [src] [status ? "on" : "off"]."))
+		to_chat(user, span_notice("我将[src]里的语音盒[status ? "打开" : "关闭"]了。"))
 
 /obj/item/clothing/mask/equipped(mob/M, slot)
 	. = ..()
@@ -58,11 +58,11 @@
 		clothing_flags |= visor_flags
 		flags_inv |= visor_flags_inv
 		flags_cover |= visor_flags_cover
-		to_chat(user, span_notice("I push \the [src] back into place."))
+		to_chat(user, span_notice("我把[src]重新推回原位。"))
 		slot_flags = initial(slot_flags)
 	else
 		icon_state += "_up"
-		to_chat(user, span_notice("I push \the [src] out of the way."))
+		to_chat(user, span_notice("我把[src]拨到一边。"))
 		gas_transfer_coefficient = null
 		permeability_coefficient = null
 		clothing_flags &= ~visor_flags

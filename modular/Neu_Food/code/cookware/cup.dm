@@ -145,8 +145,8 @@
 
 
 /obj/item/reagent_containers/glass/cup/wooden
-	name = "wooden cup"
-	desc = "This cup whispers tales of drunken battles and feasts."
+	name = "木杯"
+	desc = "这只杯子低语着酒后斗殴与盛宴的传说。"
 	resistance_flags = FLAMMABLE
 	icon_state = "wooden"
 	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'

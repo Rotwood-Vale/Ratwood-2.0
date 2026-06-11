@@ -2,7 +2,7 @@
 
 
 /obj/effect/proc_holder/spell/invoked
-	name = "invoked spell"
+	name = "引导法术"
 	range = 7
 	selection_type = "range"
 	no_early_release = TRUE
@@ -63,7 +63,7 @@
 	var/goal = get_chargetime() //if we have no chargetime then we can freely cast (and no early release flag was not set)
 	if(no_early_release) //This is to stop half-channeled spells from casting as the repeated-casts somehow bypass into this function.
 		if(percentage_progress < 100 && charge_progress < goal)//Conditions for failure: a) not 100% progress, b) charge progress less than goal
-			to_chat(usr, span_warning("[name] was not finished charging! It fizzles."))
+			to_chat(usr, span_warning("[name]尚未完成蓄力！它就此溃散了。"))
 			revert_cast(caller)
 			return FALSE
 	if(perform(list(target), TRUE, user = ranged_ability_user))

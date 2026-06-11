@@ -1,21 +1,21 @@
 //Wonder recipes
 //NOTE: Wonders are named after their proper keys, the wonder structure handles that code
 /datum/crafting_recipe/roguetown/structure/wonder
-	name = "wonder"
+	name = "奇观"
 	result = /obj/structure/wonder
 	reqs = list(
 		/obj/item/bodypart = 2,
 		/obj/item/organ/stomach = 1,
 	)
-	verbage_simple = "construct"
-	verbage = "constructs"
+	verbage_simple = "构筑"
+	verbage = "构筑"
 	craftsound = 'sound/foley/Building-01.ogg'
 	skillcraft = null
 	always_availible = FALSE
 	subtype_reqs = TRUE
 
 /datum/crafting_recipe/roguetown/structure/wonder/first
-	name = "first wonder"
+	name = "第一奇观"
 	result = /obj/structure/wonder
 	reqs = list(
 		/obj/item/bodypart = 2,
@@ -23,7 +23,7 @@
 	)
 
 /datum/crafting_recipe/roguetown/structure/wonder/second
-	name = "second wonder"
+	name = "第二奇观"
 	result = /obj/structure/wonder
 	reqs = list(
 		/obj/item/bodypart = 2,
@@ -31,7 +31,7 @@
 	)
 
 /datum/crafting_recipe/roguetown/structure/wonder/third
-	name = "third wonder"
+	name = "第三奇观"
 	result = /obj/structure/wonder
 	reqs = list(
 		/obj/item/bodypart/head = 3,
@@ -40,7 +40,7 @@
 	)
 
 /datum/crafting_recipe/roguetown/structure/wonder/fourth
-	name = "fourth wonder"
+	name = "第四奇观"
 	result = /obj/structure/wonder
 	reqs = list(
 		/obj/item/organ/tongue = 4,
@@ -50,8 +50,8 @@
 
 //Wonder structure
 /obj/structure/wonder
-	name = "wonder"
-	desc = "What a disgusting thing, what type of maniac would make this!?"
+	name = "奇观"
+	desc = "真是个恶心的东西，究竟什么样的疯子才会做出这种玩意儿！？"
 	icon = 'icons/roguetown/maniac/creations.dmi'
 	icon_state = "creation1"
 	resistance_flags = INDESTRUCTIBLE
@@ -81,11 +81,11 @@
 			user.mind.forget_crafting_recipe(dream_master.recipe_progression[dream_master.current_wonder])
 		wonder_id = dream_master.current_wonder
 		if(wonder_id >= 4)
-			to_chat(user, span_userdanger("I must SUM the keys. I am WAKING up!"))
+			to_chat(user, span_userdanger("我必须把这些钥匙相加。我正在苏醒！"))
 			dream_master.agony(user)
 		key_num = LAZYACCESS(dream_master.num_keys, wonder_id)
 		key_text = LAZYACCESS(dream_master.key_nums, wonder_id)
-		name = "[key_text ? "[key_text] " : ""]Wonder"
+		name = "[key_text ? "[key_text] " : ""]奇观"
 		icon_state = "creation[clamp(wonder_id, 1, 4)]"
 		dream_master.current_wonder++
 		if(LAZYACCESS(dream_master.recipe_progression, dream_master.current_wonder))
@@ -96,7 +96,7 @@
 /obj/structure/wonder/examine(mob/user)
 	. = ..()
 	if(gazed_at && (user.mind?.has_antag_datum(/datum/antagonist/maniac) == dream_master))
-		. += span_danger("They have GAZED at my wonder!")
+		. += span_danger("他们已经凝视过我的奇观了！")
 	if(isobserver(user))
 		return
 	if(dream_master)
@@ -112,7 +112,7 @@
 			for(var/mob/living/carbon/human/other_victim in viewers - victim)
 				other_victim.blur_eyes(2)
 				if(prob(10))
-					to_chat(other_victim, span_userdanger("It is WONDERFUL!"))
+					to_chat(other_victim, span_userdanger("这实在太奇妙了！"))
 		else
 			if(!victim.mind || (victim.stat == DEAD))
 				continue

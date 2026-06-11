@@ -40,7 +40,7 @@
 				is_straight = FALSE
 				break
 		if(is_straight)
-			plays += list(list("name" = "Straight (1-6)", "score" = 1500, "dice" = dice_values.Copy()))
+			plays += list(list("name" = "顺子（1-6）", "score" = 1500, "dice" = dice_values.Copy()))
 			return plays
 
 	// Three pairs: exactly 6 dice forming three different pairs
@@ -50,7 +50,7 @@
 			if(counts[f] == 2)
 				pair_count++
 		if(pair_count == 3)
-			plays += list(list("name" = "Three Pairs", "score" = 750, "dice" = dice_values.Copy()))
+			plays += list(list("name" = "三对", "score" = 750, "dice" = dice_values.Copy()))
 			return plays
 
 	// N-of-a-kind for each face, plus singles for 1s and 5s
@@ -68,13 +68,13 @@
 			var/list/used = list()
 			for(var/i in 1 to n)
 				used += face
-			plays += list(list("name" = "[n]x [face]s", "score" = score, "dice" = used))
+			plays += list(list("name" = "[face]点[n]个", "score" = score, "dice" = used))
 		else
 			// Only 1s and 5s score as singles
 			if(face == 1)
-				plays += list(list("name" = "Single 1", "score" = 100, "dice" = list(1)))
+				plays += list(list("name" = "单个1", "score" = 100, "dice" = list(1)))
 			if(face == 5)
-				plays += list(list("name" = "Single 5", "score" = 50, "dice" = list(5)))
+				plays += list(list("name" = "单个5", "score" = 50, "dice" = list(5)))
 
 	return plays
 
@@ -128,44 +128,44 @@
 	if(!joiner || !joiner.client)
 		return
 	if(!joining)
-		to_chat(joiner, span_warning("The Farkle game has already started."))
+		to_chat(joiner, span_warning("法克尔已经开始了。"))
 		return
 
 	if(joiner in players)
 		// Already in - let them start early or leave
-		var/list/opts = list("Leave game")
+		var/list/opts = list("离开游戏")
 		if(players.len >= 2)
-			opts += "Start game now"
-		var/choice = input(joiner, "You are already in the lobby. ([players.len]/[max_players] players)", "Farkle") as null|anything in opts
-		if(choice == "Start game now")
+			opts += "立即开始"
+		var/choice = input(joiner, "你已经在大厅中了。([players.len]/[max_players] 名玩家)", "法克尔") as null|anything in opts
+		if(choice == "立即开始")
 			start_game()
-		else if(choice == "Leave game")
+		else if(choice == "离开游戏")
 			players -= joiner
-			game_bag.visible_message(span_notice("[joiner] left the pre-game lobby. ([players.len]/[max_players])"))
+			game_bag.visible_message(span_notice("[joiner]离开了准备大厅。([players.len]/[max_players])"))
 			if(!players.len)
 				cancel_game(joiner)
 		return
 
 	if(players.len >= max_players)
-		to_chat(joiner, span_warning("The Farkle game is full ([max_players]/[max_players])."))
+		to_chat(joiner, span_warning("法克尔人数已满（[max_players]/[max_players]）。"))
 		return
 
 	players += joiner
 	scores[joiner] = 0
-	game_bag.visible_message(span_notice("[joiner] joined the Farkle game! ([players.len]/[max_players] players)"))
+	game_bag.visible_message(span_notice("[joiner]加入了法克尔！([players.len]/[max_players] 名玩家)"))
 	if(players.len >= max_players)
 		start_game()
 
 
 // --- Cancel Game ---
 /datum/farkle_game/proc/cancel_game(mob/living/canceller)
-	game_bag.visible_message(span_warning("[canceller] has cancelled the Farkle game!"))
+	game_bag.visible_message(span_warning("[canceller]取消了法克尔！"))
 	game_bag.active_game = null
 	qdel(src)
 
 /datum/farkle_game/proc/leave_game(mob/living/leaver)
 	if(!(leaver in players))
-		to_chat(leaver, span_warning("You are not in this Farkle game."))
+		to_chat(leaver, span_warning("你不在这局法克尔中。"))
 		return
 
 	var/leaver_index = players.Find(leaver)
@@ -174,7 +174,7 @@
 	players -= leaver
 	scores -= leaver
 
-	game_bag.visible_message(span_notice("[leaver] leaves the Farkle game. ([players.len]/[max_players] players remain)"))
+	game_bag.visible_message(span_notice("[leaver]离开了法克尔。([players.len]/[max_players] 名玩家剩余)"))
 
 	if(!players.len)
 		cancel_game(leaver)
@@ -210,7 +210,7 @@
 	var/list/names = list()
 	for(var/mob/M in players)
 		names += "[M]"
-	game_bag.visible_message(span_notice("Farkle begins! First to [target_score] points wins. Players: [jointext(names, ", ")]. Good luck!"))
+	game_bag.visible_message(span_notice("法克尔开始！先到[target_score]分者获胜。玩家：[jointext(names, ", ")]。祝好运！"))
 	next_turn()
 
 
@@ -242,34 +242,34 @@
 	turn_token++
 	can_initiate_turn_roll = TRUE
 
-	game_bag.visible_message(span_notice("--- [active]'s turn [final_round ? "(FINAL ROUND)" : ""] | [get_score_display()] ---"))
-	to_chat(active, span_notice("It's your turn! Activate (Z) the dice bag to roll."))
+	game_bag.visible_message(span_notice("--- [active]的回合 [final_round ? "(最终轮)" : ""] | [get_score_display()] ---"))
+	to_chat(active, span_notice("轮到你了！激活（Z）骰袋来掷骰。"))
 
 
 // --- Player Interaction Entry Point ---
 
 /datum/farkle_game/proc/player_action(mob/living/user)
 	if(!(user in players))
-		to_chat(user, span_notice("Current scores: [get_score_display()]"))
+		to_chat(user, span_notice("当前分数：[get_score_display()]"))
 		return
 
 	if(busy)
-		to_chat(user, span_notice("Please wait a moment..."))
+		to_chat(user, span_notice("请稍等片刻……"))
 		return
 
 	if(user != current_player)
 		// Not their turn
-		input(user, "It's not your turn. Scores: [get_score_display()]", "Farkle") as null|anything in list("OK")
+		input(user, "还没轮到你。分数：[get_score_display()]", "法克尔") as null|anything in list("确定")
 		return
 	if(current_player_index < 1 || current_player_index > players.len)
-		to_chat(user, span_warning("Turn order is resyncing. Try again in a moment."))
+		to_chat(user, span_warning("回合顺序正在重新同步，稍后再试。"))
 		return
 	if(user != players[current_player_index])
-		to_chat(user, span_warning("It is not your turn yet."))
+		to_chat(user, span_warning("还没轮到你。"))
 		return
 
 	if(!can_initiate_turn_roll)
-		to_chat(user, span_notice("You have already rolled for this turn. Finish your turn prompts or wait for the next turn."))
+		to_chat(user, span_notice("这回合你已经掷过骰了。请完成本回合选择，或等待下回合。"))
 		return
 
 	can_initiate_turn_roll = FALSE
@@ -292,7 +292,7 @@
 	busy = TRUE
 
 	// Wind-up: shake animation + sound, then a short pause before revealing results
-	game_bag.visible_message(span_notice("[active] rattles the dice bag..."))
+	game_bag.visible_message(span_notice("[active]摇晃着骰袋……"))
 	playsound(game_bag, 'sound/items/cup_dice_roll.ogg', 75, TRUE)
 
 	// Pixel shake animation on the bag
@@ -307,11 +307,11 @@
 	var/list/rolled = list()
 	for(var/i in 1 to dice_to_roll)
 		rolled += rand(1, 6)
-	game_bag.visible_message(span_notice("[active] dumps the dice! ([dice_to_roll]d6): [format_big_roll(rolled, get_roll_color_for(active))]"))
+	game_bag.visible_message(span_notice("[active]倒出了骰子！([dice_to_roll]枚6面骰)：[format_big_roll(rolled, get_roll_color_for(active))]"))
 
 	// Check for Farkle: no scoring dice at all
 	if(!farkle_get_plays(rolled).len)
-		game_bag.visible_message(span_danger("<b>FARKLE!</b> [active] has no scoring dice and loses [turn_score] accumulated points!"))
+		game_bag.visible_message(span_danger("<b>法克尔！</b> [active]没有掷出任何计分骰，失去了累计的 [turn_score] 分！"))
 		busy = FALSE
 		if(expected_turn_token != turn_token)
 			return
@@ -335,12 +335,12 @@
 		for(var/list/play in available)
 			menu += "[play["name"]] (+[play["score"]] pts)"
 		if(!first_pick)
-			menu += "Done picking"
+			menu += "完成选择"
 
 		var/list/rem_str = list()
 		for(var/v in remaining)
 			rem_str += "[v]"
-		var/chosen = input(active, "Remaining dice: [jointext(rem_str, " - ")]\nTurn total so far: [turn_score + turn_so_far] pts\nPick a scoring combination to keep:", "Farkle") as null|anything in menu
+		var/chosen = input(active, "剩余骰子：[jointext(rem_str, " - ")]\n本回合当前累计：[turn_score + turn_so_far] 分\n选择要保留的计分组合：", "法克尔") as null|anything in menu
 
 		// Null = cancelled/disconnected - safety valve
 		if(!chosen)
@@ -351,7 +351,7 @@
 
 		null_count = 0
 
-		if(chosen == "Done picking")
+		if(chosen == "完成选择")
 			break
 
 		// Match the selection to a play
@@ -384,29 +384,29 @@
 
 	// Hot dice: all 6 used up - player may roll all 6 again
 	if(!dice_to_roll)
-		game_bag.visible_message(span_notice("HOT DICE! [active] used all their dice! Rolling all 6 again. (Turn: [turn_score] pts)"))
+		game_bag.visible_message(span_notice("热骰！[active]已经用掉所有骰子！重新掷全部 6 颗。（本回合：[turn_score] 分）"))
 		dice_to_roll = 6
 
 	// --- Bank or keep rolling ---
 	var/list/options = list(
-		"Bank [turn_score] pts (total would be: [scores[active] + turn_score])",
-		"Keep rolling ([dice_to_roll] dice)"
+		"存分 [turn_score] 分（总分将变为：[scores[active] + turn_score]）",
+		"继续掷骰（[dice_to_roll] 颗）"
 	)
 
-	var/decision = input(active, "Turn so far: [turn_score] pts | Score if banked: [scores[active] + turn_score]\nWhat do you do?", "Farkle") as null|anything in options
+	var/decision = input(active, "本回合当前累计：[turn_score] 分 | 若存分则总分为：[scores[active] + turn_score]\n你要怎么做？", "法克尔") as null|anything in options
 
-	if(!decision || decision == "Bank [turn_score] pts (total would be: [scores[active] + turn_score])")
+	if(!decision || decision == "存分 [turn_score] 分（总分将变为：[scores[active] + turn_score]）")
 		// Bank the points
 		if(expected_turn_token != turn_token)
 			busy = FALSE
 			return
 		scores[active] += turn_score
-		game_bag.visible_message(span_notice("[active] banks [turn_score] pts! [active] now has [scores[active]] total."))
+		game_bag.visible_message(span_notice("[active]存下了 [turn_score] 分！[active]现在总共有 [scores[active]] 分。"))
 
 		if(scores[active] >= target_score && !final_round)
 			winner_mob = active
 			final_round = TRUE
-			game_bag.visible_message(span_notice("[active] reached [scores[active]] points! All remaining players get ONE final turn to beat it!"))
+			game_bag.visible_message(span_notice("[active]达到了 [scores[active]] 分！其余所有玩家都将获得最后一次超越它的机会！"))
 
 		busy = FALSE
 		can_initiate_turn_roll = FALSE
@@ -436,11 +436,11 @@
 			top = scores[M]
 			champion = M
 
-	game_bag.visible_message(span_notice("--- FARKLE GAME OVER ---<br>Final scores: [get_score_display()]"))
+	game_bag.visible_message(span_notice("--- 法克尔结束 ---<br>最终比分：[get_score_display()]"))
 	if(champion)
-		game_bag.visible_message(span_green("<b>[champion] wins with [top] points! Congratulations!</b>"))
+		game_bag.visible_message(span_green("<b>[champion]以 [top] 分获胜！恭喜！</b>"))
 	else
-		game_bag.visible_message(span_notice("It's a tie!"))
+		game_bag.visible_message(span_notice("平局！"))
 
 	game_bag.active_game = null
 	qdel(src)
@@ -451,40 +451,40 @@
 // to the existing /obj/item/storage/pill_bottle/dice/farkle type.
 
 /obj/item/storage/pill_bottle/dice/farkle
-	desc = "Six dice for the game of Farkle. Activate in hand (Z) to start or join a game!"
+	desc = "六颗用于法克尔的骰子。手持激活（Z）即可开始或加入游戏！"
 	var/datum/farkle_game/active_game
 	var/static/farkle_rules_text = {"<div style='padding:8px;font-family:Verdana,sans-serif;'>
-	<h2 style='text-align:center;margin:0 0 6px 0;'>Farkle</h2>
+	<h2 style='text-align:center;margin:0 0 6px 0;'>法克尔</h2>
 <br>
-<b>Objective:</b> Be the player with the highest score over 10,000.<br>
+<b>目标：</b>成为总分超过 10000 后分数最高的玩家。<br>
 <br>
-- Single 1s and 5s are worth points.<br>
-- Other numbers count if you get three or more of the same number in a single roll.<br>
-- Other combinations of numbers are worth points if you get them in a single roll. Note: Dice from multiple rolls cannot be added together. For example, if you set aside one 5 (50 points) on your first roll and two 5s (100 points) on your second roll, you have 150 points. You cannot add them together to make three 5s (500 points).<br>
-- Some scoring dice must be removed after every roll.<br>
-- When it's your turn, place the six Dice in the Shaker Cup and roll 'em. Any Dice that roll off the playing area are rolled again.<br>
-- After each roll, set aside Dice that are worth points and roll the rest of them. You must remove at least one Die after each roll and keep a running total of your points for that turn.<br>
-- If you're lucky enough to set aside all six Dice, you can roll them all again to build your running total.<br>
-- If you cannot set aside any Dice after a roll, that's a Farkle. You lose your running total of points for that turn and play passes to the left. A Farkle could happen on your first roll or when you roll the remaining Dice.<br>
+ - 单独的 1 和 5 可以计分。<br>
+ - 其他点数只有在一次掷骰中出现三颗或更多相同点数时才计分。<br>
+ - 某些特殊组合也能计分，但必须来自同一次掷骰。注意：不同次掷骰的骰子不能合并成更高组合。例如你第一次留下一颗 5（50 分），第二次又留两颗 5（100 分），你总共只有 150 分，不能把它们合并算作三颗 5（500 分）。<br>
+ - 每次掷骰后都必须移除至少一组可计分骰。<br>
+ - 轮到你时，把六颗骰子放进骰杯里摇出结果；若有骰子滚出游玩区域，则重新掷出。<br>
+ - 每次掷骰后，保留能计分的骰子，并继续掷剩下的骰子。你每次都至少要拿走一颗可计分骰，并累计本回合分数。<br>
+ - 如果你幸运地把六颗骰子都用于计分，就可以重新掷满六颗骰子，继续累积本回合分数。<br>
+ - 如果一次掷骰后没有任何骰子可以计分，就会发生“法克尔”。你将失去本回合累计的全部分数，回合交给下一位玩家。法克尔可能发生在第一次掷骰，也可能发生在掷剩余骰子时。<br>
 <br>
-<b>Winning:</b> When a player's accumulated score is 10,000 or more, each of the other players has one last turn to beat that total. The player with the highest score wins.<br>
+<b>胜利条件：</b>当有玩家累计达到 10000 分或以上时，其余玩家各有最后一个回合尝试超越该分数，最终由总分最高者获胜。<br>
 <br>
-<b>Scoring:</b><br>
-Single 1 = 100<br>
-Single 5 = 50<br>
-Three 1s = 300<br>
-Three 2s = 200<br>
-Three 3s = 300<br>
-Three 4s = 400<br>
-Three 5s = 500<br>
-Three 6s = 600<br>
-Four of any number = 1,000<br>
-Five of any number = 2,000<br>
-Six of any number = 3,000<br>
-1-6 straight = 1,500<br>
-Three pairs = 1,500<br>
-Four of any number with a pair = 1,500<br>
-Two triplets = 2,500
+<b>计分表：</b><br>
+单个 1 = 100<br>
+单个 5 = 50<br>
+三个 1 = 300<br>
+三个 2 = 200<br>
+三个 3 = 300<br>
+三个 4 = 400<br>
+三个 5 = 500<br>
+三个 6 = 600<br>
+任意四条 = 1000<br>
+任意五条 = 2000<br>
+任意六条 = 3000<br>
+1-6 顺子 = 1500<br>
+三对 = 1500<br>
+四条加一对 = 1500<br>
+双三条 = 2500
 </div>"}
 
 /obj/item/storage/pill_bottle/dice/farkle/proc/show_rules(mob/living/user)
@@ -500,63 +500,63 @@ Two triplets = 2,500
 			can_show_roll = TRUE
 
 	if(!active_game)
-		menu += "Start Game"
+		menu += "开始游戏"
 	else if(active_game.joining)
 		if(!(user in active_game.players))
-			menu += "Start Game"
+			menu += "开始游戏"
 	else if(can_show_roll)
-		menu += "Roll Dice"
+		menu += "掷骰"
 
 	if(menu.len)
 		menu += " "
-	menu += "Rules"
+	menu += "规则"
 	menu += "  "
 	if(active_game && (user in active_game.players))
-		menu += "Leave Game"
+		menu += "离开游戏"
 		menu += "   "
-	menu += "End Game"
+	menu += "结束游戏"
 
-	var/choice = input(user, "Select an option.", "Farkle Dice") as null|anything in menu
+	var/choice = input(user, "选择一个选项。", "法克尔骰子") as null|anything in menu
 
 	if(!choice)
 		return
 
-	if(choice == "Rules")
+	if(choice == "规则")
 		show_rules(user)
 		return
 
-	if(choice == "End Game")
+	if(choice == "结束游戏")
 		if(active_game)
 			active_game.cancel_game(user)
 		else
-			to_chat(user, span_notice("No Farkle game is currently running."))
+			to_chat(user, span_notice("当前没有正在进行的法克尔。"))
 		return
 
-	if(choice == "Leave Game")
+	if(choice == "离开游戏")
 		if(active_game)
 			active_game.leave_game(user)
 		else
-			to_chat(user, span_notice("No Farkle game is currently running."))
+			to_chat(user, span_notice("当前没有正在进行的法克尔。"))
 		return
 
-	if(choice == "Roll Dice")
+	if(choice == "掷骰")
 		if(!active_game)
-			to_chat(user, span_notice("No Farkle game is currently running."))
+			to_chat(user, span_notice("当前没有正在进行的法克尔。"))
 			return
 		if(!(user == active_game.current_player && active_game.can_initiate_turn_roll))
-			to_chat(user, span_notice("You cannot roll right now."))
+			to_chat(user, span_notice("你现在不能掷骰。"))
 			return
 		if(active_game.joining)
-			to_chat(user, span_notice("At least two players must join, then start the game before rolling."))
+			to_chat(user, span_notice("至少需要两名玩家加入并开始游戏后，才能掷骰。"))
 		else
 			active_game.player_action(user)
 		return
 
-	if(choice != "Start Game")
+	if(choice != "开始游戏")
 		return
 
 	if(!active_game)
-		var/count = input(user, "How many players?\n(2 to 4 players)", "Farkle") as null|anything in list(2, 3, 4)
+		var/count = input(user, "需要几名玩家？\n（2 到 4 名玩家）", "法克尔") as null|anything in list(2, 3, 4)
 		if(!count)
 			return
 
@@ -567,7 +567,7 @@ Two triplets = 2,500
 		new_game.try_join(user)
 
 		if(count > 1)
-			src.visible_message(span_notice("[user] is starting a Farkle game! [count - 1] more player(s) needed. Activate (Z) the dice bag to join!"))
+			src.visible_message(span_notice("[user]正在发起一局法克尔！还需要 [count - 1] 名玩家。手持激活（Z）骰袋即可加入！"))
 		return
 
 	if(active_game.joining)

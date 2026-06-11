@@ -1,9 +1,9 @@
 /datum/language/orcish
-	name = "Orcish"
-	desc = "(Spoken with ,o) The harsh and powerful language of the orcish tribes, spoken with strength and authority. A tongue of warriors and conquerors."
-	speech_verb = "grumbles"
-	ask_verb = "asks"
-	exclaim_verb = "shouts"
+	name = "兽人语"
+	desc = "(用 ,o 说)兽人部族那种粗砺而有力的语言，以力量与威势发声。这是战士与征服者的舌音。"
+	speech_verb = "低吼"
+	ask_verb = "问道"
+	exclaim_verb = "咆哮"
 	key = "o"
 	space_chance = 66
 	default_priority = 80

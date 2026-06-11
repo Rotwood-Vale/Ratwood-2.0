@@ -5,7 +5,7 @@
 */
 
 /obj/item/clothing/wall_grab
-	name = "wall"
+	name = "墙壁"
 	item_state = "grabbing"
 	icon_state = "grabbing"
 	icon = 'icons/mob/roguehudgrabs.dmi'
@@ -28,8 +28,8 @@
 	. |= FALL_NO_MESSAGE
 
 /obj/item/rogueweapon/huntingknife/idagger/harpy_talons
-	name = "talons"
-	desc = "Harpy talons. Birds of prey and all..."
+	name = "利爪"
+	desc = "鹰身女妖的利爪。毕竟是猛禽嘛……"
 	experimental_inhand = FALSE
 	icon = 'icons/roguetown/weapons/misc32.dmi'
 	icon_state = "harpy_talon" // coder kitbash 5 minute sprite ugh
@@ -59,7 +59,7 @@
 /obj/item/rogueweapon/huntingknife/idagger/harpy_talons/process()
 	if(obj_integrity >= max_integrity) 
 		STOP_PROCESSING(SSobj, src)
-		src.visible_message(span_notice("[src] are in a much better shape now, enough resting!"), vision_distance = 1)
+		src.visible_message(span_notice("[src]现在恢复得好多了，休息得也够久了！"), vision_distance = 1)
 		return
 	else if(world.time > src.last_repair + src.repair_time)
 		src.last_repair = world.time
@@ -69,10 +69,10 @@
 ///obj/item/rogueweapon/huntingknife/equipped(mob/user, slot, initial = FALSE) // idk if I should remove the sound, I think it's p neat even if a bit gamey
 
 /datum/intent/wing/cut
-	name = "cut"
+	name = "切割"
 	icon_state = "incut"
-	attack_verb = list("cuts", "slashes")
-	animname = "cut"
+	attack_verb = list("切开", "挥砍")
+	animname = "切割"
 	blade_class = BCLASS_CUT
 	hitsound = list('sound/combat/hits/bladed/smallslash (1).ogg', 'sound/combat/hits/bladed/smallslash (2).ogg', 'sound/combat/hits/bladed/smallslash (3).ogg')
 	penfactor = 0
@@ -82,9 +82,9 @@
 	item_d_type = "slash"
 
 /datum/intent/wing/shred
-	name = "shred"
+	name = "撕裂"
 	icon_state = "inchop"
-	attack_verb = list("shreds")
+	attack_verb = list("撕裂")
 	animname = "chop"
 	blade_class = BCLASS_CHOP
 	hitsound = list('sound/combat/hits/bladed/smallslash (1).ogg', 'sound/combat/hits/bladed/smallslash (2).ogg', 'sound/combat/hits/bladed/smallslash (3).ogg')
@@ -95,9 +95,9 @@
 	item_d_type = "slash"
 
 /datum/intent/wing/grab
-	name = "talon grab"
+	name = "利爪擒拿"
 	icon_state = "ingrab"
-	attack_verb = list("digs", "impales")
+	attack_verb = list("钩入", "贯穿")
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
 	penfactor = 90
 	clickcd = 15
@@ -106,9 +106,9 @@
 	blade_class = BCLASS_PICK
 
 /datum/intent/wing/pick
-	name = "talon pick"
+	name = "利爪穿刺"
 	icon_state = "inpick"
-	attack_verb = list("stabs", "impales")
+	attack_verb = list("刺击", "贯穿")
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
 	penfactor = 75
 	clickcd = 14
@@ -160,7 +160,7 @@
 					target.grippedby(user, FALSE)
 				*/
 				if(user.pulling)
-					to_chat(user, span_bloody("I am carrying [target] with my talons!! Ha ha ha!!"))
+					to_chat(user, span_bloody("我正用利爪抓着[target]！！哈哈哈！！"))
 					var/obj/item/grabbing/I = user.get_inactive_held_item()
 					if(istype(I, /obj/item/grabbing/))
 						I.icon_state = null
@@ -172,7 +172,7 @@
 		return ..()
 
 /obj/item/harpy_leg
-	name = "harpy's leg"
+	name = "鹰身女妖之腿"
 	item_state = "grabbing"
 	icon_state = "grabbing"
 	icon = 'icons/mob/roguehudgrabs.dmi'

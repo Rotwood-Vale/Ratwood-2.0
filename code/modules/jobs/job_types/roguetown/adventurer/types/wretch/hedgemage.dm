@@ -1,7 +1,7 @@
 // Hedge Mage, a pure mage adventurer sidegrade to Necromancer without the Necromancer free spells and forced patron. More spellpoints, otherwise mostly the same.
 /datum/advclass/wretch/hedgemage
-	name = "Hedge Mage"
-	tutorial = "They reject your genius, they cast you out, they call you unethical. They do not understand the SACRIFICES you must make. But it does not matter anymore, your power eclipse any of those fools, save for the Court Magos themselves. Show them true magic. Why do I have an eyepatch?"
+	name = "野法师"
+	tutorial = "他们否定你的天才，他们将你逐出，他们指责你不讲伦理。他们根本不懂你必须付出怎样的牺牲。可这已经无所谓了，除了那些宫廷大法师之外，你的力量早已凌驾于那群蠢货之上。让他们见识真正的魔法吧。至于我为什么戴着眼罩？"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/wretch/hedgemage
@@ -63,24 +63,24 @@
 		wretch_select_bounty(H)
 
 	var/staffs = list(
-		"ronts-focused staff",
-		"blortz-focused staff",
-		"saffira-focused staff",
-		"gemerald-focused staff",
-		"amethyst-focused staff",
-		"toper-focused staff",
+		"ronts 系法杖",
+		"blortz 系法杖",
+		"saffira 系法杖",
+		"gemerald 系法杖",
+		"amethyst 系法杖",
+		"toper 系法杖",
 	)
-	var/staffchoice = input(H, H, "Choose your staff", "Available staffs") as anything in staffs
+	var/staffchoice = input(H, H, "选择你的法杖", "可选法杖") as anything in staffs
 	switch(staffchoice)
-		if("ronts-focused staff")
+		if("ronts 系法杖")
 			backr = /obj/item/rogueweapon/woodstaff/ruby
-		if("blortz-focused staff")
+		if("blortz 系法杖")
 			backr = /obj/item/rogueweapon/woodstaff/quartz
-		if("saffira-focused staff")
+		if("saffira 系法杖")
 			backr = /obj/item/rogueweapon/woodstaff/sapphire
-		if("gemerald-focused staff")
+		if("gemerald 系法杖")
 			backr = /obj/item/rogueweapon/woodstaff/emerald
-		if("amethyst-focused staff")
+		if("amethyst 系法杖")
 			backr = /obj/item/rogueweapon/woodstaff/amethyst
-		if("toper-focused staff")
+		if("toper 系法杖")
 			backr = /obj/item/rogueweapon/woodstaff/toper

@@ -1,7 +1,7 @@
 
 /obj/effect/proc_holder/spell/invoked/blade_burst
-	name = "Blade Burst"
-	desc = "Summon a storm of arcyne force in an area, wounding anything in that location after a delay."
+	name = "刃爆术"
+	desc = "在一片区域中召出奥术刃潮，片刻后伤及其中的一切。"
 	cost = 3
 	range = 7
 	xp_gain = TRUE
@@ -18,7 +18,7 @@
 	associated_skill = /datum/skill/magic/arcane
 	overlay_state = "blade_burst"
 	spell_tier = 2 // AOE, but this is essential for PVE
-	invocations = list("Erumpere Gladios!")
+	invocations = list("刃潮，爆开！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_METAL
 	glow_intensity = GLOW_INTENSITY_HIGH
@@ -39,8 +39,8 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "stab"
 	dir = NORTH
-	name = "rippling arcyne energy"
-	desc = "Get out of the way!"
+	name = "翻涌的奥术刃流"
+	desc = "快躲开！"
 	randomdir = FALSE
 	duration = 1 SECONDS
 	layer = MASSIVE_OBJ_LAYER
@@ -70,14 +70,14 @@
 			continue
 		for(var/mob/living/L in affected_turf.contents)
 			if(L.anti_magic_check())
-				visible_message(span_warning("The blades dispel when they near [L]!"))
+				visible_message(span_warning("那些魔刃一靠近 [L] 就消散了！"))
 				playsound(get_turf(L), 'sound/magic/magic_nulled.ogg', 100)
 				qdel(src)
 				continue
 			play_cleave = TRUE
 			L.adjustBruteLoss(damage)
 			playsound(affected_turf, "genslash", 80, TRUE)
-			to_chat(L, "<span class='userdanger'>You're cut by arcyne force!</span>")
+			to_chat(L, "<span class='userdanger'>我被奥术之力化成的利刃割伤了！</span>")
 
 	if(play_cleave)
 		playsound(T, 'sound/combat/newstuck.ogg', 80, TRUE, soundping = TRUE)

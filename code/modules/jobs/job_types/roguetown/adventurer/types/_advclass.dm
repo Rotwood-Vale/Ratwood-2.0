@@ -3,7 +3,7 @@
 	var/examine_name			// Optional. Different name shown when examining (defaults to name if not set)
 	var/list/classes
 	var/outfit
-	var/tutorial = "Choose me!"
+	var/tutorial = "选我！"
 	var/list/allowed_sexes
 	var/list/allowed_races = RACES_ALL_KINDS
 	var/list/disallowed_races = null
