@@ -11,6 +11,7 @@ GLOBAL_LIST_INIT(custom_learnable_spells, list(
 	/obj/effect/proc_holder/spell/invoked/group_giants_strength,
 	/obj/effect/proc_holder/spell/invoked/group_leap,
 	/obj/effect/proc_holder/spell/invoked/group_flight,
+	/obj/effect/proc_holder/spell/invoked/harmless_dismemberment,
 	/obj/effect/proc_holder/spell/invoked/projectile/mini_magic_missile,
 	/obj/effect/proc_holder/spell/invoked/pain,
 	/obj/effect/proc_holder/spell/invoked/small_bet,

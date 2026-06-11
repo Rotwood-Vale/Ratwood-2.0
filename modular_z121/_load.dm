@@ -4,6 +4,7 @@
 #include "spells/arcane/flight.dm"
 #include "spells/arcane/group_buffs.dm"
 #include "spells/arcane/group_mindlink.dm"
+#include "spells/arcane/harmless_dismemberment.dm"
 #include "spells/arcane/mini_magic_missile.dm"
 #include "spells/arcane/moonlight_greatsword_spells.dm"
 #include "spells/arcane/pain.dm"
