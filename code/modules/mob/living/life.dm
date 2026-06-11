@@ -163,6 +163,7 @@
 	return can_hibernate()
 
 /mob/living/proc/wake_from_hibernation(duration = HIBERNATION_WAKE_GRACE_TIME)
+	hibernating = FALSE
 	hibernation_pending_since = 0
 	hibernation_wake_until = max(hibernation_wake_until, world.time + duration)
 

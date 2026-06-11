@@ -10,6 +10,7 @@ SUBSYSTEM_DEF(mobs)
 	var/alive_mobs = 0
 	var/hibernating_mobs = 0
 	var/list/active_z_map
+	var/full_recheck = FALSE
 
 /datum/controller/subsystem/mobs/stat_entry()
 	..("A:[alive_mobs]/[GLOB.mob_living_active_list.len] H:[hibernating_mobs]")
@@ -54,8 +55,10 @@ SUBSYSTEM_DEF(mobs)
 		alive_mobs = 0
 		hibernating_mobs = 0
 		active_z_map = build_active_z_map()
+		src.full_recheck = !(src.times_fired % max(round(HIBERNATION_REVALIDATE_TIME / wait), 1))
 	var/list/currentrun = src.currentrun
 	var/list/active_z = src.active_z_map
+	var/full_recheck = src.full_recheck
 	var/times_fired = src.times_fired
 
 	while(currentrun.len)
@@ -73,7 +76,22 @@ SUBSYSTEM_DEF(mobs)
 		if(L.stat == DEAD)
 			continue
 
+		if(L.hibernating)
+			if(!full_recheck && !L.client && !L.ckey)
+				if(ishuman(L))
+					var/mob/living/carbon/human/sleeper = L
+					if(!sleeper.clients_in_range)
+						hibernating_mobs++
+						continue
+				else
+					var/turf/sleeper_turf = L.loc
+					if(isturf(sleeper_turf) && active_z && sleeper_turf.z <= active_z.len && !active_z[sleeper_turf.z])
+						hibernating_mobs++
+						continue
+			L.hibernating = FALSE
+
 		if(L.should_hibernate(active_z))
+			L.hibernating = TRUE
 			hibernating_mobs++
 			continue
 
@@ -93,6 +111,7 @@ SUBSYSTEM_DEF(mobs_dead)
 	var/dead_mobs = 0
 	var/hibernating_mobs = 0
 	var/list/active_z_map
+	var/full_recheck = FALSE
 
 /datum/controller/subsystem/mobs_dead/stat_entry()
 	..("D:[dead_mobs]/[GLOB.mob_living_dead_list.len] H:[hibernating_mobs]")
@@ -105,9 +124,11 @@ SUBSYSTEM_DEF(mobs_dead)
 		dead_mobs = 0
 		hibernating_mobs = 0
 		active_z_map = SSmobs.build_active_z_map()
+		src.full_recheck = !(src.times_fired % max(round(HIBERNATION_REVALIDATE_TIME / wait), 1))
 
 	var/list/currentrun = src.currentrun
 	var/list/active_z = src.active_z_map
+	var/full_recheck = src.full_recheck
 
 	while(currentrun.len)
 		var/mob/living/L = currentrun[currentrun.len]
@@ -124,7 +145,16 @@ SUBSYSTEM_DEF(mobs_dead)
 		if(L.stat != DEAD)
 			continue
 
+		if(L.hibernating)
+			if(!full_recheck && !L.client && !L.ckey)
+				var/turf/sleeper_turf = L.loc
+				if(isturf(sleeper_turf) && active_z && sleeper_turf.z <= active_z.len && !active_z[sleeper_turf.z])
+					hibernating_mobs++
+					continue
+			L.hibernating = FALSE
+
 		if(L.should_hibernate(active_z))
+			L.hibernating = TRUE
 			hibernating_mobs++
 			continue
 

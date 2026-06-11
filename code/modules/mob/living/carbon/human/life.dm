@@ -24,7 +24,7 @@
 	if (notransform)
 		return
 
-	if(should_hibernate(SSmobs.active_z_map))
+	if(!client && mode == NPC_AI_SLEEP)
 		return
 
 	. = ..()

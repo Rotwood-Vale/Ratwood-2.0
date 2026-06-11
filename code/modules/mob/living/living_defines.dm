@@ -8,6 +8,7 @@
 	
 	var/resize = 1 //Badminnery resize
 	var/ignore_hibernation = FALSE
+	var/hibernating = FALSE
 	var/hibernation_pending_since = 0
 	var/hibernation_wake_until = 0
 	/// Cached bodypart state used by the hibernation predicate.

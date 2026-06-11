@@ -73,6 +73,8 @@
 	if(client)
 		if(!ai_when_client)
 			return
+	if(mode == NPC_AI_SLEEP)
+		return
 	START_PROCESSING(SShumannpc,src)
 
 /mob/living/carbon/human/proc/check_mouth_grabbed()
@@ -952,6 +954,7 @@
 /mob/living/carbon/human/proc/on_client_enter(datum/source, atom/target)
 	SIGNAL_HANDLER
 	clients_in_range = TRUE
+	hibernating = FALSE
 	if(mode == NPC_AI_SLEEP)
 		mode = NPC_AI_IDLE
 

@@ -68,6 +68,7 @@
 	if(was_dead == is_dead)
 		return
 
+	hibernating = FALSE
 	if(is_dead)
 		GLOB.alive_mob_list -= src
 		GLOB.dead_mob_list |= src
