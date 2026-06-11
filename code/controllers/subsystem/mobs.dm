@@ -76,8 +76,17 @@ SUBSYSTEM_DEF(mobs)
 		if(active_z && !L.client && !L.ckey && !L.ignore_hibernation)
 			var/turf/L_turf = get_turf(L)
 			if(L_turf && L_turf.z <= active_z.len && !active_z[L_turf.z])
-				hibernating_mobs++
-				continue
+				if(L.can_hibernate())
+					L.hibernation_pending_since = 0
+					hibernating_mobs++
+					continue
+				if(!L.hibernation_pending_since)
+					L.hibernation_pending_since = world.time
+				else if(world.time - L.hibernation_pending_since >= HIBERNATION_FAILSAFE_TIME)
+					L.hibernation_failsafe()
+					L.hibernation_pending_since = 0
+			else
+				L.hibernation_pending_since = 0
 
 		L.Life(seconds, times_fired)
 		alive_mobs++

@@ -996,8 +996,20 @@
 			mode = NPC_AI_IDLE
 		return TRUE
 
-	mode = NPC_AI_SLEEP
+	if(mode == NPC_AI_IDLE && is_calm())
+		mode = NPC_AI_SLEEP
 	return FALSE
+
+/mob/living/carbon/human/proc/awaiting_deaggro_despawn()
+	return del_on_deaggro && last_aggro_loss && world.time < last_aggro_loss + del_on_deaggro + 10 SECONDS
+
+/mob/living/carbon/human/is_calm()
+	return NPC_AI_IS_CALM(mode) && !target && !awaiting_deaggro_despawn()
+
+/mob/living/carbon/human/hibernation_failsafe()
+	if(mode == NPC_AI_OFF)
+		return
+	back_to_idle()
 
 /mob/living/carbon/human/Moved()
 	. = ..()

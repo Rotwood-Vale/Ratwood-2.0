@@ -114,6 +114,19 @@
 	if(istype(loc, /turf/open/water))
 		handle_inwater(loc)
 
+/mob/living/proc/can_hibernate()
+	if(ignore_hibernation)
+		return FALSE
+	if(stat == DEAD)
+		return TRUE
+	return is_calm()
+
+/mob/living/proc/is_calm()
+	return TRUE
+
+/mob/living/proc/hibernation_failsafe()
+	return
+
 /mob/living/proc/handle_random_events(additional = 0)
 	//random painstun
 	if(!stat && !HAS_TRAIT(src, TRAIT_NOPAINSTUN))

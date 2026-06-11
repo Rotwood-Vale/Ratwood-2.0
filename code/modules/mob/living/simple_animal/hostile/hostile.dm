@@ -482,6 +482,12 @@ GLOBAL_VAR_INIT(hostile_ai_canattack_newplayer_rejects, 0)
 	walk(src, 0)
 	LoseAggro()
 
+/mob/living/simple_animal/hostile/is_calm()
+	return !target
+
+/mob/living/simple_animal/hostile/hibernation_failsafe()
+	LoseTarget()
+
 /mob/living/simple_animal/hostile/proc/revalidate_target_on_faction_change()
 	if(!target || !isliving(target))
 		return

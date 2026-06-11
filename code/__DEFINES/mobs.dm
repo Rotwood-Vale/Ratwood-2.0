@@ -261,6 +261,11 @@
 #define NPC_AI_FLEE		5
 #define NPC_AI_SLEEP    6
 
+#define NPC_AI_CALM_MODES ((1 << NPC_AI_OFF) | (1 << NPC_AI_IDLE) | (1 << NPC_AI_SLEEP))
+#define NPC_AI_IS_CALM(M) ((1 << (M)) & NPC_AI_CALM_MODES)
+
+#define HIBERNATION_FAILSAFE_TIME (3 MINUTES)
+
 //determines if a mob can smash through it
 #define ENVIRONMENT_SMASH_NONE			0
 #define ENVIRONMENT_SMASH_STRUCTURES	(1<<0) 	//crates, lockers, ect

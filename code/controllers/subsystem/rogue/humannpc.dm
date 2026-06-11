@@ -30,6 +30,11 @@ SUBSYSTEM_DEF(humannpc)
 	set waitfor = FALSE
 	if(thing.ai_currently_active)
 		return // Already running from another tick, don't do another action!
+	var/list/active_z = SSmobs.active_z_map
+	if(active_z && !thing.client && !thing.ckey && thing.can_hibernate())
+		var/turf/thing_turf = get_turf(thing)
+		if(thing_turf && thing_turf.z <= active_z.len && !active_z[thing_turf.z])
+			return
 	thing.ai_currently_active = TRUE
 	. = thing.process_ai()
 	thing.ai_currently_active = FALSE
