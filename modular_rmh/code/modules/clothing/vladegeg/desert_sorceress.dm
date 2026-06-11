@@ -1,6 +1,6 @@
 /obj/item/clothing/suit/roguetown/shirt/desert_sorceress
-	name = "desert sorceress top"
-	desc = "A revealing silk-and-linen top worn by desert sorceresses, designed to keep the body cool while allowing unrestricted movement and spellcasting."
+	name = "沙漠女术士上衣"
+	desc = "一件由丝绸与亚麻制成的清凉上衣，为沙漠女术士所穿，既能散热，也不妨碍行动与施法。"
 	icon = 'modular_rmh/icons/clothing/vladegeg/desert_sorceress.dmi'
 	mob_overlay_icon = 'modular_rmh/icons/clothing/vladegeg/onmob/desert_sorceress.dmi'
 	icon_state = "top"
@@ -11,8 +11,8 @@
 	sleeved = null
 
 /obj/item/clothing/under/roguetown/loincloth/desert_sorceress
-	name = "desert sorceress skirt"
-	desc = "A light, flowing skirt of wrapped cloth favored by desert sorceresses, offering minimal protection but excellent freedom of movement."
+	name = "沙漠女术士裙"
+	desc = "一条轻盈飘逸的裹布裙，深受沙漠女术士喜爱，防护有限，但行动极为自如。"
 	icon = 'modular_rmh/icons/clothing/vladegeg/desert_sorceress.dmi'
 	mob_overlay_icon = 'modular_rmh/icons/clothing/vladegeg/onmob/desert_sorceress.dmi'
 	icon_state = "skirt"
@@ -22,8 +22,8 @@
 	sleeved = null
 
 /obj/item/clothing/head/roguetown/desert_sorceress
-	name = "desert sorceress hood"
-	desc = "A thin desert hood worn by sorceresses to shield against sun and sand while leaving the face and eyes unobstructed."
+	name = "沙漠女术士兜帽"
+	desc = "一顶轻薄的沙漠兜帽，供女术士遮挡烈日与风沙，同时不妨碍面部和视线。"
 	icon = 'modular_rmh/icons/clothing/vladegeg/desert_sorceress.dmi'
 	mob_overlay_icon = 'modular_rmh/icons/clothing/vladegeg/onmob/desert_sorceress.dmi'
 	flags_inv = HIDEEARS| HIDEFACE | HIDEHAIR
@@ -33,7 +33,7 @@
 //CRAFTING
 
 /datum/crafting_recipe/roguetown/sewing/deserts_top
-	name = "desert sorceress top"
+	name = "沙漠女术士上衣"
 	reqs = list(
 		/obj/item/natural/cloth = 2,
 		/obj/item/natural/fibers = 1)
@@ -41,7 +41,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/deserts_skirt
-	name = "desert sorceress skirt"
+	name = "沙漠女术士裙"
 	result = /obj/item/clothing/under/roguetown/loincloth/desert_sorceress
 	reqs = list(
 		/obj/item/natural/cloth = 2,
@@ -49,7 +49,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/deserts_hood
-	name = "desert sorceress hood"
+	name = "沙漠女术士兜帽"
 	result = /obj/item/clothing/head/roguetown/desert_sorceress
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
@@ -58,13 +58,13 @@
 //LOADOUT
 
 /datum/loadout_item/deserts_top
-	name = "desert sorceress top"
+	name = "沙漠女术士上衣"
 	path = /obj/item/clothing/suit/roguetown/shirt/desert_sorceress
 
 /datum/loadout_item/deserts_skirt
-	name = "desert sorceress skirt"
+	name = "沙漠女术士裙"
 	path = /obj/item/clothing/under/roguetown/loincloth/desert_sorceress
 
 /datum/loadout_item/deserts_hood
-	name = "desert sorceress hood"
+	name = "沙漠女术士兜帽"
 	path = /obj/item/clothing/head/roguetown/desert_sorceress

@@ -1,7 +1,7 @@
 /obj/item/clothing/suit/roguetown/shirt/leo_robe
 	slot_flags = ITEM_SLOT_SHIRT | ITEM_SLOT_ARMOR
-	name = "leopard robe"
-	desc = "An exquisite silky robe with a leopard pattern."
+	name = "豹纹长袍"
+	desc = "一件带有豹纹花样的精致丝质长袍。"
 	body_parts_covered = CHEST|GROIN|VITALS
 	icon = 'modular_rmh/icons/clothing/vladegeg/tig.dmi'
 	mob_overlay_icon = 'modular_rmh/icons/clothing/vladegeg/onmob/tig.dmi'
@@ -35,7 +35,7 @@
 //CRAFTING
 
 /datum/crafting_recipe/roguetown/sewing/leo_robe
-	name = "leopard robe"
+	name = "豹纹长袍"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/leo_robe)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 2,
@@ -47,9 +47,9 @@
 //LOADOUT
 
 /datum/loadout_item/leo_robe
-	name = "leopard robe"
+	name = "豹纹长袍"
 	path = /obj/item/clothing/suit/roguetown/shirt/leo_robe
 
 /datum/loadout_item/leo_robe_leopard
-	name = "leopard robe (leopard colored)"
+	name = "豹纹长袍（豹纹配色）"
 	path = /obj/item/clothing/suit/roguetown/shirt/leo_robe/leopard

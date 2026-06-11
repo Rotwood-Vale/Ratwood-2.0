@@ -1,6 +1,6 @@
 /obj/item/clothing/suit/roguetown/shirt/undershirt/blouse
-	name = "blouse"
-	desc = "A finely tailored blouse made from soft, lightweight fabric, with delicate buttons and subtly decorated cuffs."
+	name = "女式衬衫"
+	desc = "一件剪裁精致的女式衬衫，由柔软轻盈的布料制成，配有精巧纽扣与低调装饰的袖口。"
 	icon_state = "blouse"
 	icon = 'modular_rmh/icons/clothing/vladegeg/formal.dmi'
 	mob_overlay_icon = 'modular_rmh/icons/clothing/vladegeg/onmob/formal.dmi'
@@ -8,8 +8,8 @@
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 
 /obj/item/clothing/under/roguetown/skirt/knee
-	name = "knee-high skirt"
-	desc = "A fitted skirt tailored to follow the line of the legs, narrowing toward the hem."
+	name = "及膝裙"
+	desc = "一条贴合腿部线条裁制的合身裙摆，向下逐渐收窄至裙边。"
 	icon = 'modular_rmh/icons/clothing/vladegeg/formal.dmi'
 	mob_overlay_icon = 'modular_rmh/icons/clothing/vladegeg/onmob/formal.dmi'
 	icon_state = "skirt"
@@ -25,7 +25,7 @@
 //CRAFTING
 
 /datum/crafting_recipe/roguetown/sewing/blouse
-	name = "blouse"
+	name = "女式衬衫"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/undershirt/blouse)
 	reqs = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 2,
@@ -33,7 +33,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/skirt_knee
-	name = "knee-high skirt"
+	name = "及膝裙"
 	result = list(/obj/item/clothing/under/roguetown/skirt/knee)
 	reqs = list(/obj/item/natural/cloth = 1,
 				/obj/item/natural/fibers = 2)
@@ -42,7 +42,7 @@
 	sellprice = 10
 
 /datum/crafting_recipe/roguetown/sewing/skirt_knee_colored
-	name = "knee-high skirt (colorable)"
+	name = "及膝裙（可染色）"
 	result = list(/obj/item/clothing/under/roguetown/skirt/knee/colored)
 	reqs = list(/obj/item/natural/cloth = 1,
 				/obj/item/natural/fibers = 2)
@@ -53,13 +53,13 @@
 //LOADOUT
 
 /datum/loadout_item/blouse
-	name = "blouse"
+	name = "女式衬衫"
 	path = /obj/item/clothing/suit/roguetown/shirt/undershirt/blouse
 
 /datum/loadout_item/skirt_knee
-	name = "knee-high skirt"
+	name = "及膝裙"
 	path = /obj/item/clothing/under/roguetown/skirt/knee
 
 /datum/loadout_item/skirt_knee_colored
-	name = "knee-high skirt (colorable)"
+	name = "及膝裙（可染色）"
 	path = /obj/item/clothing/under/roguetown/skirt/knee/colored

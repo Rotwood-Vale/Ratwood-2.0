@@ -1,6 +1,6 @@
 /obj/item/clothing/suit/roguetown/shirt/dress/gen/nightgown
-	name = "nightgown"
-	desc = "An elegant and enticing nightgown, made for comfort and allure."
+	name = "睡裙"
+	desc = "一件优雅而诱人的睡裙，为舒适与魅力而制。"
 	body_parts_covered = null
 	flags_inv = HIDECROTCH|HIDEBOOB
 	slot_flags = ITEM_SLOT_SHIRT | ITEM_SLOT_ARMOR
@@ -14,7 +14,7 @@
 //CRAFTING
 
 /datum/crafting_recipe/roguetown/sewing/nightgown
-	name = "nightgown"
+	name = "睡裙"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/dress/gen/nightgown)
 	reqs = list(/obj/item/natural/cloth = 4,
 				/obj/item/natural/fibers = 2)
@@ -24,5 +24,5 @@
 //LOADOUT
 
 /datum/loadout_item/nightgown
-	name = "nightgown"
+	name = "睡裙"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/gen/nightgown

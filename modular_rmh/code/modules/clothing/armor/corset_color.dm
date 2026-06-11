@@ -6,7 +6,7 @@
 //CRAFTING
 
 /datum/crafting_recipe/roguetown/leather/corset_colored
-	name = "colorable corset"
+	name = "可染色束身胸衣"
 	result = /obj/item/clothing/suit/roguetown/armor/corset/colored
 	reqs = list(/obj/item/natural/hide/cured = 1,
 				/obj/item/natural/fibers = 1)
@@ -17,5 +17,5 @@
 //LOADOUT
 
 /datum/loadout_item/corset_colored
-	name = "colorable corset"
+	name = "可染色束身胸衣"
 	path = /obj/item/clothing/suit/roguetown/armor/corset/colored

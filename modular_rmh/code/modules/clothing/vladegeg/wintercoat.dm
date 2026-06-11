@@ -1,6 +1,6 @@
 /obj/item/clothing/suit/roguetown/armor/gambeson/winter_coat
-	name = "warm winter coat"
-	desc = "A thick, well-crafted winter coat designed to retain heat and protect against harsh cold while remaining comfortable for daily wear."
+	name = "保暖冬衣"
+	desc = "一件厚实且做工精良的冬衣，旨在锁住热量、抵御严寒，同时仍适合日常穿着。"
 	icon_state = "wintercoat"
 	item_state = "wintercoat"
 	icon = 'modular_rmh/icons/clothing/vladegeg/wintercoat.dmi'
@@ -13,7 +13,7 @@
 //CRAFTING
 
 /datum/crafting_recipe/roguetown/leather/winter_coat
-	name = "warm winter coat"
+	name = "保暖冬衣"
 	result = /obj/item/clothing/suit/roguetown/armor/gambeson/winter_coat
 	reqs = list(/obj/item/natural/hide/cured = 1,/obj/item/natural/fur = 2)
 	craftdiff = 2
@@ -21,6 +21,6 @@
 //LOADOUT
 
 /datum/loadout_item/winter_coat
-	name = "warm winter coat"
+	name = "保暖冬衣"
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/winter_coat
 	triumph_cost = 3

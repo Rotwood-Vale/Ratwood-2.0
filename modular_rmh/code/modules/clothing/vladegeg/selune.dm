@@ -1,6 +1,6 @@
 /obj/item/clothing/suit/roguetown/shirt/robe/selune
-	name = "moon robe"
-	desc = "A moon-silver robe."
+	name = "月之长袍"
+	desc = "一件月银色长袍。"
 	icon_state = "selune"
 	icon = 'modular_rmh/icons/clothing/vladegeg/selune.dmi'
 	mob_overlay_icon = 'modular_rmh/icons/clothing/vladegeg/onmob/selune.dmi'
@@ -10,7 +10,7 @@
 //CRAFTING
 
 /datum/crafting_recipe/roguetown/sewing/selune
-	name = "moon robe"
+	name = "月之长袍"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/robe/selune)
 	reqs = list(/obj/item/natural/cloth = 2)
 	craftdiff = 2
@@ -18,5 +18,5 @@
 //LOADOUT
 
 /datum/loadout_item/selune
-	name = "moon robe"
+	name = "月之长袍"
 	path = /obj/item/clothing/suit/roguetown/shirt/robe/selune

@@ -1,6 +1,6 @@
 /obj/item/clothing/suit/roguetown/shirt/dress/courtesan
-	name = "courtesan dress"
-	desc = "A radiant yellow silk dress, fitted at the waist and flowing below. Light and elegant."
+	name = "交际花礼裙"
+	desc = "一件明艳的黄色丝绸长裙，腰身贴合，裙摆垂坠。轻盈而优雅。"
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 	icon_state = "dress"
@@ -12,7 +12,7 @@
 //CRAFTING
 
 /datum/crafting_recipe/roguetown/sewing/courtesan
-	name = "courtesan dress"
+	name = "交际花礼裙"
 	result = /obj/item/clothing/suit/roguetown/shirt/dress/courtesan
 	reqs = list(/obj/item/natural/cloth = 4,
 				/obj/item/natural/fibers = 2)
@@ -23,5 +23,5 @@
 //LOADOUT
 
 /datum/loadout_item/dress/courtesan
-	name = "Courtesan Dress"
+	name = "交际花礼裙"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/courtesan
