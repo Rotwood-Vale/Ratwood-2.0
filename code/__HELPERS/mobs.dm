@@ -454,12 +454,10 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(progbar)
 		qdel(progbar)
 
-/proc/is_species(A, species_datum)
-	. = FALSE
-	if(ishuman(A))
-		var/mob/living/carbon/human/H = A
-		if(H.dna && istype(H.dna.species, species_datum))
-			. = TRUE
+/proc/is_species(mob/living/carbon/human/human, species_datum)
+	if(ishuman(human))
+		return istype(human.dna?.species, species_datum)
+	return FALSE
 
 /proc/spawn_atom_to_turf(spawn_type, target, amount, admin_spawn=FALSE, list/extra_args)
 	var/turf/T = get_turf(target)
