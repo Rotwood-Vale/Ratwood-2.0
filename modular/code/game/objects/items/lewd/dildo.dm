@@ -1,6 +1,6 @@
 /obj/item/dildo
-	name = "unfinished dildo"
-	desc = "You have to finish it first."
+	name = "未完成的假阳具"
+	desc = "你得先把它做完。"
 	icon = 'modular/icons/obj/lewd/dildo.dmi'
 	icon_state = "unfinished"
 	item_state = "dildo"
@@ -20,7 +20,7 @@
 
 /obj/item/dildo/New()
 	. = ..()
-	name = "unfinished [dildo_material] dildo"
+	name = "未完成的[dildo_material == "wooden" ? "木制" : dildo_material == "iron" ? "铁制" : dildo_material == "copper" ? "铜制" : dildo_material == "steel" ? "钢制" : dildo_material == "bronze" ? "青铜制" : dildo_material == "silver" ? "银制" : dildo_material == "golden" ? "金制" : dildo_material == "blacksteel" ? "黑钢制" : dildo_material]假阳具"
 
 /obj/item/dildo/attack_self(mob/living/user)
 	. = ..()
@@ -33,14 +33,14 @@
 	if(!can_custom)
 		return FALSE
 	if(src && !user.incapacitated() && in_range(user,src))
-		var/shape_choice = input(user, "Choose a shape for your dildo.","Dildo Shape") as null|anything in list("knotted", "human", "flared")
+		var/shape_choice = input(user, "为你的假阳具选择形状。","假阳具形状") as null|anything in list("打结", "人形", "喇叭口")
 		if(src && shape_choice && !user.incapacitated() && in_range(user,src))
-			dildo_type = shape_choice
+			dildo_type = shape_choice == "打结" ? "knotted" : shape_choice == "人形" ? "human" : "flared"
 	update_appearance()
 	if(src && !user.incapacitated() && in_range(user,src))
-		var/size_choice = input(user, "Choose a size for your dildo.","Dildo Size") as null|anything in list("small", "medium", "big")
+		var/size_choice = input(user, "为你的假阳具选择尺寸。","假阳具尺寸") as null|anything in list("小型", "中型", "大型")
 		if(src && size_choice && !user.incapacitated() && in_range(user,src))
-			dildo_size = size_choice
+			dildo_size = size_choice == "小型" ? "small" : size_choice == "中型" ? "medium" : "big"
 			switch(dildo_size)
 				if("small")
 					pleasure = 4
@@ -53,13 +53,13 @@
 
 /obj/item/dildo/proc/update_appearance()
 	icon_state = "dildo_[dildo_type]_[dildo_size]"
-	name = "[dildo_size] [dildo_type] [dildo_material] dildo"
-	desc = "To quench the woman's thirst."
+	name = "[dildo_size == "small" ? "小型" : dildo_size == "medium" ? "中型" : "大型"][dildo_type == "knotted" ? "打结" : dildo_type == "human" ? "人形" : "喇叭口"][(dildo_material == "wooden") ? "木制" : (dildo_material == "iron") ? "铁制" : (dildo_material == "copper") ? "铜制" : (dildo_material == "steel") ? "钢制" : (dildo_material == "bronze") ? "青铜制" : (dildo_material == "silver") ? "银制" : (dildo_material == "golden") ? "金制" : (dildo_material == "blacksteel") ? "黑钢制" : dildo_material]假阳具"
+	desc = "用来纾解欲火。"
 	can_custom = FALSE
 
 /obj/item/dildo/examine()
 	. = ..()
-	. += "[span_notice("It can be attached onto most belts and chastity devices.")]"
+	. += "[span_notice("它可以装到大多数腰带和贞操装置上。")]"
 
 /obj/item/dildo/afterattack(atom/target, mob/user, proximity_flag, click_parameters)  // lets you mount the dildo directly onto a chastity device or belt by clicking on the mob wearing it with the dildo in hand
 	. = ..()
@@ -70,13 +70,13 @@
 	if(!istype(device) || device.attached_toy || is_attached_to_belt)
 		return
 	if(!get_location_accessible(H, BODY_ZONE_PRECISE_GROIN))
-		to_chat(user, span_warning("[H]'s groin is not accessible!"))
+		to_chat(user, span_warning("[H]的腹股沟部位无法接触！"))
 		return
 	if(!user.transferItemToLoc(src, null))
-		to_chat(user, span_warning("\The [src] is stuck to your hand!"))
+		to_chat(user, span_warning("[src]粘在你的手上了！"))
 		return
 	if(device.attach_toy(src, user))
-		user.visible_message(span_warning("[user] equips \the [src] onto [H]'s [device]."))
+		user.visible_message(span_warning("[user]把[src]装到了[H]的[device]上。"))
 
 /obj/item/dildo/proc/do_silver_check(mob/living/victim)
 	if(!is_silver || !HAS_TRAIT(victim, TRAIT_SILVER_WEAK))
@@ -85,11 +85,11 @@
 	var/datum/component/silverbless/blesscomp = GetComponent(/datum/component/silverbless)
 	if(blesscomp?.is_blessed)
 		if(!victim.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder))
-			to_chat(victim, span_danger("Silver rebukes my presence! My vitae smolders, and my powers wane!"))
+			to_chat(victim, span_danger("银器在排斥我的存在！我的命髓在闷燃，力量也在衰退！"))
 		victim.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
 	else
 		if(!victim.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
-			to_chat(victim, span_danger("Blessed silver rebukes my presence! These fires are lashing at my very soul!"))
+			to_chat(victim, span_danger("受祝圣的银器在排斥我的存在！这火焰正鞭笞着我的灵魂！"))
 		victim.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder)
 	victim.ignite_mob()
 

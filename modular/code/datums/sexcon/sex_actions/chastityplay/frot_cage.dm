@@ -1,5 +1,5 @@
 /datum/sex_action/chastityplay/frot_cage
-	name = "Frot with their chastity device"
+	name = "与他们的贞操装置磨蹭"
 	user_sex_part =	SEX_PART_COCK
 	target_sex_part = SEX_PART_COCK
 
@@ -29,9 +29,9 @@
 
 /datum/sex_action/chastityplay/frot_cage/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(HAS_TRAIT(target, TRAIT_CHASTITY_SPIKED))
-		user.visible_message(span_warning("[user] eases [user.p_their()] cock against the outer face of [target]'s spiked [get_chastity_device_name(target)], finding the edges carefully."))
+		user.visible_message(span_warning("[user]小心地把阴茎贴上[target]带刺的[get_chastity_device_name(target)]外侧，谨慎摸索着边缘。"))
 		return
-	user.visible_message(span_warning("[user] presses [user.p_their()] cock flush against the face of [target]'s [get_chastity_device_name(target)]."))
+	user.visible_message(span_warning("[user]把阴茎紧紧压在[target]的[get_chastity_device_name(target)]正面。"))
 
 /datum/sex_action/chastityplay/frot_cage/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU))
@@ -39,7 +39,7 @@
 
 	if(HAS_TRAIT(target, TRAIT_CHASTITY_SPIKED))
 		play_chastity_impact_sound(target, 'sound/combat/hits/bladed/genstab (1).ogg', 40, 45)
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] drags [user.p_their()] cock across [target]'s spiked [get_chastity_device_name(target)] — each stroke on the outside forces the inward spikes across [target.p_their()] skin..."))
+		user.visible_message(user.sexcon.spanify_force("[user][user.sexcon.get_generic_force_adjective()]把阴茎拖过[target]带刺的[get_chastity_device_name(target)]外侧，每一次外部摩擦都会让内侧尖刺刮过[target]的皮肤..."))
 		user.sexcon.outercourse_noise(target, TRUE)
 		user.sexcon.perform_sex_action(user, 0.8, 0.4, TRUE)
 		user.sexcon.perform_sex_action(target, 0.8, 3.2, TRUE)
@@ -51,7 +51,7 @@
 			target.sexcon.ejaculate()
 		return
 	play_chastity_impact_sound(target, list('sound/combat/hits/onmetal/grille (1).ogg', 'sound/combat/hits/onmetal/grille (2).ogg'), 35, 35)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] slides [user.p_their()] cock along the length of [target]'s [get_chastity_device_name(target)], hips rolling into every pass..."))
+	user.visible_message(user.sexcon.spanify_force("[user][user.sexcon.get_generic_force_adjective()]让阴茎沿着[target]的[get_chastity_device_name(target)]来回滑动，每一次蹭过都伴随着腰胯起伏..."))
 	user.sexcon.outercourse_noise(target, TRUE)
 	user.sexcon.perform_sex_action(user, 1.2, 0, TRUE)
 	user.sexcon.perform_sex_action(target, 1.4, 1, TRUE)
@@ -62,7 +62,7 @@
 		target.sexcon.ejaculate()
 
 /datum/sex_action/chastityplay/frot_cage/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] rolls [user.p_their()] hips back and breaks contact with [target]'s [get_chastity_device_name(target)]."))
+	user.visible_message(span_warning("[user]向后收回腰胯，与[target]的[get_chastity_device_name(target)]分开。"))
 
 /datum/sex_action/chastityplay/frot_cage/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.sexcon.finished_check())

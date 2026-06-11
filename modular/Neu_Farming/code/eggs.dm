@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/food/snacks/egg
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
-	name = "egg"
-	desc = "A raw egg."
+	name = "蛋"
+	desc = "一颗生蛋。"
 	icon_state = "egg"
 	dropshrink = 0.8
 	list_reagents = list(/datum/reagent/consumable/eggyolk = 5)
@@ -27,7 +27,7 @@
 		var/obj/O = new /obj/effect/decal/cleanable/food/egg_smudge(T)
 		O.pixel_x = rand(-8,8)
 		O.pixel_y = rand(-8,8)
-		visible_message("<span class='warning'>[H] crushes [src] underfoot.</span>")
+		visible_message("<span class='warning'>[H]一脚踩碎了[src]。</span>")
 		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/egg/attackby(obj/item/I, mob/living/user, params)

@@ -1,5 +1,5 @@
 /datum/sex_action/chastityplay/force_cage_blowjob
-    name = "Force them onto your cage"
+    name = "强迫他们贴上你的贞操笼"
     require_grab = TRUE
     stamina_cost = 1.0
     category = SEX_CATEGORY_PENETRATE
@@ -24,10 +24,10 @@
     return TRUE
 
 /datum/sex_action/chastityplay/force_cage_blowjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(span_warning("[user] grabs [target] by the back of the head and shoves [target.p_their()] face into [user.p_their()] [get_chastity_device_name(user)]!"))
+    user.visible_message(span_warning("[user]抓住[target]的后脑，把[target]的脸猛地按进[get_chastity_device_name(user)]里！"))
 
 /datum/sex_action/chastityplay/force_cage_blowjob/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] holds [target]'s face hard against [user.p_their()] [get_chastity_device_name(user)], [target.p_their()] nose and mouth mashed into the metal..."))
+    user.visible_message(user.sexcon.spanify_force("[user][user.sexcon.get_generic_force_adjective()]把[target]的脸死死压在[get_chastity_device_name(user)]上，口鼻都被挤进了冰冷金属之间..."))
     user.sexcon.oralcourse_noise(target)
     user.sexcon.perform_sex_action(user, 1.3, 0.5, TRUE)
     user.sexcon.perform_sex_action(target, 0, 3, FALSE)
@@ -35,7 +35,7 @@
     target.sexcon.handle_passive_ejaculation()
 
 /datum/sex_action/chastityplay/force_cage_blowjob/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(span_warning("[user] releases [target]'s head and lets [target.p_them()] pull away from [user.p_their()] [get_chastity_device_name(user)]."))
+    user.visible_message(span_warning("[user]松开[target]的头，让[target]从[get_chastity_device_name(user)]前挣脱开来。"))
 
 /datum/sex_action/chastityplay/force_cage_blowjob/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
     if(user.sexcon.finished_check())

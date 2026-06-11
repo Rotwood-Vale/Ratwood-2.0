@@ -8,7 +8,7 @@
 #define AGE_CHECK_PASSED 2
 
 SUBSYSTEM_DEF(maturity_guard)
-	name = "Maturity guard"
+	name = "成熟内容验证"
 	flags = SS_NO_FIRE
 	init_order = INIT_ORDER_MATURITY_GUARD
 	/// A list of currently active prompts.
@@ -62,7 +62,7 @@ SUBSYSTEM_DEF(maturity_guard)
 		var/check_result = validate_dob(year, month, day)
 		switch(check_result)
 			if(AGE_CHECK_INVALID)
-				to_chat_immediate(user, "<span class='warning'>Invalid information entered. Please try again.</span>")
+				to_chat_immediate(user, "<span class='warning'>输入信息无效，请重试。</span>")
 				user.client.OpenMaturityPrompt()
 				return FALSE
 			if(AGE_CHECK_UNDERAGE)
@@ -78,7 +78,7 @@ SUBSYSTEM_DEF(maturity_guard)
 			prompt_cache |= user_ckey
 			user.client.OpenMaturityPrompt()
 		else
-			to_chat_immediate(user, "<span class='warning'>Please enter your date of birth.</span>")
+			to_chat_immediate(user, "<span class='warning'>请输入你的出生日期。</span>")
 			user.client.OpenMaturityPrompt()
 		return FALSE
 
@@ -202,8 +202,8 @@ SUBSYSTEM_DEF(maturity_guard)
 
 	var/discord_appeal_text = ""
 	if(CONFIG_GET(string/discordurl))
-		discord_appeal_text = "If you believe this to be a mistake, file an appeal in our community. <a href='[CONFIG_GET(string/discordurl)]>[CONFIG_GET(string/discordurl)]</a>"
-	var/player_ban_notification = "<span class='boldannounce'>You have been banned by the AGE CHECK SYSTEM from the server.\nReason: You do not meet the minimum age requirements for this community. [discord_appeal_text]</span>"
+		discord_appeal_text = "如果你认为这是误判，请前往我们的社区提交申诉。<a href='[CONFIG_GET(string/discordurl)]>[CONFIG_GET(string/discordurl)]</a>"
+	var/player_ban_notification = "<span class='boldannounce'>你已被年龄验证系统从本服务器封禁。\n原因：你不符合本社区的最低年龄要求。[discord_appeal_text]</span>"
 
 	if(!SSdbcore.Connect())
 	 	// Just a stopgap measure... this really isn't intended to be used without a db attached
@@ -240,7 +240,7 @@ SUBSYSTEM_DEF(maturity_guard)
 		"global_ban" = TRUE,
 		"expiration_time" = null,
 		"applies_to_admins" = TRUE,
-		"reason" = "You do not meet the minimum age requirements for this community. If you believe this to be a mistake, file an appeal in our community.",
+		"reason" = "你不符合本社区的最低年龄要求。如果你认为这是误判，请前往我们的社区提交申诉。",
 		"ckey" = user.ckey,
 		"ip" = user.client.address,
 		"computerid" = user.client.computer_id,

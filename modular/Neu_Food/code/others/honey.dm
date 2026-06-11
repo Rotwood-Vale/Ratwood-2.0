@@ -1,7 +1,7 @@
 
 // -------------- SPIDER HONEY -----------------
 /obj/item/reagent_containers/food/snacks/rogue/honey
-	name = "honey"
+	name = "蜂蜜"
 	icon = 'modular/Neu_Food/icons/others/honey.dmi'
 	icon_state = "honeycomb"
 	dropshrink = 0.75
@@ -15,7 +15,7 @@
 	faretype = FARE_FINE
 	w_class = WEIGHT_CLASS_TINY
 	spillable = FALSE
-	tastes = list("sweetness" = 1)
+	tastes = list("甜味" = 1)
 	eat_effect = null
 	rotprocess = null
 
@@ -41,7 +41,7 @@
 /obj/item/reagent_containers/food/snacks/rogue/honey/proc/set_reagent(reagent)
 	var/datum/reagent/R = GLOB.chemical_reagents_list[reagent]
 	if(istype(R))
-		name = "honeycomb ([R.name])"
+		name = "蜜脾（[R.name]）"
 		honey_color = R.color
 		reagents.add_reagent(R.type,5)
 	else
@@ -49,6 +49,6 @@
 	update_icon()
 
 /obj/item/reagent_containers/food/snacks/rogue/honey/spider
-	name = "spider honey"
+	name = "蛛蜜"
 	icon_state = "spiderhoney"
-	tastes = list("sweetness and spiderwebs" = 1)
+	tastes = list("甜味与蛛网气息" = 1)

@@ -1,8 +1,8 @@
 #define PILLORY_HEAD_OFFSET      2 // How much we need to move the player to center their head
 
 /obj/structure/pillory
-	name = "pillory"
-	desc = "To keep the criminals locked!"
+	name = "颈手枷"
+	desc = "用来把罪犯牢牢锁住！"
 	icon_state = "pillory_single"
 	icon = 'modular/icons/obj/pillory.dmi'
 	can_buckle = TRUE
@@ -34,28 +34,28 @@
 /obj/structure/pillory/examine(mob/user)
 	. = ..()
 
-	var/msg = "It is [latched ? "latched" : "unlatched"] and [locked ? "locked." : "unlocked."]<br/>"
+	var/msg = "它当前为[latched ? "扣合" : "未扣合"]状态，并且[locked ? "已上锁。" : "未上锁。"]<br/>"
 	. += msg
 
 /obj/structure/pillory/attack_right(mob/living/user)
 	. = ..()
 	if(!buckled_mobs.len)
-		to_chat(user, span_warning("What's the point of latching it with nobody inside?"))
+		to_chat(user, span_warning("里面没人，扣上它又有什么意义？"))
 		return
 	if(user in buckled_mobs)
-		to_chat(user, span_warning("I can't reach the latch!"))
+		to_chat(user, span_warning("我够不到插销！"))
 		return
 	if(locked)
-		to_chat(usr, span_warning("Unlock it first!"))
+		to_chat(usr, span_warning("先把它解锁！"))
 		return
 	togglelatch(user)
 
 /obj/structure/pillory/attackby(obj/item/P, mob/user, params)
 	if(user in buckled_mobs)
-		to_chat(user, span_warning("I can't reach the lock!"))
+		to_chat(user, span_warning("我够不到锁！"))
 		return
 	if(!latched)
-		to_chat(user, span_warning("It's not latched shut!"))
+		to_chat(user, span_warning("它根本没扣上！"))
 		return
 	if(istype(P, /obj/item/roguekey))
 		var/obj/item/roguekey/K = P
@@ -63,7 +63,7 @@
 			togglelock(user)
 			return
 		else
-			to_chat(user, span_warning("Wrong key."))
+			to_chat(user, span_warning("钥匙不对。"))
 			playsound(src, 'sound/foley/doors/lockrattle.ogg', 100)
 			return
 	if(istype(P, /obj/item/storage/keyring))
@@ -76,28 +76,28 @@
 /obj/structure/pillory/proc/togglelatch(mob/living/user, silent)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(latched)
-		user.visible_message(span_warning("[user] unlatches [src]."), \
-			span_notice("I unlatch [src]."))
+		user.visible_message(span_warning("[user]打开了[src]的插销。"), \
+			span_notice("我打开了[src]的插销。"))
 		playsound(src, 'sound/foley/doors/lock.ogg', 100)
 		latched = FALSE
 	else
-		user.visible_message(span_warning("[user] latches [src]."), \
-			span_notice("I latch [src]."))
+		user.visible_message(span_warning("[user]扣上了[src]。"), \
+			span_notice("我扣上了[src]。"))
 		playsound(src, 'sound/foley/doors/lock.ogg', 100)
 		latched = TRUE
 
 /obj/structure/pillory/proc/togglelock(mob/living/user, silent)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (!latched)
-		to_chat(user, span_warning("\The [src] is not latched shut."))
+		to_chat(user, span_warning("[src]还没有扣上。"))
 	if(locked)
-		user.visible_message(span_warning("[user] unlocks [src]."), \
-			span_notice("I unlock [src]."))
+		user.visible_message(span_warning("[user]打开了[src]的锁。"), \
+			span_notice("我打开了[src]的锁。"))
 		playsound(src, 'sound/foley/doors/lock.ogg', 100)
 		locked = FALSE
 	else
-		user.visible_message(span_warning("[user] locks [src]."), \
-			span_notice("I lock [src]."))
+		user.visible_message(span_warning("[user]锁上了[src]。"), \
+			span_notice("我锁上了[src]。"))
 		playsound(src, 'sound/foley/doors/lock.ogg', 100)
 		locked = TRUE
 
@@ -106,11 +106,11 @@
 		return FALSE
 
 	if(locked)
-		to_chat(usr, span_warning("Unlock it first!"))
+		to_chat(usr, span_warning("先把它解锁！"))
 		return FALSE
 
 	if (!istype(M, /mob/living/carbon/human))
-		to_chat(usr, span_warning("It doesn't look like [M.p_they()] can fit into this properly!"))
+		to_chat(usr, span_warning("[M]看起来没法被好好固定进这里！"))
 		return FALSE // Can't hold non-humanoids
 
 	return ..(M, force, FALSE)
@@ -155,24 +155,24 @@
 	if(buckled_mob == user)
 		if(buckled_mob.STASTR >= 18)
 			if(do_after(buckled_mob, 2.5 SECONDS))
-				buckled_mob.visible_message(span_warning("[buckled_mob] breaks [src] open!"))
+				buckled_mob.visible_message(span_warning("[buckled_mob]硬生生把[src]挣开了！"))
 				locked = FALSE
 				latched = FALSE
 				return ..()
 			return null
 		if(locked)	//can't be locked without also being latched anyway
-			to_chat(user, span_warning("It's locked! I can't free myself!"))
+			to_chat(user, span_warning("它锁住了！我没法自己挣脱！"))
 			return
 		else if(latched)
-			buckled_mob.visible_message(span_warning("[buckled_mob] struggles in [src], trying to get the latch off!"))
+			buckled_mob.visible_message(span_warning("[buckled_mob]在[src]里拼命挣扎，试图把插销弄开！"))
 			if(do_after(buckled_mob, 12 SECONDS))
-				buckled_mob.visible_message(span_warning("[buckled_mob] forces [src]'s latch open!"))
+				buckled_mob.visible_message(span_warning("[buckled_mob]硬是把[src]的插销撬开了！"))
 				latched = FALSE
 				return ..()
 			else
 				return null
 	if(locked)	//if user isn't the one in the pillory and it's also locked
-		to_chat(user, span_warning("[src] is locked! I'll need a key to unlatch it."))
+		to_chat(user, span_warning("[src]锁住了！我得用钥匙才能打开它。"))
 		return null
 	latched = FALSE //we pull them free, which implies unlatching
 	return ..()

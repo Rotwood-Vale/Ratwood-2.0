@@ -1,5 +1,5 @@
 /datum/sex_action/chastityplay/force_cage_rim
-    name = "Force them to rim your shield"
+    name = "强迫他们舔你的贞操盾"
     require_grab = TRUE
     stamina_cost = 1.0
     user_sex_part = SEX_PART_ANUS
@@ -27,10 +27,10 @@
     return TRUE
 
 /datum/sex_action/chastityplay/force_cage_rim/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(span_warning("[user] grabs [target] and shoves [target.p_their()] face beneath [user.p_their()] chastity shield with no ceremony!"))
+    user.visible_message(span_warning("[user]一把抓住[target]，毫不客气地把[target]的脸塞到后庭贞操盾下方！"))
 
 /datum/sex_action/chastityplay/force_cage_rim/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] keeps [target]'s face wedged beneath [user.p_their()] anal shield, using the hold to steer every movement of [target.p_their()] tongue..."))
+    user.visible_message(user.sexcon.spanify_force("[user][user.sexcon.get_generic_force_adjective()]把[target]的脸牢牢卡在后庭贞操盾下，借着这股压制操控[target]舌头的每一次动作..."))
     user.sexcon.oralcourse_noise(target)
     user.sexcon.perform_sex_action(user, 1.3, 0, TRUE)
     user.sexcon.perform_sex_action(target, 0, 2.5, FALSE)
@@ -38,7 +38,7 @@
     target.sexcon.handle_passive_ejaculation()
 
 /datum/sex_action/chastityplay/force_cage_rim/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(span_warning("[user] shoves [target] back and the shield comes away from [target.p_their()] face with a faint wet sound."))
+    user.visible_message(span_warning("[user]把[target]猛地推开，贞操盾从[target]的脸上挪开时带出一声轻微的湿响。"))
 
 /datum/sex_action/chastityplay/force_cage_rim/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
     if(user.sexcon.finished_check())

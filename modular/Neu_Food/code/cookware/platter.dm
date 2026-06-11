@@ -69,7 +69,7 @@ What it does:
 
 		contents[1].vis_flags = VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE
 		vis_contents += contents[1]
-		name = "platter of [contents[1].name]"
+		name = "[contents[1].name]拼盘"
 		desc = contents[1].desc
 		//Need something better than this in future like a buff
 		if(istype(contents[1],  /obj/item/reagent_containers/food/snacks/))
@@ -104,95 +104,95 @@ What it does:
 	update_icon()
 
 /obj/item/cooking/platter/decrepit
-	name = "decrepit platter"
-	desc = "Wrought bronze, flattened to serve. The edge remains wet with red; spilled merlot, meaty juices, or blood?"
+	name = "破旧拼盘"
+	desc = "锻打成盘的青铜器皿，边缘仍沾着一抹湿红；那是泼洒的梅洛酒、肉汁，还是鲜血？"
 	icon_state = "aplatter"
 	color = "#bb9696"
 	sellprice = 0
 
 /obj/item/cooking/platter/copper
-	name = "copper platter"
-	desc = "A platter made from a sheet of copper. Known to impart a metallic taste when combined with acidic food."
+	name = "铜拼盘"
+	desc = "用铜片制成的拼盘。据说与酸性食物搭配时会带出些许金属味。"
 	icon_state = "platter_copper"
 	resistance_flags = FIRE_PROOF
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	sellprice = 8
 
 /obj/item/cooking/platter/pewter
-	name = "tin platter"
-	desc = "A tin plate that could almost be mistaken for silver."
+	name = "锡拼盘"
+	desc = "一只几乎能被误认成银器的锡盘。"
 	icon_state = "platter_tin"
 	resistance_flags = FIRE_PROOF
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	sellprice = 11
 
 /obj/item/cooking/platter/silver
-	name = "silver platter"
-	desc = "A fancy silver plate often used by the nobility as a symbol of class."
+	name = "银拼盘"
+	desc = "一只华贵的银盘，贵族们常以此彰显身份。"
 	icon_state = "platter_silver"
 	sellprice = 48
 	is_silver = TRUE
 
 /obj/item/cooking/platter/gold
-	name = "gold platter"
-	desc = "A fancy gold plate often used by the nobility as a symbol of class."
+	name = "金拼盘"
+	desc = "一只华贵的金盘，贵族们常以此彰显身份。"
 	icon_state = "platter_gold"
 	resistance_flags = FIRE_PROOF
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	sellprice = 60
 
 /obj/item/cooking/platter/carved
-	name = "carved platter"
-	desc = "You shouldn't be seeing this."
+	name = "雕饰拼盘"
+	desc = "你本不该看到这个。"
 	icon_state = "aplatter"
 	resistance_flags = FIRE_PROOF
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	sellprice = 0
 
 /obj/item/cooking/platter/carved/jade
-	name = "jade platter"
-	desc = "A fancy platter carved out of jade."
+	name = "玉拼盘"
+	desc = "一只由玉石雕成的华美拼盘。"
 	icon_state = "platter_jade"
 	sellprice = 60
 
 /obj/item/cooking/platter/carved/onyxa
-	name = "onyxa platter"
-	desc = "A fancy platter carved out of onyxa."
+	name = "缟玛瑙拼盘"
+	desc = "一只由缟玛瑙雕成的华美拼盘。"
 	icon_state = "platter_onyxa"
 	sellprice = 40
 
 /obj/item/cooking/platter/carved/shell
-	name = "shell platter"
-	desc = "A fancy platter carved out of shell."
+	name = "贝壳拼盘"
+	desc = "一只由贝壳雕成的华美拼盘。"
 	icon_state = "platter_shell"
 	sellprice = 20
 
 /obj/item/cooking/platter/carved/rose
-	name = "rosestone platter"
-	desc = "A fancy platter carved out of rosestone."
+	name = "玫瑰石拼盘"
+	desc = "一只由玫瑰石雕成的华美拼盘。"
 	icon_state = "platter_rose"
 	sellprice = 25
 
 /obj/item/cooking/platter/carved/amber
-	name = "amber platter"
-	desc = "A fancy platter carved out of amber."
+	name = "琥珀拼盘"
+	desc = "一只由琥珀雕成的华美拼盘。"
 	icon_state = "platter_amber"
 	sellprice = 60
 
 /obj/item/cooking/platter/carved/opal
-	name = "opal platter"
-	desc = "A fancy platter carved out of opal."
+	name = "欧泊拼盘"
+	desc = "一只由欧泊雕成的华美拼盘。"
 	icon_state = "platter_opal"
 	sellprice = 90
 
 /obj/item/cooking/platter/carved/coral
-	name = "heartstone platter"
-	desc = "A fancy platter carved out of heartstone."
+	name = "心石拼盘"
+	desc = "一只由心石雕成的华美拼盘。"
 	icon_state = "platter_coral"
 	sellprice = 70
 
 /obj/item/cooking/platter/carved/turq
-	name = "cerulite platter"
-	desc = "A fancy platter carved out of cerulite."
+	name = "蔚蓝石拼盘"
+	desc = "一只由蔚蓝石雕成的华美拼盘。"
 	icon_state = "platter_turq"
 	sellprice = 85

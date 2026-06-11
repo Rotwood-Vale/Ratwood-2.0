@@ -14,7 +14,7 @@
 /obj/item/storage/belt/rogue/examine()
 	. = ..()
 	if(attached_toy)
-		. += "[span_notice("\An [attached_toy] appears attached to \the [initial(name)]. Alt+RMB to remove it.")]"
+		. += "[span_notice("[attached_toy]似乎装在[initial(name)]上。按 Alt+右键可将其取下。")]"
 
 // Prevent equipping a toy belt if the wearer already has a toy attached to their chastity device, since the belt and chastity device share the same sprite overlay for attached toys and it would cause visual bugs to have toys on both at the same time. The same check is done in reverse when trying to attach a toy to a belt while wearing a chastity device with an attached toy in chastity_core.dm.
 /obj/item/storage/belt/rogue/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
@@ -28,7 +28,7 @@
 	if(H.chastity_device?.attached_toy)
 		if(!disable_warning)
 			var/mob/living/warn_target = equipper ? equipper : M
-			to_chat(warn_target, span_warning("[H] cannot wear a toy belt while [H.p_they()] already [H.p_have()] a toy mounted to [H.p_their()] chastity device."))
+			to_chat(warn_target, span_warning("[H]无法佩戴玩具腰带，因为其贞操装置上已经装了一个玩具。"))
 		return FALSE
 	return TRUE
 
@@ -41,16 +41,16 @@
 	if(istype(loc, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = loc
 		if(H.chastity_device?.attached_toy)
-			to_chat(user, span_warning("[H] already has a toy attached to [H.p_their()] chastity device."))
+			to_chat(user, span_warning("[H]的贞操装置上已经装了一个玩具。"))
 			return
 	if(attached_toy) // belt already has attached toy
-		to_chat(user, span_info("\The [initial(name)] already has a toy attached! Remove it first."))
+		to_chat(user, span_info("[initial(name)]已经装了一个玩具！请先把它取下。"))
 		return
 	if(!user.transferItemToLoc(held_dildo, null)) // we're not storing the dildo inside the belt, rather we're moving it to nullspace then restoring it on delete/deattachment
-		to_chat(user, span_warning("\The [held_dildo] is stuck to your hand!"))
+		to_chat(user, span_warning("[held_dildo]粘在你的手上了！"))
 		return
 	held_dildo.is_attached_to_belt = TRUE
-	user.visible_message(span_warning("[user] equips \the [held_dildo] onto \the [initial(name)]."))
+	user.visible_message(span_warning("[user]把[held_dildo]装到了[initial(name)]上。"))
 	attached_toy = held_dildo
 	playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
 	vis_contents += attached_toy
@@ -63,9 +63,9 @@
 	if(!isliving(user) || !user.TurfAdjacent(src))
 		return
 	if(user.get_active_held_item())
-		to_chat(user, span_info("I can't do that with my hand full!"))
+		to_chat(user, span_info("我手里拿满了，做不到！"))
 		return
-	user.visible_message(span_warning("[user] removes \the [attached_toy] from \the [initial(name)]."))
+	user.visible_message(span_warning("[user]把[attached_toy]从[initial(name)]上取了下来。"))
 	vis_contents -= attached_toy
 	if(!user.put_in_hands(attached_toy))
 		var/atom/movable/S = attached_toy

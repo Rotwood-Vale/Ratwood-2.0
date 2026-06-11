@@ -23,10 +23,10 @@
 
 	var/mob/living/carbon/human/H = M
 	if(!get_location_accessible(H, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
-		to_chat(user, span_warning("[H]'s groin is covered. I can't see a cage let alone unlock one!"))
+		to_chat(user, span_warning("[H]的腹股沟部位被遮住了。我连笼子都看不见，更别说开锁了！"))
 		return TRUE
 	if(!H.chastity_device)
-		to_chat(user, span_warning("[H] isn't wearing a chastity device. Against Astrata's Will their genitals are free ranged."))
+		to_chat(user, span_warning("[H]没有佩戴贞操装置。违背了阿斯特拉塔的意志，他们的下体正自由敞露着。"))
 		return TRUE
 
 	var/obj/item/chastity/device = H.chastity_device
@@ -44,11 +44,11 @@
 		return TRUE
 
 	if(device.locked)
-		user.visible_message(span_notice("[user] unlocks [H]'s chastity device with [src]."))
+		user.visible_message(span_notice("[user]用[src]打开了[H]的贞操装置。"))
 		playsound(src, 'sound/foley/doors/lock.ogg', 100)
 		device.set_chastity_locked_state(H, FALSE, user, src, "key")
 	else
-		user.visible_message(span_notice("[user] locks [H]'s chastity device with [src]."))
+		user.visible_message(span_notice("[user]用[src]锁上了[H]的贞操装置。"))
 		playsound(src, 'sound/foley/doors/lock.ogg', 100)
 		device.set_chastity_locked_state(H, TRUE, user, src, "key")
 
@@ -58,15 +58,15 @@
 	if(!ishuman(M))
 		return null
 	if(!ishuman(user))
-		to_chat(user, span_warning("I can't get enough control to pick this lock."))
+		to_chat(user, span_warning("我没法稳稳控制住这把锁，无法撬开它。"))
 		return TRUE
 
 	var/mob/living/carbon/human/H = M
 	if(!get_location_accessible(H, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
-		to_chat(user, span_warning("[H]'s groin is covered. I can't reach the lock."))
+		to_chat(user, span_warning("[H]的腹股沟部位被遮住了。我够不到锁。"))
 		return TRUE
 	if(!H.chastity_device)
-		to_chat(user, span_warning("[H] isn't wearing a chastity device."))
+		to_chat(user, span_warning("[H]没有佩戴贞操装置。"))
 		return TRUE
 
 	var/obj/item/chastity/device = H.chastity_device
@@ -75,7 +75,7 @@
 		playsound(src, 'sound/items/pickbad.ogg', 40, TRUE)
 		return TRUE
 	if(!device.locked)
-		to_chat(user, span_notice("[H]'s chastity device is already unlocked."))
+		to_chat(user, span_notice("[H]的贞操装置已经是解锁状态了。"))
 		return TRUE
 
 	// Hardmode blocks lockpicking upfront — no point letting the player burn time and pick durability
@@ -93,17 +93,17 @@
 	pickchance *= picklvl
 	pickchance = clamp(pickchance, 5, 95)
 
-	user.visible_message(span_notice("[user] starts picking the lock on [H]'s chastity device..."), span_notice("I start picking the lock on [H]'s chastity device..."))
+	user.visible_message(span_notice("[user]开始撬开[H]贞操装置上的锁......"), span_notice("我开始撬开[H]贞操装置上的锁......"))
 	if(!do_after(user, picktime, target = H))
 		return TRUE
 
 	// Re-validate after the timed action in case state changed mid-pick.
 	var/obj/item/chastity/current_device = H.chastity_device
 	if(!current_device || !current_device.lockable)
-		to_chat(user, span_warning("The lock is no longer there."))
+		to_chat(user, span_warning("那把锁已经不在那里了。"))
 		return TRUE
 	if(!current_device.locked)
-		to_chat(user, span_notice("[H]'s chastity device is already unlocked."))
+		to_chat(user, span_notice("[H]的贞操装置已经是解锁状态了。"))
 		return TRUE
 
 	if(prob(pickchance))
@@ -113,14 +113,14 @@
 			return TRUE
 
 		playsound(src, pick('sound/items/pickgood1.ogg', 'sound/items/pickgood2.ogg'), 30, TRUE)
-		to_chat(user, span_green("The lock gives way."))
+		to_chat(user, span_green("锁开了。"))
 		current_device.set_chastity_locked_state(H, FALSE, user, src, "lockpick")
 		if(U.mind)
 			add_sleep_experience(U, /datum/skill/misc/lockpicking, U.STAINT / 2)
 	else
 		playsound(src, 'sound/items/pickbad.ogg', 40, TRUE)
 		take_damage(1, BRUTE, "blunt")
-		to_chat(user, span_warning("Clack."))
+		to_chat(user, span_warning("咔哒。"))
 		if(U.mind)
 			add_sleep_experience(U, /datum/skill/misc/lockpicking, U.STAINT / 4)
 
@@ -140,15 +140,15 @@
 	if(!ishuman(M))
 		return null
 	if(!ishuman(user))
-		to_chat(user, span_warning("I can't get enough control to pick this lock."))
+		to_chat(user, span_warning("我没法稳稳控制住这把锁，无法撬开它。"))
 		return TRUE
 
 	var/mob/living/carbon/human/H = M
 	if(!get_location_accessible(H, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
-		to_chat(user, span_warning("[H]'s groin is covered. I can't reach the lock."))
+		to_chat(user, span_warning("[H]的腹股沟部位被遮住了。我够不到锁。"))
 		return TRUE
 	if(!H.chastity_device)
-		to_chat(user, span_warning("[H] isn't wearing a chastity device."))
+		to_chat(user, span_warning("[H]没有佩戴贞操装置。"))
 		return TRUE
 
 	var/obj/item/chastity/device = H.chastity_device
@@ -157,7 +157,7 @@
 		playsound(src, 'sound/items/pickbad.ogg', 40, TRUE)
 		return TRUE
 	if(!device.locked)
-		to_chat(user, span_notice("[H]'s chastity device is already unlocked."))
+		to_chat(user, span_notice("[H]的贞操装置已经是解锁状态了。"))
 		return TRUE
 
 	// Hardmode blocks picking upfront — give immediate feedback before burning spell charges and time.
@@ -174,17 +174,17 @@
 	pickchance *= picklvl
 	pickchance = clamp(pickchance, 5, 95)
 
-	user.visible_message(span_notice("[user] traces the spectral lockpick across [H]'s chastity lock..."), span_notice("I guide the spectral pick into [H]'s chastity lock..."))
+	user.visible_message(span_notice("[user]用幽光撬锁器划过[H]贞操装置上的锁......"), span_notice("我将幽光撬锁器引入[H]贞操装置上的锁孔......"))
 	if(!do_after(user, picktime, target = H))
 		return TRUE
 
 	// Re-validate after the timed action in case state changed mid-pick.
 	var/obj/item/chastity/current_device = H.chastity_device
 	if(!current_device || !current_device.lockable)
-		to_chat(user, span_warning("The lock is no longer there."))
+		to_chat(user, span_warning("那把锁已经不在那里了。"))
 		return TRUE
 	if(!current_device.locked)
-		to_chat(user, span_notice("[H]'s chastity device is already unlocked."))
+		to_chat(user, span_notice("[H]的贞操装置已经是解锁状态了。"))
 		return TRUE
 
 	if(prob(pickchance))
@@ -194,14 +194,14 @@
 			return TRUE
 
 		playsound(src, pick('sound/items/pickgood1.ogg', 'sound/items/pickgood2.ogg'), 30, TRUE)
-		to_chat(user, span_green("The lock gives way."))
+		to_chat(user, span_green("锁开了。"))
 		current_device.set_chastity_locked_state(H, FALSE, user, src, "lockpick")
 		if(U.mind)
 			add_sleep_experience(U, /datum/skill/misc/lockpicking, U.STAINT / 2)
 	else
 		playsound(src, 'sound/items/pickbad.ogg', 40, TRUE)
 		take_damage(1, BRUTE, "blunt")
-		to_chat(user, span_warning("Clack. The arcyne focus wavers."))
+		to_chat(user, span_warning("咔哒。奥术焦点动摇了。"))
 		if(U.mind)
 			add_sleep_experience(U, /datum/skill/misc/lockpicking, U.STAINT / 4)
 

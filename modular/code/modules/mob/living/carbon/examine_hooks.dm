@@ -1,7 +1,7 @@
 /mob/living/carbon/proc/carbon_modular_examine_extension(mob/user, t_He, m1, m2, m3)
 	var/list/lines = list()
 	if(sexcon?.has_chastity_cage() && get_location_accessible(src, BODY_ZONE_PRECISE_GROIN))
-		lines += "[t_He] is wearing a chastity device!\n"
+		lines += "[t_He]穿着一个贞操装置！\n"
 	return lines
 
 /mob/living/carbon/human/proc/human_modular_examine_extension(mob/user, observer_privilege, m1, m2, m3)
@@ -16,14 +16,14 @@
 		user_is_clergy = user_is_inquisition || (H.mind?.assigned_role in GLOB.church_positions)
 		if(user_is_gnoll)
 			if(src.has_gnoll_scent_this_round)
-				lines += span_cultsmall("They have gnoll scent, a breeder!")
+				lines += span_cultsmall("他们身上有豺狼人的气味，是个繁育者！")
 	if(src.has_gnoll_scent_this_round && !user_is_gnoll)
 		if(user_is_inquisition)
-			lines += span_warning("They reek of profane beast-taint. This demands scrutiny.")
+			lines += span_warning("他们散发着亵渎的兽类污秽气息，必须严加审视。")
 		else if(user_is_clergy)
-			lines += span_warning("A profane, feral scent clings to them.")
+			lines += span_warning("一股亵渎而野性的气味萦绕在他们身上。")
 		else
-			lines += span_warning("They have a strange scent about them...")
+			lines += span_warning("他们身上有种古怪的气味......")
 	var/perception_level = 15
 	if(isliving(user))
 		var/mob/living/L = user
@@ -35,13 +35,13 @@
 		var/cage_exposed = observer_privilege || get_location_accessible(src, BODY_ZONE_PRECISE_GROIN)
 		if(cage_exposed)
 			if(perception_level >= 15)
-				lines += span_aiprivradio("[m1] secured in [chastity_name].")
+				lines += span_aiprivradio("[m1]被固定在[chastity_name]中。")
 			else if(perception_level >= 8)
-				lines += span_aiprivradio("[m1] wearing [chastity_name].")
+				lines += span_aiprivradio("[m1]穿着[chastity_name]。")
 			else
-				lines += span_warning("[m1] wearing some kind of intimate restraint.")
+				lines += span_warning("[m1]穿着某种私密束缚装置。")
 		else if(perception_level >= 15)
-			lines += span_aiprivradio("[m1] wearing a chastity device under [m2] clothes.")
+			lines += span_aiprivradio("[m1]在[m2]的衣物下穿着贞操装置。")
 
 	return lines
 
@@ -56,4 +56,4 @@
 		return null
 	if(!isobserver(user) && perception_level < 8)
 		return null
-	return "[m3] [get_examine_item_name_with_hover(user, chastity_device.attached_toy)] attached to [m2] chastity device. "
+	return "[m3]的[get_examine_item_name_with_hover(user, chastity_device.attached_toy)]装在[m2]的贞操装置上。 "

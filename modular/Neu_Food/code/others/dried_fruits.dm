@@ -1,12 +1,12 @@
 // -------------- RAISINS -----------------
 /obj/item/reagent_containers/food/snacks/rogue/raisins
-	name = "raisins"
+	name = "葡萄干"
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "raisins5"
 	bitesize = 5
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_POOR)
 	w_class = WEIGHT_CLASS_TINY
-	tastes = list("dried fruit" = 1)
+	tastes = list("风干水果" = 1)
 	faretype = FARE_POOR
 	foodtype = GRAIN
 	eat_effect = null

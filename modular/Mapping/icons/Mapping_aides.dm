@@ -1,7 +1,7 @@
 /*	..................   FLOORS   ................... */
 
 /turf/open/water/bath/pool
-	desc = "Clear water, pleasant temperature. Soothing."
+	desc = "水质清澈，温度宜人，令人放松。"
 	icon_state = "bathtile_pool"
 /turf/open/water/bath/pool/Initialize(mapload)
 	.  = ..()
@@ -16,7 +16,7 @@
 /*	..................   SPIDER   ................... */
 
 /obj/structure/spider/stickyweb
-	name = "web"
+	name = "蛛网"
 	icon = 'modular/Mapping/icons/webbing.dmi'
 	icon_state = "stickyweb1"
 	resistance_flags = FLAMMABLE
@@ -35,7 +35,7 @@
 			return TRUE
 		for(var/i = 1; i <= amount; i++)
 			new /obj/item/natural/silk (get_turf(src))
-		user.visible_message(span_notice("[user] snips [src] up into silk."))
+		user.visible_message(span_notice("[user]将[src]剪成了丝线。"))
 		user.mind.add_sleep_experience(/datum/skill/craft/sewing, (user.STAINT / 2)) //We're getting experience for harvesting silk!
 		playsound(src, 'sound/items/flint.ogg', 100, TRUE)
 		qdel(src)
@@ -45,14 +45,14 @@
 /obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target)
 	if(isliving(mover))
 		if(prob(50) && !HAS_TRAIT(mover, TRAIT_WEBWALK))
-			to_chat(mover, "<span class='danger'>I get stuck in \the [src] for a moment.</span>")
+			to_chat(mover, "<span class='danger'>我被[src]绊住了一小会儿。</span>")
 			return FALSE
 	else if(istype(mover, /obj/projectile))
 		return prob(30)
 	return TRUE
 
 /obj/structure/spider/stickyweb/fire_act(added, maxstacks)
-	visible_message(span_warning("[src] catches fire!"))
+	visible_message(span_warning("[src]着火了！"))
 	var/turf/T = get_turf(src)
 	qdel(src)
 	new /obj/effect/hotspot(T)
@@ -74,7 +74,7 @@
 	. = ..()
 
 /obj/structure/spider/cocoon
-	name = "cocoon"
+	name = "茧"
 	desc = ""
 	icon = 'modular/Mapping/icons/webbing.dmi'
 	icon_state = "cocoon_person"
@@ -85,18 +85,18 @@
 	var/breakout_time = 600
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	to_chat(user, "<span class='notice'>I struggle against the tight bonds... (This will take about [DisplayTimeText(breakout_time)].)</span>")
-	visible_message("<span class='notice'>I see something struggling and writhing in \the [src]!</span>")
+	to_chat(user, "<span class='notice'>我奋力挣扎，试图摆脱这层紧缚......（大约需要 [DisplayTimeText(breakout_time)]。）</span>")
+	visible_message("<span class='notice'>我看见有什么东西正在[src]里挣扎扭动！</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src)
-			to_chat(user, "<span class='notice'>Augh! The pain! I fail to break out for now.)</span>")
+			to_chat(user, "<span class='notice'>啊！太痛了！我暂时挣脱不出来。</span>")
 			return
 		user.remove_status_effect(/datum/status_effect/buff/healing/spider_cocoon)
 		qdel(src)
 
 /obj/structure/spider/cocoon/Destroy()
 	var/turf/T = get_turf(src)
-	src.visible_message("<span class='warning'>\The [src] splits open.</span>")
+	src.visible_message("<span class='warning'>[src]裂开了。</span>")
 	for(var/atom/movable/A in contents)
 		if(istype(A, /mob/living))
 			var/mob/living/L = A

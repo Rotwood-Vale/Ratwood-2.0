@@ -1,5 +1,5 @@
 /datum/sex_action/chastityplay/kick_cage
-	name = "Kick their chastity"
+	name = "踢击他们的贞操装置"
 	check_same_tile = FALSE
 	category = SEX_CATEGORY_HANDS
 
@@ -30,16 +30,16 @@
 	return TRUE
 
 /datum/sex_action/chastityplay/kick_cage/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/device = target.sexcon.has_chastity_cage() ? "cage" : "belt"
+	var/device = target.sexcon.has_chastity_cage() ? "贞操笼" : "贞操带"
 	play_chastity_impact_sound(target, 'sound/combat/hits/kick/kick.ogg', 40, 100, TRUE, -1)
 	if(HAS_TRAIT(target, TRAIT_CHASTITY_SPIKED))
-		user.visible_message(span_warning("[user] places the flat of [user.p_their()] foot against [target]'s spiked [device] and pushes \u2014 slowly, testing how much give there is."))
+		user.visible_message(span_warning("[user]把脚掌贴上[target]带刺的[device]，缓缓施压，试探它究竟能承受到什么地步。"))
 		return
-	user.visible_message(span_warning("[user] shifts [user.p_their()] weight back and raises [user.p_their()] foot, eye-level with [target]'s [device]."))
+	user.visible_message(span_warning("[user]将重心后移，抬起脚，与[target]的[device]平齐相对。"))
 
 /datum/sex_action/chastityplay/kick_cage/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/force = user.sexcon.force
-	var/device = target.sexcon.has_chastity_cage() ? "cage" : "belt"
+	var/device = target.sexcon.has_chastity_cage() ? "贞操笼" : "贞操带"
 	var/msg
 	var/arousal_amt = 0.7
 	var/pain_amt = 2
@@ -49,19 +49,19 @@
 
 	switch(force)
 		if(SEX_FORCE_LOW)
-			msg = "[user] [user.sexcon.get_generic_force_adjective()] rolls [user.p_their()] sole over [target]'s [device] in slow, deliberate circles, the pressure just shy of cruel..."
+			msg = "[user][user.sexcon.get_generic_force_adjective()]让脚掌在[target]的[device]上缓慢而刻意地打着圈碾动，那压力离残忍只差一点点......"
 			arousal_amt = 1.0
 			pain_amt = 1.5
 		if(SEX_FORCE_MID)
-			msg = "[user] [user.sexcon.get_generic_force_adjective()] snaps [user.p_their()] foot into [target]'s [device] with a sharp crack, the impact biting inward through the steel..."
+			msg = "[user][user.sexcon.get_generic_force_adjective()]猛地一脚踢进[target]的[device]，伴着一声清脆爆响，冲击力隔着钢铁狠狠咬了进去......"
 			arousal_amt = 0.6
 			pain_amt = 4.5
 		if(SEX_FORCE_HIGH)
-			msg = "[user] [user.sexcon.get_generic_force_adjective()] hammers [user.p_their()] foot into [target]'s [device] again and again, the rhythm relentless, each kick louder and harder than the last..."
+			msg = "[user][user.sexcon.get_generic_force_adjective()]一脚又一脚重重砸向[target]的[device]，节奏毫不停歇，每一次踢击都比上一次更响、更狠......"
 			arousal_amt = 0.25
 			pain_amt = 7.5
 		if(SEX_FORCE_EXTREME, SEX_FORCE_LUDICROUS)
-			msg = "[user] [user.sexcon.get_generic_force_adjective()] brings [user.p_their()] full weight down on [target]'s [device] in a grinding heel-stomp, steel screaming against steel..."
+			msg = "[user][user.sexcon.get_generic_force_adjective()]以碾踏般的脚跟重踩将全身重量都压向[target]的[device]，钢铁与钢铁尖啸摩擦......"
 			arousal_amt = 0.0
 			pain_amt = 11
 
@@ -74,11 +74,11 @@
 
 	if(HAS_TRAIT(target, TRAIT_CHASTITY_SPIKED))
 		play_chastity_impact_sound(target, 'sound/combat/hits/bladed/genstab (1).ogg', 45, 45)
-		user.visible_message(span_warning("The inward spikes punish every strike, digging deeper with each impact!"))
+		user.visible_message(span_warning("内侧尖刺惩罚着每一次踢击，随着每下冲击越陷越深！"))
 		user.sexcon.perform_sex_action(target, 0, 3.2, TRUE)
 		user.sexcon.try_do_pain_scream(target, pain_amt + 3.2)
 		if(force >= SEX_FORCE_HIGH && prob(35))
-			to_chat(user, span_warning("A spike catches your foot during the kick, stinging sharply."))
+			to_chat(user, span_warning("踢击时有根尖刺挂住了你的脚，传来一阵锐利刺痛。"))
 			user.sexcon.perform_sex_action(user, 0, 1.2, TRUE)
 			user.sexcon.try_do_pain_scream(user, 1.2)
 		// At extreme force the heel-stomp can drive the spikes inward hard enough to cause internal torsion damage.
@@ -91,24 +91,24 @@
 				if(has_cock && has_cunt)
 					playsound(get_turf(target), pick('modular/sound/masomoans/agony/CBTScreamIntersex1.ogg', 'modular/sound/masomoans/agony/CBTScreamIntersex2.ogg'), 85, FALSE, 2)
 					target.add_splatter_floor(get_turf(target))
-					target.visible_message(span_userdanger("[user]'s heel drives [target]'s spiked [device] inward with catastrophic force \u2014 something tears deep through [target.p_their()] groin, blood soaking [target.p_their()] thighs as [target.p_they()] crumple."))
+					target.visible_message(span_userdanger("[user]的脚跟以灾难性的力量将[target]带刺的[device]狠狠踩入体内，某种东西在腹股沟深处撕裂开来，鲜血浸透了大腿，而[target]也随之瘫倒。"))
 					chest.add_wound(/datum/wound/cbt)
 				else if(has_cock)
 					playsound(get_turf(target), pick('modular/sound/masomoans/agony/CBTScreamMale1.ogg', 'modular/sound/masomoans/agony/CBTScreamMale2.ogg'), 85, FALSE, 2)
 					target.add_splatter_floor(get_turf(target))
-					target.visible_message(span_userdanger("[user]'s heel drives the spiked cage inward with full bodyweight behind it \u2014 the crunch that follows is wrong, deep, and [target.p_they()] fold[target.p_s()] immediately, [target.p_their()] stones wrecked by what just happened to them."))
+					target.visible_message(span_userdanger("[user]的脚跟裹着全身重量把带刺的笼子狠狠踩了进去，随后传来的碎裂闷响既不对劲又沉得吓人，[target]立刻弓身蜷倒，睾丸已被这一下彻底摧毁。"))
 					chest.add_wound(/datum/wound/cbt)
 				else if(has_cunt)
 					playsound(get_turf(target), pick('modular/sound/masomoans/agony/CBTScreamFemale1.ogg', 'modular/sound/masomoans/agony/CBTScreamFemale2.ogg'), 85, FALSE, 2)
 					target.add_splatter_floor(get_turf(target))
-					target.visible_message(span_userdanger("The heel-stomp drives [target]'s spiked belt into [target.p_their()] groin with brutal finality \u2014 something gives inside, [target.p_their()] legs buckling as the damage registers and the blood starts."))
+					target.visible_message(span_userdanger("这一记脚跟重踏带着残酷的终结意味，将[target]带刺的贞操带狠狠踩进腹股沟，体内有什么东西随之崩裂，双腿一软，在鲜血涌出时才真正意识到伤势。"))
 					chest.add_wound(/datum/wound/cbt)
 
 	target.sexcon.handle_passive_ejaculation(user)
 
 /datum/sex_action/chastityplay/kick_cage/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/device = target.sexcon.has_chastity_cage() ? "cage" : "belt"
-	user.visible_message(span_warning("[user] drops [user.p_their()] foot and steps back from [target]'s [device], leaving it ringing."))
+	var/device = target.sexcon.has_chastity_cage() ? "贞操笼" : "贞操带"
+	user.visible_message(span_warning("[user]放下脚，朝后退开，留下[target]的[device]兀自嗡鸣作响。"))
 
 /datum/sex_action/chastityplay/kick_cage/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.sexcon.finished_check())

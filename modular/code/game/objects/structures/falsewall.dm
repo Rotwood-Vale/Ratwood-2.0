@@ -19,8 +19,8 @@
 	var/is_closed = TRUE
 
 /obj/structure/falsewall/stone
-	name = "stone wall"
-	desc = "A wall of smooth unyielding stone."
+	name = "石墙"
+	desc = "一堵平滑而坚硬的石墙。"
 	icon = 'icons/turf/walls/stone_wall.dmi'
 	icon_state = "stone"
 	max_integrity = 1800

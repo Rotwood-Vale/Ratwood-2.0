@@ -38,34 +38,34 @@
 	dat += "<body>"
 	dat += {"
 		<p>
-			This server features mature themes including violence, complex moral dilemmas, and adult situations. By accepting and playing this game, you acknowledge this and consent to any and all IC consequences that comes your character's way, and you will play in good faith to produce good stories for others. Please read the rules on Discord.
+			本服务器包含成熟主题内容，包括暴力、复杂的道德困境，以及成人情境。接受并游玩本游戏即表示你已知悉并同意角色在 IC 中遭遇的一切后果，同时你也将以善意进行游戏，为他人共同创造精彩故事。请先阅读 Discord 上的规则。
 			<br>
-			We only retain the year and month, the day is discarded after the initial check.
+			我们只会保留年份与月份，日期会在首次校验后丢弃。
 			<br>
-			False declarations will end up with you being banned.
+			虚假申报将导致你被封禁。
 			<br>
 		</p>
 		<form method='get' action='?src=[REF(src)]'>
 			<input type="hidden" name="age_prompt" value="age_prompt">
 			<div class="input-row">
-				<label for="year">Year</label>
+				<label for="year">年份</label>
 				<input type="number" id="year" name="year" min="1900" max="2100" required>
 			</div>
 			<div class="input-row">
-				<label for="month">Month</label>
+				<label for="month">月份</label>
 				<input type="number" id="month" name="month" min="1" max="12" required>
 			</div>
 			<div class="input-row">
-				<label for="day">Day</label>
+				<label for="day">日期</label>
 				<input type="number" id="day" name="day" min="1" max="31" required>
 			</div>
 			<div class="button-row">
-				<button type="submit">Submit</button>
+				<button type="submit">提交</button>
 			</div>
 		</form>
 	"}
 	dat += "</body></html>"
-	var/datum/browser/popup = new(src, "ageprompt", "Enter your date of birth", 680, 310)
+	var/datum/browser/popup = new(src, "ageprompt", "请输入你的出生日期", 680, 310)
 	popup.set_content(jointext(dat, ""))
 	popup.open(FALSE) // 0 is passed to open so that it doesn't use the onclose() proc
 

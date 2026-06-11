@@ -1,7 +1,7 @@
 //Non-map stactic version, can be destroyed. (Not craftable, for now.)
 /obj/structure/noose
-	name = "noose"
-	desc = "Abandon all hope."
+	name = "绞索"
+	desc = "放弃一切希望吧。"
 	icon = 'modular/icons/obj/gallows.dmi'
 	pixel_y = 10
 	icon_state = "noose"
@@ -23,8 +23,8 @@
 
 //Map stactic version.
 /obj/structure/noose/gallows
-	name = "gallows"
-	desc = "Stranded and hanging, limp and dead."
+	name = "绞刑架"
+	desc = "孤零零地悬在那里，瘫软而死寂。"
 	icon_state = "gallows"
 	pixel_y = 0
 	max_integrity = 9999
@@ -36,8 +36,8 @@
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
-			buckled_mob.visible_message("<span class='danger'>[buckled_mob] falls over and hits the ground!</span>")
-			to_chat(buckled_mob, "<span class='userdanger'>You fall over and hit the ground!</span>")
+			buckled_mob.visible_message("<span class='danger'>[buckled_mob]摔倒在地，重重撞上了地面！</span>")
+			to_chat(buckled_mob, "<span class='userdanger'>你摔倒在地，重重撞上了地面！</span>")
 			buckled_mob.adjustBruteLoss(10)
 			buckled_mob.Knockdown(60)
 	return ..()
@@ -47,21 +47,21 @@
 		return FALSE
 
 	if(!M.get_bodypart("head"))
-		to_chat(user, "<span class='warning'>[M] has no head!</span>")
+		to_chat(user, "<span class='warning'>[M]没有头！</span>")
 		return FALSE
 
-	M.visible_message("<span class='danger'>[user] attempts to tie \the [src] over [M]'s neck!</span>")
+	M.visible_message("<span class='danger'>[user]试图把[src]套到[M]的脖子上！</span>")
 	if(do_after(user, user == M ? 0:5 SECONDS, M))
 		if(buckle_mob(M))
-			user.visible_message("<span class='warning'>[user] ties \the [src] over [M]'s neck!</span>")
+			user.visible_message("<span class='warning'>[user]把[src]套在了[M]的脖子上！</span>")
 			if(user == M)
-				to_chat(M, "<span class='userdanger'>You tie \the [src] over your neck!</span>")
+				to_chat(M, "<span class='userdanger'>你把[src]套在了自己的脖子上！</span>")
 			else
-				to_chat(M, "<span class='userdanger'>[user] ties \the [src] over your neck!</span>")
+				to_chat(M, "<span class='userdanger'>[user]把[src]套在了你的脖子上！</span>")
 			playsound(user.loc, 'sound/foley/noosed.ogg', 50, 1, -1)
 			return TRUE
-	user.visible_message("<span class='warning'>[user] fails to tie \the [src] over [M]'s neck!</span>")
-	to_chat(user, "<span class='warning'>You fail to tie \the [src] over [M]'s neck!</span>")
+	user.visible_message("<span class='warning'>[user]没能把[src]套到[M]的脖子上！</span>")
+	to_chat(user, "<span class='warning'>你没能把[src]套到[M]的脖子上！</span>")
 	return FALSE
 
 /obj/structure/noose/post_buckle_mob(mob/living/M)
@@ -99,7 +99,7 @@
 						if(head.dismemberable)
 							head.dismember()
 		else
-			buckled_mob.visible_message("<span class='danger'>[buckled_mob] drops from the noose!</span>")
+			buckled_mob.visible_message("<span class='danger'>[buckled_mob]从绞索上掉了下来！</span>")
 			buckled_mob.Knockdown(60)
 			buckled_mob.pixel_y = initial(buckled_mob.pixel_y)
 			buckled_mob.pixel_x = initial(buckled_mob.pixel_x)

@@ -12,15 +12,15 @@
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
 	if(is_banned_from(user.ckey, "Emote"))
-		to_chat(user, "<span class='boldwarning'>I cannot send custom emotes (banned).</span>")
+		to_chat(user, "<span class='boldwarning'>我无法发送自定义表情动作（已被封禁）。</span>")
 		return FALSE
 	else if(QDELETED(user))
 		return FALSE
 	else if(user.client && user.client.prefs.muted & MUTE_IC)
-		to_chat(user, "<span class='boldwarning'>I cannot send IC messages (muted).</span>")
+		to_chat(user, "<span class='boldwarning'>我无法发送 IC 消息（已被禁言）。</span>")
 		return FALSE
 	else if(!params)
-		var/custom_emote = copytext(sanitize(input("What does your character subtly do?") as text|null), 1, MAX_MESSAGE_LEN)
+		var/custom_emote = copytext(sanitize(input("你的角色悄悄做了什么？") as text|null), 1, MAX_MESSAGE_LEN)
 		if(custom_emote)
 			message = custom_emote
 			emote_type = EMOTE_VISIBLE
@@ -45,31 +45,31 @@
 	var/distance = 4
 	var/list/ghostless = get_hearers_in_view(distance, src)
 	var/list/mobsinview = list()
-	var/list/mobspickable = list("1-Tile Range", "Same Tile")
+	var/list/mobspickable = list("1格范围", "同格")
 	for(var/mob/living/L in ghostless)
 		if(L.stat == CONSCIOUS && L != src) // To those conscious only. Slightly more expensive but subtle is not spammed
 			mobsinview += L
 			if(!L.rogue_sneaking && L.name != "Unknown") // do not let hidden/unknown targets be added to list
 				mobspickable += L
-	var/choice = input(src, "Pick a target?", "Subtle Emote") in mobspickable
+	var/choice = input(src, "选择一个目标？", "细微表情") in mobspickable
 	to_chat(src, "<i>[message]</i>")
 
 	var/user_loc
-	if(choice == "1-Tile Range")
+	if(choice == "1格范围")
 		distance = 1
-	else if(choice == "Same Tile")
+	else if(choice == "同格")
 		distance = 0
 	else // we picked a target
 		var/mob/living/target = choice
 		if(!isliving(target) || QDELETED(target)) // mob has since been deleted/destroyed, skip
-			to_chat(src, span_boldwarning("The subtle emote target no longer exists, try again."))
+			to_chat(src, span_boldwarning("细微表情的目标已不存在，请重试。"))
 			return
 		user_loc = get_turf(src)
 		if(get_dist(get_turf(target), user_loc) <= distance)
 			to_chat(target, "<i>[message]</i>")
 			target.playsound_local(target, 'sound/misc/subtle_emote.ogg', 100)
 		else
-			to_chat(src, span_boldwarning("The subtle emote target moved out of view, try again."))
+			to_chat(src, span_boldwarning("细微表情的目标移出了视野，请重试。"))
 		return
 
 	if(!mobsinview.len) // nobody to target, don't test distance

@@ -584,32 +584,32 @@
 		source.flash_fullscreen("redflash3")
 		if(prob(70))
 			if(devout_spiked)
-				source.visible_message(span_notice("[source] goes very still, jaw set, as the chastity spikes bite deep — enduring it with deliberate composure."))
+				source.visible_message(span_notice("[source]骤然静止，紧咬牙关，在贞操尖刺深深咬入时依旧刻意保持镇定。"))
 			else if(masochist_spiked)
-				source.visible_message(span_warning("[source] shudders and whimpers as the chastity spikes bite in, seeming to savor the punishment."))
+				source.visible_message(span_warning("[source]在贞操尖刺咬入时颤抖呜咽，仿佛正在享受这份惩罚。"))
 			else
-				source.visible_message(span_warning("[source] writhes in pain as the chastity spikes dig bloody into their tortured flesh!"))
+				source.visible_message(span_warning("[source]在痛苦中扭动，贞操尖刺血淋淋地扎进了他们饱受折磨的血肉里！"))
 		return TRUE
 
 	if(pain_amt >= PAIN_MED_EFFECT)
 		source.flash_fullscreen("redflash2")
 		if(prob(50))
 			if(devout_spiked)
-				source.visible_message(span_notice("[source] breathes carefully through the bite of the chastity spikes, expression drawn but steady."))
+				source.visible_message(span_notice("[source]小心地调匀呼吸，忍受贞操尖刺的啃咬，神情绷紧却仍旧平稳。"))
 			else if(masochist_spiked)
-				source.visible_message(span_warning("[source] trembles as the chastity spikes grind in, breathing out an eager, pained moan."))
+				source.visible_message(span_warning("[source]在贞操尖刺碾入时微微发颤，呼出带着渴求与痛楚的呻吟。"))
 			else
-				source.visible_message(span_warning("[source] shudders in pain as the chastity spikes dig into their flesh!"))
+				source.visible_message(span_warning("[source]在贞操尖刺扎进血肉时痛得发抖！"))
 		return TRUE
 
 	source.flash_fullscreen("redflash1")
 	if(prob(30))
 		if(devout_spiked)
-			source.visible_message(span_notice("[source] shifts slightly as the chastity spikes catch, then stills themselves with quiet deliberateness."))
+			source.visible_message(span_notice("[source]在贞操尖刺挂住时微微挪动了一下，随后又安静而克制地稳住了自己。"))
 		else if(masochist_spiked)
-			source.visible_message(span_warning("[source] shivers as the chastity spikes tease their flesh, eyes half-lidded."))
+			source.visible_message(span_warning("[source]在贞操尖刺撩拨血肉时轻轻发颤，双眼半阖。"))
 		else
-			source.visible_message(span_warning("[source] groans as the chastity spikes prod their flesh..."))
+			source.visible_message(span_warning("[source]在贞操尖刺戳弄血肉时低声呻吟......"))
 	return TRUE
 
 /// Movement reaction for chastity devices — dispatched by the base on_wearer_moved handler.
