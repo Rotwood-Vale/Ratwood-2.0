@@ -1,0 +1,20 @@
+name: PR 静态分析
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 获取含 PR 源码
+        uses: actions/checkout@v4
+      
+      - name: 下载静态分析器
+        run: |
+          bash tools/ci/install_spaceman_dmm.sh dreamchecker
+      
+      - name: 分析源码
+        run: |
+          ~/dreamchecker
