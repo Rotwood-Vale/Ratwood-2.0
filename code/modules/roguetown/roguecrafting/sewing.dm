@@ -499,7 +499,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/basiceast
-	name = "simple dobo robe"
+	name = "simple dopo robe"
 	result = list(/obj/item/clothing/suit/roguetown/armor/basiceast)
 	reqs = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 2)

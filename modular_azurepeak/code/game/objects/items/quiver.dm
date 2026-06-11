@@ -188,7 +188,7 @@
 /obj/item/quiver/Parrows/Initialize(mapload)
 	. = ..()
 
-/obj/item/quiver/bolts/ancient/Initialize(mapload)
+/obj/item/quiver/boltsancient/Initialize(mapload)
 	..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/bolt/ancient/A = new()

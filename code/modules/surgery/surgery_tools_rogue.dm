@@ -503,3 +503,14 @@
 	wdefense = 3
 	wbalance = 1
 	tool_behaviour = TOOL_IMPROVISED_RETRACTOR
+
+/obj/item/rogueweapon/surgery/scalpel/improv
+	name = "improvised Scalpel"
+	desc = "A crude stone blade, it will cut but the precision is to be desired"
+	icon_state = "scalpel_wood"
+	force = 8
+	throwforce = 8
+	wdefense = 2
+	wbalance = 1
+	tool_behaviour = TOOL_IMPROVISED_SCALPEL
+	sharpness = IS_SHARP

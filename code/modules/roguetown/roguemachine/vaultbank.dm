@@ -1,6 +1,6 @@
 /obj/structure/roguemachine/vaultbank
 	name = "\improper JAWBANK"
-	desc = "Collects and secures the treasury of the Grand Duchy of the vale."
+	desc = "Collects and secures the treasury of the Grand Duchy of the realm."
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "jawbank"
 	density = TRUE

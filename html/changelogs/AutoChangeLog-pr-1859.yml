@@ -1,0 +1,4 @@
+author: "Ratwood Lore Team"
+delete-after: True
+changes:
+  - rscdel: "Removed Valley Accent"

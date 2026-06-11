@@ -391,7 +391,9 @@
 		/datum/sprite_accessory/tail/tailmaw2,
 		/datum/sprite_accessory/tail/tailmaw2_head,
 		/datum/sprite_accessory/tail/tailmaw2_stripes,
-		/datum/sprite_accessory/tail/tailmaw2_headstripes
+		/datum/sprite_accessory/tail/tailmaw2_headstripes,
+		/datum/sprite_accessory/tail/shadekin,
+		/datum/sprite_accessory/tail/shadekin/short,
 		)
 
 /datum/customizer/organ/tail/dullahan

@@ -386,6 +386,15 @@
 	color_keys = 2
 	color_key_names = list("Tail", "Tip")
 
+/datum/sprite_accessory/tail/shadekin
+	name = "Shadekin"
+	icon_state = "shadekin"
+	can_wag = TRUE
+
+/datum/sprite_accessory/tail/shadekin/short
+	name = "Shadekin (Short)"
+	icon_state = "shadekinshort"
+
 /datum/sprite_accessory/tail/owl
 	name = "Owl"
 	icon_state = "owl"

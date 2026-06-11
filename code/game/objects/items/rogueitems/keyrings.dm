@@ -24,9 +24,9 @@
 /obj/item/storage/keyring/Initialize(mapload)
 	. = ..()
 	for(var/X in keys)
-		var/obj/item/key/new_key = new X(loc)
-		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, new_key, null, TRUE, TRUE))
-			qdel(new_key)
+		var/obj/item/new_item = new X(loc)
+		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, new_item, null, TRUE, TRUE))
+			qdel(new_item)
 
 	update_icon()
 	update_desc()
@@ -55,9 +55,9 @@
 
 /obj/item/storage/keyring/proc/update_desc()
 	if(contents.len)
-		desc = span_info("Holds \Roman[contents.len] key\s, including:")
-		for(var/obj/item/roguekey/KE in contents)
-			desc += span_info("\n- [KE.name ? "A [KE.name]." : "	An unknown key."]")
+		desc = span_info("Holds \Roman[contents.len] item\s, including:")
+		for(var/obj/item/I in contents)
+			desc += span_info("\n- [I.name ? "A [I.name]." : "\tAn unknown item."]")
 	else
 		desc = ""
 
@@ -215,13 +215,20 @@
 	picks = list(/obj/item/lockpick)
 
 /obj/item/storage/keyring/sheriff
-	keys = list(/obj/item/roguekey/sheriff, /obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor, /obj/item/roguekey/armory, /obj/item/roguekey/sergeant, /obj/item/roguekey/knight)
+	keys = list(/obj/item/roguekey/sheriff, /obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor, /obj/item/roguekey/armory, /obj/item/roguekey/sergeant, /obj/item/roguekey/knight, /obj/item/seal/marshal)
+
+
+/obj/item/storage/keyring/watchcaptain
+	keys = list(/obj/item/roguekey/sheriff, /obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor, /obj/item/roguekey/armory, /obj/item/roguekey/sergeant, /obj/item/roguekey/knight, /obj/item/seal/watchcaptain)
+
+/obj/item/storage/keyring/kcaptain
+	keys = list(/obj/item/roguekey/sheriff, /obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor, /obj/item/roguekey/armory, /obj/item/roguekey/sergeant, /obj/item/roguekey/knight, /obj/item/seal/knight_captain)
 
 /obj/item/storage/keyring/judge
 	keys = list(/obj/item/roguekey/sheriff, /obj/item/roguekey/armory, /obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor, /obj/item/roguekey/sergeant)
 
 /obj/item/storage/keyring/councillor
-	keys = list(/obj/item/roguekey/sheriff, /obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor)
+	keys = list(/obj/item/roguekey/sheriff, /obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor, /obj/item/seal/councillor)
 
 /obj/item/storage/keyring/squire
 	keys = list(/obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor, /obj/item/roguekey/armory) //don't need to be poor
@@ -245,7 +252,7 @@
 	keys = list(/obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor, /obj/item/roguekey/armory)
 
 /obj/item/storage/keyring/merchant
-	keys = list(/obj/item/roguekey/shop, /obj/item/roguekey/merchant)
+	keys = list(/obj/item/roguekey/shop, /obj/item/roguekey/merchant, /obj/item/seal/merchant)
 
 /obj/item/storage/keyring/mguard
 	keys = list(/obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor, /obj/item/roguekey/armory)
@@ -256,33 +263,33 @@
 /obj/item/storage/keyring/innkeep
 	keys = list(/obj/item/roguekey/tavern, /obj/item/roguekey/tavernkeep, /obj/item/roguekey/roomhunt, /obj/item/roguekey/roomix, /obj/item/roguekey/roomviii, /obj/item/roguekey/roomvii, /obj/item/roguekey/roomvi, /obj/item/roguekey/roomv, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomii, /obj/item/roguekey/roomi, /obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomiii, /obj/item/roguekey/fancyroomiv, /obj/item/roguekey/fancyroomv)
 
-/obj/item/storage/keyring/innfancyi // 3 Keys
+/obj/item/storage/keyring/innfancyi // 5 Keys
 	name = "luxury room I keyring"
-	keys = list(/obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomi)
+	keys = list(/obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomi)
 
 /obj/item/storage/keyring/innfancyii
 	name = "luxury room II keyring"
-	keys = list(/obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomii)
+	keys = list(/obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomii)
 
 /obj/item/storage/keyring/innfancyiii
 	name = "luxury room III keyring"
-	keys = list(/obj/item/roguekey/fancyroomiii, /obj/item/roguekey/fancyroomiii, /obj/item/roguekey/fancyroomiii)
+	keys = list(/obj/item/roguekey/fancyroomiii, /obj/item/roguekey/fancyroomiii, /obj/item/roguekey/fancyroomiii, /obj/item/roguekey/fancyroomiii, /obj/item/roguekey/fancyroomiii)
 
 /obj/item/storage/keyring/innfancyiv
 	name = "luxury room IV keyring"
-	keys = list(/obj/item/roguekey/fancyroomiv, /obj/item/roguekey/fancyroomiv, /obj/item/roguekey/fancyroomiv)
+	keys = list(/obj/item/roguekey/fancyroomiv, /obj/item/roguekey/fancyroomiv, /obj/item/roguekey/fancyroomiv, /obj/item/roguekey/fancyroomiv, /obj/item/roguekey/fancyroomiv)
 
 /obj/item/storage/keyring/innfancyv
 	name = "luxury room V keyring"
 	keys = list(/obj/item/roguekey/fancyroomv, /obj/item/roguekey/fancyroomv, /obj/item/roguekey/fancyroomv)
 
-/obj/item/storage/keyring/innhunt // 4 keys
+/obj/item/storage/keyring/innhunt // 5 keys
 	name = "HUNT room keyring"
-	keys = list(/obj/item/roguekey/roomhunt, /obj/item/roguekey/roomhunt, /obj/item/roguekey/roomhunt, /obj/item/roguekey/roomhunt)
+	keys = list(/obj/item/roguekey/roomhunt, /obj/item/roguekey/roomhunt, /obj/item/roguekey/roomhunt, /obj/item/roguekey/roomhunt, /obj/item/roguekey/roomhunt)
 
 
 /obj/item/storage/keyring/priest
-	keys = list(/obj/item/roguekey/priest, /obj/item/roguekey/church, /obj/item/roguekey/graveyard)
+	keys = list(/obj/item/roguekey/priest, /obj/item/roguekey/church, /obj/item/roguekey/graveyard, /obj/item/seal/prelate)
 
 /obj/item/storage/keyring/churchie
 	keys = list(/obj/item/roguekey/church, /obj/item/roguekey/graveyard, /obj/item/roguekey/keeper)
@@ -294,13 +301,41 @@
 	keys = list(/obj/item/roguekey/puritan, /obj/item/roguekey/inquisition)
 
 /obj/item/storage/keyring/nightman
-	keys = list(/obj/item/roguekey/nightman, /obj/item/roguekey/nightmaiden)
+	keys = list(/obj/item/roguekey/nightman, /obj/item/roguekey/nightmaiden, /obj/item/seal/nightmaster)
+
+/obj/item/storage/keyring/bathsi // 4 Keys
+	name = "baths room I keyring"
+	keys = list(/obj/item/roguekey/nightmaiden/rooms/i, /obj/item/roguekey/nightmaiden/rooms/i, /obj/item/roguekey/nightmaiden/rooms/i, /obj/item/roguekey/nightmaiden/rooms/i)
+
+/obj/item/storage/keyring/bathsii
+	name = "baths room II keyring"
+	keys = list(/obj/item/roguekey/nightmaiden/rooms/ii, /obj/item/roguekey/nightmaiden/rooms/ii, /obj/item/roguekey/nightmaiden/rooms/ii, /obj/item/roguekey/nightmaiden/rooms/ii)
+
+/obj/item/storage/keyring/bathsiii
+	name = "baths room III keyring"
+	keys = list(/obj/item/roguekey/nightmaiden/rooms/iii, /obj/item/roguekey/nightmaiden/rooms/iii, /obj/item/roguekey/nightmaiden/rooms/iii, /obj/item/roguekey/nightmaiden/rooms/iii)
+
+/obj/item/storage/keyring/bathsiv
+	name = "baths room IV keyring"
+	keys = list(/obj/item/roguekey/nightmaiden/rooms/iv, /obj/item/roguekey/nightmaiden/rooms/iv, /obj/item/roguekey/nightmaiden/rooms/iv, /obj/item/roguekey/nightmaiden/rooms/iv)
+
+/obj/item/storage/keyring/bathsv
+	name = "baths room V keyring"
+	keys = list(/obj/item/roguekey/nightmaiden/rooms/v, /obj/item/roguekey/nightmaiden/rooms/v, /obj/item/roguekey/nightmaiden/rooms/v, /obj/item/roguekey/nightmaiden/rooms/v)
+
+/obj/item/storage/keyring/bathspunish
+	name = "baths punishment room keyring"
+	keys = list(/obj/item/roguekey/nightmaiden/rooms/punish, /obj/item/roguekey/nightmaiden/rooms/punish, /obj/item/roguekey/nightmaiden/rooms/punish, /obj/item/roguekey/nightmaiden/rooms/punish)
+
+/obj/item/storage/keyring/bathssteam
+	name = "baths steam room keyring"
+	keys = list(/obj/item/roguekey/nightmaiden/rooms/steam, /obj/item/roguekey/nightmaiden/rooms/steam, /obj/item/roguekey/nightmaiden/rooms/steam, /obj/item/roguekey/nightmaiden/rooms/steam)
 
 /obj/item/storage/keyring/hand
-	keys = list(/obj/item/roguekey/hand, /obj/item/roguekey/steward, /obj/item/roguekey/tavern, /obj/item/roguekey/church, /obj/item/roguekey/walls, /obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/manor, /obj/item/roguekey/graveyard, /obj/item/roguekey/armory, /obj/item/roguekey/sergeant, /obj/item/roguekey/knight, /obj/item/roguekey/servant)
+	keys = list(/obj/item/roguekey/hand, /obj/item/roguekey/steward, /obj/item/roguekey/tavern, /obj/item/roguekey/church, /obj/item/roguekey/walls, /obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/manor, /obj/item/roguekey/graveyard, /obj/item/roguekey/armory, /obj/item/roguekey/sergeant, /obj/item/roguekey/knight, /obj/item/roguekey/servant, /obj/item/seal/hand)
 
 /obj/item/storage/keyring/steward
-	keys = list(/obj/item/roguekey/steward, /obj/item/roguekey/garrison, /obj/item/roguekey/manor, /obj/item/roguekey/servant)
+	keys = list(/obj/item/roguekey/steward, /obj/item/roguekey/garrison, /obj/item/roguekey/manor, /obj/item/roguekey/servant, /obj/item/seal/steward)
 
 /obj/item/storage/keyring/dungeoneer
 	keys = list(/obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor, /obj/item/roguekey/armory)
@@ -318,13 +353,37 @@
 	keys = list(/obj/item/roguekey/manor, /obj/item/roguekey/royal, /obj/item/roguekey/garrison, /obj/item/roguekey/servant)
 
 /obj/item/storage/keyring/lord
-	keys = list(/obj/item/roguekey/hand, /obj/item/roguekey/steward, /obj/item/roguekey/tavern, /obj/item/roguekey/church, /obj/item/roguekey/walls, /obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/manor, /obj/item/roguekey/graveyard, /obj/item/roguekey/royal, /obj/item/roguekey/armory, /obj/item/roguekey/sergeant, /obj/item/roguekey/knight, /obj/item/roguekey/servant)
+	keys = list(/obj/item/roguekey/hand, /obj/item/roguekey/steward, /obj/item/roguekey/tavern, /obj/item/roguekey/church, /obj/item/roguekey/walls, /obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/manor, /obj/item/roguekey/graveyard, /obj/item/roguekey/royal, /obj/item/roguekey/armory, /obj/item/roguekey/sergeant, /obj/item/roguekey/knight, /obj/item/roguekey/servant, /obj/item/seal/crown)
 
 /obj/item/storage/keyring/heir
 	keys = list(/obj/item/roguekey/manor, /obj/item/roguekey/heir, /obj/item/roguekey/garrison, /obj/item/roguekey/servant)
 
 /obj/item/storage/keyring/heir/nerd
 	keys = list(/obj/item/roguekey/manor, /obj/item/roguekey/heir, /obj/item/roguekey/garrison, /obj/item/roguekey/servant, /obj/item/roguekey/tower)
+
+/obj/item/storage/keyring/manor/guestroom/i // 2 Guestroom Keys + 2 Manor Keys
+	name = "Manor Guestroom I Keyring"
+	keys = list(/obj/item/roguekey/manor/guestroom/i, /obj/item/roguekey/manor/guestroom/i, /obj/item/roguekey/manor, /obj/item/roguekey/manor)
+
+/obj/item/storage/keyring/manor/guestroom/ii
+	name = "Manor Guestroom II Keyring"
+	keys = list(/obj/item/roguekey/manor/guestroom/ii, /obj/item/roguekey/manor/guestroom/ii, /obj/item/roguekey/manor, /obj/item/roguekey/manor)
+
+/obj/item/storage/keyring/manor/guestroom/iii
+	name = "Manor Guestroom III Keyring"
+	keys = list(/obj/item/roguekey/manor/guestroom/iii, /obj/item/roguekey/manor/guestroom/iii, /obj/item/roguekey/manor, /obj/item/roguekey/manor)
+
+/obj/item/storage/keyring/manor/counsilroom/i // 2 Counsilroom Keys
+	name = "Counsillor's Room I Keyring"
+	keys = list(/obj/item/roguekey/manor/counsilroom/i, /obj/item/roguekey/manor/counsilroom/i)
+
+/obj/item/storage/keyring/manor/counsilroom/ii // 2 Counsilroom Keys
+	name = "Counsillor's Room II Keyring"
+	keys = list(/obj/item/roguekey/manor/counsilroom/ii, /obj/item/roguekey/manor/counsilroom/ii)
+
+/obj/item/storage/keyring/manor/counsilroom/iii // 2 Counsilroom Keys
+	name = "Counsillor's Room III Keyring"
+	keys = list(/obj/item/roguekey/manor/counsilroom/iii, /obj/item/roguekey/manor/counsilroom/iii)
 
 /obj/item/storage/keyring/mageapprentice
 	keys = list(/obj/item/roguekey/manor, /obj/item/roguekey/tower)
@@ -333,7 +392,7 @@
 	keys = list(/obj/item/roguekey/farm, /obj/item/roguekey/apartments/stable1, /obj/item/roguekey/apartments/stable2)
 
 /obj/item/storage/keyring/guildmaster
-	keys = list(/obj/item/roguekey/crafterguild, /obj/item/roguekey/tailor, /obj/item/roguekey/craftermaster)
+	keys = list(/obj/item/roguekey/crafterguild, /obj/item/roguekey/tailor, /obj/item/roguekey/craftermaster, /obj/item/seal/guildmaster)
 
 /obj/item/storage/keyring/tailor
 	keys = list(/obj/item/roguekey/crafterguild, /obj/item/roguekey/tailor)
@@ -342,7 +401,7 @@
 	keys = list(/obj/item/roguekey/vampire, /obj/item/roguekey/vampire/guest, /obj/item/roguekey/vampire/maid)
 
 /obj/item/storage/keyring/wardenmaster
-	keys = list(/obj/item/roguekey/sheriff, /obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor, /obj/item/roguekey/armory, /obj/item/roguekey/sergeant, /obj/item/roguekey/warden)
+	keys = list(/obj/item/roguekey/sheriff, /obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor, /obj/item/roguekey/armory, /obj/item/roguekey/sergeant, /obj/item/roguekey/warden, /obj/item/seal/master_warden)
 
 /obj/item/storage/keyring/tribalchief
 	keys = list(/obj/item/roguekey/tribal, /obj/item/roguekey/tribalchief)

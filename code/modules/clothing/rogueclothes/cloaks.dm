@@ -1703,7 +1703,7 @@
 
 /obj/item/clothing/cloak/wardencloak
 	name = "warden cloak"
-	desc = "A cloak worn by the Wardens of the vale's Forests"
+	desc = "A cloak worn by the Wardens of the realm's Forests"
 	icon_state = "wardencloak"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
@@ -1901,7 +1901,7 @@
 
 /obj/item/clothing/cloak/captain
 	name = "captain's cape"
-	desc = "A cape with a gold embroided heraldry of the vale."
+	desc = "A cape with a gold embroided heraldry of the realm."
 	icon = 'icons/roguetown/clothing/special/captain.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/captain.dmi'
 	sleeved = 'icons/roguetown/clothing/special/onmob/captain.dmi'
@@ -1934,7 +1934,7 @@
 
 /obj/item/clothing/cloak/kazengun
 	name = "jinbaori"
-	desc = "A simple kind of Kazengunite surcoat, worn here in the distant battlefields of Rotwood Vale to differentiate friend from foe."
+	desc = "A simple kind of Kazengunite surcoat, worn here in these distant battlefields, so far from its homelands, to differentiate friend from foe."
 	icon_state = "kazenguncoat"
 	item_state = "kazenguncoat"
 	detail_tag = "_detail"

@@ -250,6 +250,15 @@
 	icon_state = "ancientsh"
 	smeltresult = /obj/item/ingot/aaslag
 
+/obj/item/rogueweapon/shield/tower/metal/ancient/getonmobprop(tag)
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.8,"sx" = -5,"sy" = -1,"nx" = 6,"ny" = -1,"wx" = 0,"wy" = -2,"ex" = 0,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
+			if("onback")
+				return list("shrink" = 0.8,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
+	return ..()
+
 /obj/item/rogueweapon/shield/tower/metal/ancient/decrepit
 	name = "decrepit shield"
 	desc = "A hefty tower shield, wrought from frayed bronze. Looped with dried kelp and reeking of saltwater, you'd assume that this had been fished out from the remains of a long-sunken warship.. alongside its former legionnaire."
@@ -376,10 +385,18 @@
 
 /obj/item/rogueweapon/shield/buckler/ancient
 	name = "ancient buckler"
-	desc = "An object once before its time, now out of it. The artisan's hammerstrikes are still visible in the mottled surface, yet \
-	the encroach of rust and rot threatens even this memory."
+	desc = "A rounded parrying shield, cast from polished gilbranze. Despite its unseemly, brittle appearance, the scars inflicted by \
+	reflected blades only faintly mar the unnatural craftsmanship."
 	icon_state = "ancient_buckler"
 	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/rogueweapon/shield/buckler/ancient/decrepit
+	name = "decrepit buckler"
+	desc = "An object once before its time, now out of it. The artisan's hammerstrikes are still visible in the mottled surface, yet \
+	the encroach of rust and rot threatens even this memory."
+	force = 12
+	throwforce = 6
+	max_integrity = 40
 
 /obj/item/rogueweapon/shield/heater
 	name = "heater shield"
@@ -455,7 +472,7 @@
 
 /obj/item/rogueweapon/shield/capbuckler // unique, better buckler for knight captain
 	name = "'Order'"
-	desc = "A special buckler shield made out of blacksteel for the captain of the guard, adorned with the vale's crest."
+	desc = "A special buckler shield made out of blacksteel for the captain of the guard, adorned with the realm's crest."
 	icon_state = "capbuckler"
 	icon = 'icons/roguetown/weapons/special/captain.dmi'
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK

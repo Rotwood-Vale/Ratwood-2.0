@@ -1,0 +1,11 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes:
+  - rscadd: "adds things to the universal accent"
+  - rscadd: "\"zaping\" -> \"ravaging\""
+  - rscadd: "\"bestie\" -> \"friend\""
+  - rscadd: "\"besties\" -> \"friends\""
+  - rscadd: "\"totes\" -> \"totally\""
+  - rscadd: "\"delish\" -> \"delicious\""
+  - rscadd: "\"gyaru\" -> \"delinquent\""
+  - rscadd: "\"gyarus\" -> \"delinquents\""

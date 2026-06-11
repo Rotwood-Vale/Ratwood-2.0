@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Box,
   Button,
@@ -44,6 +44,80 @@ const RIMS = [
   { key: 'inquisition', label: 'Inquisition (Crimson)' },
 ];
 
+const STAMP_PREVIEW_STYLE: Record<string, React.CSSProperties> = {
+  royal: {
+    display: 'inline-block', width: '64px', height: '64px', borderRadius: '50%',
+    border: '3px solid #4a1a6e', background: '#f9f3e3', lineHeight: '58px',
+    fontSize: '8px', fontWeight: 'bold', color: '#4a1a6e', textAlign: 'center', letterSpacing: '1px',
+  },
+  inquisitor: {
+    display: 'inline-block', width: '64px', height: '64px', borderRadius: '50%',
+    border: '3px solid #6b0000', background: '#fff8f5', lineHeight: '58px',
+    fontSize: '8px', fontWeight: 'bold', color: '#6b0000', textAlign: 'center',
+  },
+  merchant: {
+    display: 'inline-block', width: '64px', height: '64px', borderRadius: '50%',
+    border: '3px solid #8b6914', background: '#fdfbe8', lineHeight: '58px',
+    fontSize: '8px', fontWeight: 'bold', color: '#8b6914', textAlign: 'center',
+  },
+  steward: {
+    display: 'inline-block', width: '64px', height: '64px', borderRadius: '50%',
+    border: '3px solid #1a3a1a', background: '#f5fdf5', lineHeight: '58px',
+    fontSize: '8px', fontWeight: 'bold', color: '#1a3a1a', textAlign: 'center',
+  },
+  kingsfield: {
+    display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+    width: '64px', height: '64px', borderRadius: '50%',
+    border: '3px solid #1a2e4a', background: '#eef4ff',
+    fontSize: '8px', fontWeight: 'bold', color: '#1a2e4a', textAlign: 'center',
+  },
+  kf_academy: {
+    display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+    width: '64px', height: '64px', borderRadius: '50%',
+    border: '3px double #2a0a6e', background: '#f4f0ff',
+    fontSize: '7px', fontWeight: 'bold', color: '#2a0a6e', textAlign: 'center',
+    boxShadow: 'inset 0 0 8px #8060d0',
+  },
+  kf_army: {
+    display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+    width: '64px', height: '64px', borderRadius: '50%',
+    border: '3px solid #1c1c1c', background: '#e8e8ec',
+    fontSize: '7px', fontWeight: 'bold', color: '#1c1c1c', textAlign: 'center', letterSpacing: '1px',
+  },
+  kf_tax: {
+    display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+    width: '64px', height: '64px', borderRadius: '50%',
+    border: '2px solid #6b4400', background: '#fffae8',
+    fontSize: '6px', fontWeight: 'bold', color: '#6b4400', textAlign: 'center', lineHeight: '1.5',
+  },
+  kf_council: {
+    display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+    width: '78px', height: '78px', borderRadius: '50%',
+    border: '4px double #8b6914', background: '#fffdf0',
+    fontSize: '9px', fontWeight: 'bold', color: '#7a5500', textAlign: 'center',
+    boxShadow: 'inset 0 0 12px #e0b840, 0 0 6px #c9a84c',
+  },
+};
+
+const STAMP_LABELS: Record<string, React.ReactNode> = {
+  royal: '✦ ROYAL ✦',
+  inquisitor: '✠ OTAVAN ✠',
+  merchant: '⚖ GUILD ⚖',
+  steward: '❧ STEWARD ❧',
+  kingsfield: <><span>CITY OF</span><span>KINGSFIELD</span></>,
+  kf_academy: <><span>KINGSFIELD</span><span>ACADEMY</span></>,
+  kf_army: <><span>KINGSFIELD</span><span>ARMY</span></>,
+  kf_tax: <><span>KINGSFIELD</span><span>TAXATION</span><span>OFFICE</span></>,
+  kf_council: <><span>HIGH</span><span>COUNCIL</span></>,
+};
+
+const RIM_PREVIEW_STYLE: Record<string, React.CSSProperties> = {
+  simple: { border: '8px solid #2c1a0e' },
+  ornate: { border: '12px double #8b6914', boxShadow: 'inset 0 0 14px #c9a84c' },
+  royal: { border: '10px solid #4a1a6e', boxShadow: 'inset 0 0 16px #7a3db5' },
+  inquisition: { border: '10px solid #6b0000', boxShadow: 'inset 0 0 14px #8b0000' },
+};
+
 export const FaxPanel = (props) => {
   const { act, data } = useBackend<Data>();
   const { hermes_list, player_list, master_exists } = data;
@@ -51,6 +125,8 @@ export const FaxPanel = (props) => {
   const [sendMode, setSendMode] = useState<'player' | 'hermes'>('player');
   const [sender, setSender] = useState('');
   const [body, setBody] = useState('');
+  const [previewBody, setPreviewBody] = useState('');
+  const [previewDirty, setPreviewDirty] = useState(false);
   const [stamp, setStamp] = useState('none');
   const [rim, setRim] = useState('none');
   const [itemPath, setItemPath] = useState('');
@@ -64,86 +140,42 @@ export const FaxPanel = (props) => {
     hermes_list?.[0]?.num ?? 1,
   );
 
-  const canSend =
-    (body.trim().length > 0 || stamp !== 'none' || itemPath.trim().length > 0) &&
-    sender.trim().length > 0 &&
-    (sendMode === 'hermes'
-      ? hermes_list?.length > 0
-      : master_exists && playerRecipient);
+  const trimmedSender = sender.trim();
+  const trimmedBody = body.trim();
+  const trimmedItemPath = itemPath.trim();
+  const trimmedItemName = itemName.trim();
+  const trimmedItemDesc = itemDesc.trim();
 
-  const stampPreviewStyle: Record<string, React.CSSProperties> = {
-    royal: {
-      display: 'inline-block', width: '64px', height: '64px', borderRadius: '50%',
-      border: '3px solid #4a1a6e', background: '#f9f3e3', lineHeight: '58px',
-      fontSize: '8px', fontWeight: 'bold', color: '#4a1a6e', textAlign: 'center', letterSpacing: '1px',
-    },
-    inquisitor: {
-      display: 'inline-block', width: '64px', height: '64px', borderRadius: '50%',
-      border: '3px solid #6b0000', background: '#fff8f5', lineHeight: '58px',
-      fontSize: '8px', fontWeight: 'bold', color: '#6b0000', textAlign: 'center',
-    },
-    merchant: {
-      display: 'inline-block', width: '64px', height: '64px', borderRadius: '50%',
-      border: '3px solid #8b6914', background: '#fdfbe8', lineHeight: '58px',
-      fontSize: '8px', fontWeight: 'bold', color: '#8b6914', textAlign: 'center',
-    },
-    steward: {
-      display: 'inline-block', width: '64px', height: '64px', borderRadius: '50%',
-      border: '3px solid #1a3a1a', background: '#f5fdf5', lineHeight: '58px',
-      fontSize: '8px', fontWeight: 'bold', color: '#1a3a1a', textAlign: 'center',
-    },
-    kingsfield: {
-      display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-      width: '64px', height: '64px', borderRadius: '50%',
-      border: '3px solid #1a2e4a', background: '#eef4ff',
-      fontSize: '8px', fontWeight: 'bold', color: '#1a2e4a', textAlign: 'center',
-    },
-    kf_academy: {
-      display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-      width: '64px', height: '64px', borderRadius: '50%',
-      border: '3px double #2a0a6e', background: '#f4f0ff',
-      fontSize: '7px', fontWeight: 'bold', color: '#2a0a6e', textAlign: 'center',
-      boxShadow: 'inset 0 0 8px #8060d0',
-    },
-    kf_army: {
-      display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-      width: '64px', height: '64px', borderRadius: '50%',
-      border: '3px solid #1c1c1c', background: '#e8e8ec',
-      fontSize: '7px', fontWeight: 'bold', color: '#1c1c1c', textAlign: 'center', letterSpacing: '1px',
-    },
-    kf_tax: {
-      display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-      width: '64px', height: '64px', borderRadius: '50%',
-      border: '2px solid #6b4400', background: '#fffae8',
-      fontSize: '6px', fontWeight: 'bold', color: '#6b4400', textAlign: 'center', lineHeight: '1.5',
-    },
-    kf_council: {
-      display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-      width: '78px', height: '78px', borderRadius: '50%',
-      border: '4px double #8b6914', background: '#fffdf0',
-      fontSize: '9px', fontWeight: 'bold', color: '#7a5500', textAlign: 'center',
-      boxShadow: 'inset 0 0 12px #e0b840, 0 0 6px #c9a84c',
-    },
+  const canSend = useMemo(
+    () => (trimmedBody.length > 0 || stamp !== 'none' || trimmedItemPath.length > 0)
+      && trimmedSender.length > 0
+      && (sendMode === 'hermes'
+        ? hermes_list?.length > 0
+        : master_exists && !!playerRecipient),
+    [trimmedBody, stamp, trimmedItemPath, trimmedSender, sendMode, hermes_list, master_exists, playerRecipient],
+  );
+
+  useEffect(() => {
+    setPreviewDirty(true);
+  }, [body]);
+
+  useEffect(() => {
+    if (!previewDirty) {
+      return;
+    }
+    const handle = setTimeout(() => {
+      setPreviewBody(body);
+      setPreviewDirty(false);
+    }, 450);
+    return () => clearTimeout(handle);
+  }, [previewDirty, body]);
+
+  const updatePreview = () => {
+    setPreviewBody(body);
+    setPreviewDirty(false);
   };
 
-  const stampLabels: Record<string, React.ReactNode> = {
-    royal: '✦ ROYAL ✦',
-    inquisitor: '✠ OTAVAN ✠',
-    merchant: '⚖ GUILD ⚖',
-    steward: '❧ STEWARD ❧',
-    kingsfield: <><span>CITY OF</span><span>KINGSFIELD</span></>,
-    kf_academy: <><span>KINGSFIELD</span><span>ACADEMY</span></>,
-    kf_army: <><span>KINGSFIELD</span><span>ARMY</span></>,
-    kf_tax: <><span>KINGSFIELD</span><span>TAXATION</span><span>OFFICE</span></>,
-    kf_council: <><span>HIGH</span><span>COUNCIL</span></>,
-  };
-
-  const rimPreviewStyle: Record<string, React.CSSProperties> = {
-    simple: { border: '8px solid #2c1a0e' },
-    ornate: { border: '12px double #8b6914', boxShadow: 'inset 0 0 14px #c9a84c' },
-    royal: { border: '10px solid #4a1a6e', boxShadow: 'inset 0 0 16px #7a3db5' },
-    inquisition: { border: '10px solid #6b0000', boxShadow: 'inset 0 0 14px #8b0000' },
-  };
+  const previewHtml = useMemo(() => previewBody.replace(/\n/g, '<br>'), [previewBody]);
 
   return (
     <Window width={900} height={760} title="Admin Fax Panel">
@@ -183,6 +215,11 @@ export const FaxPanel = (props) => {
                     onClick={() => setSendMode('hermes')}
                   >
                     By HERMES #
+                  </Button>
+                </Stack.Item>
+                <Stack.Item>
+                  <Button icon="sync" onClick={() => act('refresh')}>
+                    Refresh
                   </Button>
                 </Stack.Item>
               </Stack>
@@ -238,6 +275,14 @@ export const FaxPanel = (props) => {
           {/* Body */}
           <Stack.Item>
             <Section title="Letter Body">
+              <Box mb={1}>
+                <Button
+                  icon="sync"
+                  color={previewDirty ? 'average' : undefined}
+                  onClick={updatePreview}>
+                  Update Preview
+                </Button>
+              </Box>
               <TextArea
                 height="200px"
                 width="100%"
@@ -293,7 +338,7 @@ export const FaxPanel = (props) => {
           <Stack.Item>
             <Section title="Preview">
               {/* Outer box carries the rim border — mirrors the reading window frame */}
-              <Box style={rim !== 'none' ? rimPreviewStyle[rim] : {}}>
+              <Box style={rim !== 'none' ? RIM_PREVIEW_STYLE[rim] : {}}>
                 <Box
                   style={{
                     background: '#fdf6e3',
@@ -320,13 +365,13 @@ export const FaxPanel = (props) => {
                     <Box
                       color="black"
                       style={{ fontFamily: 'serif' }}
-                      dangerouslySetInnerHTML={{ __html: body.replace(/\n/g, '<br>') }}
+                      dangerouslySetInnerHTML={{ __html: previewHtml }}
                     />
                   )}
                   {stamp !== 'none' && (
                     <Box textAlign="center" mt={1}>
-                      <span style={stampPreviewStyle[stamp]}>
-                        {stampLabels[stamp]}
+                      <span style={STAMP_PREVIEW_STYLE[stamp]}>
+                        {STAMP_LABELS[stamp]}
                       </span>
                     </Box>
                   )}
@@ -352,7 +397,7 @@ export const FaxPanel = (props) => {
                     onChange={(e) => setItemPath((e.target as HTMLInputElement).value)}
                   />
                 </LabeledList.Item>
-                {itemPath.trim() && (
+                {trimmedItemPath && (
                   <>
                     <LabeledList.Item label="Item Name">
                       <input
@@ -412,14 +457,14 @@ export const FaxPanel = (props) => {
                   send_mode: sendMode,
                   recipient: playerRecipient,
                   hermes_num: hermesNum,
-                  item_path: itemPath.trim(),
-                  item_name: itemName.trim(),
-                  item_desc: itemDesc.trim(),
+                  item_path: trimmedItemPath,
+                  item_name: trimmedItemName,
+                  item_desc: trimmedItemDesc,
                   package_size: packageSize,
                 })
               }
             >
-              {itemPath.trim() ? 'Send Parcel' : 'Send Letter'}
+              {trimmedItemPath ? 'Send Parcel' : 'Send Letter'}
             </Button>
           </Stack.Item>
         </Stack>

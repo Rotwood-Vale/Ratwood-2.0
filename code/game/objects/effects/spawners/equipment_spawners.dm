@@ -377,7 +377,7 @@
 		/obj/item/clothing/mask/rogue/facemask/carved/rosemask = 1,
 		/obj/item/clothing/mask/rogue/facemask/carved/turqmask = 1,
 		/obj/item/clothing/mask/rogue/facemask/shadowfacemask = 1,
-		/obj/item/clothing/mask/rogue/goblin_mask = 1,
+		/obj/item/clothing/mask/rogue/goblin_mask = 2,
 		/obj/item/carvedgem/rose/statue/baotha = 10,
 		/obj/item/clothing/gloves/roguetown/plate/graggar = 8,
 		/obj/item/clothing/head/roguetown/helmet/heavy/graggar = 8,
@@ -411,7 +411,7 @@
 		/obj/item/book/granter/spell/blackstone/fetch = 10,
 		/obj/item/reagent_containers/glass/bottle/alchemical/spdpot = 10,
 		/obj/item/book/granter/spell/blackstone/bonechill = 10,
-		/obj/item/book/granter/spell/blackstone/skeleton = 5,
+		/obj/item/book/granter/spell/blackstone/skeleton = 1,//super powerful lich-style player skeleton spawner
 		/obj/item/book/granter/spell/blackstone/skeleton/lesser = 15,
 		/obj/item/book/granter/spell/blackstone/sicknessray = 15,
 		/obj/item/reagent_containers/glass/bottle/rogue/emberwine = 10,
@@ -441,9 +441,12 @@
 		/obj/effect/spawner/lootdrop/potion_poisons = 10,
 		/obj/item/reagent_containers/glass/bottle/alchemical/intpot = 5,
 		/obj/item/book/granter/spell/blackstone/bonechill = 10,
-		/obj/item/book/granter/spell/blackstone/skeleton = 5,
+		/obj/item/book/granter/spell/blackstone/skeleton = 1,//super powerful lich-style player skeleton spawner
 		/obj/item/book/granter/spell/blackstone/skeleton/lesser = 15,
 		/obj/item/book/granter/spell/blackstone/sicknessray = 15,
+		/obj/item/clothing/neck/roguetown/psicross/inhumen = 5,
+		/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient = 5,
+		/obj/item/clothing/neck/roguetown/psicross/inhumen/g = 2,
 	)
 /obj/effect/spawner/lootdrop/graggar
 	name = "graggar item spawner"
@@ -461,6 +464,8 @@
 		/obj/item/book/granter/spell/blackstone/fortitude = 5,
 		/obj/item/book/granter/spell/blackstone/enlarge = 10,
 		/obj/item/bomb = 10,
+		/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar = 5,
+		/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/bronze = 5,
 	)
 /obj/effect/spawner/lootdrop/matt
 	name = "matthios item spawner"
@@ -479,6 +484,7 @@
 		/obj/item/mattcoin = 10,
 		/obj/item/book/granter/spell/blackstone/invisibility = 10,
 		/obj/item/book/granter/spell/blackstone/fetch = 10,
+		/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios = 10,
 	)
 /obj/effect/spawner/lootdrop/baotha//add baothan ritual armor when we get around to that
 	name = "baotha item spawner"
@@ -492,12 +498,21 @@
 		/obj/item/reagent_containers/powder/starsugar = 10,
 		/obj/item/roguestatue/gold/loot = 10,
 		/obj/item/rogueweapon/woodstaff/ruby = 10,
-		/obj/item/rogueweapon/whip/spiderwhip = 10,
 		/obj/item/carvedgem/onyxa/spider = 10,
 		/obj/item/rogueweapon/shield/tower/spidershield = 10,
 		/obj/effect/spawner/lootdrop/potion_poisons = 5,
 		/obj/item/reagent_containers/glass/bottle/rogue/emberwine = 10,
 		/obj/item/reagent_containers/glass/bottle/alchemical/spidervenom_paralytic = 5,
+		/obj/item/clothing/shoes/roguetown/anklets/baotha = 10,
+		/obj/item/clothing/suit/roguetown/armor/leather/studded/baotha = 10,
+		/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha = 10,
+		/obj/item/clothing/head/roguetown/helmet/heavy/baotha = 10,
+		/obj/item/clothing/gloves/roguetown/chain/baotha = 10,
+		/obj/item/clothing/suit/roguetown/armor/plate/baotha = 10,
+		/obj/item/clothing/under/roguetown/platelegs/baotha = 10,
+		/obj/item/clothing/wrists/roguetown/bracers/baotha = 10,
+		/obj/item/rogueweapon/whip/spiderwhip/baotha = 10,
+		/obj/item/storage/belt/rogue/leather/plaquegold/baotha = 10,
 	)
 /obj/item/carvedgem/rose/statue/baotha
 	name = "baothan statuette"
