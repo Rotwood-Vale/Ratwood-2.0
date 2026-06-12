@@ -18,7 +18,6 @@
 		/datum/charflaw/limbloss/arm_r_irn,\
 		/datum/charflaw/limbloss/arm_l_stl,\
 		/datum/charflaw/limbloss/arm_r_stl,\
-
 		/datum/charflaw/eerie_beauty,\
 		/datum/charflaw/unsettling_beauty,\
 		/datum/charflaw/nudist,\
