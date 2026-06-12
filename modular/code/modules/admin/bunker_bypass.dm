@@ -1,5 +1,5 @@
 SUBSYSTEM_DEF(whitelist)
-	name = "Whitelist"
+	name = "白名单"
 	flags = SS_NO_FIRE
 	init_order = INIT_ORDER_WHITELIST
 	var/list/whitelist = list()
@@ -47,16 +47,16 @@ SUBSYSTEM_DEF(whitelist)
 	return (ckey && (ckey in SSwhitelist.whitelist))
 
 /client/proc/bunker_bypass()
-	set category = "-Server-"
-	set name = "Add Whitelist"
+	set category = "-服务器-"
+	set name = "添加白名单"
 
 	if(!check_rights())
 		return
 
-	var/selection = input("Who would you like to let in?", "CKEY", "") as text|null
+	var/selection = input("你想放谁进来？", "CKEY", "") as text|null
 	if(selection)
 		if(ckey(selection) in SSwhitelist.whitelist)
-			to_chat(src, span_warning("Player with ckey [selection] is already on the list."))
+			to_chat(src, span_warning("ckey 为[selection]的玩家已在名单中。"))
 			return
-		if(alert("Confirm: allow ckey [selection] to connect?", "", "Yes!", "No") == "Yes!")
+		if(alert("确认允许 ckey 为[selection]的玩家连接吗？", "", "是", "否") == "是")
 			SSwhitelist.add_entry_whitelist(selection, ckey)

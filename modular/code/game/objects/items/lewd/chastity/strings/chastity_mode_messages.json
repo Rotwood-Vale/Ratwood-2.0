@@ -1,38 +1,38 @@
 {
 	"chastity_front_close": [
-		"The front panel seals itself shut with a sound like a drawer locking. I've been closed off.",
-		"A faint mechanical grind, then nothing — the front is sealed. Touching myself through the slit is off the table.",
-		"The access slot clicks shut. Closed. I can stop trying.",
-		"Something shifts at the front and locks down. I press against it just to make sure. Yes, that's locked."
+		"前方挡板像抽屉上锁一样自行封死了。我被彻底关上了。",
+		"轻微的机械摩擦声过后，一切归于寂静——前面被封住了。隔着缝隙摸自己这条路算是走不通了。",
+		"接触口咔哒一声闭合了。关上了。我也该死心了。",
+		"前方有什么挪动后锁死了。我还故意顶上去确认了一下。没错，锁死了。"
 	],
 	"chastity_front_open": [
-		"The front panel pops open just slightly — a gap where there wasn't one. An invitation, or a trap.",
-		"Something inside gives way and I feel a faint rush of cooler air at the front. The slit is open.",
-		"The access panel clicks loose and settles open. I'm accessible again, for whatever that's worth.",
-		"There's a small, quiet release at the front. I can feel the change in the fit. Open."
+		"前方挡板微微弹开了一点——原本没有缝隙的地方出现了缝隙。是邀请，还是陷阱。",
+		"内部有什么松开了，我感觉到前方有一丝微凉的空气掠过。那道缝打开了。",
+		"接触挡板咔哒一声松开，停在开启的位置。我又可以被接触到了，尽管这未必是好事。",
+		"前方传来一声细小而安静的释放声。我能感觉到贴合感变了。打开了。"
 	],
 	"chastity_rear_close": [
-		"The back plate draws itself down and clicks flush. My rear is sealed off now.",
-		"The rear shield locks into place with a sound like a small bolt being drawn. Closed.",
-		"The back end seals shut, cold metal flush against me. That's that.",
-		"A click at the back — not painful, just final. The rear is locked away."
+		"后方挡板自行落下，咔哒一声严丝合缝。我的后面现在被封住了。",
+		"后方护盾像插上小栓一样锁进位置。关上了。",
+		"后端封死了，冰冷的金属紧贴着我。就这样了。",
+		"后方传来一声咔哒——不算疼，只是彻底。后面被锁起来了。"
 	],
 	"chastity_rear_open": [
-		"The rear shield releases with a dull clunk and I feel the pressure ease. Open.",
-		"Something clicks at my back and the plate shifts, giving way a little. The rear is accessible.",
-		"The back panel releases — I feel the metal separate from my skin slightly. Open again.",
-		"A soft mechanical release at my rear and the shield eases back. There's a gap now."
+		"后方护盾伴着一声沉闷的响动松开了，我感觉压迫感随之一轻。打开了。",
+		"我背后有什么咔哒一响，挡板挪开了一点。后面可以接触到了。",
+		"后方挡板松开了——我能感觉到金属稍稍离开了皮肤。又打开了。",
+		"我的后方传来一道轻柔的机械释放声，护盾向后退开。现在有缝隙了。"
 	],
 	"chastity_flat_enable": [
-		"The cage compresses slowly and steadily, flattening everything beneath it. There is no comfortable position for this.",
-		"Pressure builds at the front of the device as it tightens down, crushing me smooth. I feel terribly small.",
-		"The cage forces itself flat and takes everything with it, squeezing my bits into nothing. Mortifying.",
-		"Something tightens incrementally — I'm being pressed flat. The device doesn't care how wrong it feels."
+		"笼子缓慢而稳定地收紧，把底下的一切都一点点压平。对这东西来说根本不存在舒服的姿势。",
+		"装置前端随着收紧而不断积起压力，把我压得平平整整。我感觉自己渺小得可怕。",
+		"笼子强行把自己压成扁平，也把里面的一切一起带着压扁，把我的那点东西挤得几乎不剩。羞耻透顶。",
+		"有什么东西一点点越收越紧——我正在被压平。装置根本不在乎这感觉有多不对劲。"
 	],
 	"chastity_flat_disable": [
-		"The cage loosens and the compression eases. I feel myself slip back to normal, blood returning to places it wasn't.",
-		"The device releases its grip, slowly. The flattening pressure fades and I fill the space again.",
-		"Something unclicks and the cage relaxes its hold. I stop being pressed into nothing. Relief is complicated.",
-		"The crushing pressure releases. My bits remember how to exist again, sore and grateful."
+		"笼子松开了些，压迫感也随之缓和。我感觉自己慢慢恢复正常，血液重新流回原本到不了的地方。",
+		"装置慢慢放松了它的钳制。那股压平一切的力量褪去，我又重新填满了那片空间。",
+		"有什么东西咔哒一松，笼子也放缓了束缚。我不再被压成一片虚无。可这种解脱也很复杂。",
+		"那股碾压般的压力终于释放了。我的那点部位重新想起了该如何存在，酸痛，却也感激。"
 	]
 }

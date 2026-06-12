@@ -28,66 +28,66 @@
 	return is_human_part_visible(owner, HIDECROTCH)
 
 /datum/sprite_accessory/chastity/full
-	name = "Full Belt"
+	name = "全封贞操带"
 	icon_state = "cage_belt"
 	chastity_type = /obj/item/chastity
 
 /datum/sprite_accessory/chastity/cage
-	name = "Cage"
+	name = "贞操笼"
 	icon_state = "cage_standard"
 	chastity_type = /obj/item/chastity/chastity_cage
 
 /datum/sprite_accessory/chastity/anal
-	name = "Anal Shield"
+	name = "肛门护盾"
 	icon_state = "cage_belt_shield"
 	chastity_type = /obj/item/chastity/chastity_belt/anal
 
 /datum/sprite_accessory/chastity/spiked
-	name = "Spiked Cage"
+	name = "尖刺贞操笼"
 	icon_state = "cage_standard_spiked"
 	chastity_type = /obj/item/chastity/chastity_cage/spiked
 
 /datum/sprite_accessory/chastity/spiked_anal
-	name = "Spiked Cage with Anal"
+	name = "带肛门护盾的尖刺贞操笼"
 	icon_state = "cage_standard_spikeshield"
 	chastity_type = /obj/item/chastity/chastity_cage/spiked_anal
 
 /datum/sprite_accessory/chastity/spiked_belt
-	name = "Spiked Belt"
+	name = "尖刺贞操带"
 	icon_state = "cage_belt_spiked"
 	chastity_type = /obj/item/chastity/chastity_belt/spiked
 
 /datum/sprite_accessory/chastity/spiked_belt_anal
-	name = "Spiked Belt with Anal"
+	name = "带肛门护盾的尖刺贞操带"
 	icon_state = "cage_belt_spikeshield"
 	chastity_type = /obj/item/chastity/chastity_belt/spiked_anal
 
 /datum/sprite_accessory/chastity/flat
-	name = "Flat Cage"
+	name = "扁平贞操笼"
 	icon_state = "cage_flat"
 	chastity_type = /obj/item/chastity/chastity_cage/flat
 
 /datum/sprite_accessory/chastity/intersex
-	name = "Intersex Cage"
+	name = "双性贞操具"
 	icon_state = "cage_intersex"
 	chastity_type = /obj/item/chastity/intersex
 
 /datum/sprite_accessory/chastity/cursed_belt
-	name = "Cursed Belt"
+	name = "诅咒贞操带"
 	icon_state = "cage_cursedb"
 	chastity_type = /obj/item/chastity/cursed
 
 /datum/sprite_accessory/chastity/cursed_cage
-	name = "Cursed Cage"
+	name = "诅咒贞操笼"
 	icon_state = "cage_cursed_cock"
 	chastity_type = /obj/item/chastity/cursed
 
 /datum/sprite_accessory/chastity/cursed_flat
-	name = "Cursed Flat Cage"
+	name = "诅咒扁平贞操笼"
 	icon_state = "cage_cursed_flat"
 	chastity_type = /obj/item/chastity/cursed
 
 /datum/sprite_accessory/chastity/cursed_intersex
-	name = "Cursed Intersex"
+	name = "诅咒双性贞操具"
 	icon_state = "cage_cursed_intersex"
 	chastity_type = /obj/item/chastity/cursed

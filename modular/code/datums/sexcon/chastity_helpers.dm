@@ -138,9 +138,9 @@
 	if(!prob(50))
 		return FALSE
 
-	var/self_mess_msg = "[user] spills over [user.p_their()] own chastity!"
+	var/self_mess_msg = "[user]喷溅在了[user.p_their()]自己的贞操装置上！"
 	if(HAS_TRAIT(user, TRAIT_CHASTITY_SPIKED))
-		self_mess_msg = "[user] spurts over [user.p_their()] own spiked chastity!"
+		self_mess_msg = "[user]喷射在了[user.p_their()]自己带刺的贞操装置上！"
 
 	user.visible_message(span_love(self_mess_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
 	cum_onto(user)
@@ -152,9 +152,9 @@
 /datum/sex_controller/proc/modular_get_chastity_climax_message(default_msg)
 	var/climax_msg = default_msg
 	if(has_chastity_cage() || has_chastity_anal())
-		climax_msg = "[user] climaxes and makes a mess in their chastity device!"
+		climax_msg = "[user]达到高潮，在[user.p_their()]的贞操装置里弄得一团狼藉！"
 	if(HAS_TRAIT(user, TRAIT_CHASTITY_SPIKED))
-		climax_msg = "[user] climaxes and makes a messy release in their spiked chastity!"
+		climax_msg = "[user]达到高潮，在[user.p_their()]带刺的贞操装置里狼狈地释放了出来！"
 	return climax_msg
 
 /// Scales arousal and pain amounts based on whether action_target is wearing spiked chastity.

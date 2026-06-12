@@ -45,8 +45,8 @@ Malum's tool
 /obj/item/rogueweapon/hammer/artefact/malum
 	force = 21
 	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/forge, /datum/intent/smelt)
-	name = "Malum's tool"
-	desc = "A blessed hammer that forges fate as it pleases."
+	name = "玛勒姆之器"
+	desc = "一把受祝圣的战锤，能随心所欲地锻造命运。"
 	icon = 'icons/roguetown/items/artefactsten.dmi'
 	icon_state = "malumartefact"
 	sharpness = IS_BLUNT
@@ -59,7 +59,7 @@ Malum's tool
 	grid_height = 64
 
 /datum/intent/forge
-	name = "forge"
+	name = "锻造"
 	icon_state = "inforge"
 	chargetime = 0
 	noaa = TRUE
@@ -71,7 +71,7 @@ Malum's tool
 	blade_class = BCLASS_PUNCH
 
 /datum/intent/smelt
-	name = "smelt"
+	name = "熔炼"
 	icon_state = "insmelt"
 	chargetime = 0
 	noaa = TRUE
@@ -110,16 +110,16 @@ Malum's tool
 				forge_open_category_menu(user, ing_on_anvil)
 				return
 
-			to_chat(user, span_warning("Place an ingot on the anvil or click an ingot directly."))
+			to_chat(user, span_warning("先把锭放到铁砧上，或直接点击锭。"))
 			return
 
 		if(!isitem(target))
-			to_chat(user, span_warning("I need to click an ingot to forge."))
+			to_chat(user, span_warning("我得点击一块锭才能锻造。"))
 			return
 
 		var/obj/item/ingot/ing = target
 		if(!istype(ing, /obj/item/ingot))
-			to_chat(user, span_warning("[target] is not an ingot."))
+			to_chat(user, span_warning("[target]不是锭。"))
 			return
 
 		ing.forceMove(src)
@@ -128,18 +128,18 @@ Malum's tool
 
 	if(istype(user.used_intent, /datum/intent/smelt))
 		if(!isitem(target))
-			to_chat(user, span_warning("I need an item to smelt down."))
+			to_chat(user, span_warning("我需要一个可熔炼的物品。"))
 			return
 
 		var/obj/item/I2 = target
 		var/ok_surface = isturf(I2.loc) || istype(I2.loc, /obj/machinery/anvil)
 		if(!ok_surface)
-			to_chat(user, span_warning("Place [I2] down on the ground or an anvil first."))
+			to_chat(user, span_warning("先把[I2]放到地上或铁砧上。"))
 			return
 
 		var/smeltpath = I2.smeltresult
 		if(!ispath(smeltpath))
-			to_chat(user, span_warning("[I2] cannot be smelted."))
+			to_chat(user, span_warning("[I2]无法熔炼。"))
 			return
 
 		var/list/allowed = list(
@@ -149,7 +149,7 @@ Malum's tool
 			/obj/item/ingot/gilbranze
 		)
 		if(!(smeltpath in allowed))
-			to_chat(user, span_warning("[I2] is not suitable for this hammer's smelting."))
+			to_chat(user, span_warning("[I2]不适合用这把锤子熔炼。"))
 			return
 
 		var/yield = 1
@@ -163,22 +163,22 @@ Malum's tool
 				yield = sy
 
 		user.visible_message(
-			span_info("[user] begins smelting down \the [I2] with [src]."),
-			span_info("I start smelting \the [I2]...")
+			span_info("[user]开始用[src]熔炼\the [I2]。"),
+			span_info("我开始熔炼\the [I2]……")
 		)
 		playsound(get_turf(I2), 'sound/items/bsmith3.ogg', 70, FALSE)
 
 		if(!do_after(user, 10 SECONDS, target = I2))
-			to_chat(user, span_warning("The smelting is interrupted!"))
+			to_chat(user, span_warning("熔炼被打断了！"))
 			return
 
 		if(QDELETED(I2) || (!isturf(I2.loc) && !istype(I2.loc, /obj/machinery/anvil)))
-			to_chat(user, span_warning("The smelting cannot be completed."))
+			to_chat(user, span_warning("熔炼无法完成。"))
 			return
 
 		var/turf/T = get_turf(I2)
 		if(!T)
-			to_chat(user, span_warning("There is nowhere for the smelted metal to go."))
+			to_chat(user, span_warning("熔出的金属无处可去。"))
 			return
 
 		qdel(I2)
@@ -196,11 +196,11 @@ Malum's tool
 
 		if(last_ingot)
 			if(yield == 1)
-				to_chat(user, span_notice("I smelt [last_ingot.name]."))
+				to_chat(user, span_notice("我熔出了[last_ingot.name]。"))
 			else
-				to_chat(user, span_notice("I smelt [yield] [last_ingot.name]\s."))
+				to_chat(user, span_notice("我熔出了[yield]个[last_ingot.name]。"))
 		else
-			to_chat(user, span_warning("The smelting failed."))
+			to_chat(user, span_warning("熔炼失败了。"))
 		return
 
 // CRAFT STARTTS HERE //
@@ -239,17 +239,26 @@ Malum's tool
 
 	if(total <= 0)
 		ing.forceMove(get_turf(src))
-		to_chat(user, span_warning("No single-bar recipes for [ing.name]."))
+		to_chat(user, span_warning("[ing.name]没有单锭配方。"))
 		return
 
-	var/contents = "<center><b>Malum's Tool ——— Instant Forge</b><br>Consumed: [ing.name]</center><hr>"
+	var/contents = "<center><b>玛勒姆之器——瞬时锻造</b><br>已消耗：[ing.name]</center><hr>"
 
 	for(var/section in list("Armor","Weapons","Tools","Valuables"))
 		var/list/map = by_cat[section]
 		if(!length(map))
 			continue
-
-		contents += "<b>[section]</b><br>"
+		var/section_label
+		switch(section)
+			if("Armor")
+				section_label = "护甲"
+			if("Weapons")
+				section_label = "武器"
+			if("Tools")
+				section_label = "工具"
+			else
+				section_label = "贵重品"
+		contents += "<b>[section_label]</b><br>"
 
 		var/list/names = list()
 		for(var/n in map)
@@ -269,31 +278,31 @@ Malum's tool
 
 /obj/item/rogueweapon/hammer/artefact/malum/proc/forge_do_craft(mob/user, obj/item/ingot/ing, rec_type)
 	if(!istype(ing) || QDELETED(ing))
-		to_chat(user, span_warning("Where did the ingot go?"))
+		to_chat(user, span_warning("锭去哪了？"))
 		return
 	if(!ispath(rec_type, /datum/anvil_recipe))
-		to_chat(user, span_warning("That recipe is broken."))
+		to_chat(user, span_warning("这个配方坏掉了。"))
 		return
 
 	var/datum/anvil_recipe/R = new rec_type
 
 	if(!ispath(R.req_bar) || !istype(ing, R.req_bar) || _malum_recipe_requires_extras(R) || !ispath(R.created_item))
 		qdel(R)
-		to_chat(user, span_warning("This recipe cannot be made from [ing]."))
+		to_chat(user, span_warning("这个配方不能用[ing]制作。"))
 		return
 
 	user.visible_message(
-		span_info("[user] starts shaping \the [ing] with [src]."),
-		span_info("I begin crafting with [ing]...")
+		span_info("[user]开始用[src]塑造\the [ing]。"),
+		span_info("我开始用[ing]制作……")
 	)
 	playsound(get_turf(ing), 'sound/items/bsmith3.ogg', 70, FALSE)
 
 	if(!do_after(user, 10 SECONDS, target = ing))
-		to_chat(user, span_warning("The crafting is interrupted!"))
+		to_chat(user, span_warning("制作被打断了！"))
 		qdel(R)
 		return
 	if(QDELETED(ing) || !ing.loc)
-		to_chat(user, span_warning("The ingot is no longer suitable."))
+		to_chat(user, span_warning("这块锭已经不再适用了。"))
 		qdel(R)
 		return
 
@@ -302,8 +311,8 @@ Malum's tool
 	var/obj/item/product = new R.created_item(T)
 
 	user.visible_message(
-		span_notice("[user] completes the craft, producing \the [product]."),
-		span_notice("I finish crafting.")
+		span_notice("[user]完成了制作，产出了\the [product]。"),
+		span_notice("我完成了制作。")
 	)
 	playsound(T, 'sound/items/bsmith4.ogg', 70, FALSE)
 	user.changeNext_move(CLICK_CD_INTENTCAP)
@@ -331,8 +340,8 @@ Necra's Censer (by ARefrigerator)
   the morticians with cleaning the town.
 */
 /obj/item/artefact/necra_censer
-	name = "Necra's censer"
-	desc = "A small bronze censer that expels an otherworldly mist."
+	name = "内克拉香炉"
+	desc = "一只会喷吐异界迷雾的小型青铜香炉。"
 	icon = 'icons/roguetown/items/artefactsten.dmi'
 	icon_state = "necraartefact"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -350,7 +359,7 @@ Necra's Censer (by ARefrigerator)
 /obj/item/artefact/necra_censer/attack_self(mob/user)
 	if(do_after(user, 3 SECONDS))
 		playsound(user.loc,  'sound/items/censer_use.ogg', 100)
-		user.visible_message(span_info("[user.name] lifts up their arm and swings the chain on \the [name] around lightly."))
+		user.visible_message(span_info("[user.name]抬起手臂，轻轻甩动\the [name]上的链条。"))
 		var/datum/effect_system/smoke_spread/smoke/necra_censer/S = new
 		S.set_up(3, user.loc)
 		S.start()
@@ -362,8 +371,8 @@ Necra's Censer (by ARefrigerator)
 =========================================*/
 
 /obj/item/artefact/dendor_hose //bless your tree with its piss
-	name = "Dendor's Endless Hose"
-	desc = "A living crook of wood that bends soil to the Treefather’s will. Click soil to add ±100 water/nutriment, bless, or affect growth." //Dendor's piss
+	name = "登多尔无尽之管"
+	desc = "一根活木弯杖，能让土壤屈从于树父的意志。点击土壤可增减100水分/养分、施加祝福或影响生长。" //Dendor's piss
 	icon = 'icons/roguetown/items/artefactsten.dmi'
 	icon_state = "dendorartefact"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -384,41 +393,53 @@ Necra's Censer (by ARefrigerator)
 
 /obj/item/artefact/dendor_hose/examine(mob/user)
 	. = ..()
-	. += "<hr><span class='notice'><b>Additive settings</b></span><br>"
-	. += "Water: <b>[hose_state_text(water_step_state)]</b> per click<br>"
-	. += "Nutrition: <b>[hose_state_text(nutri_step_state)]</b> per click<br>"
-	. += "Bless: <b>[auto_bless ? "ON" : "OFF"]</b><br>"
-	. += "Growth: <b>[uppertext(growth_mode)]</b><br>"
-	. += "<span class='info'>Use in hand to configure.</span>"
+	. += "<hr><span class='notice'><b>添加设置</b></span><br>"
+	. += "水分：<b>[hose_state_text(water_step_state)]</b> 每次点击<br>"
+	. += "养分：<b>[hose_state_text(nutri_step_state)]</b> 每次点击<br>"
+	. += "祝福：<b>[auto_bless ? "开" : "关"]</b><br>"
+	. += "生长：<b>[hose_growth_mode_text(growth_mode)]</b><br>"
+	. += "<span class='info'>手持使用以进行设置。</span>"
 
 /obj/item/artefact/dendor_hose/proc/hose_state_text(state)
 	if(state == 1)  return "+100"
 	if(state == -1) return "-100"
-	return "OFF"
+	return "关"
+
+/obj/item/artefact/dendor_hose/proc/hose_growth_mode_text(mode)
+	switch(mode)
+		if("none")
+			return "关闭"
+		if("mature")
+			return "催熟"
+		if("produce")
+			return "结果"
+		if("kill")
+			return "枯萎"
+	return "[mode]"
 
 /obj/item/artefact/dendor_hose/attack_self(mob/user)
 	open_config_ui(user)
 
 /obj/item/artefact/dendor_hose/proc/open_config_ui(mob/user)
-	var/contents = "<center><b> — Dendor’s Endless Hose Settings — </b></center><hr>"
+	var/contents = "<center><b> — 登多尔无尽之管设置 — </b></center><hr>"
 
-	contents += "<b>Water delta per click</b><br>"
+	contents += "<b>每次点击的水分变化</b><br>"
 	contents += "<a href='?src=[REF(src)];cyclestep=water'>[hose_state_text(water_step_state)]</a><br><br>"
 
-	contents += "<b>Nutrition delta per click</b><br>"
+	contents += "<b>每次点击的养分变化</b><br>"
 	contents += "<a href='?src=[REF(src)];cyclestep=nutri'>[hose_state_text(nutri_step_state)]</a><br><br>"
 
-	contents += "<b>Bless</b>: <a href='?src=[REF(src)];toggle=bless'>[auto_bless ? "ON" : "OFF"]</a><br><br>"
+	contents += "<b>祝福</b>：<a href='?src=[REF(src)];toggle=bless'>[auto_bless ? "开" : "关"]</a><br><br>"
 
-	contents += "<b>Growth</b><br>"
-	contents += "Mode: "
+	contents += "<b>生长</b><br>"
+	contents += "模式："
 	var/list/modes = list("none","mature","kill") //produce is hidden, sorry my man
 	for(var/m in modes)
 		if(m == growth_mode)
-			contents += " <b>[uppertext(m)]</b> "
+			contents += " <b>[hose_growth_mode_text(m)]</b> "
 		else
-			contents += " <a href='?src=[REF(src)];mode=[m]'>[uppertext(m)]</a> "
-	contents += "<hr><center><i>Click soil to apply.</i></center>"
+			contents += " <a href='?src=[REF(src)];mode=[m]'>[hose_growth_mode_text(m)]</a> "
+	contents += "<hr><center><i>点击土壤以施加效果。</i></center>"
 
 	var/datum/browser/popup = new(user, "DENDOR_HOSE", "", 420, 340)
 	popup.set_content(contents)
@@ -462,7 +483,7 @@ Necra's Censer (by ARefrigerator)
 
 	if(world.time < next_use_time)
 		var/time_left = max(1, round((next_use_time - world.time) / 10))
-		to_chat(user, span_warning("The Endless Hose must rest for [time_left] more seconds."))
+		to_chat(user, span_warning("无尽之管还需休息[time_left]秒。"))
 		return
 
 	var/obj/structure/soil/S = target
@@ -504,14 +525,14 @@ Necra's Censer (by ARefrigerator)
 				S.produce_ready = FALSE
 				S.update_icon()
 				user.visible_message(
-					span_warning("[user] withers the crop with a grim decree."),
-					span_warning("The life is snuffed out.")
+					span_warning("[user]以冷酷的意志令作物枯萎。"),
+					span_warning("生命被掐灭了。")
 				)
 
 	if(growth_mode != "kill")
 		user.visible_message(
-			span_green("[user] tends the soil with the Endless Hose."),
-			span_good("The soil yields to my will.")
+			span_green("[user]用无尽之管照料着土壤。"),
+			span_good("土壤顺从我的意志。")
 		)
 	playsound(S, 'sound/foley/waterwash (1).ogg', 80, FALSE)
 
@@ -522,8 +543,8 @@ Necra's Censer (by ARefrigerator)
 ==============================*/
 
 /obj/item/artefact/noc_phylactery
-	name = "Noc's Phylactery"
-	desc = "A lunar phylactery of Noc: a crystal vessel that binds a drop of blood to a path under the moon's gaze. In elder nights, mages used such vessels to hunt apostates who abused or stole arcane knowledge."
+	name = "诺克的命匣"
+	desc = "一只属于诺克的月之命匣：它是将一滴血液束缚在月光指引之路上的水晶器皿。古老年代里，法师曾用这种器皿追猎滥用或窃取奥术知识的叛徒。"
 	icon = 'icons/roguetown/items/artefactsten.dmi'
 	icon_state = "nocartefact"
 	w_class = WEIGHT_CLASS_TINY
@@ -537,23 +558,23 @@ Necra's Censer (by ARefrigerator)
 /obj/item/artefact/noc_phylactery/examine(mob/user)
 	. = ..()
 	if(bound)
-		. += "<hr><span class='notice'>It hums softly - someone's blood is bound within.</span><br>"
-		. += "Bound to: <b>[target_name ? target_name : "unknown"]</b><br>"
+		. += "<hr><span class='notice'>它轻轻嗡鸣，里面束缚着某人的血液。</span><br>"
+		. += "已绑定：<b>[target_name ? target_name : "未知"]</b><br>"
 	else if(binding)
-		. += "<hr><span class='warning'>The glass warms in your hand - attunement in progress...</span><br>"
+		. += "<hr><span class='warning'>玻璃在你手中发热，调谐正在进行……</span><br>"
 	else
-		. += "<hr><span class='info'>Use on a living being to attune by blood (30 seconds).</span><br>"
+		. += "<hr><span class='info'>对活体使用以通过血液调谐（30秒）。</span><br>"
 
 
 /obj/item/artefact/noc_phylactery/attack_self(mob/user)
 	if(!bound)
-		to_chat(user, span_info("The phylactery is inert. Bind it to someone first."))
+		to_chat(user, span_info("命匣毫无反应。先与某人绑定它。"))
 		return
 
 	var/mob/living/T = get_target_mob()
 	var/turf/ut = get_turf(user)
 	if(!ut)
-		to_chat(user, span_warning("I cannot sense my own footing."))
+		to_chat(user, span_warning("我感知不到自己脚下的位置。"))
 		return
 
 	var/tx = "?"
@@ -569,15 +590,15 @@ Necra's Censer (by ARefrigerator)
 			tz = "[tt.z]"
 			distance_tiles = get_dist(ut, tt)
 		else
-			to_chat(user, span_warning("The phylactery finds the blood, but not the ground beneath them..."))
+			to_chat(user, span_warning("命匣找到了血液，却找不到对方脚下的地面……"))
 	else
-		to_chat(user, span_warning("The blood-sample feels dull - perhaps the vessel is gone."))
+		to_chat(user, span_warning("血样的感应十分迟钝，也许容器已经不见了。"))
 
-	to_chat(user, span_notice("— Noc's Phylactery —"))
-	to_chat(user, span_info("Target [target_name ? target_name : "unknown"]: X=[tx], Y=[ty], Z=[tz]"))
-	to_chat(user, span_info("You: X=[ut.x], Y=[ut.y], Z=[ut.z]"))
+	to_chat(user, span_notice("— 诺克的命匣 —"))
+	to_chat(user, span_info("目标[target_name ? target_name : "未知"]：X=[tx], Y=[ty], Z=[tz]"))
+	to_chat(user, span_info("你：X=[ut.x], Y=[ut.y], Z=[ut.z]"))
 	if(distance_tiles >= 0)
-		to_chat(user, span_info("Approx. distance: [distance_tiles] tiles"))
+		to_chat(user, span_info("大致距离：[distance_tiles]格"))
 	playsound(user, 'sound/magic/churn.ogg', 50, FALSE)
 
 /obj/item/artefact/noc_phylactery/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -585,10 +606,10 @@ Necra's Censer (by ARefrigerator)
 	if(!proximity_flag)
 		return
 	if(binding)
-		to_chat(user, span_warning("It is already drawing a sample..."))
+		to_chat(user, span_warning("它已经在采样了……"))
 		return
 	if(!isliving(target))
-		to_chat(user, span_warning("It needs living blood to bind."))
+		to_chat(user, span_warning("它需要活体血液才能绑定。"))
 		return
 
 	var/mob/living/L = target
@@ -602,13 +623,13 @@ Necra's Censer (by ARefrigerator)
 	pending_target_name = get_true_name(L) //John Unknown Unknown
 
 	user.visible_message(
-		span_info("[user] presses the phylactery to [pending_target_name]; dim runes kindle along the filigree."),
-		span_notice("I begin the attunement, drawing a blood sample from [pending_target_name]...")
+		span_info("[user]将命匣按向[pending_target_name]，黯淡的符文沿着饰纹亮起。"),
+		span_notice("我开始调谐，从[pending_target_name]身上抽取血样……")
 	)
 	playsound(get_turf(user), 'sound/magic/churn.ogg', 60, FALSE)
 
 	if(!do_after(user, 30 SECONDS, target = L))
-		to_chat(user, span_warning("The attunement is interrupted. The glass cools down."))
+		to_chat(user, span_warning("调谐被打断了。玻璃重新冷却下来。"))
 		binding = FALSE
 		pending_target_name = null
 		return
@@ -618,7 +639,7 @@ Necra's Censer (by ARefrigerator)
 		pending_target_name = null
 		return
 	if(get_dist(user, L) > 1) // yes im aware but no Adjacent()
-		to_chat(user, span_warning("The subject slipped away at the final step."))
+		to_chat(user, span_warning("目标在最后一步溜走了。"))
 		binding = FALSE
 		pending_target_name = null
 		return
@@ -626,12 +647,12 @@ Necra's Censer (by ARefrigerator)
 	var/success = bind_to_target(L, pending_target_name)
 	if(success)
 		user.visible_message(
-			span_notice("A crimson thread curls into the crystal; the phylactery thrums softly."),
-			span_good("It is done. The blood remembers.")
+			span_notice("一缕猩红丝线卷入水晶之中，命匣轻轻震鸣。"),
+			span_good("完成了。血液会记住。")
 		)
 		playsound(get_turf(user), 'sound/magic/whiteflame.ogg', 60, FALSE)
 	else
-		to_chat(user, span_warning("The charm fizzles and fails to hold."))
+		to_chat(user, span_warning("法术火花一闪而灭，未能维持。"))
 	binding = FALSE
 	pending_target_name = null
 
@@ -651,8 +672,8 @@ Necra's Censer (by ARefrigerator)
 /obj/item/artefact/noc_phylactery/proc/get_true_name(mob/living/L)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		return H.real_name ? H.real_name : (H.name ? H.name : "someone")
-	return L.name ? L.name : "someone"
+		return H.real_name ? H.real_name : (H.name ? H.name : "某人")
+	return L.name ? L.name : "某人"
 
 /obj/item/artefact/noc_phylactery/attack(mob/living/M, mob/user)
 	if(isliving(M))
@@ -668,24 +689,24 @@ Necra's Censer (by ARefrigerator)
 ========================================*/
 
 /obj/item/artefact/eora_heart
-	name = "Eora's Heart"
-	desc = "A velvet heart dedicated to Eora. It remembers the names of bonds formed."
+	name = "伊欧拉之心"
+	desc = "一颗献给伊欧拉的天鹅绒之心。它会记住结下羁绊之人的名字。"
 	icon = 'icons/roguetown/items/artefactsten.dmi'
 	icon_state = "eoraartefact"
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/artefact/eora_heart/examine(mob/user)
 	. = ..()
-	. += "<hr><span class='info'>Use in hand: show your sex partners you had this week.</span><br>"
-	. += "<span class='info'>Use on a player: asks their permission, then shows their unique partners this round.</span><br>"
+	. += "<hr><span class='info'>手持使用：显示你本周拥有的性伴侣。</span><br>"
+	. += "<span class='info'>对玩家使用：先征得对方同意，然后显示其本轮的唯一伴侣。</span><br>"
 
 /obj/item/artefact/eora_heart/attack_self(mob/user)
 	if(world.time < last_used + 300)
-		to_chat(user, span_warning("The heart is quiet. Give it a moment."))
+		to_chat(user, span_warning("心脏沉寂无声。再等一会儿。"))
 		return
 
 	if(!ishuman(user) || !user.client)
-		to_chat(user, span_warning("The heart needs a living player to answer."))
+		to_chat(user, span_warning("这颗心需要活着的玩家来回应。"))
 		return
 
 	last_used = world.time
@@ -694,13 +715,13 @@ Necra's Censer (by ARefrigerator)
 	var/cnt = eora_get_partner_count(H)
 	var/list/names = eora_get_partner_names(H)
 
-	to_chat(user, span_notice("Eora's Whisper: You have <b>[cnt]</b> unique partner[cnt == 1 ? "" : "s"] this round."))
+	to_chat(user, span_notice("伊欧拉低语：你本轮有<b>[cnt]</b>名不同的伴侣。"))
 	if(names && names.len)
-		to_chat(user, "<span class='info'>Names:</span>")
+		to_chat(user, "<span class='info'>名字：</span>")
 		for(var/N in names)
 			to_chat(user, " • [html_encode(N)]")
 	else
-		to_chat(user, "<span class='info'>No names to show.</span>")
+		to_chat(user, "<span class='info'>没有可显示的名字。</span>")
 
 	playsound(user, 'sound/magic/whiteflame.ogg', 50, FALSE)
 
@@ -710,11 +731,11 @@ Necra's Censer (by ARefrigerator)
 		return
 
 	if(!isliving(target))
-		to_chat(user, span_warning("The heart only answers for living beings."))
+		to_chat(user, span_warning("这颗心只会回应活物。"))
 		return
 
 	if(!ishuman(target) || !target:client)
-		to_chat(user, span_warning("The heart only tallies beings."))
+		to_chat(user, span_warning("这颗心只会统计活体。"))
 		return
 
 	var/mob/living/carbon/human/H = target
@@ -724,19 +745,19 @@ Necra's Censer (by ARefrigerator)
 		return
 
 	if(world.time < last_used + 300)
-		to_chat(user, span_warning("The heart is quiet. Give it a moment."))
+		to_chat(user, span_warning("心脏沉寂无声。再等一会儿。"))
 		return
 
-	var/consent = alert(H, "[user.name] wants to use Eora's Heart on you and see your sex partners this week. Allow it?", "Eora's Heart", "Allow", "Deny")
-	if(consent != "Allow")
-		to_chat(user, span_warning("[H.name] refuses to answer the heart."))
-		to_chat(H, span_notice("You refuse Eora's Heart."))
+	var/consent = alert(H, "[user.name]想对你使用伊欧拉之心，查看你本周的性伴侣。允许吗？", "伊欧拉之心", "允许", "拒绝")
+	if(consent != "允许")
+		to_chat(user, span_warning("[H.name]拒绝回应这颗心。"))
+		to_chat(H, span_notice("你拒绝了伊欧拉之心。"))
 		return
 
 	if(!src || !user || !H)
 		return
 	if(get_dist(user, H) > 1)
-		to_chat(user, span_warning("Too far away."))
+		to_chat(user, span_warning("太远了。"))
 		return
 
 	last_used = world.time
@@ -744,15 +765,15 @@ Necra's Censer (by ARefrigerator)
 	var/cnt = eora_get_partner_count(H)
 	var/list/names = eora_get_partner_names(H)
 
-	to_chat(user, span_notice("Eora's Whisper: [html_encode(H.name)] has <b>[cnt]</b> unique partner[cnt == 1 ? "" : "s"] this round."))
+	to_chat(user, span_notice("伊欧拉低语：[html_encode(H.name)]本轮有<b>[cnt]</b>名不同的伴侣。"))
 	if(names && names.len)
-		to_chat(user, "<span class='info'>Names:</span>")
+		to_chat(user, "<span class='info'>名字：</span>")
 		for(var/N in names)
 			to_chat(user, " • [html_encode(N)]")
 	else
-		to_chat(user, "<span class='info'>No names to show.</span>")
+		to_chat(user, "<span class='info'>没有可显示的名字。</span>")
 
-	to_chat(H, span_notice("Eora's Heart answers [user.name]."))
+	to_chat(H, span_notice("伊欧拉之心回应了[user.name]。"))
 
 	playsound(user, 'sound/magic/whiteflame.ogg', 50, FALSE)
 
@@ -771,7 +792,7 @@ Necra's Censer (by ARefrigerator)
 		EORA_ID_NAME[id] = "[display]"
 
 /proc/eora_lookup_name_by_id(id)
-	if(!id) return "Unknown"
+	if(!id) return "未知"
 
 	if(islist(GLOB?.human_list))
 		for(var/mob/living/carbon/human/H in GLOB.human_list)
@@ -785,7 +806,7 @@ Necra's Censer (by ARefrigerator)
 	if(EORA_ID_NAME[id])
 		return "[EORA_ID_NAME[id]]"
 
-	return "Unknown"
+	return "未知"
 
 /proc/eora_register_consensual_pair(mob/living/carbon/human/A, mob/living/carbon/human/B)
 	if(!A || !B) return
@@ -844,8 +865,8 @@ Necra's Censer (by ARefrigerator)
 // STAPLES
 
 /obj/item/surgery_staple
-	name = "surgical staple"
-	desc = "A tiny surgical staple holding tissues."
+	name = "手术钉"
+	desc = "一枚固定组织的微小手术钉。"
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'icons/roguetown/items/surgery.dmi'
 	icon_state = "staples"
@@ -923,12 +944,12 @@ Necra's Censer (by ARefrigerator)
 
 
 /obj/item/surgery_staple/hemostat
-	name = "hemostat staple"
+	name = "止血钉"
 	tool_behaviour = TOOL_HEMOSTAT
 
 
 /obj/item/surgery_staple/retractor
-	name = "retractor staple"
+	name = "牵开钉"
 	tool_behaviour = TOOL_RETRACTOR
 
 
@@ -936,8 +957,8 @@ Necra's Censer (by ARefrigerator)
 // MULTITOOL
 
 /obj/item/rogueweapon/surgery/multitool
-	name = "surgical multitool"
-	desc = "A compact, blessed device that unfolds into whatever the surgeon needs."
+	name = "多功能手术器"
+	desc = "一件紧凑而受祝圣的器具，能展开成外科医生所需的任何工具。"
 	icon = 'icons/roguetown/items/artefactsten.dmi'
 	icon_state = "scalpelpestra"
 	gripsprite = FALSE
@@ -969,13 +990,13 @@ Necra's Censer (by ARefrigerator)
 	)
 
 	var/list/_mode_labels = list(
-		"scalpel" = "Scalpel",
-		"saw" = "Saw",
-		"hemostat" = "Hemostat",
-		"retractor" = "Retractor",
-		"bonesetter" = "Bonesetter",
-		"suture" = "Suture",
-		"cautery" = "Cautery"
+		"scalpel" = "手术刀",
+		"saw" = "骨锯",
+		"hemostat" = "止血钳",
+		"retractor" = "牵开器",
+		"bonesetter" = "接骨器",
+		"suture" = "缝合器",
+		"cautery" = "烧灼器"
 	)
 
 	var/list/_mode_params = list(
@@ -1118,7 +1139,7 @@ Necra's Censer (by ARefrigerator)
 		return TRUE
 	_apply_mode(selected_mode)
 
-	to_chat(user, span_notice("Multitool mode: [uppertext(current_mode)]."))
+	to_chat(user, span_notice("多功能手术器模式：[(_mode_labels[current_mode] || uppertext(current_mode))]。"))
 	return TRUE
 
 
@@ -1168,7 +1189,7 @@ Necra's Censer (by ARefrigerator)
 	_apply_mode(_modes_order[i])
 
 	if(user)
-		to_chat(user, span_notice("Multitool mode: [uppertext(current_mode)]."))
+		to_chat(user, span_notice("多功能手术器模式：[(_mode_labels[current_mode] || uppertext(current_mode))]。"))
 
 
 
@@ -1216,11 +1237,11 @@ Necra's Censer (by ARefrigerator)
 			return TRUE
 
 		if(!(part.get_surgery_flags() & SURGERY_INCISED))
-			to_chat(user, span_warning("I need an incision first."))
+			to_chat(user, span_warning("我得先切开伤口。"))
 			return TRUE
 
 		if(_zone_has_same_staple(part))
-			to_chat(user, span_info("Staples are already set here."))
+			to_chat(user, span_info("这里已经打上钉了。"))
 			return TRUE
 
 		var/obj/item/surgery_staple/S
@@ -1235,13 +1256,13 @@ Necra's Censer (by ARefrigerator)
 
 			if(current_mode == "hemostat")
 				user.visible_message(
-					span_info("[user] sets hemostat staples in [H]'s [part.name]."),
-					span_info("I set hemostat staples in [H]'s [part.name].")
+					span_info("[user]在[H]的[part.name]上打入了止血钉。"),
+					span_info("我在[H]的[part.name]上打入了止血钉。")
 				)
 			else
 				user.visible_message(
-					span_info("[user] sets retractor staples in [H]'s [part.name]."),
-					span_info("I set retractor staples in [H]'s [part.name].")
+					span_info("[user]在[H]的[part.name]上打入了牵开钉。"),
+					span_info("我在[H]的[part.name]上打入了牵开钉。")
 				)
 			playsound(H, 'sound/foley/equip/swordsmall2.ogg', 50, FALSE)
 		else
@@ -1273,8 +1294,8 @@ Necra's Censer (by ARefrigerator)
 #define SAY_WARN(msg)  to_chat(user, span_warning(msg))
 
 /obj/item/artifact/ravox_lens
-	name = "Ravox trace lens"
-	desc = "A fearless god's lens that reveals the truth."
+	name = "拉沃克斯溯痕透镜"
+	desc = "一位无畏神祇的透镜，能揭示真相。"
 	icon = 'icons/roguetown/items/artefactsten.dmi'
 	icon_state = "ravoxartefact"
 	w_class = WEIGHT_CLASS_SMALL
@@ -1309,14 +1330,14 @@ Necra's Censer (by ARefrigerator)
 			found |= _ravox_collect_from_atom(O, species_counts)
 
 	if(!found || !length(species_counts))
-		SAY_WARN("Ravox’s gaze finds no readable traces on [target].")
+		SAY_WARN("拉沃克斯的目光在[target]上找不到可辨识的痕迹。")
 		return
 
 	var/list/parts = list()
 	for(var/race_name in species_counts)
 		var/num = max(1, species_counts[race_name])
 		parts += (num > 1) ? "[race_name] ([num])" : "[race_name]"
-	SAY_INFO("Ravox’s gaze reveals: [english_list(parts)].")
+	SAY_INFO("拉沃克斯的目光揭示出：[english_list(parts)]。")
 
 /proc/_ravox_collect_from_atom(atom/A, list/species_counts)
 	if(!A) return FALSE
@@ -1366,25 +1387,25 @@ Necra's Censer (by ARefrigerator)
 	return added
 
 /proc/_ravox_bump_species(list/species_counts, race_name)
-	if(!race_name || !length(race_name)) race_name = "Unknown"
+	if(!race_name || !length(race_name)) race_name = "未知"
 	species_counts[race_name] = (species_counts[race_name] || 0) + 1
 
 
 /proc/_ravox_guess_species_by_hash(hash as text)
-	if(!length(hash)) return "Unknown"
+	if(!length(hash)) return "未知"
 	for(var/mob/living/carbon/human/H in world)
 		if(H?.dna?.uni_identity)
 			var/fp = md5(H.dna.uni_identity)
 			if(fp == hash)
 				return _ravox_species_name(H)
-	return "Unknown"
+	return "未知"
 
 
 /proc/_ravox_species_name(mob/living/carbon/human/H)
-	if(!H) return "Unknown"
+	if(!H) return "未知"
 	var/name = H.dna?.species?.name
 	if(!name) name = H.dna?.species?.id
-	if(!name) name = "Humanoid"
+	if(!name) name = "类人"
 	return "[name]"
 
 
@@ -1394,8 +1415,8 @@ Necra's Censer (by ARefrigerator)
  **************************************************/
 
 /obj/item/fishingrod/abyssoid
-    name = "Abyssor's rod"
-    desc = "A rod blessed by Abyssor. It needs no bait."
+    name = "阿比索尔之竿"
+    desc = "一根受阿比索尔祝福的钓竿。它不需要鱼饵。"
     icon = 'icons/roguetown/items/artefactsten.dmi'
     icon_state = "abyssorartefact"
 
@@ -1411,7 +1432,7 @@ Necra's Censer (by ARefrigerator)
     )
 
 /obj/item/fishingrod/abyssoid/attackby(obj/item/I, mob/user, params)
-    to_chat(user, span_notice("This rod needs no bait."))
+    to_chat(user, span_notice("这根钓竿不需要鱼饵。"))
     return
 
 /obj/item/fishingrod/abyssoid/afterattack(obj/target, mob/user, proximity)
@@ -1428,7 +1449,7 @@ Necra's Censer (by ARefrigerator)
 		return
 
 	if(user.doing)
-		to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
+		to_chat(user, "<span class='warning'>我必须站着不动才能钓鱼。</span>")
 		return
 
 	var/sl = user.get_skill_level(/datum/skill/labor/fishing)
@@ -1436,12 +1457,12 @@ Necra's Censer (by ARefrigerator)
 	ft -= (sl * 20)
 	ft = max(20, ft)
 
-	user.visible_message("<span class='warning'>[user] casts a line!</span>",
-	                     "<span class='notice'>I cast a line.</span>")
+	user.visible_message("<span class='warning'>[user]抛出了鱼线！</span>",
+	                     "<span class='notice'>我抛出了鱼线。</span>")
 	playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 
 	if(!do_after(user, ft, target = target))
-		to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
+		to_chat(user, "<span class='warning'>我必须站着不动才能钓鱼。</span>")
 		update_icon()
 		return
 
@@ -1449,7 +1470,7 @@ Necra's Censer (by ARefrigerator)
 	var/A = pickweight(_abyssor_loot)
 
 	var/ow = 30 + (sl * 10)
-	to_chat(user, "<span class='notice'>Something tugs the line!</span>")
+	to_chat(user, "<span class='notice'>有什么东西扯动了鱼线！</span>")
 	playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 
 	do_after(user, ow, target = target)
@@ -1464,7 +1485,7 @@ Necra's Censer (by ARefrigerator)
 			user.mind.add_sleep_experience(/datum/skill/labor/fishing, fisherman.STAINT*2)
 	else
 		new A(user.loc)
-		to_chat(user, "<span class='notice'>Reel 'em in!</span>")
+		to_chat(user, "<span class='notice'>把它收上来！</span>")
 		if(user?.mind)
 			user.mind.add_sleep_experience(/datum/skill/labor/fishing, round(fisherman.STAINT, 2), FALSE)
 		record_featured_stat(FEATURED_STATS_FISHERS, fisherman)
@@ -1515,8 +1536,8 @@ Necra's Censer (by ARefrigerator)
  **************************************************/
 
 /obj/item/clothing/gloves/xylix
-	name = "Pickpocket gloves"
-	desc = "Gloves favored by Xylix's acolytes. Fingers feel lighter, reach seems longer."
+	name = "扒窃手套"
+	desc = "赛利克斯信徒偏爱的手套。手指感觉更轻，触及范围似乎也更远。"
 	icon = 'icons/roguetown/items/artefactsten.dmi'
 	icon_state = "xylixartefact"
 
@@ -1597,8 +1618,8 @@ Necra's Censer (by ARefrigerator)
 // ASS TRATA
 
 /obj/item/artifact/astrata_star
-	name = "Star of Astrata"
-	desc = "An artifact used to help the lost find the true light."
+	name = "阿斯特拉塔之星"
+	desc = "一件用于帮助迷失者寻得真正光明的圣物。"
 	icon = 'icons/roguetown/items/artefactsten.dmi'
 	icon_state = "astrataartefact"
 	force = 0
@@ -1611,10 +1632,10 @@ Necra's Censer (by ARefrigerator)
 		return
 
 	if(!istype(user, /mob/living/carbon/human))
-		to_chat(user, span_warning("The Star rejects an unworthy bearer."))
+		to_chat(user, span_warning("星辰拒绝了不配的持有者。"))
 		return
 	if(!target.client)
-		to_chat(user, span_warning("[target.name] cannot accept the rite without a soul to answer (no client)."))
+		to_chat(user, span_warning("[target.name]没有可回应的灵魂，无法接受这场仪式（无客户端）。"))
 		return
 
 	var/mob/living/carbon/human/C = user
@@ -1622,20 +1643,20 @@ Necra's Censer (by ARefrigerator)
 	var/cost = HAS_TRAIT(target, TRAIT_CLERGYRADICAL) ? 1000 : 0
 
 	if(cost > 0 && C.church_favor < cost)
-		to_chat(C, span_warning("Your faith lacks the strength. ([cost] Favor required, you have [C.church_favor].)"))
+		to_chat(C, span_warning("你的信仰之力不足。（需要[cost]点恩眷，你当前有[C.church_favor]点。）"))
 		return
 
 	user.visible_message(
-		span_notice("[user] holds the Star of Astrata before [target.name]."),
-		span_notice("I hold the Star of Astrata before [target.name], letting its light flood their soul.")
+		span_notice("[user]将阿斯特拉塔之星举到[target.name]面前。"),
+		span_notice("我将阿斯特拉塔之星举到[target.name]面前，让它的光辉灌注其灵魂。")
 	)
 
 	if(!do_after(user, 300, target = target))
 		user.visible_message(
-			span_warning("[user] stops the ritual with the Star of Astrata for [target.name]."),
-			span_warning("I break the ritual early.")
+			span_warning("[user]中断了对[target.name]施行的阿斯特拉塔之星仪式。"),
+			span_warning("我提前中断了仪式。")
 		)
-		to_chat(target, span_notice("The light fades as the ritual is broken."))
+		to_chat(target, span_notice("随着仪式被打断，光芒也随之黯淡。"))
 		return
 
 	var/list/divine_options = list()
@@ -1646,18 +1667,18 @@ Necra's Censer (by ARefrigerator)
 		qdel(instance)
 
 	if(!divine_options || !divine_options.len)
-		to_chat(user, span_warning("No divine patrons are available."))
+		to_chat(user, span_warning("当前没有可选的神圣主神。"))
 		return
 
-	var/choice = input(target, "The star opens your soul. Choose your patron, or refuse.", "The Ten") as null|anything in divine_options
+	var/choice = input(target, "星辰向你的灵魂敞开。选择你的主神，或予以拒绝。", "十神") as null|anything in divine_options
 	if(!choice)
-		to_chat(target, span_danger("You turn away from the light."))
-		to_chat(user, span_danger("[target.name] rejects the offered path."))
+		to_chat(target, span_danger("你背离了光芒。"))
+		to_chat(user, span_danger("[target.name]拒绝了所赐予的道路。"))
 		return
 
 	if(cost > 0 && C.church_favor < cost)
-		to_chat(C, span_warning("In that moment of revelation, your Favor has run dry. The rite fizzles."))
-		to_chat(target, span_warning("The light flickers and dies before the vow can take hold."))
+		to_chat(C, span_warning("在启示降临的那一刻，你的恩眷已经耗尽。仪式悄然熄灭。"))
+		to_chat(target, span_warning("誓约尚未成立，光芒便已闪烁着熄灭。"))
 		return
 
 	var/patron_path = divine_options[choice]
@@ -1665,14 +1686,14 @@ Necra's Censer (by ARefrigerator)
 		if(hascall(target, "set_patron"))
 			call(target, "set_patron")(patron_path)
 		else
-			to_chat(user, span_warning("This soul cannot be marked (set_patron not found).")) //dont blame me for this whole thing im a retard
+			to_chat(user, span_warning("这具灵魂无法被标记（未找到set_patron）。")) //dont blame me for this whole thing im a retard
 			return
 
 		if(cost > 0)
 			C.church_favor = max(0, C.church_favor - cost)
 
 		user.visible_message(
-			span_notice("[target.name] accepts the mark of [choice]."),
-			span_notice("[target.name] accepts the mark of [choice]. The ritual is sealed[cost > 0 ? ", costing you [cost] Favor" : ""].")
+			span_notice("[target.name]接受了[choice]的印记。"),
+			span_notice("[target.name]接受了[choice]的印记。仪式已然封定[cost > 0 ? "，消耗你[cost]点恩眷" : ""].")
 		)
-		to_chat(target, span_notice("You feel the mark of [choice] settle in your soul."))
+		to_chat(target, span_notice("你感到[choice]的印记落定于灵魂之中。"))

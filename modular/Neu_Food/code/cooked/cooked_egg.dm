@@ -1,8 +1,8 @@
 /obj/item/reagent_containers/food/snacks/rogue/friedegg
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
-	tastes = list("fried egg" = 1)
-	name = "fried egg"
-	desc = "Some Astratans enjoy their eggs sunny-side up."
+	tastes = list("煎蛋香" = 1)
+	name = "煎蛋"
+	desc = "有些阿斯特拉塔信徒喜欢把蛋煎成单面太阳蛋。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	icon_state = "friedegg"
 	portable = FALSE
@@ -37,10 +37,10 @@
 /*	.............   Twin fried eggs   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/friedegg/two
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_CHUNKY)
-	tastes = list("fried egg" = 1)
-	name = "twin fried egg"
+	tastes = list("煎蛋香" = 1)
+	name = "双份煎蛋"
 	faretype = FARE_NEUTRAL
-	desc = "Double the yolks, double the fun."
+	desc = "双倍蛋黄，双倍快乐。"
 	portable = FALSE
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	icon_state = "seggs"
@@ -70,8 +70,8 @@
 
 /*	.............   Deviled Eggs   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/stuffedegg
-	name = "raw stuffed egg"
-	desc = "Raw egg stuffed with a creamy cheese filling."
+	name = "生夹馅蛋"
+	desc = "一颗塞满奶香芝士馅的生蛋。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	icon_state = "deviledegg_raw"
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/stuffedegg/cooked
@@ -82,17 +82,17 @@
 	faretype = FARE_POOR
 
 /obj/item/reagent_containers/food/snacks/rogue/stuffedegg/cooked
-	tastes = list("creamy cheese" = 1, "egg" = 1)
+	tastes = list("奶香芝士" = 1, "鸡蛋香" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
-	name = "stuffed egg"
-	desc = "Egg stuffed with a creamy cheese filling."
+	name = "夹馅蛋"
+	desc = "一颗塞满奶香芝士馅的蛋。"
 	icon_state = "deviledegg"
 
 /*	.............   Tartar   ................ */
 //This doesn't really count as either cooked or egg recipe (it does contain an egg at least) so whatever.
 /obj/item/reagent_containers/food/snacks/rogue/tartar
-	name = "tartar"
-	desc = "Grounded meat covered over with uncooked egg, favorite of the steppesmen. Said to have been named after a famous brigand."
+	name = "鞑靼生肉"
+	desc = "绞肉上覆着生蛋，是草原人的心头好。据说它得名于一位著名的强盗。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	icon_state = "tartar"
 	foodtype = MEAT
@@ -109,9 +109,9 @@
 /*	.................   Valerian Omelette   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/friedegg/tiberian
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
-	tastes = list("fried egg" = 1, "cheese" = 1)
-	name = "valerian omelette"
-	desc = "Fried eggs on a bed of half-melted cheese. A dish from distant lands."
+	tastes = list("煎蛋香" = 1, "奶酪香" = 1)
+	name = "瓦莱里安煎蛋卷"
+	desc = "煎蛋铺在半融化的奶酪上，是一道来自遥远国度的菜肴。"
 	bitesize = 4
 	faretype = FARE_FINE
 	portable = FALSE
@@ -123,9 +123,9 @@
 /*	.................   Bacon & Eggs   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/friedegg/bacon
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
-	tastes = list("fried egg" = 1, "bacon" = 1)
-	name = "bacon and egg"
-	desc = "Fried eggs with bacon. The bacon's savory salty crunch is a perfect complement to the eggs' more mellow flavors."
+	tastes = list("煎蛋香" = 1, "培根香" = 1)
+	name = "培根煎蛋"
+	desc = "煎蛋配培根。培根咸香酥脆，与鸡蛋更温和的味道相得益彰。"
 	bitesize = 4
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	icon_state = "baconegg"
@@ -137,9 +137,9 @@
 //This is an extremely convoluded recipe probably not even worth it but yknow what, why not.
 /obj/item/reagent_containers/food/snacks/rogue/friedegg/sausage
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
-	tastes = list("fried egg" = 1, "sausage" = 1)
-	name = "wiener egg"
-	desc = "Fried egg with sausage on the side. A good start to a perfect morning."
+	tastes = list("煎蛋香" = 1, "香肠香" = 1)
+	name = "香肠煎蛋"
+	desc = "一份配着香肠的煎蛋，是完美早晨的好开头。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	icon_state = "wieneregg"
 	eat_effect = /datum/status_effect/buff/snackbuff
@@ -162,9 +162,9 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/friedegg/sausagebacon
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
-	tastes = list("fried egg" = 1, "sausage" = 1, "bacon" = 1)
-	name = "wiener egg with bacon"
-	desc = "Fried egg with sausage and bacon on the side. Mere step away from greatness."
+	tastes = list("煎蛋香" = 1, "香肠香" = 1, "培根香" = 1)
+	name = "培根香肠煎蛋"
+	desc = "一份配着香肠和培根的煎蛋。离伟大只差一步。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	bitesize = 4
 	icon_state = "wienereggbacon"
@@ -188,9 +188,9 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/friedegg/hammerhold
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_GOOD)
-	tastes = list("fried egg" = 1, "sausage" = 1, "bacon" = 1, "toast" = 1)
-	name = "Hammerholdian breakfast"
-	desc = "A classic of the northern fortresses, peeled of it's more exotic ingredients for Vale kitchens, a true staple of Dwarven diet."
+	tastes = list("煎蛋香" = 1, "香肠香" = 1, "培根香" = 1, "吐司香" = 1)
+	name = "铁锤堡式早餐"
+	desc = "北方堡垒的经典早餐，去掉了更异域的配料以适应谷地厨房，是真正的矮人主食。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	icon_state = "hammerbreak"
 	bitesize = 5

@@ -2,7 +2,7 @@
 /obj/item/chastity/cursed/attack_self(mob/user)
 	if(!user?.mind)
 		return
-	if(tgui_alert(user, "Become the master of this device?", "[src]", list("Yes", "No")) != "Yes")
+	if(tgui_alert(user, "要成为这个装置的主人吗？", "[src]", list("是", "否")) != "是")
 		return
 	var/datum/component/collar_master/CM = user.mind.GetComponent(/datum/component/collar_master)
 	if(!CM)
@@ -33,7 +33,7 @@
 
 	var/added = get_tally_increment_for_source(source)
 	received_cum_count += added
-	var/tally_msg = added == 1 ? "A metal scraping sound is briefly heard, a tally mark suddenly appears on [wearer]'s chastity device." : "A metal scraping sound is briefly heard, two tally marks suddenly appear on [wearer]'s chastity device."
+	var/tally_msg = added == 1 ? "短暂传来一道金属刮擦声，[wearer]的贞操装置上突然多出了一道刻痕。" : "短暂传来一道金属刮擦声，[wearer]的贞操装置上突然多出了两道刻痕。"
 	for(var/mob/M in viewers(1, wearer))
 		to_chat(M, span_notice(tally_msg))
 	return TRUE
@@ -142,25 +142,25 @@
 
 /obj/item/chastity/proc/get_cursed_front_state_name(mob/living/carbon/human/H)
 	if(!H)
-		return "SEALED"
+		return "已封闭"
 
 	var/has_penis = !!H.getorganslot(ORGAN_SLOT_PENIS)
 	var/has_vagina = !!H.getorganslot(ORGAN_SLOT_VAGINA)
-	var/state_name = "SEALED"
+	var/state_name = "已封闭"
 
 	if(has_penis && has_vagina)
-		state_name = "ALL SEALED"
+		state_name = "全部封闭"
 		switch(cursed_front_mode)
 			if(1)
-				state_name = "PENIS OPEN"
+				state_name = "阴茎开放"
 			if(2)
-				state_name = "VAGINA OPEN"
+				state_name = "阴部开放"
 			if(3)
-				state_name = "ALL OPEN"
+				state_name = "全部开放"
 	else if(has_penis)
-		state_name = (cursed_front_mode == 1) ? "PENIS OPEN" : "SEALED"
+		state_name = (cursed_front_mode == 1) ? "阴茎开放" : "已封闭"
 	else if(has_vagina)
-		state_name = (cursed_front_mode == 2) ? "VAGINA OPEN" : "SEALED"
+		state_name = (cursed_front_mode == 2) ? "阴部开放" : "已封闭"
 
 	return state_name
 
@@ -322,7 +322,7 @@
 	// Deploying spikes is extreme content — block if the wearer has opted out.
 	// Retraction is always permitted regardless of the toggle.
 	if(!cursed_spikes_on && (H.client?.prefs && !H.client.prefs.extreme_erp))
-		to_chat(H, span_warning("Eora intervenes. The spikes strain in their housing but cannot deploy."))
+		to_chat(H, span_warning("伊欧拉出手干预了。尖刺在外壳内绷紧，却无法弹出。"))
 		return FALSE
 	cursed_spikes_on = !cursed_spikes_on
 	apply_cursed_state(H)
@@ -339,7 +339,7 @@
 	// Deploying spikes is extreme content — block if the wearer has opted out.
 	// Retraction (new_state == FALSE) is always permitted.
 	if(new_state && (H.client?.prefs && !H.client.prefs.extreme_erp))
-		to_chat(H, span_warning("Eora intervenes. The spikes strain in their housing but cannot deploy."))
+		to_chat(H, span_warning("伊欧拉出手干预了。尖刺在外壳内绷紧，却无法弹出。"))
 		return FALSE
 	if(cursed_spikes_on == new_state)
 		log_cursed_chastity_command(H, CHASTITY_LOG_SPIKES, "enabled=[cursed_spikes_on] changed=FALSE")

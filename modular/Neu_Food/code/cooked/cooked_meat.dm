@@ -4,33 +4,33 @@
 /obj/item/reagent_containers/food/snacks/rogue/meat/steak/fried
 	eat_effect = null
 	slices_num = 0
-	name = "frysteak"
-	desc = "A slab of beastflesh, fried to a perfect medium-rare"
+	name = "煎牛排"
+	desc = "一大块兽肉，煎到了恰到好处的五分熟。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat.dmi'
 	icon_state = "frysteak"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = MEATSLAB_NUTRITION)
 	faretype = FARE_NEUTRAL
 	rotprocess = SHELFLIFE_DECENT
-	tastes = list("warm steak" = 1)
+	tastes = list("热牛排香" = 1)
 	fried_type = null
 	cooked_type = null
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/steak/fried/attackby(obj/item/I, mob/living/user, params)
 	var/obj/item/reagent_containers/peppermill/mill = I
 	if(!locate(/obj/structure/table) in src.loc)
-		to_chat(user, span_warning("I need to use a table."))
+		to_chat(user, span_warning("我得借助一张桌子。"))
 		return FALSE
 	update_cooktime(user)
 	if(istype(mill))
 		if(!mill.reagents.has_reagent(/datum/reagent/consumable/blackpepper, 1))
-			to_chat(user, "There's not enough black pepper to make anything with.")
+			to_chat(user, "黑胡椒不够，做不成任何东西。")
 			return TRUE
 		mill.icon_state = "peppermill_grind"
-		to_chat(user, "You start rubbing the steak with black pepper.")
+		to_chat(user, "你开始把黑胡椒抹到牛排上。")
 		playsound(get_turf(user), 'modular/Neu_Food/sound/peppermill.ogg', 100, TRUE, -1)
 		if(do_after(user,long_cooktime, target = src))
 			if(!mill.reagents.has_reagent(/datum/reagent/consumable/blackpepper, 1))
-				to_chat(user, "There's not enough black pepper to make anything with.")
+				to_chat(user, "黑胡椒不够，做不成任何东西。")
 				return TRUE
 			mill.reagents.remove_reagent(/datum/reagent/consumable/blackpepper, 1)
 			new /obj/item/reagent_containers/food/snacks/rogue/peppersteak(loc)
@@ -39,7 +39,7 @@
 
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/preserved/onion_fried))
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
-		to_chat(user, span_notice("Adding onions..."))
+		to_chat(user, span_notice("正在加入洋葱……"))
 		if(do_after(user,short_cooktime, target = src))
 			new /obj/item/reagent_containers/food/snacks/rogue/onionsteak(loc)
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
@@ -48,7 +48,7 @@
 	
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/preserved/carrot_baked))
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
-		to_chat(user, "<span class='notice'>Adding carrots...</span>")
+		to_chat(user, "<span class='notice'>正在加入胡萝卜……</span>")
 		if(do_after(user,short_cooktime, target = src))
 			user.adjust_experience(/datum/skill/craft/cooking, user.STAINT * 0.8)
 			new /obj/item/reagent_containers/food/snacks/rogue/carrotsteak(loc)
@@ -56,7 +56,7 @@
 			qdel(src)
 
 	else
-		to_chat(user, span_warning("You need to put [src] on a table to knead in the spice."))
+		to_chat(user, span_warning("你得把[src]放到桌上才能把香料揉进去。"))
 
 /obj/item/reagent_containers/food/snacks/rogue/peppersteak/attackby(obj/item/I, mob/living/user, params)
 	var/found_table = locate(/obj/structure/table) in (loc)
@@ -74,21 +74,21 @@
 		return ..()
 
 /obj/item/reagent_containers/food/snacks/rogue/peppersteak/ducal
-	tastes = list("steak" = 1, "pepper" = 1, "garlick" = 1)
-	name = "ducal steak"
-	desc = "Roasted meat flanked with a generous coating of ground pepper for intense flavor and scribbled in with garlick. Said to have been favorite meal of the Mad Duke."
+	tastes = list("牛排香" = 1, "胡椒香" = 1, "蒜香" = 1)
+	name = "公爵牛排"
+	desc = "烤肉表面厚厚覆着磨碎黑胡椒，又抹上了蒜泥，滋味浓烈。据说这是疯公爵最爱的一餐。"
 	faretype = FARE_LAVISH
 	icon_state = "ducalsteak"
 	eat_effect = /datum/status_effect/buff/greatmealbuff
 
 /* .............   Roast Pork   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/meat/fatty/roast
-	name = "roast pork"
-	desc = "A hunk of pigflesh, roasted to a perfect crispy texture"
+	name = "烤猪肉"
+	desc = "一大块猪肉，烤到了恰到好处的酥脆程度。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat.dmi'
 	faretype = FARE_FINE
 	icon_state = "roastpork"
-	tastes = list("crispy pork" = 1)
+	tastes = list("酥脆猪肉香" = 1)
 	bitesize = 3
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = MEATSLAB_NUTRITION)
 	rotprocess = SHELFLIFE_DECENT
@@ -98,8 +98,8 @@
 /*	.............   Crispy bacon   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/meat/bacon/fried
 	eat_effect = null
-	name = "fried bacon"
-	desc = "A trufflepig's retirement plan."
+	name = "煎培根"
+	desc = "这是松露猪的退休归宿。"
 	faretype = FARE_FINE
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat.dmi'
 	icon_state = "friedbacon"
@@ -132,8 +132,8 @@
 
 /*	.............   Fryspider   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/meat/spider/fried
-	name = "fried spidermeat"
-	desc = "A spider leg, shaved and roasted."
+	name = "煎蜘蛛肉"
+	desc = "一条去毛烤制的蜘蛛腿。"
 	faretype = FARE_POOR
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat.dmi'
 	icon_state = "friedspider"
@@ -145,15 +145,15 @@
 
 /*	.................  Whole Chicken roast   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked
-	desc = "A plump bird, roasted to a perfect temperature and bears a crispy skin."
+	desc = "一只肥美的禽鸟，被烤到恰到好处，外皮酥脆。"
 	eat_effect = null
 	slices_num = 0
-	name = "roast bird"
+	name = "烤禽"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat.dmi'
 	icon_state = "roastchicken"
 	faretype = FARE_FINE
 	portable = FALSE
-	tastes = list("tasty birdmeat" = 1)
+	tastes = list("鲜美禽肉香" = 1)
 	cooked_type = null
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
 	rotprocess = SHELFLIFE_DECENT
@@ -166,20 +166,20 @@
 			!(locate(/obj/structure/table) in src.loc) && \
 			!(locate(/obj/structure/table/optable) in src.loc) && \
 			!(locate(/obj/item/storage/bag/tray) in src.loc))
-			to_chat(user, span_warning("I need to use a table."))
+			to_chat(user, span_warning("我得借助一张桌子。"))
 			return FALSE
 
 		if(!mill.reagents.has_reagent(/datum/reagent/consumable/blackpepper, 1))
-			to_chat(user, "There's not enough black pepper to make anything with.")
+			to_chat(user, "黑胡椒不够，做不成任何东西。")
 			return FALSE
 
 		mill.icon_state = "peppermill_grind"
-		to_chat(user, "You start rubbing the bird roast with black pepper.")
+		to_chat(user, "你开始把黑胡椒抹到烤禽上。")
 		playsound(get_turf(user), 'modular/Neu_Food/sound/peppermill.ogg', 100, TRUE, -1)
 		if(do_after(user,3 SECONDS, target = src))
 			mill.icon_state = "peppermill"
 			if(!mill.reagents.has_reagent(/datum/reagent/consumable/blackpepper, 1))
-				to_chat(user, "There's not enough black pepper to make anything with.")
+				to_chat(user, "黑胡椒不够，做不成任何东西。")
 				return FALSE
 
 			mill.reagents.remove_reagent(/datum/reagent/consumable/blackpepper, 1)
@@ -193,7 +193,7 @@
 		if(istype(I, /obj/item/reagent_containers/food/snacks/butter))
 			if(isturf(loc)&& (found_table))
 				playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
-				to_chat(user, "You start shoving butter into the roasted bird.")
+				to_chat(user, "你开始把黄油塞进烤禽里。")
 				if(do_after(user,short_cooktime, target = src))
 					new /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/butter(loc)
 					qdel(I)
@@ -201,7 +201,7 @@
 		if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked))
 			if(isturf(loc)&& (found_table))
 				playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
-				to_chat(user, "You start shoving another bird into the roasted bird - are you sure you want to do this?")
+				to_chat(user, "你开始把另一只鸟塞进这只烤禽里，你确定要这么做吗？")
 				if(do_after(user,short_cooktime, target = src))
 					new /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/doublestacked(loc)
 					qdel(I)
@@ -212,10 +212,10 @@
 /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/cutlet/fried
 	eat_effect = null
 	slices_num = 0
-	name = "frybird"
-	desc = "Poultry scorched to a perfect delicious crisp."
+	name = "炸鸟排"
+	desc = "禽肉被炸到了恰到好处的诱人酥脆。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat.dmi'
-	icon_state = "frybird"
+	icon_state = "炸禽肉香"
 	faretype = FARE_FINE
 	portable = FALSE
 	fried_type = null
@@ -261,21 +261,21 @@
 
 /*	.................  Ducal Spiced Baked Poultry  ................... */
 /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/spiced/ducal
-	name = "ducal bird-roast"
-	desc = "A plump bird, roasted perfection, spiced to taste divine with touch of garlick to top it all off. Perfect to feast on while your son is dying in battle..."
+	name = "公爵烤禽"
+	desc = "一只肥美禽鸟被烤得恰到好处，再以香料与蒜调味得近乎神赐。很适合在你儿子战死沙场时大快朵颐……"
 	faretype = FARE_LAVISH
 	icon_state = "ducalchicken"
-	tastes = list("spicy birdmeat" = 1, "garlick" = 1)
+	tastes = list("辛香禽肉" = 1, "蒜香" = 1)
 	eat_effect = /datum/status_effect/buff/greatmealbuff
 
 /* ............. Fried Crab ................*/
 /obj/item/reagent_containers/food/snacks/rogue/meat/crab/fried
 	eat_effect = null
 	slices_num = 0
-	name = "fried crabmeat"
+	name = "炸蟹肉"
 	faretype = FARE_NEUTRAL
 	portable = FALSE
-	desc = "A fried piece of crabmeat, yum."
+	desc = "一块炸蟹肉，真香。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat.dmi'
 	icon_state = "crabmeat"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
@@ -287,14 +287,14 @@
 /obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried
 	eat_effect = null
 	slices_num = 0
-	name = "fried cabbit"
-	desc = "A slab of cabbit, fried to a perfect crispy texture."
+	name = "炸兔肉"
+	desc = "一大块兔肉，被炸到了恰到好处的酥脆程度。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat.dmi'
 	icon_state = "frycabbit"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)	//It's easier and cheaper than normal meat to find.
 	faretype = FARE_NEUTRAL
 	rotprocess = SHELFLIFE_DECENT
-	tastes = list("warm cabbit" = 1)
+	tastes = list("热兔肉香" = 1)
 	fried_type = null
 	cooked_type = null
 
@@ -316,8 +316,8 @@
 /obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried
 	eat_effect = null
 	slices_num = 0
-	name = "fried volf"
-	desc = "A slab of volf, fried to a perfect medium rare. A bit gamey and chewy, but tasty."
+	name = "煎狼肉"
+	desc = "一大块狼肉，煎到了恰到好处的五分熟。略带野味也有些韧，但很好吃。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat.dmi'
 	icon_state = "fryvolf"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = MEATSLAB_NUTRITION)
@@ -344,8 +344,8 @@
 /obj/item/reagent_containers/food/snacks/rogue/meat/steak/gnoll/seared
 	eat_effect = null
 	slices_num = 0
-	name = "seared gnoll"
-	desc = "A disgusting sinewy mess of gnoll meat. Seems the muscle has only toughened after being seared."
+	name = "炙鬣狗人肉"
+	desc = "一团恶心得要命、满是筋的鬣狗人肉。看起来炙烤只让肌肉变得更韧了。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat.dmi'
 	icon_state = "searedgnoll"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = SNACK_CHUNKY)
@@ -359,33 +359,33 @@
 /obj/item/reagent_containers/food/snacks/rogue/meat/fish/fried
 	eat_effect = null
 	slices_num = 0
-	name = "fryfilet"
-	desc = "A slab of flaky fish, fried until falling apart."
+	name = "炸鱼柳"
+	desc = "一大片层层剥落的鱼肉，被煎到一碰就散。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat.dmi'
 	icon_state = "cooked_filet"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = MEATSLAB_NUTRITION)
 	faretype = FARE_NEUTRAL
 	rotprocess = SHELFLIFE_DECENT
-	tastes = list("warm fish" = 1)
+	tastes = list("热鱼香" = 1)
 	fried_type = null
 	cooked_type = null
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/fish/fried/attackby(obj/item/I, mob/living/user, params)
 	var/obj/item/reagent_containers/peppermill/mill = I
 	if(!locate(/obj/structure/table) in src.loc)
-		to_chat(user, span_warning("I need to use a table."))
+		to_chat(user, span_warning("我得借助一张桌子。"))
 		return FALSE
 	update_cooktime(user)
 	if(istype(mill))
 		if(!mill.reagents.has_reagent(/datum/reagent/consumable/blackpepper, 1))
-			to_chat(user, "There's not enough black pepper to make anything with.")
+			to_chat(user, "黑胡椒不够，做不成任何东西。")
 			return TRUE
 		mill.icon_state = "peppermill_grind"
-		to_chat(user, "You start rubbing the fish with black pepper.")
+		to_chat(user, "你开始把黑胡椒抹到鱼肉上。")
 		playsound(get_turf(user), 'modular/Neu_Food/sound/peppermill.ogg', 100, TRUE, -1)
 		if(do_after(user,long_cooktime, target = src))
 			if(!mill.reagents.has_reagent(/datum/reagent/consumable/blackpepper, 1))
-				to_chat(user, "There's not enough black pepper to make anything with.")
+				to_chat(user, "黑胡椒不够，做不成任何东西。")
 				return TRUE
 			mill.reagents.remove_reagent(/datum/reagent/consumable/blackpepper, 1)
 			new /obj/item/reagent_containers/food/snacks/rogue/pepperfish(loc)
@@ -393,14 +393,14 @@
 			qdel(src)
 
 	else
-		to_chat(user, span_warning("You need to put [src] on a table to knead in the spice."))
+		to_chat(user, span_warning("你得把[src]放到桌上才能把香料揉进去。"))
 
 /* .............   Fried Shellfish    ................ */
 /obj/item/reagent_containers/food/snacks/rogue/meat/shellfish/fried
 	eat_effect = null
 	slices_num = 0
-	name = "fried shellfish"
-	desc = "Fried shellfish meat. A bit salty, but delicious."
+	name = "炸贝肉"
+	desc = "炸熟的贝肉，有点咸，但很好吃。"
 	faretype = FARE_NEUTRAL
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat.dmi'
 	icon_state = "shellfish_meat_cooked"
@@ -412,8 +412,8 @@
 /*	.............   Sausage & Wiener   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/meat/sausage/cooked
 	eat_effect = null
-	name = "sausage"
-	desc = "Delicious flesh stuffed in a intestine casing."
+	name = "香肠"
+	desc = "把美味的肉填进肠衣里制成的食物。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat.dmi'
 	icon_state = "wiener"
 	faretype = FARE_NEUTRAL
@@ -423,11 +423,11 @@
 
 /* .............   Fried Cabbit w/ Garlick  ................ */
 /obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried/garlick
-	name = "garlick cabbit"
-	desc = "A slab of cabbit, fried to a perfect crispy texture - coated over in glove of garlick."
+	name = "蒜香兔肉"
+	desc = "一大块兔肉，被炸到了恰到好处的酥脆程度，还裹满了蒜瓣。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
 	icon_state = "frycabbit_garlick"
-	tastes = list("warm cabbit" = 1, "garlick" = 1)
+	tastes = list("热兔肉香" = 1, "蒜香" = 1)
 	faretype = FARE_FINE
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried/garlick/attackby(obj/item/I, mob/living/user, params)
@@ -446,21 +446,21 @@
 
 /* .............   Fried Cabbit w/ Garlick & Cucumber ................ */
 /obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried/garlickcucumber
-	name = "elven cabbit roast"
-	desc = "A slab of cabbit, fried to a perfect crispy texture - coated over in glove of garlick and served with side of cucumber. Thought to bring good luck by rangers!"
+	name = "精灵兔肉烤盘"
+	desc = "一大块兔肉，被炸到了恰到好处的酥脆程度，裹满蒜瓣并配有黄瓜。游侠们认为这会带来好运！"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
 	icon_state = "frycabbit_garlick_cucumber"
-	tastes = list("warm cabbit" = 1, "garlick" = 1, "cucumber" = 1)
+	tastes = list("热兔肉香" = 1, "蒜香" = 1, "黄瓜香" = 1)
 	eat_effect = /datum/status_effect/buff/mealbuff
 	faretype = FARE_LAVISH
 
 /* .............  Garlicked Fried Volf   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/garlick
-	name = "garlick volf"
-	desc = "A slab of volf, fried to a perfect medium rare. A bit gamey and chewy, but tasty. This piece has been coated over in glove of garlick."
+	name = "蒜香狼肉"
+	desc = "一大块狼肉，煎到了恰到好处的五分熟。略带野味也有些韧，但很好吃。这一块还裹满了蒜瓣。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
 	icon_state = "fryvolf_garlick"
-	tastes = list("gamey volf" = 1, "garlick" = 1)
+	tastes = list("野味狼肉香" = 1, "蒜香" = 1)
 	faretype = FARE_FINE
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/garlick/attackby(obj/item/I, mob/living/user, params)
@@ -479,10 +479,10 @@
 
 /* .............  Garlicked Fried Volf w/ Cucumber  ................ */
 /obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/garlickcucumber
-	name = "hunter's feast"
-	desc = "A slab of volf, fried to a perfect medium rare. A bit gamey and chewy, but tasty. This piece has been coated over in glove of garlick and served with side of cucumber."
+	name = "猎人盛宴"
+	desc = "一大块狼肉，煎到了恰到好处的五分熟。略带野味也有些韧，但很好吃。这一块还裹满了蒜瓣，并配有黄瓜。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
 	icon_state = "fryvolf_garlick_cucumber"
-	tastes = list("gamey volf" = 1, "garlick" = 1, "cucumber" = 1)
+	tastes = list("野味狼肉香" = 1, "蒜香" = 1, "黄瓜香" = 1)
 	eat_effect = /datum/status_effect/buff/mealbuff
 	faretype = FARE_LAVISH

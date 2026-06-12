@@ -34,9 +34,9 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 // block above because BYOND requires them before Initialize() is compiled. Both blocks together
 // form the full /obj/item/chastity type; this split is purely a compile-order requirement.
 /obj/item/chastity
-	name = "chastity belt"
+	name = "贞操带"
 	always_show_examine_link = TRUE
-	desc = "A unisex metal device designed to prevent penetrative sex. It has a lock on the front, and encloses the groin area behind robust iron bars. For the devout."
+	desc = "一种为阻止插入式性行为而设计的中性金属装置。它前方带锁，并以坚固的铁栏封住裆部区域。适合虔信者。"
 	icon = 'modular/icons/obj/lewd/chastity.dmi'
 	icon_state = "cage_belt"
 	mob_overlay_icon = "cage_belt"
@@ -77,12 +77,12 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 /obj/item/chastity/examine()
 	. = ..()
 	if(attached_toy)
-		. += "[span_notice("\An [attached_toy] appears attached to \the [initial(name)]. Alt+RMB to remove it.")]"
+		. += "[span_notice("\An [attached_toy]似乎被安装在了\the [initial(name)]上。按 Alt+右键可拆下。")]"
 	if(chastity_cursed)
 		if(received_cum_count == 1)
-			. += span_notice("1 tally mark is etched into the chastity device's metal surface.")
+			. += span_notice("贞操装置的金属表面刻着 1 道刻痕。")
 		else if(received_cum_count > 1)
-			. += span_notice("[received_cum_count] tally marks are etched into the chastity device's metal surface.")
+			. += span_notice("贞操装置的金属表面刻着 [received_cum_count] 道刻痕。")
 
 /obj/item/chastity/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/dildo))
@@ -91,13 +91,13 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 	if(held_dildo.is_attached_to_belt)
 		return
 	if(attached_toy)
-		to_chat(user, span_info("\The [initial(name)] already has a toy attached! Remove it first."))
+		to_chat(user, span_info("\The [initial(name)]已经装着玩具了！先把它拆下来。"))
 		return
 	if(!user.transferItemToLoc(held_dildo, null))
-		to_chat(user, span_warning("\The [held_dildo] is stuck to your hand!"))
+		to_chat(user, span_warning("\The [held_dildo]黏在你的手上了！"))
 		return
 	if(attach_toy(held_dildo, user))
-		user.visible_message(span_warning("[user] equips \the [held_dildo] onto \the [initial(name)]."))
+		user.visible_message(span_warning("[user]将\the [held_dildo]装到了\the [initial(name)]上。"))
 
 /obj/item/chastity/AltRightClick(mob/user)
 	if(!attached_toy)
@@ -105,9 +105,9 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 	if(!isliving(user) || !user.TurfAdjacent(src))
 		return
 	if(user.get_active_held_item())
-		to_chat(user, span_info("I can't do that with my hand full!"))
+		to_chat(user, span_info("我手上拿满了，做不了这个！"))
 		return
-	user.visible_message(span_warning("[user] removes \the [attached_toy] from \the [initial(name)]."))
+	user.visible_message(span_warning("[user]从\the [initial(name)]上拆下了\the [attached_toy]。"))
 	detach_toy(user)
 
 /obj/item/chastity/update_icon()
@@ -129,7 +129,7 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 		var/obj/item/storage/belt/rogue/worn_belt = chastity_victim.belt
 		if(worn_belt.attached_toy)
 			if(user)
-				to_chat(user, span_warning("[chastity_victim] already has a toy attached to [chastity_victim.p_their()] belt."))
+				to_chat(user, span_warning("[chastity_victim]的腰带上已经装着玩具了。"))
 			return FALSE
 	new_toy.is_attached_to_belt = TRUE
 	attached_toy = new_toy
@@ -169,15 +169,15 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 	if(!H)
 		return FALSE
 	if(!H.mind)
-		to_chat(user, span_warning("[H] cannot be fitted with a chastity device right now."))
+		to_chat(user, span_warning("[H]现在无法装配贞操装置。"))
 		return FALSE
 	if(istype(H, /mob/living/carbon/human/species/werewolf))
-		to_chat(user, span_warning("[H]'s transformed body cannot be restrained by [src]."))
+		to_chat(user, span_warning("[H]变形后的身体无法被[src]束缚。"))
 		return FALSE
 	if(attached_toy && istype(H.belt, /obj/item/storage/belt/rogue))
 		var/obj/item/storage/belt/rogue/worn_belt = H.belt
 		if(worn_belt.attached_toy)
-			to_chat(user, span_warning("[H] is already wearing a belt with an attached toy."))
+			to_chat(user, span_warning("[H]已经戴着一条装有玩具的腰带。"))
 			return FALSE
 	return TRUE
 
@@ -279,16 +279,16 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 
 	var/obj/item/roguekey/chastity/new_key = generated_key
 	var/was_hardmode_key = new_key.hardmode_indestructible
-	new_key.name = "[H]'s chastity key"
-	new_key.desc = "A small key for [H]'s chastity device."
+	new_key.name = "[H]的贞操钥匙"
+	new_key.desc = "一把用于开启[H]贞操装置的小钥匙。"
 	new_key.hardmode_indestructible = FALSE
 
 	if(is_hardmode_active())
 		new_key.hardmode_indestructible = TRUE
-		new_key.name = "[H]'s binding key"
-		new_key.desc = "A small key bearing the mark of a permanent binding. [H]'s freedom rests in this metal."
+		new_key.name = "[H]的束缚钥匙"
+		new_key.desc = "一把带有永久束缚印记的小钥匙。[H]的自由全系于这块金属之上。"
 		if(user && !was_hardmode_key)
-			to_chat(user, span_warning("The key feels heavier than it should. [H]'s fate now rests in your hands."))
+			to_chat(user, span_warning("这把钥匙比应有的分量更沉。[H]的命运现在掌握在你手中。"))
 
 // Spawns a matching physical key at the equipping user's turf (non-cursed devices only).
 // Reuses the cached generated_key if it still exists to survive re-equips without orphaning old keys.

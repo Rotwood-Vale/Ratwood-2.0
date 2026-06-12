@@ -2,11 +2,11 @@
 
 /*........... Pepperfilet */
 /obj/item/reagent_containers/food/snacks/rogue/pepperfish
-	name = "pepperfilet"
-	desc = "Roasted fish flipped against itself and coated in pepper."
+	name = "胡椒鱼柳"
+	desc = "烤鱼对折在一起，外面裹满胡椒。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_seafood_meal.dmi'
 	icon_state = "pepperfish"
-	tastes = list("warm fish" = 1, "pepper" = 1)
+	tastes = list("热鱼香" = 1, "胡椒香" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEATSLAB_NUTRITION)
 	faretype = FARE_FINE
 	portable = FALSE
@@ -18,11 +18,11 @@
 
 /* salmon st dendor*/
 /obj/item/reagent_containers/food/snacks/rogue/dendorsalmon
-	name = "saint dendor's salmon"
-	desc = "A dish invented in Otava, of a green sauce of fat and herbs atop salmon."
+	name = "圣登多尔鲑鱼"
+	desc = "这道菜起源于奥塔瓦，用脂肪与香草制成的绿色酱汁覆在鲑鱼上。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_seafood_meal.dmi'
 	icon_state = "salmon_st_columbia"
-	tastes = list("warm fish" = 1, "fatty herbaceousness" = 1)
+	tastes = list("热鱼香" = 1, "油润草本香" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
 	faretype = FARE_FINE
 	portable = FALSE
@@ -34,12 +34,12 @@
 
 /* salmon wit the berry on it */
 /obj/item/reagent_containers/food/snacks/rogue/berrysalmon
-	name = "berrymash salmon"
-	desc = "A dish of jacksberries mashed atop peppered salmon. Hearty."
+	name = "浆果酱鲑鱼"
+	desc = "一份把杰克莓果泥铺在胡椒鲑鱼上的菜肴，十分扎实。"
 	bitesize = 4
 	icon = 'modular/Neu_Food/icons/cooked/cooked_seafood_meal.dmi'
 	icon_state = "salmon_berry"
-	tastes = list("peppered fish" = 1, "fruity lightness" = 1)
+	tastes = list("胡椒鱼香" = 1, "清爽果香" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
 	faretype = FARE_FINE
 	portable = FALSE
@@ -51,11 +51,11 @@
 
 /* lobsta with the pepper all over it*/
 /obj/item/reagent_containers/food/snacks/rogue/pepperlobsta
-	name = "peppertail"
-	desc = "A sprinkle of pepper atop the tail of a cretinous beast, meant to make it palatable for more than peasantry."
+	name = "胡椒龙虾尾"
+	desc = "在这愚蠢野兽的尾肉上撒些胡椒，好让它不只是平民也吃得下去。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_seafood_meal.dmi'
 	icon_state = "pepper_tail"
-	tastes = list("peppered crustacean" = 1)
+	tastes = list("胡椒甲壳鲜香" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
 	faretype = FARE_NEUTRAL
 	portable = FALSE
@@ -67,11 +67,11 @@
 
 /*garlick seabass*/
 /obj/item/reagent_containers/food/snacks/rogue/garlickbass
-	name = "garlicked seabass"
-	desc = "Seabass, with cloves of garlick smothered onto it. Delicious."
+	name = "蒜香海鲈鱼"
+	desc = "海鲈鱼上抹满蒜瓣。美味极了。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_seafood_meal.dmi'
 	icon_state = "garlick_seabass"
-	tastes = list("pungent aromatics" = 1, "flaky fish goodness" = 1)
+	tastes = list("辛香草本" = 1, "松软鱼肉香" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
 	faretype = FARE_NEUTRAL
 	portable = FALSE
@@ -83,11 +83,11 @@
 
 /*milk clam*/
 /obj/item/reagent_containers/food/snacks/rogue/milkclam
-	name = "milkclams"
-	desc = "Clams, simmered in milk... How queer."
+	name = "奶炖蛤蜊"
+	desc = "蛤蜊，用牛奶炖煮……真古怪。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_seafood_meal.dmi'
 	icon_state = "milk_clams"
-	tastes = list("milky crustacean" = 1)
+	tastes = list("奶香贝鲜" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
 	faretype = FARE_FINE
 	portable = FALSE
@@ -99,11 +99,11 @@
 
 /*ale cod*/
 /obj/item/reagent_containers/food/snacks/rogue/alecod
-	name = "alecod"
-	desc = "Cod with ale poured over it right after cooking. A... choice pick."
+	name = "麦酒鳕鱼"
+	desc = "鳕鱼刚出锅就浇上麦酒。嗯……真是个独特的选择。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_seafood_meal.dmi'
 	icon_state = "ale_cod"
-	tastes = list("flaky ale-soaked fish" = 1)
+	tastes = list("麦酒浸润鱼香" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
 	faretype = FARE_NEUTRAL
 	portable = FALSE
@@ -115,12 +115,12 @@
 
 /*onion plaice*/
 /obj/item/reagent_containers/food/snacks/rogue/onionplaice
-	name = "plaice with onion"
-	desc = "A slab of plaice with fried onion. Delicious!"
+	name = "洋葱鲽鱼"
+	desc = "一大块鲽鱼配炸洋葱。真香！"
 	bitesize = 4
 	icon = 'modular/Neu_Food/icons/cooked/cooked_seafood_meal.dmi'
 	icon_state = "onion_plaice"
-	tastes = list("oniony fish" = 1)
+	tastes = list("洋葱鱼香" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
 	faretype = FARE_FINE
 	portable = FALSE
@@ -132,11 +132,11 @@
 
 /*buttery soles*/
 /obj/item/reagent_containers/food/snacks/rogue/buttersole
-	name = "buttered sole"
-	desc = "A slab of sole, buttered and crispy at the edges."
+	name = "黄油鳎鱼"
+	desc = "一大片鳎鱼，抹了黄油，边缘煎得酥脆。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_seafood_meal.dmi'
 	icon_state = "butter_sole"
-	tastes = list("fatty fish" = 1)
+	tastes = list("油润鱼香" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
 	faretype = FARE_POOR
 	portable = FALSE
@@ -148,11 +148,11 @@
 
 /*jellied eel*/
 /obj/item/reagent_containers/food/snacks/rogue/jelliedeel
-	name = "jellied eel"
-	desc = "Jellied eel! Eel in jelly made of eel! By the ten!"
+	name = "鳗鱼冻"
+	desc = "鳗鱼冻！用鳗鱼做成胶质，再把鳗鱼封进鳗鱼胶里！我的天啊！"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_seafood_meal.dmi'
 	icon_state = "jellied_eel"
-	tastes = list("slimy, slippery fish" = 1)
+	tastes = list("滑溜鱼香" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
 	faretype = FARE_LAVISH
 	portable = FALSE
@@ -163,11 +163,11 @@
 
 /* ............ Shellfish ................... */
 /obj/item/reagent_containers/food/snacks/rogue/fryfish/lobster/meal
-	name = "buttered lobster"
-	desc = "A lobster, covered in butter. Delicious!"
+	name = "黄油龙虾"
+	desc = "一只裹满黄油的龙虾。真香！"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_seafood_meal.dmi'
 	icon_state = "lobster_meal"
-	tastes = list("lobster" = 1, "butter" = 1)
+	tastes = list("龙虾香" = 1, "黄油香" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
 	faretype = FARE_FINE // Idc lobster is not considered fine dining back then it is now since it use butter + rare fish.
 	portable = FALSE
@@ -176,8 +176,8 @@
 	eat_effect = /datum/status_effect/buff/mealbuff
 // Close enough crab cake has two steps but it is a whatever
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/crabcakeraw
-	name = "raw crab cake"
-	desc = "A variant of the handpie filled with buttery, savory shellfish meat and made with a buttered slice of dough."
+	name = "生蟹饼"
+	desc = "一种手馅饼变体，里面塞满咸香的黄油贝肉，用抹了黄油的面片制成。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_seafood_meal.dmi'
 	icon_state = "crab_cake_raw"
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/crabcake
@@ -187,14 +187,14 @@
 	dropshrink = 0.8
 
 /obj/item/reagent_containers/food/snacks/rogue/crabcake
-	name = "crab cake"
-	desc = "A variant of the handpie filled with buttery, savory shellfish meat and made with a buttered slice of dough."
+	name = "蟹饼"
+	desc = "一种手馅饼变体，里面塞满咸香的黄油贝肉，用抹了黄油的面片制成。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_seafood_meal.dmi'
 	icon_state = "crab_cake"
 	eat_effect = /datum/status_effect/buff/greatmealbuff
 	bitesize = 4
 	list_reagents = list(/datum/reagent/consumable/nutriment = SMALLDOUGH_NUTRITION + MEATSLAB_NUTRITION)
-	tastes = list("crispy butterdough and shellfish meat" = 1)
+	tastes = list("酥脆黄油面皮与贝肉鲜香" = 1)
 	faretype = FARE_LAVISH
 	rotprocess = null
 	dropshrink = 0.8

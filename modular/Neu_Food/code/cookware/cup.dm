@@ -1,6 +1,6 @@
 /obj/item/reagent_containers/glass/cup
-	name = "metal cup"
-	desc = "A sturdy cup of metal. Often seen in the hands of warriors, wardens, and other sturdy folk."
+	name = "金属杯"
+	desc = "一只结实的金属杯。常见于战士、典狱官与其他强壮之人的手中。"
 	icon = 'modular/Neu_Food/icons/cookware/cup.dmi'
 	icon_state = "iron"
 	force = 5
@@ -47,17 +47,17 @@
 /obj/item/reagent_containers/glass/cup/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/dice) && max_dice)
 		if(reagents && reagents.total_volume)
-			to_chat(user, span_warning("[src] is full of liquid! You can’t fit dice in there."))
+			to_chat(user, span_warning("[src]里装满了液体！没法把骰子放进去。"))
 			return TRUE
 
 		if(length(contents) >= max_dice)
-			to_chat(user, span_warning("[src] can’t hold more than [max_dice] dice."))
+			to_chat(user, span_warning("[src]最多只能装[max_dice]枚骰子。"))
 			return TRUE
 
 		I.forceMove(src)
 		user.visible_message(
-			span_notice("[user] drops [I] into [src]."),
-			span_notice("I drop [I] into [src].")
+			span_notice("[user]把[I]丢进了[src]。"),
+			span_notice("我把[I]丢进了[src]。")
 		)
 		update_icon()
 		return TRUE
@@ -81,8 +81,8 @@
 	if(do_after(user, 1.5 SECONDS))
 		rolling = TRUE
 		user.visible_message(
-			span_notice("[user] shakes [src], rolling all the dice inside!"),
-			span_notice("I shake [src] and roll the dice inside!")
+			span_notice("[user]摇晃着[src]，把里面的骰子全都掷了出去！"),
+			span_notice("我摇晃[src]，把里面的骰子全都掷了出去！")
 		)
 
 		var/turf/target_turf = get_step(user.loc, user.dir)
@@ -102,7 +102,7 @@
 
 	if(istype(target, /obj/item/dice) && max_dice)
 		if(reagents && reagents.total_volume)
-			to_chat(user, span_warning("[src] is full of liquid! You can’t scoop dice into it."))
+			to_chat(user, span_warning("[src]里装满了液体！没法把骰子舀进去。"))
 			return
 
 		var/turf/T = get_turf(target)
@@ -115,8 +115,8 @@
 
 		if(scooped.len)
 			user.visible_message(
-				span_notice("[user] scoops up [english_list(scooped)] with [src]."),
-				span_notice("I scoop up [english_list(scooped)] with [src].")
+				span_notice("[user]用[src]舀起了[english_list(scooped)]。"),
+				span_notice("我用[src]舀起了[english_list(scooped)]。")
 			)
 		update_icon()
 		return TRUE
@@ -130,15 +130,15 @@
 		for(var/obj/item/dice/D in contents)
 			dice_count++
 		if(dice_count)
-			. += span_info("There [dice_count > 1 ? "are" : "is"] [dice_count] [dice_count > 1 ? "dice" : "die"] inside the cup.")
+			. += span_info("杯子里有[dice_count]枚[dice_count > 1 ? "骰子" : "骰子"]。")
 
 /obj/item/reagent_containers/glass/cup/onfill(obj/target, mob/user, silent = FALSE)
 	..()
 	if(max_dice && contents)
 		for(var/obj/item/dice/D in contents)
 			user.visible_message(
-				span_notice("[user] accidentally spills [D] from [src] while filling it!"),
-				span_notice("I accidentally spill [D] from [src] while filling it!")
+				span_notice("[user]在往[src]里倒液体时，不小心把[D]洒了出来！"),
+				span_notice("我在往[src]里倒液体时，不小心把[D]洒了出来！")
 			)
 			D.forceMove(get_turf(user))
 			update_icon()
@@ -157,16 +157,16 @@
 	throwforce = 10
 
 /obj/item/reagent_containers/glass/cup/steel
-	name = "goblet"
-	desc = "A steel goblet, its surface adorned with studs."
+	name = "钢制高脚杯"
+	desc = "一只钢制高脚杯，表面饰有铆钉。"
 	icon_state = "steel"
 	sellprice = 10
 	force = 10
 	throwforce = 15
 
 /obj/item/reagent_containers/glass/cup/decrepitmug
-	name = "decrepit mug"
-	desc = "Frayed bronze, coiled into a cup. Here, adventurers of centuries-past would laugh and legendize; but now, nothing but empty chairs and empty tables remain."
+	name = "破旧马克杯"
+	desc = "磨损的青铜盘绕成杯。数百年前，冒险者们会在这里大笑、传颂传奇；而如今，只剩下一张张空椅和空桌。"
 	color = "#bb9696"
 	icon_state = "amug"
 	sellprice = 5
@@ -174,8 +174,8 @@
 	throwforce = 10
 
 /obj/item/reagent_containers/glass/cup/decrepitgob
-	name = "decrepit goblet"
-	desc = "Frayed bronze, coiled into a hooked vessel. To think that this was once a nobleman's goblet; yet, it has endured far longer than their now-withered bloodline."
+	name = "破旧高脚杯"
+	desc = "磨损的青铜盘绕成一只弯柄酒杯。很难想象它曾属于一位贵族；然而，它却比那早已衰败的血脉存续得更久。"
 	color = "#bb9696"
 	icon_state = "agoblet"
 	sellprice = 10
@@ -183,8 +183,8 @@
 	throwforce = 15
 
 /obj/item/reagent_containers/glass/cup/silver
-	name = "silver goblet"
-	desc = "A silver goblet, its surface carefully polished."
+	name = "银制高脚杯"
+	desc = "一只银制高脚杯，表面经过细致打磨。"
 	icon_state = "silver"
 	sellprice = 48
 	last_used = 0
@@ -193,8 +193,8 @@
 	throwforce = 15
 
 /obj/item/reagent_containers/glass/cup/silver/small
-	name = "silver cup"
-	desc = "A silver cup, its surface carefully polished."
+	name = "银杯"
+	desc = "一只银杯，表面经过细致打磨。"
 	icon_state = "scup"
 	sellprice = 20
 	is_silver = TRUE
@@ -202,16 +202,16 @@
 	throwforce = 10
 
 /obj/item/reagent_containers/glass/cup/golden
-	name = "golden goblet"
-	desc = "This goblet radiates opulence and grandeur."
+	name = "金制高脚杯"
+	desc = "这只高脚杯散发着奢华与庄严的气息。"
 	icon_state = "golden"
 	sellprice = 50
 	force = 10
 	throwforce = 15
 
 /obj/item/reagent_containers/glass/cup/golden/small
-	name = "golden cup"
-	desc = "This cup radiates opulence and grandeur."
+	name = "金杯"
+	desc = "这只杯子散发着奢华与庄严的气息。"
 	icon_state = "gcup"
 	sellprice = 40
 	force = 5
@@ -223,28 +223,28 @@
 	throwforce = 15
 
 /obj/item/reagent_containers/glass/cup/tin
-	name = "tin goblet"
-	desc = "A tin goblet, cheaper than silver, but with a similar shine!"
+	name = "锡制高脚杯"
+	desc = "一只锡制高脚杯，比银器便宜，但同样闪亮！"
 	icon_state = "tgoblet"
 	sellprice = 12
 
 /obj/item/reagent_containers/glass/cup/tin/small
-	name = "tin cup"
-	desc = "A tin cup, cheaper than silver, but with a similar shine!"
+	name = "锡杯"
+	desc = "一只锡杯，比银器便宜，但同样闪亮！"
 	icon_state = "tcup"
 	sellprice = 8
 
 /obj/item/reagent_containers/glass/cup/skull
-	name = "skull goblet"
-	desc = "The hollow eye sockets tell me of forgotten, dark rituals."
+	name = "颅骨高脚杯"
+	desc = "那空洞的眼窝诉说着被遗忘的黑暗仪式。"
 	dropshrink = 1
 	icon_state = "skull"
 	force = 5
 	throwforce = 10
 
 /obj/item/reagent_containers/glass/cup/ceramic
-	name = "teacup"
-	desc = "A tea cup made out of ceramic. Used to serve tea."
+	name = "茶杯"
+	desc = "一只陶瓷制成的茶杯，用来盛茶。"
 	dropshrink = 0.7
 	icon_state = "cup"
 	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
@@ -254,143 +254,143 @@
 
 /obj/item/reagent_containers/glass/cup/ceramic/examine()
 	. = ..()
-	. += span_info("It can be brushed with a dye brush to glaze it.")
+	. += span_info("可以用染料刷为它上釉。")
 
 /obj/item/reagent_containers/glass/cup/ceramic/attackby(obj/item/I, mob/living/carbon/human/user)
 	. = ..()
 	if(istype(I, /obj/item/dye_brush))
 		if(reagents.total_volume)
-			to_chat(user, span_notice("I can't glaze the cup while it has liquid in it."))
+			to_chat(user, span_notice("杯子里还有液体时，我没法给它上釉。"))
 			return
 		if(do_after(user, 2 SECONDS, target = src))
-			to_chat(user, span_notice("I glaze the cup with the dye brush."))
+			to_chat(user, span_notice("我用染料刷给杯子上了釉。"))
 			new /obj/item/reagent_containers/glass/cup/ceramic/fancy(get_turf(src))
 			qdel(src)
 		return
 
 /obj/item/reagent_containers/glass/cup/ceramic/fancy
-	name = "fancy teacup"
-	desc = "A fancy tea cup made out of ceramic. Used to serve tea."
+	name = "华丽茶杯"
+	desc = "一只华丽的陶瓷茶杯，用来盛茶。"
 	icon_state = "cup_fancy"
 	sellprice = 12
 	force = 5
 	throwforce = 10
 
 /obj/item/reagent_containers/glass/cup/carved
-	name = "carved cup"
-	desc = "You shouldn't be seeing this."
+	name = "雕刻杯"
+	desc = "你本不该看到这个。"
 	dropshrink = 1
 	icon_state = "agoblet"
 	sellprice = 0
 
 /obj/item/reagent_containers/glass/cup/carved/jade
-	name = "jade cup"
-	desc = "A simple cup carved out of jade."
+	name = "玉杯"
+	desc = "一只用玉雕成的朴素杯子。"
 	dropshrink = 1
 	icon_state = "cup_jade"
 	sellprice = 55
 
 /obj/item/reagent_containers/glass/cup/carved/turq
-	name = "cerulite cup"
-	desc = "A simple cup carved out of cerulite."
+	name = "蔚蓝石杯"
+	desc = "一只用蔚蓝石雕成的朴素杯子。"
 	dropshrink = 1
 	icon_state = "cup_turq"
 	sellprice = 80
 
 /obj/item/reagent_containers/glass/cup/carved/amber
-	name = "amber cup"
-	desc = "A simple cup carved out of amber."
+	name = "琥珀杯"
+	desc = "一只用琥珀雕成的朴素杯子。"
 	dropshrink = 1
 	icon_state = "cup_amber"
 	sellprice = 55
 
 /obj/item/reagent_containers/glass/cup/carved/coral
-	name = "heartstone cup"
-	desc = "A simple cup carved out of heartstone."
+	name = "心石杯"
+	desc = "一只用心石雕成的朴素杯子。"
 	dropshrink = 1
 	icon_state = "cup_coral"
 	sellprice = 65
 
 /obj/item/reagent_containers/glass/cup/carved/onyxa
-	name = "onyxa cup"
-	desc = "A simple cup carved out of onyxa."
+	name = "缟玛瑙杯"
+	desc = "一只用缟玛瑙雕成的朴素杯子。"
 	dropshrink = 1
 	icon_state = "cup_onyxa"
 	sellprice = 35
 
 /obj/item/reagent_containers/glass/cup/carved/shell
-	name = "shell cup"
-	desc = "A simple cup carved out of shell."
+	name = "贝壳杯"
+	desc = "一只用贝壳雕成的朴素杯子。"
 	dropshrink = 1
 	icon_state = "cup_shell"
 	sellprice = 15
 
 /obj/item/reagent_containers/glass/cup/carved/opal
-	name = "opal cup"
-	desc = "A simple cup carved out of opal."
+	name = "欧泊杯"
+	desc = "一只用欧泊雕成的朴素杯子。"
 	dropshrink = 1
 	icon_state = "cup_opal"
 	sellprice = 85
 
 /obj/item/reagent_containers/glass/cup/carved/rose
-	name = "rosestone cup"
-	desc = "A simple cup carved out of rosestone."
+	name = "玫瑰石杯"
+	desc = "一只用玫瑰石雕成的朴素杯子。"
 	dropshrink = 1
 	icon_state = "cup_rose"
 	sellprice = 20
 
 /obj/item/reagent_containers/glass/cup/carved/jadefancy
-	name = "fancy jade cup"
-	desc = "A fancy cup carved out of jade."
+	name = "华丽玉杯"
+	desc = "一只用玉雕成的华丽杯子。"
 	dropshrink = 1
 	icon_state = "fancycup_jade"
 	sellprice = 65
 
 /obj/item/reagent_containers/glass/cup/carved/turqfancy
-	name = "fancy cerulite cup"
-	desc = "A fancy cup carved out of cerulite."
+	name = "华丽蔚蓝石杯"
+	desc = "一只用蔚蓝石雕成的华丽杯子。"
 	dropshrink = 1
 	icon_state = "fancycup_turq"
 	sellprice = 90
 
 /obj/item/reagent_containers/glass/cup/carved/opalfancy
-	name = "fancy opal cup"
-	desc = "A fancy cup carved out of opal."
+	name = "华丽欧泊杯"
+	desc = "一只用欧泊雕成的华丽杯子。"
 	dropshrink = 1
 	icon_state = "fancycup_opal"
 	sellprice = 95
 
 /obj/item/reagent_containers/glass/cup/carved/coralfancy
-	name = "fancy heartstone cup"
-	desc = "A fancy cup carved out of heartstone."
+	name = "华丽心石杯"
+	desc = "一只用心石雕成的华丽杯子。"
 	dropshrink = 1
 	icon_state = "fancycup_coral"
 	sellprice = 75
 
 /obj/item/reagent_containers/glass/cup/carved/amberfancy
-	name = "fancy amber cup"
-	desc = "A fancy cup carved out of amber."
+	name = "华丽琥珀杯"
+	desc = "一只用琥珀雕成的华丽杯子。"
 	dropshrink = 1
 	icon_state = "fancycup_amber"
 	sellprice = 65
 
 /obj/item/reagent_containers/glass/cup/carved/shellfancy
-	name = "fancy shell cup"
-	desc = "A fancy cup carved out of shell."
+	name = "华丽贝壳杯"
+	desc = "一只用贝壳雕成的华丽杯子。"
 	dropshrink = 1
 	icon_state = "fancycup_shell"
 	sellprice = 25
 
 /obj/item/reagent_containers/glass/cup/carved/rosefancy
-	name = "fancy rosestone cup"
-	desc = "A fancy cup carved out of rosestone."
+	name = "华丽玫瑰石杯"
+	desc = "一只用玫瑰石雕成的华丽杯子。"
 	dropshrink = 1
 	icon_state = "fancycup_rose"
 	sellprice = 30
 
 /obj/item/reagent_containers/glass/cup/carved/onyxafancy
-	name = "fancy onyxa cup"
-	desc = "A fancy cup carved out of onyxa."
+	name = "华丽缟玛瑙杯"
+	desc = "一只用缟玛瑙雕成的华丽杯子。"
 	dropshrink = 1
 	icon_state = "fancycup_onyxa"
 	sellprice = 45

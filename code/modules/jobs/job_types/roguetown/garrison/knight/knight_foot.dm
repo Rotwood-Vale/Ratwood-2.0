@@ -59,7 +59,7 @@
 	if(H.mind)
 		var/helmets = list(
 			"猪面尖顶盔" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,
-			"卫士盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/guard,
+			"萨伏伊式盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/guard,
 			"栅面盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/sheriff,
 			"桶盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/bucket,
 			"骑士盔"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight,

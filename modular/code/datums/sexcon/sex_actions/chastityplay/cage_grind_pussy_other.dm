@@ -1,5 +1,5 @@
 /datum/sex_action/chastityplay/cage_grind_pussy_other
-    name = "Grind your cage on their pussy"
+    name = "用你的贞操笼磨蹭对方阴部"
     user_sex_part = SEX_PART_COCK
     target_sex_part = SEX_PART_CUNT
 
@@ -34,10 +34,10 @@
     return TRUE
 
 /datum/sex_action/chastityplay/cage_grind_pussy_other/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(span_warning("[user] rolls [user.p_their()] hips forward until [user.p_their()] [get_chastity_device_name(user)] settles against [target]'s bare pussy."))
+    user.visible_message(span_warning("[user]前挺[user.p_their()]的腰，让[user.p_their()]的[get_chastity_device_name(user)]贴上[target]裸露的阴部。"))
 
 /datum/sex_action/chastityplay/cage_grind_pussy_other/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] rolls [user.p_their()] cage against [target]'s pussy in a slow, deliberate grind \u2014 bars pressing warm and unyielding..."))
+    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()]缓慢而刻意地用[user.p_their()]的贞操笼磨蹭[target]的阴部，栅栏温热地压着，却毫不退让……"))
     user.sexcon.outercourse_noise(target, TRUE)
     user.sexcon.do_thrust_animate(target)
 
@@ -47,7 +47,7 @@
     target.sexcon.handle_passive_ejaculation(user)
 
 /datum/sex_action/chastityplay/cage_grind_pussy_other/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(span_warning("[user] eases back, the metal of [user.p_their()] [get_chastity_device_name(user)] pulling away from [target] with a last rasp of contact."))
+    user.visible_message(span_warning("[user]缓缓退开，让[user.p_their()]的[get_chastity_device_name(user)]从[target]身上发出最后一声刮擦后离开。"))
 
 /datum/sex_action/chastityplay/cage_grind_pussy_other/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
     if(user.sexcon.finished_check())

@@ -1,12 +1,12 @@
 // For definition - any non-bread premium product dough that is also not a cake.
 /*	.................   Pastry   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/pastry
-	name = "pastry"
-	desc = "Crispy, buttery, and delightfully flaky. A favorite treat among children and sweetlovers."
+	name = "酥点"
+	desc = "酥脆、黄油香浓、层层起酥，令人愉悦。深受孩子和嗜甜者喜爱。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
 	icon_state = "pastry"
 	list_reagents = list(/datum/reagent/consumable/nutriment = SMALLDOUGH_NUTRITION)
-	tastes = list("crispy butterdough" = 1)
+	tastes = list("酥脆黄油面皮" = 1)
 	faretype = FARE_FINE
 	w_class = WEIGHT_CLASS_NORMAL
 	bitesize = 3
@@ -14,7 +14,7 @@
 	eat_effect = /datum/status_effect/buff/snackbuff
 
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/biscuit_raw
-	name = "uncooked raisin biscuit"
+	name = "生葡萄干饼干"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
 	icon_state = "biscuit_raw"
 	color = "#ecce61"
@@ -23,8 +23,8 @@
 	eat_effect = null
 
 /obj/item/reagent_containers/food/snacks/rogue/biscuit
-	name = "raisin biscuit"
-	desc = "A crispy buttery pastry with chewy raisins inside."
+	name = "葡萄干饼干"
+	desc = "一块酥脆的黄油酥点，里面有有嚼劲的葡萄干。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
 	icon_state = "biscuit"
 	faretype = FARE_POOR
@@ -32,13 +32,13 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = BUTTERDOUGHSLICE_NUTRITION + SNACK_POOR)
 	w_class = WEIGHT_CLASS_NORMAL
 	bitesize = 3
-	tastes = list("crispy butterdough" = 1, "raisins" = 1)
+	tastes = list("酥脆黄油面皮" = 1, "葡萄干香" = 1)
 	eat_effect = /datum/status_effect/buff/snackbuff
 
 // MISSING RECIPE
 /obj/item/reagent_containers/food/snacks/rogue/cookie		//It's a biscuit.......
-	name = "cookie of smiles"
-	desc = "It looks less like a happy smile and more like a tortured grimace."
+	name = "微笑饼干"
+	desc = "看起来不像开心的笑脸，更像痛苦扭曲的表情。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
 	icon_state = "cookie"
 	color = "#ecce61"
@@ -46,7 +46,7 @@
 	eat_effect = null
 
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/prezzel_raw
-	name = "uncooked prezzel"
+	name = "生椒盐卷饼"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
 	icon_state = "prezzel_raw"
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/prezzel
@@ -54,20 +54,20 @@
 	eat_effect = null
 
 /obj/item/reagent_containers/food/snacks/rogue/prezzel
-	name = "prezzel"
-	desc = "The next best thing after sliced bread. The recipe is a closely guarded secret among the dwarves. So dire is their conviction that not even the Inquisition's most agonizing methods could force them to reveal it."
+	name = "椒盐卷饼"
+	desc = "仅次于切片面包的好东西。它的配方在矮人间是严守的秘密；他们对此执着到就连审判庭最痛苦的手段也撬不开口。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
 	icon_state = "prezzel"
 	list_reagents = list(/datum/reagent/consumable/nutriment = SMALLDOUGH_NUTRITION)
 	faretype = FARE_FINE
-	tastes = list("crispy butterdough" = 1)
+	tastes = list("酥脆黄油面皮" = 1)
 	w_class = WEIGHT_CLASS_NORMAL
 	bitesize = 3
 	eat_effect = /datum/status_effect/buff/snackbuff
 
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw
-	name = "raw handpie"
-	desc = "To the oven with you!"
+	name = "生手馅饼"
+	desc = "进烤炉吧！"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
 	icon_state = "handpie_raw"
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/handpie
@@ -76,109 +76,109 @@
 	dropshrink = 0.8
 
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/mushroom
-	name = "raw mushroom handpie"
+	name = "生蘑菇手馅饼"
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/handpie
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/handpie
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_POOR)
 	foodtype = GRAIN | VEGETABLES
-	tastes = list("mushrooms" = 1)
+	tastes = list("蘑菇香" = 1)
 
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/fish
-	name = "raw fish handpie"
+	name = "生鱼肉手馅饼"
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/fish
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/fish
 	foodtype = GRAIN | MEAT
-	tastes = list("fish" = 1)
+	tastes = list("鱼肉香" = 1)
 
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/meat
-	name = "raw meat handpie"
+	name = "生肉手馅饼"
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/meat
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/meat
 	foodtype = GRAIN | MEAT
-	tastes = list("meat" = 1)
+	tastes = list("肉香" = 1)
 
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/crab
-	name = "raw crab handpie"
+	name = "生蟹肉手馅饼"
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/crab
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/crab
 	foodtype = GRAIN | MEAT
-	tastes = list("crab" = 1)
+	tastes = list("蟹肉香" = 1)
 
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/berry
-	name = "raw berry handpie"
+	name = "生浆果手馅饼"
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/berry
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/berry
 	foodtype = GRAIN | FRUIT
-	tastes = list("berry" = 1)
+	tastes = list("浆果香" = 1)
 
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/poison
-	name = "raw berry handpie"
+	name = "生浆果手馅饼"
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/poison
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/poison
 	list_reagents = list(/datum/reagent/berrypoison = 5)
 	foodtype = GRAIN | FRUIT
-	tastes = list("bitter berry" = 1)
+	tastes = list("苦涩浆果香" = 1)
 
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/apple
-	name = "raw apple handpie"
+	name = "生苹果手馅饼"
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/apple
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/apple
 	foodtype = GRAIN | FRUIT
-	tastes = list("apple" = 1)
+	tastes = list("苹果香" = 1)
 
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/potato
-	name = "raw potato handpie"
+	name = "生土豆手馅饼"
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/potato
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/potato
 	foodtype = GRAIN | VEGETABLES
-	tastes = list("potato" = 1)
+	tastes = list("土豆香" = 1)
 
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/cabbage//These two are classics no idea how it didn't already exist.
-	name = "raw cabbage handpie"
+	name = "生卷心菜手馅饼"
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/cabbage
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/handpie/cabbage
 	foodtype = GRAIN | VEGETABLES
-	tastes = list("cabbage" = 1)
+	tastes = list("卷心菜香" = 1)
 
 /obj/item/reagent_containers/food/snacks/rogue/handpie
-	name = "handpie"
-	desc = "The dwarves call this 'pierogi' in their dialect. It'll stay fresh for a good long while until the crust is bitten."
+	name = "手馅饼"
+	desc = "矮人在自己的方言里也把它叫作“手馅饼”。在外皮被咬开之前，它能长久保持新鲜。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
 	icon_state = "handpie"
 	eat_effect = /datum/status_effect/buff/greatsnackbuff
 	bitesize = 4
 	faretype = FARE_FINE
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = BUTTERDOUGHSLICE_NUTRITION+MINCE_NUTRITION)
-	tastes = list("crispy dough" = 1)
+	tastes = list("酥脆面皮" = 1)
 	rotprocess = null
 	dropshrink = 0.8
 
 /obj/item/reagent_containers/food/snacks/rogue/handpie/mushroom
-	name = "mushroom handpie"
+	name = "蘑菇手馅饼"
 
 /obj/item/reagent_containers/food/snacks/rogue/handpie/fish
-	name = "fish handpie"
+	name = "鱼肉手馅饼"
 
 /obj/item/reagent_containers/food/snacks/rogue/handpie/meat
-	name = "meat handpie"
+	name = "肉手馅饼"
 
 /obj/item/reagent_containers/food/snacks/rogue/handpie/potato
-	name = "potato handpie"
+	name = "土豆手馅饼"
 
 /obj/item/reagent_containers/food/snacks/rogue/handpie/cabbage
-	name = "cabbage handpie"
+	name = "卷心菜手馅饼"
 
 /obj/item/reagent_containers/food/snacks/rogue/handpie/crab
-	name = "crab handpie"
+	name = "蟹肉手馅饼"
 
 /obj/item/reagent_containers/food/snacks/rogue/handpie/berry
-	name = "berry handpie"
+	name = "浆果手馅饼"
 
 /obj/item/reagent_containers/food/snacks/rogue/handpie/poison
-	name = "berry handpie"
+	name = "浆果手馅饼"
 
 /obj/item/reagent_containers/food/snacks/rogue/handpie/apple
-	name = "apple handpie"
+	name = "苹果手馅饼"
 
 /obj/item/reagent_containers/food/snacks/rogue/handpie/On_Consume(mob/living/eater)
 	..()
@@ -189,12 +189,12 @@
 
 /*	.................   Muffins   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/muffin
-	name = "muffin"
-	desc = "Simple to prepare and enjoyed by everyone. Treat in a mushroom shaped package. Could do with something on top."
+	name = "松饼"
+	desc = "制作简单，人人都爱。像蘑菇一样的小点心，再加点配料会更好。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
 	icon_state = "muffin"
 	list_reagents = list(/datum/reagent/consumable/nutriment = SMALLDOUGH_NUTRITION)
-	tastes = list("crispy butterdough" = 1)
+	tastes = list("酥脆黄油面皮" = 1)
 	faretype = FARE_NEUTRAL
 	w_class = WEIGHT_CLASS_NORMAL
 	bitesize = 3
@@ -207,54 +207,54 @@
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/cheese))
 		if(isturf(loc)&& (found_table))
 			playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
-			to_chat(user, span_notice("You start to glaze the muffin with cheese..."))
+			to_chat(user, span_notice("你开始给松饼抹上奶酪……"))
 			if(do_after(user,long_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
 				new /obj/item/reagent_containers/food/snacks/rogue/muffin/cheese(loc)
 				qdel(I)
 				qdel(src)
 		else
-			to_chat(user, span_warning("You need to put [src] on a table to roll it out!"))
+			to_chat(user, span_warning("你得把[src]放到桌上才能处理！"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/honey))
 		if(isturf(loc)&& (found_table))
 			playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
-			to_chat(user, span_notice("You start to glaze the muffin with honey..."))
+			to_chat(user, span_notice("你开始给松饼抹上蜂蜜……"))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
 				new /obj/item/reagent_containers/food/snacks/rogue/muffin/honey(loc)
 				qdel(I)
 				qdel(src)
 		else
-			to_chat(user, span_warning("You need to put [src] on a table to prepare it!"))
+			to_chat(user, span_warning("你得把[src]放到桌上才能处理！"))
 	else
 		return ..()
 
 /obj/item/reagent_containers/food/snacks/rogue/muffin/cheese
-	name = "raw cheese muffin"
-	desc = "A mushroom shaped treat for whole topped off with cheese. Still needs to be baked!"
+	name = "生奶酪松饼"
+	desc = "一只蘑菇形的小点心，上面覆着奶酪。还需要继续烘烤！"
 	icon_state = "muffin_cheese_raw"
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/muffin/cheese/baked
 	cooked_smell = /datum/pollutant/food/muffin
 
 /obj/item/reagent_containers/food/snacks/rogue/muffin/cheese/baked
-	name = "cheese muffin"
-	desc = "A mushroom shaped treat for whole topped off with cheese. Fit for a yeoman."
+	name = "奶酪松饼"
+	desc = "一只蘑菇形的小点心，上面覆着奶酪。很适合殷实农民享用。"
 	icon_state = "muffin_cheese"
 	list_reagents = list(/datum/reagent/consumable/nutriment = BUTTERDOUGH_NUTRITION)
-	tastes = list("crispy butterdough" = 1, "cheese" = 1)
+	tastes = list("酥脆黄油面皮" = 1, "奶酪香" = 1)
 	faretype = FARE_FINE
 	cooked_type = null
 
 /obj/item/reagent_containers/food/snacks/rogue/muffin/honey
-	name = "raw honey muffin"
-	desc = "A mushroom shaped treat for whole topped off with honey. Still needs to be baked!"
+	name = "生蜂蜜松饼"
+	desc = "一只蘑菇形的小点心，上面覆着蜂蜜。还需要继续烘烤！"
 	icon_state = "muffin_honey_raw"
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/muffin/honey/baked
 	cooked_smell = /datum/pollutant/food/muffin
 
 /obj/item/reagent_containers/food/snacks/rogue/muffin/honey/baked
-	name = "honey muffin"
-	desc = "A mushroom shaped treat for whole topped off with honey. Fit for a burgher."
+	name = "蜂蜜松饼"
+	desc = "一只蘑菇形的小点心，上面覆着蜂蜜。很适合市民享用。"
 	icon_state = "muffin_honey"
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/muffin/cheese/baked
 	cooked_smell = /datum/pollutant/food/muffin
@@ -263,12 +263,12 @@
 
 /*	.................   Strudel   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/strudel
-	name = "strudel"
-	desc = "The peak of Grenzelhoftian peasant food - an elongated pastry filled with apple paste and nuts is sure to keep the hunger cramps away."
+	name = "果馅卷"
+	desc = "格伦泽尔霍夫特农家食物的巅峰。一条填满苹果酱和坚果的长酥卷，足以驱走饥饿的绞痛。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
 	icon_state = "strudel"
 	list_reagents = list(/datum/reagent/consumable/nutriment = BUTTERDOUGH_NUTRITION*2)
-	tastes = list("crispy apples" = 1, "rocknut" = 1)
+	tastes = list("酥苹果香" = 1, "石果" = 1)
 	foodtype = GRAIN | FRUIT
 	faretype = FARE_FINE
 	w_class = WEIGHT_CLASS_NORMAL
@@ -281,13 +281,13 @@
 	slice_sound = TRUE
 
 /obj/item/reagent_containers/food/snacks/rogue/strudelslice
-	name = "strudel slice"
-	desc = "A slice of tasty apple goodness - just looking at it makes your mouth wet."
+	name = "果馅卷切片"
+	desc = "一片满是苹果香甜的美味，只看着就让人口水直流。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
 	icon_state = "strudel_slice"
 	slices_num = 0
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
-	tastes = list("crispy apples" = 1, "rocknut" = 1)
+	tastes = list("酥苹果香" = 1, "石果" = 1)
 	foodtype = GRAIN | FRUIT
 	faretype = FARE_FINE
 	w_class = WEIGHT_CLASS_NORMAL
@@ -302,28 +302,28 @@
 	if(istype(I,  /obj/item/reagent_containers/food/snacks/sugar))
 		if(isturf(loc)&& (found_table))
 			playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
-			to_chat(user, span_notice("You start to coat the strudel in sugar..."))
+			to_chat(user, span_notice("你开始给果馅卷裹上糖……"))
 			if(do_after(user,long_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
 				new /obj/item/reagent_containers/food/snacks/rogue/strudel/sugar(loc)
 				qdel(I)
 				qdel(src)
 		else
-			to_chat(user, span_warning("You need to put [src] on a table to roll it out!"))
+			to_chat(user, span_warning("你得把[src]放到桌上才能处理！"))
 	else
 		return ..()
 
 /obj/item/reagent_containers/food/snacks/rogue/strudel/sugar
-	name = "coated strudel"
-	desc = "The peak of Grenzelhoftian peasant food - an elongated pastry filled with apple paste and nuts is sure to keep the hunger cramps away. This one even has sugar coating!"
+	name = "糖衣果馅卷"
+	desc = "格伦泽尔霍夫特农家食物的巅峰。一条填满苹果酱和坚果的长酥卷，足以驱走饥饿的绞痛。这一份甚至还裹了糖衣！"
 	icon_state = "strudel_sugar"
-	tastes = list("crispy apples" = 1, "rocknut" = 1 ,"sugar" = 1)
+	tastes = list("酥苹果香" = 1, "石果" = 1 ,"糖香" = 1)
 	faretype = FARE_LAVISH
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/strudelslice/sugar
 
 /obj/item/reagent_containers/food/snacks/rogue/strudelslice/sugar
-	name = "coated strudel slice"
-	desc = "A slice of tasty apple goodness - just looking at it makes your mouth wet. If you had some cream this would make it a perfect gift to an inquisitor."
+	name = "糖衣果馅卷切片"
+	desc = "一片满是苹果香甜的美味，只看着就让人口水直流。要是再配点奶油，这就是送给审判官的完美礼物了。"
 	icon_state = "strudel_sugar_slice"
-	tastes = list("crispy apples" = 1, "rocknut" = 1 ,"sugar" = 1)
+	tastes = list("酥苹果香" = 1, "石果" = 1 ,"糖香" = 1)
 	faretype = FARE_LAVISH

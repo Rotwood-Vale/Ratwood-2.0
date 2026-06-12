@@ -3,9 +3,9 @@
 /*	..................   Pepper steak   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/peppersteak
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEATSLAB_NUTRITION)
-	tastes = list("steak" = 1, "pepper" = 1)
-	name = "peppersteak"
-	desc = "Roasted meat flanked with a generous coating of ground pepper for intense flavor."
+	tastes = list("牛排香" = 1, "胡椒香" = 1)
+	name = "胡椒牛排"
+	desc = "烤肉表面厚厚覆着磨碎黑胡椒，滋味浓烈。"
 	faretype = FARE_FINE
 	portable = FALSE
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
@@ -18,12 +18,12 @@
 
 /*	..................   Onion steak   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/onionsteak
-	name = "onion steak"
-	desc = "Roasted meat garnished with fragrant fried onions, then slathered with the juices of both for a perfect mouth-watering sauce."
+	name = "洋葱牛排"
+	desc = "烤肉配上香气四溢的炸洋葱，再浇上两者交融出的肉汁，成就一份令人垂涎的酱汁。"
 	bitesize = 4
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
 	icon_state = "onionsteak"
-	tastes = list("steak" = 1, "onions" = 1)
+	tastes = list("牛排香" = 1, "洋葱香" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
 	foodtype = MEAT
 	faretype = FARE_NEUTRAL
@@ -51,12 +51,12 @@
 
 /*	..................   Carrot Steak   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/carrotsteak
-	name = "carrot steak"
-	desc = "Roasted meat paired with a savory baked carrot, then slathered with the juices of both for a perfect mouth-watering sauce."
+	name = "胡萝卜牛排"
+	desc = "烤肉配上咸香烤胡萝卜，再浇上两者交融出的肉汁，成就一份令人垂涎的酱汁。"
 	bitesize = 4
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
 	icon_state = "carrotsteak"
-	tastes = list("steak" = 1, "carrot" = 1)
+	tastes = list("牛排香" = 1, "胡萝卜香" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
 	faretype = FARE_NEUTRAL
 	foodtype = MEAT
@@ -83,8 +83,8 @@
 /*	.................   Steak & carrot & onion   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/steakcarrotonion
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
-	tastes = list("steak" = 1, "onion" = 1, "carrots" = 1)
-	name = "steak meal"
+	tastes = list("牛排香" = 1, "洋葱香" = 1, "胡萝卜香" = 1)
+	name = "牛排餐"
 	desc = ""
 	bitesize = 5
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
@@ -98,9 +98,9 @@
 /*	.................   Wiener Cabbage   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/wienercabbage
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
-	tastes = list("savory sausage" = 1, "cabbage" = 1)
-	name = "wiener on cabbage"
-	desc = "A rich and hearty meal, perfect for a soldier on the march."
+	tastes = list("咸香香肠" = 1, "卷心菜香" = 1)
+	name = "卷心菜香肠"
+	desc = "丰盛扎实的一餐，最适合行军中的士兵。"
 	bitesize = 4
 	faretype = FARE_NEUTRAL
 	portable = FALSE
@@ -115,9 +115,9 @@
 /*	.................   Wiener & Fried potato   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/wienerpotato
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
-	tastes = list("savory sausage" = 1, "potato" = 1)
-	name = "wiener on tato"
-	desc = "Stout and nourishing."
+	tastes = list("咸香香肠" = 1, "土豆香" = 1)
+	name = "土豆香肠"
+	desc = "扎实又顶饱。"
 	bitesize = 4
 	faretype = FARE_NEUTRAL
 	portable = FALSE
@@ -146,30 +146,30 @@
 
 /*	.................  Spiced Baked Poultry  ................... */
 /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/spiced
-	name = "spiced bird-roast"
-	desc = "A plump bird, roasted perfection, spiced to taste divine."
+	name = "香料烤禽"
+	desc = "一只肥美禽鸟被烤得恰到好处，再以香料调味得近乎神赐。"
 	bitesize = 4
 	faretype = FARE_LAVISH
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
 	icon_state = "pepperchicken"
-	tastes = list("spicy birdmeat" = 1)
+	tastes = list("辛香禽肉" = 1)
 	eat_effect = /datum/status_effect/buff/mealbuff
 
 /*	.................  Baked Butter Poultry  ................... */
 /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/butter
-	name = "butter bird-roast"
-	desc = "A plump bird, roasted perfection, overflowing with butter from the inside."
+	name = "黄油烤禽"
+	desc = "一只肥美禽鸟被烤得恰到好处，内部满是融化黄油。"
 	bitesize = 4
 	faretype = FARE_LAVISH
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
 	icon_state = "butterchicken"
-	tastes = list("buttery birdmeat" = 1)
+	tastes = list("黄油禽肉香" = 1)
 	eat_effect = /datum/status_effect/buff/mealbuff
 
 /*	.................  Baked Double Poultry  ................... */
 /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/doublestacked
-	name = "bird filled bird-roast"
-	desc = "A plump bird, roasted perfection.. filled with another bird - what compelled you to make this? Psydon Weeps at your hubris."
+	name = "禽中禽烤禽"
+	desc = "一只肥美禽鸟被烤得恰到好处……里面还塞着另一只鸟。到底是什么驱使你做出这东西？普赛顿都会为你的狂妄落泪。"
 	bitesize = 6
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
 	icon_state = "stuffedchicken"
@@ -179,9 +179,9 @@
 /*	.................   Wiener & Fried onions   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/wieneronions
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
-	tastes = list("savory sausage" = 1, "fried onions" = 1)
-	name = "wiener and onions"
-	desc = "Stout and flavourful."
+	tastes = list("咸香香肠" = 1, "炸洋葱香" = 1)
+	name = "香肠洋葱"
+	desc = "扎实又有滋味。"
 	bitesize = 4
 	faretype = FARE_NEUTRAL
 	portable = FALSE
@@ -211,9 +211,9 @@
 /*	.................   Wiener & potato & onions   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/wienerpotatonions
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
-	tastes = list("savory sausage" = 1, "potato" = 1)
-	name = "wiener meal"
-	desc = "Stout and nourishing."
+	tastes = list("咸香香肠" = 1, "土豆香" = 1)
+	name = "香肠餐"
+	desc = "扎实又顶饱。"
 	bitesize = 5
 	faretype = FARE_NEUTRAL
 	portable = FALSE
@@ -227,9 +227,9 @@
 /*	.................   Frybird & Tato   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/frybirdtato
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
-	tastes = list("frybird" = 1, "tato" = 1)
-	name = "frybird with a tato"
-	desc = "Hearty, comforting, and rich - Some say it was Ravox's favorite meal."
+	tastes = list("炸禽肉香" = 1, "土豆香" = 1)
+	name = "炸鸟排配土豆"
+	desc = "扎实、慰藉而丰盛。有人说这是拉沃克斯最喜欢的一餐。"
 	bitesize = 4
 	faretype = FARE_FINE
 	portable = FALSE
@@ -243,9 +243,9 @@
 /*	.................   Frybird Bucket   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/frybirdbucket
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE*3)
-	tastes = list("frybird" = 1)
-	name = "frybird bucket"
-	desc = "Hearty, comforting, and rich - Vale frybird is the best on the continent! Now served in a convenient bucket!"
+	tastes = list("炸禽肉香" = 1)
+	name = "炸鸟排桶"
+	desc = "扎实、慰藉而丰盛。谷地的炸鸟排是全大陆最棒的！现在还装在方便的桶里！"
 	bitesize = 9 //ITS AN ENTIRE BUCKET!!
 	faretype = FARE_FINE
 	portable = FALSE

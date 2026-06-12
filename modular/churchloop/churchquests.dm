@@ -226,6 +226,28 @@
 			return TRUE
 	return FALSE
 
+/proc/_patron_name_display(t)
+	if(!istext(t)) return "[t]"
+	switch("[t]")
+		if("Astrata") return "阿斯特拉塔"
+		if("Noc") return "诺克"
+		if("Dendor") return "登多尔"
+		if("Abyssor") return "阿比索尔"
+		if("Ravox") return "拉沃克斯"
+		if("Necra") return "内克拉"
+		if("Xylix") return "赛利克斯"
+		if("Pestra") return "佩斯特拉"
+		if("Malum") return "玛勒姆"
+		if("Eora") return "伊欧拉"
+	return "[t]"
+
+/proc/_patron_names_display(list/names)
+	if(!islist(names) || !names.len) return ""
+	var/list/out = list()
+	for(var/n in names)
+		out += _patron_name_display("[n]")
+	return jointext(out, "、")
+
 //--------------------------------------------------
 // I HATE FEET KNIGHT SO MUCH
 //--------------------------------------------------
@@ -459,8 +481,8 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 // ---------------------------------------------------------------------
 
 /obj/item/quest_token
-	name = "quest token"
-	desc = "A token tied to a task."
+	name = "任务令牌"
+	desc = "一枚与任务绑定的令牌。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	w_class = WEIGHT_CLASS_TINY
 
@@ -472,7 +494,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 /obj/item/quest_token/Initialize()
 	. = ..()
 	if(!length(owner_name))
-		owner_name = "unknown"
+		owner_name = "未知"
 
 /obj/item/quest_token/proc/set_owner(mob/living/carbon/human/H)
 	if(!H) return
@@ -497,16 +519,16 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	var/mob/living/carbon/human/receiver = _find_owner_mob()
 
 	if(!receiver)
-		to_chat(completer, span_warning("Owner of this quest token is absent. No favor is awarded."))
+		to_chat(completer, span_warning("该任务信物的持有者不在场，无法发放恩眷奖励。"))
 		return
 
 	receiver.church_favor += amount
 
 	if(receiver == completer)
-		to_chat(receiver, span_notice("+[amount] Favor for completing a miracle quest."))
+		to_chat(receiver, span_notice("完成神迹任务，获得 +[amount] 点恩眷。"))
 	else
-		to_chat(completer, span_notice("The reward is credited to [owner_name]."))
-		to_chat(receiver, span_notice("+[amount] Favor from a completed quest token you created."))
+		to_chat(completer, span_notice("奖励已记入[owner_name]名下。"))
+		to_chat(receiver, span_notice("你创建的任务信物已完成，获得 +[amount] 点恩眷。"))
 
 /obj/item/quest_token/proc/_ensure_attacker(user)
 	if(!istype(user, /mob/living/carbon/human))
@@ -517,17 +539,17 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 
 /obj/item/quest_token/proc/_ensure_target_player(H, user)
 	if(!istype(H, /mob/living/carbon/human))
-		to_chat(user, span_warning("Target must be a person."))
+		to_chat(user, span_warning("目标必须是一个人。"))
 		return FALSE
 	var/mob/living/carbon/human/HH = H
 	if(!HH.client)
-		to_chat(user, span_warning("Target must be a player."))
+		to_chat(user, span_warning("目标必须是玩家。"))
 		return FALSE
 	if(HAS_TRAIT(HH, TRAIT_CLERGYRADICAL))
-		to_chat(user, span_warning("Radical clergy cannot be used as quest targets."))
+		to_chat(user, span_warning("激进教士不能作为任务目标。"))
 		return FALSE
 	if(_has_quest_target_mark(HH))
-		to_chat(user, span_warning("This target is already marked by a previous quest."))
+		to_chat(user, span_warning("该目标已经被先前的任务标记了。"))
 		return FALSE
 
 	return TRUE
@@ -535,7 +557,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 /obj/item/quest_token/proc/_check_distance(mob/living/user, mob/living/target)
 	if(!user || !target) return FALSE
 	if(get_dist(user, target) > 1)
-		to_chat(user, span_warning("Too far away."))
+		to_chat(user, span_warning("距离太远了。"))
 		return FALSE
 	return TRUE
 
@@ -548,7 +570,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 		return FALSE
 
 	if(_has_quest_target_mark(H))
-		to_chat(user, span_warning("This target is already marked by a previous quest."))
+		to_chat(user, span_warning("该目标已经被先前的任务标记了。"))
 		return FALSE
 
 	if(H == user)
@@ -559,27 +581,27 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 
 	if(_quest_user_in_combat_mode(user))
 		user.visible_message(
-			span_warning("[user] forces [src] upon [H]."),
-			span_warning("I force [src] upon [H].")
+			span_warning("[user]强行将[src]施加在了[H]身上。"),
+			span_warning("我强行将[src]施加在了[H]身上。")
 		)
 		_apply_parish_scorn(H)
 		_payout(reward_amount, user)
 		qdel(src)
 		return TRUE
 
-	var/answer = alert(H, "[user] offers [src.name]. Accept it?", src.name, "Accept", "Refuse")
+	var/answer = alert(H, "[user]向你递出了[src.name]。接受吗？", src.name, "接受", "拒绝")
 	if(QDELETED(src)) return FALSE
 
-	if(answer != "Accept")
-		to_chat(user, span_warning("[H] refuses."))
-		to_chat(H, span_notice("You refuse [src.name]."))
+	if(answer != "接受")
+		to_chat(user, span_warning("[H]拒绝了。"))
+		to_chat(H, span_notice("你拒绝了[src.name]。"))
 		return FALSE
 
 	if(!_check_distance(user, H))
 		return FALSE
 
 	if(_has_quest_target_mark(H))
-		to_chat(user, span_warning("This target is already marked by a previous quest."))
+		to_chat(user, span_warning("该目标已经被先前的任务标记了。"))
 		return FALSE
 
 	_apply_parish_boon(H)
@@ -592,8 +614,8 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 // ---------------------------------------------------------------------
 
 /obj/item/quest_token/skill_bless
-	name = "mark of craft"
-	desc = "Find a target who is expert in one of the listed skills. Peaceful use gives Boon, combat-mode use gives Scorn."
+	name = "工艺印记"
+	desc = "寻找一名精通所列技能之一的目标。和平使用给予赐福，战斗模式使用则施加鄙斥。"
 	icon_state = "questflaw"
 	var/list/required_skills = list()
 
@@ -606,7 +628,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	if(!_ensure_target_player(H, U)) return
 
 	if(!islist(required_skills) || !required_skills.len)
-		to_chat(U, span_warning("This token is misconfigured. (no skills set)"))
+		to_chat(U, span_warning("该信物配置有误。（未设置技能）"))
 		return
 
 	var/is_ok = FALSE
@@ -616,7 +638,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 			break
 
 	if(!is_ok)
-		to_chat(U, span_warning("They are not an EXPERT of the required skills."))
+		to_chat(U, span_warning("对方并非所需技能的专家。"))
 		return
 
 	in_use = TRUE
@@ -633,8 +655,8 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	return
 
 /obj/item/quest_token/blood_draw
-	name = "sanctified lancet"
-	desc = "Use on a target of one of the listed bloodlines. Peaceful use gives Boon, combat-mode use gives Scorn."
+	name = "圣化采血针"
+	desc = "对拥有所列血统之一的目标使用。和平使用给予赐福，战斗模式使用则施加鄙斥。"
 	icon_state = "questblood"
 	var/list/required_race_keys = list()
 
@@ -647,7 +669,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	if(!_ensure_target_player(H, U)) return
 
 	if(!islist(required_race_keys) || !required_race_keys.len)
-		to_chat(U, span_warning("This token is misconfigured. (no race keys set)"))
+		to_chat(U, span_warning("该信物配置有误。（未设置种族键）"))
 		return
 
 	var/matchrace = FALSE
@@ -657,7 +679,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 			break
 
 	if(!matchrace)
-		to_chat(U, span_warning("They are not of the required bloodline(s)."))
+		to_chat(U, span_warning("对方不属于所需血统。"))
 		return
 
 	in_use = TRUE
@@ -674,8 +696,8 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	return
 
 /obj/item/quest_token/coin_chest
-	name = "tithe chest"
-	desc = "Feed it with mammon. It is consumed only when the tithe is completed."
+	name = "什一奉献箱"
+	desc = "向其中投入玛门。只有在奉献完成时它才会被消耗。"
 	icon_state = "questbox"
 	var/sum = 0
 	var/required_sum = 250
@@ -686,7 +708,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	var/mob/living/carbon/human/U = user
 
 	if(_has_quest_target_mark(U))
-		to_chat(U, span_warning("You are already marked by a previous quest."))
+		to_chat(U, span_warning("你已经被先前的任务标记了。"))
 		return
 
 	if(istype(I, /obj/item/roguecoin/gilbranze)) return
@@ -697,10 +719,10 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 		sum += C.get_real_price()
 		qdel(C)
 
-		to_chat(U, span_notice("Deposited. Current tithe: [sum]."))
+		to_chat(U, span_notice("已存入。当前奉献额：[sum]。"))
 
 		if(sum >= required_sum)
-			to_chat(U, span_notice("The chest accepts the tithe."))
+			to_chat(U, span_notice("奉献箱接受了这份什一献纳。"))
 			_payout(reward_amount, U)
 			qdel(src)
 		return
@@ -708,8 +730,8 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	..()
 
 /obj/item/quest_token/reliquary
-	name = "sealed reliquary"
-	desc = "Solve the code. It does not expire."
+	name = "封印圣匣"
+	desc = "解开密码。它不会过期。"
 	icon_state = "questbox"
 
 	var/code = "0000"
@@ -740,9 +762,9 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		if(_patron_matches_any(H, bonus_patron_names))
-			. += "<br><span class='notice'>Divine insight: <b>[code]</b></span>"
+			. += "<br><span class='notice'>神圣启示：<b>[code]</b></span>"
 		else
-			. += "<br><span class='info'>Followers of [jointext(bonus_patron_names, ", ")] see the code clearly.</span>"
+			. += "<br><span class='info'>[_patron_names_display(bonus_patron_names)]的追随者能清楚看见密码。</span>"
 
 /obj/item/quest_token/reliquary/proc/_ensure_ui_access(mob/living/user)
 	if(!user) return FALSE
@@ -764,18 +786,18 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	var/s = left_s % 60
 	var/s2 = (s < 10) ? "0[s]" : "[s]"
 
-	var/html = "<center><b>Sealed Reliquary</b></center><hr>"
-	html += "Enter the 4-digit code to open the box.<br>"
-	html += "<b>Attempts:</b> once every <b>20 seconds</b>.<br>"
-	html += "<b>Hint:</b> <span style='color:#2ecc71'>green</span> = correct place, "
-	html += "<span style='color:#f1c40f'>yellow</span> = correct digit wrong place.<br><br>"
+	var/html = "<center><b>封印圣匣</b></center><hr>"
+	html += "输入 4 位数字密码以打开盒子。<br>"
+	html += "<b>尝试次数：</b>每 <b>20 秒</b> 可尝试一次。<br>"
+	html += "<b>提示：</b><span style='color:#2ecc71'>绿色</span> = 位置正确，"
+	html += "<span style='color:#f1c40f'>黄色</span> = 数字正确但位置错误。<br><br>"
 
 	if(locked)
-		html += "<span style='color:#7f8c8d'>Next attempt in [m]:[s2]</span>"
+		html += "<span style='color:#7f8c8d'>下次尝试还需等待 [m]:[s2]</span>"
 	else
-		html += "<a href='?src=[REF(src)];trycode=1'>Try code</a>"
+		html += "<a href='?src=[REF(src)];trycode=1'>输入密码</a>"
 
-	var/datum/browser/B = new(user, "RELIQUARY_UI", "Sealed Reliquary", 360, 220)
+	var/datum/browser/B = new(user, "RELIQUARY_UI", "封印圣匣", 360, 220)
 	B.set_content(html)
 	B.open()
 	return TRUE
@@ -789,7 +811,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	var/mob/living/carbon/human/U = usr
 
 	if(_has_quest_target_mark(U))
-		to_chat(U, span_warning("You are already marked by a previous quest."))
+		to_chat(U, span_warning("你已经被先前的任务标记了。"))
 		return
 
 	if(href_list["trycode"])
@@ -797,14 +819,14 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 			attack_hand(U)
 			return
 
-		var/guess = input(U, "Enter 4 digits (0-9).", "Reliquary") as null|text
+		var/guess = input(U, "输入 4 位数字（0-9）。", "圣匣") as null|text
 		if(isnull(guess))
 			attack_hand(U)
 			return
 
 		guess = copytext(guess, 1, 5)
 		if(!_is_digit_string(guess) || length(guess) != 4)
-			to_chat(U, span_warning("Needs exactly four digits 0-9."))
+			to_chat(U, span_warning("必须正好输入 4 位 0-9 的数字。"))
 			attack_hand(U)
 			return
 
@@ -824,19 +846,19 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 		next_attempt_ds = world.time + (20 SECONDS)
 
 		if(guess == code)
-			to_chat(U, span_notice("The reliquary opens."))
+			to_chat(U, span_notice("圣匣打开了。"))
 			_payout(reward_amount, U)
 			qdel(src)
 			return
 		else
-			to_chat(U, "<span class='notice'>Feedback - <span style='color:#2ecc71'>green</span>: [correct_pos], <span style='color:#f1c40f'>yellow</span>: [correct_digit]</span>")
+			to_chat(U, "<span class='notice'>反馈 - <span style='color:#2ecc71'>绿色</span>：[correct_pos]，<span style='color:#f1c40f'>黄色</span>：[correct_digit]</span>")
 
 		attack_hand(U)
 		return
 
 /obj/item/quest_token/ration_delivery
-	name = "charity ration"
-	desc = "Give this to a target of one of the listed professions. Peaceful use gives Boon, combat-mode use gives Scorn."
+	name = "慈善口粮"
+	desc = "将其交给拥有所列职业之一的目标。和平使用给予赐福，战斗模式使用则施加鄙斥。"
 	icon_state = "questration"
 	var/list/required_job_types = list()
 
@@ -849,11 +871,11 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	if(!_ensure_target_player(H, U)) return
 
 	if(!islist(required_job_types) || !required_job_types.len)
-		to_chat(U, span_warning("This ration is misconfigured. (no job list set)"))
+		to_chat(U, span_warning("这份口粮配置有误。（未设置职业列表）"))
 		return
 
 	if(!_mob_matches_any_job(H, required_job_types))
-		to_chat(U, span_warning("They are not in any of the required professions."))
+		to_chat(U, span_warning("对方不属于任何所需职业。"))
 		return
 
 	in_use = TRUE
@@ -879,8 +901,8 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	return
 
 /obj/item/quest_token/donation_box
-	name = "offering coffer"
-	desc = "Accepts one designated offering."
+	name = "供奉小匣"
+	desc = "接受一种指定供物。"
 	icon_state = "questbox"
 	var/list/need_types = list()
 	var/collected = FALSE
@@ -891,23 +913,23 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 
 	var/mob/living/carbon/human/U = user
 	if(_has_quest_target_mark(U))
-		to_chat(U, span_warning("You are already marked by a previous quest."))
+		to_chat(U, span_warning("你已经被先前的任务标记了。"))
 		return
 
 	for(var/T in need_types)
 		if(istype(I, T))
 			qdel(I)
 			collected = TRUE
-			to_chat(U, span_notice("The offering is accepted."))
+			to_chat(U, span_notice("供物已被接受。"))
 			_payout(reward_amount, U)
 			qdel(src)
 			return
 
-	to_chat(U, span_warning("This is not an acceptable offering."))
+	to_chat(U, span_warning("这不是可接受的供物。"))
 
 /obj/item/quest_token/sermon_minor
-	name = "sermon token"
-	desc = "Use on a follower of the listed patron(s). Peaceful use gives Boon, combat-mode use gives Scorn."
+	name = "布道信物"
+	desc = "对信奉所列主神之一的追随者使用。和平使用给予赐福，战斗模式使用则施加鄙斥。"
 	icon_state = "questflaw"
 	var/list/required_patron_names = list()
 
@@ -920,7 +942,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 /obj/item/quest_token/sermon_minor/examine(mob/user)
 	. = ..()
 	if(islist(required_patron_names) && required_patron_names.len)
-		. += "<br><span class='info'>This sermon seeks a follower of: <b>[jointext(required_patron_names, ", ")]</b>.</span>"
+		. += "<br><span class='info'>此布道寻求的对象为以下主神的追随者：<b>[_patron_names_display(required_patron_names)]</b>。</span>"
 
 /obj/item/quest_token/sermon_minor/attack(mob/living/target, mob/living/user)
 	if(!istype(target, /mob/living/carbon/human))
@@ -934,16 +956,16 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 		return
 
 	if(!islist(required_patron_names) || !required_patron_names.len)
-		to_chat(U, span_warning("This token is misconfigured. (no patron list set)"))
+		to_chat(U, span_warning("该信物配置有误。（未设置主神列表）"))
 		return
 
 	if(!_patron_matches_any(H, required_patron_names))
-		to_chat(U, span_warning("They do not follow any required patron."))
+		to_chat(U, span_warning("对方并不信奉任何所需主神。"))
 		return
 
 	U.visible_message(
-		span_notice("[U] begins a brief sermon to [H]."),
-		span_notice("I begin a brief sermon to [H].")
+		span_notice("[U]开始向[H]进行简短布道。"),
+		span_notice("我开始向[H]进行简短布道。")
 	)
 
 	in_use = TRUE
@@ -960,14 +982,14 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 		return
 
 	U.visible_message(
-		span_notice("[U] finishes the sermon for [H]."),
-		span_notice("I finish the sermon for [H].")
+		span_notice("[U]完成了对[H]的布道。"),
+		span_notice("我完成了对[H]的布道。")
 	)
 	return TRUE
 
 /obj/item/quest_token/sermon_witness
-	name = "pharmacology probe"
-	desc = "Use on a target bearing one of the listed effects. Peaceful use gives Boon, combat-mode use gives Scorn."
+	name = "药理探针"
+	desc = "对带有下列效果之一的目标使用。和平使用给予赐福，战斗模式使用则施加鄙斥。"
 	icon_state = "questflaw"
 	var/list/required_effect_types = list()
 
@@ -991,7 +1013,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 		return
 
 	if(!islist(required_effect_types) || !required_effect_types.len)
-		to_chat(U, span_warning("This token is misconfigured. (no effect list set)"))
+		to_chat(U, span_warning("该信物配置有误。（未设置效果列表）"))
 		return
 
 	var/matched = FALSE
@@ -1002,7 +1024,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 				break
 
 	if(!matched)
-		to_chat(U, span_warning("They do not bear any of the required effects."))
+		to_chat(U, span_warning("对方身上没有任何所需效果。"))
 		return
 
 	in_use = TRUE
@@ -1019,8 +1041,8 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	return
 
 /obj/item/quest_token/flaw_aid
-	name = "mercy charm"
-	desc = "Use on a target bearing one of the listed flaws. Peaceful use gives Boon, combat-mode use gives Scorn."
+	name = "慈悲护符"
+	desc = "对带有下列缺陷之一的目标使用。和平使用给予赐福，战斗模式使用则施加鄙斥。"
 	icon_state = "questflaw"
 	var/list/required_flaw_types = list()
 
@@ -1033,7 +1055,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	if(!_ensure_target_player(H, U)) return
 
 	if(!islist(required_flaw_types) || !required_flaw_types.len)
-		to_chat(U, span_warning("This charm is misconfigured. (no flaw list set)"))
+		to_chat(U, span_warning("该护符配置有误。（未设置缺陷列表）"))
 		return
 
 	var/matched = FALSE
@@ -1043,7 +1065,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 			break
 
 	if(!matched)
-		to_chat(U, span_warning("Target does not bear any of the required flaws."))
+		to_chat(U, span_warning("目标不具备任何所需缺陷。"))
 		return
 
 	in_use = TRUE
@@ -1149,7 +1171,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 
 		tithe_diffs[dn4] = list(
 			"diff"       = dn4,
-			"desc"       = "Donate at least [need_sum] mammon into the chest.",
+			"desc"       = "向箱中捐献至少 [need_sum] 玛门。",
 			"reward"     = rew4,
 			"token_path" = /obj/item/quest_token/coin_chest,
 			"params"     = list("required_sum" = need_sum),
@@ -1158,7 +1180,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 
 	archetypes += list(list(
 		"kind"          = "coin_chest",
-		"title"         = "Tithe",
+		"title"         = "什一奉献",
 		"accepted_diff" = "",
 		"difficulties"  = tithe_diffs
 	))
@@ -1177,7 +1199,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 
 		skill_diffs[dn2] = list(
 			"diff"       = dn2,
-			"desc"       = "Bless an EXPERT of ANY of skills: [skills_desc_txt].",
+			"desc"       = "祝福一名精通以下任意技能的专家：[skills_desc_txt]。",
 			"reward"     = rew2,
 			"token_path" = /obj/item/quest_token/skill_bless,
 			"params"     = list("required_skills" = picked_skills),
@@ -1187,7 +1209,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	if(skill_diffs.len)
 		archetypes += list(list(
 			"kind"          = "skill_bless",
-			"title"         = "Find Expertise",
+			"title"         = "寻找专精者",
 			"accepted_diff" = "",
 			"difficulties"  = skill_diffs
 		))
@@ -1209,7 +1231,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 
 		blood_diffs[dn3] = list(
 			"diff"       = dn3,
-			"desc"       = "Take blood from ANY of: [races_desc_txt].",
+			"desc"       = "从以下任意血统对象身上取血：[races_desc_txt]。",
 			"reward"     = rew3,
 			"token_path" = /obj/item/quest_token/blood_draw,
 			"params"     = list("required_race_keys" = picked_races),
@@ -1219,7 +1241,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	if(blood_diffs.len)
 		archetypes += list(list(
 			"kind"          = "blood_draw",
-			"title"         = "Blood Research",
+			"title"         = "血统研究",
 			"accepted_diff" = "",
 			"difficulties"  = blood_diffs
 		))
@@ -1241,7 +1263,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 
 		ration_diffs[dn6] = list(
 			"diff"       = dn6,
-			"desc"       = "Deliver a ration to ANY of: [jobs_desc_txt].",
+			"desc"       = "将一份口粮送给以下任意职业者：[jobs_desc_txt]。",
 			"reward"     = rew6,
 			"token_path" = /obj/item/quest_token/ration_delivery,
 			"params"     = list("required_job_types" = picked_jobs),
@@ -1251,7 +1273,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	if(ration_diffs.len)
 		archetypes += list(list(
 			"kind"          = "ration_delivery",
-			"title"         = "Deliver Ration",
+			"title"         = "递送口粮",
 			"accepted_diff" = "",
 			"difficulties"  = ration_diffs
 		))
@@ -1272,7 +1294,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 
 		donate_diffs[dn7] = list(
 			"diff"       = dn7,
-			"desc"       = "Place ONE offering into the coffer - ANY of: [items_desc_txt].",
+			"desc"       = "向供匣中放入一件供物，可为以下任意之一：[items_desc_txt]。",
 			"reward"     = rew7,
 			"token_path" = /obj/item/quest_token/donation_box,
 			"params"     = list("need_types" = picked_types),
@@ -1282,7 +1304,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	if(donate_diffs.len)
 		archetypes += list(list(
 			"kind"          = "donation_box",
-			"title"         = "Offering of Supplies",
+			"title"         = "物资供奉",
 			"accepted_diff" = "",
 			"difficulties"  = donate_diffs
 		))
@@ -1300,7 +1322,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 
 		sermon_minor_diffs[dn8] = list(
 			"diff"       = dn8,
-			"desc"       = "Deliver a Minor Sermon to a follower of ANY of: [patrons_desc_txt].",
+			"desc"       = "向以下任意主神的追随者进行一次简短布道：[patrons_desc_txt]。",
 			"reward"     = rew8,
 			"token_path" = /obj/item/quest_token/sermon_minor,
 			"params"     = list("required_patron_names" = picked_patrons),
@@ -1310,7 +1332,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	if(sermon_minor_diffs.len)
 		archetypes += list(list(
 			"kind"          = "sermon_minor",
-			"title"         = "Minor Sermon",
+			"title"         = "简短布道",
 			"accepted_diff" = "",
 			"difficulties"  = sermon_minor_diffs
 		))
@@ -1328,7 +1350,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 
 		box_diffs[dn5] = list(
 			"diff"       = dn5,
-			"desc"       = "Solve a 4-digit code (followers of [patrons_hint_txt] can see it).",
+			"desc"       = "解开一个 4 位数字密码（[patrons_hint_txt] 的追随者能看见答案）。",
 			"reward"     = rew5,
 			"token_path" = /obj/item/quest_token/reliquary,
 			"params"     = list("bonus_patron_names" = picked_patrons2),
@@ -1338,7 +1360,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	if(box_diffs.len)
 		archetypes += list(list(
 			"kind"          = "reliquary",
-			"title"         = "The Riddle of the Box",
+			"title"         = "匣中之谜",
 			"accepted_diff" = "",
 			"difficulties"  = box_diffs
 		))
@@ -1362,7 +1384,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 
 		witness_diffs[dn9] = list(
 			"diff"       = dn9,
-			"desc"       = "Record the reaction: target must bear ANY of: [effects_desc_txt].",
+			"desc"       = "记录反应：目标必须带有以下任意效果：[effects_desc_txt]。",
 			"reward"     = rew9,
 			"token_path" = /obj/item/quest_token/sermon_witness,
 			"params"     = list("required_effect_types" = picked),
@@ -1371,7 +1393,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 
 	archetypes += list(list(
 		"kind"          = "sermon_witness",
-		"title"         = "Record the Reaction",
+		"title"         = "记录反应",
 		"accepted_diff" = "",
 		"difficulties"  = witness_diffs
 	))
@@ -1390,7 +1412,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 
 		flaw_diffs[dn10] = list(
 			"diff"       = dn10,
-			"desc"       = "Soothe a player bearing ANY of: [flaws_desc_txt].",
+			"desc"       = "安抚一名带有以下任意缺陷的玩家：[flaws_desc_txt]。",
 			"reward"     = rew10,
 			"token_path" = /obj/item/quest_token/flaw_aid,
 			"params"     = list("required_flaw_types" = picked_flaws),
@@ -1400,7 +1422,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	if(flaw_diffs.len)
 		archetypes += list(list(
 			"kind"          = "flaw_aid",
-			"title"         = "Mercy",
+		"title"         = "慈悲",
 			"accepted_diff" = "",
 			"difficulties"  = flaw_diffs
 		))
@@ -1463,8 +1485,8 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	duration = 20 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/parish_boon
-	name = "Boon of the Parish"
-	desc = "You accepted a research willingly and bear a modest blessing."
+	name = "教区赐福"
+	desc = "你自愿接受了一项研究，因此承受着一份温和的祝福。"
 	icon_state = "buff"
 
 /datum/status_effect/debuff/parish_scorn
@@ -1474,8 +1496,8 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	duration = 20 MINUTES
 
 /atom/movable/screen/alert/status_effect/debuff/parish_scorn
-	name = "Scorn of the Parish"
-	desc = "A research was forced upon you."
+	name = "教区鄙斥"
+	desc = "一项研究被强行施加在了你身上。"
 	icon_state = "debuff"
 
 /datum/status_effect/debuff/quest_lock
@@ -1484,6 +1506,6 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 	duration = 20 MINUTES
 
 /atom/movable/screen/alert/status_effect/debuff/quest_lock
-	name = "Edict of the Ten"
-	desc = "A legacy status effect kept for compatibility."
+	name = "十神敕令"
+	desc = "为兼容性保留的旧状态效果。"
 	icon_state = "debuff"

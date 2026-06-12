@@ -1,33 +1,33 @@
 {
 	"chastity_imprint": [
-		"You feel the device being imprinted with your will.",
-		"The metal hums and shifts beneath your hands, and then it knows you.",
-		"A strange warmth spreads through the device as it accepts your authority over it."
+		"你感觉这件装置被刻印上了你的意志。",
+		"你手下的金属轻轻嗡鸣、挪动，随后它便认得你了。",
+		"当它接受你对它的支配时，一股奇异的暖意在装置中蔓延开来。"
 	],
 	"chastity_front_shift": [
-		"Your cursed chastity front shifts to %STATE%.",
-		"The front panel rearranges itself with a click. It's %STATE% now.",
-		"Something moves in the device's front and settles into place. %STATE%."
+		"你那件诅咒贞操装置的前部切换为了%STATE%。",
+		"前方的挡板咔哒一声自行重组。现在是%STATE%。",
+		"装置前端有什么东西移动后卡进了新位置。%STATE%。"
 	],
 	"chastity_anal_open": [
-		"The anal shield opens.",
-		"The rear shield clicks open on its own with a small, hollow sound.",
-		"A soft mechanical release at the back — the anal shield has opened."
+		"肛门护盾打开了。",
+		"后方的护盾伴着一声轻微而空洞的咔哒声自行开启。",
+		"后方传来一道轻柔的机械释放声——肛门护盾已经打开。"
 	],
 	"chastity_anal_closed": [
-		"The anal shield seals shut.",
-		"The rear plate draws closed and locks with a decisive click.",
-		"The anal shield closes itself. The back of the device is sealed again."
+		"肛门护盾重新封闭了。",
+		"后方的挡板收拢闭合，并伴着干脆的咔哒声锁死。",
+		"肛门护盾自行闭合了。装置后方再次被封住。"
 	],
 	"chastity_spikes_extend": [
-		"Spikes extend inside your cursed chastity device!",
-		"YOU FEEL THE SPIKES BEFORE YOU UNDERSTAND WHAT'S HAPPENING — sharp points pressing inward from every side.",
-		"A cold mechanical sound from somewhere inside the device, and then you feel them. The spikes are out.",
-		"Something clicks deep in the mechanism and then metal teeth press into your skin from the inside. Oh gods."
+		"尖刺从你的诅咒贞操装置内部弹出了！",
+		"你还没反应过来发生了什么，就先感觉到了尖刺——锋利的尖端正从四面八方往里顶压。",
+		"装置内部某处传来冰冷的机械声，接着你就感觉到了它们。尖刺已经弹出。",
+		"机械深处有什么东西咔哒一响，随后金属尖牙从内侧压进你的皮肤。天啊。"
 	],
 	"chastity_spikes_retract": [
-		"The spikes retract.",
-		"The teeth withdraw with a sound like a small blade being sheathed. Relief.",
-		"The spikes pull back and the immediate pressure fades. Your skin still remembers them."
+		"尖刺收回去了。",
+		"那些尖牙缩回时发出的声音，像是一把小刀入鞘。终于松了口气。",
+		"尖刺退回去了，眼前那股压迫感也随之消散。可你的皮肤还记得它们。"
 	]
 }

@@ -4,26 +4,26 @@
 		return
 	var/mob/living/carbon/human/H = user
 	if(H.client?.prefs && !H.client.prefs.chastenable)
-		to_chat(user, span_warning("I have chastity content disabled."))
+		to_chat(user, span_warning("我已禁用贞操相关内容。"))
 		return
 	// Spiked devices are extreme content — require the wearer's explicit opt-in.
 	// Use the trait list as the authoritative spiked check so this stays in sync with chastity_standard_traits.
 	if((TRAIT_CHASTITY_SPIKED in GLOB.chastity_standard_traits[chastity_type + 1]) && (H.client?.prefs && !H.client.prefs.extreme_erp))
-		to_chat(user, span_warning("Eora intervenes. I cannot equip a spiked device."))
+		to_chat(user, span_warning("伊欧拉出手干预了。我无法佩戴带刺装置。"))
 		return
 	if(!can_cage_target(H, user))
 		return
 	if(!get_location_accessible(H, BODY_ZONE_PRECISE_GROIN))
-		to_chat(user, span_warning("My groin is not accessible!"))
+		to_chat(user, span_warning("我的裆部无法接触！"))
 		return
 	if(H.chastity_device)
-		to_chat(user, span_warning("I am already wearing a chastity device!"))
+		to_chat(user, span_warning("我已经佩戴着贞操装置了！"))
 		return
 	if(!chastity_genital_check(H))
-		to_chat(user, span_warning("I don't have the required genitalia for the [src]."))
+		to_chat(user, span_warning("我没有佩戴[src]所需的生殖器官。"))
 		return
 	ensure_chastity_feature(H)
-	user.visible_message(span_notice("I attempt to chasten my genitals with the [src]..."))
+	user.visible_message(span_notice("我试着用[src]束缚自己的生殖器……"))
 	if(do_after(user, 50, needhand = 1, target = H))
 		equip_standard_chastity(H, user)
 	..()
@@ -34,15 +34,15 @@
 		return
 	var/mob/living/carbon/human/H = M
 	if(H.client?.prefs && !H.client.prefs.chastenable)
-		to_chat(user, span_warning("Eora intervenes. They have chastity content disabled."))
+		to_chat(user, span_warning("伊欧拉出手干预了。对方已禁用贞操相关内容。"))
 		return
 	if(user?.client?.prefs && !user.client.prefs.chastenable)
-		to_chat(user, span_warning("I have chastity content disabled."))
+		to_chat(user, span_warning("我已禁用贞操相关内容。"))
 		return
 	// Spiked devices are extreme content — the wearer must have explicitly opted in.
 	// Use the trait list as the authoritative spiked check so this stays in sync with chastity_standard_traits.
 	if((TRAIT_CHASTITY_SPIKED in GLOB.chastity_standard_traits[chastity_type + 1]) && (H.client?.prefs && !H.client.prefs.extreme_erp))
-		to_chat(user, span_warning("Eora intervenes. They cannot be fitted with a spiked device."))
+		to_chat(user, span_warning("伊欧拉出手干预了。对方无法被装上带刺装置。"))
 		return
 	if(!can_cage_target(H, user))
 		return
@@ -50,25 +50,25 @@
 		attack_self(user)
 		return
 	if(H.chastity_device)
-		to_chat(user, span_warning("[H] is already wearing a chastity device!"))
+		to_chat(user, span_warning("[H]已经佩戴着贞操装置了！"))
 		return
 	if(!get_location_accessible(H, BODY_ZONE_PRECISE_GROIN))
-		to_chat(user, span_warning("The groin area is not accessible!"))
+		to_chat(user, span_warning("裆部区域无法接触！"))
 		return
 	if(!chastity_genital_check(H))
-		to_chat(user, span_warning("[H] does not have the required genitalia for the [src]."))
+		to_chat(user, span_warning("[H]没有佩戴[src]所需的生殖器官。"))
 		return
-	user.visible_message(span_notice("[user] tries to put the [src] on [H]..."))
+	user.visible_message(span_notice("[user]试着把[src]装到[H]身上……"))
 	if(chastity_cursed)
 		if(H == user)
-			to_chat(user, span_warning("I cannot fasten a cursed chastity device on myself."))
+			to_chat(user, span_warning("我不能把诅咒贞操装置锁在自己身上。"))
 			return
 		if(!chastity_master)
-			to_chat(user, span_warning("The cursed device rejects binding without an imprinted master."))
+			to_chat(user, span_warning("没有已刻印的主人，诅咒装置拒绝建立束缚。"))
 			return
 		var/obj/item/clothing/neck/roguetown/cursed_collar/existing_collar = H.get_item_by_slot(SLOT_NECK)
 		if(istype(existing_collar))
-			to_chat(user, span_warning("[H] is already bound by a cursed collar."))
+			to_chat(user, span_warning("[H]已经被诅咒项圈束缚了。"))
 			return
 
 		var/equip_time = 50
@@ -77,11 +77,11 @@
 		if(!do_after(user, equip_time, needhand = 1, target = H))
 			return
 		if(H.chastity_device)
-			to_chat(user, span_warning("[H] is already wearing a chastity device!"))
+			to_chat(user, span_warning("[H]已经佩戴着贞操装置了！"))
 			return
 		existing_collar = H.get_item_by_slot(SLOT_NECK)
 		if(istype(existing_collar))
-			to_chat(user, span_warning("[H] is already bound by a cursed collar."))
+			to_chat(user, span_warning("[H]已经被诅咒项圈束缚了。"))
 			return
 
 		ensure_chastity_feature(H)
@@ -179,13 +179,13 @@
 	if(H.chastity_device != src)
 		return FALSE
 	if(!locked)
-		to_chat(user, span_notice("The device is already unlocked."))
+		to_chat(user, span_notice("这件装置已经解锁了。"))
 		return FALSE
 	if(!lockable)
-		to_chat(user, span_warning("This chastity device cannot be forced open this way."))
+		to_chat(user, span_warning("这件贞操装置不能用这种方式强行撬开。"))
 		return FALSE
 	if(!get_location_accessible(H, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
-		to_chat(user, span_warning("I can't reach the lock while [H]'s groin is covered."))
+		to_chat(user, span_warning("[H]的裆部被遮住时，我碰不到锁。"))
 		return FALSE
 	if(SEND_SIGNAL(H, COMSIG_CARBON_CHASTITY_LOCK_INTERACT, user, null, FALSE, "forced_removal") & COMPONENT_CHASTITY_LOCK_INTERACT_BLOCK)
 		to_chat(user, span_warning(get_lock_denial_string()))
@@ -198,12 +198,12 @@
 		success_chance += (U.STALUC - 10) * 4
 	success_chance = clamp(success_chance, 5, 80)
 
-	user.visible_message(span_warning("[user] braces a chisel against [H]'s chastity lock and starts hammering!"), span_warning("I brace a chisel against [H]'s chastity lock and start hammering!"))
+	user.visible_message(span_warning("[user]把凿子顶在[H]的贞操锁上，开始猛敲！"), span_warning("我把凿子顶在[H]的贞操锁上，开始猛敲！"))
 	while(H.chastity_device == src && locked)
 		if(!do_after(user, 60, needhand = 1, target = H))
 			return TRUE
 		if(!get_location_accessible(H, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
-			to_chat(user, span_warning("I lose access to the lock and have to stop."))
+			to_chat(user, span_warning("我碰不到锁了，只能停下。"))
 			return TRUE
 		if(SEND_SIGNAL(H, COMSIG_CARBON_CHASTITY_LOCK_INTERACT, user, null, FALSE, "forced_removal") & COMPONENT_CHASTITY_LOCK_INTERACT_BLOCK)
 			to_chat(user, span_warning(get_lock_denial_string()))
@@ -216,10 +216,10 @@
 		if(prob(35) && ishuman(user))
 			var/mob/living/carbon/human/U = user
 			U.apply_damage(rand(2,6), BRUTE, pick(BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_PRECISE_L_HAND))
-			to_chat(user, span_warning("The chisel slips and nicks my hand."))
+			to_chat(user, span_warning("凿子打滑，在我手上划开了一道口子。"))
 
 		if(prob(success_chance))
-			user.visible_message(span_notice("[user] finally pries [H]'s chastity device open."), span_notice("I finally pry the chastity device open."))
+			user.visible_message(span_notice("[user]终于撬开了[H]的贞操装置。"), span_notice("我终于把贞操装置撬开了。"))
 			locked = FALSE
 			REMOVE_TRAIT(H, TRAIT_CHASTITY_LOCKED, TRAIT_SOURCE_CHASTITY)
 			remove_chastity(H)
@@ -242,27 +242,27 @@
 					// Requires the wearer to have extreme ERP content enabled; without it the slip
 					// still causes a CBT wound but stops short of full avulsion.
 					if(prob(20) && H.client?.prefs?.extreme_erp)
-						H.visible_message(span_userdanger("As the lock finally gives, [user]'s chisel catches [H.p_their()] trapped prick on the way out — the edge tears through flesh and root, ripping it free alongside the falling device."))
+						H.visible_message(span_userdanger("锁终于崩开的瞬间，[user]的凿子勾住了[H.p_their()]被困住的肉棒——锋刃撕开血肉与根部，随着坠落的装置一并将其扯了下来。"))
 						playsound(drop_turf, pick('modular/sound/masomoans/agony/CBTScreamMale1.ogg', 'modular/sound/masomoans/agony/CBTScreamMale2.ogg'), 85, FALSE, 2)
 						H.add_splatter_floor(drop_turf)
 						penis_organ.Remove(H)
 						penis_organ.forceMove(drop_turf)
 					else if(chest && !chest.has_wound(/datum/wound/cbt))
 						// Slip causes crushing/tearing internal groin injury but no avulsion.
-						H.visible_message(span_userdanger("As the lock gives, [user]'s chisel bites into [H.p_their()] stones — the sudden jolt of metal twisting through [H.p_their()] groin as the device drops free."))
+						H.visible_message(span_userdanger("锁崩开的瞬间，[user]的凿子狠狠咬进了[H.p_their()]的睾丸——装置脱落时，扭拧的金属猛地绞过[H.p_their()]的裆部。"))
 						playsound(drop_turf, pick('modular/sound/masomoans/agony/CBTScreamMale1.ogg', 'modular/sound/masomoans/agony/CBTScreamMale2.ogg'), 85, FALSE, 2)
 						H.add_splatter_floor(drop_turf)
 						chest.add_wound(/datum/wound/cbt)
 				else if(vagina_organ && chest && !chest.has_wound(/datum/wound/cbt))
 					// Slip rakes across exposed softer anatomy; no organ removal but severe tearing.
-					H.visible_message(span_userdanger("As the lock gives, the chisel catches [H.p_their()] exposed slit — the device's sudden release dragging the edge through tender flesh and leaving a ragged wound."))
+					H.visible_message(span_userdanger("锁崩开的瞬间，凿子勾住了[H.p_their()]暴露在外的生殖缝——装置骤然脱落，带着锋刃划过柔嫩血肉，留下参差不齐的伤口。"))
 					playsound(drop_turf, pick('modular/sound/masomoans/agony/CBTScreamFemale1.ogg', 'modular/sound/masomoans/agony/CBTScreamFemale2.ogg'), 85, FALSE, 2)
 					H.add_splatter_floor(drop_turf)
 					chest.add_wound(/datum/wound/cbt)
 
 			return TRUE
 		else
-			to_chat(user, span_warning("The lock holds. I need another strike."))
+			to_chat(user, span_warning("锁还撑着。我得再来一下。"))
 
 	return TRUE
 
@@ -274,9 +274,9 @@
 		return
 
 	if(HAS_TRAIT(H, TRAIT_CHASTITY_SPIKED))
-		H.visible_message(span_userdanger("[H]'s swelling werewolf form violently bursts through [H.p_their()] spiked chastity device, sending shards flying!"))
+		H.visible_message(span_userdanger("[H]膨胀变形的狼人之躯猛地撑爆了[H.p_their()]带刺贞操装置，碎片四处飞溅！"))
 	else
-		H.visible_message(span_userdanger("[H]'s swelling werewolf form snaps [H.p_their()] chastity device apart with a sharp metallic crack!"))
+		H.visible_message(span_userdanger("[H]膨胀变形的狼人之躯伴着一声尖锐的金属脆响，生生崩碎了[H.p_their()]的贞操装置！"))
 
 	playsound(get_turf(H), 'sound/combat/gib (1).ogg', 70, FALSE, 2)
 	remove_chastity(H)

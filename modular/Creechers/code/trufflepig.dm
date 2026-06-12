@@ -41,7 +41,7 @@
 
 //	........   Truffles   ................
 /obj/item/reagent_containers/food/snacks/rogue/truffles
-	name = "truffles"
+	name = "松露"
 	icon = 'modular/Creechers/icons/piggie.dmi'
 	icon_state = "mushroom1_full"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
@@ -62,7 +62,7 @@
 	. = ..()
 
 /obj/item/reagent_containers/food/snacks/rogue/toxicshrooms
-	name = "truffles"
+	name = "松露"
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "mushroom1_full"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/berrypoison = 5)
@@ -80,8 +80,8 @@
 //	........   Truffle Pig   ................
 /mob/living/simple_animal/hostile/retaliate/rogue/trufflepig
 	icon = 'modular/Creechers/icons/piggie.dmi'
-	name = "truffle pig"
-	desc = "A hairy pig, bred for finding truffles in the bog."
+	name = "松露猪"
+	desc = "一种毛发蓬乱的猪，专门培育来在沼地中寻找松露。"
 	icon_state = "piggie_m"
 	icon_living = "piggie_m"
 	icon_dead = "piggie_dead"
@@ -128,7 +128,7 @@
 
 
 /obj/effect/decal/remains/pig
-	name = "remains"
+	name = "残骸"
 	gender = PLURAL
 	icon_state = "skele"
 	icon = 'icons/roguetown/mob/monster/cow.dmi'

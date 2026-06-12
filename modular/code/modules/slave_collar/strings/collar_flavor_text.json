@@ -1,21 +1,20 @@
 {
 	"collar_pet_sounds": [
-		"*lets out a soft whimper",
-		"*whines quietly",
-		"*makes a needy sound",
-		"*lets out a submissive mewl",
-		"*makes a pathetic noise",
-		"*whimpers needily",
-		"*mewls submissively",
-		"*pants heavily",
-		"*lets out a desperate whine",
-		"*makes a pleading sound"
+		"*发出一声轻轻的呜咽",
+		"*低低呜咽着",
+		"*发出渴求的声音",
+		"*发出一声顺从的喵呜",
+		"*发出可怜兮兮的声音",
+		"*带着渴求轻声抽泣",
+		"*顺从地轻喵出声",
+		"*急促喘息着",
+		"*发出一声绝望的哀鸣",
+		"*发出恳求般的声音"
 	],
 	"collar_arousal_messages": [
-		"Your collar tingles as pleasure courses through you...",
-		"Waves of heat spread from your collar...",
-		"Your body quivers with building arousal...",
-		"The collar's influence makes you shudder with need..."
+		"随着快感流过全身，你的项圈微微发麻……",
+		"一阵阵热浪自你的项圈处扩散开来……",
+		"不断升高的情欲让你的身体微微颤抖……",
+		"项圈的影响让你因渴求而战栗不止……"
 	]
 }
-

@@ -2,14 +2,14 @@
 	if(!user)
 		return TRUE
 	if(!get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, grabs = FALSE, skipundies = TRUE))
-		to_chat(user, span_warning("I can't reach that! Something is covering it."))
+		to_chat(user, span_warning("我碰不到那里！有东西挡住了。"))
 		return TRUE
 	if(!chastity_device)
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_CHASTITY_LOCKED))
-		to_chat(user, span_warning("I can't remove [src]'s chastity device while it's locked!"))
+		to_chat(user, span_warning("[src]的贞操装置还锁着时，我没法把它拆下来！"))
 		return TRUE
-	user.visible_message(span_warning("[user] starts removing [src]'s [chastity_device.name]."),span_warning("I start removing [src]'s [chastity_device.name]..."))
+	user.visible_message(span_warning("[user]开始拆下[src]的[chastity_device.name]。"),span_warning("我开始拆下[src]的[chastity_device.name]……"))
 	if(do_after(user, 50, needhand = 1, target = src))
 		var/obj/item/chastity/device = chastity_device
 		if(!device)
@@ -42,9 +42,9 @@
 
 	if(chastity_device && !chastity_device.locked)
 		if(src == user)
-			src.visible_message(span_notice("[user] begins to take off [chastity_device]..."))
+			src.visible_message(span_notice("[user]开始取下[chastity_device]……"))
 		else
-			src.visible_message(span_notice("[user] begins to take off [src]'s [chastity_device]..."))
+			src.visible_message(span_notice("[user]开始取下[src]的[chastity_device]……"))
 		if(do_after(user, 30, needhand = 1, target = src))
 			var/obj/item/chastity/device = chastity_device
 			if(device)
@@ -57,13 +57,13 @@
 /mob/living/carbon/human/proc/modular_strippanel_chastity_row()
 	if(!get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
 		return null
-	var/chastity_action = "Nothing"
+	var/chastity_action = "无"
 	if(chastity_device)
 		if(HAS_TRAIT(src, TRAIT_CHASTITY_LOCKED))
-			chastity_action = "Locked"
+			chastity_action = "已锁定"
 		else
-			chastity_action = "Remove"
-	var/chastity_row = "<tr><td><BR><B>Chastity:</B> <A href='?src=[REF(src)];chastitything=1'>"
+			chastity_action = "取下"
+	var/chastity_row = "<tr><td><BR><B>贞操装置：</B> <A href='?src=[REF(src)];chastitything=1'>"
 	chastity_row += chastity_action
 	chastity_row += "</A></td></tr>"
 	return chastity_row
@@ -104,7 +104,7 @@
 		return
 	device.remove_chastity(human_mob)
 	device.forceMove(get_turf(human_mob))
-	human_mob.visible_message(span_notice("[human_mob]'s spiked chastity device falls away as the divine hand of Eora rejects the cruel ironwork."))
+	human_mob.visible_message(span_notice("随着伊欧拉神圣之手拒斥这残酷的铁具，[human_mob]带刺的贞操装置脱落了下来。"))
 
 /client/proc/modular_handle_chastity_toggle_disable()
 	if(!ishuman(mob))
@@ -114,4 +114,4 @@
 	if(device)
 		device.remove_chastity(human_mob)
 		device.forceMove(get_turf(human_mob))
-		human_mob.visible_message(span_notice("the divine hand of Eora slipped [device] free from [human_mob]'s loins!"))
+		human_mob.visible_message(span_notice("伊欧拉神圣之手将[device]从[human_mob]的胯间解了下来！"))

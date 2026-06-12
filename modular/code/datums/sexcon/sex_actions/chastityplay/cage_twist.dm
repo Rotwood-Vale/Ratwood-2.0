@@ -1,5 +1,5 @@
 /datum/sex_action/chastityplay/cage_twist
-    name = "Twist their cage"
+    name = "扭转对方的贞操笼"
     category = SEX_CATEGORY_HANDS
     target_sex_part = SEX_PART_COCK
 
@@ -21,9 +21,9 @@
 
 /datum/sex_action/chastityplay/cage_twist/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
     if(HAS_TRAIT(target, TRAIT_CHASTITY_SPIKED))
-        user.visible_message(span_warning("[user] grips [target]'s spiked [get_chastity_device_name(target)] by the outer housing and starts turning it — slow as a screw."))
+        user.visible_message(span_warning("[user]握住[target]尖刺[get_chastity_device_name(target)]的外壳，像拧螺丝一样缓缓开始扭动。"))
         return
-    user.visible_message(span_warning("[user] takes hold of [target]'s [get_chastity_device_name(target)] with both hands and begins to rotate it."))
+    user.visible_message(span_warning("[user]双手抓住[target]的[get_chastity_device_name(target)]，开始将其旋转。"))
 
 /datum/sex_action/chastityplay/cage_twist/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
     if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU))
@@ -31,7 +31,7 @@
 
     if(HAS_TRAIT(target, TRAIT_CHASTITY_SPIKED))
         play_chastity_impact_sound(target, 'sound/combat/fracture/fracturedry (1).ogg', 50)
-        user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] corkscrews [target]'s spiked [get_chastity_device_name(target)], driving the inward spikes in a slow, terrible circle..."))
+        user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()]像开瓶钻般扭动[target]的尖刺[get_chastity_device_name(target)]，让内侧尖刺缓慢而可怖地画出一圈……"))
         user.sexcon.perform_sex_action(target, 0.2, 8.8, TRUE)
         user.sexcon.try_do_pain_scream(target, 8.8)
         target.sexcon.handle_passive_ejaculation(user)
@@ -40,13 +40,13 @@
             _try_spiked_catastrophe(user, target, "twist")
         return
     play_chastity_impact_sound(target, list('sound/combat/hits/onmetal/grille (2).ogg', 'sound/combat/hits/onmetal/grille (3).ogg'), 42, 50)
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] torques [target]'s [get_chastity_device_name(target)] against its mount, metal grinding as the whole device rolls against trapped skin..."))
+    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()]拧扭[target]固定着的[get_chastity_device_name(target)]，整具装置在被困住的肌肤上滚磨，金属声刺耳作响……"))
     user.sexcon.perform_sex_action(target, 0.4, 6, TRUE)
     user.sexcon.try_do_pain_scream(target, 6)
     target.sexcon.handle_passive_ejaculation(user)
 
 /datum/sex_action/chastityplay/cage_twist/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(span_warning("[user] releases the torque and lets [target]'s [get_chastity_device_name(target)] creak back into position."))
+    user.visible_message(span_warning("[user]松开扭力，让[target]的[get_chastity_device_name(target)]吱呀作响地回到原位。"))
 
 /datum/sex_action/chastityplay/cage_twist/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
     if(target.sexcon.finished_check())
@@ -71,9 +71,9 @@
     if(penis_organ && vagina_organ)
         // Intersex: corkscrew/pull tears the cock loose and batters the remaining anatomy.
         if(action_type == "pull")
-            target.visible_message(span_userdanger("[user] hauls [target]'s spiked cage free with catastrophic force — [target.p_their()] prick still inside it, ripped clean off, the rest of [target.p_their()] groin left wrecked by what came with it."))
+            target.visible_message(span_userdanger("[user]以灾难性的力量将[target]的尖刺贞操笼硬生生扯下——[target.p_their()]的肉棒还卡在里面，被整个撕断，其余腹股沟也被一并毁得不成样子。"))
         else
-            target.visible_message(span_userdanger("With a catastrophic final rotation, [target]'s spiked cage tears loose completely — [target.p_their()] prick ripped free inside it, the violence of it wrecking everything else it touched on the way out."))
+            target.visible_message(span_userdanger("随着最后一次灾难性的扭转，[target]的尖刺贞操笼彻底脱落——[target.p_their()]的肉棒被整个撕断留在其中，脱离时碰触到的一切也都被毁坏。"))
         playsound(drop_turf, pick('modular/sound/masomoans/agony/CBTScreamIntersex1.ogg', 'modular/sound/masomoans/agony/CBTScreamIntersex2.ogg'), 85, FALSE, 2)
         target.add_splatter_floor(drop_turf)
         penis_organ.Remove(target)
@@ -83,9 +83,9 @@
     else if(penis_organ)
         // Cock-only: device and organ torn free together.
         if(action_type == "pull")
-            target.visible_message(span_userdanger("With one final heave, [target]'s spiked cage tears clean off — [target.p_their()] prick hauled out still inside it, ripped free at the root."))
+            target.visible_message(span_userdanger("最后猛地一拽，[target]的尖刺贞操笼被整个扯下——[target.p_their()]的肉棒仍卡在其中，自根部被连根撕断。"))
         else
-            target.visible_message(span_userdanger("With a gut-wrenching final revolution, [target]'s spiked cage tears itself from the mount entirely — [target.p_their()] trapped prick ripped clean off with it, dragged free by the inward spines."))
+            target.visible_message(span_userdanger("伴随着令人作呕的最后一圈扭转，[target]的尖刺贞操笼从固定处彻底撕脱——[target.p_their()]被困住的肉棒也随之被内侧尖刺整个拖断。"))
         playsound(drop_turf, pick('modular/sound/masomoans/agony/CBTScreamMale1.ogg', 'modular/sound/masomoans/agony/CBTScreamMale2.ogg'), 85, FALSE, 2)
         target.add_splatter_floor(drop_turf)
         penis_organ.Remove(target)
@@ -93,9 +93,9 @@
     else if(vagina_organ && chastity_dev && chest && !chest.has_wound(/datum/wound/cbt))
         // Vagina-only: device wrenches loose, CBT wound from the internal damage.
         if(action_type == "pull")
-            target.visible_message(span_userdanger("[user] tears [target]'s spiked [get_chastity_device_name(target)] free entirely — ripping loose from between [target.p_their()] thighs with a sickening wrench, blood following after."))
+            target.visible_message(span_userdanger("[user]将[target]的尖刺[get_chastity_device_name(target)]整个撕了下来——它带着令人作呕的猛扯声从[target.p_their()]双腿间脱出，鲜血紧随其后。"))
         else
-            target.visible_message(span_userdanger("With a vicious final corkscrew, [target]'s spiked [get_chastity_device_name(target)] wrenches itself entirely loose — tearing free of [target.p_their()] body and leaving nothing but ruin."))
+            target.visible_message(span_userdanger("随着最后一次凶狠的扭钻，[target]的尖刺[get_chastity_device_name(target)]被整个拧脱——它从[target.p_their()]体内撕裂而出，留下的只有一片狼藉。"))
         playsound(drop_turf, pick('modular/sound/masomoans/agony/CBTScreamFemale1.ogg', 'modular/sound/masomoans/agony/CBTScreamFemale2.ogg'), 85, FALSE, 2)
         target.add_splatter_floor(drop_turf)
         chest.add_wound(/datum/wound/cbt)

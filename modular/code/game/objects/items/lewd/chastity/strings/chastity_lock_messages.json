@@ -1,36 +1,36 @@
 {
 	"chastity_lock_click": [
-		"A quiet click, and I'm sealed inside. The sound is so small for what it means.",
-		"The lock snaps shut somewhere I can't reach, and that's it. That's my life now.",
-		"Cold metal fastens against cold metal. The lock sounds almost polite about it.",
-		"Something small clicks deep in the mechanism and I don't hear it again. That's me locked now."
+		"轻轻一声咔哒，我就被封在里面了。和它所代表的意义相比，这声音实在太小。",
+		"锁在我碰不到的地方啪地扣上了。就这样。我的日子现在就是这样了。",
+		"冰冷的金属扣上冰冷的金属。那锁上的声音几乎还有点客气。",
+		"机械深处有什么轻轻一响，之后我再也听不到第二次了。现在被锁住的就是我。"
 	],
 	"chastity_unlock_click": [
-		"The lock gives with a soft, familiar click, and something in my chest unknots.",
-		"There's the click — the good one. The weight shifts and I feel the latch release.",
-		"A quiet snick of metal, and I'm free. Or at least, the cage is done with me.",
-		"The mechanism releases. It's almost gentle about it, like it wasn't holding me prisoner a second ago."
+		"锁发出一声轻柔而熟悉的咔哒，胸口有什么也随之松开了。",
+		"就是这声咔哒——好的那种。重量一变，我感觉到锁扣松开了。",
+		"金属轻轻一响，我自由了。或者至少，笼子暂时放过我了。",
+		"机关松开了。它几乎温柔得像上一秒根本没把我关起来一样。"
 	],
 	"chastity_lock_denial": [
-		"The lock gives nothing. I push and twist and it just sits there, already decided.",
-		"I pull at the clasp. Nothing. The mechanism is completely indifferent to my opinion.",
-		"The keyhole stares back at me. I try the motion again anyway. The lock doesn't.",
-		"It's not budging. It hasn't decided to budge. This is going to be a while."
+		"锁毫无反应。我推、我拧，而它就只是待在那里，像是早就决定好了。",
+		"我去拉那搭扣。没用。机关对我的想法完全无动于衷。",
+		"钥匙孔就那样回望着我。即便如此我还是又试了一次。而锁没有回应。",
+		"它纹丝不动。它根本就没打算动。看来还得耗上一阵。"
 	],
 	"chastity_cursed_lock": [
-		"The lock flares — not quite hot, not quite cold — and the latch doesn't move an inch.",
-		"Something deep in the metal hums dismissively when I reach for the lock.",
-		"Dark energy flickers at the seam of the lock. It doesn't want to open. It won't.",
-		"The mechanism groans but holds. Whatever's keeping it sealed isn't going to reason with me."
+		"锁上骤然泛起一阵光——说不清是热是冷——而锁扣连一丝一毫都没动。",
+		"当我伸手去碰锁时，金属深处传来一阵不屑的嗡鸣。",
+		"黑暗能量在锁缝间闪烁。它不想打开。它也不会打开。",
+		"机关发出低沉的呻吟，却依旧死死撑住。让它维持封闭的东西，根本不会跟我讲道理。"
 	],
 	"chastity_remote_lock": [
-		"The latch catches itself without anyone near it and something small clicks me in. Did someone just—",
-		"A muffled click with no hands involved, and the device draws itself shut.",
-		"I feel the lock engage on its own, quiet and certain. Someone, somewhere, has a key."
+		"明明附近没有人，锁扣却自己扣上了，有什么轻轻一响，把我重新锁了进去。刚才难道有人——",
+		"没有任何手碰它，却传来一声闷响，装置自行闭合了。",
+		"我感觉到锁自己扣上了，安静而笃定。某个地方的某个人，手里握着钥匙。"
 	],
 	"chastity_remote_unlock": [
-		"The lock releases without warning, a soft click from nowhere, and I feel the metal relax.",
-		"Something clicks — no hands — and the seal opens on its own.",
-		"Without anyone near me, the device sighs open. Someone decided I'd earned it. Maybe."
+		"锁毫无预兆地松开了，一声轻轻的咔哒不知从何而来，我感觉到金属随之放松。",
+		"有什么咔哒一响——没有任何手——封闭就这样自行打开了。",
+		"明明没人靠近我，装置却像叹了口气般自己打开了。也许是有人觉得我配得上。也许吧。"
 	]
 }

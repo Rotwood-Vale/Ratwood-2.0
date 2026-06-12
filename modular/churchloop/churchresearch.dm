@@ -80,18 +80,18 @@ var/global/list/PATRON_ARTIFACTS = list(
 )
 
 var/global/list/PESTRA_ORGAN_KEYS = list(
-	"Eyes" = "eyes",
-	"Heart" = "heart",
-	"Lungs" = "lungs",
-	"Liver" = "liver",
-	"Stomach" = "stomach"
+	"眼睛" = "eyes",
+	"心脏" = "heart",
+	"肺" = "lungs",
+	"肝脏" = "liver",
+	"胃" = "stomach"
 )
 
 var/global/list/NOC_SECRET_MIRACLES = list(
 	list(
 		"id" = "greater_diagnose",
-		"name" = "Greater Diagnose",
-		"desc" = "A precise divine appraisal: shows reagents, blood level, organ status, and quantified damage.",
+		"name" = "高等诊断",
+		"desc" = "精准的神圣检视：显示试剂、血量、器官状态与量化伤势。",
 		"type" = /obj/effect/proc_holder/spell/invoked/diagnose/greater,
 		"cost" = NOC_SECRET_MP_COST,
 		"requires" = /obj/effect/proc_holder/spell/invoked/diagnose
@@ -112,7 +112,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 	return s
 
 /proc/status_yn(flag)
-	return flag ? "<span style='color:#2ecc71'>Unlocked</span>" : "<span style='color:#e67e22'>Locked</span>"
+	return flag ? "<span style='color:#2ecc71'>已解锁</span>" : "<span style='color:#e67e22'>未解锁</span>"
 
 /proc/_pestra_tier_price(tier_key as text)
 	if(tier_key == "t1")
@@ -522,8 +522,8 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 /// Main shit starts here
 
 /obj/effect/proc_holder/spell/self/learnmiracle
-	name = "Miracles"
-	desc = "Open miracle actions."
+	name = "神迹"
+	desc = "打开神迹操作界面。"
 	overlay_state = "startmiracle"
 
 	var/current_research_tab = "pestra"
@@ -568,10 +568,10 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 	if(!H)
 		return
 	if(!HAS_TRAIT(H, TRAIT_CLERGYRADICAL))
-		to_chat(H, span_warning("Only clergy may contemplate new miracles."))
+		to_chat(H, span_warning("只有教士才能沉思新的神迹。"))
 		return
 	if(!length(_get_human_patron_name(H)))
-		to_chat(H, span_warning("Your faith has no patron."))
+		to_chat(H, span_warning("你的信仰没有主神。"))
 		return
 	open_learn_ui(H)
 
@@ -671,9 +671,9 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 	var/list/nav_shunned = list()
 
 	if(src.current_learn_tab == "none")
-		nav += "<b>None</b>"
+		nav += "<b>无</b>"
 	else
-		nav += "<a href=\"?src=[REF(src)];learntab=none\">None</a>"
+		nav += "<a href=\"?src=[REF(src)];learntab=none\">无</a>"
 
 	var/list/names_div = list()
 	for(var/pn1 in divine_patrons_index)
@@ -717,29 +717,29 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 				nav_shunned += "<span style='color:#7f8c8d'>[_cr_html_attr(n2)]</span>"
 
 	if(src.current_learn_tab == "noc_secrets")
-		nav += "<b>Secrets of Noc</b>"
+		nav += "<b>诺克秘仪</b>"
 	else if(H.unlocked_research_noc_secrets)
-		nav += "<a href=\"?src=[REF(src)];learntab=noc_secrets\">Secrets of Noc</a>"
+		nav += "<a href=\"?src=[REF(src)];learntab=noc_secrets\">诺克秘仪</a>"
 	else
-		nav += "<span style='color:#7f8c8d'>Secrets of Noc</span>"
+		nav += "<span style='color:#7f8c8d'>诺克秘仪</span>"
 
-	var/html = "<center><h3>Learn Miracles</h3></center><hr>"
-	html += "Favor: <b>[H.church_favor]</b> | MP: <b>[H.miracle_points]</b><hr>"
+	var/html = "<center><h3>学习神迹</h3></center><hr>"
+	html += "恩眷：<b>[H.church_favor]</b> | 神迹点：<b>[H.miracle_points]</b><hr>"
 	html += jointext(nav, " | ")
 
 	if(nav_shunned.len)
-		html += "<br><span style='color:#9b59b6'><b>Shunned:</b></span> "
+		html += "<br><span style='color:#9b59b6'><b>受弃者：</b></span> "
 		html += jointext(nav_shunned, " | ")
 
 	html += "<br><br>"
 
 	if(src.current_learn_tab == "none")
-		html += "<i>Select a patron or Secrets of Noc.</i>"
+		html += "<i>请选择一位主神或诺克秘仪。</i>"
 	else if(src.current_learn_tab == "noc_secrets")
-		html += "<b>Secrets of Noc</b><br>"
-		html += "<div style='color:#95a5a6; margin-bottom:8px;'>Special purchasable miracles.</div>"
+		html += "<b>诺克秘仪</b><br>"
+		html += "<div style='color:#95a5a6; margin-bottom:8px;'>可购买的特殊神迹。</div>"
 		html += "<table width='100%' cellspacing='2' cellpadding='2'>"
-		html += "<tr><th align='left'>Miracle</th><th>Description</th><th width='100'>Cost</th><th width='160'>Action</th></tr>"
+		html += "<tr><th align='left'>神迹</th><th>描述</th><th width='100'>消耗</th><th width='160'>操作</th></tr>"
 
 		for(var/entry in NOC_SECRET_MIRACLES)
 			var/list/E = entry
@@ -766,29 +766,29 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 			html += "<tr>"
 			html += "<td><b>[_cr_html_attr(nm)]</b></td>"
 			html += "<td>[_cr_html_attr(ds)]</td>"
-			html += "<td align='center'>[cost2] MP</td>"
+			html += "<td align='center'>[cost2] 神迹点</td>"
 			html += "<td align='center'>"
 
 			if(known_secret)
-				html += "<span style='color:#2ecc71'>Learned</span>"
+				html += "<span style='color:#2ecc71'>已学会</span>"
 			else if(req2 && !has_requirement)
-				html += "<span style='color:#7f8c8d'>Requirement missing</span>"
+				html += "<span style='color:#7f8c8d'>缺少前置条件</span>"
 			else if(H.miracle_points >= cost2)
-				html += "<a href=\"?src=[REF(src)];buynoc=[id2]\">Buy</a>"
+				html += "<a href=\"?src=[REF(src)];buynoc=[id2]\">购买</a>"
 			else
-				html += "<span style='color:#7f8c8d'>Not enough MP</span>"
+				html += "<span style='color:#7f8c8d'>神迹点不足</span>"
 
 			html += "</td></tr>"
 
 		html += "</table>"
 	else
 		if(!islist(buckets[src.current_learn_tab]) || !length(buckets[src.current_learn_tab]))
-			html += "<i>No miracles available for this patron.</i>"
+			html += "<i>该主神当前没有可学习的神迹。</i>"
 		else
 			var/list/L = buckets[src.current_learn_tab]
 			html += "<b>[_cr_html_attr(src.current_learn_tab)]</b><br>"
 			html += "<table width='100%' cellspacing='2' cellpadding='2'>"
-			html += "<tr><th align='left'>Miracle</th><th>Description</th><th width='50'>Tier</th><th width='100'>Cost</th><th width='140'>Action</th></tr>"
+			html += "<tr><th align='left'>神迹</th><th>描述</th><th width='50'>阶级</th><th width='100'>消耗</th><th width='140'>操作</th></tr>"
 
 			for(var/entry2 in L)
 				var/list/E2 = entry2
@@ -803,21 +803,21 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 				html += "<td><b>[_cr_html_attr(nm2)]</b></td>"
 				html += "<td>[_cr_html_attr(desc2)]</td>"
 				html += "<td align='center'>[tier2]</td>"
-				html += "<td align='center'>[cost3] MP</td>"
+				html += "<td align='center'>[cost3] 神迹点</td>"
 				html += "<td align='center'>"
 
 				if(is_learned2)
-					html += "<span style='color:#2ecc71'>Learned</span>"
+					html += "<span style='color:#2ecc71'>已学会</span>"
 				else if(H.miracle_points >= cost3)
-					html += "<a href=\"?src=[REF(src)];learnspell=[typepath_txt]\">Learn</a>"
+					html += "<a href=\"?src=[REF(src)];learnspell=[typepath_txt]\">学习</a>"
 				else
-					html += "<span style='color:#7f8c8d'>Not enough MP</span>"
+					html += "<span style='color:#7f8c8d'>神迹点不足</span>"
 
 				html += "</td></tr>"
 
 			html += "</table>"
 
-	var/datum/browser/B = new(H, "MIRACLE_LEARN", "Learn Miracles", 760, 680)
+	var/datum/browser/B = new(H, "MIRACLE_LEARN", "学习神迹", 760, 680)
 	B.set_content(html)
 	B.open()
 
@@ -832,83 +832,83 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 	build_divine_patrons_index()
 	build_inhumen_patrons_index()
 
-	var/html = "<center><h3>Research</h3></center><hr>"
-	html += "<b>Favor:</b> [H.church_favor]<br>"
-	html += "<b>Miracle Points:</b> [H.miracle_points]<br>"
-	html += "<b>Research Points:</b> [H.personal_research_points]<br><br>"
+	var/html = "<center><h3>研究</h3></center><hr>"
+	html += "<b>恩眷：</b> [H.church_favor]<br>"
+	html += "<b>神迹点：</b> [H.miracle_points]<br>"
+	html += "<b>研究点：</b> [H.personal_research_points]<br><br>"
 
 	if(HAS_TRAIT(H, TRAIT_CLERGYRADICAL))
 		if(H.church_favor >= RESEARCH_RP_PRICE_FLAVOR)
-			html += "<a href='?src=[REF(src)];buyrp=1'>Buy 1 RP ([RESEARCH_RP_PRICE_FLAVOR] Favor)</a><br>"
+			html += "<a href='?src=[REF(src)];buyrp=1'>购买 1 点研究点（[RESEARCH_RP_PRICE_FLAVOR] 恩眷）</a><br>"
 		else
-			html += "<span style='color:#7f8c8d'>Buy 1 RP ([RESEARCH_RP_PRICE_FLAVOR] Favor)</span><br>"
+			html += "<span style='color:#7f8c8d'>购买 1 点研究点（[RESEARCH_RP_PRICE_FLAVOR] 恩眷）</span><br>"
 
 		if(H.church_favor >= MIRACLE_MP_PRICE_FLAVOR)
-			html += "<a href='?src=[REF(src)];buymp=1'>Buy 1 MP ([MIRACLE_MP_PRICE_FLAVOR] Favor)</a><br>"
+			html += "<a href='?src=[REF(src)];buymp=1'>购买 1 点神迹点（[MIRACLE_MP_PRICE_FLAVOR] 恩眷）</a><br>"
 		else
-			html += "<span style='color:#7f8c8d'>Buy 1 MP ([MIRACLE_MP_PRICE_FLAVOR] Favor)</span><br>"
+			html += "<span style='color:#7f8c8d'>购买 1 点神迹点（[MIRACLE_MP_PRICE_FLAVOR] 恩眷）</span><br>"
 	else
-		html += "<span style='color:#7f8c8d'>Only clergy may buy RP/MP.</span><br>"
+		html += "<span style='color:#7f8c8d'>只有教士可以购买研究点/神迹点。</span><br>"
 
-	html += "<hr><b>Studies</b><br>"
+	html += "<hr><b>研究项目</b><br>"
 	html += "<table width='100%' cellspacing='2' cellpadding='2'>"
-	html += "<tr><th align='left'>Study</th><th width='120'>Status</th><th width='220'>Action</th></tr>"
+	html += "<tr><th align='left'>项目</th><th width='120'>状态</th><th width='220'>操作</th></tr>"
 
 	/* html += "<tr><td>Secrets of Noc</td><td>[status_yn(H.unlocked_research_noc_secrets)]</td><td align='center'>"
 	if(!H.unlocked_research_noc_secrets)
 		if(H.church_favor >= RESEARCH_UNLOCK_FAVOR)
-			html += "<a href='?src=[REF(src)];unlockresearch=noc'>Unlock ([RESEARCH_UNLOCK_FAVOR] Favor)</a>"
+			html += "<a href='?src=[REF(src)];unlockresearch=noc'>解锁（[RESEARCH_UNLOCK_FAVOR] 恩眷）</a>"
 		else
-			html += "<span style='color:#7f8c8d'>Unlock ([RESEARCH_UNLOCK_FAVOR] Favor)</span>"
+			html += "<span style='color:#7f8c8d'>解锁（[RESEARCH_UNLOCK_FAVOR] 恩眷）</span>"
 	else
 		html += "<span style='color:#7f8c8d'>See Learn tab</span>"
 	html += "</td></tr>" */
 
-	html += "<tr><td>Fleshcraft of Pestra</td><td>[status_yn(H.unlocked_research_pestra_fleshcraft)]</td><td align='center'>"
+	html += "<tr><td>佩斯特拉血肉塑造</td><td>[status_yn(H.unlocked_research_pestra_fleshcraft)]</td><td align='center'>"
 	if(!H.unlocked_research_pestra_fleshcraft)
 		if(H.church_favor >= RESEARCH_UNLOCK_FAVOR)
-			html += "<a href='?src=[REF(src)];unlockresearch=pestra'>Unlock ([RESEARCH_UNLOCK_FAVOR] Favor)</a>"
+			html += "<a href='?src=[REF(src)];unlockresearch=pestra'>解锁（[RESEARCH_UNLOCK_FAVOR] 恩眷）</a>"
 		else
-			html += "<span style='color:#7f8c8d'>Unlock ([RESEARCH_UNLOCK_FAVOR] Favor)</span>"
+			html += "<span style='color:#7f8c8d'>解锁（[RESEARCH_UNLOCK_FAVOR] 恩眷）</span>"
 	else
-		html += "<span style='color:#7f8c8d'>Unlocked</span>"
+		html += "<span style='color:#7f8c8d'>已解锁</span>"
 	html += "</td></tr>"
 
-	html += "<tr><td>Craft of Malum</td><td>[status_yn(H.unlocked_research_malum_craft)]</td><td align='center'>"
+	html += "<tr><td>玛勒姆工艺</td><td>[status_yn(H.unlocked_research_malum_craft)]</td><td align='center'>"
 	if(!H.unlocked_research_malum_craft)
 		if(H.church_favor >= RESEARCH_UNLOCK_FAVOR)
-			html += "<a href='?src=[REF(src)];unlockresearch=malum'>Unlock ([RESEARCH_UNLOCK_FAVOR] Favor)</a>"
+			html += "<a href='?src=[REF(src)];unlockresearch=malum'>解锁（[RESEARCH_UNLOCK_FAVOR] 恩眷）</a>"
 		else
-			html += "<span style='color:#7f8c8d'>Unlock ([RESEARCH_UNLOCK_FAVOR] Favor)</span>"
+			html += "<span style='color:#7f8c8d'>解锁（[RESEARCH_UNLOCK_FAVOR] 恩眷）</span>"
 	else
-		html += "<span style='color:#7f8c8d'>Unlocked</span>"
+		html += "<span style='color:#7f8c8d'>已解锁</span>"
 	html += "</td></tr>"
 
-	html += "<tr><td>Forbidden Knowledges of Zizo</td><td>[status_yn(H.unlocked_research_zizo_forbidden)]</td><td align='center'>"
+	html += "<tr><td>齐佐禁忌知识</td><td>[status_yn(H.unlocked_research_zizo_forbidden)]</td><td align='center'>"
 	if(!H.unlocked_research_zizo_forbidden)
 		if(H.church_favor >= RESEARCH_UNLOCK_FAVOR)
-			html += "<a href='?src=[REF(src)];unlockresearch=zizo'>Unlock ([RESEARCH_UNLOCK_FAVOR] Favor)</a>"
+			html += "<a href='?src=[REF(src)];unlockresearch=zizo'>解锁（[RESEARCH_UNLOCK_FAVOR] 恩眷）</a>"
 		else
-			html += "<span style='color:#7f8c8d'>Unlock ([RESEARCH_UNLOCK_FAVOR] Favor)</span>"
+			html += "<span style='color:#7f8c8d'>解锁（[RESEARCH_UNLOCK_FAVOR] 恩眷）</span>"
 	else
-		html += "<span style='color:#7f8c8d'>Unlocked</span>"
+		html += "<span style='color:#7f8c8d'>已解锁</span>"
 	html += "</td></tr>"
 
 	html += "</table><hr>"
 
 	var/list/rnav = list()
-	rnav += (src.current_research_tab == "pestra") ? "<b>Fleshcraft of Pestra</b>" : "<a href='?src=[REF(src)];researchtab=pestra'>Fleshcraft of Pestra</a>"
-	rnav += (src.current_research_tab == "malum") ? "<b>Craft of Malum</b>" : "<a href='?src=[REF(src)];researchtab=malum'>Craft of Malum</a>"
-	rnav += (src.current_research_tab == "zizo") ? "<b>Forbidden Knowledges of Zizo</b>" : "<a href='?src=[REF(src)];researchtab=zizo'>Forbidden Knowledges of Zizo</a>"
+	rnav += (src.current_research_tab == "pestra") ? "<b>佩斯特拉血肉塑造</b>" : "<a href='?src=[REF(src)];researchtab=pestra'>佩斯特拉血肉塑造</a>"
+	rnav += (src.current_research_tab == "malum") ? "<b>玛勒姆工艺</b>" : "<a href='?src=[REF(src)];researchtab=malum'>玛勒姆工艺</a>"
+	rnav += (src.current_research_tab == "zizo") ? "<b>齐佐禁忌知识</b>" : "<a href='?src=[REF(src)];researchtab=zizo'>齐佐禁忌知识</a>"
 	html += jointext(rnav, " | ")
 	html += "<hr>"
 
 	if(src.current_research_tab == "pestra")
-		html += "<b>Fleshcraft of Pestra</b><br>"
-		html += "Status: [status_yn(H.unlocked_research_pestra_fleshcraft)]<br><br>"
+		html += "<b>佩斯特拉血肉塑造</b><br>"
+		html += "状态：[status_yn(H.unlocked_research_pestra_fleshcraft)]<br><br>"
 
 		if(!H.unlocked_research_pestra_fleshcraft)
-			html += "<span style='color:#7f8c8d'>Unlock this study above.</span>"
+			html += "<span style='color:#7f8c8d'>请先在上方解锁此研究。</span>"
 		else
 			var/list/pnav = list()
 			pnav += (src.current_pestra_tier == "t1") ? "<b>T1</b>" : "<a href='?src=[REF(src)];pestratier=t1'>T1</a>"
@@ -918,30 +918,30 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 			var/current_price = _pestra_tier_price(src.current_pestra_tier)
 
 			html += jointext(pnav, " | ")
-			html += "<br><span style='color:#95a5a6'>Selected tier price: [current_price] Favor</span><br><br>"
+			html += "<br><span style='color:#95a5a6'>当前所选阶级价格：[current_price] 恩眷</span><br><br>"
 
 			html += "<table width='100%' cellspacing='2' cellpadding='2'>"
-			html += "<tr><th align='left'>Organ</th><th width='180'>Action</th></tr>"
+			html += "<tr><th align='left'>器官</th><th width='180'>操作</th></tr>"
 
 			for(var/label in PESTRA_ORGAN_KEYS)
 				html += "<tr><td>[label] ([uppertext(src.current_pestra_tier)])</td><td align='center'>"
 				if(HAS_TRAIT(H, TRAIT_CLERGYRADICAL) && H.church_favor >= current_price)
-					html += "<a href='?src=[REF(src)];buyorg=[label];tier=[src.current_pestra_tier]'>Buy ([current_price] Favor)</a>"
+					html += "<a href='?src=[REF(src)];buyorg=[label];tier=[src.current_pestra_tier]'>购买（[current_price] 恩眷）</a>"
 				else
-					html += "<span style='color:#7f8c8d'>Buy ([current_price] Favor)</span>"
+					html += "<span style='color:#7f8c8d'>购买（[current_price] 恩眷）</span>"
 				html += "</td></tr>"
 
 			html += "</table>"
 
 	else if(src.current_research_tab == "malum")
-		html += "<b>Craft of Malum</b><br>"
-		html += "Status: [status_yn(H.unlocked_research_malum_craft)]<br><br>"
+		html += "<b>玛勒姆工艺</b><br>"
+		html += "状态：[status_yn(H.unlocked_research_malum_craft)]<br><br>"
 
 		if(!H.unlocked_research_malum_craft)
-			html += "<span style='color:#7f8c8d'>Unlock this study above.</span>"
+			html += "<span style='color:#7f8c8d'>请先在上方解锁此研究。</span>"
 		else
 			html += "<table width='100%' cellspacing='2' cellpadding='2'>"
-			html += "<tr><th align='left'>Artefact</th><th width='160'>Patron</th><th width='180'>Action</th></tr>"
+			html += "<tr><th align='left'>圣物</th><th width='160'>主神</th><th width='180'>操作</th></tr>"
 
 			var/list/pnames = list()
 			for(var/pn in PATRON_ARTIFACTS)
@@ -967,31 +967,31 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 					html += "<td align='center'>"
 
 					if(HAS_TRAIT(H, TRAIT_CLERGYRADICAL) && H.church_favor >= ARTEFACT_PRICE_FAVOR)
-						html += "<a href='?src=[REF(src)];buyart=[T]'>Buy ([ARTEFACT_PRICE_FAVOR] Favor)</a>"
+						html += "<a href='?src=[REF(src)];buyart=[T]'>购买（[ARTEFACT_PRICE_FAVOR] 恩眷）</a>"
 					else
-						html += "<span style='color:#7f8c8d'>Buy ([ARTEFACT_PRICE_FAVOR] Favor)</span>"
+						html += "<span style='color:#7f8c8d'>购买（[ARTEFACT_PRICE_FAVOR] 恩眷）</span>"
 
 					html += "</td></tr>"
 
 			html += "</table>"
 
 	else if(src.current_research_tab == "zizo")
-		html += "<b>Forbidden Knowledges of Zizo</b><br>"
-		html += "Status: [status_yn(H.unlocked_research_zizo_forbidden)]<br><br>"
+		html += "<b>齐佐禁忌知识</b><br>"
+		html += "状态：[status_yn(H.unlocked_research_zizo_forbidden)]<br><br>"
 
 		if(!H.unlocked_research_zizo_forbidden)
-			html += "<span style='color:#7f8c8d'>Unlock this study above.</span>"
+			html += "<span style='color:#7f8c8d'>请先在上方解锁此研究。</span>"
 		else
-			html += "<span style='color:#2ecc71'>Shunned relations are unlocked.</span>"
+			html += "<span style='color:#2ecc71'>已解锁受弃者关系。</span>"
 
 	html += "<hr>"
 
 	var/list/nav_bits = list()
-	nav_bits += (src.current_rel_tab == "ten") ? "<b>Ten</b>" : "<a href='?src=[REF(src)];reltab=ten'>Ten</a>"
+	nav_bits += (src.current_rel_tab == "ten") ? "<b>十神</b>" : "<a href='?src=[REF(src)];reltab=ten'>十神</a>"
 	if(_shunned_relations_unlocked(H))
-		nav_bits += (src.current_rel_tab == "shunned") ? "<b>Shunned</b>" : "<a href='?src=[REF(src)];reltab=shunned'>Shunned</a>"
+		nav_bits += (src.current_rel_tab == "shunned") ? "<b>受弃者</b>" : "<a href='?src=[REF(src)];reltab=shunned'>受弃者</a>"
 	else
-		nav_bits += "<span style='color:#7f8c8d'>Shunned</span>"
+		nav_bits += "<span style='color:#7f8c8d'>受弃者</span>"
 
 	html += jointext(nav_bits, " | ")
 	html += "<br><br>"
@@ -1005,7 +1005,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 		var/list/idx = (src.current_rel_tab == "shunned") ? inhumen_patrons_index : divine_patrons_index
 		if(idx && idx.len)
 			html += "<table width='100%' cellspacing='2' cellpadding='2'>"
-			html += "<tr><th align='left'>Patron</th><th>Domain</th><th width='80'>Level</th><th width='220'>Action</th></tr>"
+			html += "<tr><th align='left'>主神</th><th>领域</th><th width='80'>等级</th><th width='220'>操作</th></tr>"
 
 			var/list/names = list()
 			for(var/n in idx)
@@ -1030,9 +1030,9 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 				html += "<td align='center'>"
 
 				if(length(my_patron) && (nm == my_patron))
-					html += "<span style='color:#2ecc71'>Own patron (max)</span>"
+					html += "<span style='color:#2ecc71'>本命主神（已满）</span>"
 				else if(cur >= rel_cap)
-					html += "<span style='color:#2ecc71'>Maxed</span>"
+					html += "<span style='color:#2ecc71'>已满级</span>"
 				else
 					var/next = cur + 1
 					if(next > rel_cap)
@@ -1040,17 +1040,17 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 					var/cost4 = (next == 1) ? 1 : (next == 2) ? 2 : (next == 3) ? 3 : 4
 
 					if(H.personal_research_points >= cost4)
-						html += "<a href='?src=[REF(src)];relten_up=[nm]'>Upgrade to [next] ([cost4] RP)</a>"
+						html += "<a href='?src=[REF(src)];relten_up=[nm]'>提升到 [next]（[cost4] 研究点）</a>"
 					else
-						html += "<span style='color:#7f8c8d'>Upgrade to [next] ([cost4] RP)</span>"
+						html += "<span style='color:#7f8c8d'>提升到 [next]（[cost4] 研究点）</span>"
 
 				html += "</td></tr>"
 
 			html += "</table>"
 		else
-			html += "<i>No patrons found.</i>"
+			html += "<i>未找到主神。</i>"
 
-	var/datum/browser/B = new(H, "MIRACLE_RESEARCH", "Research", 820, 900)
+	var/datum/browser/B = new(H, "MIRACLE_RESEARCH", "研究", 820, 900)
 	B.set_content(html)
 	B.open()
 
@@ -1078,21 +1078,21 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 	var/secs = left_s % 60
 	var/secs_str = (secs < 10) ? "0[secs]" : "[secs]"
 
-	var/html = "<center><h3 style='color:#3498db;margin:6px 0;'>Parish Assignments</h3>"
+	var/html = "<center><h3 style='color:#3498db;margin:6px 0;'>教区任务</h3>"
 	if(charges >= 1)
-		html += "<div style='margin-top:6px;'><a href='?src=[REF(src)];q_reroll=1' style='background:#8e44ad;color:#fff;padding:3px 8px;border-radius:6px;text-decoration:none;'><b>Reroll (charges: [charges])</b></a></div>"
+		html += "<div style='margin-top:6px;'><a href='?src=[REF(src)];q_reroll=1' style='background:#8e44ad;color:#fff;padding:3px 8px;border-radius:6px;text-decoration:none;'><b>重掷（次数：[charges]）</b></a></div>"
 	else
-		html += "<div style='margin-top:6px;color:#9b59b6;'>Next charge in: <b>[mins]:[secs_str]</b></div>"
+		html += "<div style='margin-top:6px;color:#9b59b6;'>下次恢复次数还需：<b>[mins]:[secs_str]</b></div>"
 
 	html += "<div style='color:#e74c3c; text-align:center; margin:6px 0;'>"
-	html += "<b>How it works:</b><br>"
-	html += "You get three different quest themes.<br>"
-	html += "Each quest can have <u>Easy / Medium / Hard</u> variants, or just one special task.<br>"
-	html += "When you click <b>Get special item</b> on one row, you lock that quest to that difficulty and receive a quest item.<br>"
-	html += "Other rows for that quest lock until reroll.<br>"
-	html += "The quest item is single-use, may be handed to others, and stays bound to the owner for completion rewards."
-	html += "</u>Quest items may be given to other players</u>."
-	html += "Outside combat mode, the target must willingly accept. In combat mode, the quest is forced upon them and completes immediately.<br>"
+	html += "<b>规则说明：</b><br>"
+	html += "你会获得三种不同的任务主题。<br>"
+	html += "每个任务可能拥有 <u>简单 / 中等 / 困难</u> 三种变体，或仅有一种特殊任务。<br>"
+	html += "当你在某一行点击 <b>领取特殊物品</b> 时，该任务会锁定在该难度，并发放一件任务物品。<br>"
+	html += "同一任务的其他难度会一直锁定，直到重掷。<br>"
+	html += "任务物品为一次性道具，可以交给他人使用，但完成奖励仍归属于所有者。"
+	html += "</u>任务物品可以交给其他玩家</u>。"
+	html += "非战斗模式下，目标必须自愿接受；战斗模式下，任务会被强制施加并立刻完成。<br>"
 	html += "</div></center><hr>"
 
 	var/quest_count = islist(H.quest_ui_entries) ? H.quest_ui_entries.len : 0
@@ -1110,7 +1110,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 		html += "<div style='padding:10px;'>"
 		html += "<center><b style='font-size:14px; color:#ecf0f1; background:#34495e; padding:2px 8px; border-radius:6px;'>[_cr_html_attr(quest_title)]</b></center><br>"
 		html += "<table width='100%' cellspacing='2' cellpadding='2' style='text-align:center;'>"
-		html += "<tr style='background:#2c3e50;color:#ecf0f1;'><th>Difficulty</th><th>Task</th><th>Reward</th><th>Action</th></tr>"
+		html += "<tr style='background:#2c3e50;color:#ecf0f1;'><th>难度</th><th>任务</th><th>奖励</th><th>操作</th></tr>"
 
 		var/list/diffs = slot["difficulties"]
 		if(islist(diffs))
@@ -1141,15 +1141,15 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 				html += "<tr>"
 				html += "<td><b>[diff_label]</b></td>"
 				html += "<td>[desc_txt]</td>"
-				html += "<td style='color:#2ecc71'><b>[reward_txt]</b> Favor</td>"
+				html += "<td style='color:#2ecc71'><b>[reward_txt]</b> 恩眷</td>"
 				html += "<td>"
 
 				if(locked)
-					html += "<span style='display:inline-block; padding:4px 10px; border-radius:6px; background:#7f8c8d; color:#ecf0f1;'>Locked</span>"
+					html += "<span style='display:inline-block; padding:4px 10px; border-radius:6px; background:#7f8c8d; color:#ecf0f1;'>已锁定</span>"
 				else if(spawned)
-					html += "<span style='display:inline-block; padding:4px 10px; border-radius:6px; background:#7f8c8d; color:#ecf0f1;'>Item spawned</span>"
+					html += "<span style='display:inline-block; padding:4px 10px; border-radius:6px; background:#7f8c8d; color:#ecf0f1;'>已生成物品</span>"
 				else
-					html += "<a href='?src=[REF(src)];q_spawn=[i];diff=[diff_key]' style='display:inline-block; padding:4px 10px; border-radius:6px; background:#1abc9c; color:#ffffff; text-decoration:none;'>Get special item</a>"
+					html += "<a href='?src=[REF(src)];q_spawn=[i];diff=[diff_key]' style='display:inline-block; padding:4px 10px; border-radius:6px; background:#1abc9c; color:#ffffff; text-decoration:none;'>领取特殊物品</a>"
 
 				html += "</td></tr>"
 
@@ -1158,7 +1158,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 		if(i < quest_count)
 			html += "<hr style='border-color:#2c3e50;'>"
 
-	var/datum/browser/B2 = new(H, "MIRACLE_QUESTS", "Quests", 760, 780)
+	var/datum/browser/B2 = new(H, "MIRACLE_QUESTS", "任务", 760, 780)
 	B2.set_content(html)
 	B2.open()
 
@@ -1229,7 +1229,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 		if(HAS_TRAIT(H, TRAIT_CLERGYRADICAL) && H.church_favor >= RESEARCH_RP_PRICE_FLAVOR)
 			H.church_favor = max(0, H.church_favor - RESEARCH_RP_PRICE_FLAVOR)
 			H.personal_research_points++
-			to_chat(H, span_notice("You gained +1 Research Point."))
+			to_chat(H, span_notice("你获得了 +1 点研究点。"))
 		open_research_ui(H)
 		return
 
@@ -1237,7 +1237,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 		if(HAS_TRAIT(H, TRAIT_CLERGYRADICAL) && H.church_favor >= MIRACLE_MP_PRICE_FLAVOR)
 			H.church_favor = max(0, H.church_favor - MIRACLE_MP_PRICE_FLAVOR)
 			H.miracle_points++
-			to_chat(H, span_notice("You gained +1 Miracle Point."))
+			to_chat(H, span_notice("你获得了 +1 点神迹点。"))
 		open_research_ui(H)
 		return
 
@@ -1266,7 +1266,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 			return
 
 		H.church_favor = max(0, H.church_favor - RESEARCH_UNLOCK_FAVOR)
-		to_chat(H, span_notice("Research unlocked."))
+		to_chat(H, span_notice("研究已解锁。"))
 		open_research_ui(H)
 		return
 
@@ -1284,7 +1284,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 		var/item_txt = href_list["buyart"]
 		var/item_path = text2path(item_txt)
 		if(!ispath(item_path, /obj/item))
-			to_chat(H, span_warning("Invalid artefact type."))
+			to_chat(H, span_warning("无效的圣物类型。"))
 			open_research_ui(H)
 			return
 
@@ -1296,7 +1296,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 				break
 
 		if(!valid)
-			to_chat(H, span_warning("Unknown artefact."))
+			to_chat(H, span_warning("未知圣物。"))
 			open_research_ui(H)
 			return
 
@@ -1305,7 +1305,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 			T1 = get_turf(H)
 		new item_path(T1)
 		H.church_favor = max(0, H.church_favor - ARTEFACT_PRICE_FAVOR)
-		to_chat(H, span_notice("Artefact purchased."))
+		to_chat(H, span_notice("圣物已购入。"))
 		open_research_ui(H)
 		return
 
@@ -1329,7 +1329,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 
 		var/typepath2 = _pestra_get_organ_type(label, tier_key)
 		if(!typepath2)
-			to_chat(H, span_warning("Organ type not found for [label] [uppertext(tier_key)]."))
+			to_chat(H, span_warning("未找到 [label] [uppertext(tier_key)] 对应的器官类型。"))
 			open_research_ui(H)
 			return
 
@@ -1339,12 +1339,12 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 
 		new typepath2(T2)
 		H.church_favor = max(0, H.church_favor - organ_price)
-		to_chat(H, span_notice("[label] [uppertext(tier_key)] purchased."))
+		to_chat(H, span_notice("[label] [uppertext(tier_key)] 已购入。"))
 		open_research_ui(H)
 		return
 
 	if(href_list["buynoc"])
-		to_chat(H, span_warning("Secrets of Noc are disabled."))
+		to_chat(H, span_warning("诺克秘仪当前已被禁用。"))
 		open_learn_ui(H)
 		return
 
@@ -1364,7 +1364,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 			for(var/obj/effect/proc_holder/spell/K in H.mind.spell_list)
 				if(K.type == typepath)
 					qdel(Snew)
-					to_chat(H, span_warning("You already know this one."))
+					to_chat(H, span_warning("你已经学会这个了。"))
 					open_learn_ui(H)
 					return
 
@@ -1407,20 +1407,20 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 
 		if(tier > max_allowed)
 			qdel(Snew)
-			to_chat(H, span_warning("You lack the relation level for this miracle."))
+			to_chat(H, span_warning("你与该主神的关系等级不足以学习这个神迹。"))
 			open_learn_ui(H)
 			return
 
 		var/cost5 = (real_owner == my_patron) ? CLERIC_PRICE_PATRON : CLERIC_PRICE_FOREIGN
 		if(H.miracle_points < cost5)
 			qdel(Snew)
-			to_chat(H, span_warning("Not enough Miracle Points."))
+			to_chat(H, span_warning("神迹点不足。"))
 			open_learn_ui(H)
 			return
 
 		H.miracle_points = max(0, H.miracle_points - cost5)
 		H.mind.AddSpell(Snew)
-		to_chat(H, span_notice("You have learned [Snew.name]."))
+		to_chat(H, span_notice("你学会了[Snew.name]。"))
 		open_learn_ui(H)
 		return
 
@@ -1481,7 +1481,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 		if(next >= 4)
 			_apply_t4_traits_for_patron(H, god)
 
-		to_chat(H, span_notice("Relations with [god] increased to [next]."))
+		to_chat(H, span_notice("你与[god]的关系提升至 [next]。"))
 		open_research_ui(H)
 		return
 
@@ -1492,7 +1492,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 			return
 		H.quest_ui_entries = _rt_build_player_quest_set(H)
 		H.quest_reroll_charges = max(0, H.quest_reroll_charges - 1)
-		to_chat(H, span_notice("Quests rerolled. Charges left: [H.quest_reroll_charges]."))
+		to_chat(H, span_notice("任务已重掷。剩余次数：[H.quest_reroll_charges]。"))
 		open_quests_ui(H)
 		return
 
@@ -1525,7 +1525,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 			accepted_diff = ""
 
 		if(length(accepted_diff) && accepted_diff != diff_key)
-			to_chat(H, span_warning("This quest is already locked to [uppertext(accepted_diff)]."))
+			to_chat(H, span_warning("该任务已经锁定在 [uppertext(accepted_diff)] 难度。"))
 			open_quests_ui(H)
 			return
 
@@ -1534,19 +1534,19 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 			open_quests_ui(H)
 			return
 		if(D["spawned"])
-			to_chat(H, span_warning("The quest item has already been granted."))
+			to_chat(H, span_warning("该任务物品已经发放过了。"))
 			open_quests_ui(H)
 			return
 
 		var/typepath_q = D["token_path"]
 		if(!typepath_q)
-			to_chat(H, span_warning("Token type not found."))
+			to_chat(H, span_warning("未找到信物类型。"))
 			open_quests_ui(H)
 			return
 
 		var/obj/item/quest_token/QI = new typepath_q(H)
 		if(!QI)
-			to_chat(H, span_warning("Failed to spawn the quest item."))
+			to_chat(H, span_warning("生成任务物品失败。"))
 			open_quests_ui(H)
 			return
 
@@ -1604,14 +1604,14 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 					FA.required_flaw_types = P["required_flaw_types"]
 
 		var/base_desc = "[D["desc"]]"
-		var/use_desc = " Single-use quest item."
+		var/use_desc = " 一次性任务物品。"
 
 		if(istype(QI, /obj/item/quest_token/coin_chest) || istype(QI, /obj/item/quest_token/donation_box) || istype(QI, /obj/item/quest_token/reliquary))
-			use_desc = " Self-completion item."
+			use_desc = " 可由自己完成的任务物品。"
 		else
-			use_desc = " Peaceful use gives Boon. Combat-mode use forces to accept and gives Scorn."
+			use_desc = " 和平使用给予赐福，战斗模式使用则强制接受并施加鄙斥。"
 
-		QI.desc = "[base_desc] Reward goes to the token owner ([QBASE.reward_amount] Favor).[use_desc]"
+		QI.desc = "[base_desc] 奖励归信物所有者所有（[QBASE.reward_amount] 点恩眷）。[use_desc]"
 
 		D["spawned"] = TRUE
 		diffs[diff_key] = D
@@ -1619,7 +1619,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 		slot["difficulties"] = diffs
 		H.quest_ui_entries[q_index] = slot
 
-		to_chat(H, span_notice("A special quest item has been granted: [QI.name]."))
+		to_chat(H, span_notice("已发放特殊任务物品：[QI.name]。"))
 		open_quests_ui(H)
 		return
 
@@ -1648,8 +1648,8 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 /// slop spells start here
 
 /obj/effect/proc_holder/spell/invoked/diagnose/greater
-	name = "Greater Diagnose"
-	desc = "A precise divine appraisal: shows reagents, blood level, organ status, and quantified damage."
+	name = "高等诊察"
+	desc = "精确的神圣检视：显示试剂、血量、器官状态与量化伤害。"
 	overlay_state = "diagnose"
 	releasedrain = 15
 	chargedrain = 0
@@ -1680,16 +1680,16 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 	if(hascall(H, "check_for_injuries"))
 		H.check_for_injuries(user)
 
-	to_chat(user, span_notice("--- Divine Diagnosis on [H] ---"))
+	to_chat(user, span_notice("--- 对[H]进行的神圣诊察 ---"))
 
 	if(H.reagents && H.reagents.reagent_list && H.reagents.reagent_list.len)
-		to_chat(user, span_info("Reagents detected:"))
+		to_chat(user, span_info("检测到试剂："))
 		for(var/datum/reagent/R as anything in H.reagents.reagent_list)
 			if(!R || R.volume <= 0)
 				continue
-			to_chat(user, "• [R.name]: [round(R.volume, 0.1)]u")
+			to_chat(user, "• [R.name]：[round(R.volume, 0.1)]u")
 	else
-		to_chat(user, span_notice("Reagents detected: none."))
+		to_chat(user, span_notice("未检测到试剂。"))
 
 	var/blood_amt = 0
 	if(isnum(H.blood_volume) && H.blood_volume > 0)
@@ -1697,25 +1697,25 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 	else if(H.reagents && hascall(H.reagents, "get_reagent_amount"))
 		blood_amt = H.reagents.get_reagent_amount(/datum/reagent/blood)
 
-	to_chat(user, span_info("Blood volume: [round(blood_amt, 0.1)]u"))
+	to_chat(user, span_info("血量：[round(blood_amt, 0.1)]u"))
 
 	var/tox = _dg_safe_num(H, list("toxloss"))
 	var/oxy = _dg_safe_num(H, list("oxyloss", "oxygen_loss"))
-	to_chat(user, span_info("Toxin damage: [tox]"))
-	to_chat(user, span_info("Oxygen damage: [oxy]"))
+	to_chat(user, span_info("毒素伤害：[tox]"))
+	to_chat(user, span_info("缺氧伤害：[oxy]"))
 
 	if(islist(H.bodyparts) && H.bodyparts.len)
-		to_chat(user, span_info("Bodyparts damage:"))
+		to_chat(user, span_info("身体部位伤害："))
 		for(var/obj/item/bodypart/B as anything in H.bodyparts)
 			var/br = _dg_safe_num(B, list("brute_dam", "brute_damage", "brute"))
 			var/bu = _dg_safe_num(B, list("burn_dam", "burn_damage", "burn"))
 			if(br > 0 || bu > 0)
-				to_chat(user, "• [B.name]: brute [br], burn [bu]")
+				to_chat(user, "• [B.name]：钝击 [br]，灼烧 [bu]")
 	else
-		to_chat(user, span_notice("No bodypart damage data available."))
+		to_chat(user, span_notice("无可用的身体部位伤害数据。"))
 
 	if(islist(H.internal_organs) && H.internal_organs.len)
-		to_chat(user, span_info("Internal organs:"))
+		to_chat(user, span_info("内脏器官："))
 		for(var/obj/item/organ/O as anything in H.internal_organs)
 			var/od = 0
 
@@ -1732,9 +1732,9 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 				var/buorg = _dg_safe_num(O, list("burn_dam", "burn_damage"))
 				od = base + brorg + buorg
 
-			to_chat(user, "• [O.name]: damage [od]")
+			to_chat(user, "• [O.name]：伤害 [od]")
 	else
-		to_chat(user, span_notice("No internal organ data available."))
+		to_chat(user, span_notice("无可用的内脏器官数据。"))
 
 	return TRUE
 

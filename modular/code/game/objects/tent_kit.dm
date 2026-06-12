@@ -11,8 +11,8 @@
 
 // === TENT KIT ITEM ===
 /obj/item/tent_kit
-    name = "small tent kit"
-    desc = "A compact kit containing everything needed to set up a weatherproof tent. The tent will be oriented based on the direction you're facing when assembling."
+    name = "小型帐篷套件"
+    desc = "一套紧凑的工具包，包含搭建防风雨帐篷所需的一切。搭建时帐篷会按你面朝的方向摆放。"
     icon = 'icons/roguetown/misc/structure.dmi'
     icon_state = "tent_kit"
     w_class = WEIGHT_CLASS_NORMAL
@@ -271,7 +271,7 @@
         available_walls.Cut(1, 2)
         wall.forceMove(upper_wall_turf)
         wall.dir = get_wall_dir(center_turf, upper_wall_turf)
-        wall.name = "tent roof wall"
+        wall.name = "帐篷顶壁"
         wall.invisibility = 0
         wall.alpha = 255
         RegisterSignal(wall, COMSIG_PARENT_QDELETING, PROC_REF(part_destroyed))
@@ -349,8 +349,8 @@
 // === TENT WALL ===
 /obj/structure/tent_wall
     parent_type = /obj/structure/tent_component // Inherits from base
-    name = "tent wall"
-    desc = "A sturdy fabric wall. Shift-click from the inside to pack the tent."
+    name = "帐篷壁"
+    desc = "一面结实的布制墙体。从帐篷内部按住 Shift 点击可将其收起。"
     icon = 'icons/turf/roguewall.dmi'
     icon_state = "tent"
     density = TRUE
@@ -375,8 +375,8 @@
 
 // === GER KIT ===
 /obj/item/tent_kit/ger
-    name = "ger kit"
-    desc = "A large circular tent kit bundled together. Very durable and often used by nomadic travellers of the steppes."
+    name = "格尔帐篷套件"
+    desc = "一套打包好的大型圆形帐篷。十分耐用，常被草原上的游牧旅人使用。"
     icon_state = "tent_kit"
     tent_width = 5
     tent_length = 5
@@ -389,8 +389,8 @@
 
 // === YURT KIT ===
 /obj/item/tent_kit/yurt
-    name = "yurt kit"
-    desc = "A very large circular tent kit bundled together. Spacious and durable, and often used by nomadic families of the steppes."
+    name = "尤尔特帐篷套件"
+    desc = "一套打包好的超大圆形帐篷。宽敞而耐用，常被草原上的游牧家庭使用。"
     icon_state = "tent_kit"
     tent_width = 7
     tent_length = 7
@@ -404,19 +404,19 @@
 
 // === CRAFTING ===
 /datum/crafting_recipe/roguetown/sewing/tentkit
-    name = "Small Tent Kit"
+    name = "小型帐篷套件"
     result = list(/obj/item/tent_kit)
     reqs = list(/obj/item/natural/cloth = 10, /obj/item/natural/fibers = 6, /obj/item/natural/silk = 6, /obj/item/grown/log/tree/stick = 10)
     craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/gerkit
-    name = "Ger Kit"
+    name = "格尔帐篷套件"
     result = list(/obj/item/tent_kit/ger)
     reqs = list(/obj/item/natural/cloth = 20, /obj/item/natural/fibers = 12, /obj/item/natural/silk = 12, /obj/item/grown/log/tree/stick = 20)
     craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/yurtkit
-    name = "Yurt Kit"
+    name = "尤尔特帐篷套件"
     result = list(/obj/item/tent_kit/yurt)
     reqs = list(/obj/item/natural/cloth = 30, /obj/item/natural/fibers = 18, /obj/item/natural/silk = 18, /obj/item/grown/log/tree/stick = 30)
     craftdiff = 5

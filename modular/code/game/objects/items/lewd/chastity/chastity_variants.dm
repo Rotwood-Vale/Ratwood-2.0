@@ -1,8 +1,8 @@
 // Concrete chastity item variants and subtype defaults.
 
 /obj/item/chastity/chastity_cage
-	name = "chastity cage"
-	desc = "A secure metal cage for keeping a cock from getting hard."
+	name = "贞操笼"
+	desc = "一只结实的金属笼，用来防止肉棒勃起。"
 	icon_state = "cage_standard"
 	item_state = "cage_standard"
 	mob_overlay_icon = "cage_standard"
@@ -12,16 +12,16 @@
 	suffix = null
 
 /obj/item/chastity/chastity_cage/anal
-	name = "chastity cage with anal shield"
-	desc = "A secure cage with a rear shield to deny anal access too."
+	name = "带肛门护盾的贞操笼"
+	desc = "一只牢固的贞操笼，后方还带有护盾，同样可阻止肛门接触。"
 	chastity_type = 2
 	icon_state = "cage_standard_shield"
 	item_state = "cage_standard_shield"
 	suffix = null
 
 /obj/item/chastity/chastity_cage/spiked
-	name = "spiked chastity cage"
-	desc = "A punitive cage lined with inward spikes."
+	name = "尖刺贞操笼"
+	desc = "一只内侧布满尖刺、带有惩戒意味的贞操笼。"
 	chastity_type = 3
 	icon_state = "cage_standard_spiked"
 	item_state = "cage_standard_spiked"
@@ -29,8 +29,8 @@
 	suffix = null
 
 /obj/item/chastity/chastity_cage/spiked_anal
-	name = "spiked chastity cage with anal shield"
-	desc = "A cruel spiked cage with rear denial shielding."
+	name = "带肛门护盾的尖刺贞操笼"
+	desc = "一只残酷的尖刺贞操笼，后方还配有封闭护盾。"
 	chastity_type = 4
 	icon_state = "cage_standard_spikeshield"
 	item_state = "cage_standard_spikeshield"
@@ -38,8 +38,8 @@
 	suffix = null
 
 /obj/item/chastity/chastity_cage/flat
-	name = "flat chastity cage"
-	desc = "A flattened cage profile that presses close against the body."
+	name = "扁平贞操笼"
+	desc = "一种扁平轮廓的贞操笼，能更紧地贴合身体。"
 	chastity_flat = TRUE
 	icon_state = "cage_flat"
 	item_state = "cage_flat"
@@ -47,32 +47,32 @@
 	suffix = null
 
 /obj/item/chastity/chastity_cage/flat/anal
-	name = "flat chastity cage with anal shield"
-	desc = "A flat-profile cage with rear denial shielding."
+	name = "带肛门护盾的扁平贞操笼"
+	desc = "一只扁平轮廓的贞操笼，并配有后方封闭护盾。"
 	chastity_type = 2
 	icon_state = "cage_flat_shield"
 	item_state = "cage_flat_shield"
 	suffix = null
 
 /obj/item/chastity/chastity_cage/flat/spiked
-	name = "spiked flat chastity cage"
-	desc = "A flat-profile cage with inward punishment spikes."
+	name = "尖刺扁平贞操笼"
+	desc = "一只扁平轮廓的贞操笼，内侧带有惩戒用尖刺。"
 	chastity_type = 3
 	icon_state = "cage_flat_spiked"
 	item_state = "cage_flat_spiked"
 	suffix = null
 
 /obj/item/chastity/chastity_cage/flat/spiked_anal
-	name = "spiked flat chastity cage with anal shield"
-	desc = "A flat, spiked cage with rear denial shielding."
+	name = "带肛门护盾的尖刺扁平贞操笼"
+	desc = "一只扁平的尖刺贞操笼，并带有后方封闭护盾。"
 	chastity_type = 4
 	icon_state = "cage_flat_spikeshield"
 	item_state = "cage_flat_spikeshield"
 	suffix = null
 
 /obj/item/chastity/chastity_belt
-	name = "chastity insertable"
-	desc = "A locked belt with an inward insertable shape for constant denial."
+	name = "内置贞操带"
+	desc = "一条带内置结构的上锁贞操带，用于持续性的拒绝与封闭。"
 	icon_state = "cage_insert"
 	item_state = "cage_insert"
 	mob_overlay_icon = "cage_insert"
@@ -82,8 +82,8 @@
 	suffix = null
 
 /obj/item/chastity/chastity_belt/anal
-	name = "chastity insertable with anal shield"
-	desc = "An insertable belt with additional rear shielding."
+	name = "带肛门护盾的内置贞操带"
+	desc = "一条带内置结构的贞操带，并额外配有后方护盾。"
 	chastity_type = 6
 	icon_state = "cage_insert_shield"
 	item_state = "cage_insert_shield"
@@ -91,8 +91,8 @@
 	suffix = null
 
 /obj/item/chastity/chastity_belt/spiked
-	name = "spiked chastity insertable"
-	desc = "An insertable belt fitted with cruel inward spikes."
+	name = "尖刺内置贞操带"
+	desc = "一条装有残酷内向尖刺的内置贞操带。"
 	chastity_type = 7
 	icon_state = "cage_insert_spiked"
 	item_state = "cage_insert_spiked"
@@ -100,8 +100,8 @@
 	suffix = null
 
 /obj/item/chastity/chastity_belt/spiked_anal
-	name = "spiked chastity insertable with anal shield"
-	desc = "A spiked insertable belt with rear denial shielding."
+	name = "带肛门护盾的尖刺内置贞操带"
+	desc = "一条带尖刺内置结构的贞操带，并配有后方封闭护盾。"
 	chastity_type = 8
 	icon_state = "cage_insert_spikeshield"
 	item_state = "cage_insert_spikeshield"
@@ -109,8 +109,8 @@
 	suffix = null
 
 /obj/item/chastity/intersex
-	name = "intersex chastity device"
-	desc = "A broad frame combining a cage and a shield in one locked device."
+	name = "双性贞操装置"
+	desc = "一种宽大的框架，将贞操笼与护盾结合为一体并统一上锁。"
 	icon_state = "cage_belt"
 	item_state = "cage_belt"
 	mob_overlay_icon = "cage_belt"
@@ -120,8 +120,8 @@
 	suffix = null
 
 /obj/item/chastity/intersex/spiked
-	name = "spiked intersex chastity device"
-	desc = "An intersex device fitted with inward punishment spikes."
+	name = "尖刺双性贞操装置"
+	desc = "一件装有内向惩戒尖刺的双性贞操装置。"
 	chastity_type = 9
 	icon_state = "cage_belt"
 	item_state = "cage_belt"
@@ -129,8 +129,8 @@
 	suffix = null
 
 /obj/item/chastity/cursed
-	name = "cursed chastity device"
-	desc = "A writhing, rune-etched chastity frame. It flexes like something alive."
+	name = "诅咒贞操装置"
+	desc = "一件刻满符文、仿佛在蠕动的贞操框架。它弯曲起伏得像是活物。"
 	icon_state = "cage_cursed"
 	item_state = "cage_cursed"
 	mob_overlay_icon = "cage_cursed"

@@ -19,82 +19,82 @@
 	fillsounds = list('sound/items/fillcup.ogg')
 
 /obj/item/reagent_containers/glass/bowl/decrepit
-	name = "decrepit bowl"
+	name = "残旧碗"
 	icon_state = "abowl"
 	sellprice = 15
 
 /obj/item/reagent_containers/glass/bowl/iron
-	name = "iron bowl"
+	name = "铁碗"
 	icon_state = "bowl_iron"
 	sellprice = 20
 
 /obj/item/reagent_containers/glass/bowl/gold
-	name = "gold bowl"
+	name = "金碗"
 	icon_state = "bowl_gold"
 	sellprice = 120
 
 /obj/item/reagent_containers/glass/bowl/silver
-	name = "silver bowl"
+	name = "银碗"
 	icon_state = "bowl_silver"
 	sellprice = 96
 	is_silver = TRUE
 
 /obj/item/reagent_containers/glass/bowl/carved
-	name = "carved bowl"
-	desc = "You shouldn't be seeing this."
+	name = "雕花碗"
+	desc = "你本不该看到这个。"
 	icon_state = "abowl"
 	sellprice = 0
 
 /obj/item/reagent_containers/glass/bowl/carved/jade
-	name = "jade bowl"
-	desc = "A bowl carved out of jade."
+	name = "玉碗"
+	desc = "一只用玉雕成的碗。"
 	icon_state = "bowl_jade"
 	sellprice = 55
 
 /obj/item/reagent_containers/glass/bowl/carved/onyxa
-	name = "onyxa bowl"
-	desc = "A bowl carved out of onyxa."
+	name = "缟玛瑙碗"
+	desc = "一只用缟玛瑙雕成的碗。"
 	icon_state = "bowl_onyxa"
 	sellprice = 35
 
 /obj/item/reagent_containers/glass/bowl/carved/rose
-	name = "rosestone bowl"
-	desc = "A bowl carved out of rosestone."
+	name = "玫瑰石碗"
+	desc = "一只用玫瑰石雕成的碗。"
 	icon_state = "bowl_rose"
 	sellprice = 20
 
 /obj/item/reagent_containers/glass/bowl/carved/amber
-	name = "amber bowl"
-	desc = "A bowl carved out of amber."
+	name = "琥珀碗"
+	desc = "一只用琥珀雕成的碗。"
 	icon_state = "bowl_amber"
 	sellprice = 55
 
 /obj/item/reagent_containers/glass/bowl/carved/turq
-	name = "cerulite bowl"
-	desc = "A bowl carved out of cerulite."
+	name = "蔚蓝石碗"
+	desc = "一只用蔚蓝石雕成的碗。"
 	icon_state = "bowl_turq"
 	sellprice = 80
 
 /obj/item/reagent_containers/glass/bowl/carved/shell
-	name = "shell bowl"
-	desc = "A bowl carved out of shell."
+	name = "贝壳碗"
+	desc = "一只用贝壳雕成的碗。"
 	icon_state = "bowl_shell"
 	sellprice = 15
 
 /obj/item/reagent_containers/glass/bowl/carved/coral
-	name = "heartstone bowl"
-	desc = "A bowl carved out of heartstone."
+	name = "心石碗"
+	desc = "一只用心石雕成的碗。"
 	icon_state = "bowl_coral"
 	sellprice = 65
 
 /obj/item/reagent_containers/glass/bowl/carved/opal
-	name = "opal bowl"
-	desc = "A bowl carved out of opal."
+	name = "蛋白石碗"
+	desc = "一只用蛋白石雕成的碗。"
 	icon_state = "bowl_opal"
 	sellprice = 85
 
 /obj/item/reagent_containers/glass/bowl/tin
-	name = "tin bowl"
+	name = "锡碗"
 	icon_state = "bowl_tin"
 	sellprice = 20
 
@@ -137,6 +137,6 @@
 		if(reagents.total_volume > 0)
 			if(do_after(user, 1 SECONDS, target = src))
 				playsound(src,'sound/misc/eat.ogg', rand(30,60), TRUE)
-				visible_message(span_info("[user] eats from [src]."))
+				visible_message(span_info("[user]从[src]中取食。"))
 				addtimer(CALLBACK(reagents, TYPE_PROC_REF(/datum/reagents, trans_to), user, min(amount_per_transfer_from_this,5), TRUE, TRUE, FALSE, user, FALSE, INGEST), 5)
 		return TRUE
