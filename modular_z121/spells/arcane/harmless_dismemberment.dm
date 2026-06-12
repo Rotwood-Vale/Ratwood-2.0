@@ -6,6 +6,7 @@
 /mob/living/carbon/human
 	var/obj/item/bodypart/head/harmless_live_head_source
 	var/obj/effect/proc_holder/spell/self/harmless_dismemberment_select/harmless_dismemberment_selector_spell
+	var/mob/living/carbon/human/harmless_dismemberment_locked_target
 
 /mob/living/carbon/human/proc/get_harmless_live_head_source()
 	if(QDELETED(harmless_live_head_source))
@@ -18,6 +19,28 @@
 		harmless_live_head_source = null
 		return null
 	return harmless_live_head_source
+
+/mob/living/carbon/human/proc/get_harmless_dismemberment_locked_target()
+	if(QDELETED(harmless_dismemberment_locked_target))
+		harmless_dismemberment_locked_target = null
+		return null
+	if(!harmless_dismemberment_locked_target)
+		return null
+	var/datum/status_effect/buff/harmless_dismemberment/effect = harmless_dismemberment_locked_target.has_status_effect(/datum/status_effect/buff/harmless_dismemberment)
+	if(!effect || effect.controller != src || effect.controller_mind != mind)
+		harmless_dismemberment_locked_target = null
+		return null
+	return harmless_dismemberment_locked_target
+
+/mob/living/carbon/human/proc/set_harmless_dismemberment_locked_target(mob/living/carbon/human/target)
+	if(!istype(target))
+		return
+	harmless_dismemberment_locked_target = target
+
+/mob/living/carbon/human/proc/clear_harmless_dismemberment_locked_target(mob/living/carbon/human/target)
+	if(target && harmless_dismemberment_locked_target != target)
+		return
+	harmless_dismemberment_locked_target = null
 
 /mob/living/carbon/human/GetSource()
 	var/obj/item/bodypart/head/live_head = get_harmless_live_head_source()
@@ -33,13 +56,214 @@
 
 /mob/living/carbon/human/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language = null, message_mode, original_message)
 	var/obj/item/bodypart/head/live_head = get_harmless_live_head_source()
-	if(live_head)
-		source = live_head
-	return ..()
+	if(!live_head)
+		return ..()
+	. = send_harmless_live_head_speech(message, message_range, live_head, bubble_type, spans, message_language, message_mode, original_message)
+	if(message_mode != MODE_WHISPER)
+		send_live_head_voice(message, live_head)
+
+/mob/living/carbon/human/proc/send_harmless_live_head_speech(message, message_range = 6, obj/item/bodypart/head/live_head, bubble_type = bubble_icon, list/spans, datum/language/message_language = null, message_mode, original_message)
+	var/static/list/eavesdropping_modes = list(MODE_WHISPER = TRUE, MODE_WHISPER_CRIT = TRUE)
+	var/atom/movable/speaker_atom = live_head
+	var/eavesdrop_range = 0
+	var/Zs_too = FALSE
+	var/Zs_all = FALSE
+	var/Zs_yell = FALSE
+	var/listener_has_ceiling = TRUE
+	var/speaker_has_ceiling = TRUE
+	var/turf/speaker_turf = get_turf(speaker_atom)
+	var/turf/speaker_ceiling = get_step_multiz(speaker_turf, UP)
+	var/line_of_sight_only = FALSE
+
+	if(speaker_ceiling)
+		if(istransparentturf(speaker_ceiling))
+			speaker_has_ceiling = FALSE
+	if(eavesdropping_modes[message_mode])
+		eavesdrop_range = EAVESDROP_EXTRA_RANGE
+
+	if(message_mode != MODE_WHISPER)
+		Zs_too = TRUE
+		if(say_test(message) == "2")
+			message_range += 10
+			Zs_yell = TRUE
+		if(say_test(message) == "3")
+			Zs_all = TRUE
+
+	var/area/speaker_area = get_area(speaker_atom)
+	if(speaker_area && speaker_area.soundproof == TRUE)
+		line_of_sight_only = TRUE
+		Zs_too = FALSE
+		Zs_yell = FALSE
+		Zs_all = FALSE
+
+	if(has_status_effect(/datum/status_effect/thaumaturgy))
+		spans |= SPAN_REALLYBIG
+		var/datum/status_effect/thaumaturgy/buff = locate() in status_effects
+		message_range += (5 + buff.potency)
+		for(var/obj/structure/roguemachine/scomm/S in SSroguemachine.scomm_machines)
+			if(prob(buff.potency * 3) && S.speaking)
+				S.verb_say = "shrieks in terror"
+				S.verb_exclaim = "shrieks in terror"
+				S.verb_yell = "shrieks in terror"
+				S.say(message, spans = list("info", "reallybig"))
+				S.verb_say = initial(S.verb_say)
+				S.verb_exclaim = initial(S.verb_exclaim)
+				S.verb_yell = initial(S.verb_yell)
+		remove_status_effect(/datum/status_effect/thaumaturgy)
+
+	var/list/listening = get_hearers_in_view(message_range + eavesdrop_range, speaker_atom)
+	listening |= src
+	var/list/the_dead = list()
+	var/list/hidden_ghosts = null
+	for(var/_M in GLOB.player_list)
+		var/mob/M = _M
+
+		if(line_of_sight_only && !isobserver(M))
+			continue
+
+		var/atom/movable/tocheck = M
+		if(isdullahan(M))
+			var/mob/living/carbon/human/target = M
+			var/datum/species/dullahan/target_species = target.dna.species
+			tocheck = target_species.headless ? target_species.my_head : M
+		if(!client)
+			continue
+		if(!M)
+			continue
+		if(!M.client)
+			continue
+		if(get_dist(tocheck, speaker_atom) > message_range)
+			if(M.client.prefs)
+				if(eavesdropping_modes[message_mode] && !(M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER))
+					continue
+				if(!(M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
+					continue
+		if(!is_in_zweb(speaker_atom.z, tocheck.z))
+			continue
+		listening |= M
+		the_dead[M] = TRUE
+	if(has_ghost_protection(src))
+		hidden_ghosts = get_hidden_ghosts_for_target(src)
+		for(var/mob/dead/observer/ghost in hidden_ghosts)
+			if(ghost in listening)
+				listening -= ghost
+				the_dead -= ghost
+	log_seen(src, null, listening, original_message, SEEN_LOG_SAY)
+
+	var/eavesdropping
+	var/eavesrendered
+	if(eavesdrop_range)
+		eavesdropping = stars(message)
+		eavesrendered = compose_message(speaker_atom, message_language, eavesdropping, , spans, message_mode)
+
+	var/rendered = compose_message(speaker_atom, message_language, message, , spans, message_mode)
+	for(var/_AM in listening)
+		var/hearall = FALSE
+		var/atom/movable/AM = _AM
+		var/turf/listener_turf = get_turf(AM)
+		var/turf/listener_ceiling = get_step_multiz(listener_turf, UP)
+		if(istype(_AM, /obj/item/listeningdevice))
+			hearall = TRUE
+
+		if(listener_ceiling)
+			listener_has_ceiling = TRUE
+			if(istransparentturf(listener_ceiling))
+				listener_has_ceiling = FALSE
+		if(!hearall)
+			if((!Zs_too && !isobserver(AM)) || message_mode == MODE_WHISPER)
+				if(AM.z != speaker_atom.z)
+					continue
+		if(Zs_too && listener_turf.z != speaker_turf.z && !Zs_all)
+			if(!Zs_yell && !HAS_TRAIT(AM, TRAIT_KEENEARS) && !hearall)
+				if(listener_turf.z < speaker_turf.z && listener_has_ceiling)
+					continue
+				if(listener_turf.z > speaker_turf.z && speaker_has_ceiling)
+					continue
+				if(listener_has_ceiling && speaker_has_ceiling)
+					continue
+			else
+				if(abs(listener_turf.z - speaker_turf.z) >= 2)
+					continue
+			var/listener_obstructed = TRUE
+			var/speaker_obstructed = TRUE
+			if(speaker_atom != AM && !Zs_yell && !HAS_TRAIT(AM, TRAIT_KEENEARS) && !hearall)
+				if(!speaker_has_ceiling && isliving(AM))
+					var/mob/living/M = AM
+					for(var/mob/living/MH in viewers(world.view, speaker_ceiling))
+						if(M == MH && MH.z == speaker_ceiling?.z)
+							speaker_obstructed = FALSE
+
+				if(!listener_has_ceiling)
+					for(var/mob/living/ML in viewers(world.view, listener_ceiling))
+						if(ML == speaker_atom && ML.z == listener_ceiling?.z)
+							listener_obstructed = FALSE
+				if(listener_obstructed && speaker_obstructed)
+					continue
+		var/highlighted_message
+		var/keenears
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			keenears = HAS_TRAIT(H, TRAIT_KEENEARS)
+			var/name_to_highlight = H.nickname
+			if(name_to_highlight && name_to_highlight != "" && name_to_highlight != "Please Change Me")
+				highlighted_message = replacetext_char(message, name_to_highlight, "<b><font color = #[H.highlight_color]>[name_to_highlight]</font></b>")
+		var/atom/movable/tocheck = AM
+		if(isdullahan(AM))
+			var/mob/living/carbon/human/target = AM
+			var/datum/species/dullahan/target_species = target.dna.species
+			tocheck = target_species.headless ? target_species.my_head : AM
+		if(eavesdrop_range && get_dist(speaker_atom, tocheck) > message_range + keenears && !(the_dead[AM]))
+			AM.Hear(eavesrendered, speaker_atom, message_language, eavesdropping, , spans, message_mode, original_message)
+		else if(highlighted_message)
+			AM.Hear(rendered, speaker_atom, message_language, highlighted_message, , spans, message_mode, original_message)
+		else
+			AM.Hear(rendered, speaker_atom, message_language, message, , spans, message_mode, original_message)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
+
+	var/list/speech_bubble_recipients = list()
+	for(var/mob/M in listening)
+		if(M.client?.prefs)
+			if(M.client && !M.client.prefs.chat_on_map)
+				speech_bubble_recipients.Add(M.client)
+	var/image/I = image('icons/mob/talk.dmi', speaker_atom, "[bubble_type][say_test(message)]", FLY_LAYER)
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay), I, speech_bubble_recipients, 30)
+
+	speaker_atom.vocal_bark = vocal_bark
+	speaker_atom.vocal_bark_id = vocal_bark_id
+	speaker_atom.vocal_pitch = vocal_pitch
+	speaker_atom.vocal_pitch_range = vocal_pitch_range
+	speaker_atom.vocal_volume = vocal_volume
+	speaker_atom.vocal_speed = vocal_speed
+	if(SEND_SIGNAL(speaker_atom, COMSIG_MOVABLE_QUEUE_BARK, listening, args) || speaker_atom.vocal_bark || speaker_atom.vocal_bark_id)
+		for(var/mob/M in listening)
+			if(!M.client)
+				continue
+			if(!(M.client.prefs.hear_barks))
+				listening -= M
+		var/is_yell = Zs_yell || Zs_all
+		var/barks = min(round((LAZYLEN(message) / speaker_atom.vocal_speed)) + 1, BARK_MAX_BARKS)
+		var/total_delay = 0
+		speaker_atom.vocal_current_bark = world.time
+		for(var/i in 1 to barks)
+			if(total_delay > BARK_MAX_TIME)
+				break
+			addtimer(CALLBACK(speaker_atom, TYPE_PROC_REF(/atom/movable, bark), listening, message_range, (speaker_atom.vocal_volume * (is_yell ? 1.5 : 1)), BARK_DO_VARY(speaker_atom.vocal_pitch, speaker_atom.vocal_pitch_range), speaker_atom.vocal_current_bark), total_delay)
+			total_delay += rand(DS2TICKS(speaker_atom.vocal_speed / BARK_SPEED_BASELINE), DS2TICKS(speaker_atom.vocal_speed / BARK_SPEED_BASELINE) + DS2TICKS((speaker_atom.vocal_speed / BARK_SPEED_BASELINE) * (is_yell ? 0.5 : 1))) TICKS
+
+/mob/living/carbon/human/proc/send_live_head_voice(message, obj/item/bodypart/head/live_head)
+	if(!message || !length(message) || !istype(live_head))
+		return
+	playsound(get_turf(live_head), 'sound/misc/talk.ogg', 100, FALSE, -1)
 
 /obj/item/bodypart/head
 	var/harmless_live_head = FALSE
 	var/mob/living/carbon/human/harmless_live_owner
+
+/obj/item/bodypart/head/GetVoice()
+	if(harmless_live_head && harmless_live_owner)
+		return "[harmless_live_owner.real_name]的头颅"
+	return ..()
 
 /obj/item/bodypart/head/examine(mob/user)
 	. = ..()
@@ -131,19 +355,22 @@
 /datum/status_effect/buff/harmless_dismemberment
 	id = "harmless_dismemberment"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/harmless_dismemberment
-	duration = 1 MINUTES
+	duration = 2 MINUTES
 	tick_interval = 1 SECONDS
 	status_type = STATUS_EFFECT_REFRESH
 	var/list/monitored_bodyparts = list()
 	var/list/reattach_candidate_since = list()
 	var/list/reattach_glow_announced = list()
 	var/mob/living/carbon/human/controller
+	var/mob/living/controller_body
 	var/datum/mind/controller_mind
 	var/obj/effect/proc_holder/spell/self/harmless_dismemberment_select/selector_spell
 
 /datum/status_effect/buff/harmless_dismemberment/on_creation(mob/living/new_owner, new_duration = null, mob/living/new_controller = null)
 	if(new_duration)
 		duration = new_duration
+	if(isliving(new_controller))
+		controller_body = new_controller
 	if(ishuman(new_controller))
 		controller = new_controller
 		controller_mind = new_controller.mind
@@ -157,7 +384,12 @@
 	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, id)
 	ADD_TRAIT(owner, TRAIT_NOBREATH, id)
 	refresh_monitored_bodyparts()
-	ensure_selector_spell()
+	if(controller_body)
+		update_controller_transfer_signal(null, controller_body)
+	if(controller)
+		set_controller(controller)
+	else
+		ensure_selector_spell()
 	to_chat(owner, span_notice("一道潮湿而温柔得令人不安的魔力覆上了我的身体。现在，只要切口平整迅速，我的血肉便会像本就该分开那样安静裂离。"))
 	return TRUE
 
@@ -166,6 +398,7 @@
 	unregister_monitored_bodyparts()
 	reattach_candidate_since = list()
 	reattach_glow_announced = list()
+	controller?.clear_harmless_dismemberment_locked_target(owner)
 	remove_selector_spell()
 	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, id)
 	REMOVE_TRAIT(owner, TRAIT_NOBREATH, id)
@@ -207,12 +440,42 @@
 		ensure_selector_spell()
 
 /datum/status_effect/buff/harmless_dismemberment/proc/set_controller(mob/living/carbon/human/new_controller)
-	if(controller == new_controller && controller_mind == new_controller?.mind)
+	var/mob/living/old_controller_body = controller_body
+	if(controller == new_controller && controller_body == new_controller && controller_mind == new_controller?.mind)
+		update_controller_transfer_signal(old_controller_body, new_controller)
+		controller?.set_harmless_dismemberment_locked_target(owner)
 		ensure_selector_spell()
 		return
-	remove_selector_spell()
+	controller?.clear_harmless_dismemberment_locked_target(owner)
+	clear_selector_spell()
 	controller = new_controller
+	controller_body = new_controller
 	controller_mind = new_controller?.mind
+	update_controller_transfer_signal(old_controller_body, new_controller)
+	controller?.set_harmless_dismemberment_locked_target(owner)
+	ensure_selector_spell()
+
+/datum/status_effect/buff/harmless_dismemberment/proc/update_controller_transfer_signal(mob/living/old_controller_body, mob/living/new_controller_body)
+	if(old_controller_body)
+		UnregisterSignal(old_controller_body, COMSIG_MIND_TRANSFER)
+	if(new_controller_body)
+		RegisterSignal(new_controller_body, COMSIG_MIND_TRANSFER, PROC_REF(handle_controller_mind_transfer))
+
+/datum/status_effect/buff/harmless_dismemberment/proc/handle_controller_mind_transfer(mob/living/old_controller, mob/living/new_controller)
+	SIGNAL_HANDLER
+	if(controller_body != old_controller)
+		return
+	var/mob/living/old_controller_body = controller_body
+	controller?.clear_harmless_dismemberment_locked_target(owner)
+	clear_selector_spell()
+	controller_body = new_controller
+	controller_mind = new_controller?.mind || controller_mind
+	update_controller_transfer_signal(old_controller_body, new_controller)
+	if(!ishuman(new_controller))
+		controller = null
+		return
+	controller = new_controller
+	controller.set_harmless_dismemberment_locked_target(owner)
 	ensure_selector_spell()
 
 /datum/status_effect/buff/harmless_dismemberment/proc/can_be_manipulated_by(mob/living/user)
@@ -236,16 +499,19 @@
 	selector_spell.linked_target = owner
 	selector_spell.linked_effect = src
 
-/datum/status_effect/buff/harmless_dismemberment/proc/remove_selector_spell()
+/datum/status_effect/buff/harmless_dismemberment/proc/clear_selector_spell()
 	if(controller?.harmless_dismemberment_selector_spell == selector_spell)
 		controller.harmless_dismemberment_selector_spell = null
 	if(selector_spell)
-		if(controller_mind)
-			controller_mind.RemoveSpell(selector_spell)
-		else
-			qdel(selector_spell)
+		selector_spell.remove_from_specific_holder(controller_mind)
 	selector_spell = null
+
+/datum/status_effect/buff/harmless_dismemberment/proc/remove_selector_spell()
+	if(controller_body)
+		update_controller_transfer_signal(controller_body, null)
+	clear_selector_spell()
 	controller = null
+	controller_body = null
 	controller_mind = null
 
 /datum/status_effect/buff/harmless_dismemberment/proc/refresh_monitored_bodyparts()
@@ -385,7 +651,7 @@
 	chargetime = 0
 	recharge_time = 1 SECONDS
 	cooldown_min = 1 SECONDS
-	range = 1
+	range = 3
 	associated_skill = /datum/skill/magic/arcane
 	miracle = FALSE
 	gesture_required = FALSE
@@ -402,11 +668,12 @@
 	return ..()
 
 /obj/effect/proc_holder/spell/self/harmless_dismemberment_select/proc/remove_from_holder(mob/living/user)
-	var/datum/mind/M = user?.mind
-	if(M)
-		M.RemoveSpell(src)
-	else
-		qdel(src)
+	remove_from_specific_holder(user?.mind)
+
+/obj/effect/proc_holder/spell/self/harmless_dismemberment_select/proc/remove_from_specific_holder(datum/mind/M)
+	if(M?.spell_list && (src in M.spell_list))
+		M.spell_list -= src
+	qdel(src)
 
 /obj/effect/proc_holder/spell/self/harmless_dismemberment_select/cast(list/targets, mob/living/user = usr)
 	if(!ishuman(user))
@@ -516,15 +783,17 @@
 	to_chat(user, span_notice("我指定了 [target] 的[chosen.name] 脱落。"))
 
 /obj/effect/proc_holder/spell/invoked/harmless_dismemberment
+	parent_type = /obj/effect/proc_holder/spell/self
 	name = "无害肢解"
-	desc = "让一名自愿目标在一分钟内变成一具可被平整拆开的活体圣匣。肢体与头颅会在无痛、无血、无死的温柔里分离，并在靠近断口时自行归位；待时限耗尽，仍未归位之物便不再回来。"
+	desc = "用 30 秒的诡异引导挑选 3 格内一名自愿者，让其在两分钟里化作一具可被平整拆开的活体圣匣。肢体与头颅会在无痛、无血、无死的温柔里分离，并在靠近断口时自行归位；待时限耗尽，仍未归位之物便不再回来。"
 	action_icon_state = "bloodcrawl"
 	cost = 8
 	xp_gain = TRUE
 	releasedrain = 40
 	chargedrain = 1
-	chargetime = 1 MINUTES
-	recharge_time = 10 MINUTES
+	chargetime = 0
+	recharge_time = 5 MINUTES
+	cooldown_min = 5 MINUTES
 	human_req = TRUE
 	warnie = "spellwarning"
 	school = "transmutation"
@@ -539,65 +808,124 @@
 	charging_slowdown = 4
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
-	range = 1
+	range = 3
 	miracle = FALSE
 	gesture_required = TRUE
 
+/obj/effect/proc_holder/spell/invoked/harmless_dismemberment/proc/get_selectable_spell_targets(mob/living/carbon/human/user)
+	var/list/possible_targets = list()
+	if(!istype(user))
+		return possible_targets
+	var/mob/living/carbon/human/locked_target = user.get_harmless_dismemberment_locked_target()
+	if(locked_target)
+		if(locked_target in range(range, user))
+			possible_targets += locked_target
+		return possible_targets
+	for(var/mob/living/carbon/human/possible_target in range(range, user))
+		if(QDELETED(possible_target))
+			continue
+		if(possible_target != user && !possible_target.client)
+			continue
+		possible_targets += possible_target
+	return possible_targets
+
+/obj/effect/proc_holder/spell/invoked/harmless_dismemberment/proc/choose_spell_target(mob/living/carbon/human/user)
+	if(!istype(user))
+		return null
+	var/list/possible_targets = get_selectable_spell_targets(user)
+	if(!length(possible_targets))
+		return null
+	return input(user, "选择 3 格范围内要施加“无害肢解”的对象。", "无害肢解") as null|mob in sortNames(possible_targets)
+
 /obj/effect/proc_holder/spell/invoked/harmless_dismemberment/cast(list/targets, mob/living/user = usr)
-	var/atom/target_atom = targets[1]
-	if(!ishuman(target_atom))
-		to_chat(user, span_warning("无害肢解只能对近在咫尺的人施展。"))
-		revert_cast()
+	if(!ishuman(user))
+		revert_cast(user)
 		return FALSE
 
-	var/mob/living/carbon/human/spelltarget = target_atom
+	var/mob/living/carbon/human/human_user = user
+	var/mob/living/carbon/human/locked_target = human_user.get_harmless_dismemberment_locked_target()
+	var/list/possible_targets = get_selectable_spell_targets(human_user)
+	if(!length(possible_targets))
+		if(locked_target)
+			to_chat(human_user, span_warning("无害肢解仍缝在 [locked_target] 身上。在那层法术散去前，我不能把它转交给别人。"))
+		else
+			to_chat(human_user, span_warning("我周围 3 格内没有可接受无害肢解的对象。"))
+		revert_cast(human_user)
+		return FALSE
+
+	human_user.visible_message(
+		span_notice("[human_user] 将手轻轻按在自己的喉颈与腕骨之间，像在替一具尚未拆开的肉身丈量缝线。"),
+		span_notice("我开始维持那道漫长而古怪的拆解咒，引导即将降临的温柔断离。")
+	)
+	if(!do_after(human_user, 30 SECONDS, target = human_user, progress = TRUE))
+		to_chat(human_user, span_warning("我的拆解咒在成形前散掉了。"))
+		revert_cast(human_user)
+		return FALSE
+
+	if(QDELETED(src) || QDELETED(human_user))
+		revert_cast(human_user)
+		return FALSE
+
+	var/mob/living/carbon/human/spelltarget = choose_spell_target(human_user)
+	if(QDELETED(src) || QDELETED(human_user))
+		revert_cast(human_user)
+		return FALSE
+	if(!ishuman(spelltarget))
+		to_chat(human_user, span_notice("我让那道缝在空气里的温柔恶意暂时停了下来。"))
+		revert_cast(human_user)
+		return FALSE
+	if(!(spelltarget in get_selectable_spell_targets(human_user)))
+		to_chat(human_user, span_warning("[spelltarget] 已经不在我能触及的断离范围内了。"))
+		revert_cast(human_user)
+		return FALSE
+
 	if(spelltarget.anti_magic_check())
 		spelltarget.visible_message(span_warning("[spelltarget] 周身泛起一阵反魔法涟漪，将那道缝在血肉间的怪异温柔尽数震散！"))
-		to_chat(user, span_warning("[spelltarget] 身上的反魔法抵消了无害肢解。"))
+		to_chat(human_user, span_warning("[spelltarget] 身上的反魔法抵消了无害肢解。"))
 		playsound(get_turf(spelltarget), 'sound/magic/magic_nulled.ogg', 100)
-		revert_cast()
+		revert_cast(human_user)
 		return FALSE
 
-	if(spelltarget != user)
+	if(spelltarget != human_user)
 		if(spelltarget.stat != CONSCIOUS || !spelltarget.client)
-			to_chat(user, span_warning("只有清醒且能够亲自同意的人，才能接受这道法术。"))
-			revert_cast()
+			to_chat(human_user, span_warning("只有清醒且能够亲自同意的人，才能接受这道法术。"))
+			revert_cast(human_user)
 			return FALSE
 
-		var/consent = alert(spelltarget, "[user] 想对你施放“无害肢解”。接下来的一分钟里，你的肢体与头颅会在不流血、不呼痛、不立刻死去的情况下被平整分离，并在靠近断口时自行归位。若时限结束仍未归位，分离便会成为永久。要接受吗？", "无害肢解", "同意", "拒绝")
-		if(QDELETED(src) || QDELETED(user) || QDELETED(spelltarget) || get_dist(user, spelltarget) > range)
-			revert_cast()
+		var/consent = alert(spelltarget, "[human_user] 想对你施放“无害肢解”。接下来的两分钟里，你的肢体与头颅会在不流血、不呼痛、不立刻死去的情况下被平整分离，并在靠近断口时自行归位。若时限结束仍未归位，分离便会成为永久。要接受吗？", "无害肢解", "同意", "拒绝")
+		if(QDELETED(src) || QDELETED(human_user) || QDELETED(spelltarget) || get_dist(human_user, spelltarget) > range)
+			revert_cast(human_user)
 			return FALSE
 		if(consent != "同意")
-			to_chat(user, span_warning("[spelltarget] 拒绝接受无害肢解。"))
-			to_chat(spelltarget, span_notice("我拒绝了 [user] 的无害肢解。"))
-			revert_cast()
+			to_chat(human_user, span_warning("[spelltarget] 拒绝接受无害肢解。"))
+			to_chat(spelltarget, span_notice("我拒绝了 [human_user] 的无害肢解。"))
+			revert_cast(human_user)
 			return FALSE
 
 	var/already_enchanted = spelltarget.has_status_effect(/datum/status_effect/buff/harmless_dismemberment)
-	spelltarget.apply_status_effect(/datum/status_effect/buff/harmless_dismemberment, 1 MINUTES, user)
+	spelltarget.apply_status_effect(/datum/status_effect/buff/harmless_dismemberment, 2 MINUTES, human_user)
 	var/datum/status_effect/buff/harmless_dismemberment/effect = spelltarget.has_status_effect(/datum/status_effect/buff/harmless_dismemberment)
-	effect?.set_controller(user)
+	effect?.set_controller(human_user)
 	playsound(get_turf(spelltarget), 'sound/magic/haste.ogg', 70, TRUE, soundping = TRUE)
 
-	if(spelltarget == user)
+	if(spelltarget == human_user)
 		if(already_enchanted)
-			user.visible_message(span_notice("[user] 再度抚过自己的四肢与颈项，让那道缝在血肉里的古怪魔法重新流转起来。"))
-			to_chat(user, span_notice("我重新续上了自己身上的无害肢解。"))
+			human_user.visible_message(span_notice("[human_user] 再度抚过自己的四肢与颈项，让那道缝在血肉里的古怪魔法重新流转起来。"))
+			to_chat(human_user, span_notice("我重新续上了自己身上的无害肢解。"))
 		else
-			user.visible_message(span_notice("[user] 以魔力轻抚自己的四肢与颈项，肉身随之浮现出一层柔和却令人不安的缝合辉光。"))
-			to_chat(user, span_notice("我的血肉被这道法术轻轻托住了。接下来的一分钟里，即便分离，它们也不会立刻把我弃下。"))
+			human_user.visible_message(span_notice("[human_user] 以魔力轻抚自己的四肢与颈项，肉身随之浮现出一层柔和却令人不安的缝合辉光。"))
+			to_chat(human_user, span_notice("我的血肉被这道法术轻轻托住了。接下来的两分钟里，即便分离，它们也不会立刻把我弃下。"))
 	else
 		if(already_enchanted)
-			user.visible_message(span_notice("[user] 重新续接了 [spelltarget] 身上的无害肢解。"))
-			to_chat(user, span_notice("我重新续上了 [spelltarget] 身上的无害肢解。"))
+			human_user.visible_message(span_notice("[human_user] 重新续接了 [spelltarget] 身上的无害肢解。"))
+			to_chat(human_user, span_notice("我重新续上了 [spelltarget] 身上的无害肢解。"))
 			to_chat(spelltarget, span_notice("那道维系我断口的古怪柔力重新充盈了起来。"))
 		else
-			user.visible_message(span_notice("[user] 贴近 [spelltarget]，以低缓咒语将一层柔和而诡异的魔力缝进了 [spelltarget.p_their()] 血肉。"))
-			to_chat(user, span_notice("我把无害肢解缝进了 [spelltarget] 的血肉里。接下来的一分钟里，[spelltarget.p_their()] 的身体会像一件还能活着的器皿那样被拆开。"))
-			to_chat(spelltarget, span_notice("[user] 的魔法轻柔地覆上了我的身体。接下来的一分钟里，只要切口平整迅速，我的肢体与头颅就能在不死不伤的古怪温柔中分离，并在归位时重新接回。"))
-			to_chat(user, span_notice("在法术维持期间，我还可以继续点按“指定脱落”来反复选择新的部位。"))
+			human_user.visible_message(span_notice("[human_user] 贴近 [spelltarget]，以低缓咒语将一层柔和而诡异的魔力缝进了 [spelltarget.p_their()] 血肉。"))
+			to_chat(human_user, span_notice("我把无害肢解缝进了 [spelltarget] 的血肉里。接下来的两分钟里，[spelltarget.p_their()] 的身体会像一件还能活着的器皿那样被拆开。"))
+			to_chat(spelltarget, span_notice("[human_user] 的魔法轻柔地覆上了我的身体。接下来的两分钟里，只要切口平整迅速，我的肢体与头颅就能在不死不伤的古怪温柔中分离，并在归位时重新接回。"))
+			to_chat(human_user, span_notice("在法术维持期间，我还可以继续点按“指定脱落”来反复选择新的部位。"))
 
-	prompt_initial_separation(user, spelltarget)
+	prompt_initial_separation(human_user, spelltarget)
 
 	return TRUE

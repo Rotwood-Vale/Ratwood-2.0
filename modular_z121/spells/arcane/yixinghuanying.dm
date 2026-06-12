@@ -44,6 +44,11 @@
 		revert_cast()
 		return FALSE
 
+	if(user.buckled)
+		user.buckled.unbuckle_mob(user, TRUE)
+	if(target.buckled)
+		target.buckled.unbuckle_mob(target, TRUE)
+
 	playsound(target_turf, 'sound/magic/swap.ogg', 100, TRUE)
 	user.forceMove(target_turf)
 	target.forceMove(user_turf)

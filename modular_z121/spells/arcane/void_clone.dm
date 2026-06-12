@@ -39,8 +39,12 @@
 		return
 	next_check = world.time + VOID_CLONE_CHECK_INTERVAL
 
+	if(QDELETED(original_body) || !original_body)
+		finalize_clone_body("我与留在原地的本体失去了最后联系，虚空分身被迫成了我唯一可立足的躯壳。")
+		return
+
 	if(QDELETED(clone_body) || !clone_body)
-		cleanup_clone(FALSE)
+		cleanup_clone(TRUE)
 		return
 
 	if((clone_body.stat == DEAD) || (clone_body.health <= HEALTH_THRESHOLD_DEAD) || should_force_collapse())
@@ -48,6 +52,31 @@
 		return
 
 	sync_current_body_spell_access()
+
+/datum/void_clone_link/proc/restore_primary_spell_access(mob/living/body)
+	var/datum/mind/M = get_linked_mind()
+	if(!M || !body)
+		return
+
+	var/obj/effect/proc_holder/spell/clone_spell = M.get_spell(/obj/effect/proc_holder/spell/self/void_clone, TRUE)
+	if(clone_spell?.action && clone_spell.action.owner != body)
+		clone_spell.action.Grant(body)
+
+	var/obj/effect/proc_holder/spell/learn_spell = M.get_spell(/obj/effect/proc_holder/spell/self/learnspell)
+	if(learn_spell?.action && learn_spell.action.owner != body)
+		learn_spell.action.Grant(body)
+
+/datum/void_clone_link/proc/finalize_clone_body(message)
+	if(cleanup_started)
+		return
+	cleanup_started = TRUE
+
+	var/mob/living/carbon/human/old_clone = clone_body
+	restore_primary_spell_access(old_clone)
+	remove_switch_spell()
+	if(old_clone && !QDELETED(old_clone) && message)
+		to_chat(old_clone, span_warning("[message]"))
+	qdel(src)
 
 /datum/void_clone_link/proc/should_force_collapse()
 	if(!clone_body || QDELETED(clone_body))
@@ -277,12 +306,12 @@
 	if(!origin)
 		return null
 	var/turf/front = get_step(user, user.dir)
-	if(isturf(front) && !front.density)
+	if(isturf(front) && !front.is_blocked_turf())
 		return front
 	for(var/turf/T in orange(1, origin))
-		if(!T.density)
+		if(!T.is_blocked_turf())
 			return T
-	return origin
+	return null
 
 /obj/effect/proc_holder/spell/self/void_clone/proc/copy_stable_traits(mob/living/carbon/human/source, mob/living/carbon/human/clone)
 	if(!source?.status_traits || !clone)
@@ -348,6 +377,9 @@
 		to_chat(user, span_warning("我感应不到任何仍然存在的虚空分身。"))
 		revert_cast(user)
 		return FALSE
+	if((QDELETED(link.original_body) || !link.original_body) && user == link.clone_body)
+		link.finalize_clone_body("本体已经消散，留在此处的虚空之躯被我强行稳固了下来。")
+		return TRUE
 	if(QDELETED(link.clone_body) || !link.clone_body || QDELETED(link.original_body) || !link.original_body)
 		link.cleanup_clone(FALSE)
 		revert_cast(user)

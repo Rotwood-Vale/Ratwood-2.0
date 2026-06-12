@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(active_group_mindlinks)
+
 /datum/group_mindlink_custom
 	var/list/participants = list()
 	var/active = TRUE
@@ -8,16 +10,24 @@
 		if(!istype(member) || member in participants)
 			continue
 		participants += member
+		GLOB.active_group_mindlinks[member] = src
 		RegisterSignal(member, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	return ..()
 
 /datum/group_mindlink_custom/Destroy()
+	active = FALSE
 	for(var/mob/living/member as anything in participants)
+		if(GLOB.active_group_mindlinks[member] == src)
+			GLOB.active_group_mindlinks -= member
 		UnregisterSignal(member, COMSIG_MOB_SAY)
 	participants = null
 	return ..()
 
 /datum/group_mindlink_custom/proc/handle_speech(mob/living/speaker, list/speech_args)
 	SIGNAL_HANDLER
+
+	if(!active)
+		return
 
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(!message)
@@ -40,6 +50,10 @@
 		speech_args[SPEECH_MESSAGE] = null
 
 /datum/group_mindlink_custom/proc/notify_expired()
+	if(!active)
+		return
+	active = FALSE
+
 	var/list/member_names = list()
 	for(var/mob/living/member as anything in participants)
 		if(QDELETED(member))
@@ -104,6 +118,16 @@
 
 	user.visible_message(span_notice("[user] 轻触太阳穴，闭目凝神，随后一道无形的心灵网络在熟识之人之间铺展开来......"), span_notice("我将自己与熟识之人的心念编织进同一张无形之网。"))
 
+	var/list/links_to_replace = list()
+	for(var/mob/living/member as anything in participant_mobs)
+		var/datum/group_mindlink_custom/existing_link = GLOB.active_group_mindlinks[member]
+		if(existing_link && existing_link.active && !(existing_link in links_to_replace))
+			links_to_replace += existing_link
+
+	for(var/datum/group_mindlink_custom/existing_link as anything in links_to_replace)
+		existing_link.notify_expired()
+		qdel(existing_link)
+
 	var/datum/group_mindlink_custom/link = new(participant_mobs)
 	for(var/mob/living/member as anything in participant_mobs)
 		participant_names += member.real_name
@@ -123,7 +147,7 @@
 	return null
 
 /obj/effect/proc_holder/spell/invoked/group_mindlink/proc/break_link(datum/group_mindlink_custom/link)
-	if(!link)
+	if(!link || QDELETED(link) || !link.active)
 		return
 	link.notify_expired()
 	qdel(link)
