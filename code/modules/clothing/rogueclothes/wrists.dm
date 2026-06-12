@@ -93,7 +93,7 @@
 	icon_state = "lbracers"
 	item_state = "lbracers"
 	armor = ARMOR_PADDED_GOOD
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_BURN)
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	equip_sound = 'sound/foley/equip/rummaging-01.ogg'
@@ -115,7 +115,7 @@
 	desc = "Hardened leather braces that will keep your wrists safe from bludgeoning."
 	icon_state = "albracers"
 	armor = ARMOR_LEATHER_GOOD
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_CHOP, BCLASS_SMASH)
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_CHOP, BCLASS_SMASH, BCLASS_BURN)
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
 	sellprice = 10
 	salvage_amount = 1
