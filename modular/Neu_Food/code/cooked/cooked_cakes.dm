@@ -3,7 +3,7 @@
 	name = "蛋糕坯"
 	desc = "有了这份甜美，你会让他们唱起歌来。"
 	icon = 'modular/Neu_Food/icons/raw/raw_cakes.dmi'
-	icon_state = "cake"
+	icon_state = "蛋糕香"
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/cake
 	cooked_smell = /datum/pollutant/food/cake
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
@@ -55,7 +55,7 @@
 	name = "蛋糕"
 	desc = "柔软细嫩，既能作底，也适合给等不及的人直接吃。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_cakes.dmi'
-	icon_state = "cake"
+	icon_state = "蛋糕香"
 	slices_num = 8
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/cakeslice
 	eating_slice = TRUE

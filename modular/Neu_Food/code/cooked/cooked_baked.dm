@@ -116,7 +116,7 @@
 	name = "吐司"
 	desc = "酥脆爽口却没有烤焦，简直像炼金奇迹。最适合配煎蛋或一块切片黄油一起吃。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
-	icon_state = "toast"
+	icon_state = "吐司香"
 	faretype = FARE_NEUTRAL
 	tastes = list("酥脆面包香" = 1)
 	mill_result = /obj/item/reagent_containers/food/snacks/rogue/toastcrumbs
