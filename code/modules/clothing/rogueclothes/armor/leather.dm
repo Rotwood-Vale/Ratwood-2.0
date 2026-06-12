@@ -4,7 +4,7 @@
 	icon_state = "roguearmor"
 	body_parts_covered = COVERAGE_TORSO
 	armor = ARMOR_LEATHER
-	prevent_crits = list(BCLASS_CUT,BCLASS_BLUNT)
+	prevent_crits = list(BCLASS_CUT,BCLASS_BLUNT, BCLASS_BURN)
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
@@ -14,6 +14,7 @@
 	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
 	sellprice = 20
 	armor_class = ARMOR_CLASS_LIGHT
+	resistance_flags = FIRE_PROOF
 	salvage_result = /obj/item/natural/hide/cured
 	cold_protection = CHEST
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
@@ -132,7 +133,7 @@
 	icon_state = "roguearmor_belt"
 	item_state = "roguearmor_belt"
 	armor = ARMOR_LEATHER_GOOD
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH, BCLASS_BURN)
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	sellprice = 20
 	cold_protection = CHEST
@@ -145,7 +146,7 @@
 	item_state = "roguearmor_coat"
 	body_parts_covered = COVERAGE_ALL_BUT_ARMS
 	armor = ARMOR_LEATHER_GOOD
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH, BCLASS_BURN)
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	sellprice = 25
 	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
@@ -220,8 +221,8 @@
 	desc = "A heavy set of hardened robes, lined with fur. The leather is composed of several creatures that were notably difficult to fell by arrow. A proof or rangership among many."
 	icon_state = "hatanga"
 	item_state = "hatanga"
-	armor = list("blunt" = 90, "slash" = 30, "stab" = 40, "piercing" = 60, "fire" = 0, "acid" = 0)
-	prevent_crits = list(BCLASS_STAB, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK, BCLASS_TWIST)
+	armor = list("blunt" = 90, "slash" = 30, "stab" = 40, "piercing" = 60, "fire" = STRONG_FRESIST, "acid" = 0)
+	prevent_crits = list(BCLASS_STAB, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK, BCLASS_TWIST, BCLASS_BURN)
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	sellprice = 100
 	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
@@ -314,7 +315,7 @@
 	slot_flags = ITEM_SLOT_ARMOR
 	armor = ARMOR_LEATHER_GOOD
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
-	prevent_crits = list(BCLASS_CUT, BCLASS_TWIST, BCLASS_STAB)
+	prevent_crits = list(BCLASS_CUT, BCLASS_TWIST, BCLASS_STAB, BCLASS_BURN)
 
 	detail_tag = "_detail"
 	detail_color = "#FFFFFF"
@@ -415,3 +416,4 @@
 	desc = "A heavy set of hardened robes, lined with fur. The leather is composed of several creatures that were notably difficult to fell by arrow. A proof or rangership among many."
 	icon_state = "hatanga"
 	item_state = "hatanga"
+	resistance_flags = FIRE_PROOF //made of animal hides, shouldn't burn as easily as a gambeson
