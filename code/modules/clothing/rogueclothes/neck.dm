@@ -102,7 +102,7 @@
 	color = "#ad977d"
 	body_parts_covered = NECK|HAIR|EARS|HEAD
 	armor = ARMOR_PADDED //gambeson for head
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_BURN)
 
 /obj/item/clothing/neck/roguetown/coif/heavypadding
 	name = "heavy padded coif"
@@ -114,6 +114,7 @@
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HEAD
 	body_parts_covered = NECK|HAIR|EARS|HEAD|MOUTH
 	armor = ARMOR_PADDED_GOOD //full padded gambeson basically
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_BURN)
 
 /obj/item/clothing/neck/roguetown/coif/heavypadding/ComponentInitialize()
 	return
@@ -159,7 +160,7 @@
 	body_parts_covered = NECK
 	body_parts_inherent = NECK
 	armor = ARMOR_LEATHER_GOOD
-	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_SMASH)
+	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_SMASH, BCLASS_BURN)
 	sewrepair = TRUE
 	sellprice = 10
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
