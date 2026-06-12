@@ -6,7 +6,7 @@
 	icon_state = "roguepants"
 	item_state = "roguepants"
 	sewrepair = TRUE
-	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
+	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_BURN)
 	armor = ARMOR_LEATHER_GOOD
 	sellprice = 18
 	blocksound = SOFTHIT
@@ -26,7 +26,7 @@
 	being less protective than full trousers."
 	icon_state = "rogueshorts"
 	item_state = "rogueshorts"
-	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
+	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_BURN)
 	body_parts_covered = GROIN
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
