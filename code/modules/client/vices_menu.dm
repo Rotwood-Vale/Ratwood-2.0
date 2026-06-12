@@ -1091,7 +1091,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			<div class="actions">
 				<a class='btn btn-select' href='byond://?src=\ref[src];virtue_action=change_primary'>更换主要美德</a>"}
 	
-	if(statpack.name == "Virtuous")
+	if(statpack.name == "德能")
 		html += "<a class='btn btn-select' href='byond://?src=\ref[src];virtue_action=change_secondary'>更换第二美德</a>"
 	
 	html += {"
