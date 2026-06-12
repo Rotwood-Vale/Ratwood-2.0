@@ -37,7 +37,7 @@
 	if(do_after(user, deploy_speed, target = src)) //rogtodo hunting skill
 		user.dropItemToGround(src)
 		START_PROCESSING(SSobj, src)
-			name = "饵料"
+		name = "饵料"
 		icon_state = "[icon_state]1"
 		deployed = 1
 

@@ -28,7 +28,7 @@
 /datum/component/infection_spreader/proc/try_infect_human(mob/living/carbon/human/H)
 	if(QDELETED(H) || !H.zombie_check_can_convert())
 		return
-		to_chat(H, span_danger("一股不断蔓延的寒意渗入了我的身体。我感觉糟透了......真的糟透了......"))
+	to_chat(H, span_danger("一股不断蔓延的寒意渗入了我的身体。我感觉糟透了......真的糟透了......"))
 	H.infected = TRUE
 	H.apply_status_effect(/datum/status_effect/zombie_infection, infection_timer, "wound")
 

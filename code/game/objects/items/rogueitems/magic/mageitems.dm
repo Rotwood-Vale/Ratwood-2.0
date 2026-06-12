@@ -272,7 +272,7 @@
 /obj/item/mimictrinket/proc/revert()
 	if(oldicon == null || oldicon_state == null || oldname == null || olddesc == null)
 		return
-		to_chat(usr, span_notice("[src]恢复成了原本的模样。"))
+	to_chat(usr, span_notice("[src]恢复成了原本的模样。"))
 	icon = oldicon
 	icon_state = oldicon_state
 	name = oldname

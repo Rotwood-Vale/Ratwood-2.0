@@ -499,11 +499,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/basiceast
-<<<<<<< HEAD
-	name = "simple dopo robe"
-=======
 	name = "简易 dobo 长袍"
->>>>>>> 9d20ba9cc9 (翻译转移)
 	result = list(/obj/item/clothing/suit/roguetown/armor/basiceast)
 	reqs = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 2)
