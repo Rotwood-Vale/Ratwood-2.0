@@ -4,7 +4,7 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = TRUE
-	armor_penetration = 100
+	armor_penetration = -100
 	pass_flags = PASSTABLE | PASSGRILLE
 	flag = "magic"
 	var/explode_sound = list('sound/misc/explode/incendiary (1).ogg','sound/misc/explode/incendiary (2).ogg')
