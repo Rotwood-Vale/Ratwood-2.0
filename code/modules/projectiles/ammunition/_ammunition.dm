@@ -1,5 +1,5 @@
 /obj/item/ammo_casing
-	name = "bullet casing"
+	name = "弹壳"
 	desc = ""
 	icon_state = "s-casing"
 	flags_1 = CONDUCT_1
@@ -21,7 +21,7 @@
 	var/harmful = TRUE //pacifism check for boolet, set to FALSE if bullet is non-lethal
 
 /obj/item/ammo_casing/spent
-	name = "spent bullet casing"
+	name = "空弹壳"
 	BB = null
 
 /obj/item/ammo_casing/Initialize(mapload)
@@ -64,9 +64,9 @@
 					continue
 			if (boolets > 0)
 				box.update_icon()
-				to_chat(user, "<span class='notice'>I collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s.</span>")
+				to_chat(user, "<span class='notice'>我收集了[boolets]枚弹壳。[box]里现在有[box.stored_ammo.len]枚弹壳。</span>")
 			else
-				to_chat(user, "<span class='warning'>I fail to collect anything!</span>")
+				to_chat(user, "<span class='warning'>我什么都没收集到！</span>")
 	else
 		return ..()
 

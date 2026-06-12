@@ -1,5 +1,5 @@
 /obj/projectile/bullet/reusable
-	name = "reusable bullet"
+	name = "可回收子弹"
 	desc = ""
 	ammo_type = /obj/item/ammo_casing/caseless
 	impact_effect_type = null

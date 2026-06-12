@@ -1,5 +1,5 @@
 /obj/projectile/bullet
-	name = "bullet"
+	name = "子弹"
 	icon_state = "bullet"
 	damage = 60
 	pass_flags = PASSTABLE | PASSGRILLE

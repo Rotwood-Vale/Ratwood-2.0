@@ -1,5 +1,5 @@
 /obj/projectile/magic
-	name = "bolt of nothing"
+	name = "虚无魔箭"
 	icon_state = "energy"
 	damage = 0
 	damage_type = OXY
@@ -11,7 +11,7 @@
 	var/mob/living/carbon/human/sender
 
 /obj/projectile/magic/death
-	name = "bolt of death"
+	name = "死亡魔箭"
 	icon_state = "pulse1_bl"
 
 /obj/projectile/magic/death/on_hit(target)
@@ -19,7 +19,7 @@
 	if(ismob(target))
 		var/mob/M = target
 		if(M.anti_magic_check())
-			M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
+			M.visible_message(span_warning("[src]一接触[target]就消散了！"))
 			return BULLET_ACT_BLOCK
 		if(isliving(M))
 			var/mob/living/L = M
@@ -28,16 +28,16 @@
 					return BULLET_ACT_BLOCK
 				if(L.revive(full_heal = TRUE, admin_revive = TRUE))
 					L.grab_ghost(force = TRUE) // even suicides
-					to_chat(L, span_notice("I rise with a start, you're undead!!!"))
+					to_chat(L, span_notice("我猛地惊醒过来，你是不死者！！！"))
 				else if(L.stat != DEAD)
-					to_chat(L, span_notice("I feel great!"))
+					to_chat(L, span_notice("我感觉好极了！"))
 			else
 				L.death(0)
 		else
 			M.death(0)
 
 /obj/projectile/magic/resurrection
-	name = "bolt of resurrection"
+	name = "复生魔箭"
 	icon_state = "ion"
 	damage = 0
 	damage_type = OXY
@@ -47,7 +47,7 @@
 	. = ..()
 	if(isliving(target))
 		if(target.anti_magic_check())
-			target.visible_message(span_warning("[src] vanishes on contact with [target]!"))
+			target.visible_message(span_warning("[src]一接触[target]就消散了！"))
 			return BULLET_ACT_BLOCK
 		if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
 			target.death(0)
@@ -56,12 +56,12 @@
 				return BULLET_ACT_BLOCK
 			if(target.revive(full_heal = TRUE, admin_revive = TRUE))
 				target.grab_ghost(force = TRUE) // even suicides
-				to_chat(target, span_notice("I rise with a start, you're alive!!!"))
+				to_chat(target, span_notice("我猛地惊醒过来，你还活着！！！"))
 			else if(target.stat != DEAD)
-				to_chat(target, span_notice("I feel great!"))
+				to_chat(target, span_notice("我感觉好极了！"))
 
 /obj/projectile/magic/teleport
-	name = "bolt of teleportation"
+	name = "传送魔箭"
 	icon_state = "bluespace"
 	damage = 0
 	damage_type = OXY
@@ -74,7 +74,7 @@
 	if(ismob(target))
 		var/mob/M = target
 		if(M.anti_magic_check())
-			M.visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			M.visible_message(span_warning("[src]一接触[target]就失效了！"))
 			return BULLET_ACT_BLOCK
 	var/teleammount = 0
 	var/teleloc = target
@@ -89,7 +89,7 @@
 				smoke.start()
 
 /obj/projectile/magic/safety
-	name = "bolt of safety"
+	name = "安全魔箭"
 	icon_state = "bluespace"
 	damage = 0
 	damage_type = OXY
@@ -100,7 +100,7 @@
 	if(ismob(target))
 		var/mob/M = target
 		if(M.anti_magic_check())
-			M.visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			M.visible_message(span_warning("[src]一接触[target]就失效了！"))
 			return BULLET_ACT_BLOCK
 	if(isturf(target))
 		return BULLET_ACT_HIT
@@ -115,7 +115,7 @@
 			smoke.start()
 
 /obj/projectile/magic/spellblade
-	name = "blade energy"
+	name = "能量刃"
 	icon_state = "lavastaff"
 	damage = 15
 	damage_type = BURN
@@ -127,13 +127,13 @@
 	if(ismob(target))
 		var/mob/M = target
 		if(M.anti_magic_check())
-			M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
+			M.visible_message(span_warning("[src]一接触[target]就消散了！"))
 			qdel(src)
 			return BULLET_ACT_BLOCK
 	. = ..()
 
 /obj/projectile/magic/arcane_barrage
-	name = "arcane bolt"
+	name = "奥术魔箭"
 	icon_state = "arcane_barrage"
 	damage = 20
 	damage_type = BURN
@@ -146,14 +146,14 @@
 	if(ismob(target))
 		var/mob/M = target
 		if(M.anti_magic_check())
-			M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
+			M.visible_message(span_warning("[src]一接触[target]就消散了！"))
 			qdel(src)
 			return BULLET_ACT_BLOCK
 	. = ..()
 
 
 /obj/projectile/magic/locker
-	name = "locker bolt"
+	name = "储物柜魔箭"
 	icon_state = "locker"
 	nodamage = TRUE
 	flag = "magic"
@@ -170,7 +170,7 @@
 	if(isliving(A) && locker_suck)
 		var/mob/living/M = A
 		if(M.anti_magic_check())
-			M.visible_message(span_warning("[src] vanishes on contact with [A]!"))
+			M.visible_message(span_warning("[src]一接触[A]就消散了！"))
 			qdel(src)
 			return
 		if(!locker_temp_instance.insertion_allowed(M))
@@ -238,7 +238,7 @@
 	icon_welded = "welded"
 
 /obj/projectile/magic/flying
-	name = "bolt of flying"
+	name = "飞行魔箭"
 	icon_state = "flight"
 
 /obj/projectile/magic/flying/on_hit(target)
@@ -246,13 +246,13 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if(L.anti_magic_check())
-			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
+			L.visible_message(span_warning("[src]一接触[target]就消散了！"))
 			return BULLET_ACT_BLOCK
 		var/atom/throw_target = get_edge_target_turf(L, angle2dir(Angle))
 		L.throw_at(throw_target, 200, 4)
 
 /obj/projectile/magic/bounty
-	name = "bolt of bounty"
+	name = "赏金魔箭"
 	icon_state = "bounty"
 
 /obj/projectile/magic/bounty/on_hit(target)
@@ -260,12 +260,12 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if(L.anti_magic_check() || !firer)
-			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
+			L.visible_message(span_warning("[src]一接触[target]就消散了！"))
 			return BULLET_ACT_BLOCK
 		L.apply_status_effect(STATUS_EFFECT_BOUNTY, firer)
 
 /obj/projectile/magic/antimagic
-	name = "bolt of antimagic"
+	name = "反魔法魔箭"
 	icon_state = "antimagic"
 
 /obj/projectile/magic/antimagic/on_hit(target)
@@ -273,12 +273,12 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if(L.anti_magic_check())
-			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
+			L.visible_message(span_warning("[src]一接触[target]就消散了！"))
 			return BULLET_ACT_BLOCK
 		L.apply_status_effect(STATUS_EFFECT_ANTIMAGIC)
 
 /obj/projectile/magic/fetch
-	name = "bolt of fetching"
+	name = "牵引魔箭"
 	icon_state = "cursehand0"
 	range = 15
 
@@ -288,7 +288,7 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if(L.anti_magic_check() || !firer)
-			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
+			L.visible_message(span_warning("[src]一接触[target]就消散了！"))
 			return BULLET_ACT_BLOCK
 		L.throw_at(throw_target, 200, 4)
 		new /datum/magic_throw_slip_watcher(L)
@@ -362,7 +362,7 @@
 	return ..()
 
 /obj/projectile/magic/sickness
-	name = "Bolt of Sickness"
+	name = "疫病魔箭"
 	icon_state = "xray"
 	damage = 10
 	damage_type = BURN
@@ -376,7 +376,7 @@
 		M.reagents.add_reagent(/datum/reagent/toxin, 3)
 
 /obj/projectile/magic/sapping
-	name = "bolt of sapping"
+	name = "枯竭魔箭"
 	icon_state = "sapping"
 
 /obj/projectile/magic/sapping/on_hit(target)
@@ -384,11 +384,11 @@
 	if(ismob(target))
 		var/mob/M = target
 		if(M.anti_magic_check())
-			M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
+			M.visible_message(span_warning("[src]一接触[target]就消散了！"))
 			return BULLET_ACT_BLOCK
 
 /obj/projectile/magic/necropotence
-	name = "bolt of necropotence"
+	name = "死灵威能魔箭"
 	icon_state = "necropotence"
 
 /obj/projectile/magic/necropotence/on_hit(target)
@@ -396,20 +396,20 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if(L.anti_magic_check() || !L.mind || !L.mind.hasSoul)
-			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
+			L.visible_message(span_warning("[src]一接触[target]就消散了！"))
 			return BULLET_ACT_BLOCK
-		to_chat(L, span_danger("My body feels drained and there is a burning pain in my chest."))
+		to_chat(L, span_danger("我感觉身体被抽空了，胸口传来灼烧般的痛楚。"))
 		L.maxHealth -= 20
 		L.health = min(L.health, L.maxHealth)
 		if(L.maxHealth <= 0)
-			to_chat(L, span_danger("My weakened soul is completely consumed by the [src]!"))
+			to_chat(L, span_danger("我虚弱的灵魂被[src]彻底吞噬了！"))
 			L.mind.hasSoul = FALSE
 		for(var/obj/effect/proc_holder/spell/spell in L.mind.spell_list)
 			spell.charge_counter = spell.recharge_time
 			spell.update_icon()
 
 /obj/projectile/magic/aoe
-	name = "Area Bolt"
+	name = "范围魔箭"
 	desc = ""
 	damage = 0
 	var/aoe_range = 0
@@ -424,7 +424,7 @@
 
 
 /obj/projectile/magic/aoe/fireball
-	name = "bolt of fireball"
+	name = "火球魔箭"
 	icon_state = "fireball"
 	damage = 10
 	damage_type = BRUTE
@@ -443,7 +443,7 @@
 	if(ismob(target))
 		var/mob/living/M = target
 		if(M.anti_magic_check())
-			visible_message(span_warning("[src] vanishes into smoke on contact with [target]!"))
+			visible_message(span_warning("[src]一接触[target]就化作烟雾消散了！"))
 			return BULLET_ACT_BLOCK
 		if(exp_fire)
 			M.adjust_fire_stacks(exp_fire*3)
@@ -459,7 +459,7 @@
 		M.throw_at(throw_target, exp_light, EXPLOSION_THROW_SPEED)
 
 /obj/projectile/magic/aoe/fireball/infernal
-	name = "infernal fireball"
+	name = "炼狱火球"
 	exp_heavy = -1
 	exp_light = -1
 	exp_flash = 4

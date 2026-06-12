@@ -3,7 +3,7 @@
 
 /obj/item/gun/ballistic/revolver/grenadelauncher//this is only used for underbarrel grenade launchers at the moment, but admins can still spawn it if they feel like being assholes
 	desc = ""
-	name = "grenade launcher"
+	name = "榴弹发射器"
 	icon_state = "dshotgun_sawn"
 	item_state = "gun"
 	fire_sound = 'sound/blank.ogg'

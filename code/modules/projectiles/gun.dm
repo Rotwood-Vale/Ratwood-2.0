@@ -2,7 +2,7 @@
 #define DUALWIELD_PENALTY_EXTRA_MULTIPLIER 1.4
 
 /obj/item/gun
-	name = "gun"
+	name = "枪"
 	desc = ""
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "detective"
@@ -16,7 +16,7 @@
 	throw_range = 5
 	force = 5
 	item_flags = NEEDS_PERMIT
-	attack_verb = list("struck", "hit", "bashed")
+	attack_verb = list("击打", "击中", "猛砸")
 
 	var/fire_sound = 'sound/blank.ogg'
 	var/vary_fire_sound = TRUE
@@ -59,7 +59,7 @@
 	return TRUE
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
-	to_chat(user, "<span class='danger'>*click*</span>")
+	to_chat(user, "<span class='danger'>*咔嗒*</span>")
 	playsound(src, dry_fire_sound, 30, TRUE)
 
 
@@ -69,8 +69,8 @@
 
 	playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
 	if(message)
-		user.visible_message("<span class='danger'>[user] shoots [src]!</span>", \
-						"<span class='danger'>I shoot [src]!</span>", \
+		user.visible_message("<span class='danger'>[user]朝[src]开火了！</span>", \
+						"<span class='danger'>我朝[src]开火了！</span>", \
 						COMBAT_MESSAGE_RANGE)
 
 /obj/item/gun/emp_act(severity)
@@ -128,7 +128,7 @@
 	if(chambered)
 		if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 			if(chambered.harmful) // Is the bullet chambered harmful?
-				to_chat(user, "<span class='warning'>[src] is lethally chambered! You don't want to risk harming anyone...</span>")
+				to_chat(user, "<span class='warning'>[src]已上膛致命弹药！我可不想冒着伤到任何人的风险……</span>")
 				return
 		sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 		before_firing(target,user)
@@ -160,21 +160,21 @@
 		return
 
 	if(user == target)
-		target.visible_message("<span class='warning'>[user] sticks [src] in [user.p_their()] mouth, ready to pull the trigger...</span>", \
-			"<span class='danger'>I stick [src] in your mouth, ready to pull the trigger...</span>")
+		target.visible_message("<span class='warning'>[user]把[src]塞进自己嘴里，准备扣动扳机……</span>", \
+			"<span class='danger'>我把[src]塞进你的嘴里，准备扣动扳机……</span>")
 	else
-		target.visible_message("<span class='warning'>[user] points [src] at [target]'s head, ready to pull the trigger...</span>", \
-			"<span class='danger'>[user] points [src] at your head, ready to pull the trigger...</span>")
+		target.visible_message("<span class='warning'>[user]把[src]指向[target]的头，准备扣动扳机……</span>", \
+			"<span class='danger'>[user]把[src]指向你的头，准备扣动扳机……</span>")
 
 	if(!bypass_timer && (!do_mob(user, target, 120) || user.zone_selected != BODY_ZONE_PRECISE_MOUTH))
 		if(user)
 			if(user == target)
-				user.visible_message("<span class='notice'>[user] decided not to shoot.</span>")
+				user.visible_message("<span class='notice'>[user]决定不开枪了。</span>")
 			else if(target && target.Adjacent(user))
-				target.visible_message("<span class='notice'>[user] has decided to spare [target]</span>", "<span class='notice'>[user] has decided to spare your life!</span>")
+				target.visible_message("<span class='notice'>[user]决定放过[target]</span>", "<span class='notice'>[user]决定饶你一命！</span>")
 		return
 
-	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='danger'>[(user == target) ? "You pull" : "[user] pulls"] the trigger!</span>")
+	target.visible_message("<span class='warning'>[user]扣下了扳机！</span>", "<span class='danger'>[(user == target) ? "你" : "[user]"]扣下了扳机！</span>")
 
 	if(chambered && chambered.BB)
 		chambered.BB.damage *= 5

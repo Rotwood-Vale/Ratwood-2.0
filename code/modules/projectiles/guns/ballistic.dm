@@ -7,7 +7,7 @@
 ///This has a shitload of vars on it, and I'm sorry for that, but it does make making new subtypes really easy
 /obj/item/gun/ballistic
 	desc = ""
-	name = "projectile gun"
+	name = "抛射枪械"
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_NORMAL
 
@@ -77,18 +77,18 @@
 	///Whether the gun has an internal magazine or a detatchable one. Overridden by BOLT_TYPE_NO_BOLT.
 	var/internal_magazine = FALSE
 	///Phrasing of the bolt in examine and notification messages; ex: bolt, slide, etc.
-	var/bolt_wording = "bolt"
+	var/bolt_wording = "枪机"
 	///Phrasing of the magazine in examine and notification messages; ex: magazine, box, etx
-	var/magazine_wording = "magazine"
+	var/magazine_wording = "弹匣"
 	///Phrasing of the cartridge in examine and notification messages; ex: bullet, shell, dart, etc.
-	var/cartridge_wording = "bullet"
+	var/cartridge_wording = "子弹"
 	///length between individual racks
 	var/rack_delay = 5
 	///time of the most recent rack, used for cooldown purposes
 	var/recent_rack = 0
 	///Whether the gun can be tacloaded by slapping a fresh magazine directly on it
 	var/tac_reloads = TRUE //Snowflake mechanic no more.
-	var/verbage = "load"
+	var/verbage = "装填"
 
 /obj/item/gun/ballistic/Initialize(mapload)
 	. = ..()
@@ -166,11 +166,11 @@
 	if (bolt_type == BOLT_TYPE_OPEN)
 		if(!bolt_locked)	//If it's an open bolt, racking again would do nothing
 			if (user)
-				to_chat(user, "<span class='notice'>\The [src]'s [bolt_wording] is already cocked!</span>")
+				to_chat(user, "<span class='notice'>[src]的[bolt_wording]已经拉开了！</span>")
 			return
 		bolt_locked = FALSE
 	if (user)
-		to_chat(user, "<span class='notice'>I rack the [bolt_wording] of \the [src].</span>")
+		to_chat(user, "<span class='notice'>我拉动了[src]的[bolt_wording]。</span>")
 	process_chamber(!chambered, FALSE)
 	if (bolt_type == BOLT_TYPE_LOCKING && !chambered)
 		bolt_locked = TRUE
@@ -183,7 +183,7 @@
 /obj/item/gun/ballistic/proc/drop_bolt(mob/user = null)
 	playsound(src, bolt_drop_sound, bolt_drop_sound_volume, FALSE)
 	if (user)
-		to_chat(user, "<span class='notice'>I drop the [bolt_wording] of \the [src].</span>")
+		to_chat(user, "<span class='notice'>我松开了[src]的[bolt_wording]。</span>")
 	chamber_round()
 	bolt_locked = FALSE
 	update_icon()
@@ -191,19 +191,19 @@
 ///Handles all the logic needed for magazine insertion
 /obj/item/gun/ballistic/proc/insert_magazine(mob/user, obj/item/ammo_box/magazine/AM, display_message = TRUE)
 	if(!istype(AM, mag_type))
-		to_chat(user, "<span class='warning'>\The [AM] doesn't seem to fit into \the [src]...</span>")
+		to_chat(user, "<span class='warning'>[AM]似乎装不进[src]里……</span>")
 		return FALSE
 	if(user.transferItemToLoc(AM, src))
 		magazine = AM
 		if (display_message)
-			to_chat(user, "<span class='notice'>I load a new [magazine_wording] into \the [src].</span>")
+			to_chat(user, "<span class='notice'>我将一个新的[magazine_wording]装入[src]。</span>")
 		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
 		if (bolt_type == BOLT_TYPE_OPEN && !bolt_locked)
 			chamber_round(TRUE)
 		update_icon()
 		return TRUE
 	else
-		to_chat(user, "<span class='warning'>I cannot seem to get \the [src] out of your hands!</span>")
+		to_chat(user, "<span class='warning'>我似乎没法把[src]从你手里弄出来！</span>")
 		return FALSE
 
 ///Handles all the logic of magazine ejection, if tac_load is set that magazine will be tacloaded in the place of the old eject
@@ -218,16 +218,16 @@
 	var/obj/item/ammo_box/magazine/old_mag = magazine
 	if (tac_load)
 		if (insert_magazine(user, tac_load, FALSE))
-			to_chat(user, "<span class='notice'>I perform a tactical reload on \the [src].</span>")
+			to_chat(user, "<span class='notice'>我对[src]进行了战术换弹。</span>")
 		else
-			to_chat(user, "<span class='warning'>I dropped the old [magazine_wording], but the new one doesn't fit. How embarassing.</span>")
+			to_chat(user, "<span class='warning'>我把旧[magazine_wording]扔掉了，但新的不合适。真尴尬。</span>")
 			magazine = null
 	else
 		magazine = null
 	user.put_in_hands(old_mag)
 	old_mag.update_icon()
 	if (display_message)
-		to_chat(user, "<span class='notice'>I pull the [magazine_wording] out of \the [src].</span>")
+		to_chat(user, "<span class='notice'>我把[magazine_wording]从[src]里拔了出来。</span>")
 	update_icon()
 
 /obj/item/gun/ballistic/can_shoot()
@@ -245,7 +245,7 @@
 			if (tac_reloads)
 				eject_magazine(user, FALSE, AM)
 			else
-				to_chat(user, "<span class='notice'>There's already a [magazine_wording] in \the [src].</span>")
+				to_chat(user, "<span class='notice'>[src]里已经有一个[magazine_wording]了。</span>")
 		return
 	if (istype(A, /obj/item/ammo_casing) || istype(A, /obj/item/ammo_box))
 		if (bolt_type == BOLT_TYPE_NO_BOLT || internal_magazine)
@@ -254,7 +254,7 @@
 				chambered = null
 			var/num_loaded = magazine.attackby(A, user, params, TRUE)
 			if (num_loaded)
-				to_chat(user, "<span class='notice'>I [verbage] a [cartridge_wording]\s on \the [src].</span>")
+				to_chat(user, "<span class='notice'>我向[src][verbage]了一枚[cartridge_wording]。</span>")
 				playsound(src, load_sound, load_sound_volume, load_sound_vary)
 				if (chambered == null && bolt_type == BOLT_TYPE_NO_BOLT)
 					chamber_round()
@@ -316,11 +316,11 @@
 			if(T && is_station_level(T.z))
 				SSblackbox.record_feedback("tally", "station_mess_created", 1, CB.name)
 		if (num_unloaded)
-			to_chat(user, "<span class='notice'>I remove [(num_unloaded == 1) ? "the" : "[num_unloaded]"] [cartridge_wording]\s from [src].</span>")
+			to_chat(user, "<span class='notice'>我从[src]里取出[(num_unloaded == 1) ? "一枚" : "[num_unloaded]枚"][cartridge_wording]。</span>")
 			playsound(user, eject_sound, eject_sound_volume, eject_sound_vary)
 			update_icon()
 		else
-			to_chat(user, "<span class='warning'>[src] is empty!</span>")
+			to_chat(user, "<span class='warning'>[src]是空的！</span>")
 		return
 	if(bolt_type == BOLT_TYPE_LOCKING && bolt_locked)
 		drop_bolt(user)
@@ -355,12 +355,12 @@
 /obj/item/gun/ballistic/suicide_act(mob/user)
 	var/obj/item/organ/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
 	if (B && chambered && chambered.BB && can_trigger_gun(user) && !chambered.BB.nodamage)
-		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message("<span class='suicide'>[user]正把[src]的枪口塞进自己嘴里。看起来像是要自杀！</span>")
 		sleep(25)
 		if(user.is_holding(src))
 			var/turf/T = get_turf(user)
 			process_fire(user, user, FALSE, null, BODY_ZONE_HEAD)
-			user.visible_message("<span class='suicide'>[user] blows [user.p_their()] brain[user.p_s()] out with [src]!</span>")
+			user.visible_message("<span class='suicide'>[user]用[src]轰碎了自己的脑袋！</span>")
 			var/turf/target = get_ranged_target_turf(user, turn(user.dir, 180), BRAINS_BLOWN_THROW_RANGE)
 			B.Remove(user)
 			B.forceMove(T)
@@ -368,10 +368,10 @@
 			B.throw_at(target, BRAINS_BLOWN_THROW_RANGE, BRAINS_BLOWN_THROW_SPEED, callback=gibspawner)
 			return(BRUTELOSS)
 		else
-			user.visible_message("<span class='suicide'>[user] panics and starts choking to death!</span>")
+			user.visible_message("<span class='suicide'>[user]惊慌失措，开始窒息而死！</span>")
 			return(OXYLOSS)
 	else
-		user.visible_message("<span class='suicide'>[user] is pretending to blow [user.p_their()] brain[user.p_s()] out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
+		user.visible_message("<span class='suicide'>[user]假装要用[src]轰碎自己的脑袋！看起来像是要自杀！</b></span>")
 		playsound(src, dry_fire_sound, 30, TRUE)
 		return (OXYLOSS)
 #undef BRAINS_BLOWN_THROW_SPEED

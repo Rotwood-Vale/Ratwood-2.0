@@ -1,5 +1,5 @@
 /obj/item/gun/ballistic/revolver
-	name = "\improper .357 revolver"
+	name = "\improper .357左轮手枪"
 	desc = "" //usually used by syndicates
 	icon_state = "revolver"
 	fire_sound = 'sound/blank.ogg'
