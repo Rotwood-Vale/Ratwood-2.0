@@ -1073,7 +1073,7 @@
 		if(!restrained(ignore_grab = 1))
 			log_combat(src, pulledby, "resisted grab")
 			if(resist_grab())
-				COOLDOWN_START(src, broke_free, 5 SECONDS)
+				COOLDOWN_START(src, broke_free, 1 SECONDS)
 			return
 		else if(puller.compliance) // we ARE handcuffed apart from the grab, but grabber has Compliance Mode on
 			log_combat(src, pulledby, "resisted grab (is restrained, compliance mode bypass)") // if you try baiting prisoners with this, I'll know.

@@ -836,6 +836,9 @@
 /obj/structure/fluff/customsign/arrow
 	icon_state = "shitsign"
 
+/obj/structure/fluff/customsign/wrote //For mapped in signs and not player-made signs
+	icon_state = "signwrote"
+
 /obj/structure/fluff/customsign/attackby(obj/item/W, mob/user, params)
 	if(!user.cmode)
 		if(!user.is_literate())

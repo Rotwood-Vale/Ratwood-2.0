@@ -499,7 +499,6 @@
 		var/mob/M = target
 		var/list/targetl = list(target)
 		user.visible_message(span_taunt("[user] taunts [M]!"), span_taunt("I taunt [M]!"), ignored_mobs = targetl)
-		targetl.Add(user)
 		user.emote("taunt")
 		if(M.mind)
 			var/mob/living/L = user
@@ -556,7 +555,6 @@
 		var/mob/M = target
 		var/list/targetl = list(target)
 		user.visible_message(span_blue("[user] shoos [M] away."), span_blue("I shoo [M] away."), ignored_mobs = targetl)
-		targetl.Add(user)
 		if(M.mind)
 			var/mob/living/L = user
 			L.play_overhead_private_rclickemote(targetl, "dismiss")
@@ -586,7 +584,6 @@
 		var/mob/M = target
 		var/list/targetl = list(target)
 		user.visible_message(span_yellow("[user] beckons [M] to come closer."), span_yellow("I beckon [M] to come closer."), ignored_mobs = targetl)
-		targetl.Add(user)
 		if(M.mind)
 			var/mob/living/L = user
 			L.play_overhead_private_rclickemote(targetl, "beckon")
@@ -613,7 +610,6 @@
 		var/mob/M = target
 		var/list/targetl = list(target)
 		user.visible_message(span_green("[user] waves friendly at [M]."), span_green("I wave friendly at [M]."), ignored_mobs = targetl)
-		targetl.Add(user)
 		if(M.mind)	// Waving at an NPC doesn't need to show this.
 			var/mob/living/L = user
 			L.play_overhead_private_rclickemote(targetl, "wavefriendly")

@@ -41,7 +41,7 @@
 /datum/surgery_step/extract_lux/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
 	if (!target.has_status_effect(/datum/status_effect/buff/ozium))
 		target.emote("painscream")
-	if(target.has_status_effect(/datum/status_effect/debuff/devitalised))
+	if(target.has_status_effect(/datum/status_effect/debuff/devitalised) || target.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped))
 		display_results(user, target, span_notice("You cannot draw lux from [target]; they have none left to give."),
 		"[user] extracts lux from [target]'s innards.",
 		"[user] extracts lux from [target]'s innards.")

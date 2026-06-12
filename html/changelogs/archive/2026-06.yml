@@ -151,3 +151,59 @@
   - rscdel: staves skill, now everyone who used it previously has had their polearms
       skill upped to compensate
   - balance: quarterstaves are now polearms
+2026-06-10:
+  Fantasiuss:
+  - rscadd: Ursine Features descriptor
+  coffeecoffeecoffee:
+  - balance: Changed grapple cooldown from a whopping 5 seconds to 1 second
+2026-06-11:
+  Randumb-Phantomb:
+  - sound: a voicepack for all the people who want to pretend to be deadites, or possessed,
+      or some other flavor of supernatural BEASTY
+  ophaq:
+  - rscadd: Adds beauty trait to eoran missionaries.
+  - qol: Gives eoran missionaries the iron scissors on their belt instead of in-hand.
+  - bugfix: Eoran calm's aura is now much less impactful. It was way too glowy before.
+  - qol: Eora's bud miracle takes slightly less time to charge now.
+  - bugfix: The aura from the eoran tree no longer overlaps with the eoran calm aura,
+      preventing a subtle but annoying graphical effect.
+  - qol: Eoran trees only need to be watered once each harvest now, consuming 20 drams.
+      Blessed water is acceptable now, not just clean water. Watering only takes 1
+      second.
+  - qol: Eoran trees now just need to be fertilized twice at most per harvest. Still
+      scales off farming skill, and it should only take about a second each fertilizing.
+      Fertilizer applied (not compost) will halve the next fruiting cycle's time.
+  - rscadd: Fixed some examine feedback after pruning the tree. Pruning only takes
+      10 seconds down from 15. Still scales off farming skill. Only needs to be done
+      once after each harvest. Examining the tree at jman+ farming tells you the next
+      harvest cycle's time.
+  - rscadd: Added the massage ability as a T0 miracle to eorans.
+  - rscadd: 'Ports flower bed miracle from AP: https://github.com/Azure-Peak/Azure-Peak/pull/7003'
+2026-06-12:
+  AllCorruptingWyrm:
+  - rscadd: fixes a minor spelling mistake
+  Lokaka21:
+  - rscadd: A new female voicepack oriented towards gruff or more warriorlike feminine
+      types.
+  Makximus:
+  - rscdel: The Hand's fit changing on the rockhill map
+  - balance: Spymaster's stats
+  - rscadd: Sleuth to Spymaster
+  Ratwood Lore Team:
+  - rscdel: Removed Valley Accent
+  WolfOrion:
+  - balance: gives gnolls large balls
+  Xander3359:
+  - balance: Noble virtue now costs 7 triumphs
+  ophaq:
+  - bugfix: Fixes eora trees not producing golden fruits at max happiness.
+  - qol: Allows the bauernwehr on snip intent to prune the trees too!
+  zeroisthebiggay:
+  - rscadd: adds things to the universal accent
+  - rscadd: '"zaping" -> "ravaging"'
+  - rscadd: '"bestie" -> "friend"'
+  - rscadd: '"besties" -> "friends"'
+  - rscadd: '"totes" -> "totally"'
+  - rscadd: '"delish" -> "delicious"'
+  - rscadd: '"gyaru" -> "delinquent"'
+  - rscadd: '"gyarus" -> "delinquents"'

@@ -142,6 +142,42 @@
 	icon_state = "mazekey"
 	lockid = "manor"
 
+/obj/item/roguekey/manor/guestroom/i
+	name = "Manor Guestroom I Key"
+	desc = "This key will open the manor first guestroom."
+	icon_state = "mazekey"
+	lockid = "guestroom1"
+
+/obj/item/roguekey/manor/guestroom/ii
+	name = "Manor Guestroom II Key"
+	desc = "This key will open the manor second guestroom."
+	icon_state = "mazekey"
+	lockid = "guestroom2"
+
+/obj/item/roguekey/manor/guestroom/iii
+	name = "Manor Guestroom III Key"
+	desc = "This key will open the manor third guestroom."
+	icon_state = "mazekey"
+	lockid = "guestroom3"
+
+/obj/item/roguekey/manor/counsilroom/i
+	name = "Counsillor's Room I Key"
+	desc = "This key will open the manor first councilroom."
+	icon_state = "mazekey"
+	lockid = "counsil1"
+
+/obj/item/roguekey/manor/counsilroom/ii
+	name = "Counsillor's Room II Key"
+	desc = "This key will open the manor second councilroom."
+	icon_state = "mazekey"
+	lockid = "counsil2"
+
+/obj/item/roguekey/manor/counsilroom/iii
+	name = "Counsillor's Room III Key"
+	desc = "This key will open the manor third councilroom."
+	icon_state = "mazekey"
+	lockid = "counsil3"
+
 /obj/item/roguekey/heir
 	name = "heir room key"
 	desc = "A highly coveted key belonging to the doors of the heirs of this realm."
@@ -476,6 +512,48 @@
 	desc = "This regal key opens doors inside the bath-house."
 	icon_state = "bathkey"
 	lockid = "nightmaiden"
+
+/obj/item/roguekey/nightmaiden/rooms/i
+	name = "baths room I key"
+	desc = "This regal key opens the baths first room."
+	icon_state = "bathkey"
+	lockid = "lux1"
+
+/obj/item/roguekey/nightmaiden/rooms/ii
+	name = "baths room II key"
+	desc = "This regal key opens the baths second room."
+	icon_state = "bathkey"
+	lockid = "lux2"
+
+/obj/item/roguekey/nightmaiden/rooms/iii
+	name = "baths room III key"
+	desc = "This regal key opens the baths third room."
+	icon_state = "bathkey"
+	lockid = "lux3"
+
+/obj/item/roguekey/nightmaiden/rooms/iv
+	name = "baths room IV key"
+	desc = "This regal key opens the baths fourth room."
+	icon_state = "bathkey"
+	lockid = "lux4"
+
+/obj/item/roguekey/nightmaiden/rooms/v
+	name = "baths room V key"
+	desc = "This regal key opens the baths fifth room."
+	icon_state = "bathkey"
+	lockid = "lux5"
+
+/obj/item/roguekey/nightmaiden/rooms/punish
+	name = "baths punishment room  key"
+	desc = "This regal key opens the baths punishment room."
+	icon_state = "spikekey"
+	lockid = "punishroom"
+
+/obj/item/roguekey/nightmaiden/rooms/steam
+	name = "baths steam room key"
+	desc = "This regal key opens the baths steam room."
+	icon_state = "bathkey"
+	lockid = "steam"
 
 /obj/item/roguekey/mercenary
 	name = "mercenary key"
