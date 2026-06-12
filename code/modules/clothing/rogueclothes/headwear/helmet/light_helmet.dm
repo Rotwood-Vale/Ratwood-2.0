@@ -25,7 +25,7 @@
 	icon_state = "leatherhelm"
 	armor = ARMOR_LEATHER
 	sellprice = 10
-	prevent_crits = list(BCLASS_BLUNT, BCLASS_TWIST)
+	prevent_crits = list(BCLASS_BLUNT, BCLASS_TWIST, BCLASS_BURN)
 	sewrepair = TRUE
 	anvilrepair = null
 	smeltresult = null
@@ -68,7 +68,7 @@
 	max_integrity = ARMOR_INT_HELMET_HARDLEATHER
 	sellprice = 15
 	body_parts_covered = HEAD|EARS|HAIR|NOSE
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_BURN)
 	armor = ARMOR_LEATHER_GOOD
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP
 	anvilrepair = null
@@ -81,7 +81,7 @@
 	desc = "An oddly shaped hat made of tightly-sewn leather, commonly worn by spellswords."
 	icon_state = "spellcasterhat"
 	item_state = "spellcasterhat"
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_BURN)
 	armor = ARMOR_SPELLSINGER
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
@@ -105,7 +105,7 @@
 	dynamic_hair_suffix = ""
 	max_integrity = ARMOR_INT_HELMET_LEATHER
 	body_parts_covered = HEAD|HAIR|EARS
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_BURN)
 	armor = ARMOR_SPELLSINGER // spellsinger hat stats
 	resistance_flags = FIRE_PROOF
 	var/picked = FALSE
@@ -187,8 +187,8 @@
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_NECK
 	body_parts_covered = HEAD|EARS|HAIR|NOSE|EYES|NECK
 	//Something between leather and metal helmet, worse than metal helmet by far.
-	armor = list("blunt" = 70, "slash" = 65, "stab" = 60, "piercing" = 20, "fire" = 0, "acid" = 0)
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
+	armor = list("blunt" = 70, "slash" = 65, "stab" = 60, "piercing" = 20, "fire" = STRONG_FRESIST, "acid" = 0)
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_BURN)
 	adjustable = CAN_CADJUST
 	toggle_icon_state = TRUE
 	cold_protection = HEAD
@@ -204,7 +204,7 @@
 	max_integrity = 280
 	//closer to metal helmet but still quite behind, same blunt resist of hardened leather helmet though.
 	armor = ARMOR_LEATHER_STUDDED
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_CHOP, BCLASS_SMASH) //studded armor values with stab prot too
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_CHOP, BCLASS_SMASH, BCLASS_BURN) //studded armor values with stab prot too
 
 /obj/item/clothing/head/roguetown/helmet/leather/armorhood/AdjustClothes(mob/user)
 	if(loc == user)
