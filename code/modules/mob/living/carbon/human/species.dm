@@ -2130,7 +2130,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/on_hit(obj/projectile/P, mob/living/carbon/human/H)
 	if(P.flag == "fire") //Fire Damage Penetration
 		var/def_zone = check_zone(H.zone_selected)
-		H.apply_damage(P.damage - (P.damage * H.run_armor_check(def_zone, "fire")), BURN, def_zone) //take projectile damage - percentage of damage dictated by fire resist level
+		H.apply_damage(P.damage * H.run_armor_check(def_zone, "fire"), BURN, def_zone) //take projectile damage * fire-resist modifier
 		H.next_attack_msg += " <span class='warning'>and yet some heat burns through!</span>"
 
 /datum/species/proc/bullet_act(obj/projectile/P, mob/living/carbon/human/H, def_zone = BODY_ZONE_CHEST)
