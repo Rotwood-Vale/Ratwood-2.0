@@ -548,8 +548,7 @@ BLIND     // can't see anything
 	str += "[colorgrade_rating("🪓 SLASH ", armor.slash, elaborate = TRUE)]"
 	str += "<br>"
 	str += "[colorgrade_rating("🗡️ STAB ", armor.stab, elaborate = TRUE)] | "
-	str += "[colorgrade_rating("🏹 PIERCE ", armor.piercing, elaborate = TRUE)]
-	str += "[colorgrade_rating("🔥 BURNS", armor.fire, elaborate = TRUE)]"
+	str += "[colorgrade_rating("🏹 PIERCE ", armor.piercing, elaborate = TRUE)]"
 
 	if(showcrits && prevent_crits)
 		str += "<br>———————————————<br>"
