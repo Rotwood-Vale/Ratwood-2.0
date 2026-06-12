@@ -162,7 +162,7 @@
 	desc = "A noble's chaperon made for the local Marshal. \"How terribly unfortunate you are!\""
 	color = "#641E16"
 	detail_color = "#b68e37ff"
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_BURN)
 	armor = ARMOR_SPELLSINGER // spellsinger hat stats. Drip or drown.
 	nudist_approved = FALSE // armored
 
@@ -286,7 +286,7 @@
 	max_integrity = ARMOR_INT_HELMET_HARDLEATHER
 	armor = ARMOR_SPELLSINGER
 	body_parts_covered = HEAD|HAIR|EARS
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_BURN)
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 	heat_protection = HEAD
