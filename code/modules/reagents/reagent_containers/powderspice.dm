@@ -1,5 +1,5 @@
 /obj/item/reagent_containers/powder
-	name = "default powder"
+	name = "默认粉末"
 	desc = ""
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "spice"
@@ -12,7 +12,7 @@
 	dropshrink = 0.75
 
 /obj/item/reagent_containers/powder/spice
-	name = "spice"
+	name = "香料"
 	desc = ""
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "spice"
@@ -24,7 +24,7 @@
 	sellprice = 10
 
 /datum/reagent/druqks
-	name = "Drukqs"
+	name = "德鲁克斯"
 	description = ""
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 16
@@ -56,7 +56,7 @@
 	show_when_dead = FALSE
 
 /datum/reagent/druqks/overdose_start(mob/living/M)
-	M.visible_message(span_warning("Blood runs from [M]'s nose."))
+	M.visible_message(span_warning("[M]鼻中流出了鲜血。"))
 
 /datum/reagent/druqks/on_mob_metabolize(mob/living/M)
 	M.overlay_fullscreen("druqk", /atom/movable/screen/fullscreen/druqks)
@@ -97,22 +97,22 @@
 	if(!canconsume(M, user))
 		return FALSE
 	if(M == user)
-		M.visible_message(span_notice("[user] sniffs [src]."))
+		M.visible_message(span_notice("[user]吸了吸[src]。"))
 	else
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			var/obj/item/bodypart/CH = C.get_bodypart(BODY_ZONE_HEAD)
 			if(!CH)
-				to_chat(user, span_warning("[C.p_theyre(TRUE)] missing something."))
+				to_chat(user, span_warning("[C.p_theyre(TRUE)]少了点什么。"))
 			if(!C.can_smell())
-				to_chat(user, span_warning("[C.p_theyre(TRUE)] has no nose!"))
+				to_chat(user, span_warning("[C.p_theyre(TRUE)]没有鼻子！"))
 			
-			user.visible_message(span_danger("[user] attempts to force [C] to inhale [src]."), \
-								span_danger("I attempt to force [C] to inhale [src]!"))
+			user.visible_message(span_danger("[user]试图强迫[C]吸入[src]。"), \
+								span_danger("[user]试图强迫我吸入[src]！"))
 		
 			if(C.cmode)
 				if(!CH.grabbedby)
-					to_chat(user, span_info("[C.p_they(TRUE)] steals [C.p_their()] face from it."))
+					to_chat(user, span_info("[C.p_they(TRUE)]挣脱了控制。"))
 					return FALSE
 			if(!do_mob(user, M, 10))
 				return FALSE
@@ -143,12 +143,12 @@
 		to_chat(user, span_warning("[target] is full."))
 		return
 
-	user.visible_message(span_warning("[user] slips something into [target]!"), span_notice("I dissolve [src] in [target]."), null, 2)
+	user.visible_message(span_warning("[user]往[target]里偷偷塞了什么！"), span_notice("我把[src]溶进了[target]里。"), null, 2)
 	reagents.trans_to(target, reagents.total_volume, transfered_by = user)
 	qdel(src)
 */
 /obj/item/reagent_containers/powder/flour
-	name = "powder"
+	name = "粉末"
 	desc = ""
 	gender = PLURAL
 	icon_state = "flour"
@@ -158,7 +158,7 @@
 	sellprice = 0
 
 /obj/item/reagent_containers/powder/mana
-	name = "sparkling blue powder"
+	name = "闪亮的蓝色粉末"
 	desc = ""
 	gender = PLURAL
 	icon_state = "flour"
@@ -169,7 +169,7 @@
 	sellprice = 0
 
 /obj/item/reagent_containers/powder/rocknut
-	name = "rocknut powder"
+	name = "石果粉"
 	desc = ""
 	gender = PLURAL
 	icon_state = "rocknut"
@@ -188,7 +188,7 @@
 		)
 
 /datum/reagent/floure
-	name = "flour"
+	name = "面粉"
 	description = ""
 	color = "#FFFFFF" // rgb: 96, 165, 132
 
@@ -204,7 +204,7 @@
 	qdel(src)
 
 /datum/chemical_reaction/graintopowder
-	name = "Powder Piling"
+	name = "堆粉反应"
 	id = "powderpiling"
 	required_reagents = list(/datum/reagent/floure = 10)
 
@@ -214,7 +214,7 @@
 		new /obj/item/reagent_containers/powder/flour(location)
 
 /obj/item/reagent_containers/powder/salt
-	name = "salt"
+	name = "盐"
 	desc = ""
 	gender = PLURAL
 	icon_state = "salt"
@@ -228,7 +228,7 @@
 	qdel(src)
 
 /obj/item/reagent_containers/powder/ozium
-	name = "ozium"
+	name = "奥兹姆"
 	desc = ""
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "ozium"
@@ -239,12 +239,12 @@
 	sellprice = 5
 
 /datum/reagent/ozium
-	name = "Ozium"
+	name = "奥兹姆"
 	description = ""
 	color = "#a5606f" // rgb: 96, 165, 132
 	overdose_threshold = 16
 	metabolization_rate = 0.2
-	taste_description = "a bitter numbess"
+	taste_description = "苦涩的麻木感"
 
 /datum/reagent/ozium/overdose_process(mob/living/M)
 	M.adjustToxLoss(3, 0)
@@ -259,11 +259,11 @@
 
 /datum/reagent/ozium/overdose_start(mob/living/M)
 	M.playsound_local(M, 'sound/misc/heroin_rush.ogg', 100, FALSE)
-	M.visible_message(span_warning("Blood runs from [M]'s nose."))
+	M.visible_message(span_warning("[M]鼻中流出了鲜血。"))
 
 /obj/item/reagent_containers/powder/moondust
-	name = "moondust"
-	desc = "a mound of iridescent white powder with an acrid, potent scent that numbs your nostrils"
+	name = "月尘"
+	desc = "一堆泛着虹彩的白色粉末，气味辛烈浓重，闻之会让鼻腔发麻"
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "moondust"
 	possible_transfer_amounts = list()
@@ -273,12 +273,12 @@
 	sellprice = 5
 
 /datum/reagent/moondust
-	name = "moondust"
+	name = "月尘"
 	description = ""
 	color = "#f9e5fd"
 	overdose_threshold = 24
 	metabolization_rate = 0.2
-	taste_description = "numbness and the moon"
+	taste_description = "麻木感与月华"
 
 /datum/reagent/moondust/overdose_process(mob/living/M)
 	M.adjustToxLoss(3, 0)
@@ -306,11 +306,11 @@
 
 /datum/reagent/moondust/overdose_start(mob/living/M)
 	M.playsound_local(M, 'sound/misc/heroin_rush.ogg', 100, FALSE)
-	M.visible_message(span_warning("Blood runs from [M]'s nose."))
+	M.visible_message(span_warning("[M]鼻中流出了鲜血。"))
 
 /obj/item/reagent_containers/powder/moondust_purest
-	name = "moondust"
-	desc = "a spectacularly glittering pile of flaky, iridescent powder"
+	name = "月尘"
+	desc = "一堆闪耀夺目的片状虹彩粉末"
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "moondust_purest"
 	possible_transfer_amounts = list()
@@ -320,12 +320,12 @@
 	sellprice = 30
 
 /datum/reagent/moondust_purest
-	name = "Purest Moondust"
+	name = "至纯月尘"
 	description = ""
 	color = "#e7ade9"
 	overdose_threshold = 20
 	metabolization_rate = 0.2
-	taste_description = "sheer, unadulterated energy"
+	taste_description = "纯粹而毫无杂质的能量"
 
 /datum/reagent/moondust_purest/overdose_process(mob/living/M)
 	M.adjustToxLoss(3, 0)
@@ -355,12 +355,12 @@
 
 /datum/reagent/moondust_purest/overdose_start(mob/living/M)
 	M.playsound_local(M, 'sound/misc/heroin_rush.ogg', 100, FALSE)
-	M.visible_message(span_warning("Blood runs from [M]'s nose."))
+	M.visible_message(span_warning("[M]鼻中流出了鲜血。"))
 
 
 /obj/item/reagent_containers/powder/starsugar
-	name = "starsugar"
-	desc = "A powerful stimulant. Brings you closer to feeling as She does. Taboo and illegal in many places."
+	name = "星糖"
+	desc = "一种强效兴奋剂，让你更接近她所感受到的一切；在许多地方都属禁忌与非法之物。"
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "starsugar"
 	item_state = "starsugar"
@@ -371,7 +371,7 @@
 	sellprice = 25
 
 /datum/reagent/starsugar
-	name = "starsugar"
+	name = "星糖"
 	description = ""
 	color = "#e47cdf"
 	overdose_threshold = 20
@@ -392,7 +392,7 @@
 	..()
 
 /datum/reagent/starsugar/on_mob_life(mob/living/carbon/M)
-	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
+	var/high_message = pick("你感到异常亢奋。", "你觉得自己还得更快。", "你觉得自己能掌控一切。")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.AdjustStun(-40, FALSE)
@@ -419,21 +419,21 @@
 
 /datum/reagent/starsugar/overdose_process(mob/living/M)
 	M.playsound_local(M, 'sound/misc/heroin_rush.ogg', 100, FALSE)
-	M.visible_message(span_warning("Blood runs from [M]'s nose."))
+	M.visible_message(span_warning("[M]鼻中流出了鲜血。"))
 	if((M.mobility_flags & MOBILITY_MOVE) && !ismovableatom(M.loc))
 		for(var/i in 1 to 4)
 			step(M, pick(GLOB.cardinals))
 	if(prob(20))
 		M.emote("laugh")
 	if(prob(15))
-		M.visible_message("<span class='danger'>[M]'s face turns pale and sweaty!</span>")
+		M.visible_message("<span class='danger'>[M]的脸色变得苍白，满是冷汗！</span>")
 		M.drop_all_held_items()
 	..()
 	M.adjustToxLoss(4, 0)
 	. = 1
 
 /datum/reagent/herozium
-	name = "herozium"
+	name = "赫若兹姆"
 	description = ""
 	reagent_state = LIQUID
 	color = "#ff6207"
@@ -441,8 +441,8 @@
 	metabolization_rate = 0.5
 
 /obj/item/reagent_containers/powder/herozium
-	name = "herozium"
-	desc = "Sweet unfeeling. Do you like to hurt other people? Outright banned and controlled in most regions."
+	name = "赫若兹姆"
+	desc = "甜美而麻木。你喜欢伤害别人吗？它在大多数地区都被明令禁止并严加管制。"
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "herozium"
 	item_state = "herozium"
@@ -508,7 +508,7 @@
 
 
 /datum/reagent/sleep_powder
-	name = "sleep powder"
+	name = "昏睡粉"
 	description = ""
 	color = "#ddd3df" // rgb: 96, 165, 132
 	metabolization_rate = 1
@@ -521,12 +521,10 @@
 
 
 /obj/item/reagent_containers/powder/sleep_powder
-	name = "powder"
+	name = "粉末"
 	desc = ""
 	gender = PLURAL
 	icon_state = "flour"
 	list_reagents = list(/datum/reagent/sleep_powder = 5)
 	grind_results = null
 	volume = 10
-
-

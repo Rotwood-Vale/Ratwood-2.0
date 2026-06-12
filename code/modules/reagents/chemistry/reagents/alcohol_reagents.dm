@@ -7,11 +7,11 @@
 //////////////
 
 /datum/reagent/consumable/ethanol
-	name = "Ethanol"
-	description = "A well-known alcohol with a variety of applications."
+	name = "乙醇"
+	description = "一种广为人知且用途多样的酒精。"
 	color = "#404030" // rgb: 64, 64, 48
 	nutriment_factor = 0
-	taste_description = "alcohol"
+	taste_description = "酒精"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	hydration_factor = 10 // Moving hydration up a level
 	var/boozepwr = 25 //Higher numbers equal higher hardness, higher hardness equals more intense alcohol poisoning
@@ -42,7 +42,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(boozepwr >= 25)//It has to be REAL BOOZE.
 			if(HAS_TRAIT(C, TRAIT_DRUNK_HEALING))
 				if(prob(2))
-					to_chat(C, "<span class='notice'>A fine drink!</span>")
+					to_chat(C, "<span class='notice'>真是好酒！</span>")
 					C.emote("hum")
 				C.adjustBruteLoss(-0.2)
 				C.adjustFireLoss(-0.2)
@@ -56,14 +56,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(istype(O, /obj/item/paper))
 		var/obj/item/paper/paperaffected = O
 		paperaffected.clearpaper()
-		to_chat(usr, "<span class='notice'>[paperaffected]'s ink washes away.</span>")
+		to_chat(usr, "<span class='notice'>[paperaffected]上的墨迹被洗掉了。</span>")
 	if(istype(O, /obj/item/book))
 		if(reac_volume >= 5)
 			var/obj/item/book/affectedbook = O
 			affectedbook.dat = null
-			O.visible_message("<span class='notice'>[O]'s writing is washed away by [name]!</span>")
+			O.visible_message("<span class='notice'>[O]上的字迹被[name]洗掉了！</span>")
 		else
-			O.visible_message("<span class='warning'>[O]'s ink is smeared by [name], but doesn't wash away!</span>")
+			O.visible_message("<span class='warning'>[O]上的墨迹被[name]弄花了，但还没被洗掉！</span>")
 	return
 
 /datum/reagent/consumable/ethanol/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.

@@ -1,8 +1,8 @@
 /datum/reagent/miasmagas
-	name = "miasmagas"
+	name = "瘴气"
 	description = "."
 	color = "#801E28" // rgb: 128, 30, 40
-	taste_description = "ugly"
+	taste_description = "恶臭"
 	metabolization_rate = 1
 
 /datum/reagent/miasmagas/on_mob_life(mob/living/carbon/M)
@@ -13,11 +13,11 @@
 
 
 /datum/reagent/rogueacid
-	name = "rogueacid"
+	name = "盗镇酸液"
 	description = "."
 	reagent_state = LIQUID
 	color = "#5eff00"
-	taste_description = "burning"
+	taste_description = "灼烧感"
 	self_consuming = TRUE
 
 /datum/reagent/rogueacid/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -27,11 +27,11 @@
 //Might be worth putting in toxins?
 //Not used for anything but Lamia bites.
 /datum/reagent/lam_venom
-	name = "Lamia Venom"
+	name = "拉弥亚毒液"
 	description = ""
 	reagent_state = LIQUID
 	color = "#083b1c"
-	taste_description = "liquid fire"
+	taste_description = "液态火焰"
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM * 3
 	harmful = TRUE//Antidote can purge it.
 
@@ -49,7 +49,7 @@
 	M.adjust_drugginess(1)
 //Fluff text and emote.
 	if(prob(10))
-		to_chat(M, span_warning("My flesh burns!"))
+		to_chat(M, span_warning("我的血肉在燃烧！"))
 		if(prob(1))
 			M.emote("agony")
 	return ..()

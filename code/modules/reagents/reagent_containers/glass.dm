@@ -1,6 +1,6 @@
 
 /obj/item/reagent_containers/glass
-	name = "glass"
+	name = "玻璃容器"
 	amount_per_transfer_from_this = 10
 	var/amount_per_gulp = 5 // We need a separate amount for drinking
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
@@ -13,7 +13,7 @@
 	var/spiked = FALSE // a singular unit floating at the top that will always be consumed first
 
 /datum/intent/fill
-	name = "fill"
+	name = "装填"
 	icon_state = "infill"
 	chargetime = 0
 	noaa = TRUE
@@ -21,7 +21,7 @@
 	misscost = 0
 
 /datum/intent/pour
-	name = "feed"
+	name = "喂食"
 	icon_state = "infeed"
 	chargetime = 0
 	noaa = TRUE
@@ -29,7 +29,7 @@
 	misscost = 0
 
 /datum/intent/splash
-	name = "splash"
+	name = "泼洒"
 	icon_state = "insplash"
 	chargetime = 0
 	noaa = TRUE
@@ -43,12 +43,12 @@
 			H.try_milking(user, src)
 			return
 	if(!reagents || !reagents.total_volume)
-		to_chat(user, span_warning("[src] is empty!"))
+		to_chat(user, span_warning("[src]是空的！"))
 		return
 	if(user.used_intent.type == INTENT_SPLASH)
 		var/R
-		M.visible_message(span_danger("[user] splashes the contents of [src] onto [M]!"), \
-						span_danger("[user] splashes the contents of [src] onto you!"))
+		M.visible_message(span_danger("[user]把[src]里的东西泼到了[M]身上！"), \
+						span_danger("[user]把[src]里的东西泼到了你身上！"))
 		if(reagents)
 			for(var/datum/reagent/A in reagents.reagent_list)
 				R += "[A] ([num2text(A.volume)]),"
@@ -67,14 +67,14 @@
 		if(user.m_intent == MOVE_INTENT_SNEAK)
 			sneaking = TRUE
 		if(M != user)
-			M.visible_message(span_danger("[user] attempts to feed [M] something."), \
-						span_danger("[user] attempts to feed you something."))
+			M.visible_message(span_danger("[user]试图给[M]喂点什么。"), \
+						span_danger("[user]试图给你喂点什么。"))
 			if(!do_mob(user, M, double_progress = TRUE))
 				return
 			if(!reagents || !reagents.total_volume)
 				return // The drink might be empty after the delay, such as by spam-feeding
-			M.visible_message(span_danger("[user] feeds [M] something."), \
-						span_danger("[user] feeds you something."))
+			M.visible_message(span_danger("[user]给[M]喂了点什么。"), \
+						span_danger("[user]给你喂了点什么。"))
 			log_combat(user, M, "fed", reagents.log_list())
 		else
 			// check to see if we're a noble drinking soup
@@ -83,11 +83,11 @@
 				if (human_user.is_noble()) // egads we're an unmannered SLOB
 					human_user.add_stress(/datum/stressevent/noble_bad_manners)
 					if (prob(25))
-						to_chat(human_user, span_red("I've got better manners than this..."))
+						to_chat(human_user, span_red("我可不该这么没规矩……"))
 			if(sneaking)
-				to_chat(user, span_notice("I carefully sip [src]."))
+				to_chat(user, span_notice("我小心地啜饮了一口[src]。"))
 			else
-				to_chat(user, span_notice("I swallow a gulp of [src]."))
+				to_chat(user, span_notice("我灌下一大口[src]。"))
 		addtimer(CALLBACK(reagents, TYPE_PROC_REF(/datum/reagents, trans_to), M, sneaking ? 1 : amount_per_gulp, TRUE, TRUE, FALSE, user, FALSE, INGEST, TRUE, spiked ? TRUE : FALSE), 5)
 		spiked = FALSE
 		playsound(M.loc,pick(drinksounds), sneaking ? 50 : 100, TRUE)
@@ -118,25 +118,25 @@
 		if(INTENT_POUR)
 			if(closed)
 				if(they_closed)
-					to_chat(user, span_warning("Both vessels are corked!"))
+					to_chat(user, span_warning("两个容器都塞着塞子！"))
 					nodup = TRUE
 				else
-					to_chat(user, span_warning("The vessel I'm trying to pour from is corked!"))
+					to_chat(user, span_warning("我要倒出的那个容器被塞住了！"))
 			if(they_closed && !nodup)
-				to_chat(user, span_warning("The vessel I'm trying to fill up is corked!"))
+				to_chat(user, span_warning("我要装入的那个容器被塞住了！"))
 		if(INTENT_FILL)
 			if(closed)
 				if(they_closed)
-					to_chat(user, span_warning("Both vessels are corked!"))
+					to_chat(user, span_warning("两个容器都塞着塞子！"))
 					nodup = TRUE
 				else
-					to_chat(user, span_warning("The vessel I'm trying to fill up is corked!"))
+					to_chat(user, span_warning("我要装入的那个容器被塞住了！"))
 			if(they_closed && !nodup)
-				to_chat(user, span_warning("The vessel I'm trying to pour from is corked!"))
+				to_chat(user, span_warning("我要倒出的那个容器被塞住了！"))
 		if(INTENT_SPLASH)
 			if(closed)
 				if(!user.mob_timers["splashclosed_notif"] || (world.time > (user.mob_timers["splashclosed_notif"] + 0.3 SECONDS)))
-					to_chat(user, span_warning("The vessel I'm trying to splash with is corked!"))
+					to_chat(user, span_warning("我要用来泼洒的那个容器被塞住了！"))
 					user.mob_timers["splashclosed_notif"] = world.time
 
 	if(!spillable)
@@ -146,7 +146,7 @@
 	if(target.is_refillable() && (user.used_intent.type == INTENT_POUR)) //Something like a glass. Player probably wants to transfer TO it.
 		testing("attackobj2")
 		if(!reagents.total_volume)
-			to_chat(user, span_warning("[src] is empty!"))
+			to_chat(user, span_warning("[src]是空的！"))
 			return
 		var/sneaking = FALSE
 		var/to_transfer = amount_per_transfer_from_this
@@ -157,13 +157,13 @@
 		if(target.reagents.holder_full())
 			if(sneaking && istype(target, /obj/item/reagent_containers/glass))
 				to_spike = TRUE
-				to_chat(user, span_warning("I start sprinkling [src] on the rim of [target]."))
+				to_chat(user, span_warning("我开始把[src]悄悄抹在[target]的边缘。"))
 			else
-				to_chat(user, span_warning("[target] is full."))
+				to_chat(user, span_warning("[target]已经满了。"))
 				return
 		if(!sneaking)
-			user.visible_message(span_notice("[user] pours [src] into [target]."), \
-							span_notice("I pour [src] into [target]."))
+			user.visible_message(span_notice("[user]把[src]倒进了[target]。"), \
+							span_notice("我把[src]倒进了[target]。"))
 			if(poursounds)
 				playsound(user.loc,pick(poursounds), 100, TRUE)
 		if(to_spike)
@@ -190,11 +190,11 @@
 	if(target.is_drainable() && (user.used_intent.type == /datum/intent/fill)) //A dispenser. Transfer FROM it TO us.
 		testing("attackobj3")
 		if(!target.reagents.total_volume)
-			to_chat(user, span_warning("[target] is empty!"))
+			to_chat(user, span_warning("[target]是空的！"))
 			return
 
 		if(reagents.holder_full())
-			to_chat(user, span_warning("[src] is full."))
+			to_chat(user, span_warning("[src]已经满了。"))
 			return
 		var/sneaking = FALSE
 		var/to_transfer = amount_per_transfer_from_this
@@ -205,13 +205,13 @@
 		if(reagents.holder_full())
 			if(sneaking && istype(src, /obj/item/reagent_containers/glass))
 				to_spike = TRUE
-				to_chat(user, span_warning("I start sprinkling [target] on the rim of [src]."))
+				to_chat(user, span_warning("我开始把[target]悄悄抹在[src]的边缘。"))
 			else
-				to_chat(user, span_warning("[src] is full."))
+				to_chat(user, span_warning("[src]已经满了。"))
 				return
 		if(!sneaking)
-			user.visible_message(span_notice("[user] fills [src] with [target]."), \
-								span_notice("I fill [src] with [target]."))
+			user.visible_message(span_notice("[user]用[target]装满了[src]。"), \
+								span_notice("我用[target]装满了[src]。"))
 			if(fillsounds)
 				playsound(user.loc,pick(fillsounds), 100, TRUE)
 		if(to_spike)
@@ -254,7 +254,7 @@
 
 	if(closed && user.used_intent.type == INTENT_SPLASH)
 		if(!user.mob_timers["splashclosed_notif"] || (world.time > (user.mob_timers["splashclosed_notif"] + 0.3 SECONDS)))
-			to_chat(user, span_warning("The vessel I'm trying to splash with is corked!"))
+			to_chat(user, span_warning("我要用来泼洒的那个容器被塞住了！"))
 			user.mob_timers["splashclosed_notif"] = world.time
 
 	if(!spillable)
@@ -272,7 +272,7 @@
 	var/hotness = I.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
-		to_chat(user, span_notice("I heat [name] with [I]!"))
+		to_chat(user, span_notice("我用[I]加热了[name]！"))
 
 	if(istype(I, /obj/item/reagent_containers/food/snacks/egg)) //breaking eggs
 		var/obj/item/reagent_containers/food/snacks/egg/E = I
@@ -280,7 +280,7 @@
 			if(reagents.total_volume >= reagents.maximum_volume)
 				to_chat(user, span_notice("[src] is full."))
 			else
-				to_chat(user, span_notice("I break [E] in [src]."))
+				to_chat(user, span_notice("我把[E]打进了[src]里。"))
 				E.reagents.trans_to(src, E.reagents.total_volume, transfered_by = user)
 				onfill(E, user, silent = FALSE)
 				qdel(E)
@@ -295,12 +295,12 @@
 		if(!reagents.has_reagent(/datum/reagent/water, 5))
 			removereg = /datum/reagent/water/gross
 			if(!reagents.has_reagent(/datum/reagent/water/gross, 5))
-				to_chat(user, span_warning("There's not enough water to soak [T] in."))
+				to_chat(user, span_warning("这里的水不够浸湿[T]。"))
 				return
 		wash_atom(T)
 		playsound(src, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 100, FALSE)
 		reagents.remove_reagent(removereg, 5)
-		user.visible_message(span_info("[user] soaks [T] in [src]."), span_info("I soak [T] in [src]."))
+		user.visible_message(span_info("[user]把[T]浸进了[src]里。"), span_info("我把[T]浸进了[src]里。"))
 		return
 	..()
 

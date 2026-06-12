@@ -1,5 +1,5 @@
 /datum/chemical_reaction/reagent_explosion
-	name = "Generic explosive"
+	name = "通用爆炸物"
 	id = "reagent_explosion"
 	var/strengthdiv = 10
 	var/modifier = 0
@@ -17,13 +17,13 @@
 	do_explosion()
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion
-	name = "Explosion"
+	name = "爆炸"
 	id = "potassium_explosion"
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/potassium = 1)
 	strengthdiv = 20
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom
-	name = "Holy Explosion"
+	name = "神圣爆炸"
 	id = "holyboom"
 	required_reagents = list(/datum/reagent/water/holywater = 1, /datum/reagent/potassium = 1)
 

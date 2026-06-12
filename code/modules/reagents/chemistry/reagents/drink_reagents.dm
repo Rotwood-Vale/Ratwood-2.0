@@ -5,22 +5,22 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Rougetown Reagents - Ported from Dreamkeep
 /datum/reagent/consumable/acorn_powder
-	name = "Acorn Powder"
-	description = "A bitter fine powder."
+	name = "橡果粉"
+	description = "一种带苦味的细腻粉末。"
 	color = "#dcb137"
 	quality = DRINK_VERYGOOD
-	taste_description = "bitter earthy-ness"
+	taste_description = "苦涩的泥土气息"
 
 /datum/reagent/consumable/acorn_powder/on_mob_life(mob/living/carbon/M)
 	M.energy_add(8)
 	..()
 
 /datum/reagent/consumable/Acoffee
-	name = "Acorn Coffee"
-	description = "A nice bitter stimulating brew"
+	name = "橡果咖啡"
+	description = "一杯苦香宜人、提神醒脑的饮品"
 	color = "#800000"
 	quality = DRINK_VERYGOOD
-	taste_description = "robust earthy-ness"
+	taste_description = "浓郁的泥土气息"
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	overdose_threshold = null
 	var/hydration = 8
@@ -49,8 +49,8 @@
 		if(M.has_status_effect(/datum/status_effect/debuff/sleepytime))
 			M.remove_status_effect(/datum/status_effect/debuff/sleepytime)
 			M.remove_stress(/datum/stressevent/sleepytime)
-			to_chat(M, span_green("I feel much more focused from that coffee!"))
-			M.visible_message(span_info("[M] gains a look of focus in their eyes, the weary expression lifting from [M.p_them()]."))
+			to_chat(M, span_green("这杯咖啡让我清醒专注多了！"))
+			M.visible_message(span_info("[M]的眼神重新聚焦，脸上的倦意也随之消散。"))
 			M.adjust_triumphs(1)
 			if(M.mind?.sleep_adv)
 				M.mind.sleep_adv.sleep_adv_points += 3
@@ -59,7 +59,7 @@
 	..()
 
 /datum/chemical_reaction/alch/acoffee
-	name = "coffee-acorn"
+	name = "橡果咖啡"
 	mix_sound = 'sound/items/fillbottle.ogg'
 	id = /datum/reagent/consumable/Acoffee
 	required_temp = 374

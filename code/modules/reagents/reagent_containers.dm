@@ -1,5 +1,5 @@
 /obj/item/reagent_containers
-	name = "Container"
+	name = "容器"
 	desc = ""
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = null
@@ -67,20 +67,22 @@
 
 	var/covered = ""
 	if(C.is_mouth_covered(head_only = 1))
-		covered = "headgear"
+		covered = "头部装备"
 	else if(C.is_mouth_covered(mask_only = 1))
-		covered = "mask"
+		covered = "面罩"
 	if(C != user)
 		if((C.mobility_flags & MOBILITY_STAND) && eaterrelay)
 			if(get_dir(eater, user) != eater.dir)
-				to_chat(user, span_warning("I must stand in front of [C.p_them()]."))
+				to_chat(user, span_warning("我必须站到[C.p_them()]前面。"))
 				return FALSE
 		else if(eaterrelay && (get_turf(eaterrelay) != get_turf(user) && !user.is_holding(eaterrelay)))
 			return FALSE
 	if(covered)
 		if(!silent)
-			var/who = (isnull(user) || eater == user) ? "my" : "[eater.p_their()]"
-			to_chat(user, span_warning("I have to remove [who] [covered] first!"))
+			if(isnull(user) || eater == user)
+				to_chat(user, span_warning("我得先把自己的[covered]摘下来！"))
+			else
+				to_chat(user, span_warning("我得先把[eater]的[covered]摘下来！"))
 		return FALSE
 	return TRUE
 
@@ -113,8 +115,8 @@
 			reagents.total_volume *= rand(5,10) * 0.1 //Not all of it makes contact with the target
 		var/mob/M = target
 		var/R
-		target.visible_message(span_danger("[M] has been splashed with something!"), \
-						span_danger("[M] has been splashed with something!"))
+		target.visible_message(span_danger("[M]被什么东西泼到了！"), \
+						span_danger("[M]被什么东西泼到了！"))
 		for(var/datum/reagent/A in reagents.reagent_list)
 			R += "[A.type]  ([num2text(A.volume)]),"
 
@@ -123,7 +125,7 @@
 		reagents.reaction(target, TOUCH)
 
 	else if(bartender_check(target) && thrown)
-		visible_message(span_notice("[src] lands onto the [target.name] without spilling a single drop."))
+		visible_message(span_notice("[src]落在了[target.name]上，一滴都没洒出来。"))
 		return
 
 	else
@@ -131,7 +133,7 @@
 			log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]", "in [AREACOORD(target)]")
 			log_game("[key_name(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [AREACOORD(target)].")
 			message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [ADMIN_VERBOSEJMP(target)].")
-		visible_message(span_notice("[src] spills its contents all over [target]."))
+		visible_message(span_notice("[src]把里面的东西洒了[target]一身。"))
 		reagents.reaction(target, TOUCH)
 		if(QDELETED(src))
 			return

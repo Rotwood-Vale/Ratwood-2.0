@@ -15,12 +15,12 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 //Hydroponics stuff
 
 /datum/reagent
-	var/name = "Reagent"
+	var/name = "试剂"
 	var/description = ""
 	var/specific_heat = SPECIFIC_HEAT_DEFAULT		//J/(K*mol)
 	var/taste_description = ""
 	var/taste_mult = 1 //how this taste compares to others. Higher values means it is more noticable
-	var/glass_name = "glass of ...what?" // use for specialty drinks.
+	var/glass_name = "一杯……什么？" // use for specialty drinks.
 	var/glass_desc = ""
 	var/glass_icon_state = null // Otherwise just sets the icon to a normal glass with the mixture of the reagents in the glass.
 	var/shot_glass_icon_state = null
@@ -127,27 +127,27 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	return
 
 /datum/reagent/proc/overdose_start(mob/living/M)
-	to_chat(M, span_danger("I feel like I took too much of [name]!"))
+	to_chat(M, span_danger("我感觉自己摄入了太多[name]！"))
 	return
 
 /datum/reagent/proc/addiction_act_stage1(mob/living/M)
 	if(prob(30))
-		to_chat(M, span_notice("I feel like having some [name] right about now."))
+		to_chat(M, span_notice("我现在就想来点[name]。"))
 	return
 
 /datum/reagent/proc/addiction_act_stage2(mob/living/M)
 	if(prob(30))
-		to_chat(M, span_notice("I feel like you need [name]. You just can't get enough."))
+		to_chat(M, span_notice("我觉得自己需要[name]，怎么都不够。"))
 	return
 
 /datum/reagent/proc/addiction_act_stage3(mob/living/M)
 	if(prob(30))
-		to_chat(M, span_danger("I have an intense craving for [name]."))
+		to_chat(M, span_danger("我强烈渴求[name]。"))
 	return
 
 /datum/reagent/proc/addiction_act_stage4(mob/living/M)
 	if(prob(30))
-		to_chat(M, span_boldannounce("You're not feeling good at all! You really need some [name]."))
+		to_chat(M, span_boldannounce("你现在糟透了！你真的需要来点[name]。"))
 	return
 
 /proc/pretty_string_from_reagent_list(list/reagent_list)

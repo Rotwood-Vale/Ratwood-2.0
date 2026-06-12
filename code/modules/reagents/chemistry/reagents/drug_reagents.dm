@@ -1,12 +1,12 @@
 /datum/reagent/drug
-	name = "Drug"
+	name = "药物"
 	metabolization_rate = 0.1
-	taste_description = "bitterness"
+	taste_description = "苦味"
 	var/trippy = TRUE //Does this drug make you trip?
 
 /datum/reagent/drug/space_drugs
-	name = "Space drugs"
-	description = "An illegal chemical compound used as drug."
+	name = "太空毒品"
+	description = "一种被当作毒品使用的非法化合物。"
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 30
 
@@ -54,7 +54,7 @@
 	filters += filter(type="angular_blur",x=5,y=5,size=1)
 
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/M)
-	to_chat(M, "<span class='danger'>I start tripping hard!</span>")
+	to_chat(M, "<span class='danger'>我开始严重致幻了！</span>")
 
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M)
 	M.adjustToxLoss(0.1*REM, 0)
@@ -62,12 +62,12 @@
 	..()
 
 /datum/reagent/drug/nicotine
-	name = "Nicotine"
-	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."
+	name = "尼古丁"
+	description = "能略微缩短眩晕时间；过量则会造成毒素与缺氧伤害。"
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	addiction_threshold = 999
-	taste_description = "smoke"
+	taste_description = "烟味"
 	trippy = FALSE
 	overdose_threshold=999
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
@@ -103,12 +103,12 @@
 	. = 1
 
 /datum/reagent/drug/mentha // distinct from SS13 menthol, for the mentha zigs
-	name = "Mentha"
-	description = "Extract from the mentha herb. Produces a cooling sensation."
+	name = "薄荷"
+	description = "从薄荷草本中提取，能带来清凉感。"
 	reagent_state = LIQUID
 	color = "#FFFFFF"
 	addiction_threshold = 999
-	taste_description = "mentha"
+	taste_description = "薄荷"
 	trippy = FALSE
 	overdose_threshold=999
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
@@ -132,8 +132,8 @@
 	. = 1
 
 /datum/reagent/drug/crank
-	name = "Crank"
-	description = "Reduces stun times by about 200%. If overdosed or addicted it will deal significant Toxin, Brute and Brain damage."
+	name = "烈性兴奋剂"
+	description = "可大幅缩短眩晕时间；若过量或成瘾，会造成明显的毒素、钝伤与脑损伤。"
 	reagent_state = LIQUID
 	color = "#FA00C8"
 	overdose_threshold = 20
@@ -141,7 +141,7 @@
 
 /datum/reagent/drug/crank/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
-		var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
+		var/high_message = pick("你感到浑身发颤。", "你觉得自己必须快起来。", "你觉得自己该再提把劲。")
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.AdjustStun(-20, FALSE)
 	M.AdjustKnockdown(-20, FALSE)
@@ -180,8 +180,8 @@
 	. = 1
 
 /datum/reagent/drug/methamphetamine
-	name = "Methamphetamine"
-	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
+	name = "甲基苯丙胺"
+	description = "能大幅缩短眩晕时间、提高速度并快速恢复体力，但会造成轻微脑损伤；过量会引发失控、狂笑、掉落物品以及毒素和脑损伤，成瘾后症状还会持续恶化。"
 	reagent_state = LIQUID
 	color = "#FAFAFA"
 	overdose_threshold = 20
@@ -197,7 +197,7 @@
 	..()
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M)
-	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
+	var/high_message = pick("你感到异常亢奋。", "你觉得自己还得更快。", "你觉得自己能掌控一切。")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 
@@ -221,7 +221,7 @@
 	if(prob(20))
 		M.emote("laugh")
 	if(prob(33))
-		M.visible_message("<span class='danger'>[M]'s hands flip out and flail everywhere!</span>")
+		M.visible_message("<span class='danger'>[M]的双手突然失控，胡乱挥舞起来！</span>")
 		M.drop_all_held_items()
 	..()
 	M.adjustToxLoss(1, 0)
@@ -264,13 +264,13 @@
 	. = 1
 
 /datum/reagent/drug/aranesp
-	name = "Aranesp"
-	description = "Amps you up, gets you going, and rapidly restores stamina damage. Side effects include breathlessness and toxicity."
+	name = "阿拉奈斯普"
+	description = "能让你迅速振作并快速恢复体力，但副作用包括气短与毒性。"
 	reagent_state = LIQUID
 	color = "#78FFF0"
 
 /datum/reagent/drug/aranesp/on_mob_life(mob/living/carbon/M)
-	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
+	var/high_message = pick("你感到干劲十足。", "你觉得自己已经准备好了。", "你觉得自己能逼近极限。")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.adjustStaminaLoss(-18, 0)
@@ -282,8 +282,8 @@
 	. = 1
 
 /datum/reagent/drug/happiness
-	name = "Happiness"
-	description = "Fills you with ecstasic numbness and causes minor brain damage. Highly addictive. If overdosed causes sudden mood swings."
+	name = "欢欣"
+	description = "让人沉浸在欣快的麻木中，并造成轻微脑损伤；极易成瘾，过量还会引发剧烈情绪波动。"
 	reagent_state = LIQUID
 	color = "#FFF378"
 	addiction_threshold = 10
@@ -346,8 +346,8 @@
 	. = 1
 
 /datum/reagent/drug/pumpup
-	name = "Pump-Up"
-	description = "Take on the world! A fast acting, hard hitting drug that pushes the limit on what you can handle."
+	name = "强效振奋剂"
+	description = "来征服世界吧！这是一种起效极快、药劲猛烈、会把承受极限一路推高的药物。"
 	reagent_state = LIQUID
 	color = "#e38e44"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
@@ -365,7 +365,7 @@
 	M.Jitter(5)
 
 	if(prob(5))
-		to_chat(M, "<span class='notice'>[pick("Go! Go! GO!", "You feel ready...", "You feel invincible...")]</span>")
+		to_chat(M, "<span class='notice'>[pick("上！上！上！", "你准备好了……", "你感觉自己无可战胜……")]</span>")
 	if(prob(15))
 		M.losebreath++
 		M.adjustToxLoss(2, 0)
@@ -373,7 +373,7 @@
 	. = 1
 
 /datum/reagent/drug/pumpup/overdose_start(mob/living/M)
-	to_chat(M, "<span class='danger'>I can't stop shaking, my heart beats faster and faster...</span>")
+	to_chat(M, "<span class='danger'>我抖得停不下来，心跳越来越快了……</span>")
 
 /datum/reagent/drug/pumpup/overdose_process(mob/living/M)
 	M.Jitter(5)
