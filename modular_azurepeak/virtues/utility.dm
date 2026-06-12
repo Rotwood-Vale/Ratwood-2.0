@@ -309,6 +309,27 @@
 			var/obj/item/bodypart/r_arm/prosthetic/bronzeright/L = new()
 			L.attach_limb(recipient)
 
+/datum/virtue/utility/goldarm_r
+	name = "Gold Arm (R)"
+	desc = "Through connections or wealth, my arm had been replaced by one of glittering gold, that can grip and hold onto things. I've learned just a bit of Engineering as a result."
+	custom_text = "Replaces your Right arm with a prosthetic Gold one. Incompatible with Wood Arm (R) vice"
+	added_skills = list(list(/datum/skill/craft/engineering, 1, 6))
+
+/datum/virtue/utility/goldarm_r/apply_to_human(mob/living/carbon/human/recipient)
+	. = ..()
+	var/obj/item/bodypart/O = recipient.get_bodypart(BODY_ZONE_R_ARM)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	if(recipient.charflaw)
+		if(recipient.charflaw.type == /datum/charflaw/limbloss/arm_r)
+			to_chat(recipient, span_info("In my foolishness I believed a sharlatan who wished to trade in my wooden arm for one of bronze. It fell apart. Now I've no arm at all."))
+		else
+			var/obj/item/bodypart/r_arm/prosthetic/gold/L = new()
+			L.attach_limb(recipient)
+
+
+
 /datum/virtue/utility/bronzearm_l
 	name = "Bronze Arm (L)"
 	desc = "Through connections or wealth, my arm had been replaced by one of bronze and gears, that can grip and hold onto things. I've learned just a bit of Engineering as a result."
@@ -327,6 +348,28 @@
 		else
 			var/obj/item/bodypart/l_arm/prosthetic/bronzeleft/L = new()
 			L.attach_limb(recipient)
+
+/datum/virtue/utility/goldarm_l
+	name = "Gold Arm (L)"
+	desc = "Through connections or wealth, my arm had been replaced by one of glittering gold, that can grip and hold onto things. I've learned just a bit of Engineering as a result."
+	custom_text = "Replaces your Left arm with a prosthetic Gold one. Incompatible with Wood Arm (L) vice"
+	added_skills = list(list(/datum/skill/craft/engineering, 1, 6))
+
+/datum/virtue/utility/goldarm_l/apply_to_human(mob/living/carbon/human/recipient)
+	. = ..()
+	var/obj/item/bodypart/O = recipient.get_bodypart(BODY_ZONE_L_ARM)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	if(recipient.charflaw)
+		if(recipient.charflaw.type == /datum/charflaw/limbloss/arm_l)
+			to_chat(recipient, span_info("In my foolishness I believed a sharlatan who wished to trade in my wooden arm for one of bronze. It fell apart. Now I've no arm at all."))
+		else
+			var/obj/item/bodypart/l_arm/prosthetic/gold/L = new()
+			L.attach_limb(recipient)
+
+
+
 
 /datum/virtue/utility/woodwalker
 	name = "Woodwalker"
