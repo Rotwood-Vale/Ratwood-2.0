@@ -5,7 +5,7 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
 	icon_state = "welfhand"
 	item_state = "welfhand"
-	armor = list("blunt" = 100, "slash" = 10, "stab" = 110, "piercing" = 20, "fire" = 0, "acid" = 0)//Resistant to blunt and stab, super weak to slash.
+	armor = list("blunt" = 100, "slash" = 10, "stab" = 110, "piercing" = 20, "fire" = WEAK_FRESIST, "acid" = 0)//Resistant to blunt and stab, super weak to slash.
 	prevent_crits = list(BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT
@@ -19,7 +19,7 @@
 /obj/item/clothing/gloves/roguetown/elven_gloves/druidic
 	name = "blessed druid gloves"
 	desc = "Gauntlets woven from roots nurtured by the Treefather's blessing. The living wood absorbs impacts and softens cuts that would otherwise tear through."
-	armor = list("blunt" = 100, "slash" = 65, "stab" = 130, "piercing" = 20, "fire" = 0, "acid" = 0)
+	armor = list("blunt" = 100, "slash" = 65, "stab" = 130, "piercing" = 20, "fire" = WEAK_FRESIST, "acid" = 0)
 
 /obj/item/clothing/gloves/roguetown/elven_gloves/druidic/Initialize(mapload)
 	. = ..()
