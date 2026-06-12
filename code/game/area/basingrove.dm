@@ -1,5 +1,5 @@
 /area/rogue/outdoors/rtfield
-	name = "Rotwood Basin"
+	name = "腐木谷盆地"
 	icon_state = "rtfield"
 	soundenv = 19
 	ambush_times = list("night")
@@ -10,18 +10,18 @@
 				/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 30,
 				/mob/living/simple_animal/hostile/retaliate/rogue/fox = 15,
 				/mob/living/carbon/human/species/skeleton/npc/supereasy = 30)
-	first_time_text = "ROTWOOD BASIN"
+	first_time_text = "腐木谷盆地"
 	droning_sound = 'sound/music/area/field.ogg'
 	droning_sound_dusk = 'sound/music/area/septimus.ogg'
 	droning_sound_night = 'sound/music/area/sleeping.ogg'
 	converted_type = /area/rogue/indoors/shelter/rtfield
-	deathsight_message = "somewhere in the wilds, next to towering walls"
+	deathsight_message = "荒野中的某处，紧邻高耸城墙之旁"
 	threat_region = THREAT_REGION_AZURE_BASIN
 	// detail_text = DETAIL_TEXT_AZURE_BASIN
 
 /area/rogue/outdoors/rtfield/rockhill
-	name = "Rockhill Basin"
-	first_time_text = "Rockhill Basin"
+	name = "岩丘盆地"
+	first_time_text = "岩丘盆地"
 	threat_region = THREAT_REGION_ROCKHILL_BASIN
 	// town_area = TRUE //might spread out the action a little if townies keep to town.
 
@@ -37,7 +37,7 @@
 	droning_sound_night = 'sound/music/area/sleeping.ogg'
 
 /area/rogue/indoors/town/grove
-	name = "druid's grove indoors"
+	name = "德鲁伊林地内部"
 	color = "#7e799c"
 	icon_state = "druidgrove"
 	droning_sound = 'sound/music/area/druid.ogg'
@@ -45,22 +45,22 @@
 	droning_sound_night = null
 	droning_sound_dawn = 'sound/music/area/forest.ogg'
 	converted_type = /area/rogue/indoors/shelter/woods
-	deathsight_message = "A sacred place of dendor, beneath the tree of Aeons.."
-	first_time_text = "The Grove"
+	deathsight_message = "登多尔的神圣之地，位于永世之树下方。"
+	first_time_text = "林地"
 	warden_area = TRUE
 	town_area = FALSE
 	// detail_text = DETAIL_TEXT_DRUIDS_GROVE
 
 /area/rogue/outdoors/town/grove
-	name = "druid's grove"
+	name = "德鲁伊林地"
 	icon_state = "druidgrove"
 	droning_sound = 'sound/music/area/druid.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
 	droning_sound_dawn = 'sound/music/area/forest.ogg'
 	converted_type = /area/rogue/indoors/town/grove
-	deathsight_message = "A sacred place of dendor, near the tree of Aeons.."
-	first_time_text = "The Grove"
+	deathsight_message = "登多尔的神圣之地，位于永世之树附近。"
+	first_time_text = "林地"
 	droning_sound_dusk = null
 	droning_sound_night = null
 	warden_area = TRUE

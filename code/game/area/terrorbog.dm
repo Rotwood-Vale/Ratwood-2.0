@@ -1,5 +1,5 @@
 /area/rogue/outdoors/bog
-	name = "The Terrorbog"
+	name = "恐惧沼泽"
 	icon_state = "bog"
 	ambientsounds = AMB_BOGDAY
 	ambientnight = AMB_BOGNIGHT
@@ -21,10 +21,10 @@
 				new /datum/ambush_config/mirespiders_crawlers = 25,
 				new /datum/ambush_config/mirespiders_aragn = 10,
 				new /datum/ambush_config/mirespiders_unfair = 5)
-	first_time_text = "THE TERRORBOG"
+	first_time_text = "恐惧沼泽"
 	converted_type = /area/rogue/indoors/shelter/bog
 	threat_region = THREAT_REGION_TERRORBOG
-	deathsight_message = "a wretched, fetid bog"
+	deathsight_message = "一片腐臭难闻的凄惨沼泽"
 	detail_text = DETAIL_TEXT_TERRORBOG
 
 /area/rogue/indoors/shelter/bog
@@ -32,10 +32,10 @@
 	// droning_sound = 'sound/music/area/bog.ogg'//nice to have it sound different indoors than out, gives a nice instant feedback
 	// droning_sound_dusk = null
 	// droning_sound_night = null
-	deathsight_message = "a wretched, fetid bog"
+	deathsight_message = "一片腐臭难闻的凄惨沼泽"
 
 /area/rogue/outdoors/bog/north
-	name = "Northern Terrorbog"
+	name = "北部恐惧沼泽"
 
 /area/rogue/outdoors/bog/south
-	name = "Southern Terrorbog"
+	name = "南部恐惧沼泽"

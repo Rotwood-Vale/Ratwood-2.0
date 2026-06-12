@@ -1,7 +1,7 @@
 // Rotwood Vale - the areas to the south of the map
 
 /area/rogue/outdoors/woods
-	name = "The Vale"
+	name = "谷地"
 	icon_state = "woods"
 	ambientsounds = AMB_FORESTDAY
 	ambientnight = AMB_FORESTNIGHT
@@ -21,20 +21,20 @@
 				/mob/living/carbon/human/species/goblin/npc/ambush = 30,
 				/mob/living/carbon/human/species/human/northern/militia/deserter = 20,
 				/mob/living/carbon/human/species/human/northern/highwayman/ambush = 10)
-	first_time_text = "THE VALE"
+	first_time_text = "谷地"
 	converted_type = /area/rogue/indoors/shelter/woods
-	deathsight_message = "somewhere in the wilds"
+	deathsight_message = "荒野中的某处"
 	threat_region = THREAT_REGION_AZURE_GROVE
 	detail_text = DETAIL_TEXT_AZURE_GROVE
 
 /area/rogue/indoors/shelter/woods
-	name = "woodland shelter"
+	name = "林间庇护所"
 	// droning_sound = 'sound/music/area/forest.ogg'
 	// droning_sound_dusk = 'sound/music/area/septimus.ogg'
 	// droning_sound_night = 'sound/music/area/forestnight.ogg'
 
 /area/rogue/outdoors/woods/north
-	name = "Rotwood Vale - North"
+	name = "腐木谷地 - 北部"
 	// This section shouldn't have any sea mobs, but is close to the old warden tower
 	// So should be relatively easy
 	ambush_mobs = list(
@@ -47,7 +47,7 @@
 	threat_region = THREAT_REGION_AZURE_GROVE
 
 /area/rogue/outdoors/woods/northeast
-	name = "Rotwood Vale - Northeast"
+	name = "腐木谷地 - 东北部"
 	// Ambush list here is "easier" with some pirates mob, possibility of sea goblin
 	ambush_mobs = list(
 			/mob/living/simple_animal/hostile/retaliate/rogue/wolf/badger = 10,
@@ -61,7 +61,7 @@
 	threat_region = THREAT_REGION_AZURE_GROVE
 
 /area/rogue/outdoors/woods/southeast
-	name = "Rotwood Vale - Southeast"
+	name = "腐木谷地 - 东南部"
 	ambush_mobs = list(
 		/mob/living/simple_animal/hostile/retaliate/rogue/wolf/badger = 10,
 		/mob/living/simple_animal/hostile/retaliate/rogue/wolf/raccoon = 30,
@@ -73,7 +73,7 @@
 		/mob/living/carbon/human/species/human/northern/highwayman/ambush = 30)
 
 /area/rogue/outdoors/woods/south
-	name = "Rotwood Vale - South"
+	name = "腐木谷地 - 南部"
 	ambush_mobs = list(
 		/mob/living/simple_animal/hostile/retaliate/rogue/wolf/badger = 10,
 		/mob/living/simple_animal/hostile/retaliate/rogue/wolf/raccoon = 30,
@@ -84,7 +84,7 @@
 		/mob/living/carbon/human/species/human/northern/highwayman/ambush = 20)
 
 /area/rogue/outdoors/woods/southwest
-	name = "Rotwood Vale - Southwest"
+	name = "腐木谷地 - 西南部"
 	ambush_mobs = list(
 		/mob/living/simple_animal/hostile/retaliate/rogue/wolf/badger = 10,
 		/mob/living/simple_animal/hostile/retaliate/rogue/wolf/raccoon = 30,
@@ -95,7 +95,7 @@
 		/mob/living/carbon/human/species/human/northern/highwayman/ambush = 20)
 
 /area/rogue/outdoors/woods/northwest
-	name = "Rotwood Vale - Northwest"
+	name = "腐木谷地 - 西北部"
 	ambush_mobs = list(
 		/mob/living/simple_animal/hostile/retaliate/rogue/wolf/badger = 10,
 		/mob/living/simple_animal/hostile/retaliate/rogue/wolf/raccoon = 30,
@@ -106,6 +106,6 @@
 		/mob/living/carbon/human/species/human/northern/highwayman/ambush = 20)
 
 /area/rogue/outdoors/woods/above //to hear the wind whistle throught the trees
-	name = "Woods above"
+	name = "林上高地"
 	ambientsounds = AMB_MOUNTAIN
 	ambientnight = AMB_MOUNTAIN

@@ -1,6 +1,6 @@
 // Areas for Mount Decap
 /area/rogue/outdoors/mountains/decap
-	name = "Mount Decapitation"
+	name = "断首山"
 	icon_state = "decap"
 	ambush_mobs = list(
 				new /datum/ambush_config/pair_of_direbear = 10,
@@ -15,15 +15,15 @@
 	droning_sound = 'sound/music/area/decap.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
-	first_time_text = "MOUNT DECAPITATION"
+	first_time_text = "断首山"
 	ambush_times = list("night","dawn","dusk","day")
 	converted_type = /area/rogue/indoors/shelter/mountains/decap
-	deathsight_message = "a twisted tangle of soaring peaks"
+	deathsight_message = "一片高耸群峰交错盘结的险地"
 	threat_region = THREAT_REGION_MOUNT_DECAP
 	detail_text = DETAIL_TEXT_DECAP
 
 /area/rogue/outdoors/mountains/decap/rockhill
-	first_time_text = "Somewhere high..."
+	first_time_text = "高处某地……"
 
 /area/rogue/indoors/shelter/mountains/decap
 	icon_state = "decap"
@@ -31,11 +31,11 @@
 	droning_sound_dusk = null
 	droning_sound_night = null
 	threat_region = THREAT_REGION_MOUNT_DECAP
-	deathsight_message = "a twisted tangle of soaring peaks"
+	deathsight_message = "一片高耸群峰交错盘结的险地"
 	detail_text = DETAIL_TEXT_DECAP_TARICHEA
 
 /area/rogue/outdoors/mountains/decap/stepbelow
-	name = "Tarichea - Valley of Loss"
+	name = "塔里凯亚，失落之谷"
 	icon_state = "decap"
 	ambush_mobs = list(
 				new /datum/ambush_config/pair_of_direbear = 10,
@@ -50,14 +50,14 @@
 	droning_sound = 'sound/music/area/decap_deeper.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
-	first_time_text = "TARICHEA, VALLEY OF LOSS"
+	first_time_text = "塔里凯亚，失落之谷"
 	ambush_times = list("night","dawn","dusk","day")
 	converted_type = /area/rogue/indoors/shelter/mountains/decap
 	threat_region = THREAT_REGION_MOUNT_DECAP
 	detail_text = DETAIL_TEXT_DECAP_TARICHEA
 
 /area/rogue/outdoors/mountains/decap/gunduzirak
-	name = "Gundu Zirak"
+	name = "贡杜-齐拉克"
 	icon_state = "decap"
 	ambush_mobs = list(
 				new /datum/ambush_config/treasure_hunter_posse = 1,
@@ -66,7 +66,7 @@
 	droning_sound = 'sound/music/area/prospector.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
-	first_time_text = "RUINS OF GUNDU-ZIRAK"
+	first_time_text = "贡杜-齐拉克遗迹"
 	ambush_times = list("night","dawn","dusk","day")
 	converted_type = /area/rogue/indoors/shelter/mountains/decap
 	ceiling_protected = TRUE
@@ -74,8 +74,8 @@
 	detail_text = DETAIL_TEXT_DECAP_GUNDU_ZIRAK
 
 /area/rogue/outdoors/mountains/decap/gunduzirak/bossarena
-	name = "Baronness Boss Arena"
-	first_time_text = "THE BARONESS"
+	name = "女男爵首领战场"
+	first_time_text = "女男爵"
 	detail_text = DETAIL_TEXT_DECAP_GUNDU_ZIRAK
 
 
@@ -83,15 +83,15 @@
 	return FALSE
 
 /area/rogue/under/cave/dragonden
-	name = "Den of Dragons"
+	name = "群龙之穴"
 	icon_state = "under"
-	first_time_text = "DEN OF DRAGONS"
+	first_time_text = "群龙之穴"
 	droning_sound = 'sound/music/area/dragonden.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
 	converted_type = /area/rogue/outdoors/dungeon1
 	ceiling_protected = TRUE
-	deathsight_message = "a twisted tangle of soaring peaks"
+	deathsight_message = "一片高耸群峰交错盘结的险地"
 	threat_region = THREAT_REGION_MOUNT_DECAP
 	detail_text = DETAIL_TEXT_DECAP_DRAGONDEN
 
@@ -99,38 +99,38 @@
 	return FALSE
 
 /area/rogue/under/cave/goblinfort
-	name = "Goblin Fortress"
+	name = "地精堡垒"
 	icon_state = "spidercave"
-	first_time_text = "GOBLIN FORTRESS"
+	first_time_text = "地精堡垒"
 	droning_sound = 'sound/music/area/dungeon2.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
 	converted_type = /area/rogue/outdoors/dungeon1
 	ceiling_protected = TRUE
-	deathsight_message = "a twisted tangle of soaring peaks"
+	deathsight_message = "一片高耸群峰交错盘结的险地"
 	threat_region = THREAT_REGION_MOUNT_DECAP
 	detail_text = DETAIL_TEXT_DECAP_GOBLIN_FORTRESS
 
 /area/rogue/under/cave/scarymaze
-	name = "Necran Labyrinth"
+	name = "内克拉迷宫"
 	icon_state = "spidercave"
-	first_time_text = "NECRAN LABYRINTH"
+	first_time_text = "内克拉迷宫"
 	droning_sound = 'sound/music/area/underworlddrone.ogg'
 	droning_sound_dusk = 'sound/music/area/underworlddrone.ogg'
 	droning_sound_night = 'sound/music/area/underworlddrone.ogg'
 	converted_type = /area/rogue/outdoors/dungeon1
 	ceiling_protected = TRUE
-	deathsight_message = "a twisted tangle of soaring peaks"
+	deathsight_message = "一片高耸群峰交错盘结的险地"
 	threat_region = THREAT_REGION_MOUNT_DECAP
 	detail_text = DETAIL_TEXT_DECAP_NECRAN_LABYRINTH
 
 /area/rogue/outdoors/mountains/decap/minotaurfort
-	name = "Ancient Dwarven Forge"
+	name = "古代矮人熔炉"
 	icon_state = "decap"
 	droning_sound = 'sound/music/area/prospector.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
-	first_time_text = "ANCIENT DWARVEN FORGE"
+	first_time_text = "古代矮人熔炉"
 	ambush_times = list("night","dawn","dusk","day")
 	converted_type = /area/rogue/indoors/shelter/mountains/decap
 	ceiling_protected = TRUE

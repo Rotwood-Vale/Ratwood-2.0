@@ -1,8 +1,8 @@
 /area/rogue/under/cavewet
-	name = "The Undergrove"
+	name = "地下林泽"
 	icon_state = "cavewet"
 	warden_area = TRUE
-	first_time_text = "The Undergrove"
+	first_time_text = "地下林泽"
 	ambientsounds = AMB_CAVEWATER
 	ambientnight = AMB_CAVEWATER
 	spookysounds = SPOOKY_CAVE
@@ -18,54 +18,54 @@
 				/mob/living/carbon/human/species/human/northern/highwayman/ambush = 20,
 				/mob/living/simple_animal/hostile/retaliate/rogue/troll = 15)
 	converted_type = /area/rogue/outdoors/caves
-	deathsight_message = "wet root-bound caverns"
+	deathsight_message = "被湿根缠绕的潮湿洞窟"
 	detail_text = DETAIL_TEXT_UNDERGROVE
 
 /area/rogue/under/cavewet/bogcaves
-	name = "The Undergrove"
-	first_time_text = "The Undergrove"
+	name = "地下林泽"
+	first_time_text = "地下林泽"
 
 /area/rogue/under/cavewet/bogcaves/west
-	name = "Western Undergrove"
-	first_time_text = "Western Undergrove"
+	name = "西部地下林泽"
+	first_time_text = "西部地下林泽"
 
 /area/rogue/under/cavewet/bogcaves/central
-	name = "Central Undergrove"
-	first_time_text = "Central Undergrove"
+	name = "中央地下林泽"
+	first_time_text = "中央地下林泽"
 
 /area/rogue/under/cavewet/bogcaves/camp
-	name = "Undergrove Camp"
-	first_time_text = "Undergrove Camp"
+	name = "地下林泽营地"
+	first_time_text = "地下林泽营地"
 	detail_text = DETAIL_TEXT_UNDERGROVE_CAMP
 
 /area/rogue/under/cavewet/bogcaves/south
-	name = "Southern Undergrove"
-	first_time_text = "Southern Undergrove"
+	name = "南部地下林泽"
+	first_time_text = "南部地下林泽"
 
 /area/rogue/under/cavewet/bogcaves/north
-	name = "Northern Undergrove"
-	first_time_text = "Northern Undergrove"
+	name = "北部地下林泽"
+	first_time_text = "北部地下林泽"
 
 /area/rogue/under/cavewet/bogcaves/coastcaves
-	name = "South Coast Caves"
-	first_time_text = "South Coast Caves"
+	name = "南岸洞窟"
+	first_time_text = "南岸洞窟"
 
 /area/rogue/under/cave/goblindungeon
-	name = "Goblin Camp"
+	name = "地精营地"
 	icon_state = "under"
-	first_time_text = "GOBLIN CAMP"
+	first_time_text = "地精营地"
 	droning_sound = 'sound/music/area/dungeon.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
 	converted_type = /area/rogue/outdoors/dungeon1
 	ceiling_protected = TRUE
-	deathsight_message = "root-bound caverns"
+	deathsight_message = "被树根缠绕的洞窟"
 	detail_text = DETAIL_TEXT_GOBLIN_CAMP
 
 /area/rogue/under/cave/skeletoncrypt
-	name = "Skeleton Crypt"
+	name = "骷髅墓穴"
 	icon_state = "under"
-	first_time_text = "SKELETON CRYPT"
+	first_time_text = "骷髅墓穴"
 	droning_sound = 'sound/music/area/dungeon.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
@@ -73,11 +73,11 @@
 	ambientnight = AMB_BASEMENT
 	converted_type = /area/rogue/outdoors/dungeon1
 	ceiling_protected = TRUE
-	deathsight_message = "root-bound caverns"
+	deathsight_message = "被树根缠绕的洞窟"
 	detail_text = DETAIL_TEXT_SKELETON_CRYPT
 
 /area/rogue/under/cavewet/river
-	name = "Cave River"
+	name = "洞窟河流"
 	icon_state = "river"
 	first_time_text = null
 	ambientsounds = AMB_RIVERDAY

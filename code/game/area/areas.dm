@@ -5,7 +5,7 @@
  */
 /area
 	level = null
-	name = "unknown"
+	name = "未知区域"
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "unknown"
 	layer = AREA_LAYER
@@ -39,7 +39,7 @@
 	/// Bonus mood for being in this area
 	var/mood_bonus = 0
 	/// Mood message for being here, only shows up if mood_bonus != 0
-	var/mood_message = span_nicegreen("This area is pretty nice!\n")
+	var/mood_message = span_nicegreen("这地方真不错！\n")
 
 	var/power_equip = TRUE
 	var/power_light = TRUE
@@ -113,7 +113,7 @@
 
 	var/threat_region = "" // Key used to look up threat region this area belongs to
 	/// Message used for deathsight. Try to be deliberately obtuse but not too obtuse.
-	var/deathsight_message = "a locale wreathed in enigmatic fog"
+	var/deathsight_message = "一处笼罩在神秘迷雾中的所在"
 
 	var/coven_protected = FALSE
 
@@ -414,9 +414,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!client)
 		return
 	if(A.first_time_text && A.detail_text)
-		to_chat(client, span_info("You enter <a href='?src=[REF(A)];getdescription=1'>[A.name]</a>."))
+		to_chat(client, span_info("你进入了<a href='?src=[REF(A)];getdescription=1'>[A.name]</a>。"))
 	else if (A.first_time_text) // Avoid trivial introduction
-		to_chat(client, span_info("You enter [A.name]."))
+		to_chat(client, span_info("你进入了[A.name]。"))
 	if(A.first_time_text in mind.areas_entered)
 		return
 	mind.areas_entered += A.first_time_text
@@ -562,7 +562,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			to_chat(usr, span_info("[detail_text]"))
 
 /area/start
-	name = "start area"
+	name = "起始区域"
 	icon_state = "start"
 	requires_power = FALSE
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED

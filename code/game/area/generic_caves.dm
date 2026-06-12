@@ -1,6 +1,6 @@
 // Please please split up those caves if you can and stop using the generic define AGH.
 /area/rogue/under/cave
-	name = "cave"
+	name = "洞穴"
 	warden_area = TRUE
 	icon_state = "cave"
 	ambientsounds = AMB_GENCAVE
@@ -34,7 +34,7 @@
 
 /area/rogue/under/cave/spider
 	icon_state = "spider"
-	first_time_text = "ARAIGNÉE"
+	first_time_text = "蛛巢"
 	ambush_mobs = list(
 				/mob/living/simple_animal/hostile/retaliate/rogue/spider = 100)
 	droning_sound = 'sound/music/area/spidercave.ogg'
@@ -49,7 +49,7 @@
 	droning_sound_night = null
 
 /area/rogue/under/spiderbase
-	name = "spiderbase"
+	name = "蜘蛛巢穴"
 	ambientsounds = AMB_BASEMENT
 	ambientnight = AMB_BASEMENT
 	icon_state = "spiderbase"

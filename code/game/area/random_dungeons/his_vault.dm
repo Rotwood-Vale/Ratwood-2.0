@@ -1,7 +1,7 @@
 /area/rogue/under/cave/his_vault
-	name = "his vault"
+	name = "祂的秘库"
 	icon_state = "under"
-	first_time_text = "HIS VAULT"
+	first_time_text = "祂的秘库"
 	droning_sound = 'sound/music/area/dragonden.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null

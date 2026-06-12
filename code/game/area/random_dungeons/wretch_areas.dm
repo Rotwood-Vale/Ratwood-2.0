@@ -8,9 +8,9 @@
 // 	detail_text = DETAIL_TEXT_FORSAKEN_CATHEDRAL
 
 /area/rogue/outdoors/wretch
-	name = "WRETCHED GHROTTO"
+	name = "弃民石窟"
 	icon_state = "outdoors"
-	first_time_text = "WRETCHED GHROTTO"
+	first_time_text = "弃民石窟"
 	droning_sound = 'sound/music/area/gloom.ogg'
 	droning_sound_dusk = 'sound/music/area/gloom.ogg'
 	droning_sound_night = 'sound/music/area/gloom.ogg'
@@ -22,7 +22,7 @@
 	spookynight = SPOOKY_GEN
 
 /area/rogue/under/wretch
-	name = "WRETCHED CAMP"
+	name = "弃民营地"
 	icon_state = "indoors"
 	first_time_text = ""
 	droning_sound = 'sound/music/impish.ogg'
@@ -32,9 +32,9 @@
 	detail_text = DETAIL_TEXT_WRETCHED_CAMP
 
 /area/rogue/under/wretch/temple
-	name = "WRETCHED TEMPLE"
+	name = "弃民神殿"
 	icon_state = "chapel"
-	first_time_text = "FORSAKEN CATHEDRAL"
+	first_time_text = "废弃大教堂"
 	droning_sound = 'sound/music/area/gloom.ogg'
 	droning_sound_dusk = 'sound/music/area/gloom.ogg'
 	droning_sound_night = 'sound/music/unholy.ogg'
@@ -42,7 +42,7 @@
 	detail_text = DETAIL_TEXT_WRETCHED_TEMPLE
 
 /area/rogue/under/wretch/cavern
-	name = "WRETCHED CAVERN"
+	name = "弃民洞窟"
 	icon_state = "cavewet"
 	droning_sound = 'sound/music/impish.ogg'
 	droning_sound_dusk = 'sound/music/impish.ogg'
@@ -54,9 +54,9 @@
 	converted_type = /area/rogue/outdoors/dungeon1
 
 /area/rogue/under/wretch/graggarena
-	name = "GRAGGITE ARENA"
+	name = "格拉加尔斗技场"
 	icon_state = "indoors"
-	first_time_text = "BLOODY ARENA"
+	first_time_text = "血腥斗技场"
 	droning_sound = 'sound/music/area/inferno.ogg'
 	droning_sound_dusk = 'sound/music/area/inferno.ogg'
 	droning_sound_night = 'sound/music/area/inferno.ogg'
@@ -64,9 +64,9 @@
 	detail_text = DETAIL_TEXT_BLOODY_ARENA
 
 /area/rogue/under/wretch/gnollcavern
-	name = "GNOLL CAVERN"
+	name = "豺狼人洞窟"
 	icon_state = "cave"
-	first_time_text = "GNOLL CAVERN"
+	first_time_text = "豺狼人洞窟"
 	droning_sound = 'sound/music/area/gobcamp.ogg'
 	droning_sound_dusk = 'sound/music/area/gobcamp.ogg'
 	droning_sound_night = 'sound/music/area/gobcamp.ogg'

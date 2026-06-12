@@ -1,7 +1,7 @@
 // Rotwood Vale - the areas to the south of the map
 
 /area/rogue/outdoors/woodsrat
-	name = "Rockhill Woods"
+	name = "岩丘森林"
 	icon_state = "woods"
 	ambientsounds = AMB_FORESTDAY
 	ambientnight = AMB_FORESTNIGHT
@@ -18,9 +18,9 @@
 				/mob/living/carbon/human/species/skeleton/npc/easy = 10,
 				/mob/living/carbon/human/species/goblin/npc/ambush = 30,
 				/mob/living/carbon/human/species/human/northern/highwayman/ambush = 30)
-	first_time_text = "The Murderwood"
+	first_time_text = "杀戮林"
 	converted_type = /area/rogue/indoors/shelter/woods
-	deathsight_message = "somewhere in the wilds"
+	deathsight_message = "荒野中的某处"
 	threat_region = THREAT_REGION_ROCKHILL_OUTER_GROVE
 
 // /area/rogue/indoors/shelter/woodsrat//can just use the default
@@ -32,7 +32,7 @@
 // 	threat_region = THREAT_REGION_ROCKHILL_OUTER_GROVE
 
 /area/rogue/outdoors/woodsrat/north
-	name = "Rockhill Woods - North"
+	name = "岩丘森林 - 北部"
 	ambush_mobs = list(
 		/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 40,
 		/mob/living/carbon/human/species/skeleton/npc/easy = 10,
@@ -44,11 +44,11 @@
 		/mob/living/simple_animal/hostile/retaliate/rogue/wolf/bobcat = 15,
 		/mob/living/simple_animal/hostile/retaliate/rogue/direbear = 10,)
 	converted_type = /area/rogue/indoors/shelter/woods
-	deathsight_message = "somewhere in the wilds"
+	deathsight_message = "荒野中的某处"
 	threat_region = THREAT_REGION_ROCKHILL_WOODS_NORTH
 
 /area/rogue/outdoors/woodsrat/south
-	name = "Rockhill Woods - South"
+	name = "岩丘森林 - 南部"
 	ambush_mobs = list(
 		/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 40,
 		/mob/living/carbon/human/species/skeleton/npc/medium = 10,
@@ -61,13 +61,13 @@
 		/mob/living/simple_animal/hostile/retaliate/rogue/direbear = 15,
 		/mob/living/simple_animal/hostile/retaliate/rogue/troll/axe = 2)
 	converted_type = /area/rogue/indoors/shelter/woods
-	deathsight_message = "somewhere in the wilds"
+	deathsight_message = "荒野中的某处"
 	threat_region = THREAT_REGION_ROCKHILL_WOODS_SOUTH
 
 
 
 /area/rogue/outdoors/woodsrat/above
-	name = "Woods above"
+	name = "林上高地"
 	ambientsounds = AMB_MOUNTAIN
 	ambientnight = AMB_MOUNTAIN
 	soundenv = 17
@@ -76,13 +76,13 @@
 	ambush_mobs = null
 
 /area/rogue/outdoors/woodsrat/safe
-	name = "Woods safe"
+	name = "安全林地"
 	first_time_text = null
 	ambush_times = null
 	ambush_mobs = null
 
 /area/rogue/outdoors/woodsrat/river
-	name = "river"
+	name = "河流"
 	icon_state = "river"
 	ambientsounds = AMB_RIVERDAY
 	ambientnight = AMB_RIVERNIGHT
@@ -91,7 +91,7 @@
 
 //Making it a separate type and not a subtype makes it play nicer with the terrain generator
 /area/rogue/outdoors/woodsafe
-	name = "Rockhill Woods Pass"
+	name = "岩丘森林关道"
 	icon_state = "woods"
 	first_time_text = null
 	ambush_times = null
@@ -106,4 +106,4 @@
 	soundenv = 15
 	warden_area = TRUE
 	converted_type = /area/rogue/indoors/shelter/woods
-	deathsight_message = "an eastern mountain pass, wooded and secluded in the wild"
+	deathsight_message = "东侧山间关道，林木环绕，隐于荒野"

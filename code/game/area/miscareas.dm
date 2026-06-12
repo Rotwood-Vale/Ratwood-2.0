@@ -1,6 +1,6 @@
 // Misc Areas for things I cannot be bothered to categorize elsewhere
 /area/rogue/outdoors/abisland
-	name = "abyssors grasp"
+	name = "阿比索尔之握"
 	icon_state = "island"
 	ambientsounds = AMB_ABISLAND
 	ambientnight = AMB_ABISLAND
@@ -11,6 +11,6 @@
 		/mob/living/simple_animal/hostile/rogue/deepone = 50,
 		/mob/living/simple_animal/hostile/rogue/deepone/spit = 30
 	)
-	first_time_text = "ABYSSOR'S GRASP"
-	deathsight_message = "amidst abyssor's grasp"
+	first_time_text = "阿比索尔之握"
+	deathsight_message = "身处阿比索尔之握中"
 	detail_text = DETAIL_TEXT_ABYSSORS_GRASP

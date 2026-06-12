@@ -4,9 +4,9 @@
 // The only real difference is audio
 
 /area/rogue/under/tomb
-	name = "Tomb of Alotheos"
+	name = "阿洛西俄斯之墓"
 	icon_state = "basement"
-	first_time_text = "THE TOMB OF ALOTHEOS"
+	first_time_text = "阿洛西俄斯之墓"
 	soundenv = 5
 	ambientsounds = AMB_BASEMENT
 	ambientnight = AMB_BASEMENT
@@ -15,7 +15,7 @@
 	droning_sound = 'sound/music/area/catacombs.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
-	deathsight_message = "a tomb lost to time and dust"
+	deathsight_message = "一座湮没于岁月与尘埃中的古墓"
 	detail_text = DETAIL_TEXT_TOMB_OF_ALOTHEOS
 
 /area/rogue/under/tomb/indoors

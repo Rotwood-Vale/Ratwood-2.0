@@ -1,6 +1,6 @@
 /area/rogue/under/cave/fishmandungeon //idk what the fish guys are called in lore
-	name = "deep ones lair"
-	first_time_text = "DEEP ONES LAIR"
+	name = "深潜者巢穴"
+	first_time_text = "深潜者巢穴"
 	droning_sound = 'sound/music/area/dungeon.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null

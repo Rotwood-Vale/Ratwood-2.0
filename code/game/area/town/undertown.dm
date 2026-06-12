@@ -1,6 +1,6 @@
 /// under
 /area/rogue/under/town
-	name = "basement"
+	name = "地下室"
 	icon_state = "town"
 	droning_sound = 'sound/music/area/catacombs.ogg'
 	droning_sound_dusk = null
@@ -15,7 +15,7 @@
 	droning_sound_night = null
 
 /area/rogue/under/town/sewer
-	name = "sewer"
+	name = "下水道"
 	icon_state = "sewer"
 	ambientsounds = AMB_CAVEWATER
 	ambientnight = AMB_CAVEWATER
@@ -27,7 +27,7 @@
 	ambientrain = RAIN_SEWER
 	soundenv = 21
 	converted_type = /area/rogue/outdoors/exposed/under/sewer
-	deathsight_message = "beneath streets of stone, putrid and wet"
+	deathsight_message = "石砌街道之下，污秽而潮湿"
 
 /area/rogue/outdoors/exposed/under/sewer
 	icon_state = "sewer"
@@ -36,7 +36,7 @@
 	droning_sound_night = null
 
 /area/rogue/under/town/caverogue
-	name = "town cave"
+	name = "城镇洞窟"
 	icon_state = "caverogue"
 	ambientsounds = AMB_GENCAVE
 	ambientnight = AMB_GENCAVE
@@ -54,7 +54,7 @@
 	droning_sound_night = null
 
 /area/rogue/under/town/basement
-	name = "basement"
+	name = "地下室"
 	icon_state = "basement"
 	ambientsounds = AMB_BASEMENT
 	ambientnight = AMB_BASEMENT
@@ -66,15 +66,15 @@
 	soundenv = 5
 	town_area = TRUE
 	converted_type = /area/rogue/outdoors/exposed/under/basement
-	deathsight_message = "beneath streets of stone, frequent of blood and steel"
+	deathsight_message = "石砌街道之下，常有鲜血与钢铁相伴"
 
 /area/rogue/under/town/basement/keep
-	name = "keep basement"
+	name = "城堡地下室"
 	icon_state = "basement"
 	keep_area = TRUE
 	town_area = TRUE
 	ceiling_protected = TRUE
-	deathsight_message = "beneath royal roses and stone battlements"
+	deathsight_message = "皇家蔷薇与石砌垛墙之下"
 
 /area/rogue/outdoors/exposed/under/basement
 	icon_state = "basement"

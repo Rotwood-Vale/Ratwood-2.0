@@ -1,6 +1,6 @@
 // Rotwood Coast - the northern part of the map - may not be actually coast
 /area/rogue/outdoors/beach/forest
-	name = "Rotwood Coast"
+	name = "腐木谷海岸"
 	icon_state = "beach"
 	icon_state = "woods"
 	ambientsounds = AMB_FORESTDAY
@@ -23,35 +23,35 @@
 				/mob/living/carbon/human/species/orc/npc/berserker = 10,
 				/mob/living/carbon/human/species/orc/npc/marauder = 10,
 				/mob/living/carbon/human/species/goblin/npc/ambush/sea = 40)
-	first_time_text = "THE ROTWOOD COAST"
+	first_time_text = "腐木谷海岸"
 	converted_type = /area/rogue/indoors/shelter/woods
-	deathsight_message = "somewhere betwixt Abyssor's realm and Dendor's bounty"
+	deathsight_message = "阿比索尔海域与登多尔恩赐之间的某处"
 	threat_region = THREAT_REGION_AZUREAN_COAST
 	detail_text = DETAIL_TEXT_NORTH_COAST
 
 /area/rogue/outdoors/beach/forest/hamlet
-	name = "The Rotwood Coast - Hamlet"
-	first_time_text = "THE HAMLET"
+	name = "腐木谷海岸 - 村落"
+	first_time_text = "村落"
 	ambush_mobs = null // We don't want actual ambushes in Hamlet but we also don't want to misuse outdoors/beach lol
 	threat_region = THREAT_REGION_AZUREAN_COAST
 	detail_text = DETAIL_TEXT_NORTH_COAST_HAMLET
 
 /area/rogue/outdoors/beach/forest/north
-	name = "The Rotwood Coast - North"
+	name = "腐木谷海岸 - 北部"
 	threat_region = THREAT_REGION_AZUREAN_COAST
 
 /area/rogue/outdoors/beach/forest/south
-	name = "The Rotwood Coast - South"
+	name = "腐木谷海岸 - 南部"
 	threat_region = THREAT_REGION_AZUREAN_COAST
 
 /area/rogue/under/cave/dukecourt
-	name = "Mad Duke's Manor"
+	name = "疯公爵庄园"
 	icon_state = "duke"
-	first_time_text = "MAD DUKE'S MANOR"
+	first_time_text = "疯公爵庄园"
 	droning_sound = 'sound/music/area/dungeon2.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
 	converted_type = /area/rogue/outdoors/dungeon1
-	deathsight_message = "somewhere betwixt Abyssor's realm and Dendor's bounty"
+	deathsight_message = "阿比索尔海域与登多尔恩赐之间的某处"
 	threat_region = THREAT_REGION_AZUREAN_COAST
 	detail_text = DETAIL_TEXT_MAD_DUKE_COURT
