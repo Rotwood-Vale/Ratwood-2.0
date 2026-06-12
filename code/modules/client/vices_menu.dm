@@ -1091,7 +1091,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			<div class="actions">
 				<a class='btn btn-select' href='byond://?src=\ref[src];virtue_action=change_primary'>更换主要美德</a>"}
 	
-	if(statpack.name == "德能")
+	if(statpack.name == "德能") //需对齐modular_azurepeak/statpacks/wildcard.dm datum/statpack/wildcard/virtuous 的名字
 		html += "<a class='btn btn-select' href='byond://?src=\ref[src];virtue_action=change_secondary'>更换第二美德</a>"
 	
 	html += {"
@@ -1530,8 +1530,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			return
 		
 		if(action == "change_secondary")
-			if(statpack.name != "Virtuous")
-				to_chat(usr, span_warning("第二美德仅在使用「美德」属性包时可用！"))
+			if(statpack.name != "德能") //需对齐modular_azurepeak/statpacks/wildcard.dm datum/statpack/wildcard/virtuous 的名字
+				to_chat(usr, span_warning("第二美德仅在使用「德能」属性包时可用！"))
 				return
 			
 			// Save state before change
@@ -1597,7 +1597,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				to_chat(usr, "<span class='info'>[selected.description_string()]</span>")
 				
 				// Handle virtuetwo based on statpack
-				if(statpack.name == "Virtuous")
+				if(statpack.name == "德能") //需对齐modular_azurepeak/statpacks/wildcard.dm datum/statpack/wildcard/virtuous 的名字
 					// Keep virtuetwo if we have it
 				else
 					virtuetwo = GLOB.virtues[/datum/virtue/none]
