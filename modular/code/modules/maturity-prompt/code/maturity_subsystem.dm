@@ -207,7 +207,7 @@ SUBSYSTEM_DEF(maturity_guard)
 
 	if(!SSdbcore.Connect())
 	 	// Just a stopgap measure... this really isn't intended to be used without a db attached
-		message_admins("[user.ckey] has FAILED THE AGE CHECK but couldn't be banned due to lack of database connection.")
+		message_admins("[user.ckey]未通过年龄验证，但由于数据库未连接，系统无法执行封禁。")
 		blacklisted_cache |= user.ckey
 		to_chat(user, player_ban_notification)
 		qdel(user.client)
@@ -244,7 +244,7 @@ SUBSYSTEM_DEF(maturity_guard)
 		"ckey" = user.ckey,
 		"ip" = user.client.address,
 		"computerid" = user.client.computer_id,
-		"a_ckey" = "AGE CHECK SYSTEM",
+		"a_ckey" = "年龄验证系统",
 		"a_ip" = 0,
 		"a_computerid" = "N/A",
 		"who" = who,
@@ -255,9 +255,9 @@ SUBSYSTEM_DEF(maturity_guard)
 		return
 
 	var/target = "[user.ckey]/[user.client.address]/[user.client.computer_id]"
-	var/msg = "has created a global permanent server ban for [target]."
-	log_admin_private("AGE CHECK SYSTEM [msg]")
-	message_admins("AGE CHECK SYSTEM [msg]")
+	var/msg = "已对[target]创建全服永久封禁。"
+	log_admin_private("年龄验证系统[msg]")
+	message_admins("年龄验证系统[msg]")
 
 	to_chat(user, player_ban_notification)
 

@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 /obj/item/chastity/examine()
 	. = ..()
 	if(attached_toy)
-		. += "[span_notice("\An [attached_toy]似乎被安装在了\the [initial(name)]上。按 Alt+右键可拆下。")]"
+		. += "[span_notice("[attached_toy]似乎被安装在了[initial(name)]上。按住 Alt 再右键可将其拆下。")]"
 	if(chastity_cursed)
 		if(received_cum_count == 1)
 			. += span_notice("贞操装置的金属表面刻着 1 道刻痕。")
@@ -91,13 +91,13 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 	if(held_dildo.is_attached_to_belt)
 		return
 	if(attached_toy)
-		to_chat(user, span_info("\The [initial(name)]已经装着玩具了！先把它拆下来。"))
+		to_chat(user, span_info("[initial(name)]已经装着玩具了！先把它拆下来。"))
 		return
 	if(!user.transferItemToLoc(held_dildo, null))
-		to_chat(user, span_warning("\The [held_dildo]黏在你的手上了！"))
+		to_chat(user, span_warning("[held_dildo]黏在你的手上了！"))
 		return
 	if(attach_toy(held_dildo, user))
-		user.visible_message(span_warning("[user]将\the [held_dildo]装到了\the [initial(name)]上。"))
+		user.visible_message(span_warning("[user]将[held_dildo]装到了[initial(name)]上。"))
 
 /obj/item/chastity/AltRightClick(mob/user)
 	if(!attached_toy)
@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 	if(user.get_active_held_item())
 		to_chat(user, span_info("我手上拿满了，做不了这个！"))
 		return
-	user.visible_message(span_warning("[user]从\the [initial(name)]上拆下了\the [attached_toy]。"))
+	user.visible_message(span_warning("[user]从[initial(name)]上拆下了[attached_toy]。"))
 	detach_toy(user)
 
 /obj/item/chastity/update_icon()

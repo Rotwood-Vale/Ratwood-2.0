@@ -1,9 +1,9 @@
 /datum/sex_action/chastityplay/proc/modular_get_chastity_device_name(mob/living/carbon/human/owner)
 	if(owner?.sexcon?.has_chastity_flat())
-		return "flat cage"
+		return "平板贞操笼"
 	if(owner?.sexcon?.has_chastity_cage())
-		return "cage"
-	return "chastity device"
+		return "贞操笼"
+	return "贞操装置"
 
 /datum/sex_action/chastityplay/proc/modular_requires_other_target(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return !!(user && target && user != target)

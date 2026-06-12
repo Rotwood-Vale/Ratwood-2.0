@@ -1,5 +1,5 @@
 /datum/sex_action/chastityplay/ride_cage_pussy
-    name = "Ride their cage"
+    name = "骑磨对方的贞操笼"
     stamina_cost = 1.0
     category = SEX_CATEGORY_PENETRATE
     user_sex_part = SEX_PART_CUNT
@@ -32,10 +32,10 @@
     return TRUE
 
 /datum/sex_action/chastityplay/ride_cage_pussy/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(span_warning("[user] straddles [target] and settles [user.p_their()] weight down until [user.p_their()] pussy meets the bars of [target.p_their()] [get_chastity_device_name(target)]."))
+    user.visible_message(span_warning("[user]跨坐到[target]身上，缓缓压下[user.p_their()]的体重，直到[user.p_their()]的阴部贴上[target.p_their()]的[get_chastity_device_name(target)]栅栏。"))
 
 /datum/sex_action/chastityplay/ride_cage_pussy/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] rolls [user.p_their()] hips along [target]'s [get_chastity_device_name(target)], grinding [user.p_their()] bare pussy against bars that have no give..."))
+    user.visible_message(user.sexcon.spanify_force("[user][user.sexcon.get_generic_force_adjective()]扭动[user.p_their()]的腰胯，沿着[target]的[get_chastity_device_name(target)]来回磨蹭，让[user.p_their()]裸露的阴部压上那毫不退让的金属栅栏……"))
     user.sexcon.outercourse_noise(target, TRUE)
     user.sexcon.do_thrust_animate(target)
 
@@ -48,7 +48,7 @@
     target.sexcon.handle_passive_ejaculation(user)
 
 /datum/sex_action/chastityplay/ride_cage_pussy/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(span_warning("[user] lifts [user.p_their()] hips and slides off [target]'s [get_chastity_device_name(target)], the metal cold as [user.p_their()] warmth leaves it."))
+    user.visible_message(span_warning("[user]抬起[user.p_their()]的腰胯，从[target]的[get_chastity_device_name(target)]上滑开，随着[user.p_their()]的体温离去，金属又恢复了冰冷。"))
 
 /datum/sex_action/chastityplay/ride_cage_pussy/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
     if(user.sexcon.finished_check())

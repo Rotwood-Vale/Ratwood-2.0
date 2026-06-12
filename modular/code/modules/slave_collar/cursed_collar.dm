@@ -152,7 +152,7 @@
 		return
 
 	if(!user.mind)
-		user.visible_message(span_warning("\The [src]没能锁在[user]的脖子上。"))
+		user.visible_message(span_warning("[src]没能锁在[user]的脖子上。"))
 		user.dropItemToGround(src, force = TRUE)
 		return
 

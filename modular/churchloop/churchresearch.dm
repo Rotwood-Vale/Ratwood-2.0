@@ -114,6 +114,37 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 /proc/status_yn(flag)
 	return flag ? "<span style='color:#2ecc71'>已解锁</span>" : "<span style='color:#e67e22'>未解锁</span>"
 
+/proc/_cr_patron_name_display(name)
+	if(!istext(name)) return "[name]"
+	switch("[name]")
+		if("Astrata") return "阿斯特拉塔"
+		if("Noc") return "诺克"
+		if("Dendor") return "登多尔"
+		if("Abyssor") return "阿比索尔"
+		if("Ravox") return "拉沃克斯"
+		if("Necra") return "内克拉"
+		if("Xylix") return "赛利克斯"
+		if("Pestra") return "佩斯特拉"
+		if("Malum") return "玛勒姆"
+		if("Eora") return "伊欧拉"
+	return "[name]"
+
+/proc/_cr_pestra_tier_display(tier_key)
+	if(!istext(tier_key)) return "[tier_key]"
+	switch(lowertext("[tier_key]"))
+		if("t1") return "一阶"
+		if("t2") return "二阶"
+		if("t3") return "三阶"
+	return "[tier_key]"
+
+/proc/_cr_quest_diff_display(diff_key)
+	if(!istext(diff_key)) return "[diff_key]"
+	switch(lowertext("[diff_key]"))
+		if("easy") return "简单"
+		if("medium") return "中等"
+		if("hard") return "困难"
+	return "[diff_key]"
+
 /proc/_pestra_tier_price(tier_key as text)
 	if(tier_key == "t1")
 		return PESTRA_ORGAN_T1_PRICE_FAVOR
@@ -689,11 +720,11 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 
 		if(relv > 0)
 			if(src.current_learn_tab == "[n]")
-				nav += "<b>[_cr_html_attr(n)]</b>"
+				nav += "<b>[_cr_html_attr(_cr_patron_name_display(n))]</b>"
 			else
-				nav += "<a href=\"?src=[REF(src)];learntab=[tab_id]\">[_cr_html_attr(n)]</a>"
+				nav += "<a href=\"?src=[REF(src)];learntab=[tab_id]\">[_cr_html_attr(_cr_patron_name_display(n))]</a>"
 		else
-			nav += "<span style='color:#7f8c8d'>[_cr_html_attr(n)]</span>"
+			nav += "<span style='color:#7f8c8d'>[_cr_html_attr(_cr_patron_name_display(n))]</span>"
 
 	if(show_shunned_tabs)
 		var/list/names_inh = list()
@@ -710,11 +741,11 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 
 			if(relv2 > 0 || n2 == my_patron)
 				if(src.current_learn_tab == "[n2]")
-					nav_shunned += "<b>[_cr_html_attr(n2)]</b>"
+					nav_shunned += "<b>[_cr_html_attr(_cr_patron_name_display(n2))]</b>"
 				else
-					nav_shunned += "<a href=\"?src=[REF(src)];learntab=[tab_id2]\">[_cr_html_attr(n2)]</a>"
+					nav_shunned += "<a href=\"?src=[REF(src)];learntab=[tab_id2]\">[_cr_html_attr(_cr_patron_name_display(n2))]</a>"
 			else
-				nav_shunned += "<span style='color:#7f8c8d'>[_cr_html_attr(n2)]</span>"
+				nav_shunned += "<span style='color:#7f8c8d'>[_cr_html_attr(_cr_patron_name_display(n2))]</span>"
 
 	if(src.current_learn_tab == "noc_secrets")
 		nav += "<b>诺克秘仪</b>"
@@ -786,7 +817,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 			html += "<i>该主神当前没有可学习的神迹。</i>"
 		else
 			var/list/L = buckets[src.current_learn_tab]
-			html += "<b>[_cr_html_attr(src.current_learn_tab)]</b><br>"
+			html += "<b>[_cr_html_attr(_cr_patron_name_display(src.current_learn_tab))]</b><br>"
 			html += "<table width='100%' cellspacing='2' cellpadding='2'>"
 			html += "<tr><th align='left'>神迹</th><th>描述</th><th width='50'>阶级</th><th width='100'>消耗</th><th width='140'>操作</th></tr>"
 
@@ -911,9 +942,9 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 			html += "<span style='color:#7f8c8d'>请先在上方解锁此研究。</span>"
 		else
 			var/list/pnav = list()
-			pnav += (src.current_pestra_tier == "t1") ? "<b>T1</b>" : "<a href='?src=[REF(src)];pestratier=t1'>T1</a>"
-			pnav += (src.current_pestra_tier == "t2") ? "<b>T2</b>" : "<a href='?src=[REF(src)];pestratier=t2'>T2</a>"
-			pnav += (src.current_pestra_tier == "t3") ? "<b>T3</b>" : "<a href='?src=[REF(src)];pestratier=t3'>T3</a>"
+			pnav += (src.current_pestra_tier == "t1") ? "<b>一阶</b>" : "<a href='?src=[REF(src)];pestratier=t1'>一阶</a>"
+			pnav += (src.current_pestra_tier == "t2") ? "<b>二阶</b>" : "<a href='?src=[REF(src)];pestratier=t2'>二阶</a>"
+			pnav += (src.current_pestra_tier == "t3") ? "<b>三阶</b>" : "<a href='?src=[REF(src)];pestratier=t3'>三阶</a>"
 
 			var/current_price = _pestra_tier_price(src.current_pestra_tier)
 
@@ -924,7 +955,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 			html += "<tr><th align='left'>器官</th><th width='180'>操作</th></tr>"
 
 			for(var/label in PESTRA_ORGAN_KEYS)
-				html += "<tr><td>[label] ([uppertext(src.current_pestra_tier)])</td><td align='center'>"
+				html += "<tr><td>[label]（[_cr_pestra_tier_display(src.current_pestra_tier)]）</td><td align='center'>"
 				if(HAS_TRAIT(H, TRAIT_CLERGYRADICAL) && H.church_favor >= current_price)
 					html += "<a href='?src=[REF(src)];buyorg=[label];tier=[src.current_pestra_tier]'>购买（[current_price] 恩眷）</a>"
 				else
@@ -963,7 +994,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 
 					html += "<tr>"
 					html += "<td>[_cr_html_attr(name_txt)]</td>"
-					html += "<td align='center'>[_cr_html_attr("[pn2]")]</td>"
+					html += "<td align='center'>[_cr_html_attr(_cr_patron_name_display("[pn2]"))]</td>"
 					html += "<td align='center'>"
 
 					if(HAS_TRAIT(H, TRAIT_CLERGYRADICAL) && H.church_favor >= ARTEFACT_PRICE_FAVOR)
@@ -1024,7 +1055,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 					cur = rel_cap
 
 				html += "<tr>"
-				html += "<td><b>[_cr_html_attr(nm)]</b></td>"
+				html += "<td><b>[_cr_html_attr(_cr_patron_name_display(nm))]</b></td>"
 				html += "<td>[_cr_html_attr(dom)]</td>"
 				html += "<td align='center'><b>[cur]</b>/[rel_cap]</td>"
 				html += "<td align='center'>"
@@ -1132,7 +1163,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 				if(!islist(D))
 					continue
 
-				var/diff_label = uppertext("[diff_key]")
+				var/diff_label = _cr_quest_diff_display("[diff_key]")
 				var/desc_txt = "[D["desc"]]"
 				var/reward_txt = "[D["reward"]]"
 				var/spawned = D["spawned"]
@@ -1329,7 +1360,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 
 		var/typepath2 = _pestra_get_organ_type(label, tier_key)
 		if(!typepath2)
-			to_chat(H, span_warning("未找到 [label] [uppertext(tier_key)] 对应的器官类型。"))
+			to_chat(H, span_warning("未找到[label]对应的[_cr_pestra_tier_display(tier_key)]器官类型。"))
 			open_research_ui(H)
 			return
 
@@ -1339,7 +1370,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 
 		new typepath2(T2)
 		H.church_favor = max(0, H.church_favor - organ_price)
-		to_chat(H, span_notice("[label] [uppertext(tier_key)] 已购入。"))
+		to_chat(H, span_notice("[label]的[_cr_pestra_tier_display(tier_key)]器官已购入。"))
 		open_research_ui(H)
 		return
 
@@ -1481,7 +1512,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 		if(next >= 4)
 			_apply_t4_traits_for_patron(H, god)
 
-		to_chat(H, span_notice("你与[god]的关系提升至 [next]。"))
+		to_chat(H, span_notice("你与[_cr_patron_name_display(god)]的关系提升至[next]。"))
 		open_research_ui(H)
 		return
 
@@ -1525,7 +1556,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 			accepted_diff = ""
 
 		if(length(accepted_diff) && accepted_diff != diff_key)
-			to_chat(H, span_warning("该任务已经锁定在 [uppertext(accepted_diff)] 难度。"))
+			to_chat(H, span_warning("该任务已经锁定在[_cr_quest_diff_display(accepted_diff)]难度。"))
 			open_quests_ui(H)
 			return
 
@@ -1632,16 +1663,16 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 		return
 
 	var/list/rad = list()
-	rad["Learn"] = icon(icon = MIRACLE_RADIAL_DMI, icon_state = "recruit_acolyte")
-	rad["Research"] = icon(icon = MIRACLE_RADIAL_DMI, icon_state = "book1")
-	rad["Quests"] = icon(icon = MIRACLE_RADIAL_DMI, icon_state = "astrata")
+	rad["学习"] = icon(icon = MIRACLE_RADIAL_DMI, icon_state = "recruit_acolyte")
+	rad["研究"] = icon(icon = MIRACLE_RADIAL_DMI, icon_state = "book1")
+	rad["任务"] = icon(icon = MIRACLE_RADIAL_DMI, icon_state = "astrata")
 
 	var/choice = show_radial_menu(user, user, rad, require_near = FALSE)
-	if(choice == "Learn")
+	if(choice == "学习")
 		do_learn_miracle(user)
-	else if(choice == "Research")
+	else if(choice == "研究")
 		open_research_ui(user)
-	else if(choice == "Quests")
+	else if(choice == "任务")
 		open_quests_ui(user)
 	return
 

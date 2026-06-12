@@ -1,8 +1,8 @@
 
 // Raw Shellfish. Separate folder due to sprites
 /obj/item/reagent_containers/food/snacks/fish/crab
-	name = "crab"
-	desc = "A defensive shellfish that's a real hassle to crack open, they taste great when made into cakes with butterdough slice."
+	name = "螃蟹"
+	desc = "一种外壳硬得让人头疼的贝甲生物，不过拿黄油面片做成蟹饼后味道绝佳。"
 	icon_state = "crab"
 	sellprice = 10
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/crab
@@ -15,7 +15,7 @@
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/butterdoughslice))
 		if(isturf(loc)&& (found_table))
 			playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
-			to_chat(user, "<span class='notice'>Covering the crab with butterdough...</span>")
+			to_chat(user, "<span class='notice'>用黄油面皮把螃蟹包起来……</span>")
 			if(do_after(user,short_cooktime, target = src))
 				user.mind.add_sleep_experience(/datum/skill/craft/cooking, user.STAINT)
 				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/crabcakeraw(loc)
@@ -25,8 +25,8 @@
 	. = ..()
 
 /obj/item/reagent_containers/food/snacks/fish/clam
-	name = "clam"
-	desc = "A beastye built by Abyssor in the image of a knight. Hard shell, squishy interior."
+	name = "蛤蜊"
+	desc = "阿比索尔仿照骑士造出的海中小兽。外壳坚硬，里面却软乎乎的。"
 	icon_state = "clam"
 	faretype = FARE_NEUTRAL
 	no_rarity_sprite = TRUE
@@ -36,8 +36,8 @@
 	cooked_smell = /datum/pollutant/food/fried_shellfish
 
 /obj/item/reagent_containers/food/snacks/fish/lobster
-	name = "lobster"
-	desc = "A hard-shelled cretin, barely fit for eating."
+	name = "龙虾"
+	desc = "一种壳硬得要命的笨东西，勉强算是能吃。"
 	icon_state = "lobster"
 	faretype = FARE_NEUTRAL
 	no_rarity_sprite = TRUE
@@ -48,8 +48,8 @@
 	cooked_smell = /datum/pollutant/food/fried_shellfish
 
 /obj/item/reagent_containers/food/snacks/fish/shrimp
-	name = "shrimp"
-	desc = "A tiny shellfish, little bigger than your thumb. Often nicknamed butterflies of the sea."
+	name = "虾"
+	desc = "一种小小的贝甲生物，比你的拇指大不了多少，常被戏称为“海中的蝴蝶”。"
 	icon_state = "shrimp"
 	sellprice = 5
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/shrimp
@@ -57,8 +57,8 @@
 	cooked_smell = /datum/pollutant/food/fried_shellfish
 
 /obj/item/reagent_containers/food/snacks/fish/oyster
-	name = "oyster"
-	desc = "A stubborn shellfish that MIGHT hide a prize within, can be opened with a knife to reveal the flesh within."
+	name = "牡蛎"
+	desc = "这种顽固的贝甲生物体内也许藏着宝贝；用小刀撬开后，就能取出里面的肉。"
 	icon_state = "oyster"
 	sellprice = 5
 	var/closed
@@ -91,7 +91,7 @@
 /obj/item/reagent_containers/food/snacks/fish/oyster/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/huntingknife))
 		if(closed)
-			user.visible_message("<span class='notice'>[user] opens the oyster with the knife.</span>")
+			user.visible_message("<span class='notice'>[user]用小刀撬开了牡蛎。</span>")
 			closed = FALSE
 			icon_state = "[icon_state]_open"
 			update_icon()
@@ -119,7 +119,7 @@
 		add_overlay(pearl)
 
 /obj/item/oystershell
-	name = "oyster shell"
+	name = "牡蛎壳"
 	icon = 'modular/Neu_food/icons/raw/raw_fish.dmi'
 	icon_state = "oyster_shell"
 	desc = ""
@@ -130,12 +130,12 @@
 	grid_width = 32
 
 /obj/item/reagent_containers/food/snacks/rogue/crabcake
-	name = "crab cake"
-	desc = "A variant of the handpie filled with buttery, savory shellfish meat and made with a buttered slice of dough."
+	name = "蟹饼"
+	desc = "一种手馅饼变体，内里填满黄油香浓的贝甲肉，用抹了黄油的面片制成。"
 	icon_state = "crab_cake"
 	eat_effect = /datum/status_effect/buff/greatsnackbuff
 	bitesize = 4
 	list_reagents = list(/datum/reagent/consumable/nutriment = SMALLDOUGH_NUTRITION + MEATSLAB_NUTRITION)
-	tastes = list("crispy butterdough and shellfish meat" = 1)
+	tastes = list("酥脆黄油面皮与贝甲肉" = 1)
 	rotprocess = null
 	dropshrink = 0.8

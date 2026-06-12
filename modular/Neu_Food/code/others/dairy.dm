@@ -164,7 +164,7 @@
 						desc = "正在缓慢凝固，最好再静置一会儿。"
 						addtimer(CALLBACK(src, mature_proc), 5 MINUTES)
 		else
-			to_chat(user, span_warning("You need to put [src] on a table to work on it."))
+			to_chat(user, span_warning("你得把[src]放到桌上才能处理。"))
 	else
 		return ..()
 

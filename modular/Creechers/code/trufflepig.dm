@@ -49,14 +49,14 @@
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/truffles/cooked
 	cooked_smell = /datum/pollutant/food/truffles
 	color = "#ab7d6f"
-	tastes = list("mushroom" = 1)
+	tastes = list("蘑菇香" = 1)
 	sellprice = 5
 
 /obj/item/reagent_containers/food/snacks/rogue/truffles/cooked
 	eat_effect = /datum/status_effect/buff/snackbuff
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	color = "#835b4f"
-	tastes = list("succulent truffles" = 1)
+	tastes = list("鲜美松露香" = 1)
 /obj/item/reagent_containers/food/snacks/rogue/truffles/Initialize(mapload)
 	icon_state = pick("mushroom1_full","mushroom1_full","mushroom1_full")
 	. = ..()
@@ -69,7 +69,7 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/toxicshrooms/cooked
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/toxicshrooms/cooked
 	color = "#ab7d6f"
-	tastes = list("mushroom" = 1)
+	tastes = list("蘑菇香" = 1)
 /obj/item/reagent_containers/food/snacks/rogue/toxicshrooms/cooked
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	color = "#835b4f"
@@ -88,7 +88,7 @@
 	icon_gib = "piggie_dead"
 	gender = MALE
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	emote_see = list("eyes the surroundings.", "flicks its ears.")
+	emote_see = list("打量着四周。", "抖了抖耳朵。")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -110,8 +110,8 @@
 	footstep_type = FOOTSTEP_MOB_SHOE
 	pooptype = /obj/item/natural/poo/horse
 	faction = list("pigs")
-	attack_verb_continuous = "bites"
-	attack_verb_simple = "bites"
+	attack_verb_continuous = "啃咬"
+	attack_verb_simple = "啃咬"
 	melee_damage_lower = 8
 	melee_damage_upper = 14
 	minimum_distance = 1
@@ -122,8 +122,8 @@
 	buckle_lying = 0
 	can_saddle = FALSE
 	remains_type = /obj/effect/decal/remains/pig
-	response_help_continuous = "pets"
-	response_help_simple = "give the signal to the"
+	response_help_continuous = "抚摸"
+	response_help_simple = "向其示意"
 	var/hangry_meter = 0
 
 
@@ -140,7 +140,7 @@
 			if(Adjacent(M))
 				walk_towards(src, M, 1)
 				sleep(3)
-				visible_message("<span class='notice'>The pig devours the vulnerable truffles!</span>")
+				visible_message("<span class='notice'>猪一口吞掉了那些脆弱的松露！</span>")
 				stop_automated_movement = 0
 				hangry_meter = 0
 				playsound(src,'sound/misc/eat.ogg', rand(30,60), TRUE)
@@ -151,7 +151,7 @@
 	. = ..()
 	hangry_meter += 1
 	if(hangry_meter > 9)
-		to_chat(M, "<span class='notice'>The pig squeals in anger. Its sulking and refusing to work until it gets delicious truffles.</span>")
+		to_chat(M, "<span class='notice'>猪愤怒地尖叫起来。它正在闹别扭，在吃到美味松露前都不会肯干活。</span>")
 		playsound(get_turf(src), 'modular/Creechers/sound/pighangry.ogg', 150, TRUE, -1)
 		return
 	if(M.used_intent.type == INTENT_HELP)
@@ -171,29 +171,29 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/trufflepig/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/reagent_containers/food/snacks/rogue/truffles))
-		visible_message("<span class='notice'>The pig munches the truffles, looking happy.</span>")
+		visible_message("<span class='notice'>猪大口嚼着松露，看起来很高兴。</span>")
 		hangry_meter = 0 //Satisfies him fully
 		playsound(src,'sound/misc/eat.ogg', rand(30,60), TRUE)
 		qdel(O)
 	if(istype(O, /obj/item/reagent_containers/food/snacks/rogue/toxicshrooms))
-		visible_message("<span class='notice'>The pig munches the truffles reluctantly.</span>")
+		visible_message("<span class='notice'>猪很不情愿地嚼起了松露。</span>")
 		playsound(src,'sound/misc/eat.ogg', rand(30,60), TRUE)
 		qdel(O)
 		playsound(get_turf(src), 'modular/Creechers/sound/pighangry.ogg', 130, TRUE, -1)
 		sleep(20)
 		playsound(get_turf(src), 'modular/Creechers/sound/pighangry.ogg', 130, TRUE, -1)
-		visible_message("<span class='notice'>The pig shivers.</span>")
+		visible_message("<span class='notice'>猪打了个寒颤。</span>")
 		sleep(10)
 		death()
 	if(istype(O, /obj/item/reagent_containers/food/snacks/grown/potato/rogue))
 		if(hangry_meter > 2)
 			hangry_meter -= 2 //Only really a way to unblock him
-			visible_message("<span class='notice'>The pig munches the potato, looking partially satisfied.</span>")
+			visible_message("<span class='notice'>猪嚼着土豆，看起来稍微满足了一些。</span>")
 			playsound(src,'sound/misc/eat.ogg', rand(30,60), TRUE)
 			qdel(O)
 			return
 		if(hangry_meter <= 2)//Is this abysmal code- absolutely - does it work for what it's meant to be - yes
-			visible_message("<span class='notice'>The pig munches the potato, completely indifferent.</span>")
+			visible_message("<span class='notice'>猪嚼着土豆，显得完全无所谓。</span>")
 			playsound(src,'sound/misc/eat.ogg', rand(30,60), TRUE)
 			qdel(O)
 	else

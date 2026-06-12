@@ -10,28 +10,28 @@
 	..()
 
 /datum/reagent/consumable/soup/porridge
-	name = "porridge"
-	description = "Softened grain boiled in water. Suitable for peasants."
+	name = "粥"
+	description = "谷物加水煮软而成，很适合平民果腹。"
 	reagent_state = LIQUID
 	color = "#F8F0E3"
 	nutriment_factor = 15
 	metabolization_rate = 0.5 // half as fast as normal, last twice as long
-	taste_description = "porridge"
+	taste_description = "粥香"
 	taste_mult = 3
 	hydration = 2
 
 /datum/reagent/consumable/soup/porridge/oatmeal
-	name = "oatmeal"
-	description = "Fitting for a peasant."
+	name = "燕麦粥"
+	description = "很适合平民的一餐。"
 	color = "#c38553"
 
 /datum/reagent/consumable/soup/porridge/congee
-	name = "congee"
-	description = "Rice boiled in water until it is softened. Eaten by the poor and sick in the east. Here, it is considered a medicinal food."
+	name = "米粥"
+	description = "把米加水煮到软烂而成。在东方，穷人和病人都会吃它；在这里，它常被视为养身食物。"
 	color = "#F8F0E3"
 
 /datum/reagent/consumable/soup/veggie
-	name = "vegetable soup"
+	name = "蔬菜汤"
 	description = ""
 	reagent_state = LIQUID
 	nutriment_factor = 10
@@ -39,128 +39,128 @@
 	hydration = 8
 
 /datum/reagent/consumable/soup/veggie/potato
-	name = "potato soup"
+	name = "土豆汤"
 	color = "#869256"
-	taste_description = "potato broth"
+	taste_description = "土豆汤底"
 
 /datum/reagent/consumable/soup/veggie/onion
-	name = "onion soup"
+	name = "洋葱汤"
 	color = "#a6b457"
-	taste_description = "boiled onions"
+	taste_description = "煮洋葱味"
 
 /datum/reagent/consumable/soup/veggie/cabbage
-	name = "cabbage soup"
+	name = "卷心菜汤"
 	color = "#859e56"
-	taste_description = "watery cabbage"
+	taste_description = "寡淡卷心菜味"
 
 /datum/reagent/consumable/soup/veggie/turnip
-	name = "turnip soup"
+	name = "芜菁汤"
 	color = "#becf9d"
-	taste_description = "boiled turnip"
+	taste_description = "煮芜菁味"
 
 /datum/reagent/consumable/soup/stew
-	name = "thick stew"
-	description = "All manners of edible bits went into this."
+	name = "浓炖"
+	description = "凡是能入口的料头，几乎都被炖进这里面了。"
 	reagent_state = LIQUID
 	nutriment_factor = 20
 	taste_mult = 4
 
 /datum/reagent/consumable/soup/stew/egg
-	name = "egg drop soup"
+	name = "蛋花汤"
 	color = "#dedbaf"
-	taste_description = "egg soup"
+	taste_description = "蛋汤味"
 
 /datum/reagent/consumable/soup/stew/cheese
-	name = "cheese soup"
-	description = "A thick cheese soup. Creamy and comforting."
+	name = "奶酪浓汤"
+	description = "浓稠的奶酪汤，口感绵密，喝下去很是熨帖。"
 	color = "#c4be70"
-	taste_description = "creamy cheese"
+	taste_description = "绵密奶酪味"
 
 /datum/reagent/consumable/soup/stew/chicken
-	name = "chicken stew"
+	name = "鸡肉炖汤"
 	color = "#baa21c"
-	taste_description = "chicken"
+	taste_description = "鸡肉味"
 
 /datum/reagent/consumable/soup/stew/meat
-	name = "meat stew"
+	name = "肉炖汤"
 	color = "#80432a"
-	taste_description = "meat"
+	taste_description = "肉香"
 
 /datum/reagent/consumable/soup/stew/fish
-	name = "fish stew"
+	name = "鱼炖汤"
 	color = "#c7816e"
-	taste_description = "fish"
+	taste_description = "鱼鲜味"
 
 /datum/reagent/consumable/soup/stew/rabbit
-	name = "cabbit stew"
+	name = "卡比特炖汤"
 	color = "#c59182"
-	taste_description = "cabbit"
+	taste_description = "卡比特肉味"
 
 /datum/reagent/consumable/soup/stew/bisque
-	name = "bisque"
+	name = "浓海鲜汤"
 	color = "#ffb74f" // Bisque like color I know bisque's more complicated than that 
-	taste_description = "shellfish"
+	taste_description = "贝甲鲜味"
 
 /datum/reagent/consumable/soup/stew/yucky
-	name = "yucky stew"
+	name = "难喝杂炖"
 	color = "#9e559c"
-	taste_description = "something rancid"
+	taste_description = "某种腐败怪味"
 
 /datum/reagent/consumable/soup/stew/berry
-	name = "berry stew"
+	name = "浆果炖汤"
 	color = "#863333"
-	taste_description = "sweet berries"
+	taste_description = "甜浆果味"
 
 /datum/reagent/consumable/soup/stew/berry_poisoned
-	name = "berry stew"
+	name = "浆果炖汤"
 	color = "#863333"
-	taste_description = "suspiciously bitter berries"
+	taste_description = "苦得可疑的浆果味"
 
 /datum/reagent/consumable/soup/stew/garlick_soup
-	name = "garlick soup"
+	name = "蒜汤"
 	color = "#FAF9F6"
-	taste_description = "strong garlick"
+	taste_description = "浓烈蒜香"
 
 /datum/reagent/consumable/soup/stew/cucumber_soup
-	name = "cucumber soup"
+	name = "黄瓜汤"
 	color = "#98fb98"
-	taste_description = "rich cucumber"
+	taste_description = "饱满黄瓜味"
 
 /datum/reagent/consumable/soup/stew/eggplant_soup
-	name = "eggplant soup"
+	name = "茄子汤"
 	color = "#fff8e3"
-	taste_description = "subtle eggplant"
+	taste_description = "淡淡茄香"
 
 /datum/reagent/consumable/soup/stew/carrot_stew
-	name = "carrot stew"
+	name = "胡萝卜炖汤"
 	color = "#f26818"
-	taste_description = "savory carrot"
+	taste_description = "鲜香胡萝卜味"
 
 /datum/reagent/consumable/soup/stew/nutty_stew
-	name = "nutty stew"
+	name = "坚果炖汤"
 	color = "#807b78"
-	taste_description = "nutty"
+	taste_description = "坚果香"
 
 /datum/reagent/consumable/soup/stew/tomato_soup
-	name = "tomato soup"
+	name = "番茄汤"
 	color = "#db5230"
-	taste_description = "rich tomato"
+	taste_description = "浓郁番茄味"
 	metabolization_rate = 0.5 // half as fast as normal, last twice as long - it is one of the best soups after all
 
 /datum/reagent/consumable/soup/stew/plum_soup
-	name = "plum jam"
+	name = "李子酱"
 	color = "#9c305b"
-	taste_description = "sweet plums"
+	taste_description = "甜李子味"
 
 /datum/reagent/consumable/soup/stew/tangerine_marmalade
-	name = "tangerine marmalade"
+	name = "橘子果酱"
 	color = "#f0935d"
-	taste_description = "extremely sweet tangerine"
+	taste_description = "极甜橘香"
 
 /datum/reagent/consumable/soup/stew/pumpkin_soup
-	name = "pumpkin soup"
+	name = "南瓜汤"
 	color = "#702e08"
-	taste_description = "roasted squash"
+	taste_description = "烤南瓜味"
 	metabolization_rate = 0.5 // half as fast as normal, last twice as long - it is one of the best soups after all
 
 // Copy pasted from berry poison, but stew metabolizes much faster so it is less deadly. You CAN use it as a source of hydration / nutrition if you are desperate enough???

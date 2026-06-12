@@ -163,8 +163,8 @@ Malum's tool
 				yield = sy
 
 		user.visible_message(
-			span_info("[user]开始用[src]熔炼\the [I2]。"),
-			span_info("我开始熔炼\the [I2]……")
+			span_info("[user]开始用[src]熔炼[I2]。"),
+			span_info("我开始熔炼[I2]……")
 		)
 		playsound(get_turf(I2), 'sound/items/bsmith3.ogg', 70, FALSE)
 
@@ -292,7 +292,7 @@ Malum's tool
 		return
 
 	user.visible_message(
-		span_info("[user]开始用[src]塑造\the [ing]。"),
+		span_info("[user]开始用[src]塑造[ing]。"),
 		span_info("我开始用[ing]制作……")
 	)
 	playsound(get_turf(ing), 'sound/items/bsmith3.ogg', 70, FALSE)
@@ -311,7 +311,7 @@ Malum's tool
 	var/obj/item/product = new R.created_item(T)
 
 	user.visible_message(
-		span_notice("[user]完成了制作，产出了\the [product]。"),
+		span_notice("[user]完成了制作，产出了[product]。"),
 		span_notice("我完成了制作。")
 	)
 	playsound(T, 'sound/items/bsmith4.ogg', 70, FALSE)
@@ -359,7 +359,7 @@ Necra's Censer (by ARefrigerator)
 /obj/item/artefact/necra_censer/attack_self(mob/user)
 	if(do_after(user, 3 SECONDS))
 		playsound(user.loc,  'sound/items/censer_use.ogg', 100)
-		user.visible_message(span_info("[user.name]抬起手臂，轻轻甩动\the [name]上的链条。"))
+		user.visible_message(span_info("[user.name]抬起手臂，轻轻甩动[name]上的链条。"))
 		var/datum/effect_system/smoke_spread/smoke/necra_censer/S = new
 		S.set_up(3, user.loc)
 		S.start()

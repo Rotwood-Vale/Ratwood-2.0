@@ -309,7 +309,7 @@
 	keys = list(/obj/item/roguekey/fancyroomv, /obj/item/roguekey/fancyroomv, /obj/item/roguekey/fancyroomv)
 
 /obj/item/storage/keyring/innhunt // 4 keys
-	name = "HUNT 房钥匙环"
+	name = "猎人房钥匙环"
 	keys = list(/obj/item/roguekey/roomhunt, /obj/item/roguekey/roomhunt, /obj/item/roguekey/roomhunt, /obj/item/roguekey/roomhunt)
 
 

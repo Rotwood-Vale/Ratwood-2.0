@@ -1,7 +1,7 @@
 // -------------- SALUMOI (dwarven smoked sausage) -----------------
 /obj/item/reagent_containers/food/snacks/rogue/meat/salami
-	name = "salumoi"
-	desc = "A salted sausage, said to last for ten yils before spoiling. As the legend goes, dwarven caravans used this 'travel food' to create the first sandwich: a slice of bread, crowned with this sliceable meat."
+	name = "烟熏香肠"
+	desc = "一种盐腌香肠，据说放上十年都不会坏。传说矮人商队正是拿这种“旅粮”夹在面包片里，做出了最早的三明治。"
 	icon = 'modular/Neu_Food/icons/others/preserved_meat.dmi'
 	icon_state = "salumoi5"
 	eat_effect = null
@@ -13,7 +13,7 @@
 	faretype = FARE_POOR
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_NUTRITIOUS)
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/salami/slice
-	tastes = list("salted meat" = 1)
+	tastes = list("盐腌肉香" = 1)
 	rotprocess = null
 	slice_sound = TRUE
 
@@ -26,26 +26,26 @@
 /obj/item/reagent_containers/food/snacks/rogue/meat/salami/slice
 	eat_effect = null
 	slices_num = 0
-	name = "salumoi"
+	name = "烟熏香肠片"
 	icon_state = "salumoi_slice"
 	faretype = FARE_NEUTRAL
 	fried_type = null
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_POOR)
 	bitesize = 2
-	tastes = list("salted meat" = 1)
+	tastes = list("盐腌肉香" = 1)
 
 // -------------- COPPIETTE (dried meat) -----------------
 /obj/item/reagent_containers/food/snacks/rogue/meat/coppiette
 	eat_effect = null
-	name = "coppiette"
+	name = "风干肉条"
 	icon = 'modular/Neu_Food/icons/others/preserved_meat.dmi'
 	icon_state = "jerk5"
-	desc = "Dried mincesticks, prepared similarly to saloumi. While tougher to chew, it's certainly not as dry or firm as hardtack."
+	desc = "风干的肉糜条，做法与烟熏香肠相近。嚼起来更费劲些，但总比硬饼干柔软，也没那么干。"
 	faretype = FARE_POOR
 	fried_type = null
 	bitesize = 5
 	slice_path = null
-	tastes = list("salted meat" = 1)
+	tastes = list("盐腌肉香" = 1)
 	rotprocess = null
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_NUTRITIOUS)
 
@@ -62,8 +62,8 @@
 
 // -------------- SALO (salted fat) -----------------
 /obj/item/reagent_containers/food/snacks/fat/salo
-	name = "salo"
-	desc = "Salted pork fat, slabbed and ready for a slicing. A classic amongst the peasantry's pantry, when leaner cuts of meat are scarce. Quite delicious if watered down."
+	name = "盐腌肥膘"
+	desc = "一整块盐腌猪肥膘，切片即食。瘦肉匮乏时，这是农户储藏间里的老伙计；配点水下肚还挺香。"
 	icon = 'modular/Neu_Food/icons/others/preserved_meat.dmi'
 	icon_state = "salo4"
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_CHUNKY)
@@ -84,7 +84,7 @@
 		icon_state = "saloslice"
 
 /obj/item/reagent_containers/food/snacks/fat/salo/slice
-	name = "salo"
+	name = "盐腌肥膘片"
 	icon_state = "saloslice"
 	bitesize = 2
 	slices_num = FALSE
@@ -93,8 +93,8 @@
 
 // -------------- DRIED FISH FILET -----------------
 /obj/item/reagent_containers/food/snacks/rogue/meat/driedfishfilet
-	name = "dried fish filet"
-	desc = "A slab of aquatic meat, salted harder than the living thing was. A staple of any traveler alongside coastal regions, make sure to pack enough water with it."
+	name = "风干鱼柳"
+	desc = "一片咸得比活鱼还狠的水产肉片。沿海旅人几乎都会备上它，只是记得多带点水。"
 	icon = 'modular/Neu_Food/icons/others/preserved_meat.dmi'
 	icon_state = "dried_fish_filet"
 	eat_effect = null
@@ -102,5 +102,5 @@
 	bitesize = 3
 	faretype = FARE_POOR
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_NUTRITIOUS)
-	tastes = list("salted fish" = 1)
+	tastes = list("咸鱼香" = 1)
 	rotprocess = null

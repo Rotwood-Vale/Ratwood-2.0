@@ -139,6 +139,36 @@
 
 	return FALSE
 
+/proc/_race_key_display_name(key)
+	if(!istext(key)) return "[key]"
+	switch(lowertext("[key]"))
+		if("northern_human") return "北境人类"
+		if("dwarf") return "矮人"
+		if("dwarf_mountain") return "山地矮人"
+		if("elf") return "精灵"
+		if("dark_elf") return "黑暗精灵"
+		if("wood_elf") return "木精灵"
+		if("half_elf") return "半精灵"
+		if("tiefling") return "提夫林"
+		if("dullahan") return "杜拉罕"
+		if("half_orc") return "半兽人"
+		if("lizard") return "蜥蜴人"
+		if("goblin") return "哥布林"
+		if("kobold") return "狗头人"
+		if("aasimar") return "亚斯玛"
+		if("halfkin") return "半身人"
+		if("wildkin") return "兽裔"
+		if("critter") return "小兽裔"
+		if("axian") return "阿克西安"
+		if("lamia") return "拉弥亚"
+		if("dracon") return "龙裔"
+		if("lupian") return "狼裔"
+		if("moth") return "蛾人"
+		if("tabaxi") return "塔巴西"
+		if("vulp") return "狐裔"
+		if("harpy") return "鹰身女妖"
+	return "[key]"
+
 /proc/_rt_effect_type_name(T)
 	if(!ispath(T, /datum/status_effect))
 		return "[T]"
@@ -247,6 +277,14 @@
 	for(var/n in names)
 		out += _patron_name_display("[n]")
 	return jointext(out, "、")
+
+/proc/_quest_diff_display_name(diff_key)
+	if(!istext(diff_key)) return "[diff_key]"
+	switch(lowertext("[diff_key]"))
+		if("easy") return "简单"
+		if("medium") return "中等"
+		if("hard") return "困难"
+	return "[diff_key]"
 
 //--------------------------------------------------
 // I HATE FEET KNIGHT SO MUCH
@@ -851,7 +889,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 			qdel(src)
 			return
 		else
-			to_chat(U, "<span class='notice'>反馈 - <span style='color:#2ecc71'>绿色</span>：[correct_pos]，<span style='color:#f1c40f'>黄色</span>：[correct_digit]</span>")
+			to_chat(U, "<span class='notice'>反馈：<span style='color:#2ecc71'>绿色</span>：[correct_pos]，<span style='color:#f1c40f'>黄色</span>：[correct_digit]</span>")
 
 		attack_hand(U)
 		return
@@ -1223,11 +1261,11 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 		var/list/picked_races = _rt_pick_unique(race_keys_master, ccount3)
 		if(!picked_races.len) continue
 
-		var/list/races_upper = list()
+		var/list/race_names = list()
 		for(var/R in picked_races)
-			races_upper += uppertext("[R]")
+			race_names += _race_key_display_name("[R]")
 
-		var/races_desc_txt = html_attr(jointext(races_upper, ", "))
+		var/races_desc_txt = html_attr(jointext(race_names, "、"))
 
 		blood_diffs[dn3] = list(
 			"diff"       = dn3,
@@ -1318,7 +1356,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 		var/list/picked_patrons = _rt_pick_unique(patron_pool, ccount8)
 		if(!picked_patrons.len) continue
 
-		var/patrons_desc_txt = html_attr(jointext(picked_patrons, ", "))
+		var/patrons_desc_txt = html_attr(_patron_names_display(picked_patrons))
 
 		sermon_minor_diffs[dn8] = list(
 			"diff"       = dn8,
@@ -1346,7 +1384,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 		var/list/picked_patrons2 = _rt_pick_unique(patron_pool, ccount5)
 		if(!picked_patrons2.len) continue
 
-		var/patrons_hint_txt = html_attr(jointext(picked_patrons2, ", "))
+		var/patrons_hint_txt = html_attr(_patron_names_display(picked_patrons2))
 
 		box_diffs[dn5] = list(
 			"diff"       = dn5,

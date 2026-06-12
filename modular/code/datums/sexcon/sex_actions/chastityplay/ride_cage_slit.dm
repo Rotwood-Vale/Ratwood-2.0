@@ -1,5 +1,5 @@
 /datum/sex_action/chastityplay/ride_cage_slit
-    name = "Ride their cage with your slit"
+    name = "用肉缝骑磨对方的贞操笼"
     stamina_cost = 1.0
     category = SEX_CATEGORY_PENETRATE
     user_sex_part = SEX_PART_SLIT_SHEATH
@@ -34,10 +34,10 @@
     return TRUE
 
 /datum/sex_action/chastityplay/ride_cage_slit/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(span_warning("[user] straddles [target] and rolls forward until [user.p_their()] genital slit settles flush against [target.p_their()] [get_chastity_device_name(target)]."))
+    user.visible_message(span_warning("[user]跨坐到[target]身上，向前挪动身体，直到[user.p_their()]的肉缝严丝合缝地贴上[target.p_their()]的[get_chastity_device_name(target)]。"))
 
 /datum/sex_action/chastityplay/ride_cage_slit/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] works [user.p_their()] slit along the length of [target]'s [get_chastity_device_name(target)], each pass dragging metal across sensitive flesh..."))
+    user.visible_message(user.sexcon.spanify_force("[user][user.sexcon.get_generic_force_adjective()]让[user.p_their()]的肉缝沿着[target]的[get_chastity_device_name(target)]一路磨蹭，每一次来回都让金属从敏感的皮肉上拖刮过去……"))
     user.sexcon.outercourse_noise(target, TRUE)
 
     if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU))
@@ -49,7 +49,7 @@
     target.sexcon.handle_passive_ejaculation(user)
 
 /datum/sex_action/chastityplay/ride_cage_slit/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(span_warning("[user] rocks back and lifts [user.p_their()] slit off [target]'s [get_chastity_device_name(target)], the separation quiet and deliberate."))
+    user.visible_message(span_warning("[user]慢慢向后仰去，将[user.p_their()]的肉缝从[target]的[get_chastity_device_name(target)]上抬开，分离的动作安静而刻意。"))
 
 /datum/sex_action/chastityplay/ride_cage_slit/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
     if(user.sexcon.finished_check())

@@ -1,6 +1,6 @@
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/nitzel
-	name = "unfinished nitzel"
-	desc = "Tenderized meat, awaiting a coating of toastcrumbs and a hot oil bath."
+	name = "未完成的炸肉排"
+	desc = "已拍松的肉片，还差裹上面包屑，再下热油锅。"
 	icon = 'modular/Neu_Food/icons/raw/raw_deep_fried.dmi'
 	icon_state = "nitzel_step1"
 	process_step = 1
@@ -11,11 +11,11 @@
 	if(istype(I, /obj/item/reagent_containers/food/snacks/egg))
 		if(process_step != 1)
 			return
-		to_chat(user, span_notice("Cracking an egg over the nitzel."))
+		to_chat(user, span_notice("往炸肉排上打入一枚蛋。"))
 		if(do_after(user, short_cooktime, target = src))
 			playsound(get_turf(user), 'modular/Neu_Food/sound/eggbreak.ogg', 100, TRUE, -1)
-			name = "nitzel with egg"
-			desc = "A nitzel with an egg cracked over it. It awaits toastcrumbs and a hot oil bath."
+			name = "裹蛋炸肉排"
+			desc = "打过鸡蛋的炸肉排坯子，还在等面包屑和热油锅。"
 			icon_state = "nitzel_step2"
 			process_step = 2
 			update_icon()
@@ -24,10 +24,10 @@
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/toastcrumbs))
 		if(process_step != 2)
 			return
-		to_chat(user, span_notice("Coating the nitzel with toastcrumbs."))
+		to_chat(user, span_notice("给炸肉排裹上面包屑。"))
 		if(do_after(user, short_cooktime, target = src))
-			name = "nitzel with toastcrumbs"
-			desc = "A nitzel coated in toastcrumbs. It awaits a hot oil bath."
+			name = "裹屑炸肉排"
+			desc = "已经裹好面包屑的炸肉排坯子，就等下锅了。"
 			icon_state = "nitzel_step3"
 			process_step = 3
 			deep_fried_type = /obj/item/reagent_containers/food/snacks/rogue/meat/nitzel
@@ -37,8 +37,8 @@
 	return ..()
 
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/schnitzel
-	name = "schnitzel"
-	desc = "Tenderized spider meat, awaiting a coating of toastcrumbs and a hot oil bath."
+	name = "蛛肉炸排坯"
+	desc = "拍松的蜘蛛肉片，还差裹上面包屑，再下热油锅。"
 	icon = 'modular/Neu_Food/icons/raw/raw_deep_fried.dmi'
 	icon_state = "schnitzel_step1"
 	process_step = 1
@@ -50,11 +50,11 @@
 	if(istype(I, /obj/item/reagent_containers/food/snacks/egg))
 		if(process_step != 1)
 			return
-		to_chat(user, span_notice("Cracking an egg over the schnitzel."))
+		to_chat(user, span_notice("往蛛肉炸排上打入一枚蛋。"))
 		if(do_after(user, short_cooktime, target = src))
 			playsound(get_turf(user), 'modular/Neu_Food/sound/eggbreak.ogg', 100, TRUE, -1)
-			name = "schnitzel with egg"
-			desc = "A schnitzel with an egg cracked over it. It awaits toastcrumbs and a hot oil bath."
+			name = "裹蛋蛛肉炸排"
+			desc = "打过鸡蛋的蛛肉炸排坯子，还在等面包屑和热油锅。"
 			icon_state = "schnitzel_step2"
 			process_step = 2
 			update_icon()
@@ -63,10 +63,10 @@
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/toastcrumbs))
 		if(process_step != 2)
 			return
-		to_chat(user, span_notice("Coating the schnitzel with toastcrumbs."))
+		to_chat(user, span_notice("给蛛肉炸排裹上面包屑。"))
 		if(do_after(user, short_cooktime, target = src))
-			name = "schnitzel with toastcrumbs"
-			desc = "A schnitzel coated in toastcrumbs. It awaits a hot oil bath."
+			name = "裹屑蛛肉炸排"
+			desc = "已经裹好面包屑的蛛肉炸排坯子，就等下锅了。"
 			icon_state = "schnitzel_step3"
 			process_step = 3
 			deep_fried_type = /obj/item/reagent_containers/food/snacks/rogue/meat/nitzel/schnitzel
@@ -77,8 +77,8 @@
 
 // Squire's delight (deep fried butter)
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/squires_delight
-	name = "unfinished squire's delight"
-	desc = "A butter stick with an egg cracked over it. It awaits toastcrumbs and a hot oil bath."
+	name = "未完成的侍从之悦"
+	desc = "一条裹了鸡蛋的黄油，还差面包屑和热油锅。"
 	icon = 'modular/Neu_Food/icons/raw/raw_deep_fried.dmi'
 	icon_state = "squiresdelight_step1"
 	process_step = 1
@@ -88,10 +88,10 @@
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/toastcrumbs))
 		if(process_step != 1)
 			return
-		to_chat(user, span_notice("Coating the butter with toastcrumbs."))
+		to_chat(user, span_notice("给黄油裹上面包屑。"))
 		if(do_after(user, short_cooktime, target = src))
-			name = "squire's delight with toastcrumbs"
-			desc = "A butter stick coated in toastcrumbs. It awaits a hot oil bath."
+			name = "裹屑侍从之悦"
+			desc = "一条裹好面包屑的黄油，就等下锅油炸。"
 			icon_state = "squiresdelight_step2"
 			process_step = 2
 			deep_fried_type = /obj/item/reagent_containers/food/snacks/squiresdelight
@@ -100,8 +100,8 @@
 			return
 
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/chickentender
-	name = "unfinished tender frybird"
-	desc = "Tenderized meat, awaiting a coating of toastcrumbs and a hot oil bath."
+	name = "未完成的嫩炸鸟肉"
+	desc = "已拍松的禽肉，还差裹上面包屑，再下热油锅。"
 	icon = 'modular/Neu_Food/icons/raw/raw_deep_fried.dmi'
 	icon_state = "chickentender_step1"
 	process_step = 1
@@ -112,11 +112,11 @@
 	if(istype(I, /obj/item/reagent_containers/food/snacks/egg))
 		if(process_step != 1)
 			return
-		to_chat(user, span_notice("Cracking an egg over the frybird."))
+		to_chat(user, span_notice("往炸鸟肉上打入一枚蛋。"))
 		if(do_after(user, short_cooktime, target = src))
 			playsound(get_turf(user), 'modular/Neu_Food/sound/eggbreak.ogg', 100, TRUE, -1)
-			name = "tender frybird with egg"
-			desc = "A frybird with an egg cracked over it. It awaits toastcrumbs and a hot oil bath."
+			name = "裹蛋嫩炸鸟肉"
+			desc = "打过鸡蛋的炸鸟肉坯子，还在等面包屑和热油锅。"
 			icon_state = "chickentender_step2"
 			process_step = 2
 			update_icon()
@@ -125,10 +125,10 @@
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/toastcrumbs))
 		if(process_step != 2)
 			return
-		to_chat(user, span_notice("Coating the frybird with toastcrumbs."))
+		to_chat(user, span_notice("给炸鸟肉裹上面包屑。"))
 		if(do_after(user, short_cooktime, target = src))
-			name = "tender frybird with toastcrumbs"
-			desc = "A frybird coated in toastcrumbs. It awaits a hot oil bath."
+			name = "裹屑嫩炸鸟肉"
+			desc = "已经裹好面包屑的炸鸟肉坯子，就等下锅了。"
 			icon_state = "chickentender_step3"
 			process_step = 3
 			deep_fried_type = /obj/item/reagent_containers/food/snacks/rogue/meat/chickentender

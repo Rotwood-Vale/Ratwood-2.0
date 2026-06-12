@@ -5,7 +5,7 @@
 	// Using a midpoint avoids same-layer contention with chest/body sprites.
 	layer = 44.5
 	color_keys = 1
-	color_key_names = "Chastity"
+	color_key_names = "贞操具"
 	var/chastity_type = /obj/item/chastity
 
 /datum/sprite_accessory/chastity/proc/get_chastity_suffix(mob/living/carbon/owner)

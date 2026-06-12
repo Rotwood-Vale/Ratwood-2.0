@@ -6,8 +6,8 @@
 
 /*	........   Pie making   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/piebottom
-	name = "pie bottom"
-	desc = "The foundation of the fantastical.."
+	name = "派底"
+	desc = "一切美味馅派的根基。"
 	icon = 'modular/Neu_Food/icons/raw/raw_pies.dmi'
 	icon_state = "piebottom"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -103,8 +103,8 @@
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 30, TRUE, -1)
 		if(process_step == 1 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Starting on a fish pie..."))
-			name = "unfinished fish pie"
+			to_chat(user, span_notice("开始制作鱼派……"))
+			name = "未完成的鱼派"
 			process_step += 1
 			fishy = TRUE
 			update_icon()
@@ -112,14 +112,14 @@
 			return
 		if(fishy && process_step == 2 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Adding filling to the fish pie. Needs more."))
+			to_chat(user, span_notice("往鱼派里添馅。还得再加一些。"))
 			process_step += 1
 			update_icon()
 			qdel(I)
 			return
 		if(fishy && process_step == 3 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Filling the fish pie to the brim. Still lacks a pie roof."))
+			to_chat(user, span_notice("鱼派馅料已添得满满当当，但还缺一层派盖。"))
 			process_step += 1
 			update_icon()
 			qdel(I)
@@ -131,8 +131,8 @@
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 30, TRUE, -1)
 		if(process_step == 1 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Starting on a meat pie..."))
-			name = "unfinished meat pie"
+			to_chat(user, span_notice("开始制作肉派……"))
+			name = "未完成的肉派"
 			process_step += 1
 			meaty = TRUE
 			update_icon()
@@ -140,14 +140,14 @@
 			return
 		if(meaty && process_step == 2 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Adding filling to the meat pie. Needs more."))
+			to_chat(user, span_notice("往肉派里添馅。还得再加一些。"))
 			process_step += 1
 			update_icon()
 			qdel(I)
 			return
 		if(meaty && process_step == 3 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Filling the meat pie to the brim. Still lacks a pie roof."))
+			to_chat(user, span_notice("肉派馅料已添得满满当当，但还缺一层派盖。"))
 			process_step += 1
 			update_icon()
 			qdel(I)
@@ -159,8 +159,8 @@
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 30, TRUE, -1)
 		if(process_step == 1 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Starting on a pot pie..."))
-			name = "unfinished pot pie"
+			to_chat(user, span_notice("开始制作浓馅派……"))
+			name = "未完成的浓馅派"
 			process_step += 1
 			potpie = TRUE
 			var/mutable_appearance/pot1 = mutable_appearance(icon, "fill_pot1")
@@ -169,7 +169,7 @@
 			return
 		if(potpie && process_step == 2 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Adding filling to the pot pie. Needs more."))
+			to_chat(user, span_notice("往浓馅派里添馅。还得再加一些。"))
 			process_step += 1
 			var/mutable_appearance/pot2 = mutable_appearance(icon, "fill_pot2")
 			add_overlay(pot2)
@@ -177,7 +177,7 @@
 			return
 		if(potpie && process_step == 3 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Filling the pot pie to the brim. Still lacks a pie roof."))
+			to_chat(user, span_notice("浓馅派馅料已添得满满当当，但还缺一层派盖。"))
 			process_step += 1
 			var/mutable_appearance/pot3 = mutable_appearance(icon, "fill_pot3")
 			add_overlay(pot3)
@@ -190,8 +190,8 @@
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 30, TRUE, -1)
 		if(process_step == 1 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Starting on a pot pie..."))
-			name = "unfinished pot pie"
+			to_chat(user, span_notice("开始制作浓馅派……"))
+			name = "未完成的浓馅派"
 			process_step += 1
 			potpie = TRUE
 			var/mutable_appearance/egg1 = mutable_appearance(icon, "fill_egg1")
@@ -200,7 +200,7 @@
 			return
 		if(potpie && process_step == 2 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Adding filling to the pot pie. Needs more."))
+			to_chat(user, span_notice("往浓馅派里添馅。还得再加一些。"))
 			process_step += 1
 			var/mutable_appearance/egg2 = mutable_appearance(icon, "fill_egg2")
 			add_overlay(egg2)
@@ -208,7 +208,7 @@
 			return
 		if(potpie && process_step == 3 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Filling the pot pie to the brim. Still lacks a pie roof."))
+			to_chat(user, span_notice("浓馅派馅料已添得满满当当，但还缺一层派盖。"))
 			process_step += 1
 			var/mutable_appearance/egg3 = mutable_appearance(icon, "fill_egg3")
 			add_overlay(egg3)
@@ -221,8 +221,8 @@
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 30, TRUE, -1)
 		if(process_step == 1 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Starting on a pot pie..."))
-			name = "unfinished pot pie"
+			to_chat(user, span_notice("开始制作浓馅派……"))
+			name = "未完成的浓馅派"
 			process_step += 1
 			potpie = TRUE
 			var/mutable_appearance/animal1 = mutable_appearance(icon, "fill_fish1")
@@ -231,7 +231,7 @@
 			return
 		if(potpie && process_step == 2 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Adding filling to the pot pie. Needs more."))
+			to_chat(user, span_notice("往浓馅派里添馅。还得再加一些。"))
 			process_step += 1
 			var/mutable_appearance/animal2 = mutable_appearance(icon, "fill_fish2")
 			add_overlay(animal2)
@@ -239,7 +239,7 @@
 			return
 		if(potpie && process_step == 3 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Filling the pot pie to the brim. Still lacks a pie roof."))
+			to_chat(user, span_notice("浓馅派馅料已添得满满当当，但还缺一层派盖。"))
 			process_step += 1
 			var/mutable_appearance/animal3 = mutable_appearance(icon, "fill_fish3")
 			add_overlay(animal3)
@@ -259,8 +259,8 @@
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 30, TRUE, -1)
 		if(process_step == 1 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Starting on a crab pie... You consider that shredded cabbage could be used as filler for one of the remaining ingredients. "))
-			name = "unfinished crab pie"
+			to_chat(user, span_notice("开始制作蟹派……你觉得剩下的某一份蟹肉或许可用卷心菜丝代替。"))
+			name = "未完成的蟹派"
 			process_step += 1
 			crabby = TRUE
 			update_icon()
@@ -268,14 +268,14 @@
 			return
 		if(crabby && process_step == 2 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Adding filling to the crab pie. Needs more."))
+			to_chat(user, span_notice("往蟹派里添馅。还得再加一些。"))
 			process_step += 1
 			update_icon()
 			qdel(I)
 			return
 		if(crabby && process_step == 3 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Filling the crab pie to the brim. Still lacks a pie roof."))
+			to_chat(user, span_notice("蟹派馅料已添得满满当当，但还缺一层派盖。"))
 			process_step += 1
 			update_icon()
 			qdel(I)
@@ -285,12 +285,12 @@
 		if (process_step > 4 || process_step == 1)
 			return
 		if (substitute == TRUE)
-			to_chat(user, span_notice("There is too much cabbage in this pie already."))
+			to_chat(user, span_notice("这只派里的卷心菜已经太多了。"))
 			return
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 30, TRUE, -1)
 		if(crabby && process_step >= 2 && process_step <= 3 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Substituting cabbage for crab meat in the crab pie..."))
+			to_chat(user, span_notice("用卷心菜代替这份蟹派中的一部分蟹肉……"))
 			process_step += 1
 			substitute = TRUE
 			update_icon()
@@ -304,8 +304,8 @@
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 30, TRUE, -1)
 		if(process_step == 1 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Starting on an apple pie..."))
-			name = "unfinished apple pie"
+			to_chat(user, span_notice("开始制作苹果派……"))
+			name = "未完成的苹果派"
 			process_step += 1
 			applepie = TRUE
 			update_icon()
@@ -313,14 +313,14 @@
 			return
 		if(applepie && process_step == 2 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Adding filling to the apple pie. Needs more."))
+			to_chat(user, span_notice("往苹果派里添馅。还得再加一些。"))
 			process_step += 1
 			update_icon()
 			qdel(I)
 			return
 		if(applepie && process_step == 3 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Filling the apple pie to the brim. Still lacks a pie roof."))
+			to_chat(user, span_notice("苹果派馅料已添得满满当当，但还缺一层派盖。"))
 			process_step += 1
 			update_icon()
 			qdel(I)
@@ -332,8 +332,8 @@
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 30, TRUE, -1)
 		if(process_step == 1 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Starting on a berry pie..."))
-			name = "unfinished berrypie"
+			to_chat(user, span_notice("开始制作浆果派……"))
+			name = "未完成的浆果派"
 			process_step += 1
 			berrypie = TRUE
 			poisoning = TRUE
@@ -342,7 +342,7 @@
 			return
 		if(berrypie && process_step == 2 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Adding filling to the berry pie. Needs more."))
+			to_chat(user, span_notice("往浆果派里添馅。还得再加一些。"))
 			process_step += 1
 			poisoning = TRUE
 			update_icon()
@@ -350,7 +350,7 @@
 			return
 		if(berrypie && process_step == 3 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Filling the berry pie to the brim. Still lacks a pie roof."))
+			to_chat(user, span_notice("浆果派馅料已添得满满当当，但还缺一层派盖。"))
 			process_step += 1
 			poisoning = TRUE
 			update_icon()
@@ -363,8 +363,8 @@
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 30, TRUE, -1)
 		if(process_step == 1 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Starting on a berry pie..."))
-			name = "unfinished berrypie"
+			to_chat(user, span_notice("开始制作浆果派……"))
+			name = "未完成的浆果派"
 			process_step += 1
 			berrypie = TRUE
 			update_icon()
@@ -372,14 +372,14 @@
 			return
 		if(berrypie && process_step == 2 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Adding filling to the berry pie. Needs more."))
+			to_chat(user, span_notice("往浆果派里添馅。还得再加一些。"))
 			process_step += 1
 			update_icon()
 			qdel(I)
 			return
 		if(berrypie && process_step == 3 && do_after(user,short_cooktime, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			to_chat(user, span_notice("Filling the berry pie to the brim. Still lacks a pie roof."))
+			to_chat(user, span_notice("浆果派馅料已添得满满当当，但还缺一层派盖。"))
 			process_step += 1
 			update_icon()
 			qdel(I)
@@ -388,7 +388,7 @@
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/piedough))
 		playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
 		if(fishy && process_step == 4 && do_after(user,short_cooktime, target = src))
-			name = "uncooked fish pie"
+			name = "生鱼派"
 			icon_state = "fishpie_raw"
 			cooked_type = /obj/item/reagent_containers/food/snacks/rogue/pie/cooked/meat/fish
 			cooked_smell = /datum/pollutant/food/fish_pie
@@ -397,7 +397,7 @@
 			update_icon()
 			qdel(I)
 		else if(meaty && process_step == 4 && do_after(user,short_cooktime, target = src))
-			name = "uncooked meat pie"
+			name = "生肉派"
 			icon_state = "meatpie_raw"
 			cooked_type = /obj/item/reagent_containers/food/snacks/rogue/pie/cooked/meat/meat
 			cooked_smell = /datum/pollutant/food/meat_pie
@@ -406,7 +406,7 @@
 			update_icon()
 			qdel(I)
 		else if(potpie && process_step == 4 && do_after(user,short_cooktime, target = src))
-			name = "uncooked pot pie"
+			name = "生浓馅派"
 			filling_color = "#755430"
 			cooked_type = /obj/item/reagent_containers/food/snacks/rogue/pie/cooked/pot
 			cooked_smell = /datum/pollutant/food/pot_pie
@@ -414,7 +414,7 @@
 			update_icon()
 			qdel(I)
 		else if(applepie && process_step == 4 && do_after(user,short_cooktime, target = src))
-			name = "uncooked apple pie"
+			name = "生苹果派"
 			filling_color = "#947a4b"
 			cooked_type = /obj/item/reagent_containers/food/snacks/rogue/pie/cooked/apple
 			cooked_smell = /datum/pollutant/food/apple_pie
@@ -422,7 +422,7 @@
 			update_icon()
 			qdel(I)
 		else if(poisoning && process_step == 4 && do_after(user,short_cooktime, target = src))
-			name = "uncooked berry pie"
+			name = "生浆果派"
 			filling_color = "#4a62cf"
 			cooked_type = /obj/item/reagent_containers/food/snacks/rogue/pie/cooked/poison
 			cooked_smell = /datum/pollutant/food/berry_pie
@@ -430,7 +430,7 @@
 			update_icon()
 			qdel(I)
 		else if(berrypie && process_step == 4 && do_after(user,short_cooktime, target = src))
-			name = "uncooked berry pie"
+			name = "生浆果派"
 			filling_color = "#4a62cf"
 			cooked_type = /obj/item/reagent_containers/food/snacks/rogue/pie/cooked/berry
 			cooked_smell = /datum/pollutant/food/berry_pie
@@ -438,7 +438,7 @@
 			update_icon()
 			qdel(I)
 		else if(crabby && process_step == 4 && do_after(user,short_cooktime, target = src))
-			name = "uncooked crab pie"
+			name = "生蟹派"
 			filling_color = "#f1e0cb"
 			cooked_type = /obj/item/reagent_containers/food/snacks/rogue/pie/cooked/crab
 			cooked_smell = /datum/pollutant/food/crab_pie

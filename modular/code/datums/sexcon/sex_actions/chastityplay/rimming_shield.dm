@@ -1,5 +1,5 @@
 /datum/sex_action/chastityplay/rimming_shield
-	name = "Rim them behind their chastity shield"
+	name = "从贞操盾后方舔弄"
 	user_sex_part = SEX_PART_JAWS
 	target_sex_part = SEX_PART_ANUS
 
@@ -22,10 +22,10 @@
 	return TRUE
 
 /datum/sex_action/chastityplay/rimming_shield/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] ducks low and presses [user.p_their()] face to the lower edge of [target]'s anal shield, searching for an angle."))
+	user.visible_message(span_warning("[user]俯下身去，把[user.p_their()]的脸贴上[target]后庭护盾的下缘，寻找能够探入的角度。"))
 
 /datum/sex_action/chastityplay/rimming_shield/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] drives [user.p_their()] tongue beneath [target]'s anal shield, working it into whatever gap the metal allows..."))
+	user.visible_message(user.sexcon.spanify_force("[user][user.sexcon.get_generic_force_adjective()]将[user.p_their()]的舌头探入[target]的后庭护盾下方，顺着金属勉强容出的缝隙不断舔弄……"))
 	user.sexcon.oralcourse_noise(target)
 	user.sexcon.do_thrust_animate(target)
 
@@ -34,7 +34,7 @@
 		target.sexcon.ejaculate()
 
 /datum/sex_action/chastityplay/rimming_shield/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] pulls back from [target]'s shield, jaw aching, and straightens up."))
+	user.visible_message(span_warning("[user]从[target]的护盾后退开来，下颌酸痛地重新直起身。"))
 
 /datum/sex_action/chastityplay/rimming_shield/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.sexcon.finished_check())

@@ -17,7 +17,7 @@
 	else if(QDELETED(user))
 		return FALSE
 	else if(user.client && user.client.prefs.muted & MUTE_IC)
-		to_chat(user, "<span class='boldwarning'>我无法发送 IC 消息（已被禁言）。</span>")
+		to_chat(user, "<span class='boldwarning'>我无法发送角色内消息（已被禁言）。</span>")
 		return FALSE
 	else if(!params)
 		var/custom_emote = copytext(sanitize(input("你的角色悄悄做了什么？") as text|null), 1, MAX_MESSAGE_LEN)

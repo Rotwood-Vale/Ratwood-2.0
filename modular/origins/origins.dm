@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	html += {".confirm-btn:hover{background:#8b4010;border-color:#e8c87a;}"}
 	html += "</style></head><body>"
 	html += "<div class='map-wrap'>"
-	html += "<img src='rwmap1.png' alt='Ratwood Map'>"
+	html += "<img src='rwmap1.png' alt='拉特伍德地图'>"
 	for(var/otype as anything in GLOB.origins)
 		var/datum/origin/O = GLOB.origins[otype]
 		var/sel_cls = (origin == O) ? " selected" : ""
