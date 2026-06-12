@@ -25,7 +25,7 @@
 		to_chat(usr, "<span class='warning'>I seem to be selecting a mob that doesn't exist anymore.</span>")
 		return
 
-	var/body = "<html><head><title>Options for [M.key]</title><style>"
+	var/body = "<html><meta charset='UTF-8'><head><title>Options for [M.key]</title><style>"
 	body += "<style>"
 	body += "html, body { height: 100%; margin: 0; padding: 0; overflow-x: hidden; }"
 	body += "#container { display: flex; flex-direction: row; align-items: flex-start; width: 100%; overflow-x: hidden; flex-wrap: nowrap; }"
@@ -288,7 +288,7 @@
 	if(!M)
 		return
 
-	var/body = "<html><head><title>Heal - [M.name]</title>"
+	var/body = "<html><meta charset='UTF-8'><head><title>Heal - [M.name]</title>"
 	body += "<style>"
 	body += "table { border-collapse: collapse; width: 100%; }"
 	body += "th, td { border: 1px solid black; padding: 5px; text-align: left; }"
@@ -453,7 +453,7 @@
 		to_chat(usr, "<span class='warning'>I seem to be selecting a mob that doesn't exist anymore.</span>")
 		return
 	
-	var/body = "<html><head><title>Inventory Panel - [M.name]</title>"
+	var/body = "<html><meta charset='UTF-8'><head><title>Inventory Panel - [M.name]</title>"
 	body += "<style>"
 	body += "table { border-collapse: collapse; width: 100%; }"
 	body += "th, td { border: 1px solid black; padding: 5px; text-align: left; }"
@@ -526,7 +526,7 @@
 	if(!M || !container)
 		return
 	
-	var/body = "<html><head><title>Contents - [container.name]</title>"
+	var/body = "<html><meta charset='UTF-8'><head><title>Contents - [container.name]</title>"
 	body += "<style>"
 	body += "table { border-collapse: collapse; width: 100%; }"
 	body += "th, td { border: 1px solid black; padding: 5px; text-align: left; }"
