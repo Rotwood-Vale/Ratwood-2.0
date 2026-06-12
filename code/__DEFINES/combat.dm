@@ -400,3 +400,10 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BLUNT_CHIP_WEAK 0.20		//A flat 20%, meant for small clubs.
 #define BLUNT_CHIP_STRONG 0.30		//A flat 30%, meant for larger weapons.
 #define BLUNT_CHIP_ABSURD 0.40		//A flat 40%, meant for mauls and hammers.
+
+//Fire Penetration Through Armor. No longer does magic get 100 pen naturally
+#define NO_FRESIST		0
+#define WEAK_FRESIST	0.10	//10% Damage Reduction, meant for weaker padded armor and horrible leathers and armor that makes for good temperature conductors (plate)
+#define MEDIUM_FRESIST	0.20	//20% Damage Reduction, meant for more well-made padded armor and leathers.
+#define STRONG_FRESIST	0.30	//30% Damage Reduction, for the best light armors and leather armor.
+#define SUPER_FRESIST	0.50	//50% Damage Reduction, for special armor like Dragonhide.
