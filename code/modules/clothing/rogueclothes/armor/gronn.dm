@@ -35,7 +35,7 @@
 	icon_state = "gronnleatherpants"
 	item_state = "gronnleatherpants"
 	armor = ARMOR_GRONN_LIGHT
-	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH)
+	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_BURN)
 	max_integrity = ARMOR_INT_LEG_HARDLEATHER
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
@@ -84,7 +84,7 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 48
 	sellprice = 10
-	prevent_crits = list(BCLASS_BLUNT, BCLASS_TWIST)
+	prevent_crits = list(BCLASS_BLUNT, BCLASS_TWIST, BCLASS_BURN)
 	anvilrepair = null
 	smeltresult = null
 	sewrepair = TRUE
