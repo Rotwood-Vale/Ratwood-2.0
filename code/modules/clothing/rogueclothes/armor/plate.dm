@@ -7,6 +7,7 @@
 	icon_state = "halfplate"
 	item_state = "halfplate"
 	armor = ARMOR_PLATE
+	resistance_flags = FIRE_PROOF
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	nodismemsleeves = TRUE
 	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL
