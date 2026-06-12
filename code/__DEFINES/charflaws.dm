@@ -14,6 +14,11 @@
 		/datum/charflaw/disfigured,\
 		/datum/charflaw/limbloss/arm_l,\
 		/datum/charflaw/limbloss/arm_r,\
+		/datum/charflaw/limbloss/arm_l_irn,\
+		/datum/charflaw/limbloss/arm_r_irn,\
+		/datum/charflaw/limbloss/arm_l_stl,\
+		/datum/charflaw/limbloss/arm_r_stl,\
+
 		/datum/charflaw/eerie_beauty,\
 		/datum/charflaw/unsettling_beauty,\
 		/datum/charflaw/nudist,\

@@ -26,6 +26,33 @@
 	L.attach_limb(H)
 	H.adjust_triumphs(1)
 
+/datum/charflaw/limbloss/arm_r_irn
+	name = "Iron Arm (R)"
+	desc = "I lost my right arm long ago, but the iron arm is a bit sturdier...<br><i>(Incompatible with Bronze Arm (R) virtue)</i>"
+	lost_zone = BODY_ZONE_R_ARM
+
+/datum/charflaw/limbloss/arm_r_irn/on_mob_creation(mob/user)
+	..()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	var/obj/item/bodypart/r_arm/prosthetic/iron = new()
+	L.attach_limb(H)
+
+/datum/charflaw/limbloss/arm_r_stl
+	name = "Steel Arm (R)"
+	desc = "I lost my right arm long ago, but the steel arm is far sturdier...<br><i>(Incompatible with Bronze Arm (R) virtue)</i>"
+	lost_zone = BODY_ZONE_R_ARM
+
+/datum/charflaw/limbloss/arm_r_stl/on_mob_creation(mob/user)
+	..()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	var/obj/item/bodypart/r_arm/prosthetic/steel = new()
+	L.attach_limb(H)
+	H.adjust_triumphs(-1)
+
 /datum/charflaw/limbloss/arm_l
 	name = "Wood Arm (L)"
 	desc = "I lost my left arm long ago, but the wooden arm doesn't bleed as much... but it is flammable.<br><i>(Incompatible with Bronze Arm (L) virtue)</i>"
@@ -39,3 +66,30 @@
 	var/obj/item/bodypart/l_arm/prosthetic/woodleft/L = new()
 	L.attach_limb(H)
 	H.adjust_triumphs(1)
+
+/datum/charflaw/limbloss/arm_l_irn
+	name = "Iron Arm (L)"
+	desc = "I lost my left arm long ago, but the iron arm is a bit sturdier...<br><i>(Incompatible with Bronze Arm (L) virtue)</i>"
+	lost_zone = BODY_ZONE_L_ARM
+
+/datum/charflaw/limbloss/arm_l_irn/on_mob_creation(mob/user)
+	..()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	var/obj/item/bodypart/l_arm/prosthetic/iron = new()
+	L.attach_limb(H)
+
+/datum/charflaw/limbloss/arm_l_stl
+	name = "Steel Arm (L)"
+	desc = "I lost my left arm long ago, but the steel arm is far sturdier...<br><i>(Incompatible with Bronze Arm (L) virtue)</i>"
+	lost_zone = BODY_ZONE_L_ARM
+
+/datum/charflaw/limbloss/arm_l_stl/on_mob_creation(mob/user)
+	..()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	var/obj/item/bodypart/l_arm/prosthetic/steel = new()
+	L.attach_limb(H)
+	H.adjust_triumphs(-1)
