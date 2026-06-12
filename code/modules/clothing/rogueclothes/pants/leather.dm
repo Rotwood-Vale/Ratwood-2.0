@@ -22,7 +22,7 @@
 	name = "leather trousers"
 	armor = ARMOR_LEATHER
 	icon_state = "leathertrou"
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_BURN)
 	max_integrity = ARMOR_INT_LEG_LEATHER
 	resistance_flags = FIRE_PROOF
 	salvage_result = /obj/item/natural/hide/cured
