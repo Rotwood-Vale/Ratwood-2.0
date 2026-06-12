@@ -102,9 +102,9 @@
 		message_range += (5 + buff.potency)
 		for(var/obj/structure/roguemachine/scomm/S in SSroguemachine.scomm_machines)
 			if(prob(buff.potency * 3) && S.speaking)
-				S.verb_say = "shrieks in terror"
-				S.verb_exclaim = "shrieks in terror"
-				S.verb_yell = "shrieks in terror"
+				S.verb_say = "惊骇尖啸"
+				S.verb_exclaim = "惊骇尖啸"
+				S.verb_yell = "惊骇尖啸"
 				S.say(message, spans = list("info", "reallybig"))
 				S.verb_say = initial(S.verb_say)
 				S.verb_exclaim = initial(S.verb_exclaim)
