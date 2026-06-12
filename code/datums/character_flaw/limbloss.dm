@@ -36,7 +36,7 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	var/obj/item/bodypart/r_arm/prosthetic/iron = new()
+	var/obj/item/bodypart/r_arm/prosthetic/iron/L = new()
 	L.attach_limb(H)
 
 /datum/charflaw/limbloss/arm_r_stl
@@ -49,7 +49,7 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	var/obj/item/bodypart/r_arm/prosthetic/steel = new()
+	var/obj/item/bodypart/r_arm/prosthetic/steel/L = new()
 	L.attach_limb(H)
 	H.adjust_triumphs(-1)
 
@@ -77,7 +77,7 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	var/obj/item/bodypart/l_arm/prosthetic/iron = new()
+	var/obj/item/bodypart/l_arm/prosthetic/iron/L = new()
 	L.attach_limb(H)
 
 /datum/charflaw/limbloss/arm_l_stl
@@ -90,6 +90,6 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	var/obj/item/bodypart/l_arm/prosthetic/steel = new()
+	var/obj/item/bodypart/l_arm/prosthetic/steel/L = new()
 	L.attach_limb(H)
 	H.adjust_triumphs(-1)
