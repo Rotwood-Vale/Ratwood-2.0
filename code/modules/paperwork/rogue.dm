@@ -1,7 +1,7 @@
 // Shared scroll state must be declared before any procs use it.
 /obj/item/paper/scroll
 	var/open = FALSE
-	name = "scroll"
+	name = "卷轴"
 	icon_state = "scroll"
 	slot_flags = null
 	dropshrink = 0.6
@@ -21,15 +21,15 @@
 	. = ..()
 	if(!isobserver(user) || !IsAdminGhost(user))
 		if(info && open)
-			. += "<a href='?src=[REF(src)];read=1'>Read</a>"
+			. += "<a href='?src=[REF(src)];read=1'>阅读</a>"
 
 /obj/item/paper/scroll/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	if(istype(P, /obj/item/natural/thorn) || istype(P, /obj/item/natural/feather))
 		if(!open)
-			to_chat(user, span_warning("Open me."))
+			to_chat(user, span_warning("先把我打开。"))
 			return
 	if(P.get_sharpness())
-		to_chat(user, span_warning("[user] tears [src]."))
+		to_chat(user, span_warning("[user]撕碎了[src]。"))
 		new /obj/item/paper(get_turf(src))
 		new /obj/item/paper(get_turf(src))
 		qdel(src)
@@ -54,7 +54,7 @@
 
 /obj/item/paper/scroll/attack_self(mob/user)
 	if(mailer)
-		user.visible_message(span_notice("[user] opens the missive from [mailer]."))
+		user.visible_message(span_notice("[user]打开了来自[mailer]的信函。"))
 		mailer = null
 		mailedto = null
 		update_icon()
@@ -62,7 +62,7 @@
 	if(seal_label && !seal_broken)
 		seal_broken = TRUE
 		update_icon_state()
-		to_chat(user, span_notice("I break the wax seal on [src]."))
+		to_chat(user, span_notice("我拆开了[src]上的蜡封。"))
 		return
 	if(!open)
 		attack_right(user)
@@ -76,7 +76,7 @@
 
 /obj/item/paper/scroll/attack_right(mob/user)
 	if(seal_label && !seal_broken)
-		to_chat(user, span_warning("The wax seal is still intact. I need to unseal it first."))
+		to_chat(user, span_warning("蜡封还完好无损。我得先拆封。"))
 		return
 	if(open)
 		slot_flags |= ITEM_SLOT_HIP
@@ -93,7 +93,7 @@
 	if(mailer)
 		icon_state = sealed_icon_state
 		open = FALSE
-		name = "missive"
+		name = "信函"
 		slot_flags |= ITEM_SLOT_HIP
 		throw_range = 7
 		apply_seal_tint()
@@ -102,7 +102,7 @@
 	if(seal_label && !seal_broken)
 		icon_state = sealed_icon_state
 		open = FALSE
-		name = "sealed scroll"
+		name = "封缄卷轴"
 		slot_flags |= ITEM_SLOT_HIP
 		apply_seal_tint()
 		return
@@ -115,12 +115,12 @@
 		name = initial(name)
 	else
 		icon_state = folded_icon_state
-		name = "folded scroll"
+		name = "折叠卷轴"
 
 //Fake reskin of a scroll for the dwarf mercs -- just a fluffy toy
 /obj/item/paper/scroll/grudge
-	name = "Book of Grudges"
-	desc = "A copy you've taken with you. Unfortunately the dampness of your travels made it unreadable. You can still add new entries, however. It looks bulky enough to act as a mild blunt weapon."
+	name = "怨仇之书"
+	desc = "这是你随身带着的一份副本。可惜旅途中受了潮，已经无法阅读了。不过你仍然可以继续添写新条目。它看起来也够厚重，能当作轻型钝器使用。"
 	icon_state ="grudge_closed"
 	drop_sound = 'sound/foley/dropsound/book_drop.ogg'
 	grid_width = 32
@@ -150,8 +150,8 @@
 	user.update_inv_hands()
 
 /obj/item/paper/scroll/custom
-	name = "custom book"
-	desc = "A writable book appearance. Use in hand to customize."
+	name = "自定义书本"
+	desc = "一本可书写的书本外观。拿在手里即可自定义。"
 	icon = 'icons/roguetown/items/books.dmi'
 	icon_state = "book_0"
 	maxlen = 10000
@@ -161,14 +161,14 @@
 
 /obj/item/paper/scroll/custom/attack_self(mob/user)
 	if(stage == 0)
-		var/name_input = stripped_input(user, "Name your book - Leave empty for default.", "Book", max_length = MAX_NAME_LEN)
+		var/name_input = stripped_input(user, "给你的书命名，留空则使用默认名称。", "书本", max_length = MAX_NAME_LEN)
 		if(name_input)
 			name = name_input
 		stage++
 		return
 
 	if(stage == 1)
-		var/desc_input = stripped_input(user, "Describe your book - Leave empty for default.", "Book", max_length = MAX_BROADCAST_LEN)
+		var/desc_input = stripped_input(user, "描述你的书，留空则使用默认描述。", "书本", max_length = MAX_BROADCAST_LEN)
 		if(desc_input)
 			desc = desc_input
 		stage++
@@ -191,13 +191,13 @@
 		if(icon_input)
 			icon_state = icon_input
 			base_icon_state = replacetextEx(icon_input, regex(@"_[0-1]"), "")
-			if(alert(user, "Are you happy with this?", "Book Cover", "Yes", "No") != "Yes")
+			if(alert(user, "你对这个样式满意吗？", "书封", "是", "否") != "是")
 				icon_state = initial(icon_state)
 				base_icon_state = initial(base_icon_state)
 				return
 		stage++
 		customized = TRUE
-		to_chat(user, span_notice("The book is ready. Right-click to open, use a feather to write."))
+		to_chat(user, span_notice("书已经准备好了。右键打开，使用羽毛笔书写。"))
 		return
 
 	..()
@@ -224,7 +224,7 @@
 
 
 /obj/item/paper/scroll/cargo
-	name = "shipping order"
+	name = "货运订单"
 	icon_state = "contractunsigned"
 	var/signedname
 	var/signedjob
@@ -250,7 +250,7 @@
 		name = initial(name)
 	else
 		icon_state = "scroll_closed"
-		name = "scroll"
+		name = "卷轴"
 
 
 /obj/item/paper/scroll/cargo/attackby(obj/item/P, mob/living/carbon/human/user, params)
@@ -259,28 +259,33 @@
 			if(signedname)
 				to_chat(user, span_warning("[signedname]"))
 				return
-			switch(alert("Sign your name?",,"Yes","No"))
-				if("Yes")
+			switch(alert("要签上你的名字吗？",,"是","否"))
+				if("是")
 					if(user.mind && user.mind.assigned_role)
 						if(do_after(user, 20, target = src))
 							signedname = user.real_name
 							signedjob = user.mind.assigned_role
 							icon_state = "contractsigned"
-							user.visible_message(span_notice("[user] signs the [src]."))
+							user.visible_message(span_notice("[user]在[src]上签了名。"))
 							update_icon_state()
 							playsound(src, 'sound/items/write.ogg', 100, FALSE)
 							rebuild_info()
-				if("No")
+				if("否")
 					return
 
 /obj/item/paper/scroll/cargo/proc/rebuild_info()
 	info = null
-	info += "<h2>Shipping Order</h2>"
+	info += "<h2>货运订单</h2>"
 	info += "<hr/>"
 	var/realmname = SSmapping.map_adjustment.realm_name
+	var/display_signedjob = signedjob
+	if(signedjob)
+		var/datum/job/signed_job_datum = SSjob.GetJob(signedjob)
+		if(signed_job_datum && signed_job_datum.display_title)
+			display_signedjob = signed_job_datum.display_title
 
 	if(orders.len)
-		info += "Orders: <br/>"
+		info += "订单内容：<br/>"
 		info += "<ul>"
 		for(var/datum/supply_pack/A in orders)
 			info += "<li>[A.name]</li><br/>"
@@ -289,11 +294,11 @@
 	info += "<br/></font>"
 
 	if(signedname)
-		info += "SIGNED,<br/>"
-		info += "<font face=\"[FOUNTAIN_PEN_FONT]\" color=#27293f>[signedname] the [signedjob] of [realmname]</font>"
+		info += "签署人：<br/>"
+		info += "<font face=\"[FOUNTAIN_PEN_FONT]\" color=#27293f>[signedname]，[realmname]的[display_signedjob]</font>"
 
 /obj/item/paper/inqslip
-	name = "inquisition slip"
+	name = "审判庭文书"
 	var/base_icon_state = "slip"
 	dropshrink = 0.75
 	icon_state = "slip"
@@ -307,21 +312,21 @@
 	var/obj/item/inqarticles/indexer/paired
 
 /obj/item/paper/inqslip/accusation
-	name = "accusation"
-	desc = "A writ of religious suspicion, printed on Otavan parchment: one signed not in ink, but blood. Press the accusation against your own bleeding wound in order to obtain a signature. Then pair it with an INDEXER full of the accused's blood. Once done, it is ready to be mailed back to Otava. Fold and seal it, it's only proper."
+	name = "控告状"
+	desc = "一份印在奥塔瓦羊皮纸上的宗教嫌疑文书：它不是用墨水，而是用鲜血签署。将控告状按在自己流血的伤口上即可取得签名。随后再与一台装满被告之血的编目机配对。完成后，它就可以寄回奥塔瓦了。把它折起并封好，这才合乎礼数。"
 	marquevalue = 4
 	sliptype = 0
 
 /obj/item/paper/inqslip/confession
-	name = "confession"
+	name = "供述状"
 	base_icon_state = "confession"
 	marquevalue = 6
-	desc = "A writ of religious guilt, printed on Otavan parchment: one signed not in ink, but blood. Press the confession against a suspect's bleeding wound, in order to obtain their signature. Once done, it is ready to be mailed back to Otava. Fold and seal it, it's only proper."
+	desc = "一份印在奥塔瓦羊皮纸上的宗教认罪文书：它不是用墨水，而是用鲜血签署。将供述状按在嫌疑人流血的伤口上，即可取得他们的签名。完成后，它就可以寄回奥塔瓦了。把它折起并封好，这才合乎礼数。"
 	sliptype = 2
 
 /obj/item/paper/inqslip/arrival
-	name = "arrival slip"
-	desc = "A writ of arrival, printed on Otavan parchment: one signed not in ink, but blood. Intended for one person and one person only. Press the slip against one's own weeping wounds in order to obtain a fitting signature. Once done, it is ready to be mailed back to Otava."
+	name = "到任文书"
+	desc = "一份印在奥塔瓦羊皮纸上的到任文书：它不是用墨水，而是用鲜血签署。只为某一个特定之人准备。将文书按在自己渗血的伤口上，即可取得合适的签名。完成后，它就可以寄回奥塔瓦了。"
 
 /obj/item/paper/inqslip/arrival/ortho
 	marquevalue = 4
@@ -344,32 +349,32 @@
 		return
 	if(in_range(user, src) || isobserver(user))
 		if(waxed)
-			to_chat(user, span_notice("This writ has been signed by [signee.real_name], sealed with Inquisitorial Tallow, and can now be mailed back through the Hermes. The Archbishop will be pleased with this one."))
+			to_chat(user, span_notice("这份文书已由[signee.real_name]签署，并以审判庭蜡脂封缄，现在可以通过赫尔墨斯寄回去了。大主教会对这份文书感到满意。"))
 		if(signed)
-			to_chat(user, span_notice("This writ has been signed by [signee.real_name], and can now be mailed back through the Hermes. Sealing it with Inquisitorial Tallow would garner more favor from the Archbishop."))
+			to_chat(user, span_notice("这份文书已由[signee.real_name]签署，现在可以通过赫尔墨斯寄回去了。若再用审判庭蜡脂将其封缄，将更能博得大主教的青睐。"))
 		else if(signee)
-			to_chat(user, span_notice("This writ is intended to be signed by [signee.real_name]."))
+			to_chat(user, span_notice("这份文书应由[signee.real_name]签署。"))
 		else
-			to_chat(user, span_notice("This writ has not yet been signed."))
+			to_chat(user, span_notice("这份文书尚未签署。"))
 
 
 /obj/item/paper/inqslip/proc/attemptsign(mob/user, mob/living/carbon/human/M)
 	if(sliptype == 2)
 		if(paired)
 			if(paired.subject != user)
-				to_chat(M, span_warning("Why am I trying to make them sign this with the wrong [paired] paired with it?"))
+				to_chat(M, span_warning("为什么我要在配错了[paired]的情况下让他们签这份文书？"))
 				return
-			else if(alert(user, "SIGN THE CONFESSION?", "CONFIRM OR DENY", "YES", "NO") != "NO")
+			else if(alert(user, "签署供述状？", "确认或拒绝", "是", "否") != "否")
 				signed = TRUE
 				signee = user
 				update_icon()
-		else if(alert(user, "SIGN THE CONFESSION?", "CONFIRM OR DENY", "YES", "NO") != "NO")
+		else if(alert(user, "签署供述状？", "确认或拒绝", "是", "否") != "否")
 			signed = TRUE
 			signee = user
 			update_icon()
 		else
 			return
-	else if(alert(user, "SIGN THE SLIP?", "CONFIRM OR DENY", "YES", "NO") != "NO")
+	else if(alert(user, "签署文书？", "确认或拒绝", "是", "否") != "否")
 		signed = TRUE
 		signee = user
 		update_icon()
@@ -380,23 +385,23 @@
 	if(sealed)
 		return
 	if(signed)
-		to_chat(user, span_warning("It's already been signed."))
+		to_chat(user, span_warning("它已经签过了。"))
 		return
 	if(paired && !paired.full)
-		to_chat(user, span_warning("I should seperate [paired] from [src] before signing it."))
+		to_chat(user, span_warning("我应该先把[paired]和[src]分开，再进行签署。"))
 		return
 	if(sliptype != 2)
 		if(M != user)
-			to_chat(user, span_warning("This is meant to be signed by the holder."))
+			to_chat(user, span_warning("这份文书应由持有者本人签署。"))
 			return
 	if(!M.get_bleed_rate())
-		to_chat(user, span_warning("It must be signed in blood."))
+		to_chat(user, span_warning("它必须以血签署。"))
 		return
 	if(sliptype == 1)
 		if(signee == M)
 			attemptsign(user)
 		else
-			to_chat(user, span_warning("This slip isn't meant for me."))
+			to_chat(user, span_warning("这份文书不是给我签的。"))
 	else if(!sliptype)
 		attemptsign(user)
 	else
@@ -404,10 +409,10 @@
 
 /obj/item/paper/inqslip/attack_self(mob/user)
 	if(!signed)
-		to_chat(user, span_warning("It hasn't been signed yet. Why would I seal it?"))
+		to_chat(user, span_warning("它还没签署，我为什么要封它？"))
 		return
 	if(waxed)
-		to_chat(user, span_notice("It's been sealed. It's ready to send back to Otava."))
+		to_chat(user, span_notice("它已经封好了，可以寄回奥塔瓦了。"))
 		return
 	else if(!sealed)
 		sealed = TRUE
@@ -452,13 +457,13 @@
 
 /obj/item/paper/inqslip/attackby(obj/item/I, mob/living/carbon/human/user, params)
 	if(istype(I, /obj/item/seal))
-		to_chat(user, span_warning("I must use a Signet Ring for Inquisitorial Missives"))
+		to_chat(user, span_warning("审判庭文书必须使用印戒来封缄"))
 		return
 
 	if(istype(I, /obj/item/clothing/ring/signet))
 		var/obj/item/clothing/ring/signet/S = I
 		if(waxed)
-			to_chat(user,  span_warning("It's already wax-sealed."))
+			to_chat(user,  span_warning("它已经用蜡封好了。"))
 			return
 		if(S.tallowed && sealed)
 			waxed = TRUE
@@ -469,10 +474,10 @@
 			marquevalue += 2
 			return
 		else if(S.tallowed && !sealed)
-			to_chat(user,  span_warning("I need to fold the [src] first."))
+			to_chat(user,  span_warning("我得先把[src]折起来。"))
 			return
 		else
-			to_chat(user,  span_warning("The ring hasn't been waxed."))
+			to_chat(user,  span_warning("这枚戒指还没有沾蜡。"))
 			return
 
 	if(sliptype != 1)
@@ -482,7 +487,7 @@
 				return
 			if(!Q.subject)
 				if(signed)
-					to_chat(user, span_warning("I should fill [Q] before pairing it with [src]."))
+					to_chat(user, span_warning("我应该先填满[Q]，再把它与[src]配对。"))
 					return
 				else
 					paired = Q
@@ -496,22 +501,22 @@
 						update_icon()
 					else
 						if(signed)
-							to_chat(user, span_warning("[Q] doesn't contain the blood of the one who signed [src]."))
+							to_chat(user, span_warning("[Q]里装的不是签署[src]之人的血。"))
 						else
-							to_chat(user, span_warning("I should get a signature before pairing [Q] with [src]."))
+							to_chat(user, span_warning("我应该先取得签名，再把[Q]与[src]配对。"))
 						return
 				else
 					paired = Q
 					user.transferItemToLoc(Q, src, TRUE)
 					update_icon()
 			else
-				to_chat(user,  span_warning("[Q] isn't completely full."))
+				to_chat(user,  span_warning("[Q]还没有装满。"))
 			return
 
 	return ..()
 
 /obj/item/paper/scroll/sell_price_changes
-	name = "updated purchasing prices"
+	name = "更新后的采购价格"
 	icon_state = "contractsigned"
 
 	var/list/sell_prices
@@ -537,25 +542,35 @@
 		name = initial(name)
 	else
 		icon_state = "scroll_closed"
-		name = "scroll"
+		name = "卷轴"
 
 
 /obj/item/paper/scroll/sell_price_changes/proc/rebuild_info()
 	info = null
 	info += "<div style='vertical-align:top'>"
-	info += "<h2 style='color:#06080F;font-family:\"Segoe Script\"'>Purchasing Prices</h2>"
+	info += "<h2 style='color:#06080F;font-family:\"Segoe Script\"'>采购价格</h2>"
 	info += "<hr/>"
+	var/display_faction = faction
+	switch(faction)
+		if("Heartfelt")
+			display_faction = "赤心"
+		if("Hammerhold")
+			display_faction = "铁锤堡"
+		if("Grenzelhoft")
+			display_faction = "格伦泽尔霍夫特"
+		if("Kingsfield")
+			display_faction = "王田"
 
 	if(sell_prices.len)
 		info += "<ul>"
 		for(var/atom/type_path as anything in sell_prices)
 			var/list/prices = sell_prices[type_path]
-			info += "<li style='color:#06080F;font-size:9px;font-family:\"Segoe Script\"'>[initial(type_path.name)] [prices[1]] > [prices[2]] mammons</li><br/>"
+			info += "<li style='color:#06080F;font-size:9px;font-family:\"Segoe Script\"'>[initial(type_path.name)] [prices[1]] > [prices[2]] 玛门</li><br/>"
 		info += "</ul>"
 
 	info += "<br/></font>"
 
-	info += "<font size=\"2\" face=\"[FOUNTAIN_PEN_FONT]\" color=#27293f>[writers_name] Shipwright of [faction]</font>"
+	info += "<font size=\"2\" face=\"[FOUNTAIN_PEN_FONT]\" color=#27293f>[writers_name]，[display_faction]的造船匠</font>"
 
 	info += "</div>"
 
@@ -574,7 +589,7 @@
 		prices[path] = list("[starting_rand]", "[round(starting_rand * 0.5, 1)]")
 	sell_prices = prices
 /obj/item/paper/scroll/writ_of_esteem
-	name = "Writ of Esteem"
+	name = "褒信文书"
 	icon_state = "contractsigned"
 
 /obj/item/paper/scroll/writ_of_esteem/update_icon_state()
@@ -586,21 +601,21 @@
 		name = initial(name)
 
 /obj/item/paper/scroll/writ_of_esteem/zybantine
-	desc = "A formal Writ of Esteem used to showcase an envoy's authenticity. This one bears the signet of the Zybantine Empress."
-	info = "By Imperial Decree of the Calipha, Empress Sayjit Al-Halruik, Premier of Zybantium, Lady of the Gypsum Rose, in the name of PSYDON, the Most Gracious, the Most Merciful.\
-	I, Empress of the Zybantine Empire, sovereign of desert and court, issue this edict. Bearer, my appointed commander of the journey, holds full covenant and safe-conduct to treat,\
-	levy, pledge, and seal on behalf of my dominion and community. Let all governors and lords honor this writ, valid beneath my seal, witnessed by my vizier and scribe. Defiance \
-	invites reckoning; assistance earns favor. Thus is spoken and decreed from the Court of the Empire of Zybantium."
+	desc = "一份用于证明使节身份真实的正式褒信文书。这一份带有兹班图女皇的印戒。"
+	info = "奉哈里发、兹班图至高女皇萨伊吉特·阿尔-哈鲁伊克、石膏玫瑰之主之帝谕，并以至仁至慈的普赛顿之名。\
+	朕，兹班图帝国之女皇、沙漠与宫廷之主，特颁此诏。持此文书者，乃朕亲命之远行统领，得享完全盟约与安全通行之权，可代表\
+	朕之疆域与臣民进行洽谈、征收、立誓与盖印。凡总督与领主，皆当尊重此书；其于朕之封印下有效，并由朕之维齐尔与书记作证。违逆者\
+	必受清算；襄助者自得恩宠。此言此令，皆发自兹班图帝国宫廷。"
 	icon_state = "contractsigned"
 
 /obj/item/paper/scroll/writ_of_esteem/grenzel
-	desc = "A formal Writ of Esteem used to showcase an envoy's authenticity.This one bears the signet of the Grenzelhoft Holy See."
-	info = "By the command of his Imperial Majesty, through the Council of Electors, does bestow this writ. Let it be known that the bearer of this writ is empowered to negotiate,\
-	speak, and act in the Emperor’s stead as if it were His Majesty’s own words. None shall gainsay this authority, under seal and witness of the Electors assembled.\
-	Verdinand III, Emperor of The Holy See of Grenzelhoft."
+	desc = "一份用于证明使节身份真实的正式褒信文书。这一份带有格伦泽尔霍夫特教廷的印戒。"
+	info = "奉我等皇帝陛下之命，并经选帝侯议会之手，特授此文书。兹告天下，持此书者获准代表皇帝进行谈判、\
+	发言与行事，其言行等同于陛下亲口所出。凡人不得否认此等权柄；此书已加封印，并由齐聚的选帝侯共同见证。\
+	费迪南德三世，格伦泽尔霍夫特教廷之皇帝。"
 	icon_state = "contractsigned"
 
 /obj/item/paper/scroll/writ_of_esteem/otavan
-	desc = "A formal Writ of Esteem used to showcase an envoy's authenticity. This one bears the seal of the Principality of Otava."
-	info = "By word of the Prince Henri the Silver-Blooded, and with the Seal of Approval by High Inquisitor Archibald, does this writ gain power only given to the men and women truly blessed by PSYDON. The bearer of this writ is empowered to speak, negotiate, and act in the Principality's name, and to act with the full support of the Otavan Holy See. Furthermore, any true believer of PSYDON and HIS name shall provide any aid to its bearer, for they bring forth HIS will and carry HIS strength. Let it be known that should this edict be honored, favor and respect is forever earned. Should any individual wrong the men and women of PSYDON and the Holy See, however, will have HIS wrath driven unto their land."
+	desc = "一份用于证明使节身份真实的正式褒信文书。这一份带有奥塔瓦亲王国的封印。"
+	info = "奉银血亲王亨利之令，并经大审判官阿奇博尔德核准之印，此文书得享唯有真正受普赛顿祝福之男女方可拥有的权柄。持此文书者获准以亲王国之名发言、谈判与行事，并得到奥塔瓦教廷的全力支持。此外，凡真正信奉普赛顿及其圣名之人，皆应向持书者提供一切援助，因为他们代行其意志，承载其力量。须知，凡尊重此诏者，必将永得恩宠与敬意；若有人冒犯普赛顿与教廷的男女信众，则其土地必将承受祂的怒火。"
 	icon_state = "contractsigned"

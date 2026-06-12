@@ -44,7 +44,7 @@
 #endif
 
 /obj/item/paper
-	name = "parchment"
+	name = "羊皮纸"
 	gender = NEUTER
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "paper"
@@ -133,20 +133,20 @@
 /obj/item/paper/proc/append_writer_chunk(mob/living/carbon/human/user, sign_after = FALSE)
 	var/obj/item/P = get_writer_tool(user)
 	if(!can_use_writer(user, P))
-		to_chat(user, span_warning("I need a feather or thorn in hand to write."))
+		to_chat(user, span_warning("我需要手持羽毛笔或刺棘才能书写。"))
 		return FALSE
 
 	var/chunk_input = writer_draft || ""
 
 	if(!length(chunk_input) && !sign_after)
-		to_chat(user, span_warning("I have nothing to add."))
+		to_chat(user, span_warning("我没什么可补充的。"))
 		return FALSE
 
 	var/chunk_html = null
 	if(length(chunk_input))
 		chunk_html = parsepencode(chunk_input, P, user, FALSE, sanitize_writer_font(writer_font))
 		if(!chunk_html)
-			to_chat(user, span_warning("I have nothing to add."))
+			to_chat(user, span_warning("我没什么可补充的。"))
 			return FALSE
 
 	if(chunk_html)
@@ -154,7 +154,7 @@
 		if(info)
 			new_len += 4 // <br>
 		if(new_len > maxlen)
-			to_chat(user, span_warning("Too long. Try again."))
+			to_chat(user, span_warning("太长了。请再试一次。"))
 			return FALSE
 
 	if(chunk_html)
@@ -169,9 +169,9 @@
 	update_icon_state()
 	playsound(src, 'sound/items/write.ogg', 100, FALSE)
 	if(sign_after)
-		to_chat(user, span_notice("I sign [src]."))
+		to_chat(user, span_notice("我在[src]上签了名。"))
 	else
-		to_chat(user, span_notice("I add writing to [src]."))
+		to_chat(user, span_notice("我在[src]上添了些文字。"))
 	return TRUE
 
 /obj/item/paper/proc/build_writer_preview(mob/living/carbon/human/user)
@@ -222,7 +222,7 @@
 /obj/item/paper/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "PaperWriterPanel", "Letter Editor")
+		ui = new(user, src, "PaperWriterPanel", "信件编辑器")
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
@@ -295,7 +295,7 @@
 
 /obj/item/paper/examine()
 	. = ..()
-	. += span_info("Use a feather to write on it. You can create a two-page manuscript that can be turned into a book by writing on it and applying it to another piece of paper that also have something written on it.")
+	. += span_info("可用羽毛笔在上面书写。你还可以把两张都写有内容的纸合成为双页手稿，之后可制成书本。")
 
 /obj/item/paper/get_real_price()
 	if(info)
@@ -368,7 +368,7 @@
 	if(mailer)
 		icon_state = sealed_icon_state
 		folded = TRUE
-		name = "letter"
+		name = "信件"
 		throw_range = 7
 		apply_seal_tint()
 		return
@@ -382,7 +382,7 @@
 	clear_seal_tint()
 	if(folded)
 		icon_state = folded_icon_state
-		name = "folded parchment"
+		name = "折叠羊皮纸"
 		return
 	if(info)
 		icon_state = open_written_icon_state
@@ -398,16 +398,16 @@
 		if(seal_is_official)
 			seal_style += ";text-decoration:underline"
 		if(seal_broken)
-			. += "<span style='[seal_style]'>It bears a broken wax seal of [seal_label].</span>"
+			. += "<span style='[seal_style]'>上面带有一个属于[seal_label]的破损蜡封。</span>"
 		else
-			. += "<span style='[seal_style]'>It bears an unbroken wax seal of [seal_label].</span>"
+			. += "<span style='[seal_style]'>上面带有一个属于[seal_label]的完整蜡封。</span>"
 	if(mailer)
-		. += "It's from [mailer], addressed to [mailedto]."
+		. += "寄件人是[mailer]，收件人是[mailedto]。"
 	if(admin_observer)
-		. += "<a href='?src=[REF(src)];read=1'>Read</a>"
+		. += "<a href='?src=[REF(src)];read=1'>阅读</a>"
 	else if(!mailer && !is_scroll)
 		if(info && !folded)
-			. += "<a href='?src=[REF(src)];read=1'>Read</a>"
+			. += "<a href='?src=[REF(src)];read=1'>阅读</a>"
 
 /obj/item/paper/proc/read(mob/user)
 	if(!user.client)
@@ -425,10 +425,10 @@
 	if(!admin_observer && mailer)
 		return
 	if(!admin_observer && folded)
-		to_chat(user, span_warning("I need to unfold [src] first."))
+		to_chat(user, span_warning("我得先把[src]展开。"))
 		return
 	if(!admin_observer && seal_label && !seal_broken)
-		to_chat(user, span_warning("The wax seal is still intact. I need to unseal it first."))
+		to_chat(user, span_warning("蜡封还完好无损。我得先拆封。"))
 		return
 	if(in_range(user, src) || isobserver(user))
 		user << browse_rsc('html/book.png')
@@ -444,7 +444,7 @@
 		user << browse(dat, "window=reading;size=500x400;can_close=1;can_minimize=0;can_maximize=0;can_resize=1;titlebar=1;border=0")
 		onclose(user, "reading", src)
 	else
-		return span_warning("I'm too far away to read it.") 
+		return span_warning("我离得太远，读不了。") 
 
 /obj/item/paper/proc/format_browse(t, mob/user)
 	user << browse_rsc('html/book.png')
@@ -484,20 +484,20 @@
 	return !!findtext(info, "<span class=\"paper_field\"></span>")
 
 /obj/item/paper/verb/rename()
-	set name = "Rename paper"
+	set name = "重命名纸张"
 	set hidden = 1
 	set src in usr
 
 	if(usr.incapacitated() || !usr.is_literate())
 		return
-	var/n_name = stripped_input(usr, "What would you like to label the paper?", "Paper Labelling", null, MAX_NAME_LEN)
+	var/n_name = stripped_input(usr, "你想给这张纸写上什么标签？", "纸张标签", null, MAX_NAME_LEN)
 	if((loc == usr && usr.stat == CONSCIOUS))
-		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
+		name = "纸张[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
 
 /obj/item/paper/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
+	user.visible_message("<span class='suicide'>[user]用纸在[user.p_their()]手腕上划出一个方格！看起来[user.p_theyre()]像是想靠数独自尽……</span>")
 	return (BRUTELOSS)
 
 /obj/item/paper/proc/reset_spamflag()
@@ -505,7 +505,7 @@
 
 /obj/item/paper/attack_self(mob/user)
 	if(mailer)
-		user.visible_message("<span class='notice'>[user] opens the letter from [mailer].</span>")
+		user.visible_message("<span class='notice'>[user]打开了来自[mailer]的信件。</span>")
 		cached_mailer = mailer
 		cached_mailedto = mailedto
 		mailer = null
@@ -515,16 +515,16 @@
 		return
 	if(trapped)
 		var/mob/living/victim = user
-		victim.visible_message(span_notice("[user] opens the [src]."))
-		to_chat(user, span_warning("This parchment is full of strange symbols that start to glow. How odd. Wait-"))
+		victim.visible_message(span_notice("[user]打开了[src]。"))
+		to_chat(user, span_warning("这张羊皮纸上满是开始发光的奇异符号。真怪。等等-"))
 		sleep(5)
 		victim.adjust_fire_stacks(15)
 		victim.ignite_mob()
-		victim.visible_message(span_danger("[user] bursts into flames upon reading [src]!"))
+		victim.visible_message(span_danger("[user]在阅读[src]时突然燃烧起来！"))
 	if(seal_label && !seal_broken)
 		seal_broken = TRUE
 		update_icon_state()
-		to_chat(user, span_notice("I break the wax seal on [src]."))
+		to_chat(user, span_notice("我拆开了[src]上的蜡封。"))
 		return
 	if(folded)
 		attack_right(user)
@@ -542,10 +542,10 @@
 
 /obj/item/paper/attack_right(mob/user)
 	if(mailer)
-		to_chat(user, span_warning("This letter is sealed for delivery and must be opened first."))
+		to_chat(user, span_warning("这封信已封好待投递，必须先打开。"))
 		return
 	if(seal_label && !seal_broken)
-		to_chat(user, span_warning("The wax seal is still intact. I need to unseal it first."))
+		to_chat(user, span_warning("蜡封还完好无损。我得先拆封。"))
 		return
 	folded = !folded
 	playsound(src, folded ? 'sound/items/scroll_close.ogg' : 'sound/items/scroll_open.ogg', 100, FALSE)
@@ -593,7 +593,7 @@
 /obj/item/paper/proc/updateinfolinks()
 	info_links = info
 	for(var/i in 1 to min(fields, 15))
-		addtofield(i, "<A href='?src=[REF(src)];write=[i]'>write</A> (<A href='?src=[REF(src)];help=1'>\[?\]</A>)", 1)
+		addtofield(i, "<A href='?src=[REF(src)];write=[i]'>填写</A> (<A href='?src=[REF(src)];help=1'>\[?\]</A>)", 1)
 
 
 /obj/item/paper/proc/clearpaper()
@@ -651,22 +651,22 @@
 
 
 /obj/item/paper/proc/openhelp(mob/user)
-	user << browse({"<HTML><HEAD><TITLE>Paper Help</TITLE></HEAD>
+	user << browse({"<HTML><HEAD><TITLE>纸张帮助</TITLE></HEAD>
 	<BODY>
-		You can use backslash (\\) to escape special characters.<br>
+		你可以使用反斜杠 (\\) 转义特殊字符。<br>
 		<br>
-		# text : Defines a header.<br>
-		|text| : Centers the text.<br>
-		**text** : Makes the text <b>bold</b>.<br>
-		*text* : Makes the text <i>italic</i>.<br>
-		%s : Inserts a signature of your name in a foolproof way.<br>
-		((text)) : Decreases the <font size = \"1\">size</font> of the text.<br>
-		%f or %field : Creates a blank write-in field in the final letter.<br>
-		* item : An unordered list item.<br>
-		&nbsp;&nbsp;* item: An unordered list child item.<br>
-		1. item : An ordered list item.<br>
-		--- : Adds a horizontal rule.<br>
-		-=862F20text=- : Adds a specific <font color = '#862F20'>colour</font> to text.
+		# text : 定义标题。<br>
+		|text| : 使文本居中。<br>
+		**text** : 使文本<b>加粗</b>。<br>
+		*text* : 使文本变为<i>斜体</i>。<br>
+		%s : 以可靠方式插入你的签名。<br>
+		((text)) : 缩小文本的<font size = \"1\">字号</font>。<br>
+		%f 或 %field : 在最终信件中创建一个可填写空栏。<br>
+		* item : 无序列表项。<br>
+		&nbsp;&nbsp;* item: 无序子列表项。<br>
+		1. item : 有序列表项。<br>
+		--- : 添加一条水平分隔线。<br>
+		-=862F20text=- : 为文本添加指定的<font color = '#862F20'>颜色</font>。
 	</BODY></HTML>"}, "window=paper_help")
 
 
@@ -691,12 +691,12 @@
 	if(href_list["read"])
 		if(trapped)
 			var/mob/living/victim = usr
-			victim.visible_message(span_notice("[usr] opens the [src]."))
-			to_chat(usr, span_warning("This parchment is full of strange symbols that start to glow. How odd. Wait-"))
+			victim.visible_message(span_notice("[usr]打开了[src]。"))
+			to_chat(usr, span_warning("这张羊皮纸上满是开始发光的奇异符号。真怪。等等-"))
 			sleep(5)
 			victim.adjust_fire_stacks(15)
 			victim.ignite_mob()
-			victim.visible_message(span_danger("[usr] bursts into flames upon reading [src]!"))
+			victim.visible_message(span_danger("[usr]在阅读[src]时突然燃烧起来！"))
 		read(usr)
 
 	if(href_list["help"])
@@ -707,13 +707,13 @@
 		var/id = href_list["write"]
 		var/field_num = text2num(id)
 		if(!field_num || field_num < 1 || field_num > min(fields, 15))
-			to_chat(usr, span_warning("That field cannot be written to."))
+			to_chat(usr, span_warning("那个栏位无法填写。"))
 			return
 		var/obj/item/i = usr.get_active_held_item()	// Check implement first so the prompt only opens when write-capable.
 		if(!istype(i, /obj/item/natural/thorn) && !istype(i, /obj/item/natural/feather))
-			to_chat(usr, span_warning("I need a feather or thorn in hand to write."))
+			to_chat(usr, span_warning("我需要手持羽毛笔或刺棘才能书写。"))
 			return
-		var/t =  stripped_multiline_input("Enter what you want to write:", "Write", no_trim=TRUE)
+		var/t =  stripped_multiline_input("输入你想写的内容：", "书写", no_trim=TRUE)
 		if(!t || !usr.canUseTopic(src, BE_CLOSE, literate))
 			return
 
@@ -725,7 +725,7 @@
 
 		if(t != null)	//No input from the user means nothing needs to be added
 			if((length(info) + length(t)) > maxlen)
-				to_chat(usr, "<span class='warning'>Too long. Try again.</span>")
+				to_chat(usr, "<span class='warning'>太长了。请再试一次。</span>")
 				return
 			addtofield(field_num, t) // Field-only writing via read links.
 			playsound(src, 'sound/items/write.ogg', 100, FALSE)
@@ -744,14 +744,14 @@
 
 	if(istype(P, /obj/item/natural/feather/infernal))
 		if(trapped)
-			to_chat(user, span_warning("[src] is already trapped."))
+			to_chat(user, span_warning("[src]已经被设下陷阱了。"))
 		else
-			to_chat(user, span_warning("I draw infernal symbols on this [src], rigging it to explode."))
+			to_chat(user, span_warning("我在[src]上画下炼狱符号，把它布置成会爆炸的陷阱。"))
 			trapped = TRUE
 
 	if(istype(P, /obj/item/natural/thorn)|| istype(P, /obj/item/natural/feather))
 		if(length(info) > maxlen)
-			to_chat(user, "<span class='warning'>[src] is full of verba.</span>")
+			to_chat(user, "<span class='warning'>[src]已经写满了文字。</span>")
 			return
 		if(user.can_read(src))
 			if(has_empty_fields())
@@ -760,7 +760,7 @@
 				open_writer_panel(user, P)
 			return
 		else
-			to_chat(user, "<span class='warning'>I can't write.</span>")
+			to_chat(user, "<span class='warning'>我不会写字。</span>")
 			return
 
 	// Sealing logic for seal items
@@ -769,7 +769,7 @@
 		if(istype(seal, /obj/item/seal/custom))
 			var/obj/item/seal/custom/custom_seal = seal
 			if(!custom_seal.customized)
-				to_chat(user, span_warning("This custom seal is blank. Use it in-hand first to engrave text and pick a color."))
+				to_chat(user, span_warning("这个自定义印章还是空白的。先拿在手里刻上文字并选择颜色。"))
 				return
 		if(seal.tallowed && info && !seal_label)
 			seal.tallowed = FALSE
@@ -779,15 +779,15 @@
 			seal_is_official = seal.seal_is_official
 			seal_broken = FALSE
 			update_icon()
-			user.visible_message(span_notice("[user] seals [src] with [seal]."))
+			user.visible_message(span_notice("[user]用[seal]给[src]盖上了封印。"))
 			return
 		else
 			if(!seal.tallowed)
-				to_chat(user, span_warning("[seal] has no tallow on it. Dip it in a heated tallowpot first."))
+				to_chat(user, span_warning("[seal]上没有蜡脂。先把它浸进加热过的油脂锅里。"))
 			else if(!info)
-				to_chat(user, span_warning("The [src] has nothing written on it to seal."))
+				to_chat(user, span_warning("[src]上什么也没写，无法封缄。"))
 			else if(seal_label)
-				to_chat(user, span_warning("[src] is already sealed."))
+				to_chat(user, span_warning("[src]已经封好了。"))
 			return
 
 	// Sealing logic for signet rings
@@ -801,15 +801,15 @@
 			seal_is_official = ring.seal_is_official
 			seal_broken = FALSE
 			update_icon()
-			user.visible_message(span_notice("[user] seals [src] with [ring]."))
+			user.visible_message(span_notice("[user]用[ring]给[src]盖上了封印。"))
 			return
 		else
 			if(!ring.tallowed)
-				to_chat(user, span_warning("[ring] has no tallow on it. Dip it in a heated tallowpot first."))
+				to_chat(user, span_warning("[ring]上没有蜡脂。先把它浸进加热过的油脂锅里。"))
 			else if(!info)
-				to_chat(user, span_warning("The [src] has nothing written on it to seal."))
+				to_chat(user, span_warning("[src]上什么也没写，无法封缄。"))
 			else if(seal_label)
-				to_chat(user, span_warning("[src] is already sealed."))
+				to_chat(user, span_warning("[src]已经封好了。"))
 			return
 	
 	if(istype(P, /obj/item/paper))
@@ -830,7 +830,7 @@
 		return ..()
 
 	if(!istype(src, /obj/item/paper/inqslip))
-		to_chat(user, span_info("I start to wrap [P] in [src]..."))
+		to_chat(user, span_info("我开始用[src]包裹[P]……"))
 		if(do_after(user, 30, 0, target = src))
 			if(user.is_holding(P))
 				if(!user.dropItemToGround(P))
@@ -844,7 +844,7 @@
 				user.put_in_hands(D)
 			P.forceMove(D)
 			var/size = round(P.w_class)
-			D.name = "[weightclass2text(size)] package"
+			D.name = "[weightclass2text(size)]包裹"
 			D.w_class = size
 			size = min(size, 5)
 			D.grid_height = P.grid_height
@@ -888,7 +888,7 @@
 	color = "#FFF5ED"
 
 /obj/item/paper/crumpled
-	name = "paper scrap"
+	name = "纸屑"
 	icon_state = "scrap"
 	slot_flags = null
 
@@ -902,7 +902,7 @@
 	icon_state = "scrap_mud"
 
 /obj/item/smallDelivery
-	name = "package"
+	name = "包裹"
 	desc = ""
 	icon = 'icons/roguetown/clothing/storage.dmi'
 	icon_state = "deliverypackage3"
@@ -921,7 +921,7 @@
 		var/atom/movable/AM = X
 		user.put_in_hands(AM)
 	playsound(src.loc, 'sound/blank.ogg', 50, TRUE)
-	user.visible_message(span_warning("[user] opens [src]."))
+	user.visible_message(span_warning("[user]打开了[src]。"))
 	if(note)
 		note.forceMove(user.loc)
 	qdel(src)
@@ -946,25 +946,25 @@
 	. = ..()
 	if(note && length(note.info))
 		if(!in_range(user, src))
-			. += "There's a [note.name] attached to it. You can't read it from here."
+			. += "上面附着一张[note.name]。你在这里看不清。"
 		else
-			. += "There's a [note.name] attached to it..."
+			. += "上面附着一张[note.name]……"
 			. += note.examine(user)
 	if(mailer)
-		. += "It's from [mailer], addressed to [mailedto].</a>"
+		. += "寄件人是[mailer]，收件人是[mailedto]。</a>"
 
 /obj/item/smallDelivery/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/natural/feather))
 		if(!user.is_literate())
-			to_chat(user, span_notice("I scribble illegibly on the side of [src]!"))
+			to_chat(user, span_notice("我在[src]侧面乱涂了一串难以辨认的字！"))
 			return
-		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
+		var/str = copytext(sanitize(input(user,"标签文字？","设置标签","")),1,MAX_NAME_LEN)
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(!str || !length(str))
-			to_chat(user, span_warning("Invalid text!"))
+			to_chat(user, span_warning("无效文本！"))
 			return
-		user.visible_message(span_notice("[user] labels [src] as [str]."))
+		user.visible_message(span_notice("[user]给[src]贴上了“[str]”的标签。"))
 		name = "[name] ([str])"
 
 /obj/item/proc/can_be_package_wrapped() //can the item be wrapped with package wrapper into a delivery package

@@ -1,2 +1,2 @@
 /obj/item/paper/bsmith
-	info = "It's easy to smith. Put ores in the smelter. Put ingots on the anvil. Use your tongs to handle ingots. Hit them with the hammer. Quench hot ingots in the barrel (there must be water in it). Steel is an alloy from iron and coal, find the golden ratio"
+	info = "打铁很简单。把矿石放进熔炉。把锭块放到铁砧上。用钳子夹取锭块。用锤子敲打它们。把发热的锭块放进桶里淬火（桶里必须有水）。钢是由铁和煤炼成的合金，去找出那个黄金比例吧"

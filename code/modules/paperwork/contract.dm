@@ -27,8 +27,8 @@
 
 
 /obj/item/paper/contract/employment/update_text()
-	name = "paper- [target] employment contract"
-	info = "<center>Conditions of Employment</center><BR><BR><BR><BR>This Agreement is made and entered into as of the date of last signature below, by and between [target] (hereafter referred to as SLAVE), and Nanotrasen (hereafter referred to as the omnipresent and helpful watcher of humanity).<BR>WITNESSETH:<BR>WHEREAS, SLAVE is a natural born human or humanoid, possessing skills upon which he can aid the omnipresent and helpful watcher of humanity, who seeks employment in the omnipresent and helpful watcher of humanity.<BR>WHEREAS, the omnipresent and helpful watcher of humanity agrees to sporadically provide payment to SLAVE, in exchange for permanent servitude.<BR>NOW THEREFORE in consideration of the mutual covenants herein contained, and other good and valuable consideration, the parties hereto mutually agree as follows:<BR>In exchange for paltry payments, SLAVE agrees to work for the omnipresent and helpful watcher of humanity, for the remainder of his or her current and future lives.<BR>Further, SLAVE agrees to transfer ownership of his or her soul to the loyalty department of the omnipresent and helpful watcher of humanity.<BR>Should transfership of a soul not be possible, a lien shall be placed instead.<BR>Signed,<BR><i>[target]</i>"
+	name = "[target]的雇佣契约"
+	info = "<center>雇佣条件</center><BR><BR><BR><BR>本协议自下方最后一个签名落款之日起生效，由[target]（下称“奴隶”）与纳米崔森（下称“全知全能且乐于助人的人类监护者”）共同订立。<BR>兹证明如下：<BR>鉴于，“奴隶”为天生的人类或类人生物，具备可协助这位全知全能且乐于助人的人类监护者的技能，并自愿在这位全知全能且乐于助人的人类监护者麾下求职。<BR>鉴于，这位全知全能且乐于助人的人类监护者同意偶尔向“奴隶”支付报酬，以换取其永久服役。<BR>因此，鉴于本协议所载双方约定及其他正当且有价值的对价，双方特此共同同意如下：<BR>作为微薄报酬的交换，“奴隶”同意在其今生余生及未来所有生命中，持续为这位全知全能且乐于助人的人类监护者工作。<BR>此外，“奴隶”同意将其灵魂所有权转让给这位全知全能且乐于助人的人类监护者的忠诚部门。<BR>若灵魂无法完成转让，则改为设立留置权。<BR>签署人：<BR><i>[target]</i>"
 
 
 /obj/item/paper/contract/employment/attack(mob/living/M, mob/living/carbon/human/user)
@@ -41,10 +41,10 @@
 		else
 			deconvert = prob (5)
 	if(deconvert)
-		M.visible_message("<span class='notice'>[user] reminds [M] that [M]'s soul was already purchased by Nanotrasen!</span>")
-		to_chat(M, "<span class='boldnotice'>I feel that my soul has returned to its rightful owner, Nanotrasen.</span>")
+		M.visible_message("<span class='notice'>[user]提醒了[M]，[M]的灵魂早已被纳米崔森买下！</span>")
+		to_chat(M, "<span class='boldnotice'>我感觉自己的灵魂回到了它真正的主人手中，纳米崔森。</span>")
 		M.return_soul()
 	else
-		M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", \
-			"<span class='danger'>[user] beats [M] over the head with [src]!</span>")
+		M.visible_message("<span class='danger'>[user]用[src]猛砸了[M]的脑袋！</span>", \
+			"<span class='danger'>[user]用[src]猛砸了[M]的脑袋！</span>")
 	return ..()

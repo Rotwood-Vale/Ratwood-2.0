@@ -1,5 +1,5 @@
 /obj/item/paper/carbon
-	name = "sheet of carbon"
+	name = "复写纸"
 	icon_state = "paper_stack"
 	item_state = "paper"
 	var/copied = FALSE
@@ -26,17 +26,17 @@
 			copycontents = replacetext(copycontents, "<font face=\"[CRAYON_FONT]\" color=", "<font face=\"[CRAYON_FONT]\" nocolor=")
 			Copy.info += copycontents
 			Copy.info += "</font>"
-			Copy.name = "Copy - [C.name]"
+			Copy.name = "副本 - [C.name]"
 			Copy.fields = C.fields
 			Copy.updateinfolinks()
-		to_chat(user, span_notice("I tear off the carbon-copy!"))
+		to_chat(user, span_notice("我撕下了这张复写副本！"))
 		C.copied = TRUE
 		Copy.iscopy = TRUE
 		Copy.update_icon_state()
 		C.update_icon_state()
 		user.put_in_hands(Copy)
 	else
-		to_chat(user, span_notice("There are no more carbon copies attached to this paper!"))
+		to_chat(user, span_notice("这张纸上已经没有更多复写副本了！"))
 
 /obj/item/paper/carbon/attack_hand(mob/living/user)
 	if(loc == user && user.is_holding(src))
