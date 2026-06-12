@@ -96,7 +96,7 @@
 
 /obj/item/paper/fluff/stations/centcom/bulletin
 	name = "纸张- '官方公告'"
-	info = "<BR>中央司令部安保处<BR>港务部门<BR>官方公告<BR><BR>督察官：<BR>今天将有一艘紧急穿梭机抵达。<BR><BR>仅限纳米崔森员工获准通行。拒绝所有其他进入者。<BR><BR>中央司令部港务专员"
+	info = "<BR>中央司令部安保处<BR>港务部门<BR>官方公告<BR><BR>督察官：<BR>今天将有一艘紧急穿梭机抵达。<BR><BR>仅限纳米员工获准通行。拒绝所有其他进入者。<BR><BR>中央司令部港务专员"
 
 
 ///////////	Lavaland
