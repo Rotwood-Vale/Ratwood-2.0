@@ -63,7 +63,7 @@
 	if (!SSdbcore.Connect())
 		if(fail_loud || prob(5))
 			var/obj/item/paper/P = new(location)
-			P.info = "IOU - The Book Thief"
+			P.info = "借条 - 偷书贼"
 			P.update_icon()
 		return
 	if(prob(25))
@@ -81,7 +81,7 @@
 			B.author	=	query_get_random_books.item[2]
 			B.title		=	query_get_random_books.item[3]
 			B.dat		=	query_get_random_books.item[4]
-			B.name		=	"Book: [B.title]"
+			B.name		=	"书籍：[B.title]"
 			B.icon_state=	"book[rand(1,8)]"
 	qdel(query_get_random_books)
 
@@ -105,25 +105,25 @@
 
 
 /obj/structure/bookcase/random/fiction
-	name = "bookcase (Fiction)"
+	name = "书架（小说）"
 	category = "Fiction"
 /obj/structure/bookcase/random/nonfiction
-	name = "bookcase (Non-Fiction)"
+	name = "书架（非虚构）"
 	category = "Non-fiction"
 /obj/structure/bookcase/random/religion
-	name = "bookcase (Religion)"
+	name = "书架（宗教）"
 	category = "Religion"
 /obj/structure/bookcase/random/adult
-	name = "bookcase (Adult)"
+	name = "书架（成人）"
 	category = "Adult"
 
 /obj/structure/bookcase/random/reference
-	name = "bookcase (Reference)"
+	name = "书架（参考）"
 	category = "Reference"
 	var/ref_book_prob = 20
 
 /obj/structure/bookcase/random_recipes
-	name = "bookcase (Recipes)"
+	name = "书架（食谱）"
 
 /obj/structure/bookcase/random_recipes/Initialize(mapload)
 	. = ..()

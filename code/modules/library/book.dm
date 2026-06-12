@@ -4,14 +4,14 @@
  * Book
  */
 /obj/item/book
-	name = "book"
+	name = "书"
 	icon = 'icons/obj/library.dmi'
 	icon_state ="book"
 	desc = ""
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
-	attack_verb = list("bashed", "whacked", "educated")
+	attack_verb = list("猛砸", "痛击", "教训")
 	resistance_flags = FLAMMABLE
 	drop_sound = 'sound/blank.ogg'
 	pickup_sound =  'sound/blank.ogg'
@@ -49,7 +49,7 @@
 
 /obj/item/book/examine(mob/user)
 	. = ..()
-	. += "<a href='?src=[REF(src)];read=1'>Read</a>"
+	. += "<a href='?src=[REF(src)];read=1'>阅读</a>"
 
 /obj/item/book/Topic(href, href_list)
 	..()
@@ -93,7 +93,7 @@
 			if(!override_find_book)
 				pages = SSlibrarian.get_book(bookfile)
 		if(!pages.len)
-			to_chat(user, span_warning("This book is completely blank."))
+			to_chat(user, span_warning("这本书完全是空白的。"))
 		if(curpage > pages.len)
 			curpage = 1
 //		var/curdat = pages[curpage]
@@ -107,4 +107,4 @@
 		user << browse(dat, "window=reading;size=1000x700;can_close=1;can_minimize=0;can_maximize=0;can_resize=1;titlebar=1;border=0")
 		onclose(user, "reading", src)
 	else
-		return span_warning("You're too far away to read it.")
+		return span_warning("你离得太远，没法阅读它。")
