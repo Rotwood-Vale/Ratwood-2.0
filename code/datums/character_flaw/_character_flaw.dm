@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"孤僻"=/datum/charflaw/isolationist,
 	"瘾君子"=/datum/charflaw/addiction/junkie,
 	"无法无天"=/datum/charflaw/lawless,
-	"欲望之印" =/datum/charflaw/marked_by_baotha,
+	"巴奥莎之印" =/datum/charflaw/marked_by_baotha,
 	"麻风病人 (+1 TRI)"=/datum/charflaw/leprosy,
 	"Loose Straps"=/datum/charflaw/loose_armor,
 	"受虐狂"=/datum/charflaw/addiction/masochist,
@@ -853,7 +853,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	insane_fool.adjust_triumphs(1)
 
 /datum/charflaw/marked_by_baotha
-	name = "欲望之印"
+	name = "巴奥莎之印"
 	desc = "不论是我主动寻上异端仪式术士，还是在违背意愿的情况下，我都已被 Baotha 打上印记。我的腹股沟处留下了清晰可见的烙印，也因此无论身体原本处于何种通常无法受孕的状态，都仍可能受孕。为了避免压力，我得时常满足这股新生的欲望……"
 
 /datum/charflaw/marked_by_baotha/on_mob_creation(mob/user)
