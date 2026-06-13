@@ -15,7 +15,6 @@
 	smeltresult = /obj/item/ingot/steel
 	equip_delay_self = 4 SECONDS
 	armor_class = ARMOR_CLASS_MEDIUM //good idea suggested by lamaster
-	resistance_flags = FIRE_PROOF
 	sleeved_detail = FALSE
 	boobed_detail = FALSE
 
