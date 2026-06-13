@@ -84,7 +84,7 @@
 		return FALSE
 
 	var/necro_name = user.real_name ? user.real_name : user.name
-	var/list/candidates = pollGhostCandidates("The veil splits! A hand reaches forth! Serve [necro_name] in undeath as a Greater Skeleton? YOU WILL [tasks_choice]", ROLE_NECRO_SKELETON, null, null, 10 SECONDS, POLL_IGNORE_NECROMANCER_SKELETON)
+	var/list/candidates = pollGhostCandidates("帷幕裂开，一只手伸了出来！你愿意以高阶骷髅的身份在不死中侍奉 [necro_name] 吗？你将会 [tasks_choice]", ROLE_NECRO_SKELETON, null, null, 10 SECONDS, POLL_IGNORE_NECROMANCER_SKELETON)
 	if(!LAZYLEN(candidates))
 		to_chat(user, span_warning("深渊空空如也。"))
 		return FALSE

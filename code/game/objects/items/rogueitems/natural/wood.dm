@@ -37,7 +37,7 @@
 /obj/item/grown/log/tree/examine(mob/user)
 	. = ..()
 	if(blessed)
-		. += span_green("这根原木承载着 Dendor 的祝福。")
+		. += span_green("这根原木承载着登多尔的祝福。")
 		. += span_info("受祝福的原木在劈开时，有较高概率额外产出1根小原木，并有较低概率额外产出2根小原木。")
 
 /obj/item/grown/log/tree/Initialize(mapload)
@@ -89,15 +89,15 @@
 				new /obj/item/grown/log/tree/small/essence(get_turf(user))
 				if(!sound_played)
 					sound_played = TRUE
-					to_chat(user, span_warning("Dendor 在哭泣……"))
+					to_chat(user, span_warning("登多尔在哭泣……"))
 					playsound(src,pick('sound/items/gem.ogg'), 100, FALSE)
 		if(blessed)
 			if(prob(50))
-				to_chat(user, span_notice("Dendor 的祝福保留了大量的木材，让我的收获几乎翻倍。"))
+				to_chat(user, span_notice("登多尔的祝福保留了大量的木材，让我的收获几乎翻倍。"))
 				new /obj/item/grown/log/tree/small(get_turf(src))
 				new /obj/item/grown/log/tree/small(get_turf(src))
 			else if(prob(80))
-				to_chat(user, span_notice("Dendor 的祝福为我留下了更多可用的木材。"))
+				to_chat(user, span_notice("登多尔的祝福为我留下了更多可用的木材。"))
 				new /obj/item/grown/log/tree/small(get_turf(src))
 		if(!skill_level)
 			to_chat(user, span_info("由于经验不足，我糟蹋了一些木材..."))
@@ -197,7 +197,7 @@
 			var/lumber_skill = user.get_skill_level(/datum/skill/labor/lumberjacking)
 			if(prob(lumber_skill + user.goodluck(2)))
 				new /obj/item/grown/log/tree/small/essence(get_turf(src.loc))
-				to_chat(user, span_warning("Dendor 在哭泣……"))
+				to_chat(user, span_warning("登多尔在哭泣……"))
 				playsound(src, pick('sound/items/gem.ogg'), 100, FALSE)
 			user.mind.add_sleep_experience(/datum/skill/craft/carpentry, (user.STAINT*0.5))
 			new /obj/effect/decal/cleanable/debris/woody(get_turf(src))
@@ -408,7 +408,7 @@
 //................	Lumber essence	............... //
 /obj/item/grown/log/tree/small/essence
 	name = "木材精华"
-	desc = "一种注入了 Dendor 力量的神秘精华。是极佳的燃料来源。"
+	desc = "一种注入了登多尔力量的神秘精华。是极佳的燃料来源。"
 	icon_state = "lessence"
 	static_debris = null
 	firefuel = 60 MINUTES // Extremely poweful fuel.

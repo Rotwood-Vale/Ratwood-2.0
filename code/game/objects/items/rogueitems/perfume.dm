@@ -65,7 +65,7 @@
 
 /obj/item/perfume/random/Initialize(mapload)
 	fragrance_type = pick(subtypesof(/datum/pollutant/fragrance))
-	name = fragrance_type.name + " perfume"
+	name = "[fragrance_type.name]香水"
 	. = ..()
 
 /obj/item/perfume/lavender

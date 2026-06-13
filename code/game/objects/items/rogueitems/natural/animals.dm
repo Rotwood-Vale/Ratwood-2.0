@@ -3,7 +3,7 @@
 /obj/item/natural/hide
 	name = "兽皮"
 	icon_state = "hide"
-	desc = "取自 Dendor 某种生物身上的皮。"
+	desc = "取自登多尔某种生物身上的皮。"
 	force = 0
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -15,7 +15,7 @@
 /obj/item/natural/cured/essence
 	name = "荒野精华"
 	icon_state = "wessence"
-	desc = "一种注入了 Dendor 力量的神秘精华。仅仅握在手中，思绪便仿佛回到远古时代。"
+	desc = "一种注入了登多尔力量的神秘精华。仅仅握在手中，思绪便仿佛回到远古时代。"
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
@@ -26,7 +26,7 @@
 /obj/item/natural/fur
 	name = "毛皮"
 	icon_state = "wool1"
-	desc = "取自 Dendor 某种生物身上的毛皮。"
+	desc = "取自登多尔某种生物身上的毛皮。"
 	force = 0
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -66,7 +66,7 @@
 	color = null
 
 /obj/item/natural/fur/direbear
-	desc = "取自 Dendor 最强大生物之一的毛皮。"
+	desc = "取自登多尔最强大生物之一的毛皮。"
 	icon_state = "pelt_direbear"
 	color = "#33302b"
 	sellprice = 28

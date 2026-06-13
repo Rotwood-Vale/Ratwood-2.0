@@ -76,7 +76,7 @@
 
 /obj/item/natural/head/minotaur
 	name = "牛头怪头"
-	desc = "一头危险野兽的头颅，承载着 Dendor 的狂乱。"
+	desc = "一头危险野兽的头颅，承载着登多尔的狂乱。"
 	icon_state = "minotaurhead"
 	layer = 3.1
 	w_class = WEIGHT_CLASS_NORMAL // We want them to be placeable in headhook
