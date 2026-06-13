@@ -62,6 +62,7 @@
 	unequip_delay_self = 2.5 SECONDS
 	bloody_icon_state = "bodyblood"
 	boobed = TRUE
+	resistance_flags = FIRE_PROOF
 	blocksound = PLATEHIT
 	sellprice = 1
 	blade_dulling = DULLING_BASHCHOP
