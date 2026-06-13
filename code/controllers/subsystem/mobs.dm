@@ -41,6 +41,9 @@ SUBSYSTEM_DEF(mobs)
 		if(!length(clients_by_zlevel[z]))
 			continue
 		active[z] = TRUE
+		// Keep adjacent z-levels active to prevent mobs from freezing or behaving incorrectly during cross-z interactions.
+		// This should eventually be replaced with a proper cross-z wake-up mechanism.
+		// TODO: Ideally, mobs should wake when a character enters the relevant nearby area.
 		if(z > 1)
 			active[z - 1] = TRUE
 		if(z < world.maxz)
