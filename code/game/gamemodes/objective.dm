@@ -196,7 +196,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/assassinate/update_explanation_text()
 	..()
 	if(target && target.current)
-			explanation_text = "确保 [target.name] 这名[!target_role_type ? target.assigned_role : target.special_role]被杀死，并在本轮结束前始终保持死亡。若其在回合结束前被复活，你将失败。"
+		explanation_text = "确保 [target.name] 这名[!target_role_type ? target.assigned_role : target.special_role]被杀死，并在本轮结束前始终保持死亡。若其在回合结束前被复活，你将失败。"
 
 /datum/objective/assassinate/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
@@ -553,7 +553,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/protect_object/update_explanation_text()
 	. = ..()
 	if(protect_target)
-			explanation_text = "不惜一切代价保护 [protect_target]。"
+		explanation_text = "不惜一切代价保护 [protect_target]。"
 	else
 		explanation_text = "自由目标。"
 
