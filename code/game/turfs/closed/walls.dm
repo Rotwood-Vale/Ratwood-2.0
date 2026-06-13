@@ -25,7 +25,7 @@
 	return
 
 /turf/closed/wall/proc/deconstruction_hints(mob/user)
-	return "<span class='notice'>The outer plating is <b>welded</b> firmly in place.</span>"
+	return "<span class='notice'>外层镀板已被<b>牢牢焊死</b>。</span>"
 
 /turf/closed/wall/attack_tk()
 	return
@@ -42,7 +42,7 @@
 	return TRUE
 
 /turf/closed/wall/turf_destruction()
-	visible_message("<span class='notice'>\The [src] crumbles!</span>")
+	visible_message("<span class='notice'>[src] 坍塌了！</span>")
 	if(thiefmessage)
 		qdel(thiefmessage)
 	dismantle_wall(1,0)
@@ -141,7 +141,7 @@
 /turf/closed/wall/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (!user.IsAdvancedToolUser())
-		to_chat(user, span_warning("I don't have the dexterity to do this!"))
+		to_chat(user, span_warning("我的手法还不够灵巧，做不了这个！"))
 		return
 
 	//get the user's location
@@ -166,10 +166,10 @@
 		if(!W.tool_start_check(user, amount=0))
 			return FALSE
 
-		to_chat(user, "<span class='notice'>I begin fixing dents on the wall...</span>")
+		to_chat(user, "<span class='notice'>我开始修补墙上的凹痕……</span>")
 		if(W.use_tool(src, user, 0, volume=100))
 			if(iswallturf(src) && LAZYLEN(dent_decals))
-				to_chat(user, "<span class='notice'>I fix some dents on the wall.</span>")
+				to_chat(user, "<span class='notice'>我修好了墙上的一些凹痕。</span>")
 				cut_overlay(dent_decals)
 				dent_decals.Cut()
 			return TRUE
@@ -184,10 +184,10 @@
 		if(!I.tool_start_check(user, amount=0))
 			return FALSE
 
-		to_chat(user, "<span class='notice'>I begin slicing through the outer plating...</span>")
+		to_chat(user, "<span class='notice'>我开始切开外层镀板……</span>")
 		if(I.use_tool(src, user, slicing_duration, volume=100))
 			if(iswallturf(src))
-				to_chat(user, "<span class='notice'>I remove the outer plating.</span>")
+				to_chat(user, "<span class='notice'>我拆掉了外层镀板。</span>")
 				dismantle_wall()
 			return TRUE
 
@@ -198,10 +198,10 @@
 		if(!user.cmode)
 			if((user.used_intent.blade_class == BCLASS_STAB) && (I.wlength == WLENGTH_SHORT))
 				if(thiefmessage)
-					to_chat(user, span_warning("Something is already engraved here."))
+					to_chat(user, span_warning("这里已经刻有东西了。"))
 					return
 				else
-					var/inputty = stripped_input(user, "What would you like to engrave here?", "ENGRAVE THE CANT", null, 200)
+					var/inputty = stripped_input(user, "你想在这里刻下什么？", "刻下黑话", null, 200)
 					if(inputty && !thiefmessage)
 						playsound(src, 'sound/items/wood_sharpen.ogg', 100)
 						var/obj/effect/track/thievescant/new_track = SStracks.get_track(/obj/effect/track/thievescant, src)

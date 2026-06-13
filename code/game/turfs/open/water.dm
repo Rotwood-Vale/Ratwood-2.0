@@ -14,8 +14,8 @@
 
 /turf/open/water
 	gender = PLURAL
-	name = "water"
-	desc = "Good enough to drink, wet enough to douse fires."
+	name = "水"
+	desc = "足够干净，能拿来喝；也足够湿，能拿来灭火。"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "together"
 	baseturfs = /turf/open/water
@@ -67,12 +67,12 @@
 				water_reagent = water_reagent_purified
 		return
 	if(HAS_TRAIT(H, TRAIT_MIRROR_MAGIC))
-		to_chat(H, span_info("You gaze at your reflection in the water, concentrating on the glamoring magicks..."))
+		to_chat(H, span_info("我凝视着水中的倒影，专注于那改变容貌的魔法……"))
 		if(do_after(H, 3 SECONDS, src))
 			perform_mirror_transform(H)
 		return
 	else
-		to_chat(H, span_notice("You see your reflection in the water."))
+		to_chat(H, span_notice("我在水中看见了自己的倒影。"))
 		return
 
 /turf/open/water/update_icon()
@@ -239,18 +239,18 @@
 		if(!istype(src, /turf/open/water/swamp))
 			return
 		L.apply_damage(30, BRUTE, BODY_ZONE_CHEST, forced = TRUE)
-		to_chat(L, span_warningbig("The water seeps into my pores. I am crumbling!"))
+		to_chat(L, span_warningbig("水渗进了我的毛孔里。我正在崩解！"))
 
 /turf/open/water/attackby(obj/item/C, mob/user, params)
 	if(user.used_intent.type == /datum/intent/fill)
 		if(C.reagents)
 			if(C.reagents.holder_full())
-				to_chat(user, span_warning("[C] is full."))
+				to_chat(user, span_warning("[C] 已经装满了。"))
 				return
 			playsound(user, 'sound/foley/drawwater.ogg', 100, FALSE)
 			if(do_after(user, 0.8 SECONDS, target = src))
 				C.reagents.add_reagent(water_reagent, 300)
-				to_chat(user, span_notice("I fill [C] from [src]."))
+				to_chat(user, span_notice("我用 [src] 把 [C] 装满了。"))
 				// If the user is filling a water purifier and the water isn't already clean...
 				if (istype(C, /obj/item/reagent_containers/glass/bottle/waterskin/purifier) && water_reagent != water_reagent_purified)
 					var/obj/item/reagent_containers/glass/bottle/waterskin/purifier/P = C
@@ -260,7 +260,7 @@
 	if(ishuman(user) && istype(C, /obj/item/handmirror))
 		var/mob/living/carbon/human/H = user
 		if(HAS_TRAIT(H, TRAIT_MIRROR_MAGIC))
-			to_chat(H, span_notice("To change yourself via water reflection, use your bare hands on the water."))
+			to_chat(H, span_notice("想借由水中倒影改变自己，就空手触碰水面。"))
 			return
 	. = ..()
 
@@ -277,7 +277,7 @@
 				var/mob/living/carbon/human/bather = user
 				bather.relaxing_bath(1)
 				return
-			user.visible_message(span_info("[user] starts to wash in [src]."))
+			user.visible_message(span_info("[user] 开始在 [src] 里清洗自己。"))
 			if(do_after(L, 3 SECONDS, target = src))
 				if(wash_in)
 					wash_atom(user, CLEAN_STRONG)
@@ -310,7 +310,7 @@
 					L.add_mob_blood(L) //Yes its their own DNA
 
 		else
-			user.visible_message(span_info("[user] starts to wash [item2wash] in [src]."))
+			user.visible_message(span_info("[user] 开始在 [src] 里清洗 [item2wash]。"))
 			if(do_after(L, 3 SECONDS, target = src))
 				if(wash_in)
 					wash_atom(item2wash, CLEAN_STRONG)
@@ -333,7 +333,7 @@
 			var/mob/living/carbon/C = user
 			if(C.is_mouth_covered())
 				return
-		user.visible_message(span_info("[user] starts to drink from [src]."))
+		user.visible_message(span_info("[user] 开始从 [src] 中饮水。"))
 		playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 100, FALSE)
 		for(var/drink in 1 to 40)
 			if(drink_act(user, L))
@@ -415,8 +415,8 @@
 	icon_state = "bathtile"
 
 /turf/open/water/sewer
-	name = "sewage"
-	desc = "This dark water smells like dead rats and sulphur!"
+	name = "污水"
+	desc = "这漆黑的水闻起来像死老鼠和硫磺！"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "pavingW"
 	water_level = 1
@@ -457,8 +457,8 @@
 	temperature = 275
 
 /turf/open/water/bloody
-	name = "blood"
-	desc = "Is that... a river of blood? EVIL!"
+	name = "血河"
+	desc = "那是……一条血河？太邪恶了！"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "dirtW2"
 	water_level = 2
@@ -516,8 +516,8 @@
 				return .
 
 /turf/open/water/swamp/deep
-	name = "murk"
-	desc = "Deep water with several weeds and algae on the surface."
+	name = "浑水"
+	desc = "较深的水面，上头漂着不少杂草和藻类。"
 	icon_state = "dirtW"
 	water_level = 3
 	water_color = "#705a43"
@@ -585,8 +585,8 @@
 	water_color = "#705a43"
 	water_reagent = /datum/reagent/water/gross
 	icon_state = "rockwd"
-	name = "muddy river"
-	desc = "A river of thick, silt-laden sludge lurches languidly through the land."
+	name = "浑泥河"
+	desc = "一条浑浊粘稠、满含泥沙的河流迟缓地穿过大地。"
 
 /turf/open/water/river/flow
 	icon_state = "rockwd"
@@ -683,8 +683,8 @@
 	wash_in = TRUE
 
 /turf/open/water/pond
-	name = "pond"
-	desc = "Still and alarmingly idyllic water. Covered in concerning overgrowth of duckweed."
+	name = "池塘"
+	desc = "平静得近乎诡异的宜人水面，上头覆满了令人担忧的浮萍。"
 	icon_state = "pond"
 	icon = 'icons/turf/roguefloor.dmi'
 	water_level = 3
@@ -695,8 +695,8 @@
 	water_reagent = /datum/reagent/water
 
 /turf/open/water/bath/fakepond
-	name = "fake pond"
-	desc = "Soothing water, with soapy bubbles on the surface. Dyed to perfection."
+	name = "仿制池塘"
+	desc = "令人舒缓的水，表面漂着肥皂泡，染色得恰到好处。"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "pond"
 	water_level = 2
@@ -710,8 +710,8 @@
 //Healing springs.
 //Intended for deep dungeon / hidden areas.
 /turf/open/water/ocean/deep/thermalwater
-	name = "healing hot spring"
-	desc = "A warm spring with gentle ripples. Standing here soothes your body."
+	name = "疗愈温泉"
+	desc = "一眼泛着柔和涟漪的温泉。站在这里能舒缓身体。"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "together"
 	water_color = "#23b9df"

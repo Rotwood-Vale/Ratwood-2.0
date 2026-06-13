@@ -83,7 +83,7 @@
 
 /turf/closed/mineral/attackby(obj/item/item, mob/user, params, multiplier)
 	if (!user.IsAdvancedToolUser())
-		to_chat(usr, span_warning("I don't have the dexterity to do this!"))
+		to_chat(usr, span_warning("我的手法还不够灵巧，做不了这个！"))
 		return
 	lastminer = user
 	..()
@@ -186,7 +186,7 @@
 		gets_drilled(user)
 	if(user.can_mine && do_after(user, CLICK_CD_MELEE))
 		playsound(src,'sound/combat/hits/onstone/wallhit.ogg', 600, TRUE, 10)
-		visible_message(span_warning("[user] smashes [src]!"))
+		visible_message(span_warning("[user] 砸碎了 [src]！"))
 		turf_integrity -= 500
 		if(turf_integrity <= 0)
 			gets_drilled(user)
@@ -449,7 +449,7 @@
 	above_floor = /turf/closed/mineral/rogue/bedrock
 
 /turf/closed/mineral/rogue/bedrock/attackby(obj/item/I, mob/user, params, multiplier)
-	to_chat(user, span_warning("TOO HARD!"))
+	to_chat(user, span_warning("太硬了！"))
 	return FALSE
 
 /turf/closed/mineral/rogue/bedrock/TerraformTurf(path, new_baseturf, flags, defer_change = FALSE, ignore_air = FALSE)

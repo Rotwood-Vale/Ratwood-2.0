@@ -1,8 +1,8 @@
 ///LAVA
 
 /turf/open/lava
-	name = "lava"
-	desc = "Thick viscous bubbles swell and burst with sprays of molten rock. What was once locked away in the bowels of the earth now thrashes and gurgles on the surface, glowing with unimaginable heat. If you touch it, you will die."
+	name = "熔岩"
+	desc = "厚重黏稠的气泡鼓胀破裂，喷溅出熔化的岩浆。曾被锁在大地深处的东西，如今在地表翻涌咆哮，散发着难以想象的热量。碰到它，你就会死。"
 	icon_state = "lava"
 	icon = 'icons/turf/roguefloor.dmi'
 	gender = PLURAL //"That's some lava."
@@ -161,10 +161,10 @@
 			if(C.is_mouth_covered())
 				return
 		playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 100, FALSE)
-		user.visible_message(span_info("[user] starts to drink from [src]."))
+		user.visible_message(span_info("[user] 开始从 [src] 里喝东西。"))
 		if(do_after(L, 25, target = src))
 			var/mob/living/carbon/C = user
-			to_chat(C, span_userdanger("OH SWEET PSYDON, WHY DID I THINK THIS WAS A GOOD IDEA???"))
+			to_chat(C, span_userdanger("噢，至高普赛顿啊，我怎么会觉得这是个好主意？？？"))
 			C.flash_fullscreen("redflash3")
 			C.emote("agony", forced = TRUE)
 			C.adjust_fire_stacks(500) //you deserve this.
@@ -186,7 +186,7 @@
 /turf/open/lava/smooth/airless
 
 /turf/open/lava/acid
-	name = "acid"
+	name = "酸液"
 	icon_state = "acid"
 	light_outer_range =  4
 	light_power = 1
@@ -232,11 +232,11 @@
 					continue
 				C.obj_integrity -= C.max_integrity * 0.1
 				if(C.obj_integrity <= 0)
-					to_chat(L, span_danger("Your [C.name] is destroyed by the acid!"))
+					to_chat(L, span_danger("你的 [C.name] 被酸液腐蚀毁掉了！"))
 					qdel(C)	
 
 			L.adjustFireLoss(100)
-			to_chat(L, span_userdanger("THE ACID BURNS!"))
+			to_chat(L, span_userdanger("酸液在灼烧我！"))
 
 /turf/open/lava/acid/onbite(mob/user)
 	if(isliving(user))
@@ -248,10 +248,10 @@
 			if(C.is_mouth_covered())
 				return
 		playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 100, FALSE)
-		user.visible_message(span_info("[user] starts to drink from [src]."))
+		user.visible_message(span_info("[user] 开始从 [src] 里喝东西。"))
 		if(do_after(L, 25, target = src))
 			var/mob/living/carbon/C = user
-			to_chat(C, span_userdanger("OH SWEET PSYDON, WHY DID I THINK THIS WAS A GOOD IDEA???"))
+			to_chat(C, span_userdanger("噢，至高普赛顿啊，我怎么会觉得这是个好主意？？？"))
 			C.flash_fullscreen("redflash3")
 			C.emote("agony", forced = TRUE)
 			C.gib() //YOU. LITERALLY. DESERVE THIS.

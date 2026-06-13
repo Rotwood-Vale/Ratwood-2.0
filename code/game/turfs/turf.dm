@@ -328,15 +328,15 @@
 		if(flags & FALL_STOP_INTERCEPTING)
 			break
 	if(prev_turf && !(flags & FALL_NO_MESSAGE))
-		prev_turf.visible_message(span_danger("[mov_name] falls through [prev_turf]!"))
+		prev_turf.visible_message(span_danger("[mov_name] 从 [prev_turf] 坠落下去了！"))
 	if(flags & FALL_INTERCEPTED)
 		return
 	if(zFall(A, ++levels))
 		return FALSE
 	if(!HAS_TRAIT(A, TRAIT_NOFALLDAMAGE1) && !HAS_TRAIT(A, TRAIT_NOFALLDAMAGE2))
-		A.visible_message(span_danger("[A] crashes into [src]!"))
+		A.visible_message(span_danger("[A] 重重撞上了 [src]！"))
 	else
-		A.visible_message(span_warning("[A] lands on [src]!"))
+		A.visible_message(span_warning("[A] 落到了 [src] 上！"))
 	A.onZImpact(src, levels)
 	return TRUE
 
@@ -527,7 +527,7 @@
 	if(.)
 		return
 	if(length(src_object.contents()))
-		to_chat(usr, "<span class='notice'>I start dumping out the contents...</span>")
+		to_chat(usr, "<span class='notice'>我开始把里面的东西倒出来……</span>")
 		if(!do_after(usr,20,target=src_object.parent))
 			return FALSE
 
@@ -702,4 +702,3 @@
 //Should return new turf
 /turf/proc/Melt()
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-

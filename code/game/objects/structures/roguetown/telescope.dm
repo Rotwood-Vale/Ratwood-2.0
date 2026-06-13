@@ -11,18 +11,18 @@
 		return
 
 	var/mob/living/carbon/human/H = user
-	var/random_message = pick("你看见 Noc 正在缓缓转动！", "凝视 Astrata 让你双目刺痛！", "群星正向你微笑。", "今天的 Nepolx 格外赤红。", "受祝福的黄色纷争。", "你看见了一颗星星！")
+	var/random_message = pick("你看见诺克正在缓缓转动！", "凝视阿斯特拉塔让你双目刺痛！", "群星正向你微笑。", "今天的内波尔克斯格外赤红。", "受祝福的黄色纷争。", "你看见了一颗星星！")
 	to_chat(H, span_notice("[random_message]"))
 
-	if(random_message == "凝视 Astrata 让你双目刺痛！")
+	if(random_message == "凝视阿斯特拉塔让你双目刺痛！")
 		if(do_after(H, 25, target = src))
 			var/obj/item/bodypart/affecting = H.get_bodypart("head")
 			to_chat(H, span_warning("那炫目的光芒令你痛苦不堪！"))
 			if(affecting && affecting.receive_damage(0, 5))
 				H.update_damage_overlays()
-	if(random_message == "你看见 Noc 正在缓缓转动！")
+	if(random_message == "你看见诺克正在缓缓转动！")
 		if(do_after(H, 2.5 SECONDS, target = src))
-			to_chat(H, span_warning("Noc 的辉光似乎让我的思绪清明了几分。"))
+			to_chat(H, span_warning("诺克的辉光似乎让我的思绪清明了几分。"))
 			H.apply_status_effect(/datum/status_effect/buff/nocblessing)
 
 /obj/structure/globe
@@ -38,5 +38,5 @@
 		return
 
 	var/mob/living/carbon/human/H = user
-	var/random_message = pick("你转动了地球仪！", "你停在了谷地！", "你停在了 Rockhill！", "你停在了 Al-Ashur！", "你停在了 Avar！", "你停在了 Zybantium！", "你停在了 Ice Cube 港！", "你停在了 Thornvale 港！", "你停在了 Grenzelhoft！", "你停在了 Gronn！", "你停在了 Otava！", "你停在了 Giza！", "你停在了 Hammerhold！", "你停在了 Kingsfield！", "你停在了 Fablefield！", "你停在了 Avar！", "你停在了 Etrusca！", "你停在了 Kazengun！大概吧。")
+	var/random_message = pick("你转动了地球仪！", "你停在了谷地！", "你停在了岩丘！", "你停在了阿尔-阿舒尔！", "你停在了阿瓦尔！", "你停在了兹班图！", "你停在了冰方港！", "你停在了棘谷港！", "你停在了格伦泽尔霍夫特！", "你停在了格隆恩！", "你停在了奥塔瓦！", "你停在了吉萨！", "你停在了铁锤堡！", "你停在了王田！", "你停在了寓言田！", "你停在了阿瓦尔！", "你停在了伊特鲁斯卡！", "你停在了风郡！大概吧。")
 	to_chat(H, span_notice("[random_message]"))

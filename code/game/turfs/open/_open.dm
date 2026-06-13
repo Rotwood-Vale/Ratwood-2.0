@@ -91,7 +91,7 @@
 		if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
 			return 0
 	if(!(lube&SLIDE_ICE))
-		to_chat(C, "<span class='notice'>I slipped[ O ? " on the [O.name]" : ""]!</span>")
+		to_chat(C, "<span class='notice'>我滑倒了[ O ? "，是被 [O.name] 绊的" : ""]！</span>")
 		playsound(C.loc, 'sound/blank.ogg', 50, TRUE, -3)
 
 	if(force_drop)

@@ -30,34 +30,34 @@
 	var/curvol = 50 // The current volume at which audio is played. MAPPERS MAY TOUCH THIS.
 	var/playuponspawn = FALSE // Does the music box start playing music when it first spawns in? MAPPERS MAY TOUCH THIS.
 	var/list/static/songlist_otherworldly = list(
-		"Lore" = 'sound/music/jukeboxes/otherworld/ac-ler.ogg',
-		"Landmarks of Lullabies" = 'sound/music/jukeboxes/otherworld/ac-lol.ogg',
-		"Waters of Sacrifice" = 'sound/music/jukeboxes/otherworld/acn-wos.ogg',
-		"Solar Wind" = 'sound/music/jukeboxes/otherworld/av_solar.ogg',
-		"Balthasar" = 'sound/music/jukeboxes/otherworld/ac-balthasar.ogg',
-		"Dead Windmills" = 'sound/music/jukeboxes/otherworld/dead_windmills.ogg',
-		"In Heaven Everythin" = 'sound/music/jukeboxes/otherworld/in_heaven_eif.ogg',
-		"Jazznocn" = 'sound/music/jukeboxes/otherworld/jazznocn.ogg',
-		"Vivalaluna-Damla" = 'sound/music/jukeboxes/otherworld/vivalaluna-damla.ogg',
-		"Shades of Futility" = 'sound/music/jukeboxes/otherworld/fb-sofutile.ogg',
-		"Mr Doubt" = 'sound/music/jukeboxes/otherworld/mr_doubt.ogg'
+		"传闻" = 'sound/music/jukeboxes/otherworld/ac-ler.ogg',
+		"摇篮曲地标" = 'sound/music/jukeboxes/otherworld/ac-lol.ogg',
+		"献祭之水" = 'sound/music/jukeboxes/otherworld/acn-wos.ogg',
+		"太阳风" = 'sound/music/jukeboxes/otherworld/av_solar.ogg',
+		"巴尔萨泽" = 'sound/music/jukeboxes/otherworld/ac-balthasar.ogg',
+		"死去的风车" = 'sound/music/jukeboxes/otherworld/dead_windmills.ogg',
+		"天堂里的一切" = 'sound/music/jukeboxes/otherworld/in_heaven_eif.ogg',
+		"爵士诺克" = 'sound/music/jukeboxes/otherworld/jazznocn.ogg',
+		"维瓦拉露娜-达姆拉" = 'sound/music/jukeboxes/otherworld/vivalaluna-damla.ogg',
+		"徒劳之影" = 'sound/music/jukeboxes/otherworld/fb-sofutile.ogg',
+		"疑先生" = 'sound/music/jukeboxes/otherworld/mr_doubt.ogg'
 	)
 	var/list/static/songlist_generic = list(\
-		"Song 1" = 'sound/music/jukeboxes/gen/tavern1.ogg',
-		"Song 2" = 'sound/music/jukeboxes/gen/tavern2.ogg',
-		"Song 3" = 'sound/music/jukeboxes/gen/tavern3.ogg'
+		"曲目一" = 'sound/music/jukeboxes/gen/tavern1.ogg',
+		"曲目二" = 'sound/music/jukeboxes/gen/tavern2.ogg',
+		"曲目三" = 'sound/music/jukeboxes/gen/tavern3.ogg'
 	)
 	var/list/static/songlist_oldschool = list(\
-		"Autumn Voyage" = 'sound/music/jukeboxes/oldschool/Autumn_Voyage.ogg',
-		"Fanfare" = 'sound/music/jukeboxes/oldschool/Fanfare.ogg',
-		"Greatness" = 'sound/music/jukeboxes/oldschool/Greatness.ogg',
-		"Medieval" = 'sound/music/jukeboxes/oldschool/Medieval.ogg',
-		"Sea Shanty2" = 'sound/music/jukeboxes/oldschool/Sea_Shanty2.ogg',
-		"Shine" = 'sound/music/jukeboxes/oldschool/Shine.ogg',
-		"Spirit" = 'sound/music/jukeboxes/oldschool/Spirit.ogg',
-		"Still Night" = 'sound/music/jukeboxes/oldschool/Still_Night.ogg',
-		"Venture" = 'sound/music/jukeboxes/oldschool/Venture.ogg',
-		"Yesteryear" = 'sound/music/jukeboxes/oldschool/Yesteryear.ogg'
+		"秋日航程" = 'sound/music/jukeboxes/oldschool/Autumn_Voyage.ogg',
+		"号角" = 'sound/music/jukeboxes/oldschool/Fanfare.ogg',
+		"伟业" = 'sound/music/jukeboxes/oldschool/Greatness.ogg',
+		"中古" = 'sound/music/jukeboxes/oldschool/Medieval.ogg',
+		"海上歌谣2" = 'sound/music/jukeboxes/oldschool/Sea_Shanty2.ogg',
+		"光辉" = 'sound/music/jukeboxes/oldschool/Shine.ogg',
+		"灵息" = 'sound/music/jukeboxes/oldschool/Spirit.ogg',
+		"静夜" = 'sound/music/jukeboxes/oldschool/Still_Night.ogg',
+		"远行" = 'sound/music/jukeboxes/oldschool/Venture.ogg',
+		"往昔" = 'sound/music/jukeboxes/oldschool/Yesteryear.ogg'
 	)
 
 /obj/structure/roguemachine/musicbox/Initialize(mapload)

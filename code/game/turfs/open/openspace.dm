@@ -18,8 +18,8 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 //	filters += filter(type = "blur", size = 3)
 
 /turf/open/transparent/openspace
-	name = "open space"
-	desc = "My eyes can see far down below."
+	name = "开阔空域"
+	desc = "我一眼就能望见下方深处。"
 	icon_state = "openspace"
 	baseturfs = /turf/open/transparent/openspace
 	CanAtmosPassVertical = ATMOS_PASS_YES
@@ -121,14 +121,14 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			return
 		var/turf/target = get_step_multiz(src, DOWN)
 		if(!target)
-			to_chat(user, span_warning("I can't climb there."))
+			to_chat(user, span_warning("我没法往那里爬。"))
 			return
 		if(!user.can_zTravel(target, DOWN, src))
-			to_chat(user, span_warning("I can't climb here."))
+			to_chat(user, span_warning("我没法从这里往下爬。"))
 			return
 		if(user.m_intent != MOVE_INTENT_SNEAK)
 			playsound(user, 'sound/foley/climb.ogg', 100, TRUE)
-		user.visible_message(span_warning("[user] starts to climb down."), span_warning("I start to climb down."))
+		user.visible_message(span_warning("[user] 开始往下攀爬。"), span_warning("我开始往下攀爬。"))
 		var/climber2wall_dir = get_dir(src, L)
 		if(do_after(L, (HAS_TRAIT(L, TRAIT_WOODWALKER) ? 15 : 30), target = src))
 			if(user.m_intent != MOVE_INTENT_SNEAK)
@@ -190,10 +190,10 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 		if(!(climber.movement_type == FLYING)) // if you fly then fuck off
 			var/pulling = climber.pulling
 			if(ismob(pulling)) // if you are grabbing someone then fuck off, could forceMove() both grabber and the grabee for fun doe
-				climber.visible_message(span_info("I can't get a good grip while dragging someone."))
+				climber.visible_message(span_info("我拖着别人时没法抓稳。"))
 				return
 			if(!(climber.mobility_flags & MOBILITY_STAND))
-				climber.visible_message(span_info("I can't get a good grip while prone."))
+				climber.visible_message(span_info("我趴着时没法抓稳。"))
 				return
 			var/wall2wall_dir
 			var/list/adjacent_wall_list = get_adjacent_turfs(climb_target) // get and add to the list turfs centered around climb_target (turf we drag mob to) in CARDINAL (NORTH, SOUTH, WEST, EAST) directions
@@ -211,7 +211,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 					wall_for_message = pick(adjacent_wall_list_final) // if we are shimmying between 2 climbable walls, then we just pick one along which our sprite and message will be adjusted
 					wall2wall_dir = get_dir(climb_target, wall_for_message)
 			if(!adjacent_wall_list_final.len) // if there are no /turf/closed WALLS or none of the WALLS have wallclimb set to TRUE, then the list will be empty so we can't climb there
-				to_chat(climber, span_warningbig("I can't climb there!"))
+				to_chat(climber, span_warningbig("我没法往那里爬！"))
 			else
 				var/list/cloth_wipe_sfx = list('sound/foley/cloth_wipe (1).ogg',
 				'sound/foley/cloth_wipe (2).ogg',
@@ -224,10 +224,10 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 				if(climber.m_intent == MOVE_INTENT_SNEAK)
 					climb_along_delay = climb_along_delay * 1.5
 				if(do_after(climber, climb_along_delay, wall_for_message))
-					climber.visible_message(span_info("[climber] climbs along [wall_for_message]..."))
+					climber.visible_message(span_info("[climber] 沿着 [wall_for_message] 横向攀行……"))
 					climber_armor_class = climber.highest_ac_worn()
 					if(!(climber_armor_class <= ARMOR_CLASS_LIGHT))
-						climber.visible_message(span_danger("The armor weighs me down!")) // if you can actually shuffle along the wall but wearing heavy armor, you get a grip on it... but fall, as a little treat
+						climber.visible_message(span_danger("这身护甲把我拖得太沉了！")) // if you can actually shuffle along the wall but wearing heavy armor, you get a grip on it... but fall, as a little treat
 					else
 						climber.movement_type = FLYING // the way this works is that we only really ever fall if we enter the open space turf with GROUND move type, otherwise we can just hover over indefinetely
 					if((istype(climber.backr, /obj/item/clothing/climbing_gear)) || (istype(climber.backl, /obj/item/clothing/climbing_gear)))
@@ -264,21 +264,21 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	if(!user.Adjacent(src))
 		return
 	if(!target)
-		to_chat(user, span_warning("I can't go there."))
+		to_chat(user, span_warning("我去不了那里。"))
 		return
 	user.forceMove(target)
-	to_chat(user, span_warning("I glide down."))
+	to_chat(user, span_warning("我向下滑落了。"))
 	. = ..()
 
 /turf/open/transparent/openspace/attackby(obj/item/C, mob/user, params)
 	..()
 	if(C.type == /obj/item/rope && isliving(user))
 		var/mob/living/living_user = user
-		living_user.visible_message(span_notice("[living_user] begins to lay down a rope for climbing..."), span_notice("I begin to lay down a rope for climbing..."))
+		living_user.visible_message(span_notice("[living_user] 开始布设一条用于攀爬的绳索……"), span_notice("我开始布设一条用于攀爬的绳索……"))
 		if(do_after(living_user, 3 SECONDS, TRUE, target = src))
 			var/turf/target = get_step_multiz(src, DOWN)
 			if(!target)
-				to_chat(living_user, span_warning("There's nowhere to tie the rope here."))
+				to_chat(living_user, span_warning("这里没有地方可以系住绳子。"))
 				return
 			var/obj/structure/rope_ladder/rope = new(target)
 			if(living_user.is_wallpressed())
@@ -296,7 +296,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 					rope.pixel_x = -12
 				if(EAST)
 					rope.pixel_x = 12
-			living_user.visible_message(span_notice("[living_user] secures the rope to the surface below."), span_notice("I secure the rope to the surface below."))
+			living_user.visible_message(span_notice("[living_user] 把绳索固定在了下方的地面上。"), span_notice("我把绳索固定在了下方的地面上。"))
 			playsound(living_user, 'sound/foley/trap.ogg', 100, TRUE)
 			qdel(C)
 		return

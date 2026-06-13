@@ -81,7 +81,7 @@
 		if(istype(structure, placed_type))
 			return
 
-	visible_message("[user] starts placing down [src].", "You start to place [src].")
+	visible_message("[user] 开始放置 [src]。", "我开始放置 [src]。")
 	if(!do_after(user, 1.2 SECONDS - user?.get_skill_level(/datum/skill/craft/engineering), T))
 		return
 	var/obj/structure/structure = new placed_type(T)
@@ -120,7 +120,7 @@
 		return
 
 	I:in_stack += in_stack
-	visible_message("[user] collects [src].")
+	visible_message("[user] 收起了 [src]。")
 	qdel(src)
 	//I.update_appearance(UPDATE_NAME)
 	I.vand_update_appearance(UPDATE_NAME)

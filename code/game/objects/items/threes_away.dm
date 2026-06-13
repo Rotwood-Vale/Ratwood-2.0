@@ -55,14 +55,14 @@
 	if(!joiner || !joiner.client)
 		return
 	if(!joining)
-		to_chat(joiner, span_warning("这局Three's Away对局已经开始了。"))
+		to_chat(joiner, span_warning("这局三去无踪对局已经开始了。"))
 		return
 
 	if(joiner in players)
 		var/list/opts = list("离开游戏")
 		if(players.len >= 2)
 			opts += "立即开始"
-		var/choice = input(joiner, "你已经在大厅里了。([players.len]/[max_players] 名玩家)", "Three's Away 对局") as null|anything in opts
+		var/choice = input(joiner, "你已经在大厅里了。([players.len]/[max_players] 名玩家)", "三去无踪对局") as null|anything in opts
 		if(choice == "立即开始")
 			start_game()
 		else if(choice == "离开游戏")
@@ -73,7 +73,7 @@
 		return
 
 	if(players.len >= max_players)
-		to_chat(joiner, span_warning("Three's Away 对局已经满员了([max_players]/[max_players])。"))
+		to_chat(joiner, span_warning("三去无踪对局已经满员了([max_players]/[max_players])。"))
 		return
 
 	players += joiner
@@ -81,13 +81,13 @@
 	rolled[joiner] = FALSE
 	busted[joiner] = FALSE
 	ante_doubled[joiner] = FALSE
-	game_bag.visible_message(span_notice("[joiner]加入了Three's Away！([players.len]/[max_players] 名玩家)"))
+	game_bag.visible_message(span_notice("[joiner]加入了三去无踪！([players.len]/[max_players] 名玩家)"))
 	if(players.len >= max_players)
 		start_game()
 
 /datum/threes_away_game/proc/leave_game(mob/living/leaver)
 	if(!(leaver in players))
-		to_chat(leaver, span_warning("你不在这局Three's Away里。"))
+		to_chat(leaver, span_warning("你不在这局三去无踪里。"))
 		return
 
 	var/leaver_index = players.Find(leaver)
@@ -99,7 +99,7 @@
 	busted -= leaver
 	ante_doubled -= leaver
 
-	game_bag.visible_message(span_notice("[leaver]离开了Three's Away。([players.len]/[max_players] 名玩家剩余)"))
+	game_bag.visible_message(span_notice("[leaver]离开了三去无踪。([players.len]/[max_players] 名玩家剩余)"))
 
 	if(!players.len)
 		cancel_game(leaver)
@@ -129,7 +129,7 @@
 			current_player = null
 
 /datum/threes_away_game/proc/cancel_game(mob/living/canceller)
-	game_bag.visible_message(span_warning("[canceller]取消了Three's Away！"))
+	game_bag.visible_message(span_warning("[canceller]取消了三去无踪！"))
 	game_bag.active_game = null
 	qdel(src)
 
@@ -148,7 +148,7 @@
 	var/list/names = list()
 	for(var/mob/living/M in players)
 		names += "[M]"
-	game_bag.visible_message(span_notice("Three's Away 对局开始了！玩家：[jointext(names, ", ")]。"))
+	game_bag.visible_message(span_notice("三去无踪对局开始了！玩家：[jointext(names, ", ")]。"))
 	next_turn()
 
 /datum/threes_away_game/proc/player_is_done(mob/living/M)
@@ -403,11 +403,11 @@
 	return jointext(parts, " | ")
 
 /obj/item/storage/pill_bottle/dice/threes_away
-	name = "Three's Away骰袋"
-	desc = "一个用来游玩Three's Away的骰袋。手持激活（Z）即可开始或加入一局游戏。"
+	name = "三去无踪骰袋"
+	desc = "一个用来游玩三去无踪的骰袋。手持激活（Z）即可开始或加入一局游戏。"
 	var/datum/threes_away_game/active_game
 	var/static/threes_away_rules_text = {"<div style='padding:8px;font-family:Verdana,sans-serif;'>
-	<h2 style='text-align:center;margin:0 0 6px 0;'>Three's Away</h2>
+	<h2 style='text-align:center;margin:0 0 6px 0;'>三去无踪</h2>
 <br>
 <b>目标：</b>取得最低分。<br>
 <br>
@@ -466,7 +466,7 @@
 		menu += gap3
 	menu += "结束游戏"
 
-	var/choice = input(user, "选择一项操作。", "Three's Away 骰袋") as null|anything in menu
+	var/choice = input(user, "选择一项操作。", "三去无踪骰袋") as null|anything in menu
 	if(!choice)
 		return
 
@@ -478,19 +478,19 @@
 		if(active_game)
 			active_game.cancel_game(user)
 		else
-			to_chat(user, span_notice("当前没有正在进行的Three's Away游戏。"))
+			to_chat(user, span_notice("当前没有正在进行的三去无踪游戏。"))
 		return
 
 	if(choice == "离开游戏")
 		if(active_game)
 			active_game.leave_game(user)
 		else
-			to_chat(user, span_notice("当前没有正在进行的Three's Away游戏。"))
+			to_chat(user, span_notice("当前没有正在进行的三去无踪游戏。"))
 		return
 
 	if(choice == "掷骰")
 		if(!active_game)
-			to_chat(user, span_notice("当前没有正在进行的Three's Away游戏。"))
+			to_chat(user, span_notice("当前没有正在进行的三去无踪游戏。"))
 			return
 		if(!(user == active_game.current_player && active_game.can_initiate_turn_roll && !active_game.joining))
 			to_chat(user, span_notice("你现在不能掷骰。"))
@@ -502,7 +502,7 @@
 		return
 
 	if(!active_game)
-		var/count = input(user, "要几名玩家？\n（2 到 4 名玩家）", "Three's Away 对局") as null|anything in list(2, 3, 4)
+		var/count = input(user, "要几名玩家？\n（2 到 4 名玩家）", "三去无踪对局") as null|anything in list(2, 3, 4)
 		if(!count)
 			return
 
@@ -511,7 +511,7 @@
 		new_game.max_players = count
 		active_game = new_game
 		new_game.try_join(user)
-		src.visible_message(span_notice("[user]开始了一局Three's Away！还需要 [count - 1] 名玩家。激活（Z）骰袋即可加入！"))
+		src.visible_message(span_notice("[user]开始了一局三去无踪！还需要 [count - 1] 名玩家。激活（Z）骰袋即可加入！"))
 		return
 
 	if(active_game.joining)

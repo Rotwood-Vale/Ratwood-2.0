@@ -39,21 +39,21 @@
 
 /turf/open/floor/rogue/ruinedwood/turned
 	icon_state = "wooden_floort"
-	name = "wooden floorboards"
-	desc = "Interlocking wooden floorboards scratched with thousands of steps."
+	name = "木地板"
+	desc = "互相咬合的木地板上布满了万千脚步留下的划痕。"
 
 /turf/open/floor/rogue/ruinedwood/spiral
 	icon_state = "weird1"
-	name = "wooden floorboards"
-	desc = "Interlocking wooden floorboards."
+	name = "木地板"
+	desc = "互相咬合的木地板。"
 /turf/open/floor/rogue/ruinedwood/chevron
 	icon_state = "weird2"
-	name = "floorboards"
-	desc = "Interlocking wooden floorboards."
+	name = "木地板"
+	desc = "互相咬合的木地板。"
 
 /turf/open/floor/rogue/ruinedwood/platform
-	name = "platform"
-	desc = "A destructible platform."
+	name = "平台"
+	desc = "一处可被摧毁的平台。"
 	damage_deflection = 8
 	break_sound = 'sound/combat/hits/onwood/destroywalldoor.ogg'
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
@@ -87,8 +87,8 @@
 	. = ..()
 
 /turf/open/floor/rogue/twig/platform
-	name = "twig platform"
-	desc = "A destructible platform."
+	name = "树枝平台"
+	desc = "一处可被摧毁的平台。"
 	damage_deflection = 4
 	max_integrity = 100		//It's fucking twig.
 	break_sound = 'sound/combat/hits/onwood/destroywalldoor.ogg'
@@ -111,8 +111,8 @@
 	canSmoothWith = list(/turf/open/floor/rogue/wood,/turf/open/floor/carpet)
 
 /turf/open/floor/rogue/wood/nosmooth //these are here so we can put wood floors next to each other but not have them smooth
-	name = "wooden floorboards"
-	desc = "Polished wooden floorboards scuffed by scratches and a persistent layer of grime."
+	name = "木地板"
+	desc = "抛光的木地板上满是刮痕，还积着一层挥之不去的污垢。"
 	icon_state = "wooden_floor"
 	smooth = SMOOTH_MORE
 	canSmoothWith = list(/turf/open/floor/rogue/wood/nosmooth,/turf/open/floor/carpet)
@@ -128,15 +128,15 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/rogue/woodturned/nosmooth
-	name = "wooden floorboards"
-	desc = "Polished wooden floorboards scuffed by scratches and a persistent layer of grime."
+	name = "木地板"
+	desc = "抛光的木地板上满是刮痕，还积着一层挥之不去的污垢。"
 	icon_state = "wooden_floort"
 	smooth = SMOOTH_MORE
 	canSmoothWith = list(/turf/open/floor/rogue/woodturned/nosmooth,/turf/open/floor/carpet)
 
 /turf/open/floor/rogue/rooftop
-	name = "roof"
-	desc = "Overlapping wooden shingles protect the building and its inhabitants from the rain."
+	name = "屋顶"
+	desc = "层层叠叠的木瓦为建筑与其中的住户遮挡风雨。"
 	icon_state = "roof-arw"
 	footstep = FOOTSTEP_WOOD
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -207,8 +207,8 @@
 
 
 /turf/open/floor/rogue/AzureSand
-	name = "sand"
-	desc = "Warm sand that, sadly, have been mixed with dirt."
+	name = "沙地"
+	desc = "温热的沙子，只可惜已经和泥土混在了一起。"
 	icon_state = "grimshart"
 	layer = MID_TURF_LAYER
 	footstep = FOOTSTEP_SAND
@@ -229,8 +229,8 @@
 	roguesmooth(adjacencies)
 
 /turf/open/floor/rogue/snow
-	name = "snow"
-	desc = "A gentle blanket of snow."
+	name = "雪地"
+	desc = "一层轻柔覆盖的大雪。"
 	icon_state = "snow"
 	layer = MID_TURF_LAYER
 	footstep = FOOTSTEP_GRASS
@@ -258,7 +258,7 @@
 			return
 		var/obj/item/I = new /obj/item/natural/dirtclod/snow(src)
 		if(L.put_in_active_hand(I))
-			L.visible_message(span_warning("[L] picks up some snow."))
+			L.visible_message(span_warning("[L] 捧起了一些雪。"))
 			ChangeTurf(/turf/open/floor/rogue/snowpatchy, flags = CHANGETURF_INHERIT_AIR)
 		else
 			qdel(I)
@@ -271,7 +271,7 @@
 			if(!istype(elements, /obj/effect/decal/cleanable/blood/footprints/mud))
 				continue
 			QDEL_NULL(elements)
-			to_chat(user, span_notice("You pad out any footprints in [src].."))
+			to_chat(user, span_notice("我把 [src] 上的脚印都填平了。"))
 			qdel(C)
 
 	. = ..()
@@ -288,8 +288,8 @@
 		START_PROCESSING(SSwaterlevel, src)
 
 /turf/open/floor/rogue/snowrough
-	name = "rough snow"
-	desc = "A rugged blanket of snow."
+	name = "粗雪地"
+	desc = "一层粗粝不平的积雪。"
 	icon_state = "snowrough"
 	layer = MID_TURF_LAYER
 	footstep = FOOTSTEP_GRASS
@@ -312,8 +312,8 @@
 	roguesmooth(adjacencies)
 
 /turf/open/floor/rogue/snowpatchy
-	name = "patchy snow"
-	desc = "Half-melted snow revealing the hardy grass underneath."
+	name = "斑驳雪地"
+	desc = "半融的积雪下露出了顽强生长的草地。"
 	icon_state = "snowpatchy_grass"
 	layer = MID_TURF_LAYER
 	footstep = FOOTSTEP_GRASS
@@ -332,8 +332,8 @@
 	roguesmooth(adjacencies)
 
 /turf/open/floor/rogue/grasscold
-	name = "tundra grass"
-	desc = "Grass, frigid and touched by winter."
+	name = "冻原草地"
+	desc = "被寒冬侵染、冰冷刺骨的草地。"
 	icon_state = "grass_cold"
 	layer = MID_TURF_LAYER
 	footstep = FOOTSTEP_GRASS
@@ -359,8 +359,8 @@
 	roguesmooth(adjacencies)
 
 /turf/open/floor/rogue/grasspurple
-	name = "fungal 'grass'"
-	desc = "Thin fungal strands rising from the ground. Spongey to walk on."
+	name = "菌丝草地"
+	desc = "细长的菌丝自地面长出，踩上去软绵绵的。"
 	icon_state = "grass_purple"
 	layer = MID_TURF_LAYER
 	footstep = FOOTSTEP_GRASS
@@ -388,8 +388,8 @@
 	roguesmooth(adjacencies)
 
 /turf/open/floor/rogue/grassgrey
-	name = "dead grass"
-	desc = "Pale, like a bloated corpse."
+	name = "枯草地"
+	desc = "苍白得像一具肿胀的尸体。"
 	icon_state = "grass_grey"
 	layer = MID_TURF_LAYER
 	footstep = FOOTSTEP_GRASS
@@ -417,8 +417,8 @@
 	roguesmooth(adjacencies)
 
 /turf/open/floor/rogue/grassred
-	name = "red grass"
-	desc = "Grass, ripe with Dendor's blood."
+	name = "红草地"
+	desc = "浸润着登多尔之血的草地。"
 	icon_state = "grass_red"
 	layer = MID_TURF_LAYER
 	footstep = FOOTSTEP_GRASS
@@ -696,7 +696,7 @@
 		water_level = max(water_level-100,0)
 		muddy = TRUE
 		icon_state = "mud[rand (1,3)]"
-		name = "mud"
+		name = "泥地"
 		slowdown = 2
 		footstep = FOOTSTEP_MUD
 		barefootstep = FOOTSTEP_MUD
@@ -738,8 +738,8 @@
 /turf/open/floor/rogue/grass/nospawn
 
 /turf/open/floor/rogue/sand
-	name = "sand"
-	desc = "Fine grains shift and hiss softly beneath your step."
+	name = "沙地"
+	desc = "细密的沙粒在脚下悄然流动，发出轻微的沙沙声。"
 	icon = 'icons/turf/sand.dmi'
 	icon_state = "sand"
 	layer = MID_TURF_LAYER
@@ -764,11 +764,11 @@
 		if(L.stat != CONSCIOUS)
 			return
 		if(sand_amt <= 0)
-			to_chat(L, span_warning("There's no loose sand left to scoop here."))
+			to_chat(L, span_warning("这里已经没有松散的沙子可铲了。"))
 			return
 		var/obj/item/I = new /obj/item/natural/dirtclod/sand(src)
 		if(L.put_in_active_hand(I))
-			L.visible_message(span_warning("[L] scoops up some sand."))
+			L.visible_message(span_warning("[L] 铲起了一些沙子。"))
 			sand_amt--
 		else
 			qdel(I)
@@ -805,7 +805,7 @@
 			return
 		var/obj/item/I = new /obj/item/natural/dirtclod/sand(src)
 		if(L.put_in_active_hand(I))
-			L.visible_message(span_warning("[L] scoops up some sand."))
+			L.visible_message(span_warning("[L] 铲起了一些沙子。"))
 		else
 			qdel(I)
 	. = ..()
@@ -835,8 +835,8 @@
 	return FALSE
 
 /turf/open/floor/rogue/hay
-	name = "hay"
-	desc = "Dried grass strewn across the floor. It's not the worst thing to sleep on."
+	name = "干草地"
+	desc = "地上散落着干草。睡在这上面也不算最糟。"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "hay"
 	layer = MID_TURF_LAYER
@@ -908,7 +908,7 @@
 	return New
 
 /turf/open/floor/rogue/underworld/space
-	name = "void"
+	name = "虚空"
 	desc = ""
 	icon_state = "undervoid"
 	layer = MID_TURF_LAYER
@@ -922,18 +922,18 @@
 	slowdown = 50
 
 /turf/open/floor/rogue/underworld/space/sparkle_quiet
-	name = "void"
+	name = "虚空"
 	desc = ""
 	icon_state = "undervoid2"
 
 /turf/open/floor/rogue/underworld/space/quiet
-	name = "void"
+	name = "虚空"
 	desc = ""
 	icon_state = "undervoid3"
 
 /turf/open/floor/rogue/underworld/road
-	name = "ash"
-	desc = "Smells like burnt wood."
+	name = "灰烬地"
+	desc = "闻起来像烧焦的木头。"
 	icon_state = "ash"
 	layer = MID_TURF_LAYER
 	footstep = FOOTSTEP_SAND
@@ -950,8 +950,8 @@
 	dir = rand(0,8)
 
 /turf/open/floor/rogue/volcanic
-	name = "solidified lava"
-	desc = "Once, it burned anything it touched with the hatred of hell itself. Now a hardened black crust crunches beneath your feet."
+	name = "凝固熔岩"
+	desc = "它曾怀着地狱般的恶意焚尽所触的一切。如今只剩下坚硬的黑壳，在脚下发出碎裂声。"
 	icon_state = "lavafloor"
 	layer = MID_TURF_LAYER
 	footstep = FOOTSTEP_SAND
@@ -1033,8 +1033,8 @@
 	icon_state = "paving-t"
 
 /turf/open/floor/rogue/blocks/platform
-	name = "platform"
-	desc = "A destructible platform."
+	name = "平台"
+	desc = "一处可被摧毁的平台。"
 	damage_deflection = 10
 	max_integrity = 800
 	break_sound = 'sound/combat/hits/onstone/stonedeath.ogg'
@@ -1114,8 +1114,8 @@
 
 /turf/open/floor/rogue/churchmarble
 	icon_state = "church_marble"
-	name = "marble flooring"
-	desc = "Polished marble tiling clacks softly with every footstep. A prized material for vaunted halls."
+	name = "大理石地板"
+	desc = "抛光的大理石地砖在每一步下都发出清脆回响，是恢弘殿堂中备受珍视的材料。"
 	footstep = FOOTSTEP_STONE
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
@@ -1253,8 +1253,8 @@
 //
 /turf/open/floor/rogue/herringbone
 	icon_state = "herringbone"
-	name = "stone herringbone flooring"
-	desc = "These stone bricks have been carefully arranged in a rather pleasing pattern."
+	name = "石制人字地板"
+	desc = "这些石砖被精心铺排成相当悦目的图案。"
 	footstep = FOOTSTEP_STONE
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
@@ -1281,29 +1281,29 @@
 	dir = pick(GLOB.cardinals)
 
 /obj/effect/decal/herringbone
-	name = "herringbone flooring"
-	desc = "These stone bricks have been carefully arranged in a rather pleasing pattern."
+	name = "人字地板"
+	desc = "这些石砖被精心铺排成相当悦目的图案。"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "herringedge"
 	mouse_opacity = 0
 
 /obj/effect/decal/wood/herringbone
-	name = "herringbone flooring"
-	desc = "thin planks of wood carefully arranged in a rather pleasing pattern."
+	name = "人字地板"
+	desc = "细薄木板被精心铺排成相当悦目的图案。"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "herringbonewoodedge"
 	mouse_opacity = 0
 
 /obj/effect/decal/wood/herringbone2
-	name = "herringbone flooring"
-	desc = "Thin planks of wood carefully arranged in a rather pleasing pattern."
+	name = "人字地板"
+	desc = "细薄木板被精心铺排成相当悦目的图案。"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "herringbonewood2edge"
 	mouse_opacity = 0
 
 /turf/open/floor/rogue/ruinedwood/herringbone
-	name = "wooden herringbone flooring"
-	desc = "Thin planks of wood carefully arranged in a rather pleasing pattern."
+	name = "木制人字地板"
+	desc = "细薄木板被精心铺排成相当悦目的图案。"
 	footstep = FOOTSTEP_WOOD
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_WOOD_CLAW
@@ -1313,8 +1313,8 @@
 	icon_state = "herringbonewood"
 
 /turf/open/floor/rogue/ruinedwood/herringbone_clear
-	name = "wooden herringbone flooring"
-	desc = "Thin planks of wood carefully arranged in a rather pleasing pattern."
+	name = "木制人字地板"
+	desc = "细薄木板被精心铺排成相当悦目的图案。"
 	footstep = FOOTSTEP_WOOD
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_WOOD_CLAW
@@ -1403,29 +1403,29 @@
 	icon_state = "mossystone[rand(1,3)]"
 
 /obj/effect/decal/mossy
-	name = "mossy brick floor"
-	desc = "dirt and moss have crept between the gaps of this stone-brick flooring."
+	name = "苔砖地面"
+	desc = "泥土与苔藓已经爬进了这片砖地的缝隙之间。"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "mossyedge"
 	mouse_opacity = 0
 
 /obj/effect/decal/cobble/mossy
-	name = "mossy brick floor"
-	desc = "Dirt and moss have crept between the gaps of this stone-brick flooring. Rather fitting for an outdoor garden; not so much for a home."
+	name = "苔砖地面"
+	desc = "泥土与苔藓已经爬进了这片砖地的缝隙之间。放在室外花园倒很合适，放在家里就未必了。"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "mossystone_edges"
 	mouse_opacity = 0
 
 /obj/effect/decal/edge
-	name = "stone edge"
-	desc = "A piece of stone used to border city roads."
+	name = "石质路缘"
+	desc = "一块用于勾勒城市道路边界的石材。"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "border"
 	mouse_opacity = 0
 
 /obj/effect/decal/edge_corner
-	name = "stone edge corner"
-	desc = "A piece of stone used to border city roads."
+	name = "石质路缘角"
+	desc = "一块用于勾勒城市道路边界的石材。"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "border_corner"
 	mouse_opacity = 0
@@ -1466,55 +1466,55 @@
 	roguesmooth(adjacencies)
 
 /obj/effect/decal/cobbleedge
-	name = "old cobble path"
-	desc = "Erosion and time have worn this path to half-scattered rocks slowly sinking back into the earth."
+	name = "旧鹅卵石路"
+	desc = "侵蚀与岁月让这条路磨损成了半散落的碎石，正缓缓沉回泥土之中。"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "cobblestone_edges"
 	mouse_opacity = 0
 
 /obj/effect/decal/carpet
-	name = "exotic rug"
-	desc = "Dazzling symmetrical patterns flow with an old culture's style."
+	name = "异域地毯"
+	desc = "炫目的对称纹样流露出某种古老文化的风格。"
 	pixel_w = -16
 	pixel_z = -17
 	icon = 'icons/roguetown/misc/64x64.dmi'
 	icon_state = "kover"
 
 /obj/effect/decal/carpet/kover_darkred
-	name = "rustic red rug"
-	desc = "Dazzling symmetrical patterns flow with an old culture's style."
+	name = "乡野红地毯"
+	desc = "炫目的对称纹样流露出某种古老文化的风格。"
 	icon = 'icons/roguetown/misc/64x64.dmi'
 	icon_state = "kover_darkred"
 
 /obj/effect/decal/carpet/kover_purple
-	name = "rustic purple rug"
-	desc = "Dazzling symmetrical patterns flow with an old culture's style."
+	name = "乡野紫地毯"
+	desc = "炫目的对称纹样流露出某种古老文化的风格。"
 	icon = 'icons/roguetown/misc/64x64.dmi'
 	icon_state = "kover_purple"
 
 /obj/effect/decal/carpet/kover_black
-	name = "rustic black carpet"
-	desc = "Dazzling symmetrical patterns flow with an old culture's style."
+	name = "乡野黑地毯"
+	desc = "炫目的对称纹样流露出某种古老文化的风格。"
 	icon = 'icons/roguetown/misc/64x64.dmi'
 	icon_state = "kover_black"
 
 /obj/effect/decal/carpet/square
-	name = "green carpet"
-	desc = "Soft green carpeting that reminds you of grassy meadows."
+	name = "绿色地毯"
+	desc = "柔软的绿色地毯，让人想起长满青草的原野。"
 	pixel_w = -16
 	pixel_z = -16
 	icon = 'icons/roguetown/misc/64x64.dmi'
 	icon_state = "greencarpet"
 
 /obj/effect/decal/carpet/square/black
-	name = "black carpet"
-	desc = "As black as the night sky during a storm."
+	name = "黑色地毯"
+	desc = "黑得如同暴风雨中的夜空。"
 	icon = 'icons/roguetown/misc/64x64.dmi'
 	icon_state = "blackcarpet"
 
 /obj/structure/giantfur
-	name = "giant fur"
-	desc = "Pelt of some gigantic animal, made into a mat."
+	name = "巨兽毛皮"
+	desc = "某种巨型野兽的毛皮，被制成了地垫。"
 	icon = 'icons/roguetown/misc/96x96.dmi'
 	icon_state = "fur"
 	density = FALSE
@@ -1522,8 +1522,8 @@
 	plane = -7
 
 /obj/structure/giantfur/small // the irony
-	name = "fur pelt"
-	desc = "Pelt of a young animal, made into a mat."
+	name = "毛皮垫"
+	desc = "幼兽的毛皮，被制成了地垫。"
 	icon_state = "fur_alt"
 
 /turf/open/floor/rogue/tile
@@ -1569,8 +1569,8 @@
 	icon_state = "masonicspiral"
 
 /turf/open/floor/rogue/tile/bath
-	name = "bath tiles"
-	desc = "A special waterproof flooring suited for baths and pools. Slippery when wet."
+	name = "浴池砖"
+	desc = "一种适合浴池与水池的特殊防水地面。潮湿时会很滑。"
 	icon_state = "bathtile"
 
 
@@ -1641,7 +1641,7 @@
 
 /turf/open/floor/rogue/metal
 	icon_state = "plating1"
-	desc = "Covered in the tell-tale nicks of thousands of hammer-blows, this metal flooring clangs beneath your feet with every step."
+	desc = "这片金属地面遍布成千上万次锤击留下的刻痕，每一步都会在脚下发出铿锵回响。"
 	landsound = 'sound/foley/jumpland/metalland.wav'
 	footstep = FOOTSTEP_PLATING
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -1677,7 +1677,7 @@
 
 /turf/open/floor/rogue/carpet
 	icon_state = "carpet"
-	desc = "Plush fabric softens your step. Did you remember to wipe your shoes?"
+	desc = "柔软厚实的织物让脚步也变得轻缓。你进门前记得擦鞋了吗？"
 	landsound = 'sound/foley/jumpland/carpetland.wav'
 	footstep = FOOTSTEP_CARPET
 	barefootstep = FOOTSTEP_SOFT_BAREFOOT
@@ -1739,7 +1739,7 @@
 	icon_state = "carpet_r"
 
 /turf/open/floor/rogue/shroud
-	name = "treetop"
+	name = "树冠"
 	icon_state = "treetop1"
 	landsound = 'sound/foley/jumpland/dirtland.wav'
 	footstep = null
@@ -1760,8 +1760,8 @@
 	dir = pick(GLOB.cardinals)
 
 /turf/open/floor/rogue/naturalstone
-	name = "rough stone ground"
-	desc = "Rough stone that's been exposed to the air either through erosion or the swing of a pickaxe. A few patchy lichens eke out a living between the cracks."
+	name = "粗糙石地"
+	desc = "这片粗粝的石地因侵蚀或镐击而暴露在空气中，几簇稀疏的地衣在裂缝间勉强存活。"
 	icon_state = "digstone"
 	footstep = FOOTSTEP_STONE
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -1777,8 +1777,8 @@
 	roguesmooth(adjacencies)
 
 /turf/open/floor/rogue/dark_ice
-	name = "black ice"
-	desc = "A deep black rock glazed over with unnaturally cold ice."
+	name = "黑冰"
+	desc = "一块深黑色的岩石表面覆着不自然的寒冰。"
 	icon_state = "blackice"
 	footstep = FOOTSTEP_STONE
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -1793,12 +1793,12 @@
 	roguesmooth(adjacencies)
 
 /turf/open/floor/rogue/dark_ice/regular
-	name = "ice"
-	desc = "Cold, cold ice. Don't you want to look further within?"
+	name = "冰面"
+	desc = "寒冷、寒冷的冰层。你难道不想再往里面看得更深些吗？"
 
 /turf/open/floor/rogue/dark_ice/regular/turf_destruction(damage_flag)
 	. = ..()
-	visible_message(span_danger("[src] splinters and breaks away!"))
+	visible_message(span_danger("[src] 裂开并崩碎了！"))
 	playsound(src, 'sound/foley/waterenter.ogg', 100, FALSE)
 	ChangeTurf(/turf/open/water/pond, flags = CHANGETURF_INHERIT_AIR)
 
@@ -1810,7 +1810,7 @@
 	if(HAS_TRAIT(H, TRAIT_LIGHT_STEP) || H.m_intent == MOVE_INTENT_SNEAK)
 		return
 	if(prob(25))
-		to_chat(H, span_warning("[src] under you begins to crack!"))
+		to_chat(H, span_warning("你脚下的 [src] 开始裂开了！"))
 		addtimer(CALLBACK(src, PROC_REF(ice_crack)), 2 SECONDS, TIMER_UNIQUE)
 		return
 	if(prob(40))
@@ -1820,7 +1820,7 @@
 				continue
 			possible_turfs += T
 		H.forceMove(pick(possible_turfs))
-		to_chat(H, span_warning("You slip on [src]!"))
+		to_chat(H, span_warning("我在 [src] 上滑倒了！"))
 
 /turf/open/floor/rogue/dark_ice/regular/proc/ice_crack()
 	for(var/mob/living/target in contents)

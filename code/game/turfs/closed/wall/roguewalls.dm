@@ -15,11 +15,11 @@
 		var/healthpercent = (turf_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)
-				. += "It looks slightly damaged."
+				. += "它看起来有些受损。"
 			if(25 to 50)
-				. += "It appears heavily damaged."
+				. += "它看起来受损严重。"
 			if(1 to 25)
-				. +=  "<span class='warning'>It's falling apart!</span>"
+				. +=  "<span class='warning'>它快要散架了！</span>"
 
 /turf/closed/wall/mineral/rogue/Initialize(mapload)
 	if(smooth_icon)
@@ -28,8 +28,8 @@
 
 
 /turf/closed/wall/mineral/rogue/stone
-	name = "stone wall"
-	desc = "A wall of smooth unyielding stone."
+	name = "石墙"
+	desc = "一堵由平滑而坚硬的石头砌成的墙。"
 	icon = 'icons/turf/walls/stone_wall.dmi'
 	icon_state = "stone"
 	smooth = SMOOTH_MORE
@@ -46,22 +46,22 @@
 	damage_deflection = 10
 
 /turf/closed/wall/mineral/rogue/stone/turf_destruction()
-	loud_message("The sound of a crumbling stone wall rings out", hearing_distance = 14)
+	loud_message("石墙坍塌的轰响回荡开来", hearing_distance = 14)
 	. = ..()
 
 /turf/closed/wall/mineral/rogue/stone/unbreakable
-	name = "heavy stone wall"
-	desc = "Seems nigh-indestructable"
+	name = "厚重石墙"
+	desc = "看起来几乎坚不可摧。"
 	max_integrity = 10000000
 	damage_deflection = 99999999
 
 /turf/closed/wall/mineral/rogue/stone/unbreakable/attackby(obj/item/I, mob/user, params, multiplier)
-	to_chat(user, span_warning("TOO HARD!"))
+	to_chat(user, span_warning("太硬了！"))
 	return FALSE
 
 /turf/closed/wall/mineral/rogue/stone/window
-	name = "stone window"
-	desc = "A window with a solid and sturdy stone frame."
+	name = "石窗"
+	desc = "一扇带有坚固石制框架的窗。"
 	opacity = FALSE
 	max_integrity = 1300
 	icon_state = "stonewindow"
@@ -78,13 +78,13 @@
 	add_overlay(M)
 
 /turf/closed/wall/mineral/rogue/stone/window/unbreakable
-	name = "heavy stone window"
-	desc = "Seems nigh-indestructable"
+	name = "厚重石窗"
+	desc = "看起来几乎坚不可摧。"
 	max_integrity = 10000000
 	damage_deflection = 99999999
 
 /turf/closed/wall/mineral/rogue/stone/window/unbreakable/attackby(obj/item/I, mob/user, params, multiplier)
-	to_chat(user, span_warning("TOO HARD!"))
+	to_chat(user, span_warning("太硬了！"))
 	return FALSE
 
 /turf/closed/wall/mineral/rogue/stone/moss
@@ -92,12 +92,12 @@
 	climbdiff = 4
 
 /turf/closed/wall/mineral/rogue/stone/moss/unbreakable
-	desc = "Seems nigh-indestructable"
+	desc = "看起来几乎坚不可摧。"
 	max_integrity = 10000000
 	damage_deflection = 99999999
 
 /turf/closed/wall/mineral/rogue/stone/moss/unbreakable/attackby(obj/item/I, mob/user, params, multiplier)
-	to_chat(user, span_warning("TOO HARD!"))
+	to_chat(user, span_warning("太硬了！"))
 	return FALSE
 
 /turf/closed/wall/mineral/rogue/stone/window/moss
@@ -105,12 +105,12 @@
 	climbdiff = 4
 
 /turf/closed/wall/mineral/rogue/stone/window/moss/unbreakable
-	desc = "Seems nigh-indestructable"
+	desc = "看起来几乎坚不可摧。"
 	max_integrity = 10000000
 	damage_deflection = 99999999
 
 /turf/closed/wall/mineral/rogue/stone/window/moss/unbreakable/attackby(obj/item/I, mob/user, params, multiplier)
-	to_chat(user, span_warning("TOO HARD!"))
+	to_chat(user, span_warning("太硬了！"))
 	return FALSE
 
 /turf/closed/wall/mineral/rogue/craftstone
@@ -133,12 +133,12 @@
 	damage_deflection = 10
 
 /turf/closed/wall/mineral/rogue/craftstone/turf_destruction()
-	loud_message("The sound of heavy stone bricks crumbling apart rings out", hearing_distance = 14)
+	loud_message("厚重石砖崩裂坍塌的声响回荡开来", hearing_distance = 14)
 	. = ..()
 
 /turf/closed/wall/mineral/rogue/stonebrick
-	name = "brick wall"
-	desc = "Rows of overlapping bricks form this wall."
+	name = "砖墙"
+	desc = "层层交叠的砖块构成了这堵墙。"
 	icon = 'icons/turf/walls/stonebrick.dmi'
 	icon_state = "stonebrick"
 	smooth = SMOOTH_MORE
@@ -163,8 +163,8 @@
 	light_outer_range = 4
 
 /turf/closed/wall/mineral/rogue/wood
-	name = "wooden wall"
-	desc = "A rough-hewn wall of wood."
+	name = "木墙"
+	desc = "一堵由粗制木料搭成的墙。"
 	icon = 'icons/turf/walls/roguewood.dmi'
 	icon_state = "wood"
 	smooth = SMOOTH_MORE
@@ -184,8 +184,8 @@
 	spread_chance = 4
 
 /turf/closed/wall/mineral/rogue/wood/window
-	name = "wooden window"
-	desc = "A window with a rough-hewn wood frame."
+	name = "木窗"
+	desc = "一扇带有粗制木框的窗。"
 	opacity = FALSE
 	max_integrity = 550
 
@@ -200,8 +200,8 @@
 	add_overlay(M)
 
 /turf/closed/wall/mineral/rogue/tent
-	name = "tent"
-	desc = "Made from durable fabric stretched over wooden branches."
+	name = "帐篷"
+	desc = "由结实耐用的布料撑在木枝上制成。"
 	icon = 'icons/turf/roguewall.dmi'
 	icon_state = "tent"
 	smooth = SMOOTH_FALSE
@@ -262,7 +262,7 @@
 	icon_state = "slittedwooddark"
 
 /turf/closed/wall/mineral/rogue/wooddark/window
-	name = "dark wood window"
+	name = "深色木窗"
 	icon_state = "subwindow"
 	opacity = FALSE
 	max_integrity = 850
@@ -273,7 +273,7 @@
 	return ..()
 
 /turf/closed/wall/mineral/rogue/roofwall
-	name = "wooden wall"
+	name = "木墙"
 	icon = 'icons/turf/roguewall.dmi'
 	icon_state = ""
 	smooth = SMOOTH_FALSE
@@ -330,8 +330,8 @@
 	dir = 4
 
 /turf/closed/wall/mineral/rogue/decowood
-	name = "decorated wooden wall"
-	desc = "Meticulously designed by a professional carpenter."
+	name = "雕花木墙"
+	desc = "由专业木匠精心设计打造。"
 	icon = 'icons/turf/roguewall.dmi'
 	icon_state = "decowood"
 	smooth = SMOOTH_FALSE
@@ -353,7 +353,7 @@
 	dir = pick(GLOB.cardinals)
 
 /turf/closed/wall/mineral/rogue/decowood/vert
-	name = "decorated wooden wall"
+	name = "雕花木墙"
 	icon_state = "decowood-vert"
 
 /turf/closed/wall/mineral/rogue/decostone
@@ -380,7 +380,7 @@
 	dir = 1
 
 /obj/structure/thronething
-	name = "decorated stone wall" // what is thronething??
+	name = "雕花石墙" // what is thronething??
 	icon = 'icons/turf/roguewall.dmi'
 	max_integrity = 0
 	opacity = 0
@@ -409,8 +409,8 @@
 
 //Mildly better than stone-wall due to it being harder to make, plus not loose-stone cobbled together. Also higher climbing diff akin to stone-brick wall.
 /turf/closed/wall/mineral/rogue/brick
-	name = "brick wall"
-	desc = "Rows of overlapping bricks held together by mortar form a nigh-impenetrable wall of stone."
+	name = "砖墙"
+	desc = "层层交叠的砖块由灰浆牢牢粘合，形成一堵近乎不可穿透的石墙。"
 	icon = 'icons/turf/walls/brick_wall.dmi'
 	icon_state = "brick"
 	smooth = SMOOTH_MORE
@@ -427,14 +427,14 @@
 	damage_deflection = 20
 
 /turf/closed/wall/mineral/rogue/brick/window
-	name = "brick window"
-	desc = "A window with a solid and sturdy stone frame."
+	name = "砖窗"
+	desc = "一扇带有坚固石制框架的窗。"
 	opacity = FALSE
 	max_integrity = 1500
 
 /turf/closed/wall/shroud //vines
-	name = "thick treetop"
-	desc = "All the birds flew away before I could see one!"
+	name = "浓密树冠"
+	desc = "我还没来得及看清，鸟儿们就全飞走了！"
 	icon = 'icons/turf/roguewall.dmi'
 	icon_state = "shroud1"
 	var/smooth_icon = 'icons/turf/smoothrocks.dmi'
@@ -469,11 +469,11 @@
 					res_replenish = world.time + 8 MINUTES
 				var/obj/item/B = new /obj/item/grown/log/tree/stick(user.loc)
 				user.put_in_hands(B)
-				user.visible_message(span_notice("[user] finds [B] in [src]."))
+				user.visible_message(span_notice("[user] 在 [src] 里找到了 [B]。"))
 				return
-			user.visible_message(span_warning("[user] searches through [src]."))
+			user.visible_message(span_warning("[user] 在 [src] 里翻找着。"))
 			if(!res)
-				to_chat(user, span_warning("Picked clean... I should try later."))
+				to_chat(user, span_warning("已经被翻干净了……我该晚点再来。"))
 	..()
 
 /turf/closed/wall/shroud/Initialize(mapload)
@@ -486,8 +486,8 @@
 		target.ChangeTurf(/turf/open/floor/rogue/dirt/road)
 
 /turf/closed/wall/mineral/rogue/pipe
-	name = "metal wall"
-	desc = "Solid steel made into an impenetrable obstacle."
+	name = "金属墙"
+	desc = "由坚实钢材制成，构成了一道不可逾越的障碍。"
 	icon = 'icons/turf/pipewall.dmi'
 	icon_state = "iron_box"
 	smooth = SMOOTH_MORE
@@ -544,8 +544,8 @@
 /turf/closed/wall/mineral/rogue/stone/red_moss
 	icon = 'icons/turf/walls/red_mossy.dmi'
 /turf/closed/wall/mineral/rogue/decostone/mossy
-	name = "decorated mossy stone wall"
-	desc = "There was much effort put into this wall a long time ago."
+	name = "雕花苔石墙"
+	desc = "很久以前，人们曾在这堵墙上倾注了大量心血。"
 	icon = 'icons/turf/Rougewall_mossy.dmi'
 	icon_state = "decostone-b-green"
 	climbdiff = 4
@@ -584,7 +584,7 @@
 	icon_state = "decostone-cand-red"
 
 /turf/closed/dungeon_void
-	name = "thick dungeon shroud"
+	name = "厚重地牢帷幕"
 	icon = 'icons/turf/roguewall.dmi'
 	icon_state = "shroud1"
 	baseturfs = /turf/closed/dungeon_void

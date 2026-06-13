@@ -74,7 +74,7 @@
 	if(has_buckled_mobs())
 		var/person = buckled_mobs[1].name
 		if(user == buckled_mobs[1])
-			person = "themself"
+			person = "自己"
 		user.visible_message(span_warning("[user.name]开始把[person]从[name]里拽出来！"))
 		if(do_after(user, 3 SECONDS))
 			unbuckle_mob(buckled_mobs[1], TRUE)
