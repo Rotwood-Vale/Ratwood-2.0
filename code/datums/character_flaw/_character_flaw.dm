@@ -81,19 +81,36 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /mob/living/carbon/human/has_flaw(flaw)
 	if(!flaw)
-		return
-	// Check new multiple vices system
-	if(length(vices))
-		for(var/datum/charflaw/vice in vices)
-			if(istype(vice, flaw))
-				return TRUE
-	// Legacy single vice check
+		return FALSE
+
+	if(vice_index && vice_index[flaw])
+		return TRUE
+
 	if(istype(charflaw, flaw))
 		return TRUE
+
 	return FALSE
 
 /mob/proc/get_flaw(flaw_type)
 	return
+
+/mob/proc/give_flaw(flaw_type)
+	return TRUE
+
+/mob/living/carbon/human/give_flaw(flaw_type)
+	if(!ispath(flaw_type, /datum/charflaw))
+		return FALSE
+
+	if(vice_index?[flaw_type])
+		return FALSE
+
+	var/datum/charflaw/F = new flaw_type
+
+	vices += F
+	vice_index[flaw_type] = F
+
+	F.on_mob_creation(src)
+	return TRUE
 
 /mob/living/carbon/human/get_flaw(flaw_type)
 	if(!flaw_type)
@@ -894,9 +911,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 		// Add the adjusted Nymphomaniac addiction flaw
 		if(!HAS_TRAIT(H, TRAIT_DEPRAVED))
-			var/datum/charflaw/addiction/baothamarked/L = new
-			H.vices += L
-			L.on_mob_creation(H)
+			H.give_flaw(/datum/charflaw/addiction/baothamarked)
 
 /datum/charflaw/hemophage
 	name = "Hemophage"

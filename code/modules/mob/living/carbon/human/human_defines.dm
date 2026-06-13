@@ -177,6 +177,7 @@
 
 	var/datum/charflaw/charflaw  // Legacy single vice (kept for compatibility)
 	var/list/datum/charflaw/vices = list()  // Multiple vices system
+	var/list/vice_index = list() // Optimization, makes lookups faster
 
 	// curse list and cooldown
 	var/list/curses = list()

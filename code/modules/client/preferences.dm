@@ -3205,21 +3205,15 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	// Apply multiple vices system
 	character.vices = list()
+	character.vice_index = list()
+
 	for(var/i = 1 to 5)
 		var/datum/charflaw/vice = vars["vice[i]"]
 		if(vice)
-			var/datum/charflaw/new_vice = new vice.type()
-			character.vices += new_vice
-			new_vice.on_mob_creation(character)
-			// Set first vice as the legacy charflaw for compatibility
+			character.give_flaw(vice)
 			if(i == 1)
+				var/datum/charflaw/new_vice = new vice.type()
 				character.charflaw = new_vice
-
-	// Legacy single vice support (if new system not used)
-	if(!length(character.vices) && charflaw)
-		character.charflaw = new charflaw.type()
-		character.charflaw.on_mob_creation(character)
-		character.vices += character.charflaw
 
 	character.dna.real_name = character.real_name
 
