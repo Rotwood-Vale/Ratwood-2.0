@@ -1,6 +1,15 @@
 /client
 	var/list/played_loops = list() //uses dlink to link to the sound
 
+/proc/resolve_sound_channel(mob/M, channel, datum/looping_sound/repeat)
+	if(!repeat || !M.client)
+		return channel
+	for(var/datum/looping_sound/existing_loop in M.client.played_loops)
+		if(existing_loop == repeat)
+			continue
+		if(existing_loop.channel == channel)
+			return null
+	return channel
 
 /proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, frequency = null, channel, pressure_affected = FALSE, ignore_walls = TRUE, soundping = FALSE, repeat, animal_pref = FALSE)
 	if(isarea(source))
@@ -72,7 +81,7 @@
 			if(animal_pref)
 				if(M.client?.prefs?.mute_animal_emotes)
 					continue
-			if(M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S, repeat))
+			if(M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, resolve_sound_channel(M, channel, repeat), pressure_affected, S, repeat))
 				. += M
 	//This never runs because muffled listeners will always be empty and instead muffling runs on playsound_local
 	/*for(var/mob/M as anything in muffled_listeners)
@@ -81,7 +90,7 @@
 				if(M.client?.prefs?.mute_animal_emotes)
 					continue
 			if(M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S, repeat, muffled = TRUE))
-				. += M*/ 
+				. += M*/
 
 
 /proc/ping_sound(atom/A)

@@ -7,21 +7,24 @@ SUBSYSTEM_DEF(soundloopers)
 	var/list/processing = list()
 	var/list/currentrun = list()
 	var/client_ticker = 0
+	var/list/client_run = list()
+	var/update_clients = FALSE
+	var/has_persistent = FALSE
 
 /datum/controller/subsystem/soundloopers/fire(resumed = 0)
-	if (!resumed || !currentrun.len)
+	if (!resumed)
 		src.currentrun = processing.Copy()
+		has_persistent = FALSE
+		client_ticker++
+		if(client_ticker >= 5)
+			client_ticker = 0
+			update_clients = TRUE
+			src.client_run = GLOB.clients.Copy()
+		else
+			update_clients = FALSE
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/current = src.currentrun
-	var/check_clients = FALSE
-	client_ticker++
-
-	if(client_ticker>=5) //this is dumb but necessary- clients update every half tick but sounds themselves need to be updated regularly
-		client_ticker = 0
-		check_clients = TRUE
-	else
-		check_clients = FALSE
 
 	while (current.len)
 		var/datum/looping_sound/thing = current[current.len]
@@ -36,11 +39,20 @@ SUBSYSTEM_DEF(soundloopers)
 			if(thing.sound_loop()) //returns 1 if it fails for some reason
 				continue
 
-		if(check_clients && thing.persistent_loop)
-			for(var/client/C in GLOB.clients)
-				if(C.mob) //Not in the lobby
-					C.update_sounds()
+		if(thing.persistent_loop)
+			has_persistent = TRUE
 
+		if (MC_TICK_CHECK)
+			return
+
+	if(!update_clients || !has_persistent)
+		return
+	var/list/client_run = src.client_run
+	while (client_run.len)
+		var/client/C = client_run[client_run.len]
+		client_run.len--
+		if(C && C.mob) //Not in the lobby
+			C.update_sounds()
 		if (MC_TICK_CHECK)
 			return
 
@@ -73,7 +85,7 @@ SUBSYSTEM_DEF(soundloopers)
 		if(!our_sound)
 			continue //something fucked up and the loop has no cursound, wups. this should basically never happen
 
-		mob.playsound_local(parent_turf, PS.cursound, PS.volume, PS.vary, PS.frequency, PS.falloff, PS.channel, FALSE, our_sound, repeat = PS)
+		mob.playsound_local(parent_turf, PS.cursound, PS.volume, PS.vary, PS.frequency, PS.falloff, resolve_sound_channel(mob, PS.channel, PS), FALSE, our_sound, repeat = PS)
 
 	//Now we check how far away etc we are
 	for(var/datum/looping_sound/loop in played_loops)
