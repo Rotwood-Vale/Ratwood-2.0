@@ -1,5 +1,6 @@
 #include "spells/_registry.dm"
 #include "bootstrap/custom_bootstrap.dm"
+#include "jobs/war_shaman.dm"
 #include "spells/admin/admin_spells.dm"
 #include "spells/druid/wildshape_dragon.dm"
 #include "rites/eldritch_ritechalk.dm"

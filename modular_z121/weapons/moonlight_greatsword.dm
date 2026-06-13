@@ -53,19 +53,34 @@
 		return H
 	return null
 
+/obj/item/rogueweapon/greatsword/moonlight_greatsword/proc/find_moonlight_spell_instance(mob/living/carbon/human/holder, spell_type)
+	if(!holder?.mind)
+		return null
+	for(var/obj/effect/proc_holder/spell/self/moonlight_weapon_spell/spell as anything in holder.mind.spell_list)
+		if(spell.type != spell_type)
+			continue
+		if(spell.get_source_weapon() == src)
+			return spell
+	return null
+
+/obj/item/rogueweapon/greatsword/moonlight_greatsword/proc/remove_moonlight_spell_instance(mob/living/carbon/human/holder, obj/effect/proc_holder/spell/self/moonlight_weapon_spell/spell_instance, spell_type)
+	if(!holder?.mind)
+		return
+	var/obj/effect/proc_holder/spell/self/moonlight_weapon_spell/spell_to_remove = spell_instance
+	if(!spell_to_remove || !(spell_to_remove in holder.mind.spell_list) || spell_to_remove.get_source_weapon() != src)
+		spell_to_remove = find_moonlight_spell_instance(holder, spell_type)
+	if(!spell_to_remove)
+		return
+	holder.mind.spell_list -= spell_to_remove
+	qdel(spell_to_remove)
+
 /obj/item/rogueweapon/greatsword/moonlight_greatsword/proc/clear_moonlight_spells(mob/living/carbon/human/holder_override)
 	var/mob/living/carbon/human/holder = holder_override
 	if(!holder)
 		holder = spellbearer_ref?.resolve()
 	if(holder?.mind)
-		if(granted_wave_spell)
-			holder.mind.RemoveSpell(granted_wave_spell)
-		else if(holder.mind.has_spell(/obj/effect/proc_holder/spell/self/moonlight_weapon_spell/moonlight_wave))
-			holder.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/moonlight_weapon_spell/moonlight_wave)
-		if(granted_blessing_spell)
-			holder.mind.RemoveSpell(granted_blessing_spell)
-		else if(holder.mind.has_spell(/obj/effect/proc_holder/spell/self/moonlight_weapon_spell/moonlight_blessing))
-			holder.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/moonlight_weapon_spell/moonlight_blessing)
+		remove_moonlight_spell_instance(holder, granted_wave_spell, /obj/effect/proc_holder/spell/self/moonlight_weapon_spell/moonlight_wave)
+		remove_moonlight_spell_instance(holder, granted_blessing_spell, /obj/effect/proc_holder/spell/self/moonlight_weapon_spell/moonlight_blessing)
 	if(holder_override && holder_override == holder)
 		to_chat(holder_override, span_notice("月光大剑中的秘术重新归于沉寂。"))
 	granted_wave_spell = null
@@ -84,10 +99,13 @@
 			clear_moonlight_spells(previous_holder)
 		return
 
-	if(!current_holder.mind.has_spell(/obj/effect/proc_holder/spell/self/moonlight_weapon_spell/moonlight_wave))
+	granted_wave_spell = find_moonlight_spell_instance(current_holder, /obj/effect/proc_holder/spell/self/moonlight_weapon_spell/moonlight_wave)
+	granted_blessing_spell = find_moonlight_spell_instance(current_holder, /obj/effect/proc_holder/spell/self/moonlight_weapon_spell/moonlight_blessing)
+
+	if(!granted_wave_spell && !current_holder.mind.has_spell(/obj/effect/proc_holder/spell/self/moonlight_weapon_spell/moonlight_wave))
 		granted_wave_spell = new /obj/effect/proc_holder/spell/self/moonlight_weapon_spell/moonlight_wave(src)
 		current_holder.mind.AddSpell(granted_wave_spell, current_holder)
-	if(!current_holder.mind.has_spell(/obj/effect/proc_holder/spell/self/moonlight_weapon_spell/moonlight_blessing))
+	if(!granted_blessing_spell && !current_holder.mind.has_spell(/obj/effect/proc_holder/spell/self/moonlight_weapon_spell/moonlight_blessing))
 		granted_blessing_spell = new /obj/effect/proc_holder/spell/self/moonlight_weapon_spell/moonlight_blessing(src)
 		current_holder.mind.AddSpell(granted_blessing_spell, current_holder)
 
