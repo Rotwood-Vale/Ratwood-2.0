@@ -1,5 +1,5 @@
 /datum/objective/improve_combat
-	name = "Improve Combat Skills"
+	name = "提升战斗技艺"
 	triumph_count = 0
 	var/levels_gained = 0
 	var/required_levels = 2
@@ -32,7 +32,7 @@
 	levels_gained += level_diff
 
 	if(levels_gained >= required_levels)
-		to_chat(owner.current, span_greentext("You've improved your combat skills enough to satisfy Ravox!"))
+		to_chat(owner.current, span_greentext("你的战斗技艺已提升到足以令拉沃克斯满意！"))
 		owner.current.adjust_triumphs(1)
 		completed = TRUE
 		adjust_storyteller_influence("Ravox", 15)
@@ -40,7 +40,7 @@
 		UnregisterSignal(owner.current, COMSIG_SKILL_RANK_INCREASED)
 	else
 		var/remaining = required_levels - levels_gained
-		to_chat(owner.current, span_notice("Combat skill improved! [remaining] more level[remaining == 1 ? "" : "s"] needed to fulfill Ravox's task!"))
+		to_chat(owner.current, span_notice("战斗技能已提升！还需要 [remaining] 级才能完成拉沃克斯的试炼！"))
 
 /datum/objective/improve_combat/update_explanation_text()
-	explanation_text = "Improve your combat skills by gaining [required_levels] new skill levels through practice or dreams. For Ravox!"
+	explanation_text = "通过练习或梦境获得 [required_levels] 级新的战斗技能等级，以此精进你的武艺。为了拉沃克斯！"

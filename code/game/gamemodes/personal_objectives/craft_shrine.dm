@@ -1,5 +1,5 @@
 /datum/objective/craft_shrine
-	name = "Build Shrines"
+	name = "建造神龛"
 	triumph_count = 0
 	var/target_type = /obj/structure/fluff/psycross/crafted
 	var/target_count = 2
@@ -30,10 +30,10 @@
 
 	current_count++
 	if(current_count < target_count)
-		to_chat(owner.current, span_notice("You have built [current_count] out of [target_count] sacred crosses."))
+		to_chat(owner.current, span_notice("你已建成 [current_count]/[target_count] 座神圣十字。"))
 		return
 
-	to_chat(owner.current, span_greentext("You have built all the required sacred crosses, completing Malum's objective!"))
+	to_chat(owner.current, span_greentext("你已建成全部所需的神圣十字，完成了玛勒姆的目标！"))
 	owner.current.adjust_triumphs(2)
 	completed = TRUE
 	adjust_storyteller_influence("Malum", 10)
@@ -41,4 +41,4 @@
 	UnregisterSignal(owner.current, COMSIG_ITEM_CRAFTED)
 
 /datum/objective/craft_shrine/update_explanation_text()
-	explanation_text = "Build [target_count] wooden pantheon cross[target_count > 1 ? "es" : ""] to demonstrate your devotion to Malum."
+	explanation_text = "建造 [target_count] 座木制万神十字，以彰显你对玛勒姆的虔敬。"

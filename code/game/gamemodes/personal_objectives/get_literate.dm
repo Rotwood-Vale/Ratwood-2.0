@@ -1,5 +1,5 @@
 /datum/objective/literacy
-	name = "Get Literate"
+	name = "学会识字"
 	triumph_count = 0
 
 /datum/objective/literacy/on_creation()
@@ -18,7 +18,7 @@
 		return
 
 	if(istype(skill_ref, /datum/skill/misc/reading) && old_level == SKILL_LEVEL_NONE && new_level > SKILL_LEVEL_NONE)
-		to_chat(owner.current, span_greentext("You've learned to read, completing Noc's objective!"))
+		to_chat(owner.current, span_greentext("你已学会阅读，完成了诺克的目标！"))
 		owner.current.adjust_triumphs(1)
 		completed = TRUE
 		adjust_storyteller_influence("Noc", 10)
@@ -26,4 +26,4 @@
 		UnregisterSignal(owner.current, COMSIG_SKILL_RANK_INCREASED)
 
 /datum/objective/literacy/update_explanation_text()
-	explanation_text = "Get rid of your ignorance! Learn to read to please Noc!"
+	explanation_text = "摆脱你的无知！学会阅读，取悦诺克！"

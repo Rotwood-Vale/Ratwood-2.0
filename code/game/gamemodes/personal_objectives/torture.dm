@@ -1,5 +1,5 @@
 /datum/objective/torture
-	name = "Extract Truth Through Pain"
+	name = "以痛逼供"
 	triumph_count = 0
 	var/torture_count = 0
 	var/required_count = 1
@@ -25,7 +25,7 @@
 		complete_objective(victim)
 
 /datum/objective/torture/proc/complete_objective(mob/living/victim)
-	to_chat(owner.current, span_greentext("You have extracted the truth through pain, satisfying Zizo!"))
+	to_chat(owner.current, span_greentext("你已通过痛苦逼出了真相，令齐佐感到满意！"))
 	owner.current.adjust_triumphs(1)
 	completed = TRUE
 	adjust_storyteller_influence("Zizo", 15)
@@ -33,4 +33,4 @@
 	UnregisterSignal(owner.current, COMSIG_TORTURE_PERFORMED)
 
 /datum/objective/torture/update_explanation_text()
-	explanation_text = "Torture someone until they beg for mercy to please Zizo!"
+	explanation_text = "折磨某人，直到其哀求怜悯，以取悦齐佐！"

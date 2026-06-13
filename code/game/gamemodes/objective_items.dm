@@ -1,7 +1,7 @@
 //Contains the target item datums for Steal objectives.
 
 /datum/objective_item
-	var/name = "A silly bike horn! Honk!"
+	var/name = "一个傻乎乎的自行车喇叭！叭叭！"
 	var/targetitem = /obj/item/paper	//typepath of the objective item
 	var/difficulty = 9001							//vaguely how hard it is to do this objective
 	var/list/excludefromjob = list()				//If you don't want a job to get a certain objective (no captain stealing his own medal, etcetc)
@@ -26,19 +26,19 @@
 	return ..()
 
 /datum/objective_item/steal/rogue/ledger
-	name = "the merchant's catatoma."
+	name = "商人的账册。"
 	targetitem = /obj/item/book/rogue/secret/ledger
 	difficulty = 2
 	excludefromjob = list("Merchant")
 
 /datum/objective_item/steal/rogue/mkey
-	name = "the master key."
+	name = "万能钥匙。"
 	targetitem = /obj/item/roguekey/lord
 	difficulty = 3
 	excludefromjob = list("Lord", "Knight")
 
 /datum/objective_item/steal/rogue/crown
-	name = "the Lord's crown."
+	name = "领主的王冠。"
 	targetitem = /obj/item/clothing/head/roguetown/crown/serpcrown
 	difficulty = 3
 	excludefromjob = list("Grand Duke", "Suitor", "Knight")

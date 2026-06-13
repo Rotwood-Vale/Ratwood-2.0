@@ -1,5 +1,5 @@
 /datum/objective/nobility
-	name = "Become Noble"
+	name = "跻身贵族"
 	triumph_count = 0
 
 /datum/objective/nobility/on_creation()
@@ -21,7 +21,7 @@
 	if(completed)
 		return
 
-	to_chat(owner.current, span_greentext("You have earned nobility and completed Astrata's objective!"))
+	to_chat(owner.current, span_greentext("你已获得贵族身份，完成了阿斯特拉塔的目标！"))
 	owner.current.adjust_triumphs(2)
 	completed = TRUE
 	adjust_storyteller_influence("Astrata", 15)
@@ -29,4 +29,4 @@
 	UnregisterSignal(owner.current, SIGNAL_ADDTRAIT(TRAIT_NOBLE))
 
 /datum/objective/nobility/update_explanation_text()
-	explanation_text = "Become part of the nobility by any means to gain Astrata's approval!"
+	explanation_text = "不择手段跻身贵族之列，以赢得阿斯特拉塔的认可！"

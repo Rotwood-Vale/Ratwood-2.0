@@ -1,5 +1,5 @@
 /datum/objective/build_zizo_shrine
-	name = "Construct Profane Shrines"
+	name = "建造亵渎神龛"
 	triumph_count = 0
 	var/target_type = /obj/structure/fluff/psycross/zizocross
 	var/target_count = 2
@@ -24,10 +24,10 @@
 
 	current_count++
 	if(current_count < target_count)
-		to_chat(owner.current, span_notice("You have built [current_count] out of [target_count] profane shrines."))
+		to_chat(owner.current, span_notice("你已建成 [current_count]/[target_count] 座亵渎神龛。"))
 		return
 
-	to_chat(owner.current, span_greentext("You have built all the required profane shrines, completing Zizo's objective!"))
+	to_chat(owner.current, span_greentext("你已建成全部所需的亵渎神龛，完成了齐佐的目标！"))
 	owner.current.adjust_triumphs(1)
 	completed = TRUE
 	adjust_storyteller_influence("Zizo", 15)
@@ -35,4 +35,4 @@
 	UnregisterSignal(owner.current, COMSIG_ITEM_CRAFTED)
 
 /datum/objective/build_zizo_shrine/update_explanation_text()
-	explanation_text = "Construct [target_count] profane shrine[target_count > 1 ? "s" : ""] to spread Zizo's corruption!"
+	explanation_text = "建造 [target_count] 座亵渎神龛，将齐佐的腐化传播出去！"

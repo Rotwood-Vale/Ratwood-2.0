@@ -7,7 +7,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 		sandbox.admin = 1
 	verbs += new/mob/proc/sandbox_panel
 /mob/proc/sandbox_panel()
-	set name = "Sandbox Panel"
+	set name = "沙盒面板"
 	if(sandbox)
 		sandbox.update()
 
@@ -27,21 +27,21 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 /datum/hSB/proc/update()
 	var/static/list/hrefs = list(
-			"Space Gear",
+			"太空装备",
 
-			"Standard Tools")
+			"标准工具")
 
 
 
 	if(!hsbinfo)
-		hsbinfo = "<center><b>Sandbox Panel</b></center><hr>"
+		hsbinfo = "<center><b>沙盒面板</b></center><hr>"
 		if(admin)
-			hsbinfo += "<b>Administration</b><br>"
-			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbtobj'>Toggle Object Spawning</a><br>"
-			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbtac'>Toggle Item Spawn Panel Auto-close</a><br>"
+			hsbinfo += "<b>管理选项</b><br>"
+			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbtobj'>切换物体生成</a><br>"
+			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbtac'>切换物品生成面板自动关闭</a><br>"
 		else
-			hsbinfo += "<i>Some item spawning may be disabled by the administrators.</i><br>"
-			hsbinfo += "<i>Only administrators may spawn dangerous canisters.</i><br>"
+			hsbinfo += "<i>部分物品生成可能已被管理员禁用。</i><br>"
+			hsbinfo += "<i>只有管理员才能生成危险的气罐。</i><br>"
 		for(var/T in hrefs)
 			var/href = hrefs[T]
 			if(href)
@@ -49,9 +49,9 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			else
 				hsbinfo += "<br><b>[T]</b><br>"
 		hsbinfo += "<hr>"
-		hsbinfo += "- <a href='?[REF(src)];hsb=hsbcloth'>Spawn Clothing...</a><br>"
-		hsbinfo += "- <a href='?[REF(src)];hsb=hsbreag'>Spawn Reagent Container...</a><br>"
-		hsbinfo += "- <a href='?[REF(src)];hsb=hsbobj'>Spawn Other Item...</a><br><br>"
+		hsbinfo += "- <a href='?[REF(src)];hsb=hsbcloth'>生成服装...</a><br>"
+		hsbinfo += "- <a href='?[REF(src)];hsb=hsbreag'>生成试剂容器...</a><br>"
+		hsbinfo += "- <a href='?[REF(src)];hsb=hsbobj'>生成其他物品...</a><br><br>"
 
 	usr << browse(hsbinfo, "window=hsbpanel")
 
@@ -69,11 +69,11 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			if("hsbtobj")
 				if(!admin) return
 				if(GLOB.hsboxspawn)
-					to_chat(world, "<span class='boldannounce'>Sandbox:</span> <b>\black[usr.key] has disabled object spawning!</b>")
+					to_chat(world, "<span class='boldannounce'>沙盒：</span> <b>\black[usr.key] 已禁用物体生成！</b>")
 					GLOB.hsboxspawn = FALSE
 					return
 				else
-					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black[usr.key] has enabled object spawning!</b>")
+					to_chat(world, "<span class='boldnotice'>沙盒：</span> <b>\black[usr.key] 已启用物体生成！</b>")
 					GLOB.hsboxspawn = TRUE
 					return
 			//
@@ -83,9 +83,9 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				if(!admin) return
 				var/sbac = CONFIG_GET(flag/sandbox_autoclose)
 				if(sbac)
-					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black [usr.key] has removed the object spawn limiter.</b>")
+					to_chat(world, "<span class='boldnotice'>沙盒：</span> <b>\black [usr.key] 已移除物体生成限制。</b>")
 				else
-					to_chat(world, "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning. The window will now auto-close after use.</b>")
+					to_chat(world, "<span class='danger'>沙盒：</span> <b>\black [usr.key] 已为物体生成添加限制。窗口现在会在使用后自动关闭。</b>")
 				CONFIG_SET(flag/sandbox_autoclose, !sbac)
 				return
 			//
@@ -97,7 +97,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				if(!GLOB.hsboxspawn) return
 
 				if(!clothinfo)
-					clothinfo = "<b>Clothing</b> <a href='?[REF(src)];hsb=hsbreag'>(Reagent Containers)</a> <a href='?[REF(src)];hsb=hsbobj'>(Other Items)</a><hr><br>"
+					clothinfo = "<b>服装</b> <a href='?[REF(src)];hsb=hsbreag'>(试剂容器)</a> <a href='?[REF(src)];hsb=hsbobj'>(其他物品)</a><hr><br>"
 					var/list/all_items = subtypesof(/obj/item/clothing)
 					for(var/typekey in spawn_forbidden)
 						all_items -= typesof(typekey)
@@ -111,7 +111,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				if(!GLOB.hsboxspawn) return
 
 				if(!reaginfo)
-					reaginfo = "<b>Reagent Containers</b> <a href='?[REF(src)];hsb=hsbcloth'>(Clothing)</a> <a href='?[REF(src)];hsb=hsbobj'>(Other Items)</a><hr><br>"
+					reaginfo = "<b>试剂容器</b> <a href='?[REF(src)];hsb=hsbcloth'>(服装)</a> <a href='?[REF(src)];hsb=hsbobj'>(其他物品)</a><hr><br>"
 					var/list/all_items = subtypesof(/obj/item/reagent_containers)
 					for(var/typekey in spawn_forbidden)
 						all_items -= typesof(typekey)
@@ -125,7 +125,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				if(!GLOB.hsboxspawn) return
 
 				if(!objinfo)
-					objinfo = "<b>Other Items</b> <a href='?[REF(src)];hsb=hsbcloth'>(Clothing)</a> <a href='?[REF(src)];hsb=hsbreag'>(Reagent Containers)</a><hr><br>"
+					objinfo = "<b>其他物品</b> <a href='?[REF(src)];hsb=hsbcloth'>(服装)</a> <a href='?[REF(src)];hsb=hsbreag'>(试剂容器)</a><hr><br>"
 					var/list/all_items = subtypesof(/obj/item/) - typesof(/obj/item/clothing) - typesof(/obj/item/reagent_containers)
 					for(var/typekey in spawn_forbidden)
 						all_items -= typesof(typekey)
@@ -145,7 +145,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 				var/typepath = text2path(href_list["path"])
 				if(!typepath)
-					to_chat(usr, "Bad path: \"[href_list["path"]]\"")
+					to_chat(usr, "无效路径：\"[href_list["path"]]\"")
 					return
 				new typepath(usr.loc)
 
@@ -157,7 +157,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			if("hsbspawn")
 				var/typepath = text2path(href_list["path"])
 				if(!typepath)
-					to_chat(usr, "Bad path: \"[href_list["path"]]\"")
+					to_chat(usr, "无效路径：\"[href_list["path"]]\"")
 					return
 				new typepath(usr.loc)
 

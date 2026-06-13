@@ -1,7 +1,7 @@
 GLOBAL_LIST_EMPTY(tram_landmarks)
 
 /obj/effect/landmark/tram
-	name = "tram destination" //the tram buttons will mention this.
+	name = "电车目的地" //the tram buttons will mention this.
 	icon_state = "tram"
 
 	///the id of the tram we're linked to.
@@ -24,7 +24,7 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
  * it sets its specific_lift_id to that landmark. allows you to have multiple trams and multiple controls linking to their specific tram
  */
 /obj/effect/landmark/lift_id
-	name = "lift id setter"
+	name = "升降机ID设置器"
 	icon_state = "lift_id"
 
 	///what specific id we give to the tram we're placed on, should explicitely set this if its a subtype, or weird things might happen

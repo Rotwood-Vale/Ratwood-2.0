@@ -1,5 +1,5 @@
 /datum/objective/tame_animal
-	name = "Tame an Animal"
+	name = "驯服动物"
 	triumph_count = 0
 	var/tamed_count = 0
 	var/required_tames = 1
@@ -25,7 +25,7 @@
 		complete_objective(animal)
 
 /datum/objective/tame_animal/proc/complete_objective(mob/living/simple_animal/animal)
-	to_chat(owner.current, span_greentext("You have tamed [animal], fulfilling Dendor's will!"))
+	to_chat(owner.current, span_greentext("你已驯服 [animal]，完成了登多尔的意志！"))
 	owner.current.adjust_triumphs(1)
 	completed = TRUE
 	adjust_storyteller_influence("Dendor", 15)
@@ -33,4 +33,4 @@
 	UnregisterSignal(owner.current, COMSIG_ANIMAL_TAMED)
 
 /datum/objective/tame_animal/update_explanation_text()
-	explanation_text = "Tame an animal, either by feeding it or any other means until it acknowledges you as a friend. Dendor wills it!"
+	explanation_text = "驯服一只动物，无论是通过喂食还是其他手段，直到它承认你是朋友。登多尔如此所愿！"

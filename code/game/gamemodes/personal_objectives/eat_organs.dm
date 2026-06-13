@@ -1,5 +1,5 @@
 /datum/objective/consume_organs
-	name = "Consume Organs"
+	name = "吞食器官"
 	triumph_count = 0
 	var/organs_consumed = 0
 	var/hearts_consumed = 0
@@ -26,15 +26,15 @@
 
 	if(ispath(organ_type, /obj/item/reagent_containers/food/snacks/organ/heart))
 		hearts_consumed++
-		to_chat(owner.current, span_cult("You feel Graggar's pleasure as you consume a heart!"))
+		to_chat(owner.current, span_cult("当你吞下心脏时，你感受到了格拉加尔的愉悦！"))
 	else
-		to_chat(owner.current, span_notice("Organ consumed! [organs_required - organs_consumed] more organ\s needed."))
+		to_chat(owner.current, span_notice("已吞食器官！还需要 [organs_required - organs_consumed] 个器官。"))
 
 	if(organs_consumed >= organs_required && hearts_consumed >= hearts_required)
 		complete_objective()
 
 /datum/objective/consume_organs/proc/complete_objective()
-	to_chat(owner.current, span_greentext("You have consumed enough organs and hearts to satisfy Graggar!"))
+	to_chat(owner.current, span_greentext("你已吞食足够的器官与心脏，令格拉加尔感到满意！"))
 	owner.current.adjust_triumphs(1)
 	completed = TRUE
 	adjust_storyteller_influence("Graggar", 15)
@@ -42,4 +42,4 @@
 	UnregisterSignal(owner.current, COMSIG_ORGAN_CONSUMED)
 
 /datum/objective/consume_organs/update_explanation_text()
-	explanation_text = "Consume [organs_required] organ\s, including [hearts_required] heart\s, to appease Graggar!"
+	explanation_text = "吞食 [organs_required] 个器官，其中至少包含 [hearts_required] 颗心脏，以平息格拉加尔的欲望！"

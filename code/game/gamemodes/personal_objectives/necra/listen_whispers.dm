@@ -1,5 +1,5 @@
 /datum/objective/listen_whispers
-	name = "Listen to Whispers"
+	name = "聆听低语"
 	triumph_count = 2
 	var/time_required = 5 MINUTES
 	var/time_spent = 0
@@ -53,7 +53,7 @@
 		complete_objective()
 
 /datum/objective/listen_whispers/proc/complete_objective()
-	to_chat(owner.current, span_greentext("You have listened to the whispers of the dead long enough to satisfy Necra!"))
+	to_chat(owner.current, span_greentext("你已聆听亡者低语足够久，令内克拉感到满意！"))
 	owner.current.adjust_triumphs(triumph_count)
 	completed = TRUE
 	adjust_storyteller_influence("Necra", 15)
@@ -61,4 +61,4 @@
 	STOP_PROCESSING(SSprocessing, src)
 
 /datum/objective/listen_whispers/update_explanation_text()
-	explanation_text = "Necra wants you to understand death better. Spend at least [time_required / (1 MINUTES)] minutes in the church listening to the whispers of the dead while wearing an amulet of Necra."
+	explanation_text = "内克拉希望你更深地理解死亡。佩戴内克拉护符，在教堂中聆听亡者低语至少 [time_required / (1 MINUTES)] 分钟。"

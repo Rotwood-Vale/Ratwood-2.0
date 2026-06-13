@@ -1,5 +1,5 @@
 /datum/objective/improve_craft
-	name = "Improve Craft Skills"
+	name = "提升工艺技艺"
 	triumph_count = 0
 	var/levels_gained = 0
 	var/required_levels = 2
@@ -32,7 +32,7 @@
 	levels_gained += level_diff
 
 	if(levels_gained >= required_levels)
-		to_chat(owner.current, span_greentext("You've improved your craft skills enough to please Malum!"))
+		to_chat(owner.current, span_greentext("你的工艺技艺已提升到足以取悦玛勒姆！"))
 		owner.current.adjust_triumphs(1)
 		completed = TRUE
 		adjust_storyteller_influence("Malum", 10)
@@ -40,7 +40,7 @@
 		UnregisterSignal(owner.current, COMSIG_SKILL_RANK_INCREASED)
 	else
 		var/remaining = required_levels - levels_gained
-		to_chat(owner.current, span_notice("Craft skill improved! [remaining] more level[remaining == 1 ? "" : "s"] needed to fulfill Malum's task!"))
+		to_chat(owner.current, span_notice("工艺技能已提升！还需要 [remaining] 级才能完成玛勒姆的试炼！"))
 
 /datum/objective/improve_craft/update_explanation_text()
-	explanation_text = "Improve your craft skills by gaining [required_levels] new skill levels through practice or dreams. For Malum!"
+	explanation_text = "通过练习或梦境获得 [required_levels] 级新的工艺技能等级，以此磨炼你的手艺。为了玛勒姆！"

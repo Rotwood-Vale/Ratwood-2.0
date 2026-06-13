@@ -490,7 +490,7 @@
 		return
 	if(buckle_message_cooldown <= world.time)
 		buckle_message_cooldown = world.time + 25
-		to_chat(user, "<span class='warning'>I should try resisting.</span>")
+		to_chat(user, "<span class='warning'>我应该试着挣脱。</span>")
 	return
 
 /// Handle what happens when your contents are exploded by a bomb
@@ -635,7 +635,7 @@
 	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(STR, TYPE_PROC_REF(/datum/component/storage, handle_mass_item_insertion), things, src_object, user, progress)))
 		stoplag(1)
 	qdel(progress)
-	to_chat(user, "<span class='notice'>I dump as much of [src_object.parent]'s contents [STR.insert_preposition]to [src] as I can.</span>")
+	to_chat(user, "<span class='notice'>我尽可能把[src_object.parent]里的东西全都倒[STR.insert_preposition]到[src]里。</span>")
 	STR.orient2hud(user)
 	STR.update_icon()
 	src_object.update_icon()

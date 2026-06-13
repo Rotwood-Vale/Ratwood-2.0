@@ -1,5 +1,5 @@
 /datum/objective/punch_people
-	name = "Punch People"
+	name = "痛殴他人"
 	triumph_count = 0
 	var/punches_done = 0
 	var/punches_required = 3
@@ -23,13 +23,13 @@
 	punches_done++
 
 	if(punches_done < punches_required)
-		to_chat(owner.current, span_notice("People punched in the face! [punches_required - punches_done] more face punches needed."))
+		to_chat(owner.current, span_notice("已挥拳打脸！还需要 [punches_required - punches_done] 次打脸。"))
 
 	if(punches_done >= punches_required)
 		complete_objective()
 
 /datum/objective/punch_people/proc/complete_objective()
-	to_chat(owner.current, span_greentext("You have dealt enough face punches to satisfy Graggar!"))
+	to_chat(owner.current, span_greentext("你已经狠狠干了足够多的脸，令格拉加尔感到满意！"))
 	owner.current.adjust_triumphs(1)
 	completed = TRUE
 	adjust_storyteller_influence("Graggar", 15)
@@ -37,4 +37,4 @@
 	UnregisterSignal(owner.current, COMSIG_HEAD_PUNCHED)
 
 /datum/objective/punch_people/update_explanation_text()
-	explanation_text = "Punch people [punches_required] time\s in the face to demonstrate your devotion to Graggar!"
+	explanation_text = "朝别人的脸狠狠干上 [punches_required] 拳，以彰显你对格拉加尔的虔诚！"

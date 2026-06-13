@@ -1,5 +1,5 @@
 /datum/objective/hug_beggar
-	name = "Hug a Towner"
+	name = "拥抱镇民"
 	triumph_count = 0
 
 /datum/objective/hug_beggar/on_creation()
@@ -18,7 +18,7 @@
 		return
 
 	if(target.job == "Towner" || istype(target.mind?.assigned_role, /datum/job/roguetown/villager))
-		to_chat(owner.current, span_greentext("You've hugged a local, completing Eora's objective!"))
+		to_chat(owner.current, span_greentext("你拥抱了一位本地居民，完成了伊欧拉的目标！"))
 		owner.current.adjust_triumphs(1)
 		completed = TRUE
 		adjust_storyteller_influence("Eora", 10)
@@ -26,4 +26,4 @@
 		UnregisterSignal(owner.current, COMSIG_MOB_HUGGED)
 
 /datum/objective/hug_beggar/update_explanation_text()
-	explanation_text = "Everyone deserves love! Hug a towner to please Eora!"
+	explanation_text = "人人都值得被爱！拥抱一位镇民，以取悦伊欧拉！"

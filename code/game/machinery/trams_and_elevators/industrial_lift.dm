@@ -11,8 +11,8 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 ))
 
 /obj/structure/industrial_lift
-	name = "lift platform"
-	desc = "A lightweight lift platform. It moves up and down."
+	name = "升降平台"
+	desc = "一座轻型升降平台。它可以上下移动。"
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "weird1"
 	density = FALSE
@@ -336,7 +336,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 					shake_camera(nearby_witness, 2, 3)
 
 			for(var/mob/living/crushed in dest_turf.contents)
-				to_chat(crushed, span_userdanger("You are crushed by [src]!"))
+				to_chat(crushed, span_userdanger("你被 [src] 压扁了！"))
 				if(violent_landing)
 					// Violent landing = gibbed. But the nicest kind of gibbing, keeping everything intact.
 					crushed.gib(FALSE, FALSE, FALSE)
@@ -380,13 +380,13 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 					if(victim_structure.layer >= LOW_OBJ_LAYER)
 
 						if(victim_structure.anchored && initial(victim_structure.anchored) == TRUE)
-							visible_message(span_danger("[src] smashes through [victim_structure]!"))
+							visible_message(span_danger("[src] 猛地撞碎了 [victim_structure]！"))
 							victim_structure.deconstruct(FALSE)
 
 						else
 							if(!throw_target)
 								throw_target = get_edge_target_turf(src, turn(going, pick(45, -45)))
-							visible_message(span_danger("[src] violently rams [victim_structure] out of the way!"))
+							visible_message(span_danger("[src] 粗暴地把 [victim_structure] 撞飞到一旁！"))
 							victim_structure.anchored = FALSE
 							victim_structure.take_damage(rand(20, 25) * collision_lethality)
 							victim_structure.throw_at(throw_target, 200 * collision_lethality, 4 * collision_lethality)
@@ -395,12 +395,12 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 					if(QDELING(victim_machine))
 						continue
 					if(victim_machine.layer >= LOW_OBJ_LAYER) //avoids stuff that is probably flush with the ground
-						visible_message(span_danger("[src] smashes through [victim_machine]!"))
+						visible_message(span_danger("[src] 猛地撞穿了 [victim_machine]！"))
 						qdel(victim_machine)
 
 				for(var/mob/living/collided in dest_turf.contents)
 					var/damage_multiplier = collided.maxHealth * 0.01
-					to_chat(collided, span_userdanger("[src] collides into you!"))
+					to_chat(collided, span_userdanger("[src] 猛地撞上了你！"))
 					var/damage = 0
 					if(prob(15)) //sorry buddy, luck wasn't on your side
 						damage = 29 * collision_lethality * damage_multiplier
@@ -597,14 +597,14 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 		if(!up_arrow)
 			up_arrow = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH)
 
-		possible_directions["Up"] = up_arrow
+		possible_directions["上"] = up_arrow
 
 	if(lift_master_datum.Check_lift_move(DOWN))
 		var/static/image/down_arrow
 		if(!down_arrow)
 			down_arrow = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
 
-		possible_directions["Down"] = down_arrow
+		possible_directions["下"] = down_arrow
 
 	add_fingerprint(user)
 
@@ -622,7 +622,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 	if(!can_open_lift_radial(user, starting_position))
 		return //nice try
 	switch(result)
-		if("Up")
+		if("上")
 			// We have to make sure that they don't do illegal actions
 			// by not having their radial menu refresh from someone else moving the lift.
 			if(!lift_master_datum.simple_move_wrapper(UP, elevator_vertical_speed, user))
@@ -631,7 +631,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 			show_fluff_message(UP, user)
 			open_lift_radial(user)
 
-		if("Down")
+		if("下")
 			if(!lift_master_datum.simple_move_wrapper(DOWN, elevator_vertical_speed, user))
 				return
 
@@ -688,10 +688,10 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
  */
 /obj/structure/industrial_lift/proc/show_fluff_message(direction, mob/user)
 	if(direction == UP)
-		user.visible_message(span_notice("[user] moves the lift upwards."), span_notice("You move the lift upwards."))
+		user.visible_message(span_notice("[user] 将升降平台向上移动。"), span_notice("你将升降平台向上移动。"))
 
 	if(direction == DOWN)
-		user.visible_message(span_notice("[user] moves the lift downwards."), span_notice("You move the lift downwards."))
+		user.visible_message(span_notice("[user] 将升降平台向下移动。"), span_notice("你将升降平台向下移动。"))
 
 // A subtype intended for "public use"
 /obj/structure/industrial_lift/public
@@ -703,8 +703,8 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 	radial_travel = FALSE
 
 /obj/structure/industrial_lift/debug
-	name = "transport platform"
-	desc = "A lightweight platform. It moves in any direction, except up and down."
+	name = "运输平台"
+	desc = "一座轻型平台。它可以朝任意方向移动, 但不能上下移动。"
 	color = "#5286b9ff"
 	lift_id = DEBUG_LIFT_ID
 	radial_travel = TRUE
@@ -749,8 +749,8 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 	add_fingerprint(user)
 
 /obj/structure/industrial_lift/tram
-	name = "tram"
-	desc = "A tram for tramversing the station."
+	name = "电车"
+	desc = "一辆可在站内行驶的电车。"
 	canSmoothWith = null
 	obj_flags = BLOCK_Z_OUT_DOWN
 	//kind of a centerpiece of the station, so pretty tough to destroy

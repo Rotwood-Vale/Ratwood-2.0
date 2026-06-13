@@ -3,15 +3,15 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective
 	var/datum/mind/owner				//The primary owner of the objective. !!SOMEWHAT DEPRECATED!! Prefer using 'team' for new code.
 	var/datum/team/team					//An alternative to 'owner': a team. Use this when writing new code.
-	var/name = "generic objective" 		//Name for admin prompts
-	var/explanation_text = "Nothing"	//What that person is supposed to do.
+	var/name = "通用目标" 		//Name for admin prompts
+	var/explanation_text = "无"	//What that person is supposed to do.
 	var/team_explanation_text			//For when there are multiple owners.
 	var/datum/mind/target = null		//If they are focused on a particular person.
 	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
 	var/completed = 0					//currently only used for custom objectives.
 	var/martyr_compatible = 0			//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
 	var/triumph_count = 1
-	var/flavor = "Goal"
+	var/flavor = "目标"
 
 /datum/objective/New(text, datum/mind/owner)
 	if(text)
@@ -180,7 +180,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 				H.equip_in_one_of_slots(O, slots)
 
 /datum/objective/assassinate
-	name = "assasinate"
+	name = "刺杀"
 	var/target_role_type=FALSE
 	martyr_compatible = 0
 	triumph_count = 3
@@ -196,7 +196,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/assassinate/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Ensure [target.name] the [!target_role_type ? target.assigned_role : target.special_role] is killed and remains dead until the end of the round. If they are revived before the round ends, you will fail this objective."
+			explanation_text = "确保 [target.name] 这名[!target_role_type ? target.assigned_role : target.special_role]被杀死，并在本轮结束前始终保持死亡。若其在回合结束前被复活，你将失败。"
 
 /datum/objective/assassinate/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
@@ -207,10 +207,10 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/assassinate/internal/update_explanation_text()
 	..()
 	if(target && !target.current)
-		explanation_text = "Assassinate [target.name], who was obliterated"
+		explanation_text = "刺杀 [target.name]，其当前已被彻底毁灭"
 
 /datum/objective/mutiny
-	name = "mutiny"
+	name = "叛乱"
 	var/target_role_type=FALSE
 	martyr_compatible = 1
 
@@ -228,12 +228,12 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/mutiny/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Assassinate or exile [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "刺杀或放逐 [target.name] 这名[!target_role_type ? target.assigned_role : target.special_role]。"
 	else
-		explanation_text = "Free Objective"
+		explanation_text = "自由目标"
 
 /datum/objective/maroon
-	name = "maroon"
+	name = "流放"
 	var/target_role_type=FALSE
 	martyr_compatible = 1
 
@@ -247,15 +247,15 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/maroon/update_explanation_text()
 	if(target && target.current)
-		explanation_text = "Prevent [target.name], the [!target_role_type ? target.assigned_role : target.special_role], from escaping alive."
+		explanation_text = "阻止 [target.name] 这名[!target_role_type ? target.assigned_role : target.special_role]活着逃脱。"
 	else
-		explanation_text = "Free Objective"
+		explanation_text = "自由目标"
 
 /datum/objective/maroon/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
 
 /datum/objective/debrain
-	name = "debrain"
+	name = "夺脑"
 	var/target_role_type=0
 
 /datum/objective/debrain/find_target_by_role(role, role_type=FALSE,invert=FALSE)
@@ -281,15 +281,15 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/debrain/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Steal the brain of [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "夺取 [target.name] 这名[!target_role_type ? target.assigned_role : target.special_role]的大脑。"
 	else
-		explanation_text = "Free Objective"
+		explanation_text = "自由目标"
 
 /datum/objective/debrain/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
 
 /datum/objective/protect//The opposite of killing a dude.
-	name = "protect"
+	name = "保护"
 	martyr_compatible = 1
 	var/target_role_type = FALSE
 	var/human_check = TRUE
@@ -306,26 +306,26 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/protect/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Protect [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "保护 [target.name] 这名[!target_role_type ? target.assigned_role : target.special_role]。"
 	else
-		explanation_text = "Free Objective"
+		explanation_text = "自由目标"
 
 /datum/objective/protect/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
 
 /datum/objective/protect/nonhuman
-	name = "protect nonhuman"
+	name = "保护非人者"
 	human_check = FALSE
 
 /datum/objective/escape/prisoner
-	name = "survive"
-	explanation_text = "Escape the prison."
-	team_explanation_text = "Escape the prison."
+	name = "越狱"
+	explanation_text = "逃离监牢。"
+	team_explanation_text = "逃离监牢。"
 
 /datum/objective/escape
-	name = "survive"
-	explanation_text = "Survive without facing justice."
-	team_explanation_text = "Survive without facing justice."
+	name = "幸存"
+	explanation_text = "在不面对审判的情况下存活下来。"
+	team_explanation_text = "在不面对审判的情况下存活下来。"
 
 /datum/objective/escape/check_completion()
 	// Require all owners escape safely.
@@ -336,9 +336,9 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	return TRUE
 
 /datum/objective/marry
-	name = "marry"
-	explanation_text = "Secure a marriage with the local Duke/Duchess - or alternatively marry one of the royal heirs and ensure they are coronated by the week's end."
-	team_explanation_text = "Secure a marriage with the local Duke/Duchess - or alternatively marry one of the royal heirs and ensure they are coronated by the week's end."
+	name = "联姻"
+	explanation_text = "与本地公爵或女公爵缔结婚姻, 或者与某位王室继承人结婚, 并确保其在周末前加冕。"
+	team_explanation_text = "与本地公爵或女公爵缔结婚姻, 或者与某位王室继承人结婚, 并确保其在周末前加冕。"
 
 /datum/objective/marry/check_completion()
 	for(var/datum/mind/M in get_owners())
@@ -354,9 +354,9 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	return FALSE
 
 /datum/objective/dungeoneer
-	name = "protect"
-	explanation_text = "Keep the prisoner alive and in their cell."
-	team_explanation_text = "Keep the prisoner alive and in their cell."
+	name = "看押"
+	explanation_text = "让囚犯活着并待在牢房里。"
+	team_explanation_text = "让囚犯活着并待在牢房里。"
 	var/mob/prisoner
 
 /datum/objective/dungeoneer/check_completion()
@@ -366,7 +366,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 
 /datum/objective/escape/escape_with_identity
-	name = "escape with identity"
+	name = "冒名逃脱"
 	var/target_real_name // Has to be stored because the target's real_name can change over the course of the round
 	var/target_missing_id
 
@@ -377,18 +377,18 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/escape/escape_with_identity/update_explanation_text()
 	if(target && target.current)
 		target_real_name = target.current.real_name
-		explanation_text = "Escape on the shuttle or an escape pod with the identity of [target_real_name], the [target.assigned_role]"
+		explanation_text = "以 [target_real_name] 这名[target.assigned_role]的身份搭乘穿梭机或逃生舱逃脱"
 		var/mob/living/carbon/human/H
 		if(ishuman(target.current))
 			H = target.current
 		if(H && H.get_id_name() != target_real_name)
 			target_missing_id = 1
 		else
-			explanation_text += " while wearing their identification card"
+			explanation_text += "，并佩戴其身份卡"
 		explanation_text += "." //Proper punctuation is important!
 
 	else
-		explanation_text = "Free Objective."
+		explanation_text = "自由目标。"
 
 /datum/objective/escape/escape_with_identity/check_completion()
 	if(!target || !target_real_name)
@@ -406,8 +406,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	admin_simple_target_pick(admin)
 
 /datum/objective/survive
-	name = "survive"
-	explanation_text = "Stay alive until the end."
+	name = "幸存"
+	explanation_text = "活到最后。"
 
 /datum/objective/survive/check_completion()
 	var/list/datum/mind/owners = get_owners()
@@ -417,7 +417,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	return TRUE
 
 /datum/objective/survive/exist //Like survive, but works for silicons and zombies and such.
-	name = "survive nonhuman"
+	name = "非人幸存"
 
 /datum/objective/survive/exist/check_completion()
 	var/list/datum/mind/owners = get_owners()
@@ -427,8 +427,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	return TRUE
 
 /datum/objective/martyr
-	name = "martyr"
-	explanation_text = "Die a glorious death."
+	name = "殉道"
+	explanation_text = "壮烈赴死。"
 
 /datum/objective/martyr/check_completion()
 	var/list/datum/mind/owners = get_owners()
@@ -441,7 +441,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/steal
-	name = "steal"
+	name = "窃取"
 	var/datum/objective_item/targetinfo = null //Save the chosen item datum so we can access it later.
 	var/obj/item/steal_target = null //Needed for custom objectives (they're just items, not datums).
 	martyr_compatible = 0
@@ -474,11 +474,11 @@ GLOBAL_LIST_EMPTY(possible_items)
 	if(item)
 		targetinfo = item
 		steal_target = targetinfo.targetitem
-		explanation_text = "Steal [targetinfo.name]"
+		explanation_text = "窃取[targetinfo.name]"
 		give_special_equipment(targetinfo.special_equipment)
 		return steal_target
 	else
-		explanation_text = "Free objective"
+		explanation_text = "自由目标"
 		return
 
 /datum/objective/steal/admin_edit(mob/admin)
@@ -497,7 +497,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 		if (!custom_name)
 			return
 		steal_target = custom_target
-		explanation_text = "Steal [custom_name]."
+		explanation_text = "窃取 [custom_name]。"
 
 	else
 		set_target(new_target)
@@ -525,7 +525,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 	return FALSE
 
 /datum/objective/capture
-	name = "capture"
+	name = "捕获"
 
 /datum/objective/capture/proc/gen_amount_goal()
 	target_amount = rand(5,10)
@@ -534,7 +534,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/capture/update_explanation_text()
 	. = ..()
-	explanation_text = "Capture [target_amount] lifeform\s with an energy net. Live, rare specimens are worth more."
+	explanation_text = "用能量网捕获 [target_amount] 个生命体。活体与稀有样本价值更高。"
 
 /datum/objective/capture/admin_edit(mob/admin)
 	var/count = input(admin,"How many mobs to capture ?","capture",target_amount) as num|null
@@ -543,7 +543,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 	update_explanation_text()
 
 /datum/objective/protect_object
-	name = "protect object"
+	name = "保护物件"
 	var/obj/protect_target
 
 /datum/objective/protect_object/proc/set_target(obj/O)
@@ -553,9 +553,9 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/protect_object/update_explanation_text()
 	. = ..()
 	if(protect_target)
-		explanation_text = "Protect \the [protect_target] at all costs."
+			explanation_text = "不惜一切代价保护 [protect_target]。"
 	else
-		explanation_text = "Free objective."
+		explanation_text = "自由目标。"
 
 /datum/objective/protect_object/check_completion()
 	return !QDELETED(protect_target)
@@ -565,8 +565,8 @@ GLOBAL_LIST_EMPTY(possible_items)
 	var/stolen = FALSE 		//Have we already eliminated this target?
 
 /datum/objective/steal_five_of_type
-	name = "steal five of"
-	explanation_text = "Steal at least five items!"
+	name = "窃取五件"
+	explanation_text = "至少窃取五件物品！"
 	var/list/wanted_items = list()
 
 /datum/objective/steal_five_of_type/New()
@@ -587,7 +587,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 //Created by admin tools
 /datum/objective/custom
-	name = "custom"
+	name = "自定义"
 
 /datum/objective/custom/admin_edit(mob/admin)
 	var/expl = stripped_input(admin, "Custom objective:", "Objective", explanation_text)
@@ -600,7 +600,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/changeling_team_objective //Abstract type
 	martyr_compatible = 0	//Suicide is not teamwork!
-	explanation_text = "Changeling Friendship!"
+	explanation_text = "蜕形怪友谊万岁！"
 	var/min_lings = 3 //Minimum amount of lings for this team objective to be possible
 	var/escape_objective_compatible = FALSE
 

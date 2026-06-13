@@ -1,5 +1,5 @@
 /obj/effect/landmark/tram/queued_path
-	name = "tram destination continue pathing"
+	name = "电车目的地连续寻路点"
 
 	var/next_path_id
 

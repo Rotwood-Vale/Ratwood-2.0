@@ -1,6 +1,6 @@
 /datum/objective/bandit
-	name = "bandit"
-	explanation_text = "Feed valuables to the idol."
+	name = "匪徒"
+	explanation_text = "向神像献上财物。"
 
 /datum/objective/bandit/check_completion()
 	if(SSmapping.retainer.bandit_contribute >= SSmapping.retainer.bandit_goal)
@@ -8,12 +8,12 @@
 
 /datum/objective/bandit/update_explanation_text()
 	..()
-	explanation_text = "Feed [SSmapping.retainer.bandit_goal] mammon to an idol of greed."
+	explanation_text = "向贪婪神像献上 [SSmapping.retainer.bandit_goal] 枚玛门币。"
 
 
 /datum/objective/delf
-	name = "delf"
-	explanation_text = "Feed honeys to the mother."
+	name = "德尔芙"
+	explanation_text = "向母亲献上蜂蜜。"
 
 /datum/objective/delf/check_completion()
 	if(SSmapping.retainer.delf_contribute >= SSmapping.retainer.delf_goal)
@@ -21,12 +21,12 @@
 
 /datum/objective/delf/update_explanation_text()
 	..()
-	explanation_text = "Feed [SSmapping.retainer.delf_goal] honeys to the mother."
+	explanation_text = "向母亲献上 [SSmapping.retainer.delf_goal] 份蜂蜜。"
 
 /datum/objective/werewolf
-	name = "conquer"
-	explanation_text = "You are touched by the Mad God of the Wilds, Dendor - be it through a bite... Or a terrible blessing. And you are SO, SO VERY HUNGRY. The form Dendor promises will be fearsome, but the transition will be agonizing. Fear not the full moon - and let the feast begin."
-	team_explanation_text = "Lycanthropy is a terrible disease that's been recorded in scattered accounts going back hundreds of years. Whatever madness drove Dendor to create such an aberration is beyond mortal minds - and whatever the reason, he has been unwilling or unable to undo it. Nightly transformations and prodigious increses in mass drive the body into an active state of insatiable starvation, driving animalistic, rabid behavior."
+	name = "征服"
+	explanation_text = "你已被荒野的疯神登多尔所触碰, 也许源于一记咬伤……又或是一份可怖的赐福。而你现在饿得发狂, 饿得无以复加。登多尔许诺的形态将无比可怖, 但蜕变的过程也将痛苦万分。莫惧满月, 让盛宴开始吧。"
+	team_explanation_text = "狼化症是一种可怖的疾病, 零散记载可追溯数百年前。究竟是何等疯狂驱使登多尔造出这般畸变, 凡人根本无从理解; 而无论缘由为何, 他都既不愿也无法将其收回。每夜的变身与暴涨的体型, 会让躯体陷入永不满足的饥饿之中, 驱使宿主做出野兽般的狂暴行径。"
 	triumph_count = 5
 
 /datum/objective/werewolf/check_completion()
@@ -34,9 +34,9 @@
 		return TRUE
 
 /datum/objective/vampire
-	name = "conquer"
-	explanation_text = "Put an end to the werewolf menace, or unite with them against the forces of the Nine."
-	team_explanation_text = "The feud between werewolves and vampires reaches back to the dawn of time. Will the two factions destroy each other, or find a way to coexist and face the mortals of this land together?"
+	name = "征服"
+	explanation_text = "终结狼人带来的威胁, 或与他们联手对抗十神的势力。"
+	team_explanation_text = "狼人和吸血鬼之间的宿怨可追溯到远古之初。两方究竟会彼此毁灭, 还是找到共存之道, 一同面对这片土地上的凡人？"
 	triumph_count = 5
 
 /datum/objective/vampire/check_completion()

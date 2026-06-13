@@ -83,7 +83,7 @@
 	SIGNAL_HANDLER
 
 	travel_distance = 0
-	bumped_atom.visible_message(span_userdanger("The [bumped_atom.name] crashes into the field violently!"))
+	bumped_atom.visible_message(span_userdanger("[bumped_atom.name] 猛烈地撞上了力场！"))
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_platforms)
 		tram_part.set_travelling(FALSE)
 		for(var/tram_contents in tram_part.lift_load)

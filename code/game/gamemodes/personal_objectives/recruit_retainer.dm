@@ -1,5 +1,5 @@
 /datum/objective/retainer
-	name = "Recruit Retainer"
+	name = "招募侍从"
 	triumph_count = 0
 	var/retainers_recruited = 0
 
@@ -23,23 +23,23 @@
 		complete_objective()
 
 /datum/objective/retainer/proc/complete_objective()
-	to_chat(owner.current, span_greentext("You have recruited a retainer and completed Astrata's objective!"))
+	to_chat(owner.current, span_greentext("你已招募一名侍从，完成了阿斯特拉塔的目标！"))
 	owner.current.adjust_triumphs(1)
 	completed = TRUE
 	adjust_storyteller_influence("Astrata", 10)
 	escalate_objective()
 
 /datum/objective/retainer/update_explanation_text()
-	explanation_text = "Recruit atleast one retainer to serve you and to demonstrate your ability to lead to Astrata."
+	explanation_text = "至少招募一名侍从为你效力，以向阿斯特拉塔证明你的领导能力。"
 
 /obj/effect/proc_holder/spell/self/convertrole/retainer
-	name = "Recruit Retainer"
+	name = "招募侍从"
 	new_role = "Retainer"
 	overlay_state = "recruit_guard"
 	recruitment_faction = "Retainers"
-	recruitment_message = "Join my service as a retainer, %RECRUIT!"
-	accept_message = "I pledge my service to you!"
-	refuse_message = "I must decline your offer."
+	recruitment_message = "成为我的侍从，为我效力吧，%RECRUIT！"
+	accept_message = "我愿向你宣誓效忠！"
+	refuse_message = "我必须拒绝你的提议。"
 
 
 /obj/effect/proc_holder/spell/self/convertrole/retainer/convert(mob/living/carbon/human/recruit, mob/living/carbon/human/recruiter)

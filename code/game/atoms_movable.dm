@@ -14,12 +14,12 @@
 	var/mob/pulledby = null
 	var/initial_language_holder = /datum/language_holder
 	var/datum/language_holder/language_holder
-	var/verb_say = "says"
-	var/verb_ask = "asks"
-	var/verb_exclaim = "exclaims"
-	var/verb_whisper = "whispers"
-	var/verb_sing = "sings"
-	var/verb_yell = "yells"
+	var/verb_say = "说"
+	var/verb_ask = "问"
+	var/verb_exclaim = "惊呼"
+	var/verb_whisper = "低语"
+	var/verb_sing = "歌唱"
+	var/verb_yell = "高喊"
 	var/speech_span
 	var/inertia_dir = 0
 	var/atom/inertia_last_loc
@@ -186,8 +186,8 @@
 		if(M.doing)
 			M.doing = FALSE
 		if(!supress_message)
-			M.visible_message("<span class='warning'>[src] grabs [M].</span>", \
-				"<span class='danger'>[src] grabs you.</span>")
+			M.visible_message("<span class='warning'>[src] 抓住了 [M]。</span>", \
+				"<span class='danger'>[src] 抓住了你。</span>")
 	if(istype(AM, /mob/living/simple_animal))
 		var/mob/living/simple_animal/simple_animal = AM
 		simple_animal.toggle_ai(AI_ON)
@@ -713,12 +713,12 @@
 /atom/movable/proc/force_push(atom/movable/AM, force = move_force, direction, silent = FALSE)
 	. = AM.force_pushed(src, force, direction)
 	if(!silent && .)
-		visible_message("<span class='warning'>[src] forcefully pushes against [AM]!</span>", "<span class='warning'>I forcefully push against [AM]!</span>")
+		visible_message("<span class='warning'>[src] 猛力推向了 [AM]！</span>", "<span class='warning'>我猛力推向了 [AM]！</span>")
 
 /atom/movable/proc/move_crush(atom/movable/AM, force = move_force, direction, silent = FALSE)
 	. = AM.move_crushed(src, force, direction)
 	if(!silent && .)
-		visible_message("<span class='danger'>[src] crushes past [AM]!</span>", "<span class='danger'>I crush [AM]!</span>")
+		visible_message("<span class='danger'>[src] 强行碾过了 [AM]！</span>", "<span class='danger'>我碾过了 [AM]！</span>")
 
 /atom/movable/proc/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	return FALSE
@@ -1297,4 +1297,3 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 			SSspatial_grid.remove_grid_awareness(movable_loc, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 		ASSOC_UNSETEMPTY(recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS)
 		UNSETEMPTY(movable_loc.important_recursive_contents)
-

@@ -1,8 +1,8 @@
 /obj/machinery
-	name = "machinery"
+	name = "机械装置"
 	desc = ""
-	verb_say = "beeps"
-	verb_yell = "blares"
+	verb_say = "滴响"
+	verb_yell = "尖鸣"
 	max_integrity = 200
 	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 
@@ -19,7 +19,7 @@
 
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
 	var/fair_market_price = 69
-	var/market_verb = "Customer"
+	var/market_verb = "顾客"
 	var/payment_department = ACCOUNT_ENG
 
 	var/climb_time = 0
@@ -167,7 +167,7 @@
 
 /obj/proc/can_be_unfasten_wrench(mob/user, silent) //if we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
 	if(!(isfloorturf(loc)) && !anchored)
-		to_chat(user, "<span class='warning'>[src] needs to be on the floor to be secured!</span>")
+		to_chat(user, "<span class='warning'>[src] 必须放在地面上才能固定！</span>")
 		return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
@@ -177,12 +177,12 @@
 		if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
 			return can_be_unfasten
 		if(time)
-			to_chat(user, "<span class='notice'>I begin [anchored ? "un" : ""]securing [src]...</span>")
+			to_chat(user, "<span class='notice'>我开始[anchored ? "拆除" : "固定"][src]……</span>")
 		I.play_tool_sound(src, 50)
 		var/prev_anchored = anchored
 		//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
 		if(I.use_tool(src, user, time, extra_checks = CALLBACK(src, PROC_REF(unfasten_wrench_check), prev_anchored, user)))
-			to_chat(user, "<span class='notice'>I [anchored ? "un" : ""]secure [src].</span>")
+			to_chat(user, "<span class='notice'>我[anchored ? "拆除了" : "固定了"][src]。</span>")
 			setAnchored(!anchored)
 			playsound(src, 'sound/blank.ogg', 50, TRUE)
 			SEND_SIGNAL(src, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, anchored)
@@ -199,9 +199,9 @@
 
 /obj/machinery/proc/display_parts(mob/user)
 	. = list()
-	. += "<span class='notice'>It contains the following parts:</span>"
+	. += "<span class='notice'>它包含以下部件：</span>"
 	for(var/obj/item/C in component_parts)
-		. += "<span class='notice'>[icon2html(C, user)] \A [C].</span>"
+		. += "<span class='notice'>[icon2html(C, user)] \A [C]。</span>"
 	. = jointext(., "")
 
 /obj/machinery/examine(mob/user)
@@ -211,11 +211,11 @@
 			var/healthpercent = (obj_integrity/max_integrity) * 100
 			switch(healthpercent)
 				if(50 to 99)
-					. += "It looks slightly damaged."
+					. += "它看起来有些受损。"
 				if(25 to 50)
-					. += "It appears heavily damaged."
+					. += "它看起来受损严重。"
 				if(0 to 25)
-					. += "<span class='warning'>It's falling apart!</span>"
+					. += "<span class='warning'>它快要散架了！</span>"
 //	if(user.research_scanner && component_parts)
 //		. += display_parts(user, TRUE)
 
@@ -295,8 +295,8 @@
 	if(do_mob(user, user, adjusted_climb_time))
 		if(src.loc) //Checking if structure has been destroyed
 			if(do_climb(user))
-				user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
-									"<span class='notice'>I climb onto [src].</span>")
+				user.visible_message("<span class='warning'>[user] 爬上了 [src]。</span>", \
+									"<span class='notice'>我爬上了 [src]。</span>")
 				log_combat(user, src, "climbed onto")
 				if(climb_stun)
 					user.Stun(climb_stun)
@@ -304,5 +304,5 @@
 					playsound(src, climb_sound, 100)
 				. = 1
 			else
-				to_chat(user, "<span class='warning'>I fail to climb onto [src].</span>")
+				to_chat(user, "<span class='warning'>我没能爬上 [src]。</span>")
 	structureclimber = null
