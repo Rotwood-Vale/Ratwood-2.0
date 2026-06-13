@@ -419,7 +419,7 @@
 /obj/item/clothing/mask/rogue/facemask/prisoner
 	name = "cursed mask"
 	icon_state = "cursemask"
-	desc = "An iron mask that seals around the head, making it impossible to remove. It seems to be enchanted with some kind of vile magic..."
+	desc = "一副会锁死在头上的铁面具，几乎不可能自行摘下。看起来像是附着了某种邪恶魔法……"
 	body_parts_covered = NONE //So that surgery can be done through the mask.
 	var/active_item
 	var/bounty_amount
@@ -440,12 +440,12 @@
 /obj/item/clothing/mask/rogue/facemask/prisoner/proc/timerup(mob/living/carbon/human/user)
 	REMOVE_TRAIT(user, TRAIT_PACIFISM, "cursedmask")
 	REMOVE_TRAIT(user, TRAIT_SPELLCOCKBLOCK, "cursedmask")
-	visible_message(span_warning("The cursed mask opens with a click, falling off of [user]'s face and clambering apart on the ground, their penance complete."))
-	say("YOUR PENANCE IS COMPLETE.")
+	visible_message(span_warning("诅咒面具咔哒一声开启，从[user]脸上脱落，掉到地上后自行散开；他们的赎罪已经完成。"))
+	say("你的赎罪已经完成。")
 	for(var/name in GLOB.outlawed_players)
 		if(user.real_name == name)
 			GLOB.outlawed_players -= user.real_name
-			priority_announce("[user.real_name] has completed their penance. Justice has been served in the eyes of Ravox.", "PENANCE", 'sound/misc/bell.ogg')
+			priority_announce("[user.real_name]已完成赎罪。于拉沃克斯眼中，正义已得伸张。", "赎罪", 'sound/misc/bell.ogg')
 	playsound(src.loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
 	if(QDELETED(src))
 		return
@@ -458,7 +458,7 @@
 		return
 	else if(slot == SLOT_WEAR_MASK)
 		active_item = TRUE
-		to_chat(user, span_warning("This accursed mask pacifies me!"))
+		to_chat(user, span_warning("这副受诅咒的面具让我失去了争斗之心！"))
 		ADD_TRAIT(user, TRAIT_PACIFISM, "cursedmask")
 		ADD_TRAIT(user, TRAIT_SPELLCOCKBLOCK, "cursedmask")
 		if(HAS_TRAIT(user, TRAIT_RITUALIST))
@@ -473,7 +473,7 @@
 		var/timer_minutes = timer / 600
 
 		addtimer(CALLBACK(src, PROC_REF(timerup), user), timer)
-		say("YOUR PENANCE WILL BE COMPLETE IN [timer_minutes] MINUTES.")
+		say("你的赎罪将在[timer_minutes]分钟后完成。")
 	return
 */
 

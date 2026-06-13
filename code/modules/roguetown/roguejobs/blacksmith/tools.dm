@@ -51,7 +51,7 @@
 		if(!attacked_prosthetic.anvilrepair) //No hammering flesh limbs
 			return
 		if(attacked_prosthetic.obj_integrity >= attacked_prosthetic.max_integrity && attacked_prosthetic.brute_dam == 0 && attacked_prosthetic.burn_dam == 0 && attacked_prosthetic.wounds == null && attacked_prosthetic.disabled == BODYPART_NOT_DISABLED) //A mouthful
-			to_chat(user, span_warning("There is nothing to further repair on [attacked_prosthetic]."))
+			to_chat(user, span_warning("[attacked_prosthetic]已经没有更多可修的地方了。"))
 			return
 		if(blacksmith.get_skill_level(attacked_prosthetic.anvilrepair) <= 0)
 			if(prob(30))
@@ -70,15 +70,15 @@
 			attacked_prosthetic.wounds = null //Fixing fractures
 			attacked_prosthetic.disabled = BODYPART_NOT_DISABLED
 			if(repair_percent == 0.01) // If an inexperienced repair attempt has been successful
-				to_chat(user, span_warning("You fumble your way into slightly repairing [attacked_prosthetic]."))
+				to_chat(user, span_warning("我手忙脚乱地稍微修好了一点[attacked_prosthetic]。"))
 			else
-				user.visible_message(span_info("[user] repairs [attacked_prosthetic]!"))
+				user.visible_message(span_info("[user]修好了[attacked_prosthetic]！"))
 			blacksmith.mind.add_sleep_experience(attacked_prosthetic.anvilrepair, exp_gained/2) //We gain as much exp as we fix divided by 2
 			if(do_after(user, CLICK_CD_MELEE, target = attacked_object))
 				attack_obj(attacked_object, user)
 			return
 		else
-			user.visible_message(span_warning("[user] fumbles trying to repair [attacked_prosthetic]!"))
+			user.visible_message(span_warning("[user]修理[attacked_prosthetic]时手忙脚乱！"))
 			if(do_after(user, CLICK_CD_MELEE, target = attacked_object))
 				attack_obj(attacked_object, user)
 			return
@@ -100,11 +100,11 @@
 			return
 
 		if(!attacked_item.ontable())
-			to_chat(user, span_warning("I should put this on a table or an anvil first."))
+			to_chat(user, span_warning("我得先把这东西放到桌上或铁砧上。"))
 			return
 
 		if (unskilled && !attacked_item.obj_broken && attacked_item.shoddy_repair && integrity_percentage >= 60)
-			to_chat(user, span_warning("I can't do anything else to fix this right now - I should see a skilled craftsman."))
+			to_chat(user, span_warning("我现在没法继续修这个了，得找个手艺高明的匠人。"))
 			return
 
 		if(repair_skill <= 0)
@@ -124,36 +124,36 @@
 			attacked_item.obj_integrity = min(attacked_item.obj_integrity + repair_percent, attacked_item.max_integrity)
 			integrity_percentage = (attacked_item.obj_integrity / attacked_item.max_integrity) * 100
 			if(repair_percent == 0.01) // If an inexperienced repair attempt has been successful
-				to_chat(user, span_warning("You fumble your way into slightly repairing [attacked_item]."))
+				to_chat(user, span_warning("我手忙脚乱地稍微修好了一点[attacked_item]。"))
 			else
-				user.visible_message(span_info("[user] repairs [attacked_item]!"))
+				user.visible_message(span_info("[user]修好了[attacked_item]！"))
 				if(attacked_item.body_parts_covered != attacked_item.body_parts_covered_dynamic)
-					user.visible_message(span_info("[user] repairs [attacked_item]'s coverage!"))
+					user.visible_message(span_info("[user]修复了[attacked_item]的覆盖部位！"))
 					attacked_item.repair_coverage()
 			if(attacked_item.obj_broken)
 				var/do_fix = FALSE
 				if (unskilled && integrity_percentage >= 60)
 					attacked_item.shoddy_repair = TRUE
-					blacksmith.visible_message(span_info("[blacksmith] finishes field-repairing [attacked_item]."))
-					to_chat(user, span_warning("I should get this properly fixed by a skilled craftsman later."))
+					blacksmith.visible_message(span_info("[blacksmith]完成了对[attacked_item]的临时修理。"))
+					to_chat(user, span_warning("之后我还得找个手艺高明的匠人把它彻底修好。"))
 					do_fix = TRUE
 				else if (!unskilled && integrity_percentage >= 100)
 					if (attacked_item.shoddy_repair)
 						attacked_item.shoddy_repair = FALSE
-						to_chat(user, span_notice("My skilled hand has fully repaired this item."))
+						to_chat(user, span_notice("凭我熟练的手艺，这件物品已被彻底修好。"))
 					do_fix = TRUE
 				if (do_fix)
 					attacked_item.obj_fix()
 					return
 			else if (!attacked_item.obj_broken && !unskilled && attacked_item.shoddy_repair && integrity_percentage >= 100)
 				attacked_item.shoddy_repair = FALSE
-				to_chat(user, span_notice("My skilled hand has fully repaired this item."))
+				to_chat(user, span_notice("凭我熟练的手艺，这件物品已被彻底修好。"))
 			blacksmith.mind.add_sleep_experience(attacked_item.anvilrepair, exp_gained/2) //We gain as much exp as we fix divided by 2
 			if(do_after(user, CLICK_CD_MELEE, target = attacked_object))
 				attack_obj(attacked_object, user)
 			return
 		else
-			user.visible_message(span_warning("[user] fumbles trying to repair [attacked_item]!"))
+			user.visible_message(span_warning("[user]修理[attacked_item]时手忙脚乱！"))
 			if(do_after(user, CLICK_CD_MELEE, target = attacked_object))
 				attack_obj(attacked_object, user)
 			return
@@ -163,14 +163,14 @@
 		if(!attacked_structure.hammer_repair || !attacked_structure.max_integrity)
 			return
 		if(blacksmith.get_skill_level(attacked_structure.hammer_repair) <= 0)
-			to_chat(user, span_warning("I don't know how to repair this.."))
+			to_chat(user, span_warning("我不知道该怎么修这个……"))
 			return
 		repair_percent *= blacksmith.get_skill_level(attacked_structure.hammer_repair) * attacked_structure.max_integrity
 		exp_gained = min(attacked_structure.obj_integrity + repair_percent, attacked_structure.max_integrity) - attacked_structure.obj_integrity
 		attacked_structure.obj_integrity = min(attacked_structure.obj_integrity + repair_percent, attacked_structure.max_integrity)
 		blacksmith.mind.add_sleep_experience(attacked_structure.hammer_repair, exp_gained) //We gain as much exp as we fix
 		playsound(src,'sound/items/bsmithfail.ogg', 100, FALSE)
-		user.visible_message(span_info("[user] repairs [attacked_structure]!"))
+		user.visible_message(span_info("[user]修好了[attacked_structure]！"))
 		if(attacked_object.obj_integrity <= attacked_object.max_integrity && do_after(user, CLICK_CD_MELEE, target = attacked_object))
 			attack_obj(attacked_object, user)
 		return
@@ -209,7 +209,7 @@
 		while(affecting.get_damage() != 0 || length(affecting.wounds))
 			var/used_time = 7 SECONDS
 			if(M == user)
-				to_chat(user, span_warning("Repairing myself is difficult..."))
+				to_chat(user, span_warning("给自己修理还真是困难……"))
 				used_time += 3 SECONDS //repairing yourself as a golem is logistically going to be a lot more difficult than someone else doing it for you
 			if(user.mind)
 				used_time -= (user.get_skill_level(/datum/skill/craft/engineering) * 10)
@@ -235,12 +235,12 @@
 				user.visible_message(span_notice("[user] hammers [M]'s [affecting.name]."), span_notice("I hammer [M]'s [affecting.name]."))
 		if(affecting.get_damage() == 0 && !length(affecting.wounds))//if the bodypart has no damage nor wounds on it...
 			if(M == user)
-				to_chat(user, span_warning("My [affecting.name] is undamaged."))
+				to_chat(user, span_warning("我的[affecting.name]并没有受损。"))
 			else
-				to_chat(user, span_warning("[M]'s [affecting.name] is undamaged."))
+				to_chat(user, span_warning("[M]的[affecting.name]并没有受损。"))
 			return
 	else //Non-construct.
-		to_chat(user, span_warning("I can't tinker on living flesh!"))
+		to_chat(user, span_warning("我没法在活生生的血肉上敲敲打打！"))
 
 /obj/item/rogueweapon/hammer/wood	// wood hammer (mallet)
 	name = "木槌"
@@ -257,7 +257,7 @@
 
 /obj/item/rogueweapon/hammer/ancient
 	name = "古代锤"
-	desc = "一把以抛光 吉尔青铜 打造的锤子。被巧妙地重新装在光滑握柄上，它将继续塑造 HER 军团士兵的武备与伟大造物……"
+	desc = "一把以抛光吉尔青铜打造的锤子。被巧妙地重新装在光滑握柄上，它将继续塑造她之军团士兵的武备与伟大造物……"
 	icon_state = "ahammer"
 	smeltresult = /obj/item/ingot/aaslag
 
@@ -314,13 +314,13 @@
 			var/repair_percent = 0.05
 			if(user.mind)
 				if(user.get_skill_level(I.hammer_repair) <= 0)
-					to_chat(user, span_warning("I don't know how to repair this.."))
+					to_chat(user, span_warning("我不知道该怎么修这个……"))
 					return
 				repair_percent = max(user.get_skill_level(I.hammer_repair) * 0.05, 0.05)
 			repair_percent = repair_percent * I.max_integrity
 			I.obj_integrity = min(obj_integrity+repair_percent, I.max_integrity)
 			playsound(src,'sound/items/bsmithfail.ogg', 100, FALSE)
-			user.visible_message(span_info("[user] repairs [I]!"))
+			user.visible_message(span_info("[user]修好了[I]！"))
 			return
 	..()
 */
@@ -358,7 +358,7 @@
 /obj/item/rogueweapon/tongs/examine(mob/user)
 	. = ..()
 	if(hott)
-		. += span_warning("The tip is hot to the touch.")
+		. += span_warning("前端烫得不能碰。")
 
 /obj/item/rogueweapon/tongs/get_temperature()
 	if(hott)

@@ -277,9 +277,9 @@
 	var/bruthealval = -14 + psicross_bonus + sit_bonus1
 	var/burnhealval = -14 + psicross_bonus + sit_bonus2
 
-	to_chat(H, span_info("I take a moment to collect myself..."))
+	to_chat(H, span_info("我花了片刻让自己重新镇定下来……"))
 	if(zcross_trigger)
-		user.visible_message(span_warning("[user] shuddered. Something's very wrong."), span_userdanger("Cold shoots through my spine. Something laughs at me for trying."))
+		user.visible_message(span_warning("[user]猛地一颤。情况非常不对劲。"), span_userdanger("一股寒意窜过我的脊背。有什么东西正在嘲笑我的尝试。"))
 		user.playsound_local(user, 'sound/misc/zizo.ogg', 25, FALSE)
 		user.adjustBruteLoss(25)
 		return FALSE
@@ -291,13 +291,13 @@
 		H.adjustBruteLoss(bruthealval)
 		H.adjustFireLoss(burnhealval)
 		if (conditional_buff)
-			to_chat(user, span_info("My pain gives way to a sense of furthered clarity before returning again, dulled."))
+			to_chat(user, span_info("我的痛楚短暂退去，取而代之的是更进一步的清明，随后那痛楚又变得迟钝地回来了。"))
 		user.devotion?.update_devotion(-60)
 		to_chat(user, "<font color='purple'>我失去了 60 点虔诚！</font>")
 		cast(user)
 		return TRUE
 	else
-		to_chat(H, span_warning("My thoughts and sense of quiet escape me."))
+		to_chat(H, span_warning("我的思绪与内心的宁静都正在离我而去。"))
 		return FALSE
 
 

@@ -1,6 +1,6 @@
 /obj/structure/bed/rogue/eora
-	name = "flower bed"
-	desc = "A bed of flower petals that looks soft enough to sleep on! Said to spare the dying from Necra's domain."
+	name = "花瓣床"
+	desc = "一张由花瓣铺成的床，看起来柔软得足以安睡！据说能让濒死者免受内克拉领域侵扰。"
 	sleepy = 4
 	debris = null
 	max_integrity = 50
@@ -91,8 +91,8 @@
 	outline_colour = "#d04ae2"
 
 /atom/movable/screen/alert/status_effect/buff/healing/eora_bed
-	name = "Eora's reprieve"
-	desc = "The warmth of the petals soothes my breathing and heals my ails."
+	name = "伊欧拉的宽慰"
+	desc = "花瓣的温暖安抚着我的呼吸，并治愈我的病痛。"
 	icon_state = "eorabed"
 
 /datum/status_effect/buff/healing/bed_rest/tick()
@@ -112,10 +112,10 @@
 		owner.blood_volume = min(owner.blood_volume+healing_on_tick, BLOOD_VOLUME_NORMAL)
 
 /obj/effect/proc_holder/spell/invoked/summon_bed
-	name = "Eora's Rest"
-	desc = "Summon a sacred Eoran bed to provide sanctuary and stabilize the wounded. \
-	You may only maintain a limited amount of beds at a time depending on miracle skill. Summoning a new one will cause the oldest one to vanish."
-	invocations = list("Eora, provider of beauty-sleeps!")
+	name = "伊欧拉的安憩"
+	desc = "召唤一张神圣的伊欧拉床榻，为伤者提供庇护并稳定伤势。\
+	你同时只能维持有限数量的床榻，数量取决于神迹技艺。召唤新床会使最早的一张消失。"
+	invocations = list("伊欧拉啊，赐下安眠之美吧！")
 	sound = 'sound/magic/holyshield.ogg'
 	overlay_state = "eorabed"
 	chargetime = 10
@@ -129,7 +129,7 @@
 	var/turf/T = get_turf(targets[1]) || get_turf(user)
 
 	if(!isopenturf(T) || T.density)
-		to_chat(user, span_warning("The ground here is unsuitable for a sanctuary."))
+		to_chat(user, span_warning("这里的地面并不适合建起一处庇护所。"))
 		revert_cast()
 		return FALSE
 
@@ -149,14 +149,14 @@
 		var/datum/weakref/oldest_W = bed_refs[1]
 		var/obj/structure/bed/rogue/eora/old_bed = oldest_W.resolve()
 		if(old_bed && !QDELETED(old_bed))
-			old_bed.visible_message(span_nicegreen("The bed fades as a new one is summoned."))
+			old_bed.visible_message(span_nicegreen("旧床在新床被召来时渐渐消散。"))
 			qdel(old_bed)
 		bed_refs.Cut(1, 2)
 
 	var/obj/structure/bed/rogue/eora/new_bed = new(T)
 	bed_refs += WEAKREF(new_bed)
-	user.visible_message(span_notice("[user] conjures a beautiful bed of Eoran petals!"), \
-		span_notice("You summon a sanctuary for the weary."))
+	user.visible_message(span_notice("[user]召出了一张由伊欧拉花瓣构成的美丽床榻！"), \
+		span_notice("我为疲惫者召来了一处庇护所。"))
 
 	return TRUE
 

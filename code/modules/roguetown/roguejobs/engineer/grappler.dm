@@ -260,10 +260,10 @@ Reel teleports the attached atom to the grabbed turf.
 							to_chat(user, span_info("路径被挡住了！"))
 							return
 					else if(get_dist(user, T) > max_range_z)
-						reason = "It's too far."
+						reason = "太远了。"
 					else if (T.density)
-						reason = "It's a wall!"
-					to_chat(user, span_info("The hook fails! "+"[reason]"))
+						reason = "那是一堵墙！"
+					to_chat(user, span_info("钩爪失败了！[reason]"))
 					playsound(user, 'sound/foley/trap.ogg', 100, FALSE , 5)
 					unload(failure = TRUE)
 				else if(T.z == user.z)

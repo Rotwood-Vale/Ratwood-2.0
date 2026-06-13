@@ -25,7 +25,7 @@
 	xp_gain = TRUE
 
 /obj/projectile/magic/aoe/fireball/rogue
-	name = "fireball"
+	name = "火球"
 	exp_heavy = 0
 	exp_light = 0
 	exp_flash = 0

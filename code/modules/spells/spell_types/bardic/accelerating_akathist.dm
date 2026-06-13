@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/invoked/song/accelakathist
 	name = "加速圣颂"
 	desc = "用你的吟游之歌加速盟友！"
-	invocations = list("plays a blisteringly fast series of notes!") 
+	invocations = list("奏出一连串快得灼人的音符！") 
 	invocation_type = "emote"
 	overlay_state = "bardsong_t3_base"
 	action_icon_state = "bardsong_t3_base"
@@ -33,7 +33,7 @@
 	
 /atom/movable/screen/alert/status_effect/buff/song/accelakathist
 	name = "加速圣颂"
-	desc = "I can feel the rhythm!"
+	desc = "我能感受到节奏在体内奔涌！"
 	icon_state = "buff"
 
 #define ACCELAKATHIST_FILTER "akathist_glow"
@@ -56,12 +56,12 @@
 	var/filter = owner.get_filter(ACCELAKATHIST_FILTER)
 	if (!filter)
 		owner.add_filter(ACCELAKATHIST_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 25, "size" = 1))
-	to_chat(owner, span_warning("I am being invited to dance! My heart pounds in my ears as my movements quicken!"))
+	to_chat(owner, span_warning("我像是被邀请去起舞！心跳在耳畔轰鸣，动作也随之加快！"))
 
 /datum/status_effect/buff/song/accelakathist/on_remove()
 	. = ..()
 	owner.remove_filter(ACCELAKATHIST_FILTER)
-	to_chat(owner, span_warning("The song ends, and my heartbeat slows back down to a more moderate tempo."))
+	to_chat(owner, span_warning("乐曲停歇，我的心跳也逐渐放缓，回到了平稳的节奏。"))
 
 #undef ACCELAKATHIST_FILTER
 

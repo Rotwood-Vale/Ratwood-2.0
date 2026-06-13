@@ -121,21 +121,21 @@
 
 	switch(quality_tier)
 		if(0)
-			quality_prefix = "crude "
+			quality_prefix = "粗制的"
 			quality_multiplier = 0.4
 		if(1)
-			quality_prefix = "poor "
+			quality_prefix = "拙劣的"
 			quality_multiplier = 0.6
 		if(2)
 			quality_multiplier = 0.8
 		if(3)
-			quality_prefix = "fine "
+			quality_prefix = "精良的"
 			quality_multiplier = 1.1
 		if(4)
-			quality_prefix = "flawless "
+			quality_prefix = "无瑕的"
 			quality_multiplier = 1.2
 		if(5)
-			quality_prefix = "masterwork "
+			quality_prefix = "大师之作"
 			quality_multiplier = 1.5
 
 	if(quality_prefix)
@@ -268,7 +268,7 @@
 
 /datum/glass_blow_recipe
 	abstract_type = /datum/glass_blow_recipe
-	var/name = "glass shape"
+	var/name = "玻璃坯形"
 	var/craftdiff = SKILL_LEVEL_NONE
 	var/base_time = 40
 	var/result_type = /obj/item/natural/glass
@@ -340,4 +340,3 @@
 	result_count = 2
 	recipe_icon = 'icons/roguetown/misc/alchemy.dmi'
 	recipe_icon_state = "vial_bottle"
-

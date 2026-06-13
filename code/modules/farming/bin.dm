@@ -210,8 +210,8 @@
 	. = ..()
 
 /obj/item/roguebin/trash
-	name = "trash bin"
-	desc = "An eyesore that is meant to make things look cleaner."
+	name = "垃圾桶"
+	desc = "一个碍眼的垃圾桶，摆在这里只是为了让环境看起来更整洁。"
 	icon_state = "trashbin"
 	base_state = "trashbin"
 

@@ -39,7 +39,7 @@
 	var/mob/living/carbon/human/H = user
 
 	// Main Menu
-	var/list/choices = list("Consult Bounties", "Set Bounty", "Print List of Bounties", "Remove Bounty", "Collect Change")
+	var/list/choices = list("查看悬赏", "设立悬赏", "打印悬赏列表", "移除悬赏", "取回找零")
 	var/selection = input(user, "灭绝兽 正在聆听", src) as null|anything in choices
 
 	if(!Adjacent(user, src)) // User can move while selecting, sanity check
@@ -47,19 +47,19 @@
 
 	switch(selection)
 
-		if("Consult Bounties")
+		if("查看悬赏")
 			consult_bounties(H)
 
-		if("Set Bounty")
+		if("设立悬赏")
 			set_bounty(H)
 
-		if("Print List of Bounties")
+		if("打印悬赏列表")
 			print_bounty_scroll(H)
 
-		if("Remove Bounty")
+		if("移除悬赏")
 			remove_bounty(H)
 
-		if("Collect Change")
+		if("取回找零")
 			budget2change(budget)
 			budget = 0
 
@@ -80,14 +80,14 @@
 /obj/structure/roguemachine/bounty/proc/consult_bounties(mob/living/carbon/human/user)
 	var/bounty_found = FALSE
 	var/consult_menu
-	consult_menu += "<center>BOUNTIES<BR>"
+	consult_menu += "<center>悬赏名单<BR>"
 	consult_menu += "--------------<BR>"
 	for(var/datum/bounty/saved_bounty in GLOB.head_bounties)
 		consult_menu += saved_bounty.banner
 		bounty_found = TRUE
 
 	if(bounty_found)
-		var/datum/browser/popup = new(user, "BOUNTIES", "", 500, 300, src)
+		var/datum/browser/popup = new(user, "悬赏名单", "", 500, 300, src)
 		popup.set_content(consult_menu)
 		popup.open()
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(user_moved))
@@ -127,7 +127,7 @@
 	for(var/datum/bounty/removing_bounty in GLOB.head_bounties)
 		if(removing_bounty.target == target_name && user.real_name == removing_bounty.employer)
 			GLOB.head_bounties -= removing_bounty
-			scom_announce("The bounty posting on [target_name] has been removed.")
+			scom_announce("对[target_name]的悬赏已被撤销。")
 			message_admins("[ADMIN_LOOKUPFLW(user)] has removed the bounty on [ADMIN_LOOKUPFLW(target_name)]")
 			return
 	say("错误。该悬赏已不再有效。")
@@ -173,8 +173,8 @@
 		say("未给出理由。")
 		return
 
-	var/confirm = input(user, "你真敢将这份黑暗释放到世间吗？你的名字会为人所知。", src) as null|anything in list("Yes", "No")
-	if(isnull(confirm) || confirm == "No") return
+	var/confirm = input(user, "你真敢将这份黑暗释放到世间吗？你的名字会为人所知。", src) as null|anything in list("是", "否")
+	if(isnull(confirm) || confirm == "否") return
 
 	// Deduct money from user
 	budget -= round(amount)
@@ -198,7 +198,7 @@
 
 	//Announce it locally and on scomm
 	playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
-	var/bounty_announcement = "The 灭绝兽 hungers for [target]."
+	var/bounty_announcement = "灭绝兽已将[target]列为猎物。"
 	say(bounty_announcement)
 	scom_announce(bounty_announcement)
 
@@ -302,43 +302,43 @@
 /proc/compose_bounty(datum/bounty/new_bounty)
 	switch(rand(1, 3))
 		if(1)
-			new_bounty.banner += "A dire bounty hangs upon the capture of [new_bounty.target], for '[new_bounty.reason]'.<BR>"
-			new_bounty.banner += "They are a criminal belonging to the [new_bounty.target_race] race, going by the following description: they are [new_bounty.target_height], of a [new_bounty.target_body_type] build and they have [new_bounty.target_body_prefix] physique. They speak with [new_bounty.target_voice_prefix] voice.'.<BR>"
-			new_bounty.banner += "The patron, [new_bounty.employer], offers [new_bounty.amount] mammons for the task.<BR>"
+			new_bounty.banner += "现对[new_bounty.target]发布严酷悬赏，缘由如下：'[new_bounty.reason]'。<BR>"
+			new_bounty.banner += "此人为[new_bounty.target_race]族裔罪犯，外貌如下：身高[new_bounty.target_height]，体格[new_bounty.target_body_type]，身形[new_bounty.target_body_prefix]。其嗓音[new_bounty.target_voice_prefix]。<BR>"
+			new_bounty.banner += "委托人[new_bounty.employer]愿为此事支付[new_bounty.amount]玛门。<BR>"
 		if(2)
-			new_bounty.banner += "The capture of [new_bounty.target] is wanted for '[new_bounty.reason]''.<BR>"
-			new_bounty.banner += "They are a reprobate belonging to the [new_bounty.target_race] race, going by the following description: they are [new_bounty.target_height], of a [new_bounty.target_body_type] build and they have [new_bounty.target_body_prefix] physique. They speak with [new_bounty.target_voice_prefix] voice.'.<BR>"
-			new_bounty.banner += "The employer, [new_bounty.employer], offers [new_bounty.amount] mammons for the deed.<BR>"
+			new_bounty.banner += "现悬赏缉拿[new_bounty.target]，罪名为：'[new_bounty.reason]'。<BR>"
+			new_bounty.banner += "此人为[new_bounty.target_race]族的恶徒，外貌如下：身高[new_bounty.target_height]，体格[new_bounty.target_body_type]，身形[new_bounty.target_body_prefix]。其嗓音[new_bounty.target_voice_prefix]。<BR>"
+			new_bounty.banner += "雇主[new_bounty.employer]愿为此事支付[new_bounty.amount]玛门。<BR>"
 		if(3)
-			new_bounty.banner += "[new_bounty.employer] hath offered to pay [new_bounty.amount] mammons for the capture of [new_bounty.target].<BR>"
-			new_bounty.banner += "By reason of the following: '[new_bounty.reason]'.<BR>"
-			new_bounty.banner += "They are a heathen belonging to the [new_bounty.target_race] race, going by the following description: they are [new_bounty.target_height], of a [new_bounty.target_body_type] build and they have [new_bounty.target_body_prefix] physique. They speak with [new_bounty.target_voice_prefix] voice.'.<BR>"
+			new_bounty.banner += "[new_bounty.employer]愿支付[new_bounty.amount]玛门，以缉拿[new_bounty.target]。<BR>"
+			new_bounty.banner += "缘由如下：'[new_bounty.reason]'。<BR>"
+			new_bounty.banner += "此人为[new_bounty.target_race]族的异端，外貌如下：身高[new_bounty.target_height]，体格[new_bounty.target_body_type]，身形[new_bounty.target_body_prefix]。其嗓音[new_bounty.target_voice_prefix]。<BR>"
 	new_bounty.banner += "--------------<BR>"
 
 /proc/compose_bounty_noface(datum/bounty/new_bounty_noface)
 	switch(rand(1, 3))
 		if(1)
-			new_bounty_noface.banner += "A dire bounty hangs upon the capture of an outlaw belonging to the [new_bounty_noface.target_race] race, going by the following description: they are [new_bounty_noface.target_height], of a [new_bounty_noface.target_body_type] build and they have [new_bounty_noface.target_body_prefix] physique. They speak with [new_bounty_noface.target_voice_prefix] voice. They are wanted for '[new_bounty_noface.reason]'.<BR>"
-			new_bounty_noface.banner += "The patron, [new_bounty_noface.employer], offers [new_bounty_noface.amount] mammons for the task.<BR>"
+			new_bounty_noface.banner += "现对一名[new_bounty_noface.target_race]族裔的亡命徒发布严酷悬赏。其外貌如下：身高[new_bounty_noface.target_height]，体格[new_bounty_noface.target_body_type]，身形[new_bounty_noface.target_body_prefix]。其嗓音[new_bounty_noface.target_voice_prefix]。其罪名为：'[new_bounty_noface.reason]'。<BR>"
+			new_bounty_noface.banner += "委托人[new_bounty_noface.employer]愿为此事支付[new_bounty_noface.amount]玛门。<BR>"
 		if(2)
-			new_bounty_noface.banner += "The capture of a criminal of [new_bounty_noface.target_race] ancestry. This bounty been authorised by [new_bounty_noface.employer] for '[new_bounty_noface.reason]'. Their description is as follows: they are of a [new_bounty_noface.target_height] height, of a [new_bounty_noface.target_body_type] build, they have [new_bounty_noface.target_body_prefix] physique and they speak with [new_bounty_noface.target_voice_prefix] voice.<BR>"
-			new_bounty_noface.banner += "The employer, [new_bounty_noface.employer], offers [new_bounty_noface.amount] mammons for the deed, they are to be brought in dead or alive.<BR>"
+			new_bounty_noface.banner += "现缉拿一名[new_bounty_noface.target_race]血统的罪犯。此悬赏由[new_bounty_noface.employer]授权，缘由为：'[new_bounty_noface.reason]'。其外貌如下：身高[new_bounty_noface.target_height]，体格[new_bounty_noface.target_body_type]，身形[new_bounty_noface.target_body_prefix]，其嗓音[new_bounty_noface.target_voice_prefix]。<BR>"
+			new_bounty_noface.banner += "雇主[new_bounty_noface.employer]愿支付[new_bounty_noface.amount]玛门，无论死活。<BR>"
 		if(3)
-			new_bounty_noface.banner += "[new_bounty_noface.employer] hath offered to pay [new_bounty_noface.amount] mammons for the capture of a criminal of [new_bounty_noface.target_race] ancestry. They've been described to be of a [new_bounty_noface.target_height] stature with [new_bounty_noface.target_body_prefix] physique with a [new_bounty_noface.target_body_type] build. Their voice is [new_bounty_noface.target_voice].<BR>"
-			new_bounty_noface.banner += "By reason of the following: '[new_bounty_noface.reason]'.<BR>"
+			new_bounty_noface.banner += "[new_bounty_noface.employer]愿支付[new_bounty_noface.amount]玛门，以缉拿一名[new_bounty_noface.target_race]血统的罪犯。其外貌描述为：身高[new_bounty_noface.target_height]，身形[new_bounty_noface.target_body_prefix]，体格[new_bounty_noface.target_body_type]。其声音为[new_bounty_noface.target_voice]。<BR>"
+			new_bounty_noface.banner += "缘由如下：'[new_bounty_noface.reason]'。<BR>"
 	new_bounty_noface.banner += "--------------<BR>"
 
 /proc/compose_bounty_obscure(datum/bounty/new_bounty_obscure)
 	switch(rand(1, 3))
 		if(1)
-			new_bounty_obscure.banner += "A dire bounty hangs upon the capture of an outlaw belonging to the [new_bounty_obscure.target_race] race, going by the following description: they are [new_bounty_obscure.target_height], of a [new_bounty_obscure.target_body_type] build and they have [new_bounty_obscure.target_body_prefix] physique. They are wanted for '[new_bounty_obscure.reason]'.<BR>"
-			new_bounty_obscure.banner += "The patron, [new_bounty_obscure.employer], offers [new_bounty_obscure.amount] mammons for the task.<BR>"
+			new_bounty_obscure.banner += "现对一名[new_bounty_obscure.target_race]族裔的亡命徒发布严酷悬赏。其外貌如下：身高[new_bounty_obscure.target_height]，体格[new_bounty_obscure.target_body_type]，身形[new_bounty_obscure.target_body_prefix]。其罪名为：'[new_bounty_obscure.reason]'。<BR>"
+			new_bounty_obscure.banner += "委托人[new_bounty_obscure.employer]愿为此事支付[new_bounty_obscure.amount]玛门。<BR>"
 		if(2)
-			new_bounty_obscure.banner += "The capture of a criminal of [new_bounty_obscure.target_race] ancestry. This bounty been authorised by [new_bounty_obscure.employer] for '[new_bounty_obscure.reason]'. Their description is as follows: they are of a [new_bounty_obscure.target_height] height, of a [new_bounty_obscure.target_body_type] build and they have [new_bounty_obscure.target_body_prefix] physique.<BR>"
-			new_bounty_obscure.banner += "The employer, [new_bounty_obscure.employer], offers [new_bounty_obscure.amount] mammons for the deed, they are to be brought in dead or alive.<BR>"
+			new_bounty_obscure.banner += "现缉拿一名[new_bounty_obscure.target_race]血统的罪犯。此悬赏由[new_bounty_obscure.employer]授权，缘由为：'[new_bounty_obscure.reason]'。其外貌如下：身高[new_bounty_obscure.target_height]，体格[new_bounty_obscure.target_body_type]，身形[new_bounty_obscure.target_body_prefix]。<BR>"
+			new_bounty_obscure.banner += "雇主[new_bounty_obscure.employer]愿支付[new_bounty_obscure.amount]玛门，无论死活。<BR>"
 		if(3)
-			new_bounty_obscure.banner += "[new_bounty_obscure.employer] hath offered to pay [new_bounty_obscure.amount] mammons for the capture of a criminal of [new_bounty_obscure.target_race] ancestry. They've been described to be of a [new_bounty_obscure.target_height] stature with [new_bounty_obscure.target_body_prefix] physique with a [new_bounty_obscure.target_body_type] build.<BR>"
-			new_bounty_obscure.banner += "By reason of the following: '[new_bounty_obscure.reason]'.<BR>"
+			new_bounty_obscure.banner += "[new_bounty_obscure.employer]愿支付[new_bounty_obscure.amount]玛门，以缉拿一名[new_bounty_obscure.target_race]血统的罪犯。其外貌描述为：身高[new_bounty_obscure.target_height]，身形[new_bounty_obscure.target_body_prefix]，体格[new_bounty_obscure.target_body_type]。<BR>"
+			new_bounty_obscure.banner += "缘由如下：'[new_bounty_obscure.reason]'。<BR>"
 	new_bounty_obscure.banner += "--------------<BR>"
 
 /obj/structure/roguemachine/bounty/proc/print_bounty_scroll(mob/living/carbon/human/user)
@@ -347,12 +347,12 @@
 		return
 
 	var/cost = 50
-	var/choice = alert(user, "Print a continously updated list of active bounties for [cost] mammons?", "Print Bounty Scroll", "Yes", "No")
-	if(choice != "Yes")
+	var/choice = alert(user, "要花费 [cost] 玛门打印一份会持续更新的现行悬赏清单吗？", "打印悬赏卷轴", "是", "否")
+	if(choice != "是")
 		return
 
 	if(budget < cost)
-		say("Insufficient funds. [cost] mammons required.")
+		say("资金不足。需要 [cost] 玛门。")
 		return
 
 	budget -= cost
@@ -387,8 +387,8 @@
 
 /obj/structure/chair/freedomchair
 	name = "自由机"
-	desc = "A chair-shaped machine normally used to place cursed collars onto a prisoner's neck. \
-	This one's been tampered with, and now does the opposite - re-purposed to remove those wretched iron collars."
+	desc = "一台通常用于把诅咒项圈扣到囚犯脖子上的椅形机器。\
+	这一台显然被人动过手脚，如今功用完全相反，专门拿来拆除那些可憎的铁项圈。"
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "evilchair"
 	blade_dulling = DULLING_BASH
@@ -435,13 +435,13 @@
 	for(var/l in buckled_mobs)
 		M = l
 	if(!ismob(M))
-		say("CANNOT BEGIN WITHOUT SUBJECT BUCKLED.")
+		say("未将对象固定，无法开始。")
 		return
 	if(!ishuman(M))
-		say("NON-HUMAN ENTITY. ABORT. ABORT.")
+		say("非人实体。中止。中止。")
 		return
 	if(!M.buckled)
-		say("SUBJECT... NOT PROPERLY SECURED...")
+		say("对象……未被妥善固定……")
 		return
 	if(!do_after(A, 3 SECONDS, TRUE, M))
 		return
@@ -575,7 +575,7 @@
 	unbuckle_all_mobs()
 
 /obj/structure/chair/arrestchair/proc/giveup(mob/living/carbon/human/M)
-	if(alert(M, "Do you submit to the Mask, or do you die? You have 10 seconds to decide.", "CHOICE OF LYFE", "Submit", "Perish") == "Perish")
+	if(alert(M, "你是向面具屈服，还是选择去死？你有 10 秒时间决定。", "生死抉择", "屈服", "去死") == "去死")
 		message_admins("[M.real_name] chose to die to the 灭绝兽.")
 		log_admin("[M.real_name] opted to die to the 灭绝兽.")
 		if(M.Adjacent(src))	//No buffering this for later

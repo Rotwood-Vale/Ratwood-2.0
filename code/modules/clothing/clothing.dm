@@ -281,7 +281,7 @@
 		C.use(1)
 		update_clothes_damaged_state(FALSE)
 		obj_integrity = max_integrity
-		to_chat(user, span_notice("I fix the damage on [src] with [C]."))
+		to_chat(user, span_notice("我用[C]修补了[src]上的损伤。"))
 		return 1*/
 	return ..()
 

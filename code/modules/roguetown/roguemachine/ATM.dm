@@ -24,7 +24,7 @@
 /*
 	if(HAS_TRAIT(user, TRAIT_OUTLANDER) && !HAS_TRAIT(user, TRAIT_NOBLE) && !HAS_TRAIT(user, TRAIT_INQUISITION))
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
-		loc.visible_message(span_warning("The nervelock turns its nose up at [user]'s hand."))
+		loc.visible_message(span_warning("神经锁嫌恶地甩开了[user]的手。"))
 		to_chat(user, span_danger("这台机器鄙夷你卑微的异乡血脉。"))
 		return
 */
@@ -207,7 +207,7 @@
 	else
 		loc.visible_message(span_warning("当王冠工作时，发出可怕的刮擦声..."))
 		if(!has_reported)
-			send_ooc_note("A parasite of the Freefolk is draining a Nervelock! Location: [location_tag ? location_tag : "Unknown"]", job = list("Grand Duke", "Steward", "Clerk"))
+			send_ooc_note("有一名自由民的寄生虫正在榨取一台神经锁！位置：[location_tag ? location_tag : "未知"]", job = list("Grand Duke", "Steward", "Clerk"))
 			has_reported = TRUE
 		playsound(src, 'sound/misc/TheDrill.ogg', 70, TRUE)
 		spawn(100) // The time it takes to complete an interval. If you adjust this, please adjust the sound too. It's 'about' perfect at 100. Anything less It'll start overlapping.
@@ -299,11 +299,11 @@
 								playsound(src, 'sound/misc/DrillDone.ogg', 70, TRUE)
 								is_active = FALSE
 								to_chat(H,span_info("<font color ='red'>你感到自己被抽空了。</font>"))
-								send_ooc_note("A parasite of the Freefolk has siphoned [H.real_name] of [sum] from the Nervemaster's veins.", job = list("Grand Duke", "Steward", "Clerk"))
+								send_ooc_note("有一名自由民的寄生虫从神经主 [H.real_name] 的血脉中抽走了 [sum]。", job = list("Grand Duke", "Steward", "Clerk"))
 						else
 							is_active = FALSE
 							if(sum)
-								send_ooc_note("A parasite of the Freefolk has siphoned [H.real_name] of [sum] from the Nervemaster's veins.", job = list("Grand Duke", "Steward", "Clerk"))
+								send_ooc_note("有一名自由民的寄生虫从神经主 [H.real_name] 的血脉中抽走了 [sum]。", job = list("Grand Duke", "Steward", "Clerk"))
 							break
 				if("缓慢")
 					is_active = TRUE
@@ -327,11 +327,11 @@
 								drain_effect_fast(H)
 							if(i == needed_cycles)	//Last cycle.
 								is_active = FALSE
-								send_ooc_note("A parasite of the Freefolk has siphoned [H.real_name] of [sum] from the Nervemaster's veins.", job = list("Grand Duke", "Steward", "Clerk"))
+								send_ooc_note("有一名自由民的寄生虫从神经主 [H.real_name] 的血脉中抽走了 [sum]。", job = list("Grand Duke", "Steward", "Clerk"))
 						else
 							is_active = FALSE
 							if(sum)
-								send_ooc_note("A parasite of the Freefolk has siphoned [H.real_name] of [sum] from the Nervemaster's veins.", job = list("Grand Duke", "Steward", "Clerk"))
+								send_ooc_note("有一名自由民的寄生虫从神经主 [H.real_name] 的血脉中抽走了 [sum]。", job = list("Grand Duke", "Steward", "Clerk"))
 							break
 				if("算了")
 					return

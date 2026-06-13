@@ -50,9 +50,9 @@
 	lastpoint = world.time
 	var/obj/item/held_item = get_active_held_item()
 	if(held_item)
-		visible_message(span_info("[src] points [held_item] at [pointed_atom]."), span_info("I point [held_item] at [pointed_atom]."))
+		visible_message(span_info("[src]用[held_item]指向了[pointed_atom]。"), span_info("我用[held_item]指向了[pointed_atom]。"))
 	else
-		visible_message(span_info("[src] points at [pointed_atom]."), span_info("I point at [pointed_atom]."))
+		visible_message(span_info("[src]指向了[pointed_atom]。"), span_info("我指向了[pointed_atom]。"))
 
 	return TRUE
 

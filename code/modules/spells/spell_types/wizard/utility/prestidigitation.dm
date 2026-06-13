@@ -242,7 +242,7 @@
 		user.visible_message(span_notice("[user]朝[target.name]施了个手势。细小的奥术微尘涌过[target.p_them()]周身......"), span_notice("我开始用奥术之力清洁[target.name]......"))
 		if (do_after(user, src.cleanspeed, target = target))
 			wash_atom(target,CLEAN_MEDIUM)
-			to_chat(user, span_notice("I render \the [target.name] clean."))
+			to_chat(user, span_notice("我将\the [target.name]清理干净了。"))
 			return TRUE
 		return FALSE
 
@@ -252,12 +252,12 @@
 	var/speed = initial(gatherspeed) - (skill_level * 3) // 3 speed per skill level, from 35 down to a maximum of 17 (pretty quick)
 	var/turf/Turf = get_turf(target)
 	if (istype(target, /obj/structure/well/fountain/mana))
-		user.visible_message(span_notice("[user] begins crystalizing liquid mana..."))
+		user.visible_message(span_notice("[user]开始将液态法力结晶化……"))
 		while(do_after(user, speed, target = target))
 			to_chat(user, span_notice("我用奥术之力塑形[target.name]中的液态法力，将其结晶化了！"))
 			new /obj/item/magic/manacrystal(Turf)
 	if (istype(target, /turf/open/lava))
-		user.visible_message(span_notice("[user] begins molding the oozing lava..."))
+		user.visible_message(span_notice("[user]开始塑形那股流淌的熔岩……"))
 		while(do_after(user, speed, target = target))
 			to_chat(user, span_notice("我用奥术之力塑起一捧流淌的熔岩，使其迅速硬化了！"))
 			new /obj/item/magic/obsidian(user.loc)

@@ -61,8 +61,8 @@
 		if(levels <= 2)
 			Immobilize(2 SECONDS)
 			OffBalance(12 SECONDS)
-			visible_message(span_danger("[src] glides from above."), \
-							span_danger("I glide down."))
+			visible_message(span_danger("[src]自上方滑翔而下。"), \
+							span_danger("我滑翔而下。"))
 			if(m_intent == MOVE_INTENT_RUN)
 				toggle_rogmove_intent(MOVE_INTENT_WALK)
 			return
@@ -70,8 +70,8 @@
 	for(var/i in 2 to levels)
 		i++
 		points += "!"
-	visible_message(span_danger("[src] falls down[points]"), \
-					span_danger("I fall down[points]"))
+	visible_message(span_danger("[src]摔倒了[points]"), \
+					span_danger("我摔倒了[points]"))
 	playsound(src.loc, 'sound/foley/zfall.ogg', 100, FALSE)
 	if(!isgroundlessturf(T))
 		ZImpactDamage(T, levels)
@@ -143,14 +143,14 @@
 		//Should stop you pushing a restrained person out of the way
 		if(L.pulledby && L.pulledby != src && L.pulledby != L && L.restrained())
 			if(!(world.time % 5))
-				to_chat(src, span_warning("[L] is restrained, you cannot push past."))
+				to_chat(src, span_warning("[L]被束缚住了，我没法从其身边挤过去。"))
 			return TRUE
 
 		if(L.pulling)
 			if(ismob(L.pulling) && L.pulling != L)
 				var/mob/P = L.pulling
 				if(!(world.time % 5))
-					to_chat(src, span_warning("[L] is grabbing [P], you cannot push past."))
+					to_chat(src, span_warning("[L]正抓着[P]，我没法从其身边挤过去。"))
 				return TRUE
 
 	if(moving_diagonally)//no mob swap during diagonal moves.
@@ -190,12 +190,12 @@
 			if(src.dir != src.sprint_dir)
 				self_points -= 99
 				instafail = TRUE
-				to_chat(src, span_warning("I changed direction too late!"))
+				to_chat(src, span_warning("我转向得太晚了！"))
 			var/clash_blocked
 			if(L.has_status_effect(/datum/status_effect/buff/clash) && !instafail)
 				self_points -= 99
 				L.remove_status_effect(/datum/status_effect/buff/clash)
-				to_chat(src, span_warning("[L] was ready for me!"))
+				to_chat(src, span_warning("[L]早有防备！"))
 				if(prob(10))
 					playsound(src, 'sound/combat/clash_charge_meme.ogg', 100)
 				else
@@ -219,11 +219,11 @@
 				playsound(src, "genblunt", 100, TRUE)
 			if(instafail || clash_blocked)
 				if(instafail)
-					visible_message(span_warning("[src] smashes into [L] with no headstart!"), span_warning("I charge into [L] too early!"))
+					visible_message(span_warning("[src]还没冲起来就一头撞上了[L]！"), span_warning("我冲得太早，直接撞上了[L]！"))
 				if(clash_blocked)
-					visible_message(span_warning("[src] gets tripped by [L]!"), span_warning("I get tripped by [L]!"))
+					visible_message(span_warning("[src]被[L]绊倒了！"), span_warning("我被[L]绊倒了！"))
 			else
-				visible_message(span_warning("[src] charges into [L]!"), span_warning("I charge into [L]!"))
+				visible_message(span_warning("[src]猛地撞向了[L]！"), span_warning("我猛地撞向了[L]！"))
 			return TRUE
 
 	//okay, so we didn't switch. but should we push?
@@ -247,9 +247,9 @@
 			if(statchance < 10)
 				statchance = 10
 			if(prob(statchance))
-				visible_message(span_info("[src] pushes [M]."))
+				visible_message(span_info("[src]推了[M]一下。"))
 			else
-				visible_message(span_warning("[src] pushes [M]."))
+				visible_message(span_warning("[src]猛地推开了[M]。"))
 				return TRUE
 
 	//anti-riot equipment is also anti-push
@@ -297,13 +297,13 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		if(!get_bodypart(check_zone(L.zone_selected)))
-			to_chat(L, span_warning("[src] is missing that."))
+			to_chat(L, span_warning("[src]身上没有那个部位。"))
 			return FALSE
 		if(!lying_attack_check(L))
 			return FALSE
 		// snowflake check for blocking mouthgrabs on biting deadites
 		if(L.zone_selected == BODY_ZONE_PRECISE_MOUTH && istype(mouth, /obj/item/grabbing/bite))
-			to_chat(L, span_warning("You can't grab [src]'s mouth while [p_theyre()] biting something!"))
+			to_chat(L, span_warning("[src]正在咬着什么东西时，你没法去抓[src.p_their()]的嘴！"))
 			return FALSE
 	return TRUE
 
@@ -316,7 +316,7 @@
 	if(HAS_TRAIT(L, TRAIT_CIVILIZEDBARBARIAN))
 		acceptable.Add(BODY_ZONE_HEAD)
 	if( !(check_zone(L.zone_selected) in acceptable) )
-		to_chat(L, span_warning("I can't reach that."))
+		to_chat(L, span_warning("我够不到那里。"))
 		return FALSE
 	return TRUE
 
@@ -349,12 +349,12 @@
 		CZ = TRUE
 	if(CZ)
 		if( !(check_zone(L.zone_selected) in acceptable) )
-			to_chat(L, span_warning("I can't reach that."))
+			to_chat(L, span_warning("我够不到那里。"))
 			testing("reach2")
 			return FALSE
 	else
 		if( !(L.zone_selected in acceptable) )
-			to_chat(L, span_warning("I can't reach that."))
+			to_chat(L, span_warning("我够不到那里。"))
 			testing("reach2")
 			return FALSE
 	return TRUE
@@ -377,13 +377,13 @@
 
 	if(AM.pulledby && AM.pulledby != src)
 		if(AM == src)
-			to_chat(src, span_warning("I'm being grabbed by something!"))
+			to_chat(src, span_warning("有什么东西抓住我了！"))
 			return FALSE
 		else
 			if(!supress_message)
-				AM.visible_message(span_danger("[src] has pulled [AM] from [AM.pulledby]'s grip."), span_danger("[src] has pulled me from [AM.pulledby]'s grip."), null, null, src)
+				AM.visible_message(span_danger("[src]把[AM]从[AM.pulledby]手里拽了出来。"), span_danger("[src]把我从[AM.pulledby]手里拽了出来。"), null, null, src)
 
-				to_chat(src, span_notice("I pull [AM] from [AM.pulledby]'s grip!"))
+				to_chat(src, span_notice("我把[AM]从[AM.pulledby]手里拽了出来！"))
 			log_combat(AM, AM.pulledby, "pulled from", src)
 			AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 	if(AM != src)
@@ -417,23 +417,23 @@
 			// If limb is not covered and oiled, chance to slip away
 			if(!is_covered)
 				if(prob(50)) // 35% chance to slip away from grab attempt
-					visible_message(span_warning("[target] slips away from [src]'s oily grasp!"), \
-							span_warning("[target.name] slips away from my grip - they're too oily!"))
+					visible_message(span_warning("[target]从[src]油滑的手中溜脱了！"), \
+							span_warning("[target.name]从我手里滑走了，他们身上太滑了！"))
 					log_combat(src, target, "failed to grab due to oil", addition="oiled skin")
 					return FALSE // Grab attempt fails
 
 		if(HAS_TRAIT(target, TRAIT_GRABIMMUNE) && target.stat == CONSCIOUS) // Grab immunity check
 			if(target.cmode)
-				target.visible_message(span_warning("[target] breaks from [src]'s grip effortlessly!"), \
-						span_warning("I break from [src]'s grab effortlessly!"))
+				target.visible_message(span_warning("[target]轻而易举地挣脱了[src]的抓握！"), \
+						span_warning("我轻而易举地挣脱了[src]的抓握！"))
 				log_combat(src, target, "tried grabbing", addition="passive grab")
 				stop_pulling()
 				return
 
 		// Makes it so people who recently broke out of grabs cannot be grabbed again
 		if(COOLDOWN_TIMELEFT(target, broke_free) && target.stat == CONSCIOUS)
-			target.visible_message(span_warning("[target] slips from [src]'s grip."), \
-					span_warning("I slip from [src]'s grab."))
+			target.visible_message(span_warning("[target]从[src]手中滑脱了。"), \
+					span_warning("我从[src]手中滑脱了。"))
 			log_combat(src, target, "tried grabbing", addition="passive grab")
 			stop_pulling()
 			return
@@ -527,9 +527,9 @@
 	return FALSE
 
 /mob/living/proc/send_pull_message(mob/living/target)
-	target.visible_message(span_warning("[src] grabs [target]."), \
-					span_warning("[src] grabs me."), span_hear("I hear shuffling."), null, src)
-	to_chat(src, span_info("I grab [target]."))
+	target.visible_message(span_warning("[src]抓住了[target]。"), \
+					span_warning("[src]抓住了我。"), span_hear("我听见一阵窸窣声。"), null, src)
+	to_chat(src, span_info("我抓住了[target]。"))
 
 /mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE)
 	if(M.buckled)
@@ -650,7 +650,7 @@
 		return FALSE
 	if(!..())
 		return FALSE
-	visible_message(span_notice(span_name("[src]") + " points at [A]."), span_notice("I point at [A]."))
+	visible_message(span_notice(span_name("[src]") + "指向了[A]。"), span_notice("我指向了[A]。"))
 	return TRUE
 
 /mob/living/verb/succumb(whispered as null, reaper as null)
@@ -670,7 +670,7 @@
 //		if(!whispered)
 //			to_chat(src, span_userdanger("I have given up life and succumbed to death."))
 
-		var/word_input = stripped_input(src, "Your parting words? Leave empty if you will.", "Last Words")
+		var/word_input = stripped_input(src, "你的临终遗言是什么？若不想说可留空。", "临终遗言")
 		if(word_input)
 			say(word_input)
 		death()
@@ -708,10 +708,10 @@
 	set category = "IC"
 	set hidden = 1
 	if(IsSleeping())
-		to_chat(src, span_warning("I am already sleeping!"))
+		to_chat(src, span_warning("我已经睡着了！"))
 		return
 	else
-		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
+		if(alert(src, "你确定要睡上一会儿吗？", "睡觉", "是", "否") == "是")
 			SetSleeping(400) //Short nap
 	update_mobility()
 
@@ -726,7 +726,7 @@
 	if(stat)
 		return
 	if(pulledby)
-		to_chat(src, span_warning("I'm grabbed!"))
+		to_chat(src, span_warning("我被抓住了！"))
 		return
 	if(!resting)
 		set_resting(TRUE, FALSE)
@@ -738,16 +738,16 @@
 	if(stat)
 		return
 	if(pulledby)
-		to_chat(src, span_warning("I'm grabbed!"))
+		to_chat(src, span_warning("我被抓住了！"))
 		return
 	if(resting)
 		if(!IsKnockdown() && !IsStun() && !IsParalyzed())
-			src.visible_message(span_notice("[src] stands up."))
+			src.visible_message(span_notice("[src]站了起来。"))
 			if(move_after(src, 20, target = src))
 				set_resting(FALSE, FALSE)
 				return TRUE
 		else
-			src.visible_message(span_warning("[src] tries to stand up."))
+			src.visible_message(span_warning("[src]试图站起来。"))
 			return FALSE
 
 /mob/living/proc/toggle_rest()
@@ -757,15 +757,15 @@
 	if(stat)
 		return
 	if(pulledby)
-		to_chat(src, span_warning("I'm grabbed!"))
+		to_chat(src, span_warning("我被抓住了！"))
 		return
 	if(resting)
 		if(!IsKnockdown() && !IsStun() && !IsParalyzed())
-			src.visible_message(span_info("[src] begins to stand up."))
+			src.visible_message(span_info("[src]开始起身。"))
 			if(move_after(src, 20, target = src))
 				set_resting(FALSE, FALSE)
 		else
-			src.visible_message(span_warning("[src] struggles to stand up."))
+			src.visible_message(span_warning("[src]艰难地试图站起来。"))
 	else
 		set_resting(TRUE, FALSE)
 
@@ -780,11 +780,11 @@
 		if(rest == resting)
 			if(resting)
 				playsound(src, 'sound/foley/toggledown.ogg', 100, FALSE)
-				src.visible_message(span_info("[src] lays down."))
+				src.visible_message(span_info("[src]躺了下来。"))
 			else
 				playsound(src, 'sound/foley/toggleup.ogg', 100, FALSE)
 		else
-			to_chat(src, span_warning("I fail to get up!"))
+			to_chat(src, span_warning("我没能站起来！"))
 	update_cone_show()
 
 /mob/living/proc/update_resting()
@@ -827,18 +827,18 @@
 	if(src == user)
 		return FALSE
 	if(stat < DEAD)
-		to_chat(user, span_warning("Nothing happens."))
+		to_chat(user, span_warning("什么也没有发生。"))
 		return FALSE
 	if(!mind)
 		return FALSE
 	if(!mind.active)
-		to_chat(user, span_warning("They are unresponsive to my attempts. For now."))
+		to_chat(user, span_warning("至少现在，他们对我的尝试毫无反应。"))
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_DNR))
-		to_chat(user, span_danger("None of the divine have them. Their only chance is spent. Where did they go?"))
+		to_chat(user, span_danger("诸神中没有任何一位收留了他们。他们唯一的机会已经用尽。他们究竟去了哪里？"))
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_NECRAS_VOW))
-		to_chat(user, span_warning("This one has pledged themselves whole to Necra. They are Hers."))
+		to_chat(user, span_warning("此人已将自身完全献给内克拉。他们属于她。"))
 		return FALSE
 
 	var/obj/item/bodypart/head = get_bodypart("head")
@@ -846,13 +846,13 @@
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 
 	if(!head)
-		to_chat(user, span_warning("[src] is missing their head!"))
+		to_chat(user, span_warning("[src]没有头颅！"))
 		return FALSE
 	if(!brain)
-		to_chat(user, span_warning("[src] is missing their brain!"))
+		to_chat(user, span_warning("[src]没有大脑！"))
 		return FALSE
 	if(!heart)
-		to_chat(user, span_warning("[src] is missing their heart!"))
+		to_chat(user, span_warning("[src]没有心脏！"))
 		return FALSE
 
 	return TRUE
@@ -874,8 +874,8 @@
 		reload_fullscreen()
 		remove_client_colour(/datum/client_colour/monochrome)
 		// Add message about struggling to recall death circumstances
-		to_chat(src, "<span class='notice'><b>As you return to life, you struggle to recall the circumstances of your death...</b></span>")
-		to_chat(src, "<span class='italic'>Your memories of your final moments are hazy and fragmented.</span>")
+		to_chat(src, "<span class='notice'><b>当你重返人世时，你艰难地试图回想自己是如何死去的……</b></span>")
+		to_chat(src, "<span class='italic'>你对生命最后时刻的记忆模糊而破碎。</span>")
 		. = TRUE
 		if(mind)
 			if(admin_revive)
@@ -1142,7 +1142,7 @@
 	if(surrendering || stat == DEAD)
 		return
 	if(!instant)
-		if(alert(src, "Do you yield?", "SURRENDER", "Yes", "No") == "No")
+		if(alert(src, "你要屈服吗？", "投降", "是", "否") == "否")
 			return
 	log_combat(src, null, "surrendered")
 	surrendering = 1
@@ -1155,7 +1155,7 @@
 	Knockdown(300)
 	apply_status_effect(/datum/status_effect/debuff/breedable)
 	apply_status_effect(/datum/status_effect/debuff/submissive)
-	src.visible_message(span_notice("[src] yields!"))
+	src.visible_message(span_notice("[src]屈服了！"))
 	playsound(src, 'sound/misc/surrender.ogg', 100, FALSE, -1, ignore_walls=TRUE)
 	update_vision_cone()
 	addtimer(CALLBACK(src, PROC_REF(end_submit)), 600)
@@ -1175,24 +1175,24 @@
 
 	if(has_status_effect(/datum/status_effect/compliance))
 		if(HAS_TRAIT(src, TRAIT_COMPLIANT))
-			to_chat(src, span_alert("My vice makes me compliant against my will.")) //only for people who take the compliant vice
+			to_chat(src, span_alert("我的恶习让我违背本心地变得顺从。")) //only for people who take the compliant vice
 			return
 		compliance = FALSE
 		remove_status_effect(/datum/status_effect/compliance)
 		if(notifyme)
-			to_chat(src, span_info("I will struggle against grabs as usual."))
+			to_chat(src, span_info("我会像平常一样反抗抓取。"))
 	else
 		compliance = TRUE
 		apply_status_effect(/datum/status_effect/compliance)
 		if(notifyme)
-			to_chat(src, span_info("I will allow all grabs and resistance attempts by others."))
+			to_chat(src, span_info("我会允许他人对我进行任何抓取和反抗尝试。"))
 
 
 /mob/proc/stop_attack(message = FALSE)
 	if(atkswinging)
 		atkswinging = FALSE
 		if(message)
-			to_chat(src, span_warning("Attack stopped."))
+			to_chat(src, span_warning("攻击已停止。"))
 	if(client)
 		client.charging = 0
 		client.chargedprog = 0
@@ -1281,31 +1281,31 @@
 			var/obj/item/inqarticles/garrote/gcord = L.get_active_held_item()
 			if(!gcord)
 				gcord = L.get_inactive_held_item()
-			to_chat(pulledby, span_warning("[src] struggles against the [gcord]!"))
+			to_chat(pulledby, span_warning("[src]正在奋力挣脱[gcord]！"))
 		if(!HAS_TRAIT(src, TRAIT_GARROTED))
-			visible_message(span_warning("[src] struggles to break free from [L]'s grip!"), \
-						span_warning("I struggle against [L]'s grip![rchance]"), null, null, L)
+			visible_message(span_warning("[src]奋力挣脱[L]的抓握！"), \
+						span_warning("我正在挣脱[L]的抓握！[rchance]"), null, null, L)
 		else
 			var/obj/item/inqarticles/garrote/gcord = L.get_active_held_item()
 			if(!gcord)
 				gcord = L.get_inactive_held_item()
-			visible_message(span_warning("[src] struggles to break free from [L]'s [gcord]!"), \
-						span_warning("I struggle against [L]'s [gcord]![rchance]"), null, null, L)
+			visible_message(span_warning("[src]奋力挣脱[L]的[gcord]！"), \
+						span_warning("我正在挣脱[L]的[gcord]！[rchance]"), null, null, L)
 		playsound(src.loc, 'sound/combat/grabstruggle.ogg', 50, TRUE, -1)
 		if(!HAS_TRAIT(src, TRAIT_GARROTED))
-			to_chat(pulledby, span_warning("[src] struggles against my grip!"))
+			to_chat(pulledby, span_warning("[src]正在奋力挣脱我的抓握！"))
 		return FALSE
 	if(!HAS_TRAIT(src, TRAIT_GARROTED))
-		visible_message(span_warning("[src] breaks free of [L]'s grip!"), \
-						span_notice("I break free of [L]'s grip!"), null, null, L)
-		to_chat(L, span_danger("[src] breaks free of my grip!"))
+		visible_message(span_warning("[src]挣脱了[L]的抓握！"), \
+						span_notice("我挣脱了[L]的抓握！"), null, null, L)
+		to_chat(L, span_danger("[src]挣脱了我的抓握！"))
 	else
 		var/obj/item/inqarticles/garrote/gcord = L.get_active_held_item()
 		if(!gcord)
 			gcord = L.get_inactive_held_item()
-		visible_message(span_warning("[src] breaks free of [L]'s [gcord]!"), \
-						span_notice("I break free of [L]'s [gcord]!"), null, null, L)
-		to_chat(L, span_danger("[src] breaks free from my [gcord]!"))
+		visible_message(span_warning("[src]挣脱了[L]的[gcord]！"), \
+						span_notice("我挣脱了[L]的[gcord]！"), null, null, L)
+		to_chat(L, span_danger("[src]挣脱了我的[gcord]！"))
 	if(HAS_TRAIT(src, TRAIT_GARROTED))
 		var/obj/item/inqarticles/garrote/gcord = L.get_active_held_item()
 		if(!gcord)
@@ -1350,23 +1350,23 @@
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
 /mob/living/stripPanelUnequip(obj/item/what, mob/who, where)
 	if(!what.canStrip(who))
-		to_chat(src, span_warning("I can't remove \the [what.name], it appears to be stuck!"))
+		to_chat(src, span_warning("我没法取下\the [what.name]，它似乎卡住了！"))
 		return
 
 	if(!has_active_hand()) //can't attack without a hand.
-		to_chat(src, span_warning("I lack working hands."))
+		to_chat(src, span_warning("我没有能正常使用的手。"))
 		return
 
 	if(!has_hand_for_held_index(active_hand_index)) //can't attack without a hand.
-		to_chat(src, span_warning("I can't move this hand."))
+		to_chat(src, span_warning("我动不了这只手。"))
 		return
 
 	if(check_arm_grabbed(active_hand_index))
-		to_chat(src, span_warning("Someone is grabbing my arm!"))
+		to_chat(src, span_warning("有人正抓着我的胳膊！"))
 		return
 
 	if(istype(src, /mob/living/carbon/spirit))
-		to_chat(src, span_warning("Your hands pass right through \the [what]!"))
+		to_chat(src, span_warning("我的手直接穿过了\the [what]！"))
 		return
 
 	var/surrender_mod = 1

@@ -25,7 +25,7 @@
 	cost = 3
 
 /obj/projectile/magic/bloodlightning
-	name = "blood bolt"
+	name = "血雷矢"
 	tracer_type = /obj/effect/projectile/tracer/blood
 	muzzle_type = null
 	impact_type = null

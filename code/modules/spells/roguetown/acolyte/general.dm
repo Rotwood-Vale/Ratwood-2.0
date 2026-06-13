@@ -355,7 +355,7 @@
 		var/obj/item/bodypart/affecting = target.get_bodypart(def_zone)
 
 		if(HAS_TRAIT(target, TRAIT_PSYDONITE))
-			target.visible_message(span_info("[target] stirs for a moment, the miracle dissipates."), span_notice("A dull warmth swells in your heart, only to fade as quickly as it arrived."))
+			target.visible_message(span_info("[target]微微动了一下，神迹随之消散。"), span_notice("一股迟钝的暖意在你心中膨胀，却又和来时一样迅速褪去。"))
 			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			return FALSE
@@ -438,7 +438,7 @@
 			return FALSE
 
 		if(NOBLOOD in UH.dna?.species?.species_traits)
-			to_chat(UH, span_warning("I have no blood to provide."))
+			to_chat(UH, span_warning("我已无血可供。"))
 			revert_cast()
 			return FALSE
 
@@ -485,7 +485,7 @@
 					bloodbeam.End()
 					return TRUE
 			else
-				UH.visible_message(span_warning("Severs the bloodlink from [target]!"))
+				UH.visible_message(span_warning("与[target]之间的血链断开了！"))
 				bloodbeam.End()
 				return TRUE
 		bloodbeam.End()

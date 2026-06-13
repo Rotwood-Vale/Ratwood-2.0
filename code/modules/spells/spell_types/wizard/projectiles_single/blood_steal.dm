@@ -25,7 +25,7 @@
 	cost = 3
 
 /obj/projectile/magic/bloodsteal
-	name = "blood steal"
+	name = "夺血矢"
 	tracer_type = /obj/effect/projectile/tracer/bloodsteal
 	muzzle_type = null
 	impact_type = null

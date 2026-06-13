@@ -287,15 +287,15 @@ GLOBAL_VAR_INIT(mobids, 1)
 			if(L.z > src.z)
 				switch(zdiff)
 					if(1)
-						strz = "below"
+						strz = "下方"
 					if(2 to 999)
-						strz = "far below"
+						strz = "更下方"
 			if(L.z < src.z)
 				switch(zdiff)
 					if(1)
-						strz = "above"
+						strz = "上方"
 					if(2 to 999)
-						strz = "far above"
+						strz = "更上方"
 		if(directional)
 			var/dir = get_dir(L, src)
 			strdir = dir2text(dir)
@@ -303,7 +303,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 		//If there's a z difference: "A rock can be heard falling" + "from" + "below/above/etc" + "and" + "northeast"
 		//No z difference: "A rock can be heard falling" + "from" + "northeast"
 		//No dir difference:"A rock can be heard falling" + "from" + "above"
-		var/fullmsg = span_warning("[message] from [strz ? "<b>[strz]</b>" : ""][strdir ? "[strz ? " and " : ""]<b>[strdir]</b>" : ""].")
+		var/fullmsg = span_warning("[message]，来自[strz ? "<b>[strz]</b>" : ""][strdir ? "[strz ? "与" : ""]<b>[strdir]</b>" : ""]。")
 		to_chat(L, fullmsg)
 /**
  * Show a message to all mobs in earshot of this one
@@ -377,7 +377,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 			qdel(W)
 		else
 			if(!disable_warning)
-				to_chat(src, "<span class='warning'>I couldn't equip that.</span>")
+				to_chat(src, "<span class='warning'>我没法把那东西装备上。</span>")
 		return FALSE
 	equip_to_slot(W, slot, redraw_mob, initial) //This proc should not ever fail.
 	update_a_intents()
@@ -494,7 +494,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 		return
 
 	if(is_blind(src))
-		to_chat(src, span_warning("Something is there but I can't see it!"))
+		to_chat(src, span_warning("那里有什么东西，但我看不见！"))
 		return
 
 	if(isliving(src) && src.m_intent != MOVE_INTENT_SNEAK && src.stat != DEAD)
@@ -646,12 +646,12 @@ GLOBAL_VAR_INIT(mobids, 1)
 	if (CONFIG_GET(flag/norespawn))
 		return
 	if ((stat != DEAD || !( SSticker )))
-		to_chat(usr, "<span class='boldnotice'>I must be dead to use this!</span>")
+		to_chat(usr, "<span class='boldnotice'>我必须在死亡后才能使用这个！</span>")
 		return
 
 	log_game("[key_name(usr)] used abandon mob.")
 
-	to_chat(src, "<span class='info'>Returned to lobby successfully.</span>")
+	to_chat(src, "<span class='info'>已成功返回大厅。</span>")
 
 	if(!client)
 		log_game("[key_name(usr)] AM failed due to disconnect.")
@@ -1150,11 +1150,11 @@ GLOBAL_VAR_INIT(mobids, 1)
 /mob/proc/can_read(obj/O, silent = FALSE)
 	if(is_blind(src) || eye_blurry)
 		if(!silent)
-			to_chat(src, "<span class='warning'>I'm too blind to read.</span>")
+			to_chat(src, "<span class='warning'>我瞎得看不了字。</span>")
 		return
 	if(!is_literate())
 		if(!silent)
-			to_chat(src, "<span class='warning'>I can't make sense of these verba.</span>")
+			to_chat(src, "<span class='warning'>我无法理解这些文字。</span>")
 		return
 	return TRUE
 

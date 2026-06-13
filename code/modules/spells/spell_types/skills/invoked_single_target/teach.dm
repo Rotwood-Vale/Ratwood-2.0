@@ -134,13 +134,13 @@
 					else
 						if(L.get_skill_level(item) < SKILL_LEVEL_APPRENTICE) // +2 skill levels if novice or no skill
 							if(do_after(usr, teachingtime, target = L))
-								user.visible_message("<font color='yellow'>[user] teaches [L] a lesson.</font>")
+								user.visible_message("<font color='yellow'>[user]向[L]传授了一课。</font>")
 								to_chat(usr, span_notice("我的学生对[item.name]的掌握大有长进！"))
 								L.adjust_skillrank(item, 2, FALSE)
 								ADD_TRAIT(L, TRAIT_STUDENT, "[type]")
 							else
-								to_chat(usr, span_warning("[L] got distracted and wandered off!"))
-								to_chat(L, span_warning("I must be more focused on my studies!"))
+								to_chat(usr, span_warning("[L]分心走开了！"))
+								to_chat(L, span_warning("我必须更专注于自己的学习！"))
 								return
 						else  // +1 skill level if apprentice or better
 							if(do_after(usr, teachingtime, target = L))

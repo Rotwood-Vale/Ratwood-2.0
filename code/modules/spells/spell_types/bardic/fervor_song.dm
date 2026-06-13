@@ -2,7 +2,7 @@
 	name = "奋战幻想曲"
 	desc = "激扬战斗的节奏，使盟友的攻击与招架效果提升 20%！"
 	warnie = "spellwarning"
-	invocations = list("plays a bombastic, rhythmic march! The world feels grounded!") 
+	invocations = list("奏起一段雄浑而富有节律的进行曲！世界仿佛都沉稳了下来！") 
 	invocation_type = "emote"
 	overlay_state = "bardsong_t2_base"
 	action_icon_state = "bardsong_t2_base"
@@ -44,12 +44,12 @@
 	var/filter = owner.get_filter(FERVOR_FILTER)
 	if (!filter)
 		owner.add_filter(FERVOR_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 50, "size" = 1))
-	to_chat(owner, span_warning("I feel as if I truly understand combat! This is a tune worth fighting for!"))
+	to_chat(owner, span_warning("我感觉自己仿佛真正理解了战斗！这是一首值得为之奋战的曲子！"))
 	ADD_TRAIT(owner, TRAIT_GUIDANCE, MAGIC_TRAIT)
 
 /datum/status_effect/buff/song/fervor/on_remove()
 	. = ..()
-	to_chat(owner, span_warning("The buzzing in my head softens, as does my adrenaline."))
+	to_chat(owner, span_warning("脑中的嗡鸣逐渐平息，肾上腺素也随之退去。"))
 	owner.remove_filter(FERVOR_FILTER)
 	REMOVE_TRAIT(owner, TRAIT_GUIDANCE, MAGIC_TRAIT)
 

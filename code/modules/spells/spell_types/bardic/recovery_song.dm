@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/invoked/song/recovery_song
 	name = "休憩狂想曲"
 	desc = "用你的歌声抚慰盟友的精神！会持续恢复体力！"
-	invocations = list("plays a gentle-yet-refreshing tune. The nearby air clears.") 
+	invocations = list("奏起一段温柔而提神的旋律，周围的空气都清朗了起来。") 
 	invocation_type = "emote"
 	overlay_state = "melody_t2_base"
 	action_icon_state = "melody_t2_base"
@@ -33,7 +33,7 @@
 
 /atom/movable/screen/alert/status_effect/buff/song/recovery
 	name = "乐声恢复"
-	desc = "I breathe deeply. This melody refreshes me - I could run for hours."
+	desc = "我深深吸了一口气。这段旋律令我神清气爽，仿佛能一口气奔跑数个时辰。"
 	icon_state = "buff"
 
 /datum/status_effect/buff/song/recovery

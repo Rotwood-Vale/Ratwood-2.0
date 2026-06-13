@@ -44,7 +44,7 @@
 				if(HAS_TRAIT(user, TRAIT_WOODWALKER))
 					var/obj/item/C = new B.type(user.loc)
 					user.put_in_hands(C)
-				user.visible_message(span_notice("[user] finds [HAS_TRAIT(user, TRAIT_WOODWALKER) ? "two of " : ""][B] in [src]."))
+				user.visible_message(span_notice("[user]在[src]里找到了[HAS_TRAIT(user, TRAIT_WOODWALKER) ? "两份" : ""][B]。"))
 				harvested = TRUE
 				timerid = addtimer(CALLBACK(src, PROC_REF(loot_replenish)), 5 MINUTES, flags = TIMER_STOPPABLE)
 				//add_filter("picked", 1, alpha_mask_filter(icon = icon('icons/effects/picked_overlay.dmi', "picked_overlay_[rand(1,3)]"), flags = MASK_INVERSE))

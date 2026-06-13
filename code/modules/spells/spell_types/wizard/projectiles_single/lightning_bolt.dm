@@ -27,7 +27,7 @@
 	xp_gain = TRUE
 
 /obj/projectile/magic/lightning
-	name = "bolt of lightning"
+	name = "雷霆矢"
 	tracer_type = /obj/effect/projectile/tracer/stun
 	muzzle_type = null
 	impact_type = null

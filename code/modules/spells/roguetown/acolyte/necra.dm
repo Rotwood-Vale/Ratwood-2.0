@@ -441,7 +441,7 @@
 	var/selected = tgui_input_list(user, "你要寻找哪一具遗体？", "可选遗体", corpses)
 
 	if(!selected || QDELETED(src) || QDELETED(user) || QDELETED(corpses[selected]))
-		to_chat(user, span_warning("The Undermaiden's grasp lets slip."))
+		to_chat(user, span_warning("冥下侍女的牵引忽然脱手了。"))
 		return .
 
 	var/mob/living/corpse = corpses[selected]
