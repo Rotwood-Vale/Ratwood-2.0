@@ -302,7 +302,6 @@
 	desc = "Tight boiled leathers that stretch and fit to one's frame perfectly."
 	shiftable = FALSE
 	cold_protection = null
-	resistance_flags = FIRE_PROOF
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT | LEG_RIGHT | LEG_LEFT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
@@ -315,7 +314,6 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_BURN)
 	armor = ARMOR_PADDED
 	shiftable = FALSE
-	resistance_flags = FIRE_PROOF //it's made of leather, I'll give the inquis an edge
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/shadowrobe
