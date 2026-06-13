@@ -366,6 +366,8 @@
 	var/datum/mind/controller_mind
 	var/obj/effect/proc_holder/spell/self/harmless_dismemberment_select/selector_spell
 
+#define HARMLESS_REATTACH_GLOW_FILTER "harmless_reattach_glow"
+
 /datum/status_effect/buff/harmless_dismemberment/on_creation(mob/living/new_owner, new_duration = null, mob/living/new_controller = null)
 	if(new_duration)
 		duration = new_duration
@@ -396,6 +398,7 @@
 /datum/status_effect/buff/harmless_dismemberment/on_remove()
 	var/mob/living/carbon/carbon_owner = owner
 	unregister_monitored_bodyparts()
+	clear_all_reattach_glows()
 	reattach_candidate_since = list()
 	reattach_glow_announced = list()
 	controller?.clear_harmless_dismemberment_locked_target(owner)
@@ -514,6 +517,20 @@
 	controller_body = null
 	controller_mind = null
 
+/datum/status_effect/buff/harmless_dismemberment/proc/enable_reattach_glow(obj/item/bodypart/limb)
+	if(!istype(limb) || QDELETED(limb) || limb.get_filter(HARMLESS_REATTACH_GLOW_FILTER))
+		return
+	limb.add_filter(HARMLESS_REATTACH_GLOW_FILTER, 2, list("type" = "outline", "color" = "#4ea1e6", "alpha" = 200, "size" = 1))
+
+/datum/status_effect/buff/harmless_dismemberment/proc/disable_reattach_glow(obj/item/bodypart/limb)
+	if(!istype(limb) || QDELETED(limb))
+		return
+	limb.remove_filter(HARMLESS_REATTACH_GLOW_FILTER)
+
+/datum/status_effect/buff/harmless_dismemberment/proc/clear_all_reattach_glows()
+	for(var/obj/item/bodypart/limb as anything in reattach_glow_announced)
+		disable_reattach_glow(limb)
+
 /datum/status_effect/buff/harmless_dismemberment/proc/refresh_monitored_bodyparts()
 	if(!iscarbon(owner))
 		return
@@ -570,6 +587,7 @@
 	if(drop_spot)
 		bodypart.forceMove(drop_spot)
 	reattach_candidate_since -= bodypart
+	disable_reattach_glow(bodypart)
 	reattach_glow_announced -= bodypart
 	if(get_dist(bodypart, carbon_owner) <= 1)
 		reattach_candidate_since[bodypart] = world.time
@@ -608,9 +626,10 @@
 			reattach_candidate_since[limb] = world.time
 			continue
 		if(world.time - started_waiting >= 3 SECONDS && !(limb in reattach_glow_announced))
+			enable_reattach_glow(limb)
 			reattach_glow_announced += limb
 			limb.visible_message(
-				span_info("[limb] 静静落在地上，断口边缘渐渐浮现出一缕微弱而温柔的牵引光。"),
+				span_info("[limb] 静静落在地上，断口边缘渐渐亮起一圈象征归位的柔和蓝光。"),
 				null
 			)
 		if(world.time - started_waiting < 5 SECONDS)
@@ -618,6 +637,7 @@
 		if(!limb.attach_limb(human_owner, TRUE))
 			continue
 		reattach_candidate_since -= limb
+		disable_reattach_glow(limb)
 		reattach_glow_announced -= limb
 
 		human_owner.visible_message(
@@ -628,6 +648,7 @@
 	for(var/obj/item/bodypart/limb as anything in reattach_candidate_since)
 		if(QDELETED(limb) || !(limb in current_candidates))
 			reattach_candidate_since -= limb
+			disable_reattach_glow(limb)
 			reattach_glow_announced -= limb
 
 /datum/status_effect/buff/harmless_dismemberment/proc/can_reattach_bodypart(mob/living/carbon/human/human_owner, obj/item/bodypart/limb)
@@ -643,7 +664,7 @@
 
 /obj/effect/proc_holder/spell/self/harmless_dismemberment_select
 	name = "指定脱落"
-	desc = "在无害肢解持续期间，再次指定目标身上要无伤脱落的部位。"
+	desc = "在无害肢解持续期间，无论相隔多远，都可仅对锁定目标再次指定要无伤脱落的部位。"
 	action_icon_state = "abduct"
 	overlay_state = "blink"
 	releasedrain = 0
@@ -651,7 +672,7 @@
 	chargetime = 0
 	recharge_time = 1 SECONDS
 	cooldown_min = 1 SECONDS
-	range = 3
+	range = 0
 	associated_skill = /datum/skill/magic/arcane
 	miracle = FALSE
 	gesture_required = FALSE
@@ -689,8 +710,8 @@
 		remove_from_holder(user)
 		revert_cast(user)
 		return FALSE
-	if(get_dist(user, linked_target) > range)
-		to_chat(user, span_warning("[linked_target] 离得太远，我暂时没法继续指定新的脱落部位。"))
+	if(linked_target != user && (!linked_target.client || linked_target.stat != CONSCIOUS))
+		to_chat(user, span_warning("只有仍然清醒、能够回应这道法术的人，才能继续接受无害肢解的指定脱落。"))
 		revert_cast(user)
 		return FALSE
 
@@ -753,6 +774,9 @@
 	if(!effect.can_be_manipulated_by(user))
 		to_chat(user, span_warning("这道无害肢解当前并不受我支配。"))
 		return
+	if(target != user && (!target.client || target.stat != CONSCIOUS))
+		to_chat(user, span_warning("只有仍然清醒、能够回应这道法术的人，才能继续接受无害肢解的指定脱落。"))
+		return
 
 	var/list/detachable = get_detachable_bodypart_choices(target)
 	if(!length(detachable))
@@ -765,8 +789,8 @@
 	if(!effect.can_be_manipulated_by(user))
 		to_chat(user, span_warning("那股牵引血肉的柔力已不再听从我的指定。"))
 		return
-	if(get_dist(user, target) > range)
-		to_chat(user, span_warning("[target] 已经离得太远，我没法继续指定断离的部位。"))
+	if(target != user && (!target.client || target.stat != CONSCIOUS))
+		to_chat(user, span_warning("只有仍然清醒、能够回应这道法术的人，才能继续接受无害肢解的指定脱落。"))
 		return
 	if(!choice)
 		to_chat(user, span_notice("我暂时没有让任何部位脱落。"))
@@ -787,7 +811,7 @@
 	name = "无害肢解"
 	desc = "用 30 秒的诡异引导挑选 3 格内一名自愿者，让其在两分钟里化作一具可被平整拆开的活体圣匣。肢体与头颅会在无痛、无血、无死的温柔里分离，并在靠近断口时自行归位；待时限耗尽，仍未归位之物便不再回来。"
 	action_icon_state = "bloodcrawl"
-	cost = 8
+	cost = 4
 	xp_gain = TRUE
 	releasedrain = 40
 	chargedrain = 1
@@ -818,13 +842,13 @@
 		return possible_targets
 	var/mob/living/carbon/human/locked_target = user.get_harmless_dismemberment_locked_target()
 	if(locked_target)
-		if(locked_target in range(range, user))
+		if(locked_target.client && locked_target.stat == CONSCIOUS && locked_target in range(range, user))
 			possible_targets += locked_target
 		return possible_targets
 	for(var/mob/living/carbon/human/possible_target in range(range, user))
 		if(QDELETED(possible_target))
 			continue
-		if(possible_target != user && !possible_target.client)
+		if(possible_target != user && (!possible_target.client || possible_target.stat != CONSCIOUS))
 			continue
 		possible_targets += possible_target
 	return possible_targets
@@ -835,7 +859,7 @@
 	var/list/possible_targets = get_selectable_spell_targets(user)
 	if(!length(possible_targets))
 		return null
-	return input(user, "选择 3 格范围内要施加“无害肢解”的对象。", "无害肢解") as null|mob in sortNames(possible_targets)
+	return input(user, "选择 3 格范围内要施加“无害肢解”的清醒对象。", "无害肢解") as null|mob in sortNames(possible_targets)
 
 /obj/effect/proc_holder/spell/invoked/harmless_dismemberment/cast(list/targets, mob/living/user = usr)
 	if(!ishuman(user))
@@ -847,9 +871,9 @@
 	var/list/possible_targets = get_selectable_spell_targets(human_user)
 	if(!length(possible_targets))
 		if(locked_target)
-			to_chat(human_user, span_warning("无害肢解仍缝在 [locked_target] 身上。在那层法术散去前，我不能把它转交给别人。"))
+			to_chat(human_user, span_warning("无害肢解仍缝在 [locked_target] 身上；若想再次续上或改投这道法术，对方必须清醒且位于我 3 格范围内。"))
 		else
-			to_chat(human_user, span_warning("我周围 3 格内没有可接受无害肢解的对象。"))
+			to_chat(human_user, span_warning("我周围 3 格内没有清醒且能够回应这道法术的对象。"))
 		revert_cast(human_user)
 		return FALSE
 
@@ -896,6 +920,10 @@
 		if(QDELETED(src) || QDELETED(human_user) || QDELETED(spelltarget) || get_dist(human_user, spelltarget) > range)
 			revert_cast(human_user)
 			return FALSE
+		if(spelltarget.stat != CONSCIOUS || !spelltarget.client)
+			to_chat(human_user, span_warning("只有清醒且能够亲自同意的人，才能接受这道法术。"))
+			revert_cast(human_user)
+			return FALSE
 		if(consent != "同意")
 			to_chat(human_user, span_warning("[spelltarget] 拒绝接受无害肢解。"))
 			to_chat(spelltarget, span_notice("我拒绝了 [human_user] 的无害肢解。"))
@@ -929,3 +957,5 @@
 	prompt_initial_separation(human_user, spelltarget)
 
 	return TRUE
+
+#undef HARMLESS_REATTACH_GLOW_FILTER
