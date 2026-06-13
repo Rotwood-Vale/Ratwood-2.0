@@ -59,16 +59,16 @@
 	prefix = "很"
 
 /datum/mob_descriptor/trait/zardish
-	name = "Zardish"
+	name = "扎迪什式"
 	prefix = "很"
 
 
 /datum/mob_descriptor/trait/lupian
-	name = "Lupian"
+	name = "卢皮安式"
 	prefix = "很"
 
 /datum/mob_descriptor/trait/venardic
-	name = "Venardic"
+	name = "维纳丁式"
 	prefix = "很"
 
 
@@ -81,7 +81,7 @@
 	prefix = "很"
 
 /datum/mob_descriptor/trait/rousley
-	name = "Rousley"
+	name = "劳斯利式"
 	prefix = "很"
 
 /datum/mob_descriptor/trait/pale
@@ -109,7 +109,7 @@
 	prefix = "很"
 
 /datum/mob_descriptor/trait/volfish
-	name = "Volfish"
+	name = "沃尔夫式"
 	prefix = "很"
 
 /datum/mob_descriptor/trait/graceful

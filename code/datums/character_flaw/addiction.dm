@@ -262,8 +262,8 @@
 	icon_state = "nymphomaniac"
 
 /datum/charflaw/addiction/baothamarked
-	name = "Baothan Marked"
-	desc = "我被 Baothan 的印记烙上了标记。"
+	name = "巴奥莎之印"
+	desc = "我被巴奥莎的印记烙上了标记。"
 	time = 45 MINUTES
 	needsate_text = "我的印记正痛苦地灼烧着。"
 	sated_text = "印记的光芒渐渐黯淡，宽慰感涌上心头……"
@@ -276,6 +276,6 @@
 	effectedstats = list(STATKEY_CON = -1, STATKEY_WIL = -1)
 
 /atom/movable/screen/alert/status_effect/debuff/addiction/baothamarked
-	name = "Baothan Mania"
+	name = "巴奥莎狂热"
 	desc = "那道遭诅咒的符印。它在我的血肉上灼灼发亮，把我下腹烧得满是痛苦而难耐的释放欲望。"
 	icon_state = "nymphomaniac"

@@ -337,10 +337,10 @@
 
 // Gnoll stature — always returns "gnoll" regardless of pronouns
 /datum/mob_descriptor/stature/gnoll
-	name = "Gnoll"
+	name = "豺狼人"
 
 /datum/mob_descriptor/stature/gnoll/get_description(mob/living/described)
-	return "gnoll"
+	return "豺狼人"
 
 /datum/mob_descriptor/stature/widower/get_description(mob/living/described)
 	switch(described.pronouns)

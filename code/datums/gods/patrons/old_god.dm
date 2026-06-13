@@ -1,8 +1,8 @@
 /datum/patron/old_god
-	name = "Psydon"
+	name = "普赛顿"
 	domain = "生命、创造、慈悲与坚忍"
-	desc = "The One 抵达了 COMET SYON 所载的 PSYDONIA，将那片荒芜世界重塑为祂的模样。祂被死灵魔女 Zizo 击倒；有人相信祂已经死去，也有人相信祂只是沉眠。愿我们以祂之名 ENDURE。"
-	worshippers = "古代矮人与精灵、Zybantines、Otavans、Those Who Dream of Peace"
+	desc = "独一者抵达了彗星西昂所载的普赛多尼亚，将那片荒芜世界重塑为祂的模样。祂被死灵魔女齐佐击倒；有人相信祂已经死去，也有人相信祂只是沉眠。愿我们以祂之名坚忍。"
+	worshippers = "古代矮人与精灵、兹班图人、奥塔万人、和平之梦者"
 	virtues = "和平、坚韧、顽强"
 	sins = "巫术、施虐、纵欲无度"
 	associated_faith = /datum/faith/old_god
@@ -24,7 +24,7 @@
 
 
 /obj/effect/proc_holder/spell/self/check_boot
-	name = "BOOT-CHECK"
+	name = "靴中寻物"
 	desc = "检查我的靴子里有没有各种东西。"
 	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
@@ -95,7 +95,7 @@
 		found_thing = new /obj/item/roguecoin/silver
 	else
 		found_thing = new /obj/item/roguecoin/copper
-	to_chat(H, span_info("我的靴子里有枚硬币？Psydon 正对我微笑！"))
+	to_chat(H, span_info("我的靴子里有枚硬币？普赛顿正对我微笑！"))
 	H.put_in_hands(found_thing, FALSE)
 	if(prob(H.STALUC + H.get_skill_level(associated_skill)))
 		var/obj/item/extra_thing = pick(lootpool)
@@ -117,7 +117,7 @@
 	// Allows prayer near psycross.
 	for(var/obj/structure/fluff/psycross/cross in view(4, get_turf(follower)))
 		if(cross.divine == FALSE)
-			to_chat(follower, span_danger("那座被亵渎的 psycross 打断了我的祈祷！"))
+			to_chat(follower, span_danger("那座被亵渎的普赛圣十字打断了我的祈祷！"))
 			return FALSE
 		return TRUE
 	// Allows prayer if raining and outside. Psydon weeps.
@@ -130,7 +130,7 @@
 	// Allows prayer if holding silver psycross.
 	if(istype(follower.get_active_held_item(), /obj/item/clothing/neck/roguetown/psicross/silver))
 		return TRUE
-	to_chat(follower, span_danger("若想让 Psydon 听见我的祈祷，我必须在 Pantheon Cross 附近、以自己的鲜血忏悔、手持祂的银制圣徽之一，或沐浴在祂的雨中；因为 Psydon 正为祂的子民哭泣……"))
+	to_chat(follower, span_danger("若想让普赛顿听见我的祈祷，我必须在万神圣十字附近、以自己的鲜血忏悔、手持祂的银制圣徽之一，或沐浴在祂的雨中；因为普赛顿正为祂的子民哭泣……"))
 	return FALSE
 
 //////////////////////////////////
@@ -138,7 +138,7 @@
 ////////////////////////////////
 
 /obj/effect/proc_holder/spell/invoked/psydonendure
-	name = "ENDURE"
+	name = "坚忍"
 	desc = "以一些维系生命的鲜血为代价，我能够治愈目标的伤势。"
 	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
@@ -150,7 +150,7 @@
 	warnie = "sydwarning"
 	movement_interrupt = FALSE
 	sound = 'sound/magic/ENDVRE.ogg'
-	invocations = list("LYVE, ENDURE!") // holy larp yelling for healing is silly
+	invocations = list("活着，坚持！") // holy larp yelling for healing is silly
 	invocation_type = "none"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
@@ -181,7 +181,7 @@
 			if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/decrepit, /obj/item/clothing/neck/roguetown/psicross/silver,	/obj/item/clothing/neck/roguetown/psicross/g))
 				pp += 1
 				if(pp >= 12 & target == user) // A harmless easter-egg. Only applies on self-cast. You'd have to be pretty deliberate to wear 12 of them.
-					target.visible_message(span_danger("[target] 身上的众多 psycross 共鸣出一种奇异而短暂的声响……"), span_userdanger("祂一定要苏醒了！我听见了！我竟如此 ENDURING！"))
+					target.visible_message(span_danger("[target] 身上的众多普赛圣十字共鸣出一种奇异而短暂的声响……"), span_userdanger("祂一定要苏醒了！我听见了！我竟如此坚忍！"))
 					playsound(user, 'sound/magic/PSYDONE.ogg', 100, FALSE)
 					sleep(60)
 					user.psydo_nyte()
@@ -223,7 +223,7 @@
 		var/psyhealing = 3
 		psyhealing += psicross_bonus
 		if (conditional_buff & !zcross_trigger)
-			to_chat(user, "正因如此 <b>ENDURING</b>，我变得 <b>无比振奋</b>！")
+			to_chat(user, "正因如此 <b>坚忍不屈</b>，我变得 <b>无比振奋</b>！")
 			psyhealing += situational_bonus
 
 		if (zcross_trigger)

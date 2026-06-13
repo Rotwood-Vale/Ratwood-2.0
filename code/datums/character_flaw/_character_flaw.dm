@@ -421,7 +421,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		H.remove_status_effect(/datum/status_effect/compliance)
 
 /datum/charflaw/assassintarget
-	name = "Marked for Death"
+	name = "死亡标记"
 	desc = "我过去的某些事让我成了目标。我总得不停回头张望。<br>\
 	你的刺客可以在不进行升级冲突的情况下永久将你逐出本局！"
 	var/logged = FALSE
@@ -620,7 +620,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/greedy
 	name = "贪婪"
-	desc = "我对 mammons 永远不会满足，只会想要越来越多！不过我也因此更擅长判断东西值多少钱。"
+	desc = "我对玛门币永远不会满足，只会想要越来越多！不过我也因此更擅长判断东西值多少钱。"
 	var/last_checked_mammons = 0
 	var/required_mammons = 0
 	var/next_mammon_increase = 0
@@ -650,16 +650,16 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/greedy/proc/mammon_increase(mob/living/carbon/human/user)
 	if(last_passed_check + (50 MINUTES) < world.time) //If we spend a REALLY long time without being able to satisfy, then pity downgrade
 		required_mammons -= rand(10, 20)
-		to_chat(user, span_blue("也许少些 mammons 也够了……"))
+		to_chat(user, span_blue("也许少些玛门币也够了……"))
 	else
 		required_mammons += rand(25, 35) + extra_increment_value
 	required_mammons = min(required_mammons, 250) //Cap at 250 coins maximum
 	next_mammon_increase = world.time + rand(35 MINUTES, 40 MINUTES)
 	var/current_mammons = get_mammons_in_atom(user)
 	if(current_mammons >= required_mammons)
-		to_chat(user, span_blue("我手头这些 mammons，已经挺让我满意了……"))
+		to_chat(user, span_blue("我手头这些玛门币，已经挺让我满意了……"))
 	else
-		to_chat(user, span_boldwarning("我需要更多 mammons，我手里的还不够……"))
+		to_chat(user, span_boldwarning("我需要更多玛门币，我手里的还不够……"))
 
 	last_checked_mammons = current_mammons
 
@@ -671,7 +671,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(new_mammon_amount >= required_mammons)
 		// Feel better
 		if(user.has_stress_event(/datum/stressevent/vice/greedy))
-			to_chat(user, span_blue("[new_mammon_amount] 枚 mammons……这才像样……"))
+			to_chat(user, span_blue("[new_mammon_amount] 枚玛门币……这才像样……"))
 		user.remove_stress(/datum/stressevent/vice/greedy)
 		user.remove_status_effect(/datum/status_effect/debuff/addiction/greedy)
 		last_passed_check = world.time
@@ -686,9 +686,9 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 	if(do_update_msg)
 		if(ascending)
-			to_chat(user, span_warning("才 [new_mammon_amount] 枚 mammons……我还需要更多……"))
+			to_chat(user, span_warning("才 [new_mammon_amount] 枚玛门币……我还需要更多……"))
 		else
-			to_chat(user, span_boldwarning("不！我珍爱的 mammons……"))
+			to_chat(user, span_boldwarning("不！我珍爱的玛门币……"))
 
 	last_checked_mammons = new_mammon_amount
 
@@ -854,7 +854,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/marked_by_baotha
 	name = "巴奥莎之印"
-	desc = "不论是我主动寻上异端仪式术士，还是在违背意愿的情况下，我都已被 Baotha 打上印记。我的腹股沟处留下了清晰可见的烙印，也因此无论身体原本处于何种通常无法受孕的状态，都仍可能受孕。为了避免压力，我得时常满足这股新生的欲望……"
+	desc = "不论是我主动寻上异端仪式术士，还是在违背意愿的情况下，我都已被巴奥莎打上印记。我的腹股沟处留下了清晰可见的烙印，也因此无论身体原本处于何种通常无法受孕的状态，都仍可能受孕。为了避免压力，我得时常满足这股新生的欲望……"
 
 /datum/charflaw/marked_by_baotha/on_mob_creation(mob/user)
 

@@ -1,6 +1,6 @@
 /datum/sex_action
 	abstract_type = /datum/sex_action
-	var/name = "Zodomize"
+	var/name = "肛交"
 	/// Time to do the act, modified by up to 2.5x speed by the speed toggle
 	var/do_time = 3.3 SECONDS
 	/// Whether the act is continous and will be done on repeat

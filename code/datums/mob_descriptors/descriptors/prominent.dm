@@ -328,7 +328,7 @@
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/ursine_features
-	name = "Ursine Features"
+	name = "熊科特征"
 	verbage = "%HAVE%"
 
 /datum/mob_descriptor/prominent/cervine_features

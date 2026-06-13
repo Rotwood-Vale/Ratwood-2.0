@@ -388,36 +388,36 @@
 
 /datum/special_trait/bounty/on_apply(mob/living/carbon/human/character, silent)
 	var/reason = ""
-	var/employer = "unknown employer"
+	var/employer = "不明雇主"
 	var/employer_gender
 	if(prob(65))
 		employer_gender = MALE
 	else
 		employer_gender = FEMALE
 	if(employer_gender == MALE)
-		employer = pick(list("Baron", "Lord", "Nobleman", "Prince"))
+		employer = pick(list("男爵", "领主", "贵族老爷", "王子"))
 	else
-		employer = pick(list("Duchess", "Lady", "Noblelady", "Princess"))
+		employer = pick(list("女公爵", "贵妇", "贵族小姐", "公主"))
 	employer = "[employer] [random_human_name(employer_gender, FALSE, FALSE)]"
 	var/amount = rand(40,100)
 	switch(rand(1,7))
 		if(1)
-			reason = "murder"
+			reason = "谋杀"
 		if(2)
-			reason = "kinslaying"
+			reason = "弑亲"
 		if(3)
-			reason = "besmirching a noble's name"
+			reason = "玷污贵族名声"
 		if(4)
-			reason = "treason"
+			reason = "叛国"
 		if(5)
-			reason = "arson"
+			reason = "纵火"
 		if(6)
-			reason = "heresy"
+			reason = "异端罪"
 		if(7)
-			reason = "robbing a noble"
+			reason = "打劫贵族"
 	add_bounty(character.real_name, amount, FALSE, reason, employer)
 	if(!silent)
-		to_chat(character, span_notice("Whether I done it or not, I have been accused of [reason], and the [employer] put a bounty on my head!"))
+		to_chat(character, span_notice("不论事情是不是我干的，我都已被指控犯下[reason]，[employer]还悬赏买我的脑袋！"))
 
 /datum/special_trait/outlaw
 	name = "知名法外之徒"

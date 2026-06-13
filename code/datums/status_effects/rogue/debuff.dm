@@ -224,8 +224,8 @@
 	desc = "我被夺走了某些东西，还需要时间恢复。"
 
 /atom/movable/screen/alert/status_effect/debuff/devitalised/lux_ripped
-	name = "Lux Ripped"
-	desc = "The very essence of my lyfe was roughly torn from me."
+	name = "灵辉撕裂"
+	desc = "我生命的本质被粗暴地从体内撕走了。"
 
 /datum/status_effect/debuff/vamp_dreams
 	id = "sleepytime"
@@ -245,8 +245,8 @@
 
 
 /atom/movable/screen/alert/status_effect/debuff/ritualdefiled
-	name = "受污的 Lux"
-	desc = "我的 Lux 在邪恶的异端仪式中被玷污了。"
+	name = "受污的灵辉"
+	desc = "我的灵辉在邪恶的异端仪式中被玷污了。"
 
 /// SURRENDERING DEBUFFS
 
@@ -297,8 +297,8 @@
 	return ..()
 
 /atom/movable/screen/alert/status_effect/debuff/yield_prompt
-	name = "Yield?"
-	desc = "I am being told to yield, shall I comply? Or will I continue to fight!"
+	name = "屈服吗？"
+	desc = "有人在逼我屈服。我该顺从吗，还是继续战斗！"
 	icon_state = "compliance"
 	alert_group = ALERT_DEBUFF
 
@@ -388,7 +388,7 @@
 
 /atom/movable/screen/alert/status_effect/debuff/call_to_slaughter
 	name = "屠戮号令"
-	desc = "腐臭的气味灌满你的鼻腔，Graggar 的屠戮号令震得你灵魂发颤......"
+	desc = "腐臭的气味灌满你的鼻腔，格拉加尔的屠戮号令震得你灵魂发颤......"
 	icon_state = "call_to_slaughter"
 
 //For revive - your body DIDN'T rot, but it did suffer damage. Unlike being rotted, this one is only timed. Not forever.
@@ -400,7 +400,7 @@
 
 /atom/movable/screen/alert/status_effect/debuff/revived
 	name = "复生虚弱"
-	desc = "你感到生命本身流过全身，修复了你的 Lux 与精华。你......活过来了，但身体仍在疼痛，还需要时间恢复......"
+	desc = "你感到生命本身流过全身，修复了你的灵辉与精华。你......活过来了，但身体仍在疼痛，还需要时间恢复......"
 	icon_state = "revived"
 
 //For de-rot - your body ROTTED. Harsher penalty for longer, can be fully off-set with a cure-rot potion.
