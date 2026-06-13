@@ -87,6 +87,7 @@
 	blocksound = SOFTHIT
 	body_parts_covered = NECK|HAIR|EARS|HEAD
 	armor = ARMOR_PADDED_BAD
+	resistance_flags = FIRE_PROOF
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 	adjustable = CAN_CADJUST
 	toggle_icon_state = TRUE
@@ -160,6 +161,7 @@
 	body_parts_covered = NECK
 	body_parts_inherent = NECK
 	armor = ARMOR_LEATHER_GOOD
+	resistance_flags = FIRE_PROOF
 	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_SMASH, BCLASS_BURN)
 	sewrepair = TRUE
 	sellprice = 10
