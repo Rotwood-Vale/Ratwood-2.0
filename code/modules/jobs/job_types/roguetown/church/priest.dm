@@ -19,7 +19,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	total_positions = 1
 	spawn_positions = 1
 	selection_color = JCOLOR_CHURCH
-	f_title = "Bishop"
+	f_title = "主教"
 	allowed_races = RACES_NO_CONSTRUCT		//Too recent arrivals to ascend to priesthood.
 	allowed_patrons = ALL_DIVINE_PATRONS
 	allowed_sexes = list(MALE, FEMALE)
@@ -222,7 +222,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 /datum/job/priest/vice //just used to change the priest title
 	title = "Vice Priest"
 	display_title = "副司祭"
-	f_title = "Vice Priestess"
+	f_title = "副司祭"
 	flag = PRIEST
 	department_flag = CHURCHMEN
 	total_positions = 0

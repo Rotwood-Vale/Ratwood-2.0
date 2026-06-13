@@ -4,7 +4,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 /datum/job/roguetown/lord
 	title = "Grand Duke"
 	display_title = "大公"
-	f_title = "Grand Duchess"
+	f_title = "大公夫人"
 	flag = LORD
 	department_flag = NOBLEMEN
 	faction = "Station"

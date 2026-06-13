@@ -1,7 +1,7 @@
 /datum/job/roguetown/nightmaiden
 	title = "Bathhouse Attendant"
 	display_title = "浴场侍者"
-	f_title = "Bathhouse Attendant"
+	f_title = "浴场侍者"
 	flag = WENCH
 	department_flag = PEASANTS
 	faction = "Station"

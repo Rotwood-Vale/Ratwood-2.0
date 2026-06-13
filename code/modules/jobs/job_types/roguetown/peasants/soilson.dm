@@ -14,7 +14,7 @@
 	tutorial = "你过着一种朴素的生活，而你对日子的那点朴实理解，若让旁人知道其中有多圆满，怕是许多人都会心生羡慕。你知道怎样才算一整天扎实的劳作，也明白额上的汗水都是替自己流的。饥荒与瘟疫也许会降临，但你依旧懂得如何好好庆贺活着这件事。翻耕土地，为周围的人种出新鲜粮食，说不定有朝一日，你就不只是个无人称颂的英雄。"
 
 
-	f_title = "Soilbride"
+	f_title = "农妇"
 	outfit = /datum/outfit/job/roguetown/farmer
 	display_order = 24
 	give_bank_account = 17

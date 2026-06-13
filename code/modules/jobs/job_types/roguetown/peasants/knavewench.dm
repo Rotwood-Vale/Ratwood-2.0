@@ -1,7 +1,7 @@
 /datum/job/roguetown/knavewench // The most aggressively rude name yet.
 	title = "Tapster"
 	display_title = "酒馆伙计"
-	f_title = "Tapster"
+	f_title = "酒馆伙计"
 	flag = KNAVEWENCH
 	department_flag = PEASANTS
 	faction = "Station"

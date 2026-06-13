@@ -1,7 +1,7 @@
 /datum/job/roguetown/servant
 	title = "Servant"
 	display_title = "仆役"
-//	f_title = "Maid"
+//	f_title = "女仆"
 	flag = SERVANT
 	department_flag = COURTIERS
 	faction = "Station"

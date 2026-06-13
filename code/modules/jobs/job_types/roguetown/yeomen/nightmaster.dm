@@ -6,7 +6,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	f_title = "Bathmatron"
+	f_title = "浴场主事"
 	allowed_races = ACCEPTED_RACES
 	tutorial = "你与酒馆老板一同经营这间浴场，并将其对外出租。你负责为浴女们提供庇护，帮她们招揽营生，前提是你自己别又成了那个惹是生非、让众人勉强忍着的浪荡子。"
 	allowed_sexes = list(MALE, FEMALE)

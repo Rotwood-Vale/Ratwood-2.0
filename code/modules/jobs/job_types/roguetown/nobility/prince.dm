@@ -1,13 +1,13 @@
 /datum/job/roguetown/prince
 	title = "Prince"
 	display_title = "王子"
-	f_title = "Princess"
+	f_title = "公主"
 	flag = PRINCE
 	department_flag = NOBLEMEN
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
-	f_title = "Princess"
+	f_title = "公主"
 	allowed_races = RACES_TOLERATED_UP //the duke isn't giving up their throne to a goblin
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_ages = list(AGE_ADULT)

@@ -1,7 +1,7 @@
 /datum/job/roguetown/druid
 	title = "Druid"
 	display_title = "德鲁伊"
-	f_title = "Druidess"
+	f_title = "德鲁伊"
 	flag = DRUID
 	department_flag = CHURCHMEN
 	faction = "Station"
