@@ -1,5 +1,6 @@
 /datum/job/roguetown/adventurer/courtslave
 	title = "Enslaved Adventurer"
+	display_title = "被奴役的冒险者"
 	flag = ADVENTURER
 	display_order = JDO_COURTAGENT
 	allowed_races = RACES_ALL_KINDS

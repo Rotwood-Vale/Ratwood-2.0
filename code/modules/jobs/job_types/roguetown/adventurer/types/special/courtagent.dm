@@ -1,5 +1,6 @@
 /datum/job/roguetown/adventurer/courtagent
 	title = "Court Agent"
+	display_title = "宫廷密探"
 	flag = COURTAGENT
 	display_order = JDO_COURTAGENT
 	allowed_races = RACES_ALL_KINDS
