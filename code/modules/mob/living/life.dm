@@ -131,7 +131,7 @@
 	return stat != DEAD && length(simple_wounds)
 
 /mob/living/proc/should_hibernate(list/active_z)
-	if(client || ckey || ignore_hibernation)
+	if(ckey || ignore_hibernation)
 		hibernation_pending_since = 0
 		return FALSE
 

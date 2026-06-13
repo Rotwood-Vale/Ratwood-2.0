@@ -76,7 +76,7 @@ SUBSYSTEM_DEF(mobs)
 			continue
 
 		if(L.hibernating)
-			if(!full_recheck && !L.client && !L.ckey)
+			if(!full_recheck && !L.ckey)
 				if(ishuman(L))
 					var/mob/living/carbon/human/sleeper = L
 					if(!sleeper.clients_in_range)
@@ -141,7 +141,7 @@ SUBSYSTEM_DEF(mobs_dead)
 			continue
 
 		if(L.hibernating)
-			if(!full_recheck && !L.client && !L.ckey)
+			if(!full_recheck && !L.ckey)
 				var/turf/sleeper_turf = L.loc
 				if(isturf(sleeper_turf) && active_z && sleeper_turf.z <= active_z.len && !active_z[sleeper_turf.z])
 					hibernating_mobs++

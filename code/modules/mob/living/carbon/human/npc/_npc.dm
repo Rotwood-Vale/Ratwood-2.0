@@ -1013,7 +1013,7 @@
 /mob/living/carbon/human/should_hibernate(list/active_z)
 	if(stat == DEAD)
 		return ..(active_z)
-	if(client || ckey || ignore_hibernation || clients_in_range)
+	if(ckey || ignore_hibernation || clients_in_range)
 		hibernation_pending_since = 0
 		return FALSE
 	return update_hibernation_state()
