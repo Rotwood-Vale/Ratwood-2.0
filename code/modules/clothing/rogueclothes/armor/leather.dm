@@ -14,7 +14,6 @@
 	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
 	sellprice = 20
 	armor_class = ARMOR_CLASS_LIGHT
-	resistance_flags = FIRE_PROOF
 	salvage_result = /obj/item/natural/hide/cured
 	cold_protection = CHEST
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
@@ -416,4 +415,3 @@
 	desc = "A heavy set of hardened robes, lined with fur. The leather is composed of several creatures that were notably difficult to fell by arrow. A proof or rangership among many."
 	icon_state = "hatanga"
 	item_state = "hatanga"
-	resistance_flags = FIRE_PROOF //made of animal hides, shouldn't burn as easily as a gambeson
