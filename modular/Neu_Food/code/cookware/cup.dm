@@ -115,8 +115,8 @@
 
 		if(scooped.len)
 			user.visible_message(
-				span_notice("[user]用[src]舀起了[english_list(scooped)]。"),
-				span_notice("我用[src]舀起了[english_list(scooped)]。")
+				span_notice("[user]用[src]舀起了[replacetext(replacetext(replacetext(english_list(scooped), ", and ", "、"), " and ", "、"), ", ", "、")]。"),
+				span_notice("我用[src]舀起了[replacetext(replacetext(replacetext(english_list(scooped), ", and ", "、"), " and ", "、"), ", ", "、")]。")
 			)
 		update_icon()
 		return TRUE

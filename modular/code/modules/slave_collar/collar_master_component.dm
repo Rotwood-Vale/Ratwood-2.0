@@ -683,7 +683,7 @@ GLOBAL_LIST_EMPTY(collar_masters)
 	if(pet == listening_pet)
 		active_traits += "监听链接"
 
-	status_text += active_traits.len ? english_list(active_traits) : "无"
+	status_text += active_traits.len ? jointext(active_traits, "、") : "无"
 	status_text += "</span>"
 
 	return status_text

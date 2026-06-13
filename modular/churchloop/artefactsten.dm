@@ -1337,7 +1337,7 @@ Necra's Censer (by ARefrigerator)
 	for(var/race_name in species_counts)
 		var/num = max(1, species_counts[race_name])
 		parts += (num > 1) ? "[race_name] ([num])" : "[race_name]"
-	SAY_INFO("拉沃克斯的目光揭示出：[english_list(parts)]。")
+	SAY_INFO("拉沃克斯的目光揭示出：[replacetext(replacetext(replacetext(english_list(parts), ", and ", "、"), " and ", "、"), ", ", "、")]。")
 
 /proc/_ravox_collect_from_atom(atom/A, list/species_counts)
 	if(!A) return FALSE
@@ -1663,7 +1663,7 @@ Necra's Censer (by ARefrigerator)
 	for(var/path in ALL_DIVINE_PATRONS)
 		var/datum/patron/divine/instance = new path
 		if(instance && instance.name)
-			divine_options[instance.name] = path
+			divine_options[_cr_patron_name_display(instance.name)] = path
 		qdel(instance)
 
 	if(!divine_options || !divine_options.len)

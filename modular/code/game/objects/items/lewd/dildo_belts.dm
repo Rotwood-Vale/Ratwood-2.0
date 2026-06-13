@@ -14,7 +14,7 @@
 /obj/item/storage/belt/rogue/examine()
 	. = ..()
 	if(attached_toy)
-		. += "[span_notice("[attached_toy]似乎装在[initial(name)]上。按 Alt+右键可将其取下。")]"
+		. += "[span_notice("[attached_toy]似乎装在[initial(name)]上。按住 Alt 键并右键可将其取下。")]"
 
 // Prevent equipping a toy belt if the wearer already has a toy attached to their chastity device, since the belt and chastity device share the same sprite overlay for attached toys and it would cause visual bugs to have toys on both at the same time. The same check is done in reverse when trying to attach a toy to a belt while wearing a chastity device with an attached toy in chastity_core.dm.
 /obj/item/storage/belt/rogue/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)

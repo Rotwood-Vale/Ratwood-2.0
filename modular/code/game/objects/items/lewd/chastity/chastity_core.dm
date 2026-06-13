@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 /obj/item/chastity/examine()
 	. = ..()
 	if(attached_toy)
-		. += "[span_notice("[attached_toy]似乎被安装在了[initial(name)]上。按住 Alt 再右键可将其拆下。")]"
+		. += "[span_notice("[attached_toy]似乎被安装在了[initial(name)]上。按住 Alt 键并右键可将其拆下。")]"
 	if(chastity_cursed)
 		if(received_cum_count == 1)
 			. += span_notice("贞操装置的金属表面刻着 1 道刻痕。")

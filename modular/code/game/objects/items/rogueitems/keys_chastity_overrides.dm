@@ -93,7 +93,7 @@
 	pickchance *= picklvl
 	pickchance = clamp(pickchance, 5, 95)
 
-	user.visible_message(span_notice("[user]开始撬开[H]贞操装置上的锁......"), span_notice("我开始撬开[H]贞操装置上的锁......"))
+	user.visible_message(span_notice("[user]开始撬开[H]贞操装置上的锁……"), span_notice("我开始撬开[H]贞操装置上的锁……"))
 	if(!do_after(user, picktime, target = H))
 		return TRUE
 
@@ -174,7 +174,7 @@
 	pickchance *= picklvl
 	pickchance = clamp(pickchance, 5, 95)
 
-	user.visible_message(span_notice("[user]用幽光撬锁器划过[H]贞操装置上的锁......"), span_notice("我将幽光撬锁器引入[H]贞操装置上的锁孔......"))
+	user.visible_message(span_notice("[user]用幽光撬锁器划过[H]贞操装置上的锁……"), span_notice("我将幽光撬锁器引入[H]贞操装置上的锁孔……"))
 	if(!do_after(user, picktime, target = H))
 		return TRUE
 

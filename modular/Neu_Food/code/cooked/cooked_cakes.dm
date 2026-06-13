@@ -223,7 +223,7 @@
 					qdel(I)
 					qdel(src)
 					playsound(get_turf(user), 'sound/magic/charged.ogg', 100, TRUE, -1)
-					user.say("Immensa dulcedo!")
+					user.say("无上的甘甜！")
 		else
 			to_chat(user, span_warning("你得把[src]放到桌上才能处理。"))
 */

@@ -350,7 +350,7 @@
 /obj/structure/tent_wall
     parent_type = /obj/structure/tent_component // Inherits from base
     name = "帐篷壁"
-    desc = "一面结实的布制墙体。从帐篷内部按住 Shift 点击可将其收起。"
+    desc = "一面结实的布制墙体。从帐篷内部按住 Shift 键点击可将其收起。"
     icon = 'icons/turf/roguewall.dmi'
     icon_state = "tent"
     density = TRUE

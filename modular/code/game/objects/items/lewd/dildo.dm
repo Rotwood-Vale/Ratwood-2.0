@@ -20,7 +20,7 @@
 
 /obj/item/dildo/New()
 	. = ..()
-	name = "未完成的[dildo_material == "wooden" ? "木制" : dildo_material == "iron" ? "铁制" : dildo_material == "copper" ? "铜制" : dildo_material == "steel" ? "钢制" : dildo_material == "bronze" ? "青铜制" : dildo_material == "silver" ? "银制" : dildo_material == "golden" ? "金制" : dildo_material == "blacksteel" ? "黑钢制" : dildo_material]假阳具"
+	name = "未完成的[dildo_material == "wooden" ? "木制" : dildo_material == "iron" ? "铁制" : dildo_material == "copper" ? "铜制" : dildo_material == "steel" ? "钢制" : dildo_material == "bronze" ? "青铜制" : dildo_material == "silver" ? "银制" : dildo_material == "golden" ? "金制" : dildo_material == "blacksteel" ? "黑钢制" : "未知材质"]假阳具"
 
 /obj/item/dildo/attack_self(mob/living/user)
 	. = ..()
@@ -53,7 +53,7 @@
 
 /obj/item/dildo/proc/update_appearance()
 	icon_state = "dildo_[dildo_type]_[dildo_size]"
-	name = "[dildo_size == "small" ? "小型" : dildo_size == "medium" ? "中型" : "大型"][dildo_type == "knotted" ? "打结" : dildo_type == "human" ? "人形" : "喇叭口"][(dildo_material == "wooden") ? "木制" : (dildo_material == "iron") ? "铁制" : (dildo_material == "copper") ? "铜制" : (dildo_material == "steel") ? "钢制" : (dildo_material == "bronze") ? "青铜制" : (dildo_material == "silver") ? "银制" : (dildo_material == "golden") ? "金制" : (dildo_material == "blacksteel") ? "黑钢制" : dildo_material]假阳具"
+	name = "[dildo_size == "small" ? "小型" : dildo_size == "medium" ? "中型" : "大型"][dildo_type == "knotted" ? "打结" : dildo_type == "human" ? "人形" : "喇叭口"][(dildo_material == "wooden") ? "木制" : (dildo_material == "iron") ? "铁制" : (dildo_material == "copper") ? "铜制" : (dildo_material == "steel") ? "钢制" : (dildo_material == "bronze") ? "青铜制" : (dildo_material == "silver") ? "银制" : (dildo_material == "golden") ? "金制" : (dildo_material == "blacksteel") ? "黑钢制" : "未知材质"]假阳具"
 	desc = "用来纾解欲火。"
 	can_custom = FALSE
 

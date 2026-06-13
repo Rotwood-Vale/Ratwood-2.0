@@ -17,7 +17,7 @@
 	plane = GAME_PLANE_UPPER
 	static_debris = list(/obj/item/rope = 1)
 	breakoutextra = 10 MINUTES
-	buckleverb = "tie"
+	buckleverb = "套上"
 	var/offsetx = 0
 	var/offsety = 10
 

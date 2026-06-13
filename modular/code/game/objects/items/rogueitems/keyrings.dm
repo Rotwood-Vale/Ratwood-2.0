@@ -84,7 +84,7 @@
 
 /obj/item/storage/keyring/proc/update_desc()
 	if(contents.len)
-		desc = span_info("内有\Roman[contents.len]件物品，包括：")
+		desc = span_info("内有[contents.len]件物品，包括：")
 		for(var/obj/item/I in contents)
 			desc += span_info("\n- [I.name ? "[I.name]。" : "\t未知物品。"]")
 	else
@@ -233,7 +233,7 @@
 /obj/item/lockpickring/proc/update_desc()
 	if(picks.len)
 		desc = initial(desc)
-		desc += "<span class='info'>\n\Roman [picks.len]根撬锁工具。</span>"
+		desc += "<span class='info'>\n[picks.len]根撬锁工具。</span>"
 	else
 		desc = initial(desc)
 
@@ -289,23 +289,23 @@
 	keys = list(/obj/item/roguekey/tavern, /obj/item/roguekey/tavernkeep, /obj/item/roguekey/roomhunt, /obj/item/roguekey/roomx, /obj/item/roguekey/roomix, /obj/item/roguekey/roomviii, /obj/item/roguekey/roomvii, /obj/item/roguekey/roomvi, /obj/item/roguekey/roomv, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomii, /obj/item/roguekey/roomi, /obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomiii, /obj/item/roguekey/fancyroomiv, /obj/item/roguekey/fancyroomv)
 
 /obj/item/storage/keyring/innfancyi // 3 Keys
-	name = "豪华客房 I 钥匙环"
+	name = "豪华客房一号钥匙环"
 	keys = list(/obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomi, /obj/item/roguekey/fancyroomi)
 
 /obj/item/storage/keyring/innfancyii
-	name = "豪华客房 II 钥匙环"
+	name = "豪华客房二号钥匙环"
 	keys = list(/obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomii, /obj/item/roguekey/fancyroomii)
 
 /obj/item/storage/keyring/innfancyiii
-	name = "豪华客房 III 钥匙环"
+	name = "豪华客房三号钥匙环"
 	keys = list(/obj/item/roguekey/fancyroomiii, /obj/item/roguekey/fancyroomiii, /obj/item/roguekey/fancyroomiii)
 
 /obj/item/storage/keyring/innfancyiv
-	name = "豪华客房 IV 钥匙环"
+	name = "豪华客房四号钥匙环"
 	keys = list(/obj/item/roguekey/fancyroomiv, /obj/item/roguekey/fancyroomiv, /obj/item/roguekey/fancyroomiv)
 
 /obj/item/storage/keyring/innfancyv
-	name = "豪华客房 V 钥匙环"
+	name = "豪华客房五号钥匙环"
 	keys = list(/obj/item/roguekey/fancyroomv, /obj/item/roguekey/fancyroomv, /obj/item/roguekey/fancyroomv)
 
 /obj/item/storage/keyring/innhunt // 4 keys

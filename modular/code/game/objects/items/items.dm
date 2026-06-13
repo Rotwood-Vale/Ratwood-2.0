@@ -13,7 +13,7 @@
 
 		if(!(src in C.held_items) && unequip_delay_self)
 			if(unequip_delay_self >= 10)
-				C.visible_message(span_smallnotice("[C]开始脱下[src]..."), span_smallnotice("我开始脱下[src]..."))
+				C.visible_message(span_smallnotice("[C]开始脱下[src]……"), span_smallnotice("我开始脱下[src]……"))
 			if(edelay_type)
 				if(move_after(C, minone(unequip_delay_self-C.STASPD), target = C))
 					return TRUE
@@ -42,7 +42,7 @@
 
 		if(!(src in C.held_items) && unequip_delay_self)
 			if(unequip_delay_self >= 10)
-				C.visible_message(span_smallnotice("[C]开始脱下[src]..."), span_smallnotice("我开始脱下[src]..."))
+				C.visible_message(span_smallnotice("[C]开始脱下[src]……"), span_smallnotice("我开始脱下[src]……"))
 			if(edelay_type)
 				if(move_after(C, minone(unequip_delay_self-C.STASPD), target = C))
 					return ..()
@@ -71,7 +71,7 @@
 
 		if(!(src in C.held_items) && unequip_delay_self)
 			if(unequip_delay_self >= 10)
-				C.visible_message(span_smallnotice("[C]开始脱下[src]..."), span_smallnotice("我开始脱下[src]..."))
+				C.visible_message(span_smallnotice("[C]开始脱下[src]……"), span_smallnotice("我开始脱下[src]……"))
 			if(edelay_type)
 				if(move_after(C, minone(unequip_delay_self-C.STASPD), target = C))
 					return ..()
