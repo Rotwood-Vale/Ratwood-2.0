@@ -842,7 +842,7 @@
 		return possible_targets
 	var/mob/living/carbon/human/locked_target = user.get_harmless_dismemberment_locked_target()
 	if(locked_target)
-		if(locked_target.client && locked_target.stat == CONSCIOUS && locked_target in range(range, user))
+		if(locked_target.client && locked_target.stat == CONSCIOUS && (locked_target in range(range, user)))
 			possible_targets += locked_target
 		return possible_targets
 	for(var/mob/living/carbon/human/possible_target in range(range, user))
