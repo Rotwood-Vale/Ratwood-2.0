@@ -143,38 +143,38 @@
 	lockid = "manor"
 
 /obj/item/roguekey/manor/guestroom/i
-	name = "Manor Guestroom I Key"
-	desc = "This key will open the manor first guestroom."
+	name = "庄园一号客房钥匙"
+	desc = "这把钥匙能打开庄园的一号客房。"
 	icon_state = "mazekey"
 	lockid = "guestroom1"
 
 /obj/item/roguekey/manor/guestroom/ii
-	name = "Manor Guestroom II Key"
-	desc = "This key will open the manor second guestroom."
+	name = "庄园二号客房钥匙"
+	desc = "这把钥匙能打开庄园的二号客房。"
 	icon_state = "mazekey"
 	lockid = "guestroom2"
 
 /obj/item/roguekey/manor/guestroom/iii
-	name = "Manor Guestroom III Key"
-	desc = "This key will open the manor third guestroom."
+	name = "庄园三号客房钥匙"
+	desc = "这把钥匙能打开庄园的三号客房。"
 	icon_state = "mazekey"
 	lockid = "guestroom3"
 
 /obj/item/roguekey/manor/counsilroom/i
-	name = "Counsillor's Room I Key"
-	desc = "This key will open the manor first councilroom."
+	name = "议事厅一号房钥匙"
+	desc = "这把钥匙能打开庄园的第一间议事厅。"
 	icon_state = "mazekey"
 	lockid = "counsil1"
 
 /obj/item/roguekey/manor/counsilroom/ii
-	name = "Counsillor's Room II Key"
-	desc = "This key will open the manor second councilroom."
+	name = "议事厅二号房钥匙"
+	desc = "这把钥匙能打开庄园的第二间议事厅。"
 	icon_state = "mazekey"
 	lockid = "counsil2"
 
 /obj/item/roguekey/manor/counsilroom/iii
-	name = "Counsillor's Room III Key"
-	desc = "This key will open the manor third councilroom."
+	name = "议事厅三号房钥匙"
+	desc = "这把钥匙能打开庄园的第三间议事厅。"
 	icon_state = "mazekey"
 	lockid = "counsil3"
 
@@ -314,7 +314,7 @@
 	lockid = "vroomvi"
 
 /obj/item/roguekey/roomi
-	name = "I号客房钥匙"
+	name = "一号客房钥匙"
 	desc = "第一间客房的钥匙。"
 	icon_state = "brownkey"
 	lockid = "roomi"
@@ -375,7 +375,7 @@
 
 /obj/item/roguekey/roomhunt
 	name = "HUNT套房钥匙"
-	desc = "通往 HUNT 套房的钥匙，那是本地旅店的顶层客房。"
+	desc = "通往HUNT套房的钥匙，那是本地旅店的顶层客房。"
 	icon_state = "brownkey"
 	lockid = "roomhunt"
 
@@ -514,44 +514,44 @@
 	lockid = "nightmaiden"
 
 /obj/item/roguekey/nightmaiden/rooms/i
-	name = "baths room I key"
-	desc = "This regal key opens the baths first room."
+	name = "浴场一号房钥匙"
+	desc = "这把华贵的钥匙能打开浴场的一号房。"
 	icon_state = "bathkey"
 	lockid = "lux1"
 
 /obj/item/roguekey/nightmaiden/rooms/ii
-	name = "baths room II key"
-	desc = "This regal key opens the baths second room."
+	name = "浴场二号房钥匙"
+	desc = "这把华贵的钥匙能打开浴场的二号房。"
 	icon_state = "bathkey"
 	lockid = "lux2"
 
 /obj/item/roguekey/nightmaiden/rooms/iii
-	name = "baths room III key"
-	desc = "This regal key opens the baths third room."
+	name = "浴场三号房钥匙"
+	desc = "这把华贵的钥匙能打开浴场的三号房。"
 	icon_state = "bathkey"
 	lockid = "lux3"
 
 /obj/item/roguekey/nightmaiden/rooms/iv
-	name = "baths room IV key"
-	desc = "This regal key opens the baths fourth room."
+	name = "浴场四号房钥匙"
+	desc = "这把华贵的钥匙能打开浴场的四号房。"
 	icon_state = "bathkey"
 	lockid = "lux4"
 
 /obj/item/roguekey/nightmaiden/rooms/v
-	name = "baths room V key"
-	desc = "This regal key opens the baths fifth room."
+	name = "浴场五号房钥匙"
+	desc = "这把华贵的钥匙能打开浴场的五号房。"
 	icon_state = "bathkey"
 	lockid = "lux5"
 
 /obj/item/roguekey/nightmaiden/rooms/punish
-	name = "baths punishment room  key"
-	desc = "This regal key opens the baths punishment room."
+	name = "浴场惩戒房钥匙"
+	desc = "这把华贵的钥匙能打开浴场惩戒房。"
 	icon_state = "spikekey"
 	lockid = "punishroom"
 
 /obj/item/roguekey/nightmaiden/rooms/steam
-	name = "baths steam room key"
-	desc = "This regal key opens the baths steam room."
+	name = "浴场蒸汽房钥匙"
+	desc = "这把华贵的钥匙能打开浴场蒸汽房。"
 	icon_state = "bathkey"
 	lockid = "steam"
 

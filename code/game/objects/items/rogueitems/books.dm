@@ -239,7 +239,7 @@
 
 /obj/item/book/rogue/bibble/psy
 	name = "普西顿圣典"
-	desc = "'而祂哭泣。不是为你，不是为我，而是为这一切。' </br>一本皮面典籍，记述着正教会所奉持的信条；这是世上最大的普西顿教派。Otava 神职者近来发明的“哈劳斯印刷机”，确保普西多尼亚的每一处角落都能沐于祂的教诲之光。书中分为三部圣约，各以天鹅绒束带标记。</br>诗篇 - 神职智慧之圣约，昭示诠释。 </br>创世 - 普西多尼亚起源之圣约，记述往昔。 </br>祷文 - 意志之圣约，用以驱邪与咏唱。"
+	desc = "'而祂哭泣。不是为你，不是为我，而是为这一切。' </br>一本皮面典籍，记述着正教会所奉持的信条；这是世上最大的普西顿教派。奥塔瓦神职者近来发明的“哈劳斯印刷机”，确保普西多尼亚的每一处角落都能沐于祂的教诲之光。书中分为三部圣约，各以天鹅绒束带标记。</br>诗篇 - 神职智慧之圣约，昭示诠释。 </br>创世 - 普西多尼亚起源之圣约，记述往昔。 </br>祷文 - 意志之圣约，用以驱邪与咏唱。"
 	icon_state = "psyble_0"
 	base_icon_state = "psyble"
 	title = "psyble"
@@ -345,7 +345,7 @@
 //player made books
 /obj/item/book/rogue/tales1
 	name = "旧日逸闻杂谈"
-	desc = "作者：Alamere J Wevensworth"
+	desc = "作者：阿拉梅尔·J·韦文斯沃斯"
 	icon_state ="book_0"
 	base_icon_state = "book"
 	bookfile = "tales1.json"
@@ -360,7 +360,7 @@
 
 /obj/item/book/rogue/tales3
 	name = "群峰与彼方的神话传奇 第一卷"
-	desc = "作者：Arbalius the Younger"
+	desc = "作者：小阿巴利乌斯"
 	icon_state ="book3_0"
 	base_icon_state = "book3"
 	bookfile = "tales3.json"
@@ -374,21 +374,21 @@
 
 /obj/item/book/rogue/robber
 	name = "盗匪读本"
-	desc = "作者：Flavius of Dendor"
+	desc = "作者：登多尔的弗拉维乌斯"
 	icon_state ="basic_book_0"
 	base_icon_state = "basic_book"
 	bookfile = "tales4.json"
 
 /obj/item/book/rogue/cardgame
-	name = "《Graystone's Torment》基础规则"
-	desc = "作者：Johnus of Doe"
+	name = "《灰石折磨》基础规则"
+	desc = "作者：多伊的约努斯"
 	icon_state ="basic_book_0"
 	base_icon_state = "basic_book"
 	bookfile = "tales5.json"
 
 /obj/item/book/rogue/blackmountain
 	name = "《Zabrekalrek：黑山传奇》第一部"
-	desc = "著者：Gorrek Tale-Writer，译者：Hargrid Men-Speaker。"
+	desc = "著者：戈雷克·撰史者，译者：哈格里德·代言人。"
 	icon_state ="book6_0"
 	base_icon_state = "book6"
 	bookfile = "tales6.json"
@@ -402,77 +402,77 @@
 
 /obj/item/book/rogue/abyssor
 	name = "海上居民的故事"
-	desc = "作者：Bellum Aegir"
+	desc = "作者：贝勒姆·埃吉尔"
 	icon_state ="book2_0"
 	base_icon_state = "book2"
 	bookfile = "tales8.json"
 
 /obj/item/book/rogue/necra
-	name = "献给Necra的葬仪"
-	desc = "作者：Hunlaf，掘墓人。修订：Lenore，Necra 祭司。"
+	name = "献给内克拉的葬仪"
+	desc = "作者：掘墓人亨拉夫。修订：内克拉祭司莱诺尔。"
 	icon_state ="book6_0"
 	base_icon_state = "book6"
 	bookfile = "tales9.json"
 
 /obj/item/book/rogue/noc
 	name = "寻梦者"
-	desc = "作者：Hunlaf，掘墓人。修订：Lenore，Necra 祭司。"
+	desc = "作者：掘墓人亨拉夫。修订：内克拉祭司莱诺尔。"
 	icon_state ="book6_0"
 	base_icon_state = "book6"
 	bookfile = "tales10.json"
 
 /obj/item/book/rogue/fishing
-	name = "《Fontaine高等渔业指南》"
-	desc = "作者：Ford Fontaine"
+	name = "《方丹高等渔业指南》"
+	desc = "作者：福特·方丹"
 	icon_state ="book2_0"
 	base_icon_state = "book2"
 	bookfile = "tales11.json"
 
 /obj/item/book/rogue/sword
 	name = "六种愚行：持剑求生之道"
-	desc = "作者：Theodore Spillguts"
+	desc = "作者：西奥多·泼胆"
 	icon_state ="book5_0"
 	base_icon_state = "book5"
 	bookfile = "tales12.json"
 
 /obj/item/book/rogue/arcyne
-	name = "潜伏魔法：Arcyne之力从何而来？"
-	desc = "作者：Kildren Birchwood，魔法学者"
+	name = "潜伏魔法：奥术之力从何而来？"
+	desc = "作者：魔法学者基尔德伦·桦木"
 	icon_state ="book4_0"
 	base_icon_state = "book4"
 	bookfile = "tales13.json"
 
 /obj/item/book/rogue/nitebeast
 	name = "夜兽传说"
-	desc = "作者：Paquetto the Scholar"
+	desc = "作者：学者帕奎托"
 	icon_state ="book8_0"
 	base_icon_state = "book8"
 	bookfile = "tales14.json"
 
 /obj/item/book/rogue/naledi1
 	name = "战学者之路 第一卷"
-	desc = "作者：Jatholemew von Rittensquatter, Esq"
+	desc = "作者：贾索洛缪·冯·里滕斯夸特阁下"
 	icon_state = "knowledge_0"
 	base_icon_state = "knowledge"
 	bookfile = "naledi1.json"
 
 /obj/item/book/rogue/naledi2
 	name = "战学者之路 第三卷"
-	desc = "作者：Jatholemew von Rittensquatter, Esq"
+	desc = "作者：贾索洛缪·冯·里滕斯夸特阁下"
 	icon_state = "book8_0"
 	base_icon_state = "book8"
 	bookfile = "naledi2.json"
 
 /obj/item/book/rogue/naledi3
 	name = "战学者之路 第七卷"
-	desc = "作者：Jatholemew von Rittensquatter, Esq"
+	desc = "作者：贾索洛缪·冯·里滕斯夸特阁下"
 	icon_state = "book7_0"
 	base_icon_state = "book7"
 	bookfile = "naledi3.json"
 
 /obj/item/book/rogue/naledi4
 	name = "战学者之路 第二十卷"
-	desc = "作者：Jatholemew von Rittensquatter, Esq"
+	desc = "作者：贾索洛缪·冯·里滕斯夸特阁下"
 	icon_state = "book6_0"
 	base_icon_state = "book6"
 	bookfile = "naledi4.json"

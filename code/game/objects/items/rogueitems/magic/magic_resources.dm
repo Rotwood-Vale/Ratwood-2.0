@@ -192,28 +192,28 @@
 /obj/item/magic/elemental/mote
 	name = "元素微尘"
 	icon_state = "mote"
-	desc = "一缕灌注了 Dendor 力量的神秘精华，仅仅握住它，心神便仿佛回到了远古时代。"
+	desc = "一缕灌注了登多尔力量的神秘精华，仅仅握住它，心神便仿佛回到了远古时代。"
 	sellprice = T1SELLPRICE
 	tier = 1
 
 /obj/item/magic/elemental/shard
 	name = "元素碎片"
 	icon_state = "shard"
-	desc = "一缕灌注了 Dendor 力量的神秘精华，仅仅握住它，心神便仿佛回到了远古时代。"
+	desc = "一缕灌注了登多尔力量的神秘精华，仅仅握住它，心神便仿佛回到了远古时代。"
 	sellprice = T2SELLPRICE
 	tier = 2
 
 /obj/item/magic/elemental/fragment
 	name = "元素残片"
 	icon_state = "fragment"
-	desc = "一缕灌注了 Dendor 力量的神秘精华，仅仅握住它，心神便仿佛回到了远古时代。"
+	desc = "一缕灌注了登多尔力量的神秘精华，仅仅握住它，心神便仿佛回到了远古时代。"
 	sellprice = T3SELLPRICE
 	tier = 3
 
 /obj/item/magic/elemental/relic
 	name = "元素遗物"
 	icon_state = "relic"
-	desc = "一缕灌注了 Dendor 力量的神秘精华，仅仅握住它，心神便仿佛回到了远古时代。"
+	desc = "一缕灌注了登多尔力量的神秘精华，仅仅握住它，心神便仿佛回到了远古时代。"
 	sellprice = T4SELLPRICE
 	tier = 4
 

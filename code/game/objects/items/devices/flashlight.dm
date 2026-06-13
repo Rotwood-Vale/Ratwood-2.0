@@ -569,7 +569,7 @@
 	icon_state = "pumpkinlampten"
 
 /obj/item/flashlight/flare/torch/lantern/pumpkin/zizo
-	name = "Zumpkin 灯笼"
+	name = "齐佐南瓜灯笼"
 	desc = "一只巨大而装饰华美的南瓜壳。它阴沉得有些古怪。"
 	icon_state = "pumpkinlampz"
 	light_color = "#ceff72ff"

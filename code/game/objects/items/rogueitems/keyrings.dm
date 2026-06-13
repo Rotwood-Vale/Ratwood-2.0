@@ -57,7 +57,7 @@
 	if(contents.len)
 		desc = span_info("可挂 \Roman[contents.len] 把钥匙，包括：")
 		for(var/obj/item/I in contents)
-			desc += span_info("\n- [I.name ? "A [I.name]." : "\t一把未知钥匙。"]")
+			desc += span_info("\n- [I.name ? "[I.name]。" : "\t一把未知钥匙。"]")
 	else
 		desc = ""
 
@@ -284,7 +284,7 @@
 	keys = list(/obj/item/roguekey/fancyroomv, /obj/item/roguekey/fancyroomv, /obj/item/roguekey/fancyroomv)
 
 /obj/item/storage/keyring/innhunt // 5 keys
-	name = "HUNT 客房钥匙环"
+	name = "HUNT套房钥匙环"
 	keys = list(/obj/item/roguekey/roomhunt, /obj/item/roguekey/roomhunt, /obj/item/roguekey/roomhunt, /obj/item/roguekey/roomhunt, /obj/item/roguekey/roomhunt)
 
 
@@ -304,31 +304,31 @@
 	keys = list(/obj/item/roguekey/nightman, /obj/item/roguekey/nightmaiden, /obj/item/seal/nightmaster)
 
 /obj/item/storage/keyring/bathsi // 4 Keys
-	name = "baths room I keyring"
+	name = "浴场一号房钥匙环"
 	keys = list(/obj/item/roguekey/nightmaiden/rooms/i, /obj/item/roguekey/nightmaiden/rooms/i, /obj/item/roguekey/nightmaiden/rooms/i, /obj/item/roguekey/nightmaiden/rooms/i)
 
 /obj/item/storage/keyring/bathsii
-	name = "baths room II keyring"
+	name = "浴场二号房钥匙环"
 	keys = list(/obj/item/roguekey/nightmaiden/rooms/ii, /obj/item/roguekey/nightmaiden/rooms/ii, /obj/item/roguekey/nightmaiden/rooms/ii, /obj/item/roguekey/nightmaiden/rooms/ii)
 
 /obj/item/storage/keyring/bathsiii
-	name = "baths room III keyring"
+	name = "浴场三号房钥匙环"
 	keys = list(/obj/item/roguekey/nightmaiden/rooms/iii, /obj/item/roguekey/nightmaiden/rooms/iii, /obj/item/roguekey/nightmaiden/rooms/iii, /obj/item/roguekey/nightmaiden/rooms/iii)
 
 /obj/item/storage/keyring/bathsiv
-	name = "baths room IV keyring"
+	name = "浴场四号房钥匙环"
 	keys = list(/obj/item/roguekey/nightmaiden/rooms/iv, /obj/item/roguekey/nightmaiden/rooms/iv, /obj/item/roguekey/nightmaiden/rooms/iv, /obj/item/roguekey/nightmaiden/rooms/iv)
 
 /obj/item/storage/keyring/bathsv
-	name = "baths room V keyring"
+	name = "浴场五号房钥匙环"
 	keys = list(/obj/item/roguekey/nightmaiden/rooms/v, /obj/item/roguekey/nightmaiden/rooms/v, /obj/item/roguekey/nightmaiden/rooms/v, /obj/item/roguekey/nightmaiden/rooms/v)
 
 /obj/item/storage/keyring/bathspunish
-	name = "baths punishment room keyring"
+	name = "浴场惩戒房钥匙环"
 	keys = list(/obj/item/roguekey/nightmaiden/rooms/punish, /obj/item/roguekey/nightmaiden/rooms/punish, /obj/item/roguekey/nightmaiden/rooms/punish, /obj/item/roguekey/nightmaiden/rooms/punish)
 
 /obj/item/storage/keyring/bathssteam
-	name = "baths steam room keyring"
+	name = "浴场蒸汽房钥匙环"
 	keys = list(/obj/item/roguekey/nightmaiden/rooms/steam, /obj/item/roguekey/nightmaiden/rooms/steam, /obj/item/roguekey/nightmaiden/rooms/steam, /obj/item/roguekey/nightmaiden/rooms/steam)
 
 /obj/item/storage/keyring/hand
@@ -362,27 +362,27 @@
 	keys = list(/obj/item/roguekey/manor, /obj/item/roguekey/heir, /obj/item/roguekey/garrison, /obj/item/roguekey/servant, /obj/item/roguekey/tower)
 
 /obj/item/storage/keyring/manor/guestroom/i // 2 Guestroom Keys + 2 Manor Keys
-	name = "Manor Guestroom I Keyring"
+	name = "庄园一号客房钥匙环"
 	keys = list(/obj/item/roguekey/manor/guestroom/i, /obj/item/roguekey/manor/guestroom/i, /obj/item/roguekey/manor, /obj/item/roguekey/manor)
 
 /obj/item/storage/keyring/manor/guestroom/ii
-	name = "Manor Guestroom II Keyring"
+	name = "庄园二号客房钥匙环"
 	keys = list(/obj/item/roguekey/manor/guestroom/ii, /obj/item/roguekey/manor/guestroom/ii, /obj/item/roguekey/manor, /obj/item/roguekey/manor)
 
 /obj/item/storage/keyring/manor/guestroom/iii
-	name = "Manor Guestroom III Keyring"
+	name = "庄园三号客房钥匙环"
 	keys = list(/obj/item/roguekey/manor/guestroom/iii, /obj/item/roguekey/manor/guestroom/iii, /obj/item/roguekey/manor, /obj/item/roguekey/manor)
 
 /obj/item/storage/keyring/manor/counsilroom/i // 2 Counsilroom Keys
-	name = "Counsillor's Room I Keyring"
+	name = "议事厅一号房钥匙环"
 	keys = list(/obj/item/roguekey/manor/counsilroom/i, /obj/item/roguekey/manor/counsilroom/i)
 
 /obj/item/storage/keyring/manor/counsilroom/ii // 2 Counsilroom Keys
-	name = "Counsillor's Room II Keyring"
+	name = "议事厅二号房钥匙环"
 	keys = list(/obj/item/roguekey/manor/counsilroom/ii, /obj/item/roguekey/manor/counsilroom/ii)
 
 /obj/item/storage/keyring/manor/counsilroom/iii // 2 Counsilroom Keys
-	name = "Counsillor's Room III Keyring"
+	name = "议事厅三号房钥匙环"
 	keys = list(/obj/item/roguekey/manor/counsilroom/iii, /obj/item/roguekey/manor/counsilroom/iii)
 
 /obj/item/storage/keyring/mageapprentice

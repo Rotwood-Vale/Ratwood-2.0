@@ -365,7 +365,7 @@ Necra's Censer
 */
 
 /obj/item/necra_censer
-	name = "Necra 的香炉"
+	name = "内克拉的香炉"
 	desc = "一只小巧的青铜香炉，会不断吐出异界般的雾气。"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state ="necra_censer"

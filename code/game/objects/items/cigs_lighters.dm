@@ -418,7 +418,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	list_reagents = list(/datum/reagent/drug/nicotine = 25)
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
-	name = "\improper Cohiba Robusto 雪茄"
+	name = "\improper 科伊巴罗布斯托雪茄"
 	desc = ""
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"

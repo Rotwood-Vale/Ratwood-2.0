@@ -48,7 +48,7 @@
 		return FALSE
 /*	AZURE PEAK REMOVAL -- UNUSED ANYWAY
 	if(user.STAINT < 12)
-			to_chat(user, span_warning("You can't make sense of the sprawling runes!"))
+			to_chat(user, span_warning("这些蔓延交错的符文我根本无法理解！"))
 			return FALSE */
 	if(used && oneuse)
 		to_chat(user, span_warning("这眼知识之泉本就不是为让人啜饮两次而存在的！"))

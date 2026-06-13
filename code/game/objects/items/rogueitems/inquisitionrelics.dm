@@ -23,7 +23,7 @@
 			to_chat(user, span_info("圣髑匣开启时吞没了我手中的钥匙，我不由得思索，究竟有何等力量被赐予了我们……"))
 			playsound(loc, 'sound/foley/doors/lock.ogg', 60)
 			to_chat(user,)
-			var/relics = list("忧郁手摇匣 - 反魔法", "破晓 - 白银长鞭", "圣痕 - 白银长戟", "伪典 - 白银巨剑", "Golgatha - SYON 碎片香炉")
+			var/relics = list("忧郁手摇匣 - 反魔法", "破晓 - 白银长鞭", "圣痕 - 白银长戟", "伪典 - 白银巨剑", "戈尔戈萨 - SYON碎片香炉")
 			var/relicchoice = input(user, "选择你的器物", "圣遗物") as anything in relics
 			var/obj/choice
 			switch(relicchoice)
@@ -139,12 +139,12 @@
 	var/ticks_to_apply = 10
 	var/astratanlines =list("'她的光已离我而去！我这是在哪？！'", "'砸碎这鬼东西吧，让我最后再感受一次她的温暖！'", "'我是王族……他们为什么要这样对我……？'")
 	var/noclines =list("'比月光还要寒冷……'", "'再没有任何智慧能触及我了……'", "'求求你帮帮我，我想念群星……'")
-	var/necralines =list("'他们把我从她的掌握中夺走了，只留下永恒的折磨……'", "'Necra！求求你！我太累了！放我走吧！'", "'我迷失了，迷失在一片被窃取的终局之海里。'")
+	var/necralines =list("'他们把我从她的掌握中夺走了，只留下永恒的折磨……'", "'内克拉！求求你！我太累了！放我走吧！'", "'我迷失了，迷失在一片被窃取的终局之海里。'")
 	var/abyssorlines =list("'我再也感受不到海岸上的风了……'", "'我们在这里被搅得比鱼群还要紧密……'", "'求你放了我吧，让我回到大海……'")
-	var/ravoxlines =list("'Ravox 的同道！砍下这个 Otava 狗崽子的脑袋！把我从这该死的妖术里放出去！'", "'这里既无公义，也无荣耀，只有无穷无尽的疲惫……'", "'我曾祈求一场死于刀剑之下的结局……'")
-	var/pestralines =list("'我只是想让自己的药方更加完善……'", "'愿千重瘟疫降临在这台被诅咒机器的持有者身上！Pestra！你听不见我吗？！'", "'我能感到他们从我身边擦过时所承受的痛苦……'")
+	var/ravoxlines =list("'拉沃克斯的同道！砍下这个奥塔瓦狗崽子的脑袋！把我从这该死的妖术里放出去！'", "'这里既无公义，也无荣耀，只有无穷无尽的疲惫……'", "'我曾祈求一场死于刀剑之下的结局……'")
+	var/pestralines =list("'我只是想让自己的药方更加完善……'", "'愿千重瘟疫降临在这台被诅咒机器的持有者身上！佩斯特拉！你听不见我吗？！'", "'我能感到他们从我身边擦过时所承受的痛苦……'")
 	var/eoralines =list("'每一次抚触都像有千万根骨头同时碎裂……'", "'她是异端，可我又怎么下得去手伤害她？！'", "'对不起！我只是想要和平！求你放了我！'")
-	var/dendorlines =list("'祂的疯狂正在呼唤我！呃啊啊……'", "'砸碎这口箱子吧，好让我们用泥土与根须呛死这个 Otava 人！'", "'我想念叶间回响的祂之声……求你放我出去……'")
+	var/dendorlines =list("'祂的疯狂正在呼唤我！呃啊啊……'", "'砸碎这口箱子吧，好让我们用泥土与根须呛死这个奥塔瓦人！'", "'我想念叶间回响的祂之声……求你放我出去……'")
 	var/xylixlines =list("'一、二、三、四，二、二、三、四。怎么，你觉得这很烦？'", "'你知道吗，这里面还有十三个别的家伙！多棒的观众啊，他们甚至连座位都离不开！'", "'我当然全押了！我还以为他手里只是高牌 A 呢！'", "'不，XYLIX'S FORTUNE 没说错，这回的情况确实糟得很。'")
 	var/malumlines =list("'这台遭诅咒机器的结构是可以被重塑的……求你把它砸开……'", "'我的技艺本能改变整个世界……'", "'放我出去吧，让我回到我的学徒身边，求你了……'")
 	var/matthioslines =list("'我最后一笔交易……他再也收不到我应有的价值了……全被这些怪物夺走了……'", "'同道啊，我被锁进了这可怖的机关里，放我出去！'", "'我能感觉到我们的镣铐正彼此纠缠着……'")
@@ -761,7 +761,7 @@ Inquisitorial armory down here
 	else
 		if(loaded_tallow)
 			if(!messageshown)
-				visible_message(span_info("The [loaded_tallow] in [src] hardens again."))
+				visible_message(span_info("[src]中的[loaded_tallow]再次凝固了。"))
 				messageshown = 1
 			update_icon()
 	if(remaining == 0)
