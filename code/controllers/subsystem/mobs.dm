@@ -66,11 +66,7 @@ SUBSYSTEM_DEF(mobs)
 		currentrun.len--
 
 		if(!L || QDELETED(L))
-			GLOB.mob_living_list -= L
 			GLOB.mob_living_active_list -= L
-			GLOB.mob_living_dead_list -= L
-			GLOB.alive_mob_list -= L
-			GLOB.dead_mob_list -= L
 			continue
 
 		if(L.stat == DEAD)
@@ -135,11 +131,7 @@ SUBSYSTEM_DEF(mobs_dead)
 		currentrun.len--
 
 		if(!L || QDELETED(L))
-			GLOB.mob_living_list -= L
-			GLOB.mob_living_active_list -= L
 			GLOB.mob_living_dead_list -= L
-			GLOB.alive_mob_list -= L
-			GLOB.dead_mob_list -= L
 			continue
 
 		if(L.stat != DEAD)

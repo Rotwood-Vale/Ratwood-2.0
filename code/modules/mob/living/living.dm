@@ -10,13 +10,11 @@
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
 	faction += "[REF(src)]"
-	GLOB.mob_living_list |= src
+	GLOB.mob_living_list += src
 	if(stat == DEAD)
-		GLOB.mob_living_active_list -= src
-		GLOB.mob_living_dead_list |= src
+		GLOB.mob_living_dead_list += src
 	else
-		GLOB.mob_living_dead_list -= src
-		GLOB.mob_living_active_list |= src
+		GLOB.mob_living_active_list += src
 	init_faith()
 
 /mob/living/Destroy()
@@ -71,9 +69,9 @@
 	hibernating = FALSE
 	if(is_dead)
 		GLOB.alive_mob_list -= src
-		GLOB.dead_mob_list |= src
+		GLOB.dead_mob_list += src
 		GLOB.mob_living_active_list -= src
-		GLOB.mob_living_dead_list |= src
+		GLOB.mob_living_dead_list += src
 		if(SSmobs)
 			SSmobs.currentrun -= src
 		update_sneak_invis(TRUE)
@@ -81,9 +79,9 @@
 			cut_overlay(GLOB.cold_breath_overlay)
 	else
 		GLOB.dead_mob_list -= src
-		GLOB.alive_mob_list |= src
+		GLOB.alive_mob_list += src
 		GLOB.mob_living_dead_list -= src
-		GLOB.mob_living_active_list |= src
+		GLOB.mob_living_active_list += src
 		if(SSmobs_dead)
 			SSmobs_dead.currentrun -= src
 
