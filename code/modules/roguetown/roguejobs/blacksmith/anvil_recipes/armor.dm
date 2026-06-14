@@ -288,7 +288,7 @@
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/half/iron
 
 /datum/anvil_recipe/armor/iron/wardenbrig
-	name = "Forester 札甲 (+1 Forester's Armor, +1 铁, +1 Essence of Wilderness)"
+	name = "林地守卫札甲 (+1 林地守卫甲, +1 铁, +1 荒野精华)"
 	additional_items = list(/obj/item/clothing/suit/roguetown/armor/leather/studded/warden, /obj/item/ingot/iron, /obj/item/natural/cured/essence)
 	created_item = /obj/item/clothing/suit/roguetown/armor/leather/studded/warden/upgraded
 	i_type = "护甲"

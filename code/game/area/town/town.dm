@@ -425,6 +425,6 @@
 // 	droning_sound_night = null
 
 /area/rogue/outdoors/town/outskirts
-	name = "city outskirts"
+	name = "城郊"
 	warden_area = TRUE
-	deathsight_message = "civilisation, clinging to one side of a wall like moss"
+	deathsight_message = "文明蜷附在墙垣一侧，如同苔藓一般"

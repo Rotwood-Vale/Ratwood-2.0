@@ -589,7 +589,7 @@
 
 	if(istype(I, /obj/item/compost) || istype(I, /obj/item/fertilizer))
 		if(istype(I, /obj/item/fertilizer) && growth_stage != FRUITING)
-			to_chat(user, span_warning("The tree won't absorb the fertilizer properly until it is maturing or fully grown."))
+			to_chat(user, span_warning("这棵树要到成熟期或完全长成后，才能正常吸收肥料。"))
 			return TRUE
 
 		if(fertilizer_happiness >= 25)
@@ -697,15 +697,15 @@
 
 	if(growth_stage == FRUITING && user.get_skill_level(/datum/skill/labor/farming) >= SKILL_LEVEL_JOURNEYMAN)
 		if(fruit_ready)
-			. += span_good("The fruit is ripe and ready to harvest.")
+			. += span_good("果实已经成熟，可以采摘了。")
 		else if(fruit)
-			. += span_info("The fruit is almost ripe.")
+			. += span_info("果实已经快成熟了。")
 		else
 			var/effective_fruit_time = (fertilizer_happiness > 0) ? time_to_grow_fruit / 2 : time_to_grow_fruit
 			var/remaining_seconds = round(((growth_threshold - growth_progress) / (growth_threshold * 0.25)) * effective_fruit_time / 10)
 			var/minutes = round(remaining_seconds / 60)
 			var/secs = remaining_seconds % 60
-			. += span_info("My farming experience tells me the fruit will start to bear in roughly [minutes > 0 ? "[minutes] minute\s" : ""][minutes > 0 && secs > 0 ? " and " : ""][secs > 0 ? "[secs] second\s" : ""].")
+			. += span_info("凭我的农务经验判断，这棵树大约还要 [minutes > 0 ? (secs > 0 ? "[minutes] 分 [secs] 秒" : "[minutes] 分") : "[secs] 秒"] 后才会开始结果。")
 
 /obj/structure/eoran_pomegranate_tree/proc/reset_care()
 	//The benefit of rare offerings are kept through harvests.

@@ -1374,7 +1374,7 @@
 	if(isliving(who))
 		var/mob/living/L = who
 		if(L.cmode && L.mobility_flags & MOBILITY_STAND && !L.restrained())
-			to_chat(src, span_warning("I can't take \the [what] off, they are too tense!"))
+			to_chat(src, span_warning("我没法把\the [what]脱下来，对方绷得太紧了！"))
 			return
 		if(L.compliance || L.surrendering)
 			surrender_mod = 0.5
@@ -1391,7 +1391,7 @@
 		who.visible_message(span_warning("[src] tries to remove [who]'s [what.name]."), \
 						span_danger("[src] tries to remove my [what.name]."), null, null, src)
 
-	to_chat(src, span_danger("I try to remove [who]'s [what.name]..."))
+	to_chat(src, span_danger("我试着脱下[who]的[what.name]......"))
 	what.add_fingerprint(src)
 	var/strip_delayed = what.strip_delay
 	if(enhanced_strip)
@@ -1418,7 +1418,7 @@
 /mob/living/stripPanelEquip(obj/item/what, mob/who, where)
 	what = src.get_active_held_item()
 	if(what && (HAS_TRAIT(what, TRAIT_NODROP)))
-		to_chat(src, span_warning("I can't put \the [what.name] on [who], it's stuck to my hand!"))
+		to_chat(src, span_warning("我没法把\the [what.name]穿到[who]身上，它粘在我手上了！"))
 		return
 	if(what)
 		var/list/where_list
@@ -1431,7 +1431,7 @@
 			final_where = where
 
 		if(!what.mob_can_equip(who, src, final_where, TRUE, TRUE))
-			to_chat(src, span_warning("\The [what.name] doesn't fit in that place!"))
+			to_chat(src, span_warning("\The [what.name]不适合穿在那个位置！"))
 			return
 
 		var/surrender_mod = 1
@@ -1439,14 +1439,14 @@
 		if(isliving(who))
 			var/mob/living/L = who
 			if(L.cmode && L.mobility_flags & MOBILITY_STAND)
-				to_chat(src, span_warning("I can't put \the [what] on them, they are too tense!"))
+				to_chat(src, span_warning("我没法把\the [what]穿到对方身上，他们绷得太紧了！"))
 				return
 			if(L.compliance || L.surrendering)
 				surrender_mod = 0.5
 
 		who.visible_message(span_notice("[src] tries to put [what] on [who]."), \
 						span_notice("[src] tries to put [what] on you."), null, null, src)
-		to_chat(src, span_notice("I try to put [what] on [who]..."))
+		to_chat(src, span_notice("我试着把[what]穿到[who]身上......"))
 		if(do_mob(src, who, what.equip_delay_other * surrender_mod))
 			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE, TRUE))
 				if(temporarilyRemoveItemFromInventory(what))
@@ -1528,10 +1528,10 @@
 
 /mob/living/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 	if(incapacitated())
-		to_chat(src, span_warning("I can't do that right now!"))
+		to_chat(src, span_warning("我现在做不了这个！"))
 		return FALSE
 	if(be_close && !in_range(M, src))
-		to_chat(src, span_warning("I am too far away!"))
+		to_chat(src, span_warning("我离得太远了！"))
 		return FALSE
 	if(!no_dexterity)
 		to_chat(src, span_warning("I don't have the dexterity to do this!"))

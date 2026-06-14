@@ -676,13 +676,13 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 							break
 					if(armor_blocked && !fallingas)
 						if(HAS_TRAIT(H, TRAIT_NUDE_SLEEPER))
-							to_chat(src, span_warning("I can't sleep while wearing clothes!"))
+							to_chat(src, span_warning("我穿着衣服睡不着！"))
 						else
-							to_chat(src, span_warning("I can't sleep like this. My armor is burdening me."))
+							to_chat(src, span_warning("我这样睡不着，身上的护甲压得我难受。"))
 						fallingas = TRUE
 				if(!armor_blocked)
 					if(!fallingas)
-						to_chat(src, span_warning("I'll fall asleep soon..."))
+						to_chat(src, span_warning("我很快就要睡着了......"))
 					fallingas++
 					if(HAS_TRAIT(src, TRAIT_FASTSLEEP))
 						fallingas++
@@ -706,14 +706,14 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 					if(HAS_TRAIT(H, TRAIT_NUDE_SLEEPER))
 						trait_blocked = TRUE
 					if(trait_blocked && !fallingas)
-						to_chat(src, span_warning("I need to rest on something more comfortable!"))
+						to_chat(src, span_warning("我得躺在更舒服的地方休息！"))
 						fallingas = TRUE
 					else if(armor_blocked && !fallingas)
-						to_chat(src, span_warning("I can't sleep like this. My armor is burdening me."))
+						to_chat(src, span_warning("我这样睡不着，身上的护甲压得我难受。"))
 						fallingas = TRUE
 				if(!armor_blocked && !trait_blocked)
 					if(!fallingas)
-						to_chat(src, span_warning("I'll fall asleep soon, although a bed would be more comfortable..."))
+						to_chat(src, span_warning("我很快就要睡着了，不过有张床会更舒服......"))
 					fallingas++
 					if(HAS_TRAIT(src, TRAIT_FASTSLEEP))
 						fallingas++

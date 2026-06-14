@@ -172,7 +172,7 @@
 			C.adjustFireLoss(1000) //you, literally, deserve this.
 
 /turf/open/lava/smooth
-	name = "lava"
+	name = "熔岩"
 	baseturfs = /turf/open/lava/smooth
 	icon = 'icons/turf/floors/lava.dmi'
 	icon_state = "unsmooth"

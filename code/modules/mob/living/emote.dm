@@ -1392,13 +1392,13 @@
 /datum/emote/living/custom/proc/check_invalid(mob/user, input)
 	. = TRUE
 	if(copytext(input,1,5) == "says")
-		to_chat(user, span_danger("Invalid emote."))
+		to_chat(user, span_danger("无效的表情动作。"))
 	else if(copytext(input,1,9) == "exclaims")
-		to_chat(user, span_danger("Invalid emote."))
+		to_chat(user, span_danger("无效的表情动作。"))
 	else if(copytext(input,1,6) == "yells")
-		to_chat(user, span_danger("Invalid emote."))
+		to_chat(user, span_danger("无效的表情动作。"))
 	else if(copytext(input,1,5) == "asks")
-		to_chat(user, span_danger("Invalid emote."))
+		to_chat(user, span_danger("无效的表情动作。"))
 	else
 		. = FALSE
 
@@ -1406,15 +1406,15 @@
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
 	if(is_banned_from(user.ckey, "Emote"))
-		to_chat(user, span_boldwarning("I cannot send custom emotes (banned)."))
+		to_chat(user, span_boldwarning("我无法发送自定义表情动作（已被禁用）。"))
 		return FALSE
 	else if(QDELETED(user))
 		return FALSE
 	else if(user.client && user.client.prefs.muted & MUTE_IC)
-		to_chat(user, span_boldwarning("I cannot send IC messages (muted)."))
+		to_chat(user, span_boldwarning("我无法发送 IC 消息（已被禁言）。"))
 		return FALSE
 	else if(!params)
-		var/custom_emote = copytext(sanitize(input("What does your character do?") as text|null), 1, MAX_MESSAGE_LEN)
+		var/custom_emote = copytext(sanitize(input("你的角色做了什么？") as text|null), 1, MAX_MESSAGE_LEN)
 		if(custom_emote && !check_invalid(user, custom_emote))
 /*			var/type = input("Is this a visible or hearable emote?") as null|anything in list("Visible", "Hearable")
 			switch(type)

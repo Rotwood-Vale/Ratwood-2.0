@@ -1,8 +1,8 @@
 /**********************Mineral deposits**************************/
 
 /turf/closed/mineral //wall piece
-	name = "rock"
-	desc = "Lichens and moss cling to the jagged contours of the rock face. It is slick with moisture and exudes the heavy odors of dirt, minerals, and petrichor."
+	name = "岩壁"
+	desc = "地衣与苔藓攀附在嶙峋的岩面上。岩石湿滑潮润，散发着泥土、矿物与雨后尘息的厚重气味。"
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock"
 	var/smooth_icon = 'icons/turf/smoothrocks.dmi'
@@ -240,8 +240,8 @@
 
 /turf/closed/mineral/random/rogue
 //	layer = ABOVE_MOB_LAYER
-	name = "rock"
-	desc = "Lichens and moss cling to the jagged contours of the rock face. It is slick with moisture and exudes the heavy odors of dirt, minerals, and petrichor."
+	name = "岩壁"
+	desc = "地衣与苔藓攀附在嶙峋的岩面上。岩石湿滑潮润，散发着泥土、矿物与雨后尘息的厚重气味。"
 	icon = 'icons/turf/roguewall.dmi'
 	icon_state = "minrandbad"
 	smooth = SMOOTH_TRUE | SMOOTH_MORE
@@ -352,8 +352,8 @@
 //begin actual mineral turfs
 /turf/closed/mineral/rogue
 //	layer = ABOVE_MOB_LAYER
-	name = "rock"
-	desc = "Lichens and moss cling to the jagged contours of the rock face. It is slick with moisture and exudes the heavy odors of dirt, minerals, and petrichor."
+	name = "岩壁"
+	desc = "地衣与苔藓攀附在嶙峋的岩面上。岩石湿滑潮润，散发着泥土、矿物与雨后尘息的厚重气味。"
 	icon = 'icons/turf/roguewall.dmi'
 	icon_state = "rockyash"
 	smooth = SMOOTH_TRUE | SMOOTH_MORE
@@ -440,8 +440,8 @@
 	spread = 2
 
 /turf/closed/mineral/rogue/bedrock
-	name = "rock"
-	desc = "Seems barren and nigh-indestructable"
+	name = "基岩"
+	desc = "看起来贫瘠而近乎不可摧毁。"
 	icon_state = "rockyashbed"
 //	smooth_icon = 'icons/turf/walls/hardrock.dmi'
 	max_integrity = 10000000

@@ -294,7 +294,7 @@ GLOBAL_VAR(restart_counter)
 			continue
 		thing << sound(round_end_sound)
 
-	to_chat(world, "Please be patient as the server restarts. You will be automatically reconnected in about 60 seconds.")
+	to_chat(world, "服务器正在重启，请耐心等待。大约 60 秒后你将自动重新连接。")
 	Master.Shutdown()	//run SS shutdowns? rtchange
 
 	TgsReboot()

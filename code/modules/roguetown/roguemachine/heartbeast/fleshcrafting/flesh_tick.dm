@@ -42,8 +42,8 @@
 
 	if(target.cmode && prob(66))
 		target.visible_message(
-			span_warning("[src] bounces off [target]!"),
-			span_notice("[src] bounces off of you, because you're too feisty to let it latch on!")
+			span_warning("[src]从[target]身上弹开了！"),
+			span_notice("[src]从你身上弹开了，你反抗得太凶，它根本咬不上来！")
 		)
 		return FALSE
 
@@ -54,11 +54,11 @@
 
 	if(user)
 		user.visible_message(
-			span_warning("[user] attaches [src] to [target]!"),
-			span_notice("You attach [src] to [target].")
+			span_warning("[user]把[src]贴到了[target]身上！"),
+			span_notice("你把[src]贴到了[target]身上。")
 		)
 	else
-		target.visible_message(span_warning("[src] latches onto [target]!"))
+		target.visible_message(span_warning("[src]一下咬住了[target]！"))
 
 	// Delete the item now that it's attached as a component
 	qdel(src)
@@ -170,11 +170,11 @@
 		return
 	var/mob/living/L = parent
 	if(!L.has_status_effect(/datum/status_effect/debuff/devitalised) && !L.has_status_effect(/datum/status_effect/debuff/revived) && !L.has_status_effect(/datum/status_effect/debuff/leech_schizophrenia))
-		L.visible_message(span_notice("The leech tick falls off of [L], looking full and satisfied."))
+		L.visible_message(span_notice("水蛭蜱从[L]身上脱落，看起来饱足而满足。"))
 		new full_leechtick_type(get_turf(L))
 		L.apply_status_effect(/datum/status_effect/debuff/devitalised)
 	else
-		L.visible_message(span_notice("The leech tick falls off of [L], looking the same as ever."))
+		L.visible_message(span_notice("水蛭蜱从[L]身上脱落，看起来和先前没什么两样。"))
 		new leechtick_type(get_turf(L))
 
 	playsound(parent, 'sound/vo/mobs/spider/pain.ogg', 40)
@@ -183,7 +183,7 @@
 
 /datum/component/leechtick_attachment/proc/on_examine(source, mob/living/examiner, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_warning("A leech tick is attached to [examiner == parent ? "you" : "them"]!")
+	examine_list += span_warning("一只水蛭蜱正附着在[examiner == parent ? "你" : "对方"]身上！")
 
 /datum/component/leechtick_attachment/proc/on_grab_self_attempt(mob/living/source, mob/living/target, zone, params)
 	SIGNAL_HANDLER
@@ -195,8 +195,8 @@
 	if(!L.used_intent || !istype(L.used_intent, /datum/intent/grab))
 		return
 	L.visible_message(
-		span_warning("[L] starts trying to remove the leech tick!"),
-		span_notice("You start trying to remove the leech tick...")
+		span_warning("[L]开始试着扯下那只水蛭蜱！"),
+		span_notice("你开始试着扯下那只水蛭蜱......")
 	)
 
 	// Use global do_after with callback instead of sleeping in signal handler
@@ -215,8 +215,8 @@
 		return
 
 	L.visible_message(
-		span_warning("[L] successfully removes the leech tick!"),
-		span_notice("You successfully remove the leech tick.")
+		span_warning("[L]成功扯下了那只水蛭蜱！"),
+		span_notice("你成功扯下了那只水蛭蜱。")
 	)
 
 	if(leechtick_type)
@@ -236,12 +236,12 @@
 	var/message_cooldown = 4 MINUTES
 	var/current_cooldown = 0
 	var/list/creepy_msgs = list(
-		span_italics("You feel a presence settling deep within your mind. 'Not... enough...'"),
-		span_warning("You feel as if your head fills with a heavy, slimy ooze..."),
-		span_userdanger("The silence is broken by a low, insistent clicking sound that only you can hear."),
-		span_italics("For a moment, your own shadow seems to move independently of you."),
-		span_warning("You suddenly question why you're holding what you're holding, and the world feels momentarily wrong."),
-		span_italics("A voice that sounds like wet sand asks 'Why?'")
+		span_italics("你感觉有什么存在正沉入你的脑海深处。'还......不够......'"),
+		span_warning("你感觉自己的脑中仿佛灌满了沉重而黏滑的浆液......"),
+		span_userdanger("寂静被一阵低沉而执拗的咔哒声打破，只有你能听见。"),
+		span_italics("有那么一瞬间，你自己的影子似乎在脱离你独自移动。"),
+		span_warning("你忽然怀疑起自己为何正拿着手里的东西，整个世界也在那一刻显得不太对劲。"),
+		span_italics("一个像湿沙摩擦般的声音问道：'为什么？'")
 	)
 	effectedstats = list(STATKEY_STR = -1, STATKEY_WIL = -2, STATKEY_CON = -2, STATKEY_SPD = -1, STATKEY_INT = -1)
 

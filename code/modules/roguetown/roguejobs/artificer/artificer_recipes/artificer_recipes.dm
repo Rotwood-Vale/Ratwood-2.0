@@ -73,14 +73,14 @@
 	i_type = "通用"
 
 /datum/artificer_recipe/wood/reliable
-	name = "可靠木制齿轮 (+1 Essence of Lumber)"
+	name = "可靠木制齿轮 (+1 木材精华)"
 	created_item = /obj/item/roguegear/wood/reliable
 	additional_items = list(/obj/item/grown/log/tree/small/essence = 1)
 	hammers_per_item = 10
 	skill_level = 2
 
 /datum/artificer_recipe/wood/unstable
-	name = "不稳定木制齿轮 (+1 Essence of Wilderness)"
+	name = "不稳定木制齿轮 (+1 荒野精华)"
 	created_item = /obj/item/roguegear/wood/unstable
 	additional_items = list(/obj/item/natural/cured/essence = 1)
 	hammers_per_item = 10
@@ -313,7 +313,7 @@
 	skill_level = 5
 
 /datum/artificer_recipe/contraptions/cursed_collar // lets people make the actual cursed collar, but gates it behind semi rare mats and engineering 
-	name = "真诅咒项圈 (+1 青铜齿轮, +1 Essence of Wilderness)"
+	name = "真诅咒项圈 (+1 青铜齿轮, +1 荒野精华)"
 	required_item = /obj/item/ingot/steel
 	additional_items = list(/obj/item/roguegear/bronze, /obj/item/natural/cured/essence)
 	created_item = /obj/item/clothing/neck/roguetown/cursed_collar

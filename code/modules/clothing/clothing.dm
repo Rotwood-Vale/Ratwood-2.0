@@ -447,7 +447,7 @@ BLIND     // can't see anything
 		return 0
 
 	var/list/modes = list("关闭", "生命体征二值", "精确生命体征", "追踪信标")
-	var/switchMode = input("选择一个传感器模式：", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
+	var/switchMode = input("选择一个传感器模式：", "衣物传感器模式", modes[sensor_mode + 1]) in modes
 	if(get_dist(usr, src) > 1)
 		to_chat(usr, span_warning("我移动得太远了！"))
 		return
