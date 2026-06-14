@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(migrants)
 
 	var/wave_wait_time = 3 MINUTES
 	var/regular_roll_interval = 5 MINUTES
-	var/special_roll_interval = 18 MINUTES
+	var/special_roll_interval = 12 MINUTES
 	var/faction_fail_cooldown = 20 MINUTES
 	var/raid_fail_cooldown = 30 MINUTES
 	var/ooc_ping_interval = 5 MINUTES
