@@ -110,11 +110,12 @@ SUBSYSTEM_DEF(vote)
 	for(var/option in choices)
 		if(!option)
 			continue
-		var/vote_total = choices[option]
-		if(!vote_total)
-			vote_total = 0
-		if(vote_total >= greatest_votes)
+		var/effective_vote_total = choices[option]
+		if(mode == "map" && option == SSmapping.config.map_name)
+			effective_vote_total -= round(effective_vote_total * 0.25)
+		if(effective_vote_total == greatest_votes)
 			. += option
+
 	return .
 
 /datum/controller/subsystem/vote/proc/announce_result()
