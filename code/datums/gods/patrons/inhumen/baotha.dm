@@ -48,7 +48,7 @@
 	// Allows praying atop ritual chalk of the god.
 	for(var/obj/structure/ritualcircle/baotha in view(1, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("若想让 Baotha 听见我的祈祷，我必须身处被遗弃者的教堂、倒置的 psycross 附近、镇上的浴场之中，或正沉浸在某种鼻中妙药带来的快意里！"))
+	to_chat(follower, span_danger("若想让 Baotha 听见我的祈祷，我必须身处被遗弃者的教堂、倒置的普赛圣十字附近、镇上的浴场之中，或正沉浸在某种鼻中妙药带来的快意里！"))
 	return FALSE
 
 #define BAOTHA_SUFFERING_DIVIDER 3.535 // max bonus at 50 pain/bleedrate and pain_mod = 1

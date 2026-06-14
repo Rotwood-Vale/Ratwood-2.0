@@ -299,7 +299,7 @@
 		html += "<strong class=class='scroll'>在墙旁开始制作</strong> <br>"
 
 	if(final_sellprice)
-		html += "<strong class=class='scroll'>正常品质下可卖出 [final_sellprice] mammons</strong> <br>"
+		html += "<strong class=class='scroll'>正常品质下可卖出 [final_sellprice] 玛门币</strong> <br>"
 	else(
 		html += "<strong class=class='scroll'>此物没有出口价值</strong> <br>"
 	)

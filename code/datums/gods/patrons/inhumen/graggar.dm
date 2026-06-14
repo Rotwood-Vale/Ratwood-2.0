@@ -81,5 +81,5 @@
 	// Allows praying atop ritual chalk of the god.
 	for(var/obj/structure/ritualcircle/graggar in view(1, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("若想让 Graggar 听见我的祈祷，我必须身处被遗弃者的教堂、倒置的 psycross 附近、靠近新鲜血迹，或亲手放出自己的血！"))
+	to_chat(follower, span_danger("若想让 Graggar 听见我的祈祷，我必须身处被遗弃者的教堂、倒置的普赛圣十字附近、靠近新鲜血迹，或亲手放出自己的血！"))
 	return FALSE

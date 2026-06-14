@@ -1,5 +1,7 @@
 /datum/job/roguetown/gnoll
 	title = "Gnoll"
+	display_title = "豺狼人"
+	f_title = "豺狼人"
 	flag = GNOLL
 	antag_job = TRUE
 	faction = "Station"

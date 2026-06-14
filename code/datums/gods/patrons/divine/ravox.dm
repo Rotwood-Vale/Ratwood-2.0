@@ -1,7 +1,7 @@
 /datum/patron/divine/ravox
 	name = "Ravox"
 	domain = "正义、战斗、荣耀、义怒"
-	desc = "辉耀的正义与 Astrata 的秩序彼此制衡，避免世界沦为太阳暴政的统治。他是公正无私的神，只为贯彻神圣正义而存在。祂的追随者在追求这一目标时往往会误入歧途。"
+	desc = "辉耀的正义与阿斯特拉塔的秩序彼此制衡，避免世界沦为太阳暴政的统治。他是公正无私的神，只为贯彻神圣正义而存在。祂的追随者在追求这一目标时往往会误入歧途。"
 	worshippers = "战士、佣兵、骑士、求索正义者"
 	virtues = "公正、战斗技艺、勇气"
 	sins = "怯懦、施虐、性暴力"
@@ -30,7 +30,7 @@
 	// Allows prayer near psycross
 	for(var/obj/structure/fluff/psycross/cross in view(4, get_turf(follower)))
 		if(cross.divine == FALSE)
-			to_chat(follower, span_danger("那座被亵渎的 psycross 打断了我的祈祷！"))
+			to_chat(follower, span_danger("那座被亵渎的普赛圣十字打断了我的祈祷！"))
 			return FALSE
 		return TRUE
 	// Allows prayer in the church
@@ -39,7 +39,7 @@
 	// Allows prayer near any knight statue and its subtypes.
 	for(var/obj/structure/fluff/statue/knight/K in view(4, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("若想让 Ravox 听见我的祈祷，我必须在教堂内、psycross 附近，或在纪念阵亡者的骑士雕像旁祈祷……"))
+	to_chat(follower, span_danger("若想让拉沃克斯听见我的祈祷，我必须在教堂内、普赛圣十字附近，或在纪念阵亡者的骑士雕像旁祈祷……"))
 	return FALSE
 
 /datum/patron/divine/ravox/on_lesser_heal(

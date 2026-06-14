@@ -47,7 +47,7 @@
 	if (tamed && !QDELETED(targetted)) //if we have a retal target as a tamed pawn, chance to drop aggro
 		var/deaggro_chance = 23 // why 23? I don't know. It was in the code.
 		if(prob(deaggro_chance))
-			living_mob.visible_message(span_notice("[living_mob] calms down.")) 
+			living_mob.visible_message(span_notice("[living_mob] 平静了下来。")) 
 			controller.clear_blackboard_key(shitlist_key)
 			controller.clear_blackboard_key(target_key)
 			controller.CancelActions() // Otherwise they will try and get one last attack

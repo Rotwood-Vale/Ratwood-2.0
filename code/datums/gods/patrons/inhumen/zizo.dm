@@ -40,7 +40,7 @@
 	// Allows prayer near EEEVIL psycross
 	for(var/obj/structure/fluff/psycross/zizocross/cross in view(4, get_turf(follower)))
 		if(cross.divine == TRUE)
-			to_chat(follower, span_danger("那座遭诅咒的 psycross 打断了我的祈祷！"))
+			to_chat(follower, span_danger("那座遭诅咒的普赛圣十字打断了我的祈祷！"))
 			return FALSE
 		return TRUE
 	// Allows prayer near a grave.
@@ -52,7 +52,7 @@
 	// Allows praying atop ritual chalk of the god.
 	for(var/obj/structure/ritualcircle/zizo in view(1, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("若想让 Zizo 听见我的祈祷，我必须身处被遗弃者的教堂、倒置的 psycross 附近、站在绘好的 Zizite 符记上，或趁太阳被遮蔽天穹之时祈祷！"))
+	to_chat(follower, span_danger("若想让 Zizo 听见我的祈祷，我必须身处被遗弃者的教堂、倒置的普赛圣十字附近、站在绘好的齐佐派符记上，或趁太阳被遮蔽天穹之时祈祷！"))
 	return FALSE
 
 /datum/patron/inhumen/zizo/on_lesser_heal(

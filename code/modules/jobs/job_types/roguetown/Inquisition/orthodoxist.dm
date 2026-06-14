@@ -3,6 +3,8 @@
 //Standard stat spread is 8 across the board. Broken up by classes that don't fit this.
 /datum/job/roguetown/orthodoxist
 	title = "Orthodoxist"
+	display_title = "正教徒"
+	f_title = "正教徒"
 	flag = ORTHODOXIST
 	department_flag = INQUISITION
 	faction = "Station"

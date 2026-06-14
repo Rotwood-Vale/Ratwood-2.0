@@ -17,7 +17,7 @@
 	desc = list(span_boldred("我需要有人来伤害我。"),span_boldred("我渴望疼痛的感觉。"))
 
 /datum/stressevent/vice/greedy
-	desc = list(span_boldred("我需要更多 mammons ……"),span_boldred("我手里的这些远远不够！"))
+	desc = list(span_boldred("我需要更多玛门币……"),span_boldred("我手里的这些远远不够！"))
 
 /datum/stressevent/vice/alcoholic
 	desc = list(span_boldred("该喝一杯了。"),span_boldred("我需要来点酒。"))
@@ -32,7 +32,7 @@
 	desc = list(span_boldred("该来一口够劲的烟了。"),span_boldred("我得抽点什么。"))
 
 /datum/stressevent/vice/godfearing
-	desc = list(span_boldred("该向我的 Patron 祈祷了。"),span_boldred("我得去拜访 Patron 的领域。"))
+	desc = list(span_boldred("该向我的主神祈祷了。"),span_boldred("我得去拜访主神的领域。"))
 
 /datum/stressevent/chastity_frustration
 	timer = INFINITY

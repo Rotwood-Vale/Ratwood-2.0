@@ -1,5 +1,7 @@
 /datum/job/roguetown/knight
 	title = "Knight"
+	display_title = "骑士"
+	f_title = "女骑士"
 	flag = KNIGHT
 	department_flag = NOBLEMEN
 	faction = "Station"

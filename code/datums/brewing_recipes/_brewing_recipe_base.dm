@@ -97,7 +97,7 @@
 		for(var/datum/reagent/path as anything in age_times)
 			html += "陈化 [age_times[path] * 0.1] 秒后，会变成 [initial(path.name)]。<br>"
 	if(sell_value)
-		html += "一桶可卖出：[sell_value] mammons。<br>"
+		html += "一桶可卖出：[sell_value] 玛门币。<br>"
 
 	html += {"
 		</div>

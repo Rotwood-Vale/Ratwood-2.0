@@ -1,5 +1,7 @@
 /datum/job/roguetown/pilgrim
 	title = "Refugee"
+	display_title = "流民"
+	f_title = "流民"
 	flag = PILGRIM
 	department_flag = PEASANTS
 	faction = "Station"
@@ -25,4 +27,3 @@
 	advjob_examine = TRUE
 	always_show_on_latechoices = TRUE
 	same_job_respawn_delay = 0
-

@@ -31,7 +31,7 @@
 	// Allows prayer near psycross
 	for(var/obj/structure/fluff/psycross/cross in view(4, get_turf(follower)))
 		if(cross.divine == FALSE)
-			to_chat(follower, span_danger("那座被亵渎的 psycross 打断了我的祈祷！"))
+			to_chat(follower, span_danger("那座被亵渎的普赛圣十字打断了我的祈祷！"))
 			return FALSE
 		return TRUE
 	// Allows prayer in the church
@@ -40,7 +40,7 @@
 	// Allows prayer near a grave.
 	for(var/obj/structure/closet/dirthole/grave/G in view(4, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("若想让 Necra 听见我的祈祷，我必须在教堂内、psycross 附近，或靠近那终将迎来我们所有人的坟墓祈祷……"))
+	to_chat(follower, span_danger("若想让内克拉听见我的祈祷，我必须在教堂内、普赛圣十字附近，或靠近那终将迎来我们所有人的坟墓祈祷……"))
 	return FALSE
 
 /datum/patron/divine/necra/on_lesser_heal(

@@ -1,5 +1,7 @@
 /datum/job/roguetown/shophand
 	title = "Shophand"
+	display_title = "店伙计"
+	f_title = "店伙计"
 	flag = SHOPHAND
 	department_flag = YOUNGFOLK
 	faction = "Station"

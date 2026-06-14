@@ -12,7 +12,7 @@ GLOBAL_LIST_EMPTY(prayers)
 	/// Domain of the god, such as earth, fire, water, murder etc
 	var/domain = "糟糕的编程实践"
 	/// Description of the god
-	var/desc = "一位会命令你去 GitHub 报告这个问题的神明 - 你本不该看到这段文字，说明有人忘了给这位主神填写描述。"
+	var/desc = "一位会命令你去提交问题报告的神明 - 你本不该看到这段文字，说明有人忘了给这位主神填写描述。"
 	/// String that represents who worships this guy
 	var/worshippers = "蹩脚程序员"
 	///Which qualities the god approves of.

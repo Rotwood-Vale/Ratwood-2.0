@@ -390,7 +390,7 @@
 
 /datum/stressevent/gazeuponme
 	stressadd = -5
-	desc = span_green("我是在 Ten 注视下的异端……我的 Patron 以我为傲！")
+	desc = span_green("我是在 Ten 注视下的异端……我的主神以我为傲！")
 	timer = INFINITY
 
 /datum/stressevent/sermon
@@ -468,7 +468,7 @@
 /datum/stressevent/bloodrevel
 	timer = 1 MINUTES
 	stressadd = 4
-	desc = span_red("天上下着血雨！愿我的 Patron 受赞颂！")
+	desc = span_red("天上下着血雨！愿我的主神受赞颂！")
 
 /datum/stressevent/fireflies
 	timer = 10 MINUTES

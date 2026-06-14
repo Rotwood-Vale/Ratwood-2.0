@@ -15,7 +15,7 @@
 	traits_tier = list(TRAIT_PSYDONITE = CLERIC_T1)
 	confess_lines = list(
 		"唯有一位真神！",
-		"PSYDON 仍然活着！PSYDON 依然长存！",
+		"普赛顿仍然活着！普赛顿依然长存！",
 		"斥退异教徒，粉碎怪物！",
 		"骨断筋折之时，我仍发誓自己活着！",
 		"宽恕他们吧，全父，因为他们不知道自己在做什么！",
@@ -130,7 +130,7 @@
 	// Allows prayer if holding silver psycross.
 	if(istype(follower.get_active_held_item(), /obj/item/clothing/neck/roguetown/psicross/silver))
 		return TRUE
-	to_chat(follower, span_danger("若想让普赛顿听见我的祈祷，我必须在万神圣十字附近、以自己的鲜血忏悔、手持祂的银制圣徽之一，或沐浴在祂的雨中；因为普赛顿正为祂的子民哭泣……"))
+	to_chat(follower, span_danger("若想让普赛顿听见我的祈祷，我必须在万神殿十字架附近、以自己的鲜血忏悔、手持祂的银制圣徽之一，或沐浴在祂的雨中；因为普赛顿正为祂的子民哭泣……"))
 	return FALSE
 
 //////////////////////////////////

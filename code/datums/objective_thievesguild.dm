@@ -111,7 +111,7 @@
 	if(is_assassinate)
 		explanation_text = src.get_assassinate_explanation()
 	else if(is_mammon)
-		explanation_text = "在本轮结束时，我身上至少要带有 <b>[mammon_amount] mammons</b>。"
+		explanation_text = "在本轮结束时，我身上至少要带有 <b>[mammon_amount] 玛门币</b>。"
 	else
 		explanation_text = "偷到并将 <b>[target_item_name]</b> 持有到本轮结束。"
 
@@ -163,7 +163,7 @@
 	if(is_mammon)
 		var/total_mammon = get_mammons_in_atom(owner.current)
 		if(owner.current && owner.current.client)
-			to_chat(owner.current, "[span_notice("Mammon 目标检查：算上所有容器后，我共持有 [total_mammon] mammons。")]")
+			to_chat(owner.current, "[span_notice("玛门币目标检查：算上所有容器后，我共持有 [total_mammon] 枚玛门币。")]")
 		return total_mammon >= mammon_amount
 	if(target_item_path)
 		for(var/obj/item/I in get_all_mob_items(owner.current))

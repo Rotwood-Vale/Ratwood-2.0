@@ -1,8 +1,8 @@
 /datum/patron/divine/abyssor
 	name = "Abyssor"
 	domain = "海洋、梦境、纯净、净化"
-	desc = "Pure Tide 沉入了长眠，却未曾想到，祂的梦会召来那些因祂神圣缺席而追随祂的人。Dreamers 扭曲的心智与肉体玷污了祂的领域，但也唯有借由祂的水域，我们方可得到洗净。若祂苏醒，世界将被彻底净化。"
-	worshippers = "渔民、Axians、Lamia、Dreamers、疯子"
+	desc = "纯净之潮沉入了长眠，却未曾想到，祂的梦会召来那些因祂神圣缺席而追随祂的人。梦者们扭曲的心智与肉体玷污了祂的领域，但也唯有借由祂的水域，我们方可得到洗净。若祂苏醒，世界将被彻底净化。"
+	worshippers = "渔民、阿克西安、拉弥亚、梦者、疯子"
 	virtues = "做梦、开放心胸、纯净"
 	sins = "遗忘、欺瞒、妄称其名"
 	mob_traits = list(TRAIT_ABYSSOR_SWIM, TRAIT_SEA_DRINKER)
@@ -42,7 +42,7 @@
 	// Allows prayer near any body of water turf.
 	for(var/turf/open/water in view(4, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("若想让 Abyssor 听见我的祈祷，我必须在教堂内、psycross 附近，或任意一片水域旁祈祷，好让祈祷的潮汐得以流动……"))
+	to_chat(follower, span_danger("若想让阿比索尔听见我的祈祷，我必须在教堂内、普赛圣十字附近，或任意一片水域旁祈祷，好让祈祷的潮汐得以流动……"))
 	return FALSE
 
 /datum/patron/divine/abyssor/on_lesser_heal(

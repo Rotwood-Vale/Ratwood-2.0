@@ -171,18 +171,18 @@
 	switch(H.patron?.type)
 		if(/datum/patron/divine/astrata) //Unique patron weapons, more can be added here if wanted.
 			weapons += list("日耀裁决", "蚀辉长剑")
-			weapons -= "长剑"//Eclipsum Longsword takes priority.
+			weapons -= "长剑"//优先使用蚀辉长剑。
 		if(/datum/patron/divine/noc)
-			weapons += list("月光镰刃刀", "Eclipsum 长剑")
-			weapons -= "长剑"//Eclipsum Longsword takes priority.
+			weapons += list("月光镰刃刀", "蚀辉长剑")
+			weapons -= "长剑"//优先使用蚀辉长剑。
 		if(/datum/patron/divine/necra)
 			weapons += list("迅终", "安歇")
 			weapons -= list("连枷", "战斧")//First to have two wildly different weapons.
 		if(/datum/patron/divine/pestra)
 			weapons += "瘟疫使者双镰"
 		if(/datum/patron/divine/malum)
-			weapons += "Kargrund重槌"
-			weapons -= "钉锤"//Kargrund Maul takes priority.
+			weapons += "卡尔格伦德巨槌"
+			weapons -= "钉锤"//优先使用卡尔格伦德巨槌。
 		if(/datum/patron/divine/dendor)
 			weapons += "盛夏长镰"
 			weapons -= "长矛"//Scythe takes priority.
@@ -222,56 +222,56 @@
 			H.adjust_skillrank(/datum/skill/combat/axes, 1, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
 //Actual patron specific weapons below.
-		if("Solar Judgement")
+		if("日耀裁决")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/long/exe/astrata(H), TRUE)
 			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
-		if("Moonlight Khopesh")
+		if("月光镰刃刀")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/sabre/nockhopesh(H), TRUE)
 			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
-		if("Swift End")
+		if("迅终")
 			H.put_in_hands(new /obj/item/rogueweapon/flail/sflail/necraflail(H), TRUE)
 			H.adjust_skillrank(/datum/skill/combat/whipsflails, 1, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
-		if("Plaguebringer Sickles")
+		if("瘟疫使者双镰")
 			H.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/steel/pestrasickle(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/steel/pestrasickle(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/knives, 4, TRUE) // actually makes them usable for the templar.
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
-		if("Kargrund Maul")
+		if("卡尔格伦德巨槌")
 			H.put_in_hands(new /obj/item/rogueweapon/mace/maul/grand/malum(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), FALSE)
 			H.adjust_skillrank(/datum/skill/combat/maces, 1, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
-		if("Summer Scythe")
+		if("盛夏长镰")
 			H.put_in_hands(new /obj/item/rogueweapon/halberd/bardiche/scythe(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), FALSE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE) // again, needs skill to actually use the weapon
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
-		if("Cackle Lash")
+		if("狂笑鞭")
 			H.put_in_hands(new /obj/item/rogueweapon/whip/xylix(H), TRUE)
 			H.adjust_skillrank(/datum/skill/combat/whipsflails, 1, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
-		if("Censure")
+		if("谴戒")
 			H.put_in_hands(new /obj/item/rogueweapon/greatsword/grenz/flamberge/ravox(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), FALSE)
 			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
-		if("The Heartstring")
+		if("心弦")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/eora(H), TRUE)
 			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
-		if("Tidecleaver")
+		if("裂潮")
 			H.put_in_hands(new /obj/item/rogueweapon/stoneaxe/battle/abyssoraxe(H), TRUE)
 			H.adjust_skillrank(/datum/skill/combat/axes, 1, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
-		if("Respite")
+		if("安歇")
 			H.put_in_hands(new /obj/item/rogueweapon/greataxe/steel/necran(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), FALSE)
 			H.adjust_skillrank(/datum/skill/combat/axes, 1, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
-		if("Eclipsum 长剑")
+		if("蚀辉长剑")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/long/holysee_lesser(H), TRUE)
 			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)

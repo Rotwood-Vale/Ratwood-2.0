@@ -68,52 +68,52 @@
 //////////////////////
 
 /datum/curse/astrata
-	name = "Astrata 的诅咒"
+	name = "阿斯特拉塔的诅咒"
 	description = "我已被太阳所弃。在她毫不动摇的注视下，我永远得不到安歇。"
 	trait = TRAIT_CURSE_ASTRATA
 
 /datum/curse/noc
-	name = "Noc 的诅咒"
+	name = "诺克的诅咒"
 	description = "我已被明月所弃。在他的恩泽中，我再寻不到救赎。"
 	trait = TRAIT_CURSE_NOC
 
 /datum/curse/dendor
-	name = "Dendor 的诅咒"
+	name = "登多尔的诅咒"
 	description = "我已被树父所弃。理智与常识正离我而去。"
 	trait = TRAIT_CURSE_DENDOR //Needs something unique but come up with it later:tm:
 
 /datum/curse/abyssor
-	name = "Abyssor 的诅咒"
+	name = "阿比索尔的诅咒"
 	description = "我已被梦者所弃。祂的领域终将化为我的葬身之地。"
 	trait = TRAIT_CURSE_ABYSSOR
 
 /datum/curse/ravox
-	name = "Ravox 的诅咒"
+	name = "拉沃克斯的诅咒"
 	description = "我已被裁决者所弃。我的敌手绝不会对我心慈手软。"
 	trait = TRAIT_CURSE_RAVOX
 
 /datum/curse/necra
-	name = "Necra 的诅咒"
+	name = "内克拉的诅咒"
 	description = "我已被冥下侍女所弃。哪怕最轻微的一击，也可能将我送入她的怀抱。"
 	trait = TRAIT_CURSE_NECRA //Should be crit weakness still just flavour:tm:
 
 /datum/curse/xylix
-	name = "Xylix 的诅咒"
+	name = "赛利克斯的诅咒"
 	description = "我已被诡术者所弃。厄运将步步紧随于我。"
 	trait = TRAIT_CURSE_XYLIX
 
 /datum/curse/pestra
-	name = "Pestra 的诅咒"
+	name = "佩斯特拉的诅咒"
 	description = "我已被疫母所弃。病痛席卷我的身体，让最简单的事情也成了折磨。"
 	trait = TRAIT_CURSE_PESTRA
 
 /datum/curse/malum
-	name = "Malum 的诅咒"
+	name = "玛勒姆的诅咒"
 	description = "我已被造物主所弃。我的双手颤抖不止，迷雾笼罩了我的思绪。"
 	trait = TRAIT_CURSE_MALUM
 
 /datum/curse/eora
-	name = "Eora 的诅咒"
+	name = "伊欧拉的诅咒"
 	description = "我已被爱者所弃。这个世界于我而言，再无半点美丽可言。"
 	trait = TRAIT_CURSE_EORA
 
@@ -121,22 +121,22 @@
 ///   ASCENDANT CURSES   ///
 ////////////////////////////
 /datum/curse/zizo
-	name = "Zizo 的诅咒"
+	name = "齐佐的诅咒"
 	description = "我已被构筑者所弃。她的手掌正向我的心脏逼近。"
 	trait = TRAIT_CURSE_ZIZO
 
 /datum/curse/graggar
-	name = "Graggar 的诅咒"
+	name = "格拉加尔的诅咒"
 	description = "我已被战主所弃。如今我所真正知晓的，只有嗜血。"
 	trait = TRAIT_CURSE_GRAGGAR
 
 /datum/curse/matthios
-	name = "Matthios 的诅咒"
+	name = "马西奥斯的诅咒"
 	description = "我已被巨龙所弃。贪婪将成为我唯一的救赎。"
 	trait = TRAIT_CURSE_MATTHIOS
 
 /datum/curse/baotha
-	name = "Baotha 的诅咒"
+	name = "巴奥莎的诅咒"
 	description = "我已被碎心者所弃。我正溺死在她的许诺之中。"
 	trait = TRAIT_CURSE_BAOTHA
 

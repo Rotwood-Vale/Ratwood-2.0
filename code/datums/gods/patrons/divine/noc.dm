@@ -1,9 +1,9 @@
 /datum/patron/divine/noc
 	name = "Noc"
 	domain = "黑夜、月亮、知识、魔法、秘密"
-	desc = "秘密之父是辉煌的月光，祂通过知识赐予我们力量。祂让我们得见祂那秘藏宝库的幻象，又以祂的仁慈赐予我们驾驭 Arcyne 的能力。"
+	desc = "秘密之父是辉煌的月光，祂通过知识赐予我们力量。祂让我们得见祂那秘藏宝库的幻象，又以祂的仁慈赐予我们驾驭奥术的能力。"
 	worshippers = "巫师、学者、夜猫子"
-	virtues = "智慧、好奇、求索 Arcyne"
+	virtues = "智慧、好奇、求索奥术"
 	sins = "无知、审查、焚书"
 	mob_traits = list(TRAIT_NIGHT_OWL, TRAIT_NOCSIGHT)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison				= CLERIC_ORI,
@@ -29,7 +29,7 @@
 	// Allows prayer near psycross
 	for(var/obj/structure/fluff/psycross/cross in view(4, get_turf(follower)))
 		if(cross.divine == FALSE)
-			to_chat(follower, span_danger("那座被亵渎的 psycross 打断了我的祈祷！"))
+			to_chat(follower, span_danger("那座被亵渎的普赛圣十字打断了我的祈祷！"))
 			return FALSE
 		return TRUE
 	// Allows prayer in the church
@@ -41,7 +41,7 @@
 	// Allows praying atop ritual chalk of the god.
 	for(var/obj/structure/ritualcircle/noc in view(1, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("若想让 Noc 听见我的祈祷，我必须沐浴在祂赐福的月光下、身处教堂内，或在 psycross 附近。"))
+	to_chat(follower, span_danger("若想让诺克听见我的祈祷，我必须沐浴在祂赐福的月光下、身处教堂内，或在普赛圣十字附近。"))
 	return FALSE
 
 /datum/patron/divine/noc/on_lesser_heal(

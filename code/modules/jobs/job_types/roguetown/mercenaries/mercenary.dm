@@ -1,5 +1,7 @@
 /datum/job/roguetown/mercenary
 	title = "Mercenary"
+	display_title = "佣兵"
+	f_title = "佣兵"
 	flag = WANDERERS
 	department_flag = WANDERERS
 	faction = "Station"

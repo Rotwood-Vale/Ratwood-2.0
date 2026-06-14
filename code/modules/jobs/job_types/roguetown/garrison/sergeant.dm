@@ -1,5 +1,7 @@
 /datum/job/roguetown/sergeant
 	title = "Sergeant"
+	display_title = "军士长"
+	f_title = "女军士长"
 	flag = SERGEANT
 	department_flag = GARRISON
 	faction = "Station"

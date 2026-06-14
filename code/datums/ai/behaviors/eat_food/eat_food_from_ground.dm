@@ -29,7 +29,7 @@
 			return
 
 //Eat food below, dangerous, qdeletes
-		living_pawn.visible_message(span_danger("[living_pawn] munches on [target]!"))
+		living_pawn.visible_message(span_danger("[living_pawn] 大口啃食着 [target]！"))
 		if(do_after(mob, 5 SECONDS, target = target))
 			playsound(src,'sound/misc/eat.ogg', rand(30,60), TRUE)
 			qdel(target) //Actually 'eat'
@@ -43,5 +43,4 @@
 	. = ..()
 	if(!succeeded)
 		controller.clear_blackboard_key(target_key)
-
 

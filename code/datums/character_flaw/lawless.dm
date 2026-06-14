@@ -27,8 +27,8 @@
 		addtimer(CALLBACK(src, PROC_REF(set_up), H), 30 SECONDS)
 		return
 	var/face_known = input(H, "当局知道你的长相吗？", "暴露程度") as anything in list ("他们认得我的脸", "他们只知道我的体貌特征")
-	var/bounty_poster = input(H, "是谁悬赏缉拿你？", "悬赏发布者") as anything in list("The Justiciary of [SSmapping.map_adjustment.realm_name]", "The Grenzelhoftian Holy See", "The Otavan Orthodoxy")
-	var/bounty_severity = input(H, "你的罪行有多严重？", "悬赏金额") as anything in list("轻罪", "伤害 lyfe", "骇人暴行")
+	var/bounty_poster = input(H, "是谁悬赏缉拿你？", "悬赏发布者") as anything in list("[SSmapping.map_adjustment.realm_name]司法厅", "格伦泽尔霍夫特教廷", "奥塔瓦正教会")
+	var/bounty_severity = input(H, "你的罪行有多严重？", "悬赏金额") as anything in list("轻罪", "伤人害命", "骇人暴行")
 	var/race = H.dna.species
 	var/gender = H.gender
 	var/list/d_list = H.get_mob_descriptors()
@@ -39,7 +39,7 @@
 	switch(bounty_severity)
 		if("轻罪")
 			bounty_total = rand(50, 100)
-		if("伤害 lyfe")
+		if("伤人害命")
 			bounty_total = rand(100, 150)
 		if("骇人暴行")
 			bounty_total = rand(150, 200)
@@ -54,8 +54,8 @@
 		ADD_TRAIT(H, TRAIT_DISGRACED_NOBLE, TRAIT_GENERIC)
 		H.is_noble()
 	if (face_known == "他们认得我的脸")
-		if(bounty_poster == "The Justiciary of The Vale")
+		if(bounty_poster == "[SSmapping.map_adjustment.realm_name]司法厅")
 			GLOB.outlawed_players += H.real_name
 		else
 			GLOB.excommunicated_players += H.real_name
-	to_chat(H, span_notice("我的脑袋值上一笔 mammons……最好先避避风头。"))
+	to_chat(H, span_notice("我的脑袋值上一笔玛门币……最好先避避风头。"))

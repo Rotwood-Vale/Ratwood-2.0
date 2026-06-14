@@ -37,7 +37,7 @@
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 
 	living_pawn.face_atom()
-	living_pawn.visible_message(span_danger("[living_pawn] starts to rip apart [target]!"))
+	living_pawn.visible_message(span_danger("[living_pawn] 开始撕扯 [target]！"))
 	if(do_after(living_pawn, 10 SECONDS, target = target)) // Eating time
 		if(C)	//carbon corpse disposal
 			var/obj/item/bodypart/limb

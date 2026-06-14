@@ -28,7 +28,7 @@
 	
 	// If theyre holding a parasol
 	if(H.is_holding_item_of_type(/obj/item/rogueweapon/mace/parasol))
-		to_chat(H, span_danger("我的阳伞替我挡下了 Sun-Tyrant 的恶意。"))
+		to_chat(H, span_danger("我的阳伞替我挡下了太阳暴君的恶意。"))
 		return
 
 	// Check if outside and in light
@@ -42,7 +42,7 @@
 			apply_sunlight_damage(H)
 		else
 			if(in_sunlight)
-				to_chat(H, span_notice("Sun-Tyrant 那灼人的注视终于不再灼烧我了。"))
+				to_chat(H, span_notice("太阳暴君那灼人的注视终于不再灼烧我了。"))
 			in_sunlight = FALSE
 	else
 		in_sunlight = FALSE

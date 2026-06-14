@@ -1,7 +1,7 @@
 /datum/patron/divine/astrata
 	name = "Astrata"
 	domain = "白昼、太阳、秩序"
-	desc = "Absolute Order 便是那穿透大地、驱退邪恶的辉煌日光。世界因她的光而获得秩序，高贵者也因她的赐福而得以统治。Ravox 立于她侧，确保她的秩序不会沦为暴政。"
+	desc = "绝对秩序便是那穿透大地、驱退邪恶的辉煌日光。世界因她的光而获得秩序，高贵者也因她的赐福而得以统治。拉沃克斯立于她侧，确保她的秩序不会沦为暴政。"
 	worshippers = "贵族、义人、狂热者"
 	virtues = "服从、诚实、压制"
 	sins = "不忠、不死、懒惰"
@@ -38,7 +38,7 @@
 	// Allows prayer during daytime if outside.
 	if(istype(get_area(follower), /area/rogue/outdoors) && (GLOB.tod == "day" || GLOB.tod == "dawn"))
 		return TRUE
-	to_chat(follower, span_danger("若想让 Astrata 听见我的祈祷，我必须沐浴在她赐福的白昼之下、身处教堂之中，或位于 psycross 附近……"))
+	to_chat(follower, span_danger("若想让阿斯特拉塔听见我的祈祷，我必须沐浴在她赐福的白昼之下、身处教堂之中，或位于普赛圣十字附近……"))
 	return FALSE
 
 /datum/patron/divine/astrata/on_lesser_heal(

@@ -46,7 +46,7 @@
 	// Allows prayer near smelters.
 	for(var/obj/machinery/light/rogue/smelter/H in view(4, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("若想让 Malum 听见我的祈祷，我必须在教堂内、铁匠工坊中、psycross 附近、熔炉旁，或在壁炉边沐浴于 Malum 的荣光之下……"))
+	to_chat(follower, span_danger("若想让玛勒姆听见我的祈祷，我必须在教堂内、铁匠工坊中、普赛圣十字附近、熔炉旁，或在壁炉边沐浴于玛勒姆的荣光之下……"))
 	return FALSE
 
 /datum/patron/divine/malum/on_lesser_heal(

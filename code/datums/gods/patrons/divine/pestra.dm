@@ -1,7 +1,7 @@
 /datum/patron/divine/pestra
 	name = "Pestra"
 	domain = "医药、瘟疫、腐朽"
-	desc = "万灵药是 THE TEN 中唯一诞生自 wildkin 的神祇，她教会了我们医术与外科手艺。与其他 Tennites 相比，她的追随者对腐烂与朽坏的痴迷已到了令人忧心的地步。"
+	desc = "万灵药是十神中唯一诞生自兽裔的神祇，她教会了我们医术与外科手艺。与其他十神信徒相比，她的追随者对腐烂与朽坏的痴迷已到了令人忧心的地步。"
 	worshippers = "病患、外科医师、药剂师"
 	virtues = "怜悯、腐朽、求知"
 	sins = "傲慢、愤怒、拒绝向任何人提供医治"
@@ -32,7 +32,7 @@
 	// Allows prayer near psycross
 	for(var/obj/structure/fluff/psycross/cross in view(4, get_turf(follower)))
 		if(cross.divine == FALSE)
-			to_chat(follower, span_danger("那座被亵渎的 psycross 打断了我的祈祷！"))
+			to_chat(follower, span_danger("那座被亵渎的普赛圣十字打断了我的祈祷！"))
 			return FALSE
 		return TRUE
 	// Allows prayer in the church
@@ -44,7 +44,7 @@
 	// Allows prayer near wells. Weird one, but makes sense for health and disease. Miasma, water, etc.
 	for(var/obj/structure/well/W in view(4, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("若想让 Pestra 听见我的祈祷，我必须在教堂内、医馆中、psycross 附近，或在井边见证生命的完整轮回……"))
+	to_chat(follower, span_danger("若想让佩斯特拉听见我的祈祷，我必须在教堂内、医馆中、普赛圣十字附近，或在井边见证生命的完整轮回……"))
 	return FALSE
 
 /datum/patron/divine/pestra/on_lesser_heal(

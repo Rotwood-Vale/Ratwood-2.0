@@ -285,7 +285,7 @@
 
 /datum/special_trait/richpouch
 	name = "富足钱袋"
-	greet_text = span_notice("我最近捡到了一只装满 mammons 的钱袋，多半是哪位贵族丢的。")
+	greet_text = span_notice("我最近捡到了一只装满玛门币的钱袋，多半是哪位贵族丢的。")
 	weight = 100
 
 /datum/special_trait/richpouch/on_apply(mob/living/carbon/human/character, silent)
@@ -313,7 +313,7 @@
 /datum/special_trait/lucky
 	name = "幸运眷顾"
 	greet_text = span_notice("Xylix 眷顾着我，我的运气好得惊人。")
-	req_text = "以 Xylix 为你的 Patron"
+	req_text = "以 Xylix 为你的主神"
 	allowed_patrons = list(/datum/patron/divine/xylix)
 	weight = 7
 

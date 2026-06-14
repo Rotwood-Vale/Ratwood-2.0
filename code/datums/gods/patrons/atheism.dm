@@ -17,7 +17,7 @@
 
 /datum/patron/godless/can_pray(mob/living/follower)
 	. = ..()
-	to_chat(follower, span_danger("Zarlz Zarwin 与 psyvolution 听不见我的祈祷！"))
+	to_chat(follower, span_danger("这世上没有任何存在会回应我的祈祷！"))
 	return FALSE	//heathen
 
 /datum/patron/godless/on_lesser_heal(

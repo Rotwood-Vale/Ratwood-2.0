@@ -1,5 +1,7 @@
 /datum/job/roguetown/prisonerr
 	title = "Prisoner (Town)"
+	display_title = "囚犯（城镇）"
+	f_title = "囚犯（城镇）"
 	flag = PRISONERR
 	department_flag = PEASANTS
 	faction = "Station"

@@ -2,7 +2,7 @@
 	name = "Dendor"
 	domain = "植物、野兽、自然、农耕"
 	desc = "树父曾是第一位德鲁伊，因其领域屡遭蹂躏而陷入疯狂。即便如此，祂依旧守望着林地与平原，为我们的收成与生计降下祝福。祂的野兽从不对我们留情，但我们仍能学会避开它们的利爪獠牙。"
-	worshippers = "德鲁伊、野兽、疯子、农夫、精灵、Wildkin"
+	worshippers = "德鲁伊、野兽、疯子、农夫、精灵、兽裔"
 	virtues = "和谐、原始主义、狩猎"
 	sins = "文明、过度猎杀、不敬自然"
 	mob_traits = list(TRAIT_KNEESTINGER_IMMUNITY, TRAIT_LEECHIMMUNE)
@@ -44,7 +44,7 @@
 		return TRUE
 	for(var/obj/structure/flora/roguetree/wise in view(4, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("若想让 Dendor 听见我的祈祷，我必须身处祂的荒野、Grove、智者古树附近，或 Panetheon Cross 旁，好让“树父”听见我的祈祷……"))
+	to_chat(follower, span_danger("若想让登多尔听见我的祈祷，我必须身处祂的荒野、林苑、智者古树附近，或万神殿十字架旁，好让“树父”听见我的祈祷……"))
 	return FALSE
 
 /datum/patron/divine/dendor/on_lesser_heal(
