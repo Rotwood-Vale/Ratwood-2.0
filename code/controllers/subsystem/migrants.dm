@@ -443,7 +443,7 @@ SUBSYSTEM_DEF(migrants)
 	var/base_weight = wave.weight
 	var/triumph_bonus = wave.triumph_total
 
-	var/triumph_multiplier = 6
+	var/triumph_multiplier = 20
 	var/final_weight = base_weight + (triumph_bonus * triumph_multiplier)
 
 	return max(final_weight, 1)
