@@ -997,7 +997,7 @@ SUBSYSTEM_DEF(job)
 	if(istype(P.virtue, /datum/virtue/utility/resident))
 		return TRUE
 
-	if(P.statpack?.name == "Virtuous" && istype(P.virtuetwo, /datum/virtue/utility/resident))
+	if(P.statpack?.name == "德能" && istype(P.virtuetwo, /datum/virtue/utility/resident)) //需对齐modular_azurepeak/statpacks/wildcard.dm datum/statpack/wildcard/virtuous 的名字
 		return TRUE
 
 	return FALSE

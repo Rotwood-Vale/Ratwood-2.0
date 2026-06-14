@@ -635,7 +635,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 					virtue = GLOB.virtues[/datum/virtue/none]
 				if(virtuetwo.type in pref_species.restricted_virtues)
 					virtuetwo = GLOB.virtues[/datum/virtue/none]
-			if(statpack.name != "Virtuous")
+			if(statpack.name != "德能") //需对齐modular_azurepeak/statpacks/wildcard.dm datum/statpack/wildcard/virtuous 的名字
 				virtuetwo = GLOB.virtues[/datum/virtue/none]
 			dat += "<b>角色自定义:</b> <a href='?_src_=prefs;preference=vices_menu;task=input'>配置全部</a><BR>"
 			var/datum/faith/selected_faith = GLOB.faithlist[selected_patron?.associated_faith]

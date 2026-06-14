@@ -95,7 +95,7 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 	if(istype(player.prefs.selected_patron, /datum/patron/inhumen))
 		heretic = TRUE
 
-	if(player.prefs.statpack.name == "Virtuous")
+	if(player.prefs.statpack.name == "德能") //需对齐modular_azurepeak/statpacks/wildcard.dm datum/statpack/wildcard/virtuous 的名字
 		virtuous = TRUE
 
 	var/datum/virtue/virtue_type = player.prefs.virtue
