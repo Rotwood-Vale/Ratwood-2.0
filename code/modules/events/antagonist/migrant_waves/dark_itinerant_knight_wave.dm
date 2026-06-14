@@ -18,7 +18,7 @@
 	max_spawns = 1
 	shared_wave_type = /datum/migrant_wave/evil_knight
 	weight = 8
-	roles = list(
+	required_roles = list(
 		/datum/migrant_role/dark_itinerant_knight = 1,
 		/datum/migrant_role/dark_itinerant_squire = 1,
 	)
