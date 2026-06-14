@@ -7,10 +7,13 @@
 	id = "magic_flight"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/magic_flight
 	duration = 60 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	tick_interval = 1 SECONDS
 	var/mob/living/flier
 	var/obj/effect/flyer_shadow/shadow
 	var/was_flying = FALSE
 	var/was_marked_flying = FALSE
+	var/ending_warning_sent = FALSE
 
 /datum/status_effect/buff/magic_flight/on_creation(mob/living/new_owner, new_duration = null)
 	if(new_duration)
@@ -19,6 +22,12 @@
 		was_flying = !!(new_owner.movement_type & FLYING)
 		was_marked_flying = !!new_owner.flying
 	return ..()
+
+/datum/status_effect/buff/magic_flight/refresh(mob/living/new_owner, new_duration = null)
+	ending_warning_sent = FALSE
+	if(isnull(new_duration))
+		return ..()
+	duration = world.time + new_duration
 
 /datum/status_effect/buff/magic_flight/on_apply()
 	. = ..()
@@ -72,6 +81,16 @@
 	SIGNAL_HANDLER
 	update_shadow()
 
+/datum/status_effect/buff/magic_flight/tick()
+	if(!flier || duration == -1 || ending_warning_sent)
+		return
+
+	if(duration - world.time > 10 SECONDS)
+		return
+
+	ending_warning_sent = TRUE
+	to_chat(flier, span_warning("托举我的飞行魔法只剩不到 10 秒了。"))
+
 /datum/status_effect/buff/magic_flight/proc/update_shadow()
 
 	if(!flier || was_flying)
@@ -99,7 +118,7 @@
 /obj/effect/proc_holder/spell/invoked/flight
 	name = "飞行术"
 	desc = "以纯粹魔力让目标自由飞行 60 秒。"
-	cost = 6
+	cost = 4
 	releasedrain = 10
 	chargetime = 6 SECONDS
 	recharge_time = 2 MINUTES
@@ -130,7 +149,7 @@
 
 	var/mob/living/spelltarget = target_atom
 	var/already_enchanted = spelltarget.has_status_effect(/datum/status_effect/buff/magic_flight)
-	spelltarget.apply_status_effect(/datum/status_effect/buff/magic_flight, 30 SECONDS)
+	spelltarget.apply_status_effect(/datum/status_effect/buff/magic_flight, 60 SECONDS)
 	playsound(get_turf(spelltarget), 'sound/magic/haste.ogg', 80, TRUE, soundping = TRUE)
 
 	if(spelltarget == user)

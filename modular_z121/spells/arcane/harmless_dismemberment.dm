@@ -58,13 +58,18 @@
 	var/obj/item/bodypart/head/live_head = get_harmless_live_head_source()
 	if(!live_head)
 		return ..()
-	. = send_harmless_live_head_speech(message, message_range, live_head, bubble_type, spans, message_language, message_mode, original_message)
-	if(message_mode != MODE_WHISPER)
-		send_live_head_voice(message, live_head)
+	return live_head.send_speech(message, message_range, live_head, bubble_type, spans, message_language, message_mode, original_message)
 
-/mob/living/carbon/human/proc/send_harmless_live_head_speech(message, message_range = 6, obj/item/bodypart/head/live_head, bubble_type = bubble_icon, list/spans, datum/language/message_language = null, message_mode, original_message)
+/obj/item/bodypart/head/send_speech(message, message_range = 6, obj/source = src, bubble_type = "default", list/spans, datum/language/message_language = null, message_mode, original_message)
+	var/mob/living/carbon/human/head_owner = harmless_live_owner
+	if(!harmless_live_head || !istype(head_owner))
+		return ..()
+	// 头颅物件本身没有 bubble_icon 变量，优先沿用原主人的说话气泡样式。
+	if(!bubble_type || bubble_type == "default")
+		bubble_type = head_owner.bubble_icon || "default"
+
 	var/static/list/eavesdropping_modes = list(MODE_WHISPER = TRUE, MODE_WHISPER_CRIT = TRUE)
-	var/atom/movable/speaker_atom = live_head
+	var/atom/movable/speaker_atom = src
 	var/eavesdrop_range = 0
 	var/Zs_too = FALSE
 	var/Zs_all = FALSE
@@ -96,9 +101,9 @@
 		Zs_yell = FALSE
 		Zs_all = FALSE
 
-	if(has_status_effect(/datum/status_effect/thaumaturgy))
+	if(head_owner.has_status_effect(/datum/status_effect/thaumaturgy))
 		spans |= SPAN_REALLYBIG
-		var/datum/status_effect/thaumaturgy/buff = locate() in status_effects
+		var/datum/status_effect/thaumaturgy/buff = locate() in head_owner.status_effects
 		message_range += (5 + buff.potency)
 		for(var/obj/structure/roguemachine/scomm/S in SSroguemachine.scomm_machines)
 			if(prob(buff.potency * 3) && S.speaking)
@@ -109,10 +114,10 @@
 				S.verb_say = initial(S.verb_say)
 				S.verb_exclaim = initial(S.verb_exclaim)
 				S.verb_yell = initial(S.verb_yell)
-		remove_status_effect(/datum/status_effect/thaumaturgy)
+		head_owner.remove_status_effect(/datum/status_effect/thaumaturgy)
 
 	var/list/listening = get_hearers_in_view(message_range + eavesdrop_range, speaker_atom)
-	listening |= src
+	listening |= head_owner
 	var/list/the_dead = list()
 	var/list/hidden_ghosts = null
 	for(var/_M in GLOB.player_list)
@@ -126,7 +131,7 @@
 			var/mob/living/carbon/human/target = M
 			var/datum/species/dullahan/target_species = target.dna.species
 			tocheck = target_species.headless ? target_species.my_head : M
-		if(!client)
+		if(!head_owner.client)
 			continue
 		if(!M)
 			continue
@@ -142,13 +147,13 @@
 			continue
 		listening |= M
 		the_dead[M] = TRUE
-	if(has_ghost_protection(src))
-		hidden_ghosts = get_hidden_ghosts_for_target(src)
+	if(has_ghost_protection(head_owner))
+		hidden_ghosts = get_hidden_ghosts_for_target(head_owner)
 		for(var/mob/dead/observer/ghost in hidden_ghosts)
 			if(ghost in listening)
 				listening -= ghost
 				the_dead -= ghost
-	log_seen(src, null, listening, original_message, SEEN_LOG_SAY)
+	log_seen(head_owner, null, listening, original_message, SEEN_LOG_SAY)
 
 	var/eavesdropping
 	var/eavesrendered
@@ -218,7 +223,7 @@
 			AM.Hear(rendered, speaker_atom, message_language, highlighted_message, , spans, message_mode, original_message)
 		else
 			AM.Hear(rendered, speaker_atom, message_language, message, , spans, message_mode, original_message)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, head_owner, message)
 
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in listening)
@@ -229,12 +234,12 @@
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay), I, speech_bubble_recipients, 30)
 
-	speaker_atom.vocal_bark = vocal_bark
-	speaker_atom.vocal_bark_id = vocal_bark_id
-	speaker_atom.vocal_pitch = vocal_pitch
-	speaker_atom.vocal_pitch_range = vocal_pitch_range
-	speaker_atom.vocal_volume = vocal_volume
-	speaker_atom.vocal_speed = vocal_speed
+	speaker_atom.vocal_bark = head_owner.vocal_bark
+	speaker_atom.vocal_bark_id = head_owner.vocal_bark_id
+	speaker_atom.vocal_pitch = head_owner.vocal_pitch
+	speaker_atom.vocal_pitch_range = head_owner.vocal_pitch_range
+	speaker_atom.vocal_volume = head_owner.vocal_volume
+	speaker_atom.vocal_speed = head_owner.vocal_speed
 	if(SEND_SIGNAL(speaker_atom, COMSIG_MOVABLE_QUEUE_BARK, listening, args) || speaker_atom.vocal_bark || speaker_atom.vocal_bark_id)
 		for(var/mob/M in listening)
 			if(!M.client)
@@ -250,6 +255,8 @@
 				break
 			addtimer(CALLBACK(speaker_atom, TYPE_PROC_REF(/atom/movable, bark), listening, message_range, (speaker_atom.vocal_volume * (is_yell ? 1.5 : 1)), BARK_DO_VARY(speaker_atom.vocal_pitch, speaker_atom.vocal_pitch_range), speaker_atom.vocal_current_bark), total_delay)
 			total_delay += rand(DS2TICKS(speaker_atom.vocal_speed / BARK_SPEED_BASELINE), DS2TICKS(speaker_atom.vocal_speed / BARK_SPEED_BASELINE) + DS2TICKS((speaker_atom.vocal_speed / BARK_SPEED_BASELINE) * (is_yell ? 0.5 : 1))) TICKS
+	if(message_mode != MODE_WHISPER)
+		head_owner.send_live_head_voice(message, src)
 
 /mob/living/carbon/human/proc/send_live_head_voice(message, obj/item/bodypart/head/live_head)
 	if(!message || !length(message) || !istype(live_head))

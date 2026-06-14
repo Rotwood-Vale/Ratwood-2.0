@@ -237,7 +237,7 @@
 	action_icon = TIMESTOP_ACTION_ICON
 	action_icon_state = "time"
 	overlay_state = "time"
-	cost = 16
+	cost = 12
 	releasedrain = 500
 	chargedrain = 10
 	chargetime = 0

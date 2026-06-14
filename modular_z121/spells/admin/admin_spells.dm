@@ -77,6 +77,7 @@
 	recharge_time = 0
 	cooldown_min = 0
 	spell_tier = 1
+	human_req = FALSE
 	gesture_required = FALSE
 	no_early_release = FALSE
 	charging_slowdown = 0
@@ -101,6 +102,7 @@
 	invocations = list()
 	invocation_type = "none"
 	action_icon_state = "mimicry"
+	var/max_copy_depth = 8
 
 /obj/effect/proc_holder/spell/invoked/mimicry/copy/proc/copy_item_state(obj/item/source, obj/item/duplicate)
 	duplicate.name = source.name
@@ -128,6 +130,74 @@
 	else if(hasvar(source, "quantity") && hasvar(duplicate, "quantity"))
 		duplicate.vars["quantity"] = source.vars["quantity"]
 
+/obj/effect/proc_holder/spell/invoked/mimicry/copy/proc/can_copy_item(obj/item/source)
+	if(!source)
+		return FALSE
+	if(source.item_flags & ABSTRACT)
+		return FALSE
+	return TRUE
+
+/obj/effect/proc_holder/spell/invoked/mimicry/copy/proc/get_item_contents(obj/item/source)
+	var/datum/component/storage/source_storage = source.GetComponent(/datum/component/storage)
+	if(source_storage)
+		return source_storage.contents()
+	return source.contents.Copy()
+
+/obj/effect/proc_holder/spell/invoked/mimicry/copy/proc/clear_duplicate_contents(obj/item/duplicate)
+	if(!duplicate?.contents.len)
+		return
+
+	for(var/obj/item/contained as anything in duplicate.contents.Copy())
+		qdel(contained)
+
+/obj/effect/proc_holder/spell/invoked/mimicry/copy/proc/place_copied_item(obj/item/duplicate_item, obj/item/duplicate_container)
+	var/datum/component/storage/target_storage = duplicate_container.GetComponent(/datum/component/storage)
+	if(!target_storage)
+		duplicate_item.forceMove(duplicate_container)
+		return TRUE
+
+	if(!target_storage.can_be_inserted(duplicate_item, TRUE, null))
+		return FALSE
+	return !!target_storage.handle_item_insertion(duplicate_item, TRUE, null)
+
+/obj/effect/proc_holder/spell/invoked/mimicry/copy/proc/copy_item_contents(obj/item/source, obj/item/duplicate, list/copy_stats, list/visited = null, depth = 0)
+	if(!source || !duplicate)
+		return
+
+	if(!visited)
+		visited = list()
+
+	var/source_ref = REF(source)
+	if(visited[source_ref])
+		copy_stats["skipped_recursive"] += 1
+		return
+	visited[source_ref] = TRUE
+
+	clear_duplicate_contents(duplicate)
+
+	var/list/source_contents = get_item_contents(source)
+	if(!source_contents.len)
+		return
+
+	if(depth >= max_copy_depth)
+		copy_stats["skipped_depth"] += source_contents.len
+		return
+
+	for(var/obj/item/source_child as anything in source_contents)
+		if(!can_copy_item(source_child))
+			copy_stats["skipped_abstract"] += 1
+			continue
+
+		var/obj/item/duplicate_child = new source_child.type(get_turf(duplicate))
+		copy_item_state(source_child, duplicate_child)
+		if(!place_copied_item(duplicate_child, duplicate))
+			copy_stats["skipped_restricted"] += 1
+			qdel(duplicate_child)
+			continue
+
+		copy_stats["copied_nested"] += 1
+		copy_item_contents(source_child, duplicate_child, copy_stats, visited, depth + 1)
+
 /obj/effect/proc_holder/spell/invoked/mimicry/copy/cast(list/targets, mob/living/user)
 	var/atom/target = targets[1]
 	if(!istype(target, /obj/item))
@@ -143,8 +213,30 @@
 
 	var/obj/item/duplicate = new target_item.type(user.drop_location())
 	copy_item_state(target_item, duplicate)
+	var/list/copy_stats = list(
+		"copied_nested" = 0,
+		"skipped_abstract" = 0,
+		"skipped_restricted" = 0,
+		"skipped_depth" = 0,
+		"skipped_recursive" = 0,
+	)
+	copy_item_contents(target_item, duplicate, copy_stats)
+
+	var/list/copy_notes = list()
+	if(copy_stats["copied_nested"])
+		copy_notes += "[copy_stats["copied_nested"]] stored item[copy_stats["copied_nested"] == 1 ? "" : "s"]"
+	if(copy_stats["skipped_abstract"])
+		copy_notes += "[copy_stats["skipped_abstract"]] abstract item[copy_stats["skipped_abstract"] == 1 ? "" : "s"] skipped"
+	if(copy_stats["skipped_restricted"])
+		copy_notes += "[copy_stats["skipped_restricted"]] item[copy_stats["skipped_restricted"] == 1 ? "" : "s"] skipped by storage limits"
+	if(copy_stats["skipped_depth"])
+		copy_notes += "[copy_stats["skipped_depth"]] item[copy_stats["skipped_depth"] == 1 ? "" : "s"] skipped at recursion limit"
+	if(copy_stats["skipped_recursive"])
+		copy_notes += "[copy_stats["skipped_recursive"]] recursive branch[copy_stats["skipped_recursive"] == 1 ? "" : "es"] skipped"
+
+	var/copy_summary = copy_notes.len ? " ([english_list(copy_notes)])" : ""
 	if(!user.put_in_hands(duplicate))
-		to_chat(user, span_notice("You copy [target_item], but your hands are full so it drops to the ground."))
+		to_chat(user, span_notice("You copy [target_item], but your hands are full so it drops to the ground.[copy_summary]"))
 	else
-		to_chat(user, span_notice("You copy [target_item] into your hands."))
+		to_chat(user, span_notice("You copy [target_item] into your hands.[copy_summary]"))
 	return TRUE

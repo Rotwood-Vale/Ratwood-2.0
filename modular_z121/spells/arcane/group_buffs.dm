@@ -407,7 +407,7 @@
 /obj/effect/proc_holder/spell/invoked/group_flight
 	name = "群体飞行术"
 	desc = "以纯粹魔力托举施法者与周围 1 格内活物，使其在更长时间内自由飞行。"
-	cost = 12
+	cost = 8
 	releasedrain = 20
 	chargetime = 12 SECONDS
 	recharge_time = 4 MINUTES
