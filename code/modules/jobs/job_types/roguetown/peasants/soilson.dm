@@ -38,11 +38,12 @@
 	subclass_stats = list(
 		STATKEY_WIL = 2,
 		STATKEY_STR = 1,
-		STATKEY_CON = 1,
+		STATKEY_CON = 2,
 		STATKEY_SPD = 1,
 		STATKEY_INT = -1,//simple and honest
 	)
 	subclass_skills = list(
+		/datum/skill/misc/athletics = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/whipsflails = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
