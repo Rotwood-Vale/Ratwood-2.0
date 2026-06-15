@@ -66,26 +66,26 @@
 	if(pre_reqs)
 		html += "<strong>需要我刚刚在[heat_required ? "蒸馏器" : "酒桶"]中制成过[initial(pre_reqs.name)]。</stong><br>"
 	if(heat_required)
-		html += "<strong>需要在温度至少为 [heat_required - 273.1]C 的蒸馏器中制作。</stong><br>"
+		html += "<strong>需要在温度至少为 [heat_required - 273.1] 摄氏度的蒸馏器中制作。</stong><br>"
 
 	if(length(needed_crops) || length(needed_items))
 		html += "<h3>所需物品</h3>"
 		for(var/atom/path as anything in needed_crops)
 			var/count = needed_crops[path]
-			html += "[count] 份 [initial(path.name)]<br>"
+			html += "[count] 份[initial(path.name)]<br>"
 		for(var/atom/path as anything in needed_items)
 			var/count = needed_items[path]
-			html += "[count] 份 [initial(path.name)]<br>"
+			html += "[count] 份[initial(path.name)]<br>"
 		html += "<br>"
 	if(length(needed_reagents))
 		html += "<h3>所需液体</h3>"
 		for(var/atom/path as anything in needed_reagents)
 			var/count = needed_reagents[path]
-			html += "[FLOOR(count, 1)] [UNIT_FORM_STRING(FLOOR(count, 1))] [initial(path.name)]<br>"
+			html += "[FLOOR(count, 1)] [UNIT_FORM_STRING(FLOOR(count, 1))]的[initial(path.name)]<br>"
 		html += "<br>"
 
 	if(brewed_amount)
-		html += "产出：[FLOOR((per_brew_amount * brewed_amount), 1)] [UNIT_FORM_STRING(FLOOR((per_brew_amount * brewed_amount), 1))] [name]"
+		html += "产出：[FLOOR((per_brew_amount * brewed_amount), 1)] [UNIT_FORM_STRING(FLOOR((per_brew_amount * brewed_amount), 1))]的[name]"
 	if(brewed_item)
 		html += "产出：[icon2html(new brewed_item, user)] [(brewed_item_count)] [initial(brewed_item.name)]"
 	html += {"
@@ -95,9 +95,9 @@
 
 	if(ages)
 		for(var/datum/reagent/path as anything in age_times)
-			html += "陈化 [age_times[path] * 0.1] 秒后，会变成 [initial(path.name)]。<br>"
+			html += "陈化 [age_times[path] * 0.1] 秒后，会变成[initial(path.name)]。<br>"
 	if(sell_value)
-		html += "一桶可卖出：[sell_value] 玛门币。<br>"
+		html += "一桶可卖出：[sell_value] 玛门。<br>"
 
 	html += {"
 		</div>
