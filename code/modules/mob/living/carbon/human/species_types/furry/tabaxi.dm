@@ -200,3 +200,28 @@
 /datum/species/tabaxi/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_SAY)
+
+/datum/species/tabaxi/get_species_sound(soundin, gender)
+	var/used
+	switch(soundin)
+		if("meow")
+			if(gender == FEMALE)
+				used = list('sound/vo/female/tabaxi/tabaxi_meow1.ogg', 'sound/vo/female/tabaxi/tabaxi_meow2.ogg')
+			else
+				used = list('sound/vo/male/tabaxi/tabaxi_meow1.ogg', 'sound/vo/male/tabaxi/tabaxi_meow2.ogg')
+		if("purr")
+			if(gender == FEMALE)
+				used = list('sound/vo/female/tabaxi/tabaxi_purr.ogg')
+			else
+				used = list('sound/vo/male/tabaxi/tabaxi_purr.ogg')
+		if("trill")
+			if(gender == FEMALE)
+				used = list('sound/vo/female/tabaxi/tabaxi_mrrp1.ogg', 'sound/vo/female/tabaxi/tabaxi_mrrp2.ogg')
+			else
+				used = list('sound/vo/male/tabaxi/tabaxi_mrrp1.ogg', 'sound/vo/male/tabaxi/tabaxi_mrrp2.ogg')
+		if("hiss")
+			if(gender == FEMALE)
+				used = list('sound/vo/female/tabaxi/tabaxi_hiss1.ogg', 'sound/vo/female/tabaxi/tabaxi_hiss2.ogg')
+			else
+				used = list('sound/vo/male/tabaxi/tabaxi_hiss1.ogg', 'sound/vo/male/tabaxi/tabaxi_hiss2.ogg')
+	return used
