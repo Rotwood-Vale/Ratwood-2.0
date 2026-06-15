@@ -58,7 +58,7 @@
 		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-1), \
 		OFFSET_BREASTS_F = list(0,-1), \
 		)
-	inherent_traits = list(TRAIT_SLEUTH)
+	inherent_traits = list(TRAIT_SLEUTH, TRAIT_STRONGBITE)
 	race_bonus = list(STAT_INTELLIGENCE = 1, STAT_CONSTITUTION = 1)
 	enflamed_icon = "widefire"
 	organs = list(
