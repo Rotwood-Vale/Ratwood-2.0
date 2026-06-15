@@ -190,20 +190,32 @@
 				modifier = "old"
 			if((!ignore_silent && (H.silent)) || (!ignore_silent && !is_emote_muffled(H)) || (!ignore_silent && HAS_TRAIT(H, TRAIT_MUTE)) ||  (!ignore_silent && HAS_TRAIT(H, TRAIT_BAGGED)))
 				modifier = "silenced"
-			if(user.gender == FEMALE && H.dna.species.soundpack_f)
-				possible_sounds = H.dna.species.soundpack_f.get_sound(key,modifier)
-			else if(H.dna.species.soundpack_m)
-				possible_sounds = H.dna.species.soundpack_m.get_sound(key,modifier)
+			// check for species-specific sounds first
+			possible_sounds = H.dna.species.get_species_sound(key, user.gender)
+			if(!possible_sounds)
+				if(user.gender == FEMALE && H.dna.species.soundpack_f)
+					possible_sounds = H.dna.species.soundpack_f.get_sound(key,modifier)
+				else if(H.dna.species.soundpack_m)
+					possible_sounds = H.dna.species.soundpack_m.get_sound(key,modifier)
+			possible_sounds = H.dna.species.get_species_sound(key, user.gender)
 			// LETHALSTONE ADDITION BEGIN: use preference-set voice types where possible
 			if(H.voice_type)
 				switch (H.voice_type)
 					if (VOICE_TYPE_MASC)
-						possible_sounds = H.dna.species.soundpack_m.get_sound(key, modifier)
-					else
-						if (H.dna.species.soundpack_f)
-							possible_sounds = H.dna.species.soundpack_f.get_sound(key, modifier)
-						else
+						// check for species-specific sounds first
+						if(!possible_sounds)
+							possible_sounds = H.dna.species.get_species_sound(key, MALE)
+						if(!possible_sounds)
 							possible_sounds = H.dna.species.soundpack_m.get_sound(key, modifier)
+					else
+						// check for species-specific sounds first, part two
+						if(!possible_sounds)
+							possible_sounds = H.dna.species.get_species_sound(key, FEMALE)
+						if(!possible_sounds)
+							if (H.dna.species.soundpack_f)
+								possible_sounds = H.dna.species.soundpack_f.get_sound(key, modifier)
+							else
+								possible_sounds = H.dna.species.soundpack_m.get_sound(key, modifier)
 			// LETHALSTONE ADDITION END
 			if(possible_sounds)
 				if(islist(possible_sounds))
