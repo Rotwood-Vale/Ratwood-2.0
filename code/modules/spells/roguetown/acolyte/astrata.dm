@@ -487,14 +487,14 @@
 	. = ..()
 	var/choice = alert(user, "你要执掌哪一种武装神迹？", "承担神威", "圣枪", "圣矛")
 	switch(choice)
-		if("Lance")
+		if("圣枪")
 			if(user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue))//No stacking.
 				revert_cast()
 			else
 				user.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue)
 				if(user.mind?.has_spell(/obj/effect/proc_holder/spell/self/astratan_spear))//No, thanks.
 					user.mind?.RemoveSpell(/obj/effect/proc_holder/spell/self/astratan_spear)
-		if("Spear")
+		if("圣矛")
 			if(user.mind?.has_spell(/obj/effect/proc_holder/spell/self/astratan_spear))//No stacking. Again. As funny as a dozen of these were.
 				revert_cast()
 			else
