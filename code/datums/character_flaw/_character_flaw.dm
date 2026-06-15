@@ -71,6 +71,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 // Called when a vice is removed from a character to clean up persistent effects
 /datum/charflaw/proc/on_removal(mob/user)
+	if(user.vice_index?[src])
+    	user.vice_index -= type
 	return
 
 /datum/charflaw/proc/on_bath(mob/user)
