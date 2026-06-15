@@ -77,7 +77,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/wheat
 	seed = /obj/item/seeds/wheat
-	name = "wheat grain"
+	name = "小麦谷粒"
 	desc = ""
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "wheat"
@@ -92,7 +92,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/oat
 	seed = /obj/item/seeds/wheat/oat
-	name = "oat grain"
+	name = "燕麦谷粒"
 	desc = ""
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "oat"
@@ -107,8 +107,8 @@
 
 /obj/item/reagent_containers/food/snacks/grown/rice
 	seed = /obj/item/seeds/rice
-	name = "rice grain"
-	desc = "Rice grains, ready to be worked with water to be cleaned."
+	name = "米粒"
+	desc = "稻米颗粒，使用前需要用水清洗。"
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "rice"
 	gender = PLURAL
@@ -122,7 +122,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/apple
 	seed = /obj/item/seeds/apple
-	name = "apple"
+	name = "苹果"
 	desc = ""
 	icon_state = "apple"
 	filling_color = "#FF4500"
@@ -154,7 +154,7 @@
 /obj/item/reagent_containers/food/snacks/grown/apple/blockproj(mob/living/carbon/human/H)
 	testing("APPLEHITBEGIN")
 	if(prob(98))
-		H.visible_message(span_notice("[H] is saved by the apple!"))
+		H.visible_message(span_notice("[H]被苹果拯救了！"))
 		H.dropItemToGround(H.head)
 		return 1
 	else
@@ -189,17 +189,17 @@
 	splat_type = /obj/effect/decal/cleanable/food/plant_smudge
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/pear
-	name = "pear"
+	name = "梨"
 	seed = /obj/item/seeds/pear
-	desc = "A juicy, bell-shaped fruit with a delicate sweetness and soft, grainy flesh."
+	desc = "多汁、钟形水果，带有细腻甜味和柔软略带颗粒感的果肉。"
 	icon_state = "pear"
 	tastes = list("pear" = 1)
 	splat_color = "#D2B48C"
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/lemon
-	name = "lemon"
+	name = "柠檬"
 	seed = /obj/item/seeds/lemon
-	desc = "A bright yellow citrus fruit, prized for its tart, refreshing juice and fragrant zest."
+	desc = "一种明亮黄色的柑橘类水果，以其酸爽清新的果汁和芳香的果皮而备受青睐。"
 	icon_state = "lemon"
 	tastes = list("lemon" = 1)
 	splat_color = "#FFFF00"
@@ -213,41 +213,41 @@
 	splat_color = "#00FF00"
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/tangerine
-	name = "tangerine"
+	name = "柑橘"
 	seed = /obj/item/seeds/tangerine
-	desc = "A small, easy-to-peel citrus fruit with a vibrant orange color and sweet, juicy segments."
+	desc = "一种小型易剥的柑橘类水果，色泽鲜亮橙黄，果肉分瓣，甜美多汁。"
 	icon_state = "tangerine"
 	tastes = list("tangerine" = 1)
 	splat_color = "#FFA500"
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/plum
-	name = "plum"
+	name = "梅子"
 	seed = /obj/item/seeds/plum
-	desc = "A smooth-skinned fruit with juicy, sweet-tart flesh and a deep purple or red hue."
+	desc = "一种表皮光滑的水果，果肉多汁，酸甜适中，呈深紫或红色。"
 	icon_state = "plum"
 	tastes = list("plum" = 1)
 	splat_color = "#8B008B"
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/strawberry
-	name = "strawberry"
+	name = "草莓"
 	seed = /obj/item/seeds/strawberry
-	desc = "A small, red fruit with a sweet taste. It is often used in desserts."
+	desc = "小型红色水果，味道甜，常用于甜点。"
 	icon_state = "strawberry"
 	tastes = list("strawberry" = 1)
 	splat_color = "#9A1B00"
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/blackberry
-	name = "blackberry"
+	name = "黑莓"
 	seed = /obj/item/seeds/blackberry
-	desc = "A small, dark fruit with a sweet and slightly tart taste. It is often used in desserts."
+	desc = "一种小型深色水果，味道甜中带微酸，常用于甜点制作。"
 	icon_state = "blackberry"
 	tastes = list("blackberry" = 1)
 	splat_color = "#272C3F"
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/raspberry
-	name = "raspberry"
+	name = "树莓"
 	seed = /obj/item/seeds/raspberry
-	desc = "A small, red fruit with a sweet and slightly tart taste. It is often used in desserts."
+	desc = "一种小型红色水果，味道甜中带微酸，常用于甜点制作。"
 	icon_state = "raspberry"
 	tastes = list("raspberry" = 1)
 	splat_color = "#A01600"
@@ -262,7 +262,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/berries/rogue
 	seed = /obj/item/seeds/berryrogue
-	name = "jacksberries"
+	name = "杰克莓"
 	desc = ""
 	icon_state = "berries"
 	tastes = list("berry" = 1)
@@ -341,8 +341,8 @@
 	mill_result = /obj/item/reagent_containers/food/snacks/sugar
 
 /obj/item/reagent_containers/food/snacks/sugar
-	name = "sugar"
-	desc = "Milled sugarcane, sweet as can be."
+	name = "糖"
+	desc = "由甘蔗精制而成的糖粉，甜味纯粹而浓郁。"
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "salt"
 	tastes = list("sweet" = 1)
@@ -537,8 +537,8 @@
 		)
 
 /obj/item/reagent_containers/food/snacks/grown/onion/rogue
-	name = "onion"
-	desc = "A wonderful vegetable with many layers and broad flavor profile."
+	name = "洋葱"
+	desc = "一种层次丰富、风味多样的奇妙蔬菜。"
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/veg/onion_sliced
 	chopping_sound = TRUE
 	dropshrink = 0.6
@@ -551,8 +551,8 @@
 	seed = /obj/item/seeds/onion
 
 /obj/item/reagent_containers/food/snacks/grown/cabbage/rogue
-	name = "cabbage"
-	desc = "A dense leafed vegetable, crunchy and ripe. A symbol of prosperity for elves."
+	name = "卷心菜"
+	desc = "一种叶片紧实的蔬菜，清脆而成熟。是精灵族象征繁荣的作物。"
 	icon_state = "cabbage"
 	tastes = list("blandness" = 1)
 	bitesize = 10
