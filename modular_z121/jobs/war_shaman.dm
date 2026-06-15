@@ -1,4 +1,4 @@
-// modular_z121 自定义冒险者子职业：战争萨满
+// modular_z121 自定义佣兵子职业：战争萨满
 // 仅在 modular_z121 内实现，避免触碰主职业文件。
 
 /datum/advclass/z121_war_shaman
@@ -7,8 +7,9 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/z121_war_shaman
-	category_tags = list(CTAG_ADVENTURER)
-	class_select_category = CLASS_CAT_CLERIC
+	// 将战争萨满归入佣兵的 Aavnr 分类页签。
+	category_tags = list(CTAG_MERCENARY)
+	class_select_category = CLASS_CAT_AAVNR
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	cmode_music = 'sound/music/combat_holy.ogg'
 	traits_applied = list(

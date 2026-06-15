@@ -8,6 +8,7 @@ SUBSYSTEM_DEF(custom_bootstrap)
 		/client/proc/adminspell,
 		/client/proc/removeadminspell,
 		/client/proc/bless,
+		/client/proc/grandcaster,
 		/client/proc/god,
 	)
 

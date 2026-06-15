@@ -1,3 +1,21 @@
+/proc/z121_get_magic_flight_duration(mob/living/user)
+	var/arcane_level = max(user?.get_skill_level(/datum/skill/magic/arcane), 0)
+	switch(arcane_level)
+		if(0 to 1)
+			return 30 SECONDS
+		if(2)
+			return 60 SECONDS
+		if(3)
+			return 120 SECONDS
+		if(4)
+			return 240 SECONDS
+		if(5)
+			return 360 SECONDS
+	return 480 SECONDS
+
+/proc/z121_get_group_magic_flight_duration(mob/living/user)
+	return z121_get_magic_flight_duration(user) * 2
+
 /atom/movable/screen/alert/status_effect/buff/magic_flight
 	name = "飞行术"
 	desc = "魔法将我托离地面，使我得以自由飞行。"
@@ -14,6 +32,9 @@
 	var/was_flying = FALSE
 	var/was_marked_flying = FALSE
 	var/ending_warning_sent = FALSE
+	var/apply_message = "魔法将我托离地面，我的身体也随之轻盈地飞了起来。"
+	var/remove_message = "托举我的魔法逐渐消散，我也缓缓落回地面。"
+	var/ending_warning_message = "托举我的飞行魔法只剩不到 10 秒了。"
 
 /datum/status_effect/buff/magic_flight/on_creation(mob/living/new_owner, new_duration = null)
 	if(new_duration)
@@ -50,7 +71,7 @@
 		animate(pixel_y = flier.pixel_y - 3, time = 6)
 
 	update_shadow()
-	to_chat(flier, span_notice("魔法将我托离地面，我的身体也随之轻盈地飞了起来。"))
+	to_chat(flier, span_notice(apply_message))
 	return TRUE
 
 /datum/status_effect/buff/magic_flight/on_remove()
@@ -74,7 +95,7 @@
 	if(!was_marked_flying)
 		flier.flying = FALSE
 
-	to_chat(flier, span_warning("托举我的魔法逐渐消散，我也缓缓落回地面。"))
+	to_chat(flier, span_warning(remove_message))
 	flier = null
 
 /datum/status_effect/buff/magic_flight/proc/check_movement(datum/source)
@@ -89,7 +110,7 @@
 		return
 
 	ending_warning_sent = TRUE
-	to_chat(flier, span_warning("托举我的飞行魔法只剩不到 10 秒了。"))
+	to_chat(flier, span_warning(ending_warning_message))
 
 /datum/status_effect/buff/magic_flight/proc/update_shadow()
 
@@ -117,7 +138,7 @@
 
 /obj/effect/proc_holder/spell/invoked/flight
 	name = "飞行术"
-	desc = "以纯粹魔力让目标自由飞行 60 秒。"
+	desc = "以纯粹魔力让目标自由飞行，持续时间会随施法者的奥术造诣提升。"
 	cost = 4
 	releasedrain = 10
 	chargetime = 6 SECONDS
@@ -149,7 +170,8 @@
 
 	var/mob/living/spelltarget = target_atom
 	var/already_enchanted = spelltarget.has_status_effect(/datum/status_effect/buff/magic_flight)
-	spelltarget.apply_status_effect(/datum/status_effect/buff/magic_flight, 60 SECONDS)
+	var/flight_duration = z121_get_magic_flight_duration(user)
+	spelltarget.apply_status_effect(/datum/status_effect/buff/magic_flight, flight_duration)
 	playsound(get_turf(spelltarget), 'sound/magic/haste.ogg', 80, TRUE, soundping = TRUE)
 
 	if(spelltarget == user)

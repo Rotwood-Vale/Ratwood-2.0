@@ -406,7 +406,7 @@
 
 /obj/effect/proc_holder/spell/invoked/group_flight
 	name = "群体飞行术"
-	desc = "以纯粹魔力托举施法者与周围 1 格内活物，使其在更长时间内自由飞行。"
+	desc = "以纯粹魔力托举施法者与周围 1 格内活物，使其自由飞行；持续时间为飞行术的两倍。"
 	cost = 8
 	releasedrain = 20
 	chargetime = 12 SECONDS
@@ -431,9 +431,10 @@
 	xp_gain = TRUE
 
 /obj/effect/proc_holder/spell/invoked/group_flight/cast(list/targets, mob/living/user = usr)
+	var/flight_duration = z121_get_group_magic_flight_duration(user)
 	playsound(get_turf(user), 'sound/magic/haste.ogg', 80, TRUE, soundping = TRUE)
 	user.visible_message(span_notice("[user] 释放出的魔力如无形气流般扩散，将周围众人一并托离地面。"))
 	for(var/mob/living/L in range(1, user))
-		L.apply_status_effect(/datum/status_effect/buff/group_magic_flight)
+		L.apply_status_effect(/datum/status_effect/buff/group_magic_flight, flight_duration)
 		to_chat(L, span_notice("无形魔力在我脚下汇聚，将我托入飞行。"))
 	return TRUE
