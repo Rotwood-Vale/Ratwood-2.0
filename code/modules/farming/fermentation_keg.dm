@@ -6,8 +6,8 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	volume = 25
 
 /obj/structure/fermentation_keg
-	name = "fermentation keg"
-	desc = "A simple keg that is meant for making booze."
+	name = "发酵桶"
+	desc = "一个用于酿造酒水的简单桶子。"
 
 	icon = 'icons/obj/brewing.dmi'
 	icon_state = "barrel_tapless"
@@ -78,7 +78,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 /obj/structure/fermentation_keg/attack_right(mob/user)
 	. = ..()
 	if(!ready_to_bottle && selected_recipe && !brewing)
-		user.visible_message("[user] starts emptying out [src].", "You start emptying out [src].")
+		user.visible_message("[user]开始清空[src]。", "你开始清空[src]。")
 		if(!do_after(user, 5 SECONDS, src))
 			return
 		clear_keg(TRUE)
@@ -101,12 +101,12 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	if((user.used_intent == /datum/intent/grab) || user.cmode)
 		return ..()
 	if(!selected_recipe)
-		to_chat(user, span_warning("No recipe has been set yet!"))
+		to_chat(user, span_warning("尚未设置配方！"))
 		return ..()
 
 	if(try_n_brew(user))
 		start_brew()
-		to_chat(user, span_info("[src] begins brewing [selected_recipe.name]."))
+		to_chat(user, span_info("[src]开始酿造[selected_recipe.name]。"))
 	..()
 
 /obj/structure/fermentation_keg/attackby(obj/item/I, mob/user)
@@ -165,7 +165,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 			qdel(item)
 
 	if(dumps)
-		user.visible_message("[user] dumps some things into [src].", "You dump some things into [src].")
+		user.visible_message("[user]把一些东西倒进了[src]。", "你把一些东西倒进了[src]。")
 
 	. = ..()
 	update_overlays()
@@ -173,18 +173,18 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 /obj/structure/fermentation_keg/examine(mob/user)
 	. =..()
 	if(heated)
-		. += "Internal Temperature of around [heat - 271.3]C."
+		. += "内部温度约为 [heat - 271.3] 摄氏度。"
 	if(ready_to_bottle)
 		. += span_boldnotice("[made_item]")
 		if(age_start_time)
-			. += "Aged for [(world.time - age_start_time) * 0.1] Seconds.\n"
+			. += "已陈化 [(world.time - age_start_time) * 0.1] 秒。\n"
 		if(beer_left)
-			. += "[((beer_left / FLOOR((selected_recipe.brewed_amount * selected_recipe.per_brew_amount) , 1))) * 100]% Full"
+			. += "[((beer_left / FLOOR((selected_recipe.brewed_amount * selected_recipe.per_brew_amount) , 1))) * 100]% 满"
 		if(!tapped)
-			. += span_blue("Middle-Click on the Barrel to Tap it. It will lose its sale value.")
+			. += span_blue("中键点击桶以安装龙头。这将使其失去出售价值。")
 
 	else if(selected_recipe)
-		var/message = "Currently making: [selected_recipe.name].\n"
+		var/message = "当前制作：[selected_recipe.name]。\n"
 
 		//time
 		if(selected_recipe.brew_time)
@@ -192,24 +192,24 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 			if(heated && !selected_recipe.heat_required)
 				multiplier = 0.5
 			if((selected_recipe.brew_time * multiplier) >= 1 MINUTES)
-				message += "Once set, will take [(selected_recipe.brew_time / 600) * multiplier] Minutes.\n"
+				message += "一旦开始，将需要 [(selected_recipe.brew_time / 600) * multiplier] 分钟。\n"
 			else
-				message += "Once set, will take [(selected_recipe.brew_time / 10) & multiplier] Seconds.\n"
+				message += "一旦开始，将需要 [(selected_recipe.brew_time / 10) & multiplier] 秒。\n"
 
 		//How many are brewed
 		if(selected_recipe.brewed_amount)
-			message += "Will produce [selected_recipe.brewed_amount] bottles when finished or [FLOOR((selected_recipe.brewed_amount * selected_recipe.per_brew_amount)/ 3 , 1)] oz.\n"
+			message += "完成后将生产 [selected_recipe.brewed_amount] 瓶或 [FLOOR((selected_recipe.brewed_amount * selected_recipe.per_brew_amount)/ 3 , 1)] 盎司。\n"
 
 		if(selected_recipe.brewed_item && selected_recipe.brewed_item_count)
 			var/name_to_use = selected_recipe.secondary_name
 			if(!name_to_use)
 				name_to_use = selected_recipe.name
-			message += "Will produce [name_to_use] x [selected_recipe.brewed_item_count] when finished.\n"
+			message += "完成后将生产 [name_to_use] x [selected_recipe.brewed_item_count] 个。\n"
 
 		if(selected_recipe.helpful_hints)
-			message += "[selected_recipe.helpful_hints].\n"
+			message += "[selected_recipe.helpful_hints]。\n"
 
-		. += span_blue("Right-Click on the Barrel to clear it. Left-Click to start brewing. Brewing will remove all existing reagents in the barrel!")
+		. += span_blue("右键点击桶以清空它。左键点击开始酿造。酿造将清除桶内所有现有物质！")
 		/*
 		if(istype(selected_recipe, /datum/brewing_recipe/custom_recipe))
 			var/datum/brewing_recipe/custom_recipe/recipe = selected_recipe
@@ -218,7 +218,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 		*/
 		. += message
 	else
-		. += span_blue("Right-Click on the Barrel to select a recipe.")
+		. += span_blue("右键点击桶以选择配方。")
 
 /obj/structure/fermentation_keg/proc/shopping_run(mob/user)
 	if(brewing)
@@ -247,11 +247,11 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 		return
 
 	if(user.get_skill_level(/datum/skill/craft/cooking) < SKILL_LEVEL_APPRENTICE)
-		to_chat(user, span_notice("I am not knowledgable enough to brew."))
+		to_chat(user, span_notice("我的知识不足以酿酒。"))
 		return FALSE
 
 	options = sortList(options)
-	var/choice = input(user,"What brew do you want to make?", name) as null|anything in options
+	var/choice = input(user,"你想酿造什么？", name) as null|anything in options
 
 	if(!choice)
 		return
@@ -355,12 +355,12 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	var/ready = TRUE
 	if(!selected_recipe)
 		if(user)
-			to_chat(user, span_notice("You need to set a booze to brew!"))
+			to_chat(user, span_notice("你需要设置要酿造的饮品！"))
 		ready = FALSE
 
 	if(brewing)
 		if(user)
-			to_chat(user, span_notice("This keg is already brewing a mix!"))
+			to_chat(user, span_notice("这个酿造桶已经在发酵了！"))
 		ready = FALSE
 		return ready
 
@@ -368,25 +368,25 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	for(var/obj/item/reagent_containers/food/needed_crop as anything in selected_recipe.needed_crops)
 		if(recipe_crop_stocks[needed_crop] < selected_recipe.needed_crops[needed_crop])
 			if(user)
-				to_chat(user, span_notice("This keg needs more [initial(needed_crop.name)]!"))
+				to_chat(user, span_notice("这个桶需要更多的[initial(needed_crop.name)]！"))
 				ready = FALSE
 
 	for(var/obj/item/needed_item as anything in selected_recipe.needed_items)
 		if(recipe_crop_stocks[needed_item] < selected_recipe.needed_items[needed_item])
 			if(user)
-				to_chat(user, span_notice("This keg needs more [initial(needed_item.name)]!"))
+				to_chat(user, span_notice("这个桶需要更多的[initial(needed_item.name)]！"))
 				ready = FALSE
 
 	for(var/datum/reagent/required_chem as anything in selected_recipe.needed_reagents)
 		if(selected_recipe.needed_reagents[required_chem] > reagents.get_reagent_amount(required_chem))
 			if(user)
-				to_chat(user, span_notice("This keg needs more [initial(required_chem.name)]!"))
+				to_chat(user, span_notice("这个桶需要更多的[initial(required_chem.name)]！"))
 				ready = FALSE
 
 	return ready
 
 /obj/structure/fermentation_keg/proc/refuel(obj/item/item, mob/user)
-	user.visible_message("[user] starts refueling [src].", "You start refueling [src].")
+	user.visible_message("[user]开始给[src]添加燃料。", "你开始给[src]添加燃料。")
 	if(!do_after(user, 1.5 SECONDS, src))
 		return
 	var/burn_time = 4 MINUTES
@@ -447,9 +447,9 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 			for(bottlecaps = 0, bottlecaps < selected_recipe.brewed_amount, bottlecaps++)
 				var/obj/item/reagent_containers/glass/bottle/brewing_bottle/bottle_made = new /obj/item/reagent_containers/glass/bottle/brewing_bottle(get_turf(src))
 				bottle_made.icon_state = "[glass_colour]"
-				bottle_made.name = "brewer's bottle of [selected_recipe.bottle_name]"
+				bottle_made.name = "[selected_recipe.bottle_name]酿酒瓶"
 				bottle_made.sellprice = round(selected_recipe.sell_value / selected_recipe.brewed_amount)
-				bottle_made.desc =  selected_recipe.bottle_desc || "A bottle of locally-brewed [selected_recipe.bottle_name]."
+				bottle_made.desc =  selected_recipe.bottle_desc || "一瓶本地酿造的[selected_recipe.bottle_name]。"
 				var/datum/reagent/brewed_reagent = selected_recipe.reagent_to_brew
 				if(selected_recipe.ages)
 					var/time = world.time - age_start_time
@@ -466,7 +466,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 /obj/structure/fermentation_keg/proc/try_tapping(mob/user)
 	if(tapped)
 		return
-	visible_message("[user] starts tapping [src].", "You start tapping [src].")
+	visible_message("[user]开始给[src]安装龙头。", "你开始给[src]安装龙头。")
 	if(!do_after(user, 4 SECONDS, src))
 		return
 	tapped = TRUE
@@ -478,7 +478,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 /obj/structure/fermentation_keg/proc/try_filling(mob/user, obj/item/reagent_containers/container)
 	if(!tapped)
 		return
-	visible_message("[user] starts pouring from [src].", "You start pouring from [src].")
+	visible_message("[user]开始从[src]倒出液体。", "你开始从[src]倒出液体。")
 	if(!do_after(user, 1 SECONDS, src))
 		return
 	var/beer_taken = min((container.reagents.maximum_volume - container.reagents.total_volume), beer_left)
@@ -510,8 +510,8 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 
 
 /obj/item/reagent_containers/glass/bottle/brewing_bottle
-	name = "brewer's bottle"
-	desc = "A bottle with a cork."
+	name = "酿酒瓶"
+	desc = "一个带软木塞的瓶子。"
 	icon =  'icons/obj/bottle.dmi'
 	icon_state = "brew_bottle"
 
@@ -534,9 +534,9 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 /obj/item/reagent_containers/glass/bottle/brewing_bottle/examine()
 	. = ..()
 	if(sealed)
-		. += span_notice("The bottle is sealed. It can sell for something.")
+		. += span_notice("瓶子是密封的。可以卖些钱。")
 	else
-		. += span_notice("The bottle has been unsealed. It cannot be sold anymore.")
+		. += span_notice("瓶子已经被打开了。不能再出售了。")
 
 /obj/item/reagent_containers/glass/bottle/brewing_bottle/rmb_self(mob/user)
 	. = ..()
@@ -565,7 +565,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 
 			var/transfer_amount = min(reagents_needed, keg.beer_left)
 
-			user.visible_message("[user] starts to pour [keg] into [src]." , "You start to pour [keg] in [src].")
+			user.visible_message("[user]开始把[keg]倒进[src]。", "你开始把[keg]倒进[src]。")
 			if(!do_after(user, 5 SECONDS, keg))
 				return
 			reagents.add_reagent(selected_recipe.reagent_to_brew, transfer_amount)
@@ -584,7 +584,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 					return
 
 				var/transfer_amount = min(reagents_needed, reagent.volume)
-				user.visible_message("[user] starts to pour [keg] into [src]." , "You start to pour [keg] in [src].")
+				user.visible_message("[user]开始把[keg]倒进[src]。", "你开始把[keg]倒进[src]。")
 				if(!do_after(user, 5 SECONDS, keg))
 					return
 				reagents.add_reagent(reagent.type, transfer_amount)
@@ -592,7 +592,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	else
 		if(!keg.tapped)
 			return
-		user.visible_message("[user] starts to pour [keg] into [src]." , "You start to pour [keg] in [src].")
+		user.visible_message("[user]开始把[keg]倒进[src]。", "你开始把[keg]倒进[src]。")
 		if(!do_after(user, 5 SECONDS, keg))
 			return
 		reagents.add_reagent(keg.selected_recipe?.reagent_to_brew, keg.beer_left)
