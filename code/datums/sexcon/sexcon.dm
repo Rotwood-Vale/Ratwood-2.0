@@ -766,12 +766,12 @@
 			if(!user.mob_timers["cumtri"])
 				user.mob_timers["cumtri"] = world.time
 				user.adjust_triumphs(1)
-				to_chat(user, span_love("我们的欢爱是一场真正的 TRIUMPH！"))
+				to_chat(user, span_love("我们的欢爱是一场真正的凯旋！"))
 		if(user_goodlover)
 			if(!effective_target.mob_timers["cumtri"])
 				effective_target.mob_timers["cumtri"] = world.time
 				effective_target.adjust_triumphs(1)
-				to_chat(effective_target, span_love("我们的欢爱是一场真正的 TRIUMPH！"))
+				to_chat(effective_target, span_love("我们的欢爱是一场真正的凯旋！"))
 	var/user_beautiful = HAS_TRAIT(user, TRAIT_BEAUTIFUL)
 	var/user_ugly = HAS_TRAIT(user, TRAIT_UNSEEMLY) || HAS_TRAIT(user, TRAIT_DISFIGURED)
 	var/target_beautiful = HAS_TRAIT(effective_target, TRAIT_BEAUTIFUL)

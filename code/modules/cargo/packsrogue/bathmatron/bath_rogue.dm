@@ -8,7 +8,7 @@
 
 // Same as merchant
 /datum/supply_pack/rogue/bath_rogue/chains
-	name = "Chains"
+	name = "锁链"
 	cost = 15
 	contains = list(
 		/obj/item/rope/chain,
@@ -17,17 +17,17 @@
 	)
 
 /datum/supply_pack/rogue/bath_rogue/goldpin
-	name = "Golden Hairpin"
+	name = "金发簪"
 	cost = 70
 	contains = list(/obj/item/lockpick/goldpin)
 
 /datum/supply_pack/rogue/bath_rogue/silverpin
-	name = "Silver Hairpin"
+	name = "银发簪"
 	cost = 140
 	contains = list(/obj/item/lockpick/goldpin/silver)
 
 /datum/supply_pack/rogue/bath_rogue/smokebomb
-	name = "Smoke Bomb"
+	name = "烟雾弹"
 	cost = 25
 	contains = list(
 		/obj/item/bomb/smoke,
@@ -35,12 +35,12 @@
 		/obj/item/bomb/smoke)
 
 /datum/supply_pack/rogue/bath_rogue/mirrortransform
-	name = "Scroll of Mirror Transform"
+	name = "镜像变形卷轴"
 	cost = 50
 	contains = list(/obj/item/book/granter/spell/blackstone/mirror_transform)
 
 /datum/supply_pack/rogue/bath_rogue/waterarrows
-	name = "Water Arrows"
+	name = "水箭"
 	cost = 20
 	contains = list (
 		/obj/item/ammo_casing/caseless/rogue/arrow/water,
@@ -56,7 +56,7 @@
 	)
 
 /datum/supply_pack/rogue/bath_rogue/waterbolts
-	name = "Water Bolts"
+	name = "水弩矢"
 	cost = 20
 	contains = list (
 		/obj/item/ammo_casing/caseless/rogue/bolt/water,
@@ -72,31 +72,31 @@
 	)
 
 /datum/supply_pack/rogue/bath_rogue/quiver
-	name = "Empty Quiver"
+	name = "空箭袋"
 	cost = 5
 	contains = list(/obj/item/quiver)
 
 /datum/supply_pack/rogue/bath_rogue/net
-	name = "Net"
+	name = "网"
 	cost = 20
 	contains = list(/obj/item/net)
 
 /datum/supply_pack/rogue/bath_rogue/grappler
-	name = "Grappler"
+	name = "抓钩"
 	cost = 200
 	contains = list(/obj/item/grapplinghook)
 
 /datum/supply_pack/rogue/bath_rogue/climbing_gear
-	name = "Climbing Gear"
+	name = "攀爬装备"
 	cost = 150
 	contains = list(/obj/item/clothing/climbing_gear)
 
 /datum/supply_pack/rogue/bath_rogue/whip
-	name = "Whip"
+	name = "鞭子"
 	cost = 20
 	contains = list(/obj/item/rogueweapon/whip)
 
 /datum/supply_pack/rogue/bath_rogue/brandiron
-	name = "Branding Iron"
+	name = "烙铁"
 	cost = 20
 	contains = list(/obj/item/rogueweapon/surgery/cautery/branding)

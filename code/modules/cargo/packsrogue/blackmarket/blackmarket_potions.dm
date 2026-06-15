@@ -4,21 +4,21 @@
 	crate_type = /obj/structure/closet/crate/chest/merchant
 
 /datum/supply_pack/rogue/blackmarket_potions/healthpot
-	name = "Red Elixir"
+	name = "红灵药"
 	cost = 35
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/healthpot)
 
 /datum/supply_pack/rogue/blackmarket_potions/manapot
-	name = "Blue Elixir"
+	name = "蓝灵药"
 	cost = 25
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/manapot)
 
 /datum/supply_pack/rogue/blackmarket_potions/stamina
-	name = "Green Elixir"
+	name = "绿灵药"
 	cost = 40
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/stampot)
 
 /datum/supply_pack/rogue/blackmarket_potions/antidote
-	name = "Antitoxin"
+	name = "解毒剂"
 	cost = 10
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/antidote)

@@ -4,31 +4,31 @@
 	crate_type = /obj/structure/closet/crate/chest/merchant
 
 /datum/supply_pack/rogue/blackmarket_drugs/ozium
-	name = "Ozium"
+	name = "奥兹姆"
 	cost = 25
 	contains = list(/obj/item/reagent_containers/powder/ozium)
 
 /datum/supply_pack/rogue/blackmarket_drugs/moondust
-	name = "Moon Dust"
+	name = "月尘"
 	cost = 40
 	contains = list(/obj/item/reagent_containers/powder/moondust)
 
 /datum/supply_pack/rogue/blackmarket_drugs/spice
-	name = "Spice"
+	name = "香料"
 	cost = 50
 	contains = list(/obj/item/reagent_containers/powder/spice)
 
 /datum/supply_pack/rogue/blackmarket_drugs/swampzig
-	name = "Zigarette, Swampweed"
+	name = "卷烟，沼泽草"
 	cost = 10
 	contains = list(/obj/item/clothing/mask/cigarette/rollie/cannabis)
 
 /datum/supply_pack/rogue/blackmarket_drugs/pipezig
-	name = "Zigarette, Pipeweed"
+	name = "卷烟，烟斗草"
 	cost = 5
 	contains = list(/obj/item/clothing/mask/cigarette/rollie/nicotine)
 
 /datum/supply_pack/rogue/blackmarket_drugs/soap
-	name = "Bar of Soap"
+	name = "一块肥皂"
 	cost = 15
 	contains = list(/obj/item/soap)

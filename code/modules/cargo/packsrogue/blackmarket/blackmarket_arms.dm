@@ -4,56 +4,56 @@
 	crate_type = /obj/structure/closet/crate/chest/merchant
 
 /datum/supply_pack/rogue/blackmarket_arms/dagger
-	name = "Dagger, Steel"
+	name = "钢匕首"
 	cost =	50
 	contains = list(/obj/item/rogueweapon/huntingknife/idagger/steel)
 
 /datum/supply_pack/rogue/blackmarket_arms/katar
-	name = "Katar, Steel"
+	name = "钢拳刃"
 	cost =	75
 	contains = list(/obj/item/rogueweapon/katar)
 
 /datum/supply_pack/rogue/blackmarket_arms/steelknuckle
-	name =	"Knuckledusters, Steel"
+	name =	"钢指虎"
 	cost =	75
 	contains = list(/obj/item/rogueweapon/knuckles)
 
 /datum/supply_pack/rogue/blackmarket_arms/sword
-	name = "Arming Sword, Steel"
+	name = "钢武装剑"
 	cost = 50
 	contains = list(/obj/item/rogueweapon/sword)
 
 /datum/supply_pack/rogue/blackmarket_arms/shortsword
-	name = "Short Sword, Steel"
+	name = "钢短剑"
 	cost = 50
 	contains = list(/obj/item/rogueweapon/sword/short)
 
 /datum/supply_pack/rogue/blackmarket_arms/mace
-	name = "Mace, Iron"
+	name = "铁钉头锤"
 	cost =	30
 	contains = list(/obj/item/rogueweapon/mace)
 
 /datum/supply_pack/rogue/blackmarket_arms/warhammer
-	name = "Warhammer, Iron"
+	name = "铁战锤"
 	cost =	30
 	contains = list(/obj/item/rogueweapon/mace/warhammer)
 
 /datum/supply_pack/rogue/blackmarket_arms/spear
-	name = "Spear, Iron"
+	name = "铁矛"
 	cost =	30
 	contains = list(/obj/item/rogueweapon/spear)
 
 /datum/supply_pack/rogue/blackmarket_arms/steelaxe
-	name =	"Axe, Steel"
+	name =	"钢斧"
 	cost =	75
 	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/steel)
 
 /datum/supply_pack/rogue/blackmarket_arms/flail
-	name = "Flail, Iron"
+	name = "铁连枷"
 	cost =	40
 	contains = list(/obj/item/rogueweapon/flail)
 
 /datum/supply_pack/rogue/blackmarket_arms/heater
-	name = "Heater Shield"
+	name = "熨斗盾"
 	cost =	30
 	contains = list(/obj/item/rogueweapon/shield/heater)

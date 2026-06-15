@@ -1,7 +1,7 @@
 //The "BDPtarget" temp visual is created by anything that "launches" a supplypod.  It makes two things: a falling droppod animation, and the droppod itself.
 //------------------------------------SUPPLY POD-------------------------------------//
 /obj/structure/closet/supplypod
-	name = "supply pod" //Names and descriptions are normally created with the setStyle() proc during initialization, but we have these default values here as a failsafe
+	name = "补给舱" //Names and descriptions are normally created with the setStyle() proc during initialization, but we have these default values here as a failsafe
 	desc = ""
 	icon_state = "supplypod"
 	pixel_x = -16 //2x2 sprite
@@ -50,7 +50,7 @@
 	landingDelay = 15 //Slightly quicker than the supplypod
 
 /obj/structure/closet/supplypod/extractionpod
-	name = "Syndicate Extraction Pod"
+	name = "辛迪加回收舱"
 	desc = ""
 	specialised = TRUE
 	style = STYLE_SYNDICATE
@@ -130,7 +130,7 @@
 		bluespace = TRUE //Make it so that the pod doesn't stay in centcom forever
 
 		QDEL_IN(risingPod, 10)
-		audible_message("<span class='notice'>The pod hisses, closing quickly and launching itself away from the station.</span>", "<span class='notice'>The ground vibrates, the nearby pod launching away from the station.</span>")
+		audible_message("<span class='notice'>补给舱嘶嘶作响，迅速关闭并自行发射离开了哨站。</span>", "<span class='notice'>地面震颤，附近的补给舱发射离开了哨站。</span>")
 
 		stay_after_drop = FALSE
 		specialisedPod(holder) // Do special actions for specialised pods - this is likely if we were already doing manual launches
@@ -272,7 +272,7 @@
 
 //------------------------------------TEMPORARY_VISUAL-------------------------------------//
 /obj/effect/DPtarget //This is the object that forceMoves the supplypod to it's location
-	name = "Landing Zone Indicator"
+	name = "着陆区指示器"
 	desc = ""
 	icon_state = ""
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER

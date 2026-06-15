@@ -359,14 +359,14 @@
 
 /client/proc/run_particle_weather()
 	set category = "-GameMaster-"
-	set name = "Weather - Particle"
-	set desc = "Triggers a particle weather"
+	set name = "天气 - 粒子"
+	set desc = "触发一场粒子天气"
 
 
 	if(!holder)
 		return
 
-	var/weather_type = input("Choose a weather", "Weather")  as null|anything in sortList(subtypesof(/datum/particle_weather), /proc/cmp_typepaths_asc)
+	var/weather_type = input("选择一种天气", "天气")  as null|anything in sortList(subtypesof(/datum/particle_weather), /proc/cmp_typepaths_asc)
 	if(!weather_type)
 		return
 
@@ -378,15 +378,15 @@
 
 /client/proc/run_custom_particle_weather()
 	set category = "-GameMaster-"
-	set name = "Weather - Color Particle"
-	set desc = "Triggers a particle weather"
+	set name = "天气 - 彩色粒子"
+	set desc = "触发一场粒子天气"
 
 
 
 	if(!holder)
 		return
 
-	var/weather_type = input("Choose a weather", "Weather")  as null|anything in sortList(subtypesof(/datum/particle_weather), /proc/cmp_typepaths_asc)
+	var/weather_type = input("选择一种天气", "天气")  as null|anything in sortList(subtypesof(/datum/particle_weather), /proc/cmp_typepaths_asc)
 	if(!weather_type)
 		return
 
@@ -401,7 +401,7 @@
 	"Gold" = "#f9a602"
 	)
 
-	var/color = input("Choose a weather color", "Weather")  as null|anything in selectable_colors
+	var/color = input("选择天气颜色", "天气")  as null|anything in selectable_colors
 	if(!color )
 		color = "#ccffff" //base rain color
 

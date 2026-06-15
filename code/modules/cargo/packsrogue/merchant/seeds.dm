@@ -6,7 +6,7 @@
 	crate_type = /obj/structure/closet/crate/chest/merchant
 
 /datum/supply_pack/rogue/seeds/spelt
-	name = "Spelt"
+	name = "斯佩耳特小麦"
 	cost = 11
 	contains = list(
 					/obj/item/seeds/wheat,
@@ -18,7 +18,7 @@
 				)
 
 /datum/supply_pack/rogue/seeds/apple
-	name = "Apple"
+	name = "苹果"
 	cost = 12
 	contains = list(
 					/obj/item/seeds/apple,
@@ -29,7 +29,7 @@
 				)
 
 /datum/supply_pack/rogue/seeds/weed
-	name = "Pipeweed"
+	name = "烟草"
 	cost = 15
 	contains = list(
 					/obj/item/seeds/pipeweed,
@@ -40,7 +40,7 @@
 				)
 
 /datum/supply_pack/rogue/seeds/swampweed
-	name = "Swampweed"
+	name = "沼泽草"
 	cost = 30
 	contains = list(
 					/obj/item/seeds/swampweed,
@@ -50,7 +50,7 @@
 				)
 
 /datum/supply_pack/rogue/seeds/berry
-	name = "Berry"
+	name = "浆果"
 	cost = 10
 	contains = list(
 					/obj/item/seeds/berryrogue,
@@ -60,7 +60,7 @@
 				)
 
 /datum/supply_pack/rogue/seeds/onion
-	name = "Onion"
+	name = "洋葱"
 	cost = 15
 	contains = list(
 					/obj/item/seeds/onion,
@@ -71,7 +71,7 @@
 				)
 
 /datum/supply_pack/rogue/seeds/cabbage
-	name = "Cabbage"
+	name = "卷心菜"
 	cost = 15
 	contains = list(
 					/obj/item/seeds/cabbage,
@@ -82,7 +82,7 @@
 				)
 
 /datum/supply_pack/rogue/seeds/potato
-	name = "Potato"
+	name = "土豆"
 	cost = 15
 	contains = list(
 					/obj/item/seeds/potato,
@@ -93,7 +93,7 @@
 				)
 
 /datum/supply_pack/rogue/seeds/poppy
-	name = "Poppy"
+	name = "罂粟"
 	cost = 15
 	contains = list(
 					/obj/item/seeds/poppy,
@@ -105,7 +105,7 @@
 
 
 /datum/supply_pack/rogue/seeds/coffee
-	name = "Coffee"
+	name = "咖啡"
 	cost = 15
 	contains = list(
 					/obj/item/seeds/coffee,
@@ -117,7 +117,7 @@
 
 
 /datum/supply_pack/rogue/seeds/tea
-	name = "Tea"
+	name = "茶"
 	cost = 15
 	contains = list(
 					/obj/item/seeds/tea,
@@ -128,7 +128,7 @@
 				)
 
 /datum/supply_pack/rogue/seeds/rare_veggies
-	name = "Imported Vegetable Seeds"
+	name = "进口蔬菜种子"
 	cost = 15
 	contains = list(
 					/obj/item/seeds/garlick,
@@ -141,7 +141,7 @@
 					)
 
 /datum/supply_pack/rogue/seeds/rare_fruit
-	name = "Imported Fruit Seeds"
+	name = "进口水果种子"
 	cost = 15
 	contains = list(
 					/obj/item/seeds/pear,
@@ -154,7 +154,7 @@
 					)
 
 /datum/supply_pack/rogue/seeds/rare_berry
-	name = "Imported Berry Seeds"
+	name = "进口浆果种子"
 	cost = 15
 	contains = list(/obj/item/seeds/strawberry,
 					/obj/item/seeds/strawberry,
@@ -166,7 +166,7 @@
 
 
 /datum/supply_pack/rogue/seeds/rare_grain
-	name = "Imported Grain Seeds"
+	name = "进口谷物种子"
 	cost = 15
 	contains = list(
 					/obj/item/seeds/wheat/oat,

@@ -1309,7 +1309,7 @@
 
 
 /atom/movable/screen/alert/status_effect/buff/undermaidenbargain
-	name = "Undermaiden 的交易"
+	name = "冥下侍女的交易"
 	desc = "有一桩可怕的交易以我的名义缔结了......"
 	icon_state = "buff"
 
@@ -1712,13 +1712,13 @@
 /datum/status_effect/buff/clash/proc/guard_disrupted()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.bad_guard("My focus was disrupted!")
+		H.bad_guard("我的专注被打断了！")
 
 //We tried to cheese it. Generally reserved for egregious things, like attacking / casting while its active.
 /datum/status_effect/buff/clash/proc/guard_disrupted_cheesy()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.bad_guard("My focus was <b>heavily</b> disrupted!")
+		H.bad_guard("我的专注被<b>严重</b>打断了！")
 
 /datum/status_effect/buff/clash/on_apply()
 	. = ..()
@@ -1805,8 +1805,8 @@
 	effectedstats = list(STATKEY_CON = 1,STATKEY_WIL = 1)
 
 /atom/movable/screen/alert/status_effect/buff/psydonic_endurance
-	name = "Psydonic 坚忍"
-	desc = "我受到受祝 Psydonian 板甲的保护。"
+	name = "普赛顿式坚忍"
+	desc = "我受到受祝普赛顿板甲的保护。"
 	icon_state = "buff"
 
 #undef BLOODRAGE_FILTER

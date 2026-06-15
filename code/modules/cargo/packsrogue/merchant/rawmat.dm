@@ -4,7 +4,7 @@
 	crate_type = /obj/structure/closet/crate/chest/merchant
 
 /datum/supply_pack/rogue/rawmats/iron
-	name = "Iron Ore"
+	name = "铁矿石"
 	cost = 60
 	contains = list(/obj/item/rogueore/iron,
 	/obj/item/rogueore/iron,
@@ -13,7 +13,7 @@
 	/obj/item/rogueore/iron)
 
 /datum/supply_pack/rogue/rawmats/copper
-	name = "Copper Ore"
+	name = "铜矿石"
 	cost = 60
 	contains = list(/obj/item/rogueore/copper,
 	/obj/item/rogueore/copper,
@@ -22,7 +22,7 @@
 	/obj/item/rogueore/copper)
 
 /datum/supply_pack/rogue/rawmats/tin
-	name = "Tin Ore"
+	name = "锡矿石"
 	cost = 80
 	contains = list(/obj/item/rogueore/tin,
 	/obj/item/rogueore/tin,
@@ -31,7 +31,7 @@
 	/obj/item/rogueore/tin)
 
 /datum/supply_pack/rogue/rawmats/coal
-	name = "Coal"
+	name = "煤炭"
 	cost = 100
 	contains = list(/obj/item/rogueore/coal,
 	/obj/item/rogueore/coal,
@@ -43,12 +43,12 @@
 	/obj/item/rogueore/coal)
 
 /datum/supply_pack/rogue/rawmats/silver
-	name = "Silver Dust"
+	name = "银粉"
 	cost = 70
 	contains = list(/obj/item/alch/silverdust)
 
 /datum/supply_pack/rogue/rawmats/cloth
-	name = "Cloth"
+	name = "布料"
 	cost = 60
 	contains = list(/obj/item/natural/cloth,
 	/obj/item/natural/cloth,
@@ -60,7 +60,7 @@
 	/obj/item/natural/cloth)
 
 /datum/supply_pack/rogue/rawmats/stones
-	name = "Stone"
+	name = "石料"
 	cost = 30
 	contains = list(/obj/item/natural/stone,
 	/obj/item/natural/stone,
@@ -74,7 +74,7 @@
 	/obj/item/natural/stone,)
 
 /datum/supply_pack/rogue/rawmats/lumber
-	name = "Lumber"
+	name = "木材"
 	cost = 30
 	contains = list(/obj/item/grown/log/tree/small,
 	/obj/item/grown/log/tree/small,
@@ -83,7 +83,7 @@
 	/obj/item/grown/log/tree/small,)
 
 /datum/supply_pack/rogue/rawmats/ash
-	name = "Ash"
+	name = "灰烬"
 	cost = 20
 	contains = list(/obj/item/ash,
 	/obj/item/ash,

@@ -408,7 +408,7 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 		to_chat(mind.current, span_smallnotice("我感觉自己又能再次更换法术了。"))
 	if(mind.has_rituos)
 		mind.has_rituos = FALSE
-		to_chat(mind.current, span_smallnotice("施行 Her Lesser Work 的劳累已经离开我这孱弱之躯。我可以继续我的蜕变了……"))
+		to_chat(mind.current, span_smallnotice("施行“她的次级之作”带来的劳累已经离开我这孱弱之躯。我可以继续我的蜕变了……"))
 	if (mind.rituos_spell)
 		to_chat(mind.current, span_warning("我对[mind.rituos_spell.name]的窥见正从沉睡的意识中溜走……"))
 		mind.RemoveSpell(mind.rituos_spell)

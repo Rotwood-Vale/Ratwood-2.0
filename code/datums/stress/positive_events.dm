@@ -46,12 +46,12 @@
 /datum/stressevent/gnoll_graggar
 	timer = 1 MINUTES
 	stressadd = -2
-	desc = span_green("是 Gnoll！Graggar 的祝福庇佑着我！")
+	desc = span_green("是豺狼人！Graggar 的祝福庇佑着我！")
 
 /datum/stressevent/triumph
 	timer = 10 MINUTES
 	stressadd = -5
-	desc = span_boldgreen("我回想起了一次 TRIUMPH。")
+	desc = span_boldgreen("我回想起了一次凯旋。")
 
 /datum/stressevent/drunk
 	timer = 1 MINUTES
@@ -196,7 +196,7 @@
 
 /datum/stressevent/moondust
 	stressadd = -6
-	desc = span_boldgreen("Moondust 正在我体内奔涌。")
+	desc = span_boldgreen("月尘正在我体内奔涌。")
 	timer = 4 MINUTES
 
 /datum/stressevent/starsugar
@@ -206,7 +206,7 @@
 
 /datum/stressevent/moondust_purest
 	stressadd = -8
-	desc = span_boldgreen("纯粹的 Moondust 正在我体内奔涌！")
+	desc = span_boldgreen("纯粹的月尘正在我体内奔涌！")
 	timer = 4 MINUTES
 
 /datum/stressevent/campfire
@@ -375,12 +375,12 @@
 
 /datum/stressevent/eoran_blessing
 	stressadd = -1
-	desc = span_info("一位 Eoran 将其光辉洒在了我身上。")
+	desc = span_info("一位伊欧拉信徒将其光辉洒在了我身上。")
 	timer = 5 MINUTES
 
 /datum/stressevent/eoran_blessing_greater
 	stressadd = -2
-	desc = span_info("一位虔诚的 Eoran 将其光辉洒在了我身上。")
+	desc = span_info("一位虔诚的伊欧拉信徒将其光辉洒在了我身上。")
 	timer = 10 MINUTES
 
 /datum/stressevent/guillotinekill
@@ -390,7 +390,7 @@
 
 /datum/stressevent/gazeuponme
 	stressadd = -5
-	desc = span_green("我是在 Ten 注视下的异端……我的主神以我为傲！")
+	desc = span_green("我是在十神注视下的异端……我的主神以我为傲！")
 	timer = INFINITY
 
 /datum/stressevent/sermon
@@ -422,7 +422,7 @@
 
 /datum/stressevent/ward
 	stressadd = -3
-	desc = span_green("我就在我的 Champion 身边！哦，哦，Champion！")
+	desc = span_green("我就在我的受护者身边！哦，哦，受护者！")
 	timer = 1 MINUTES
 
 /datum/stressevent/blessed_weapon

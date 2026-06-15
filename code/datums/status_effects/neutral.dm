@@ -147,7 +147,7 @@
 
 /atom/movable/screen/alert/status_effect/ugotmail
 	name = "邮件"
-	desc = "HERMES 那里有一封信在等我。"
+	desc = "赫尔墨斯那里有一封信在等我。"
 	icon_state = "mail"
 
 //Xylix Gambling
@@ -211,5 +211,5 @@
 
 /atom/movable/screen/alert/status_effect/carebox
 	name = "包裹"
-	desc = "HERMES 那里有一个包裹在等我。"
+	desc = "赫尔墨斯那里有一个包裹在等我。"
 	icon_state = "mail"

@@ -9,12 +9,12 @@
 //////////
 
 /datum/supply_pack/rogue/Sawbones/trustworthyhat
-	name = "Trustworthy Hat"
+	name = "可信医帽"
 	cost = 5
 	contains = list(/obj/item/clothing/head/roguetown/physician)
 
 /datum/supply_pack/rogue/Sawbones/leather/Lhelmet
-	name = "Leather Helmet"
+	name = "皮盔"
 	cost = 5
 	contains = list(/obj/item/clothing/head/roguetown/helmet/leather)
 
@@ -23,22 +23,22 @@
 //////////
 
 /datum/supply_pack/rogue/Sawbones/icoif
-	name = "Iron Coif"
+	name = "铁锁子头巾"
 	cost = 20
 	contains = list(/obj/item/clothing/neck/roguetown/chaincoif/iron)
 
 /datum/supply_pack/rogue/Sawbones/coif/steel
-	name = "Steel Coif"
+	name = "钢锁子头巾"
 	cost = 40
 	contains = list(/obj/item/clothing/neck/roguetown/chaincoif)
 
 /datum/supply_pack/rogue/Sawbones/gorget
-	name = "Gorget"
+	name = "护喉"
 	cost = 20
 	contains = list(/obj/item/clothing/neck/roguetown/gorget)
 
 /datum/supply_pack/rogue/Sawbones/sgorget
-	name = "Steel Gorget"
+	name = "钢护喉"
 	cost = 40
 	contains = list(/obj/item/clothing/neck/roguetown/gorget/steel)
 
@@ -47,32 +47,32 @@
 ///////////
 
 /datum/supply_pack/rogue/Sawbones/trustworthyrobes
-	name = "Trustworthy Robes"
+	name = "可信医袍"
 	cost = 5
 	contains = list(/obj/item/clothing/suit/roguetown/shirt/robe/physician)
 
 /datum/supply_pack/rogue/Sawbones/gambeson
-	name = "Gambeson"
+	name = "棉甲"
 	cost = 5
 	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson)
 
 /datum/supply_pack/rogue/Sawbones/hgambeson
-	name = "Heavy Gambeson"
+	name = "重型棉甲"
 	cost = 20
 	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy)
 
 /datum/supply_pack/rogue/Sawbones/leather
-	name = "Leather Armor"
+	name = "皮甲"
 	cost = 10
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather)
 
 /datum/supply_pack/rogue/Sawbones/leather/studded
-	name = "Studded Leather Armor"
+	name = "铆钉皮甲"
 	cost = 20
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/studded)
 
 /datum/supply_pack/rogue/Sawbones/leather/heavy
-	name = "Hardened Leather Armor"
+	name = "硬化皮甲"
 	cost = 20
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy)
 
@@ -81,27 +81,27 @@
 ///////////////////
 
 /datum/supply_pack/rogue/Sawbones/leather/Lbracers
-	name = "Leather Bracers"
+	name = "皮护臂"
 	cost = 5
 	contains = list(/obj/item/clothing/wrists/roguetown/bracers/leather)
 
 /datum/supply_pack/rogue/Sawbones/leather/hbracers
-	name = "Hardened Leather Bracers"
+	name = "硬化皮护臂"
 	cost = 10
 	contains = list(/obj/item/clothing/wrists/roguetown/bracers/leather/heavy)
 
 /datum/supply_pack/rogue/Sawbones/leather/lgloves
-	name = "Leather Gloves"
+	name = "皮手套"
 	cost = 5
 	contains = list(/obj/item/clothing/gloves/roguetown/leather)
 
 /datum/supply_pack/rogue/Sawbones/leather/hlgloves
-	name = "Heavy Leather Gloves"
+	name = "重型皮手套"
 	cost = 10
 	contains = list(/obj/item/clothing/gloves/roguetown/angle)
 
 /datum/supply_pack/rogue/Sawbones/leather/flgloves
-	name = "Fingerless Leather Gloves"
+	name = "露指皮手套"
 	cost = 10
 	contains = list(/obj/item/clothing/gloves/roguetown/fingerless_leather)
 
@@ -110,12 +110,12 @@
 ///////////////
 
 /datum/supply_pack/rogue/Sawbones/leather/pants
-	name = "Leather Trousers"
+	name = "皮裤"
 	cost = 10
 	contains = list(/obj/item/clothing/under/roguetown/trou/leather)
 
 /datum/supply_pack/rogue/Sawbones/leather/hpants
-	name = "Hardened Leather Trousers"
+	name = "硬化皮裤"
 	cost = 20
 	contains = list(/obj/item/clothing/under/roguetown/heavy_leather_pants)
 
@@ -124,12 +124,12 @@
 /////////////
 
 /datum/supply_pack/rogue/Sawbones/rapier
-	name = "Rapier"
+	name = "刺剑"
 	cost = 20
 	contains = list(/obj/item/rogueweapon/sword/rapier)
 
 /datum/supply_pack/rogue/Sawbones/estoc
-	name = "Estoc"
+	name = "穿甲剑"
 	cost = 40
 	contains = list(/obj/item/rogueweapon/estoc)
 
@@ -138,12 +138,12 @@
 ///////////
 
 /datum/supply_pack/rogue/Sawbones/botbomb
-	name = "Bottle bomb"
+	name = "瓶装炸弹"
 	cost = 20
 	contains = list(/obj/item/bomb)
 
 /datum/supply_pack/rogue/Sawbones/surgery_bag
-	name = "Surgery Bag"
+	name = "手术袋"
 	cost = 30
 	contains = list(/obj/item/storage/belt/rogue/surgery_bag/full/physician)
 
@@ -152,12 +152,12 @@
 /////////////
 
 /datum/supply_pack/rogue/Sawbones/bedroll
-	name = "Bedroll"
+	name = "铺盖卷"
 	cost = 5
 	contains = list(/obj/item/bedroll)
 
 /datum/supply_pack/rogue/Sawbones/gbottle
-	name = "Glass bottle"
+	name = "玻璃瓶"
 	cost = 5
 	contains = list(/obj/item/reagent_containers/glass/bottle)
 
@@ -166,12 +166,12 @@
 ///////////
 
 /datum/supply_pack/rogue/Sawbones/herozium
-	name = "Herozium"
+	name = "赫若兹姆"
 	cost = 40
 	contains = list(/obj/item/reagent_containers/powder/herozium)
 
 /datum/supply_pack/rogue/Sawbones/starsugar
-	name = "Starsugar"
+	name = "星糖"
 	cost = 40
 	contains = list(/obj/item/reagent_containers/powder/starsugar)
 
@@ -180,52 +180,52 @@
 /////////////////////
 
 /datum/supply_pack/rogue/Sawbones/strpot
-	name = "Strength Potion"
+	name = "力量药水"
 	cost = 10
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/strpot)
 
 /datum/supply_pack/rogue/Sawbones/perpot
-	name = "Perception Potion"
+	name = "感知药水"
 	cost = 10
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/perpot)
 
 /datum/supply_pack/rogue/Sawbones/intpot
-	name = "Intelligence Potion"
+	name = "智力药水"
 	cost = 10
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/intpot)
 
 /datum/supply_pack/rogue/Sawbones/conpot
-	name = "Constitution Potion"
+	name = "体质药水"
 	cost = 10
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/conpot)
 
 /datum/supply_pack/rogue/Sawbones/endpot
-	name = "Willpower Potion"
+	name = "意志药水"
 	cost = 10
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/endpot)
 
 /datum/supply_pack/rogue/Sawbones/spdpot
-	name = "Speed Potion"
+	name = "速度药水"
 	cost = 10
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/spdpot)
 
 /datum/supply_pack/rogue/Sawbones/lucpot
-	name = "Luck Potion"
+	name = "幸运药水"
 	cost = 10
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/lucpot)
 
 /datum/supply_pack/rogue/Sawbones/antidote
-	name = "Poison Antidote"
+	name = "毒药解毒剂"
 	cost = 10
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/strong_antidote)
 
 /datum/supply_pack/rogue/Sawbones/emberwine
-	name = "Emberwine"
+	name = "余烬酒"
 	cost = 50
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/emberwine)
 
 /datum/supply_pack/rogue/Sawbones/heartblood
-	name = "Heartblood canister"
+	name = "心血罐"
 	cost = 5
 	contains = list(/obj/item/heart_blood_canister/filled)
 
@@ -234,6 +234,6 @@
 /////////////////
 
 /datum/supply_pack/rogue/Sawbones/bronzeprosthetic
-	name = "Bronze Prosthetic"
+	name = "青铜义体"
 	cost = 10
 	contains = list(/obj/item/contraption/bronzeprosthetic)

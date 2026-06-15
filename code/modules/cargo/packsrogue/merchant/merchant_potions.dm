@@ -9,7 +9,7 @@
 
 //Only two since that's 4 uses total; two sips each. You only need one sip for cure.
 /datum/supply_pack/rogue/potions/rotcure
-	name = "Rot Cure Potion"
+	name = "腐坏治疗药水"
 	cost = 300
 	contains = list(
 					/obj/item/reagent_containers/glass/bottle/alchemical/rogue/rotcure,
@@ -17,56 +17,56 @@
 				)
 
 /datum/supply_pack/rogue/potions/healthpot
-	name = "Healing Potion"
+	name = "治疗药水"
 	cost = 25
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/healthpot)
 
 /datum/supply_pack/rogue/potions/manapot
-	name = "Mana Potion"
+	name = "法力药水"
 	cost = 25
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/manapot)
 
 /datum/supply_pack/rogue/potions/stamina
-	name = "Stamina Potion"
+	name = "耐力药水"
 	cost = 25
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/stampot)
 
 /datum/supply_pack/rogue/potions/antidote
-	name = "Poison Antidote"
+	name = "解毒剂"
 	cost = 25
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/antidote)
 
 /datum/supply_pack/rogue/potions/strpot
-	name = "Strength Potion"
+	name = "力量药水"
 	cost = 50
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/strpot)
 
 /datum/supply_pack/rogue/potions/perpot
-	name = "Perception Potion"
+	name = "感知药水"
 	cost = 50
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/perpot)
 
 /datum/supply_pack/rogue/potions/endpot
-	name = "Willpower Potion"
+	name = "意志药水"
 	cost = 50
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/endpot)
 
 /datum/supply_pack/rogue/potions/conpot
-	name = "Constitution Potion"
+	name = "体质药水"
 	cost = 50
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/conpot)
 					
 /datum/supply_pack/rogue/potions/intpot
-	name = "Intelligence Potion"
+	name = "智力药水"
 	cost = 50
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/intpot)
 
 /datum/supply_pack/rogue/potions/spdpot
-	name = "Speed Potion"
+	name = "迅捷药水"
 	cost = 50
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/spdpot)
 
 /datum/supply_pack/rogue/potions/lucpot
-	name = "Luck Potion"
+	name = "幸运药水"
 	cost = 50
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/lucpot)

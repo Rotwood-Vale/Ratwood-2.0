@@ -184,7 +184,7 @@
 	character.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 1, TRUE)
 
 /datum/special_trait/pineapple
-	name = "安全词是“Pineapple”"
+	name = "安全词是“菠萝”"
 	greet_text = span_notice("我喜欢把人抽打到扭动呻吟，他们的痛苦便是我的欢愉。我还藏了一根鞭子。")
 	weight = 50
 
@@ -324,7 +324,7 @@
 /datum/special_trait/backproblems
 	name = "巨人"
 	greet_text = span_notice("别人一直都叫我巨人。我的体格让我受到重视，但这个为矮小种族打造的世界，也逼得我只能谨慎行动。")
-	req_text = "不能是 kobold、verminvolk 或 dwarf"
+	req_text = "不能是狗头人、verminvolk 或矮人"
 	restricted_races = list(/datum/species/anthromorphsmall, /datum/species/dwarf/mountain, /datum/species/kobold)
 	weight = 50
 
@@ -358,7 +358,7 @@
 
 /datum/special_trait/nopouch
 	name = "没了钱袋"
-	greet_text = span_boldwarning("我最近把钱袋弄丢了，现在一个 zenny 都没有……")
+	greet_text = span_boldwarning("我最近把钱袋弄丢了，现在一个泽尼都没有……")
 	weight = 200
 
 /datum/special_trait/nopouch/on_apply(mob/living/carbon/human/character, silent)
@@ -438,7 +438,7 @@
 
 /datum/special_trait/jesterphobia
 	name = "小丑恐惧症"
-	greet_text = span_boldwarning("我对 Jesters 怀有一种严重而毫无道理的恐惧。")
+	greet_text = span_boldwarning("我对弄臣怀有一种严重而毫无道理的恐惧。")
 	weight = 50
 
 /datum/special_trait/jesterphobia/on_apply(mob/living/carbon/human/character, silent)

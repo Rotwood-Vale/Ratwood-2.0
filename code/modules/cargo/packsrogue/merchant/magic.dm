@@ -6,42 +6,42 @@
 	crate_type = /obj/structure/closet/crate/chest/merchant
 
 /datum/supply_pack/rogue/magic/swampzig
-	name = "Swampleaf Zig"
+	name = "沼叶烟卷"
 	cost = 15
 	contains = list(/obj/item/clothing/mask/cigarette/rollie/cannabis)
 
 /datum/supply_pack/rogue/magic/silverpsicross
-	name = "Silver Psycross"
+	name = "银质 Psycross"
 	cost = 120
 	contains = list(/obj/item/clothing/neck/roguetown/psicross/silver)
 
 /datum/supply_pack/rogue/magic/silverdagger
-	name = "Silver Dagger"
+	name = "银匕首"
 	cost = 120 //Silver weapons have been made much less powerful but much more common over time
 	contains = list(/obj/item/rogueweapon/huntingknife/idagger/silver)
 
 /datum/supply_pack/rogue/magic/nomag
-	name = "Ring of Null Magic"
+	name = "反魔法戒指"
 	cost = 300
 	contains = list(/obj/item/clothing/ring/active/nomag)
 
 /datum/supply_pack/rogue/magic/scrying
-	name = "Scrying Orb"
+	name = "占视宝珠"
 	cost = 300
 	contains = list(/obj/item/scrying)
 
 /datum/supply_pack/rogue/magic/listenst
-	name = "Emerald Choker"
+	name = "翡翠颈环"
 	cost = 250
 	contains = list(/obj/item/listenstone)
 
 /datum/supply_pack/rogue/magic/talkstone
-	name = "Talkstone"
+	name = "传话石"
 	cost = 100
 	contains = list(/obj/item/clothing/neck/roguetown/talkstone)
 
 /datum/supply_pack/rogue/magic/obsidianfragment
-	name = "Obsidian Fragments"
+	name = "黑曜石碎片"
 	cost = 55
 	contains = list(
 			/obj/item/magic/obsidian,
@@ -50,7 +50,7 @@
 			)
 
 /datum/supply_pack/rogue/magic/manaflower
-	name = "Manabloom Flowers"
+	name = "法力花"
 	cost = 55
 	contains = list(
 			/obj/item/reagent_containers/food/snacks/grown/manabloom,
@@ -59,7 +59,7 @@
 			)
 
 /datum/supply_pack/rogue/magic/manacrystal
-	name = "Mana Crystals"
+	name = "法力水晶"
 	cost = 55
 	contains = list(
 			/obj/item/magic/manacrystal,
@@ -68,11 +68,11 @@
 			)
 
 /datum/supply_pack/rogue/magic/lovepotion
-	name = "Love Potion"
+	name = "爱情魔药"
 	cost = 300
 	contains = list(/obj/item/lovepotion)
 
 /datum/supply_pack/rogue/magic/suidust
-	name = "Dust of Disguise (Gender only)"
+	name = "易容之尘（仅性别）"
 	cost = 135
 	contains = list(/obj/item/alch/transisdust)

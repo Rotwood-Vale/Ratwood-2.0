@@ -1,5 +1,5 @@
 /datum/supply_pack/rogue/tools/soft_tallow
-	name = "Soft Tallow"
+	name = "软兽脂"
 	cost = 20
 	contains = list(
 		/obj/item/reagent_containers/food/snacks/tallow/soft,
@@ -11,17 +11,17 @@
 	crate_type = /obj/structure/closet/crate/chest/merchant
 
 /datum/supply_pack/rogue/tools/scomst
-	name = "Scomstone"
+	name = "SCOM传讯石"
 	cost = 120
 	contains = list(/obj/item/scomstone)
 
 /datum/supply_pack/rogue/tools/serfst
-	name = "Serfstone"
+	name = "农奴传讯石"
 	cost = 40
 	contains = list(/obj/item/scomstone/bad)
 
 /datum/supply_pack/rogue/tools/chains
-	name = "Chains"
+	name = "铁链"
 	cost = 15
 	contains = list(
 					/obj/item/rope/chain,
@@ -30,12 +30,12 @@
 				)
 
 /datum/supply_pack/rogue/tools/lockpicks
-	name = "Lockpicks"
+	name = "开锁器"
 	cost = 20
 	contains = list(/obj/item/lockpickring/mundane)
 
 /datum/supply_pack/rogue/tools/sacks
-	name = "Sacks"
+	name = "麻袋"
 	cost = 10
 	contains = list(
 					/obj/item/storage/roguebag,
@@ -44,7 +44,7 @@
 				)
 
 /datum/supply_pack/rogue/tools/paper
-	name = "Paper"
+	name = "纸张"
 	cost = 20
 	contains = list(
 					/obj/item/paper/scroll,
@@ -58,7 +58,7 @@
 				)
 
 /datum/supply_pack/rogue/tools/flint
-	name = "Flint"
+	name = "燧石"
 	cost = 15
 	contains = list(
 					/obj/item/flint,
@@ -67,7 +67,7 @@
 				)
 
 /datum/supply_pack/rogue/tools/pipes
-	name = "Pipe"
+	name = "烟斗"
 	cost = 15
 	contains = list(
 					/obj/item/clothing/mask/cigarette/pipe,
@@ -76,7 +76,7 @@
 				)
 
 /datum/supply_pack/rogue/tools/bait
-	name = "Premium Fishing Bait"
+	name = "高级鱼饵"
 	cost = 15
 	contains = list(
 					/obj/item/natural/worms/grubs,
@@ -87,116 +87,116 @@
 				)
 
 /datum/supply_pack/rogue/tools/prarml
-	name = "Prosthetic Wood Arm (L)"
+	name = "木制义肢手臂（左）"
 	cost = 40
 	contains = list(/obj/item/bodypart/l_arm/prosthetic/woodleft)
 
 /datum/supply_pack/rogue/tools/prarmr
-	name = "Prosthetic Wood Arm (R)"
+	name = "木制义肢手臂（右）"
 	cost = 40
 	contains = list(/obj/item/bodypart/r_arm/prosthetic/woodright)
 
 /datum/supply_pack/rogue/tools/prlegl
-	name = "Prosthetic Wood Leg (L)"
+	name = "木制义肢腿（左）"
 	cost = 15
 	contains = list(/obj/item/bodypart/l_leg/prosthetic)
 
 /datum/supply_pack/rogue/tools/prlegr
-	name = "Prosthetic Wood Leg (R)"
+	name = "木制义肢腿（右）"
 	cost = 15
 	contains = list(/obj/item/bodypart/r_leg/prosthetic)
 
 /datum/supply_pack/rogue/tools/hoe
-	name = "Hoe"
+	name = "锄头"
 	cost = 10
 	contains = list(/obj/item/rogueweapon/hoe,)
 
 /datum/supply_pack/rogue/tools/thresher
-	name = "Thresher"
+	name = "打谷器"
 	cost = 10
 	contains = list(/obj/item/rogueweapon/thresher,)
 
 /datum/supply_pack/rogue/tools/sickle
-	name = "Sickle"
+	name = "镰刀"
 	cost = 10
 	contains = list(/obj/item/rogueweapon/sickle,)
 
 /datum/supply_pack/rogue/tools/pfork
-	name = "Pitchfork"
+	name = "干草叉"
 	cost = 10
 	contains = list(/obj/item/rogueweapon/pitchfork,)
 
 
 /datum/supply_pack/rogue/tools/plough
-	name = "Plough"
+	name = "犁"
 	cost = 50
 	contains = list(/obj/structure/plough,)
 
 /datum/supply_pack/rogue/tools/ironpick
-	name = "Iron Pickaxe"
+	name = "铁镐"
 	cost = 10
 	contains = list(/obj/item/rogueweapon/pick,)
 
 /datum/supply_pack/rogue/tools/soapps
-	name = "Soap"
+	name = "肥皂"
 	cost = 10
 	contains = list(/obj/item/soap)
 
 /datum/supply_pack/rogue/tools/herbsoap
-	name = "Herbal Soap"
+	name = "草药皂"
 	cost = 20
 	contains = list(/obj/item/soap/bath)
 
 /datum/supply_pack/rogue/tools/keyrings
-	name = "Keyrings"
+	name = "钥匙圈"
 	cost = 20
 	contains = list(/obj/item/storage/keyring,
 					/obj/item/storage/keyring,
 					/obj/item/storage/keyring)
 
 /datum/supply_pack/rogue/tools/scythe
-	name = "Scythe"
+	name = "长柄镰刀"
 	cost = 25
 	contains = list(/obj/item/rogueweapon/scythe)
 
 /datum/supply_pack/rogue/tools/handsaw
-	name = "Handsaw"
+	name = "手锯"
 	cost = 35
 	contains = list(/obj/item/rogueweapon/handsaw)
 
 /datum/supply_pack/rogue/tools/handsaw
-	name = "Chisel"
+	name = "凿子"
 	cost = 35
 	contains = list(/obj/item/rogueweapon/chisel)
 
 /datum/supply_pack/rogue/tools/hammer
-	name = "Hammer"
+	name = "锤子"
 	cost = 35
 	contains = list(/obj/item/rogueweapon/hammer/iron)
 
 /datum/supply_pack/rogue/tools/fryingpan
-	name = "Frying Pan"
+	name = "平底锅"
 	cost = 20
 	contains = list(/obj/item/cooking/pan)
 
 /datum/supply_pack/rogue/tools/tallowpot
-	name = "Tallowpot"
+	name = "兽脂锅"
 	cost = 20
 	contains = list(/obj/item/inqarticles/tallowpot)
 
 /datum/supply_pack/rogue/tools/shopkeyy
-	name = "Spare Shopkey"
+	name = "备用店铺钥匙"
 	cost = 10
 	not_in_public = TRUE
 	contains = list(/obj/item/roguekey/shop)
 
 /datum/supply_pack/rogue/tools/alch_bottle
-	name = "Bottle (Alchemical Vial)"
+	name = "瓶子（炼金小瓶）"
 	cost = 1
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical,)
 
 /datum/supply_pack/rogue/tools/alch_bottles
-	name = "Bottles (Alchemical Vials, bulk)" //Buy 8 now get 1 free!
+	name = "瓶子（炼金小瓶，大宗装）" //Buy 8 now get 1 free!
 	cost = 8
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical,/obj/item/reagent_containers/glass/bottle/alchemical,/obj/item/reagent_containers/glass/bottle/alchemical,
 	/obj/item/reagent_containers/glass/bottle/alchemical,/obj/item/reagent_containers/glass/bottle/alchemical,/obj/item/reagent_containers/glass/bottle/alchemical,
@@ -204,47 +204,47 @@
 
 
 /datum/supply_pack/rogue/tools/alch_bottlenormal
-	name = "Bottle"
+	name = "瓶子"
 	cost = 3
 	contains = list(/obj/item/reagent_containers/glass/bottle,)
 
 /datum/supply_pack/rogue/tools/alch_bottlesnormal
-	name = "Bottles (Bulk)" //buy 4 get 1 free
+	name = "瓶子（大宗装）" //buy 4 get 1 free
 	cost = 12
 	contains = list(/obj/item/reagent_containers/glass/bottle/,/obj/item/reagent_containers/glass/bottle/,/obj/item/reagent_containers/glass/bottle/,
 	/obj/item/reagent_containers/glass/bottle/,/obj/item/reagent_containers/glass/bottle/)
 
 /datum/supply_pack/rogue/tools/headhook
-	name = "Iron Head Hook"
+	name = "铁制头颅钩"
 	cost = 10
 	contains = list(/obj/item/storage/hip/headhook)
 
 /datum/supply_pack/rogue/tools/bottle_kit
-	name = "Bottle Kit"
+	name = "装瓶套件"
 	cost = 50
 	contains = list(/obj/item/bottle_kit)
 
 /datum/supply_pack/rogue/tools/surgeonsbag
-	name = "Surgeon's bag, Full"
+	name = "满配外科包"
 	cost = 80
 	contains = list(/obj/item/storage/belt/rogue/surgery_bag)
 
 /datum/supply_pack/rogue/tools/spade
-	name = "Wooden Spade"
+	name = "木铲"
 	cost = 5
 	contains = list(/obj/item/rogueweapon/shovel/small)
 
 /datum/supply_pack/rogue/tools/shovel
-	name = "Shovel"
+	name = "铁锹"
 	cost = 20
 	contains = list(/obj/item/rogueweapon/shovel)
 
 /datum/supply_pack/rogue/tools/golem_upgrades
-	name = "Golem Skill Exhibitor"
+	name = "魔像技能展示器"
 	cost = 35
 	contains = list(/obj/item/construct_skill_core)
 
 /datum/supply_pack/rogue/tools/scissors
-	name = "Scissors, Iron"
+	name = "铁剪刀"
 	cost = 30
 	contains = list(/obj/item/rogueweapon/huntingknife/scissors)

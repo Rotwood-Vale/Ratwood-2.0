@@ -176,12 +176,12 @@
 /datum/stressevent/treefather_loss
 	timer = 10 MINUTES
 	stressadd = 5
-	desc = span_boldred("Treefather 发出悲恸的哀鸣。一棵神圣之树倒下了。")
+	desc = span_boldred("树父发出悲恸的哀鸣。一棵神圣之树倒下了。")
 
 /datum/stressevent/virginchurch
 	timer = INFINITY
 	stressadd = 10
-	desc = span_boldred("我违背了向 The Gods 立下的贞洁誓言！")
+	desc = span_boldred("我违背了向诸神立下的贞洁誓言！")
 
 /datum/stressevent/badmeal
 	timer = 3 MINUTES
@@ -274,7 +274,7 @@
 /datum/stressevent/jesterphobia
 	timer = 4 MINUTES
 	stressadd = 5
-	desc = span_boldred("不！快把 Jester 从我身边赶走！")
+	desc = span_boldred("不！快把弄臣从我身边赶走！")
 
 /datum/stressevent/coldhead
 	timer = 60 SECONDS
@@ -329,7 +329,7 @@
 
 /datum/stressevent/puzzle_fail
 	stressadd = 1
-	desc = list(span_red("我把时间浪费在那蠢盒子上了。"),span_red("该死的 jester-box。"))
+	desc = list(span_red("我把时间浪费在那蠢盒子上了。"),span_red("该死的弄臣盒子。"))
 	timer = 5 MINUTES
 
 /datum/stressevent/bowedasnoble
@@ -436,7 +436,7 @@
 
 /datum/stressevent/excommunicated
 	stressadd = 5
-	desc = span_boldred("The Ten 已将我抛弃！")
+	desc = span_boldred("十神已将我抛弃！")
 	timer = INFINITY
 
 /datum/stressevent/apostasy
@@ -446,7 +446,7 @@
 
 /datum/stressevent/heretic_on_sermon
 	stressadd = 5
-	desc = span_red("我的 PATRON 对我大失所望！")
+	desc = span_red("我的主神对我大失所望！")
 	timer = 20 MINUTES
 
 /datum/stressevent/riddle_munch
@@ -476,7 +476,7 @@
 
 /datum/stressevent/naledimasklost
 	stressadd = 3
-	desc = span_boldred("那副面具！这里的任何人都可能是 djinn。我已经暴露了。")
+	desc = span_boldred("那副面具！这里的任何人都可能是灯灵。我已经暴露了。")
 	timer = INFINITY
 
 /datum/stressevent/shamanhoodlost

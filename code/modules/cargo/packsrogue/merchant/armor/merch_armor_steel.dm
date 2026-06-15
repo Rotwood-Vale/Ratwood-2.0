@@ -12,216 +12,216 @@
 
 // Steel Armor Section. Massive selection here so I am not going to include everything
 /datum/supply_pack/rogue/armor_steel/haubergeon_steel
-	name = "Haubergeon"
+	name = "锁子短甲"
 	cost = 50 // 1 Ingots
 	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail)
 
 /datum/supply_pack/rogue/armor_steel/hauberk_steel
-	name = "Hauberk"
+	name = "锁子甲"
 	cost = 90 // 2 Ingots
 	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk)
 
 /datum/supply_pack/rogue/armor_steel/halfplate
-	name = "Half-Plate Armor"
+	name = "半身板甲"
 	cost = 130 // 3 Ingots, 1 Cured Leather
 	contains = list(/obj/item/clothing/suit/roguetown/armor/plate)
 
 /datum/supply_pack/rogue/armor_steel/halfplate_fluted
-	name = "Half-Plate Armor, Fluted"
+	name = "半身板甲（凹槽）"
 	cost = 155 // 3 Ingots, 1 Iron, 1 Cured Leather
 	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/fluted)
 
 /datum/supply_pack/rogue/armor_steel/fullplate
-	name = "Full Plate"
+	name = "全身板甲"
 	cost = 350 // 4 Steel, 1 Cured Leather - x2 cuz it is the best armor
 	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/full)
 
 /datum/supply_pack/rogue/armor_steel/fullplate_fluted
-	name = "Full Plate, Fluted"
+	name = "全身板甲（凹槽）"
 	cost = 380 // 4 Steel, 1 Iron, 1 Cured Leather - x2 cuz it is the best armor
 	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/full/fluted)
 
 /datum/supply_pack/rogue/armor_steel/coatplates
-	name = "Coat of Plates"
+	name = "镶板外衣"
 	cost = 95 // 2 Steel
 	contains = list(/obj/item/clothing/suit/roguetown/armor/brigandine/coatplates)
 
 /datum/supply_pack/rogue/armor_steel/cuirass_steel
-	name = "Cuirass"
+	name = "胸铠"
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/half)
 
 /datum/supply_pack/rogue/armor_steel/scalemail
-	name = "Scalemail"
+	name = "鳞甲"
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/scale)
 
 /datum/supply_pack/rogue/armor_steel/brigandine
-	name = "Brigandine"
+	name = "板甲衣"
 	cost = 100 // 2 Steel, 2 Cloth
 	contains = list(/obj/item/clothing/suit/roguetown/armor/brigandine)
 
 /datum/supply_pack/rogue/armor_steel/brigandine_light
-	name = "Brigandine, Light"
+	name = "轻型板甲衣"
 	cost = 55 //1 Steel, 1 Leather
 	contains = list(/obj/item/clothing/suit/roguetown/armor/brigandine/light)
 
 /datum/supply_pack/rogue/armor_steel/chaincoif_steel
-	name = "Chain Coif"
+	name = "锁子头巾"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/neck/roguetown/chaincoif)
 
 /datum/supply_pack/rogue/armor_steel/chainmantle
-	name = "Chain Mantle"
+	name = "锁链披肩"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/neck/roguetown/chaincoif/chainmantle)
 
 /datum/supply_pack/rogue/armor_steel/chaingloves_steel
-	name = "Gauntlets, Chain"
+	name = "锁链手甲"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/gloves/roguetown/chain)
 
 /datum/supply_pack/rogue/armor_steel/plategloves
-	name = "Gauntlets, Plate"
+	name = "板手甲"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/gloves/roguetown/plate)
 
 /datum/supply_pack/rogue/armor_steel/chausses_brigandine
-	name = "Chausses, Brigandine"
+	name = "板甲衣腿甲"
 	cost = 60 //1 Steel, 2 Leather
 	contains = list(/obj/item/clothing/under/roguetown/splintlegs)
 
 /datum/supply_pack/rogue/armor_steel/chainleg_steel
-	name = "Chausses, Chain"
+	name = "锁链腿甲"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/under/roguetown/chainlegs)
 
 /datum/supply_pack/rogue/armor_steel/platelegs
-	name = "Chausses, Plate"
+	name = "板腿甲"
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/under/roguetown/platelegs)
 	
 /datum/supply_pack/rogue/armor_steel/chainkilt
-	name = "Chain Kilt"
+	name = "锁裙"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/under/roguetown/chainlegs/kilt)
 
 /datum/supply_pack/rogue/armor_steel/rearbraces
-	name = "Bracers, Brigandine"
+	name = "板甲衣臂甲"
 	cost = 55 // 1 Steel, 1 Leather
 	contains = list(/obj/item/clothing/wrists/roguetown/splintarms)
 
 /datum/supply_pack/rogue/armor_steel/bracers_plate
-	name = "Bracers, Plate"
+	name = "板臂甲"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/wrists/roguetown/bracers)
 
 /datum/supply_pack/rogue/armor_steel/helmet_nasal
-	name = "Helmet, Nasal"
+	name = "头盔，鼻护款"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet)
 
 /datum/supply_pack/rogue/armor_steel/helmet_winged
-	name = "Helmet, Winged"
+	name = "头盔，翼饰款"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/winged)
 
 /datum/supply_pack/rogue/armor_steel/helmet_kettle
-	name = "Helmet, Kettle"
+	name = "头盔，锅盔"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/kettle)
 
 /datum/supply_pack/rogue/armor_steel/helmet_sallet
-	name = "Helmet, Sallet"
+	name = "头盔，萨莱"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/sallet)
 
 /datum/supply_pack/rogue/armor_steel/helmet_sallet_visor
-	name = "Helmet, Sallet with Visor"
+	name = "头盔，带面罩萨莱"
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/sallet/visored)
 
 /datum/supply_pack/rogue/armor_steel/helmet_bucket
-	name = "Helmet, Bucket"
+	name = "头盔，桶盔"
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/bucket)
 
 /datum/supply_pack/rogue/armor_steel/helmet_pigface
-	name = "Helmet, Pigface"
+	name = "头盔，猪面盔"
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/pigface)
 
 /datum/supply_pack/rogue/armor_steel/helmet_hounskull
-	name = "Helmet, Hounskull"
+	name = "头盔，猎犬颅盔"
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull)
 
 /datum/supply_pack/rogue/armor_steel/helmet_volfplate
-	name = "Helmet, Volfplate"
+	name = "头盔，沃尔夫钢盔"
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/volfplate)
 
 /datum/supply_pack/rogue/armor_steel/helmet_bascinet
-	name = "Helmet, Bascinet"
+	name = "头盔，巴西内"
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet)
 
 /datum/supply_pack/rogue/armor_steel/helmet_etruscan_bascinet
-	name = "Helmet, Etruscan Bascinet"
+	name = "头盔，伊特鲁斯卡巴西内"
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/etruscan)
 
 /datum/supply_pack/rogue/armor_steel/helmet_knight
-	name = "Helmet, Knight's"
+	name = "头盔，骑士款"
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/knight)
 
 /datum/supply_pack/rogue/armor_steel/helmet_armet
-	name = "Helmet, Armet"
+	name = "头盔，阿梅特"
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/knight/armet)
 
 /datum/supply_pack/rogue/armor_steel/helmet_savoyard
-	name = "Helmet, Savoyard"
+	name = "头盔，萨伏依"
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/guard)
 
 /datum/supply_pack/rogue/armor_steel/helmet_barred
-	name = "Helmet, Barred"
+	name = "头盔，栅面款"
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/sheriff)
 
 /datum/supply_pack/rogue/armor_steel/helmet_beak
-	name = "Helmet, Beak"
+	name = "头盔，鸟喙款"
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/beakhelm)
 
 /datum/supply_pack/rogue/armor_steel/bevor
-	name = "Bevor"
+	name = "护颌"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/neck/roguetown/bevor)
 
 /datum/supply_pack/rogue/armor_steel/gorget_steel
-	name = "Gorget"
+	name = "护喉"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/neck/roguetown/gorget/steel)
 
 /datum/supply_pack/rogue/armor_steel/boots_steel
-	name = "Plated Boots"
+	name = "甲靴"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/shoes/roguetown/boots/armor)
 
 /datum/supply_pack/rogue/armor_steel/mask_steel
-	name = "Mask"
+	name = "面甲"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/mask/rogue/facemask/steel)
 
 /datum/supply_pack/rogue/armor_steel/steel/belt
-	name = "Belt"
+	name = "腰带"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/storage/belt/rogue/leather/steel)
 
 /datum/supply_pack/rogue/armor_steel/steel/belt
-	name = "Belt, Tasseted"
+	name = "挂甲片腰带"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/storage/belt/rogue/leather/steel/tasset)

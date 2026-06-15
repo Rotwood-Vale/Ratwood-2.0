@@ -16,15 +16,15 @@
 
 /datum/world_trait/necra_requiem
 	name = "Necra 的安魂曲"
-	desc = "新尸体不会变成 deadite。"
+	desc = "新尸体不会变成尸鬼。"
 
 /datum/world_trait/zizo_defilement
 	name = "Zizo 的亵渎"
-	desc = "deadite 将在镇中复起。"
+	desc = "尸鬼将在镇中复起。"
 
 /datum/world_trait/zizo_pet_cementery
 	name = "Zizo 的宠物墓园"
-	desc = "deadite 动物将频繁复起，并取代普通动物出现。"
+	desc = "尸鬼动物将频繁复起，并取代普通动物出现。"
 
 /datum/world_trait/abyssor_rage
 	name = "Abyssor 之怒"

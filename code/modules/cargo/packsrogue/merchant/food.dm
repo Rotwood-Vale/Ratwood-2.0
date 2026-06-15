@@ -4,7 +4,7 @@
 	crate_type = /obj/structure/closet/crate/chest/merchant
 
 /datum/supply_pack/rogue/food/meat
-	name = "Dry Meat"
+	name = "风干肉"
 	cost = 28
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/rogue/meat/coppiette,
@@ -15,7 +15,7 @@
 				)
 
 /datum/supply_pack/rogue/food/hardtack
-	name = "Hardtacks"
+	name = "硬饼干"
 	cost = 22
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
@@ -27,7 +27,7 @@
 
 
 /datum/supply_pack/rogue/food/raisinbreads
-	name = "Raisin Bread"
+	name = "葡萄干面包"
 	cost = 30
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/rogue/raisinbread,
@@ -36,7 +36,7 @@
 				)
 
 /datum/supply_pack/rogue/food/eggs
-	name = "Egg"
+	name = "鸡蛋"
 	cost = 20
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/egg,
@@ -50,7 +50,7 @@
 				)
 
 /datum/supply_pack/rogue/food/coffee
-	name = "Coffee Beans"
+	name = "咖啡豆"
 	cost = 25
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/grown/coffeebeans,
@@ -64,7 +64,7 @@
 				)
 
 /datum/supply_pack/rogue/food/tea
-	name = "Tea Leaves"
+	name = "茶叶"
 	cost = 25
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/grown/rogue/tealeaves_dry,
@@ -78,7 +78,7 @@
 				)
 
 /datum/supply_pack/rogue/food/rosa
-	name = "Dried Rosa Petals"
+	name = "干 Rosa 花瓣"
 	cost = 20
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals_dried,
@@ -92,7 +92,7 @@
 				)
 
 /datum/supply_pack/rogue/food/poppies
-	name = "Poppies"
+	name = "罂粟花"
 	cost = 20
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/grown/rogue/poppy,
@@ -101,7 +101,7 @@
 	)
 
 /datum/supply_pack/rogue/food/sugarcane
-	name = "Sugarcane"
+	name = "甘蔗"
 	cost = 15
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/grown/sugarcane,
@@ -111,14 +111,14 @@
 
 
 /datum/supply_pack/rogue/food/rocknut
-	name = "Rocknut"
+	name = "石果"
 	cost = 15
 	contains = list(/obj/item/reagent_containers/food/snacks/grown/nut,
 					/obj/item/reagent_containers/food/snacks/grown/nut,
 					/obj/item/reagent_containers/food/snacks/grown/nut,)
 
 /datum/supply_pack/rogue/food/rare_veggies
-	name = "Sorted Imported Vegetables"
+	name = "精选进口蔬菜"
 	cost = 40
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/grown/garlick/rogue,
@@ -134,7 +134,7 @@
 					)
 
 /datum/supply_pack/rogue/food/rare_grain
-	name = "Sorted Imported Grains"
+	name = "精选进口谷物"
 	cost = 25
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/grown/oat,
@@ -146,7 +146,7 @@
 					)
 
 /datum/supply_pack/rogue/food/rare_fruit
-	name = "Sorted Imported Fruits"
+	name = "精选进口水果"
 	cost = 45
 	contains = list(/obj/item/reagent_containers/food/snacks/grown/fruit/pear,
 					/obj/item/reagent_containers/food/snacks/grown/fruit/pear,
@@ -162,7 +162,7 @@
 					/obj/item/natural/shellplant/pumpkin,)
 
 /datum/supply_pack/rogue/food/rare_berry
-	name = "Sorted Imported Berries"
+	name = "精选进口浆果"
 	cost = 35
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/grown/fruit/strawberry,
@@ -177,12 +177,12 @@
 					)
 
 /datum/supply_pack/rogue/food/pepper
-	name = "Pepper"
+	name = "胡椒"
 	cost = 30
 	contains = list(/obj/item/reagent_containers/peppermill)
 
 /datum/supply_pack/rogue/food/butter
-	name = "Butter"
+	name = "黄油"
 	cost = 35
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/butter,
@@ -191,7 +191,7 @@
 				)
 
 /datum/supply_pack/rogue/food/honey
-	name = "Honey"
+	name = "蜂蜜"
 	cost = 50
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/rogue/honey/spider,
@@ -201,7 +201,7 @@
 				)
 
 /datum/supply_pack/rogue/food/eel
-	name = "Eel"
+	name = "鳗鱼"
 	cost = 20
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/fish/eel,
@@ -210,7 +210,7 @@
 				)
 
 /datum/supply_pack/rogue/food/carp
-	name = "Carp"
+	name = "鲤鱼"
 	cost = 40
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/fish/carp,
@@ -219,7 +219,7 @@
 				)
 
 /datum/supply_pack/rogue/food/angler
-	name = "Anglerfish"
+	name = "琵琶鱼"
 	cost = 60
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/fish/angler,
@@ -228,7 +228,7 @@
 				)
 
 /datum/supply_pack/rogue/food/clownfish
-	name = "Clownfish"
+	name = "小丑鱼"
 	cost = 120
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/fish/clownfish,

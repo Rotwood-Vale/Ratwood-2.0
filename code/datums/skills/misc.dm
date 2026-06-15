@@ -7,8 +7,8 @@
 	name = "体能"
 	desc = "每级提高 5 点最大耐力，并使剧烈活动时消耗营养的概率每级降低 16%。"
 	dreams = list(
-		"...your lungs burn and you can no longer feel your breath as the pale volf's howling grows distant. You should have collapsed three times over, but the urge to survive pushes you past your bodily limits...",
-		"...the incline before you is steep, and the barrel weighs heavy in your hands but you press on. This is no longer a hill. This is your mountain and with every strained breath, you inch closer to its summit, determined to conquer it..."
+		"...肺像火烧一样灼痛，连呼吸都渐渐感觉不到了，苍白沃尔夫的嚎叫也在远去。你本该早已倒下三次，可求生的冲动逼着你越过肉体的极限……",
+		"...面前的坡道陡得像墙，手里的木桶沉得要命，可你仍咬牙前进。这已不再是一座小坡，这是你的山，而你每一次艰难的喘息，都让你离顶峰更近一步。你决意征服它……"
 	)
 	expert_name = "运动员"
 
@@ -16,8 +16,8 @@
 	name = "攀爬"
 	desc = "提高攀爬速度。攀爬大多数石墙至少需要 3 级，攀爬覆苔石墙则需要 4 级。"
 	dreams = list(
-		"...your elbows are scraped and your hands, calloused but you have a firm hold on the rock wall. With a deep breath and a sudden lunge, you reach upward, searching for another handhold. Your foot slips and gravity pulls at you, your heart racing as you plummet into the void...",
-		"...the meadows are shining green and the sun is behind a covering of clouds. Your childhood friend taunts you, his white toothed grin matching his pale eyes before dashing up a tree. You clamber after him and make your way upwards..."
+		"...手肘被磨破，双手布满老茧，却仍死死扣住岩壁。你深吸一口气，猛地向上一蹿，摸索着下一个着力点。脚下一滑，重力将你拽走，心脏狂跳着坠向虚空……",
+		"...草地泛着明亮的绿意，太阳藏在云幕后。儿时玩伴咧嘴嘲笑你，白牙与淡色眼睛一同闪着光，随即窜上树去。你不甘示弱，攀着树干一路追了上去……"
 	)
 	expert_name = "攀登者"
 
@@ -25,8 +25,8 @@
 	name = "识字"
 	desc = "每级提高 2% 成功阅读法术书的概率，同时增强书写与理解技能书的能力。至少需要 1 级才能识字并阅读各类文字。"
 	dreams = list(
-		"...amidst the void, strange symbols and glyphs make their way into your mind. They re-arrange themselves unceasingly, indecipherable truths speaking in silent voices. The clouds part, and they fall still within the moonlight. The meaning of the gift is revealed...",
-		"...you cut into your meal, juices leaking from the edges of the book. Your mind expands throughout your meal, and you are about halfway through the meal when an old, bearded chef asks you how you like his specialty..."
+		"...虚空之中，奇异的符号与文字涌入你的脑海。它们不断重组，无从解读的真理以寂静之音低语。云层分开，它们在月光下终于静止，赠礼的意义也随之显现……",
+		"...你切开面前的佳肴，汁水却从那本书的边缘渗了出来。整顿饭的过程中，你的思绪不断扩展；正读到一半时，一位留着长胡子的老厨子问你觉得他的拿手菜如何……"
 	)
 	expert_name = "读书人"
 
@@ -34,9 +34,9 @@
 	name = "游泳"
 	desc = "每级略微减少游泳时消耗的耐力。"
 	dreams = list(
-		"...there is no light in the suffocating dark. You choose a direction and your arms and legs tear at the thick, oily waters in a desperate attempt to reach the surface. Your heart pounds, and your body yearns for another breath...",
-		"...a wave rocks to the side of the boat, and you tumble into the yawning abyss. Lightning splits the sky as the old captain hurls a buoy into the churning sea. Salt water burns your lungs as you thrash and claw, struggling towards your lifeline...",
-		"...the current  the beach draws you out further into the ocean, relentless and fast. Your muscles burn as you struggle, every stroke a battle. 'Across, not against!' a voice from your past chides, guiding you as you break free of the riptide's grasp..."
+		"...窒息般的黑暗里没有一丝光。你选定一个方向，手脚拼命撕开浓稠油腻的水体，只想浮上水面。心脏猛跳，身体渴求着下一口空气……",
+		"...海浪猛地拍上船舷，你一头栽进张口欲吞的深渊。闪电撕裂天穹，老船长将救生浮具抛入翻涌的海中。咸水灼烧着你的肺，你拼命扑腾抓挠，朝那唯一的生机挣扎而去……",
+		"...离岸流把你越拖越远，迅猛而无情地卷向深海。肌肉灼痛，每一次划水都像在搏命。'横着游，不要硬顶！'记忆中的声音厉声提醒着你，于是你终于挣脱了离岸流的攫取……"
 		
 	)
 	expert_name = "泳者"
@@ -45,8 +45,8 @@
 	name = "扒窃"
 	desc = "提高我偷窃成功且不被发现的概率。"
 	dreams = list(
-		"...one moment, you stand in line at the smithy, waiting behind the captain of the guard. The next, you're at the merchant's stall, shadowing a travelling noble. Moments later, cries of 'Thief!' echo throughout town, while you count out hundreds of mammon...",
-		"...a piss-stinking, beggar with wooden-arms and a lice-ridden beard calls out to you, a rotten-toothed smile on his face. 'Spare a zenny for the wretched?' he asks. As you step away from the wretch, you feel strangely light at your waist. A glance down reveals your now empty pouch -- and two wooden arms abandoned on the ground where he had been sitting..."
+		"...前一刻，你还在铁匠铺前排队，站在卫队长身后；下一刻，你已来到商贩摊前，悄悄尾随着一位远道而来的贵族。再过片刻，整座镇子里都回荡起'有贼！'的喊声，而你正数着成百上千的玛门币……",
+		"...一个浑身尿骚味、双臂木制、胡子里爬满虱子的乞丐朝你喊话，烂牙间咧出笑容。'可怜可怜弃民，施舍一枚泽尼吧？'他问。可等你离开那弃民后，却忽然觉得腰间轻了许多。低头一看，你的钱袋已空空如也，而他刚才坐着的地方，只剩下两条被丢下的木头胳膊……"
 	)
 	expert_name = "扒手"
 
@@ -54,8 +54,8 @@
 	name = "潜行"
 	desc = "提高潜行成功且不被发现的概率，并降低留下踪迹的几率。"
 	dreams = list(
-		"...the four connected houses, orthogonally aligned, have a small dip at the center of their slanted rooftops. Your crow's nest. Your safe haven. The only light that can reach you here is what Noc takes from Astrata, and this night is particularly veiled. It's concealing and comforting, safe from the town guard, as you curl up to rest...",
-		"...the pale volf gets on its hindlegs, and howls unto the moon. It seeks prey, and you happen to be unfortunate enough to be in its forest. This is the third time it has circled you, as you press yourself tighter into the hollow tree, completely still..."
+		"...那四栋彼此相连、整齐排布的屋子，倾斜屋顶在中央微微下陷。那是你的鸦巢，你的安身之所。在这里，能照到你的唯一光亮，只有诺克自阿斯特拉塔手中夺来的夜色，而今夜尤为昏蔽。它遮掩着你，也安抚着你；你蜷身歇息，镇卫绝不可能在此寻到你……",
+		"...那头苍白的沃尔夫以后腿立起，朝月长嚎。它在寻找猎物，而你偏偏倒霉地闯入了它的林地。这已经是它第三次绕着你打转了，你只能把自己更紧地缩进树洞，连一丝动静都不敢发出……"
 	)
 	expert_name = "潜行者"
 
@@ -63,9 +63,9 @@
 	name = "撬锁"
 	desc = "加快撬锁速度并提高成功率。"
 	dreams = list(
-		"...your pick feels like an extension of your fingers as you nudge the final pin into place. The chest creaks open, revealing a glint of gold that was never meant to see the light of day...",
-		"...the street and the merchant's shop stands silent in the moonlight as you kneel before the lock. Each quiet click draws you closer to riches--or discovery. With a soft snap, the door opens, allowing you to slip inside...",
-		"...the old woman fumbles at her empty pockets, her face etched with worry. With a deft hand and a keen ear the lock yields and you push the door open, returning her to the warmth of her home..."
+		"...拨针在你手中仿佛成了指尖的延伸，你轻轻一顶，最后一枚锁栓便归了位。箱盖吱呀开启，露出一道从未见过天日的金光……",
+		"...月光下，街道与商铺一片寂静，你跪在锁前。每一声轻微的咔哒都让你离财富更近一步，也离暴露更近一步。随着一声轻响，门锁弹开，让你得以悄无声息地溜进去……",
+		"...老妇人摸着空空的口袋，满面愁容。你手法利落，侧耳细听，锁舌终于松开；你推开房门，把她重新送回了温暖的家中……"
 	)
 	expert_name = "锁匠"
 
@@ -73,8 +73,8 @@
 	name = "骑术"
 	desc = "提高骑乘坐骑时的移动速度，以及上下坐骑的速度。"
 	dreams = list(
-		"...the bog becomes more tolerable when it is not your foot that has to tread upon it. It took some coin, but your travels are much smoother atop your trustworthy steed...",
-		"...the landsknecht thrusts their pole-arm at your steed and it bucks wildly. Lurching forwards, you interpose your shield to the weapon and feel your balance shift. Flexing every muscle in your core and legs, you barely manage to remain mounted..."
+		"...若不必亲脚踩进沼泽，这片烂地也就没那么难熬了。虽然花了些钱，但骑在这匹可靠坐骑背上，你的旅途的确顺畅了许多……",
+		"...那名佣兵把长柄武器刺向你的坐骑，惊得它狂暴腾跃。你身子猛地前倾，急忙抬盾挡开那一下，同时感到重心正在偏移。你绷紧腰腹与双腿的每一块肌肉，才勉强没有被甩下马背……"
 	)
 	expert_name = "骑手"
 
@@ -82,10 +82,10 @@
 	name = "音乐"
 	desc = "每级提高音乐缓解压力的效果。达到 4 级及以上时，可演奏自定义曲目。"
 	dreams = list(
-		"...offstage, anxiety grips you, sweat beading on your brow. But onstage, you are as still as a winter night, your voice steady and clear. Curiosity pulls your audience in as you begin to sing...",
-		"...you raise your hands to the strings and draw the crowds attention unto yourself. The music comes easily out of you, and your lyre is like a second voice...",
-		"...your audience moves under the music like grass against the wind. With a voice bold and boisterous, you sing of the comet's first coming, each note soaring proudly into the air...",
-		"...the heat of the bonfire causes sweat to drip down your face. The crowd moves with fervor, their chants rising in rhythm with each beat. You can no longer tell if they follow your tempo or whether your hands obey the beating of their hearts. Tonight, the drum and their spirits thunder as one..."
+		"...登台前，焦虑攥紧了你，汗珠自额上渗出。可一踏上台，你却静如冬夜，嗓音平稳而清澈。当你开始歌唱，台下听众的好奇便被你一点点牵了过来……",
+		"...你抬手拂向琴弦，将众人的目光引向自己。乐音自你体内自然流出，里拉琴几乎成了你的第二副嗓音……",
+		"...听众在乐声中起伏摆动，如同风中草浪。你以洪亮而昂扬的歌喉，唱起彗星初临之时的传说，每一个音符都自豪地飞向夜空……",
+		"...篝火的热浪逼得汗水沿着脸颊淌下。人群狂热起舞，呼喊随每一道鼓点一同高涨。你已分不清究竟是他们在跟随你的节奏，还是你的双手在服从他们心脏的搏动。今夜，鼓声与众人的魂魄一同轰鸣……"
 	)
 	expert_name = "乐师"
 
@@ -94,10 +94,10 @@
 	desc = "提高外科手术与缝合伤口的速度和成功率。"
 	dream_cost_base = 3
 	dreams = list(
-		"...the beak-masked doctor leans over the elven corpse, tugging and slicing at a mass of strange, dark flesh. 'The appendix,' he mutters as he holds it aloft. 'Longer in this species of kin than others, adapted for their plant-rich diets.' He gestures for you to observe more closely, his tone as clinical as his blade...",
-		"...you stand among seven other students the air thick with anticipation. Before you, two doctors clad in obscuring robes loom. Their masks set them apart: one an owl, wise and flat; the other a crow, inquisitive and sharp. The crow's voice cuts through the silence, instructing on the purpose of each tool laid before you...",
-		"...a maskless void drags a veiled corpse into the center of the theater. The crow hands them a single coin, a silent exchange, and the faceless one departs. The lesson commences, and the owl pulls apart the layers of the torso like a macabre curtain; skin, fat and muscle giving way to revealing the liver, heart, stomach and other actors...",
-		"...a student to your left pales, her queasiness overwhelming before she faints. You steel yourself, and look at the voidlike ribcage in the torso before you. Well-preserved chunks of flesh lie beside it, waiting for you to restore them to their rightful places..."
+		"...那位戴着鸟嘴面具的医师俯在精灵尸体上，拉扯、切开一团诡异漆黑的血肉。'阑尾，'他高举那团组织嘟囔道，'这一族裔的阑尾比别的族类更长，是为适应以植物为主的饮食。'他示意你靠近细看，语气和手术刀一样冷静……",
+		"...你与另外七名学生站在一起，空气里满是紧张与期待。面前两名披着遮蔽长袍的医师高高站立，面具将他们区别开来：一人是平阔睿智的猫头鹰，另一人则是锐利好问的乌鸦。乌鸦的声音划破寂静，开始讲解摆在你们面前每一件器械的用途……",
+		"...一个没有面孔的虚空存在将一具蒙尸布的尸体拖到讲堂中央。乌鸦递给他一枚钱币，沉默的交易就此完成，那无面者随即离去。课程开始，猫头鹰像拉开怪诞帷幕般层层剖开躯干；皮肤、脂肪、肌肉依次分开，露出肝脏、心脏、胃与其他'演员'……",
+		"...你左手边的学生脸色煞白，终究被反胃感击倒，昏厥了过去。你强迫自己镇定下来，望向面前那如虚空般空洞的胸腔。几块保存完好的血肉就摆在一旁，等着你把它们缝回原本的位置……"
 	)
 	expert_name = "医师"
 	max_untraited_level = SKILL_LEVEL_EXPERT // We'll let people get to Expert as an exception because reviving someone is very important to keep players in round
@@ -109,8 +109,8 @@
 	达到专家级及以上后，我可以标记踪迹的目标以追索其位置。 \n \
 	达到大师级及以上后，我可以发现隐形生物。 \n \ 可通过右键点击眼睛图标进行追踪。"
 	dreams = list(
-		"... your feet sink into the mud, forcing you to stop and re-evaluate. The storm is close, but not close enough, so you retrace your steps. Left, right, left, until you can manage to step on solid ground once more, taking a new route...",
-		"... you kneel, taking a deep look at the floor, studying the slightly sunk shapes in the dirt. Paw-tracks, one after the other, heading up a hill. With a smile, you carry on...",
-		"... the blood may have gotten lost in the rain, but the wounded man's boots are as fresh as jackberries, perfectly marked in the sand. You raise your bow, nock an arrow, and carefully trace them towards a cave..."
+		"...双脚陷进泥里，让你不得不停下来重新判断。风暴近了，却还不够近，于是你折回自己的脚印。左、右、左……直到你再次踏上结实地面，改换一条新路继续前进……",
+		"...你跪下，专注审视地面，研究泥土里那些微微下陷的形状。一串又一串爪印正往山坡上延伸。你露出微笑，继续追了上去……",
+		"...血迹或许已被雨水冲散，可那名伤者的靴印却新鲜得像杰克莓，清清楚楚地刻在沙地上。你抬起弓，搭上一支箭，小心翼翼地循着它们指向一处洞穴……"
 	)
 	expert_name = "追迹者"

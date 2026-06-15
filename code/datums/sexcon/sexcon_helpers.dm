@@ -59,15 +59,15 @@
 		to_chat(user, "<span class='warning'>我现在做不到这个。</span>")
 		return
 	if(!user?.client?.prefs.sexable)
-		to_chat(user, "<span class='warning'>我不想碰[target]。（这是我在选项里的 ERP 偏好设置）</span>")
+		to_chat(user, "<span class='warning'>我不想碰[target]。（这是我在选项里的情色角色扮演偏好设置）</span>")
 		return
 	if(!target?.client?.prefs)
 		to_chat(user, span_warning("[target]根本就不在那里。我做不到这个。"))
 		log_combat(user, target, "tried ERP menu against d/ced")
 		return
 	if(!target.client.prefs.sexable)
-		to_chat(user, "<span class='warning'>[target]不想被碰触。（这是对方在选项里的 ERP 偏好设置）</span>")
-		to_chat(target, "<span class='warning'>[user]没能碰到你。（这是你在选项里的 ERP 偏好设置）</span>")
+		to_chat(user, "<span class='warning'>[target]不想被碰触。（这是对方在选项里的情色角色扮演偏好设置）</span>")
+		to_chat(target, "<span class='warning'>[user]没能碰到你。（这是你在选项里的情色角色扮演偏好设置）</span>")
 		log_combat(user, target, "tried unwanted ERP menu against")
 		return
 	user.sexcon.start(target)
