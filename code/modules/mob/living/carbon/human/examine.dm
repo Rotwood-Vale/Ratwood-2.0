@@ -1234,19 +1234,19 @@
 /mob/living/proc/get_villain_text(mob/examiner)
 	var/villain_text
 	if(mind)
-		if(mind.special_role == "Bandit")
+		if(mind.special_role == "强盗")
 			if(HAS_TRAIT(examiner, TRAIT_COMMIE))
-				villain_text = span_notice("Free man!")
+				villain_text = span_notice("自由人!")
 			if(HAS_TRAIT(src,TRAIT_KNOWNCRIMINAL))
 				villain_text = span_userdanger("OUTLAW!")
-		if(mind.special_role == "Deadite")
-			villain_text = span_userdanger("DEADITE!")
+		if(mind.special_role == "尸鬼") //对齐 code/modules/antagonists/roguetown/villain/zombie/zombie.dm /datum/antagonist/zombie
+			villain_text = span_userdanger("尸鬼!")
 		if(mind.special_role == "Vampire Lord")
 			var/datum/antagonist/vampire/VD = mind.has_antag_datum(/datum/antagonist/vampire)
 			if(!SEND_SIGNAL(VD.owner, COMSIG_DISGUISE_STATUS))
-				villain_text += span_userdanger("A MONSTER!")
+				villain_text += span_userdanger("怪物!")
 		if(mind.assigned_role == "Lunatic")
-			villain_text += span_userdanger("LUNATIC!")
+			villain_text += span_userdanger("疯子!")
 
 	return villain_text
 
