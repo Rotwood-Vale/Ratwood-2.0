@@ -447,7 +447,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 			for(bottlecaps = 0, bottlecaps < selected_recipe.brewed_amount, bottlecaps++)
 				var/obj/item/reagent_containers/glass/bottle/brewing_bottle/bottle_made = new /obj/item/reagent_containers/glass/bottle/brewing_bottle(get_turf(src))
 				bottle_made.icon_state = "[glass_colour]"
-				bottle_made.name = "[selected_recipe.bottle_name]酿酒瓶"
+				bottle_made.name = "一瓶[selected_recipe.bottle_name]"
 				bottle_made.sellprice = round(selected_recipe.sell_value / selected_recipe.brewed_amount)
 				bottle_made.desc =  selected_recipe.bottle_desc || "一瓶本地酿造的[selected_recipe.bottle_name]。"
 				var/datum/reagent/brewed_reagent = selected_recipe.reagent_to_brew

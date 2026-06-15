@@ -1,8 +1,8 @@
 /datum/brewing_recipe/cabbage
-	name = "Fireleaf"
+	name = "火叶酒"
 	category = "其他"
-	bottle_name = "fireleaf"
-	bottle_desc = "一瓶本地酿造的 Fireleaf。它以卷心菜酿成，味道糟得惊人。"
+	bottle_name = "火叶酒"
+	bottle_desc = "一瓶本地酿造的火叶酒。它以卷心菜酿成，味道糟得惊人。"
 	reagent_to_brew = /datum/reagent/consumable/ethanol/fireleaf
 	needed_reagents = list(/datum/reagent/water = 198)
 	needed_crops = list(/obj/item/reagent_containers/food/snacks/grown/cabbage/rogue = 6)

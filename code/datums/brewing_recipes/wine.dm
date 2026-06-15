@@ -17,10 +17,10 @@
 	)
 
 /datum/brewing_recipe/plum_wine
-	name = "葡萄酒，Umeshu（李子）"
+	name = "葡萄酒，梅子"
 	category = "水果"
-	bottle_name = "umeshu 酒"
-	bottle_desc = "一瓶本地酿制的李子酒。口感香甜，略带酸味。"
+	bottle_name = "梅酒"
+	bottle_desc = "一瓶本地酿制的梅酒。口感香甜，略带酸味。"
 	reagent_to_brew = /datum/reagent/consumable/ethanol/plum_wine
 	needed_reagents = list(/datum/reagent/water = 198)
 	needed_items = list(/obj/item/reagent_containers/food/snacks/grown/fruit/plum = 4, /obj/item/reagent_containers/food/snacks/sugar = 2)
@@ -35,10 +35,10 @@
 	)
 
 /datum/brewing_recipe/tangerine_wine
-	name = "葡萄酒，橘子"
+	name = "葡萄酒，柑橘"
 	category = "水果"
-	bottle_name = "橘子酒"
-	bottle_desc = "一瓶本地酿制的橘子酒。口感酸甜微苦，带着鲜明的柑橘风味。"
+	bottle_name = "柑橘酒"
+	bottle_desc = "一瓶本地酿制的柑橘酒。口感酸甜微苦，带着鲜明的柑橘风味。"
 	reagent_to_brew = /datum/reagent/consumable/ethanol/tangerine
 	needed_reagents = list(/datum/reagent/water = 198)
 	needed_items = list(/obj/item/reagent_containers/food/snacks/grown/fruit/tangerine = 4, /obj/item/reagent_containers/food/snacks/sugar = 2)
@@ -53,10 +53,10 @@
 	)
 
 /datum/brewing_recipe/raspberry_wine
-	name = "葡萄酒，覆盆子"
+	name = "葡萄酒，树莓"
 	category = "水果"
-	bottle_name = "覆盆子酒"
-	bottle_desc = "一瓶本地酿制的覆盆子酒。口感香甜而酸爽。"
+	bottle_name = "树莓酒"
+	bottle_desc = "一瓶本地酿制的树莓酒。口感香甜而酸爽。"
 	reagent_to_brew = /datum/reagent/consumable/ethanol/raspberry
 	needed_reagents = list(/datum/reagent/water = 198)
 	needed_items = list(/obj/item/reagent_containers/food/snacks/grown/fruit/raspberry = 4, /obj/item/reagent_containers/food/snacks/sugar = 2)
@@ -89,10 +89,10 @@
 	)
 
 /datum/brewing_recipe/whipwine
-	name = "葡萄酒，Whip"
+	name = "鞭酒"
 	category = "其他"
-	bottle_name = "vale whip-wine" // knockoff divine whip wine (magical penis wine)
-	bottle_desc = "一瓶本地酿制的 Whipwine。据说是基于 Kazengun 的配方改制而来。它有着格外……皮革般的风味。"
+	bottle_name = "仿制鞭酒" // knockoff divine whip wine (magical penis wine)
+	bottle_desc = "一瓶本地酿制的鞭酒。据说是基于 Kazengun 的配方改制而来。带有一种格外...皮革般的风味。"
 	reagent_to_brew = /datum/reagent/consumable/ethanol/whipwine
 	needed_reagents = list(/datum/reagent/water = 198)
 	needed_items = list(
@@ -107,10 +107,10 @@
 	sell_value = 30
 
 /datum/brewing_recipe/luxintenebre
-	name = "葡萄酒，Lux"
+	name = "葡萄酒，灵魂核心"
 	category = "其他"
-	bottle_name = "luxintebere" // knockoff divine whip wine (magical penis wine)
-	bottle_desc = "一种可能带有异端色彩的酿品，Lux 在发酵后会分解为 Vitae，而 Vitae 还能进一步发酵成可口的美酒。"
+	bottle_name = "幽光酒" // knockoff divine whip wine (magical penis wine)
+	bottle_desc = "一种可能带有异端色彩的酿品，灵魂核心在发酵后会分解为生命精华，而生命精华还能进一步发酵成可口的美酒。"
 	reagent_to_brew = /datum/reagent/consumable/ethanol/luxwine
 	needed_reagents = list(/datum/reagent/water = 198) // standard
 	needed_items = list(

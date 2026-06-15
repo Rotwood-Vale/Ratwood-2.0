@@ -11,9 +11,9 @@
 	sell_value = 30
 
 /datum/brewing_recipe/beer/oat
-	name = "燕麦艾尔"
-	bottle_name = "燕麦艾尔"
-	bottle_desc = "一瓶本地酿造的燕麦艾尔。风味浓郁而饱满。"
+	name = "燕麦酒"
+	bottle_name = "燕麦酒"
+	bottle_desc = "一瓶本地酿造的燕麦酒。风味浓郁而饱满。"
 	reagent_to_brew = /datum/reagent/consumable/ethanol/ale
 	needed_items = list(/obj/item/reagent_containers/food/snacks/grown/oat = 6)
 
