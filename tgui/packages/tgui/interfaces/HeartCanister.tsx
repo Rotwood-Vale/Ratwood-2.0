@@ -40,12 +40,12 @@ export const HeartCanister = (props) => {
   } = data || {};
 
   const {
-    name = "N/A",
-    desc = "No description available",
-    type = "Unknown",
+    name = "无数据",
+    desc = "暂无描述",
+    type = "未知",
     color = "#ffffff",
     liked_concepts = [],
-    preferred_approaches_summary = "N/A",
+    preferred_approaches_summary = "无",
     conflicting_traits = [],
     conflicting_quirks = [],
     // Archetype-specific defaults
@@ -55,41 +55,42 @@ export const HeartCanister = (props) => {
   } = aspect_data || {};
 
   return (
-    <Window width={450} height={400} title="Aspect Canister Examination">
+    <Window width={450} height={400} title="属性罐检查">
       <Window.Content>
-        {!filled && type === "Unknown" ? (
-          <NoticeBox>This canister is empty.</NoticeBox>
+        {/* 这里同步修改了判定，防止空罐时显示错误 */}
+        {!filled && (type === "未知" || type === "Unknown") ? (
+          <NoticeBox>这个罐子是空的。</NoticeBox>
         ) : (
           <>
-            <Section title="Aspect Details">
+            <Section title="属性概要">
               <LabeledList>
-                <LabeledList.Item label="Aspect Name" color="yellow">
+                <LabeledList.Item label="属性名称" color="yellow">
                   <Box color={color}>{name}</Box>
                 </LabeledList.Item>
-                <LabeledList.Item label="Type">
+                <LabeledList.Item label="类型">
                   {type}
                 </LabeledList.Item>
-                <LabeledList.Item label="Description">
+                <LabeledList.Item label="详细描述">
                   {desc}
                 </LabeledList.Item>
               </LabeledList>
             </Section>
 
-            {/* --- Archetype-Specific Information --- */}
-            {type === "Archetype" && (
-              <Section title="Archetype Specifics">
+            {/* --- 人格原型详细信息 (修正了判定条件) --- */}
+            {(type === "Archetype" || type === "原型") && (
+              <Section title="原型详细信息">
                 <LabeledList>
-                  <LabeledList.Item label="Possible Traits">
+                  <LabeledList.Item label="潜在特性">
                     {possible_traits.length
                       ? possible_traits.join(', ')
-                      : 'None'}
+                      : '无'}
                   </LabeledList.Item>
-                  <LabeledList.Item label="Possible Quirks">
+                  <LabeledList.Item label="潜在怪癖">
                     {possible_quirks.length
                       ? possible_quirks.join(', ')
-                      : 'None'}
+                      : '无'}
                   </LabeledList.Item>
-                  <LabeledList.Item label="Discharge Colors">
+                  <LabeledList.Item label="分泌物颜色">
                     <Box>
                       {discharge_colors.length ? (
                         <Box>
@@ -113,7 +114,7 @@ export const HeartCanister = (props) => {
                           </Box>
                         </Box>
                       ) : (
-                        'None'
+                        '无'
                       )}
                     </Box>
                   </LabeledList.Item>
@@ -121,34 +122,34 @@ export const HeartCanister = (props) => {
               </Section>
             )}
 
-            {/* --- Quirk-Specific Information --- */}
-            {type === "Quirk" && (
-              <Section title="Quirk Specifics">
+            {/* --- 怪癖详细信息 (修正了判定条件) --- */}
+            {(type === "Quirk" || type === "怪癖") && (
+              <Section title="怪癖详细信息">
                 <LabeledList>
-                  <LabeledList.Item label="Conflicts">
+                  <LabeledList.Item label="冲突怪癖">
                     {conflicting_quirks.length
                       ? conflicting_quirks.join(', ')
-                      : 'None'}
+                      : '无'}
                   </LabeledList.Item>
                 </LabeledList>
               </Section>
             )}
 
-            {/* --- Trait-Specific Information --- */}
-            {type === "Trait" && (
-              <Section title="Trait Specifics">
+            {/* --- 特性详细信息 (修正了判定条件) --- */}
+            {(type === "Trait" || type === "特性") && (
+              <Section title="特性详细信息">
                 <LabeledList>
-                  <LabeledList.Item label="Conflicts">
+                  <LabeledList.Item label="冲突特性">
                     {conflicting_traits.length
                       ? conflicting_traits.join(', ')
-                      : 'None'}
+                      : '无'}
                   </LabeledList.Item>
-                  <LabeledList.Item label="Liked Concepts">
+                  <LabeledList.Item label="喜好概念">
                     {liked_concepts.length
                       ? liked_concepts.join(', ')
-                      : 'None'}
+                      : '无'}
                   </LabeledList.Item>
-                  <LabeledList.Item label="Preferred Approaches">
+                  <LabeledList.Item label="偏好应对方案">
                     {preferred_approaches_summary}
                   </LabeledList.Item>
                 </LabeledList>
