@@ -130,6 +130,14 @@
 	else if(hasvar(source, "quantity") && hasvar(duplicate, "quantity"))
 		duplicate.vars["quantity"] = source.vars["quantity"]
 
+	// 复制液体内容：如果源物品是液体容器并且里面有液体，
+	// 则将试剂一并复制到复制品中，确保复制品不是空容器。
+	if(source.reagents && source.reagents.total_volume > 0)
+		if(!duplicate.reagents)
+			duplicate.create_reagents(source.reagents.maximum_volume)
+		for(var/datum/reagent/source_reagent in source.reagents.reagent_list)
+			duplicate.reagents.add_reagent(source_reagent.type, source_reagent.volume)
+
 /obj/effect/proc_holder/spell/invoked/mimicry/copy/proc/can_copy_item(obj/item/source)
 	if(!source)
 		return FALSE
