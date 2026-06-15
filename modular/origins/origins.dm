@@ -122,7 +122,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 
 /datum/preferences/proc/build_origin_map_html()
 	var/html = ""
-	html += "<html><head><style>"
+	html += "<html><head><meta charset='utf-8'><style>"
 	html += {"body{margin:0;padding:0;background:#1a1209;color:#e8dcc8;font-family:Georgia,serif;overflow:hidden;user-select:none;}"}
 	html += {".map-wrap{position:relative;width:550px;height:400px;display:block;margin:0 auto;}"}
 	html += {".map-wrap img{width:550px;height:400px;display:block;pointer-events:none;}"}
