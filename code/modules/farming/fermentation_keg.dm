@@ -600,7 +600,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 		keg.clear_keg(TRUE)
 
 /obj/structure/fermentation_keg/distiller
-	name = "copper distiller"
+	name = "铜制蒸馏器"
 
 	icon = 'icons/obj/distillery.dmi'
 	icon_state = "distillery"
