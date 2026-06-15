@@ -265,6 +265,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/after_creation(mob/living/carbon/human/H)
 	return TRUE
 
+/// species-specific sound returns. override in species datums for species-specific sounds teehee.
+/// returns a sound file or a list of sound files, or null if no species-specific sound exists. backwards-compatible.
+/datum/species/proc/get_species_sound(soundin, gender)
+	return
+
 
 /proc/get_selectable_species()
 	if(!GLOB.roundstart_races.len)
