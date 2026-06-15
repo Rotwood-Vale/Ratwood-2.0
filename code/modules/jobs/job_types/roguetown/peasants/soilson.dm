@@ -81,7 +81,8 @@
 	if(H.age == AGE_OLD)//So ppl have reason to pick this I guess?
 		H.adjust_skillrank_up_to(/datum/skill/labor/farming, 6, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/labor/butchering, 6, TRUE)
-
+	if(H.patron?.type == /datum/patron/divine/dendor)
+		H.adjust_skillrank_up_to(/datum/skill/magic/druidic, 2, TRUE)
 	if(should_wear_femme_clothes(H))
 		armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
 		shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/random
