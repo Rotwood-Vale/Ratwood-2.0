@@ -52,7 +52,7 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
 	if(H.mind)
-		var/weapons = list("弓术", "弩术", "让烈焰降临吧！！！")
+		var/weapons = list("弓术", "弩术", "让烈焰降临吧!!!")
 		var/weapon_choice = input(H, "选择你的武器。", "披甲执兵") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -64,7 +64,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 4, TRUE)
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				beltl = /obj/item/quiver/pyrobolts
-			if("让烈焰降临吧！！！")
+			if("让烈焰降临吧!!!")
 				H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 2, TRUE)
 				backr = /obj/item/rogueweapon/woodstaff/toper
 				if(H.mind)
