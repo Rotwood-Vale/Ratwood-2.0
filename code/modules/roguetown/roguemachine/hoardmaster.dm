@@ -97,21 +97,21 @@
 
 	var/list/unlocked_cats = list("Supplies", "Medicaments", "Clothing")
 	switch(usr.advjob)
-		if("Brigand")
+		if("悍匪") //code/modules/jobs/job_types/roguetown/adventurer/types/antag/brigand.dm
 			unlocked_cats+="Brigand"
-		if("Sellsword")
+		if("佣兵剑客") //code/modules/jobs/job_types/roguetown/adventurer/types/antag/sellsword.dm
 			unlocked_cats+="Sellsword"
-		if("Sawbones")
+		if("锯骨郎中") //code/modules/jobs/job_types/roguetown/adventurer/types/antag/sawbones.dm
 			unlocked_cats+="Sawbones"
-		if("Hedge Knight")
+		if("落魄骑士") //code/modules/jobs/job_types/roguetown/adventurer/types/antag/hedgeknight.dm
 			unlocked_cats+="Knight"
-		if("Rogue Mage")
+		if("野法师") //code/modules/jobs/job_types/roguetown/adventurer/types/antag/roguemage.dm
 			unlocked_cats+="Mage"
-		if("Knave")
+		if("无赖") //code/modules/jobs/job_types/roguetown/adventurer/types/antag/knave.dm
 			unlocked_cats+="Knave"
-		if("Iconoclast")
+		if("破像者") //code/modules/jobs/job_types/roguetown/adventurer/types/antag/Iconoclast.dm
 			unlocked_cats+="Iconoclast"
-		if("Pioneer")
+		if("拓荒工兵") //code/modules/jobs/job_types/roguetown/adventurer/types/antag/pioneer.dm
 			unlocked_cats+="Pioneer"
 
 	if(!(current_cat in unlocked_cats))
