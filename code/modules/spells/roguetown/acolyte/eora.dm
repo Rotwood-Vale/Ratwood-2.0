@@ -20,7 +20,7 @@
 
 /obj/item/clothing/head/peaceflower/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot == SLOT_HEAD)
+	if(slot == SLOT_HEAD || slot = SLOT_MASK)
 		var/trait_given = user?.patron?.type == /datum/patron/divine/eora ? TRAIT_EORAN_CONTENTED : TRAIT_PACIFISM
 		ADD_TRAIT(user, trait_given, "peaceflower_[REF(src)]")
 		user.apply_status_effect(/datum/status_effect/buff/peaceflower)
