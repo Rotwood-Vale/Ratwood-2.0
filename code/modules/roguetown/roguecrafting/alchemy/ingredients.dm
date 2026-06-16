@@ -486,7 +486,7 @@
 	minor_pot = /datum/alch_cauldron_recipe/aphrodisiac
 
 /obj/item/alch/manabloompowder
-	name = "Manabloom 粉"
+	name = "魔力花粉"
 	icon_state = "bluepowder"
 
 	major_pot = /datum/alch_cauldron_recipe/mana_potion
