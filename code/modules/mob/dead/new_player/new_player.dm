@@ -364,43 +364,43 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 /proc/get_job_unavailable_error_message(retval, jobtitle)
 	switch(retval)
 		if(JOB_AVAILABLE)
-			return "[jobtitle] is available."
+			return "[jobtitle]当前可选。"
 		if(JOB_UNAVAILABLE_GENERIC)
-			return "[jobtitle] is unavailable."
+			return "[jobtitle]当前不可选。"
 		if(JOB_UNAVAILABLE_BANNED)
-			return "You are currently banned from [jobtitle]."
+			return "你当前已被封禁[jobtitle]。"
 		if(JOB_UNAVAILABLE_PLAYTIME)
-			return "You do not have enough relevant playtime for [jobtitle]."
+			return "你没有足够的游戏时长来解锁[jobtitle]。"
 		if(JOB_UNAVAILABLE_ACCOUNTAGE)
-			return "Your account is not old enough for [jobtitle]."
+			return "你的账号注册时间不足以解锁[jobtitle]。"
 		if(JOB_UNAVAILABLE_SLOTFULL)
-			return "[jobtitle] is already filled to capacity."
+			return "[jobtitle]的人数已满。"
 		if(JOB_UNAVAILABLE_RACE)
-			return "[jobtitle] is not meant for your kind."
+			return "[jobtitle]不适合你的种族。"
 		if(JOB_UNAVAILABLE_SEX)
-			return "[jobtitle] is not meant for your lesser sex."
+			return "[jobtitle]不适合你的性别。"
 		if(JOB_UNAVAILABLE_AGE)
-			return "[jobtitle] is not meant for your age."
+			return "[jobtitle]不适合你这年龄。"
 		if(JOB_UNAVAILABLE_PATRON)
-			return "[jobtitle] requires more faith."
+			return "[jobtitle]需要符合的信仰。"
 		if(JOB_UNAVAILABLE_LASTCLASS)
-			return "You have played [jobtitle] recently."
+			return "你最近刚玩过[jobtitle]。"
 		if(JOB_UNAVAILABLE_JOB_COOLDOWN)
 			if(usr.ckey in GLOB.job_respawn_delays)
 				var/remaining_time = round((GLOB.job_respawn_delays[usr.ckey] - world.time) / 10)
-				return "You must wait [remaining_time] seconds before playing as an [jobtitle] again."
+				return "你必须等待 [remaining_time] 秒后才能再次玩[jobtitle]。"
 		if(JOB_UNAVAILABLE_VIRTUESVICE)
-			return "[jobtitle] is restricted by your Virtues or Vices."
+			return "[jobtitle]受到你的美德或恶行的限制。"
 		if(JOB_UNAVAILABLE_PQ)
 			var/datum/job/job = SSjob.GetJob(jobtitle)
 			if(job && !isnull(job.min_pq))
 				var/player_pq = get_playerquality(usr?.ckey)
-				return "You do not meet the Player Quality requirement for [jobtitle]. (Required: [job.min_pq], Your PQ: [player_pq])"
+				return "你未达到[jobtitle]的玩家品质要求。（要求：[job.min_pq]，当前你的 PQ：[player_pq]）"
 			else if(job && !isnull(job.max_pq))
 				var/player_pq = get_playerquality(usr?.ckey)
-				return "You exceed the Player Quality requirement for [jobtitle]. (Maximum: [job.max_pq], Your PQ: [player_pq])"
-			return "You do not meet the Player Quality requirement for [jobtitle]."
-	return "Error: Unknown job availability."
+				return "你超出了[jobtitle]的玩家品质要求限制。（最大限制：[job.max_pq]，当前你的 PQ：[player_pq]）"
+			return "你未达到[jobtitle]的玩家品质要求。"
+	return "错误：未知的职位可用性状态。"
 
 //used for latejoining
 /mob/dead/new_player/proc/IsJobUnavailable(rank, latejoin = FALSE)
