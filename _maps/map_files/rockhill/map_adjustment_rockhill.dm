@@ -34,33 +34,32 @@
 		/datum/job/roguetown/warden = 4,//split with vanguard
 	)
 	title_adjust = list(
-		/datum/job/roguetown/physician = list(display_title = "Court Physician"),
-		/datum/job/roguetown/niteman = list(display_title = "Nightmaster", f_title = "Nightmistress"),
-		/datum/job/roguetown/nightmaiden = list(display_title = "Nightswain", f_title = "Nightmaiden"),
+		/datum/job/roguetown/physician = list(display_title = "宫廷医师"),
+		/datum/job/roguetown/niteman = list(display_title = "夜主", f_title = "夜主"),
+		/datum/job/roguetown/nightmaiden = list(display_title = "夜侍", f_title = "夜侍女"),
 		// /datum/job/roguetown/marshal = list(display_title = "Mayor"),
 	)
 	tutorial_adjust = list(
-		/datum/job/roguetown/captain = "Your lineage is noble, and generations of strong, loyal knights and men-at-arms have come before you. You served your time \
-				gracefully as knight of his royal majesty, and now you've grown into a role which many men can only dream of becoming. \
-				Veteran among knights, you lead the crown's knights and loyal men at arms into battle and organize the training squires. Obey only the Marshal and Crown. \
-				Lead your men to victory--and keep them in line--and you will see this realm prosper under a thousand suns.",
-		/datum/job/roguetown/physician = "You are a master physician, trusted by the Duke themself to administer expert care to the Royal family, the court, \
-			its protectors and its subjects. While primarily a resident of the keep in the manors medical wing, you also have access \
-			to the local hightown clinic, where lesser licensed apothecaries ply their trade under your occasional passing tutelage.",
+		/datum/job/roguetown/captain = "你的血脉高贵，几代强大忠诚的骑士和兵士在你之前诞生。你曾在皇家陛下麾下优雅地担任骑士，如今已成长为无数人只能梦想成为的角色。 \
+				作为骑士中的老手，你带领王室的骑士和忠诚兵士奔赴战场，并组织训练侍从。只听从执法官和王室的命令。 \
+				率领你的部下走向胜利——并管住他们——你将看到这个国度在万千太阳之下的繁荣昌盛。",
+		/datum/job/roguetown/physician = "你是一位医学大师，深得公爵本人信赖，负责为王室宗亲、宫廷朝臣、\
+			其护卫及其臣民提供专业医护。你主要在庄园医疗翼的城堡内居住，但也同样可以出入 \
+			上城区的本地诊所，那里有资历较浅的持证药剂师在你的偶尔路过指点下行医。",
 		// /datum/job/roguetown/archivist = "CHANGE THIS!! - Teach people skills, whether DIRECTLY or by writing SKILLBOOKS. You and the Veteran next door teach people shit."
-		/datum/job/roguetown/warden = "Having proven yourself through years of scouting, skirmishing and survival in the vanguard, you have been initiated into the Wardens - an elite fraternity of ranger types who keep a vigil over the untamed wilderness. \
-				Trusted to venture deep into the uncivilised darkness south of lowtown, you act as a scout, soldier, sentinel and guide, performing long-range reconnaissance, culling dangerous wildlife, and protecting lowtown alongside the vanguard. \
-				You are subordinate to the Master Warden, and may be called upon as members of the garrison by the Marshal and Crown.\
-				Serve their will as the first line of defence from threats beyond the borders of civilisation, keep the roads safe, and hold the vanguard fortress. The Crown is counting on you.",
-		/datum/job/roguetown/manorguard = "Having proven yourself loyal and capable, you are entrusted to defend the keep and enforce its will throughout the city and duchy. \
-				Trained regularly in combat and siege warfare, you deal with threats - both within and without. \
-				Obey your Marshal, Knight-captain and the Crown. Show the nobles and knights your respect, so that you may earn it in turn. Not as a commoner, but as a soldier..",
-		/datum/job/roguetown/marshal = "You are an agent of the crown in matters of law and military, making sure that laws are pushed, verified and carried out by the retinue upon the citizenry of the realm. \
-				As the ultimate authority on all things military, much of your work happens behind a desk, deferring duties between the Knight Captain, Watch Captain and Master Warden and acting as the primary \
-				go-between to ensure the will of the duke, through you, is carried out in the field.",
-		/datum/job/roguetown/rookie = "Odd-jobs, running messages, fixing dents and talking to locals; the City Watch can always use a spare pair of hands, eyes and ears. Assist your fellow city watchmen in dealing with threats - both within and without. \
-				Given a brief introduction in weapons and guardwork, the rest of your training is to be picked up on the job. \
-				Obey your superiors (everyone who isn't you) and show the nobles your respect. Keep an eye out, try to learn a thing or two, then one day you might live to make an adequate soldier."
+		/datum/job/roguetown/warden = "通过在先锋队中多年的侦察、散兵作战和生存历练，你已被接纳加入守林人——一支精英游侠团体，常年监视着未驯化荒野的动静。 \
+				你受信赖深入下城南方的蛮荒黑暗之中，担任侦察兵、战士、哨兵和向导，执行远程侦察、铲除危险野兽、与先锋队一起保卫下城。 \
+				你隶属于守林总长，执法官和王室也可随时调你充任卫戍成员。\
+				作为对抗文明边疆之外威胁的第一道防线，履行职责，保障道路安全，坚守先锋堡垒。王室在指望你。",
+		/datum/job/roguetown/manorguard = "你已证明了自己的忠诚和能力，被委以保卫城堡并在全市和公国内贯彻其意志的重任。 \
+				定期接受战斗和攻城训练，你负责应对来自内部和外部的威胁。 \
+				服从你的执法官、骑士队长和王室。对贵族和骑士保持尊敬，这样你才能赢得他们的尊重。不是作为平民，而是作为一名兵士..",
+		/datum/job/roguetown/marshal = "你是王室在律法和军事事务上的代理人，确保法律得到推行、验证，并由随从队伍对全国臣民予以施行。 \
+				作为军事事务的最高权威，你的大部分工作在案牍之后完成，在骑士队长、守望队长和守林总长之间分派任务，担任主要的 \
+				协调人，确保公爵的意志——通过你——在战场上得以贯彻。",
+		/datum/job/roguetown/rookie = "杂活跑腿、传递消息、修补缺漏、与当地人攀谈；城市守望队总需要多一双耳目、多一双手。协助同伴守望队员应对来自内部和外部的威胁。 \
+				在武器与守卫勤务方面只受过简短介绍，其余的训练得靠边干边学。 \
+				服从你的上级（除你之外的每一个人），对贵族保持尊敬。多留心观察，尽量学点东西，总有一天你或许能活成一个像样的兵。"
 	
 	)
 	// species_adjust = list()

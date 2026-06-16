@@ -38,9 +38,9 @@
 	title_adjust = list(
 	)
 	tutorial_adjust = list(
-		/datum/job/roguetown/rookie = "Odd-jobs, running messages, fixing dents and talking to locals; the Men at Arms can always use a spare pair of hands, eyes and ears. Assist your fellow guards in dealing with threats - both within and without. \
-				Given a brief introduction in weapons and guardwork, the rest of your training is to be picked up on the job. \
-				Obey your superiors (everyone who isn't you) and show the nobles your respect. Keep an eye out, try to learn a thing or two, then one day you might live to make an adequate soldier."
+		/datum/job/roguetown/rookie = "杂活跑腿、传递消息、修补缺漏、与当地人攀谈；守卫们总需要多一双耳目、多一双手。协助同伴守卫应对来自内部和外部的威胁。 \
+				在武器与守卫勤务方面只受过简短介绍，其余的训练得靠边干边学。 \
+				服从你的上级（除你之外的每一个人），对贵族保持尊敬。多留心观察，尽量学点东西，总有一天你或许能活成一个像样的兵。"
 	)
 	species_adjust = list()
 	sexes_adjust = list()
