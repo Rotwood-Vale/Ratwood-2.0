@@ -17,7 +17,7 @@
 	movement_interrupt = FALSE
 	sound = 'sound/magic/churn.ogg'
 	spell_tier = 2 // Combat spell
-	invocations = list("Noc 以黑暗遮蔽你的罪目！")
+	invocations = list("诺克 以黑暗遮蔽你的罪目！")
 	invocation_type = "shout" //can be none, whisper, emote and shout
 	associated_skill = /datum/skill/magic/holy
 	devotion_cost = 15
@@ -53,7 +53,7 @@
 	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
 	action_icon = 'icons/mob/actions/nocmiracles.dmi'
 	overlay_state = "invisibility"
-	desc = "令自己或他人暂时隐形。持续时间随 Arcyne 技艺提升而增加；施法、攻击或受击都会打断效果。"
+	desc = "令自己或他人暂时隐形。持续时间随 奥术 技艺提升而增加；施法、攻击或受击都会打断效果。"
 	releasedrain = 30
 	chargedrain = 5
 	chargetime = 5
@@ -97,7 +97,7 @@
 	return FALSE
 
 /obj/effect/proc_holder/spell/self/noc_spell_bundle
-	name = "Arcyne 亲和"
+	name = "奥术亲和"
 	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
 	action_icon = 'icons/mob/actions/nocmiracles.dmi'
 	overlay_state = "arcyne_affinity"
@@ -145,9 +145,9 @@
 		available_choices.Remove(already)
 	if(!available_choices.len)
 		user.mind.RemoveSpell(src)
-		to_chat(user, span_notice("Noc 所赐的 Arcyne 知识已经尽数降下。"))
+		to_chat(user, span_notice("诺克 所赐的 奥术 知识已经尽数降下。"))
 		return TRUE
-	var/choice = input(user, "Noc 赐予你的会是哪一类法术？", "选择道路") as null|anything in available_choices
+	var/choice = input(user, "诺克 赐予你的会是哪一类法术？", "选择道路") as null|anything in available_choices
 	if(!choice)
 		revert_cast()
 		return FALSE
@@ -166,7 +166,7 @@
 			ADD_TRAIT(user, TRAIT_MAGEARMOR, TRAIT_MIRACLE)
 	if(chosen_bundles.len >= 3)
 		user.mind.RemoveSpell(src)
-		to_chat(user, span_notice("Noc 所赐的 Arcyne 知识已经尽数降下。"))
+		to_chat(user, span_notice("诺克 所赐的 奥术 知识已经尽数降下。"))
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/noc_spell_bundle/proc/add_spells(mob/user, list/spells, choice_count = 1, grant_all = FALSE)
@@ -209,7 +209,7 @@
 
 //15 PER peer-ahead.
 /obj/effect/proc_holder/spell/invoked/noc_sight
-	name = "Noc 之视"
+	name = "诺克之视"
 	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
 	action_icon = 'icons/mob/actions/nocmiracles.dmi'
 	overlay_state = "noc_sight"
@@ -222,7 +222,7 @@
 	range = 7
 	warnie = "sydwarning"
 	movement_interrupt = FALSE
-	invocations = list("Noc，请引导我的目光。")
+	invocations = list("诺克，请引导我的目光。")
 	invocation_type = "whisper"
 	sound = null
 	associated_skill = /datum/skill/magic/holy

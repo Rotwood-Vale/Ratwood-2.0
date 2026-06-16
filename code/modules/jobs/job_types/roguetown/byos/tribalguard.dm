@@ -11,7 +11,7 @@
 	allowed_races = list(/datum/species/goblinp, /datum/species/anthromorphsmall, /datum/species/kobold)
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
 	// tutorial = "Ooga Chacka Guard-a-Chacka."
-	tutorial = "你是酋长的臂膀，也是 The Dragon 的铁爪。祂的力量凌驾于任何凡人之上，至少你从小就是这么被教导的。毕竟，祂最大，也最强。\
+	tutorial = "你是酋长的臂膀，也是 龙神 的铁爪。祂的力量凌驾于任何凡人之上，至少你从小就是这么被教导的。毕竟，祂最大，也最强。\
 	你要遵照酋长的命令，同时维持寨中的秩序。没有酋长首肯，最好别擅自离开。\
 	若有可能，尽量去“照料”俘虏，而不是一上来就把他们杀掉。"
 	display_order = JDO_TRIBALGUARD

@@ -10,12 +10,12 @@
 	return ..()
 
 /datum/status_effect/divine_exhaustion/on_remove()
-	to_chat(owner, span_notice("我感到自己与 Pestra 神力之间的联系正缓缓恢复。"))
+	to_chat(owner, span_notice("我感到自己与 佩斯特拉 神力之间的联系正缓缓恢复。"))
 	return ..()
 
 /atom/movable/screen/alert/status_effect/divine_exhaustion
 	name = "神力耗竭"
-	desc = "我方才引导了过多 Pestra 的力量，如今已无法再承载太多她的神圣虫灾。"
+	desc = "我方才引导了过多 佩斯特拉 的力量，如今已无法再承载太多她的神圣虫灾。"
 	icon_state = "divine_exhaustion"
 
 // The ultimate healing miracle
@@ -144,7 +144,7 @@
 		owner.adjustCloneLoss(-healing_strength, 0)
 
 /atom/movable/screen/alert/status_effect/buff/pestra_care
-	name = "Pestra 的拥抱"
+	name = "佩斯特拉 的拥抱"
 	desc = "我体内仿佛有什么在蠕动，可那感觉却让我逐渐好转……"
 	icon_state = "divine_heal"
 
@@ -479,5 +479,5 @@
 	examine_text = "SUBJECTPRONOUN 周身萦绕着一股不祥的病疫气息。"
 
 /atom/movable/screen/alert/status_effect/black_rot_carrier
-	name = "Pestra 的赐福"
-	desc = "Pestra 的赐福正寄宿于我体内，旁人最好避开我的碰触。"
+	name = "佩斯特拉 的赐福"
+	desc = "佩斯特拉 的赐福正寄宿于我体内，旁人最好避开我的碰触。"

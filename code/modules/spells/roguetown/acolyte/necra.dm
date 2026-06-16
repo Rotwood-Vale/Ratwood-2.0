@@ -1,7 +1,7 @@
 // Necrite
 /obj/effect/proc_holder/spell/targeted/burialrite
 	name = "葬仪"
-	desc = "祝圣一具棺木或一座墓穴，将其中停留的灵魂送往 Necra 的国度。"
+	desc = "祝圣一具棺木或一座墓穴，将其中停留的灵魂送往 内克拉 的国度。"
 	range = 5
 	overlay_state = "consecrateburial"
 	releasedrain = 30
@@ -77,7 +77,7 @@
 			if(isvampire)
 				vamp_prob -= 59
 			if(prob(vamp_prob))
-				L.visible_message("<span class='warning'>[L] 被 Necra 之握翻搅撕裂！", "<span class='danger'>我被 Necra 之握翻搅撕裂了！")
+				L.visible_message("<span class='warning'>[L] 被 内克拉 之握翻搅撕裂！", "<span class='danger'>我被 内克拉 之握翻搅撕裂了！")
 				explosion(get_turf(L), light_impact_range = 1, flame_range = 1, smoke = FALSE)
 				L.Stun(50)
 			else
@@ -91,7 +91,7 @@
 */
 /obj/effect/proc_holder/spell/invoked/deaths_door
 	name = "死门"
-	desc = "开启一道通往濒死边缘之境的单向门户，可将他人拖入其中以阻止尸身腐坏。不死者会在其中燃烧。踏入此域的人会感到求生意志大幅衰弱。<br>离开 Necra 领域的方法，是通过其中通往神龛的出口，或通往被 Necra 之视标记的墓穴/灵十字的出口。"
+	desc = "开启一道通往濒死边缘之境的单向门户，可将他人拖入其中以阻止尸身腐坏。不死者会在其中燃烧。踏入此域的人会感到求生意志大幅衰弱。<br>离开 内克拉 领域的方法，是通过其中通往神龛的出口，或通往被 内克拉 之视标记的墓穴/灵十字的出口。"
 	range = 6
 	no_early_release = TRUE
 	chargedrain = 0
@@ -104,7 +104,7 @@
 	recharge_time = 30 SECONDS
 	antimagic_allowed = TRUE
 	sound = 'sound/misc/deadbell.ogg'
-	invocations = list("Necra，向我显出归途！")
+	invocations = list("内克拉，向我显出归途！")
 	invocation_type = "shout"
 	miracle = TRUE
 	devotion_cost = 30
@@ -124,7 +124,7 @@
 
 //Choosing between skulls/respite
 /* /obj/effect/proc_holder/spell/self/necra_spirits
-	name = "Necra 的群灵"
+	name = "内克拉 的群灵"
 	overlay_state = "consecrateburial"
 	desc = "冥下侍女将复仇群灵握于掌中，让你从 <b>她</b> 的助力中择其一而用。"
 	miracle = TRUE
@@ -220,7 +220,7 @@
 				replier = target.mind.current
 
 			if(replier)
-				var/spirit_message = input(replier, "一名叫做 [user.real_name] 的 Necra 侍僧正在呼唤你。你要如何回应？", "灵魂的回应") as text|null
+				var/spirit_message = input(replier, "一名叫做 [user.real_name] 的 内克拉 侍僧正在呼唤你。你要如何回应？", "灵魂的回应") as text|null
 				if(spirit_message)
 					to_chat(user, "<span style='color:silver'><i>灵魂低语道：</i> \"[spirit_message]\"</span>")
 				else

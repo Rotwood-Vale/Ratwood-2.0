@@ -112,13 +112,13 @@
 	return ..()
 
 //==============================================================================
-// Harvest Bloomstone — ritual reward from Cat 9 Harvest Bloomstone rite.
+// 丰收花石 — ritual reward from Cat 9 丰收花石 rite.
 // Functions as a 20-use blessed seed powder when held during Bless Crops.
 // Each use (qdel call from blesscrop) decrements charges instead of destroying it.
 // When all 20 charges are spent, the stone shatters and leaves stone dust.
 //==============================================================================
 /obj/item/alch/bloomstone
-	name = "harvest bloomstone"
+	name = "丰收花石"
 	desc = "一块浸润着 Treefather 生机之力的光滑石头。手持它施展 Bless Crops 奇迹时，会像祝圣种子粉一样生效，并消耗 1 层充能而不是被直接消耗，足够使用二十次后才会碎裂。"
 	icon = 'icons/roguetown/gems/gem_shell.dmi'
 	icon_state = "cutgem_shell"
@@ -148,7 +148,7 @@
 	new /obj/item/alch/stonedust(get_turf(src))
 	if(loc && isliving(loc))
 		var/mob/living/holder = loc
-		to_chat(holder, span_warning("Harvest Bloomstone 的光芒黯淡下去，石头在我手中碎成了粉末！"))
+		to_chat(holder, span_warning("丰收花石 的光芒黯淡下去，石头在我手中碎成了粉末！"))
 	return ..()
 
 /obj/item/alch/runedust
@@ -218,14 +218,14 @@
 	minor_pot = /datum/alch_cauldron_recipe/int_potion
 
 /obj/item/alch/swampdust
-	name = "Swampweed 粉"
+	name = "沼泽烟叶粉"
 	icon_state = "swampdust"
 	major_pot = /datum/alch_cauldron_recipe/temp_potion
 	med_pot = /datum/alch_cauldron_recipe/aphrodisiac
 	minor_pot = /datum/alch_cauldron_recipe/end_potion
 
 /obj/item/alch/tobaccodust
-	name = "Westleach 粉"
+	name = "西池烟叶粉"
 	icon_state = "tobaccodust"
 	major_pot = /datum/alch_cauldron_recipe/per_potion
 	med_pot = /datum/alch_cauldron_recipe/stamina_potion
@@ -275,7 +275,7 @@
 	minor_pot = /datum/alch_cauldron_recipe/per_potion
 
 /obj/item/alch/feaudust
-	name = "feau dust"
+	name = "焦尘粉"
 	icon_state = "feaudust"
 
 	major_pot = /datum/alch_cauldron_recipe/spd_potion
@@ -283,7 +283,7 @@
 	minor_pot = /datum/alch_cauldron_recipe/strong_antidote
 
 /obj/item/alch/ozium
-	name = "炼金 ozium"
+	name = "炼金奥兹姆"
 	desc = "炼金处理已使其不适合食用。"
 	icon_state = "darkredpowder"
 
@@ -292,7 +292,7 @@
 	minor_pot = /datum/alch_cauldron_recipe/int_potion
 
 /obj/item/alch/transisdust
-	name = "sui dust"
+	name = "碎晶粉"
 	desc = "多种草药长时间混合后形成的特殊粉末。手持使用即可。"
 	icon_state = "transisdust"
 
@@ -323,7 +323,7 @@
 
 /obj/item/alch/puresalt
 	name = "精制盐"
-	desc = "经过细筛的盐，能增强其疗愈特性，并强化它与 arcyne 的联系。"
+	desc = "经过细筛的盐，能增强其疗愈特性，并强化它与奥术的联系。"
 	icon_state = "puresalt"
 
 	major_pot = /datum/alch_cauldron_recipe/antidote
@@ -522,7 +522,7 @@
 
 //dust mix crafting
 /datum/crafting_recipe/roguetown/alch/feaudust
-	name = "feau dust"
+	name = "焦尘粉"
 	result = list(/obj/item/alch/feaudust,
 				/obj/item/alch/feaudust)
 	reqs = list(/obj/item/alch/irondust = 2,

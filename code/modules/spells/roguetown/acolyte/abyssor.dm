@@ -1,7 +1,7 @@
 //t1, the bends
 /obj/effect/proc_holder/spell/invoked/abyssor_bends
 	name = "深渊压弯"
-	desc = "抽空目标的体力，除非其同样信奉 Abyssor。还会令其头晕目眩、视野模糊。"
+	desc = "抽空目标的体力，除非其同样信奉 阿比索尔。还会令其头晕目眩、视野模糊。"
 	overlay_icon = 'icons/mob/actions/abyssormiracles.dmi'
 	action_icon = 'icons/mob/actions/abyssormiracles.dmi'
 	overlay_state = "bends"
@@ -244,11 +244,11 @@
 		if (situational_bonus > 0)
 			slickness = max_slickness
 			conditional_buff = TRUE
-			to_chat(user, "在这种环境下，呼唤 Abyssor 的力量更加轻松！")
+			to_chat(user, "在这种环境下，呼唤 阿比索尔 的力量更加轻松！")
 
 		// Warning messages
 		if((slickness / max_slickness) <= 0.5)
-			to_chat(user, span_warning("你与 Abyssor 的联系正在减弱。靠近水域施法即可恢复。"))
+			to_chat(user, span_warning("你与 阿比索尔 的联系正在减弱。靠近水域施法即可恢复。"))
 
 		// Calculate healing based on slickness and situational bonus
 		var/healing = max(base_healing * (slickness / max_slickness) + situational_bonus, 3)
@@ -421,7 +421,7 @@
 		return FALSE
 
 	if(target.mind.has_spell(/obj/effect/proc_holder/spell/invoked/abyssal_strength))
-		to_chat(user, span_warning("[target] 已经受到了 Abyssor 之力的赐福。"))
+		to_chat(user, span_warning("[target] 已经受到了 阿比索尔 之力的赐福。"))
 		revert_cast()
 		return FALSE
 

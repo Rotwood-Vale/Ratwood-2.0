@@ -261,7 +261,7 @@
 			return FALSE
 		water_container.reagents.remove_reagent(/datum/reagent/water/blessed, blessed_amt)
 		qdel(seed_source)
-		visible_message(span_green("[usr] 以 Dendor 的恩泽圣化了这些长原木！"))
+		visible_message(span_green("[usr] 以 登多尔 的恩泽圣化了这些长原木！"))
 		return TRUE
 
 	// Soil plots are now blessed one-by-one unless blessed seed powder is used to bypass it.
@@ -289,10 +289,10 @@
 				return FALSE
 			qdel(seed_source)
 			spend_all_bless_charges()
-			visible_message(span_green("[usr] 撒下祝福种粉，Dendor 的恩泽随之拂过附近的作物！"))
+			visible_message(span_green("[usr] 撒下祝福种粉，登多尔 的恩泽随之拂过附近的作物！"))
 			return TRUE
 		target_soil.bless_soil()
-		visible_message(span_green("[usr] 以 Dendor 的恩泽祝福了 [target_soil]！"))
+		visible_message(span_green("[usr] 以 登多尔 的恩泽祝福了 [target_soil]！"))
 		return TRUE
 
 	// Non-soil target mode: bless exactly what was targeted.
@@ -304,20 +304,20 @@
 		target_tree = locate(/obj/structure/flora/roguetree) in target_turf
 	if(target_tree)
 		if(seed_source && get_dist(user, target_tree) > 1)
-			to_chat(user, span_warning("我必须紧贴树木，才能以 Dendor 的祝福转化它。"))
+			to_chat(user, span_warning("我必须紧贴树木，才能以 登多尔 的祝福转化它。"))
 			return FALSE
 		if(seed_source && target_tree.reinvigorate_tree(user))
 			if(seed_source == user.get_active_held_item() || seed_source == user.get_inactive_held_item())
 				qdel(seed_source)
-			visible_message(span_green("[usr] 向 [target_tree] 唤来了 Dendor 的恩泽。"))
+			visible_message(span_green("[usr] 向 [target_tree] 唤来了 登多尔 的恩泽。"))
 			return TRUE
 		if(target_tree.bless_tree(user))
-			visible_message(span_green("[usr] 向 [target_tree] 唤来了 Dendor 的恩泽。"))
+			visible_message(span_green("[usr] 向 [target_tree] 唤来了 登多尔 的恩泽。"))
 			return TRUE
 	if(istype(target_atom, /obj/structure/flora/newtree))
 		var/obj/structure/flora/newtree/tree = target_atom
 		if(tree.bless_tree(user))
-			visible_message(span_green("[usr] 向 [tree] 唤来了 Dendor 的恩泽。"))
+			visible_message(span_green("[usr] 向 [tree] 唤来了 登多尔 的恩泽。"))
 			return TRUE
 
 	to_chat(user, span_warning("这个目标无法承受这道祝福。"))
@@ -326,7 +326,7 @@
 //At some point, this spell should Awaken beasts, allowing a ghost to possess them. Not for this PR though.
 /obj/effect/proc_holder/spell/targeted/beasttame
 	name = "驯服野兽"
-	desc = "以 Dendor 的祝福安抚目标中可驯养的野兽，永久平息其怒意。共有 2 层充能；每层 10 秒恢复，若两层全空则需 1 分钟回满。"
+	desc = "以登多尔的祝福安抚目标中可驯养的野兽，永久平息其怒意。共有 2 层充能；每层 10 秒恢复，若两层全空则需 1 分钟回满。"
 	overlay_icon = 'icons/mob/actions/dendormiracles.dmi'
 	action_icon = 'icons/mob/actions/dendormiracles.dmi'
 	overlay_state = "tamebeast"
@@ -408,7 +408,7 @@
 	var/mob/living/simple_animal/animal = targets?.len ? targets[1] : null
 	if(!animal || QDELETED(animal))
 		return FALSE
-	visible_message(span_green("[user] 以 Dendor 的低语抚平了兽血中的躁动。"))
+	visible_message(span_green("[user] 以 登多尔 的低语抚平了兽血中的躁动。"))
 	animal.tamed(TRUE)
 	if(istype(animal, /mob/living/simple_animal/hostile/retaliate))
 		var/mob/living/simple_animal/hostile/retaliate/retaliate_animal = animal
@@ -417,7 +417,7 @@
 		animal.ai_controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
 		animal.ai_controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
 		animal.ai_controller.set_blackboard_key(BB_BASIC_MOB_TAMED, TRUE)
-	to_chat(user, span_green("在 Dendor 的祝福下，你平息了 [animal] 的怒火。"))
+	to_chat(user, span_green("在 登多尔 的祝福下，你平息了 [animal] 的怒火。"))
 	return TRUE
 
 /obj/effect/proc_holder/spell/targeted/beasttame/after_cast(list/targets, mob/user = usr)
@@ -463,7 +463,7 @@
 
 /obj/effect/proc_holder/spell/targeted/conjure_glowshroom
 	name = "菌辉照明"
-	desc = "召唤会发光的蘑菇；任何试图闯入其中的人都会被电击。Dendor 的信徒免疫此效果。"
+	desc = "召唤会发光的蘑菇；任何试图闯入其中的人都会被电击。登多尔的信徒免疫此效果。"
 	overlay_icon = 'icons/mob/actions/dendormiracles.dmi'
 	action_icon = 'icons/mob/actions/dendormiracles.dmi'
 	overlay_state = "glowshroom"
@@ -556,7 +556,7 @@
 
 	if (!first_cast)
 		to_chat(user, span_boldwarning("大地与空气如此低语：呼唤明月乃是神圣之事，将由此得来的知识分享给不属祂者，便是罪。"))
-		to_chat(user, span_boldwarning("谨记于心吧，Dendor 的孩子。"))
+		to_chat(user, span_boldwarning("谨记于心吧，登多尔 的孩子。"))
 		first_cast = TRUE
 	. = ..()
 
@@ -594,7 +594,7 @@
 // --- T4 Miracle: Sanctify Tree -----------------------------------------------
 /obj/effect/proc_holder/spell/invoked/sanctify_tree
 	name = "圣化古树"
-	desc = "引导 Dendor 最神圣的祝福，将一棵活着且未被烧毁的树木祝圣为树父的圣树，化作德鲁伊之力的枢纽。"
+	desc = "引导 登多尔 最神圣的祝福，将一棵活着且未被烧毁的树木祝圣为树父的圣树，化作德鲁伊之力的枢纽。"
 	invocation_type = "shout"
 	overlay_state = "blesscrop"
 	range = 1
@@ -686,7 +686,7 @@
 		var/obj/structure/flora/roguetree/wise/sanctified/new_tree = new(T)
 		playsound(T, 'sound/ambience/noises/mystical (4).ogg', 70, TRUE)
 		H.visible_message(
-			span_green("[H] 的双手燃起金色辉光，[new_tree] 完成圣化，蜕变为一棵属于 Dendor 的圣树！"),
+			span_green("[H] 的双手燃起金色辉光，[new_tree] 完成圣化，蜕变为一棵属于 登多尔 的圣树！"),
 			span_notice("当 [new_tree] 完成圣化时，我感到树父的力量流过了我的全身。")
 		)
 		SEND_SIGNAL(H, COMSIG_TREE_TRANSFORMED)
@@ -1017,7 +1017,7 @@
 //==============================================================================
 /obj/effect/proc_holder/spell/self/conjure_floral_seed
 	name = "造化花种"
-	desc = "借助 Dendor 的力量在手中造出花种或灌木种。种子一旦掉落便会溶解；花种可在手中切换为不同子类型。冷却 30 秒。"
+	desc = "借助 登多尔 的力量在手中造出花种或灌木种。种子一旦掉落便会溶解；花种可在手中切换为不同子类型。冷却 30 秒。"
 	overlay_state = "blesscrop"
 	action_icon_state = "blessing"
 	action_icon = 'icons/mob/actions/genericmiracles.dmi'

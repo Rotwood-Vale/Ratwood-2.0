@@ -3,7 +3,7 @@
 //Do not numberfuck them if you can help it. I beg you.
 /datum/advclass/sojourner
 	name = "旅居者"
-	tutorial = "失去故土的 纳莱迪 学者被送往 Grimoria 各地寻找意义。他们最终在 奥塔瓦 找到了答案， \
+	tutorial = "失去故土的 纳莱迪 学者被送往 格里莫里亚 各地寻找意义。他们最终在 奥塔瓦 找到了答案， \
 	在那片神圣殿堂之中，他们磨砺天赋，也淬炼自己原本掌握的学识。追随审判官的你如今只有一个目标。 \
 	向世人证明，那场沦亡并非毫无意义。"
 	allowed_sexes = list(MALE, FEMALE)

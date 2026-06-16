@@ -95,7 +95,7 @@
 	var/attached_count = 0
 	if(human_target.has_status_effect(/datum/status_effect/buff/necras_vow))
 		same_owner = TRUE
-		to_chat(user, span_warning("此人已向 Necra 立下誓约。唯有他们自己的肢体会被接纳。"))
+		to_chat(user, span_warning("此人已向 内克拉 立下誓约。唯有他们自己的肢体会被接纳。"))
 
 	// Get missing limbs first
 	var/list/missing_limbs = human_target.get_missing_limbs()
@@ -118,7 +118,7 @@
 
 			// Necra vow check
 			if(same_owner && limb.original_owner && limb.original_owner != human_target)
-				to_chat(user, span_warning("由于 Necra 誓约的限制，肢体 [limb] 不属于目标！"))
+				to_chat(user, span_warning("由于 内克拉 誓约的限制，肢体 [limb] 不属于目标！"))
 				continue
 
 			// Check if target already has this limb
@@ -369,7 +369,7 @@
 // Cure rot
 /obj/effect/proc_holder/spell/invoked/cure_rot
 	name = "祛腐"
-	desc = "借助 Psycross 呼唤 Pestra 的意志，驱逐他人身上的腐坏，或令其血肉重生。"
+	desc = "借助普赛圣十字呼唤佩斯特拉的意志，驱逐他人身上的腐坏，或令其血肉重生。"
 	overlay_icon = 'icons/mob/actions/pestramiracles.dmi'
 	action_icon = 'icons/mob/actions/pestramiracles.dmi'
 	overlay_state = "rot"
@@ -393,7 +393,7 @@
 	var/is_lethal = FALSE
 
 /obj/effect/proc_holder/spell/invoked/cure_rot/priest
-	desc = "借 Astrata 之意焚尽腐坏。"
+	desc = "借 阿斯特拉塔 之意焚尽腐坏。"
 	is_lethal = FALSE
 	recharge_time = 2 MINUTES
 	devotion_cost = 30
@@ -411,11 +411,11 @@
 				target.AddComponent(/datum/component/infestation_black_rot)
 				ADD_TRAIT(target, TRAIT_PESTRAS_BLESSING, TRAIT_MIRACLE)
 				target.visible_message(span_notice("[user] 轻轻将 [rose] 按在 [target] 的血肉上。玫瑰随即溶解，只留下一道黑印。"), \
-										span_userdanger("玫瑰与我的血肉融为一体，赋予了我受 Pestra 庇护的印记。"))
+										span_userdanger("玫瑰与我的血肉融为一体，赋予了我受 佩斯特拉 庇护的印记。"))
 				qdel(rose)
 				return TRUE
 			else
-				to_chat(user, span_warning("[target] 早已受过 Pestra 的黑色祝福。"))
+				to_chat(user, span_warning("[target] 早已受过 佩斯特拉 的黑色祝福。"))
 				revert_cast()
 				return FALSE
 
@@ -510,7 +510,7 @@
 	warnie = "sydwarning"
 	movement_interrupt = FALSE
 	sound = 'sound/magic/heal.ogg'
-	invocations = list("Pestra，让他们重获新生！")
+	invocations = list("佩斯特拉，让他们重获新生！")
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
@@ -614,7 +614,7 @@
 
 /obj/effect/proc_holder/spell/invoked/pestilent_blade
 	name = "疫刃附魔"
-	desc = "以 Pestra 的力量附魔你的刀刃，消耗一层虫灾充能，使你对已感染目标的下一击更具威力。若目标未感染，效果微乎其微……"
+	desc = "以佩斯特拉的力量附魔你的刀刃，消耗一层虫灾充能，使你对已感染目标的下一击更具威力。若目标未感染，效果微乎其微……"
 	overlay_icon = 'icons/mob/actions/pestramiracles.dmi'
 	action_icon = 'icons/mob/actions/pestramiracles.dmi'
 	overlay_state = "blade"
@@ -626,7 +626,7 @@
 	warnie = "sydwarning"
 	movement_interrupt = FALSE
 	sound = 'sound/magic/slimesquish.ogg'
-	invocations = list("Pestra，赐福此刃！")
+	invocations = list("佩斯特拉，赐福此刃！")
 	invocation_type = "whisper"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE

@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/song/discordant_dirge
-	name = "Discordant Dirge"
-	desc = "Play a dissonant dirge that slows your enemies. Reduces SPD of non-audience members nearby."
+	name = "不谐哀歌"
+	desc = "奏响一首不谐的哀歌，减缓敌人的速度。降低附近非听众目标的SPD。"
 	invocations = list("plays a grinding, dissonant melody. The air grows heavy and sluggish.")
 	invocation_type = "emote"
 	overlay_state = "dirge_t1_base"
@@ -30,8 +30,8 @@
 	)
 
 /atom/movable/screen/alert/status_effect/debuff/song/discordant_dirge
-	name = "Discordant Dirge"
-	desc = "A terrible melody weighs on my limbs. Everything feels slower."
+	name = "不谐哀歌"
+	desc = "一段可怕的旋律压在我的四肢上。一切都感觉更慢了。"
 	icon_state = "debuff"
 
 /datum/status_effect/debuff/song/discordant_dirge

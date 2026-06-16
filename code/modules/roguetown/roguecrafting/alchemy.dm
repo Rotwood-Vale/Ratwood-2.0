@@ -14,14 +14,14 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/alchemy/ozium
-	name = "ozium"
+	name = "奥兹姆"
 	category = "台面"
 	result = list(/obj/item/reagent_containers/powder/ozium)
 	reqs = list(/obj/item/ash = 2, /datum/reagent/berrypoison = 2, /obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry = 1)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/alchemy/ozium_3x
-	name = "ozium (x3)"
+	name = "奥兹姆 (x3)"
 	category = "台面"
 	result = list(/obj/item/reagent_containers/powder/ozium,
 					/obj/item/reagent_containers/powder/ozium,
@@ -78,14 +78,14 @@
 	structurecraft = null
 
 /datum/crafting_recipe/roguetown/alchemy/transisdust
-	name = "sui dust"
+	name = "碎晶粉"
 	category = "台面"
 	result = list(/obj/item/alch/transisdust)
 	reqs = list(/obj/item/herbseed/taraxacum = 1, /obj/item/herbseed/euphrasia = 1, /obj/item/herbseed/hypericum = 1, /obj/item/herbseed/salvia = 1)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/alchemy/menthazig
-	name = "手工 mentha 烟卷"
+	name = "手工薄荷烟卷"
 	category = "台面"
 	result = list(/obj/item/clothing/mask/cigarette/rollie/mentha/crafted)
 	reqs = list(/obj/item/clothing/mask/cigarette/rollie/nicotine = 1, /obj/item/alch/mentha = 1)
@@ -166,7 +166,7 @@
 	verbage_simple = "转化"
 
 /datum/crafting_recipe/roguetown/alchemy/g2wes
-	name = "谷物转 Westleach"
+	name = "谷物→西池烟叶"
 	category = "转化"
 	result = list(/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweed = 1)
 	reqs = list(/obj/item/reagent_containers/food/snacks/grown/wheat = 2)
@@ -174,7 +174,7 @@
 	verbage_simple = "转化"
 
 /datum/crafting_recipe/roguetown/alchemy/w2swa
-	name = "Westleach 转 Swampweed"
+	name = "西池烟叶→沼泽烟叶"
 	category = "转化"
 	result = list(/obj/item/reagent_containers/food/snacks/grown/rogue/swampweed = 1)
 	reqs = list(/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweed = 2)
@@ -330,7 +330,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/alchemy/glut
-	name = "Glut（来自豺狼人肉）"
+	name = "炼金胶剂（来自豺狼人肉）"
 	craftdiff = 4
 	result = list(
 		/obj/item/roguegem/blood_diamond
@@ -341,7 +341,7 @@
 	subtype_reqs = TRUE
 
 /datum/crafting_recipe/roguetown/alchemy/gnoll_flesh
-	name = "豺狼人肉（来自 Glut）"
+	name = "豺狼人肉（来自炼金胶剂）"
 	craftdiff = 4
 	result = list(
 		/obj/item/reagent_containers/food/snacks/rogue/meat/steak/gnoll

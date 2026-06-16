@@ -71,7 +71,7 @@
 	bonus_chance_outputs = list(/obj/item/alch/bonemeal = 50)
 
 /datum/alch_grind_recipe/swampweed
-	name = "Swampweed"
+	name = "沼泽烟叶"
 	valid_input = /obj/item/reagent_containers/food/snacks/grown/rogue/swampweed
 	valid_outputs = list(/obj/item/alch/swampdust = 1)
 	bonus_chance_outputs = list(/obj/item/alch/earthdust = 33)
@@ -83,7 +83,7 @@
 	bonus_chance_outputs = list(/obj/item/alch/earthdust = 50,/obj/item/alch/swampdust = 50)
 
 /datum/alch_grind_recipe/westleach
-	name = "Westleach"
+	name = "西池烟叶"
 	valid_input = /obj/item/reagent_containers/food/snacks/grown/rogue/pipeweed
 	valid_outputs = list(/obj/item/alch/tobaccodust = 1)
 	bonus_chance_outputs = list(/obj/item/alch/airdust = 33)
@@ -95,7 +95,7 @@
 	bonus_chance_outputs = list(/obj/item/alch/airdust = 50,/obj/item/alch/tobaccodust = 50)
 
 /datum/alch_grind_recipe/fyritius
-	name = "Fyritius"
+	name = "焰蕊"
 	valid_input = /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius
 	valid_outputs = list(/obj/item/alch/firedust = 1)
 	bonus_chance_outputs = list(/obj/item/alch/solardust = 50)
@@ -127,7 +127,7 @@
 	bonus_chance_outputs = list(/obj/item/alch/airdust =25,/obj/item/alch/earthdust = 25)
 
 /datum/alch_grind_recipe/ozium
-	name = "Ozium"
+	name = "奥兹姆"
 	valid_input = /obj/item/reagent_containers/powder/ozium
 	valid_outputs = list(/obj/item/alch/ozium = 1)
 	bonus_chance_outputs = list(/obj/item/alch/airdust =25,/obj/item/alch/ozium = 25)

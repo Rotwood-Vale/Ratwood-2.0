@@ -101,9 +101,9 @@
 
 /datum/component/fit_clothing/proc/on_examine(datum/source, mob/user, list/examine_list)
 	if(enchant_type == DURABILITY_ENCHANT)
-		examine_list += "This clothing has been fitted"
+		examine_list += "这件衣物已被改体剪裁。"
 	var/remaining_minutes = round((endtime - world.time) / 600)
-	examine_list += "The fitting will last for [remaining_minutes] more minutes."
+	examine_list += "改体效果还将持续[remaining_minutes]分钟。"
 
 // This is called right after the object is fixed and all of its force / wdefense values are reset to initial. We re-apply the relevant bonuses.
 /datum/component/fit_clothing/proc/on_fix()

@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/extract_heart
 	name = "剜心献祭"
-	desc = "一场为 Graggar 献上心脏祭品的亵渎仪式。仅对新鲜尸体生效。"
+	desc = "一场为 格拉加尔 献上心脏祭品的亵渎仪式。仅对新鲜尸体生效。"
 	overlay_state = "curse"
 	chargedrain = 0
 	chargetime = 0
@@ -18,11 +18,11 @@
 	var/mob/living/carbon/human/target = targets[1]
 
 	if(!istype(target))
-		to_chat(user, "<span class='warning'>唯有真正的血肉，才值得 Graggar 投来目光！</span>")
+		to_chat(user, "<span class='warning'>唯有真正的血肉，才值得 格拉加尔 投来目光！</span>")
 		return FALSE
 
 	if(target.stat != DEAD)
-		to_chat(user, "<span class='warning'>这懦夫体内仍有生命搏动！Graggar 要求你先把他彻底了结！</span>")
+		to_chat(user, "<span class='warning'>这懦夫体内仍有生命搏动！格拉加尔 要求你先把他彻底了结！</span>")
 		return FALSE
 
 	// Calculate actual time based on butchery skill
@@ -37,7 +37,7 @@
 		return FALSE
 
 	if(target.stat != DEAD)
-		to_chat(user, "<span class='warning'>这懦夫体内仍有生命搏动！Graggar 要求你先把他彻底了结！</span>")
+		to_chat(user, "<span class='warning'>这懦夫体内仍有生命搏动！格拉加尔 要求你先把他彻底了结！</span>")
 		return FALSE
 
 	var/obj/item/organ/heart/heart = target.getorganslot(ORGAN_SLOT_HEART)
@@ -53,7 +53,7 @@
 	target.adjustBruteLoss(20)
 
 	user.visible_message("<span class='warning'>[user] 咆哮着将 [target] 的心脏活生生扯了出来！</span>", \
-						"<span class='red'>我将这颗心脏献给了 Graggar！这位神明对祭品发出了低笑。</span>")
+						"<span class='red'>我将这颗心脏献给了 格拉加尔！这位神明对祭品发出了低笑。</span>")
 	user.emote("rage", forced = TRUE)
 
 	return TRUE

@@ -466,7 +466,7 @@
 	craftdiff = SKILL_LEVEL_EXPERT
 
 /datum/crafting_recipe/roguetown/survival/purify_lux
-	name = "提纯 Lux"
+	name = "提纯灵辉"
 	result = list(
 		/obj/item/heart_blood_canister,
 		/obj/item/reagent_containers/lux,
@@ -479,7 +479,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/survival/purify_lux_vials
-	name = "提纯 Lux（小瓶）"
+	name = "提纯灵辉（小瓶）"
 	result = list(
 		/obj/item/reagent_containers/lux,
 		/obj/item/heart_blood_vial,
@@ -494,7 +494,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/survival/purify_lux_compress
-	name = "提纯 Lux（压缩）"
+	name = "提纯灵辉（压缩）"
 	result = list(
 		/obj/item/reagent_containers/lux,
 		)

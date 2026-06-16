@@ -12,7 +12,7 @@
 	no_early_release = TRUE
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/items/bsmithfail.ogg'
-	invocations = list("借火与灰烬之力，让活力再起，凭 Malum 之手，使力量重归！")
+	invocations = list("借火与灰烬之力，让活力再起，凭 玛勒姆 之手，使力量重归！")
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
@@ -38,7 +38,7 @@
 	no_early_release = TRUE
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/items/bsmithfail.ogg'
-	invocations = list("我执掌炽热，我号令火焰，让金属以 Malum 之名俯首！")
+	invocations = list("我执掌炽热，我号令火焰，让金属以 玛勒姆 之名俯首！")
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
@@ -64,7 +64,7 @@
 	no_early_release = TRUE
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/items/bsmithfail.ogg'
-	invocations = list("凭熔火之威，借战锤之重，于 Malum 烈焰中令大地震颤！")
+	invocations = list("凭熔火之威，借战锤之重，于 玛勒姆 烈焰中令大地震颤！")
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
@@ -110,7 +110,7 @@
 
 /obj/effect/proc_holder/spell/invoked/craftercovenant
 	name = "匠造之约"
-	desc = "将一堆贵重物熔化并塑成单件物品。即便祭品价值不足以造出任何东西，Malum 依然会收下它。"
+	desc = "将一堆贵重物熔化并塑成单件物品。即便祭品价值不足以造出任何东西，玛勒姆依然会收下它。"
 	overlay_icon = 'icons/mob/actions/malummiracles.dmi'
 	action_icon = 'icons/mob/actions/malummiracles.dmi'
 	overlay_state = "craftercovenant"
@@ -123,7 +123,7 @@
 	no_early_release = TRUE
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/items/bsmithfail.ogg'
-	invocations = list("让钱币化灰，让火焰塑形，以 Malum 之名，令造物诞生！")
+	invocations = list("让钱币化灰，让火焰塑形，以 玛勒姆 之名，令造物诞生！")
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
@@ -325,7 +325,7 @@
 			doable += list(list(itemtorecord.name, itemtorecord))
 	}
 	if (!doable.len)
-		show_visible_message(usr, "[user] 呼唤 Malum 之名时，一阵热浪席卷了这堆祭品。成堆贵重物随之崩解成尘。", "当我呼唤 Malum 之名时，一阵热浪席卷了这堆祭品。成堆贵重物随之崩解成尘。Malum 接受了你的祭品，但显然还远远不够。")
+		show_visible_message(usr, "[user] 呼唤 玛勒姆 之名时，一阵热浪席卷了这堆祭品。成堆贵重物随之崩解成尘。", "当我呼唤 玛勒姆 之名时，一阵热浪席卷了这堆祭品。成堆贵重物随之崩解成尘。玛勒姆 接受了你的祭品，但显然还远远不够。")
 		return
 	var/list/doablename = list()
 	var/list/item_map = list()
@@ -341,7 +341,7 @@
 			new itemtospawn.type(altar)
 			sparks.set_up(1, 1, altar)
 			sparks.start()
-			show_visible_message(usr, "[user] 呼唤 Malum 之名时，一阵热浪席卷了这堆祭品。贵重物崩解成尘，又像自火中重生般重新凝成了一件器物。Malum 接受了这次供奉。", "当我呼唤 Malum 之名时，一阵热浪席卷了这堆祭品。贵重物崩解成尘，又像自火中重生般重新凝成了一件器物。Malum 接受了这次供奉。")
+			show_visible_message(usr, "[user] 呼唤 玛勒姆 之名时，一阵热浪席卷了这堆祭品。贵重物崩解成尘，又像自火中重生般重新凝成了一件器物。玛勒姆 接受了这次供奉。", "当我呼唤 玛勒姆 之名时，一阵热浪席卷了这堆祭品。贵重物崩解成尘，又像自火中重生般重新凝成了一件器物。玛勒姆 接受了这次供奉。")
 
 GLOBAL_LIST_EMPTY(anvil_recipe_prices)
 
@@ -393,7 +393,7 @@ GLOBAL_LIST_EMPTY(anvil_recipe_prices)
 	initialize_anvil_recipe_prices() // Precompute recipe prices on startup
 
 /obj/effect/proc_holder/spell/invoked/malum_flame_rogue
-	name = "Malum 之火"
+	name = "玛勒姆 之火"
 	desc = "点燃目标。"
 	overlay_icon = 'icons/mob/actions/malummiracles.dmi'
 	action_icon = 'icons/mob/actions/malummiracles.dmi'

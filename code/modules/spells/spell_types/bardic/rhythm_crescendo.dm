@@ -96,8 +96,8 @@
 	return ..()
 
 /obj/effect/proc_holder/spell/self/rhythm
-	name = "Rhythm"
-	desc = "Attune your weapon to a rhythm. Your next melee hit within 8 seconds triggers its effect."
+	name = "韵律"
+	desc = "为你的武器调和一段韵律。8秒内的下一次近战攻击将触发效果。"
 	action_icon = 'icons/mob/actions/bardsongs.dmi'
 	action_icon_state = "rhythm_resonating"
 	action_background_icon_state = "spell"
@@ -198,8 +198,8 @@
 	return target.checkdefense(user.used_intent, user)
 
 /obj/effect/proc_holder/spell/self/rhythm/resonating
-	name = "Resonating Rhythm"
-	desc = "Prime a parry-bypassing strike for 20 brute damage to your aimed location. Armor still applies."
+	name = "共鸣韵律"
+	desc = "蓄力一次无视格挡的打击，对瞄准部位造成20点钝伤。护甲仍然有效。"
 	action_icon_state = "rhythm_resonating"
 	rhythm_type = RHYTHM_RESONATING
 
@@ -208,12 +208,12 @@
 	var/armor_block = target.run_armor_check(def_zone, "slash", damage = RHYTHM_RESONATING_DAMAGE)
 	target.apply_damage(RHYTHM_RESONATING_DAMAGE, BRUTE, def_zone, armor_block)
 	new /obj/effect/temp_visual/kinetic_blast(get_turf(target))
-	target.visible_message(span_danger("Rhythmic force reverberates through [target]!"), span_userdanger("Rhythmic force reverberates through my body!"))
+	target.visible_message(span_danger("韵律之力在[target]身上震荡！"), span_userdanger("Rhythmic force reverberates through my body!"))
 	playsound(target, 'sound/magic/blade_burst.ogg', 50, TRUE)
 
 /obj/effect/proc_holder/spell/self/rhythm/concussive
-	name = "Concussive Rhythm"
-	desc = "Prime a strike that repels the target by 1 tile."
+	name = "冲击韵律"
+	desc = "蓄力一次将目标击退1格的打击。"
 	action_icon_state = "rhythm_concussive"
 	rhythm_type = RHYTHM_CONCUSSIVE
 
@@ -228,8 +228,8 @@
 	playsound(target, 'sound/magic/repulse.ogg', 50, TRUE)
 
 /obj/effect/proc_holder/spell/self/rhythm/regenerating
-	name = "Regenerating Rhythm"
-	desc = "Prime a strike that heals you for 0.5 per tick for 10 seconds."
+	name = "再生韵律"
+	desc = "蓄力一次打击，每tick为你恢复0.5生命，持续10秒。"
 	action_icon_state = "rhythm_regenerating"
 	rhythm_type = RHYTHM_REGENERATING
 
@@ -240,8 +240,8 @@
 	playsound(user, 'sound/magic/heal.ogg', 40, TRUE)
 
 /obj/effect/proc_holder/spell/self/rhythm/malaise
-	name = "Malaise Rhythm"
-	desc = "Prime a strike that leaves the target sluggish for a short time."
+	name = "萎靡韵律"
+	desc = "蓄力一次让目标短时间内行动迟缓的打击。"
 	action_icon_state = "rhythm_frigid"
 	rhythm_type = RHYTHM_MALAISE
 
@@ -256,7 +256,7 @@
 	duration = RHYTHM_MALAISE_DURATION
 
 /atom/movable/screen/alert/status_effect/debuff/bardic_malaise
-	name = "Malaise"
+	name = "萎靡"
 	desc = "A cold, draining rhythm weighs down your limbs."
 	icon_state = "chilled"
 
@@ -283,8 +283,8 @@
 	return ..(new_owner, new_healing_on_tick, is_inhumen)
 
 /obj/effect/proc_holder/spell/self/crescendo
-	name = "Crescendo"
-	desc = "Prime your next melee strike to unleash a 3x3 blast based on your last rhythm. Build 3 rhythm procs to unlock."
+	name = "渐强"
+	desc = "蓄力下一次近战攻击，释放基于上一段韵律的3x3范围爆发。积累3次韵律触发来解锁。"
 	action_icon = 'icons/mob/actions/bardsongs.dmi'
 	action_icon_state = "crescendo"
 	action_background_icon_state = "spell"
@@ -365,7 +365,7 @@
 	prime_timer_id = null
 	UnregisterSignal(user, COMSIG_MOB_ITEM_ATTACK_POST_SWINGDELAY)
 	user.remove_filter(CRESCENDO_FILTER)
-	to_chat(user, span_warning("My crescendo fades, the resonance is gone..."))
+	to_chat(user, span_warning("我的渐强消散了，共鸣消失了……"))
 
 /obj/effect/proc_holder/spell/self/crescendo/Destroy()
 	if(primed && action?.owner)

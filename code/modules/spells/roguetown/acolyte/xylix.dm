@@ -89,7 +89,7 @@
 	return TRUE
 
 /mob/living/simple_animal/hostile/rogue/xylixdouble
-	name = "Xylix 替身 - 你本不该看到这个。"
+	name = "赛利克斯 替身 - 你本不该看到这个。"
 	desc = ""
 	gender = NEUTER
 	mob_biotypes = MOB_HUMANOID
@@ -155,7 +155,7 @@
 			if(3)
 				user.say("你那刀站得倒挺直，和你那话儿一样不中用！", forced = "spell")
 			if(4)
-				user.say("连 Eora 都不会爱上你那张脸！", forced = "spell")
+				user.say("连 伊欧拉 都不会爱上你那张脸！", forced = "spell")
 			if(5)
 				user.say("你嘴里的味儿像生黄油和廉价啤酒！", forced = "spell")
 			if(6)
@@ -173,7 +173,7 @@
 			if(12)
 				user.say("看来你真是 PSY-DONE 了！不？太早了？行吧。", forced = "spell")
 			if(13)
-				user.say("愿 Ravox 替你那无用的导师降下正义，阁下！", forced = "spell")
+				user.say("愿 拉沃克斯 替你那无用的导师降下正义，阁下！", forced = "spell")
 
 /datum/status_effect/debuff/viciousmockery
 	id = "viciousmockery"
@@ -187,7 +187,7 @@
 	icon_state = "mockery"
 
 /obj/effect/proc_holder/spell/self/xylixslip
-	name = "Xylix 滑步"
+	name = "赛利克斯 滑步"
 	desc = "让你跃至最远 3 格外。"
 	overlay_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
@@ -680,7 +680,7 @@
 	return ..()
 
 /obj/effect/proc_holder/spell/invoked/slick_trick_small/miracle
-	name = "Xylix 滑域"
+	name = "赛利克斯 滑域"
 	desc = "创造一小片神圣湿滑区域，绊倒疏于防备者。"
 	overlay_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
@@ -693,7 +693,7 @@
 	recharge_time = 30 SECONDS
 
 /obj/effect/proc_holder/spell/invoked/slick_trick/miracle
-	name = "巨型 Xylix 滑域"
+	name = "巨型 赛利克斯 滑域"
 	desc = "让大片区域覆满神圣滑面，将受害者掀翻在地。"
 	overlay_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
@@ -740,7 +740,7 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/xylix_blessed_luck
-	name = "Xylix 赐福之运"
+	name = "赛利克斯 赐福之运"
 	desc = "即便你没有真正赢得他的恩宠，他依旧眷顾着你。"
 	icon_state = "status"
 
@@ -791,8 +791,8 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/astrata_favor
-	name = "Astrata 的恩泽"
-	desc = "虽然这份恩泽来之不易，但 Xylix 还是动用了它。你几乎如同不朽。"
+	name = "阿斯特拉塔 的恩泽"
+	desc = "虽然这份恩泽来之不易，但 赛利克斯 还是动用了它。你几乎如同不朽。"
 	icon_state = "status"
 
 //Noc Jackpot
@@ -814,8 +814,8 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/noc_favor
-	name = "Noc 的恩泽"
-	desc = "Noc 的知识、光与影笼罩着你。"
+	name = "诺克 的恩泽"
+	desc = "诺克 的知识、光与影笼罩着你。"
 	icon_state = "status"
 
 //Zizo punishment
@@ -835,8 +835,8 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/zizo_unfavor
-	name = "Zizo 的介入"
-	desc = "你的庇护者不够专注，引来了 Zizo 的注意。你感到自己变弱了。"
+	name = "齐佐 的介入"
+	desc = "你的庇护者不够专注，引来了 齐佐 的注意。你感到自己变弱了。"
 	icon_state = "status"
 
 //Ravox Jackpot
@@ -856,8 +856,8 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/ravox_favor
-	name = "Ravox 的恩泽"
-	desc = "Ravox 的力量支撑着你。"
+	name = "拉沃克斯 的恩泽"
+	desc = "拉沃克斯 的力量支撑着你。"
 	icon_state = "status"
 
 //Malum Jackpot
@@ -901,7 +901,7 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/baotha_favor
-	name = "Baotha 的恩泽"
+	name = "巴奥莎 的恩泽"
 	desc = "你感到欣快、敏捷，浑身燥热而微醺。"
 	icon_state = "status"
 
@@ -920,7 +920,7 @@
 		BP.add_wound(pick(/datum/wound/dynamic/bruise, /datum/wound/dynamic/slash, /datum/wound/dynamic/puncture))
 		if(prob(25))
 			BP.add_wound(/datum/wound/fracture)
-	owner.visible_message(span_warning("[owner] 在 Graggar 的怒火下忽然痛得抽搐，血肉撕裂、瘀伤遍生！"), span_userdanger("Graggar 的怒火将我撕伤，剧痛在我全身绽开！"))
+	owner.visible_message(span_warning("[owner] 在 格拉加尔 的怒火下忽然痛得抽搐，血肉撕裂、瘀伤遍生！"), span_userdanger("格拉加尔 的怒火将我撕伤，剧痛在我全身绽开！"))
 	. = ..()
 
 /datum/status_effect/graggar_favor/on_remove()
@@ -929,7 +929,7 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/graggar_favor
-	name = "Graggar 的恩泽"
+	name = "格拉加尔 的恩泽"
 	desc = "暴力转而向内。鲜血与痛苦都降临在你身上！"
 	icon_state = "status"
 
@@ -945,9 +945,9 @@
 	if(meister_balance > 0)
 		var/stolen = min(rand(1, 10), meister_balance)
 		SStreasury.bank_accounts[owner] -= stolen
-		to_chat(owner, span_warning("Matthios 从你的钱袋里顺走了 [stolen] 枚 Mammon！"))
+		to_chat(owner, span_warning("马西奥斯 从你的钱袋里顺走了 [stolen] 枚 玛门！"))
 	else
-		to_chat(owner, span_notice("Matthios 伸手去摸你的钱袋，却发现里面空空如也。真是个穷酸的傻瓜！"))
+		to_chat(owner, span_notice("马西奥斯 伸手去摸你的钱袋，却发现里面空空如也。真是个穷酸的傻瓜！"))
 	. = ..()
 
 /datum/status_effect/matthios_favor/on_remove()
@@ -956,13 +956,13 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/matthios_favor
-	name = "Matthios 的恩泽"
+	name = "马西奥斯 的恩泽"
 	desc = "那位自由之神带着歪斜的笑意，从你的钱袋里顺走了钱币。"
 	icon_state = "status"
 
 /atom/movable/screen/alert/status_effect/buff/malum_favor
-	name = "Malum 的恩泽"
-	desc = "Malum 将他持久的力量与意志借给了你。"
+	name = "玛勒姆 的恩泽"
+	desc = "玛勒姆 将他持久的力量与意志借给了你。"
 	icon_state = "status"
 
 //Eora Jackpot
@@ -989,8 +989,8 @@
 	. = ..()
 
 /atom/movable/screen/alert/status_effect/buff/eora_favor
-	name = "Eora 的恩泽"
-	desc = "Eora 以她的爱包裹着你，抚平你的伤口，并令你焕发神性的美丽。"
+	name = "伊欧拉 的恩泽"
+	desc = "伊欧拉 以她的爱包裹着你，抚平你的伤口，并令你焕发神性的美丽。"
 	icon_state = "status"
 
 //Necra Jackpot
@@ -1030,8 +1030,8 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/necra_favor
-	name = "Necra 的恩泽"
-	desc = "Necra 香炉中的烟雾缠绕在你的步履之间，净化着你周围的地面。"
+	name = "内克拉 的恩泽"
+	desc = "内克拉 香炉中的烟雾缠绕在你的步履之间，净化着你周围的地面。"
 	icon_state = "status"
 
 //Pestra Jackpot
@@ -1050,7 +1050,7 @@
 	owner.adjustToxLoss(-30)
 	owner.apply_status_effect(/datum/status_effect/buff/healing, 5)
 	owner.apply_status_effect(/datum/status_effect/buff/pestra_care)
-	to_chat(owner, span_notice("一声湿漉漉的干呕吐出了一条水蛭，Pestra 的虫群正从体内修补着我。"))
+	to_chat(owner, span_notice("一声湿漉漉的干呕吐出了一条水蛭，佩斯特拉 的虫群正从体内修补着我。"))
 	. = ..()
 
 /datum/status_effect/pestra_favor/on_remove()
@@ -1059,7 +1059,7 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/pestra_favor
-	name = "Pestra 的恩泽"
+	name = "佩斯特拉 的恩泽"
 	desc = "水蛭般的净除与爬行的慈悲缓解了毒素，并将你的伤口缝合。"
 	icon_state = "status"
 
@@ -1074,7 +1074,7 @@
 	owner.electrocute_act(30, owner)
 	owner.emote("painscream")
 	ADD_TRAIT(owner, TRAIT_LONGSTRIDER, XYLIX_LUCK_TRAIT)
-	to_chat(owner, span_warning("你忽然被针刺般的一触电得一颤，Dendor 的力量让你短时间内能在崎岖地面上自由奔行！"))
+	to_chat(owner, span_warning("你忽然被针刺般的一触电得一颤，登多尔 的力量让你短时间内能在崎岖地面上自由奔行！"))
 	. = ..()
 
 /datum/status_effect/dendor_favor/on_remove()
@@ -1084,8 +1084,8 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/dendor_favor
-	name = "Dendor 的恩泽"
-	desc = "Dendor 的祝福如针刺般电过你的身体，暂时将你的步伐从大地的束缚中解放。"
+	name = "登多尔 的恩泽"
+	desc = "登多尔 的祝福如针刺般电过你的身体，暂时将你的步伐从大地的束缚中解放。"
 	icon_state = "status"
 
 //Abyssor Jackpot
@@ -1105,7 +1105,7 @@
 		owner.Dizzy(10)
 		owner.blur_eyes(10)
 		owner.emote("drown")
-		to_chat(owner, span_warning("Abyssor 的深渊攫住了你的肺腑，扯走了你的呼吸，也抽干了你的精力！"))
+		to_chat(owner, span_warning("阿比索尔 的深渊攫住了你的肺腑，扯走了你的呼吸，也抽干了你的精力！"))
 	else
 		owner.stamina_add(round(owner.max_stamina * 0.8))
 		owner.energy_add(round(owner.max_energy * 0.2))
@@ -1118,12 +1118,12 @@
 	owner?.update_vision_cone()
 
 /atom/movable/screen/alert/status_effect/buff/abyssor_favor
-	name = "Abyssor 的恩泽"
+	name = "阿比索尔 的恩泽"
 	desc = "你唤醒了本不该唤醒之物。它会夺走你的呼吸，或者赐你第二口气。"
 	icon_state = "status"
 
 /obj/effect/proc_holder/spell/invoked/xylixlian_luck
-	name = "Xylix 的赌运"
+	name = "赛利克斯 的赌运"
 	desc = "向你的运气与庇护者发起挑战。"
 	overlay_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
@@ -1145,7 +1145,7 @@
 /obj/effect/proc_holder/spell/invoked/xylixlian_luck/cast(list/targets,mob/living/carbon/human/user = usr)
 	user.play_overhead_indicator('modular_twilight_axis/icons/mob/overhead_effects.dmi', "xylix_fortune", 30, MUTATIONS_LAYER, soundin = 'modular_twilight_axis/sound/slotmachine.ogg', y_offset = 24)
 
-	to_chat(user, span_danger("Xylix 给了你一次动用他恩泽的机会。"))
+	to_chat(user, span_danger("赛利克斯 给了你一次动用他恩泽的机会。"))
 	var/luck_bonus = 0
 	luck_bonus -= used_times * 5
 	luck_bonus += 1.9444 * ((world.time - last_used) / bonus_luck_threshould)
@@ -1174,46 +1174,46 @@
 		if(XYLIX)
 			user.apply_status_effect(/datum/status_effect/xylix_blessed_luck)
 			new /obj/item/roguecoin/gold(get_turf(user), 1)
-			to_chat(user, span_danger("Xylix 的赌运站在你这边！"))
+			to_chat(user, span_danger("赛利克斯 的赌运站在你这边！"))
 		if(ASTRATA)
 			user.apply_status_effect(/datum/status_effect/astrata_favor)
-			to_chat(user, span_danger("Astrata 的光辉赐予了你力量！"))
+			to_chat(user, span_danger("阿斯特拉塔 的光辉赐予了你力量！"))
 		if(NOC)
 			user.apply_status_effect(/datum/status_effect/noc_favor)
-			to_chat(user, span_danger("Noc 银辉的阴影笼罩着你！"))
+			to_chat(user, span_danger("诺克 银辉的阴影笼罩着你！"))
 		if(ZIZO)
 			user.apply_status_effect(/datum/status_effect/zizo_unfavor)
-			to_chat(user, span_danger("Zizo 的面容正在嘲弄你！"))
+			to_chat(user, span_danger("齐佐 的面容正在嘲弄你！"))
 		if(RAVOX)
 			user.apply_status_effect(/datum/status_effect/ravox_favor)
-			to_chat(user, span_danger("Ravox 赐予了你力量！"))
+			to_chat(user, span_danger("拉沃克斯 赐予了你力量！"))
 		if(ABYSSOR)
 			user.apply_status_effect(/datum/status_effect/abyssor_favor)
-			to_chat(user, span_danger("Abyssor 的潮汐转瞬之间便倒向了你，或与你为敌！"))
+			to_chat(user, span_danger("阿比索尔 的潮汐转瞬之间便倒向了你，或与你为敌！"))
 		if(MALUM)
 			user.apply_status_effect(/datum/status_effect/malum_favor)
-			to_chat(user, span_danger("Malum 重铸了你的身躯，并赐你精力！"))
+			to_chat(user, span_danger("玛勒姆 重铸了你的身躯，并赐你精力！"))
 		if(EORA)
 			user.apply_status_effect(/datum/status_effect/eora_favor)
-			to_chat(user, span_danger("Eora 的爱意将你环抱！"))
+			to_chat(user, span_danger("伊欧拉 的爱意将你环抱！"))
 		if(NECRA)
 			user.apply_status_effect(/datum/status_effect/necra_favor)
-			to_chat(user, span_danger("Necra 的香炉烟雾跟随着你的脚步，净化着前行之路。"))
+			to_chat(user, span_danger("内克拉 的香炉烟雾跟随着你的脚步，净化着前行之路。"))
 		if(PESTRA)
 			user.apply_status_effect(/datum/status_effect/pestra_favor)
-			to_chat(user, span_danger("Pestra 的虫群在你腹中翻涌，驱散毒素并缝合血肉。"))
+			to_chat(user, span_danger("佩斯特拉 的虫群在你腹中翻涌，驱散毒素并缝合血肉。"))
 		if(DENDOR)
 			user.apply_status_effect(/datum/status_effect/dendor_favor)
-			to_chat(user, span_danger("Dendor 狂野的力量奔流过你的全身，只要你受得住那刺痛之吻！"))
+			to_chat(user, span_danger("登多尔 狂野的力量奔流过你的全身，只要你受得住那刺痛之吻！"))
 		if(BAOTHA)
 			user.apply_status_effect(/datum/status_effect/baotha_favor)
-			to_chat(user, span_danger("Baotha 的迷雾攫住了你的身心！"))
+			to_chat(user, span_danger("巴奥莎 的迷雾攫住了你的身心！"))
 		if(GRAGGAR)
 			user.apply_status_effect(/datum/status_effect/graggar_favor)
-			to_chat(user, span_danger("Graggar 的怒火已在你的血肉上留下烙印！"))
+			to_chat(user, span_danger("格拉加尔 的怒火已在你的血肉上留下烙印！"))
 		if(MATTHIOS)
 			user.apply_status_effect(/datum/status_effect/matthios_favor)
-			to_chat(user, span_danger("Matthios 从你的钱袋里偷走了钱财，好给你上一课何为贪婪！"))
+			to_chat(user, span_danger("马西奥斯 从你的钱袋里偷走了钱财，好给你上一课何为贪婪！"))
 	return ..()
 
 #undef NOTHING

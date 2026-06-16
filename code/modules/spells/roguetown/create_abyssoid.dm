@@ -23,7 +23,7 @@
 		return FALSE
 
 	if(istype(target, /obj/item/natural/worms/leech/abyssoid))
-		to_chat(user, span_warning("这只水蛭已经受过 Abyssor 的赐福，化作渊蛭了！"))
+		to_chat(user, span_warning("这只水蛭已经受过 阿比索尔 的赐福，化作渊蛭了！"))
 		return FALSE
 
 	if(user.blood_volume < BLOOD_VOLUME_BAD)
@@ -31,7 +31,7 @@
 		return FALSE
 
 	user.visible_message(span_warning("[user] 对着 [target] 开始低声诵念古怪祷词……"), \
-						span_notice("我开始进行转化仪式，向 Abyssor 献上自己的鲜血。"))
+						span_notice("我开始进行转化仪式，向 阿比索尔 献上自己的鲜血。"))
 
 	if(!do_after(user, 10 SECONDS, target = user))
 		to_chat(user, span_warning("仪式被打断了！"))

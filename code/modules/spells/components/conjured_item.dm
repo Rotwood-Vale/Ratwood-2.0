@@ -22,4 +22,4 @@ by Arcyne user after a duration
 	I.craft_blocked = TRUE
 
 /datum/component/conjured_item/proc/on_examine(datum/source, mob/user, list/examine_list)
-	examine_list += "This item crackles with faint arcyne energy. It seems to be conjured."
+	examine_list += "这件物品噼啪作响，散发出微弱的奥术能量。它似乎是凭空造出来的。"

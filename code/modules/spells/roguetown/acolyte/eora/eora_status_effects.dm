@@ -44,7 +44,7 @@
 			linked_alert.icon_state = "pom_regret"
 		if(-5)
 			linked_alert.name = "阿瑞里安空壳"
-			linked_alert.desc = "你身体的大部分都已朽坏成灰。若你居然还活着，那也绝非 Eora 的怜悯。"
+			linked_alert.desc = "你身体的大部分都已朽坏成灰。若你居然还活着，那也绝非 伊欧拉 的怜悯。"
 			linked_alert.icon_state = "pom_regret"
 
 /datum/status_effect/buff/ashen_aril/on_apply()
@@ -186,7 +186,7 @@
 		M.Jitter(100)
 		record_round_statistic(STATS_LUX_REVIVALS)
 		M.update_body()
-		M.visible_message(span_notice("[M] 被强行从 Necra 的掌握中拽了回来！"), span_green("我自虚无之中醒来。"))
+		M.visible_message(span_notice("[M] 被强行从 内克拉 的掌握中拽了回来！"), span_green("我自虚无之中醒来。"))
 
 		M.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)
 		M.apply_status_effect(/datum/status_effect/debuff/revived)
@@ -274,7 +274,7 @@
 		owner.blood_volume = max(10, owner.blood_volume - 10)
 
 /atom/movable/screen/alert/status_effect/pomegranate_aura
-	name = "Eora 的祝福"
+	name = "伊欧拉 的祝福"
 	desc = "你在这棵圣树附近感到一阵安宁。"
 	icon_state = "pom_peace"
 

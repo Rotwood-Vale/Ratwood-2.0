@@ -107,7 +107,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 //Ravoxian CtA, with blood cost and weaker. Kind of. As above.
 /obj/effect/proc_holder/spell/self/psydonic_inspire
 	name = "激励"
-	desc = "以自身维系生命的鲜血为代价，你可以鼓舞其他 Psydon 信众。 \
+	desc = "以自身维系生命的鲜血为代价，你可以鼓舞其他 普赛顿 信众。 \
 	这会赐予他们体魄与意志。 \
 	<small><span class='bloody'>高阶神迹。</span></small>"
 	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
@@ -245,7 +245,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 //Of course, this is limited to arbalist. Why would anyone else need or want this?
 /obj/effect/proc_holder/spell/self/psydonic_lux_bolt
 	name = "圣辉矢铸"
-	desc = "这是古老教团的神迹，允许你将自身一部分 lux 凝成合用之器。 \
+	desc = "这是古老教团的神迹，允许你将自身一部分 灵辉 凝成合用之器。 \
 	对你而言，它会化作供心爱弩机使用的投射物。其代价稍后便会显现，所以动作必须快。 \
 	<small><span class='bloody'>高阶神迹。</span></small>"
 	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
@@ -314,7 +314,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 
 /obj/item/ammo_casing/caseless/rogue/heavy_bolt/lux
 	name = "圣辉弩矢"
-	desc = "一支由纯粹、未受拘束的 <b>lux</b> 凝成的弩矢。若它正握在你手里，那多半就是由你自身凝出的。 \
+	desc = "一支由纯粹、未受拘束的 <b>灵辉</b> 凝成的弩矢。若它正握在你手里，那多半就是由你自身凝出的。 \
 	你总该明白它该拿来做什么吧？"
 	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/lux
 	icon_state = "lux_bolt"//Temp sprite. Psydon save me!!!

@@ -1,8 +1,8 @@
 //Eora content from Stonekeep
 
 /obj/item/clothing/head/peaceflower
-	name = "Eora 花苞"
-	desc = "一朵花瓣柔和的花，与 Eora 或 Necra 相关。通常被佩作头饰，或置于墓前，象征爱与安宁。"
+	name = "伊欧拉 花苞"
+	desc = "一朵花瓣柔和的花，与 伊欧拉 或 内克拉 相关。通常被佩作头饰，或置于墓前，象征爱与安宁。"
 	icon = 'icons/roguetown/items/produce.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
 	icon_state = "peaceflower"
@@ -38,8 +38,8 @@
 	effectedstats = list(STATKEY_STR = 1, STATKEY_PER = 1) // These are the stats that the eoran tree affect
 
 /atom/movable/screen/alert/status_effect/buff/peaceflower
-	name = "Eora 花苞"
-	desc = "Eora 的美丽令我的心神变得澄澈而敏锐。"
+	name = "伊欧拉 花苞"
+	desc = "伊欧拉 的美丽令我的心神变得澄澈而敏锐。"
 	icon_state = "buff"
 
 /obj/item/clothing/head/peaceflower/proc/peace_check(mob/living/user)
@@ -61,8 +61,8 @@
 
 
 /obj/effect/proc_holder/spell/invoked/bud
-	name = "Eora 绽放"
-	desc = "尝试在目标地块，或目标的头顶长出一枚 Eora 花苞，在它被移除前令其思绪远离暴力。"
+	name = "伊欧拉 绽放"
+	desc = "尝试在目标地块，或目标的头顶长出一枚 伊欧拉 花苞，在它被移除前令其思绪远离暴力。"
 	clothes_req = FALSE
 	range = 7
 	overlay_state = "love"
@@ -84,22 +84,22 @@
 		if(!C.get_item_by_slot(SLOT_HEAD))
 			var/obj/item/clothing/head/peaceflower/F = new(get_turf(C))
 			C.equip_to_slot_if_possible(F, SLOT_HEAD, TRUE, TRUE)
-			to_chat(C, "<span class='info'>一朵 Eora 之花在我头顶绽放。我感到无比平和。</span>")
+			to_chat(C, "<span class='info'>一朵 伊欧拉 之花在我头顶绽放。我感到无比平和。</span>")
 			return TRUE
 		else
-			to_chat(user, "<span class='warning'>目标的头部被遮住了。Eora 之花需要一片开阔处才能绽放。</span>")
+			to_chat(user, "<span class='warning'>目标的头部被遮住了。伊欧拉 之花需要一片开阔处才能绽放。</span>")
 			revert_cast()
 			return FALSE
 	var/turf/T = get_turf(targets[1])
 	if(!isclosedturf(T))
 		new /obj/item/clothing/head/peaceflower(T)
 		return TRUE
-	to_chat(user, "<span class='warning'>目标位置被阻挡了。Eora 之花拒绝在此生长。</span>")
+	to_chat(user, "<span class='warning'>目标位置被阻挡了。伊欧拉 之花拒绝在此生长。</span>")
 	revert_cast()
 	return FALSE
 
 /obj/effect/proc_holder/spell/invoked/eoracurse
-	name = "Eora 的诅咒"
+	name = "伊欧拉 的诅咒"
 	desc = "令目标同时陷入恍惚与醉意。"
 	overlay_state = "curse2"
 	releasedrain = 50
@@ -254,7 +254,7 @@
 	overlay_state = "bliss"
 	range = 1
 	chargetime = 0.5 SECONDS
-	invocations = list("借 Eora 之恩，让我们的命运交缠吧！")
+	invocations = list("借 伊欧拉 之恩，让我们的命运交缠吧！")
 	sound = 'sound/magic/magnet.ogg'
 	recharge_time = 60 SECONDS
 	miracle = TRUE
@@ -309,7 +309,7 @@
 	var/outline_colour = "#FF69B4"
 
 /atom/movable/screen/alert/status_effect/eora_bond
-	name = "Eora 之绊"
+	name = "伊欧拉 之绊"
 	desc = "你的生命力与另一道灵魂相连。"
 
 /datum/status_effect/eora_bond/on_apply()
@@ -363,8 +363,8 @@
 
 /obj/effect/proc_holder/spell/invoked/bless_food
 	name = "祝福食物"
-	invocations = list("Eora，请滋养这份供品！")
-	desc = "祝福一件食物。进食耗时越久的食物，治疗速度越慢。熟练的教士能更频繁地祝福食物。越精致的食物治疗效果越强。Eora 的大师甚至能令食物染上金辉。"
+	invocations = list("伊欧拉，请滋养这份供品！")
+	desc = "祝福一件食物。进食耗时越久的食物，治疗速度越慢。熟练的教士能更频繁地祝福食物。越精致的食物治疗效果越强。伊欧拉 的大师甚至能令食物染上金辉。"
 	sound = 'sound/magic/magnet.ogg'
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	devotion_cost = 25
@@ -386,7 +386,7 @@
 	if(ishuman(H))
 		patron = user.patron
 	target.AddComponent(/datum/component/blessed_food, user, holy_skill, patron)
-	to_chat(user, span_notice("你以 Eora 的慈爱祝福了 [target]！"))
+	to_chat(user, span_notice("你以 伊欧拉 的慈爱祝福了 [target]！"))
 	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/bless_food/start_recharge()
@@ -405,7 +405,7 @@
 
 /obj/effect/proc_holder/spell/invoked/pomegranate
 	name = "绯榴圣域"
-	invocations = list("Eora，请为你的美丽降下庇护！")
+	invocations = list("伊欧拉，请为你的美丽降下庇护！")
 	desc = "种出一棵石榴树，只要悉心照料，便会结出具有各种效果的 Auril。除此之外，它还会治疗美丽之人，并对视野范围内的所有人大幅削弱力量与感知。"
 	sound = 'sound/magic/magnet.ogg'
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
@@ -423,13 +423,13 @@
 		my_little_tree = null
 
 	if(my_little_tree)
-		to_chat(user, span_warning("我无法同时为 Eora 维系超过一棵树。无论多么不忍，我都得先处理掉另一棵。"))
+		to_chat(user, span_warning("我无法同时为 伊欧拉 维系超过一棵树。无论多么不忍，我都得先处理掉另一棵。"))
 		revert_cast()
 		return FALSE
 
 	var/turf/T = get_turf(targets[1])
 	if(!isopenturf(T))
-		to_chat(user, span_warning("目标位置被阻挡了。Eora 的种子无法在这里萌芽。"))
+		to_chat(user, span_warning("目标位置被阻挡了。伊欧拉 的种子无法在这里萌芽。"))
 		revert_cast()
 		return FALSE
 	if(!(istype(T, /turf/open/floor/rogue/grass) || istype(T, /turf/open/floor/rogue/dirt) || istype(T, /turf/open/floor/rogue/grassyel) || istype(T, /turf/open/floor/rogue/grassred) || istype(T, /turf/open/floor/rogue/grasscold) || istype(T, /turf/open/floor/rogue/desert_grass)))
@@ -437,7 +437,7 @@
 		revert_cast()
 		return FALSE
 
-	to_chat(user, span_notice("我开始在这里培育 Eora 的圣树了。若我并不想把唯一的一棵种在这里，现在就该停手再想想。"))
+	to_chat(user, span_notice("我开始在这里培育 伊欧拉 的圣树了。若我并不想把唯一的一棵种在这里，现在就该停手再想想。"))
 	if(do_after(user, 30 SECONDS, FALSE))
 		var/obj/structure/eoran_pomegranate_tree/tree = new /obj/structure/eoran_pomegranate_tree(T)
 		my_little_tree = tree
@@ -450,7 +450,7 @@
 
 /obj/structure/eoran_pomegranate_tree
 	name = "石榴圣树"
-	desc = "一棵受 Eora 祝福的神秘树木。"
+	desc = "一棵受 伊欧拉 祝福的神秘树木。"
 	icon = 'modular_azurepeak/icons/obj/items/eora_tree.dmi'
 	icon_state = "sprout"
 	anchored = TRUE
@@ -517,7 +517,7 @@
 		if(iscarbon(user))
 			var/mob/living/carbon/c = user
 			if(c.patron.type != /datum/patron/divine/eora)
-				to_chat(user, span_warning("这棵树拒绝了你的供奉。只有 Eora 的追随者才能向它献上灰烬。"))
+				to_chat(user, span_warning("这棵树拒绝了你的供奉。只有 伊欧拉 的追随者才能向它献上灰烬。"))
 				return TRUE
 		if(ash_offered)
 			to_chat(user, span_warning("继续往树上覆灰似乎激怒了它，叶片猛然舒张，灰烬纷纷抖落在地，光环也重新燃起。"))
@@ -1017,7 +1017,7 @@
 		&& ((living_user.patron.type == /datum/patron/divine/eora) || HAS_TRAIT(living_user, TRAIT_CHOSEN))\
 		&& user.get_stress_event(/datum/stressevent/psyprayer)\
 		&& !HAS_TRAIT(living_user, TRAIT_EORAN_PITY))
-		to_chat(user, span_notice("Eora 回应了你的祈祷，赐予你一枚可供培育的种子！"))
+		to_chat(user, span_notice("伊欧拉 回应了你的祈祷，赐予你一枚可供培育的种子！"))
 		new /obj/item/reagent_containers/eoran_seed(loc)
 		ADD_TRAIT(living_user, TRAIT_EORAN_PITY, TRAIT_GENERIC)
 
@@ -1025,8 +1025,8 @@
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/eoran_aril
-	name = "Eora 果粒"
-	desc = "一枚来自 Eora 果实的发光种子。它正随着神圣能量轻轻搏动。"
+	name = "伊欧拉 果粒"
+	desc = "一枚来自 伊欧拉 果实的发光种子。它正随着神圣能量轻轻搏动。"
 	icon = 'modular_azurepeak/icons/obj/items/eora_pom.dmi'
 	dropshrink = 0.7
 	icon_state = "auric"
@@ -1039,7 +1039,7 @@
 
 /obj/item/reagent_containers/food/snacks/eoran_aril/attack(mob/living/M, mob/living/user, def_zone)
 	if(M != user)
-		to_chat(user, span_info("当你试图强行把她的馈赠塞给别人时，这枚种子因 Eora 的怒意而灼热发烫。"))
+		to_chat(user, span_info("当你试图强行把她的馈赠塞给别人时，这枚种子因 伊欧拉 的怒意而灼热发烫。"))
 		return
 	. = ..()
 
@@ -1139,7 +1139,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/eora_grace
 
 /atom/movable/screen/alert/status_effect/eora_grace
-	name = "Eora 的恩宠"
+	name = "伊欧拉 的恩宠"
 	desc = "你感到自己美得动人。"
 
 /datum/status_effect/buff/eora_grace/on_apply()
@@ -1189,7 +1189,7 @@
 	name = "分形果粒"
 	desc = "一枚几何结构完美到令人目眩刺痛的种子。"
 	icon_state = "fractal"
-	effect_desc = "以体质为代价，Eora 的慈悲会将丑陋悄然融去……"
+	effect_desc = "以体质为代价，伊欧拉 的慈悲会将丑陋悄然融去……"
 
 /obj/item/reagent_containers/food/snacks/eoran_aril/fractal/apply_effects(mob/living/eater)
 	if(ishuman(eater))
@@ -1235,7 +1235,7 @@
 	name = "赭红果粒"
 	desc = "一枚血红色的种子，正以威胁般的节奏搏动着。"
 	icon_state = "ochre"
-	effect_desc = "以你自己的生命为代价，将视野内附近两具尸体从 Necra 的怀抱中唤回。"
+	effect_desc = "以你自己的生命为代价，将视野内附近两具尸体从 内克拉 的怀抱中唤回。"
 
 /obj/item/reagent_containers/food/snacks/eoran_aril/ochre/apply_effects(mob/living/carbon/eater)
 	if(ishuman(eater))
@@ -1309,7 +1309,7 @@
 //This is meant to be given guaranteed with T4 pommes for priests but given we don't have eoran priests yet I will implement this when we do.
 /obj/item/reagent_containers/lux/eoran_aril
 	name = "炽耀果粒"
-	desc = "一枚亮得刺眼的种子，散发着纯粹的生命能量。它模仿着作为生命本源的 lux。"
+	desc = "一枚亮得刺眼的种子，散发着纯粹的生命能量。它模仿着作为生命本源的 灵辉。"
 	icon = 'modular_azurepeak/icons/obj/items/eora_pom.dmi'
 	icon_state = "incandescent"
 	dropshrink = 0.7
@@ -1328,7 +1328,7 @@
 
 /obj/item/reagent_containers/eoran_seed
 	name = "缎柔果粒"
-	desc = "一枚来自 Eora 圣树、触感如丝般柔滑的种子。可在肥沃土壤中播下，延续她的恩赐。"
+	desc = "一枚来自 伊欧拉 圣树、触感如丝般柔滑的种子。可在肥沃土壤中播下，延续她的恩赐。"
 	icon = 'modular_azurepeak/icons/obj/items/eora_pom.dmi'
 	icon_state = "roseate"
 
@@ -1368,8 +1368,8 @@
 
 //Remove their ability to feel bad, restore a small amount of hunger / thirst if they're already starving.
 /obj/effect/proc_holder/spell/invoked/eora_blessing
-	name = "Eora 的祝福"
-	desc = "将 Eora 的安宁赐予一人，哪怕只持续短短片刻。"
+	name = "伊欧拉 的祝福"
+	desc = "将 伊欧拉 的安宁赐予一人，哪怕只持续短短片刻。"
 	sound = 'sound/magic/eora_bless.ogg'
 	devotion_cost = 80
 	recharge_time = 5 MINUTES
@@ -1431,6 +1431,6 @@
 	return ..()
 
 /atom/movable/screen/alert/status_effect/buff/eora_blessing
-	name = "Eora 的宁静"
+	name = "伊欧拉 的宁静"
 	desc = "一阵令人神清气爽的安宁。你的烦恼仿佛都被冲刷殆尽。为什么不能永远如此呢？"
 	icon_state = "eora_bless"

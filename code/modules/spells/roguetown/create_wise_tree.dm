@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/transform_tree
 	name = "化树为智"
-	desc = "将一棵普通树木转化为 Dendor 的智者古树。"
+	desc = "将一棵普通树木转化为 登多尔 的智者古树。"
 	invocation_type = "whisper"
 	overlay_state = "entangle"
 	range = 1
@@ -73,5 +73,5 @@
 	playsound(T, 'sound/ambience/noises/mystical (4).ogg', 50, TRUE)
 
 	if(uses <= 0)
-		to_chat(H, span_warning("Dendor 的赐福自我身上消退了。"))
+		to_chat(H, span_warning("登多尔 的赐福自我身上消退了。"))
 		H.mind.RemoveSpell(src)

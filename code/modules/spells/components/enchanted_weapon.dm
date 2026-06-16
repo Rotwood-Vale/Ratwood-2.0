@@ -115,11 +115,11 @@
 
 /datum/component/enchanted_weapon/proc/on_examine(datum/source, mob/user, list/examine_list)
 	if(enchant_type == FORCE_BLADE_ENCHANT)
-		examine_list += "This weapon is enchanted with a force blade enchantment."
+		examine_list += "这把武器附有力量锋刃的魔法。"
 	else if(enchant_type == DURABILITY_ENCHANT)
-		examine_list += "This weapon is enchanted with a durability enchantment."
+		examine_list += "这把武器附有耐久魔法的加持。"
 	var/remaining_minutes = round((endtime - world.time) / 600)
-	examine_list += "The enchantment will last for [remaining_minutes] more minutes."
+	examine_list += "附魔还将持续[remaining_minutes]分钟。"
 
 // This is called right after the object is fixed and all of its force / wdefense values are reset to initial. We re-apply the relevant bonuses.
 /datum/component/enchanted_weapon/proc/on_fix()

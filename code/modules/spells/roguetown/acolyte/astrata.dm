@@ -34,7 +34,7 @@
 
 /obj/effect/proc_holder/spell/invoked/revive
 	name = "再临"
-	desc = "通过固定不动的圣十字引导 Astrata 的力量，将目标自死亡中唤回。"
+	desc = "通过固定不动的圣十字引导阿斯特拉塔的力量，将目标自死亡中唤回。"
 	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
 	action_icon = 'icons/mob/actions/astratamiracles.dmi'
 	overlay_state = "resurrect"
@@ -139,7 +139,7 @@
 
 //T0. Removes cone vision for a dynamic duration.
 /obj/effect/proc_holder/spell/self/astrata_gaze
-	name = "Astrata 之视"
+	name = "阿斯特拉塔 之视"
 	desc = "暂时解除你的视野限制，让你连身后也能看见；在白昼持续更久，并为精于神圣技艺者提供感知加成。"
 	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
 	action_icon = 'icons/mob/actions/astratamiracles.dmi'
@@ -151,7 +151,7 @@
 	sound = 'sound/magic/astrata_choir.ogg'
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
-	invocations = list("Astrata，让我得见真相。")
+	invocations = list("阿斯特拉塔，让我得见真相。")
 	invocation_type = "shout"
 	recharge_time = 120 SECONDS
 	devotion_cost = 30
@@ -166,7 +166,7 @@
 	return TRUE
 
 /atom/movable/screen/alert/status_effect/buff/astrata_gaze
-	name = "Astrata 之视"
+	name = "阿斯特拉塔 之视"
 	desc = "她的光辉穿过我身，照亮一切不义。"
 	icon_state = "astrata_gaze"
 
@@ -369,7 +369,7 @@
 // =====================
 /obj/effect/proc_holder/spell/invoked/immolation
 	name = "圣焰焚身"
-	desc = "以圣焰点燃目标，灼烧其周围之人。若目标是虔诚的 Astrata 信徒，火势将燃得更盛。"
+	desc = "以圣焰点燃目标，灼烧其周围之人。若目标是虔诚的阿斯特拉塔信徒，火势将燃得更盛。"
 	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
 	action_icon = 'icons/mob/actions/astratamiracles.dmi'
 	overlay_state = "immolation"
@@ -398,7 +398,7 @@
 	// Channeling requirement
 	user.visible_message(span_danger("[user] 开始以诡异的神圣烈焰点燃 [target]！"))
 	if(!do_after(user, 1 SECONDS, target = target))
-		to_chat(user, span_warning("Astrata 的威能需要毫不动摇的专注方可引导！"))
+		to_chat(user, span_warning("阿斯特拉塔 的威能需要毫不动摇的专注方可引导！"))
 		revert_cast()
 		return FALSE
 
@@ -474,7 +474,7 @@
 	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
 	action_icon = 'icons/mob/actions/astratamiracles.dmi'
 	overlay_state = "order"
-	desc = "Astrata 赐福你的心智，让你选择以 <b>她</b> 的哪种方式贯彻秩序。"
+	desc = "阿斯特拉塔赐福你的心智，让你选择以 <b>她</b> 的哪种方式贯彻秩序。"
 	miracle = TRUE
 	devotion_cost = 100
 	recharge_time = 10 MINUTES
@@ -510,8 +510,8 @@
 	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
 	action_icon = 'icons/mob/actions/astratamiracles.dmi'
 	overlay_state = "spear"
-	desc = "这是源远流长的古老圣迹，由第二纪元那些曾作为 Astrata 武装之臂而战的人不断磨练。\
-	借此，你可以向 Astrata 祈求她的一缕神力。"
+	desc = "这是源远流长的古老圣迹，由第二纪元那些曾作为阿斯特拉塔武装之臂而战的人不断磨练。\
+	借此，你可以向阿斯特拉塔祈求她的一缕神力。"
 	clothes_req = FALSE
 	sound = 'sound/magic/blade_burst.ogg'
 	invocations = list("秩序圣女，请引导我的手！")

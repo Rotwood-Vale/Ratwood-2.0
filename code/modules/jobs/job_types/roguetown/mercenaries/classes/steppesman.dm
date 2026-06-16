@@ -60,7 +60,7 @@
 		switch(classchoice)
 			if("Starshina - 军士长")	//Tl;dr - medium armor class for Mount and Blade larpers who still get a saiga. Akin to Vaquero with specific drip.
 				H.set_blindness(0)
-				to_chat(H, span_warning("军士长 是北方草原 哥萨克 中的初级军官阶层，历经 Grimoria 各地战火的老兵。 \
+				to_chat(H, span_warning("军士长 是北方草原 哥萨克 中的初级军官阶层，历经 格里莫里亚 各地战火的老兵。 \
 				漫长的服役岁月为你赢来了你的尖顶盔、盾牌与甲胄，但别搞错了。 \
 				你可不是什么坐着喝苦酒的 Grenzel 贵族。带头冲锋吧，Zoloto i slava。"))
 				shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot/steppesman

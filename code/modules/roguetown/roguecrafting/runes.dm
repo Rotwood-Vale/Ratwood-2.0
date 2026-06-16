@@ -92,7 +92,7 @@
 	// icon_state = "water_rune"
 	name = "水之符文"
 	desc = "有些潮湿。"
-	remarks = list("To understand these archaic things...", "法力流淌于一切活物之中……", "这个法术会让我疲惫……", "法术应如流水般流转……")
+	remarks = list("想要理解这些古老之物……", "法力流淌于一切活物之中……", "这个法术会让我疲惫……", "法术应如流水般流转……")
 
 /obj/item/rune/spell/air_rune
 	spell = /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt
@@ -100,7 +100,7 @@
 	// icon_state = "air_rune"
 	name = "风之符文"
 	desc = "摸起来很凉。"
-	remarks = list("To understand these archaic things...", "若施放得当，这也许能……", "我好像刚把手电麻了……")
+	remarks = list("想要理解这些古老之物……", "若施放得当，这也许能……", "我好像刚把手电麻了……")
 
 /obj/item/rune/spell/earth_rune
 	spell = /obj/effect/proc_holder/spell/invoked/projectile/fetch
@@ -108,7 +108,7 @@
 	// icon_state = "earth_rune"
 	name = "土之符文"
 	desc = "比看起来更沉。"
-	remarks = list("To understand these archaic things...", "我只能拉，不能推……", "我的脑子像泥浆一样沉重……")
+	remarks = list("想要理解这些古老之物……", "我只能拉，不能推……", "我的脑子像泥浆一样沉重……")
 
 /obj/item/rune/spell/blank_rune
 	spell = null

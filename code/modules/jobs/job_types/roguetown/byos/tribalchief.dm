@@ -9,9 +9,9 @@
 	spawn_positions = 1
 	selection_color = JCOLOR_TRIBAL
 	allowed_races = list(/datum/species/goblinp, /datum/species/anthromorphsmall, /datum/species/kobold, /datum/species/dracon, /datum/species/halforc)
-	tutorial = "你是本地岛上部族的酋长，也是 The Dragon 统治意志的象征，因为你最强、也最有资格发号施令。你要尽可能扩张祂对众人的支配，同时确保无人惊扰祂的沉眠。\
-	如今有消息称，一支新来的公国势力正打算染指 The Dragon 的岛屿。\
-	命你的族人潜入洞窟与四野，劫掠路人、掳走弱者。将祂的意志施加在这些愚蠢的凡人身上，并以 The Dragon 之名为部族带回黄金与奴隶！"
+	tutorial = "你是本地岛上部族的酋长，也是 龙神 统治意志的象征，因为你最强、也最有资格发号施令。你要尽可能扩张祂对众人的支配，同时确保无人惊扰祂的沉眠。\
+	如今有消息称，一支新来的公国势力正打算染指 龙神 的岛屿。\
+	命你的族人潜入洞窟与四野，劫掠路人、掳走弱者。将祂的意志施加在这些愚蠢的凡人身上，并以 龙神 之名为部族带回黄金与奴隶！"
 	allowed_sexes = list(MALE, FEMALE)
 	advclass_cat_rolls = list(CTAG_TRIBALCHIEFTAIN = 20)
 

@@ -179,10 +179,10 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 		if(SSticker.current_state <= GAME_STATE_PREGAME)
 			if(tready == PLAYER_READY_TO_PLAY)
 				if(length(client.prefs.flavortext) < MINIMUM_FLAVOR_TEXT)
-					to_chat(src, span_boldwarning("You need a minimum of [MINIMUM_FLAVOR_TEXT] characters in your flavor text in order to play."))
+					to_chat(src, span_boldwarning("你需要至少[MINIMUM_FLAVOR_TEXT]个字符的人物描述才能游玩。"))
 					return
 				if(length(client.prefs.ooc_notes) < MINIMUM_OOC_NOTES)
-					to_chat(src, span_boldwarning("You need at least a few words in your OOC notes in order to play."))
+					to_chat(src, span_boldwarning("你需要至少写上几句话的OOC备注才能游玩。"))
 					return
 
 			if(ready != tready)
@@ -206,11 +206,11 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 
 	if(href_list["late_join"])
 		if(!SSticker?.IsRoundInProgress())
-			to_chat(usr, span_boldwarning("The game is starting. You cannot join yet."))
+			to_chat(usr, span_boldwarning("游戏正在开始，你还不能加入。"))
 			return
 
 		if(client && client.prefs.is_active_migrant())
-			to_chat(usr, span_boldwarning("You are in the migrant queue."))
+			to_chat(usr, span_boldwarning("你正处于移民队列中。"))
 			return
 
 		if(href_list["late_join"] == "override")
@@ -218,7 +218,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 			return
 /*#ifdef MATURESERVER
 		if(key && (world.time < GLOB.respawntimes[key] + RESPAWNTIME))
-			to_chat(usr, span_warning("I can return in [GLOB.respawntimes[key] + RESPAWNTIME - world.time]."))
+			to_chat(usr, span_warning("我可以在[GLOB.respawntimes[key] + RESPAWNTIME - world.time]后返回。"))
 			return
 #else*/
 
@@ -248,12 +248,12 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 
 				var/queue_position = SSticker.queued_players.Find(usr)
 				if(queue_position == 1)
-					to_chat(usr, span_notice("Thou art next in line to join the game. You will be notified when a slot opens up."))
+					to_chat(usr, span_notice("阁下排在下一位加入游戏。有空位时会通知您。"))
 				else if(queue_position)
-					to_chat(usr, span_notice("Thou art [queue_position-1] players in front of you in the queue to join the game."))
+					to_chat(usr, span_notice("阁下前面还有[queue_position-1]位玩家在排队等待加入游戏。"))
 				else
 					SSticker.queued_players += usr
-					to_chat(usr, span_notice("Thou have been added to the queue to join the game. Your position in queue is [SSticker.queued_players.len]."))
+					to_chat(usr, span_notice("阁下已被加入游戏等待队列。您排在[SSticker.queued_players.len]位。"))
 				return
 		LateChoices()
 
@@ -262,28 +262,28 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 
 	if(href_list["SelectedJob"])
 		if(!SSticker?.IsRoundInProgress())
-			to_chat(usr, span_danger("The round is either not ready, or has already finished..."))
+			to_chat(usr, span_danger("当前回合要么还未开始，要么已经结束……"))
 			return
 
 		if(!GLOB.enter_allowed)
-			to_chat(usr, span_notice("There is a lock on entering the game!"))
+			to_chat(usr, span_notice("加入游戏已被锁定！"))
 			return
 
 		if(SSticker.queued_players.len && !(ckey(key) in GLOB.admin_datums))
 			if((living_player_count() >= relevant_cap) || (src != SSticker.queued_players[1]))
-				to_chat(usr, span_warning("Server is full."))
+				to_chat(usr, span_warning("服务器已满。"))
 				return
 
 		if(client && client.prefs.is_active_migrant())
-			to_chat(usr, span_boldwarning("You are in the migrant queue."))
+			to_chat(usr, span_boldwarning("你正处于移民队列中。"))
 			return
 
 		if(length(client.prefs.flavortext) < MINIMUM_FLAVOR_TEXT)
-			to_chat(usr, span_boldwarning("You need a minimum of [MINIMUM_FLAVOR_TEXT] characters in your flavor text in order to play."))
+			to_chat(usr, span_boldwarning("你需要至少[MINIMUM_FLAVOR_TEXT]个字符的人物描述才能游玩。"))
 			return
 
 		if(length(client.prefs.ooc_notes) < MINIMUM_OOC_NOTES)
-			to_chat(src, span_boldwarning("You need at least a few words in your OOC notes in order to play."))
+			to_chat(src, span_boldwarning("你需要至少写上几句话的OOC备注才能游玩。"))
 			return
 
 		AttemptLateSpawn(href_list["SelectedJob"])
@@ -341,11 +341,11 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	observer.started_as_observer = TRUE
 	close_spawn_windows()
 	var/obj/effect/landmark/observer_start/O = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
-	to_chat(src, span_notice("Now teleporting."))
+	to_chat(src, span_notice("正在传送。"))
 	if (O)
 		observer.forceMove(O.loc)
 	else
-		to_chat(src, span_notice("Teleporting failed. Ahelp an admin please"))
+		to_chat(src, span_notice("传送失败，请通过管理员帮助（Ahelp）联系管理员。"))
 		stack_trace("There's no freaking observer landmark available on this map or you're making observers before the map is initialised")
 	observer.key = key
 	observer.client = client
@@ -827,7 +827,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 		has_antags = TRUE
 	if(client.prefs.job_preferences.len == 0)
 		if(!ineligible_for_roles)
-			to_chat(src, span_danger("I need to pick a class to join as."))
+			to_chat(src, span_danger("我需要选择一个职业来加入。"))
 		ineligible_for_roles = TRUE
 		ready = PLAYER_NOT_READY
 		if(has_antags)

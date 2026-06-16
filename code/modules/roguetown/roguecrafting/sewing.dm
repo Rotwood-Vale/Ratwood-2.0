@@ -499,7 +499,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/basiceast
-	name = "简易 dobo 长袍"
+	name = "简易多宝长袍"
 	result = list(/obj/item/clothing/suit/roguetown/armor/basiceast)
 	reqs = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 2)
@@ -825,14 +825,14 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/keffiyeh
-	name = "keffiyeh"
+	name = "库菲耶"
 	result = list(/obj/item/clothing/head/roguetown/roguehood/shalal)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/hijab
-	name = "hijab"
+	name = "希贾布"
 	result = list(/obj/item/clothing/head/roguetown/roguehood/shalal/hijab)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
@@ -886,7 +886,7 @@
 	sellprice = 30
 
 /datum/crafting_recipe/roguetown/sewing/grenzelshirt
-	name = "grenzelhoftian 短上衣"
+	name = "格伦泽尔霍夫特的短上衣"
 	result = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft)
 	reqs = list(/obj/item/natural/cloth = 6,
 				/obj/item/natural/fibers = 4,
@@ -991,7 +991,7 @@
 	sellprice = 5
 
 /datum/crafting_recipe/roguetown/sewing/grenzelpants
-	name = "grenzelhoftian paumpers"
+	name = "格伦泽尔霍夫特的蓬裤"
 	result = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants)
 	reqs = list(/obj/item/natural/cloth = 4,
 				/obj/item/natural/fibers = 2,
@@ -1029,7 +1029,7 @@
 	sellprice = 19
 
 /datum/crafting_recipe/roguetown/sewing/nemes
-	name = "nemes"
+	name = "尼梅斯头巾"
 	result = list(/obj/item/clothing/head/roguetown/headdress)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 2)
@@ -1056,7 +1056,7 @@
 	sellprice = 5
 
 /datum/crafting_recipe/roguetown/sewing/grenzelhat
-	name = "grenzelhoftian 帽子"
+	name = "格伦泽尔霍夫特的帽子"
 	result = list(/obj/item/clothing/head/roguetown/grenzelhofthat)
 	reqs = list(/obj/item/natural/cloth = 1,
 				/obj/item/natural/fibers = 1,
@@ -1087,7 +1087,7 @@
 	sellprice = 35
 
 /datum/crafting_recipe/roguetown/sewing/naledisash
-	name = "hierophant 绶带"
+	name = "圣师绶带"
 	result = list(/obj/item/clothing/cloak/hierophant)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 2)
@@ -1136,7 +1136,7 @@
 	sellprice = 20
 
 /datum/crafting_recipe/roguetown/sewing/desertgown
-	name = "hierophant kandys"
+	name = "圣师坎迪斯袍"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/robe/hierophant)
 	reqs = list(/obj/item/natural/cloth = 6,
 				/obj/item/natural/fibers = 4)
@@ -1145,7 +1145,7 @@
 	sellprice = 17
 
 /datum/crafting_recipe/roguetown/sewing/halfrobe
-	name = "hierophant 披巾"
+	name = "圣师披巾"
 	result = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant)
 	reqs = list(/obj/item/natural/cloth = 6,
 				/obj/item/natural/fibers = 5)
@@ -1154,7 +1154,7 @@
 	sellprice = 15
 
 /datum/crafting_recipe/roguetown/sewing/monkrobe
-	name = "pontifex qaba"
+	name = "教宗卡巴袍"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/robe/pointfex)
 	reqs = list(/obj/item/natural/cloth = 6,
 				/obj/item/natural/fibers = 5)
@@ -1181,7 +1181,7 @@
 	sellprice = 13
 
 /datum/crafting_recipe/roguetown/sewing/sleevelessrobefeld
-	name = "feldsher 长袍"
+	name = "军医长袍"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/robe/feld)
 	reqs = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 2)
@@ -1199,7 +1199,7 @@
 	sellprice = 13
 
 /datum/crafting_recipe/roguetown/sewing/hoodfeld
-	name = "feldsher 兜帽"
+	name = "军医兜帽"
 	result = list(/obj/item/clothing/head/roguetown/roguehood/feld)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)

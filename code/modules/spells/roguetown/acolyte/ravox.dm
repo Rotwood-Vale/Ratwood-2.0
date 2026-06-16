@@ -16,7 +16,7 @@
 	associated_skill = /datum/skill/magic/holy
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/timestop.ogg'
-	invocations = list("以 Ravox 之名，起身而战！")
+	invocations = list("以 拉沃克斯 之名，起身而战！")
 	invocation_type = "shout"
 	antimagic_allowed = TRUE
 	miracle = TRUE
@@ -123,7 +123,7 @@
 	warnie = "sydwarning"
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/timestop.ogg'
-	invocations = list("Ravox 认可你的坚忍！")
+	invocations = list("拉沃克斯 认可你的坚忍！")
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
@@ -142,7 +142,7 @@
 				phy.pain_mod *= 1.5
 				addtimer(VARSET_CALLBACK(phy, bleed_mod, phy.bleed_mod /= 1.5), 19 SECONDS)
 				addtimer(VARSET_CALLBACK(phy, pain_mod, phy.pain_mod /= 1.5), 19 SECONDS)
-				human_target.visible_message(span_danger("[target] 的伤口猛然发炎溃痛，生命力也被抽走了！"), span_userdanger("Ravox 令我的伤口灼痛发炎，并削弱了我的身体！"))
+				human_target.visible_message(span_danger("[target] 的伤口猛然发炎溃痛，生命力也被抽走了！"), span_userdanger("拉沃克斯 令我的伤口灼痛发炎，并削弱了我的身体！"))
 				return ..()
 			return FALSE
 
@@ -151,7 +151,7 @@
 		for(var/obj/effect/decal/cleanable/blood/O in oview(5, target))
 			situational_bonus = min(situational_bonus + 0.015, 1)
 		if(situational_bonus > 0.25)
-			to_chat(user, "在这种环境下，引导 Ravox 的力量要容易得多！")
+			to_chat(user, "在这种环境下，引导 拉沃克斯 的力量要容易得多！")
 
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
@@ -191,7 +191,7 @@
 	associated_skill = /datum/skill/magic/holy
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/timestop.ogg'
-	invocations = list("以 Ravox 之名，让你的罪孽引你走向审判！")
+	invocations = list("以 拉沃克斯 之名，让你的罪孽引你走向审判！")
 	invocation_type = "shout"
 	antimagic_allowed = FALSE
 	miracle = TRUE
@@ -245,7 +245,7 @@
 
 /obj/effect/proc_holder/spell/invoked/challenge
 	name = "裁决挑战"
-	desc = "将一名对手一并带入 Ravox 的审判试炼，进行三分钟决斗。"
+	desc = "将一名对手一并带入 拉沃克斯 的审判试炼，进行三分钟决斗。"
 	overlay_icon = 'icons/mob/actions/ravoxmiracles.dmi'
 	action_icon = 'icons/mob/actions/ravoxmiracles.dmi'
 	overlay_state = "ravoxchallenge"
@@ -260,7 +260,7 @@
 	associated_skill = /datum/skill/magic/holy
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/timestop.ogg'
-	invocations = list("以 Ravox 之名，我向你发起挑战！！")
+	invocations = list("以 拉沃克斯 之名，我向你发起挑战！！")
 	chargedloop = /datum/looping_sound/invokeholy
 	invocation_type = "shout"
 	antimagic_allowed = TRUE
@@ -301,13 +301,13 @@ GLOBAL_LIST_EMPTY(arenafolks) // we're just going to use a list and add to it. S
 		do_teleport(target, challengedspawnpoint)
 		GLOB.arenafolks += user
 		GLOB.arenafolks += target
-		storedchallengerturf.visible_message((span_cult("[user] 呼唤了 Ravox 的审判仪式！[target] 与 [user] 一同被带入了试炼！")))
+		storedchallengerturf.visible_message((span_cult("[user] 呼唤了 拉沃克斯 的审判仪式！[target] 与 [user] 一同被带入了试炼！")))
 
 		new /obj/structure/fluff/ravox/challenger/recall(storedchallengerturf)
 		new /obj/structure/fluff/ravox/challenged/recall(storedchallengedturf)
 
 		to_chat(user, span_userdanger("审判已经开始，取悦我们吧，原告！！"))
-		to_chat(target, span_userdanger("Ravox 的审判开始了。取悦我们吧，被告！！"))
+		to_chat(target, span_userdanger("拉沃克斯 的审判开始了。取悦我们吧，被告！！"))
 
 		user.cmode_change('sound/music/ravoxarena.ogg')
 		target.cmode_change('sound/music/ravoxarena.ogg')
@@ -368,13 +368,13 @@ GLOBAL_LIST_EMPTY(arenafolks) // we're just going to use a list and add to it. S
 				var/mob/living/M = AM
 				M.Paralyze(10)
 				M.adjustBruteLoss(20)
-				to_chat(M, "<span class='danger'>你被 Ravox 的力量狠狠砸向了地面！！</span>")
+				to_chat(M, "<span class='danger'>你被 拉沃克斯 的力量狠狠砸向了地面！！</span>")
 		else
 			new sparkle_path(get_turf(AM), get_dir(src, AM)) //created sparkles will disappear on their own
 			if(isliving(AM))
 				var/mob/living/M = AM
 				M.Paralyze(5)
-				to_chat(M, "<span class='danger'>你被 Ravox 的力量猛地掀飞了出去！！</span>")
+				to_chat(M, "<span class='danger'>你被 拉沃克斯 的力量猛地掀飞了出去！！</span>")
 			AM.safe_throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromflag - 2, 0, distfromflag))), 3, maxthrow))), 1,null, force = repulse_force)
 
 

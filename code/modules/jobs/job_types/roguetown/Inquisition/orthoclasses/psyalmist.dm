@@ -3,7 +3,7 @@
 //Knives exist the same way it does on Arbalist, as a 'just in case'.
 /datum/advclass/psyaltrist
 	name = "圣咏师"
-	tutorial = "你曾在大教堂唱诗班与 psyaltrist 们身边修习一段时日。如今，你日复一日地把音乐之艺用于实务，为至圣审判庭效力。"
+	tutorial = "你曾在大教堂唱诗班与 圣咏师 们身边修习一段时日。如今，你日复一日地把音乐之艺用于实务，为至圣审判庭效力。"
 	outfit = /datum/outfit/job/roguetown/psyaltrist
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_EMPATH, TRAIT_DODGEEXPERT)

@@ -431,7 +431,7 @@
 	return ..()
 
 /atom/movable/screen/alert/status_effect/malum_revival
-	name = "Malum 之担"
+	name = "玛勒姆 之担"
 	desc = "你的身体沉重无比，恢复起来也格外缓慢。"
 	icon_state = "malum_burden"
 
@@ -448,7 +448,7 @@
 	return ..()
 
 /atom/movable/screen/alert/status_effect/ravox_revival
-	name = "Ravox 之衰"
+	name = "拉沃克斯 之衰"
 	desc = "你的肌肉绵软无力，动作也变得迟缓。"
 	icon_state = "ravox_weakness"
 
@@ -465,7 +465,7 @@
 	return ..()
 
 /atom/movable/screen/alert/status_effect/dendor_revival
-	name = "Dendor 之缓"
+	name = "登多尔 之缓"
 	desc = "你的动作仿佛被无形根须缠住，身体也变得脆弱不堪。"
 	icon_state = "dendor_sluggish"
 
@@ -526,7 +526,7 @@
 	can_cauterize = FALSE
 
 /atom/movable/screen/alert/status_effect/noc_revival
-	name = "Noc 的月照诅咒"
+	name = "诺克 的月照诅咒"
 	desc = "你的思绪一片昏沉，而月光会灼伤你的皮肤。"
 	icon_state = "noc_curse"
 

@@ -4,7 +4,7 @@
 //Middling skills. Half-half stats. A niche. Outside of their miracles.
 /datum/advclass/puritan/arbiter
 	name = "裁决官"
-	tutorial = "不同于 Ordinator 或 Inspector，Arbiter 所承担的是截然不同的职责。 \
+	tutorial = "不同于 裁断官 或 监察官，裁决官 所承担的是截然不同的职责。 \
 	你出身于战斗祭司之列，至今仍在被腐败侵蚀的土地上作战，对那份腐朽之触有着异乎寻常的感应。 \
 	借助稀有而危险的大能神迹，你能嗅出污秽，再把异端一个接一个送上火刑架。"
 	outfit = /datum/outfit/job/roguetown/puritan/arbiter

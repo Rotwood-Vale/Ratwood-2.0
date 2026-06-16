@@ -73,7 +73,7 @@
 
 	var/obj/effect/proc_holder/spell/invoked/divine_rebirth/new_spell = new()
 	parent_mob.mind.AddSpell(new_spell)
-	to_chat(parent_mob, span_notice("随着 Pestra 的虫灾在我体内溃烂生长，我感到一股新力量正涌入核心！现在可以使用 [new_spell.name] 了。"))
+	to_chat(parent_mob, span_notice("随着 佩斯特拉 的虫灾在我体内溃烂生长，我感到一股新力量正涌入核心！现在可以使用 [new_spell.name] 了。"))
 
 /datum/component/infestation_charges/proc/remove_divine_rebirth()
 	if(!parent_mob?.mind)
@@ -82,7 +82,7 @@
 	var/obj/effect/proc_holder/spell/invoked/divine_rebirth/existing = parent_mob.mind.get_spell(/obj/effect/proc_holder/spell/invoked/divine_rebirth)
 	if(existing)
 		parent_mob.mind.RemoveSpell(existing)
-		to_chat(parent_mob, span_warning("随着 Pestra 在我体内的虫灾逐渐衰退，我暂时失去了她最强大的赐礼。现在已无法使用 [existing.name]。"))
+		to_chat(parent_mob, span_warning("随着 佩斯特拉 在我体内的虫灾逐渐衰退，我暂时失去了她最强大的赐礼。现在已无法使用 [existing.name]。"))
 
 /datum/component/infestation_charges/proc/divine_rebirth_cast(mob/living/user, mob/living/target)
 	SIGNAL_HANDLER
