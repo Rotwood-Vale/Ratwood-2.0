@@ -8,7 +8,6 @@
 	var/shown = 0
 	var/mob/user
 	var/listindex
-	var/list/tracked_clients
 
 /datum/progressbar/New(mob/User, goal_number, atom/target)
 	. = ..()
@@ -20,6 +19,8 @@
 	bar.plane = ABOVE_HUD_PLANE
 	bar.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	user = User
+	for (var/client/C in GLOB.clients)
+		C.images += bar
 
 	LAZYINITLIST(user.progressbars)
 	LAZYINITLIST(user.progressbars[bar.loc])
@@ -31,13 +32,6 @@
 	animate(bar, pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 
 /datum/progressbar/proc/update(progress)
-	if(!tracked_clients)
-		tracked_clients = list()
-	for(var/mob/M in viewers(user, null))
-		if(M.client)
-			M.client.images |= bar
-			tracked_clients |= M.client
-
 	progress = CLAMP(progress, 0, goal)
 	last_progress = progress
 	bar.icon_state = "prog_bar_[round(((progress / goal) * 100), 5)]"
@@ -68,10 +62,9 @@
 	return ..()
 
 /datum/progressbar/proc/remove_from_client()
-	for(var/client/C in tracked_clients)
+	for (var/client/C in GLOB.clients)
 		C.images -= bar
 	bar = null
-	tracked_clients = null
 
 #undef PROGRESSBAR_ANIMATION_TIME
 #undef PROGRESSBAR_HEIGHT
