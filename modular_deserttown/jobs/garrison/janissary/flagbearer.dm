@@ -1,7 +1,6 @@
 /datum/advclass/janissary/flagbearer
-	name = "Standard Bearer"
-	tutorial = "You're the sergeant's second, entrusted with the palace's standard when you sally out into battle. \
-	Your fellow soldiers know to rally around you, should you keep it safe."
+	name = "旗手"
+	tutorial = "你是军士长的副手，受命在出征时执掌宫廷旗帜。只要旗帜不倒，你的战友们便知道该向何处集结。"
 	outfit = /datum/outfit/job/roguetown/janissary/flagbearer
 	category_tags = list(CTAG_JANISSARY)
 	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_STANDARD_BEARER)
@@ -42,11 +41,11 @@
 	H.verbs |= /mob/proc/haltyell
 
 	if(H.mind)
-		var/weapons = list("Pike","Poleaxe")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("长矛","戟斧")
+		var/weapon_choice = input(H, "选择你的武器：", "拿起武器") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Pike")
+			if("长矛")
 				r_hand = /obj/item/rogueweapon/spear/keep_standard
-			if("Poleaxe")
+			if("戟斧")
 				r_hand = /obj/item/rogueweapon/spear/keep_standard/poleaxe

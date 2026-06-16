@@ -1,7 +1,7 @@
 // In exchange for martial skills beyond ranged, they can now set traps, too.
 /datum/advclass/janissary/jezail
-	name = "Janissary Jezail"
-	tutorial = "You are a professional soldier of the realm, specializing in ranged implements. You sport a keen eye, looking for your enemies weaknesses."
+	name = "耶尼切里杰扎伊尔"
+	tutorial = "你是王国的职业士兵，专精远程武器。你目光敏锐，时刻寻找敌人的弱点。"
 	outfit = /datum/outfit/job/roguetown/janissary/jezail
 
 	maximum_possible_slots = 2//One always tells the truth, the other only lies. Guess wrong and they both shoot you.
@@ -69,14 +69,14 @@
 		// 		beltr = /obj/item/quiver/bullet/grapeshot
 		// 		r_hand = /obj/item/gun/ballistic/firearm/blunderbuss
 
-		var/weapons2 = list("Scimitar","Whip","Club")
-		var/weapon_choice2 = input(H, "Choose your sidearm.", "TAKE UP ARMS") as anything in weapons2
+		var/weapons2 = list("弯刀","鞭","棍棒")
+		var/weapon_choice2 = input(H, "选择你的副武器。", "拿起武器") as anything in weapons2
 		switch(weapon_choice2)
-			if("Scimitar")
+			if("弯刀")
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				l_hand = /obj/item/rogueweapon/sword/sabre/iron
-			if("Whip")
+			if("鞭")
 				beltl = /obj/item/rogueweapon/whip
-			if("Club")
+			if("棍棒")
 				beltl = /obj/item/rogueweapon/mace/cudgel
 		H.verbs |= /mob/proc/haltyell

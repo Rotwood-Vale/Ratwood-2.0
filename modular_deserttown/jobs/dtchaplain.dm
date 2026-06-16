@@ -1,5 +1,6 @@
 /datum/job/roguetown/dtchaplain
 	title = "Palace Chaplain"
+	display_title = "宫廷牧师"
 	flag = DTCHAPLAIN
 	department_flag = COURTIERS
 	faction = "Station"
@@ -10,7 +11,7 @@
 	allowed_patrons = list(/datum/patron/old_god)
 	allowed_sexes = list(MALE, FEMALE)
 	outfit = /datum/outfit/job/roguetown/dtchaplain
-	tutorial = "SOMETHING SOMETHING PSYDON, something something REFUGEE TENNITES in your BIG TEMPLE... UNEASY ALLIANCE? Brokering PEACE  with the tennites? Idunno!"
+	tutorial = "普赛顿诸事……十神信徒难民涌入你的大神殿……脆弱的同盟？与十神信徒缔结和平？谁知道呢！"
 	display_order = JDO_CHAPLAIN
 	give_bank_account = TRUE
 	min_pq = 5
@@ -26,8 +27,8 @@
 	)
 
 /datum/advclass/dtchaplain
-	name = "Palace Chaplain"
-	tutorial = "SOMETHING SOMETHING PSYDON, something something REFUGEE TENNITES in your BIG TEMPLE... UNEASY ALLIANCE? Brokering PEACE  with the tennites? Idunno!"
+	name = "宫廷牧师"
+	tutorial = "普赛顿诸事……十神信徒难民涌入你的大神殿……脆弱的同盟？与十神信徒缔结和平？谁知道呢！"
 	outfit = /datum/outfit/job/roguetown/dtchaplain
 	subclass_languages = list(/datum/language/otavan, /datum/language/celestial)
 	category_tags = list(CTAG_DTCHAPLAIN)
@@ -48,7 +49,7 @@
 		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,//fancy lad school
 	)
 	subclass_stashed_items = list(
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+		"普赛顿圣典" = /obj/item/book/rogue/bibble/psy
 	)
 
 /datum/outfit/job/roguetown/dtchaplain

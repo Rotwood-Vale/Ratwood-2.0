@@ -175,19 +175,19 @@
 		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/zyb
 
 /obj/effect/proc_holder/spell/self/convertrole/slave
-	name = "Recruit Slave"
-	new_role = "Slave"
+	name = "招募奴隶"
+	new_role = "奴隶"
 	overlay_state = "recruit_servant"
-	recruitment_faction = "Servants"
-	recruitment_message = "Serve the crown, %RECRUIT!"
-	accept_message = "I OBEY, MASTER!"
-	refuse_message = "I refuse."
+	recruitment_faction = "仆从"
+	recruitment_message = "为王室效命，%RECRUIT！"
+	accept_message = "遵命，主人！"
+	refuse_message = "我拒绝。"
 	recharge_time = 100
 
 /obj/effect/proc_holder/spell/self/convertrole/azeb
-	name = "Recruit Azeb"
-	new_role = "Azeb"
-	recruitment_faction = "Bog Guard"
-	recruitment_message = "Serve the my will, %RECRUIT!"
-	accept_message = "FOR THE SULTAN!"
-	refuse_message = "I refuse."
+	name = "招募阿塞卜"
+	new_role = "阿塞卜"
+	recruitment_faction = "沼泽卫队"
+	recruitment_message = "遵行我的意志，%RECRUIT！"
+	accept_message = "为了苏丹！"
+	refuse_message = "我拒绝。"

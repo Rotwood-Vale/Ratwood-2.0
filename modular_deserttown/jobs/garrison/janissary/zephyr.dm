@@ -1,7 +1,7 @@
 // In exchange for martial skills beyond ranged, they can now set traps, too.
 /datum/advclass/janissary/zephyr
-	name = "Janissary Zephyr"
-	tutorial = "You are a professional soldier of the realm, specializing in ranged implements. You sport a keen eye, looking for your enemies weaknesses."
+	name = "耶尼切里西风"
+	tutorial = "你是王国的职业士兵，专精远程武器。你目光敏锐，时刻寻找敌人的弱点。"
 	outfit = /datum/outfit/job/roguetown/janissary/zephyr
 
 	category_tags = list(CTAG_JANISSARY)
@@ -29,7 +29,7 @@
 		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/crafting = SKILL_LEVEL_NOVICE,
 	)
-	extra_context = "Can set traps."
+	extra_context = "可设置陷阱。"
 
 /datum/outfit/job/roguetown/janissary/zephyr/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -49,38 +49,38 @@
 
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Crossbow","Bow","Sling")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
-		var/armor_options = list("Light Armor", "Medium Armor")
-		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in armor_options
+		var/weapons = list("弩","弓","投石索")
+		var/weapon_choice = input(H, "选择你的武器：", "拿起武器") as anything in weapons
+		var/armor_options = list("轻甲", "中甲")
+		var/armor_choice = input(H, "选择你的护甲：", "拿起武器") as anything in armor_options
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Crossbow")
+			if("弩")
 				beltr = /obj/item/quiver/bolts
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-			if("Bow") // They can head down to the armory to sideshift into one of the other bows.
+			if("弓") // They can head down to the armory to sideshift into one of the other bows.
 				beltr = /obj/item/quiver/arrows
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-			if("Sling")
+			if("投石索")
 				beltr = /obj/item/quiver/sling/iron
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling // Both are belt slots and it's not worth setting where the cugel goes for everyone else, sad.
 				
-		var/weapons2 = list("Scimitar","Whip","Club")
-		var/weapon_choice2 = input(H, "Choose your sidearm.", "TAKE UP ARMS") as anything in weapons2
+		var/weapons2 = list("弯刀","鞭","棍棒")
+		var/weapon_choice2 = input(H, "选择你的副武器：", "拿起武器") as anything in weapons2
 		switch(weapon_choice2)
-			if("Scimitar")
+			if("弯刀")
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				l_hand = /obj/item/rogueweapon/sword/sabre/iron
-			if("Whip") // They can head down to the armory to sideshift into one of the other bows.
+			if("鞭") // They can head down to the armory to sideshift into one of the other bows.
 				beltl = /obj/item/rogueweapon/whip
-			if("Club")
+			if("棍棒")
 				beltl = /obj/item/rogueweapon/mace/cudgel
 
 		switch(armor_choice)
-			if("Light Armor")
+			if("轻甲")
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-			if("Medium Armor")
+			if("中甲")
 				armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/janissary
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 

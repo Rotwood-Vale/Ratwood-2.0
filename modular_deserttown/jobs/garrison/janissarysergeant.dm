@@ -1,5 +1,6 @@
 /datum/job/roguetown/janissarysergeant
 	title = "Janissary Sergeant"// Googling terms Naqib seems to mean something like Captain and has a nice ring to it?
+	display_title = "耶尼切里军士长"
 	flag = JANISSARYSERGEANT
 	department_flag = GARRISON
 	faction = "Station"
@@ -8,8 +9,8 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
-	tutorial = "You are the most experienced of the SULTAN's Soldiery, leading the Janissary in maintaining order and attending to threats and crimes below the PALACE's attention. \
-				See to those under your command and fill in the gaps CATAPHRACTS leave in their wake. Obey the orders of your Marshal and the SULTAN."
+	tutorial = "你是苏丹军中最富经验的战士，统领耶尼切里维持秩序，处理宫廷无暇顾及的各种威胁与罪行。 \
+				照看好你的部下，填补铁甲骑兵留下的空缺。听从执法官和苏丹的命令。"
 	display_order = JDO_SERGEANT
 	whitelist_req = TRUE
 	round_contrib_points = 3
@@ -51,9 +52,9 @@
 	id = /obj/item/scomstone/garrison
 
 /datum/advclass/janissarysergeant/janissarysergeant
-	name = "Sergeant-at-Arms"
-	tutorial = "You are the most experienced of the SULTAN's Soldiery, leading the Janissary in maintaining order and attending to threats and crimes below the PALACE's attention. \
-				See to those under your command and fill in the gaps CATAPHRACTS leave in their wake. Obey the orders of your Marshal and the SULTAN."
+	name = "军士长"
+	tutorial = "你是苏丹军中最富经验的战士，统领耶尼切里维持秩序，处理宫廷无暇顾及的各种威胁与罪行。 \
+				照看好你的部下，填补铁甲骑兵留下的空缺。听从执法官和苏丹的命令。"
 	outfit = /datum/outfit/job/roguetown/janissarysergeant/janissarysergeant
 
 	category_tags = list(CTAG_JANISSARYSERGEANT)
@@ -103,27 +104,27 @@
 		)
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Rhomphaia","Whip & Shield","Glaive","Sabre & Crossbow")	//Bit more unique than footsman, you are a jack-of-all-trades + slightly more 'elite'.
+		var/weapons = list("罗姆法亚长刃","鞭与盾","长柄刃","军刀与弩")	//Bit more unique than footsman, you are a jack-of-all-trades + slightly more 'elite'.
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Rhomphaia")
+			if("罗姆法亚长刃")
 				backl = /obj/item/rogueweapon/scabbard/sword
 				l_hand = /obj/item/rogueweapon/sword/long/rhomphaia
 				beltr = /obj/item/rogueweapon/mace/cudgel
-			if("Whip & Shield")
+			if("鞭与盾")
 				beltr = /obj/item/rogueweapon/flail/sflail
 				backl = /obj/item/rogueweapon/shield/tower
-			if("Glaive")
+			if("长柄刃")
 				r_hand = /obj/item/rogueweapon/halberd/glaive
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				beltr = /obj/item/rogueweapon/mace/cudgel
-			if("Sabre & Crossbow")
+			if("军刀与弩")
 				beltr = /obj/item/quiver/bolts
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				r_hand = /obj/item/rogueweapon/sword/sabre
 				beltl = /obj/item/rogueweapon/scabbard/sword
 
 /obj/item/clothing/cloak/catcloak/jancap
-	name = "janissary sergeant's cloak"
-	desc = "A most handsome cloak, of royal red, denoting the authority of a leader."
+	name = "耶尼切里军士长披风"
+	desc = "一件极为俊美的披风，王家之红彰显着领袖的权威。"

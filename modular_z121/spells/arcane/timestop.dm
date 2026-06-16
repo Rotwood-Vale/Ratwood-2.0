@@ -334,6 +334,8 @@
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
 	spell_tier = 4
+	action_icon = 'modular_z121/icon/custompell.dmi'
+	overlay_state = "time"
 	gesture_required = TRUE
 	invocations = list("THE WORLD!")
 	invocation_type = "shout"

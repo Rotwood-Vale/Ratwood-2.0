@@ -1,5 +1,6 @@
 /datum/job/roguetown/azeb
 	title = "Azeb"
+	display_title = "阿塞卜"
 	flag = BOGGUARD
 	department_flag = GARRISON
 	faction = "Station"
@@ -9,9 +10,9 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
-	tutorial = "Beholden to the royal family as property, you where raised from birth as a slave soldier. \
-		Sent to guard the border and keep the city safe as your more esteemed counterparts live lavishly within the city\
-		 walls yours is a thankless duty but one that must be upheld."
+	tutorial = "你从出生起便作为奴隶士兵被训练，是效忠皇室的财产。 \
+		你被派去守卫边境、保卫城市，而你那些更高贵的同袍则在城墙内尽情享乐。 \
+		你的职责虽无人感激，却必须坚守。"
 	
 	display_order = JDO_TOWNGUARD
 	whitelist_req = TRUE
@@ -52,9 +53,9 @@
 	job_bitflag = BITFLAG_GARRISON
 
 /datum/advclass/azeb/ranger
-	name = "Ranger"
-	tutorial = "You are well versed in the ways of handling a bow. \
-	You will stand in the back, and protect the front with arrows."
+	name = "游侠"
+	tutorial = "你精通弓箭之道。 \
+	你将站在后排，以前方的箭矢保护队友。"
 	outfit = /datum/outfit/job/roguetown/azeb/ranger
 	category_tags = list(CTAG_AZEB)
 	traits_applied = list(TRAIT_DODGEEXPERT)
@@ -114,9 +115,9 @@
 	H.set_blindness(0)
 
 /datum/advclass/azeb/footman
-	name = "Footman"
-	tutorial = "You are well versed in the ways of handling a sword. \
-	You will stand in the front, and protect."
+	name = "步兵"
+	tutorial = "你精通剑术之道。 \
+	你将站在前排，守护身后。"
 	outfit = /datum/outfit/job/roguetown/azeb/footman
 	category_tags = list(CTAG_AZEB)
 	traits_applied = list(TRAIT_MEDIUMARMOR)

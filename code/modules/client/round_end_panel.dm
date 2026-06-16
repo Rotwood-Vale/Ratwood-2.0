@@ -7,8 +7,8 @@
 
 	// Navigation buttons
 	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
-	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>CHRONICLE</a>"
-	data += "<a href='byond://?src=[REF(src)];viewinfluences=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>INFLUENCES</a>"
+	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>编年史</a>"
+	data += "<a href='byond://?src=[REF(src)];viewinfluences=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>影响力</a>"
 	data += "</div>"
 
 	// Divider
@@ -18,13 +18,13 @@
 
 	// Chronicle sub-tabs
 	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Gods' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #4a4a5a, #2a2a3a); border: 1px solid #6a6a7a; border-bottom: 2px solid #9a9aaa; color: #e0e0f0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>GODS</a>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Messages' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a1a, #1a120a); border: 1px solid #5a4a3a; border-bottom: 2px solid #8a7a6a; color: #d4c4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>WHISPERS</a>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=The Realm' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #2a2a3a, #0a0a1a); border: 1px solid #4a4a5a; border-bottom: 2px solid #7a7a8a; color: #c4c4d4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>THE REALM</a>"
-	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a0a, #1a1200); border: 1px solid #5a4a1a; border-bottom: 2px solid #8a7a3a; color: #dec97a; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>STATISTICS</a>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Heroes' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a4a5a, #1a1b2a); border: 1px solid #6a7b8a; border-bottom: 2px solid #8f9caa; color: #c0c0d0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>HEROES</a>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Villains' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a1a1a, #1a0a0a); border: 1px solid #5a3a3a; border-bottom: 2px solid #8a6a6a; color: #d4b4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>VILLAINS</a>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Outlaws' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #5a3a0a, #3a1a0a); border: 1px solid #7a5a2a; border-bottom: 2px solid #aa8a5a; color: #ffd494; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>OUTLAWS</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Gods' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #4a4a5a, #2a2a3a); border: 1px solid #6a6a7a; border-bottom: 2px solid #9a9aaa; color: #e0e0f0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>诸神</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Messages' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a1a, #1a120a); border: 1px solid #5a4a3a; border-bottom: 2px solid #8a7a6a; color: #d4c4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>低语</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=The Realm' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #2a2a3a, #0a0a1a); border: 1px solid #4a4a5a; border-bottom: 2px solid #7a7a8a; color: #c4c4d4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>王国</a>"
+	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a0a, #1a1200); border: 1px solid #5a4a1a; border-bottom: 2px solid #8a7a3a; color: #dec97a; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>统计</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Heroes' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a4a5a, #1a1b2a); border: 1px solid #6a7b8a; border-bottom: 2px solid #8f9caa; color: #c0c0d0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>英雄</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Villains' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a1a1a, #1a0a0a); border: 1px solid #5a3a3a; border-bottom: 2px solid #8a6a6a; color: #d4b4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>恶徒</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Outlaws' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #5a3a0a, #3a1a0a); border: 1px solid #7a5a2a; border-bottom: 2px solid #aa8a5a; color: #ffd494; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>亡命之徒</a>"
 	data += "</div>"
 
 	// Content
@@ -70,21 +70,21 @@
 
 	if(max_influence <= 0 && max_chosen <= 0)
 		data += "<div style='font-size: 1.2em; font-weight: bold; margin-bottom: 12px;'>"
-		data += "No <span style='color: #bd1717;'>Gods</span>, No <span style='color: #bd1717;'>Masters</span>"
+		data += "无<span style='color: #bd1717;'>诸神</span>，无<span style='color: #bd1717;'>主宰</span>"
 		data += "</div>"
 	else
 		if(most_influential == most_frequent && max_influence > 0)
 			data += "<div style='font-size: 1.2em; font-weight: bold; margin-bottom: 12px;'>"
-			data += "The most dominant God was <span style='color:[most_influential.color_theme];'>[most_influential.name]</span>"
+			data += "最具统治力的神祇是<span style='color:[most_influential.color_theme];'>[most_influential.name]</span>"
 			data += "</div>"
 		else
 			if(max_influence > 0)
 				data += "<div style='font-size: 1.2em; font-weight: bold; margin-bottom: 12px;'>"
-				data += "The most influential God is <span style='color:[most_influential.color_theme];'>[most_influential.name]</span>"
+				data += "最具影响力的神祇是<span style='color:[most_influential.color_theme];'>[most_influential.name]</span>"
 				data += "</div>"
 			if(max_chosen > 0)
 				data += "<div style='font-size: 1.2em; font-weight: bold; margin-bottom: 12px;'>"
-				data += "The longest reigning God was <span style='color:[most_frequent.color_theme];'>[most_frequent.name]</span>"
+				data += "统治最久的神祇是<span style='color:[most_frequent.color_theme];'>[most_frequent.name]</span>"
 				data += "</div>"
 
 	data += "<div style='border-top: 1.5px solid #444; margin: 15px auto; width: 100%;'></div>"
@@ -98,7 +98,7 @@
 	data += "<div style='display: table-cell; width: 30%; vertical-align: top; padding-right: 15px;'>"
 	data += "<div style='height: 38px; text-align: center;'>"
 	data += "<a href='byond://?src=[REF(src)];viewstats=1;featured_stat=[prev_stat]' style='color: #e6b327; text-decoration: none; font-weight: bold; margin-right: 10px; font-size: 1.2em;'>&#9664;</a>"
-	data += "<span style='font-weight: bold; color: #bd1717;'>Featured Statistics</span>"
+	data += "<span style='font-weight: bold; color: #bd1717;'>精选统计</span>"
 	data += "<a href='byond://?src=[REF(src)];viewstats=1;featured_stat=[next_stat]' style='color: #e6b327; text-decoration: none; font-weight: bold; margin-left: 10px; font-size: 1.2em;'>&#9654;</a>"
 	data += "</div>"
 	data += "<div style='border-top: 1px solid #444; width: 80%; margin: 0 auto 15px auto;'></div>"
@@ -115,14 +115,14 @@
 	var/has_entries = length(GLOB.featured_stats[current_featured]["entries"])
 
 	if(stat_is_admin_only && !holder)
-		data += "<div style='margin-top: 20px;'>Admin Eyes Only...</div>"
+		data += "<div style='margin-top: 20px;'>仅限管理员查看...</div>"
 	else if(has_entries)
 		if(stat_is_object)
 			data += format_top_stats_objects(current_featured)
 		else
 			data += format_top_stats(current_featured)
 	else
-		data += "<div style='margin-top: 20px;'>[stat_is_object ? "None" : "Nobody"]</div>"
+		data += "<div style='margin-top: 20px;'>[stat_is_object ? "无" : "无人"]</div>"
 
 	data += "</div>"
 	data += "</div>"
@@ -131,43 +131,43 @@
 	// General Statistics Section (37%)
 	data += "<div style='display: table-cell; width: 37%; vertical-align: top;'>"
 	data += "<div style='height: 38px; text-align: center;'>"
-	data += "<span style='font-weight: bold; color: #bd1717;'>General Statistics</span>"
+	data += "<span style='font-weight: bold; color: #bd1717;'>综合统计</span>"
 	data += "</div>"
 	data += "<div style='border-top: 1px solid #444; width: 80%; margin: 0 auto 15px auto;'></div>"
 	data += "<div style='display: table; width: 100%;'>"
 
 	// Left column
 	data += "<div style='display: table-cell; width: 50%; vertical-align: top; border-left: 1px solid #444; padding: 0 10px;'>"
-	data += "<font color='#9b6937'><span class='bold'>Total Deaths:</span></font> [GLOB.azure_round_stats[STATS_DEATHS]]<br>"
-	data += "<font color='#6b5ba1'><span class='bold'>Noble Deaths:</span></font> [GLOB.azure_round_stats[STATS_NOBLE_DEATHS]]<br>"
-	data += "<font color='#e6b327'><span class='bold'>Revivals:</span></font> [GLOB.azure_round_stats[STATS_ASTRATA_REVIVALS]]<br>"
-	data += "<font color='#2dc5bd'><span class='bold'>Lux Revivals:</span></font> [GLOB.azure_round_stats[STATS_LUX_REVIVALS]]<br>"
-	data += "<font color='#825b1c'><span class='bold'>Moat Fallers:</span></font> [GLOB.azure_round_stats[STATS_MOAT_FALLERS]]<br>"
-	data += "<font color='#ac5d5d'><span class='bold'>Ankles Broken:</span></font> [GLOB.azure_round_stats[STATS_ANKLES_BROKEN]]<br>"
-	data += "<font color='#e6d927'><span class='bold'>People Smitten:</span></font> [GLOB.azure_round_stats[STATS_PEOPLE_SMITTEN]]<br>"
-	data += "<font color='#50aeb4'><span class='bold'>People Drowned:</span></font> [GLOB.azure_round_stats[STATS_PEOPLE_DROWNED]]<br>"
-	data += "<font color='#8f816b'><span class='bold'>Items Stolen:</span></font> [GLOB.azure_round_stats[STATS_ITEMS_PICKPOCKETED]]<br>"
-	data += "<font color='#c24bc2'><span class='bold'>Drugs Snorted:</span></font> [GLOB.azure_round_stats[STATS_DRUGS_SNORTED]]<br>"
-	data += "<font color='#90a037'><span class='bold'>Laughs Had:</span></font> [GLOB.azure_round_stats[STATS_LAUGHS_MADE]]<br>"
-	data += "<font color='#f5c02e'><span class='bold'>Taxes Collected:</span></font> [GLOB.azure_round_stats[STATS_TAXES_COLLECTED]]<br>"
-	data += "<font color='#f37746'><span class='bold'>Consumed by Greed:</span></font> [GLOB.azure_round_stats[STATS_GREED_DUSTED]]<br>"
+	data += "<font color='#9b6937'><span class='bold'>总死亡数:</span></font> [GLOB.azure_round_stats[STATS_DEATHS]]<br>"
+	data += "<font color='#6b5ba1'><span class='bold'>贵族死亡数:</span></font> [GLOB.azure_round_stats[STATS_NOBLE_DEATHS]]<br>"
+	data += "<font color='#e6b327'><span class='bold'>复活数:</span></font> [GLOB.azure_round_stats[STATS_ASTRATA_REVIVALS]]<br>"
+	data += "<font color='#2dc5bd'><span class='bold'>灵辉复活数:</span></font> [GLOB.azure_round_stats[STATS_LUX_REVIVALS]]<br>"
+	data += "<font color='#825b1c'><span class='bold'>落壕者:</span></font> [GLOB.azure_round_stats[STATS_MOAT_FALLERS]]<br>"
+	data += "<font color='#ac5d5d'><span class='bold'>脚踝骨折数:</span></font> [GLOB.azure_round_stats[STATS_ANKLES_BROKEN]]<br>"
+	data += "<font color='#e6d927'><span class='bold'>被天谴者:</span></font> [GLOB.azure_round_stats[STATS_PEOPLE_SMITTEN]]<br>"
+	data += "<font color='#50aeb4'><span class='bold'>溺亡者:</span></font> [GLOB.azure_round_stats[STATS_PEOPLE_DROWNED]]<br>"
+	data += "<font color='#8f816b'><span class='bold'>物品被盗数:</span></font> [GLOB.azure_round_stats[STATS_ITEMS_PICKPOCKETED]]<br>"
+	data += "<font color='#c24bc2'><span class='bold'>吸食毒品数:</span></font> [GLOB.azure_round_stats[STATS_DRUGS_SNORTED]]<br>"
+	data += "<font color='#90a037'><span class='bold'>欢笑次数:</span></font> [GLOB.azure_round_stats[STATS_LAUGHS_MADE]]<br>"
+	data += "<font color='#f5c02e'><span class='bold'>税款征收额:</span></font> [GLOB.azure_round_stats[STATS_TAXES_COLLECTED]]<br>"
+	data += "<font color='#f37746'><span class='bold'>被贪婪吞噬者:</span></font> [GLOB.azure_round_stats[STATS_GREED_DUSTED]]<br>"
 	data += "</div>"
 
 	// Right column
 	data += "<div style='display: table-cell; width: 50%; vertical-align: top; padding: 0 15px;'>"
-	data += "<font color='#36959c'><span class='bold'>Triumphs Awarded:</span></font> [GLOB.azure_round_stats[STATS_TRIUMPHS_AWARDED]]<br>"
-	data += "<font color='#a02fa4'><span class='bold'>Triumphs Stolen:</span></font> [GLOB.azure_round_stats[STATS_TRIUMPHS_STOLEN] * -1]<br>"
-	data += "<font color='#d7da2f'><span class='bold'>Prayers Made:</span></font> [GLOB.azure_round_stats[STATS_PRAYERS_MADE]]<br>"
-	data += "<font color='#bacfd6'><span class='bold'>Graves Consecrated:</span></font> [GLOB.azure_round_stats[STATS_GRAVES_CONSECRATED]]<br>"
-	data += "<font color='#9c3e46'><span class='bold'>Active Deadites:</span></font> [GLOB.azure_round_stats[STATS_DEADITES_ALIVE]]<br>"
-	data += "<font color='#0f555c'><span class='bold'>Beards Shaved:</span></font> [GLOB.azure_round_stats[STATS_BEARDS_SHAVED]]<br>"
-	data += "<font color='#6e7c81'><span class='bold'>Skills Learned:</span></font> [GLOB.azure_round_stats[STATS_SKILLS_LEARNED]]<br>"
-	data += "<font color='#23af4d'><span class='bold'>Plants Harvested:</span></font> [GLOB.azure_round_stats[STATS_PLANTS_HARVESTED]]<br>"
-	data += "<font color='#4492a5'><span class='bold'>Fish Caught:</span></font> [GLOB.azure_round_stats[STATS_FISH_CAUGHT]]<br>"
-	data += "<font color='#836033'><span class='bold'>Trees Felled:</span></font> [GLOB.azure_round_stats[STATS_TREES_CUT]]<br>"
-	data += "<font color='#af2323'><span class='bold'>Organs Eaten:</span></font> [GLOB.azure_round_stats[STATS_ORGANS_EATEN]]<br>"
-	data += "<font color='#afa623'><span class='bold'>Locks Picked:</span></font> [GLOB.azure_round_stats[STATS_LOCKS_PICKED]]<br>"
-	data += "<font color='#af2379'><span class='bold'>Kisses Made:</span></font> [GLOB.azure_round_stats[STATS_KISSES_MADE]]<br>"
+	data += "<font color='#36959c'><span class='bold'>凯旋授予数:</span></font> [GLOB.azure_round_stats[STATS_TRIUMPHS_AWARDED]]<br>"
+	data += "<font color='#a02fa4'><span class='bold'>凯旋被窃数:</span></font> [GLOB.azure_round_stats[STATS_TRIUMPHS_STOLEN] * -1]<br>"
+	data += "<font color='#d7da2f'><span class='bold'>祷告次数:</span></font> [GLOB.azure_round_stats[STATS_PRAYERS_MADE]]<br>"
+	data += "<font color='#bacfd6'><span class='bold'>坟墓祝圣数:</span></font> [GLOB.azure_round_stats[STATS_GRAVES_CONSECRATED]]<br>"
+	data += "<font color='#9c3e46'><span class='bold'>活跃尸鬼:</span></font> [GLOB.azure_round_stats[STATS_DEADITES_ALIVE]]<br>"
+	data += "<font color='#0f555c'><span class='bold'>剃须次数:</span></font> [GLOB.azure_round_stats[STATS_BEARDS_SHAVED]]<br>"
+	data += "<font color='#6e7c81'><span class='bold'>技能学习数:</span></font> [GLOB.azure_round_stats[STATS_SKILLS_LEARNED]]<br>"
+	data += "<font color='#23af4d'><span class='bold'>植物收获数:</span></font> [GLOB.azure_round_stats[STATS_PLANTS_HARVESTED]]<br>"
+	data += "<font color='#4492a5'><span class='bold'>捕鱼数:</span></font> [GLOB.azure_round_stats[STATS_FISH_CAUGHT]]<br>"
+	data += "<font color='#836033'><span class='bold'>伐木数:</span></font> [GLOB.azure_round_stats[STATS_TREES_CUT]]<br>"
+	data += "<font color='#af2323'><span class='bold'>器官食用数:</span></font> [GLOB.azure_round_stats[STATS_ORGANS_EATEN]]<br>"
+	data += "<font color='#afa623'><span class='bold'>开锁数:</span></font> [GLOB.azure_round_stats[STATS_LOCKS_PICKED]]<br>"
+	data += "<font color='#af2379'><span class='bold'>接吻次数:</span></font> [GLOB.azure_round_stats[STATS_KISSES_MADE]]<br>"
 	data += "</div>"
 	data += "</div></div>"
 	data += "</div>"
@@ -175,7 +175,7 @@
 	// Census Section (33%)
 	data += "<div style='display: table-cell; width: 33%; vertical-align: top;'>"
 	data += "<div style='height: 38px; text-align: center;'>"
-	data += "<span style='font-weight: bold; color: #bd1717;'>Census</span>"
+	data += "<span style='font-weight: bold; color: #bd1717;'>人口普查</span>"
 	data += "</div>"
 	data += "<div style='border-top: 1px solid #444; width: 80%; margin: 0 auto 15px auto;'></div>"
 	data += "<div style='display: table; width: 100%;'>"
@@ -183,19 +183,19 @@
 
 	// Left column
 	data += "<div style='display: table-cell; width: 50%; vertical-align: top; border-left: 1px solid #444; padding: 0 10px;'>"
-	data += "<font color='#8f1dc0'<span class='bold'>Ruler's Patron:</span></font> [GLOB.azure_round_stats[STATS_MONARCH_PATRON]]<br>"
-	data += "<font color='#4682B4'><span class='bold'>Total Populace:</span></font> [GLOB.azure_round_stats[STATS_TOTAL_POPULATION]]<br>"
-	data += "<font color='#ce4646'><span class='bold'>Nobility:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_NOBLES]]<br>"
-	data += "<font color='#556B2F'><span class='bold'>Garrison:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_GARRISON]]<br>"
-	data += "<font color='#DAA520'><span class='bold'>Clergy:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_CLERGY]]<br>"
-	data += "<font color='#D2691E'><span class='bold'>Tradesmen:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_TRADESMEN]]<br>"
-	data += "<font color='#8B4513'><span class='bold'>Humens:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_NORTHERN_HUMANS]]<br>"	//Here to save space, should be other column
-	data += "<font color='#6b89e0'><span class='bold'>Males:</span></font> [GLOB.azure_round_stats[STATS_MALE_POPULATION]]<br>"
-	data += "<font color='#d67daa'><span class='bold'>Females:</span></font> [GLOB.azure_round_stats[STATS_FEMALE_POPULATION]]<br>"
-	data += "<font color='#77d0cd'><span class='bold'>Non-binary:</span></font> [GLOB.azure_round_stats[STATS_OTHER_GENDER]]<br>"
-	data += "<font color='#d0d67c'><span class='bold'>Adults:</span></font> [GLOB.azure_round_stats[STATS_ADULT_POPULATION]]<br>"
-	data += "<font color='#FFD700'><span class='bold'>Middle-Aged:</span></font> [GLOB.azure_round_stats[STATS_MIDDLEAGED_POPULATION]]<br>"
-	data += "<font color='#C0C0C0'><span class='bold'>Elderly:</span></font> [GLOB.azure_round_stats[STATS_ELDERLY_POPULATION]]<br>"
+	data += "<font color='#8f1dc0'<span class='bold'>君主守护神:</span></font> [GLOB.azure_round_stats[STATS_MONARCH_PATRON]]<br>"
+	data += "<font color='#4682B4'><span class='bold'>总人口:</span></font> [GLOB.azure_round_stats[STATS_TOTAL_POPULATION]]<br>"
+	data += "<font color='#ce4646'><span class='bold'>贵族:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_NOBLES]]<br>"
+	data += "<font color='#556B2F'><span class='bold'>驻军:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_GARRISON]]<br>"
+	data += "<font color='#DAA520'><span class='bold'>神职人员:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_CLERGY]]<br>"
+	data += "<font color='#D2691E'><span class='bold'>商贾:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_TRADESMEN]]<br>"
+	data += "<font color='#8B4513'><span class='bold'>休门:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_NORTHERN_HUMANS]]<br>"	//Here to save space, should be other column
+	data += "<font color='#6b89e0'><span class='bold'>男性:</span></font> [GLOB.azure_round_stats[STATS_MALE_POPULATION]]<br>"
+	data += "<font color='#d67daa'><span class='bold'>女性:</span></font> [GLOB.azure_round_stats[STATS_FEMALE_POPULATION]]<br>"
+	data += "<font color='#77d0cd'><span class='bold'>非二元性别:</span></font> [GLOB.azure_round_stats[STATS_OTHER_GENDER]]<br>"
+	data += "<font color='#d0d67c'><span class='bold'>成年人:</span></font> [GLOB.azure_round_stats[STATS_ADULT_POPULATION]]<br>"
+	data += "<font color='#FFD700'><span class='bold'>中年人:</span></font> [GLOB.azure_round_stats[STATS_MIDDLEAGED_POPULATION]]<br>"
+	data += "<font color='#C0C0C0'><span class='bold'>老年人:</span></font> [GLOB.azure_round_stats[STATS_ELDERLY_POPULATION]]<br>"
 	data += "</div>"
 
 	// Right column	- Way too many races, so they've been thrown together.
@@ -235,8 +235,8 @@
 
 	// Navigation buttons
 	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
-	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>CHRONICLE</a>"
-	data += "<a href='byond://?src=[REF(src)];viewinfluences=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>INFLUENCES</a>"
+	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>编年史</a>"
+	data += "<a href='byond://?src=[REF(src)];viewinfluences=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>影响力</a>"
 	data += "</div>"
 
 	// Divider
@@ -246,13 +246,13 @@
 
 	// Chronicle sub-tabs
 	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Gods' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #4a4a5a, #2a2a3a); border: 1px solid #6a6a7a; border-bottom: 2px solid #9a9aaa; color: #e0e0f0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>GODS</a>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Messages' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a1a, #1a120a); border: 1px solid #5a4a3a; border-bottom: 2px solid #8a7a6a; color: #d4c4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>WHISPERS</a>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=The Realm' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #2a2a3a, #0a0a1a); border: 1px solid #4a4a5a; border-bottom: 2px solid #7a7a8a; color: #c4c4d4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>THE REALM</a>"
-	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a0a, #1a1200); border: 1px solid #5a4a1a; border-bottom: 2px solid #8a7a3a; color: #dec97a; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>STATISTICS</a>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Heroes' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a4a5a, #1a1b2a); border: 1px solid #6a7b8a; border-bottom: 2px solid #8f9caa; color: #c0c0d0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>HEROES</a>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Villains' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a1a1a, #1a0a0a); border: 1px solid #5a3a3a; border-bottom: 2px solid #8a6a6a; color: #d4b4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>VILLAINS</a>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Outlaws' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #5a3a0a, #3a1a0a); border: 1px solid #7a5a2a; border-bottom: 2px solid #aa8a5a; color: #ffd494; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>OUTLAWS</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Gods' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #4a4a5a, #2a2a3a); border: 1px solid #6a6a7a; border-bottom: 2px solid #9a9aaa; color: #e0e0f0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>诸神</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Messages' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a1a, #1a120a); border: 1px solid #5a4a3a; border-bottom: 2px solid #8a7a6a; color: #d4c4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>低语</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=The Realm' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #2a2a3a, #0a0a1a); border: 1px solid #4a4a5a; border-bottom: 2px solid #7a7a8a; color: #c4c4d4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>王国</a>"
+	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a0a, #1a1200); border: 1px solid #5a4a1a; border-bottom: 2px solid #8a7a3a; color: #dec97a; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>统计</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Heroes' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a4a5a, #1a1b2a); border: 1px solid #6a7b8a; border-bottom: 2px solid #8f9caa; color: #c0c0d0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>英雄</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Villains' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a1a1a, #1a0a0a); border: 1px solid #5a3a3a; border-bottom: 2px solid #8a6a6a; color: #d4b4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>恶徒</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Outlaws' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #5a3a0a, #3a1a0a); border: 1px solid #7a5a2a; border-bottom: 2px solid #aa8a5a; color: #ffd494; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>亡命之徒</a>"
 	data += "</div>"
 
 	// Content
@@ -873,8 +873,8 @@
 
 	// Navigation buttons
 	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
-	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>CHRONICLE</a>"
-	data += "<a href='byond://?src=[REF(src)];viewinfluences=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>INFLUENCES</a>"
+	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>编年史</a>"
+	data += "<a href='byond://?src=[REF(src)];viewinfluences=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>影响力</a>"
 	data += "</div>"
 
 	data += "<div style='margin-bottom: 25px'></div>"
@@ -886,13 +886,13 @@
 
 	// Chronicle sub-tabs
 	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Gods' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #4a4a5a, #2a2a3a); border: 1px solid #6a6a7a; border-bottom: 2px solid #9a9aaa; color: #e0e0f0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>GODS</a>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Messages' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a1a, #1a120a); border: 1px solid #5a4a3a; border-bottom: 2px solid #8a7a6a; color: #d4c4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>WHISPERS</a>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=The Realm' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #2a2a3a, #0a0a1a); border: 1px solid #4a4a5a; border-bottom: 2px solid #7a7a8a; color: #c4c4d4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>THE REALM</a>"
-	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a0a, #1a1200); border: 1px solid #5a4a1a; border-bottom: 2px solid #8a7a3a; color: #dec97a; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>STATISTICS</a>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Heroes' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a4a5a, #1a1b2a); border: 1px solid #6a7b8a; border-bottom: 2px solid #8f9caa; color: #c0c0d0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>HEROES</a>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Villains' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a1a1a, #1a0a0a); border: 1px solid #5a3a3a; border-bottom: 2px solid #8a6a6a; color: #d4b4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>VILLAINS</a>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Outlaws' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #5a3a0a, #3a1a0a); border: 1px solid #7a5a2a; border-bottom: 2px solid #aa8a5a; color: #ffd494; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>OUTLAWS</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Gods' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #4a4a5a, #2a2a3a); border: 1px solid #6a6a7a; border-bottom: 2px solid #9a9aaa; color: #e0e0f0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>诸神</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Messages' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a1a, #1a120a); border: 1px solid #5a4a3a; border-bottom: 2px solid #8a7a6a; color: #d4c4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>低语</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=The Realm' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #2a2a3a, #0a0a1a); border: 1px solid #4a4a5a; border-bottom: 2px solid #7a7a8a; color: #c4c4d4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>王国</a>"
+	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a0a, #1a1200); border: 1px solid #5a4a1a; border-bottom: 2px solid #8a7a3a; color: #dec97a; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>统计</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Heroes' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a4a5a, #1a1b2a); border: 1px solid #6a7b8a; border-bottom: 2px solid #8f9caa; color: #c0c0d0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>英雄</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Villains' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a1a1a, #1a0a0a); border: 1px solid #5a3a3a; border-bottom: 2px solid #8a6a6a; color: #d4b4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>恶徒</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Outlaws' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #5a3a0a, #3a1a0a); border: 1px solid #7a5a2a; border-bottom: 2px solid #aa8a5a; color: #ffd494; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>亡命之徒</a>"
 	data += "</div>"
 
 	// Content

@@ -1,5 +1,6 @@
 /datum/job/roguetown/slavemaster
 	title = "Slave Master"
+	display_title = "奴隶主"
 	flag = SLAVEMASTER
 	department_flag = GARRISON
 	faction = "Station"
@@ -13,7 +14,7 @@
 	display_order = JDO_DUNGEONEER
 	advclass_cat_rolls = list(CTAG_SLAVEMASTER = 2)
 
-	tutorial = "CHANGE THIS!! something something WHIPS something something keeping the rabble in line something something sterin guiding hand. You have a swanky room in the keep, you catch escaped slaves, and you put existing slaves to work. Check the jails for prisoners to enslave."
+	tutorial = "鞭刑是你的拿手好戏——维持乌合之众的秩序，以铁腕引导迷途羔羊。你在城堡中有一间气派的房间，负责抓捕逃奴、驱使现有奴隶劳作。检查牢房是否有囚犯可供奴役。"
 
 	announce_latejoin = FALSE
 	outfit = /datum/outfit/job/roguetown/slavemaster
@@ -49,8 +50,8 @@
 	job_bitflag = BITFLAG_GARRISON
 
 /datum/advclass/slavemaster
-	name = "Slavemaster"
-	tutorial = "CHANGE THIS!! something something WHIPS something something keeping the rabble in line something something sterin guiding hand"
+	name = "奴隶主"
+	tutorial = "鞭刑是你的拿手好戏——维持乌合之众的秩序，以铁腕引导迷途羔羊。"
 	outfit = /datum/outfit/job/roguetown/slavemaster/base
 
 	category_tags = list(CTAG_SLAVEMASTER)

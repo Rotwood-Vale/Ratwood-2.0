@@ -1,5 +1,6 @@
 /datum/job/roguetown/cataphract
 	title = "Cataphract"
+	display_title = "铁甲骑兵"
 	flag = CATAPHRACT
 	department_flag = GARRISON
 	faction = "Station"
@@ -8,9 +9,8 @@
 	allowed_races = RACES_TOLERATED_UP
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED)
-	tutorial = "A Cataphract with expert training; \
-	Born into petty nobility and raised as a squire from a young age, now you guard the royal family, answer to their commands, and act as a last beacon of chivalry in these dark times. \
-	You're wholly dedicated to the standing Regent and their safety. Do not fail."
+	tutorial = "你是受过精英训练的铁甲骑兵；出身小贵族，自幼作为侍从长大，如今护卫着王室，听命于他们，在这黑暗时代中作为骑士精神的最后灯塔。 \
+	你全然效忠于在位摄政及其安危。切勿辜负使命。"
 	display_order = JDO_KNIGHT
 	whitelist_req = TRUE
 	outfit = /datum/outfit/job/roguetown/cataphract
@@ -62,8 +62,8 @@
 	)
 
 /datum/advclass/cataphract/greatweapon
-	name = "Great-weapon warrior"
-	tutorial = "You've trained thoroughly and hit far harder than most - masterfully proficient in mighty swords, axes, maces or polearms."
+	name = "重武战士"
+	tutorial = "你训练有素，打击力道远超常人——精通大剑、战斧、战锤和长柄武器。"
 	outfit = /datum/outfit/job/roguetown/cataphract/greatweapon
 
 	category_tags = list(CTAG_CATAPHRACT)
@@ -98,34 +98,34 @@
 
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Claymore","Great Mace","Battle Axe","Greataxe","Estoc","Lucerne","Partizan")
+		var/weapons = list("双手阔剑","大战锤","战斧","巨斧","刺击剑","卢塞恩战锤","阔刃矛")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Claymore")
+			if("双手阔剑")
 				r_hand = /obj/item/rogueweapon/greatsword/zwei
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
-			if("Great Mace")
+			if("大战锤")
 				r_hand = /obj/item/rogueweapon/mace/goden/steel
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
-			if("Battle Axe")
+			if("战斧")
 				r_hand = /obj/item/rogueweapon/stoneaxe/battle
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
-			if("Greataxe")
+			if("巨斧")
 				r_hand = /obj/item/rogueweapon/greataxe/steel
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
-			if("Estoc")
+			if("刺击剑")
 				r_hand = /obj/item/rogueweapon/estoc
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
-			if("Lucerne")
+			if("卢塞恩战锤")
 				r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)
-			if("Partizan")
+			if("阔刃矛")
 				r_hand = /obj/item/rogueweapon/spear/partizan
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)
@@ -148,9 +148,9 @@
 	)
 
 /datum/advclass/cataphract/shieldmaster
-	name = "Shieldmaster"
-	tutorial = "You are accustomed to traditional foot-soldiery, masterfully proficient in swords, flails, or maces. \
-	Your fortitude and mastery with the versatile combination of a shield and weapon makes you a fearsome opponent to take down!"
+	name = "盾卫大师"
+	tutorial = "你习惯于传统的步兵作战方式，精通剑、连枷和战锤。 \
+	你的坚韧加上盾与武器的多面组合，让你成为战场上难以撼动的可怕对手！"
 	outfit = /datum/outfit/job/roguetown/cataphract/shieldmaster
 
 	category_tags = list(CTAG_CATAPHRACT)
@@ -184,21 +184,21 @@
 
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Shamshir","Whip","Warhammer","Sabre")
+		var/weapons = list("沙姆希尔弯刀","鞭","战锤","军刀")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Shamshir")
+			if("沙姆希尔弯刀")
 				beltl = /obj/item/rogueweapon/scabbard/sword/noble
 				l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
-			if("Whip")
+			if("鞭")
 				l_hand = /obj/item/rogueweapon/whip/antique
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_MASTER, TRUE)
-			if ("Warhammer")
+			if ("战锤")
 				l_hand = /obj/item/rogueweapon/mace/warhammer
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
-			if("Sabre")
+			if("军刀")
 				beltl = /obj/item/rogueweapon/scabbard/sword/noble
 				l_hand = /obj/item/rogueweapon/sword/sabre
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
@@ -340,10 +340,10 @@
 
 
 /datum/advclass/cataphract/dervish
-	name = "Royal Dervish"
-	tutorial = "Your skillset is abnormal for a cataphract. \
-	Your swift maneuvers and masterful technique impress both lords and ladies alike, and you have a preference for quicker, more elegant blades. \
-	While you are an effective fighting force in medium armor, your evasive skills will only truly shine if you don even lighter protection."
+	name = "皇家达尔维什"
+	tutorial = "你的武艺对铁甲骑兵而言并不寻常。 \
+	你的敏捷身法与精湛技巧令贵族贵妇无不赞叹，而你更偏爱敏捷优雅的刀剑。 \
+	虽然你穿中等护甲时已是有效战力，但唯有换上更轻便的防护，你的闪避技巧才能真正大放异彩。"
 	outfit = /datum/outfit/job/roguetown/cataphract/dervish
 
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT)
@@ -378,48 +378,48 @@
 
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Scimitar + Longbow","Estoc + Recurve Bow","Sabre + Shield","Whip + Crossbow")
-		var/armor_options = list("Light Coat", "Light Brigandine", "Scalemail")
+		var/weapons = list("弯刀与长弓","刺击剑与反曲弓","军刀与盾","鞭与弩")
+		var/armor_options = list("轻皮甲", "轻板甲衣", "鳞甲")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in armor_options
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Scimitar + Longbow")
+			if("弯刀与长弓")
 				r_hand = /obj/item/rogueweapon/sword/sabre/shamshir
 				beltl = /obj/item/rogueweapon/scabbard/sword/noble
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
 				beltr = /obj/item/quiver/arrows
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 
-			if("Estoc + Recurve Bow")
+			if("刺击剑与反曲弓")
 				r_hand = /obj/item/rogueweapon/estoc
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				beltr = /obj/item/quiver/arrows
 				beltl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 
-			if("Sabre + Shield")
+			if("军刀与盾")
 				beltl = /obj/item/rogueweapon/scabbard/sword/noble
 				r_hand = /obj/item/rogueweapon/sword/sabre
 				backl = /obj/item/rogueweapon/shield/iron/zybantine
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 
-			if("Whip + Crossbow")
+			if("鞭与弩")
 				beltl = /obj/item/rogueweapon/whip
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				beltr = /obj/item/quiver/bolts
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_MASTER, TRUE)
 
 		switch(armor_choice)
-			if("Light Coat")
+			if("轻皮甲")
 				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
 				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
-			if("Light Brigandine")
+			if("轻板甲衣")
 				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
 				pants = /obj/item/clothing/under/roguetown/splintlegs
 				armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light/retinue
-			if("Scalemail")
+			if("鳞甲")
 				shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
 				pants = /obj/item/clothing/under/roguetown/chainlegs
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted

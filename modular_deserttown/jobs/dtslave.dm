@@ -1,5 +1,6 @@
 /datum/job/roguetown/slave
 	title = "Palace Slave"
+	display_title = "宫奴"
 	f_title = "宫奴"
 	flag = SLAVE
 	department_flag = YOUNGFOLK
@@ -10,7 +11,7 @@
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = ALL_AGES_LIST
 
-	tutorial = "Whether you were once a free soul or were born into chattel servitude, you're one of the many abused and mistreated slaves whipped by the Task Master to keep the Sultan's palace running smooth. Each day is marked by a scar on your back, and it is your back that carries the dirty, menial work required to keep the royal family content and decadent."
+	tutorial = "无论你曾为自由之身还是生来便是奴籍，你都不过是众多被奴隶主鞭策驱使的受虐奴隶中的一员，只为维持苏丹宫廷的运转。每一天都在你的背上刻下新的伤疤，而正是你的脊背承载着那些肮脏卑微的劳作，维系着王室的奢靡享乐。"
 	
 	outfit = /datum/outfit/job/roguetown/slave
 	advclass_cat_rolls = list(CTAG_PSLAVE = 20)
@@ -30,8 +31,8 @@
 	)
 
 /datum/advclass/slave/servant
-	name = "Servant"
-	tutorial = "You are a humdrum servant, dressed the part; lowly and best out of sight. It's practical, however."
+	name = "仆人"
+	tutorial = "你是一名普通的仆人，衣着得体，卑微而最好不被看见。但穿着很实用。"
 	outfit = /datum/outfit/job/roguetown/slave/servant
 	category_tags = list(CTAG_PSLAVE)
 	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_ROYALSERVANT, TRAIT_FOOD_STIPEND)
@@ -76,8 +77,8 @@
 		H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 
 /datum/advclass/slave/pleasure
-	name = "Exotic Slave"
-	tutorial = "Not one really mentions how hard it is to do yardwork in a dress and stockings, but at least you still look really good."
+	name = "异域奴隶"
+	tutorial = "没人提过穿着长裙和长袜干院子里的活有多辛苦，但至少你看起来还是很美。"
 	outfit = /datum/outfit/job/roguetown/slave/pleasure
 	category_tags = list(CTAG_PSLAVE)
 	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_ROYALSERVANT, TRAIT_FOOD_STIPEND)
@@ -122,27 +123,27 @@
 
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/massage)
-		var/weapons = list("Harp","Lute","Accordion","Guitar","Hurdy-Gurdy","Viola","Vocal Talisman","Flute", "Psyaltery")
-		var/weapon_choice = input(H, "Choose your instrument.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("竖琴","鲁特琴","手风琴","吉他","绞弦琴","维奥尔琴","歌唱护符","长笛", "索尔特里琴")
+		var/weapon_choice = input(H, "选择你的乐器：", "拿起武器") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Harp")
+			if("竖琴")
 				backr = /obj/item/rogue/instrument/harp
-			if("Lute")
+			if("鲁特琴")
 				backr = /obj/item/rogue/instrument/lute
-			if("Accordion")
+			if("手风琴")
 				backr = /obj/item/rogue/instrument/accord
-			if("Guitar")
+			if("吉他")
 				backr = /obj/item/rogue/instrument/guitar
-			if("Hurdy-Gurdy")
+			if("绞弦琴")
 				backr = /obj/item/rogue/instrument/hurdygurdy
-			if("Viola")
+			if("维奥尔琴")
 				backr = /obj/item/rogue/instrument/viola
-			if("Vocal Talisman")
+			if("歌唱护符")
 				backr = /obj/item/rogue/instrument/vocals
-			if("Flute")
+			if("长笛")
 				backr = /obj/item/rogue/instrument/flute
-			if("Psyaltery")
+			if("索尔特里琴")
 				backr = /obj/item/rogue/instrument/psyaltery
 
 	if(H.age == AGE_MIDDLEAGED)

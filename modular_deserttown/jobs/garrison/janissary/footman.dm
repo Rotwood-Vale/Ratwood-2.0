@@ -1,7 +1,7 @@
 // Melee goon. STR and martial setup.
 /datum/advclass/janissary/footman
-	name = "Janissary Footman"
-	tutorial = "You are a member of the Sultans Retinue. Ensure the safety of the Sultan and their subjects, defend the powers that be from the horrors of the outside world, and keep the Sultanate alive."
+	name = "耶尼切里步兵"
+	tutorial = "你是苏丹扈从的一员。确保苏丹及其臣民的安全，保卫当权者免受外界恐怖之物的侵害，守护苏丹国的存续。"
 	outfit = /datum/outfit/job/roguetown/janissary/footman
 
 	category_tags = list(CTAG_JANISSARY)
@@ -54,21 +54,21 @@
 
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Scimitar & Shield","Warhammer & Shield","Bardiche","Maul - +STR/CON, -SPD/PER/INT")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("弯刀与盾","战锤与盾","巴迪什斧","大锤——+力量/体质，-速度/感知/智力")
+		var/weapon_choice = input(H, "选择你的武器：", "拿起武器") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Scimitar & Shield")
+			if("弯刀与盾")
 				r_hand = /obj/item/rogueweapon/sword/short/falchion
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				backl = /obj/item/rogueweapon/shield/iron/zybantine
-			if("Warhammer & Shield")
+			if("战锤与盾")
 				r_hand = /obj/item/rogueweapon/mace/warhammer
 				backl = /obj/item/rogueweapon/shield/iron/zybantine
-			if("Bardiche")
+			if("巴迪什斧")
 				r_hand = /obj/item/rogueweapon/halberd/bardiche
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
-			if("Maul - +STR/CON, -SPD/PER/INT")
+			if("大锤——+力量/体质，-速度/感知/智力")
 				r_hand = /obj/item/rogueweapon/mace/maul
 				l_hand = /obj/item/reagent_containers/glass/bottle/rogue/beer
 				backl = /obj/item/rogueweapon/scabbard/gwstrap

@@ -1,5 +1,6 @@
 /datum/job/roguetown/headslave // really need to re-name all these when the codebase isn't a fork and search will update for the peasants...
 	title = "Head Slave"
+	display_title = "奴隶总管"
 	flag = HEADSLAVE
 	department_flag = COURTIERS
 	faction = "Station"
@@ -8,10 +9,7 @@
 
 	allowed_races = ACCEPTED_RACES
 
-	tutorial = "Servitude unto death; that is your motto. You are the manor's head slave, commanding over the lesser slaves and seeing to the administrative affairs,\
-	 day to day of the estate. While you will always be understood as what you are - a slave - your many years of hard work have proven you to be a loyal, trusted, valuable,\
-	  and, to a certain degree, respected member of the court, trained far beyond need of the whip. Indeed, you are entrusted to take the whip to those slaves beneath you.\
-	  You love your masters."
+	tutorial = "至死方休的奴役——此乃你的信条。你是庄园的奴隶总管，统管着下级奴隶，处理庄园的日常行政事务。尽管你永远被定义为一个奴隶，但多年辛劳已证明你是一名忠诚、可靠、珍贵、甚至在某种程度上受人尊敬的宫廷成员，早已无需鞭策。事实上，你被委以挥鞭管教下层奴隶之权。你深爱着主人们。"
 	outfit = /datum/outfit/job/roguetown/headslave
 	advclass_cat_rolls = list(CTAG_HEADSLAVE = 20)
 	display_order = JDO_BUTLER
@@ -30,8 +28,8 @@
 /datum/advclass/headslave
 	traits_applied = list(TRAIT_CICERONE, TRAIT_HOMESTEAD_EXPERT, TRAIT_SEWING_EXPERT, TRAIT_ROYALSERVANT, TRAIT_FOOD_STIPEND) // They have Expert Sewing
 	category_tags = list(CTAG_HEADSLAVE)
-	name = "Head Slave"
-	tutorial = "While still expected to fill in for the duties of the household slaves as needed, you have styled yourself as a figure beyond them."
+	name = "奴隶总管"
+	tutorial = "虽然仍需在必要时填补家务奴隶的职责，但你的形象已超越了普通奴隶。"
 	outfit = /datum/outfit/job/roguetown/headslave/headslave
 	subclass_stats = list(
 		STATKEY_INT = 2,

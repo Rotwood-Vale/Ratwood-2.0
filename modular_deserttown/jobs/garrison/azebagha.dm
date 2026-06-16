@@ -1,5 +1,6 @@
 /datum/job/roguetown/azebagha
 	title = "Azeb Agha"
+	display_title = "阿塞卜阿迦"
 	flag = AZEBAGHA
 	department_flag = GARRISON
 	faction = "Station"
@@ -8,10 +9,10 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
-	tutorial = "An experienced soldier of the Sultan's Azeb Corp you have been tasked with overseeing the newly constructed border. \
-				You report to the Royal Family and their sheikhs, \
-				and your job is to keep the younger Janissaries in line and to ensure the routes to the city remain safe.\
-				The Border must not fall."
+	tutorial = "作为苏丹阿塞卜军团的资深战士，你被委以监督新建边境的重任。 \
+				你向皇室及其谢赫汇报， \
+				你的职责是管束年轻的耶尼切里，确保通往城市的道路安全。\
+				边境绝不能沦陷。"
 	display_order = JDO_SERGEANT
 	whitelist_req = TRUE
 	round_contrib_points = 3
@@ -43,7 +44,7 @@
 					index = copytext(H.real_name, 1,index)
 				if(!index)
 					index = H.real_name
-				S.name = "Agha Cloak ([index])"
+				S.name = "阿迦披风 ([index])"
 
 //All skills/traits are on the loadouts. All are identical. Welcome to the stupid way we have to make sub-classes...
 /datum/outfit/job/roguetown/azebagha
@@ -61,11 +62,11 @@
 	id = /obj/item/scomstone/garrison
 
 /datum/advclass/azebagha/azebagha
-	name = "Sergeant-at-Arms"
-	tutorial = "An experienced soldier of the Sultan's Azeb Corp you have been tasked with overseeing the newly constructed border. \
-				You report to the Royal Family and their Councillors, \
-				and your job is to keep the younger Janissaries in line and to ensure the routes to the city remain safe.\
-				The Border must not fall."
+	name = "军士长"
+	tutorial = "作为苏丹阿塞卜军团的资深战士，你被委以监督新建边境的重任。 \
+				你向皇室及其顾问汇报， \
+				你的职责是管束年轻的耶尼切里，确保通往城市的道路安全。\
+				边境绝不能沦陷。"
 	outfit = /datum/outfit/job/roguetown/azebagha/azebagha
 
 	category_tags = list(CTAG_AZEBAGHA)
@@ -118,34 +119,34 @@
 		)
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/primary = list("Scimitar","Shotel","Whip","Warden Axe")
+		var/primary = list("弯刀","钩镰剑","鞭","守林人斧")
 		var/primary_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in primary
-		var/secondary = list("Glaive","Javelins and Shield","Blackhorn Longbow","Handgonne")
+		var/secondary = list("长柄刃","标枪与盾","黑角长弓","手炮")
 		var/secondary_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in secondary
 		H.set_blindness(0)
 		switch(primary_choice)
-			if("Scimitar")		
+			if("弯刀")		
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
-			if("Shotel")		
+			if("钩镰剑")		
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				l_hand = /obj/item/rogueweapon/sword/long/shotel
-			if("Whip")	
+			if("鞭")	
 				beltl = /obj/item/rogueweapon/whip/antique
-			if("Warden Axe")	
+			if("守林人斧")	
 				beltl = /obj/item/rogueweapon/stoneaxe/woodcut/wardenpick
 
 		switch(secondary_choice)
-			if("Glaive")			
+			if("长柄刃")			
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				l_hand = /obj/item/rogueweapon/halberd/glaive
-			if("Javelins and Shield")	
+			if("标枪与盾")	
 				beltr = /obj/item/quiver/javelin/steel
 				backl = /obj/item/rogueweapon/shield/iron/zybantine
-			if("Blackhorn Longbow")
+			if("黑角长弓")
 				beltr = /obj/item/quiver/arrows
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow/warden
-			if("Handgonne")//okay I can remove this later but I think it would be... just... so based
+			if("手炮")//okay I can remove this later but I think it would be... just... so based
 				backl = /obj/item/gun/ballistic/firearm/handgonne
 				r_hand = /obj/item/powderflask
 				beltr = /obj/item/quiver/bullet/lead

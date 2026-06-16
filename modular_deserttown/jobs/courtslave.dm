@@ -7,7 +7,7 @@
 	total_positions = 3
 	spawn_positions = 3
 	round_contrib_points = 2
-	tutorial = "Woe has befallen thee - whether by falling on the wrong side of the law or needing to pay off a debt, you have found yourself under the underhanded employ of the Slavemaster. Fulfill desires and whims of the court that they would rather not be publicly known. Your position is anything but secure, and any mistake can leave you bound, flogged or worse. Garrison and Court members know who you are."
+	tutorial = "祸不单行——无论是站错了法律的一边，还是欠下了无法偿还的债务，你最终落入了奴隶主的暗中操控之下。满足宫廷中那些不可告人的欲望和奇想。你的处境岌岌可危，任何失误都可能让你被绑缚、鞭笞，甚至更糟。卫戍部队和宫廷成员都知道你的身份。"
 	min_pq = 5
 	job_reopens_slots_on_death = FALSE
 	always_show_on_latechoices = TRUE
