@@ -168,64 +168,64 @@
 
 /obj/item/herbseed/atropa
 	makes_herb = /obj/structure/flora/roguegrass/herb/atropa
-	seed_identity = "atropa seeds"
+	seed_identity = "颠茄 种子"
 
 /obj/item/herbseed/matricaria
 	makes_herb = /obj/structure/flora/roguegrass/herb/matricaria
-	seed_identity = "matricaria seeds"
+	seed_identity = "洋甘菊 种子"
 
 /obj/item/herbseed/symphitum
 	makes_herb = /obj/structure/flora/roguegrass/herb/symphitum
-	seed_identity = "symphitum seeds"
+	seed_identity = "聚合草 种子"
 
 /obj/item/herbseed/taraxacum
 	makes_herb = /obj/structure/flora/roguegrass/herb/taraxacum
-	seed_identity = "taraxacum seeds"
+	seed_identity = "蒲公英 种子"
 
 /obj/item/herbseed/euphrasia
 	makes_herb = /obj/structure/flora/roguegrass/herb/euphrasia
-	seed_identity = "euphrasia seeds"
+	seed_identity = "小米草 种子"
 
 /obj/item/herbseed/paris
 	makes_herb = /obj/structure/flora/roguegrass/herb/paris
-	seed_identity = "paris seeds"
+	seed_identity = "重楼 种子"
 
 /obj/item/herbseed/calendula
 	makes_herb = /obj/structure/flora/roguegrass/herb/calendula
-	seed_identity = "calendula seeds"
+	seed_identity = "金盏花 种子"
 
 /obj/item/herbseed/mentha
 	makes_herb = /obj/structure/flora/roguegrass/herb/mentha
-	seed_identity = "mentha seeds"
+	seed_identity = "薄荷 种子"
 
 /obj/item/herbseed/urtica
 	makes_herb = /obj/structure/flora/roguegrass/herb/urtica
-	seed_identity = "urtica seeds"
+	seed_identity = "荨麻 种子"
 
 /obj/item/herbseed/salvia
 	makes_herb = /obj/structure/flora/roguegrass/herb/salvia
-	seed_identity = "salvia seeds"
+	seed_identity = "鼠尾草 种子"
 
 /obj/item/herbseed/hypericum
 	makes_herb = /obj/structure/flora/roguegrass/herb/hypericum
-	seed_identity = "hypericum seeds"
+	seed_identity = "金丝桃 种子"
 
 /obj/item/herbseed/benedictus
 	makes_herb = /obj/structure/flora/roguegrass/herb/benedictus
-	seed_identity = "benedictus seeds"
+	seed_identity = "圣蓟 种子"
 
 /obj/item/herbseed/valeriana
 	makes_herb = /obj/structure/flora/roguegrass/herb/valeriana
-	seed_identity = "valeriana seeds"
+	seed_identity = "缬草 种子"
 
 /obj/item/herbseed/artemisia
 	makes_herb = /obj/structure/flora/roguegrass/herb/artemisia
-	seed_identity = "artemisia seeds"
+	seed_identity = "艾蒿 种子"
 
 /obj/item/herbseed/rosa
 	makes_herb = /obj/structure/flora/roguegrass/herb/rosa
-	seed_identity = "rosa seeds"
+	seed_identity = "玫瑰 种子"
 
 /obj/item/herbseed/manabloom
 	makes_herb = /obj/structure/flora/roguegrass/herb/manabloom
-	seed_identity = "manabloom seeds"
+	seed_identity = "魔力花 种子"
