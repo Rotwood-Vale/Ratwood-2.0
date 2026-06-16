@@ -377,7 +377,7 @@
 	minor_pot = /datum/alch_cauldron_recipe/stam_poison
 
 /obj/item/alch/matricaria
-	name = "母菊"
+	name = "洋甘菊"
 	icon_state = "matricaria"
 
 	major_pot = /datum/alch_cauldron_recipe/berrypoison
@@ -409,7 +409,7 @@
 	minor_pot = /datum/alch_cauldron_recipe/int_potion
 
 /obj/item/alch/paris
-	name = "巴黎"
+	name = "重楼"
 	icon_state = "paris"
 
 	major_pot = /datum/alch_cauldron_recipe/big_stam_poison
@@ -441,7 +441,7 @@
 	minor_pot = /datum/alch_cauldron_recipe/aphrodisiac
 
 /obj/item/alch/salvia
-	name = "欧鼠尾草"
+	name = "鼠尾草"
 	icon_state = "salvia"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
@@ -462,7 +462,7 @@
 	minor_pot = /datum/alch_cauldron_recipe/antidote
 
 /obj/item/alch/benedictus
-	name = "藏掖花"
+	name = "圣蓟"
 	icon_state = "benedictus"
 
 	major_pot = /datum/alch_cauldron_recipe/big_stamina_potion
