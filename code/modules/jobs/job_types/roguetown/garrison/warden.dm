@@ -31,9 +31,13 @@
 		/datum/advclass/warden/forester
 	)
 
+/datum/job/roguetown/manorguard/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	. = ..()
+	if(ishuman(L))
+		addtimer(CALLBACK(L, TYPE_PROC_REF(/mob, cloak_and_title_setup)), 50)
+
 /datum/outfit/job/roguetown/warden
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/warden
-	cloak = /obj/item/clothing/cloak/wardencloak
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather
 	backr = /obj/item/storage/backpack/rogue/satchel

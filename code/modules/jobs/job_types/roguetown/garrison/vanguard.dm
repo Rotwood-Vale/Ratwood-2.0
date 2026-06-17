@@ -32,10 +32,14 @@
 		/datum/advclass/vanguard/archer
 	)
 
+/datum/job/roguetown/manorguard/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	. = ..()
+	if(ishuman(L))
+		addtimer(CALLBACK(L, TYPE_PROC_REF(/mob, cloak_and_title_setup)), 50)
+
 /datum/outfit/job/roguetown/vanguard
 	backr = /obj/item/storage/backpack/rogue/satchel
 	head = /obj/item/clothing/head/roguetown/helmet/skullcap
-	cloak = /obj/item/clothing/cloak/shadowcloak
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	gloves = /obj/item/clothing/gloves/roguetown/leather/black
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather

@@ -30,10 +30,14 @@
 /datum/outfit/job/roguetown/watchcaptain
 	job_bitflag = BITFLAG_GARRISON
 
+/datum/job/roguetown/manorguard/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	. = ..()
+	if(ishuman(L))
+		addtimer(CALLBACK(L, TYPE_PROC_REF(/mob, cloak_and_title_setup)), 50)
+
 /datum/outfit/job/roguetown/watchcaptain
 	head = /obj/item/clothing/head/roguetown/helmet/citywatch
 	neck = /obj/item/clothing/neck/roguetown/bevor
-	cloak = /obj/item/clothing/cloak/citywatchcaptain
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/citywatch
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 	belt = /obj/item/storage/belt/rogue/leather
