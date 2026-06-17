@@ -29,6 +29,11 @@
 		/datum/advclass/wardenmaster/wardenmaster
 	)
 
+/datum/job/roguetown/manorguard/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	. = ..()
+	if(ishuman(L))
+		addtimer(CALLBACK(L, TYPE_PROC_REF(/mob, cloak_and_title_setup)), 50)
+
 /datum/outfit/job/roguetown/wardenmaster
 	job_bitflag = BITFLAG_GARRISON
 

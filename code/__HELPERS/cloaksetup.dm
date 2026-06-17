@@ -26,16 +26,49 @@
 			allowed_cloaks = list(
 			"Jupon" = 			/obj/item/clothing/cloak/stabard/surcoat/guard,
 			"Tabard" = 			/obj/item/clothing/cloak/stabard/guard,
-			"Guard hood" = 		/obj/item/clothing/cloak/stabard/guardhood
-			)
+			"Guard hood" = 		/obj/item/clothing/cloak/stabard/guardhood)
 		if("Sergeant")
 			name_index = "sergeant"
 			allowed_cloaks = list(
 			"Jupon" = 			/obj/item/clothing/cloak/stabard/surcoat/guard,
 			"Tabard" = 			/obj/item/clothing/cloak/stabard/guard,
 			"Cape" = 			/obj/item/clothing/cloak/cape/guard,
-			"Guard hood" = 		/obj/item/clothing/cloak/stabard/guardhood
-			)
+			"Guard hood" = 		/obj/item/clothing/cloak/stabard/guardhood)
+		if("Vanguard")
+			name_index = "vanguard"
+			allowed_cloaks = list(
+			"Jupon" = 			/obj/item/clothing/cloak/stabard/surcoat/guard,
+			"Tabard" = 			/obj/item/clothing/cloak/stabard/guard,
+			"Guard hood" = 		/obj/item/clothing/cloak/stabard/guardhood)
+		if("Warden")
+			name_index = "warden"
+			allowed_cloaks = list(
+			"Jupon" = 			/obj/item/clothing/cloak/stabard/surcoat/guard,
+			"Tabard" = 			/obj/item/clothing/cloak/stabard/guard,
+			"Guard hood" = 		/obj/item/clothing/cloak/stabard/guardhood)
+		if("City Guard")
+			name_index = "city guard"
+			allowed_cloaks = list(
+			"Jupon" = 			/obj/item/clothing/cloak/stabard/surcoat/guard,
+			"Tabard" = 			/obj/item/clothing/cloak/stabard/guard,
+			"Guard hood" = 		/obj/item/clothing/cloak/stabard/guardhood)
+		if("Watch Captain")
+			name_index = "watch captain"
+			allowed_cloaks = list(
+			"Jupon" = 			/obj/item/clothing/cloak/stabard/surcoat/guard,
+			"Cape" = 			/obj/item/clothing/cloak/cape/guard,
+			"Long tabard" =		/obj/item/clothing/cloak/tabard/retinue,
+			"Short tabard" = 	/obj/item/clothing/cloak/stabard/guard,
+			"Guard hood" = 		/obj/item/clothing/cloak/stabard/guardhood)
+		if("Warden Master")
+			name_index = "warden master"
+			allowed_cloaks = list(
+			"Jupon" = 			/obj/item/clothing/cloak/stabard/surcoat/guard,
+			"Cape" = 			/obj/item/clothing/cloak/cape/guard,
+			"Long tabard" =		/obj/item/clothing/cloak/tabard/retinue,
+			"Short tabard" = 	/obj/item/clothing/cloak/stabard/guard,
+			"Guard hood" = 		/obj/item/clothing/cloak/stabard/guardhood)
+
 
 	var/choive_key = input(src, "Choose your cloak", "IDENTIFY YOURSELF") as anything in allowed_cloaks
 	var/typepath = allowed_cloaks[choive_key]
