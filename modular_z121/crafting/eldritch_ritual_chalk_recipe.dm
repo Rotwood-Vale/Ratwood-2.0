@@ -4,7 +4,6 @@
 	category = "Table"
 	result = list(/obj/item/ritechalk/eldritch = 1)
 	reqs = list(/obj/item/chalk = 1)
-	structurecraft = /obj/structure/flora/roguetree/wise
-	skillcraft = /datum/skill/magic/druidic
-	craftdiff = 1
+	skillcraft = /datum/skill/magic/holy
+	craftdiff = 3
 	verbage_simple = "refine"
