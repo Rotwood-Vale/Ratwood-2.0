@@ -200,20 +200,20 @@
 
 	// Right column	- Way too many races, so they've been thrown together.
 	data += "<div style='display: table-cell; width: 50%; vertical-align: top; padding: 0 10px;'>"
-	data += "<font color='#808080'><span class='bold'>Dwarves:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_DWARVES]]<br>"
-	data += "<font color='#87CEEB'><span class='bold'>Pure & Half-Elves:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_WOOD_ELVES] + GLOB.azure_round_stats[STATS_ALIVE_HALF_ELVES]]<br>"
-	data += "<font color='#7729af'><span class='bold'>Dark Elves:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_DARK_ELVES]]<br>"
-	data += "<font color='#e7e3d9'><span class='bold'>Aasimars:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_AASIMAR]]<br>"
-	data += "<font color='#DC143C'><span class='bold'>Tieflings:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_TIEFLINGS]]<br>"
-	data += "<font color='#228B22'><span class='bold'>Half-Orcs & Goblins:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_HALF_ORCS] + GLOB.azure_round_stats[STATS_ALIVE_GOBLINS]]<br>"
-	data += "<font color='#CD853F'><span class='bold'>Kobolds & Verminvolk:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_KOBOLDS] + GLOB.azure_round_stats[STATS_ALIVE_CRITTERKIN]]<br>"
-	data += "<font color='#FFD700'><span class='bold'>Zardmen & Dracon:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_LIZARDS] + GLOB.azure_round_stats[STATS_ALIVE_DRACON]]<br>"
-	data += "<font color='#d49d7c'><span class='bold'>Half & Wildkins:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_HALFKIN] + GLOB.azure_round_stats[STATS_ALIVE_WILDKIN]]<br>"
-	data += "<font color='#99dfd5'><span class='bold'>Lupians/Venardines & Tabaxi:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_LUPIANS] + GLOB.azure_round_stats[STATS_ALIVE_VULPS] + GLOB.azure_round_stats[STATS_ALIVE_TABAXI]]<br>"
-	data += "<font color='#c0c6c7'><span class='bold'>Constructs:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_CONSTRUCTS]]<br>"
-	data += "<font color='#9ACD32'><span class='bold'>Fluvian & Axians:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_MOTHS] + GLOB.azure_round_stats[STATS_ALIVE_AXIAN]]<br>"
-	data += "<font color='#4679c7'><span class='bold'>Harpies:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_HARPIES]]<br>"
-	data += "<font color='#9c6113'><span class='bold'>Arachnids:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_ARACHNIDS]]<br>"
+	data += "<font color='#808080'><span class='bold'>矮人:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_DWARVES]]<br>"
+	data += "<font color='#87CEEB'><span class='bold'>纯血与半精灵:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_WOOD_ELVES] + GLOB.azure_round_stats[STATS_ALIVE_HALF_ELVES]]<br>"
+	data += "<font color='#7729af'><span class='bold'>卓尔:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_DARK_ELVES]]<br>"
+	data += "<font color='#e7e3d9'><span class='bold'>亚斯玛尔:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_AASIMAR]]<br>"
+	data += "<font color='#DC143C'><span class='bold'>提夫林:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_TIEFLINGS]]<br>"
+	data += "<font color='#228B22'><span class='bold'>半兽人与哥布林:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_HALF_ORCS] + GLOB.azure_round_stats[STATS_ALIVE_GOBLINS]]<br>"
+	data += "<font color='#CD853F'><span class='bold'>狗头人与虫裔:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_KOBOLDS] + GLOB.azure_round_stats[STATS_ALIVE_CRITTERKIN]]<br>"
+	data += "<font color='#FFD700'><span class='bold'>扎迪什人与龙裔:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_LIZARDS] + GLOB.azure_round_stats[STATS_ALIVE_DRACON]]<br>"
+	data += "<font color='#d49d7c'><span class='bold'>半身人与兽裔:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_HALFKIN] + GLOB.azure_round_stats[STATS_ALIVE_WILDKIN]]<br>"
+	data += "<font color='#99dfd5'><span class='bold'>卢皮安/维纳丁与塔巴西:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_LUPIANS] + GLOB.azure_round_stats[STATS_ALIVE_VULPS] + GLOB.azure_round_stats[STATS_ALIVE_TABAXI]]<br>"
+	data += "<font color='#c0c6c7'><span class='bold'>构装体:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_CONSTRUCTS]]<br>"
+	data += "<font color='#9ACD32'><span class='bold'>弗卢维安与阿克西安:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_MOTHS] + GLOB.azure_round_stats[STATS_ALIVE_AXIAN]]<br>"
+	data += "<font color='#4679c7'><span class='bold'>鹰身女妖:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_HARPIES]]<br>"
+	data += "<font color='#9c6113'><span class='bold'>蛛裔:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_ARACHNIDS]]<br>"
 	data += "</div>"
 
 	data += "</div></div>"
@@ -222,7 +222,7 @@
 	data += "</div></div>"
 
 	src.mob << browse(null, "window=vanderlin_influences")
-	var/datum/browser/popup = new(src.mob, "azure_roundend", "<center>The Chronicle</center>", 1325, 875)
+	var/datum/browser/popup = new(src.mob, "azure_roundend", "<center>编年史</center>", 1325, 875)
 	popup.set_content(data.Join())
 	popup.open()
 
@@ -262,7 +262,7 @@
 
 			// Gods' Interventions Section
 			data += "<div>"
-			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.2em; margin-bottom: 10px;'>GODS' INTERVENTIONS</div>"
+			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.2em; margin-bottom: 10px;'>诸神干预</div>"
 			data += "<div style='border-top: 1px solid #9a9aaa; margin: 20px auto 10px auto; width: 90%;'></div>"
 
 			if(length(SSmapping.active_world_traits))
@@ -275,12 +275,12 @@
 
 				data += "</div>"
 			else
-				data += "<div style='text-align: center; color: #999; font-style: italic; padding: 30px 0;'>The Gods are silent</div>"
+				data += "<div style='text-align: center; color: #999; font-style: italic; padding: 30px 0;'>诸神沉寂</div>"
 
 			data += "</div>"
 
 			// Ranking of the Gods Section
-			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.2em; margin-bottom: 15px;'>RANKING OF THE GODS</div>"
+			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.2em; margin-bottom: 15px;'>诸神排行</div>"
 			data += "<div style='border-top: 1.5px solid #9a9aaa; margin: 0 auto 20px auto; width: 90%;'></div>"
 
 			var/list/god_rankings = get_god_rankings()
@@ -302,7 +302,7 @@
 				data += create_god_ranking_entry(god_data["name"], god_data["points"], god_data["color"])
 
 			// Gods' Events Section
-			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.2em; margin-top: 20px; margin-bottom: 20px;'>GODS' EVENTS</div>"
+			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.2em; margin-top: 20px; margin-bottom: 20px;'>诸神事件</div>"
 			data += "<div style='border-top: 1.5px solid #9a9aaa; margin: 0 auto 20px auto; width: 90%;'></div>"
 
 			var/list/event_categories = list(
@@ -333,7 +333,7 @@
 				has_events = TRUE
 
 			if(!has_events)
-				data += "<div style='text-align: center; color: #999; font-style: italic; padding: 30px 0;'>The Gods did not meddle with mortals, yet</div>"
+				data += "<div style='text-align: center; color: #999; font-style: italic; padding: 30px 0;'>诸神尚未干预凡间</div>"
 			else
 				data += "<div style='display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px;'>"
 
@@ -349,7 +349,7 @@
 							data += "<span style='color: #b0b0b0;'>[event_data["name"]]:</span> <span style='color: #e0e0f0;'>[event_data["count"]]</span>"
 							data += "</div>"
 					else
-						data += "<div style='color: #999; font-style: italic; text-align: center; padding: 10px 0;'>No events occurred</div>"
+						data += "<div style='color: #999; font-style: italic; text-align: center; padding: 10px 0;'>无事发生</div>"
 
 					data += "</div>"
 
@@ -362,7 +362,7 @@
 
 			// Last Words Column (50%)
 			data += "<div style='display: table-cell; width: 50%; vertical-align: top; padding: 0 15px;'>"
-			data += "<div style='color: #bd1717; font-size: 1.2em; font-weight: bold; text-align: center; margin-bottom: 10px;'>LAST WORDS</div>"
+			data += "<div style='color: #bd1717; font-size: 1.2em; font-weight: bold; text-align: center; margin-bottom: 10px;'>临终遗言</div>"
 			data += "<div style='border-top: 1px solid #bd1717; width: 80%; margin: 0 auto 15px auto;'></div>"
 
 			if(length(GLOB.last_words))
@@ -371,7 +371,7 @@
 					data += "[entry]"
 					data += "</div>"
 			else
-				data += "<div style='color: #aaaaaa; font-style: italic; text-align: center; padding: 20px 0;'>No last words told</div>"
+				data += "<div style='color: #aaaaaa; font-style: italic; text-align: center; padding: 20px 0;'>无人留下遗言</div>"
 			data += "</div>"
 
 			// Vertical Divider
@@ -379,7 +379,7 @@
 
 			// Prayers Column (50%)
 			data += "<div style='display: table-cell; width: 50%; vertical-align: top; padding: 0 15px;'>"
-			data += "<div style='color: #e6b327; font-size: 1.2em; font-weight: bold; text-align: center; margin-bottom: 10px;'>PRAYERS</div>"
+			data += "<div style='color: #e6b327; font-size: 1.2em; font-weight: bold; text-align: center; margin-bottom: 10px;'>祷告</div>"
 			data += "<div style='border-top: 1px solid #e6b327; width: 80%; margin: 0 auto 15px auto;'></div>"
 
 			if(length(GLOB.prayers))
@@ -388,12 +388,12 @@
 					data += "[entry]"
 					data += "</div>"
 			else
-				data += "<div style='color: #aaaaaa; font-style: italic; text-align: center; padding: 20px 0;'>No prayers made</div>"
+				data += "<div style='color: #aaaaaa; font-style: italic; text-align: center; padding: 20px 0;'>无人祷告</div>"
 			data += "</div>"
 
 		if("The Realm")
 			data += "<div style='text-align: center;'>"
-			data += "<div style='color: #e6a962; font-size: 1.2em; margin-bottom: 15px; text-transform: uppercase;'>NOTABLE PEOPLE</div>"
+			data += "<div style='color: #e6a962; font-size: 1.2em; margin-bottom: 15px; text-transform: uppercase;'>知名人士</div>"
 			data += "<div style='border-top: 1.5px solid #e6a962; margin: 0 auto 25px auto; width: 90%;'></div>"
 
 			data += "<div style='display: inline-block; margin: 0 5%; width: 90%;'>"
@@ -404,18 +404,18 @@
 			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
 			// First Row - STRONGEST
 			var/mob/living/strongest = get_chronicle_stat_holder(CHRONICLE_STATS_STRONGEST_PERSON)
-			data += "<div style='margin-bottom: 15px;'><font color='#bd1717'>STRONGMAN</font></div>"
+			data += "<div style='margin-bottom: 15px;'><font color='#bd1717'>力士</font></div>"
 			data += "<div style='margin: 10px 0;'>"
 			if(strongest)
 				data += get_headshot_icon(strongest)
-				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[strongest.real_name]</font><br><i>[strongest.job]</i><br>(with <font color='#bd1717'>[strongest.STASTR] strength</font>)</div>"
+				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[strongest.real_name]</font><br><i>[strongest.job]</i><br>(拥有 <font color='#bd1717'>[strongest.STASTR] 点力量</font>)</div>"
 			else
-				data += "Nobody"
+				data += "无人"
 			data += "</div>"
 
 			// Second Row - FASTEST
 			var/mob/living/fastest = get_chronicle_stat_holder(CHRONICLE_STATS_FASTEST_PERSON)
-			data += "<div style='margin: 30px 0 15px 0;'><font color='#54d6c2'>SPEEDSTER</font></div>"
+			data += "<div style='margin: 30px 0 15px 0;'><font color='#54d6c2'>飞毛腿</font></div>"
 			data += "<div style='margin: 10px 0;'>"
 			if(fastest)
 				data += get_headshot_icon(fastest)
@@ -429,7 +429,7 @@
 			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
 			// First Row - SMARTEST
 			var/mob/living/wisest = get_chronicle_stat_holder(CHRONICLE_STATS_WISEST_PERSON)
-			data += "<div style='margin-bottom: 15px;'><font color='#5eb6e6'>GENIUS</font></div>"
+			data += "<div style='margin-bottom: 15px;'><font color='#5eb6e6'>天才</font></div>"
 			data += "<div style='margin: 10px 0;'>"
 			if(wisest)
 				data += get_headshot_icon(wisest)
@@ -440,7 +440,7 @@
 
 			// Second Row - DUMBEST
 			var/mob/living/dumbest = get_chronicle_stat_holder(CHRONICLE_STATS_DUMBEST_PERSON)
-			data += "<div style='margin: 30px 0 15px 0;'><font color='#e67e22'>IDIOT</font></div>"
+			data += "<div style='margin: 30px 0 15px 0;'><font color='#e67e22'>愚者</font></div>"
 			data += "<div style='margin: 10px 0;'>"
 			if(dumbest)
 				data += get_headshot_icon(dumbest)
@@ -454,24 +454,24 @@
 			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
 			// First Row - RICHEST
 			var/mob/living/richest = get_chronicle_stat_holder(CHRONICLE_STATS_RICHEST_PERSON)
-			data += "<div style='margin-bottom: 15px;'><font color='#d8dd90'>MAGNATE</font></div>"
+			data += "<div style='margin-bottom: 15px;'><font color='#d8dd90'>富豪</font></div>"
 			data += "<div style='margin: 10px 0;'>"
 			if(richest)
 				data += get_headshot_icon(richest)
-				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[richest.real_name]</font><br><i>[richest.job]</i><br>(with <font color='#d8dd90'>[get_mammons_in_atom(richest)] mammons</font>)</div>"
+				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[richest.real_name]</font><br><i>[richest.job]</i><br>(拥有 <font color='#d8dd90'>[get_mammons_in_atom(richest)] 玛门币</font>)</div>"
 			else
-				data += "Nobody"
+				data += "无人"
 			data += "</div>"
 
 			// Second Row - SLOWEST
 			var/mob/living/slowest = get_chronicle_stat_holder(CHRONICLE_STATS_SLOWEST_PERSON)
-			data += "<div style='margin: 30px 0 15px 0;'><font color='#a569bd'>TURTLE</font></div>"
+			data += "<div style='margin: 30px 0 15px 0;'><font color='#a569bd'>慢龟</font></div>"
 			data += "<div style='margin: 10px 0;'>"
 			if(slowest)
 				data += get_headshot_icon(slowest)
-				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[slowest.real_name]</font><br><i>[slowest.job]</i><br>(with <font color='#a569bd'>[slowest.STASPD] speed</font>)</div>"
+				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[slowest.real_name]</font><br><i>[slowest.job]</i><br>(拥有 <font color='#a569bd'>[slowest.STASPD] 点速度</font>)</div>"
 			else
-				data += "Nobody"
+				data += "无人"
 			data += "</div>"
 			data += "</div>"
 
@@ -479,24 +479,24 @@
 			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
 			// First Row - LUCKIEST
 			var/mob/living/luckiest = get_chronicle_stat_holder(CHRONICLE_STATS_LUCKIEST_PERSON)
-			data += "<div style='margin-bottom: 15px;'><font color='#54d666'>LUCKY DEVIL</font></div>"
+			data += "<div style='margin-bottom: 15px;'><font color='#54d666'>幸运儿</font></div>"
 			data += "<div style='margin: 10px 0;'>"
 			if(luckiest)
 				data += get_headshot_icon(luckiest)
-				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[luckiest.real_name]</font><br><i>[luckiest.job]</i><br>(with <font color='#54d666'>[luckiest.STALUC] luck</font>)</div>"
+				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[luckiest.real_name]</font><br><i>[luckiest.job]</i><br>(拥有 <font color='#54d666'>[luckiest.STALUC] 点幸运</font>)</div>"
 			else
-				data += "Nobody"
+				data += "无人"
 			data += "</div>"
 
 			// Second Row - UNLUCKIEST
 			var/mob/living/unluckiest = get_chronicle_stat_holder(CHRONICLE_STATS_UNLUCKIEST_PERSON)
-			data += "<div style='margin: 30px 0 15px 0;'><font color='#e74c3c'>WALKING DISASTER</font></div>"
+			data += "<div style='margin: 30px 0 15px 0;'><font color='#e74c3c'>行走的灾星</font></div>"
 			data += "<div style='margin: 10px 0;'>"
 			if(unluckiest)
 				data += get_headshot_icon(unluckiest)
-				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[unluckiest.real_name]</font><br><i>[unluckiest.job]</i><br>(with <font color='#e74c3c'>[unluckiest.STALUC] luck</font>)</div>"
+				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[unluckiest.real_name]</font><br><i>[unluckiest.job]</i><br>(拥有 <font color='#e74c3c'>[unluckiest.STALUC] 点幸运</font>)</div>"
 			else
-				data += "Nobody"
+				data += "无人"
 			data += "</div>"
 			data += "</div>"
 
@@ -505,7 +505,7 @@
 			data += "<div style='height: 20px;'></div>"
 
 			// Treasury Section
-			data += "<div style='text-align: center; color: #e6b327; font-size: 1.2em; margin: 15px 0; text-transform: uppercase;'>Realm's Treasury: [SStreasury.treasury_value]</div>"
+			data += "<div style='text-align: center; color: #e6b327; font-size: 1.2em; margin: 15px 0; text-transform: uppercase;'>王国国库: [SStreasury.treasury_value]</div>"
 			data += "<div style='border-top: 1.5px solid #e6b327; margin: 0 auto 20px auto; width: 75%;'></div>"
 
 			data += "<div style='width: 100%; margin: 0 auto; position: relative;'>"
@@ -514,30 +514,30 @@
 			// Left column (Revenue)
 			data += "<div style='width: 44%; display: flex; justify-content: flex-end;'>"
 			data += "<div style='text-align: left; padding-right: 20px;'>"
-			data += "<div style='margin-bottom: 4px;'><font color='#f0c759'>Starting Treasury: </font>[GLOB.azure_round_stats[STATS_STARTING_TREASURY]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#e67e22'>Noble Estates Revenue: </font>[GLOB.azure_round_stats[STATS_NOBLE_INCOME_TOTAL]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#ce9d15'>Rural Taxes Collected: </font>[GLOB.azure_round_stats[STATS_RURAL_TAXES_COLLECTED]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#f5c02e'>Royal Taxes Collected: </font>[GLOB.azure_round_stats[STATS_TAXES_COLLECTED]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#8fa36a'>Mammons Deposited: </font>[GLOB.azure_round_stats[STATS_MAMMONS_DEPOSITED]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#90b34f'>Stockpile Exports: </font>[GLOB.azure_round_stats[STATS_STOCKPILE_EXPORTS_VALUE]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#a2b337'>Bought from Stockpile: </font>[GLOB.azure_round_stats[STATS_STOCKPILE_REVENUE]]</div>"
-			data += "<div style='border-top: 1px solid #555; margin: 8px 0;'></div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#23ba30'>Total Revenue: </font>[GLOB.azure_round_stats[STATS_STARTING_TREASURY]  + GLOB.azure_round_stats[STATS_NOBLE_INCOME_TOTAL] + GLOB.azure_round_stats[STATS_TAXES_COLLECTED] + GLOB.azure_round_stats[STATS_MAMMONS_DEPOSITED] + GLOB.azure_round_stats[STATS_STOCKPILE_EXPORTS_VALUE] + GLOB.azure_round_stats[STATS_STOCKPILE_REVENUE] + GLOB.azure_round_stats[STATS_RURAL_TAXES_COLLECTED]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#f0c759'>初始国库: </font>[GLOB.azure_round_stats[STATS_STARTING_TREASURY]]</div>"
+	data += "<div style='margin-bottom: 4px;'><font color='#e67e22'>贵族领地收入: </font>[GLOB.azure_round_stats[STATS_NOBLE_INCOME_TOTAL]]</div>"
+	data += "<div style='margin-bottom: 4px;'><font color='#ce9d15'>农村税款征收: </font>[GLOB.azure_round_stats[STATS_RURAL_TAXES_COLLECTED]]</div>"
+	data += "<div style='margin-bottom: 4px;'><font color='#f5c02e'>皇家税款征收: </font>[GLOB.azure_round_stats[STATS_TAXES_COLLECTED]]</div>"
+	data += "<div style='margin-bottom: 4px;'><font color='#8fa36a'>玛门币存入: </font>[GLOB.azure_round_stats[STATS_MAMMONS_DEPOSITED]]</div>"
+	data += "<div style='margin-bottom: 4px;'><font color='#90b34f'>库存出口: </font>[GLOB.azure_round_stats[STATS_STOCKPILE_EXPORTS_VALUE]]</div>"
+	data += "<div style='margin-bottom: 4px;'><font color='#a2b337'>库存购入: </font>[GLOB.azure_round_stats[STATS_STOCKPILE_REVENUE]]</div>"
+	data += "<div style='border-top: 1px solid #555; margin: 8px 0;'></div>"
+	data += "<div style='margin-bottom: 4px;'><font color='#23ba30'>总收入: </font>[GLOB.azure_round_stats[STATS_STARTING_TREASURY]  + GLOB.azure_round_stats[STATS_NOBLE_INCOME_TOTAL] + GLOB.azure_round_stats[STATS_TAXES_COLLECTED] + GLOB.azure_round_stats[STATS_MAMMONS_DEPOSITED] + GLOB.azure_round_stats[STATS_STOCKPILE_EXPORTS_VALUE] + GLOB.azure_round_stats[STATS_STOCKPILE_REVENUE] + GLOB.azure_round_stats[STATS_RURAL_TAXES_COLLECTED]]</div>"
 			data += "</div></div>"
 
 			// Right column (Expenses)
 			data += "<div style='width: 44%; display: flex; justify-content: flex-start;'>"
 			data += "<div style='text-align: left; padding-left: 20px;'>"
-			data += "<div style='margin-bottom: 4px;'><font color='#c95555'>Mammons Withdrawn: </font>[GLOB.azure_round_stats[STATS_MAMMONS_WITHDRAWN]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#db853d'>Stockpile Imports: </font>[GLOB.azure_round_stats[STATS_STOCKPILE_IMPORTS_VALUE]]</div>"
-			data += "<div style='border-top: 1px solid #555; margin: 8px 0;'></div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#c44731'>Total Expenses: </font>[GLOB.azure_round_stats[STATS_MAMMONS_WITHDRAWN] + GLOB.azure_round_stats[STATS_STOCKPILE_IMPORTS_VALUE]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#c95555'>玛门币提取: </font>[GLOB.azure_round_stats[STATS_MAMMONS_WITHDRAWN]]</div>"
+	data += "<div style='margin-bottom: 4px;'><font color='#db853d'>库存进口: </font>[GLOB.azure_round_stats[STATS_STOCKPILE_IMPORTS_VALUE]]</div>"
+	data += "<div style='border-top: 1px solid #555; margin: 8px 0;'></div>"
+	data += "<div style='margin-bottom: 4px;'><font color='#c44731'>总支出: </font>[GLOB.azure_round_stats[STATS_MAMMONS_WITHDRAWN] + GLOB.azure_round_stats[STATS_STOCKPILE_IMPORTS_VALUE]]</div>"
 			data += "</div></div>"
 
 			data += "</div></div>"
 
 			// Economy Section
-			data += "<div style='text-align: center; color: #e6b327; font-size: 1.2em; margin: 15px 0; text-transform: uppercase; margin-top: 35px;'>ECONOMY</div>"
+			data += "<div style='text-align: center; color: #e6b327; font-size: 1.2em; margin: 15px 0; text-transform: uppercase; margin-top: 35px;'>经济</div>"
 			data += "<div style='border-top: 1.5px solid #e6b327; margin: 0 auto 20px auto; width: 75%;'></div>"
 
 			data += "<div style='width: 100%; margin: 0 auto; position: relative;'>"
@@ -546,31 +546,31 @@
 			// Left column
 			data += "<div style='width: 44%; display: flex; justify-content: flex-end;'>"
 			data += "<div style='text-align: left; padding-right: 20px;'>"
-			data += "<div style='margin-bottom: 4px;'><font color='#caa64a'>Bathmatron Vault Revenue: </font>[GLOB.azure_round_stats[STATS_BATHMATRON_VAULT_TOTAL_REVENUE]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#c57e62'>Sold to Stockpile: </font>[GLOB.azure_round_stats[STATS_STOCKPILE_EXPANSES]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#b6a17f'>Salary Payments: </font>[GLOB.azure_round_stats[STATS_WAGES_PAID]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#aac484'>Treasury Transfers: </font>[GLOB.azure_round_stats[STATS_DIRECT_TREASURY_TRANSFERS]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#c78445'>Royal Fines Collected: </font>[GLOB.azure_round_stats[STATS_FINES_INCOME]]</div>"
-			data += "<div><font color='#e74c3c'>Royal Taxes Evaded: </font>[GLOB.azure_round_stats[STATS_TAXES_EVADED]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#caa64a'>浴场主事金库收入: </font>[GLOB.azure_round_stats[STATS_BATHMATRON_VAULT_TOTAL_REVENUE]]</div>"
+	data += "<div style='margin-bottom: 4px;'><font color='#c57e62'>售予库存: </font>[GLOB.azure_round_stats[STATS_STOCKPILE_EXPANSES]]</div>"
+	data += "<div style='margin-bottom: 4px;'><font color='#b6a17f'>薪资支付: </font>[GLOB.azure_round_stats[STATS_WAGES_PAID]]</div>"
+	data += "<div style='margin-bottom: 4px;'><font color='#aac484'>国库转账: </font>[GLOB.azure_round_stats[STATS_DIRECT_TREASURY_TRANSFERS]]</div>"
+	data += "<div style='margin-bottom: 4px;'><font color='#c78445'>皇家罚款征收: </font>[GLOB.azure_round_stats[STATS_FINES_INCOME]]</div>"
+	data += "<div><font color='#e74c3c'>皇家税款逃避: </font>[GLOB.azure_round_stats[STATS_TAXES_EVADED]]</div>"
 			data += "</div></div>"
 
 			// Right column
 			data += "<div style='width: 44%; display: flex; justify-content: flex-start;'>"
 			data += "<div style='text-align: left; padding-left: 20px;'>"
-			data += "<div style='margin-bottom: 4px;'><font color='#ebbf49'>Mammons Circulating: </font>[GLOB.azure_round_stats[STATS_MAMMONS_HELD]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#db9a59'>Trade Value Exported: </font>[GLOB.azure_round_stats[STATS_TRADE_VALUE_EXPORTED]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#dfbf57'>Trade Value Imported: </font>[GLOB.azure_round_stats[STATS_TRADE_VALUE_IMPORTED]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#c0b283'>GOLDFACE Imports: </font>[GLOB.azure_round_stats[STATS_GOLDFACE_VALUE_SPENT]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#c0c0c0'>SILVERFACE Imports: </font>[GLOB.azure_round_stats[STATS_SILVERFACE_VALUE_SPENT]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#b87333'>COPPERFACE Imports: </font>[GLOB.azure_round_stats[STATS_COPPERFACE_VALUE_SPENT]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#b5a642'>PURITY Imports: </font>[GLOB.azure_round_stats[STATS_PURITY_VALUE_SPENT]]</div>"
-			data += "<div><font color='#7495d3'>Peddler Revenue: </font>[GLOB.azure_round_stats[STATS_PEDDLER_REVENUE]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#ebbf49'>玛门币流通: </font>[GLOB.azure_round_stats[STATS_MAMMONS_HELD]]</div>"
+	data += "<div style='margin-bottom: 4px;'><font color='#db9a59'>贸易出口额: </font>[GLOB.azure_round_stats[STATS_TRADE_VALUE_EXPORTED]]</div>"
+	data += "<div style='margin-bottom: 4px;'><font color='#dfbf57'>贸易进口额: </font>[GLOB.azure_round_stats[STATS_TRADE_VALUE_IMPORTED]]</div>"
+	data += "<div style='margin-bottom: 4px;'><font color='#c0b283'>金面进口: </font>[GLOB.azure_round_stats[STATS_GOLDFACE_VALUE_SPENT]]</div>"
+	data += "<div style='margin-bottom: 4px;'><font color='#c0c0c0'>银面进口: </font>[GLOB.azure_round_stats[STATS_SILVERFACE_VALUE_SPENT]]</div>"
+	data += "<div style='margin-bottom: 4px;'><font color='#b87333'>铜面进口: </font>[GLOB.azure_round_stats[STATS_COPPERFACE_VALUE_SPENT]]</div>"
+	data += "<div style='margin-bottom: 4px;'><font color='#b5a642'>纯净号进口: </font>[GLOB.azure_round_stats[STATS_PURITY_VALUE_SPENT]]</div>"
+	data += "<div><font color='#7495d3'>小贩收入: </font>[GLOB.azure_round_stats[STATS_PEDDLER_REVENUE]]</div>"
 			data += "</div></div>"
 
 			data += "</div></div>"
 
 		if("Heroes")
-			data += "<div style='text-align: center; color: #e6e6e6; font-size: 1.2em; margin-bottom: 15px;'>HEROES OF THE REALM</div>"
+			data += "<div style='text-align: center; color: #e6e6e6; font-size: 1.2em; margin-bottom: 15px;'>王国英雄</div>"
 			data += "<div style='border-top: 1.5px solid #7a7a7a; margin: 0 auto 20px auto; width: 65%;'></div>"
 
 			if(length(GLOB.personal_objective_minds))
@@ -589,22 +589,22 @@
 						else if(mind.assigned_role && mind.current)
 							jobtext = " the <b>[mind.assigned_role]</b>"
 						var/usede = get_display_ckey(mind.key)
-						data += "<b>[usede]</b> was <span style='color:#e6a962'><b>[mind.name]</b>[jobtext]</span> and "
+						data += "<b>[usede]</b> 曾为 <span style='color:#e6a962'><b>[mind.name]</b>[jobtext]</span>，已"
 						if(mind.current.stat == DEAD)
-							data += "<span style='color:#d9534f'>died</span>"
+							data += "<span style='color:#d9534f'>死亡</span>"
 						else
-							data += "<span style='color:#4ccf4c'>survived</span>"
+							data += "<span style='color:#4ccf4c'>幸存</span>"
 					else
-						data += "<b>Unknown Hero</b>"
+						data += "<b>未知英雄</b>"
 					data += "</div>"
 
 					var/obj_count = 1
 					for(var/datum/objective/objective as anything in mind.personal_objectives)
 						var/completed = objective.check_completion()
 						data += "<div style='margin-bottom: 6px; padding-left: 8px; border-left: 2px solid #555;'>"
-						data += "<b>Quest #[obj_count]:</b> [objective.explanation_text] "
+						data += "<b>任务 #[obj_count]:</b> [objective.explanation_text] "
 						data += "<span style='color:[completed ? "#5cb85c" : "#d9534f"]'>"
-						data += "[completed ? "(COMPLETED)" : "(FAILED)"]</span>"
+						data += "[completed ? "(已完成)" : "(失败)"]</span>"
 						data += "</div>"
 						obj_count++
 
@@ -612,10 +612,10 @@
 
 				data += "</div>"
 			else
-				data += "<div style='text-align: center; color: #999; font-style: italic;'>Psydon was the last hero to live</div>"
+				data += "<div style='text-align: center; color: #999; font-style: italic;'>普赛顿是最后的在世英雄</div>"
 
 		if("Villains")
-			data += "<div style='text-align: center; color: #d4b4b4; font-size: 1.2em; margin-bottom: 15px;'>VILLAINS OF THE REALM</div>"
+			data += "<div style='text-align: center; color: #d4b4b4; font-size: 1.2em; margin-bottom: 15px;'>王国恶徒</div>"
 			data += "<div style='border-top: 1.5px solid #8a6a6a; margin: 0 auto 20px auto; width: 65%;'></div>"
 
 			var/list/all_teams = list()
@@ -638,11 +638,11 @@
 						all_antagonists |= A
 
 			if(!length(all_teams) && !length(all_antagonists) && !length(GLOB.confessors))
-				data += "<div style='text-align: center; color: #999; font-style: italic;'>The Realm has no villains... for now</div>"
+				data += "<div style='text-align: center; color: #999; font-style: italic;'>王国暂无恶徒...暂时如此</div>"
 			else
 				if(length(GLOB.confessors))
 					data += "<div style='background: #1a0a0a; border: 1px solid #5a3a3a; padding: 12px; border-radius: 4px; margin-bottom: 15px;'>"
-					data += "<div style='color: #d4b4b4; font-weight: bold; margin-bottom: 8px;'>Confessed Heretics</div>"
+					data += "<div style='color: #d4b4b4; font-weight: bold; margin-bottom: 8px;'>忏悔的异端</div>"
 					data += "<div style='margin-left: 10px;'>"
 					for(var/x in GLOB.confessors)
 						data += "<div style='margin-bottom: 10px;'>"
@@ -665,13 +665,13 @@
 							else if(member.assigned_role && member.current)
 								jobtext = " the <b>[member.assigned_role]</b>"
 							var/usede = get_display_ckey(member.key)
-							data += "<b>[usede]</b> was <span style='color:#e6a962'><b>[member.name]</b>[jobtext]</span> and "
+							data += "<b>[usede]</b> 曾为 <span style='color:#e6a962'><b>[member.name]</b>[jobtext]</span>，已"
 							if(member.current.stat == DEAD)
-								data += "<span style='color:#d9534f'>died</span>"
+								data += "<span style='color:#d9534f'>死亡</span>"
 							else
-								data += "<span style='color:#4ccf4c'>survived</span>"
+								data += "<span style='color:#4ccf4c'>幸存</span>"
 						else
-							data += "<b>Unknown Villain</b>"
+							data += "<b>未知恶徒</b>"
 
 						if(member.antag_datums?.len)
 							data += "<div style='margin-left: 15px; margin-top: 5px;'>"
@@ -681,12 +681,12 @@
 									for(var/datum/objective/O in A.objectives)
 										var/completed = O.check_completion()
 										data += "<div style='margin-bottom: 3px;'>"
-										data += "<b>Objective #[obj_count]:</b> [O.explanation_text] "
+										data += "<b>任务 #[obj_count]:</b> [O.explanation_text] "
 										data += "<span style='color:[completed ? "#5cb85c" : "#d9534f"]'>"
-										data += "[completed ? "(COMPLETED)" : "(FAILED)"]</span>"
+										data += "[completed ? "(已完成)" : "(失败)"]</span>"
 										data += "</div>"
 										obj_count++
-							data += "</div>"
+								data += "</div>"
 						data += "</div>"
 					data += "</div></div>"
 
@@ -713,12 +713,12 @@
 							jobtext = " the <b>[A.owner.assigned_role]</b>"
 						var/usede = get_display_ckey(A.owner.key)
 						data += "<b>[usede]</b> was <span style='color:#e6a962'><b>[A.owner.name]</b>[jobtext]</span> and "
-						if(A.owner.current.stat == DEAD)
-							data += "<span style='color:#d9534f'>died</span>"
-						else
-							data += "<span style='color:#4ccf4c'>survived</span>"
+					if(A.owner.current.stat == DEAD)
+						data += "<span style='color:#d9534f'>死亡</span>"
 					else
-						data += "<b>Unknown Villain</b>"
+						data += "<span style='color:#4ccf4c'>幸存</span>"
+				else
+					data += "<b>未知恶徒</b>"
 
 					if(A.objectives.len)
 						data += "<div style='margin-left: 15px; margin-top: 5px;'>"
@@ -726,9 +726,9 @@
 						for(var/datum/objective/O in A.objectives)
 							var/completed = O.check_completion()
 							data += "<div style='margin-bottom: 3px;'>"
-							data += "<b>Objective #[obj_count]:</b> [O.explanation_text] "
+							data += "<b>任务 #[obj_count]:</b> [O.explanation_text] "
 							data += "<span style='color:[completed ? "#5cb85c" : "#d9534f"]'>"
-							data += "[completed ? "(COMPLETED)" : "(FAILED)"]</span>"
+							data += "[completed ? "(已完成)" : "(失败)"]</span>"
 							data += "</div>"
 							obj_count++
 						data += "</div>"
@@ -738,7 +738,7 @@
 					data += "</div></div>"
 
 		if("Outlaws")
-			data += "<div style='text-align: center; color: #ffd494; font-size: 1.2em; margin-bottom: 15px;'>WANTED OUTLAWS</div>"
+			data += "<div style='text-align: center; color: #ffd494; font-size: 1.2em; margin-bottom: 15px;'>通缉亡命之徒</div>"
 			data += "<div style='border-top: 1.5px solid #aa8a5a; margin: 0 auto 20px auto; width: 65%;'></div>"
 
 			var/list/outlaws = list()
@@ -752,7 +752,7 @@
 						))
 
 			if(!length(outlaws))
-				data += "<div style='text-align: center; color: #999; font-style: italic;'>The Realm is peaceful, its inhabitants kind</div>"
+				data += "<div style='text-align: center; color: #999; font-style: italic;'>王国太平，臣民友善</div>"
 			else
 				data += {"
 				<style>
@@ -844,9 +844,9 @@
 
 					data += {"
 					<div class='wanted-poster'>
-						<div class='wanted-header'>WANTED</div>
+						<div class='wanted-header'>通缉令</div>
 						<div class='wanted-divider'></div>
-						<div class='wanted-footer'>DEAD OR ALIVE</div>
+						<div class='wanted-footer'>生死不论</div>
 						<div class='wanted-icon-container'>
 							[icon_html]
 						</div>
@@ -860,7 +860,7 @@
 	data += "</div>"
 
 	src.mob << browse(null, "window=vanderlin_influences")
-	var/datum/browser/popup = new(src.mob, "azure_roundend", "<center>The Chronicle</center>", 1325, 875)
+	var/datum/browser/popup = new(src.mob, "azure_roundend", "<center>编年史</center>", 1325, 875)
 	popup.set_content(data.Join())
 	popup.open()
 
@@ -900,7 +900,7 @@
 
 	if(debug && check_rights(R_DEBUG))
 		data += "<div style='text-align: center; margin: 10px 0;'>"
-		data += "<a href='byond://?src=[REF(src)];viewinfluences=1;debug=[!debug]' style='color: [debug ? "#00FF00" : "#FF0000"];'>[debug ? "DEBUG MODE ON" : "DEBUG MODE OFF"]</a>"
+		data += "<a href='byond://?src=[REF(src)];viewinfluences=1;debug=[!debug]' style='color: [debug ? "#00FF00" : "#FF0000"];'>[debug ? "调试模式开启" : "调试模式关闭"]</a>"
 		data += "</div>"
 
 	// Psydon Section
@@ -931,30 +931,30 @@
 	data += "<div style='display: flex;'>"
 
 	data += "<div style='flex: 1; padding-right: 10px;'>"
-	data += "Number of followers: [psydon_followers] ([get_colored_influence_value(psydon_followers * 20)])<br>"
-	data += "People wearing psycross: [GLOB.azure_round_stats[STATS_PSYCROSS_USERS]] ([get_colored_influence_value(GLOB.azure_round_stats[STATS_PSYCROSS_USERS] * 10)])<br>"
-	data += "Number of confessions: [GLOB.confessors.len] ([get_colored_influence_value(GLOB.confessors.len * 20)])<br>"
-	data += "Largest faith: [largest_religion ? "YES" : "NO"] ([get_colored_influence_value(largest_religion ? 500 : -250)])<br>"
-	data += "Psydonite monarch: [psydonite_monarch ? "YES" : "NO"] ([get_colored_influence_value((psydonite_monarch ? (psydonite_monarch * 500) : -250))])<br>"
+	data += "信徒数量: [psydon_followers] ([get_colored_influence_value(psydon_followers * 20)])<br>"
+	data += "佩戴普赛圣十字者: [GLOB.azure_round_stats[STATS_PSYCROSS_USERS]] ([get_colored_influence_value(GLOB.azure_round_stats[STATS_PSYCROSS_USERS] * 10)])<br>"
+	data += "忏悔数量: [GLOB.confessors.len] ([get_colored_influence_value(GLOB.confessors.len * 20)])<br>"
+	data += "最大信仰: [largest_religion ? "是" : "否"] ([get_colored_influence_value(largest_religion ? 500 : -250)])<br>"
+	data += "普赛顿信徒君主: [psydonite_monarch ? "是" : "否"] ([get_colored_influence_value((psydonite_monarch ? (psydonite_monarch * 500) : -250))])<br>"
 	data += "</div>"
 
 	data += "<div style='flex: 1; padding-left: 60px;'>"
-	data += "Number of apostates: [apostasy_followers] ([get_colored_influence_value(apostasy_followers * -20)])<br>"
-	data += "Humen deaths: [GLOB.azure_round_stats[STATS_HUMEN_DEATHS]] ([get_colored_influence_value(GLOB.azure_round_stats[STATS_HUMEN_DEATHS] * -10)])<br>"
-	data += "Largest faith: [largest_religion ? "YES" : "NO"] ([get_colored_influence_value(largest_religion ? 500 : -250)])<br>"
-	data += "Lux harvested: [GLOB.azure_round_stats[STATS_LUX_HARVESTED]] ([get_colored_influence_value(GLOB.azure_round_stats[STATS_LUX_HARVESTED] * -50)])<br>"
-	data += "God's status: [psydonite_user ? "ALIVE" : "DEAD"] ([get_colored_influence_value(psydonite_user ? 10000 : -10000)])<br>"
+	data += "背教者数量: [apostasy_followers] ([get_colored_influence_value(apostasy_followers * -20)])<br>"
+	data += "休门死亡数: [GLOB.azure_round_stats[STATS_HUMEN_DEATHS]] ([get_colored_influence_value(GLOB.azure_round_stats[STATS_HUMEN_DEATHS] * -10)])<br>"
+	data += "最大信仰: [largest_religion ? "是" : "否"] ([get_colored_influence_value(largest_religion ? 500 : -250)])<br>"
+	data += "灵辉收获: [GLOB.azure_round_stats[STATS_LUX_HARVESTED]] ([get_colored_influence_value(GLOB.azure_round_stats[STATS_LUX_HARVESTED] * -50)])<br>"
+	data += "神祇状态: [psydonite_user ? "存活" : "已殁"] ([get_colored_influence_value(psydonite_user ? 10000 : -10000)])<br>"
 	data += "</div>"
 
 	data += "</div>"
 
 	data += "<div style='border-top: 1px solid #444; margin: 12px 0 8px 0;'></div>"
-	data += "<div style='text-align: center;'>Total Influence: [get_colored_influence_value(psydon_influence)]</div>"
+	data += "<div style='text-align: center;'>总影响力: [get_colored_influence_value(psydon_influence)]</div>"
 	data += "</div></div></div>"
 
 	// The Ten Section
 
-	data += "<div style='text-align: center; font-size: 1.3em; color: #c0a828; margin: 20px 0 10px 0;'><b>THE TEN</b></div>"
+	data += "<div style='text-align: center; font-size: 1.3em; color: #c0a828; margin: 20px 0 10px 0;'><b>十神</b></div>"
 	data += "<div style='border-top: 3px solid #404040; margin: 0 auto 30px; width: 91.5%;'></div>"
 
 	data += "<div style='width: 91.5%; margin: 0 auto 40px;'>"
@@ -998,7 +998,7 @@
 
 	// Inhumen Gods Section
 
-	data += "<div style='text-align: center; font-size: 1.3em; color: #AA0000; margin: 20px 0 10px 0;'><b>INHUMEN GODS</b></div>"
+	data += "<div style='text-align: center; font-size: 1.3em; color: #AA0000; margin: 20px 0 10px 0;'><b>异民诸神</b></div>"
 	data += "<div style='border-top: 3px solid #404040; margin: 0 auto 30px; width: 91.5%;'></div>"
 
 	data += "<div style='width: 91.5%; margin: 0 auto;'>"
@@ -1019,7 +1019,7 @@
 	data += "</div></div>"
 
 	src.mob << browse(null, "window=azure_roundend")
-	var/datum/browser/popup = new(src.mob, "vanderlin_influences", "<center>Gods' influences</center>", 1325, 875)
+	var/datum/browser/popup = new(src.mob, "vanderlin_influences", "<center>诸神影响力</center>", 1325, 875)
 	popup.set_content(data.Join())
 	popup.open()
 
@@ -1034,16 +1034,16 @@
 	var/followers = GLOB.patron_follower_counts[initialized_storyteller.name] || 0
 
 	if(!debug)
-		dynamic_content += "Number of followers: [followers] ([get_colored_influence_value(SSgamemode.get_follower_influence(storyteller))])<br>"
+		dynamic_content += "信徒数量: [followers] ([get_colored_influence_value(SSgamemode.get_follower_influence(storyteller))])<br>"
 		for(var/stat in initialized_storyteller.influence_factors)
 			var/list/stat_data = initialized_storyteller.influence_factors[stat]
 			var/stat_value = GLOB.azure_round_stats[stat] || 0
 
 			dynamic_content += "[stat_data["name"]] [round(stat_value)] ([get_colored_influence_value(SSgamemode.calculate_specific_influence(storyteller, stat))])<br>"
 	else
-		dynamic_content += "<div style='color: #FFFF00;'><b>DEBUG MODE</b></div>"
-		dynamic_content += "Total reigns: [initialized_storyteller.times_chosen]<br>"
-		dynamic_content += "Number of followers: [followers] ([get_colored_influence_value(SSgamemode.get_follower_influence(storyteller))])<br>"
+		dynamic_content += "<div style='color: #FFFF00;'><b>调试模式</b></div>"
+		dynamic_content += "总统治次数: [initialized_storyteller.times_chosen]<br>"
+		dynamic_content += "信徒数量: [followers] ([get_colored_influence_value(SSgamemode.get_follower_influence(storyteller))])<br>"
 
 		var/datum/storyteller/prototype = new storyteller
 		for(var/set_name in prototype.influence_sets)
@@ -1058,7 +1058,7 @@
 				dynamic_content += "[stat_data["name"]] [round(stat_value)] ([get_colored_influence_value(influence_value)])</span><br>"
 		qdel(prototype)
 
-	var/suffix = initialized_storyteller.bonus_points >= 0 ? "from wanting to rule" : "from long reign exhaustion"
+	var/suffix = initialized_storyteller.bonus_points >= 0 ? "因渴望统治" : "因长期统治疲惫"
 	var/bonus_display = "<div>([get_colored_influence_value(round(initialized_storyteller.bonus_points))] [suffix])</div>"
 
 	return {"
@@ -1067,7 +1067,7 @@
 		<div style='padding:8px; background:#111; border-radius:0 0 4px 4px;'>
 			<div style='margin-bottom:8px;'>[dynamic_content]</div>
 			<div style='border-top:1px solid #444; padding-top:6px;'>
-				<div>Total Influence: [get_colored_influence_value(total_influence)]</div>
+				<div>总影响力: [get_colored_influence_value(total_influence)]</div>
 				[bonus_display]
 			</div>
 		</div>
@@ -1091,7 +1091,7 @@
 
 /// Global proc to show debug version of gods influences
 /client/proc/debug_influences()
-	set name = "Debug Gods' Influences"
+	set name = "调试诸神影响力"
 	set category = "Debug"
 
 	show_influences()
