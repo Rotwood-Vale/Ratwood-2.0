@@ -410,7 +410,7 @@
 	for(var/mob/living/carbon/human/ally in user.inspiration.audience)
 		if(ally.stat == DEAD)
 			continue
-		if(!(ally in hearers(10, user)))
+		if(!(ally in get_hearers_in_view(10, user)))
 			continue
 		ally.apply_status_effect(/datum/status_effect/buff/healing/crescendo_mending)
 		new /obj/effect/temp_visual/heal_rogue(get_turf(ally))

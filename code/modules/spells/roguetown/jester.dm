@@ -25,7 +25,7 @@
 			
 			// Apply Xylix buff to those with the trait who hear the laughter
 			// Only apply if the hearer is not the one laughing and not the spell caster
-			for(var/mob/living/carbon/human/H in hearers(7, CA))
+			for(var/mob/living/carbon/human/H in get_hearers_in_view(7, CA))
 				if(H == CA || H == user || !H.client)
 					continue
 				if(HAS_TRAIT(H, TRAIT_XYLIX) && !H.has_status_effect(/datum/status_effect/buff/xylix_joy))

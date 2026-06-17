@@ -164,7 +164,7 @@
 		pulse = 0
 		if(!HAS_TRAIT(owner, TRAIT_INQUISITION))
 			owner.add_stress(/datum/stressevent/soulchurnerhorror)
-		for (var/mob/living/carbon/human/H in hearers(7, owner))
+		for (var/mob/living/carbon/human/H in get_hearers_in_view(7, owner))
 			if (!H.client)
 				continue
 			if (!H.has_stress_event(/datum/stressevent/soulchurner))
@@ -285,7 +285,7 @@
 		pulse = 0
 		if(!HAS_TRAIT(owner, TRAIT_INQUISITION))
 			owner.add_stress(/datum/stressevent/soulchurnerhorror)
-		for (var/mob/living/carbon/human/H in hearers(7, owner))
+		for(var/mob/living/carbon/human/H in get_hearers_in_view(7, owner))
 			if(!H.client)
 				continue
 			if(HAS_TRAIT(H, TRAIT_INQUISITION))

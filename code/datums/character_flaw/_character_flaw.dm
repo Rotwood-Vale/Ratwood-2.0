@@ -262,8 +262,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(!user)
 		return
 	last_check = world.time
-	var/cnt = 0
-	for(var/mob/living/carbon/human/L in hearers(7, user))
+	var/nearby_humans = 0
+	for(var/mob/living/carbon/human/L in get_hearers_in_view(7, user))
 		if(L == src)
 			continue
 		if(L.stat)
@@ -272,17 +272,17 @@ GLOBAL_LIST_INIT(character_flaws, list(
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				if(L.dna.species.id != H.dna.species.id)
-					cnt++
-		if(cnt > 2)
+					nearby_humans++
+		if(nearby_humans > 2)
 			break
-	if(cnt > 2)
+	if(nearby_humans > 2)
 		user.add_stress(/datum/stressevent/paracrowd)
-	cnt = 0
+	nearby_humans = 0
 	for(var/obj/effect/decal/cleanable/blood/B in view(7, user))
-		cnt++
-		if(cnt > 3)
+		nearby_humans++
+		if(nearby_humans > 3)
 			break
-	if(cnt > 6)
+	if(nearby_humans > 6)
 		user.add_stress(/datum/stressevent/parablood)
 
 /datum/charflaw/isolationist
@@ -297,18 +297,18 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(!user)
 		return
 	last_check = world.time
-	var/cnt = 0
-	for(var/mob/living/carbon/human/L in hearers(7, user))
+	var/nearby_humans = 0
+	for(var/mob/living/carbon/human/L in get_hearers_in_view(7, user))
 		if(L == user)
 			continue
 		if(L.stat)
 			continue
 		if(L.dna.species)
-			cnt++
-		if(cnt > 3)
+			nearby_humans++
+		if(nearby_humans > 3)
 			break
 	var/mob/living/carbon/P = user
-	if(cnt > 3)
+	if(nearby_humans > 3)
 		P.add_stress(/datum/stressevent/crowd)
 
 /datum/charflaw/clingy
@@ -323,18 +323,18 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(!user)
 		return
 	last_check = world.time
-	var/cnt = 0
-	for(var/mob/living/carbon/human/L in hearers(7, user))
+	var/nearby_humans = 0
+	for(var/mob/living/carbon/human/L in get_hearers_in_view(7, user))
 		if(L == user)
 			continue
 		if(L.stat)
 			continue
 		if(L.dna.species)
-			cnt++
-		if(cnt > 1)
+			nearby_humans++
+		if(nearby_humans > 1)
 			break
 	var/mob/living/carbon/P = user
-	if(cnt < 1)
+	if(nearby_humans < 1)
 		P.add_stress(/datum/stressevent/nopeople)
 
 /datum/charflaw/noeyer

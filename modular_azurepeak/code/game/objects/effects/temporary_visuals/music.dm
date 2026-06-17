@@ -55,7 +55,7 @@
 	pulse += 1
 	if (pulse >= ticks_to_apply)
 		pulse = 0
-		for (var/mob/living/carbon/human/H in hearers(7, owner))
+		for (var/mob/living/carbon/human/H in get_hearers_in_view(7, owner))
 			if (!H.client)
 				continue
 			if (!H.has_stress_event(stress_to_apply))

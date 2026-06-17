@@ -100,7 +100,7 @@
 	C.add_stress(/datum/stressevent/dismembered)
 
 	if(stress2give && C.mind) //Shouldn't be freaking out over a boglin getting their shit rocked.
-		for(var/mob/living/carbon/CA in hearers(world.view, C))
+		for(var/mob/living/carbon/CA in get_hearers_in_view(7, C))
 			if(CA != C && !HAS_TRAIT(CA, TRAIT_BLIND) && !guillotine_execution)
 				if(stress2give == /datum/stressevent/viewdismember)
 					if(HAS_TRAIT(CA, TRAIT_STEELHEARTED))
@@ -223,7 +223,7 @@
 	C.add_stress(/datum/stressevent/dismembered)
 
 	if(stress2give && C.mind) //Shouldn't be freaking out over a boglin getting their shit rocked.
-		for(var/mob/living/carbon/CA in hearers(world.view, C))
+		for(var/mob/living/carbon/CA in get_hearers_in_view(7, C))
 			if(CA != C && !HAS_TRAIT(CA, TRAIT_BLIND) && !guillotine_execution)
 				if(stress2give == /datum/stressevent/viewdismember)
 					if(HAS_TRAIT(CA, TRAIT_STEELHEARTED))

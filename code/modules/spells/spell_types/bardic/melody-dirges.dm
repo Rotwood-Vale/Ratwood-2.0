@@ -40,7 +40,7 @@
 	if (pulse >= ticks_to_apply)
 		pulse = 0
 		O.energy_add(-12.5)
-		for (var/mob/living/carbon/human/H in hearers(10, owner))
+		for (var/mob/living/carbon/human/H in get_hearers_in_view(10, owner))
 			if(!O.in_audience(H))
 				var/debuff = debuffs_to_apply_by_level?[O.inspiration.level] || debuff_to_apply
 				H.apply_status_effect(debuff)
@@ -73,7 +73,7 @@
 	if (pulse >= ticks_to_apply)
 		pulse = 0
 		O.energy_add(-12.5)
-		for (var/mob/living/carbon/human/H in hearers(10, owner))
+		for (var/mob/living/carbon/human/H in get_hearers_in_view(10, owner))
 			if(O.in_audience(H))
 				var/buff = buffs_to_apply_by_level?[O.inspiration.level] || buff_to_apply
 				H.apply_status_effect(buff)

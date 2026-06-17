@@ -51,7 +51,7 @@ GLOBAL_LIST_EMPTY(active_abyssors_rage)
 	if(QDELETED(src))
 		return
 
-	for(var/mob/M in hearers(sound_range, src))
+	for(var/mob/M in get_hearers_in_view(sound_range, src))
 		M.playsound_local(src, tornado_loop, sound_volume, FALSE)
 
 	addtimer(CALLBACK(src, PROC_REF(loop_tornado_sound)), sound_loop_delay)
@@ -189,7 +189,7 @@ GLOBAL_LIST_EMPTY(active_abyssors_rage)
 	if(QDELETED(src))
 		return
 
-	for(var/mob/M in hearers(sound_range, src))
+	for(var/mob/M in get_hearers_in_view(sound_range, src))
 		M.playsound_local(src, tornado_loop, 10, FALSE)
 
 	addtimer(CALLBACK(src, PROC_REF(loop_tornado_sound)), sound_loop_delay)

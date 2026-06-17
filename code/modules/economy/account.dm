@@ -77,7 +77,7 @@
 			if(card_holder.can_hear())
 				to_chat(card_holder, "[icon2html(icon_source, card_holder)] *[message]*")
 		else if(isturf(A.loc)) //If on the ground
-			for(var/mob/M in hearers(1,get_turf(A)))
+			for(var/mob/M in get_hearers_in_view(1, get_turf(A)))
 				if(M.client && !(M.client.prefs.chat_toggles & CHAT_BANKCARD) && !force)
 					return
 				playsound(A, 'sound/blank.ogg', 50, TRUE)
