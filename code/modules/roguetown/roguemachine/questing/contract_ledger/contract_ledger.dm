@@ -128,6 +128,7 @@
 	data["regions"] = build_region_listing()
 	data["tax_rate"] = SStreasury.get_tax_rate(TAX_CATEGORY_CONTRACT_LEVY)
 	data["guild_cut_rate"] = GUILD_REFERRAL_FEE_PCT
+	data["can_proxy_turnin"] = (user.job in GLOB.contract_proxy_officials)
 	var/list/dynamic_roles = resolve_dynamic_roles(user)
 	data["dynamic_roles"] = dynamic_roles
 	data["dynamic_role"] = length(dynamic_roles) ? dynamic_roles[1] : null
@@ -179,6 +180,11 @@
 
 // crown_authority_roles lives in _es_compat.dm (ES 3-role roster: Steward/Clerk/Grand Duke).
 // AP's 7-role court list is intentionally NOT ported here (would duplicate-define the global).
+
+GLOBAL_LIST_INIT(contract_proxy_officials, list(
+	"Steward",
+	"Clerk",
+))
 
 /// TRUE if the user has standing to commission defense writs - either by job, or by sitting as
 /// the current Regent (Regent inherits commission authority for the duration of their regency,
