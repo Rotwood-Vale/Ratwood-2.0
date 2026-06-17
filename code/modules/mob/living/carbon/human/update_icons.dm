@@ -60,13 +60,10 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_body()
 	var/obj/item/bodypart/head/HD = get_bodypart(BODY_ZONE_HEAD)
 	var/new_cache_key = "[HD ? HD.skeletonized : "nohead"]|[HAS_TRAIT(src, TRAIT_HUSK)]|[lip_style]|[lip_color]|[gender]|[dna?.species?.hairyness]|[hair_color]"
-
-	if(body_overlay_cache_key == new_cache_key)
-		return
-	body_overlay_cache_key = new_cache_key
-
-	dna.species.handle_body(src)
-	..()
+	if(body_overlay_cache_key != new_cache_key)
+		dna.species.handle_body(src)
+		body_overlay_cache_key = new_cache_key
+	..() // always do update_body_parts when we call this
 
 #define SUNDER_FILTER "sunder_filter"
 
@@ -2003,6 +2000,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 	. += gender
 	. += age
+	. += obscured_flags
 
 	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		. += BP.body_zone
