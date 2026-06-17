@@ -629,7 +629,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			if(istype(skin)) // this checks if it's harpy skin specifically
 				if(skin.obj_integrity < skin.max_integrity)
 					skin.obj_integrity = skin.max_integrity
-					to_chat(src, "I can feel the skin on my feet mend...")
+					to_chat(src, "我能感觉到脚上的皮肤正在愈合……")
 				else if((skin.obj_integrity >= skin.max_integrity) && skin.obj_broken)
 					skin.obj_broken = FALSE
 		// handle_dreams() // this has no functionality currently
