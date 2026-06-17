@@ -127,7 +127,7 @@
 	desc = ""
 
 /datum/dog_fashion/head/ghost
-	name = "\improper Ghost"
+	name = "\improper 幽灵"
 	speak = list("WoooOOOooo~","AUUUUUUUUUUUUUUUUUU")
 	emote_see = list("跌跌撞撞地游荡。", "瑟瑟发抖。")
 	emote_hear = list("发出嚎叫！","呻吟着。")

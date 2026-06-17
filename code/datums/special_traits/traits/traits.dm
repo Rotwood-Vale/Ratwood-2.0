@@ -72,7 +72,7 @@
 
 /datum/special_trait/night_owl
 	name = "夜枭"
-	greet_text = span_notice("比起祂的另一半，我始终更偏爱 Noc。")
+	greet_text = span_notice("比起祂的另一半，我始终更偏爱诺克。")
 	weight = 100
 
 /datum/special_trait/night_owl/on_apply(mob/living/carbon/human/character, silent)
@@ -312,8 +312,8 @@
 
 /datum/special_trait/lucky
 	name = "幸运眷顾"
-	greet_text = span_notice("Xylix 眷顾着我，我的运气好得惊人。")
-	req_text = "以 Xylix 为你的主神"
+	greet_text = span_notice("赛利克斯眷顾着我，我的运气好得惊人。")
+	req_text = "以赛利克斯为你的主神"
 	allowed_patrons = list(/datum/patron/divine/xylix)
 	weight = 7
 

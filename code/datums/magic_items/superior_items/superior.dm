@@ -1,7 +1,7 @@
 ///T2 Enchantments
 /datum/magic_item/superior/nightvision
 	name = "夜视"
-	description = "其上刻有 Noc 之眼的印记。"
+	description = "其上刻有诺克之眼的印记。"
 	var/active_item = FALSE
 
 /datum/magic_item/superior/nightvision/on_equip(obj/item/i, mob/living/user, slot)

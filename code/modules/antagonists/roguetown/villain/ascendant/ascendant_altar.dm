@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(capstone_pool, list(
 			addomen(ASCEND_FIRST)
 			priority_announce("地脉开始以反常扭曲的方式震颤 - 大阿卡纳：愚者，正位。", "梦者", 'sound/villain/dreamer_warning.ogg')
 		if(2)
-			to_chat(user, span_danger("第二块基石。陷在污秽里 - 污秽与粪秽！我抓住那腐烂、发臭之物，开始将它一层层剥开。彗星西昂。那位大魔。祂是死了，还是在沉睡？……"))
+			to_chat(user, span_danger("第二块基石。陷在污秽里 - 污秽与粪秽！我抓住那腐烂、发臭之物，开始将它一层层剥开。普赛顿彗星。那位大魔。祂是死了，还是在沉睡？……"))
 			sleep(30)
 			to_chat(user, span_userdanger("祂是虚弱 - 还是怯懦？？"))
 			sleep(20)

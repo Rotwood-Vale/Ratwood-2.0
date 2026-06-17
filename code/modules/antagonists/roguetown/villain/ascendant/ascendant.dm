@@ -2,7 +2,7 @@
 	name = "飞升者"
 	roundend_category = "疯子"
 	antagpanel_category = "倾听者"
-	antag_memory = "<b>普赛顿 已死。旧万神殿软弱无力，而新神愚不可及。这个世界正在死去，而唯有我能拯救它 - 在此事完成之前，让 彗星西昂 的刀刃以鲜血浸透我。</b>"
+	antag_memory = "<b>普赛顿 已死。旧万神殿软弱无力，而新神愚不可及。这个世界正在死去，而唯有我能拯救它 - 在此事完成之前，让 普赛顿彗星 的刀刃以鲜血浸透我。</b>"
 	job_rank = ROLE_ASCENDANT
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "villain"

@@ -870,7 +870,7 @@
 	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
 		arousal_amt *=1.5
 		if(prob(10))
-			var/lovermessage = pick("感觉太舒服了！","我简直像在天堂！","这舒服得简直不像真的！","By the ten!","我停不下来，太美妙了！")
+			var/lovermessage = pick("感觉太舒服了！","我简直像在天堂！","这舒服得简直不像真的！","以十神之名！","我停不下来，太美妙了！")
 			to_chat(action_target, span_love(lovermessage))
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))
 		if(istype(user.rmb_intent, /datum/rmb_intent/strong))

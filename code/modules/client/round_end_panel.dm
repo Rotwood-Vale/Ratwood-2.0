@@ -183,7 +183,7 @@
 
 	// Left column
 	data += "<div style='display: table-cell; width: 50%; vertical-align: top; border-left: 1px solid #444; padding: 0 10px;'>"
-	data += "<font color='#8f1dc0'<span class='bold'>君主守护神:</span></font> [GLOB.azure_round_stats[STATS_MONARCH_PATRON]]<br>"
+	data += "<font color='#8f1dc0'><span class='bold'>君主守护神:</span></font> [GLOB.azure_round_stats[STATS_MONARCH_PATRON]]<br>"
 	data += "<font color='#4682B4'><span class='bold'>总人口:</span></font> [GLOB.azure_round_stats[STATS_TOTAL_POPULATION]]<br>"
 	data += "<font color='#ce4646'><span class='bold'>贵族:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_NOBLES]]<br>"
 	data += "<font color='#556B2F'><span class='bold'>驻军:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_GARRISON]]<br>"
@@ -419,9 +419,9 @@
 			data += "<div style='margin: 10px 0;'>"
 			if(fastest)
 				data += get_headshot_icon(fastest)
-				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[fastest.real_name]</font><br><i>[fastest.job]</i><br>(with <font color='#54d6c2'>[fastest.STASPD] speed</font>)</div>"
+				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[fastest.real_name]</font><br><i>[fastest.job]</i><br>(拥有 <font color='#54d6c2'>[fastest.STASPD] 点速度</font>)</div>"
 			else
-				data += "Nobody"
+				data += "无人"
 			data += "</div>"
 			data += "</div>"
 
@@ -433,9 +433,9 @@
 			data += "<div style='margin: 10px 0;'>"
 			if(wisest)
 				data += get_headshot_icon(wisest)
-				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[wisest.real_name]</font><br><i>[wisest.job]</i><br>(with <font color='#5eb6e6'>[wisest.STAINT] intelligence</font>)</div>"
+				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[wisest.real_name]</font><br><i>[wisest.job]</i><br>(拥有 <font color='#5eb6e6'>[wisest.STAINT] 点智力</font>)</div>"
 			else
-				data += "Nobody"
+				data += "无人"
 			data += "</div>"
 
 			// Second Row - DUMBEST
@@ -444,9 +444,9 @@
 			data += "<div style='margin: 10px 0;'>"
 			if(dumbest)
 				data += get_headshot_icon(dumbest)
-				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[dumbest.real_name]</font><br><i>[dumbest.job]</i><br>(with <font color='#e67e22'>[dumbest.STAINT] intelligence</font>)</div>"
+				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[dumbest.real_name]</font><br><i>[dumbest.job]</i><br>(拥有 <font color='#e67e22'>[dumbest.STAINT] 点智力</font>)</div>"
 			else
-				data += "Nobody"
+				data += "无人"
 			data += "</div>"
 			data += "</div>"
 

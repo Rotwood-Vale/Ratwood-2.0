@@ -178,14 +178,14 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 */
 
 /datum/combat_music/darkstar
-	name = "Dark Star（Verewolf/野蛮人/狂战士）"
+	name = "暗星（维尔沃夫/野蛮人/狂战士）"
 	desc = ""
 	shortname = "Dark Star"
 	credits = " T-87 SULFURHEAD - Archetype of the Dark Star (https://www.youtube.com/@T87-Sulfurhead)"
 	musicpath = list('sound/music/cmode/antag/combat_darkstar.ogg')
 
 /datum/combat_music/deadite
-	name = "Deadite"
+	name = "尸鬼"
 	desc = "踢！抓！咬！"
 	shortname = "Deadite"
 	musicpath = list('sound/music/combat_weird.ogg')
@@ -205,7 +205,7 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	musicpath = list('sound/music/combat_desertrider.ogg')
 
 /datum/combat_music/druid
-	name = "德鲁伊（Verewolf）"
+	name = "德鲁伊（维尔沃夫）"
 	desc = "死路、无数岔道、令人窒息的泥沼。它们比任何刀刃都更危险。"
 	shortname = "德鲁伊"
 	credits = "The Witcher 3: Wild Hunt - Hunt or Be Hunted"
@@ -232,7 +232,7 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	musicpath = list('sound/music/cmode/church/combat_eora.ogg')
 
 /datum/combat_music/forlorn
-	name = "Forlorn Hope 佣兵"
+	name = "死士先锋佣兵"
 	desc = "你觉得自己从死亡手里逃出来了吗，先锋？"
 	shortname = "Forlorn Hope"
 	musicpath = list('sound/music/combat_blackstar.ogg')
@@ -245,42 +245,42 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	musicpath = list('sound/music/combat_fullplate.ogg')
 
 /datum/combat_music/grenzelhoft
-	name = "Grenzelhoft 佣兵"
+	name = "格伦泽尔霍夫特佣兵"
 	desc = "你的态度令人无法忍受，你的笑容也让人作呕。你被录用了。"
 	shortname = "Grenzelhoft"
 	credits = "Helbrede - Sons of Tyr"
 	musicpath = list('sound/music/combat_grenzelhoft.ogg')
 
 /datum/combat_music/heretic_zizo
-	name = "异端 - Zizo（巫妖）"
+	name = "异端 - 齐佐（巫妖）"
 	desc = "谁都别信，因为力量始终都在你自己体内。"
 	shortname = "Zizo"
 	credits = "T87-Sulfurhead - DEMESNE (https://www.youtube.com/@T87-Sulfurhead)"
 	musicpath = list('sound/music/combat_heretic.ogg')
 
 /datum/combat_music/heretic_matthios
-	name = "异端 - Matthios"
+	name = "异端 - 马西奥斯"
 	desc = "一阵精力狂涌而来。你早已忘记上一次有人告诉你何为正确、该做什么，是在什么时候了。"
 	shortname = "Matthios"
 	credits = "T87-Sulfurhead - Amontillado (https://www.youtube.com/@T87-Sulfurhead)"
 	musicpath = list('sound/music/combat_matthios.ogg')
 
 /datum/combat_music/heretic_graggar
-	name = "异端 - Graggar"
+	name = "异端 - 格拉加尔"
 	desc = "也许这一次，你终于会感受到真正的强大。"
 	shortname = "Graggar"
 	credits = "T87-Sulfurhead - Black Powder (https://www.youtube.com/@T87-Sulfurhead)"
 	musicpath = list('sound/music/combat_graggar.ogg')
 
 /datum/combat_music/heretic_graggar_2
-	name = "异端 - Graggar（替代）"
+	name = "异端 - 格拉加尔（替代）"
 	desc = "也许这一次，你终于会感受到真正的强大。它可能很吵，所以小心。"
 	shortname = "Graggar 2"
 	credits = "Devil's Meat Grinder - OTXO OST"
 	musicpath = list('sound/music/combat_graggar_new.ogg')
 
 /datum/combat_music/heretic_baotha
-	name = "异端 - Baotha"
+	name = "异端 - 巴奥莎"
 	desc = "去他的明天。"
 	shortname = "Baotha"
 	credits = "T87-Sulfurhead - Love Within You (Rough Mix) (https://www.youtube.com/@T87-Sulfurhead)"
@@ -321,25 +321,25 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	musicpath = list('sound/music/combat_jester.ogg')
 
 /datum/combat_music/kazengite
-	name = "Kazengite"
+	name = "风郡裔"
 	desc = ""
 	shortname = "Kazengite"
 	musicpath = list('sound/music/combat_kazengite.ogg')
 
 /datum/combat_music/firestorm
-	name = "烈焰风暴（Kazengun）"
+	name = "烈焰风暴（风郡）"
 	desc = ""
 	shortname = "烈焰风暴"
 	musicpath = list('sound/music/combat_Kazengun_Firestorm.ogg')
 
 /datum/combat_music/overlord
-	name = "霸主（Kazengun）"
+	name = "霸主（风郡）"
 	desc = ""
 	shortname = "霸主"
 	musicpath = list('sound/music/combat_Kazengun_Overlord.ogg')
 
 /datum/combat_music/runaway_chariot
-	name = "失控战车（Kazengun）"
+	name = "失控战车（风郡）"
 	desc = ""
 	shortname = "失控战车"
 	musicpath = list('sound/music/combat_Kazengun_Runaway_Chariot.ogg')
@@ -405,7 +405,7 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	musicpath = list('sound/music/combat_holy.ogg')
 
 /datum/combat_music/necra
-	name = "Necra 教士"
+	name = "内克拉教士"
 	desc = ""
 	shortname = "Necra"
 	credits = "T-87 SULFURHEAD - Formerly Known as Toulouse Lautrec (https://www.youtube.com/@T87-Sulfurhead)"
@@ -425,7 +425,7 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	musicpath = list('sound/music/combat_noble.ogg')
 
 /datum/combat_music/ozium
-	name = "Ozium 滥用（很吵！）"
+	name = "奥兹姆滥用（很吵！）"
 	desc = "唉，我必须赶紧来上一口。"
 	shortname = "Ozium"
 	credits = "Light Club - FAHKEET"
@@ -452,13 +452,13 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	musicpath = list('sound/music/cmode/church/combat_reckoning.ogg')
 
 /datum/combat_music/routier
-	name = "Otavan 路佣兵"
+	name = "奥塔万路佣兵"
 	desc = ""
 	shortname = "佣兵"
 	musicpath = list('sound/music/combat_routier.ogg')
 
 /datum/combat_music/shaman
-	name = "Atgervi 萨满"
+	name = "阿特格维萨满"
 	desc = ""
 	shortname = "萨满"
 	credits = "Heilung - Elddansurin"
@@ -486,7 +486,7 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	musicpath = list('sound/music/combat_squire.ogg')
 
 /datum/combat_music/starsugar
-	name = "Starsugar 滥用（很吵！）"
+	name = "星糖滥用（很吵！）"
 	desc = ""
 	shortname = "Starsugar"
 	credits = "FEMTANYL - DOGMATICA"
@@ -500,7 +500,7 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	musicpath = list('sound/music/combat_steppe.ogg')
 
 /datum/combat_music/league
-	name = "Liga Aavnik"
+	name = "阿夫尼克联盟"
 	desc = "Oni zaplatyat tysyachi za odin dyuym。为了一寸之地，千人赴死。"
 	shortname = "Liga"
 	credits = "The Heathen - Jan J. Močnik"
@@ -535,7 +535,7 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	musicpath = list('sound/music/cmode/towner/combat_retired.ogg')
 
 /datum/combat_music/varangian
-	name = "Varangian"
+	name = "瓦兰吉安"
 	desc = ""
 	shortname = "Varangian"
 	credits = "Heilung - Svanrand"
@@ -557,7 +557,7 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 */
 
 /datum/combat_music/vaquero
-	name = "Vaquero"
+	name = "牧侠"
 	desc = ""
 	shortname = "Vaquero"
 	musicpath = list('sound/music/combat_vaquero.ogg')
@@ -577,7 +577,7 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	musicpath = list('sound/music/combat_vigilante.ogg')
 
 /datum/combat_music/warscholar
-	name = "Naledi 战争学者"
+	name = "纳莱迪战争学者"
 	desc = ""
 	shortname = "战争学者"
 	credits = "Butcher's Boulevard - Kristjan Thomas Haaristo"
@@ -593,14 +593,14 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 */
 
 /datum/combat_music/zybantine
-	name = "Zybantine 奴隶贩子"
+	name = "兹班图奴隶贩子"
 	desc = "拥有奴隶的权利，是一个人所能要求的最大自由。"
 	shortname = "Zybantine"
 	credits = "Hakan Glante - Crusader Kings 3 Fate of Iberia OST - War \"Short\""
 	musicpath = list('sound/music/combat_zybantine.ogg')
 
 /datum/combat_music/czwarteki
-	name = "Czwarteki 翼骑兵"
+	name = "兹瓦尔特基翼骑兵"
 	desc = "为了上帝、荣誉与家园。"
 	shortname = "Czwarteki"
 	credits = " Andrius Klimka & Andrey Kulik - World of Tanks Original Soundtrack: Studzianki "

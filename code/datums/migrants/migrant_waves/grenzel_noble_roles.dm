@@ -6,7 +6,7 @@
 	name = "使节"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
-	greet_text = "你是来自 Grenzelhoft 的使节，带着护卫与神父一同出行，代表你的祖国。\
+	greet_text = "你是来自格伦泽尔霍夫特的使节，带着护卫与神父一同出行，代表你的祖国。\
 	你究竟被派来商谈什么，只有你自己知晓。"
 	advclass_cat_rolls = list(CTAG_GRENZEL_ENVOY = 20)
 

@@ -8,7 +8,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	advclass_cat_rolls = list(CTAG_ZYBANTINE_EMIR = 20)
-	greet_text = "你是来自 Zybantine 帝国的使者，带着护卫和你的私人顾问一同出行，代表自己的祖国。\
+	greet_text = "你是来自兹班图帝国的使者，带着护卫和你的私人顾问一同出行，代表自己的祖国。\
 	你究竟被派来此地商谈什么，只有你自己知道。"
 
 /datum/advclass/zybantine_emir

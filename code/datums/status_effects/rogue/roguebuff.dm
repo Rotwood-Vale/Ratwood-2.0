@@ -19,7 +19,7 @@
 	icon_state = "drunk"
 
 /atom/movable/screen/alert/status_effect/buff/drunknoc
-	name = "Noc 光辉之力"
+	name = "诺克光辉之力"
 	desc = ""
 	icon_state = "drunk"
 
@@ -1204,7 +1204,7 @@
 #define BLESSINGOFSUN_FILTER "sun_glow"
 /atom/movable/screen/alert/status_effect/buff/guidinglight
 	name = "引路明光"
-	desc = "Astrata 的目光追随着我，为我照亮前路！"
+	desc = "阿斯特拉塔的目光追随着我，为我照亮前路！"
 	icon_state = "stressvg"
 
 /datum/status_effect/buff/guidinglight // Hey did u follow us from ritualcircles? Cool, okay this stuff is pretty simple yeah? Most ritual circles use some sort of status effects to get their effects ez.
@@ -1246,7 +1246,7 @@
 
 /atom/movable/screen/alert/status_effect/buff/moonlightdance
 	name = "月光之舞"
-	desc = "Noc 如石般冰凉的触碰落在我的心智之上，为我带来智慧。"
+	desc = "诺克如石般冰凉的触碰落在我的心智之上，为我带来智慧。"
 	icon_state = "moonlightdance"
 
 
@@ -1258,7 +1258,7 @@
 
 /datum/status_effect/buff/moonlightdance/on_remove()
 	. = ..()
-	to_chat(owner, span_warning("Noc 的银辉离开了我的视野。"))
+	to_chat(owner, span_warning("诺克的银辉离开了我的视野。"))
 	REMOVE_TRAIT(owner, TRAIT_DARKVISION, MAGIC_TRAIT)
 
 
@@ -1266,7 +1266,7 @@
 
 /atom/movable/screen/alert/status_effect/buff/flylordstriage
 	name = "蝇王急救"
-	desc = "Pestra 的仆从正从我的毛孔与伤口中爬行！"
+	desc = "佩斯特拉的仆从正从我的毛孔与伤口中爬行！"
 	icon_state = "buff"
 
 /datum/status_effect/buff/flylordstriage
@@ -1353,7 +1353,7 @@
 
 /datum/status_effect/buff/undermaidenbargainheal/on_remove()
 	. = ..()
-	to_chat(owner, span_warning("以我之名缔结的交易已经兑现......我被 Necra 的怀抱抛出，而另一个人替我承受......"))
+	to_chat(owner, span_warning("以我之名缔结的交易已经兑现......我被内克拉的怀抱抛出，而另一个人替我承受......"))
 	playsound(owner, 'sound/misc/deadbell.ogg', 100, FALSE, -1)
 	REMOVE_TRAIT(owner, TRAIT_NODEATH, id)
 
@@ -1402,7 +1402,7 @@
 
 /datum/status_effect/buff/lesserwolf/on_remove()
 	. = ..()
-	to_chat(owner, span_warning("我感觉 Dendor 的祝福正在离开我的身体......"))
+	to_chat(owner, span_warning("我感觉登多尔的祝福正在离开我的身体......"))
 	REMOVE_TRAIT(owner, TRAIT_LONGSTRIDER, id)
 	REMOVE_TRAIT(owner, TRAIT_STRONGBITE, id)
 
@@ -1533,7 +1533,7 @@
 	REMOVE_TRAIT(owner, TRAIT_LIGHT_STEP, "xylixboon")
 
 /atom/movable/screen/alert/status_effect/buff/pacify
-	name = "Eora 的祝福"
+	name = "伊欧拉的祝福"
 	desc = "我感到心轻如羽，所有忧虑都被冲刷而去。"
 	icon_state = "buff"
 
@@ -1556,7 +1556,7 @@
 
 //A lesser variant of Eoran blessing meant for peacecake consumption.
 /atom/movable/screen/alert/status_effect/buff/peacecake
-	name = "次级 Eora 祝福"
+	name = "次级伊欧拉祝福"
 	desc = "我感到内心轻松了许多，所有忧虑都缓缓散去。"
 	icon_state = "buff"
 
@@ -1818,13 +1818,13 @@
 	var/outline_colour = "#EEBBBB"
 	duration = -1
 	tick_interval = -1
-	examine_text = span_good("SUBJECTPRONOUN 沐浴在 Eora 的圣光之中！")
+	examine_text = span_good("SUBJECTPRONOUN 沐浴在伊欧拉的圣光之中！")
 	alert_type = null
 
 /datum/status_effect/eoranaura/on_apply()
 	. = ..()
 
-	owner.visible_message(span_userdanger("Eora 的光潮自[owner]身上奔涌而出，使你心中充满平和与希望！"))
+	owner.visible_message(span_userdanger("伊欧拉的光潮自[owner]身上奔涌而出，使你心中充满平和与希望！"))
 
 	var/mutable_appearance/effect = mutable_appearance('icons/effects/effects.dmi', "curse", -JOYBRINGER_LAYER, alpha = 128)
 	effect.appearance_flags = RESET_COLOR
@@ -2084,8 +2084,8 @@
 	duration = 30 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/nocblessing
-	name = "Noc 的祝福"
-	desc = "仰望 Noc 让我思绪更清晰。"
+	name = "诺克的祝福"
+	desc = "仰望诺克让我思绪更清晰。"
 	icon_state = "buff"
 /datum/status_effect/buff/goodloving
 	id = "Good Loving"

@@ -528,7 +528,7 @@
 /datum/stressevent/xylixian_pity
 	timer = 5 MINUTES
 	stressadd = 1
-	desc = span_red("Xylix 怜悯了我，让我免于厄运的后果。我必须表现得更好！")
+	desc = span_red("赛利克斯怜悯了我，让我免于厄运的后果。我必须表现得更好！")
 
 // Prestidigitation water bolt stress events — triggered by being a cat and splashed in the face
 /datum/stressevent/water_splashed_cat

@@ -208,7 +208,7 @@
 
 /datum/particle_weather/hurricane
 	name = "飓风"
-	desc = "Abyssor 的怒火。"
+	desc = "阿比索的怒火。"
 	particleEffectType = /particles/weather/rain
 	warning_message = span_danger("天空中的云层暗如深夜并拉成长带，远方旋转的巨轮庞大得让人难以一眼看清。")
 	scale_vol_with_severity = TRUE

@@ -59,7 +59,7 @@
 	icon_state = "debuff"
 
 	var/static/list/hunger_tips = list(
-		"我的胃像笼中的 volf 一样低吼着……",
+		"我的胃像笼中的沃尔夫一样低吼着……",
 		"我能感到家族诅咒沉重地压在身上。",
 		"即便是最丰盛的盛宴也从来无法让我满足。"
 	)

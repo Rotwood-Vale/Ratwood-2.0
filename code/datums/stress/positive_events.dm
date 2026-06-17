@@ -46,7 +46,7 @@
 /datum/stressevent/gnoll_graggar
 	timer = 1 MINUTES
 	stressadd = -2
-	desc = span_green("是豺狼人！Graggar 的祝福庇佑着我！")
+	desc = span_green("是豺狼人！格拉加尔的祝福庇佑着我！")
 
 /datum/stressevent/triumph
 	timer = 10 MINUTES
@@ -231,7 +231,7 @@
 
 /datum/stressevent/puzzle_impossible
 	stressadd = -4
-	desc = span_boldgreen("我解开了一道极其困难的谜题。Xylix 正对我微笑，就连 Noc 想必也会觉得这很了不起。")
+	desc = span_boldgreen("我解开了一道极其困难的谜题。赛利克斯正对我微笑，就连诺克想必也会觉得这很了不起。")
 	timer = 15 MINUTES
 
 /datum/stressevent/noble_lavish_food
@@ -366,11 +366,11 @@
 /datum/stressevent/astrata_grandeur
 	timer = 30 MINUTES
 	stressadd = -2
-	desc = span_green("Astrata 的光辉正耀眼地穿透我。我绝不能让任何人忘记这一点。")
+	desc = span_green("阿斯特拉塔的光辉正耀眼地穿透我。我绝不能让任何人忘记这一点。")
 
 /datum/stressevent/graggar_culling_finished
 	stressadd = -1
-	desc = span_green("我战胜了自己的宿敌！Graggar 如今正眷顾着我！")
+	desc = span_green("我战胜了自己的宿敌！格拉加尔如今正眷顾着我！")
 	timer = INFINITY
 
 /datum/stressevent/eoran_blessing
@@ -478,4 +478,4 @@
 /datum/stressevent/xylixian_fate
 	timer = 10 MINUTES
 	stressadd = -2
-	desc = span_green("Xylix 将命运之线编向了我这一边！毫无疑问，我正受眷顾！")
+	desc = span_green("赛利克斯将命运之线编向了我这一边！毫无疑问，我正受眷顾！")

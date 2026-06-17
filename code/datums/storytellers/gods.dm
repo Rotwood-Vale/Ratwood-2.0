@@ -253,7 +253,7 @@
 			STATS_GRAVES_ROBBED = list("name" = "被盗掘的坟墓：", "points" = -3.75, "capacity" = -40),
 		),
 		"Set 4" = list(
-			STATS_DEADITES_KILLED = list("name" = "击杀的 deadite：", "points" = 6.25, "capacity" = 90),
+			STATS_DEADITES_KILLED = list("name" = "击杀的尸鬼：", "points" = 6.25, "capacity" = 90),
 		),
 		"Set 5" = list(
 			STATS_VAMPIRES_KILLED = list("name" = "击杀的吸血鬼：", "points" = 12.5, "capacity" = 70),
@@ -372,7 +372,7 @@
 
 /datum/storyteller/dendor
 	name = "Dendor"
-	vote_desc = " 自然主宰一切。过度生长与 Verevolves 更容易出现。祂的恩泽照耀着丰收与狼人。"
+	vote_desc = " 自然主宰一切。过度生长与维尔沃夫更容易出现。祂的恩泽照耀着丰收与狼人。"
 	desc = "Dendor 喜欢降下自然主题的事件。"
 	welcome_text = "栖枝 zads 的咯咯怪笑，与晨露闪烁的微光……"
 	weight = 4
@@ -406,7 +406,7 @@
 			STATS_FOREST_DEATHS = list("name" = "森林中的死亡：", "points" = 6, "capacity" = 90),
 		),
 		"Set 4" = list(
-			STATS_WEREVOLVES = list("name" = "werevolves 数量：", "points" = 12.5, "capacity" = 65),
+			STATS_WEREVOLVES = list("name" = "维尔沃夫数量：", "points" = 12.5, "capacity" = 65),
 		),
 	)
 
@@ -414,7 +414,7 @@
 
 /datum/storyteller/zizo
 	name = "Zizo"
-	vote_desc = "混沌主宰一切。恶人必将现身，而 deadite 也会更加凶残。她的恩泽照耀着尸体，无论圣洁、尊贵，还是复苏之躯。"
+	vote_desc = "混沌主宰一切。恶人必将现身，而尸鬼也会更加凶残。她的恩泽照耀着尸体，无论圣洁、尊贵，还是复苏之躯。"
 	desc = "Zizo 以风险与回报为食，偏爱大胆而难测之人。"
 	welcome_text = "一阵阴森的风拂过，携来受诅者的哀嚎……"
 	weight = 4
@@ -446,7 +446,7 @@
 			STATS_NOBLE_DEATHS = list("name" = "死去的贵族：", "points" = 5.5, "capacity" = 80),
 		),
 		"Set 2" = list(
-			STATS_DEADITES_WOKEN_UP = list("name" = "唤醒的 deadite：", "points" = 4, "capacity" = 85),
+			STATS_DEADITES_WOKEN_UP = list("name" = "唤醒的尸鬼：", "points" = 4, "capacity" = 85),
 		),
 		"Set 3" = list(
 			STATS_CLERGY_DEATHS = list("name" = "死去的教士：", "points" = 12, "capacity" = 70),
@@ -510,7 +510,7 @@
 
 /datum/storyteller/graggar
 	name = "Graggar"
-	vote_desc = " Inhumenity 主宰一切。恶人必将现身，袭击也会更加频繁。祂的恩泽照耀着流血与食人。"
+	vote_desc = " 异民主宰一切。恶人必将现身，袭击也会更加频繁。祂的恩泽照耀着流血与食人。"
 	desc = "Graggar 鼓励战争与征服，使战斗成为解决一切的手段。"
 	welcome_text = "滚滚烟柱穿过街巷，散发着灰烬与鲜血的腥味……"
 	weight = 4

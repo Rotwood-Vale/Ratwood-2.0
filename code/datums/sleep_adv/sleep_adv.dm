@@ -346,7 +346,7 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 
 	// Notify player if they're benefiting from Malum's blessing for craft skills or sewing
 	if(HAS_TRAIT(mind.current, TRAIT_FORGEBLESSED) && (istype(skill, /datum/skill/craft) || istype(skill, /datum/skill/craft/sewing)))
-		to_chat(mind.current, span_notice("Malum 的赐福降低了你工艺训练所需的梦点消耗。"))
+		to_chat(mind.current, span_notice("马卢姆的赐福降低了你工艺训练所需的梦点消耗。"))
 	// Let them in on it being related to their trait.
 	if(HAS_TRAIT(mind.current, TRAIT_HUMEN_INGENUITY))
 		to_chat(mind.current, span_notice("仿佛有人在引导我的梦境，知识来得格外轻易。"))

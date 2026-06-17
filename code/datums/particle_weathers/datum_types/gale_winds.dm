@@ -127,7 +127,7 @@ GLOBAL_LIST_EMPTY(active_abyssors_rage)
 	step(src, current_drift_dir)
 
 /obj/effect/weather/tornado/abyssors_rage	//Hurricane tornado, destroys turfs and structures
-	name = "Abyssor之怒"
+	name = "阿比索之怒"
 	desc = "愿沉眠者受颂赞，因其怒火无边无际。这是一股狂暴旋转的水气之柱。"
 	color = "#00d8d8"
 	var/destruction_radius = 4

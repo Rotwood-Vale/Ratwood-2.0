@@ -47,7 +47,7 @@
 		to_chat(user, span_notice("我又恢复平凡了。"))
 
 /datum/magic_item/mundane/xylix
-	name = "Xylix 的恩赐"
+	name = "赛利克斯的恩赐"
 	description = "它仿佛隐约散发着笑声。"
 	var/active_item = FALSE
 

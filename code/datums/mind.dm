@@ -482,7 +482,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 			output += "<br>[carbon.real_name]"
 			if (carbon.job)
 				output += " - [carbon.job]"
-	output += "<br>我的信条是鲜血，我的信仰是钢铁。在这些灵魂尽归我所有之前，我绝不会停歇。用那把渎神匕首替 Graggar 囚禁他们的灵魂。"
+	output += "<br>我的信条是鲜血，我的信仰是钢铁。在这些灵魂尽归我所有之前，我绝不会停歇。用那把渎神匕首替格拉加尔囚禁他们的灵魂。"
 
 	if(window)
 		recipient << browse(output,"window=memory")
@@ -509,10 +509,10 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 				if(target_heart && target_heart.owner && target_heart.owner != target) // Rival is not gone but their heart is in someone else
 					output += "<br>[target.real_name]，[target.job]"
 					output += "<br>我宿敌的心脏正在[target_heart.owner.real_name]位于[target_heart_location]的胸腔中跳动"
-					output += "<br>取回并吞食它，以此夺取胜利！Graggar 不会宽恕失败。"
+					output += "<br>取回并吞食它，以此夺取胜利！格拉加尔不会宽恕失败。"
 				else
 					output += "<br>[target.real_name]，[target.job]"
-					output += "<br>在宿敌吞食我的心脏之前，先把对方的心脏吃掉！Graggar 不会宽恕失败。"
+					output += "<br>在宿敌吞食我的心脏之前，先把对方的心脏吃掉！格拉加尔不会宽恕失败。"
 			else if(target_heart)
 				if(target_heart.owner && target_heart.owner != recipient)
 					output += "<br>宿敌之心"
@@ -530,10 +530,10 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 				if(challenger_heart && challenger_heart.owner && challenger_heart.owner != challenger) // Rival is not gone but their heart is in someone else
 					output += "<br>[challenger.real_name]，[challenger.job]"
 					output += "<br>我宿敌的心脏正在[challenger_heart.owner.real_name]位于[challenger_heart_location]的胸腔中跳动"
-					output += "<br>取回并吞食它，以此夺取胜利！Graggar 不会宽恕失败。"
+					output += "<br>取回并吞食它，以此夺取胜利！格拉加尔不会宽恕失败。"
 				else
 					output += "<br>[challenger.real_name]，[challenger.job]"
-					output += "<br>在宿敌吞食我的心脏之前，先把对方的心脏吃掉！Graggar 不会宽恕失败。"
+					output += "<br>在宿敌吞食我的心脏之前，先把对方的心脏吃掉！格拉加尔不会宽恕失败。"
 			else if(challenger_heart)
 				if(challenger_heart.owner && challenger_heart.owner != recipient)
 					output += "<br>宿敌之心"

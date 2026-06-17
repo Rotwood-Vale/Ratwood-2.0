@@ -6,7 +6,7 @@
 
 /datum/advclass/crusader_Captain
 	name = "十字军队长"
-	tutorial = "你是真正信仰的十字军领袖，奉圣座之命自 Grenzelhoft 而来。找到 Psydon 的圣杯，再一路劫掠夺取财富，彰显 Astrata 的荣光！"
+	tutorial = "你是真正信仰的十字军领袖，奉圣座之命自格伦泽尔霍夫特而来。找到普赛顿的圣杯，再一路劫掠夺取财富，彰显阿斯特拉塔的荣光！"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	maximum_possible_slots = 1
@@ -51,7 +51,7 @@
 /datum/outfit/job/roguetown/crusader/captain/pre_equip(mob/living/carbon/human/H)
 	..()
 	if (!(istype(H.patron, /datum/patron/divine/astrata)))	//astratan crusade
-		to_chat(H, span_warning("Astrata，这片土地的绝对秩序接纳了我；我们将夺回应得之物，因为这是她的意志。"))
+		to_chat(H, span_warning("阿斯特拉塔，这片土地的绝对秩序接纳了我；我们将夺回应得之物，因为这是她的意志。"))
 		H.set_patron(/datum/patron/divine/astrata)
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/crusader
 	wrists = /obj/item/clothing/neck/roguetown/psicross/astrata
@@ -78,7 +78,7 @@
 
 /datum/advclass/crusader_cleric
 	name = "十字军牧师"
-	tutorial = "你是真正信仰的十字军，奉圣座之命自 Grenzelhoft 而来。找到 Psydon 的圣杯，再一路劫掠夺取财富，彰显 Astrata 的荣光！"
+	tutorial = "你是真正信仰的十字军，奉圣座之命自格伦泽尔霍夫特而来。找到普赛顿的圣杯，再一路劫掠夺取财富，彰显阿斯特拉塔的荣光！"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	maximum_possible_slots = 2
@@ -119,7 +119,7 @@
 
 /datum/outfit/job/roguetown/crusader/cleric/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("Astrata，这片土地的绝对秩序接纳了我；我们将夺回应得之物，因为这是她的意志。"))
+	to_chat(H, span_warning("阿斯特拉塔，这片土地的绝对秩序接纳了我；我们将夺回应得之物，因为这是她的意志。"))
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/crusader
 	wrists = /obj/item/clothing/neck/roguetown/psicross/astrata
 	cloak = /obj/item/clothing/cloak/cape/crusader
@@ -148,7 +148,7 @@
 
 /datum/advclass/crusader_paladin
 	name = "十字军圣骑士"
-	tutorial = "你是真正信仰的十字军，奉圣座之命自 Grenzelhoft 而来。找到 Psydon 的圣杯，再一路劫掠夺取财富，彰显 Astrata 的荣光！"
+	tutorial = "你是真正信仰的十字军，奉圣座之命自格伦泽尔霍夫特而来。找到普赛顿的圣杯，再一路劫掠夺取财富，彰显阿斯特拉塔的荣光！"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	maximum_possible_slots = 2
@@ -192,7 +192,7 @@
 /datum/outfit/job/roguetown/crusader/paladin/pre_equip(mob/living/carbon/human/H)
 	..()
 	if (!(istype(H.patron, /datum/patron/divine/astrata)))	//astratan crusade
-		to_chat(H, span_warning("Astrata，这片土地的绝对秩序接纳了我；我们将夺回应得之物，因为这是她的意志。"))
+		to_chat(H, span_warning("阿斯特拉塔，这片土地的绝对秩序接纳了我；我们将夺回应得之物，因为这是她的意志。"))
 		H.set_patron(/datum/patron/divine/astrata)
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/crusader
 	wrists = /obj/item/clothing/neck/roguetown/psicross/astrata
@@ -221,7 +221,7 @@
 
 /datum/advclass/crusader_footman
 	name = "十字军步卒"
-	tutorial = "你是身披重甲、真正信仰的十字军，奉圣座之命自 Grenzelhoft 而来。找到 Psydon 的圣杯，再一路劫掠夺取财富，彰显 Astrata 的荣光！"
+	tutorial = "你是身披重甲、真正信仰的十字军，奉圣座之命自格伦泽尔霍夫特而来。找到普赛顿的圣杯，再一路劫掠夺取财富，彰显阿斯特拉塔的荣光！"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/roguetown/crusader/footman
@@ -253,7 +253,7 @@
 /datum/outfit/job/roguetown/crusader/footman/pre_equip(mob/living/carbon/human/H)
 	..()
 	if (!(istype(H.patron, /datum/patron/divine/astrata)))	//astratan crusade
-		to_chat(H, span_warning("Astrata，这片土地的绝对秩序接纳了我；我们将夺回应得之物，因为这是她的意志。"))
+		to_chat(H, span_warning("阿斯特拉塔，这片土地的绝对秩序接纳了我；我们将夺回应得之物，因为这是她的意志。"))
 		H.set_patron(/datum/patron/divine/astrata)
 
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/crusader
@@ -281,7 +281,7 @@
 
 /datum/advclass/crusader_marksman
 	name = "十字军射手"
-	tutorial = "你是真正信仰的十字军，奉圣座之命自 Grenzelhoft 而来。找到 Psydon 的圣杯，再一路劫掠夺取财富，彰显 Astrata 的荣光！"
+	tutorial = "你是真正信仰的十字军，奉圣座之命自格伦泽尔霍夫特而来。找到普赛顿的圣杯，再一路劫掠夺取财富，彰显阿斯特拉塔的荣光！"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/roguetown/crusader/marksman
@@ -315,7 +315,7 @@
 /datum/outfit/job/roguetown/crusader/marksman/pre_equip(mob/living/carbon/human/H)
 	..()
 	if (!(istype(H.patron, /datum/patron/divine/astrata)))	//astratan crusade
-		to_chat(H, span_warning("Astrata，这片土地的绝对秩序接纳了我；我们将夺回应得之物，因为这是她的意志。"))
+		to_chat(H, span_warning("阿斯特拉塔，这片土地的绝对秩序接纳了我；我们将夺回应得之物，因为这是她的意志。"))
 		H.set_patron(/datum/patron/divine/astrata)
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/crusader
 	wrists = /obj/item/clothing/neck/roguetown/psicross/astrata
@@ -343,8 +343,8 @@
 
 
 /obj/item/reagent_containers/glass/cup/golden/psydon
-	name = "Psydon的圣杯"
+	name = "普赛顿的圣杯"
 	icon_state = "psydon_golden"
 	sellprice = 600
-	desc = "这是一只由银与金打造、闪闪发光的圣杯，其上镶着独一无二的宝石。据说，它曾是 Psydon 本人所用的圣杯。"
+	desc = "这是一只由银与金打造、闪闪发光的圣杯，其上镶着独一无二的宝石。据说，它曾是普赛顿本人所用的圣杯。"
 #undef CTAG_CRUSADE

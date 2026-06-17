@@ -604,7 +604,7 @@
 		owner.remove_status_effect(src)
 
 /atom/movable/screen/alert/status_effect/debuff/necranwilloss
-	name = "Necra 的死寂安宁！"
+	name = "内克拉的死寂安宁！"
 	desc = "我正站在吾主领域的边缘，如此死寂的安宁让我意志消沉。"
 	icon_state = "debuff"
 	color ="#af9f9f"
