@@ -2036,12 +2036,6 @@ generate/load female uniform sprites matching all previously decided variables
 		. += "husk"
 	return jointext(., "-")
 
-/mob/living/carbon/human/load_limb_from_cache()
-	..()
-	update_hair()
-
-
-
 /mob/living/carbon/human/proc/update_observer_view(obj/item/I, inventory)
 	if(observers && observers.len)
 		for(var/M in observers)
