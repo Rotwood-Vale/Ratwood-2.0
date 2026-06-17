@@ -71,6 +71,17 @@
 	name = "异界仪式粉笔"
 	desc = "浸透异界气息的仪式粉笔。它会顺着使用者的信仰，描绘出对应神明的献祭法阵。"
 
+
+/obj/item/ritechalk/eldritch/Initialize(mapload)
+	. = ..()
+	add_atom_colour("#88ffaa", FIXED_COLOUR_PRIORITY)
+	add_filter("eldritch_ritual_chalk_outline", 2, list("type" = "outline", "color" = "#58C86A", "alpha" = 95, "size" = 1))
+
+/obj/item/ritechalk/eldritch/Destroy()
+	remove_filter("blessed_log_outline")
+	return ..()
+
+
 /obj/item/ritechalk/eldritch/attack_self(mob/living/user)
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
 		to_chat(user, span_smallred("我不明白该如何驱使这股异界仪式之力。"))
