@@ -2003,19 +2003,7 @@ generate/load female uniform sprites matching all previously decided variables
 	. += obscured_flags
 
 	for(var/obj/item/bodypart/BP as anything in bodyparts)
-		. += BP.body_zone
-		. += (BP.status == BODYPART_ORGANIC) ? "organic" : "robotic"
-		switch(BP.use_digitigrade)
-			if(FULL_DIGITIGRADE)
-				. += "digitigrade_full"
-			if(SQUISHED_DIGITIGRADE)
-				. += "digitigrade_squashed"
-		if(BP.rotted)
-			. += "rotted"
-		if(BP.skeletonized)
-			. += "skeletonized"
-		if(BP.dmg_overlay_type)
-			. += BP.dmg_overlay_type
+		. += BP.generate_limb_cache_key()
 
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += "husk"

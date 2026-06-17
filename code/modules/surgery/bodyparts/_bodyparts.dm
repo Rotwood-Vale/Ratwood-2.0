@@ -611,6 +611,9 @@
 /// Generates a cache key for this limb's base appearance
 /obj/item/bodypart/proc/generate_limb_cache_key(dropped, hideaux)
 	var/list/key_parts = list(
+		type,
+		icon,
+		species_icon,
 		body_zone,
 		body_gender,
 		dropped,
@@ -709,7 +712,6 @@
 			if(marking_overlays)
 				. += marking_overlays
 
-	// These are not cached as they can change independently
 	var/draw_organ_features = TRUE
 	var/draw_bodypart_features = TRUE
 	if(owner?.dna?.species)
