@@ -515,23 +515,23 @@
 			data += "<div style='width: 44%; display: flex; justify-content: flex-end;'>"
 			data += "<div style='text-align: left; padding-right: 20px;'>"
 			data += "<div style='margin-bottom: 4px;'><font color='#f0c759'>初始国库: </font>[GLOB.azure_round_stats[STATS_STARTING_TREASURY]]</div>"
-	data += "<div style='margin-bottom: 4px;'><font color='#e67e22'>贵族领地收入: </font>[GLOB.azure_round_stats[STATS_NOBLE_INCOME_TOTAL]]</div>"
-	data += "<div style='margin-bottom: 4px;'><font color='#ce9d15'>农村税款征收: </font>[GLOB.azure_round_stats[STATS_RURAL_TAXES_COLLECTED]]</div>"
-	data += "<div style='margin-bottom: 4px;'><font color='#f5c02e'>皇家税款征收: </font>[GLOB.azure_round_stats[STATS_TAXES_COLLECTED]]</div>"
-	data += "<div style='margin-bottom: 4px;'><font color='#8fa36a'>玛门币存入: </font>[GLOB.azure_round_stats[STATS_MAMMONS_DEPOSITED]]</div>"
-	data += "<div style='margin-bottom: 4px;'><font color='#90b34f'>库存出口: </font>[GLOB.azure_round_stats[STATS_STOCKPILE_EXPORTS_VALUE]]</div>"
-	data += "<div style='margin-bottom: 4px;'><font color='#a2b337'>库存购入: </font>[GLOB.azure_round_stats[STATS_STOCKPILE_REVENUE]]</div>"
-	data += "<div style='border-top: 1px solid #555; margin: 8px 0;'></div>"
-	data += "<div style='margin-bottom: 4px;'><font color='#23ba30'>总收入: </font>[GLOB.azure_round_stats[STATS_STARTING_TREASURY]  + GLOB.azure_round_stats[STATS_NOBLE_INCOME_TOTAL] + GLOB.azure_round_stats[STATS_TAXES_COLLECTED] + GLOB.azure_round_stats[STATS_MAMMONS_DEPOSITED] + GLOB.azure_round_stats[STATS_STOCKPILE_EXPORTS_VALUE] + GLOB.azure_round_stats[STATS_STOCKPILE_REVENUE] + GLOB.azure_round_stats[STATS_RURAL_TAXES_COLLECTED]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#e67e22'>贵族领地收入: </font>[GLOB.azure_round_stats[STATS_NOBLE_INCOME_TOTAL]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#ce9d15'>农村税款征收: </font>[GLOB.azure_round_stats[STATS_RURAL_TAXES_COLLECTED]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#f5c02e'>皇家税款征收: </font>[GLOB.azure_round_stats[STATS_TAXES_COLLECTED]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#8fa36a'>玛门币存入: </font>[GLOB.azure_round_stats[STATS_MAMMONS_DEPOSITED]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#90b34f'>库存出口: </font>[GLOB.azure_round_stats[STATS_STOCKPILE_EXPORTS_VALUE]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#a2b337'>库存购入: </font>[GLOB.azure_round_stats[STATS_STOCKPILE_REVENUE]]</div>"
+			data += "<div style='border-top: 1px solid #555; margin: 8px 0;'></div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#23ba30'>总收入: </font>[GLOB.azure_round_stats[STATS_STARTING_TREASURY]  + GLOB.azure_round_stats[STATS_NOBLE_INCOME_TOTAL] + GLOB.azure_round_stats[STATS_TAXES_COLLECTED] + GLOB.azure_round_stats[STATS_MAMMONS_DEPOSITED] + GLOB.azure_round_stats[STATS_STOCKPILE_EXPORTS_VALUE] + GLOB.azure_round_stats[STATS_STOCKPILE_REVENUE] + GLOB.azure_round_stats[STATS_RURAL_TAXES_COLLECTED]]</div>"
 			data += "</div></div>"
 
 			// Right column (Expenses)
 			data += "<div style='width: 44%; display: flex; justify-content: flex-start;'>"
 			data += "<div style='text-align: left; padding-left: 20px;'>"
 			data += "<div style='margin-bottom: 4px;'><font color='#c95555'>玛门币提取: </font>[GLOB.azure_round_stats[STATS_MAMMONS_WITHDRAWN]]</div>"
-	data += "<div style='margin-bottom: 4px;'><font color='#db853d'>库存进口: </font>[GLOB.azure_round_stats[STATS_STOCKPILE_IMPORTS_VALUE]]</div>"
-	data += "<div style='border-top: 1px solid #555; margin: 8px 0;'></div>"
-	data += "<div style='margin-bottom: 4px;'><font color='#c44731'>总支出: </font>[GLOB.azure_round_stats[STATS_MAMMONS_WITHDRAWN] + GLOB.azure_round_stats[STATS_STOCKPILE_IMPORTS_VALUE]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#db853d'>库存进口: </font>[GLOB.azure_round_stats[STATS_STOCKPILE_IMPORTS_VALUE]]</div>"
+			data += "<div style='border-top: 1px solid #555; margin: 8px 0;'></div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#c44731'>总支出: </font>[GLOB.azure_round_stats[STATS_MAMMONS_WITHDRAWN] + GLOB.azure_round_stats[STATS_STOCKPILE_IMPORTS_VALUE]]</div>"
 			data += "</div></div>"
 
 			data += "</div></div>"
@@ -547,24 +547,24 @@
 			data += "<div style='width: 44%; display: flex; justify-content: flex-end;'>"
 			data += "<div style='text-align: left; padding-right: 20px;'>"
 			data += "<div style='margin-bottom: 4px;'><font color='#caa64a'>浴场主事金库收入: </font>[GLOB.azure_round_stats[STATS_BATHMATRON_VAULT_TOTAL_REVENUE]]</div>"
-	data += "<div style='margin-bottom: 4px;'><font color='#c57e62'>售予库存: </font>[GLOB.azure_round_stats[STATS_STOCKPILE_EXPANSES]]</div>"
-	data += "<div style='margin-bottom: 4px;'><font color='#b6a17f'>薪资支付: </font>[GLOB.azure_round_stats[STATS_WAGES_PAID]]</div>"
-	data += "<div style='margin-bottom: 4px;'><font color='#aac484'>国库转账: </font>[GLOB.azure_round_stats[STATS_DIRECT_TREASURY_TRANSFERS]]</div>"
-	data += "<div style='margin-bottom: 4px;'><font color='#c78445'>皇家罚款征收: </font>[GLOB.azure_round_stats[STATS_FINES_INCOME]]</div>"
-	data += "<div><font color='#e74c3c'>皇家税款逃避: </font>[GLOB.azure_round_stats[STATS_TAXES_EVADED]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#c57e62'>售予库存: </font>[GLOB.azure_round_stats[STATS_STOCKPILE_EXPANSES]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#b6a17f'>薪资支付: </font>[GLOB.azure_round_stats[STATS_WAGES_PAID]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#aac484'>国库转账: </font>[GLOB.azure_round_stats[STATS_DIRECT_TREASURY_TRANSFERS]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#c78445'>皇家罚款征收: </font>[GLOB.azure_round_stats[STATS_FINES_INCOME]]</div>"
+			data += "<div><font color='#e74c3c'>皇家税款逃避: </font>[GLOB.azure_round_stats[STATS_TAXES_EVADED]]</div>"
 			data += "</div></div>"
 
 			// Right column
 			data += "<div style='width: 44%; display: flex; justify-content: flex-start;'>"
 			data += "<div style='text-align: left; padding-left: 20px;'>"
 			data += "<div style='margin-bottom: 4px;'><font color='#ebbf49'>玛门币流通: </font>[GLOB.azure_round_stats[STATS_MAMMONS_HELD]]</div>"
-	data += "<div style='margin-bottom: 4px;'><font color='#db9a59'>贸易出口额: </font>[GLOB.azure_round_stats[STATS_TRADE_VALUE_EXPORTED]]</div>"
-	data += "<div style='margin-bottom: 4px;'><font color='#dfbf57'>贸易进口额: </font>[GLOB.azure_round_stats[STATS_TRADE_VALUE_IMPORTED]]</div>"
-	data += "<div style='margin-bottom: 4px;'><font color='#c0b283'>金面进口: </font>[GLOB.azure_round_stats[STATS_GOLDFACE_VALUE_SPENT]]</div>"
-	data += "<div style='margin-bottom: 4px;'><font color='#c0c0c0'>银面进口: </font>[GLOB.azure_round_stats[STATS_SILVERFACE_VALUE_SPENT]]</div>"
-	data += "<div style='margin-bottom: 4px;'><font color='#b87333'>铜面进口: </font>[GLOB.azure_round_stats[STATS_COPPERFACE_VALUE_SPENT]]</div>"
-	data += "<div style='margin-bottom: 4px;'><font color='#b5a642'>纯净号进口: </font>[GLOB.azure_round_stats[STATS_PURITY_VALUE_SPENT]]</div>"
-	data += "<div><font color='#7495d3'>小贩收入: </font>[GLOB.azure_round_stats[STATS_PEDDLER_REVENUE]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#db9a59'>贸易出口额: </font>[GLOB.azure_round_stats[STATS_TRADE_VALUE_EXPORTED]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#dfbf57'>贸易进口额: </font>[GLOB.azure_round_stats[STATS_TRADE_VALUE_IMPORTED]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#c0b283'>金面进口: </font>[GLOB.azure_round_stats[STATS_GOLDFACE_VALUE_SPENT]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#c0c0c0'>银面进口: </font>[GLOB.azure_round_stats[STATS_SILVERFACE_VALUE_SPENT]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#b87333'>铜面进口: </font>[GLOB.azure_round_stats[STATS_COPPERFACE_VALUE_SPENT]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#b5a642'>纯净号进口: </font>[GLOB.azure_round_stats[STATS_PURITY_VALUE_SPENT]]</div>"
+			data += "<div><font color='#7495d3'>小贩收入: </font>[GLOB.azure_round_stats[STATS_PEDDLER_REVENUE]]</div>"
 			data += "</div></div>"
 
 			data += "</div></div>"
@@ -712,13 +712,13 @@
 						else if(A.owner.assigned_role && A.owner.current)
 							jobtext = " the <b>[A.owner.assigned_role]</b>"
 						var/usede = get_display_ckey(A.owner.key)
-						data += "<b>[usede]</b> was <span style='color:#e6a962'><b>[A.owner.name]</b>[jobtext]</span> and "
-					if(A.owner.current.stat == DEAD)
-						data += "<span style='color:#d9534f'>死亡</span>"
+						data += "<b>[usede]</b> 曾为 <span style='color:#e6a962'><b>[A.owner.name]</b>[jobtext]</span>，已"
+						if(A.owner.current.stat == DEAD)
+							data += "<span style='color:#d9534f'>死亡</span>"
+						else
+							data += "<span style='color:#4ccf4c'>幸存</span>"
 					else
-						data += "<span style='color:#4ccf4c'>幸存</span>"
-				else
-					data += "<b>未知恶徒</b>"
+						data += "<b>未知恶徒</b>"
 
 					if(A.objectives.len)
 						data += "<div style='margin-left: 15px; margin-top: 5px;'>"
