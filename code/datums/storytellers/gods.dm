@@ -372,7 +372,7 @@
 
 /datum/storyteller/dendor
 	name = "Dendor"
-	vote_desc = " 自然主宰一切。过度生长与维尔沃夫更容易出现。祂的恩泽照耀着丰收与狼人。"
+	vote_desc = " 自然主宰一切。过度生长与狼人更容易出现。祂的恩泽照耀着丰收与狼人。"
 	desc = "Dendor 喜欢降下自然主题的事件。"
 	welcome_text = "栖枝 zads 的咯咯怪笑，与晨露闪烁的微光……"
 	weight = 4
