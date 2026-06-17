@@ -4,25 +4,25 @@
 /datum/species/kobold
 	name = "Kobold"
 	id = "kobold"
-	desc = "<b>Kobold</b><br>\
-	Kobolds are a nomadic tribal people known for their small stature and swift speed. \
-	They prefer mountainous terrain or underground cave systems, but they are adaptable \
-	to new environments. They are often found in the service of dragons or Drakian rulers.<br>\
-	(+1 Fortune, Eating Rocks and Gems Trait)"
+	desc = "<b>狗头人</b><br>\
+	狗头人是游牧部族，以身材矮小和行动迅捷著称。\
+	他们偏好山地或地下洞穴系统，但也能适应新环境。\
+	他们常被发现侍奉巨龙或龙裔统治者。<br>\
+	(+1 幸运, 食石食矿特质)"
 
-	expanded_desc =	"Kobolds are a nomadic tribal people known for their small stature and swift speed. \
-	They prefer mountainous terrain or underground cave systems, but they are adaptable \
-	to new environments. They are often found in the service of dragons or Drakian rulers. \
+	expanded_desc =	"狗头人是游牧部族，以身材矮小和行动迅捷著称。\
+	他们偏好山地或地下洞穴系统，但也能适应新环境。\
+	他们常被发现侍奉巨龙或龙裔统治者。\
 	<br><br> \
-	It is said that Kobolds were created by Matthios, who upon achieving godhood assumed a new form, \
-	that of the first dragon. Kobolds were the last race Matthios created before his defeat and ultimate \
-	banishment to the hells. It is believed they were made to be subservient to dragons and Drakians \
-	due to their servile nature. \
+	据说狗头人是由马西奥斯创造的，他在升神后获得了新的形态——\
+	即第一条巨龙。狗头人是马西奥斯在被击败并最终放逐至地狱之前创造的最后一个种族。\
+	据说他们被造出来的目的就是臣服于巨龙和龙裔，\
+	这源于他们的奴性本质。\
 	<br><br> \
-	However, Kobolds suffered from fleeting loyalty and faith in Matthios \
-	and the task they were created for. Consequently, many Kobolds sought new purposes and beliefs. Many \
-	even sought refuge in civilized societies. Yet, they remain bound by their nature and often take to \
-	thievery and pickpocketing, further cementing hatred and distrust toward them by civilized folk."
+	然而，狗头人的忠诚和对马西奥斯及其被创造使命的信仰并不持久。\
+	因此，许多狗头人寻求新的目标和信仰。许多人甚至\
+	在文明社会中寻找庇护。然而，他们仍受其本性束缚，常常从事\
+	偷盗和扒窃，进一步加深了文明人对他们的仇恨与不信任。"
 	species_traits = list(EYECOLOR,LIPS,STUBBLE,MUTCOLORS)
 	possible_ages = ALL_AGES_LIST
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT

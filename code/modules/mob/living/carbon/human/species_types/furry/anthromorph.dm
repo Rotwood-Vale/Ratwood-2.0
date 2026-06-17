@@ -4,24 +4,25 @@
 /datum/species/anthromorph
 	name = "Wild-Kin"
 	id = "anthromorph"
-	desc = "<b>Wild-Kin</b><br>\
-	Wild-kins are a highly diverse and varied group of people, the majority of which are descendants of the \
-	first followers of Dendor who rejected civilization in favour of the deep forests. However, some came from \
-	magical anomalies or curses, Divine or otherwise.<br>\
-	(+1 Constitution, +1 Perception)"
+	desc = "<b>兽裔</b><br>\
+	兽裔是一个高度多样化的族群，其中大多数是登多尔最初追随者的后裔，\
+	他们拒绝文明而选择深林生活。不过也有一部分起源于魔法异常或诅咒，无论是否神性所致。<br>\
+	(+1 体质, +1 感知)"
 
-	expanded_desc = "Wild-kins are a highly diverse and varied group of people, the majority of which are descendants of the \
-	first followers of Dendor who rejected civilization in favour of the deep forests. However, some came from \
-	magical anomalies or curses, Divine or otherwise. \
-	<br><br> \ Their bloodlines were blessed by Dendor for their ancestor&#39;s devotion \
-	and this is reflected in their appearance. Some descendants of the first Dendorite wild-kins, \
-	especially those not as devoted to the ways of Dendor and filled \
-	with wanderlust, emerged from their remote communities to embrace the civilization their ancestors had once rejected. \
+	expanded_desc = "兽裔是一个高度多样化的族群，其中大多数是登多尔最初追随者的后裔，\
+	他们拒绝文明而选择深林生活。不过也有一部分起源于魔法异常或诅咒，\
+	无论是否神性所致。\
+	<br><br> \ 他们的血脉因其先祖的虔诚而受到登多尔的祝福，\
+	这反映在他们的外貌特征上。一些初代登多尔兽裔的后代，\
+	尤其是那些不似先祖般虔诚于登多尔之道、\
+	满心怀揣漫游之志者，从偏远社群中走出，\
+	拥抱了他们先祖曾经拒绝的文明。\
 	<br><br> \
-	At first, they faced discrimination from people wary of their abnormal appearances. Yet, their appearance was a blessing \
-	from Dendor, and the clergy of the Ten made this known throughout the lands of the faithful. Wild-kins are now fully \
-	accepted, with many even holding titles of landed nobility. However, there is still an air of distrust and uncertainty \
-	surrounding them, especially for those who acquired their features during life rather than through birth."
+	起初，他们因异于常人的外貌而受到人们猜忌与歧视。\
+	然而他们的外貌乃是登多尔的祝福，十神教神职人员在信众的土地上宣告了这一点。\
+	兽裔如今已完全被接纳，许多甚至拥有领主贵族头衔。\
+	然而，围绕他们仍有一丝不信任与不确定的气氛，\
+	尤其是对那些在生命历程中获得兽形特征而非与生俱来者。"
 
 	use_titles = TRUE
 	race_titles = list(

@@ -4,21 +4,21 @@
 /datum/species/lizardfolk
 	name = "Sissean"
 	id = "lizardfolk"
-	desc = "<b>Sissean</b><br>\
-	Sissean are hardy, reptilian people that share a unique bond among their kind due to being the target \
-	of oppression and enslavement by other races, particularly by Humans and Drakians. They take pride in \
-	their resilience and adaptability, and they can be found all over the world for one reason or another.<br>\
-	(+1 Constitution, +1 Willpower, Wild Eater Trait)"
-	expanded_desc = "Sissean are hardy, reptilian people that share a unique bond among their kind due to being the target of oppression \
-	and enslavement by other races, particularly by Humans and Drakians. They take pride in their resilience and adaptability,\
-	and they can be found all over the world for one reason or another. Once a nomadic, tribal people, Sissean are often forced \
-	to hide and settle in deserts, swamps, bogs, and other typically inhospitable lands. Their appearance changes based on the lands \
-	they adapt to, allowing for crocodilian appearance if from the swamp to lizard-like appearances if from the desert. \
+	desc = "<b>西塞亚</b><br>\
+	西塞亚人是坚韧的蜥形民族，由于长期以来成为其他种族——尤其是人类和龙裔——的压迫和奴役目标，\
+	他们在同族间拥有一种独特的羁绊。他们以自身的韧性和适应力为傲，\
+	出于各种原因，他们的足迹遍布世界各地。<br>\
+	(+1 体质, +1 意志, 野食者特质)"
+	expanded_desc = "西塞亚人是坚韧的蜥形民族，由于长期以来成为其他种族——尤其是人类和龙裔——的压迫和奴役目标，\
+	他们在同族间拥有一种独特的羁绊。他们以自身的韧性和适应力为傲，\
+	出于各种原因，他们的足迹遍布世界各地。西塞亚人曾是游牧部族，如今常常被迫\
+	躲藏并定居于沙漠、沼泽、泥潭以及其他通常不适宜居住的土地上。他们的外形会随着所适应的土地而改变，\
+	从沼泽地的鳄鱼形貌到沙漠中的蜥蜴形貌。\
 	<br><br> \
-	They can also be found in large, bustling cities, particularly slave cities where their strength, toughness, and endurance \
-	makes them particularly valuable. Sissean often despise weakness and instead find solace in suffering. They tend to be \
-	highly religious, although of course, no race is monolithic. In fact, some Sissean have become successful with some rising to \
-	the rank of nobility in many different kingdoms despite all adversity, but this often makes them targets of their jealous peers."
+	他们也会出现在大型繁华的城市中，尤其是在奴隶城市里，他们的力量、坚韧和耐力\
+	使他们格外珍贵。西塞亚人往往鄙视软弱，而选择在苦难中寻求慰藉。他们倾向于\
+	极度虔诚，但当然，没有任何种族是铁板一块的。事实上，有些西塞亚人成就斐然，\
+	尽管历尽逆境，仍有升至各王国贵族之位者，但这往往使他们成为嫉妒同辈的目标。"
 	skin_tone_wording = "Skin Colors"
 	species_traits = list(EYECOLOR,LIPS,STUBBLE,MUTCOLORS)
 	possible_ages = ALL_AGES_LIST

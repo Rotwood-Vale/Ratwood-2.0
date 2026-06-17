@@ -4,23 +4,23 @@
 /datum/species/elf/dark
 	name = "Dark Elf"
 	id = "elfd"
-	desc = "<b>Dark Elf</b><br>\
-	\"Elf\" is a catch-all term used for tall, pointy-eared humanoids who can trace their \
-	heritage to the ancient and mysterious Snow Elves. This species of elf, less frequently \
-	seen, are also referred to by some as \"drow,\" and have several key differences \
-	that set them apart from their more well-known and surface-dwelling kin. Chief among these \
-	differences are their dark complexions and origins from the Underdark; a massive subterranean \
-	landscape made up of a vast network of interconnected caves, caverns and tunnels. In this world \
-	hidden deep beneath the soil are several dark elven cities who exist and function far from the \
-	reaches of the rest of the surface-dwelling societies. These are a large part of what has earned \
-	the dark elves their notoriety, for in these cities the worship of the ascendant pantheon is \
-	normalized, and their cruel and bloodthirsty culture reflects this. It was rare to see dark \
-	elves outside of their underground homes, but in recent years, more and more of them have fled \
-	to the surface. The reasons for each dark elf fleeing the Underdark vary depending on the \
-	individual, such as a kinder heart fleeing from a brutal society that scorns them for their \
-	less cruel nature. However, not every dark elf seen on the surface can be safely assumed as \
-	kind, for some leave the Underdark simply to find their own greater heights of power.<br>\
-	(+1 Intellect, +1 Perception, Webwalker and Dark Vision Traits)"
+	desc = "<b>黑暗精灵</b><br>\
+	\"精灵\"是一个泛称，指那些可将血脉追溯至古老神秘的\
+	雪精灵的高个子尖耳人形生物。\
+	这种较为罕见的精灵亚种也被一些人称为\"卓尔\"，\
+	与他们更广为人知的地表亲族有几个关键区别。\
+	其中最主要的区别在于他们深色的皮肤和源自幽暗地域的出身——\
+	幽暗地域是一片广阔的地下世界，由错综复杂的洞穴、洞窟和隧道网络构成。\
+	在这深埋地底的世界中，坐落着数座黑暗精灵城市，\
+	它们远离地表社会的触及而独立运转。这些城市在很大程度上成就了\
+	黑暗精灵的恶名，因为在其中，崇拜升格者万神殿是常态，\
+	而他们残酷嗜血的文化正是这一点的体现。过去很少能在\
+	地下家园之外见到黑暗精灵，但近年来，越来越多的黑暗精灵逃亡至\
+	地表。每位黑暗精灵逃离幽暗地域的原因因人而异，\
+	例如心地更为善良者逃离那个因他们不够残忍而排斥他们的残酷社会。\
+	然而，并非地表上遇到的每位黑暗精灵都可以安然假定其心地善良，\
+	因为有些黑暗精灵离开幽暗地域只是为了寻求更大的权力高峰。<br>\
+	(+1 智力, +1 感知, 蛛行特质, 黑暗视觉))"
 
 /*
 	Former RT Desc: These guys were undead which doesn't really fit considering now you have a ton of them walking around.

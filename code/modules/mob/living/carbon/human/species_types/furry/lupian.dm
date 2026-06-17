@@ -4,27 +4,27 @@
 /datum/species/lupian
 	name = "Lupian"
 	id = "lupian"
-	desc = "<b>Lupian</b><br>\
-	Lupians are the sons and daughters of Noc. They are a volf-like people hailing from the Northern Regions of the world. \
-	They are resilient, cunning and fight ready creachures capable of surviving the north thanks to their rugged pelts, \
-	sharp teeth and deep-rooted spirit of community. They are very dutiful individuals and make fantastic and fearsome \
-	warriors to those who earn their loyalty. Thanks to their pack minded nature they are slow to trust the other races \
-	but form deep connections with those they do. In recent years they have been driven from the forests by unrest and the \
-	inevitable spread of the rot and pressed into cohabitation with races they'd deem lesser.<br>\
-	(+1 Constitution, +1 Intelligence, Sleuth Trait)"
+	desc = "<b>卢皮安</b><br>\
+	卢皮安是诺克的儿女。他们是一种形似沃尔夫的民族，来自世界北方地区。\
+	他们坚韧、机敏且随时准备战斗，凭借坚韧的毛发、\
+	锋利的牙齿和根深蒂固的社群精神得以在北方生存。他们极为尽职，\
+	对那些赢得他们忠诚的人而言，他们是出色而可畏的战士。由于他们以族群为中心的思维天性，\
+	他们对外族信任缓慢，但一旦信任便建立深厚羁绊。近年来，他们因动荡不安和\
+	不可避免的腐化蔓延被逐出森林，被迫与他们视为劣等的种族共居。<br>\
+	(+1 体质, +1 智力, 侦探特质)"
 
-	expanded_desc = "Lupians live under elective monarchies, forms of feudalism where the king of a pack is chosen from, and by, the military council. \
-	The leader of the pack is a philosopher king, a paragon of virtue and one who should inspire awe and loyalty among the population \
-	while the real power is held by the military leadership. Should a king fail his people it is not uncommon for the entire kingdom \
-	to fall into disarray as law and order begin to break down, for many Lupians see it a disgrace to themselves to follow a king who \
-	appears weak. Similarly, most Lupians uphold an image of pride and toughness, it is only in the presence of someone who appears \
-	stronger do they bend the knee. To become a leader is a constant challenge to maintain. \
+	expanded_desc = "卢皮安生活在选举君主制下，这是一种君主由军事议会从议会中推选出来的封建形式。\
+	族群的领袖是一位哲人王，德行之典范，应能激发民众的敬畏与忠诚，\
+	而实权则由军事领导层掌握。若国王辜负了子民，整个王国陷入混乱、\
+	法律与秩序崩溃的情况并不少见，因为许多卢皮安认为追随一位懦弱之君是对自身的耻辱。\
+	同样，大多数卢皮安维持着自豪与坚韧的形象，只有在比他们更强者面前\
+	才会屈膝。成为领袖是一场持续的挑战。\
 	<br><br> \
-	Vakran was once the largest of the pack-nations, the capital of Lupian civilization. After the King sequestered himself away under \
-	insurmountable stress and went into hiding, it was revealed weeks later that he was poisoned by one of his sons. This plunged the \
-	nation states under the Vakran name into chaos. Vassals left, either becoming free or aligning themselves with the neighboring \
-	Frostfell or Felsaad, while others faced internal strife, civils wars between those who believed the Vakran name still held strong, \
-	and those who saw the crown tainted, even the military council decimated itself between duels and the pitting of coups."
+	瓦克兰曾是最大的族群国，卢皮安文明的首都。在国王因不堪重负的压力\
+	而自闭隐居之后，数周后便发现他被自己的一个儿子毒杀。这使得瓦克兰旗下\
+	的各邦国陷入混乱。附庸纷纷离去，有的获得自由，有的归附邻国霜野和费尔萨德，\
+	而另一些则面临内部纷争——相信瓦克兰之名仍有威势者与认为王冠已污者之间的内战，\
+	连军事议会也在决斗和接连的政变中自我毁灭。"
 	skin_tone_wording = "Pack"
 	species_traits = list(
 		MUTCOLORS,

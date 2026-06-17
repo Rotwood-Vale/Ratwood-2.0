@@ -5,10 +5,10 @@
 /datum/species/construct/metal
 	name = "Metal Construct"
 	id = "constructm"
-	desc = "<b>Metallic Construct</b><br>\
-	Masterworks of artifice, metal constructs are as the name implies- entirely constructed by mortal hands. They are beings not of flesh and blood, but cold metal and the arcyne. Constructs are said to originate from works of Zizo, and they hail from the far-off lands of the Southern Empty- a great city of artifice, where the only artificers capable of understanding what is necessary to create the constructs live. For some reason, they have found themselves travelling out of the empty, as of late. Children of the Resonator Siphon.<br>\
-	(+1 Willpower, -2 Speed)<br>\
-	(Insomnia, No hunger, no blood.)"
+	desc = "<b>金属构装体</b><br>\
+	工艺巅顶之作，金属构装体正如其名——完全由凡人之手打造。他们并非血肉之躯，而是冰冷的金属与奥术的结晶。据说构装体起源于齐佐的造物，他们来自遥远的南方虚空——一座伟大的工艺之城，那里居住着唯一能够理解构装体制造之法的技匠。出于某种原因，近来他们开始走出虚空。共鸣虹吸之子。<br>\
+	(+1 意志, -2 速度)<br>\
+	(失眠症, 无需进食, 无血液。)"
 
 	construct = 1
 	skin_tone_wording = "Material"

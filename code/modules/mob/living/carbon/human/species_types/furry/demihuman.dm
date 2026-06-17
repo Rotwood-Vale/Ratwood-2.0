@@ -4,26 +4,26 @@
 /datum/species/demihuman
 	name = "Half-Kin"
 	id = "demihuman"
-	desc = "<b>Half-kin</b><br>\
-	Half-kins are a highly diversified people. Half-kins are primarily \
-	a consequence of Beastling races mixing with a Humens and Elves, although some have \
-	acquired their Beastling traits due to magical curses or blessings from a god, typically \
-	Dendor. Half-kins can reproduce with one another, and their children will inherit features \
-	from both parents. Half-kin genes are dominant when mixing with Humens or Elves.<br>\
-	(+1 Endurance, +1 Perception)"
+	desc = "<b>半兽裔</b><br>\
+	半兽裔是一个高度多样化的族群。半兽裔的主要成因是\
+	兽裔种族与人类和精灵通婚，不过也有一些\
+	因魔法诅咒或神祇祝福（通常是登多尔）而获得兽裔特征。\
+	半兽裔之间可以繁殖，其子女会继承双方的特征。\
+	半兽裔的基因在与人类或精灵混血时呈显性。<br>\
+	(+1 耐力, +1 感知)"
 
-	expanded_desc = "Half-kins are a highly diversified people. Half-kins are primarily \
-	a consequence of Beastling races mixing with a Humens and Elves, although some have \
-	acquired their Beastling traits due to magical curses or blessings from a god, typically \
-	Dendor. Half-kins can reproduce with one another, and their children will inherit features \
-	from both parents. Half-kin genes are dominant when mixing with Humens or Elves. \
+	expanded_desc = "半兽裔是一个高度多样化的族群。半兽裔的主要成因是\
+	兽裔种族与人类和精灵通婚，不过也有一些\
+	因魔法诅咒或神祇祝福（通常是登多尔）而获得兽裔特征。\
+	半兽裔之间可以繁殖，其子女会继承双方的特征。\
+	半兽裔的基因在与人类或精灵混血时呈显性。\
 	<br><br> \
-	Half-kins have an easier time being accepted into societies depending on what Beastling features \
-	they have, but it is highly dependent on both their appearance and attitude. However, due to both \
-	historic and ongoing discrimination of mixed bloods they are usually not fully accepted by either \
-	of their parent races. Hence, Half-kins tend to share a strong sense of kinship with similar Half-kins. \
-	Yet, their shared traits with respectable races do mean that Half-kins are more widely accepted into \
-	societies that they share blood ties with than other Beastling races."
+	半兽裔在社会中更容易被接纳的程度取决于他们所拥有的兽裔特征，\
+	但这在很大程度上也取决于他们的外貌与态度。然而，由于历史上和持续存在的\
+	对混血的歧视，他们通常无法被双亲种族中任何一方完全接纳。\
+	因此，半兽裔往往对同类半兽裔怀有强烈的归属感。\
+	不过，由于他们与体面种族共有某些特征，\
+	与血缘相关的社会确实比其他兽裔种族更容易接纳他们。"
 	skin_tone_wording = "Ancestry"
 	default_color = "FFFFFF"
 

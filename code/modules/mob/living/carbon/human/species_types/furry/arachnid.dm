@@ -5,8 +5,8 @@
 	name = "Arachnid"
 	id = "arachnid"
 	clothes_id = "lamia"
-	desc = "<b>Arachnid</b><br>\
-	(+1 Strength, -1 Speed, Webwalk Trait, Longstrider Trait, Venomous Trait)"
+	desc = "<b>蛛形族</b><br>\
+	(+1 力量, -1 速度, 蛛行特质, 长腿特质, 毒液特质)"
 
 	expanded_desc = ""
 

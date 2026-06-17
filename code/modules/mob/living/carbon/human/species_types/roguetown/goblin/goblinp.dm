@@ -4,12 +4,12 @@
 /datum/species/goblinp
 	name = "Goblin"
 	id = "goblinp"
-	desc = "<b>Goblin</b><br>\
-	A clever and stubborn nature are two charitable qualities of a goblin - scheming and selfish are less so. The Fell Gods use them as an avatar of malice, sending out \
-	mindless, enthralled waves of the creatures to attack civilization from lunar portals. It leaves the typical goblinoid to cloister in their hidden away tribes, stealing \
-	from the scraps out of fear of reprisal while shooing away outsiders. The cities of Man typically shun them, but it's not unheard of to see one pushing their luck in a \
-	town square or out on a well-traveled road, as even the most backwater peasant can tell the difference between a sapient one and portal-spawn. Usually.<br>\
-	(+1 Speed, Dark Vision Trait)"
+	desc = "<b>哥布林</b><br>\
+	机灵与固执是哥布林为人称道的两种品质——阴谋诡计和自私自利则不太受欢迎。堕落诸神将他们用作恶意的化身，派出\
+	毫无心智、被奴役的哥布林大军从月之门中攻击文明世界。这使得普通的哥布林类人躲藏在隐秘的部落中，\
+	出于对报复的恐惧而捡拾残羹剩饭，同时赶走外来者。人类城市通常排斥他们，但偶尔也能见到哥布林在\
+	镇广场或繁忙道路上碰运气，因为即便是最闭塞的农夫也能区分有灵智的哥布林和门中凭空而生的怪物。通常是如此。<br>\
+	(+1 速度, 暗视特质)"
 	species_traits = list(EYECOLOR,LIPS,STUBBLE)
 	possible_ages = ALL_AGES_LIST
 	use_skintones = TRUE

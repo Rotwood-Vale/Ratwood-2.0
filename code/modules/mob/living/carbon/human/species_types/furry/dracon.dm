@@ -4,30 +4,32 @@
 /datum/species/dracon
 	name = "Drakian"
 	id = "dracon"
-	desc = "<b>Drakian</b><br>\
-	Drakians are a proud and ancient race that trace their heritage to dragons of old. \
-	They are highly protective of their bloodline and do everything in their power to make sure it does not spread beyond their own, \
-	as they believe themselves to be guardians of tradition and that it is their ultimate duty to maintain their prestige as a race. \
-	After all, a single drop of draconic blood in one's bloodline means that they will experience all of the benefits of having draconic ancestors such as agelessness.<br>\
-	(+1 Strength, Wing Bound Trait)"
-	expanded_desc = "Drakians are a proud and ancient race that trace their heritage to dragons of old. \
-	They are highly protective of their bloodline and do everything in their power to make sure it does not spread beyond their own, \
-	as they believe themselves to be guardians of tradition and that it is their ultimate duty to maintain their prestige as a race. \
-	After all, a single drop of draconic blood in ones bloodline means that they will experience all of the benefits of having draconic ancestors such as agelessness.\
+	desc = "<b>龙裔</b><br>\
+	龙裔是一个骄傲而古老的种族，其血脉可追溯至远古巨龙。\
+	他们极力守护自己的血统，竭尽所能确保其不至扩散至本族之外，\
+	因为他们自视为传统的守护者，维护种族荣耀乃是他们的天职。\
+	毕竟，血脉中哪怕仅有一滴龙血，也意味着将享有龙裔先祖的一切恩惠，比如不老之身。<br>\
+	(+1 力量, 绑翼特质)"
+	expanded_desc = "龙裔是一个骄傲而古老的种族，其血脉可追溯至远古巨龙。\
+	他们极力守护自己的血统，竭尽所能确保其不至扩散至本族之外，\
+	因为他们自视为传统的守护者，维护种族荣耀乃是他们的天职。\
+	毕竟，血脉中哪怕仅有一滴龙血，也意味着将享有龙裔先祖的一切恩惠，比如不老之身。\
 	<br><br> \
-	Yet, it comes at a cost. \
-	While initially viewed as one of the noblest races, \
-	they are now hated for their insufferable arrogance and often appear completely out of touch with the rest of society. \
-	Their inability to have a concept of time, refusal to compromise or intermarry, \
-	along with their rejection of any technology that threatens their supremacy have earned them countless enemies from Axians to Dwarves. \
-	For instance, they view any Wild-kin with draconic features or blood as inherently inferior. \
-	Yet, not all Drakians are like this with some believing it is their duty to help lesser races, although many still view these Drakians to be just as insufferable.\
+	然而，这一切是有代价的。\
+	他们最初被视为最高贵的种族之一，\
+	如今却因其令人无法忍受的傲慢而遭人憎恨，常常显得与世间其他社会完全脱节。\
+	他们对时间毫无概念、拒绝妥协或通婚，\
+	并排斥任何威胁其至高地位的新技术，这使他们树敌无数，从阿克西安人到矮人。\
+	例如，他们认为任何拥有龙类特征或血统的兽裔都是天生的劣等存在。\
+	不过，并非所有龙裔都是如此，有些龙裔认为帮助低等种族是他们的天职，\
+	尽管许多人仍然觉得这些龙裔同样令人难以忍受。\
 	<br><br> \
-	In the past, Drakians held positions of power and prestige across all the realms. \
-	Many try to style themselves after knight-philosophers in an attempt to hide their brutish ways. \
-	When in reality, most Drakians are known for being bloody conquerors. \
-	However, the rise of humans have caused their ambitions to crumble, forcing them to work with other races, especially at the climax of the Great Sissean Uprising. \
-	Furthermore, dwindling numbers have caused Drakians to increasingly abandon the ways of old, forcing them to adapt to a more modern way of life."
+	在过去，龙裔在天下诸国都身居高位、享有威望。\
+	许多人试图以骑士哲学家的风格来掩饰其野蛮的本性。\
+	但实际上，大多数龙裔都以血腥征服者著称。\
+	然而，人类的崛起使他们的野心破灭，迫使他们与其他种族合作，\
+	尤其是在大西塞亚起义的高潮时期。\
+	此外，日渐稀少的数量使龙裔逐渐抛弃旧习，被迫适应更现代的生活方式。"
 	species_traits = list(EYECOLOR,LIPS,STUBBLE,MUTCOLORS)
 	possible_ages = ALL_AGES_LIST
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT

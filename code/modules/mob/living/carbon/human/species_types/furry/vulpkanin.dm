@@ -4,33 +4,33 @@
 /datum/species/vulpkanin
 	name = "Venardine"
 	id = "vulpkanin"
-	desc = "<b>Venardine</b> <br>\
-	Venardine are a fox-like Beastling race with the majority hailing from the Kingdom \
-	of Vulpkheim, which borders Hammerhold. However, there are a few Venardine tribes that \
-	originate elsewhere but are still considered Venardine, despite not hailing from Vulpkheim. \
-	Venardine are a crafty, cunning, and perceptive people. Many Venardine have used their nature \
-	to take advantage of other races, causing them to be known for their wit and charm at the expense \
-	of a reputation as cheats, frauds, tricksters, and thieves.<br>\
-	(+1 Perception, +1 Intelligence, Sleuth Trait)"
+	desc = "<b>维纳丁</b> <br>\
+	维纳丁是一个形似狐狸的兽裔种族，大多数来自\
+	与铁锤堡接壤的沃夫克海姆王国。不过也有一些维纳丁部落\
+	起源于其他地方，尽管不来自沃夫克海姆，但仍被视为维纳丁。\
+	维纳丁是一个机敏、狡黠且敏锐的民族。许多维纳丁利用他们的天性\
+	来占其他种族的便宜，使他们以机智和魅力著称，\
+	但也因此背负了骗子、欺诈者、诡计师和盗贼的恶名。<br>\
+	(+1 感知, +1 智力, 侦探特质)"
 
-	expanded_desc = "Venardine are a fox-like Beastling race with the majority hailing from the Kingdom \
-	of Vulpkheim, which borders Hammerhold. However, there are a few Venardine tribes that \
-	originate elsewhere but are still considered Venardine, despite not hailing from Vulpkheim. \
-	Venardine are a crafty, cunning, and perceptive people. Many Venardine have used their nature \
-	to take advantage of other races, causing them to be known for their wit and charm at the expense \
-	of a reputation as cheats, frauds, tricksters, and thieves. \
+	expanded_desc = "维纳丁是一个形似狐狸的兽裔种族，大多数来自\
+	与铁锤堡接壤的沃夫克海姆王国。不过也有一些维纳丁部落\
+	起源于其他地方，尽管不来自沃夫克海姆，但仍被视为维纳丁。\
+	维纳丁是一个机敏、狡黠且敏锐的民族。许多维纳丁利用他们的天性\
+	来占其他种族的便宜，使他们以机智和魅力著称，\
+	但也因此背负了骗子、欺诈者、诡计师和盗贼的恶名。\
 	<br><br> \
-	Due to their nature and their reputation, Xylix often patronizes Venardine and their descendants. \
-	These traits, combined with the fact that the average Venardine pregnancy consists of twins, triplets, \
-	or even quadruplets, have allowed the Venardine tribes to dominate the other Beastling tribes within the \
-	great forest of Vargheim. This ultimately led to establishment of the Kingdom of Vulpkheim, which \
-	the Venardine rule and politically dominate. \
+	由于他们的天性和名声，赛利克斯常常眷顾维纳丁及其后裔。\
+	这些特质，加上维纳丁的孕期通常怀有双胞胎、三胞胎\
+	甚至四胞胎，使得维纳丁部落在瓦尔格海姆的广阔森林中\
+	主导了其他兽裔部落。这最终促成了沃夫克海姆王国的建立，\
+	维纳丁人在其中实行统治和政治主导。\
 	<br><br> \
-	Many Venardine suffer from wanderlust and set off upon reaching adulthood to explore the world, with \
-	most beginning their journey in Hammerhold. This has led to Venardine being widely accepted in the lands \
-	of Hammerhold. However, their fox-like features often leave people in foreign lands wary, as many \
-	Hammerhold raiders bear fox-like features due to the strong relationship between the two peoples and their \
-	kingdoms. Consequently, they are often looked upon with suspicion and fear in lands under threat by Hammerhold sea raiders."
+	许多维纳丁人饱受漫游之志的驱使，成年后便踏上了探索世界的旅途，\
+	多数人的旅程始于铁锤堡。这使维纳丁人在铁锤堡地区被广泛接受。\
+	然而，他们的狐形特征往往让异国他乡之人警惕，因为许多铁锤堡掠夺者\
+	也带有狐形特征，这是由于这两个民族及其王国之间的密切关系。\
+	因此，在那些受到铁锤堡海盗掠夺威胁的地区，他们常常被猜疑和恐惧地看待。"
 
 	default_color = "444"
 	species_traits = list(

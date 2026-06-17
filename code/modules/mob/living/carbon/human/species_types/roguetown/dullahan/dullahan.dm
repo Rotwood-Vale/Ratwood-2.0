@@ -7,9 +7,9 @@
 /datum/species/dullahan
 	name = "Revenant"
 	id = "revenant"
-	desc = "<b>Revenant</b><br>\
-	Revenants are those that have died, returning from death to continue 'living' in a manner to speak. Their origins are not entirely known, yet many strongly believe them to have originated from the rot and decay of Psydonia. \
-	Unable to truly rest, yet entirely sane of mind. Capable of detaching their heads through unknown arcyne means, they are oft wanderers due to their unknown origins and being ostracized by both the Church and many of the common masses around the lands."
+	desc = "<b>还魂者</b><br>\
+	还魂者乃是死后重返人世、以某种方式继续\"活着\"之人。他们的起源尚不为人知，但许多人坚信他们诞生于普赛多尼亚的腐朽与衰败。\
+	无法真正安息，却心智全然清醒。能够通过未知的奥术手段分离头颅，他们常常四处漂泊，因其来历不明且遭到教会和各地大众的排斥。"
 	// Stat balancing. Per-server decision. Preferably keep neutral until analysis post testmerges.
 	//race_bonus = list(STAT_INTELLIGENCE = 1, STAT_CONSTITUTION = 1)
 	skin_tone_wording = "Catalyst"

@@ -4,27 +4,26 @@
 /datum/species/akula
 	name = "Axian"
 	id = "akula"
-	desc = "<b>Axian</b><br>\
-	Axians are a proud, shark-like people that have a heritage founded in maritime trade, tax evasion, and piracy. \
-	While known for being strong in spirit and promoting robust commercial practices, they have gained infamy for \
-	possessing an intense distaste for both the nobility and taxes, making them a prime target of discrimination and suspicion.<br>\
-	(+1 Constitution, +1 Willpower, Waterbreathing, Sea Water Drinking Trait)"
-	expanded_desc =	"Axians are a proud, shark-like people that have a heritage founded in maritime trade, tax evasion, and piracy. While known for \
-	being strong in spirit and promoting robust commercial practices, they have gained infamy for possessing an intense distaste for \
-	both the nobility and taxes, making them a prime target of discrimination and suspicion. They are oftentimes scapegoats for crime \
-	and are often blamed for any signs of dissent, oftentimes becoming the first to be persecuted for any rebellious activities present \
-	in the region. Furthermore, they often are accused of being Matthiosan, oftentimes having their assets forcibly seized by opportunistic schemers. \
+	desc = "<b>阿克西安</b><br>\
+	阿克西安人是骄傲的鲨形民族，其传承根植于海上贸易、逃税与海盗行当。\
+	他们以精神坚韧、崇尚繁荣的商业活动闻名，却也因对贵族和税收深恶痛绝而声名狼藉，\
+	这使他们成为歧视与猜疑的目标。<br>\
+	(+1 体质, +1 意志, 水下呼吸, 海水饮用特质)"
+	expanded_desc =	"阿克西安人是骄傲的鲨形民族，其传承根植于海上贸易、逃税与海盗行当。他们以精神坚韧、\
+	崇尚繁荣的商业活动闻名，却也因对贵族和税收深恶痛绝而声名狼藉，这使他们成为歧视与猜疑的目标。\
+	他们常常成为犯罪的替罪羊，任何异议迹象都会归咎于他们，在地区内出现叛乱活动时，往往最先被追捕。\
+	此外，他们常被指控为马西奥斯信徒，其资产时常被投机取巧的阴谋家强行没收。\
 	<br><br> \
-	Due to their penchant for trade, travel, and being kicked out of various kingdoms, they can be found all over the world, oftentimes \
-	seeing places most could not even dream of. They look down at those they considered the \"settled\" and often uproot themselves quite \
-	often in their lifetimes, particularly when it proves to be most profitable. However, many Axians often find their sanity being clawed \
-	away as they sometimes find themselves stuck in one place. \
+	由于他们热衷于贸易、旅行以及被各王国驱逐，他们的足迹遍布世界各地，\
+	时常踏足大多数人无法想象的地方。他们轻视那些他们视为\"定居者\"的人，\
+	一生中频繁迁居，尤其是在最有利可图的时候。然而，许多阿克西安人若被困居一地，\
+	有时会感到理智被逐渐蚕食。\
 	<br><br> \
-	Axians were once unified under the Grand Ainoan Republic but have since scattered in recent times. Ainoa was a dominant maritime power, \
-	controlling key trade goods and routes that rivaled those of Giza and the Zybantinians. However, the disruption of the slave trade following \
-	the Great Sissean Uprisings plunged the republic into economic and moral chaos with many leaders accused of Matthiosan worship. This turmoil \
-	eventually sparked the brutal Ainoan Crusade, splintering the republic into several rump states led by merchant warlords and so-called pirate kings. \
-	However, instead of trying to reclaim the glory of the past, Axians embrace their new lifestyle and thrive in the chaos."
+	阿克西安人曾统一于大艾诺亚共和国之下，但近来已四散各地。艾诺亚曾是海上霸主，\
+	掌握着可与吉萨和兹班图人匹敌的关键贸易商品和航线。然而，大西塞亚起义后奴隶贸易的中断，\
+	使共和国陷入经济与道德的混乱，许多领袖被指控信奉马西奥斯。这场动荡最终引发了残酷的艾诺亚十字军，\
+	共和国分裂为数个残存邦国，由商业军阀和所谓海盗王统治。\
+	然而，阿克西安人并未试图重拾旧日荣光，而是拥抱新的生活方式，在混乱中蓬勃发展。"
 	species_traits = list(EYECOLOR,LIPS,STUBBLE,MUTCOLORS)
 	inherent_traits = list(TRAIT_WATERBREATHING, TRAIT_SEA_DRINKER)
 	possible_ages = ALL_AGES_LIST

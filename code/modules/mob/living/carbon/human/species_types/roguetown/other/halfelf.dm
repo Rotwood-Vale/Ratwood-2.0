@@ -4,18 +4,18 @@
 /datum/species/human/halfelf
 	name = "Half-Elf"
 	id = "helf"
-	desc = "<b>Half Elf</b><br>\
-	The child of an Elf and Humen, Half-Elves are generally frowned \
-	upon by the more conservatively minded. However, as racial tensions lower, \
-	the rate of Half-Elf births has continues to increase. So common has it become that some scholars \
-	worry that someday it may be impossible to distinguish the Humens and Elves from one another. \
-	From physical to cultural characteristics, Half-Elves are an incredibly diverse people, \
-	thanks in no small part to the incredibly varied nature of their Humen halves. Indeed, no other race \
-	embodies the term \"melting pot\" quite like the Half-Elves. Due to their half-breed nature, their physical \
-	characteristics can be either more Elvish or more Humen, depending on which of their parents' genes \
-	are more predominant. In terms of cultural identity, a Half-Elf will typically choose to lean more \
-	towards either their Humen or Elvish heritages.<br>\
-	(+1 Constitution, +1 Perception)"
+	desc = "<b>半精灵</b><br>\
+	精灵与人类的子女，半精灵通常被保守观念者所排斥。\
+	然而随着种族间的紧张关系缓和，半精灵的出生率持续攀升。\
+	这一现象已变得如此普遍，以至于一些学者担心有朝一日可能无法再将\
+	人类与精灵区分开来。从身体到文化特征，半精灵是一个极其多样化的族群，\
+	这在很大程度上要归因于其人类半身极为多样的特质。\
+	确实，没有任何其他种族能如半精灵一般体现出\"熔炉\"的含义。\
+	由于他们的混血本质，其身体特征可能更偏精灵或更偏人类，\
+	取决于是双亲中哪一方的基因更为显性。\
+	在文化认同方面，半精灵通常会选择更倾向于\
+	其人类或精灵的传承。<br>\
+	(+1 体质, +1 感知)"
 
 	skin_tone_wording = "Identity"
 	default_color = "FFFFFF"

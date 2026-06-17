@@ -4,13 +4,13 @@
 /datum/species/anthromorphsmall
 	name = "Critterkin"
 	id = "anthromorphsmall"
-	desc = "<b>Critterkin</b><br>\
-	A race akin to wild-kin, except afflicted with significantly smaller stature. \
-	Sometimes referred to with the derogatory term 'verminfolk' by those that disrespect the small.<br>\
-	(+1 Speed, Keen Ears Trait)"
+	desc = "<b>小兽裔</b><br>\
+	一种与兽裔相似的种族，只是身型显著更小。\
+	有时被那些不尊重小个子的家伙用贬称\"害虫民\"来称呼。<br>\
+	(+1 速度, 敏锐听觉特质)"
 
-	expanded_desc = "A race akin to wild-kin, except afflicted with significantly smaller stature. \
-	Sometimes referred to with the derogatory term 'verminfolk' by those that disrespect the small."
+	expanded_desc = "一种与兽裔相似的种族，只是身型显著更小。\
+	有时被那些不尊重小个子的家伙用蔑称\"害虫民\"来称呼。"
 	default_color = "444"
 
 	use_titles = TRUE

@@ -4,16 +4,16 @@
 /datum/species/aasimar
 	name = "Aasimar"
 	id = "aasimar"
-	desc = "<b>Aasimar</b><br>\
-	Aasimar are born of a rare union between Humens and Angels. \
-	They bear the mark of their celestial touch through their many varying physical features. \
-	Their looks resemble the traditional characteristics of whichever of the Gods their Angel parent was associated with. \
-	Most commonly, Aasimar are similar to Humens, albeit taller, and commonly possess an uncanny beauty. \
-	When compared to the average Humen, they have strangely colored skin and are more physically frail. \
-	Because of their upbringing, they make for natural conduits for godly powers. \
-	The realm's populace holds them with a mixture of uneasy mixture of fear and respect. \
-	Due to their celestial nature, it is widely believed that an Aasimar's death is a bad omen...<br>\
-	(+1 Stat of their choice, Lack of Hunger & Thirst)"
+	desc = "<b>亚斯玛尔</b><br>\
+	亚斯玛尔诞生于人类与天使之间罕见的结合。\
+	他们身上多种多样的身体特征都标志着天界触碰的痕迹。\
+	他们的外貌会呈现出其天使双亲所属神祇的典型特征。\
+	最常见的亚斯玛尔与人类相似，但更高挑，通常拥有一种非凡的美感。\
+	与普通人类相比，他们拥有异色皮肤，身体也更为纤弱。\
+	由于他们的出身背景，他们天生便是神力的天然容器。\
+	世间民众对他们的态度复杂，既恐惧又尊敬。\
+	由于他们的天界本质，人们普遍相信亚斯玛尔的死亡是不祥之兆……<br>\
+	(+1 自选属性，无需饮食)"
 
 	skin_tone_wording = "Craft"
 

@@ -4,13 +4,13 @@
 /datum/species/dwarf/gnome
 	name = "Gnome"
 	id = "gnome"
-	desc = "<b>Gnome</b><br>\
-	Gnomes are short delicate creatures known for their quick thinking and wit.<br>\
-The naturally inquisitive mind of a Gnome inclines them towards arcane pursuits, artificing and teaching others.\
-Gnomish folk have an earned reputation for being brilliant tradespeople and crafters, although their rapid thoughts often lead to them seeming scatterbrained to the other beings of the realm.<br>\
-Gnomes are typically a mixed race of Dwarves and a magical race, typically Elves when the two aren't arguing, but some are born with fae blood as well. <br>\
-Even though they are of mixed blood and smaller than typical dwarves, most gnomes and dwarves still regard each other as kin.<br>\
-	(+1 Intelligence, +1 Perception)"
+	desc = "<b>侏儒</b><br>\
+	侏儒是身材矮小精致的生灵，以思维敏捷和机智著称。<br>\
+侏儒天生好奇心旺盛，倾向于奥术探索、工艺制造和教导他人。\
+侏儒族以卓越的商贾和工匠技艺享有声誉，尽管他们迅捷的思维有时让世间其他种族觉得他们不够专注。<br>\
+侏儒通常是矮人与某魔法种族（一般是精灵，当两族不争吵时）的混血后代，不过有些侏儒也带有妖精血脉。<br>\
+尽管他们是混血且比一般矮人更小，大多数侏儒和矮人仍视彼此为同族。<br>\
+	(+1 智力, +1 感知)"
 
 	skin_tone_wording = "Skintone"
 

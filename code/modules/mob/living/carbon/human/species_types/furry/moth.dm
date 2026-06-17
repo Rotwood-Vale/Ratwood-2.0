@@ -4,20 +4,20 @@
 /datum/species/moth
 	name = "Fluvian"
 	id = "moth"
-	desc = "<b>Fluvian</b><br> \
-	Fluvians are a diverse race of moth-like creechers that live in sparse, nomadic communities across Grimoria. \
-	Aside from their obsession with the concept of their propensity with esoteric and seemingly inhumen rites and \
-	rituals, not much is known about the moth-kin. These so-called \"mystics\" are rarely seen within humen and \
-	beastkin settlements, but those that find themselves in civilisation are oft ascended to nobility.<br>\
-	(+1 Speed, Blackleg Trait)"
+	desc = "<b>弗卢维安</b><br> \
+	弗卢维安人是多种多样的蛾形生灵，生活在格里莫里亚各地稀疏的游牧群落中。\
+	除了他们对秘传且看似非人类仪式和礼法的痴迷，\
+	人们对蛾族知之甚少。这些所谓的\"秘士\"很少出现在人类和\
+	兽裔聚落中，但那些来到文明世界的蛾族往往被提升为贵族。<br>\
+	(+1 速度, 黑腿特质)"
 
-	expanded_desc = "Fluvians are a diverse race of moth-like creechers that live in sparse, nomadic communities across Grimoria. \
-	Aside from their obsession with the concept of their propensity with esoteric and seemingly inhumen rites and rituals, not much \
-	is known about the moth-kin.\ These so-called \"mystics\" are rarely seen within humen and beastkin settlements. \
+	expanded_desc = "弗卢维安人是多种多样的蛾形生灵，生活在格里莫里亚各地稀疏的游牧群落中。\
+	除了他们对秘传且看似非人类仪式和礼法的痴迷，人们对蛾族知之甚少。\
+	这些所谓的\"秘士\"很少出现在人类和兽裔聚落中。\
 	<br><br> \
-	Scholars frequently argue about the patron god of the Fluvian race, erring towards either the twin of Astrata, Noc, or the God-Head \
-	Herself, Zizo. In truth however, the moth-kin forsake the paths of the Ten and the Inhumen, worshipping instead the whims of fate. \
-	As such, they oft find themselves as fortune tellers, mystics and spirit mediums, being the origin of mysticism in Grimoria as a whole."
+	学者们常就弗卢维安族的庇护神争论不休，倾向于阿斯特拉塔的双生姐妹诺克，或神主齐佐本人。\
+	然而实际上，蛾族摒弃了十神和异民之道，转而崇拜命运的变幻莫测。\
+	因此，他们常成为算命师、秘士和灵媒，是整个格里莫里亚神秘主义的起源。"
 
 	species_traits = list(EYECOLOR,LIPS,STUBBLE,MUTCOLORS,HAIR)
 	possible_ages = ALL_AGES_LIST

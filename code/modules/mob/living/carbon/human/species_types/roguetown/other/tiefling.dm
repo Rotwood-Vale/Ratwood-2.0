@@ -4,16 +4,16 @@
 /datum/species/tieberian
 	name = "Tiefling"
 	id = "tiefling"
-	desc = "<b>Tiefling</b><br>\
-	The offspring of demons with mortal races, a consequence of demonic incursions into the mortal realm and dark pacts. \
-	Their origins dating back to the demonic invasion of Archdevil Vheslyn who pillaged and ravaged the mortal lands and its people before being stopped by Psydon. \
-	These offspring of demon and mortal races came to be known as 'Tieflings', largely despised by most people for centuries for their unnatural origins and appearances. \
-	It was only recently that they became more tolerated, even if the Church still watches them with a weary eye. \
-	When a Tiefling has offspring, no matter the race of their partner, the child would always be a pureblooded Tiefling. \
-	The taint of their very being going back generations, and no amount of cleansing can be rid of it. \
-	As over a millennium a simple handful of Tieflings have created extended bloodlines linking back to their infernal progenitors. Some Tieflings embrace their demonic origin, while other shun it. \
-	No matter if they embrace their demonic ancestors or not, Tieflings have formed an importance upon their bloodline and family due to often being shunned and hunted through out time in which only those of their blood and kin they could truly trust. <br>\
-	(+1 Constitution, +1 Intelligence, Hellspawn Trait)"
+	desc = "<b>提夫林</b><br>\
+	恶魔与凡俗种族结合的后代，是恶魔入侵凡间与黑暗契约的产物。\
+	他们的起源可追溯至大魔君维瑟林的恶魔入侵，他在被普赛顿阻止之前蹂躏了凡间土地与人民。\
+	这些恶魔与凡俗种族所生的后代被称为\"提夫林\"，数世纪来因其非自然的起源和外貌遭到大多数人的鄙视。\
+	直到最近，他们才被稍加容忍，即便教会仍以警惕的目光注视他们。\
+	当提夫林生育后代时，无论其伴侣是何种族，子女始终会是纯血提夫林。\
+	他们的存在之污会追溯数代，任何净化都无法将其摆脱。\
+	历经千年，少数提夫林已繁衍出广泛的家族血脉，回溯至其地狱先祖。有些提夫林接纳自己的恶魔起源，另一些则极力回避。\
+	无论是否接纳其恶魔先祖，由于长年在历史中遭到排斥与追猎，而真正能信任的唯有血亲与族人，提夫林对其血脉和家族极为重视。<br>\
+	(+1 体质, +1 智力, 地狱后裔特质)"
 
 	skin_tone_wording = "Progenitor"
 

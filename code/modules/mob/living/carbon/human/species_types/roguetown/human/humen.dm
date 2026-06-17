@@ -4,15 +4,15 @@
 /datum/species/human/northern
 	name = "Humen"
 	id = "humen"
-	desc = "<b>Humen</b><br>\
-	Humens (or \"Humans\") are the eldest of the Weeping God's creations. Noted for their \
-	tenacity and overwhelming population, humens are the most commonly seen race across the lands, \
-	at a rate of about ten to one in regions such as Grenzelhoft. However, to the west \
-	the opposite is true. Humens come from a vast swathe of cultures and ethnicities, most of which \
-	have historically been at odds with one another. Being the eldest creations of the Weeping God, humens \
-	tend to find fortune easier than the other races, and are so diverse that no other racial traits \
-	are dominant in their species.<br>\
-	(+1 Willpower, +1 Intelligence, Humen Ingenuity Trait)"
+	desc = "<b>人类</b><br>\
+	人类（或称\"人族\"）是哭泣之神最古老的造物。他们以\
+	坚韧不拔和压倒性的人口数量著称，人类是这片土地上最常见的种族，\
+	在格伦泽尔霍夫特等地区，人类与非人类的比例约为十比一。然而，在西方\
+	情况正相反。人类来自广泛多元的文化与族群，其中大多数\
+	在历史上彼此纷争不断。作为哭泣之神最古老的造物，人类\
+	比其他种族更容易获得福运，而且他们如此多样化，以至于他们的物种中\
+	没有其他种族特征是显性的。<br>\
+	(+1 意志, +1 智力, 休门巧思特质)"
 
 	skin_tone_wording = "Ancestry"
 

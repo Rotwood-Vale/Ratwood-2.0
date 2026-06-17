@@ -4,17 +4,17 @@
 /datum/species/halforc
 	name = "Half Orc"
 	id = "halforc"
-	desc = "<b>Half Orcs</b><br>\
-	With the Ironmask clan on a centuries-long warpath to consolidate all orcs beneath their banner, \
-	crushed orc tribes have lost their menfolk, and war-widows have been scattered to the hinterlands. \
-	Between humen civilization and orc savagery, orc-women opting for exile over dishonor have become \
-	more common visitors to fur trading posts and prospecting camps, eventually leading to half-orcs \
-	being born in these rough places otherwise devoid of a fairer sex. Your mother-clan is in thrall \
-	to the Ironmask. True orcs would kill you on sight, seeing you as a mongrel dog, and non-orcish \
-	people cannot decide between regarding you with either mere distrust or outright disgust. Yet \
-	somehow your wandering feet came to these lands, where half-orcs ply muscle and their hardiness \
-	in the rough underbelly or outer reaches of society.<br>\
-	(+1 Strength, Big Guy Trait, Bed Breaker Trait)"
+	desc = "<b>半兽人</b><br>\
+	数世纪以来，铁面氏族走上了统一旗下所有兽人的征途，\
+	被击溃的兽人部落失去了他们的男丁，战争寡妇流散至边远之地。\
+	在人类文明与兽人野蛮之间，选择流放而非受辱的兽人女性\
+	越来越多地出没于皮货贸易站和勘探营地，最终导致半兽人\
+	在这些粗砺、缺乏女性的地方降生。你的母族臣服于铁面氏族的枷锁之下。\
+	纯血兽人会一见你就杀，视你为杂种狗，而非兽人的外人\
+	对你的态度也始终在单纯的不信任与公然厌恶之间摇摆不定。然而，\
+	你的双足不知为何飘荡到了这片土地，在这里，半兽人靠着体力与坚韧\
+	在社会粗糙的底层或边缘地带谋生。<br>\
+	(+1 力量, 大块头特质, 破床特质)"
 
 	skin_tone_wording = "Clan"
 

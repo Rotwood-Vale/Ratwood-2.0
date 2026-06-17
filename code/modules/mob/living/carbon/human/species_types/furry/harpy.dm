@@ -4,24 +4,24 @@
 /datum/species/harpy
 	name = "Harpy"
 	id = "harpy"
-	desc = "<b>Harpy</b><br>\
-	Harpies, often called \"songbirds\" or \"Magpies\" by some, resemble the half-kin in appearance at first glance. \
-	However, the exact nature of the creatures is a much more complicated, debated topic, with many unknown details. \
-	Their origin comes from the cliffs of Etrusca, but their creation is disputed by scholars to be from one of several gods, but there is no confirmed answer whether they are the creation of Baotha, Eora, Matthios, or even Pestra's hand. \
-	Mistrusted by many for their wily and possessive nature, yet admired by others for their intelligence and beauty, these nomads are oft welcomed at a distance by most new cities they travel to. 	\
-	<span style='color: #cc0f0f;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>-3 CON | -2 STR</span> |<span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'> +1 PER | +1 INT | +2 SPD</b></span> </br> \
-	<span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>Flight | Innate Singing | Strong Bites</b></span> </br> \
-	<span style='color: #cc0f0f;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>Can't wear boots</span> | <span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #00０;'>Slight Fall Damage Reduction </span></b>"
+	desc = "<b>哈比</b><br>\
+	哈比常被人称为\"歌鸟\"或\"喜鹊\"，乍看之下形似半兽裔。\
+	然而，这些生灵的确切本质是一个更为复杂、充满争议的话题，其中有许多未知细节。\
+	她们起源于伊特鲁斯卡的悬崖，但学者们对其创造者究竟是何方神祇争执不休——究竟是巴奥莎、伊欧拉、马西奥斯，甚至佩斯特拉之手，至今没有定论。\
+	许多人因她们狡黠且占有欲强的天性而对其心怀不信任，但也有不少人欣赏她们的聪慧与美貌，这些游牧民每至一座新城，往往被当地人以礼貌的距离接纳。\
+	<span style='color: #cc0f0f;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>-3 体质 | -2 力量</span> |<span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'> +1 感知 | +1 智力 | +2 速度</b></span> </br> \
+	<span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>飞行 | 天生歌唱 | 强力咬击</b></span> </br> \
+	<span style='color: #cc0f0f;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>无法穿靴</span> | <span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #00０;'>轻微坠落伤害减免 </span></b>"
 
-	expanded_desc = "<b>Harpy</b><br>\
-	Harpies, often called \"songbirds\" or \"Magpies\" by some, resemble the half-kin in appearance at first glance. \
-	However, the exact nature of the creatures is a much more complicated, debated topic, with many unknown details. \
-	Their origin comes from the cliffs of Etrusca, but their creation is disputed by scholars to be from one of several gods, but there is no confirmed answer whether they are the creation of Baotha, Eora, Matthios, or even Pestra's hand. \
-	Mistrusted by many for their wily and possessive nature, yet admired by others for their intelligence and beauty, these nomads are oft welcomed at a distance by most new cities they travel to. 	\
-	Whilst harpies may fly, their freedom is weighed by corruption of fleshcrafting to this day. Complete open-air freedom is still foreign to them. \
-	Harpies tend to live and gather in colonies at the tops of great sequoia forests and in nearby cliffs. Due to their laden flight, they must employ use of updrafts and proximity to large objects or structures to bolster their limited range and air-dancing performances. \
-	Their serene songs and blissful music can be heard echoing far below, guiding travelers and thieves both to respite... or treasure. For as lifted into grace as they might be, these magpies earn such a nickname from instinctual Matthiosan greed and love for anything that shines. \
-	Yet if one can work past that distrust and compensate them well, harpies make for unparalleled couriers. </br>"
+	expanded_desc = "<b>哈比</b><br>\
+	哈比常被人称为\"歌鸟\"或\"喜鹊\"，乍看之下形似半兽裔。\
+	然而，这些生灵的确切本质是一个更为复杂、充满争议的话题，其中有许多未知细节。\
+	她们起源于伊特鲁斯卡的悬崖，但学者们对其创造者究竟是何方神祇争执不休——究竟是巴奥莎、伊欧拉、马西奥斯，甚至佩斯特拉之手，至今没有定论。\
+	许多人因她们狡黠且占有欲强的天性而对其心怀不信任，但也有不少人欣赏她们的聪慧与美貌，这些游牧民每至一座新城，往往被当地人以礼貌的距离接纳。\
+	哈比或能飞翔，但她们的自由至今仍受血肉塑形术的腐化所累。完全开阔天空的自由对她们而言仍是陌生的。\
+	哈比倾向于在巨杉林之巅和附近悬崖上聚集成群。由于她们的飞行承重有限，她们必须利用上升气流并靠近大型物体或建筑来增强其有限的飞行范围和空中舞蹈表演。\
+	她们宁静的歌声与悦耳的音乐可远远回荡在下方，指引旅人和盗贼前往休憩之所……亦或宝藏。尽管她们如优雅般高飞，这些喜鹊却因其本能般的马西奥斯式贪婪和对一切闪耀之物的热爱而获此绰号。\
+	然而，若有人能越过那份不信任并给予丰厚酬劳，哈比便是无可匹敌的信使。</br>"
 	skin_tone_wording = "Ancestry"
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR, LIPS, HAIR, HARPY, OLDGREY, MUTCOLORS)

@@ -4,19 +4,21 @@
 /datum/species/lamia
 	name = "Lamia"
 	id = "lamia"
-	desc = "<b>Lamia</b><br>\
-	The monstrous spawn of Abyssor, snake and humen conjoined together, the deepkin and merfolk. \
-	Sirens, mermaids, nagas and many others fall into lamia categorization. While one could consider them to be of Dendor, he had no hand in their creation. \
-	(+1 Strength, -1 Speed, Strong Kicks, Longstrider Trait, Venomous Trait)"
+	desc = "<b>拉弥亚</b><br>\
+	阿比索尔的怪物后代，蛇与人类的融合体，深海族裔与人鱼族。\
+	塞壬、美人鱼、纳迦等众多族群皆属于拉弥亚的范畴。虽可认为她们归属于登多尔，但他并未参与她们的创造。\
+	(+1 力量, -1 速度, 强力踢击, 长腿特质, 毒液特质)"
 
-	expanded_desc = "The monstrous spawn of Abyssor, snake and humen conjoined together, the deepkin and merfolk. \
-	Sirens, mermaids, nagas and many others fall into lamia categorization. While one could consider them to be of Dendor, he had no hand in their creation. \
+	expanded_desc = "阿比索尔的怪物后代，蛇与人类的融合体，深海族裔与人鱼族。\
+	塞壬、美人鱼、纳迦等众多族群皆属于拉弥亚的范畴。虽可认为她们归属于登多尔，但他并未参与她们的创造。\
 	<br><br> \
-	Lamia are widespread in the southern coastal regions, where their tribes have settled in aeons ago, much of their written and oral history is filled with accounts \
-	of grand raids on coastal regions, for they have been terrorizing any race that has dared to settle near their waters. For this, they are widely shunned by the other races, \
-	with the exception of Axians and some coast-dwelling Sisseans with whom they share their natural heartlands. Many a sailor has met their end at the claws of Lamias. \
+	拉弥亚广泛分布于南海岸地区，她们的部落在万古之前便已在此定居，其大量文字和口述史中\
+	满是关于对沿海地区发动大规模劫掠的记述，因为她们一直在恐吓任何敢于在水域附近定居的种族。\
+	为此，她们遭到其他种族的普遍排斥，唯有阿克西安人和一些沿海西塞亚人是例外，因他们共享着天然的家园。\
+	许多水手都葬身于拉弥亚的爪下。\
 	<br><br> \
-	Yet... not all of them have stayed in the depths of the abyss, for some of the clans have moved far away from the coastal regions, settling in swamps, forests and even deserts, having spread themselves far and wide aeons ago."
+	然而……并非所有拉弥亚都留在了深渊之底，因为有些氏族已远离沿海地区，在沼泽、森林甚至沙漠中定居，\
+	在万古之前便已遍布世界各方。"
 
 	skin_tone_wording = "Brood"
 

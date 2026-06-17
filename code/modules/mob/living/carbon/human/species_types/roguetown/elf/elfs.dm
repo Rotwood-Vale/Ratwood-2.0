@@ -4,20 +4,19 @@
 /datum/species/elf/wood
 	name = "Elf"
 	id = "elfw"
-	desc = "<b>Elf</b><br>\
-	\"Elf\" is a catch-all term used for tall, pointy-eared humanoids who can trace \
-	their heritage to the ancient and mysterious Snow Elves. This particular species \
-	of elf are what most imagine when they hear the word, and are also known among \
-	the elder races as \"Wood-Elves\". Considering their diverse history, it is extremely \
-	difficult for other mortals to even conceive the various intricacies found in elven \
-	society, thanks in no small part to the hundreds if not thousands of tribes that exist \
-	within their culture. Although ancient and complex, Elves tend to be looked poorly upon by \
-	Humens, as historically the two races have been rivals in various conflicts and \
-	territorial disputes. This, however, does not stop many Humens and Elves from forming \
-	relationships, which are capable of producing half-elven children. Elves are known for \
-	their intelligence and sharp eyes, but their graceful nature typically leaves their bodies \
-	more frail and fagile than most. In these lands, only a handful of the many Elvish tribes are seen.<br>\
-	(+1 Speed, Woodwalker Trait)"
+	desc = "<b>精灵</b><br>\
+	\"精灵\"是一个泛称，指那些可将血脉追溯至古老神秘的雪精灵的高个子尖耳人形生物。\
+	这个特定的精灵亚种是大多数人在听到这个词时首先想到的形象，\
+	在古老种族中也被称为\"木精灵\"。考虑到他们多元的历史，\
+	其他凡俗种族极难理解精灵社会中的种种精妙之处，\
+	这在很大程度上归因于其文化中存在着数以百计甚至千计的部落。\
+	尽管古老而复杂，精灵往往被人类轻视，\
+	因为历史上两族曾在各种冲突和领土争端中互为对手。\
+	然而，这并未阻止许多人类与精灵建立关系，\
+	他们可以生育半精灵子女。精灵以聪慧和敏锐眼力著称，\
+	但他们的优雅天性通常使身体比大多数种族更为纤弱易碎。\
+	在这片土地上，众多精灵部落中只有少数几个能够见到。<br>\
+	(+1 速度, 林中行者特质)"
 
 	skin_tone_wording = "Tribal Identity"
 

@@ -7,19 +7,19 @@
 
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | SLIME_EXTRACT
 
-	desc = "<b>Tabaxi</b><br>\
-	Tabaxi are taller than most humans at six to seven feet. \
-	Their bodies are slender and covered in spotted or striped fur. \
-	Like most felines, Tabaxi have long tails and retractable claws.<br>\
-	(+1 Speed, Light Steps Trait)"
+	desc = "<b>塔巴西</b><br>\
+	塔巴西人比大多数人类更高，身高达六到七英尺。\
+	他们的身体修长，覆盖着斑点或条纹的皮毛。\
+	如同大多数猫科动物，塔巴西人拥有长尾和可伸缩的爪子。<br>\
+	(+1 速度, 轻步特质)"
 
-	expanded_desc = "Tabaxi are taller than most humans at six to seven feet. \
-	Their bodies are slender and covered in spotted or striped fur. \
-	Like most felines, Tabaxi have long tails and retractable claws. \
-	Tabaxi fur color ranges from light yellow to brownish red. \
-	Tabaxi eyes are slit-pupilled and usually green or yellow. \
-	Tabaxi are competent swimmers and climbers as well as speedy runners. \
-	They have a good sense of balance and an acute sense of smell."
+	expanded_desc = "塔巴西人比大多数人类更高，身高达六到七英尺。\
+	他们的身体修长，覆盖着斑点或条纹的皮毛。\
+	如同大多数猫科动物，塔巴西人拥有长尾和可伸缩的爪子。\
+	塔巴西人的毛色从浅黄到棕红不等。\
+	塔巴西人的眼睛是竖瞳的，通常为绿色或黄色。\
+	塔巴西人是出色的游泳者和攀爬者，也是快速的奔跑者。\
+	他们拥有良好的平衡感和敏锐的嗅觉。"
 
 
 	skin_tone_wording = "Fur Colors"

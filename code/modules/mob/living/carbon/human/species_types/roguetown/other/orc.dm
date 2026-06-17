@@ -1,10 +1,10 @@
 /datum/species/orc
 	name = "Orc"
 	id = "orc"
-	desc = "<b>Orcs</b><br>\
-	This is made for events. You shouldn't be able to use this as a normal person, \
-	For courtesies sake however, I've tried to half-assedly balance it for use by players\
-	(+1 Strength, +1 Constitution, -1 Intelligence, -1 Speed)"
+	desc = "<b>兽人</b><br>\
+	此为活动用角色。正常情况下不应能使用，\
+	但出于礼数，我已勉强为其做了玩家使用的平衡\
+	(+1 力量, +1 体质, -1 智力, -1 速度)"
 
 	skin_tone_wording = "Clan"
 

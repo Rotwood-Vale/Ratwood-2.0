@@ -5,21 +5,20 @@
 	name = "Dwarf"
 	id = "dwarfm"
 	clothes_id = "dwarf"
-	desc = "<b>Dwarf</b><br>\
-	A proud and robust race of short mountain folk, \
-	the dwarves are known for their pride in martial strength \
-	and the tenacity with which they adhere to their ancient traditions. \
-	A Dwarf, much like the rock that they carve their fortresses out of, \
-	is stubborn and ancient, with their race being the longest lived of all \
-	of the Weeping God's creations. They, like stone, also rarely change \
-	and tend to shun the modernization of the world around them. \
-	Instead, a Dwarf looks to their ancestorial heritage for guidance on \
-	the various challenges they face. Even if, ironically, this behaviour \
-	leads their kind towards technological advacement as they continue \
-	to improve their crafts, both in engineering workshops and the forges. \
-	Dwarves are hearty, but are not known for their speed or eyesight... \
-	Each dwarf hails from a ancient fortress named after the most plentiful mineral.<br>\
-	(+1 Constitution, +1 Willpower, Drunken Healing Trait, Dwarvish Knowledge Trait)"
+	desc = "<b>矮人</b><br>\
+	一个骄傲而强壮的矮个子山地种族，\
+	矮人以对武力的自豪感和坚守古老传统的坚韧闻名。\
+	矮人就像他们用以凿建堡垒的岩石一样，\
+	顽固而古老，他们的种族是哭泣之神所有造物中寿命最长的。\
+	他们也如石头一般，鲜少改变，\
+	往往排斥周遭世界的现代化。\
+	相反，矮人面对种种挑战时，\
+	会向祖先的遗产寻求指引。即便讽刺的是，这种行为\
+	反而推动了他们一类人的技术进步，因为他们不断\
+	精进工艺，无论是在工程作坊还是锻炉中。\
+	矮人体魄强健，但速度和眼力却不出众……\
+	每位矮人都来自一座以当地最丰产矿物命名的古老堡垒。<br>\
+	(+1 体质, +1 意志, 醉酒疗伤特质, 矮人语知识特质)"
 
 	skin_tone_wording = "Dwarf Fortress"
 
