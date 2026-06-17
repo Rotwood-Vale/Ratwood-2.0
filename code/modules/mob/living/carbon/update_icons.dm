@@ -274,7 +274,7 @@
 							inhand_overlay.pixel_y += H.dna.species.offset_features[OFFSET_HANDS_F][2]
 			hands += inhand_overlay
 
-	update_inv_cloak() //cloak held items
+	update_inv_cloak_real() //cloak held items
 
 	overlays_standing[HANDS_BEHIND_LAYER] = behindhands
 	overlays_standing[HANDS_LAYER] = hands

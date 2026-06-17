@@ -559,7 +559,7 @@ There are several things that need to be remembered:
 				overlays_standing[WRISTSLEEVE_LAYER] = sleeves
 
 	rebuild_obscured_flags()
-	update_inv_gloves()
+	update_inv_gloves_real()
 	apply_overlay(WRISTS_LAYER)
 	apply_overlay(WRISTSLEEVE_LAYER)
 
@@ -1006,7 +1006,7 @@ There are several things that need to be remembered:
 		inv.update_icon()
 	if(backr)
 		if(backr.alternate_worn_layer == CLOAK_BEHIND_LAYER)
-			update_inv_cloak()
+			update_inv_cloak_real()
 		else
 			var/mutable_appearance/back_overlay
 			var/mutable_appearance/behindback_overlay
@@ -1059,7 +1059,7 @@ There are several things that need to be remembered:
 
 	if(backl)
 		if(backl.alternate_worn_layer == CLOAK_BEHIND_LAYER)
-			update_inv_cloak()
+			update_inv_cloak_real()
 		else
 			update_hud_backl(backl)
 			var/mutable_appearance/back_overlay
@@ -1261,7 +1261,7 @@ There are several things that need to be remembered:
 
 	overlays_standing[CLOAK_LAYER] = cloaklays
 	rebuild_obscured_flags()
-	update_inv_armor() //fixboob
+	update_inv_armor_real() //fixboob
 	apply_overlay(TABARD_LAYER)
 	apply_overlay(CLOAK_BEHIND_LAYER)
 	apply_overlay(CLOAK_LAYER)
@@ -1475,7 +1475,7 @@ There are several things that need to be remembered:
 		update_body_parts(redraw = TRUE)
 		dna.species.handle_body(src)
 	update_hair()
-	update_inv_shirt() // fix boob
+	update_inv_shirt_real() // fix boob
 
 	apply_overlay(ARMOR_LAYER)
 	apply_overlay(ARMORSLEEVE_LAYER)
