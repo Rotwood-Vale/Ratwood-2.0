@@ -57,12 +57,6 @@ There are several things that need to be remembered:
 			jazz += 2
 	return jazz
 
-//HAIR OVERLAY
-/mob/living/carbon/human/update_hair()
-	rebuild_obscured_flags()
-	update_body_parts(TRUE)
-	return
-
 /mob/living/carbon/human/update_body()
 	var/obj/item/bodypart/head/HD = get_bodypart(BODY_ZONE_HEAD)
 	var/new_cache_key = "[HD ? HD.skeletonized : "nohead"]|[HAS_TRAIT(src, TRAIT_HUSK)]|[lip_style]|[lip_color]|[gender]|[dna?.species?.hairyness]|[hair_color]"
@@ -926,7 +920,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_inv_wear_suit()
 	rebuild_obscured_flags()
-	update_body_parts(TRUE)
+	update_body()
 	return
 /*
 	remove_overlay(ARMOR_LAYER)
@@ -979,7 +973,6 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_wear_mask()
 	defer_overlay_vision_updates()
 	..()
-	update_body_parts(TRUE)
 	var/mutable_appearance/mask_overlay = overlays_standing[MASK_LAYER]
 	if(mask_overlay)
 		rebuild_obscured_flags()
@@ -995,6 +988,7 @@ There are several things that need to be remembered:
 		overlays_standing[MASK_LAYER] = mask_overlay
 		apply_overlay(MASK_LAYER)
 	resume_overlay_vision_updates()
+	update_body()
 
 /mob/living/carbon/human/update_inv_back(hide_experimental = FALSE)
 	queue_icon_update(PENDING_UPDATE_INV_BACK)
@@ -1282,7 +1276,6 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_shirt_real()
 	remove_overlay(SHIRT_LAYER)
 	remove_overlay(SHIRTSLEEVE_LAYER)
-	update_body_parts(TRUE)
 
 	var/obj/item/bodypart/taur/taur = get_taur_tail()
 	var/icon/c_mask = taur?.clip_mask
@@ -1370,10 +1363,7 @@ There are several things that need to be remembered:
 				overlays_standing[SHIRTSLEEVE_LAYER] = sleeves
 
 	rebuild_obscured_flags()
-	if(gender == FEMALE && dna?.species)
-		update_body_parts(redraw = TRUE)
-		dna.species.handle_body(src)
-	update_hair()
+	update_body() // handles dna.species.handle_body() and update_body_parts() for us
 	// Note: wrists will update gloves in its own update
 
 	apply_overlay(SHIRT_LAYER)
@@ -1480,10 +1470,7 @@ There are several things that need to be remembered:
 				overlays_standing[ARMORSLEEVE_LAYER] = sleeves
 
 	rebuild_obscured_flags()
-	if(gender == FEMALE && dna?.species)
-		update_body_parts(redraw = TRUE)
-		dna.species.handle_body(src)
-	update_hair()
+	update_body()
 	update_inv_shirt() // fix boob
 
 	apply_overlay(ARMOR_LAYER)
@@ -1559,7 +1546,7 @@ There are several things that need to be remembered:
 				overlays_standing[LEGSLEEVE_LAYER] = sleeves
 
 	rebuild_obscured_flags()
-	update_hair()
+	update_body()
 	apply_overlay(PANTS_LAYER)
 	apply_overlay(LEGSLEEVE_LAYER)
 
