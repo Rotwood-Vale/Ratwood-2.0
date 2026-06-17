@@ -29,7 +29,7 @@
 		/datum/advclass/wardenmaster/wardenmaster
 	)
 
-/datum/job/roguetown/manorguard/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+/datum/job/roguetown/wardenmaster/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	. = ..()
 	if(ishuman(L))
 		addtimer(CALLBACK(L, TYPE_PROC_REF(/mob, cloak_and_title_setup)), 50)
