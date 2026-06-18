@@ -54,6 +54,7 @@
 	这道法术无法遗忘。"
 	school = "transmutation"
 	spell_tier = 4                         // T4 法术
+	refundable = FALSE                     // 禁止遗忘法术避免绕过冷却
 	cost = WISH_MANA_COST                  // “法力 / 法术点”消耗 = 18
 	releasedrain = WISH_FATIGUE_DRAIN      // 每次施放的疲劳消耗
 	chargedrain = 0
