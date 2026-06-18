@@ -632,6 +632,28 @@
 		skin_tone,
 		limb_material
 	)
+	// todo: cache these on the bodypart and update in set_species
+	var/draw_organ_features = TRUE
+	var/draw_bodypart_features = TRUE
+	if(owner?.dna?.species)
+		var/datum/species/owner_species = owner.dna.species
+		if(NO_ORGAN_FEATURES in owner_species.species_traits)
+			draw_organ_features = FALSE
+		if(NO_BODYPART_FEATURES in owner_species.species_traits)
+			draw_bodypart_features = FALSE
+	// Organ overlays
+	if(!skeletonized && draw_organ_features)
+		// i don't know if this will actually work since these aren't sorted?
+		for(var/obj/item/organ/organ as anything in get_organs())
+			if(organ.is_visible())
+				var/extra_keys = organ.get_icon_cache_key(src)
+				key_parts += extra_keys
+
+	if(!skeletonized && draw_bodypart_features)
+		for(var/datum/bodypart_feature/feature as anything in bodypart_features)
+			var/extra_keys = feature.get_icon_cache_key(src)
+			if(extra_keys)
+				key_parts += extra_keys
 	return key_parts.Join("-")
 
 /// Invalidates the cached limb appearance
