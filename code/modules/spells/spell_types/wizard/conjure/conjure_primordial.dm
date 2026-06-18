@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/invoked/conjure_primordial
 	name = "唤生元初灵"
 	desc = "消耗一把火、水或风的精质，并召出对应类型的元初灵。\n\
-	这道法术无法返还。"
+	这道法术无法遗忘。"
 	clothes_req = FALSE
 	overlay_state = "rune0"
 	range = 7
