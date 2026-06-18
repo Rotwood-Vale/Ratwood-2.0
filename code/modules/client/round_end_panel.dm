@@ -189,7 +189,7 @@
 	data += "<font color='#556B2F'><span class='bold'>驻军:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_GARRISON]]<br>"
 	data += "<font color='#DAA520'><span class='bold'>神职人员:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_CLERGY]]<br>"
 	data += "<font color='#D2691E'><span class='bold'>商贾:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_TRADESMEN]]<br>"
-	data += "<font color='#8B4513'><span class='bold'>休门:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_NORTHERN_HUMANS]]<br>"	//Here to save space, should be other column
+	data += "<font color='#8B4513'><span class='bold'>人类:</span></font> [GLOB.azure_round_stats[STATS_ALIVE_NORTHERN_HUMANS]]<br>"	//Here to save space, should be other column
 	data += "<font color='#6b89e0'><span class='bold'>男性:</span></font> [GLOB.azure_round_stats[STATS_MALE_POPULATION]]<br>"
 	data += "<font color='#d67daa'><span class='bold'>女性:</span></font> [GLOB.azure_round_stats[STATS_FEMALE_POPULATION]]<br>"
 	data += "<font color='#77d0cd'><span class='bold'>非二元性别:</span></font> [GLOB.azure_round_stats[STATS_OTHER_GENDER]]<br>"
@@ -940,7 +940,7 @@
 
 	data += "<div style='flex: 1; padding-left: 60px;'>"
 	data += "背教者数量: [apostasy_followers] ([get_colored_influence_value(apostasy_followers * -20)])<br>"
-	data += "休门死亡数: [GLOB.azure_round_stats[STATS_HUMEN_DEATHS]] ([get_colored_influence_value(GLOB.azure_round_stats[STATS_HUMEN_DEATHS] * -10)])<br>"
+	data += "人类死亡数: [GLOB.azure_round_stats[STATS_HUMEN_DEATHS]] ([get_colored_influence_value(GLOB.azure_round_stats[STATS_HUMEN_DEATHS] * -10)])<br>"
 	data += "最大信仰: [largest_religion ? "是" : "否"] ([get_colored_influence_value(largest_religion ? 500 : -250)])<br>"
 	data += "灵辉收获: [GLOB.azure_round_stats[STATS_LUX_HARVESTED]] ([get_colored_influence_value(GLOB.azure_round_stats[STATS_LUX_HARVESTED] * -50)])<br>"
 	data += "神祇状态: [psydonite_user ? "存活" : "已殁"] ([get_colored_influence_value(psydonite_user ? 10000 : -10000)])<br>"
