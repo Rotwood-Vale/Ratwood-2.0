@@ -37,7 +37,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/camel
 	icon = 'modular_deserttown/icons/camel.dmi'
-	name = "camel"
+	name = "骆驼"
 	desc = ""
 	icon_state = "camel"
 	icon_living = "camel"
@@ -71,8 +71,8 @@
 	footstep_type = FOOTSTEP_MOB_SHOE
 	pooptype = /obj/item/natural/poo/horse
 	faction = list("saiga")
-	attack_verb_continuous = "headbutts"
-	attack_verb_simple = "headbutt"
+	attack_verb_continuous = "头撞"
+	attack_verb_simple = "头撞"
 	melee_damage_lower = 10
 	melee_damage_upper = 25
 	retreat_distance = 10
@@ -89,7 +89,7 @@
 	remains_type = /obj/effect/decal/remains/saiga
 	
 /obj/effect/decal/remains/saiga
-	name = "remains"
+	name = "遗骸"
 	gender = PLURAL
 	icon_state = "skele"
 	icon = 'icons/roguetown/mob/monster/saiga.dmi'

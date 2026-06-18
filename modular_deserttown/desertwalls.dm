@@ -1,6 +1,6 @@
 /turf/closed/wall/mineral/rogue/sandstone
-	name = "sandstone wall"
-	desc = "A wall of smooth, unyielding sandstone."
+	name = "砂岩墙"
+	desc = "一堵光滑而坚硬的砂岩墙。"
 	icon = 'modular_deserttown/icons/sandstone.dmi'
 	icon_state = "sand-stone"
 	smooth = SMOOTH_MORE
@@ -17,12 +17,12 @@
 	hardness = 3
 
 /datum/crafting_recipe/roguetown/turfs/desert/sandstone
-	name = "sandstone wall"
+	name = "砂岩墙"
 	result = /turf/closed/wall/mineral/rogue/sandstone
 	reqs = list(/obj/item/natural/stone = 2)
 	skillcraft = /datum/skill/craft/masonry
-	verbage_simple = "construct"
-	verbage = "constructs"
+	verbage_simple = "建造"
+	verbage = "建造"
 	craftdiff = 2
 
 /turf/closed/wall/mineral/rogue/sandbrick
@@ -44,17 +44,17 @@
 	hardness = 3
 
 /datum/crafting_recipe/roguetown/turfs/desert/sandbrick
-	name = "sandbrick wall"
+	name = "沙砖墙"
 	result = /turf/closed/wall/mineral/rogue/sandbrick
 	reqs = list(/obj/item/natural/stone = 2)
 	skillcraft = /datum/skill/craft/masonry
-	verbage_simple = "construct"
-	verbage = "constructs"
+	verbage_simple = "建造"
+	verbage = "建造"
 	craftdiff = 2
 
 /turf/closed/mineral/rogue/sandstone
-	name = "sandstone"
-	desc = "Dusty, sand-blasted rock."
+	name = "砂岩"
+	desc = "布满沙尘的岩石。"
 	icon = 'modular_deserttown/icons/rock.dmi'
 	icon_state = "wallformed"
 	smooth = SMOOTH_TRUE | SMOOTH_MORE
@@ -65,16 +65,16 @@
 	above_floor = /turf/open/floor/rogue/naturalstone/sandstone
 
 /turf/closed/mineral/rogue/bedrock/sandstone
-	name = "sandstone"
-	desc = "Seems barren and nigh-indestructable"
+	name = "砂岩"
+	desc = "看似荒芜，近乎不可摧毁。"
 	icon = 'modular_deserttown/icons/rock.dmi'
 	icon_state = "bedrock"
 //	smooth_icon = 'icons/turf/walls/hardrock.dmi'
 	above_floor = /turf/closed/mineral/rogue/bedrock
 
 /turf/closed/mineral/random/rogue/sandstone
-	name = "sandstone"
-	desc = "Dusty, sand-blasted rock."
+	name = "砂岩"
+	desc = "布满沙尘的岩石。"
 	icon = 'modular_deserttown/icons/rock.dmi'
 	icon_state = "minlow"
 	smooth = SMOOTH_TRUE | SMOOTH_MORE

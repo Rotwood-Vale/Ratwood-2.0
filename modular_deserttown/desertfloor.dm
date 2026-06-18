@@ -65,12 +65,12 @@
 	roguesmooth(adjacencies)
 
 /datum/crafting_recipe/roguetown/turfs/desert/sandbrickfloor
-	name = "sandbrick floor"
+	name = "沙砖地板"
 	result = /turf/open/floor/rogue/sandbrick
 	reqs = list(/obj/item/natural/stone = 1)
 	skillcraft = /datum/skill/craft/masonry
-	verbage_simple = "construct"
-	verbage = "constructs"
+	verbage_simple = "建造"
+	verbage = "建造"
 	craftdiff = 1
 
 /turf/open/floor/rogue/sandbrick/Initialize()
@@ -183,12 +183,12 @@
 	icon_state = "dark-path[rand(1,8)]"
 
 /datum/crafting_recipe/roguetown/turfs/desert/darksandbrickfloor
-	name = "dark sandbrick floor"
+	name = "暗色沙砖地板"
 	result = /turf/open/floor/rogue/darkpath
 	reqs = list(/obj/item/natural/stone = 1)
 	skillcraft = /datum/skill/craft/masonry
-	verbage_simple = "construct"
-	verbage = "constructs"
+	verbage_simple = "建造"
+	verbage = "建造"
 	craftdiff = 1
 
 /obj/effect/decal/desertgrassedge

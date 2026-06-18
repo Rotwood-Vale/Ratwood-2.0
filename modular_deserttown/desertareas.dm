@@ -2,7 +2,7 @@
 //desert areas
 
 /area/rogue/outdoors/desert
-	name = "Inner Dunes"
+	name = "内沙丘"
 	icon_state = "desert"
 	soundenv = 19
 	ambientsounds = AMB_TOWNDAY
@@ -17,15 +17,15 @@
 				/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 30,
 				/mob/living/simple_animal/hostile/retaliate/rogue/fox = 30,
 				/mob/living/carbon/human/species/skeleton/npc/supereasy = 30)
-	first_time_text = "Al-Ashur Dunes"
+	first_time_text = "阿尔-阿舒尔沙丘"
 	droning_sound = 'sound/music/area/desert/Iberia1.ogg'
 	droning_sound_dusk = 'sound/music/area/desert/NightPrayer.ogg'
 	droning_sound_night = 'sound/music/area/desert/Moonrise.ogg'
-	deathsight_message = "somewhere in the dunes, next to towering walls"
+	deathsight_message = "沙丘某处，高墙之旁"
 	threat_region = THREAT_REGION_DESERT_NEAR
 	
 /area/rogue/outdoors/desert/river
-	name = "river"
+	name = "河流"
 	icon_state = "river"
 	ambientsounds = AMB_RIVERDAY
 	ambientnight = AMB_RIVERNIGHT
@@ -33,13 +33,13 @@
 	spookynight = SPOOKY_FOREST
 
 /area/rogue/outdoors/desertdeep
-	name = "Deep Dunes"
+	name = "深沙丘"
 	icon_state = "desertdeep"
 	ambientsounds = AMB_TOWNDAY
 	ambientnight = AMB_TOWNNIGHT
 	spookysounds = SPOOKY_GEN
 	spookynight = SPOOKY_GEN
-	first_time_text = "Deep Dunes"
+	first_time_text = "深沙丘"
 	droning_sound = 'sound/music/area/desert/Iberia1.ogg'
 	droning_sound_dusk = 'sound/music/area/desert/NightPrayer.ogg'
 	droning_sound_night = 'sound/music/area/desert/Moonrise.ogg'
@@ -55,23 +55,23 @@
 		/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 20,
 		/mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead = 10,)
 	converted_type = /area/rogue/indoors/shelter/desertdeep
-	deathsight_message = "an empty, parched desert"
+	deathsight_message = "一片空旷干涸的沙漠"
 	threat_region = THREAT_REGION_DESERT_DEEP
 
 /area/rogue/indoors/shelter/desertdeep
-	name = "Deep Desert (shelter)"
+	name = "深沙漠（掩体）"
 	icon_state = "desertdeep"
 	droning_sound = 'sound/music/area/desert/Iberia1.ogg'
 	droning_sound_dusk = 'sound/music/area/desert/NightPrayer.ogg'
 	droning_sound_night = 'sound/music/area/desert/Moonrise.ogg'
 
 /area/rogue/outdoors/desertdeep/safe
-	name = "Desert Pass"
+	name = "沙漠隘口"
 	ambush_times = null
 	ambush_mobs = null
 
 /area/rogue/outdoors/desertdeep/above
-	name = "deep desert above"
+	name = "深沙漠上层"
 	ambientsounds = AMB_MOUNTAIN
 	ambientnight = AMB_MOUNTAIN
 	soundenv = 17
@@ -80,7 +80,7 @@
 	ambush_mobs = null
 
 /area/rogue/outdoors/desert/above
-	name = "desert above"
+	name = "沙漠上层"
 	ambientsounds = AMB_MOUNTAIN
 	ambientnight = AMB_MOUNTAIN
 	soundenv = 17
@@ -91,17 +91,17 @@
 //
 
 /area/rogue/outdoors/town/desert
-	name = "desert town outdoors"
+	name = "沙漠城镇户外"
 	icon_state = "town"
 	soundenv = 16
 	droning_sound = 'sound/music/area/desert/TheRoad.ogg'
 	droning_sound_dusk = 'sound/music/area/desert/NightPrayer.ogg'
 	droning_sound_night = 'sound/music/area/desert/Moonrise.ogg'
-	first_time_text = "The City of Al-Ashur"
+	first_time_text = "阿尔-阿舒尔城"
 	town_area = TRUE
 
 /area/rogue/outdoors/town/roofs/desert
-	name = "desert roofs"
+	name = "沙漠屋顶"
 	icon_state = "roofs"
 	ambientsounds = AMB_MOUNTAIN
 	ambientnight = AMB_MOUNTAIN
@@ -111,15 +111,15 @@
 	first_time_text = null
 
 /area/rogue/outdoors/town/roofs/desert/church
-	name = "church rooftops"
+	name = "教堂屋顶"
 	holy_area = TRUE
 
 /area/rogue/outdoors/town/roofs/desert/arena
-	name = "arena rooftops"
+	name = "竞技场屋顶"
 	warden_area = TRUE
 
 /area/rogue/outdoors/town/roofs/desert/tavern
-	name = "tavern rooftops"
+	name = "酒馆屋顶"
 	tavern_area = TRUE
 
 
@@ -129,16 +129,16 @@
 	droning_sound_night = 'sound/music/area/desert/Moonrise.ogg'
 
 /area/rogue/outdoors/town/manor/desert
-	name = "Al-Ashur Palace exterior"
+	name = "阿尔-阿舒尔宫殿外部"
 	icon_state = "manor"
 	droning_sound = 'sound/music/area/desert/Iberia1.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = 'sound/music/area/desert/Iberia2.ogg'
-	first_time_text = "Al-Ashur Palace"
+	first_time_text = "阿尔-阿舒尔宫殿"
 	keep_area = TRUE
 
 /area/rogue/outdoors/town/manor/roofs/desert
-	name = "Palace roofs"
+	name = "宫殿屋顶"
 	icon_state = "roofs"
 	ambientsounds = AMB_MOUNTAIN
 	ambientnight = AMB_MOUNTAIN
@@ -149,36 +149,36 @@
 ///
 
 /area/rogue/indoors/town/desert/warden
-	name = "Warden Fort"
+	name = "守林人堡垒"
 	warden_area = TRUE
 
 /area/rogue/outdoors/banditcamp/desert
-	name = "Bandit Camp"
+	name = "强盗营地"
 	droning_sound = 'sound/music/area/desert/stronghold.ogg'
 	droning_sound_dusk = 'sound/music/area/desert/stronghold.ogg'
 	droning_sound_night = 'sound/music/area/desert/stronghold.ogg'
-	first_time_text = "A Gathering of Thieves"
-	deathsight_message = "hidden among thieves, in the hoard of a dragon"
+	first_time_text = "盗贼聚集地"
+	deathsight_message = "藏身盗贼之中，匿于巨龙宝库"
 
 /area/rogue/indoors/banditcamp/desert
-	name = "Bandit Camp"
+	name = "强盗营地"
 	droning_sound = 'sound/music/area/desert/stronghold.ogg'
 	droning_sound_dusk = 'sound/music/area/desert/stronghold.ogg'
 	droning_sound_night = 'sound/music/area/desert/stronghold.ogg'
-	deathsight_message = "hidden among thieves, in the hoard of a dragon"
+	deathsight_message = "藏身盗贼之中，匿于巨龙宝库"
 
 /area/rogue/outdoors/town/desert
-	name = "desert town outdoors"
+	name = "沙漠城镇户外"
 	icon_state = "town"
 	soundenv = 16
 	droning_sound = 'sound/music/area/desert/TheRoad.ogg'
 	droning_sound_dusk = 'sound/music/area/desert/NightPrayer.ogg'
 	droning_sound_night = 'sound/music/area/desert/Moonrise.ogg'
-	first_time_text = "The City of Al-Ashur"
+	first_time_text = "阿尔-阿舒尔城"
 	town_area = TRUE
 
 /area/rogue/outdoors/town/roofs/desert
-	name = "desert roofs"
+	name = "沙漠屋顶"
 	icon_state = "roofs"
 	ambientsounds = AMB_MOUNTAIN
 	ambientnight = AMB_MOUNTAIN
@@ -194,16 +194,16 @@
 	droning_sound_night = 'sound/music/area/desert/Moonrise.ogg'
 
 /area/rogue/outdoors/town/manor/desert
-	name = "Al-Ashur Palace exterior"
+	name = "阿尔-阿舒尔宫殿外部"
 	icon_state = "manor"
 	droning_sound = 'sound/music/area/desert/Iberia1.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = 'sound/music/area/desert/Iberia2.ogg'
-	first_time_text = "Al-Ashur Palace"
+	first_time_text = "阿尔-阿舒尔宫殿"
 	keep_area = TRUE
 
 /area/rogue/outdoors/town/manor/desert/roofs
-	name = "Palace roofs"
+	name = "宫殿屋顶"
 	icon_state = "roofs"
 	ambientsounds = AMB_MOUNTAIN
 	ambientnight = AMB_MOUNTAIN
@@ -214,23 +214,23 @@
 ///
 
 /area/rogue/indoors/town/desert
-	name = "desert town indoors"
+	name = "沙漠城镇室内"
 	droning_sound = 'sound/music/area/desert/TheRoad.ogg'
 	droning_sound_dusk = 'sound/music/area/desert/NightPrayer.ogg'
 	droning_sound_night = 'sound/music/area/desert/Moonrise.ogg'
 	converted_type = /area/rogue/outdoors/exposed/town
-	deathsight_message = "the city of Al-Ashur and all its bustling souls"
+	deathsight_message = "阿尔-阿舒尔城及其所有熙攘生灵"
 
 /area/rogue/indoors/town/manor/desert
-	name = "Al-Ashur Palace interior"
+	name = "阿尔-阿舒尔宫殿内部"
 	droning_sound = 'sound/music/area/desert/Iberia1.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = 'sound/music/area/desert/Iberia2.ogg'
-	first_time_text = "Al-Ashur Palace"
+	first_time_text = "阿尔-阿舒尔宫殿"
 	keep_area = TRUE
 
 /area/rogue/indoors/town/magician/desert
-	name = "Wizard's Tower"
+	name = "巫师塔"
 	// spookysounds = SPOOKY_MYSTICAL
 	// spookynight = SPOOKY_MYSTICAL
 	// droning_sound = 'sound/music/area/magiciantower.ogg'
@@ -239,19 +239,19 @@
 	// keep_area = TRUE
 
 /area/rogue/indoors/town/shop/desert
-	name = "Bazaar"
+	name = "集市"
 	droning_sound = 'sound/music/area/desert/Caravan.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
 
 /area/rogue/indoors/town/dwarfin/desert
-	name = "Guild Smithy"
+	name = "行会铁匠铺"
 	droning_sound = 'sound/music/area/desert/Sandal.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
 
 /area/rogue/indoors/town/physician/desert
-	name = "Physician"
+	name = "医师"
 	droning_sound = 'sound/music/area/academy.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
@@ -259,19 +259,19 @@
 /area/rogue/indoors/town/academy/desert
 
 /area/rogue/indoors/town/bath/desert
-	name = "Baths"
+	name = "浴场"
 	droning_sound = 'sound/music/area/desert/TenThousandDelights.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
 
 /area/rogue/indoors/town/garrison/desert
-	name = "Al-Ashur Garrison"
+	name = "阿尔-阿舒尔卫戍营"
 	droning_sound = 'sound/music/area/desert/DarMeshq.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
 	
 /area/rogue/indoors/town/garrison/desert/cell
-	name = "dungeon cell"
+	name = "地牢牢房"
 	icon_state = "cell"
 	spookysounds = SPOOKY_DUNGEON
 	spookynight = SPOOKY_DUNGEON
@@ -280,7 +280,7 @@
 	droning_sound_night = null
 
 /area/rogue/indoors/town/garrison/desert/cell/outdoor
-	name = "dungeon cell"
+	name = "地牢牢房"
 	icon_state = "cell"
 	spookysounds = SPOOKY_DUNGEON
 	spookynight = SPOOKY_DUNGEON
@@ -292,7 +292,7 @@
 	cell_area = TRUE
 
 /area/rogue/indoors/town/tavern/desert
-	name = "tavern"
+	name = "酒馆"
 	icon_state = "tavern"
 	ambientsounds = AMB_INGEN
 	ambientnight = AMB_INGEN
@@ -302,11 +302,11 @@
 	tavern_area = TRUE
 
 /area/rogue/indoors/town/desert/warden
-	name = "Azeb Fort"
+	name = "阿塞卜堡垒"
 	warden_area = TRUE
 
 /area/rogue/under/town/basement/desert
-	name = "basement"
+	name = "地下室"
 	town_area = FALSE
 	ceiling_protected = TRUE
 
@@ -314,17 +314,17 @@
 	town_area = TRUE
 
 /area/rogue/under/town/basement/desert/keep
-	name = "palace basement"
+	name = "宫殿地下室"
 	keep_area = TRUE
 	town_area = TRUE
 
 /area/rogue/indoors/town/desert/arenaview
-	name = "Grand Arena"
+	name = "大竞技场"
 	viewing_area = TRUE
 
 /area/rogue/indoors/town/church/cavebasement
 	icon_state = "church"
-	first_time_text = "THE CRYPT OF THE TEN"
+	first_time_text = "十神墓穴"
 	ambientsounds = AMB_CAVEWATER
 	ambientnight = AMB_CAVEWATER
 	spookysounds = SPOOKY_CAVE
@@ -332,7 +332,7 @@
 	droning_sound = 'sound/music/area/underdark2.ogg'
 
 /area/rogue/indoors/town/church/psy
-	name = "church"
+	name = "教堂"
 	icon_state = "church"
 	droning_sound = 'sound/music/area/church.ogg'
 	droning_sound_dusk = null
@@ -340,8 +340,8 @@
 	holy_area = TRUE
 	droning_sound_dawn = 'sound/music/area/churchdawn.ogg'
 	converted_type = /area/rogue/outdoors/exposed/church
-	deathsight_message = "a hallowed place, sworn to the One"
-	first_time_text = "THE HOUSE OF THE ONE"
+	deathsight_message = "一片圣地，誓奉独一者"
+	first_time_text = "独一者之殿"
 
 /area/rogue/under/dungeon/desert
 

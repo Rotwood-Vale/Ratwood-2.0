@@ -3,21 +3,21 @@
 	plane = -3
 
 /obj/structure/drape/desert
-	name = "desert drape"
-	desc = "Made from durable fabric, it serves its purpose."
+	name = "沙漠挂帘"
+	desc = "由耐用布料制成，能发挥其应有的作用。"
 	icon = 'modular_deserttown/icons/drapes.dmi'
 	icon_state = "desertdrape"
 
 /datum/crafting_recipe/roguetown/structure/zybdrape
-	name = "desert drape"
+	name = "沙漠挂帘"
 	result = /obj/structure/drape/desert
 	reqs = list(/obj/item/natural/cloth = 2)
 	craftdiff = 1
 	ignoredensity = TRUE
 
 /obj/structure/drape/zybantine
-	name = "zybantine drape"
-	desc = "Made from prestigious fabric, a display of wealth."
+	name = "兹班图挂帘"
+	desc = "以名贵布料制成，是财富的展示。"
 	icon = 'modular_deserttown/icons/drapes.dmi'
 	icon_state = "zybantinedrape1"
 	color = "#a3a3a3"
@@ -27,7 +27,7 @@
 	icon_state = "zybantinedrape[rand(1, 2)]"
 
 /datum/crafting_recipe/roguetown/structure/zybdrapefancy
-	name = "fancy zybantine drape"
+	name = "精致兹班图挂帘"
 	result = /obj/structure/drape/zybantine
 	reqs = list(/obj/item/natural/cloth = 2, /obj/item/natural/silk= 2 )
 	craftdiff = 4
@@ -46,24 +46,24 @@
 	icon_state = "desertcushion2"
 
 /obj/item/cushion/zybantine
-	name = "zybantine cushion"
+	name = "兹班图坐垫"
 	icon = 'modular_deserttown/icons/cushions.dmi'
 	icon_state = "zybantinecushion"
 
 /datum/crafting_recipe/roguetown/sewing/zybcushion1
-	name = "desert cushion (yellow)"
+	name = "沙漠坐垫（黄色）"
 	result = list(/obj/item/cushion/desert1)
 	reqs = list(/obj/item/natural/cloth = 2)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/zybcushion2
-	name = "desert cushion (grey)"
+	name = "沙漠坐垫（灰色）"
 	result = list(/obj/item/cushion/desert2)
 	reqs = list(/obj/item/natural/cloth = 2)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/zybcushionfancy
-	name = "zybantine cushion"
+	name = "兹班图坐垫"
 	result = list(/obj/item/cushion/zybantine)
 	reqs = list(/obj/item/natural/silk = 2)
 	craftdiff = 4
@@ -80,40 +80,40 @@
 	icon_state = "sandpot1"
 
 /datum/crafting_recipe/roguetown/structure/sandpot
-	name = "sand pot"
+	name = "沙陶罐"
 	result = /obj/structure/fermentation_keg/sandpot
 	reqs = list(/obj/item/natural/clay = 1)
-	verbage_simple = "make"
-	verbage = "makes"
+	verbage_simple = "制作"
+	verbage = "制作"
 	skillcraft = /datum/skill/craft/ceramics
 	craftdiff = 1
 
 /obj/structure/fermentation_keg/fancypot
-	name = "fancy pot"
-	desc = "Decorative and Practical!"
+	name = "精致陶罐"
+	desc = "既美观又实用！"
 	icon = 'modular_deserttown/icons/pots.dmi'
 	icon_state = "fancypot1"
 
 /datum/crafting_recipe/roguetown/structure/fancypot
-	name = "sand pot (fancy)"
+	name = "沙陶罐（精致款）"
 	result = /obj/structure/fermentation_keg/fancypot
 	reqs = list(/obj/item/natural/clay = 1)
-	verbage_simple = "make"
-	verbage = "makes"
+	verbage_simple = "制作"
+	verbage = "制作"
 	skillcraft = /datum/skill/craft/ceramics
 	craftdiff = 3
 
 /obj/item/reagent_containers/glass/bucket/tinypot
-	name = "tiny pot"
+	name = "小陶罐"
 	icon = 'modular_deserttown/icons/pots.dmi'
 	icon_state = "tinypot1"
 
 /datum/crafting_recipe/roguetown/structure/tinypot
-	name = "small clay pot"
+	name = "小黏土罐"
 	result = /obj/item/reagent_containers/glass/bucket/tinypot
 	reqs = list(/obj/item/natural/clay = 1)
-	verbage_simple = "make"
-	verbage = "makes"
+	verbage_simple = "制作"
+	verbage = "制作"
 	skillcraft = /datum/skill/craft/ceramics
 	craftdiff = 2
 
@@ -191,7 +191,7 @@
 
 ///
 /obj/machinery/light/rogue/campfire/fireplace/desert
-	name = "desert fireplace"
+	name = "沙漠壁炉"
 	icon = 'modular_deserttown/icons/fireplace.dmi'
 	icon_state = "fireplace1"
 	base_state = "fireplace"
@@ -201,7 +201,7 @@
 	cookonme = FALSE
 
 /datum/crafting_recipe/roguetown/structure/fireplace/desert
-	name = "desert fireplace"
+	name = "沙漠壁炉"
 	result = /obj/machinery/light/rogue/campfire/fireplace/desert
 	// reqs = list(/obj/item/grown/log/tree/small = 1,
 	// 			/obj/item/natural/stoneblock = 3)
@@ -214,7 +214,7 @@
 ///////////
 
 /obj/structure/pillar
-	name = "pillar"
+	name = "柱子"
 	desc = ""
 	icon = 'modular_deserttown/icons/sandpillar.dmi'
 	opacity = 0
@@ -236,11 +236,11 @@
 	icon_state = "sandpillar1"
 
 /datum/crafting_recipe/roguetown/structure/pillar/desert
-	name = "sandstone pillar"
+	name = "砂岩柱子"
 	result = /obj/structure/pillar/sand1
 	reqs = list(/obj/item/natural/stone = 2)
-	verbage_simple = "builds"
-	verbage = "builds"
+	verbage_simple = "建造"
+	verbage = "建造"
 	skillcraft = /datum/skill/craft/masonry
 	craftdiff = 4
 
@@ -248,27 +248,27 @@
 ////chairs
 
 /obj/structure/chair/wood/zybantine
-	name = "zybantine chair"
+	name = "兹班图椅子"
 	icon = 'modular_deserttown/icons/chairs.dmi'
 	icon_state = "zybantinechair"
 
 /obj/structure/chair/wood/rogue/throne/zybantine
-	name = "zybantine throne"
+	name = "兹班图王座"
 	icon_state = "zybantinethrone"
 	icon = 'modular_deserttown/icons/throne.dmi'
 	pixel_x = -16
 
 /datum/crafting_recipe/roguetown/structure/chair/zyb
-	name = "wooden chair"
+	name = "木椅"
 	result = /obj/structure/chair/wood/zybantine
 	reqs = list(/obj/item/grown/log/tree/small = 1)
-	verbage_simple = "construct"
-	verbage = "constructs"
+	verbage_simple = "建造"
+	verbage = "建造"
 	skillcraft = /datum/skill/craft/carpentry
 
 
 /obj/structure/chair/sofa
-	name = "old ratty sofa"
+	name = "破旧鼠啮沙发"
 	buildstackamount = 1
 	item_chair = null
 
@@ -283,14 +283,14 @@
 
 
 /obj/structure/chair/zybantine_sofa/right
-	name = "zybantine sofa"
+	name = "兹班图沙发"
 	icon_state = "zybantinesofa_right"
 	icon = 'modular_deserttown/icons/chairs.dmi'
 	buildstackamount = 1
 	item_chair = null
 
 /obj/structure/chair/zybantine_sofa/left
-	name = "zybantine sofa"
+	name = "兹班图沙发"
 	icon_state = "zybantinesofa_left"
 	icon = 'modular_deserttown/icons/chairs.dmi'
 	buildstackamount = 1
@@ -299,8 +299,8 @@
 //Sandrocks
 
 /obj/structure/sandrock
-	name = "sandrock"
-	desc = "A large desert rock protuding from the ground."
+	name = "沙岩"
+	desc = "一块从地面突出的巨大沙漠岩石。"
 	icon_state = "rock1"
 	icon = 'modular_deserttown/icons/sandrock.dmi'
 	opacity = 0
@@ -332,7 +332,7 @@
 	icon_state = "sandrock4"
 
 /obj/item/natural/rock/desert
-	name = "sand rock"
+	name = "沙质岩石"
 	icon = 'modular_deserttown/icons/small_sandrock.dmi'
 	icon_state = "sandrock1"
 
@@ -354,8 +354,8 @@
 	icon_state = "saigahorn[rand(1, 3)]"
 
 /obj/structure/flora/roguegrass/bush/desertshrub
-	name = "treelet"
-	desc = "A rounded bush-like tree or perhaps tree-like bush native to Zybantium. A valuable source of wood in the sparse desert."
+	name = "小树"
+	desc = "一种生长于兹班图的圆球状灌木般的树，或树般的灌木。在这片稀疏沙漠中是一种宝贵的木材来源。"
 	icon = 'modular_deserttown/icons/flora.dmi'
 	icon_state = "bushshrub1"
 	attacked_sound = 'sound/misc/woodhit.ogg'
@@ -381,8 +381,8 @@
 	icon_state = "palm[rand(1,2)]"
 
 /obj/structure/flora/roguetree/stump/palm
-	name = "tree stump"
-	desc = "Shade no more."
+	name = "树桩"
+	desc = "再无荫凉。"
 	icon_state = "palmstump1"
 	icon = 'modular_deserttown/icons/bigpalm.dmi'
 	stump_type = null
@@ -403,7 +403,7 @@
 //Stairs
 
 /obj/structure/stairs/desert
-	name = "sand stairs"
+	name = "沙漠阶梯"
 	icon = 'modular_deserttown/icons/sandstairs.dmi'
 	icon_state = "sandstairs"
 	max_integrity = 600
@@ -434,8 +434,8 @@
 //weapons
 
 /obj/item/rogueweapon/shield/iron/zybantine
-	name = "brass shield"
-	desc = "A sturdy shield of Zybantium make."
+	name = "黄铜盾"
+	desc = "一面兹班图制造的坚固盾牌。"
 	icon = 'modular_deserttown/icons/items/desertweapons32.dmi'
 	icon_state = "zybshield"
 	max_integrity = 250
@@ -445,8 +445,8 @@
 	smeltresult = /obj/item/ingot/bronze
 
 /obj/item/rogueweapon/woodstaff/riddle_of_steel/serpent
-	name = "\improper Staff of the Serpent"
-	desc = "A mysterious golden staff shaped like a snake. You could swear its staring at you"
+	name = "\improper 蛇之杖"
+	desc = "一根神秘的金色手杖，形如一条蛇。你几乎可以发誓它在盯着你看。"
 	icon = 'modular_deserttown/icons/items/desertweapons64.dmi'
 	icon_state = "snakestaff"
 
@@ -458,8 +458,8 @@
 // 	icon_state = "Kmesser"
 
 /obj/structure/fluff/traveltile/alashurentrance
-	desc = "Awake from this dream. The road to Al-Ashur awaits."
-	name = "To Al-Ashur"
+	desc = "从这梦境中醒来。通往阿尔-阿舒尔之路正等着你。"
+	name = "前往阿尔-阿舒尔"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "underworldportal"
 

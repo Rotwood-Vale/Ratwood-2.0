@@ -4,8 +4,8 @@
 //Common workhorse armour for men at arms? Seems like it should be decent alround basic protection, like a hauberk (but not underarmour)
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/janissary
 	slot_flags = ITEM_SLOT_ARMOR
-	name = "janissary chainmail"
-	desc = "A longer steel maille that protects the legs."
+	name = "耶尼切里锁子甲"
+	desc = "一件较长的钢制锁甲，可保护腿部。"
 	sleeved = null
 	sleevetype = null
 	icon = 'modular_deserttown/icons/clothing/armor.dmi'
@@ -19,8 +19,8 @@
 //Actually nah plate heavy armour should be heavier than that...
 /obj/item/clothing/suit/roguetown/armor/plate/cataphract
 	slot_flags = ITEM_SLOT_ARMOR
-	name = "cataphract armor"
-	desc = "Metal scales interwoven intricately to form flexible protection!"
+	name = "铁甲骑兵甲"
+	desc = "金属甲片精妙交织而成，提供灵活防护！"
 	icon = 'modular_deserttown/icons/clothing/armor.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/armor.dmi'
 	icon_state = "cataphract"
@@ -36,16 +36,16 @@
 	smelt_bar_num = 2
 
 /obj/item/clothing/suit/roguetown/armor/plate/cataphract/sultan
-	name = "sultan scale"
-	desc = "Impenetrable scales like an ancient black dragon!"
+	name = "苏丹鳞甲"
+	desc = "如同远古黑龙般坚不可摧的鳞甲！"
 	color = "#5e5d5d"
 	armor = ARMOR_PLATE_BSTEEL
 	max_integrity = ARMOR_INT_CHEST_PLATE_BLACKSTEEL
 	smeltresult = /obj/item/ingot/blacksteel
 
 /obj/item/clothing/head/roguetown/helmet/heavy/cataphract/sultan
-	name = "sultan helm"
-	desc = "Impenetrable scales like an ancient black dragon!"
+	name = "苏丹头盔"
+	desc = "如同远古黑龙般坚不可摧的鳞甲！"
 	color = "#5e5d5d"
 	armor = ARMOR_PLATE_BSTEEL
 	max_integrity = ARMOR_INT_CHEST_PLATE_BLACKSTEEL
@@ -66,8 +66,8 @@
 // 	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/agha
-	name = "Agha Scale"
-	desc = "Fine armor made of treated animal scales, denoting an esteemed career in the dunes."
+	name = "阿迦鳞甲"
+	desc = "以精制兽鳞制成的优良铠甲，象征着沙丘中的尊荣生涯。"
 	icon_state = "huus"
 	item_state = "huus"
 	armor = ARMOR_LEATHER_STUDDED
@@ -78,8 +78,8 @@
 //armorhelmets
 
 /obj/item/clothing/head/roguetown/helmet/heavy/cataphract
-	name = "cataphracts helm"
-	desc = "A helmet with a menacing visage."
+	name = "铁甲骑兵头盔"
+	desc = "一顶面容狰狞的头盔。"
 	icon_state = "cathelm"
 	item_state = "cathelm"
 	icon = 'modular_deserttown/icons/clothing/head32x48.dmi'
@@ -91,8 +91,8 @@
 	dropshrink = null
 
 /obj/item/clothing/head/roguetown/helmet/janissaryhelm
-	name = "Janissary Helmet"
-	desc = "A helmet with too much style."
+	name = "耶尼切里头盔"
+	desc = "一顶风格过多的头盔。"
 	icon = 'modular_deserttown/icons/clothing/head.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/head.dmi'
 	icon_state = "mamhelm"
@@ -114,8 +114,8 @@
 ///VEST
 
 /obj/item/clothing/suit/roguetown/armor/leather/vest/open
-	name = "open vest"
-	desc = "A leather vest. Not very protective when worn like this."
+	name = "敞口马甲"
+	desc = "一件皮马甲。这样穿着保护力不强。"
 	icon = 'modular_deserttown/icons/clothing/armor.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/armor.dmi'
 	icon_state = "openvest"
@@ -147,8 +147,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/robe/bisht
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
-	name = "bisht"
-	desc = "A long robe typical in Zybantine."
+	name = "比什特长袍"
+	desc = "兹班图典型的罩袍。"
 	icon = 'modular_deserttown/icons/clothing/easternclothes.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/easternclothes.dmi'
 	icon_state = "greythawb"
@@ -184,13 +184,13 @@
 
 /obj/item/clothing/suit/roguetown/shirt/robe/bisht/bluegrey
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
-	name = "grey bisht"
+	name = "灰色比什特长袍"
 	icon_state = "bluethawb"
 	item_state = "bluethawb"
 
 /obj/item/clothing/suit/roguetown/shirt/robe/bisht/purple
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
-	name = "purple bisht"
+	name = "紫色比什特长袍"
 	icon_state = "purplethawb"
 	item_state = "purplethawb"
 
@@ -199,21 +199,21 @@
 	body_parts_covered = CHEST|VITALS
 	icon = 'modular_deserttown/icons/clothing/armor.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/armor.dmi'
-	name = "guild bisht"
-	desc = "An open robe, made from luxurious silks."
+	name = "行会比什特长袍"
+	desc = "一件敞开的罩袍，以奢华丝绸制成。"
 	armor = ARMOR_PADDED
 	icon_state = "merbisht"
 	item_state = "merbisht"
 	color = null
 
 /datum/crafting_recipe/roguetown/sewing/bisht
-	name = "bisht"
+	name = "比什特长袍"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/robe/bisht/beige)
 	reqs = list(/obj/item/natural/cloth = 3)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/bisht/fancy
-	name = "fine bisht"
+	name = "精致比什特长袍"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/robe/bisht/bluegrey)
 	reqs = list(/obj/item/natural/cloth = 2, /obj/item/natural/silk = 1)
 	craftdiff = 4
@@ -223,8 +223,8 @@
 //Easternclothes 
 /obj/item/clothing/suit/roguetown/shirt/dress/thawb
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
-	name = "thawb"
-	desc = "A long, loose Zybantine robe."
+	name = "索布长袍"
+	desc = "一件宽松的兹班图罩袍。"
 	armor = ARMOR_CLOTHING
 	body_parts_covered = CHEST|GROIN|LEGS|VITALS
 	icon = 'modular_deserttown/icons/clothing/shirts.dmi'
@@ -258,15 +258,15 @@
 	..()
 
 /datum/crafting_recipe/roguetown/sewing/thawb
-	name = "thawb"
+	name = "索布长袍"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/dress/thawb/beige)
 	reqs = list(/obj/item/natural/cloth = 2)
 	craftdiff = 2
 
 /obj/item/clothing/suit/roguetown/shirt/dress/thawb/gold
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
-	name = "gold-trimmed thawb"
-	desc = "A long, loose Zybantine robe. This one is trimmed with gold-silk thread."
+	name = "金边索布长袍"
+	desc = "一件宽松的兹班图罩袍。这件镶有金丝线装饰。"
 	body_parts_covered = CHEST|GROIN|LEGS|VITALS
 	icon = 'modular_deserttown/icons/clothing/shirts.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/shirts.dmi'
@@ -275,8 +275,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/dress/amiradress
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
-	name = "amira's dress"
-	desc = "A red skirt and binder, embroidened with infinitely intricate gold-thread patterns, and made of silk as light as air. Fit for a princess of Zybantine."
+	name = "阿米拉长裙"
+	desc = "红色裙装与束胸，绣有无尽精妙的金线图案，以轻如空气的丝绸制成。堪配兹班图的公主。"
 	body_parts_covered = CHEST|GROIN|LEGS|VITALS
 	icon = 'modular_deserttown/icons/clothing/shirts.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/shirts.dmi'
@@ -286,8 +286,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/sultan
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	name = "sultans robes"
-	desc = "A Zybantine Sultans noble robes."
+	name = "苏丹长袍"
+	desc = "兹班图苏丹的高贵长袍。"
 	body_parts_covered = CHEST|GROIN|VITALS|LEGS|ARMS
 	boobed = FALSE
 	icon = 'modular_deserttown/icons/clothing/shirts.dmi'
@@ -302,8 +302,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/sultana
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	name = "sultanas dress"
-	desc = "A Zybantine Sultanas noble Dress."
+	name = "苏丹娜长裙"
+	desc = "兹班图苏丹娜的高贵长裙。"
 	body_parts_covered = CHEST|GROIN|VITALS|LEGS|ARMS
 	boobed = FALSE
 	icon = 'modular_deserttown/icons/clothing/shirts.dmi'
@@ -318,8 +318,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/jafar
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	name = "zybantine magos robes"
-	desc = "A Zybantine magos noble robes."
+	name = "兹班图魔导长袍"
+	desc = "兹班图魔导的高贵长袍。"
 	body_parts_covered = CHEST|GROIN|VITALS|LEGS|ARMS
 	boobed = FALSE
 	icon = 'modular_deserttown/icons/clothing/shirts.dmi'
@@ -336,8 +336,8 @@
 //Eastern Clothing by Infrared Baron
 
 /obj/item/clothing/head/roguetown/turban
-	name = "turban"
-	desc = "A long cloth, wound around the head."
+	name = "头巾"
+	desc = "一条长布，缠绕在头上。"
 	color = null
 	body_parts_covered = HEAD|HAIR|EARS|NECK
 	flags_inv = HIDEHAIR|HIDEEARS
@@ -369,28 +369,28 @@
 	..()
 
 /datum/crafting_recipe/roguetown/sewing/turban
-	name = "turban"
+	name = "头巾"
 	result = list(/obj/item/clothing/head/roguetown/turban)
 	reqs = list(/obj/item/natural/cloth = 1)
 	craftdiff = 1
 
 /obj/item/clothing/head/roguetown/turban/fancypurple
-	name = "fancy purple turban"
-	desc = "A long, luxurious cloth, wound around the head."
+	name = "华丽紫色头巾"
+	desc = "一条长而奢华的布，缠绕在头上。"
 	icon = 'modular_deserttown/icons/clothing/easternclothes.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/easternclothes.dmi'
 	icon_state = "purple_hood"
 	item_state = "purple_hood"
 
 /datum/crafting_recipe/roguetown/sewing/turban/fancy
-	name = "fancy turban"
+	name = "华丽头巾"
 	result = list(/obj/item/clothing/head/roguetown/turban)
 	reqs = list(/obj/item/natural/silk = 2)
 	craftdiff = 4
 
 /obj/item/clothing/head/roguetown/tagelmust
-	name = "Tagelmust"
-	desc = "A long cloth, wound around the head, and a veil."
+	name = "塔杰尔穆斯特"
+	desc = "一条长布缠绕在头上，并配有面纱。"
 	body_parts_covered = HEAD|EARS|HAIR|NECK|NOSE|MOUTH
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	icon = 'modular_deserttown/icons/clothing/easternclothes.dmi'
@@ -399,14 +399,14 @@
 	item_state = "blue_hood"
 
 /datum/crafting_recipe/roguetown/sewing/tagelmust
-	name = "tagelmust"
+	name = "塔杰尔穆斯特"
 	result = list(/obj/item/clothing/head/roguetown/turban)
 	reqs = list(/obj/item/natural/silk = 2)
 	craftdiff = 3
 //
 /obj/item/clothing/head/roguetown/sultan
-	name = "sultan's turban"
-	desc = "Bask in its noble size and granduer!."
+	name = "苏丹头巾"
+	desc = "尽享其尊贵气派与宏伟之姿！"
 	icon = 'modular_deserttown/icons/clothing/head.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/head32x48.dmi'
 	icon_state = "sultan"
@@ -416,22 +416,22 @@
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HEAD
 
 /obj/item/clothing/head/roguetown/sultan/merchant
-	name = "merchant's turban"
-	desc = "A turban, large and elaborate, made of the finest silk money can buy."
+	name = "商贾头巾"
+	desc = "一顶宽大精美的头巾，以金钱能买到的最上等丝绸制成。"
 	icon_state = "merchant"
 	item_state = "merchant"
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HEAD
 
 /obj/item/clothing/head/roguetown/sultan/amir
-	name = "amir's turban"
-	desc = "Soft, decadent, grandiouse, but above all - princely."
+	name = "埃米尔头巾"
+	desc = "柔软、奢华、宏伟，但最重要的是——尽显王侯风范。"
 	icon_state = "amir"
 	item_state = "amir"
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HEAD
 
 /obj/item/clothing/head/roguetown/sultana
-	name = "sultana's headdress"
-	desc = "Silky smooth Zybantine silk headress!"
+	name = "苏丹娜头饰"
+	desc = "丝滑的兹班图丝绸头饰！"
 	icon = 'modular_deserttown/icons/clothing/head.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/head.dmi'
 	icon_state = "sultana"
@@ -441,8 +441,8 @@
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HEAD
 
 /obj/item/clothing/head/roguetown/jafar
-	name = "zybantine magos hat"
-	desc = "Bask in its noble size and granduer!"
+	name = "兹班图魔导帽"
+	desc = "尽享其尊贵气派与宏伟之姿！"
 	icon = 'modular_deserttown/icons/clothing/head.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/head32x48.dmi'
 	icon_state = "jafar"
@@ -454,8 +454,8 @@
 
 
 /obj/item/clothing/under/roguetown/sirwal
-	name = "sirwal"
-	desc = "Long, baggy trousers from Zybantium."
+	name = "西尔瓦裤"
+	desc = "来自兹班图的宽松长裤。"
 	color = null
 	icon = 'modular_deserttown/icons/clothing/pants.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/pants.dmi'
@@ -479,8 +479,8 @@
 
 /obj/item/clothing/under/roguetown/sirwal/fancy
 	color = null
-	name = "fancy sirwal"
-	desc = "Long, baggy trousers from Zybantine dyed in expensive, exotic colours."
+	name = "精致西尔瓦裤"
+	desc = "来自兹班图的宽松长裤，以昂贵的异域色彩染成。"
 
 /obj/item/clothing/under/roguetown/sirwal/fancy/red
 	color = CLOTHING_RED
@@ -501,14 +501,14 @@
 	..()
 
 /datum/crafting_recipe/roguetown/sewing/sirwal
-	name = "sirwal"
+	name = "西尔瓦裤"
 	result = list(/obj/item/clothing/under/roguetown/sirwal)
 	reqs = list(/obj/item/natural/cloth = 1)
 	craftdiff = 1
 
 /obj/item/clothing/under/roguetown/thong
-	name = "thong"
-	desc = "Underwear so thin it barely covers ones bits. Barely."
+	name = "丁字裤"
+	desc = "薄到几乎遮不住私处的内衣。勉强遮住。"
 	gender = PLURAL
 	icon = 'modular_deserttown/icons/clothing/pants.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/pants.dmi'
@@ -517,15 +517,15 @@
 	body_parts_covered = GROIN
 
 /datum/crafting_recipe/roguetown/sewing/thong
-	name = "thong"
+	name = "丁字裤"
 	result = list(/obj/item/clothing/under/roguetown/thong)
 	reqs = list(/obj/item/natural/cloth = 1)
 	craftdiff = 2
 
 //cloak
 /obj/item/clothing/cloak/catcloak
-	name = "cataphracts cloak"
-	desc = "Noble red cloak of a Zybantine Cataphract"
+	name = "铁甲骑兵披风"
+	desc = "兹班图铁甲骑兵的尊贵红色披风"
 	icon = 'modular_deserttown/icons/clothing/cloaks.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/cloaks.dmi'
 	icon_state = "catcloak"
@@ -537,8 +537,8 @@
 	nodismemsleeves = TRUE
 	
 /obj/item/clothing/cloak/raincloak/amir
-	name = "amir's cloak"
-	desc = "A silky red cloak as light as a feather, embroidened with gold patterns. Fit for a prince of Zybantine."
+	name = "埃米尔披风"
+	desc = "一件轻如羽毛的丝绸红色披风，绣有金线图案。堪配兹班图的王子。"
 	icon = 'modular_deserttown/icons/clothing/cloaks.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/cloaks.dmi'
 	icon_state = "dprince"
@@ -550,8 +550,8 @@
 	salvage_result = /obj/item/natural/silk
 
 /obj/item/clothing/head/hooded/rainhood/amirhood
-	name = "amir's hood"
-	desc = "A silky red hood as light as a feather, embroidened with gold patterns. Fit for a prince of Zybantine."
+	name = "埃米尔兜帽"
+	desc = "一顶轻如羽毛的丝绸红色兜帽，绣有金线图案。堪配兹班图的王子。"
 	icon = 'modular_deserttown/icons/clothing/head.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/head.dmi'
 	icon_state = "dprince"
@@ -560,8 +560,8 @@
 	flags_inv = HIDEHAIR
 
 /obj/item/clothing/cloak/dunestalker
-	name = "dunestalker cloak"
-	desc = "A heavy leather cloak held together by a gilded pin, depicting the Grand Sultan's house. The sign of a faithful servant."
+	name = "沙丘行者披风"
+	desc = "一件厚重的皮披风，以镀金别针固定，描绘着大苏丹家族的纹章。忠诚仆从的标志。"
 	icon = 'modular_deserttown/icons/clothing/shadowcloak.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/shadowcloak.dmi'
 	icon_state = "shadowcloak"
@@ -579,8 +579,8 @@
 	flags_inv = null
 
 /obj/item/clothing/cloak/citywatch/janissary
-	name = "janissary cape"
-	desc = "A light cloak held together by a gilded badge, depicting the Grand Sultan's house. The sign of a faithful servant."
+	name = "耶尼切里披肩"
+	desc = "一件轻便披风，以镀金徽章固定，描绘着大苏丹家族的纹章。忠诚仆从的标志。"
 	icon = 'modular_deserttown/icons/clothing/shadowcloak.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/shadowcloak.dmi'
 	icon_state = "jan"
@@ -589,8 +589,8 @@
 //////BELTS
 
 /obj/item/storage/belt/rogue/leather/cloth/sash
-	name = "simple zybantine sash"
-	desc = "A simple cloth sash."
+	name = "简单兹班图腰带"
+	desc = "一条简单的布腰带。"
 	color = null
 	icon = 'modular_deserttown/icons/clothing/belts.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/belts.dmi'
@@ -598,7 +598,7 @@
 	item_state = "sashgrey"
 
 /datum/crafting_recipe/roguetown/sewing/zybsash
-	name = "sash (zybantine)"
+	name = "腰带（兹班图式）"
 	result = list(/obj/item/storage/belt/rogue/leather/cloth/sash)
 	reqs = list(/obj/item/natural/cloth = 1)
 	craftdiff = 2
@@ -625,56 +625,56 @@
 	..()
 	
 /obj/item/storage/belt/rogue/leather/noblesash
-	name = "Zybantine noble sash"
+	name = "兹班图贵族腰带"
 	icon = 'modular_deserttown/icons/clothing/belts.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/belts.dmi'
 	icon_state = "noblesash"
 	sellprice = 5
 
 /datum/crafting_recipe/roguetown/sewing/zybnoblesash
-	name = "sash (zybantine noble)"
+	name = "腰带（兹班图贵族式）"
 	result = list(/obj/item/storage/belt/rogue/leather/noblesash)
 	reqs = list(/obj/item/natural/silk = 2)
 	craftdiff = 4
 
 /obj/item/storage/belt/rogue/leather/sultbelt
-	name = "Zybantine Sultans Sash"
+	name = "兹班图苏丹腰带"
 	icon = 'modular_deserttown/icons/clothing/belts.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/belts.dmi'
 	icon_state = "sultbelt"
 	sellprice = 30
 
 /obj/item/storage/belt/rogue/leather/jafar
-	name = "Zybantine magos Sash"
+	name = "兹班图魔导腰带"
 	icon = 'modular_deserttown/icons/clothing/belts.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/belts.dmi'
 	icon_state = "jafar"
 	sellprice = 30
 
 /obj/item/storage/belt/rogue/leather/exoticsilkbelt/skirtgreen
-	name = "green exotic silk skirt"
-	desc = "A gold adorned belt with the softest of silk skirts barely concealing one's bits."
+	name = "绿色异域丝绸裙"
+	desc = "一条饰金腰带，配以最柔软的丝绸裙摆，勉强遮掩私处。"
 	icon = 'modular_deserttown/icons/clothing/belts.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/belts.dmi'
 	icon_state = "exoticsilkskirt2"
 	item_state = "exoticsilkskirt2"
 
 /datum/crafting_recipe/roguetown/sewing/skirtgreen
-	name = "exotic silk belt (green)"
+	name = "异域丝绸腰带（绿色）"
 	result = list(/obj/item/storage/belt/rogue/leather/exoticsilkbelt/skirtgreen)
 	reqs = list(/obj/item/natural/silk = 2)
 	craftdiff = 4
 
 /obj/item/storage/belt/rogue/leather/exoticsilkbelt/skirtred
-	name = "red exotic silk skirt"
-	desc = "A gold adorned belt with the softest of silk skirts barely concealing one's bits."
+	name = "红色异域丝绸裙"
+	desc = "一条饰金腰带，配以最柔软的丝绸裙摆，勉强遮掩私处。"
 	icon = 'modular_deserttown/icons/clothing/belts.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/belts.dmi'
 	icon_state = "exoticsilkskirt"
 	item_state = "exoticsilkskirt"
 
 /datum/crafting_recipe/roguetown/sewing/skirtred
-	name = "exotic silk belt (red)"
+	name = "异域丝绸腰带（红色）"
 	result = list(/obj/item/storage/belt/rogue/leather/exoticsilkbelt/skirtred)
 	reqs = list(/obj/item/natural/silk = 2)
 	craftdiff = 4
@@ -689,13 +689,13 @@
 	dropshrink = null
 
 /datum/crafting_recipe/roguetown/sewing/bragreen
-	name = "exotic silk bra(green)"
+	name = "异域丝绸胸衣（绿色）"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/exoticsilkbra/green)
 	reqs = list(/obj/item/natural/silk = 2)
 	craftdiff = 4
 
 /obj/item/clothing/suit/roguetown/shirt/exoticsilkbra/red
-	desc = "Fanciful gold laced silks barely able to conceal what little it covers. Long, flowing sleeves droop from the upper arms to a ring on each hand, fluttering in the wind and with every movement."
+	desc = "精致的金边丝绸，几乎遮不住它所覆盖的微末之处。长而飘逸的袖子从上臂垂至双手的指环，随风与每一个动作飘动。"
 	icon = 'modular_deserttown/icons/clothing/shirts.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/shirts.dmi'
 	icon_state = "exoticsilkbrar"
@@ -703,7 +703,7 @@
 	dropshrink = null
 
 /datum/crafting_recipe/roguetown/sewing/brared
-	name = "exotic silk bra (red)"
+	name = "异域丝绸胸衣（红色）"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/exoticsilkbra/red)
 	reqs = list(/obj/item/natural/silk = 2)
 	craftdiff = 4
@@ -716,7 +716,7 @@
 	dropshrink = null
 
 /datum/crafting_recipe/roguetown/sewing/maskgreen
-	name = "exotic silk mask (green)"
+	name = "异域丝绸面具（绿色）"
 	result = list(/obj/item/clothing/mask/rogue/exoticsilkmask/green)
 	reqs = list(/obj/item/natural/silk = 2)
 	craftdiff = 4
@@ -728,15 +728,15 @@
 	item_state = "exoticsilkmaskr"
 
 /datum/crafting_recipe/roguetown/sewing/maskred
-	name = "exotic silk mask (red)"
+	name = "异域丝绸面具（红色）"
 	result = list(/obj/item/clothing/mask/rogue/exoticsilkmask/red)
 	reqs = list(/obj/item/natural/silk = 2)
 	craftdiff = 4
 
 //Because some people can't live without BiS
 /obj/item/clothing/shoes/roguetown/shalal/reinforced
-	name = "fine babouche"
-	desc = "Sturdy boots stitched together from cured leather. Stylish, firm, and sport a satisfying 'squeek' with each step."
+	name = "精致巴布什鞋"
+	desc = "以鞣制皮革缝制而成的结实靴子。时髦、坚固，每一步都发出令人满意的嘎吱声。"
 	icon_state = "shalal"//change when I get around to it
 	item_state = "shalal"
 	color = "#d4c7bf"
@@ -746,7 +746,7 @@
 
 	
 /obj/item/clothing/shoes/roguetown/boots/armor/shalal
-	name = "plated babouche"
-	desc = "Sturdy boots stitched together from cured leather. Stylish, firm, and sport a satisfying 'squeek' with each step."
+	name = "镶板巴布什鞋"
+	desc = "以鞣制皮革缝制而成的结实靴子。时髦、坚固，每一步都发出令人满意的嘎吱声。"
 	icon_state = "shalal"//change when I get around to it
 	item_state = "shalal"

@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/hyena
 	icon = 'modular_deserttown/icons/Hyena.dmi'
-	name = "hyena"
-	desc = "Usually content to leave menfolk alone if well-fed, but something in the wilds turns them hungry, persistent, and vicious."
+	name = "鬣狗"
+	desc = "通常在吃饱时乐意远离人类，但荒野中有些东西会让它们变得饥饿、执着而凶残。"
 	icon_state = "yeen"
 	icon_living = "yeen"
 	icon_dead = "yeend"
@@ -53,7 +53,7 @@
 	ai_controller = /datum/ai_controller/volf
 
 /obj/effect/decal/remains/hyena
-	name = "remains"
+	name = "遗骸"
 	gender = PLURAL
 	icon_state = "bones"
 	icon = 'icons/roguetown/mob/monster/vol.dmi'
