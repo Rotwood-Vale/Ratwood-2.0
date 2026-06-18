@@ -62,6 +62,13 @@ GLOBAL_LIST_INIT(terror_clock_roster, list(
 		"母鸡" = /mob/living/simple_animal/hostile/retaliate/rogue/chicken,        // weak swarm filler
 		"赛加羚羊" = /mob/living/simple_animal/hostile/retaliate/rogue/saiga,      // fast fleeing game beast
 		"巨熊" = /mob/living/simple_animal/hostile/retaliate/rogue/direbear,       // powerful apex predator
+		// --- Added non-monster hostile wildlife (ordinary beasts, not monsters) ---
+		"山猫" = /mob/living/simple_animal/hostile/retaliate/rogue/wolf/bobcat,    // agile wildcat predator (bobcat.dm)
+		"獾" = /mob/living/simple_animal/hostile/retaliate/rogue/wolf/badger,      // stubborn burrowing badger (badger.dm)
+		"浣熊" = /mob/living/simple_animal/hostile/retaliate/rogue/wolf/raccoon,   // small scrappy raccoon "rakun" (raccoon.dm)
+		"母山羊" = /mob/living/simple_animal/hostile/retaliate/rogue/goat,         // wild she-goat (distinct from the ramming goatmale)
+		// --- Second batch of non-monster wildlife --------------------------------
+		"兔蟹" = /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/cabbit, // "cabbit" — a feisty rabbit-beast (cabbit.dm)
 	),
 	// === Category 2: Monsters (unnatural / monstrous threats) ==================
 	"怪物" = list(
@@ -76,6 +83,21 @@ GLOBAL_LIST_INIT(terror_clock_roster, list(
 		"巨鼹" = /mob/living/simple_animal/hostile/retaliate/rogue/mole,           // burrowing monster
 		"不死之狼" = /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead, // reanimated wolf (modular_azurepeak)
 		"巨魔" = /mob/living/simple_animal/hostile/retaliate/rogue/troll,          // heavy boss-tier monster
+		// --- Added monsters (more frightening choices) ---------------------------
+		"蜂蛛" = /mob/living/simple_animal/hostile/retaliate/rogue/spider,         // venomous "beespider" swarmer (honeyspider.dm)
+		"斯卡拉克斯蜘蛛" = /mob/living/simple_animal/hostile/retaliate/rogue/spider/mutated, // mutated "skallax" spider, tougher variant
+		"洞穴巨魔" = /mob/living/simple_animal/hostile/retaliate/rogue/troll/cave,  // stone-throwing cave troll (trollcave.dm)
+		"沼泽巨魔" = /mob/living/simple_animal/hostile/retaliate/rogue/troll/bog,   // night-sighted bog troll (trollbog.dm)
+		"持斧巨魔" = /mob/living/simple_animal/hostile/retaliate/rogue/troll/axe,   // axe-wielding troll bruiser (trollaxe.dm)
+		// --- Second batch of monsters --------------------------------------------
+		"泥沼爬蛛" = /mob/living/simple_animal/hostile/retaliate/rogue/mirespider,  // mire-crawler spider (modular_azurepeak)
+		"暴怒泥沼爬蛛" = /mob/living/simple_animal/hostile/retaliate/rogue/mirespider/angry, // enraged mire spider variant
+		"死灵赛加羚" = /mob/living/simple_animal/hostile/retaliate/rogue/saiga/undead, // reanimated undead saiga (modular_azurepeak)
+		"弗雷滕西斯" = /mob/living/simple_animal/hostile/retaliate/rogue/bigrat/gethsmane, // named giant-rat monster (modular_azurepeak)
+		"拖拽者" = /mob/living/simple_animal/hostile/rogue/dragger,                 // shambling dragger (NOTE: no 'retaliate' in path)
+		"血肉傀儡" = /mob/living/simple_animal/hostile/rogue/dragger/flesh,         // flesh homunculus dragger variant
+		// --- Third batch of monsters ---------------------------------------------
+		"小型梦魇魔" = /mob/living/simple_animal/hostile/rogue/dreamfiend/unbound,  // free-roaming lesser dreamfiend swarmer (modular_azurepeak)
 	),
 	// === Category 3: Humanoids (hostile humanoid combatants) ===================
 	"人形" = list(
@@ -95,7 +117,19 @@ GLOBAL_LIST_INIT(terror_clock_roster, list(
 		"哥布林" = /mob/living/carbon/human/species/goblin/npc,                          // standard hostile goblin
 		"洞穴哥布林" = /mob/living/carbon/human/species/goblin/npc/cave,                  // cave goblin variant
 		"地狱哥布林" = /mob/living/carbon/human/species/goblin/npc/hell,                  // infernal goblin variant
+		"海哥布林" = /mob/living/carbon/human/species/goblin/npc/sea,                     // sea goblin variant (goblin.dm)
+		"月哥布林" = /mob/living/carbon/human/species/goblin/npc/moon,                    // moon goblin variant (goblin.dm)
 		"蜥蜴人狱卒" = /mob/living/carbon/human/species/lizardfolk/psy_vault_guard/ambush, // HARD lizardfolk guard (hunts on sight)
+		// --- Human/elf raider NPCs: non-monster hostile humanoids (all aggressive=1,
+		// self-equip via Initialize -> after_creation, so plain new(turf) spawns a
+		// fully-armed combatant). ------------------------------------------------
+		"拦路强盗" = /mob/living/carbon/human/species/human/northern/highwayman,             // armed road bandit (highwayman.dm)
+		"沼泽逃兵" = /mob/living/carbon/human/species/human/northern/bog_deserters,          // deserter-turned-marauder (bog_deserters.dm)
+		"盗贼" = /mob/living/carbon/human/species/human/northern/thief,                      // opportunist cutthroat (thief.dm)
+		"海上劫掠者" = /mob/living/carbon/human/species/human/northern/searaider,            // viking-style raider (searaider.dm)
+		"癫狂寻宝者" = /mob/living/carbon/human/species/human/northern/mad_touched_treasure_hunter, // mad-touched looter (mad_touched_treasure_hunters.dm)
+		"癫狂骑士" = /mob/living/carbon/human/species/human/northern/deranged_knight,        // tough fallen knight (deranged_knight.dm)
+		"卓尔劫掠者" = /mob/living/carbon/human/species/elf/dark/drowraider,                 // dark-elf raider (drow.dm)
 	),
 	// === Category 4: Horrors (boss-tier, truly terrifying summons) =============
 	// These are extremely dangerous; each is self-contained (Initialize takes no
@@ -107,6 +141,9 @@ GLOBAL_LIST_INIT(terror_clock_roster, list(
 		"地狱犬" = /mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound,   // demonic hound
 		"恶鬼" = /mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend,         // demonic fiend (wound-immune)
 		"虚空巨龙" = /mob/living/simple_animal/hostile/retaliate/rogue/voiddragon,         // void dragon — apocalyptic boss
+		// --- Boss-tier dreamfiends (free-roaming "unbound" variants, modular_azurepeak) ---
+		"大型梦魇魔" = /mob/living/simple_animal/hostile/rogue/dreamfiend/major/unbound,   // greater dreamfiend (splits into 2 lesser on death)
+		"远古梦魇魔" = /mob/living/simple_animal/hostile/rogue/dreamfiend/ancient/unbound, // ancient dreamfiend — apex eldritch horror
 	),
 ))
 
@@ -188,11 +225,19 @@ GLOBAL_LIST_INIT(terror_clock_roster, list(
 	if(obstruction)
 		to_chat(L, span_warning("附近 [TERROR_CLOCK_CLEAR_RANGE] 格范围内存在建筑（[obstruction.name]），钟无法运作。请在空旷处使用。"))
 		return
-	// Pop-up #1: choose the broad CATEGORY first (野兽/怪物/人形). The outer keys
-	// of the nested roster are exactly the category labels we want to show.
-	var/category = tgui_input_list(L, "你要召唤何种类别的存在？", "恐怖之钟", GLOB.terror_clock_roster)
+	// Pop-up #1: choose the broad CATEGORY first (野兽/怪物/人形/梦魇), plus the
+	// special trial option. We shallow-copy the roster (so we never mutate GLOB)
+	// and append the trial label as an extra key; tgui_input_list shows all keys.
+	var/list/top_choices = GLOB.terror_clock_roster.Copy()
+	top_choices[TERROR_CLOCK_TRIAL_LABEL] = null
+	var/category = tgui_input_list(L, "你要召唤何种类别的存在？", "恐怖之钟", top_choices)
 	// A null choice means the player closed/cancelled the dialog: abort cleanly.
 	if(isnull(category))
+		return
+	// Special branch: the trial option launches Glaggar's Glance instead of a
+	// normal summon. It has no species/quantity step, so we handle it and return.
+	if(category == TERROR_CLOCK_TRIAL_LABEL)
+		start_glaggar_challenge(L)
 		return
 	// Drill into the chosen category to get its (species label -> typepath) list.
 	var/list/species_list = GLOB.terror_clock_roster[category]

@@ -178,6 +178,7 @@
 // Surfaces the refining formulas inside the vanilla alchemy guide under a "精炼药剂" (Refined Potions) category.
 #include "alchemy/refining_guide.dm"
 #include "structures/terror_clock.dm"
+#include "structures/glaggar_challenge.dm"
 #include "items/magic_bedroll.dm"
 #include "items/goldface_supply_packs.dm"
 // 自定义药水成品瓶：为 modular_z121 各自定义炼金药水（精力/暖心/温酒/克林卡特/驱兽/隐身/飞行/
