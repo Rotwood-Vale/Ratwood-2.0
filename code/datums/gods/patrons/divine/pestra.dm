@@ -18,6 +18,7 @@
 					/obj/effect/proc_holder/spell/invoked/heal					= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/cure_rot				= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/resurrect/pestra		= CLERIC_T4,
+					/obj/effect/proc_holder/spell/invoked/wound_heal			= CLERIC_T4,
 	)
 	confess_lines = list(
 		"PESTRA SOOTHES ALL ILLS!",

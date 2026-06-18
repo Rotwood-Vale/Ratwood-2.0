@@ -16,6 +16,7 @@
 					/obj/effect/proc_holder/spell/invoked/hammerfall			= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/craftercovenant		= CLERIC_T4,
 					/obj/effect/proc_holder/spell/invoked/resurrect/malum		= CLERIC_T4,
+					/obj/effect/proc_holder/spell/invoked/wound_heal			= CLERIC_T4,
 	)
 	confess_lines = list(
 		"MALUM IS MY MUSE!",

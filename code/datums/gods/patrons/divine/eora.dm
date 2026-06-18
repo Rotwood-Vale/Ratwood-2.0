@@ -18,6 +18,7 @@
 					/obj/effect/proc_holder/spell/invoked/eoracurse				= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/pomegranate			= CLERIC_T4,
 					/obj/effect/proc_holder/spell/invoked/resurrect/eora		= CLERIC_T4,
+					/obj/effect/proc_holder/spell/invoked/wound_heal			= CLERIC_T4,
 	)
 	confess_lines = list(
 		"EORA BRINGS US TOGETHER!",
