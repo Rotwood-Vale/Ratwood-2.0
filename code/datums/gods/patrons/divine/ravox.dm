@@ -15,7 +15,6 @@
 					/obj/effect/proc_holder/spell/invoked/challenge				= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/persistence			= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/resurrect/ravox		= CLERIC_T4,
-					/obj/effect/proc_holder/spell/invoked/wound_heal			= CLERIC_T4,
 	)
 	confess_lines = list(
 		"RAVOX IS JUSTICE!",

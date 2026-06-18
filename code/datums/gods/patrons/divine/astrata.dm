@@ -15,7 +15,6 @@
 					/obj/effect/proc_holder/spell/invoked/heal					= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/revive				= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/immolation			= CLERIC_T4,
-					/obj/effect/proc_holder/spell/invoked/wound_heal			= CLERIC_T4,
 	)
 	confess_lines = list(
 		"ASTRATA IS MY LIGHT!",
