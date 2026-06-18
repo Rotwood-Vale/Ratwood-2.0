@@ -4,7 +4,7 @@
 	clothes_req = FALSE
 	range = 8
 	projectile_type = /obj/projectile/magic/aoe/fireball/rogue
-	overlay_state = "火球"
+	overlay_state = "fireball"
 	sound = list('sound/magic/fireball.ogg')
 	releasedrain = 30
 	chargedrain = 1
