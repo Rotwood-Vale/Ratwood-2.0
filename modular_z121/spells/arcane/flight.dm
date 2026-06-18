@@ -146,7 +146,8 @@
 	human_req = TRUE
 	warnie = "spellwarning"
 	school = "transmutation"
-	overlay_state = "haste"
+	action_icon = 'modular_z121/icon/custompell.dmi'
+	overlay_state = "flight"
 	spell_tier = 3
 	invocations = list("凌空而起！")
 	invocation_type = "shout"

@@ -1,9 +1,8 @@
 /obj/effect/proc_holder/spell/targeted/conjure_item/summon_magic_bedroll
 	name = "召唤魔法睡袋"
 	desc = "在手中召唤一只捆好的魔法睡袋。它与普通睡袋作用相同，但只能维持短短数分钟。"
-	action_icon = 'icons/roguetown/items/misc.dmi'
-	action_icon_state = "bedroll_r"
-	overlay_state = "bedroll_r"
+	action_icon = 'modular_z121/icon/custompell.dmi'
+	overlay_state = "summon_bedroll"
 	sound = list('sound/magic/whiteflame.ogg')
 	invocation_type = "whisper"
 	invocations = list("宿具，显形。")

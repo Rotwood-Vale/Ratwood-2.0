@@ -15,6 +15,8 @@
 	warnie = "spellwarning"
 	school = "transmutation"
 	spell_tier = 2
+	action_icon = 'modular_z121/icon/custompell.dmi'
+	overlay_state = "locate_person"
 	invocations = list("循迹寻人。")
 	invocation_type = "whisper"
 	glow_color = GLOW_COLOR_ARCANE

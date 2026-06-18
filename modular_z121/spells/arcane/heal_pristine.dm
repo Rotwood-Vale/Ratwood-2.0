@@ -14,7 +14,8 @@
 	warnie = "spellwarning"
 	school = "restoration"
 	spell_tier = 3
-	overlay_state = "heal"
+	action_icon = 'modular_z121/icon/custompell.dmi'
+	overlay_state = "heal_pristine"
 	invocations = list("愈合如初！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_ARCANE

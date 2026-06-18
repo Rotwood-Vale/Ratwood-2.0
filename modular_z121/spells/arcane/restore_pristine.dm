@@ -14,7 +14,8 @@
 	warnie = "spellwarning"
 	school = "transmutation"
 	spell_tier = 2
-	overlay_state = "mending"
+	action_icon = 'modular_z121/icon/custompell.dmi'
+	overlay_state = "restore_pristine"
 	invocations = list("恢复如初！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_ARCANE

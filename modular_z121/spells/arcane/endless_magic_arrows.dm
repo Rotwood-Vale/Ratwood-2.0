@@ -3,9 +3,8 @@
 /obj/effect/proc_holder/spell/self/endless_magic_arrows
 	name = "无尽魔矢"
 	desc = "极快地在手中凝聚一支限时存在的魔矢。最多同时维持十支魔矢，每支魔矢会在一分钟后自行溃散。"
-	action_icon = 'icons/roguetown/weapons/ammo.dmi'
-	action_icon_state = "arrow"
-	overlay_state = "arrow"
+	action_icon = 'modular_z121/icon/custompell.dmi'
+	overlay_state = "endless_magic_arrows"
 	sound = list('sound/magic/whiteflame.ogg')
 	releasedrain = 2
 	chargedrain = 0

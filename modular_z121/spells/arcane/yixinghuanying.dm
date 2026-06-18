@@ -12,6 +12,8 @@
 	school = "transmutation"
 	overlay_state = "blink"
 	spell_tier = 2
+	action_icon = 'modular_z121/icon/custompell.dmi'
+	overlay_state = "yixinghuanying"
 	invocations = list("形影相易，移位于此！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_ARCANE

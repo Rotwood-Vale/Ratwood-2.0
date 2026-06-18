@@ -67,12 +67,13 @@ GLOBAL_LIST_EMPTY(active_group_mindlinks)
 /obj/effect/proc_holder/spell/invoked/group_mindlink
 	name = "群体心灵链接"
 	desc = "将施法者与自己认识的人接入同一条心灵通话之中，持续五分钟。发言前输入 ,m 即可进行交流。"
-	overlay_state = "mindlink"
 	associated_skill = /datum/skill/magic/arcane
 	cost = 5
 	xp_gain = TRUE
 	recharge_time = 6 MINUTES
 	spell_tier = 3
+	action_icon = 'modular_z121/icon/custompell.dmi'
+	overlay_state = "groupmindlink"
 	invocations = list("群念相连。")
 	invocation_type = "whisper"
 	chargedloop = /datum/looping_sound/invokegen

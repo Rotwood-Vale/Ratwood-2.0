@@ -11,6 +11,8 @@
 	warnie = "spellwarning"
 	school = "transmutation"
 	spell_tier = 1
+	action_icon = 'modular_z121/icon/custompell.dmi'
+	overlay_state = "small_bet"
 	invocations = list("就赌这一手。")
 	invocation_type = "whisper"
 	glow_color = GLOW_COLOR_DISPLACEMENT

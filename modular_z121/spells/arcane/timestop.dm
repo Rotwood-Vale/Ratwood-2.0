@@ -4,7 +4,6 @@
 #define TIMESTOP_HOLD_DURATION (1 SECONDS)
 #define TIMESTOP_NULL_COLOR "__timestop_null_color__"
 #define TIMESTOP_MUTE_SOURCE "timestop"
-#define TIMESTOP_ACTION_ICON 'modular_z121/assets/spells/timestop/actions_spells.dmi'
 #define TIMESTOP_FIELD_ICON 'modular_z121/assets/spells/timestop/160x160.dmi'
 #define TIMESTOP_SOUND 'modular_z121/assets/spells/timestop/timeparadox2.ogg'
 
@@ -234,9 +233,8 @@
 	name = "时间暂停"
 	desc = "暂停一小片区域的时间9s，这是能征服世界的力量啊！WRYYYYYYY！"
 	school = "transmutation"
-	action_icon = TIMESTOP_ACTION_ICON
-	action_icon_state = "time"
-	overlay_state = "time"
+	action_icon = 'modular_z121/icon/custompell.dmi'
+	overlay_state = "timestop"
 	cost = 12
 	releasedrain = 500
 	chargedrain = 10
@@ -302,6 +300,5 @@
 #undef TIMESTOP_HOLD_DURATION
 #undef TIMESTOP_NULL_COLOR
 #undef TIMESTOP_MUTE_SOURCE
-#undef TIMESTOP_ACTION_ICON
 #undef TIMESTOP_FIELD_ICON
 #undef TIMESTOP_SOUND

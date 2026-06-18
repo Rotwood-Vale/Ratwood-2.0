@@ -41,7 +41,8 @@
 	human_req = TRUE
 	warnie = "spellwarning"
 	school = "transmutation"
-	overlay_state = "darkvision"
+	action_icon = 'modular_z121/icon/custompell.dmi'
+	overlay_state = "xray_vision"
 	spell_tier = 2
 	invocations = list("赐我洞穿障壁之目。")
 	invocation_type = "whisper"

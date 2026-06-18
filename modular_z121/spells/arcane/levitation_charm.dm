@@ -81,7 +81,8 @@
 /obj/effect/proc_holder/spell/invoked/levitation_charm
 	name = "漂浮咒"
 	desc = "直接以轻盈魔力托起 7 格内的活物，让其只能在当前层级漂浮移动；持续时间随施法者的奥术造诣提升。"
-	overlay_state = "force_dart"
+	action_icon = 'modular_z121/icon/custompell.dmi'
+	overlay_state = "levitation_charm"
 	range = 7
 	sound = list('sound/magic/vlightning.ogg')
 	releasedrain = 1

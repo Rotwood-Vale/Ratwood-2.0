@@ -31,6 +31,8 @@
 	warnie = "spellwarning"
 	school = "evocation"
 	spell_tier = 2
+	action_icon = 'modular_z121/icon/custompell.dmi'
+	overlay_state = "pain"
 	invocations = list("钻心剜骨！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_ARCANE

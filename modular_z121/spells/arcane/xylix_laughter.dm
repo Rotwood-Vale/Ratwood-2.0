@@ -11,6 +11,8 @@
 	warnie = "spellwarning"
 	school = "illusion"
 	spell_tier = 2
+	action_icon = 'modular_z121/icon/custompell.dmi'
+	overlay_state = "xylix_laughter"
 	invocations = list("欢笑，吞没其心！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_DISPLACEMENT

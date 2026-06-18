@@ -14,7 +14,8 @@
 	warnie = "spellwarning"
 	school = "transmutation"
 	spell_tier = 1
-	overlay_state = "mending"
+	action_icon = 'modular_z121/icon/custompell.dmi'
+	overlay_state = "clearwater_spring"
 	invocations = list("清水如泉！")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_ARCANE

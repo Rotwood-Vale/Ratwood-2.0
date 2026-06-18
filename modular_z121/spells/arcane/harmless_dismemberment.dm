@@ -52,13 +52,28 @@
 	var/obj/item/bodypart/head/live_head = get_harmless_live_head_source()
 	if(live_head)
 		return "[real_name]的头颅"
-	return ..()
+	// 复刻核心 /mob/living/carbon/human/GetVoice（say.dm）的行为：本覆盖取代了核心同名
+	// 过程，而 ..() 只会落到父级 GetVoice，会跳过“特殊嗓音”（伪装/变声）逻辑。
+	// 因此这里必须自行优先返回特殊嗓音，否则返回真名，避免全局变声功能失效。
+	if(GetSpecialVoice())
+		return GetSpecialVoice()
+	return real_name
 
 /mob/living/carbon/human/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language = null, message_mode, original_message)
 	var/obj/item/bodypart/head/live_head = get_harmless_live_head_source()
-	if(!live_head)
-		return ..()
-	return live_head.send_speech(message, message_range, live_head, bubble_type, spans, message_language, message_mode, original_message)
+	if(live_head)
+		// 顶着活体头颅时，把说话整体转交给头颅处理（其内含独立的头颅嗓音逻辑）。
+		return live_head.send_speech(message, message_range, live_head, bubble_type, spans, message_language, message_mode, original_message)
+	// 无活体头颅：本覆盖取代了核心 human/send_speech 与 xylix 拟声术的同名覆盖，
+	// 而 ..() 只会落到父级 /mob/living/send_speech，会丢失 xylix 戏法傀儡的发声中继。
+	// 因此这里复刻“当前生效的核心行为”（xylix 版本：调用父级后，向戏法傀儡的旁观者投射聊天气泡）。
+	. = ..()
+	if(!istype(loc, /obj/effect/dummy/parlor_trick))
+		return
+	var/obj/effect/dummy/parlor_trick/parlor_dummy = loc
+	var/list/hearers = get_hearers_in_view(message_range, source)
+	for(var/mob/M in hearers)
+		M.create_chat_message(parlor_dummy, message_language, message, spans, message_mode)
 
 /obj/item/bodypart/head/send_speech(message, message_range = 6, obj/source = src, bubble_type = "default", list/spans, datum/language/message_language = null, message_mode, original_message)
 	var/mob/living/carbon/human/head_owner = harmless_live_owner
@@ -274,6 +289,10 @@
 
 /obj/item/bodypart/head/examine(mob/user)
 	. = ..()
+	// 复刻核心 head/examine（head.dm，即当前生效的核心版本）的悬赏售卖提示：
+	// 本覆盖取代了核心同名过程，若不补回，所有头颅都会丢失这条提示。
+	if(sellprice)
+		. += span_notice("This head seems to be wanted by the Judiciary of The Realm. It can be sold at the merchant or a HEADEATER.")
 	if(harmless_live_head && harmless_live_owner)
 		. += span_notice("这颗头还活着。它的眼神并未熄灭，仿佛正隔着自己的眼窝向外张望。")
 		if(harmless_live_owner.client?.eye == src)
@@ -281,6 +300,14 @@
 
 /obj/item/bodypart/head/Destroy()
 	disable_harmless_live_head()
+	// 复刻核心 /obj/item/bodypart/head/Destroy（head.dm）的器官清理：本覆盖取代了核心
+	// 同名过程，而 ..() 只会落到父级 /obj/item/bodypart/Destroy（并不清理这些器官）。
+	// 若不补回，头颅被删除时其脑/脑内意识体/眼/耳/舌都会泄漏或留下悬挂引用。顺序敏感。
+	QDEL_NULL(brainmob)
+	QDEL_NULL(brain)
+	QDEL_NULL(eyes)
+	QDEL_NULL(ears)
+	QDEL_NULL(tongue)
 	return ..()
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special)
@@ -319,8 +346,22 @@
 	return success
 
 /obj/item/bodypart/head/attackby(obj/item/I, mob/user, params)
+	// 活体头颅：可直接拿食物喂给它的原主人。
 	if(harmless_live_head && harmless_live_owner && istype(I, /obj/item/reagent_containers/food/) && ishuman(user))
 		I.attack(harmless_live_owner, user)
+		return
+	// 复刻核心 /obj/item/bodypart/head/attackby（_bodyparts.dm）的“用锋利物切开头颅取出器官”
+	// 逻辑：本覆盖取代了核心同名过程，而 ..() 只会落到父级 /obj/item/bodypart/attackby，
+	// 会丢失头颅特有的开颅取器官交互。若不补回，所有头颅都无法再被切开取器官。
+	if(length(contents) && I.get_sharpness() && !user.cmode)
+		add_fingerprint(user)
+		playsound(loc, 'sound/combat/hits/bladed/genstab (1).ogg', 60, vary = FALSE)
+		user.visible_message(span_warning("[user] begins to cut open [src]."),\
+			span_notice("You begin to cut open [src]..."))
+		if(do_after(user, 5 SECONDS, target = src))
+			drop_organs(user)
+			user.visible_message(span_danger("[user] cuts [src] open!"),\
+				span_notice("You finish cutting [src] open."))
 		return
 	return ..()
 
@@ -816,7 +857,7 @@
 /obj/effect/proc_holder/spell/invoked/harmless_dismemberment
 	parent_type = /obj/effect/proc_holder/spell/self
 	name = "无害肢解"
-	desc = "用 30 秒的诡异引导挑选 3 格内一名自愿者，让其在两分钟里化作一具可被平整拆开的活体圣匣。肢体与头颅会在无痛、无血、无死的温柔里分离，并在靠近断口时自行归位；待时限耗尽，仍未归位之物便不再回来。"
+	desc = "用 10 秒的诡异引导挑选 3 格内一名自愿者，让其在两分钟里化作一具可被平整拆开的活体圣匣。肢体与头颅会在无痛、无血、无死的温柔里分离，并在靠近断口时自行归位；待时限耗尽，仍未归位之物便不再回来。"
 	action_icon_state = "bloodcrawl"
 	cost = 4
 	xp_gain = TRUE
@@ -828,7 +869,8 @@
 	human_req = TRUE
 	warnie = "spellwarning"
 	school = "transmutation"
-	overlay_state = "mimicry"
+	action_icon = 'modular_z121/icon/custompell.dmi'
+	overlay_state = "harmless_dismemberment"
 	spell_tier = 3
 	invocations = list("肉可离，命暂留，归处莫迟。")
 	invocation_type = "whisper"
@@ -888,7 +930,7 @@
 		span_notice("[human_user] 将手轻轻按在自己的喉颈与腕骨之间，像在替一具尚未拆开的肉身丈量缝线。"),
 		span_notice("我开始维持那道漫长而古怪的拆解咒，引导即将降临的温柔断离。")
 	)
-	if(!do_after(human_user, 30 SECONDS, target = human_user, progress = TRUE))
+	if(!do_after(human_user, 10 SECONDS, target = human_user, progress = TRUE))
 		to_chat(human_user, span_warning("我的拆解咒在成形前散掉了。"))
 		revert_cast(human_user)
 		return FALSE

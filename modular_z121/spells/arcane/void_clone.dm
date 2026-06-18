@@ -162,7 +162,6 @@
 /obj/effect/proc_holder/spell/self/void_clone
 	name = "分身术"
 	desc = "以虚空石神奇的力量临时构建一个可以远程操控的躯体。"
-	overlay_state = "shapeshift"
 	associated_skill = /datum/skill/magic/arcane
 	cost = 6
 	xp_gain = TRUE
@@ -173,6 +172,8 @@
 	cooldown_min = 30 MINUTES
 	warnie = "spellwarning"
 	spell_tier = 3
+	action_icon = 'modular_z121/icon/custompell.dmi'
+	overlay_state = "void_clone"
 	invocations = list("虚空，塑我伪身！")
 	invocation_type = "shout"
 	glow_color = "#7f5bff"
