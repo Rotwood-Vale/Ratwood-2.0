@@ -110,7 +110,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/blacksteel/modern/plateboots
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	belt = /obj/item/storage/belt/rogue/leather/steel/tasset
-	beltr = /obj/item/rogueweapon/scabbard/sword
+	backl = /obj/item/rogueweapon/scabbard/gwstrap
 	backr = /obj/item/storage/backpack/rogue/satchel
 	l_hand = /obj/item/rogueweapon/greatsword/grenz/flamberge/blacksteel
 
@@ -124,7 +124,7 @@
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
-		H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/swords, 5, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)
