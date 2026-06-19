@@ -22,6 +22,7 @@
 
 	//You've given up your life for the Church. Why would you be noble?
 	virtue_restrictions = list(/datum/virtue/utility/noble)
+	vice_restrictions = list(/datum/charflaw/godless)
 
 	advclass_cat_rolls = list(CTAG_CHURCHLING = 2)
 	job_subclasses = list(

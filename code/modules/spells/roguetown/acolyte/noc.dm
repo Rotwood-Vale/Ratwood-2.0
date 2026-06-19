@@ -68,6 +68,9 @@
 /obj/effect/proc_holder/spell/invoked/invisibility/cast(list/targets, mob/living/user)
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			to_chat(user, span_warning("I feel a wave of disgust wash over me."))
+			return FALSE
 		if(target.anti_magic_check(TRUE, TRUE))
 			return FALSE
 		target.visible_message(span_warning("[target] starts to fade into thin air!"), span_notice("You start to become invisible!"))

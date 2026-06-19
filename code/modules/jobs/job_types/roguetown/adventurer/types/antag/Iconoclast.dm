@@ -7,6 +7,7 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	category_tags = list(CTAG_BANDIT)
 	maximum_possible_slots = 1 // We only want one of these.
+	vice_restrictions = list(/datum/charflaw/godless)
 	traits_applied = list(
 		TRAIT_HEAVYARMOR,// We are going to be the lord's first heavy armor unarmed class
 		TRAIT_CIVILIZEDBARBARIAN,// To be up to date with other unarmed classes.

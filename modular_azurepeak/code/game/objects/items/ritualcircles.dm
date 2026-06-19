@@ -66,9 +66,15 @@
 /obj/structure/ritualcircle/astrata/proc/guidinglight(src)
 	var/ritualtargets = view(7, loc) // Range of 7 from the source, which is the rune
 	for(var/mob/living/carbon/human/target in ritualtargets) // defines the target as every human in this range
-		target.apply_status_effect(/datum/status_effect/buff/guidinglight) // applies the status effect
-		to_chat(target,span_cultsmall("Astrata's light guides me forward, drawn to me by the Ritualist's pyre!"))
-		playsound(target, 'sound/magic/holyshield.ogg', 80, FALSE, -1) // Cool sound!
+		if(HAS_TRAIT(target, TRAIT_GODLESS)) // Burns the Godless, leaves everyone else fine.
+			to_chat(target, span_warning("Your mind sears with melting heat as Astrata's light burns you!"))
+			target.visible_message(span_info("[target] bursts into flames!"), span_userdanger("I'm burned by holy light!"))
+			target.adjustFireLoss(35)
+			target.fire_act(1,10) 
+		else
+			target.apply_status_effect(/datum/status_effect/buff/guidinglight) // applies the status effect
+			to_chat(target,span_cultsmall("Astrata's light guides me forward, drawn to me by the Ritualist's pyre!"))
+			playsound(target, 'sound/magic/holyshield.ogg', 80, FALSE, -1) // Cool sound!
 // If you want to review a more complicated one, Undermaiden's Bargain is probs the most complicated of the starting set. - Have fun! - Onutsio 🏳️‍⚧️
 
 
@@ -107,7 +113,10 @@
 /obj/structure/ritualcircle/noc/proc/moonlightdance(src)
 	var/ritualtargets = view(7, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
-		target.apply_status_effect(/datum/status_effect/buff/moonlightdance)
+		if(HAS_TRAIT(target, TRAIT_GODLESS)) // I'm lazy.
+			to_chat(target, span_warning("Nothing happens."))
+		else
+			target.apply_status_effect(/datum/status_effect/buff/moonlightdance)
 
 /obj/structure/ritualcircle/xylix
 	name = "Rune of Trickery"
@@ -232,13 +241,16 @@
 /obj/structure/ritualcircle/pestra/proc/flylordstriage(src)
 	var/ritualtargets = view(0, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
-		to_chat(target,span_userdanger("You feel them crawling into your wounds and pores. Their horrific hum rings through your ears as they do their work!"))
-		target.flash_fullscreen("redflash3")
-		target.emote("agony")
-		target.Stun(200)
-		target.Knockdown(200)
-		to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
-		target.apply_status_effect(/datum/status_effect/buff/flylordstriage)
+		if(HAS_TRAIT(target, TRAIT_GODLESS)) // Hurts the Godless, leaves everyone else fine.
+			target.visible_message(span_info("[target] remains still, and unchaged."), span_notice("You feel nothing but a dull sense of contempt. Aimed at you.")) 
+		else	
+			to_chat(target,span_userdanger("You feel them crawling into your wounds and pores. Their horrific hum rings through your ears as they do their work!"))
+			target.flash_fullscreen("redflash3")
+			target.emote("agony")
+			target.Stun(200)
+			target.Knockdown(200)
+			to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
+			target.apply_status_effect(/datum/status_effect/buff/flylordstriage)
 
 /obj/structure/ritualcircle/dendor
 	name = "Rune of Beasts"
@@ -315,7 +327,10 @@
 /obj/structure/ritualcircle/dendor/proc/lesserwolf(src)
 	var/ritualtargets = view(1, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
-		target.apply_status_effect(/datum/status_effect/buff/lesserwolf)
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			target.visible_message(span_info("[target] remains unaffected."), span_notice("You feel nothing but a dull sense of contempt. Aimed at you."))
+		else	
+			target.apply_status_effect(/datum/status_effect/buff/lesserwolf)
 
 /obj/structure/ritualcircle/dendor/proc/borrowedmadness(src)
 	var/ritualtargets = view(1, loc)
@@ -1094,6 +1109,9 @@
 		target.visible_message(span_danger("[target] is unmade by divine magic! The Toll is accepted, and [target] is dragged to ever-death!"), span_userdanger("I'm unmade by divine magic!"))
 		target.gib()
 		return
+	if(HAS_TRAIT(target, TRAIT_GODLESS))
+		to_chat(user, span_warning("Necra does not answer my pleads. She shall not be guide this one back."))
+		return
 	target.adjustOxyLoss(-target.getOxyLoss()) //Ye Olde CPR
 	if(!target.revive(full_heal = FALSE))
 		to_chat(user, span_warning("Nothing happens."))
@@ -1122,12 +1140,15 @@
 /obj/structure/ritualcircle/necra/proc/undermaidenbargain(src)
 	var/ritualtargets = view(7, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
-		target.apply_status_effect(/datum/status_effect/buff/undermaidenbargain)
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			to_chat(target, span_warning("Nothing happens."))
+		else	
+			target.apply_status_effect(/datum/status_effect/buff/undermaidenbargain)
 
 /obj/structure/ritualcircle/necra/proc/undermaidenvow(src)
 	var/ritualtargets = view(1, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
-		if(HAS_TRAIT(target, TRAIT_ROTMAN) || HAS_TRAIT(target, TRAIT_NOBREATH) || target.mob_biotypes & MOB_UNDEAD)	//No Undead, no Rotcured, no Deathless
+		if(HAS_TRAIT(target, TRAIT_ROTMAN) || HAS_TRAIT(target, TRAIT_NOBREATH) || HAS_TRAIT(target, TRAIT_GODLESS) || target.mob_biotypes & MOB_UNDEAD)	//No Undead, no Rotcured, no Deathless
 			return FALSE
 		if(target.patron.type != /datum/patron/divine/necra)
 			return FALSE
@@ -1239,9 +1260,12 @@
 /obj/structure/ritualcircle/eora/proc/pacify(src)
 	var/ritualtargets = view(0, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
-		loc.visible_message(span_warning("[target] sways like windchimes in the wind..."))
-		target.visible_message(span_green("I feel the burdens of my heart lifting. Something feels very wrong... I don't mind at all..."))
-		target.apply_status_effect(/datum/status_effect/buff/pacify)
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			target.visible_message(span_info("[target] remains unaffected."), span_notice("You feel nothing but a dull sense of contempt. Aimed at you."))
+		else
+			loc.visible_message(span_warning("[target] sways like windchimes in the wind..."))
+			target.visible_message(span_green("I feel the burdens of my heart lifting. Something feels very wrong... I don't mind at all..."))
+			target.apply_status_effect(/datum/status_effect/buff/pacify)
 
 /obj/structure/ritualcircle/eora/proc/eoranaura(mob/living/carbon/human/target)
 	loc.visible_message(span_good("[target]'s form becomes enveloped in calming aura."))
@@ -1401,6 +1425,10 @@
 		return
 	if(HAS_TRAIT(target, TRAIT_CABAL))
 		loc.visible_message(span_cult("THE RITE REJECTS ONE ALREADY OF THE CABAL"))
+		return
+	if(HAS_TRAIT(target, TRAIT_GODLESS))
+		to_chat(usr, "ZIZO Rejects to enlighten the Scorned! They shall not know of her Grand Works!") // technically TRAIT_GODLESS buff? New Meta? 
+		target.apply_damage(50, BURN, BODY_ZONE_HEAD) // Doesn't kill them.. still leaves them pretty beat up, this is just a RP rune so it's not really that important, right?
 		return
 	if(target.already_converted_once)
 		loc.visible_message(span_cult("BLOODY NIMROD!!"))
@@ -1660,6 +1688,10 @@
 	if(HAS_TRAIT(target, TRAIT_COMMIE))
 		loc.visible_message(span_cult("THE RITE REJECTS ONE WITH GREED IN THEIR HEART ALREADY PRESENT!!"))
 		return
+	if(HAS_TRAIT(target, TRAIT_GODLESS))
+		loc.visible_message(span_cult("The Gilded God rejects this fool! The Scorned shall not know his magnificence!"))
+		target.apply_damage(50, BURN, BODY_ZONE_HEAD)
+		return
 	if(target.already_converted_once)
 		loc.visible_message(span_cult("BLOODY NIMROD!!"))
 		target.apply_damage(150, BRUTE, BODY_ZONE_HEAD)
@@ -1891,6 +1923,10 @@
 	if(HAS_TRAIT(target, TRAIT_HORDE))
 		loc.visible_message(span_cult("THE RITE REJECTS ONE WITH SLAUGHTER IN THEIR HEART!!"))
 		return
+	if(HAS_TRAIT(target, TRAIT_GODLESS))
+		loc.visible_message(span_cult("THE GORE-BOUND STAR REJECTS THIS FOOL! THE SCORNED SHALL NOT TASTE DELICIOUS VIOLENCE!"))
+		target.apply_damage(50, BRUTE, BODY_ZONE_HEAD)
+		return
 	if(target.already_converted_once)
 		loc.visible_message(span_cult("BLOODY NIMROD!!"))
 		target.apply_damage(150, BRUTE, BODY_ZONE_HEAD)
@@ -2039,6 +2075,10 @@
 		return
 	if(HAS_TRAIT(target, TRAIT_DEPRAVED))
 		loc.visible_message(span_cult("THE RITE REJECTS ONE ALREADY DEPRAVED ENOUGH!!"))
+		return
+	if(HAS_TRAIT(target, TRAIT_GODLESS))
+		loc.visible_message(span_cult("The Lady of Pleasure rejects this one! The Scorned shall not know of bondless pleasure!"))
+		target.apply_damage(50, BURN, BODY_ZONE_HEAD)
 		return
 	if(target.already_converted_once)
 		loc.visible_message(span_cult("BLOODY NIMROD!!"))
@@ -2258,6 +2298,9 @@
 	if(HAS_TRAIT(target, TRAIT_PSYDONIAN_GRIT))
 		loc.visible_message(span_cult("Anguish already plagues this one's heart."))
 		return
+	if(HAS_TRAIT(target, TRAIT_GODLESS))
+		loc.visible_message(span_cult("Even if this one has been forsaken by the Saints and the Inhumen, PSYDON still yet carries love for them."))
+		to_chat(target, span_warning("A faint feeling of being loved sneaks into your heart.")) 
 	var/prompt = alert(target, "DO YOU ACCEPT THE ONE'S WILL?",, "VERILY", "NAE")
 	if(prompt == "VERILY")
 		to_chat(target, span_warning("A blunt pang of guilt surges through your thoughts. The One's gaze is upon you. He weeps."))

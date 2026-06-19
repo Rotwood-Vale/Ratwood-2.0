@@ -39,6 +39,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	social_rank = SOCIAL_RANK_ROYAL
 	//No nobility for you, being a member of the clergy means you gave UP your nobility. It says this in many of the church tutorial texts.
 	virtue_restrictions = list(/datum/virtue/utility/noble)
+	vice_restrictions = list(/datum/charflaw/godless)
 	job_traits = list(
 		TRAIT_CHOSEN,
 		TRAIT_RITUALIST,

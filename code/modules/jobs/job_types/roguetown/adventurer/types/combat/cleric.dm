@@ -7,6 +7,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/cleric
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	class_select_category = CLASS_CAT_CLERIC
+	vice_restrictions = list(/datum/charflaw/godless)
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
 	traits_applied = list(TRAIT_CIVILIZEDBARBARIAN, TRAIT_OUTLANDER)
 	subclass_stats = list(
@@ -437,6 +438,7 @@
 	name = "Cantor"
 	tutorial = "You were a bard once - but you've found a new calling. Your eyes have been opened to the divine, now you wander from city to city singing songs and telling tales of your patron's greatness."
 	outfit = /datum/outfit/job/roguetown/adventurer/cantor
+	vice_restrictions = list(/datum/charflaw/godless)
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_EMPATH)
 	subclass_stats = list(
 		STATKEY_STR = 1,
@@ -607,6 +609,7 @@
 	name = "Missionary"
 	tutorial = "You are a devout worshipper of the divine with a strong connection to your patron god. You've spent years studying scriptures and serving your deity - now you wander into foreign lands, spreading the word of your faith. Preachers focus on homesteading while Shepards preach through example and protecting their would-be flock."
 	outfit = /datum/outfit/job/roguetown/adventurer/missionary
+	vice_restrictions = list(/datum/charflaw/godless)
 	traits_applied = list(TRAIT_EMPATH)
 	subclass_stats = list(
 		STATKEY_INT = 2,

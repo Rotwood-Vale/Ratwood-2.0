@@ -1142,7 +1142,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			if(!job.required && !isnull(job.max_pq) && (get_playerquality(user.ckey) > job.max_pq))
 				HTML += "<font color=#a59461>[used_name] (Max PQ: [job.max_pq])</font></td> <td> </td></tr>"
 				continue
-			if(length(job.virtue_restrictions) && length(job.vice_restrictions))
+			if(length(job.virtue_restrictions) || length(job.vice_restrictions))
 				var/name
 				if(virtue.type in job.virtue_restrictions)
 					name = virtue.name
@@ -1162,6 +1162,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 							name = vice.name
 				if(!isnull(name))
 					HTML += "<font color='#a561a5'>[used_name] (Disallowed by Virtues / Vice: [name])</font></td> <td> </td></tr>"
+					continue
 			if(length(job.virtue_restrictions))
 				var/name
 				if(virtue.type in job.virtue_restrictions)

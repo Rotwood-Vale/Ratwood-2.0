@@ -524,6 +524,11 @@
 	desc = span_boldred("The proof of my oath! It's been stolen!")
 	timer = INFINITY
 
+/datum/stressevent/godless
+	stressadd = 4 // Mechanical inclination of actually hating the godless.
+	desc = span_boldred("Godless Heathen. I must keep my distance.")
+	timer = 3 MINUTES
+
 // this generally only happens if you're below 10 FOR, this is a little nudge to work on your luck stat
 /datum/stressevent/xylixian_pity
 	timer = 5 MINUTES

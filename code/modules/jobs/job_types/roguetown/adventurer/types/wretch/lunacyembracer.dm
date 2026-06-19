@@ -2,6 +2,7 @@
 	name = "Lunacy Embracer"
 	tutorial = "You have rejected and terrorized civilization in the name of nature. You run wild under the moon, a terror to the townsfolk and a champion of Dendor's wild domain."
 	allowed_sexes = list(MALE, FEMALE)
+	vice_restrictions = list(/datum/charflaw/godless) // you get miracles? you get restricted.
 	allowed_races = RACES_NO_CONSTRUCT
 	disallowed_races = list(
 		/datum/species/harpy,	//for further clarification, basically, FLYING LUNACY EMBRACERS. embracers getting into sneaky places they shouldn't goes about as well as you'd think

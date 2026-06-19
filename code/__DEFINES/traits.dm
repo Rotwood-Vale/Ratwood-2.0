@@ -103,6 +103,7 @@
 #define TRAIT_SCALEARMOR "Weathered Scales"//Mage armor, refluffed to scales.
 #define TRAIT_HEMOPHAGE "Hemophage"//You can drink blood for heals, but normal food and water makes you ill. Shitty vampire.
 #define TRAIT_BAOTHA_FERTILITY_BOON "Marked and shaped by Baotha" //Able to be impregnated, has permanent womb tattoo and stronger version of nympho vice
+#define TRAIT_GODLESS "Scorned" // Miracles don't work. At least the positive ones. Best hope the Apothecary is staffed.
 // chastity traits are defined in chastity_core.dm since they're pretty specific and it's easier to keep them there, but here are the trait defines for them:
 #define TRAIT_CHASTITY_FULL "Chastity Belt" //Prevents most penetrative sexual activity. Given by chastity belt.
 #define TRAIT_CHASTITY_CAGE "Chastity Cage" //Prevents most penis action sexual activity. Given by chastity cage.
@@ -414,6 +415,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_HORDE = span_info("BY BLOOD AND BONE, I AM OF GRAGGAR'S ANOINTED!"),
 	TRAIT_PSYDONITE = span_info("Divine contempt leaves me unable to receive most miracles."),
 	TRAIT_PSYDONIAN_GRIT = span_info("While I still stand, there is yet hope for mankind. The stronger my willpower is, the better I can struggle through crippling wounds."),
+	TRAIT_GODLESS = span_info("I'm Scorned by the Ten and the Four. I shall know no grace, nor mercy from the Divine and the Unholy."),
 	TRAIT_BLACKBAGGER = span_info("I've been trained to properly abduct individuals through the use of seizing garrotes and blackbags."),
 	TRAIT_FORTITUDE = span_info("The typical drain I feel from day to day life is lessened, my athleticism greater."),
 	TRAIT_GUIDANCE = span_info("The arcyne aides me in battle."),

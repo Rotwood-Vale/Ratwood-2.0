@@ -130,6 +130,8 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 			continue
 		if(target.mob_biotypes & MOB_UNDEAD)
 			continue
+		if(HAS_TRAIT(target, TRAIT_GODLESS)) 
+			to_chat(target, span_warning("A presence witnesses you. For a time, it loves you, despite all.")) //PSYDON LOVES YOU!
 		target.apply_status_effect(/datum/status_effect/buff/psydonic_inspire)
 	return TRUE
 

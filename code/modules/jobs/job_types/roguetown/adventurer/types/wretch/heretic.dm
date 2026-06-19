@@ -4,6 +4,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/wretch/heretic
+	vice_restrictions = list(/datum/charflaw/godless)
 	class_select_category = CLASS_CAT_CLERIC
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_RITUALIST, TRAIT_HEAVYARMOR)

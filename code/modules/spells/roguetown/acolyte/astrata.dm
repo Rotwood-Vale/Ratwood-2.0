@@ -139,6 +139,11 @@
 		qdel(underworld_spirit)
 		ghost.mind.transfer_to(target, TRUE)
 	target.grab_ghost(force = TRUE) // even suicides
+	if(HAS_TRAIT(target, TRAIT_GODLESS))
+		target.visible_message(span_info("[target] remains deathly still. Nothing happens."))
+		to_chat(user, span_warning("My patron scolds me for wasting their time upon a heathen."))
+		revert_cast()
+		return FALSE
 	if(!target.mind.active)
 		to_chat(user, "[target] will not return from afterlife.")
 		revert_cast()

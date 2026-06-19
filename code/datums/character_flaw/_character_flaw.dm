@@ -38,6 +38,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Random or No Flaw"=/datum/charflaw/randflaw,
 	"Sadist"=/datum/charflaw/addiction/sadist,
 	"Scarred"=/datum/charflaw/scarred,
+	"Scorned"=/datum/charflaw/godless,
 	"Silver Weakness"=/datum/charflaw/silverweakness,
 	"Sleepless (+1 TRI)"=/datum/charflaw/sleepless,
 	"Smoker"=/datum/charflaw/addiction/smoker,
@@ -908,11 +909,19 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	ADD_TRAIT(vamp_wannabe, TRAIT_VAMPBITE, TRAIT_GENERIC)
 	vamp_wannabe.adjust_triumphs(1)
 
+/datum/charflaw/godless
+	name = "Scorned (+2 TRI)"
+	desc = "For whatever reason or sin, both the Divine and Profane scorn me and my existence. I stand alone in this rotted world and shall experience no grace or assistance from the Powers That Be."
+
+/datum/charflaw/godless/on_mob_creation(mob/user)
+	ADD_TRAIT(user, TRAIT_GODLESS, TRAIT_GENERIC)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.adjust_triumphs(2)
 /datum/charflaw/silverweakness/on_removal(mob/user)
 	..()
 	REMOVE_TRAIT(user, TRAIT_HEMOPHAGE, TRAIT_GENERIC)
 	REMOVE_TRAIT(user, TRAIT_VAMPBITE, TRAIT_GENERIC)
-
 
 /datum/charflaw/weak
 	name = "Feeble-bodied"

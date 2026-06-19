@@ -41,6 +41,14 @@
 				if(show_message && user)
 					to_chat(user, span_warning("Socialite virtue conflicts with Eerie Beauty vice!"))
 				return TRUE
+
+	// Godless vs Devotee. 
+	if(virtue_type == /datum/virtue/combat/devotee)
+		for(var/datum/charflaw/vice in vice_list)
+			if(vice && vice.type == /datum/charflaw/godless)
+				if(show_message && user)
+					to_chat(user, span_warning("Devotee virtue conflicts with Godless vice!"))
+				return TRUE
 	
 	// Deathless (no hunger/breath) vs any food/breathing related vices
 	// Deathless conflicts with nothing currently, but kept for future reference
@@ -118,6 +126,15 @@
 				if(show_message && user)
 					to_chat(user, span_warning("Unintelligible vice conflicts with Second Voice virtue!"))
 				return TRUE
+			
+	// Godless vs Devotee
+	if(vice_type == /datum/charflaw/godless)
+		for(var/datum/virtue/virt in virtue_list)
+			if(virt && virt.type == /datum/virtue/combat/devotee)
+				if(show_message && user)
+					to_chat(user, span_warning("Scorned vice conflicts with Devotee virtue!"))
+				return TRUE
+	
 	// Lawless conflicts with: Nobility and High Society
 	if(vice_type == /datum/charflaw/lawless)
 		for(var/datum/virtue/virt in virtue_list)
@@ -256,6 +273,12 @@
 			if(show_message && user)
 				to_chat(user, span_warning("Unintelligible vice conflicts with Mute vice - you can't have both speech impediments!"))
 			return TRUE
+	
+	if(vice_type == /datum/charflaw/godless)
+		if(/datum/charflaw/addiction/godfearing in selected_vices)
+			if(show_message && user)
+				to_chat(user, span_warning("WARNING: While technically, the Scorned Vice and Devout Follower do NOT conflict with each other, due to the way that Scorned is coded, your prayers will not go through to your patron. Meaning that you will never be able to get rid of the stress debuff associated with Devout Follower. Combine at your own risk."))
+			return FALSE // Gives the user a fair warning, still lets them do it for RP/Masochism reasons. Not like they get any sort of advantage here.
 
 	return FALSE
 

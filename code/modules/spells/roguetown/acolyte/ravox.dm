@@ -98,6 +98,9 @@
 		if(istype(target.patron, /datum/patron/old_god))
 			to_chat(target, span_danger("You feel a hot-wave wash over you, leaving as quickly as it came.."))	//No effect on Psydonians!
 			continue
+		if(HAS_TRAIT(target, TRAIT_GODLESS)) // No effects on the Godless either!
+			to_chat(target, span_warning("You feel a wave of disgust wash over you."))
+			continue
 		if(!user.faction_check_mob(target))
 			continue
 		if(target.mob_biotypes & MOB_UNDEAD)
@@ -139,7 +142,9 @@
 				human_target.visible_message(span_danger("[target]'s wounds become inflammed as their vitality is sapped away!"), span_userdanger("Ravox inflammes my wounds and weakens my body!"))
 				return ..()
 			return FALSE
-
+		if(HAS_TRAIT(target, TRAIT_GODLESS))
+			to_chat(user, span_warning("Ravox is silent! He shall not extend his mercy upon the Heathens..."))
+			return FALSE
 		target.visible_message(span_info("Warmth radiates from [target] as their wounds seal over!"), span_notice("The pain from my wounds fade as warmth radiates from my soul!"))
 		var/situational_bonus = 0.25
 		for(var/obj/effect/decal/cleanable/blood/O in oview(5, target))

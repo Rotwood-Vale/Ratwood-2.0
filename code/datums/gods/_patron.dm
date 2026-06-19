@@ -102,7 +102,9 @@ GLOBAL_LIST_EMPTY(prayers)
 		if(cussjar.Find(prayer))
 			punish_prayer(follower)
 			return FALSE
-
+	if(HAS_TRAIT(follower,TRAIT_GODLESS))
+		to_chat(follower, span_warning("I receive nothing but dead silence."))
+		return FALSE
 	var/patron_name = follower?.patron.name
 	if(!patron_name)
 		CRASH("check_prayer called with null patron")
