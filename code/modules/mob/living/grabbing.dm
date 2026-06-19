@@ -343,6 +343,10 @@
 				var/stun_dur = max(((65 + (skill_diff * 10) + (user.STASTR * 5) - (M.STASTR * 5)) * combat_modifier), 20)
 				var/pincount = 0
 				user.stamina_add(rand(1,3))
+				var/pin_stun_baseline = M.AmountStun()
+				var/pin_stun_applied = FALSE
+				var/pin_immob_baseline = M.AmountImmobilized()
+				var/pin_immob_applied = FALSE
 				while(M == grabbed && !(M.mobility_flags & MOBILITY_STAND) && (src in M.grabbedby))
 					if(M.IsStun())
 						if(!do_after(user, stun_dur + 1, needhand = 0, target = M))
@@ -354,17 +358,26 @@
 							qdel(src)
 							break
 						M.Stun(stun_dur - pincount * 2)
-						M.Immobilize(stun_dur)	//Made immobile for the whole do_after duration, though
+						pin_stun_applied = TRUE
+						M.Immobilize(stun_dur)
+						pin_immob_applied = TRUE
 						user.stamina_add(rand(1,3) + abs(skill_diff) + stun_dur / 1.5)
 						M.visible_message(span_danger("[user] keeps [M] pinned to the ground!"))
 						pincount += 2
 					else if(src in M.grabbedby)
 						M.Stun(stun_dur - 10)
+						pin_stun_applied = TRUE
 						M.Immobilize(stun_dur)
+						pin_immob_applied = TRUE
 						user.stamina_add(rand(1,3) + abs(skill_diff) + stun_dur / 1.5)
 						pincount += 2
 						M.visible_message(span_danger("[user] pins [M] to the ground!"), \
 							span_userdanger("[user] pins me to the ground!"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE)
+				if(!(src in M.grabbedby))
+					if(pin_stun_applied)
+						M.SetStun(pin_stun_baseline)
+					if(pin_immob_applied)
+						M.SetImmobilized(pin_immob_baseline)
 			else
 				if(user.badluck(4))
 					badluckmessage(user)
