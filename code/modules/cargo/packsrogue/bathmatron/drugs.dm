@@ -97,3 +97,18 @@
 	name = "Dust of Disguise (Gender only)"
 	cost = 60
 	contains = list(/obj/item/alch/transisdust)
+
+/datum/supply_pack/rogue/drugs/swampleaf
+	name = "Swampweeed leaf (dried)"
+	cost = 5
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry)
+
+/datum/supply_pack/rogue/drugs/pipeleaf
+	name = "Pipeweed leaf (dried)"
+	cost = 2
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweeddry)
+
+/datum/supply_pack/rogue/drugs/hookah
+	name = "Shisha Pipe (Handheld)"
+	cost = 50
+	contains = list(/obj/item/portable_hookah)

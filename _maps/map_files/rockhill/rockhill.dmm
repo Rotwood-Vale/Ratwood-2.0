@@ -59,7 +59,7 @@
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors/town/manor/rockhill)
 "aas" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/tile/masonic,
@@ -2041,7 +2041,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/town/grove)
 "axy" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /obj/effect/landmark/start/manorguardsman,
@@ -6709,7 +6709,7 @@
 /turf/open/floor/rogue/grasscold,
 /area/rogue/under/cave)
 "bBu" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/outdoors/woodsrat/north)
 "bBx" = (
@@ -12377,7 +12377,7 @@
 	icon_state = "borderfall";
 	pixel_x = 8
 	},
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = 32
 	},
 /turf/open/floor/rogue/carpet/lord/center,
@@ -13973,7 +13973,7 @@
 /turf/open/floor/rogue/woodturned,
 /area/rogue/under/cave/goblinfort)
 "deA" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/blocks,
@@ -15879,7 +15879,7 @@
 	},
 /area/rogue/under/dungeon/tricksntraps)
 "dAy" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /obj/structure/fluff/railing/border{
@@ -16346,7 +16346,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
 "dGp" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/closed/wall/mineral/rogue/stone/moss,
@@ -18018,7 +18018,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/shelter/bog)
 "dYS" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/outdoors/bograt/above)
 "dYT" = (
@@ -18360,7 +18360,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/outdoors/beach/harbor)
 "ebX" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/concrete,
@@ -22401,7 +22401,7 @@
 /area/rogue/indoors/town/garrison)
 "eWW" = (
 /obj/structure/fluff/statue/knightalt/r,
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = -32
 	},
 /turf/open/floor/rogue/church,
@@ -24861,7 +24861,7 @@
 /area/rogue/under/cave)
 "fCh" = (
 /obj/structure/flora/roguegrass/bush/wall/tall,
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/grass,
@@ -25371,7 +25371,7 @@
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/indoors/town/tavern)
 "fHM" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/woodturned,
@@ -26047,7 +26047,7 @@
 /turf/open/floor/rogue/blocks/paving,
 /area/rogue/indoors/town/bath)
 "fPG" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/stone/moss,
 /area/rogue/outdoors/woodsrat/north)
 "fPH" = (
@@ -26789,7 +26789,7 @@
 /obj/structure/stairs/stone{
 	dir = 1
 	},
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/cobble,
@@ -26963,7 +26963,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/town/rockhill)
 "fZY" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/wooddark/vertical,
 /area/rogue/under/cave)
 "gah" = (
@@ -27111,7 +27111,7 @@
 /obj/structure/stairs/cw{
 	dir = 8
 	},
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -28778,7 +28778,7 @@
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/indoors/town/church/chapel)
 "gwI" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/decowood,
 /area/rogue/indoors)
 "gwJ" = (
@@ -28814,7 +28814,7 @@
 /turf/closed/wall/mineral/rogue/roofwall/outercorner,
 /area/rogue/outdoors/town/roofs)
 "gxi" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/mineral/rogue,
 /area/rogue/under/cavewet)
 "gxl" = (
@@ -30226,7 +30226,7 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/shelter/woods)
 "gON" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /obj/structure/fluff/railing/border{
@@ -33731,7 +33731,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/shelter/bog)
 "hEw" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/outdoors/beach/harbor)
 "hEz" = (
@@ -37529,7 +37529,7 @@
 /obj/structure/stairs{
 	dir = 4
 	},
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32;
 	pixel_x = 0
 	},
@@ -43226,7 +43226,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/inq/basement)
 "jOo" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /obj/effect/landmark/start/steward,
@@ -43320,7 +43320,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/town/magician/rockhill)
 "jPz" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = -32
 	},
 /turf/open/floor/rogue/cobble/mossy,
@@ -44314,7 +44314,7 @@
 /area/rogue/outdoors/bograt/north)
 "kcm" = (
 /obj/structure/fluff/statue/knightalt,
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = 32
 	},
 /turf/open/floor/rogue/church,
@@ -46394,7 +46394,7 @@
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors/town/manor/rockhill)
 "kzw" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/outdoors/woodsrat/north)
 "kzz" = (
@@ -48188,7 +48188,7 @@
 /obj/structure/table/wood{
 	icon_state = "longtable"
 	},
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = -32
 	},
 /turf/open/floor/rogue/woodturned,
@@ -50953,7 +50953,7 @@
 	dir = 4
 	},
 /obj/structure/chair/bench/couchablack/r,
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/carpet/royalblack,
@@ -51463,7 +51463,7 @@
 /obj/structure/stairs{
 	dir = 1
 	},
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/concrete,
@@ -51897,7 +51897,7 @@
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/town/church)
 "lQy" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /obj/structure/bed/rogue/shit,
@@ -52586,7 +52586,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement/keep)
 "lYn" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/grass,
@@ -54535,7 +54535,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woodsrat/safe)
 "msH" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "msN" = (
@@ -57507,7 +57507,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/indoors/inq/basement)
 "ncR" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /obj/effect/landmark/start/manorguardsman,
@@ -58244,7 +58244,7 @@
 /area/rogue/indoors/town/manor/rockhill)
 "nlU" = (
 /obj/structure/fluff/railing/border,
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = -32
 	},
 /turf/open/floor/rogue/concrete,
@@ -59828,7 +59828,7 @@
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors/town/bath)
 "nEI" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/town/garrison)
 "nET" = (
@@ -61545,7 +61545,7 @@
 /area/rogue/under/cavewet)
 "nZI" = (
 /obj/machinery/tanningrack,
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = 32
 	},
 /turf/open/floor/rogue/concrete,
@@ -62022,7 +62022,7 @@
 /area/rogue/under/underdark/rockhill/west)
 "oeG" = (
 /obj/machinery/light/rogue/chand,
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town/manor/rockhill)
 "oeI" = (
@@ -64863,7 +64863,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/shelter/bog)
 "oOv" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/stone/moss,
 /area/rogue/outdoors/bograt/sunken)
 "oOw" = (
@@ -66765,7 +66765,7 @@
 	},
 /area/rogue/indoors/town/dwarfin/rockhill)
 "pkH" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/decowood,
 /area/rogue/indoors/shelter/bog)
 "pkJ" = (
@@ -67713,7 +67713,7 @@
 /turf/open/water/swamp/deep,
 /area/rogue/under/cavewet)
 "pvW" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = -32
 	},
 /obj/structure/mineral_door/wood/window{
@@ -70327,7 +70327,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/garrison)
 "qbC" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = -32
 	},
 /turf/open/floor/rogue/blocks,
@@ -70765,7 +70765,7 @@
 	},
 /area/rogue/under/cavewet)
 "qhg" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = 32
 	},
 /turf/open/floor/rogue/carpet,
@@ -71511,7 +71511,7 @@
 /turf/open/floor/rogue/carpet,
 /area/rogue/indoors/town/manor/rockhill)
 "qpO" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = 32
 	},
 /obj/structure/fluff/railing/wood{
@@ -72370,7 +72370,7 @@
 	dir = 8;
 	pixel_x = -4
 	},
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = 32
 	},
 /turf/open/transparent/openspace,
@@ -75965,7 +75965,7 @@
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/church/chapel)
 "ruD" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/cobble,
@@ -78942,7 +78942,7 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/tavern)
 "sgu" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/stonebrick,
 /area/rogue/indoors/town/manor/rockhill)
 "sgw" = (
@@ -81446,7 +81446,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/bath)
 "sLg" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /obj/structure/closet/crate/chest{
@@ -81829,7 +81829,7 @@
 /area/rogue/under/cavewet)
 "sQL" = (
 /obj/structure/chair/wood/rogue,
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/tile,
@@ -83888,7 +83888,7 @@
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/rtfield/rockhill)
 "tpl" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/indoors/town/warden)
 "tpm" = (
@@ -85581,7 +85581,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/church/chapel)
 "tKI" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = -32
 	},
 /turf/open/floor/rogue/concrete,
@@ -86172,7 +86172,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/town/warden)
 "tRB" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/stone/moss,
 /area/rogue/indoors/shelter/bog)
 "tRE" = (
@@ -87708,7 +87708,7 @@
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
 "ukk" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/tile/checkeralt,
@@ -89011,7 +89011,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/rtfield/eora)
 "uyO" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/stone/moss,
 /area/rogue/outdoors/woodsrat/above)
 "uyX" = (
@@ -90007,7 +90007,7 @@
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/under/dungeon/oldgoblincamp)
 "uLm" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 3
 	},
 /turf/open/transparent/openspace,
@@ -90382,7 +90382,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors)
 "uQm" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/outdoors/woodsrat/above)
 "uQC" = (
@@ -91567,7 +91567,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/church)
 "vdU" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/stone/moss,
 /area/rogue/outdoors/bograt/above)
 "vdZ" = (
@@ -92288,7 +92288,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor/rockhill)
 "vnv" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /obj/item/flashlight/flare/torch/lantern,
@@ -92845,7 +92845,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woodsrat/south)
 "vto" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = -32
 	},
 /turf/open/floor/rogue/carpet,
@@ -96296,7 +96296,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors)
 "wka" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/stone/moss,
 /area/rogue/outdoors/bograt/north)
 "wkm" = (
@@ -96762,7 +96762,7 @@
 /area/rogue/indoors/town/bath)
 "wpw" = (
 /obj/structure/fluff/railing/border,
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = -32
 	},
 /turf/open/floor/rogue/blocks,
@@ -97020,7 +97020,7 @@
 	},
 /area/rogue/outdoors/town/roofs/keep)
 "wti" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/blocks/newstone/alt,
@@ -97474,7 +97474,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor/rockhill)
 "wyg" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /obj/effect/decal/cobbleedge{
@@ -98091,7 +98091,7 @@
 /area/rogue/indoors/town/bath)
 "wEJ" = (
 /obj/structure/rack/rogue,
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /obj/item/quiver/bolts{
@@ -99638,7 +99638,7 @@
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/indoors)
 "wVr" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = -32
 	},
 /turf/open/transparent/openspace,
@@ -101227,7 +101227,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/church)
 "xpD" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/transparent/openspace,
@@ -102746,7 +102746,7 @@
 /obj/item/ration,
 /obj/item/ration,
 /obj/item/ration,
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = 32
 	},
 /turf/open/floor/rogue/concrete,
@@ -103826,7 +103826,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/town/grove)
 "xVb" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = -32
 	},
 /obj/structure/fluff/statue/knight{

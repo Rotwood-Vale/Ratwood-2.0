@@ -1591,7 +1591,7 @@
 	dir = 3;
 	pixel_x = 10
 	},
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = 32
 	},
 /turf/open/floor/rogue/blocks/stonered,
@@ -12254,7 +12254,7 @@
 /obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 8
 	},
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = 32
 	},
 /obj/structure/fluff/railing/border{
@@ -12810,7 +12810,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/shelter/woods)
 "cRi" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/carpet/royalblack,
@@ -96450,7 +96450,7 @@
 /obj/item/roguebin/water{
 	pixel_y = 7
 	},
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/carpet/royalblack,
