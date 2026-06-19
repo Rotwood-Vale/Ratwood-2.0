@@ -24,6 +24,7 @@
 	vision_range = 7
 	aggro_vision_range = 9
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
+	simple_detect_bonus = 20
 	retreat_distance = 0
 	minimum_distance = 0
 	food_type = list()
@@ -32,6 +33,7 @@
 	STACON = 18
 	STASTR = 14
 	STASPD = 4
+	simple_detect_bonus = 20
 	deaggroprob = 0
 	defprob = 40
 	canparry = TRUE

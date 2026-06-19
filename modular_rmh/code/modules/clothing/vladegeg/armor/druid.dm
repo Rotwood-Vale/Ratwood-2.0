@@ -11,9 +11,6 @@
 	slot_flags = ITEM_SLOT_SHIRT | ITEM_SLOT_ARMOR
 	salvage_result = /obj/item/natural/hide/cured
 
-/obj/item/clothing/suit/roguetown/armor/leather/druid/loadout
-	name = "druid armor"
-
 //CRAFTING
 
 /datum/crafting_recipe/roguetown/leather/druid
@@ -26,5 +23,5 @@
 
 /datum/loadout_item/druid
 	name = "druid armor"
-	path = /obj/item/clothing/suit/roguetown/armor/leather/druid/loadout
+	path = /obj/item/clothing/suit/roguetown/armor/leather/druid
 	triumph_cost = 3

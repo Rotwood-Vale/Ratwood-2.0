@@ -1,7 +1,7 @@
 /datum/advclass/vagabond_scholar
 	name = "Destitute Scholar"
 	examine_name = "Beggar"
-	tutorial = "Knowledge is often both a boon and a curse. Whatever you know has left you with little to your name but your wits, and even then..."
+	tutorial = "Knowledge is often both a boon and a curse. Whatever you know has left you with little to your name, save a half-rate artifact "
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/vagabond/scholar
@@ -38,5 +38,17 @@
 		cloak = /obj/item/clothing/cloak/raincloak/brown
 		gloves = /obj/item/clothing/gloves/roguetown/fingerless
 
-	if(prob(10))
-		r_hand = /obj/item/rogue/instrument/flute
+	var/item_chance = rand(1, 100)
+	switch(item_chance)
+		if(1 to 30)
+			r_hand = /obj/item/natural/feather/infernal
+		if(31 to 50)
+			r_hand = /obj/item/enchantmentscroll/nightvision
+		if(51 to 70)
+			r_hand = /obj/item/mimictrinket
+		if(71 to 85)
+			r_hand = /obj/item/flashlight/flare/torch/lantern/voidlamptern
+		if(86 to 95)
+			r_hand = /obj/item/enchantmentscroll/featherstep
+		if(96 to 100)
+			r_hand = /obj/item/clothing/ring/active/shimmeringlens
