@@ -71,11 +71,11 @@
 	"十字弩", )
 	var/weapon_choice = input(H, "选择你的武器。", "修会军备") as anything in weapons
 	switch(weapon_choice)
-		if("Warhammer")
+		if("战锤")
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/mace/warhammer/steel, SLOT_BELT_L)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/heater, SLOT_BACK_L)
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT)
-		if("crossbow")
+		if("十字弩")
 			H.equip_to_slot_or_del(new /obj/item/quiver/bolts, SLOT_BELT_L)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/sword/short/falchion, SLOT_BELT_R)
 			H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow, SLOT_BACK_L)
