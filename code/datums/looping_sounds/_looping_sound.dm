@@ -59,7 +59,7 @@ GLOBAL_LIST_EMPTY(created_sound_groups)
 	direct			(bool)					If true plays directly to provided atoms instead of from them
 */
 /datum/looping_sound
-	var/datum/weakref/parent // weakref to the atom we belong to
+	var/atom/parent // the atom we belong to
 	var/mid_sounds
 	var/mid_length = 1
 	var/start_sound
@@ -112,7 +112,7 @@ GLOBAL_LIST_EMPTY(created_sound_groups)
 		group.last_iter++
 		channel = picked_channel
 
-	parent = WEAKREF(_parent)
+	parent = _parent
 	direct = _direct
 
 	if(_channel)
@@ -184,18 +184,17 @@ GLOBAL_LIST_EMPTY(created_sound_groups)
 	if(direct)
 		S.channel = channel
 		S.volume = volume
-	var/atom/thing = parent.resolve()
-	if (!thing)
+	if (!parent)
 		return
 
 	starttime = world.time
 
 	if(direct)
-		if(ismob(thing))
-			var/mob/mob = thing
+		if(ismob(parent))
+			var/mob/mob = parent
 			mob.playsound_local(mob, S, volume, vary, frequency, falloff, repeat = src, channel = channel)
 	else
-		var/list/R = playsound(thing, S, volume, vary, extra_range, falloff, frequency, channel, ignore_walls = ignore_walls, repeat = src)
+		var/list/R = playsound(parent, S, volume, vary, extra_range, falloff, frequency, channel, ignore_walls = ignore_walls, repeat = src)
 		if(!R || !R.len)
 			R = list()
 		for(var/datum/weakref/listener_ref in thingshearing)
@@ -254,8 +253,8 @@ GLOBAL_LIST_EMPTY(created_sound_groups)
 	if(persistent_loop)
 		attach_loop_to_all_clients()
 	addtimer(CALLBACK(src, PROC_REF(begin_loop)), start_wait, TIMER_CLIENT_TIME)
-	if(persistent_loop && !(src in GLOB.persistent_sound_loops))
-		GLOB.persistent_sound_loops += src
+	if(persistent_loop)
+		GLOB.persistent_sound_loops |= src
 
 /datum/looping_sound/proc/attach_loop_to_all_clients()
 	if(!persistent_loop)
@@ -296,20 +295,15 @@ GLOBAL_LIST_EMPTY(created_sound_groups)
 					M.client.played_loops -= src
 					thingshearing -= listener_ref
 	else
-		var/mob/P = parent.resolve()
+		var/mob/P = parent
 		if(P && P.client)
 			P.stop_sound_channel(channel) //This is mostly used for weather
 
 /datum/looping_sound/proc/set_parent(new_parent)
-	var/atom/real_parent = parent.resolve()
-
-	if(real_parent)
-		UnregisterSignal(real_parent, COMSIG_PARENT_QDELETING)
+	if(parent)
+		UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
 	if(new_parent)
-		if(istype(new_parent, /datum/weakref)) // probably shouldn't happen but it does, so?
-			var/datum/weakref/passed_weakref = new_parent
-			new_parent = passed_weakref.resolve()
-		parent = WEAKREF(new_parent)
+		parent = new_parent
 		RegisterSignal(new_parent, COMSIG_PARENT_QDELETING, PROC_REF(handle_parent_del))
 
 /datum/looping_sound/proc/handle_parent_del(datum/source)

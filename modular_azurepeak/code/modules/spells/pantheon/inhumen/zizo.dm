@@ -128,21 +128,6 @@
 	devotion_cost = 120
 	associated_skill = /datum/skill/magic/holy
 
-/// Checks if Rituos is complete or not. Requires that you have all 4 skeletonized limbs + 5 or more casts
-/obj/effect/proc_holder/spell/invoked/rituos/proc/check_ritual_progress(mob/living/carbon/user)
-	// Check the counter, you need 5+ completions to "finish" rituos
-	if(rituos_counter < 5)
-		return FALSE
-
-	// Check the limbs, you need a full skeletonized body or else you can't succeed rituos
-	for(var/obj/item/bodypart/skeletonized_limb in user.bodyparts)
-		if(skeletonized_limb.type in excluded_bodyparts)
-			continue
-		if(!skeletonized_limb.skeletonized)
-			return FALSE
-
-	return TRUE
-
 /obj/effect/proc_holder/spell/invoked/rituos/cast(list/targets, mob/living/carbon/user)
 	. = ..()
 	if(!user || !user.mind)
@@ -175,20 +160,6 @@
 		to_chat(user, span_warning("I have no remaining limbs to offer to the ritual!"))
 		return FALSE
 
-	var/list/choices = list()
-	var/list/spell_choices = GLOB.learnable_spells
-	for(var/i = 1, i <= spell_choices.len, i++)
-		var/obj/effect/proc_holder/spell/spell_item = spell_choices[i]
-		if(spell_item.spell_tier > 3) // Hardcap Rituos choice to T3 to avoid Court Mage spells access
-			continue
-		choices["[spell_item.name]"] = spell_item
-	choices = sortList(choices)
-	var/choice = input("Choose an arcyne expression of the Lesser Work") as null|anything in choices
-	var/obj/effect/proc_holder/spell/item = choices[choice]
-
-	if(!choice || !item)
-		return FALSE
-
 	if(!(user.mob_biotypes & MOB_UNDEAD))
 		user.visible_message(span_warning("The pallor of the grave descends across [user]'s skin in a wave of arcyne energy..."), span_boldwarning("A deathly chill overtakes my body at my first culmination of the Lesser Work! I feel my heart slow down in my chest..."))
 		user.mob_biotypes |= MOB_UNDEAD
@@ -198,35 +169,29 @@
 	user.update_body_parts()
 	user.visible_message(span_warning("Faint runes flare beneath [user]'s skin before [user.p_their()] flesh suddenly slides away from [user.p_their()] [part_to_bonify.name]!"), span_notice("I feel arcyne power surge throughout my frail mortal form, as the Rituos takes its terrible price from my [part_to_bonify.name]."))
 
-	if(user.mind?.rituos_spell)
-		to_chat(user, span_warning("My knowledge of [user.mind.rituos_spell.name] flees..."))
-		user.mind.RemoveSpell(user.mind.rituos_spell)
-		user.mind.rituos_spell = null
-
 	user.mind.has_rituos = TRUE
 	rituos_counter++
-
-	var/post_rituos = check_ritual_progress(user)
-	if(post_rituos)
-		//everything but our head is skeletonized now, so grant them journeyman rank and 3 extra spellpoints to grief people with
-		user.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
-		user.grant_language(/datum/language/undead)
-		user.mind?.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-		user.mind?.adjust_spellpoints(18)
-		user.visible_message(span_boldwarning("[user]'s form swells with terrible power as they cast away almost all of the remnants of their mortal flesh, arcyne runes glowing upon their exposed bones..."), span_notice("I HAVE DONE IT! I HAVE COMPLETED HER LESSER WORK! I stand at the cusp of unspeakable power, but something is yet missing..."))
-		ADD_TRAIT(user, TRAIT_NOHUNGER, "[type]")
-		ADD_TRAIT(user, TRAIT_NOBREATH, "[type]")
-		ADD_TRAIT(user, TRAIT_ARCYNE_T3, "[type]")
-		ADD_TRAIT(user, TRAIT_OVERTHERETIC, "[type]")
-		if(prob(33))
-			to_chat(user, span_small("...what have I done?"))
-		user.mind?.RemoveSpell(src)
-		return TRUE
-	else
-		to_chat(user, span_notice("The Lesser Work of Rituos floods my mind with stolen arcyne knowledge: I can now cast [item.name] until I next rest..."))
-		user.mind.rituos_spell = item
-		user.mind.AddSpell(new item)
-		return TRUE
+	switch(rituos_counter)
+		if(1)
+			user.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
+			ADD_TRAIT(user, TRAIT_ARCYNE_T3, "[type]")
+			user.mind?.adjust_spellpoints(3)
+		if(2,4)
+			user.mind?.adjust_spellpoints(3)
+		if(3)
+			user.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
+			user.mind?.adjust_spellpoints(3)
+		if(5)
+			user.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
+			user.grant_language(/datum/language/undead)
+			user.mind?.adjust_spellpoints(6)
+			user.visible_message(span_boldwarning("[user]'s form swells with terrible power as they cast away almost all of the remnants of their mortal flesh, arcyne runes glowing upon their exposed bones..."), span_notice("I HAVE DONE IT! I HAVE COMPLETED HER LESSER WORK! I stand at the cusp of unspeakable power, but something is yet missing..."))
+			ADD_TRAIT(user, TRAIT_NOHUNGER, "[type]")
+			ADD_TRAIT(user, TRAIT_NOBREATH, "[type]")
+			ADD_TRAIT(user, TRAIT_OVERTHERETIC, "[type]")
+			if(prob(33))
+				to_chat(user, span_small("...what have I done?"))
+			user.mind?.RemoveSpell(src)
 
 // T3 Lacrima (plunge your hand into someone's ribs to rip out their impure lux for your diabolical uses)
 

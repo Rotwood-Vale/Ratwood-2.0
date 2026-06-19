@@ -189,8 +189,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	if(!channel)
 		channel = _get_sound_group()?.checkout_channel()
 		if(!channel)
-			var/atom/resolved_parent = parent?.resolve()
-			log_game("INSTRUMENT: All [/datum/sound_group/instruments::channel_count] instrument channels in use simultaneously - [resolved_parent]")
+			log_game("INSTRUMENT: All [/datum/sound_group/instruments::channel_count] instrument channels in use simultaneously - [parent]")
 			return FALSE
 	..()
 	return TRUE

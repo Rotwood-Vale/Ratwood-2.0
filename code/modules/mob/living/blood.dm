@@ -235,7 +235,7 @@
 	if (old_volume > 0 && !blood_volume) // it looks like we've just bled out. bummer.
 		to_chat(src, span_userdanger("The last of your lyfeblood ebbs from your ravaged body and soaks the cold earth below..."))
 	record_round_statistic(STATS_BLOOD_SPILT, amt)
-	if(isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
+	if(isturf(src.loc))
 		add_drip_floor(src.loc, amt)
 	var/vol2use
 	if(amt > 1)
@@ -454,6 +454,12 @@
 		else
 			new /obj/effect/decal/cleanable/blood/drip(T)
 
+//OV edit
+/mob/living/carbon/human/add_drip_floor(turf/T, amt)
+	if(!(NOBLOOD in dna.species.species_traits) && !(INVISBLOOD in dna.species.species_traits))
+		..()
+//OV edit end
+
 /mob/living/carbon/human/add_splatter_floor(turf/T, small_drip)
-	if(!(NOBLOOD in dna.species.species_traits))
+	if(!(NOBLOOD in dna.species.species_traits) && !(INVISBLOOD in dna.species.species_traits)) //OV EDIT
 		..()
