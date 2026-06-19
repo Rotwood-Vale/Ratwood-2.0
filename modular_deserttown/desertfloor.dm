@@ -202,7 +202,7 @@
 	name = "desert grass"
 	desc = "Grass, barely."
 	icon = 'modular_deserttown/icons/desertfloor.dmi'
-	icon_state = "desertgrass1"
+	icon_state = "desertgrass"
 	layer = MID_TURF_LAYER
 	footstep = FOOTSTEP_GRASS
 	barefootstep = FOOTSTEP_SOFT_BAREFOOT
@@ -237,7 +237,7 @@
 /turf/open/floor/rogue/desert_grass/Initialize()
 	. = ..()
 	dir = pick(GLOB.cardinals)
-	icon_state = "desertgrass[rand(1,16)]"
+	// icon_state = "desertgrass[rand(1,16)]"
 
 /turf/open/floor/rogue/desert_grass/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
