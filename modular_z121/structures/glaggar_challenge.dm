@@ -3,9 +3,10 @@
 // ----------------------------------------------------------------------------
 // 本文件实现一个完整的“波次竞技场”挑战：玩家在恐怖之钟上选择该选项后，
 //   1) 30 秒准备期，期间不断响起恐怖之声；
-//   2) 准备期结束时，钟周围 8 格内随机挑选 3 名玩家成为“挑战者”；
+//   2) 准备期结束时，钟周围 6 格内随机挑选 3 名玩家成为“挑战者”；
 //   3) 用不可摧毁的壁垒把竞技场围起来，并把非挑战者传送到教堂；
-//   4) 依次刷出四波怪物，每波清空后 30 秒刷下一波；
+//   4) 依次刷出四波怪物：首波由 30 秒准备期触发，此后每波间隔 2 分钟；
+//      每一波都会从该波的“预设池”中随机抽取一支敌人队伍刷出；
 //   5) 通关后存活的挑战者获得“格拉加尔的奖励”（+2 力量 +2 速度）；
 //   6) 挑战期间非挑战者若干涉（出现在竞技场内 / 伤害怪物）将被诅咒并传走。
 //
@@ -18,7 +19,8 @@
 // 准备期时长：选择挑战后到第一波刷新之间的缓冲时间。
 #define GLAGGAR_PREP_TIME (30 SECONDS)
 // 每一波被清空后，到下一波刷新之间的间隔时间。
-#define GLAGGAR_WAVE_DELAY (30 SECONDS)
+// 注意：第一波由准备期（GLAGGAR_PREP_TIME=30 秒）触发；从第二波起，每波间隔为 2 分钟。
+#define GLAGGAR_WAVE_DELAY (2 MINUTES)
 // 竞技场半径（切比雪夫距离）：壁垒环建在该半径上，恰好把“无建筑净空区”围住。
 // 与恐怖之钟的净空检测半径（TERROR_CLOCK_CLEAR_RANGE）保持一致，均为 6。
 #define GLAGGAR_ARENA_RADIUS 6
@@ -55,6 +57,12 @@
 	resistance_flags = INDESTRUCTIBLE
 	// 画在高层，避免被地面贴图盖住。
 	layer = ABOVE_MOB_LAYER
+
+// 显式拦截一切移动者：虽然 density=TRUE 默认就会让 CanPass 返回假，但部分怪物可能
+// 带有 pass_flags 或特殊穿越逻辑。这里强制返回 FALSE，确保任何召唤怪/玩家都无法
+// 穿过壁垒，彻底杜绝“怪物穿墙”的问题。
+/obj/structure/glaggar_barrier/CanPass(atom/movable/mover, turf/target)
+	return FALSE
 
 // ============================================================================
 // 状态效果：格拉加尔的奖励（通关奖励）
@@ -133,27 +141,43 @@
 	// 防重入标志：避免在一波刚清空的同一瞬间被重复判定为“通关本波”。
 	var/advancing = FALSE
 
-// 构造时填充四波怪物的数据。把波次写成纯数据，后续若要调整只需改这里。
+// 构造时填充四波怪物的数据。
+// 数据结构为三层：waves[波号] = 该波的“预设池”（多支队伍），每支队伍是一个
+// (类型 = 数量) 的关联列表。每波开战时会从对应预设池里随机抽取一支队伍刷出，
+// 因此同一波每次挑战的敌人组合都可能不同，增加变数。
 /datum/glaggar_challenge/New()
 	..()
 	waves = list(
-		// 第一波：4 只恶狼。
-		list(/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 4),
-		// 第二波：斧/矛/卫/弓 骷髅各 1。
+		// 第一波预设池（随机选一支）：
 		list(
-			/mob/living/simple_animal/hostile/rogue/skeleton/axe = 1,
-			/mob/living/simple_animal/hostile/rogue/skeleton/spear = 1,
-			/mob/living/simple_animal/hostile/rogue/skeleton/guard = 1,
-			/mob/living/simple_animal/hostile/rogue/skeleton/bow = 1,
+			list(/mob/living/simple_animal/hostile/rogue/skeleton/axe = 4),     // 4 斧骷髅
+			list(/mob/living/simple_animal/hostile/rogue/skeleton/spear = 4),   // 4 矛骷髅
+			list(/mob/living/simple_animal/hostile/rogue/skeleton/guard = 4),   // 4 卫骷髅
+			list(/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 4),   // 4 恶狼
+			list(/mob/living/carbon/human/species/goblin/npc = 4),             // 4 哥布林
 		),
-		// 第三波：4 只持斧巨魔猛士。
-		list(/mob/living/simple_animal/hostile/retaliate/rogue/troll/axe = 4),
-		// 第四波：兽人长矛兵/弓手/劫掠者/蹂躏者各 1。
+		// 第二波预设池（随机选一支）：
 		list(
-			/mob/living/simple_animal/hostile/retaliate/rogue/orc/spear = 1,
-			/mob/living/simple_animal/hostile/retaliate/rogue/orc/ranged = 1,
-			/mob/living/simple_animal/hostile/retaliate/rogue/orc/orc_marauder = 1,
-			/mob/living/simple_animal/hostile/retaliate/rogue/orc/orc_marauder/ravager = 1,
+			// 2 兽人劫掠者 + 2 兽人蹂躏者
+			list(
+				/mob/living/simple_animal/hostile/retaliate/rogue/orc/orc_marauder = 2,
+				/mob/living/simple_animal/hostile/retaliate/rogue/orc/orc_marauder/ravager = 2,
+			),
+			list(/mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound = 4), // 4 地狱犬
+			list(/mob/living/carbon/human/species/human/northern/highwayman = 4),           // 4 拦路强盗
+		),
+		// 第三波预设池（随机选一支）：
+		list(
+			list(/mob/living/simple_animal/hostile/retaliate/rogue/troll/axe = 4),  // 4 持斧巨魔
+			list(/mob/living/simple_animal/hostile/retaliate/rogue/direbear = 4),   // 4 巨熊
+			list(/mob/living/simple_animal/hostile/retaliate/rogue/lamia = 4),      // 4 拉弥亚
+		),
+		// 第四波预设池（随机选一支）：
+		list(
+			list(/mob/living/carbon/human/species/lizardfolk/psy_vault_guard/ambush = 4),          // 4 蜥蜴人狱卒
+			list(/mob/living/carbon/human/species/human/northern/mad_touched_treasure_hunter = 4), // 4 疯狂寻宝者
+			list(/mob/living/carbon/human/species/human/northern/deranged_knight = 4),             // 4 癫狂骑士
+			list(/mob/living/carbon/human/species/elf/dark/drowraider = 4),                        // 4 卓尔劫掠者
 		),
 	)
 
@@ -287,8 +311,15 @@
 	if(!length(spawn_turfs))
 		abort_challenge("没有可供怪物降临的空地，试炼无法进行。")
 		return
-	// 按数据定义逐类型、逐只生成怪物。
-	var/list/this_wave = waves[wave_index]
+	// 取出本波的“预设池”，并从中随机抽取一支队伍。
+	var/list/wave_presets = waves[wave_index]
+	// 错误处理：预设池为空（数据配置异常）则中止，避免对空列表 pick() 运行时报错。
+	if(!islist(wave_presets) || !length(wave_presets))
+		abort_challenge("本波的怪物预设缺失，试炼无法继续。")
+		return
+	// 随机选出本次实际刷新的队伍（同一波每次可能不同）。
+	var/list/this_wave = pick(wave_presets)
+	// 按抽中的队伍逐类型、逐只生成怪物。
 	for(var/mob_type in this_wave)
 		var/count = this_wave[mob_type]
 		for(var/i in 1 to count)

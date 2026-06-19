@@ -19,6 +19,7 @@ GLOBAL_LIST_INIT(custom_learnable_spells, list(
 	/obj/effect/proc_holder/spell/invoked/levitation_charm,
 	/obj/effect/proc_holder/spell/self/locate_person,
 	/obj/effect/proc_holder/spell/invoked/magic_satiety,
+	/obj/effect/proc_holder/spell/invoked/mansion_curse,
 	/obj/effect/proc_holder/spell/invoked/projectile/mini_magic_missile,
 	/obj/effect/proc_holder/spell/invoked/pain,
 	/obj/effect/proc_holder/spell/invoked/restore_pristine,
