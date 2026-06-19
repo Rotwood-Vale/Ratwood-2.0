@@ -26,6 +26,7 @@
 #include "spells/arcane/levitation_charm.dm"
 #include "spells/arcane/locate_person.dm"
 #include "spells/arcane/magic_satiety.dm"
+#include "spells/arcane/mansion_curse.dm"
 #include "spells/arcane/mini_magic_missile.dm"
 #include "spells/arcane/moonlight_greatsword_spells.dm"
 #include "spells/arcane/pain.dm"
