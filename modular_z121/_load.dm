@@ -12,6 +12,8 @@
 #include "rites/mystery_of_magic.dm"
 #include "rites/necra_death_curtain.dm"
 #include "rites/xylix_music_offering.dm"
+#include "rites/pestra_plague_disaster.dm"
+#include "rites/victory_glow.dm"
 #include "spells/arcane/flight.dm"
 #include "spells/arcane/group_buffs.dm"
 #include "spells/arcane/group_mindlink.dm"
