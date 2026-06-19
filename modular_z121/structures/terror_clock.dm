@@ -34,6 +34,9 @@
 // Cooldown enforced between two uses of the clock (any summon OR a trial), so it
 // cannot be spammed. 5 minutes, as required.
 #define TERROR_CLOCK_COOLDOWN (5 MINUTES)
+// Radius (in tiles) the "Horror Bell" cleanses every time it rings: it erases
+// non-player corpses, cleanable stains, and unanchored ground items around it.
+#define TERROR_CLOCK_PURGE_RANGE 10
 
 // Maps a human-readable Chinese label (shown in the pop-up) to the concrete mob
 // typepath it spawns. Every entry is a verified, instantiable hostile mob in
@@ -153,6 +156,12 @@ GLOBAL_LIST_INIT(terror_clock_roster, list(
 	// a 96x96 sprite, so it shares that structure's layer/plane below.
 	icon = 'icons/roguetown/misc/96x96.dmi'
 	icon_state = "churchbell"
+	// A 96px-wide sprite has its left edge on the tile by default, which makes it
+	// LOOK one tile to the right of its real turf. pixel_x = -32 re-centers the
+	// sprite over its turf — this is the repo convention for 96x96 structures and
+	// it removes the apparent "deviation" between the clock and the arena ring
+	// (and the related illusion of edge monsters slipping past the barrier).
+	pixel_x = -32
 	// The clock is a solid, fixed installation: block movement and stop it from
 	// being shoved around so its "clear radius" check stays meaningful.
 	density = TRUE
@@ -273,8 +282,9 @@ GLOBAL_LIST_INIT(terror_clock_roster, list(
 	// and warn everyone nearby.
 	summoning = TRUE
 	COOLDOWN_START(src, summon_cooldown, TERROR_CLOCK_COOLDOWN)
-	// A single ominous toll (one bell strike, as specified).
-	playsound(src, 'sound/misc/bell.ogg', 100, FALSE, extrarange = 7)
+	// A single ominous toll (one bell strike, as specified). ring_bell() also runs
+	// the Horror Bell cleanse so each toll wipes the battlefield around the clock.
+	ring_bell()
 	visible_message(span_danger("[src]发出一声低沉的轰鸣，空气中弥漫开令人胆寒的气息……"))
 	to_chat(L, span_danger("你敲响了恐怖之钟。[TERROR_CLOCK_SUMMON_DELAY / 10] 秒后，怪物将会降临。"))
 	// Schedule the actual spawn after the delay. We pass the chosen type/amount
@@ -374,13 +384,59 @@ GLOBAL_LIST_INIT(terror_clock_roster, list(
 		if(QDELETED(M))
 			continue
 		spawned++
-	// Announce the outcome and play a final flourish if anything appeared.
+	// Announce the outcome and play a final flourish if anything appeared. The
+	// flourish toll also triggers another Horror Bell cleanse via ring_bell().
 	if(spawned)
 		visible_message(span_danger("伴随着[src]最后的余音，[spawned] 只怪物凭空浮现，獠牙毕露！"))
-		playsound(src, 'sound/misc/bell.ogg', 100, FALSE, extrarange = 7)
+		ring_bell()
 	else
 		// Every spawn failed (e.g. all types qdel'd on Initialize): report it.
 		visible_message(span_warning("[src]的钟声散去，却没有任何怪物现身。"))
+
+// Rings the Horror Bell once: plays the toll AND cleanses the surroundings. All
+// "bell rings" go through here so the cleanse and the sound never drift apart.
+/obj/structure/terror_clock/proc/ring_bell()
+	// The single ominous toll, audible over a wide radius.
+	playsound(src, 'sound/misc/bell.ogg', 100, FALSE, extrarange = 7)
+	// Cleanse the battlefield each time the bell sounds.
+	purge_surroundings()
+
+// Horror Bell cleanse: within TERROR_CLOCK_PURGE_RANGE tiles, delete non-player
+// corpses, cleanable stains, and unanchored ground items. Deliberately spares
+// living mobs, anything a player owns/controls (so corpses stay revivable), the
+// clock itself, and the challenge barriers/structures.
+/obj/structure/terror_clock/proc/purge_surroundings()
+	// Iterate every atom in range once; branch on what kind of thing it is.
+	for(var/atom/movable/AM in range(TERROR_CLOCK_PURGE_RANGE, src))
+		// --- Non-player corpses ---------------------------------------------
+		if(isliving(AM))
+			var/mob/living/M = AM
+			// Only DEAD bodies are "corpses"; never touch the living.
+			if(M.stat != DEAD)
+				continue
+			// Protect anything that is, or ever was, a player: a present client
+			// (ckey) or a mind that still remembers a player key (ghosted but
+			// revivable). Such corpses must remain so they can be brought back.
+			if(M.ckey || (M.mind && M.mind.key))
+				continue
+			// Pure NPC/animal corpse -> erase it.
+			qdel(M)
+			continue
+		// --- Cleanable stains (blood, vomit, ash, ...) ----------------------
+		if(istype(AM, /obj/effect/decal/cleanable))
+			qdel(AM)
+			continue
+		// --- Unanchored ground items ----------------------------------------
+		if(isitem(AM))
+			var/obj/item/I = AM
+			// Only items lying directly on a turf count as "on the ground";
+			// skip things held/stored inside mobs or containers.
+			if(!isturf(I.loc))
+				continue
+			// Respect anchored items (rare, but never yank fixed fixtures).
+			if(I.anchored)
+				continue
+			qdel(I)
 
 // --- Clean up the file-local defines so they don't leak globally -------------
 #undef TERROR_CLOCK_CLEAR_RANGE
@@ -391,3 +447,4 @@ GLOBAL_LIST_INIT(terror_clock_roster, list(
 #undef TERROR_CLOCK_BOSS_MAX
 #undef TERROR_CLOCK_TRIAL_LABEL
 #undef TERROR_CLOCK_COOLDOWN
+#undef TERROR_CLOCK_PURGE_RANGE
