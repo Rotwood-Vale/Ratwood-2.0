@@ -5,17 +5,17 @@
 
 
 /obj/effect/landmark/start/dt/azebagha
-	name = "Azeb Agha"
+	name = "阿泽布阿迦"
 /obj/effect/landmark/start/dt/azeb
-	name = "Azeb"
+	name = "阿泽布"
 /obj/effect/landmark/start/dt/cataphract
-	name = "Cataphract"
+	name = "铁甲骑兵"
 /obj/effect/landmark/start/dt/janissary
-	name = "Janissary"
+	name = "禁卫军"
 /obj/effect/landmark/start/dt/janissarysergeant
-	name = "Janissary Sergeant"
+	name = "禁卫军士官"
 /obj/effect/landmark/start/dt/slavemaster
-	name = "Slave Master"
+	name = "奴隶主"
 
 // /obj/effect/landmark/start/dt/sheikh
 // 	name = "Sheikh"
@@ -28,15 +28,15 @@
 // /obj/effect/landmark/start/dt/dtmagician
 // 	name = "Palace Magician"
 /obj/effect/landmark/start/dt/slave
-	name = "Palace Slave"
+	name = "宫廷奴隶"
 /obj/effect/landmark/start/dt/headslave
-	name = "Head Slave"
+	name = "奴隶总管"
 // /obj/effect/landmark/start/dt/dttowner
 // 	name = "Villager"
 /obj/effect/landmark/start/dt/courtslave
-	name = "Enslaved Adventurer"
+	name = "被奴役的冒险者"
 /obj/effect/landmark/start/dt/chaplain
-	name = "Palace Chaplain"
+	name = "宫廷牧师"
 
 // /obj/effect/landmark/start/
 // 	name = ""
