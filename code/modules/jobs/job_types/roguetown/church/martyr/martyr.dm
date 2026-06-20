@@ -122,11 +122,11 @@
 	var/boon_choice = input(H,"选择你的恩赐。", "领受圣座赐礼") as anything in boons
 	switch(boon_choice)
 //Generic boons.
-		if("Endurance")//Hard dismemberment. Pair with ult for funny results.
+		if("坚忍")//Hard dismemberment. Pair with ult for funny results.
 			ADD_TRAIT(H, TRAIT_HARDDISMEMBER, TRAIT_GENERIC)
-		if("Indefatigable")//Battle ready, which provides energy over time and you can remain in combat mode.
+		if("不屈")//Battle ready, which provides energy over time and you can remain in combat mode.
 			ADD_TRAIT(H, TRAIT_BREADY, TRAIT_GENERIC)
-		if("Hollow")//Magic isn't real.
+		if("空壳")//Magic isn't real.
 			ADD_TRAIT(H, TRAIT_ANTIMAGIC, TRAIT_GENERIC)//While you're immune to it...
 			ADD_TRAIT(H, TRAIT_SPELLCOCKBLOCK, TRAIT_GENERIC)//... you may NEVER cast magic.
 			ADD_TRAIT(H, TRAIT_COUNTERCOUNTERSPELL, TRAIT_GENERIC)//Because it's funny.
