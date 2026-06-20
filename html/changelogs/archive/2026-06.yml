@@ -237,3 +237,15 @@
       \ and CC-BY-SA 3.0 for assets, unless otherwise stated. You acknowledge that\
       \ the project maintainers are under no obligation to remove any materials that\
       \ do not violate these licenses. -->"
+2026-06-20:
+  Rayforx:
+  - balance: Juvenile size increases to 0.75 the size of a normal man eater.
+  Skyglazer:
+  - rscadd: Gives the Estoc a special attack, in line with other weapons.
+  The-Sun-In-Splendour:
+  - balance: reworked rituos so that it more progressively makes the user a stronger
+      spellcaster over time
+  WolfOrion:
+  - bugfix: I forgot that scissoring was a thing, now bedbreaker applies to it.
+  vitoras228322-ai:
+  - rscadd: Added oozes, aka a new race of amorphous goop-people. Kind of WIP still.
