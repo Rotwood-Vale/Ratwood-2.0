@@ -12,24 +12,24 @@
 		return .
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake
-	name = "snake"
+	name = "蛇"
 	desc = ""
 	icon_state = "snake"
 	icon_living = "snake"
 	icon_dead = "snake_dead"
-	speak_emote = list("hisses")
+	speak_emote = list("嘶嘶作响")
 	health = 20
 	maxHealth = 20
-	attack_verb_continuous = "bites"
-	attack_verb_simple = "bite"
+	attack_verb_continuous = "咬了"
+	attack_verb_simple = "咬"
 	melee_damage_lower = 5
 	melee_damage_upper = 6
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "shoos"
-	response_disarm_simple = "shoo"
-	response_harm_continuous = "steps on"
-	response_harm_simple = "step on"
+	response_help_continuous = "抚摸了"
+	response_help_simple = "抚摸"
+	response_disarm_continuous = "驱赶了"
+	response_disarm_simple = "驱赶"
+	response_harm_continuous = "踩了"
+	response_harm_simple = "踩"
 	faction = list("hostile")
 	ventcrawler = VENTCRAWLER_ALWAYS
 	density = FALSE
@@ -57,7 +57,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/AttackingTarget()
 	if(istype(target, /mob/living/simple_animal/mouse))
-		visible_message(span_notice("[name] consumes [target] in a single gulp!"), span_notice("I consume [target] in a single gulp!"))
+		visible_message(span_notice("[name]一口吞下了[target]！"), span_notice("我一口吞下了[target]！"))
 		QDEL_NULL(target)
 		adjustBruteLoss(-2)
 	else

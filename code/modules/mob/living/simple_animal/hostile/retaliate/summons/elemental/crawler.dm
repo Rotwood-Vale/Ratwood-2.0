@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/crawler
 	icon = 'icons/mob/summonable/32x32.dmi'
-	name = "earthen crawler"
-	summon_primer = "You are an crawler, a small elemental. Elementals such as yourself spend immeasurable time wandering about within your plane. Now you've been pulled from your home into a new world, that is decidedly less peaceful then your carefully guarded plane. How you react to these events, only time can tell."
+	name = "大地爬行者"
+	summon_primer = "你是一名爬行者，小型的元素生物。像你这样的元素生物在无穷无尽的时光中漫游于自己的位面。如今你被从故乡拖入了一个新世界，这个世界显然远比你精心守护的位面更加动荡。你将如何应对这些事件，只有时间才能揭晓。"
 	summon_tier = 1
 	icon_state = "crawler"
 	icon_living = "crawler"
@@ -36,8 +36,8 @@
 	retreat_health = 0.3
 	food = 0
 	attack_sound = 'sound/combat/hits/onstone/wallhit.ogg'
-	attack_verb_continuous = "pounds"
-	attack_verb_simple = "pounds"
+	attack_verb_continuous = "捶击"
+	attack_verb_simple = "捶击"
 	dodgetime = 0
 	aggressive = 1
 

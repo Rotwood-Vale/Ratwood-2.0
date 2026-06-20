@@ -1,7 +1,7 @@
 #define GOOSE_SATIATED 50
 
 /mob/living/simple_animal/hostile/retaliate/goose
-	name = "goose"
+	name = "鹅"
 	desc = ""
 	icon_state = "goose" // sprites by cogwerks from goonstation, used with permission
 	icon_living = "goose"
@@ -10,13 +10,13 @@
 	speak_chance = 0
 	turns_per_move = 5
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2)
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently pushes aside"
-	response_disarm_simple = "gently push aside"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
-	emote_taunt = list("hisses")
+	response_help_continuous = "抚摸了"
+	response_help_simple = "抚摸"
+	response_disarm_continuous = "轻轻推开了"
+	response_disarm_simple = "轻轻推开"
+	response_harm_continuous = "踢了"
+	response_harm_simple = "踢"
+	emote_taunt = list("嘶嘶叫")
 	taunt_chance = 30
 	speed = 0
 	maxHealth = 25
@@ -24,10 +24,10 @@
 	harm_intent_damage = 5
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	attack_verb_continuous = "pecks"
-	attack_verb_simple = "peck"
+	attack_verb_continuous = "啄了"
+	attack_verb_simple = "啄"
 	attack_sound = "goose"
-	speak_emote = list("honks")
+	speak_emote = list("嘎嘎叫")
 	faction = list("neutral")
 	attack_same = TRUE
 	gold_core_spawnable = HOSTILE_SPAWN
@@ -45,16 +45,16 @@
 		Retaliate()
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit
-	name = "Birdboat"
-	real_name = "Birdboat"
+	name = "鸟船"
+	real_name = "鸟船"
 	desc = ""
 	gender = MALE
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently pushes aside"
-	response_disarm_simple = "gently push aside"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
+	response_help_continuous = "抚摸了"
+	response_help_simple = "抚摸"
+	response_disarm_continuous = "轻轻推开了"
+	response_disarm_simple = "轻轻推开"
+	response_harm_continuous = "踢了"
+	response_harm_simple = "踢"
 	gold_core_spawnable = NO_SPAWN
 	random_retaliate = FALSE
 	var/vomiting = FALSE
@@ -79,7 +79,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/examine(user)
 	. = ..()
-	. += span_notice("Somehow, it still looks hungry.")
+	. += span_notice("不知为何，它看起来还是很饿。")
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/attacked_by(obj/item/O, mob/user)
 	. = ..()
@@ -91,18 +91,18 @@
 		return
 	if (contents.len > GOOSE_SATIATED)
 		if(message_cooldown < world.time)
-			visible_message(span_notice("[src] looks too full to eat \the [tasty]!"))
+			visible_message(span_notice("[src]看起来太饱了，吃不下去\the [tasty]！"))
 			message_cooldown = world.time + 5 SECONDS
 		return
 	if (tasty.foodtype)
-		visible_message(span_notice("[src] hungrily gobbles up \the [tasty]!"))
+		visible_message(span_notice("[src]狼吞虎咽地吞下了\the [tasty]！"))
 		tasty.forceMove(src)
 		playsound(src,'sound/blank.ogg', 70, TRUE)
 		vomitCoefficient += 3
 		vomitTimeBonus += 2
 	else
 		if(message_cooldown < world.time)
-			visible_message(span_notice("[src] refuses to eat \the [tasty]."))
+			visible_message(span_notice("[src]拒绝了\the [tasty]。"))
 			message_cooldown = world.time + 5 SECONDS
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()
@@ -185,7 +185,7 @@
 	"vomit" = CALLBACK(src, PROC_REF(vomit_prestart), 25)), 12 SECONDS, 4 SECONDS)
 
 /datum/action/cooldown/vomit
-	name = "Vomit"
+	name = "呕吐"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "vomit"
 	icon_icon = 'icons/mob/animal.dmi'

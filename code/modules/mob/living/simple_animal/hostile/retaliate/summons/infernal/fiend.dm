@@ -1,10 +1,10 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend
 	icon = 'icons/mob/summonable/32x32.dmi'
-	name = "fiend"
+	name = "恶魔"
 	icon_state = "fiend"
 	icon_living = "fiend"
 	icon_dead = "vvd"
-	summon_primer = "You are fiend, a large sized demon from the infernal plane. You have imps and hounds at your beck and call, able to do whatever you wished. Now you've been pulled from your home into a new world, that is decidedly lacking in fire. How you react to these events, only time can tell."
+	summon_primer = "你是一头恶魔，来自地狱位面的大型魔物。小鬼与地狱犬随时听从你的号令，任你差遣。如今你被从故乡拖入了一个新世界，而这个世界显然极度缺乏火焰。你将如何应对这些事件，只有时间才能揭晓。"
 	summon_tier = 4
 	gender = MALE
 	emote_hear = null
@@ -48,7 +48,7 @@
 	ranged = TRUE
 	rapid = TRUE
 	projectiletype = /obj/projectile/magic/aoe/fireball/rogue/great
-	ranged_message = "throws fire"
+	ranged_message = "投掷火焰"
 	ranged_cooldown = 50
 	var/flame_cd = 0
 	var/summon_cd = 0
@@ -79,7 +79,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend/OpenFire(atom/A)
 	if(CheckFriendlyFire(A))
 		return
-	visible_message(span_danger("<b>[src]</b> [ranged_message] at [A]!"))
+	visible_message(span_danger("<b>[src]</b> [ranged_message]向[A]!"))
 
 	if(world.time >= src.flame_cd + 25 SECONDS && !mind)
 		var/mob/living/targetted = target
@@ -99,8 +99,8 @@
 	ranged_cooldown = world.time + ranged_cooldown_time
 
 /obj/effect/proc_holder/spell/invoked/fiend_meteor
-	name = "Meteor storm"
-	desc = "Summons forth dangerous meteors from the sky to scatter and smash foes."
+	name = "流星风暴"
+	desc = "从天空召唤危险的流星，粉碎并击垮敌人。"
 	overlay_state = "meteor_storm"
 	recharge_time = 20 SECONDS
 	chargetime = 0
@@ -116,7 +116,7 @@
 /obj/effect/proc_holder/spell/invoked/fiend_meteor/proc/create_meteors(atom/target)
 	if(!target)
 		return
-	target.visible_message(span_boldwarning("Fire rains from the sky!"))
+	target.visible_message(span_boldwarning("天空降下火雨！"))
 	var/turf/targetturf = get_turf(target)
 	for(var/turf/turf as anything in RANGE_TURFS(4,targetturf))
 		if(prob(20))
@@ -125,7 +125,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend/proc/create_meteors(atom/target)
 	if(!target)
 		return
-	target.visible_message(span_boldwarning("Fire rains from the sky!"))
+	target.visible_message(span_boldwarning("火焰从天而降！"))
 	var/turf/targetturf = get_turf(target)
 	for(var/turf/turf as anything in RANGE_TURFS(4,targetturf))
 		if(prob(20))
@@ -137,7 +137,7 @@
 	/mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound,
 	/mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound)
 	var/reinforcement_count = 3
-	src.visible_message(span_notice("[src] summons reinforcements from the infernal abyss."))
+	src.visible_message(span_notice("[src]从地狱深渊召唤了援军。"))
 	while(reinforcement_count > 0)
 		var/list/turflist = list()
 		for(var/turf/t in RANGE_TURFS(1, src))
@@ -155,7 +155,7 @@
 	return
 
 /obj/effect/proc_holder/spell/self/call_infernals
-	name = "Call Infernals"
+	name = "召唤地狱生物"
 	recharge_time = 20 SECONDS
 	sound = list('sound/magic/whiteflame.ogg')
 	overlay_state = "burning"
@@ -164,14 +164,14 @@
 	if(istype(user, /mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend))
 		var/mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend/demonguy = user
 		if(world.time <= demonguy.summon_cd + 200)//shouldn't ever happen cuz the spell cd is the same as summon_cd but I'd rather it check with the internal cd just in case
-			to_chat(user,span_warning("Too soon!"))
+			to_chat(user,span_warning("太快了！"))
 			revert_cast()
 			return FALSE
 		if(demonguy.binded)
 			revert_cast()
 			return FALSE
 		demonguy.callforbackup()
-		demonguy.say("To me, my minions!")
+		demonguy.say("仆从们，到我这里来！")
 		demonguy.summon_cd = world.time
 
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend/awaken_summon(mob/living/carbon/human/master, ckey)

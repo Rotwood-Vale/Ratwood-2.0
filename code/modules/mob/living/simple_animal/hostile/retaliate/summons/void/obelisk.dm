@@ -12,7 +12,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk/Move(newloc)
 	if(binded)
-		to_chat(src,span_warning("You're currently bound and unable to move!"))
+		to_chat(src,span_warning("你当前被束缚，无法移动！"))
 		return
 	.=..()
 
@@ -24,8 +24,8 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk
 	icon = 'icons/mob/summonable/32x32.dmi'
-	name = "voidstone obelisk"
-	desc = "A construct from another age. It is marked by glowing sigils and it's material seems to absorb magic!"
+	name = "虚空石方尖碑"
+	desc = "来自另一个时代的构装体。它身上刻着发光的符文，其材质似乎能吸收魔法！"
 	icon_state = "obelisk-combined"
 	icon_living = "obelisk-combined"
 	icon_dead = "obelisk-combined"
@@ -77,14 +77,14 @@
 	var/static/image/direction_overlay = image('icons/effects/effects.dmi', "obeliak_telegraph_dir")
 	/// A list of all the beam parts.
 	var/list/beam_parts = list()
-	summon_primer = "You are ancient. A construct built in an age before men, a time of dragons. Your builders don't seem to be around anymore, and time has past with you in standby. How you respond, is up to you."
+	summon_primer = "你是古老的。一具建造于人类出现之前、龙族时代中的构装体。你的建造者似乎已不复存在，时间已在你待机中流逝。如何回应，由你决定。"
 	summon_tier = 3
 	inherent_spells = list(/obj/effect/proc_holder/spell/invoked/fire_obelisk_beam)
 
 /datum/intent/simple/slam
 	name = "slam"
 	icon_state = "instrike"
-	attack_verb = list("slam", "rams")
+	attack_verb = list("重击", "冲撞")
 	animname = "blank22"
 	blade_class = BCLASS_BLUNT
 	hitsound = 'sound/combat/hits/onstone/wallhit.ogg'
@@ -156,14 +156,14 @@
 	src.face_atom(target)
 	src.move_resist = MOVE_FORCE_VERY_STRONG
 	src.add_overlay(direction_overlay)
-	src.visible_message(span_notice("The air chills as [src] takes in energy..."))
+	src.visible_message(span_notice("空气变冷了，[src]正在吸收能量..."))
 	var/fully_charged = do_after(src, delay = charge_duration, target = src)
 	src.cut_overlay(direction_overlay)
 	if (!fully_charged)
 		return TRUE
 
 	if (!fire_laser())
-		var/static/list/fail_emotes = list("tremors.", "creaks.", "emits green steam as it fails to fire.")
+		var/static/list/fail_emotes = list("发出震颤。", "发出嘎吱声。", "未能开火，冒出了绿色蒸汽。")
 		src.manual_emote(pick(fail_emotes))
 		return TRUE
 
@@ -174,7 +174,7 @@
 
 /// Create a laser in the direction we are facing
 /mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk/proc/fire_laser()
-	src.visible_message(span_danger("[src] fires a aberrant beam!"))
+	src.visible_message(span_danger("[src]发射出一道畸变光束！"))
 	playsound(src, 'sound/magic/obeliskbeam.ogg', 150, FALSE, 0, 3)
 	var/turf/target_turf = get_ranged_target_turf(src, src.dir, beam_range)
 	var/turf/origin_turf = get_turf(src)
@@ -195,7 +195,7 @@
 		new_obeliskbeam.assign_creator(src)
 		for(var/mob/living/hit_mob in affected_turf.contents)
 			hit_mob.apply_damage(damage = 25, damagetype = BURN)
-			to_chat(hit_mob, span_userdanger("You're blasted by [src]'s aberrant beam!"))
+			to_chat(hit_mob, span_userdanger("你被[src]的畸变光束轰击了！"))
 //		RegisterSignal(new_obeliskbeam, COMSIG_QDELETING, PROC_REF(extinguish_laser)) // In case idk a singularity eats it or something
 	if(!length(beam_parts))
 		return FALSE
@@ -246,7 +246,7 @@
 /// Hurt the passed mob
 /obj/effect/obeliskbeam/proc/damage(mob/living/hit_mob)
 	hit_mob.apply_damage(damage = 15, damagetype = BURN)
-	to_chat(hit_mob, span_danger("You're damaged by [src]!"))
+	to_chat(hit_mob, span_danger("你被[src]伤到了！"))
 
 /// Ignore damage dealt to this mob
 /obj/effect/obeliskbeam/proc/assign_creator(mob/living/maker)
@@ -258,7 +258,7 @@
 	QDEL_IN(src, 0.5 SECONDS)
 
 /obj/effect/proc_holder/spell/invoked/fire_obelisk_beam
-	name = "Fire Beam"
+	name = "发射光束"
 	recharge_time = 20 SECONDS //voidstone obelisk's beam is different than other mob spells since the cooldown actually begins one the beam is finished, we'll just eyeball it
 	overlay_state = "regression"
 	chargetime = 0
@@ -269,7 +269,7 @@
 	if(istype(user, /mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk))
 		var/mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk/obby = user
 		if(world.time <= obby.beam_cooldown)
-			to_chat(user,span_warning("Too soon!"))
+			to_chat(user,span_warning("太快了！"))
 			revert_cast()
 			return FALSE
 		obby.Activate(targets[1])

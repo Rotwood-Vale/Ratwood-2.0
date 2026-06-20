@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/rogue/skeleton
-	name = "Skeleton"
+	name = "骷髅"
 	desc = ""
 	icon = 'modular_hearthstone/icons/mob/skeletons.dmi'
 	icon_state = "skeleton"
@@ -24,13 +24,13 @@
 	minimum_distance = 0
 	limb_destroyer = 1
 	base_intents = list(/datum/intent/simple/claw/skeleton)
-	attack_verb_continuous = "hacks"
-	attack_verb_simple = "hack"
+	attack_verb_continuous = "砍了"
+	attack_verb_simple = "砍"
 	attack_sound = 'sound/blank.ogg'
 	canparry = TRUE
 	d_intent = INTENT_PARRY
 	defprob = 50
-	speak_emote = list("grunts")
+	speak_emote = list("咕哝")
 	loot = list(/obj/item/natural/bone,	/obj/item/natural/bone, /obj/item/natural/bone,	/obj/item/skull)
 	faction = list("undead")
 	footstep_type = FOOTSTEP_MOB_BAREFOOT
@@ -50,7 +50,7 @@
 	ADD_TRAIT(src, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 
 /mob/living/simple_animal/hostile/rogue/skeleton/axe
-	name = "Skeleton"
+	name = "骷髅"
 	desc = ""
 	icon = 'modular_hearthstone/icons/mob/skeletons.dmi'
 	base_intents = list(/datum/intent/simple/axe/skeleton)
@@ -60,7 +60,7 @@
 	loot = list(/obj/item/natural/bone,	/obj/item/natural/bone, /obj/item/natural/bone, /obj/item/skull)
 
 /mob/living/simple_animal/hostile/rogue/skeleton/spear
-	name = "Skeleton"
+	name = "骷髅"
 	desc = ""
 	icon = 'modular_hearthstone/icons/mob/skeletons.dmi'
 	base_intents = list(/datum/intent/simple/spear/skeleton)
@@ -72,7 +72,7 @@
 	ai_controller = /datum/ai_controller/skeleton_spear
 
 /mob/living/simple_animal/hostile/rogue/skeleton/guard
-	name = "Skeleton"
+	name = "骷髅"
 	desc = ""
 	icon = 'modular_hearthstone/icons/mob/skeletons.dmi'
 	base_intents = list(/datum/intent/simple/axe/skeleton)
@@ -84,7 +84,7 @@
 	health = 200
 
 /mob/living/simple_animal/hostile/rogue/skeleton/bow
-	name = "Skeleton"
+	name = "骷髅"
 	desc = ""
 	icon = 'modular_hearthstone/icons/mob/skeletons.dmi'
 	icon_state = "skeleton_bow"
@@ -186,7 +186,7 @@
 
 
 /datum/intent/simple/claw/skeleton_unarmed
-	attack_verb = list("claws", "strikes", "punches")
+	attack_verb = list("抓", "击打", "拳击")
 	blade_class = BCLASS_CHOP
 	animname = "cut"
 	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
@@ -195,8 +195,8 @@
 	swingdelay = 8
 
 /obj/item/skull
-	name = "skull"
-	desc = "A skull"
+	name = "颅骨"
+	desc = "一个颅骨"
 	icon = 'modular_hearthstone/icons/mob/skeletons.dmi'
 	icon_state = "skull"
 	w_class = WEIGHT_CLASS_SMALL

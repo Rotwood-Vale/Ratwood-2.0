@@ -1,29 +1,29 @@
 //goat
 /mob/living/simple_animal/hostile/retaliate/goat
-	name = "goat"
+	name = "山羊"
 	desc = ""
 	icon_state = "goat"
 	icon_living = "goat"
 	icon_dead = "goat_dead"
 	speak = list("EHEHEHEHEH","eh?")
-	speak_emote = list("brays")
-	emote_hear = list("brays.")
-	emote_see = list("shakes its head.", "stamps a foot.", "glares around.")
+	speak_emote = list("叫唤")
+	emote_hear = list("叫唤。")
+	emote_see = list("摇了摇头。", "跺了跺脚。", "环顾四周瞪着。")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4)
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently pushes aside"
-	response_disarm_simple = "gently push aside"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
+	response_help_continuous = "抚摸了"
+	response_help_simple = "抚摸"
+	response_disarm_continuous = "轻轻推开了"
+	response_disarm_simple = "轻轻推开"
+	response_harm_continuous = "踢了"
+	response_harm_simple = "踢"
 	faction = list("neutral")
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	attack_same = 0
-	attack_verb_continuous = "kicks"
-	attack_verb_simple = "kick"
+	attack_verb_continuous = "踢了"
+	attack_verb_simple = "踢"
 	attack_sound = 'sound/blank.ogg'
 	health = 40
 	maxHealth = 40
@@ -57,7 +57,7 @@
 		if(enemies.len && prob(10))
 			enemies = list()
 			LoseTarget()
-			src.visible_message(span_notice("[src] calms down."))
+			src.visible_message(span_notice("[src]冷静了下来。"))
 	if(stat == CONSCIOUS)
 		udder.generateMilk()
 		eat_plants()
@@ -70,7 +70,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
 	..()
-	src.visible_message(span_danger("[src] gets an evil-looking gleam in [p_their()] eye."))
+	src.visible_message(span_danger("[src]眼中闪过邪恶的光芒。"))
 
 /mob/living/simple_animal/hostile/retaliate/goat/attackby(obj/item/O, mob/user, params)
 	if(stat == CONSCIOUS && istype(O, /obj/item/reagent_containers/glass))
@@ -81,7 +81,7 @@
 
 //cow
 /mob/living/simple_animal/cow
-	name = "cow"
+	name = "奶牛"
 	desc = ""
 	icon_state = "cow"
 	icon_living = "cow"
@@ -90,21 +90,21 @@
 	gender = FEMALE
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak = list("moo?","moo","MOOOOOO")
-	speak_emote = list("moos")
-	emote_hear = list("chews.")
-	emote_see = list("shakes her head.", "chews her cud.")
+	speak_emote = list("哞哞叫")
+	emote_hear = list("咀嚼着。")
+	emote_see = list("摇了摇头。", "咀嚼着反刍物。")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat = 6)
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently pushes aside"
-	response_disarm_simple = "gently push aside"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
-	attack_verb_continuous = "kicks"
-	attack_verb_simple = "kick"
+	response_help_continuous = "抚摸了"
+	response_help_simple = "抚摸"
+	response_disarm_continuous = "轻轻推开了"
+	response_disarm_simple = "轻轻推开"
+	response_harm_continuous = "踢了"
+	response_harm_simple = "踢"
+	attack_verb_continuous = "踢了"
+	attack_verb_simple = "踢"
 	attack_sound = 'sound/blank.ogg'
 	health = 100
 	maxHealth = 100
@@ -154,9 +154,9 @@
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
 	if(gender == FEMALE && !stat && M.used_intent.type == INTENT_DISARM && icon_state != "[initial(icon_state)]_tip")
-		M.visible_message(span_warning("[M] tips over [src]."),
-			span_notice("I tip over [src]."))
-		to_chat(src, span_danger("I am tipped over by [M]!"))
+		M.visible_message(span_warning("[M]把[src]推倒了。"),
+			span_notice("我把[src]推倒了。"))
+		to_chat(src, span_danger("我被[M]推倒了！"))
 		Paralyze(60, ignore_canstun = TRUE)
 		icon_state = "[initial(icon_state)]_tip"
 		spawn(rand(20,50))
@@ -166,20 +166,20 @@
 				var/internal
 				switch(pick(1,2,3,4))
 					if(1,2,3)
-						var/text = pick("imploringly.", "pleadingly.",
-							"with a resigned expression.")
-						external = "[src] looks at [M] [text]"
-						internal = "You look at [M] [text]"
+						var/text = pick("哀求地看着", "恳求地看着",
+							"带着一副听天由命的表情看着")
+						external = "[src][text][M]。"
+						internal = "你[text][M]。"
 					if(4)
-						external = "[src] seems resigned to its fate."
-						internal = "You resign myself to your fate."
+						external = "[src]似乎对命运逆来顺受。"
+						internal = "你对自己的命运逆来顺受。"
 				visible_message(span_notice("[external]"),
 					span_revennotice("[internal]"))
 	else
 		..()
 
 /mob/living/simple_animal/chick
-	name = "\improper chick"
+	name = "\improper 雏鸡"
 	desc = ""
 	icon_state = "chick"
 	icon_living = "chick"
@@ -188,21 +188,21 @@
 	gender = FEMALE
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak = list("Cherp.","Cherp?","Chirrup.","Cheep!")
-	speak_emote = list("cheeps")
-	emote_hear = list("cheeps.")
-	emote_see = list("pecks at the ground.","flaps its tiny wings.")
+	speak_emote = list("啾啾叫")
+	emote_hear = list("啾啾叫。")
+	emote_see = list("啄了啄地面。","扑扇着小翅膀。")
 	density = FALSE
 	speak_chance = 2
 	turns_per_move = 2
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/fat = 1)
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently pushes aside"
-	response_disarm_simple = "gently push aside"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
-	attack_verb_continuous = "kicks"
-	attack_verb_simple = "kick"
+	response_help_continuous = "抚摸了"
+	response_help_simple = "抚摸"
+	response_disarm_continuous = "轻轻推开了"
+	response_disarm_simple = "轻轻推开"
+	response_harm_continuous = "踢了"
+	response_harm_simple = "踢"
+	attack_verb_continuous = "踢了"
+	attack_verb_simple = "踢"
 	food_type = list(/obj/item/reagent_containers/food/snacks/grown/wheat)
 	health = 3
 	maxHealth = 3
@@ -234,7 +234,7 @@
 	amount_grown = 0
 
 /mob/living/simple_animal/chicken
-	name = "\improper chicken"
+	name = "\improper 鸡"
 	desc = ""
 	gender = FEMALE
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
@@ -242,23 +242,23 @@
 	icon_living = "chicken_brown"
 	icon_dead = "chicken_brown_dead"
 	speak = list("Cluck!","BWAAAAARK BWAK BWAK BWAK!","Bwaak bwak.")
-	speak_emote = list("clucks","croons")
-	emote_hear = list("clucks.")
-	emote_see = list("pecks at the ground.","flaps its wings viciously.")
+	speak_emote = list("咯咯叫","咕咕低鸣")
+	emote_hear = list("咯咯叫。")
+	emote_see = list("啄了啄地面。","凶狠地扑扇着翅膀。")
 	density = FALSE
 	speak_chance = 2
 	turns_per_move = 3
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat = 1)
 	var/egg_type = /obj/item/reagent_containers/food/snacks/egg
 	food_type = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat)
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently pushes aside"
-	response_disarm_simple = "gently push aside"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
-	attack_verb_continuous = "kicks"
-	attack_verb_simple = "kick"
+	response_help_continuous = "抚摸了"
+	response_help_simple = "抚摸"
+	response_disarm_continuous = "轻轻推开了"
+	response_disarm_simple = "轻轻推开"
+	response_harm_continuous = "踢了"
+	response_harm_simple = "踢"
+	attack_verb_continuous = "踢了"
+	attack_verb_simple = "踢"
 	health = 15
 	maxHealth = 15
 	ventcrawler = VENTCRAWLER_ALWAYS
@@ -268,7 +268,7 @@
 	var/icon_prefix = "chicken"
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
-	var/list/feedMessages = list("It clucks happily.","It clucks happily.")
+	var/list/feedMessages = list("它开心地咯咯叫。","它开心地咯咯叫。")
 	var/list/layMessage = EGG_LAYING_MESSAGES
 	var/list/validColors = list("brown","black","white")
 	gold_core_spawnable = FRIENDLY_SPAWN
@@ -294,12 +294,12 @@
 /mob/living/simple_animal/chicken/attackby(obj/item/O, mob/user, params)
 	if(food_typecache?[O.type]) //feedin' dem chickens
 		if(!stat && eggsleft < 8)
-			var/feedmsg = "[user] feeds [O] to [name]! [pick(feedMessages)]"
+			var/feedmsg = "[user]喂了[O]给[name]！[pick(feedMessages)]"
 			user.visible_message(feedmsg)
 			qdel(O)
 			eggsleft += rand(1, 4)
 		else
-			to_chat(user, span_warning("[name] doesn't seem hungry!"))
+			to_chat(user, span_warning("[name]看起来不饿！"))
 	else
 		..()
 
@@ -324,14 +324,14 @@
 		if(isturf(loc))
 			amount_grown += rand(1,2)
 			if(amount_grown >= 100)
-				visible_message(span_notice("[src] hatches with a quiet cracking sound."))
+				visible_message(span_notice("[src]伴随着轻微的裂壳声孵化了。"))
 				new /mob/living/simple_animal/chick(get_turf(src))
 				STOP_PROCESSING(SSobj, src)
 				qdel(src)
 
 
 /obj/item/udder
-	name = "udder"
+	name = "乳房"
 	var/in_use // so you can't spam milking sounds
 
 /obj/item/udder/Initialize(mapload)
@@ -347,16 +347,16 @@
 	if(in_use)
 		return
 	if(G.reagents.total_volume >= G.volume)
-		to_chat(user, span_warning("[O] is full."))
+		to_chat(user, span_warning("[O]已经满了。"))
 		return
 	if(!reagents.has_reagent(/datum/reagent/consumable/milk, 5))
-		to_chat(user, "<span class='warning'>The udder is dry. Wait a bit longer...</span>")
+		to_chat(user, "<span class='warning'>乳房干了。再等一等……</span>")
 		return
 	beingmilked()
 	playsound(O, pick('modular/Creechers/sound/milking1.ogg', 'modular/Creechers/sound/milking2.ogg'), 100, TRUE, -1)
 	if(do_after(user, 20, target = src))
 		reagents.trans_to(O, rand(5,10))
-		user.visible_message("<span class='notice'>[user] milks [src] using \the [O].</span>", "<span class='notice'>I milk [src] using \the [O].</span>")
+		user.visible_message("<span class='notice'>[user]用\the [O]给[src]挤奶。</span>", "<span class='notice'>我用\the [O]给[src]挤奶。</span>")
 
 /obj/item/udder/proc/beingmilked()
 	in_use = TRUE
@@ -366,29 +366,29 @@
 //grenchensnacker
 
 /mob/living/simple_animal/grenchensnacker
-	name = "grenchensnacker"
-	desc = "Why is it smiling like that"
+	name = "格伦钦斯纳克"
+	desc = "它为什么那样笑"
 	icon_state = "grenchen"
 	icon_living = "grenchen"
 	icon_dead = "grenchen_dead"
 	gender = MALE
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak = list("GRA","AH!","HEEHEHE")
-	speak_emote = list("squeeks")
-	emote_hear = list("chops.")
-	emote_see = list("dances.", "stares.")
+	speak_emote = list("吱吱尖叫")
+	emote_hear = list("切齿作响。")
+	emote_see = list("跳舞。", "凝视着。")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
 	butcher_results = list(/obj/item/roguekey/porta = 1)
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently pushes aside"
-	response_disarm_simple = "gently push aside"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
-	attack_verb_continuous = "kicks"
-	attack_verb_simple = "kick"
+	response_help_continuous = "抚摸了"
+	response_help_simple = "抚摸"
+	response_disarm_continuous = "轻轻推开了"
+	response_disarm_simple = "轻轻推开"
+	response_harm_continuous = "踢了"
+	response_harm_simple = "踢"
+	attack_verb_continuous = "踢了"
+	attack_verb_simple = "踢"
 	attack_sound = 'sound/blank.ogg'
 	health = 100
 	maxHealth = 100

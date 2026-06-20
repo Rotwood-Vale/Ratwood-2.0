@@ -1,9 +1,9 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/watcher
 	icon = 'icons/mob/summonable/32x32.dmi'
-	name = "infernal watcher"
+	name = "地狱观察者"
 	icon_state = "watcher"
 	icon_living = "watcher"
-	summon_primer = "You are an infernal watcher, a creature of lava and rock. You have watched over the chaos of the infernal plane long enough that it was been pointless to keep count."
+	summon_primer = "你是一只地狱观察者，由熔岩与岩石构成的生物。你在地狱位面的混沌中守望得太久，久到记数已毫无意义。"
 	summon_tier = 3
 	icon_dead = "vvd"
 	gender = MALE
@@ -47,7 +47,7 @@
 	ranged = TRUE
 	ranged_cooldown = 40
 	projectiletype = /obj/projectile/magic/aoe/fireball/rogue
-	ranged_message = "stares"
+	ranged_message = "凝视着"
 
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/watcher/Initialize(mapload)
 	. = ..()
@@ -59,7 +59,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/watcher/MeleeAction(patience = TRUE)
 	for(var/t in RANGE_TURFS(1, src))
 		new /obj/effect/hotspot(t)
-		src.visible_message(span_danger("[src] emits a burst of flames from it's core!"))
+		src.visible_message(span_danger("[src]从核心喷发出一股烈焰！"))
 	if(rapid_melee > 1)
 		var/datum/callback/cb = CALLBACK(src, PROC_REF(CheckAndAttack))
 		var/delay = SSnpcpool.wait / rapid_melee

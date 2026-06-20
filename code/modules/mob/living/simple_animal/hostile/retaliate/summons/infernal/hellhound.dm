@@ -1,11 +1,11 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound
 	icon = 'icons/mob/summonable/32x32.dmi'
-	name = "hell hound"
+	name = "地狱犬"
 	icon_state = "hellhound"
 	icon_living = "hellhound"
 	icon_dead = "vvd"
-	summon_primer = "You are a hellhound, a moderate sized canine made of heat and flame. You spend time in the infernal plane hunting and incinerating things to your hearts content. Now you've been pulled from your home into a new world, that is decidedly lacking in fire. How you react to these events, only time can tell."
+	summon_primer = "你是一头地狱犬，中等体型、由高温与烈焰构成的犬类生物。你在地狱位面中以肆意狩猎、焚烧万物为乐。如今你被从故乡拖入了一个新世界，而这个世界显然极度缺乏火焰。你将如何应对这些事件，只有时间才能揭晓。"
 	summon_tier = 2
 	gender = MALE
 	emote_hear = null
@@ -79,7 +79,7 @@
 			return
 		targetted.adjust_fire_stacks(5)
 		targetted.ignite_mob()
-		targetted.visible_message(span_danger("[src] sets [target] on fire!"))
+		targetted.visible_message(span_danger("[src]把[target]点燃了！"))
 		src.flame_cd = world.time
 	if(!QDELETED(target))
 		return target.attack_animal(src)

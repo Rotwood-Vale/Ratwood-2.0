@@ -50,29 +50,29 @@ It will also call down lightning strikes from the sky, and fling people with it'
 		var/obj/item/magic/magicmaterial = I
 		if(istype(magicmaterial, /obj/item/magic/voidstone))
 			if(health == maxHealth)
-				to_chat(user, "[src] is already healthy!")
+				to_chat(user, "[src]已经很健康了！")
 				return
-			to_chat(user, "I start healing [src] with [magicmaterial].")
+			to_chat(user, "我开始用[magicmaterial]治疗[src]。")
 			if(do_mob(user, src, 20))
 				var/tier_diff = 0.5 //Voidstone is uncommon, and if your trying to heal the dragon, you deserve the half health heal.
-				visible_message("[src] absorbs [magicmaterial] and is healed.")
+				visible_message("[src]吸收了[magicmaterial]，伤势痊愈。")
 				adjustBruteLoss(-maxHealth * tier_diff)
 				qdel(magicmaterial)
 				return
 	..()
 /mob/living/simple_animal/hostile/retaliate/rogue/voiddragon
-	name = "void dragon"
-	desc = "An ancient creature from a bygone age. Now would be a good time to run."
+	name = "虚空龙"
+	desc = "来自远古时代的古老生物。现在正是逃跑的好时机。"
 	health = 5000
 	maxHealth = 5000
-	attack_verb_continuous = "gouges"
-	attack_verb_simple = "gouge"
+	attack_verb_continuous = "凿击"
+	attack_verb_simple = "凿击"
 	attack_sound = 'sound/misc/demon_attack1.ogg'
 	icon = 'modular/icons/mob/96x96/ratwood_dragon.dmi'
 	icon_state = "dragon"
 	icon_living = "dragon"
 	icon_dead = "dragon_dead"
-	speak_emote = list("roars")
+	speak_emote = list("咆哮")
 	emote_hear = null
 	emote_see = null
 	environment_smash = ENVIRONMENT_SMASH_WALLS
@@ -94,7 +94,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	pixel_x = -32
 	var/swooping = NONE
 	var/player_cooldown = 0
-	deathmessage = "collapses to the floor with a final roar, the impact rocking the ground."
+	deathmessage = "随着最后一声咆哮轰然倒地，冲击力撼动了大地。"
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	var/anger_modifier = 0
 	var/recovery_time = 0
@@ -106,7 +106,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	var/lightning_cd
 	var/summon_cd
 	var/slam_cd
-	summon_primer = "You are ancient. A creature long since banished to the void ages past, you were trapped in a seemingly timeless abyss. Now you've been freed, returned to the world- and everything has changed. It seems some of your constructs remain buried beneath the ground. How you react to these events, only time can tell."
+	summon_primer = "你是古老的。一头在久远年代被放逐到虚空的生物，你被困在一个看似永恒的无尽深渊中。如今你被解放，重回世间——而一切都已改变。看来你的一些构装体仍埋藏在地底。你对此作何反应，只有时间能证明。"
 	summon_tier = 5
 	inherent_spells = list(
 	/obj/effect/proc_holder/spell/invoked/dragon_lightning,
@@ -123,7 +123,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 /datum/intent/unarmed/dragonclaw
 	name = "gouge"
 	icon_state = "inchop"
-	attack_verb = list("slashes", "gouges", "eviscerates")
+	attack_verb = list("切割", "凿击", "剔骨")
 	animname = "cut"
 	blade_class = BCLASS_CHOP
 	hitsound = "genslash"
@@ -131,11 +131,11 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	damfactor = 40
 	candodge = TRUE
 	canparry = TRUE
-	miss_text = "slashes the air!"
+	miss_text = "划破空气！"
 	miss_sound = "bluntwooshlarge"
 
 /datum/action/innate/megafauna_attack
-	name = "Megafauna Attack"
+	name = "巨兽攻击"
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = ""
 	var/mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/M
@@ -150,7 +150,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	to_chat(M, chosen_message)
 
 /obj/effect/proc_holder/spell/invoked/dragon_lightning
-	name = "Summon Sundering Lightning"
+	name = "召唤撕裂闪电"
 	recharge_time = 20 SECONDS
 	overlay_state = "lightning_sunder"//this icon is really awful but it's consistent with the existing spell
 	chargetime = 0
@@ -160,14 +160,14 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	if(istype(user, /mob/living/simple_animal/hostile/retaliate/rogue/voiddragon))
 		var/mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/dragon = user
 		if(world.time <= dragon.lightning_cd)
-			to_chat(user,span_warning("Too soon!"))
+			to_chat(user,span_warning("太快了！"))
 			revert_cast()
 			return FALSE
-		dragon.visible_message(span_danger("[dragon] calls forth lightning from the sky!"))
+		dragon.visible_message(span_danger("[dragon]从天空召唤出闪电！"))
 		dragon.create_lightning(targets[1])
 
 /obj/effect/proc_holder/spell/self/dragon_slam
-	name = "Slam"
+	name = "重击"
 	recharge_time = 15 SECONDS
 	overlay_state = "bloodrage"
 	chargetime = 0
@@ -177,14 +177,14 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	if(istype(user, /mob/living/simple_animal/hostile/retaliate/rogue/voiddragon))
 		var/mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/dragon = user
 		if(world.time <= dragon.slam_cd)
-			to_chat(user,span_warning("Too soon!"))
+			to_chat(user,span_warning("太快了！"))
 			revert_cast()
 			return FALSE
-		dragon.visible_message(span_colossus("[dragon] slams the ground, creating a shockwave!"))
+		dragon.visible_message(span_colossus("[dragon]重击地面，制造出一道冲击波！"))
 		dragon.dragon_slam(dragon,2,10,8)
 
 /obj/effect/proc_holder/spell/self/summon_obelisks
-	name = "Summon Obelisks"
+	name = "召唤方尖碑"
 	recharge_time = 200 SECONDS
 	overlay_state = "sands_of_time"
 	chargetime = 0
@@ -194,13 +194,13 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	if(istype(user, /mob/living/simple_animal/hostile/retaliate/rogue/voiddragon))
 		var/mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/dragon = user
 		if(world.time <= dragon.summon_cd)
-			to_chat(user,span_warning("Too soon!"))
+			to_chat(user,span_warning("太快了！"))
 			revert_cast()
 			return FALSE
 		dragon.summon_obelisk()
 
 /obj/effect/proc_holder/spell/invoked/dragon_swoop
-	name = "Swoop Attack"
+	name = "俯冲攻击"
 	recharge_time = 30 SECONDS//there's not a fitting var for this because the lightning swoop thing is handled differently than other procs, just gonna make it do this instead
 	overlay_state = "dendor"
 	chargetime = 0
@@ -213,7 +213,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 		dragon.swoop_attack(manual_target = targets[1])
 
 /obj/effect/proc_holder/spell/invoked/chain_lightning_breath
-	name = "Chain Lightning"
+	name = "连锁闪电"
 	recharge_time = 50 SECONDS
 	overlay_state = "lightning"
 	chargetime = 0
@@ -224,17 +224,17 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	if(istype(user, /mob/living/simple_animal/hostile/retaliate/rogue/voiddragon))
 		var/mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/dragon = user
 		if(world.time <= dragon.cl_cd)
-			to_chat(user,span_warning("Too soon!"))
+			to_chat(user,span_warning("太快了！"))
 			revert_cast()
 			return FALSE
-		dragon.visible_message(span_colossus("[src] opens its maw, and lightning crackles beyond its teeth!"))
+		dragon.visible_message(span_colossus("[src]张开巨口，闪电在它的齿间噼啪作响！"))
 		if(!dragon.chain_lightning(targets[1], dragon))
 			revert_cast()
 			return FALSE
 
 /mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/proc/TailSwipe(mob/victim)
 	var/mob/living/target = victim
-	src.visible_message(span_notice("[src] slams [target] with it's tail, knocking them to the floor!"))
+	src.visible_message(span_notice("[src]用尾巴猛击[target]，将其击倒在地！"))
 	target.Paralyze(5)
 	target.apply_damage(20, BRUTE)
 	shake_camera(target, 2, 1)
@@ -251,7 +251,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	if(prob(15 + anger_modifier))
 		lava_swoop()
 	if(world.time >= cl_cd)
-		src.visible_message(span_colossus("[src] opens its maw, and lightning crackles beyond its teeth."))
+		src.visible_message(span_colossus("[src]张开巨口，闪电在它的齿间噼啪作响！"))
 		chain_lightning(target, src)
 		return
 	if(health <= 0.75 * maxHealth && world.time >= summon_cd)
@@ -264,7 +264,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 /mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/proc/summon_obelisk()
 	var/list/spawnLists = list(/mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk,/mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk)
 	var/reinforcement_count = 2
-	src.visible_message(span_cultbigbold("[src] summons abberant obelisks from beneath the ground."))
+	src.visible_message(span_cultbigbold("[src] 从地底召唤出畸变方尖碑。"))
 	summon_cd = world.time + 2000
 	while(reinforcement_count > 0)
 		var/list/turflist = list()
@@ -287,7 +287,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 			addtimer(cb, (i - 1)*delay)
 	else
 		if(world.time >= slam_cd && !client)
-			src.visible_message(span_colossus("[src] slams the ground, creating a shockwave!"))
+			src.visible_message(span_colossus("[src]重击地面，制造出一道冲击波！"))
 			dragon_slam(src,2,10,8)
 		AttackingTarget()
 	if(patience)
@@ -308,7 +308,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 			for(var/mob/living/hit_mob in stomp_turf)
 				if(hit_mob == owner || hit_mob.throwing)
 					continue
-				to_chat(hit_mob, span_userdanger("[owner]'s ground slam shockwave sends you flying!"))
+				to_chat(hit_mob, span_userdanger("[owner]的地面重击冲击波把你震飞了！"))
 				var/turf/thrownat = get_ranged_target_turf_direct(owner, hit_mob, throw_range, rand(-10, 10))
 				hit_mob.throw_at(thrownat, 8, 2, null, TRUE, force = MOVE_FORCE_OVERPOWERING)
 				hit_mob.apply_damage(20, BRUTE)
@@ -335,7 +335,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 /mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/proc/lightning_strikes(amount, delay = 0.8)
 	if(!target)
 		return
-	target.visible_message(span_colossus("Lightning starts to strike down from the sky!"))
+	target.visible_message(span_colossus("闪电开始从天空劈下！"))
 	while(amount > 0)
 		if(QDELETED(target))
 			break
@@ -366,7 +366,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	movement_type = FLYING
 	density = FALSE
 	icon_state = "shadow"
-	visible_message("<span class='boldwarning'>[src] swoops up high!</span>")
+	visible_message("<span class='boldwarning'>[src]高高飞起！</span>")
 
 	var/negative
 	var/initial_x = x
@@ -420,7 +420,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	playsound(loc, 'sound/misc/meteorimpact.ogg', 200, TRUE)
 	for(var/mob/living/L in orange(1, src))
 		if(L.stat)
-			visible_message(span_warning("[src] slams down on [L], crushing [L.p_them()]!"))
+			visible_message(span_warning("[src]猛击在[L]身上，把[L.p_them()]碾碎了！"))
 			L.gib()
 		else
 			L.adjustBruteLoss(75)
@@ -430,7 +430,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 					throw_dir = pick(GLOB.alldirs)
 				var/throwtarget = get_edge_target_turf(src, throw_dir)
 				L.throw_at(throwtarget, 3)
-				visible_message(span_warning("[L] is thrown clear of [src]!</span>"))
+				visible_message(span_warning("[L]被弹飞离开了[src]！</span>"))
 	for(var/mob/M in range(7, src))
 		shake_camera(M, 15, 1)
 	movement_type = GROUND
@@ -461,7 +461,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 
 /mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/Move()
 	if(binded)
-		to_chat(src,span_warning("You're currently bound and unable to move!"))
+		to_chat(src,span_warning("你当前被束缚，无法移动！"))
 		return
 	if(!swooping)
 		..()
@@ -495,7 +495,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 		if(istype(L, /mob/living/simple_animal/hostile/retaliate/rogue/voiddragon))
 			continue
 		L.adjustFireLoss(10)
-		to_chat(L, "<span class='userdanger'>You fall directly into the pool of lava!</span>")
+		to_chat(L, "<span class='userdanger'>你直接掉进了熔岩池里！</span>")
 
 	// changes turf to lava temporarily
 	if(!T.density && !islava(T))
@@ -506,8 +506,8 @@ It will also call down lightning strikes from the sky, and fling people with it'
 		T.ChangeTurf(reset_turf)
 
 /obj/effect/temp_visual/drakewall
-	desc = "An ash drakes true flame."
-	name = "Fire Barrier"
+	desc = "灰烬龙的真焰。"
+	name = "火焰屏障"
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	anchored = TRUE
@@ -521,8 +521,8 @@ It will also call down lightning strikes from the sky, and fling people with it'
 
 
 /obj/effect/temp_visual/dragon_swoop
-	name = "certain death"
-	desc = "Don't just stand there, move!"
+	name = "必死无疑"
+	desc = "别傻站着，快动！"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "void_blink_in"
 	layer = BELOW_MOB_LAYER
@@ -580,12 +580,12 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	var/mob/living/carbon/target = targets[1]
 	var/distance = get_dist(user.loc,target.loc)
 	if(distance>3)
-		to_chat(user, span_colossus("[target.p_theyre(TRUE)] too far away!"))
+		to_chat(user, span_colossus("[target.p_theyre(TRUE)]太远了！"))
 
 		return FALSE
 	if(do_after(user, 2 SECONDS, target = src))
 		user.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
-		src.visible_message(span_colossus("[src] unleashes a storm of lightning from it's maw!"))
+		src.visible_message(span_colossus("[src] 从巨口中释放出闪电风暴！"))
 		cl_cd = world.time + 500
 		Bolt(user,target,30,5,user)
 		src.move_resist = initial(src.move_resist)
@@ -597,7 +597,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	origin.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
 	var/mob/living/carbon/current = target
 	if(current.anti_magic_check())
-		current.visible_message(span_warning("[current] absorbs the spell, remaining unharmed!"), span_danger("I absorb the spell, remaining unharmed!"))
+		current.visible_message(span_warning("[current]吸收了法术，毫发无伤！"), span_danger("我吸收了法术，毫发无伤！"))
 	else if(bounces < 1)
 		current.electrocute_act(bolt_energy,"Lightning Bolt",flags = SHOCK_NOGLOVES)
 	else
@@ -626,8 +626,8 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	return 1
 
 /obj/effect/proc_holder/spell/invoked/repulse/voiddragon
-	name = "Tail Sweep"
-	desc = "Throw back attackers with a sweep of your tail."
+	name = "尾扫"
+	desc = "用尾巴一扫，将攻击者击退。"
 	sound = 'sound/misc/tail_swing.ogg'
 	recharge_time = 15 SECONDS
 	clothes_req = FALSE
@@ -665,15 +665,15 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	loot = list(/obj/item/roguekey/mage/dragon)
 
 /obj/item/roguekey/mage/dragon
-	name = "void key"
-	desc = "A shimmering, awful looking key. Once embedded in a dragon's scales, now no more than a trophy."
+	name = "虚空钥匙"
+	desc = "一把微微发亮、看起来极为不详的钥匙。曾经嵌在龙鳞之间，如今不过是个战利品。"
 	icon_state = "voidkey"//Temp. I hate temp sprites!!!!
 	lockid = "void_dragon"
 
 /obj/effect/oneway/dragon
-	name = "magical barrier"
+	name = "魔法屏障"
 	max_integrity = 99999
-	desc = "Victory or death - once you pass this point you will either triumph or fall. Recommended 5 players or more."
+	desc = "胜利或死亡——一旦越过此点，你要么凯旋，要么倒下。推荐5名以上玩家。"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "smoke"
 	invisibility = SEE_INVISIBLE_LIVING
@@ -682,7 +682,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 /obj/effect/oneway/dragon/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(istype(W, /obj/item/roguekey/mage/dragon))
-		visible_message(span_boldannounce("The magical barrier disperses!"))
+		visible_message(span_boldannounce("魔法屏障消散了！"))
 		qdel(src)
 
 #undef DRAKE_SWOOP_HEIGHT

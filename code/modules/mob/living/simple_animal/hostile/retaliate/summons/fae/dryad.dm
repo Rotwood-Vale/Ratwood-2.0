@@ -1,10 +1,10 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/dryad	//Make this cause giant vine tangled messes
 	icon = 'icons/mob/summonable/32x64.dmi'
-	name = "dryad"
+	name = "树精"
 	icon_state = "dryad"
 	icon_living = "dryad"
 	icon_dead = "vvd"
-	summon_primer = "You are a dryad, a large sized fae. You spend time tending to forests, guarding sacred ground from tresspassers. Now you've been pulled from your home into a new world, that is decidedly less wild and natural. How you react to these events, only time can tell."
+	summon_primer = "你是一名树精，大型的精类生物。你以照管森林、守护圣地免受入侵者为生。如今你被从故乡拖入了一个新世界，这个世界显然远不如从前那般狂野自然。你将如何应对这些事件，只有时间才能揭晓。"
 	summon_tier = 3
 	gender = MALE
 	emote_hear = null
@@ -108,7 +108,7 @@
 		return 1
 
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/dryad/proc/vine()
-	visible_message(span_boldwarning("Vines spread out from [src]!"))
+	visible_message(span_boldwarning("藤蔓从[src]蔓延而出！"))
 	for(var/turf/turf as anything in RANGE_TURFS(2,src.loc))
 		if(!locate(/obj/structure/vine) in turf)
 			new /obj/structure/vine(turf)
@@ -117,7 +117,7 @@
 	..()
 	for(var/obj/structure/vine/V in view(src))
 		qdel(V)
-	src.visible_message(span_boldwarning("Vines near [src] wither as it returns to it's plane!"))
+	src.visible_message(span_boldwarning("[src]周围的藤蔓枯萎了，它回到了自己的位面！"))
 	var/turf/deathspot = get_turf(src)
 	new /obj/item/magic/melded/t1(deathspot)
 	new /obj/item/magic/fae/scale(deathspot)
@@ -131,7 +131,7 @@
 	qdel(src)
 
 /obj/effect/proc_holder/spell/self/create_vines
-	name = "Spawn Vines"
+	name = "生成藤蔓"
 	recharge_time = 10 SECONDS
 	sound = 'sound/magic/churn.ogg'
 	overlay_state = "blesscrop"
@@ -140,7 +140,7 @@
 	if(istype(user, /mob/living/simple_animal/hostile/retaliate/rogue/fae/dryad))
 		var/mob/living/simple_animal/hostile/retaliate/rogue/fae/dryad/treeguy = user
 		if(world.time <= treeguy.vine_cd + 100)//shouldn't ever happen cuz the spell cd is the same as summon_cd but I'd rather it check with the internal cd just in case
-			to_chat(user,span_warning("Too soon!"))
+			to_chat(user,span_warning("太快了！"))
 			revert_cast()
 			return FALSE
 		if(treeguy.binded)

@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/boss/lich
-	name = "Archlich"
-	desc = "An incomprehensibly powerful necromancer, dressed in the papal garbs of a Rockhillian priest - a glimpse into what once was. The air around you crackles with unholy energy."
+	name = "大巫妖"
+	desc = "一位拥有不可思议力量的死灵法师，身着岩丘教士的教皇法袍——让人得以一窥往昔。你周围的空气中噼啪作响着不洁的能量。"
 	mob_biotypes = MOB_HUMANOID|MOB_UNDEAD
 	boss_abilities = list(/datum/action/boss/lich_summon_minions)
 	faction = list("lich")
@@ -13,7 +13,7 @@
 	ranged = 1
 	rapid = 3
 	rapid_fire_delay = 8
-	ranged_message = "casts a spell"
+	ranged_message = "施放了一个法术"
 	ranged_cooldown_time = 40
 	ranged_ignores_vision = TRUE
 	environment_smash = 0
@@ -47,7 +47,7 @@
 	var/obj/effect/proc_holder/spell/targeted/turf_teleport/blink/blink = null
 	var/next_cast = 0
 	var/next_blink = 0
-	var/list/taunt = list("Witness my power!", "Die!", "Suffer!")
+	var/list/taunt = list("见证我的力量！", "死吧！", "受死！")
 	var/minions_to_spawn = 6
 	var/next_summon = 0
 	var/next_blaststrong = 0
@@ -80,7 +80,7 @@
 
 //First Summon Ability. Spawns two fully armored carbon skeletons.
 /datum/action/boss/lich_summon_minions
-	name = "Summon Minions"
+	name = "召唤仆从"
 	button_icon_state = "art_summon"
 	usage_probability = 100
 	boss_cost = 70
@@ -103,7 +103,7 @@
 	. = ..()
 	if(target && next_cast < world.time && next_summon < world.time) //Second summon ability. Spawns a mob of simple skeletons
 		spawn_minions(minions_to_spawn)
-		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "Minions, to me!", null, list("colossus", "yell"))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "仆从们，到我这里来！", null, list("colossus", "yell"))
 		next_cast = world.time + 10
 		next_summon = world.time + 600
 		return .
@@ -115,7 +115,7 @@
 			next_blink = world.time + 120
 			return .
 	if(target && next_cast < world.time && health < maxHealth * 0.33 && next_blaststrong < world.time) //Fires a wave of greater fireballs after blinking
-		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "I am immortal, you are NOTHING!", null, list("colossus", "yell"))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "我是永生的，你什么都不是！", null, list("colossus", "yell"))
 		playsound(get_turf(src), 'sound/magic/antimagic.ogg', 70, TRUE)
 		blaststrong()
 		next_cast = world.time + 100
@@ -175,7 +175,7 @@
 	speed = 20
 
 /obj/projectile/magic/lich/lightning
-	name = "bolt of lightning"
+	name = "闪电箭"
 	tracer_type = /obj/effect/projectile/tracer/stun
 	muzzle_type = null
 	impact_type = null
@@ -193,7 +193,7 @@
 	if(ismob(target))
 		var/mob/M = target
 		if(M.anti_magic_check())
-			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			visible_message(span_warning("[src]在接触到[target]时嘶嘶作响了！"))
 			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 			qdel(src)
 			return BULLET_ACT_BLOCK
@@ -234,7 +234,7 @@
 	return TRUE
 
 /obj/effect/temp_visual/lich_dying
-	name = "Lich"
+	name = "巫妖"
 	desc = ""
 	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/mob/evilpope.dmi'
@@ -245,8 +245,8 @@
 
 /obj/effect/temp_visual/lich_dying/Initialize(mapload)
 	. = ..()
-	visible_message(span_boldannounce("The Archlich collapses into a pile of dust and bone, unholy energy dispersing into the air!"))
-	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "Impossible!", null, list("colossus", "yell"))
+	visible_message(span_boldannounce("大巫妖崩溃为一堆尘土与枯骨，不洁的能量消散在空气中！"))
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "不可能！", null, list("colossus", "yell"))
 
 /obj/effect/temp_visual/lich_dying/Destroy()
 	for(var/mob/M in range(7,src))
@@ -302,7 +302,7 @@
 /datum/intent/simple/lich
 	name = "lich"
 	icon_state = "instrike"
-	attack_verb = list("strikes", "cuts", "cleaves", "slashes")
+	attack_verb = list("击打", "切割", "劈开", "砍")
 	animname = "blank22"
 	blade_class = BCLASS_CUT
 	hitsound = 'sound/combat/hits/bladed/genchop (1).ogg'
@@ -404,9 +404,9 @@
 	return ..() && (T == MT || get_dir(MT,T) == dir)
 
 /obj/effect/oneway/lich //one way barrier to the boss room. Can be despawned with the key the boss drops.
-	name = "magical barrier"
+	name = "魔法屏障"
 	max_integrity = 99999
-	desc = "Victory or death - once you pass this point you will either triumph or fall. Recommended 5 players or more."
+	desc = "要么胜利要么死亡——一旦你越过此点，要么凯旋要么陨落。推荐5名或以上玩家。"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "smoke"
 	invisibility = SEE_INVISIBLE_LIVING
@@ -415,7 +415,7 @@
 /obj/effect/oneway/lich/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(istype(W, /obj/item/roguekey/mage/lich))
-		visible_message(span_boldannounce("The magical barrier disperses!"))
+		visible_message(span_boldannounce("魔法屏障消散了！"))
 		qdel(src)
 
 
@@ -424,13 +424,13 @@
 
 //Loot
 /obj/item/roguekey/mage/lich
-	name = "archlich's key"
-	desc = "A strange key the Archlich dropped."
+	name = "大巫妖的钥匙"
+	desc = "大巫妖掉落的一把奇怪的钥匙。"
 	icon_state = "eyekey"
 	lockid = "lich"
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/blink
-	name = "Blink"
+	name = "闪现"
 	desc = ""
 
 	school = "abjuration"

@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental
 	obj_damage = 75
 	can_mine = TRUE
-	speak_emote = list("crackles")
+	speak_emote = list("噼啪作响")
 
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/Initialize(mapload)
 	. = ..()
@@ -65,12 +65,12 @@
 		var/obj/item/magic/magicmaterial = I
 		if(istype(magicmaterial, /obj/item/magic/elemental))
 			if(health == maxHealth)
-				to_chat(user, "[src] is already healthy!")
+				to_chat(user, "[src]已经很健康了！")
 				return
-			to_chat(user, "I start healing [src] with [magicmaterial].")
+			to_chat(user, "我开始用[magicmaterial]治疗[src]。")
 			if(do_mob(user, src, 20))
 				var/tier_diff = magicmaterial.tier / summon_tier //find the percentage of the guy we're healing based on the tier of our magic material
-				visible_message("[src] absorbs [magicmaterial] and is healed.")
+				visible_message("[src]吸收了[magicmaterial]并得到了治疗。")
 				adjustBruteLoss(-maxHealth * tier_diff)
 				qdel(magicmaterial)
 				return

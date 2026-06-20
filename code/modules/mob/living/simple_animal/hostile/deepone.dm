@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/rogue/deepone
-	name = "Deep One"
+	name = "深潜者"
 	desc = ""
 	icon = 'icons/roguetown/mob/monster/fishman.dmi'
 	icon_state = "deep1"
@@ -25,13 +25,13 @@
 	minimum_distance = 0
 	limb_destroyer = 0
 	base_intents = list(/datum/intent/simple/claw/deepone_unarmed)
-	attack_verb_continuous = "slashes"
-	attack_verb_simple = "slash"
+	attack_verb_continuous = "砍了"
+	attack_verb_simple = "砍"
 	attack_sound = 'sound/combat/wooshes/punch/punchwoosh (1).ogg'
 	canparry = TRUE
 	d_intent = INTENT_DODGE
 	defprob = 50
-	speak_emote = list("burbles")
+	speak_emote = list("咕哝")
 	faction = list("deepone")
 	footstep_type = FOOTSTEP_MOB_BAREFOOT
 
@@ -42,7 +42,7 @@
 
 
 /mob/living/simple_animal/hostile/rogue/deepone/arm
-	name = "Deep One"
+	name = "深潜者"
 	desc = ""
 	icon = 'icons/roguetown/mob/monster/fishman.dmi'
 	icon_state = "deep1_arm"
@@ -51,11 +51,11 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 30
 	limb_destroyer = 1
-	attack_verb_continuous = "mauls"
-	attack_verb_simple = "maul"
+	attack_verb_continuous = "撕咬了"
+	attack_verb_simple = "撕咬"
 
 /mob/living/simple_animal/hostile/rogue/deepone/spit
-	name = "Deep One"
+	name = "深潜者"
 	desc = ""
 	icon = 'icons/roguetown/mob/monster/fishman.dmi'
 	icon_state = "deep1_spit"
@@ -71,7 +71,7 @@
 	ai_controller = /datum/ai_controller/deepone_ranged
 
 /mob/living/simple_animal/hostile/rogue/deepone/wiz
-	name = "Deep One Devout"
+	name = "深潜者虔信者"
 	desc = ""
 	icon = 'icons/roguetown/mob/monster/fishman.dmi'
 	icon_state = "deep1_wiz"
@@ -100,7 +100,7 @@
 /mob/living/simple_animal/hostile/rogue/deepone/boss
 	wander = FALSE
 /datum/intent/simple/claw/deepone_unarmed
-	attack_verb = list("claws", "strikes")
+	attack_verb = list("抓", "击打")
 	blade_class = BCLASS_CHOP
 	animname = "cut"
 	hitsound = 'sound/combat/hits/bladed/smallslash (1).ogg'
@@ -108,7 +108,7 @@
 	penfactor = 5
 	chargetime = 2
 /datum/intent/simple/claw/deepone_boss
-	attack_verb = list("smashes", "slams")
+	attack_verb = list("砸", "摔")
 	blade_class = BCLASS_CHOP
 	animname = "cut"
 	hitsound = 'sound/combat/hits/blunt/metalblunt (1).ogg'

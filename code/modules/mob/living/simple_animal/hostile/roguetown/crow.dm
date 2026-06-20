@@ -1,12 +1,12 @@
 /obj/item/reagent_containers/food/snacks/crow
-	name = "zad"
-	desc = "A black bird commonly associated with Necra. They were once trained for use in carrying messages around and respected for their cleverness, but are nowadays considered no better than vermin."
+	name = "扎德"
+	desc = "一种常与涅克拉关联的黑鸟。它们曾被训练用于传递消息并因其聪明而受到尊敬，但如今却被视为与害虫无异。"
 	icon_state = "crow"
 	icon = 'icons/roguetown/mob/monster/crow.dmi'
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	foodtype = RAW
-	verb_say = "squeaks"
-	verb_yell = "squeaks"
+	verb_say = "吱吱叫"
+	verb_yell = "吱吱叫"
 	obj_flags = CAN_BE_HIT
 	var/dead = FALSE
 	eat_effect = /datum/status_effect/debuff/uncookedfood
@@ -19,14 +19,14 @@
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/friedcrow
 
 /obj/item/reagent_containers/food/snacks/rogue/friedcrow
-	name = "fried zad"
-	desc = "It took some work to pluck off all the feathers, but in the end you prevailed. The result is a surprisingly crispy, if bland, morsel."
+	name = "油炸扎德"
+	desc = "拔掉所有羽毛费了些功夫，但最终还是成功了。结果是一份出奇酥脆、即便寡淡的小食。"
 	icon = 'icons/roguetown/items/food.dmi'
 	icon_state = "fcrow"
 	bitesize = 2
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	w_class = WEIGHT_CLASS_TINY
-	tastes = list("burnt flesh" = 1)
+	tastes = list("焦肉" = 1)
 	eat_effect = null
 	rotprocess = SHELFLIFE_SHORT
 	sellprice = 0
@@ -64,7 +64,7 @@
 				..()
 			else
 				if(isturf(loc))
-					to_chat(user, span_warning("I fail to snatch [src]!"))
+					to_chat(user, span_warning("我没能抓住[src]！"))
 					playsound(src, 'sound/vo/mobs/bird/birdfly.ogg', 100, TRUE, -1)
 					qdel(src)
 					return
@@ -103,7 +103,7 @@
 			if(prob(L.STASPD * 2))
 				..()
 			else
-				to_chat(user, span_warning("[src] gets away!"))
+				to_chat(user, span_warning("[src]逃走了！"))
 				playsound(src, 'sound/vo/mobs/bird/birdfly.ogg', 100, TRUE, -1)
 				qdel(src)
 				return

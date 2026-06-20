@@ -1,15 +1,15 @@
 /mob/living/simple_animal/hostile/retaliate/bat
-	name = "bat"
+	name = "蝙蝠"
 	desc = ""
 	icon_state = "bat"
 	icon_living = "bat"
 	icon_dead = "bat_dead"
 	icon_gib = "bat_dead"
 	turns_per_move = 1
-	response_help_continuous = "brushes aside"
-	response_help_simple = "brush aside"
-	response_disarm_continuous = "flails at"
-	response_disarm_simple = "flail at"
+	response_help_continuous = "拂过"
+	response_help_simple = "拂过"
+	response_disarm_continuous = "拍打"
+	response_disarm_simple = "拍打"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_chance = 0
 	maxHealth = 50
@@ -18,8 +18,8 @@
 	harm_intent_damage = 6
 	melee_damage_lower = 6
 	melee_damage_upper = 5
-	attack_verb_continuous = "bites"
-	attack_verb_simple = "bite"
+	attack_verb_continuous = "咬了"
+	attack_verb_simple = "咬"
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1)
 	pass_flags = PASSTABLE
 	faction = list("hostile")
@@ -29,7 +29,7 @@
 	ventcrawler = VENTCRAWLER_ALWAYS
 	mob_size = MOB_SIZE_TINY
 	movement_type = FLYING
-	speak_emote = list("squeaks")
+	speak_emote = list("吱吱叫")
 	base_intents = list(/datum/intent/bite)
 	sight = SEE_SELF
 	see_in_dark = 8
@@ -56,7 +56,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/bat/crow/proc/change_stance()
 	set category = "Winged Form"
-	set name = "Change Stance"
+	set name = "切换姿态"
 	sitting = !sitting
 	update_icon()
 
@@ -71,7 +71,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/bat/crow/proc/emote_caw()
 	set category = "Winged Form"
-	set name = "Caw"
+	set name = "鸣叫"
 	emote("caw", intentional = TRUE, animal = TRUE)
 
 /mob/living/simple_animal/hostile/retaliate/bat/crow/get_sound(input)
@@ -80,43 +80,43 @@
 
 /mob/living/simple_animal/hostile/retaliate/bat/proc/fly_up()
 	set category = "Winged Form"
-	set name = "Fly Up"
+	set name = "起飞"
 
 	if(src.pulledby != null)
-		to_chat(src, span_notice("I can't fly away while being grabbed!"))
+		to_chat(src, span_notice("我被抓着没法飞走！"))
 		return
-	src.visible_message(span_notice("[src] begins to ascend!"), span_notice("You take flight..."))
+	src.visible_message(span_notice("[src]开始上升！"), span_notice("你起飞了……"))
 	if(do_after(src, fly_time, target))
 		if(src.pulledby == null)
 			src.zMove(UP, TRUE)
-			to_chat(src, span_notice("I fly up."))
+			to_chat(src, span_notice("我飞上去了。"))
 		else
-			to_chat(src, span_notice("I can't fly away while being grabbed!"))
+			to_chat(src, span_notice("我被抓着没法飞走！"))
 
 /mob/living/simple_animal/hostile/retaliate/bat/proc/fly_down()
 	set category = "Winged Form"
-	set name = "Fly Down"
+	set name = "降落"
 
 	if(src.pulledby != null)
-		to_chat(src, span_notice("I can't fly away while being grabbed!"))
+		to_chat(src, span_notice("我被抓着没法飞走！"))
 		return
-	src.visible_message(span_notice("[src] begins to descend!"), span_notice("You take flight..."))
+	src.visible_message(span_notice("[src]开始下降！"), span_notice("你起飞了……"))
 	if(do_after(src, fly_time, target))
 		if(src.pulledby == null)
 			src.zMove(DOWN, TRUE)
-			to_chat(src, span_notice("I fly down."))
+			to_chat(src, span_notice("我飞下来了。"))
 		else
-			to_chat(src, span_notice("I can't fly away while being grabbed!"))
+			to_chat(src, span_notice("我被抓着没法飞走！"))
 
 /mob/living/simple_animal/hostile/retaliate/bat/crow
-	name = "zad"
+	name = "扎德"
 	desc = ""
 	icon = 'icons/roguetown/mob/monster/crow.dmi'
 	icon_state = "crow_flying"
 	icon_living = "crow_flying"
 	icon_dead = "crow1"
 	icon_gib = "crow1"
-	speak_emote = list("caws")
+	speak_emote = list("呱呱叫")
 	base_intents = list(/datum/intent/unarmed/help)
 	harm_intent_damage = 0
 	melee_damage_lower = 0
@@ -126,8 +126,8 @@
 	var/sitting = FALSE
 
 /obj/effect/decal/remains/crow
-	name = "zad remains"
-	desc = "Nevermore..."
+	name = "扎德残骸"
+	desc = "永不复还……"
 	gender = PLURAL
 	icon_state = "crow1"
 	icon = 'icons/roguetown/mob/monster/crow.dmi'

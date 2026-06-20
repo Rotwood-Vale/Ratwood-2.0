@@ -1,6 +1,6 @@
 //Higher health, mixed stat dreamfiend.
 /mob/living/simple_animal/hostile/rogue/spirit_respite
-	name = "Aspect of Respite"
+	name = "安息之相"
 	desc = ""
 	icon = 'modular_helmsguard/icons/mob/gravelord.dmi'
 	icon_state = "glord"
@@ -24,12 +24,12 @@
 	minimum_distance = 0
 	limb_destroyer = 1
 	base_intents = list(/datum/intent/simple/bite)
-	attack_verb_continuous = "hacks"
-	attack_verb_simple = "hack"
+	attack_verb_continuous = "砍了"
+	attack_verb_simple = "砍"
 	attack_sound = 'sound/blank.ogg'
 	canparry = TRUE
 	defprob = 30
-	speak_emote = list("rattles")
+	speak_emote = list("咯咯作响")
 	del_on_death = TRUE
 	can_have_ai = FALSE //disable native ai
 	AIStatus = AI_OFF

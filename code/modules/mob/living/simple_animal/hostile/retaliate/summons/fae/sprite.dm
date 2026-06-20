@@ -1,10 +1,10 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/sprite
 	icon = 'icons/mob/summonable/32x32.dmi'
-	name = "sprite"
+	name = "精魄"
 	icon_state = "sprite"
 	icon_living = "sprite"
 	icon_dead = "vvd"
-	summon_primer = "You are a sprite, a small fae. You spend time wandering the wilds. Now you've been pulled from your home into a new world, that is decidedly less wild and natural. How you react to these events, only time can tell."
+	summon_primer = "你是一只精魄，小型的精类生物。你以漫游荒野为生。如今你被从故乡拖入了一个新世界，这个世界显然远不如从前那般狂野自然。你将如何应对这些事件，只有时间才能揭晓。"
 	summon_tier = 1
 	gender = FEMALE
 	emote_hear = null
@@ -43,8 +43,8 @@
 	retreat_health = 0.3
 	food = 0
 	attack_sound = 'sound/combat/hits/bladed/smallslash (1).ogg'
-	attack_verb_continuous = "jabs"
-	attack_verb_simple = "jab"
+	attack_verb_continuous = "戳刺"
+	attack_verb_simple = "戳刺"
 	dodgetime = 60
 	aggressive = 1
 	var/drug_cd

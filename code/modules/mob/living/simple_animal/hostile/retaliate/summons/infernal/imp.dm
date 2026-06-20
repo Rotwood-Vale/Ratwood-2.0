@@ -1,10 +1,10 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp
 	icon = 'icons/mob/summonable/32x32.dmi'
-	name = "infernal imp"
+	name = "地狱小鬼"
 	icon_state = "imp"
 	icon_living = "imp"
 	icon_dead = "vvd"
-	summon_primer = "You are an imp, a small creature spending it's time in the infernal plane amusing itself and eating meat. Now you've been pulled from your home into a new world, that is decidedly lacking in fire. How you react to these events, only time can tell."
+	summon_primer = "你是一只小鬼，一种在地狱位面中以自娱自乐和吃肉的时光中消磨的小型生物。如今你被从故乡拖入了一个新世界，而这个世界显然极度缺乏火焰。你将如何应对这些事件，只有时间才能揭晓。"
 	summon_tier = 1
 	gender = MALE
 	emote_hear = null
@@ -44,8 +44,8 @@
 	retreat_health = 0.3
 	food = 0
 	attack_sound = 'sound/combat/hits/bladed/smallslash (1).ogg'
-	attack_verb_continuous = "claws"
-	attack_verb_simple = "claw"
+	attack_verb_continuous = "抓了"
+	attack_verb_simple = "抓"
 	dodgetime = 30
 	aggressive = 1
 
@@ -54,7 +54,7 @@
 	ADD_TRAIT(src, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 
 /obj/projectile/magic/firebolt
-	name = "ball of fire"
+	name = "火球"
 	icon_state = "fireball"
 	damage = 20
 	damage_type = BURN
@@ -67,7 +67,7 @@
 	if(ismob(target))
 		var/mob/M = target
 		if(M.anti_magic_check())
-			M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
+			M.visible_message(span_warning("[src]接触到[target]后消散了！"))
 			qdel(src)
 			return BULLET_ACT_BLOCK
 	. = ..()

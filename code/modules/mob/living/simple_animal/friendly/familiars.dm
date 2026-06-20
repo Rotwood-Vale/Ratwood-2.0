@@ -10,8 +10,8 @@
 */
 
 /mob/living/simple_animal/pet/familiar
-	name = "Generic Wizard familiar"
-	desc = "The spirit of what makes a familiar (You shouldn't be seeing this.)"
+	name = "通用巫师伙伴"
+	desc = "构成了伙伴的精魂（你不应该看到这个。）"
 
 	icon = 'icons/roguetown/mob/familiars.dmi'
 
@@ -34,12 +34,12 @@
 	minbodytemp = FAMILIAR_MIN_BODYTEMP
 	maxbodytemp = FAMILIAR_MAX_BODYTEMP
 	unsuitable_atmos_damage = 1
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently pushes aside"
-	response_disarm_simple = "gently push aside"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
+	response_help_continuous = "抚摸了"
+	response_help_simple = "抚摸"
+	response_disarm_continuous = "轻轻推开了"
+	response_disarm_simple = "轻轻推开"
+	response_harm_continuous = "踢了"
+	response_harm_simple = "踢"
 	faction = list("rogueanimal", "neutral")
 	speed = 0.8
 	breedchildren = 0 //Yeah no, I'm not falling for this one.
@@ -77,30 +77,30 @@
 	set name = "Fly Up"
 
 	if(src.pulledby != null)
-		to_chat(src, span_notice("I can't fly away while being grabbed!"))
+		to_chat(src, span_notice("我被抓住了，没法飞走！"))
 		return
-	src.visible_message(span_notice("[src] begins to ascend!"), span_notice("You take flight..."))
+	src.visible_message(span_notice("[src]开始上升！"), span_notice("你起飞了……"))
 	if(do_after(src, flight_time))
 		if(src.pulledby == null)
 			src.zMove(UP, TRUE)
-			to_chat(src, span_notice("I fly up."))
+			to_chat(src, span_notice("我飞上去了。"))
 		else
-			to_chat(src, span_notice("I can't fly away while being grabbed!"))
+			to_chat(src, span_notice("我被抓住了，没法飞走！"))
 
 /mob/living/simple_animal/pet/familiar/proc/fly_down()
 	set category = "Flight"
 	set name = "Fly Down"
 
 	if(src.pulledby != null)
-		to_chat(src, span_notice("I can't fly away while being grabbed!"))
+		to_chat(src, span_notice("我被抓住了，没法飞走！"))
 		return
-	src.visible_message(span_notice("[src] begins to descend!"), span_notice("You take flight..."))
+	src.visible_message(span_notice("[src]开始下降！"), span_notice("你起飞了……"))
 	if(do_after(src, flight_time))
 		if(src.pulledby == null)
 			src.zMove(DOWN, TRUE)
-			to_chat(src, span_notice("I fly down."))
+			to_chat(src, span_notice("我飞下去了。"))
 		else
-			to_chat(src, span_notice("I can't fly away while being grabbed!"))
+			to_chat(src, span_notice("我被抓住了，没法飞走！"))
 
 /mob/living/simple_animal/pet/familiar/proc/can_bite()
 	for(var/obj/item/grabbing/grab in grabbedby) //Grabbed by the mouth
@@ -113,7 +113,7 @@
 	. = ..()
 	var/datum/familiar_prefs/fpref = src.client?.prefs.familiar_prefs
 	if(fpref && (fpref.familiar_flavortext || fpref.familiar_headshot_link || fpref.familiar_ooc_notes))
-		. += "<a href='?src=[REF(src)];task=view_fam_headshot;'>Examine closer</a>"
+		. += "<a href='?src=[REF(src)];task=view_fam_headshot;'>仔细查看</a>"
 
 /datum/status_effect/buff/familiar
 	duration = -1
@@ -122,7 +122,7 @@
 	. = ..()
 	emote("deathgasp")
 	if(familiar_summoner)
-		to_chat(familiar_summoner, span_warning("[src.name] has fallen, and your bond dims. Yet in the quiet beyond, a flicker of their essence remains."))
+		to_chat(familiar_summoner, span_warning("[src.name]倒下了，你们的羁绊随之暗淡。但在远处的寂静中，它们一丝精华的微光依然留存。"))
 
 /mob/living/simple_animal/pet/familiar/Destroy()
 	if(familiar_summoner)
@@ -133,10 +133,10 @@
 	return ..()
 
 /mob/living/simple_animal/pet/familiar/pondstone_toad
-	name = "Pondstone Toad"
-	desc = "This damp, heavy toad pulses with unseen strength. Its skin is cool and lined with mineral veins."
-	animal_species = "Pondstone Toad"
-	summoning_emote = "A deep thrum echoes beneath your feet, and a mossy toad pushes itself free from the earth, humming low."
+	name = "池塘石蟾蜍"
+	desc = "这只潮湿沉重的蟾蜍搏动着无形的力量。它的皮肤冰凉，布满了矿物脉络。"
+	animal_species = "池塘石蟾蜍"
+	summoning_emote = "你脚下回荡起一阵低沉的嗡鸣，一只苔藓覆盖的蟾蜍推开泥土，发出低沉的哼鸣。"
 	icon_state = "pondstone"
 	icon_living = "pondstone"
 	icon_dead = "pondstone_dead"
@@ -149,9 +149,9 @@
 	STASPD = 5
 	STALUC = 9
 	speak = list("Hrrrm.", "Grrup.", "Blorp.")
-	speak_emote = list("croaks low", "grumbles")
-	emote_hear = list("croaks lowly.", "lets out a bubbling sound.")
-	emote_see = list("shudders like stone.", "thumps softly in place.")
+	speak_emote = list("低沉地呱呱叫", "咕哝")
+	emote_hear = list("低沉地呱呱叫。", "发出咕噜咕噜的声音。")
+	emote_see = list("如石头般颤抖。", "在原地轻轻扑通。")
 	var/icon/original_icon = null
 	var/original_icon_state = ""
 	var/original_icon_living = ""
@@ -164,15 +164,15 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/familiar/settled_weight
 
 /atom/movable/screen/alert/status_effect/buff/familiar/settled_weight
-	name = "Settled Weight"
-	desc = "You feel just a touch more grounded. Pushing back has become a little easier."
+	name = "沉稳之重"
+	desc = "你感觉自己更沉稳了一些。推回去变得稍微容易了。"
 
 
 /mob/living/simple_animal/pet/familiar/mist_lynx
-	name = "Mist Lynx"
-	desc = "A ghostlike lynx, its eyes gleaming like twin moons. It never seems to blink, even when you're not looking."
-	animal_species = "Mist Lynx"
-	summoning_emote = "Mist coils into feline shape, resolving into a lynx with pale fur and unblinking silver eyes."
+	name = "雾影猞猁"
+	desc = "一只幽灵般的猞猁，双眼如双月般闪烁。它似乎从不眨眼，即使你没在看着它。"
+	animal_species = "雾影猞猁"
+	summoning_emote = "雾气凝聚成猫科形态，化作一只毛色苍白、银眼不眨的猞猁。"
 	icon_state = "mist"
 	icon_living = "mist"
 	icon_dead = "mist_dead"
@@ -188,9 +188,9 @@
 	STASPD = 13
 	STALUC = 9
 	speak = list("...") // mostly silent
-	speak_emote = list("purrs softly", "whispers")
-	emote_hear = list("lets out a soft yowl.", "whispers almost silently.")
-	emote_see = list("pads in a circle.", "vanishes briefly, then reappears.")
+	speak_emote = list("轻声呼噜", "低语")
+	emote_hear = list("发出轻柔的嚎叫。", "近乎无声地低语。")
+	emote_see = list("转着圈踱步。", "短暂消失，然后重新出现。")
 	var/list/saved_trails = list()
 
 /datum/status_effect/buff/familiar/silver_glance
@@ -199,14 +199,14 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/familiar/silver_glance
 
 /atom/movable/screen/alert/status_effect/buff/familiar/silver_glance
-	name = "Silver Glance"
-	desc = "There's a flicker at the edge of your vision. You notice what others pass by."
+	name = "银眸一瞥"
+	desc = "你视野的边缘有微光闪烁。你注意到了他人忽略的东西。"
 
 /mob/living/simple_animal/pet/familiar/rune_rat
-	name = "Rune Rat"
-	desc = "This rat leaves fading runes in the air as it twitches. The smell of old paper clings to its fur."
-	animal_species = "Rune Rat"
-	summoning_emote = "A faint spark dances through the air. A rat with a softly glowing tail scampers into existence."
+	name = "符文鼠"
+	desc = "这只老鼠抽动时会在空中留下消逝的符文。它的毛皮上粘着旧纸的气味。"
+	animal_species = "符文鼠"
+	summoning_emote = "一丝微弱的火星在空气中舞动。一只尾巴微微发光的老鼠奔跳着出现了。"
 	icon_state = "runerat"
 	icon_living = "runerat"
 	icon_dead = "runerat_dead"
@@ -219,9 +219,9 @@
 	STAWIL = 8
 	STASPD = 11
 	speak = list("Skrii!", "Tik-tik.", "Chrr.")
-	speak_emote = list("squeaks", "chatters")
-	emote_hear = list("squeaks thoughtfully.", "sniffs the air.")
-	emote_see = list("twitches its tail in patterns.", "skitters in a loop.")
+	speak_emote = list("吱吱叫", "叽喳")
+	emote_hear = list("若有所思地吱吱叫。", "嗅了嗅空气。")
+	emote_see = list("尾巴划出有规律的抽动。", "绕圈疾跑。")
 	var/stored_books = list()
 	var/storage_limit = 5
 
@@ -231,14 +231,14 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/familiar/threaded_thoughts
 
 /atom/movable/screen/alert/status_effect/buff/familiar/threaded_thoughts
-	name = "Threaded Thoughts"
-	desc = "Your thoughts gather more easily, like threads pulled into a tidy weave."
+	name = "思绪交织"
+	desc = "你的思绪更容易凝聚在一起，像被拉成整齐编织的线。"
 
 /mob/living/simple_animal/pet/familiar/vaporroot_wisp
-	name = "Vaporroot Wisp"
-	desc = "This vaporroot wisp shimmers and shifts like smoke but feels solid enough to lean on."
-	animal_species = "Vaporroot"
-	summoning_emote = "A swirl of silvery mist gathers, coalescing into a small wisp of vaporroot."
+	name = "蒸气根精魄"
+	desc = "这只蒸气根精魄闪烁流转如烟，但靠上去却感觉足够坚实。"
+	animal_species = "蒸气根"
+	summoning_emote = "一团银色的雾旋转凝聚，化作一束蒸气根的小小精魄。"
 	icon_state = "vaporroot"
 	icon_living = "vaporroot"
 	icon_dead = "vaporroot_dead"
@@ -253,9 +253,9 @@
 	STAWIL = 9
 	STASPD = 8
 	speak = list("Fffff...", "Whuuuh.")
-	speak_emote = list("whispers", "murmurs")
-	emote_hear = list("hums softly.", "emits a calming mist.")
-	emote_see = list("swirls in place.", "dissolves briefly.")
+	speak_emote = list("低语", "呢喃")
+	emote_hear = list("轻柔地嗡鸣。", "散发出舒缓的雾气。")
+	emote_see = list("原地旋转。", "短暂地消散。")
 
 /datum/status_effect/buff/familiar/quiet_resilience
 	id = "quiet_resilience"
@@ -263,14 +263,14 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/familiar/quiet_resilience
 
 /atom/movable/screen/alert/status_effect/buff/familiar/quiet_resilience
-	name = "Quiet Resilience"
-	desc = "A calm strength hums beneath your skin. You breathe a little deeper."
+	name = "静谧韧性"
+	desc = "一股平静的力量在你皮下嗡鸣。你的呼吸深了一些。"
 
 /mob/living/simple_animal/pet/familiar/ashcoiler
-	name = "Ashcoiler"
-	desc = "This long-bodied snake coils slowly, like a heated rope. Its breath carries a faint scent of burnt herbs."
-	summoning_emote = "Dust rises and circles before coiling into a gray-scaled creature that radiates dry, residual warmth."
-	animal_species = "Ashcoiler"
+	name = "灰烬盘绕者"
+	desc = "这条长身蛇缓慢地盘绕，像一根加热的绳索。它的呼吸带着淡淡的烧焦草药味。"
+	summoning_emote = "尘土扬起盘旋，随后盘绕成一只有着灰色鳞片、散发着干燥余温的生物。"
+	animal_species = "灰烬盘绕者"
 	icon_state = "ashcoiler"
 	icon_living = "ashcoiler"
 	icon_dead = "ashcoiler_dead"
@@ -285,9 +285,9 @@
 	STASPD = 8
 	STALUC = 8
 	speak = list("Ssshh...", "Hhsss.", "Ffff.")
-	speak_emote = list("hisses", "rasps")
-	emote_hear = list("hisses faintly.", "breathes a puff of ash.")
-	emote_see = list("slowly coils and uncoils.", "shifts weight in rhythm.")
+	speak_emote = list("嘶嘶作响", "粗声粗气")
+	emote_hear = list("微弱地嘶嘶作响。", "吐出一股灰烬。")
+	emote_see = list("缓慢地盘绕又松开。", "有节奏地移动重心。")
 
 /datum/status_effect/buff/familiar/desert_bred_tenacity
 	id = "desert_bred_tenacity"
@@ -295,14 +295,14 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/familiar/desert_bred_tenacity
 
 /atom/movable/screen/alert/status_effect/buff/familiar/desert_bred_tenacity
-	name = "Desert-Bred Tenacity"
-	desc = "You feel steady and patient, like something that has survived years without rain."
+	name = "沙漠淬炼之韧"
+	desc = "你感到沉稳而有耐心，就像某个在无雨之年存活下来的存在。"
 
 /mob/living/simple_animal/pet/familiar/glimmer_hare
-	name = "Glimmer Hare"
-	desc = "A quick, nervy creature. Light bends strangely around its translucent body."
-	summoning_emote = "The air glints, and a translucent hare twitches into existence."
-	animal_species = "Glimmer Hare"
+	name = "微光兔"
+	desc = "一只敏捷、神经质的生物。光线在它半透明的身体上奇怪地弯曲。"
+	summoning_emote = "空气闪烁，一只半透明的野兔颤抖着出现了。"
+	animal_species = "微光兔"
 	icon_state = "glimmer"
 	icon_living = "glimmer"
 	icon_dead = "glimmer_dead"
@@ -316,9 +316,9 @@
 	STALUC = 11
 	alpha = 150
 	speak = list("Tik!", "Tch!", "Hah!")
-	speak_emote = list("chatters quickly", "chirps")
-	emote_hear = list("thumps the ground.", "scatters some dust.")
-	emote_see = list("dashes suddenly, then stops.", "vibrates subtly.")
+	speak_emote = list("快速叽喳", "啁啾")
+	emote_hear = list("用脚敲着地面。", "洒落了些灰尘。")
+	emote_see = list("突然冲一下然后停下。", "微微震动。")
 
 /datum/status_effect/buff/familiar/lightstep
 	id = "lightstep"
@@ -326,14 +326,14 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/familiar/lightstep
 
 /atom/movable/screen/alert/status_effect/buff/familiar/lightstep
-	name = "Lightstep"
-	desc = "You move with just a touch more ease."
+	name = "轻盈步伐"
+	desc = "你行动起来稍微更轻松了一些。"
 
 /mob/living/simple_animal/pet/familiar/hollow_antlerling
-	name = "Hollow Antlerling"
-	desc = "A dog-sized deer with gleaming hollow antlers that emit flute-like sounds."
-	summoning_emote = "A musical chime sounds. A tiny deer with antlers like bone flutes steps gently into view."
-	animal_species = "Hollow Antlerling"
+	name = "空心角鹿"
+	desc = "一只狗大小的鹿，长着闪烁的空心鹿角，发出笛子般的声音。"
+	summoning_emote = "一阵悦耳的钟声响起。一只角如骨笛的小鹿轻柔地走到视野中。"
+	animal_species = "空心角鹿"
 	icon_state = "antlerling"
 	icon_living = "antlerling"
 	icon_dead = "antlerling_dead"
@@ -345,9 +345,9 @@
 	STASPD = 9
 	STALUC = 11
 	speak = list("Hrrn.", "Mnnn.", "Chuff.")
-	speak_emote = list("chimes softly", "calls out")
-	emote_hear = list("lets out a musical chime.")
-	emote_see = list("flickers like a mirage.", "steps just out of reach of falling dust.")
+	speak_emote = list("轻柔地鸣响", "呼唤")
+	emote_hear = list("发出悦耳的钟声。")
+	emote_see = list("如海市蜃楼般闪烁。", "刚好站在落尘触及不到的地方。")
 
 /datum/status_effect/buff/familiar/soft_favor
 	id = "soft_favor"
@@ -355,14 +355,14 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/familiar/soft_favor
 
 /atom/movable/screen/alert/status_effect/buff/familiar/soft_favor
-	name = "Soft Favor"
-	desc = "Fortune seems to tilt in your direction."
+	name = "温柔眷顾"
+	desc = "命运似乎向你倾斜。"
 
 /mob/living/simple_animal/pet/familiar/gravemoss_serpent
-	name = "Gravemoss Serpent"
-	desc = "Its scales are flecked with lichen and grave-dust. Wherever it passes, roots twitch faintly in the soil."
-	summoning_emote = "The ground heaves faintly as a long, moss-veiled serpent uncoils from it."
-	animal_species = "Gravemoss Serpent"
+	name = "墓苔巨蛇"
+	desc = "它的鳞片上斑驳着地衣和墓尘。它所经之处，泥土中的根须微颤。"
+	summoning_emote = "地面微微起伏，一条覆满苔藓的长蛇从中盘绕而出。"
+	animal_species = "墓苔巨蛇"
 	icon_state = "gravemoss"
 	icon_living = "gravemoss"
 	icon_dead = "gravemoss_dead"
@@ -376,9 +376,9 @@
 	STASPD = 6
 	STALUC = 8
 	speak = list("Grhh...", "Sssrrrh.", "Urrh.")
-	speak_emote = list("hisses low", "mutters")
-	emote_hear = list("rumbles from deep within.", "hisses like wind in roots.")
-	emote_see = list("sinks halfway into the earth.", "gazes steadily.")
+	speak_emote = list("低沉嘶嘶", "咕哝")
+	emote_hear = list("从深处发出隆隆声。", "如穿根之风般嘶嘶作响。")
+	emote_see = list("半身沉入大地。", "沉稳注视。")
 
 /datum/status_effect/buff/familiar/burdened_coil
 	id = "burdened_coil"
@@ -386,14 +386,14 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/familiar/burdened_coil
 
 /atom/movable/screen/alert/status_effect/buff/familiar/burdened_coil
-	name = "Burdened Coil"
-	desc = "You feel grounded and steady, as if strength coils beneath your skin."
+	name = "重负盘绕"
+	desc = "你感到脚踏实地而沉稳，仿佛力量在皮下盘绕。"
 
 /mob/living/simple_animal/pet/familiar/starfield_crow
-	name = "Starfield Zad"
-	desc = "Its glossy feathers shimmer with shifting constellations, eyes gleaming with uncanny awareness even in the darkest shadows."
-	summoning_emote = "A rift in the air reveals a fragment of the starry void, from which a sleek zad with feathers like the night sky takes flight."
-	animal_species = "Starfield Crow"
+	name = "星域扎德"
+	desc = "它光泽的羽毛闪烁着流转的星座，即使在最暗的阴影中眼睛也闪烁着离奇的知觉。"
+	summoning_emote = "空气裂开一道缝隙，显现出星空虚空的一角，一只羽毛如夜空般的利落扎德从中起飞。"
+	animal_species = "星域乌鸦"
 	icon_state = "crow_flying"
 	icon_living = "crow_flying"
 	icon_dead = "crow_dead"
@@ -409,9 +409,9 @@
 	STAWIL = 8
 	STALUC = 11
 	speak = list("Kraa.", "Caw.", "Krrrk.")
-	speak_emote = list("caws quietly", "croaks")
-	emote_hear = list("lets out a knowing caw.", "chirps like stars ticking.")
-	emote_see = list("flickers through constellations.", "tilts its head and vanishes for a second.")
+	speak_emote = list("轻声啼叫", "呱呱叫")
+	emote_hear = list("发出通晓的啼叫。", "像星辰滴答般啁啾。")
+	emote_see = list("在星座间闪烁。", "歪了下头然后消失了一秒。")
 
 /datum/status_effect/buff/familiar/starseam
 	id = "starseam"
@@ -419,14 +419,14 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/familiar/starseam
 
 /atom/movable/screen/alert/status_effect/buff/familiar/starseam
-	name = "Starseam"
-	desc = "You feel nudged by distant patterns. The world flows more legibly."
+	name = "星纹"
+	desc = "你感到被遥远的星图轻轻推动。世界的流动变得更容易解读。"
 
 /mob/living/simple_animal/pet/familiar/emberdrake
-	name = "Emberdrake"
-	desc = "Tiny and warm to the touch, this drake's wingbeats stir old memories. Runes flicker behind it like afterimages."
-	summoning_emote = "A hush falls as glowing ash collects into a fluttering emberdrake."
-	animal_species = "Emberdrake"
+	name = "余烬幼龙"
+	desc = "触感温热的微小龙兽，翅膀拍打时搅动着旧日的记忆。符文在它身后如残像般闪烁。"
+	summoning_emote = "沉寂降临，发光的灰烬凝聚成一只扑翼的余烬幼龙。"
+	animal_species = "余烬幼龙"
 	icon_state = "emberdrake"
 	icon_living = "emberdrake"
 	icon_dead = "emberdrake_dead"
@@ -441,9 +441,9 @@
 	STASPD = 8
 	STALUC = 8
 	speak = list("Ffff.", "Rrrhh.", "Chhhh.")
-	speak_emote = list("crackles", "speaks warmly")
-	emote_hear = list("rumbles like a hearth.", "flickers with flame.")
-	emote_see = list("glows briefly brighter.", "leaves a brief heat haze.")
+	speak_emote = list("噼啪作响", "温声细语")
+	emote_hear = list("如壁炉般隆隆作响。", "火焰般闪烁。")
+	emote_see = list("亮度短暂一涨。", "留下一片短暂的热浪。")
 
 /datum/status_effect/buff/familiar/steady_spark
 	id = "steady_spark"
@@ -451,14 +451,14 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/familiar/steady_spark
 
 /atom/movable/screen/alert/status_effect/buff/familiar/steady_spark
-	name = "Steady Spark"
-	desc = "Your thoughts don't burn, they smolder. Clear, slow, and lasting."
+	name = "稳定火花"
+	desc = "你的思绪没有燃烧，而是阴燃着。清晰、缓慢、持久。"
 
 /mob/living/simple_animal/pet/familiar/ripplefox
-	name = "Ripplefox"
-	desc = "They flickers when not directly observed. Leaves no tracks. You're not always sure they're still nearby."
-	summoning_emote = "A ripple in the air becomes a sleek fox, their fur twitching between shades of color as they pads forth."
-	animal_species = "Ripplefox"
+	name = "涟漪狐"
+	desc = "不直视它的时候它会闪烁。不留痕迹。你并不总是确定它是否还在附近。"
+	summoning_emote = "空气泛起涟漪，化作一只身形流畅的狐狸，毛皮在色彩间跳动，踱步走来。"
+	animal_species = "涟漪狐"
 	icon_state = "ripple"
 	icon_living = "ripple"
 	icon_dead = "ripple_dead"
@@ -470,9 +470,9 @@
 	STASPD = 11
 	STALUC = 11
 	speak = list("Yip!", "Hrrnk.", "Tchk-tchk.")
-	speak_emote = list("whispers fast", "speaks quickly")
-	emote_hear = list("lets out a playful yip.", "laughs like water in motion.")
-	emote_see = list("blurs like a ripple.", "isn't where it was a second ago.")
+	speak_emote = list("快速低语", "语速很快")
+	emote_hear = list("发出欢快的叫声。", "笑声如流水般。")
+	emote_see = list("如水波般模糊。", "已经不在刚才的位置了。")
 
 /datum/status_effect/buff/familiar/subtle_slip
 	id = "subtle_slip"
@@ -480,14 +480,14 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/familiar/subtle_slip
 
 /atom/movable/screen/alert/status_effect/buff/familiar/subtle_slip
-	name = "Subtle Slip"
-	desc = "Things seem a bit looser around you, a gap, a chance, a beat ahead."
+	name = "微妙滑步"
+	desc = "周围的一切似乎都松动了一些，留出了空隙、机会、更快的节拍。"
 
 /mob/living/simple_animal/pet/familiar/whisper_stoat
-	name = "Whisper Stoat"
-	desc = "Its gaze is too knowing. It tilts its head as if listening to something inside your skull."
-	summoning_emote = "A thought twists into form, a tiny stoat slinks into view."
-	animal_species = "Whisper Stoat"
+	name = "低语鼬"
+	desc = "它的目光太过通透。它歪着头，仿佛在聆听你头颅内的某种东西。"
+	summoning_emote = "一个念头扭曲成形，一只小小的鼬悄然溜进视野。"
+	animal_species = "低语鼬"
 	icon_state = "whisper"
 	icon_living = "whisper"
 	icon_dead = "whisper_dead"
@@ -501,9 +501,9 @@
 	STASPD = 11
 	STALUC = 9
 	speak = list("Tchhh.", "Hmm.", "Skkk.")
-	speak_emote = list("mutters", "speaks softly")
-	emote_hear = list("murmurs in your direction.", "makes a sound you forget instantly.")
-	emote_see = list("wraps around a shadow.", "slips behind a thought.")
+	speak_emote = list("低语", "轻声说话")
+	emote_hear = list("朝你方向低语。", "发出一种你立刻忘记的声音。")
+	emote_see = list("缠绕着一道影子。", "溜进了一个念头背后。")
 
 /datum/status_effect/buff/familiar/noticed_thought
 	id = "noticed_thought"
@@ -511,14 +511,14 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/familiar/noticed_thought
 
 /atom/movable/screen/alert/status_effect/buff/familiar/noticed_thought
-	name = "Noticed Thought"
-	desc = "Everything makes just a bit more sense. You catch patterns more quickly."
+	name = "被留意的思绪"
+	desc = "一切都变得更加有意义。你更快地捕捉到规律。"
 
 /mob/living/simple_animal/pet/familiar/thornback_turtle
-	name = "Thornback Turtle"
-	desc = "It barely moves, but seems unshakable. Vines twist gently around its limbs."
-	summoning_emote = "The ground gives a slow rumble. A turtle with a bark-like shell emerges from the soil."
-	animal_species = "Thornback Turtle"
+	name = "棘背龟"
+	desc = "它几乎不动，但似乎不可动摇。藤蔓轻柔地缠绕着它的四肢。"
+	summoning_emote = "大地发出缓慢的隆隆声。一只壳如树皮的龟从土壤中钻出。"
+	animal_species = "棘背龟"
 	icon_state = "thornback"
 	icon_living = "thornback"
 	icon_dead = "thornback_dead"
@@ -531,9 +531,9 @@
 	STAWIL = 12
 	STALUC = 8
 	speak = list("Hrmm.", "Grunk.", "Mmm.")
-	speak_emote = list("rumbles", "speaks slowly")
-	emote_hear = list("grunts like shifting boulders.", "sighs like old wood.")
-	emote_see = list("retracts slightly into its shell.", "blinks slowly.")
+	speak_emote = list("隆隆作响", "缓缓而语")
+	emote_hear = list("如巨石挪动般哼鸣。", "如古旧木头般叹息。")
+	emote_see = list("微微缩进壳里。", "缓慢眨眼。")
 
 /datum/status_effect/buff/familiar/worn_stone
 	id = "worn_stone"
@@ -541,5 +541,5 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/familiar/worn_stone
 
 /atom/movable/screen/alert/status_effect/buff/familiar/worn_stone
-	name = "Worn Stone"
-	desc = "Nothing feels urgent. You can take your time... and take a hit."
+	name = "磨蚀之石"
+	desc = "没什么觉得是紧迫的。你可以慢慢来……并且挨得住一击。"

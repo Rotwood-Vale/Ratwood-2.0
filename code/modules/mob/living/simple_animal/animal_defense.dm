@@ -39,7 +39,7 @@
 		riding_datum.driver = M
 		riding_datum.handle_vehicle_offsets()
 
-	visible_message(span_notice("[M] pulls [grab_target] onto [src]."), span_notice("[M] pulls [grab_target] onto me."))
+	visible_message(span_notice("[M]将[grab_target]拉到[src]身上。"), span_notice("[M]将[grab_target]拉到我身上。"))
 	return TRUE
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M)
@@ -49,15 +49,15 @@
 	switch(M.used_intent.type)
 		if(INTENT_HELP)
 			if (health > 0)
-				visible_message(span_notice("[M] [response_help_continuous] [src]."), \
-								span_notice("[M] [response_help_continuous] you."), null, null, M)
-				to_chat(M, span_notice("I [response_help_simple] [src]."))
+				visible_message(span_notice("[M] [response_help_continuous] [src]。"), \
+								span_notice("[M] [response_help_continuous] 我。"), null, null, M)
+				to_chat(M, span_notice("我[response_help_simple]了[src]。"))
 				playsound(loc, 'sound/blank.ogg', 50, TRUE, -1)
 			return TRUE
 
 		if(INTENT_GRAB)
 			if(!M.has_hand_for_held_index(M.active_hand_index, TRUE)) //we obviously have a hadn, but we need to check for fingers/prosthetics
-				to_chat(M, span_warning("I can't move the fingers."))
+				to_chat(M, span_warning("我的手指动不了。"))
 				return
 			grabbedby(M)
 			return TRUE
@@ -65,7 +65,7 @@
 		if(INTENT_HARM)
 			var/atk_verb = pick(M.used_intent.attack_verb)
 			if(HAS_TRAIT(M, TRAIT_PACIFISM))
-				to_chat(M, span_warning("I don't want to hurt [src]!"))
+				to_chat(M, span_warning("我不想伤害[src]！"))
 				return
 			M.do_attack_animation(src, M.used_intent.animname)
 			playsound(loc, attacked_sound, 25, TRUE, -1)
@@ -76,8 +76,8 @@
 			updatehealth()
 			var/hitlim = simple_limb_hit(M.zone_selected)
 			simple_woundcritroll(M.used_intent.blade_class, damage, M, hitlim)
-			visible_message(span_danger("[M] [atk_verb] [src]![next_attack_msg.Join()]"),\
-							span_danger("[M] [atk_verb] me![next_attack_msg.Join()]"), null, COMBAT_MESSAGE_RANGE)
+			visible_message(span_danger("[M] [atk_verb]了[src]![next_attack_msg.Join()]"),\
+							span_danger("[M] [atk_verb]了我![next_attack_msg.Join()]"), null, COMBAT_MESSAGE_RANGE)
 			next_attack_msg.Cut()
 			return TRUE
 
@@ -126,35 +126,35 @@
 									break
 					if((!target_table && !target_collateral_mob) || directional_blocked)
 						target.Stun(10)
-						target.visible_message(span_danger("[user.name] shoves [target.name]!"),
-										span_danger("I'm shoved by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
-						to_chat(user, span_danger("I shove [target.name]!"))
+						target.visible_message(span_danger("[user.name]推搡了[target.name]！"),
+									span_danger("我被[user.name]推搡了！"), span_hear("你听到激烈的推搡声，随后是一声闷响！"), COMBAT_MESSAGE_RANGE, user)
+						to_chat(user, span_danger("我推搡了[target.name]！"))
 						log_combat(user, target, "shoved", "knocking them down")
 					else if(target_table)
 						target.Stun(10)
-						target.visible_message(span_danger("[user.name] shoves [target.name] onto \the [target_table]!"),
-										span_danger("I'm shoved onto \the [target_table] by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
-						to_chat(user, span_danger("I shove [target.name] onto \the [target_table]!"))
+						target.visible_message(span_danger("[user.name]把[target.name]推搡到\the [target_table]上！"),
+									span_danger("我被[user.name]推搡到\the [target_table]上了！"), span_hear("你听到激烈的推搡声，随后是一声闷响！"), COMBAT_MESSAGE_RANGE, user)
+						to_chat(user, span_danger("我把[target.name]推搡到\the [target_table]上了！"))
 						target.throw_at(target_table, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
 						log_combat(user, target, "shoved", "onto [target_table] (table)")
 					else if(target_collateral_mob)
 						target.Stun(10)
 						target_collateral_mob.Stun(SHOVE_KNOCKDOWN_COLLATERAL)
-						target.visible_message(span_danger("[user.name] shoves [target.name] into [target_collateral_mob.name]!"),
-							span_danger("I'm shoved into [target_collateral_mob.name] by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
-						to_chat(user, span_danger("I shove [target.name] into [target_collateral_mob.name]!"))
+						target.visible_message(span_danger("[user.name]把[target.name]推搡到[target_collateral_mob.name]身上！"),
+						span_danger("我被[user.name]推搡到[target_collateral_mob.name]身上！"), span_hear("你听到激烈的推搡声，随后是一声闷响！"), COMBAT_MESSAGE_RANGE, user)
+						to_chat(user, span_danger("我把[target.name]推搡到[target_collateral_mob.name]身上！"))
 						log_combat(user, target, "shoved", "into [target_collateral_mob.name]")
 				else
-					target.visible_message(span_danger("[user.name] shoves [target.name]!"),
-									span_danger("I'm shoved by [user.name]!"), span_hear("I hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, user)
-					to_chat(user, span_danger("I shove [target.name]!"))
+					target.visible_message(span_danger("[user.name]推搡了[target.name]！"),
+								span_danger("我被[user.name]推搡了！"), span_hear("你听到激烈的推搡声！"), COMBAT_MESSAGE_RANGE, user)
+					to_chat(user, span_danger("我推搡了[target.name]！"))
 					log_combat(user, target, "shoved")
 			return TRUE
 
 	if(M.used_intent.unarmed)
 		var/atk_verb = pick(M.used_intent.attack_verb)
 		if(HAS_TRAIT(M, TRAIT_PACIFISM))
-			to_chat(M, span_warning("I don't want to hurt [src]!"))
+			to_chat(M, span_warning("我不想伤害[src]！"))
 			return
 		M.do_attack_animation(src, M.used_intent.animname)
 		playsound(loc, attacked_sound, 25, TRUE, -1)
@@ -165,8 +165,8 @@
 		updatehealth()
 		var/hitlim = simple_limb_hit(M.zone_selected)
 		simple_woundcritroll(M.used_intent.blade_class, damage, M, hitlim)
-		visible_message(span_danger("[M] [atk_verb] [src]![next_attack_msg.Join()]"),\
-						span_danger("[M] [atk_verb] me![next_attack_msg.Join()]"), null, COMBAT_MESSAGE_RANGE)
+		visible_message(span_danger("[M] [atk_verb]了[src]![next_attack_msg.Join()]"),\
+						span_danger("[M] [atk_verb]了我![next_attack_msg.Join()]"), null, COMBAT_MESSAGE_RANGE)
 		next_attack_msg.Cut()
 		return TRUE
 
@@ -178,8 +178,8 @@
 		var/hitlim = simple_limb_hit(M.zone_selected)
 		attack_threshold_check(damage, M.melee_damage_type)
 		simple_woundcritroll(M.a_intent.blade_class, damage, M, hitlim)
-		visible_message(span_danger("\The [M] [pick(M.a_intent.attack_verb)] [src]![next_attack_msg.Join()]"), \
-					span_danger("\The [M] [pick(M.a_intent.attack_verb)] me![next_attack_msg.Join()]"), null, COMBAT_MESSAGE_RANGE)
+		visible_message(span_danger("\The [M] [pick(M.a_intent.attack_verb)]了[src]![next_attack_msg.Join()]"), \
+					span_danger("\The [M] [pick(M.a_intent.attack_verb)]了我![next_attack_msg.Join()]"), null, COMBAT_MESSAGE_RANGE)
 		next_attack_msg.Cut()
 
 /mob/living/simple_animal/onbite(mob/living/carbon/human/user)
@@ -190,30 +190,30 @@
 	user.next_attack_msg.Cut()
 	if(stat == DEAD)
 		if(user.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder))
-			to_chat(user, span_notice("My power is weakened, I cannot heal!"))
+			to_chat(user, span_notice("我的力量被削弱了，我无法治疗！"))
 			return
 		if(user.mind && istype(user, /mob/living/carbon/human/species/werewolf))
-			visible_message(span_danger("The werewolf ravenously consumes the [src]!"))
-			to_chat(src, span_warning("I feed on succulent flesh. I feel reinvigorated."))
+			visible_message(span_danger("狼人贪婪地吞噬了[src]！"))
+			to_chat(src, span_warning("我啃食着鲜美的肉。我感到精神焕发。"))
 			user.reagents.add_reagent(/datum/reagent/medicine/healthpot, 30)
 			gib()
 		if(user.mind && istype(user, /mob/living/carbon/human/species/wildshape/volf))
-			visible_message(span_danger("The volf ravenously consumes the [src]!"))
-			to_chat(src, span_warning("I feed on succulent flesh. I feel satiated."))
+			visible_message(span_danger("沃尔夫贪婪地吞噬了[src]！"))
+			to_chat(src, span_warning("我啃食着鲜美的肉。我感到饱足了。"))
 			user.reagents.add_reagent(/datum/reagent/consumable/nutriment, 15)
 			gib()
 		return
 	if(src.apply_damage(damage, BRUTE))
 		if(istype(user, /mob/living/carbon/human/species/werewolf))
-			visible_message(span_danger("The werewolf bites into [src] and thrashes!"))
+			visible_message(span_danger("狼人咬住[src]猛甩！"))
 		else
-			visible_message(span_danger("[user] bites [src]! What is wrong with them?"))
+			visible_message(span_danger("[user]咬了[src]！他们怎么了？"))
 
 /mob/living/simple_animal/onkick(mob/M)
 	var/mob/living/simple_animal/target = src
 	var/mob/living/carbon/human/user = M
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("I don't want to harm [target]!"))
+		to_chat(user, span_warning("我不想伤害[target]！"))
 		return FALSE
 	if(user.IsKnockdown())
 		return FALSE
@@ -221,12 +221,12 @@
 		return FALSE
 	if(!HAS_TRAIT(user, TRAIT_GARROTED))	
 		if(user.check_leg_grabbed(1) || user.check_leg_grabbed(2))
-			to_chat(user, span_notice("I can't move my leg!"))
+			to_chat(user, span_notice("我的腿动不了！"))
 			return
 	if(user.stamina >= user.max_stamina)
 		return FALSE
 	if(user.loc == target.loc)
-		to_chat(user, span_warning("I'm too close to get a good kick in."))
+		to_chat(user, span_warning("我离得太近，没法好好踢一脚。"))
 		return FALSE
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
@@ -237,9 +237,9 @@
 
 		target.Move(target_shove_turf, shove_dir)
 
-		target.visible_message(span_danger("[user.name] kicks [target.name]!"),
-						span_danger("I'm kicked by [user.name]!"), span_hear("I hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_danger("I kick [target.name]!"))
+		target.visible_message(span_danger("[user.name]踢了[target.name]！"),
+						span_danger("我被[user.name]踢了！"), span_hear("你听到激烈的推搡声！"), COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_danger("我踢了[target.name]！"))
 		log_combat(user, target, "kicked")
 		playsound(target, 'sound/combat/hits/kick/kick.ogg', 100, TRUE, -1)
 		target.lastattacker = user.real_name
@@ -257,7 +257,7 @@
 		temp_damage *= damage_coeff[damagetype]
 
 	if(temp_damage >= 0 && temp_damage <= force_threshold)
-		visible_message(span_warning("[src] looks unharmed!"))
+		visible_message(span_warning("[src]看起来毫发无伤！"))
 		return FALSE
 	else
 		apply_damage(damage, damagetype, null, getarmor(null, armorcheck))

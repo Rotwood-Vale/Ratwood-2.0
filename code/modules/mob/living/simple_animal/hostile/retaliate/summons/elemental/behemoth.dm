@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/behemoth
 	icon = 'icons/mob/summonable/32x64.dmi'
-	name = "earthen behemoth"
-	summon_primer = "You are an behemoth, a large elemental. Elementals such as yourself often lead groups of wardens in defending your plane. Now you've been pulled from your home into a new world, that is decidedly less peaceful then your carefully guarded plane. How you react to these events, only time can tell."
+	name = "大地巨兽"
+	summon_primer = "你是一头巨兽，一位庞大的元素生物。像你这样的元素生物通常带领着一群守望者在你的位面中守卫家园。如今你被从故乡拖入了一个新世界，这个世界显然远比你精心守护的位面更加动荡。你将如何应对这些事件，只有时间才能揭晓。"
 	summon_tier = 3
 	icon_state = "behemoth"
 	icon_living = "behemoth"
@@ -127,7 +127,7 @@
 		return 1
 
 /obj/effect/proc_holder/spell/invoked/ele_quake
-	name = "Quake"
+	name = "地震"
 	recharge_time = 20 SECONDS
 	overlay_state = "bloodrage"
 	chargetime = 0
@@ -149,7 +149,7 @@
 	var/turf/target_turf = target
 	if(isliving(target))
 		target_turf = target.loc
-	visible_message(span_colossus("[src] shakes the ground beneath [target]!"))
+	visible_message(span_colossus("[src]撼动了[target]脚下的地面！"))
 	playsound(src,'sound/combat/hits/onstone/wallhit.ogg', 600, TRUE, 10)
 	var/turf/focalpoint = target_turf
 	for (var/turf/open/visual in view(1, focalpoint))
@@ -158,7 +158,7 @@
 	for (var/mob/living/screenshaken in view(1, focalpoint))
 		shake_camera(screenshaken, 5, 5)
 	for (var/mob/living/shaken in view(1, focalpoint))
-		to_chat(shaken, span_danger("<B>The ground ruptures beneath your feet!</B>"))
+		to_chat(shaken, span_danger("<B>地面在脚下崩裂！</B>"))
 		shaken.Paralyze(50)
 		var/obj/structure/flora/rock/giant_rock = new(get_turf(shaken))
 		QDEL_IN(giant_rock, 200)

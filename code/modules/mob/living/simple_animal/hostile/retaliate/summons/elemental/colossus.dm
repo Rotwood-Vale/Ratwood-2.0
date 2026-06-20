@@ -1,10 +1,10 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/colossus
 	icon = 'icons/mob/summonable/64x64.dmi'
-	name = "earthen colossus"
+	name = "大地巨像"
 	icon_state = "colossus"
 	icon_living = "colossus"
 	icon_dead = "vvd"
-	summon_primer = "You are an colossus, a massive elemental. Elementals such as yourself are immeasurably old. Now you've been pulled from your home into a new world, that is decidedly less peaceful then your carefully guarded plane. How you react to these events, only time can tell."
+	summon_primer = "你是一尊巨像，一位庞然无匹的元素生物。像你这样的元素生物存在了不可估量的岁月。如今你被从故乡拖入了一个新世界，这个世界显然远比你精心守护的位面更加动荡。你将如何应对这些事件，只有时间才能揭晓。"
 	summon_tier = 4
 	gender = MALE
 	emote_hear = null
@@ -47,7 +47,7 @@
 	dodgetime = 0
 	aggressive = 1
 	inherent_spells = list(/obj/effect/proc_holder/spell/self/colossus_stomp)
-	ranged_message = "launches earth"
+	ranged_message = "投掷土石"
 
 	STACON = 20
 	STAWIL = 20
@@ -115,7 +115,7 @@
 	qdel(src)
 
 /obj/effect/proc_holder/spell/self/colossus_stomp
-	name = "Stomp"
+	name = "践踏"
 	recharge_time = 25 SECONDS
 	overlay_state = "bloodrage"
 	chargetime = 0
@@ -133,7 +133,7 @@
 		var/mob/living/L = stomped
 		L.throw_at(throw_target, 7, 4)
 		L.adjustBruteLoss(60)
-	visible_message(span_colossus("[src] stomps the ground!"))
+	visible_message(span_colossus("[src]践踏地面！"))
 	playsound(src,'sound/misc/bamf.ogg', 600, TRUE, 10)
 	stomp_cd = world.time
 
@@ -162,7 +162,7 @@
 	)
 	var/reinforcement_count = 3
 	if(prob(20))
-		src.visible_message(span_notice("[src] breaks apart, scattering minor elementals about!"))
+		src.visible_message(span_notice("[src]碎裂开来，散出小型元素生物！"))
 		while(reinforcement_count > 0)
 			var/list/turflist = list()
 			for(var/turf/t in RANGE_TURFS(1, src))

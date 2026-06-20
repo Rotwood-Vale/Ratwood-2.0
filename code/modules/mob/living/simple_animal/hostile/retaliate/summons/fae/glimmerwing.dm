@@ -1,10 +1,10 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/glimmerwing
 	icon = 'icons/mob/summonable/32x32.dmi'
-	name = "glimmerwing"
+	name = "微光翼"
 	icon_state = "glimmerwing"
 	icon_living = "glimmerwing"
 	icon_dead = "vvd"
-	summon_primer = "You are a glimmerwing, a moderate sized fae. You spend time wandering forests, cursing unweary travellers. Now you've been pulled from your home into a new world, that is decidedly less wild and natural. How you react to these events, only time can tell."
+	summon_primer = "你是一只微光翼，中等体型的精类生物。你以漫游森林、诅咒疏于防范的旅人为乐。如今你被从故乡拖入了一个新世界，这个世界显然远不如从前那般狂野自然。你将如何应对这些事件，只有时间才能揭晓。"
 	summon_tier = 2
 	gender = MALE
 	emote_hear = null
@@ -75,7 +75,7 @@
 	if(world.time >= src.drug_cd + 25 SECONDS)
 		var/mob/living/targetted = target
 		targetted.apply_status_effect(/datum/status_effect/buff/seelie_drugs)
-		targetted.visible_message(span_danger("[src] dusts [target] with some kind of powder!"))
+		targetted.visible_message(span_danger("[src]向[target]撒了某种粉末！"))
 		targetted.adjustToxLoss(15)
 		src.drug_cd = world.time
 	if(!QDELETED(target))

@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/rogue/haunt
-	name = "haunt"
+	name = "幽魂"
 	desc = ""
 	icon = 'icons/roguetown/mob/monster/wraith.dmi'
 	icon_state = "haunt"
@@ -13,8 +13,8 @@
 	gender = MALE
 	speak_chance = 0
 	turns_per_move = 5
-	response_help_continuous = "passes through"
-	response_help_simple = "pass through"
+	response_help_continuous = "穿过了"
+	response_help_simple = "穿过"
 	maxHealth = HAUNT_HEALTH
 	health = HAUNT_HEALTH
 	stat_attack = UNCONSCIOUS
@@ -30,7 +30,7 @@
 	dodge_sound = 'sound/combat/dodge.ogg'
 	parry_sound = "bladedmedium"
 	d_intent = INTENT_PARRY
-	speak_emote = list("growls")
+	speak_emote = list("低吼")
 	limb_destroyer = 1
 	del_on_death = TRUE
 	STALUC = 11
@@ -101,8 +101,8 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/rogue/haunt/omen
-	name = "omen"
-	desc = "A vengeful spirit comes to haunt the living!"
+	name = "预兆"
+	desc = "一个前来侵扰生者的复仇之魂！"
 	maxHealth = 200
 	health = 200
 	melee_damage_lower = 30
@@ -226,14 +226,14 @@
 	if(. && prob(10) && iscarbon(target))
 		var/mob/living/carbon/C = target
 		C.Immobilize(50)
-		C.visible_message(span_danger("\The [src] paralyzes \the [C] in fear!"), \
-				span_danger("\The [src] paralyzes me!"))
+		C.visible_message(span_danger("\The [src]让\the [C]在恐惧中动弹不得！"), \
+				span_danger("\The [src]让我动弹不得！"))
 		emote("laugh")
 
 /datum/intent/simple/slash
 	name = "chop"
 	icon_state = "inchop"
-	attack_verb = list("cuts", "slashes")
+	attack_verb = list("切割", "砍")
 	animname = "cut"
 	blade_class = BCLASS_CHOP
 	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')

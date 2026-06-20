@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/boss
-	name = "A Perfectly Generic Boss Placeholder"
+	name = "一个完全通用的Boss占位符"
 	desc = ""
 	robust_searching = 1
 	stat_attack = UNCONSCIOUS

@@ -1,12 +1,12 @@
 /obj/item/reagent_containers/food/snacks/smallrat
-	name = "rat"
-	desc = "A scurrying rodent often found in sewers and pantries."
+	name = "老鼠"
+	desc = "一种常在阴沟和食品储藏间里窜动的啮齿动物。"
 	icon_state = "srat"
 	icon = 'icons/roguetown/mob/monster/rat.dmi'
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	foodtype = RAW
-	verb_say = "squeaks"
-	verb_yell = "squeaks"
+	verb_say = "吱吱叫"
+	verb_yell = "吱吱叫"
 	obj_flags = CAN_BE_HIT
 	var/dead = FALSE
 	eat_effect = /datum/status_effect/debuff/uncookedfood
@@ -22,11 +22,11 @@
 	if(loc == user)
 		if(user.mind && user.mind.has_antag_datum(/datum/antagonist/vampire))
 			if(dead)
-				to_chat(user, span_warning("It's dead."))
+				to_chat(user, span_warning("它已经死了。"))
 				return
 			if(do_after(user, 30, target = src))
-				user.visible_message(span_warning("[user] drinks from [src]!"),\
-				span_warning("I drink from [src]!"))
+				user.visible_message(span_warning("[user]从[src]身上吸血！"),\
+				span_warning("我从[src]身上吸血！"))
 				playsound(user.loc, 'sound/misc/drink_blood.ogg', 100, FALSE, -4)
 				user.adjust_bloodpool(50)
 				dead = TRUE
@@ -38,14 +38,14 @@
 	return ..()
 
 /obj/item/reagent_containers/food/snacks/rogue/friedrat
-	name = "fried rat"
+	name = "油炸老鼠"
 	desc = ""
 	icon = 'icons/roguetown/items/food.dmi'
 	icon_state = "cookedrat"
 	bitesize = 2
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	w_class = WEIGHT_CLASS_TINY
-	tastes = list("burnt flesh" = 1)
+	tastes = list("焦肉" = 1)
 	eat_effect = null
 	rotprocess = SHELFLIFE_SHORT
 	sellprice = 0
@@ -98,7 +98,7 @@
 				else
 					dir = pick(GLOB.cardinals)
 					step(src, dir)
-					to_chat(user, span_warning("I fail to snatch it by the tail!"))
+					to_chat(user, span_warning("我没能抓住它的尾巴！"))
 					playsound(src, pick('sound/vo/mobs/rat/rat_life.ogg','sound/vo/mobs/rat/rat_life2.ogg','sound/vo/mobs/rat/rat_life3.ogg'), 100, TRUE, -1)
 					return
 	..()
@@ -146,7 +146,7 @@
 				if(isturf(loc))
 					dir = pick(GLOB.cardinals)
 					step(src, dir)
-					to_chat(user, span_warning("The vermin dodges my attack."))
+					to_chat(user, span_warning("这害兽躲开了我的攻击。"))
 					playsound(src, pick('sound/vo/mobs/rat/rat_life.ogg','sound/vo/mobs/rat/rat_life2.ogg','sound/vo/mobs/rat/rat_life3.ogg'), 100, TRUE, -1)
 					return
 	..()

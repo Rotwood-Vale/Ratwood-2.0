@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/boss/fishboss
-	name = "Duke of the Deep"
+	name = "深渊公爵"
 	desc = ""
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	boss_abilities = list(/datum/action/boss/lich_summon_minions)
@@ -12,7 +12,7 @@
 	ranged = 1
 	rapid = 4
 	rapid_fire_delay = 8
-	ranged_message = "spits stones"
+	ranged_message = "吐石头"
 	ranged_cooldown_time = 200
 	ranged_ignores_vision = TRUE
 	environment_smash = 0
@@ -87,7 +87,7 @@
 	return TRUE
 
 /mob/living/simple_animal/hostile/boss/fishboss/death()
-	src.visible_message("<span class='warning'>The bloated, grotesque fishman explodes in a shower of gore!</span>","<span class='warning'>The bloated, grotesque fishman explodes in a shower of gore!</span>")
+	src.visible_message("<span class='warning'>那臃肿而狰狞的鱼人在一片血肉横飞中炸裂开来！</span>","<span class='warning'>那臃肿而狰狞的鱼人在一片血肉横飞中炸裂开来！</span>")
 	src.spawn_gibs()
 	src.spawn_gibs()
 	src.spawn_gibs()

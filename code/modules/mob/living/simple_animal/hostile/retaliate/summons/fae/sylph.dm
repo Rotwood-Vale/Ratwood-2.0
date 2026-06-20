@@ -45,13 +45,13 @@
 	ranged = TRUE
 	rapid = 3
 	projectiletype = /obj/projectile/magic/frostbolt/greater
-	ranged_message = "throws icy magick"
+	ranged_message = "投掷冰霜魔法"
 	var/shroom_cd = 0
 	var/summon_cd = 0
 	inherent_spells = list(/obj/effect/proc_holder/spell/invoked/create_shrooms)
 
 /obj/projectile/magic/frostbolt/greater
-	name = "greater frostbolt"
+	name = "强效冰霜箭"
 	damage = 25
 	range = 6
 	speed = 6 //higher is slower
@@ -66,7 +66,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/sylph/OpenFire(atom/A)
 	if(CheckFriendlyFire(A))
 		return
-	visible_message(span_danger("<b>[src]</b> [ranged_message] at [A]!"))
+	visible_message(span_danger("<b>[src]</b> [ranged_message]向[A]!"))
 
 	if(world.time >= shroom_cd + 25 SECONDS && !mind)
 		var/mob/living/targetted = target
@@ -84,7 +84,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/sylph/proc/create_shroom(atom/target)
 	if(!target)
 		return
-	target.visible_message(span_boldwarning("Kneestingers pop out from the ground around [target]!"))
+	target.visible_message(span_boldwarning("刺膝草从[target]周围的地面冒出！"))
 	var/turf/target_turf = target // need to handle it this way so player sylphs can target turfs with this spell
 	if(isliving(target))
 		target_turf = target.loc
@@ -112,7 +112,7 @@
 	qdel(src)
 
 /obj/effect/proc_holder/spell/invoked/create_shrooms
-	name = "Spread Kneestingers"
+	name = "散布刺膝草"
 	recharge_time = 20 SECONDS
 	sound = 'sound/magic/churn.ogg'
 	overlay_state = "blesscrop"
@@ -123,7 +123,7 @@
 	if(istype(user, /mob/living/simple_animal/hostile/retaliate/rogue/fae/sylph))
 		var/mob/living/simple_animal/hostile/retaliate/rogue/fae/sylph/treeguy = user
 		if(world.time <= treeguy.shroom_cd + 200)//shouldn't ever happen cuz the spell cd is the same as summon_cd but I'd rather it check with the internal cd just in case
-			to_chat(user,span_warning("Too soon!"))
+			to_chat(user,span_warning("太快了！"))
 			revert_cast()
 			return FALSE
 		if(treeguy.binded)

@@ -19,7 +19,7 @@
 		return
 	pcollar = P
 	regenerate_icons()
-	to_chat(user, span_notice("I put the [P] around [src]'s neck."))
+	to_chat(user, span_notice("我把[P]戴在了[src]的脖子上。"))
 	if(P.tagname && !unique_pet)
 		fully_replace_character_name(null, "\proper [P.tagname]")
 

@@ -1,7 +1,7 @@
 
 /mob/living/simple_animal/hostile/rogue/werewolf
-	name = "WEREWOLF"
-	desc = "THE HOWL OF A MAD GOD SHAKES YOUR BONES! FLESH SHORN INTO VISCERA SPRAYS THE WALLS! RIP AND TEAR!"
+	name = "狼人"
+	desc = "疯神的嚎叫撼动你的骨髓！血肉化作内脏飞溅墙头！撕碎一切！"
 	icon = 'icons/roguetown/mob/monster/werewolf.dmi'
 	gender = MALE
 	icon_state = "wwolf_m"

@@ -6,7 +6,7 @@
 ///       kneestingers on all 4 cardinals + 5×5 solid vine field around self
 ///   - Lighter, lower health than the full dryad
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/dryad/lesser
-	name = "lesser dryad"
+	name = "次级树精"
 	gender = FEMALE
 	health = 450
 	maxHealth = 450
@@ -153,7 +153,7 @@
 	if(world.time < special_cd + 40 SECONDS)
 		return FALSE
 	special_cd = world.time
-	visible_message(span_boldwarning("[src] raises its arms — thorns and vines heed the call!"))
+	visible_message(span_boldwarning("[src]举起双臂——荆棘与藤蔓应召而来！"))
 	playsound(get_turf(src), 'sound/magic/churn.ogg', 60, TRUE)
 	var/turf/T = surge_turf || get_turf(src)
 	if(!T)
@@ -182,7 +182,7 @@
 		melee_damage_upper = initial(melee_damage_upper)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/dryad/lesser/death(gibbed)
-	visible_message(span_boldwarning("[src] dissolves into greenish light..."))
+	visible_message(span_boldwarning("[src]化作淡绿色的光芒消散了..."))
 	playsound(get_turf(src), 'sound/items/dig_shovel.ogg', 70, TRUE)
 	if(summoner_spell)
 		summoner_spell.on_dryad_deleted(src)
@@ -203,7 +203,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/dryad/lesser/examine(mob/user)
 	. = ..()
-	. += span_info("A spirit of a sanctified tree, bound to serve by the rites of Dendor. Its bark-skin is etched with glowing sigils, and vines curl idly about its limbs. Though lesser than the great dryads of old, the fury of the forest still rides within.")
+	. += span_info("一棵圣树的精魂，受登多尔的仪式束缚而侍奉。它的树皮上刻着发光的符文，藤蔓慵懒地缠绕在它的四肢上。虽不及古代的那些大树精，但森林的怒火仍蕴藏其中。")
 
 /// Record the attacker's intent damage type so adjustBruteLoss can apply correct bark reduction.
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/dryad/lesser/attacked_by(obj/item/I, mob/living/user)
@@ -230,7 +230,7 @@
 		amount = max(0, amount - absorbed)
 		if(bark_integrity <= 0 && !bark_broken)
 			bark_broken = TRUE
-			visible_message(span_boldwarning("[src]'s protective bark splinters and breaks!"))
+			visible_message(span_boldwarning("[src]的保护性树皮碎裂崩坏了！"))
 	return ..(amount, updating_health, forced)
 
 /// Restart the regen countdown — called after every hit so regen waits until combat ends.
@@ -261,7 +261,7 @@
 	if(isturf(loc) && contains_vines(loc) && health < maxHealth)
 		if(!has_status_effect(/datum/status_effect/buff/healing))
 			apply_status_effect(/datum/status_effect/buff/healing, 1.5)
-		visible_message(span_notice("[src] mends itself in the vines."))
+		visible_message(span_notice("[src]在藤蔓中修补自身。"))
 	vine_regen_timer = addtimer(CALLBACK(src, PROC_REF(vine_heal_tick)), 100, TIMER_STOPPABLE)  // Repeat every 10 s
 
 /// Apply a Dendor-blessed frenzy: reduces melee_cooldown for 5 seconds.
@@ -273,11 +273,11 @@
 	if(bloomstone_boost)
 		melee_cooldown = round(initial(melee_cooldown) * 0.5)
 		frenzy_boost = 2
-		visible_message(span_boldwarning("[src] blazes with the Treefather's fury — its movements become a blur!"))
+		visible_message(span_boldwarning("[src]燃起了树父的怒火——它的动作快如幻影！"))
 	else
 		melee_cooldown = round(initial(melee_cooldown) * 0.75)
 		frenzy_boost = 1
-		visible_message(span_warning("[src] surges with Dendor's blessing, striking faster!"))
+		visible_message(span_warning("[src]在登多尔的祝福下涌动，出击更快了！"))
 	// Visual: druid-armor-style light radius + Living Light outline.
 	set_light(1, 1, 2, l_color = "#58C86A")
 	add_filter("dryad_frenzy_outline", 2, list("type" = "outline", "color" = "#58C86A", "alpha" = 60, "size" = 1))

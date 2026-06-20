@@ -1,7 +1,7 @@
 /datum/intent/simple/elemental_unarmed
 	name = "elemental unarmed"
 	icon_state = "instrike"
-	attack_verb = list("punches", "strikes", "rolls on", "crushes")
+	attack_verb = list("拳击", "击打", "滚压", "碾碎")
 	animname = "blank22"
 	blade_class = BCLASS_BLUNT
 	hitsound = null
@@ -12,7 +12,7 @@
 /datum/intent/simple/elementalt2_unarmed
 	name = "elemental unarmed"
 	icon_state = "instrike"
-	attack_verb = list("punches", "strikes", "kicks", "steps on", "crushes")
+	attack_verb = list("拳击", "击打", "踢", "踩踏", "碾碎")
 	animname = "blank22"
 	blade_class = BCLASS_SMASH
 	hitsound = null

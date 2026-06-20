@@ -7,8 +7,8 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/leylinelycan
 	icon = 'icons/mob/summonable/32x32.dmi'
-	name = "Leyline Lycan"
-	desc = "A creature made of leyline energy. It is highly territorial and guards it's home leyline jealously."
+	name = "灵脉狼人"
+	desc = "由灵脉能量构成的生物。极具领地意识，嫉妒地守护着自己的家园灵脉。"
 	icon_state = "leycreature"
 	icon_living = "leycreature"
 	icon_dead = "leycreature"
@@ -118,10 +118,10 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/leylinelycan/proc/leyline_teleport_2(turf/T, turf/source)
 	animate(src, alpha = 0, time = 2, easing = EASE_OUT) //fade out
-	visible_message(span_warning("[src] dives into a leyline rift!"))
+	visible_message(span_warning("[src]潜入了一条地脉裂隙！"))
 	addtimer(CALLBACK(src, PROC_REF(leyline_teleport_3), T), 0.2 SECONDS)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/leylinelycan/proc/leyline_teleport_3(turf/T)
 	forceMove(T)
 	animate(src, alpha = 255, time = 2, easing = EASE_IN) //fade IN
-	visible_message(span_warning("[src] tears it's way out of the leyline rift!"))
+	visible_message(span_warning("[src]从地脉裂隙中撕裂而出！"))

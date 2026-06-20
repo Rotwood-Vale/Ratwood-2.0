@@ -4,12 +4,12 @@
 	if(href_list["inspect_animal"] && (isobserver(usr) || usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY)))
 		var/list/msg = list()
 		if(length(simple_wounds))
-			msg += "<B>Wounds:</B>"
+			msg += "<B>伤势：</B>"
 			for(var/datum/wound/wound as anything in simple_wounds)
 				msg += wound.get_visible_name(usr)
 
 		if(length(simple_embedded_objects))
-			msg += "<B>Embedded objects:</B>"
+			msg += "<B>嵌入物：</B>"
 			for(var/obj/item/embedded as anything in simple_embedded_objects)
 				msg += "<a href='?src=[REF(src)];embedded_object=[REF(embedded)]'>[embedded.name]</a>"
 
@@ -22,9 +22,9 @@
 		usr.put_in_hands(I)
 		playsound(loc, 'sound/foley/flesh_rem.ogg', 100, TRUE, -2)
 		if(usr == src)
-			usr.visible_message(span_notice("[usr] rips [I] out of [usr.p_them()]self!"), span_notice("I remove [I] from myself."))
+			usr.visible_message(span_notice("[usr]从自己体内拔出了[I]！"), span_notice("我从自己体内取出了[I]。"))
 		else
-			usr.visible_message(span_notice("[usr] rips [I] out of [src]!"), span_notice("I rip [I] from [src]."))
+			usr.visible_message(span_notice("[usr]从[src]体内拔出了[I]！"), span_notice("我从[src]体内拔出了[I]。"))
 
 /mob/living/simple_animal/pet/familiar/Topic(href, href_list)
 	. = ..()
@@ -44,12 +44,12 @@
 
 		// Add pronouns below species name
 		var/list/pronoun_display = list(
-			HE_HIM = "he/him",
-			SHE_HER = "she/her",
-			THEY_THEM = "they/them",
-			IT_ITS = "it/its"
+			HE_HIM = "他",
+			SHE_HER = "她",
+			THEY_THEM = "Ta们",
+			IT_ITS = "它"
 		)
-		var/selected_pronoun = pronoun_display[prefy.familiar_pronouns] ? pronoun_display[prefy.familiar_pronouns] : "they/them"
+		var/selected_pronoun = pronoun_display[prefy.familiar_pronouns] ? pronoun_display[prefy.familiar_pronouns] : "Ta们"
 		dat += "<div align='center'><font size=3 color='#bbbbbb'>[selected_pronoun]</font></div>"
 
 		if(valid_headshot_link(null, prefy.familiar_headshot_link, TRUE))
@@ -58,7 +58,7 @@
 			dat += "<div align='left'>[prefy.familiar_flavortext_display]</div>"
 		if(prefy.familiar_ooc_notes_display)
 			dat += "<br>"
-			dat += "<div align='center'><b>OOC notes</b></div>"
+			dat += "<div align='center'><b>OOC备注</b></div>"
 			dat += "<div align='left'>[prefy.familiar_ooc_notes_display]</div>"
 		if(prefy.familiar_ooc_extra)
 			dat += "[prefy.familiar_ooc_extra]"

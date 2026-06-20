@@ -1,11 +1,11 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/warden
 	icon = 'icons/mob/summonable/32x32.dmi'
-	name = "earthen Warden"
+	name = "大地守望者"
 	icon_state = "warden"
 	icon_living = "warden"
 	icon_dead = "vvd"
-	summon_primer = "You are an warden, a moderate elemental. Elementals such as yourself guard your plane from intrusion zealously. Now you've been pulled from your home into a new world, that is decidedly less peaceful then your carefully guarded plane. How you react to these events, only time can tell."
+	summon_primer = "你是一名守望者，中型的元素生物。像你这样的元素生物不遗余力地守卫着自己的位面免受入侵。如今你被从故乡拖入了一个新世界，这个世界显然远比你精心守护的位面更加动荡。你将如何应对这些事件，只有时间才能揭晓。"
 	summon_tier = 2
 	gender = MALE
 	emote_hear = null

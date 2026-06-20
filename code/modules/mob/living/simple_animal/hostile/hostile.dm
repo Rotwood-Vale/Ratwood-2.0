@@ -25,7 +25,7 @@
 	var/rapid_melee = 1			 //Number of melee attacks between each npc pool tick. Spread evenly.
 	var/melee_queue_distance = 4 //If target is close enough start preparing to hit them if we have rapid_melee enabled
 
-	var/ranged_message = "fires" //Fluff text for ranged mobs
+	var/ranged_message = "射击" //Fluff text for ranged mobs
 	var/ranged_cooldown = 0 //What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
 	var/ranged_cooldown_time = 30 //How long, in deciseconds, the cooldown of ranged attacks is
 	var/ranged_ignores_vision = FALSE //if it'll fire ranged attacks even if it lacks vision on its target, only works with environment smash
@@ -476,7 +476,7 @@
 		return FALSE
 	if(CheckFriendlyFire(A))
 		return
-	visible_message(span_danger("<b>[src]</b> [ranged_message] at [A]!"))
+	visible_message(span_danger("<b>[src]</b> [ranged_message]向[A]！"))
 
 
 	if(rapid > 1)

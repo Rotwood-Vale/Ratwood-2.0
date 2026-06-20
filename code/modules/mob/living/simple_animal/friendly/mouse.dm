@@ -1,25 +1,25 @@
 /mob/living/simple_animal/mouse
-	name = "mouse"
+	name = "老鼠"
 	desc = ""
 	icon_state = "mouse_gray"
 	icon_living = "mouse_gray"
 	icon_dead = "mouse_gray_dead"
-	speak = list("Squeak!","SQUEAK!","Squeak?")
-	speak_emote = list("squeaks")
-	emote_hear = list("squeaks.")
-	emote_see = list("runs in a circle.", "shakes.")
+	speak = list("吱吱！","吱吱！！","吱吱？")
+	speak_emote = list("吱吱叫")
+	emote_hear = list("吱吱叫。")
+	emote_see = list("转圈跑。", "抖了抖。")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
 	maxHealth = 5
 	health = 5
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1)
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently pushes aside"
-	response_disarm_simple = "gently push aside"
-	response_harm_continuous = "splats"
-	response_harm_simple = "splat"
+	response_help_continuous = "抚摸了"
+	response_help_simple = "抚摸"
+	response_disarm_continuous = "轻轻推开了"
+	response_disarm_simple = "轻轻推开"
+	response_harm_continuous = "拍扁了"
+	response_harm_simple = "拍扁"
 	density = FALSE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
@@ -61,7 +61,7 @@
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
-			to_chat(M, span_notice("[icon2html(src, M)] Squeak!"))
+			to_chat(M, span_notice("[icon2html(src, M)] 吱吱！"))
 	..()
 
 /*
@@ -82,23 +82,23 @@
 
 //TOM IS ALIVE! SQUEEEEEEEE~K :)
 /mob/living/simple_animal/mouse/brown/Tom
-	name = "Tom"
+	name = "汤姆"
 	desc = ""
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently pushes aside"
-	response_disarm_simple = "gently push aside"
-	response_harm_continuous = "splats"
-	response_harm_simple = "splat"
+	response_help_continuous = "抚摸了"
+	response_help_simple = "抚摸"
+	response_disarm_continuous = "轻轻推开了"
+	response_disarm_simple = "轻轻推开"
+	response_harm_continuous = "拍扁了"
+	response_harm_simple = "拍扁"
 	gold_core_spawnable = NO_SPAWN
 
 /obj/item/reagent_containers/food/snacks/deadmouse
-	name = "dead mouse"
+	name = "死老鼠"
 	desc = ""
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "mouse_gray_dead"
 	bitesize = 3
-	eatverb = "devour"
+	eatverb = "吞食"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtype = GROSS | MEAT | RAW
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
@@ -106,16 +106,16 @@
 /obj/item/reagent_containers/food/snacks/deadmouse/examine(mob/user)
 	. = ..()
 	if (reagents?.has_reagent(/datum/reagent/yuck) || reagents?.has_reagent(/datum/reagent/fuel))
-		. += span_warning("It's dripping with fuel and smells terrible.")
+		. += span_warning("它滴着燃油，散发着难闻的气味。")
 
 /obj/item/reagent_containers/food/snacks/deadmouse/attackby(obj/item/I, mob/user, params)
 	if(I.get_sharpness() && user.used_intent.type == INTENT_HARM)
 		if(isturf(loc))
 			new /obj/item/reagent_containers/food/snacks/rogue/meat/steak(loc)
-			to_chat(user, span_notice("I butcher [src]."))
+			to_chat(user, span_notice("我屠宰了[src]。"))
 			qdel(src)
 		else
-			to_chat(user, span_warning("I need to put [src] on a surface to butcher it!"))
+			to_chat(user, span_warning("我需要把[src]放在平面上才能屠宰！"))
 	else
 		return ..()
 
@@ -125,10 +125,10 @@
 		var/datum/reagents/target_reagents = target.reagents
 		var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
 		if(target_reagents.has_reagent(/datum/reagent/fuel) && target_reagents.trans_to(src, trans_amount))
-			to_chat(user, span_notice("I dip [src] into [target]."))
+			to_chat(user, span_notice("我把[src]浸入[target]中。"))
 			reagents.trans_to(target, reagents.total_volume)
 		else
-			to_chat(user, span_warning("That's a terrible idea."))
+			to_chat(user, span_warning("那是个糟糕的主意。"))
 	else
 		return ..()
 

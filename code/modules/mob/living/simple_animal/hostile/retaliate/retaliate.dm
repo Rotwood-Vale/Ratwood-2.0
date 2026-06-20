@@ -9,7 +9,7 @@
 		if(enemies.len)
 			if(tame)
 				enemies = list()
-				src.visible_message(span_notice("[src] calms down."))
+				src.visible_message(span_notice("[src]冷静了下来。"))
 				LoseTarget()
 
 /mob/living/simple_animal/hostile/retaliate
@@ -33,7 +33,7 @@
 	var/list/check_health = list("health" = src.health)
 
 	if(L.stat != CONSCIOUS)
-		src.visible_message(span_danger("[src] starts to rip apart [L]!"))
+		src.visible_message(span_danger("[src]开始撕碎[L]！"))
 		if(attack_sound)
 			playsound(src, pick(attack_sound), 100, TRUE, -1)
 		//If their health is decreased at all during the 10 seconds the dismemberment will fail and they will lose target.

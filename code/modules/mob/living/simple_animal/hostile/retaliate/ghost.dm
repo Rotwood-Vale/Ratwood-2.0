@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/retaliate/ghost
-	name = "ghost"
+	name = "幽灵"
 	desc = ""
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
@@ -7,8 +7,8 @@
 	mob_biotypes = MOB_SPIRIT
 	speak_chance = 0
 	turns_per_move = 5
-	response_help_continuous = "passes through"
-	response_help_simple = "pass through"
+	response_help_continuous = "穿过了"
+	response_help_simple = "穿过"
 	a_intent = INTENT_HARM
 	healable = 0
 	speed = 0
@@ -18,12 +18,12 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	del_on_death = 1
-	emote_see = list("weeps silently", "groans", "mumbles")
-	attack_verb_continuous = "grips"
-	attack_verb_simple = "grip"
+	emote_see = list("默默哭泣", "呻吟", "喃喃自语")
+	attack_verb_continuous = "抓住了"
+	attack_verb_simple = "抓住"
 	attack_sound = 'sound/blank.ogg'
-	speak_emote = list("weeps")
-	deathmessage = "wails, disintegrating into a pile of ectoplasm!"
+	speak_emote = list("哭泣")
+	deathmessage = "哀嚎着，瓦解为一堆灵质！"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
@@ -44,9 +44,9 @@
 	if(random)
 		switch(rand(0,1))
 			if(0)
-				name = "ghost of [pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
+				name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]的幽灵"
 			if(1)
-				name = "ghost of [pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"
+				name = "[pick(GLOB.first_names_female)] [pick(GLOB.last_names)]的幽灵"
 
 
 /mob/living/simple_animal/hostile/retaliate/ghost/proc/give_hair()
@@ -62,7 +62,7 @@
 		add_overlay(ghost_facial_hair)
 
 /mob/living/simple_animal/hostile/retaliate/gaseousform
-	name = "gaseous mist"
+	name = "气态雾气"
 	desc = ""
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "mist"
@@ -70,8 +70,8 @@
 	mob_biotypes = MOB_SPIRIT
 	speak_chance = 0
 	turns_per_move = 5
-	response_help_continuous = "passes through"
-	response_help_simple = "pass through"
+	response_help_continuous = "穿过了"
+	response_help_simple = "穿过"
 	base_intents = list(/datum/intent/simple/claw)
 	a_intent = INTENT_HARM
 	healable = 0
@@ -82,12 +82,12 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	del_on_death = 1
-	emote_see = list("blows")
-	attack_verb_continuous = "grips"
-	attack_verb_simple = "grip"
+	emote_see = list("飘荡")
+	attack_verb_continuous = "抓住了"
+	attack_verb_simple = "抓住"
 	attack_sound = 'sound/blank.ogg'
-	speak_emote = list("wails")
-	deathmessage = "wails, disintegrating into a pile of ectoplasm!"
+	speak_emote = list("哀嚎")
+	deathmessage = "哀嚎着，瓦解为一堆灵质！"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500

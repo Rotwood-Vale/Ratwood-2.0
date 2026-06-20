@@ -1,26 +1,26 @@
 /mob/living/simple_animal/hostile/retaliate/frog
-	name = "frog"
+	name = "青蛙"
 	desc = ""
 	icon_state = "frog"
 	icon_living = "frog"
 	icon_dead = "frog_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	speak = list("ribbit","croak")
-	emote_see = list("hops in a circle.", "shakes.")
+	speak = list("呱呱","呱呱")
+	emote_see = list("转圈跳。", "抖动。")
 	speak_chance = 1
 	turns_per_move = 5
 	maxHealth = 15
 	health = 15
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	attack_verb_continuous = "bites"
-	attack_verb_simple = "bite"
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "pokes"
-	response_disarm_simple = "poke"
-	response_harm_continuous = "splats"
-	response_harm_simple = "splat"
+	attack_verb_continuous = "咬了"
+	attack_verb_simple = "咬"
+	response_help_continuous = "抚摸了"
+	response_help_simple = "抚摸"
+	response_disarm_continuous = "捅了"
+	response_disarm_simple = "捅"
+	response_harm_continuous = "拍扁了"
+	response_harm_simple = "拍扁"
 	density = FALSE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	faction = list("hostile")
@@ -33,7 +33,7 @@
 /mob/living/simple_animal/hostile/retaliate/frog/Initialize(mapload)
 	. = ..()
 	if(prob(1))
-		name = "rare frog"
+		name = "稀有青蛙"
 		desc = ""
 		icon_state = "rare_frog"
 		icon_living = "rare_frog"

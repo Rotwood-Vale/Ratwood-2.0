@@ -47,17 +47,17 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 
 	///When someone interacts with the simple animal.
 	///Help-intent verb in present continuous tense.
-	var/response_help_continuous = "pokes"
+	var/response_help_continuous = "戳了戳"
 	///Help-intent verb in present simple tense.
-	var/response_help_simple = "poke"
+	var/response_help_simple = "戳"
 	///Disarm-intent verb in present continuous tense.
-	var/response_disarm_continuous = "shoves"
+	var/response_disarm_continuous = "推搡了"
 	///Disarm-intent verb in present simple tense.
-	var/response_disarm_simple = "shove"
+	var/response_disarm_simple = "推搡"
 	///Harm-intent verb in present continuous tense.
-	var/response_harm_continuous = "hits"
+	var/response_harm_continuous = "打了"
 	///Harm-intent verb in present simple tense.
-	var/response_harm_simple = "hit"
+	var/response_harm_simple = "打"
 	var/harm_intent_damage = 3
 	///Minimum force required to deal any damage.
 	var/force_threshold = 0
@@ -88,14 +88,14 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	/// 1 for full damage , 0 for none , -1 for 1:1 heal from that source.
 	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	///Attacking verb in present continuous tense.
-	var/attack_verb_continuous = "attacks"
+	var/attack_verb_continuous = "攻击了"
 	///Attacking verb in present simple tense.
-	var/attack_verb_simple = "attack"
+	var/attack_verb_simple = "攻击"
 	var/attack_sound = PUNCHWOOSH
 	///Attacking, but without damage, verb in present continuous tense.
-	var/friendly_verb_continuous = "nuzzles"
+	var/friendly_verb_continuous = "蹭了蹭"
 	///Attacking, but without damage, verb in present simple tense.
-	var/friendly_verb_simple = "nuzzle"
+	var/friendly_verb_simple = "蹭"
 	///Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls.
 	var/environment_smash = ENVIRONMENT_SMASH_NONE
 
@@ -236,10 +236,10 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		return
 	else
 		if(can_saddle && istype(O, /obj/item/reagent_containers/food/snacks/grown/apple) && has_status_effect(/datum/status_effect/buff/mount_apple_healing))
-			to_chat(user, span_warning("[src] is still chewing on the last apple! Try again in a few seconds when they look hungry."))
+			to_chat(user, span_warning("[src]还在嚼上一个苹果！过几秒等它看起来饿了再试。"))
 			return
 		if(!stat)
-			user.visible_message(span_info("[user] hand-feeds [O] to [src]."), span_notice("I hand-feed [O] to [src]."))
+			user.visible_message(span_info("[user]用手喂[O]给[src]。"), span_notice("我用手喂[O]给[src]。"))
 			playsound(loc,'sound/misc/eat.ogg', rand(30,60), TRUE)
 			qdel(O)
 			food = min(food + 30, 100)
@@ -250,7 +250,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 					var/mob/living/simple_animal/hostile/retaliate/retaliating_mount = src
 					if(retaliating_mount.enemies.len)
 						retaliating_mount.enemies = list()
-						visible_message(span_notice("[src] calms down."))
+						visible_message(span_notice("[src]冷静了下来。"))
 						retaliating_mount.LoseTarget()
 			if(tame && owner == user)
 				return
@@ -440,9 +440,9 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 				if((src.buckled && istype(src.buckled, /obj/structure/meathook))|| istype(held_item, /obj/item/contraption/shears))
 					on_meathook = TRUE //will work efficiently if they are using autosheers as well
 					used_time -= 3 SECONDS
-					visible_message("[user] begins to efficiently butcher [src]...")
+					visible_message("[user]开始高效地屠宰[src]……")
 				else
-					visible_message("[user] begins to butcher [src]...")
+					visible_message("[user]开始屠宰[src]……")
 				if(user.mind)
 					used_time -= (user.get_skill_level(/datum/skill/labor/butchering) * 30)
 				playsound(src, 'sound/foley/gross.ogg', 100, FALSE)
@@ -454,16 +454,16 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		var/is_shift_middle = modifiers["shift"] || user?.client?.keys_held["Shift"]
 		if(is_shift_middle)
 			if(has_buckled_mobs())
-				to_chat(user, span_warning("I can't remove [src]'s saddle while someone is mounted."))
+				to_chat(user, span_warning("有人骑乘时无法拆下[src]的马鞍。"))
 				return
-			user.visible_message(span_notice("[user] starts undoing [src]'s saddle."), span_notice("I start undoing [src]'s saddle."))
+			user.visible_message(span_notice("[user]开始拆卸[src]的马鞍。"), span_notice("我开始拆卸[src]的马鞍。"))
 			if(do_after(user, 30, target = src))
 				var/obj/item/natural/saddle/saddle_item = ssaddle
 				ssaddle = null
 				saddle_item.forceMove(get_turf(src))
 				user.put_in_hands(saddle_item)
 				playsound(src, 'sound/foley/saddledismount.ogg', 100, TRUE)
-				user.visible_message(span_notice("[user] removes [src]'s saddle."), span_notice("I remove [src]'s saddle."))
+				user.visible_message(span_notice("[user]拆下了[src]的马鞍。"), span_notice("我拆下了[src]的马鞍。"))
 				update_icon()
 		else
 			var/datum/component/storage/saddle_storage = ssaddle.GetComponent(/datum/component/storage)
@@ -512,9 +512,9 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		var/amount = butcher_results[path]
 		if(!do_after(user, time_per_cut, target = src))
 			if(botch_count || normal_count || perfect_count)
-				to_chat(user, "<span class='notice'>I stop butchering: [butcher_summary(botch_count, normal_count, perfect_count, botch_chance, perfect_chance)].</span>")
+				to_chat(user, "<span class='notice'>我停止屠宰：[butcher_summary(botch_count, normal_count, perfect_count, botch_chance, perfect_chance)]。</span>")
 			else
-				to_chat(user, "<span class='notice'>I stop butchering for now.</span>")
+				to_chat(user, "<span class='notice'>我暂停屠宰。</span>")
 			break
 
 		// Check for botch first
@@ -549,17 +549,17 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 			user.mind.add_sleep_experience(/datum/skill/labor/butchering, user.STAINT * 0.5)
 		playsound(src, 'sound/foley/gross.ogg', 100, FALSE)
 	if(isemptylist(butcher_results))
-		to_chat(user, "<span class='notice'>I finish butchering: [butcher_summary(botch_count, normal_count, perfect_count, botch_chance, perfect_chance)].</span>")
+		to_chat(user, "<span class='notice'>我完成了屠宰：[butcher_summary(botch_count, normal_count, perfect_count, botch_chance, perfect_chance)]。</span>")
 		gib()
 
 /mob/living/proc/butcher_summary(botch_count, normal_count, perfect_count, botch_chance, perfect_chance)
 	var/list/parts = list()
 	if(botch_count)
-		parts += "[botch_count] botched ([botch_chance]%)"
+		parts += "[botch_count]件搞砸 ([botch_chance]%)"
 	if(normal_count)
-		parts += "[normal_count] normal"
+		parts += "[normal_count]件普通"
 	if(perfect_count)
-		parts += "[perfect_count] perfect ([perfect_chance]%)"
+		parts += "[perfect_count]件完美 ([perfect_chance]%)"
 
 	var/msg = ""
 	for(var/i = 1, i <= length(parts), i++)
@@ -702,13 +702,13 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 
 /mob/living/simple_animal/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 	if(incapacitated())
-		to_chat(src, span_warning("I can't do that right now!"))
+		to_chat(src, span_warning("我现在做不到！"))
 		return FALSE
 	if(be_close && !in_range(M, src))
-		to_chat(src, span_warning("I am too far away!"))
+		to_chat(src, span_warning("我离得太远了！"))
 		return FALSE
 	if(!(no_dexterity || dextrous))
-		to_chat(src, span_warning("I don't have the dexterity to do this!"))
+		to_chat(src, span_warning("我没有足够的灵巧度来做这个！"))
 		return FALSE
 	return TRUE
 
@@ -808,7 +808,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		if(istype(held_item, /obj/item/twohanded))
 			var/obj/item/twohanded/T = held_item
 			if(T.wielded == 1)
-				to_chat(usr, span_warning("My other hand is too busy holding [T]."))
+				to_chat(usr, span_warning("我的另一只手正握着[T]，腾不出空。"))
 				return FALSE
 	var/oindex = active_hand_index
 	active_hand_index = hand_index
@@ -866,7 +866,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		M.Paralyze(50)
 		M.Stun(50)
 		playsound(src.loc, 'sound/foley/zfall.ogg', 100, FALSE)
-		M.visible_message(span_danger("[M] falls off [src]!"))
+		M.visible_message(span_danger("[M]从[src]上摔了下来！"))
 	..()
 	update_icon()
 
@@ -958,7 +958,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		L.Paralyze(50)
 		L.Stun(50)
 		playsound(L.loc, 'sound/foley/zfall.ogg', 100, FALSE)
-		L.visible_message(span_danger("[L] falls off [src]!"))
+		L.visible_message(span_danger("[L]从[src]上摔了下来！"))
 
 /mob/living/simple_animal/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
 	var/datum/component/riding/riding_datum = LoadComponent(/datum/component/riding)

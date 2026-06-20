@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/rogue/spirit_vengeance
-	name = "Rancor Spirit"
+	name = "怨毒之魂"
 	desc = ""
 	icon = 'modular_hearthstone/icons/mob/spirit_vengeance.dmi'
 	icon_state = "spirit_vengeance"
@@ -23,13 +23,13 @@
 	minimum_distance = 0
 	limb_destroyer = 1
 	base_intents = list(/datum/intent/simple/bite)
-	attack_verb_continuous = "hacks"
-	attack_verb_simple = "hack"
+	attack_verb_continuous = "砍了"
+	attack_verb_simple = "砍"
 	attack_sound = 'sound/blank.ogg'
 	canparry = TRUE
 	d_intent = INTENT_DODGE
 	defprob = 20
-	speak_emote = list("growls")
+	speak_emote = list("低吼")
 	footstep_type = null
 	del_on_death = TRUE
 	can_have_ai = FALSE //disable native ai
@@ -65,8 +65,8 @@
 //same but crow
 
 /mob/living/simple_animal/hostile/rogue/crow_vengeance
-	name = "Rancor Crow"
-	desc = "A black-winged servant of Necra."
+	name = "怨毒之鸦"
+	desc = "涅克拉的黑翼仆从。"
 	icon = 'icons/roguetown/mob/monster/crow.dmi'
 	icon_state = "crow_flying"
 	icon_living = "crow_flying"
@@ -89,13 +89,13 @@
 	minimum_distance = 0
 	limb_destroyer = 1
 	base_intents = list(/datum/intent/simple/bite)
-	attack_verb_continuous = "pecks"
-	attack_verb_simple = "peck"
+	attack_verb_continuous = "啄了"
+	attack_verb_simple = "啄"
 	attack_sound = 'sound/blank.ogg'
 	canparry = TRUE
 	d_intent = INTENT_DODGE
 	defprob = 20
-	speak_emote = list("caws")
+	speak_emote = list("呱呱叫")
 	footstep_type = null
 	del_on_death = TRUE
 	can_have_ai = FALSE //disable native ai

@@ -1,8 +1,8 @@
 /mob/living/simple_animal/hostile/boss/baroness //Huge thank you to felinid for their lich_boss code. They inspired this entire project.
-	name = "Baroness"
-	real_name = "Baroness Granita Narâg'Thark"
+	name = "男爵夫人"
+	real_name = "格拉尼塔·纳拉格萨克男爵夫人"
 	gender = FEMALE
-	desc = "An old, dwarven woman with a malicious stare. Her sallow skin is stretched taut over their skeletal structure. She is dressed in expensive clothes."
+	desc = "一位老迈的矮人女性，目光恶毒。她蜡黄的皮肤紧绷在骨骼之上。她穿着昂贵的衣物。"
 	mob_biotypes = MOB_HUMANOID | MOB_ORGANIC
 	faction = list("dundead")
 	del_on_death = FALSE
@@ -15,7 +15,7 @@
 	ranged = 1
 	rapid = 3
 	rapid_fire_delay = 10
-	ranged_message = "casts a spell"
+	ranged_message = "施放了一个法术"
 	ranged_cooldown = 0
 	ranged_cooldown_time = 90
 	ranged_ignores_vision = TRUE
@@ -34,10 +34,10 @@
 	health = 3333
 	maxHealth = 3333 //Increased from 3000.
 	speak_chance = 3
-	speak = list("An invader in my fortress?! I will feed your corpse to my pit!", 
-	"Disgusting creature, you aren't worth the sum of your parts.",
-	"I will flay your flesh and ensure you are conscious for every agonizing moment!",
-	"Your soul will belong to me - my toy for eternity!")
+	speak = list("我的堡垒里来了入侵者？！我要把你的尸体扔给我的深渊去喂！", 
+	"恶心的生物，你的价值还抵不上你身上零件的总和。",
+	"我要剥下你的皮，让你在每一刻的痛苦中都保持清醒！",
+	"你的灵魂将属于我——成为我永恒的玩具！")
 
 	STASTR = 14
 	STAPER = 20
@@ -78,7 +78,7 @@
 		retreat_distance = 3
 		if(target && next_cast < world.time && next_summon < world.time)
 			spawn_minions(minions_to_spawn)
-			INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "Defend your Matriarch!", null, list("colossus", "yell"))
+			INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "保护你们的女族长！", null, list("colossus", "yell"))
 			next_cast = world.time + 10
 			next_summon = world.time + 1800
 			return .
@@ -95,7 +95,7 @@
 	if(ismob(target))
 		var/mob/M = target
 		if(M.anti_magic_check())
-			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			visible_message(span_warning("[src]接触到[target]后消散了！"))
 			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 			qdel(src)
 			return BULLET_ACT_BLOCK
@@ -106,7 +106,7 @@
 	qdel(src)
 
 /obj/projectile/magic/baroness/lightning
-	name = "bolt of lightning"
+	name = "闪电箭"
 	tracer_type = /obj/effect/projectile/tracer/stun
 	muzzle_type = null
 	impact_type = null
@@ -124,7 +124,7 @@
 	if(ismob(target))
 		var/mob/M = target
 		if(M.anti_magic_check())
-			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			visible_message(span_warning("[src]接触到[target]后消散了！"))
 			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 			qdel(src)
 			return BULLET_ACT_BLOCK
@@ -165,8 +165,8 @@
 	return TRUE
 
 /obj/effect/temp_visual/baroness_dying
-	name = "Baroness"
-	desc = "The corpse of the baroness. Seems she was mortal after all."
+	name = "男爵夫人"
+	desc = "男爵夫人的尸骸。看来她终究还是凡人之躯。"
 	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/mob/baroness.dmi'
 	icon_state = "baronessdead"
@@ -176,8 +176,8 @@
 
 /obj/effect/temp_visual/baroness_dying/Initialize(mapload)
 	. = ..()
-	visible_message(span_boldannounce("The Baroness' staff shatters and she crumples to the floor."))
-	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "Mistress!...", null, list("colossus", "yell"))
+	visible_message(span_boldannounce("男爵夫人的法杖碎裂，她瘫倒在地。"))
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "女主人！……", null, list("colossus", "yell"))
 
 /obj/effect/temp_visual/baroness_dying/Destroy()
 	for(var/mob/M in range(7,src))
@@ -233,7 +233,7 @@
 /datum/intent/simple/baroness
 	name = "baroness"
 	icon_state = "instrike"
-	attack_verb = list("magically slashes", "magically cuts", "magically stabs")
+	attack_verb = list("魔法劈砍", "魔法切割", "魔法刺击")
 	animname = "blank22"
 	blade_class = BCLASS_CUT
 	hitsound = 'sound/combat/hits/bladed/genchop (1).ogg'
@@ -261,9 +261,9 @@
 	return ..() && (T == MT || get_dir(MT,T) == dir)
 
 /obj/effect/oneway/baroness //one way barrier to the boss room. Can be despawned with the key the boss drops.
-	name = "magical barrier"
+	name = "魔法屏障"
 	max_integrity = 99999
-	desc = "Victory or death - once you pass this point you will either triumph or fall. Recommended 3 players or more."
+	desc = "要么胜利要么死亡——一旦你越过此点，要么凯旋要么陨落。推荐3名或以上玩家。"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "smoke"
 	invisibility = SEE_INVISIBLE_LIVING
@@ -272,12 +272,12 @@
 /obj/effect/oneway/baroness/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(istype(W, /obj/item/roguekey/mage/baroness))
-		visible_message(span_boldannounce("The magical barrier disperses!"))
+		visible_message(span_boldannounce("魔法屏障消散了！"))
 		qdel(src)
 
 //Loot
 /obj/item/roguekey/mage/baroness
-	name = "baroness' key"
-	desc = "An offputting key the Baroness dropped."
+	name = "男爵夫人的钥匙"
+	desc = "男爵夫人掉落的一把令人不安的钥匙。"
 	icon_state = "toothkey"
 	lockid = "baroness"
