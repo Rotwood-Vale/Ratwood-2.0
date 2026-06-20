@@ -25,6 +25,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Lawless"=/datum/charflaw/lawless,
 	"Marked by Baotha" =/datum/charflaw/marked_by_baotha,
 	"Leper (+1 TRI)"=/datum/charflaw/leprosy,
+	"Loose Straps"=/datum/charflaw/loose_armor,
 	"Masochist"=/datum/charflaw/addiction/masochist,
 	"Missing Nose"=/datum/charflaw/missing_nose,
 	"Mute (+1 TRI)"=/datum/charflaw/mute,
@@ -573,6 +574,25 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		REMOVE_TRAIT(H, TRAIT_NUDE_SLEEPER, TRAIT_GENERIC)
+
+	
+/datum/charflaw/loose_armor
+	name = "Loose Straps"
+	desc = "My armor never seems to fit quite right. It has a nasty habit of exploding off my body when under inordinate stress."
+
+/datum/charflaw/loose_armor/on_mob_creation(mob/user)
+	..()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	ADD_TRAIT(H, TRAIT_LOOSE_STRAPS, TRAIT_GENERIC)
+
+/datum/charflaw/loose_armor/on_removal(mob/user)
+	..()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	REMOVE_TRAIT(H, TRAIT_LOOSE_STRAPS, TRAIT_GENERIC)
 
 /datum/charflaw/unsettling_beauty
 	name = "Unsettling Beauty"

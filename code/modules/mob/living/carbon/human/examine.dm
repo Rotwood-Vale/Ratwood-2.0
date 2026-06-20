@@ -258,6 +258,9 @@
 		if((HAS_TRAIT(src, TRAIT_OUTLANDER) && !HAS_TRAIT(user, TRAIT_OUTLANDER)) || (HAS_TRAIT(user, TRAIT_RACISMISBAD) && !(src.dna.species.name == "Elf" || src.dna.species.name == "Dark Elf" || src.dna.species.name == "Half Elf")))
 			. += span_phobia("A foreigner...")
 
+		if(HAS_TRAIT(src, TRAIT_LOOSE_STRAPS))
+			. += span_phobia("[capitalize(m2)] armor hangs on by a thread...")
+
 		if(HAS_TRAIT(src, TRAIT_DISGRACED_NOBLE))
 			if(HAS_TRAIT(user, TRAIT_NOBLE))
 				. += span_phobia("A disgraced member of the nobility...")
