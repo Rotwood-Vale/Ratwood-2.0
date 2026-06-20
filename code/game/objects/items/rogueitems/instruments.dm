@@ -778,6 +778,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
 /obj/item/rogue/instrument/ztratocaster/Initialize(mapload)
 	. = ..()
+	soundloop.extra_range = 5 //stop blowing up my ears ser
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "INSTRUMENT")
 
 /obj/item/rogue/instrument/lute
