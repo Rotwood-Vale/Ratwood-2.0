@@ -1,5 +1,5 @@
 /datum/species/ooze
-	name = "软泥"
+	name = "Ooze"
 	id = "ooze"
 	desc = "<b>软泥</b><br>\
 	在岩丘公国的地牢与废墟中，古老与新鲜的尸体遍布地面。\
