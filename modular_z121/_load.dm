@@ -52,3 +52,4 @@
 #include "admin/bless.dm"
 #include "admin/grandcaster.dm"
 #include "admin/god.dm"
+#include "admin/cleanup_world.dm"
