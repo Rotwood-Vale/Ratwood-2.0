@@ -118,6 +118,11 @@
 		return FALSE
 	testing("revived1")
 	var/mob/living/target = targets[1]
+	//OV edit
+	if(istype(target, /mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob/suffering))
+		target.revive()
+		return TRUE
+	//OV edit end
 	if(!target.check_revive(user))
 		revert_cast()
 		return FALSE

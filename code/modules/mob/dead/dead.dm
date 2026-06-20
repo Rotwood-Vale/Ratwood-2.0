@@ -47,8 +47,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	loc = destination
 	Moved(oldloc, NONE, TRUE)
 
-
-/mob/dead/new_player/proc/lobby_refresh()
+/mob/dead/new_player/proc/lobby_refresh(actor_list)
 	set waitfor = 0
 	if(!client)
 		return
@@ -63,11 +62,15 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	if(!winexists(client, "lobby_window"))
 		open_lobby()  // creates window + browser control
 		sleep(0)
+		if(!client) // client vanished while we slept
+			return
 	var/lobby_visible = winget(client, "lobby_window", "is-visible")
 	if(lobby_visible == "false") // winget returns a string...
 		client << browse(null, "window=lobby_window")
 		open_lobby()
 		sleep(0)
+		if(!client) // client vanished while we slept
+			return
 
 	// UPDATE TIMER -- Script in html\lobby\lobby.html / .js
 	var/timer_text
@@ -145,6 +148,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 			dat += jobs_under_department
 
 	client << output(dat.Join(), "lobby_window.browser:update_jobs")
+	client << output(actor_list, "lobby_window.browser:update_jobs")
 
 /mob/dead/new_player/proc/open_lobby()
 	if (!client)

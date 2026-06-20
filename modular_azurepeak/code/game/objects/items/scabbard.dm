@@ -170,8 +170,6 @@
 		user.update_inv_belt()
 		user.update_inv_back()
 
-	getonmobprop(tag)
-
 
 /obj/item/rogueweapon/scabbard/getonmobprop(tag)
 	..()
@@ -428,8 +426,6 @@
 
 	if(user)
 		user.update_inv_back()
-
-	getonmobprop(tag)
 
 /obj/item/rogueweapon/scabbard/gwstrap/getonmobprop(tag)
 	..()

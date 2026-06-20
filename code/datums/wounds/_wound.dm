@@ -435,6 +435,11 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		clotting_threshold += CLOT_THRESHOLD_INCREASE_PER_HIT
 	..()
 
+/datum/wound/proc/handle_ooze_wound(obj/item/bodypart/affected)
+	if(bodypart_owner || owner || QDELETED(affected) || QDELETED(affected.owner))
+		return FALSE
+	return TRUE
+
 #undef CLOT_THRESHOLD_INCREASE_PER_HIT
 #undef CLOT_RATE_INCREASE_PER_HIT
 #undef CLOT_RATE_ARTERY

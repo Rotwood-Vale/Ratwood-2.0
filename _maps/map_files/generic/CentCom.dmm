@@ -2270,7 +2270,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "KQ" = (
-/obj/structure/fluff/walldeco/customflag/rockhill,
+/obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/stone/unbreakable,
 /area/rogue/dietroyt)
 "KV" = (

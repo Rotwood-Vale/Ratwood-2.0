@@ -31,7 +31,7 @@
 /obj/structure/flora/newtreealt/obj_destruction(damage_flag)//this proc is stupidly long for a destruction proc
 	var/turf/NT = get_turf(src)
 	var/turf/UPNT = get_step_multiz(src, UP)
-	src.obj_flags = CAN_BE_HIT | BLOCK_Z_IN_UP //so the logs actually fall when pulled by zfall
+	set_is_platform(FALSE) //so the logs actually fall when pulled by zfall
 	if(burnt)
 		damage_flag = "fire"
 
@@ -47,13 +47,13 @@
 				var/turf/BI = get_step(B, DI)
 				for(var/obj/structure/flora/newbranchalt/bi in BI)//2 tile end branch
 					if(bi.dir == DI)
-						bi.obj_flags = CAN_BE_HIT
+						bi.set_is_platform(FALSE)
 						bi.obj_destruction(damage_flag)
 					for(var/atom/bio in BI)
 						BI.zFall(bio)
 				for(var/obj/structure/flora/newleafalt/bil in BI)//2 tile end leaf
 					bil.obj_destruction(damage_flag)
-				BRANCH.obj_flags = CAN_BE_HIT 
+				BRANCH.set_is_platform(FALSE)
 				BRANCH.obj_destruction(damage_flag)
 			for(var/atom/BRA in B)//unload a sack of rocks on a branch and stand under it, it'll be funny bro
 				B.zFall(BRA)
