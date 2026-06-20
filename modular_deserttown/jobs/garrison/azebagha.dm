@@ -120,9 +120,9 @@
 	H.adjust_blindness(-3)
 	if(H.mind)
 		var/primary = list("弯刀","钩镰剑","鞭","守林人斧")
-		var/primary_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in primary
+		var/primary_choice = input(H, "选择你的武器。", "拿起武器") as anything in primary
 		var/secondary = list("长柄刃","标枪与盾","黑角长弓","手炮")
-		var/secondary_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in secondary
+		var/secondary_choice = input(H, "选择你的武器。", "拿起武器") as anything in secondary
 		H.set_blindness(0)
 		switch(primary_choice)
 			if("弯刀")		
