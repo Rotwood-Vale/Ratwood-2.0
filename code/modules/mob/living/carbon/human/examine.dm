@@ -285,7 +285,7 @@
 					. += span_userdanger("HEATHEN! SHAME!")
 */
 		if(name in GLOB.outlawed_players)
-			. += span_userdanger("OUTLAW!")
+			. += span_userdanger("法外之徒!")
 
 		if(HAS_TRAIT(user, TRAIT_JUSTICARSIGHT) && !HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
 			for(var/datum/bounty/b in GLOB.head_bounties) //I hate this.
@@ -1238,7 +1238,7 @@
 			if(HAS_TRAIT(examiner, TRAIT_COMMIE))
 				villain_text = span_notice("自由人!")
 			if(HAS_TRAIT(src,TRAIT_KNOWNCRIMINAL))
-				villain_text = span_userdanger("OUTLAW!")
+				villain_text = span_userdanger("法外之徒!")
 		if(mind.special_role == "尸鬼") //对齐 code/modules/antagonists/roguetown/villain/zombie/zombie.dm /datum/antagonist/zombie
 			villain_text = span_userdanger("尸鬼!")
 		if(mind.special_role == "Vampire Lord")
