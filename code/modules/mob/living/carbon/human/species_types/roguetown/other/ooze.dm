@@ -248,7 +248,7 @@
 		stored.mind.transfer_to(shape)
 	stored.forceMove(src)
 	stored.notransform = TRUE
-	shape.visible_message(span_warning("[stored]失去了形态，他们变得脆弱并濒临死亡。"),span_warningbig("你已濒死，无法再维持形态。需要被复活才能恢复你的休门形态。"))
+	shape.visible_message(span_warning("[stored]失去了形态，他们变得脆弱并濒临死亡。"),span_warningbig("你已濒死，无法再维持形态。需要被复活才能恢复你的人类形态。"))
 	playsound(shape.loc, pick('sound/combat/gib (1).ogg','sound/combat/gib (2).ogg'), 200, FALSE, 3)
 	slink = soullink(/datum/soullink/shapeshift, stored , shape)
 	slink.source = src
