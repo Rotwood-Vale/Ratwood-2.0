@@ -267,7 +267,7 @@
 #define TRAIT_WORN_SILVER_PSICROSS "worn_silver_psicross"
 #define TRAIT_ASSASSIN	"刺客"
 #define TRAIT_EQUESTRIAN "骑术精湛"
-#define TRAIT_REGROW_LIMBS "Regrow Limbs" //OV ADD, regrows lost limbs at cost of nutrition
+#define TRAIT_REGROW_LIMBS "肢体再生" //OV ADD, regrows lost limbs at cost of nutrition
 #define TRAIT_GANG_A "帮派：隆兹鼠帮"
 #define TRAIT_GANG_B "帮派：布洛兹狼帮"
 #define TRAIT_NATURALARMOR "坚韧皮肤" 

@@ -472,8 +472,8 @@
 
 //Decor
 /obj/structure/vase
-	name = "fancy pot"
-	desc = "Decorative and Practical!"
+	name = "精致罐子"
+	desc = "既美观又实用！"
 	icon = 'modular_deserttown/icons/pots.dmi'
 	icon_state = "fancypot1"
 	anchored = TRUE
@@ -488,8 +488,8 @@
 	base_state = "stained-blue"
 
 /obj/structure/flora/roguegrass/desertgrass
-	name = "desert grass"
-	desc = "Dry grass struggling to survive in the arid climate."
+	name = "沙漠草"
+	desc = "在干旱气候中挣扎求存的枯草。"
 	icon = 'modular_deserttown/icons/flora.dmi'
 	icon_state = "desertgrass1"
 

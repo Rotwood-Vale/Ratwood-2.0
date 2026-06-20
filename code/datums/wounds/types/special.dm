@@ -360,24 +360,24 @@
 	critical = TRUE
 
 /datum/wound/slime/knockout
-	name = "neural core rupture"
-	check_name = span_bone("RUPTURE!")
+	name = "神经核心破裂"
+	check_name = span_bone("破裂！")
 	crit_message = list(
-		"Ooze leaks from the neural core!",
-		"The neural core is pierced!",
-		"The neural core is torn!",
+		"软泥从神经核心中漏出！",
+		"神经核心被刺穿了！",
+		"神经核心被撕裂了！",
 	)
 	woundpain = 60
 	whp = 20
 	knockout = 4 SECONDS
 
 /datum/wound/slime/paralyze
-	name = "shattered neural core"
-	check_name = span_bone("<B>SHATTERED!</B>")
+	name = "碎裂的神经核心"
+	check_name = span_bone("<B>碎裂！</B>")
 	crit_message = list(
-		"THE NEURAL CORE SHATTERS!",
-		"THE NEURAL CORE SPLITS IN HALF!",
-		"THE NEURAL CORE CAVES IN!",
+		"神经核心碎裂了！",
+		"神经核心裂成了两半！",
+		"神经核心塌陷了！",
 	)
 	woundpain = 100
 	whp = 40
@@ -426,7 +426,7 @@
 	return TRUE
 
 /datum/wound/dynamic/ooze
-	name = "membrasion"
+	name = "体膜擦伤"
 	whp = 5
 	bleed_rate = null
 	clotting_threshold = null
@@ -438,10 +438,10 @@
 	can_cauterize = FALSE
 	passive_healing = 0.5
 	severity_names = list(
-		"minor" = 20,
-		"moderate" = 60,
-		"big" = 120,
-		"massive" = 180
+		"轻微" = 20,
+		"中等" = 60,
+		"严重" = 120,
+		"大规模" = 180
 	)
 
 #define OOZE_UPG_WHPRATE 1

@@ -346,21 +346,21 @@
 /area/rogue/under/dungeon/desert
 
 /area/rogue/under/dungeon/bizbaz
-	name = "Bizzare Bazaar"
+	name = "奇异集市"
 	icon_state = "under"
-	first_time_text = "BIZZARE BAZAAR"
+	first_time_text = "奇异集市"
 	droning_sound = 'sound/music/area/desert/freedive_2.ogg'
 
 /area/rogue/under/dungeon/desert_pyramid
-	name = "pyramid"
+	name = "金字塔"
 	icon_state = "under"
-	first_time_text = "Tomb of the Ancient"
+	first_time_text = "古代陵墓"
 	droning_sound = 'sound/music/area/tombs.ogg'
 
 /area/rogue/under/underdesert
-	name = "Underdeep"
+	name = "深地渊"
 	icon_state = "cavewet"
-	first_time_text = "The Underdeep"
+	first_time_text = "深地渊"
 	ambientsounds = AMB_CAVEWATER
 	ambientnight = AMB_CAVEWATER
 	spookysounds = SPOOKY_CAVE
@@ -378,6 +378,6 @@
 				/mob/living/simple_animal/hostile/retaliate/rogue/drider = 10,
 	)
 	converted_type = /area/rogue/outdoors/caves
-	deathsight_message = "the lush, hidden deeps"
+	deathsight_message = "葱郁隐蔽的深层"
 	// detail_text = DETAIL_TEXT_UNDERDARK
 //This version will use a different terraingen that spawns unhappy shrooms instead of happy shrooms, for scarier and eviler underdarks

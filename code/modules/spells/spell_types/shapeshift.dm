@@ -103,7 +103,7 @@
 		return
 
 	if(istype(H.shape, /mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob/suffering))
-		to_chat(H.shape, span_warning("You have no strength to manipulate your form."))
+		to_chat(H.shape, span_warning("你没有力量操控你的形态。"))
 		return
 
 

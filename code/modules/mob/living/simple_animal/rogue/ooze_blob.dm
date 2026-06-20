@@ -2,8 +2,8 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob
 	icon = 'modular_ochrevalley/icons/mob/ooze_blob.dmi'
-	name = "ooze"
-	desc = "A strange, amorphous animated blob of ooze."
+	name = "软泥"
+	desc = "一团奇怪的无定形活性软泥。"
 	icon_state = "ooze"
 	icon_living = "ooze"
 	icon_dead = "ooze_dead"
@@ -72,14 +72,14 @@
 			if(chomp_roll > C.STACON)
 				C.Knockdown(20)
 				C.visible_message(
-					span_danger("\The [src] chomps \the [C]'s legs, knocking them down!"),
-					span_danger("\The [src] tugs me to the ground! I'm winded!")
+					span_danger("\The [src]咬住了\the [C]的腿，将其扑倒在地！"),
+					span_danger("\The [src]把我拽倒在地！我喘不上气了！")
 				)
 				C.adjustOxyLoss(10) //less punishing than zfall bc simplemob
 				C.emote("gasp")
 				playsound(C, 'sound/foley/zfall.ogg', 100, FALSE)
 			else
-				C.visible_message(span_danger("\The [src] fails to drag \the [C] down!"))
+				C.visible_message(span_danger("\The [src]没能把\the [C]拽倒！"))
 			chomp_cd = world.time //this goes here i think? ...sure
 
 /mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob/Initialize(mapload)
@@ -139,39 +139,39 @@
 		return ""
 	switch(zone)
 		if(BODY_ZONE_PRECISE_R_EYE)
-			return "blob"
+			return "软泥团"
 		if(BODY_ZONE_PRECISE_L_EYE)
-			return "blob"
+			return "软泥团"
 		if(BODY_ZONE_PRECISE_NOSE)
-			return "blob"
+			return "软泥团"
 		if(BODY_ZONE_PRECISE_MOUTH)
-			return "blob"
+			return "软泥团"
 		if(BODY_ZONE_PRECISE_SKULL)
-			return "blob"
+			return "软泥团"
 		if(BODY_ZONE_PRECISE_EARS)
-			return "blob"
+			return "软泥团"
 		if(BODY_ZONE_PRECISE_NECK)
-			return "blob"
+			return "软泥团"
 		if(BODY_ZONE_PRECISE_L_HAND)
-			return "blob"
+			return "软泥团"
 		if(BODY_ZONE_PRECISE_R_HAND)
-			return "blob"
+			return "软泥团"
 		if(BODY_ZONE_PRECISE_L_FOOT)
-			return "blob"
+			return "软泥团"
 		if(BODY_ZONE_PRECISE_R_FOOT)
-			return "blob"
+			return "软泥团"
 		if(BODY_ZONE_PRECISE_STOMACH)
-			return "blob"
+			return "软泥团"
 		if(BODY_ZONE_PRECISE_GROIN)
-			return "blob"
+			return "软泥团"
 		if(BODY_ZONE_HEAD)
-			return "blob"
+			return "软泥团"
 		if(BODY_ZONE_R_LEG)
-			return "blob"
+			return "软泥团"
 		if(BODY_ZONE_L_LEG)
-			return "blob"
+			return "软泥团"
 		if(BODY_ZONE_R_ARM)
-			return "blob"
+			return "软泥团"
 		if(BODY_ZONE_L_ARM)
-			return "blob"
+			return "软泥团"
 	return ..()

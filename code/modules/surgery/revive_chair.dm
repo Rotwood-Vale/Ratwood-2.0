@@ -2,8 +2,8 @@
 
 // The immovable chair structure
 /obj/structure/chair/frankenstein
-	name = "Fulmenor chair"
-	desc = "A nightmarish contraption of pipes, and sparking electrodes. It seems permanently fixed to the ground. Affectionately known as the ZRONK device."
+	name = "富尔门诺椅"
+	desc = "一个由管道和火花电极组成的噩梦般装置，似乎永久固定在地面上，被亲切地称为ZRONK设备。"
 	icon = 'icons/roguetown/misc/struc48x48.dmi'
 	icon_state = "frankenchair0"
 	anchored = TRUE
@@ -72,7 +72,7 @@
 
 /obj/structure/chair/frankenstein/attackby(obj/item/I, mob/user)
 	if(!ishuman(user))
-		to_chat(user, span_warning("I have no idea how to operate this."))
+		to_chat(user, span_warning("我完全不知道如何操作这个。"))
 	var/mob/living/carbon/human/H = user
 	// Handle filling with brew containers
 	if(istype(I, /obj/item/reagent_containers))
@@ -81,7 +81,7 @@
 		// Check if container has our special brew
 		if(container.reagents.has_reagent(/datum/reagent/frankenbrew, 1))
 			if(current_brew >= max_brew)
-				to_chat(user, span_warning("[src] is completely full!"))
+				to_chat(user, span_warning("[src]已经满了！"))
 				return
 
 			// Calculate how much we can transfer
@@ -89,13 +89,13 @@
 			var/available_brew = container.reagents.get_reagent_amount(/datum/reagent/frankenbrew)
 
 			if(available_brew <= 0)
-				to_chat(user, span_warning("[container] is empty!"))
+				to_chat(user, span_warning("[container]是空的！"))
 				return
 
 			// Animate filling
 			user.visible_message(
-				span_notice("[user] begins filling [src] with [container]."), 
-				span_notice("You begin filling [src] with [container].")
+				span_notice("[user]开始用[container]填充[src]。"), 
+				span_notice("你开始用[container]填充[src]。")
 			)
 
 			var/skill_mod = get_user_skill(H)
@@ -127,44 +127,44 @@
 				playsound(src, 'sound/items/drink_bottle (2).ogg', 30, TRUE)
 
 			if(transferred > 0)
-				to_chat(user, span_notice("You transfer [transferred] units of elixir to [src]. It now has [current_brew]/[max_brew] units."))
+				to_chat(user, span_notice("你向[src]转移了[transferred]单位的灵药。现在它有[current_brew]/[max_brew]单位。"))
 			else
-				to_chat(user, span_warning("You were interrupted while filling [src]."))
+				to_chat(user, span_warning("你在填充[src]时被打断了。"))
 
-			update_icon()
-			return TRUE
+				update_icon()
+				return TRUE
 		else
-			to_chat(user, span_warning("This container doesn't have the special brew!"))
+			to_chat(user, span_warning("这个容器没有特殊药剂！"))
 			return
 	return ..()
 
 /obj/structure/chair/frankenstein/examine(mob/user)
 	. = ..()
-	. += span_info("Fluid level: [current_brew]/[max_brew] units")
-	. += span_info("Charge level: [charge]/[max_charge]")
-	. += span_info("Useful leaflet: To charge, use the crank affixed on the right.")
-	. += span_info("There's a big juicy lever in the middle on the backside that looks enticing to pull.")
+	. += span_info("液位：[current_brew]/[max_brew]单位")
+	. += span_info("充能等级：[charge]/[max_charge]")
+	. += span_info("实用说明：要充能，请使用右侧固定的曲柄。")
+	. += span_info("背面中间有一个看起来诱人的大拉杆，让人想拉一下。")
 
 	if(current_brew > 0)
-		. += span_notice("The fluid tank contains a glowing green liquid.")
+		. += span_notice("流体罐中含有发光的绿色液体。")
 	else
-		. += span_warning("The fluid tank is empty.")
+		. += span_warning("流体罐是空的。")
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.patron.type == /datum/patron/divine/pestra || H.patron.type == /datum/patron/inhumen/zizo)
-			. += span_info("You recall that these chairs are often shipped in enigmatic black crates marked with white crosses. The components are assembled by mysterious beaked figures on site, and taking it apart again seems like an impossible task.")
+			. += span_info("你回想起这些椅子通常装在标有白色十字架的神秘黑箱中运输。零件由神秘的鸟喙身影在现场组装，再将其拆开似乎是不可能完成的任务。")
 
 // Special brew reagent
 /datum/reagent/frankenbrew
-	name = "Reanimation Elixir"
-	description = "A volatile chemical mixture that helps the deceased conduct electricity."
+	name = "复活灵药"
+	description = "一种挥发性化学混合物，帮助死者导电。"
 	color = "#00ff15"
-	taste_description = "lightning and regret"
+	taste_description = "闪电与悔恨"
 
 /obj/item/reagent_containers/glass/bottle/frankenbrew
-	name = "vial of Reanimation Elixir"
-	desc = "A volatile chemical mixture that helps the deceased conduct electricity. Looks expensive..."
+	name = "一瓶复活灵药"
+	desc = "一种挥发性化学混合物，帮助死者导电。看起来很昂贵……"
 	list_reagents = list(/datum/reagent/frankenbrew = 48)
 
 /obj/item/reagent_containers/glass/bottle/frankenbrew/third
@@ -200,21 +200,21 @@
 
 /obj/structure/chair/frankenstein/attack_right(mob/user)
 	if(!ishuman(user))
-		to_chat(user, span_warning("I have no idea how to operate this."))
+		to_chat(user, span_warning("我完全不知道如何操作这个。"))
 	var/mob/living/carbon/human/H = user
 
 	if(cranking)
-		to_chat(user, span_warning("Someone is already cranking [src]!"))
+		to_chat(user, span_warning("已经有人在摇动[src]了！"))
 		return
 
 	if(charge >= max_charge)
-		to_chat(user, span_warning("[src] is already fully charged!"))
+		to_chat(user, span_warning("[src]已经充满能了！"))
 		return
 
 	// Start cranking
 	user.visible_message(
-		span_notice("[user] begins cranking [src]."), 
-		span_notice("You start cranking [src]...")
+		span_notice("[user]开始摇动[src]。"), 
+		span_notice("你开始摇动[src]……")
 	)
 
 	start_cranking_animation()
@@ -240,9 +240,9 @@
 	stop_cranking_animation()
 
 	if(cranks > 0)
-		to_chat(user, span_notice("You crank [src] [cranks] times."))
+		to_chat(user, span_notice("你摇了[src] [cranks]次。"))
 	else
-		to_chat(user, span_warning("You stop cranking it."))
+		to_chat(user, span_warning("你停止了摇动。"))
 
 	return TRUE
 
@@ -254,7 +254,7 @@
 
 	// Check medical skill requirement
 	if(H.get_skill_level(/datum/skill/misc/medicine) < chair_skill_level)
-		to_chat(H, span_warning("I don't have the medical expertise to operate this device!"))
+		to_chat(H, span_warning("我没有操作此设备的医疗专业知识！"))
 		return
 
 	// Check if chair is occupied
@@ -272,22 +272,22 @@
 	//OV edit end
 
 	if(!occupant)
-		to_chat(H, span_warning("The chair needs an occupant to perform reanimation!"))
+		to_chat(H, span_warning("椅子需要有被复活者才能执行复活！"))
 		return
 
 	// Check resources
 	if(current_brew < brew_required)
-		to_chat(H, span_warning("Insufficient fluid!"))
+		to_chat(H, span_warning("液体不足！"))
 		return
 	if(charge < max_charge)
-		to_chat(H, span_warning("Insufficient charge!"))
+		to_chat(H, span_warning("充能不足！"))
 		return
 
 	//OV edit
 	if(istype(occupant, /mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob/suffering))
 		playsound(src, 'sound/magic/lightning.ogg', 100, TRUE)
 		do_sparks(8, TRUE, occupant)
-		occupant.visible_message(span_danger("Bolts of electricity course through [occupant]!"))
+		occupant.visible_message(span_danger("电流贯穿了[occupant]！"))
 		occupant.revive()
 		current_brew -= brew_required
 		charge = 0
@@ -298,22 +298,22 @@
 		return
 
 	// Prompt ghost
-	to_chat(occupant, span_ghostalert("You sense powerful energies attempting to pull you back to your body!"))
-	var/alert_result = alert(occupant, "They are calling for you. Are you ready?", "Reanimation", "I need to wake up", "Don't let me go")
+	to_chat(occupant, span_ghostalert("你感觉到强大的能量正在试图将你拉回身体！"))
+	var/alert_result = alert(occupant, "他们在呼唤你。你准备好了吗？", "复活", "我需要醒来", "不要放开我")
 
 	// Verify occupant is still valid
 	if(occupant.stat != DEAD || occupant.loc != get_turf(src) || !occupant.buckled)
-		to_chat(H, span_warning("The subject is no longer properly buckled to the chair!"))
+		to_chat(H, span_warning("对象不再适当地固定在椅子上！"))
 		return
 
-	if(alert_result != "I need to wake up")
-		to_chat(H, span_warning("[occupant] refuses to return."))
+	if(alert_result != "我需要醒来")
+		to_chat(H, span_warning("[occupant]拒绝回来。"))
 		return
 
 	// Animation and sound
 	playsound(src, 'sound/magic/lightning.ogg', 100, TRUE)
 	do_sparks(8, TRUE, occupant)
-	occupant.visible_message(span_danger("Bolts of electricity course through [occupant]!"))
+	occupant.visible_message(span_danger("电流贯穿了[occupant]！"))
 
 	// Revive process
 	occupant.adjustOxyLoss(-occupant.getOxyLoss())
@@ -323,8 +323,8 @@
 		occupant.emote("gasp")
 		occupant.Jitter(100)
 		occupant.electrocute_act(100, src, 1)
-		occupant.visible_message(span_notice("[occupant] jerks awake with a gasp!"), 
-								span_userdanger("You awaken with agonizing pain as unnatural energy courses through your veins!"))
+		occupant.visible_message(span_notice("[occupant]喘着气猛然醒来！"), 
+								span_userdanger("你痛苦地醒来，非自然的能量在你的血管中奔涌！"))
 		current_brew -= brew_required
 		charge = 0
 		update_icon()

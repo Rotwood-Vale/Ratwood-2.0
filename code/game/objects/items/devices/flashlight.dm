@@ -289,7 +289,7 @@
 	var/mob/living/doctor = user
 	var/mob/living/patient = target
 	if(!on)
-		to_chat(user, span_warning("[src] needs to lit!"))
+		to_chat(user, span_warning("[src]需要点燃！"))
 		return
 	var/list/sewable
 	var/obj/item/bodypart/affecting
@@ -299,15 +299,15 @@
 	if(iscarbon(patient))
 		affecting = patient.get_bodypart(check_zone(doctor.zone_selected))
 		if(!affecting)
-			to_chat(doctor, span_warning("That limb is missing."))
+			to_chat(doctor, span_warning("那个肢体缺失了。"))
 			return FALSE
 		sewable = affecting.get_sewable_wounds()
 	else
 		sewable = patient.get_sewable_wounds()
 	if(!length(sewable))
-		to_chat(doctor, span_warning("There aren't any wounds to singe closed."))
+		to_chat(doctor, span_warning("没有任何伤口可供烧灼闭合。"))
 		return FALSE
-	var/datum/wound/target_wound = sewable.len > 1 ? input(doctor, "Which wound?", "[src]") as null|anything in sewable : sewable[1]
+	var/datum/wound/target_wound = sewable.len > 1 ? input(doctor, "哪个伤口？", "[src]") as null|anything in sewable : sewable[1]
 	if(!target_wound)
 		return FALSE
 
@@ -342,9 +342,9 @@
 		target_wound.set_bleed_rate(max( (target_wound.bleed_rate - bleedreduction), 0))
 		if(target_wound.bleed_rate == 0 && !informed)
 			if(is_simple_animal)
-				patient.visible_message(span_smallgreen("One last drop of plasm trickles from the [(target_wound?.name)] on [patient] before it closes."), span_smallgreen("The throbbing warmth coming out of [target_wound] soothes and stops. It no longer bleeds plasm."))
+				patient.visible_message(span_smallgreen("最后一滴液浆从[patient]的[(target_wound?.name)]中淌出，伤口随即闭合。"), span_smallgreen("从[target_wound]传来的阵阵灼热感逐渐舒缓并停止。它不再流出液浆。"))
 			else
-				patient.visible_message(span_smallgreen("One last drop of plasm trickles from the [(target_wound?.name)] on [patient]'s [affecting.name] before it closes."), span_smallgreen("The throbbing warmth coming out of [target_wound] soothes and stops. It no longer bleeds plasm."))
+				patient.visible_message(span_smallgreen("最后一滴液浆从[patient]的[affecting.name]上的[(target_wound?.name)]中淌出，伤口随即闭合。"), span_smallgreen("从[target_wound]传来的阵阵灼热感逐渐舒缓并停止。它不再流出液浆。"))
 			informed = TRUE
 		if(istype(target_wound, /datum/wound/dynamic))
 			var/datum/wound/dynamic/dynwound = target_wound
@@ -360,16 +360,16 @@
 		target_wound.sew_wound()
 		if(patient == doctor)
 			if(is_simple_animal)
-				doctor.visible_message(span_notice("[doctor] singes \a [target_wound.name] on [doctor.p_them()]self."), span_notice("I singe \a [target_wound.name] on myself."))
+				doctor.visible_message(span_notice("[doctor]烧灼了自己身上的\a [target_wound.name]。"), span_notice("我烧灼了自己身上的\a [target_wound.name]。"))
 			else
-				doctor.visible_message(span_notice("[doctor] singes \a [target_wound.name] on [doctor.p_them()]self."), span_notice("I singe \a [target_wound.name] on my [affecting]."))
+				doctor.visible_message(span_notice("[doctor]烧灼了自己身上的\a [target_wound.name]。"), span_notice("我烧灼了自己[affecting]上的\a [target_wound.name]。"))
 		else
 			if(is_simple_animal)
-				doctor.visible_message(span_notice("[doctor] singes \a [target_wound.name] on [patient]."), span_notice("I singe \a [target_wound.name] on [patient]."))
+				doctor.visible_message(span_notice("[doctor]烧灼了[patient]身上的\a [target_wound.name]。"), span_notice("我烧灼了[patient]身上的\a [target_wound.name]。"))
 			else if(affecting)
-				doctor.visible_message(span_notice("[doctor] singes \a [target_wound.name] on [patient]'s [affecting]."), span_notice("I singe \a [target_wound.name] on [patient]'s [affecting]."))
+				doctor.visible_message(span_notice("[doctor]烧灼了[patient]的[affecting]上的\a [target_wound.name]。"), span_notice("我烧灼了[patient]的[affecting]上的\a [target_wound.name]。"))
 			else
-				doctor.visible_message(span_notice("[doctor] singes \a [target_wound.name] on [patient]."), span_notice("I singe \a [target_wound.name] on [patient]."))
+				doctor.visible_message(span_notice("[doctor]烧灼了[patient]身上的\a [target_wound.name]。"), span_notice("我烧灼了[patient]身上的\a [target_wound.name]。"))
 		if(is_simple_animal)
 			var/mob/living/simple_animal/animal_patient = patient
 			animal_patient.adjustHealth(-((animal_patient.maxHealth / 20) * (medskill + 1)), TRUE)

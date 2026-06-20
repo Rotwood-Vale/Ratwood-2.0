@@ -1,15 +1,15 @@
 /datum/species/ooze
-	name = "Ooze"
+	name = "软泥"
 	id = "ooze"
-	desc = "<b>Ooze</b><br>\
-	In the dungeons and ruins of the duchy of Rockhill, corpses both ancient and fresh litter the ground. \
-	With the appearance of Rot in our realm there was a reactionary substance formed by the natural world, the Ooze. \
-	Taking the form of unintelligent slimes that act as agents of renewal, they digest dead remains and neutralize the Rot where it can be found. \
-	Tied to no singular god they seem to be the planet’s immune system come to life, yet in the cursed loam of the vale there has been a unique result at times.. \
-	When an ooze consumes a corpse fresh, mummified, or skeletal, they retain the memories and skills of the fallen adventurers or commoners that litter the ruins. \
-	Taking on new life, they adopt the mannerisms of this formative meal even if they can realize and mentally separate from their template, although many think of themselves as these dead peoples, insisting this is but a second chance at life..<br>\
-	(+1 CON | +1 WIL | -1 INT) <br>\
-	Easy Dismember | Limb Regrowth | No Bones | No Blood</b></span><br><br>"
+	desc = "<b>软泥</b><br>\
+	在岩丘公国的地牢与废墟中，古老与新鲜的尸体遍布地面。\
+	随着腐化出现在我们的领域，自然界形成了一种反应性物质——软泥。\
+	它们以无智软泥的形态出现，作为重生的使者，消化死者的遗骸并中和所到之处的腐化。\
+	它们不依附于任何单一神祇，仿佛是这颗星球的免疫系统获得了生命，然而在这片诅咒的谷地沃土中，有时会产生独特的结果……\
+	当软泥吞食一具新鲜的、干尸化的或仅剩骨骼的尸体时，它们会保留那些散落废墟中的陨落冒险者或平民的记忆与技能。\
+	获得新生后，它们会继承这顿塑造性大餐的言行举止，即使它们能意识到并能在精神上与自己的模版区分开来，尽管许多软泥会把自己当作那些死者，坚称这不过是生命中的第二次机会……<br>\
+	(+1 体质 | +1 意志 | -1 智力) <br>\
+	易肢解 | 肢体再生 | 无骨骼 | 无血液</b></span><br><br>"
 
 
 	default_color = "79F299"
@@ -147,33 +147,33 @@
 
 ////// ORGAN SPRITES, provided by VelSlime
 /obj/item/organ/brain/ooze
-	name = "Ooze Neural Core"
+	name = "软泥神经核心"
 	icon = 'modular_ochrevalley/icons/obj/velslime.dmi'
 	organ_flags = ORGAN_ORGANIC
 	decoy_override = TRUE
 
 /obj/item/organ/heart/ooze
-	name = "Ooze Fluid Pump"
+	name = "软泥流体泵"
 	icon = 'modular_ochrevalley/icons/obj/velslime.dmi'
 	organ_flags = ORGAN_ORGANIC
 
 /obj/item/organ/eyes/ooze
-	name = "Ooze Occular Sensors"
+	name = "软泥视觉感应器"
 	icon = 'modular_ochrevalley/icons/obj/velslime.dmi'
 	organ_flags = ORGAN_ORGANIC
 
 /obj/item/organ/tongue/wild_tongue/ooze
-	name = "Ooze Taste Buds"
+	name = "软泥味蕾"
 	icon = 'modular_ochrevalley/icons/obj/velslime.dmi'
 	organ_flags = ORGAN_ORGANIC
 
 /obj/item/organ/stomach/ooze
-	name = "Ooze Digestive Chamber"
+	name = "软泥消化腔"
 	icon = 'modular_ochrevalley/icons/obj/velslime.dmi'
 	organ_flags = ORGAN_ORGANIC
 
 /obj/item/organ/liver/ooze
-	name = "Ooze Detoxification Organelle"
+	name = "软泥解毒细胞器"
 	icon = 'modular_ochrevalley/icons/obj/velslime.dmi'
 	organ_flags = ORGAN_ORGANIC
 
@@ -183,7 +183,7 @@
 //SLIME FORM WOOO
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/ooze
-	name = "Blob Form"
+	name = "团块形态"
 	desc = ""
 	overlay_state = ""
 	gesture_required = TRUE
@@ -202,7 +202,7 @@
 	defprob = 70
 
 /mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob/suffering
-	name = "suffering ooze"
+	name = "痛苦的软泥"
 	melee_damage_lower = 1
 	melee_damage_upper = 1
 	del_on_deaggro = null
@@ -219,7 +219,7 @@
 /obj/effect/proc_holder/spell/targeted/shapeshift/ooze/Shapeshift(mob/living/caster)
 	var/obj/shapeshift_holder/H = locate() in caster
 	if(H)
-		to_chat(caster, span_warning("You're already shapeshifted!"))
+		to_chat(caster, span_warning("你已经处于变形状态！"))
 		return
 
 	var/mob/living/shape = new shapeshift_type(caster.loc)
@@ -248,7 +248,7 @@
 		stored.mind.transfer_to(shape)
 	stored.forceMove(src)
 	stored.notransform = TRUE
-	shape.visible_message(span_warning("[stored] has lost their form, they are vulnerable and near death."),span_warningbig("You have been near killed, you can no longer maintain your form. You will need to be revived to return to your humen form."))
+	shape.visible_message(span_warning("[stored]失去了形态，他们变得脆弱并濒临死亡。"),span_warningbig("你已濒死，无法再维持形态。需要被复活才能恢复你的休门形态。"))
 	playsound(shape.loc, pick('sound/combat/gib (1).ogg','sound/combat/gib (2).ogg'), 200, FALSE, 3)
 	slink = soullink(/datum/soullink/shapeshift, stored , shape)
 	slink.source = src
@@ -266,14 +266,14 @@
 		// leave a track to indicate something has shifted out here
 		var/obj/effect/track/the_evidence = new(stored.loc)
 		the_evidence.handle_creation(stored)
-		the_evidence.track_type = "expanding animal tracks into humanoid footprints"
-		the_evidence.ambiguous_track_type = "curious footprints"
+		the_evidence.track_type = "从动物足迹扩展为人形脚印"
+		the_evidence.ambiguous_track_type = "奇怪的脚印"
 		the_evidence.base_diff = 6
 
 	if(shape && shape.mind)
 		shape.mind?.transfer_to(stored)
 	stored.revive(full_heal = TRUE, admin_revive = FALSE)
-	to_chat(stored, span_notice("Bug notice: If you can no longer see emotes, move to a different z level and back (up/down a level). This is a known bug."))
+	to_chat(stored, span_notice("Bug提示：如果你看不到表情动作，请移动到不同的z层级再返回（上/下一层）。这是一个已知的bug。"))
 	stored.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/ooze)
 	stored.Knockdown(200)
 	stored.Stun(200)

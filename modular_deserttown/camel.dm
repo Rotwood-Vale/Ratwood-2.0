@@ -44,7 +44,7 @@
 	icon_dead = "camel_dead"
 	gender = FEMALE
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	emote_see = list("looks around.", "chews some leaves.")
+	emote_see = list("环顾四周。", "咀嚼着树叶。")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
