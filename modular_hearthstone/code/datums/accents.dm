@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(character_accents, list("无口音",
 	"信义口音",
 	"普伊-梅恩口音",
 	"阿瓦尔口音",
-	"海盗口音",
+	"海盗腔",
 	"下城区口音"))
 
 // Global mapping of accent names to their font span lists
