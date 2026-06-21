@@ -68,6 +68,37 @@
 	desc = span_boldgreen("我感受到了一阵从感官链接彼端传来的愉悦。")
 
 // ===========================================================================
+// “共感之痛”魔法伤口：用来承载从链接彼端传来的疼痛。
+// ---------------------------------------------------------------------------
+// 为什么用伤口而非直接造成伤害：本游戏的“疼痛”是由 get_complex_pain() 实时汇总的派生量，
+// 其来源既包括肢体的 brute/burn 伤，也包括每个伤口的 woundpain（见 carbon/life.dm）。
+// 像“钻心剜骨”这类法术正是靠给肢体挂一个只有 woundpain、却毫无实际伤害的魔法伤口来制造剧痛——
+// 这类“只痛不伤”的疼痛根本不会经过 apply_damage，因此旧的“受伤才共享”方案必然漏掉它。
+// 用一个我们自己掌控的 woundpain 伤口来表示“借来的痛”，能让承痛方真正进入主线疼痛系统
+// （会痛吟、会因疼痛被定身），从而忠实地“共享疼痛”。
+// 它不造成任何实际伤害、不出血、不自愈，痛感数值完全由链接每秒轮询写入（见 sync_shared_pain）。
+// ===========================================================================
+/datum/wound/magical/shared_pain
+	name = "共感之痛"
+	check_name = "共感之痛"
+	severity = WOUND_SEVERITY_LIGHT
+	mob_overlay = ""          // 不显示任何外观（这是“借来的痛”，并非肉体上的真实创口）
+	sewn_overlay = ""
+	whp = 1
+	sewn_whp = 1
+	woundpain = 0            // 初始为 0，真实痛感由链接轮询动态写入
+	sewn_woundpain = 0
+	sleep_healing = 0        // 不随睡眠恢复
+	passive_healing = 0      // 不自愈：其存续与痛感完全由链接掌控
+	qdel_on_droplimb = TRUE
+
+// 同名伤口不可叠加：始终只保留一个“共感之痛”，痛感直接改写其 woundpain 即可。
+/datum/wound/magical/shared_pain/can_stack_with(datum/wound/other)
+	if(istype(other, /datum/wound/magical/shared_pain))
+		return FALSE
+	return ..()
+
+// ===========================================================================
 // 感官共享链接 datum：承载“两名 mob 之间”的所有共享逻辑与生命周期。
 // 把状态与信号集中在一个 datum 里，便于在到期 / 一方失效时一次性干净清理，
 // 避免信号、临时法术、视角覆写等残留。
@@ -76,8 +107,10 @@
 	var/mob/living/user_a          // 链接的一方（通常是施法者）
 	var/mob/living/user_b          // 链接的另一方（被选中并同意的目标）
 	var/active = FALSE             // 链接是否仍然有效（防止清理过程中重入）
-	var/relaying_pain = FALSE      // 重入保护：正在“转发疼痛”时为真，避免疼痛在两端无限反弹
 	var/expire_timer_id            // 到期定时器 id，便于一方提前失效时清掉它
+	var/next_pain_sync = 0        // 疼痛轮询的下次允许时间（节流用，避免每个快刻都重算疼痛）
+	var/last_pain_to_a = 0        // 上次写给 user_a 的“借来痛感”值，用于只在“起痛/痛消”时提示，不刷屏
+	var/last_pain_to_b = 0        // 上次写给 user_b 的“借来痛感”值，同上
 
 // New：建立链接。注册双方的痛觉/听觉信号，授予双方“切换视角”的临时法术。
 // 形参 a / b 为参与共享的两名活体。
@@ -99,10 +132,15 @@
 	// 视觉共享：给双方各授予一个“切换视角”的临时法术（见文件末尾的 view 法术）。
 	grant_view_spell(user_a)
 	grant_view_spell(user_b)
+	// 启动轻量轮询：当某一方正“借用对方的眼睛”时，需要持续把其视野锥朝向同步到对方的当前朝向，
+	// 否则对方转身后，借眼者看到的视野锥仍停在旧方向。用 SSfastprocess 每刻校正一次即可（见 process）。
+	START_PROCESSING(SSfastprocess, src)
 
 // Destroy：链接销毁时，必须把一切“加上去的东西”对称地撤销干净。
 /datum/sensory_share_link/Destroy()
 	active = FALSE
+	// 先停掉轮询，避免清理过程中 process 再访问已半拆解的链接。
+	STOP_PROCESSING(SSfastprocess, src)
 	// 注销信号、收回临时法术、复原视角，缺一不可，否则会留下幽灵效果。
 	cleanup_member(user_a)
 	cleanup_member(user_b)
@@ -110,13 +148,125 @@
 	user_b = null
 	return ..()
 
-// register_member_signals：为单个成员注册“受伤”和“听到声音”两类信号。
-// COMSIG_MOB_APPLY_DAMGE -> 痛觉共享；COMSIG_MOVABLE_HEAR -> 听觉共享。
+// process：每个处理刻被 SSfastprocess 调用一次。两项职责：
+//   1) 为“当前正借用对方眼睛”的成员，把其视野锥持续校正到对方的最新朝向（每刻，需跟手）。
+//   2) 节流地轮询双方“自身疼痛”，把它共享给对方（每秒一次即可，疼痛无需逐刻刷新）。
+/datum/sensory_share_link/process()
+	if(!active)
+		return
+	// 视觉锥校正：每个快刻都做，保证借眼视角跟手。
+	sync_borrowed_cone(user_a)
+	sync_borrowed_cone(user_b)
+	// 疼痛同步：按 next_pain_sync 节流（每秒一次），避免每个快刻都遍历肢体/伤口重算疼痛。
+	if(world.time >= next_pain_sync)
+		next_pain_sync = world.time + 1 SECONDS
+		sync_shared_pain()
+
+// ---------------------------------------------------------------------------
+// sync_shared_pain：疼痛共享的核心。每秒被 process 调用一次。
+// 思路（绝对赋值的稳态模型，天然杜绝 A->B->A 的疼痛回声）：
+//   1) 分别测得双方的“自身疼痛”own_pain（刻意排除我们注入的“共感之痛”，见 get_own_pain）；
+//   2) 按比例把对方的自身疼痛写成本方“共感之痛”伤口的 woundpain（带上限钳制）。
+// 因为“共感之痛”被排除在 own_pain 之外，所以它永远只是对方真实疼痛的映射，绝不会再被回传放大。
+// 这样无论疼痛来自何种途径（普通外伤、纯 woundpain 的魔法痛、灼烧等），都能被如实共享。
+// ---------------------------------------------------------------------------
+/datum/sensory_share_link/proc/sync_shared_pain()
+	// 计算各自要“借给对方”的痛感：对方自身疼痛 * 比例，再用上限钳制，避免一次把人痛晕/痛死。
+	var/to_b = min(round(get_own_pain(user_a) * SENSORY_PAIN_RATIO), SENSORY_PAIN_CAP)
+	var/to_a = min(round(get_own_pain(user_b) * SENSORY_PAIN_RATIO), SENSORY_PAIN_CAP)
+	// 写入双方的“共感之痛”伤口（并按需提示“起痛/痛消”）。
+	apply_shared_pain(user_b, to_b, last_pain_to_b)
+	apply_shared_pain(user_a, to_a, last_pain_to_a)
+	// 记录本次写入值，供下次比较“是否发生起痛/痛消的状态变化”。
+	last_pain_to_b = to_b
+	last_pain_to_a = to_a
+
+// get_own_pain：测量某成员“属于自己的”疼痛量。
+// 它复刻主线 get_complex_pain 的核心算法，但【刻意跳过“共感之痛”伤口】——
+// 这样借来的痛不会被算进自身疼痛，从而保证共享是单向映射、不会层层放大。
+// 非 carbon（无肢体/伤口疼痛系统）一律返回 0。
+/datum/sensory_share_link/proc/get_own_pain(mob/living/member)
+	if(!iscarbon(member) || QDELETED(member))
+		return 0
+	var/mob/living/carbon/carbon_member = member
+	. = 0
+	for(var/obj/item/bodypart/limb as anything in carbon_member.bodyparts)
+		// 机械/骨骼化肢体不计入疼痛，与主线一致。
+		if(limb.status == BODYPART_ROBOTIC || limb.skeletonized)
+			continue
+		// 该肢体由实际伤害（brute/burn）换算出的疼痛。
+		var/bodypart_pain = ((limb.brute_dam + limb.burn_dam) / limb.max_damage) * limb.max_pain_damage
+		// 叠加该肢体上各伤口的 woundpain——但跳过我们自己注入的“共感之痛”，避免回声。
+		for(var/datum/wound/wound in limb.wounds)
+			if(istype(wound, /datum/wound/magical/shared_pain))
+				continue
+			bodypart_pain += wound.woundpain
+		// 单个肢体的疼痛上限钳制，与主线一致。
+		bodypart_pain = min(bodypart_pain, limb.max_pain_damage)
+		. += bodypart_pain
+
+// apply_shared_pain：把数值 amount 写入 member 的“共感之痛”伤口（没有则按需创建、为 0 则移除）。
+// previous 为上一次写入值，用于只在“从无到有 / 从有到无”时给出文字提示，避免每秒刷屏。
+/datum/sensory_share_link/proc/apply_shared_pain(mob/living/member, amount, previous)
+	// 只有 carbon 拥有基于伤口的疼痛系统；非 carbon 直接跳过（无从承载这种“痛”）。
+	if(!iscarbon(member) || QDELETED(member))
+		return
+	var/mob/living/carbon/carbon_member = member
+	// 找出当前是否已存在“共感之痛”伤口。
+	var/datum/wound/magical/shared_pain/existing = carbon_member.has_wound(/datum/wound/magical/shared_pain)
+
+	if(amount <= 0)
+		// 对方已无痛 -> 移除本方的“共感之痛”（连同其 woundpain）。
+		if(existing && existing.bodypart_owner)
+			existing.bodypart_owner.remove_wound(existing)
+		if(previous > 0)
+			to_chat(member, span_notice("自感官链接彼端传来的疼痛渐渐退去了。"))
+		return
+
+	if(existing)
+		// 已有伤口：直接更新痛感数值即可（无需反复创建/销毁）。
+		existing.woundpain = amount
+	else
+		// 尚无伤口：挂到胸口（找不到就退而用第一根肢体），并写入痛感。
+		var/obj/item/bodypart/affected = carbon_member.get_bodypart(BODY_ZONE_CHEST)
+		if(!affected && carbon_member.bodyparts?.len)
+			affected = carbon_member.bodyparts[1]
+		if(!affected)
+			return
+		var/datum/wound/magical/shared_pain/new_wound = affected.add_wound(/datum/wound/magical/shared_pain, TRUE)
+		if(!new_wound)
+			return
+		new_wound.woundpain = amount
+
+	// 仅在“从无痛到有痛”的瞬间提示一次，避免每秒刷屏。
+	if(previous <= 0)
+		to_chat(member, span_danger("一阵并非源于己身的疼痛，顺着感官链接灌入我的神经！"))
+
+// sync_borrowed_cone：若 viewer 此刻正透过 partner 的眼睛观看，则刷新其视野锥，
+// 使锥体朝向 / 形状跟随 partner 的当前状态（具体改写见 /mob/living/carbon 的 update_vision_cone 覆写）。
+/datum/sensory_share_link/proc/sync_borrowed_cone(mob/living/viewer)
+	if(!viewer || QDELETED(viewer) || !viewer.client)
+		return
+	var/mob/living/partner = get_partner(viewer)
+	if(!partner || QDELETED(partner))
+		return
+	// client.eye 指向 partner 才说明“正在借眼”；否则该成员看的是自己，无需处理。
+	if(viewer.client.eye != partner)
+		return
+	// 确保锥体保持显示（show_cone 内部有 cone_showing 短路，已显示时几乎零开销）。
+	viewer.update_cone_show()
+	// 性能优化：仅当对方“转了向”（锥体朝向需要变化）时才做较重的锥体重算，
+	// 对方原地不动的每一刻都直接跳过，避免无谓地反复重建遮挡图像。
+	if(viewer.hud_used && viewer.hud_used.fov && viewer.hud_used.fov.dir == partner.dir)
+		return
+	viewer.update_vision_cone()
+
+// register_member_signals：为单个成员注册“听到声音 / 性快感 / 高潮”信号。
+// 注意：疼痛共享不再走信号（apply_damage 只在“受伤”时触发，会漏掉“只痛不伤”的来源），
+// 改由 process -> sync_shared_pain 每秒轮询 get_complex_pain 实现（见上）。
 /datum/sensory_share_link/proc/register_member_signals(mob/living/member)
 	if(!istype(member))
 		return
-	// 受伤信号：在 apply_damage 起始处触发，参数为 (damage, damagetype, def_zone)。
-	RegisterSignal(member, COMSIG_MOB_APPLY_DAMGE, PROC_REF(on_member_damaged))
 	// 听到声音信号：在 Hear() 处触发，参数为一个 hearing_args 列表。
 	RegisterSignal(member, COMSIG_MOVABLE_HEAR, PROC_REF(on_member_heard))
 	// 性爱快感信号：每次该成员“承受一次性爱动作”时触发，携带本次有效性奋值（快感）。
@@ -131,13 +281,27 @@
 		return
 	// 注销信号（用 QDELETED 兜底，避免对已删除对象操作）。
 	if(!QDELETED(member))
-		UnregisterSignal(member, COMSIG_MOB_APPLY_DAMGE)
 		UnregisterSignal(member, COMSIG_MOVABLE_HEAR)
 		// 同步注销性爱快感 / 高潮信号，与 register_member_signals 严格对称，杜绝残留监听。
 		UnregisterSignal(member, COMSIG_CARBON_SEX_ACTION_RECEIVED)
 		UnregisterSignal(member, COMSIG_MOB_EJACULATED)
+		// 清除我们注入的“共感之痛”伤口，避免链接结束后还残留借来的疼痛。
+		if(iscarbon(member))
+			var/mob/living/carbon/carbon_member = member
+			var/datum/wound/magical/shared_pain/leftover = carbon_member.has_wound(/datum/wound/magical/shared_pain)
+			if(leftover && leftover.bodypart_owner)
+				leftover.bodypart_owner.remove_wound(leftover)
 		// 复原视角：若成员此刻正透过对方的眼睛观看，必须拉回自己，避免“黑屏/卡视角”。
 		member.reset_perspective(null)
+		// 关键：链接结束时若成员正“借眼视物”，光是拉回镜头还不够，必须重算视觉，
+		// 否则之前被远程接管的 sight/see_in_dark/lighting_alpha 会残留，造成视觉异常。
+		member.update_sight()
+		// 同步复原视野锥：先 update_cone_show() 决定是否显示，再 update_vision_cone() 把朝向
+		// 校正回成员自己的 dir，确保链接结束后本人的方向性视野立刻、完整地恢复正常。
+		member.update_cone_show()
+		member.update_vision_cone()
+		// 复原失明状态：链接结束后，若成员本就失明（借眼期间被暂时绕过），此刻应立即重新盖回黑幕。
+		member.update_blindness()
 	// 解除反向引用（仅当它确实指向本链接时才清，避免误删别人的链接）。
 	if(member.sensory_share_link_custom == src)
 		member.sensory_share_link_custom = null
@@ -152,35 +316,6 @@
 	if(who == user_b)
 		return user_a
 	return null
-
-// ---------------------------------------------------------------------------
-// 痛觉共享：当链接中的某一方受到伤害时，把一部分痛楚同步到另一方。
-// 由 COMSIG_MOB_APPLY_DAMGE 触发，签名与 apply_damage 的信号发送一致。
-// ---------------------------------------------------------------------------
-/datum/sensory_share_link/proc/on_member_damaged(mob/living/source, damage, damagetype, def_zone)
-	SIGNAL_HANDLER
-	// 链接失效、或正处于“转发疼痛”过程中（防止 A->B->A 无限反弹）时，直接忽略。
-	if(!active || relaying_pain)
-		return
-	// 找到要承受共感疼痛的另一方；任一方已失效则不处理。
-	var/mob/living/partner = get_partner(source)
-	if(!partner || QDELETED(partner) || QDELETED(source))
-		return
-	// 死亡的一方不再传导/接收痛觉，避免对尸体反复结算。
-	if(partner.stat == DEAD)
-		return
-	// 把实际伤害按比例换算成“共感疼痛”，并用上限钳制，防止秒杀链接对象。
-	var/shared = min(round(damage * SENSORY_PAIN_RATIO), SENSORY_PAIN_CAP)
-	if(shared <= 0)
-		return
-	// 关键：转发期间置位重入保护。下面对 partner 施加的耐力损耗本身也会触发
-	// COMSIG_MOB_APPLY_DAMGE，若不加保护就会再次进入本过程造成死循环。
-	relaying_pain = TRUE
-	// 用 STAMINA（耐力/疲劳）承载“共感疼痛”：能明确体现痛感，又不会造成真实外伤。
-	partner.apply_damage(shared, STAMINA)
-	relaying_pain = FALSE
-	// 表现层反馈：让承痛的一方明确知道这股痛来自感官链接，而非自身受创。
-	to_chat(partner, span_danger("一阵并非来自己身的剧痛，顺着感官链接灌入我的神经！"))
 
 // ---------------------------------------------------------------------------
 // 听觉共享：当链接中的某一方“听到”话语时，把内容回响进另一方脑海。
@@ -507,6 +642,120 @@
 	return TRUE
 
 // ===========================================================================
+// 真·借眼视物：覆写 /mob/living/update_remote_sight。
+// ---------------------------------------------------------------------------
+// 这是“真正看到对方所见”的关键。主线的 carbon/simple_animal 在 update_sight() 中，
+// 当 client.eye 不是自己时会调用 `client.eye.update_remote_sight(观看者)`，若其返回
+// TRUE，则“接管观看者的全部视觉参数”。我们正是借此把【被观看方(src)】的真实视觉
+// （夜视距离 see_in_dark、视觉标志 sight、可见隐形 see_invisible、亮度敏感 lighting_alpha）
+// 原样赋给【观看者(user)】，从而获得一份“有血有肉、与对方一致”的视角，而非仅仅把镜头
+// 挪到对方身上、却仍用自己的眼睛去看（那会出现“对方在暗处看得见、我却一片漆黑”的割裂感）。
+//
+// 作用域控制：本覆写只在“src 正处于一段有效感官链接、且观看者正是链接另一方”时才接管；
+// 其它任何远程观看（摄像头、附身等）一律 return ..() 走原版逻辑，绝不影响链接之外的行为。
+// ===========================================================================
+/mob/living/update_remote_sight(mob/living/user)
+	// 取出 src（被观看方）当前所属的感官链接；没有链接就完全交还给原版逻辑。
+	var/datum/sensory_share_link/link = sensory_share_link_custom
+	if(!link || !link.active)
+		return ..()
+	// 仅当“观看者恰是本链接的另一方”时才接管；否则不是我们该管的远程观看。
+	if(link.get_partner(user) != src)
+		return ..()
+	// 把被观看方(src)的真实视觉参数整套复制给观看者(user)，实现“看到对方之所见”。
+	user.sight = sight                       // 视觉标志（透视墙体/看穿生物等能力）
+	user.see_in_dark = see_in_dark           // 夜视距离（决定黑暗中能看多远）
+	user.see_invisible = see_invisible       // 可见隐形等级（能否看见隐身/灵体等）
+	user.lighting_alpha = lighting_alpha      // 亮度平面透明度（黑暗的呈现强度）
+	user.sync_lighting_plane_alpha()          // 立即把上面的 lighting_alpha 应用到光照平面
+	// 返回 TRUE：告诉观看者的 update_sight() “视觉已被远程接管”，跳过其自身的视觉重算。
+	return TRUE
+
+// ===========================================================================
+// 复刻“对方的视野锥”：覆写 /mob/living/carbon 的 update_cone_show / update_vision_cone。
+// ---------------------------------------------------------------------------
+// 需求：借眼观看时，不要给一个“环视四周”的上帝视角，而要原样复刻对方的方向性视野锥
+//       ——对方朝哪看、视野盲区在哪，借眼者就一模一样地受限。
+//
+// 原理：主线视野锥本质是一层屏幕空间遮罩，其“朝向”取自 hud_used.fov(_blocker).dir，
+//       由 update_vision_cone() 设定（dullahan 借“分离的头”远程观看时，正是把 dir 设成
+//       远端身体的朝向——见 vision_cone.dm 第 80-90 行，本实现沿用同一思路）。
+//       而“是否显示锥体”由 update_cone_show() 决定，原版在 client.eye≠自己时会强制隐藏。
+//
+// 为何覆写在 /mob/living/carbon 而非 /mob/living：主线已在 /mob/living 定义了
+//       update_vision_cone()，无法再重复定义；在更具体的 /mob/living/carbon 上覆写既能
+//       拦截人类（视野锥本就是为带客户端的人类设计），其 ..() 又能回落到 /mob/living 原版。
+//
+// 作用域控制：仅当“自己正借用感官链接对方的眼睛（client.eye==对方）”时才改写；
+//       其它所有情况一律 return ..()，绝不影响链接之外（含 dullahan）的原有视野锥行为。
+// ===========================================================================
+
+// 小工具：判断 src 此刻是否正“借用某位感官链接对方的眼睛”，是则返回那位对方，否则返回 null。
+/mob/living/proc/sensory_borrowed_eye_partner()
+	var/datum/sensory_share_link/link = sensory_share_link_custom
+	if(!link || !link.active || !client || !client.eye || client.eye == src)
+		return null
+	var/mob/living/partner = link.get_partner(src)
+	// client.eye 必须正好指向链接对方，才算“借其眼睛”。
+	if(partner && client.eye == partner)
+		return partner
+	return null
+
+// update_cone_show 覆写：借眼时强制“显示锥体”（这样才能呈现对方的方向性视野），
+// 而不是走原版“client.eye≠自己 -> 隐藏锥体”的分支（那会变成无锥的环视视角）。
+/mob/living/carbon/update_cone_show()
+	if(sensory_borrowed_eye_partner())
+		return show_cone()
+	return ..()
+
+// update_vision_cone 覆写：借眼时，把自己的视野锥朝向 / 形状同步成对方的，
+// 使“盲区方向”与对方完全一致；非借眼情况回落原版（含 dullahan 分支）。
+/mob/living/carbon/update_vision_cone()
+	var/mob/living/partner = sensory_borrowed_eye_partner()
+	if(!partner)
+		return ..()
+	if(client && hud_used && hud_used.fov)
+		// 朝向跟随对方当前 dir：对方一转身，借眼者的视野盲区随之转向。
+		hud_used.fov.dir = partner.dir
+		hud_used.fov_blocker.dir = partner.dir
+		// 形状（icon_state）尽量复刻对方：对方若因眼伤/独眼而视野更窄，借眼者也照样受限。
+		if(partner.hud_used && partner.hud_used.fov)
+			hud_used.fov.icon_state = partner.hud_used.fov.icon_state
+			hud_used.fov_blocker.icon_state = partner.hud_used.fov_blocker.icon_state
+		else
+			// 对方没有可用的锥体 HUD（如无客户端的 NPC）时，退化为标准战斗视野锥兜底。
+			hud_used.fov.icon_state = "combat"
+			hud_used.fov_blocker.icon_state = "combat_v"
+		// 触发 SSincone 做一次锥体遮挡的图像刷新（与原版同样的收尾步骤）。
+		START_PROCESSING(SSincone, client)
+
+// ===========================================================================
+// 失明者借眼复明：覆写 /mob/living/update_blindness。
+// ---------------------------------------------------------------------------
+// 背景：主线的“失明”并不是靠视觉变量实现，而是往客户端屏幕盖一层全屏黑幕
+//       （overlay_fullscreen("blind", ...)，见 status_procs.dm）。这层黑幕独立于
+//       client.eye —— 即便我们把镜头挪到了对方身上、并用 update_remote_sight 把对方的
+//       视觉参数套到了失明者身上，只要这层黑幕还在，失明者依旧只看得见一片漆黑。
+//
+// 需求（已与使用者确认）：感官共享既然连“视觉”也一并相连，失明者在借用对方眼睛期间
+//       应当能真正看见对方之所见——即魔法暂时绕过其自身的失明。
+//
+// 做法：当 src 正借用感官链接对方的眼睛时，本覆写改为“清除失明黑幕”，让借来的画面得以显示；
+//       其余任何情况一律 return ..() 走原版逻辑（该失明仍失明）。一旦切回自身视角或链接结束，
+//       只要再调用一次 update_blindness()（切换/清理流程里都会调用），原版逻辑就会按其真实状态
+//       重新盖回黑幕，失明立刻恢复——魔法绕过仅在“正借眼”的那段时间内有效。
+//
+// 作用域：只在“正借眼”时才接管，绝不影响链接之外的任何失明判定。
+// ===========================================================================
+/mob/living/update_blindness()
+	// 正在借用对方的眼睛 -> 清除本人的失明全屏黑幕，使借来的画面可见。
+	if(sensory_borrowed_eye_partner())
+		clear_fullscreen("blind")
+		return
+	// 其它情况：交还原版逻辑，由其依据 TRAIT_BLIND / eye_blind / stat 决定是否盖回黑幕。
+	return ..()
+
+// ===========================================================================
 // 临时法术：感官互视（视角切换）
 // ---------------------------------------------------------------------------
 // 由链接 datum 在建立时授予双方、在结束时收回。作用：在“自己的视角”与
@@ -555,10 +804,30 @@
 	// 用 client.eye 是否指向 partner 作为当前状态判据，保证开/关严格成对。
 	if(user.client.eye == partner)
 		user.reset_perspective(null) // 恢复到自身默认视角
+		// 切回自身后立即重算视觉：client.eye==自己时，carbon/simple_animal 的 update_sight()
+		// 会跳过 update_remote_sight，转而依据自身器官/装备复原本人视觉，撤销之前的“借眼”。
+		user.update_sight()
+		// 立即复原视野锥：回到自身视角后应恢复本人的方向性视野锥（否则要等下次转向才更新）。
+		// 先 update_cone_show()（此时不再借眼，会回落原版逻辑重新显示自己的锥体），
+		// 再 update_vision_cone() 把锥体朝向校正回自己的 dir。
+		user.update_cone_show()
+		user.update_vision_cone()
+		// 复原失明状态：此时已不再借眼，原版 update_blindness 会按本人真实状态决定是否盖回黑幕，
+		// 失明者切回自身后将立刻重新失明（魔法绕过仅在借眼期间有效）。
+		user.update_blindness()
 		to_chat(user, span_notice("我的视野回到了自己的双眼。"))
 	else
 		user.reset_perspective(partner) // 把 client.eye 设为对方，借其双眼观察
-		to_chat(user, span_notice("我的视野顺着感官链接，切换到了对方的双眼所见。"))
+		// 切到对方后立即重算视觉：此时 client.eye==partner，update_sight() 会调用
+		// partner.update_remote_sight(user)（即上面的覆写），把对方的真实视觉套到我身上。
+		user.update_sight()
+		// 立即让“借来的视野锥”生效：update_cone_show() 借眼时会强制显示锥体，
+		// update_vision_cone() 则把锥体朝向 / 形状同步成对方的——于是连视野盲区都与对方一致。
+		user.update_cone_show()
+		user.update_vision_cone()
+		// 失明者借眼复明：清除本人的失明黑幕，使借来的画面得以显示（详见 update_blindness 覆写）。
+		user.update_blindness()
+		to_chat(user, span_notice("我的视野顺着感官链接切换到对方身上——所见、明暗、乃至朝向盲区，皆与对方一致。"))
 	return TRUE
 
 // ===== 清理顶部定义的宏，避免泄漏到全局命名空间、与其它文件冲突 =====
