@@ -11,6 +11,7 @@ SUBSYSTEM_DEF(custom_bootstrap)
 		/client/proc/grandcaster,
 		/client/proc/god,
 		/client/proc/toggle_god_blessings,
+		/client/proc/cleanup_world,	// 世界清理指令：必须在此登记，自定义 client 动词才会被挂到管理员的 -GameMaster- 标签下
 	)
 
 /datum/controller/subsystem/custom_bootstrap/Initialize(timeofday)

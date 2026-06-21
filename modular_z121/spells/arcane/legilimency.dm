@@ -251,6 +251,12 @@
 	var/datum/mind/caster_mind
 	// 目标原本的心智：接管前先抓存，归还时用它把目标客户端拉回身体。可能为 null（目标是无心智的 NPC）。
 	var/datum/mind/victim_mind
+	// 施法者的“技能数据”(/datum/skill_holder)：接管前先抓存其引用。用于在归还时把技能数据强制各归各位，
+	// 修复 transfer_to 在“占据活体玩家”场景下会把双方 skill_holder 指针交叉的 Bug（导致技能等级互换）。
+	var/datum/skill_holder/caster_skills
+	// 目标原本的“技能数据”。占据活体玩家时它会变成“悬挂监听”，归还时若不强制复位就会被错误拖到施法者身上。
+	// 目标是无 skill_holder 的简单 NPC 时此值为 null。
+	var/datum/skill_holder/victim_skills
 
 // on_creation：在基类把 duration 换算成绝对到期时间之前，先写入施法者算好的时长，
 // 并记下施法者引用（随后 ..() 会触发 on_apply 真正执行接管）。
@@ -287,6 +293,14 @@
 	victim_mind = owner.mind
 	// 抓存施法者心智，作为归还时把施法者搬回原身的句柄。
 	caster_mind = caster.mind
+
+	// 关键（技能互换 Bug 修复）：在任何 transfer_to 发生之前，先各自抓存“技能数据”引用。
+	// 因为 transfer_to 会让 skill_holder 跟随心智在身体间迁移（COMSIG_MIND_TRANSFER + set_current），
+	// 而占据活体玩家时，目标自己的 skill_holder 会留下“悬挂监听”，归还途中被错误地拖到施法者身上。
+	// 这里先把两个 skill_holder 句柄记下，待 on_remove 末尾再据此把它们强制复位，彻底消除交叉。
+	// caster 用 ensure_skills() 确保一定拿得到（施法者必有技能）；目标用 .skills 原样读取（NPC 可能为 null）。
+	caster_skills = caster.ensure_skills()
+	victim_skills = owner.skills
 
 	// 在“挤出”目标之前先给目标本人发提示——此刻其客户端仍在 owner（目标身体）里，
 	// 直接对 owner 发消息一定能送达；转移之后目标客户端被挤成灵魂就不便定位了。
@@ -340,7 +354,39 @@
 			victim_mind.transfer_to(target_body, TRUE) // 把目标客户端从灵魂状态拉回自己身体
 			to_chat(target_body, span_notice("束缚我的意志骤然松脱，我重新夺回了对自己身体的掌控。"))
 
-	// --- 第三步：清除可能残留的“掉线/SSD”提示（头顶 zzz 标记）---
+	// --- 第三步：修复“技能等级互换”Bug —— 把两份技能数据强制各归各位 ---
+	// 成因：transfer_to 让 skill_holder 跟随心智迁移（靠 COMSIG_MIND_TRANSFER 信号 + set_current）。
+	//       占据活体玩家时，目标自己的 skill_holder 仍挂在目标身体上监听该信号，却已不再被 .skills 指向；
+	//       归还时第一步 transfer_to 在目标身体上 SEND_SIGNAL(COMSIG_MIND_TRANSFER)，这个“悬挂监听”被触发，
+	//       于是目标的技能数据被错误地拖到了“施法者原身”上——双方技能等级看起来就互换了。
+	// 修复思路：skill_holder 的“内容”（known_skills/经验）始终正确，错乱的只是“哪具身体指向哪份数据”。
+	//       因此在所有 transfer_to 都结束后，按开场抓存的引用把它们重新钉死：施法者技能→施法者原身，
+	//       目标技能→目标身体。先 UnregisterSignal 摘除两份数据在两具身体上的全部 COMSIG_MIND_TRANSFER 监听
+	//       （含归还途中产生的悬挂监听），避免随后 set_current 重复注册报错；再用 set_current 干净复位。
+	if(caster_skills)
+		// 先把施法者技能数据从两具身体上的迁移监听里彻底摘除（未注册时为无害空操作）。
+		if(!QDELETED(caster_body))
+			caster_skills.UnregisterSignal(caster_body, COMSIG_MIND_TRANSFER)
+		if(!QDELETED(target_body))
+			caster_skills.UnregisterSignal(target_body, COMSIG_MIND_TRANSFER)
+	if(victim_skills)
+		// 同样摘除目标技能数据在两具身体上的迁移监听，清掉占据期间遗留的悬挂监听。
+		if(!QDELETED(caster_body))
+			victim_skills.UnregisterSignal(caster_body, COMSIG_MIND_TRANSFER)
+		if(!QDELETED(target_body))
+			victim_skills.UnregisterSignal(target_body, COMSIG_MIND_TRANSFER)
+	// 把施法者技能数据钉回施法者原身：set_current 会重设 current、重新注册监听并令 caster_body.skills 指回它。
+	if(caster_skills && !QDELETED(caster_body))
+		caster_skills.set_current(caster_body)
+	// 把目标技能数据钉回目标身体（玩家目标）。
+	if(victim_skills && !QDELETED(target_body))
+		victim_skills.set_current(target_body)
+	else if(!QDELETED(target_body) && target_body.skills == caster_skills)
+		// 目标本是无 skill_holder 的简单 NPC：避免它残留指向“施法者技能数据”的悬挂指针，
+		// 直接置空，需要时引擎会通过 ensure_skills() 给它新建一份空白技能数据。
+		target_body.skills = null
+
+	// --- 第四步：清除可能残留的“掉线/SSD”提示（头顶 zzz 标记）---
 	// 成因：施法者客户端从目标身体撤离时，主线 /mob/living/Logout() 会无条件给该身体
 	//       set_ssd_indicator(TRUE)，留下一个“zzz”掉线标记。对“玩家目标”而言，其本人随后
 	//       重新登入身体（Login）会清掉该标记；但若目标本是“简单生物 NPC”（victim_mind 为 null），
@@ -353,6 +399,8 @@
 	// 清理引用，避免悬挂。
 	caster_mind = null
 	victim_mind = null
+	caster_skills = null
+	victim_skills = null
 	caster_body_ref = null
 	target_body_ref = null
 	return ..()

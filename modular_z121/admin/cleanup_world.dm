@@ -31,6 +31,13 @@
 		/obj/item/bodypart,                                    // 肢体（含 /obj/item/bodypart/head 头颅子类）
 		/obj/item/natural/bone,                                // 骨头
 		/obj/item/reagent_containers/food/snacks/rogue/meat,   // 肉（生肉 + 同类型的腐肉）
+		/obj/item/natural/hide,                                // 兽皮（含已鞣制等子类）
+		/obj/item/alch/sinew,                                  // 兽筋（炼金素材）
+		/obj/item/alch/bone,                                   // 骨料（炼金素材，区别于 natural/bone）
+		/obj/item/natural/fur,                                 // 毛皮
+		/obj/item/natural/worms/leech,                         // 水蛭
+		/obj/item/ash,                                         // 灰烬
+		/obj/item/natural/stone,                               // 石块
 	))
 
 // -----------------------------------------------------------------------------

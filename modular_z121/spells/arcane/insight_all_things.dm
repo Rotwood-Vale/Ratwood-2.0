@@ -45,7 +45,7 @@
 	human_req = TRUE                        // 只有人类施法者能施放
 	warnie = "spellwarning"
 	action_icon = 'modular_z121/icon/custompell.dmi'
-	overlay_state = "insight"               // 动作按钮图标态（若 dmi 暂无该态仅显示为空，不影响编译）
+	overlay_state = "insight_all_things"               // 动作按钮图标态（若 dmi 暂无该态仅显示为空，不影响编译）
 	invocations = list("为我展示世界的真实!") // 咒文（成功施放时由框架喊出）
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_ARCANE
