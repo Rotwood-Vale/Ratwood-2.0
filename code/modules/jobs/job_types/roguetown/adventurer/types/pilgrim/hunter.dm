@@ -50,7 +50,6 @@
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 	backl = /obj/item/storage/backpack/rogue/backpack
 	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/quiver/arrows
 	r_hand = /obj/item/storage/meatbag
 	backpack_contents = list(
 				/obj/item/flint = 1,
@@ -58,7 +57,8 @@
 				/obj/item/rogueweapon/huntingknife = 1,
 				/obj/item/flashlight/flare/torch/lantern = 1,
 				/obj/item/rogueweapon/scabbard/sheath = 1,
-				/obj/item/hunting_map/white_stag = 1
+				/obj/item/hunting_map/white_stag = 1,
+				/obj/item/hunting_map/boars = 1,
 				)
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 	if(SSmapping.current_map.map_name == "Desert Town")
@@ -73,10 +73,24 @@
 		H.adjust_skillrank_up_to(/datum/skill/craft/tanning, 4, TRUE)
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/huntersyell)
-		var/weapons = list("Machete","Hatchet")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
-		switch(weapon_choice)
+		var/ranged_weapons = list("Longbow", "Recurve Bow", "Crossbow")
+		var/ranged_choice = input(H, "Choose your ranged weapon.", "PREPARE FOR THE HUNT") as anything in ranged_weapons
+		switch(ranged_choice)
+			if("Longbow")
+				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
+				beltr = /obj/item/quiver/arrows
+			if("Recurve Bow")
+				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+				beltr = /obj/item/quiver/arrows
+			if("Crossbow")
+				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+				beltr = /obj/item/quiver/bolts
+				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
+
+		var/sidearms = list("Machete", "Hatchet")
+		var/sidearm_choice = input(H, "Choose your sidearm.", "TAKE UP ARMS") as anything in sidearms
+		switch(sidearm_choice)
 			if("Machete")
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				l_hand = /obj/item/rogueweapon/sword/short/messer/iron
@@ -139,7 +153,8 @@
 				/obj/item/rogueweapon/huntingknife = 1,
 				/obj/item/rogueweapon/scabbard/sheath = 1,
 				/obj/item/hunting_map/white_stag = 1,
-				/obj/item/rogueweapon/stoneaxe/handaxe
+				/obj/item/hunting_map/boars = 1,
+				/obj/item/rogueweapon/stoneaxe/handaxe = 1,
 				)
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 	if(SSmapping.current_map.map_name == "Desert Town")

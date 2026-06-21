@@ -19,7 +19,9 @@
 		TRAIT_KNEESTINGER_IMMUNITY,
 		TRAIT_NOBREATH,
 		TRAIT_DEATHLESS,
-		TRAIT_BLOOD_RESISTANCE
+		TRAIT_BLOOD_RESISTANCE,
+		// We do not need people farming this for master skills
+		TRAIT_BADTRAINER,
 	)
 	no_equip = list(SLOT_SHIRT, SLOT_HEAD, SLOT_ARMOR, SLOT_WEAR_MASK, SLOT_GLOVES, SLOT_SHOES, SLOT_PANTS, SLOT_CLOAK, SLOT_BELT)
 	nojumpsuit = TRUE
@@ -33,15 +35,31 @@
 	H.pixel_x = -24
 	return TRUE
 
+/datum/ai_controller/white_stag
+	movement_delay = 0.1 SECONDS
+	ai_movement = /datum/ai_movement/hybrid_pathing
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
+	)
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/simple_find_target/closest,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)
+
 /mob/living/carbon/human/species/wildshape/white_stag
 	name = "The White Stag"
 	race = /datum/species/white_stag
+	ai_controller = /datum/ai_controller/white_stag
 	d_intent = INTENT_PARRY
 	dodgetime = 10
 	pixel_x = -16
 	// We are not a normal wildshape.
 	untransform_on_death = FALSE
 	faction = list("White Stag")
+	icon = 'icons/mob/unique_shapeshifts/white_stag_shape.dmi'
+	icon_state = "stag"
 
 /mob/living/carbon/human/species/wildshape/white_stag/gain_inherent_skills()
 	return FALSE
@@ -204,7 +222,8 @@
 		/obj/item/natural/hide = 10,
 		/obj/item/natural/bundle/bone/full = 10,
 		/obj/item/alch/sinew = 5,
-		/obj/item/alch/viscera = 3
+		/obj/item/alch/viscera = 3,
+		/obj/item/natural/head/white_stag = 1
 	)
 	perfect_butcher_results = list(
 		/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_w = 8,
@@ -215,7 +234,8 @@
 		/obj/item/natural/hide = 10,
 		/obj/item/natural/bundle/bone/full = 10,
 		/obj/item/alch/sinew = 5,
-		/obj/item/alch/viscera = 3
+		/obj/item/alch/viscera = 3,
+		/obj/item/natural/head/white_stag = 1
 	)
 	// Doesn't rot
 	rot_type = 0
