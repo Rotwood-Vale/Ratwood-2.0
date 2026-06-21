@@ -73,7 +73,7 @@ GLOBAL_LIST_EMPTY(active_group_mindlinks)
 	recharge_time = 6 MINUTES
 	spell_tier = 3
 	action_icon = 'modular_z121/icon/custompell.dmi'
-	overlay_state = "group_mindlink"
+	overlay_state = "groupmindlink"
 	invocations = list("群念相连。")
 	invocation_type = "whisper"
 	chargedloop = /datum/looping_sound/invokegen

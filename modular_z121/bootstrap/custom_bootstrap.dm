@@ -10,6 +10,7 @@ SUBSYSTEM_DEF(custom_bootstrap)
 		/client/proc/bless,
 		/client/proc/grandcaster,
 		/client/proc/god,
+		/client/proc/toggle_god_blessings,
 	)
 
 /datum/controller/subsystem/custom_bootstrap/Initialize(timeofday)
