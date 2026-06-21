@@ -1232,6 +1232,7 @@
 	)
 	bigboy = TRUE
 	gripsprite = TRUE
+	special = /datum/special_intent/piercing_lunge
 	wlength = WLENGTH_GREAT
 	w_class = WEIGHT_CLASS_BULKY
 	minstr = 8

@@ -84,10 +84,9 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 		return FALSE
 	if(direction == DOWN)
 		testing("dir=down")
-		for(var/obj/O in contents)
-			if(O.obj_flags & BLOCK_Z_OUT_DOWN)
-				testing("noout")
-				return FALSE
+		if(platform_atom_count > 0)
+			testing("noout")
+			return FALSE
 		return TRUE
 	if(direction == UP)
 		for(var/obj/O in contents)

@@ -284,6 +284,38 @@
 	name = "Conformable"
 	desc = "Falling in line is my only choice."
 
+/datum/status_effect/debuff/yield_prompt
+	id = "yieldprompt"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/yield_prompt
+	duration = 20 SECONDS
+
+/datum/status_effect/debuff/yield_prompt/on_apply()
+	if(isliving(owner) && owner.has_flaw(/datum/charflaw/compliant))
+		var/mob/living/living_owner = owner
+		living_owner.submit(TRUE)
+		return FALSE
+	return ..()
+
+/atom/movable/screen/alert/status_effect/debuff/yield_prompt
+	name = "Yield?"
+	desc = "I am being told to yield, shall I comply? Or will I continue to fight!"
+	icon_state = "compliance"
+	alert_group = ALERT_DEBUFF
+
+/atom/movable/screen/alert/status_effect/debuff/yield_prompt/Click(location, control, params)
+	if(!usr || !usr.client)
+		return FALSE
+	var/mob/user = usr
+	var/paramslist = params2list(params)
+	if(paramslist["shift"] && paramslist["left"]) // screen objects don't do the normal Click() stuff so we'll cheat
+		examine_ui(user)
+		return FALSE
+	var/mob/living/L = usr
+	if(!istype(L))
+		return
+	L.submit()
+	L.remove_status_effect(attached_effect)
+
 /datum/status_effect/debuff/chilled
 	id = "chilled"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/chilled

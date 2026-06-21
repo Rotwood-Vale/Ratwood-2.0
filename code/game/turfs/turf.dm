@@ -55,6 +55,13 @@
 	var/neighborlay_override
 	var/teleport_restricted = FALSE //whether turf teleport spells are forbidden from teleporting to this turf
 
+	// Pathfinding variables.
+	var/path_weight = 0
+	/// How many dense climbable atoms does this turf have?
+	var/climbable_atom_count = 0
+	/// How many atoms on this turf act as platforms (have BLOCK_Z_OUT_DOWN)?
+	var/platform_atom_count = 0
+
 	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID
 
 /turf/vv_edit_var(var_name, new_value)
@@ -107,7 +114,7 @@
 		reassess_stack()
 
 	if (opacity)
-		has_opaque_atom = TRUE
+		opaque_atom_count = 1 // we count ourselves
 
 	ComponentInitialize()
 
@@ -401,18 +408,37 @@
 		if(QDELETED(mover))
 			return FALSE		//We were deleted.
 
-/turf/Entered(atom/movable/AM)
+/turf/Entered(atom/movable/entered_movable)
 	..()
-	SEND_SIGNAL(src, COMSIG_TURF_ENTERED, AM)
-	SEND_SIGNAL(AM, COMSIG_MOVABLE_TURF_ENTERED, src)
-
-	if(explosion_level && AM.ex_check(explosion_id))
-		AM.ex_act(explosion_level)
-
+	SEND_SIGNAL(src, COMSIG_TURF_ENTERED, entered_movable)
+	SEND_SIGNAL(entered_movable, COMSIG_MOVABLE_TURF_ENTERED, src)
+	if(explosion_level && entered_movable.ex_check(explosion_id))
+		entered_movable.ex_act(explosion_level)
 	// If an opaque movable atom moves around we need to potentially update visibility.
-	if (AM.opacity)
-		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
+	if (entered_movable.opacity)
+		opaque_atom_count++ // Make sure to do this before reconsider_lights(), incase we're on instant updates.
 		reconsider_lights()
+	if(isstructure(entered_movable))
+		var/obj/structure/entered_structure = entered_movable
+		if(entered_structure.density && entered_structure.climbable)
+			climbable_atom_count += 1
+		if(entered_structure.obj_flags & BLOCK_Z_OUT_DOWN)
+			platform_atom_count += 1
+
+/turf/Exited(atom/movable/gone, atom/newloc)
+	if(!istype(gone))
+		return
+	SEND_SIGNAL(src, COMSIG_TURF_EXITED, gone, newloc)
+	SEND_SIGNAL(gone, COMSIG_MOVABLE_TURF_EXITED, src, newloc)
+	if (gone?.opacity)
+		opaque_atom_count-- // Make sure to do this before reconsider_lights(), incase we're on instant updates.
+		reconsider_lights()
+	if(isstructure(gone))
+		var/obj/structure/exited_structure = gone
+		if(exited_structure.density && exited_structure.climbable)
+			climbable_atom_count -= 1
+		if(exited_structure.obj_flags & BLOCK_Z_OUT_DOWN)
+			platform_atom_count -= 1
 
 /turf/open/Entered(atom/movable/AM)
 	..()
@@ -531,22 +557,19 @@
 		return FALSE
 	return abs(x - T.x) + abs(y - T.y) + abs(z - T.z)
 
+// TODO: cache certain parts of this per-tile and update on /entered and /exited
+// that way we can avoid iterating contents
 /// Returns an additional distance factor based on slowdown and other factors.
 /turf/proc/get_heuristic_slowdown(mob/traverser, travel_dir)
 	. = get_slowdown(traverser)
-	// add cost from climbable obstacles
-	for(var/obj/structure/some_object in src)
-		if(some_object.density && some_object.climbable)
-			. += 1 // extra tile penalty
-			break
 	var/obj/structure/mineral_door/door = locate() in src
 	if(door && door.density && !door.locked && door.anchored) // door will have to be opened
 		. += 2 // try to avoid closed doors where possible
-
-	for(var/obj/structure/O in contents)
-		if(O.obj_flags & BLOCK_Z_OUT_DOWN)
-			return
-	. += path_weight
+	// add cost from climbable obstacles
+	if(climbable_atom_count > 0)
+		. += 1 // extra tile penalty
+	if(platform_atom_count <= 0)
+		. += path_weight
 
 // Like Distance_cardinal, but includes additional weighting to make A* prefer turfs that are easier to pass through.
 /turf/proc/Heuristic_cardinal(turf/T, mob/traverser)

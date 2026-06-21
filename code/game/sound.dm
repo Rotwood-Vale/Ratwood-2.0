@@ -35,8 +35,7 @@
 	if(!extrarange)
 		extrarange = 1
 	var/maxdistance = (world.view + extrarange)
-	var/source_z = turf_source.z
-	var/list/listeners = SSmobs.clients_by_zlevel[source_z].Copy()
+	var/list/listeners
 
 	var/turf/above_turf = GET_TURF_ABOVE(turf_source)
 	var/turf/below_turf = GET_TURF_BELOW(turf_source)
@@ -46,34 +45,29 @@
 
 	//var/list/muffled_listeners = list() //this is very rudimentary list of muffled listeners above and below to mimic sound muffling (this is done through modifying the playsounds for them) <-- no it ain't you forgot to use this var
 	if(!ignore_walls) //these sounds don't carry through walls or vertically
-		listeners = listeners & get_hearers_in_view(maxdistance,turf_source)
+		listeners = get_hearers_in_view(maxdistance, turf_source, RECURSIVE_CONTENTS_CLIENT_MOBS)
 	else
+		listeners = get_hearers_in_range(maxdistance, turf_source, RECURSIVE_CONTENTS_CLIENT_MOBS)
 		if(above_turf)
-			listeners += SSmobs.clients_by_zlevel[above_turf.z]
-			listeners += SSmobs.dead_players_by_zlevel[above_turf.z]
+			listeners += get_hearers_in_range(maxdistance, above_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
 		if(below_turf)
-			listeners += SSmobs.clients_by_zlevel[below_turf.z]
-			listeners += SSmobs.dead_players_by_zlevel[below_turf.z]
+			listeners += get_hearers_in_range(maxdistance, below_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
-	listeners += SSmobs.dead_players_by_zlevel[source_z]
 	. = list()
 
 	for(var/mob/M as anything in listeners)
-		var/turf/turf_check = get_turf(M)
 		// Check relay instead.
 		if(isdullahan(M))
 			var/mob/living/carbon/human = M
 			var/datum/species/dullahan/dullahan = human.dna.species
-			if(dullahan.headless)
-				turf_check = get_turf(dullahan.my_head)
+			if(dullahan.headless && get_dist(dullahan.my_head, turf_source) >= maxdistance)
+				continue
 
-		if(get_dist(turf_check, turf_source) <= maxdistance)
-			if(animal_pref)
-				if(M.client?.prefs?.mute_animal_emotes)
-					continue
-			if(M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S, repeat))
-				. += M
+		if(animal_pref && M.client?.prefs?.mute_animal_emotes)
+			continue
+		if(M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S, repeat))
+			. += M
 	//This never runs because muffled listeners will always be empty and instead muffling runs on playsound_local
 	/*for(var/mob/M as anything in muffled_listeners)
 		if(get_dist(M, turf_source) <= maxdistance)

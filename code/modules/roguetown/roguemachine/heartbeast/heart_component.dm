@@ -1,3 +1,4 @@
+// why does this use a component, it should be on the heart beast type, this is dumb
 /datum/component/chimeric_heart_beast
 	var/obj/structure/roguemachine/chimeric_heart_beast/heart_beast
 	var/base_blood_output = 1
@@ -199,7 +200,7 @@
 
 /datum/component/chimeric_heart_beast/proc/update_blood_overlay()
 	var/blood_percent = blood_pool / max_blood_pool
-	heart_beast.cut_overlay("blood_pool")
+	heart_beast.cut_overlays()
 
 	var/chunk = round(blood_percent * 5) // This gives us 0-5
 	if(chunk >= 1)

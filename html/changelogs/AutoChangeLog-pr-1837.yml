@@ -1,6 +1,0 @@
-author: "Makximus"
-delete-after: True
-changes:
-  - rscdel: "The Hand's fit changing on the rockhill map"
-  - balance: "Spymaster's stats"
-  - rscadd: "Sleuth to Spymaster"
