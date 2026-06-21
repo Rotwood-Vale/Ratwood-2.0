@@ -249,3 +249,12 @@
   - bugfix: I forgot that scissoring was a thing, now bedbreaker applies to it.
   vitoras228322-ai:
   - rscadd: Added oozes, aka a new race of amorphous goop-people. Kind of WIP still.
+2026-06-21:
+  Lokaka21:
+  - rscadd: Added the Loose Straps vice! It makes your armor fall off if it breaks!
+  ophaq:
+  - rscadd: Rebrands Valleygirl Accent to 'Gallant Accent' and reworks it. We're lyke,
+      so back.
+  - bugfix: Fixes Xylix slip miracles not actually slipping properly.
+  - balance: Shortens slip time on Xylix miracles so it does not stun you for a long
+      time on the floor like soap did.
