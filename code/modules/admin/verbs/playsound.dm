@@ -42,6 +42,7 @@
 /client/verb/change_music_vol()
 	set category = "Options"
 	set name = "ChangeMusicPower"
+	set hidden = 1
 
 	if(prefs)
 /*		if(blacklisted() == 1)
@@ -61,17 +62,107 @@
 		prefs.musicvol = vol
 		prefs.save_preferences()
 
+		mob.update_music_volume(CHANNEL_MUSIC, prefs.musicvol)
 		mob.update_music_volume(CHANNEL_ADMIN, prefs.musicvol)
-		mob.update_music_volume(CHANNEL_BUZZ, prefs.musicvol)
-		mob.update_music_volume(CHANNEL_CMUSIC1, prefs.musicvol)
-		mob.update_music_volume(CHANNEL_CMUSIC2, prefs.musicvol)
-		mob.update_music_volume(CHANNEL_CMUSIC3, prefs.musicvol)
-		mob.update_music_volume(CHANNEL_CMUSIC4, prefs.musicvol)
+
+/client/verb/volume_power_menu()
+	set category = "Options"
+	set name = "Volume Power"
+
+	if(!prefs)
+		return
+
+	if(!volume_power_menu)
+		volume_power_menu = new(src)
+
+	volume_power_menu.ui_interact(mob)
+
+/client/proc/apply_volume_power_setting(setting_id, volume_value)
+	if(!prefs)
+		return
+
+	var/vol = clamp(round(volume_value), 0, 100)
+	switch(setting_id)
+		if("master")
+			prefs.mastervol = vol
+		if("music")
+			prefs.musicvol = vol
+			mob?.update_music_volume(CHANNEL_MUSIC, prefs.musicvol)
+			mob?.update_music_volume(CHANNEL_ADMIN, prefs.musicvol)
+		if("combat")
+			prefs.combatmusicvol = vol
+			if(mob?.cmode)
+				mob.update_music_volume(CHANNEL_BUZZ, prefs.combatmusicvol)
+				mob.update_music_volume(CHANNEL_CMUSIC1, prefs.combatmusicvol)
+				mob.update_music_volume(CHANNEL_CMUSIC2, prefs.combatmusicvol)
+				mob.update_music_volume(CHANNEL_CMUSIC3, prefs.combatmusicvol)
+				mob.update_music_volume(CHANNEL_CMUSIC4, prefs.combatmusicvol)
+		if("ambience")
+			prefs.ambiencevol = vol
+			mob?.update_channel_volume(CHANNEL_AMBIENCE, prefs.ambiencevol)
+			mob?.update_channel_volume(CHANNEL_RAIN, prefs.ambiencevol)
+		if("lobby")
+			prefs.lobbymusicvol = vol
+			if(isnewplayer(mob))
+				mob.update_music_volume(CHANNEL_LOBBYMUSIC, prefs.lobbymusicvol)
+		else
+			return
+
+	prefs.save_preferences()
+
+/datum/volume_power_menu
+	var/client/owner
+
+/datum/volume_power_menu/New(client/C)
+	. = ..()
+	owner = C
+
+/datum/volume_power_menu/Destroy(force)
+	if(owner?.volume_power_menu == src)
+		owner.volume_power_menu = null
+	owner = null
+	return ..()
+
+/datum/volume_power_menu/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "VolumePowerMenu", "Volume Power")
+		ui.set_state(GLOB.always_state)
+		ui.open()
+
+/datum/volume_power_menu/ui_data(mob/user)
+	var/list/data = list()
+	if(!owner?.prefs)
+		return data
+
+	data["master"] = isnum(owner.prefs.mastervol) ? owner.prefs.mastervol : initial(owner.prefs.mastervol)
+	data["music"] = isnum(owner.prefs.musicvol) ? owner.prefs.musicvol : initial(owner.prefs.musicvol)
+	data["combat"] = isnum(owner.prefs.combatmusicvol) ? owner.prefs.combatmusicvol : initial(owner.prefs.combatmusicvol)
+	data["ambience"] = isnum(owner.prefs.ambiencevol) ? owner.prefs.ambiencevol : initial(owner.prefs.ambiencevol)
+	data["lobby"] = isnum(owner.prefs.lobbymusicvol) ? owner.prefs.lobbymusicvol : initial(owner.prefs.lobbymusicvol)
+	return data
+
+/datum/volume_power_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	if(..())
+		return TRUE
+
+	if(!owner?.prefs)
+		return FALSE
+
+	if(action == "set_volume")
+		var/setting_id = params["id"]
+		var/volume_value = text2num(params["value"])
+		owner.apply_volume_power_setting(setting_id, volume_value)
+		SStgui.update_uis(src)
+		return TRUE
+
+	return FALSE
 
 
 /client/verb/show_rolls()
 	set category = "Options"
 	set name = "ShowRolls"
+	set hidden = 1
 
 	if(prefs)
 		prefs.showrolls = !prefs.showrolls
@@ -84,6 +175,7 @@
 /client/verb/change_master_vol()
 	set category = "Options"
 	set name = "ChangeVolPower"
+	set hidden = 1
 
 	if(prefs)
 		var/vol = input(usr, "Current master volume power (affects all sounds except music and ambience): [prefs.mastervol]",, 100) as null|num
@@ -97,6 +189,7 @@
 /client/verb/change_ambience_vol()
 	set category = "Options"
 	set name = "ChangeAmbiencePower"
+	set hidden = 1
 
 	if(prefs)
 		var/vol = input(usr, "Current ambience power: [prefs.ambiencevol]",, 100) as null|num
@@ -108,12 +201,12 @@
 		prefs.save_preferences()
 
 		mob.update_channel_volume(CHANNEL_AMBIENCE, prefs.ambiencevol)
-		mob.update_channel_volume(CHANNEL_MUSIC, prefs.ambiencevol)
 		mob.update_channel_volume(CHANNEL_RAIN, prefs.ambiencevol)
 
 /client/verb/change_lobby_music_vol()
 	set category = "Options"
 	set name = "ChangeLobbyMusicPower"
+	set hidden = 1
 
 	if(prefs)
 		var/vol = input(usr, "Current lobby music power: [prefs.lobbymusicvol]",, 100) as null|num

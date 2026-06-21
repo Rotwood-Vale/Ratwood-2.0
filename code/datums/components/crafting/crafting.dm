@@ -743,6 +743,7 @@
 	set name = "Toggle legacy craft"
 	set category = "Options"
 	set desc = "Toggles between legacy and miacraft"
+	set hidden = 1
 	usr.client.legacycraft = !legacycraft
 
 /client

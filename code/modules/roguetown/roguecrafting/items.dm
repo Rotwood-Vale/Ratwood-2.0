@@ -423,6 +423,17 @@
 		)
 	craftdiff = 1
 
+/datum/crafting_recipe/roguetown/survival/improvisedscalpel
+	name = "improvised scalpel"
+	result = /obj/item/rogueweapon/surgery/scalpel/improv
+	reqs = list(
+		/obj/item/natural/fibers = 2,
+		/obj/item/grown/log/tree/stick = 2,
+		/obj/item/natural/whetstone = 1,
+		/obj/item/natural/stone = 1,
+		)
+	craftdiff = 2
+
 // Unfortunately there's no good category for it, yet.
 // I don't want ration paper to be too expensive, making wrapped food underused
 // So instead, ration paper is a very cheap recipe with parchment and tallow (instead of full fat) that makes 2 wrapper

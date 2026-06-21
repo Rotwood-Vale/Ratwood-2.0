@@ -36,41 +36,37 @@
 	max_integrity = ARMOR_INT_CHEST_PLATE_IRON
 	smeltresult = /obj/item/ingot/iron
 
-/obj/item/clothing/suit/roguetown/armor/plate/aalloy
+/obj/item/clothing/suit/roguetown/armor/plate/ancient
+	name = "ancient half-plate"
+	desc = "Polished gilbranze layers, magewelded into plate armor. Let none impede the march of progress, and let Her champions bring the unenlightened masses to kneel."
+	icon_state = "ancientplate"
+	item_state = "ancientplate"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/decrepit
 	name = "decrepit half-plate"
 	desc = "Frayed bronze layers, bolted into plate armor. Once, the hauberk of a rising champion; now, nothing more than a fool's tomb."
-	icon_state = "ancientplate"
-	item_state = "ancientplate"
 	max_integrity = ARMOR_INT_CHEST_PLATE_DECREPIT
 	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = null
 
-/obj/item/clothing/suit/roguetown/armor/plate/paalloy
-	name = "ancient half-plate"
-	desc = "Polished gilbronze layers, magewelded into plate armor. Let none impede the march of progress, and let Her champions bring the unenlightened masses to kneel."
-	icon_state = "ancientplate"
-	item_state = "ancientplate"
-	smeltresult = /obj/item/ingot/aaslag
-
-/obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/artificer
 	name = "artificed half-plate"
-	desc = "Polished gilbronze layers, magewelded into lightweight plate armor. It holds a slot for an arcyne meld to power it."
-	smeltresult = /obj/item/ingot/aaslag
+	desc = "Polished gilbranze layers, magewelded into lightweight plate armor. It holds a slot for an arcyne meld to power it."
 	icon_state = "artificerplate"
 	item_state = "artificerplate"
-	armor_class = ARMOR_CLASS_LIGHT // Artificer made gilbronze.
+	armor_class = ARMOR_CLASS_LIGHT // Artificer made gilbranze.
 	var/powered = FALSE
 	var/mode = 1
 	var/active_item = FALSE //Prevents issues like dragon ring giving negative str instead
 	var/legendaryarcane = FALSE
 	var/legendaryathletics = FALSE
-/obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer/Initialize(mapload)
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/artificer/Initialize(mapload)
 	.=..()
 	update_description()
 
-/obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/rogueweapon/hammer))
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/artificer/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/rogueweapon/tongs))
 		if(user.get_skill_level(/datum/skill/craft/engineering) >= 3)
 			toggle_mode(user)
 			return
@@ -83,7 +79,7 @@
 			item_state = "artificerplate_powered"
 	.=..()
 
-/obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer/proc/toggle_mode(mob/user)
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/artificer/proc/toggle_mode(mob/user)
 	if(!src.ontable())
 		to_chat(user, span_notice("I need to put this on a table first")) //prevents stats staying on a person if tinkered on self
 	else
@@ -91,7 +87,7 @@
 		user.visible_message(span_notice("[user] tinkers with [src], adjusting its enhancements."))
 		update_description()
 
-/obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer/equipped(mob/living/user, slot)
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/artificer/equipped(mob/living/user, slot)
 	. = ..()
 	if(!powered || active_item || slot != SLOT_ARMOR)
 		return
@@ -137,7 +133,7 @@
 		else
 			to_chat(user, span_warning("The curiass feels cold and dead."))
 
-/obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer/dropped(mob/living/user)
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/artificer/dropped(mob/living/user)
 	.=..()
 	if(active_item)
 		if(mode == 1)
@@ -166,11 +162,11 @@
 			else
 				return
 
-/obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer/proc/update_description()
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/artificer/proc/update_description()
 	if(mode == 1)
-		desc = "Polished gilbronze layers, magewelded into lightweight plate armor. It hums with arcyne power, enhancing magical prowess."
+		desc = "Polished gilbranze layers, magewelded into lightweight plate armor. It hums with arcyne power, enhancing magical prowess."
 	else
-		desc = "Polished gilbronze layers, magewelded into lightweight plate armor. It radiates raw strength, reinforcing the wearer's physical might."
+		desc = "Polished gilbranze layers, magewelded into lightweight plate armor. It radiates raw strength, reinforcing the wearer's physical might."
 
 /obj/item/clothing/suit/roguetown/armor/plate/fluted
 	name = "fluted half-plate"
@@ -321,6 +317,7 @@
 	icon_state = "matthiosarmor"
 	max_integrity = ARMOR_INT_CHEST_PLATE_ANTAG
 	peel_threshold = 5	//-Any- weapon will require 5 peel hits to peel coverage off of this armor.
+	armor = ARMOR_ASCENDANT
 
 /obj/item/clothing/suit/roguetown/armor/plate/full/matthios/Initialize(mapload)
 	. = ..()
@@ -338,6 +335,7 @@
 	icon_state = "zizoplate"
 	max_integrity = ARMOR_INT_CHEST_PLATE_ANTAG
 	peel_threshold = 5	//-Any- weapon will require 5 peel hits to peel coverage off of this armor.
+	armor = ARMOR_ASCENDANT
 
 /obj/item/clothing/suit/roguetown/armor/plate/full/zizo/Initialize(mapload)
 	. = ..()
@@ -498,20 +496,18 @@
 	item_state = "ornatechestplate"
 	is_silver = TRUE
 
-/obj/item/clothing/suit/roguetown/armor/plate/half/aalloy
-	name = "decrepit cuirass"
-	desc = "Frayed bronze, pounded into a breastplate. It feels more like a corset than a cuirass; there's barely enough width to let those aching lungs breathe."
-	icon_state = "ancientcuirass"
-	max_integrity = ARMOR_INT_CHEST_MEDIUM_DECREPIT
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-
-/obj/item/clothing/suit/roguetown/armor/plate/half/paalloy
+/obj/item/clothing/suit/roguetown/armor/plate/half/ancient
 	name = "ancient cuirass"
 	desc = "Polished gilbranze, curved into a breastplate. It is not for the heart that beats no more, but for the spirit that flows through luxless marrow; one of Her many gifts."
 	icon_state = "ancientcuirass"
 	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/clothing/suit/roguetown/armor/plate/half/ancient/decrepit
+	name = "decrepit cuirass"
+	desc = "Frayed bronze, pounded into a breastplate. It feels more like a corset than a cuirass; there's barely enough width to let those aching lungs breathe."
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_DECREPIT
+	color = "#bb9696"
+	anvilrepair = null
 
 /obj/item/clothing/suit/roguetown/armor/plate/half/fluted
 	name = "fluted cuirass"

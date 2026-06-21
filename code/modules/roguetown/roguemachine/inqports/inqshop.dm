@@ -48,7 +48,7 @@
 	new /obj/item/roguecoin/silver/inqpile(src)
 
 /datum/inqports/supplies/stampstuff
-	name = "1 Lump of Redtallow"
+	name = "1 Lump of Inquisitorial Tallow"
 	item_type = /obj/item/reagent_containers/food/snacks/tallow/red
 	marquescost = 2
 

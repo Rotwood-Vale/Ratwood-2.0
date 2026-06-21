@@ -197,7 +197,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 		hidden_ghosts = get_hidden_ghosts_for_target(src)
 		if(length(hidden_ghosts))
 			ignored_mobs += hidden_ghosts
-	var/list/hearers = get_hearers_in_view(vision_distance, src) //caches the hearers and then removes ignored mobs.
+	var/list/hearers = hearers(vision_distance, src) //caches the hearers and then removes ignored mobs.
 	hearers -= ignored_mobs
 	if(self_message)
 		hearers -= src
@@ -233,7 +233,7 @@ GLOBAL_VAR_INIT(mobids, 1)
  * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
  */
 /atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, runechat_message = null, log_seen = NONE, log_seen_msg = null, list/ignored_mobs)
-	var/list/hearers = get_hearers_in_view(hearing_distance, src)
+	var/list/hearers = hearers(hearing_distance, src) // get_hearers_in_view is slower because we don't care about SCOMs and etc here
 	if(!islist(ignored_mobs))
 		ignored_mobs = list(ignored_mobs)
 	hearers -= ignored_mobs
@@ -256,7 +256,7 @@ GLOBAL_VAR_INIT(mobids, 1)
  */
 
 /atom/proc/loud_message(message, hearing_distance = DEFAULT_MESSAGE_RANGE, directional = TRUE)
-	var/list/listening = get_hearers_in_view(hearing_distance, src)
+	var/list/listening = hearers(hearing_distance, src)
 	for(var/_M in GLOB.player_list)
 		var/mob/M = _M
 		if(!M.client) //client is so that ghosts don't have to listen to mice
@@ -271,14 +271,17 @@ GLOBAL_VAR_INIT(mobids, 1)
 					continue
 		if(!is_in_zweb(src.z,M.z))
 			continue
-		listening |= M
+		if(M in listening)
+			continue
+		var/mob/living/L = M
+		if(istype(L) && L.STAPER <= 8)
+			to_chat(L, span_warning("You hear something... somewhere!"))
+			continue
+		listening += M
 
 	for(var/mob/living/L in listening)
 		var/strz
 		var/strdir
-		if(L.STAPER <= 8 && !(L in viewers(world.view, src)))
-			to_chat(L, span_warning("You hear something... somewhere!"))
-			continue
 		if(L.z != src.z)
 			var/zdiff = abs(L.z - src.z)
 			if(L.z > src.z)
@@ -603,7 +606,7 @@ GLOBAL_VAR_INIT(mobids, 1)
  */
 /mob/verb/memory()
 	set name = "Notes"
-	set category = "Memory"
+	set category = "IC"
 	set desc = ""
 	if(mind)
 		mind.show_memory(src)
@@ -615,7 +618,7 @@ GLOBAL_VAR_INIT(mobids, 1)
  */
 /mob/verb/add_memory(msg as message)
 	set name = "AddNote"
-	set category = "Memory"
+	set category = "IC"
 	if(mind)
 		if (world.time < memory_throttle_time)
 			return
@@ -1219,7 +1222,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 ///Show the language menu for this mob
 /mob/verb/open_language_menu()
 	set name = "Open Language Menu"
-	set category = "Memory"
+	set category = "IC"
 	set hidden = 0
 
 	var/datum/language_holder/H = get_language_holder()

@@ -26,8 +26,19 @@
 	STACON = 8
 	STASTR = 10
 	tame = FALSE
-	tame_chance = 25
-	bonus_tame_chance = 15
+	food_type = list(
+		/obj/item/reagent_containers/food/snacks/rogue/meat/steak,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/fatty,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/bacon,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/spider,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/crab,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/poultry,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit,
+		/obj/item/reagent_containers/food/snacks/rogue/truffles,
+	)
+	tame_chance = 5
+	bonus_tame_chance = 5
 	can_saddle = TRUE
 	can_buckle = TRUE
 	aggressive = 1

@@ -67,7 +67,7 @@
 
 /datum/component/storage/concrete/roguetown/keyring/New(datum/P, ...)
 	. = ..()
-	can_hold = typecacheof(list(/obj/item/roguekey))
+	can_hold = typecacheof(list(/obj/item/roguekey, /obj/item/seal))
 
 /datum/component/storage/concrete/roguetown/belt/knife_belt
 	screen_max_rows = 3		//Lets you hold a regular knife + keys basically.
@@ -260,8 +260,8 @@
 			/obj/item/ingot/blacksteel,
 			/obj/item/ingot/steelholy,
 			/obj/item/ingot/silverblessed,
-			/obj/item/ingot/aalloy,
-			/obj/item/ingot/purifiedaalloy,
+			/obj/item/ingot/decrepit,
+			/obj/item/ingot/gilbranze,
 			/obj/item/ingot/aaslag,
 			/obj/item/roguegem,
 			/obj/item/roguegem/green,

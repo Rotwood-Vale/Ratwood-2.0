@@ -114,6 +114,6 @@
 							/obj/item/restraints/legcuffs/beartrap/armed = 1,
 							/obj/structure/flora/roguetree/stump/log = 10,
 							/obj/structure/flora/roguetree = 10,
-							/obj/structure/flora/ausbushes/reedbush = 20,
+							/obj/structure/flora/roguegrass/reedbush = 20,
 							/obj/structure/flora/roguegrass/water/reeds = 20,
 							/obj/structure/zizo_bane = 2)

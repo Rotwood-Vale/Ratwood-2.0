@@ -1,6 +1,0 @@
-author: "SneakySlinky"
-delete-after: True
-changes:
-  - rscadd: "Added a cum volume/max loads multiplier to characters with the BIGGUY trait"
-  - rscadd: "Added a cum volume/max loads multiplier to gnolls"
-  - rscadd: "Added an examine descriptor for characters with small penises that would have sheaths"

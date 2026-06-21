@@ -440,6 +440,21 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/list/cake_types = list(
 		/obj/item/reagent_containers/food/snacks/rogue/cakeslice,
 		/obj/item/reagent_containers/food/snacks/rogue/frostedcakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/applecakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/applenutcakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/berrycakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/blackberrycakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/carrotcakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/lemoncakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/limecakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/menthacakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/peacecakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/raspberrycakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/rocknutcakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/strawberrycakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/tangerinecakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/hcakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/ccakeslice,
 	)
 	var/cake_type = pick(cake_types)
 	new cake_type(T)
@@ -859,7 +874,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			humie.add_stress(/datum/stressevent/maniac_woke_up)
 			to_chat(humie, span_deadsay("<span class='reallybig'>... WHERE AM I? ...</span>"))
 			var/static/list/slop_lore = list(
-				span_deadsay("... Rotwood Vale? No ... It doesn't exist ..."),
+				span_deadsay("... Rockhill? No ... It doesn't exist ..."),
 				span_deadsay("... My name is Trey. Trey Liam, Liamtific Troverseer ..."),
 				span_deadsay("... I'm on NT Liam, a self Treystaining ship, used to Treyserve what Liamains of roguemanity ..."),
 				span_deadsay("... Launched into the Grim Darkness, War and Grim Darkness preserves their grimness ... Their edge ..."),

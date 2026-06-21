@@ -36,13 +36,13 @@
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
 	blade_dulling = DULLING_BASHCHOP
 	debris = list(/obj/item/grown/log/tree/small = 1)
-	hidingspot = TRUE
-	/// So we can find them with fixed eye search
-	var/mob/living/hiddenguy = null
 
-/obj/structure/table/examine(mob/user)
+/obj/structure/table/Initialize(mapload)
 	. = ..()
-	. += span_info("Some structures can be used as hiding places. Toggle the 'SNEAK' button on your HUD, then click the structure to hide in it. You can stop hiding by clicking the structure again, or by moving out of it.")
+	AddComponent(/datum/component/hiding_spot, \
+		"Someone is already hiding under %LOCATION!", \
+		"I hide under %LOCATION!", \
+		"I come out from under %LOCATION!")
 
 /obj/structure/table/proc/deconstruction_hints(mob/user)
 	return span_notice("The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.")
@@ -61,13 +61,6 @@
 	return attack_hand(user)
 
 /obj/structure/table/attack_hand(mob/living/user)
-	if(user.m_intent == MOVE_INTENT_SNEAK)
-		var/turf/T = get_turf(src)
-		for(var/obj/structure/bars/B in T)
-			to_chat(user, span_warning("I can't fit down there with the bars in the way!"))
-			return
-		hideinside(user)
-		return
 	if(Adjacent(user) && user.pulling)
 		if(isliving(user.pulling))
 			var/mob/living/pushed_mob = user.pulling
@@ -97,34 +90,6 @@
 					span_notice("I place [user.pulling] onto [src]."))
 				user.stop_pulling()
 	return ..()
-
-/obj/structure/table/proc/hideinside(mob/living/user)
-	var/sneak_level = user.get_skill_level(/datum/skill/misc/sneaking) || 0
-	var/sneaktime = max(10, 50 - (sneak_level * 10)) // Hard caps at 1 second at Expert and above.
-	if(user.loc == src)
-		unhide(user)
-		return
-	if(occupied)
-		to_chat(user, span_warning("Someone is already hiding under [src]!"))
-		return
-	if(!do_after(user, sneaktime, src))
-		return
-	user.forceMove(src)
-	occupied = TRUE
-	hiddenguy = user
-	to_chat(user, span_warning("I hide under [src]!"))
-
-/obj/structure/table/proc/unhide(mob/living/user)
-	var/turf/T = get_turf(src)
-	if(!T) return
-	user.forceMove(T)
-	occupied = FALSE
-	hiddenguy = null
-	to_chat(user, span_warning("I come out from under [src]!"))
-
-/obj/structure/table/relaymove(mob/user)
-	if(user.loc == src)
-		unhide(user)
 
 /obj/structure/table/attack_tk()
 	return FALSE

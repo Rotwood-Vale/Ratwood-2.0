@@ -519,7 +519,8 @@
 	if(togg)
 		testing("togge1")
 		icon_state = "floorgrilleopen"
-		obj_flags = CAN_BE_HIT
+		set_is_platform(FALSE)
+		obj_flags &= ~BLOCK_Z_IN_UP
 		var/turf/T = loc
 		if(istype(T))
 			for(var/mob/living/M in loc)
@@ -527,7 +528,8 @@
 	else
 		testing("togge2")
 		icon_state = "floorgrille"
-		obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
+		set_is_platform(TRUE)
+		obj_flags |= BLOCK_Z_IN_UP
 
 /obj/structure/bars/grille/attackby(obj/item/I, mob/user, params)
 	. = ..()
@@ -761,7 +763,7 @@
 	pixel_y = 0
 	pixel_x = 32
 
-/obj/structure/fluff/signage
+/obj/structure/fluff/signage//these are a bit of a pain
 	name = "sign"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
@@ -771,22 +773,24 @@
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
 	blade_dulling = DULLING_BASHCHOP
-	max_integrity = 500
+	max_integrity = 200
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
 
 /obj/structure/fluff/signage/examine(mob/user)
 	. = ..()
+	var/realmname = SSmapping.map_adjustment.realm_name
 	if(!user.is_literate())
 		. += "I have no idea what it says."
 	else
-		. += "It says \"ROTWOOD VALE\""
+		. += "It says \"[realmname]\""
 
 /obj/structure/fluff/buysign
 	icon_state = "signwrote"
 	name = "sign"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
+
 /obj/structure/fluff/buysign/examine(mob/user)
 	. = ..()
 	if(!user.is_literate())
@@ -799,6 +803,7 @@
 	name = "sign"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
+
 /obj/structure/fluff/sellsign/examine(mob/user)
 	. = ..()
 	if(!user.is_literate())
@@ -806,15 +811,15 @@
 	else
 		. += "I can read this sign."
 
-
 /obj/structure/fluff/customsign
 	name = "sign"
 	desc = ""
 	icon_state = "sign"
 	var/wrotesign
-	max_integrity = 500
+	max_integrity = 200//these don't need to be so tough
 	blade_dulling = DULLING_BASHCHOP
 	icon = 'icons/roguetown/misc/structure.dmi'
+	pixel_y = 3
 
 /obj/structure/fluff/customsign/examine(mob/user)
 	. = ..()
@@ -823,6 +828,12 @@
 			. += "I have no idea what it says."
 		else
 			. += "It says \"[wrotesign]\"."
+
+/obj/structure/fluff/customsign/arrow
+	icon_state = "shitsign"
+
+/obj/structure/fluff/customsign/wrote //For mapped in signs and not player-made signs
+	icon_state = "signwrote"
 
 /obj/structure/fluff/customsign/attackby(obj/item/W, mob/user, params)
 	if(!user.cmode)

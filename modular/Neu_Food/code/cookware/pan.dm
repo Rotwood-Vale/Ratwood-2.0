@@ -27,8 +27,7 @@
 /datum/intent/mace/strike/pan
 	hitsound = list('sound/combat/hits/blunt/frying_pan(1).ogg', 'sound/combat/hits/blunt/frying_pan(2).ogg', 'sound/combat/hits/blunt/frying_pan(3).ogg', 'sound/combat/hits/blunt/frying_pan(4).ogg')
 
-
-/obj/item/cooking/pan/aalloy
+/obj/item/cooking/pan/decrepit
 	name = "decrepit pan"
 	desc = "Frayed bronze, wrought into a handheld griddle. Just a little oil's more than enough to slicken the surprisingly-unmarred surface."
 	icon_state = "apan"

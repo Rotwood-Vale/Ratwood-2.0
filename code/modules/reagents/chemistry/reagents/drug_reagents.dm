@@ -24,7 +24,6 @@
 
 /datum/reagent/drug/space_drugs/on_mob_end_metabolize(mob/living/M)
 	M.clear_fullscreen("weedsm")
-	M.update_body_parts_head_only()
 
 /*
 	if(M.client)
@@ -34,7 +33,6 @@
 /datum/reagent/drug/space_drugs/on_mob_metabolize(mob/living/M)
 	..()
 	M.set_drugginess(30)
-	M.update_body_parts_head_only()
 	M.overlay_fullscreen("weedsm", /atom/movable/screen/fullscreen/weedsm)
 
 /*

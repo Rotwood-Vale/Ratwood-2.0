@@ -1,7 +1,0 @@
-author: "ophaq"
-delete-after: True
-changes:
-  - rscadd: "Adds the padded and studded hood to the tailor silverface."
-  - rscadd: "Adds studded hood to the merchant goldface."
-  - rscadd: "Allows the hoods to be worn on the neck slot (not just the head)."
-  - bugfix: "Fixes a FoV issue with certain masks like the jester, oni and kitsune ones not updating the FoV at times when they were removed."
