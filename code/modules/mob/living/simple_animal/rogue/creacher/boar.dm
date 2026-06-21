@@ -73,7 +73,7 @@
 	can_have_ai = FALSE
 	ai_controller = /datum/ai_controller/boar
 
-/mob/living/simple_animal/hostile/retaliate/rogue/boar/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/boar/Initialize(mapload)
 	. = ..()
 	gender = MALE
 	if(prob(33))
