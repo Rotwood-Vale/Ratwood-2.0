@@ -24,7 +24,7 @@ GLOBAL_LIST_INIT(custom_learnable_spells, list(
 	/obj/effect/proc_holder/spell/invoked/projectile/mini_magic_missile,
 	/obj/effect/proc_holder/spell/invoked/pain,
 	/obj/effect/proc_holder/spell/invoked/restore_pristine,
-	/obj/effect/proc_holder/spell/invoked/sectumsempra,
+	/obj/effect/proc_holder/spell/invoked/projectile/sectumsempra,
 	/obj/effect/proc_holder/spell/self/sensory_sharing,
 	/obj/effect/proc_holder/spell/invoked/small_bet,
 	/obj/effect/proc_holder/spell/self/storage_spell,
