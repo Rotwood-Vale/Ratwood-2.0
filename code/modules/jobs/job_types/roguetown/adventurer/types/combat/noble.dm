@@ -5,7 +5,7 @@
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/roguetown/adventurer/noble
 	subclass_social_rank = SOCIAL_RANK_NOBLE
-	traits_applied = list(TRAIT_NOBLE)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_EXPERT_HUNTER)
 	class_select_category = CLASS_CAT_NOBLE
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT, CTAG_LICKER_WRETCH)
 
