@@ -70,7 +70,7 @@
 	chargedloop = /datum/looping_sound/invokegen // 引导期间循环播放的施法音效
 	associated_skill = /datum/skill/magic/arcane
 	action_icon = 'modular_z121/icon/custompell.dmi'
-	overlay_state = "wish"                 // 动作按钮的图标态（若 dmi 暂无该态仅显示为空，不影响编译）
+	overlay_state = "wish_spell"                 // 动作按钮的图标态（若 dmi 暂无该态仅显示为空，不影响编译）
 	invocations = list("实现我的愿望吧!") // 咒文（按规格在“开始引导”时喊出）
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_ARCANE
