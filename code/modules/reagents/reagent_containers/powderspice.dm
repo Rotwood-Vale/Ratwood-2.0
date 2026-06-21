@@ -61,7 +61,6 @@
 /datum/reagent/druqks/on_mob_metabolize(mob/living/M)
 	M.overlay_fullscreen("druqk", /atom/movable/screen/fullscreen/druqks)
 	M.set_drugginess(30)
-	M.update_body_parts_head_only()
 	if(M.client)
 		ADD_TRAIT(M, TRAIT_DRUQK, "based")
 		SSdroning.area_entered(get_area(M), M.client)
@@ -76,7 +75,6 @@
 	if(M.client)
 		REMOVE_TRAIT(M, TRAIT_DRUQK, "based")
 		SSdroning.play_area_sound(get_area(M), M.client)
-	M.update_body_parts_head_only()
 //		if(M.client.screen && M.client.screen.len)
 ///			var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/game_world) in M.client.screen
 //			PM.backdrop(M.client.mob)
@@ -488,7 +486,6 @@
 	M.remove_status_effect(/datum/status_effect/buff/herozium)
 	if(M.client)
 		SSdroning.play_area_sound(get_area(M), M.client)
-	M.update_body_parts_head_only()
 
 /datum/reagent/herozium/overdose_process(mob/living/M)
 	if(prob(30))

@@ -1125,12 +1125,15 @@
 	if(isliving(user) && user.mind)
 		user.mind.add_sleep_experience(/datum/skill/magic/druidic, 20)
 	return TRUE
-//A smattering of jungle-themed assets
+
+//A smattering of jungle-themed assets. The default artstyle of SS13 is far too bright so they all have a color to darken them down to more of a roguetown pallette
 //trees
+
+#define COLOR_JUNGLE			"#9bb6ae"
 
 /obj/structure/flora/roguetree/jungle//version with mechanics this time
 	name = "jungle tree"
-	color = "#a7b5a9"
+	color = COLOR_JUNGLE
 	// desc = "Scant, precious shade."
 	stump_type = /obj/structure/flora/roguetree/stump/palm
 	icon = 'icons/obj/flora/jungletrees.dmi'
@@ -1162,7 +1165,7 @@
 /obj/structure/flora/roguegrass/bush/jungle
 	name = "jungle bush"
 	desc = ""
-	color = "#b9c4bd"
+	color = COLOR_JUNGLE
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "bushb"
 
@@ -1180,7 +1183,7 @@
 	desc = "Haha, im in danger."
 
 /obj/structure/flora/roguegrass/bush/jungle/large
-	color = "#a7b5a9"
+	color = COLOR_JUNGLE
 	icon = 'icons/obj/flora/largejungleflora.dmi'
 	icon_state = "bush"
 	pixel_x = -16
@@ -1201,7 +1204,7 @@
 /obj/structure/flora/roguegrass/jungle
 	name = "jungle grass"
 	desc = ""
-	color = "#a7b5a9"
+	color = COLOR_JUNGLE
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "grassa"
 

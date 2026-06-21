@@ -67,17 +67,11 @@
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/agha
 	name = "Agha Scale"
-	desc = "Fine armor made of treated animal scales, denoting an esteemd career in the dunes."
+	desc = "Fine armor made of treated animal scales, denoting an esteemed career in the dunes."
 	icon_state = "huus"
 	item_state = "huus"
 	armor = ARMOR_LEATHER_STUDDED
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
-	blocksound = SOFTHIT
-	slot_flags = ITEM_SLOT_ARMOR
-	blade_dulling = DULLING_BASHCHOP
 	body_parts_covered = CHEST|GROIN|LEGS|VITALS|ARMS
-	break_sound = 'sound/foley/cloth_rip.ogg'
-	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	sewrepair = TRUE
 	armor_class = ARMOR_CLASS_MEDIUM
 

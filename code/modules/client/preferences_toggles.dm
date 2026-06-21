@@ -213,6 +213,8 @@
 			if("hear_instruments")
 				owner.prefs.toggles ^= SOUND_INSTRUMENTS
 				owner.prefs.save_preferences()
+				for(var/datum/looping_sound/persistent_loop in GLOB.persistent_sound_loops)
+					owner.update_persistent_sound_loop(persistent_loop)
 				owner.update_sounds()
 				owner.sync_instrument_audio_toggle()
 			if("animal_emotes")

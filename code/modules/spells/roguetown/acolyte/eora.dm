@@ -533,7 +533,7 @@
 		update_icon()
 		return TRUE
 
-	if(istype(I, /obj/item/rogueweapon/huntingknife/scissors))
+	if(istype(I, /obj/item/rogueweapon/huntingknife/scissors) || (istype(I, /obj/item/rogueweapon/huntingknife/throwingknife/bauernwehr) && user.used_intent.type == /datum/intent/snip))
 		if(prune_count >= 1)
 			to_chat(user, span_warning("The tree has been fully pruned already!"))
 			return TRUE
@@ -556,7 +556,7 @@
 
 	if(istype(I, /obj/item/reagent_containers) && !istype(I, /obj/item/reagent_containers/food/snacks))
 		var/obj/item/reagent_containers/container = I
-		if(water_happiness >= 25)
+		if(water_happiness >= 40)
 			to_chat(user, span_warning("The tree can't absorb any more water right now!"))
 			return TRUE
 
@@ -570,7 +570,7 @@
 			to_chat(user, span_warning("The tree accepts only fresh, clean or blessed water."))
 			return
 
-		var/remaining_cap = 25 - water_happiness
+		var/remaining_cap = 40 - water_happiness
 		var/actual_gain = remaining_cap
 
 		if(do_after(user, 1 SECONDS, target = src))
@@ -677,7 +677,7 @@
 	else if(happiness_tier == 4)
 		. += span_good("The tree bustles with an incandescent light. You feel... perfection.")
 
-	if(water_happiness < 25)
+	if(water_happiness < 40)
 		. += span_info("It could use more water.")
 	else
 		. += span_info("It is fully slaked.")
@@ -688,7 +688,7 @@
 		. += span_info("It is fully sated.")
 
 	if(prune_count < 1)
-		. += span_info("The branches look messy. Perhaps a scissor can right this mess.")
+		. += span_info("The branches look messy. Perhaps something to snip them can right this mess.")
 	else
 		. += span_info("The branches are elaborately pruned.")
 
