@@ -31,6 +31,7 @@ GLOBAL_LIST_INIT(custom_learnable_spells, list(
 	/obj/effect/proc_holder/spell/targeted/conjure_item/summon_magic_bedroll,
 	/obj/effect/proc_holder/spell/self/timestop,
 	/obj/effect/proc_holder/spell/self/void_clone,
+	/obj/effect/proc_holder/spell/self/weather_control, // 自定义 T3：掌控天时（晴/雨/雪）
 	/obj/effect/proc_holder/spell/self/wish_spell,
 	/obj/effect/proc_holder/spell/invoked/xylix_laughter,
 	/obj/effect/proc_holder/spell/invoked/xray_vision,

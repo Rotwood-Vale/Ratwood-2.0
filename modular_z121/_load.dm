@@ -39,6 +39,8 @@
 #include "spells/arcane/summon_magic_bedroll.dm"
 #include "spells/arcane/timestop.dm"
 #include "spells/arcane/void_clone.dm"
+// 自定义 T3 法术：掌控天时（晴 / 雨 / 雪），仅调用主线 SSParticleWeather 接口
+#include "spells/arcane/weather_control.dm"
 #include "spells/arcane/wish_spell.dm"
 #include "spells/arcane/xylix_laughter.dm"
 #include "spells/arcane/xray_vision.dm"
