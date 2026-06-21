@@ -52,7 +52,7 @@
 		boar.visible_message("<b>[boar]</b> lowers its head and charges!")
 		playsound(boar, 'sound/vo/mobs/boar/boar_charge.ogg', 75, TRUE)
 		var/charge_dir = get_dir(boar, target)
-		boar.throw_at(target, 7, 2.5, boar, callback = CALLBACK(src, .proc/on_charge_end, controller, charge_dir))
+		boar.throw_at(target, 7, 2.5, boar, callback = CALLBACK(src, PROC_REF(on_charge_end), controller, charge_dir))
 	finish_action(controller, TRUE)
 
 /datum/ai_behavior/boar_charge/proc/on_charge_end(datum/ai_controller/controller, charge_dir)

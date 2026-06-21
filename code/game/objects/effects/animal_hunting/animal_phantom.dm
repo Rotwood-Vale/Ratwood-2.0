@@ -31,7 +31,7 @@
 /obj/effect/temp_visual/hunting_phantom/proc/appear_and_wait()
 	animate(src, alpha = 200, time = spawn_delay, easing = EASE_IN)
 	playsound(src, 'sound/misc/jumpscare (4).ogg', 50, TRUE)
-	addtimer(CALLBACK(src, .proc/finalize_spawn), spawn_delay)
+	addtimer(CALLBACK(src, PROC_REF(finalize_spawn)), spawn_delay)
 
 /obj/effect/temp_visual/hunting_phantom/proc/finalize_spawn()
 	var/turf/T = get_turf(src)
