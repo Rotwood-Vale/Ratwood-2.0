@@ -42285,8 +42285,8 @@
 /area/rogue/outdoors/rtfield/eora)
 "iKP" = (
 /obj/structure/fluff/traveltile/wretch{
-	aportalgoesto = "wretchin1";
-	aportalid = "wretchout1"
+	aportalgoesto = "wretchout3";
+	aportalid = "wretchout3"
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/cave)
@@ -72163,8 +72163,8 @@
 /area/rogue/outdoors/exposed/town/keep)
 "oQL" = (
 /obj/structure/fluff/traveltile/wretch{
-	aportalgoesto = "wretchtradein";
-	aportalid = "wretchtradeout"
+	aportalgoesto = "wretchout1";
+	aportalid = "wretchout1"
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/mountains/decap)
@@ -77953,7 +77953,7 @@
 /area/rogue/under/cave/his_vault/puzzle)
 "qbK" = (
 /obj/structure/fluff/traveltile/wretch{
-	aportalgoesto = "wretchin2";
+	aportalgoesto = "wretchout2";
 	aportalid = "wretchout2"
 	},
 /turf/open/floor/rogue/naturalstone,
@@ -104534,6 +104534,14 @@
 /obj/structure/stone_tile/surrounding_tile,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/underdark/north)
+"vyZ" = (
+/obj/structure/fluff/traveltile/wretch{
+	aportalgoesto = "wretchout2";
+	aportalid = "wretchout2";
+	pixel_y = 0
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/indoors/cave)
 "vza" = (
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/woods/southwest)
@@ -388921,7 +388929,7 @@ cbT
 cbT
 kis
 cxA
-qbK
+vyZ
 jXH
 jXH
 jXH

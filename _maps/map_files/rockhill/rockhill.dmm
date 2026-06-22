@@ -831,8 +831,8 @@
 /area/rogue/indoors/town/manor/rockhill)
 "ahW" = (
 /obj/structure/fluff/traveltile/wretch{
-	aportalgoesto = "wretchin1";
-	aportalid = "wretchout1"
+	aportalgoesto = "wretchout3";
+	aportalid = "wretchou3"
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors/shelter/mountains)
@@ -33733,8 +33733,8 @@
 /area/rogue/indoors/town/church)
 "hKY" = (
 /obj/structure/fluff/traveltile/wretch{
-	aportalgoesto = "wretchin2";
-	aportalid = "wretchout2"
+	aportalgoesto = "wretchout1";
+	aportalid = "wretchout1"
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
@@ -39254,8 +39254,8 @@
 /area/rogue/indoors/town/church/basement)
 "jcN" = (
 /obj/structure/fluff/traveltile/wretch{
-	aportalgoesto = "wretchtradein";
-	aportalid = "wretchtradeout"
+	aportalgoesto = "wretchout2";
+	aportalid = "wretchout2"
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
