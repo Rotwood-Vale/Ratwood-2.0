@@ -66,16 +66,15 @@
 	var/mob/living/carbon/human/hag_body = mob_override || owner?.current
 	if(!istype(hag_body) || !hag_body.mind)
 		return
-	if(curio_component)
-		hag_body.RemoveComponent(curio_component)
-		curio_component = null
+	qdel(hag_body.GetComponent(/datum/component/hag_curio_tracker))
+	curio_component = null
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/hag_pact)
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/hag_transmute)
 
 /datum/antagonist/hag/on_removal()
-	if(owner?.current && curio_component)
-		owner.current.RemoveComponent(curio_component)
-		curio_component = null
+	if(owner?.current)
+		qdel(owner.current.GetComponent(/datum/component/hag_curio_tracker))
+	curio_component = null
 	cleanup_bound_followers()
 	return ..()
 
