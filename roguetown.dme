@@ -1416,6 +1416,7 @@
 #include "code\modules\antagonists\roguetown\villain\dark_itinerant.dm"
 #include "code\modules\antagonists\roguetown\villain\dreamwalker.dm"
 #include "code\modules\antagonists\roguetown\villain\hag.dm"
+#include "code\modules\antagonists\roguetown\villain\hag_component.dm"
 #include "code\modules\antagonists\roguetown\villain\hag_heart.dm"
 #include "code\modules\antagonists\roguetown\villain\lich.dm"
 #include "code\modules\antagonists\roguetown\villain\peasantrebel.dm"
