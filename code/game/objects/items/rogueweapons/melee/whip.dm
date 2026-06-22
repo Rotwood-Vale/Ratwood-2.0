@@ -123,7 +123,7 @@
 	is_silver = TRUE
 	force = 25
 	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish)
-	minstr = 12
+	minstr = 10
 	wdefense = 0
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/silver
@@ -145,7 +145,7 @@
 	icon_state = "silverwhip"
 	force = 23 //Experimental change - adds a +2 to force, as a bridge between handweapons and blunt weapons. Higher strength minimum. Do not raise above 25, unless you want to resurrect maille-shatterers.
 	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish)
-	minstr = 12 //Locks 100% effectiveness - and partially disables ranged dismemberment - unless you either have a +2 STR statpack or are a dedicated melee combatant.
+	minstr = 10
 	wdefense = 0
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
