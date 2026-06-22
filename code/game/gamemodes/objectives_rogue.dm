@@ -23,6 +23,14 @@
 	..()
 	explanation_text = "Feed [SSmapping.retainer.delf_goal] honeys to the mother."
 
+/datum/objective/hag
+	name = "prepare revenge"
+	explanation_text = "Survive, gather followers, and prepare your revenge from the bog."
+	triumph_count = 5
+
+/datum/objective/hag/check_completion()
+	return owner && considered_alive(owner, enforce_human = TRUE)
+
 /datum/objective/werewolf
 	name = "conquer"
 	explanation_text = "You are touched by the Mad God of the Wilds, Dendor - be it through a bite... Or a terrible blessing. And you are SO, SO VERY HUNGRY. The form Dendor promises will be fearsome, but the transition will be agonizing. Fear not the full moon - and let the feast begin."

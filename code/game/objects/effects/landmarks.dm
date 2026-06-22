@@ -479,6 +479,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	. = ..()
 	GLOB.lich_starts += loc
 
+/obj/effect/landmark/start/hag
+	name = "hag"
+	icon_state = "arrow"
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/hag/Initialize(mapload)
+	. = ..()
+	GLOB.hag_starts += loc
+
 //tribal
 
 /obj/effect/landmark/start/tribalchieftain
