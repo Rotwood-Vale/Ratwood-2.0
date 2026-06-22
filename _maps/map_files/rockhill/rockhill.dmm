@@ -832,7 +832,7 @@
 "ahW" = (
 /obj/structure/fluff/traveltile/wretch{
 	aportalgoesto = "wretchout3";
-	aportalid = "wretchou3"
+	aportalid = "wretchout3"
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors/shelter/mountains)
