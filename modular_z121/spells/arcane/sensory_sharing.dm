@@ -1,25 +1,24 @@
-// modular_z121 自定义奥术法术：视觉共享（Visual Sharing）
+// modular_z121 自定义奥术法术：感官共享（Sensory Sharing）
 // ---------------------------------------------------------------------------
 // 设计目标：一个 T2 实用 / 羁绊法术。
 //   施法者吟唱咒文 -> do_after 引导 3 秒 -> 弹窗从 7 格内选择一名目标 ->
-//   目标会收到“是否接受”的弹窗 -> 接受后，双方在 3 分钟内共享视觉：
-//   双方各获得一道“临时法术”，可在“自己的视角”与“对方的视角”之间随时切换。
-//   切换到对方视角时，是“真·借眼视物”——明暗远近、夜视、可见隐形、方向性视野盲区
-//   乃至失明的临时绕过，都与对方完全一致，而非仅仅把镜头挪到对方身上。
+//   目标会收到“是否接受”的弹窗 -> 接受后，双方在 3 分钟内共享感官：
+//     · 痛觉（一方受到伤害时，另一方会同步感到部分痛楚）
+//     · 愉悦（提供可被外部系统调用的钩子，把愉悦感同步给对方）
+//     · 听觉（一方听到的话语会回响进另一方脑海）
+//     · 视觉（双方各获得一道“临时法术”，可在自己/对方视角之间切换）
 //
 // 选取 / 引导方式：沿用 wish_spell.dm 的 /spell/self 引导式做法——点击图标后只对
 //   “自己”发起 3 秒 do_after 引导，引导成功后再弹窗选目标、再询问目标是否同意。
-//   这样最契合“先吟唱、再选人、对方需同意”的流程，且天然支持中途取消。
+//   这样最契合规格里“先吟唱、再选人、对方需同意”的流程，且天然支持中途取消。
 //
 // 约束：本法术的全部代码都只存在于 modular_z121 内，仅“调用”主线系统现有的接口
-//   （reset_perspective / update_remote_sight / update_cone_show / mind.AddSpell 等），
+//   （apply_damage / reset_perspective / add_stress / mind.AddSpell 等信号与 proc），
 //   不修改 modular_z121 之外的任何文件。
 //
 // 注册方式（均在 modular_z121 内）：
 //   1) modular_z121/_load.dm            -> #include 本文件
 //   2) modular_z121/spells/_registry.dm -> 加入 custom_learnable_spells 列表
-//   （沿用既有类型路径 /obj/effect/proc_holder/spell/self/sensory_sharing，
-//     故仅改“显示名”为“视觉共享”，无需改动上述两处注册。）
 // ---------------------------------------------------------------------------
 
 // ===== 可调参数集中定义（文件末尾统一 #undef，避免污染全局命名空间）=====
@@ -28,36 +27,92 @@
 #define SENSORY_MANA_COST     3              // “法力 / 法术点”消耗（cost）= 3
 #define SENSORY_CHANNEL_TIME  (3 SECONDS)    // 引导 / 蓄力时长（do_after）= 3 秒
 #define SENSORY_RESOURCE_COST 5              // “额外资源消耗”：每次施放抽取的疲劳/耐力（releasedrain）= 5
-#define SENSORY_DURATION      (3 MINUTES)    // 视觉共享效果持续时间 = 3 分钟
+#define SENSORY_DURATION      (3 MINUTES)    // 感官共享效果持续时间 = 3 分钟
 #define SENSORY_COOLDOWN      (3 MINUTES)    // 成功施放后的冷却 = 3 分钟
 #define SENSORY_TARGET_RANGE  7              // 选取目标的最大距离 = 7 格
+
+// 痛觉同步比例：一方实际受到的伤害，会按此比例换算成另一方的“共感疼痛”（耐力损耗）。
+// 用 0.5 既能让“痛感共享”有明确体感，又不会让链接双方互相把对方拖死。
+#define SENSORY_PAIN_RATIO    0.5
+// 单次同步疼痛的上限，避免一次性的巨额伤害把链接对象直接拍晕/拍死。
+#define SENSORY_PAIN_CAP      25
+
+// 性快感（性奋值 arousal）同步比例：链接一方在性爱中获得的快感，会按此比例同步给另一方。
+// 主线把“性快感”量化为 sexcon.arousal，这里直接复用该数值通道，让“床笫之欢”真正传导给对方。
+#define SENSORY_AROUSAL_RATIO 0.5
+// 当链接一方“高潮（射精/达到顶点）”时，额外灌注给另一方的性奋值，体现“高潮快感共享”。
+#define SENSORY_CLIMAX_AROUSAL 25
 
 // 目标对“是否接受共享”弹窗的应答超时（毫秒级游戏刻）。超时未点则视为拒绝，
 // 避免目标挂机时施法者被无限期卡住。
 #define SENSORY_PROMPT_TIMEOUT (20 SECONDS)
 
 // ===========================================================================
-// 在 /mob/living 上挂一个“当前所属视觉共享链接”的引用。
-// 之所以放在 /mob/living 上（而非仅 human），是为了让视角切换法术、各视觉覆写
+// 在 /mob/living 上挂一个“当前所属感官链接”的引用。
+// 之所以放在 /mob/living 上（而非仅 human），是为了让视觉切换法术、信号处理
 // 都能从任意一方的 mob 快速反查到链接 datum，并避免一名 mob 同时存在多条链接。
 // （这是在 modular_z121 内对主线类型的“追加变量”，不修改外部文件。）
 // ===========================================================================
 /mob/living
-	// 指向该 mob 当前参与的视觉共享链接；为空表示当前没有任何共享。
+	// 指向该 mob 当前参与的感官共享链接；为空表示当前没有任何共享。
 	var/datum/sensory_share_link/sensory_share_link_custom
 
 // ===========================================================================
-// 视觉共享链接 datum：承载“两名 mob 之间”的视觉共享状态与生命周期。
-// 把状态集中在一个 datum 里，便于在到期 / 一方失效时一次性干净清理，
-// 避免临时法术、视角覆写、视野锥等残留。
+// 正向情绪事件：感官共享带来的“愉悦”。
+// 主线没有独立的“快感”数值，这里用心情/压力系统（stressevent，stressadd 为负即降压）
+// 来承载“愉悦同步”。它作为可被外部系统调用的钩子使用（见 share_pleasure）。
+// ===========================================================================
+/datum/stressevent/sensory_pleasure
+	timer = 1 MINUTES        // 单次愉悦余韵持续 1 分钟
+	stressadd = -3           // 负值 = 降低压力 / 带来正面心情（“愉悦”）
+	desc = span_boldgreen("我感受到了一阵从感官链接彼端传来的愉悦。")
+
+// ===========================================================================
+// “共感之痛”魔法伤口：用来承载从链接彼端传来的疼痛。
+// ---------------------------------------------------------------------------
+// 为什么用伤口而非直接造成伤害：本游戏的“疼痛”是由 get_complex_pain() 实时汇总的派生量，
+// 其来源既包括肢体的 brute/burn 伤，也包括每个伤口的 woundpain（见 carbon/life.dm）。
+// 像“钻心剜骨”这类法术正是靠给肢体挂一个只有 woundpain、却毫无实际伤害的魔法伤口来制造剧痛——
+// 这类“只痛不伤”的疼痛根本不会经过 apply_damage，因此旧的“受伤才共享”方案必然漏掉它。
+// 用一个我们自己掌控的 woundpain 伤口来表示“借来的痛”，能让承痛方真正进入主线疼痛系统
+// （会痛吟、会因疼痛被定身），从而忠实地“共享疼痛”。
+// 它不造成任何实际伤害、不出血、不自愈，痛感数值完全由链接每秒轮询写入（见 sync_shared_pain）。
+// ===========================================================================
+/datum/wound/magical/shared_pain
+	name = "共感之痛"
+	check_name = "共感之痛"
+	severity = WOUND_SEVERITY_LIGHT
+	mob_overlay = ""          // 不显示任何外观（这是“借来的痛”，并非肉体上的真实创口）
+	sewn_overlay = ""
+	whp = 1
+	sewn_whp = 1
+	woundpain = 0            // 初始为 0，真实痛感由链接轮询动态写入
+	sewn_woundpain = 0
+	sleep_healing = 0        // 不随睡眠恢复
+	passive_healing = 0      // 不自愈：其存续与痛感完全由链接掌控
+	qdel_on_droplimb = TRUE
+
+// 同名伤口不可叠加：始终只保留一个“共感之痛”，痛感直接改写其 woundpain 即可。
+/datum/wound/magical/shared_pain/can_stack_with(datum/wound/other)
+	if(istype(other, /datum/wound/magical/shared_pain))
+		return FALSE
+	return ..()
+
+// ===========================================================================
+// 感官共享链接 datum：承载“两名 mob 之间”的所有共享逻辑与生命周期。
+// 把状态与信号集中在一个 datum 里，便于在到期 / 一方失效时一次性干净清理，
+// 避免信号、临时法术、视角覆写等残留。
 // ===========================================================================
 /datum/sensory_share_link
 	var/mob/living/user_a          // 链接的一方（通常是施法者）
 	var/mob/living/user_b          // 链接的另一方（被选中并同意的目标）
 	var/active = FALSE             // 链接是否仍然有效（防止清理过程中重入）
 	var/expire_timer_id            // 到期定时器 id，便于一方提前失效时清掉它
+	var/next_pain_sync = 0        // 疼痛轮询的下次允许时间（节流用，避免每个快刻都重算疼痛）
+	var/last_pain_to_a = 0        // 上次写给 user_a 的“借来痛感”值，用于只在“起痛/痛消”时提示，不刷屏
+	var/last_pain_to_b = 0        // 上次写给 user_b 的“借来痛感”值，同上
 
-// New：建立链接。授予双方“切换视角”的临时法术，并启动视野锥同步轮询。
+// New：建立链接。注册双方的痛觉/听觉信号，授予双方“切换视角”的临时法术。
 // 形参 a / b 为参与共享的两名活体。
 /datum/sensory_share_link/New(mob/living/a, mob/living/b)
 	. = ..()
@@ -68,9 +123,12 @@
 	user_a = a
 	user_b = b
 	active = TRUE
-	// 反向引用：让双方都能 O(1) 反查到本链接（视角切换法术、各视觉覆写都依赖它）。
+	// 反向引用：让双方都能 O(1) 反查到本链接（视角切换法术、信号处理都依赖它）。
 	user_a.sensory_share_link_custom = src
 	user_b.sensory_share_link_custom = src
+	// 给两端都挂上痛觉、听觉信号，实现“双向”共享。
+	register_member_signals(user_a)
+	register_member_signals(user_b)
 	// 视觉共享：给双方各授予一个“切换视角”的临时法术（见文件末尾的 view 法术）。
 	grant_view_spell(user_a)
 	grant_view_spell(user_b)
@@ -83,20 +141,106 @@
 	active = FALSE
 	// 先停掉轮询，避免清理过程中 process 再访问已半拆解的链接。
 	STOP_PROCESSING(SSfastprocess, src)
-	// 收回临时法术、复原视角/视野/失明，缺一不可，否则会留下幽灵效果。
+	// 注销信号、收回临时法术、复原视角，缺一不可，否则会留下幽灵效果。
 	cleanup_member(user_a)
 	cleanup_member(user_b)
 	user_a = null
 	user_b = null
 	return ..()
 
-// process：每个处理刻被 SSfastprocess 调用一次。
-// 唯一职责：为“当前正借用对方眼睛”的成员，把其视野锥持续校正到对方的最新朝向（需跟手）。
+// process：每个处理刻被 SSfastprocess 调用一次。两项职责：
+//   1) 为“当前正借用对方眼睛”的成员，把其视野锥持续校正到对方的最新朝向（每刻，需跟手）。
+//   2) 节流地轮询双方“自身疼痛”，把它共享给对方（每秒一次即可，疼痛无需逐刻刷新）。
 /datum/sensory_share_link/process()
 	if(!active)
 		return
+	// 视觉锥校正：每个快刻都做，保证借眼视角跟手。
 	sync_borrowed_cone(user_a)
 	sync_borrowed_cone(user_b)
+	// 疼痛同步：按 next_pain_sync 节流（每秒一次），避免每个快刻都遍历肢体/伤口重算疼痛。
+	if(world.time >= next_pain_sync)
+		next_pain_sync = world.time + 1 SECONDS
+		sync_shared_pain()
+
+// ---------------------------------------------------------------------------
+// sync_shared_pain：疼痛共享的核心。每秒被 process 调用一次。
+// 思路（绝对赋值的稳态模型，天然杜绝 A->B->A 的疼痛回声）：
+//   1) 分别测得双方的“自身疼痛”own_pain（刻意排除我们注入的“共感之痛”，见 get_own_pain）；
+//   2) 按比例把对方的自身疼痛写成本方“共感之痛”伤口的 woundpain（带上限钳制）。
+// 因为“共感之痛”被排除在 own_pain 之外，所以它永远只是对方真实疼痛的映射，绝不会再被回传放大。
+// 这样无论疼痛来自何种途径（普通外伤、纯 woundpain 的魔法痛、灼烧等），都能被如实共享。
+// ---------------------------------------------------------------------------
+/datum/sensory_share_link/proc/sync_shared_pain()
+	// 计算各自要“借给对方”的痛感：对方自身疼痛 * 比例，再用上限钳制，避免一次把人痛晕/痛死。
+	var/to_b = min(round(get_own_pain(user_a) * SENSORY_PAIN_RATIO), SENSORY_PAIN_CAP)
+	var/to_a = min(round(get_own_pain(user_b) * SENSORY_PAIN_RATIO), SENSORY_PAIN_CAP)
+	// 写入双方的“共感之痛”伤口（并按需提示“起痛/痛消”）。
+	apply_shared_pain(user_b, to_b, last_pain_to_b)
+	apply_shared_pain(user_a, to_a, last_pain_to_a)
+	// 记录本次写入值，供下次比较“是否发生起痛/痛消的状态变化”。
+	last_pain_to_b = to_b
+	last_pain_to_a = to_a
+
+// get_own_pain：测量某成员“属于自己的”疼痛量。
+// 它复刻主线 get_complex_pain 的核心算法，但【刻意跳过“共感之痛”伤口】——
+// 这样借来的痛不会被算进自身疼痛，从而保证共享是单向映射、不会层层放大。
+// 非 carbon（无肢体/伤口疼痛系统）一律返回 0。
+/datum/sensory_share_link/proc/get_own_pain(mob/living/member)
+	if(!iscarbon(member) || QDELETED(member))
+		return 0
+	var/mob/living/carbon/carbon_member = member
+	. = 0
+	for(var/obj/item/bodypart/limb as anything in carbon_member.bodyparts)
+		// 机械/骨骼化肢体不计入疼痛，与主线一致。
+		if(limb.status == BODYPART_ROBOTIC || limb.skeletonized)
+			continue
+		// 该肢体由实际伤害（brute/burn）换算出的疼痛。
+		var/bodypart_pain = ((limb.brute_dam + limb.burn_dam) / limb.max_damage) * limb.max_pain_damage
+		// 叠加该肢体上各伤口的 woundpain——但跳过我们自己注入的“共感之痛”，避免回声。
+		for(var/datum/wound/wound in limb.wounds)
+			if(istype(wound, /datum/wound/magical/shared_pain))
+				continue
+			bodypart_pain += wound.woundpain
+		// 单个肢体的疼痛上限钳制，与主线一致。
+		bodypart_pain = min(bodypart_pain, limb.max_pain_damage)
+		. += bodypart_pain
+
+// apply_shared_pain：把数值 amount 写入 member 的“共感之痛”伤口（没有则按需创建、为 0 则移除）。
+// previous 为上一次写入值，用于只在“从无到有 / 从有到无”时给出文字提示，避免每秒刷屏。
+/datum/sensory_share_link/proc/apply_shared_pain(mob/living/member, amount, previous)
+	// 只有 carbon 拥有基于伤口的疼痛系统；非 carbon 直接跳过（无从承载这种“痛”）。
+	if(!iscarbon(member) || QDELETED(member))
+		return
+	var/mob/living/carbon/carbon_member = member
+	// 找出当前是否已存在“共感之痛”伤口。
+	var/datum/wound/magical/shared_pain/existing = carbon_member.has_wound(/datum/wound/magical/shared_pain)
+
+	if(amount <= 0)
+		// 对方已无痛 -> 移除本方的“共感之痛”（连同其 woundpain）。
+		if(existing && existing.bodypart_owner)
+			existing.bodypart_owner.remove_wound(existing)
+		if(previous > 0)
+			to_chat(member, span_notice("自感官链接彼端传来的疼痛渐渐退去了。"))
+		return
+
+	if(existing)
+		// 已有伤口：直接更新痛感数值即可（无需反复创建/销毁）。
+		existing.woundpain = amount
+	else
+		// 尚无伤口：挂到胸口（找不到就退而用第一根肢体），并写入痛感。
+		var/obj/item/bodypart/affected = carbon_member.get_bodypart(BODY_ZONE_CHEST)
+		if(!affected && carbon_member.bodyparts?.len)
+			affected = carbon_member.bodyparts[1]
+		if(!affected)
+			return
+		var/datum/wound/magical/shared_pain/new_wound = affected.add_wound(/datum/wound/magical/shared_pain, TRUE)
+		if(!new_wound)
+			return
+		new_wound.woundpain = amount
+
+	// 仅在“从无痛到有痛”的瞬间提示一次，避免每秒刷屏。
+	if(previous <= 0)
+		to_chat(member, span_danger("一阵并非源于己身的疼痛，顺着感官链接灌入我的神经！"))
 
 // sync_borrowed_cone：若 viewer 此刻正透过 partner 的眼睛观看，则刷新其视野锥，
 // 使锥体朝向 / 形状跟随 partner 的当前状态（具体改写见 /mob/living/carbon 的 update_vision_cone 覆写）。
@@ -117,11 +261,36 @@
 		return
 	viewer.update_vision_cone()
 
+// register_member_signals：为单个成员注册“听到声音 / 性快感 / 高潮”信号。
+// 注意：疼痛共享不再走信号（apply_damage 只在“受伤”时触发，会漏掉“只痛不伤”的来源），
+// 改由 process -> sync_shared_pain 每秒轮询 get_complex_pain 实现（见上）。
+/datum/sensory_share_link/proc/register_member_signals(mob/living/member)
+	if(!istype(member))
+		return
+	// 听到声音信号：在 Hear() 处触发，参数为一个 hearing_args 列表。
+	RegisterSignal(member, COMSIG_MOVABLE_HEAR, PROC_REF(on_member_heard))
+	// 性爱快感信号：每次该成员“承受一次性爱动作”时触发，携带本次有效性奋值（快感）。
+	// （仅人类拥有 sexcon 才会真正发出此信号；对非人类注册它也无害，只是永不触发。）
+	RegisterSignal(member, COMSIG_CARBON_SEX_ACTION_RECEIVED, PROC_REF(on_member_sex_action))
+	// 高潮信号：该成员“高潮/射精”时触发，是性快感的顶点，用于把顶点快感共享给对方。
+	RegisterSignal(member, COMSIG_MOB_EJACULATED, PROC_REF(on_member_ejaculated))
+
 // cleanup_member：与 New 对称地清理单个成员的全部痕迹。
 /datum/sensory_share_link/proc/cleanup_member(mob/living/member)
 	if(!member)
 		return
+	// 注销信号（用 QDELETED 兜底，避免对已删除对象操作）。
 	if(!QDELETED(member))
+		UnregisterSignal(member, COMSIG_MOVABLE_HEAR)
+		// 同步注销性爱快感 / 高潮信号，与 register_member_signals 严格对称，杜绝残留监听。
+		UnregisterSignal(member, COMSIG_CARBON_SEX_ACTION_RECEIVED)
+		UnregisterSignal(member, COMSIG_MOB_EJACULATED)
+		// 清除我们注入的“共感之痛”伤口，避免链接结束后还残留借来的疼痛。
+		if(iscarbon(member))
+			var/mob/living/carbon/carbon_member = member
+			var/datum/wound/magical/shared_pain/leftover = carbon_member.has_wound(/datum/wound/magical/shared_pain)
+			if(leftover && leftover.bodypart_owner)
+				leftover.bodypart_owner.remove_wound(leftover)
 		// 复原视角：若成员此刻正透过对方的眼睛观看，必须拉回自己，避免“黑屏/卡视角”。
 		member.reset_perspective(null)
 		// 关键：链接结束时若成员正“借眼视物”，光是拉回镜头还不够，必须重算视觉，
@@ -140,13 +309,101 @@
 	remove_view_spell(member)
 
 // get_partner：给定链接中的一方，返回另一方（找不到则返回 null）。
-// 视角切换与各视觉覆写都靠它来确定“要借谁的眼睛 / 把视觉投射给谁”。
+// 信号处理与视角切换都靠它来确定“要把感受投射给谁”。
 /datum/sensory_share_link/proc/get_partner(mob/living/who)
 	if(who == user_a)
 		return user_b
 	if(who == user_b)
 		return user_a
 	return null
+
+// ---------------------------------------------------------------------------
+// 听觉共享：当链接中的某一方“听到”话语时，把内容回响进另一方脑海。
+// 由 COMSIG_MOVABLE_HEAR 触发，hearing_args 为 Hear() 的参数列表。
+// ---------------------------------------------------------------------------
+/datum/sensory_share_link/proc/on_member_heard(mob/living/source, list/hearing_args)
+	SIGNAL_HANDLER
+	if(!active)
+		return
+	var/mob/living/partner = get_partner(source)
+	if(!partner || QDELETED(partner) || QDELETED(source))
+		return
+	// 取出本次听到的成文消息；为空（如纯音效）则没什么可转达的。
+	var/message = hearing_args?[HEARING_MESSAGE]
+	if(!message)
+		return
+	// 避免回声风暴：若发声者本就是链接的另一方（即对方在说话），不再重复回响，
+	// 否则两端都在场时同一句话会被来回投射、刷屏。
+	var/atom/movable/speaker = hearing_args[HEARING_SPEAKER]
+	if(speaker == partner || speaker == source)
+		return
+	// 把“对方听到的话”作为脑海回响转达给 partner。raw_message 已是处理过的文本。
+	to_chat(partner, span_purple("透过感官链接，一段话语在我脑海中回响：\"[message]\""))
+
+// ---------------------------------------------------------------------------
+// 愉悦共享（统一入口 + 公共钩子）：把一阵“愉悦”同步给链接中除 origin 之外的另一方。
+// 它同时服务于两类来源：
+//   1) 内部信号处理（性快感 on_member_sex_action / 高潮 on_member_ejaculated）；
+//   2) 任何代表“愉悦”的外部系统（进食满足、按摩等）也可直接调用本钩子。
+// 参数：
+//   arousal_amount —— 要灌注给对方的性奋值（性快感）。仅人类（有 sexcon）才生效。
+//   apply_mood     —— 是否额外施加一次正向心情事件（高潮等“强愉悦”时才置 TRUE，避免刷屏）。
+//   message        —— 给对方的文字反馈；为空则不发文字，便于高频的细微快感静默同步。
+// 返回 TRUE 表示成功把愉悦传达给了对方。
+// ---------------------------------------------------------------------------
+/datum/sensory_share_link/proc/share_pleasure(mob/living/origin, arousal_amount = 0, apply_mood = FALSE, message = null)
+	if(!active)
+		return FALSE
+	var/mob/living/partner = get_partner(origin)
+	if(!partner || QDELETED(partner))
+		return FALSE
+	// 死亡的一方不再接收快感，避免对尸体结算。
+	if(partner.stat == DEAD)
+		return FALSE
+	// 性快感走主线的 arousal（性奋值）通道：仅人类拥有 sexcon，故先做类型校验再灌注。
+	// 注意：adjust_arousal 只改数值、不发任何信号，因此不存在“快感在两端反弹”的风险，无需重入保护。
+	if(arousal_amount > 0 && ishuman(partner))
+		var/mob/living/carbon/human/human_partner = partner
+		if(human_partner.sexcon)
+			human_partner.sexcon.adjust_arousal(arousal_amount)
+	// 强愉悦（高潮）才动用心情/压力系统，且仅 carbon 拥有该系统。
+	if(apply_mood && iscarbon(partner))
+		var/mob/living/carbon/carbon_partner = partner
+		carbon_partner.add_stress(/datum/stressevent/sensory_pleasure)
+	// 文字反馈按需发送（高频细微快感传 null 以保持安静）。
+	if(message)
+		to_chat(partner, span_green(message))
+	return TRUE
+
+// ---------------------------------------------------------------------------
+// 性快感共享：当链接一方“承受一次性爱动作”时，把其中的性快感按比例同步给另一方。
+// 由 COMSIG_CARBON_SEX_ACTION_RECEIVED 触发，签名与该信号发送处一致：
+//   (initiator, origin_sexcon, action, receiver_part, giving, effective_arousal, effective_pain, force, speed)
+// 我们只关心 effective_arousal（本次的有效性快感/性奋增量）。
+// ---------------------------------------------------------------------------
+/datum/sensory_share_link/proc/on_member_sex_action(mob/living/source, mob/living/initiator, datum/sex_controller/origin_sexcon, datum/sex_action/action, receiver_part, giving, effective_arousal, effective_pain, applied_force, applied_speed)
+	SIGNAL_HANDLER
+	if(!active)
+		return
+	// 没有正向快感（例如纯疼痛动作）就没什么可共享的，直接返回。
+	if(!effective_arousal || effective_arousal <= 0)
+		return
+	// 按比例把这次的性快感同步给对方。这是“床笫之欢”的持续传导部分，
+	// 频率较高，故 message 传 null（静默同步），只让对方的性奋值自然累积。
+	share_pleasure(source, effective_arousal * SENSORY_AROUSAL_RATIO, apply_mood = FALSE, message = null)
+
+// ---------------------------------------------------------------------------
+// 高潮共享：当链接一方“高潮/射精”时，把这股顶点快感强烈地同步给另一方。
+// 由 COMSIG_MOB_EJACULATED 触发（发出者即高潮的那名 mob）。
+// 关键：这里绝不调用 partner.sexcon.ejaculate()，否则会再次发出本信号在两端无限反弹；
+//       而是只灌注一笔较大的性奋值 + 一次正向心情 + 文字反馈来表现“共享高潮”。
+// ---------------------------------------------------------------------------
+/datum/sensory_share_link/proc/on_member_ejaculated(mob/living/source)
+	SIGNAL_HANDLER
+	if(!active)
+		return
+	// 顶点快感：灌注固定的高潮性奋值，施加正向心情，并给出明确的文字反馈。
+	share_pleasure(source, SENSORY_CLIMAX_AROUSAL, apply_mood = TRUE, message = "链接彼端骤然涌来一阵高潮的快感，让我浑身止不住地一颤！")
 
 // ---------------------------------------------------------------------------
 // grant_view_spell / remove_view_spell：为成员授予 / 收回“切换视角”临时法术。
@@ -176,20 +433,20 @@
 	if(!active)
 		return
 	if(user_a && !QDELETED(user_a))
-		to_chat(user_a, span_warning("我与对方之间的视觉链接渐渐淡去，眼前重新只剩下自己的所见。"))
+		to_chat(user_a, span_warning("我与对方之间的感官链接渐渐淡去，世界重新只剩下我自己的感受。"))
 	if(user_b && !QDELETED(user_b))
-		to_chat(user_b, span_warning("我与对方之间的视觉链接渐渐淡去，眼前重新只剩下自己的所见。"))
+		to_chat(user_b, span_warning("我与对方之间的感官链接渐渐淡去，世界重新只剩下我自己的感受。"))
 	qdel(src)
 
 // ===========================================================================
-// 法术本体：视觉共享
+// 法术本体：感官共享
 // ---------------------------------------------------------------------------
 // 基类选 /spell/self：点击图标后只对“自己”发起 3 秒引导，引导成功后再弹窗选人、
-// 再询问对方是否同意。符合“先吟唱蓄力 -> 选目标 -> 对方需弹窗同意”的流程。
+// 再询问对方是否同意。符合规格“先吟唱蓄力 -> 选目标 -> 对方需弹窗同意”的流程。
 // ===========================================================================
 /obj/effect/proc_holder/spell/self/sensory_sharing
-	name = "视觉共享"
-	desc = "一道奇妙的法术，借魔力将两人的视觉彼此相连——可随时切换，透过对方的双眼观察世界。"
+	name = "感官共享"
+	desc = "一道奇妙的法术，借魔力将两人的感官彼此相连——不只是痛楚，还有愉悦、视觉、听觉等等。"
 	school = "transmutation"
 	spell_tier = 2                          // T2 法术
 	cost = SENSORY_MANA_COST                // “法力 / 法术点”消耗 = 3
@@ -208,7 +465,7 @@
 	associated_skill = /datum/skill/magic/arcane
 	action_icon = 'modular_z121/icon/custompell.dmi'
 	overlay_state = "sensory_sharing"       // 动作按钮图标态（dmi 暂无该态时仅显示为空，不影响编译）
-	invocations = list("以我之眼，见你所见！") // 咒文（“释放需要相应台词”，开始引导时喊出）
+	invocations = list("感由心生，与你相连！") // 咒文（规格要求“释放需要相应台词”，开始引导时喊出）
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_ARCANE
 	glow_intensity = GLOW_INTENSITY_LOW
@@ -228,7 +485,7 @@
 		revert_cast()
 		return
 
-	// “释放时”念出咒文，因此这里手动调用一次 invocation()。
+	// 规格要求“释放时”念出咒文，因此这里手动调用一次 invocation()。
 	// （稍后在 perform() 前临时屏蔽 invocation，避免咒文被重复喊两遍。）
 	invocation(user)
 
@@ -236,12 +493,12 @@
 	var/cast_time = get_chargetime()
 	if(cast_time > 0)
 		user.visible_message(
-			span_warning("[user] 闭目凝神，指尖萦绕起一缕将视觉彼此牵连的魔力……"),
-			span_notice("我开始引导这道视觉共享法术，只需再稳住片刻……")
+			span_warning("[user] 闭目凝神，指尖萦绕起一缕将感官彼此牵连的魔力……"),
+			span_notice("我开始引导这道感官共享法术，只需再稳住片刻……")
 		)
 		// do_after：引导期间若移动被打断/死亡会返回 FALSE。progress 显示进度条，target=user 表自身引导。
 		if(!do_after(user, cast_time, target = user, progress = TRUE))
-			to_chat(user, span_warning("我对视觉魔力的牵引被打断了，链接未能成形。"))
+			to_chat(user, span_warning("我对感官魔力的牵引被打断了，链接未能成形。"))
 			revert_cast(user) // 引导失败：退还冷却，可重新尝试
 			return
 
@@ -272,16 +529,16 @@
 		revert_cast()
 		return FALSE
 
-	// 同一时刻只允许参与一条视觉链接，避免多链接互相干扰。
+	// 同一时刻只允许参与一条感官链接，避免多链接互相干扰、信号叠加。
 	if(user.sensory_share_link_custom)
-		to_chat(user, span_warning("我已身处一段视觉链接之中，无法再开启新的链接。"))
+		to_chat(user, span_warning("我已身处一段感官链接之中，无法再开启新的链接。"))
 		revert_cast(user)
 		return FALSE
 
 	// —— 步骤 1：收集 7 格视野内、存活、且非自身的活体作为候选目标 ——
 	var/list/candidates = list()
 	for(var/mob/living/L in view(SENSORY_TARGET_RANGE, user))
-		if(L == user)            // 不能和自己共享视觉
+		if(L == user)            // 不能和自己共享感官
 			continue
 		if(L.stat == DEAD)       // 死者无法参与共享
 			continue
@@ -295,12 +552,12 @@
 
 	// 错误处理：附近没有任何可链接的对象。
 	if(!length(candidates))
-		to_chat(user, span_warning("我的视野之内没有可以建立视觉链接的对象。"))
+		to_chat(user, span_warning("我的视野之内没有可以建立感官链接的对象。"))
 		revert_cast(user)
 		return FALSE
 
 	// 弹窗让施法者选择目标；可取消（返回 null）。
-	var/chosen_label = tgui_input_list(user, "选择要与之共享视觉的对象：", "视觉共享", candidates)
+	var/chosen_label = tgui_input_list(user, "选择要与之共享感官的对象：", "感官共享", candidates)
 	if(isnull(chosen_label))
 		to_chat(user, span_warning("我收回了建立链接的念头。"))
 		revert_cast(user)
@@ -314,19 +571,19 @@
 
 	// 反魔法检定：被反魔法保护的目标无法被接入链接（即便是善意的）。
 	if(target.anti_magic_check())
-		to_chat(user, span_warning("[target] 身上的反魔法挡下了视觉链接的魔力。"))
+		to_chat(user, span_warning("[target] 身上的反魔法挡下了感官链接的魔力。"))
 		playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 		revert_cast(user)
 		return FALSE
 
 	// —— 步骤 2：询问目标是否接受 ——
 	// 提示施法者正在等待对方答复，避免其以为法术卡住。
-	to_chat(user, span_notice("我向 [target] 发出了视觉链接的邀请，正在等待 [target.p_their()] 答复……"))
+	to_chat(user, span_notice("我向 [target] 发出了感官链接的邀请，正在等待 [target.p_their()] 答复……"))
 	// 目标侧弹窗：接受 / 拒绝；超时未答（SENSORY_PROMPT_TIMEOUT）则视为拒绝。
-	var/response = tgui_alert(target, "[user.name] 想要与你共享视觉（可切换至彼此视角观察），持续约 3 分钟。是否接受？", "视觉共享邀请", list("接受", "拒绝"), timeout = SENSORY_PROMPT_TIMEOUT)
+	var/response = tgui_alert(target, "[user.name] 想要与你共享感官（痛觉、愉悦、视觉、听觉等），持续约 3 分钟。是否接受？", "感官共享邀请", list("接受", "拒绝"), timeout = SENSORY_PROMPT_TIMEOUT)
 	if(response != "接受")
-		to_chat(user, span_warning("[target] 拒绝了（或未能及时回应）这次视觉链接。"))
-		to_chat(target, span_notice("我婉拒了这次视觉链接。"))
+		to_chat(user, span_warning("[target] 拒绝了（或未能及时回应）这次感官链接。"))
+		to_chat(target, span_notice("我婉拒了这次感官链接。"))
 		revert_cast(user)
 		return FALSE
 
@@ -340,11 +597,11 @@
 		revert_cast(user)
 		return FALSE
 
-	// 建立链接 datum（构造函数内部完成视角法术授予、反向引用挂载与轮询启动）。
+	// 建立链接 datum（构造函数内部完成信号注册、视角法术授予与反向引用挂载）。
 	var/datum/sensory_share_link/link = new(user, target)
 	// 极端兜底：若构造函数因校验失败而自毁，则视为施法失败并退款。
 	if(QDELETED(link) || !link.active)
-		to_chat(user, span_warning("视觉链接在最后一刻没能稳定成形。"))
+		to_chat(user, span_warning("感官链接在最后一刻没能稳定成形。"))
 		revert_cast(user)
 		return FALSE
 
@@ -355,12 +612,12 @@
 	playsound(get_turf(user), 'sound/magic/whiteflame.ogg', 60, TRUE)
 	user.visible_message(
 		span_notice("[user] 与 [target] 之间似有一缕无形的丝线悄然连起。"),
-		span_green("我与 [target] 的视觉彼此相连——自此短暂之间，我可透过 [target.p_their()] 双眼观察世界。")
+		span_green("我与 [target] 的感官彼此交融——痛楚、愉悦、所见所闻，自此短暂相通。")
 	)
-	to_chat(target, span_green("我与 [user] 的视觉彼此相连——自此短暂之间，我可透过 [user] 的双眼观察世界。"))
-	// 告知双方：可在动作栏使用新出现的“视角切换”法术切换到对方视角。
-	to_chat(user, span_info("动作栏中新增了『视角切换』，可借此切换到对方的视角观察世界。"))
-	to_chat(target, span_info("动作栏中新增了『视角切换』，可借此切换到对方的视角观察世界。"))
+	to_chat(target, span_green("我与 [user] 的感官彼此交融——痛楚、愉悦、所见所闻，自此短暂相通。"))
+	// 告知双方：可在动作栏使用新出现的“感官互视”法术切换到对方视角。
+	to_chat(user, span_info("动作栏中新增了『感官互视』，可借此切换到对方的视角观察世界。"))
+	to_chat(target, span_info("动作栏中新增了『感官互视』，可借此切换到对方的视角观察世界。"))
 	return TRUE
 
 // validate_target：建立链接前对“目标是否仍可被链接”的统一校验，避免逻辑分散重复。
@@ -370,17 +627,17 @@
 		to_chat(user, span_warning("链接的对象已经不在了。"))
 		return FALSE
 	if(target == user)
-		to_chat(user, span_warning("我无法和自己建立视觉链接。"))
+		to_chat(user, span_warning("我无法和自己建立感官链接。"))
 		return FALSE
 	if(target.stat == DEAD)
-		to_chat(user, span_warning("逝者无法参与视觉共享。"))
+		to_chat(user, span_warning("逝者无法参与感官共享。"))
 		return FALSE
 	// 距离校验：必须仍处在 7 格视野内（用 view 同时满足“可见 + 距离”两个条件）。
 	if(!(target in view(SENSORY_TARGET_RANGE, user)))
 		to_chat(user, span_warning("[target] 已经离开了我的感知范围。"))
 		return FALSE
 	if(target.sensory_share_link_custom)
-		to_chat(user, span_warning("[target] 已经身处另一段视觉链接之中。"))
+		to_chat(user, span_warning("[target] 已经身处另一段感官链接之中。"))
 		return FALSE
 	return TRUE
 
@@ -394,11 +651,11 @@
 // 原样赋给【观看者(user)】，从而获得一份“有血有肉、与对方一致”的视角，而非仅仅把镜头
 // 挪到对方身上、却仍用自己的眼睛去看（那会出现“对方在暗处看得见、我却一片漆黑”的割裂感）。
 //
-// 作用域控制：本覆写只在“src 正处于一段有效视觉链接、且观看者正是链接另一方”时才接管；
+// 作用域控制：本覆写只在“src 正处于一段有效感官链接、且观看者正是链接另一方”时才接管；
 // 其它任何远程观看（摄像头、附身等）一律 return ..() 走原版逻辑，绝不影响链接之外的行为。
 // ===========================================================================
 /mob/living/update_remote_sight(mob/living/user)
-	// 取出 src（被观看方）当前所属的视觉链接；没有链接就完全交还给原版逻辑。
+	// 取出 src（被观看方）当前所属的感官链接；没有链接就完全交还给原版逻辑。
 	var/datum/sensory_share_link/link = sensory_share_link_custom
 	if(!link || !link.active)
 		return ..()
@@ -429,11 +686,11 @@
 //       update_vision_cone()，无法再重复定义；在更具体的 /mob/living/carbon 上覆写既能
 //       拦截人类（视野锥本就是为带客户端的人类设计），其 ..() 又能回落到 /mob/living 原版。
 //
-// 作用域控制：仅当“自己正借用视觉链接对方的眼睛（client.eye==对方）”时才改写；
+// 作用域控制：仅当“自己正借用感官链接对方的眼睛（client.eye==对方）”时才改写；
 //       其它所有情况一律 return ..()，绝不影响链接之外（含 dullahan）的原有视野锥行为。
 // ===========================================================================
 
-// 小工具：判断 src 此刻是否正“借用某位视觉链接对方的眼睛”，是则返回那位对方，否则返回 null。
+// 小工具：判断 src 此刻是否正“借用某位感官链接对方的眼睛”，是则返回那位对方，否则返回 null。
 /mob/living/proc/sensory_borrowed_eye_partner()
 	var/datum/sensory_share_link/link = sensory_share_link_custom
 	if(!link || !link.active || !client || !client.eye || client.eye == src)
@@ -480,10 +737,10 @@
 //       client.eye —— 即便我们把镜头挪到了对方身上、并用 update_remote_sight 把对方的
 //       视觉参数套到了失明者身上，只要这层黑幕还在，失明者依旧只看得见一片漆黑。
 //
-// 需求（已与使用者确认）：视觉共享既然把“视觉”整套相连，失明者在借用对方眼睛期间
+// 需求（已与使用者确认）：感官共享既然连“视觉”也一并相连，失明者在借用对方眼睛期间
 //       应当能真正看见对方之所见——即魔法暂时绕过其自身的失明。
 //
-// 做法：当 src 正借用视觉链接对方的眼睛时，本覆写改为“清除失明黑幕”，让借来的画面得以显示；
+// 做法：当 src 正借用感官链接对方的眼睛时，本覆写改为“清除失明黑幕”，让借来的画面得以显示；
 //       其余任何情况一律 return ..() 走原版逻辑（该失明仍失明）。一旦切回自身视角或链接结束，
 //       只要再调用一次 update_blindness()（切换/清理流程里都会调用），原版逻辑就会按其真实状态
 //       重新盖回黑幕，失明立刻恢复——魔法绕过仅在“正借眼”的那段时间内有效。
@@ -499,16 +756,16 @@
 	return ..()
 
 // ===========================================================================
-// 临时法术：视角切换
+// 临时法术：感官互视（视角切换）
 // ---------------------------------------------------------------------------
 // 由链接 datum 在建立时授予双方、在结束时收回。作用：在“自己的视角”与
-// “对方的视角”之间来回切换，落实“视觉共享提供一个可切换视角的临时法术”。
-// 实现复用主线 reset_perspective：传入对方 mob 即把 client.eye 设为对方，
+// “对方的视角”之间来回切换，落实规格里“视觉共享提供一个可切换视角的临时法术”。
+// 实现完全复用主线 reset_perspective：传入对方 mob 即把 client.eye 设为对方，
 // 传入 null 即恢复到自身视角；不转移控制权，仅改变“看到的画面”。
 // ===========================================================================
 /obj/effect/proc_holder/spell/self/sensory_sharing_view
-	name = "视角切换"
-	desc = "在自己与视觉链接对象的视角之间切换观察。"
+	name = "感官互视"
+	desc = "在自己与感官链接对象的视角之间切换观察。"
 	overlay_state = "blink"                 // 复用已存在的图标态，确保按钮一定有图标
 	action_icon = 'modular_z121/icon/custompell.dmi'
 	releasedrain = 0                        // 切换视角不消耗资源
@@ -529,7 +786,7 @@
 	// 反查自己所属的链接；没有链接说明共享已结束，此时本法术理应已被收回。
 	var/datum/sensory_share_link/link = user.sensory_share_link_custom
 	if(!link || !link.active)
-		to_chat(user, span_warning("视觉链接已经消散，我无法再借由它窥见他人的视角。"))
+		to_chat(user, span_warning("感官链接已经消散，我无法再借由它窥见他人的视角。"))
 		revert_cast(user)
 		return FALSE
 	// 找到链接的另一方作为“可切换到的视角源”。
@@ -570,7 +827,7 @@
 		user.update_vision_cone()
 		// 失明者借眼复明：清除本人的失明黑幕，使借来的画面得以显示（详见 update_blindness 覆写）。
 		user.update_blindness()
-		to_chat(user, span_notice("我的视野顺着视觉链接切换到对方身上——所见、明暗、乃至朝向盲区，皆与对方一致。"))
+		to_chat(user, span_notice("我的视野顺着感官链接切换到对方身上——所见、明暗、乃至朝向盲区，皆与对方一致。"))
 	return TRUE
 
 // ===== 清理顶部定义的宏，避免泄漏到全局命名空间、与其它文件冲突 =====
@@ -580,4 +837,8 @@
 #undef SENSORY_DURATION
 #undef SENSORY_COOLDOWN
 #undef SENSORY_TARGET_RANGE
+#undef SENSORY_PAIN_RATIO
+#undef SENSORY_PAIN_CAP
+#undef SENSORY_AROUSAL_RATIO
+#undef SENSORY_CLIMAX_AROUSAL
 #undef SENSORY_PROMPT_TIMEOUT
