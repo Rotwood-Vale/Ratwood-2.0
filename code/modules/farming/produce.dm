@@ -120,6 +120,32 @@
 	mill_result = /obj/item/reagent_containers/powder/flour
 	dropshrink = 0.9
 
+/obj/item/reagent_containers/food/snacks/grown/bakersroot
+	name = "baker's root"
+	desc = "A starchy root caked in dirt. It should be washed before eating."
+	icon = 'icons/roguetown/items/bakers_root.dmi'
+	icon_state = "br_raw"
+	tastes = list("earthy starch" = 1)
+	bitesize = 1
+	foodtype = VEGETABLES
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3)
+	faretype = FARE_POOR
+	rotprocess = null
+	mill_result = /obj/item/reagent_containers/powder/flour
+	var/dirty = TRUE
+
+/obj/item/reagent_containers/food/snacks/grown/bakersroot/On_Consume(mob/living/eater)
+	. = ..()
+	if(dirty && eater)
+		eater.add_stress(/datum/stressevent/dirty_bakers_root)
+
+/obj/item/reagent_containers/food/snacks/grown/bakersroot/wash_act(clean = CLEAN_WEAK)
+	if(!dirty)
+		return
+	dirty = FALSE
+	desc = "A clean, starchy root. It can be eaten or milled into flour."
+	icon_state = "br_clean"
+
 /obj/item/reagent_containers/food/snacks/grown/apple
 	seed = /obj/item/seeds/apple
 	name = "apple"

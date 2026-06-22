@@ -350,6 +350,8 @@
 				new /obj/item/natural/stone(T)
 			if(prob(18))
 				new /obj/item/natural/clay(T)
+		if(prob(10))
+			new /obj/item/reagent_containers/food/snacks/grown/bakersroot(T)
 	return ..()
 
 /obj/structure/closet/dirthole/Destroy()
@@ -371,4 +373,3 @@
 /obj/structure/closet/dirthole/post_unbuckle_mob()
 	. = ..()
 	update_abovemob()
-

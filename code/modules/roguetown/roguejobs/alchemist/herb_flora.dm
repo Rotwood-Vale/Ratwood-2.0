@@ -46,6 +46,7 @@
 					user.put_in_hands(C)
 				user.visible_message(span_notice("[user] finds [HAS_TRAIT(user, TRAIT_WOODWALKER) ? "two of " : ""][B] in [src]."))
 				harvested = TRUE
+				update_icon()
 				timerid = addtimer(CALLBACK(src, PROC_REF(loot_replenish)), 5 MINUTES, flags = TIMER_STOPPABLE)
 				//add_filter("picked", 1, alpha_mask_filter(icon = icon('icons/effects/picked_overlay.dmi', "picked_overlay_[rand(1,3)]"), flags = MASK_INVERSE))
 				GLOB.harvested_herbs |= src
@@ -56,6 +57,7 @@
 	if(herbtype)
 		looty += herbtype
 	harvested = FALSE
+	update_icon()
 	remove_filter("picked")
 	GLOB.harvested_herbs -= src
 	if(timerid)
@@ -81,6 +83,7 @@
 	/obj/structure/flora/roguegrass/herb/valeriana,
 	/obj/structure/flora/roguegrass/herb/artemisia,
 	/obj/structure/flora/roguegrass/herb/rosa,
+	/obj/structure/flora/roguegrass/herb/bakersroot,
 	/obj/structure/flora/roguegrass/swampweed))
 
 	var/obj/structure/flora/roguegrass/herb/boi = new type
@@ -187,3 +190,12 @@
 	icon_state = "manabloom2"
 
 	herbtype = /obj/item/reagent_containers/food/snacks/grown/manabloom
+
+/obj/structure/flora/roguegrass/herb/bakersroot
+	name = "baker's root"
+	icon = 'icons/roguetown/items/bakers_root.dmi'
+	icon_state = "br_ripe"
+	herbtype = /obj/item/reagent_containers/food/snacks/grown/bakersroot
+
+/obj/structure/flora/roguegrass/herb/bakersroot/update_icon()
+	icon_state = harvested ? "br_unripe" : "br_ripe"

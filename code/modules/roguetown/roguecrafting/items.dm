@@ -149,6 +149,13 @@
 		)
 	subtype_reqs = TRUE
 
+/datum/crafting_recipe/roguetown/survival/bait/bakersroot
+	name = "bait (baker's root)"
+	reqs = list(
+		/obj/item/storage/roguebag = 1,
+		/obj/item/reagent_containers/food/snacks/grown/bakersroot = 2,
+		)
+
 /datum/crafting_recipe/roguetown/survival/sbaita
 	name = "sweetbait (apple)"
 	result = /obj/item/bait/sweet
