@@ -421,6 +421,8 @@
 /mob/living/carbon/human/proc/zombie_check_can_convert()
 	if(!mind)
 		return
+	if(mind.has_antag_datum(/datum/antagonist/hag))
+		return
 	if(mind.has_antag_datum(/datum/antagonist/vampire))
 		return
 	if(mind.has_antag_datum(/datum/antagonist/werewolf))

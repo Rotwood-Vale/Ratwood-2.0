@@ -16,8 +16,7 @@
 	var/list/follower_links = list()
 	var/list/cursed_followers = list()
 	var/hag_tier = 1
-	var/revive_pending = FALSE
-	var/revive_delay = 90 SECONDS
+	var/datum/component/hag_curio_tracker/curio_component
 	var/static/list/curse_registry = list(
 		/datum/hag_curse/scar = list("cost" = 0, "min_tier" = 1),
 		/datum/hag_curse/no_run = list("cost" = 60, "min_tier" = 1),
@@ -60,18 +59,23 @@
 		return
 	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/hag_pact)
 	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/hag_transmute)
-	RegisterSignal(hag_body, COMSIG_LIVING_DEATH, PROC_REF(on_hag_death))
+	// Attach the curio tracker component for death/revive handling
+	curio_component = hag_body.AddComponent(/datum/component/hag_curio_tracker, src)
 
 /datum/antagonist/hag/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/carbon/human/hag_body = mob_override || owner?.current
 	if(!istype(hag_body) || !hag_body.mind)
 		return
-	UnregisterSignal(hag_body, COMSIG_LIVING_DEATH)
+	if(curio_component)
+		hag_body.RemoveComponent(curio_component)
+		curio_component = null
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/hag_pact)
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/hag_transmute)
 
 /datum/antagonist/hag/on_removal()
-	revive_pending = FALSE
+	if(owner?.current && curio_component)
+		owner.current.RemoveComponent(curio_component)
+		curio_component = null
 	cleanup_bound_followers()
 	return ..()
 
@@ -79,6 +83,14 @@
 	for(var/obj/structure/roguemachine/hag_heart/heart as anything in GLOB.hag_hearts)
 		if(QDELETED(heart) || heart.destroyed)
 			continue
+		return heart
+
+	// Fallback for cases where the global list is stale or mixed with non-heart entries.
+	for(var/obj/structure/roguemachine/hag_heart/heart in world)
+		if(QDELETED(heart) || heart.destroyed)
+			continue
+		if(!(heart in GLOB.hag_hearts))
+			GLOB.hag_hearts += heart
 		return heart
 
 /datum/antagonist/hag/proc/get_heart_turf()
@@ -96,40 +108,6 @@
 
 /datum/antagonist/hag/proc/can_heart_revive()
 	return !!get_active_heart()
-
-/datum/antagonist/hag/proc/on_hag_death(datum/source, gibbed)
-	SIGNAL_HANDLER
-	if(revive_pending || !can_heart_revive())
-		return
-
-	var/mob/living/hag_body = source
-	if(!hag_body)
-		return
-
-	var/turf/heart_turf = get_heart_turf()
-	if(!heart_turf)
-		return
-
-	revive_pending = TRUE
-	hag_body.visible_message(span_boldnotice("[hag_body]'s corpse begins dissolving into damp roots and black moss!"))
-	to_chat(hag_body, span_userdanger("Death's cold grip is denied. The heart drags me back to the hut..."))
-	hag_body.forceMove(heart_turf)
-	addtimer(CALLBACK(src, PROC_REF(revive_hag)), revive_delay)
-
-/datum/antagonist/hag/proc/revive_hag()
-	revive_pending = FALSE
-	var/mob/living/carbon/human/hag_body = owner?.current
-	if(!hag_body || QDELETED(hag_body) || hag_body.stat != DEAD)
-		return FALSE
-	if(!can_heart_revive())
-		to_chat(hag_body, span_warning("The heart's power has faded. I cannot return."))
-		return FALSE
-
-	hag_body.grab_ghost(force = TRUE)
-	hag_body.revive(full_heal = TRUE, admin_revive = FALSE)
-	playsound(hag_body, 'sound/magic/slimesquish.ogg', 100, TRUE)
-	hag_body.visible_message(span_boldnotice("[hag_body] claws back to life, dripping with wet moss."))
-	return TRUE
 
 /datum/antagonist/hag/proc/get_boon_source()
 	return "hag_boon_[REF(src)]"
