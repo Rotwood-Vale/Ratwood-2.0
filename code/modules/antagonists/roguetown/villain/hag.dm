@@ -425,7 +425,7 @@
 
 /datum/hag_curse/no_def/apply()
 	if(victim?.current)
-		ADD_TRAIT(victim.current, "No Defense", "hag_curse")
+		ADD_TRAIT(victim.current, TRAIT_NODEF, "hag_curse")
 
 /datum/hag_curse/silver_weak
 	name = "Curse of Silver Weakness"

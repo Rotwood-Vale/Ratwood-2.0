@@ -2,7 +2,8 @@
 	name = "Mossmother's Heart"
 	desc = "A pulsing, grotesque organ made of moss, roots, and something unspeakable. It thrums with the Mossmother's ancient power. The hag draws her immortality from this artifact."
 	icon = 'icons/roguetown/misc/machines.dmi'
-	icon_state = "heart"
+	// Temporary fallback until a dedicated hag-heart sprite is added to machines.dmi.
+	icon_state = "scomite"
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 150
