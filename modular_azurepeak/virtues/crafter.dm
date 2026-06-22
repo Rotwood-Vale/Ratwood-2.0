@@ -28,7 +28,10 @@
 	name = "Physician's Apprentice"
 	desc = "In my youth, I worked under a skilled physician, studying medicine and alchemy."
 	added_traits = list(TRAIT_MEDICINE_EXPERT, TRAIT_ALCHEMY_EXPERT)
-	added_stashed_items = list("Medicine Pouch" = /obj/item/storage/belt/rogue/pouch/medicine)
+	added_stashed_items = list(
+		"Surgery Bag" = /obj/item/storage/belt/rogue/surgery_bag/full/physician,
+		"Alchemy Bag" = /obj/item/storage/magebag/alchemist
+	)
 	added_skills = list(list(/datum/skill/craft/crafting, 2, 2),
 						list(/datum/skill/craft/alchemy, 2, 2),
 						list(/datum/skill/misc/medicine, 2, 2)
