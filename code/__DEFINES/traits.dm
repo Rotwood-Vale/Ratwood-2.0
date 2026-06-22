@@ -160,6 +160,9 @@
 /// Snowflake trait given to Eoran's wearing their bud
 #define TRAIT_EORAN_CONTENTED "Eoran Contented"
 
+// HAG CURSES
+#define TRAIT_CURSE_SCAR "Curse Scar" //source: marks a soul cursed by the hag
+
 // PATRON GOD CURSES
 
 #define TRAIT_CURSE "Curse" //source
@@ -210,6 +213,7 @@
 #define TRAIT_PSYCHOSIS "Psychosis" //replaces all ambience with creepy shit
 #define TRAIT_SCREENSHAKE "Tremors" //screen will always be shaking, you cannot stop it
 #define TRAIT_NORUN "Decayed Flesh"
+#define TRAIT_NODEF "No Defense"
 #define TRAIT_PUNISHMENT_CURSE "PunishmentCurse"
 #define TRAIT_LEPROSY "Leprosy"
 #define TRAIT_NUDE_SLEEPER "Nude Sleeper"

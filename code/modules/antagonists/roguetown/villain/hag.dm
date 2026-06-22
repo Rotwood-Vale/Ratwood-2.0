@@ -14,6 +14,16 @@
 
 	var/list/datum/mind/bound_followers = list()
 	var/list/follower_links = list()
+	var/list/cursed_followers = list()
+	var/hag_tier = 1
+	var/static/list/curse_registry = list(
+		/datum/hag_curse/scar = list("cost" = 0, "min_tier" = 1),
+		/datum/hag_curse/no_run = list("cost" = 60, "min_tier" = 1),
+		/datum/hag_curse/unseemly = list("cost" = 10, "min_tier" = 1),
+		/datum/hag_curse/silver_weak = list("cost" = 50, "min_tier" = 2),
+		/datum/hag_curse/mute = list("cost" = 100, "min_tier" = 3),
+		/datum/hag_curse/critical_weak = list("cost" = 75, "min_tier" = 2),
+	)
 
 /datum/antagonist/hag/get_antag_cap_weight()
 	return 2
@@ -44,12 +54,14 @@
 	if(!istype(hag_body) || !hag_body.mind)
 		return
 	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/hag_pact)
+	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/hag_transmute)
 
 /datum/antagonist/hag/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/carbon/human/hag_body = mob_override || owner?.current
 	if(!istype(hag_body) || !hag_body.mind)
 		return
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/hag_pact)
+	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/hag_transmute)
 
 /datum/antagonist/hag/on_removal()
 	cleanup_bound_followers()
@@ -178,3 +190,206 @@
 	to_chat(target, span_userdanger("The pact settles into my flesh. Bog leeches will shun me, and I can speak to the hag with ,m."))
 	to_chat(user, span_notice("[target] is now bound to my pact. I can speak to them with ,m."))
 	return TRUE
+
+/datum/antagonist/hag/proc/transmute_to_curse(datum/mind/follower, curse_path, points)
+	if(!follower || !curse_path)
+		return FALSE
+	if(!(follower in bound_followers))
+		return FALSE
+
+	// Remove from normal binding
+	cursed_followers |= follower
+	bound_followers -= follower
+
+	// Add curse scar if missing
+	var/mob/living/victim = follower.current
+	if(victim)
+		if(!HAS_TRAIT(victim, TRAIT_CURSE_SCAR))
+			ADD_TRAIT(victim, TRAIT_CURSE_SCAR, "hag_curse")
+			to_chat(victim, span_userdanger("A dark scar etches itself into your soul. You have been cursed."))
+
+	// Create and apply the curse
+	var/datum/hag_curse/curse = new curse_path(follower, points)
+	to_chat(owner.current, span_notice("[follower.name] has been cursed with [curse.name]."))
+	return TRUE
+
+/datum/antagonist/hag/proc/get_available_curses()
+	var/list/data = list()
+	for(var/path in curse_registry)
+		var/list/details = curse_registry[path]
+		if(details["min_tier"] > hag_tier)
+			continue
+		data[path] = details
+	return data
+
+/obj/effect/proc_holder/spell/invoked/hag_transmute
+	name = "Transmutation Rite"
+	desc = "Transmute a bound pact-bearer into a cursed servant."
+	overlay_state = "mindlink"
+	releasedrain = 30
+	chargedrain = 0
+	chargetime = 15
+	recharge_time = 2 MINUTES
+	range = 1
+	ignore_los = FALSE
+	warnie = "spellwarning"
+	movement_interrupt = TRUE
+	chargedloop = /datum/looping_sound/invokegen
+	sound = 'sound/magic/whiteflame.ogg'
+	clothes_req = FALSE
+	human_req = TRUE
+	miracle = FALSE
+	associated_skill = /datum/skill/magic/arcane
+	spell_tier = 3
+	invocations = list("Betray and bind")
+	invocation_type = "whisper"
+	var/selected_follower = null
+	var/selected_curse = null
+
+/obj/effect/proc_holder/spell/invoked/hag_transmute/cast(list/targets, mob/living/user)
+	var/datum/antagonist/hag/hag_datum = user?.mind?.has_antag_datum(/datum/antagonist/hag)
+	if(!hag_datum || !length(hag_datum.bound_followers))
+		to_chat(user, span_warning("I have no pacts to corrupt."))
+		revert_cast()
+		return FALSE
+
+	ui_interact(user)
+	return TRUE
+
+/obj/effect/proc_holder/spell/invoked/hag_transmute/ui_state(mob/user)
+	return GLOB.always_state
+
+/obj/effect/proc_holder/spell/invoked/hag_transmute/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "HagTransmutation", "Rite of Transmutation")
+		ui.open()
+
+/obj/effect/proc_holder/spell/invoked/hag_transmute/ui_data(mob/user)
+	var/datum/antagonist/hag/hag_datum = user?.mind?.has_antag_datum(/datum/antagonist/hag)
+	if(!hag_datum)
+		return FALSE
+
+	var/list/followers_data = list()
+	for(var/datum/mind/follower in hag_datum.bound_followers)
+		followers_data += list(list(
+			"name" = follower.name,
+			"key" = REF(follower)
+		))
+
+	var/list/curses_data = list()
+	for(var/path in hag_datum.get_available_curses())
+		var/list/details = hag_datum.curse_registry[path]
+		curses_data += list(list(
+			"name" = initial(path:name),
+			"path" = "[path]",
+			"cost" = details["cost"],
+			"min_tier" = details["min_tier"]
+		))
+
+	return list(
+		"followers" = followers_data,
+		"curses" = curses_data,
+		"hag_tier" = hag_datum.hag_tier,
+		"selected_follower" = selected_follower,
+		"selected_curse" = selected_curse
+	)
+
+/obj/effect/proc_holder/spell/invoked/hag_transmute/ui_act(action, list/params)
+	var/mob/user = usr
+	var/datum/antagonist/hag/hag_datum = user?.mind?.has_antag_datum(/datum/antagonist/hag)
+	if(!hag_datum)
+		return
+
+	switch(action)
+		if("select_follower")
+			selected_follower = params["key"]
+			return TRUE
+
+		if("select_curse")
+			selected_curse = params["path"]
+			return TRUE
+
+		if("commit_transmute")
+			if(!selected_follower || !selected_curse)
+				to_chat(user, span_warning("You must select both a follower and a curse."))
+				return TRUE
+
+			var/datum/mind/follower = locate(selected_follower)
+			if(!follower || !(follower in hag_datum.bound_followers))
+				to_chat(user, span_warning("That follower is no longer bound."))
+				return TRUE
+
+			var/curse_cost = 0
+			for(var/path in hag_datum.curse_registry)
+				if("[path]" == selected_curse)
+					curse_cost = hag_datum.curse_registry[path]["cost"]
+					break
+
+			if(!hag_datum.transmute_to_curse(follower, text2path(selected_curse), curse_cost))
+				to_chat(user, span_warning("The transmutation fails."))
+				return TRUE
+
+			selected_follower = null
+			selected_curse = null
+			to_chat(user, span_notice("The rite completes. [follower.name] is now cursed."))
+			return TRUE
+	return ..()
+
+
+/// HAG CURSE DATUMS
+
+/datum/hag_curse
+	var/name = "Generic Curse"
+	var/desc = "A curse from the hag."
+	var/datum/mind/victim
+	var/points = 1
+
+/datum/hag_curse/New(datum/mind/target, set_points = 1)
+	victim = target
+	points = set_points
+	apply_curse()
+
+/datum/hag_curse/proc/apply_curse()
+	// Override in subtypes to apply specific effects
+	return
+
+/datum/hag_curse/scar
+	name = "Curse Scar"
+	desc = "A lingering mark of corruption, claimed by the Mossmother."
+
+/datum/hag_curse/no_run
+	name = "Curse of Sluggish Limbs"
+	desc = "The bearer cannot run."
+
+/datum/hag_curse/no_run/apply_curse()
+	if(victim?.current)
+		ADD_TRAIT(victim.current, TRAIT_NORUN, "hag_curse")
+
+/datum/hag_curse/unseemly
+	name = "Curse of Unseemly Form"
+	desc = "Renders the bearer grotesque to behold."
+
+/datum/hag_curse/silver_weak
+	name = "Curse of Silver Weakness"
+	desc = "Silver becomes like acid to the bearer's flesh."
+
+/datum/hag_curse/silver_weak/apply_curse()
+	if(victim?.current)
+		ADD_TRAIT(victim.current, TRAIT_SILVER_WEAK, "hag_curse")
+
+/datum/hag_curse/mute
+	name = "Curse of Silenced Tongue"
+	desc = "The bearer's voice is stolen by the hag."
+
+/datum/hag_curse/mute/apply_curse()
+	if(victim?.current)
+		ADD_TRAIT(victim.current, TRAIT_PERMAMUTE, "hag_curse")
+
+/datum/hag_curse/critical_weak
+	name = "Curse of Fragile Form"
+	desc = "The bearer's body grows frail and vulnerable."
+
+/datum/hag_curse/critical_weak/apply_curse()
+	if(victim?.current)
+		ADD_TRAIT(victim.current, TRAIT_CRITICAL_WEAKNESS, "hag_curse")
