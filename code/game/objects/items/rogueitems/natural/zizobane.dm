@@ -5,8 +5,8 @@
 	icon_state = "zizo_bane"
 	density = FALSE
 	anchored= TRUE
-	var/time_delay = 0
 	debris = list(/obj/item/reagent_containers/food/snacks/zizo_bane = 1)
+	var/time_delay = 0
 
 /obj/structure/zizo_bane/Initialize(mapload)
 	. = ..()
