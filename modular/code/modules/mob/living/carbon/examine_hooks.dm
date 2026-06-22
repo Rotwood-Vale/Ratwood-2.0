@@ -17,16 +17,16 @@
 		if(user_is_gnoll)
 			var/datum/antagonist/gnoll/gnoll_antag = H.mind?.has_antag_datum(/datum/antagonist/gnoll)
 			if(gnoll_antag?.is_examine_marked_target(src))
-				lines += span_cultsmall("Graggar has marked them!")
+				lines += span_cultsmall("Graggar has marked [src.p_them()]!")
 			if(src.has_gnoll_scent_this_round)
-				lines += span_cultsmall("They have gnoll scent, a breeder!")
+				lines += span_cultsmall("[src.p_they(TRUE)] have gnoll scent, a breeder!")
 	if(src.has_gnoll_scent_this_round && !user_is_gnoll)
 		if(user_is_inquisition)
-			lines += span_warning("They reek of profane beast-taint. This demands scrutiny.")
+			lines += span_warning("[src.p_they(TRUE)] reek of profane beast-taint. This demands scrutiny.")
 		else if(user_is_clergy)
-			lines += span_warning("A profane, feral scent clings to them.")
+			lines += span_warning("A profane, feral scent clings to [src.p_them()].")
 		else
-			lines += span_warning("They have a strange scent about them...")
+			lines += span_warning("[src.p_they(TRUE)] have a strange scent about [src.p_them()]...")
 	var/perception_level = 15
 	if(isliving(user))
 		var/mob/living/L = user
