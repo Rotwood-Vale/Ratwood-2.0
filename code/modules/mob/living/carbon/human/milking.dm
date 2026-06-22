@@ -54,7 +54,7 @@
 		to_chat(user, span_warning("[container] is full."))
 		return
 
-	var/milk_produced = min(container.reagents.maximum_volume - container.reagents.total_volume, 5) // Produce 10 units of milk per attempt //原数值10
+	var/milk_produced = min(container.reagents.maximum_volume - container.reagents.total_volume, 10) // Produce 10 units of milk per attempt
 	var/has_blood = blood_volume && blood_volume >= 20
 
 	// Play milking sound
@@ -65,7 +65,7 @@
 
 	if(has_blood)
 		// Consume blood to produce milk
-		blood_volume = max(0, blood_volume - 30) ////原数值20
+		blood_volume = max(0, blood_volume - 40) ////原数值20
 	else
 		// No blood - take burn damage from life essence being drained
 		adjustFireLoss(15)
