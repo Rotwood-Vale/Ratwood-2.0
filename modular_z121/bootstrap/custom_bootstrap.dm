@@ -21,6 +21,12 @@ SUBSYSTEM_DEF(custom_bootstrap)
 	if(GLOB.custom_learnable_spells?.len)
 		GLOB.learnable_spells |= GLOB.custom_learnable_spells
 
+	// 登记自定义恶习"洁癖"到可选恶习列表（GLOB.character_flaws）。
+	// 为什么放在这里：custom_bootstrap 是本项目统一的启动钩子，其 Initialize 执行时机
+	//   晚于全局列表（GLOBAL_LIST_INIT）的初始化，此刻追加可选恶习是安全的；
+	//   登记逻辑本身定义在 modular_z121/vices/neat_freak.dm 内，这里只做一次调用。
+	register_neat_freak_vice()
+
 	var/list/custom_admin_verbs = get_custom_admin_verbs()
 	if(islist(GLOB.admin_verbs_admin))
 		GLOB.admin_verbs_admin |= custom_admin_verbs

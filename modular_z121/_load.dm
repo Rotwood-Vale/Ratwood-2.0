@@ -68,3 +68,36 @@
 #include "admin/god.dm"
 #include "admin/cleanup_world.dm"
 #include "storytellers/god_blessings.dm"
+// 自定义美德：永无止境（每日一次、死亡 3 分钟后完美复活，但失忆且技能回退）
+// Custom virtue: never-ending (daily, perfect resurrection 3 min after death, amnesia + skill reset)
+#include "virtues/never_ending.dm"
+// 自定义美德：魅魔血脉（限女性身体、全属性 -6；每晚发情、每日一次，吸取交合对象精气：
+// 自身随机属性 +2，对方获得最长 6 分钟"肾虚"减益）
+// Custom virtue: Meimo Bloodline (female-only, all stats -6; nightly estrus once per day,
+// absorb a partner's energy: self random stat +2, partner gets a 6-minute "Kidney Deficiency" debuff)
+#include "virtues/meimo_bloodline.dm"
+// 自定义美德：生命潜能（仅限血肉之躯、消耗 16 凯旋点；濒死时 10% 概率进入 3 分钟"濒死爆发"：
+// 立即止血并恢复一半外伤、无痛、无限耐力，力量/速度/感知/意志各 +2；结束后强制沉睡 10 分钟）
+// Custom virtue: Life Potential (flesh-and-blood only, costs 16 TRIUMPH; on near-death a 10% chance
+// to enter a 3-minute "burst": instant clotting + half-heal, no pain, infinite stamina,
+// STR/SPD/PER/WIL +2; forced 10-minute sleep when it ends)
+#include "virtues/life_potential.dm"
+// 自定义美德：远古造物（仅限金属构装体获取）（消耗 18 凯旋点；授予【亘古长存】特性：
+// 智力 +1、意志 +1、识字 +3（上限 6）、工匠系列全部技能 +3（上限 6）并将工匠系列等级上限提升到 6；
+// 非金属构装体领取时退还点数并不生效）
+// Custom virtue: Ancient Creation (Metal Construct race only; costs 18 TRIUMPH; grants the
+// "Ancient existence" trait: INT +1, WIL +1, Literacy +3 (cap 6), the whole Craftsman series +3
+// (cap 6) and raises the Craftsman series' level cap to 6; non-construct takers are refunded and get nothing)
+#include "virtues/ancient_creation.dm"
+// 自定义美德：马丁的早晨（限能睡眠者、消耗 23 凯旋点）；授予【马丁的早晨】特性：
+// 每天清晨强制沉睡 30 秒，醒来后随机切换为另一个日常职业（装备/技能/特性等一并替换）
+// Custom virtue: Martin's Morning (sleep-capable only, costs 23 TRIUMPH); grants the
+// "Martin's Morning" trait: every dawn forced to sleep 30s, then randomly re-roll into
+// another everyday profession (advclass) — gear/skills/traits and all, as if chosen from start
+#include "virtues/martins_morning.dm"
+// 自定义恶习：洁癖（被动）；当身上有污渍（赤手沾血 / 身上附着可清理污物）时，
+// 持续触发心情变差（压力事件）并施加意志 -2 减益；把身体清洗干净即可解除
+// Custom vice: Neat Freak (passive); while the body is stained (bloody hands /
+// cleanable filth on the body) it continuously worsens mood (stress event) and
+// applies a Willpower -2 debuff; washing the body clean removes the penalties
+#include "vices/neat_freak.dm"
