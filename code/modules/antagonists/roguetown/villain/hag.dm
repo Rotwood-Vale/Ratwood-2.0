@@ -337,10 +337,11 @@
 	)
 
 /obj/effect/proc_holder/spell/invoked/hag_transmute/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	var/mob/user = usr
 	var/datum/antagonist/hag/hag_datum = user?.mind?.has_antag_datum(/datum/antagonist/hag)
 	if(!hag_datum)
-		return ..()
+		return .
 
 	switch(action)
 		if("select_follower")
@@ -375,7 +376,7 @@
 			selected_curse = null
 			to_chat(user, span_notice("The rite completes. [follower.name] is now cursed."))
 			return TRUE
-	return ..()
+	return .
 
 
 /// HAG CURSE DATUMS
@@ -389,9 +390,9 @@
 /datum/hag_curse/New(datum/mind/target, set_points = 1)
 	victim = target
 	points = set_points
-	apply()
+	apply_curse()
 
-/datum/hag_curse/proc/apply()
+/datum/hag_curse/proc/apply_curse()
 	// Override in subtypes to apply specific effects
 	return
 
@@ -399,7 +400,7 @@
 	name = "Curse Scar"
 	desc = "A lingering mark of corruption, claimed by the Mossmother."
 
-/datum/hag_curse/scar/apply()
+/datum/hag_curse/scar/apply_curse()
 	// Scar is a marker, not an active curse - no mechanical effects
 	return
 
@@ -407,7 +408,7 @@
 	name = "Curse of Sluggish Limbs"
 	desc = "The bearer cannot run."
 
-/datum/hag_curse/no_run/apply()
+/datum/hag_curse/no_run/apply_curse()
 	if(victim?.current)
 		ADD_TRAIT(victim.current, TRAIT_NORUN, "hag_curse")
 
@@ -415,7 +416,7 @@
 	name = "Curse of Unseemly Form"
 	desc = "Renders the bearer grotesque to behold."
 
-/datum/hag_curse/unseemly/apply()
+/datum/hag_curse/unseemly/apply_curse()
 	if(victim?.current)
 		ADD_TRAIT(victim.current, TRAIT_UNSEEMLY, "hag_curse")
 
@@ -423,7 +424,7 @@
 	name = "Curse of Defenselessness"
 	desc = "The bearer cannot parry or dodge."
 
-/datum/hag_curse/no_def/apply()
+/datum/hag_curse/no_def/apply_curse()
 	if(victim?.current)
 		ADD_TRAIT(victim.current, TRAIT_NODEF, "hag_curse")
 
@@ -431,7 +432,7 @@
 	name = "Curse of Silver Weakness"
 	desc = "Silver becomes like acid to the bearer's flesh."
 
-/datum/hag_curse/silver_weak/apply()
+/datum/hag_curse/silver_weak/apply_curse()
 	if(victim?.current)
 		ADD_TRAIT(victim.current, TRAIT_SILVER_WEAK, "hag_curse")
 
@@ -439,7 +440,7 @@
 	name = "Curse of Silenced Tongue"
 	desc = "The bearer's voice is stolen by the hag."
 
-/datum/hag_curse/mute/apply()
+/datum/hag_curse/mute/apply_curse()
 	if(victim?.current)
 		ADD_TRAIT(victim.current, TRAIT_PERMAMUTE, "hag_curse")
 
@@ -447,6 +448,6 @@
 	name = "Curse of Fragile Form"
 	desc = "The bearer's body grows frail and vulnerable."
 
-/datum/hag_curse/critical_weak/apply()
+/datum/hag_curse/critical_weak/apply_curse()
 	if(victim?.current)
 		ADD_TRAIT(victim.current, TRAIT_CRITICAL_WEAKNESS, "hag_curse")
