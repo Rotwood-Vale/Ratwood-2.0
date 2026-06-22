@@ -132,19 +132,44 @@
 	faretype = FARE_POOR
 	rotprocess = null
 	mill_result = /obj/item/reagent_containers/powder/flour
-	var/dirty = TRUE
+	eat_effect = /datum/status_effect/debuff/badmeal
+	var/water_added
 
-/obj/item/reagent_containers/food/snacks/grown/bakersroot/On_Consume(mob/living/eater)
-	. = ..()
-	if(dirty && eater)
-		eater.add_stress(/datum/stressevent/dirty_bakers_root)
+/obj/item/reagent_containers/food/snacks/grown/bakersroot/attackby(obj/item/I, mob/living/user, params)
+	var/found_table = locate(/obj/structure/table) in loc
+	var/obj/item/reagent_containers/container = I
+	update_cooktime(user)
+	if(!istype(container) || water_added)
+		return ..()
+	if(isturf(loc) && !found_table)
+		to_chat(user, span_notice("Need a table..."))
+		return ..()
+	if(!container.reagents.has_reagent(/datum/reagent/water, 10))
+		to_chat(user, span_notice("Needs more water to wash it."))
+		return TRUE
+	to_chat(user, span_notice("Adding water, now it needs to be scrubbed clean..."))
+	playsound(get_turf(user), 'modular/Neu_Food/sound/splishy.ogg', 100, TRUE, -1)
+	if(do_after(user, short_cooktime, target = src))
+		add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+		name = "wet baker's root"
+		container.reagents.remove_reagent(/datum/reagent/water, 10)
+		water_added = TRUE
+	return TRUE
 
-/obj/item/reagent_containers/food/snacks/grown/bakersroot/wash_act(clean = CLEAN_WEAK)
-	if(!dirty)
-		return
-	dirty = FALSE
+/obj/item/reagent_containers/food/snacks/grown/bakersroot/attack_hand(mob/living/user)
+	if(water_added)
+		playsound(get_turf(user), 'modular/Neu_Food/sound/kneading_alt.ogg', 90, TRUE, -1)
+		if(do_after(user, short_cooktime, target = src))
+			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+			new /obj/item/reagent_containers/food/snacks/grown/bakersroot/clean(loc)
+			qdel(src)
+	else
+		return ..()
+
+/obj/item/reagent_containers/food/snacks/grown/bakersroot/clean
 	desc = "A clean, starchy root. It can be eaten or milled into flour."
 	icon_state = "br_clean"
+	eat_effect = null
 
 /obj/item/reagent_containers/food/snacks/grown/apple
 	seed = /obj/item/seeds/apple

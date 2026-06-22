@@ -188,11 +188,6 @@
 	stressadd = 2
 	desc = span_red("It tastes VILE!")
 
-/datum/stressevent/dirty_bakers_root
-	timer = 2 MINUTES
-	stressadd = 2
-	desc = span_red("I ate a mouthful of dirt! VILE!")
-
 /datum/stressevent/vomit
 	timer = 3 MINUTES
 	stressadd = 2
