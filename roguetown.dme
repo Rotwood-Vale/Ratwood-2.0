@@ -9,6 +9,7 @@
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
 #include "_maps\map_files\generic\CentCom.dmm"
+#include "_maps\map_files\otherz\hag_hut.dmm"
 #include "_maps\templates\arcyne_fortress.dm"
 #include "_maps\templates\bog_shack_small.dm"
 #include "_maps\templates\sewers.dm"
@@ -1415,7 +1416,7 @@
 #include "code\modules\antagonists\roguetown\villain\dark_itinerant.dm"
 #include "code\modules\antagonists\roguetown\villain\dreamwalker.dm"
 #include "code\modules\antagonists\roguetown\villain\hag.dm"
-#include "code\modules\antagonists\roguetown\villain\hag.dm"
+#include "code\modules\antagonists\roguetown\villain\hag_heart.dm"
 #include "code\modules\antagonists\roguetown\villain\lich.dm"
 #include "code\modules\antagonists\roguetown\villain\peasantrebel.dm"
 #include "code\modules\antagonists\roguetown\villain\thievesguild.dm"

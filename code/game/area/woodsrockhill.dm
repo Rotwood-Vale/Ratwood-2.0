@@ -107,3 +107,16 @@
 	warden_area = TRUE
 	converted_type = /area/rogue/indoors/shelter/woods
 	deathsight_message = "an eastern mountain pass, wooded and secluded in the wild"
+
+/area/rogue/indoors/shelter/bog_hag
+	name = "Hag's Hollow"
+	icon_state = "bog"
+	ambientsounds = AMB_FORESTNIGHT
+	ambientnight = AMB_FORESTNIGHT
+	spookysounds = null
+	spookynight = null
+	droning_sound = 'sound/music/area/bog.ogg'
+	droning_sound_dusk = 'sound/music/area/bog.ogg'
+	droning_sound_night = 'sound/music/area/bog.ogg'
+	soundenv = 15
+	deathsight_message = "deep in the bog"

@@ -1,0 +1,6 @@
+{
+	"map_name": "Hag's Hut",
+	"map_path": "map_files/otherz",
+	"map_file": "hag_hut.dmm",
+	"traits": [{"Name": "Hag's Domain"}]
+}

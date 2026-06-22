@@ -296,6 +296,7 @@
 	)
 
 /obj/effect/proc_holder/spell/invoked/hag_transmute/ui_act(action, list/params)
+	. = ..()
 	var/mob/user = usr
 	var/datum/antagonist/hag/hag_datum = user?.mind?.has_antag_datum(/datum/antagonist/hag)
 	if(!hag_datum)
@@ -358,6 +359,10 @@
 	name = "Curse Scar"
 	desc = "A lingering mark of corruption, claimed by the Mossmother."
 
+/datum/hag_curse/scar/apply_curse()
+	// Scar is a marker, not an active curse - no mechanical effects
+	return
+
 /datum/hag_curse/no_run
 	name = "Curse of Sluggish Limbs"
 	desc = "The bearer cannot run."
@@ -369,6 +374,10 @@
 /datum/hag_curse/unseemly
 	name = "Curse of Unseemly Form"
 	desc = "Renders the bearer grotesque to behold."
+
+/datum/hag_curse/unseemly/apply_curse()
+	if(victim?.current)
+		ADD_TRAIT(victim.current, TRAIT_NODEF, "hag_curse")
 
 /datum/hag_curse/silver_weak
 	name = "Curse of Silver Weakness"
