@@ -16,11 +16,14 @@
 	var/list/follower_links = list()
 	var/list/cursed_followers = list()
 	var/hag_tier = 1
+	var/revive_pending = FALSE
+	var/revive_delay = 90 SECONDS
 	var/static/list/curse_registry = list(
 		/datum/hag_curse/scar = list("cost" = 0, "min_tier" = 1),
 		/datum/hag_curse/no_run = list("cost" = 60, "min_tier" = 1),
 		/datum/hag_curse/unseemly = list("cost" = 10, "min_tier" = 1),
 		/datum/hag_curse/silver_weak = list("cost" = 50, "min_tier" = 2),
+		/datum/hag_curse/no_def = list("cost" = 100, "min_tier" = 3),
 		/datum/hag_curse/mute = list("cost" = 100, "min_tier" = 3),
 		/datum/hag_curse/critical_weak = list("cost" = 75, "min_tier" = 2),
 	)
@@ -42,6 +45,8 @@
 	if(length(GLOB.hag_starts))
 		owner.current.forceMove(pick(GLOB.hag_starts))
 
+	bind_to_heart()
+
 	greet()
 
 /datum/antagonist/hag/greet()
@@ -55,17 +60,76 @@
 		return
 	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/hag_pact)
 	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/hag_transmute)
+	RegisterSignal(hag_body, COMSIG_LIVING_DEATH, PROC_REF(on_hag_death))
 
 /datum/antagonist/hag/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/carbon/human/hag_body = mob_override || owner?.current
 	if(!istype(hag_body) || !hag_body.mind)
 		return
+	UnregisterSignal(hag_body, COMSIG_LIVING_DEATH)
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/hag_pact)
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/hag_transmute)
 
 /datum/antagonist/hag/on_removal()
+	revive_pending = FALSE
 	cleanup_bound_followers()
 	return ..()
+
+/datum/antagonist/hag/proc/get_active_heart()
+	for(var/obj/structure/roguemachine/hag_heart/heart as anything in GLOB.hag_hearts)
+		if(QDELETED(heart) || heart.destroyed)
+			continue
+		return heart
+
+/datum/antagonist/hag/proc/get_heart_turf()
+	var/obj/structure/roguemachine/hag_heart/heart = get_active_heart()
+	if(heart)
+		return get_turf(heart)
+	return null
+
+/datum/antagonist/hag/proc/bind_to_heart()
+	var/obj/structure/roguemachine/hag_heart/heart = get_active_heart()
+	if(!heart)
+		return FALSE
+	heart.link_hag(src)
+	return TRUE
+
+/datum/antagonist/hag/proc/can_heart_revive()
+	return !!get_active_heart()
+
+/datum/antagonist/hag/proc/on_hag_death(datum/source, gibbed)
+	SIGNAL_HANDLER
+	if(revive_pending || !can_heart_revive())
+		return
+
+	var/mob/living/hag_body = source
+	if(!hag_body)
+		return
+
+	var/turf/heart_turf = get_heart_turf()
+	if(!heart_turf)
+		return
+
+	revive_pending = TRUE
+	hag_body.visible_message(span_boldnotice("[hag_body]'s corpse begins dissolving into damp roots and black moss!"))
+	to_chat(hag_body, span_userdanger("Death's cold grip is denied. The heart drags me back to the hut..."))
+	hag_body.forceMove(heart_turf)
+	addtimer(CALLBACK(src, PROC_REF(revive_hag)), revive_delay)
+
+/datum/antagonist/hag/proc/revive_hag()
+	revive_pending = FALSE
+	var/mob/living/carbon/human/hag_body = owner?.current
+	if(!hag_body || QDELETED(hag_body) || hag_body.stat != DEAD)
+		return FALSE
+	if(!can_heart_revive())
+		to_chat(hag_body, span_warning("The heart's power has faded. I cannot return."))
+		return FALSE
+
+	hag_body.grab_ghost(force = TRUE)
+	hag_body.revive(full_heal = TRUE, admin_revive = FALSE)
+	playsound(hag_body, 'sound/magic/slimesquish.ogg', 100, TRUE)
+	hag_body.visible_message(span_boldnotice("[hag_body] claws back to life, dripping with wet moss."))
+	return TRUE
 
 /datum/antagonist/hag/proc/get_boon_source()
 	return "hag_boon_[REF(src)]"
@@ -295,12 +359,11 @@
 		"selected_curse" = selected_curse
 	)
 
-/obj/effect/proc_holder/spell/invoked/hag_transmute/ui_act(action, list/params)
-	. = ..()
+/obj/effect/proc_holder/spell/invoked/hag_transmute/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	var/mob/user = usr
 	var/datum/antagonist/hag/hag_datum = user?.mind?.has_antag_datum(/datum/antagonist/hag)
 	if(!hag_datum)
-		return
+		return ..()
 
 	switch(action)
 		if("select_follower")
@@ -349,9 +412,9 @@
 /datum/hag_curse/New(datum/mind/target, set_points = 1)
 	victim = target
 	points = set_points
-	apply_curse()
+	apply()
 
-/datum/hag_curse/proc/apply_curse()
+/datum/hag_curse/proc/apply()
 	// Override in subtypes to apply specific effects
 	return
 
@@ -359,7 +422,7 @@
 	name = "Curse Scar"
 	desc = "A lingering mark of corruption, claimed by the Mossmother."
 
-/datum/hag_curse/scar/apply_curse()
+/datum/hag_curse/scar/apply()
 	// Scar is a marker, not an active curse - no mechanical effects
 	return
 
@@ -367,7 +430,7 @@
 	name = "Curse of Sluggish Limbs"
 	desc = "The bearer cannot run."
 
-/datum/hag_curse/no_run/apply_curse()
+/datum/hag_curse/no_run/apply()
 	if(victim?.current)
 		ADD_TRAIT(victim.current, TRAIT_NORUN, "hag_curse")
 
@@ -375,15 +438,23 @@
 	name = "Curse of Unseemly Form"
 	desc = "Renders the bearer grotesque to behold."
 
-/datum/hag_curse/unseemly/apply_curse()
+/datum/hag_curse/unseemly/apply()
 	if(victim?.current)
-		ADD_TRAIT(victim.current, TRAIT_NODEF, "hag_curse")
+		ADD_TRAIT(victim.current, TRAIT_UNSEEMLY, "hag_curse")
+
+/datum/hag_curse/no_def
+	name = "Curse of Defenselessness"
+	desc = "The bearer cannot parry or dodge."
+
+/datum/hag_curse/no_def/apply()
+	if(victim?.current)
+		ADD_TRAIT(victim.current, "No Defense", "hag_curse")
 
 /datum/hag_curse/silver_weak
 	name = "Curse of Silver Weakness"
 	desc = "Silver becomes like acid to the bearer's flesh."
 
-/datum/hag_curse/silver_weak/apply_curse()
+/datum/hag_curse/silver_weak/apply()
 	if(victim?.current)
 		ADD_TRAIT(victim.current, TRAIT_SILVER_WEAK, "hag_curse")
 
@@ -391,7 +462,7 @@
 	name = "Curse of Silenced Tongue"
 	desc = "The bearer's voice is stolen by the hag."
 
-/datum/hag_curse/mute/apply_curse()
+/datum/hag_curse/mute/apply()
 	if(victim?.current)
 		ADD_TRAIT(victim.current, TRAIT_PERMAMUTE, "hag_curse")
 
@@ -399,6 +470,6 @@
 	name = "Curse of Fragile Form"
 	desc = "The bearer's body grows frail and vulnerable."
 
-/datum/hag_curse/critical_weak/apply_curse()
+/datum/hag_curse/critical_weak/apply()
 	if(victim?.current)
 		ADD_TRAIT(victim.current, TRAIT_CRITICAL_WEAKNESS, "hag_curse")
