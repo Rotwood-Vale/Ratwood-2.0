@@ -427,6 +427,10 @@
 		icon_state = "passage0"
 		density = TRUE
 
+/obj/structure/bars/passage/preopen
+	density = FALSE
+	icon_state = "passage1"
+
 /obj/structure/bars/passage/shutter
 	icon_state = "shutter0"
 	density = TRUE

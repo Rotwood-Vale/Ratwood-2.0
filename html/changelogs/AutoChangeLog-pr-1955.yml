@@ -1,4 +1,0 @@
-author: "SneakySlinky"
-delete-after: True
-changes:
-  - balance: "Removed the target.death() from 1001+ value churn wealthy"

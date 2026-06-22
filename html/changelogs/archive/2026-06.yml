@@ -258,3 +258,16 @@
   - bugfix: Fixes Xylix slip miracles not actually slipping properly.
   - balance: Shortens slip time on Xylix miracles so it does not stun you for a long
       time on the floor like soap did.
+2026-06-22:
+  AllCorruptingWyrm:
+  - rscadd: Deadbolt doors to the Church balcony
+  - rscadd: Items hid behind locked pieces of furniture
+  - rscadd: A hearth too in the infirmary to make healing less miserable
+  Jamdrawers:
+  - bugfix: fixed missing deserttown spawnpoints
+  - spellcheck: translates some parts of the map that was ported from a russian speaking
+      server
+  SneakySlinky:
+  - balance: Removed the target.death() from 1001+ value churn wealthy
+  ophaq:
+  - bugfix: Fixes Gallant Accent not working.

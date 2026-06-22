@@ -184,6 +184,11 @@
 	density = FALSE
 	pixel_y = 32
 	cookonme = TRUE
+	
+/obj/machinery/light/rogue/campfire/fireplace/blue
+	desc = "A curious cool fire dances upon a bed of mysteriously glowing embers."
+	icon = 'icons/roguetown/misc/wallfireblue.dmi'
+	bulb_colour = "#6e90ff"
 
 /obj/machinery/light/rogue/candle
 	name = "candles"

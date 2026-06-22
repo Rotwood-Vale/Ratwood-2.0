@@ -158,7 +158,6 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 			icon_state = "leverfloor[toggled]"
 			playsound(src, 'sound/foley/lever.ogg', 100, extrarange = 3)
 
-
 /obj/structure/lever/attackby(obj/item/I, mob/user, params)
 	var/obj/item = user.get_active_held_item()
 	if(user.used_intent.type == /datum/intent/chisel )
@@ -210,6 +209,14 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 
 /obj/structure/lever/hidden
 	icon = null
+
+/obj/structure/lever/pretoggled
+	toggled = TRUE
+	icon_state = "leverfloor1"
+
+/obj/structure/lever/wall/pretoggled
+	toggled = TRUE
+	icon_state = "leverwall1"
 
 /obj/structure/lever/hidden/proc/feel_button(mob/living/user)
 	if(isliving(user))
