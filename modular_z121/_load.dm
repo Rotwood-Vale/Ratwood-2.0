@@ -51,6 +51,8 @@
 #include "crafting/blood_tonic_recipe.dm"
 // 自定义炼金配方：催乳剂（骨头x2+玻璃瓶x1+水50+牛奶10 → 装满50单位催乳剂的玻璃瓶，需炼金2级）
 #include "crafting/lactation_enhancer_recipe.dm"
+// 把催乳剂成品瓶加入浴场商贩机 BRASSFACE 的售货清单（Drugs 分类）
+#include "crafting/lactation_enhancer_merchant.dm"
 #include "alchemy/blood_tonic_reagent.dm"
 // 催乳剂试剂与成品瓶定义（加速泌乳恢复）
 #include "alchemy/lactation_enhancer_reagent.dm"
