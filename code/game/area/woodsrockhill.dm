@@ -120,3 +120,16 @@
 	droning_sound_night = 'sound/music/area/bog.ogg'
 	soundenv = 15
 	deathsight_message = "deep in the bog"
+
+/area/rogue/indoors/shelter/bog_hag_hut
+	name = "Hag's Hut Interior"
+	icon_state = "bog"
+	ambientsounds = AMB_FORESTNIGHT
+	ambientnight = AMB_FORESTNIGHT
+	spookysounds = null
+	spookynight = null
+	droning_sound = 'sound/music/area/bog.ogg'
+	droning_sound_dusk = 'sound/music/area/bog.ogg'
+	droning_sound_night = 'sound/music/area/bog.ogg'
+	soundenv = 15
+	deathsight_message = "within the hag's hut"

@@ -80877,6 +80877,10 @@
 /obj/structure/spider/stickyweb,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/cavewet)
+"sDV" = (
+/obj/effect/landmark/start/hag,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/bograt/sunken)
 "sDW" = (
 /obj/structure/flora/roguetree{
 	pixel_x = 0
@@ -236762,7 +236766,7 @@ hMX
 jsj
 jsj
 jsj
-jsj
+sDV
 hMX
 bca
 nhG
