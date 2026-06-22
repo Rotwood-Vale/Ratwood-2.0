@@ -471,6 +471,8 @@
 //Updates an organ's brute/burn states for use by update_damage_overlays()
 //Returns 1 if we need to update overlays. 0 otherwise.
 /obj/item/bodypart/proc/update_bodypart_damage_state()
+	if(!max_damage) // can't do anything boss, we aren't set up yet
+		return FALSE
 	var/tbrute = round((brute_dam / max_damage) * 3, 1)
 	var/tburn = round((burn_dam / max_damage) * 3, 1)
 	if((tbrute != brutestate) || (tburn != burnstate))
@@ -597,7 +599,7 @@
 
 	var/list/bodypart_organs
 	for(var/obj/item/organ/organ_check as anything in owner.internal_organs) //internal organs inside the dismembered limb are dropped.
-		if(check_zone(organ_check.zone) == body_zone)
+		if(organ_check.zone_checked == body_zone)
 			LAZYADD(bodypart_organs, organ_check) // this way if we don't have any, it'll just return null
 
 	return bodypart_organs

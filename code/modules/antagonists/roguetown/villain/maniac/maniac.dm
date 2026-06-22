@@ -193,7 +193,7 @@
 		to_chat(trey_liam, span_deadsay("<span class='reallybig'>... WHERE AM I? ...</span>"))
 		sleep(1.5 SECONDS)
 		var/static/list/slop_lore = list(
-			span_deadsay("... [SSmapping.map_adjustment.realm_name]? No ... It doesn't exist ..."),
+			span_deadsay("... Rockhill? No ... It doesn't exist ..."),
 			span_deadsay("... My name is Trey. Trey Liam, Liamtific Troverseer ..."),
 			span_deadsay("... I'm on NT Liam, a self Treystaining ship, used to Treyserve what Liamains of roguemanity ..."),
 			span_deadsay("... Launched into the Grim Darkness, Fart Grimness preserves their grimness ... Their edge ..."),

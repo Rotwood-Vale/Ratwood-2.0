@@ -294,5 +294,4 @@
 						if(limb_turf)
 							new /obj/effect/decal/cleanable/blood/gibs/limb(limb_turf)
 
-			target.death()
 			return
