@@ -22,6 +22,30 @@
 	hud = null
 	return ..()
 
+/atom/movable/screen/proc/get_roguehud_icon(datum/preferences/prefs)
+	if(!prefs)
+		prefs = hud?.mymob?.client?.prefs
+	if(prefs)
+		return prefs.get_roguehud_icon()
+	return 'icons/mob/roguehud.dmi'
+
+/atom/movable/screen/proc/get_rogueheat_icon(datum/preferences/prefs)
+	if(!prefs)
+		prefs = hud?.mymob?.client?.prefs
+	if(prefs)
+		return prefs.get_rogueheat_icon()
+	return 'icons/mob/rogueheat.dmi'
+
+/atom/movable/screen/proc/apply_colorblind_hud_palette(datum/preferences/prefs)
+	if(!prefs)
+		prefs = hud?.mymob?.client?.prefs
+	if(!prefs)
+		return
+	if(is_roguehud_palette_icon(icon))
+		icon = prefs.get_roguehud_icon()
+	else if(is_rogueheat_palette_icon(icon))
+		icon = prefs.get_rogueheat_icon()
+
 /atom/movable/screen/Click(location, control, params)
 	if(!usr || !usr.client)
 		return FALSE
@@ -402,22 +426,23 @@
 //		intent1 = image(icon='icons/mob/rogueintentbase.dmi',icon_state="intentbase")
 //		add_overlay(intent1, TRUE)
 		var/list/used = intentsr
+		var/roguehud_icon = get_roguehud_icon()
 		if(hud.mymob.active_hand_index == 1)
 			used = intentsl
 		for(var/datum/intent/intenty in used)
 			lol++
 			switch(lol)
 				if(1)
-					intent1 = image(icon='icons/mob/roguehud.dmi',icon_state=intenty.icon_state, pixel_x = 64, pixel_y = 16, layer = layer+0.02)
+					intent1 = image(icon=roguehud_icon,icon_state=intenty.icon_state, pixel_x = 64, pixel_y = 16, layer = layer+0.02)
 					add_overlay(intent1, TRUE)
 				if(2)
-					intent2 = image(icon='icons/mob/roguehud.dmi',icon_state=intenty.icon_state, pixel_x = 96, pixel_y = 16, layer = layer+0.02)
+					intent2 = image(icon=roguehud_icon,icon_state=intenty.icon_state, pixel_x = 96, pixel_y = 16, layer = layer+0.02)
 					add_overlay(intent2, TRUE)
 				if(3)
-					intent3 = image(icon='icons/mob/roguehud.dmi',icon_state=intenty.icon_state, pixel_x = 64, layer = layer+0.02)
+					intent3 = image(icon=roguehud_icon,icon_state=intenty.icon_state, pixel_x = 64, layer = layer+0.02)
 					add_overlay(intent3, TRUE)
 				if(4)
-					intent4 = image(icon='icons/mob/roguehud.dmi',icon_state=intenty.icon_state, pixel_x = 96, layer = layer+0.02)
+					intent4 = image(icon=roguehud_icon,icon_state=intenty.icon_state, pixel_x = 96, layer = layer+0.02)
 					add_overlay(intent4, TRUE)
 		if(ismob(usr))
 			var/mob/M = usr
@@ -432,6 +457,7 @@
 	if(!r_index || !l_index)
 		return
 	else
+		var/roguehud_icon = get_roguehud_icon()
 		var/used_index = r_index
 		var/other = l_index
 		if(hud.mymob.active_hand_index == 1)
@@ -439,22 +465,22 @@
 			other = r_index
 		switch(used_index)
 			if(1)
-				border1 = image(icon='icons/mob/roguehud.dmi',icon_state="intentselected", pixel_x = 64, pixel_y = 16, layer = layer+0.01)
+				border1 = image(icon=roguehud_icon,icon_state="intentselected", pixel_x = 64, pixel_y = 16, layer = layer+0.01)
 			if(2)
-				border1 = image(icon='icons/mob/roguehud.dmi',icon_state="intentselected", pixel_x = 96, pixel_y = 16, layer = layer+0.01)
+				border1 = image(icon=roguehud_icon,icon_state="intentselected", pixel_x = 96, pixel_y = 16, layer = layer+0.01)
 			if(3)
-				border1 = image(icon='icons/mob/roguehud.dmi',icon_state="intentselected", pixel_x = 64, layer = layer+0.01)
+				border1 = image(icon=roguehud_icon,icon_state="intentselected", pixel_x = 64, layer = layer+0.01)
 			if(4)
-				border1 = image(icon='icons/mob/roguehud.dmi',icon_state="intentselected", pixel_x = 96, layer = layer+0.01)
+				border1 = image(icon=roguehud_icon,icon_state="intentselected", pixel_x = 96, layer = layer+0.01)
 		switch(other)
 			if(1)
-				border2 = image(icon='icons/mob/roguehud.dmi',icon_state=used, pixel_x = 64, pixel_y = 16, layer = layer+0.01)
+				border2 = image(icon=roguehud_icon,icon_state=used, pixel_x = 64, pixel_y = 16, layer = layer+0.01)
 			if(2)
-				border2 = image(icon='icons/mob/roguehud.dmi',icon_state=used, pixel_x = 96, pixel_y = 16, layer = layer+0.01)
+				border2 = image(icon=roguehud_icon,icon_state=used, pixel_x = 96, pixel_y = 16, layer = layer+0.01)
 			if(3)
-				border2 = image(icon='icons/mob/roguehud.dmi',icon_state=used, pixel_x = 64, layer = layer+0.01)
+				border2 = image(icon=roguehud_icon,icon_state=used, pixel_x = 64, layer = layer+0.01)
 			if(4)
-				border2 = image(icon='icons/mob/roguehud.dmi',icon_state=used, pixel_x = 96, layer = layer+0.01)
+				border2 = image(icon=roguehud_icon,icon_state=used, pixel_x = 96, layer = layer+0.01)
 		add_overlay(border2, TRUE)
 		add_overlay(border1, TRUE)
 
@@ -1797,6 +1823,8 @@
 	if(C)
 		holder = C
 	. = ..()
+	if(holder?.prefs)
+		icon = holder.prefs.get_roguehud_icon()
 	holder.screen += src
 
 /atom/movable/screen/rintent_selection/Destroy()
@@ -2051,6 +2079,18 @@
 	QDEL_NULL(fill)
 	QDEL_NULL(mask)
 	return ..()
+
+/atom/movable/screen/bloodpool/apply_colorblind_hud_palette(datum/preferences/prefs)
+	..()
+	var/rogueheat_icon = get_rogueheat_icon(prefs)
+	if(background)
+		background.icon = rogueheat_icon
+	if(foreground)
+		foreground.icon = rogueheat_icon
+	if(fill)
+		fill.icon = rogueheat_icon
+	if(mask)
+		mask.icon = rogueheat_icon
 
 /atom/movable/screen/bloodpool/proc/set_fill_color(new_color = "#ffffff")
 	fill.color = new_color

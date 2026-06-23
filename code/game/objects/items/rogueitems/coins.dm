@@ -110,6 +110,8 @@
 		if(quantity == 1)
 			amt_text = ""
 		var/amount = input(user, "How many [plural_name] to split?[amt_text]", null, round(quantity/2, 1)) as null|num
+		if(QDELETED(user) || QDELETED(src) || !user.Adjacent(src)) // if coins were consumed/user was deleted/moved away, don't split
+			return
 		amount = clamp(amount, 0, quantity)
 		amount = round(amount, 1) // no taking non-integer coins
 		if(!amount)
@@ -243,7 +245,7 @@
 	plural_name = "zennies"
 
 // ANCIENT
-/obj/item/roguecoin/aalloy
+/obj/item/roguecoin/gilbranze
 	name = "psilen"
 	desc = "A coin of polished gilbranze, beheld to a fallen kingdom that hadn't endured the passage of tyme."
 	icon_state = "a1"
@@ -255,7 +257,7 @@
 	. = ..()
 	set_quantity(rand(4,19))
 
-/obj/item/roguecoin/aalloy/pile/Initialize(mapload)
+/obj/item/roguecoin/gilbranze/pile/Initialize(mapload)
 	. = ..()
 	set_quantity(rand(4,19))
 

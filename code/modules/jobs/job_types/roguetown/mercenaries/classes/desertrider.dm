@@ -112,7 +112,7 @@
 	to_chat(H, span_warning("Zybantine 'Blade Dancers' are famed and feared the world over. Their expertise in blades both long and short is well known."))
 	head = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/zyb
 	neck = /obj/item/clothing/neck/roguetown/leather
-	mask = /obj/item/clothing/mask/rogue/facemask/steel/paalloy
+	mask = /obj/item/clothing/mask/rogue/facemask/ancient
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
 	wrists = /obj/item/clothing/wrists/roguetown/splintarms

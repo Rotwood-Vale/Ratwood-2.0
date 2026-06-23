@@ -177,7 +177,7 @@
 	id = "net"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/netted
 	effectedstats = list(STATKEY_SPD = -5, STATKEY_WIL = -2)
-	duration = 3 MINUTES
+	duration = 30 SECONDS
 
 /datum/status_effect/debuff/netted/on_apply()
 		. = ..()
@@ -213,9 +213,19 @@
 	effectedstats = list(STATKEY_STR = -1, STATKEY_WIL = -1, STATKEY_CON = -1, STATKEY_SPD = -1, STATKEY_LCK = -1)	//Slightly punishing.
 	duration = 15 MINUTES	//Punishing, same time as revival, but mildly less punishing than revival itself.
 
+/datum/status_effect/debuff/devitalised/lux_ripped
+	id = "lux_ripped"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/devitalised/lux_ripped
+	effectedstats = list(STATKEY_STR = -5, STATKEY_WIL = -5, STATKEY_CON = -5, STATKEY_SPD = -5, STATKEY_LCK = -5)	//apparently zizite miraclists killing people is BAD so we have to make the debuff so much worse than death to encourage people to just lacrima rather than remove gorget neck chop. this also prevents necromancers from doing a lacrima circle-jerk to farm lux. have fun.
+	duration = 30 MINUTES
+
 /atom/movable/screen/alert/status_effect/debuff/devitalised
 	name = "Devitalised"
 	desc = "Something has been taken from me, and it will take time to recover."
+
+/atom/movable/screen/alert/status_effect/debuff/devitalised/lux_ripped
+	name = "Lux Ripped"
+	desc = "The very essence of my lyfe was roughly torn from me."
 
 /datum/status_effect/debuff/vamp_dreams
 	id = "sleepytime"
@@ -273,6 +283,38 @@
 /atom/movable/screen/alert/status_effect/debuff/submissive
 	name = "Conformable"
 	desc = "Falling in line is my only choice."
+
+/datum/status_effect/debuff/yield_prompt
+	id = "yieldprompt"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/yield_prompt
+	duration = 20 SECONDS
+
+/datum/status_effect/debuff/yield_prompt/on_apply()
+	if(isliving(owner) && owner.has_flaw(/datum/charflaw/compliant))
+		var/mob/living/living_owner = owner
+		living_owner.submit(TRUE)
+		return FALSE
+	return ..()
+
+/atom/movable/screen/alert/status_effect/debuff/yield_prompt
+	name = "Yield?"
+	desc = "I am being told to yield, shall I comply? Or will I continue to fight!"
+	icon_state = "compliance"
+	alert_group = ALERT_DEBUFF
+
+/atom/movable/screen/alert/status_effect/debuff/yield_prompt/Click(location, control, params)
+	if(!usr || !usr.client)
+		return FALSE
+	var/mob/user = usr
+	var/paramslist = params2list(params)
+	if(paramslist["shift"] && paramslist["left"]) // screen objects don't do the normal Click() stuff so we'll cheat
+		examine_ui(user)
+		return FALSE
+	var/mob/living/L = usr
+	if(!istype(L))
+		return
+	L.submit()
+	L.remove_status_effect(attached_effect)
 
 /datum/status_effect/debuff/chilled
 	id = "chilled"

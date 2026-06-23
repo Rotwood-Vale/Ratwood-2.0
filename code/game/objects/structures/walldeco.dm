@@ -220,6 +220,16 @@
 
 /obj/structure/fluff/walldeco/customflag/Initialize(mapload)
 	. = ..()
+	if(SSmapping.config.map_name == "Rockhill")
+		name = "Rockhill flag"
+	else if(SSmapping.config.map_name == "Desert Town")
+		name = "Al-Ashur flag"
+		desc = "A banner flutters in the breeze in the proud heraldic colors of the Sultanate."
+	else if(SSmapping.config.map_name == "Build Your Own Settlement")
+		name = "New-Kingsfield flag"
+		desc = "A banner flutters in the breeze in the proud heraldic colors of the Colony."
+	else
+		name = "Rotwood Vale flag"
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
 	GLOB.lordcolor += src
@@ -237,9 +247,6 @@
 	M = mutable_appearance(icon, "wallflag_secondary", -(layer+0.1))
 	M.color = secondary
 	add_overlay(M)
-
-/obj/structure/fluff/walldeco/customflag/rockhill
-	name = "Rockhill flag"
 
 /obj/structure/fluff/walldeco/moon
 	name = "banner"

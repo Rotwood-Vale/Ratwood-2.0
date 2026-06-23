@@ -55,6 +55,7 @@
 	var/can_repair = TRUE
 	grid_width = 32
 	grid_height = 32
+	dropshrink = 0.75
 
 /obj/item/needle/examine()
 	. = ..()
@@ -202,6 +203,11 @@
 	var/list/sewable
 	var/obj/item/bodypart/affecting
 	if(iscarbon(patient))
+		//OV edit
+		if(isooze(patient))
+			to_chat(doctor, span_warning("You can't sew an Ooze, their wounds must be burned closed."))
+			return FALSE
+		//OV edit end
 		affecting = patient.get_bodypart(check_zone(doctor.zone_selected))
 		if(!affecting)
 			to_chat(doctor, span_warning("That limb is missing."))
@@ -270,7 +276,7 @@
 	desc = span_green("This needle has been blessed by the goddess of medicine herself!")
 	infinite = TRUE
 
-/obj/item/needle/aalloy
+/obj/item/needle/decrepit
 	name = "decrepit needle"
 	icon_state = "aneedle"
 	desc = "This decrepit old needle doesn't seem helpful for much."

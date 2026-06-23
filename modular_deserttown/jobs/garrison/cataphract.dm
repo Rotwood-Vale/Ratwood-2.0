@@ -70,7 +70,7 @@
 	traits_applied = list(TRAIT_HEAVYARMOR)
 	subclass_stats = list(
 		STATKEY_STR = 3,//Heavy hitters. Less con/end, high strength.
-		STATKEY_INT = 3,
+		STATKEY_INT = 1,
 		STATKEY_CON = 1,
 		STATKEY_WIL = 1,
 		STATKEY_SPD = -1,
@@ -350,7 +350,7 @@
 	category_tags = list(CTAG_CATAPHRACT)
 	subclass_stats = list(
 		STATKEY_STR = 1,
-		STATKEY_INT = 1,
+		STATKEY_INT = 3,
 		STATKEY_WIL = 2,
 		STATKEY_SPD = 2,
 	)

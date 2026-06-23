@@ -107,37 +107,6 @@
 	human_owner = null
 	return ..()
 
-/datum/status_effect/incapacitating/sleeping/tick()
-	if(owner.maxHealth)
-		var/health_ratio = owner.health / owner.maxHealth
-		var/healing = -0.2
-		if((locate(/obj/structure/bed) in owner.loc))
-			healing -= 0.3
-		else if((locate(/obj/structure/table) in owner.loc))
-			healing -= 0.1
-		for(var/obj/item/bedsheet/bedsheet in range(owner.loc,0))
-			if(bedsheet.loc != owner.loc) //bedsheets in my backpack/neck don't give you comfort
-				continue
-			healing -= 0.1
-			break //Only count the first bedsheet
-		if(health_ratio > 0.8)
-			owner.adjustToxLoss(healing * 0.5, FALSE, TRUE)
-		owner.adjustStaminaLoss(healing)
-	if(human_owner && human_owner.drunkenness)
-		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
-	if(prob(20))
-		if(carbon_owner)
-			carbon_owner.handle_dreams()
-			if(prob(10) && owner.health > owner.crit_threshold)
-				owner.emote("snore")
-	if(isharpy(owner))
-		var/obj/item/clothing/suit/roguetown/armor/skin_armor/harpy_skin = human_owner.skin_armor
-		if(harpy_skin.obj_integrity < harpy_skin.max_integrity)
-			harpy_skin.obj_integrity += 10
-			to_chat(human_owner, "I can feel the skin on my feet mend...")
-		else if((harpy_skin.obj_integrity >= harpy_skin.max_integrity) && harpy_skin.obj_broken)
-			harpy_skin.obj_broken = FALSE
-
 /atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"
 	desc = ""

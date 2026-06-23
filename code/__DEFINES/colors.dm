@@ -77,6 +77,7 @@
 #define CLOTHING_MAGENTA		"#962e5c"
 #define CLOTHING_DRAB			"#9b7e54"
 #define CLOTHING_DARKDRAB		"#7c6d5c"
+#define CLOTHING_BURLAP			"#a09571"
 
 
 #define CLOTHING_WET			"#bbbbbb"

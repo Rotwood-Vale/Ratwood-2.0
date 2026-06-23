@@ -175,8 +175,7 @@
 		var/mob/M = loc
 		M.update_inv_hands()
 
-
-/obj/item/fishingrod/aalloy
+/obj/item/fishingrod/decrepit
 	name = "decrepit fishing rod"
 	desc = "The Comet Syon's impact drowned the world, long ago. The waves've long since receded, but His greatest works remain shrouded far beneath the sea."
 	icon_state = "arod"

@@ -257,35 +257,35 @@
 	icon_state = "dweapon/armor"
 	lootcount = 1
 	loot = list(
-		/obj/item/clothing/suit/roguetown/armor/chainmail/aalloy = 1,
-		/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/aalloy = 1,
-		/obj/item/clothing/suit/roguetown/armor/plate/half/aalloy = 1,
-		/obj/item/clothing/suit/roguetown/armor/plate/aalloy = 1,
-		/obj/item/clothing/shoes/roguetown/boots/aalloy = 1,
-		/obj/item/clothing/shoes/roguetown/sandals/aalloy = 1,
-		/obj/item/clothing/gloves/roguetown/plate/aalloy = 1,
-		/obj/item/clothing/gloves/roguetown/chain/aalloy = 1,
-		/obj/item/clothing/under/roguetown/platelegs/aalloy = 1,
-		/obj/item/clothing/under/roguetown/chainlegs/kilt/aalloy = 1,
-		/obj/item/clothing/wrists/roguetown/bracers/aalloy = 1,
-		/obj/item/clothing/head/roguetown/helmet/heavy/aalloy = 1,
-		/obj/item/clothing/head/roguetown/helmet/heavy/guard/aalloy = 1,
-		/obj/item/clothing/neck/roguetown/chaincoif/iron/aalloy = 1,
-		/obj/item/clothing/neck/roguetown/gorget/aalloy = 1,
-		/obj/item/rogueweapon/sword/short/ashort = 1,
-		/obj/item/rogueweapon/sword/short/gladius/agladius = 1,
-		/obj/item/rogueweapon/sword/sabre/alloy = 1,
-		/obj/item/rogueweapon/knuckles/aknuckles = 1,
-		/obj/item/rogueweapon/spear/aalloy = 1,
-		/obj/item/rogueweapon/halberd/bardiche/aalloy = 1,
-		/obj/item/rogueweapon/greatsword/aalloy = 1,
-		/obj/item/rogueweapon/huntingknife/idagger/adagger = 1,
-		/obj/item/rogueweapon/huntingknife/throwingknife/aalloy = 1,
-		/obj/item/rogueweapon/flail/aflail = 1,
-		/obj/item/rogueweapon/mace/alloy = 1,
-		/obj/item/rogueweapon/mace/goden/aalloy = 1,
-		/obj/item/rogueweapon/mace/warhammer/alloy = 1,
-		/obj/item/rogueweapon/stoneaxe/woodcut/aaxe = 1,
+		/obj/item/clothing/suit/roguetown/armor/chainmail/ancient/decrepit = 1,
+		/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ancient/decrepit = 1,
+		/obj/item/clothing/suit/roguetown/armor/plate/half/ancient/decrepit = 1,
+		/obj/item/clothing/suit/roguetown/armor/plate/ancient/decrepit = 1,
+		/obj/item/clothing/shoes/roguetown/boots/armor/ancient/decrepit = 1,
+		/obj/item/clothing/shoes/roguetown/sandals/ancient/decrepit = 1,
+		/obj/item/clothing/gloves/roguetown/plate/ancient/decrepit = 1,
+		/obj/item/clothing/gloves/roguetown/chain/ancient/decrepit = 1,
+		/obj/item/clothing/under/roguetown/platelegs/ancient/decrepit = 1,
+		/obj/item/clothing/under/roguetown/chainlegs/kilt/ancient/decrepit = 1,
+		/obj/item/clothing/wrists/roguetown/bracers/ancient/decrepit = 1,
+		/obj/item/clothing/head/roguetown/helmet/heavy/ancient/decrepit = 1,
+		/obj/item/clothing/head/roguetown/helmet/heavy/guard/ancient/decrepit = 1,
+		/obj/item/clothing/neck/roguetown/chaincoif/ancient/decrepit = 1,
+		/obj/item/clothing/neck/roguetown/gorget/steel/ancient/decrepit = 1,
+		/obj/item/rogueweapon/sword/short/ancient/decrepit = 1,
+		/obj/item/rogueweapon/sword/short/gladius/ancient/decrepit = 1,
+		/obj/item/rogueweapon/sword/sabre/ancient/decrepit = 1,
+		/obj/item/rogueweapon/knuckles/ancient/decrepit = 1,
+		/obj/item/rogueweapon/spear/ancient/decrepit = 1,
+		/obj/item/rogueweapon/halberd/bardiche/ancient/decrepit = 1,
+		/obj/item/rogueweapon/greatsword/ancient/decrepit = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/ancient/decrepit = 1,
+		/obj/item/rogueweapon/huntingknife/throwingknife/steel/ancient/decrepit = 1,
+		/obj/item/rogueweapon/flail/sflail/ancient/decrepit = 1,
+		/obj/item/rogueweapon/mace/steel/ancient/decrepit = 1,
+		/obj/item/rogueweapon/mace/goden/steel/ancient/decrepit = 1,
+		/obj/item/rogueweapon/mace/warhammer/steel/ancient/decrepit = 1,
+		/obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient/decrepit = 1,
 	)
 
 /obj/effect/spawner/lootdrop/ancient_equipment_spawner
@@ -293,29 +293,31 @@
 	icon_state = "paweapon/armor"
 	lootcount = 1
 	loot = list(
-		/obj/item/clothing/suit/roguetown/armor/chainmail/paalloy = 1,
-		/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/paalloy = 1,
-		/obj/item/clothing/suit/roguetown/armor/plate/half/paalloy = 1,
-		/obj/item/clothing/suit/roguetown/armor/plate/paalloy = 1,
-		/obj/item/clothing/gloves/roguetown/plate/paalloy = 1,
-		/obj/item/clothing/gloves/roguetown/chain/paalloy = 1,
-		/obj/item/clothing/under/roguetown/platelegs/paalloy = 1,
-		/obj/item/clothing/under/roguetown/chainlegs/kilt/paalloy = 1,
-		/obj/item/clothing/wrists/roguetown/bracers/paalloy = 1,
-		/obj/item/clothing/head/roguetown/helmet/heavy/paalloy = 1,
-		/obj/item/clothing/head/roguetown/helmet/heavy/guard/paalloy = 1,
-		/obj/item/clothing/neck/roguetown/gorget/paalloy = 1,
-		/obj/item/rogueweapon/sword/short/gladius/pagladius = 1,
-		/obj/item/rogueweapon/sword/sabre/palloy = 1,
-		/obj/item/rogueweapon/spear/paalloy = 1,
-		/obj/item/rogueweapon/halberd/bardiche/paalloy = 1,
-		/obj/item/rogueweapon/greatsword/paalloy = 1,
-		/obj/item/rogueweapon/huntingknife/idagger/steel/padagger = 1,
-		/obj/item/rogueweapon/huntingknife/throwingknife/steel/palloy = 1,
-		/obj/item/rogueweapon/mace/steel/palloy = 1,
-		/obj/item/rogueweapon/mace/goden/steel/paalloy = 1,
-		/obj/item/rogueweapon/mace/warhammer/steel/paalloy = 1,
-		/obj/item/rogueweapon/stoneaxe/woodcut/steel/paaxe = 1,
+		/obj/item/clothing/suit/roguetown/armor/chainmail/ancient = 1,
+		/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ancient = 1,
+		/obj/item/clothing/suit/roguetown/armor/plate/half/ancient = 1,
+		/obj/item/clothing/suit/roguetown/armor/plate/ancient = 1,
+		/obj/item/clothing/gloves/roguetown/plate/ancient = 1,
+		/obj/item/clothing/shoes/roguetown/boots/armor/ancient = 1,
+		/obj/item/clothing/shoes/roguetown/sandals/ancient = 1,
+		/obj/item/clothing/gloves/roguetown/chain/ancient = 1,
+		/obj/item/clothing/under/roguetown/platelegs/ancient = 1,
+		/obj/item/clothing/under/roguetown/chainlegs/kilt/ancient = 1,
+		/obj/item/clothing/wrists/roguetown/bracers/ancient = 1,
+		/obj/item/clothing/head/roguetown/helmet/heavy/ancient = 1,
+		/obj/item/clothing/head/roguetown/helmet/heavy/guard/ancient = 1,
+		/obj/item/clothing/neck/roguetown/gorget/steel/ancient = 1,
+		/obj/item/rogueweapon/sword/short/gladius/ancient = 1,
+		/obj/item/rogueweapon/sword/sabre/ancient = 1,
+		/obj/item/rogueweapon/spear/ancient = 1,
+		/obj/item/rogueweapon/halberd/bardiche/ancient = 1,
+		/obj/item/rogueweapon/greatsword/ancient = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/ancient = 1,
+		/obj/item/rogueweapon/huntingknife/throwingknife/steel/ancient = 1,
+		/obj/item/rogueweapon/mace/steel/ancient = 1,
+		/obj/item/rogueweapon/mace/goden/steel/ancient = 1,
+		/obj/item/rogueweapon/mace/warhammer/steel/ancient = 1,
+		/obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient = 1,
 	)
 
 /obj/effect/spawner/lootdrop/elven_equipment_spawner
@@ -375,7 +377,7 @@
 		/obj/item/clothing/mask/rogue/facemask/carved/rosemask = 1,
 		/obj/item/clothing/mask/rogue/facemask/carved/turqmask = 1,
 		/obj/item/clothing/mask/rogue/facemask/shadowfacemask = 1,
-		/obj/item/clothing/mask/rogue/goblin_mask = 1,
+		/obj/item/clothing/mask/rogue/goblin_mask = 2,
 		/obj/item/carvedgem/rose/statue/baotha = 10,
 		/obj/item/clothing/gloves/roguetown/plate/graggar = 8,
 		/obj/item/clothing/head/roguetown/helmet/heavy/graggar = 8,
@@ -409,7 +411,8 @@
 		/obj/item/book/granter/spell/blackstone/fetch = 10,
 		/obj/item/reagent_containers/glass/bottle/alchemical/spdpot = 10,
 		/obj/item/book/granter/spell/blackstone/bonechill = 10,
-		/obj/item/book/granter/spell/blackstone/skeleton = 10,
+		/obj/item/book/granter/spell/blackstone/skeleton = 1,//super powerful lich-style player skeleton spawner
+		/obj/item/book/granter/spell/blackstone/skeleton/lesser = 15,
 		/obj/item/book/granter/spell/blackstone/sicknessray = 15,
 		/obj/item/reagent_containers/glass/bottle/rogue/emberwine = 10,
 		/obj/item/reagent_containers/glass/bottle/alchemical/spidervenom_paralytic = 5,
@@ -438,8 +441,12 @@
 		/obj/effect/spawner/lootdrop/potion_poisons = 10,
 		/obj/item/reagent_containers/glass/bottle/alchemical/intpot = 5,
 		/obj/item/book/granter/spell/blackstone/bonechill = 10,
-		/obj/item/book/granter/spell/blackstone/skeleton = 10,
+		/obj/item/book/granter/spell/blackstone/skeleton = 1,//super powerful lich-style player skeleton spawner
+		/obj/item/book/granter/spell/blackstone/skeleton/lesser = 15,
 		/obj/item/book/granter/spell/blackstone/sicknessray = 15,
+		/obj/item/clothing/neck/roguetown/psicross/inhumen = 5,
+		/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient = 5,
+		/obj/item/clothing/neck/roguetown/psicross/inhumen/g = 2,
 	)
 /obj/effect/spawner/lootdrop/graggar
 	name = "graggar item spawner"
@@ -457,6 +464,8 @@
 		/obj/item/book/granter/spell/blackstone/fortitude = 5,
 		/obj/item/book/granter/spell/blackstone/enlarge = 10,
 		/obj/item/bomb = 10,
+		/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar = 5,
+		/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/bronze = 5,
 	)
 /obj/effect/spawner/lootdrop/matt
 	name = "matthios item spawner"
@@ -475,6 +484,7 @@
 		/obj/item/mattcoin = 10,
 		/obj/item/book/granter/spell/blackstone/invisibility = 10,
 		/obj/item/book/granter/spell/blackstone/fetch = 10,
+		/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios = 10,
 	)
 /obj/effect/spawner/lootdrop/baotha//add baothan ritual armor when we get around to that
 	name = "baotha item spawner"
@@ -488,12 +498,21 @@
 		/obj/item/reagent_containers/powder/starsugar = 10,
 		/obj/item/roguestatue/gold/loot = 10,
 		/obj/item/rogueweapon/woodstaff/ruby = 10,
-		/obj/item/rogueweapon/whip/spiderwhip = 10,
 		/obj/item/carvedgem/onyxa/spider = 10,
 		/obj/item/rogueweapon/shield/tower/spidershield = 10,
 		/obj/effect/spawner/lootdrop/potion_poisons = 5,
 		/obj/item/reagent_containers/glass/bottle/rogue/emberwine = 10,
 		/obj/item/reagent_containers/glass/bottle/alchemical/spidervenom_paralytic = 5,
+		/obj/item/clothing/shoes/roguetown/anklets/baotha = 10,
+		/obj/item/clothing/suit/roguetown/armor/leather/studded/baotha = 10,
+		/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha = 10,
+		/obj/item/clothing/head/roguetown/helmet/heavy/baotha = 10,
+		/obj/item/clothing/gloves/roguetown/chain/baotha = 10,
+		/obj/item/clothing/suit/roguetown/armor/plate/baotha = 10,
+		/obj/item/clothing/under/roguetown/platelegs/baotha = 10,
+		/obj/item/clothing/wrists/roguetown/bracers/baotha = 10,
+		/obj/item/rogueweapon/whip/spiderwhip/baotha = 10,
+		/obj/item/storage/belt/rogue/leather/plaquegold/baotha = 10,
 	)
 /obj/item/carvedgem/rose/statue/baotha
 	name = "baothan statuette"
@@ -522,3 +541,20 @@
 		/obj/item/tntstick = 5,
 		/obj/item/bomb = 10,
 	)
+
+/obj/effect/spawner/lootdrop/spider_cave
+	name = "weirdly specific dunworld spidercave loot drop"
+	icon_state = "cot"
+	loot = list(
+		/obj/item/rogueweapon/greataxe/dreamscape = 99,
+		/obj/item/rogueweapon/greataxe/dreamscape/active = 1,
+		/obj/item/clothing/neck/roguetown/leather = 150,
+		/obj/item/clothing/neck/roguetown/chaincoif = 100,
+		/obj/item/clothing/suit/roguetown/armor/plate/half = 50,
+		/obj/item/clothing/head/roguetown/helmet/heavy/volfplate = 100,
+		/obj/item/rogueweapon/mace/warhammer/steel/silver = 100,
+		/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk = 150,
+		/obj/item/clothing/gloves/roguetown/plate = 75,
+		/obj/item/clothing/under/roguetown/platelegs = 75,
+		/obj/item/clothing/head/roguetown/helmet/bascinet = 100
+		)

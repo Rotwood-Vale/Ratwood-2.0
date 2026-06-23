@@ -21,10 +21,10 @@
 	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/roguestatue/iron
 
-/datum/anvil_recipe/valuables/aalloy
+/datum/anvil_recipe/valuables/decrepit
 	name = "Statue, Decrepit" // decrepit
-	req_bar = /obj/item/ingot/aalloy
-	created_item = /obj/item/roguestatue/aalloy
+	req_bar = /obj/item/ingot/decrepit
+	created_item = /obj/item/roguestatue/decrepit
 
 /datum/anvil_recipe/valuables/steel
 	name = "Statue, Steel"
@@ -61,8 +61,8 @@
 
 /datum/anvil_recipe/valuables/ringa
 	name = "Rings, Decrepit (x3)"
-	req_bar = /obj/item/ingot/aalloy
-	created_item = /obj/item/clothing/ring/aalloy
+	req_bar = /obj/item/ingot/decrepit
+	created_item = /obj/item/clothing/ring/decrepit
 	createditem_num = 3
 
 /datum/anvil_recipe/valuables/rings

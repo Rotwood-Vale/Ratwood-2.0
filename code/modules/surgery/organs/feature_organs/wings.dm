@@ -48,6 +48,18 @@
 	gradient_appearance.color = gradient_color
 	standing.overlays += gradient_appearance
 
+/obj/item/organ/wings/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.update_tongue_noise_verbs()
+
+/obj/item/organ/wings/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.update_tongue_noise_verbs()
+
 //TODO: Well you know what this flight stuff is a bit complicated and hardcoded, this is enough for now
 
 /obj/item/organ/wings/moth

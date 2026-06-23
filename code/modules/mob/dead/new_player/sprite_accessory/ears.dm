@@ -365,6 +365,29 @@
 	color_key_names = list("Ears", "Inner", "Tips")
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER, BODY_ADJ_LAYER)
 
+/datum/sprite_accessory/ears/shadekin
+	name = "Shadekin"
+	icon_state = "m_ears_shadekin"
+	color_keys = 2
+	color_key_names = list("Ears", "Inner")
+	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+
+/datum/sprite_accessory/ears/shadekin/band_left
+	name = "Shadekin (Band Left)"
+	icon_state = "m_ears_shadekinbandleft"
+
+/datum/sprite_accessory/ears/shadekin/band_right
+	name = "Shadekin (Band Right)"
+	icon_state = "m_ears_shadekinbandright"
+
+/datum/sprite_accessory/ears/shadekin/fluffy
+	name = "Shadekin (Fluffy)"
+	icon_state = "m_ears_shadekinfluffy"
+
+/datum/sprite_accessory/ears/shadekin/smooth
+	name = "Shadekin (Smooth)"
+	icon_state = "m_ears_shadekinsmooth"
+
 ///CONSTRUCT-GOLEM ACCESORIES, MADE OF METAL///
 /datum/sprite_accessory/ears/dendorite
 	name = "Dendorite Construct"

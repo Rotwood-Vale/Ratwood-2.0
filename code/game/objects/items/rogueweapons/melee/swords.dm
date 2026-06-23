@@ -878,17 +878,22 @@
 	grid_width = 32
 	grid_height = 96
 
-/obj/item/rogueweapon/sword/short/kazengun
-	name = "steel kodachi"
-	desc = "A razor-edged sword with a wavy pattern weld apparent on its blade."
-	possible_item_intents = list(
-		/datum/intent/sword/cut/short,
-		/datum/intent/sword/thrust/short,
-		/datum/intent/sword/peel,
-		/datum/intent/sword/chop/short,
-		)
-	icon_state = "eastshortsword"
-	sheathe_icon = "mulyeog"
+/obj/item/rogueweapon/sword/short/ancient
+	name = "ancient shortsword"
+	desc = "A polished sidearm-sword, forged from gilbranze. From after His sacrifice, but before Her ascension; the tithe of a war without reason, waged between squabbling children who hadn't known that the world was about to end."
+	icon_state = "ashortsword"
+	sheathe_icon = "ashortsword"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/rogueweapon/sword/short/ancient/decrepit
+	name = "decrepit short sword"
+	desc = "A chipped sidearm-sword, wrought from frayed bronze. It's hard to gauge whether it was naturally forged to be so short, or if it's all that remained of a longer blade."
+	force = 18
+	max_integrity = 75
+	blade_dulling = DULLING_SHAFT_CONJURED
+	color = "#bb9696"
+	anvilrepair = null
+	randomize_blade_int_on_init = TRUE
 
 /obj/item/rogueweapon/sword/short/iron
 	name = "iron shortsword"
@@ -900,25 +905,17 @@
 	max_integrity = 100
 	sellprice = 10
 
-/obj/item/rogueweapon/sword/short/ashort
-	name = "decrepit short sword"
-	desc = "A chipped sidearm-sword, wrought from frayed bronze. It's hard to gauge whether it was naturally forged to be so short, or if it's all that remained of a longer blade."
-	icon_state = "ashortsword"
-	sheathe_icon = "ashortsword"
-	max_integrity = 75
-	force = 18
-	blade_dulling = DULLING_SHAFT_CONJURED
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-	randomize_blade_int_on_init = TRUE
-
-/obj/item/rogueweapon/sword/short/pashortsword
-	name = "ancient shortsword"
-	desc = "A polished sidearm-sword, forged from gilbranze. From after His sacrifice, but before Her ascension; the tithe of a war without reason, waged between squabbling children who hadn't known that the world was about to end."
-	icon_state = "ashortsword"
-	sheathe_icon = "ashortsword"
-	smeltresult = /obj/item/ingot/aaslag
+/obj/item/rogueweapon/sword/short/kazengun
+	name = "steel kodachi"
+	desc = "A razor-edged sword with a wavy pattern weld apparent on its blade."
+	possible_item_intents = list(
+		/datum/intent/sword/cut/short,
+		/datum/intent/sword/thrust/short,
+		/datum/intent/sword/peel,
+		/datum/intent/sword/chop/short,
+		)
+	icon_state = "eastshortsword"
+	sheathe_icon = "mulyeog"
 
 /obj/item/rogueweapon/sword/short/falchion
 	name = "falchion"
@@ -939,23 +936,21 @@
 	smeltresult = /obj/item/ingot/bronze
 	wdefense = 3
 
-/obj/item/rogueweapon/sword/short/gladius/agladius
+/obj/item/rogueweapon/sword/short/gladius/ancient
+	name = "ancient gladius"
+	desc = "A polished shortsword, forged from gilbranze. Favored by ZIZO's undying legionnaires, this antiquated tool serves a simple purpose; to spill the innards of unenlightened fools."
+	icon_state = "agladius"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/rogueweapon/sword/short/gladius/ancient/decrepit
 	name = "decrepit gladius"
 	desc = "A hefty shortsword, wrought from frayed bronze. Once, the sidearm of a proud legionnaire; now, a consequence of progress and sacrifice."
 	force = 18
 	max_integrity = 150
-	icon_state = "agladius"
 	blade_dulling = DULLING_SHAFT_CONJURED
 	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = null
 	randomize_blade_int_on_init = TRUE
-
-/obj/item/rogueweapon/sword/short/gladius/pagladius
-	name = "ancient gladius"
-	desc = "A polished shortsword, forged from gilbranze. Favored by Zizo's undying legionnaires, this antiquated tool serves a simple purpose; to spill the innards of unenlightened fools."
-	icon_state = "agladius"
-	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/rogueweapon/sword/short/iron/chipped
 	name = "chipped iron shortsword"
@@ -1094,6 +1089,22 @@
 	sheathe_icon = "decsaber"
 	sellprice = 140
 
+/obj/item/rogueweapon/sword/sabre/ancient
+	name = "ancient khopesh"
+	desc = "A polished hook-sword, forged from gilbranze. The Comet Syon's glare once graced this blade; now, it's wielded by those who can't even remember what came before His sacrifice."
+	smeltresult = /obj/item/ingot/aaslag
+	icon_state = "akhopesh"
+
+/obj/item/rogueweapon/sword/sabre/ancient/decrepit
+	name = "decrepit khopesh"
+	desc = "A hooked sword, wrought from frayed bronze. The design is not only baffling, but seems to predate history itself."
+	force = 18
+	max_integrity = 115
+	blade_dulling = DULLING_SHAFT_CONJURED
+	color = "#bb9696"
+	anvilrepair = null
+	randomize_blade_int_on_init = TRUE
+
 /obj/item/rogueweapon/sword/sabre/iron
 	name = "iron sabre"
 	desc = "A Naledian sword mass produced for line infantry. Its fittings are simple, munitions grade, but the construction is sturdy and the blade as threatening \
@@ -1120,24 +1131,6 @@
 	force = 25	//Base is 22
 	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/chop/falx, /datum/intent/sword/peel)
 	max_integrity = 200
-
-/obj/item/rogueweapon/sword/sabre/alloy
-	name = "decrepit khopesh"
-	desc = "A hooked sword, wrought from frayed bronze. The design is not only baffling, but seems to predate history itself."
-	force = 18
-	max_integrity = 115
-	icon_state = "akhopesh"
-	blade_dulling = DULLING_SHAFT_CONJURED
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-	randomize_blade_int_on_init = TRUE
-
-/obj/item/rogueweapon/sword/sabre/palloy
-	name = "ancient khopesh"
-	desc = "A polished hook-sword, forged from gilbronze. The Comet Syon's glare once graced this blade; now, it's wielded by those who can't even remember what came before His sacrifice."
-	smeltresult = /obj/item/ingot/aaslag
-	icon_state = "akhopesh"
 
 /obj/item/rogueweapon/sword/sabre/elf
 	name = "elvish saber"
@@ -1353,6 +1346,17 @@
 	wdefense = 8
 	smeltresult = /obj/item/ingot/silverblessed
 	is_silver = TRUE
+
+/obj/item/rogueweapon/sword/rapier/psy/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 100,\
+		added_def = 2,\
+	)
 
 /obj/item/rogueweapon/sword/rapier/psy/preblessed/ComponentInitialize()
 	AddComponent(\
