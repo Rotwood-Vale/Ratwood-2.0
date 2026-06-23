@@ -12,6 +12,8 @@
 //     - 工匠系列（Craftsman series = /datum/skill/craft 全部工艺）技能 +3，最高提升到 6 级。
 //     - 把工匠系列技能的"等级上限"设为 6 级（传说级 SKILL_LEVEL_LEGENDARY），
 //       使持有者日后还能继续通过梦境/训练把它们练到 6 级。
+//     - 该特性在游戏内对玩家可见：任何人检视（examine）该角色时，都会在检视文本里
+//       看到一行【亘古长存】说明（通过挂载检视组件实现，见文件后半段）。
 //
 // 关于"金属构造受限"（Metal construction Limited）——这是【种族限制】而非名字：
 //   本美德的设定是"一个自远古存活至今、亲历矮人灭绝的个体"，唯有由金属与奥术铸成、
@@ -52,6 +54,8 @@
 //   - SKILL_LEVEL_LEGENDARY (= 6)         传说级，即需求所说的"上限 6"（code/__DEFINES/skills.dm）
 //   - TRAIT_*_EXPERT                      解锁各工艺技能等级上限到传说级的特性（traits.dm）
 //   - TRAIT_VIRTUE                        美德特性来源标签（统一清理用）
+//   - /datum/component                    组件基类（用于挂载"检视可察觉"信号）
+//   - COMSIG_PARENT_EXAMINE               检视信号（atom/examine 末尾发出，用于追加检视文本）
 //
 // 加载：本文件需在 modular_z121/_load.dm 中以 #include 引入（已在该文件追加对应行）。
 // ============================================================================
@@ -183,6 +187,12 @@
 	// ---- 1) 授予特性 ----
 	// 授予"身份标签"【亘古长存】，来源标记 TRAIT_VIRTUE（与引擎美德特性约定一致，便于统一清理）。
 	ADD_TRAIT(recipient, TRAIT_ANCIENT_EXISTENCE, TRAIT_VIRTUE)
+	// 挂载"检视可察觉"组件：让【亘古长存】特性在游戏内对玩家可见——任何人检视该角色时，
+	//   都会在检视文本里看到一行说明（含本人检视自己）。组件做了 UNIQUE 去重，重复挂载无碍。
+	//   为什么用组件而非直接 RegisterSignal：美德 datum 是 GLOB.virtues 的"模板单例"，
+	//   不能用它的 src 注册到 recipient 上；组件实例与 recipient 一一绑定，能正确管理信号
+	//   注册并在宿主消失时自动反注册，避免悬空回调（与 succubus_bloodline 的做法一致）。
+	recipient.AddComponent(/datum/component/ancient_existence)
 	// 授予"工匠系列上限解锁特性"集合：引擎用这些 *_EXPERT 特性把对应工艺技能的等级上限
 	//   解锁到传说级（6）（见 code/datums/skills/craft.dm 各技能的 trait_uncap）。集齐它们，
 	//   即可把【全部】工匠系列技能的上限统一提升到 6 级，实现需求"工匠系列等级上限设为 6"。
@@ -227,6 +237,68 @@
 
 	// 给出醒目的整体反馈，让玩家清楚"远古造物"已经生效，否则纯被动加成对玩家不可见。
 	to_chat(recipient, span_nicegreen("千年的记忆与技艺自金属的核心深处奔涌而出——我的心智更为敏锐，万般造物之术皆如本能。"))
+
+
+// ----------------------------------------------------------------------------
+// 检视组件：亘古长存（仅负责"让特性在游戏内对玩家可见"）
+// 为什么用组件：组件与宿主 mob 绑定，提供 Initialize / UnregisterFromParent 生命周期，
+//   能干净地注册 / 反注册检视信号，并在宿主死亡或被删除时自动清理，避免悬空回调。
+//   这与 succubus_bloodline.dm 中"血脉可被检视察觉"的实现保持一致。
+// ----------------------------------------------------------------------------
+/datum/component/ancient_existence
+	// 唯一组件：同一 mob 上只允许一个实例，重复 AddComponent 会被丢弃，杜绝重复监听 / 重复刷文本。
+	dupe_mode = COMPONENT_DUPE_UNIQUE
+
+// Initialize：组件创建时做类型校验并注册检视信号。
+/datum/component/ancient_existence/Initialize()
+	. = ..()
+	// 检视提示与人物语境绑定，挂到非人类上无意义，返回 COMPONENT_INCOMPATIBLE 让引擎丢弃本组件。
+	if(!ishuman(parent))
+		return COMPONENT_INCOMPATIBLE
+	// 注册 COMSIG_PARENT_EXAMINE：引擎在 atom/examine() 末尾发出该信号，携带
+	//   (检视者 user, 检视文本列表)。据此向检视文本追加一行【亘古长存】说明。
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+
+// UnregisterFromParent：组件与宿主解绑时撤销注册，避免悬空信号回调。
+/datum/component/ancient_existence/UnregisterFromParent()
+	if(parent)
+		UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
+	return ..()
+
+// on_examine：检视回调，向检视文本追加一行"亘古长存"提示，使特性在游戏内可见。
+// 为什么标 SIGNAL_HANDLER：检视信号同步触发，回调内只拼接文本、不可 sleep。
+// 为什么以 HAS_TRAIT 为条件而非无条件追加：万一特性已被其它系统移除（如美德被清除），
+//   提示也应随之消失，保证"看到提示 = 确实拥有特性"严格一致。
+/datum/component/ancient_existence/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	// 防御：宿主异常或已不再持有特性，则不追加任何文本。
+	if(!ishuman(parent))
+		return
+	if(!HAS_TRAIT(parent, TRAIT_ANCIENT_EXISTENCE))
+		return
+	// 追加可读的检视提示，让检视者（含本人）明确得知此身拥有【亘古长存】。
+	examine_list += span_notice("此身散发着亘古而苍老的气息——仿佛一件历经千年、亲历矮人灭绝的远古造物。【亘古长存】")
+
+
+// ----------------------------------------------------------------------------
+// 登记过程：把【亘古长存】特性写入玩家可见的特性自检表 GLOB.roguetraits。
+// 为什么需要：除了"被他人检视可见"（上面的检视组件）之外，本项目还有一张玩家自检面板
+//   （GLOB.roguetraits）——玩家点开后能看到自己所有特性的第一人称说明。把特性登记进去，
+//   才能让持有者在面板里看到【亘古长存】及其效果说明，与 life_potential 的做法保持一致。
+// 为什么定义在本文件：TRAIT_ANCIENT_EXISTENCE 宏在本文件内定义且未被 #undef，登记逻辑写在
+//   这里才能引用到该宏（遵守宏的 #include 可见性规则）；实际调用点在 custom_bootstrap 的
+//   Initialize 中（那时核心 roguetraits 表已由 GLOBAL_LIST_INIT 完成初始化，追加是安全的）。
+// ----------------------------------------------------------------------------
+/proc/register_ancient_existence_trait()
+	// 防御：核心全局表必须已初始化为 list 才能写入；异常情况下安静跳过，绝不新建一张
+	//   会与核心表脱钩的"假表"，以免登记到一个永远不会被面板读取的列表上。
+	if(!islist(GLOB.roguetraits))
+		return
+	// 写入「特性键 -> 玩家自检描述」。描述用第一人称、span_info 样式，与表中其它条目风格一致。
+	//   幂等：重复调用只是覆盖同一个键，不会产生重复项，二次启动也安全。
+	GLOB.roguetraits[TRAIT_ANCIENT_EXISTENCE] = span_info("我是一件自远古便已存在的造物，\
+		甚至亲历过矮人一族的灭绝。漫长的岁月让我心智敏锐（智力、意志各 +1），\
+		识字与工匠系列技艺也远超常人（识字、工匠系列技能各 +3，上限可达 6 级）。")
 
 
 // ----------------------------------------------------------------------------

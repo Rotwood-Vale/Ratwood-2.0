@@ -23,7 +23,15 @@
 
 // 「指定演员」特性的字符串 ID。用作 ADD_TRAIT 的 trait define，便于其它系统查询。
 // String identifier for the "Designated Performer" trait, queryable via HAS_TRAIT elsewhere.
-#define TRAIT_DESIGNATED_PERFORMER "designated_performer"
+// 为什么取值为可读中文「指定演员」而非英文 slug：
+//   玩家的特性自检面板（_onclick/hud/screen_objects.dm:135）会把"特性字符串本身"当作
+//   标题直接打印给玩家（格式为「[特性值] - 描述」）。因此特性值必须是体面的中文名，
+//   否则面板会显示成 "designated_performer - ……"。此值在全项目内唯一，无 HAS_TRAIT 歧义。
+//   （与 modular_z121/virtues/life_potential.dm 中 TRAIT_LIFE_POTENTIAL = "生命潜能" 的约定一致。）
+// Why the value is the readable Chinese name rather than an English slug:
+//   the player's trait self-check panel (screen_objects.dm:135) prints the trait STRING itself
+//   as the title ("[trait] - desc"), so it must be a presentable name; mirrors life_potential.
+#define TRAIT_DESIGNATED_PERFORMER "指定演员"
 
 // 复活前的等待时间：3 分钟。剧本里的「随后不久」即被量化为三分钟。
 // Delay before resurrection happens: 3 minutes ("soon after" the script ends).
@@ -111,6 +119,9 @@
 	// 监听该人物的死亡信号。每次死亡都会触发 on_performer_death。
 	// Listen for this performer's death; each death triggers on_performer_death.
 	RegisterSignal(performer, COMSIG_LIVING_DEATH, PROC_REF(on_performer_death))
+	// 监听被检视（examine）信号，从而把「指定演员」特性显示给游戏中的玩家。
+	// Listen for the examine signal so the "Designated Performer" trait is visible to players in-game.
+	RegisterSignal(performer, COMSIG_PARENT_EXAMINE, PROC_REF(on_performer_examine))
 
 // snapshot_initial_skills：把当前技能等级与经验深拷贝保存，作为「初始状态」基准。
 // snapshot_initial_skills: deep-copies current skill levels & experience as the baseline.
@@ -128,6 +139,30 @@
 	// A shallow .Copy() suffices: keys are global skill singletons and values are numbers.
 	initial_known_skills = holder.known_skills?.Copy()
 	initial_skill_experience = holder.skill_experience?.Copy()
+
+// on_performer_examine：检视信号回调。把「指定演员」特性以文字形式呈现给玩家，
+// 让该特性在游戏内「可见」。本人看到完整机制说明，旁观者只看到不剧透的氛围提示，
+// 以免敌人得知「需肢解才能阻止复活」这一弱点。
+// on_performer_examine: examine signal handler. Surfaces the "Designated Performer" trait as
+// text so it is visible in-game. The bearer sees the full mechanic; onlookers get only a
+// non-spoiler flavour hint, so enemies don't learn the "must gib to stop revival" weakness.
+/datum/component/never_ending_performer/proc/on_performer_examine(mob/source, mob/user, list/examine_list)
+	// SIGNAL_HANDLER：检视回调同样不允许执行可能 sleep 的操作。
+	// SIGNAL_HANDLER: examine callbacks must not perform sleeping operations either.
+	SIGNAL_HANDLER
+	var/mob/living/carbon/human/performer = parent
+	// 防御：若特性已被移除（例如美德被清除），就不再显示，保持与真实状态一致。
+	// Guard: if the trait was removed (e.g. virtue cleared), show nothing to stay truthful.
+	if(!HAS_TRAIT(performer, TRAIT_DESIGNATED_PERFORMER))
+		return
+	// 本人检视自己：给出完整的特性名称与机制提醒，方便玩家随时确认自己拥有此能力。
+	// Self-examine: show the full trait name + mechanic so the player can always confirm they have it.
+	if(user == performer)
+		examine_list += span_nicegreen("【指定演员】诸神视你为剧本中不可或缺的角色——每天一次，你会在死亡 3 分钟后以完美状态重返舞台（代价：失去全部记忆，技能回退至初入游戏时）。")
+		return
+	// 他人检视：仅给一句富有戏剧感、却不泄露复活机制的氛围描述。
+	// Examined by others: a single theatrical flavour line that does NOT reveal the revival mechanic.
+	examine_list += span_notice("[performer.p_they(TRUE)]身上有种说不清的舞台气场，仿佛[performer.p_their()]故事永远不会真正落幕。")
 
 // on_performer_death：死亡信号回调。判断冷却，符合条件则排程一次三分钟后的复活。
 // on_performer_death: death signal handler; checks cooldown and schedules a +3min revival.
@@ -258,6 +293,45 @@
 	// training can't mutate our preserved snapshot.
 	holder.known_skills = initial_known_skills.Copy()
 	holder.skill_experience = initial_skill_experience.Copy()
+
+// ----------------------------------------------------------------------------
+// 让玩家在游戏内"看得见"这项特性：登记进 GLOB.roguetraits
+// ----------------------------------------------------------------------------
+// 为什么要登记：引擎的玩家特性自检面板（_onclick/hud/screen_objects.dm:133-135）会遍历
+//   GLOB.roguetraits，对玩家"拥有的"每一个特性打印「特性名 - 描述」；职业/偏好界面
+//   （_job.dm、preferences.dm）同样据此展示特性说明。只有把 TRAIT_DESIGNATED_PERFORMER
+//   加进这张全局表，玩家点开特性列表时才会看到"指定演员"及其说明；否则特性虽已通过
+//   ADD_TRAIT 生效，却对玩家完全不可见（仅靠 examine 提示是不够正式的）。
+//
+// 为什么"运行时追加"而不是改核心的 GLOBAL_LIST_INIT(roguetraits)：
+//   硬性约束只允许改动 modular_z121。核心表 roguetraits 定义在 code/__DEFINES/traits.dm
+//   （本目录之外，禁止修改）。因此在启动钩子里向这张"已初始化"的全局表追加键值对——
+//   这正是本项目登记自定义内容的既定做法（参见 custom_bootstrap.dm 对 learnable_spells、
+//   恶习列表、以及 register_life_potential_trait 的处理）。
+//
+// 为什么做成独立 proc 由 custom_bootstrap 调用：
+//   #define 按 #include 顺序生效；custom_bootstrap.dm 的包含顺序早于本文件，那里无法直接
+//   引用 TRAIT_DESIGNATED_PERFORMER 宏。而 proc 名是全局解析的、跨文件可调用，于是把
+//   "需要用到本文件宏"的登记逻辑封装进本文件 proc，bootstrap 只按名调用，既守住宏可见性，
+//   又复用统一的启动时机（此刻 roguetraits 已完成 GLOBAL_LIST_INIT 初始化）。
+//
+// Make the trait visible in-game by registering it into GLOB.roguetraits (the player trait
+// panel). Done at runtime from custom_bootstrap because the core list lives outside modular_z121
+// and the trait macro is only visible inside this file. Mirrors register_life_potential_trait().
+/proc/register_designated_performer_trait()
+	// 防御：核心全局表必须已初始化为 list 才能写入；异常情况下安静跳过，绝不另建一张
+	//   会与核心表脱钩的"假表"，以免登记到一个面板永远不会读取的列表上。
+	// Guard: only write if the core list is a real list; never create a detached fake list.
+	if(!islist(GLOB.roguetraits))
+		return
+	// 写入「特性键 -> 玩家自检描述」。描述用第一人称、span_info 样式，与表中其它条目
+	//   （如 TRAIT_NOPAIN = span_info("我感觉不到痛楚。")）风格一致。
+	//   幂等：重复调用只是覆盖同一个键，不会产生重复项，二次启动也安全。
+	// Write trait -> first-person description (span_info), matching existing entries; idempotent.
+	GLOB.roguetraits[TRAIT_DESIGNATED_PERFORMER] = span_info("我是这出剧本里不可或缺的演员：\
+		每天一次，我会在死亡 3 分钟后以完美的状态重返舞台——代价是失去全部记忆，\
+		技能进度也回退到我初入游戏时的模样。")
+
 
 // 取消两个仅在本文件内使用的计时宏，避免污染全局编译命名空间。
 // （TRAIT_DESIGNATED_PERFORMER 保留为全局可见，便于其它系统用 HAS_TRAIT 查询，

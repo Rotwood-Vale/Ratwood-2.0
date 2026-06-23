@@ -27,6 +27,47 @@ SUBSYSTEM_DEF(custom_bootstrap)
 	//   登记逻辑本身定义在 modular_z121/vices/neat_freak.dm 内，这里只做一次调用。
 	register_neat_freak_vice()
 
+	// 登记自定义美德"生命潜能"的特性到玩家可见的特性表（GLOB.roguetraits）。
+	// 为什么放在这里：与上面同理——此刻核心表 roguetraits 已由 GLOBAL_LIST_INIT 完成
+	//   初始化，向其追加一个键值对，玩家点开特性自检面板时即可看到"生命潜能"及其说明。
+	//   登记逻辑定义在 modular_z121/virtues/life_potential.dm 内（那里才有对应的特性宏），
+	//   这里只按 proc 名做一次调用，遵守宏的 #include 可见性规则。
+	register_life_potential_trait()
+
+	// 登记自定义美德"远古造物"的【亘古长存】特性到玩家可见的特性表（GLOB.roguetraits）。
+	// 为什么放在这里：与上面同理——此刻核心表 roguetraits 已由 GLOBAL_LIST_INIT 完成初始化，
+	//   向其追加一个键值对，玩家点开特性自检面板时即可看到"亘古长存"及其说明。
+	//   登记逻辑定义在 modular_z121/virtues/ancient_creation.dm 内（那里才有对应的特性宏），
+	//   这里只按 proc 名做一次调用，遵守宏的 #include 可见性规则。
+	register_ancient_existence_trait()
+
+	// 登记自定义美德"永无止境"的【指定演员】特性到玩家可见的特性表（GLOB.roguetraits）。
+	// 为什么放在这里：与上面同理——此刻核心表 roguetraits 已由 GLOBAL_LIST_INIT 完成初始化，
+	//   向其追加一个键值对，玩家点开特性自检面板时即可看到"指定演员"及其说明。
+	//   登记逻辑定义在 modular_z121/virtues/never_ending.dm 内（那里才有对应的特性宏
+	//   TRAIT_DESIGNATED_PERFORMER），这里只按 proc 名做一次调用，遵守宏的 #include 可见性规则。
+	// Register the never-ending virtue's "Designated Performer" trait into the player-visible
+	// GLOB.roguetraits, same rationale as the registrations above.
+	register_designated_performer_trait()
+
+	// 登记自定义美德"魅魔血脉"的【魅魔血脉 / 魅魔女王】特性到玩家可见的特性表（GLOB.roguetraits）。
+	// 为什么放在这里：与上面同理——此刻核心表 roguetraits 已由 GLOBAL_LIST_INIT 完成初始化，
+	//   向其追加键值对后，玩家点开特性自检面板即可看到这两项特性及其说明，满足"该特性应能被
+	//   玩家在游戏内察觉"的需求。登记逻辑定义在 modular_z121/virtues/succubus_bloodline.dm 内
+	//   （那里才有对应的 TRAIT_SUCCUBUS_* 宏），这里只按 proc 名做一次调用，遵守宏的 #include 可见性规则。
+	// Register the succubus bloodline virtue's "Succubus Bloodline / Succubus Queen" traits into the
+	// player-visible GLOB.roguetraits, same rationale as the registrations above.
+	register_succubus_bloodline_trait()
+
+	// 登记自定义美德"马丁的早晨"的【马丁的早晨】特性到玩家可见的特性表（GLOB.roguetraits）。
+	// 为什么放在这里：与上面同理——此刻核心表 roguetraits 已由 GLOBAL_LIST_INIT 完成初始化，
+	//   向其追加键值对后，玩家点开特性自检面板即可看到"马丁的早晨"及其说明。
+	//   登记逻辑定义在 modular_z121/virtues/martins_morning.dm 内（那里才有对应的
+	//   TRAIT_MARTINS_MORNING 宏），这里只按 proc 名做一次调用，遵守宏的 #include 可见性规则。
+	// Register the Martin's Morning virtue's trait into the player-visible GLOB.roguetraits,
+	// same rationale as the registrations above.
+	register_martins_morning_trait()
+
 	var/list/custom_admin_verbs = get_custom_admin_verbs()
 	if(islist(GLOB.admin_verbs_admin))
 		GLOB.admin_verbs_admin |= custom_admin_verbs

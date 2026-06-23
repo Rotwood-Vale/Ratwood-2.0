@@ -71,11 +71,15 @@
 // 自定义美德：永无止境（每日一次、死亡 3 分钟后完美复活，但失忆且技能回退）
 // Custom virtue: never-ending (daily, perfect resurrection 3 min after death, amnesia + skill reset)
 #include "virtues/never_ending.dm"
-// 自定义美德：魅魔血脉（限女性身体、全属性 -6；每晚发情、每日一次，吸取交合对象精气：
-// 自身随机属性 +2，对方获得最长 6 分钟"肾虚"减益）
-// Custom virtue: Meimo Bloodline (female-only, all stats -6; nightly estrus once per day,
-// absorb a partner's energy: self random stat +2, partner gets a 6-minute "Kidney Deficiency" debuff)
-#include "virtues/meimo_bloodline.dm"
+// 自定义美德：魅魔血脉（限女性身体、消耗 24 凯旋点；获得 魅魔血脉/美貌/传奇情人 三特性。
+// 每当被内射：随机获得 12 分钟"餍足"（对应属性 +1）+ 随餍足数量递增的心情；对方获得 4 分钟
+// "魅魔之吻"（心情'与魅魔交合' + 力量-1/耐力-1）；对方处于该状态时再次内射不会餍足。
+// 隐藏：被内射满 100 次进化为魅魔女王，意志 +2、耐力 +2）
+// Custom virtue: Succubus Bloodline (female-only, 24 TRIUMPH; grants succubus bloodline + Beauty +
+// Legendary Lover. On being creampied: random 12-min "Satisfaction" (matching stat +1) + mood scaling
+// with satisfaction count; the partner gets a 4-min "Bite of Succubus" (mood + STR/CON -1) which also
+// gates re-satisfaction. Hidden: 100 internal shots evolves into the Succubus Queen, WIL +2 / CON +2)
+#include "virtues/succubus_bloodline.dm"
 // 自定义美德：生命潜能（仅限血肉之躯、消耗 16 凯旋点；濒死时 10% 概率进入 3 分钟"濒死爆发"：
 // 立即止血并恢复一半外伤、无痛、无限耐力，力量/速度/感知/意志各 +2；结束后强制沉睡 10 分钟）
 // Custom virtue: Life Potential (flesh-and-blood only, costs 16 TRIUMPH; on near-death a 10% chance
