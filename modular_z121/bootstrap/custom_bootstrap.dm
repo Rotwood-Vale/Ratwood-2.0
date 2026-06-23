@@ -68,6 +68,45 @@ SUBSYSTEM_DEF(custom_bootstrap)
 	// same rationale as the registrations above.
 	register_martins_morning_trait()
 
+	// 登记自定义美德"地狱血脉后裔"的【地狱血脉】特性到玩家可见的特性表（GLOB.roguetraits）。
+	// 为什么放在这里：与上面同理——此刻核心表 roguetraits 已由 GLOBAL_LIST_INIT 完成初始化，
+	//   向其追加键值对后，提夫林玩家点开特性自检面板即可看到【地狱血脉】及其说明，满足"该特性
+	//   应能被玩家在游戏内察觉"的需求。登记逻辑定义在 modular_z121/virtues/hellblood_descendant.dm
+	//   内（那里才有对应的 TRAIT_HELLBLOOD_DESCENDANT 宏），这里只按 proc 名做一次调用，遵守宏的
+	//   #include 可见性规则。
+	// Register the Hell Bloody Descendants virtue's "Hell Bloodline" trait into the player-visible
+	// GLOB.roguetraits, same rationale as the registrations above.
+	register_hellblood_descendant_trait()
+
+	// 登记自定义美德"天才"的【天才】特性到玩家可见的特性表（GLOB.roguetraits）。
+	// 为什么放在这里：与上面同理——此刻核心表 roguetraits 已由 GLOBAL_LIST_INIT 完成初始化，
+	//   向其追加键值对后，年轻角色点开特性自检面板即可看到【天才】及其说明，满足"该特性
+	//   应能被玩家在游戏内看到"的需求。登记逻辑定义在 modular_z121/virtues/genius.dm 内
+	//   （那里才有对应的 TRAIT_GENIUS 宏），这里只按 proc 名做一次调用，遵守宏的 #include 可见性规则。
+	// Register the Genius virtue's "Genius" trait into the player-visible GLOB.roguetraits,
+	// same rationale as the registrations above.
+	register_genius_trait()
+
+	// 登记自定义美德"畸变变种"的【畸变变种】特性到玩家可见的特性表（GLOB.roguetraits）。
+	// 为什么放在这里：与上面同理——此刻核心表 roguetraits 已由 GLOBAL_LIST_INIT 完成初始化，
+	//   向其追加键值对后，血肉之躯角色点开特性自检面板即可看到【畸变变种】及其说明，满足"该特性
+	//   应能被玩家在游戏内看到"的需求。登记逻辑定义在 modular_z121/virtues/distortion_variant.dm 内
+	//   （那里才有对应的 TRAIT_DISTORTION_VARIANT 宏），这里只按 proc 名做一次调用，遵守宏的
+	//   #include 可见性规则。
+	// Register the Distortion Variant virtue's trait into the player-visible GLOB.roguetraits,
+	// same rationale as the registrations above.
+	register_distortion_variant_trait()
+
+	// 登记自定义美德"醉剑仙"的【醉剑仙】特性到玩家可见的特性表（GLOB.roguetraits）。
+	// 为什么放在这里：与上面同理——此刻核心表 roguetraits 已由 GLOBAL_LIST_INIT 完成初始化，
+	//   向其追加键值对后，玩家点开特性自检面板即可看到【醉剑仙】及其说明，满足"该特性应能被
+	//   玩家在游戏内看到"的需求。登记逻辑定义在 modular_z121/virtues/wine_sword_immortal.dm 内
+	//   （那里才有对应的 TRAIT_WINE_SWORD_IMMORTAL 宏），这里只按 proc 名做一次调用，遵守宏的
+	//   #include 可见性规则。
+	// Register the Wine Sword Immortal virtue's trait into the player-visible GLOB.roguetraits,
+	// same rationale as the registrations above.
+	register_wine_sword_immortal_trait()
+
 	var/list/custom_admin_verbs = get_custom_admin_verbs()
 	if(islist(GLOB.admin_verbs_admin))
 		GLOB.admin_verbs_admin |= custom_admin_verbs

@@ -105,3 +105,29 @@
 // cleanable filth on the body) it continuously worsens mood (stress event) and
 // applies a Willpower -2 debuff; washing the body clean removes the penalties
 #include "vices/neat_freak.dm"
+// 自定义美德：地狱血脉后裔（仅限提夫林、消耗 29 凯旋点）；授予【地狱血脉】特性：
+// 免疫一切火焰/灼烧/高温伤害（不会被点燃），并习得火焰系法术（火球术/强效火球术/吐焰火球/生成营火）。
+// Custom virtue: Hell Bloody Descendants (Tiefling-only, costs 29 TRIUMPH); grants the "Hell Bloodline"
+// trait: immune to all fire/burn/heat damage (cannot be ignited) and learns the flame series of spells
+// (Fireball / Greater Fireball / Spitfire / Create Campfire)
+#include "virtues/hellblood_descendant.dm"
+// 自定义美德：天才（仅限年轻角色、消耗 11 凯旋点）；授予【天才】特性：
+// 所获得的一切技能经验放大到 300%（经验倍率 ×3），任何技能都"一学就会"，学得远比常人迅速。
+// Custom virtue: Genius (young-age-only, costs 11 TRIUMPH); grants the "Genius" trait:
+// all gained skill experience is multiplied to 300% (×3), learning any skill far faster than normal.
+#include "virtues/genius.dm"
+// 自定义美德：畸变变种（仅限血肉之躯、消耗 6 凯旋点）；授予【畸变变种】特性：
+// 每天夜晚在剧烈疼痛中随机切换成另一个【血肉之躯】的种族（绝不变成构造体/史莱姆/亡魂等非血肉种族），
+// 换种族经 set_species 完成，由引擎一并清除上一个种族赋予的特性与能力。
+// Custom virtue: Distortion Variant (flesh-and-blood only, costs 6 TRIUMPH); grants the "Distortion
+// Variant" trait: every night the body is painfully reshaped into another flesh-and-blood race at random
+// (never a construct/ooze/undead); the swap goes through set_species so the engine clears the previous
+// race's traits and abilities as part of the change.
+#include "virtues/distortion_variant.dm"
+// 自定义美德：醉剑仙（消耗 6 凯旋点）；授予【醉剑仙】特性：
+// 免疫醉酒带来的一切减益（智力下降/口齿不清/神志不清/眩晕/毒性/昏睡等）；一旦饮酒上头，
+// 剑术技能立即被强化到【传奇】等级，直到酒意散尽——即"唯有醉后方能施展的东方剑法"。
+// Custom virtue: Wine Sword Immortal (costs 6 TRIUMPH); grants the "Wine Sword Immortal" trait:
+// immune to every drunkenness debuff (INT loss / slurring / confusion / dizziness / toxin / sleep);
+// once drunk, the Sword-fighting skill is instantly boosted to Legendary until the alcohol wears off.
+#include "virtues/wine_sword_immortal.dm"
