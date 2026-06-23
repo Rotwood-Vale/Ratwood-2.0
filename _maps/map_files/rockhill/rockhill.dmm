@@ -41979,7 +41979,8 @@
 /area/rogue/indoors/town/warden)
 "jzW" = (
 /obj/structure/roguemachine/vendor/bathhouse/locker{
-	density = 0
+	density = 0;
+	will_hawk = 0
 	},
 /turf/closed/wall/mineral/rogue/decostone/mossy/blue,
 /area/rogue/indoors/town/bath)
@@ -52376,7 +52377,8 @@
 "lUT" = (
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	name = "locker 4"
+	name = "locker 4";
+	redstone_id = "bathlocker4"
 	},
 /obj/structure/curtain/magenta{
 	color = "#a1254a"
@@ -77964,7 +77966,8 @@
 "rRO" = (
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	name = "locker 5"
+	name = "locker 5";
+	redstone_id = "bathlocker5"
 	},
 /obj/structure/curtain/magenta{
 	color = "#a1254a"
@@ -82240,7 +82243,8 @@
 "sTO" = (
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	name = "locker I"
+	name = "locker I";
+	redstone_id = "bathlocker2"
 	},
 /obj/structure/curtain/magenta{
 	color = "#a1254a"
@@ -82289,7 +82293,8 @@
 "sUG" = (
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	name = "locker 2"
+	name = "locker 2";
+	redstone_id = "bathlocker1"
 	},
 /obj/structure/curtain/magenta{
 	color = "#a1254a"
@@ -82840,7 +82845,8 @@
 "taK" = (
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	name = "locker 6"
+	name = "locker 6";
+	pixel_y = "bathlocker6"
 	},
 /obj/structure/curtain/magenta{
 	color = "#a1254a"
@@ -100909,7 +100915,8 @@
 "xjv" = (
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	name = "locker 3"
+	name = "locker 3";
+	redstone_id = "bathlocker3"
 	},
 /obj/structure/curtain/magenta{
 	color = "#a1254a"

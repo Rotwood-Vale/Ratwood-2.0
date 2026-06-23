@@ -271,3 +271,8 @@
   - balance: Removed the target.death() from 1001+ value churn wealthy
   ophaq:
   - bugfix: Fixes Gallant Accent not working.
+2026-06-23:
+  Jamdrawers:
+  - bugfix: bathhouse lockers keys fixed
+  - bugfix: 'deserttown: fixes a missing wall and a missing hatch. Also fixes a missing
+      texture and adds some grass'
