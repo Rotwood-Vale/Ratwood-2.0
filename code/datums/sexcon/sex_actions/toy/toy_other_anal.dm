@@ -27,6 +27,7 @@
 /datum/sex_action/toy_other_anal/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pleasures [target]'s butt..."))
 	user.sexcon.outercourse_noise(target)
+	do_onomatopoeia(user)
 
 	user.sexcon.perform_sex_action(target, 2, 6, TRUE)
 	target.sexcon.handle_passive_ejaculation()

@@ -32,6 +32,7 @@
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] scissors with [target]'s cunt."))
 	user.sexcon.outercourse_noise(target, TRUE)
 	user.sexcon.do_thrust_animate(target)
+	do_onomatopoeia(user)
 
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))
 		if(istype(user.rmb_intent, /datum/rmb_intent/strong))

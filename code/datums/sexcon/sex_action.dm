@@ -99,3 +99,6 @@
 		return modular_result
 
 	return FALSE
+
+/datum/sex_action/proc/do_onomatopoeia(mob/living/carbon/human/user)
+	user.balloon_alert_to_viewers("Plap!", x_offset = rand(-15, 15), y_offset = rand(0, 25))

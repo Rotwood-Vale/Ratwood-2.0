@@ -27,6 +27,7 @@
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] fucks [target]'s thighs."))
 	user.sexcon.outercourse_noise(target, TRUE)
 	user.sexcon.do_thrust_animate(target)
+	do_onomatopoeia(user)
 
 	user.sexcon.perform_sex_action(user, 2, 4, TRUE)
 
