@@ -261,7 +261,7 @@
 	beltl = /obj/item/storage/keyring/heir
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
 	backr = /obj/item/storage/backpack/rogue/satchel
-	id = /obj/item/clothing/ring/aalloy
+	id = /obj/item/clothing/ring/decrepit
 	backpack_contents = list(
 		/obj/item/reagent_containers/glass/bottle/rogue/berrypoison = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/strongstampoison = 1,

@@ -25,7 +25,7 @@
 /area/rogue/under/tomb/cave)
 "m" = (
 /obj/item/rogueweapon/huntingknife/copper,
-/obj/item/rogueweapon/shield/buckler/palloy,
+/obj/item/rogueweapon/shield/buckler/ancient,
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/blocks/paving/vert,
 /area/rogue/under/tomb/sewer)

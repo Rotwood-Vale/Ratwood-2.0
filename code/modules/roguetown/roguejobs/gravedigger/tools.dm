@@ -371,7 +371,7 @@
 	smeltresult = null
 	grid_height = 64
 
-/obj/item/rogueweapon/shovel/aalloy
+/obj/item/rogueweapon/shovel/decrepit
 	force = 8
 	name = "decrepit shovel"
 	desc = "A tool of wrought bronze, for burying the lyfeless. His worshippers would say that death is necessary; that the bod will nourish this world, so that more lyfe may sprout. But to those who know the truth - Her truth, it is nothing more than a mockery."
@@ -666,7 +666,7 @@
 	/datum/intent/axe/chop/stone, /datum/intent/shovelscoop)//Two hands to let you shovel and chop.
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "mortstaff"//Temp sprite.
-	associated_skill = /datum/skill/combat/staves
+	associated_skill = /datum/skill/combat/polearms
 	wdefense = 3
 	wdefense_wbonus = 3//Bless this, m'lord.
 	max_integrity = 200

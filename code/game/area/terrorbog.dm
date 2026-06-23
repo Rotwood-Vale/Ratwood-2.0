@@ -1,7 +1,6 @@
 /area/rogue/outdoors/bog
 	name = "The Terrorbog"
 	icon_state = "bog"
-	warden_area = TRUE
 	ambientsounds = AMB_BOGDAY
 	ambientnight = AMB_BOGNIGHT
 	spookysounds = SPOOKY_FROG
@@ -31,10 +30,9 @@
 /area/rogue/indoors/shelter/bog
 	// icon_state = "indoors"
 	// droning_sound = 'sound/music/area/bog.ogg'//nice to have it sound different indoors than out, gives a nice instant feedback
-	droning_sound_dusk = null
-	droning_sound_night = null
+	// droning_sound_dusk = null
+	// droning_sound_night = null
 	deathsight_message = "a wretched, fetid bog"
-	warden_area = TRUE
 
 /area/rogue/outdoors/bog/north
 	name = "Northern Terrorbog"

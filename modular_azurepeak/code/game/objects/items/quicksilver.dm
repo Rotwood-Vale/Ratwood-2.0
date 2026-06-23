@@ -163,7 +163,7 @@
 	name = "Inquisitorial Missive"
 	desc = "A letter from the Grand Cathedral in Otava. It reeks of zig smoke."
 	info = {"
-		<font face=\"Segoe Script\" color=#00000>Greetings to ye, distant missionaries in The Vale<br><br>This missive serves to inform of a breakthrough of alchemy.
+		<font face=\"Segoe Script\" color=#00000>Greetings to ye, distant missionaries in these lands<br><br>This missive serves to inform of a breakthrough of alchemy.
 		Enclosed is a substance, <b>Quicksilver</b>, that may be of keen use in the preservation of lyfe against those unholy creechers that are repelled by divine silver.
 		We speak of the werevolf and the vampyre. Herein lies the method.<br><br>Gather an ore of silver, a vessel of blessed water- a bottle's worth shall suffice, and a
 		simple strip of cloth to add structure to the poultice. Take the warm bud of a fyritius flower, and immerse it in the bleeding wound of an unholy creecher. The warmth

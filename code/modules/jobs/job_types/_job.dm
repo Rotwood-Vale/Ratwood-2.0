@@ -289,20 +289,6 @@
 
 	log_admin("[department] >> [H.key]/([H.real_name]) has joined as [H.mind.assigned_role].")
 
-/client/verb/set_mugshot()
-	set category = "OOC"
-	set name = "Set Credits Mugshot"
-	set hidden = FALSE
-	if(mob && ishuman(mob) && mob.mind)
-		var/mob/living/carbon/human/H = mob
-		if(!H.mind.mugshot_set)
-			to_chat(src, "Updating mugshot...")
-			H.mind.mugshot_set = TRUE
-			H.add_credit(TRUE)
-			to_chat(src, "Mugshot updated.")
-		else
-			to_chat(src, "Mugshots are resource intensive. You are limited to one per character.")
-
 /mob/living/carbon/human/proc/add_credit(generate_for_adv_class = FALSE) //Evil code to get the proper image for adv classes after they spawn in.
 	if(!mind || !client)
 		return

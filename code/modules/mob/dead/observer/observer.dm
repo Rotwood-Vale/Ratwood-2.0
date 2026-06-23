@@ -222,13 +222,14 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 10)
 
 /mob/dead/observer/Destroy()
+	clear_ghost_images(ghostimage_default, ghostimage_simple)
 	GLOB.ghost_images_default -= ghostimage_default
-	QDEL_NULL(ghostimage_default)
+	ghostimage_default = null
 
 	GLOB.ghost_images_simple -= ghostimage_simple
-	QDEL_NULL(ghostimage_simple)
+	ghostimage_simple = null
 
-	updateallghostimages()
+	// updateallghostimages() // likely not necessary since we cleared them earlier
 
 	STOP_PROCESSING(SShaunting, src)
 
@@ -787,6 +788,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	updateghostimages()
 	..()
 
+/// Clears the two provided images from all observers.
+/proc/clear_ghost_images(image/default_image, image/simple_image)
+	for (var/mob/dead/observer/O in GLOB.player_list)
+		if(!O.ghostvision)
+			continue
+		if(O.client)
+			O.client.images -= default_image
+			O.client.images -= simple_image
+
 /proc/updateallghostimages()
 	listclearnulls(GLOB.ghost_images_default)
 	listclearnulls(GLOB.ghost_images_simple)
@@ -799,7 +809,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	var/bt = world.time
 	SEND_SOUND(src, sound('sound/misc/notice (2).ogg'))
-	if(alert(src, "You have been summoned you to destroy the vale!", "Join the Horde", "Yes", "No") == "Yes")
+	if(alert(src, "You have been summoned you to destroy!", "Join the Horde", "Yes", "No") == "Yes")
 		if(world.time > bt + 5 MINUTES)
 			to_chat(src, span_warning("Too late."))
 			return FALSE

@@ -51,6 +51,7 @@
 			if(5)
 				shown_patreon_level = "Lord"
 		to_chat(src, span_info("Donator Level: [shown_patreon_level]"))
+	client.changelog()
 
 	var/primary_server = "byond://ratwood.rip:22096"
 	var/secondary_server = "byond://ratwood.rip:22099"

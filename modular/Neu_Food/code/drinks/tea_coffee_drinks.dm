@@ -36,7 +36,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/coffeebeansroasted
 	name = "roasted coffee beans"
-	desc = "Roasted coffee beans, with a much deeper flavor. Can be used to brew coffee. The variant grown in the vale can be brewed without being ground."
+	desc = "Roasted coffee beans, with a much deeper flavor. Can be used to brew coffee. The variant grown in these lands can be brewed without being ground."
 	icon = 'modular/Neu_Food/icons/drinks.dmi'
 	icon_state = "coffeebeans_roasted"
 	tastes = list("rich caramel smoothness" = 1)

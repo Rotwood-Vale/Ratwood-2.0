@@ -67,7 +67,6 @@
 			charflaw.on_removal(src)
 		vices = list()
 		charflaw = null
-		statpack = null
 		headshot_link = null
 
 	// Gnolls should not inherit player-authored social metadata from their base slot.
@@ -114,6 +113,7 @@
 		var/obj/item/organ/testicles/testicles = getorganslot(ORGAN_SLOT_TESTICLES)
 		if(!testicles)
 			testicles = new()
+			testicles.ball_size = MAX_TESTICLES_SIZE
 			testicles.Insert(src, TRUE, FALSE)
 	else if(penis)
 		penis.Remove(src)

@@ -42,6 +42,15 @@
 	chargetime = 15
 	recharge_time = 10 SECONDS
 
+/obj/effect/proc_holder/spell/invoked/projectile/blood_net/cast(list/targets, mob/user = usr)
+	var/obj/item/I = user.get_active_held_item()
+	if(!istype(I, req_inhand))
+		to_chat(user, span_warning("I'm missing viscera in my hand to cast this."))
+		return FALSE
+	. = ..()
+	if(. && I)
+		qdel(I)
+
 /obj/projectile/magic/unholy_grasp
 	name = "viceral organ net"
 	icon_state = "tentacle_end"
@@ -52,14 +61,52 @@
 	. = ..()
 	if(. == BULLET_ACT_MISS || . == BULLET_ACT_BLOCK || !iscarbon(hit_atom))
 		return
+
 	ensnare(hit_atom)
 
 /obj/projectile/magic/unholy_grasp/proc/ensnare(mob/living/carbon/carbon)
+	if(carbon.legcuffed || carbon.get_num_legs(FALSE) < 2)
+		return
+
+	var/obj/item/net/unholy_grasp/net = new(get_turf(carbon))
+	net.slipouttime = max(2 SECONDS, 13 SECONDS - max(0, carbon.STASTR - 10) * 0.5 SECONDS)
 	visible_message(span_danger("\The [src] ensnares [carbon] in vicera!"))
 	to_chat(carbon, span_danger("\The [src] ensnares you!"))
+	carbon.legcuffed = net
+	net.forceMove(carbon)
+	carbon.update_inv_legcuffed()
 	carbon.Knockdown(knockdown)
-	carbon.apply_status_effect(/datum/status_effect/debuff/netted, 30 SECONDS)
+	carbon.apply_status_effect(/datum/status_effect/debuff/netted)
 	playsound(src, 'sound/combat/caught.ogg', 50, TRUE)
+
+/obj/item/net/unholy_grasp
+	name = "visceral net"
+	desc = "A disgusting mass of viscera binding the victim's legs."
+	color = "#80182e"
+
+/obj/item/net/unholy_grasp/remove_effect()
+	if(iscarbon(loc))
+		var/mob/living/carbon/M = loc
+		if(M.legcuffed == src)
+			M.legcuffed = null
+			M.remove_movespeed_modifier(MOVESPEED_ID_NET_SLOWDOWN, TRUE)
+			M.update_inv_legcuffed()
+			if(M.has_status_effect(/datum/status_effect/debuff/netted))
+				M.remove_status_effect(/datum/status_effect/debuff/netted)
+		var/turf/T = get_turf(M)
+		if(T)
+			forceMove(T)
+
+/obj/item/net/unholy_grasp/Destroy() //we avoud forceMove() my manna caused by destroy as its not good to put it together
+	if(iscarbon(loc))
+		var/mob/living/carbon/M = loc
+		if(M.legcuffed == src)
+			M.legcuffed = null
+			M.remove_movespeed_modifier(MOVESPEED_ID_NET_SLOWDOWN, TRUE)
+			M.update_inv_legcuffed()
+		if(M.has_status_effect(/datum/status_effect/debuff/netted))
+			M.remove_status_effect(/datum/status_effect/debuff/netted)
+	return ..()
 
 /obj/effect/proc_holder/spell/invoked/revel_in_slaughter
 	name = "Revel in Slaughter"

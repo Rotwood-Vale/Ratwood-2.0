@@ -37,7 +37,7 @@
 #define CARGOTECH		(1<<7)
 //#define MINER			(1<<8) //This is redefined below, and is a ss13 leftover.
 #define LAWYER			(1<<9)
-#define CHAPLAIN		(1<<10)
+// #define CHAPLAIN		(1<<10)//This is redefined below, and is a ss13 leftover.
 #define CLOWN			(1<<11)
 #define MIME			(1<<12)
 #define ASSISTANT		(1<<13)
@@ -77,7 +77,7 @@
 #define JOB_DISPLAY_ORDER_MIME 12
 #define JOB_DISPLAY_ORDER_CURATOR 13
 #define JOB_DISPLAY_ORDER_LAWYER 14
-#define JOB_DISPLAY_ORDER_CHAPLAIN 15
+// #define JOB_DISPLAY_ORDER_CHAPLAIN 15//This is redefined below, and is a ss13 leftover.
 #define JOB_DISPLAY_ORDER_CHIEF_ENGINEER 16
 #define JOB_DISPLAY_ORDER_STATION_ENGINEER 17
 #define JOB_DISPLAY_ORDER_ATMOSPHERIC_TECHNICIAN 18
@@ -140,6 +140,7 @@
 #define SERVANT		(1<<5)
 #define MAGEASSOCIATE	(1<<6)
 #define APOTHECARY	(1<<7)
+#define CHAPLAIN	(1<<8)
 
 #define YEOMEN		(1<<4)
 
@@ -265,6 +266,7 @@
 #define JDO_JESTER 7
 #define JDO_BUTLER 7.1
 #define JDO_SERVANT 7.2
+#define JDO_CHAPLAIN 7.3
 
 #define JDO_GUARD_CAPTAIN 8
 #define JDO_KNIGHT 8.1
@@ -352,6 +354,8 @@
 	/datum/job/roguetown/servant,\
 	/datum/job/roguetown/butler,\
 	/datum/job/roguetown/apothecary,\
+	/datum/job/roguetown/chaplain,\
+	/datum/job/roguetown/dtchaplain,\
 	/datum/job/roguetown/magician,\
 	/datum/job/roguetown/headslave,\
 	/datum/job/roguetown/slave,\

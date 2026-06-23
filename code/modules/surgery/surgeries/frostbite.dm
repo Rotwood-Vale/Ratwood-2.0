@@ -30,6 +30,7 @@
 
 	implements = list(
 		TOOL_SCALPEL = 80,
+		TOOL_IMPROVISED_SCALPEL = 70,
 		TOOL_SHARP = 60,
 	)
 

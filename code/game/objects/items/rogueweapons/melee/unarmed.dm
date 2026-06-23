@@ -257,21 +257,19 @@
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/bronze
 
-/obj/item/rogueweapon/knuckles/aknuckles
-	name = "decrepit knuckles"
-	desc = "a set of knuckles made of ancient metals, Aeon's grasp wither their form."
-	icon_state = "aknuckle"
-	force = 12
-	max_integrity = 100
-	wdefense = 4
-	smeltresult = /obj/item/ingot/aalloy
-	blade_dulling = DULLING_SHAFT_CONJURED
-
-/obj/item/rogueweapon/knuckles/paknuckles
+/obj/item/rogueweapon/knuckles/ancient
 	name = "ancient knuckles"
 	desc = "a set of knuckles made of ancient metals, Aeon's grasp has been lifted from their form."
 	icon_state = "aknuckle"
 	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/rogueweapon/knuckles/ancient/decrepit
+	name = "decrepit knuckles"
+	desc = "a set of knuckles made of ancient metals, Aeon's grasp wither their form."
+	force = 12
+	max_integrity = 100
+	wdefense = 4
+	blade_dulling = DULLING_SHAFT_CONJURED
 
 /obj/item/rogueweapon/knuckles/eora
 	name = "close caress"

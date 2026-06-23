@@ -132,7 +132,7 @@
 	craftdiff = 6	//Can be a bit strong, reduce to 5 if too high.
 
 /datum/crafting_recipe/roguetown/leather/unique/crafteast
-	name = "decorated dobo robe"
+	name = "decorated dopo robe"
 	result = list(/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast)
 	reqs = list(
 		/obj/item/natural/hide/cured = 2,

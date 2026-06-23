@@ -416,6 +416,7 @@
 	metalizer_result = /obj/item/rogueore/gold
 	grid_height = 32
 	grid_width = 32
+	dropshrink = 0.6
 
 /////////////
 // Planks //

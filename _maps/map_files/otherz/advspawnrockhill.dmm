@@ -28,9 +28,7 @@
 	},
 /obj/effect/landmark/start/courtagent,
 /turf/open/floor/rogue/churchrough,
-/area/rogue/underworld{
-	first_time_text = "wayfarer's dream"
-	})
+/area/rogue/underworld/adventurespawn/start)
 "dI" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -73,9 +71,7 @@
 	pixel_y = -36
 	},
 /turf/closed/mineral/rogue/bedrock,
-/area/rogue/underworld{
-	first_time_text = "wayfarer's dream"
-	})
+/area/rogue/underworld/adventurespawn/start)
 "kd" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -287,9 +283,7 @@
 /area/rogue/underworld/adventurespawn)
 "Hm" = (
 /turf/closed/mineral/rogue/bedrock,
-/area/rogue/underworld{
-	first_time_text = "wayfarer's dream"
-	})
+/area/rogue/underworld/adventurespawn/start)
 "Jn" = (
 /obj/structure/underworld/barrier,
 /obj/effect/landmark/start/adventurerlate{
@@ -300,9 +294,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/churchrough,
-/area/rogue/underworld{
-	first_time_text = "wayfarer's dream"
-	})
+/area/rogue/underworld/adventurespawn/start)
 "JE" = (
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/underworld/adventurespawn)
@@ -361,9 +353,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/churchrough,
-/area/rogue/underworld{
-	first_time_text = "wayfarer's dream"
-	})
+/area/rogue/underworld/adventurespawn/start)
 "QK" = (
 /obj/structure/flora/roguetree/underworld,
 /turf/open/floor/rogue/churchrough,
@@ -375,9 +365,7 @@
 "Rt" = (
 /obj/structure/underworld/barrier,
 /turf/open/floor/rogue/churchrough,
-/area/rogue/underworld{
-	first_time_text = "wayfarer's dream"
-	})
+/area/rogue/underworld/adventurespawn/start)
 "RB" = (
 /obj/machinery/light/rogue/lanternpost,
 /turf/open/floor/rogue/underworld/road,
