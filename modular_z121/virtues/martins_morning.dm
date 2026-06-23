@@ -141,9 +141,14 @@
 	//     美德"虔信者"(/datum/virtue/combat/devotee) 创建的【虔诚数据单 + 神迹】——它们与职业用的是
 	//     完全相同的底层接口（adjust_spellpoints / new /datum/devotion），无法靠查看数据区分来源。
 	// 正确做法：只删除【当前职业自己授予的那部分】，其余（美德 / 种族 / 局内学习）一律不动。
-	//   - 法术：在 apply_profession 授予前后对 spell_list 做差分，记录"本职业新增了哪些法术类型"，
-	//     换职业时只删这些。（若戏法术早已被美德授予，本职业的 adjust_spellpoints 因 has_spell 去重
-	//     而不会重复添加，于是它不在差分集合里 → 不会被误删，美德的戏法术得以保留。）
+	//   - 法术（后续切入的职业）：在 apply_profession 授予前后对 spell_list 做差分，记录"本职业新增了
+	//     哪些法术类型"，换职业时只删这些。（若戏法术早已被美德授予，本职业的 adjust_spellpoints 因
+	//     has_spell 去重而不重复添加 → 不在差分集合 → 不会被误删，美德的戏法术得以保留。）
+	//   - 法术（最初职业，关键修复）：最初职业由引擎在出生时授予、其中含 advclass.equipme 自定义代码
+	//     AddSpell 的法术（如世俗诊断 diagnose/secular、神圣冲击……），无法靠差分获知。改为在 Initialize
+	//     对 spell_list 拍"原始类型快照"（此刻玩家尚未局内学习，最初职业法术已就位），首次换职业时再扣除
+	//     "玩家所选美德也会授予的同类法术"（见 get_virtue_protected_spells），即得最初职业应清的法术集合。
+	//     这样既清掉职业经 equipme 自定义授予的残留法术，又不误删美德 / 种族 / 局内学习的法术。
 	//   - 法术点：记录本职业贡献的点数，换职业时按量【相减】而非清零，从而保住美德给的点数。
 	//   - 神迹 / 虔诚：仅当【虔诚确属职业所授】时才 qdel + RemoveAllMiracles。是否职业所授，通过
 	//     "玩家是否选了会授予虔诚的美德（如虔信者）"来判定（见 profession_owns_devotion 的计算）。
@@ -158,6 +163,13 @@
 	// 为什么懒判定：组件在出生装备流程中创建，此刻人物的 client 可能尚未附加（EquipRank 注释明言
 	//   "H 可能还没有 client"），导致 Initialize 时读 prefs 不可靠。改到首次换职业时判定最稳妥。
 	var/initial_devotion_evaluated = FALSE
+	/// Initialize 时对 spell_list 拍下的"原始法术类型"快照（已排除神迹与种族先天法术）。
+	// 为什么在 Initialize 拍：此刻最初职业已完整应用、但玩家尚未在局内学习任何法术，是"纯净"时机；
+	//   它涵盖最初职业经 advclass.equipme 自定义代码 AddSpell 的法术（如世俗诊断 diagnose/secular），
+	//   这正是"换职业后残留职业法术"BUG 的根因所在。
+	var/list/initial_spell_snapshot = list()
+	/// "最初职业法术集合"是否已据玩家美德扣除并定型（懒判定：首次换职业时进行，那时 prefs 可靠）。
+	var/initial_profession_spells_derived = FALSE
 
 // Initialize：组件创建时调用，负责类型校验、注册清晨信号、打上身份特性标签。
 /datum/component/martins_morning/Initialize()
@@ -183,26 +195,36 @@
 	//   （虔诚归属因 client/prefs 此刻可能不可用，改到首次换职业时懒判定，不在这里处理。）
 	record_initial_profession_magic(host)
 
-// record_initial_profession_magic：在组件创建时，推算"最初职业"贡献的法术点与虔诚归属。
-// 为什么需要：换职业要"只清职业自己给的"，而最初职业不是我们授予的，得在此刻把它的贡献量记下来。
+// record_initial_profession_magic：在组件创建时，记录"最初职业"的法术点贡献，并对 spell_list
+//   拍一份"原始法术类型"快照——这是修复"换职业后残留职业法术（如 diagnose/secular）"的关键。
+// 为什么需要：换职业要"只清职业自己给的"，而最初职业不是我们授予的，得在此刻把它的内容记下来。
 /datum/component/martins_morning/proc/record_initial_profession_magic(mob/living/carbon/human/host)
 	// 通过当前 advjob 名反查最初职业的 advclass 数据单，读取其法术点贡献。
 	//   查不到（advjob 为空 / 为组合名 / 最初是非 advclass 的法系职业）则记为 0，
 	//   宁可少减点数也不误伤美德 / 其它来源的点数（保守、安全）。
 	var/datum/advclass/initial = host.advjob ? SSrole_class_handler.get_advclass_by_name(host.advjob) : null
 	profession_spell_points = (initial && initial.subclass_spellpoints) ? initial.subclass_spellpoints : 0
-	// 最初职业【经 advclass.equipme 自定义代码 AddSpell】的法术类型无法从数据区精确获知
-	//   （出生时美德 / 种族法术可能也已在列，无法区分），故默认留空、首次换职业不按类型删除，
-	//   避免误删美德 / 种族法术（这是有意的保守取舍，已知局限见文末说明）。
+
+	// 对 spell_list 拍"原始法术类型"快照。此刻最初职业（含其 advclass.equipme 自定义代码
+	//   AddSpell 的法术，如世俗诊断 / 神圣冲击 / 役使亡者……，以及底层 job.spells）都已就位，
+	//   而玩家尚未在局内学习任何法术，因此快照里的非美德 / 非种族 / 非神迹法术，几乎必为"最初职业所授"。
+	// 此处只排除两类一定要保留、且无需 prefs 即可判定的：
+	//   1) 神迹（S.miracle）——由"虔诚归属"逻辑单独处理，不在此按类型删；
+	//   2) 软泥怪 ooze 的变形——种族先天能力，必须保留。
+	// 至于"美德授予的法术（如 physician 的 diagnose/secular、rich 的 appraise/secular……）"也可能
+	//   混在快照里，但要扣除它们需要读 prefs（此刻可能不可用），故推迟到首次换职业时再扣
+	//   （见 remove_profession_magic 的懒处理 + get_virtue_protected_spells）。
+	initial_spell_snapshot = list()
+	if(host.mind)
+		for(var/obj/effect/proc_holder/spell/S in host.mind.spell_list)
+			if(S.miracle)                                                          // 神迹：交由虔诚归属逻辑处理。
+				continue
+			if(S.type == /obj/effect/proc_holder/spell/targeted/shapeshift/ooze)    // 软泥怪先天变形：保留。
+				continue
+			initial_spell_snapshot += S.type
+	// profession_spell_types 先留空：它会在首次换职业时由"快照 - 美德授予法术"定型（届时 prefs 可靠）。
 	profession_spell_types = list()
-	// 但底层【职业（/datum/job）】通过其 `spells` 数据字段授予的法术是可精确枚举的
-	//   （job.after_spawn 会 AddSpell(new S) for S in job.spells）。把这些类型登记下来，
-	//   首次换职业时即可精确删除，覆盖如神职等职业的法术授予，且不会误伤美德 / 种族法术。
-	var/datum/job/initial_job = host.job ? SSjob.GetJob(host.job) : null
-	if(initial_job && length(initial_job.spells))
-		for(var/spell_type in initial_job.spells)
-			profession_spell_types += spell_type
-	// 注意：最初职业的"虔诚归属"不在此判定——此刻 client/prefs 可能尚不可用。改为首次换职业时
+	// 注意：最初职业的"虔诚归属"同样不在此判定——此刻 client/prefs 可能尚不可用。改为首次换职业时
 	//   懒判定（见 remove_profession_magic 中对 initial_devotion_evaluated 的处理）。
 
 // has_devotion_granting_virtue：判断玩家所选美德里是否存在"会授予虔诚 / 神迹"的美德。
@@ -217,6 +239,36 @@
 	if(istype(prefs.virtue, /datum/virtue/combat/devotee) || istype(prefs.virtuetwo, /datum/virtue/combat/devotee))
 		return TRUE
 	return FALSE
+
+// get_virtue_protected_spells：返回"由玩家所选美德授予、因而必须保留"的法术类型集合。
+// 为什么需要：有些法术既可由职业授予、也可由美德授予（典型：世俗诊断 diagnose/secular 既来自
+//   Absolver 等职业，也来自【医师学徒】美德）。清除职业法术时，必须把"美德也授予的同类法术"排除在外，
+//   否则会误删玩家的美德能力。引擎不记录法术来源，故只能依据玩家的美德预设（prefs）来识别。
+// 维护说明：这是一张"已知会向 spell_list 授予法术的美德 -> 其法术类型"映射表。若将来新增同类美德，
+//   在此补一条即可（神迹类美德如【虔信者】不在此表——其神迹由"虔诚归属"逻辑单独保护）。
+/datum/component/martins_morning/proc/get_virtue_protected_spells(mob/living/carbon/human/host)
+	var/list/protected = list()
+	var/datum/preferences/prefs = host.client?.prefs
+	if(!prefs)
+		return protected
+	// 逐一检查两个美德槽位，把命中映射表的美德所授法术类型并入保护集合。
+	for(var/datum/virtue/V in list(prefs.virtue, prefs.virtuetwo))
+		if(!V)
+			continue
+		if(istype(V, /datum/virtue/utility/physician))                             // 医师学徒 -> 世俗诊断
+			protected |= /obj/effect/proc_holder/spell/invoked/diagnose/secular
+		if(istype(V, /datum/virtue/items/rich))                                    // 富有精明 -> 世俗估价
+			protected |= /obj/effect/proc_holder/spell/invoked/appraise/secular
+		if(istype(V, /datum/virtue/combat/magical_potential))                      // 奥术潜质 -> 戏法术
+			protected |= /obj/effect/proc_holder/spell/targeted/touch/prestidigitation
+		if(istype(V, /datum/virtue/utility/riding))                                // 骑术 -> 选择坐骑
+			protected |= /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount
+		if(istype(V, /datum/virtue/utility/hellblood_descendant))                  // 地狱血裔 -> 火焰系法术
+			protected |= /obj/effect/proc_holder/spell/invoked/projectile/fireball
+			protected |= /obj/effect/proc_holder/spell/invoked/projectile/fireball/greater
+			protected |= /obj/effect/proc_holder/spell/invoked/projectile/spitfire
+			protected |= /obj/effect/proc_holder/spell/invoked/create_campfire
+	return protected
 
 // UnregisterFromParent：组件与宿主解绑时，撤销 Initialize 注册的信号与特性，避免悬空回调与残留。
 /datum/component/martins_morning/UnregisterFromParent()
@@ -450,10 +502,28 @@
 //   不动美德、种族先天、局内学习得来的任何魔法。各项依据 Initialize / apply_profession 记录的
 //   profession_spell_types / profession_spell_points / profession_owns_devotion 来精确处理。
 /datum/component/martins_morning/proc/remove_profession_magic(mob/living/carbon/human/host)
+	// ---- 0. 懒定型"最初职业法术集合" ----
+	// 首次换职业时（此刻 client/prefs 可靠）把 Initialize 拍下的原始法术快照，扣除"玩家美德也授予的
+	//   同类法术"，得到真正应清除的最初职业法术集合。这样既能清掉职业经 equipme 自定义授予的法术
+	//   （如世俗诊断 diagnose/secular），又不会误删美德授予的同名法术。仅定型一次；此后各次换职业
+	//   的 profession_spell_types 由 apply_profession 的差分实时给出，与此无关。
+	// 仅在能可靠读到玩家美德预设（prefs）时才定型：否则无法识别"美德授予的法术"，
+	//   贸然清除会误删美德能力。读不到 prefs（如玩家此刻掉线）则本轮跳过定型、不删最初职业法术，
+	//   留待下个清晨（玩家通常已重连）再定型，宁可晚清也不误清。
+	if(!initial_profession_spells_derived && host.client?.prefs)
+		initial_profession_spells_derived = TRUE
+		var/list/protected = get_virtue_protected_spells(host)
+		profession_spell_types = list()
+		for(var/spell_type in initial_spell_snapshot)
+			if(spell_type in protected)                                            // 美德也授予的法术：保留，不计入清除集合。
+				continue
+			profession_spell_types += spell_type
+
 	// 防御：没有 mind 则没有法术 / 法术点系统；但仍可能持有职业虔诚，故 mind 与 devotion 分别判空处理。
 	if(host?.mind)
 		// ---- 1. 删除"本职业新增的具体法术" ----
-		// profession_spell_types 来自 apply_profession 的前后差分（最初职业留空）。逐类型删除。
+		// profession_spell_types：最初职业来自上面的"快照 - 美德保护"；后续职业来自 apply_profession
+		//   的前后差分。逐类型删除。
 		//   跳过戏法术 / 学习术这两种"法术点派生且共享"的法术——它们由下面的点数逻辑统一裁决，
 		//   以免在仍有（美德等来源的）法术点时被误删。
 		for(var/spell_type in profession_spell_types)
@@ -493,9 +563,11 @@
 	// 为什么有这道闸：美德"虔信者"也会创建虔诚数据单 + 神迹，绝不能误删。
 	// 懒判定"最初职业的虔诚归属"：组件创建时 client/prefs 可能不可用，故推迟到此刻（玩家在线、
 	//   prefs 可靠）判定一次——若此刻仍有虔诚且玩家【未】选择会授予虔诚的美德，则判定该虔诚属于
-	//   最初的神职职业、应予清除；否则保留（玩家自带虔诚来源）。判定仅做一次。
+	//   最初的神职职业、应予清除；否则保留（玩家自带虔诚来源）。
+	//   与上面的法术定型同理：仅在能可靠读到 prefs 时才判定，读不到则本轮跳过、留待下个清晨，
+	//   避免在掉线时把美德"虔信者"的虔诚误判为职业所授而清除。判定仅做一次。
 	//   后续 apply_profession 切入的日常职业从不创建虔诚，会把 profession_owns_devotion 持续置 FALSE。
-	if(!initial_devotion_evaluated)
+	if(!initial_devotion_evaluated && host.client?.prefs)
 		initial_devotion_evaluated = TRUE
 		profession_owns_devotion = (host.devotion != null) && !has_devotion_granting_virtue(host)
 	if(profession_owns_devotion && host.devotion)
