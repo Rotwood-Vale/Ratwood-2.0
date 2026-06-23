@@ -1376,8 +1376,8 @@
 	sheathe_icon = "psyrapier"
 	max_integrity = 300
 	max_blade_int = 300
-	force = 20
-	force_wielded = 20
+	force = 25
+	force_wielded = 25
 	minstr = 8
 	wdefense = 8
 	smeltresult = /obj/item/ingot/silver
@@ -1821,6 +1821,34 @@
 	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/thrust/krieg, /datum/intent/rend/krieg, /datum/intent/sword/strike)
 	alt_intents = null // Can't mordhau this
 	smeltresult = /obj/item/ingot/steel
+
+/obj/item/rogueweapon/sword/long/kriegmesser/psy/relic
+	name = "Creed"
+	desc = "Psydonian prayers and Tennite smiths, working as one to craft a weapon to slay the Four. A heavy and large blade, favored by Saint Ravox, to lay waste to those who threaten His flock. The crossguard's psycross reflects even the faintest of Noc's light. You're the light - show them the way."
+	icon_state = "psybroadsword"
+	sheathe_icon = "silversword"
+	is_silver = TRUE
+	smeltresult = /obj/item/ingot/silver
+
+/obj/item/rogueweapon/sword/long/kriegmesser/psy/relic/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen") return list("shrink" = 0.5, "sx" = -14, "sy" = -8, "nx" = 15, "ny" = -7, "wx" = -10, "wy" = -5, "ex" = 7, "ey" = -6, "northabove" = 0, "southabove" = 1, "eastabove" = 1, "westabove" = 0, "nturn" = -13, "sturn" = 110, "wturn" = -60, "eturn" = -30, "nflip" = 1, "sflip" = 1, "wflip" = 8, "eflip" = 1)
+			if("wielded") return list("shrink" = 0.6,"sx" = 9,"sy" = -4,"nx" = -7,"ny" = 1,"wx" = -9,"wy" = 2,"ex" = 10,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 5,"sturn" = -190,"wturn" = -170,"eturn" = -10,"nflip" = 8,"sflip" = 8,"wflip" = 1,"eflip" = 0)
+			if("onback") return list("shrink" = 0.5, "sx" = -1, "sy" = 2, "nx" = 0, "ny" = 2, "wx" = 2, "wy" = 1, "ex" = 0, "ey" = 1, "nturn" = 0, "sturn" = 0, "wturn" = 70, "eturn" = 15, "nflip" = 1, "sflip" = 1, "wflip" = 1, "eflip" = 1, "northabove" = 1, "southabove" = 0, "eastabove" = 0, "westabove" = 0)
+			if("onbelt") return list("shrink" = 0.3, "sx" = -4, "sy" = -6, "nx" = 5, "ny" = -6, "wx" = 0, "wy" = -6, "ex" = -1, "ey" = -6, "nturn" = 100, "sturn" = 156, "wturn" = 90, "eturn" = 180, "nflip" = 0, "sflip" = 0, "wflip" = 0, "eflip" = 0, "northabove" = 0, "southabove" = 1, "eastabove" = 1, "westabove" = 0)
+
+/obj/item/rogueweapon/sword/long/kriegmesser/psy/relic/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_PSYDONIAN,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 100,\
+		added_def = 2,\
+	)
 
 /obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo
 	name = "ssangsudo"
