@@ -246,7 +246,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/structure/barrel
-	name = "木桶"
+	name = "发酵桶"
 	result = /obj/structure/fermentation_keg/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	verbage_simple = "制作"
