@@ -14,8 +14,8 @@
 /obj/structure/roguemachine/hag_ward
 	name = "Strange Ward"
 	desc = "A strange overgrown ward. Gnarled roots and bleached bone twist into an unsettling sigil. You feel vaguely repelled."
-	icon = 'icons/roguetown/misc/machines.dmi'
-	icon_state = "scomite" // TODO: replace with dedicated hag ward sprite
+	icon = 'icons/roguetown/items/hag/hag_ward.dmi'
+	icon_state = "ward"
 	density = TRUE
 	max_integrity = 0 // Indestructible by normal combat
 	anchored = TRUE

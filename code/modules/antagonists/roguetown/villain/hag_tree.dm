@@ -13,8 +13,8 @@
 /obj/structure/roguemachine/mossmother
 	name = "Mossmother"
 	desc = "One of the most sacred of trees. The very heart of the bog, its roots extend across every single inch of land drenched by maddened waters. Its moss is said to have magical properties."
-	icon = 'icons/roguetown/misc/machines.dmi'
-	icon_state = "scomite" // TODO: replace with dedicated hag tree sprite
+	icon = 'icons/roguetown/items/hag/hag_tree.dmi'
+	icon_state = "mossmother"
 	density = TRUE
 	max_integrity = 0 // Indestructible
 	anchored = TRUE
@@ -23,6 +23,7 @@
 /obj/structure/roguemachine/mossmother/travel
 	name = "Heartroot Tree"
 	desc = "No one knows why, but these trees seem nigh indestructible. You feel uneasy looking at this monstrosity of roots and bark."
+	icon_state = "tree"
 	var/cooldown_until = 0
 	var/static/list/hag_lux_alert_times = list()
 
