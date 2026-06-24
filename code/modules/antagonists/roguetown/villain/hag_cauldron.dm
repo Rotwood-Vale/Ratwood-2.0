@@ -18,33 +18,29 @@
 	var/list/synth_recipes = list(
 		// GILDED ITEMS
 		/obj/item/rogueweapon/sword/decorated = /obj/item/hag_catalyst/synth_base/gilded,
-		/obj/item/rogueweapon/sword/long/decorated = /obj/item/hag_catalyst/synth_base/gilded,
-		/obj/item/rogueweapon/sword/long/broadsword/steel/decorated = /obj/item/hag_catalyst/synth_base/gilded,
-		/obj/item/rogueweapon/huntingknife/idagger/steel/decorated = /obj/item/hag_catalyst/synth_base/gilded,
+		/obj/item/rogueweapon/sword/long/dec = /obj/item/hag_catalyst/synth_base/gilded,
+		/obj/item/rogueweapon/sword/sabre/dec = /obj/item/hag_catalyst/synth_base/gilded,
+		/obj/item/rogueweapon/sword/rapier/dec = /obj/item/hag_catalyst/synth_base/gilded,
 		// REGULAR STEEL - SWORDS
 		/obj/item/rogueweapon/sword = /obj/item/hag_catalyst/synth_base,
 		/obj/item/rogueweapon/sword/long = /obj/item/hag_catalyst/synth_base,
-		/obj/item/rogueweapon/sword/long/broadsword/steel = /obj/item/hag_catalyst/synth_base,
 		// REGULAR STEEL - DAGGERS
 		/obj/item/rogueweapon/huntingknife/chefknife = /obj/item/hag_catalyst/synth_base,
-		/obj/item/rogueweapon/huntingknife/chefknife/cleaver = /obj/item/hag_catalyst/synth_base,
+		/obj/item/rogueweapon/huntingknife/cleaver = /obj/item/hag_catalyst/synth_base,
 		/obj/item/rogueweapon/huntingknife/combat = /obj/item/hag_catalyst/synth_base,
 		/obj/item/rogueweapon/huntingknife/idagger/steel = /obj/item/hag_catalyst/synth_base,
 		/obj/item/rogueweapon/huntingknife/idagger/steel/parrying = /obj/item/hag_catalyst/synth_base,
-		/obj/item/rogueweapon/huntingknife/idagger/steel/rondel = /obj/item/hag_catalyst/synth_base,
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = /obj/item/hag_catalyst/synth_base,
 		/obj/item/rogueweapon/huntingknife/throwingknife/steel = /obj/item/hag_catalyst/synth_base,
 		/obj/item/rogueweapon/huntingknife/scissors/steel = /obj/item/hag_catalyst/synth_base,
 		// REGULAR STEEL - BLUNT WEAPONS
 		/obj/item/rogueweapon/mace/steel = /obj/item/hag_catalyst/synth_base,
 		/obj/item/rogueweapon/mace/steel/morningstar = /obj/item/hag_catalyst/synth_base,
-		/obj/item/rogueweapon/mace/cudgel/flanged = /obj/item/hag_catalyst/synth_base,
 		/obj/item/rogueweapon/mace/warhammer/steel = /obj/item/hag_catalyst/synth_base,
 		/obj/item/rogueweapon/mace/goden/steel = /obj/item/hag_catalyst/synth_base,
 		/obj/item/rogueweapon/mace/maul/grand = /obj/item/hag_catalyst/synth_base,
 		// REGULAR STEEL - FLAILS
 		/obj/item/rogueweapon/flail/sflail = /obj/item/hag_catalyst/synth_base,
-		/obj/item/rogueweapon/flail/peasantwarflail/iron = /obj/item/hag_catalyst/synth_base,
 		/obj/item/rogueweapon/flail/militia = /obj/item/hag_catalyst/synth_base,
 		// REGULAR STEEL - GREATSWORDS
 		/obj/item/rogueweapon/greatsword = /obj/item/hag_catalyst/synth_base,
@@ -80,7 +76,6 @@
 		/obj/item/rogueweapon/stoneaxe/hurlbat = /obj/item/hag_catalyst/synth_base,
 		/obj/item/rogueweapon/greataxe = /obj/item/hag_catalyst/synth_base,
 		/obj/item/rogueweapon/greataxe/steel = /obj/item/hag_catalyst/synth_base,
-		/obj/item/rogueweapon/greataxe/steel/knight = /obj/item/hag_catalyst/synth_base,
 		/obj/item/rogueweapon/greataxe/steel/doublehead = /obj/item/hag_catalyst/synth_base
 	)
 
@@ -144,7 +139,7 @@
 		mode = new_mode
 		stored_core = I
 		to_chat(user, msg)
-		update_icon_overlaps()
+		update_icon_overlays()
 		return TRUE
 	return FALSE
 
@@ -245,4 +240,4 @@
 	if(stored_core)
 		qdel(stored_core)
 	mode = null
-	update_icon_overlaps()
+	update_icon_overlays()

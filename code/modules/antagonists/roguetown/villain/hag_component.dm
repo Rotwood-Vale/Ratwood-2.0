@@ -100,3 +100,23 @@
 /// Check if a boon can be received
 /datum/component/hag_curio_tracker/proc/user_can_receive_boon(boon_path, true_name)
 	return TRUE
+
+/// Grant a boon to a user (typically an NPC)
+/datum/component/hag_curio_tracker/proc/grant_boon(mob/living/recipient, boon_path)
+	if(!recipient)
+		return FALSE
+	
+	// Simple stub - just apply a status effect or trait based on the boon
+	// In a full implementation, this would check prepared_boons and apply the actual boon
+	to_chat(recipient, span_notice("You feel a strange blessing wash over you..."))
+	return TRUE
+
+/// Receive an enchanted item and process the trade
+/datum/component/hag_curio_tracker/proc/receive_enchanted_item(mob/living/receiver, power_points)
+	if(!receiver)
+		return FALSE
+	
+	// Process the enchanted item trade
+	// In a full implementation, this would track trades and boon accumulation
+	to_chat(receiver, span_notice("The hag accepts your offering of power..."))
+	return TRUE

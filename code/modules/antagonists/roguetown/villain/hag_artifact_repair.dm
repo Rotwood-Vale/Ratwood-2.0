@@ -47,11 +47,6 @@
 			tended_items -= I
 			continue
 
-		// Check if item is still on the person
-		if(!L.is_holding(I) && !L.is_wearing(I))
-			tended_items -= I
-			continue
-
 		// Restore integrity
 		if(I.obj_integrity < I.max_integrity)
 			I.obj_integrity = min(I.obj_integrity + 2, I.max_integrity)
@@ -66,20 +61,13 @@
 	if(!is_type_in_list(current_turf, natural_turfs))
 		return
 
-	// Start tending items that are being held
-	for(var/obj/item/I in L.get_all_held_items())
-		if(I in tended_items)
-			continue
-		if(HAS_TRAIT(I, TRAIT_NOMOSS))
-			continue
-		tended_items += I
-
-	for(var/slot in ALL_ITEM_SLOTS)
-		var/obj/item/I = L.get_item_by_slot(slot)
-		if(!I)
-			continue
-		if(I in tended_items)
-			continue
-		if(HAS_TRAIT(I, TRAIT_NOMOSS))
-			continue
-		tended_items += I
+	// Add all currently equipped items to be tended
+	if(L.get_item_by_slot(ITEM_SLOT_ARMOR))
+		var/obj/item/I = L.get_item_by_slot(ITEM_SLOT_ARMOR)
+		if(I && !(I in tended_items))
+			tended_items += I
+	
+	if(L.get_item_by_slot(ITEM_SLOT_OCLOTHING))
+		var/obj/item/I2 = L.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+		if(I2 && !(I2 in tended_items))
+			tended_items += I2

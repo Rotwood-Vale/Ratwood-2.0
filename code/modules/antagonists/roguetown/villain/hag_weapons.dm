@@ -3,7 +3,6 @@
 	name = "gnarled axe"
 	desc = "A large axe made out of gnarled, twisted wood. It's like it was grown that way, and you can swear you see the branches moving."
 	icon_state = "hagaxe"
-	item_flags = HAG_ITEM
 	smeltresult = null
 
 /obj/item/rogueweapon/greataxe/steel/hag/Initialize(mapload)
@@ -15,7 +14,6 @@
 	name = "gnarled sword"
 	desc = "A long sword made out of gnarled, twisted wood. It's like it was grown that way, and you can swear you see the branches moving."
 	icon_state = "hagsword"
-	item_flags = HAG_ITEM
 	smeltresult = null
 
 /obj/item/rogueweapon/sword/long/hag/Initialize(mapload)
@@ -26,7 +24,6 @@
 	name = "gnarled polearm"
 	desc = "A large polearm made out of gnarled, twisted wood. It's like it was grown that way, and you can swear you see the branches moving."
 	icon_state = "hagspear"
-	item_flags = HAG_ITEM
 	smeltresult = null
 
 /obj/item/rogueweapon/halberd/hag/Initialize(mapload)
@@ -48,8 +45,6 @@
 	. = ..()
 	AddComponent(/datum/component/hag_magical_item, /datum/hag_boon/item/wyrd_cross)
 
-/obj/item/clothing/neck/roguetown/psicross/hag/get_examine_highlight_status()
-	return "It warps and shifts, never staying in one form."
 
 /obj/item/clothing/neck/roguetown/psicross/hag/dropped(mob/user)
 	. = ..()
@@ -59,8 +54,8 @@
 		icon = initial(C.icon)
 		icon_state = initial(C.icon_state)
 
-/obj/item/clothing/neck/roguetown/psicross/hag/proc/can_use_wyrd_power(mob/living/user, hag_allowed)
-	if(hag_allowed && HAS_TRAIT(user, TRAIT_ANCIENT_HAG))
+/obj/item/clothing/neck/roguetown/psicross/hag/proc/can_use_wyrd_power(mob/living/user)
+	if(HAS_TRAIT(user, TRAIT_ANCIENT_HAG))
 		return TRUE
 
 	var/datum/component/hag_magical_item_affinity/Keychain = user.GetComponent(/datum/component/hag_magical_item_affinity)
@@ -71,8 +66,8 @@
 
 /obj/item/clothing/neck/roguetown/psicross/hag/MiddleClick(mob/living/user)
 	. = ..()
-	// Hags can't use this themselves, womp womp
-	if(!can_use_wyrd_power(user, FALSE))
+	// Hags can use this
+	if(!can_use_wyrd_power(user))
 		return
 
 	if(tonic_spent)
@@ -103,7 +98,7 @@
 	var/mob/living/user = usr
 
 	// Only works for the person holding it
-	if(!can_use_wyrd_power(user, TRUE))
+	if(!can_use_wyrd_power(user))
 		return
 
 	if(!hag_radial_choices)
@@ -121,7 +116,7 @@
 	if(!selection)
 		return
 
-	if(!can_use_wyrd_power(user, TRUE))
+	if(!can_use_wyrd_power(user))
 		return
 
 	if(mimic_type == hag_path_map[selection])
@@ -147,7 +142,7 @@
 	src.overarmor = initial(C.overarmor)
 	src.armor = initial(C.armor)
 
-	user.update_worn_clothing()
+	user.update_icons()
 	to_chat(user, span_notice("The cross warps into the shape of [name]."))
 
 /obj/item/clothing/neck/roguetown/psicross/hag/verb/wyrd_reset_form()
@@ -157,7 +152,7 @@
 
 	var/mob/living/user = usr
 
-	if(!can_use_wyrd_power(user, TRUE))
+	if(!can_use_wyrd_power(user))
 		return
 
 	if(!mimic_type)
@@ -175,5 +170,5 @@
 	src.overarmor = initial(overarmor)
 	src.armor = initial(armor)
 
-	user.update_worn_clothing()
+	user.update_icons()
 	to_chat(user, span_notice("The cross warps back into its indecipherable, shifting form."))

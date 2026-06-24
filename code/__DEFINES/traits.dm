@@ -163,6 +163,9 @@
 // HAG CURSES
 #define TRAIT_CURSE_SCAR "Curse Scar" //source: marks a soul cursed by the hag
 
+// HAG ANTAGONIST TRAITS
+#define TRAIT_ANCIENT_HAG "Ancient Hag" //source: marks the hag antagonist
+
 // PATRON GOD CURSES
 
 #define TRAIT_CURSE "Curse" //source
