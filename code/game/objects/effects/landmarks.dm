@@ -506,6 +506,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	. = ..()
 	new /obj/structure/roguemachine/mossmother/travel(loc)
 
+/obj/effect/landmark/start/hag_ward
+	name = "hag_ward"
+	icon_state = "arrow"
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/hag_ward/Initialize(mapload)
+	. = ..()
+	new /obj/structure/roguemachine/hag_ward(loc)
+
 //tribal
 
 /obj/effect/landmark/start/tribalchieftain
