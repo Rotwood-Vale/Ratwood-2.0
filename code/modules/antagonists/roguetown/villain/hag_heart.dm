@@ -113,7 +113,7 @@
 	delivered_items[path_to_check] = already_delivered
 
 	to_chat(user, span_notice("The heart pulses greedily as it consumes the [initial(path_to_check:name)]. ([already_delivered]/[total_needed])"))
-	playsound(src, 'sound/magic/magic_spark.ogg', 50, TRUE)
+	playsound(src, 'sound/magic/slimesquish.ogg', 50, TRUE)
 
 	if(already_delivered >= total_needed)
 		to_chat(user, span_boldnotice("The heart has been satiated with [initial(path_to_check:name)] for this stage!"))

@@ -24,6 +24,7 @@
 	name = "Heartroot Tree"
 	desc = "No one knows why, but these trees seem nigh indestructible. You feel uneasy looking at this monstrosity of roots and bark."
 	var/cooldown_until = 0
+	var/static/list/hag_lux_alert_times = list()
 
 /obj/structure/roguemachine/mossmother/travel/Initialize(mapload)
 	. = ..()
@@ -59,13 +60,18 @@
 	return ..()
 
 /// Notifies all active hags that a tree was fed with lux, including the feeder's name and area.
-/obj/structure/roguemachine/mossmother/travel/proc/notify_hag_lux_fed(mob/living/feeder, is_impure = FALSE)
+/obj/structure/roguemachine/mossmother/travel/proc/notify_hag_lux_fed(mob/living/feeder, is_impure = FALSE, alert_cooldown = 20 SECONDS)
 	var/area/A = get_area(src)
 	var/area_name = A ? A.name : "an unknown thicket"
 	var/feeder_name = feeder ? feeder.real_name : "a mysterious force"
 	for(var/obj/structure/roguemachine/hag_heart/heart in GLOB.hag_hearts)
 		if(!heart.bound_hag?.owner?.current)
 			continue
+		var/key = "[REF(heart.bound_hag.owner)]:[REF(src)]:[is_impure]:[feeder ? REF(feeder.mind) : "none"]"
+		var/last_alert = hag_lux_alert_times[key] || 0
+		if(world.time < last_alert + alert_cooldown)
+			continue
+		hag_lux_alert_times[key] = world.time
 		to_chat(heart.bound_hag.owner.current, \
 			span_boldnotice("The roots hum deep within [area_name]... [feeder_name] has fed the network with [is_impure ? "Impure" : "Pure"] Lux!"))
 
@@ -73,14 +79,38 @@
 /obj/structure/roguemachine/mossmother/travel/proc/handle_travel(mob/living/user)
 	var/datum/antagonist/hag/hag_datum = user?.mind?.has_antag_datum(/datum/antagonist/hag)
 	var/is_hag = !!hag_datum
+	var/is_scarred = HAS_TRAIT(user, TRAIT_CURSE_SCAR)
 
 	if(is_hag)
 		var/datum/component/hag_curio_tracker/tracker = user.GetComponent(/datum/component/hag_curio_tracker)
 		if(tracker && !tracker.hag_teleport_check())
 			to_chat(user, span_warning("Your soul is still too frayed from your last return to walk the deep roots. Wait a bit longer..."))
 			return
-	else if(!HAS_TRAIT(user, TRAIT_CURSE_SCAR) && length(GLOB.hag_wards))
+	else if(!is_scarred && length(GLOB.hag_wards))
 		to_chat(user, span_warning("The roots refuse you. You bear no mark the Mossmother recognises."))
+		return
+
+	// Plain mortals only get the hut in/out shortcut once wards are gone.
+	if(!is_hag && !is_scarred)
+		if(length(GLOB.hag_wards))
+			to_chat(user, span_warning("The roots twist away from your touch."))
+			return
+		var/area/my_area = get_area(src)
+		if(istype(my_area, /area/rogue/indoors/shelter/bog_hag_hut))
+			var/list/exits = list()
+			for(var/obj/structure/roguemachine/mossmother/travel/T in GLOB.hag_trees)
+				if(!istype(get_area(T), /area/rogue/indoors/shelter/bog_hag_hut))
+					exits += T
+			if(length(exits))
+				do_teleport(user, pick(exits), FALSE)
+			else
+				to_chat(user, span_warning("The roots find no path out from here."))
+		else
+			for(var/obj/structure/roguemachine/mossmother/travel/T in GLOB.hag_trees)
+				if(istype(get_area(T), /area/rogue/indoors/shelter/bog_hag_hut))
+					do_teleport(user, T, FALSE)
+					return
+			to_chat(user, span_warning("The roots cannot find the hag's hut."))
 		return
 
 	var/list/destinations = list()
@@ -139,13 +169,3 @@
 	if(passenger && get_dist(src, passenger) <= 2)
 		passenger.forceMove(destination)
 		to_chat(passenger, span_userdanger("You are dragged through the suffocating, muddy darkness of the roots!"))
-
-	// Notify the hag when a mortal arrives in her bog or hut
-	if(!is_hag)
-		var/area/arrived_in = get_area(target)
-		if(istype(arrived_in, /area/rogue/indoors/shelter/bog_hag_hut) || istype(arrived_in, /area/rogue/indoors/shelter/bog_hag))
-			for(var/obj/structure/roguemachine/hag_heart/heart in GLOB.hag_hearts)
-				if(!heart.bound_hag?.owner?.current)
-					continue
-				to_chat(heart.bound_hag.owner.current, \
-					span_boldnotice("An intruder walks your roots! [user.real_name] has entered [arrived_in.name]."))

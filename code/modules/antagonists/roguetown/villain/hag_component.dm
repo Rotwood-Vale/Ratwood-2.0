@@ -69,3 +69,9 @@
 	L.visible_message(span_boldnotice("[L] claws back to life, dripping with wet moss."))
 
 	last_revive_time = world.time
+
+/// Prevents immediate post-revive root travel to match Azure Peak pacing.
+/datum/component/hag_curio_tracker/proc/hag_teleport_check()
+	if(world.time < last_revive_time + 5 MINUTES)
+		return FALSE
+	return TRUE

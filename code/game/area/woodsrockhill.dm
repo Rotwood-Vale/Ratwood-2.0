@@ -121,6 +121,27 @@
 	soundenv = 15
 	deathsight_message = "deep in the bog"
 
+/area/rogue/indoors/shelter/var/static/list/hag_intrusion_alert_times = list()
+
+/area/rogue/indoors/shelter/proc/notify_hag_intrusion(mob/living/carbon/human/guy, message, cooldown = 20 SECONDS)
+	if(!ishuman(guy) || !guy.mind)
+		return
+	if(guy.mind.has_antag_datum(/datum/antagonist/hag))
+		return
+	for(var/obj/structure/roguemachine/hag_heart/heart in GLOB.hag_hearts)
+		if(!heart.bound_hag?.owner?.current)
+			continue
+		var/key = "[REF(heart.bound_hag.owner)]:[REF(guy.mind)]:[type]"
+		var/last_alert = hag_intrusion_alert_times[key] || 0
+		if(world.time < last_alert + cooldown)
+			continue
+		hag_intrusion_alert_times[key] = world.time
+		to_chat(heart.bound_hag.owner.current, message)
+
+/area/rogue/indoors/shelter/bog_hag/Entered(mob/living/carbon/human/guy)
+	. = ..()
+	notify_hag_intrusion(guy, span_boldnotice("The roots whisper of trespass. [guy.real_name] has entered your hollow."))
+
 /area/rogue/indoors/shelter/bog_hag_hut
 	name = "Hag's Hut Interior"
 	icon_state = "bog"
@@ -133,3 +154,7 @@
 	droning_sound_night = 'sound/music/area/bog.ogg'
 	soundenv = 15
 	deathsight_message = "within the hag's hut"
+
+/area/rogue/indoors/shelter/bog_hag_hut/Entered(mob/living/carbon/human/guy)
+	. = ..()
+	notify_hag_intrusion(guy, span_userdanger("The hut shudders. [guy.real_name] has stepped into your sanctuary."))
