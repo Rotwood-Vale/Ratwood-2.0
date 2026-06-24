@@ -3351,7 +3351,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		reset_all_customizer_accessory_colors()
 
 /proc/valid_headshot_link(mob/user, value, silent = FALSE, list/valid_extensions = list("jpg", "png", "jpeg"))
-	var/static/link_regex = regex(@"i\.gyazo.com|.\.l3n\.co|(images2|thumbs2)\.imgbox\.com|files\.catbox\.moe|(?:dl\.)?sndup\.net") //gyazo, lensdump, imgbox, catbox, sndup
+	var/static/link_regex = regex(@"i\.gyazo.com|.\.l3n\.co|(images2|thumbs2)\.imgbox\.com|files\.catbox\.moe|file\.garden") //gyazo, lensdump, imgbox, catbox, filegarden
 
 	if(!length(value))
 		return FALSE
@@ -3378,7 +3378,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	find_index = findtext(value, link_regex)
 	if(find_index != 9)
 		if(!silent)
-			to_chat(usr, "<span class='warning'>The link must be hosted on one of the following sites: 'Gyazo, Lensdump, Imgbox, Catbox, SndUp'</span>")
+			to_chat(usr, "<span class='warning'>The link must be hosted on one of the following sites: 'Gyazo, Lensdump, Imgbox, Catbox, Filegarden'</span>")
 		return FALSE
 	return TRUE
 
