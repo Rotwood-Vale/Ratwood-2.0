@@ -4,6 +4,8 @@
 	var/last_revive_time = -5 MINUTES
 	/// Associated hag antagonist datum
 	var/datum/antagonist/hag/hag_ref
+	/// Prepared boons ready to manifest as items: [boon_path] = count
+	var/alist/prepared_boons = list()
 
 /datum/component/hag_curio_tracker/Initialize(datum/antagonist/hag/hag_datum)
 	if(!isliving(parent))
@@ -74,4 +76,27 @@
 /datum/component/hag_curio_tracker/proc/hag_teleport_check()
 	if(world.time < last_revive_time + 5 MINUTES)
 		return FALSE
+	return TRUE
+
+/// Absorb enchanted moss to prepare boons for manifestation
+/datum/component/hag_curio_tracker/proc/absorb_enchanted_moss(obj/item/alch/hag_moss/enchanted/M)
+	if(!M.boon_path)
+		return FALSE
+
+	prepared_boons[M.boon_path] = (prepared_boons[M.boon_path] || 0) + 1
+
+	to_chat(parent, span_notice("The [M] dissolves into your spirit, preparing a blessing of [initial(M.boon_path:name)]."))
+	qdel(M)
+	return TRUE
+
+/// Consume a prepared boon to check availability
+/datum/component/hag_curio_tracker/proc/consume_prepared_boon(boon_path)
+	if(!prepared_boons[boon_path] || prepared_boons[boon_path] <= 0)
+		return FALSE
+
+	prepared_boons[boon_path]--
+	return TRUE
+
+/// Check if a boon can be received
+/datum/component/hag_curio_tracker/proc/user_can_receive_boon(boon_path, true_name)
 	return TRUE
