@@ -495,7 +495,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/hag_heart/Initialize(mapload)
 	. = ..()
-	GLOB.hag_hearts += loc
+	if(!locate(/obj/structure/roguemachine/hag_heart) in loc)
+		new /obj/structure/roguemachine/hag_heart(loc)
 
 /obj/effect/landmark/start/hag_tree
 	name = "hag_tree"
