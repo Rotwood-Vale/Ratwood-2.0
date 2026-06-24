@@ -276,3 +276,11 @@
   - bugfix: bathhouse lockers keys fixed
   - bugfix: 'deserttown: fixes a missing wall and a missing hatch. Also fixes a missing
       texture and adds some grass'
+2026-06-24:
+  567Turtle:
+  - bugfix: Tiger Markings are now drawn correctly on Feminine bodies.
+  EvenInDeathIStillServe:
+  - rscadd: You can export your preferences/characters using the "Export Preferences"
+      verb in the "OOC" panel. It will be saved as a file on your computer.
+  RadiantFlash7:
+  - code_imp: Admin debug message removed

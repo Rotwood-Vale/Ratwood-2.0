@@ -1,0 +1,4 @@
+author: "567Turtle"
+delete-after: True
+changes:
+  - bugfix: "Fixes stripes/tiger stripes markings for real this time."
