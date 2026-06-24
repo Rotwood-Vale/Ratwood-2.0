@@ -123,7 +123,13 @@
 		// Scarred mortals can't reach the hut tree while wards still stand
 		if(!is_hag && is_hut && length(GLOB.hag_wards))
 			continue
-		destinations[REF(tree)] = A ? A.name : "Unknown Thicket"
+		var/base_label = A ? A.name : "Unknown Thicket"
+		var/label = base_label
+		var/suffix = 2
+		while(destinations[label])
+			label = "[base_label] ([suffix])"
+			suffix++
+		destinations[label] = REF(tree)
 
 	if(!length(destinations))
 		to_chat(user, span_warning("The roots lead nowhere from here."))
@@ -133,7 +139,8 @@
 	if(!selection)
 		return
 
-	var/obj/structure/roguemachine/mossmother/travel/target = locate(selection) in GLOB.hag_trees
+	var/target_ref = destinations[selection]
+	var/obj/structure/roguemachine/mossmother/travel/target = locate(target_ref) in GLOB.hag_trees
 	if(!target)
 		return
 

@@ -31,7 +31,7 @@
 /datum/antagonist/hag/get_antag_cap_weight()
 	return 2
 
-/datum/antagonist/hag/on_gain()
+/datum/antagonist/hag/on_gain(admin_granted = FALSE)
 	. = ..()
 	if(!owner || !owner.current)
 		return
@@ -44,6 +44,10 @@
 		owner.store_memory("Objective: [revenge_objective.explanation_text]")
 
 	if(istype(hag_body))
+		if(admin_granted)
+			// Admin/manual grants often happen mid-round with occupied slots.
+			// Clear equipment first so the hag loadout applies deterministically.
+			hag_body.unequip_everything()
 		hag_body.equipOutfit(/datum/outfit/job/roguetown/hag)
 
 	if(length(GLOB.hag_starts))
@@ -78,9 +82,11 @@
 		return
 	ADD_TRAIT(hag_body, TRAIT_ANCIENT_HAG, "[type]")
 	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/hag_pact)
-	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/hag_transmute)
+	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/transmutation_rite)
 	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/spiritual_siphon)
 	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/grant_boon)
+	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/resurrect/hag)
+	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mindlink/hag)
 	teach_hag_recipes(hag_body.mind)
 	// Attach the curio tracker component for death/revive handling
 	curio_component = hag_body.AddComponent(/datum/component/hag_curio_tracker, src)
@@ -93,9 +99,11 @@
 	qdel(hag_body.GetComponent(/datum/component/hag_curio_tracker))
 	curio_component = null
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/hag_pact)
-	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/hag_transmute)
+	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/transmutation_rite)
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/spiritual_siphon)
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/grant_boon)
+	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/resurrect/hag)
+	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/mindlink/hag)
 	hag_body.verbs -= /mob/living/carbon/human/proc/commune_with_roots
 
 /datum/antagonist/hag/proc/teach_hag_recipes(datum/mind/hag_mind)
@@ -680,6 +688,214 @@
 	user.put_in_hands(B)
 	to_chat(user, span_notice("You pull a sliver of [choice] from your spirit."))
 	return TRUE
+
+
+/obj/effect/proc_holder/spell/invoked/transmutation_rite
+	name = "Transmutation"
+	var/list/selected_boons = list()
+	var/selected_curse_path = null
+	var/active_victim_name = null
+
+/obj/effect/proc_holder/spell/invoked/transmutation_rite/cast(list/targets, mob/living/user)
+	var/datum/component/hag_curio_tracker/H = user.GetComponent(/datum/component/hag_curio_tracker)
+	if(!H || !length(H.boon_registry))
+		to_chat(user, span_warning("You have no souls bound to your spirit."))
+		return FALSE
+	ui_interact(user)
+	return TRUE
+
+/obj/effect/proc_holder/spell/invoked/transmutation_rite/ui_state(mob/user)
+	return GLOB.always_state
+
+/obj/effect/proc_holder/spell/invoked/transmutation_rite/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "HagTransmutation", "Rite of Transmutation")
+		ui.open()
+
+/obj/effect/proc_holder/spell/invoked/transmutation_rite/ui_data(mob/user)
+	var/datum/component/hag_curio_tracker/H = user.GetComponent(/datum/component/hag_curio_tracker)
+	if(!H)
+		return FALSE
+
+	var/list/victims_data = list()
+	for(var/t_name in H.boon_registry)
+		var/list/boons = list()
+		for(var/datum/hag_boon/B in H.boon_registry[t_name])
+			boons += list(list(
+				"id" = "[B.type]",
+				"victim_name" = t_name,
+				"name" = B.name,
+				"points" = B.points,
+				"selected" = (B in selected_boons),
+				"transmutable" = B.transmutable
+			))
+		victims_data += list(list(
+			"name" = t_name,
+			"boons" = boons
+		))
+
+	return list(
+		"victims" = victims_data,
+		"curse_options" = H.get_available_curses_data(),
+		"total_points" = calculate_current_points(),
+		"hag_tier" = H.hag_tier,
+		"selected_curse_path" = selected_curse_path
+	)
+
+/obj/effect/proc_holder/spell/invoked/transmutation_rite/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	var/mob/living/user = ui.user
+	var/datum/component/hag_curio_tracker/H = user.GetComponent(/datum/component/hag_curio_tracker)
+	if(!H)
+		return .
+
+	switch(action)
+		if("toggle_boon")
+			var/boon_id = params["id"]
+			var/v_name = params["victim_name"]
+			if(active_victim_name != v_name)
+				selected_boons.Cut()
+				active_victim_name = v_name
+			var/list/registry = H.boon_registry[v_name]
+			for(var/datum/hag_boon/B in registry)
+				if("[B.type]" == boon_id)
+					if(B in selected_boons)
+						selected_boons -= B
+						if(!selected_boons.len)
+							active_victim_name = null
+					else
+						selected_boons += B
+					return TRUE
+
+		if("select_curse")
+			selected_curse_path = params["path"]
+			return TRUE
+
+		if("commit_transmutation")
+			if(!active_victim_name || !selected_curse_path || !selected_boons.len)
+				return TRUE
+
+			var/points_gathered = calculate_current_points()
+			var/curse_cost = 999
+			var/list/curses = H.get_available_curses_data()
+			for(var/list/C in curses)
+				if(C["path"] == selected_curse_path)
+					curse_cost = C["cost"]
+					break
+
+			if(points_gathered < curse_cost)
+				to_chat(user, span_warning("The soul-tithe is insufficient. You require [curse_cost] points, but have only gathered [points_gathered]."))
+				return TRUE
+
+			H.transmute_boons_to_curse(active_victim_name, selected_boons, text2path(selected_curse_path), points_gathered)
+			selected_boons.Cut()
+			selected_curse_path = null
+			active_victim_name = null
+			return TRUE
+	return .
+
+/obj/effect/proc_holder/spell/invoked/transmutation_rite/proc/calculate_current_points()
+	var/points = 0
+	for(var/datum/hag_boon/B in selected_boons)
+		points += B.points
+	return points
+
+
+/obj/effect/proc_holder/spell/invoked/resurrect/hag
+	name = "Thorny Regrowth"
+	desc = "Knit a fallen soul back into a body using parasitic vines. The target is revived, but incurs a 50-point debt to your Curio."
+	recharge_time = 10 MINUTES
+	sound = 'sound/magic/slimesquish.ogg'
+	required_structure = /obj/structure/roguemachine/mossmother
+	required_items = list()
+	req_items = list()
+	alt_required_items = list()
+	miracle = FALSE
+	harms_undead = FALSE
+	devotion_cost = 0
+	var/boon_path = /datum/hag_boon/revival_debt
+
+/obj/effect/proc_holder/spell/invoked/resurrect/hag/cast(list/targets, mob/living/carbon/human/user)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	var/mob/living/carbon/human/target = targets[1]
+	if(!istype(target))
+		return FALSE
+
+	var/datum/component/hag_curio_tracker/HCT = user.GetComponent(/datum/component/hag_curio_tracker)
+	if(HCT)
+		HCT.grant_boon(target.real_name, boon_path, 50)
+		to_chat(user, span_notice("You've tethered [target.real_name] to your garden. Their life is now your currency."))
+	return TRUE
+
+
+/obj/effect/proc_holder/spell/invoked/mindlink/hag
+	name = "Coven Link"
+	desc = "Weave selected minds into your web. Linked minds communicate via ,m."
+	recharge_time = 4 MINUTES
+	cost = 12
+	var/link_duration = 20 MINUTES
+
+/obj/effect/proc_holder/spell/invoked/mindlink/hag/cast(list/targets, mob/living/user)
+	var/list/possible = user.mind.known_people.Copy()
+	if(!possible.len)
+		to_chat(user, span_warning("I have no puppets to bind to my web."))
+		revert_cast()
+		return FALSE
+
+	var/list/mob/living/carbon/human/selected = list()
+	for(var/i in 1 to 5)
+		var/prompt = "Choose member #[i] to bind (Cancel to finalize)"
+		var/target_name = tgui_input_list(user, prompt, "Coven Link", sort_list(possible))
+		if(!target_name)
+			break
+
+		var/mob/living/carbon/human/found_mob
+		for(var/mob/living/carbon/human/HL in GLOB.human_list)
+			if(HL.real_name == target_name)
+				found_mob = HL
+				break
+		if(found_mob)
+			selected += found_mob
+			possible -= target_name
+		if(!possible.len)
+			break
+
+	if(!selected.len)
+		to_chat(user, span_warning("A coven of one is just a lonely old woman. I need at least one other."))
+		revert_cast()
+		return FALSE
+
+	var/list/active_links = list()
+	for(var/mob/living/carbon/human/M in selected)
+		var/datum/mindlink/link = new(user, M)
+		GLOB.mindlinks += link
+		active_links += link
+
+	var/list/names = list(user.real_name)
+	for(var/mob/living/M in selected)
+		names += M.real_name
+	var/roster = names.Join(", ")
+	to_chat(user, span_boldnotice("The Coven is formed! Linked minds: [roster]. Use ,m to speak."))
+	for(var/mob/living/M in selected)
+		to_chat(M, span_boldnotice("The Coven is formed! Linked minds: [roster]. Use ,m to speak."))
+
+	addtimer(CALLBACK(src, PROC_REF(break_coven), active_links), link_duration)
+	return TRUE
+
+/obj/effect/proc_holder/spell/invoked/mindlink/hag/proc/break_coven(list/links)
+	for(var/datum/mindlink/L in links)
+		if(!L)
+			continue
+		if(L.owner)
+			to_chat(L.owner, span_warning("The coven web snaps and withers..."))
+		if(L.target)
+			to_chat(L.target, span_warning("The coven web snaps and withers..."))
+		GLOB.mindlinks -= L
+		qdel(L)
 
 
 /mob/living/carbon/human/proc/commune_with_roots()
