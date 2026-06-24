@@ -25,11 +25,21 @@
 	// Will add more logic in Phase 2 for ward mechanics
 	return
 
+/// Wards protect the heart. While any ward remains standing, the heart cannot be damaged.
+/obj/structure/roguemachine/hag_heart/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armor_penetration = 0, object_damage_multiplier = 1)
+	if(length(GLOB.hag_wards))
+		if(sound_effect)
+			src.visible_message(span_notice("Magical energy still safeguards the heart. The wards must fall first."))
+		return FALSE
+	return ..()
+
 /obj/structure/roguemachine/hag_heart/proc/on_destroyed()
 	destroyed = TRUE
 	visible_message(span_boldwarning("The Mossmother's Heart shatters! Its ancient power dissipates into the bog!"))
-	//playsound(src, 'sound/magic/sunder.ogg', 100, TRUE) // TODO: Port Azure Peak audio assets
-	// Phase 2: Will trigger final spite curse, make hag killable, notify coven
+	priority_announce("A terrible crack echoes across the land. The Mossmother's Heart has been destroyed — the hag can now be slain for good.", "The Heart Falls")
+	// Notify the bound hag directly
+	if(bound_hag?.owner?.current)
+		to_chat(bound_hag.owner.current, span_userdanger("My heart is gone. If I die now, I will not return."))
 
 /obj/structure/roguemachine/hag_heart/proc/link_hag(datum/antagonist/hag/hag_datum)
 	bound_hag = hag_datum
