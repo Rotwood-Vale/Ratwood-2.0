@@ -855,7 +855,7 @@
 	if(islist(modular_adjustments) && modular_adjustments.len >= 2)
 		arousal_amt = modular_adjustments[1]
 		pain_amt = modular_adjustments[2]
-	if(!do_subtle_action)
+	if(!user.sexcon.do_subtle_action)
 		show_sex_effects(action_target)
 	action_target.sexcon.receive_sex_action(arousal_amt, pain_amt, giving, force, speed)
 	/// modular signal to let other systems know about the sex action, currently used for chastity course to track arousal and apply pain, but can be used for other things in the future
@@ -1648,10 +1648,8 @@
 	for(var/i in 1 to rand(1, 3))
 		if(!user.cmode) // Combat mode
 			new /obj/effect/temp_visual/heart/sex_effects(get_turf(user))
-			to_chat(user, "Spawned heart!")
 		else
 			new /obj/effect/temp_visual/heart/sex_effects/red_heart(get_turf(user))
-			to_chat(user, "Spawned anger!")
 
 /datum/proc/werewolf_sex_infect_attempt(mob/living/carbon/human/top, mob/living/carbon/human/bottom)
 
