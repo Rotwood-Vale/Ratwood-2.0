@@ -28,7 +28,8 @@
 	var/obj/item/dildo/dildo = get_dildo_in_either_hand(user)
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pleasures [user.p_their()] butt with \the [dildo]."))
 	user.sexcon.outercourse_noise(user)
-	do_onomatopoeia(user)
+	if(user.client.prefs.erp_hearts && target.client.prefs.erp_hearts)
+		do_onomatopoeia(user)
 
 	user.sexcon.perform_sex_action(user, 2, 6, TRUE)
 	user.sexcon.handle_passive_ejaculation()

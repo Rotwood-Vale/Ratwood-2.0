@@ -91,7 +91,8 @@
 		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] double-knots [target]'s ass."))
 	user.sexcon.intercourse_noise(target)
 	user.sexcon.do_thrust_animate(target)
-	do_onomatopoeia(user)
+	if(user.client.prefs.erp_hearts && target.client.prefs.erp_hearts)
+		do_onomatopoeia(user)
 
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU))
 		user.sexcon.try_pelvis_crush(target)

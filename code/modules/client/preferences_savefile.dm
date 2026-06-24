@@ -262,6 +262,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["chastenable"]		>> chastenable
 	S["chastity_hardmode"]	>> chastity_hardmode
 	S["extreme_erp"]		>> extreme_erp
+	S["erp_hearts"]			>> erp_hearts
 	S["edging"]				>> edging
 	S["shake"]				>> shake
 	S["mastervol"]			>> mastervol
@@ -409,6 +410,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["chastenable"], chastenable)
 	WRITE_FILE(S["chastity_hardmode"], chastity_hardmode)
 	WRITE_FILE(S["extreme_erp"], extreme_erp)
+	WRITE_FILE(S["erp_hearts"], erp_hearts)
 	WRITE_FILE(S["edging"], edging)
 	WRITE_FILE(S["shake"], shake)
 	WRITE_FILE(S["lastclass"], lastclass)

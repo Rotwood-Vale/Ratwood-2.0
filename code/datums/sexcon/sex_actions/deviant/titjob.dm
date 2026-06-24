@@ -30,7 +30,8 @@
 /datum/sex_action/titjob/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] fucks [target]'s tits."))
 	user.sexcon.outercourse_noise(user)
-	do_onomatopoeia(user)
+	if(user.client.prefs.erp_hearts && target.client.prefs.erp_hearts)
+		do_onomatopoeia(user)
 
 	user.sexcon.perform_sex_action(user, 2, 4, TRUE)
 

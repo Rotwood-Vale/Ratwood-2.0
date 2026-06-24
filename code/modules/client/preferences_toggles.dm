@@ -135,6 +135,7 @@
 		list("id" = "chastity", "label" = "Enable Chastity Content", "enabled" = !!owner.prefs.chastenable, "desc" = "Show and allow chastity-related content."),
 		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
 		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allow extreme ERP content categories."),
+		list("id" = "erp_hearts", "label" = "Enable ERP Hearts and Plaptext", "enabled" = !!owner.prefs.erp_hearts, "desc" = "Allow ERP hearts and plaptext."),
 		list("id" = "edging", "label" = "Enable Edging Content", "enabled" = !!owner.prefs.edging, "desc" = "Allow edging-related ERP content."),
 	)
 
@@ -227,6 +228,8 @@
 				owner.toggle_Chastity_Hardmode()
 			if("extreme_erp")
 				owner.toggle_extreme_ERP()
+			if("erp_hearts")
+				owner.toggle_ERP_hearts()
 			if("edging")
 				owner.toggle_edging()
 		SStgui.update_uis(src)
@@ -438,6 +441,18 @@
 			if(hascall(src, "modular_handle_extreme_erp_toggle_disable"))
 				call(src, "modular_handle_extreme_erp_toggle_disable")()
 			to_chat(src, "Extreme ERP content disabled in the ERP panel.")
+
+/client/verb/toggle_ERP_hearts()// toggles the heart and anger emojis, as well as the plap text
+	set category = "Options"
+	set name = "Toggle ERP hearts and plap alerts"
+	set hidden = 1
+	if(prefs)
+		prefs.erp_hearts = !prefs.erp_hearts
+		prefs.save_preferences()
+		if(prefs.erp_hearts)
+			to_chat(src, "ERP Hearts and plaptext enabled in the ERP panel.")
+		else
+			to_chat(src, "ERP Hearts and plaptext disabled in the ERP panel.")
 
 /client/verb/toggle_edging() // Toggles edging content in the ERP panel, for psydonites who clearly can't ENDURE.
 	set category = "Options"

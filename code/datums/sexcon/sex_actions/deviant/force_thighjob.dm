@@ -25,6 +25,8 @@
 	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] jerks [target]'s cock with [user.p_their()] thighs..."))
 	user.sexcon.outercourse_noise(user)
 	user.sexcon.do_thrust_animate(target)
+	if(user.client.prefs.erp_hearts && target.client.prefs.erp_hearts)
+		do_onomatopoeia(user)
 
 	user.sexcon.perform_sex_action(target, 2, 4, TRUE)
 

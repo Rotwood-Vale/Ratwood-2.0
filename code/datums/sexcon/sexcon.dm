@@ -1645,11 +1645,12 @@
 	icon_state = "quivering"
 
 /datum/proc/show_sex_effects(mob/living/carbon/human/user)
-	for(var/i in 1 to rand(1, 3))
-		if(!user.cmode) // Combat mode
-			new /obj/effect/temp_visual/heart/sex_effects(get_turf(user))
-		else
-			new /obj/effect/temp_visual/heart/sex_effects/red_heart(get_turf(user))
+	if(user.client.prefs.erp_hearts)
+		for(var/i in 1 to rand(1, 3))
+			if(!user.cmode) // Combat mode
+				new /obj/effect/temp_visual/heart/sex_effects(get_turf(user))
+			else
+				new /obj/effect/temp_visual/heart/sex_effects/red_heart(get_turf(user))
 
 /datum/proc/werewolf_sex_infect_attempt(mob/living/carbon/human/top, mob/living/carbon/human/bottom)
 

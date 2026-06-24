@@ -100,7 +100,8 @@
 	user.sexcon.intercourse_noise(target, TRUE)
 	user.sexcon.oralcourse_noise(target)
 	user.sexcon.do_thrust_animate(target)
-	do_onomatopoeia(user)
+	if(user.client.prefs.erp_hearts && target.client.prefs.erp_hearts)
+		do_onomatopoeia(user)
 
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))
 		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
