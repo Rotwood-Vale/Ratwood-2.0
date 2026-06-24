@@ -87,12 +87,12 @@
 // 为什么是 9：略大于默认视野（7），确保玩家屏幕内（含边缘）正在交战的怪物都能被及时挂上监听。
 #define RPG_SYSTEM_SCAN_RANGE 9
 
-// 击杀积分的换算：固定为怪物最大生命值 maxHealth 的 10%，越强的怪给得越多。
+// 击杀积分的换算：固定为怪物最大生命值 maxHealth 的 5%，越强的怪给得越多。
 // 为什么按 maxHealth：simple_animal 系怪物普遍带 maxHealth，且它与"怪物强度"高度相关，
 //   是最稳妥、对所有怪物都可用的强度近似指标（无需为每种怪单独配表）。
-// 为什么是 0.1（10%）：需求明确"击杀获得的积分 = 怪物最大生命值的 10%"。例如 100 血的怪给 10 分，
-//   200 血的怪给 20 分。单列为常量，平衡只改这一处。
-#define RPG_SYSTEM_POINTS_PER_MAXHP 0.1
+// 为什么是 0.05（5%）：需求明确"击杀获得的积分 = 怪物最大生命值的 5%"。例如 100 血的怪给 5 分，
+//   200 血的怪给 10 分。单列为常量，平衡只改这一处。
+#define RPG_SYSTEM_POINTS_PER_MAXHP 0.05
 // 单次击杀的保底积分：纯粹用于兜底——防止极低血量怪物经 round() 后算出 0 分（"杀了像没收益"）。
 //   故仅设为 1（最低限度的非零保证），不破坏"积分=10% 最大生命值"的基本设定。
 #define RPG_SYSTEM_MIN_KILL_POINTS 1
@@ -350,6 +350,8 @@
 		"consumable" = "消耗品",
 		"material" = "材料",
 		"magic" = "魔法物品",
+		"delicacy" = "美食",
+		"artifact" = "神器",
 		"stat" = "强化属性",
 		"skill" = "强化技能",
 	)
@@ -394,10 +396,18 @@
 		"战斧（180积分）"  = list(180, /obj/item/rogueweapon/stoneaxe/battle),                // 重型斧，高伤害
 		"三叉戟（210积分）"= list(210, /obj/item/rogueweapon/spear/trident),                  // 高级长柄武器
 		"弩（240积分）"    = list(240, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow), // 远程武器（需自备弩矢）
+		"投石索（90积分）"= list(90, /obj/item/gun/ballistic/revolver/grenadelauncher/sling),      // 廉价远程武器（需自备弹丸）
+		"弓（200积分）"   = list(200, /obj/item/gun/ballistic/revolver/grenadelauncher/bow),        // 远程武器（需自备箭矢）
 		"弯刀（150积分）"  = list(150, /obj/item/rogueweapon/sword/falx),                     // 法尔克斯弯刀，劈砍见长
 		"短棍（50积分）"   = list(50, /obj/item/rogueweapon/mace/cudgel),                     // 廉价钝器，入门近战
 		"重锤（260积分）"  = list(260, /obj/item/rogueweapon/mace/goden),                     // 戈登大棒，重型钝击
 		"戟（280积分）"    = list(280, /obj/item/rogueweapon/halberd),                        // 长柄重武器，攻防兼备
+		"连枷（170积分）"  = list(170, /obj/item/rogueweapon/flail),                          // 链锤，无视格挡角度
+		"刺剑（220积分）"  = list(220, /obj/item/rogueweapon/estoc),                          // 重型刺剑，破甲穿刺
+		"木棍（25积分）"   = list(25, /obj/item/rogueweapon/mace/woodclub),                   // 最廉价的钝器
+		"短剑（70积分）"   = list(70, /obj/item/rogueweapon/sword/short),                     // 轻便单手短剑
+		"草叉（70积分）"   = list(70, /obj/item/rogueweapon/pitchfork),                       // 长柄农具，可作刺击武器
+		"鞭子（90积分）"   = list(90, /obj/item/rogueweapon/whip),                            // 长鞭，远距离软兵
 		"巨剑（300积分）"  = list(300, /obj/item/rogueweapon/greatsword),                     // 双手巨剑，高伤害重武器
 	)
 
@@ -407,13 +417,21 @@
 		"火把（50积分）"     = list(50, /obj/item/flashlight/flare/torch),                   // 照明工具（黑暗中作战必备）
 		"锁链手套（60积分）" = list(60, /obj/item/clothing/gloves/roguetown/chain),          // 手部护具
 		"木盾（70积分）"     = list(70, /obj/item/rogueweapon/shield/wood),                  // 入门盾牌，格挡攻击
+		"皮盔（55积分）"     = list(55, /obj/item/clothing/head/roguetown/helmet/leather),    // 轻型皮制头盔
 		"头盔（90积分）"     = list(90, /obj/item/clothing/head/roguetown/helmet),           // 头部护具
+		"皮背心（70积分）"   = list(70, /obj/item/clothing/suit/roguetown/armor/leather/vest), // 轻型皮背心
 		"皮甲（100积分）"    = list(100, /obj/item/clothing/suit/roguetown/armor/leather),   // 基础躯干护甲
+		"水壶盔（110积分）"  = list(110, /obj/item/clothing/head/roguetown/helmet/kettle),   // 宽檐铁盔，遮挡上方
 		"铁盾（150积分）"    = list(150, /obj/item/rogueweapon/shield/iron),                 // 中级盾牌，格挡更强
+		"轻型半盔（150积分）"= list(150, /obj/item/clothing/head/roguetown/helmet/sallet),   // 半罩式骑士盔
 		"厚棉甲（130积分）"  = list(130, /obj/item/clothing/suit/roguetown/armor/gambeson),  // 软质护甲，缓冲钝击
 		"板甲手套（140积分）"= list(140, /obj/item/clothing/gloves/roguetown/plate),         // 重型手部护具
 		"重型头盔（170积分）"= list(170, /obj/item/clothing/head/roguetown/helmet/heavy),    // 重型头部护具
+		"面甲盔（185积分）"  = list(185, /obj/item/clothing/head/roguetown/helmet/bascinet), // 带面甲的骑士盔
+		"镶嵌甲（240积分）"  = list(240, /obj/item/clothing/suit/roguetown/armor/brigandine), // 镶钉皮甲，防护与灵活兼顾
 		"背包（50积分）"     = list(50, /obj/item/storage/backpack/rogue/backpack),          // 背负容器，扩充携带空间
+		"提灯（60积分）"     = list(60, /obj/item/flashlight/flare/torch/lantern),           // 可持续照明的提灯
+		"塔盾（220积分）"    = list(220, /obj/item/rogueweapon/shield/tower),                // 大型塔盾，防护面积最大
 		"锁子甲（200积分）"  = list(200, /obj/item/clothing/suit/roguetown/armor/chainmail), // 中级躯干护甲
 		"板甲（320积分）"    = list(320, /obj/item/clothing/suit/roguetown/armor/plate),     // 高级躯干护甲，防护最强
 	)
@@ -421,6 +439,12 @@
 /datum/component/rpg_system/proc/get_consumable_catalog()
 	return list(
 		"清水（10积分）"     = list(10, /obj/item/reagent_containers/glass/bottle/rogue/water),      // 解渴的廉价补给
+		"箭矢（6积分）"      = list(6, /obj/item/ammo_casing/caseless/rogue/arrow),                  // 弓用弹药
+		"石箭（7积分）"      = list(7, /obj/item/ammo_casing/caseless/rogue/arrow/stone),            // 石制弓用弹药
+		"弩矢（8积分）"      = list(8, /obj/item/ammo_casing/caseless/rogue/bolt),                   // 弩用弹药
+		"铁箭（12积分）"     = list(12, /obj/item/ammo_casing/caseless/rogue/arrow/iron),            // 更锋利的弓用弹药
+		"钢箭（20积分）"     = list(20, /obj/item/ammo_casing/caseless/rogue/arrow/steel),           // 钢制弓用弹药，穿透更强
+		"啤酒（15积分）"     = list(15, /obj/item/reagent_containers/glass/bottle/rogue/beer),         // 廉价酒水
 		"绷带（25积分）"     = list(25, /obj/item/natural/cloth/bandage),                            // 包扎止血
 		"面包（30积分）"     = list(30, /obj/item/reagent_containers/food/snacks/rogue/bread),       // 充饥的食物
 		"葡萄酒（25积分）"   = list(25, /obj/item/reagent_containers/glass/bottle/rogue/wine),          // 提神的酒水
@@ -428,30 +452,40 @@
 		"治疗药水（60积分）" = list(60, /obj/item/reagent_containers/glass/bottle/rogue/healthpot),     // 回血
 		"魔力药水（60积分）" = list(60, /obj/item/reagent_containers/glass/bottle/rogue/manapot),       // 回蓝
 		"解毒剂（70积分）"   = list(70, /obj/item/reagent_containers/glass/bottle/rogue/antidote),      // 解除中毒
+		"强效体力药水（100积分）" = list(100, /obj/item/reagent_containers/glass/bottle/rogue/strongstampot),  // 大量恢复体力
 		"强效治疗药水（120积分）" = list(120, /obj/item/reagent_containers/glass/bottle/rogue/healthpotnew), // 强力回血
+		"强效魔力药水（120积分）" = list(120, /obj/item/reagent_containers/glass/bottle/rogue/strongmanapot),  // 大量回蓝
+		"强效解毒剂（140积分）"   = list(140, /obj/item/reagent_containers/glass/bottle/rogue/strong_antidote), // 强力解毒
 	)
 
 // get_material_catalog：锻造 / 制作材料目录。需求"在兑换列表中加入材料兑换"。
-//   这些都是引擎里矿工 / 自然资源系产出的基础材料，玩家可拿去打造装备 / 制作物品，
-//   故价格普遍偏低（材料是中间产物，而非成品）。
+//   这些都是引擎里矿工 / 自然资源系产出的基础材料，玩家可拿去打造装备 / 制作物品。
+// 定价原则（本次价值优化）：材料是"中间原料"，单价必须显著低于用它打成的成品装备
+//   （例如成品锁子甲 200、板甲 320），否则"买原料比买成品还贵"就不合理。故整条材料线
+//   统一压到 150 以内，按"普通自然物 < 贱金属 < 贵金属 / 宝石"由廉到贵平滑排列，
+//   且任何一种金属锭都低于用它锻成的同级武器 / 护甲。
 /datum/component/rpg_system/proc/get_material_catalog()
 	return list(
+		"灰烬（4积分）"     = list(4, /obj/item/ash),                     // 炼金 / 制作的廉价材料
 		"石块（5积分）"     = list(5, /obj/item/natural/stone),           // 基础建材 / 制石器材料
 		"木材（8积分）"     = list(8, /obj/item/grown/log/tree/small),    // 基础木料（可加工成木板等）
 		"布料（10积分）"    = list(10, /obj/item/natural/cloth),          // 缝纫材料
-		"鞣制皮革（15积分）"= list(15, /obj/item/natural/hide/cured),     // 制甲 / 皮具材料
-		"铜锭（20积分）"    = list(20, /obj/item/ingot/copper),           // 低级金属锭
-		"铁锭（30积分）"    = list(30, /obj/item/ingot/iron),             // 常用锻造金属锭
-		"青铜锭（35积分）"  = list(35, /obj/item/ingot/bronze),           // 合金锭
-		"钢锭（50积分）"    = list(50, /obj/item/ingot/steel),            // 高级锻造金属锭
-		"银锭（70积分）"    = list(70, /obj/item/ingot/silver),           // 贵金属锭（克制特定敌人）
-		"金锭（100积分）"   = list(100, /obj/item/ingot/gold),            // 贵金属锭 / 高价值材料
 		"玻璃（12积分）"    = list(12, /obj/item/natural/glass),          // 制瓶 / 镶窗等的基础材料
-		"灰烬（5积分）"     = list(5, /obj/item/ash),                     // 炼金 / 制作的廉价材料
-		"绿宝石（90积分）"  = list(90, /obj/item/roguegem/green),         // 普通宝石，可镶嵌 / 制作材料
-		"蓝宝石（110积分）" = list(110, /obj/item/roguegem/blue),         // 较珍贵的宝石材料
-		"红宝石（130积分）" = list(130, /obj/item/roguegem/ruby),         // 珍贵宝石，可镶嵌 / 高价值材料
-		"钻石（200积分）"   = list(200, /obj/item/roguegem/diamond),      // 最珍贵的宝石材料
+		"鞣制皮革（16积分）"= list(16, /obj/item/natural/hide/cured),     // 制甲 / 皮具材料
+		"锡锭（18积分）"    = list(18, /obj/item/ingot/tin),              // 低级金属锭（合金原料）
+		"铜锭（22积分）"    = list(22, /obj/item/ingot/copper),           // 低级金属锭
+		"铁锭（28积分）"    = list(28, /obj/item/ingot/iron),             // 常用锻造金属锭
+		"青铜锭（34积分）"  = list(34, /obj/item/ingot/bronze),           // 合金锭
+		"绿宝石（40积分）"  = list(40, /obj/item/roguegem/green),         // 普通宝石，可镶嵌 / 制作材料
+		"黄宝石（45积分）"  = list(45, /obj/item/roguegem/yellow),        // 普通宝石，可镶嵌 / 制作材料
+		"钢锭（45积分）"    = list(45, /obj/item/ingot/steel),            // 高级锻造金属锭
+		"银锭（55积分）"    = list(55, /obj/item/ingot/silver),           // 贵金属锭（克制特定敌人）
+		"蓝宝石（60积分）"  = list(60, /obj/item/roguegem/blue),          // 较珍贵的宝石材料
+		"金锭（70积分）"    = list(70, /obj/item/ingot/gold),             // 贵金属锭 / 高价值材料
+		"紫宝石（70积分）"  = list(70, /obj/item/roguegem/violet),        // 较珍贵的宝石材料
+		"黑钢锭（85积分）"  = list(85, /obj/item/ingot/blacksteel),       // 高级合金锭，质地坚硬
+		"红宝石（100积分）" = list(100, /obj/item/roguegem/ruby),         // 珍贵宝石，可镶嵌 / 高价值材料
+		"钻石（150积分）"   = list(150, /obj/item/roguegem/diamond),      // 最珍贵的宝石材料
 	)
 
 // get_magic_catalog：魔法物品目录。需求"加入魔法物品的兑换"。
@@ -463,7 +497,109 @@
 		"传送卷轴（150积分）"   = list(150, /obj/item/teleportation_scroll),                          // 一次性魔法传送
 		"魔法戒指（200积分）"   = list(200, /obj/item/clothing/ring/active),                          // 可激活的魔法戒指
 		"随机魔法书（400积分）" = list(400, /obj/item/book/granter/spell/random),                    // 研读后习得一个随机法术
+		"传讯术卷轴（150积分）" = list(150, /obj/item/book/granter/spell/blackstone/message),        // 研读后习得【传讯术】（远程传话）
+		"羽落术卷轴（200积分）" = list(200, /obj/item/book/granter/spell/blackstone/featherfall),    // 研读后习得【羽落术】（缓降）
+		"纵跃术卷轴（220积分）" = list(220, /obj/item/book/granter/spell/blackstone/leap),           // 研读后习得【纵跃术】（跳跃）
+		"取物术卷轴（250积分）" = list(250, /obj/item/book/granter/spell/blackstone/fetch),          // 研读后习得【取物术】（隔空取物）
+		"排斥术卷轴（260积分）" = list(260, /obj/item/book/granter/spell/blackstone/repel),          // 研读后习得【排斥术】（击退）
+		"酸液飞溅卷轴（280积分）" = list(280, /obj/item/book/granter/spell/blackstone/acidsplash),   // 研读后习得【酸液飞溅】
+		"坚毅卷轴（290积分）"   = list(290, /obj/item/book/granter/spell/blackstone/fortitude),      // 研读后习得【坚毅】（强韧增益）
+		"火球术卷轴（300积分）" = list(300, /obj/item/book/granter/spell/blackstone/fireball),       // 研读后习得【火球术】
+		"冰霜箭卷轴（320积分）" = list(320, /obj/item/book/granter/spell/blackstone/frostbolt),      // 研读后习得【冰霜箭】
+		"闪电术卷轴（320积分）" = list(320, /obj/item/book/granter/spell/blackstone/lightning),      // 研读后习得【闪电术】
+		"吐焰火球卷轴（340积分）" = list(340, /obj/item/book/granter/spell/blackstone/spitfire),     // 研读后习得【吐焰火球】
+		"隐身术卷轴（350积分）" = list(350, /obj/item/book/granter/spell/blackstone/invisibility),   // 研读后习得【隐身术】
+		"力场墙卷轴（360积分）" = list(360, /obj/item/book/granter/spell/blackstone/forcewall_weak), // 研读后习得【力场墙】（屏障）
+		"寒骨卷轴（380积分）"   = list(380, /obj/item/book/granter/spell/blackstone/bonechill),      // 研读后习得【寒骨】（冰霜）
+		"疾病射线卷轴（400积分）" = list(400, /obj/item/book/granter/spell/blackstone/sicknessray),  // 研读后习得【疾病射线】
+		"强效火球术卷轴（500积分）" = list(500, /obj/item/book/granter/spell/blackstone/greaterfireball), // 研读后习得【强效火球术】
+		// —— 法术卷轴（研读后习得对应法术，作用于"人"）——
+		"小开锁卷轴（180积分）" = list(180, /obj/item/book/granter/spell/blackstone/lesserknock),     // 研读后习得【小开锁】（开锁）
+		"指引卷轴（210积分）"   = list(210, /obj/item/book/granter/spell/blackstone/guidance),        // 研读后习得【指引】（增益）
+		"缠绕卷轴（240积分）"   = list(240, /obj/item/book/granter/spell/blackstone/ensnare),         // 研读后习得【缠绕】（束缚）
+		"雾化卷轴（260积分）"   = list(260, /obj/item/book/granter/spell/blackstone/aerosolize),      // 研读后习得【雾化】
+		"易容卷轴（300积分）"   = list(300, /obj/item/book/granter/spell/blackstone/mirror_transform), // 研读后习得【镜像易容】（变换外貌）
+		"巨化卷轴（320积分）"   = list(320, /obj/item/book/granter/spell/blackstone/enlarge),         // 研读后习得【巨化】（体型增大）
+		"寻找魔宠卷轴（380积分）" = list(380, /obj/item/book/granter/spell/blackstone/familiar),       // 研读后习得【寻找魔宠】（召唤魔宠，可重复使用）
+		"奥术顿悟卷轴（350积分）" = list(350, /obj/item/book/granter/spell_points),                    // 研读后获得 3 点法术点（需奥术新手及以上）
+		"虚空奥术顿悟卷轴（650积分）" = list(650, /obj/item/book/granter/spell_points/voiddragon),     // 研读后获得 6 点法术点（需奥术新手及以上）
+		// —— 附魔卷轴（对"物品"施加特殊附魔：手持卷轴点击目标物品即可附魔，不是教人法术）——
+		//   T1 基础附魔
+		"附魔·伐木（150积分）"   = list(150, /obj/item/enchantmentscroll/woodcut),     // 给斧子附魔：高效伐木
+		"附魔·采矿（150积分）"   = list(150, /obj/item/enchantmentscroll/mining),      // 给镐子附魔：高效采矿
+		"附魔·显照（170积分）"   = list(170, /obj/item/enchantmentscroll/revealing),   // 给物品附魔：光源照明范围翻倍
+		"附魔·恒光（180积分）"   = list(180, /obj/item/enchantmentscroll/light),       // 给武器 / 衣物附魔：自身发光
+		"附魔·幸运（200积分）"   = list(200, /obj/item/enchantmentscroll/xylix),       // 给衣物附魔：赐予幸运
+		"附魔·储物（240积分）"   = list(240, /obj/item/enchantmentscroll/holding),     // 给容器附魔：容量翻倍
+		//   T2 高级附魔
+		"附魔·长步（240积分）"   = list(240, /obj/item/enchantmentscroll/trekk),       // 给鞋 / 戒指附魔：沼泽中行走自如
+		"附魔·蛛行（250积分）"   = list(250, /obj/item/enchantmentscroll/climbing),    // 给衣物附魔：攀爬陡壁
+		"附魔·夜视（250积分）"   = list(250, /obj/item/enchantmentscroll/nightvision), // 给衣物附魔：黑暗中视物
+		"附魔·锻造（250积分）"   = list(250, /obj/item/enchantmentscroll/smithing),    // 给锤子附魔：打铁更有效
+		"附魔·巧手（260积分）"   = list(260, /obj/item/enchantmentscroll/thievery),    // 给手套 / 戒指附魔：偷窃撬锁
+		"附魔·羽步（280积分）"   = list(280, /obj/item/enchantmentscroll/featherstep), // 给鞋 / 戒指附魔：加速且脚步无声
+		"附魔·抗火（280积分）"   = list(280, /obj/item/enchantmentscroll/fireresist),  // 给衣物附魔：不会被点燃
+		"附魔·坚不可摧（300积分）" = list(300, /obj/item/enchantmentscroll/unbreaking), // 给武器 / 衣物附魔：更耐用
+		//   T3 强力附魔
+		"附魔·武器召回（420积分）" = list(420, /obj/item/enchantmentscroll/returningweapon), // 给戒指 / 项链 / 手套附魔：召回武器
+		"附魔·箭术（440积分）"   = list(440, /obj/item/enchantmentscroll/archery),     // 给戒指 / 护腕附魔：提升箭术
+		"附魔·愈合（450积分）"   = list(450, /obj/item/enchantmentscroll/woundclosing), // 给戒指附魔：定期闭合伤口
+		"附魔·霜幕（460积分）"   = list(460, /obj/item/enchantmentscroll/frostveil),   // 给武器 / 护甲附魔：减速敌人
+		"附魔·闪电（480积分）"   = list(480, /obj/item/enchantmentscroll/lightning),   // 给武器附魔：命中电击
+		"附魔·凤凰守卫（480积分）" = list(480, /obj/item/enchantmentscroll/phoenixguard), // 给衣物附魔：反伤点燃来犯者
+		"附魔·吸血（500积分）"   = list(500, /obj/item/enchantmentscroll/lifesteal),   // 给武器附魔：命中回血
+		"附魔·虚空（520积分）"   = list(520, /obj/item/enchantmentscroll/voidtouched), // 给武器附魔：将敌人短暂拽入虚空
+		//   T4 神话附魔
+		"附魔·荆棘诅咒（700积分）" = list(700, /obj/item/enchantmentscroll/briars),     // 给武器附魔：伤害大增但反噬自身
+		"附魔·地狱火焰（750积分）" = list(750, /obj/item/enchantmentscroll/infernalflame), // 给武器 / 衣物附魔：命中点燃
+		"附魔·冰冻（780积分）"   = list(780, /obj/item/enchantmentscroll/freeze),      // 给武器 / 衣物附魔：命中冻结
+		"附魔·时间回溯（800积分）" = list(800, /obj/item/enchantmentscroll/rewind),     // 给武器 / 衣物附魔：受击后回溯位置
+		"附魔·混沌风暴（850积分）" = list(850, /obj/item/enchantmentscroll/chaos_storm), // 给武器附魔：随机混沌效果
 		"月光大剑（600积分）"   = list(600, /obj/item/rogueweapon/greatsword/moonlight_greatsword),   // 本模块自定义：高级魔法巨剑
+	)
+
+// get_delicacy_catalog：美食（珍馐 / 佳酿）目录。需求"加入昂贵的美食与饮品"。
+//   与普通"消耗品"分开成独立页签：消耗品偏功能（药水 / 弹药 / 干粮），美食偏享受 / 奢侈，
+//   定价显著高于同等填饱肚子的干粮——卖的是"风味与排场"。
+// 重要约束（按需求）：本目录只收录"昂贵的成品 / 熟食"，绝不收录生肉等"未加工原料"。
+//   因此这里只放：熟派 / 熟酿蛋等明确的熟食、奶酪 / 蜂蜜等成品、以及各类佳酿；
+//   生牛排 / 生禽肉 / 生兔肉等未烹饪肉类属于"原料"，已剔除（玩家若想要生肉应去别处加工，
+//   不在"珍馐"之列）。全部为引擎已有的成品食物 / 佳酿。
+/datum/component/rpg_system/proc/get_delicacy_catalog()
+	return list(
+		"曲奇饼（35积分）"   = list(35, /obj/item/reagent_containers/food/snacks/rogue/cookie),         // 曲奇饼，烤好的成品点心
+		"奶酪（40积分）"     = list(40, /obj/item/reagent_containers/food/snacks/rogue/cheese),         // 奶酪，成品乳制珍品
+		"蜂蜜（45积分）"     = list(45, /obj/item/reagent_containers/food/snacks/rogue/honey),          // 蜂蜜，成品甘味珍品
+		"三明治（50积分）"   = list(50, /obj/item/reagent_containers/food/snacks/rogue/sandwich),       // 三明治，做好的成品餐食
+		"熟酿蛋（55积分）"   = list(55, /obj/item/reagent_containers/food/snacks/rogue/stuffedegg/cooked), // 熟酿蛋，烹好的成品菜
+		"果馅卷（80积分）"   = list(80, /obj/item/reagent_containers/food/snacks/rogue/strudel),        // 果馅卷，烤好的成品酥点
+		"糖渍果馅卷（95积分）" = list(95, /obj/item/reagent_containers/food/snacks/rogue/strudel/sugar), // 糖渍果馅卷，成品甜点
+		"红酒（70积分）"     = list(70, /obj/item/reagent_containers/glass/bottle/rogue/redwine),       // 红葡萄酒，餐桌佳酿
+		"白葡萄酒（70积分）" = list(70, /obj/item/reagent_containers/glass/bottle/rogue/whitewine),     // 白葡萄酒，清爽佳酿
+		"肉派（90积分）"     = list(90, /obj/item/reagent_containers/food/snacks/rogue/pie/cooked/meat),  // 烤好的肉馅大派，成品硬菜
+		"蟹肉派（110积分）"  = list(110, /obj/item/reagent_containers/food/snacks/rogue/pie/cooked/crab), // 烤好的蟹肉派，成品珍馐
+		"精灵红酒（150积分）"= list(150, /obj/item/reagent_containers/glass/bottle/rogue/elfred),       // 精灵红酒，名贵佳酿
+		"精灵蓝酒（160积分）"= list(160, /obj/item/reagent_containers/glass/bottle/rogue/elfblue),      // 精灵蓝酒，名贵佳酿
+		"仙馐蜂蜜（200积分）"= list(200, /obj/item/reagent_containers/food/snacks/rogue/honey/ambrosia), // 仙馐蜂蜜，传说级成品珍馐
+	)
+
+// get_artifact_catalog：神器（与神祇相关的圣物）目录。需求"加入与神有关的神器"。
+//   收录主神们的圣徽护符——每件都是某位神祇的信物 / 圣物，属"与神相关"的器物；
+//   另含受祝的银制圣物作为高阶神器。全部为引擎已有的成品物件。
+/datum/component/rpg_system/proc/get_artifact_catalog()
+	return list(
+		"阿斯特拉塔护符（150积分）" = list(150, /obj/item/clothing/neck/roguetown/psicross/astrata),  // 太阳女神 阿斯特拉塔 的圣徽
+		"诺克护符（150积分）"       = list(150, /obj/item/clothing/neck/roguetown/psicross/noc),      // 求知之神 诺克 的圣徽
+		"阿比索尔护符（150积分）"   = list(150, /obj/item/clothing/neck/roguetown/psicross/abyssor),  // 深海之神 阿比索尔 的圣徽
+		"邓多尔护符（150积分）"     = list(150, /obj/item/clothing/neck/roguetown/psicross/dendor),   // 自然之神 邓多尔 的圣徽
+		"奈克拉护符（150积分）"     = list(150, /obj/item/clothing/neck/roguetown/psicross/necra),    // 死亡之神 奈克拉 的圣徽
+		"佩斯特拉护符（150积分）"   = list(150, /obj/item/clothing/neck/roguetown/psicross/pestra),   // 医疗之神 佩斯特拉 的圣徽
+		"拉沃克斯护符（150积分）"   = list(150, /obj/item/clothing/neck/roguetown/psicross/ravox),    // 战争 / 正义之神 拉沃克斯 的圣徽
+		"玛卢姆护符（150积分）"     = list(150, /obj/item/clothing/neck/roguetown/psicross/malum),    // 创造 / 火 之神 玛卢姆 的圣徽
+		"埃奥拉护符（150积分）"     = list(150, /obj/item/clothing/neck/roguetown/psicross/eora),     // 羁绊之神 埃奥拉 的圣徽
+		"希利克斯护符（150积分）"   = list(150, /obj/item/clothing/neck/roguetown/psicross/xylix),    // 戏谑之神 希利克斯 的圣徽
+		"圣印护符（220积分）"       = list(220, /obj/item/clothing/neck/roguetown/psicross/undivided), // 圣座信物，地位与恩典的象征
+		"受祝银制圣徽（350积分）"   = list(350, /obj/item/clothing/neck/roguetown/psicross/silver/astrata), // 受祝的银制 阿斯特拉塔 圣物（高阶神器）
 	)
 
 // get_catalog_for_tab：把"商品页签 id"映射到对应的商品目录表。
@@ -481,6 +617,10 @@
 			return get_material_catalog()
 		if("magic")
 			return get_magic_catalog()
+		if("delicacy")
+			return get_delicacy_catalog()
+		if("artifact")
+			return get_artifact_catalog()
 	// 未知页签：返回空表，调用方据此显示"暂无商品"，绝不空引用。
 	return list()
 
@@ -661,23 +801,63 @@
 // 为什么用 adjust_skillrank：它是引擎"按等级提升技能"的统一入口，内部按经验阈值把等级封顶到
 //   传奇。为避免"已满级仍扣分"，扣费前先用 get_skill_level 预检当前等级。
 // ----------------------------------------------------------------------------
-// get_skill_defs：可强化技能的有序表："玩家可见名" => 技能类型路径。涵盖全部战斗技能与若干常用
-//   杂项技能；渲染与结算共用同一张表，按"行号"对应。将来要开放更多技能，往这张表追加即可。
+// get_skill_defs：可强化技能的有序表："玩家可见名" => 技能类型路径。现已涵盖引擎全部可练技能：
+//   战斗（近战 / 远程）、杂项（运动 / 生活 / 社交）、劳作（采集 / 生产）、工艺（锻造 / 制作）、
+//   以及四系魔法。渲染与结算共用同一张表，按"行号"对应；将来要开放更多技能，往这张表追加即可。
+//   所有技能升级都走统一的 adjust_skillrank，故新增一行即可，无需改动渲染 / 结算逻辑。
 /datum/component/rpg_system/proc/get_skill_defs()
 	return list(
-		"剑术"   = /datum/skill/combat/swords,
-		"匕首"   = /datum/skill/combat/knives,
-		"斧术"   = /datum/skill/combat/axes,
-		"长柄"   = /datum/skill/combat/polearms,
-		"钝器"   = /datum/skill/combat/maces,
-		"徒手"   = /datum/skill/combat/unarmed,
-		"摔角"   = /datum/skill/combat/wrestling,
-		"盾防"   = /datum/skill/combat/shields,
-		"弓术"   = /datum/skill/combat/bows,
-		"弩术"   = /datum/skill/combat/crossbows,
-		"运动"   = /datum/skill/misc/athletics,
-		"医术"   = /datum/skill/misc/medicine,
-		"潜行"   = /datum/skill/misc/sneaking,
+		// —— 战斗：近战 ——
+		"剑术"     = /datum/skill/combat/swords,
+		"匕首"     = /datum/skill/combat/knives,
+		"斧术"     = /datum/skill/combat/axes,
+		"长柄"     = /datum/skill/combat/polearms,
+		"钝器"     = /datum/skill/combat/maces,
+		"鞭索"     = /datum/skill/combat/whipsflails,   // 鞭 / 连枷类
+		"徒手"     = /datum/skill/combat/unarmed,
+		"摔角"     = /datum/skill/combat/wrestling,
+		"盾防"     = /datum/skill/combat/shields,
+		// —— 战斗：远程 ——
+		"弓术"     = /datum/skill/combat/bows,
+		"弩术"     = /datum/skill/combat/crossbows,
+		"投石"     = /datum/skill/combat/slings,
+		"火器"     = /datum/skill/combat/firearms,
+		// —— 杂项：运动 / 生活 / 社交 ——
+		"运动"     = /datum/skill/misc/athletics,
+		"攀爬"     = /datum/skill/misc/climbing,
+		"游泳"     = /datum/skill/misc/swimming,
+		"阅读"     = /datum/skill/misc/reading,
+		"医术"     = /datum/skill/misc/medicine,
+		"潜行"     = /datum/skill/misc/sneaking,
+		"偷窃"     = /datum/skill/misc/stealing,
+		"撬锁"     = /datum/skill/misc/lockpicking,
+		"骑术"     = /datum/skill/misc/riding,
+		"音乐"     = /datum/skill/misc/music,
+		"追踪"     = /datum/skill/misc/tracking,
+		// —— 劳作：采集 / 生产 ——
+		"耕作"     = /datum/skill/labor/farming,
+		"采矿"     = /datum/skill/labor/mining,
+		"捕鱼"     = /datum/skill/labor/fishing,
+		"屠宰"     = /datum/skill/labor/butchering,
+		"伐木"     = /datum/skill/labor/lumberjacking,
+		// —— 工艺：锻造 / 制作 ——
+		"工艺"     = /datum/skill/craft/crafting,
+		"锻造武器" = /datum/skill/craft/weaponsmithing,
+		"锻造护甲" = /datum/skill/craft/armorsmithing,
+		"铁匠"     = /datum/skill/craft/blacksmithing,
+		"冶炼"     = /datum/skill/craft/smelting,
+		"木工"     = /datum/skill/craft/carpentry,
+		"石工"     = /datum/skill/craft/masonry,
+		"工程"     = /datum/skill/craft/engineering,
+		"烹饪"     = /datum/skill/craft/cooking,
+		"缝纫"     = /datum/skill/craft/sewing,
+		"制革"     = /datum/skill/craft/tanning,
+		"制陶"     = /datum/skill/craft/ceramics,
+		"炼金"     = /datum/skill/craft/alchemy,
+		// —— 魔法 ——（血魔法按需求不开放强化，故不列入）
+		"神圣魔法" = /datum/skill/magic/holy,
+		"奥术"     = /datum/skill/magic/arcane,
+		"德鲁伊魔法" = /datum/skill/magic/druidic,
 	)
 
 // render_skill_table：把"强化技能"页渲染成 HTML 表格（技能 / 当前等级 / 升级花费 / 操作）。
@@ -773,7 +953,7 @@
 	if(href_list["tab"])
 		var/new_tab = href_list["tab"]
 		// 仅接受白名单内的页签 id，过滤伪造值。
-		if(new_tab in list("weapon", "equipment", "consumable", "material", "magic", "stat", "skill"))
+		if(new_tab in list("weapon", "equipment", "consumable", "material", "magic", "delicacy", "artifact", "stat", "skill"))
 			current_tab = new_tab
 	// ---- 购买商品 ----（buyitem = 行号；itemtab = 该行所属页签）
 	else if(href_list["buyitem"])
