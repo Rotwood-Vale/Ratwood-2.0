@@ -105,6 +105,21 @@
 // cleanable filth on the body) it continuously worsens mood (stress event) and
 // applies a Willpower -2 debuff; washing the body clean removes the penalties
 #include "vices/neat_freak.dm"
+// 自定义恶习：病娇（开局随机暗恋一名玩家）；自动习得【寻人术】并把暗恋对象加入熟人名单；
+// 看见暗恋对象时心情达到顶峰，看不见时心情持续变差，超过 5 分钟看不见则不断嘶喊其名
+// Custom vice: Yandere (randomly fall in love with a player at round start); auto-learns the
+// "Person Searching Technique" (locate_person) and adds the crush to acquaintances; mood peaks
+// while the crush is visible, steadily worsens while unseen, and after 5+ minutes unseen the
+// character keeps screaming the crush's name
+#include "vices/yandere.dm"
+// 自定义恶习：脸盲症（被动）；授予【面孔失认 TRAIT_PROSOPAGNOSIA】特性，使患者查看任何人时
+// 其姓名都被打码为"陌生人"（看谁都是陌生人）；并周期性清空 mind.known_people（面孔记忆库），
+// 使其无论见过多少次都记不住别人的脸/认不出人。移除恶习时收回该特性。
+// Custom vice: Facial Blindness (passive); grants the TRAIT_PROSOPAGNOSIA trait so every face the
+// afflicted examines shows up as an "unknown" stranger, and periodically wipes mind.known_people
+// (the face-memory registry) so they can never remember or recognize anyone. Removing the vice
+// takes the trait back.
+#include "vices/facial_blindness.dm"
 // 自定义美德：地狱血脉后裔（仅限提夫林、消耗 29 凯旋点）；授予【地狱血脉】特性：
 // 免疫一切火焰/灼烧/高温伤害（不会被点燃），并习得火焰系法术（火球术/强效火球术/吐焰火球/生成营火）。
 // Custom virtue: Hell Bloody Descendants (Tiefling-only, costs 29 TRIUMPH); grants the "Hell Bloodline"
