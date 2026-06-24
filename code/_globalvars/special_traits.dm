@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 
 /proc/virtue_check(datum/virtue/V, heretic = FALSE)
 	if(V)
-		if(istype(V,/datum/virtue/heretic) && !heretic)
+		if(V.is_heretic && !heretic)
 			return FALSE
 		return TRUE
 	return FALSE

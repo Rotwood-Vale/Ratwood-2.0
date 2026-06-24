@@ -19,6 +19,8 @@ GLOBAL_LIST_EMPTY(virtues)
 	var/triumph_cost = 0
 	/// A custom addendum that explains what the virtue does outside of the traits / skill adjustments.
 	var/custom_text
+	/// Whether this virtue is exclusive to heretics (inhumen worshippers).
+	var/is_heretic = FALSE
 
 /datum/virtue/New()
 	. = ..()
