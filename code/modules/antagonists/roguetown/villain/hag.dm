@@ -15,6 +15,8 @@
 	var/list/datum/mind/bound_followers = list()
 	var/list/follower_links = list()
 	var/list/cursed_followers = list()
+	/// Associative: [datum/mind] = list(datum/hag_curse/...) — tracks active curse datums for cleanup on hag death
+	var/list/active_curses = list()
 	var/hag_tier = 1
 	var/datum/component/hag_curio_tracker/curio_component
 	var/static/list/curse_registry = list(
@@ -251,8 +253,74 @@
 
 	// Create and apply the curse
 	var/datum/hag_curse/curse = new curse_path(follower, points)
+	if(!active_curses[follower])
+		active_curses[follower] = list()
+	active_curses[follower] += curse
 	to_chat(owner.current, span_notice("[follower.name] has been cursed with [curse.name]."))
+	check_tier_upgrade()
 	return TRUE
+
+/// Checks accumulated curse-point totals across all victims and advances hag_tier if thresholds are met.
+/// Mirrors Azure Peak's check_tier_upgrade(): tier 2 at first victim with >= 20pts, tier 3 at two victims with >= 60pts.
+/datum/antagonist/hag/proc/check_tier_upgrade()
+	var/scar_60_count = 0
+	var/has_scar_20 = FALSE
+
+	for(var/datum/mind/follower in cursed_followers)
+		var/total_points = 0
+		if(active_curses[follower])
+			for(var/datum/hag_curse/C in active_curses[follower])
+				total_points += C.points
+		if(total_points >= 60)
+			scar_60_count++
+		if(total_points >= 20)
+			has_scar_20 = TRUE
+
+	if(hag_tier == 1 && has_scar_20)
+		hag_tier = 2
+		if(owner?.current)
+			to_chat(owner.current, span_boldnotice("Your connection to the Mossmother's roots deepens. You have reached Tier 2."))
+
+	if(hag_tier == 2 && scar_60_count >= 2)
+		hag_tier = 3
+		if(owner?.current)
+			to_chat(owner.current, span_boldnotice("The Mossmother sees you. You have reached Tier 3."))
+
+/// Called on the hag's permanent death. Lifts curses from scarred followers and applies final spite to unblemished pact-bearers.
+/datum/antagonist/hag/proc/execute_final_spite()
+	// Cursed followers have already paid the price — lift their curses as the hag's power fades.
+	for(var/datum/mind/follower in cursed_followers)
+		var/mob/living/victim = follower.current
+		if(victim)
+			to_chat(victim, span_notice("The heavy weight of your curse lifts as a distant, pained shriek echoes in your mind."))
+			REMOVE_TRAIT(victim, TRAIT_CURSE_SCAR, "hag_curse")
+		if(active_curses[follower])
+			for(var/datum/hag_curse/C in active_curses[follower])
+				C.remove_curse()
+				qdel(C)
+		active_curses -= follower
+
+	// Bound followers enjoyed boons but were never truly claimed. The hag's dying breath claims them now.
+	var/list/valid_curses = list()
+	for(var/path in curse_registry)
+		var/list/details = curse_registry[path]
+		if(details["cost"] > 10)
+			valid_curses += path
+
+	for(var/datum/mind/follower in bound_followers)
+		var/mob/living/victim = follower.current
+		if(!victim)
+			continue
+		to_chat(victim, span_userdanger("With her dying breath, the Hag weaves a final, spiteful knot into your soul!"))
+		if(!length(valid_curses))
+			continue
+		// Apply 2 random curses — matching Azure Peak's final spite behaviour
+		for(var/i in 1 to 2)
+			var/curse_path = pick(valid_curses)
+			var/datum/hag_curse/curse = new curse_path(follower, 100)
+			if(!active_curses[follower])
+				active_curses[follower] = list()
+			active_curses[follower] += curse
 
 /datum/antagonist/hag/proc/get_available_curses()
 	var/list/data = list()
@@ -396,6 +464,10 @@
 	// Override in subtypes to apply specific effects
 	return
 
+/// Reverses the effects of apply_curse(). Called on hag's permanent death to clean up living curses.
+/datum/hag_curse/proc/remove_curse()
+	return
+
 /datum/hag_curse/scar
 	name = "Curse Scar"
 	desc = "A lingering mark of corruption, claimed by the Mossmother."
@@ -412,6 +484,10 @@
 	if(victim?.current)
 		ADD_TRAIT(victim.current, TRAIT_NORUN, "hag_curse")
 
+/datum/hag_curse/no_run/remove_curse()
+	if(victim?.current)
+		REMOVE_TRAIT(victim.current, TRAIT_NORUN, "hag_curse")
+
 /datum/hag_curse/unseemly
 	name = "Curse of Unseemly Form"
 	desc = "Renders the bearer grotesque to behold."
@@ -419,6 +495,10 @@
 /datum/hag_curse/unseemly/apply_curse()
 	if(victim?.current)
 		ADD_TRAIT(victim.current, TRAIT_UNSEEMLY, "hag_curse")
+
+/datum/hag_curse/unseemly/remove_curse()
+	if(victim?.current)
+		REMOVE_TRAIT(victim.current, TRAIT_UNSEEMLY, "hag_curse")
 
 /datum/hag_curse/no_def
 	name = "Curse of Defenselessness"
@@ -428,6 +508,10 @@
 	if(victim?.current)
 		ADD_TRAIT(victim.current, TRAIT_NODEF, "hag_curse")
 
+/datum/hag_curse/no_def/remove_curse()
+	if(victim?.current)
+		REMOVE_TRAIT(victim.current, TRAIT_NODEF, "hag_curse")
+
 /datum/hag_curse/silver_weak
 	name = "Curse of Silver Weakness"
 	desc = "Silver becomes like acid to the bearer's flesh."
@@ -435,6 +519,10 @@
 /datum/hag_curse/silver_weak/apply_curse()
 	if(victim?.current)
 		ADD_TRAIT(victim.current, TRAIT_SILVER_WEAK, "hag_curse")
+
+/datum/hag_curse/silver_weak/remove_curse()
+	if(victim?.current)
+		REMOVE_TRAIT(victim.current, TRAIT_SILVER_WEAK, "hag_curse")
 
 /datum/hag_curse/mute
 	name = "Curse of Silenced Tongue"
@@ -444,6 +532,10 @@
 	if(victim?.current)
 		ADD_TRAIT(victim.current, TRAIT_PERMAMUTE, "hag_curse")
 
+/datum/hag_curse/mute/remove_curse()
+	if(victim?.current)
+		REMOVE_TRAIT(victim.current, TRAIT_PERMAMUTE, "hag_curse")
+
 /datum/hag_curse/critical_weak
 	name = "Curse of Fragile Form"
 	desc = "The bearer's body grows frail and vulnerable."
@@ -451,3 +543,7 @@
 /datum/hag_curse/critical_weak/apply_curse()
 	if(victim?.current)
 		ADD_TRAIT(victim.current, TRAIT_CRITICAL_WEAKNESS, "hag_curse")
+
+/datum/hag_curse/critical_weak/remove_curse()
+	if(victim?.current)
+		REMOVE_TRAIT(victim.current, TRAIT_CRITICAL_WEAKNESS, "hag_curse")

@@ -497,6 +497,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	. = ..()
 	GLOB.hag_hearts += loc
 
+/obj/effect/landmark/start/hag_tree
+	name = "hag_tree"
+	icon_state = "arrow"
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/hag_tree/Initialize(mapload)
+	. = ..()
+	new /obj/structure/roguemachine/mossmother/travel(loc)
+
 //tribal
 
 /obj/effect/landmark/start/tribalchieftain
