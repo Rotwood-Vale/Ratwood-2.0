@@ -62,6 +62,9 @@
 	var/shifted = FALSE
 	cold_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/purple
+	color = CLOTHING_PURPLE
 	
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/attack_right(mob/user)
 	if(!shiftable)
@@ -182,6 +185,16 @@
 	altdetail_tag = "_detailalt"
 	shiftable = FALSE
 	var/picked = FALSE
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter/red
+	color = CLOTHING_RED
+	detail_color = CLOTHING_RED
+	altdetail_color = CLOTHING_RED
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter/white
+	color = CLOTHING_WHITE
+	detail_color = CLOTHING_WHITE
+	altdetail_color = CLOTHING_WHITE
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter/attack_right(mob/user)
 	..()

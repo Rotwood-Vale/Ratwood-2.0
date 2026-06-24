@@ -41,14 +41,15 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
 	id = /obj/item/clothing/ring/silver
-	beltl = /obj/item/rogueweapon/sword/sabre/dec
-	l_hand = /obj/item/rogueweapon/scabbard/sword
+	beltl = /obj/item/rogueweapon/scabbard/sword
+	l_hand = /obj/item/rogueweapon/sword/sabre/dec
 	if(should_wear_masc_clothes(H))
 		cloak = /obj/item/clothing/cloak/half/red
-		shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/red
-		pants = /obj/item/clothing/under/roguetown/tights/black
+		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter/red
+		pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic/black
 	if(should_wear_femme_clothes(H))
-		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/gen/purple
+		armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/purple
+		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/purple
 		cloak = /obj/item/clothing/cloak/raincloak/purple
 	// backpack_contents = list(/obj/item/recipe_book/survival = 1)//superceded by tgui
 	H.set_blindness(0)
@@ -63,9 +64,9 @@
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
 	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR)
 	subclass_stats = list(
-		STATKEY_STR = 2,
-		STATKEY_CON = 1,
-		STATKEY_WIL = 1,
+		STATKEY_STR = 1,
+		STATKEY_CON = 2,
+		STATKEY_WIL = 2,
 		STATKEY_INT = 1,
 	)
 	subclass_skills = list(
@@ -114,54 +115,68 @@
 			"Brigandine"		= /obj/item/clothing/suit/roguetown/armor/brigandine,
 			"Coat of Plates"	= /obj/item/clothing/suit/roguetown/armor/brigandine/coatplates,
 			"Steel Cuirass"		= /obj/item/clothing/suit/roguetown/armor/plate/half,
+			"Fluted Cuirass"	= /obj/item/clothing/suit/roguetown/armor/plate/half/fluted,
 			)
 		var/armorchoice = input(H, "Choose your armor.", "TAKE UP ARMOR") as anything in armors
 		armor = armors[armorchoice]
 
-	gloves = /obj/item/clothing/gloves/roguetown/chain
-	pants = /obj/item/clothing/under/roguetown/chainlegs
+		var/underarmors = list("Steel Maille","Padded Cloth")
+		var/underarmorchoice = input(H, "Choose your armor.", "TAKE UP ARMOR") as anything in underarmors
+		switch(underarmorchoice)
+			if("Steel Maille")
+				gloves = /obj/item/clothing/gloves/roguetown/chain
+				shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
+				pants = /obj/item/clothing/under/roguetown/chainlegs
+				shoes = /obj/item/clothing/shoes/roguetown/boots/armor
+			if("Padded Cloth")
+				gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter/white
+				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic/brown
+				shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
+
 	cloak = /obj/item/clothing/cloak/stabard
 	neck = /obj/item/clothing/neck/roguetown/bevor
-	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
-	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
 	belt = /obj/item/storage/belt/rogue/leather/steel/tasset
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
-		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
 		)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 	H.set_blindness(0)
 	if(H.mind)
-		var/weapons = list("Longsword","Mace + Shield","Flail + Shield","Billhook","Battle Axe","Greataxe")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
-		switch(weapon_choice)
+		var/sidearms = list("Longsword","Mace","Flail","Battle Axe")
+		var/sidearm_choice = input(H, "Choose your sidearm.", "TAKE UP ARMS") as anything in sidearms
+		switch(sidearm_choice)
 			if("Longsword")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				beltr = /obj/item/rogueweapon/sword/long
 				r_hand = /obj/item/rogueweapon/scabbard/sword
-			if("Mace + Shield")
+			if("Mace")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				beltr = /obj/item/rogueweapon/mace
-				backr = /obj/item/rogueweapon/shield/tower/metal
-			if("Flail + Shield")
+			if("Flail")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				beltr = /obj/item/rogueweapon/flail
-				backr = /obj/item/rogueweapon/shield/tower/metal
-			if("Billhook")
-				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/spear/billhook
-				backr = /obj/item/rogueweapon/scabbard/gwstrap
 			if("Battle Axe")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/stoneaxe/battle
+
+		var/weapons = list("Billhook","Greataxe","Shield")
+		var/weapon_choice = input(H, "Choose your formation weapon.", "TAKE UP STRENGTH") as anything in weapons
+		switch(weapon_choice)
+			if("Billhook")
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				l_hand = /obj/item/rogueweapon/spear/billhook
+				backr = /obj/item/rogueweapon/scabbard/gwstrap
 			if("Greataxe")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/greataxe
+				l_hand = /obj/item/rogueweapon/greataxe
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
+			if("Shield")
+				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				backr = /obj/item/rogueweapon/shield/tower/metal
 
 	if (H.mind && !H.mind.has_spell(/obj/effect/proc_holder/spell/self/choose_riding_virtue_mount))
 		H.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)
@@ -227,16 +242,25 @@
 				pants = /obj/item/clothing/under/roguetown/chainlegs/iron
 				gloves = /obj/item/clothing/gloves/roguetown/chain/iron
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+		var/masks = list("Wildguard","Simple Mask","Hound Mask")
+		var/mask_choice = input(H, "Choose your mask.", "WILL YOU DIE SMILING") as anything in masks
+		switch(mask_choice)
+			if("Wildguard")
+				mask = /obj/item/clothing/mask/rogue/wildguard
+			if("Simple Mask")
+				mask = /obj/item/clothing/mask/rogue/facemask
+			if("Hound Mask")
+				mask = /obj/item/clothing/mask/rogue/facemask/hound
 		var/weapons = list("Arming Sword","Shortsword + Shield","Bow & Arrow","Spear")
 		var/weapon_choice = input(H, "Choose your weapon.", "WHAT WILL YOU SWING BEFORE DEATH") as anything in weapons
 		switch(weapon_choice)
 			if("Arming Sword")
 				backl = /obj/item/rogueweapon/scabbard/sword
-				r_hand = /obj/item/rogueweapon/sword/iron
+				r_hand = /obj/item/rogueweapon/sword
 			if("Shortsword + Shield")
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				backl = /obj/item/rogueweapon/shield/wood
-				r_hand = /obj/item/rogueweapon/sword/short/iron
+				r_hand = /obj/item/rogueweapon/sword/short
 			if("Bow & Arrow")
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve

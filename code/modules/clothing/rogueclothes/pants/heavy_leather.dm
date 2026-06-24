@@ -50,6 +50,14 @@
 	heat_protection = GROIN | LEG_RIGHT | LEG_LEFT
 	max_heat_protection_temperature = 600
 
+/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic/black
+	color = CLOTHING_BLACK
+	detail_color = CLOTHING_BLACK
+
+/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic/brown
+	color = CLOTHING_BROWN
+	detail_color = CLOTHING_BROWN
+
 /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
