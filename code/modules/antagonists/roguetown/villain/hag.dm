@@ -35,12 +35,16 @@
 	. = ..()
 	if(!owner || !owner.current)
 		return
+	var/mob/living/carbon/human/hag_body = owner.current
 
 	owner.special_role = name
 	if(!objectives.len)
 		var/datum/objective/hag/revenge_objective = new /datum/objective/hag(owner = owner)
 		objectives += revenge_objective
 		owner.store_memory("Objective: [revenge_objective.explanation_text]")
+
+	if(istype(hag_body))
+		hag_body.equipOutfit(/datum/outfit/job/roguetown/hag)
 
 	if(length(GLOB.hag_starts))
 		owner.current.forceMove(pick(GLOB.hag_starts))
@@ -54,10 +58,23 @@
 	owner.announce_objectives()
 	..()
 
+/datum/outfit/job/roguetown/hag/pre_equip(mob/living/carbon/human/H)
+	..()
+	armor = /obj/item/clothing/suit/roguetown/shirt/robe/hag
+	belt = /obj/item/storage/belt/rogue/leather/black
+	backl = /obj/item/storage/backpack/rogue/satchel
+	shoes = /obj/item/clothing/shoes/roguetown/sandals
+	beltl = /obj/item/storage/belt/rogue/pouch/coins/aalloy
+	beltr = /obj/item/roguekey/hag
+	backpack_contents = list(
+		/obj/item/handmirror = 1
+	)
+
 /datum/antagonist/hag/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/carbon/human/hag_body = mob_override || owner?.current
 	if(!istype(hag_body) || !hag_body.mind)
 		return
+	ADD_TRAIT(hag_body, TRAIT_ANCIENT_HAG, "[type]")
 	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/hag_pact)
 	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/hag_transmute)
 	// Attach the curio tracker component for death/revive handling
@@ -67,6 +84,7 @@
 	var/mob/living/carbon/human/hag_body = mob_override || owner?.current
 	if(!istype(hag_body) || !hag_body.mind)
 		return
+	REMOVE_TRAIT(hag_body, TRAIT_ANCIENT_HAG, "[type]")
 	qdel(hag_body.GetComponent(/datum/component/hag_curio_tracker))
 	curio_component = null
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/hag_pact)

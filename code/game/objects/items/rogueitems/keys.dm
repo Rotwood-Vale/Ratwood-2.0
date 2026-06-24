@@ -119,6 +119,11 @@
 	SSroguemachine.key = null //Do not harddel.
 	qdel(src) //Anti-stall
 
+/obj/item/roguekey/hag
+	name = "wyrd key"
+	desc = "An ancient key twisted by bog magic."
+	lockid = "hag"
+
 /obj/item/roguekey/lord/pre_attack(target, user, params)
 	. = ..()
 	if(istype(target, /obj/structure/closet))

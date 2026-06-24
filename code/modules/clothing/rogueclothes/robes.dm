@@ -35,6 +35,12 @@
 	name = "necromancer robes"
 	icon_state = "necromrobe"
 
+/obj/item/clothing/suit/roguetown/shirt/robe/hag
+	name = "wyrd robe"
+	desc = "A robe with an ancient design, unknown to tailors and sewers here."
+	icon_state = "hag"
+	color = null
+
 /obj/item/clothing/suit/roguetown/shirt/robe/dendor
 	name = "briar robe"
 	icon_state = "dendorrobe"

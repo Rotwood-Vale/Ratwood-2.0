@@ -41,6 +41,20 @@
 		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, C, null, TRUE, TRUE))
 			qdel(C)
 
+/obj/item/storage/belt/rogue/pouch/coins/aalloy
+	name = "coin pouch"
+
+/obj/item/storage/belt/rogue/pouch/coins/aalloy/Initialize(mapload)
+	. = ..()
+	var/obj/item/roguecoin/silver/pile/H = new(loc)
+	if(istype(H))
+		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
+			qdel(H)
+	var/obj/item/roguecoin/copper/pile/C = new(loc)
+	if(istype(C))
+		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, C, null, TRUE, TRUE))
+			qdel(C)
+
 /obj/item/storage/belt/rogue/pouch/coins/rich/Initialize(mapload)
 	. = ..()
 	var/obj/item/roguecoin/silver/pile/H = new(loc)
