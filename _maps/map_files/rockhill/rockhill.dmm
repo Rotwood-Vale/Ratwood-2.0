@@ -57466,6 +57466,10 @@
 	dir = 1
 	},
 /area/rogue/outdoors/town/roofs/tavern)
+"nbm" = (
+/obj/effect/landmark/start/hag_tree,
+/turf/open/floor/rogue/grassgrey,
+/area/rogue/outdoors/bograt/sunken)
 "nbq" = (
 /obj/item/reagent_containers/glass/bowl,
 /turf/open/floor/rogue/cobble,
@@ -70890,6 +70894,10 @@
 /obj/machinery/light/rogue/torchholder/r,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/town/rockhill)
+"qhb" = (
+/obj/effect/landmark/start/hag_tree,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/bograt/sunken)
 "qhd" = (
 /obj/item/natural/rock,
 /turf/open/floor/rogue/dirt/road,
@@ -100161,6 +100169,10 @@
 /obj/structure/flora/roguegrass/herb/rosa,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield/rockhill)
+"wZC" = (
+/obj/effect/landmark/start/hag_tree,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/bograt/south)
 "wZF" = (
 /turf/closed/mineral/random/rogue,
 /area/rogue/outdoors/rtfield/rockhill)
@@ -237204,7 +237216,7 @@ hMX
 hMX
 jsj
 hMX
-hMX
+nbm
 jsj
 hMX
 hMX
@@ -250084,7 +250096,7 @@ uWK
 wfu
 wfu
 uWK
-uWK
+wZC
 uWK
 qrc
 xQW
@@ -257065,7 +257077,7 @@ nhG
 iJc
 iJc
 nhG
-hMX
+nbm
 hMX
 sWz
 hMX
@@ -265302,7 +265314,7 @@ bca
 hMX
 hMX
 jsj
-jsj
+qhb
 hMX
 jDE
 bca
@@ -279968,7 +279980,7 @@ jDE
 hMX
 hMX
 jsj
-hMX
+nbm
 hMX
 nhG
 iJc

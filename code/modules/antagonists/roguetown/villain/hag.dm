@@ -20,8 +20,7 @@
 	var/hag_tier = 1
 	var/datum/component/hag_curio_tracker/curio_component
 	var/static/list/curse_registry = list(
-		/datum/hag_curse/scar = list("cost" = 0, "min_tier" = 1),
-		/datum/hag_curse/no_run = list("cost" = 60, "min_tier" = 1),
+		/datum/hag_curse/no_run = list("cost" = 60, "min_tier" = 2),
 		/datum/hag_curse/unseemly = list("cost" = 10, "min_tier" = 1),
 		/datum/hag_curse/silver_weak = list("cost" = 50, "min_tier" = 2),
 		/datum/hag_curse/no_def = list("cost" = 100, "min_tier" = 3),
@@ -128,6 +127,8 @@
 		return FALSE
 	if(target.mind in bound_followers)
 		return FALSE
+	if(target.mind in cursed_followers)
+		return FALSE
 
 	add_bound_follower(target.mind)
 	ADD_TRAIT(target, TRAIT_LEECHIMMUNE, get_boon_source())
@@ -214,6 +215,10 @@
 		return FALSE
 	if(target.mind in hag_datum.bound_followers)
 		to_chat(user, span_warning("[target] is already bound to my pact."))
+		revert_cast()
+		return FALSE
+	if(target.mind in hag_datum.cursed_followers)
+		to_chat(user, span_warning("[target] already bears my curse and cannot be bound again."))
 		revert_cast()
 		return FALSE
 

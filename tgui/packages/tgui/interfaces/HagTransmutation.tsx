@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Button,
   LabeledList,
@@ -29,7 +28,7 @@ type Data = {
   selected_curse: string | null;
 };
 
-export const HagTransmutation = (props) => {
+export const HagTransmutation = () => {
   const { act, data } = useBackend<Data>();
   const { followers, curses, hag_tier, selected_follower, selected_curse } = data;
 
@@ -58,7 +57,7 @@ export const HagTransmutation = (props) => {
           </Stack>
         </Section>
 
-        <Section title="Available Curses (Tier {hag_tier})">
+        <Section title={`Available Curses (Tier ${hag_tier})`}>
           <Stack vertical>
             {curses.length > 0 ? (
               curses.map(curse => (
