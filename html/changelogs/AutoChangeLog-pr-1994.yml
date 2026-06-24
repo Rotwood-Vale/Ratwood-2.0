@@ -1,0 +1,4 @@
+author: "567Turtle"
+delete-after: True
+changes:
+  - bugfix: "Tiger Markings are now drawn correctly on Feminine bodies."
