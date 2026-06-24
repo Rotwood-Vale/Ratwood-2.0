@@ -1418,6 +1418,7 @@
 #include "code\modules\antagonists\roguetown\villain\hag.dm"
 #include "code\modules\antagonists\roguetown\villain\hag_artifact_repair.dm"
 #include "code\modules\antagonists\roguetown\villain\hag_boon_item.dm"
+#include "code\modules\antagonists\roguetown\villain\hag_boons.dm"
 #include "code\modules\antagonists\roguetown\villain\hag_cauldron.dm"
 #include "code\modules\antagonists\roguetown\villain\hag_component.dm"
 #include "code\modules\antagonists\roguetown\villain\hag_enchanted_items.dm"
