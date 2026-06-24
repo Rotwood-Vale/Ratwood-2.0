@@ -61,7 +61,7 @@
 
 /obj/structure/roguemachine/hag_ward/examine(mob/user)
 	. = ..()
-	if(HAS_TRAIT(user, TRAIT_CURSE_SCAR))
+	if(HAS_TRAIT(user, TRAIT_CURSE_SCAR) || GLOB.hag_rite_active)
 		var/datum/reagent/R = required_reagent
 		. += "<br>[span_boldwarning("The scar on your skin pulses. The roots of this ward crave [units_needed] units of [initial(R.name)].")]"
 	else
