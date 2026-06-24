@@ -57467,7 +57467,7 @@
 	},
 /area/rogue/outdoors/town/roofs/tavern)
 "nbm" = (
-/obj/effect/landmark/start/hag_tree,
+/obj/structure/roguemachine/mossmother/travel,
 /turf/open/floor/rogue/grassgrey,
 /area/rogue/outdoors/bograt/sunken)
 "nbq" = (
@@ -70895,7 +70895,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/town/rockhill)
 "qhb" = (
-/obj/effect/landmark/start/hag_tree,
+/obj/structure/roguemachine/mossmother/travel,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/bograt/sunken)
 "qhd" = (
@@ -75634,6 +75634,10 @@
 	},
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors/town/shop)
+"rpE" = (
+/obj/structure/roguemachine/hag_ward,
+/turf/open/floor/rogue/grassgrey,
+/area/rogue/outdoors/bograt/sunken)
 "rpH" = (
 /obj/structure/table/wood/poor,
 /obj/item/rope/chain,
@@ -241090,7 +241094,7 @@ wwX
 bca
 bca
 hMX
-hMX
+rpE
 hMX
 jsj
 hMX
@@ -257077,7 +257081,7 @@ nhG
 iJc
 iJc
 nhG
-nbm
+hMX
 hMX
 sWz
 hMX
@@ -257967,7 +257971,7 @@ hMX
 hMX
 jsj
 hMX
-hMX
+rpE
 hMX
 jDE
 sWz
@@ -265313,8 +265317,8 @@ wwX
 bca
 hMX
 hMX
-jsj
 qhb
+jsj
 hMX
 jDE
 bca
@@ -270036,7 +270040,7 @@ bca
 wwX
 jDE
 hMX
-wbA
+rpE
 mbx
 ine
 bca
@@ -278687,7 +278691,7 @@ jsj
 hMX
 bca
 nhG
-iJc
+nhG
 aRR
 xoT
 gZs
@@ -279118,8 +279122,8 @@ hMX
 jsj
 hMX
 hMX
+hMX
 nhG
-iJc
 aRR
 qkr
 kOZ
@@ -279549,9 +279553,9 @@ lGM
 jsj
 jsj
 hMX
+nbm
 hMX
 nhG
-iJc
 iJc
 qkr
 umJ
@@ -279980,10 +279984,10 @@ jDE
 hMX
 hMX
 jsj
-nbm
+hMX
+hMX
 hMX
 nhG
-iJc
 iJc
 qkr
 qkr
@@ -280414,8 +280418,8 @@ hMX
 jsv
 hMX
 hMX
+hMX
 nhG
-iJc
 iJc
 iJc
 iJc
@@ -280846,8 +280850,8 @@ hMX
 jsv
 hMX
 hMX
-bca
-iJc
+oAp
+nhG
 iJc
 iJc
 iJc
