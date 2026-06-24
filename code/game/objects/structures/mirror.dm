@@ -294,6 +294,10 @@
 	grid_height = 64
 	dropshrink = 0.8
 
+/obj/item/handmirror/hag
+	name = "wyrd mirror"
+	desc = "The reflection in this mirror shimmers and warps like roots beneath black water."
+
 /obj/item/handmirror/attack_self(mob/user)
 	if(!ishuman(user))
 		return

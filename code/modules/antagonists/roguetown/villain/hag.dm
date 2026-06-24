@@ -69,6 +69,8 @@
 	backpack_contents = list(
 		/obj/item/handmirror = 1
 	)
+	if(H.mind)
+		H.verbs += /mob/living/carbon/human/proc/commune_with_roots
 
 /datum/antagonist/hag/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/carbon/human/hag_body = mob_override || owner?.current
@@ -77,6 +79,9 @@
 	ADD_TRAIT(hag_body, TRAIT_ANCIENT_HAG, "[type]")
 	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/hag_pact)
 	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/hag_transmute)
+	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/spiritual_siphon)
+	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/grant_boon)
+	teach_hag_recipes(hag_body.mind)
 	// Attach the curio tracker component for death/revive handling
 	curio_component = hag_body.AddComponent(/datum/component/hag_curio_tracker, src)
 
@@ -89,6 +94,39 @@
 	curio_component = null
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/hag_pact)
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/hag_transmute)
+	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/spiritual_siphon)
+	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/grant_boon)
+	hag_body.verbs -= /mob/living/carbon/human/proc/commune_with_roots
+
+/datum/antagonist/hag/proc/teach_hag_recipes(datum/mind/hag_mind)
+	if(!hag_mind)
+		return
+	// Core catalysts
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/varnish)
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/synth_shiny)
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/synth_base)
+	// Low rarity mosses
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/faded_moss)
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/crawling_moss)
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/stormy_moss)
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/corrosive_moss)
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/sprouting_moss)
+	// Mid rarity mosses
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/lustrous_moss)
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/caring_moss)
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/rooted_moss)
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/creeping_moss)
+	// High rarity mosses
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/prismatic_moss)
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/gilded_moss)
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/drowned_moss)
+	// Wyrd items
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/wyrd_cross)
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/wyrd_axe)
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/wyrd_sword)
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/wyrd_spear)
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/lux_moss)
+	hag_mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/hag/wyrd_mirror)
 
 /datum/antagonist/hag/on_removal()
 	if(owner?.current)
@@ -570,3 +608,122 @@
 /datum/hag_curse/critical_weak/remove_curse()
 	if(victim?.current)
 		REMOVE_TRAIT(victim.current, TRAIT_CRITICAL_WEAKNESS, "hag_curse")
+
+
+/obj/effect/proc_holder/spell/invoked/spiritual_siphon
+	name = "Spiritual Siphon"
+	desc = "Absorbs mosses and select components into your spirit, or manifests stored items onto the ground."
+	invocation_type = "whisper"
+	invocations = list("Bloom inside.")
+	recharge_time = 5 SECONDS
+	range = 1
+
+/obj/effect/proc_holder/spell/invoked/spiritual_siphon/cast(list/targets, mob/living/user)
+	var/datum/component/hag_curio_tracker/H = user.GetComponent(/datum/component/hag_curio_tracker)
+	if(!H)
+		to_chat(user, span_warning("Your soul lacks the hollow spaces required to store these blossoms."))
+		return FALSE
+
+	var/atom/target = targets[1]
+	var/turf/T = get_turf(target)
+
+	var/absorbed_any = FALSE
+	for(var/obj/item/I in T)
+		if(istype(I, /obj/item/alch/hag_moss/enchanted))
+			if(H.absorb_enchanted_moss(I))
+				absorbed_any = TRUE
+		else if(H.absorb_item(I))
+			absorbed_any = TRUE
+
+	if(absorbed_any)
+		to_chat(user, span_notice("The mosses dissolve into your spirit."))
+		playsound(T, 'sound/magic/magnet.ogg', 50, TRUE)
+		return TRUE
+
+	if(H.dump_materials(T))
+		to_chat(user, span_notice("You manifest a handful of stored components."))
+		playsound(T, 'sound/magic/slimesquish.ogg', 50, TRUE)
+		return TRUE
+
+	to_chat(user, span_warning("You have nothing stored to manifest."))
+	return FALSE
+
+/obj/effect/proc_holder/spell/invoked/grant_boon
+	name = "Manifest Boon"
+
+/obj/effect/proc_holder/spell/invoked/grant_boon/cast(list/targets, mob/living/user)
+	var/datum/component/hag_curio_tracker/H = user.GetComponent(/datum/component/hag_curio_tracker)
+	if(!H || !length(H.prepared_boons))
+		to_chat(user, span_warning("You have no prepared blessings to manifest."))
+		return FALSE
+
+	var/list/options = list()
+	for(var/path in H.prepared_boons)
+		if(H.prepared_boons[path] > 0)
+			options[initial(path:name)] = path
+
+	if(!length(options))
+		to_chat(user, span_warning("You have no prepared blessings with enough essence to manifest."))
+		return FALSE
+
+	var/choice = input(user, "Which blessing do you wish to manifest?", "Manifestation") as null|anything in options
+	if(!choice)
+		return FALSE
+
+	var/path = options[choice]
+	var/default_points = initial(path:points)
+
+	var/obj/item/hag_blessing_item/B = new(user.loc)
+	B.name = "[choice] blessing"
+	B.AddComponent(/datum/component/hag_boon_manifestation, path, default_points)
+
+	user.put_in_hands(B)
+	to_chat(user, span_notice("You pull a sliver of [choice] from your spirit."))
+	return TRUE
+
+
+/mob/living/carbon/human/proc/commune_with_roots()
+	set name = "Commune with Roots"
+	set category = "RoleUnique.Hag"
+	set desc = "Press your feet to the soil to hear the Mossmother's heartbeat."
+
+	if(stat || !HAS_TRAIT(src, TRAIT_ANCIENT_HAG))
+		return
+
+	to_chat(src, span_notice("You press your feet to the earth, seeking the Mother's pulse..."))
+	if(!do_after(src, 1 SECONDS, target = src))
+		return
+
+	var/obj/structure/roguemachine/mossmother/closest_tree
+	var/min_dist = INFINITY
+	var/turf/my_turf = get_turf(src)
+
+	for(var/obj/structure/roguemachine/mossmother/tree in GLOB.hag_trees)
+		var/turf/tree_turf = get_turf(tree)
+		if(!tree_turf)
+			continue
+		var/dist = get_dist_euclidean(my_turf, tree_turf)
+		if(dist < min_dist)
+			min_dist = dist
+			closest_tree = tree
+
+	if(!closest_tree)
+		to_chat(src, span_warning("The earth is hollow and silent. You are beyond the reach of the Mossmother."))
+		return
+
+	var/turf/tree_turf = get_turf(closest_tree)
+	var/area/tree_area = get_area(closest_tree)
+	if(tree_turf.z != my_turf.z)
+		var/z_dir = (tree_turf.z > my_turf.z) ? "above" : "deep below"
+		to_chat(src, span_notice("The pulse of a Heartroot tree thrums from [z_dir] you, somewhere in [tree_area.name]."))
+	else
+		var/dir_text = dir2text(get_dir(src, closest_tree))
+		var/dist_tiles = get_dist(my_turf, tree_turf)
+		if(dist_tiles <= 2)
+			to_chat(src, span_boldnotice("The Heartroot is right here!"))
+		else if(dist_tiles < 15)
+			to_chat(src, span_notice("A strong, wet thrumming comes from the [dir_text]. A tree grows nearby in [tree_area.name]."))
+		else
+			to_chat(src, span_notice("You feel a faint, ancient vibration to the [dir_text]... somewhere far off in [tree_area.name]."))
+
+	src.playsound_local(src.loc, 'sound/magic/heartbeat.ogg', 75, TRUE)
