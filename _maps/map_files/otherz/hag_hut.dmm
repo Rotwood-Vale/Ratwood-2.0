@@ -14,6 +14,10 @@
 /obj/effect/landmark/start/hag_heart,
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/shelter/bog_hag_hut)
+"V" = (
+/obj/effect/landmark/start/hag_tree,
+/turf/open/floor/rogue/dirt,
+/area/rogue/indoors/shelter/bog_hag_hut)
 
 (1,1,1) = {"
 b
@@ -296,7 +300,7 @@ b
 b
 b
 b
-b
+V
 b
 a
 b
