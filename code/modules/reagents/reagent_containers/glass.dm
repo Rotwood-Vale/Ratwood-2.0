@@ -308,7 +308,7 @@
 /obj/item/reagent_containers/glass/proc/onfill(obj/target, mob/user, silent = FALSE)
 
 /obj/item/reagent_containers/glass/bucket
-	name = "木桶"
+	name = "提桶"
 	desc = ""
 	icon = 'icons/roguetown/items/misc.dmi'
 	lefthand_file = 'modular/Neu_Food/icons/food_lefthand.dmi'
