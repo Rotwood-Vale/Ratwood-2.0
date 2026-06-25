@@ -60,7 +60,7 @@
 			if("Flail")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-					beltr = /obj/item/rogueweapon/flail/sflail/psyflail/old
+					beltr = /obj/item/rogueweapon/flail/sflail/silver/psy/old
 				else
 					beltr = /obj/item/rogueweapon/flail/sflail
 			if("Axe")

@@ -301,7 +301,7 @@ Inquisitorial armory down here
 	new /obj/item/rogueweapon/greatsword/psygsword(src)
 	new /obj/item/rogueweapon/halberd/psyhalberd(src)
 	new /obj/item/rogueweapon/whip/psywhip_lesser
-	new /obj/item/rogueweapon/flail/sflail/psyflail
+	new /obj/item/rogueweapon/flail/sflail/silver/psy
 	new /obj/item/rogueweapon/spear/silver/psyspear(src)
 	new /obj/item/rogueweapon/sword/long/psysword(src)
 	new /obj/item/rogueweapon/mace/goden/silver/psy(src)

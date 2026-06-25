@@ -107,7 +107,7 @@
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal, SLOT_BACK_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 		if("Psydonic Flail + Shield")
-			H.put_in_hands(new /obj/item/rogueweapon/flail/sflail/psyflail(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/flail/sflail/silver/psy(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal, SLOT_BACK_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 		//Polearms and the like.
