@@ -1427,6 +1427,7 @@
 	icon_state = "quarterstaff_silver"
 	max_integrity = 250
 	is_silver = TRUE
+	smeltresult = /obj/item/ingot/silver
 
 /obj/item/rogueweapon/woodstaff/quarterstaff/silver/ComponentInitialize()
 	AddComponent(\
@@ -1439,18 +1440,11 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/woodstaff/quarterstaff/psy
+/obj/item/rogueweapon/woodstaff/quarterstaff/silver/psy
 	name = "psydonic quarterstaff"
-	desc = "A quarterstaff reinforced with silver tips. A relatively new design, purportedly inspired by the warstaffs oft-carried by Naledian warscholars. Durable enough to catch avantyne to the shaft, without so much as a splinter - or so, they say."
-	force = 20
-	force_wielded = 27
-	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
-	icon_state = "quarterstaff_silver"
-	max_integrity = 250
-	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/woodstaff/quarterstaff/psy/ComponentInitialize()
+/obj/item/rogueweapon/woodstaff/quarterstaff/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\

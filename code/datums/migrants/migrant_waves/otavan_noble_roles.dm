@@ -248,7 +248,7 @@
 	if (!(istype(H.patron, /datum/patron/old_god)))		//PSYDON ENDURE PURITY AFLOAT PSYDON PSYDON ENDURE PSYDON OTAVA PSYDON WAH WAH WAH
 		to_chat(H, span_warning("PSYDON has taught me to ENDURE whatever it takes - and HE guides my hand and words."))
 		H.set_patron(/datum/patron/old_god)
-	r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/psy
+	r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/silver/psy
 	head = /obj/item/clothing/head/roguetown/roguehood/psydon
 	mask = /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk

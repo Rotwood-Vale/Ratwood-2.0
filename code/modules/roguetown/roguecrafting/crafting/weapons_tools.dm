@@ -305,7 +305,7 @@
 /datum/crafting_recipe/roguetown/survival/quarterstaff_psydonic
 	name = "psydonic silver-reinforced quarterstaff"
 	category = "Tools"
-	result = list(/obj/item/rogueweapon/woodstaff/quarterstaff/psy)
+	result = list(/obj/item/rogueweapon/woodstaff/quarterstaff/silver/psy)
 	reqs = list(
 		/obj/item/rogueweapon/woodstaff/quarterstaff = 1,
 		/obj/item/ingot/silverblessed = 1,
