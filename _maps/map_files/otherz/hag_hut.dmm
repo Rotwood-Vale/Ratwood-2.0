@@ -103,6 +103,11 @@
 /obj/structure/stairs,
 /turf/open/floor/rogue/shroud,
 /area/rogue/indoors/shelter/bog_hag)
+"kC" = (
+/obj/item/grown/log/tree/stick,
+/obj/structure/flora/roguegrass/thorn_bush,
+/turf/open/water/swamp/deep,
+/area/rogue/indoors/shelter/bog_hag)
 "kN" = (
 /turf/open/transparent/openspace,
 /area/rogue/indoors/shelter/bog_hag)
@@ -167,6 +172,7 @@
 "nV" = (
 /obj/item/grown/log/tree/stick,
 /obj/machinery/light/rogue/candle/green/l,
+/obj/structure/flora/roguegrass/thorn_bush,
 /turf/open/water/swamp/deep,
 /area/rogue/indoors/shelter/bog_hag)
 "oP" = (
@@ -273,12 +279,16 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/shelter/bog_hag)
 "vA" = (
-/mob/living/simple_animal/hostile/retaliate/frog,
+/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/frog,
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/shelter/bog_hag)
 "vQ" = (
 /obj/effect/spawner/lootdrop/hag/raw_botanicals,
 /turf/open/floor/rogue/cobble,
+/area/rogue/indoors/shelter/bog_hag)
+"vV" = (
+/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/frog,
+/turf/open/floor/rogue/grassyel,
 /area/rogue/indoors/shelter/bog_hag)
 "vY" = (
 /obj/item/reagent_containers/powder/flour,
@@ -302,6 +312,15 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/grass,
+/area/rogue/indoors/shelter/bog_hag)
+"wC" = (
+/obj/structure/flora/roguegrass/verdant,
+/turf/open/floor/rogue/grassyel,
+/area/rogue/indoors/shelter/bog_hag)
+"xf" = (
+/obj/item/grown/log/tree/stick,
+/obj/structure/flora/roguegrass/verdant,
+/turf/open/water/swamp/deep,
 /area/rogue/indoors/shelter/bog_hag)
 "xF" = (
 /obj/structure/table/wood/poor,
@@ -365,6 +384,7 @@
 /area/rogue/indoors/shelter/bog_hag)
 "yX" = (
 /obj/effect/spawner/lootdrop/hag/enchanted_moss,
+/obj/structure/flora/roguegrass/verdant,
 /turf/open/floor/rogue/grassyel,
 /area/rogue/indoors/shelter/bog_hag)
 "zp" = (
@@ -514,6 +534,7 @@
 "Og" = (
 /obj/item/grown/log/tree/stick,
 /obj/machinery/light/rogue/candle/green,
+/obj/structure/flora/roguegrass/thorn_bush,
 /turf/open/water/swamp/deep,
 /area/rogue/indoors/shelter/bog_hag)
 "Ow" = (
@@ -1537,9 +1558,9 @@ Nw
 qy
 mc
 mU
-mU
+wC
 XW
-mU
+wC
 CG
 QV
 Xu
@@ -1607,9 +1628,9 @@ CG
 CG
 Nw
 Nw
-mU
+wC
 XW
-mU
+vV
 mc
 Nw
 CG
@@ -1644,10 +1665,10 @@ CG
 CG
 lq
 mc
-mU
-tH
+wC
+xf
 Xn
-tH
+kC
 CG
 QV
 Xu

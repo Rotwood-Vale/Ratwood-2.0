@@ -15,10 +15,45 @@
 	var/list/datum/mind/bound_followers = list()
 	var/list/follower_links = list()
 	var/list/cursed_followers = list()
-	/// Associative: [datum/mind] = list(datum/hag_curse/...) — tracks active curse datums for cleanup on hag death
 	var/list/active_curses = list()
 	var/hag_tier = 1
 	var/datum/component/hag_curio_tracker/curio_component
+	var/static/list/hag_baseline_traits = list(
+		TRAIT_RITUALIST,
+		TRAIT_ALCHEMY_EXPERT,
+		TRAIT_ANCIENT_HAG,
+		TRAIT_HOMESTEAD_EXPERT,
+		TRAIT_SEWING_EXPERT,
+		TRAIT_ZOMBIE_IMMUNE,
+		TRAIT_NOMOOD,
+		TRAIT_UNLYCKERABLE,
+		TRAIT_DARKVISION,
+		TRAIT_NOHUNGER,
+		//To add: bogwalker - investigate edit_descriptors technophobe and no pve
+	)
+	var/static/list/hag_baseline_stats = list(
+		STATKEY_STR = -7,
+		STATKEY_WIL = 8,
+		STATKEY_SPD = -2,
+		STATKEY_CON = 1,
+		STATKEY_INT = 9,
+	)
+	var/static/list/hag_baseline_skills = list(
+		/datum/skill/misc/tracking = SKILL_LEVEL_LEGENDARY,
+		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
+		/datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/medicine = SKILL_LEVEL_LEGENDARY,
+		/datum/skill/craft/crafting = SKILL_LEVEL_LEGENDARY,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_LEGENDARY,
+		/datum/skill/craft/sewing = SKILL_LEVEL_MASTER,
+		/datum/skill/craft/cooking = SKILL_LEVEL_MASTER,
+	)
 	var/static/list/curse_registry = list(
 		/datum/hag_curse/no_run = list("cost" = 60, "min_tier" = 2),
 		/datum/hag_curse/unseemly = list("cost" = 10, "min_tier" = 1),
@@ -49,6 +84,7 @@
 			// Clear equipment first so the hag loadout applies deterministically.
 			hag_body.unequip_everything()
 		hag_body.equipOutfit(/datum/outfit/job/roguetown/hag)
+		apply_hag_baseline(hag_body)
 
 	if(length(GLOB.hag_starts))
 		owner.current.forceMove(pick(GLOB.hag_starts))
@@ -95,7 +131,9 @@
 	var/mob/living/carbon/human/hag_body = mob_override || owner?.current
 	if(!istype(hag_body) || !hag_body.mind)
 		return
-	REMOVE_TRAIT(hag_body, TRAIT_ANCIENT_HAG, "[type]")
+	for(var/trait in hag_baseline_traits)
+		REMOVE_TRAIT(hag_body, trait, "[type]")
+	hag_baseline_applied = FALSE
 	qdel(hag_body.GetComponent(/datum/component/hag_curio_tracker))
 	curio_component = null
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/hag_pact)
@@ -105,6 +143,23 @@
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/resurrect/hag)
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/mindlink/hag)
 	hag_body.verbs -= /mob/living/carbon/human/proc/commune_with_roots
+
+/datum/antagonist/hag/proc/apply_hag_baseline(mob/living/carbon/human/hag_body)
+	if(!istype(hag_body) || !hag_body.mind || hag_baseline_applied)
+		return
+
+	for(var/trait in hag_baseline_traits)
+		if(trait in hag_body.dna?.species?.banned_traits)
+			continue
+		ADD_TRAIT(hag_body, trait, "[type]")
+
+	for(var/stat in hag_baseline_stats)
+		hag_body.change_stat(stat, hag_baseline_stats[stat])
+
+	for(var/skill in hag_baseline_skills)
+		hag_body.adjust_skillrank_up_to(skill, hag_baseline_skills[skill], TRUE)
+
+	hag_baseline_applied = TRUE
 
 /datum/antagonist/hag/proc/teach_hag_recipes(datum/mind/hag_mind)
 	if(!hag_mind)

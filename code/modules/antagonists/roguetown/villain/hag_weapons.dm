@@ -3,6 +3,7 @@
 	name = "gnarled axe"
 	desc = "A large axe made out of gnarled, twisted wood. It's like it was grown that way, and you can swear you see the branches moving."
 	icon_state = "hagaxe"
+	icon = 'icons/roguetown/weapons/axes64.dmi'
 	smeltresult = null
 
 /obj/item/rogueweapon/greataxe/steel/hag/Initialize(mapload)
@@ -14,6 +15,7 @@
 	name = "gnarled sword"
 	desc = "A long sword made out of gnarled, twisted wood. It's like it was grown that way, and you can swear you see the branches moving."
 	icon_state = "hagsword"
+	icon = 'icons/roguetown/weapons/swords64.dmi'
 	smeltresult = null
 
 /obj/item/rogueweapon/sword/long/hag/Initialize(mapload)
@@ -24,6 +26,7 @@
 	name = "gnarled polearm"
 	desc = "A large polearm made out of gnarled, twisted wood. It's like it was grown that way, and you can swear you see the branches moving."
 	icon_state = "hagspear"
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
 	smeltresult = null
 
 /obj/item/rogueweapon/halberd/hag/Initialize(mapload)
