@@ -284,3 +284,8 @@
       verb in the "OOC" panel. It will be saved as a file on your computer.
   RadiantFlash7:
   - code_imp: Admin debug message removed
+2026-06-25:
+  567Turtle:
+  - bugfix: Fixes stripes/tiger stripes markings for real this time.
+  Jamdrawers:
+  - bugfix: fixes keycontrol for the tavern key vendor

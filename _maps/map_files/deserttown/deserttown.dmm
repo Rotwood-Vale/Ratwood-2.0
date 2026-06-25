@@ -27250,7 +27250,7 @@
 	icon_state = "wcv";
 	locked = 1;
 	lockid = "tower";
-	name = "Wizard's Tower"
+	name = "Magician's Tower"
 	},
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/magician/desert)
@@ -34462,7 +34462,7 @@
 /obj/structure/mineral_door/wood/donjon{
 	dir = 2;
 	name = "Wizard's Tower";
-	lockid = "university_secure";
+	lockid = "tower";
 	locked = 1
 	},
 /turf/open/floor/rogue/ruinedwood,
@@ -34606,7 +34606,12 @@
 /obj/item/reagent_containers/glass/bucket/pot,
 /obj/structure/rack/rogue/shelf,
 /obj/machinery/light/rogue/oven/east,
-/turf/open/floor/rogue/deserttile,
+/obj/structure/table/finestone,
+/obj/item/cooking/pan{
+	pixel_x = -3;
+	pixel_y = 35
+	},
+/turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/shelter/desertdeep)
 "kbW" = (
 /obj/structure/rack/rogue,
@@ -54922,6 +54927,10 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/church/basement)
+"pTr" = (
+/obj/machinery/tanningrack,
+/turf/open/floor/rogue/tile/brownbrick,
+/area/rogue/indoors/shelter/desertdeep)
 "pTt" = (
 /obj/structure/mineral_door/wood/deadbolt{
 	dir = 8
@@ -73879,7 +73888,16 @@
 /area/rogue/indoors/town/desert)
 "vtK" = (
 /obj/machinery/light/rogue/candle,
-/turf/open/floor/rogue/deserttile,
+/obj/structure/rack/rogue{
+	pixel_y = 10
+	},
+/obj/item/grown/log/tree/small,
+/obj/item/grown/log/tree/small,
+/obj/item/grown/log/tree/small{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/shelter/desertdeep)
 "vtP" = (
 /obj/structure/table/wood{
@@ -76814,6 +76832,22 @@
 /obj/structure/ritualcircle/zizo,
 /turf/open/floor/rogue/citybrick/citybrick1,
 /area/rogue/under/dungeon/desert_pyramid)
+"wjB" = (
+/obj/structure/closet/crate/roguecloset,
+/obj/item/reagent_containers/glass/bowl/decrepit,
+/obj/item/reagent_containers/glass/bowl/decrepit,
+/obj/item/reagent_containers/glass/bowl/decrepit,
+/obj/item/cooking/platter/decrepit,
+/obj/item/cooking/platter/decrepit,
+/obj/item/cooking/platter/decrepit,
+/obj/item/kitchen/fork/decrepit,
+/obj/item/kitchen/fork/decrepit,
+/obj/item/kitchen/fork/decrepit,
+/obj/item/kitchen/spoon/decrepit,
+/obj/item/kitchen/spoon/decrepit,
+/obj/item/kitchen/spoon/decrepit,
+/turf/open/floor/rogue/tile/brownbrick,
+/area/rogue/indoors/shelter/desertdeep)
 "wjC" = (
 /obj/structure/curtain/magenta{
 	layer = 4.05
@@ -76914,8 +76948,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "university_secure";
-	name = "Magician's Tower Roof"
+	lockid = "tower"
 	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/town/magician/desert)
@@ -421749,7 +421782,7 @@ kUf
 kUf
 orw
 rJC
-icQ
+gSs
 icQ
 teJ
 rJh
@@ -422685,7 +422718,7 @@ kUf
 kUf
 orw
 qTz
-gSs
+icQ
 icQ
 teJ
 lGB
@@ -475282,10 +475315,10 @@ kvr
 kvr
 kvr
 kvr
-kvr
-kvr
-kvr
-kvr
+uJK
+uJK
+uJK
+uJK
 kvr
 kvr
 kvr
@@ -475595,8 +475628,8 @@ kvr
 kvr
 uJK
 uJK
-uJK
-uJK
+pTr
+wjB
 uJK
 uJK
 kvr

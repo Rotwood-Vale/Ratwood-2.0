@@ -12674,7 +12674,7 @@
 /area/rogue/outdoors/town/roofs)
 "cPD" = (
 /obj/structure/flora/roguegrass,
-/obj/structure/flora/roguegrass/herb,
+/obj/structure/flora/roguegrass/herb/random,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woodsrat/above)
 "cPE" = (
@@ -64505,7 +64505,7 @@
 /area/rogue/outdoors/bograt/sunken)
 "oIH" = (
 /obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/roguegrass/herb,
+/obj/structure/flora/roguegrass/herb/random,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woodsrat/above)
 "oII" = (
@@ -75013,7 +75013,7 @@
 /turf/open/water/cleanshallow,
 /area/rogue/under/town/sewer)
 "rhE" = (
-/obj/structure/flora/roguegrass/herb,
+/obj/structure/flora/roguegrass/herb/random,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woodsrat/above)
 "rhG" = (
