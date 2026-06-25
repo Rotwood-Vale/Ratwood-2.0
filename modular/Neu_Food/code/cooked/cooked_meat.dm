@@ -215,7 +215,7 @@
 	name = "炸鸟排"
 	desc = "禽肉被炸到了恰到好处的诱人酥脆。"
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat.dmi'
-	icon_state = "炸禽肉香"
+	icon_state = "frybird"
 	faretype = FARE_FINE
 	portable = FALSE
 	fried_type = null
