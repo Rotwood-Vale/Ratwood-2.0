@@ -154,3 +154,25 @@
 // simple_animals) earns system points, spent in the system shop on items / equipment / weapons /
 // consumables, and on enhancing skill levels and the six attributes.
 #include "virtues/rpg_system.dm"
+// 自定义种族：暗影裔（Shadekin），从 S.P.L.U.R.T-Station-13 移植。栖身阴影的人形兽族，
+// 三段变异体色 + 兽尾兽耳兽口鼻，天生【暗视】（发光眼夜视），+1 感知 / +1 速度；
+// 并实装其签名能力【暗影穿行】：化作黑烟瞬移到一片处于阴影中的地块。
+// Custom species: Shadekin, ported from S.P.L.U.R.T-Station-13. A shadow-dwelling anthro humanoid with
+// 3-tone mutant coloring + anthro tail/ears/snout, innate TRAIT_DARKVISION (glowing-eye night vision),
+// +1 PER / +1 SPD; plus its signature ability "Shadow Step" (blink into a shadowed tile).
+#include "species/shadekin.dm"
+#include "species/shadekin_shadow_step.dm"
+// 暗影裔贴图接入：把移植自 SPLURT 的尾巴/耳朵贴图登记为 Ratwood 原生精灵配件 + 自定义项。
+// Shadekin texture wiring: register the SPLURT-ported tail/ears textures as native Ratwood
+// sprite accessories + customizer choices.
+#include "species/shadekin_sprites.dm"
+// 暗影裔职业准入修复：运行时把暗影裔注入所有"允许野民"的职业/进阶职业 allowed_races，
+// 修复"该种族无法选择任何职业"的 Bug（由 custom_bootstrap 在子系统初始化后调用）。
+// Shadekin job-access fix: at runtime, inject Shadekin into every job/advclass that already allows
+// Wild-Kin, fixing the "can't choose any profession" bug (invoked from custom_bootstrap post-init).
+#include "jobs/shadekin_job_access.dm"
+// 暗影裔装备准入修复：运行时把暗影裔注入所有"允许野民"的衣物 allowed_race 共享列表，
+// 修复"该种族无法穿戴许多装备"的 Bug（由 custom_bootstrap 调用，仅依赖编译期类型信息）。
+// Shadekin equipment-access fix: at runtime, inject Shadekin into the shared allowed_race list of every
+// clothing type that already allows Wild-Kin, fixing the "can't wear many items" bug.
+#include "species/shadekin_equipment_access.dm"
