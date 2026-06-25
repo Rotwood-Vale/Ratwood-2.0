@@ -1115,16 +1115,38 @@
 	max_blade_int = 200
 	smeltresult = /obj/item/ingot/blacksteel
 
-/obj/item/rogueweapon/greatsword/psygsword
+/obj/item/roguetown/greatsword/silver //unobtainium. purely for psydonic subtype
+	name = "silver greatsword"
+	force = 12
+	force_wielded = 30
+	minstr = 11
+	wdefense = 6
+	is_silver = TRUE
+	smeltresult = /obj/item/ingot/silver
+
+/obj/item/rogueweapon/greatsword/silver/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 50,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/greatsword/silver/psy
 	name = "psydonic greatsword"
 	desc = "It is said that a Psydonian smith was guided by Saint Malum himself to forge such a formidable blade, and given the task to slay a daemon preying on the Otavan farmlands. The design was retrieved, studied, and only a few replicas made - for they believe it dulls its edge."
 	icon_state = "silverexealt"
+	force = 14
+	force_wielded = 35
 	minstr = 11//+2, in exchange for the better defense. Is this really a problem? C'mon. It didn't need -5 force.
 	wdefense = 6
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/greatsword/psygsword/ComponentInitialize()
+/obj/item/rogueweapon/greatsword/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -1135,13 +1157,13 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/greatsword/psygsword/relic
+/obj/item/rogueweapon/greatsword/silver/psy/relic
 	name = "Apocrypha"
 	desc = "In the Otavan mosaics, Saint Ravox - bare in all but a beaked helmet and loincloth - is often depicted wielding such an imposing greatweapon against the Dark Star, Graggar. Regardless of whether this relic was actually wielded by divinity-or-not, its unparallel strength will nevertheless command even the greatest foes to fall."
 	icon_state = "psygsword"
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/rend, /datum/intent/sword/thrust/exe, /datum/intent/sword/strike/bad)
 
-/obj/item/rogueweapon/greatsword/psygsword/relic/ComponentInitialize()
+/obj/item/rogueweapon/greatsword/silver/psy/relic/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -1702,7 +1724,7 @@
 
 //
 
-/obj/item/rogueweapon/greatsword/psygsword/dragonslayer
+/obj/item/rogueweapon/greatsword/silver/psy/dragonslayer
 	name = "\"Daemonslayer\""
 	desc = "'That thing was too big to be called a sword. Too big, too thick, too heavy, and too rough. No, it was more like a large hunk of silver.' </br>Intimidatingly massive, unfathomably powerful, and - above all else - a testament to one's guts."
 	icon_state = "machaslayer"
@@ -1721,7 +1743,7 @@
 	is_silver = TRUE
 	smeltresult = /obj/item/rogueweapon/sword/long/kriegmesser/silver //Too thick to completely melt.
 
-/obj/item/rogueweapon/greatsword/psygsword/dragonslayer/ComponentInitialize()
+/obj/item/rogueweapon/greatsword/silver/psy/dragonslayer/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\

@@ -14946,7 +14946,7 @@
 /turf/open/floor/rogue/blocks/green,
 /area/rogue/under/town/sewer)
 "dUw" = (
-/obj/item/rogueweapon/greatsword/psygsword,
+/obj/item/rogueweapon/greatsword/silver/psy,
 /obj/structure/closet/crate/chest/inqreliquary{
 	locked = 1;
 	lockid = "psy_bog_dung_lootkey_two"

@@ -35,7 +35,7 @@
 					choice = /obj/item/rogueweapon/halberd/silver/psy
 					user.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)	//We make sure the weapon is usable by the Inquisitor.
 				if("Apocrypha - Silver Greatsword")
-					choice = /obj/item/rogueweapon/greatsword/psygsword
+					choice = /obj/item/rogueweapon/greatsword/silver/psy
 					user.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)		//Ditto.
 				if("Golgatha - SYON Shard Censer")
 					choice = /obj/item/flashlight/flare/torch/lantern/psycenser
@@ -298,7 +298,7 @@ Inquisitorial armory down here
 /obj/structure/closet/crate/chest/inqarmory/PopulateContents()
 	.=..()
 	new /obj/item/rogueweapon/huntingknife/idagger/silver/psy(src)
-	new /obj/item/rogueweapon/greatsword/psygsword(src)
+	new /obj/item/rogueweapon/greatsword/silver/psy(src)
 	new /obj/item/rogueweapon/halberd/silver/psy(src)
 	new /obj/item/rogueweapon/whip/psywhip_lesser
 	new /obj/item/rogueweapon/flail/sflail/silver/psy

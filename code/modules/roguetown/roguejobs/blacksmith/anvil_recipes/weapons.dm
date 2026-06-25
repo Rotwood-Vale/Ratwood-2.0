@@ -1055,7 +1055,7 @@
 
 /datum/anvil_recipe/weapons/psy/gsword
 	name = "Psydonic Greatsword (+2 Blessed Silver)"
-	created_item = /obj/item/rogueweapon/greatsword/psygsword
+	created_item = /obj/item/rogueweapon/greatsword/silver/psy
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/ingot/silverblessed)
 
 /datum/anvil_recipe/weapons/psy/sword
