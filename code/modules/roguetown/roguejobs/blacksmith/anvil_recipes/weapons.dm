@@ -1046,7 +1046,7 @@
 
 /datum/anvil_recipe/weapons/psy/cudgel
 	name = "Psydonic Handmace"
-	created_item = /obj/item/rogueweapon/mace/cudgel/psy
+	created_item = /obj/item/rogueweapon/mace/cudgel/silver/psy
 
 /datum/anvil_recipe/weapons/psy/halberd
 	name = "Psydonic Halberd (+2 Blessed Silver, +1 Small Log)"

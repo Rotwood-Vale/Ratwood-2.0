@@ -261,19 +261,34 @@
 	max_integrity = 75
 	sellprice = 35
 
-/obj/item/rogueweapon/mace/cudgel/psy
-	name = "psydonic handmace"
-	desc = "A shorter variant of the flanged silver mace, rebalanced for one-handed usage. It isn't uncommon for these sidearms to mysteriously 'vanish' from an Adjudicator's belt, only to be 'rediscovered' - and subsequently kept - by a Confessor."
+/obj/item/rogueweapon/mace/cudgel/silver/ //unobtainium. purely for silver subtype
+	name = "silver handmace"
 	force = 25
 	force_wielded = 30
 	minstr = 9
 	wdefense = 5
 	resistance_flags = FIRE_PROOF
-	icon_state = "psyflangedmace"
 	is_silver = TRUE
+	smeltresult = /obj/item/ingot/silver
+
+/obj/item/rogueweapon/mace/cudgel/silver/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 50,\
+		added_def = 1,\
+	)
+
+/obj/item/rogueweapon/mace/cudgel/silver/psy
+	name = "psydonic handmace"
+	desc = "A shorter variant of the flanged silver mace, rebalanced for one-handed usage. It isn't uncommon for these sidearms to mysteriously 'vanish' from an Adjudicator's belt, only to be 'rediscovered' - and subsequently kept - by a Confessor."
+	icon_state = "psyflangedmace"
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/mace/cudgel/psy/ComponentInitialize()
+/obj/item/rogueweapon/mace/cudgel/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -284,7 +299,7 @@
 		added_def = 1,\
 	)
 
-/obj/item/rogueweapon/mace/cudgel/psy/preblessed/ComponentInitialize()
+/obj/item/rogueweapon/mace/cudgel/silver/psy/preblessed/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -295,7 +310,7 @@
 		added_def = 1,\
 	)
 
-/obj/item/rogueweapon/mace/cudgel/psy/old
+/obj/item/rogueweapon/mace/cudgel/silver/psy/old
 	name = "enduring handmace"
 	desc = "A shorthanded mace and convenient sleeping aid, its grown harder to swing with age, though it hasn't lost reliability."
 	force = 20
@@ -304,7 +319,7 @@
 	icon_state = "opsyflangedmace"
 	smeltresult = /obj/item/ingot/steel
 
-/obj/item/rogueweapon/mace/cudgel/psy/old/ComponentInitialize()
+/obj/item/rogueweapon/mace/cudgel/silver/psy/old/ComponentInitialize()
 	return
 
 /obj/item/rogueweapon/mace/cudgel/copper

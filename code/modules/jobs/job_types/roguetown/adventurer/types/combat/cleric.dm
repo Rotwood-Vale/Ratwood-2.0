@@ -369,7 +369,7 @@
 		if("Mace")
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-				beltr = /obj/item/rogueweapon/mace/cudgel/psy/old
+				beltr = /obj/item/rogueweapon/mace/cudgel/silver/psy/old
 			else
 				beltr = /obj/item/rogueweapon/mace
 		if("Flail")

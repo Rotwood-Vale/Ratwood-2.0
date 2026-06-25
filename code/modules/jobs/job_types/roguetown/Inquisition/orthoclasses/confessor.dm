@@ -56,7 +56,7 @@
 				r_hand = /obj/item/rogueweapon/scabbard/sheath
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, 4, TRUE)
 			if("Psydonic Handmace")
-				l_hand = /obj/item/rogueweapon/mace/cudgel/psy
+				l_hand = /obj/item/rogueweapon/mace/cudgel/silver/psy
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 			if("Psydonic Shortsword")
 				l_hand = /obj/item/rogueweapon/sword/short/psy
