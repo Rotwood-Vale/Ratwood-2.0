@@ -16,7 +16,7 @@
 	var/list/delivered_items = list()
 	var/rite_started = FALSE
 	var/rite_completed = FALSE
-	var/static/list/rite_requirements = list(
+	var/static/list/rite_requirements = alist(
 		1 = list(/obj/item/reagent_containers/lux = 2, /obj/item/magic/manacrystal = 1),
 		2 = list(/obj/item/magic/voidstone = 1, /obj/item/roguegem/diamond = 1),
 		3 = list(/obj/item/magic/leyline = 1, /obj/item/ingot/gold = 2, /obj/item/magic/artifact = 1),
