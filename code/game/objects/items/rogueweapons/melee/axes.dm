@@ -365,7 +365,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/stoneaxe/battle/silver/psyaxe
+/obj/item/rogueweapon/stoneaxe/battle/silver/psy
 	name = "psydonic war axe"
 	desc = "An ornate battle axe, plated in a ceremonial veneer of silver. The premiere instigator of conflict against elven attachees."
 	icon_state = "psyaxe"
@@ -374,7 +374,7 @@
 	wdefense = 6
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/stoneaxe/battle/silver/psyaxe/ComponentInitialize()
+/obj/item/rogueweapon/stoneaxe/battle/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -385,7 +385,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/stoneaxe/battle/silver/psyaxe/old
+/obj/item/rogueweapon/stoneaxe/battle/silver/psy/old
 	name = "enduring war axe"
 	desc = "An ornate battle axe, its silver tarnished by neglect. Even a dim light can pierce the dark."
 	icon_state = "psyaxe"
@@ -395,7 +395,7 @@
 	smeltresult = /obj/item/ingot/steel
 	color = COLOR_FLOORTILE_GRAY
 
-/obj/item/rogueweapon/stoneaxe/battle/silver/psyaxe/old/ComponentInitialize()
+/obj/item/rogueweapon/stoneaxe/battle/silver/psy/old/ComponentInitialize()
 	return
 
 /obj/item/rogueweapon/stoneaxe/battle/steppesman
