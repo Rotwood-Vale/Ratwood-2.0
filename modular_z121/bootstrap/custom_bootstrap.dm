@@ -128,6 +128,20 @@ SUBSYSTEM_DEF(custom_bootstrap)
 	// same rationale as the registrations above.
 	register_rpg_system_trait()
 
+	// 修复"暗影裔无法选择任何职业"的 Bug：把暗影裔注入所有已允许【野民/anthromorph】的
+	//   职业(/datum/job)与进阶职业(/datum/advclass)的 allowed_races 列表。
+	// 为什么放在这里：custom_bootstrap 的 init_order(0) 晚于 SSjob(65) 与 SSrole_class_handler(66)，
+	//   此刻两套职业实例均已就绪，可安全遍历改写；登记逻辑定义在 modular_z121/jobs/shadekin_job_access.dm。
+	// Fix the "Shadekin can't pick any profession" bug: inject Shadekin into the allowed_races of every
+	// job/advclass that already allows Wild-Kin (anthromorph). Safe here because custom_bootstrap (init
+	// order 0) runs after SSjob (65) and SSrole_class_handler (66), so all instances exist.
+	grant_shadekin_job_access()
+
+	// 注：暗影裔的"装备准入"修复已改为在 /datum/species/shadekin/can_equip() 内就地放行
+	//   （见 modular_z121/species/shadekin_equipment_access.dm），无需在此做启动期注入。
+	// Note: the Shadekin equipment-access fix now lives in /datum/species/shadekin/can_equip()
+	// (see modular_z121/species/shadekin_equipment_access.dm); no startup-time injection needed here.
+
 	var/list/custom_admin_verbs = get_custom_admin_verbs()
 	if(islist(GLOB.admin_verbs_admin))
 		GLOB.admin_verbs_admin |= custom_admin_verbs
