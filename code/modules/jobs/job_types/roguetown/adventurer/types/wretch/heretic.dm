@@ -73,7 +73,7 @@
 				l_hand = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-					r_hand = /obj/item/rogueweapon/spear/silver/psyspear/old
+					r_hand = /obj/item/rogueweapon/spear/silver/psy/old
 				else
 					r_hand = /obj/item/rogueweapon/spear/billhook
 		var/datum/devotion/C = new /datum/devotion(H, H.patron)

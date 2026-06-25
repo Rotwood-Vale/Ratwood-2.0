@@ -1025,7 +1025,7 @@
 
 /datum/anvil_recipe/weapons/psy/spear
 	name = "Psydonic Spear (+1 Blessed Silver, +1 Small Log)"
-	created_item = /obj/item/rogueweapon/spear/silver/psyspear
+	created_item = /obj/item/rogueweapon/spear/silver/psy
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/grown/log/tree/small)
 
 /datum/anvil_recipe/weapons/psy/dagger
