@@ -112,7 +112,7 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 		//Polearms and the like.
 		if("Psydonic Grand Mace + Shortsword")
-			H.put_in_hands(new /obj/item/rogueweapon/mace/goden/psy(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/mace/goden/silver/psy(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/sword/short/psy(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)

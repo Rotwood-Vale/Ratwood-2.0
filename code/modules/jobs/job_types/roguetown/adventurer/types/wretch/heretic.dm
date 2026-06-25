@@ -54,7 +54,7 @@
 			if("Mace")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-					r_hand = /obj/item/rogueweapon/mace/goden/psy/old
+					r_hand = /obj/item/rogueweapon/mace/goden/silver/psy/old
 				else
 					r_hand = /obj/item/rogueweapon/mace/steel
 			if("Flail")

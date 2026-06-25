@@ -467,18 +467,32 @@
 	gripped_intents = list(/datum/intent/mace/strike/goden, /datum/intent/mace/smash/goden, /datum/intent/stab, /datum/intent/effect/daze)
 	max_integrity = 225 // it's strong wood, but it's still wood.
 
-/obj/item/rogueweapon/mace/goden/psy
-	name = "psydonic grand mace"
-	desc = "An ornate mace, plated in a ceremonial veneer of silver. Even the unholy aren't immune to discombobulation."
-	icon_state = "psymace"
+/obj/item/rogueweapon/mace/goden/silver // unobtainium. purely for psydonic subtype
+	name = "silver grand mace"
 	force = 15
 	force_wielded = 35
 	minstr = 12
 	smelt_bar_num = 2
 	is_silver = TRUE
-	smeltresult = /obj/item/ingot/silverblessed
+	smeltresult = /obj/item/ingot/silver
 
-/obj/item/rogueweapon/mace/goden/psy/ComponentInitialize()
+/obj/item/rogueweapon/mace/goden/silver/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 50,\
+		added_def = 1,\
+	)
+
+/obj/item/rogueweapon/mace/goden/silver/psy
+	name = "psydonic grand mace"
+	desc = "An ornate mace, plated in a ceremonial veneer of silver. Even the unholy aren't immune to discombobulation."
+	icon_state = "psymace"
+
+/obj/item/rogueweapon/mace/goden/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -489,7 +503,7 @@
 		added_def = 1,\
 	)
 
-/obj/item/rogueweapon/mace/goden/psy/preblessed/ComponentInitialize()
+/obj/item/rogueweapon/mace/goden/silver/psy/preblessed/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -500,8 +514,8 @@
 		added_def = 1,\
 	)
 
-/obj/item/rogueweapon/mace/goden/psy/old
-	name = "enduring mace"
+/obj/item/rogueweapon/mace/goden/silver/psy/old
+	name = "enduring grand mace"
 	desc = "An ornate mace, its silver tarnished by neglect. Even without HIS holy blessing, its weight ENDURES."
 	icon_state = "psymace"
 	force = 15
@@ -512,7 +526,7 @@
 	smeltresult = /obj/item/ingot/steel
 	color = COLOR_FLOORTILE_GRAY
 
-/obj/item/rogueweapon/mace/goden/psy/old/ComponentInitialize()
+/obj/item/rogueweapon/mace/goden/silver/psy/old/ComponentInitialize()
 	return
 
 /obj/item/rogueweapon/mace/spiked

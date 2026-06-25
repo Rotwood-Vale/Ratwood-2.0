@@ -1020,7 +1020,7 @@
 
 /datum/anvil_recipe/weapons/psy/mace
 	name = "Psydonic Grand Mace (+1 Blessed Silver, +1 Small Log)"
-	created_item = /obj/item/rogueweapon/mace/goden/psy
+	created_item = /obj/item/rogueweapon/mace/goden/silver/psy
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/grown/log/tree/small)
 
 /datum/anvil_recipe/weapons/psy/spear
