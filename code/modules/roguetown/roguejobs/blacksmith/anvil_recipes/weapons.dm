@@ -1060,7 +1060,7 @@
 
 /datum/anvil_recipe/weapons/psy/sword
 	name = "Psydonic Longsword (+1 Blessed Silver)"
-	created_item = /obj/item/rogueweapon/sword/long/psysword
+	created_item = /obj/item/rogueweapon/sword/long/silver/psy
 	additional_items = list(/obj/item/ingot/silverblessed)
 
 /datum/anvil_recipe/weapons/psy/whip

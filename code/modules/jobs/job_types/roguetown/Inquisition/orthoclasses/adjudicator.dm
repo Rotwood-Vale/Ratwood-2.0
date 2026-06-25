@@ -94,7 +94,7 @@
 	switch(weapon_choice)
 		//Typical arms and such.
 		if("Psydonic Longsword + Shield")
-			H.put_in_hands(new /obj/item/rogueweapon/sword/long/psysword(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/sword/long/silver/psy(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal, SLOT_BACK_L, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
