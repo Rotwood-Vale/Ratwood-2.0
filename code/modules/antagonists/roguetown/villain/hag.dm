@@ -30,7 +30,8 @@
 		TRAIT_UNLYCKERABLE,
 		TRAIT_DARKVISION,
 		TRAIT_NOHUNGER,
-		//To add: bogwalker - investigate edit_descriptors technophobe and no pve
+		TRAIT_SELF_SUSTENANCE
+		//To add: bogwalker - investigate edit_descriptors, technophobe and no pve as well as ring still not working
 	)
 	var/static/list/hag_baseline_stats = list(
 		STATKEY_STR = -7,

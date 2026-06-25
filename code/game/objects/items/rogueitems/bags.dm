@@ -155,3 +155,10 @@
 		/obj/item/toy/cards/deck,
 		/obj/item/folding_table_stored
 	)
+
+/obj/item/storage/roguebag/leechbait
+	populate_contents = list(
+	/obj/item/bait/leech,
+	/obj/item/bait/leech,
+	/obj/item/bait/leech,
+	)

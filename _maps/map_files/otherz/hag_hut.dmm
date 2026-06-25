@@ -3,10 +3,6 @@
 /obj/structure/flora/roguegrass/water,
 /turf/open/water/cleanshallow,
 /area/rogue/indoors/shelter/bog_hag)
-"aW" = (
-/obj/effect/wisp/green,
-/turf/open/floor/rogue/grass,
-/area/rogue/indoors/shelter/bog_hag)
 "bv" = (
 /obj/structure/flora/roguegrass/verdant,
 /turf/open/floor/rogue/grass,
@@ -33,6 +29,11 @@
 /obj/structure/flora/hotspring_rocks/grassy,
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/shelter/bog_hag)
+"dq" = (
+/obj/structure/flora/roguegrass/jungle,
+/obj/effect/wisp/green,
+/turf/open/floor/rogue/grass,
+/area/rogue/indoors/shelter/bog_hag)
 "dP" = (
 /obj/structure/flora/roguegrass/verdant,
 /mob/living/simple_animal/butterfly,
@@ -43,8 +44,8 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/shelter/bog_hag)
 "eO" = (
-/obj/structure/fluff/walldeco/vinez/red,
-/turf/closed/mineral/rogue/bedrock,
+/obj/effect/wisp/infernal,
+/turf/open/water/swamp/deep,
 /area/rogue/indoors/shelter/bog_hag)
 "gy" = (
 /obj/structure/manaflower,
@@ -74,8 +75,8 @@
 	},
 /area/rogue/indoors/shelter/bog_hag)
 "ie" = (
-/obj/effect/wisp/green,
-/turf/open/floor/rogue/grassred,
+/obj/structure/flora/roguegrass/verdant,
+/turf/open/floor/rogue/grassyel,
 /area/rogue/indoors/shelter/bog_hag)
 "ik" = (
 /obj/item/natural/cloth,
@@ -102,29 +103,19 @@
 /obj/effect/spawner/lootdrop/hag/raw_botanicals,
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/shelter/bog_hag)
-"ka" = (
-/obj/item/grown/log/tree/stick,
-/obj/structure/flora/roguegrass/verdant,
-/turf/open/water/swamp/deep,
-/area/rogue/indoors/shelter/bog_hag)
 "kl" = (
 /obj/structure/stairs,
 /turf/open/floor/rogue/shroud,
-/area/rogue/indoors/shelter/bog_hag)
-"kq" = (
-/obj/machinery/light/rogue/candle/weak,
-/turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/shelter/bog_hag)
 "kN" = (
 /turf/open/transparent/openspace,
 /area/rogue/indoors/shelter/bog_hag)
 "lq" = (
-/obj/item/grown/log/tree/stick,
 /obj/effect/wisp/green{
-	pixel_x = 7;
-	pixel_y = -5
+	pixel_x = -10;
+	pixel_y = -4
 	},
-/turf/open/water/swamp/deep,
+/turf/open/floor/rogue/shroud,
 /area/rogue/indoors/shelter/bog_hag)
 "lP" = (
 /obj/structure/stairs,
@@ -140,11 +131,6 @@
 "mm" = (
 /obj/structure/table/wood/poor,
 /turf/open/floor/rogue/twig,
-/area/rogue/indoors/shelter/bog_hag)
-"mz" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/frog,
-/obj/effect/wisp/green,
-/turf/open/floor/rogue/grassyel,
 /area/rogue/indoors/shelter/bog_hag)
 "mI" = (
 /obj/item/rogueore/iron{
@@ -183,9 +169,7 @@
 /turf/open/floor/rogue/shroud,
 /area/rogue/indoors/shelter/bog_hag)
 "nV" = (
-/obj/structure/fluff/walldeco/vinez/red{
-	dir = 10
-	},
+/obj/structure/fluff/walldeco/vinez/red,
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/indoors/shelter/bog_hag)
 "oP" = (
@@ -209,13 +193,10 @@
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/turf/open/floor/rogue/shroud,
-/area/rogue/indoors/shelter/bog_hag)
-"pA" = (
-/obj/effect/wisp/green{
-	pixel_x = 20;
-	pixel_y = 12
-	},
+/obj/effect/spawner/lootdrop/hag/raw_botanicals,
+/obj/effect/spawner/lootdrop/hag/raw_botanicals,
+/obj/effect/spawner/lootdrop/hag/raw_botanicals,
+/obj/effect/spawner/lootdrop/hag/raw_botanicals,
 /turf/open/floor/rogue/shroud,
 /area/rogue/indoors/shelter/bog_hag)
 "pM" = (
@@ -243,7 +224,10 @@
 /area/rogue/indoors/shelter/bog_hag)
 "qy" = (
 /obj/item/grown/log/tree/stick,
-/obj/effect/wisp/green,
+/obj/effect/wisp/infernal{
+	pixel_x = -10;
+	pixel_y = 14
+	},
 /turf/open/floor/rogue/grassyel,
 /area/rogue/indoors/shelter/bog_hag)
 "qL" = (
@@ -263,17 +247,6 @@
 /obj/item/rogueweapon/woodstaff,
 /obj/item/rogueweapon/scabbard/gwstrap,
 /turf/open/floor/rogue/shroud,
-/area/rogue/indoors/shelter/bog_hag)
-"sc" = (
-/obj/structure/flora/roguegrass/verdant,
-/turf/open/floor/rogue/grassyel,
-/area/rogue/indoors/shelter/bog_hag)
-"sw" = (
-/obj/effect/wisp/green{
-	pixel_x = 3;
-	pixel_y = -15
-	},
-/turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/shelter/bog_hag)
 "sK" = (
 /obj/machinery/light/rogue/candle/weak,
@@ -309,21 +282,15 @@
 /area/rogue/indoors/shelter/bog_hag)
 "uq" = (
 /obj/effect/wisp/green{
-	pixel_x = 14;
-	pixel_y = 16
+	pixel_x = 3;
+	pixel_y = -15
 	},
-/turf/open/floor/rogue/grass,
-/area/rogue/indoors/shelter/bog_hag)
-"va" = (
-/obj/effect/wisp/green{
-	pixel_x = -9;
-	pixel_y = -4
-	},
-/turf/open/floor/rogue/twig,
+/turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/shelter/bog_hag)
 "vy" = (
 /obj/effect/spawner/lootdrop/hag/enchanted_moss,
-/turf/open/floor/rogue/dirt/road,
+/obj/structure/flora/roguegrass/verdant,
+/turf/open/floor/rogue/grass,
 /area/rogue/indoors/shelter/bog_hag)
 "vA" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/frog,
@@ -332,10 +299,6 @@
 "vQ" = (
 /obj/effect/spawner/lootdrop/hag/raw_botanicals,
 /turf/open/floor/rogue/cobble,
-/area/rogue/indoors/shelter/bog_hag)
-"vU" = (
-/obj/effect/wisp/green,
-/turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/shelter/bog_hag)
 "vY" = (
 /obj/item/reagent_containers/powder/flour,
@@ -371,6 +334,12 @@
 "yj" = (
 /obj/structure/flora/hotspring_rocks/grassy,
 /turf/open/water/cleanshallow,
+/area/rogue/indoors/shelter/bog_hag)
+"ys" = (
+/obj/structure/fluff/walldeco/vinez/red{
+	dir = 10
+	},
+/turf/closed/mineral/rogue/bedrock,
 /area/rogue/indoors/shelter/bog_hag)
 "yy" = (
 /turf/closed/wall/mineral/rogue/stone,
@@ -445,13 +414,6 @@
 /obj/structure/flora/roguegrass/bush/wall,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/shelter/bog_hag)
-"BQ" = (
-/obj/effect/wisp/green{
-	pixel_x = -10;
-	pixel_y = -4
-	},
-/turf/open/floor/rogue/shroud,
-/area/rogue/indoors/shelter/bog_hag)
 "Cq" = (
 /obj/structure/flora/roguegrass/thorn_bush,
 /turf/open/floor/rogue/grass,
@@ -518,6 +480,10 @@
 /obj/structure/vine,
 /turf/closed/wall/mineral/rogue/wooddark/vertical,
 /area/rogue)
+"Jv" = (
+/obj/machinery/light/rogue/candle/weak,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/indoors/shelter/bog_hag)
 "Jw" = (
 /obj/structure/flora/hotspring_rocks/grassy{
 	pixel_y = 4;
@@ -525,9 +491,13 @@
 	},
 /turf/open/water/cleanshallow,
 /area/rogue/indoors/shelter/bog_hag)
+"Kp" = (
+/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/frog,
+/turf/open/floor/rogue/grassyel,
+/area/rogue/indoors/shelter/bog_hag)
 "Li" = (
-/obj/effect/waterfall,
-/turf/open/water/cleanshallow,
+/obj/effect/wisp/green,
+/turf/open/floor/rogue/grass,
 /area/rogue/indoors/shelter/bog_hag)
 "LE" = (
 /obj/machinery/light/rogue/cauldron,
@@ -588,14 +558,6 @@
 /obj/effect/decal/cleanable/blood/gibs/core,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/shelter/bog_hag)
-"ON" = (
-/obj/structure/bed/rogue/shit,
-/obj/effect/wisp/infernal{
-	pixel_x = -10;
-	pixel_y = 14
-	},
-/turf/open/floor/rogue/cobble,
-/area/rogue/indoors/shelter/bog_hag)
 "OW" = (
 /obj/structure/bed/rogue/shit,
 /turf/open/floor/rogue/cobble,
@@ -607,6 +569,11 @@
 "Pk" = (
 /mob/living/simple_animal/hostile/retaliate/frog,
 /turf/open/water/cleanshallow,
+/area/rogue/indoors/shelter/bog_hag)
+"PJ" = (
+/obj/effect/wisp/green,
+/obj/structure/flora/roguegrass/verdant,
+/turf/open/floor/rogue/grass,
 /area/rogue/indoors/shelter/bog_hag)
 "PV" = (
 /obj/structure/vine,
@@ -669,13 +636,13 @@
 	},
 /turf/open/floor/rogue/shroud,
 /area/rogue/indoors/shelter/bog_hag)
+"Tf" = (
+/obj/item/grown/log/tree/stick,
+/obj/structure/flora/roguegrass/verdant,
+/turf/open/water/swamp/deep,
+/area/rogue/indoors/shelter/bog_hag)
 "Tj" = (
 /obj/structure/leyline,
-/turf/open/floor/rogue/grass,
-/area/rogue/indoors/shelter/bog_hag)
-"Ts" = (
-/obj/structure/flora/roguegrass/jungle,
-/obj/effect/wisp/green,
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/shelter/bog_hag)
 "Tv" = (
@@ -718,13 +685,6 @@
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/shelter/bog_hag)
-"UK" = (
-/obj/effect/wisp/infernal{
-	pixel_x = -10;
-	pixel_y = -10
-	},
-/turf/open/water/swamp/deep,
-/area/rogue/indoors/shelter/bog_hag)
 "UO" = (
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/shelter/bog_hag)
@@ -764,11 +724,12 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/shelter/bog_hag)
 "Xn" = (
-/obj/effect/wisp/green{
-	pixel_x = 3;
-	pixel_y = -15
+/obj/structure/bed/rogue/shit,
+/obj/effect/wisp/infernal{
+	pixel_x = -10;
+	pixel_y = 14
 	},
-/turf/open/floor/rogue/grass,
+/turf/open/floor/rogue/cobble,
 /area/rogue/indoors/shelter/bog_hag)
 "Xu" = (
 /turf/closed/mineral/rogue/bedrock,
@@ -800,6 +761,13 @@
 /area/rogue/indoors/shelter/bog_hag)
 "XW" = (
 /turf/open/floor/rogue/grassred,
+/area/rogue/indoors/shelter/bog_hag)
+"XY" = (
+/obj/effect/wisp/green{
+	pixel_x = 3;
+	pixel_y = -15
+	},
+/turf/open/floor/rogue/grass,
 /area/rogue/indoors/shelter/bog_hag)
 "Yl" = (
 /obj/structure/mushroom_sprout,
@@ -1197,7 +1165,7 @@ QV
 QV
 TF
 RU
-BQ
+lq
 LE
 Ow
 LE
@@ -1269,7 +1237,7 @@ QV
 QV
 TF
 wt
-pA
+Qa
 UO
 pm
 yI
@@ -1380,7 +1348,7 @@ xF
 UO
 UO
 ZS
-va
+UO
 Qa
 TF
 CG
@@ -1475,13 +1443,13 @@ QV
 QV
 QV
 QV
-eO
-eO
-eO
-eO
-eO
-eO
-eO
+nV
+nV
+nV
+nV
+nV
+nV
+nV
 QV
 TF
 CG
@@ -1511,13 +1479,13 @@ QV
 QV
 QV
 QV
-nV
-ON
+ys
+Xn
 vQ
-eO
+nV
 pN
 OW
-eO
+nV
 CG
 CG
 TF
@@ -1547,13 +1515,13 @@ QV
 QV
 QV
 QV
-eO
+nV
 yR
 vQ
-eO
+nV
 vQ
 vQ
-eO
+nV
 CG
 CG
 CG
@@ -1583,13 +1551,13 @@ QV
 QV
 QV
 QV
-eO
-eO
+nV
+nV
 mK
-eO
+nV
 mK
-eO
-eO
+nV
+nV
 CG
 Og
 yX
@@ -1624,16 +1592,16 @@ CG
 Nw
 Nw
 Nw
-UK
-eO
+Nw
+nV
 CG
 Nw
 qy
 mc
 mU
-sc
 ie
-sc
+XW
+ie
 CG
 QV
 Xu
@@ -1701,11 +1669,11 @@ CG
 CG
 Nw
 Nw
-sc
+ie
 XW
-mz
+Kp
 mc
-Nw
+eO
 CG
 QV
 Xu
@@ -1736,10 +1704,10 @@ Xu
 Xu
 CG
 CG
-lq
+tH
 mc
-sc
-ka
+ie
+Tf
 Nw
 Og
 CG
@@ -1774,7 +1742,7 @@ iW
 CG
 CG
 tH
-Nw
+eO
 Nw
 CG
 CG
@@ -1967,7 +1935,7 @@ jj
 jj
 jj
 jj
-vU
+PJ
 vy
 BM
 Tx
@@ -1998,14 +1966,14 @@ ti
 HR
 HR
 Qm
-aW
+Li
 jj
 jj
 jj
 jj
 jj
-IE
-IE
+bv
+bv
 HR
 ti
 iW
@@ -2041,7 +2009,7 @@ OZ
 jj
 jj
 jj
-IE
+bv
 HR
 ti
 ti
@@ -2067,7 +2035,7 @@ QV
 QV
 QV
 ti
-Xn
+XY
 TM
 jj
 jj
@@ -2105,12 +2073,12 @@ QV
 ti
 Ct
 Ct
-uq
+Ct
 YK
 vA
 Ct
 Ob
-Ct
+bv
 bv
 jj
 jj
@@ -2145,12 +2113,12 @@ jQ
 bv
 HR
 Tj
-Ct
+bv
 cb
 jQ
 jj
 jj
-Ts
+dq
 HR
 Tx
 QV
@@ -2184,7 +2152,7 @@ dX
 bv
 YM
 bv
-aW
+Li
 jj
 jj
 DV
@@ -2330,7 +2298,7 @@ TK
 jj
 jj
 jj
-sw
+uq
 cw
 Tx
 iW
@@ -2363,7 +2331,7 @@ UO
 UO
 UO
 bH
-kq
+Jv
 jj
 IE
 IE
@@ -2508,7 +2476,7 @@ kN
 ti
 ti
 ti
-Li
+gW
 gW
 Pk
 gW
@@ -2544,7 +2512,7 @@ ti
 ti
 ti
 ti
-Li
+gW
 yj
 gW
 Qs

@@ -160,11 +160,12 @@
 /// Snowflake trait given to Eoran's wearing their bud
 #define TRAIT_EORAN_CONTENTED "Eoran Contented"
 
-// HAG CURSES
-#define TRAIT_CURSE_SCAR "Curse Scar" //source: marks a soul cursed by the hag
-
-// HAG ANTAGONIST TRAITS
-#define TRAIT_ANCIENT_HAG "Ancient Hag" //source: marks the hag antagonist
+// HAG 
+#define TRAIT_ANCIENT_HAG "Ancient Hag" // Narks the hag antagonist
+#define TRAIT_CURSE_SCAR "Curse Scar" // Marks a soul cursed by the hag
+#define TRAIT_FEYTOUCHED "Feytouched" // Can use heart trees for travel
+#define TRAIT_ROOT_WALKER "Root Walker"
+#define TRAIT_WYRD_LABOURER "Wyrd Labourer" // Hag boon
 
 // PATRON GOD CURSES
 
@@ -562,7 +563,12 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_NATURALARMOR = span_info("Whether by natural or other means, my skin is strong enough to resist being pierced and cut."),
 	TRAIT_CLERGYRADICAL = span_info("I follow the radical path of the clergy, abandoning the old road of devotion in favor of self-guided miracle study."),
 	TRAIT_TRIBAL = span_info("I belong to the Island's tribe."),
-	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others.")
+	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others."),
+	TRAIT_ANCIENT_HAG = span_info("I know of secrets in alchemy and magyck no one else is aware of, for none are more ancient, more engrossed with the finer details of this land."),
+	TRAIT_WYRD_LABOURER = span_info("Strange power causes my swings to cut through trees and rocks with ease."),
+	TRAIT_CURSE_SCAR = span_info("That foul wench cursed me! I'll have my revenge... Those strange fog wards in the bog, what if?..."),
+	TRAIT_FEYTOUCHED = span_info("I've been influenced or created by fey, after offering lux to a heartroot, I can use it to travel."),
+	TRAIT_ROOT_WALKER = span_info("After offering lux, I can now travel along heartroot trees.")
 ))
 
 // trait accessor defines

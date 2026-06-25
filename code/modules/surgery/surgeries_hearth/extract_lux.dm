@@ -50,7 +50,10 @@
 		display_results(user, target, span_notice("You extract a single dose of lux from [target]'s heart."),
 			"[user] extracts lux from [target]'s innards.",
 			"[user] extracts lux from [target]'s innards.")
-		new /obj/item/reagent_containers/lux_impure(target.loc)
+		if(HAS_TRAIT(target, TRAIT_ANCIENT_HAG) || HAS_TRAIT(target, TRAIT_FEYTOUCHED)) // Hags take lux_moss
+			new /obj/item/reagent_containers/lux_moss(target.loc)
+		else
+			new /obj/item/reagent_containers/lux_impure(target.loc)
 		SEND_SIGNAL(user, COMSIG_LUX_EXTRACTED, target)
 		//record_featured_stat(FEATURED_STATS_CRIMINALS, user)	- This.. isn't normally criminal.
 		record_round_statistic(STATS_LUX_HARVESTED)

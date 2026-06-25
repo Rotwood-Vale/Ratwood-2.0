@@ -14,7 +14,7 @@
 	maximum_antags = 1
 
 	weight = 1
-	max_occurrences = 0 // Scaffolded until pact and map content are ready.
+	max_occurrences = 1
 
 	earliest_start = 0 SECONDS
 

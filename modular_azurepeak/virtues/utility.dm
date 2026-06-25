@@ -416,3 +416,27 @@
 		list(/datum/skill/combat/knives, 1, 2)
 	)
 
+// Mostly meant as a virtue for strange fey creatures, or people roleplaying as if they have been influenced by hags positively in the past, following an active pact to avoid vengeance.
+// Hags don't get a boon on this person, that's perhaps a choice to add later.
+/datum/virtue/utility/feytouched
+	name = "Feytouched"
+	desc = "A vessel or creation of the Mossmother, or perhaps a puppet of the past. You are sympathetic to the hag's cause. Your connection to the fey allows you to offer lux or bloated leechticks and traverse the roots, though your mortal form is frail (-1 INT, -2 STR). The hag is aware of you; your lux is corrupted. You may know of old events, but as the decades lengthen, so does your recollection of them fade. Hag-boons cannot take hold."
+	added_stats = list(STATKEY_INT = -1, STATKEY_STR = -2)
+	added_traits = list(TRAIT_FEYTOUCHED)
+	added_skills = list(list(/datum/skill/misc/medicine, 1, 4),
+						list(/datum/skill/craft/alchemy, 1, 4)
+	)
+	added_stashed_items = list("Bag of Leechbait" = /obj/item/storage/roguebag/leechbait)
+
+/datum/virtue/feytouched/apply_to_human(mob/living/carbon/human/recipient)
+    ..() // Apply traits, stats, and languages first
+    if(!recipient.mind)
+        return
+    for(var/datum/mind/hag_mind in GLOB.active_hags)
+        if(!hag_mind)
+            continue
+        hag_mind.i_know_person(recipient)
+        recipient.mind.i_know_person(hag_mind)
+        if(hag_mind.current)
+            to_chat(hag_mind.current, span_boldnotice("A familiar rhythm pulse in the roots... [recipient.real_name] is walking the lands this week."))
+    to_chat(recipient, span_boldnotice("The Mossmother's gaze lingers upon you. You are recognized by her daughters."))
