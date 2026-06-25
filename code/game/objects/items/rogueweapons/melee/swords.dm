@@ -964,41 +964,6 @@
 	sheathe_icon = "iswordshort_d"
 	max_integrity = 75
 
-/obj/item/rogueweapon/sword/short/psy
-	name = "psydonic shortsword"
-	desc = "Despite its shattered blade, this former-longsword finds new purpose and renewed lethality as something shorter and quicker and no less deadly. Like He, it perseveres, no matter what."
-	icon_state = "psyswordshort"
-	sheathe_icon = "psyswordshort"
-	force = 20
-	force_wielded = 20
-	minstr = 7
-	wdefense = 3
-	wbalance = WBALANCE_SWIFT
-	is_silver = TRUE
-	smeltresult = /obj/item/ingot/silverblessed
-
-/obj/item/rogueweapon/sword/short/psy/ComponentInitialize()
-	AddComponent(\
-		/datum/component/silverbless,\
-		pre_blessed = BLESSING_NONE,\
-		silver_type = SILVER_PSYDONIAN,\
-		added_force = 0,\
-		added_blade_int = 100,\
-		added_int = 50,\
-		added_def = 2,\
-	)
-
-/obj/item/rogueweapon/sword/short/psy/preblessed/ComponentInitialize()
-	AddComponent(\
-		/datum/component/silverbless,\
-		pre_blessed = BLESSING_PSYDONIAN,\
-		silver_type = SILVER_PSYDONIAN,\
-		added_force = 0,\
-		added_blade_int = 100,\
-		added_int = 50,\
-		added_def = 2,\
-	)
-
 /obj/item/rogueweapon/sword/short/silver
 	name = "silver shortsword"
 	desc = "A shortsword with a blade of pure silver. In the marginalia of tomes depicting Psydonia's crusading orders, there is no sight more iconic than that of the hauberk-draped paladin; a kite shield in one hand, and this glimmering sidearm in the other."
@@ -1018,6 +983,36 @@
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
 		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/sword/short/silver/psy
+	name = "psydonic shortsword"
+	desc = "Despite its shattered blade, this former-longsword finds new purpose and renewed lethality as something shorter and quicker and no less deadly. Like He, it perseveres, no matter what."
+	icon = 'icons/roguetown/weapons/32.dmi'
+	icon_state = "psyswordshort"
+	sheathe_icon = "psyswordshort"
+	smeltresult = /obj/item/ingot/silverblessed
+
+/obj/item/rogueweapon/sword/short/silver/psy/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/sword/short/silver/psy/preblessed/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_PSYDONIAN,\
+		silver_type = SILVER_PSYDONIAN,\
 		added_force = 0,\
 		added_blade_int = 100,\
 		added_int = 50,\

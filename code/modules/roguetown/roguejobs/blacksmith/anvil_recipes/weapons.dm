@@ -1034,7 +1034,7 @@
 
 /datum/anvil_recipe/weapons/psy/shortsword
 	name = "Psydonic Shortsword"
-	created_item = /obj/item/rogueweapon/sword/short/psy
+	created_item = /obj/item/rogueweapon/sword/short/silver/psy
 
 /datum/anvil_recipe/weapons/psy/katar
 	name = "Psydonic Katar"

@@ -59,7 +59,7 @@
 				l_hand = /obj/item/rogueweapon/mace/cudgel/silver/psy
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 			if("Psydonic Shortsword")
-				l_hand = /obj/item/rogueweapon/sword/short/psy
+				l_hand = /obj/item/rogueweapon/sword/short/silver/psy
 				r_hand = /obj/item/rogueweapon/scabbard/sword
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 		var/quivers = list("Bolts - Steel-Tipped", "Sunderbolts - Silver-Tipped, Halved Damage")
