@@ -381,7 +381,7 @@
 		if("Spear")
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-				r_hand = /obj/item/rogueweapon/spear/psyspear/old
+				r_hand = /obj/item/rogueweapon/spear/silver/psyspear/old
 			else
 				r_hand = /obj/item/rogueweapon/spear
 			backr = /obj/item/rogueweapon/scabbard/gwstrap

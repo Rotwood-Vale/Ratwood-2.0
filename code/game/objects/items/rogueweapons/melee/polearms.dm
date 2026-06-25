@@ -441,19 +441,16 @@
 					to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
 			update_icon()
 
-/obj/item/rogueweapon/spear/psyspear
+/obj/item/rogueweapon/spear/silver/psyspear
 	name = "psydonic spear"
 	desc = "An ornate spear, plated in a ceremonial veneer of silver. The barbs pierce your palm, and - for just a moment - you see red. Never forget that you are why Psydon wept."
 	icon_state = "psyspear"
 	force = 20
 	force_wielded = 30
-	minstr = 11
-	wdefense = 6
 	resistance_flags = FIRE_PROOF	//It's meant to be smacked by a "lamptern", and is special enough to warrant overriding the spear weakness
-	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/spear/psyspear/ComponentInitialize()
+/obj/item/rogueweapon/spear/silver/psyspear/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -464,7 +461,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/spear/psyspear/old
+/obj/item/rogueweapon/spear/silver/psyspear/old
 	name = "enduring spear"
 	desc = "An ornate spear, its silver tarnished by neglect. HE still guides the faithful's hand, if not this weapon."
 	icon_state = "psyspear"
@@ -474,7 +471,7 @@
 	smeltresult = /obj/item/ingot/steel
 	color = COLOR_FLOORTILE_GRAY
 
-/obj/item/rogueweapon/spear/psyspear/old/ComponentInitialize()
+/obj/item/rogueweapon/spear/silver/psyspear/old/ComponentInitialize()
 	return
 
 /obj/item/rogueweapon/spear/silver

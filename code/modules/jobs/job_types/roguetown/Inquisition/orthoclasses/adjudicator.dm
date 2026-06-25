@@ -118,7 +118,7 @@
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 		if("Psydonic Spear + Handmace")
-			H.put_in_hands(new /obj/item/rogueweapon/spear/psyspear(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/spear/silver/psyspear(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/mace/cudgel/psy(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
