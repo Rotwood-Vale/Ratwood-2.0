@@ -861,13 +861,13 @@
 		added_def = 3,\
 	)
 
-/obj/item/rogueweapon/huntingknife/throwingknife/silver/psydon
+/obj/item/rogueweapon/huntingknife/throwingknife/silver/psy
 	name = "psydonic tossblade"
 	desc = "An unconventional method of delivering silver to a heretic; but one PSYDON smiles at, all the same. Doubles as an actual knife in a pinch, though obviously not as well. </br>This dagger can be stowed away inside a pair of boots, permitting it to be quickly drawn when needed."
 	item_state = "bone_dagger"
 	icon_state = "throw_knifep"
 
-/obj/item/rogueweapon/huntingknife/throwingknife/silver/psydon/ComponentInitialize()
+/obj/item/rogueweapon/huntingknife/throwingknife/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
