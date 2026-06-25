@@ -338,7 +338,7 @@
 							l_hand = /obj/item/rogueweapon/spear/silver
 						if("Silver Axe")
 							H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
-							l_hand = /obj/item/rogueweapon/stoneaxe/woodcut/silver
+							l_hand = /obj/item/rogueweapon/stoneaxe/battle/silver
 						if("Silver Whip")
 							H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 							l_hand = /obj/item/rogueweapon/whip/silver // Die, monster! You don't belong in this world!

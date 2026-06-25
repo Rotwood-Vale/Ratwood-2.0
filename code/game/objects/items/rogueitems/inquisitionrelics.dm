@@ -305,7 +305,7 @@ Inquisitorial armory down here
 	new /obj/item/rogueweapon/spear/psyspear(src)
 	new /obj/item/rogueweapon/sword/long/psysword(src)
 	new /obj/item/rogueweapon/mace/goden/psy(src)
-	new /obj/item/rogueweapon/stoneaxe/battle/psyaxe(src)
+	new /obj/item/rogueweapon/stoneaxe/battle/silver/psyaxe(src)
 	*/
 
 /obj/item/flashlight/flare/torch/lantern/psycenser

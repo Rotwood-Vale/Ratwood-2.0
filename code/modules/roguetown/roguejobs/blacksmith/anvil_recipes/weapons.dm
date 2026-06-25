@@ -723,7 +723,7 @@
 /datum/anvil_recipe/weapons/silver/waraxe
 	name = "War Axe, Silver (+2 Silver, +1 Small Log)"
 	additional_items = list(/obj/item/ingot/silver, /obj/item/ingot/silver, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/silver
+	created_item = /obj/item/rogueweapon/stoneaxe/battle/silver
 
 /datum/anvil_recipe/weapons/silver/poleaxe
 	name = "Poleaxe, Silver (+2 Silver, +2 Small Logs)"
@@ -1010,7 +1010,7 @@
 
 /datum/anvil_recipe/weapons/psy/axe
 	name = "Psydonic War Axe (+1 Blessed Silver, +1 Stick)"
-	created_item = /obj/item/rogueweapon/stoneaxe/battle/psyaxe
+	created_item = /obj/item/rogueweapon/stoneaxe/battle/silver/psyaxe
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/grown/log/tree/stick)
 
 /datum/anvil_recipe/weapons/psy/poleaxe

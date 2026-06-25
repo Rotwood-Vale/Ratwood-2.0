@@ -341,22 +341,20 @@
 	gripped_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop)
 	resistance_flags = FLAMMABLE
 
-/obj/item/rogueweapon/stoneaxe/woodcut/silver
+/obj/item/rogueweapon/stoneaxe/battle/silver
 	name = "silver war axe"
 	desc = "A hefty battle axe, fashioned from pure silver. Even with a one-handed grasp, an efforted swing carries enough momentum to cleave through maille-and-flesh alike."
 	icon_state = "silveraxe"
 	force = 20
 	force_wielded = 25
-	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/axe/bash, /datum/intent/sword/peel)
 	minstr = 11
 	max_blade_int = 400
 	smeltresult = /obj/item/ingot/silver
-	gripped_intents = null
 	wdefense = 5
 	is_silver = TRUE
 	blade_dulling = DULLING_SHAFT_METAL
 
-/obj/item/rogueweapon/stoneaxe/woodcut/silver/ComponentInitialize()
+/obj/item/rogueweapon/stoneaxe/battle/silver/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -367,19 +365,16 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/stoneaxe/battle/psyaxe
+/obj/item/rogueweapon/stoneaxe/battle/silver/psyaxe
 	name = "psydonic war axe"
 	desc = "An ornate battle axe, plated in a ceremonial veneer of silver. The premiere instigator of conflict against elven attachees."
 	icon_state = "psyaxe"
 	force = 25
 	force_wielded = 30
-	minstr = 11
 	wdefense = 6
-	blade_dulling = DULLING_SHAFT_METAL
-	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/stoneaxe/battle/psyaxe/ComponentInitialize()
+/obj/item/rogueweapon/stoneaxe/battle/silver/psyaxe/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -387,10 +382,10 @@
 		added_force = 0,\
 		added_blade_int = 50,\
 		added_int = 50,\
-		added_def = 1,\
+		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/stoneaxe/battle/psyaxe/old
+/obj/item/rogueweapon/stoneaxe/battle/silver/psyaxe/old
 	name = "enduring war axe"
 	desc = "An ornate battle axe, its silver tarnished by neglect. Even a dim light can pierce the dark."
 	icon_state = "psyaxe"
@@ -400,7 +395,7 @@
 	smeltresult = /obj/item/ingot/steel
 	color = COLOR_FLOORTILE_GRAY
 
-/obj/item/rogueweapon/stoneaxe/battle/psyaxe/old/ComponentInitialize()
+/obj/item/rogueweapon/stoneaxe/battle/silver/psyaxe/old/ComponentInitialize()
 	return
 
 /obj/item/rogueweapon/stoneaxe/battle/steppesman
