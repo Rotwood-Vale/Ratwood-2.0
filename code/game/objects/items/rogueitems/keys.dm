@@ -122,7 +122,7 @@
 /obj/item/roguekey/hag
 	name = "wyrd key"
 	desc = "An ancient key twisted by bog magic."
-	icon_state = 'mosskey'
+	icon_state = "mosskey"
 	lockid = "hag"
 
 /obj/item/roguekey/lord/pre_attack(target, user, params)

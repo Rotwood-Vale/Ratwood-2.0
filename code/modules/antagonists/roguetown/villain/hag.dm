@@ -16,6 +16,7 @@
 	var/list/follower_links = list()
 	var/list/cursed_followers = list()
 	var/list/active_curses = list()
+	var/hag_baseline_applied = FALSE
 	var/hag_tier = 1
 	var/datum/component/hag_curio_tracker/curio_component
 	var/static/list/hag_baseline_traits = list(
