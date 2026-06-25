@@ -87,12 +87,14 @@
 // 为什么是 9：略大于默认视野（7），确保玩家屏幕内（含边缘）正在交战的怪物都能被及时挂上监听。
 #define RPG_SYSTEM_SCAN_RANGE 9
 
-// 击杀积分的换算：固定为怪物最大生命值 maxHealth 的 5%，越强的怪给得越多。
+// 击杀积分的换算：默认为怪物最大生命值 maxHealth 的 20%，越强的怪给得越多。
 // 为什么按 maxHealth：simple_animal 系怪物普遍带 maxHealth，且它与"怪物强度"高度相关，
 //   是最稳妥、对所有怪物都可用的强度近似指标（无需为每种怪单独配表）。
-// 为什么是 0.05（5%）：需求明确"击杀获得的积分 = 怪物最大生命值的 5%"。例如 100 血的怪给 5 分，
-//   200 血的怪给 10 分。单列为常量，平衡只改这一处。
-#define RPG_SYSTEM_POINTS_PER_MAXHP 0.05
+// 为什么是 0.2（20%）：需求明确"击杀获得的积分 = 怪物最大生命值的 20%"。例如 100 血的怪给 20 分，
+//   200 血的怪给 40 分。单列为常量，平衡只改这一处。
+// 注：部分"类人怪物"（NPC，属 /mob/living/carbon/human 子类型）不走这个比例，而是按
+//   get_fixed_kill_rewards() 里登记的"固定积分"给分（见下方击杀监听组件）。
+#define RPG_SYSTEM_POINTS_PER_MAXHP 0.2
 // 单次击杀的保底积分：纯粹用于兜底——防止极低血量怪物经 round() 后算出 0 分（"杀了像没收益"）。
 //   故仅设为 1（最低限度的非零保证），不破坏"积分=10% 最大生命值"的基本设定。
 #define RPG_SYSTEM_MIN_KILL_POINTS 1
@@ -195,10 +197,11 @@
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
-// process：每个处理周期执行一次，扫描宿主视野内"活着的敌对怪物"，给它们补挂一次性击杀监听组件。
-//   为什么只盯敌对怪物（/mob/living/simple_animal/hostile）：需求是"击杀怪物得分"，敌对
-//   simple_animal 即本游戏的"怪物"主体；这样既不会因杀普通牲畜 / 玩家而错误给分，也把扫描
-//   范围与挂载开销限制在最小集合。
+// process：每个处理周期执行一次，扫描宿主视野内"算作怪物"的目标，给它们补挂一次性击杀监听组件。
+//   两类目标会被盯上：
+//     1) 敌对 simple_animal（/mob/living/simple_animal/hostile）——本游戏的"怪物"主体，按生命值比例给分；
+//     2) 固定积分名单里的"类人怪物"（NPC，属 /mob/living/carbon/human 子类型）——按固定积分给分。
+//   普通牲畜 / 其他玩家不在两类之内，不会被挂监听、也就不会错误给分。
 /datum/component/rpg_system/process(delta_time)
 	// 防御：宿主异常（已删除 / 非人类）直接返回，等待 Destroy 收尾。
 	if(!ishuman(parent))
@@ -207,13 +210,110 @@
 	// 死亡或离线的持有者不再巡检：尸体 / 空壳不会去打怪，省去无谓扫描。
 	if(host.stat == DEAD || !host.client)
 		return
-	// 遍历以宿主为中心、RPG_SYSTEM_SCAN_RANGE 格内的所有敌对怪物。
-	//   给每只活着的怪补挂"击杀监听"组件（UNIQUE 去重：已挂过的会被自动丢弃，不会叠加 / 重复给分）。
-	for(var/mob/living/simple_animal/hostile/monster in range(RPG_SYSTEM_SCAN_RANGE, host))
-		// 已死的怪没有"击杀"价值，跳过；活着的才挂监听，等它被打死时结算归属。
-		if(monster.stat == DEAD)
+	// 遍历以宿主为中心、RPG_SYSTEM_SCAN_RANGE 格内的所有活体。给"算作怪物"的目标补挂监听
+	//   （UNIQUE 去重：已挂过的会被自动丢弃，不会叠加 / 重复给分）。
+	for(var/mob/living/target in range(RPG_SYSTEM_SCAN_RANGE, host))
+		// 跳过自己与已死目标：自己不该被监听；尸体没有"击杀"价值。
+		if(target == host || target.stat == DEAD)
 			continue
-		monster.AddComponent(/datum/component/rpg_kill_watcher)
+		// 判定是否"算作怪物"：① 可给分的 simple_animal（非友善生物）；或 ② 固定积分名单上的类人怪物。
+		//   为什么 ② 先用 ishuman 短路再查固定名单：固定名单里全是 /mob/living/carbon/human 子类型，
+		//   非人类目标不可能命中，先 ishuman 过滤可省去对一大堆生物逐一跑名单匹配的开销。
+		var/is_monster = is_rewardable_beast(target)
+		if(!is_monster && ishuman(target) && get_fixed_reward(target) > 0)
+			is_monster = TRUE
+		if(is_monster)
+			target.AddComponent(/datum/component/rpg_kill_watcher)
+
+// ----------------------------------------------------------------------------
+// 固定积分名单：特定"类人怪物"（NPC）按这里登记的固定分值给分，不走 maxHealth 比例。
+// 为什么要单列：这些 NPC 都是 /mob/living/carbon/human 子类型，没有 simple_animal 的 maxHealth
+//   强度语义，且设计上希望按"怪物种类"给固定奖励（例如疯骑士固定 200、流浪汉固定 30），
+//   故用一张"类型路径 => 固定积分"的表来配置。
+// 安全性：表里登记的都是 npc 目录下的 NPC 专用 mob 子类型，玩家角色是基类 /mob/living/carbon/human
+//   （种族经 DNA 设定，并非这些子类型实例），因此 istype 匹配绝不会命中真实玩家，杜绝"杀玩家给分"。
+// ----------------------------------------------------------------------------
+/datum/component/rpg_system/proc/get_fixed_kill_rewards()
+	// 静态缓存：表内容恒定，首次构建后复用，避免每次调用都重建列表。
+	var/static/list/rewards
+	if(!rewards)
+		rewards = list(
+			/mob/living/carbon/human/species/human/northern/highwayman = 80,                 // 拦路强盗
+			/mob/living/carbon/human/species/human/northern/militia = 50,                     // 民兵
+			/mob/living/carbon/human/species/human/northern/bog_deserters = 40,               // 沼泽逃兵
+			/mob/living/carbon/human/species/human/northern/bum = 30,                         // 流浪汉
+			/mob/living/carbon/human/species/human/northern/searaider = 80,                   // 海上劫掠者
+			/mob/living/carbon/human/species/human/northern/thief = 60,                       // 窃贼
+			/mob/living/carbon/human/species/human/northern/mad_touched_treasure_hunter = 200, // 疯魔寻宝者
+			/mob/living/carbon/human/species/human/northern/deranged_knight = 200,            // 癫狂骑士
+			/mob/living/carbon/human/species/skeleton = 30,                                   // 骷髅（基础）
+			/mob/living/carbon/human/species/skeleton/npc/bogguard = 40,                      // 沼泽骷髅卫
+			/mob/living/carbon/human/species/skeleton/npc/summoned = 30,                      // 召唤骷髅
+			/mob/living/carbon/human/species/dwarfskeleton = 30,                              // 矮人骷髅
+			/mob/living/carbon/human/species/npc/deadite = 50,                                // 亡者
+			/mob/living/carbon/human/species/elf/dark/drowraider = 120,                       // 卓尔劫掠者
+			/mob/living/carbon/human/species/orc = 120,                                       // 兽人
+			/mob/living/carbon/human/species/goblin = 40,                                     // 哥布林
+			/mob/living/carbon/human/species/lizardfolk/psy_vault_guard = 200,                // 蜥蜴人秘库守卫
+			/mob/living/carbon/human/species/construct/metal/zizoconstruct = 100,             // 兹佐金属构装体
+		)
+	return rewards
+
+// get_fixed_reward：取某个目标的"固定积分"。命中名单返回其分值，否则返回 0。
+//   匹配规则：取名单中"目标 istype 命中、且最具体（最深子类型）"的那条。
+//   为什么取最具体：例如骷髅基类登记 30、其子类型 bogguard 登记 40——一只 bogguard 同时
+//   istype 命中两条，应按更具体的 bogguard（40）给分；而未单独登记的其它骷髅子类型则回落到基类 30。
+/datum/component/rpg_system/proc/get_fixed_reward(mob/living/victim)
+	if(!isliving(victim))
+		return 0
+	var/list/rewards = get_fixed_kill_rewards()
+	var/best_type    // 已找到的最具体匹配类型
+	for(var/mob_type in rewards)
+		if(!istype(victim, mob_type))
+			continue
+		// 同一目标的所有命中项都在其类型继承链上、彼此为父子关系：若新命中项是当前最优项的
+		//   子类型（ispath(新, 旧) 为真），说明它更具体，取而代之。
+		if(!best_type || ispath(mob_type, best_type))
+			best_type = mob_type
+	return best_type ? rewards[best_type] : 0
+
+// ----------------------------------------------------------------------------
+// 友善生物名单：simple_animal 目录里"友善 / 不该给分"的生物类型族。
+// 需求："击杀 simple_animal 目录下的生物给分，但友善生物除外。"
+//   引擎把友善生物集中放在 simple_animal/friendly/ 目录，但它们的类型路径各不相同（宠物在
+//   /pet 下、家畜雏类 / 虫豸直接挂在 simple_animal 下），故这里按"类型族"逐一登记。
+//   注意：friendly/ 目录里少数其实是 /hostile 子类型（山羊 / 毒蛇 / 蜥蜴等），它们是会反击的
+//   野生 / 牲畜，按"战斗 / 可猎杀生物"对待——不在本友善名单内，照常给分。
+//   另：roguetown 实际使用的农场牲畜是 rogue/farm 下的 /hostile/retaliate/rogue/* 类型（与此处
+//   的原版 /cow、/chicken 路径不同），它们不属"友善"目录、会反击，故也照常给分（可猎杀取肉）。
+/datum/component/rpg_system/proc/get_friendly_beast_types()
+	// 静态缓存：名单恒定，首次构建后复用。
+	var/static/list/friendlies
+	if(!friendlies)
+		friendlies = list(
+			/mob/living/simple_animal/pet,            // 宠物总族：猫 / 狗 / 狐 / 魔宠 等
+			/mob/living/simple_animal/butterfly,      // 蝴蝶
+			/mob/living/simple_animal/cockroach,      // 蟑螂
+			/mob/living/simple_animal/mouse,          // 老鼠
+			/mob/living/simple_animal/cow,            // 原版奶牛（友善）
+			/mob/living/simple_animal/chick,          // 雏鸡
+			/mob/living/simple_animal/chicken,        // 原版母鸡（友善）
+			/mob/living/simple_animal/grenchensnacker,// 格兰琴零嘴兽（友善）
+		)
+	return friendlies
+
+// is_rewardable_beast：判断某生物是否"可给分的 simple_animal 怪物"。
+//   规则：是 /mob/living/simple_animal 子类型，且不属于任何"友善生物"类型族。
+//   渲染挂载（process）与死亡结算（on_monster_death）共用本判定，保证两处口径一致。
+/datum/component/rpg_system/proc/is_rewardable_beast(mob/living/target)
+	// 必须是 simple_animal（本需求只针对该目录下的生物）。
+	if(!istype(target, /mob/living/simple_animal))
+		return FALSE
+	// 命中任一友善类型族即排除（友善生物不给分）。
+	for(var/friendly_type in get_friendly_beast_types())
+		if(istype(target, friendly_type))
+			return FALSE
+	return TRUE
 
 // award_points：给这名玩家发放击杀积分（由击杀监听组件在确认归属后调用）。
 //   单独成 proc 而非外部直接改字段：集中处理"累加 + 反馈"，将来要做积分上限 / 音效也只改这里。
@@ -245,11 +345,12 @@
 	//   用这个一次性闸门确保"一只怪最多只给一次分"，杜绝刷分。
 	var/rewarded = FALSE
 
-// Initialize：监听组件创建时调用，校验宿主为怪物并注册死亡信号。
+// Initialize：监听组件创建时调用，校验宿主为活体并注册死亡信号。
 /datum/component/rpg_kill_watcher/Initialize()
 	. = ..()
-	// 只给 simple_animal 系怪物挂监听（敌对怪物均属此类）；挂到别的东西上无意义，丢弃之。
-	if(!istype(parent, /mob/living/simple_animal))
+	// 挂到任意活体上即可（敌对 simple_animal 或固定积分名单上的类人 NPC）；非活体无死亡可言，丢弃之。
+	//   具体"算不算给分目标"在 process() 挂载时已筛过，这里只需保证宿主是 /mob/living 能发出死亡信号。
+	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	// 监听宿主（怪物）的死亡信号。引擎在 /mob/living/death() 末尾发出 COMSIG_LIVING_DEATH
 	//   （death.dm:128），无论该怪是哪种子类型、其 death() 是否被重写，最终都会 ..() 到这里，
@@ -281,12 +382,22 @@
 		return
 	// 置一次性闸门：先标记已结算，再发放，避免极端重入下的重复给分。
 	rewarded = TRUE
-	// 计算本次积分：按怪物最大生命值比例发放，并设保底，使强怪多给、弱怪也不至于没收益。
-	//   simple_animal 带 maxHealth；这里读取它来近似怪物强度（无需逐怪配表）。
-	var/gain = RPG_SYSTEM_MIN_KILL_POINTS
-	if(istype(victim, /mob/living/simple_animal))
+	// 计算本次积分：优先查"固定积分名单"（特定类人怪物给固定分）；否则按 simple_animal 的
+	//   最大生命值比例发放。两者都不命中（例如普通玩家 / 牲畜被打死）则不发分。
+	var/gain = 0
+	// ① 固定积分名单（类人 NPC 怪物）。
+	var/fixed = system.get_fixed_reward(victim)
+	if(fixed > 0)
+		gain = fixed
+	// ② 可给分的 simple_animal（非友善生物）：按最大生命值比例给分，并设保底，使强怪多给、弱怪也不至于没收益。
+	//   用 system.is_rewardable_beast 复核（该 proc 定义在驱动组件上），确保即便友善生物意外被挂上监听
+	//   也不会给分（口径与 process 一致）。
+	else if(system.is_rewardable_beast(victim))
 		var/mob/living/simple_animal/beast = victim
 		gain = max(RPG_SYSTEM_MIN_KILL_POINTS, round(beast.maxHealth * RPG_SYSTEM_POINTS_PER_MAXHP))
+	// 两类都不是 → 不在给分范围（杜绝"杀玩家 / 杀牲畜也给分"），安静返回。
+	if(gain <= 0)
+		return
 	// 委托驱动组件统一发放积分并播报反馈。
 	system.award_points(gain, victim)
 
@@ -408,15 +519,22 @@
 		"短剑（70积分）"   = list(70, /obj/item/rogueweapon/sword/short),                     // 轻便单手短剑
 		"草叉（70积分）"   = list(70, /obj/item/rogueweapon/pitchfork),                       // 长柄农具，可作刺击武器
 		"鞭子（90积分）"   = list(90, /obj/item/rogueweapon/whip),                            // 长鞭，远距离软兵
+		"镐（60积分）"     = list(60, /obj/item/rogueweapon/pick),                            // 矿镐，亦可作刺击武器
+		"铁锤（90积分）"   = list(90, /obj/item/rogueweapon/hammer/iron),                     // 铁锻锤，钝击 / 打铁两用
 		"巨剑（300积分）"  = list(300, /obj/item/rogueweapon/greatsword),                     // 双手巨剑，高伤害重武器
 	)
 
 /datum/component/rpg_system/proc/get_equipment_catalog()
 	return list(
+		"兜帽（30积分）"     = list(30, /obj/item/clothing/head/roguetown/roguehood),        // 兜帽，遮风蔽脸
 		"长靴（40积分）"     = list(40, /obj/item/clothing/shoes/roguetown/boots),           // 基础脚部护具
+		"腰包（40积分）"     = list(40, /obj/item/storage/belt/rogue/pouch),                 // 腰间小袋，扩充携带空间
+		"皮护腕（50积分）"   = list(50, /obj/item/clothing/wrists/roguetown/bracers/leather), // 轻型皮护腕
 		"火把（50积分）"     = list(50, /obj/item/flashlight/flare/torch),                   // 照明工具（黑暗中作战必备）
 		"锁链手套（60积分）" = list(60, /obj/item/clothing/gloves/roguetown/chain),          // 手部护具
+		"护腕（70积分）"     = list(70, /obj/item/clothing/wrists/roguetown/bracers),        // 金属护腕，护住前臂
 		"木盾（70积分）"     = list(70, /obj/item/rogueweapon/shield/wood),                  // 入门盾牌，格挡攻击
+		"锁甲头巾（80积分）" = list(80, /obj/item/clothing/neck/roguetown/coif),             // 锁甲头巾，护住头颈
 		"皮盔（55积分）"     = list(55, /obj/item/clothing/head/roguetown/helmet/leather),    // 轻型皮制头盔
 		"头盔（90积分）"     = list(90, /obj/item/clothing/head/roguetown/helmet),           // 头部护具
 		"皮背心（70积分）"   = list(70, /obj/item/clothing/suit/roguetown/armor/leather/vest), // 轻型皮背心
@@ -434,6 +552,9 @@
 		"塔盾（220积分）"    = list(220, /obj/item/rogueweapon/shield/tower),                // 大型塔盾，防护面积最大
 		"锁子甲（200积分）"  = list(200, /obj/item/clothing/suit/roguetown/armor/chainmail), // 中级躯干护甲
 		"板甲（320积分）"    = list(320, /obj/item/clothing/suit/roguetown/armor/plate),     // 高级躯干护甲，防护最强
+		"银戒指（55积分）"   = list(55, /obj/item/clothing/ring/silver),                     // 银质戒指，装饰配饰
+		"玉戒指（75积分）"   = list(75, /obj/item/clothing/ring/jade),                       // 玉质戒指，装饰配饰
+		"金戒指（90积分）"   = list(90, /obj/item/clothing/ring/gold),                       // 金质戒指，装饰配饰
 	)
 
 /datum/component/rpg_system/proc/get_consumable_catalog()
