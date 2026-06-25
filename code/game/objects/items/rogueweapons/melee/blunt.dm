@@ -318,6 +318,7 @@
 	wbalance = WBALANCE_NORMAL
 	icon_state = "opsyflangedmace"
 	smeltresult = /obj/item/ingot/steel
+	is_silver = FALSE
 
 /obj/item/rogueweapon/mace/cudgel/silver/psy/old/ComponentInitialize()
 	return
