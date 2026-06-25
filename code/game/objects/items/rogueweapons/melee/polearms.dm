@@ -829,15 +829,37 @@
 	force_wielded = 33 // +3
 	max_integrity = 300 // +50
 
-/obj/item/rogueweapon/halberd/psyhalberd/relic
-	name = "Stigmata"
-	desc = "Christened in the Siege of Lirvas, these silver-tipped poleaxes - wielded by a lonesome contingent of Saint Eora's paladins - kept the horrors at bay for forty daes-and-nites. Long-since-recovered from the rubble, this relic now serve as a bulwark for the defenseless."
-	icon_state = "psyhalberd"
+/obj/item/roguetown/halberd/silver //unobtainium. purely for psydonic subtype
+	name = "silver halberd"
+	force = 10//Use the spear instead if you're going to one-hand this.
+	force_wielded = 25
+	minstr = 11
+	wdefense = 7
+	is_silver = TRUE
+	smeltresult = /obj/item/ingot/silver
 
-/obj/item/rogueweapon/halberd/psyhalberd/relic/ComponentInitialize()
+/obj/item/rogueweapon/halberd/silver/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
-		pre_blessed = BLESSING_PSYDONIAN,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 100,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/halberd/silver/psy
+	name = "psydonic halberd"
+	desc = "A reliable design that has served humenkind to fell the enemy and defend Psydon's flock - now fitted with a lengthier blade and twin, silver-tipped beaks."
+	icon_state = "silverhalberd"
+	force_wielded = 30
+	smeltresult = /obj/item/ingot/silverblessed
+
+/obj/item/rogueweapon/halberd/silver/psy/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
 		silver_type = SILVER_PSYDONIAN,\
 		added_force = 0,\
 		added_blade_int = 100,\
@@ -845,24 +867,19 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/halberd/psyhalberd
-	name = "psydonic halberd"
-	desc = "A reliable design that has served humenkind to fell the enemy and defend Psydon's flock - now fitted with a lengthier blade and twin, silver-tipped beaks."
-	icon_state = "silverhalberd"
-	force = 10//Use the spear instead if you're going to one-hand this.
-	minstr = 11
-	wdefense = 7
-	is_silver = TRUE
-	smeltresult = /obj/item/ingot/silverblessed
+/obj/item/rogueweapon/halberd/silver/psy/relic
+	name = "Stigmata"
+	desc = "Christened in the Siege of Lirvas, these silver-tipped poleaxes - wielded by a lonesome contingent of Saint Eora's paladins - kept the horrors at bay for forty daes-and-nites. Long-since-recovered from the rubble, this relic now serve as a bulwark for the defenseless."
+	icon_state = "psyhalberd"
 
-/obj/item/rogueweapon/halberd/psyhalberd/ComponentInitialize()
+/obj/item/rogueweapon/halberd/silver/psy/relic/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
-		pre_blessed = BLESSING_NONE,\
+		pre_blessed = BLESSING_PSYDONIAN,\
 		silver_type = SILVER_PSYDONIAN,\
 		added_force = 0,\
-		added_blade_int = 50,\
-		added_int = 50,\
+		added_blade_int = 100,\
+		added_int = 100,\
 		added_def = 2,\
 	)
 

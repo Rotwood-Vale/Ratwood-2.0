@@ -1050,7 +1050,7 @@
 
 /datum/anvil_recipe/weapons/psy/halberd
 	name = "Psydonic Halberd (+2 Blessed Silver, +1 Small Log)"
-	created_item = /obj/item/rogueweapon/halberd/psyhalberd
+	created_item = /obj/item/rogueweapon/halberd/silver/psy
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/ingot/silverblessed, /obj/item/grown/log/tree/small)
 
 /datum/anvil_recipe/weapons/psy/gsword
