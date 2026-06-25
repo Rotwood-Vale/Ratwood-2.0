@@ -1038,11 +1038,11 @@
 
 /datum/anvil_recipe/weapons/psy/katar
 	name = "Psydonic Katar"
-	created_item = /obj/item/rogueweapon/katar/psydon
+	created_item = /obj/item/rogueweapon/katar/silver/psy
 
 /datum/anvil_recipe/weapons/psy/knuckles
 	name = "Psydonic Knuckledusters"
-	created_item = /obj/item/rogueweapon/knuckles/psydon
+	created_item = /obj/item/rogueweapon/knuckles/silver/psy
 
 /datum/anvil_recipe/weapons/psy/cudgel
 	name = "Psydonic Handmace"

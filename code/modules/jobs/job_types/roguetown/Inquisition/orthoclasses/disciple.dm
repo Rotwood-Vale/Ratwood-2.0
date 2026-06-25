@@ -53,11 +53,11 @@
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
 			if("Katar")
-				r_hand = /obj/item/rogueweapon/katar/psydon
+				r_hand = /obj/item/rogueweapon/katar/silver/psy
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 			if("Knuckledusters")
-				r_hand = /obj/item/rogueweapon/knuckles/psydon
+				r_hand = /obj/item/rogueweapon/knuckles/silver/psy
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 			if("Quarterstaff")

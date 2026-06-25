@@ -90,7 +90,7 @@
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
 			if("Knuckledusters")
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-					beltl = /obj/item/rogueweapon/knuckles/psydon/old
+					beltl = /obj/item/rogueweapon/knuckles/silver/psy/old
 					gloves = /obj/item/clothing/gloves/roguetown/bandages
 				else
 					beltl = /obj/item/rogueweapon/knuckles/bronzeknuckles
