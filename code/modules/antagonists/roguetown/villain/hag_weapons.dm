@@ -96,7 +96,7 @@
 /obj/item/clothing/neck/roguetown/psicross/hag/verb/wyrd_mimic_radial()
 	set name = "Shift Form"
 	set category = "Object"
-	set src in range(0)
+	set src in usr
 
 	var/mob/living/user = usr
 
@@ -105,17 +105,17 @@
 		return
 
 	if(!hag_radial_choices)
-		// Build the radial list on first use
+		// Build radial options once; keys are labels, values are icon previews.
 		hag_radial_choices = list()
 		hag_path_map = list()
 		for(var/obj/item/clothing/neck/roguetown/psicross/P in typesof(/obj/item/clothing/neck/roguetown/psicross))
 			if(P == /obj/item/clothing/neck/roguetown/psicross/hag)
 				continue
 			var/display_name = initial(P.name)
-			hag_radial_choices += display_name
+			hag_radial_choices[display_name] = image(icon = initial(P.icon), icon_state = initial(P.icon_state))
 			hag_path_map[display_name] = P
 
-	var/selection = input(user, "What form shall you take?", "Form") as null|anything in hag_radial_choices
+	var/selection = show_radial_menu(user, src, hag_radial_choices, require_near = TRUE, tooltips = TRUE)
 	if(!selection)
 		return
 
@@ -151,7 +151,7 @@
 /obj/item/clothing/neck/roguetown/psicross/hag/verb/wyrd_reset_form()
 	set name = "Reset Form"
 	set category = "Object"
-	set src in range(0)
+	set src in usr
 
 	var/mob/living/user = usr
 
