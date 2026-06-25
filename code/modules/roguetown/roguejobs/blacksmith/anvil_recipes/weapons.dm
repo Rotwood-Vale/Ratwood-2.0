@@ -1030,7 +1030,7 @@
 
 /datum/anvil_recipe/weapons/psy/dagger
 	name = "Psydonic Dagger"
-	created_item = /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
+	created_item = /obj/item/rogueweapon/huntingknife/idagger/silver/psy
 
 /datum/anvil_recipe/weapons/psy/shortsword
 	name = "Psydonic Shortsword"

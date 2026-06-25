@@ -297,7 +297,7 @@ Inquisitorial armory down here
 
 /obj/structure/closet/crate/chest/inqarmory/PopulateContents()
 	.=..()
-	new /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger(src)
+	new /obj/item/rogueweapon/huntingknife/idagger/silver/psy(src)
 	new /obj/item/rogueweapon/greatsword/psygsword(src)
 	new /obj/item/rogueweapon/halberd/psyhalberd(src)
 	new /obj/item/rogueweapon/whip/psywhip_lesser

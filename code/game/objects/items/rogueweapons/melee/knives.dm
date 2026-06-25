@@ -583,7 +583,7 @@
 		added_def = 0,\
 	)
 
-/obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
+/obj/item/rogueweapon/huntingknife/idagger/silver/psy
 	name = "psydonic dagger"
 	desc = "An ornate dagger, plated in a ceremonial veneer of silver. The bane of vampyres and verevolves, in the hands of a faithful hunter."
 	icon_state = "psydagger"
@@ -592,7 +592,7 @@
 	sellprice = 70
 	picklvl = 1.1
 
-/obj/item/rogueweapon/huntingknife/idagger/silver/psydagger/ComponentInitialize()
+/obj/item/rogueweapon/huntingknife/idagger/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\

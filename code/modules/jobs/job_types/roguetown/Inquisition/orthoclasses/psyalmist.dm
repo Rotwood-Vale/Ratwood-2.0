@@ -55,7 +55,7 @@
 	I.grant_inspiration(H, bard_tier = BARD_T3)
 	backpack_contents = list(/obj/item/roguekey/inquisition = 1,
 	/obj/item/paper/inqslip/arrival/ortho = 1,
-	/obj/item/rogueweapon/huntingknife/idagger/silver/psydagger = 1,
+	/obj/item/rogueweapon/huntingknife/idagger/silver/psy = 1,
 	/obj/item/rogueweapon/scabbard/sheath = 1)
 
 	H.cmode_music = 'sound/music/cmode/adventurer/combat_outlander3.ogg'

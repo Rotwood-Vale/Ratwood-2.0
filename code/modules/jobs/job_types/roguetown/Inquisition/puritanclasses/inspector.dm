@@ -67,7 +67,7 @@
 	backpack_contents = list(
 		/obj/item/storage/keyring/puritan = 1,
 		/obj/item/lockpickring/mundane = 1,
-		/obj/item/rogueweapon/huntingknife/idagger/silver/psydagger,
+		/obj/item/rogueweapon/huntingknife/idagger/silver/psy,
 		/obj/item/clothing/head/inqarticles/blackbag = 1,
 		/obj/item/inqarticles/garrote = 1,
 		/obj/item/rope/inqarticles/inquirycord = 1,

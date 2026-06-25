@@ -61,7 +61,7 @@
 	id = /obj/item/clothing/ring/signet/silver
 	backpack_contents = list(
 		/obj/item/storage/keyring/puritan = 1,
-		/obj/item/rogueweapon/huntingknife/idagger/silver/psydagger,
+		/obj/item/rogueweapon/huntingknife/idagger/silver/psy,
 		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
 		/obj/item/paper/inqslip/arrival/inq = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1

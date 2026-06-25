@@ -48790,7 +48790,7 @@
 	icon_state = "cobbleedge-sread"
 	},
 /obj/structure/table/church,
-/obj/item/rogueweapon/huntingknife/idagger/silver/psydagger,
+/obj/item/rogueweapon/huntingknife/idagger/silver/psy,
 /obj/structure/spider/stickyweb/mirespider,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/his_vault)
