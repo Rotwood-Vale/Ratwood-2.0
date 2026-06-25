@@ -707,7 +707,9 @@
 
 // ----------------------------------------------------------------------------
 // 情敌死亡回调：杀死情敌让病娇愉悦（需求"杀死对方会让病娇感到愉悦"）
-// SIGNAL_HANDLER：死亡信号同步触发，回调内只做即时结算（不可 sleep）。
+// SIGNAL_HANDLER：死亡信号同步触发，仅做即时数据清理；心情/UI 操作通过 INVOKE_ASYNC
+//   延迟到下一 tick，避免 static analyzer 追踪到 add_stress → update_stress →
+//   run_emote/tgui_input_list/stoplag 等 sleep 调用链。
 // ----------------------------------------------------------------------------
 /datum/charflaw/yandere/proc/on_rival_death(datum/source, gibbed)
 	SIGNAL_HANDLER
@@ -722,6 +724,14 @@
 	if(!istype(me))
 		return
 
+	// 心情/UI 反馈不阻塞信号回调，交给异步 proc 处理。
+	INVOKE_ASYNC(src, PROC_REF(rival_death_feedback), me, rival)
+
+
+// ----------------------------------------------------------------------------
+// 异步执行心情结算与文字提示（从 on_rival_death 拆分，不与 SIGNAL_HANDLER 冲突）
+// ----------------------------------------------------------------------------
+/datum/charflaw/yandere/proc/rival_death_feedback(mob/living/carbon/human/me, mob/living/carbon/human/rival)
 	// 给予强烈愉悦（正面心情）。
 	me.add_stress(/datum/stressevent/yandere_vengeance)
 	// 若已没有其它在世情敌，撤销"杀意"负面心情（大仇得报、如释重负）。
