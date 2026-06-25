@@ -1016,7 +1016,7 @@
 /datum/anvil_recipe/weapons/psy/poleaxe
 	name = "Psydonic Poleaxe (+2 Blessed Silver, +1 Small Log)"
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/ingot/silverblessed, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/greataxe/psy
+	created_item = /obj/item/rogueweapon/greataxe/silver/psy/
 
 /datum/anvil_recipe/weapons/psy/mace
 	name = "Psydonic Grand Mace (+1 Blessed Silver, +1 Small Log)"

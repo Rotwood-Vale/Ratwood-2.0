@@ -521,22 +521,16 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/greataxe/psy
-	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/mace/strike)
-	gripped_intents = list(/datum/intent/axe/cut/battle/greataxe, /datum/intent/axe/chop/battle/greataxe, /datum/intent/mace/rangedthrust)
-	alt_intents = list(/datum/intent/spear/bash/poleaxe, /datum/intent/mace/smash/poleaxe, /datum/intent/mace/rangedthrust)
+/obj/item/rogueweapon/greataxe/silver/psy
+	force = 15
+	force_wielded = 30
 	name = "psydonic poleaxe"
 	desc = "A poleaxe, fitted with a reinforced shaft and a beaked axhead of alloyed silver. As the fragility of swords've become more apparent, the Psydonic Orders - following the disastrous Massacre of Blastenghyll - have shifted their focus towards arming their paladins with longer-lasting greatweapons."
 	icon_state = "silverpolearm"
 	icon = 'icons/roguetown/weapons/64.dmi'
-	minstr = 12
-	max_blade_int = 350
-	max_integrity = 150 // compensates for the potential of using it to parry without actually using blunt parry integrity loss
-	associated_skill = /datum/skill/combat/polearms // yes it is located in the axe folder and uses axe subtypes it is a polearm
-	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/greataxe/psy/ComponentInitialize()
+/obj/item/rogueweapon/greataxe/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -547,7 +541,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/greataxe/psy/preblessed/ComponentInitialize()
+/obj/item/rogueweapon/greataxe/silver/psy/preblessed/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\

@@ -123,7 +123,7 @@
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 		if("Psydonic Poleaxe + Shortsword")
-			H.put_in_hands(new /obj/item/rogueweapon/greataxe/psy(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/greataxe/silver/psy/(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/sword/short/psy(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
