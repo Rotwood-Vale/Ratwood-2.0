@@ -1311,7 +1311,7 @@
 	name = "silver rapier"
 	desc = "A basket-hilted rapier, fitted with a thin blade of pure silver. Immortalized by Rockhill's witch hunters, this weapon - though cumberstone in an untrained hand - is surprisingly adept at both parrying and riposting."
 	icon_state = "silverrapier"
-	sheathe_icon = "psyrapier"
+	sheathe_icon = "rapier"
 	max_integrity = 225
 	max_blade_int = 225
 	force = 20
@@ -1332,21 +1332,12 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/sword/rapier/psy
+/obj/item/rogueweapon/sword/rapier/silver/psy
 	name = "psydonic rapier"
 	desc = "A basket-hilted rapier, fitted with a thin blade of pure silver. Such a resplendent weapon not only pierces the gaps within a heathen's maille, but also serves as the symbol of an Otavan diplomat's authority."
-	icon_state = "silverrapier"
-	sheathe_icon = "rapier"
-	max_integrity = 225
-	max_blade_int = 225
-	force = 20
-	force_wielded = 20
-	minstr = 8
-	wdefense = 8
 	smeltresult = /obj/item/ingot/silverblessed
-	is_silver = TRUE
 
-/obj/item/rogueweapon/sword/rapier/psy/ComponentInitialize()
+/obj/item/rogueweapon/sword/rapier/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -1357,7 +1348,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/sword/rapier/psy/preblessed/ComponentInitialize()
+/obj/item/rogueweapon/sword/rapier/silver/psy/preblessed/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -1368,21 +1359,15 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/sword/rapier/psy/relic
+/obj/item/rogueweapon/sword/rapier/silver/psy/relic
 	name = "Eucharist"
 	desc = "Etruscan shape falling prey to Otavan craftsmanship. Saint Malum's smiths created an uniquely thin blade, capable of swiftly skewering the unholy and the miscreants through gaps that most claim to have never existed in the first place. <b> Silver-dipped steel crowned upon a basket hilt that keeps righteous hands safe from harm."
 	icon_state = "psyrapier"
 	sheathe_icon = "psyrapier"
 	max_integrity = 300
 	max_blade_int = 300
-	force = 20
-	force_wielded = 20
-	minstr = 8
-	wdefense = 8
-	smeltresult = /obj/item/ingot/silver
-	is_silver = TRUE
 
-/obj/item/rogueweapon/sword/rapier/psy/relic/ComponentInitialize()
+/obj/item/rogueweapon/sword/rapier/silver/psy/relic/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\

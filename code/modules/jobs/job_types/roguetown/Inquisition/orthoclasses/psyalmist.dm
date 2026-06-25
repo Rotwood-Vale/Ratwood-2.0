@@ -106,7 +106,7 @@
 				H.put_in_hands(new /obj/item/rogueweapon/whip/psywhip_lesser(get_turf(H)), forced = TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 			if("Psydonic Rapier")
-				H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/psy(get_turf(H)), forced = TRUE)
+				H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/silver/psy(get_turf(H)), forced = TRUE)
 				H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 
