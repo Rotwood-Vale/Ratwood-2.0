@@ -23025,17 +23025,6 @@
 	},
 /turf/open/floor/rogue/blocks/flipped,
 /area/rogue/indoors/town/church/basement)
-"eYo" = (
-/obj/structure/table/wood{
-	dir = 1;
-	icon_state = "longtable"
-	},
-/obj/structure/bars{
-	icon_state = "barsbent";
-	layer = 2.81
-	},
-/turf/open/floor/rogue/concrete,
-/area/rogue/indoors/town/physician)
 "eYs" = (
 /obj/structure/fluff/statue/gargoyle/moss,
 /turf/open/floor/rogue/concrete,
@@ -28270,12 +28259,20 @@
 /area/rogue/outdoors/town/grove)
 "gip" = (
 /obj/structure/table/wood{
-	dir = 1;
-	icon_state = "longtable_mid"
+	icon_state = "longtable"
 	},
+/obj/item/paper,
+/obj/item/paper{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/natural/feather,
 /obj/structure/bars{
 	icon_state = "barsbent";
 	layer = 2.81
+	},
+/obj/structure/mineral_door/wood/deadbolt/shutter{
+	name = "apothecary service hatch"
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/physician)
@@ -66846,17 +66843,15 @@
 /area/rogue/outdoors/woodsrat/south)
 "oQl" = (
 /obj/structure/table/wood{
+	dir = 1;
 	icon_state = "longtable"
 	},
-/obj/item/paper,
-/obj/item/paper{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/natural/feather,
 /obj/structure/bars{
 	icon_state = "barsbent";
 	layer = 2.81
+	},
+/obj/structure/mineral_door/wood/deadbolt/shutter{
+	name = "apothecary service hatch"
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/physician)
@@ -106350,9 +106345,8 @@
 /obj/item/reagent_containers/food/snacks/rogue/raisinbreadslice,
 /obj/item/reagent_containers/food/snacks/rogue/raisinbreadslice,
 /obj/item/reagent_containers/food/snacks/rogue/raisinbreadslice,
-/obj/structure/closet/crate/chest{
-	lockid = "physician";
-	pixel_y = 6
+/obj/structure/closet/crate/chest/neu{
+	lockid = "physician"
 	},
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/manor/rockhill)
@@ -292773,7 +292767,7 @@ kwI
 hNi
 hNi
 fXJ
-eYo
+oQl
 fBL
 tFu
 tFu
