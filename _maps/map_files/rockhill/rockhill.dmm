@@ -39408,7 +39408,8 @@
 "iJf" = (
 /obj/structure/mineral_door/wood/window{
 	lockid = "farm";
-	name = "Soiler's House"
+	name = "Soiler's House";
+	locked = 1
 	},
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/indoors)
