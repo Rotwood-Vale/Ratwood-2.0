@@ -289,3 +289,6 @@
   - bugfix: Fixes stripes/tiger stripes markings for real this time.
   Jamdrawers:
   - bugfix: fixes keycontrol for the tavern key vendor
+2026-06-26:
+  Xander3359:
+  - rscadd: Refugees can pick minstrel
