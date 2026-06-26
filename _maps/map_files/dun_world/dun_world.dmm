@@ -46176,7 +46176,7 @@
 "jGC" = (
 /obj/structure/table/wood/poor/alt,
 /obj/item/roguecoin/gilbranze/pile,
-/obj/item/rogueweapon/greatsword/bsword/psy,
+/obj/item/rogueweapon/greatsword/silver/bsword/psy,
 /obj/item/roguecoin/gilbranze/pile,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/his_vault)

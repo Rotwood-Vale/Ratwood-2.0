@@ -1174,7 +1174,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/greatsword/bsword/psy
+/obj/item/rogueweapon/greatsword/silver/bsword/psy
 	name = "forgotten blade"
 	desc = "'Let His name be naught but forgot'n.'"
 	icon_state = "oldpsybroadsword"
@@ -1185,10 +1185,9 @@
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop, /datum/intent/sword/thrust, /datum/intent/rend/krieg)
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop, /datum/intent/sword/lunge, /datum/intent/sword/thrust/estoc)
 	alt_intents = list(/datum/intent/effect/daze, /datum/intent/sword/strike, /datum/intent/sword/bash)
-	is_silver = TRUE
-	smeltresult = /obj/item/ingot/silver
+	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/greatsword/bsword/psy/ComponentInitialize()
+/obj/item/rogueweapon/greatsword/silver/bsword/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -1199,14 +1198,13 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/greatsword/bsword/psy/relic
+/obj/item/rogueweapon/greatsword/silver/bsword/psy/relic
 	name = "Creed"
 	desc = "Psydonian prayers and Tennite smiths, working as one to craft a weapon to slay the Four. A heavy and large blade, favored by Saint Ravox, to lay waste to those who threaten His flock. The crossguard's psycross reflects even the faintest of Noc's light. You're the light - show them the way."
 	icon_state = "psybroadsword"
-	is_silver = TRUE
-	smeltresult = /obj/item/ingot/silver
+	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/greatsword/bsword/psy/getonmobprop(tag)
+/obj/item/rogueweapon/greatsword/silver/bsword/psy/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -1215,7 +1213,7 @@
 			if("onback") return list("shrink" = 0.5, "sx" = -1, "sy" = 2, "nx" = 0, "ny" = 2, "wx" = 2, "wy" = 1, "ex" = 0, "ey" = 1, "nturn" = 0, "sturn" = 0, "wturn" = 70, "eturn" = 15, "nflip" = 1, "sflip" = 1, "wflip" = 1, "eflip" = 1, "northabove" = 1, "southabove" = 0, "eastabove" = 0, "westabove" = 0)
 			if("onbelt") return list("shrink" = 0.3, "sx" = -4, "sy" = -6, "nx" = 5, "ny" = -6, "wx" = 0, "wy" = -6, "ex" = -1, "ey" = -6, "nturn" = 100, "sturn" = 156, "wturn" = 90, "eturn" = 180, "nflip" = 0, "sflip" = 0, "wflip" = 0, "eflip" = 0, "northabove" = 0, "southabove" = 1, "eastabove" = 1, "westabove" = 0)
 
-/obj/item/rogueweapon/greatsword/bsword/psy/relic/ComponentInitialize()
+/obj/item/rogueweapon/greatsword/silver/bsword/psy/relic/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -1226,14 +1224,13 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/greatsword/bsword/psy/unforgotten
+/obj/item/rogueweapon/greatsword/silver/bsword/psy/unforgotten
 	name = "unforgotten blade"
 	desc = "High Inquisitor Archibald once recorded an expedition of seven brave Adjudicators into Gronnian snow-felled wastes to root out evil. Its leader, Holy Ordinator Guillemin, was said to have held on for seven daes and seven nights against darksteel-clad heretics before Psydon acknowledged his endurance. Nothing but his blade remained - his psycross wrapped around its hilt in remembrance."
 	icon_state = "forgottenblade"
-	is_silver = TRUE
-	smeltresult = /obj/item/ingot/silver
+	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/greatsword/bsword/psy/unforgotten/ComponentInitialize()
+/obj/item/rogueweapon/greatsword/silver/bsword/psy/unforgotten/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
