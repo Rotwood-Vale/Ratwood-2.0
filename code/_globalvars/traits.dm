@@ -169,6 +169,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		TRAIT_FUSILIER,
 		TRAIT_GANG_A,
 		TRAIT_GANG_B,
+		TRAIT_REGROW_LIMBS, //OV ADD
 		TRAIT_LICHLAIR
 	),
 	/obj/item/bodypart = list(

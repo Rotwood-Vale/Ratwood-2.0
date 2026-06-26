@@ -18,7 +18,7 @@
 
 /obj/item/soap/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 10)
+	AddComponent(/datum/component/slippery, 1 SECONDS, NO_SLIP_WHEN_WALKING)
 
 /obj/item/soap/examine(mob/user)
 	. = ..()

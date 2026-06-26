@@ -63,23 +63,24 @@
 		LoseTarget()
 
 /mob/living/simple_animal/hostile/retaliate/proc/Retaliate()
-//	var/list/around = view(src, vision_range)
 	toggle_ai(AI_ON)
-	var/list/around = hearers(vision_range, src)
 
-	for(var/atom/movable/A in around)
-		if(A == src)
+	// saving hearers to an intermediary list disables certain byond optimizations
+	// so we just use it directly in the for loop
+	for(var/mob/living/bystander in hearers(vision_range, src))
+		if(bystander == src)
 			continue
-		if(isliving(A))
-			var/mob/living/M = A
-			if(faction_check_mob(M) && attack_same || !faction_check_mob(M))
-				enemies |= M
+		if(attack_same || !faction_check_mob(bystander))
+			enemies |= bystander
 
-	for(var/mob/living/simple_animal/hostile/retaliate/H in around)
-		if(faction_check_mob(H) && !attack_same && !H.attack_same)
-			H.enemies |= enemies
+	if(attack_same)
+		return 0 // we aren't buddies with our faction so we don't warn them about enemies
+	for(var/mob/living/simple_animal/hostile/retaliate/ally in hearers(vision_range, src))
+		if(ally.attack_same)
+			continue
+		if(faction_check_mob(ally))
+			ally.enemies |= enemies
 	return 0
-	
 
 /mob/living/simple_animal/hostile/retaliate/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()

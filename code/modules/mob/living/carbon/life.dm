@@ -574,6 +574,15 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			energy_add(sleepy_mod * 4)
 		if(buckled?.sleepy)
 			sleepy_mod = buckled.sleepy
+		//OV edit
+		if(HAS_TRAIT(src, TRAIT_REGROW_LIMBS))
+			var/list/limb_list = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+			for(var/zone in limb_list)
+				var/obj/item/bodypart/limb = get_bodypart(zone)
+				if(!limb && nutrition > 250)
+					regenerate_limb(zone)
+					nutrition -= 250
+		//OV edit end
 		else if(isturf(loc)) //No illegal tech.
 			var/obj/structure/bed/rogue/bed = locate() in loc
 			if(bed)
@@ -585,6 +594,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 						sleepy_mod = 1.6 // little worse than a bedroll
 		if(sleepy_mod >= 2 && bodytemperature < BODYTEMP_NORMAL_MIN) // if we're sleeping on a bedroll or better
 			adjust_bodytemperature(0.5) // not exactly the best way to regain heat but it'll keep you from freezing to death, won't protect you from a snowstorm though
+		if(drunkenness)
+			drunkenness *= 0.94 //reduce drunkenness by 6% per 2 seconds
 		if(nutrition > 0 || doesnt_hunger)
 			energy_add(sleepy_mod * 15)
 		if(hydration > 0 || doesnt_hunger)
@@ -610,6 +621,20 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			if(eyesclosed && !HAS_TRAIT(src, TRAIT_NOSLEEP))
 				teleport_to_dream(src, 10000, 2)
 				Sleeping(300)
+		// i would love it if handle_sleep actually handled just sleep instead of also falling asleep
+		// that way i could put this in an override on /mob/living/carbon/human
+		if(ishuman(src))
+			var/mob/living/carbon/human/human_src = src
+			var/obj/item/clothing/suit/roguetown/armor/skin_armor/harpy_skin/skin = human_src.skin_armor
+			if(istype(skin)) // this checks if it's harpy skin specifically
+				if(skin.obj_integrity < skin.max_integrity)
+					skin.obj_integrity = skin.max_integrity
+					to_chat(src, "I can feel the skin on my feet mend...")
+				else if((skin.obj_integrity >= skin.max_integrity) && skin.obj_broken)
+					skin.obj_broken = FALSE
+		// handle_dreams() // this has no functionality currently
+		if(prob(10) && health > crit_threshold)
+			emote("snore")
 	else if(!IsSleeping() && !HAS_TRAIT(src, TRAIT_NOSLEEP))
 		// Resting on a bed or something
 		var/sleepy_mod = 0

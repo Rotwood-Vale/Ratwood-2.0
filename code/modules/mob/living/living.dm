@@ -1041,7 +1041,7 @@
 						TH.transfer_mob_blood_dna(src)
 
 /mob/living/carbon/human/makeTrail(turf/T)
-	if((NOBLOOD in dna.species.species_traits) || !bleed_rate || bleedsuppress)
+	if((NOBLOOD in dna.species.species_traits) || (INVISBLOOD in dna.species.species_traits) || !bleed_rate || bleedsuppress) //OV EDIT
 		return
 	..()
 
@@ -1356,6 +1356,8 @@
 			if(what.nudist_approved && L.IsSleeping())
 				surrender_mod = 0.5 // concession for letting nude sleepers wear certain items: people can swipe them fast
 
+		else if(HAS_TRAIT(L, TRAIT_LOOSE_STRAPS))
+			surrender_mod = 0.5
 	if(!who.Adjacent(src))
 		return
 

@@ -88,7 +88,7 @@
 			H.change_stat("willpower", 1)
 			H.change_stat("speed", 1)
 			H.change_stat("fortune", 1)
-			if(bounty_poster == "The Justiciary of The Realm")
+			if(bounty_poster == "The Justiciary of [SSmapping.map_adjustment.realm_name]")
 				GLOB.outlawed_players += H.real_name
 			else
 				GLOB.excommunicated_players += H.real_name
