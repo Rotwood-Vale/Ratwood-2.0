@@ -44,7 +44,6 @@
 
 /mob/living/carbon/human/species/lizardfolk/psy_vault_guard/Initialize(mapload)
 	. = ..()
-	set_species(/datum/species/lizardfolk)
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
 	is_silent = TRUE
 	transform = transform.Scale(1.25, 1.25)

@@ -233,7 +233,7 @@
 	UnregisterSignal(user, COMSIG_MOB_SAY)
 	UnregisterSignal(user, COMSIG_MOB_SAY_POSTPROCESS)
 	UnregisterSignal(user, COMSIG_ERP_LOCATION_ACCESSIBLE)
-	if(my_head.owner ~= user)
+	if(my_head?.owner == user)
 		// Give their head back instead?
 		// In TG Dullahan heads are always off, thus they give back heads.
 		// Warn that they're going to die?

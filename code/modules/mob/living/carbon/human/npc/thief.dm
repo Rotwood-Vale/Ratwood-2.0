@@ -24,7 +24,6 @@
 
 /mob/living/carbon/human/species/human/northern/thief/Initialize(mapload)
 	. = ..()
-	set_species(/datum/species/human/northern)
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
 
 /mob/living/carbon/human/species/human/northern/thief/after_creation()

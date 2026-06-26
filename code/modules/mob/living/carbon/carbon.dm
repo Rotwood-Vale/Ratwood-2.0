@@ -8,7 +8,6 @@
 		pain_threshold = 250
 
 	create_reagents(1000)
-	update_body_parts() //to update the carbon's new bodyparts appearance
 	GLOB.carbon_list += src
 
 /mob/living/carbon/Destroy()

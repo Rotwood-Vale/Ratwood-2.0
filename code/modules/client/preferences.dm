@@ -433,7 +433,6 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			to_chat(user, "<a href='?src=[REF(user)];view_species_info=[pref_species.expanded_desc]'>Read More</a>")
 		to_chat(user, "<font color='red'>Classes reset.</font>")
 	random_character(gender, FALSE, FALSE)
-	accessory = "Nothing"
 
 	if(pref_species.forced_taur && pref_species.allowed_taur_types.len)
 		taur_type = pick(pref_species.allowed_taur_types)
@@ -3165,8 +3164,9 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		character.dna.species.name = selected_title
 
 	character.domhand = domhand
-	character.cmode_music_override = combat_music.musicpath
-	character.cmode_music_override_name = combat_music.name
+	if(combat_music)
+		character.cmode_music_override = combat_music.musicpath
+		character.cmode_music_override_name = combat_music.name
 	character.highlight_color = highlight_color
 	character.nickname = nickname
 

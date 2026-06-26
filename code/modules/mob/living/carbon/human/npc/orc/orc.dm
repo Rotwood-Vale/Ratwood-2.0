@@ -1,4 +1,4 @@
-/mob/living/carbon/human/species/orc/
+/mob/living/carbon/human/species/orc
 	name = "orc"
 	skin_tone = SKIN_COLOR_GROONN
 	hairstyle = "Bald"
@@ -29,7 +29,6 @@
 
 /mob/living/carbon/human/species/orc/npc/Initialize(mapload)
 	. = ..()
-	set_species(/datum/species/orc)
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
 
 /mob/living/carbon/human/species/orc/npc/after_creation()

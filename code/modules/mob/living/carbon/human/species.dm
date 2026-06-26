@@ -227,6 +227,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	/// WARNING - This is a very simple implementation. Not meant for carbons composed of limbs!
 	var/custom_rotation_icon = null
 	var/custom_base_icon = null
+	/// Have we gone through setup yet?
+	var/setup_done = FALSE
 
 //Used for expanded lore blurbs on species.
 	var/expanded_desc
@@ -459,7 +461,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			organ.Insert(C, TRUE, FALSE)
 
 /datum/species/proc/random_character(mob/living/carbon/human/H)
-	H.real_name = random_name(H.gender,1)
+	// needed for customizers to work.
+	// I really wanted to make them work without prefs (and started doing some of the groundwork for it)
+	// but it's just too tangled for me to unfuck right now, so this is a stopgap.
+	var/static/datum/preferences/randomizer_prefs = new()
+/* 	H.real_name = random_name(H.gender,1)
 //	H.age = pick(possible_ages)
 	var/list/hairs
 	if((H.age == AGE_OLD) && (OLDGREY in species_traits))
@@ -470,18 +476,21 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	H.facial_hair_color = H.hair_color
 	var/list/skins = get_skin_list()
 	H.skin_tone = skins[pick(skins)]
-	H.eye_color = random_eye_color()
-	H.accessory = "Nothing"
-	if(H.dna)
-		H.dna.real_name = H.real_name
-		H.dna.features = get_random_features()
-		H.dna.body_markings = get_random_body_markings(H.dna.features)
-	H.update_body()
-	H.update_hair()
-	H.update_body_parts()
+	H.eye_color = random_eye_color() */
+	if(sexes)
+		randomizer_prefs.gender = pick(MALE, FEMALE) // ditto
+	randomizer_prefs.set_new_race(src)
+	randomizer_prefs.randomize_descriptors()
+	randomizer_prefs.copy_to(H, TRUE, FALSE, FALSE)
+	// if you want to try getting prefless customizers to work be my guest
+/* 	for(var/customizer_type in customizers)
+		var/datum/customizer/entry = CUSTOMIZER(customizer_type)
+		for(var/datum/customizer_choice/choice in entry.customizer_choices)
+			choice.randomize_entry(entry, src) */
 
 
 /datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species, datum/preferences/pref_load)
+	setup_done = TRUE
 	// Drop the items the new species can't wear
 	if((AGENDER in species_traits))
 		C.gender = PLURAL

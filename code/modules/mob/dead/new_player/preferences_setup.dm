@@ -8,7 +8,7 @@
 		gender = gender_override
 	else
 		gender = pick(MALE,FEMALE)
-	age = AGE_ADULT
+	age = pick(pref_species.possible_ages)
 	var/list/skins = pref_species.get_skin_list()
 	skin_tone = skins[pick(skins)]
 	eye_color = random_eye_color()
@@ -29,7 +29,6 @@
 		nsfw_img_gallery = null
 	features = pref_species.get_random_features()
 	body_markings = pref_species.get_random_body_markings(features)
-	accessory = "Nothing"
 	bark_id = pick(GLOB.bark_random_list)
 	bark_pitch = BARK_PITCH_RAND(gender)
 	bark_variance = BARK_VARIANCE_RAND

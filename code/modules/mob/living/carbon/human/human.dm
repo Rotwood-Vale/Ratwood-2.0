@@ -96,25 +96,26 @@
 
 	icon_state = ""		//Remove the inherent human icon that is visible on the map editor. We're rendering ourselves limb by limb, having it still be there results in a bug where the basic human icon appears below as south in all directions and generally looks nasty.
 
+	. = ..() // create important things like our reagents
+
 	//initialize limbs first
 	create_bodyparts()
 
 	setup_human_dna()
 
-	if(dna.species)
-		set_species(dna.species.type)
+	if(dna.species && !dna.species.setup_done) // may have been set up by a setup_human_dna override
+		set_species(dna.species)
 
 	//initialise organs
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
 	physiology = new()
-
-	. = ..()
 
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_blood))
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, footstep_type, 1, 2)
 	GLOB.human_list += src
 	update_tongue_noise_verbs()
+	update_body_parts()
 
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
 	var/obj/item/bodypart/affecting
@@ -152,7 +153,8 @@
 /mob/living/carbon/human/proc/setup_human_dna()
 	//initialize dna. for spawned humans; overwritten by other code
 	create_dna(src)
-	randomize_human(src)
+	if(istype(dna?.species))
+		dna.species.random_character(src)
 	dna.initialize_dna()
 
 /mob/living/carbon/human/Destroy()
@@ -1057,10 +1059,12 @@
 /mob/living/carbon/human/species
 	var/race = null
 
-/mob/living/carbon/human/species/Initialize(mapload)
-	. = ..()
+/mob/living/carbon/human/species/create_dna()
 	if(race)
-		set_species(race)
+		dna = new /datum/dna(src)
+		dna.species = new race()
+	else
+		return ..() // how?
 
 //Vrell - Moving this here to fix load order bugs
 /mob/living/carbon/human/has_penis()
