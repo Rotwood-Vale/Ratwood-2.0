@@ -10,7 +10,7 @@
 	var/stunning = FALSE
 
 /obj/item/reagent_containers/food/snacks/rogue/pie/cooked
-	icon_state = "馅饼香"
+	icon_state = "pie"
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_FILLING)
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/pieslice
 	slices_num = 5
