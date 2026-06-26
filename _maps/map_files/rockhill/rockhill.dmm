@@ -83998,7 +83998,7 @@
 "sOc" = (
 /obj/structure/mineral_door/wood{
 	locked = 1;
-	lockid = "physician";
+	lockid = "cphysician";
 	name = "Head Physician's Office"
 	},
 /turf/open/floor/rogue/wood,
