@@ -1065,7 +1065,7 @@
 
 /datum/anvil_recipe/weapons/psy/whip
 	name = "Psydonic Whip (+3 Cured Leather)"
-	created_item = /obj/item/rogueweapon/whip/psywhip_lesser
+	created_item = /obj/item/rogueweapon/whip/silver/psy
 	additional_items = list(/obj/item/natural/hide/cured, /obj/item/natural/hide/cured, /obj/item/natural/hide/cured)
 
 /// BLESSED SILVER, BULLION VARIANTS - FALLBACK

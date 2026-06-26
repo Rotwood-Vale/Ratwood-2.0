@@ -30,7 +30,7 @@
 				if("Melancholic Crankbox - Antimagic")
 					choice = /obj/item/psydonmusicbox
 				if("Daybreak - Silver Whip")
-					choice = /obj/item/rogueweapon/whip/antique/psywhip
+					choice = /obj/item/rogueweapon/whip/silver/psy/relic
 				if("Stigmata - Silver Halberd")
 					choice = /obj/item/rogueweapon/halberd/silver/psy
 					user.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)	//We make sure the weapon is usable by the Inquisitor.
@@ -300,7 +300,7 @@ Inquisitorial armory down here
 	new /obj/item/rogueweapon/huntingknife/idagger/silver/psy(src)
 	new /obj/item/rogueweapon/greatsword/silver/psy(src)
 	new /obj/item/rogueweapon/halberd/silver/psy(src)
-	new /obj/item/rogueweapon/whip/psywhip_lesser
+	new /obj/item/rogueweapon/whip/silver/psy
 	new /obj/item/rogueweapon/flail/sflail/silver/psy
 	new /obj/item/rogueweapon/spear/silver/psy(src)
 	new /obj/item/rogueweapon/sword/long/silver/psy(src)

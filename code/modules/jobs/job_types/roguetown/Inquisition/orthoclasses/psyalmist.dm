@@ -103,7 +103,7 @@
 		var/weapon_choice = tgui_input_list(H, "Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.", weapons)
 		switch(weapon_choice)
 			if("Psydonic Whip")
-				H.put_in_hands(new /obj/item/rogueweapon/whip/psywhip_lesser(get_turf(H)), forced = TRUE)
+				H.put_in_hands(new /obj/item/rogueweapon/whip/silver/psy(get_turf(H)), forced = TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 			if("Psydonic Rapier")
 				H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/silver/psy(get_turf(H)), forced = TRUE)

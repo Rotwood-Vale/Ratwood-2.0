@@ -116,29 +116,6 @@
 	minstr = 11
 	icon_state = "gwhip"
 
-/obj/item/rogueweapon/whip/antique/psywhip
-	name = "Daybreak"
-	desc = "A chain-linked whip, meticulously assembled from a hundred pieces of blessed silver. Its origins are steeped in mythos: most believe it to originate from an ancient bloodline of vampyre-killers, which once saved Psydonia from a powerful lyckerlorde. Whether it was happenstance or fate itself that eventually led it into your grasp, however, is better left unspoken. </br>'There, upon the Cathedral's ceiling, was painted a scene-most-beautiful: of a robed Psydon standing before the Archdevil, parting the nite's sky with a crack from His fiery whip. Just as He had done prior, so too must you bring daelight to the darkness.'"
-	icon_state = "psywhip"
-	is_silver = TRUE
-	force = 25
-	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish)
-	minstr = 12
-	wdefense = 0
-	anvilrepair = /datum/skill/craft/weaponsmithing
-	smeltresult = /obj/item/ingot/silver
-
-/obj/item/rogueweapon/whip/antique/psywhip/ComponentInitialize()
-	AddComponent(\
-		/datum/component/silverbless,\
-		pre_blessed = BLESSING_PSYDONIAN,\
-		silver_type = SILVER_PSYDONIAN,\
-		added_force = 0,\
-		added_blade_int = 0,\
-		added_int = 100,\
-		added_def = 0,\
-	)
-
 /obj/item/rogueweapon/whip/silver
 	name = "silver whip"
 	desc = "A hefty, silver whip. The uncoiled leather is tipped with a silver barb, which can sunder the blighted from a remarkable distance. </br>'Die, monster! You don't belong in this world!'"
@@ -161,18 +138,14 @@
 		added_def = 0,\
 	)
 
-/obj/item/rogueweapon/whip/psywhip_lesser
+/obj/item/rogueweapon/whip/silver/psy
 	name = "psydonic whip"
 	desc = "An ornate whip, plated in a ceremonial veneer of silver. Crack the leather and watch as the apostates clammer aside."
 	icon_state = "psywhip_lesser"
-	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish)
-	force = 23
 	minstr = 6 // makes it so psyaltrist can actually use it properly
-	wdefense = 0
-	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/whip/psywhip_lesser/ComponentInitialize()
+/obj/item/rogueweapon/whip/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -180,6 +153,26 @@
 		added_force = 0,\
 		added_blade_int = 0,\
 		added_int = 50,\
+		added_def = 0,\
+	)
+
+/obj/item/rogueweapon/whip/silver/psy/relic
+	name = "Daybreak"
+	desc = "A chain-linked whip, meticulously assembled from a hundred pieces of blessed silver. Its origins are steeped in mythos: most believe it to originate from an ancient bloodline of vampyre-killers, which once saved Psydonia from a powerful lyckerlorde. Whether it was happenstance or fate itself that eventually led it into your grasp, however, is better left unspoken. </br>'There, upon the Cathedral's ceiling, was painted a scene-most-beautiful: of a robed Psydon standing before the Archdevil, parting the nite's sky with a crack from His fiery whip. Just as He had done prior, so too must you bring daelight to the darkness.'"
+	icon_state = "psywhip"
+	force = 25
+	minstr = 12
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	smeltresult = /obj/item/ingot/silverblessed
+
+/obj/item/rogueweapon/whip/silver/psy/relic/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_PSYDONIAN,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 100,\
 		added_def = 0,\
 	)
 

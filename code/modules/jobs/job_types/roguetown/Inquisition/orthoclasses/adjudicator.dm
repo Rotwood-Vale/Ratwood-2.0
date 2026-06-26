@@ -103,7 +103,7 @@
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal, SLOT_BACK_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
 		if("Psydonic Whip + Shield")
-			H.put_in_hands(new /obj/item/rogueweapon/whip/psywhip_lesser(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/whip/silver/psy(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal, SLOT_BACK_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 		if("Psydonic Flail + Shield")

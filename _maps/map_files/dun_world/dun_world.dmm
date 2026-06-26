@@ -91152,7 +91152,7 @@
 /obj/structure/fluff/walldeco/chains{
 	icon_state = "chains3"
 	},
-/obj/item/rogueweapon/whip/psywhip_lesser,
+/obj/item/rogueweapon/whip/silver/psy,
 /obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/inq/basement)

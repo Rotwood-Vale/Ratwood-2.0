@@ -85,7 +85,7 @@
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_R, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 		if("Daybreak (Whip)")
-			H.put_in_hands(new /obj/item/rogueweapon/whip/antique/psywhip(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/whip/silver/psy/relic(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 		if("Stigmata (Halberd)")
 			H.put_in_hands(new /obj/item/rogueweapon/halberd/silver/psy/relic(H), TRUE)
