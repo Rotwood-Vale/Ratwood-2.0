@@ -552,9 +552,6 @@
 		"塔盾（220积分）"    = list(220, /obj/item/rogueweapon/shield/tower),                // 大型塔盾，防护面积最大
 		"锁子甲（200积分）"  = list(200, /obj/item/clothing/suit/roguetown/armor/chainmail), // 中级躯干护甲
 		"板甲（320积分）"    = list(320, /obj/item/clothing/suit/roguetown/armor/plate),     // 高级躯干护甲，防护最强
-		"银戒指（55积分）"   = list(55, /obj/item/clothing/ring/silver),                     // 银质戒指，装饰配饰
-		"玉戒指（75积分）"   = list(75, /obj/item/clothing/ring/jade),                       // 玉质戒指，装饰配饰
-		"金戒指（90积分）"   = list(90, /obj/item/clothing/ring/gold),                       // 金质戒指，装饰配饰
 	)
 
 /datum/component/rpg_system/proc/get_consumable_catalog()
@@ -688,10 +685,10 @@
 //   不在"珍馐"之列）。全部为引擎已有的成品食物 / 佳酿。
 /datum/component/rpg_system/proc/get_delicacy_catalog()
 	return list(
-		"曲奇饼（35积分）"   = list(35, /obj/item/reagent_containers/food/snacks/rogue/cookie),         // 曲奇饼，烤好的成品点心
+		"饼干（35积分）"     = list(35, /obj/item/reagent_containers/food/snacks/rogue/biscuit),        // 饼干，烤好的成品点心（cookie 图标缺失，改用图标确实存在的 biscuit）
 		"奶酪（40积分）"     = list(40, /obj/item/reagent_containers/food/snacks/rogue/cheese),         // 奶酪，成品乳制珍品
 		"蜂蜜（45积分）"     = list(45, /obj/item/reagent_containers/food/snacks/rogue/honey),          // 蜂蜜，成品甘味珍品
-		"三明治（50积分）"   = list(50, /obj/item/reagent_containers/food/snacks/rogue/sandwich),       // 三明治，做好的成品餐食
+		"奶酪三明治（50积分）" = list(50, /obj/item/reagent_containers/food/snacks/rogue/sandwich/cheese), // 奶酪三明治，成品餐食（基类 sandwich 无图标，改用有图标的奶酪子类型）
 		"熟酿蛋（55积分）"   = list(55, /obj/item/reagent_containers/food/snacks/rogue/stuffedegg/cooked), // 熟酿蛋，烹好的成品菜
 		"果馅卷（80积分）"   = list(80, /obj/item/reagent_containers/food/snacks/rogue/strudel),        // 果馅卷，烤好的成品酥点
 		"糖渍果馅卷（95积分）" = list(95, /obj/item/reagent_containers/food/snacks/rogue/strudel/sugar), // 糖渍果馅卷，成品甜点
