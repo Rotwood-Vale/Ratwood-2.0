@@ -56,6 +56,16 @@
 #include "alchemy/blood_tonic_reagent.dm"
 // 催乳剂试剂与成品瓶定义（加速泌乳恢复）
 #include "alchemy/lactation_enhancer_reagent.dm"
+// 自定义精炼药剂框架：精炼炼药锅 /obj/machinery/light/rogue/cauldron/refining(覆盖 process())。
+// 仍用【原版炼金材料的气味积分】选出配方家族，再由【液体底料(单一/复合)】决定产物：清水→回退原版
+// 普通药水；特殊底料→精炼出新药。配方用数据 /datum/alch_refining_formula 描述(base_recipe 现成配方
+// + required_base 现成液体 + output_reagents 新药)，未来扩展不新增任何材料。含两条示例(生命药水家族
+// +水60板油30→凝脂润肤膏；5级春日气味+葡萄酒90→暖心酒剂)及成品试剂，并提供精炼锅合成配方。
+// ★酒基设定★：底料含任意酒类的配方，其成品为"酒基药剂"，喝下会像喝酒一样醉酒；酒劲＝【酒底加权平均
+// boozepwr】+【技能加成】并封顶(酒越烈/技能越高越烈)，写入成品试剂 data 随装瓶保留；继承 ethanol/refined_potion。
+// Custom medicine-refining framework: a cauldron subtype whose brew reads the LIQUID BASE
+// (single/composite) alongside the original materials' scent to produce new potions.
+#include "alchemy/refining_framework.dm"
 #include "structures/terror_clock.dm"
 #include "structures/glaggar_challenge.dm"
 #include "items/magic_bedroll.dm"
