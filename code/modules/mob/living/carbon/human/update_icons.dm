@@ -692,6 +692,11 @@ There are several things that need to be remembered:
 	apply_overlay(BELT_LAYER)*/
 	return
 
+//HAIR OVERLAY
+// NOTE Q2 2026 - REMOVE AND REPLACE WITH UPDATE_BODY EVENTUALLY
+/mob/living/carbon/human/update_hair()
+	rebuild_obscured_flags()
+	update_body()
 
 /mob/living/carbon/human/update_inv_head(hide_nonstandard = FALSE)
 	update_inv_head_real(hide_nonstandard)
