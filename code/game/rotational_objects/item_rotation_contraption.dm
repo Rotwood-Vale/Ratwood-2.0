@@ -21,7 +21,7 @@
 	/// Reskinned items turn this off to show their own sprite normally (upright, full size).
 	var/contraption_transform = TRUE
 
-/obj/item/rotation_contraption/Initialize()
+/obj/item/rotation_contraption/Initialize(mapload)
 	. = ..()
 	if(placed_type)
 		set_type(placed_type)
