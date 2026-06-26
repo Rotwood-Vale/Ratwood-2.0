@@ -2757,8 +2757,6 @@
 #include "code\modules\spells\spell_types\skills\invoked_aoe\mineroresight.dm"
 #include "code\modules\spells\spell_types\skills\invoked_single_target\digclay.dm"
 #include "code\modules\spells\spell_types\skills\invoked_single_target\engineeranalyze.dm"
-#include "code\modules\spells\spell_types\skills\invoked_single_target\engineertuneup.dm"
-#include "code\modules\spells\spell_types\skills\invoked_single_target\engineerwindup.dm"
 #include "code\modules\spells\spell_types\skills\invoked_single_target\fitclothing.dm"
 #include "code\modules\spells\spell_types\skills\invoked_single_target\learn.dm"
 #include "code\modules\spells\spell_types\skills\invoked_single_target\massage.dm"

@@ -215,46 +215,12 @@
 	charge_per_source = 20
 	max_stored_charge = 100
 
-/obj/item/contraption/linker/proc/disable_tuneup(mob/user, message = FALSE)
-	if(!active_item)
-		return
-	active_item = FALSE
-	if(user?.mind)
-		user.mind.RemoveSpell(new /obj/effect/proc_holder/spell/invoked/engineertuneup)
-	if(message && user)
-		to_chat(user, span_warning("I set my wrench down."))
-
-/obj/item/contraption/linker/proc/enable_tuneup(mob/user)
-	if(active_item)
-		return
-	if(!user?.mind)
-		return
-	user.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/engineertuneup)
-	to_chat(user, span_green("Time for a tune-up."))
-	active_item = TRUE
-
-/obj/item/contraption/linker/equipped(mob/user, slot)
-	..()
-	if(slot != ITEM_SLOT_HANDS)
-		disable_tuneup(user)
-		return
-	if(user.get_skill_level(/datum/skill/craft/engineering) < 4)
-		disable_tuneup(user)
-		return
-	enable_tuneup(user)
-
-/obj/item/contraption/linker/dropped(mob/user, slot)
-	..()
-	disable_tuneup(user, TRUE)
-
 /obj/item/contraption/linker/hammer_action(obj/item/I, mob/user)
 	return
 
 /obj/item/contraption/linker/Destroy()
 	if(buffer)
 		remove_buffer(buffer)
-	if(ismob(loc))
-		disable_tuneup(loc)
 	return ..()
 
 /obj/item/contraption/linker/examine(mob/user)
@@ -620,6 +586,10 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
+/obj/item/contraption/pick/drill/examine(mob/user)
+	. = ..()
+	. += span_info("Wield it in both hands and strike stone or a wall to bore through it in seconds — each bore spends a charge.")
+
 /obj/item/contraption/pick/drill/attack_obj(obj/O, mob/living/user)
 	. = ..()
 
@@ -634,32 +604,6 @@
 
 /obj/item/contraption/pick/drill/attack_right(mob/user)
 	. = ..()
-
-/obj/item/contraption/pick/drill/equipped(mob/user, slot, initial)
-	..()
-	if(active_item)
-		return
-	if(slot == ITEM_SLOT_HANDS)
-		if(user.get_skill_level(/datum/skill/craft/engineering) >= 4)
-			user.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/engineerwindup)
-			to_chat(user, span_notice("Time to wind things up"))
-			active_item = TRUE
-			return
-		else
-			if(active_item)
-				active_item = FALSE
-				user.mind.RemoveSpell(new /obj/effect/proc_holder/spell/invoked/engineerwindup)
-				to_chat(user, span_notice("Setting my drill down"))
-			return
-	else
-		return
-
-/obj/item/contraption/pick/drill/dropped(mob/user, slot)
-	..()
-	if(active_item)
-		active_item = FALSE
-		user.mind.RemoveSpell(new /obj/effect/proc_holder/spell/invoked/engineerwindup)
-		to_chat(user, span_notice("Setting my drill down"))
 
 /obj/item/contraption/smelter
 	var/obj/machinery/light/rogue/smelter/hand_held

@@ -5,8 +5,10 @@ import {
   DmIcon,
   Input,
   NoticeBox,
+  ProgressBar,
   Section,
   Stack,
+  Tabs,
 } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
@@ -51,6 +53,8 @@ type Data = {
   current_recipe_ref: string | null;
   progress: number;
   needed_progress: number;
+  rpm: number;
+  can_quick_toggle: boolean;
 };
 
 const STATUS_COLORS = {
@@ -110,16 +114,17 @@ const getQuoteColumns = (lines: string[], linesPerRail: number) => {
   return [visibleLines.slice(0, midpoint), visibleLines.slice(midpoint)];
 };
 
-const getCategoryIconState = (category: string | null | undefined) => {
-  const lowerCategory = (category || '').toLowerCase();
-  if (lowerCategory.includes('weapon')) {
-    return 'weapon';
-  }
-  if (lowerCategory.includes('armor')) {
-    return 'armor';
-  }
-  return 'rework';
-};
+const ALL_CATEGORY = 'All';
+
+// Recipe names carry a trailing material note like "Breastplate (+1 Iron)" and sometimes an inline
+// count ("3x nails", "Gas Belcher Shells x3") — strip both so the count comes solely from
+// created_num and we don't render "... x3 x3".
+const cleanRecipeName = (name: string) =>
+  name
+    .replace(/\s*\([^)]*\)\s*$/, '') // trailing "(+1 Iron)" material note
+    .replace(/\s*x\s*\d+\s*$/i, '') // trailing "x3"
+    .replace(/^\s*\d+\s*x\s+/i, '') // leading "3x "
+    .trim();
 
 export const Autosmither = () => {
   const { data } = useBackend<Data>();
@@ -142,6 +147,7 @@ const AutosmitherContent = ({ data }: AutosmitherContentProps) => {
   const [selectedRef, setSelectedRef] = useState<string | null>(recipes[0]?.ref || null);
   const [amount, setAmount] = useState(1);
   const [searchText, setSearchText] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(ALL_CATEGORY);
 
   useEffect(() => {
     if (!recipes.length) {
@@ -153,6 +159,22 @@ const AutosmitherContent = ({ data }: AutosmitherContentProps) => {
     }
   }, [recipes, selectedRef]);
 
+  const categories = useMemo(() => {
+    const seen = new Set<string>();
+    for (const recipe of recipes) {
+      if (recipe.category) {
+        seen.add(recipe.category);
+      }
+    }
+    return Array.from(seen).sort();
+  }, [recipes]);
+
+  useEffect(() => {
+    if (selectedCategory !== ALL_CATEGORY && !categories.includes(selectedCategory)) {
+      setSelectedCategory(ALL_CATEGORY);
+    }
+  }, [categories, selectedCategory]);
+
   const selectedRecipe = useMemo(
     () => recipes.find((recipe) => recipe.ref === selectedRef) || null,
     [recipes, selectedRef],
@@ -160,16 +182,19 @@ const AutosmitherContent = ({ data }: AutosmitherContentProps) => {
 
   const filteredRecipes = useMemo(() => {
     const query = searchText.trim().toLowerCase();
-    if (!query) {
-      return recipes;
-    }
 
     return recipes.filter((recipe) => {
+      if (selectedCategory !== ALL_CATEGORY && recipe.category !== selectedCategory) {
+        return false;
+      }
+      if (!query) {
+        return true;
+      }
       const recipeName = recipe.name.toLowerCase();
       const recipeCategory = recipe.category.toLowerCase();
       return recipeName.includes(query) || recipeCategory.includes(query);
     });
-  }, [recipes, searchText]);
+  }, [recipes, searchText, selectedCategory]);
 
   const quoteColumns = useMemo(
     () => getQuoteColumns(QUOTE_LINES, QUOTE_LINES_PER_RAIL),
@@ -214,23 +239,20 @@ const AutosmitherContent = ({ data }: AutosmitherContentProps) => {
           <QuoteRail lines={quoteColumns[0]} />
         </Stack.Item>
         <Stack.Item grow basis={0} mr={1}>
-          {machine_on ? (
-            <ActiveCenterPanel
-              controlsLocked={data.controls_locked}
-              hopperCounts={data.hopper_counts}
-              statusState={data.status_state}
-              selectedRecipe={selectedRecipe}
-              amount={amount}
-              setAmount={setAmount}
-              progress={data.progress}
-              neededProgress={data.needed_progress}
-            />
-          ) : (
-            <OffCenterPanel
-              controlsLocked={data.controls_locked}
-              machinePowered={data.machine_powered}
-            />
-          )}
+          <ActiveCenterPanel
+            machineOn={Boolean(machine_on)}
+            machinePowered={Boolean(data.machine_powered)}
+            controlsLocked={data.controls_locked}
+            canQuickToggle={data.can_quick_toggle}
+            hopperCounts={data.hopper_counts}
+            statusState={data.status_state}
+            selectedRecipe={selectedRecipe}
+            amount={amount}
+            setAmount={setAmount}
+            progress={data.progress}
+            neededProgress={data.needed_progress}
+            rpm={data.rpm}
+          />
         </Stack.Item>
         <Stack.Item basis="5%" mr={1}>
           <QuoteRail lines={quoteColumns[1]} />
@@ -242,6 +264,9 @@ const AutosmitherContent = ({ data }: AutosmitherContentProps) => {
             onSelect={setSelectedRef}
             searchText={searchText}
             onSearch={setSearchText}
+            categories={categories}
+            selectedCategory={selectedCategory}
+            onSelectCategory={setSelectedCategory}
           />
         </Stack.Item>
       </Stack>
@@ -354,7 +379,7 @@ const CurrentQueueSection = ({ machineOn, queue }: CurrentQueueSectionProps) => 
             </Stack.Item>
             <Stack.Item grow>
               <Box bold>
-                {entry.index}. {entry.name}
+                {entry.index}. {cleanRecipeName(entry.name)}
               </Box>
               <Box color="label">
                 {entry.category}
@@ -374,7 +399,10 @@ const CurrentQueueSection = ({ machineOn, queue }: CurrentQueueSectionProps) => 
 };
 
 type ActiveCenterPanelProps = {
+  machineOn: boolean;
+  machinePowered: boolean;
   controlsLocked: boolean;
+  canQuickToggle: boolean;
   hopperCounts: Record<string, number>;
   statusState: Data['status_state'];
   selectedRecipe: Recipe | null;
@@ -382,10 +410,14 @@ type ActiveCenterPanelProps = {
   setAmount: (amount: number) => void;
   progress: number;
   neededProgress: number;
+  rpm: number;
 };
 
 const ActiveCenterPanel = ({
+  machineOn,
+  machinePowered,
   controlsLocked,
+  canQuickToggle,
   hopperCounts,
   statusState,
   selectedRecipe,
@@ -393,6 +425,7 @@ const ActiveCenterPanel = ({
   setAmount,
   progress,
   neededProgress,
+  rpm,
 }: ActiveCenterPanelProps) => {
   const { act } = useBackend<Data>();
   const progressPercent = neededProgress > 0
@@ -414,29 +447,58 @@ const ActiveCenterPanel = ({
           >
             {STATUS_LABELS[statusState]}
           </Box>
-          <Box
-            mt={1}
-            px={1.5}
-            py={1}
-            style={{
-              background: '#1f2328',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-            }}
-          >
-            <Box bold mb={0.5}>Progress</Box>
-            <Box color="label">
-              {progressPercent}% complete ({Math.round(progress)}/{neededProgress || 0})
+          <Box mt={1} textAlign="center" style={{ letterSpacing: '0.06em' }}>
+            <Box inline color="label">{'RPM: '}</Box>
+            <Box inline bold style={{ color: rpm > 0 ? STATUS_COLORS.on : STATUS_COLORS.off }}>
+              {rpm}
             </Box>
           </Box>
+          {!machinePowered && (
+            <Box
+              mt={1}
+              textAlign="center"
+              style={{
+                color: STATUS_COLORS.off,
+                letterSpacing: '0.05em',
+              }}
+            >
+              No rotation power reaches the anvil.
+            </Box>
+          )}
+          {machineOn && (
+            <Box
+              mt={1}
+              px={1.5}
+              py={1}
+              style={{
+                background: '#1f2328',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+              }}
+            >
+              <Box bold mb={0.5}>Progress</Box>
+              <ProgressBar
+                value={progress}
+                minValue={0}
+                maxValue={neededProgress || 1}
+                color="good"
+              >
+                {progressPercent}% complete ({Math.round(progress)}/{neededProgress || 0})
+              </ProgressBar>
+            </Box>
+          )}
           <Box mt={1}>
-            <ControlRack controlsLocked={controlsLocked} />
+            <ControlRack
+              controlsLocked={controlsLocked}
+              canQuickToggle={canQuickToggle}
+              machineOn={machineOn}
+            />
           </Box>
         </Section>
       </Stack.Item>
-      <Stack.Item grow basis={0}>
+      <Stack.Item grow basis={0} style={!machineOn ? { opacity: 0.55 } : undefined}>
         {selectedRecipe ? (
           <Section
-            title={selectedRecipe.name}
+            title={machineOn ? cleanRecipeName(selectedRecipe.name) : `${cleanRecipeName(selectedRecipe.name)} (offline)`}
             fill
             scrollable
           >
@@ -447,8 +509,8 @@ const ActiveCenterPanel = ({
                     <DmIcon
                       icon={selectedRecipe.icon_file}
                       icon_state={selectedRecipe.icon_state}
-                      width={16}
-                      height={16}
+                      width={6}
+                      height={6}
                     />
                   </Stack.Item>
                 </Stack>
@@ -488,12 +550,12 @@ const ActiveCenterPanel = ({
                 <Box bold mb={1}>Queue Amount</Box>
                 <Stack align="center" justify="space-between">
                   <Stack.Item>
-                    <Button onClick={() => setAmount(Math.max(1, amount - 5))}>
+                    <Button disabled={!machineOn} onClick={() => setAmount(Math.max(1, amount - 5))}>
                       {'<<'}
                     </Button>
                   </Stack.Item>
                   <Stack.Item>
-                    <Button onClick={() => setAmount(Math.max(1, amount - 1))}>
+                    <Button disabled={!machineOn} onClick={() => setAmount(Math.max(1, amount - 1))}>
                       {'<'}
                     </Button>
                   </Stack.Item>
@@ -503,12 +565,12 @@ const ActiveCenterPanel = ({
                     </Box>
                   </Stack.Item>
                   <Stack.Item>
-                    <Button onClick={() => setAmount(Math.min(25, amount + 1))}>
+                    <Button disabled={!machineOn} onClick={() => setAmount(Math.min(25, amount + 1))}>
                       {'>'}
                     </Button>
                   </Stack.Item>
                   <Stack.Item>
-                    <Button onClick={() => setAmount(Math.min(25, amount + 5))}>
+                    <Button disabled={!machineOn} onClick={() => setAmount(Math.min(25, amount + 5))}>
                       {'>>'}
                     </Button>
                   </Stack.Item>
@@ -517,10 +579,11 @@ const ActiveCenterPanel = ({
               <Stack.Item mt={2}>
                 <Button.Confirm
                   fluid
+                  disabled={!machineOn}
                   color="good"
                   onClick={() => act('add_recipe', { ref: selectedRecipe.ref, amount })}
                 >
-                  Add {amount} To Queue
+                  {machineOn ? `Add ${amount} To Queue` : 'Switch the anvil on to queue'}
                 </Button.Confirm>
               </Stack.Item>
             </Stack>
@@ -535,65 +598,48 @@ const ActiveCenterPanel = ({
   );
 };
 
-type OffCenterPanelProps = {
-  controlsLocked: boolean;
-  machinePowered: boolean;
-};
-
-const OffCenterPanel = ({ controlsLocked, machinePowered }: OffCenterPanelProps) => {
-  return (
-    <Section fill>
-      <Stack fill align="center" justify="center">
-        <Stack.Item>
-          <Box
-            textAlign="center"
-            px={4}
-            py={6}
-            style={{
-              background: '#2c2f33',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-            }}
-          >
-            <Box
-              bold
-              fontSize={1.8}
-              style={{
-                color: '#d8d3c2',
-                letterSpacing: '0.14em',
-              }}
-            >
-              {machinePowered
-                ? 'MALUM AWAITS YOUR BLOOD, SWEAT AND DEVOTION'
-                : 'MALUM\'S FORCE OF LYFE DOES NOT FLOW'}
-            </Box>
-            <Box
-              mt={2}
-              bold
-              fontSize={2.2}
-              style={{
-                color: STATUS_COLORS.off,
-                letterSpacing: '0.18em',
-              }}
-            >
-              {MACHINE_ACTIVITY_LABELS.inactive}
-            </Box>
-            <Box mt={3}>
-              <ControlRack controlsLocked={controlsLocked} />
-            </Box>
-          </Box>
-        </Stack.Item>
-      </Stack>
-    </Section>
-  );
-};
-
 type ControlRackProps = {
   controlsLocked: boolean;
+  canQuickToggle: boolean;
+  machineOn: boolean;
 };
 
-const ControlRack = ({ controlsLocked }: ControlRackProps) => {
+const ControlRack = ({ controlsLocked, canQuickToggle, machineOn }: ControlRackProps) => {
   const { act } = useBackend<Data>();
   const isLocked = Boolean(controlsLocked);
+
+  const lockNotice = isLocked && (
+    <Stack.Item>
+      <Box color="label" textAlign="center" mt={1}>
+        Stand next to the auto anvil to use its controls.
+      </Box>
+    </Stack.Item>
+  );
+
+  if (canQuickToggle) {
+    return (
+      <Stack vertical>
+        <Stack.Item>
+          <Box bold textAlign="center" mb={1}>
+            Power Switch
+          </Box>
+        </Stack.Item>
+        <Stack.Item>
+          <Button
+            fluid
+            textAlign="center"
+            icon="power-off"
+            disabled={isLocked}
+            color={machineOn ? 'bad' : 'good'}
+            onClick={() => act('toggle_power')}
+          >
+            {machineOn ? 'Switch Off' : 'Switch On'}
+          </Button>
+        </Stack.Item>
+        {lockNotice}
+      </Stack>
+    );
+  }
 
   return (
     <Stack vertical>
@@ -633,13 +679,7 @@ const ControlRack = ({ controlsLocked }: ControlRackProps) => {
           </Stack.Item>
         </Stack>
       </Stack.Item>
-      {isLocked && (
-        <Stack.Item>
-          <Box color="label" textAlign="center" mt={1}>
-            Stand next to the auto anvil to use its controls.
-          </Box>
-        </Stack.Item>
-      )}
+      {lockNotice}
     </Stack>
   );
 };
@@ -650,6 +690,9 @@ type RecipePickerSectionProps = {
   onSelect: (ref: string) => void;
   searchText: string;
   onSearch: (value: string) => void;
+  categories: string[];
+  selectedCategory: string;
+  onSelectCategory: (category: string) => void;
 };
 
 const RecipePickerSection = ({
@@ -658,6 +701,9 @@ const RecipePickerSection = ({
   onSelect,
   searchText,
   onSearch,
+  categories,
+  selectedCategory,
+  onSelectCategory,
 }: RecipePickerSectionProps) => {
   return (
     <Stack vertical fill>
@@ -668,6 +714,25 @@ const RecipePickerSection = ({
           value={searchText}
           onChange={onSearch}
         />
+      </Stack.Item>
+      <Stack.Item>
+        <Tabs style={{ flexWrap: 'wrap' }}>
+          <Tabs.Tab
+            selected={selectedCategory === ALL_CATEGORY}
+            onClick={() => onSelectCategory(ALL_CATEGORY)}
+          >
+            {ALL_CATEGORY}
+          </Tabs.Tab>
+          {categories.map((category) => (
+            <Tabs.Tab
+              key={category}
+              selected={selectedCategory === category}
+              onClick={() => onSelectCategory(category)}
+            >
+              {category}
+            </Tabs.Tab>
+          ))}
+        </Tabs>
       </Stack.Item>
       <Stack.Item grow basis={0} mt={1}>
         <Section title="What I Can Provide" fill scrollable>
@@ -688,11 +753,12 @@ const RecipePickerSection = ({
                 <Stack.Item>
                   <Box className={recipe.icon} mr={1} inline />
                 </Stack.Item>
-                <Stack.Item grow>
-                  <Box bold>{recipe.name}</Box>
-                  <Box color="label">
-                    {recipe.category}
-                    {recipe.created_num > 1 ? ` x${recipe.created_num}` : ''}
+                <Stack.Item grow style={{ minWidth: 0 }}>
+                  <Box style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}>
+                    <Box bold inline>{cleanRecipeName(recipe.name)}</Box>
+                    {recipe.created_num > 1 ? (
+                      <Box color="label" inline> x{recipe.created_num}</Box>
+                    ) : null}
                   </Box>
                 </Stack.Item>
               </Stack>

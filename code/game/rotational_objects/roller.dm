@@ -124,6 +124,14 @@
 	movedir = newdir
 	vand_update_appearance()
 
+/obj/structure/roller/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armor_penetration = 0)
+	. = ..()
+	// take_damage plays a pixel_x "shake" via animate() when hit, which replaces our looping spin
+	// animation and leaves the sprite frozen while the roller is still operating. Restart the spin
+	// once the shake (3 x 0.5ds) settles so it keeps visibly turning.
+	if(!QDELETED(src) && operating && rotations_per_minute)
+		addtimer(CALLBACK(src, PROC_REF(update_animation_effect)), 2, TIMER_OVERRIDE | TIMER_UNIQUE)
+
 /obj/structure/roller/rotation_break()
 	set_rotations_per_minute(0)
 
