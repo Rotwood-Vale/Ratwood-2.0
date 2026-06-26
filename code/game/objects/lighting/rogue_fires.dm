@@ -27,7 +27,7 @@
 		return 1
 	if(mover.throwing)
 		return 1
-	if(locate(/obj/structure/table) in get_turf(mover))
+	if(has_table_surface(get_turf(mover)))
 		return 1
 	return !density
 
@@ -512,7 +512,7 @@
 		return 1
 	if(mover.throwing)
 		return 1
-	if(locate(/obj/structure/table) in get_turf(mover))
+	if(has_table_surface(get_turf(mover)))
 		return 1
 	else
 		return !density
@@ -746,6 +746,30 @@
 	QDEL_NULL(boilloop)
 	. = ..()
 
+/obj/machinery/light/rogue/hearth/wooden_spit
+	name = "wooden spit"
+	desc = "A wooden spit set over a campfire. It can hold the same cookware as a hearth."
+	icon = 'icons/roguetown/misc/campfire_spit.dmi'
+	icon_state = "campfire_spit0"
+	base_state = "campfire_spit"
+	density = FALSE
+	fueluse = 15 MINUTES
+	max_integrity = 30
+
+/obj/machinery/light/rogue/hearth/wooden_spit/OnCrafted(dirin, mob/user)
+	var/obj/machinery/light/rogue/campfire/fire = locate(/obj/machinery/light/rogue/campfire) in loc
+	var/greater_fire = fire?.type == /obj/machinery/light/rogue/campfire/densefire
+	var/remaining_fuel = fire?.fueluse
+	. = ..()
+	if(fire)
+		qdel(fire)
+	if(greater_fire)
+		density = TRUE
+		max_integrity = 60
+	if(!isnull(remaining_fuel))
+		fueluse = remaining_fuel
+	update_icon()
+
 /obj/machinery/light/rogue/hearth/mobilestove // thanks to Reen and Ppooch for their help on this. If any of this is slopcode, its my slopcode, not theirs. They only made improvements.
 	name = "mobile stove"
 	desc = "A portable bronze stovetop. The underside is covered in an esoteric pattern of small tubes. Whatever heats the hob is hidden inside the body of the device"
@@ -941,7 +965,7 @@
 		return 1
 	if(mover.throwing)
 		return 1
-	if(locate(/obj/structure/table) in get_turf(mover))
+	if(has_table_surface(get_turf(mover)))
 		return 1
 	if(locate(/obj/machinery/light/rogue/firebowl) in get_turf(mover))
 		return 1

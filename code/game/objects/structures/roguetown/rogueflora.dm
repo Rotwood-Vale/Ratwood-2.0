@@ -288,6 +288,7 @@
 	climb_time = 0
 	layer = TABLE_LAYER
 	plane = GAME_PLANE
+	pass_flags = LETPASSTHROW
 	blade_dulling = DULLING_CUT
 	// debris = list(/obj/item/grown/log/tree/stick = 1) // Removed for lumberjacking/handcart upgrade PR
 	static_debris = list(/obj/item/grown/log/tree/small = 1)
@@ -340,6 +341,97 @@
 		return TRUE
 	else
 		..()
+
+/obj/structure/flora/roguetree/stump/attack_paw(mob/user)
+	return attack_hand(user)
+
+/obj/structure/flora/roguetree/stump/attack_hand(mob/living/user)
+	if(Adjacent(user) && user.pulling)
+		if(isliving(user.pulling))
+			var/mob/living/pushed_mob = user.pulling
+			if(pushed_mob.buckled)
+				to_chat(user, span_warning("[pushed_mob] is on [pushed_mob.buckled]!"))
+				return
+			if(user.used_intent.type == INTENT_GRAB)
+				if(user.grab_state < GRAB_AGGRESSIVE)
+					to_chat(user, span_warning("I need a better grip to do that!"))
+					return
+				if(user.grab_state >= GRAB_NECK)
+					tableheadsmash(user, pushed_mob)
+				else
+					tablepush(user, pushed_mob)
+			if(user.used_intent.type == INTENT_HELP)
+				pushed_mob.visible_message(span_notice("[user] begins to place [pushed_mob] onto [src]..."), \
+									span_danger("[user] begins to place [pushed_mob] onto [src]..."))
+				if(do_after(user, 35, target = pushed_mob))
+					tableplace(user, pushed_mob)
+				else
+					return
+			user.stop_pulling()
+		else if(user.pulling.pass_flags & PASSTABLE)
+			user.Move_Pulled(src)
+			if(user.pulling.loc == loc)
+				user.visible_message(span_notice("[user] places [user.pulling] onto [src]."),
+					span_notice("I place [user.pulling] onto [src]."))
+				user.stop_pulling()
+	return ..()
+
+/obj/structure/flora/roguetree/stump/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover) && (mover.pass_flags & PASSTABLE))
+		return TRUE
+	if(isliving(mover))
+		var/mob/living/M = mover
+		if(M.movement_type & FLYING)
+			return TRUE
+	if(mover.throwing)
+		return TRUE
+	if(has_table_surface(get_turf(mover)))
+		return TRUE
+	return !density
+
+/obj/structure/flora/roguetree/stump/CanAStarPass(ID, dir, caller)
+	. = ..()
+	if(ismovableatom(caller))
+		var/atom/movable/mover = caller
+		. ||= (mover.pass_flags & PASSTABLE)
+
+/obj/structure/flora/roguetree/stump/proc/tableplace(mob/living/user, mob/living/pushed_mob)
+	pushed_mob.forceMove(loc)
+	pushed_mob.set_resting(TRUE, TRUE)
+	pushed_mob.visible_message(span_notice("[user] places [pushed_mob] onto [src]."), \
+								span_notice("[user] places [pushed_mob] onto [src]."))
+	log_combat(user, pushed_mob, "places", null, "onto [src]")
+
+/obj/structure/flora/roguetree/stump/proc/tablepush(mob/living/user, mob/living/pushed_mob)
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_danger("Throwing [pushed_mob] onto [src] might hurt them!"))
+		return
+	var/added_passtable = FALSE
+	if(!(pushed_mob.pass_flags & PASSTABLE))
+		added_passtable = TRUE
+		pushed_mob.pass_flags |= PASSTABLE
+	pushed_mob.Move(src.loc)
+	if(added_passtable)
+		pushed_mob.pass_flags &= ~PASSTABLE
+	if(pushed_mob.loc != loc)
+		return
+	pushed_mob.Knockdown(30)
+	pushed_mob.apply_damage(10, BRUTE)
+	pushed_mob.apply_damage(40, STAMINA)
+	playsound(pushed_mob, "sound/effects/tableslam.ogg", 90, TRUE)
+	pushed_mob.visible_message(span_danger("[user] slams [pushed_mob] onto \the [src]!"), \
+								span_danger("[user] slams you onto \the [src]!"))
+	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
+
+/obj/structure/flora/roguetree/stump/proc/tableheadsmash(mob/living/user, mob/living/pushed_mob)
+	pushed_mob.Knockdown(30)
+	pushed_mob.apply_damage(40, BRUTE, BODY_ZONE_HEAD)
+	pushed_mob.apply_damage(60, STAMINA)
+	take_damage(50)
+	playsound(pushed_mob, "sound/effects/tableheadsmash.ogg", 90, TRUE)
+	pushed_mob.visible_message(span_danger("[user] smashes [pushed_mob]'s head against \the [src]!"),
+								span_danger("[user] smashes your head against \the [src]"))
+	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
 
 /obj/structure/flora/roguetree/stump/log
 	name = "ancient log"

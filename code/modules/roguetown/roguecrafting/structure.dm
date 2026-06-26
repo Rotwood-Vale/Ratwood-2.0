@@ -619,6 +619,22 @@
 	verbage_simple = "build"
 	verbage = "builds"
 
+/datum/crafting_recipe/roguetown/structure/wooden_spit
+	name = "wooden spit"
+	result = /obj/machinery/light/rogue/hearth/wooden_spit
+	reqs = list(/obj/item/grown/log/tree/stick = 2)
+	structurecraft = /obj/machinery/light/rogue/campfire
+	ignoredensity = TRUE
+	verbage_simple = "set up"
+	verbage = "sets up"
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/structure/wooden_spit/TurfCheck(mob/user, turf/T)
+	for(var/obj/machinery/light/rogue/campfire/fire in T)
+		if(fire.type == /obj/machinery/light/rogue/campfire || fire.type == /obj/machinery/light/rogue/campfire/densefire)
+			return TRUE
+	return FALSE
+
 /datum/crafting_recipe/roguetown/structure/cookpit
 	name = "hearth"
 	result = /obj/machinery/light/rogue/hearth

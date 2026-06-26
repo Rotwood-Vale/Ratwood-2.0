@@ -146,6 +146,16 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/storage/roguebag
 	triumph_cost = 2
 
+/datum/loadout_item/bedroll
+	name = "Bedroll"
+	path = /obj/item/bedroll
+	triumph_cost = 3
+
+/datum/loadout_item/tent_kit
+	name = "Small Tent Kit"
+	path = /obj/item/tent_kit
+	triumph_cost = 5
+
 /datum/loadout_item/mallet
 	name = "Wooden Mallet"
 	path = /obj/item/rogueweapon/hammer/wood

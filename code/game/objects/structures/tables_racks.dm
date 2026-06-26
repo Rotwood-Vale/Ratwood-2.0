@@ -37,6 +37,14 @@
 	blade_dulling = DULLING_BASHCHOP
 	debris = list(/obj/item/grown/log/tree/small = 1)
 
+/proc/has_table_surface(location)
+	return !!get_table_surface(location)
+
+/proc/get_table_surface(location)
+	if(!location)
+		return null
+	return (locate(/obj/structure/table) in location) || (locate(/obj/structure/flora/roguetree/stump) in location)
+
 /obj/structure/table/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/hiding_spot, \
@@ -103,7 +111,7 @@
 			return 1
 	if(mover.throwing)
 		return 1
-	if(locate(/obj/structure/table) in get_turf(mover))
+	if(has_table_surface(get_turf(mover)))
 		return 1
 	else
 		return !density

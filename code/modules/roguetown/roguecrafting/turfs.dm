@@ -446,7 +446,7 @@
 /datum/crafting_recipe/roguetown/turfs/tentwall/TurfCheck(mob/user, turf/T)
 	if(isclosedturf(T))
 		return
-	if(!istype(T, /turf/open/floor/rogue))
+	if(!istype(T, /turf/open/floor/rogue) && !istype(T, /turf/open/transparent/openspace))
 		return
 	return TRUE
 
@@ -463,9 +463,21 @@
 /datum/crafting_recipe/roguetown/turfs/tentdoor/TurfCheck(mob/user, turf/T)
 	if(isclosedturf(T))
 		return
-	if(!istype(T, /turf/open/floor/rogue))
+	if(!istype(T, /turf/open/floor/rogue) && !istype(T, /turf/open/transparent/openspace))
 		return
 	return ..()
+
+/datum/crafting_recipe/roguetown/turfs/tentwall/leather
+	name = "leather tent wall (1 stick, 1 leather)"
+	result = /turf/closed/wall/mineral/rogue/tent/leather
+	reqs = list(/obj/item/grown/log/tree/stick = 1,
+				/obj/item/natural/hide/cured = 1)
+
+/datum/crafting_recipe/roguetown/turfs/tentdoor/leather
+	name = "leather tent door (1 stick, 1 leather)"
+	result = /obj/structure/roguetent/leather
+	reqs = list(/obj/item/grown/log/tree/stick = 1,
+				/obj/item/natural/hide/cured = 1)
 
 // Normal, non-openable window
 /datum/crafting_recipe/roguetown/turfs/roguewindow

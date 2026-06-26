@@ -194,7 +194,7 @@
 
 /turf/closed/wall/mineral/rogue/tent
 	name = "tent"
-	desc = "Made from durable fabric stretched over wooden branches."
+	desc = "Made from durable fabric stretched over wooden branches. Shift-click it from the side it was built on to take it down."
 	icon = 'icons/turf/roguewall.dmi'
 	icon_state = "tent"
 	smooth = SMOOTH_FALSE
@@ -212,6 +212,36 @@
 	sheet_amount = 1
 	burn_power = 20
 	spread_chance = 9
+	var/obj/item/refund_material = /obj/item/natural/cloth
+
+/turf/closed/wall/mineral/rogue/tent/OnCrafted(dirin, mob/user)
+	. = ..()
+	if(user)
+		dir = get_dir(src, get_turf(user))
+
+/turf/closed/wall/mineral/rogue/tent/ShiftClick(mob/user)
+	if(get_dist(user, src) > 1 || get_dir(src, get_turf(user)) != dir)
+		to_chat(user, span_warning("I can only take this wall down from the side it was built on."))
+		return TRUE
+	if(alert(user, "Take down this tent wall?", "Dismantle", "Yes", "No") != "Yes")
+		return TRUE
+	if(get_dist(user, src) > 1 || get_dir(src, get_turf(user)) != dir)
+		return TRUE
+	user.visible_message(span_notice("[user] begins taking down [src]."))
+	if(!do_after(user, 4 SECONDS, target = src))
+		return TRUE
+	var/turf/dismantled_turf = src
+	new /obj/item/grown/log/tree/stick(get_turf(user))
+	new refund_material(get_turf(user))
+	dismantle_wall()
+	if(istype(dismantled_turf, /turf/open/floor/rogue/twig))
+		dismantled_turf.ChangeTurf(/turf/open/transparent/openspace, flags = CHANGETURF_INHERIT_AIR)
+	return TRUE
+
+/turf/closed/wall/mineral/rogue/tent/leather
+	color = "#7a4a2b"
+	sheet_type = /obj/item/natural/hide/cured
+	refund_material = /obj/item/natural/hide/cured
 
 /turf/closed/wall/mineral/rogue/wooddark
 	name = "dark wood wall"
