@@ -42250,7 +42250,7 @@
 /obj/structure/fluff/railing/border{
 	dir = 9
 	},
-/obj/structure/curtain/blue{
+/obj/structure/curtain/directional/blue{
 	color = "#415e96"
 	},
 /turf/open/floor/rogue/church,
@@ -55807,6 +55807,10 @@
 /area/rogue/outdoors/bograt/above)
 "mpP" = (
 /obj/structure/roguewindow/openclose{
+	dir = 8
+	},
+/obj/structure/curtain/directional/blue{
+	color = "#415e96";
 	dir = 8
 	},
 /turf/open/floor/rogue/churchbrick,
@@ -91769,6 +91773,20 @@
 	},
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/bath)
+"uzo" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 4;
+	pixel_x = 2
+	},
+/obj/structure/fluff/walldeco/church/line{
+	dir = 8
+	},
+/obj/structure/curtain/directional/blue{
+	color = "#415e96";
+	dir = 1
+	},
+/turf/open/floor/rogue/church,
+/area/rogue/indoors/town/manor/rockhill)
 "uzr" = (
 /obj/structure/hotspring/border/three,
 /turf/open/floor/rogue/cobble/mossy,
@@ -514667,7 +514685,7 @@ tpQ
 bxR
 tpQ
 sjj
-sjj
+uzo
 tiZ
 iMd
 sHJ
