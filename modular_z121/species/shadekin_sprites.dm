@@ -18,7 +18,7 @@
 // modular_z121/icon/shadekin_tails.dmi & shadekin_ears.dmi. This file registers them as native
 // Ratwood sprite accessories + customizer choices so they are selectable in character creation.
 // =====================================================================================
-
+/*
 // -------------------------------------------------------------------------------------
 // 1) 精灵配件 (sprite_accessory) —— 把贴图状态包装成可被器官引用的外观数据
 //    sprite accessories — wrap the icon states into appearance data an organ can reference
@@ -63,7 +63,7 @@
 	name = "Shadekin"
 	icon = 'modular_z121/icon/shadekin_ears.dmi'
 	icon_state = "shadekin"
-
+*/
 // -------------------------------------------------------------------------------------
 // 2) 自定义项 (customizer) —— 把上面的配件聚合成角色创建界面里的"尾巴/耳朵"可选条目
 //    customizers — group the accessories into selectable "tail/ears" entries in chargen
@@ -90,7 +90,7 @@
 	// followed by generic anthro tails as alternatives.
 	sprite_accessories = list(
 		/datum/sprite_accessory/tail/shadekin,
-		/datum/sprite_accessory/tail/shadekinshort,
+		/datum/sprite_accessory/tail/shadekin/short,
 		/datum/sprite_accessory/tail/cat,
 		/datum/sprite_accessory/tail/fox,
 		/datum/sprite_accessory/tail/wolf,
@@ -110,6 +110,10 @@
 	// Shadekin ears first (featured default), with generic anthro ears as alternatives.
 	sprite_accessories = list(
 		/datum/sprite_accessory/ears/shadekin,
+		/datum/sprite_accessory/ears/shadekin/band_left,
+		/datum/sprite_accessory/ears/shadekin/band_right,
+		/datum/sprite_accessory/ears/shadekin/fluffy,
+		/datum/sprite_accessory/ears/shadekin/smooth,
 		/datum/sprite_accessory/ears/cat,
 		/datum/sprite_accessory/ears/fox,
 		/datum/sprite_accessory/ears/wolf,
