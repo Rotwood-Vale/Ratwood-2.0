@@ -537,8 +537,6 @@
 	resistance_flags = null
 	sellprice = 100
 
-//
-
 /obj/item/rogueweapon/scabbard/sword/kazengun
 	name = "simple kazengun scabbard"
 	desc = "A piece of steel lined with wood. Great for batting away blows."
