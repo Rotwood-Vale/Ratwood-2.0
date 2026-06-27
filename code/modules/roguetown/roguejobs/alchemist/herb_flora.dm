@@ -83,7 +83,6 @@
 	/obj/structure/flora/roguegrass/herb/valeriana,
 	/obj/structure/flora/roguegrass/herb/artemisia,
 	/obj/structure/flora/roguegrass/herb/rosa,
-	/obj/structure/flora/roguegrass/herb/bakersroot,
 	/obj/structure/flora/roguegrass/swampweed))
 
 	var/obj/structure/flora/roguegrass/herb/boi = new type

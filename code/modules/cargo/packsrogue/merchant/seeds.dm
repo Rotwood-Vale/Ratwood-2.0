@@ -92,6 +92,15 @@
 					/obj/item/seeds/potato,
 				)
 
+/datum/supply_pack/rogue/seeds/bakersroot
+	name = "Baker's Root"
+	cost = 25
+	contains = list(
+					/obj/item/seeds/bakersroot,
+					/obj/item/seeds/bakersroot,
+					/obj/item/seeds/bakersroot,
+				)
+
 /datum/supply_pack/rogue/seeds/poppy
 	name = "Poppy"
 	cost = 15

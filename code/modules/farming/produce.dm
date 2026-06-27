@@ -121,6 +121,7 @@
 	dropshrink = 0.9
 
 /obj/item/reagent_containers/food/snacks/grown/bakersroot
+	seed = /obj/item/seeds/bakersroot
 	name = "baker's root"
 	desc = "A starchy root caked in dirt. It should be washed before eating."
 	icon = 'icons/roguetown/items/bakers_root.dmi'
@@ -128,39 +129,67 @@
 	tastes = list("earthy starch" = 1)
 	bitesize = 1
 	foodtype = VEGETABLES
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3)
+	list_reagents = list(/datum/reagent/toxin/bad_food = 6)
 	faretype = FARE_POOR
 	rotprocess = null
-	mill_result = /obj/item/reagent_containers/powder/flour
 	eat_effect = /datum/status_effect/debuff/badmeal
 	var/water_added
+	var/scrubbed_times = 0
+	var/scraped_clean = FALSE
 
 /obj/item/reagent_containers/food/snacks/grown/bakersroot/attackby(obj/item/I, mob/living/user, params)
 	var/found_table = locate(/obj/structure/table) in loc
 	var/obj/item/reagent_containers/container = I
 	update_cooktime(user)
-	if(!istype(container) || water_added)
-		return ..()
 	if(isturf(loc) && !found_table)
 		to_chat(user, span_notice("Need a table..."))
 		return ..()
-	if(!container.reagents.has_reagent(/datum/reagent/water, 10))
+	if(water_added)
+		if(scrubbed_times < 2)
+			to_chat(user, span_notice("It needs to be scrubbed before scraping."))
+			return TRUE
+		if(scraped_clean)
+			return ..()
+		if(!I.get_sharpness())
+			to_chat(user, span_notice("I need something sharp to scrape the skin off."))
+			return TRUE
+		to_chat(user, span_notice("Scraping the tough skin off..."))
+		playsound(get_turf(user), 'sound/items/wood_sharpen.ogg', 50, TRUE, -1)
+		if(do_after(user, short_cooktime * 2, target = src))
+			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+			name = "scraped baker's root"
+			scraped_clean = TRUE
+		return TRUE
+	if(!istype(container))
+		return ..()
+	if(!container.reagents.has_reagent(/datum/reagent/water, 20))
 		to_chat(user, span_notice("Needs more water to wash it."))
 		return TRUE
 	to_chat(user, span_notice("Adding water, now it needs to be scrubbed clean..."))
 	playsound(get_turf(user), 'modular/Neu_Food/sound/splishy.ogg', 100, TRUE, -1)
-	if(do_after(user, short_cooktime, target = src))
+	if(do_after(user, short_cooktime * 2, target = src))
 		add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
 		name = "wet baker's root"
-		container.reagents.remove_reagent(/datum/reagent/water, 10)
+		container.reagents.remove_reagent(/datum/reagent/water, 20)
 		water_added = TRUE
 	return TRUE
 
 /obj/item/reagent_containers/food/snacks/grown/bakersroot/attack_hand(mob/living/user)
 	if(water_added)
+		update_cooktime(user)
 		playsound(get_turf(user), 'modular/Neu_Food/sound/kneading_alt.ogg', 90, TRUE, -1)
-		if(do_after(user, short_cooktime, target = src))
+		if(do_after(user, short_cooktime * 2, target = src))
 			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+			if(scrubbed_times < 2)
+				scrubbed_times++
+				if(scrubbed_times < 2)
+					to_chat(user, span_notice("It still needs more scrubbing."))
+				else
+					to_chat(user, span_notice("The skin needs to be scraped off with something sharp."))
+				return
+			if(!scraped_clean)
+				to_chat(user, span_notice("The skin needs to be scraped off with something sharp."))
+				return
 			new /obj/item/reagent_containers/food/snacks/grown/bakersroot/clean(loc)
 			qdel(src)
 	else
@@ -169,6 +198,9 @@
 /obj/item/reagent_containers/food/snacks/grown/bakersroot/clean
 	desc = "A clean, starchy root. It can be eaten or milled into flour."
 	icon_state = "br_clean"
+	foodtype = GRAIN | VEGETABLES
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2)
+	mill_result = /obj/item/reagent_containers/powder/flour
 	eat_effect = null
 
 /obj/item/reagent_containers/food/snacks/grown/apple
