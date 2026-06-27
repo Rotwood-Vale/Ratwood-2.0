@@ -194,7 +194,7 @@
 
 /turf/closed/wall/mineral/rogue/tent
 	name = "tent"
-	desc = "Made from durable fabric stretched over wooden branches. Shift-click it from the side it was built on to take it down."
+	desc = "Made from durable fabric stretched over wooden branches. Use a stake from the side it was built on to take it down."
 	icon = 'icons/turf/roguewall.dmi'
 	icon_state = "tent"
 	smooth = SMOOTH_FALSE
@@ -220,6 +220,12 @@
 		dir = get_dir(src, get_turf(user))
 
 /turf/closed/wall/mineral/rogue/tent/ShiftClick(mob/user)
+	to_chat(user, span_warning("I need a stake to take this wall down."))
+	return TRUE
+
+/turf/closed/wall/mineral/rogue/tent/attackby(obj/item/I, mob/user, params, multiplier)
+	if(!istype(I, /obj/item/grown/log/tree/stake))
+		return ..()
 	if(get_dist(user, src) > 1 || get_dir(src, get_turf(user)) != dir)
 		to_chat(user, span_warning("I can only take this wall down from the side it was built on."))
 		return TRUE

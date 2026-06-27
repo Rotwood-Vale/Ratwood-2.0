@@ -22,7 +22,8 @@
 
 /obj/structure/roguetent/ShiftClick(mob/user)
 	if(!parent_tent || !parent_tent.assembled)
-		return try_dismantle(user)
+		to_chat(user, span_warning("I need a stake to take this flap down."))
+		return TRUE
 	
 	var/turf/T = get_turf(user)
 	if(!T || !T.pseudo_roof)
@@ -38,7 +39,15 @@
 		parent_tent.disassemble_tent(user)
 	return TRUE
 
-/obj/structure/roguetent/proc/try_dismantle(mob/user)
+/obj/structure/roguetent/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/grown/log/tree/stake))
+		return try_dismantle(user, I)
+	return ..()
+
+/obj/structure/roguetent/proc/try_dismantle(mob/user, obj/item/I)
+	if(!istype(I, /obj/item/grown/log/tree/stake))
+		to_chat(user, span_warning("I need a stake to take this flap down."))
+		return TRUE
 	if(!dismantle_dir)
 		dismantle_dir = get_dir(src, get_turf(user))
 	if(get_dist(user, src) > 1 || get_dir(src, get_turf(user)) != dismantle_dir)
