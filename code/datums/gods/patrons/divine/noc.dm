@@ -15,7 +15,7 @@
 					/obj/effect/proc_holder/spell/invoked/invisibility/miracle		= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/lesserblindness			= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/silencenoc				= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/magicshield/miracle		= CLERIC_T2,
+					/obj/effect/proc_holder/spell/invoked/magicshield				= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/blindness					= CLERIC_T3, //full blindness is strong enough, habibi
 					/obj/effect/proc_holder/spell/self/noc_spell_bundle				= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/resurrect/noc				= CLERIC_T4,

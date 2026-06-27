@@ -328,7 +328,7 @@
 	desc = "A dim veil clouds my vision."
 	icon_state = "blind"
 
-/obj/effect/proc_holder/spell/invoked/nocsilence/miracle
+/obj/effect/proc_holder/spell/invoked/silencenoc/miracle
 	name = "Silence"
 	desc = "Clamp shut a voice by holy command, denying speech for a short while."
 	overlay_state = "silencenoc"
@@ -349,32 +349,40 @@
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	miracle = TRUE
 
-/obj/effect/proc_holder/spell/invoked/silence/miracle/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/invoked/silencenoc/miracle/cast(list/targets, mob/user = usr)
 	if(!targets || !length(targets) || !isliving(targets[1]))
 		revert_cast()
 		return FALSE
-	var/mob/living/carbon/target = targets[1]
+
+	var/mob/living/target = targets[1]
 	if(HAS_TRAIT(target, TRAIT_COUNTERCOUNTERSPELL) || HAS_TRAIT(target, TRAIT_ANTIMAGIC) || HAS_TRAIT(target, TRAIT_MUTE))
 		to_chat(user, span_warning("The spell fizzles, it won't work on them!"))
 		revert_cast()
 		return FALSE
+
 	ADD_TRAIT(target, TRAIT_MUTE, MAGIC_TRAIT)
 	target.visible_message(
 		span_warning("[user] gestures at [target]'s throat!"),
 		span_warning("The wind in my voice goes still. I can't speak!")
 	)
+
 	var/skill = max(1, user.get_skill_level(associated_skill))
 	var/dur = clamp(skill * 2, 2, 18)
 	addtimer(CALLBACK(src, PROC_REF(remove_buff), target), wait = dur SECONDS)
 	return TRUE
-	
-/obj/effect/proc_holder/spell/invoked/silence/miracle/proc/remove_miracle_silence(mob/living/carbon/target)
+
+/obj/effect/proc_holder/spell/invoked/silencenoc/miracle/proc/remove_buff(mob/living/target)
 	if(!target)
 		return
+	REMOVE_TRAIT(target, TRAIT_MUTE, MAGIC_TRAIT)
+	if(!QDELETED(target))
+		to_chat(target, span_notice("My voice returns."))
 
+/obj/effect/proc_holder/spell/invoked/silencenoc/miracle/proc/remove_miracle_silence(mob/living/carbon/target)
+	if(!target)
+		return
 	REMOVE_TRAIT(target, TRAIT_MUTE, MAGIC_TRAIT)
 	to_chat(target, span_warning("My voice returns to me!"))
-
 
 /obj/effect/proc_holder/spell/invoked/magicshield
 	name = "Magic Shield"
