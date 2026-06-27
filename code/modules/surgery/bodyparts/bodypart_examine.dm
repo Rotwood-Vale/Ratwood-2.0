@@ -8,7 +8,7 @@
 		return
 	var/list/head_status = list()
 	if(!brain)
-		head_status += span_dead("The brain is missing.")
+		head_status += span_dead("大脑缺失。")
 	/*		
 	else if(brain.suicided || brainmob?.suiciding)
 		. += span_info("There's a pretty dumb expression on [real_name]'s face; they must have really hated life. There is no hope of recovery.")
@@ -26,16 +26,16 @@
 	*/
 
 	if(!eyes)
-		head_status += span_warning("The eyes appear to be missing.")
+		head_status += span_warning("眼睛似乎缺失。")
 
 	if(!ears)
-		head_status += span_warning("The ears appear to be missing.")
+		head_status += span_warning("耳朵似乎缺失。")
 
 	if(!tongue)
-		head_status += span_warning("The tongue appears to be missing.")
+		head_status += span_warning("舌头似乎缺失。")
 	
 	if(length(head_status))
-		. += "<B>Organs:</B>"
+		. += "<B>器官：</B>"
 		. += head_status
 
 /obj/item/bodypart/proc/inspect_limb(mob/user)
@@ -44,7 +44,7 @@
 	if(owner && disabled)
 		switch(disabled)
 			if(BODYPART_DISABLED_DAMAGE)
-				bodypart_status += "[src] is numb to touch."
+				bodypart_status += "[src]触感麻木。"
 			if(BODYPART_DISABLED_PARALYSIS)
 				bodypart_status += "[src] is limp."
 			if(BODYPART_DISABLED_CLAMPED)
@@ -52,9 +52,9 @@
 			else
 				bodypart_status += "[src] is crippled."
 	if(has_wound(/datum/wound/fracture))
-		bodypart_status += "[src] is fractured."
+		bodypart_status += "[src]骨折了。"
 	if(has_wound(/datum/wound/dislocation))
-		bodypart_status += "[src] is dislocated."
+		bodypart_status += "[src]脱臼了。"
 	var/location_accessible = TRUE
 	if(owner)
 		location_accessible = get_location_accessible(owner, body_zone)
@@ -65,7 +65,7 @@
 		if(skeletonized)
 			bodypart_status += "[src] is skeletonized."
 		else if(rotted)
-			bodypart_status += "[src] is necrotic."
+			bodypart_status += "[src]已坏死。"
 		
 		var/brute = brute_dam
 		var/burn = burn_dam
@@ -78,11 +78,11 @@
 		if(brute >= DAMAGE_PRECISION)
 			switch(brute/max_damage)
 				if(0.75 to INFINITY)
-					bodypart_status += "[src] is [heavy_brute_msg]."
+					bodypart_status += "[src]呈[heavy_brute_msg]。"
 				if(0.25 to 0.75)
-					bodypart_status += "[src] is [medium_brute_msg]."
+					bodypart_status += "[src]呈[medium_brute_msg]。"
 				else
-					bodypart_status += "[src] is [light_brute_msg]."
+					bodypart_status += "[src]呈[light_brute_msg]。"
 		if(burn >= DAMAGE_PRECISION)
 			switch(burn/max_damage)
 				if(0.75 to INFINITY)
@@ -93,7 +93,7 @@
 					bodypart_status += "[src] is [light_burn_msg]."
 
 		if(!location_accessible)
-			bodypart_status += "Obscured by clothing."
+			bodypart_status += "被衣物遮盖。"
 
 		if(bandage || length(wounds))
 			bodypart_status += "<B>Wounds:</B>"
@@ -106,8 +106,8 @@
 				else if(istype(bandage, /obj/item/natural/cloth))
 					var/obj/item/natural/cloth/cloth = bandage
 					if(cloth.medicine_amount)
-						extratext = " (medicated)"
-				bodypart_status += "<a href='?src=[owner_ref];bandage=[REF(bandage)];bandaged_limb=[REF(src)]' class='[usedclass]'>Bandaged[extratext]</a>"
+						extratext = "（已上药）"
+				bodypart_status += "<a href='?src=[owner_ref];bandage=[REF(bandage)];bandaged_limb=[REF(src)]' class='[usedclass]'>已包扎[extratext]</a>"
 			if(!bandage || observer_privilege)
 				for(var/datum/wound/wound as anything in wounds)
 					if(wound == null)
@@ -115,10 +115,10 @@
 					bodypart_status += wound.get_visible_name(user)
 		
 	if(length(bodypart_status) <= 1)
-		bodypart_status += "[src] is healthy."
+		bodypart_status += "[src]状况良好。"
 
 	if(length(embedded_objects))
-		bodypart_status += "<B>Embedded objects:</B>"
+		bodypart_status += "<B>嵌入物：</B>"
 		for(var/obj/item/embedded as anything in embedded_objects)
 			bodypart_status += "<a href='?src=[owner_ref];embedded_object=[REF(embedded)];embedded_limb=[REF(src)]'>[embedded.name]</a>"
 	
@@ -130,7 +130,7 @@
 
 	var/list/status = get_injury_status(user, advanced)
 	if(!length(status))
-		examination += span_green("OK")
+		examination += span_green("良好")
 	else
 		examination += status.Join(" | ")
 
@@ -150,9 +150,9 @@
 
 	if(advanced)
 		if(brute)
-			status += brute >= 10 ? span_danger("[brute] BRUTE") : span_warning("[brute] BRUTE")
+			status += brute >= 10 ? span_danger("[brute] 钝伤") : span_warning("[brute] 钝伤")
 		if(burn)
-			status += burn >= 10 ? span_danger("[burn] BURN") : span_warning("[burn] BURN")
+			status += burn >= 10 ? span_danger("[burn] 灼伤") : span_warning("[burn] 灼伤")
 	else
 		if(brute >= DAMAGE_PRECISION)
 			switch(brute/max_damage)
@@ -179,9 +179,9 @@
 	var/bleed_rate = get_bleed_rate()
 	if(bleed_rate)
 		if(bleed_rate > 1) //Totally arbitrary value
-			status += span_bloody("<B>BLEEDING</B>")
+			status += span_bloody("<B>出血</B>")
 		else
-			status += span_bloody("BLEEDING")
+			status += span_bloody("出血")
 	
 	var/crazy_infection = FALSE
 	var/list/wound_strings = list()
@@ -196,12 +196,12 @@
 	status += wound_strings
 
 	if(crazy_infection)
-		status += span_infection("INFECTION")
+		status += span_infection("感染")
 
 	if(skeletonized)
-		status += span_dead("SKELETON")
+		status += span_dead("骨架化")
 	else if(rotted)
-		status += span_necrosis("NECROSIS")
+		status += span_necrosis("坏死")
 
 	var/owner_ref = owner ? REF(owner) : REF(src)
 	for(var/obj/item/embedded as anything in embedded_objects)
@@ -215,15 +215,15 @@
 		var/extratext = ""
 		if(HAS_BLOOD_DNA(bandage))
 			usedclass = "bloody"
-			extratext = " (bloodied)"
+			extratext = "（血迹）"
 		else if(istype(bandage, /obj/item/natural/cloth))
 			var/obj/item/natural/cloth/cloth = bandage
 			if(cloth.medicine_amount)
-				extratext = " (medicated)"
+				extratext = "（已上药）"
 		status += "<a href='?src=[owner_ref];bandaged_limb=[REF(src)];bandage=[REF(bandage)]' class='[usedclass]'>[uppertext(bandage.name)][extratext]</a>"
 
 	if(disabled)
-		status += span_deadsay("CRIPPLED")
+		status += span_deadsay("残废")
 
 	return status
 

@@ -10,11 +10,11 @@
 		user.add_stress(/datum/stressevent/jesterphobia)
 	if(HAS_TRAIT(src, TRAIT_BEAUTIFUL) && user != src)//it doesn't really make sense that you can examine your own face
 		user.add_stress(/datum/stressevent/beautiful)
-		to_chat(user, span_info("[p_they(TRUE)] [p_are()] strikingly beautiful."))
+		to_chat(user, span_info("[p_they(TRUE)] [p_are()] 惊人地美丽。"))
 		// Apply Xylix buff when examining someone with the beautiful trait
 		if(HAS_TRAIT(user, TRAIT_XYLIX) && !user.has_status_effect(/datum/status_effect/buff/xylix_joy))
 			user.apply_status_effect(/datum/status_effect/buff/xylix_joy)
-			to_chat(user, span_info("Their beauty brings a smile to my face, and fortune to my steps!"))
+			to_chat(user, span_info("他们的美丽让我脸上泛起微笑，让我的脚步带来好运！"))
 	if(HAS_TRAIT(src, TRAIT_UNSEEMLY) && user != src)
 		if(!HAS_TRAIT(user, TRAIT_UNSEEMLY))
 			user.add_stress(/datum/stressevent/unseemly)
@@ -23,7 +23,7 @@
 	// Apply Xylix buff when examining someone with the beautiful trait
 	if(HAS_TRAIT(user, TRAIT_XYLIX) && !user.has_status_effect(/datum/status_effect/buff/xylix_joy) && user.has_stress_event(/datum/stressevent/beautiful))
 		user.apply_status_effect(/datum/status_effect/buff/xylix_joy)
-		to_chat(user, span_info("Their beauty brings a smile to my face, and fortune to my steps!"))
+		to_chat(user, span_info("他们的美丽让我脸上泛起微笑，让我的脚步带来好运！"))
 
 /mob/living/carbon/human/proc/human_modular_examine_lines(mob/user, observer_privilege, m1, m2, m3)
 	var/list/lines = list()
@@ -59,17 +59,17 @@
 	var/datum/antagonist/maniac/maniac = user.mind?.has_antag_datum(/datum/antagonist/maniac)
 	var/datum/antagonist/skeleton/skeleton = user.mind?.has_antag_datum(/datum/antagonist/skeleton)
 	if(maniac && (user != src))
-		race_name = "disgusting pig"
+		race_name = "恶心的猪猡"
 	if(skeleton && (user != src))
-		race_name = "[pick("shambling", "taut", "decrepit")]"
+		race_name = "[pick("蹒跚的", "紧绷的", "腐朽的")]"
 
 	var/m1 = "[t_He] [t_is]"
 	var/m2 = "[t_his]"
 	var/m3 = "[t_He] [t_has]"
 	if(user == src)
-		m1 = "I am"
-		m2 = "my"
-		m3 = "I have"
+		m1 = "我"
+		m2 = "我的"
+		m3 = "我有"
 
 	if(isliving(user))
 		var/mob/living/L = user
@@ -77,9 +77,9 @@
 			obscure_name = TRUE
 
 	var/static/list/unknown_names = list(
-		"Unknown",
-		"Unknown Man",
-		"Unknown Woman",
+		"未知",
+		"未知男子",
+		"未知女子",
 	)
 	if(get_face_name() != real_name)
 		obscure_name = TRUE
@@ -93,9 +93,9 @@
 		. = list("ø ------------ ø")
 
 	if(name in unknown_names)
-		. += span_info("This is <EM>[name]</EM>.")
+		. += span_info("这是 <EM>[name]</EM>.")
 	else if(obscure_name)
-		. += span_info("This is an unknown <EM>[name]</EM>.")
+		. += span_info("这是一位未知的 <EM>[name]</EM>.")
 		if(HAS_TRAIT(user, TRAIT_HERETIC_SEER))
 			var/heretic_text = get_heretic_text(user)
 			if(heretic_text)
@@ -114,7 +114,7 @@
 				used_name = descriptor_name
 			else
 				// Fallback to gender-based unknown name
-				used_name = "Unknown [(gender == FEMALE) ? "Woman" : "Man"]"
+				used_name = "未知[(gender == FEMALE) ? "女子" : "男子"]"
 		var/used_title = get_role_title()
 		// Check for cosmetic class titles (for advclass cosmetic variants)
 		if(mind && mind.cosmetic_class_title)
@@ -122,14 +122,14 @@
 				// Use query string approach (like species_lore) to reveal the true job
 			used_title = "<a href='?src=[REF(src)];reveal_cosmetic=1'><u>[\cosmetic_title]</u></A>"
 		if(SSticker.regentmob == src)
-			used_title = "[used_title]" + " Regent"
+			used_title = "[used_title]" + " 摄政"
 		var/display_as_wanderer = FALSE
 		var/display_as_lowlife = FALSE
 		if(observer_privilege)
 			used_name = real_name
 		if(migrant_type)
 			used_title = MIGRANT_ROLE(migrant_type)
-			. += span_info("This is <EM>[used_name]</EM>, the wandering [race_name] [used_title].")
+			. += span_info("这是 <EM>[used_name]</EM>, 一名流浪的 [race_name] [used_title].")
 		else if(job)
 			var/datum/job/J = SSjob.GetJob(job)
 			if(!J || J.wanderer_examine)
@@ -156,38 +156,38 @@
 		var/display1
 		var/display2 = "[(!HAS_TRAIT(usr, TRAIT_OUTLANDER) && src.social_rank) ? "[social_strata]" : " "]"
 		if(display_as_wanderer)
-			display1 = span_info("This is <EM>[used_name]</EM>, the wandering [race_name].")
+			display1 = span_info("这是 <EM>[used_name]</EM>, 一名流浪的 [race_name].")
 		else if(display_as_lowlife)
-			display1 = span_info("This is <EM>[used_name]</EM>, the lowlife [race_name].")
+			display1 = span_info("这是 <EM>[used_name]</EM>, 一名下等人的 [race_name].")
 		else if(used_title)
-			display1 = span_info("This is <EM>[used_name]</EM>, the [race_name] [used_title].")
+			display1 = span_info("这是 <EM>[used_name]</EM>, 一名 [race_name] [used_title].")
 		else
-			display1 = span_info("This is the <EM>[used_name]</EM>, the [race_name].")
+			display1 = span_info("这是 <EM>[used_name]</EM>, 一名 [race_name].")
 		. += "[display1] [display2]"
 
 		if(HAS_TRAIT(src, TRAIT_WITCH))
 			if(HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_WITCH))
-				. += span_warning("A witch! Their presence brings an unsettling aura.")
+				. += span_warning("一个女巫！他们的存在带来一股令人不安的气息。")
 			else if(HAS_TRAIT(user, TRAIT_COMMIE) || HAS_TRAIT(user, TRAIT_CABAL) || HAS_TRAIT(user, TRAIT_HORDE) || HAS_TRAIT(user, TRAIT_DEPRAVED))
-				. += span_notice("A practitioner of the old ways.")
+				. += span_notice("一个古老之道的践行者。")
 			else
-				. += span_notice("Something about them seems... different.")
+				. += span_notice("他们身上有一种……与众不同的气息。")
 
 		if(GLOB.lord_titles[name])
 			. += span_notice("[m3] been granted the title of \"[GLOB.lord_titles[name]]\".")
 
 		if(HAS_TRAIT(src, TRAIT_NOBLE) || HAS_TRAIT(src, TRAIT_DEFILED_NOBLE))
 			if(HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_DEFILED_NOBLE))
-				. += span_notice("A fellow noble.")
+				. += span_notice("一位贵族同袍。")
 			else
-				. += span_notice("A noble!")
+				. += span_notice("一位贵族！")
 		// Leashed pet status effect message
 		if(has_status_effect(/datum/status_effect/leash_pet))
-			. += span_warning("A leash is hooked to their collar. They are being led like a pet.")
+			. += span_warning("一根皮带钩在他们的项圈上。他们像宠物一样被牵着。")
 
 		// Knotted effect message
 		if(has_status_effect(/datum/status_effect/knot_tied))
-			. += span_warning("A knot is locked inside [p_them()]. [m1] being pulled around like a pet.")
+			. += span_warning("一个绳结锁在[p_them()]体内。[m1]像宠物一样被牵着走。")
 
 		// Facial/Creampie/Body shot effect message
 		var/datum/status_effect/facial/facial = has_status_effect(/datum/status_effect/facial)
@@ -207,42 +207,42 @@
 				show_detail = (L.STAPER >= 8 && L.STAINT >= 5)
 			if(!show_detail)
 				if(any_cum_effect)
-					. += span_warning("[m1] covered in something glossy!")
+					. += span_warning("[m1]身上沾满了某种光泽的液体！")
 			else
 				if(external)
-					. += span_aiprivradio("[capitalize(m2)] body is [!external.has_dried_up ? "covered in cum" : "covered in dried cum"]!")
+					. += span_aiprivradio("[capitalize(m2)]的身体是[!external.has_dried_up ? "沾满了精液" : "沾满了干涸的精液"]！")
 				if(facial)
-					. += span_aiprivradio("[capitalize(m2)] face is [!facial.has_dried_up ? "glazed with cum" : "plastered with dried cum"]!")
+					. += span_aiprivradio("[capitalize(m2)]的脸上是[!facial.has_dried_up ? "涂满了精液" : "糊满了干涸的精液"]！")
 				if(creampie && !drip)
-					. += span_aiprivradio("[capitalize(m2)] crotch is [!creampie.has_dried_up ? "a cummy mess" : "stained with dried cum"]!")
+					. += span_aiprivradio("[capitalize(m2)]的胯下是[!creampie.has_dried_up ? "一片精液狼藉" : "沾满了干涸的精斑"]！")
 				if(drip)
 					var/is_long = istype(drip, /datum/status_effect/creampie_leak/long)
 					switch(drip.orifice)
 						if(SEX_PART_CUNT)
-							. += span_aiprivradio("[m1] [is_long ? "gushing cum from [m2] sex" : "trickling cum from [m2] sex"]!")
+							. += span_aiprivradio("[m1] [is_long ? "正从[m2]的下体涌出精液" : "正从[m2]的下体滴落精液"]！")
 						if(SEX_PART_ANUS)
-							. += span_aiprivradio("[m1] [is_long ? "leaking heavily from [m2] ass" : "leaking cum from [m2] ass"]!")
+							. += span_aiprivradio("[m1] [is_long ? "正从[m2]的后庭大量泄漏" : "正从[m2]的后庭漏出精液"]！")
 						if(SEX_PART_SLIT_SHEATH)
-							. += span_aiprivradio("[m1] [is_long ? "leaking heavily from [m2] slit" : "trickling cum from [m2] slit"]!")
+							. += span_aiprivradio("[m1] [is_long ? "正从[m2]的裂缝大量泄漏" : "正从[m2]的裂缝滴落精液"]！")
 						if(SEX_PART_CUNT|SEX_PART_ANUS)
-							. += span_aiprivradio("[m1] [is_long ? "leaking heavily from both [m2] holes" : "dripping cum from both [m2] holes"]!")
+							. += span_aiprivradio("[m1] [is_long ? "正从[m2]的两个穴口大量泄漏" : "正从[m2]的两个穴口滴落精液"]！")
 						else
-							. += span_aiprivradio("[m1] [is_long ? "leaking a heavy load" : "dripping cum from [m2] nethers"]!")
+							. += span_aiprivradio("[m1] [is_long ? "正泄漏着大量浊物" : "正从[m2]的下身滴落精液"]！")
 		var/list/modular_lines = human_modular_examine_lines(user, observer_privilege, m1, m2, m3)
 		if(length(modular_lines))
 			. += modular_lines
 
 		if((HAS_TRAIT(src, TRAIT_OUTLANDER) && !HAS_TRAIT(user, TRAIT_OUTLANDER)) || (HAS_TRAIT(user, TRAIT_RACISMISBAD) && !(src.dna.species.name == "Elf" || src.dna.species.name == "Dark Elf" || src.dna.species.name == "Half Elf")))
-			. += span_phobia("A foreigner...")
+			. += span_phobia("一个外国人……")
 
 		if(HAS_TRAIT(src, TRAIT_LOOSE_STRAPS))
-			. += span_phobia("[capitalize(m2)] armor hangs on by a thread...")
+			. += span_phobia("[capitalize(m2)]的盔甲摇摇欲坠……")
 
 		if(HAS_TRAIT(src, TRAIT_DISGRACED_NOBLE))
 			if(HAS_TRAIT(user, TRAIT_NOBLE))
-				. += span_phobia("A disgraced member of the nobility...")
+				. += span_phobia("一个被玷污的贵族成员……")
 			else
-				. += span_notice("A disgraced noble.")
+				. += span_notice("一个被玷污的贵族。")
 
 		//For tennite schism god-event
 		if(length(GLOB.tennite_schisms))
@@ -253,26 +253,26 @@
 			if(user_side && mob_side)
 				var/datum/patron/their_god = (mob_side == "astrata") ? S.astrata_god.resolve() : S.challenger_god.resolve()
 				if(their_god)
-					. += (user_side == mob_side) ? span_notice("Fellow [their_god.name] supporter!") : span_userdanger("Vile [their_god.name] supporter!")
+					. += (user_side == mob_side) ? span_notice("[their_god.name]的支持者同伴！") : span_userdanger("卑鄙的[their_god.name]支持者！")
 
 
 		if(origin && origin != "Unknown")
-			. += span_info("[capitalize(m2)] ancestry is [origin].")
+			. += span_info("[capitalize(m2)]的血统是[origin]。")
 
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.marriedto == name)
-				. += span_love("It's my spouse.")
+				. += span_love("这是我的配偶。")
 
 		var/gang_message = get_gang_text(user)
 		if (gang_message)
 			. += gang_message
 
 		if(name in GLOB.excommunicated_players)
-			. += span_userdanger("HERETIC! SHAME!")
+			. += span_userdanger("异端！耻辱！")
 
 		if(HAS_TRAIT(src, TRAIT_EXCOMMUNICATED))
-			. += span_userdanger("EXCOMMUNICATED! SHAME!")//Temporary, probably going to get rid of the trait since it doesn't fit for us.
+			. += span_userdanger("绝罚者！耻辱！")//Temporary, probably going to get rid of the trait since it doesn't fit for us.
 /*
 		if(name in GLOB.excommunicated_players)
 			var/mob/living/carbon/human/H = src
@@ -290,42 +290,42 @@
 		if(HAS_TRAIT(user, TRAIT_JUSTICARSIGHT) && !HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
 			for(var/datum/bounty/b in GLOB.head_bounties) //I hate this.
 				if(b.target == real_name)
-					. += span_syndradio("[m3] a bounty on [m2] head of [b.amount] mammon for [b.reason], issued by [b.employer].")
+					. += span_syndradio("[m3]的头上有一份来自[b.employer]的[b.amount]玛门的悬赏，罪名是[b.reason]。")
 					break
 
 		if(name in GLOB.court_agents)
 			var/datum/job/J = SSjob.GetJob(user.mind?.assigned_role)
 			if(J?.department_flag & GARRISON || J?.department_flag & NOBLEMEN)
-				. += span_greentext("<b>[m1] an agent of the court!</b>")
+				. += span_greentext("<b>[m1]是宫中的密探！</b>")
 
 		if(user != src && !HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS) && ishuman(user))
 			if(has_flaw(/datum/charflaw/addiction/lovefiend) && user.has_flaw(/datum/charflaw/addiction/lovefiend))
-				. += span_aiprivradio("[m1] as lovesick as I.")
+				. += span_aiprivradio("[m1]和我一样为情所困。")
 
 			if(has_flaw(/datum/charflaw/marked_by_baotha) && HAS_TRAIT(user, TRAIT_DEPRAVED))
-				. += span_aiprivradio("[m1] marked by the debauched scent of my patron.")
+				. += span_aiprivradio("[m1]被我的庇护者的放荡气息所标记。")
 
 			if(has_flaw(/datum/charflaw/addiction/junkie) && user.has_flaw(/datum/charflaw/addiction/junkie))
-				. += span_deadsay("[m1] carrying the same dust marks on their nose as I.")
+				. += span_deadsay("[m1]的鼻子上和我一样带着同样的粉尘痕迹。")
 
 			if(has_flaw(/datum/charflaw/addiction/smoker) && user.has_flaw(/datum/charflaw/addiction/smoker))
-				. += span_suppradio("[m1] enveloped by the familiar, faint stench of smoke. I know it well.")
+				. += span_suppradio("[m1]被那股熟悉而微弱的烟味所笼罩。我再熟悉不过了。")
 
 			if(has_flaw(/datum/charflaw/addiction/alcoholic) && user.has_flaw(/datum/charflaw/addiction/alcoholic))
-				. += span_syndradio("[m1] struggling to hide the hangover, and the stench of spirits. We're alike.")
+				. += span_syndradio("[m1]挣扎着掩饰宿醉，还有那股酒臭味。我们是一类人。")
 
 			if(has_flaw(/datum/charflaw/paranoid) && user.has_flaw(/datum/charflaw/paranoid))
 				var/mob/living/carbon/human/H = user
 				if(dna.species.name == H.dna.species.name)
-					. += span_nicegreen("[m1] privy to the dangers of all these strangers around us. [m1] just as afraid as I am.")
+					. += span_nicegreen("[m1]深知周围这些陌生人的危险。[m1]和我一样恐惧。")
 				else
-					. += span_nicegreen("[m1] one of the good ones. [m1] just as afraid as I am.")
+					. += span_nicegreen("[m1]是好人中的一员。[m1]和我一样恐惧。")
 			if(has_flaw(/datum/charflaw/addiction/masochist) && user.has_flaw(/datum/charflaw/addiction/sadist))
-				. += span_secradio("[m1] marked by scars inflicted for pleasure. A delectable target for my urges.")
+				. += span_secradio("[m1]身上带着为取乐而留下的伤疤。是我欲望的绝佳目标。")
 			if(has_flaw(/datum/charflaw/addiction/sadist) && user.has_flaw(/datum/charflaw/addiction/masochist))
-				. += span_secradio("[m1] looking with eyes filled with a desire to inflict pain. So exciting.")
+				. += span_secradio("[m1]的眼神里充满施虐的欲望。真让人兴奋。")
 			if(HAS_TRAIT(user, TRAIT_EMPATH) && HAS_TRAIT(src, TRAIT_PERMAMUTE))
-				. += span_notice("[m1] lacks a voice. [m1] is a mute!")
+				. += span_notice("[m1]没有声音。[m1]是个哑巴！")
 
 		var/villain_text = get_villain_text(user)
 		if(villain_text)
@@ -338,7 +338,7 @@
 			. +=span_notice(inquisition_text)
 
 		if (HAS_TRAIT(src, TRAIT_LEPROSY))
-			. += span_necrosis("A LEPER...")
+			. += span_necrosis("一个麻风病人……")
 
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -350,42 +350,42 @@
 		if (HAS_TRAIT(src, TRAIT_BEAUTIFUL))
 			switch (pronouns)
 				if (HE_HIM, SHE_HER_M)
-					. += span_beautiful_masc("[m1] handsome!")
+					. += span_beautiful_masc("[m1]英俊潇洒！")
 				if (SHE_HER, HE_HIM_F)
-					. += span_beautiful_fem("[m1] beautiful!")
+					. += span_beautiful_fem("[m1]美丽动人！")
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
-					. += span_beautiful_nb("[m1] good-looking!")
+					. += span_beautiful_nb("[m1]很好看！")
 
 		if (HAS_TRAIT(src, TRAIT_UNSEEMLY))
 			switch (pronouns)
 				if (HE_HIM, SHE_HER_M)
-					. += span_redtext("[m1] revolting!")
+					. += span_redtext("[m1]令人作呕！")
 				if (SHE_HER, HE_HIM_F)
-					. += span_redtext("[m1] repugnant!")
+					. += span_redtext("[m1]令人厌恶！")
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
-					. += span_redtext("[m1] repulsive!")
+					. += span_redtext("[m1]令人反感！")
 
 		if (HAS_TRAIT(src, TRAIT_COMICSANS))
-			. += span_sans("[m3] an oddly annoying face and voice.")
+			. += span_sans("[m3]一张莫名烦人的脸和一副烦人的嗓音。")
 
 		if (HAS_TRAIT(src, TRAIT_SCARRED))
-			. += span_redtext("[capitalize(m2)] face is marked with terrible scars.")
+			. += span_redtext("[capitalize(m2)]的脸上布满了可怕的伤疤。")
 
 		if (HAS_TRAIT(src, TRAIT_DISFIGURED))
 			switch (pronouns)
 				if (HE_HIM, SHE_HER_M)
-					. += span_beautiful_masc("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
+					. += span_beautiful_masc("[capitalize(m2)]的脸被丑陋地毁容了，使[m2]无法被认出。")
 				if (SHE_HER, HE_HIM_F)
-					. += span_beautiful_fem("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
+					. += span_beautiful_fem("[capitalize(m2)]的脸被丑陋地毁容了，使[m2]无法被认出。")
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
-					. += span_beautiful_nb("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
+					. += span_beautiful_nb("[capitalize(m2)]的脸被丑陋地毁容了，使[m2]无法被认出。")
 
 		// Shouldn't be able to tell they are unrevivable through a mask as a Necran
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user)
 			if(HAS_TRAIT(user, TRAIT_DEATHSIGHT))
-				. += span_danger("They extrude a pale aura. Their soul [src.stat == DEAD ? "was not" : "is not"] clean. This is it for them.")
+				. += span_danger("他们散发着苍白的灵光。他们的灵魂[src.stat == DEAD ? "不曾" : "并不"]纯净。他们已经完了。")
 			else if(user.stat == DEAD)
-				. += span_danger("This was their only chance at lyfe.")
+				. += span_danger("这是他们此生唯一的机会。")
 
 	if(has_flaw(/datum/charflaw/hunted) && ishuman(user) && istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
@@ -396,18 +396,18 @@
 
 	if(user.get_skill_level(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT && src.stat == DEAD)
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user && !HAS_TRAIT(user, TRAIT_DEATHSIGHT)) // A lot of conditional to avoid a redundant message, but we also want unknown DNRs to be covered.
-			. += span_danger("Their body holds not even a glimmer of life. No medicine can bring them back.")
+			. += span_danger("他们的身体已无丝毫生机。任何药物也无法使其复生。")
 
 	if (HAS_TRAIT(src, TRAIT_CRITICAL_WEAKNESS) && (!HAS_TRAIT(src, TRAIT_VAMP_DREAMS)))
 		if(isliving(user))
 			var/mob/living/L = user
 			if(L.STAINT > 9 && L.STAPER > 9)
-				. += span_redtext("<i>[m1] critically fragile!</i>")
+				. += span_redtext("<i>[m1]脆弱至极！</i>")
 
 	if(user != src && HAS_TRAIT(user, TRAIT_MATTHIOS_EYES) && (!HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS)))
 		var/atom/item = get_most_expensive()
 		if(item)
-			. += span_notice("You get the feeling [m2] most valuable possession is \a [item].")
+			. += span_notice("你觉得[m2]最值钱的财产是\a [item]。")
 
 	if(user != src && get_dist(user, src) <= 3)
 		var/datum/charflaw/malodorous/malodorous_flaw = src.get_flaw(/datum/charflaw/malodorous)
@@ -417,7 +417,7 @@
 				var/mob/living/living_user = user
 				can_see_stink = living_user.can_smell() && !HAS_TRAIT(living_user, TRAIT_NOSTINK)
 			if(can_see_stink)
-				. += span_greentext("They reek.")
+				. += span_greentext("他们浑身恶臭。")
 
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
@@ -428,20 +428,20 @@
 			var/datum/reagent/consumable/fav_drink = src.culinary_preferences[CULINARY_FAVOURITE_DRINK]
 			if(fav_food)
 				if(fav_drink)
-					. += span_notice("Their favourites are [fav_food.name] and [fav_drink.name].")
+					. += span_notice("他们喜欢[fav_food.name]和[fav_drink.name]。")
 				else
-					. += span_notice("Their favourite is [fav_food.name].")
+					. += span_notice("他们喜欢[fav_food.name]。")
 			else if(fav_drink)
-				. += span_notice("Their favourite is [fav_drink.name].")
+				. += span_notice("他们喜欢[fav_drink.name]。")
 			var/obj/item/reagent_containers/food/snacks/hated_food = src.culinary_preferences[CULINARY_HATED_FOOD]
 			var/datum/reagent/consumable/hated_drink = src.culinary_preferences[CULINARY_HATED_DRINK]
 			if(hated_food)
 				if(hated_drink)
-					. += span_notice("They hate [hated_food.name] and [hated_drink.name].")
+					. += span_notice("他们讨厌[hated_food.name]和[hated_drink.name]。")
 				else
-					. += span_notice("They hate [hated_food.name].")
+					. += span_notice("他们讨厌[hated_food.name]。")
 			else if(hated_drink)
-				. += span_notice("They hate [hated_drink.name].")
+				. += span_notice("他们讨厌[hated_drink.name]。")
 
 	var/is_stupid = FALSE
 	var/is_smart = FALSE
@@ -471,7 +471,7 @@
 		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_shirt)]. "
 		str += "[wear_shirt.integrity_check(is_smart)]"
 		if(is_stupid)
-			str = "[m3] some kind of shirt!"
+			str = "[m3]某种衬衫！"
 		. += str
 
 	//uniform
@@ -482,10 +482,10 @@
 			var/obj/item/clothing/under/U = wear_pants
 			if(U.attached_accessory)
 				accessory_msg += " with [icon2html(U.attached_accessory, user)] \a [U.attached_accessory]"
-		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_pants)][accessory_msg]. "
+		var/str = "[m3][get_examine_item_name_with_hover(user, wear_pants)][accessory_msg]。"
 		str += wear_pants.integrity_check(is_smart)
 		if(is_stupid)
-			str = "[m3] a pair of some pants! "
+			str = "[m3]一条什么裤子！"
 		. += str
 
 
@@ -496,9 +496,9 @@
 		str += head_condition
 		if(is_stupid)
 			if(istype(head,/obj/item/clothing/head/roguetown/helmet))
-				str = "[m3] some kinda helmet!"
+				str = "[m3]某种头盔！"
 			else
-				str = "[m3] some kinda hat!"
+				str = "[m3]某种帽子！"
 			if(head_condition)
 				str += " [head_condition]"
 		. += str
@@ -514,13 +514,13 @@
 				var/obj/item/clothing/suit/roguetown/armor/examined_armor = wear_armor
 				switch(examined_armor.armor_class)
 					if(ARMOR_CLASS_LIGHT)
-						str = "[m3] some flimsy leathers!"
+						str = "[m3]一些薄皮甲！"
 					if(ARMOR_CLASS_MEDIUM)
 						if(!HAS_TRAIT(user, TRAIT_MEDIUMARMOR))
-							str = "[m3] some metal and leather!"
+							str = "[m3]一些金属和皮革！"
 					if(ARMOR_CLASS_HEAVY)
 						if(!HAS_TRAIT(user, TRAIT_HEAVYARMOR))
-							str = "[m3] some heavy metal stuff!"
+							str = "[m3]一些很重的金属玩意儿！"
 			if(armor_condition)
 				str += " [armor_condition]"
 		if(armor_condition && !findtext(str, "[armor_condition]"))
@@ -545,7 +545,7 @@
 		str += cloak.integrity_check(is_smart)
 		if (is_stupid)					//So they can tell the named RG tabards. If they can read them, anyway.
 			if(!istype(cloak, /obj/item/clothing/cloak/stabard) && user.get_skill_level(/datum/skill/misc/reading) == 0)
-				str = "[m3] some kinda clothy thing on [m2] shoulders!"
+				str = "[m3]肩膀上挂着某种布类的东西！"
 		. += str
 
 	//right back
@@ -573,15 +573,15 @@
 		var/str = "[m3] [get_examine_item_name_with_hover(user, gloves)] on [m2] hands. "
 		str += gloves.integrity_check(is_smart)
 		if(is_stupid)
-			str = "[m3] a pair of gloves of some kind!"
+			str = "[m3]某种手套！"
 		. += str
 	else if(FR && length(FR.blood_DNA))
 		var/hand_number = get_num_arms(FALSE)
 		if(hand_number)
 			if(is_stupid)
-				. += "[m3] got weird hands! They don't look right!"
+				. += "[m3]手好奇怪！看起来不对劲！"
 			else
-				. += "[m3][hand_number > 1 ? "" : " a"] <span class='bloody'>blood-stained</span> hand[hand_number > 1 ? "s" : ""]!"
+				. += "[m3][hand_number > 1 ? "" : " a"]<span class='bloody'>血迹斑斑的</span>手[hand_number > 1 ? "s" : ""]！"
 
 	//belt
 	if(belt && !(SLOT_BELT in obscured))
@@ -615,7 +615,7 @@
 		var/str = "[m3] [get_examine_item_name_with_hover(user, shoes)] on [m2] feet. "
 		str += shoes.integrity_check(is_smart)
 		if(is_stupid)
-			str = "[m3] some shoes on [m2] feet!"
+			str = "[m3]脚上有些鞋子！"
 		. += str
 
 	//mask
@@ -623,7 +623,7 @@
 		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_mask)] on [m2] face. "
 		str += wear_mask.integrity_check(is_smart)
 		if(is_stupid)
-			str = "[m3] some kinda thing on [m2] face!"
+			str = "[m3]脸上有什么东西！"
 		. += str
 
 	//mouth
@@ -636,7 +636,7 @@
 			"[m3] [get_examine_item_name_with_hover(user, mouth)] in [m2] mouth. "
 		str += mouth.integrity_check(is_smart)
 		if(is_stupid)
-			str = "[m3] some kinda thing on [m2] mouth!"
+			str = "[m3]嘴里有什么东西！"
 		. += str
 
 	//neck
@@ -644,7 +644,7 @@
 		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_neck)] around [m2] neck. "
 		str += wear_neck.integrity_check(is_smart)
 		if (is_stupid)
-			str = "[m3] something on [m2] neck!"
+			str = "[m3]脖子上有些东西！"
 		. += str
 
 	//eyes
@@ -652,7 +652,7 @@
 		if(glasses)
 			. += "[m3] [get_examine_item_name_with_hover(user, glasses)] covering [m2] eyes."
 		else if(eye_color == BLOODCULT_EYE)
-			. += span_warning("<B>[m2] eyes are glowing an unnatural red!</B>")
+			. += span_warning("<B>[m2]的眼睛散发着不自然的红光！</B>")
 
 	//ears
 	if(ears && !(SLOT_HEAD in obscured))
@@ -665,11 +665,11 @@
 			var/obj/item/clothing/ring/active/AR = wear_ring
 			if(AR.cooldowny)
 				if(world.time < AR.cooldowny + AR.cdtime)
-					str += span_warning("It cannot activate again, yet.")
+					str += span_warning("它暂时还无法再次激活。")
 				else
-					str += span_warning("It is ready to use.")
+					str += span_warning("它已准备就绪。")
 		if(is_stupid)
-			str = "[m3] some sort of ring!"
+			str = "[m3]某种戒指！"
 		. += str
 
 	//wrists
@@ -677,22 +677,22 @@
 		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_wrists)] on [m2] wrists."
 		str += wear_wrists.integrity_check(is_smart)
 		if (is_stupid)
-			str = "[m3] something on [m2] wrists!"
+			str = "[m3]手腕上有些东西！"
 		. += str
 
 	//handcuffed?
 	if(handcuffed)
 		if(user == src)
-			. += "<span class='warning'>[m1] tied up with \a [handcuffed]!</span>"
+			. += "<span class='warning'>[m1]被\a [handcuffed]绑住了！</span>"
 		else
-			. += "<A href='?src=[REF(src)];item=[SLOT_HANDCUFFED]'><span class='warning'>[m1] tied up with \a [handcuffed]!</span></A>"
+			. += "<A href='?src=[REF(src)];item=[SLOT_HANDCUFFED]'><span class='warning'>[m1]被\a [handcuffed]绑住了！</span></A>"
 
 	if(legcuffed)
-		. += "<A href='?src=[REF(src)];item=[SLOT_LEGCUFFED]'><span class='warning'>[m3] \a [legcuffed] around [m2] legs!</span></A>"
+		. += "<A href='?src=[REF(src)];item=[SLOT_LEGCUFFED]'><span class='warning'>[m3]\a [legcuffed]捆在[m2]的腿上！</span></A>"
 
 	var/datum/status_effect/bugged/effect = has_status_effect(/datum/status_effect/bugged)
 	if(effect && HAS_TRAIT(user, TRAIT_INQUISITION))
-		. += "<A href='?src=[REF(src)];item=[effect.device]'><span class='warning'>[m3] \a [effect.device] implanted.</span></A>"
+		. += "<A href='?src=[REF(src)];item=[effect.device]'><span class='warning'>[m3]\a [effect.device]被植入了。</span></A>"
 
 	//Gets encapsulated with a warning span
 	var/list/msg = list()
@@ -702,63 +702,63 @@
 		appears_dead = TRUE
 
 	if (get_bodypart(BODY_ZONE_HEAD)?.grievously_wounded)
-		msg += span_bloody("<b>[p_their(TRUE)] neck is a ghastly ruin of blood and bone, barely hanging on!</b>")
+		msg += span_bloody("<b>[p_their(TRUE)]的脖子是一片血与骨的惨状，摇摇欲坠地挂着！</b>")
 
 	var/temp = getBruteLoss()
 	if(!(user == src && src.hal_screwyhud == SCREWYHUD_HEALTHY)) //fake healthy
 		if(temp)
 			if (temp < 25)
-				msg += "[m3] some bruises.\n"
+				msg += "[m3]一些瘀伤。\n"
 			else if (temp < 50)
-				msg += "[m3] a lot of bruises!\n"
+				msg += "[m3]很多瘀伤！\n"
 			else
-				msg += "<B>[m1] black and blue!!</B>\n"
+				msg += "<B>[m1]青一块紫一块！！</B>\n"
 
 		temp = getFireLoss()
 		if(temp)
 			if (temp < 25)
-				msg += "[m3] some burns.\n"
+				msg += "[m3]一些烧伤。\n"
 			else if (temp < 50)
-				msg += "[m3] many burns!\n"
+				msg += "[m3]很多烧伤！\n"
 			else
-				msg += "<B>[m1] dragon food!!</B>\n"
+				msg += "<B>[m1]快成烤龙肉了！！</B>\n"
 
 	//body temp
 	switch(bodytemperature)
 		if(0 to BODYTEMP_COLD_LEVEL_ONE_MAX)
-			msg += span_biginfo("<font color='#023E8A'> [m1] shivering uncontrollably</font>")
+			msg += span_biginfo("<font color='#023E8A'> [m1]失控地颤抖着</font>")
 		if(BODYTEMP_COLD_LEVEL_ONE_MAX to BODYTEMP_NORMAL_MIN)
-			msg += span_biginfo("<font color='#99e6ff'> [m1] shivering</font>")
+			msg += span_biginfo("<font color='#99e6ff'> [m1]在颤抖</font>")
 		if(BODYTEMP_NORMAL_MAX to BODYTEMP_HEAT_LEVEL_ONE_MAX)
-			msg += span_biginfo("<font color='#ffff00'> [m1] sweating</font>")
+			msg += span_biginfo("<font color='#ffff00'> [m1]在出汗</font>")
 		if(BODYTEMP_HEAT_LEVEL_ONE_MAX to 600)
-			msg += span_biginfo("<font color='#DC143C?'> [m1] sweating greatly</font>")
+			msg += span_biginfo("<font color='#DC143C?'> [m1]汗流不止</font>")
 
 	// Blood volume
 	switch(blood_volume)
 		if(-INFINITY to BLOOD_VOLUME_SURVIVE)
-			msg += span_artery("<B>[m1] extremely pale and sickly.</B>")
+			msg += span_artery("<B>[m1]极其苍白而病态。</B>")
 		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-			msg += span_artery("<B>[m1] very pale.</B>")
+			msg += span_artery("<B>[m1]非常苍白。</B>")
 		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-			msg += span_artery("[m1] pale.")
+			msg += span_artery("[m1]面色苍白。")
 		if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-			msg += span_artery("[m1] a little pale.")
+			msg += span_artery("[m1]有点苍白。")
 
 	// Bleeding
 	var/bleed_rate = get_bleed_rate()
 	if(bleed_rate)
 		if(!is_stupid)
-			var/bleed_wording = "bleeding"
+			var/bleed_wording = "在出血"
 			switch(bleed_rate)
 				if(0 to 1)
-					bleed_wording = "bleeding slightly"
+					bleed_wording = "轻微出血"
 				if(1 to 5)
-					bleed_wording = "bleeding"
+					bleed_wording = "在出血"
 				if(5 to 10)
-					bleed_wording = "bleeding a lot"
+					bleed_wording = "出血很多"
 				if(10 to INFINITY)
-					bleed_wording = "bleeding profusely"
+					bleed_wording = "大量出血"
 			var/list/bleeding_limbs = list()
 			var/static/list/bleed_zones = list(
 				BODY_ZONE_HEAD,
@@ -775,21 +775,21 @@
 				bleeding_limbs += parse_zone(bleeder.body_zone)
 			if(length(bleeding_limbs))
 				if(bleed_rate >= 5)
-					msg += span_bloody("<B>[capitalize(m2)] [english_list(bleeding_limbs)] [bleeding_limbs.len > 1 ? "are" : "is"] [bleed_wording]!</B>")
+					msg += span_bloody("<B>[capitalize(m2)]的[english_list(bleeding_limbs)]部位[bleeding_limbs.len > 1 ? "正在" : "正在"][bleed_wording]！</B>")
 				else
-					msg += span_bloody("[capitalize(m2)] [english_list(bleeding_limbs)] [bleeding_limbs.len > 1 ? "are" : "is"] [bleed_wording]!")
+					msg += span_bloody("[capitalize(m2)]的[english_list(bleeding_limbs)]部位[bleeding_limbs.len > 1 ? "正在" : "正在"][bleed_wording]！")
 			else
 				if(bleed_rate >= 5)
-					msg += span_bloody("<B>[m1] [bleed_wording]</B>!")
+					msg += span_bloody("<B>[m1][bleed_wording]！</B>")
 				else
-					msg += span_bloody("[m1] [bleed_wording]!")
+					msg += span_bloody("[m1][bleed_wording]！")
 		else
 			if(isliving(user))
 				var/mob/living/M = user
 				if(M.patron.type == /datum/patron/inhumen/graggar)
-					msg += span_bloody("[m1] shedding lyfe's blood, exposing weakness!")
+					msg += span_bloody("[m1]正倾泻着生命的血液，暴露出软弱！")
 				else
-					msg += span_bloody("[m1] letting out the red stuff!")
+					msg += span_bloody("[m1]正往外流着红色的东西！")
 
 	// Missing limbs
 	var/missing_head = FALSE
@@ -804,7 +804,7 @@
 		missing_limbs += parse_zone(missing_zone)
 
 	if(length(missing_limbs))
-		var/missing_limb_message = "<B>[capitalize(m2)] [english_list(missing_limbs)] [missing_limbs.len > 1 ? "are" : "is"] gone.</B>"
+		var/missing_limb_message = "<B>[capitalize(m2)]的[english_list(missing_limbs)][missing_limbs.len > 1 ? "都" : ""]没了。</B>"
 		if(missing_head)
 			missing_limb_message = span_dead("[missing_limb_message]")
 		else
@@ -812,16 +812,16 @@
 		msg += missing_limb_message
 
 	if(has_status_effect(/datum/status_effect/fire_handler/fire_stacks))
-		msg += "[t_He] [t_is] covered in something flammable.\n"
+		msg += "[t_He][t_is]被某些易燃物覆盖了。\n"
 	if(has_status_effect(/datum/status_effect/fire_handler/wet_stacks))
-		msg += "[t_He] look[p_s()] a little soaked.\n"
+		msg += "[t_He]看起来有点湿透了。\n"
 	//Grabbing
 	if(pulledby && pulledby.grab_state)
-		msg += "[m1] being grabbed by [pulledby]."
+		msg += "[m1]正被[pulledby]抓着。"
 
 	//Nutrition and Thirst
 	if(nutrition < (NUTRITION_LEVEL_STARVING - 50))
-		msg += "[m1] looking emaciated."
+		msg += "[m1]看起来骨瘦如柴。"
 //	else if(nutrition >= NUTRITION_LEVEL_FAT)
 //		if(user.nutrition < NUTRITION_LEVEL_STARVING - 50)
 //			msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy."
@@ -831,24 +831,24 @@
 	if(HAS_TRAIT(user, TRAIT_EXTEROCEPTION))
 		switch(nutrition)
 			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-				msg += "[m1] looking peckish."
+				msg += "[m1]看起来有点饿了。"
 			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-				msg += "[m1] looking hungry."
+				msg += "[m1]看起来很饿。"
 			if(NUTRITION_LEVEL_STARVING-50 to NUTRITION_LEVEL_STARVING)
-				msg += "[m1] looking starved."
+				msg += "[m1]看起来饿极了。"
 		switch(hydration)
 			if(HYDRATION_LEVEL_THIRSTY to HYDRATION_LEVEL_SMALLTHIRST)
-				msg += "[m1] looking like [m2] mouth is dry."
+				msg += "[m1]看起来[m2]口干舌燥。"
 			if(HYDRATION_LEVEL_DEHYDRATED to HYDRATION_LEVEL_THIRSTY)
-				msg += "[m1] looking thirsty for a drink."
+				msg += "[m1]看起来口渴想喝水。"
 			if(0 to HYDRATION_LEVEL_DEHYDRATED)
-				msg += "[m1] looking parched."
+				msg += "[m1]看起来干渴至极。"
 
 	//Fire/water stacks
 	if(has_status_effect(/datum/status_effect/fire_handler))
-		msg += "[m1] covered in something flammable."
+		msg += "[m1]被某些易燃物覆盖了。"
 	if(has_status_effect(/datum/status_effect/fire_handler/wet_stacks))
-		msg += "[m1] soaked."
+		msg += "[m1]湿透了。"
 
 	//Status effects
 	var/list/status_examines = status_effect_examines()
@@ -866,68 +866,68 @@
 			//Disgust
 			switch(disgust)
 				if(DISGUST_LEVEL_SLIGHTLYGROSS to DISGUST_LEVEL_GROSS)
-					msg += "[m1] a little disgusted."
+					msg += "[m1]有点反感。"
 				if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
-					msg += "[m1] disgusted."
+					msg += "[m1]感到反感。"
 				if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
-					msg += "[m1] really disgusted."
+					msg += "[m1]非常反感。"
 				if(DISGUST_LEVEL_DISGUSTED to INFINITY)
-					msg += "<B>[m1] extremely disgusted.</B>"
+					msg += "<B>[m1]极度厌恶。</B>"
 
 			//Drunkenness
 			switch(drunkenness)
 				if(11 to 21)
-					msg += "[m1] slightly flushed."
+					msg += "[m1]微微泛红。"
 				if(21.01 to 41) //.01s are used in case drunkenness ends up to be a small decimal
-					msg += "[m1] flushed."
+					msg += "[m1]脸色发红。"
 				if(41.01 to 51)
-					msg += "[m1] quite flushed and [m2] breath smells of alcohol."
+					msg += "[m1]脸色通红，[m2]的呼吸中带着酒味。"
 				if(51.01 to 61)
-					msg += "[m1] very flushed, with breath reeking of alcohol."
+					msg += "[m1]满脸通红，呼吸中散发着浓烈的酒味。"
 				if(61.01 to 91)
-					msg += "[m1] looking like a drunken mess."
+					msg += "[m1]看起来一副醉醺醺的样子。"
 				if(91.01 to INFINITY)
-					msg += "[m1] a shitfaced, slobbering wreck."
+					msg += "[m1]是个烂醉如泥、口水横流的醉鬼。"
 
 			//Stress
 			var/stress = get_stress_amount()
 			if(HAS_TRAIT(user, TRAIT_EMPATH))
 				switch(stress)
 					if(20 to INFINITY)
-						msg += "[m1] extremely stressed."
+						msg += "[m1]极度紧张。"
 					if(10 to 19)
-						msg += "[m1] very stressed."
+						msg += "[m1]非常紧张。"
 					if(1 to 9)
-						msg += "[m1] a little stressed."
+						msg += "[m1]有点紧张。"
 					if(-9 to 0)
-						msg += "[m1] not stressed."
+						msg += "[m1]不紧张。"
 					if(-19 to -10)
-						msg += "[m1] somewhat at peace."
+						msg += "[m1]内心颇为平静。"
 					if(-20 to INFINITY)
-						msg += "[m1] at peace inside."
+						msg += "[m1]内心安宁。"
 			else if(stress > 10)
-				msg += "[m3] stress all over [m2] face."
+				msg += "[m3]满脸压力。"
 
 		//Jitters
 		switch(jitteriness)
 			if(300 to INFINITY)
-				msg += "<B>[m1] convulsing violently!</B>"
+				msg += "<B>[m1]剧烈抽搐！</B>"
 			if(200 to 300)
-				msg += "[m1] extremely jittery."
+				msg += "[m1]严重颤抖。"
 			if(100 to 200)
-				msg += "[m1] twitching ever so slightly."
+				msg += "[m1]微微抽动。"
 
 		if(InCritical())
-			msg += span_warning("[m1] barely conscious.")
+			msg += span_warning("[m1]勉强还有意识。")
 		else
 			if(stat >= UNCONSCIOUS)
-				msg += "[m1] [IsSleeping() ? "sleeping" : "unconscious"]."
+				msg += "[m1][IsSleeping() ? "在睡觉" : "失去了意识"]。"
 			else if(eyesclosed)
-				msg += "[capitalize(m2)] eyes are closed."
+				msg += "[capitalize(m2)]的眼睛闭着。"
 			else if(has_status_effect(/datum/status_effect/debuff/sleepytime))
-				msg += "[m1] looking a little tired."
+				msg += "[m1]看起来有点疲惫。"
 	else
-		msg += "[m1] unconscious."
+		msg += "[m1]失去了意识。"
 //		else
 //			if(HAS_TRAIT(src, TRAIT_DUMB))
 //				msg += "[m3] a stupid expression on [m2] face."
@@ -947,7 +947,7 @@
 		if(LAZYLEN(part.embedded_objects))
 			for(var/obj/item/stuck_thing as anything in part.embedded_objects)
 				if(stuck_thing.w_class >= WEIGHT_CLASS_SMALL)
-					. += span_bloody("<b>[m3] \a [stuck_thing] stuck in [m2] [part.name]!</b>")
+					. += span_bloody("<b>[m3]\a [stuck_thing]卡在[m2]的[part.name]里！</b>")
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -977,15 +977,15 @@
 		var/strength_diff = final_str - L.STASTR
 		switch(strength_diff)
 			if(5 to INFINITY)
-				. += span_warning("<B>[t_He] look[p_s()] much stronger than I.</B>")
+				. += span_warning("<B>[t_He]看起来比我强壮得多。</B>")
 			if(1 to 5)
-				. += span_warning("[t_He] look[p_s()] stronger than I.")
+				. += span_warning("[t_He]看起来比我强壮。")
 			if(0)
-				. += "[t_He] look[p_s()] about as strong as I."
+				. += "[t_He]看起来和我差不多强壮。"
 			if(-5 to -1)
-				. += span_warning("[t_He] look[p_s()] weaker than I.")
+				. += span_warning("[t_He]看起来比我弱。")
 			if(-INFINITY to -5)
-				. += span_warning("<B>[t_He] look[p_s()] much weaker than I.</B>")
+				. += span_warning("<B>[t_He]看起来比我弱得多。</B>")
 
 	if((HAS_TRAIT(user,TRAIT_INTELLECTUAL)))
 		var/mob/living/L = user
@@ -995,20 +995,20 @@
 		var/int_diff = final_int - L.STAINT
 		switch(int_diff)
 			if(5 to INFINITY)
-				. += span_revenwarning("[t_He] look[p_s()] far more intelligent than I.")
+				. += span_revenwarning("[t_He]看起来比我聪明得多。")
 			if(2 to 5)
-				. += span_revenminor("[t_He] look[p_s()] smarter than I.")
+				. += span_revenminor("[t_He]看起来比我聪明。")
 			if(-1 to 1)
-				. += "[t_He] look[p_s()] about as intelligent as I."
+				. += "[t_He]看起来和我差不多聪明。"
 			if(-5 to -2)
-				. += span_revennotice("[t_He] look[p_s()] dumber than I.")
+				. += span_revennotice("[t_He]看起来比我笨。")
 			if(-INFINITY to -5)
-				. += span_revennotice("[t_He] look[p_s()] as blunt-minded as a rock.")
+				. += span_revennotice("[t_He]脑袋笨得像块石头。")
 
 	if(maniac)
 		var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 		if(heart?.inscryption && (heart.inscryption_key in maniac.key_nums))
-			. += span_danger("[t_He] know[p_s()] [heart.inscryption_key], I AM SURE OF IT!")
+			. += span_danger("[t_He]知道[heart.inscryption_key]，我对此确信无疑！")
 
 	if(Adjacent(user))
 		if(observer_privilege)
@@ -1024,20 +1024,20 @@
 				var/obj/item/bodypart/bodypart = get_bodypart(zone)
 				if(!bodypart)
 					continue
-				. += "<a href='?src=[REF(src)];inspect_limb=[zone]'>Inspect [parse_zone(zone)]</a>"
-			. += "<a href='?src=[REF(src)];check_hb=1'>Check Heartbeat</a>"
+				. += "<a href='?src=[REF(src)];inspect_limb=[zone]'>检查 [parse_zone(zone)]</a>"
+			. += "<a href='?src=[REF(src)];check_hb=1'>检查心跳</a>"
 		else
 			var/checked_zone = check_zone(user.zone_selected)
-			. += "<a href='?src=[REF(src)];inspect_limb=[checked_zone]'>Inspect [parse_zone(checked_zone)]</a>"
+			. += "<a href='?src=[REF(src)];inspect_limb=[checked_zone]'>检查 [parse_zone(checked_zone)]</a>"
 			if(!(mobility_flags & MOBILITY_STAND) && user != src && (user.zone_selected == BODY_ZONE_CHEST))
-				. += "<a href='?src=[REF(src)];check_hb=1'>Listen to Heartbeat</a>"
+				. += "<a href='?src=[REF(src)];check_hb=1'>倾听心跳</a>"
 
 	if(!HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS) && user != src)
 		if(isliving(user))
 			var/mob/living/L = user
 			if(L.STAINT > 9 && L.STAPER > 9)
 				if(HAS_TRAIT(src, TRAIT_COMBAT_AWARE))
-					. += span_warning("<i>They look battle-aware.</i>")
+					. += span_warning("<i>他们看起来身经百战。</i>")
 				if(HAS_TRAIT(user, TRAIT_COMBAT_AWARE))
 					var/userheld = user.get_active_held_item()
 					var/srcheld = get_active_held_item()
@@ -1052,7 +1052,7 @@
 						if(I.associated_skill)
 							src_skill = I.associated_skill
 					var/skilldiff = user.get_skill_level(user_skill) - get_skill_level(src_skill)
-					. += "<font size = 3><i>[skilldiff_report(skilldiff)] in my wielded skill than they are in theirs.</i></font>"
+					. += "<font size = 3><i>[skilldiff_report(skilldiff)]在我擅长的武艺上，相对而言他们就是了。</i></font>"
 
 	if((dna?.species?.id != "gnoll") && (!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes))
 		. += "<a href='?src=[REF(src)];task=view_headshot;'>Examine closer</a>"
@@ -1060,23 +1060,23 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(get_dist(src, H) <= ((2 + clamp(floor(((H.STAPER - 10))),-1, 4)) + HAS_TRAIT(user, TRAIT_INTELLECTUAL)))
-			. += "<a href='?src=[REF(src)];task=assess;'>Assess</a>"
+			. += "<a href='?src=[REF(src)];task=assess;'>评估</a>"
 
 	/// Rumours & Gossip
 	if(length(rumour) || length(noble_gossip))
 		if(!obscure_name || (obscure_name && client?.prefs.masked_examine) || observer_privilege)
-			. += "<a href='?src=[REF(src)];task=view_rumours_gossip;'>Recall Rumours & Gossip</a>"
+			. += "<a href='?src=[REF(src)];task=view_rumours_gossip;'>回忆传闻与八卦</a>"
 
 	if(lip_style)
 		switch(lip_color)
 			if("red")
-				. += "<span class='info' style='color: #a81324'>[m1] wearing red lipstick.</span>"
+				. += "<span class='info' style='color: #a81324'>[m1]涂着红色口红。</span>"
 			if("purple")
-				. += "<span class='info' style='color: #800080'>[m1] wearing purple lipstick.</span>"
+				. += "<span class='info' style='color: #800080'>[m1]涂着紫色口红。</span>"
 			if("lime")
-				. += "<span class='info' style='color: #00FF00'>[m1] wearing lime lipstick.</span>"
+				. += "<span class='info' style='color: #00FF00'>[m1]涂着亮绿色口红。</span>"
 			if("black")
-				. += "<span class='info' style='color: #313131ff'>[m1] wearing black lipstick.</span>"
+				. += "<span class='info' style='color: #313131ff'>[m1]涂着黑色口红。</span>"
 
 
 	var/list/lines
@@ -1100,7 +1100,7 @@
 				descriptors += /datum/mob_descriptor/vagina
 			if(src.getorganslot(ORGAN_SLOT_TESTICLES))
 				descriptors += /datum/mob_descriptor/testicles
-			. += span_info("[t_his] underwear doesn't cover [t_him] from behind.")
+			. += span_info("[t_his]的内衣从后面遮不住[t_him]。")
 			//male genitalia line
 			var/malegen = build_coalesce_description(descriptors, src, list(MOB_DESCRIPTOR_SLOT_PENIS, MOB_DESCRIPTOR_SLOT_TESTICLES), "%THEY% %DESC1%, and %DESC2%.")
 			if(malegen)
@@ -1113,17 +1113,17 @@
 	if(branded) // we are branded, now check what bodypart brands we've got. genital brands handled separately.
 		for(var/obj/item/bodypart/branded_bodypart as anything in bodyparts)
 			if(length(branded_bodypart.branded_writing) && get_location_accessible(src, branded_bodypart.body_zone))
-				. += span_info("[capitalize(m2)] [LOWER_TEXT(branded_bodypart.name)] has been branded with ") + "[span_boldwarning(branded_bodypart.branded_writing)]."
+				. += span_info("[capitalize(m2)]的[LOWER_TEXT(branded_bodypart.name)]被烙上了 ") + "[span_boldwarning(branded_bodypart.branded_writing)]."
 			if(istype(branded_bodypart, /obj/item/bodypart/chest))
 				var/obj/item/bodypart/chest/chest = branded_bodypart
 				if(length(chest.branded_writing_on_buttocks) && get_location_accessible(src, BODY_ZONE_PRECISE_GROIN))
-					. += span_info("[capitalize(m2)] hindquarters has been branded with ") + "[span_boldwarning(chest.branded_writing_on_buttocks)]."
+					. += span_info("[capitalize(m2)]的臀部被烙上了 ") + "[span_boldwarning(chest.branded_writing_on_buttocks)]."
 				if(length(chest.branded_writing_on_stomach) && get_location_accessible(src, BODY_ZONE_PRECISE_STOMACH))
-					. += span_info("[capitalize(m2)] stomach has been branded with ") + "[span_boldwarning(chest.branded_writing_on_stomach)]."
+					. += span_info("[capitalize(m2)]的腹部被烙上了 ") + "[span_boldwarning(chest.branded_writing_on_stomach)]."
 			else if(istype(branded_bodypart, /obj/item/bodypart/head))
 				var/obj/item/bodypart/head/neck = branded_bodypart
 				if(length(neck.branded_writing_on_neck) && get_location_accessible(src, BODY_ZONE_PRECISE_NECK))
-					. += span_info("[capitalize(m2)] neck has been branded with ") + "[span_boldwarning(neck.branded_writing_on_neck)]."
+					. += span_info("[capitalize(m2)]的脖子被烙上了 ") + "[span_boldwarning(neck.branded_writing_on_neck)]."
 
 	// Characters with the marked for death flaw will freak out if they can't see someone's face.
 	if(!appears_dead)
@@ -1135,7 +1135,7 @@
 			var/mob/living/carbon/human/H = user
 			if(H.dna?.species?.type == /datum/species/gnoll)
 				if(user.advjob)
-					. += span_notice("<i>They are a [advjob] of the pack.</i>")
+					. += span_notice("<i>他们是族群的[advjob]。</i>")
 
 	var/trait_exam = common_trait_examine()
 	if(!isnull(trait_exam))
@@ -1176,26 +1176,26 @@
 
 	if(HAS_TRAIT(src, TRAIT_COMMIE))
 		if(seer)
-			heretic_text += "Matthiosan."
+			heretic_text += "马西奥斯信徒。"
 			if(HAS_TRAIT(examiner, TRAIT_COMMIE))
-				heretic_text += " To share with. To take with. For all, and us."
+				heretic_text += " 共享。共担。为众人，为我们。"
 		else if(HAS_TRAIT(examiner, TRAIT_COMMIE))
-			heretic_text += "Comrade!"
+			heretic_text += "同志！"
 	else if((HAS_TRAIT(src, TRAIT_CABAL)))
 		if(seer)
-			heretic_text += "A member of Zizo's cabal."
+			heretic_text += "齐佐密社的成员。"
 			if(HAS_TRAIT(examiner, TRAIT_CABAL))
-				heretic_text += " May their ambitions not interfere with mine."
+				heretic_text += " 愿他们的野心不要妨碍到我。"
 	else if((HAS_TRAIT(src, TRAIT_HORDE)))
 		if(seer)
-			heretic_text += "Hardened by Graggar's Rituals."
+			heretic_text += "经格拉加尔的仪式千锤百炼。"
 			if(HAS_TRAIT(examiner, TRAIT_HORDE))
-				heretic_text += " Mine were a glorious memory."
+				heretic_text += " 我自己的仪式也是一段光荣的记忆。"
 	else if((HAS_TRAIT(src, TRAIT_DEPRAVED)))
 		if(seer)
-			heretic_text += "Baotha's Touched."
+			heretic_text += "巴奥莎的眷顾者。"
 			if(HAS_TRAIT(examiner, TRAIT_DEPRAVED))
-				heretic_text += " She leads us to the greatest ends."
+				heretic_text += " 她引领我们走向至高之境。"
 
 	return heretic_text
 
@@ -1220,13 +1220,13 @@
 /mob/living/proc/get_inquisition_text(mob/examiner)
 	var/inquisition_text
 	if(HAS_TRAIT(src, TRAIT_INQUISITION) && HAS_TRAIT(examiner, TRAIT_INQUISITION))
-		inquisition_text = "A fellow adherent to the Holy Otavan Inquisition's missives."
+		inquisition_text = "一位共同遵循神圣奥塔瓦宗教审判所使命的同伴。"
 	if(HAS_TRAIT(src, TRAIT_PURITAN) && HAS_TRAIT(examiner, TRAIT_INQUISITION))
-		inquisition_text = "My superior, sent by the Holy Otavan Inquisition to lead our sect."
+		inquisition_text = "我的上级，由神圣奥塔瓦宗教审判所派遣来领导我们教派。"
 	if(HAS_TRAIT(src, TRAIT_INQUISITION) && HAS_TRAIT(examiner, TRAIT_PURITAN))
-		inquisition_text = "A subordinate to my authority, as willed by the Holy Otavan Inquisition."
+		inquisition_text = "我在权威下的下属，这是神圣奥塔瓦宗教审判所的旨意。"
 	if(HAS_TRAIT(src, TRAIT_PURITAN) && HAS_TRAIT(examiner, TRAIT_PURITAN))
-		inquisition_text = "Myself. I lead this sect of the Holy Otavan Inquisition."
+		inquisition_text = "我自己。我领导着神圣奥塔瓦宗教审判所的这一教派。"
 
 	return inquisition_text
 
@@ -1253,15 +1253,15 @@
 /proc/get_blade_dulling_text(obj/item/rogueweapon/I, verbose = FALSE)
 	switch(I.blade_dulling)
 		if(DULLING_SHAFT_WOOD)
-			return "[verbose ? "Wooden" : "(W. shaft)"]"
+			return "[verbose ? "木制的" : "(木柄)"]"
 		if(DULLING_SHAFT_REINFORCED)
-			return "[verbose ? "Reinforced" : "(R. shaft)"]"
+			return "[verbose ? "加固的" : "(加固柄)"]"
 		if(DULLING_SHAFT_METAL)
-			return "[verbose ? "Metal" : "(M. shaft)"]"
+			return "[verbose ? "金属的" : "(金属柄)"]"
 		if(DULLING_SHAFT_GRAND)
-			return "[verbose ? "Grand" : "(G. shaft)"]"
+			return "[verbose ? "宏大的" : "(宏大柄)"]"
 		if(DULLING_SHAFT_CONJURED)
-			return "[verbose ? "Conjured" : "(C. shaft)"]"
+			return "[verbose ? "召唤的" : "(召唤柄)"]"
 		else
 			return null
 
@@ -1272,16 +1272,16 @@
 
 	if (HAS_TRAIT(src, TRAIT_GANG_A))
 		if (HAS_TRAIT(examiner, TRAIT_GANG_A))
-			gang_text = span_notice ("My Rontz Ratz gang member!")
+			gang_text = span_notice ("我的隆兹鼠帮帮派成员！")
 		else if (HAS_TRAIT(examiner, TRAIT_GANG_B))
-			gang_text = span_userdanger ("Rontz Ratz scum! Enemy!") ///I don't know why it doesn't indicate the correct gang here
+			gang_text = span_userdanger ("隆兹鼠帮渣滓！敌人！") ///I don't know why it doesn't indicate the correct gang here
 
 
 	if (HAS_TRAIT(src, TRAIT_GANG_B))
 		if (HAS_TRAIT(examiner, TRAIT_GANG_B))
-			gang_text = span_notice ("My Blortz Volves gang member!")
+			gang_text = span_notice ("我的布洛兹狼帮帮派成员！")
 		else if (HAS_TRAIT(examiner, TRAIT_GANG_A))
-			gang_text = span_userdanger ("Blortz Volves scum! Enemy!")
+			gang_text = span_userdanger ("布洛兹狼帮渣滓！敌人！")
 
 	return gang_text
 
