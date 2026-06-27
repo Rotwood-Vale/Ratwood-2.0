@@ -302,7 +302,7 @@
 	if(isnum(potency))
 		lvl = potency
 	lvl = clamp(lvl, 1, 6)
-	duration = (lvl * 2) SECONDS
+	duration = (lvl * 3) SECONDS
 	return ..()
 
 /datum/status_effect/debuff/living_darkness_blindness/on_apply()
@@ -328,7 +328,7 @@
 	desc = "A dim veil clouds my vision."
 	icon_state = "blind"
 
-/obj/effect/proc_holder/spell/invoked/silencenoc/miracle
+/obj/effect/proc_holder/spell/invoked/silencenoc
 	name = "Silence"
 	desc = "Clamp shut a voice by holy command, denying speech for a short while."
 	overlay_state = "silencenoc"
@@ -349,7 +349,7 @@
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	miracle = TRUE
 
-/obj/effect/proc_holder/spell/invoked/silencenoc/miracle/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/invoked/silencenoc/cast(list/targets, mob/user = usr)
 	if(!targets || !length(targets) || !isliving(targets[1]))
 		revert_cast()
 		return FALSE
@@ -367,18 +367,18 @@
 	)
 
 	var/skill = max(1, user.get_skill_level(associated_skill))
-	var/dur = clamp(skill * 2, 2, 18)
+	var/dur = clamp(skill * 3, 3, 18)
 	addtimer(CALLBACK(src, PROC_REF(remove_buff), target), wait = dur SECONDS)
 	return TRUE
 
-/obj/effect/proc_holder/spell/invoked/silencenoc/miracle/proc/remove_buff(mob/living/target)
+/obj/effect/proc_holder/spell/invoked/silencenoc/proc/remove_buff(mob/living/target)
 	if(!target)
 		return
 	REMOVE_TRAIT(target, TRAIT_MUTE, MAGIC_TRAIT)
 	if(!QDELETED(target))
 		to_chat(target, span_notice("My voice returns."))
 
-/obj/effect/proc_holder/spell/invoked/silencenoc/miracle/proc/remove_miracle_silence(mob/living/carbon/target)
+/obj/effect/proc_holder/spell/invoked/silencenoc/proc/remove_miracle_silence(mob/living/carbon/target)
 	if(!target)
 		return
 	REMOVE_TRAIT(target, TRAIT_MUTE, MAGIC_TRAIT)
@@ -387,7 +387,7 @@
 /obj/effect/proc_holder/spell/invoked/magicshield
 	name = "Magic Shield"
 	desc = "Wrap a target in a ward of anti-magic."
-	overlay_state = "magicshield"
+	overlay_state = "antimagenoc"
 	clothes_req = FALSE
 	releasedrain = 30
 	chargedrain = 0
@@ -420,7 +420,7 @@
 		span_warning("A nullifying force settles over me!")
 	)
 	var/skill = max(1, user.get_skill_level(associated_skill))
-	var/dur = clamp(skill * 2, 2, 18)
+	var/dur = clamp(skill * 3, 3, 18)
 	addtimer(CALLBACK(src, PROC_REF(remove_buff), target), wait = dur SECONDS)
 	return TRUE
 
