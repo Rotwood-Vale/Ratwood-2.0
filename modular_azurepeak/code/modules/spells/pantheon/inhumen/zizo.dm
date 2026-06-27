@@ -250,7 +250,7 @@
 	if(!target.mind)
 		to_chat(user, span_info("This one's lux is weak and insufficient. I need a victim with higher conscious!"))
 		return
-	if(!isliving(target))
+	if(target.stat == DEAD || !isliving(target))
 		to_chat(user, span_info("Only lyving creachers may have their lux torn."))
 		return
 	if(!target.Adjacent(user))
