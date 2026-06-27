@@ -30,7 +30,14 @@
 		TRAIT_UNLYCKERABLE,
 		TRAIT_DARKVISION,
 		TRAIT_NOHUNGER,
-		TRAIT_SELF_SUSTENANCE
+		TRAIT_SELF_SUSTENANCE,
+		TRAIT_UNLYCKERABLE,
+		TRAIT_LEECHIMMUNE,
+		TRAIT_KNEESTINGER_IMMUNITY,
+		TRAIT_WILDERNESSGUIDE,
+		TRAIT_EXTREME_TEMPERATURE_IMMUNE,
+		TRAIT_ANTISCRYING,
+		TRAIT_LONGSTRIDER
 		//To add: bogwalker - investigate edit_descriptors, technophobe and no pve as well as ring still not working
 	)
 	var/static/list/hag_baseline_stats = list(
@@ -833,7 +840,7 @@
 			if(!active_victim_name || !selected_curse_path || !selected_boons.len)
 				return TRUE
 
-			var/points_gathered = calculate_current_points()
+			var/summary_power = calculate_current_points()
 			var/curse_cost = 999
 			var/list/curses = H.get_available_curses_data()
 			for(var/list/C in curses)
@@ -841,11 +848,11 @@
 					curse_cost = C["cost"]
 					break
 
-			if(points_gathered < curse_cost)
-				to_chat(user, span_warning("The soul-tithe is insufficient. You require [curse_cost] points, but have only gathered [points_gathered]."))
+			if(summary_power < curse_cost)
+				to_chat(user, span_warning("The soul-tithe is insufficient. You require [curse_cost] curse strength, but have only gathered [summary_power] summary power."))
 				return TRUE
 
-			H.transmute_boons_to_curse(active_victim_name, selected_boons, text2path(selected_curse_path), points_gathered)
+			H.transmute_boons_to_curse(active_victim_name, selected_boons, text2path(selected_curse_path), summary_power)
 			selected_boons.Cut()
 			selected_curse_path = null
 			active_victim_name = null

@@ -17,10 +17,6 @@
 /obj/structure/flora/roguegrass/swampweed,
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/shelter/bog_hag)
-"cb" = (
-/obj/structure/well/poisoned,
-/turf/open/floor/rogue/grass,
-/area/rogue/indoors/shelter/bog_hag)
 "cw" = (
 /obj/structure/flora/newtree,
 /turf/open/floor/rogue/dirt/road,
@@ -104,8 +100,8 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/shelter/bog_hag)
 "kl" = (
-/obj/structure/stairs,
-/turf/open/floor/rogue/shroud,
+/obj/structure/composter,
+/turf/open/floor/rogue/grass,
 /area/rogue/indoors/shelter/bog_hag)
 "kN" = (
 /turf/open/transparent/openspace,
@@ -253,9 +249,8 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/shelter/bog_hag)
 "sP" = (
-/obj/structure/glowshroom,
-/obj/structure/flora/roguegrass/reedbush,
-/turf/open/water/cleanshallow,
+/obj/effect/landmark/start/hag,
+/turf/open/floor/rogue/grassred,
 /area/rogue/indoors/shelter/bog_hag)
 "ti" = (
 /turf/closed/mineral/rogue/bedrock,
@@ -491,10 +486,6 @@
 	},
 /turf/open/water/cleanshallow,
 /area/rogue/indoors/shelter/bog_hag)
-"Kp" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/frog,
-/turf/open/floor/rogue/grassyel,
-/area/rogue/indoors/shelter/bog_hag)
 "Li" = (
 /obj/effect/wisp/green,
 /turf/open/floor/rogue/grass,
@@ -593,10 +584,6 @@
 /obj/structure/vine,
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/indoors/shelter/bog_hag)
-"Qs" = (
-/obj/structure/glowshroom,
-/turf/open/water/cleanshallow,
-/area/rogue/indoors/shelter/bog_hag)
 "QN" = (
 /obj/structure/flora/newtree,
 /turf/open/floor/rogue/grass,
@@ -675,7 +662,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/indoors/shelter/bog_hag)
 "TM" = (
-/obj/structure/roguemachine/mossmother/travel,
+/obj/structure/roguemachine/mossmother,
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/shelter/bog_hag)
 "Uu" = (
@@ -756,7 +743,7 @@
 /turf/closed/wall/mineral/rogue/wooddark/horizontal,
 /area/rogue/indoors/shelter/bog_hag)
 "XI" = (
-/obj/effect/landmark/start/hag,
+/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/frog,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/shelter/bog_hag)
 "XW" = (
@@ -1386,7 +1373,7 @@ UO
 UO
 XI
 Qa
-kl
+Qa
 zp
 Xu
 QV
@@ -1492,7 +1479,7 @@ TF
 TF
 UO
 CG
-TF
+CG
 TF
 Xu
 Xu
@@ -1636,7 +1623,7 @@ Nw
 XW
 wg
 Sy
-XW
+sP
 ht
 CG
 QV
@@ -1671,7 +1658,7 @@ Nw
 Nw
 ie
 XW
-Kp
+mU
 mc
 eO
 CG
@@ -2114,9 +2101,9 @@ bv
 HR
 Tj
 bv
-cb
+Ct
 jQ
-jj
+Ct
 jj
 dq
 HR
@@ -2186,7 +2173,7 @@ IJ
 XE
 WX
 LY
-dX
+kl
 bW
 bv
 jj
@@ -2224,7 +2211,7 @@ SF
 iC
 UT
 bv
-jj
+Ct
 jj
 jj
 HR
@@ -2372,7 +2359,7 @@ IE
 IE
 IE
 Cu
-Qs
+gW
 Tx
 "}
 (17,1,2) = {"
@@ -2440,10 +2427,10 @@ oP
 qL
 Hy
 Uu
-sP
+Cu
 gW
 gW
-Qs
+gW
 Jw
 Tx
 "}
@@ -2515,7 +2502,7 @@ ti
 gW
 yj
 gW
-Qs
+gW
 Tx
 Tx
 "}

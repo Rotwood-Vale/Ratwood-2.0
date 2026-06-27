@@ -54,7 +54,7 @@ export const HagTransmutation = () => {
   const hag_tier = data.hag_tier || 1;
   const selected_follower = data.selected_follower || null;
   const selected_curse = data.selected_curse || data.selected_curse_path || null;
-  const total_points = data.total_points || 0;
+  const summary_power = data.total_points || 0;
 
   const selectedFollowerName = followers.find(f => f.key === selected_follower)?.name || "None";
   const selectedCurseName = curses.find(c => c.path === selected_curse)?.name || "None";
@@ -78,7 +78,7 @@ export const HagTransmutation = () => {
                           selected={boon.selected}
                           onClick={() => act('toggle_boon', { id: boon.id, victim_name: victim.name })}
                         >
-                          {boon.name} ({boon.points} pts)
+                          {boon.name} (Boon strength: {boon.points})
                         </Button>
                       ))
                     ) : (
@@ -122,7 +122,7 @@ export const HagTransmutation = () => {
                   selected={selected_curse === curse.path}
                   onClick={() => act('select_curse', { path: curse.path })}
                 >
-                  {curse.name} (Cost: {curse.cost} pts, Tier {curse.min_tier})
+                  {curse.name} (Curse strength: {curse.cost}, Tier {curse.min_tier})
                 </Button>
               ))
             ) : (
@@ -142,8 +142,8 @@ export const HagTransmutation = () => {
               {selectedCurseName}
             </LabeledList.Item>
             {hasVictimMode && (
-              <LabeledList.Item label="Soul Tithe">
-                {total_points}
+              <LabeledList.Item label="Summary Power">
+                  {summary_power}
               </LabeledList.Item>
             )}
           </LabeledList>
