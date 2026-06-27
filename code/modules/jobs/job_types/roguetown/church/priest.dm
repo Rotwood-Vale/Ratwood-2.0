@@ -261,7 +261,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		//Coronate new King (or Queen)
 		HU.mind.assigned_role = "Grand Duke"
 		HU.job = "Grand Duke"
-		ADD_TRAIT(HU, TRAIT_DNR, JOB_TRAIT)
+		//ADD_TRAIT(HU, TRAIT_DNR, JOB_TRAIT)
 		SSticker.set_ruler_mob(HU)
 		SSticker.regentmob = null
 		var/dispjob = mind.assigned_role
