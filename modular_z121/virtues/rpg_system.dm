@@ -111,6 +111,12 @@
 //   0→1 需 180，2→3 需 540，5→6 需 1080）。单列为常量，平衡只改这一处。
 #define RPG_SYSTEM_SKILL_COST_BASE 180
 
+// 兑换"正向特性 / 天赋"的统一单价（积分）。需求："只收录正向增益特性，价格统一 1000。"
+#define RPG_SYSTEM_TRAIT_COST 1000
+// 通过本系统购买特性时使用的 ADD_TRAIT 来源标签：统一、可识别，便于将来需要时统一清理；
+//   不复用 TRAIT_VIRTUE / TRAIT_GENERIC 等其它来源，避免与别处授予的同名特性互相干扰。
+#define RPG_SYSTEM_TRAIT_SOURCE "rpg_system_purchase"
+
 
 // ----------------------------------------------------------------------------
 // 美德定义：RPG 系统
@@ -463,6 +469,7 @@
 		"magic" = "魔法物品",
 		"delicacy" = "美食",
 		"artifact" = "神器",
+		"trait" = "特性",
 		"stat" = "强化属性",
 		"skill" = "强化技能",
 	)
@@ -481,6 +488,8 @@
 			html += render_stat_table(user)
 		if("skill")
 			html += render_skill_table(user)
+		if("trait")
+			html += render_trait_table(user)
 		else
 			html += render_item_table(user, current_tab)
 	// 组装成单段 HTML，丢进 /datum/browser 并打开。窗口 ID 固定，重复 open 会刷新同一窗口（不会叠窗）。
@@ -1050,6 +1059,200 @@
 	to_chat(user, span_green("【系统提示】[display] 已提升至等级 [user.get_skill_level(skill_path)]，花费 [cost] 积分。（剩余积分：[points]）"))
 	playsound(user, 'sound/misc/click.ogg', 50, FALSE)
 
+// ----------------------------------------------------------------------------
+// 特性兑换：用积分永久获得一项"正向增益特性 / 天赋"，单价统一 RPG_SYSTEM_TRAIT_COST（1000）。
+// 需求："加入特性兑换；特性取自 code/__DEFINES/traits.dm；只收录正向增益特性；价格统一 1000。"
+// 实现要点（为什么这样写）：
+//   - 特性不是 /obj/item，无法走商品目录的"生成实体"流程，故单列目录 + 渲染 + 结算三件套。
+//   - 这些 TRAIT_* 宏定义在 modular_z121 之外的 code/__DEFINES/traits.dm；本文件只是"引用"这些
+//     编译期常量（宏展开为可读中文串），不修改其源文件，符合"只在 modular_z121 内新增"的约束。
+//   - 这些特性大多已登记在 GLOB.roguetraits（玩家特性自检面板），购买后玩家即可在面板看到说明，
+//     无需本系统额外登记。
+//   - 严格只挑"正向增益"：战斗 / 防护 / 耐力 / 免疫 / 实用 / 求生类；不含负面、诅咒、职业 / 种族受限、
+//     或带明显副作用的特性。
+// ----------------------------------------------------------------------------
+// get_trait_catalog：可兑换特性的有序表（纯特性串列表；串本身即玩家可见名）。
+//   渲染与结算共用同一张表，按"行号"对应。将来要增减开放特性，往这张表加 / 删一行即可。
+/datum/component/rpg_system/proc/get_trait_catalog()
+	return list(
+		TRAIT_MEDIUMARMOR,              // 锁甲训练：可无惩罚穿戴中型护甲
+		TRAIT_HEAVYARMOR,               // 板甲训练：可无惩罚穿戴重型护甲
+		TRAIT_DODGEEXPERT,              // 闪避专家：闪避能力强化
+		TRAIT_MAGEARMOR,                // 魔法障壁：法师护甲
+		TRAIT_CRITICAL_RESISTANCE,      // 重创抗性：更不易被打出重伤
+		TRAIT_PSYDONIAN_GRIT,           // 普赛顿坚毅：疼痛耐受
+		TRAIT_STRONGBITE,               // 强力啃咬：徒手撕咬更狠
+		TRAIT_STRONGKICK,               // 强力飞踢：飞踢更强
+		TRAIT_CIVILIZEDBARBARIAN,       // 拳斗专家：徒手格斗强化
+		TRAIT_TAVERN_FIGHTER,           // 酒馆斗士：近身肉搏强化
+		TRAIT_SHARPER_BLADES,           // 利刃常锋：武器更不易钝
+		TRAIT_NOFALLDAMAGE2,            // 坠落免疫：免疫坠落伤害
+		TRAIT_SHOCKIMMUNE,              // 抗电：免疫电击
+		TRAIT_EXTREME_TEMPERATURE_IMMUNE, // 极端温度免疫：免疫中暑 / 冻伤
+		TRAIT_WATERBREATHING,           // 水下呼吸：可在水下呼吸
+		TRAIT_LEECHIMMUNE,              // 拒蛭：水蛭不再叮附
+		TRAIT_DRUNK_HEALING,            // 酒疗：体内有足量酒精时缓慢自愈
+		TRAIT_BETTER_SLEEP,             // 优眠：睡眠回复精力更多
+		TRAIT_ZJUMP,                    // 高跃：可向上跳跃
+		TRAIT_LEAPER,                   // 跃袭者：扑跃突进
+		TRAIT_JACKOFALLTRADES,          // 万事通：技能升级消耗更低
+		TRAIT_SEEPRICES,                // 熟练鉴价师：可看出物品价值
+		TRAIT_PERFECT_TRACKER,          // 猎踪大师：必定发现并完美解析踪迹
+		TRAIT_INTELLECTUAL,             // 学识者：博学
+		TRAIT_NOSTINK,                  // 死鼻：不受恶臭影响
+		TRAIT_GOODLOVER,                // 传奇情人：情爱方面的卓越天赋
+		// —— 战斗 / 防护（续）——
+		TRAIT_NOPAIN,                   // 无痛：感受不到疼痛
+		TRAIT_NOPAINSTUN,               // 坚忍：疼痛不再打断动作
+		TRAIT_HARDDISMEMBER,            // 难肢解：肢体更不易被卸下
+		TRAIT_DUALWIELDER,              // 双持者：可双手各持一把武器
+		TRAIT_COMBAT_AWARE,             // 战场警觉：临战感知更敏锐
+		TRAIT_HOLYWARRIOR,              // 圣战士：神圣战斗强化
+		TRAIT_ASSASSIN,                 // 刺客：暗杀技法
+		TRAIT_GRABIMMUNE,               // 势不可挡：免疫被擒抱
+		TRAIT_NATURALARMOR,             // 坚韧皮肤：天生护甲
+		TRAIT_HARDSHELL,                // 硬壳：额外护甲
+		TRAIT_BREADY,                   // 临战就绪：随时进入战斗状态
+		TRAIT_DECEIVING_MEEKNESS,       // 伪弱藏锋：示弱诱敌
+		TRAIT_NUTCRACKER,               // 碎卵者：攻击要害更狠
+		TRAIT_BASHDOORS,                // 破门者：徒手破门
+		TRAIT_SCALEARMOR,               // 风蚀鳞甲：鳞甲护体（法师护甲变体）
+		TRAIT_HELLSPAWN,                // 地狱后裔：15% 几率免于被点燃
+		TRAIT_ADRENALINE_RUSH,          // 肾上腺激涌：危急时迸发
+		TRAIT_REGROW_LIMBS,            // 肢体再生：消耗营养再生断肢
+		TRAIT_VENOMOUS,                 // 毒腺：啃咬带毒
+		TRAIT_COUNTERCOUNTERSPELL,      // 反反制咒：抵御反制法术
+		// —— 免疫 / 求生 ——
+		TRAIT_NOBREATH,                 // 无息：无需呼吸
+		TRAIT_TOXIMMUNE,                // 毒素免疫：免疫毒素
+		TRAIT_NOHUNGER,                 // 无饥：不会饥饿
+		TRAIT_ZOMBIE_IMMUNE,            // 尸鬼疫免疫：免疫亡者感染
+		TRAIT_UNLYCKERABLE,             // 莱克免疫：免疫莱克化
+		TRAIT_KNEESTINGER_IMMUNITY,     // 登多尔的赐福：免疫膝刺等
+		TRAIT_ROT_EATER,                // 佩斯特拉的赐福：可食用腐败食物
+		TRAIT_ORGAN_EATER,              // 格拉加尔的赐福：可食用器官
+		TRAIT_CRACKHEAD,                // 巴奥莎的赐福：永不过量
+		TRAIT_SEA_DRINKER,              // 深海之民：可饮海水
+		TRAIT_NASTY_EATER,              // 异种消化：可食腐败 / 毒物 / 浊水
+		TRAIT_WILD_EATER,               // 兽性消化：可食生 / 腐食与浊水
+		// —— 感知 / 视觉 / 潜行 ——
+		TRAIT_DARKVISION,               // 暗视：黑暗中视物
+		TRAIT_ZIZOSIGHT,                // 齐佐的赐福：暗处视物更清
+		TRAIT_NOCSIGHT,                 // 诺克的赐福：暗处视物更清
+		TRAIT_KEENEARS,                 // 灵敏耳朵：听觉敏锐
+		TRAIT_EXTEROCEPTION,            // 外感：可见他人饥渴
+		TRAIT_SOUL_EXAMINE,             // 内克拉的赐福：可查验尸体灵魂是否离去
+		TRAIT_HERETIC_SEER,             // 异端识者：识别异端
+		TRAIT_JUSTICARSIGHT,            // 拉沃克斯之赐：查看罪犯的悬赏 / 罪行
+		TRAIT_MATTHIOS_EYES,            // 马西奥斯之眼：看出他人最贵重的物品
+		TRAIT_EMPATH,                   // 共情者：洞悉他人情绪
+		TRAIT_LIGHT_STEP,               // 轻步：脚步无声
+		TRAIT_SLEUTH,                   // 追缉者：追查线索
+		TRAIT_WOODWALKER,               // 林行者：林地穿行自如
+		TRAIT_WEBWALK,                  // 网行者：蛛网间自由穿行
+		// —— 移动 ——
+		TRAIT_LONGSTRIDER,              // 长足者：移动更快
+		TRAIT_EQUESTRIAN,               // 骑术精湛：骑乘强化
+		// —— 工艺 / 职业技艺 ——
+		TRAIT_MEDICINE_EXPERT,          // 医道专家：精通医术
+		TRAIT_ALCHEMY_EXPERT,           // 炼金专家：精通炼金
+		TRAIT_SMITHING_EXPERT,          // 锻冶专家：精通锻造 / 冶炼 / 工程 / 采矿 / 制陶
+		TRAIT_SEWING_EXPERT,            // 纺缝专家：精通缝纫 / 制革 / 屠宰
+		TRAIT_SURVIVAL_EXPERT,          // 生存专家：精通屠宰 / 烹饪 / 捕鱼 / 制革
+		TRAIT_HOMESTEAD_EXPERT,         // 拓荒专家：精通全部劳作技艺
+		TRAIT_SELF_SUSTENANCE,          // 自给自足：解锁全部受限工艺技能
+		TRAIT_FUSILIER,                 // 火枪手：火器技艺
+		TRAIT_MASTER_CARPENTER,         // 木作大师：木工精通
+		TRAIT_MASTER_MASON,             // 石作大师：石工精通
+		TRAIT_TRAINED_SMITH,            // 受训铁匠：锻造加成
+		TRAIT_KAZENGUNITE_SMITH,        // 风郡锻艺：锻造加成
+		TRAIT_DWARF_REPAIR,             // 矮人工艺：修理加成
+		TRAIT_SQUIRE_REPAIR,            // 侍从技艺：修理加成
+		TRAIT_FORGEBLESSED,             // 玛勒姆的赐福：锻造耗力更少
+		TRAIT_DYES,                     // 染艺师：染色技艺
+		TRAIT_GOODWRITER,               // 妙笔文豪：书写技艺
+		TRAIT_SEEDKNOW,                 // 识种者：辨识种子
+		TRAIT_CAUTIOUS_FISHER,          // 谨慎渔夫：钓鱼加成
+		TRAIT_GRAVEROBBER,              // 老练盗墓贼：盗墓技艺
+		TRAIT_GOODTRAINER,              // 良师：教导他人更有效
+		TRAIT_OUTDOORSMAN,              // 野外行家：野外生存
+		TRAIT_WILDERNESSGUIDE,          // 荒野向导：荒野行进
+		TRAIT_WOODSMAN,                 // 老练林人：守护林地时本领更敏锐
+		TRAIT_GUARDSMAN,                // 警觉卫兵：守护城镇时本领更敏锐
+		TRAIT_RITUALIST,                // 仪式师：可用仪式粉笔
+		TRAIT_CICERONE,                 // 酒饮行家：精于品酒
+		TRAIT_HUMEN_INGENUITY,          // 人类巧思：睡眠升级更省
+		TRAIT_BLACKBAGGER,              // 缉拿技法：可用绞索 / 黑头套擒拿
+		TRAIT_ENGINEERING_GOGGLES,      // 工程护目镜：获得护目镜视效
+		// —— 魔法 ——
+		TRAIT_ARCYNE_T1,                // 奥术训练（新手）
+		TRAIT_ARCYNE_T2,                // 奥术训练（学徒）
+		TRAIT_ARCYNE_T3,                // 奥术训练（专家）
+		TRAIT_ARCYNE_T4,                // 奥术训练（大师）
+		TRAIT_MIRROR_MAGIC,             // 镜像魔法
+		TRAIT_RESONANCE,                // 共鸣施法者：为周围施法者提供增益
+		TRAIT_XYLIX_DEVOTEE,            // 赛利克斯命织者：命运 / 幸运加成
+		// —— 其它正向 ——
+		TRAIT_FASTSLEEP,                // 速眠者：入睡更快
+		TRAIT_STEELHEARTED,             // 铁心：血腥场面不影响心情
+		TRAIT_BEAUTIFUL,                // 美貌：容貌出众
+		TRAIT_APRICITY,                 // 暖阳恩沐：日间耐力恢复更快
+		TRAIT_ABYSSOR_SWIM,             // 阿比索尔的赐福：游泳耗力更少
+		TRAIT_XYLIX,                    // 赛利克斯的赐福：盗贼黑话
+		TRAIT_TOLERANT,                 // 宽容：不因异族而生恶感
+		TRAIT_SILVER_BLESSED,           // 银圣眷者：受银之祝福
+	)
+
+// render_trait_table：把"特性"页渲染成 HTML 表格（特性名 / 价格 / 操作）。
+//   已拥有的显示绿字"已拥有"（不可重复买）；买不起显示灰字"积分不足"；买得起给可点的"兑换"链接。
+/datum/component/rpg_system/proc/render_trait_table(mob/living/carbon/human/user)
+	var/list/defs = get_trait_catalog()
+	var/list/rows = list()
+	rows += "<div style='color:#95a5a6;margin-bottom:6px;'>兑换后永久获得对应正向特性（统一单价 [RPG_SYSTEM_TRAIT_COST] 积分，每项仅可兑换一次）。</div>"
+	rows += "<table width='100%' cellspacing='2' cellpadding='3'>"
+	rows += "<tr><th align='left'>特性</th><th width='90'>价格</th><th width='90'>操作</th></tr>"
+	var/idx = 0
+	for(var/trait in defs)
+		idx++
+		rows += "<tr>"
+		rows += "<td>[trait]</td>"                                                    // 特性串本身即可读名
+		rows += "<td align='center'>[RPG_SYSTEM_TRAIT_COST]</td>"
+		rows += "<td align='center'>"
+		if(HAS_TRAIT(user, trait))
+			rows += "<span style='color:#2ecc71'>已拥有</span>"                       // 已有：不可重复买
+		else if(points >= RPG_SYSTEM_TRAIT_COST)
+			rows += "<a href=\"?src=[REF(src)];buytrait=[idx]\">兑换</a>"             // 买得起：可点兑换
+		else
+			rows += "<span style='color:#7f8c8d'>积分不足</span>"                     // 买不起：灰字
+		rows += "</td></tr>"
+	rows += "</table>"
+	return jointext(rows, "")
+
+// do_buy_trait：实际的特性兑换结算（由 Topic 在玩家点击"兑换"时调用）。index = 行号。
+/datum/component/rpg_system/proc/do_buy_trait(mob/living/carbon/human/user, index)
+	// 防御：宿主状态校验。
+	if(!ishuman(parent) || user != parent || user.stat == DEAD)
+		return
+	var/list/defs = get_trait_catalog()
+	// 行号健壮性校验：越界忽略（防伪造 href）。
+	if(index < 1 || index > defs.len)
+		return
+	var/trait = defs[index]   // 第 index 个特性串
+	// 已拥有则不重复扣费 / 不重复添加（HAS_TRAIT 复核，与渲染口径一致）。
+	if(HAS_TRAIT(user, trait))
+		to_chat(user, span_warning("【系统提示】你已拥有【[trait]】，无需重复兑换。"))
+		return
+	// 积分校验：不足则提示，不扣分。
+	if(points < RPG_SYSTEM_TRAIT_COST)
+		to_chat(user, span_warning("【系统提示】积分不足。需要 [RPG_SYSTEM_TRAIT_COST]，你只有 [points]。"))
+		return
+	// 扣费并永久授予特性。来源用本系统专属标签，便于识别 / 将来统一清理，且不与别处来源冲突。
+	points -= RPG_SYSTEM_TRAIT_COST
+	ADD_TRAIT(user, trait, RPG_SYSTEM_TRAIT_SOURCE)
+	// 反馈兑换结果与剩余积分。
+	to_chat(user, span_green("【系统提示】兑换成功，永久获得特性【[trait]】，花费 [RPG_SYSTEM_TRAIT_COST] 积分。（剩余积分：[points]）"))
+	playsound(user, 'sound/misc/click.ogg', 50, FALSE)
+
 // ============================================================================
 // Topic：HTML 系统面板的点击事件总入口。
 // 为什么在组件上实现：面板里的每个链接都是 ?src=[REF(本组件)];key=value，BYOND 会把点击
@@ -1071,7 +1274,7 @@
 	if(href_list["tab"])
 		var/new_tab = href_list["tab"]
 		// 仅接受白名单内的页签 id，过滤伪造值。
-		if(new_tab in list("weapon", "equipment", "consumable", "material", "magic", "delicacy", "artifact", "stat", "skill"))
+		if(new_tab in list("weapon", "equipment", "consumable", "material", "magic", "delicacy", "artifact", "trait", "stat", "skill"))
 			current_tab = new_tab
 	// ---- 购买商品 ----（buyitem = 行号；itemtab = 该行所属页签）
 	else if(href_list["buyitem"])
@@ -1082,6 +1285,9 @@
 	// ---- 强化技能 ----（enhskill = 行号）
 	else if(href_list["enhskill"])
 		do_enhance_skill(user, text2num(href_list["enhskill"]))
+	// ---- 兑换特性 ----（buytrait = 行号）
+	else if(href_list["buytrait"])
+		do_buy_trait(user, text2num(href_list["buytrait"]))
 	// 任一动作处理完毕后整窗重绘，使资源 / 可负担状态 / 当前值即时刷新（无动作的未知 href 也只是重绘）。
 	render_ui(user)
 
@@ -1118,3 +1324,5 @@
 #undef RPG_SYSTEM_MIN_KILL_POINTS
 #undef RPG_SYSTEM_STAT_COST_BASE
 #undef RPG_SYSTEM_SKILL_COST_BASE
+#undef RPG_SYSTEM_TRAIT_COST
+#undef RPG_SYSTEM_TRAIT_SOURCE
