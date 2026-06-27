@@ -28,10 +28,10 @@
 //          ② 按【现成配方家族】：base_recipe，要求材料气味积分最高项为某现成配方(兼容旧式写法)。
 //        未来新增配方只需继承它、用【现成气味/现成液体】填好字段——不触碰任何材料，符合"只用原版材料"。
 //     3) ★酒基设定★：若配方的液体底料含【任意酒类】(乙醇子类，泛指游戏内所有酒)，则其成品为"酒基药剂"——
-//        喝下会像喝酒一样【上头醉酒】。酒劲(boozepwr) = 【所用酒底的酒劲(加权平均)】 + 【所需技能加成】，
-//        并封顶在安全值：即"酒底越烈、所需技能越高，成品越烈"。出炉时炼药锅算出酒劲写入成品试剂的 data，
+//        喝下会像喝酒一样【上头醉酒】。酒劲(boozepwr) = 【酒底酒精含量(=酒劲×酒在底料中的占比)】 +
+//        【少量技能加成】并封顶：即主要看"用什么酒、酒占多大比例"，技能只小幅微调。出炉时炼药锅算出酒劲写入成品试剂的 data，
 //        随装瓶/转移保留；成品继承 /datum/reagent/consumable/ethanol/refined_potion 即自动享有此设定
-//        (见 0 节常量与 is_alcoholic()/get_base_alcohol_strength()/get_boozepwr())。
+//        (见 0 节常量与 is_alcoholic()/get_base_alcohol_content()/get_boozepwr())。
 //
 //   本文件全部内容位于 modular_z121 根目录之下，符合项目硬性约束。
 // ============================================================================
@@ -40,16 +40,20 @@
 // ============================================================================
 // 0) "酒基药剂"设定常量 —— 让以酒为底的精炼药剂"喝起来像喝酒"，且技能越高酒劲越烈。
 // ----------------------------------------------------------------------------
-// 中文：成品酒劲(boozepwr) = 【所用酒底的酒劲】 + 【技能加成】，并设安全上限。
-//   · 酒底酒劲：取底料中各酒类(乙醇子类)按用量【加权平均】的原版 boozepwr —— 用越烈的酒，成品越烈。
-//   · 技能加成：PER_SKILL * skill_required —— 所需炼金技能越高，越烈。
-//   · 上限 MAX：避免酒劲过高(原版 91+ 会醉死)，封顶在 80(≈烂醉但不致死)。
+// 中文：成品酒劲(boozepwr) = 【酒底的"酒精含量"】 + 【少量技能加成】，并设安全上限。
+//   · 酒底酒精含量(主导项)：= Σ(各酒类 boozepwr × 用量) ÷ 【整份底料总量】。
+//     这等价于"酒底强度 × 酒在底料中的占比"——掺的水/油越多、酒占比越低，成品就越淡；纯酒则等于该酒原版酒劲。
+//   · 技能加成(次要项)：PER_SKILL * skill_required。已【大幅调小】PER_SKILL，弱化技能对酒劲的干扰，
+//     使酒劲主要由"用什么酒、酒占多大比例"决定，而非由所需技能决定。
+//   · 上限 MAX：避免酒劲过高(原版 91+ 会醉死)，封顶在 80。
 //   参考(原版 boozepwr)：淡啤酒=5、葡萄酒=30；35-40≈微醺、41-50≈一般醉、51-70≈大醉、71+≈烂醉。
-//   举例(技能数值：学徒2/老手3/专家4/大师5/传奇6)：
-//     葡萄酒底(30)+学徒(2) → 30+16=46(一般醉)；葡萄酒底+传奇(6) → 30+48=78(大醉，封顶内)；
-//     淡啤酒底(5)+学徒(2) → 5+16=21(微醺)。可见"酒越烈"与"技能越高"都会抬高酒劲。
-// WHY a formula: 用户要"通用设定"，对【所有】酒基精炼药剂自动生效，且同时受【技能】与【酒底强度】两方面影响。
-#define ALCOHOL_POTION_BOOZE_PER_SKILL 8			// Skill contribution per required alchemy level.
+//   举例(技能数值：学徒2/专家4/大师5)：
+//     纯葡萄酒底(占比100%)+学徒 → 30 + 2×2 = 34；
+//     水50+葡萄酒50(占比50%)+专家 → 30×0.5=15 + 2×4=8 → 23；
+//     水50+葡萄酒50+板油20(占比≈42%)+大师 → 30×50/120≈12.5 + 2×5=10 → 23。
+//     可见酒劲主要随"酒的占比/烈度"变化，技能只是小幅微调。
+// WHY: 用户要求酒劲与"酒在底料中的占比"挂钩，并削弱所需技能对酒劲的干扰。
+#define ALCOHOL_POTION_BOOZE_PER_SKILL 2			// Small skill contribution per level (reduced from 8).
 #define ALCOHOL_POTION_MAX_BOOZE 80				// Safety cap (keep below the lethal 91+ band).
 
 
@@ -59,6 +63,10 @@
 //   未来新增配方：继承本类，填 base_recipe / required_base / output_reagents 即可，全部使用【现成】路径。
 // ============================================================================
 /datum/alch_refining_formula
+	// 中文：抽象基类标记——配方书据此(is_abstract)只列出【子类】(具体配方)，不列出本基类。
+	abstract_type = /datum/alch_refining_formula			// Base is abstract; only concrete formulas list.
+	// 中文：配方书中的分类名——固定归入"精炼药剂"区(见 refining_guide.dm 对炼金秘要的扩展)。
+	var/category = "精炼药剂"								// Recipe-book category (Refined Potions).
 	// 中文：配方名(成功提示/调试用)。
 	var/name = "精炼药剂"									// Display name.
 	// ========================================================================
@@ -96,36 +104,36 @@
 			return TRUE										// It's an alcohol-based potion.
 	return FALSE											// No alcohol in the base.
 
-// 中文：取底料中各【酒类】组分按用量【加权平均】的原版酒劲(boozepwr)——代表"所用酒水本身有多烈"。
-// WHY weighted by amount: 复合酒底(如 啤酒+威士忌)按各自用量折中；非酒组分(水/油等)不计入。
-//      用 initial(E.boozepwr) 读取该酒类型的【出厂酒劲】(E 只是持有类型路径，不实例化)。
-/datum/alch_refining_formula/proc/get_base_alcohol_strength()
-	// 中文：累计"酒类用量"与"酒劲×用量"，用于求加权平均。
-	var/total_amount = 0									// Sum of alcoholic base amounts.
-	var/total_weighted = 0									// Sum of (boozepwr * amount).
+// 中文：取底料的"酒精含量"——= Σ(各酒类 boozepwr × 用量) ÷ 【整份底料总量】。
+//   分母用【整份底料总量】(含水/油等非酒组分)，因此天然体现"酒在底料中的占比"：掺得越稀、含量越低。
+//   数学上等价于"酒底强度(加权平均 boozepwr) × 酒占比"。
+// WHY: 用户要求酒劲与"酒在底料中的占比"挂钩。用 initial(E.boozepwr) 读取该酒类型的出厂酒劲(E 只持有类型路径)。
+/datum/alch_refining_formula/proc/get_base_alcohol_content()
+	// 中文：分别累计"整份底料总量"与"酒劲×用量"。
+	var/total_base_volume = 0								// Sum of ALL base amounts (the denominator/proportion).
+	var/total_weighted = 0									// Sum of (boozepwr * amount) over alcoholic parts.
 	for(var/base_reagent in required_base)					// Each liquid-base component.
-		// 中文：跳过非酒组分(水、板油等)。
+		var/amount = required_base[base_reagent]			// Its amount in the base.
+		total_base_volume += amount							// All components count toward the total volume.
+		// 中文：只有酒类(乙醇子类)贡献酒劲；水/板油等不计入分子。
 		if(!ispath(base_reagent, /datum/reagent/consumable/ethanol))	// Not an alcoholic beverage.
 			continue
-		// 中文：把类型路径放进带类型的变量，便于用 initial() 读它的出厂酒劲。
 		var/datum/reagent/consumable/ethanol/E = base_reagent	// Typed handle for initial().
-		var/amount = required_base[base_reagent]			// How much of this drink the base uses.
-		total_amount += amount								// Tally amount.
-		total_weighted += initial(E.boozepwr) * amount		// Tally strength-weighted-by-amount.
-	// 中文：没有酒(理论上 is_alcoholic 已挡住) → 0。
-	if(total_amount <= 0)									// No alcohol present.
+		total_weighted += initial(E.boozepwr) * amount		// Add this drink's strength-weighted-by-amount.
+	// 中文：空底料 → 0。
+	if(total_base_volume <= 0)								// No base at all.
 		return 0
-	// 中文：加权平均酒劲。
-	return total_weighted / total_amount					// Amount-weighted average boozepwr.
+	// 中文：除以整份底料总量 → 体现酒的占比。
+	return total_weighted / total_base_volume				// boozepwr averaged over the WHOLE base (proportion-aware).
 
-// 中文：计算本配方成品应携带的酒精强度(boozepwr)。非酒基 → 0；酒基 → 【酒底酒劲 + 技能加成】并封顶。
-// WHY: 把"酒越烈/技能越高都更烈、但不致死"的设定收敛到一处，对所有酒基配方统一生效。
+// 中文：计算本配方成品应携带的酒精强度(boozepwr)。非酒基 → 0；酒基 → 【酒底酒精含量 + 少量技能加成】并封顶。
+// WHY: 酒劲主要由"酒底含量/占比"决定，技能只小幅微调(PER_SKILL 已调小)；并封顶避免致死。
 /datum/alch_refining_formula/proc/get_boozepwr()
 	// 中文：非酒基配方不产生酒劲。
 	if(!is_alcoholic())										// Not alcohol-based.
 		return 0
-	// 中文：成品酒劲 = 酒底加权平均酒劲 + 每级技能加成 * 所需技能等级。
-	var/strength = get_base_alcohol_strength() + (ALCOHOL_POTION_BOOZE_PER_SKILL * skill_required)	// Base-drink + skill.
+	// 中文：成品酒劲 = 酒底酒精含量(主导) + 每级技能加成(次要) * 所需技能等级。
+	var/strength = get_base_alcohol_content() + (ALCOHOL_POTION_BOOZE_PER_SKILL * skill_required)	// Content + small skill.
 	// 中文：四舍五入并封顶到安全上限，避免出现"喝一口就醉死"的成品。
 	return min(round(strength), ALCOHOL_POTION_MAX_BOOZE)	// Rounded & capped.
 
@@ -376,24 +384,6 @@ GLOBAL_LIST_EMPTY(alch_refining_formulas)					// Lazily-filled list of all formu
 // 4) 成品试剂(产出，非"输入材料"，符合"材料须现成、成品可新建")。
 // ============================================================================
 
-// --- 凝脂润肤膏：示例一(复合底料)的产物 ---
-// 中文：归入药剂大类；每代谢一拍温和愈合烧伤与轻微外伤。
-/datum/reagent/medicine/tallow_salve
-	name = "凝脂润肤膏"										// In-game name.
-	description = "循生命草木的气味、以清水与板油复合为底在炼药锅中精炼而成的温润药膏，能舒缓灼伤、抚平皮肉的细小创口。"	// Flavour + hint.
-	reagent_state = LIQUID									// Salve liquid.
-	color = "#e8c873"										// Warm tallow-yellow.
-	taste_description = "油脂的暖香"							// Taste flavour.
-	metabolization_rate = REAGENTS_METABOLISM				// Standard metabolism.
-
-// 中文：每代谢一拍的疗效——主疗烧伤、辅疗外伤。
-/datum/reagent/medicine/tallow_salve/on_mob_life(mob/living/carbon/M)
-	if(!M || QDELETED(M))									// Guard against missing/deleting mob.
-		return ..()
-	M.adjustFireLoss(-3)									// Soothe burns.
-	M.adjustBruteLoss(-1)									// Minor brute mending.
-	return ..()
-
 // --- 酒基药剂基类：所有"以酒为底"的精炼成品都应继承它 ---
 // 中文：继承 /datum/reagent/consumable/ethanol，从而获得原版【完整的醉酒逻辑】(父类 on_mob_life 会按
 //       boozepwr 累加 drunkenness)；其酒劲 boozepwr 由炼药锅出炉时按"配方技能"写入试剂的 data，于此处
@@ -436,31 +426,138 @@ GLOBAL_LIST_EMPTY(alch_refining_formulas)					// Lazily-filled list of all formu
 	return ..()												// -> ethanol on_mob_life: apply drunkenness at brewed boozepwr.
 
 
+// --- 温酒：本次新增配方的产物，亦为一味【酒基药剂】 ---
+// 中文：成品试剂——温酒(Warm wine)。继承酒基药剂基类，故喝下会像喝酒一样上头(酒劲随配方技能/酒底而定)；
+//       并在【代谢持续期间】赋予【抗寒】——免疫寒冷伤害，待药剂代谢殆尽即消失。
+/datum/reagent/consumable/ethanol/refined_potion/warm_wine
+	name = "温酒"											// In-game name (Warm wine).
+	description = "循甜浆果的气味、以清水与醇酒各半为底精炼的温热酒剂。一股暖流自腹中升起，将彻骨的寒意尽数驱散。"	// Flavour + hint.
+	color = "#9b3b3b"										// Warm mulled-wine red.
+	taste_description = "暖暖的香料酒"						// Taste flavour.
+	boozepwr = 30											// Fallback; overridden per-brew (base drink + skill).
+
+// 中文：代谢开始时——先经父链按 data 设定酒劲，再赋予"抗寒"特性。
+//   来源标签用唯一字符串 "warm_wine_potion"，以便结束时精确移除、且不会误删该 mob 自带(如哥布林)的抗寒。
+/datum/reagent/consumable/ethanol/refined_potion/warm_wine/on_mob_metabolize(mob/living/M)
+	. = ..()												// refined_potion: pull boozepwr from data first.
+	// 中文：赋予抗寒——人/猴/亡魂等的生命循环在 HAS_TRAIT(TRAIT_RESISTCOLD) 时跳过寒冷伤害，即"免疫寒冷"。
+	ADD_TRAIT(M, TRAIT_RESISTCOLD, "warm_wine_potion")		// Cold immunity for the potion's duration.
+
+// 中文：代谢结束(药剂耗尽/被清除)时——移除本药施加的抗寒来源，恢复原状。
+/datum/reagent/consumable/ethanol/refined_potion/warm_wine/on_mob_end_metabolize(mob/living/M)
+	// 中文：仅移除"温酒"这一来源；若该 mob 本就自带抗寒(如哥布林)，不受影响。
+	REMOVE_TRAIT(M, TRAIT_RESISTCOLD, "warm_wine_potion")	// Drop the cold immunity when it runs out.
+	return ..()												// Let the base finish up.
+
+// --- 克林卡特(Klinkat)：本次新增配方的产物，亦为一味【酒基药剂】 ---
+// 中文：成品试剂——克林卡特(Klinkat)。继承酒基药剂基类，喝下会像喝酒一样上头；
+//       并在【代谢持续期间】赋予【免疫致命一击(暴击/重创)】——持续刷新暴击抗性，使重创无从落下。
+/datum/reagent/consumable/ethanol/refined_potion/klinkat
+	name = "克林卡特"										// In-game name (Klinkat).
+	description = "循力量的气味、以清水、醇酒与板油为底精炼的浓厚酒剂，名曰'克林卡特'。饮下后筋骨仿佛裹上一层无形钢壳，再凶险的致命一击也难以撕开。"	// Flavour + hint.
+	color = "#6b4a8c"										// Deep arcane purple.
+	taste_description = "沉重而辛烈的酒"						// Taste flavour.
+	boozepwr = 30											// Fallback; overridden per-brew (base drink + skill).
+
+// 中文：代谢开始时——先经父链按 data 设定酒劲，再赋予暴击抗性特性(它是 try_resist_critical() 生效的前提)。
+//   来源标签用唯一字符串 "klinkat_potion"，以便结束时精确移除、且不误删该 mob 自带的暴击抗性。
+/datum/reagent/consumable/ethanol/refined_potion/klinkat/on_mob_metabolize(mob/living/M)
+	. = ..()												// refined_potion: pull boozepwr from data first.
+	ADD_TRAIT(M, TRAIT_CRITICAL_RESISTANCE, "klinkat_potion")	// Enable crit resistance for the duration.
+
+// 中文：每代谢一拍——清除"暴击抗性冷却"(crit_resistance_cd)，使抗性计数永不累积到失效阈值，从而【持续免疫暴击】。
+//   原版机制：仅有 TRAIT_CRITICAL_RESISTANCE 时，try_resist_critical 只能挡下冷却窗口内"前几次"重创；
+//   每拍把该冷却跟踪器重置，则每次重创都按"第一次"被挡下 ≈ 整段持续期间免疫致命一击。
+/datum/reagent/consumable/ethanol/refined_potion/klinkat/on_mob_life(mob/living/carbon/M)
+	if(!M || QDELETED(M))									// Guard against missing/deleting mob.
+		return ..()
+	M.remove_status_effect(/datum/status_effect/debuff/crit_resistance_cd)	// Keep crit immunity from lapsing.
+	return ..()												// -> ethanol on_mob_life: apply drunkenness at brewed boozepwr.
+
+// 中文：代谢结束(药剂耗尽/被清除)时——移除本药施加的暴击抗性来源，恢复原状。
+/datum/reagent/consumable/ethanol/refined_potion/klinkat/on_mob_end_metabolize(mob/living/M)
+	REMOVE_TRAIT(M, TRAIT_CRITICAL_RESISTANCE, "klinkat_potion")	// Drop the crit immunity when it runs out.
+	return ..()												// Let the base finish up.
+
+// --- 隐身药水：本次新增配方的产物(底料无酒，故为普通试剂，不带酒劲) ---
+// 中文：成品试剂——隐身药水。复用原版【隐形术】的隐身机制：把 alpha 渐隐为 0，并把 mob_timers[MT_INVISIBILITY]
+//       推到未来——只要该计时器在未来，原版 update_sneak_invis() 就会让其保持隐形(rogue_sneaking)。
+//       每代谢一拍刷新该计时器(并在被某些动作显形后重新淡隐)，使隐身【持续整个代谢期】；药剂耗尽即现形。
+/datum/reagent/invisibility_potion
+	name = "隐身药水"										// In-game name (Invisibility Potion).
+	description = "循纯净的气味、以清水与魔力药水为底精炼的澄澈药水。饮下后身形如薄雾般淡去，隐没于无形之中。"	// Flavour + hint.
+	reagent_state = LIQUID									// Liquid potion.
+	color = "#cfe8ffaa"										// Pale, near-transparent blue.
+	taste_description = "几乎尝不出的清冽"					// Taste flavour (almost nothing).
+	metabolization_rate = REAGENTS_METABOLISM				// Standard metabolism (controls duration).
+
+// 中文：代谢开始时——渐隐为 0、设置隐形计时器、并调用 update_sneak_invis() 即时进入隐形态。
+/datum/reagent/invisibility_potion/on_mob_metabolize(mob/living/M)
+	. = ..()												// Base setup.
+	// 中文：提示与淡隐(1 秒渐隐到全透明)。
+	M.visible_message(span_warning("[M]开始在空气中渐渐淡去！"), span_notice("我的身形开始隐没。"))	// Fade-out message.
+	animate(M, alpha = 0, time = 1 SECONDS, easing = EASE_IN)	// Visually turn invisible.
+	// 中文：把隐形计时器推到未来；原版 update_sneak_invis 据此维持隐形。每拍会刷新它(见 on_mob_life)。
+	M.mob_timers[MT_INVISIBILITY] = world.time + 10 SECONDS	// Keep-alive window (refreshed each life tick).
+	M.update_sneak_invis()									// Enter the sneaking/invisible state now.
+
+// 中文：每代谢一拍——刷新隐形计时器(防止中途到期)，并在因攻击/受击等被显形后重新淡隐，确保"持续隐身"。
+/datum/reagent/invisibility_potion/on_mob_life(mob/living/carbon/M)
+	if(!M || QDELETED(M))									// Guard against missing/deleting mob.
+		return ..()
+	// 中文：持续把计时器顶在未来，使隐身贯穿整个代谢期(代谢结束才由 end_metabolize 显形)。
+	M.mob_timers[MT_INVISIBILITY] = world.time + 10 SECONDS	// Refresh keep-alive.
+	// 中文：若某些动作把 alpha 调回(显形)，则重新淡隐并刷新隐形态。
+	if(M.alpha != 0)										// Got revealed by some action?
+		animate(M, alpha = 0, time = 0.5 SECONDS)			// Fade back to invisible.
+		M.update_sneak_invis()								// Re-assert the invisible state.
+	return ..()												// Standard metabolism finish.
+
+// 中文：代谢结束(药剂耗尽/被清除)时——清空隐形计时器并以 reset=TRUE 强制现形(恢复 alpha)。
+/datum/reagent/invisibility_potion/on_mob_end_metabolize(mob/living/M)
+	M.mob_timers[MT_INVISIBILITY] = 0						// Drop the invisibility keep-alive.
+	M.update_sneak_invis(TRUE)								// Force reveal + restore alpha (reset path).
+	M.visible_message(span_warning("[M]重新显现在众人眼前。"), span_notice("我重新显露了身形。"))	// Reappear message.
+	return ..()												// Let the base finish up.
+
+// --- 驱兽药水：本次新增配方的产物(底料无酒，故为普通试剂) ---
+// 中文：成品试剂——驱兽药水。原版"伏击系统"在玩家采集(踩踏草丛/折断树枝/采石采纤等)时调用
+//       consider_ambush()，并由 get_will_block_ambush() 判定：若该 mob 的 ambushable() 为假即直接拦下、
+//       不刷怪。故本药在【代谢期间】把饮用者的 ambushable 置为 FALSE → 采集不再凭空引出怪物；结束即还原。
+/datum/reagent/monster_repel_potion
+	name = "驱兽药水"										// In-game name (Monster-Repelling Potion).
+	description = "循平静的气味、以清水与魔力药水为底精炼的安神药水。饮下后周身萦绕一缕宁和气息，蛰伏的野兽与怪物再不会因你的惊扰而扑出。"	// Flavour + hint.
+	reagent_state = LIQUID									// Liquid potion.
+	color = "#8fbf8f"										// Calm sage green.
+	taste_description = "草木的宁和"							// Taste flavour.
+	metabolization_rate = REAGENTS_METABOLISM				// Standard metabolism (controls duration).
+	// 中文：保存施加前的 ambushable 原值，结束时精确还原(无论该 mob 原本可否被伏击)。
+	//   同一瓶药从代谢开始到结束是同一个试剂实例，故用实例变量保存/读取即可，无需 data。
+	var/prev_ambushable = TRUE								// Saved prior ambush state.
+
+// 中文：代谢开始时——记录原 ambushable 并置 FALSE，使采集动作不再触发伏击刷怪。
+/datum/reagent/monster_repel_potion/on_mob_metabolize(mob/living/M)
+	. = ..()												// Base setup.
+	prev_ambushable = M.ambushable							// Remember the prior state.
+	M.ambushable = FALSE									// Suppress ambush spawns for the duration.
+	to_chat(M, span_notice("一缕宁和的气息萦绕周身，蛰伏的野兽仿佛不再留意到我。"))	// Feedback on drink.
+
+// 中文：代谢结束(药剂耗尽/被清除)时——还原 ambushable 原值。
+/datum/reagent/monster_repel_potion/on_mob_end_metabolize(mob/living/M)
+	M.ambushable = prev_ambushable							// Restore the prior ambush state.
+	to_chat(M, span_warning("那缕驱避野兽的宁和气息渐渐消散了。"))	// Feedback on expiry.
+	return ..()												// Let the base finish up.
+
+
 // ============================================================================
 // 5) 示例精炼配方(全部使用【现成材料 + 现成液体】，未新增任何材料)。
 // ----------------------------------------------------------------------------
-// 中文：玩家用【原版材料】把气味凑够要求，再配上指定【液体底料】即可精炼出新药。两种触发方式各演示一例：
-//   · 示例一(气味档②·按现成配方家族)：材料气味指向"生命药水"
-//             (如 聚合草[major=生命药水] + 蒲公英[med=生命药水] = 5 点)，
-//             配【复合底料 水60 + 板油30】→ 凝脂润肤膏。(同样的材料若只配清水，则回退炼成普通生命药水。)
-//   · 示例二(气味档①·按气味等级)：要求【5 级"春日"气味】
-//             (如 玫瑰[major=春日,3] + 沼泽烟叶粉[major=春日,3] = 6 点)，
-//             配【单一底料 葡萄酒90】→ 暖心酒剂。无需镜像任何现成配方。
+// 中文：玩家用【原版材料】把气味凑够要求，再配上指定【液体底料】即可精炼出新药。下列配方全部采用
+//       气味档①(按气味等级触发)——要求某种现成气味累计达 5 点，无需镜像任何现成配方。
+//       (框架仍保留气味档②"按现成配方家族 base_recipe"的能力，当前示例未使用。)
 // ============================================================================
 
-// 中文：示例一——复合底料(水 + 油)，把"生命药水家族"的材料精炼成凝脂润肤膏。
-/datum/alch_refining_formula/tallow_salve
-	name = "凝脂润肤膏"										// Formula name.
-	// 中文：材料气味须指向【现成的"生命药水"配方】。
-	base_recipe = /datum/alch_cauldron_recipe/health_potion	// Existing recipe the materials smell like.
-	// 中文：★复合底料★ 水 60 + 板油 30(均为现成试剂；板油＝leaf lard，比通用燃油更贴合"凝脂"药膏)。
-	required_base = list(/datum/reagent/water = 60, /datum/reagent/consumable/oil/tallow = 30)	// Composite base (water + tallow/leaf-lard).
-	// 中文：产物——60 单位凝脂润肤膏。
-	output_reagents = list(/datum/reagent/medicine/tallow_salve = 60)	// Refined output.
-	// 中文：成功气味词。
-	smells_like = "温润油脂"									// Success scent.
-
-// 中文：示例二——★按气味等级★触发(气味档①)：要求【5 级"春日"(春季)气味】+ 单一葡萄酒底料 → 暖心酒剂。
+// 中文：示例一——★按气味等级★触发(气味档①)：要求【5 级"春日"(春季)气味】+ 单一葡萄酒底料 → 暖心酒剂。
 //       不镜像任何现成配方，纯靠气味等级。带"春日"气味的现成材料：玫瑰、沼泽烟叶粉(各 3 级)，
 //       两味同投即 6 点 >= 5，满足"5 级春日气味"。
 /datum/alch_refining_formula/heart_tonic
@@ -470,13 +567,89 @@ GLOBAL_LIST_EMPTY(alch_refining_formulas)					// Lazily-filled list of all formu
 	required_scent_points = 5								// ...at level 5 (>= 5 accumulated points).
 	// 中文：★单一替代底料★ 只用葡萄酒 90(完全不用水)。
 	required_base = list(/datum/reagent/consumable/ethanol/wine = 90)	// Single non-water base.
-	// 中文：产物——60 单位暖心酒剂(酒基药剂；因底料为葡萄酒，出炉时会按本配方技能附带酒劲)。
-	output_reagents = list(/datum/reagent/consumable/ethanol/refined_potion/heartwarming_tonic = 60)	// Refined alcoholic output.
+	// 中文：产物——50 单位暖心酒剂(酒基药剂；因底料为葡萄酒，出炉时会按本配方技能附带酒劲)。
+	output_reagents = list(/datum/reagent/consumable/ethanol/refined_potion/heartwarming_tonic = 50)	// Refined alcoholic output.
 	// 中文：成功气味词。
 	smells_like = "醇酒暖意"									// Success scent.
-	// 中文：本配方为【酒基】(底料为葡萄酒，boozepwr 30)：成品喝下会像喝酒一样上头。
-	//       酒劲＝酒底30 + 技能加成(学徒2×8=16) = 46(一般醉)。把 skill_required 调高、或换更烈的酒底，酒劲随之增强。
+	// 中文：本配方为【酒基】(纯葡萄酒底，占比100%，boozepwr 30)：成品喝下会像喝酒一样上头。
+	//       酒劲＝酒底含量30(纯酒) + 技能加成(学徒2×2=4) = 34(微醺)。换更烈的酒、或提高酒在底料中的占比，酒劲随之增强。
 	skill_required = SKILL_LEVEL_APPRENTICE					// Skill gate (also feeds the alcohol strength).
+
+// 中文：示例三(本次新增)——★按气味等级★：要求【5 级"甜浆果"气味】+ 复合底料(水50 + 葡萄酒50) → 温酒。
+//       "甜浆果"是【生命药水】配方的气味；带它的现成材料(指向生命药水)有：聚合草[major,3]、荨麻[major,3]、
+//       缬草[major,3]、蒲公英[med,2]、内脏[med,2]、尾骨[med,2] 等；如 聚合草(3)+蒲公英(2)=5 即满足。
+//       底料含葡萄酒(水50+酒50，占比50%) → 温酒为酒基药剂(酒底含量30×0.5=15 + 专家4×2=8 → 酒劲 23，微醺)。
+//       成品效果：代谢期间【免疫寒冷】(TRAIT_RESISTCOLD)。
+/datum/alch_refining_formula/warm_wine
+	name = "温酒"											// Formula name.
+	// 中文：★气味档①★ 要求"甜浆果"气味累计达到 5 点(即"5 份甜浆果")。
+	required_scent = "甜浆果"								// Require the sweet-berry scent...
+	required_scent_points = 5								// ...at level 5 (>= 5 accumulated points).
+	// 中文：★复合底料★ 水 50 + 葡萄酒 50(各半)。
+	required_base = list(/datum/reagent/water = 50, /datum/reagent/consumable/ethanol/wine = 50)	// Composite base (half water, half wine).
+	// 中文：产物——50 单位温酒(酒基药剂；因底料含葡萄酒，按"酒底+技能"附带酒劲)。
+	output_reagents = list(/datum/reagent/consumable/ethanol/refined_potion/warm_wine = 50)	// Refined alcoholic output.
+	// 中文：所需技能——专家(同时抬高酒劲，见酒基设定)。
+	skill_required = SKILL_LEVEL_EXPERT						// Expert gate (also feeds the alcohol strength).
+	// 中文：成功气味词。
+	smells_like = "温热的果酒香"								// Success scent.
+
+// 中文：示例四(本次新增)——★按气味等级★：要求【5 级"力量"气味】+ 复合底料(水50 + 葡萄酒50 + 板油20) → 克林卡特。
+//       "力量"是【魔力灵药】配方的气味；带它的现成材料(指向魔力灵药)有：骨粉[major,3]、魔力花粉[major,3]、
+//       浆果粉[med,2] 等；如 骨粉(3)+浆果粉(2)=5 即满足。
+//       底料含葡萄酒(水50+酒50+板油20，酒占比≈42%) → 克林卡特为酒基药剂(酒底含量30×50/120≈12.5 + 大师5×2=10 → 酒劲 23，微醺)。
+//       成品效果：代谢期间【免疫致命一击(暴击/重创)】。
+/datum/alch_refining_formula/klinkat
+	name = "克林卡特"										// Formula name.
+	// 中文：★气味档①★ 要求"力量"气味累计达到 5 点(即"5 份力量")。
+	required_scent = "力量"									// Require the "power" scent...
+	required_scent_points = 5								// ...at level 5 (>= 5 accumulated points).
+	// 中文：★复合底料★ 水 50 + 葡萄酒 50 + 板油 20。
+	required_base = list(/datum/reagent/water = 50, /datum/reagent/consumable/ethanol/wine = 50, /datum/reagent/consumable/oil/tallow = 20)	// Composite base.
+	// 中文：产物——30 单位克林卡特(酒基药剂；因底料含葡萄酒，按"酒底+技能"附带酒劲)。
+	output_reagents = list(/datum/reagent/consumable/ethanol/refined_potion/klinkat = 30)	// Refined alcoholic output.
+	// 中文：所需技能——大师(同时抬高酒劲，见酒基设定)。
+	skill_required = SKILL_LEVEL_MASTER						// Master gate (also feeds the alcohol strength).
+	// 中文：成功气味词。
+	smells_like = "厚重的酒香"								// Success scent.
+
+// 中文：示例五(本次新增)——★按气味等级★：要求【5 级"纯净"气味】+ 复合底料(水70 + 魔力药水30) → 隐身药水。
+//       "纯净"是【强效解毒剂】配方的气味；带它的现成材料(指向强效解毒剂)有：银粉[major,3]、尾骨[major,3]、
+//       精制盐[med,2] 等；如 银粉(3)+精制盐(2)=5 即满足。
+//       底料：水70 + 魔力药水30(均为现成试剂；魔力药水在此作为液体底料组分，无酒 → 成品非酒基)。
+//       成品效果：代谢期间【隐身】。
+/datum/alch_refining_formula/invisibility
+	name = "隐身药水"										// Formula name.
+	// 中文：★气味档①★ 要求"纯净"气味累计达到 5 点(即"5 份纯净")。
+	required_scent = "纯净"									// Require the "purity" scent...
+	required_scent_points = 5								// ...at level 5 (>= 5 accumulated points).
+	// 中文：★复合底料★ 水 70 + 魔力药水 30。
+	required_base = list(/datum/reagent/water = 70, /datum/reagent/medicine/manapot = 30)	// Composite base (water + mana potion).
+	// 中文：产物——30 单位隐身药水。
+	output_reagents = list(/datum/reagent/invisibility_potion = 30)	// Refined output.
+	// 中文：所需技能——大师。
+	skill_required = SKILL_LEVEL_MASTER						// Master gate.
+	// 中文：成功气味词。
+	smells_like = "缥缈无形"									// Success scent.
+
+// 中文：示例六(本次新增)——★按气味等级★：要求【5 级"平静"气味】+ 复合底料(水70 + 魔力药水30) → 驱兽药水。
+//       "平静"是【七叶草药剂】配方的气味；带它的现成材料(指向七叶草药剂)有：艾蒿[major,3]、炼金奥兹姆[med,2]；
+//       如 艾蒿(3)+炼金奥兹姆(2)=5 即满足。
+//       底料：水70 + 魔力药水30(均为现成试剂，无酒 → 成品非酒基)。
+//       成品效果：代谢期间，饮用者采集(踩草丛/折树枝等)不再触发伏击刷怪。
+/datum/alch_refining_formula/monster_repel
+	name = "驱兽药水"										// Formula name.
+	// 中文：★气味档①★ 要求"平静"气味累计达到 5 点(即"5 份平静")。
+	required_scent = "平静"									// Require the "calm" scent...
+	required_scent_points = 5								// ...at level 5 (>= 5 accumulated points).
+	// 中文：★复合底料★ 水 70 + 魔力药水 30。
+	required_base = list(/datum/reagent/water = 70, /datum/reagent/medicine/manapot = 30)	// Composite base (water + mana potion).
+	// 中文：产物——30 单位驱兽药水。
+	output_reagents = list(/datum/reagent/monster_repel_potion = 30)	// Refined output.
+	// 中文：所需技能——大师。
+	skill_required = SKILL_LEVEL_MASTER						// Master gate.
+	// 中文：成功气味词。
+	smells_like = "宁和的草木气"								// Success scent.
 
 
 // 中文：清理本文件作用域内的局部宏，避免泄漏到全局编译环境。
