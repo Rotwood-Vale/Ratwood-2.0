@@ -463,7 +463,7 @@
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.icon_render_key = null
-		owner.queue_icon_update(PENDING_UPDATE_BODY)
+		owner.update_body()
 		owner.update_mobility()
 	return TRUE //if there was a change.
 
@@ -504,7 +504,7 @@
 			H.body_overlay_cache_key = null
 			H.damage_overlay_cache_key = null
 			H.icon_render_key = null
-		owner.queue_icon_update(PENDING_UPDATE_BODY | PENDING_UPDATE_HAIR | PENDING_UPDATE_DAMAGE)
+		owner.update_body()
 
 /obj/item/bodypart/proc/is_organic_limb()
 	return (status == BODYPART_ORGANIC)

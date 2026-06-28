@@ -2087,7 +2087,7 @@
 	if(!I)
 		return
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	flick_overlay(I, list(C), 30)
+	flick_overlay_global(I, list(C), 3 SECONDS)
 
 /mob/proc/look_up()
 	return

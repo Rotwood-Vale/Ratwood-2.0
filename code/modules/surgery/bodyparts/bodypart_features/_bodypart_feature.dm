@@ -66,7 +66,7 @@
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.icon_render_key = null
-		owner.queue_icon_update(PENDING_UPDATE_BODY)
+		owner.update_body()
 	return TRUE
 
 /obj/item/bodypart/proc/remove_bodypart_feature(datum/bodypart_feature/feature)
@@ -77,7 +77,7 @@
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.icon_render_key = null
-		owner.queue_icon_update(PENDING_UPDATE_BODY)
+		owner.update_body()
 	return
 
 /obj/item/bodypart/proc/remove_all_bodypart_features()
@@ -88,7 +88,7 @@
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.icon_render_key = null
-		owner.queue_icon_update(PENDING_UPDATE_BODY)
+		owner.update_body()
 
 /mob/living/carbon/proc/remove_all_bodypart_features()
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)

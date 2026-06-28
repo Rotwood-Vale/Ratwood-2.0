@@ -29,7 +29,7 @@
 	var/playing = FALSE // If music is playing or not. playmusic() deals with this don't mess with it.
 	var/curvol = 50 // The current volume at which audio is played. MAPPERS MAY TOUCH THIS.
 	var/playuponspawn = FALSE // Does the music box start playing music when it first spawns in? MAPPERS MAY TOUCH THIS.
-	var/list/static/songlist_otherworldly = list(
+	var/static/list/songlist_otherworldly = list(
 		"Lore" = 'sound/music/jukeboxes/otherworld/ac-ler.ogg',
 		"Landmarks of Lullabies" = 'sound/music/jukeboxes/otherworld/ac-lol.ogg',
 		"Waters of Sacrifice" = 'sound/music/jukeboxes/otherworld/acn-wos.ogg',
@@ -42,12 +42,12 @@
 		"Shades of Futility" = 'sound/music/jukeboxes/otherworld/fb-sofutile.ogg',
 		"Mr Doubt" = 'sound/music/jukeboxes/otherworld/mr_doubt.ogg'
 	)
-	var/list/static/songlist_generic = list(\
+	var/static/list/songlist_generic = list(\
 		"Song 1" = 'sound/music/jukeboxes/gen/tavern1.ogg',
 		"Song 2" = 'sound/music/jukeboxes/gen/tavern2.ogg',
 		"Song 3" = 'sound/music/jukeboxes/gen/tavern3.ogg'
 	)
-	var/list/static/songlist_oldschool = list(\
+	var/static/list/songlist_oldschool = list(\
 		"Autumn Voyage" = 'sound/music/jukeboxes/oldschool/Autumn_Voyage.ogg',
 		"Fanfare" = 'sound/music/jukeboxes/oldschool/Fanfare.ogg',
 		"Greatness" = 'sound/music/jukeboxes/oldschool/Greatness.ogg',

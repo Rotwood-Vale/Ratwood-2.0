@@ -91,12 +91,6 @@
  * Helper atom that copies an appearance and exists for a period
 */
 /atom/movable/flick_visual
-	var/atom/movable/container = null
-
-/atom/movable/flick_visual/Destroy()
-	. = ..()
-	if(container)
-		container.vis_contents -= src
 
 /// Takes the passed in MA/icon_state, mirrors it onto ourselves, and displays that in world for duration seconds
 /// Returns the displayed object, you can animate it and all, but you don't own it, we'll delete it after the duration
@@ -120,7 +114,6 @@
 	// I hate /area
 	var/atom/movable/lies_to_children = src
 	lies_to_children.vis_contents += visual
-	visual.container = lies_to_children
 	QDEL_IN_CLIENT_TIME(visual, duration)
 	return visual
 
@@ -358,44 +351,26 @@
 	O.screen_loc = screen_loc
 	return O
 
-/proc/remove_images_from_clients(image/I, list/show_to)
+/proc/remove_image_from_clients(image/I, list/show_to)
 	for(var/client/C as anything in show_to)
 		C.images -= I
 
-/proc/flick_overlay(image/I, list/show_to, duration)
-	if(!show_to || !length(show_to))
+/// Add an image to a list of clients and calls a proc to remove it after a duration
+/proc/flick_overlay_global(image/image_to_show, list/show_to, duration)
+	if(!show_to || !length(show_to) || !image_to_show)
 		return
+	for(var/client/add_to in show_to)
+		add_to.images += image_to_show
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_image_from_clients), image_to_show, show_to), duration, TIMER_CLIENT_TIME)
 
-	var/expire_time = world.time + duration
+///Flicks a certain overlay onto an atom, handling icon_state strings
+/atom/proc/flick_overlay(image_to_show, list/show_to, duration, layer)
+	var/image/passed_image = \
+		istext(image_to_show) \
+			? image(icon, src, image_to_show, layer) \
+			: image_to_show
 
-	var/list/client_schedule = SSiconupdates.image_removal_schedule[I]
-	if(!client_schedule)
-		client_schedule = list()
-		SSiconupdates.image_removal_schedule[I] = client_schedule
-
-	for(var/client/C as anything in show_to)
-		if(!C || QDELETED(C))
-			continue
-
-		if(client_schedule[C])
-			if(expire_time > client_schedule[C])
-				client_schedule[C] = expire_time
-			continue
-
-		C.images += I
-
-		client_schedule[C] = expire_time
-
-	if(!length(client_schedule))
-		SSiconupdates.image_removal_schedule -= I
-
-/proc/flick_overlay_view(image/I, atom/target, duration) //wrapper for the above, flicks to everyone who can see the target atom
-	var/list/viewing = list()
-	for(var/m in get_hearers_in_view(world.view, target, RECURSIVE_CONTENTS_CLIENT_MOBS))
-		var/mob/M = m
-		if(M.client)
-			viewing += M.client
-	flick_overlay(I, viewing, duration)
+	flick_overlay_global(passed_image, show_to, duration)
 
 /proc/get_active_player_count(alive_check = 0, afk_check = 0, human_check = 0)
 	// Get active players who are playing in the round

@@ -478,6 +478,10 @@
 		orbiting = null
 
 	LAZYNULL(client_mobs_in_contents)
+	vis_locs = null
+	// Checking length(vis_contents) before cutting has significant speed benefits
+	if (length(vis_contents))
+		vis_contents.Cut()
 
 // Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
 // You probably want CanPass()

@@ -39,28 +39,29 @@ SUBSYSTEM_DEF(overlays)
 	iconbro.icon = icon
 	return iconbro.appearance
 
-/atom/proc/build_appearance_list(build_overlays)
-	if(!islist(build_overlays))
-		build_overlays = list(build_overlays)
+// Formerly build_appearance_list, but it doesn't always return a list because that's wasteful.
+/atom/proc/build_appearances(build_overlays)
+	if(!islist(build_overlays)) // this always making a list was stupid.
+		if(istext(build_overlays))
+			return iconstate2appearance(icon, build_overlays)
+		else if(isicon(build_overlays))
+			return icon2appearance(icon, build_overlays)
+		return build_overlays
 
+	// this seems crazy bc it guarantees we do a list operation for each entry,
+	// but list removal is O(n) and we do it n times, so the old approach was O(n^2)
+	// and this approach SHOULD be O(n)
+	var/list/new_overlays = list()
 	for(var/overlay in build_overlays)
 		if(!overlay)
-			build_overlays -= overlay
 			continue
 		if(istext(overlay))
-			// This is too expensive to run normally but running it during CI is a good test
-			// if(PERFORM_ALL_TESTS(focus_only/invalid_overlays))
-			// 	if(!icon_exists(icon, overlay))
-			// 		var/icon_file = "[icon]" || "Unknown Generated Icon"
-			// 		stack_trace("Invalid overlay: Icon object '[icon_file]' [REF(icon)] used in '[src]' [type] is missing icon state [overlay].")
-			// 		continue
-			build_overlays -= overlay
-			build_overlays += iconstate2appearance(icon, overlay)
+			new_overlays += iconstate2appearance(icon, overlay)
 		else if(isicon(overlay))
-			build_overlays -= overlay
-			build_overlays += icon2appearance(overlay)
+			new_overlays += icon2appearance(overlay)
+		new_overlays += overlay
 
-	return build_overlays
+	return new_overlays
 
 /atom/proc/cut_overlays()
 	STAT_START_STOPWATCH
@@ -73,7 +74,7 @@ SUBSYSTEM_DEF(overlays)
 	if(!overlays)
 		return
 	STAT_START_STOPWATCH
-	overlays -= build_appearance_list(remove_overlays)
+	overlays -= build_appearances(remove_overlays)
 	POST_OVERLAY_CHANGE(src)
 	STAT_STOP_STOPWATCH
 	STAT_LOG_ENTRY(SSoverlays.stats, type)
@@ -82,7 +83,7 @@ SUBSYSTEM_DEF(overlays)
 	if(!overlays)
 		return
 	STAT_START_STOPWATCH
-	overlays += build_appearance_list(add_overlays)
+	overlays += build_appearances(add_overlays)
 	POST_OVERLAY_CHANGE(src)
 	STAT_STOP_STOPWATCH
 	STAT_LOG_ENTRY(SSoverlays.stats, type)
