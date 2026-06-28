@@ -257,7 +257,7 @@
 
 
 		if(origin && origin != "Unknown")
-			. += span_info("[capitalize(m2)]的血统是[origin]。")
+			. += span_info("[capitalize(m2)]血统是[origin]。")
 
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
