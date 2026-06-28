@@ -111,8 +111,8 @@
 //   0→1 需 180，2→3 需 540，5→6 需 1080）。单列为常量，平衡只改这一处。
 #define RPG_SYSTEM_SKILL_COST_BASE 180
 
-// 兑换"正向特性 / 天赋"的统一单价（积分）。需求："只收录正向增益特性，价格统一 1000。"
-#define RPG_SYSTEM_TRAIT_COST 1000
+// 兑换"正向特性 / 天赋"的统一单价（积分）。需求："只收录正向增益特性，价格统一 2000。"
+#define RPG_SYSTEM_TRAIT_COST 2000
 // 通过本系统购买特性时使用的 ADD_TRAIT 来源标签：统一、可识别，便于将来需要时统一清理；
 //   不复用 TRAIT_VIRTUE / TRAIT_GENERIC 等其它来源，避免与别处授予的同名特性互相干扰。
 #define RPG_SYSTEM_TRAIT_SOURCE "rpg_system_purchase"
@@ -1060,8 +1060,8 @@
 	playsound(user, 'sound/misc/click.ogg', 50, FALSE)
 
 // ----------------------------------------------------------------------------
-// 特性兑换：用积分永久获得一项"正向增益特性 / 天赋"，单价统一 RPG_SYSTEM_TRAIT_COST（1000）。
-// 需求："加入特性兑换；特性取自 code/__DEFINES/traits.dm；只收录正向增益特性；价格统一 1000。"
+// 特性兑换：用积分永久获得一项"正向增益特性 / 天赋"，单价统一 RPG_SYSTEM_TRAIT_COST（2000）。
+// 需求："加入特性兑换；特性取自 code/__DEFINES/traits.dm；只收录正向增益特性；价格统一 2000。"
 // 实现要点（为什么这样写）：
 //   - 特性不是 /obj/item，无法走商品目录的"生成实体"流程，故单列目录 + 渲染 + 结算三件套。
 //   - 这些 TRAIT_* 宏定义在 modular_z121 之外的 code/__DEFINES/traits.dm；本文件只是"引用"这些
