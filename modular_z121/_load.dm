@@ -189,3 +189,4 @@
 // Shadekin equipment-access fix: at runtime, inject Shadekin into the shared allowed_race list of every
 // clothing type that already allows Wild-Kin, fixing the "can't wear many items" bug.
 #include "species/shadekin_equipment_access.dm"
+#include "datum/loadout.dm"//添加新的开局物品选项
