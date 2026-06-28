@@ -6,7 +6,7 @@ GLOBAL_LIST_INIT(custom_learnable_spells, list(
 	/obj/effect/proc_holder/spell/invoked/group_guidance,
 	/obj/effect/proc_holder/spell/invoked/group_haste,
 	/obj/effect/proc_holder/spell/invoked/group_longstrider,
-	/obj/effect/proc_holder/spell/invoked/group_mindlink,
+	/obj/effect/proc_holder/spell/self/group_mindlink,
 	/obj/effect/proc_holder/spell/invoked/group_stoneskin,
 	/obj/effect/proc_holder/spell/invoked/group_giants_strength,
 	/obj/effect/proc_holder/spell/invoked/group_leap,

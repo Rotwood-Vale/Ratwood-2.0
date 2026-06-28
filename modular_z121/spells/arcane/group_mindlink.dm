@@ -396,11 +396,11 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 // 法术本体：群体心灵链接。施法成功后把"施法者认识的人"全部接入同一个心灵聊天室。
 // The spell proper: on a successful cast, pull everyone the caster knows into one chat room.
 // =====================================================================================
-/obj/effect/proc_holder/spell/invoked/group_mindlink
+/obj/effect/proc_holder/spell/self/group_mindlink
 	name = "群体心灵链接"
-	// 描述更新为新机制：进入同一聊天室窗口，并保留 ",m" 快捷发言说明。
-	// Description updated for the new mechanic: a shared chat-room window, with the ",m" shortcut kept.
-	desc = "将施法者与自己认识的人接入同一个『心灵聊天室』对话窗口（仿管理员帮助 ahelp 对话界面），持续五分钟。在窗口底部输入文字并按回车即可实时交流；也可在发言前输入 ,m 快捷发送。若关闭窗口，可在 IC 标签下用『Group Mindlink』动词重新打开。"
+	// 描述更新为新机制：自我施法（无需点选目标）+ do_after 引导；成功后把"我认识的人"接入同一聊天室。
+	// Description updated: self-cast (no click target) + do_after channel; links everyone the caster KNOWS.
+	desc = "自我吟唱引导后，将施法者与自己认识的人接入同一个『心灵聊天室』对话窗口（仿管理员帮助 ahelp 对话界面），持续五分钟。在窗口底部输入文字并按回车即可实时交流；也可在发言前输入 ,m 快捷发送。若关闭窗口，可在 IC 标签下用『Group Mindlink』动词重新打开。"
 	associated_skill = /datum/skill/magic/arcane
 	cost = 5
 	xp_gain = TRUE
@@ -412,39 +412,90 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 	invocation_type = "whisper"
 	chargedloop = /datum/looping_sound/invokegen
 	chargedrain = 1
+	// chargetime 仍保留，但不再驱动法术内置充能流程，而是作为 choose_targets() 里 do_after 的引导时长来源。
+	// chargetime is kept but no longer drives the built-in charge flow; it's the do_after channel duration.
 	chargetime = 5 SECONDS
 	releasedrain = 30
 	no_early_release = TRUE
 	movement_interrupt = FALSE
 	charging_slowdown = 3
 	warnie = "spellwarning"
-	ignore_los = TRUE
 	miracle = FALSE
 	human_req = TRUE
 
+// ---------------------------------------------------------------------------
+// choose_targets：自我施法入口（点击图标后由 Click -> cast_check -> choose_targets 调用）。
+// 改为 do_after 引导式蓄力：先念咒，再对"自己"发起一段可被打断的 do_after 引导，引导成功才 perform。
+// 这样满足"自我类型法术"+"以 do_after 计时充能"两项要求，且天然支持移动/死亡中断。
+// choose_targets: self-cast entry. Uses a do_after channel: chant, then run an interruptible do_after on the
+// caster; only on success do we perform(). Satisfies "self spell" + "do_after-timed charge", with native interrupt.
+// ---------------------------------------------------------------------------
+/obj/effect/proc_holder/spell/self/group_mindlink/choose_targets(mob/user = usr)
+	// 没有施法者直接撤销，避免空指针；revert_cast() 会把冷却恢复为"可用"。
+	// No caster => revert to avoid null deref; revert_cast() restores the cooldown to "ready".
+	if(!user)
+		revert_cast()
+		return
+
+	// "释放时"念出咒文（因稍后 perform 前会临时屏蔽 invocation，避免重复喊两遍）。
+	// Chant on release (we temporarily suppress invocation before perform so it isn't shouted twice).
+	invocation(user)
+
+	// 取引导时长（= chargetime），用 do_after 实现"可被打断的蓄力"。
+	// Take the channel time (= chargetime) and run an interruptible do_after.
+	var/cast_time = get_chargetime()
+	if(cast_time > 0)
+		user.visible_message(span_warning("[user] 闭目凝神，指尖萦绕起牵连众人心念的魔力……"), \
+			span_notice("我开始引导群体心灵链接，只需再稳住片刻……"))
+		// do_after：引导期间移动被打断/死亡会返回 FALSE。target=user 表示对自身的引导，progress 显示进度条。
+		// do_after returns FALSE if interrupted by movement/death. target=user is a self-channel; progress shows a bar.
+		if(!do_after(user, cast_time, target = user, progress = TRUE))
+			to_chat(user, span_warning("我对心灵之网的牵引被打断了，链接未能成形。"))
+			revert_cast(user) // 引导失败：退还冷却，可重试。 Channel failed: refund cooldown, retryable.
+			return
+
+	// 引导成功。进入 perform 前临时清空 invocations，防止 perform 成功后又把咒文喊一遍。
+	// Channel succeeded. Clear invocations before perform so the chant isn't repeated on success.
+	var/list/original_invocations = invocations
+	var/original_invocation_type = invocation_type
+	invocations = null
+	invocation_type = "none"
+	// /spell/self 的 cast 只面向施法者本人，targets 传 null 即可。
+	// /spell/self cast targets only the caster; pass null for targets.
+	perform(null, user = user)
+	// 还原咒文设置，避免影响下一次施放。
+	// Restore the invocation settings so the next cast is unaffected.
+	invocations = original_invocations
+	invocation_type = original_invocation_type
+
 // 施法：收集施法者认识且在场的人，建立聊天室，并设置 5 分钟后自动断开的定时器。
 // Cast: gather the caster's present acquaintances, build the room, and schedule a 5-minute auto-break.
-/obj/effect/proc_holder/spell/invoked/group_mindlink/cast(list/targets, mob/living/user)
+/obj/effect/proc_holder/spell/self/group_mindlink/cast(list/targets, mob/living/user = usr)
 	. = ..()
 	// 防御：施法者必须是合法的、拥有 mind 的生物，否则无法读取其熟人名单。
 	// Guard: the caster must be a valid living mob with a mind to read known_people from.
 	if(!istype(user) || !user.mind)
-		return FALSE
-
-	// 参与者列表先放入施法者自己；同时准备"成功加入名"和"缺席/找不到名"两个清单用于事后反馈。
-	// Start the roster with the caster; also track joined names and missing names for feedback.
-	var/list/participant_mobs = list(user)
-	var/list/missing_names = list()
-
-	// 防御：熟人名单为空 => 无人可链接，回退施法（退还消耗）并提示。
-	// Guard: empty acquaintance list => nobody to link; revert the cast and inform the user.
-	if(!length(user.mind.known_people))
-		to_chat(user, span_warning("没有我认识的人可供建立群体心灵链接！"))
 		revert_cast()
 		return FALSE
 
-	// 遍历熟人名单，逐个尝试在世界里找到对应的活人；找不到的记入缺席名单。
-	// Walk the acquaintance list and try to resolve each name to a living human; unresolved ones go to "missing".
+	// 参与者列表先放入施法者自己；同时准备"缺席/找不到名"清单用于事后反馈。
+	// Start the roster with the caster; also track missing names for feedback.
+	var/list/participant_mobs = list(user)
+	var/list/missing_names = list()
+
+	// 自我施法不再点选目标——链接成员【完全来自施法者的熟人名单 known_people】。
+	// 防御：熟人名单为空 => 无人可链接，回退施法并提示。
+	// Self-cast no longer clicks a target — members come ENTIRELY from the caster's known_people.
+	// Guard: empty acquaintance list => nobody to link; revert and inform.
+	if(!length(user.mind.known_people))
+		to_chat(user, span_warning("没有我认识的人可供建立群体心灵链接！请先结识一些人。"))
+		revert_cast()
+		return FALSE
+
+	// 遍历熟人名单，逐个在世界里找到对应的活人；找不到（不在场/已死等）的记入缺席名单。
+	// 这就是"被链接的目标"的唯一来源——它们会和施法者一样，被 New()/兜底流程一视同仁地完整接入。
+	// Walk known_people and resolve each name to a living human; unresolved -> "missing".
+	// THIS is the sole source of "linked targets" — they get fully set up just like the caster.
 	for(var/person_name in user.mind.known_people)
 		var/mob/living/found_person = find_known_human(person_name)
 		if(!found_person)
@@ -457,8 +508,8 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 		if(!(found_person in participant_mobs))
 			participant_mobs += found_person
 
-	// 防御：除了施法者外没人能加入（全部缺席/被排除）则回退施法并提示。
-	// Guard: nobody but the caster could join => revert and inform.
+	// 防御：除施法者外无人可加入（熟人都缺席/被排除）则回退施法并提示。
+	// Guard: nobody but the caster could join (all acquaintances absent/excluded) => revert.
 	if(length(participant_mobs) <= 1)
 		to_chat(user, span_warning("我认识的人里，没有能加入群体心灵链接的对象。"))
 		revert_cast()
@@ -482,9 +533,26 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 		existing_link.notify_expired()
 		qdel(existing_link)
 
-	// 创建新的聊天室：构造函数会自动开窗并登记成员。
-	// Create the new room; the constructor opens windows and registers members automatically.
+	// 创建新的聊天室：构造函数会自动登记成员、授予 IC 重开动词并开窗。
+	// Create the new room; the constructor registers members, grants the IC reopen verb, and opens windows.
 	var/datum/group_mindlink_custom/link = new(participant_mobs)
+
+	// 【针对性兜底——修复"被链接的熟人没有对话窗口/聊天记录/IC 动词"的 bug】
+	// 显式地为【每一位】成员（施法者与所有熟人一视同仁）再核验一遍：补齐 IC 重开动词、打开对话窗口。
+	// 即便 New() 中某一步因边缘情况未对某个成员生效，这里也会把它补全，确保所有被链接者：
+	//   ① IC 标签下都有【Group Mindlink】动词；② 都弹出对话窗口；③ 都在 participants 内，
+	//   从而都能收到 add_message 向【普通聊天框】的镜像（不会有人没有"心灵对话记录"）。
+	// [Targeted safety net — fixes the "linked acquaintances had no window/chat record/IC verb" bug]
+	// Explicitly re-verify EVERY member (caster and acquaintances alike): grant the IC reopen verb and open the
+	// dialogue window. Even if a step in New() failed for someone, this backfills it, guaranteeing every linked
+	// target ① has the [Group Mindlink] IC verb, ② gets the window, and ③ is in participants — so all of them
+	// also receive the add_message mirror into NORMAL chat (nobody ends up without a mind-dialogue record).
+	for(var/mob/living/member as anything in participant_mobs)
+		if(QDELETED(member))
+			continue
+		if(!(/mob/living/proc/group_mindlink_reopen in member.verbs))
+			member.verbs += /mob/living/proc/group_mindlink_reopen
+		link.open_window_for(member)
 
 	// 在房间历史里写下开场系统提示，并罗列当前全部成员，作为"会话开始"的第一条记录。
 	// Seed the room with an opening system notice listing all members ("conversation started").
@@ -510,7 +578,7 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 
 // 辅助：按真实姓名在全局人类列表里查找对应的活人，找不到返回 null。
 // Helper: find a living human by real_name in the global human list, or null if absent.
-/obj/effect/proc_holder/spell/invoked/group_mindlink/proc/find_known_human(person_name)
+/obj/effect/proc_holder/spell/self/group_mindlink/proc/find_known_human(person_name)
 	for(var/mob/living/carbon/human/HL in GLOB.human_list)
 		if(HL.real_name == person_name)
 			return HL
@@ -518,7 +586,7 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 
 // 定时回调：让链接过期（发系统提示）并销毁，窗口与信号由 Destroy() 统一清理。
 // Timer callback: expire (notice) then destroy the link; Destroy() cleans up windows + signals.
-/obj/effect/proc_holder/spell/invoked/group_mindlink/proc/break_link(datum/group_mindlink_custom/link)
+/obj/effect/proc_holder/spell/self/group_mindlink/proc/break_link(datum/group_mindlink_custom/link)
 	// 防御：链接已被提前销毁或已失效则无需重复处理。
 	// Guard: nothing to do if the link was already destroyed or is inactive.
 	if(!link || QDELETED(link) || !link.active)
