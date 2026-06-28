@@ -1,46 +1,46 @@
 /proc/parse_zone(zone, obj/item/bodypart/affecting = null)
 	// this helps adapt older code
 	if(affecting?.body_zone == BODY_ZONE_TAUR)
-		return "tauric half"
+		return "下半身"
 	switch(zone)
 		if(BODY_ZONE_PRECISE_R_HAND)
-			return "right hand"
+			return "右手"
 		if(BODY_ZONE_PRECISE_L_HAND)
-			return "left hand"
+			return "左手"
 		if(BODY_ZONE_L_ARM)
-			return "left arm"
+			return "左臂"
 		if(BODY_ZONE_R_ARM)
-			return "right arm"
+			return "右臂"
 		if(BODY_ZONE_L_LEG)
-			return "left leg"
+			return "左腿"
 		if(BODY_ZONE_R_LEG)
-			return "right leg"
+			return "右腿"
 		if(BODY_ZONE_PRECISE_L_FOOT)
-			return "left foot"
+			return "左脚"
 		if(BODY_ZONE_PRECISE_R_FOOT)
-			return "right foot"
+			return "右脚"
 		if(BODY_ZONE_TAUR)
-			return "tauric half"
+			return "下半身"
 		if(BODY_ZONE_PRECISE_NECK)
-			return "throat"
+			return "喉咙"
 		if(BODY_ZONE_PRECISE_GROIN)
-			return "groin"
+			return "腹股沟"
 		if(BODY_ZONE_PRECISE_EARS)	//we want the chatlog to say 'grabbed his ear' not 'grabbed his ears' etc
-			return "ear"
+			return "耳朵"
 		if(BODY_ZONE_PRECISE_R_EYE)
-			return "right eye"
+			return "右眼"
 		if(BODY_ZONE_PRECISE_L_EYE)
-			return "left eye"
+			return "左眼"
 		if(BODY_ZONE_PRECISE_NOSE)
-			return "nose"
+			return "鼻子"
 		if(BODY_ZONE_PRECISE_R_INHAND)
-			return "right hand"
+			return "右手"
 		if(BODY_ZONE_PRECISE_L_INHAND)
-			return "left hand"
+			return "左手"
 		if(BODY_ZONE_PRECISE_SKULL)
-			return "skull"
+			return "头骨"
 		if(BODY_ZONE_PRECISE_MOUTH)
-			return "mouth"
+			return "嘴巴"
 	return zone
 
 /proc/parse_organ_slot(slot)

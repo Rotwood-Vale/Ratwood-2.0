@@ -41,5 +41,5 @@
 /datum/component/decal/blood/proc/get_examine_name(datum/source, mob/user, list/override)
 	var/atom/A = parent
 	override[EXAMINE_POSITION_ARTICLE] = A.gender == PLURAL? "一些" : ""
-	override[EXAMINE_POSITION_BEFORE] = " <span class='bloody'>染血的</span> "
+	override[EXAMINE_POSITION_BEFORE] = "<span class='bloody'>染血的</span>"
 	return COMPONENT_EXNAME_CHANGED

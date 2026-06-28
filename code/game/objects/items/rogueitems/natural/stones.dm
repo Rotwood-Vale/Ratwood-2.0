@@ -184,7 +184,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 	Yakub from BBC lore has inspired me
 */
 /obj/item/natural/stone/proc/stone_lore()
-	var/stone_title = "stone" // Our stones title
+	var/stone_title = "石头" // Our stones title
 	var/stone_desc = "[desc]" // Total Bonus desc the stone will be getting
 
 	icon_state = "stone[rand(1,5)]"

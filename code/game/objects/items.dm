@@ -1394,15 +1394,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(0 to 9)
 			return "孱弱"
 		if(10 to 14)
-			return "微弱"
+			return "轻弱"
 		if(15 to 19)
-			return "尚可"
+			return "普通"
 		if(20 to 24)
-			return "强劲"
+			return "精良"
 		if(25 to 29)
-			return "卓越"
+			return "强劲"
 		if(30 to 35)
-			return "骇人"
+			return "卓越"
 		else
 			return "惊世"
 

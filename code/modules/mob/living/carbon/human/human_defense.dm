@@ -601,56 +601,56 @@
 	var/m1
 	var/deep_examination = advanced
 	if(user == src)
-		m1 = "I am"
+		m1 = "我"
 		if(!deep_examination)
 			deep_examination = HAS_TRAIT(src, TRAIT_SELF_AWARE)
-		examination += span_notice("Let's see how I am doing.")
+		examination += span_notice("让我看看我怎么样了。")
 		if(!stat && !silent)
-			user.visible_message(span_notice("[src] examines [p_them()]self."), \
-				span_notice("I check myself for injuries."))
+			user.visible_message(span_notice("[src]检查[p_them()]自己。"), \
+				span_notice("我检查自己的伤势。"))
 	else if(user)
-		m1 = "[p_they(TRUE)] [p_are()]"
+		m1 = "[p_they(TRUE)]"
 		if(!deep_examination)
 			deep_examination = HAS_TRAIT(user, TRAIT_EMPATH)
-		examination += span_notice("Let's see how [src] is doing.")
+		examination += span_notice("让我看看[src]怎么样了。")
 		if(!user.stat && !silent)
-			user.visible_message(span_notice("[user] examines [src]."), \
-				span_notice("I check [src] for injuries."))
+			user.visible_message(span_notice("[user]检查[src]。"), \
+				span_notice("我检查[src]的伤势。"))
 
 	if(stat < DEAD)
-		examination += "[m1] still alive."
+		examination += "[m1]还活着。"
 		if(stat >= UNCONSCIOUS)
-			examination += "[m1] [IsSleeping() ? "asleep" : "unconscious"]."
+			examination += "[m1] [IsSleeping() ? "睡着了" : "失去意识"]。"
 	else
-		examination += span_dead("[m1] dead.")
+		examination += span_dead("[m1]死了。")
 	switch(bodytemperature)
 		if(0 to BODYTEMP_COLD_LEVEL_ONE_MAX)
-			examination += span_biginfo("<font color='#023E8A'> [m1] shivering greatly</font>")
+			examination += span_biginfo("<font color='#023E8A'> [m1]剧烈发抖</font>")
 		if(BODYTEMP_COLD_LEVEL_ONE_MAX to BODYTEMP_NORMAL_MIN)
-			examination += span_biginfo("<font color='#99e6ff'> [m1] shivering</font>")
+			examination += span_biginfo("<font color='#99e6ff'> [m1]在发抖</font>")
 		if(BODYTEMP_NORMAL_MIN to BODYTEMP_NORMAL_MAX)
-			examination += span_biginfo("<B>[m1] average temperature.</B>")
+			examination += span_biginfo("<B>[m1]体温正常。</B>")
 		if(BODYTEMP_NORMAL_MAX to BODYTEMP_HEAT_LEVEL_ONE_MAX)
-			examination += span_biginfo("<font color='#ffff00'> [m1] sweating</font>")
+			examination += span_biginfo("<font color='#ffff00'> [m1]在出汗</font>")
 		if(BODYTEMP_HEAT_LEVEL_ONE_MAX to 600)
-			examination += span_biginfo("<font color='#DC143C?'> [m1] sweating greatly</font>")
+			examination += span_biginfo("<font color='#DC143C?'> [m1]大量出汗</font>")
 	switch(blood_volume)
 		if(-INFINITY to BLOOD_VOLUME_SURVIVE)
-			examination += span_artery("<B>[m1] extremely anemic.</B>")
+			examination += span_artery("<B>[m1]严重贫血。</B>")
 		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-			examination += span_artery("<B>[m1] very anemic.</B>")
+			examination += span_artery("<B>[m1]非常贫血。</B>")
 		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-			examination += span_artery("[m1] anemic.")
+			examination += span_artery("[m1]贫血。")
 		if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-			examination += span_artery("[m1] a little anemic.")
+			examination += span_artery("[m1]有点贫血。")
 
 	if(HAS_TRAIT(src, TRAIT_PARALYSIS))
 		if(HAS_TRAIT(src, TRAIT_NO_BITE))
-			examination += span_danger("[m1] PARALYZED!")
+			examination += span_danger("[m1]瘫痪了！")
 		else
-			examination += span_danger("[m1] TETRAPLEGIC!")
+			examination += span_danger("[m1]四肢瘫痪！")
 	else if(HAS_TRAIT(src, TRAIT_PARALYSIS_R_LEG) && HAS_TRAIT(src, TRAIT_PARALYSIS_L_LEG))
-		examination += span_warning("[m1] PARAPLEGIC!")
+		examination += span_warning("[m1]截瘫！")
 
 	var/static/list/body_zones = list(
 		BODY_ZONE_HEAD,
@@ -674,13 +674,13 @@
 	for(var/body_zone in zones_to_check)
 		var/obj/item/bodypart/bodypart = get_bodypart(body_zone)
 		if(!bodypart)
-			examination += span_info("☼ [capitalize(parse_zone(body_zone))]: <span class='deadsay'><b>MISSING</b></span>")
+			examination += span_info("☼ [parse_zone(body_zone)]：<span class='deadsay'><b>缺失</b></span>")
 			continue
 		examination += bodypart.check_for_injuries(user, deep_examination)
 
 	examination += "ø ------------ ø</span>"
 	if(has_status_effect(/datum/status_effect/zombie_infection) || infected)
-		examination += span_boldwarning("[m1] slowly rotting away.")
+		examination += span_boldwarning("[m1]正在慢慢腐烂。")
 
 	if(!silent)
 		to_chat(user, examination.Join("\n"))
@@ -734,11 +734,11 @@
 
 	var/m1
 	if(user == src)
-		m1 = "I am"
-		examination += span_notice("Let's see how my body temperature feels.")
+		m1 = "我"
+		examination += span_notice("让我看看我的体温感觉如何。")
 	else
-		m1 = "[p_they(TRUE)] [p_are()]"
-		examination += span_notice("Let's see how [src]'s temperature looks.")
+		m1 = "[p_they(TRUE)]"
+		examination += span_notice("让我看看[src]的体温情况。")
 
 	// Get temperature state
 	var/temp_state = get_temperature_state()
@@ -746,30 +746,30 @@
 	switch(temp_state)
 
 		if(TEMP_STATE_VERY_COLD)
-			examination += span_danger("<B>[m1] extremely cold!</B>")
-			examination += span_biginfo("- Severe shivering")
-			examination += span_biginfo("- Movement speed reduced")
-			examination += span_biginfo("- Constitution reduced")
-			examination += span_danger("- Risk of frostbite after prolonged exposure")
+			examination += span_danger("<B>[m1]极度寒冷！</B>")
+			examination += span_biginfo("- 剧烈颤抖")
+			examination += span_biginfo("- 移动速度降低")
+			examination += span_biginfo("- 体质降低")
+			examination += span_danger("- 长时间暴露有冻伤风险")
 
 		if(TEMP_STATE_COLD)
-			examination += span_danger("[m1] cold.")
-			examination += span_biginfo("- Hunger increases faster")
-			examination += span_biginfo("- Occasional shivering")
+			examination += span_danger("[m1]很冷。")
+			examination += span_biginfo("- 饥饿速度加快")
+			examination += span_biginfo("- 偶尔颤抖")
 
 		if(TEMP_STATE_NORMAL)
-			examination += span_biginfo("[m1] at a comfortable temperature.")
+			examination += span_biginfo("[m1]体温舒适。")
 
 		if(TEMP_STATE_HOT)
-			examination += span_danger("[m1] hot.")
-			examination += span_biginfo("- Thirst increases faster")
-			examination += span_biginfo("- Occasional sweating")
+			examination += span_danger("[m1]很热。")
+			examination += span_biginfo("- 口渴速度加快")
+			examination += span_biginfo("- 偶尔出汗")
 
 		if(TEMP_STATE_VERY_HOT)
-			examination += span_danger("<B>[m1] extremely hot!</B>")
-			examination += span_biginfo("- Actions take more stamina")
-			examination += span_biginfo("- Stamina recovery takes twice as long")
-			examination += span_danger("- Risk of heatstroke after prolonged exposure")
+			examination += span_danger("<B>[m1]极度炎热！</B>")
+			examination += span_biginfo("- 行动消耗更多体力")
+			examination += span_biginfo("- 体力恢复时间加倍")
+			examination += span_danger("- 长时间暴露有中暑风险")
 
 	var/turf/open/floor/F = loc
 	if(isfloorturf(F) && F.heat)

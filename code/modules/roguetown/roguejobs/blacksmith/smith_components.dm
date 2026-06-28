@@ -240,19 +240,19 @@
 		if(modifier != 1)
 			switch(modifier)
 				if(0.3)
-					I.name = "ruined [I.name]"
+					I.name = "破损的 [I.name]"
 				if(0.5)
-					I.name = "awful [I.name]"
+					I.name = "糟糕的 [I.name]"
 				if(0.8)
-					I.name = "crude [I.name]"
+					I.name = "粗劣的[I.name]"
 				if(0.9)
-					I.name = "rough [I.name]"
+					I.name = "粗糙的[I.name]"
 				if(1.1)
-					I.name = "fine [I.name]"
+					I.name = "优良的[I.name]"
 				if(1.2)
-					I.name = "flawless [I.name]"
+					I.name = "无瑕的[I.name]"
 				if(1.3)
-					I.name = "masterwork [I.name]"
+					I.name = "大师级的[I.name]"
 					I.polished = 4
 					I.AddComponent(/datum/component/metal_glint)
 

@@ -1,5 +1,5 @@
 /obj/item/clothing/gloves/roguetown/chain
-	name = "锁子护手"
+	name = "锁链护手"
 	desc = "由相扣钢环制成的护手。除了箭矢外，对常见兵器都有不错的防护。"
 	icon_state = "cgloves"
 	armor = ARMOR_MAILLE

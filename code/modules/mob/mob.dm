@@ -499,16 +499,16 @@ GLOBAL_VAR_INIT(mobids, 1)
 
 	if(isliving(src) && src.m_intent != MOVE_INTENT_SNEAK && src.stat != DEAD)
 		var/target = "\the [A]"
-		var/message = "[src] looks at"
+		var/message = "[src]注视着"
 		if(!isturf(A))
 			if(A == src)
-				message = "[src] looks over"
-				target = "themselves"
+				message = "[src]打量着"
+				target = "自己"
 			if(A.loc == src)
-				target = "[src.p_their()] [A.name]"
+				target = "[src.p_their()][A.name]"
 			if(A.loc.loc == src)
-				message = "[src] looks into"
-				target = "[src.p_their()] [A.loc.name]"
+				message = "[src]查看着"
+				target = "[src.p_their()][A.loc.name]"
 			if(isliving(A))
 				var/mob/living/T = A
 				var/hitzone = T.simple_limb_hit(zone_selected)
@@ -527,7 +527,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 							if(G.sublimb_grabbed == zone_selected)
 								grabbing = TRUE
 				if(!ishuman(T) && hitzone)
-					target = "\the [T.name]'s [hitzone]"
+					target = "[T.name]的[hitzone]"
 				else if(ishuman(T))
 					var/mob/living/carbon/human/target_human = T
 					if(target_human.getorganslot(ORGAN_SLOT_PENIS))
@@ -539,10 +539,10 @@ GLOBAL_VAR_INIT(mobids, 1)
 					if(T == src)
 						var/parsed_zone = parse_zone_fancy(zone_selected, cmode, cmode, Adjacent(T), behind, T.resting, grabbing, fixedeye, uncovered, penised, pussied, strcheck, TRUE)
 						if(parsed_zone)
-							target = "[src.p_their()] [parsed_zone]"
+							target = "[src.p_their()][parsed_zone]"
 					else
-						target = "[T]'s [parse_zone_fancy(zone_selected, cmode, T.cmode, Adjacent(T), behind, T.resting, grabbing, fixedeye, uncovered, penised, pussied, strcheck)]"
-			visible_message(span_emote("[message] [target]."))
+						target = "[T]的[parse_zone_fancy(zone_selected, cmode, T.cmode, Adjacent(T), behind, T.resting, grabbing, fixedeye, uncovered, penised, pussied, strcheck)]"
+			visible_message(span_emote("[message][target]."))
 
 	var/list/result = A.examine(src)
 	if(result)

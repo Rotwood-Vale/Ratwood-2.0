@@ -92,8 +92,8 @@
 	anchored = TRUE
 
 /obj/structure/underworld/carriage_normal
-	name = "Carriage"
-	desc = "The vale awaits."
+	name = "马车"
+	desc = "幽谷在等待。"
 	icon = 'icons/roguetown/underworld/enigma_carriage.dmi'
 	icon_state = "carriage_normal"
 	anchored = TRUE
@@ -104,8 +104,8 @@
 	set_light(5, 3, 30, l_color = LIGHT_COLOR_WHITE)
 
 /obj/structure/underworld/carriage
-	name = "Carriage"
-	desc = "The Undermaiden awaits."
+	name = "马车"
+	desc = "冥女在等待。"
 	icon = 'icons/roguetown/underworld/enigma_carriage.dmi'
 	icon_state = "carriage_lit"
 	layer = ABOVE_MOB_LAYER

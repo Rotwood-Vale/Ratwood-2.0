@@ -13,7 +13,7 @@
 
 // Water
 /obj/structure/fermentation_keg/random/water
-	name = "water barrel"
+	name = "水桶"
 
 /obj/structure/fermentation_keg/random/water/Initialize(mapload)
 	. = ..()
@@ -24,7 +24,7 @@
 	reagents.add_reagent(/datum/reagent/consumable/ethanol/beer, rand(0,900))
 
 /obj/structure/fermentation_keg/water
-	name = "water barrel"
+	name = "水桶"
 
 /obj/structure/fermentation_keg/water/Initialize(mapload)
 	. = ..()

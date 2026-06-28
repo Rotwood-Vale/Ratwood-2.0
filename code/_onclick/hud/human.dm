@@ -184,7 +184,7 @@
 	build_hand_slots()
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "ring"
+	inv_box.name = "戒指"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "ring"
 	inv_box.screen_loc = rogueui_ringr
@@ -193,7 +193,7 @@
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "wrists"
+	inv_box.name = "手腕"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "wrist"
 	inv_box.screen_loc = rogueui_wrists
@@ -202,7 +202,7 @@
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "mask"
+	inv_box.name = "面具"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mask"
 	inv_box.screen_loc = rogueui_mask
@@ -211,7 +211,7 @@
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "neck"
+	inv_box.name = "项链"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "neck"
 	inv_box.screen_loc = rogueui_neck
@@ -220,7 +220,7 @@
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "backl"
+	inv_box.name = "左背"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
 	inv_box.screen_loc = rogueui_backl
@@ -229,7 +229,7 @@
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "backr"
+	inv_box.name = "右背"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
 	inv_box.screen_loc = rogueui_backr
@@ -238,7 +238,7 @@
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "gloves"
+	inv_box.name = "手套"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "gloves"
 	inv_box.screen_loc = rogueui_gloves
@@ -247,7 +247,7 @@
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "head"
+	inv_box.name = "头部"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "head"
 	inv_box.screen_loc = rogueui_head
@@ -256,7 +256,7 @@
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "shoes"
+	inv_box.name = "鞋子"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "shoes"
 	inv_box.screen_loc = rogueui_shoes
@@ -265,7 +265,7 @@
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "belt"
+	inv_box.name = "腰带"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "belt"
 	inv_box.screen_loc = rogueui_belt
@@ -274,7 +274,7 @@
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "hip r"
+	inv_box.name = "右腰"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "hip"
 	inv_box.screen_loc = rogueui_beltr
@@ -283,7 +283,7 @@
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "hip l"
+	inv_box.name = "左腰"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "hip"
 	inv_box.screen_loc = rogueui_beltl
@@ -292,7 +292,7 @@
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "shirt"
+	inv_box.name = "衬衫"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "shirt"
 	inv_box.screen_loc = rogueui_shirt
@@ -301,7 +301,7 @@
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "trou"
+	inv_box.name = "裤子"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "pants"
 	inv_box.screen_loc = rogueui_pants
@@ -310,7 +310,7 @@
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "armor"
+	inv_box.name = "护甲"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "armor"
 	inv_box.screen_loc = rogueui_armor
@@ -319,7 +319,7 @@
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "cloak"
+	inv_box.name = "斗篷"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "cloak"
 	inv_box.screen_loc = rogueui_cloak
@@ -328,7 +328,7 @@
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "mouth"
+	inv_box.name = "嘴部"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mouth"
 	inv_box.screen_loc = rogueui_mouth
