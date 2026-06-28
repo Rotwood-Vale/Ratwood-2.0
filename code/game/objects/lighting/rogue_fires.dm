@@ -750,19 +750,33 @@
 	name = "wooden spit"
 	desc = "A wooden spit set over a campfire. It can hold the same cookware as a hearth."
 	icon = 'icons/roguetown/misc/campfire_spit.dmi'
-	icon_state = "campfire_spit0"
-	base_state = "campfire_spit"
+	icon_state = "spit_1"
 	density = FALSE
 	fueluse = 15 MINUTES
 	max_integrity = 30
+
+/obj/machinery/light/rogue/hearth/wooden_spit/Initialize(mapload)
+	. = ..()
+	icon_state = "spit_[rand(1,4)]"
+
+/obj/machinery/light/rogue/hearth/wooden_spit/update_icon()
+	cut_overlays()
+	if(attachment)
+		var/obj/item/I = attachment
+		I.pixel_x = 0
+		I.pixel_y = 0
+		add_overlay(new /mutable_appearance(I))
+		if(food)
+			I = food
+			I.pixel_x = 0
+			I.pixel_y = 0
+			add_overlay(new /mutable_appearance(I))
 
 /obj/machinery/light/rogue/hearth/wooden_spit/OnCrafted(dirin, mob/user)
 	var/obj/machinery/light/rogue/campfire/fire = locate(/obj/machinery/light/rogue/campfire) in loc
 	var/greater_fire = fire?.type == /obj/machinery/light/rogue/campfire/densefire
 	var/remaining_fuel = fire?.fueluse
 	. = ..()
-	if(fire)
-		qdel(fire)
 	if(greater_fire)
 		density = TRUE
 		max_integrity = 60

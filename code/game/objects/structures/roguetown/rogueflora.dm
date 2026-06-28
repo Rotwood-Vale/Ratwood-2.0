@@ -304,7 +304,7 @@
 	. = ..()
 	icon_state = "t[rand(1,4)]stump"
 
-/obj/structure/flora/roguetree/stump/attackby(obj/item/I, mob/living/user)
+/obj/structure/flora/roguetree/stump/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/rogueweapon/shovel))
 		var/skill_level = user.get_skill_level(/datum/skill/labor/lumberjacking)
 		var/dig_time = (120 - (skill_level * 15)) / 2
@@ -339,8 +339,28 @@
 		playsound(src, destroy_sound, 100, TRUE)
 		qdel(src)
 		return TRUE
-	else
-		..()
+	if(!user.cmode)
+		if(!(I.item_flags & ABSTRACT))
+			if(user.transferItemToLoc(I, drop_location(), silent = FALSE))
+				var/list/click_params = params2list(params)
+				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+					return TRUE
+				I.pixel_x = initial(I.pixel_x) += CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2) + pixel_x
+				I.pixel_y = initial(I.pixel_y) += CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2) + pixel_y
+				return TRUE
+	return ..()
+
+/obj/structure/flora/roguetree/stump/ongive(mob/user, params)
+	var/obj/item/I = user.get_active_held_item()
+	if(!I || (I.item_flags & ABSTRACT))
+		return
+	if(user.transferItemToLoc(I, drop_location(), silent = FALSE))
+		var/list/click_params = params2list(params)
+		if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+			return TRUE
+		I.pixel_x = initial(I.pixel_x) += CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2) + pixel_x
+		I.pixel_y = initial(I.pixel_y) += CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2) + pixel_y
+		return TRUE
 
 /obj/structure/flora/roguetree/stump/attack_paw(mob/user)
 	return attack_hand(user)

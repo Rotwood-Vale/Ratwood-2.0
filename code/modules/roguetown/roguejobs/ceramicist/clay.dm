@@ -110,7 +110,7 @@
 	if(!user)
 		return ..()
 
-	var/found_table = locate(/obj/structure/table) in (loc)
+	var/found_table = has_table_surface(loc)
 	var/obj/item/reagent_containers/water_container = W
 	if(istype(water_container) && !is_wet)
 		if(isturf(loc) && !found_table)
