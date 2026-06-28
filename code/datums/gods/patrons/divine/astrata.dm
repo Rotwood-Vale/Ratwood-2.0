@@ -1,5 +1,5 @@
 /datum/patron/divine/astrata
-	name = "Astrata"
+	name = "阿斯特拉塔"
 	domain = "白昼、太阳、秩序"
 	desc = "绝对秩序便是那穿透大地、驱退邪恶的辉煌日光。世界因她的光而获得秩序，高贵者也因她的赐福而得以统治。拉沃克斯立于她侧，确保她的秩序不会沦为暴政。"
 	worshippers = "贵族、义人、狂热者"
@@ -17,8 +17,8 @@
 					/obj/effect/proc_holder/spell/invoked/immolation			= CLERIC_T4,
 	)
 	confess_lines = list(
-		"ASTRATA 即是我的光！",
-		"ASTRATA 带来律法！",
+		"阿斯特拉塔即是我的光！",
+		"阿斯特拉塔带来律法！",
 		"我侍奉太阳的荣光！",
 	)
 	storyteller = /datum/storyteller/astrata

@@ -1,5 +1,5 @@
 /datum/patron/divine/malum
-	name = "Malum"
+	name = "玛勒姆"
 	domain = "工艺、火焰、毁灭、巧思"
 	desc = "这位无偏之神教导我们：无论是用来杀戮还是用来拯救，工具终究只是工具。润滑得当的断头台与磨得锋利的斧头都不过是器物而已，在它们的锻造之中，本无善恶可言。"
 	worshippers = "铁匠、矿工、工匠、矮人"
@@ -18,7 +18,7 @@
 					/obj/effect/proc_holder/spell/invoked/resurrect/malum		= CLERIC_T4,
 	)
 	confess_lines = list(
-		"MALUM 是我的灵感之源！",
+		"玛勒姆是我的灵感之源！",
 		"真正的价值存在于劳作之中！",
 		"我是创造的器具！",
 	)

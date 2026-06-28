@@ -1,5 +1,5 @@
 /datum/patron/divine/xylix
-	name = "Xylix"
+	name = "赛利克斯"
 	domain = "诡计、自由、灵感、命运、弗卢维安人"
 	desc = "戏弄者是万神殿中最为神秘莫测的一位。祂创造了弗卢维安一族，并赐予他们命运的馈赠；祂存在的唯一目的，就是拿诸神与凡人一并开涮。祂的追随者将自由视作绝对，并憎恶奴役。"
 	worshippers = "赌徒、吟游诗人、艺术家、巧舌之人、弗卢维安人"
@@ -24,21 +24,21 @@
 	)
 	traits_tier = list(TRAIT_XYLIX_DEVOTEE = CLERIC_T0) //Requires a minimal holy skill or the 'Devotee' virtue to unlock. Rerolls luck events
 	confess_lines = list(
-		"ASTRATA 即是我的光！",
-		"NOC 即是黑夜！",
-		"DENDOR 赐予一切！",
-		"ABYSSOR 统御浪涛！",
-		"RAVOX 即是正义！",
-		"众魂终将归于 NECRA！",
+		"阿斯特拉塔即是我的光！",
+		"诺克即是黑夜！",
+		"登多尔赐予一切！",
+		"阿比索尔统御浪涛！",
+		"拉沃克斯即是正义！",
+		"众魂终将归于内克拉！",
 		"HAHAHAHA! AHAHAHA! HAHAHAHA!",
-		"PESTRA 抚慰一切病苦！",
-		"MALUM 是我的灵感之源！",
-		"EORA 让我们相聚！",
-		"ZIZO 万岁！",
-		"GRAGGAR 就是我所崇拜的凶兽！",
-		"MATTHIOS 是我的主！",
-		"BAOTHA 是我的欢愉！",
-		"斥退异端者 - PSYDON 依然长存！",
+		"佩斯特拉抚慰一切病苦！",
+		"玛勒姆是我的灵感之源！",
+		"伊欧拉让我们相聚！",
+		"齐坐万岁！",
+		"格拉加尔就是我所崇拜的凶兽！",
+		"马西奥斯是我的主！",
+		"巴奥莎是我的欢愉！",
+		"斥退异端者 - 普赛顿 依然长存！",
 	)
 	storyteller = /datum/storyteller/xylix
 

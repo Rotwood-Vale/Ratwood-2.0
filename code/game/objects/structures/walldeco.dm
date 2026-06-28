@@ -66,7 +66,7 @@
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/walldeco/bsmith
-		name = "铁匠铺招牌"
+	name = "铁匠铺招牌"
 	desc = "一块小型的摇摆铁砧招牌标志着铁匠铺，在那里，沾血的硬币为匆忙的修理和二手武器而转手。"
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "bsmith"
@@ -101,57 +101,57 @@
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/walldeco/mercenaryflag
-	name = "mercenary guild banner"
-	desc = "A rugged white banner stitched with a blood-red sparrow, the mark of the Mercenary Guild. A loose confederation of smaller mercenary companies and independent contractors, they can be trusted as far as you can spend your gold."
+	name = "佣兵行会旗帜"
+	desc = "一面粗犷的白色旗帜，其上绣着一只血红麻雀，这便是佣兵行会的标记。它由小型佣兵团和独立佣兵组成的松散联盟集合而成——你付多少金子，就能信任他们多少。"
 	icon_state = "sparrow"
 
 /obj/structure/fluff/walldeco/xavo
-	name = "white oak banner"
-	desc = "Alone against a black sky and crimson field sits a white oak, regal and proud. The craftsmanship is exquisite and the banner is made of fine linen, but the heraldry is unfamiliar to you. Perhaps a forgotten dynasty or mercenary company?"
+	name = "白橡旗帜"
+	desc = "在黑色天空与深红原野的映衬下，一株白橡孤然挺立，高贵而骄傲。这面旗帜的做工精良，由上等亚麻织成，但你对这纹章却毫无印象——或许属于某个已被遗忘的王朝或佣兵团？"
 	icon_state = "xavo"
 
 /obj/structure/fluff/walldeco/serpflag
-	name = "house lindwurm banner"
-	desc = "On a black field a fearsome serpent coils, the heraldry of the barony of House Lindwurm, 'Our Work is Eternal' went their house motto. Crushed by the taxes of the city lord's ancestors, the barony of Lord Lindwurm was forced to abandon its lands and flee to the capital city of Kingsfield. Now their estate is occupied by the wretches of the realm, squatting in the ruins of their glory."
+	name = "林德沃姆家族旗帜"
+	desc = "黑底之上盘踞着一条可怖的巨蛇，这是林德沃姆家族男爵领的纹章，其家族箴言为'吾业永恒'。由于承受不住城主的先辈们施加的赋税，林德沃姆男爵领被迫放弃领地，逃往首府王田城。如今他们的庄园已沦为此地的弃民栖身之所，在其昔日的荣光废墟中苟延残喘。"
 	icon_state = "serpent"
 
 /obj/structure/fluff/walldeco/artificerflag
-	name = "artificer guild flag"
-	desc = "Golden tools gleam against the blue of the oceans these craftsmen cross in their trade and works. The proud flag of the artificer guild, a collection of artisans and craftsmen who work together for shared profit and protection. In some cities their legal rights rival that of the petty nobility."
+	name = "技匠行会旗帜"
+	desc = "金色的工具在蔚蓝的海洋映衬下闪耀——那片海正是这些工匠们跋涉往来、从事贸易与劳作的水域。这面骄傲的旗帜属于技匠行会，一个由工匠与手艺人组成的集合体，他们共同协作以谋求利益与保护。在某些城市，他们的法定权利甚至堪比小贵族。"
 	icon_state = "artificer"
 
 /obj/structure/fluff/walldeco/maidendrape
-	name = "black drape"
-	desc = "A dark drape of fabric, a featureless decoration for those too cowardly to mark their heraldry."
+	name = "黑色挂帘"
+	desc = "一块深色的织物挂帘，对不敢标榜自身纹章的人来说，它是一件毫无特征的纯粹装饰。"
 	icon_state = "black_drape"
 	dir = SOUTH
 	pixel_y = 32
 
 /obj/structure/fluff/walldeco/wallshield
-	name = "old wall shield"
-	desc = "An old shield mounted on the wall, its heraldry damaged and faded by time. No longer able to serve its purpose in combat, its function is now decorative."
+	name = "旧墙盾"
+	desc = "一面挂在墙上的旧盾牌，其纹章已被岁月侵蚀得残损褪色。既然已无法在战斗中履行职责，它如今的功能纯粹是装饰。"
 	icon_state = "wallshield"
 
 /obj/structure/fluff/walldeco/sign/merchantsign
-	name = "merchant guild sign"
-	desc = "A sign advertising the services of the Merchant Guild, a widespread alliance of merchants across the world. Here you can hope to earn enough from your spoils to at least break even, if not afford a meal."
+	name = "商会招牌"
+	desc = "一块宣传商会服务的招牌——商会是一个遍及世界的广泛商人联盟。在这里，你或许能指望靠卖货赚到些钱，好歹不至于亏本，运气好的话还能凑够一顿饭钱。"
 	icon_state = "shopsign_merchant_right"
 	plane = -1
 	pixel_y = 16
 
 /obj/structure/fluff/walldeco/sign/merchantsign/left
-	name = "merchant guild sign"
-	desc = "A sign advertising the services of the Merchant Guild, a widespread alliance of merchants across the world. Here you can hope to earn enough from your spoils to at least break even, if not afford a meal."
+	name = "商会招牌"
+	desc = "一块宣传商会服务的招牌——商会是一个遍及世界的广泛商人联盟。在这里，你或许能指望靠卖货赚到些钱，好歹不至于亏本，运气好的话还能凑够一顿饭钱。"
 	icon_state = "shopsign_merchant_left"
 
 /obj/structure/fluff/walldeco/psybanner
-	name = "sun cult banner"
-	desc = "Fine silk dyed in deep purple with golden thread in its trim, this banner is the mark of the Sun Cult. Wherever the rays of Astrata touch the world, there may be found her followers, who claim authority over all sects and temples."
+	name = "太阳教会旗帜"
+	desc = "由深紫色丝绸与金色镶边织就的精美旗帜，这是太阳教会的标记。无论阿斯特拉塔的光芒照到世上的哪个角落，都能找到她的追随者——他们宣称对所有教派与神殿拥有至高权威。"
 	icon_state = "Psybanner-PURPLE"
 
 /obj/structure/fluff/walldeco/psybanner/red
-	name = "otavan orthodoxy banner"
-	desc = "Rich red silk trimmed with silver thread marks the banner of the Otavan Orthodoxy, the church of the Creator-God PSYDON which dominates the nation of Otava and sends its Inquisition abroad to root out heresy in its neighbors."
+	name = "奥塔瓦正教会旗帜"
+	desc = "由深红丝绸与银线镶边织就的旗帜，这是奥塔瓦正教会的标记——它崇奉创世之神普赛顿，主宰着奥塔瓦国度，并派遣其宗教审判所到邻国铲除异端。"
 	icon_state = "Psybanner-RED"
 
 /obj/structure/fluff/walldeco/stone
@@ -188,21 +188,21 @@
 	pixel_x = 16
 
 /obj/structure/fluff/walldeco/bigpainting
-	name = "midnight in the darkwood"
-	desc = "Made by the traveling scholar Johann Grünwald in his travels across the continent, this painting depicts a moonlit night in the wilderness of Grenzelhoft. While there are many replicas of this painting, a few highly prized originals still exist."
+	name = "暗林午夜"
+	desc = "由旅行学者约翰·格吕恩瓦尔德在穿行大陆游历时所绘，这幅画描绘了格伦泽尔霍夫特荒野中的月夜之景。这幅画虽有许多复制品，但仍有少数备受珍视的原本存世。"
 	icon = 'icons/roguetown/misc/64x64.dmi'
 	icon_state = "sherwoods"
 	pixel_y = 32
 	pixel_x = -16
 
 /obj/structure/fluff/walldeco/bigpainting/lake
-	name = "crimson lake lighthouse"
-	desc = "Made by the traveling scholar Johann Grünwald in his travels across the lands, this painting depicts a peaceful moonlit lake in the Otavan countryside. A popular piece among the wealthy, even a good replica can fetch a fine price."
+	name = "深红湖畔灯塔"
+	desc = "由旅行学者约翰·格吕恩瓦尔德在游历各地时所作，这幅画描绘了奥塔瓦乡间一湾宁静的月下湖泊。此画在富人圈中颇受欢迎，即便是上好的复制品也能卖出可观的价钱。"
 	icon_state = "lake"
 
 /obj/structure/fluff/walldeco/mona
-	name = "old painting"
-	desc = "A painting of a woman, its frame is weathered and its paint peels from the canvas. Time has not treated this piece well, but it has a certain charm to it."
+	name = "陈旧画作"
+	desc = "一幅女子肖像画，画框已经风化，颜料正从画布上剥落。岁月并未善待这幅作品，但它仍自有一种独特的韵味。"
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "mona"
 	pixel_y = 32
@@ -224,22 +224,22 @@
 	..()
 
 /obj/structure/fluff/walldeco/customflag
-	name = "Banner of Rotwood Vale"
-	desc = "Prominently fluttering in the breeze you see the sturdy banner of the realm, the heraldry of the city lord's family. Many would be honored to wear these colors in loyal service to the crown."
+	name = "腐木谷旗帜"
+	desc = "迎着微风猎猎飘扬的，是一面结实牢固的领地旗帜，上面纹着城主家族的纹章。许多人将以为王室忠诚效力、身披此色为荣。"
 	icon_state = "wallflag"
 
 /obj/structure/fluff/walldeco/customflag/Initialize(mapload)
 	. = ..()
 	if(SSmapping.current_map.map_name == "Rockhill")
-		name = "Rockhill flag"
+		name = "岩丘旗"
 	else if(SSmapping.current_map.map_name == "Desert Town")
-		name = "Al-Ashur flag"
-		desc = "A banner flutters in the breeze in the proud heraldic colors of the Sultanate."
+		name = "阿尔-阿舒尔旗"
+		desc = "一面印着苏丹国骄傲纹章色的旗帜在微风中飘扬。"
 	else if(SSmapping.current_map.map_name == "Build Your Own Settlement")
-		name = "New-Kingsfield flag"
-		desc = "A banner flutters in the breeze in the proud heraldic colors of the Colony."
+		name = "新王田旗"
+		desc = "一面印着殖民地骄傲纹章色的旗帜在微风中飘扬。"
 	else
-		name = "Rotwood Vale flag"
+		name = "腐木谷旗"
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
 	GLOB.lordcolor += src
@@ -259,53 +259,53 @@
 	add_overlay(M)
 
 /obj/structure/fluff/walldeco/moon
-	name = "noccite banner"
-	desc = "On a plate of silvered metal is draped a banner of deep purple, with the leering face of a crescent moon in its center; the heraldry of Noc has an expression of deep concentration, meant to inspire insight in his acolytes."
+	name = "诺克派旗帜"
+	desc = "一面镀银金属板上悬挂着深紫色的旗布，正中是一张咧嘴邪笑的月牙面孔；诺克的纹章呈现出深深沉思的表情，意在激发其侍僧的领悟力。"
 	icon_state = "moon"
 
 /obj/structure/fluff/walldeco/rpainting
-	name = "morbid painting"
-	desc = "A painting of a candelabra and human skull on a covered table, it is a modestly grim yet tasteful piece of art."
+	name = "暗黑静物画"
+	desc = "一幅描绘覆布桌上的烛台与人类颅骨的画作，是一件朴素阴沉却不失雅致的艺术品。"
 	icon_state = "painting_1"
 
 /obj/structure/fluff/walldeco/rpainting/forest
-	name = "forest painting"
-	desc = "A painting of a forest and distant castle shrouded in fog, it gives a feeling of mystery as the mind fills in the details."
+	name = "森林画作"
+	desc = "一幅描绘森林与远处雾中城堡的画作，当思绪自行填补细节时，一种神秘感油然而生。"
 	icon_state = "painting_2"
 
 /obj/structure/fluff/walldeco/rpainting/crown
-	name = "crown painting"
-	desc = "A painting of a noble crown atop a book with an apple to its side, it is a simple yet elegant piece on the elements of any good ruler's life."
+	name = "王冠画作"
+	desc = "一幅描绘高贵王冠的画作，王冠置于书本之上，旁边还有一颗苹果。这是一件简洁而优雅的作品，展现了一位优秀统治者生活中的基本要素。"
 	icon_state = "painting_3"
 
 /obj/structure/fluff/walldeco/med
-	name = "frostbite diagram"
-	desc = "Frostbite can cause severe burns and tissue damage if untreated, and while warming up can lessen the damage, existing frostbite must be treated. Slice open the patient and apply clamps to prevent bleedout, retract the incision, cut away the dead tissue with a scalpel, then clean the cut before removing your tools and closing up the wound."
+	name = "冻伤图解"
+	desc = "冻伤若不处理，可能导致严重烧伤和组织损伤。虽然回暖可以减轻伤害，但已有的冻伤必须加以治疗。切开患者皮肤，用止血钳夹住防止失血，拉开切口，用手术刀切除坏死组织，然后清创，再移除工具并缝合伤口。"
 	icon_state = "medposter"
 
 /obj/structure/fluff/walldeco/med2
-	name = "eye diagram"
-	desc = "Eye surgery is a delicate procedure, requiring focus and skill. Ensure the patient is numbed from pain, then carefully cut at the eye, clamping and retracting for better access. Manipulate the eye with care to remove it, insert the replacement, slice to ensure a flow of healthy blood to the new eyes, then clean and close the site."
+	name = "眼部图解"
+	desc = "眼部手术是一项精细的操作，需要专注与技巧。确保患者已麻醉无痛，然后小心地切开眼部，用止血钳与牵开器撑开以获得更好视野。谨慎操作眼球将其取出，放入替代品，切开以确保新眼获得健康的血液流通，然后清创并缝合部位。"
 	icon_state = "medposter2"
 
 /obj/structure/fluff/walldeco/med3
-	name = "limb attachment diagram"
-	desc = "When a limb is severed, it must be sutured immediately before bleedout occurs. Once the limb is applied to the stump, the arteries will be re-opened, and you must suture the limb. Use bone forceps to set the limb in place, then forceps to ensure the muscles won't separate once the patient begins to move. Suture to finish."
+	name = "断肢接合图解"
+	desc = "当肢体被切下时，必须在发生失血之前立即缝合。将肢体对准残端后，动脉将重新开启，你必须缝合肢体。使用骨钳将肢固定到位，然后用组织钳确保肌肉在患者开始活动后不会分离。最后以缝线收尾。"
 	icon_state = "medposter3"
 
 /obj/structure/fluff/walldeco/med4
-	name = "toxin diagram"
-	desc = "Toxins can quickly travel through the blood and overwhelm the patient, so the use of leeches has become essential in modern medicine. Regular leeches will drain blood until they are fully engorged, harming the patient if ripped off early. Some students of medical science are gifted with the cheele, a helpful specialized leech which can switch between draining or infusing blood when its stomach is gently pressed on."
+	name = "毒素图解"
+	desc = "毒素可迅速随血液传播并压垮患者，因此水蛭在现代医学中已不可或缺。普通水蛭会一直吸血直到完全饱胀，若提前扯下则会伤害患者。一些医学生有幸获得奇蛭——一种实用且特化的水蛭，轻按其腹部即可在吸血或输注血液之间切换。"
 	icon_state = "medposter4"
 
 /obj/structure/fluff/walldeco/med5
-	name = "lux diagram"
-	desc = "As the pump that moves blood through the body, lux naturally accumulates over the heart in layers. With careful practice, it can be scraped off the surface and collected for further use. This will leave the patient weakened, and they should rest properly after volunteering for lux donation."
+	name = "灵辉图解"
+	desc = "灵辉作为将血液泵输全身的动力源，会自然地在心脏表面层层积聚。经悉心练习，可将其从表面刮取并收集以供进一步使用。这会使患者体弱，他们在自愿捐献灵辉后应适当休息。"
 	icon_state = "medposter5"
 
 /obj/structure/fluff/walldeco/med6
-	name = "revival diagram"
-	desc = "When the new medical student is confused on how to revive a patient, there may be several causes for a failure to revitalize. Attempt to diagnose your patient if possible, as the issue may be ensanguination, significant bodily trauma, or even sustained oxygen deprivation damage. Rebalance their humors, tend bruises and burns, conduct CPR, and if all else fails ask your mentor for advice."
+	name = "复苏图解"
+	desc = "当新手医学生对如何复苏患者感到困惑时，复苏失败可能有几个原因。尽可能对患者进行诊断——问题可能在于失血、重大躯体创伤，甚至是持续性缺氧损伤。调整其体液平衡，处理瘀伤和烧伤，进行心肺复苏。若所有方法都无效，请向你的导师请教。"
 	icon_state = "medposter6"
 
 /obj/structure/fluff/walldeco/alarm
@@ -386,8 +386,8 @@
 		next_yap = world.time + 6 SECONDS
 
 /obj/structure/fluff/walldeco/vinez // overlay vines for more flexibile mapping
-	name = "vines"
-	desc = "Nature begins to retake this place, slowly but surely."
+	name = "藤蔓"
+	desc = "大自然正开始重新夺回此地，缓慢却坚定。"
 	icon_state = "vinez"
 
 /obj/structure/fluff/walldeco/vinez/l
@@ -397,82 +397,82 @@
 	pixel_x = 32
 
 /obj/structure/fluff/walldeco/vinez/offset
-	name = "vines"
-	desc = "Nature begins to retake this place, slowly but surely."
+	name = "藤蔓"
+	desc = "大自然正开始重新夺回此地，缓慢却坚定。"
 	icon_state = "vinez"
 	pixel_y = 32
 
 /obj/structure/fluff/walldeco/vinez/blue
-	name = "vines"
-	desc = "Nature begins to retake this place, slowly but surely."
+	name = "藤蔓"
+	desc = "大自然正开始重新夺回此地，缓慢却坚定。"
 	icon_state = "vinez_blue"
 
 /obj/structure/fluff/walldeco/vinez/red
-	name = "vines"
-	desc = "Nature begins to retake this place, slowly but surely."
+	name = "藤蔓"
+	desc = "大自然正开始重新夺回此地，缓慢却坚定。"
 	icon_state = "vinez_red"
 
 /obj/structure/fluff/walldeco/bath // suggestive stonework
-	name = "suggestive stonework"
-	desc = "Tasteful and inviting artwork depicting the female form, its as close as you'll get without any coin."
+	name = "传情石雕"
+	desc = "品味高雅、引人遐想的女性形态石雕，不花一分钱你就只能看到这种程度了。"
 	icon_state = "bath1"
 	pixel_x = -32
 	alpha = 210
 
 /obj/structure/fluff/walldeco/bath/two
-	name = "inviting stonework"
-	desc = "Suggestive and tempting artwork depicting the female form, the figure seems to beckon you closer, but the stone is cold and hard to your touch."
+	name = "媚诱石雕"
+	desc = "令人浮想联翩、撩拨心弦的女性形态石雕，那身影似乎正召唤你靠近，然而当你触碰时，石头却冰冷而坚硬。"
 	icon_state = "bath2"
 	pixel_x = -29
 
 /obj/structure/fluff/walldeco/bath/three
-	name = "tempting stonework"
-	desc = "Inviting and detailed artwork depicting the male form, its physique is herculean and twisted in some great effort, promising much yet without real motion."
+	name = "挑逗石雕"
+	desc = "引人注目、细节丰富的男性形态石雕，其体魄如大力神般雄壮，扭曲于某种巨大的努力之中——它承诺良多，却毫无真实动作。"
 	icon_state = "bath3"
 	pixel_x = -29
 
 /obj/structure/fluff/walldeco/bath/four
-	name = "detailed stonework"
-	desc = "Impressive and sensual artwork depicting the female form, the figure invites yet rewards nothing to your touch, tempting one towards spending their coin elsewhere."
+	name = "细腻石雕"
+	desc = "令人印象深刻、富有魅惑的女性形态石雕，那人影引人靠近，然而你的触碰换不来任何回报，让人不禁想将钱币花到别处去。"
 	icon_state = "bath4"
 	pixel_y = 32
 	pixel_x = 0
 
 /obj/structure/fluff/walldeco/bath/five
-	name = "raunchy stonework"
-	desc = "Detailed and suggestive artwork depicting the female form, the figure is posed in an excited fashion, frozen in a moment of ecstasy."
+	name = "香艳石雕"
+	desc = "细节生动、引人遐想的女性形态石雕，那身姿摆出兴奋的姿态，凝固于极乐的瞬间。"
 	icon_state = "bath5"
 	pixel_x = -29
 
 /obj/structure/fluff/walldeco/bath/six
-	name = "generous stonework"
-	desc = "Tempting and luridly gifted artwork depicting the female form, the figure waits for the action of the audience, ever unable to reciprocate."
+	name = "慷慨石雕"
+	desc = "撩拨感官、艳色难掩的女性形态石雕，那人影等待着观者的回应，却永远无法做出回馈。"
 	icon_state = "bath6"
 	pixel_x = -29
 
 /obj/structure/fluff/walldeco/bath/seven
-	name = "coy stonework"
-	desc = "A playful and inviting artwork depicting the female form, the figure tempts those watching with a finger, to an act of passion that will never begin."
+	name = "羞怯石雕"
+	desc = "一幅俏皮而引人遐想的女性形态石雕，那人影用手指挑逗着旁观者，邀你奔赴一场永不会开始的激情之举。"
 	icon_state = "bath7"
 	pixel_x = 32
 
 /obj/structure/fluff/walldeco/bath/gents
-	name = "gents bath sign"
-	desc = "Gentlemen only, please."
+	name = "男浴标识"
+	desc = "仅限绅士，敬请配合。"
 	icon_state = "gents"
 	pixel_x = 0
 	pixel_y = 32
 
 /obj/structure/fluff/walldeco/bath/ladies
-	name = "ladies bath sign"
-	desc = "Ladies only, please."
+	name = "女浴标识"
+	desc = "仅限淑女，敬请配合。"
 	icon_state = "ladies"
 	pixel_x = 0
 	pixel_y = 32
 
 /obj/structure/fluff/walldeco/bath/wallrope
-	name = "rope"
-	desc = "A good rope can solve most problems."
+	name = "绳索"
+	desc = "一根好绳子能解决大部分问题。"
 	icon_state = "wallrope"
 	layer = WALL_OBJ_LAYER+0.1
 	pixel_x = 0
@@ -480,8 +480,8 @@
 	color = "#d66262"
 
 /obj/structure/fluff/walldeco/sign/saiga
-	name = "The Drunken Saiga"
-	desc = "A stumbling beast is depicted on this sign, promising heavy inebriation at least, if not quality food or service."
+	name = "醉醺羚羊"
+	desc = "招牌上画着一头踉踉跄跄的野兽，就算吃不上什么好菜好饭，至少也能保证让你喝个烂醉。"
 	icon_state = "shopsign_inn_saiga_right"
 	plane = -1
 	pixel_x = 3
@@ -491,8 +491,8 @@
 	icon_state = "shopsign_inn_saiga_left"
 
 /obj/structure/fluff/walldeco/sign/trophy
-	name = "saiga trophy"
-	desc = "A mounted trophy of curved saiga horns, a hunter's pride."
+	name = "赛加羚羊角战利品"
+	desc = "一副固定在墙上的弯角赛加羚羊角战利品，猎手的骄傲。"
 	icon_state = "saiga_trophy"
 	pixel_y = 32
 
@@ -517,28 +517,28 @@
 	max_integrity = 100
 
 /obj/structure/fluff/walldeco/bogbanner
-	name = "banner of victory"
-	desc = "A red banner hanging off a wall, symbolizing martial triumph over all enemies."
+	name = "胜利旗帜"
+	desc = "一面挂在墙上的红色旗帜，象征着对一切敌人的军事凯旋。"
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "bogbanner-whole"
 	layer = WALL_OBJ_LAYER+0.1
 
 /obj/structure/fluff/walldeco/bogbanner/brown
-	name = "banner of the forgotten"
-	desc = "A discolored and tattered banner hanging off a wall, its heraldry is long forgotten."
+	name = "遗忘者旗帜"
+	desc = "一面挂在墙上的褪色残破旗帜，其纹章早已被遗忘殆尽。"
 	icon_state = "bogbanner-brown"
 
 /obj/structure/fluff/walldeco/bogbanner/zizo
-	name = "profane banner"
-	desc = "A bloodstained banner with a profane zcross depicted on it, the proud symbol of the Zizite Cabal."
+	name = "亵渎旗帜"
+	desc = "一面血迹斑斑的旗帜，其上绘有亵渎的齐佐十字，这是齐佐密教的骄傲徽记。"
 	icon_state = "bogbanner-zizo"
 
 /obj/structure/fluff/walldeco/bogbanner/bogguard
-	name = "bog guard banner"
-	desc = "A torn banner with a snake depicted on it, the proud standard of a local swamp militia. Its last members dead or deserted, it is now a relic of a dead hope."
+	name = "沼泽卫队旗帜"
+	desc = "一面残破的旗帜，其上绘有一条蛇，这是一支本地沼泽民兵的骄傲军旗。其最后一批成员或死或逃，如今它已成了一段死灭希望的遗物。"
 	icon_state = "bogbanner-snake"
 
 /obj/structure/fluff/walldeco/bogbanner/bogguard/animated
-	name = "bog guard banner"
-	desc = "A torn banner with a snake depicted on it, the proud standard of a local swamp militia. Its last members dead or deserted, it is now a relic of a dead hope."
+	name = "沼泽卫队旗帜"
+	desc = "一面残破的旗帜，其上绘有一条蛇，这是一支本地沼泽民兵的骄傲军旗。其最后一批成员或死或逃，如今它已成了一段死灭希望的遗物。"
 	icon_state = "bogbanner-snake-anim"

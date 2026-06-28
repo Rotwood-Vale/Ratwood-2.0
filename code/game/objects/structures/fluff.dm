@@ -996,29 +996,29 @@
 		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/fluff/statue/gargoyle
-	name = "gargoyle statue"
-	desc = "Since before the first empires, ancient men would carve statues of horrific beasts to scare off angry and tormented spirits from their places of rest."
+	name = "石像鬼雕像"
+	desc = "早在最初的帝国诞生之前，古人便会雕刻可怖兽类的石像，置于安息之所，用来吓退愤怒而受折磨的怨灵。"
 	icon_state = "gargoyle"
 
 /obj/structure/fluff/statue/aasimar
-	name = "crumbling statue"
-	desc = "Carvings of heroes from before your time in this world, the faces and names have become lost, they will likely be naught but dust soon enough."
+	name = "崩裂的雕像"
+	desc = "雕像上镌刻着不属于这个时代的英雄事迹，他们的面容与姓名早已失落，恐怕用不了多久便会化为尘土。"
 	icon_state = "aasimar"
 
 /obj/structure/fluff/statue/gargoyle/candles
 	icon_state = "gargoyle_candles"
 
 /obj/structure/fluff/statue/gargoyle/moss
-	name = "gargoyle statue"
-	desc = "Since before the first empires, ancient men would carve statues of horrific beasts to scare off angry and tormented spirits from their places of rest."
+	name = "石像鬼雕像"
+	desc = "早在最初的帝国诞生之前，古人便会雕刻可怖兽类的石像，置于安息之所，用来吓退愤怒而受折磨的怨灵。"
 	icon_state = "mgargoyle"
 
 /obj/structure/fluff/statue/gargoyle/moss/candles
 	icon_state = "mgargoyle_candles"
 
 /obj/structure/fluff/statue/knight
-	name = "templar statue"
-	desc = "This man stands staunch amongst the sands of time, a testament to his unending faith towards his divine masters. He will stand even when we are all dust."
+	name = "圣堂武士雕像"
+	desc = "此人屹立于时间长河的流沙之中，岿然不动，见证着他对神圣主宰永不动摇的信仰。即使我们都已化为尘土，他依然挺立。"
 	icon_state = "knightstatue_l"
 
 /obj/structure/fluff/statue/astrata
@@ -1046,60 +1046,60 @@
 	icon_state = "abyssor_dolomite"
 
 /obj/structure/fluff/statue/knight/r
-	name = "templar statue"
-	desc = "This man stands staunch amongst the sands of time, a testament to his unending faith towards his divine masters. He will stand even when we are all dust."
+	name = "圣堂武士雕像"
+	desc = "此人屹立于时间长河的流沙之中，岿然不动，见证着他对神圣主宰永不动摇的信仰。即使我们都已化为尘土，他依然挺立。"
 	icon_state = "knightstatue_r"
 
 /obj/structure/fluff/statue/knight/interior
-	name = "templar statue"
-	desc = "This man stands staunch amongst the sands of time, a testament to his unending faith towards his divine masters. He will stand even when we are all dust."
+	name = "圣堂武士雕像"
+	desc = "此人屹立于时间长河的流沙之中，岿然不动，见证着他对神圣主宰永不动摇的信仰。即使我们都已化为尘土，他依然挺立。"
 	icon_state = "oknightstatue_l"
 
 /obj/structure/fluff/statue/knight/interior/r
-	name = "templar statue"
-	desc = "This man stands staunch amongst the sands of time, a testament to his unending faith towards his divine masters. He will stand even when we are all dust."
+	name = "圣堂武士雕像"
+	desc = "此人屹立于时间长河的流沙之中，岿然不动，见证着他对神圣主宰永不动摇的信仰。即使我们都已化为尘土，他依然挺立。"
 	icon_state = "oknightstatue_r"
 
 /obj/structure/fluff/statue/knight/interior/r/bronze
-	name = "templar statue"
-	desc = "This man stands staunch amongst the sands of time, a testament to his unending faith towards his divine masters. He will stand even when we are all dust."
+	name = "圣堂武士雕像"
+	desc = "此人屹立于时间长河的流沙之中，岿然不动，见证着他对神圣主宰永不动摇的信仰。即使我们都已化为尘土，他依然挺立。"
 	color = "#ff9c1a"
 
 /obj/structure/fluff/statue/knightalt
-	name = "knight statue"
-	desc = "Many men and women of the Otavan Orthodoxy died here to fight the Rot. It is tradition for the bones of their knights to be encased in these stone works." 
+	name = "骑士雕像"
+	desc = "众多奥塔瓦正教会的男男女女在此地抗击腐化而捐躯。按传统，骑士们的遗骨会被封入这些石雕之中。" 
 	icon_state = "knightstatue2_l"
 
 /obj/structure/fluff/statue/knightalt/r
-	name = "knight statue"
-	desc = "Many men and women of the Otavan Orthodoxy died here to fight the Rot. It is tradition for the bones of their knights to be encased in these stone works." 
+	name = "骑士雕像"
+	desc = "众多奥塔瓦正教会的男男女女在此地抗击腐化而捐躯。按传统，骑士们的遗骨会被封入这些石雕之中。" 
 	icon_state = "knightstatue2_r"
 
 
 /obj/structure/fluff/statue/myth
-	name = "warrior statue"
-	desc = "The name has long since faded from this statue, but one can still see the incredible detail in their steady stance and barely restrained muscular strength."
+	name = "战士雕像"
+	desc = "雕像上的名字早已被岁月抹去，但从其沉稳的站姿与呼之欲出的肌肉力量中，仍可窥见那令人叹为观止的雕工细节。"
 	icon_state = "myth"
 	density = TRUE
 
 /obj/structure/fluff/statue/psy
-	name = "psydon statue"
-	desc = "The All-Father watched over Psydonia, once a paradise for his flourishing creations, without intervening upon the land. This would change one fateful day as the Arch-Enemy's ascension threatened mankind, narrowly stopped by Psydon. He wept for three daes and three nights after, and vanished from the realm."
+	name = "普赛顿雕像"
+	desc = "众父曾守望普赛多尼亚——那片曾是他繁茂造物的乐园——却未曾干预这片土地。直到宿命之日，大敌的崛起威胁到人类存亡，普赛顿以微弱之差将其阻止。此后他痛哭了三日三夜，便从世间消隐无踪。"
 	icon_state = "psy"
 	icon = 'icons/roguetown/misc/96x96.dmi'
 	pixel_x = -32
 
 /obj/structure/fluff/statue/psybloody
-	name = "psydon statue"
-	desc = "And thus he wept, not for you, not for I; but for it all."
+	name = "普赛顿雕像"
+	desc = "于是，他悲泣。这泪水并非为你，并非为我——而是为世间一切。"
 	icon_state = "psy_bloody"
 	icon = 'icons/roguetown/misc/96x96.dmi'
 	pixel_x = -32
 
 
 /obj/structure/fluff/statue/small
-	name = "elven statue"
-	desc =  "Elves have long been seen as symbols of beauty and long life, and some believe statues of them will bring some luck, or at least make a place more bearable to look at."
+	name = "精灵雕像"
+	desc =  "精灵一直被视为美丽与长寿的象征，有些人相信精灵雕像能带来好运，或者至少让一个地方看上去不至于那么难以忍受。"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "elfs"
 
@@ -1108,32 +1108,32 @@
 	icon_state = "pillar"
 
 /obj/structure/fluff/statue/femalestatue
-	name = "temptress statue"
-	desc = "Artistic depiction of the mortal form, or an exploitation of mortal desire? One thing is known for sure, these statues are not often put up in charity houses or temples."
+	name = "妖娆雕像"
+	desc = "是对凡人形态的艺术描绘，还是对凡人欲望的挑逗利用？有一件事可以确定——这类雕像很少出现在济贫院或神殿里。"
 	icon = 'icons/roguetown/misc/ay.dmi'
 	icon_state = "1"
 	pixel_x = -32
 	pixel_y = -16
 
 /obj/structure/fluff/statue/femalestatue1
-	name = "queen alexia statue"	
-	desc = "A modest depiction of the Queen Alexia the Righteous, lacking her usual armors or finery, many were constructed as a show of her humility and piety by prisoners of the crown."
+	name = "阿莱克西亚女王雕像"	
+	desc = "一尊谦逊描绘的公义女王阿莱克西亚，未穿戴她惯常的铠甲与华服。其中许多是由王室囚犯所造，以彰显她的谦卑与虔诚。"
 	icon = 'icons/roguetown/misc/ay.dmi'
 	icon_state = "2"
 	pixel_x = -32
 	pixel_y = -16
 
 /obj/structure/fluff/statue/femalestatue2
-	name = "forest spirit statue"
-	desc = "Dendor's Wild is protected by many a forest spirit more than glad to drown or throttle travelers who cut one too many trees, depictions of them are often made by his followers in his places as warnings of this for those who might forget the natural balance of things."
+	name = "森林之灵雕像"
+	desc = "登多尔的荒野由众多森林之灵守护着——它们十分乐意溺死或勒死那些砍了太多树的旅人。其追随者常在圣地立起它们的雕像，以此警告那些或许会忘记自然平衡的人。"
 	icon = 'icons/roguetown/misc/ay.dmi'
 	icon_state = "5"
 	pixel_x = -32
 	pixel_y = -16
 
 /obj/structure/fluff/statue/femalestatue/zizo
-	name = "zizo statue"
-	desc = "With her mortal form destroyed and now chained in the underworld, she still whispers to her disciples, guiding them to act in her name and rebuild her powers."
+	name = "齐佐雕像"
+	desc = "她的凡人之躯被毁，如今被锁链囚于冥界，但她仍向门徒低语，指引他们以她之名行事，重建她的力量。"
 	icon = 'icons/roguetown/misc/ay.dmi'
 	icon_state = "4"
 	pixel_x = -32

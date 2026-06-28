@@ -1,5 +1,5 @@
 /datum/patron/divine/eora
-	name = "Eora"
+	name = "伊欧拉"
 	domain = "爱、家庭、美丽"
 	desc = "炉边夫人赐福于我们的爱情，不问那爱究竟献给谁。婚姻不过是阿斯特拉塔的暴政侵入伊欧拉领域的体现。她的追随者往往风流多情，尤其是吟游诗人。"
 	worshippers = "恋人、溺爱子女的父母、吟游诗人、无可救药的浪漫主义者"
@@ -20,7 +20,7 @@
 					/obj/effect/proc_holder/spell/invoked/resurrect/eora		= CLERIC_T4,
 	)
 	confess_lines = list(
-		"EORA 让我们相聚！",
+		"伊欧拉让我们相聚！",
 		"即便在这苦难之中，她的美也依旧存在！",
 		"哪怕你冒犯了我，我依然爱你！",
 	)

@@ -1,5 +1,5 @@
 /datum/patron/divine/abyssor
-	name = "Abyssor"
+	name = "阿比索尔"
 	domain = "海洋、梦境、纯净、净化"
 	desc = "纯净之潮沉入了长眠，却未曾想到，祂的梦会召来那些因祂神圣缺席而追随祂的人。梦者们扭曲的心智与肉体玷污了祂的领域，但也唯有借由祂的水域，我们方可得到洗净。若祂苏醒，世界将被彻底净化。"
 	worshippers = "渔民、阿克西安、拉弥亚、梦者、疯子"
@@ -20,8 +20,8 @@
 					/obj/effect/proc_holder/spell/invoked/resurrect/abyssor		= CLERIC_T4,
 	)
 	confess_lines = list(
-		"ABYSSOR 号令海浪！",
-		"海洋的怒涛即是 ABYSSOR 的意志！",
+		"阿比索尔号令海浪！",
+		"海洋的怒涛即是阿比索尔的意志！",
 		"我正被潮汐的牵引所召唤！",
 	)
 

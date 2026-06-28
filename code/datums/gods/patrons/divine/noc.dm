@@ -1,5 +1,5 @@
 /datum/patron/divine/noc
-	name = "Noc"
+	name = "诺克"
 	domain = "黑夜、月亮、知识、魔法、秘密"
 	desc = "秘密之父是辉煌的月光，祂通过知识赐予我们力量。祂让我们得见祂那秘藏宝库的幻象，又以祂的仁慈赐予我们驾驭奥术的能力。"
 	worshippers = "巫师、学者、夜猫子"
@@ -17,8 +17,8 @@
 					/obj/effect/proc_holder/spell/invoked/resurrect/noc				= CLERIC_T4,
 	)
 	confess_lines = list(
-		"NOC 即是黑夜！",
-		"NOC 洞察万物！",
+		"诺克即是黑夜！",
+		"诺克洞察万物！",
 		"我寻求月亮的奥秘！",
 	)
 	storyteller = /datum/storyteller/noc

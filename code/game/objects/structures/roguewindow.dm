@@ -108,20 +108,20 @@
 	repair_costs = list(/obj/item/natural/glass, /obj/item/natural/glass)
 
 /obj/structure/roguewindow/stained/silver
-	name = "psydonite window"
-	desc = "A glass window stained in the silver of the Otavan Orthodoxy, it represents a time of hope long past which refuses to die."
+	name = "普赛顿式窗户"
+	desc = "一扇染有奥塔瓦正教会银色调的彩绘玻璃窗，它象征着一个久远而拒绝消亡的希望年代。"
 	icon_state = "stained-silver"
 	base_state = "stained-silver"
 
 /obj/structure/roguewindow/stained/yellow
-	name = "astratan window"
-	desc = "A glass window stained in the gold of the Sun Cult, it represents the undying authority of their faith, ever-present as the wilting gaze of the sun above."
+	name = "阿斯特拉塔式窗户"
+	desc = "一扇染有太阳教会金色调的彩绘玻璃窗，它象征着其信仰永恒不灭的权威，如同头顶太阳那始终灼灼逼人的注视。"
 	icon_state = "stained-yellow"
 	base_state = "stained-yellow"
 
 /obj/structure/roguewindow/stained/zizo
-	name = "zizite window"
-	desc = "A glass window stained in the red of the Zizo Cabal, it represents the endless ambition of their cause and goddess, that which is unsatisfied with just one life to live."
+	name = "齐佐派窗户"
+	desc = "一扇染有齐佐密教红色调的彩绘玻璃窗，它象征着其事业与女神的无尽野心——区区一世的生命远远不够。"
 	icon_state = "stained-zizo"
 	base_state = "stained-zizo"
 

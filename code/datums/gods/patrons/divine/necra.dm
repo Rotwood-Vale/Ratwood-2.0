@@ -1,5 +1,5 @@
 /datum/patron/divine/necra
-	name = "Necra"
+	name = "内克拉"
 	domain = "死亡、来世、重生"
 	desc = "冥下侍女是来世的看守者，所有灵魂终将去往那里。她令迷失者接受“遗忘者试炼”，在那里反复思索自己的一生，方能获得重生。她的追随者将复活视为可憎之举，宁愿守着自己的墓园，与世隔绝。"
 	worshippers = "掘墓人、入殓师、失势医者、独行者"
@@ -19,7 +19,7 @@
 					/obj/effect/proc_holder/spell/targeted/churn					= CLERIC_T4,//Priest/Acolytes only. Thanks.
 	)
 	confess_lines = list(
-		"众魂终将归于 NECRA！",
+		"众魂终将归于内克拉！",
 		"冥下侍女便是我们最终的安息！",
 		"我无惧死亡，我的女主人正等待着我！",
 	)

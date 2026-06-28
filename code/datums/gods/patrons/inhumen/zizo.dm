@@ -1,10 +1,10 @@
 /datum/patron/inhumen/zizo
-	name = "Zizo"
-	domain = "死灵术、野心、腐朽、左道魔法"
-	desc = "远古时代，曾有一位凡人建立起庞大的帝国，并通过献祭其子民而升格为神。那些较弱者即便死后亦被束缚，其誓言永恒，其劳役无尽。齐佐正是人类无限潜能的明证。如今她被囚于冥界，向凡人低语，要他们奉她之名行事，重铸她的力量，助她重获自由，再度游走于凡间，延续她的暴政。"
-	worshippers = "死灵法师、不死者、秘密结社、征服者与狂人"
-	virtues = "野心、支配、不死"
-	sins = "谦卑、无知、停滞"
+	name = "齐佐"
+	domain = "死灵术，野心，腐化，左道魔法"
+	desc = "在远古时代，曾有一位凡人建立了一个强大的帝国，并通过牺牲其臣民升格为神。弱者死后仍被束缚，誓言永恒，劳役无尽。齐佐便是人类无限潜能的证明。如今被锁链囚禁于冥界的她，向凡人低语，令其以她之名行事，重建她的力量，助她重获自由以再度行走于凡间，延续她的统治。"
+	worshippers = "死灵法师，亡灵，秘密结社，征服者与狂人。"
+	virtues = "野心，支配，不死"
+	sins = "谦卑，无知，停滞"
 	mob_traits = list(TRAIT_CABAL, TRAIT_ZIZOSIGHT)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/zizo_snuff						= CLERIC_T0,

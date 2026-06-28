@@ -1,5 +1,5 @@
 /datum/patron/divine/ravox
-	name = "Ravox"
+	name = "拉沃克斯"
 	domain = "正义、战斗、荣耀、义怒"
 	desc = "辉耀的正义与阿斯特拉塔的秩序彼此制衡，避免世界沦为太阳暴政的统治。他是公正无私的神，只为贯彻神圣正义而存在。祂的追随者在追求这一目标时往往会误入歧途。"
 	worshippers = "战士、佣兵、骑士、求索正义者"
@@ -17,7 +17,7 @@
 					/obj/effect/proc_holder/spell/invoked/resurrect/ravox		= CLERIC_T4,
 	)
 	confess_lines = list(
-		"RAVOX 即是正义！",
+		"拉沃克斯即是正义！",
 		"历经斗争，方得恩典！",
 		"坚持到底，方见荣耀！",
 	)

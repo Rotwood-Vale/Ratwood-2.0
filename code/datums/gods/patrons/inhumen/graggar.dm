@@ -1,7 +1,7 @@
 /datum/patron/inhumen/graggar
-	name = "Graggar"
+	name = "格拉加尔"
 	domain = "征服、残酷、弑亲、屠戮、食人、支配"
-	desc = "血缚之星曾是一位半兽人军阀，因爱侣遭受残酷命运而愤怒到想将 Ravox 击落。他被斩首之后，头颅却以蓝色腐肉与令人作呕的触须畸变复生。凡是凝视那颗星的人，都会被逼入疯狂。"
+	desc = "血缚之星曾是一位半兽人军阀，因爱侣遭受残酷命运而愤怒到想将拉沃克斯击落。他被斩首之后，头颅却以蓝色腐肉与令人作呕的触须畸变复生。凡是凝视那颗星的人，都会被逼入疯狂。"
 	worshippers = "堕落战士、食人者、连环杀手、残酷之人"
 	virtues = "武勇、支配、暴力"
 	sins = "软弱、奴性、怯懦"
@@ -15,7 +15,7 @@
 					/obj/effect/proc_holder/spell/invoked/revel_in_slaughter 			= CLERIC_T3,
 	)
 	confess_lines = list(
-		"GRAGGAR 就是我所崇拜的凶兽！",
+		"格拉加尔就是我所崇拜的凶兽！",
 		"唯有暴力，方可登神！",
 		"征服之神渴求鲜血！",
 	)
@@ -81,5 +81,5 @@
 	// Allows praying atop ritual chalk of the god.
 	for(var/obj/structure/ritualcircle/graggar in view(1, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("若想让 Graggar 听见我的祈祷，我必须身处被遗弃者的教堂、倒置的普赛圣十字附近、靠近新鲜血迹，或亲手放出自己的血！"))
+	to_chat(follower, span_danger("若想让格拉加尔听见我的祈祷，我必须身处被遗弃者的教堂、倒置的普赛圣十字附近、靠近新鲜血迹，或亲手放出自己的血！"))
 	return FALSE

@@ -1,5 +1,5 @@
 /datum/patron/divine/dendor
-	name = "Dendor"
+	name = "登多尔"
 	domain = "植物、野兽、自然、农耕"
 	desc = "树父曾是第一位德鲁伊，因其领域屡遭蹂躏而陷入疯狂。即便如此，祂依旧守望着林地与平原，为我们的收成与生计降下祝福。祂的野兽从不对我们留情，但我们仍能学会避开它们的利爪獠牙。"
 	worshippers = "德鲁伊、野兽、疯子、农夫、精灵、兽裔"
@@ -20,7 +20,7 @@
 					/obj/effect/proc_holder/spell/invoked/sanctify_tree			= CLERIC_T4,
 					)
 	confess_lines = list(
-		"DENDOR 赐予万物！",
+		"登多尔赐予万物！",
 		"树父带来丰饶！",
 		"我回应荒野的呼唤！",
 	)

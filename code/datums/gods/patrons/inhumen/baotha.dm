@@ -1,7 +1,7 @@
 /datum/patron/inhumen/baotha
-	name = "Baotha"
+	name = "巴奥莎"
 	domain = "享乐、放荡、成瘾、碎心"
-	desc = "放纵之女是唯一从 Zizo 屠杀中活下来的雪精灵，曾被 Naledi 当作侍妾豢养。直到某一天，她彻底沉沦于自己的堕落与瘾欲之中，从囚禁她的人手中盗走了一块 SYON 碎片，并由此登临神位。她的追随者只渴望体验那些足以腐蚀心智的欢愉。"
+	desc = "放纵之女是唯一从齐佐屠杀中活下来的雪精灵，曾被纳莱迪人当作侍妾豢养。直到某一天，她彻底沉沦于自己的堕落与瘾欲之中，从囚禁她的人手中盗走了一块普赛顿彗星碎片，并由此登临神位。她的追随者只渴望体验那些足以腐蚀心智的欢愉。"
 	worshippers = "寡妇、赌徒、瘾君子、失意恋人、彻底沉沦的娼妓"
 	virtues = "色欲、暴食、寻求刺激"
 	sins = "贞洁、节制、阴郁"
@@ -19,9 +19,9 @@
 					/obj/effect/proc_holder/spell/invoked/painkiller					= CLERIC_T3,
 	)
 	confess_lines = list(
-		"BAOTHA 渴求欢愉！",
+		"巴奥莎就是我所崇拜的凶兽！",
 		"活着，欢笑，去爱！",
-		"BAOTHA 就是我的快乐！",
+		"巴奥莎就是我的快乐！",
 	)
 	storyteller = /datum/storyteller/baotha
 
@@ -48,7 +48,7 @@
 	// Allows praying atop ritual chalk of the god.
 	for(var/obj/structure/ritualcircle/baotha in view(1, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("若想让 Baotha 听见我的祈祷，我必须身处被遗弃者的教堂、倒置的普赛圣十字附近、镇上的浴场之中，或正沉浸在某种鼻中妙药带来的快意里！"))
+	to_chat(follower, span_danger("若想让巴奥莎听见我的祈祷，我必须身处被遗弃者的教堂、倒置的普赛圣十字附近、镇上的浴场之中，或正沉浸在某种鼻中妙药带来的快意里！"))
 	return FALSE
 
 #define BAOTHA_SUFFERING_DIVIDER 3.535 // max bonus at 50 pain/bleedrate and pain_mod = 1

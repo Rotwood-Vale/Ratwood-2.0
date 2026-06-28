@@ -1,5 +1,5 @@
 /datum/patron/divine/pestra
-	name = "Pestra"
+	name = "佩斯特拉"
 	domain = "医药、瘟疫、腐朽"
 	desc = "万灵药是十神中唯一诞生自兽裔的神祇，她教会了我们医术与外科手艺。与其他十神信徒相比，她的追随者对腐烂与朽坏的痴迷已到了令人忧心的地步。"
 	worshippers = "病患、外科医师、药剂师"
@@ -20,7 +20,7 @@
 					/obj/effect/proc_holder/spell/invoked/resurrect/pestra		= CLERIC_T4,
 	)
 	confess_lines = list(
-		"PESTRA 抚慰一切病苦！",
+		"佩斯特拉抚慰一切病苦！",
 		"腐朽便是生命的延续！",
 		"我的苦难便是我的见证！",
 	)
