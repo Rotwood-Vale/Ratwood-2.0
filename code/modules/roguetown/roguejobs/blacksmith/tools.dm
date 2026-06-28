@@ -90,7 +90,7 @@
 		// skilled craftsmen can repair to 100% as usual
 		var/obj/item/attacked_item = attacked_object
 		var/repair_skill = blacksmith.get_skill_level(attacked_item.anvilrepair)
-		var/unskilled = repair_skill < SKILL_LEVEL_JOURNEYMAN
+		var/unskilled = repair_skill < SKILL_LEVEL_APPRENTICE //修改维修需求等级 SKILL_LEVEL_JOURNEYMAN
 		var/integrity_percentage = (attacked_item.obj_integrity / attacked_item.max_integrity) * 100
 
 		if(HAS_TRAIT(blacksmith, TRAIT_SQUIRE_REPAIR) || HAS_TRAIT(user, TRAIT_SELF_SUSTENANCE)) // squires are always considered skilled w/o other bonuses for the purposes of repair
