@@ -358,8 +358,14 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 		if(!message)
 			return
 		// 投入聊天室历史并广播——快捷通道与窗口"发送消息"走完全相同的入口。
-		// Push into the room log + broadcast — the shortcut shares the exact same path as the window's send.
-		add_message(speaker, message)
+		// 注意：本过程是 SIGNAL_HANDLER（不允许睡眠），而 add_message → render_all → 浏览器 open()
+		// 存在会睡眠的子类重载（/datum/browser/modal/open）；故用 INVOKE_ASYNC 把它派发到允许睡眠的
+		// 独立上下文执行，既消除"信号处理器中睡眠"的告警，又不改变功能。
+		// Push into the room log + broadcast — same entry point as the window's send.
+		// NOTE: this is a SIGNAL_HANDLER (must not sleep), but add_message -> render_all -> browser open()
+		// has a sleeping override (/datum/browser/modal/open). Dispatch it via INVOKE_ASYNC so it runs in a
+		// sleep-allowed context, clearing the "sleep in signal handler" lint without changing behavior.
+		INVOKE_ASYNC(src, PROC_REF(add_message), speaker, message)
 
 // 通知房间即将/已经消散：写入一条系统提示，告知所有人链接结束。
 // Notify that the room has expired: log a system notice telling everyone the link has ended.
