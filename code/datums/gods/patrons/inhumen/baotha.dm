@@ -19,7 +19,7 @@
 					/obj/effect/proc_holder/spell/invoked/painkiller					= CLERIC_T3,
 	)
 	confess_lines = list(
-		"巴奥莎就是我所崇拜的凶兽！",
+		"巴奥莎渴求欢愉！",
 		"活着，欢笑，去爱！",
 		"巴奥莎就是我的快乐！",
 	)
