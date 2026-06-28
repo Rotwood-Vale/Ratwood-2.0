@@ -716,7 +716,7 @@
 	dropshrink = null
 
 /datum/crafting_recipe/roguetown/sewing/maskgreen
-	name = "异域丝绸面具（绿色）"
+	name = "异域丝绸面纱（绿色）"
 	result = list(/obj/item/clothing/mask/rogue/exoticsilkmask/green)
 	reqs = list(/obj/item/natural/silk = 2)
 	craftdiff = 4
@@ -728,7 +728,7 @@
 	item_state = "exoticsilkmaskr"
 
 /datum/crafting_recipe/roguetown/sewing/maskred
-	name = "异域丝绸面具（红色）"
+	name = "异域丝绸面纱（红色）"
 	result = list(/obj/item/clothing/mask/rogue/exoticsilkmask/red)
 	reqs = list(/obj/item/natural/silk = 2)
 	craftdiff = 4

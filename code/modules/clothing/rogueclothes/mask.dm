@@ -656,7 +656,7 @@
 	sellprice = 0
 
 /obj/item/clothing/mask/rogue/exoticsilkmask
-	name = "异域丝绸面具"
+	name = "异域丝绸面纱"
 	icon_state = "exoticsilkmask"
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
