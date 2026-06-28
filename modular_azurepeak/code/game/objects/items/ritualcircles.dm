@@ -1257,8 +1257,8 @@
 
 
 /obj/structure/ritualcircle/zizo
-	name = "Rune of Progress"
-	desc = "A Holy Rune of ZIZO. Progress at any cost."
+	name = "Rune of Ambition"
+	desc = "A Holy Rune of ZIZO. Ambition at any cost."
 	icon_state = "zizo_chalky"
 	var/zizorites = list("Rite of Armaments", "Rite of the Dark Crystal", "Conversion")
 
@@ -1274,7 +1274,7 @@
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
 		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more."))
 		return
-	var/riteselection = input(user, "Rituals of Progress", src) as null|anything in zizorites
+	var/riteselection = input(user, "Rituals of Ambition", src) as null|anything in zizorites
 	switch(riteselection)
 		if("Rite of Armaments")
 			var/onrune = view(1, loc)
@@ -1287,7 +1287,7 @@
 				return
 			if(!do_after(user, 5 SECONDS))
 				return
-			user.say("ZIZO! ZIZO! DAME OF PROGRESS!!")
+			user.say("ZIZO! ZIZO! DAME OF AMBITION!!")
 			if(!do_after(user, 5 SECONDS))
 				return
 			user.say("ZIZO! ZIZO! HEED MY CALL!!")
@@ -1304,7 +1304,7 @@
 		if("Rite of the Dark Crystal")
 			if(!do_after(user, 5 SECONDS))
 				return
-			user.say("ZIZO! ZIZO! DAME OF PROGRESS!!")
+			user.say("ZIZO! ZIZO! DAME OF AMBITION!!")
 			if(!do_after(user, 5 SECONDS))
 				return
 			user.say("ZIZO! ZIZO! GRANT THE CABAL THEIR RELIC!!")
@@ -1336,7 +1336,7 @@
 				return
 			if(!do_after(user, 5 SECONDS))
 				return
-			user.say("ZIZO! ZIZO! DAME OF PROGRESS!!")
+			user.say("ZIZO! ZIZO! DAME OF AMBITION!!")
 			if(!do_after(user, 5 SECONDS))
 				return
 			user.say("ZIZO! ZIZO! HEED MY CALL!!")
@@ -1423,7 +1423,7 @@
 			target.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 			spawn(40)
 				playsound(loc, 'sound/misc/boatleave.ogg', 100)
-				to_chat(target, span_purple("They are ignorant, backwards, without hope. You. You will fight in the name of Progress."))
+				to_chat(target, span_purple("They are ignorant, backwards, without hope. You. You will fight in the name of Ambition."))
 				if(target.devotion == null) // why can't it just go 'huh null? yeah ok dont care let's continue' why do i have to write this
 					target.set_patron(new /datum/patron/inhumen/zizo)
 					target.already_converted_once = TRUE

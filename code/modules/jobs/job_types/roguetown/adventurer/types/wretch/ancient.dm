@@ -105,7 +105,7 @@
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/silence)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_deadite)
 				var/extraspell = list("Bolt of Lightning", "Ensnare")
-				var/spell_choice = input(H,"Choose your offensive spell.", "INEVITABILITY OF PROGRESS") as anything in extraspell
+				var/spell_choice = input(H,"Choose your offensive spell.", "INEVITABILITY OF AMBITION") as anything in extraspell
 				switch(spell_choice)
 					if("Bolt of Lightning")
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt)
