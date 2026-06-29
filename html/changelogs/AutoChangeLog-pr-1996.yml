@@ -1,0 +1,5 @@
+author: "Xander3359"
+delete-after: True
+changes:
+  - balance: "Rontz rings no longer show up on examine"
+  - qol: "Bandit rings now mention in the description that they can be disguised"

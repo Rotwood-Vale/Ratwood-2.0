@@ -747,11 +747,16 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FINGERLESS "fingerless" //The limb has no fingies
 
 //item traits
-#define TRAIT_NODROP			"nodrop"
-#define TRAIT_NOEMBED			"noembed"
-#define TRAIT_T_RAY_VISIBLE     "t-ray-visible" // Visible on t-ray scanners if the atom/var/level == 1
-#define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
-#define TRAIT_NO_SELF_UNEQUIP			"no-self-unequip" // For items you can't remove on wearing but can still hold freely
+#define TRAIT_NODROP "nodrop"
+#define TRAIT_NOEMBED "noembed"
+/// Visible on t-ray scanners if the atom/var/level == 1
+#define TRAIT_T_RAY_VISIBLE "t-ray-visible"
+/// you just can't
+#define TRAIT_NO_TELEPORT "no-teleport"
+/// For items you can't remove on wearing but can still hold freely
+#define TRAIT_NO_SELF_UNEQUIP "no-self-unequip"
+/// Items with this trait will not appear when examined. (only implemented for rings)
+#define TRAIT_EXAMINE_SKIP "examine_skip"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"

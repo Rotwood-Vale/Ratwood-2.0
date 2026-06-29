@@ -712,8 +712,8 @@
 	if(ears && !(SLOT_HEAD in obscured))
 		. += "[m3] [get_examine_item_name_with_hover(user, ears)] on [m2] ears."
 
-	//ID
-	if(wear_ring && !(SLOT_RING in obscured))
+	//ring
+	if(wear_ring && !(SLOT_RING in obscured) && !HAS_TRAIT(wear_ring, TRAIT_EXAMINE_SKIP))
 		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_ring)] on [m2] hands. "
 		if(is_smart && istype(wear_ring, /obj/item/clothing/ring/active))
 			var/obj/item/clothing/ring/active/AR = wear_ring

@@ -705,7 +705,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		to_chat(src, span_warning("I can't do that right now!"))
 		return FALSE
 	if(be_close && !in_range(M, src))
-		to_chat(src, span_warning("I are too far away!"))
+		to_chat(src, span_warning("I am too far away!"))
 		return FALSE
 	if(!(no_dexterity || dextrous))
 		to_chat(src, span_warning("I don't have the dexterity to do this!"))

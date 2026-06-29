@@ -300,3 +300,10 @@
   - bugfix: Stripes. . . For the third time !
   The-Sun-In-Splendour:
   - bugfix: lacrima's "is dead" check
+2026-06-29:
+  John-Dang:
+  - rscadd: Added new descriptions to the statues! Little bits of flavor! Find them
+      in-game!
+  Xaytan:
+  - refactor: refactored heart on_life
+  - code_imp: added early exit to sleep stamina healing.

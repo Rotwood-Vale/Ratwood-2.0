@@ -1,6 +1,6 @@
 /datum/surgery/debride_frostbite
 	name = "Frostbite debridement"
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 
 	possible_locs = list(
 		BODY_ZONE_HEAD,
@@ -34,7 +34,7 @@
 		TOOL_SHARP = 60,
 	)
 
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 
 	surgery_flags = SURGERY_INCISED | SURGERY_RETRACTED
 	surgery_flags_blocked = SURGERY_CONSTRUCT
