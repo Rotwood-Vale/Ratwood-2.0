@@ -598,9 +598,11 @@ GLOBAL_LIST_EMPTY(alch_refining_formulas)					// Lazily-filled list of all formu
 		O.visible_message(span_green("[O]在溶剂的浸润下崩损尽复、锋芒重现，宛如刚刚锻造问世！"))	// Visible feedback.
 
 // --- 变性药水：本次新增配方的产物(底料为情欲液，无酒，故为普通试剂) ---
-// 中文：成品试剂——变性药水。饮下并【代谢满 5 单位】后，触发一次彻底的性别转换：翻转 gender，并据此
-//       【更换性器官】(原版生殖器官：阴茎/睾丸 ↔ 阴道/乳房)，再刷新外观。属角色变身机制，仅对人类生效。
-//   涉及原版接口：H.gender、getorganslot(ORGAN_SLOT_*)、器官的 Insert()/Remove()、regenerate_icons()。
+// 中文：成品试剂——变性药水。饮下并【代谢满 5 单位】后，触发一次彻底的性别转换：翻转 gender、移除原性别
+//       的性器官，随后【弹窗让本人选择】新性器官的【大小/样式】等(详见 build_new_genitals)，再植入并刷新外观。
+//       属角色变身机制，仅对人类生效。弹窗为异步进行，不阻塞生命循环；无客户端(NPC)则按默认值生成。
+//   涉及原版接口：H.gender、getorganslot(ORGAN_SLOT_*)、器官 Insert()/Remove()、regenerate_icons()、
+//       原版尺寸/样式 #define(MAX_PENIS_SIZE/MAX_BREASTS_SIZE/PENIS_TYPE_* 等)、tgui_input_number/list。
 /datum/reagent/gender_swap_potion
 	name = "变性药水"										// In-game name (Gender-Swap Potion).
 	description = "循浆果派的气味、以情欲液为底精炼的乳色药水。饮下足量并待其消化后，会从内到外彻底改写饮用者的性别——容貌乃至性器官都将随之转变。"	// Flavour + hint.
@@ -625,7 +627,7 @@ GLOBAL_LIST_EMPTY(alch_refining_formulas)					// Lazily-filled list of all formu
 		do_gender_swap(M)									// Perform the transformation.
 	return ..()
 
-// 中文：执行性别转换——翻转 gender，按目标性别更换性器官，最后刷新身体外观。仅对人类有效。
+// 中文：执行性别转换——翻转 gender、移除原性别的性器官，随后由【本人弹窗定制】后植入新性器官并刷新外观。仅对人类有效。
 /datum/reagent/gender_swap_potion/proc/do_gender_swap(mob/living/carbon/human/H)
 	// 中文：非人类(动物/构造体等)没有这套性器官系统，直接跳过。
 	if(!ishuman(H))											// Only humans have these organs.
@@ -634,24 +636,79 @@ GLOBAL_LIST_EMPTY(alch_refining_formulas)					// Lazily-filled list of all formu
 	var/becoming_female = (H.gender == MALE)				// Direction of the swap.
 	// 中文：翻转性别(影响声音/称谓/身体外观判定)。
 	H.gender = becoming_female ? FEMALE : MALE				// Flip the gender var.
+	// 中文：先移除"原性别"的性器官；新器官稍后据玩家选择植入。
 	if(becoming_female)
-		// 中文：移除男性性器官、植入女性性器官。
 		swap_remove_organ(H, ORGAN_SLOT_PENIS)				// Remove penis.
 		swap_remove_organ(H, ORGAN_SLOT_TESTICLES)			// Remove testicles.
-		swap_add_organ(H, /obj/item/organ/vagina)			// Add vagina.
-		swap_add_organ(H, /obj/item/organ/breasts)			// Add breasts.
 	else
-		// 中文：移除女性性器官、植入男性性器官。
 		swap_remove_organ(H, ORGAN_SLOT_VAGINA)				// Remove vagina.
 		swap_remove_organ(H, ORGAN_SLOT_BREASTS)			// Remove breasts.
-		swap_add_organ(H, /obj/item/organ/penis)			// Add penis.
-		swap_add_organ(H, /obj/item/organ/testicles)		// Add testicles.
-	// 中文：刷新身体贴图与各部件，让外观随新性别/器官更新。
+	// 中文：先就当前状态刷新一次外观，并给出转变反馈。
 	H.regenerate_icons()									// Rebuild the body sprite.
 	H.update_body_parts(TRUE)								// Refresh body-part overlays.
-	// 中文：反馈。
 	to_chat(H, span_userdanger("一阵深入骨髓的剧变自体内涌起……我的身体被彻底改写了。"))	// Self message.
 	H.visible_message(span_warning("[H]的身形在眼前发生了惊人的转变！"))	// Onlookers' message.
+	// 中文：植入新性器官——有客户端者【弹窗让本人选择大小/样式等】，并异步进行(避免阻塞生命循环)；
+	//       无客户端(NPC)则按默认值同步构建。
+	if(H.client)											// A player who can answer prompts.
+		INVOKE_ASYNC(src, PROC_REF(build_new_genitals), H, becoming_female)	// Prompt + build, off the Life loop.
+	else
+		build_new_genitals(H, becoming_female)				// NPC: defaults, synchronous.
+
+// 中文：构建并植入新性器官。有客户端则弹窗让本人选择(大小/样式/生育力等)，否则用默认值；完成后刷新外观。
+//   ——弹窗使用 tgui_input_list/tgui_input_number/alert；尺寸/样式取值范围来自原版 DNA.dm 的相关 #define。
+/datum/reagent/gender_swap_potion/proc/build_new_genitals(mob/living/carbon/human/H, becoming_female)
+	if(!ishuman(H))											// Safety: still human?
+		return
+	if(becoming_female)
+		// 中文：女性 → 乳房 + 阴道。可选：胸部大小(1-12)、是否具备生育能力。
+		var/breast_size = DEFAULT_BREASTS_SIZE				// Default breast size.
+		var/fertile = TRUE									// Default: fertile.
+		if(H.client)										// Ask the transformed person.
+			var/chosen_bsize = tgui_input_number(H, "选择胸部大小（1 - [MAX_BREASTS_SIZE]）", "变性 · 身体定制", DEFAULT_BREASTS_SIZE, MAX_BREASTS_SIZE, 1)
+			if(!isnull(chosen_bsize))						// Apply if they answered.
+				breast_size = clamp(round(chosen_bsize), 1, MAX_BREASTS_SIZE)
+			fertile = (alert(H, "新的身体是否具备生育能力？", "变性 · 身体定制", "是", "否") != "否")	// Fertility option.
+		var/obj/item/organ/breasts/new_breasts = new()		// New breasts.
+		new_breasts.breast_size = breast_size				// Apply chosen size.
+		new_breasts.Insert(H)								// Implant.
+		var/obj/item/organ/vagina/new_vagina = new()		// New vagina.
+		new_vagina.fertility = fertile						// Apply chosen fertility.
+		new_vagina.Insert(H)								// Implant.
+	else
+		// 中文：男性 → 阴茎 + 睾丸。可选：阴茎样式(对应原版各阴茎子类型)、阴茎大小(1-3)、睾丸大小(1-3)。
+		var/penis_path = /obj/item/organ/penis				// Default: plain penis.
+		var/penis_size = DEFAULT_PENIS_SIZE					// Default penis size.
+		var/ball_size = DEFAULT_TESTICLES_SIZE				// Default testicle size.
+		if(H.client)										// Ask the transformed person.
+			// 中文：阴茎样式 → 各原版子类型(其已内置对应的 penis_type / sheath_type)。
+			var/list/penis_styles = list(
+				"普通" = /obj/item/organ/penis,				// Plain.
+				"犬结" = /obj/item/organ/penis/knotted,		// Knotted.
+				"马势" = /obj/item/organ/penis/equine,		// Equine.
+				"锥形" = /obj/item/organ/penis/tapered,		// Tapered.
+				"倒刺" = /obj/item/organ/penis/barbed,		// Barbed.
+				"触手" = /obj/item/organ/penis/tentacle,		// Tentacle.
+			)
+			var/style_choice = tgui_input_list(H, "选择阴茎样式", "变性 · 身体定制", penis_styles)
+			if(style_choice && penis_styles[style_choice])	// Apply chosen style.
+				penis_path = penis_styles[style_choice]
+			var/chosen_psize = tgui_input_number(H, "选择阴茎大小（[MIN_PENIS_SIZE] - [MAX_PENIS_SIZE]）", "变性 · 身体定制", DEFAULT_PENIS_SIZE, MAX_PENIS_SIZE, MIN_PENIS_SIZE)
+			if(!isnull(chosen_psize))
+				penis_size = clamp(round(chosen_psize), MIN_PENIS_SIZE, MAX_PENIS_SIZE)
+			var/chosen_tsize = tgui_input_number(H, "选择睾丸大小（1 - [MAX_TESTICLES_SIZE]）", "变性 · 身体定制", DEFAULT_TESTICLES_SIZE, MAX_TESTICLES_SIZE, 1)
+			if(!isnull(chosen_tsize))
+				ball_size = clamp(round(chosen_tsize), 1, MAX_TESTICLES_SIZE)
+		var/obj/item/organ/penis/new_penis = new penis_path()	// New penis of the chosen style.
+		new_penis.penis_size = penis_size					// Apply chosen size.
+		new_penis.Insert(H)									// Implant.
+		var/obj/item/organ/testicles/new_testes = new()		// New testicles.
+		new_testes.ball_size = ball_size					// Apply chosen size.
+		new_testes.Insert(H)								// Implant.
+	// 中文：植入完成后刷新外观，让新器官与体型生效。
+	H.regenerate_icons()									// Rebuild the body sprite.
+	H.update_body_parts(TRUE)								// Refresh body-part overlays.
+	to_chat(H, span_notice("我的新身体已经定型。"))			// Done.
 
 // 中文：移除指定槽位的器官(若有)并销毁。
 /datum/reagent/gender_swap_potion/proc/swap_remove_organ(mob/living/carbon/human/H, slot)
@@ -659,11 +716,6 @@ GLOBAL_LIST_EMPTY(alch_refining_formulas)					// Lazily-filled list of all formu
 	if(old_organ)											// Present?
 		old_organ.Remove(H)									// Detach from the body.
 		qdel(old_organ)										// Destroy it.
-
-// 中文：新建并植入一个指定类型的器官(Insert 会处理同槽替换)。
-/datum/reagent/gender_swap_potion/proc/swap_add_organ(mob/living/carbon/human/H, organ_type)
-	var/obj/item/organ/new_organ = new organ_type()			// Fresh organ instance.
-	new_organ.Insert(H)										// Implant into the body.
 
 // --- 媚药(强制发情)：本次新增配方的产物(底料为情欲液，无酒，故为普通试剂) ---
 // 中文：成品试剂——媚药。沿用原版"催情"机制(sexcon.aphrodisiac 倍率，参见余烬酒)，但更猛烈：
