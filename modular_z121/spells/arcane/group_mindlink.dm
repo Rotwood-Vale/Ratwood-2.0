@@ -149,6 +149,29 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 	popup.open()
 	return TRUE
 
+// 仅刷新【已经打开】的窗口：窗口对象存在才更新内容，不存在（被关闭/从未打开）则什么都不做。
+// 这样在有人发言时，不会把别人【已经关掉】的对话框强行重新弹出来——他们仍可在普通聊天框看到
+// 镜像消息，需要时再用 IC 标签的【Group Mindlink】动词手动打开。这是与 open_window_for 的关键区别：
+// open_window_for 会"按需新建并强制弹出"（用于施法/手动重开），refresh_window_for 只"就地刷新已开窗口"。
+// Only refresh an ALREADY-OPEN window: update it if a browser object exists, otherwise do nothing.
+// This stops speech from force-popping a window someone deliberately closed — they still see the mirrored
+// line in normal chat and can reopen via the [Group Mindlink] IC verb. Key difference vs open_window_for,
+// which creates-and-force-opens (for casting / manual reopen); this one just refreshes in place.
+/datum/group_mindlink_custom/proc/refresh_window_for(mob/living/member)
+	// 失效/无客户端 -> 不处理。
+	// Dead link / no client -> skip.
+	if(!active || QDELETED(member) || !member.client)
+		return
+	// 没有已打开的窗口对象 -> 绝不强制弹出，直接返回。
+	// No open window object -> never force one open; just return.
+	var/datum/browser/popup = windows[member]
+	if(!popup)
+		return
+	// 窗口本就开着：就地刷新内容。
+	// Window is already open: refresh its content in place.
+	popup.set_content(build_window_html(member))
+	popup.open()
+
 // 关闭并丢弃某成员的窗口对象（成员退出 / 房间销毁时调用）。
 // Close and drop a member's browser window (on member leave / room destroy).
 /datum/group_mindlink_custom/proc/close_window_for(mob/living/member)
@@ -219,17 +242,21 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 	// Assemble: style + header + scrollable log (id=log) + input form + script.
 	return "[css][header]<div id='log' class='log'>[body]</div>[form][js]"
 
-// 把当前聊天内容刷新到所有在场且有客户端的成员窗口（每次有新消息后调用）。
-// Refresh the current content into every present, client-having member's window (after each new message).
+// 把当前聊天内容刷新到所有【已经打开窗口】的成员（每次有新消息后调用）。
+// 关键：此处用 refresh_window_for 而非 open_window_for——只刷新已开的窗口，绝不强制弹出已被关闭的，
+// 从而修复"有人一说话就把对话框强行弹出来"的烦扰。关窗的成员仍能在普通聊天框看到镜像消息。
+// Refresh content into every member whose window is ALREADY OPEN (called after each new message).
+// Key: uses refresh_window_for (not open_window_for) — refresh open windows only, never force-pop a closed one,
+// fixing the "any speech force-pops the dialog" annoyance. Closed-window members still see the chat mirror.
 /datum/group_mindlink_custom/proc/render_all()
 	if(!active)
 		return
 	for(var/mob/living/member as anything in participants)
-		// 跳过已删除的成员；其余成员若有客户端则打开/刷新窗口（已关窗的会被重新拉起，确保不漏看消息）。
-		// Skip deleted members; (re)open windows for the rest, so a member who closed it still sees new messages.
+		// 跳过已删除的成员；其余成员仅在其窗口已开时就地刷新。
+		// Skip deleted members; for the rest, refresh only if their window is already open.
 		if(QDELETED(member))
 			continue
-		open_window_for(member)
+		refresh_window_for(member)
 
 // -------------------------------------------------------------------------------------
 // 消息写入：把一条发言（或系统提示）追加进历史并广播刷新。
@@ -329,9 +356,14 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 			// Manual refresh: just re-render the clicker's own window.
 			open_window_for(clicker)
 		if("close")
-			// 窗口被关闭（onclose 回调）：丢弃该成员的窗口对象；下条消息到来时会自动重新弹出。
-			// Window closed (onclose hook): drop the window object; it reopens on the next message.
+			// 窗口被关闭（onclose 回调）：销毁并移除该成员的窗口对象，使其【保持关闭】，他人发言不再强行弹出。
+			// Window closed (onclose hook): destroy + drop this member's window object so it STAYS closed.
+			// Later speech only calls refresh_window_for, which skips it (no window object) — no more force-pop.
+			// The member still sees mirrored lines in normal chat, and can reopen via the [Group Mindlink] IC verb.
+			var/datum/browser/popup = windows[clicker]
 			windows -= clicker
+			if(popup)
+				qdel(popup)
 
 // -------------------------------------------------------------------------------------
 // 兼容旧用法：发言以 ",m" 开头时，作为不依赖窗口的快捷发送通道直接投入聊天室历史。
