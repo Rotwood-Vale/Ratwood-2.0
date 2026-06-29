@@ -3846,6 +3846,8 @@
 "aNd" = (
 /obj/structure/table/wood/long_table/right,
 /obj/machinery/light/rogue/candle/floorcandle,
+/obj/item/inqarticles/tallowpot,
+/obj/item/reagent_containers/food/snacks/tallow/soft,
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/bath)
 "aNh" = (
@@ -5696,10 +5698,11 @@
 /area/rogue/outdoors/exposed/town/keep)
 "bic" = (
 /obj/structure/table/wood/long_table,
-/obj/item/bouquet/calendula,
 /obj/machinery/light/rogue/candle{
 	pixel_y = -32
 	},
+/obj/item/inqarticles/tallowpot,
+/obj/item/reagent_containers/food/snacks/tallow/soft,
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/shop)
 "bij" = (
@@ -9162,6 +9165,7 @@
 	pixel_x = -1;
 	pixel_y = 30
 	},
+/obj/item/reagent_containers/food/snacks/tallow/soft,
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors/town/manor)
 "bSl" = (
@@ -12649,6 +12653,8 @@
 /obj/item/candle/candlestick/silver/lit{
 	pixel_y = 9
 	},
+/obj/item/inqarticles/tallowpot,
+/obj/item/reagent_containers/food/snacks/tallow/soft,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement/keep)
 "cFU" = (
@@ -18465,6 +18471,7 @@
 	},
 /obj/machinery/light/rogue/candle/l,
 /obj/item/storage/keyring/manor/guestroom/i,
+/obj/item/seal/custom,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/manor)
 "dSr" = (
@@ -19384,6 +19391,8 @@
 /obj/item/reagent_containers/glass/bottle/rogue/wine{
 	pixel_y = 10
 	},
+/obj/item/inqarticles/tallowpot,
+/obj/item/reagent_containers/food/snacks/tallow/soft,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/manor)
 "ebz" = (
@@ -22897,6 +22906,7 @@
 /obj/item/paper,
 /obj/item/paper,
 /obj/item/paper,
+/obj/item/reagent_containers/food/snacks/tallow/soft,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/bath)
 "eNY" = (
@@ -43014,6 +43024,13 @@
 	pixel_y = 10
 	},
 /obj/item/reagent_containers/glass/cup/silver,
+/obj/item/inqarticles/tallowpot{
+	pixel_x = -9;
+	pixel_y = -8
+	},
+/obj/item/reagent_containers/food/snacks/tallow/soft{
+	pixel_x = -6
+	},
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors/town/manor)
 "iWY" = (
@@ -52395,6 +52412,8 @@
 /area/rogue/under/cave/orcdungeon)
 "kUh" = (
 /obj/structure/table/wood/map/three,
+/obj/item/inqarticles/tallowpot,
+/obj/item/reagent_containers/food/snacks/tallow/soft,
 /turf/open/floor/rogue/carpet/lord/right,
 /area/rogue/indoors/town/manor)
 "kUm" = (
@@ -57966,6 +57985,8 @@
 /area/rogue/indoors/town/manor)
 "maQ" = (
 /obj/structure/table/wood/map,
+/obj/item/inqarticles/tallowpot,
+/obj/item/reagent_containers/food/snacks/tallow/soft,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/garrison)
 "maR" = (
@@ -59011,6 +59032,8 @@
 	mailtag = "Hand's Chambers"
 	},
 /obj/structure/table/wood/long_table/right,
+/obj/item/inqarticles/tallowpot,
+/obj/item/reagent_containers/food/snacks/tallow/soft,
 /turf/open/floor/rogue/carpet/lord/right,
 /area/rogue/indoors/town/manor)
 "mls" = (
@@ -60513,6 +60536,7 @@
 	pixel_y = 8
 	},
 /obj/item/storage/keyring/manor/counsilroom/i,
+/obj/item/reagent_containers/food/snacks/tallow/soft,
 /turf/open/floor/rogue/tile/masonic/single,
 /area/rogue/indoors/town/manor)
 "mBD" = (
@@ -68868,6 +68892,7 @@
 	icon_state = "borderfall";
 	pixel_y = 8
 	},
+/obj/item/reagent_containers/food/snacks/tallow/soft,
 /turf/open/floor/rogue/tile/masonic/single,
 /area/rogue/indoors/town/manor)
 "ooi" = (
@@ -74659,12 +74684,16 @@
 /area/rogue/outdoors/woods/south)
 "pyP" = (
 /obj/structure/table/wood/long_table/north_east,
-/obj/item/candle/silver/lit,
+/obj/item/candle/silver/lit{
+	pixel_y = 13
+	},
 /obj/effect/decal/edge{
 	color = "#423926";
 	dir = 1
 	},
 /obj/machinery/light/rogue/candle/l,
+/obj/item/inqarticles/tallowpot,
+/obj/item/reagent_containers/food/snacks/tallow/soft,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor)
 "pyU" = (
@@ -75942,6 +75971,8 @@
 /obj/item/candle/candlestick/gold/lit{
 	pixel_y = 12
 	},
+/obj/item/inqarticles/tallowpot,
+/obj/item/reagent_containers/food/snacks/tallow/soft,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town)
 "pLW" = (
@@ -89815,6 +89846,8 @@
 /obj/structure/fluff/wallclock{
 	pixel_y = -32
 	},
+/obj/item/inqarticles/tallowpot,
+/obj/item/reagent_containers/food/snacks/tallow/soft,
 /turf/open/floor/rogue/tile/masonic/inverted,
 /area/rogue/indoors/town/garrison)
 "sGF" = (
@@ -102341,6 +102374,8 @@
 	pixel_x = -8;
 	pixel_y = 9
 	},
+/obj/item/inqarticles/tallowpot,
+/obj/item/reagent_containers/food/snacks/tallow/soft,
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/church/chapel)
 "vjM" = (
@@ -104419,6 +104454,8 @@
 /area/rogue/indoors/town)
 "vFJ" = (
 /obj/structure/table/wood/map/six,
+/obj/item/inqarticles/tallowpot,
+/obj/item/reagent_containers/food/snacks/tallow/soft,
 /turf/open/floor/rogue/carpet,
 /area/rogue/indoors/town/dwarfin)
 "vFL" = (
@@ -115300,6 +115337,9 @@
 /area/rogue/indoors/town/church/chapel)
 "xSM" = (
 /obj/structure/table/wood/long_table/mid/alt,
+/obj/item/reagent_containers/glass/bucket/pot/teapot/fancy{
+	pixel_y = 12
+	},
 /obj/item/reagent_containers/glass/cup/ceramic/fancy{
 	pixel_x = 5;
 	pixel_y = 5
@@ -116202,9 +116242,8 @@
 /area/rogue/indoors/shelter)
 "ycz" = (
 /obj/structure/table/wood/long_table/right,
-/obj/item/reagent_containers/glass/bucket/pot/teapot/fancy{
-	pixel_y = 12
-	},
+/obj/item/inqarticles/tallowpot,
+/obj/item/reagent_containers/food/snacks/tallow/soft,
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/magician)
 "ycA" = (
