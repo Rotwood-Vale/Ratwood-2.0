@@ -102,6 +102,10 @@
 		revert_cast()
 		to_chat(user, span_warning("I must be playing something to call upon the dead."))
 		return FALSE
+	if(!user.is_holding_item_of_type(/obj/item/rogue/instrument))
+		revert_cast()
+		to_chat(user, span_warning("I need an instrument in hand to call upon the dead."))
+		return FALSE
 	return ..()
 
 /obj/effect/proc_holder/spell/invoked/tame_undead/miracle
@@ -122,6 +126,10 @@
 		revert_cast()
 		to_chat(user, span_warning("I must be playing something to channel my rhythm."))
 		return FALSE
+	if(!user.is_holding_item_of_type(/obj/item/rogue/instrument))
+		revert_cast()
+		to_chat(user, span_warning("I need an instrument in hand to channel my rhythm."))
+		return FALSE
 	return ..()
 
 /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/forzando
@@ -136,6 +144,10 @@
 	if(!user.has_status_effect(/datum/status_effect/buff/playing_music))
 		revert_cast()
 		to_chat(user, span_warning("I must be playing something to channel my rhythm."))
+		return
+	if(!user.is_holding_item_of_type(/obj/item/rogue/instrument))
+		revert_cast()
+		to_chat(user, span_warning("I need an instrument in hand to channel my rhythm."))
 		return
 	return ..()
 
@@ -183,6 +195,10 @@
 
 /obj/effect/proc_holder/spell/invoked/song/of_her_embrace/cast(mob/living/user = usr)
 	if(user.has_status_effect(/datum/status_effect/buff/playing_music))
+		if(!user.is_holding_item_of_type(/obj/item/rogue/instrument))
+			revert_cast()
+			to_chat(user, span_warning("I need an instrument in hand to channel her rhythm!"))
+			return
 		for(var/datum/status_effect/buff/playing_melody/melodies in user.status_effects)
 			user.remove_status_effect(melodies)
 		for(var/datum/status_effect/buff/playing_dirge/dirges in user.status_effects)
