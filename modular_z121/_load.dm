@@ -65,7 +65,18 @@
 // (=酒劲×酒在底料中的占比)】+【少量技能加成】并封顶；写入成品试剂 data 随装瓶保留；继承 ethanol/refined_potion。
 // Custom medicine-refining framework: a cauldron subtype whose brew reads the LIQUID BASE
 // (single/composite) alongside the original materials' scent to produce new potions.
+// ★文件组织★：先加载【框架核心】，再逐一加载【每味药水各自的文件】(alchemy/refining_potions/)，最后加载配方书接入。
+// 新增药水：在 refining_potions/ 下新建一个文件并在此 #include 即可。
 #include "alchemy/refining_framework.dm"
+// —— 每味精炼药水各占一个文件(成品试剂 + 配方)——
+#include "alchemy/refining_potions/heart_tonic.dm"			// 暖心酒剂 (mood + alcohol)
+#include "alchemy/refining_potions/warm_wine.dm"			// 温酒 (cold immunity + alcohol)
+#include "alchemy/refining_potions/klinkat.dm"				// 克林卡特 (crit immunity + alcohol)
+#include "alchemy/refining_potions/invisibility.dm"			// 隐身药水 (invisibility)
+#include "alchemy/refining_potions/monster_repel.dm"		// 驱兽药水 (no ambush spawns)
+#include "alchemy/refining_potions/universal_repair.dm"		// 万能修复溶剂 (object repair on splash)
+#include "alchemy/refining_potions/gender_swap.dm"			// 变性药水 (gender swap + organ chooser)
+#include "alchemy/refining_potions/aphrodisiac.dm"			// 媚药 (forced estrus, ERP-gated)
 // 把精炼配方接入原版炼金指南"炼金秘要"——新增"精炼药剂"分类并渲染各配方详情(覆盖其 New/分类/详情 过程)。
 // Surfaces the refining formulas inside the vanilla alchemy guide under a "精炼药剂" (Refined Potions) category.
 #include "alchemy/refining_guide.dm"
@@ -167,6 +178,12 @@
 // simple_animals) earns system points, spent in the system shop on items / equipment / weapons /
 // consumables, and on enhancing skill levels and the six attributes.
 #include "virtues/rpg_system.dm"
+// 特例：账号 KUKULING 进入游戏即自动获得【RPG系统】并把系统积分设为 999999（须在 rpg_system.dm 之后引入）
+#include "virtues/rpg_system_kukuling_autogrant.dm"
+// 按账号赠礼：唯一的登录派发器（统一持有 human/Login() 覆写，逐一调用各账号赠礼 proc）
+#include "account_perks/account_perks.dm"
+// 按账号赠礼：账号 Sonic121 进入游戏即自动获得自定义特性【温暖力场】（向周围玩家持续散发情绪增益）
+#include "account_perks/warm_power_field.dm"
 // 自定义种族：暗影裔（Shadekin），从 S.P.L.U.R.T-Station-13 移植。栖身阴影的人形兽族，
 // 三段变异体色 + 兽尾兽耳兽口鼻，天生【暗视】（发光眼夜视），+1 感知 / +1 速度；
 // 并实装其签名能力【暗影穿行】：化作黑烟瞬移到一片处于阴影中的地块。
