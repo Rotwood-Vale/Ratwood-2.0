@@ -4,7 +4,7 @@
 #define STATKEY_PER "感知"
 #define STATKEY_INT "智力"
 #define STATKEY_CON "体格"
-#define STATKEY_WIL "毅力"
+#define STATKEY_WIL "意志"
 #define STATKEY_SPD "速度"
 #define STATKEY_LCK "幸运"
 
