@@ -128,6 +128,13 @@ SUBSYSTEM_DEF(custom_bootstrap)
 	// same rationale as the registrations above.
 	register_rpg_system_trait()
 
+	// 登记自定义特性【温暖力场】到玩家可见的特性表（GLOB.roguetraits），同上理由：此刻核心表已初始化，
+	//   追加后 Sonic121 点开特性自检面板即可看到【温暖力场】及其说明。登记逻辑定义在
+	//   modular_z121/account_perks/warm_power_field.dm 内（那里才有 TRAIT_WARM_POWER_FIELD 宏），
+	//   这里只按 proc 名做一次调用，遵守宏的 #include 可见性规则。
+	// Register the custom "Warm Power Field" trait into the player-visible GLOB.roguetraits.
+	register_warm_power_field_trait()
+
 	// 修复"暗影裔无法选择任何职业"的 Bug：把暗影裔注入所有已允许【野民/anthromorph】的
 	//   职业(/datum/job)与进阶职业(/datum/advclass)的 allowed_races 列表。
 	// 为什么放在这里：custom_bootstrap 的 init_order(0) 晚于 SSjob(65) 与 SSrole_class_handler(66)，

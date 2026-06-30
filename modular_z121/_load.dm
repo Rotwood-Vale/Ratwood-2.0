@@ -178,6 +178,12 @@
 // simple_animals) earns system points, spent in the system shop on items / equipment / weapons /
 // consumables, and on enhancing skill levels and the six attributes.
 #include "virtues/rpg_system.dm"
+// 特例：账号 KUKULING 进入游戏即自动获得【RPG系统】并把系统积分设为 999999（须在 rpg_system.dm 之后引入）
+#include "virtues/rpg_system_kukuling_autogrant.dm"
+// 按账号赠礼：唯一的登录派发器（统一持有 human/Login() 覆写，逐一调用各账号赠礼 proc）
+#include "account_perks/account_perks.dm"
+// 按账号赠礼：账号 Sonic121 进入游戏即自动获得自定义特性【温暖力场】（向周围玩家持续散发情绪增益）
+#include "account_perks/warm_power_field.dm"
 // 自定义种族：暗影裔（Shadekin），从 S.P.L.U.R.T-Station-13 移植。栖身阴影的人形兽族，
 // 三段变异体色 + 兽尾兽耳兽口鼻，天生【暗视】（发光眼夜视），+1 感知 / +1 速度；
 // 并实装其签名能力【暗影穿行】：化作黑烟瞬移到一片处于阴影中的地块。
