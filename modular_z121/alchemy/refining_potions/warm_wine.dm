@@ -14,6 +14,9 @@
 	color = "#9b3b3b"										// Warm mulled-wine red.
 	taste_description = "暖暖的香料酒"						// Taste flavour.
 	boozepwr = 30											// Fallback; overridden per-brew (base drink + skill).
+	// 中文：消化速度——【每 1 单位约维持 12 秒】。1 单位维持 2/rate 秒；要 12 秒 → rate = 2/12 = 1/6 ≈ 0.167。
+	//   (覆盖父类乙醇默认的 0.5；正常无 baotha_revelry 世界特性时按此生效。)
+	metabolization_rate = REAGENTS_METABOLISM / 6			// ~1 unit per 12 seconds.
 
 // 中文：代谢开始时——先经父链按 data 设定酒劲，再赋予"抗寒"特性。
 //   来源标签用唯一字符串 "warm_wine_potion"，以便结束时精确移除、且不会误删该 mob 自带(如哥布林)的抗寒。

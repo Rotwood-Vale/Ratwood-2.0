@@ -15,7 +15,8 @@
 	reagent_state = LIQUID									// Liquid potion.
 	color = "#cfe8ffaa"										// Pale, near-transparent blue.
 	taste_description = "几乎尝不出的清冽"					// Taste flavour (almost nothing).
-	metabolization_rate = REAGENTS_METABOLISM				// Standard metabolism (controls duration).
+	// 中文：消化速度——【每 1 单位约维持 1 秒】。代谢每约 2 秒一拍消耗 rate 单位 → 1 单位维持 2/rate 秒；要 1 秒 → rate = 2。
+	metabolization_rate = 2 * REAGENTS_METABOLISM			// ~1 unit per 1 second.
 
 // 中文：代谢开始时——渐隐为 0、设置隐形计时器、并调用 update_sneak_invis() 即时进入隐形态。
 /datum/reagent/invisibility_potion/on_mob_metabolize(mob/living/M)

@@ -15,7 +15,8 @@
 	reagent_state = LIQUID									// Liquid potion.
 	color = "#8fbf8f"										// Calm sage green.
 	taste_description = "草木的宁和"							// Taste flavour.
-	metabolization_rate = REAGENTS_METABOLISM				// Standard metabolism (controls duration).
+	// 中文：消化速度——【每 1 单位约维持 18 秒】。1 单位维持 2/rate 秒；要 18 秒 → rate = 2/18 = 1/9 ≈ 0.111。
+	metabolization_rate = REAGENTS_METABOLISM / 9			// ~1 unit per 18 seconds.
 	// 中文：保存施加前的 ambushable 原值，结束时精确还原(无论该 mob 原本可否被伏击)。
 	//   同一瓶药从代谢开始到结束是同一个试剂实例，故用实例变量保存/读取即可，无需 data。
 	var/prev_ambushable = TRUE								// Saved prior ambush state.
