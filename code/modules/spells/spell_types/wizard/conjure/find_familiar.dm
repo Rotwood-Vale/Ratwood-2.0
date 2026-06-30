@@ -146,7 +146,7 @@
 			show_familiar_preview(user, pref)
 
 			var/confirm = input(user, "要召唤这只使魔吗？") as null|anything in list("是", "否")
-			if (confirm != "接受")
+			if (confirm != "是")
 				winset(user.client, "Familiar Inspect", "is-visible=false")
 				continue
 
