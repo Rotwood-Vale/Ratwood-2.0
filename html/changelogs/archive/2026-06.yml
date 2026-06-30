@@ -307,3 +307,7 @@
   Xaytan:
   - refactor: refactored heart on_life
   - code_imp: added early exit to sleep stamina healing.
+2026-06-30:
+  Xander3359:
+  - balance: Rontz rings no longer show up on examine
+  - qol: Bandit rings now mention in the description that they can be disguised
