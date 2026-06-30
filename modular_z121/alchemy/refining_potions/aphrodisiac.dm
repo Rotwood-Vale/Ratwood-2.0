@@ -16,7 +16,9 @@
 	reagent_state = LIQUID									// Liquid potion.
 	color = "#c71f5a"										// Hot pink-red.
 	taste_description = "炽烈的甜香"							// Taste flavour.
-	metabolization_rate = 0.1 * REAGENTS_METABOLISM			// Slow burn -> a lasting duration (the fallback timer).
+	// 中文：消化速度——【每 1 单位约维持 30 秒】。mob 代谢每约 2 秒结算一拍、每拍消耗 metabolization_rate 单位，
+	//   故 1 单位维持 30 秒 = 15 拍各消耗 1/15 单位 → rate = 1/15 ≈ 0.0667(即默认速率 REAGENTS_METABOLISM 的 1/15)。
+	metabolization_rate = REAGENTS_METABOLISM / 15			// ~1 unit per 30 seconds (2s/tick × 15 ticks).
 	// 中文：标记是否已施加 aphrodisiac 加成，确保结束时只精确扣除我们加过的那一份。
 	var/applied = FALSE										// Did we add our aphrodisiac bonus?
 

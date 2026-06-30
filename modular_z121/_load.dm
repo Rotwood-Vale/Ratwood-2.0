@@ -77,6 +77,8 @@
 #include "alchemy/refining_potions/universal_repair.dm"		// 万能修复溶剂 (object repair on splash)
 #include "alchemy/refining_potions/gender_swap.dm"			// 变性药水 (gender swap + organ chooser)
 #include "alchemy/refining_potions/aphrodisiac.dm"			// 媚药 (forced estrus, ERP-gated)
+#include "alchemy/refining_potions/vigor_potion.dm"			// 精力药剂 (limitless energy / endless ejaculation, ERP-gated)
+#include "alchemy/refining_potions/flying.dm"				// 飞行药水 (3-minute magic flight)
 // 把精炼配方接入原版炼金指南"炼金秘要"——新增"精炼药剂"分类并渲染各配方详情(覆盖其 New/分类/详情 过程)。
 // Surfaces the refining formulas inside the vanilla alchemy guide under a "精炼药剂" (Refined Potions) category.
 #include "alchemy/refining_guide.dm"

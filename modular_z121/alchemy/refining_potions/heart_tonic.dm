@@ -20,6 +20,9 @@
 	taste_description = "温热的醇酒"							// Taste flavour.
 	// 中文：兜底酒劲(若某瓶未被炼药锅写入 data 时的默认值)；正常出炉时由炼药锅按"酒底+技能"覆盖。
 	boozepwr = 30											// Fallback; overridden per-brew (base drink + skill).
+	// 中文：消化速度——【每 1 单位约维持 6 秒】。1 单位维持 2/rate 秒；要 6 秒 → rate = 2/6 = 1/3 ≈ 0.333。
+	//   (覆盖父类乙醇默认的 0.5；正常无 baotha_revelry 世界特性时按此生效。)
+	metabolization_rate = REAGENTS_METABOLISM / 3			// ~1 unit per 6 seconds.
 
 // 中文：每代谢一拍——先给饮用者提振心情，再交由父链(酒基→乙醇)施加醉酒效果。
 /datum/reagent/consumable/ethanol/refined_potion/heartwarming_tonic/on_mob_life(mob/living/carbon/M)
