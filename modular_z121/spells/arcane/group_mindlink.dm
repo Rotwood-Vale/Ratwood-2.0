@@ -162,13 +162,26 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 	// Dead link / no client -> skip.
 	if(!active || QDELETED(member) || !member.client)
 		return
-	// 没有已打开的窗口对象 -> 绝不强制弹出，直接返回。
-	// No open window object -> never force one open; just return.
+	// 没有窗口对象 -> 绝不强制弹出，直接返回。
+	// No window object -> never force one open; just return.
 	var/datum/browser/popup = windows[member]
 	if(!popup)
 		return
-	// 窗口本就开着：就地刷新内容。
-	// Window is already open: refresh its content in place.
+	// 【关键】用 winexists 查询客户端【实际的窗口状态】，而不是依赖我们自己的记录或 onclose 回调
+	// （onclose 在 BYOND 里并不总能可靠触发，这正是"关掉后仍被发言强行弹回来"的根因）。
+	// 若该窗口此刻在客户端【并不存在】（玩家已手动关闭），则【绝不】再 browse 把它弹回来：
+	// 清理掉我们这边残留的窗口记录后直接返回。winexists 是窗口是否打开的权威依据。
+	// [KEY] Query the client's ACTUAL window state via winexists, instead of trusting our own bookkeeping or
+	// the onclose callback (onclose is not reliably fired in BYOND — that's the real root cause of "a closed
+	// window gets force-popped by others' speech"). If the window does NOT currently exist on the client
+	// (the player closed it), NEVER browse it back open: drop our stale record and return. winexists is the
+	// authoritative source of truth for whether the window is open.
+	if(!winexists(member, GROUP_MINDLINK_WINDOW_ID))
+		windows -= member
+		qdel(popup)
+		return
+	// 窗口确实仍开着：才就地刷新内容（此时 browse 只是更新已开窗口，不会造成弹窗）。
+	// The window really is still open: only now refresh in place (browse just updates the open window, no pop).
 	popup.set_content(build_window_html(member))
 	popup.open()
 
