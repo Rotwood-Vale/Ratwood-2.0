@@ -1,4 +1,4 @@
-/*STAT DEFINES*/ //对应code/__DEFINES/mobs.dm
+/*STAT DEFINES*/
 #define STAT_STRENGTH "strength"
 #define STAT_PERCEPTION "perception"
 #define STAT_INTELLIGENCE "intelligence"
