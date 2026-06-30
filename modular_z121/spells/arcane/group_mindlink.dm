@@ -339,13 +339,34 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 // -------------------------------------------------------------------------------------
 /datum/group_mindlink_custom/Topic(href, href_list)
 	..()
-	// 链接已失效则不再响应任何交互。
-	// Reject all interaction once the link is dead.
+	// 取出操作者（onclose 回调与表单提交都会把 usr 设为对应成员）。
+	// Resolve the actor (both the onclose callback and form submits set usr to the member).
+	var/mob/living/clicker = usr
+
+	// 【关键修复·关窗后仍被强行弹开】窗口关闭事件由 BYOND 的 onclose 以 "close=1"（即 href_list["close"]）
+	// 送达，而【不是】action=close。必须在此【优先】处理：销毁并移除该成员的窗口对象，使其【保持关闭】。
+	// 之前把关闭逻辑误放进 switch(href_list["action"]) 的 "close" 分支，导致它永远不会被触发——窗口记录
+	// 一直残留，于是他人发言时 refresh_window_for 又把窗口 browse 回来。这才是"关掉后还被强行弹开"的真正根因。
+	// 即便链接正在拆除(active=FALSE)时也要清理，故放在 active 判断之前。
+	// [KEY FIX for "closed window gets force-popped"] The close event arrives from BYOND's onclose as
+	// "close=1" (href_list["close"]), NOT action=close. Handle it FIRST: destroy + drop this member's window
+	// object so it STAYS closed. The old code put close handling inside switch(href_list["action"]) under a
+	// "close" case that therefore NEVER fired — the record lingered and others' speech re-browsed it open.
+	// That was the true root cause. Clean up even mid-teardown (active=FALSE), so this precedes the active check.
+	if(href_list["close"])
+		if(istype(clicker))
+			var/datum/browser/popup = windows[clicker]
+			windows -= clicker
+			if(popup)
+				qdel(popup)
+		return
+
+	// 链接已失效则不再响应其余交互。
+	// Reject the remaining interactions once the link is dead.
 	if(!active)
 		return
-	// 取出点击者；必须是本房间成员才允许操作，杜绝越权往别人房间发消息。
-	// Resolve the clicker; only a member of THIS room may act, preventing cross-room injection.
-	var/mob/living/clicker = usr
+	// 其余动作只有本房间成员才能操作，杜绝越权往别人房间发消息。
+	// Only a member of THIS room may perform the remaining actions (prevents cross-room injection).
 	if(!istype(clicker) || !(clicker in participants))
 		return
 
@@ -368,15 +389,6 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 			// 手动刷新：仅重渲染点击者自己的窗口即可。
 			// Manual refresh: just re-render the clicker's own window.
 			open_window_for(clicker)
-		if("close")
-			// 窗口被关闭（onclose 回调）：销毁并移除该成员的窗口对象，使其【保持关闭】，他人发言不再强行弹出。
-			// Window closed (onclose hook): destroy + drop this member's window object so it STAYS closed.
-			// Later speech only calls refresh_window_for, which skips it (no window object) — no more force-pop.
-			// The member still sees mirrored lines in normal chat, and can reopen via the [Group Mindlink] IC verb.
-			var/datum/browser/popup = windows[clicker]
-			windows -= clicker
-			if(popup)
-				qdel(popup)
 
 // -------------------------------------------------------------------------------------
 // 兼容旧用法：发言以 ",m" 开头时，作为不依赖窗口的快捷发送通道直接投入聊天室历史。
