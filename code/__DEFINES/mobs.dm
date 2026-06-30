@@ -1,12 +1,12 @@
 /*ALL MOB-RELATED DEFINES THAT DON'T BELONG IN ANOTHER FILE GO HERE*/
 
-#define STATKEY_STR "力量"
-#define STATKEY_PER "感知"
-#define STATKEY_INT "智力"
-#define STATKEY_CON "体质"
-#define STATKEY_WIL "意志"
-#define STATKEY_SPD "速度"
-#define STATKEY_LCK "幸运"
+#define STATKEY_STR "strength"
+#define STATKEY_PER "perception"
+#define STATKEY_INT "intelligence"
+#define STATKEY_CON "constitution"
+#define STATKEY_WIL "willpower"
+#define STATKEY_SPD "speed"
+#define STATKEY_LCK "fortune"
 
 //This was previously in vampirelord.dm and mob/living/stats.dm, the person defined it twice because vampirelord came in below that stats file, so now both of them can get it here.
 #define MOBSTATS list(STATKEY_STR, STATKEY_PER, STATKEY_INT, STATKEY_CON, STATKEY_WIL, STATKEY_SPD, STATKEY_LCK)
