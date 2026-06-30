@@ -896,7 +896,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	_load_gnoll_prefs(S)
 
 	var/patron_typepath
-	S["selected_patron"]	>> patron_typepath
+	S["selected_patron"] >> patron_typepath
 	if(patron_typepath)
 		selected_patron = GLOB.patronlist[patron_typepath]
 		if(!selected_patron) //failsafe
@@ -906,6 +906,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		// No patron saved, set default
 		selected_patron = GLOB.patronlist[default_patron]
+
+	S["polytheist_patron"] >> patron_typepath
+	if(patron_typepath)
+		polytheist_patron = GLOB.patronlist[patron_typepath] // Could be null, nobody forced to be polytheist
+	else
+		polytheist_patron = "NONE"
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)
@@ -1152,7 +1158,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["all_quirks"]			, all_quirks)
 
 	//Patron
-	WRITE_FILE(S["selected_patron"]		, preferences_typepath_or_null(selected_patron))
+	WRITE_FILE(S["selected_patron"], preferences_typepath_or_null(selected_patron))
+	WRITE_FILE(S["polytheist_patron"], preferences_typepath_or_null(polytheist_patron))
 
 	// Organs
 	WRITE_FILE(S["customizer_entries"] , customizer_entries)

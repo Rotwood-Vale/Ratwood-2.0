@@ -108,6 +108,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/static/datum/species/default_species = new /datum/species/human/northern()
 	var/datum/patron/selected_patron
 	var/static/datum/patron/default_patron = /datum/patron/divine/astrata
+	/// 2nd patron that your character may worship, provides no mechanics benefit other than being able to do/see 2 faith salutes
+	var/datum/patron/polytheist_patron
 	var/list/features = MANDATORY_FEATURE_LIST
 	var/list/randomise = list(RANDOM_UNDERWEAR = TRUE, RANDOM_UNDERWEAR_COLOR = TRUE, RANDOM_UNDERSHIRT = TRUE, RANDOM_SOCKS = TRUE, RANDOM_BACKPACK = TRUE, RANDOM_JUMPSUIT_STYLE = FALSE, RANDOM_SKIN_TONE = TRUE, RANDOM_EYE_COLOR = TRUE)
 	var/list/friendlyGenders = list("male" = "masculine", "female" = "feminine")
@@ -635,6 +637,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			var/datum/faith/selected_faith = GLOB.faithlist[selected_patron?.associated_faith]
 			dat += "<b>Faith:</b> <a href='?_src_=prefs;preference=faith;task=input'>[selected_faith?.name || "FUCK!"]</a><BR>"
 			dat += "<b>Patron:</b> <a href='?_src_=prefs;preference=patron;task=input'>[selected_patron?.name || "FUCK!"]</a><BR>"
+			dat += "<b>Polytheism:</b><a href='?_src_=prefs;preference=polytheism;task=input'>[polytheist_patron?.name || "NONE"]</a><BR>"
+
 			dat += "<b>Dominance:</b> <a href='?_src_=prefs;preference=domhand'>[domhand == 1 ? "Left-handed" : "Right-handed"]</a><BR>"
 			dat += "<b>Food Preferences:</b> <a href='?_src_=prefs;preference=culinary;task=menu'>Change</a><BR>"
 
@@ -1921,6 +1925,22 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						to_chat(user, "<font color='purple'>Likely Worshippers: [selected_patron.worshippers]</font>")
 						to_chat(user, "<font color='white'>Considers these to be VIRTUES: [selected_patron.virtues]</font>")
 						to_chat(user, "<font color='red'>Considers these to be SINS: [selected_patron.sins]</font>")
+
+				if("polytheism")
+					var/list/polytheism_deities = list("NONE")
+					for(var/datum/patron/patron as anything in GLOB.patronlist)
+						if(!patron.name)
+							continue
+						if(patron.disabled_patron)
+							continue
+						if(patron.type == /datum/patron/godless) // lol
+							continue
+						polytheism_deities[patron.name] = patron
+					var/polytheist = tgui_input_list(user, "Some will worship more than one. Will you?", "FAITH", polytheism_deities)
+					if(polytheist == "NONE")
+						polytheist_patron = null
+					else if(polytheist)
+						polytheist_patron = polytheism_deities[polytheist]
 
 				if("combat_music") // if u change shit here look at /client/verb/combat_music() too
 					if(!combat_music_helptext_shown)

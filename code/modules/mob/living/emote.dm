@@ -2212,6 +2212,29 @@
 
 	emote("ffsalute", intentional =  TRUE)
 
+/datum/emote/living/fsalute_alt
+	key = "fsalute_alt"
+	key_third_person = "salutes their faith."
+	message = "salutes their faith."
+	emote_type = EMOTE_AUDIBLE
+	show_runechat = TRUE
+
+/datum/emote/living/fsalute_alt/run_emote(mob/living/user, params, type_override, intentional, targetted, animal)
+	. = ..()
+	if(. && !isnull(user?.client?.prefs?.polytheist_patron))
+		user.play_overhead_indicator('icons/mob/overhead_effects.dmi', "stress", 15, MUTATIONS_LAYER, private = user.client.prefs.polytheist_patron.type, soundin = 'sound/magic/holyshield.ogg', y_offset = 32)
+
+/datum/emote/living/fsalute_alt/can_run_emote(mob/user, status_check, intentional)
+	if(!user?.client?.prefs?.polytheist_patron)
+		return FALSE
+	return ..()
+
+/mob/living/carbon/human/verb/emote_fsalute_alt()
+	set name = "Faith Salute Alternate"
+	set category = "Emotes"
+
+	emote("fsalute_alt", intentional =  TRUE)
+
 /datum/emote/living/yip
 	key = "yip"
 	key_third_person = "yips"
