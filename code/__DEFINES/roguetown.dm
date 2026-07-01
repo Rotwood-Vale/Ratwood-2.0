@@ -2,7 +2,7 @@
 #define STAT_STRENGTH "力量"
 #define STAT_PERCEPTION "感知"
 #define STAT_INTELLIGENCE "智力"
-#define STAT_CONSTITUTION "体格"
+#define STAT_CONSTITUTION "体质"
 #define STAT_WILLPOWER "意志"
 #define STAT_SPEED "速度"
 #define STAT_FORTUNE "幸运"
