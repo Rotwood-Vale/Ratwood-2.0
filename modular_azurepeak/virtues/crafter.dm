@@ -42,6 +42,15 @@
 		recipient.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
 
 
+/datum/virtue/utility/medically_prepared
+	name = "Medically Prepared"
+	desc = "I've prepared for treating wounds in the field, with practical medical training and a stocked pouch."
+	added_stashed_items = list(
+		"Medicine Pouch" = /obj/item/storage/belt/rogue/pouch/medicine
+	)
+	added_skills = list(list(/datum/skill/misc/medicine, 2, 3))
+
+
 /datum/virtue/utility/hunter
 	name = "Hunter's Apprentice"
 	desc = "In my youth, I trained under a skilled hunter, learning how to butcher animals and work with leather/hide."
