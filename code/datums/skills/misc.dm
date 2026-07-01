@@ -100,7 +100,7 @@
 		"...a student to your left pales, her queasiness overwhelming before she faints. You steel yourself, and look at the voidlike ribcage in the torso before you. Well-preserved chunks of flesh lie beside it, waiting for you to restore them to their rightful places..."
 	)
 	expert_name = "Barber"
-	max_untraited_level = SKILL_LEVEL_EXPERT // We'll let people get to Expert as an exception because reviving someone is very important to keep players in round
+	max_untraited_level = SKILL_LEVEL_JOURNEYMAN // No longer expert because miracles exist and the woefully underpaid physicians are getting cucked by the meta
 	trait_uncap = list(TRAIT_MEDICINE_EXPERT = SKILL_LEVEL_LEGENDARY)
 
 /datum/skill/misc/tracking
