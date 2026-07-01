@@ -316,8 +316,9 @@
 	
 	// Initial channel to establish the connection
 	if (do_after(user, cast_time, target = target))
-		// Healing power scales better with holy skill: 0.3 to 0.8
-		var/healing_power = clamp(0.3 + (holy_skill * 0.1), 0.3, 0.8)
+		// Healing power scales better with holy skill. With lesser miracle being nerfed as a limb targeted miracle, this is basically your new channeled lesser heal
+		// These are values by tick. No more clamp as we're using a list for better readability and customization
+		var/healing_power = list(0.3, 0.5, 1.0, 1.5, 2.0, 3.0, 4.0)[holy_skill + 1]
 		// Devotion cost per tick scales down with skill: 3 to 1
 		var/devotion_per_tick = clamp(4 - holy_skill, 1, 20)
 		
