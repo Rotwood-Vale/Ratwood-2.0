@@ -238,6 +238,17 @@
 		mouse_pointer_icon = mouse_up_icon
 	selected_target[1] = null
 
+	// BYOND reads "cast started on mob, cursor left the mob" as a drag, so the finishing Click never
+	// fires even if you release back on the mob. Force the release cast ourselves.
+	if(mob.atkswinging == "middle" && mob.mmb_intent && istype(object, /atom) && !istype(object, /atom/movable/screen) && mob.next_move <= world.time && world.time > mob.next_click)
+		tcompare = null
+		if(mob.mmb_intent.no_early_release && chargedprog < 100)
+			mob.changeNext_move(mob.mmb_intent.clickcd)
+		else
+			mob.next_click = world.time + 1
+			mob.MiddleClickOn(object, params)
+		return
+
 	if(tcompare)
 		var/atom/target_atom = object
 		if(istype(target_atom) && tcompare != mob && (mob.atkswinging == "middle" || mob.used_intent?.tranged || (mob.atkswinging && object != tcompare)))
