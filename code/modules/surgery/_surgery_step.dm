@@ -379,7 +379,7 @@
 	speed_mod *= get_speed_location_modifier(target)
 	var/medskill = user.get_skill_level(/datum/skill/misc/medicine)
 	if(medskill == SKILL_LEVEL_EXPERT)
-		speed_mod -= 0.2
+		speed_mod -= 0.3
 	else if(medskill == SKILL_LEVEL_MASTER)
 		speed_mod -= 0.4
 	else if(medskill == SKILL_LEVEL_LEGENDARY)
