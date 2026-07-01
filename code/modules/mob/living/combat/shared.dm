@@ -3,8 +3,8 @@
 		var/fakeint = STAINT
 		if(length(status_effects))
 			for(var/datum/status_effect/status as anything in status_effects)
-				if(length(status.effectedstats) && status.effectedstats["intelligence"] > 0)
-					fakeint -= status.effectedstats["intelligence"]
+				if(length(status.effectedstats) && status.effectedstats[STATKEY_INT] > 0)
+					fakeint -= status.effectedstats[STATKEY_INT]
 		if(fakeint > 10)
 			var/bonus = round(((fakeint - 10) / 2)) * 10
 			if(bonus > 0)
