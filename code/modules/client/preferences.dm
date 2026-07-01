@@ -637,7 +637,10 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			var/datum/faith/selected_faith = GLOB.faithlist[selected_patron?.associated_faith]
 			dat += "<b>Faith:</b> <a href='?_src_=prefs;preference=faith;task=input'>[selected_faith?.name || "FUCK!"]</a><BR>"
 			dat += "<b>Patron:</b> <a href='?_src_=prefs;preference=patron;task=input'>[selected_patron?.name || "FUCK!"]</a><BR>"
-			dat += "<b>Polytheism:</b><a href='?_src_=prefs;preference=polytheism;task=input'>[polytheist_patron?.name || "NONE"]</a><BR>"
+			if(polytheist_patron == "NONE" || isnull(polytheist_patron))
+				dat += "<b>Polytheism:</b><a href='?_src_=prefs;preference=polytheism;task=input'>["None"]</a><BR>"
+			else
+				dat += "<b>Polytheism:</b><a href='?_src_=prefs;preference=polytheism;task=input'>[polytheist_patron.name]</a><BR>"
 
 			dat += "<b>Dominance:</b> <a href='?_src_=prefs;preference=domhand'>[domhand == 1 ? "Left-handed" : "Right-handed"]</a><BR>"
 			dat += "<b>Food Preferences:</b> <a href='?_src_=prefs;preference=culinary;task=menu'>Change</a><BR>"
