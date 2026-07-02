@@ -14,6 +14,7 @@
 #include "rites/xylix_music_offering.dm"
 #include "rites/pestra_plague_disaster.dm"
 #include "rites/victory_glow.dm"
+#include "spells/arcane/anti_spoil.dm"
 #include "spells/arcane/flight.dm"
 #include "spells/arcane/group_buffs.dm"
 #include "spells/arcane/group_mindlink.dm"
@@ -79,6 +80,7 @@
 #include "alchemy/refining_potions/aphrodisiac.dm"			// 媚药 (forced estrus, ERP-gated)
 #include "alchemy/refining_potions/vigor_potion.dm"			// 精力药剂 (limitless energy / endless ejaculation, ERP-gated)
 #include "alchemy/refining_potions/flying.dm"				// 飞行药水 (3-minute magic flight)
+#include "alchemy/refining_potions/anticorruption.dm"		// 防腐药水 (splash: food never rots / corpse preserved)
 // 把精炼配方接入原版炼金指南"炼金秘要"——新增"精炼药剂"分类并渲染各配方详情(覆盖其 New/分类/详情 过程)。
 // Surfaces the refining formulas inside the vanilla alchemy guide under a "精炼药剂" (Refined Potions) category.
 #include "alchemy/refining_guide.dm"
@@ -86,6 +88,10 @@
 #include "structures/glaggar_challenge.dm"
 #include "items/magic_bedroll.dm"
 #include "items/goldface_supply_packs.dm"
+// 自定义药水成品瓶：为 modular_z121 各自定义炼金药水（精力/暖心/温酒/克林卡特/驱兽/隐身/飞行/
+// 万能修复/变性/媚药）补一个"预装 50 单位该药水的玻璃瓶物品"，使其能作为即用消耗品在商店兑换。
+// Pre-filled bottles for the module's custom potions, so they can be sold as ready-to-use consumables.
+#include "items/custom_potion_bottles.dm"
 #include "weapons/magical_archery.dm"
 #include "weapons/moonlight_greatsword.dm"
 #include "admin/adminspell.dm"

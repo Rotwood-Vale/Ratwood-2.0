@@ -1,4 +1,5 @@
 GLOBAL_LIST_INIT(custom_learnable_spells, list(
+	/obj/effect/proc_holder/spell/invoked/anti_spoil, // 自定义 T1：防腐净化（复原腐坏食物为新鲜）
 	/obj/effect/proc_holder/spell/invoked/flight,
 	/obj/effect/proc_holder/spell/invoked/group_darkvision,
 	/obj/effect/proc_holder/spell/invoked/group_enlarge,

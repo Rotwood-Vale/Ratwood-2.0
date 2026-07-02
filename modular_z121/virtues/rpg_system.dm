@@ -583,6 +583,19 @@
 		"强效治疗药水（120积分）" = list(120, /obj/item/reagent_containers/glass/bottle/rogue/healthpotnew), // 强力回血
 		"强效魔力药水（120积分）" = list(120, /obj/item/reagent_containers/glass/bottle/rogue/strongmanapot),  // 大量回蓝
 		"强效解毒剂（140积分）"   = list(140, /obj/item/reagent_containers/glass/bottle/rogue/strong_antidote), // 强力解毒
+		// —— 本模块自定义炼金药水（成品瓶，即用型）——
+		"温酒（40积分）"       = list(40, /obj/item/reagent_containers/glass/bottle/rogue/warm_wine),           // 驱寒温酒
+		"催乳剂（50积分）"     = list(50, /obj/item/reagent_containers/glass/bottle/rogue/lactation_enhancer),  // 加速泌乳恢复
+		"克林卡特（60积分）"   = list(60, /obj/item/reagent_containers/glass/bottle/rogue/klinkat),             // 精炼酒基药剂
+		"血之补剂（70积分）"   = list(70, /obj/item/reagent_containers/glass/bottle/rogue/blood_tonic),         // 补血
+		"暖心酒剂（80积分）"   = list(80, /obj/item/reagent_containers/glass/bottle/rogue/heart_tonic),         // 暖身暖心
+		"媚药（80积分）"       = list(80, /obj/item/reagent_containers/glass/bottle/rogue/aphrodisiac),         // 强效催情
+		"精力药剂（90积分）"   = list(90, /obj/item/reagent_containers/glass/bottle/rogue/vigor_potion),        // 短时振奋精力
+		"驱兽药水（100积分）"  = list(100, /obj/item/reagent_containers/glass/bottle/rogue/monster_repel),      // 令野兽退避
+		"万能修复溶剂（120积分）" = list(120, /obj/item/reagent_containers/glass/bottle/rogue/universal_repair), // 修复物品损耗
+		"变性药水（120积分）"  = list(120, /obj/item/reagent_containers/glass/bottle/rogue/gender_swap),        // 改变生理性别
+		"隐身药水（150积分）"  = list(150, /obj/item/reagent_containers/glass/bottle/rogue/invisibility),       // 短时隐形
+		"飞行药水（180积分）"  = list(180, /obj/item/reagent_containers/glass/bottle/rogue/flying),             // 短时飞行
 	)
 
 // get_material_catalog：锻造 / 制作材料目录。需求"在兑换列表中加入材料兑换"。
@@ -708,6 +721,46 @@
 		"精灵红酒（150积分）"= list(150, /obj/item/reagent_containers/glass/bottle/rogue/elfred),       // 精灵红酒，名贵佳酿
 		"精灵蓝酒（160积分）"= list(160, /obj/item/reagent_containers/glass/bottle/rogue/elfblue),      // 精灵蓝酒，名贵佳酿
 		"仙馐蜂蜜（200积分）"= list(200, /obj/item/reagent_containers/food/snacks/rogue/honey/ambrosia), // 仙馐蜂蜜，传说级成品珍馐
+		// —— 珍馐（品质 5 / FARE_LAVISH 的成品美食；图标均已核验存在）——
+		//   蛋糕类甜点
+		"苹果蛋糕（110积分）"   = list(110, /obj/item/reagent_containers/food/snacks/rogue/applecake),
+		"苹果坚果蛋糕（110积分）" = list(110, /obj/item/reagent_containers/food/snacks/rogue/applenutcake),
+		"浆果蛋糕（110积分）"   = list(110, /obj/item/reagent_containers/food/snacks/rogue/berrycake),
+		"黑莓蛋糕（110积分）"   = list(110, /obj/item/reagent_containers/food/snacks/rogue/blackberrycake),
+		"覆盆子蛋糕（110积分）" = list(110, /obj/item/reagent_containers/food/snacks/rogue/raspberrycake),
+		"草莓蛋糕（110积分）"   = list(110, /obj/item/reagent_containers/food/snacks/rogue/strawberrycake),
+		"胡萝卜蛋糕（110积分）" = list(110, /obj/item/reagent_containers/food/snacks/rogue/carrotcake),
+		"柠檬蛋糕（110积分）"   = list(110, /obj/item/reagent_containers/food/snacks/rogue/lemoncake),
+		"青柠蛋糕（110积分）"   = list(110, /obj/item/reagent_containers/food/snacks/rogue/limecake),
+		"橘子蛋糕（110积分）"   = list(110, /obj/item/reagent_containers/food/snacks/rogue/tangerinecake),
+		"薄荷蛋糕（110积分）"   = list(110, /obj/item/reagent_containers/food/snacks/rogue/menthacake),
+		"石果蛋糕（110积分）"   = list(110, /obj/item/reagent_containers/food/snacks/rogue/rocknutcake),
+		"和平蛋糕（120积分）"   = list(120, /obj/item/reagent_containers/food/snacks/rogue/peacecake),
+		"兹班图蛋糕（120积分）" = list(120, /obj/item/reagent_containers/food/snacks/rogue/hcake),
+		//   肉食硬菜
+		"嫩炸鸟排（150积分）"   = list(150, /obj/item/reagent_containers/food/snacks/rogue/meat/chickentender),
+		"炸肉排（150积分）"     = list(150, /obj/item/reagent_containers/food/snacks/rogue/meat/nitzel),
+		"香料烤禽（150积分）"   = list(150, /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/spiced),
+		"黄油烤禽（150积分）"   = list(150, /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/butter),
+		"精灵兔肉烤盘（160积分）" = list(160, /obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried/garlickcucumber),
+		"猎人盛宴（160积分）"   = list(160, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/garlickcucumber),
+		"公爵烤禽（180积分）"   = list(180, /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/spiced/ducal),
+		"公爵牛排（180积分）"   = list(180, /obj/item/reagent_containers/food/snacks/rogue/peppersteak/ducal),
+		//   饭食套餐
+		"鸡蛋奶酪饭（120积分）" = list(120, /obj/item/reagent_containers/food/snacks/rogue/riceeggcheese),
+		"牛肉饭套餐（130积分）" = list(130, /obj/item/reagent_containers/food/snacks/rogue/ricebeefcar),
+		"猪肉饭套餐（130积分）" = list(130, /obj/item/reagent_containers/food/snacks/rogue/riceporkcuc),
+		"禽肉饭套餐（130积分）" = list(130, /obj/item/reagent_containers/food/snacks/rogue/ricebirdcar),
+		"虾仁饭套餐（140积分）" = list(140, /obj/item/reagent_containers/food/snacks/rogue/riceshrimpcar),
+		//   其它成品珍馐
+		"鳗鱼冻（120积分）"     = list(120, /obj/item/reagent_containers/food/snacks/rogue/jelliedeel),
+		"奶酪酿茄子（120积分）" = list(120, /obj/item/reagent_containers/food/snacks/rogue/preserved/eggplantstuffedcheese),
+		"铁锤堡式早餐（130积分）" = list(130, /obj/item/reagent_containers/food/snacks/rogue/friedegg/hammerhold),
+		// —— 佳酿（品质 ≥ 3 的名贵酒水；elfblue 已在上方列出）——
+		"风间清酒（130积分）"   = list(130, /obj/item/reagent_containers/glass/bottle/rogue/beer/kgunsake),
+		"风间烧酎（140积分）"   = list(140, /obj/item/reagent_containers/glass/bottle/rogue/beer/kgunshochu),
+		"药酒（130积分）"       = list(130, /obj/item/reagent_containers/glass/bottle/rogue/beer/yaojiu),
+		"蛇酒（150积分）"       = list(150, /obj/item/reagent_containers/glass/bottle/rogue/beer/shejiu),
 	)
 
 // get_artifact_catalog：神器（与神祇相关的圣物）目录。需求"加入与神有关的神器"。
