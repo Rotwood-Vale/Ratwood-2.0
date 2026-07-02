@@ -326,7 +326,7 @@
 		
 		// Continuous healing loop - keeps going as long as both stay still and adjacent
 		var/first_application = TRUE
-		var/tick_time = 70 - (holy_skill * 3) // Faster ticks for more skilled clerics
+		var/tick_time = 90 - (holy_skill * 3) // Faster ticks for more skilled clerics
 		
 		while(do_after(user, tick_time, target = target))
 			// Check if we have enough devotion to continue
@@ -349,7 +349,7 @@
 			
 			// Consume devotion and stamina for this healing cycle. Stamina loss is the same as lesser miracle for obvious balance reasons
 			user.devotion?.update_devotion(-devotion_per_tick)
-			user.adjustStaminaLoss(40)
+			user.stamina_add(40)
 			
 			if (first_application)
 				to_chat(user, span_notice("I maintain my focus, channeling [user.patron.name]'s restorative power through my hands..."))
