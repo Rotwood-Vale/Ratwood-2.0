@@ -5,3 +5,8 @@
   - bugfix: Fix resisting out of man eaters being bugged.
   annikaRU:
   - rscadd: refined ducal blacksteel staff and the recipe for it
+2026-07-02:
+  IronDragoon:
+  - bugfix: Removed rontz ring from the contraband spawner
+  Yuckuza:
+  - rscdel: Removed raise fortified skeleton scroll from necromancer corpse loot pool.

@@ -1,0 +1,5 @@
+author: "BlindPoet"
+delete-after: True
+changes:
+  - rscadd: "Added back the Janissary's mace"
+  - rscadd: "Added a shield to the class to match its' description"
