@@ -72,11 +72,16 @@
 		return TRUE
 
 	var/mob/living/carbon/human/human = target
-	var/def_zone = check_zone(user.zone_selected)
-	var/obj/item/bodypart/affecting = human.get_bodypart(def_zone)
+	var/obj/item/bodypart/affecting
+	var/most_damage = 0
+	for(var/obj/item/bodypart/bodypart in human.bodyparts)
+		var/total_damage = bodypart.brute_dam + bodypart.burn_dam
+		if(total_damage > most_damage)
+			most_damage = total_damage
+			affecting = bodypart
 
-	if(!affecting)
-		to_chat(user, span_warning("That limb cannot be healed."))
+	if(!affecting || most_damage <= 0)
+		to_chat(user, span_warning("I find no wounds in need of mending."))
 		revert_cast()
 		return FALSE
 
