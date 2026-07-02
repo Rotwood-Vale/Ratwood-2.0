@@ -86,6 +86,10 @@
 #include "structures/glaggar_challenge.dm"
 #include "items/magic_bedroll.dm"
 #include "items/goldface_supply_packs.dm"
+// 自定义药水成品瓶：为 modular_z121 各自定义炼金药水（精力/暖心/温酒/克林卡特/驱兽/隐身/飞行/
+// 万能修复/变性/媚药）补一个"预装 50 单位该药水的玻璃瓶物品"，使其能作为即用消耗品在商店兑换。
+// Pre-filled bottles for the module's custom potions, so they can be sold as ready-to-use consumables.
+#include "items/custom_potion_bottles.dm"
 #include "weapons/magical_archery.dm"
 #include "weapons/moonlight_greatsword.dm"
 #include "admin/adminspell.dm"

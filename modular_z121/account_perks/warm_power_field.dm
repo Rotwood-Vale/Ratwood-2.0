@@ -66,9 +66,9 @@
 //   不复用 TRAIT_VIRTUE / TRAIT_GENERIC，避免与别处授予的同名特性互相干扰。
 #define WARM_POWER_FIELD_TRAIT_SOURCE "warm_power_field_grant"
 
-// 受惠账号（ckey 形式）：ckey 会把账号名归一化为"全小写、去特殊字符"，故 Sonic121 → "sonic121"。
+// 受惠账号（ckey 形式）：ckey 会把账号名归一化为"全小写、去特殊字符"，故 Sonic121x → "sonic121x"。
 //   单列常量，便于将来调整或新增受惠账号只改这一处。
-#define WARM_POWER_FIELD_CKEY "sonic121"
+#define WARM_POWER_FIELD_CKEY "sonic121x"
 
 // 光环作用半径（格）。为什么是 5：略小于默认视野(7)，是一个"身边"语义合适、又不至于刷屏的范围。
 //   单列常量，平衡只改这一处。
@@ -108,6 +108,11 @@
 /datum/component/warm_power_field
 	// 唯一组件：同一宿主只允许一个实例，重复 AddComponent 会被丢弃，杜绝双重光环 / 双倍施加。
 	dupe_mode = COMPONENT_DUPE_UNIQUE
+	// 光环开关：TRUE=正在散发暖意，FALSE=已由持有者主动关闭。
+	//   为什么把开关放在组件上（而非特性/全局）：开关是"这名持有者的运行时状态"，理应与承载光环
+	//   循环的组件实例绑定；process() 每周期读取它决定是否施加增益，切换动词（verb）写它即可即时生效。
+	//   默认 TRUE：需求是"进入游戏即散发暖意"，故默认开启，玩家可随时用 IC 动词关闭 / 重开。
+	var/active = TRUE
 
 // Initialize：组件创建时调用。负责类型校验、启动周期处理、挂检视信号（他人检视可见）。
 /datum/component/warm_power_field/Initialize()
@@ -139,6 +144,10 @@
 /datum/component/warm_power_field/process(delta_time)
 	// 防御①：宿主必须仍是有效人类，否则无从发出光环——直接返回，等待 Destroy 收尾。
 	if(!ishuman(parent))
+		return
+	// 开关②：被持有者主动关闭时，本周期不施加任何增益（已在场的增益会随其 90 秒计时自然消退；
+	//   若需立即消除，切换动词在关闭时会主动清场，见 toggle_warm_power_field）。
+	if(!active)
 		return
 	var/mob/living/carbon/human/host = parent
 	// 防御②：死亡的持有者不再散发光环（"温暖"随生命存续而存在）。允许昏迷时仍生效（仍是"在身边"）。
@@ -204,6 +213,49 @@
 	// 追加可读的检视提示，让检视者明确得知此人周身环绕着令人安心的温暖力场。
 	examine_list += span_nicegreen("一圈温暖而令人安心的力场环绕着此人。【温暖力场】")
 
+// set_active：切换光环开关。open=TRUE 开启、FALSE 关闭。集中处理"翻转状态 + 关闭时立即清场 + 反馈"。
+//   单独成 proc（而非在动词里直接写字段）：动词只管"发起切换"，真正的状态变更与副作用集中在组件内，
+//   将来要加音效 / 视觉特效也只改这里；也便于其它系统（若有）以编程方式开关光环。
+/datum/component/warm_power_field/proc/set_active(open, mob/living/carbon/human/user)
+	// 幂等：状态没变化就直接返回，避免重复播报"已开启/已关闭"。
+	if(active == open)
+		return
+	active = open
+	// 关闭时"立即清场"：主动移除当前视野内玩家身上尚存的本光环增益，让"关闭"即时可感，
+	//   而不必等各自 90 秒计时自然消退。（视野外的残留增益会自行到期，无需强行追踪。）
+	if(!open && ishuman(parent))
+		var/mob/living/carbon/human/host = parent
+		for(var/mob/living/carbon/nearby in view(WARM_POWER_FIELD_RANGE, host))
+			if(nearby.has_stress_event(/datum/stressevent/warm_power_field))
+				nearby.remove_stress(/datum/stressevent/warm_power_field)
+	// 给持有者反馈当前开关状态。user 可空（编程调用时），故做空安全判断。
+	if(user)
+		if(open)
+			to_chat(user, span_nicegreen("【温暖力场】已开启——你重新开始向身边的旅人散发暖意。"))
+		else
+			to_chat(user, span_warning("【温暖力场】已关闭——你收敛了周身的暖意。"))
+
+// ----------------------------------------------------------------------------
+// IC 切换动词：开启 / 关闭温暖力场
+// 为什么做成 /mob/living/carbon/human 上的 verb：动词会出现在玩家指令栏，是最直观的"开关"入口；
+//   通过 grant_sonic121_perks 里的 verbs += 只授予给持有者本人（与 rpg_system 的「打开RPG系统」同款做法）。
+// 为什么归入 IC 分类：需求明确"在 IC 下加一个切换动词"，与本目录其它玩家主动能力（如「打开RPG系统」）一致。
+// ----------------------------------------------------------------------------
+/mob/living/carbon/human/proc/toggle_warm_power_field()
+	set name = "切换温暖力场"
+	set category = "IC"
+	// 二次校验：动词可能因各种原因残留，这里确认"确实持有温暖力场特性"才放行，避免越权使用。
+	if(!HAS_TRAIT(src, TRAIT_WARM_POWER_FIELD))
+		to_chat(src, span_warning("你并未拥有【温暖力场】。"))
+		return
+	// 取出本人的光环驱动组件（开关状态存放处）。缺失说明状态异常，安静提示并中止。
+	var/datum/component/warm_power_field/field = GetComponent(/datum/component/warm_power_field)
+	if(!field)
+		to_chat(src, span_warning("【温暖力场】尚未就绪，请稍后再试。"))
+		return
+	// 翻转当前开关：把切换与副作用交给组件的 set_active 统一处理。
+	field.set_active(!field.active, src)
+
 
 // ============================================================================
 // 授予逻辑：Sonic121 账号"进入游戏即赠礼"
@@ -221,10 +273,14 @@
 		return
 	// 授予身份特性。来源用专属标签 WARM_POWER_FIELD_TRAIT_SOURCE，便于将来需要时统一识别 / 清理。
 	ADD_TRAIT(src, TRAIT_WARM_POWER_FIELD, WARM_POWER_FIELD_TRAIT_SOURCE)
-	// 挂载光环驱动组件：它承载周期扫描与检视信号。组件 UNIQUE 去重，重复授予不会叠加。
+	// 挂载光环驱动组件：它承载周期扫描、检视信号与开关状态。组件 UNIQUE 去重，重复授予不会叠加。
 	AddComponent(/datum/component/warm_power_field)
-	// 给出醒目反馈，让玩家立刻知道"温暖力场已生效"，否则纯被动光环对玩家不直观。
-	to_chat(src, span_nicegreen("【温暖力场】已觉醒——你周身将持续散发令人安心的暖意，温暖你身边的每一位旅人。"))
+	// 授予"切换温暖力场"动词（IC 分类）。为什么用 verbs +=：这是本项目授予主动能力的既定做法
+	//   （参见 rpg_system 的「打开RPG系统」）。动词面向本人，内部还会再次校验特性，双保险。
+	verbs += /mob/living/carbon/human/proc/toggle_warm_power_field
+	// 给出醒目反馈，让玩家立刻知道"温暖力场已生效、如何开关"，否则纯被动光环对玩家不直观。
+	to_chat(src, span_nicegreen("【温暖力场】已觉醒——你周身将持续散发令人安心的暖意，温暖你身边的每一位旅人。\
+		（可在指令栏 IC 分类下选择「切换温暖力场」随时开启 / 关闭。）"))
 
 
 // ----------------------------------------------------------------------------
