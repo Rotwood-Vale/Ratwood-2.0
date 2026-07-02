@@ -416,8 +416,8 @@
 	return FALSE
 
 /obj/effect/proc_holder/spell/invoked/blood_heal
-	name = "Blood transfer Miracle"
-	desc = "Transfers the blood from myself to the target with divine magycks. Ratio of transfer scales with holy skill."
+	name = "Blood Bond"
+	desc = "Transfers some of my lyfeblood to a target in need."
 	overlay_icon = 'icons/mob/actions/genericmiracles.dmi'
 	overlay_state = "bloodheal"
 	action_icon_state = "bloodheal"
@@ -425,7 +425,7 @@
 	releasedrain = 30
 	chargedrain = 0
 	chargetime = 0
-	range = 7
+	range = 1
 	ignore_los = FALSE
 	warnie = "sydwarning"
 	movement_interrupt = TRUE
@@ -433,67 +433,84 @@
 	invocation_type = "none"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
-	recharge_time = 45 SECONDS
+	recharge_time = 15 SECONDS
 	miracle = TRUE
 	devotion_cost = 50
-	var/blood_price = 5
-	var/blood_vol_restore = 7.5 //30 every 2 seconds.
-	var/vol_per_skill = 1	//54 with legendary
-	var/delay = 0.5 SECONDS
+	var/blood_price_coefficient = 1.25
+	var/blood_vol_restore = 7.5 // base value
+	var/vol_per_skill = 3.75 // double at apprentice, triple at expert, quadruple at legendary
+	var/delay = 1.5 SECONDS
+
+/obj/effect/proc_holder/spell/invoked/blood_heal/proc/bond_check(mob/living/carbon/human/user, mob/living/target, revert = TRUE)
+	if (!istype(user, /mob/living/carbon/human) || !istype(target, /mob/living/carbon/human))
+		to_chat(user, span_warning("I can only forge a bloodbond with other humanoids!"))
+		if (revert)
+			revert_cast()
+		return FALSE
+	if (target == user)
+		to_chat(user, span_warning("I can't start a bloodbond on myself! It has to be on someone else!"))
+		if (revert)
+			revert_cast()
+		return
+	if (!user.Adjacent(target))
+		to_chat(user, span_warning("I need to be next to my target to maintain a bloodbond with them!"))
+		if (revert)
+			revert_cast()
+		return FALSE
+	if(NOBLOOD in user.dna?.species?.species_traits)
+		to_chat(user, span_warning("I have no blood to provide."))
+		if (revert)
+			revert_cast()
+		return FALSE
+	if(target.blood_volume >= BLOOD_VOLUME_NORMAL)
+		to_chat(user, span_warning("Their lyfeblood is at capacity. There is no need."))
+		if (revert)
+			revert_cast()
+		return FALSE
+	if(HAS_TRAIT(target, TRAIT_PSYDONITE))
+		target.visible_message(span_info("[target] stirs for a moment, then the miracle dissipates."), span_notice("A dull warmth swells in your heart, only to fade as quickly as it arrived."))
+		user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
+		playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
+		return FALSE
+
+	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/blood_heal/cast(list/targets, mob/user = usr)
 	if(ishuman(targets[1]))
 		var/mob/living/carbon/human/target = targets[1]
 		var/mob/living/carbon/human/UH = user
-		if(NOBLOOD in UH.dna?.species?.species_traits)
-			to_chat(UH, span_warning("I have no blood to provide."))
-			revert_cast()
-			return FALSE
 
-		if(target.blood_volume >= BLOOD_VOLUME_NORMAL)
-			to_chat(UH, span_warning("Their lyfeblood is at capacity. There is no need."))
-			revert_cast()
-			return FALSE
-
-		if(HAS_TRAIT(target, TRAIT_PSYDONITE))
-			target.visible_message(span_info("[target] stirs for a moment, the miracle dissipates."), span_notice("A dull warmth swells in your heart, only to fade as quickly as it arrived."))
-			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
-			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
+		if (!bond_check(UH, target, revert = TRUE))
 			return FALSE
 
 		UH.visible_message(span_warning("Tiny strands of red link between [UH] and [target], blood being transferred!"))
 		playsound(UH, 'sound/magic/bloodheal_start.ogg', 100, TRUE)
 		var/user_skill = UH.get_skill_level(associated_skill)
-		var/user_informed = FALSE
-		switch(user_skill)	//Bleeding happens every life(), which is every 2 seconds. Multiply these numbers by 4 to get the "bleedrate" equivalent values.
-			if(SKILL_LEVEL_APPRENTICE)
-				blood_price = 3.75
-			if(SKILL_LEVEL_JOURNEYMAN)
-				blood_price = 2.5
-			if(SKILL_LEVEL_EXPERT)
-				blood_price = 2
-			if(SKILL_LEVEL_MASTER)
-				blood_price = 1.625
-			if(SKILL_LEVEL_LEGENDARY)
-				blood_price = 1.25
-		if(user_skill > SKILL_LEVEL_NOVICE)
-			blood_vol_restore += vol_per_skill * user_skill
-		var/max_loops = round(UH.blood_volume / blood_price, 1) * 2	// x2 just in case the user is trying to fill themselves up while using it.
+		
+		// higher miracle skills let us transfer more of our blood at once, but don't really affect the efficiency all that much.
+		var/actual_blood_vol_restore = blood_vol_restore
+		actual_blood_vol_restore += (vol_per_skill * user_skill)
+
+		// a cheele restores 300% of the original blood volume over a LONG period of time
+		// we want bloodbond to be about 125% since it doesn't require an external item, is much faster, and uses two renewable resources (blood & devotion)
+		var/actual_blood_price = actual_blood_vol_restore / blood_price_coefficient
+
+		var/max_loops = max(round(UH.blood_volume / actual_blood_price, 1), 1)
 		var/datum/beam/bloodbeam = user.Beam(target,icon_state="blood",time=(max_loops * 5))
+
 		for(var/i in 1 to max_loops)
 			if(UH.blood_volume > (BLOOD_VOLUME_SURVIVE / 2))
-				if(do_after(UH, delay))
-					target.blood_volume = min((target.blood_volume + blood_vol_restore), BLOOD_VOLUME_NORMAL)
-					UH.blood_volume = max((UH.blood_volume - blood_price), 0)
-					if(target.blood_volume >= BLOOD_VOLUME_NORMAL && !user_informed)
-						to_chat(UH, span_info("They're at a healthy blood level, but I can keep going."))
-						user_informed = TRUE
+				if(do_after(UH, delay) && bond_check(UH, target, revert = FALSE) && UH.devotion?.check_devotion(src))
+					target.blood_volume = min((target.blood_volume + actual_blood_vol_restore), BLOOD_VOLUME_NORMAL)
+					UH.blood_volume = max((UH.blood_volume - actual_blood_price), 0)
+					var/devo_cost = round(0 - (devotion_cost / max_loops), 1)
+					UH.devotion?.update_devotion(devo_cost)
 				else
-					UH.visible_message(span_warning("Severs the bloodlink from [target]!"))
+					UH.visible_message(span_warning("The bloodbond between [UH] and [target] breaks!"))
 					bloodbeam.End()
 					return TRUE
 			else
-				UH.visible_message(span_warning("Severs the bloodlink from [target]!"))
+				UH.visible_message(span_warning("The bloodbond between [UH] and [target] breaks!"))
 				bloodbeam.End()
 				return TRUE
 		bloodbeam.End()
