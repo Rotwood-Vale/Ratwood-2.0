@@ -3,7 +3,7 @@
 	name = "Miracle"
 	desc = "Heals target over time, causes damage if something is embedded in target. Burns undead instead of healing them if you worship the Ten.<br>Does not work on those worshipping the dead god."
 	overlay_state = "lesserheal"
-	releasedrain = 40
+	releasedrain = 60
 	chargedrain = 0
 	chargetime = 0
 	range = 3
@@ -114,6 +114,8 @@
 	if(!target_limb || QDELETED(target_limb))
 		qdel(src)
 		return
+	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
+	H.color = "#FF0000"
 	target_limb.heal_damage(healing_on_tick, healing_on_tick)
 	target_limb.heal_wounds(healing_on_tick)
 
