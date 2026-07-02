@@ -1678,7 +1678,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 	var/mob/living/carbon/human/H = target
 
 	if(hascall(H, "check_for_injuries"))
-		H.check_for_injuries(user)
+		H.check_for_injuries(user, TRUE)
 
 	to_chat(user, span_notice("--- Divine Diagnosis on [H] ---"))
 
