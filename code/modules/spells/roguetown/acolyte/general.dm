@@ -3,10 +3,10 @@
 	name = "Miracle"
 	desc = "Heals target over time, causes damage if something is embedded in target. Burns undead instead of healing them if you worship the Ten.<br>Does not work on those worshipping the dead god."
 	overlay_state = "lesserheal"
-	releasedrain = 30
+	releasedrain = 40
 	chargedrain = 0
 	chargetime = 0
-	range = 4
+	range = 3
 	warnie = "sydwarning"
 	movement_interrupt = FALSE
 	sound = 'sound/magic/heal.ogg'
@@ -15,7 +15,7 @@
 	antimagic_allowed = TRUE
 	recharge_time = 10 SECONDS
 	miracle = TRUE
-	devotion_cost = 10
+	devotion_cost = 30
 
 /obj/effect/proc_holder/spell/invoked/lesser_heal/cast(list/targets, mob/living/user)
 	. = ..()
@@ -60,7 +60,7 @@
 
 	user.patron.on_lesser_heal(user, target, &message_out, &message_self, &conditional_buff, &situational_bonus, &is_inhumen)
 
-	var/healing = 2.5
+	var/healing = 3.5
 
 	if(conditional_buff)
 		if(situational_bonus > 0)
@@ -72,6 +72,14 @@
 		return TRUE
 
 	var/mob/living/carbon/human/human = target
+	var/def_zone = check_zone(user.zone_selected)
+	var/obj/item/bodypart/affecting = human.get_bodypart(def_zone)
+
+	if(!affecting)
+		to_chat(user, span_warning("That limb cannot be healed."))
+		revert_cast()
+		return FALSE
+
 	var/no_embeds = TRUE
 	var/list/embeds = human.get_embedded_objects()
 
@@ -89,10 +97,25 @@
 		human.emote("agony")
 		return FALSE
 
-	target.apply_status_effect(/datum/status_effect/buff/healing, healing)
+	target.apply_status_effect(/datum/status_effect/buff/healing/limb, healing, affecting)
 	target.visible_message(message_out, message_self)
 
 	return TRUE
+
+// Limbs now become target healed, and you can't heal another until the heal effect wears off. Also if your limb goes bye bye somehow it should cancel itself out
+/datum/status_effect/buff/healing/limb
+	var/obj/item/bodypart/target_limb
+
+/datum/status_effect/buff/healing/limb/on_creation(mob/living/new_owner, new_healing_on_tick, obj/item/bodypart/bodypart)
+	target_limb = bodypart
+	return ..(new_owner, new_healing_on_tick)
+
+/datum/status_effect/buff/healing/limb/tick()
+	if(!target_limb || QDELETED(target_limb))
+		qdel(src)
+		return
+	target_limb.heal_damage(healing_on_tick, healing_on_tick)
+	target_limb.heal_wounds(healing_on_tick)
 
 // Miracle
 /obj/effect/proc_holder/spell/invoked/heal
