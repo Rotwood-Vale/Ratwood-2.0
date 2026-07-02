@@ -99,7 +99,7 @@
 	antimagic_allowed = TRUE
 	recharge_time = 2 MINUTES
 	miracle = TRUE
-	devotion_cost = 80
+	devotion_cost = 500
 	/// Amount of PQ gained for reviving people
 	var/revive_pq = PQ_GAIN_REVIVE
 

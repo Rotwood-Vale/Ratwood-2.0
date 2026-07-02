@@ -319,7 +319,7 @@
 		// Healing power scales better with holy skill. With lesser miracle being nerfed as a limb targeted miracle, this is basically your new channeled lesser heal
 		// These are values by tick. No more clamp as we're using a list for better readability and customization
 		var/healing_power = list(0.3, 0.5, 1.0, 1.5, 2.0, 3.0, 4.0)[holy_skill + 1]
-		// Devotion cost per tick scales up with skill to match increased healing output
+		// Devotion cost per tick no longer uses clamp for the same reason
 		var/devotion_per_tick = list(4, 4, 6, 8, 10, 12, 15)[holy_skill + 1]
 		
 		user.visible_message(span_notice("Divine energy suffuses [target] as [user]'s channeling takes hold!"), span_notice("The connection is established - [user.patron.name]'s power flows through me into [target]."))
@@ -347,7 +347,7 @@
 			// Apply or refresh the healing effect
 			target.apply_status_effect(/datum/status_effect/buff/lay_hands, healing_power)
 			
-			// Consume devotion and stamina for this healing cycle (stamina matches lesser miracle cast cost)
+			// Consume devotion and stamina for this healing cycle. Stamina loss is the same as lesser miracle for obvious balance reasons
 			user.devotion?.update_devotion(-devotion_per_tick)
 			user.adjustStaminaLoss(30)
 			

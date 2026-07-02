@@ -15,7 +15,7 @@
 	antimagic_allowed = TRUE
 	recharge_time = 10 MINUTES
 	miracle = TRUE
-	devotion_cost = 250
+	devotion_cost = 500
 	var/revive_pq = PQ_GAIN_REVIVE
 	var/required_structure = /obj/structure/fluff/psycross
 	var/required_items = list(/obj/item/clothing/neck/roguetown/psicross = 1)

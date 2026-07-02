@@ -71,7 +71,7 @@
 	if(!helditemvalue)
 		to_chat(user, span_info("This has no value, It will be of no use In such a transaction."))
 		return
-	if(helditemvalue<10)
+	if(helditemvalue<20)
 		to_chat(user, span_info("This has little value, It will be of no use In such a transaction."))
 		return
 	if(isliving(targets[1]))
@@ -86,12 +86,12 @@
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			var/datum/status_effect/buff/healing/heal_effect = C.apply_status_effect(/datum/status_effect/buff/healing)
-			heal_effect.healing_on_tick = helditemvalue/2
+			heal_effect.healing_on_tick = helditemvalue/5
 			playsound(user, 'sound/combat/hits/burn (2).ogg', 100, TRUE)
 			qdel(held_item)
 		else
-			target.adjustBruteLoss(helditemvalue/2)
-			target.adjustFireLoss(helditemvalue/2)
+			target.adjustBruteLoss(helditemvalue/5)
+			target.adjustFireLoss(helditemvalue/5)
 			playsound(user, 'sound/combat/hits/burn (2).ogg', 100, TRUE)
 			qdel(held_item)
 		return TRUE
