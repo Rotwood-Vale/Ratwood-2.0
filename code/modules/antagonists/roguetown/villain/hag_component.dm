@@ -384,11 +384,13 @@
 		var/list/name_list = boon_registry[t_name]
 
 		if(S && S.points > 10)
-			for(var/datum/hag_boon/curse/C in name_list)
-				var/mob/living/L = find_target(t_name)
-				if(L)
-					to_chat(L, span_notice("The heavy weight of your curse lifts as a distant, pained shriek echoes in your mind."))
-				qdel(C)
+			var/mob/living/L = find_target(t_name)
+			if(L)
+				to_chat(L, span_notice("The heavy weight of your curse lifts as a distant, pained shriek echoes in your mind."))
+
+			for(var/datum/hag_boon/B in name_list.Copy())
+				if(B.hag_curse)
+					remove_boon_instance(B)
 		else
 			var/mob/living/victim = find_target(t_name)
 			if(!victim)

@@ -362,6 +362,12 @@
 	points = 65
 	status_type = /datum/status_effect/debuff/hag_curse/rotting_touch
 
+/datum/hag_boon/curse/storm_weakness
+	name = "Storm Weakness"
+	desc = "Your soul was dragged back through a lightning storm and your body paid the price."
+	points = 85
+	status_type = /datum/status_effect/debuff/hag_curse/storm_weakness
+
 /datum/hag_boon/curse_scar
 	name = "Curse Scar"
 	desc = "A lingering mark of corruption claimed by the Mossmother."
@@ -496,21 +502,40 @@
 	if(gibbed || !L || L.stat != DEAD)
 		return
 
+	L.visible_message(span_boldwarning("[L]'s body crackles with violent storm-energy!"))
+	L.Jitter(100)
+	playsound(get_turf(L), 'sound/magic/unmagnet.ogg', 100, TRUE)
+	for(var/mob/living/victim in orange(2, L))
+		if(victim == L)
+			continue
+		var/turf/throw_target = get_edge_target_turf(L, get_dir(L, victim))
+		victim.throw_at(throw_target, 5, 3)
+
 	L.grab_ghost(force = TRUE)
 	L.revive(full_heal = TRUE, admin_revive = FALSE)
 	if(L.mind)
 		L.mind.remove_antag_datum(/datum/antagonist/zombie)
 	L.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)
-	L.apply_status_effect(/datum/status_effect/debuff/hag_curse/storm_weakness, boon_type, tracker_ref, 85)
+
+	var/lookup_name = source_true_name || L.real_name
+	if(tracker_ref && lookup_name)
+		var/datum/hag_boon/source_boon = tracker_ref.find_boon_by_type(lookup_name, boon_type)
+		if(source_boon)
+			tracker_ref.transmute_boons_to_curse(lookup_name, list(source_boon), /datum/hag_boon/curse/storm_weakness, 85)
+		else
+			L.apply_status_effect(/datum/status_effect/debuff/hag_curse/storm_weakness, boon_type, tracker_ref, 85, lookup_name)
+	else
+		L.apply_status_effect(/datum/status_effect/debuff/hag_curse/storm_weakness, boon_type, tracker_ref, 85, lookup_name)
+
 	to_chat(L, span_boldwarning("The bog drags me back to life, but leaves my body terribly frail."))
-	if(!clear_source_boon())
-		qdel(src)
+	qdel(src)
 
 
 /datum/status_effect/buff/hag_boon/natural_communion
 	id = "hag_natural_communion"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/hag_natural_communion
 	tick_interval = 2 SECONDS
+	var/energy_cooldown = 0
 	var/static/list/natural_turfs = list(
 		/turf/open/floor/rogue/dirt,
 		/turf/open/floor/rogue/snow,
@@ -526,22 +551,35 @@
 	desc = "Nature replenishes me while I stand upon untamed ground."
 	icon_state = "buff"
 
+/datum/status_effect/buff/hag_boon/natural_communion/on_apply()
+	energy_cooldown = world.time
+	return ..()
+
 /datum/status_effect/buff/hag_boon/natural_communion/tick()
-	if(!owner)
+	if(!ishuman(owner))
 		return
-	var/turf/T = get_turf(owner)
+	var/mob/living/carbon/human/H = owner
+	var/turf/T = get_turf(H)
 	if(!is_type_in_list(T, natural_turfs))
 		return
-	owner.adjustStaminaLoss(-2, FALSE)
+
+	var/stam_regen = 0.05 * H.max_stamina
+	H.stamina_add(-stam_regen)
+
+	if(world.time >= energy_cooldown)
+		energy_cooldown = world.time + 25 SECONDS
+		var/energy_regen = 0.05 * H.max_energy
+		H.energy_add(energy_regen)
 
 
 /datum/status_effect/buff/hag_boon/creeping_moss
 	id = "hag_creeping_moss"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/hag_creeping_moss
 	duration = -1
-	tick_interval = 3 SECONDS
+	tick_interval = 2 SECONDS
 	var/moss_layer = 0
-	var/tick_progress = 0
+	var/total_healed = 0
+	var/heal_threshold = 200
 	var/movespeed_id
 	var/static/list/natural_turfs = list(
 		/turf/open/floor/rogue/dirt,
@@ -567,6 +605,19 @@
 		owner.remove_movespeed_modifier(movespeed_id)
 	return ..()
 
+/datum/status_effect/buff/hag_boon/creeping_moss/proc/update_moss_slowdown()
+	if(!owner || !movespeed_id)
+		return
+	owner.add_movespeed_modifier(movespeed_id, update = TRUE, priority = 10, multiplicative_slowdown = (0.15 * moss_layer), movetypes = GROUND)
+
+/datum/status_effect/buff/hag_boon/creeping_moss/proc/grow_moss()
+	moss_layer = min(moss_layer + 1, 6)
+	update_moss_slowdown()
+
+/datum/status_effect/buff/hag_boon/creeping_moss/proc/trim_moss()
+	moss_layer = max(moss_layer - 1, 0)
+	update_moss_slowdown()
+
 /datum/status_effect/buff/hag_boon/creeping_moss/tick()
 	if(!owner)
 		return
@@ -575,17 +626,15 @@
 	if(!is_type_in_list(T, natural_turfs))
 		return
 
-	tick_progress++
 	if(owner.getBruteLoss() > 0)
-		owner.adjustBruteLoss(-0.4, FALSE)
+		owner.adjustBruteLoss(-0.5, FALSE)
 	if(owner.getFireLoss() > 0)
-		owner.adjustFireLoss(-0.2, FALSE)
+		owner.adjustFireLoss(-0.25, FALSE)
 
-	if(tick_progress >= 3)
-		tick_progress = 0
-		moss_layer = min(moss_layer + 1, 6)
-		if(movespeed_id)
-			owner.add_movespeed_modifier(movespeed_id, update = TRUE, priority = 10, multiplicative_slowdown = (0.15 * moss_layer), movetypes = GROUND)
+	total_healed += (2 + (2 * moss_layer))
+	if(total_healed >= heal_threshold && moss_layer < 6)
+		total_healed = 0
+		grow_moss()
 
 
 /datum/status_effect/buff/hag_boon/creeping_moss/curse
@@ -601,10 +650,14 @@
 	..()
 	if(!owner)
 		return
-	if(moss_layer >= 4)
-		owner.adjustOxyLoss(2)
+	if(moss_layer >= 6)
+		owner.adjustOxyLoss(10)
+		if(prob(10))
+			to_chat(owner, span_userdanger("The moss forces its way into my throat. I can't breathe!"))
 	if(owner.on_fire && moss_layer > 0)
-		moss_layer = max(moss_layer - 1, 0)
+		if(prob(10))
+			to_chat(owner, span_danger("Flames sear away part of the parasitic moss!"))
+			trim_moss()
 
 
 /datum/status_effect/curse/waterlogged
@@ -639,7 +692,7 @@
 	id = "hag_slumber"
 	alert_type = /atom/movable/screen/alert/status_effect/curse/hag_slumber
 	duration = -1
-	tick_interval = 30 SECONDS
+	tick_interval = 1 MINUTES
 
 /atom/movable/screen/alert/status_effect/curse/hag_slumber
 	name = "Cursed Slumber"
@@ -647,14 +700,35 @@
 	icon_state = "debuff"
 
 /datum/status_effect/curse/hag_slumber/tick()
-	if(!owner || owner.stat == DEAD)
+	if(!ishuman(owner) || owner.stat == DEAD)
 		return
-	if(owner.has_status_effect(/datum/status_effect/debuff/sleepytime))
-		owner.remove_status_effect(/datum/status_effect/debuff/sleepytime)
+
+	var/mob/living/carbon/human/H = owner
+	if(H.has_status_effect(/datum/status_effect/debuff/sleepytime))
+		addtimer(CALLBACK(src, PROC_REF(clear_standard_sleep)), 5 SECONDS)
+		to_chat(H, span_warning("My exhaustion fades... replaced by a cold, heavy pressure behind my eyes."))
+		addtimer(CALLBACK(src, PROC_REF(force_dream_drag)), 1 MINUTES)
+		return
+
 	if(prob(20))
-		owner.apply_status_effect(/datum/status_effect/debuff/sleepytime)
-	if(prob(10))
-		teleport_to_dream(owner, 10000, 120)
+		H.apply_status_effect(/datum/status_effect/debuff/sleepytime)
+
+/datum/status_effect/curse/hag_slumber/proc/clear_standard_sleep()
+	var/mob/living/carbon/human/H = owner
+	if(!H || H.stat == DEAD)
+		return
+	H.remove_status_effect(/datum/status_effect/debuff/sleepytime)
+	to_chat(H, span_notice("Wakefulness surges through me, but something hungry tugs from the deep."))
+
+/datum/status_effect/curse/hag_slumber/proc/force_dream_drag()
+	var/mob/living/carbon/human/H = owner
+	if(!H || H.stat == DEAD)
+		return
+
+	to_chat(H, span_userdanger("The Dream reaches out and grips my heart!"))
+	H.Knockdown(10)
+	H.blur_eyes(20)
+	teleport_to_dream(H, 10000, 10000)
 
 
 /datum/status_effect/debuff/hag_curse
@@ -666,6 +740,7 @@
 	var/datum/component/hag_curio_tracker/tracker_ref
 	var/curse_points = 1
 	var/source_true_name
+	var/suppress_tracker_cleanup = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/hag_curse
 	name = "Hag Curse"
@@ -684,10 +759,18 @@
 /datum/status_effect/debuff/hag_curse/proc/clear_source_boon()
 	if(!tracker_ref || !boon_type)
 		return FALSE
+	suppress_tracker_cleanup = TRUE
 	var/lookup_name = source_true_name || owner?.real_name
 	if(!lookup_name)
 		return FALSE
 	return tracker_ref.remove_boon_by_type(lookup_name, boon_type)
+
+/datum/status_effect/debuff/hag_curse/on_remove()
+	if(!suppress_tracker_cleanup && tracker_ref && owner)
+		var/lookup_name = source_true_name || owner.real_name
+		if(lookup_name)
+			tracker_ref.remove_boon_by_type(lookup_name, boon_type)
+	return ..()
 
 
 /datum/status_effect/debuff/hag_curse/storm_weakness
