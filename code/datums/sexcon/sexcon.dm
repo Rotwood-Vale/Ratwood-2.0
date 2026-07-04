@@ -405,9 +405,9 @@
 		if(!splashed_type)
 			splashed_user.apply_status_effect(status_type)
 			if(oral)
-				splashed_user.visible_message(span_love("[splashed_user] takes a load down their throat!"), span_love("I take a load down my throat!"))
+				splashed_user.visible_message(span_love("[splashed_user] takes a load down [splashed_user.p_their()] throat!"), span_love("I take a load down my throat!"))
 			else
-				splashed_user.visible_message(span_love("[splashed_user] takes a load inside them!"), span_love("I take a load inside me!"))
+				splashed_user.visible_message(span_love("[splashed_user] takes a load inside [splashed_user.p_them()]!"), span_love("I take a load inside me!"))
 		else
 			splashed_type.refresh_cum()
 		if(oral && splashed_user.reagents) //cum fills hunger if taking it orally
@@ -416,8 +416,10 @@
 			else
 				splashed_user.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 2)
 			apply_cum_consumed_buff(splashed_user)
-		if(!oral && user?.dna?.species?.id == "gnoll")
+		if(user?.dna?.species?.id == "gnoll" && splashed_user?.dna?.species?.id != "gnoll")
 			splashed_user.has_gnoll_scent_this_round = TRUE
+		if(splashed_user?.dna?.species?.id == "gnoll" && user?.dna?.species?.id != "gnoll")
+			user.has_gnoll_scent_this_round = TRUE
 		modular_record_collar_receive_event(splashed_user, user)
 		if(!oral)
 			var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
