@@ -12686,7 +12686,7 @@
 /area/rogue/outdoors/town/roofs)
 "cPD" = (
 /obj/structure/flora/roguegrass,
-/obj/structure/flora/roguegrass/herb,
+/obj/structure/flora/roguegrass/herb/random,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woodsrat/above)
 "cPE" = (
@@ -49554,7 +49554,6 @@
 "lkg" = (
 /obj/structure/fluff/statue/aasimar{
 	color = "aaa0a0";
-	desc = "This statue is an ode to the purity and superiority of the beloved Aasimar race";
 	pixel_y = 2
 	},
 /turf/open/floor/rogue/concrete,
@@ -50237,7 +50236,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave)
 "ltI" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/grass,
@@ -62120,13 +62119,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/church/basement)
 "odS" = (
-/obj/structure/fluff/statue/femalestatue{
-	desc = "Wow, she is beautiful.";
-	icon_state = "5";
-	name = "Lady of the Lake";
-	pixel_x = -15;
-	pixel_y = 6
-	},
+/obj/structure/fluff/statue/femalestatue2,
 /obj/structure/fluff/walldeco/church/line,
 /obj/structure/fluff/walldeco/church/line{
 	dir = 8
@@ -64566,7 +64559,7 @@
 /area/rogue/outdoors/bograt/sunken)
 "oIH" = (
 /obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/roguegrass/herb,
+/obj/structure/flora/roguegrass/herb/random,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woodsrat/above)
 "oII" = (
@@ -68776,13 +68769,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/church)
 "pGs" = (
-/obj/structure/fluff/statue/femalestatue{
-	desc = "Wow, she is beautiful.";
-	icon_state = "5";
-	name = "Lady of the Lake";
-	pixel_x = -28;
-	pixel_y = -28
-	},
+/obj/structure/fluff/statue/femalestatue2,
 /obj/structure/flora/roguegrass/reedbush,
 /turf/open/water/cleanshallow,
 /area/rogue/under/town/sewer)
@@ -75094,7 +75081,7 @@
 /turf/open/water/cleanshallow,
 /area/rogue/under/town/sewer)
 "rhE" = (
-/obj/structure/flora/roguegrass/herb,
+/obj/structure/flora/roguegrass/herb/random,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woodsrat/above)
 "rhG" = (
@@ -77032,7 +77019,7 @@
 /turf/open/floor/rogue/metal,
 /area/rogue/under/town/sewer)
 "rFi" = (
-/obj/structure/fluff/walldeco/sparrowflag,
+/obj/structure/fluff/walldeco/mercenaryflag,
 /turf/closed/wall/mineral/rogue/decowood,
 /area/rogue/indoors)
 "rFm" = (
@@ -77988,7 +77975,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/underdark/rockhill/west)
 "rRa" = (
-/obj/structure/fluff/statue/zizo{
+/obj/structure/fluff/statue/valmora{
 	pixel_y = 11
 	},
 /turf/open/floor/rogue/grasscold,

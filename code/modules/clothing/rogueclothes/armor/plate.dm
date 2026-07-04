@@ -38,7 +38,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/plate/ancient
 	name = "ancient half-plate"
-	desc = "Polished gilbranze layers, magewelded into plate armor. Let none impede the march of progress, and let Her champions bring the unenlightened masses to kneel."
+	desc = "Polished gilbranze layers, magewelded into plate armor. Let none impede the march of ambition, and let Her champions bring the unenlightened masses to kneel."
 	icon_state = "ancientplate"
 	item_state = "ancientplate"
 	smeltresult = /obj/item/ingot/aaslag

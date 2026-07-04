@@ -1,7 +1,7 @@
 
 /obj/structure/roguewindow
 	name = "window"
-	desc = "A glass window."
+	desc = "A glass window, it separates a small slice of civilization from the savage outside world."
 	icon = 'icons/roguetown/misc/roguewindow.dmi'
 	icon_state = "window-solid"
 	layer = TABLE_LAYER
@@ -104,14 +104,20 @@
 	repair_costs = list(/obj/item/natural/glass, /obj/item/natural/glass)
 
 /obj/structure/roguewindow/stained/silver
+	name = "psydonite window"
+	desc = "A glass window stained in the silver of the Otavan Orthodoxy, it represents a time of hope long past which refuses to die."
 	icon_state = "stained-silver"
 	base_state = "stained-silver"
 
 /obj/structure/roguewindow/stained/yellow
+	name = "astratan window"
+	desc = "A glass window stained in the gold of the Sun Cult, it represents the undying authority of their faith, ever-present as the wilting gaze of the sun above."
 	icon_state = "stained-yellow"
 	base_state = "stained-yellow"
 
 /obj/structure/roguewindow/stained/zizo
+	name = "zizite window"
+	desc = "A glass window stained in the red of the Zizo Cabal, it represents the endless ambition of their cause and goddess, that which is unsatisfied with just one life to live."
 	icon_state = "stained-zizo"
 	base_state = "stained-zizo"
 
@@ -133,7 +139,7 @@
 	icon_state = base_state
 
 /obj/structure/roguewindow/openclose/reinforced
-	desc = "A glass window. This one looks reinforced with a metal mesh."
+	desc = "A glass window reinforced with a metal mesh, it still won't keep you alive tonight."
 	icon_state = "reinforcedwindowdir"
 	base_state = "reinforcedwindow"
 	max_integrity = 800
@@ -151,7 +157,7 @@
 	icon_state = base_state
 
 /obj/structure/roguewindow/openclose/reinforced/brick
-	desc = "A glass window. This one looks reinforced with a metal frame."
+	desc = "A glass window reinforced with a metal frame, it should keep you safe from the outside world."
 	icon_state = "brickwindowdir"
 	base_state = "brickwindow"
 	max_integrity = 1000	//Better than reinforced by a bit; metal frame.
@@ -167,12 +173,14 @@
 
 /obj/structure/roguewindow/harem1
 	name = "harem window"
+	desc = "An opaque glass window, you can only imagine what is on the other side."
 	icon_state = "harem1-solid"
 	base_state = "harem1-solid"
 	repair_costs = list(/obj/item/natural/glass, /obj/item/natural/glass)
 
 /obj/structure/roguewindow/harem2
 	name = "harem window"
+	desc = "An opaque glass window, it promises delights and opportunities you may never see realized."
 	icon_state = "harem2-solid"
 	base_state = "harem2-solid"
 	opacity = TRUE
@@ -180,12 +188,14 @@
 
 /obj/structure/roguewindow/harem3
 	name = "harem window"
+	desc = "An opaque glass window, the blur of colors and shapes behind it serve as ever more temptation to the mind."
 	icon_state = "harem3-solid"
 	base_state = "harem3-solid"
 	repair_costs = list(/obj/item/natural/glass, /obj/item/natural/glass)
 	
 /obj/structure/roguewindow/harem3/frosted
 	name = "frosted glass window"
+	desc = "A frosted glass window, it obscures the view but focuses the mind on just what could be hiding behind it."
 	opacity = TRUE
 
 /obj/structure/roguewindow/openclose/Initialize(mapload)
@@ -388,9 +398,6 @@
 		repairwindow(W, user)
 	else
 		return ..()
-
-/obj/structure/roguewindow/attack_paw(mob/living/user)
-	attack_hand(user)
 
 /obj/structure/roguewindow/attack_hand(mob/living/user)
 	. = ..()

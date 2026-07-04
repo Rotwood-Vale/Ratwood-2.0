@@ -284,3 +284,30 @@
       verb in the "OOC" panel. It will be saved as a file on your computer.
   RadiantFlash7:
   - code_imp: Admin debug message removed
+2026-06-25:
+  567Turtle:
+  - bugfix: Fixes stripes/tiger stripes markings for real this time.
+  Jamdrawers:
+  - bugfix: fixes keycontrol for the tavern key vendor
+2026-06-26:
+  Xander3359:
+  - rscadd: Refugees can pick minstrel
+2026-06-27:
+  The-Sun-In-Splendour:
+  - spellcheck: ancient alloy warhammer -> ancient warhammer
+2026-06-28:
+  567Turtle:
+  - bugfix: Stripes. . . For the third time !
+  The-Sun-In-Splendour:
+  - bugfix: lacrima's "is dead" check
+2026-06-29:
+  John-Dang:
+  - rscadd: Added new descriptions to the statues! Little bits of flavor! Find them
+      in-game!
+  Xaytan:
+  - refactor: refactored heart on_life
+  - code_imp: added early exit to sleep stamina healing.
+2026-06-30:
+  Xander3359:
+  - balance: Rontz rings no longer show up on examine
+  - qol: Bandit rings now mention in the description that they can be disguised

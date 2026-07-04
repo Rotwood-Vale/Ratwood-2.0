@@ -721,6 +721,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Skirt"
 	path = /obj/item/clothing/under/roguetown/skirt
 
+/datum/loadout_item/sirwal
+	name = "Sirwal"
+	path = /obj/item/clothing/under/roguetown/sirwal
+
 //ACCESSORIES
 /datum/loadout_item/wrappings
 	name = "Handwraps"

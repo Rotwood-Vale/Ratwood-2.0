@@ -7,7 +7,7 @@
 		/datum/surgery_step/extract_lux,
 		/datum/surgery_step/cauterize
 	)
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_CHEST)
 
 /datum/surgery_step/extract_lux
@@ -17,7 +17,7 @@
 		TOOL_IMPROVISED_SCALPEL = 45,
 		TOOL_SHARP = 30,
 	)
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	time = 8 SECONDS
 	surgery_flags = SURGERY_BLOODY | SURGERY_INCISED | SURGERY_CLAMPED | SURGERY_RETRACTED | SURGERY_BROKEN
 	surgery_flags_blocked = SURGERY_CONSTRUCT

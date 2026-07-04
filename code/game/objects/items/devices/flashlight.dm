@@ -145,8 +145,6 @@
 	var/should_self_destruct = TRUE
 	max_integrity = 50
 	fuel = 30 MINUTES
-	light_depth = 0
-	light_height = 0
 	grid_width = 32
 	grid_height = 32
 	metalizer_result = /obj/item/flashlight/flare/torch/lantern

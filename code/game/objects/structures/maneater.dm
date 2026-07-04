@@ -151,31 +151,28 @@
 		name = "grass"
 		icon_state = "maneater-hidden"
 
-/obj/structure/flora/roguegrass/maneater/real/user_unbuckle_mob(mob/living/M, mob/user, break_factor = 1)
-	if(obj_broken)
-		..()
-		return
+/obj/structure/flora/roguegrass/maneater/real/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user, break_factor = 1)
 	if(!isliving(user))
 		return
+	if(obj_broken)
+		return ..()
 
-	var/mob/living/L = user
-	var/time2mount = CLAMP((L.STASTR * 2 * break_factor), 1, 99)
-	if(istype(src, /obj/structure/flora/roguegrass/maneater/real/juvenile))
-		time2mount *= 2
-	user.changeNext_move(CLICK_CD_FAST, override = TRUE)
-	if(user != M)
-		user.visible_message(span_warning("[user] tries to pull [M] free of [src]!"))
+	if(user != buckled_mob)
+		user.visible_message(span_warning("[user] tries to pull [buckled_mob] free of [src]!"))
 	else
 		user.visible_message(span_warning("[user] tries to break free of [src]!"))
 
-	if(do_after(user, 1.5 SECONDS, FALSE, src, TRUE, null, FALSE, TRUE))
-		user.visible_message(span_warning("[M] stops struggling!"))
+	var/time2mount = CLAMP((user.STASTR * 2 * break_factor), 1, 99)
+	if(istype(src, /obj/structure/flora/roguegrass/maneater/real/juvenile))
+		time2mount *= 2
+	if(!do_after(user, 1.5 SECONDS, FALSE, src, TRUE, null, FALSE, TRUE))
+		user.visible_message(span_warning("[buckled_mob] stops struggling!"))
 		return
-	if(!prob(time2mount))
-		user_unbuckle_mob(M, user, break_factor * 1.5)
-	..()
+	if(prob(time2mount))
+		return ..()
+	user_unbuckle_mob(buckled_mob, user, break_factor * 1.5) // Recursive loop that gives you better breakout chance every time
 
-/obj/structure/flora/roguegrass/maneater/real/user_buckle_mob(mob/living/M, mob/living/user) //Don't want them getting put on the rack other than by spiking
+/obj/structure/flora/roguegrass/maneater/real/user_buckle_mob(mob/living/buckled_mob, mob/living/user) //Don't want them getting put on the rack other than by spiking
 	return
 
 /obj/structure/flora/roguegrass/maneater/real/attackby(obj/item/W, mob/user, params)
