@@ -79,6 +79,26 @@
 			return B
 	return null
 
+/datum/component/hag_curio_tracker/proc/remove_boon_instance(datum/hag_boon/B)
+	if(!B || !B.true_name)
+		return FALSE
+
+	var/list/name_list = boon_registry[B.true_name]
+	if(!name_list || !(B in name_list))
+		return FALSE
+
+	name_list -= B
+	qdel(B)
+	if(!length(name_list))
+		boon_registry -= B.true_name
+	return TRUE
+
+/datum/component/hag_curio_tracker/proc/remove_boon_by_type(true_name, typepath)
+	var/datum/hag_boon/B = find_boon_by_type(true_name, typepath)
+	if(!B)
+		return FALSE
+	return remove_boon_instance(B)
+
 /datum/component/hag_curio_tracker/proc/receive_enchanted_item(mob/living/receiver, points = 1)
 	if(!receiver)
 		return FALSE
@@ -149,8 +169,7 @@
 /datum/component/hag_curio_tracker/proc/transmute_boons_to_curse(true_name, list/boons, curse_path, points)
 	var/list/name_list = boon_registry[true_name]
 	for(var/datum/hag_boon/B in boons)
-		name_list -= B
-		qdel(B)
+		remove_boon_instance(B)
 
 	var/datum/hag_boon/curse/C = new curse_path(true_name, src, points)
 	name_list += C

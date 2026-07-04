@@ -88,7 +88,7 @@
 	var/mob/living/L = find_target()
 	if(!L || !status_type)
 		return
-	L.apply_status_effect(status_type, type, tracker, points)
+	L.apply_status_effect(status_type, type, tracker, points, true_name)
 
 /datum/hag_boon/buff/remove_from_target()
 	var/mob/living/L = find_target()
@@ -112,7 +112,7 @@
 	name = "Creeping Moss"
 	desc = "Moss grows on your skin, slowly mending wounds."
 	points = 70
-	status_type = /datum/status_effect/buff/hag_boon/ 
+	status_type = /datum/status_effect/buff/hag_boon/creeping_moss
 
 // ================== CURSES (Buffs with curse flag) ==================
 
@@ -348,7 +348,7 @@
 	var/mob/living/L = find_target()
 	if(!L)
 		return
-	L.apply_status_effect(status_type, type, tracker, points)
+	L.apply_status_effect(status_type, type, tracker, points, true_name)
 
 /datum/hag_boon/curse/remove_from_target()
 	var/mob/living/L = find_target()
@@ -451,13 +451,24 @@
 	var/boon_type
 	var/datum/component/hag_curio_tracker/tracker_ref
 	var/boon_points = 1
+	var/source_true_name
 
-/datum/status_effect/buff/hag_boon/on_creation(mob/living/new_owner, set_boon_type, datum/component/hag_curio_tracker/set_tracker, set_points)
+/datum/status_effect/buff/hag_boon/on_creation(mob/living/new_owner, set_boon_type, datum/component/hag_curio_tracker/set_tracker, set_points, set_true_name)
 	boon_type = set_boon_type
 	tracker_ref = set_tracker
 	if(set_points)
 		boon_points = set_points
+	if(set_true_name)
+		source_true_name = set_true_name
 	return ..()
+
+/datum/status_effect/buff/hag_boon/proc/clear_source_boon()
+	if(!tracker_ref || !boon_type)
+		return FALSE
+	var/lookup_name = source_true_name || owner?.real_name
+	if(!lookup_name)
+		return FALSE
+	return tracker_ref.remove_boon_by_type(lookup_name, boon_type)
 
 
 /datum/status_effect/buff/hag_boon/storm_rebirth
@@ -489,7 +500,8 @@
 	L.revive(full_heal = TRUE, admin_revive = FALSE)
 	L.apply_status_effect(/datum/status_effect/debuff/hag_curse/storm_weakness, boon_type, tracker_ref, 85)
 	to_chat(L, span_boldwarning("The bog drags me back to life, but leaves my body terribly frail."))
-	qdel(src)
+	if(!clear_source_boon())
+		qdel(src)
 
 
 /datum/status_effect/buff/hag_boon/natural_communion
@@ -643,18 +655,29 @@
 	var/boon_type
 	var/datum/component/hag_curio_tracker/tracker_ref
 	var/curse_points = 1
+	var/source_true_name
 
 /atom/movable/screen/alert/status_effect/debuff/hag_curse
 	name = "Hag Curse"
 	desc = "The Mossmother's malice festers in my body."
 	icon_state = "debuff"
 
-/datum/status_effect/debuff/hag_curse/on_creation(mob/living/new_owner, set_boon_type, datum/component/hag_curio_tracker/set_tracker, set_points)
+/datum/status_effect/debuff/hag_curse/on_creation(mob/living/new_owner, set_boon_type, datum/component/hag_curio_tracker/set_tracker, set_points, set_true_name)
 	boon_type = set_boon_type
 	tracker_ref = set_tracker
 	if(set_points)
 		curse_points = set_points
+	if(set_true_name)
+		source_true_name = set_true_name
 	return ..()
+
+/datum/status_effect/debuff/hag_curse/proc/clear_source_boon()
+	if(!tracker_ref || !boon_type)
+		return FALSE
+	var/lookup_name = source_true_name || owner?.real_name
+	if(!lookup_name)
+		return FALSE
+	return tracker_ref.remove_boon_by_type(lookup_name, boon_type)
 
 
 /datum/status_effect/debuff/hag_curse/storm_weakness
@@ -701,4 +724,5 @@
 
 	if(items_rotted >= max_rotted)
 		to_chat(H, span_notice("The rotting curse loosens after devouring enough offerings."))
-		H.remove_status_effect(/datum/status_effect/debuff/hag_curse/rotting_touch)
+		if(!clear_source_boon())
+			H.remove_status_effect(/datum/status_effect/debuff/hag_curse/rotting_touch)
