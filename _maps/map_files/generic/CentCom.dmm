@@ -2119,7 +2119,7 @@
 /area/rogue/outdoors)
 "He" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/decal/remains/human,
+/obj/structure/deadbody/adventurer_steel,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/wretch/graggarena)
 "Hy" = (
@@ -2363,7 +2363,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/ravoxarena)
 "Nh" = (
-/obj/effect/decal/remains/human,
+/obj/structure/deadbody/old_knight,
 /turf/open/water/bloody,
 /area/rogue/under/wretch/graggarena)
 "No" = (
@@ -2626,7 +2626,7 @@
 /turf/open/water/pond,
 /area/rogue/indoors/ravoxarena)
 "Ui" = (
-/obj/effect/decal/remains/human,
+/obj/structure/deadbody/wizard,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/wretch/graggarena)
 "Up" = (
