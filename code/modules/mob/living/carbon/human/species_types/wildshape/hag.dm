@@ -1,3 +1,9 @@
+/proc/is_hag_true_form_allowed_area(area/A)
+	return istype(A, /area/rogue/outdoors/bog) || istype(A, /area/rogue/outdoors/bograt) || istype(A, /area/rogue/outdoors/bogsafe) || istype(A, /area/rogue/indoors/shelter/bog) || istype(A, /area/rogue/indoors/shelter/bog_hag) || istype(A, /area/rogue/indoors/shelter/bog_hag_hut)
+
+/mob/living/carbon/human/proc/start_hag_transform_lockout()
+	COOLDOWN_START(src, hag_transform_lockout, 2 MINUTES)
+
 /datum/status_effect/debuff/hag_bog_tether/wildshape
 	id = "hag_bog_tether"
 	tick_interval = 5 SECONDS
@@ -8,11 +14,8 @@
 		return
 
 	var/area/A = get_area(H)
-	if(!istype(A, /area/rogue/outdoors/bog) && !istype(A, /area/rogue/indoors/shelter/bog) && !istype(A, /area/rogue/indoors/shelter/bog_hag) && !istype(A, /area/rogue/indoors/shelter/bog_hag_hut))
+	if(!is_hag_true_form_allowed_area(A))
 		to_chat(H, span_userdanger("The purity of the air shatters my form!"))
-		var/mob/living/carbon/human/original = H.stored_mob
-		if(original)
-			COOLDOWN_START(original, hag_transform_lockout, 2 MINUTES)
 		H.wildshape_untransform()
 		H.remove_status_effect(/datum/status_effect/debuff/hag_bog_tether/wildshape)
 
@@ -51,6 +54,20 @@
 		AddSpell(new /obj/effect/proc_holder/spell/self/hagclaws)
 		apply_status_effect(/datum/status_effect/debuff/hag_bog_tether/wildshape)
 
+/mob/living/carbon/human/species/wildshape/hag/proc/cleanup_hag_claws()
+	for(var/obj/item/rogueweapon/hag_claw/claw in src)
+		dropItemToGround(claw, TRUE)
+		qdel(claw)
+
+/mob/living/carbon/human/species/wildshape/hag/wildshape_untransform(dead, gibbed)
+	if(stored_mob)
+		var/mob/living/carbon/human/original = stored_mob
+		if(original)
+			original.start_hag_transform_lockout()
+	cleanup_hag_claws()
+	remove_status_effect(/datum/status_effect/debuff/hag_bog_tether/wildshape)
+	return ..()
+
 
 /obj/item/clothing/suit/roguetown/armor/skin_armor/hag_skin
 	slot_flags = null
@@ -80,7 +97,9 @@
 		TRAIT_LONGSTRIDER,
 		TRAIT_KNEESTINGER_IMMUNITY,
 		TRAIT_LEECHIMMUNE,
-		TRAIT_AZURENATIVE
+		TRAIT_AZURENATIVE,
+		TRAIT_NOCSIGHT,
+		TRAIT_DEATHSIGHT
 	)
 	inherent_biotypes = MOB_HUMANOID
 	no_equip = list(SLOT_SHIRT, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_ARMOR, SLOT_GLOVES, SLOT_SHOES, SLOT_PANTS, SLOT_CLOAK, SLOT_BELT, SLOT_BACK_R, SLOT_BACK_L, SLOT_S_STORE)
@@ -114,7 +133,7 @@
 		return FALSE
 
 	var/area/A = get_area(user)
-	if(!istype(A, /area/rogue/outdoors/bog) && !istype(A, /area/rogue/indoors/shelter/bog) && !istype(A, /area/rogue/indoors/shelter/bog_hag) && !istype(A, /area/rogue/indoors/shelter/bog_hag_hut))
+	if(!is_hag_true_form_allowed_area(A))
 		to_chat(user, span_warning("The air here is too pure. I can only reveal my true self within the Terrorbog or my Hut!"))
 		revert_cast(user)
 		return FALSE
