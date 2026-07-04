@@ -237,6 +237,23 @@
 			return L
 	return null
 
+/// Returns TRUE when the named victim has at least one active non-curse boon and no curse scar.
+/datum/component/hag_curio_tracker/proc/has_unscarred_active_boon(true_name)
+	if(!true_name)
+		return FALSE
+	var/list/name_list = boon_registry[true_name]
+	if(!islist(name_list) || !length(name_list))
+		return FALSE
+
+	var/datum/hag_boon/curse_scar/scar = find_boon_by_type(true_name, /datum/hag_boon/curse_scar)
+	if(scar && scar.points > 0)
+		return FALSE
+
+	for(var/datum/hag_boon/B in name_list)
+		if(B && B.hag_is_valid && !B.hag_curse && !istype(B, /datum/hag_boon/curse_scar))
+			return TRUE
+	return FALSE
+
 /datum/component/hag_curio_tracker/proc/can_grant_boon(boon_path)
 	if(!prepared_boons[boon_path] || prepared_boons[boon_path] <= 0)
 		return FALSE
@@ -375,10 +392,7 @@
 		L.visible_message(span_danger("The roots that once sustained [L.name] wither and turn to ash! There is no sanctuary for the hag left."))
 		to_chat(L, span_userdanger("Your connection to the Mossmother's hearts has been severed. This is the end."))
 		playsound(L, 'sound/magic/slimesquish.ogg', 100, TRUE)
-		if(hag_ref)
-			hag_ref.execute_final_spite()
-		else
-			execute_final_spite()
+		execute_final_spite()
 		return
 
 	var/obj/structure/roguemachine/hag_heart/heart = pick(GLOB.hag_hearts)

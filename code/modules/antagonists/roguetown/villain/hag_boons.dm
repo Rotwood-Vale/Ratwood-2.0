@@ -363,7 +363,7 @@
 	status_type = /datum/status_effect/debuff/hag_curse/rotting_touch
 
 /datum/hag_boon/curse/storm_weakness
-	name = "Storm Weakness"
+	name = "Storm-Scarred"
 	desc = "Your soul was dragged back through a lightning storm and your body paid the price."
 	points = 85
 	status_type = /datum/status_effect/debuff/hag_curse/storm_weakness
@@ -811,8 +811,8 @@
 	)
 
 /atom/movable/screen/alert/status_effect/debuff/hag_storm_weakness
-	name = "Storm Weakness"
-	desc = "Rebirth left my body brittle and exhausted."
+	name = "Storm-Scarred"
+	desc = "Your soul was dragged back through a lightning storm. Your physical constitution is shattered."
 	icon_state = "debuff"
 
 

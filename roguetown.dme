@@ -2304,6 +2304,7 @@
 #include "code\modules\mob\living\carbon\human\species_types\wildshape\cabbit.dm"
 #include "code\modules\mob\living\carbon\human\species_types\wildshape\cat.dm"
 #include "code\modules\mob\living\carbon\human\species_types\wildshape\dendormole.dm"
+#include "code\modules\mob\living\carbon\human\species_types\wildshape\hag.dm"
 #include "code\modules\mob\living\carbon\human\species_types\wildshape\mirecrawler.dm"
 #include "code\modules\mob\living\carbon\human\species_types\wildshape\saiga.dm"
 #include "code\modules\mob\living\carbon\human\species_types\wildshape\spider.dm"

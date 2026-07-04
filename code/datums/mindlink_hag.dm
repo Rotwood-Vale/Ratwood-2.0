@@ -1,18 +1,19 @@
-/datum/mindlink/coven
+/datum/mindlink_coven
 	var/list/mob/living/members = list()
+	var/active = TRUE
 
-/datum/mindlink/coven/New(list/mob/living/new_members)
+/datum/mindlink_coven/New(list/mob/living/new_members)
 	src.members = new_members
 	for(var/mob/living/M in members)
-		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_coven_speech))
 
-/datum/mindlink/coven/Destroy()
+/datum/mindlink_coven/Destroy()
 	for(var/mob/living/M in members)
 		UnregisterSignal(M, COMSIG_MOB_SAY)
 	members.Cut()
 	return ..()
 
-/datum/mindlink/coven/proc/handle_speech(mob/living/speaker, list/speech_args)
+/datum/mindlink_coven/proc/handle_coven_speech(mob/living/speaker, list/speech_args)
 	SIGNAL_HANDLER
 
 	var/message = speech_args[SPEECH_MESSAGE]
@@ -40,7 +41,7 @@
 		for(var/mob/living/M in members)
 			if(!M)
 				continue
-			M.playsound_local(M, 'sound/magic/mindlink.ogg', 75, TRUE)
+			M.playsound_local(M, 'sound/magic/message.ogg', 75, TRUE)
 			if(M == speaker)
 				to_chat(M, span_purple("My voice threads through the coven web: \"[radio_message]\""))
 			else

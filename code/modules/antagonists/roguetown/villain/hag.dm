@@ -130,6 +130,7 @@
 	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/transmutation_rite)
 	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/spiritual_siphon)
 	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/grant_boon)
+	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/self/wildshape/hag_true_form)
 	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/resurrect/hag)
 	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mindlink/hag)
 	teach_hag_recipes(hag_body.mind)
@@ -149,6 +150,7 @@
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/transmutation_rite)
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/spiritual_siphon)
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/grant_boon)
+	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/wildshape/hag_true_form)
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/resurrect/hag)
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/mindlink/hag)
 	hag_body.verbs -= /mob/living/carbon/human/proc/commune_with_roots
@@ -363,8 +365,8 @@
 		return FALSE
 
 	user.visible_message(span_notice("[user] seals a sinister pact with [target]."), span_notice("I bind [target] to my pact with a sliver of bog-magic."))
-	to_chat(target, span_userdanger("The pact settles into my flesh. Bog leeches will shun me, and I can speak to the hag with ,m."))
-	to_chat(user, span_notice("[target] is now bound to my pact. I can speak to them with ,m."))
+	to_chat(target, span_userdanger("The pact settles into my flesh. Bog leeches will shun me. We may now speak along the coven thread with ,y (and sever with ,mst)."))
+	to_chat(user, span_notice("[target] is now bound to my pact. We may now speak along the coven thread with ,y."))
 	return TRUE
 
 /datum/antagonist/hag/proc/transmute_to_curse(datum/mind/follower, curse_path, points)
@@ -421,7 +423,13 @@
 
 /// Called on the hag's permanent death. Lifts curses from scarred followers and applies final spite to unblemished pact-bearers.
 /datum/antagonist/hag/proc/execute_final_spite()
-	// Cursed followers have already paid the price — lift their curses as the hag's power fades.
+	if(owner?.current)
+		var/datum/component/hag_curio_tracker/H = owner.current.GetComponent(/datum/component/hag_curio_tracker)
+		if(H)
+			H.execute_final_spite()
+			return
+
+	// Fallback for legacy states where no tracker component is present.
 	for(var/datum/mind/follower in cursed_followers)
 		var/mob/living/victim = follower.current
 		if(victim)
@@ -432,28 +440,6 @@
 				C.remove_curse()
 				qdel(C)
 		active_curses -= follower
-
-	// Bound followers enjoyed boons but were never truly claimed. The hag's dying breath claims them now.
-	var/list/valid_curses = list()
-	for(var/path in curse_registry)
-		var/list/details = curse_registry[path]
-		if(details["cost"] > 10)
-			valid_curses += path
-
-	for(var/datum/mind/follower in bound_followers)
-		var/mob/living/victim = follower.current
-		if(!victim)
-			continue
-		to_chat(victim, span_userdanger("With her dying breath, the Hag weaves a final, spiteful knot into your soul!"))
-		if(!length(valid_curses))
-			continue
-		// Apply 2 random curses — matching Azure Peak's final spite behaviour
-		for(var/i in 1 to 2)
-			var/curse_path = pick(valid_curses)
-			var/datum/hag_curse/curse = new curse_path(follower, 100)
-			if(!active_curses[follower])
-				active_curses[follower] = list()
-			active_curses[follower] += curse
 
 /datum/antagonist/hag/proc/get_available_curses()
 	var/list/data = list()
@@ -948,7 +934,7 @@
 				break
 		if(found_mob)
 			var/already_linked = FALSE
-			for(var/datum/mindlink/coven/ML in GLOB.mindlinks)
+			for(var/datum/mindlink_coven/ML in GLOB.mindlinks)
 				if(found_mob in ML.members)
 					already_linked = TRUE
 					break
@@ -966,7 +952,7 @@
 		revert_cast()
 		return FALSE
 
-	var/datum/mindlink/coven/C = new(coven_members)
+	var/datum/mindlink_coven/C = new(coven_members)
 	GLOB.mindlinks += C
 
 	var/list/names = list()
@@ -979,7 +965,7 @@
 	addtimer(CALLBACK(src, PROC_REF(break_coven), C), link_duration)
 	return TRUE
 
-/obj/effect/proc_holder/spell/invoked/mindlink/hag/proc/break_coven(datum/mindlink/coven/C)
+/obj/effect/proc_holder/spell/invoked/mindlink/hag/proc/break_coven(datum/mindlink_coven/C)
 	if(!C)
 		return
 	for(var/mob/living/M in C.members)

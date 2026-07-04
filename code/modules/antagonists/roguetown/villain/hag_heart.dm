@@ -182,12 +182,11 @@
 			continue
 		if(H.mind.has_antag_datum(/datum/antagonist/hag))
 			continue
-		// Active pact-bearers with NO curse are allies — spare them
-		if(H.mind in bound_hag.bound_followers)
+		// Active boon-bearers with no scar are allies and are spared.
+		if(HCT.has_unscarred_active_boon(H.real_name))
 			continue
-		bound_hag.active_curses[H.mind] ||= list()
-		var/datum/hag_curse/curse = new chosen_rite.curse_path(H.mind, 100)
-		bound_hag.active_curses[H.mind] += curse
+		if(!HCT.find_boon_by_type(H.real_name, chosen_rite.curse_boon_path))
+			HCT.grant_boon(H.real_name, chosen_rite.curse_boon_path, 100)
 		to_chat(H, span_userdanger("The world screams in agony. You are now afflicted by [chosen_rite.name]!"))
 
 /// HAG RITE DATUMS
@@ -195,19 +194,19 @@
 /datum/hag_rite
 	var/name = "Generic Rite"
 	var/desc = "A dark ritual."
-	var/curse_path = /datum/hag_curse/unseemly
+	var/curse_boon_path = /datum/hag_boon/trait/curse/ugly
 
 /datum/hag_rite/blighted_earth
 	name = "The Rite of Blighted Earth"
 	desc = "The bog's rot seeps into the legs of all mortals, leaving them shuffling through the world like the dead."
-	curse_path = /datum/hag_curse/no_run
+	curse_boon_path = /datum/hag_boon/trait/curse/no_run
 
 /datum/hag_rite/unveiled_ugliness
 	name = "The Rite of Unveiled Ugliness"
 	desc = "The veil of vanity is stripped away, leaving all mortals grotesque to behold."
-	curse_path = /datum/hag_curse/unseemly
+	curse_boon_path = /datum/hag_boon/trait/curse/ugly
 
 /datum/hag_rite/silent_world
 	name = "The Rite of the Silent World"
 	desc = "The Mossmother steals every tongue. No voice will carry until her spite is sated."
-	curse_path = /datum/hag_curse/mute
+	curse_boon_path = /datum/hag_boon/trait/curse/mute

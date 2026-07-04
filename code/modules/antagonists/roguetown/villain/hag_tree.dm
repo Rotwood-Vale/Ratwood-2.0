@@ -55,10 +55,18 @@
 		user.visible_message(span_notice("[user] pours [W] over the roots of [src]."), \
 			span_boldnotice("You feed the heartroot. The ground trembles as the Lux is absorbed."))
 		qdel(W)
+		check_fey_ascension(user)
 		notify_hag_lux_fed(user, is_impure)
 		cooldown_until = world.time + (is_impure ? 90 SECONDS : 120 SECONDS)
 		return
 	return ..()
+
+/// Feytouched mortals become root-walkers after feeding the network for the first time.
+/obj/structure/roguemachine/mossmother/travel/proc/check_fey_ascension(mob/living/user)
+	if(HAS_TRAIT(user, TRAIT_FEYTOUCHED) && !HAS_TRAIT(user, TRAIT_ROOT_WALKER))
+		ADD_TRAIT(user, TRAIT_ROOT_WALKER, "hag_roots")
+		to_chat(user, span_userdanger("As the Lux flows, the roots under your feet soften. You feel the map of the bog etched into your mind. You can now walk the deep paths."))
+		playsound(src, 'sound/magic/ahh1.ogg', 50, TRUE)
 
 /// Notifies all active hags that a tree was fed with lux, including the feeder's name and area.
 /obj/structure/roguemachine/mossmother/travel/proc/notify_hag_lux_fed(mob/living/feeder, is_impure = FALSE, alert_cooldown = 20 SECONDS)
@@ -81,18 +89,19 @@
 	var/datum/antagonist/hag/hag_datum = user?.mind?.has_antag_datum(/datum/antagonist/hag)
 	var/is_hag = !!hag_datum
 	var/is_scarred = HAS_TRAIT(user, TRAIT_CURSE_SCAR)
+	var/is_rootwalker = HAS_TRAIT(user, TRAIT_ROOT_WALKER)
 
 	if(is_hag)
 		var/datum/component/hag_curio_tracker/tracker = user.GetComponent(/datum/component/hag_curio_tracker)
 		if(tracker && !tracker.hag_teleport_check())
 			to_chat(user, span_warning("Your soul is still too frayed from your last return to walk the deep roots. Wait a bit longer..."))
 			return
-	else if(!is_scarred && length(GLOB.hag_wards))
+	else if(!is_scarred && !is_rootwalker && length(GLOB.hag_wards))
 		to_chat(user, span_warning("The roots refuse you. You bear no mark the Mossmother recognises."))
 		return
 
 	// Plain mortals only get the hut in/out shortcut once wards are gone.
-	if(!is_hag && !is_scarred)
+	if(!is_hag && !is_scarred && !is_rootwalker)
 		if(length(GLOB.hag_wards))
 			to_chat(user, span_warning("The roots twist away from your touch."))
 			return
