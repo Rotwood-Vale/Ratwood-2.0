@@ -99,19 +99,19 @@
 /datum/hag_boon/buff/storm_rebirth
 	name = "Storm Rebirth"
 	desc = "Resilience in the face of adversity. You always come back."
-	points = 75
+	points = 65
 	status_type = /datum/status_effect/buff/hag_boon/storm_rebirth
 
 /datum/hag_boon/buff/natural_communion
 	name = "Natural Communion"
 	desc = "Communicate with nature itself. The forest accepts you."
-	points = 65
+	points = 40
 	status_type = /datum/status_effect/buff/hag_boon/natural_communion
 
 /datum/hag_boon/buff/creeping_moss
 	name = "Creeping Moss"
 	desc = "Moss grows on your skin, slowly mending wounds."
-	points = 70
+	points = 40
 	status_type = /datum/status_effect/buff/hag_boon/creeping_moss
 
 // ================== CURSES (Buffs with curse flag) ==================
@@ -130,13 +130,13 @@
 /datum/hag_boon/buff/curse/waterlogged
 	name = "Waterlogged"
 	desc = "Your lungs fill with water, yet you do not drown. You are bound to the bogs."
-	points = 55
+	points = 25
 	status_type = /datum/status_effect/curse/waterlogged
 
 /datum/hag_boon/buff/curse/slumber
 	name = "Cursed Slumber"
 	desc = "Sleep calls to you, incessant and hungry."
-	points = 50
+	points = 20
 	status_type = /datum/status_effect/curse/hag_slumber
 
 // ================== TRAITS ==================
@@ -498,6 +498,9 @@
 
 	L.grab_ghost(force = TRUE)
 	L.revive(full_heal = TRUE, admin_revive = FALSE)
+	if(L.mind)
+		L.mind.remove_antag_datum(/datum/antagonist/zombie)
+	L.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)
 	L.apply_status_effect(/datum/status_effect/debuff/hag_curse/storm_weakness, boon_type, tracker_ref, 85)
 	to_chat(L, span_boldwarning("The bog drags me back to life, but leaves my body terribly frail."))
 	if(!clear_source_boon())
@@ -608,7 +611,7 @@
 	id = "hag_waterlogged"
 	alert_type = /atom/movable/screen/alert/status_effect/curse/waterlogged
 	duration = -1
-	tick_interval = 3 SECONDS
+	tick_interval = 2 SECONDS
 
 /atom/movable/screen/alert/status_effect/curse/waterlogged
 	name = "Waterlogged"
@@ -616,13 +619,20 @@
 	icon_state = "debuff"
 
 /datum/status_effect/curse/waterlogged/tick()
-	if(!owner)
+	if(!ishuman(owner))
 		return
-	var/turf/T = get_turf(owner)
+	var/mob/living/carbon/human/H = owner
+	var/turf/T = get_turf(H)
 	if(!istype(T, /turf/open/water))
 		return
-	owner.adjustOxyLoss(2)
-	owner.adjustStaminaLoss(4, FALSE)
+
+	if(H.stat != DEAD)
+		var/stam_drain = 10
+		if(!H.stamina_add(stam_drain) && (H.mobility_flags & MOBILITY_STAND))
+			to_chat(H, span_userdanger("The murky depths claim my footing!"))
+			H.Knockdown(30)
+		if(!(H.mobility_flags & MOBILITY_STAND))
+			H.adjustOxyLoss(6)
 
 
 /datum/status_effect/curse/hag_slumber
@@ -683,10 +693,9 @@
 /datum/status_effect/debuff/hag_curse/storm_weakness
 	id = "hag_storm_weakness"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/hag_storm_weakness
+	needs_processing = FALSE
 	effectedstats = list(
-		STATKEY_STR = -2,
-		STATKEY_CON = -2,
-		STATKEY_SPD = -1,
+		STATKEY_CON = -5,
 	)
 
 /atom/movable/screen/alert/status_effect/debuff/hag_storm_weakness
@@ -699,8 +708,6 @@
 	id = "hag_rotting_touch"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/hag_rotting_touch
 	tick_interval = 2 SECONDS
-	var/items_rotted = 0
-	var/max_rotted = 3
 
 /atom/movable/screen/alert/status_effect/debuff/hag_rotting_touch
 	name = "Rotting Touch"
@@ -714,15 +721,15 @@
 	if(!istype(H))
 		return
 
-	var/obj/item/I = H.get_active_held_item()
-	if(!istype(I, /obj/item/reagent_containers/food/snacks))
+	var/obj/item/reagent_containers/food/snacks/food = H.get_active_held_item()
+	if(!istype(food))
 		return
 
-	to_chat(H, span_warning("[I] blackens and rots apart in my grasp!"))
-	qdel(I)
-	items_rotted++
+	food.become_rotten()
+	to_chat(H, span_warning("[food] putrefies in my grasp!"))
+	curse_points--
 
-	if(items_rotted >= max_rotted)
-		to_chat(H, span_notice("The rotting curse loosens after devouring enough offerings."))
+	if(curse_points <= 0)
+		to_chat(H, span_notice("The oily, putrid sensation in my hands finally fades."))
 		if(!clear_source_boon())
 			H.remove_status_effect(/datum/status_effect/debuff/hag_curse/rotting_touch)
