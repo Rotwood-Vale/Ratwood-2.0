@@ -78,7 +78,7 @@ export const HagTransmutation = () => {
                           selected={boon.selected}
                           onClick={() => act('toggle_boon', { id: boon.id, victim_name: victim.name })}
                         >
-                          {boon.name} (Boon strength: {boon.points})
+                          {boon.name} {boon.transmutable ? `(Boon strength: ${boon.points})` : '(Active Curse)'}
                         </Button>
                       ))
                     ) : (
@@ -153,7 +153,7 @@ export const HagTransmutation = () => {
           <Button
             fluid
             color="bad"
-            disabled={hasVictimMode ? !selected_curse : (!selected_follower || !selected_curse)}
+            disabled={hasVictimMode ? (!selected_curse || !summary_power) : (!selected_follower || !selected_curse)}
             onClick={() => act(hasVictimMode ? 'commit_transmutation' : 'commit_transmute')}
           >
             Transmute

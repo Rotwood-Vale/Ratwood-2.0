@@ -167,9 +167,30 @@
 	return data
 
 /datum/component/hag_curio_tracker/proc/transmute_boons_to_curse(true_name, list/boons, curse_path, points)
-	var/list/name_list = boon_registry[true_name]
+	if(!true_name || !ispath(curse_path, /datum/hag_boon) || !length(boons))
+		return FALSE
+	var/datum/hag_boon/curse_template = curse_path
+	if(!initial(curse_template.hag_curse))
+		return FALSE
+	var/list/curse_details = curse_registry[curse_path]
+	if(!islist(curse_details) || curse_details["min_tier"] > hag_tier)
+		return FALSE
+	if(find_boon_by_type(true_name, curse_path))
+		return FALSE
+
+	var/list/eligible_boons = list()
 	for(var/datum/hag_boon/B in boons)
+		if(B && B.true_name == true_name && B.transmutable && !B.hag_curse)
+			eligible_boons += B
+	if(!length(eligible_boons))
+		return FALSE
+
+	for(var/datum/hag_boon/B in eligible_boons)
 		remove_boon_instance(B)
+
+	if(!boon_registry[true_name])
+		boon_registry[true_name] = list()
+	var/list/name_list = boon_registry[true_name]
 
 	var/datum/hag_boon/curse/C = new curse_path(true_name, src, points)
 	name_list += C
@@ -184,6 +205,7 @@
 		scar = new /datum/hag_boon/curse_scar(true_name, src, points)
 		name_list += scar
 	check_tier_upgrade()
+	return TRUE
 
 /datum/component/hag_curio_tracker/proc/check_tier_upgrade()
 	var/scar_60_count = 0
@@ -269,7 +291,7 @@
 
 	if(boon_registry[name_to_check])
 		for(var/datum/hag_boon/B in boon_registry[name_to_check])
-			if(!B.hag_is_valid || !B.hag_curse)
+			if(!B.hag_is_valid || (!B.hag_curse && !istype(B, /datum/hag_boon/curse_scar)))
 				continue
 			current_total_points += B.points
 			if(B.hag_trait)
@@ -379,9 +401,18 @@
 
 /// Called on final hag death to resolve all registered pacts.
 /datum/component/hag_curio_tracker/proc/execute_final_spite()
-	for(var/t_name in boon_registry)
+	var/list/valid_curses = list()
+	for(var/path in curse_registry)
+		var/list/details = curse_registry[path]
+		if(details["cost"] > 10)
+			valid_curses += path
+
+	var/list/registry_snapshot = boon_registry.Copy()
+	for(var/t_name in registry_snapshot)
 		var/datum/hag_boon/curse_scar/S = find_boon_by_type(t_name, /datum/hag_boon/curse_scar)
 		var/list/name_list = boon_registry[t_name]
+		if(!islist(name_list))
+			continue
 
 		if(S && S.points > 10)
 			var/mob/living/L = find_target(t_name)
@@ -396,14 +427,15 @@
 			if(!victim)
 				continue
 			to_chat(victim, span_userdanger("With her dying breath, the Hag weaves a final, spiteful knot into your soul!"))
-			var/list/valid_curses = list()
-			for(var/path in curse_registry)
-				var/list/details = curse_registry[path]
-				if(details["cost"] > 10)
-					valid_curses += path
-
 			if(!length(valid_curses))
 				continue
-			for(var/i in 1 to 2)
-				var/curse_path = pick(valid_curses)
+			var/list/curse_pool = list()
+			for(var/curse_path in valid_curses)
+				if(!find_boon_by_type(t_name, curse_path))
+					curse_pool += curse_path
+			if(!length(curse_pool))
+				continue
+			for(var/i in 1 to min(2, length(curse_pool)))
+				var/curse_path = pick(curse_pool)
+				curse_pool -= curse_path
 				grant_boon(t_name, curse_path, 100)

@@ -458,6 +458,7 @@
 	var/datum/component/hag_curio_tracker/tracker_ref
 	var/boon_points = 1
 	var/source_true_name
+	var/suppress_tracker_cleanup = FALSE
 
 /datum/status_effect/buff/hag_boon/on_creation(mob/living/new_owner, set_boon_type, datum/component/hag_curio_tracker/set_tracker, set_points, set_true_name)
 	boon_type = set_boon_type
@@ -474,7 +475,17 @@
 	var/lookup_name = source_true_name || owner?.real_name
 	if(!lookup_name)
 		return FALSE
-	return tracker_ref.remove_boon_by_type(lookup_name, boon_type)
+	if(tracker_ref.remove_boon_by_type(lookup_name, boon_type))
+		suppress_tracker_cleanup = TRUE
+		return TRUE
+	return FALSE
+
+/datum/status_effect/buff/hag_boon/on_remove()
+	if(!suppress_tracker_cleanup && tracker_ref && owner)
+		var/lookup_name = source_true_name || owner.real_name
+		if(lookup_name)
+			tracker_ref.remove_boon_by_type(lookup_name, boon_type)
+	return ..()
 
 
 /datum/status_effect/buff/hag_boon/storm_rebirth
@@ -523,7 +534,7 @@
 		if(source_boon)
 			tracker_ref.transmute_boons_to_curse(lookup_name, list(source_boon), /datum/hag_boon/curse/storm_weakness, 85)
 		else
-			L.apply_status_effect(/datum/status_effect/debuff/hag_curse/storm_weakness, boon_type, tracker_ref, 85, lookup_name)
+			tracker_ref.grant_boon(lookup_name, /datum/hag_boon/curse/storm_weakness, 85)
 	else
 		L.apply_status_effect(/datum/status_effect/debuff/hag_curse/storm_weakness, boon_type, tracker_ref, 85, lookup_name)
 
@@ -665,11 +676,16 @@
 	alert_type = /atom/movable/screen/alert/status_effect/curse/waterlogged
 	duration = -1
 	tick_interval = 2 SECONDS
+	var/next_fall_warning = 0
 
 /atom/movable/screen/alert/status_effect/curse/waterlogged
 	name = "Waterlogged"
 	desc = "Water drags at my limbs and worms its way into my lungs."
 	icon_state = "debuff"
+
+/datum/status_effect/curse/waterlogged/on_apply()
+	next_fall_warning = world.time
+	return ..()
 
 /datum/status_effect/curse/waterlogged/tick()
 	if(!ishuman(owner))
@@ -682,7 +698,9 @@
 	if(H.stat != DEAD)
 		var/stam_drain = 10
 		if(!H.stamina_add(stam_drain) && (H.mobility_flags & MOBILITY_STAND))
-			to_chat(H, span_userdanger("The murky depths claim my footing!"))
+			if(world.time >= next_fall_warning)
+				next_fall_warning = world.time + 10 SECONDS
+				to_chat(H, span_userdanger("The murky depths claim my footing!"))
 			H.Knockdown(30)
 		if(!(H.mobility_flags & MOBILITY_STAND))
 			H.adjustOxyLoss(6)
@@ -693,11 +711,16 @@
 	alert_type = /atom/movable/screen/alert/status_effect/curse/hag_slumber
 	duration = -1
 	tick_interval = 1 MINUTES
+	var/dream_drag_armed = FALSE
 
 /atom/movable/screen/alert/status_effect/curse/hag_slumber
 	name = "Cursed Slumber"
 	desc = "Natural sleep evades me, but the dream drags at my soul."
 	icon_state = "debuff"
+
+/datum/status_effect/curse/hag_slumber/on_apply()
+	dream_drag_armed = FALSE
+	return ..()
 
 /datum/status_effect/curse/hag_slumber/tick()
 	if(!ishuman(owner) || owner.stat == DEAD)
@@ -705,6 +728,9 @@
 
 	var/mob/living/carbon/human/H = owner
 	if(H.has_status_effect(/datum/status_effect/debuff/sleepytime))
+		if(dream_drag_armed)
+			return
+		dream_drag_armed = TRUE
 		addtimer(CALLBACK(src, PROC_REF(clear_standard_sleep)), 5 SECONDS)
 		to_chat(H, span_warning("My exhaustion fades... replaced by a cold, heavy pressure behind my eyes."))
 		addtimer(CALLBACK(src, PROC_REF(force_dream_drag)), 1 MINUTES)
@@ -722,6 +748,7 @@
 
 /datum/status_effect/curse/hag_slumber/proc/force_dream_drag()
 	var/mob/living/carbon/human/H = owner
+	dream_drag_armed = FALSE
 	if(!H || H.stat == DEAD)
 		return
 
@@ -759,11 +786,13 @@
 /datum/status_effect/debuff/hag_curse/proc/clear_source_boon()
 	if(!tracker_ref || !boon_type)
 		return FALSE
-	suppress_tracker_cleanup = TRUE
 	var/lookup_name = source_true_name || owner?.real_name
 	if(!lookup_name)
 		return FALSE
-	return tracker_ref.remove_boon_by_type(lookup_name, boon_type)
+	if(tracker_ref.remove_boon_by_type(lookup_name, boon_type))
+		suppress_tracker_cleanup = TRUE
+		return TRUE
+	return FALSE
 
 /datum/status_effect/debuff/hag_curse/on_remove()
 	if(!suppress_tracker_cleanup && tracker_ref && owner)
@@ -790,29 +819,55 @@
 /datum/status_effect/debuff/hag_curse/rotting_touch
 	id = "hag_rotting_touch"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/hag_rotting_touch
-	tick_interval = 2 SECONDS
+	needs_processing = FALSE
 
 /atom/movable/screen/alert/status_effect/debuff/hag_rotting_touch
 	name = "Rotting Touch"
 	desc = "Food decays to filth in my hands."
 	icon_state = "debuff"
 
-/datum/status_effect/debuff/hag_curse/rotting_touch/tick()
-	if(!owner || owner.stat == DEAD)
+/datum/status_effect/debuff/hag_curse/rotting_touch/on_apply()
+	if(!..())
+		return FALSE
+	RegisterSignal(owner, COMSIG_ITEM_EQUIPPED, PROC_REF(handle_touch))
+	return TRUE
+
+/datum/status_effect/debuff/hag_curse/rotting_touch/on_remove()
+	UnregisterSignal(owner, COMSIG_ITEM_EQUIPPED)
+	return ..()
+
+/datum/status_effect/debuff/hag_curse/rotting_touch/proc/handle_touch(datum/source, obj/item/I, slot)
+	SIGNAL_HANDLER
+	if(!owner || owner.stat == DEAD || !(slot & ITEM_SLOT_HANDS))
 		return
+
 	var/mob/living/carbon/human/H = owner
 	if(!istype(H))
 		return
 
-	var/obj/item/reagent_containers/food/snacks/food = H.get_active_held_item()
+	var/obj/item/reagent_containers/food/snacks/food = I
 	if(!istype(food))
 		return
 
-	food.become_rotten()
-	to_chat(H, span_warning("[food] putrefies in my grasp!"))
+	if(food.eat_effect == /datum/status_effect/debuff/rotfood)
+		return
+
+	to_chat(H, span_warning("Your touch withers [food] instantly!"))
+
+	if(food.become_rot_type)
+		var/obj/item/reagent_containers/food/snacks/rotten_food = new food.become_rot_type(food.loc)
+		if(food.reagents && rotten_food?.reagents)
+			food.reagents.trans_to(rotten_food.reagents, food.reagents.maximum_volume)
+		H.dropItemToGround(food, TRUE, TRUE)
+		rotten_food.forceMove(get_turf(H))
+		qdel(food)
+	else
+		food.become_rotten()
+
 	curse_points--
 
 	if(curse_points <= 0)
 		to_chat(H, span_notice("The oily, putrid sensation in my hands finally fades."))
+		UnregisterSignal(owner, COMSIG_ITEM_EQUIPPED)
 		if(!clear_source_boon())
 			H.remove_status_effect(/datum/status_effect/debuff/hag_curse/rotting_touch)

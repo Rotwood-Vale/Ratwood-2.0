@@ -840,28 +840,52 @@
 			if(!active_victim_name || !selected_curse_path || !selected_boons.len)
 				return TRUE
 
-			var/summary_power = calculate_current_points()
+			var/list/consumable_boons = list()
+			for(var/datum/hag_boon/B in selected_boons)
+				if(B && B.true_name == active_victim_name && B.transmutable && !B.hag_curse)
+					consumable_boons += B
+			if(!length(consumable_boons))
+				to_chat(user, span_warning("Only transmutable blessings from this soul can be bound into a blight."))
+				return TRUE
+
+			var/curse_path = text2path(selected_curse_path)
+			var/datum/hag_boon/selected_curse = curse_path
+			if(!ispath(curse_path, /datum/hag_boon) || !initial(selected_curse.hag_curse))
+				to_chat(user, span_warning("That transmutation target is invalid. Choose a curse from the rite list."))
+				return TRUE
+			if(H.find_boon_by_type(active_victim_name, curse_path))
+				to_chat(user, span_warning("That blight already festers in this soul. Choose a different curse."))
+				return TRUE
+
+			var/summary_power = calculate_current_points(consumable_boons)
 			var/curse_cost = 999
+			var/curse_available = FALSE
 			var/list/curses = H.get_available_curses_data()
 			for(var/list/C in curses)
 				if(C["path"] == selected_curse_path)
+					curse_available = TRUE
 					curse_cost = C["cost"]
 					break
+			if(!curse_available)
+				to_chat(user, span_warning("That blight is not available to your current circle."))
+				return TRUE
 
 			if(summary_power < curse_cost)
 				to_chat(user, span_warning("The soul-tithe is insufficient. You require [curse_cost] curse strength, but have only gathered [summary_power] summary power."))
 				return TRUE
 
-			H.transmute_boons_to_curse(active_victim_name, selected_boons, text2path(selected_curse_path), summary_power)
+			if(!H.transmute_boons_to_curse(active_victim_name, consumable_boons, curse_path, summary_power))
+				to_chat(user, span_warning("The rite sputters and fails. The chosen blight cannot be bound this way."))
+				return TRUE
 			selected_boons.Cut()
 			selected_curse_path = null
 			active_victim_name = null
 			return TRUE
 	return .
 
-/obj/effect/proc_holder/spell/invoked/transmutation_rite/proc/calculate_current_points()
+/obj/effect/proc_holder/spell/invoked/transmutation_rite/proc/calculate_current_points(list/boons = selected_boons)
 	var/points = 0
-	for(var/datum/hag_boon/B in selected_boons)
+	for(var/datum/hag_boon/B in boons)
 		points += B.points
 	return points
 
@@ -898,21 +922,21 @@
 
 /obj/effect/proc_holder/spell/invoked/mindlink/hag
 	name = "Coven Link"
-	desc = "Weave selected minds into your web. Linked minds communicate via ,m."
+	desc = "Weave selected minds into your web. Linked minds communicate via ,y and can sever the web with ,mst."
 	recharge_time = 4 MINUTES
 	cost = 12
 	var/link_duration = 20 MINUTES
 
 /obj/effect/proc_holder/spell/invoked/mindlink/hag/cast(list/targets, mob/living/user)
 	var/list/possible = user.mind.known_people.Copy()
+	var/list/mob/living/carbon/human/coven_members = list(user)
 	if(!possible.len)
 		to_chat(user, span_warning("I have no puppets to bind to my web."))
 		revert_cast()
 		return FALSE
 
-	var/list/mob/living/carbon/human/selected = list()
-	for(var/i in 1 to 5)
-		var/prompt = "Choose member #[i] to bind (Cancel to finalize)"
+	for(var/i in 1 to 3)
+		var/prompt = "Choose member #[i] to bind (Cancel to finalize coven with [coven_members.len] members)"
 		var/target_name = tgui_input_list(user, prompt, "Coven Link", sort_list(possible))
 		if(!target_name)
 			break
@@ -923,43 +947,46 @@
 				found_mob = HL
 				break
 		if(found_mob)
-			selected += found_mob
+			var/already_linked = FALSE
+			for(var/datum/mindlink/coven/ML in GLOB.mindlinks)
+				if(found_mob in ML.members)
+					already_linked = TRUE
+					break
+			if(already_linked)
+				to_chat(user, span_warning("[found_mob.real_name]'s mind is already bound by another thread! I cannot reach them."))
+				continue
+
+			coven_members += found_mob
 			possible -= target_name
 		if(!possible.len)
 			break
 
-	if(!selected.len)
+	if(coven_members.len < 2)
 		to_chat(user, span_warning("A coven of one is just a lonely old woman. I need at least one other."))
 		revert_cast()
 		return FALSE
 
-	var/list/active_links = list()
-	for(var/mob/living/carbon/human/M in selected)
-		var/datum/mindlink/link = new(user, M)
-		GLOB.mindlinks += link
-		active_links += link
+	var/datum/mindlink/coven/C = new(coven_members)
+	GLOB.mindlinks += C
 
-	var/list/names = list(user.real_name)
-	for(var/mob/living/M in selected)
+	var/list/names = list()
+	for(var/mob/living/M in coven_members)
 		names += M.real_name
 	var/roster = names.Join(", ")
-	to_chat(user, span_boldnotice("The Coven is formed! Linked minds: [roster]. Use ,m to speak."))
-	for(var/mob/living/M in selected)
-		to_chat(M, span_boldnotice("The Coven is formed! Linked minds: [roster]. Use ,m to speak."))
+	for(var/mob/living/M in coven_members)
+		to_chat(M, span_boldnotice("The Coven is formed! Linked minds: [roster]. Use ,y to speak."))
 
-	addtimer(CALLBACK(src, PROC_REF(break_coven), active_links), link_duration)
+	addtimer(CALLBACK(src, PROC_REF(break_coven), C), link_duration)
 	return TRUE
 
-/obj/effect/proc_holder/spell/invoked/mindlink/hag/proc/break_coven(list/links)
-	for(var/datum/mindlink/L in links)
-		if(!L)
-			continue
-		if(L.owner)
-			to_chat(L.owner, span_warning("The coven web snaps and withers..."))
-		if(L.target)
-			to_chat(L.target, span_warning("The coven web snaps and withers..."))
-		GLOB.mindlinks -= L
-		qdel(L)
+/obj/effect/proc_holder/spell/invoked/mindlink/hag/proc/break_coven(datum/mindlink/coven/C)
+	if(!C)
+		return
+	for(var/mob/living/M in C.members)
+		if(M)
+			to_chat(M, span_warning("The coven web snaps and withers..."))
+	GLOB.mindlinks -= C
+	qdel(C)
 
 
 /mob/living/carbon/human/proc/commune_with_roots()
