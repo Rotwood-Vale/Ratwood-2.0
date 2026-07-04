@@ -78,3 +78,27 @@
 	name = "媚药瓶"
 	desc = "一瓶预装的媚药，气息暧昧，饮下会强烈催情。"
 	list_reagents = list(/datum/reagent/forced_estrus_aphrodisiac = 50)
+
+// 防腐药水：泼洒 / 施用于物品或尸体以防止腐坏。
+/obj/item/reagent_containers/glass/bottle/rogue/anticorruption
+	name = "防腐药水瓶"
+	desc = "一瓶预装的防腐药水，施于食物或尸体可延缓其腐坏。"
+	list_reagents = list(/datum/reagent/anticorruption_potion = 50)                // 预装 50 单位（与其它药水瓶一致）。
+
+// 硬化药剂：短时减免受到的钝击伤害。
+/obj/item/reagent_containers/glass/bottle/rogue/hardened_potion
+	name = "硬化药剂瓶"
+	desc = "一瓶预装的硬化药剂，饮下可在一段时间内减免钝击伤害。"
+	list_reagents = list(/datum/reagent/medicine/hardened_potion = 50)            // 硬化药剂继承自 medicine 分支。
+
+// 防蚂蟥药水：短时令水蛭无法附身吸血。
+/obj/item/reagent_containers/glass/bottle/rogue/anti_leech
+	name = "防蚂蟥药水瓶"
+	desc = "一瓶预装的防蚂蟥药水，饮下可在一段时间内令水蛭无法附身吸血。"
+	list_reagents = list(/datum/reagent/anti_leech_potion = 50)
+
+// 身体再生药剂：饮用并消化满 10 单位后再生已失去的四肢。此处预装 50 单位，足量触发再生。
+/obj/item/reagent_containers/glass/bottle/rogue/bodily_regeneration
+	name = "身体再生药剂瓶"
+	desc = "一瓶预装的身体再生药剂，饮下足量并待其消化后可重新长出失去的肢体。"
+	list_reagents = list(/datum/reagent/bodily_regeneration_potion = 50)          // 50 >= 10 的生效阈值，管理员测试即取即用。
