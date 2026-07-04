@@ -252,7 +252,6 @@
 	)
 	loot_table_lucky = list(
 		/obj/item/book/granter/spell/blackstone/skeleton/lesser           = 15,
-		/obj/item/book/granter/spell/blackstone/skeleton                  = 10,
 		/obj/item/book/granter/spell/blackstone/sicknessray               = 15,
 		/obj/item/book/granter/spell/blackstone/invisibility              = 15,
 		/obj/item/book/granter/spell/blackstone/bonechill                 = 10,

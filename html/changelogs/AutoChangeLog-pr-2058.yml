@@ -1,0 +1,5 @@
+author: "Xander3359"
+delete-after: True
+changes:
+  - bugfix: "Fixed spells giving you a permanent glow when they fizzled out."
+  - rscadd: "Mending now gives you an arcyne glow when casting"

@@ -36,6 +36,7 @@
 		/obj/item/reagent_containers/food/snacks/rogue/meat/poultry,
 		/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit,
 		/obj/item/reagent_containers/food/snacks/rogue/truffles,
+		/obj/item/reagent_containers/food/snacks/grown/apple,
 	)
 	tame_chance = 5
 	bonus_tame_chance = 5
