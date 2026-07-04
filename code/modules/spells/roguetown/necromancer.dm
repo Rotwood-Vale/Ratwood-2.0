@@ -84,7 +84,7 @@
 	chargedloop = /datum/looping_sound/invokegen
 	gesture_required = TRUE // Summon spell
 	associated_skill = /datum/skill/magic/arcane
-	recharge_time = 20 SECONDS
+	recharge_time = 60 SECONDS
 	var/cabal_affine = FALSE
 	var/is_summoned = FALSE
 	var/to_spawn = 4
@@ -136,7 +136,7 @@
 /obj/effect/proc_holder/spell/invoked/raise_undead_formation/necromancer
 	cabal_affine = TRUE
 	is_summoned = TRUE
-	recharge_time = 35 SECONDS
+	recharge_time = 60 SECONDS
 	to_spawn = 3
 
 
