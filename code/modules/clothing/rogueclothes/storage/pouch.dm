@@ -17,6 +17,8 @@
 	grid_height = 64
 	grid_width = 32
 	component_type = /datum/component/storage/concrete/roguetown/coin_pouch
+	salvage_amount = 1
+	salvage_result = /obj/item/natural/fibers
 
 /obj/item/storage/belt/rogue/pouch/coins/poor/Initialize(mapload)
 	. = ..()

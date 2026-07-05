@@ -4,6 +4,8 @@
 	name = "Profane"
 	desc = "Fire forth a splinter of unholy bone, tearing flesh and causing bleeding. If you hold pieces of bone in your other hand, you will coax a much stronger lance of bone into being."
 	clothes_req = FALSE
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "profane"
 	range = 8
 	associated_skill = /datum/skill/magic/arcane
@@ -108,6 +110,8 @@
 	name = "Rituos"
 	desc = "Do a ritual for she of Z that skeletonises a part of your body and bestows upon you arcyne magycks until you next sleep. Once your whole body has become skeletonised you gain full access to the Arcyne, bolstering your knowledge of spells with each additional ritual."
 	clothes_req = FALSE
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "rituos"
 	associated_skill = /datum/skill/magic/arcane
 	chargedloop = /datum/looping_sound/invokeholy
@@ -200,7 +204,9 @@
 	desc = "Wreath your hand in inhumen energies.\n \
 	USE on a mind-inhabited victim who is alyve, floored, whose lux is intact to plunge your hand into their chest, shattering their ribs and will alike in order to forcefully tear the lux from their chest.\n \
 	DISARM on a PURE lux to convert it into IMPURE lux, in order to deprive it of those who need it or to fuel your wicked necromantic relics."
-	overlay_state = "noc_revive"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "lacrima"
 	clothes_req = FALSE
 	drawmessage = "I pray to ZIZO for but a sliver of Her power, wreathing my hand in inhumen energies!"
 	dropmessage = "I allow the energies upon my hand to dissipate."
@@ -218,7 +224,7 @@
 
 /obj/item/melee/touch_attack/lacrima
 	name = "\improper lux ripper"
-	desc = "ZIZO's will is to perverse the lux of the lyving. With but a mere shred of Her power, you will do exactly that."
+	desc = "ZIZO's will is to perverse the lux of the lyving. With but a mere shred of HER power, you will do exactly that."
 	catchphrase = null
 	possible_item_intents = list(/datum/intent/use, INTENT_DISARM)
 	icon = 'icons/mob/roguehudgrabs.dmi'
@@ -310,6 +316,9 @@
 /obj/effect/proc_holder/spell/self/zizo_snuff
 	name = "Snuff Lights"
 	desc = "Extinguish all lights in range, with your Miracles skill increasing range."
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "snuff_lights"
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
@@ -317,7 +326,6 @@
 	invocations = list("Embrace the darkness!")
 	invocation_type = "shout"
 	sound = 'sound/magic/zizo_snuff.ogg'
-	overlay_state = "rune2"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
 	recharge_time = 20 SECONDS
@@ -349,8 +357,11 @@
 
 // Ancient Champion-exclusive: An evil variant of Repulse. Longer charge time and CD, but greater maxthrow, push range and the affected people lose 50 stamina. The undead are immune.
 /obj/effect/proc_holder/spell/invoked/churnliving //Repulse variant.
-	name = "Churn Living"
+	name = "Churn Lyving"
 	desc = "Conjure forth a wave of necrotic energy, repelling non-undead around you and greatly damaging their stamina."
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "churn_living"
 	xp_gain = FALSE
 	zizo_spell = TRUE
 	releasedrain = 50
@@ -365,7 +376,6 @@
 	charging_slowdown = 2
 	chargedloop = /datum/looping_sound/invokeascendant
 	associated_skill = /datum/skill/magic/arcane
-	overlay_state = "repulse"
 	spell_tier = 2
 	invocations = list("Irzkrat, nullak!")
 	invocation_type = "shout"
@@ -426,7 +436,9 @@
 /obj/effect/proc_holder/spell/invoked/evil_resurrect
 	name = "Perfect Reanimation" //Wretch Heresiarch-exclusive variant of Anastasis
 	desc = "Rip the target's soul out of Necra's grasp and revive them at a cost of a humanoid being's heart. The target's attributes will be temporarily reduced."
-	overlay_state = "noc_revive"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "revival"
 	releasedrain = 90
 	chargedrain = 0
 	chargetime = 50

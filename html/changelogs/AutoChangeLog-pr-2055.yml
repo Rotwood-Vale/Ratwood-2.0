@@ -1,7 +1,0 @@
-author: "petwir1"
-delete-after: True
-changes:
-  - balance: "heavy knight's claymore weapon choice split into two steel options"
-  - balance: "heavy knight's lucerne weapon choice changed to eagle's beak"
-  - balance: "foot knight's warhammer weapon choice upgraded to steel to match all other options"
-  - balance: "city guard's polehammer weapon choice downgraded to lucerne instead of the current eagle's beak\n:cl:"

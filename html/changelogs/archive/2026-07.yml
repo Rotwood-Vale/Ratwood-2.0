@@ -24,3 +24,21 @@
       force (cautery intends got shufled)
   zeroisthebiggay:
   - bugfix: rookies properly get willpower
+2026-07-05:
+  JustMeTheIInd:
+  - qol: made roleplay ad notifications turned on by default
+  Xander3359:
+  - bugfix: Fixed spells giving you a permanent glow when they fizzled out.
+  - rscadd: Mending now gives you an arcyne glow when casting
+  Yuckuza:
+  - qol: Drider mounts like those used by drow mercs can be healed via apples like
+      saiga and beetles can.
+  petwir1:
+  - balance: heavy knight's claymore weapon choice split into two steel options
+  - balance: heavy knight's lucerne weapon choice changed to eagle's beak
+  - balance: foot knight's warhammer weapon choice upgraded to steel to match all
+      other options
+  - balance: 'city guard''s polehammer weapon choice downgraded to lucerne instead
+      of the current eagle''s beak
+
+      :cl:'
