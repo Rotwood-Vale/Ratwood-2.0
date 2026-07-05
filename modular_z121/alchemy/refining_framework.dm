@@ -74,6 +74,9 @@
 	var/list/required_base = list()							// Liquid base: single or composite (existing reagents).
 	// 中文：产物——精炼出的【新药】(成品试剂；成品是产出，不属于"输入材料")。
 	var/list/output_reagents = list()						// The new refined potion(s).
+	// 中文：★固体产物★——精炼出的【实体物品】路径列表(可选)。每个条目生成一件物品(要多件就重复列出该路径)。
+	//   用于"产物不是液体试剂、而是一件成品道具"的配方(如防腐皂)。留空则本配方只产试剂。
+	var/list/output_items = list()							// Optional solid item outputs (one item per list entry).
 	// 中文：成功时显示的气味词。
 	var/smells_like = "精炼药香"								// Flavour scent on success.
 	// 中文：驾驭本配方所需的炼金技能等级(默认学徒，可按需提高)。
@@ -213,6 +216,11 @@ GLOBAL_LIST_EMPTY(alch_refining_formulas)					// Lazily-filled list of all formu
 					reagents.add_reagent(output_type, formula.output_reagents[output_type], list("boozepwr" = booze))	// Carry the booze strength.
 			else											// Non-alcoholic potion: plain output.
 				reagents.add_reagent_list(formula.output_reagents)
+			// 中文：★固体产物★——若配方产出实体物品(如防腐皂)，逐一在锅子所在格生成(一个条目=一件)。
+			//   这样"精炼配方"也能像原版配方那样产出成品道具，而不仅仅是液体试剂。
+		if(formula.output_items.len)						// Any solid item outputs?
+			for(var/itempath in formula.output_items)		// Each item path (one item per entry).
+				new itempath(get_turf(src))					// Spawn it on the cauldron's turf.
 		// 中文：反馈/统计/经验/音效/完成。
 		visible_message(span_info("[src]沸腾完毕，精炼出了[formula.name]，散发着一股[formula.smells_like]的气味。"))
 		record_featured_stat(FEATURED_STATS_ALCHEMISTS, lastuser)

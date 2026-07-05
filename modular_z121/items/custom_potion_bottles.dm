@@ -79,11 +79,9 @@
 	desc = "一瓶预装的媚药，气息暧昧，饮下会强烈催情。"
 	list_reagents = list(/datum/reagent/forced_estrus_aphrodisiac = 50)
 
-// 防腐药水：泼洒 / 施用于物品或尸体以防止腐坏。
-/obj/item/reagent_containers/glass/bottle/rogue/anticorruption
-	name = "防腐药水瓶"
-	desc = "一瓶预装的防腐药水，施于食物或尸体可延缓其腐坏。"
-	list_reagents = list(/datum/reagent/anticorruption_potion = 50)                // 预装 50 单位（与其它药水瓶一致）。
+// 防腐（改版）：已由"液体药水"改为【固体防腐皂 /obj/item/anticorruption_soap】，
+//   成品直接由「精炼炼药锅」产出、手持点击食物/尸体施用，不再是可装瓶的液体试剂，
+//   故此处不再提供预装液体瓶(原 /datum/reagent/anticorruption_potion 已移除)。
 
 // 硬化药剂：短时减免受到的钝击伤害。
 /obj/item/reagent_containers/glass/bottle/rogue/hardened_potion
