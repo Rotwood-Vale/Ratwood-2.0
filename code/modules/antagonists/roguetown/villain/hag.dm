@@ -157,7 +157,7 @@
 	hag_baseline_applied = TRUE
 
 /datum/antagonist/hag/proc/get_hag_job_datum()
-	static/datum/job/roguetown/hag/hag_job
+	var/static/datum/job/roguetown/hag/hag_job
 	if(!hag_job)
 		hag_job = new /datum/job/roguetown/hag()
 	return hag_job
