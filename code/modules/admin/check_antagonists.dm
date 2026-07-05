@@ -393,6 +393,101 @@
 			dat += "<tr><td>[hag_body.real_name]</td><td>[hag_body.job || "(none)"]</td><td>[hag_body.advjob || "(none)"]</td><td>[hag_tier]</td><td>[curse_scar_count]</td><td>[length(prepared_bits) ? jointext(prepared_bits, ", ") : "(none)"]</td><td>[jointext(links, " | ")]</td></tr>"
 		dat += "</table>"
 
+		dat += "<hr><h2>Hag Victims</h2>"
+		var/list/hag_victim_rows = list()
+		for(var/datum/antagonist/hag/hag_datum as anything in active_hags)
+			var/mob/living/carbon/human/hag_body = hag_datum.owner.current
+			var/datum/component/hag_curio_tracker/tracker = hag_body.GetComponent(/datum/component/hag_curio_tracker)
+			if(!tracker)
+				continue
+
+			for(var/true_name in tracker.boon_registry)
+				var/list/name_list = tracker.boon_registry[true_name]
+				if(!islist(name_list) || !length(name_list))
+					continue
+
+				var/list/active_boons = list()
+				var/list/active_curses = list()
+				var/scar_points = 0
+
+				for(var/datum/hag_boon/B as anything in name_list)
+					if(!B || !B.hag_is_valid)
+						continue
+					if(istype(B, /datum/hag_boon/curse_scar))
+						var/datum/hag_boon/curse_scar/S = B
+						scar_points = max(scar_points, S.points)
+						continue
+					if(B.hag_curse)
+						active_curses += B.name
+					else
+						active_boons += B.name
+
+				if(!length(active_boons) && !length(active_curses) && scar_points <= 0)
+					continue
+
+				var/mob/living/victim = tracker.find_target(true_name)
+				var/victim_name_cell = true_name
+				var/victim_location = "(offline)"
+				var/victim_status = "Offline"
+				var/victim_actions = "(none)"
+
+				if(victim)
+					victim_name_cell = "<a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(victim)]'>[victim.real_name]</a>"
+					victim_location = AREACOORD(victim)
+					victim_status = (victim.stat == DEAD) ? "Dead" : "Alive"
+					var/list/victim_links = list()
+					victim_links += "<a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(victim)]'>Panel</a>"
+					victim_links += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(victim)]'>FLW</a>"
+					if(victim.client)
+						victim_links += "<a href='?_src_=holder;[HrefToken()];priv_msg=[ckey(victim.ckey)]'>PM</a>"
+					victim_actions = jointext(victim_links, " | ")
+
+				var/scar_state = scar_points > 0 ? "Yes ([scar_points] pts)" : "No"
+				var/boon_text = length(active_boons) ? jointext(active_boons, ", ") : "(none)"
+				var/curse_text = length(active_curses) ? jointext(active_curses, ", ") : "(none)"
+				var/row_key = "[LOWER_TEXT(true_name)]-[REF(hag_datum)]"
+				hag_victim_rows[row_key] = "<tr><td>[victim_name_cell]</td><td>[hag_body.real_name]</td><td>[boon_text]</td><td>[curse_text]</td><td>[scar_state]</td><td>[victim_status]</td><td>[victim_location]</td><td>[victim_actions]</td></tr>"
+
+		if(length(hag_victim_rows))
+			sortTim(hag_victim_rows, GLOBAL_PROC_REF(cmp_text_asc), associative = TRUE)
+			dat += "<table cellspacing=5>"
+			dat += "<tr><th align='left'>Victim</th><th align='left'>Bound Hag</th><th align='left'>Boons</th><th align='left'>Curses</th><th align='left'>Scarred</th><th align='left'>Status</th><th align='left'>Location</th><th align='left'>Actions</th></tr>"
+			for(var/row_key in hag_victim_rows)
+				dat += hag_victim_rows[row_key]
+			dat += "</table>"
+		else
+			dat += "No victims currently bear hag boons, curses, or scars.<br>"
+
+		dat += "<hr><h2>Feytouched</h2>"
+		var/list/feytouched_rows = list()
+		for(var/mob/living/carbon/human/H in GLOB.player_list)
+			if(!HAS_TRAIT(H, TRAIT_FEYTOUCHED))
+				continue
+
+			var/name_cell = "<a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(H)]'>[H.real_name]</a>"
+			var/key_cell = H.ckey ? H.ckey : "(no key)"
+			var/job_cell = H.job || "(none)"
+			var/status_cell = (H.stat == DEAD) ? "Dead" : "Alive"
+			var/location_cell = AREACOORD(H)
+			var/list/fey_links = list()
+			fey_links += "<a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(H)]'>Panel</a>"
+			fey_links += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(H)]'>FLW</a>"
+			if(H.client)
+				fey_links += "<a href='?_src_=holder;[HrefToken()];priv_msg=[ckey(H.ckey)]'>PM</a>"
+
+			var/fey_row_key = "[LOWER_TEXT(H.real_name)]-[REF(H)]"
+			feytouched_rows[fey_row_key] = "<tr><td>[name_cell]</td><td>[key_cell]</td><td>[job_cell]</td><td>[status_cell]</td><td>[location_cell]</td><td>[jointext(fey_links, " | ")]</td></tr>"
+
+		if(length(feytouched_rows))
+			sortTim(feytouched_rows, GLOBAL_PROC_REF(cmp_text_asc), associative = TRUE)
+			dat += "<table cellspacing=5>"
+			dat += "<tr><th align='left'>Character</th><th align='left'>Key</th><th align='left'>Job</th><th align='left'>Status</th><th align='left'>Location</th><th align='left'>Actions</th></tr>"
+			for(var/fey_row_key in feytouched_rows)
+				dat += feytouched_rows[fey_row_key]
+			dat += "</table>"
+		else
+			dat += "No active feytouched players found.<br>"
+
 		dat += "<hr><h2>Active Hag Details</h2>"
 		for(var/datum/antagonist/hag/hag_datum as anything in active_hags)
 			var/mob/living/carbon/human/hag_body = hag_datum.owner.current

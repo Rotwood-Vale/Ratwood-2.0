@@ -71,7 +71,6 @@
 
 /obj/item/clothing/neck/roguetown/psicross/hag/proc/open_wyrd_form_menu(mob/living/user)
 	if(!can_use_wyrd_power(user))
-		to_chat(user, span_warning("The [src.name] does not answer to me."))
 		return
 
 	if(!hag_radial_choices)
@@ -95,7 +94,6 @@
 		return
 
 	if(!can_use_wyrd_power(user))
-		to_chat(user, span_warning("The [src.name] slips from your command."))
 		return
 
 	if(mimic_type == hag_path_map[selection])
@@ -126,13 +124,31 @@
 
 /obj/item/clothing/neck/roguetown/psicross/hag/attack_self(mob/living/user)
 	. = ..()
+	if(mimic_type)
+		if(!can_use_wyrd_power(user))
+			return
+
+		mimic_type = null
+		name = initial(name)
+		desc = initial(desc)
+		icon = initial(icon)
+		icon_state = initial(icon_state)
+		mob_overlay_icon = initial(mob_overlay_icon)
+		src.sellprice = initial(sellprice)
+		src.resistance_flags = initial(resistance_flags)
+		src.overarmor = initial(overarmor)
+		src.armor = initial(armor)
+
+		user.update_icons()
+		to_chat(user, span_notice("The cross settles back into wyrd form."))
+		return
+
 	open_wyrd_form_menu(user)
 
 /obj/item/clothing/neck/roguetown/psicross/hag/MiddleClick(mob/living/user)
 	. = ..()
 	// Hags can use this
 	if(!can_use_wyrd_power(user))
-		to_chat(user, span_warning("The [src.name] rejects your touch."))
 		return
 
 	if(tonic_spent)
@@ -170,7 +186,6 @@
 	var/mob/living/user = usr
 
 	if(!can_use_wyrd_power(user))
-		to_chat(user, span_warning("The [src.name] refuses to bend for me."))
 		return
 
 	if(!mimic_type)
