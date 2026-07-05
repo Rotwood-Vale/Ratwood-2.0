@@ -227,9 +227,3 @@
 		user.update_inv_belt()
 
 	I.getonmobprop(tag)
-
-/datum/component/holster/handstaff/puke_sword(mob/living/user)
-	. = ..()
-
-/datum/component/holster/handstaff/eat_sword(mob/living/user, obj/A)
-	. = ..()
