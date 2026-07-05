@@ -49,6 +49,13 @@
 	W.stored_experience = ensure_skills().skill_experience.Copy()
 	W.stored_spells = mind.spell_list.Copy()
 	W.voice_color = voice_color
+	W.voice_type = voice_type
+	W.voice_pitch = voice_pitch
+	if(vocal_bark_id)
+		W.set_bark(vocal_bark_id)
+	W.vocal_speed = vocal_speed
+	W.vocal_pitch = vocal_pitch
+	W.vocal_pitch_range = vocal_pitch_range
 	W.cmode_music_override = cmode_music_override
 	W.cmode_music_override_name = cmode_music_override_name
 

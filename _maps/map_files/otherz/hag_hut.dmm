@@ -662,7 +662,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/indoors/shelter/bog_hag)
 "TM" = (
-/obj/structure/roguemachine/mossmother,
+/obj/structure/roguemachine/mossmother/travel,
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/shelter/bog_hag)
 "Uu" = (

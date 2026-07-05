@@ -39,6 +39,12 @@
 /datum/asset_transport/webroot/get_asset_url(asset_name, datum/asset_cache_item/asset_cache_item)
 	if (!istype(asset_cache_item))
 		asset_cache_item = SSassets.cache[asset_name]
+	var/keep_local_name = dont_mutate_filenames \
+		|| asset_cache_item.legacy \
+		|| asset_cache_item.keep_local_name \
+		|| (asset_cache_item.namespace && !asset_cache_item.namespace_parent)
+	if (keep_local_name)
+		return ..(asset_name, asset_cache_item)
 	var/url = CONFIG_GET(string/asset_cdn_url) //config loading will handle making sure this ends in a /
 	return "[url][get_asset_suffex(asset_cache_item)]"
 
