@@ -974,7 +974,7 @@
 		names += M.real_name
 	var/roster = names.Join(", ")
 	for(var/mob/living/M in coven_members)
-		to_chat(M, span_boldnotice("The Coven is formed! Linked minds: [roster]. Use ,y to speak."))
+		to_chat(M, span_boldnotice("The Coven is formed! Linked minds: [roster]. Use ,y to speak. Use ,mst to sever the web."))
 
 	addtimer(CALLBACK(src, PROC_REF(break_coven), C), link_duration)
 	return TRUE
@@ -991,7 +991,7 @@
 
 /mob/living/carbon/human/proc/commune_with_roots()
 	set name = "Commune with Roots"
-	set category = "RoleUnique.Hag"
+	set category = "IC"
 	set desc = "Press your feet to the soil to hear the Mossmother's heartbeat."
 
 	if(stat || !HAS_TRAIT(src, TRAIT_ANCIENT_HAG))

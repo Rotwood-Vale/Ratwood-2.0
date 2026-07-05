@@ -298,6 +298,16 @@
 	name = "wyrd mirror"
 	desc = "The reflection in this mirror shimmers and warps like roots beneath black water."
 
+/obj/item/handmirror/hag/attack_self(mob/user)
+	if(!ishuman(user))
+		return
+
+	var/mob/living/carbon/human/H = user
+	to_chat(H, span_info("You gaze into the wyrd mirror, watching your reflection ripple with ancient glamour."))
+	if(do_after(H, 3 SECONDS))
+		perform_mirror_transform(H)
+	return
+
 /obj/item/handmirror/attack_self(mob/user)
 	if(!ishuman(user))
 		return
