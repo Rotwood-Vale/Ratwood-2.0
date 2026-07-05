@@ -2221,11 +2221,14 @@
 
 /datum/emote/living/fsalute_alt/run_emote(mob/living/user, params, type_override, intentional, targetted, animal)
 	. = ..()
-	if(. && !isnull(user?.client?.prefs?.polytheist_patron))
-		user.play_overhead_indicator('icons/mob/overhead_effects.dmi', "stress", 15, MUTATIONS_LAYER, private = user.client.prefs.polytheist_patron.type, soundin = 'sound/magic/holyshield.ogg', y_offset = 32)
+	if(!. || isnull(user?.client?.prefs?.polytheist_patron) || user.client.prefs.polytheist_patron == "NONE")
+		return
+	user.play_overhead_indicator('icons/mob/overhead_effects.dmi', "stress", 15, MUTATIONS_LAYER, private = user.client.prefs.polytheist_patron.type, soundin = 'sound/magic/holyshield.ogg', y_offset = 32)
 
 /datum/emote/living/fsalute_alt/can_run_emote(mob/user, status_check, intentional)
 	if(!user?.client?.prefs?.polytheist_patron)
+		return FALSE
+	if(user.client.prefs.polytheist_patron == "NONE")
 		return FALSE
 	return ..()
 
