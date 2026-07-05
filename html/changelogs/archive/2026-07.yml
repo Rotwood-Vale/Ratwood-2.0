@@ -10,3 +10,35 @@
   - bugfix: Removed rontz ring from the contraband spawner
   Yuckuza:
   - rscdel: Removed raise fortified skeleton scroll from necromancer corpse loot pool.
+2026-07-03:
+  BlindPoet:
+  - rscadd: Added back the Janissary's mace
+  - rscadd: Added a shield to the class to match its' description
+2026-07-04:
+  Xander3359:
+  - bugfix: Fix attacks, spells and miracles fizzling sometimes if you hold a channel
+      and move your mouse.
+  - bugfix: Fix T3 eyes giving you +1 in a bugged stat
+  wikimody:
+  - bugfix: Surgical tool that stepped out of line has been brought by in line by
+      force (cautery intends got shufled)
+  zeroisthebiggay:
+  - bugfix: rookies properly get willpower
+2026-07-05:
+  JustMeTheIInd:
+  - qol: made roleplay ad notifications turned on by default
+  Xander3359:
+  - bugfix: Fixed spells giving you a permanent glow when they fizzled out.
+  - rscadd: Mending now gives you an arcyne glow when casting
+  Yuckuza:
+  - qol: Drider mounts like those used by drow mercs can be healed via apples like
+      saiga and beetles can.
+  petwir1:
+  - balance: heavy knight's claymore weapon choice split into two steel options
+  - balance: heavy knight's lucerne weapon choice changed to eagle's beak
+  - balance: foot knight's warhammer weapon choice upgraded to steel to match all
+      other options
+  - balance: 'city guard''s polehammer weapon choice downgraded to lucerne instead
+      of the current eagle''s beak
+
+      :cl:'

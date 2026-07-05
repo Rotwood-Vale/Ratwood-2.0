@@ -1,0 +1,4 @@
+author: "SneakySlinky"
+delete-after: True
+changes:
+  - bugfix: "Grand Mace and Punch Dagger loadout choices for Berserker now work."

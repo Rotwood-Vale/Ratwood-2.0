@@ -1,0 +1,4 @@
+author: "kimesik"
+delete-after: True
+changes:
+  - bugfix: "Wretch-Heretic Spy gets maximum Devotion on spawn."

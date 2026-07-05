@@ -1,0 +1,5 @@
+author: "Xander3359"
+delete-after: True
+changes:
+  - rscadd: "Belts can now be untied into the leather that is used to make them via a craft."
+  - rscadd: "Sandals, boots and pouches can be chopped up with scissors."
