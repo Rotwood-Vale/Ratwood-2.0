@@ -6,6 +6,8 @@
 	var/datum/antagonist/hag/hag_ref
 	/// Associative list: [True Name String] = [/datum/hag_boon]
 	var/alist/boon_registry = list()
+	/// Weak lookup cache for true_name -> mob, to avoid repeated global list scans.
+	var/list/target_cache = list()
 	/// Materials the hag currently has stored in their component.
 	var/list/stored_materials = list()
 	/// How many of each type of material hags can store, and which ones they can store
@@ -47,6 +49,7 @@
 /datum/component/hag_curio_tracker/Destroy()
 	if(parent)
 		UnregisterSignal(parent, COMSIG_LIVING_DEATH)
+	target_cache.Cut()
 	return ..()
 
 /datum/component/hag_curio_tracker/proc/grant_boon(true_name, boon_path = /datum/hag_boon, set_points)
@@ -229,11 +232,20 @@
 		to_chat(parent, span_boldnotice("The Mossmother sees you. You have reached Tier 3."))
 
 /datum/component/hag_curio_tracker/proc/find_target(true_name)
+	var/datum/weakref/cached_ref = target_cache[true_name]
+	if(cached_ref)
+		var/mob/living/cached = cached_ref.resolve()
+		if(cached && cached.real_name == true_name)
+			return cached
+		target_cache -= true_name
+
 	for(var/mob/living/L in GLOB.player_list)
 		if(L.real_name == true_name)
+			target_cache[true_name] = WEAKREF(L)
 			return L
 	for(var/mob/living/L in GLOB.mob_living_list)
 		if(L.real_name == true_name)
+			target_cache[true_name] = WEAKREF(L)
 			return L
 	return null
 

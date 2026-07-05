@@ -567,7 +567,7 @@
 	return ..()
 
 /datum/status_effect/buff/hag_boon/natural_communion/tick()
-	if(!ishuman(owner))
+	if(!ishuman(owner) || owner.stat == DEAD)
 		return
 	var/mob/living/carbon/human/H = owner
 	var/turf/T = get_turf(H)
@@ -630,7 +630,7 @@
 	update_moss_slowdown()
 
 /datum/status_effect/buff/hag_boon/creeping_moss/tick()
-	if(!owner)
+	if(!owner || owner.stat == DEAD)
 		return
 
 	var/turf/T = get_turf(owner)
@@ -688,22 +688,21 @@
 	return ..()
 
 /datum/status_effect/curse/waterlogged/tick()
-	if(!ishuman(owner))
+	if(!ishuman(owner) || owner.stat == DEAD)
 		return
 	var/mob/living/carbon/human/H = owner
 	var/turf/T = get_turf(H)
 	if(!istype(T, /turf/open/water))
 		return
 
-	if(H.stat != DEAD)
-		var/stam_drain = 10
-		if(!H.stamina_add(stam_drain) && (H.mobility_flags & MOBILITY_STAND))
-			if(world.time >= next_fall_warning)
-				next_fall_warning = world.time + 10 SECONDS
-				to_chat(H, span_userdanger("The murky depths claim my footing!"))
-			H.Knockdown(30)
-		if(!(H.mobility_flags & MOBILITY_STAND))
-			H.adjustOxyLoss(6)
+	var/stam_drain = 10
+	if(!H.stamina_add(stam_drain) && (H.mobility_flags & MOBILITY_STAND))
+		if(world.time >= next_fall_warning)
+			next_fall_warning = world.time + 10 SECONDS
+			to_chat(H, span_userdanger("The murky depths claim my footing!"))
+		H.Knockdown(30)
+	if(!(H.mobility_flags & MOBILITY_STAND))
+		H.adjustOxyLoss(6)
 
 
 /datum/status_effect/curse/hag_slumber

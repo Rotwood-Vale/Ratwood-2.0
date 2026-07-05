@@ -26,6 +26,7 @@
 	icon_state = "tree"
 	var/cooldown_until = 0
 	var/static/list/hag_lux_alert_times = list()
+	var/static/hag_lux_alert_last_cleanup = 0
 
 /obj/structure/roguemachine/mossmother/travel/Initialize(mapload)
 	. = ..()
@@ -70,6 +71,13 @@
 
 /// Notifies all active hags that a tree was fed with lux, including the feeder's name and area.
 /obj/structure/roguemachine/mossmother/travel/proc/notify_hag_lux_fed(mob/living/feeder, is_impure = FALSE, alert_cooldown = 20 SECONDS)
+	if(world.time >= hag_lux_alert_last_cleanup + 2 MINUTES)
+		hag_lux_alert_last_cleanup = world.time
+		var/prune_before = world.time - 5 MINUTES
+		for(var/key in hag_lux_alert_times)
+			if((hag_lux_alert_times[key] || 0) < prune_before)
+				hag_lux_alert_times -= key
+
 	var/area/A = get_area(src)
 	var/area_name = A ? A.name : "an unknown thicket"
 	var/feeder_name = feeder ? feeder.real_name : "a mysterious force"
