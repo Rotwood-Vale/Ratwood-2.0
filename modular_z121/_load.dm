@@ -81,6 +81,23 @@
 #include "alchemy/refining_potions/vigor_potion.dm"			// 精力药剂 (limitless energy / endless ejaculation, ERP-gated)
 #include "alchemy/refining_potions/flying.dm"				// 飞行药水 (3-minute magic flight)
 #include "alchemy/refining_potions/anticorruption.dm"		// 防腐药水 (splash: food never rots / corpse preserved)
+#include "alchemy/refining_potions/hardened_potion.dm"		// 硬化药剂 (take 20% less brute damage for the duration)
+// 防蚂蟥药水：气味"死亡"(5级) + 水70/普通毒药30；炼金3级(熟练)；产出50单位。
+// 药效期间主动剥离饮用者身上"正在吸血"的水蛭(脱离肢体即停止吸血)，等效"水蛭咬不动你"；并挂 TRAIT_ANTILEECH 状态钩子。
+// Anti-leech potion: "death" scent (lvl5) + 70 water/30 common poison; alchemy lvl3; 50u output.
+#include "alchemy/refining_potions/anti_leech.dm"			// 防蚂蟥药水 (leeches won't bite for the duration)
+// 身体再生药剂：气味"潮湿的苔藓"(5级,未占用) + 水50/强效生命30/强效耐力30；炼金5级(大师)；产出30单位。
+// 饮用并消化满10单位后，一次性再生所有已失去的四肢(手臂/腿)。
+// Bodily Regeneration potion: "damp moss" scent (lvl5, unused) + 50 water/30 great-life/30 great-endurance; alchemy lvl5 (Master); 30u output; regrows lost limbs after digesting >=10u.
+#include "alchemy/refining_potions/bodily_regeneration.dm"	// 身体再生药剂 (regrows lost limbs)
+// 复原药剂：气味"毁灭"(5级) + 水70/强效魔力药水30；炼金5级(大师)；产出30单位。
+// 泼洒>=10单位到一件物品上，逆向查出"合成/锻造它的配方"(菜单合成 /datum/crafting_recipe 与铁砧锻造
+// /datum/anvil_recipe 两套体系)，按其原料清单在原地还原出全部合成原料后销毁原物；无配方的物品不予分解。
+// Restorative potion: "doom" scent (lvl5) + 70 water/30 great-mana-potion; alchemy lvl5 (Master); 30u output.
+// Splashing >=10u onto an item reverse-looks-up its recipe across BOTH the menu crafting system
+// (/datum/crafting_recipe reqs) AND the anvil forging system (/datum/anvil_recipe req_bar/blade + additional_items),
+// spawns those materials on the floor, then deletes the item. Items with no recipe are left untouched.
+#include "alchemy/refining_potions/restorative_potion.dm"	// 复原药剂 (splash: item -> raw materials)
 // 把精炼配方接入原版炼金指南"炼金秘要"——新增"精炼药剂"分类并渲染各配方详情(覆盖其 New/分类/详情 过程)。
 // Surfaces the refining formulas inside the vanilla alchemy guide under a "精炼药剂" (Refined Potions) category.
 #include "alchemy/refining_guide.dm"

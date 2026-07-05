@@ -75,11 +75,25 @@
 			out_parts += "[initial(R.name)] [formula.output_reagents[out_reagent]] 单位"
 		html += "<p><strong>产物：</strong>[jointext(out_parts, " ＋ ")]</p>"
 
-	// --- 功效(取首个产物试剂的说明文本) ---
+	// --- 固体产物(若配方产出实体道具，如防腐皂，逐一列出物品名) ---
+	if(length(formula.output_items))
+		var/list/item_parts = list()						// Readable item-name pieces.
+		for(var/itempath in formula.output_items)			// Each solid item path.
+			var/obj/item/I = itempath						// Typed for initial(name).
+			item_parts += "[initial(I.name)]"
+		html += "<p><strong>产物（实体）：</strong>[jointext(item_parts, " ＋ ")]</p>"
+
+	// --- 功效(优先取首个产物试剂的说明；若无试剂产物则取首个固体产物的说明) ---
 	if(length(formula.output_reagents))
 		var/first_output = formula.output_reagents[1]		// First product reagent path.
 		var/datum/reagent/R = first_output					// Typed for initial(description).
 		var/effect_text = initial(R.description)			// The product's flavour/effect text.
+		if(effect_text)
+			html += "<p><strong>功效：</strong>[effect_text]</p>"
+	else if(length(formula.output_items))					// Item-only product → describe the item.
+		var/first_item = formula.output_items[1]			// First product item path.
+		var/obj/item/I = first_item							// Typed for initial(desc).
+		var/effect_text = initial(I.desc)					// The item's flavour/effect text.
 		if(effect_text)
 			html += "<p><strong>功效：</strong>[effect_text]</p>"
 
