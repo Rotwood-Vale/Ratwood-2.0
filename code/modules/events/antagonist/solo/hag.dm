@@ -1,6 +1,7 @@
 /datum/round_event_control/antagonist/solo/hag
 	name = "Hag"
 	tags = list(
+		TAG_COMBAT,
 		TAG_HAUNTED,
 		TAG_VILLIAN,
 	)
@@ -13,7 +14,7 @@
 	base_antags = 1
 	maximum_antags = 1
 
-	weight = 1
+	weight = 10
 	max_occurrences = 1
 
 	earliest_start = 0 SECONDS

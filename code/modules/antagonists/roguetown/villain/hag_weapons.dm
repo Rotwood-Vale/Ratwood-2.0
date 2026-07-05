@@ -69,41 +69,7 @@
 
 	return FALSE
 
-/obj/item/clothing/neck/roguetown/psicross/hag/MiddleClick(mob/living/user)
-	. = ..()
-	// Hags can use this
-	if(!can_use_wyrd_power(user))
-		to_chat(user, span_warning("The [src.name] rejects your touch."))
-		return
-
-	if(tonic_spent)
-		to_chat(user, span_warning("The [src.name]'s magic is spent."))
-		return
-
-	if(!iscarbon(user))
-		return
-
-	to_chat(user, span_notice("You press the [src.name] against your neck, waiting for the needle to bite..."))
-
-	if(do_after(user, 1 SECONDS, target = user))
-		if(tonic_spent)
-			return
-		var/mob/living/carbon/C = user
-		if(!C.reagents)
-			return
-
-		C.reagents.add_reagent(/datum/reagent/medicine/stronghealth, 30)
-		tonic_spent = TRUE
-		to_chat(user, span_notice("A soothing tonic flows from the [src.name] into your body."))
-
-/obj/item/clothing/neck/roguetown/psicross/hag/verb/wyrd_mimic_radial()
-	set name = "Shift Form"
-	set category = "Object"
-	set src in usr
-
-	var/mob/living/user = usr
-
-	// Only works for the person holding it
+/obj/item/clothing/neck/roguetown/psicross/hag/proc/open_wyrd_form_menu(mob/living/user)
 	if(!can_use_wyrd_power(user))
 		to_chat(user, span_warning("The [src.name] does not answer to me."))
 		return
@@ -157,6 +123,44 @@
 
 	user.update_icons()
 	to_chat(user, span_notice("The cross warps into the shape of [name]."))
+
+/obj/item/clothing/neck/roguetown/psicross/hag/attack_self(mob/living/user)
+	. = ..()
+	open_wyrd_form_menu(user)
+
+/obj/item/clothing/neck/roguetown/psicross/hag/MiddleClick(mob/living/user)
+	. = ..()
+	// Hags can use this
+	if(!can_use_wyrd_power(user))
+		to_chat(user, span_warning("The [src.name] rejects your touch."))
+		return
+
+	if(tonic_spent)
+		to_chat(user, span_warning("The [src.name]'s magic is spent."))
+		return
+
+	if(!iscarbon(user))
+		return
+
+	to_chat(user, span_notice("You press the [src.name] against your neck, waiting for the needle to bite..."))
+
+	if(do_after(user, 1 SECONDS, target = user))
+		if(tonic_spent)
+			return
+		var/mob/living/carbon/C = user
+		if(!C.reagents)
+			return
+
+		C.reagents.add_reagent(/datum/reagent/medicine/stronghealth, 30)
+		tonic_spent = TRUE
+		to_chat(user, span_notice("A soothing tonic flows from the [src.name] into your body."))
+
+/obj/item/clothing/neck/roguetown/psicross/hag/verb/wyrd_mimic_radial()
+	set name = "Shift Form"
+	set category = "Object"
+	set src in usr
+
+	open_wyrd_form_menu(usr)
 
 /obj/item/clothing/neck/roguetown/psicross/hag/verb/wyrd_reset_form()
 	set name = "Reset Form"

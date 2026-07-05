@@ -37,7 +37,6 @@
 		TRAIT_EXTREME_TEMPERATURE_IMMUNE,
 		TRAIT_ANTISCRYING,
 		TRAIT_LONGSTRIDER
-		//To add: bogwalker - investigate edit_descriptors, technophobe and no pve as well as ring still not working
 	)
 	var/static/list/hag_baseline_stats = list(
 		STATKEY_STR = -7,
@@ -115,7 +114,7 @@
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/aalloy
 	beltr = /obj/item/roguekey/hag
 	backpack_contents = list(
-		/obj/item/handmirror = 1
+		/obj/item/handmirror/hag = 1
 	)
 	if(H.mind)
 		H.verbs += /mob/living/carbon/human/proc/commune_with_roots
