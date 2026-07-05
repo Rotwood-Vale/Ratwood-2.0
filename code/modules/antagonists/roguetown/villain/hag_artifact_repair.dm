@@ -37,6 +37,8 @@
 	STOP_PROCESSING(SSprocessing, src)
 
 /datum/component/hag_artifact_repair/Destroy()
+	if(parent)
+		UnregisterSignal(parent, COMSIG_ATOM_DIR_CHANGE)
 	set_processing(FALSE)
 	tended_items.Cut()
 	for(var/id in reconstruction_timers)
@@ -75,6 +77,7 @@
 
 	var/mob/living/L = parent
 	var/turf/current_turf = get_turf(L)
+	tended_items.Cut()
 
 	// Stop tending if we move off natural turf
 	if(!is_type_in_list(current_turf, natural_turfs))
