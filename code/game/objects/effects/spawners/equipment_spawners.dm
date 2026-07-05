@@ -523,7 +523,6 @@
 	name = "confiscated item spawner"
 	icon_state = "heresy"
 	loot = list(
-		/obj/item/mattcoin = 5,
 		/obj/item/reagent_containers/powder/herozium = 5,
 		/obj/item/reagent_containers/powder/starsugar = 5,
 		/obj/item/roguestatue/gold/loot = 5,

@@ -705,7 +705,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		to_chat(src, span_warning("I can't do that right now!"))
 		return FALSE
 	if(be_close && !in_range(M, src))
-		to_chat(src, span_warning("I are too far away!"))
+		to_chat(src, span_warning("I am too far away!"))
 		return FALSE
 	if(!(no_dexterity || dextrous))
 		to_chat(src, span_warning("I don't have the dexterity to do this!"))
@@ -816,10 +816,10 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		var/atom/movable/screen/inventory/hand/H
 		H = hud_used.hand_slots["[hand_index]"]
 		if(H)
-			H.update_icon()
+			H.update_hand_vis()
 		H = hud_used.hand_slots["[oindex]"]
 		if(H)
-			H.update_icon()
+			H.update_hand_vis()
 	return TRUE
 
 /mob/living/simple_animal/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE)

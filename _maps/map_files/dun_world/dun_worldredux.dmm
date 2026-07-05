@@ -1168,7 +1168,7 @@
 	icon_state = "borderfall";
 	pixel_y = 8
 	},
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32
 	},
 /obj/structure/roguemachine/scomm/r,
@@ -20601,7 +20601,7 @@
 	pixel_x = -11;
 	pixel_y = 14
 	},
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32;
 	name = "mercenary's guild"
 	},
@@ -22043,7 +22043,7 @@
 /turf/open/floor/rogue/grasscold,
 /area/rogue/indoors/town/physician)
 "eSu" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = -32
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -34436,7 +34436,7 @@
 /turf/open/floor/rogue/churchrough,
 /area/rogue/under/cave/scarymaze)
 "hKH" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32
 	},
 /obj/effect/decal/cobbleedge{
@@ -43085,7 +43085,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cavewet/bogcaves/west)
 "jGm" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32;
 	name = "mercenary's guild"
 	},
@@ -52460,7 +52460,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement/tavern)
 "lJN" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32;
 	name = "mercenary's guild"
 	},
@@ -65952,7 +65952,7 @@
 /obj/effect/decal/cleanable/sigil/N,
 /obj/structure/fluff/statue/femalestatue/zizo{
 	pixel_y = 21;
-	desc = "A intrepetation of Zizo in statue form. The base reads 'Let the Lady of Progress guide us forth, out of this ever rotting world.' ";
+	desc = "A intrepetation of Zizo in statue form. The base reads 'Let the Lady of Ambition guide us forth, out of this ever rotting world.' ";
 	name = "Statue of Zizo"
 	},
 /turf/open/floor/rogue/hexstone,
@@ -96915,7 +96915,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/town/outskirts)
 "vvV" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = -32
 	},
 /turf/open/floor/rogue/tile,

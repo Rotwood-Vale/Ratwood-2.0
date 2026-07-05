@@ -498,7 +498,7 @@
 		hud_used.clock.update_icon()
 
 /mob/living/carbon/human/update_health_hud()
-	if(!client || !hud_used)
+	if(!hud_used)
 		return
 	if(dna.species.update_health_hud())
 		return
@@ -515,11 +515,12 @@
 			if(bloodloss > 0)
 				usedloss = bloodloss
 
-			hud_used.bloods.cut_overlays()
+			var/toxoverlay = null
+			var/oxyoverlay = null
+			var/painoverlay = null
 			if(usedloss <= 0)
 				hud_used.bloods.icon_state = "dam0"
 				if(toxloss > 0)
-					var/toxoverlay
 					switch(toxloss)
 						if(1 to 20)
 							toxoverlay = "toxloss20"
@@ -531,10 +532,8 @@
 							toxoverlay = "toxloss80"
 						if(100 to 999)
 							toxoverlay = "toxloss100"
-					hud_used.bloods.add_overlay(toxoverlay)
 
 				if(oxyloss > 0)
-					var/oxyoverlay
 					switch(oxyloss)
 						if(1 to 20)
 							oxyoverlay = "oxyloss20"
@@ -546,7 +545,6 @@
 							oxyoverlay = "oxyloss80"
 						if(100 to 999)
 							oxyoverlay = "oxyloss100"
-					hud_used.bloods.add_overlay(oxyoverlay)
 			else
 				var/used = round(usedloss, 10)
 				if(used <= 80)
@@ -554,7 +552,6 @@
 				else
 					hud_used.bloods.icon_state = "damelse"
 			if(painpercent > 0)
-				var/painoverlay
 				switch(painpercent)
 					if(1 to 29)
 						painoverlay = "painloss20"
@@ -566,7 +563,9 @@
 						painoverlay = "painloss80"
 					if(100 to 999)
 						painoverlay = "painloss100"
-				hud_used.bloods.add_overlay(painoverlay)
+			var/atom/movable/screen/healths/blood/blood_hud = hud_used.bloods
+			if(istype(blood_hud))
+				blood_hud.update_indicator_states(toxoverlay, oxyoverlay, painoverlay)
 
 /*		if(hud_used.healthdoll)
 			hud_used.healthdoll.cut_overlays()
@@ -670,7 +669,8 @@
 	spill_embedded_objects()
 	set_heartattack(FALSE)
 	drunkenness = 0
-	return ..()
+	. = ..()
+	mark_zone_selector_hud_dirty()
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
 	. = ..()

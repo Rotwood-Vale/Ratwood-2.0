@@ -564,7 +564,7 @@
 /datum/status_effect/buff/t3eyes
 	id = "t3eyes"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/t3eyes
-	effectedstats = list(STATKEY_END = 1, STATKEY_CON = 1, STATKEY_STR = 1)
+	effectedstats = list(STATKEY_WIL = 1, STATKEY_CON = 1, STATKEY_STR = 1)
 
 /atom/movable/screen/alert/status_effect/buff/t3eyes
 	name = "Cursed necran eyes"

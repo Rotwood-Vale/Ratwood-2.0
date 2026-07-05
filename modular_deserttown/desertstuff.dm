@@ -4,7 +4,7 @@
 
 /obj/structure/drape/desert
 	name = "desert drape"
-	desc = "Made from durable fabric."
+	desc = "Made from durable fabric, it serves its purpose."
 	icon = 'modular_deserttown/icons/drapes.dmi'
 	icon_state = "desertdrape"
 
@@ -17,7 +17,7 @@
 
 /obj/structure/drape/zybantine
 	name = "zybantine drape"
-	desc = "Made from prestigious fabric."
+	desc = "Made from prestigious fabric, a display of wealth."
 	icon = 'modular_deserttown/icons/drapes.dmi'
 	icon_state = "zybantinedrape1"
 	color = "#a3a3a3"

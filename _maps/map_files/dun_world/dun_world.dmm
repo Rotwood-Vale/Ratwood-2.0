@@ -60404,7 +60404,7 @@
 /turf/open/floor/rogue/tile/bath,
 /area/rogue/indoors/town/magician)
 "mAF" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32;
 	name = "mercenary's guild"
 	},
@@ -63841,7 +63841,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/shelter)
 "nmL" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32;
 	name = "mercenary's guild"
 	},
@@ -87365,7 +87365,7 @@
 	icon_state = "borderfall";
 	pixel_y = 8
 	},
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32
 	},
 /obj/structure/roguemachine/scomm/r,
@@ -88265,7 +88265,7 @@
 	pixel_x = -11;
 	pixel_y = 14
 	},
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32;
 	name = "mercenary's guild"
 	},
@@ -102932,7 +102932,7 @@
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/mountains)
 "vpI" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = -32
 	},
 /turf/open/floor/rogue/tile,
@@ -105912,7 +105912,7 @@
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/under/cave/scarymaze)
 "vVV" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32
 	},
 /obj/effect/decal/cobbleedge{
@@ -110412,7 +110412,7 @@
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/shelter/mountains/decap)
 "wQO" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = -32
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,

@@ -192,7 +192,7 @@
 
 /obj/item/clothing/neck/roguetown/chaincoif/ancient
 	name = "ancient coif"
-	desc = "Polished gilbranze rings, linked together to form a billowing hood. Let it not be a crown of thorns that saves this dying world, but a crown of progress; of fettered metal and stained bone, rejuvenated by Zizo's will to herald Her greatest works yet."
+	desc = "Polished gilbranze rings, linked together to form a billowing hood. Let it not be a crown of thorns that saves this dying world, but a crown of ambition; of fettered metal and stained bone, rejuvenated by Zizo's will to herald Her greatest works yet."
 	icon_state = "achaincoif"
 	smeltresult = /obj/item/ingot/aaslag
 
@@ -457,12 +457,12 @@
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen
 	name = "inverted psycross"
-	desc = "A symbol of progress from an era that had reason to believe in it."
+	desc = "A symbol of ambition from an era that had reason to believe in it."
 	icon_state = "zcross_iron"
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/ancient
 	name = "ancient zcross"
-	desc = "'Progress. Ascension. Destiny. A mandate, commanded by God, to be fulfilled by Man. She called us forth from the edge of reality - and with Her dying breath, rasped out the final truth; the fire is gone, and the world will soon follow.'"
+	desc = "'Ambition. Destiny. Ascension. A mandate, commanded by God, to be fulfilled by Man. She called us forth from the edge of reality - and with Her dying breath, rasped out the final truth; the fire is gone, and the world will soon follow.'"
 	icon_state = "zcross_a"
 	color = "#bb9696"
 
@@ -783,7 +783,7 @@
 	grid_height = 32
 	var/goodluckactivated = FALSE
 	salvage_result = /obj/item/natural/fibers
-	salvage_result = 1
+	salvage_amount = 1
 	nudist_approved = TRUE
 
 /obj/item/clothing/neck/roguetown/luckcharm/equipped(mob/living/carbon/human/user, slot)

@@ -1,0 +1,4 @@
+author: "Teragenic"
+delete-after: True
+changes:
+  - qol: "Adds Right and Left Indicator from AP"

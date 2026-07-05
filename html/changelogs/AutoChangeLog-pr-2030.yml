@@ -1,0 +1,4 @@
+author: "EvenInDeathIStillServe"
+delete-after: True
+changes:
+  - rscadd: "Adds an Observer ban option to the admin ban panel."

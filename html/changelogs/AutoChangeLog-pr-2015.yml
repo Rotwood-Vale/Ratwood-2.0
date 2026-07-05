@@ -1,0 +1,4 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - balance: "Gave whips the wbalance var, with light whips getting swift and most of the heavier whips getting heavy balance."
