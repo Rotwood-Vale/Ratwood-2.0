@@ -51,8 +51,9 @@
 			// Admin/manual grants often happen mid-round with occupied slots.
 			// Clear equipment first so the hag loadout applies deterministically.
 			hag_body.unequip_everything()
-		capture_hag_baseline_state(hag_body)
-		hag_body.equipOutfit(get_hag_job_datum().outfit)
+		var/datum/job/roguetown/hag/hag_job = get_hag_job_datum()
+		capture_hag_baseline_state(hag_body, hag_job)
+		hag_body.equipOutfit(hag_job.outfit)
 		apply_hag_baseline(hag_body)
 
 	if(length(GLOB.hag_starts))
@@ -115,8 +116,12 @@
 	var/mob/living/carbon/human/hag_body = mob_override || owner?.current
 	if(!istype(hag_body) || !hag_body.mind)
 		return
-	for(var/trait in hag_baseline_traits)
-		REMOVE_TRAIT(hag_body, trait, "[type]")
+	var/datum/job/roguetown/hag/hag_job = get_hag_job_datum()
+	if(hag_job)
+		for(var/trait in hag_job.job_traits)
+			REMOVE_TRAIT(hag_body, trait, "[type]")
+	else
+		REMOVE_TRAIT(hag_body, TRAIT_ANCIENT_HAG, "[type]")
 	hag_baseline_applied = FALSE
 	qdel(hag_body.GetComponent(/datum/component/hag_curio_tracker))
 	curio_component = null
@@ -152,13 +157,15 @@
 	hag_baseline_applied = TRUE
 
 /datum/antagonist/hag/proc/get_hag_job_datum()
-	return new /datum/job/roguetown/hag()
+	static/datum/job/roguetown/hag/hag_job
+	if(!hag_job)
+		hag_job = new /datum/job/roguetown/hag()
+	return hag_job
 
-/datum/antagonist/hag/proc/capture_hag_baseline_state(mob/living/carbon/human/hag_body)
+/datum/antagonist/hag/proc/capture_hag_baseline_state(mob/living/carbon/human/hag_body, datum/job/roguetown/hag/hag_job)
 	if(!istype(hag_body))
 		return
 
-	var/datum/job/roguetown/hag/hag_job = get_hag_job_datum()
 	if(!hag_job)
 		return
 	saved_hag_stats = list()

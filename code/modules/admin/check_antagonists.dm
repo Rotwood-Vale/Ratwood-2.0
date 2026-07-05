@@ -390,7 +390,7 @@
 			links += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(hag_body)]'>FLW</a>"
 			if(hag_body.client)
 				links += "<a href='?_src_=holder;[HrefToken()];priv_msg=[ckey(hag_body.ckey)]'>PM</a>"
-			dat += "<tr><td>[hag_body.real_name]</td><td>[hag_body.job || "(none)"]</td><td>[hag_body.advjob || "(none)"]</td><td>[hag_tier]</td><td>[curse_scar_count]</td><td>[length(prepared_bits) ? prepared_bits.Join(", ") : "(none)"]</td><td>[links.Join(" | ")]</td></tr>"
+					dat += "<tr><td>[hag_body.real_name]</td><td>[hag_body.job || "(none)"]</td><td>[hag_body.advjob || "(none)"]</td><td>[hag_tier]</td><td>[curse_scar_count]</td><td>[length(prepared_bits) ? jointext(prepared_bits, ", ") : "(none)"]</td><td>[jointext(links, " | ")]</td></tr>"
 		dat += "</table>"
 
 		dat += "<hr><h2>Active Hag Details</h2>"
