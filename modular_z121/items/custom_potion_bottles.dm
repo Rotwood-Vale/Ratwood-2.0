@@ -102,3 +102,9 @@
 	name = "身体再生药剂瓶"
 	desc = "一瓶预装的身体再生药剂，饮下足量并待其消化后可重新长出失去的肢体。"
 	list_reagents = list(/datum/reagent/bodily_regeneration_potion = 50)          // 50 >= 10 的生效阈值，管理员测试即取即用。
+
+// 复原药剂：泼洒/喷淋到物品上以将其分解回原材料。预装 50 单位（远超单件所需的 10 单位阈值）。
+/obj/item/reagent_containers/glass/bottle/rogue/restorative_potion
+	name = "复原药剂瓶"
+	desc = "一瓶预装的复原药剂，泼于器物之上可将其崩解、复归为最初的原料。"
+	list_reagents = list(/datum/reagent/restorative_potion = 50)                  // 50 >= 10 的单件分解阈值，取即可用。
