@@ -19,48 +19,9 @@
 	var/hag_baseline_applied = FALSE
 	var/hag_tier = 1
 	var/datum/component/hag_curio_tracker/curio_component
-	var/static/list/hag_baseline_traits = list(
-		TRAIT_RITUALIST,
-		TRAIT_ALCHEMY_EXPERT,
-		TRAIT_ANCIENT_HAG,
-		TRAIT_HOMESTEAD_EXPERT,
-		TRAIT_SEWING_EXPERT,
-		TRAIT_ZOMBIE_IMMUNE,
-		TRAIT_NOMOOD,
-		TRAIT_UNLYCKERABLE,
-		TRAIT_DARKVISION,
-		TRAIT_NOHUNGER,
-		TRAIT_SELF_SUSTENANCE,
-		TRAIT_LEECHIMMUNE,
-		TRAIT_KNEESTINGER_IMMUNITY,
-		TRAIT_WILDERNESSGUIDE,
-		TRAIT_EXTREME_TEMPERATURE_IMMUNE,
-		TRAIT_ANTISCRYING,
-		TRAIT_LONGSTRIDER
-	)
-	var/static/list/hag_baseline_stats = list(
-		STATKEY_STR = -7,
-		STATKEY_WIL = 8,
-		STATKEY_SPD = -2,
-		STATKEY_CON = 1,
-		STATKEY_INT = 9,
-	)
-	var/static/list/hag_baseline_skills = list(
-		/datum/skill/misc/tracking = SKILL_LEVEL_LEGENDARY,
-		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
-		/datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/medicine = SKILL_LEVEL_LEGENDARY,
-		/datum/skill/craft/crafting = SKILL_LEVEL_LEGENDARY,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_LEGENDARY,
-		/datum/skill/craft/sewing = SKILL_LEVEL_MASTER,
-		/datum/skill/craft/cooking = SKILL_LEVEL_MASTER,
-	)
+	var/list/saved_hag_stats = null
+	var/list/saved_hag_skill_levels = null
+	var/list/saved_hag_skill_experience = null
 	var/static/list/curse_registry = list(
 		/datum/hag_curse/no_run = list("cost" = 60, "min_tier" = 2),
 		/datum/hag_curse/unseemly = list("cost" = 10, "min_tier" = 1),
@@ -90,7 +51,8 @@
 			// Admin/manual grants often happen mid-round with occupied slots.
 			// Clear equipment first so the hag loadout applies deterministically.
 			hag_body.unequip_everything()
-		hag_body.equipOutfit(/datum/outfit/job/roguetown/hag)
+		capture_hag_baseline_state(hag_body)
+		hag_body.equipOutfit(get_hag_job_datum().outfit)
 		apply_hag_baseline(hag_body)
 
 	if(length(GLOB.hag_starts))
@@ -166,23 +128,77 @@
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/resurrect/hag)
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/mindlink/hag)
 	hag_body.verbs -= /mob/living/carbon/human/proc/commune_with_roots
+	restore_hag_baseline_state(hag_body)
 
 /datum/antagonist/hag/proc/apply_hag_baseline(mob/living/carbon/human/hag_body)
 	if(!istype(hag_body) || !hag_body.mind || hag_baseline_applied)
 		return
 
-	for(var/trait in hag_baseline_traits)
+	var/datum/job/roguetown/hag/hag_job = get_hag_job_datum()
+	if(!hag_job)
+		return
+
+	for(var/trait in hag_job.job_traits)
 		if(trait in hag_body.dna?.species?.banned_traits)
 			continue
 		ADD_TRAIT(hag_body, trait, "[type]")
 
-	for(var/stat in hag_baseline_stats)
-		hag_body.change_stat(stat, hag_baseline_stats[stat])
+	for(var/stat in hag_job.job_stats)
+		hag_body.change_stat(stat, hag_job.job_stats[stat])
 
-	for(var/skill in hag_baseline_skills)
-		hag_body.adjust_skillrank_up_to(skill, hag_baseline_skills[skill], TRUE)
+	for(var/skill in hag_job.skills)
+		hag_body.adjust_skillrank_up_to(skill, hag_job.skills[skill], TRUE)
 
 	hag_baseline_applied = TRUE
+
+/datum/antagonist/hag/proc/get_hag_job_datum()
+	return new /datum/job/roguetown/hag()
+
+/datum/antagonist/hag/proc/capture_hag_baseline_state(mob/living/carbon/human/hag_body)
+	if(!istype(hag_body))
+		return
+
+	var/datum/job/roguetown/hag/hag_job = get_hag_job_datum()
+	if(!hag_job)
+		return
+	saved_hag_stats = list()
+	for(var/stat in hag_job.job_stats)
+		saved_hag_stats[stat] = hag_body.get_stat(stat)
+
+	var/datum/skill_holder/skill_holder = hag_body.ensure_skills()
+	if(!skill_holder)
+		return
+	saved_hag_skill_levels = list()
+	saved_hag_skill_experience = list()
+	for(var/skill in hag_job.skills)
+		var/datum/skill/skill_ref = GetSkillRef(skill)
+		saved_hag_skill_levels[skill_ref] = skill_holder.known_skills[skill_ref] || SKILL_LEVEL_NONE
+		saved_hag_skill_experience[skill_ref] = skill_holder.skill_experience[skill_ref] || 0
+
+/datum/antagonist/hag/proc/restore_hag_baseline_state(mob/living/carbon/human/hag_body)
+	if(!istype(hag_body))
+		return
+
+	if(islist(saved_hag_stats))
+		for(var/stat in saved_hag_stats)
+			var/current_value = hag_body.get_stat(stat)
+			hag_body.change_stat(stat, saved_hag_stats[stat] - current_value)
+
+	var/datum/skill_holder/skill_holder = hag_body.skills
+	if(!skill_holder)
+		return
+
+	if(islist(saved_hag_skill_levels))
+		for(var/skill_ref in saved_hag_skill_levels)
+			skill_holder.known_skills[skill_ref] = saved_hag_skill_levels[skill_ref]
+
+	if(islist(saved_hag_skill_experience))
+		for(var/skill_ref in saved_hag_skill_experience)
+			skill_holder.skill_experience[skill_ref] = saved_hag_skill_experience[skill_ref]
+
+	saved_hag_stats = null
+	saved_hag_skill_levels = null
+	saved_hag_skill_experience = null
 
 /datum/antagonist/hag/proc/teach_hag_recipes(datum/mind/hag_mind)
 	if(!hag_mind)

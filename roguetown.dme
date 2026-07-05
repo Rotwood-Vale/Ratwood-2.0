@@ -1818,6 +1818,7 @@
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\_advclass.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\antag\brigand.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\antag\gnoll.dm"
+#include "code\modules\jobs\job_types\roguetown\adventurer\types\antag\hag.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\antag\hedgeknight.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\antag\Iconoclast.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\antag\knave.dm"
