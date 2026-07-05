@@ -46,7 +46,7 @@
 		objectives += revenge_objective
 		owner.store_memory("Objective: [revenge_objective.explanation_text]")
 
-	if(istype(hag_body))
+	if(hag_body)
 		if(admin_granted)
 			// Admin/manual grants often happen mid-round with occupied slots.
 			// Clear equipment first so the hag loadout applies deterministically.
@@ -84,7 +84,7 @@
 
 /datum/antagonist/hag/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/carbon/human/hag_body = mob_override || owner?.current
-	if(!istype(hag_body) || !hag_body.mind)
+	if(!hag_body || !hag_body.mind)
 		return
 	ADD_TRAIT(hag_body, TRAIT_ANCIENT_HAG, "[type]")
 	ensure_single_spell(hag_body.mind, /obj/effect/proc_holder/spell/invoked/hag_pact)
@@ -114,7 +114,7 @@
 
 /datum/antagonist/hag/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/carbon/human/hag_body = mob_override || owner?.current
-	if(!istype(hag_body) || !hag_body.mind)
+	if(!hag_body || !hag_body.mind)
 		return
 	var/datum/job/roguetown/hag/hag_job = get_hag_job_datum()
 	if(hag_job)
@@ -136,7 +136,7 @@
 	restore_hag_baseline_state(hag_body)
 
 /datum/antagonist/hag/proc/apply_hag_baseline(mob/living/carbon/human/hag_body)
-	if(!istype(hag_body) || !hag_body.mind || hag_baseline_applied)
+	if(!hag_body || !hag_body.mind || hag_baseline_applied)
 		return
 
 	var/datum/job/roguetown/hag/hag_job = get_hag_job_datum()
@@ -163,7 +163,7 @@
 	return hag_job
 
 /datum/antagonist/hag/proc/capture_hag_baseline_state(mob/living/carbon/human/hag_body, datum/job/roguetown/hag/hag_job)
-	if(!istype(hag_body))
+	if(!hag_body)
 		return
 
 	if(!hag_job)
@@ -183,7 +183,7 @@
 		saved_hag_skill_experience[skill_ref] = skill_holder.skill_experience[skill_ref] || 0
 
 /datum/antagonist/hag/proc/restore_hag_baseline_state(mob/living/carbon/human/hag_body)
-	if(!istype(hag_body))
+	if(!hag_body)
 		return
 
 	if(islist(saved_hag_stats))
