@@ -1397,6 +1397,14 @@
 			return
 		usr.client.holder.check_hunted_targets()
 
+	else if(href_list["check_hag_information"])
+		if(!check_rights(R_BAN))
+			return
+		if(!SSticker.HasRoundStarted())
+			alert("The game hasn't started yet!")
+			return
+		usr.client.holder.check_hag_information()
+
 	else if(href_list["kick_all_from_lobby"])
 		if(!check_rights(R_BAN))
 			return

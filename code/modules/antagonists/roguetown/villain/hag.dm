@@ -219,6 +219,8 @@
 		qdel(owner.current.GetComponent(/datum/component/hag_curio_tracker))
 	curio_component = null
 	cleanup_bound_followers()
+	if(owner)
+		owner.special_role = null
 	return ..()
 
 /datum/antagonist/hag/proc/get_active_heart()

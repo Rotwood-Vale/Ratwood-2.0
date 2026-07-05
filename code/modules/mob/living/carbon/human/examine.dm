@@ -149,6 +149,8 @@
 				display_as_wanderer = TRUE
 			else if(J.lowlife_examine)
 				display_as_lowlife = TRUE
+		if(src.mind?.has_antag_datum(/datum/antagonist/hag))
+			display_as_wanderer = TRUE
 		var/rank_color = "#725D4C"
 		if(HAS_TRAIT(src, TRAIT_NOBLE) && social_rank < 4)
 			social_rank = SOCIAL_RANK_MINOR_NOBLE

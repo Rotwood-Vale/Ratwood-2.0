@@ -145,7 +145,8 @@
 	dat += "<a href='?_src_=holder;[HrefToken()];ctf_toggle=1'>Enable/Disable CTF</a><br>"
 	dat += "<a href='?_src_=holder;[HrefToken()];rebootworld=1'>Reboot World</a><br>"
 	dat += "<a href='?_src_=holder;[HrefToken()];check_teams=1'>Check Teams</a><br>"
-	dat += "<a href='?_src_=holder;[HrefToken()];check_hunted_targets=1'>Gnoll Information</a>"
+	dat += "<a href='?_src_=holder;[HrefToken()];check_hunted_targets=1'>Gnoll Information</a><br>"
+	dat += "<a href='?_src_=holder;[HrefToken()];check_hag_information=1'>Hag Information</a>"
 	var/connected_players = GLOB.clients.len
 	var/lobby_players = 0
 	var/observers = 0
@@ -349,3 +350,129 @@
 
 	dat += "</body></html>"
 	usr << browse(dat.Join(), "window=gnollinformation;size=700x500")
+
+/datum/admins/proc/check_hag_information()
+	if(!SSticker.HasRoundStarted())
+		alert("The game hasn't started yet!")
+		return
+
+	var/list/active_hags = list()
+	for(var/datum/antagonist/hag/hag_datum as anything in GLOB.antagonists)
+		if(!hag_datum?.owner?.current)
+			continue
+		active_hags += hag_datum
+
+	var/list/dat = list("<html><head><title>Hag Information</title></head><body><h1><B>Hag Information</B></h1>")
+	dat += "<a href='?_src_=holder;[HrefToken()];check_hag_information=1'>Refresh</a><br>"
+
+	if(!length(active_hags))
+		dat += "<br><b>No active hags.</b>"
+	else
+		dat += "<br><table cellspacing=5>"
+		dat += "<tr><th align='left'>Hag</th><th align='left'>Job</th><th align='left'>Advjob</th><th align='left'>Tier</th><th align='left'>Curse Scars</th><th align='left'>Prepared Boons</th><th align='left'>Actions</th></tr>"
+		for(var/datum/antagonist/hag/hag_datum as anything in active_hags)
+			var/mob/living/carbon/human/hag_body = hag_datum.owner.current
+			var/datum/component/hag_curio_tracker/tracker = hag_body.GetComponent(/datum/component/hag_curio_tracker)
+			var/hag_tier = tracker ? tracker.hag_tier : 1
+			var/curse_scar_count = 0
+			var/list/prepared_bits = list()
+			if(tracker)
+				for(var/true_name in tracker.boon_registry)
+					var/datum/hag_boon/curse_scar/scar = tracker.find_boon_by_type(true_name, /datum/hag_boon/curse_scar)
+					if(scar)
+						curse_scar_count++
+				for(var/boon_path in tracker.prepared_boons)
+					var/count = tracker.prepared_boons[boon_path]
+					if(count > 0)
+						prepared_bits += "[initial(boon_path:name)]x[count]"
+			var/links = list()
+			links += "<a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(hag_body)]'>Panel</a>"
+			links += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(hag_body)]'>FLW</a>"
+			if(hag_body.client)
+				links += "<a href='?_src_=holder;[HrefToken()];priv_msg=[ckey(hag_body.ckey)]'>PM</a>"
+			dat += "<tr><td>[hag_body.real_name]</td><td>[hag_body.job || "(none)"]</td><td>[hag_body.advjob || "(none)"]</td><td>[hag_tier]</td><td>[curse_scar_count]</td><td>[length(prepared_bits) ? prepared_bits.Join(", ") : "(none)"]</td><td>[links.Join(" | ")]</td></tr>"
+		dat += "</table>"
+
+		dat += "<hr><h2>Active Hag Details</h2>"
+		for(var/datum/antagonist/hag/hag_datum as anything in active_hags)
+			var/mob/living/carbon/human/hag_body = hag_datum.owner.current
+			var/datum/component/hag_curio_tracker/tracker = hag_body.GetComponent(/datum/component/hag_curio_tracker)
+			if(!tracker)
+				continue
+
+			var/obj/structure/roguemachine/hag_heart/heart = null
+			for(var/obj/structure/roguemachine/hag_heart/H as anything in GLOB.hag_hearts)
+				if(H.bound_hag == hag_datum)
+					heart = H
+					break
+
+			dat += "<h3>[hag_body.real_name]</h3>"
+			dat += "<b>Location:</b> [AREACOORD(hag_body)]<br>"
+			dat += "<b>Alive:</b> [hag_body.stat == DEAD ? "No" : "Yes"]<br>"
+			dat += "<b>Hag tier:</b> [tracker.hag_tier]<br>"
+			dat += "<b>Bound boons:</b> [length(tracker.boon_registry)] victims tracked<br>"
+			if(length(tracker.prepared_boons))
+				var/list/prepare_rows = list()
+				for(var/boon_path in tracker.prepared_boons)
+					var/count = tracker.prepared_boons[boon_path]
+					if(count > 0)
+						prepare_rows += "- [initial(boon_path:name)]: [count]"
+				dat += "<b>Prepared boons:</b><br>[prepare_rows.Join("<br>")]<br>"
+			else
+				dat += "<b>Prepared boons:</b> none<br>"
+
+			if(heart)
+				dat += "<b>Heart:</b> [heart.destroyed ? "Destroyed" : "Active"]<br>"
+				dat += "<b>Heart health:</b> [heart.obj_integrity]/[heart.max_integrity]<br>"
+				dat += "<b>Heart stage:</b> [heart.current_stage]/[heart.max_stages]<br>"
+				if(heart.timer_id)
+					var/time_left = timeleft(heart.timer_id)
+					dat += "<b>Grand Rite:</b> [heart.rite_started ? "Running" : "Pending"] ([time_left > 0 ? DisplayTimeText(time_left) : "ending"])<br>"
+				else if(heart.rite_completed)
+					dat += "<b>Grand Rite:</b> Completed<br>"
+				else if(heart.current_stage > heart.max_stages)
+					dat += "<b>Grand Rite:</b> Ready to choose<br>"
+				else
+					dat += "<b>Grand Rite:</b> Not ready<br>"
+
+				var/list/current_requirements = heart.rite_requirements[heart.current_stage]
+				if(length(current_requirements))
+					dat += "<b>Current rite requirements:</b><br>"
+					for(var/req_path in current_requirements)
+						var/needed = current_requirements[req_path]
+						var/delivered = heart.delivered_items[req_path] || 0
+						dat += "- [needed - delivered] remaining of [initial(req_path:name)] ([delivered]/[needed])<br>"
+			else
+				dat += "<b>Heart:</b> No bound heart found<br>"
+
+			dat += "<b>Curse-scarred victims:</b><br>"
+			var/any_scarred = FALSE
+			for(var/true_name in tracker.boon_registry)
+				var/datum/hag_boon/curse_scar/scar = tracker.find_boon_by_type(true_name, /datum/hag_boon/curse_scar)
+				if(!scar)
+					continue
+				any_scarred = TRUE
+				var/list/scar_links = list()
+				var/mob/living/victim = tracker.find_target(true_name)
+				if(victim)
+					scar_links += "<a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(victim)]'>[true_name]</a>"
+				else
+					scar_links += true_name
+				dat += "- [scar_links.Join()] : [scar.points] points<br>"
+			if(!any_scarred)
+				dat += "- none<br>"
+
+			dat += "<br><b>Last revive:</b> [tracker.last_revive_time > 0 ? DisplayTimeText(world.time - tracker.last_revive_time) + " ago" : "never"]<br>"
+
+			dat += "<br><b>Heartroot Ward Status:</b><br>"
+			if(!length(GLOB.hag_wards))
+				dat += "No wards remain.<br>"
+			else
+				for(var/obj/structure/roguemachine/hag_ward/ward as anything in GLOB.hag_wards)
+					var/datum/reagent/reagent_type = ward.required_reagent
+					dat += "- [ward.name]: [initial(reagent_type.name)] ([ward.units_needed] units remaining)<br>"
+
+			dat += "<hr>"
+
+	dat += "</body></html>"
+	usr << browse(dat.Join(), "window=haginformation;size=850x700")
