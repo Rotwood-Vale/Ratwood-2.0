@@ -241,6 +241,11 @@
 	stressadd = 2
 	desc = span_red("Gods above... a Gnoll!!")
 
+/datum/stressevent/hag_true_form_examine
+	timer = 2 MINUTES
+	stressadd = 2
+	desc = span_boldred("What in the gods is THAT!?")
+
 /datum/stressevent/paracrowd
 	timer = 15 SECONDS
 	stressadd = 2

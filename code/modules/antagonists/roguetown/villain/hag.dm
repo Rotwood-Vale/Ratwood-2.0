@@ -1,7 +1,7 @@
 /datum/antagonist/hag
 	name = "Hag"
 	roundend_category = "Hags"
-	antagpanel_category = "Roguetown"
+	antagpanel_category = "Hag"
 	show_name_in_check_antagonists = TRUE
 	job_rank = ROLE_HAG
 	rogue_enabled = TRUE
@@ -126,16 +126,30 @@
 	if(!istype(hag_body) || !hag_body.mind)
 		return
 	ADD_TRAIT(hag_body, TRAIT_ANCIENT_HAG, "[type]")
-	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/hag_pact)
-	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/transmutation_rite)
-	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/spiritual_siphon)
-	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/grant_boon)
-	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/self/wildshape/hag_true_form)
-	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/resurrect/hag)
-	hag_body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mindlink/hag)
+	ensure_single_spell(hag_body.mind, /obj/effect/proc_holder/spell/invoked/hag_pact)
+	ensure_single_spell(hag_body.mind, /obj/effect/proc_holder/spell/invoked/transmutation_rite)
+	ensure_single_spell(hag_body.mind, /obj/effect/proc_holder/spell/invoked/spiritual_siphon)
+	ensure_single_spell(hag_body.mind, /obj/effect/proc_holder/spell/invoked/grant_boon)
+	ensure_single_spell(hag_body.mind, /obj/effect/proc_holder/spell/self/wildshape/hag_true_form)
+	ensure_single_spell(hag_body.mind, /obj/effect/proc_holder/spell/invoked/resurrect/hag)
+	ensure_single_spell(hag_body.mind, /obj/effect/proc_holder/spell/invoked/mindlink/hag)
 	teach_hag_recipes(hag_body.mind)
 	// Attach the curio tracker component for death/revive handling
 	curio_component = hag_body.AddComponent(/datum/component/hag_curio_tracker, src)
+
+/datum/antagonist/hag/proc/ensure_single_spell(datum/mind/hag_mind, spell_type)
+	if(!hag_mind || !spell_type)
+		return
+	var/seen = FALSE
+	for(var/obj/effect/proc_holder/spell/S in hag_mind.spell_list.Copy())
+		if(S.type != spell_type)
+			continue
+		if(!seen)
+			seen = TRUE
+			continue
+		hag_mind.RemoveSpell(S)
+	if(!seen)
+		hag_mind.AddSpell(new spell_type)
 
 /datum/antagonist/hag/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/carbon/human/hag_body = mob_override || owner?.current

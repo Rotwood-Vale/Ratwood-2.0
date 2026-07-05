@@ -172,11 +172,10 @@
 	skills?.skill_experience = WA.stored_experience.Copy()
 	playsound(W.loc, 'sound/body/shapeshift-end.ogg', 100, FALSE, 3)
 
-	//Compares the list of spells we had before transformation with those we do now. If there are any that don't match, we remove them
-	for(var/obj/effect/proc_holder/spell/self/originspell in WA.stored_spells)
-		for(var/obj/effect/proc_holder/spell/self/wildspell in W.mind.spell_list)
-			if(wildspell != originspell)
-				W.RemoveSpell(wildspell)
+	// Remove only spells gained while transformed; preserve the exact pre-transform spell objects.
+	for(var/obj/effect/proc_holder/spell/self/current_spell in W.mind.spell_list.Copy())
+		if(!(current_spell in WA.stored_spells))
+			W.RemoveSpell(current_spell)
 
 	W.regenerate_icons()
 	to_chat(W, span_userdanger("I return to my old form."))

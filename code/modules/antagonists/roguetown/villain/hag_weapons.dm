@@ -58,6 +58,8 @@
 		icon_state = initial(C.icon_state)
 
 /obj/item/clothing/neck/roguetown/psicross/hag/proc/can_use_wyrd_power(mob/living/user)
+	if(!user)
+		return FALSE
 	if(HAS_TRAIT(user, TRAIT_ANCIENT_HAG))
 		return TRUE
 
@@ -71,6 +73,7 @@
 	. = ..()
 	// Hags can use this
 	if(!can_use_wyrd_power(user))
+		to_chat(user, span_warning("The [src.name] rejects your touch."))
 		return
 
 	if(tonic_spent)
@@ -102,24 +105,31 @@
 
 	// Only works for the person holding it
 	if(!can_use_wyrd_power(user))
+		to_chat(user, span_warning("The [src.name] does not answer to me."))
 		return
 
 	if(!hag_radial_choices)
 		// Build radial options once; keys are labels, values are icon previews.
 		hag_radial_choices = list()
 		hag_path_map = list()
-		for(var/obj/item/clothing/neck/roguetown/psicross/P in typesof(/obj/item/clothing/neck/roguetown/psicross))
+		for(var/path as anything in typesof(/obj/item/clothing/neck/roguetown/psicross))
+			var/obj/item/clothing/neck/roguetown/psicross/P = path
 			if(P == /obj/item/clothing/neck/roguetown/psicross/hag)
 				continue
 			var/display_name = initial(P.name)
 			hag_radial_choices[display_name] = image(icon = initial(P.icon), icon_state = initial(P.icon_state))
 			hag_path_map[display_name] = P
 
+	if(!length(hag_radial_choices))
+		to_chat(user, span_warning("The [src.name] shudders, but no stable forms answer your call."))
+		return
+
 	var/selection = show_radial_menu(user, src, hag_radial_choices, require_near = TRUE, tooltips = TRUE)
 	if(!selection)
 		return
 
 	if(!can_use_wyrd_power(user))
+		to_chat(user, span_warning("The [src.name] slips from your command."))
 		return
 
 	if(mimic_type == hag_path_map[selection])
@@ -156,6 +166,7 @@
 	var/mob/living/user = usr
 
 	if(!can_use_wyrd_power(user))
+		to_chat(user, span_warning("The [src.name] refuses to bend for me."))
 		return
 
 	if(!mimic_type)

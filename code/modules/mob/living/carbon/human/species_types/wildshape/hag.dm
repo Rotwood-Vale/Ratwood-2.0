@@ -54,6 +54,22 @@
 		AddSpell(new /obj/effect/proc_holder/spell/self/hagclaws)
 		apply_status_effect(/datum/status_effect/debuff/hag_bog_tether/wildshape)
 
+/mob/living/carbon/human/species/wildshape/hag/examine(mob/user)
+	. = ..()
+	. += examine_block(span_boldwarning("<font size='4'>What in the gods is THAT!?</font>"))
+	if(user == src || !ishuman(user))
+		return
+
+	var/mob/living/carbon/human/H = user
+	if(!H.mind)
+		return
+	if(!H.mind.has_antag_datum(/datum/antagonist))
+		return
+	if(H.mind.has_antag_datum(/datum/antagonist/hag))
+		return
+
+	H.add_stress(/datum/stressevent/hag_true_form_examine)
+
 /mob/living/carbon/human/species/wildshape/hag/proc/cleanup_hag_claws()
 	for(var/obj/item/rogueweapon/hag_claw/claw in src)
 		dropItemToGround(claw, TRUE)
