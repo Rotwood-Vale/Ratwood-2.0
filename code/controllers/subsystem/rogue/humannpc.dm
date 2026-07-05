@@ -30,6 +30,11 @@ SUBSYSTEM_DEF(humannpc)
 	set waitfor = FALSE
 	if(thing.ai_currently_active)
 		return // Already running from another tick, don't do another action!
+	if(thing.mode == NPC_AI_SLEEP)
+		STOP_PROCESSING(src, thing)
+		return
+	if(thing.hibernating)
+		return
 	thing.ai_currently_active = TRUE
 	. = thing.process_ai()
 	thing.ai_currently_active = FALSE

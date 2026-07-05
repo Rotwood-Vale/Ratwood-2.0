@@ -379,7 +379,7 @@
 	if(brainmob)
 		LB.brainmob = brainmob
 		LB.brainmob.forceMove(LB)
-		LB.brainmob.stat = DEAD
+		LB.brainmob.set_stat(DEAD)
 	brainmob = null
 	return TRUE
 
@@ -546,6 +546,12 @@
 	moveToNullspace()
 	owner = C
 	C.bodyparts += src
+	if(needs_processing || length(wounds))
+		C.hibernation_bodypart_work = TRUE
+	if(length(embedded_objects))
+		C.hibernation_bodypart_embedded = TRUE
+	if(bleeding)
+		C.hibernation_bodypart_bleeding = TRUE
 	if(src.body_zone == BODY_ZONE_TAUR)
 		ADD_TRAIT(C, TRAIT_PONYGIRL_RIDEABLE, BODY_ZONE_TAUR)
 	if(held_index)

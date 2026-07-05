@@ -63,6 +63,11 @@ Key procs
 
 ///Handles the special case of editing the movement var
 /mob/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, stat))
+		set_stat(var_value)
+		datum_flags |= DF_VAR_EDITED
+		return TRUE
+
 	var/slowdown_edit = (var_name == NAMEOF(src, cached_multiplicative_slowdown))
 	var/diff
 	if(slowdown_edit && isnum(cached_multiplicative_slowdown) && isnum(var_value))

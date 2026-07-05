@@ -73,7 +73,7 @@ GLOBAL_LIST_EMPTY(stress_test_mobs)
 		addtimer(CALLBACK(src, PROC_REF(stress_test_cleanup), spawned_mobs), 45 SECONDS)
 	else
 		to_chat(src, span_warning("Test mobs will remain spawned. Use 'Cleanup Stress Test' verb to remove them later."))
-		GLOB.stress_test_mobs = spawned_mobs
+		GLOB.stress_test_mobs |= spawned_mobs
 
 /client/proc/stress_test_damage_wave(list/mobs, wave_number)
 	if(!mobs || !length(mobs))
@@ -114,6 +114,7 @@ GLOBAL_LIST_EMPTY(stress_test_mobs)
 			qdel(H)
 			cleaned++
 
+	GLOB.stress_test_mobs -= mobs
 	to_chat(src, span_notice("Stress test cleanup complete. Deleted [cleaned] mobs."))
 	to_chat(src, span_notice("Check server profiler for performance data."))
 

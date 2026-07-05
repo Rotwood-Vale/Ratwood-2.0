@@ -2046,6 +2046,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			zone_sel.flash_limb(BP.body_zone, "#00AFFF") // blocked = blue
 		return 0
 
+	H.wake_from_hibernation()
+
 	if(!spread_damage)
 		if(isbodypart(def_zone))
 			BP = def_zone

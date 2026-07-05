@@ -2,6 +2,32 @@
 
 // Kelvin per second (10 K per minute)
 #define TEMP_RECOVERY_RATE (10.0 / 60.0)
+
+/mob/living/carbon/has_hibernation_sensitive_state()
+	if(..())
+		return TRUE
+	if(blood_volume < BLOOD_VOLUME_NORMAL && (stat != DEAD || blood_volume))
+		return TRUE
+	if(hibernation_bodypart_embedded)
+		return TRUE
+	if(blood_volume && hibernation_bodypart_bleeding)
+		return TRUE
+	return stat != DEAD && hibernation_bodypart_work
+
+/mob/living/carbon/proc/refresh_hibernation_bodypart_state()
+	hibernation_bodypart_work = FALSE
+	hibernation_bodypart_embedded = FALSE
+	hibernation_bodypart_bleeding = FALSE
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		if(length(bodypart.embedded_objects))
+			hibernation_bodypart_embedded = TRUE
+		if(bodypart.bleeding)
+			hibernation_bodypart_bleeding = TRUE
+		if(bodypart.needs_processing || length(bodypart.wounds))
+			hibernation_bodypart_work = TRUE
+		if(hibernation_bodypart_work && hibernation_bodypart_embedded && hibernation_bodypart_bleeding)
+			return
+
 /mob/living/carbon/Life(seconds, times_fired)
 	set invisibility = 0
 
@@ -35,6 +61,8 @@
 			heal_wounds(0.3, list(/datum/wound/fracture/head, /datum/wound/fracture/head/brain, /datum/wound/fracture/neck))
 
 	handle_embedded_objects()
+	if(!client && times_fired % 3 == 0 && (hibernation_bodypart_work || hibernation_bodypart_embedded || hibernation_bodypart_bleeding))
+		refresh_hibernation_bodypart_state()
 	handle_roguebreath()
 	var/bprv = handle_bodyparts()
 	if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
@@ -52,7 +80,7 @@
 	if(stat != DEAD)
 		return 1
 
-/mob/living/carbon/DeadLife()
+/mob/living/carbon/DeadLife(seconds_per_tick = 2)
 	set invisibility = 0
 
 	if(notransform)
@@ -64,8 +92,10 @@
 	handle_wounds()
 	handle_embedded_objects()
 	handle_blood()
+	if(hibernation_bodypart_work || hibernation_bodypart_embedded || hibernation_bodypart_bleeding)
+		refresh_hibernation_bodypart_state()
 
-	check_cremation()
+	check_cremation(seconds_per_tick)
 
 /mob/living/carbon/handle_random_events()//BP/WOUND BASED PAIN
 	if(HAS_TRAIT(src, TRAIT_NOPAIN))
@@ -423,7 +453,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 /////////////
 //CREMATION//
 /////////////
-/mob/living/carbon/proc/check_cremation()
+/mob/living/carbon/proc/check_cremation(seconds_per_tick = 2)
 	//Only cremate while actively on fire
 	if(!on_fire)
 		return
@@ -436,6 +466,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(!(chest.get_damage() >= chest.max_damage))
 		return
 
+	var/progress_mult = max(seconds_per_tick * 0.5, 1)
+
 	//Burn off limbs one by one
 	var/obj/item/bodypart/limb
 	var/list/limb_list = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -446,9 +478,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		if(limb && !limb.skeletonized)
 			still_has_limbs = TRUE
 			if(limb.get_damage() >= limb.max_damage)
-				limb.cremation_progress += rand(2,5)
+				limb.cremation_progress += rand(2,5) * progress_mult
 				if(dna && dna.species && !(NOBLOOD in dna.species.species_traits))
-					blood_volume = max(blood_volume - 10, 0)
+					blood_volume = max(blood_volume - 10 * progress_mult, 0)
 				if(limb.cremation_progress >= 50)
 					if(limb.status == BODYPART_ORGANIC) //Non-organic limbs don't burn
 						limb.skeletonize()

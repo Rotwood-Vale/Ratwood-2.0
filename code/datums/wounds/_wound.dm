@@ -163,6 +163,9 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	sortTim(affected.wounds, GLOBAL_PROC_REF(cmp_wound_severity_dsc))
 	bodypart_owner = affected
 	owner = bodypart_owner.owner
+	owner.hibernation_bodypart_work = TRUE
+	if(bleed_rate)
+		owner.hibernation_bodypart_bleeding = TRUE
 	bodypart_owner.bleeding += bleed_rate // immediately apply our base bleeding
 	on_bodypart_gain(affected)
 	INVOKE_ASYNC(src, PROC_REF(on_mob_gain), affected.owner) //this is literally a fucking lint error like new species cannot possible spawn with wounds until after its ass
@@ -298,6 +301,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		bodypart_owner.bleeding -= bleed_rate
 		bleed_rate = amount
 		bodypart_owner.bleeding += bleed_rate
+		if(bleed_rate)
+			owner.hibernation_bodypart_bleeding = TRUE
 
 /// Heals this wound by the given amount, and deletes it if it's healed completely
 /datum/wound/proc/heal_wound(heal_amount)

@@ -320,6 +320,8 @@
 	else
 		. = FALSE
 	needs_processing = .
+	if(. && owner)
+		owner.hibernation_bodypart_work = TRUE
 
 //Return TRUE to get whatever mob this is in to update health.
 /obj/item/bodypart/proc/on_life(stam_regen)

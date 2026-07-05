@@ -11,6 +11,10 @@
 		real_name = name
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
+	if(stat == DEAD)
+		GLOB.mob_living_dead_list += src
+	else
+		GLOB.mob_living_active_list += src
 	init_faith()
 
 /mob/living/Destroy()
@@ -29,7 +33,13 @@
 
 	stop_offering_item()
 
+	GLOB.mob_living_active_list -= src
+	GLOB.mob_living_dead_list -= src
 	GLOB.mob_living_list -= src
+	if(SSmobs)
+		SSmobs.currentrun -= src
+	if(SSmobs_dead)
+		SSmobs_dead.currentrun -= src
 	for(var/s in ownedSoullinks)
 		var/datum/soullink/S = s
 		S.ownerDies(FALSE)
@@ -43,6 +53,37 @@
 	if(craftingthing)
 		QDEL_NULL(craftingthing)
 	return ..()
+
+/mob/living/set_stat(new_stat)
+	. = ..()
+	if(isnull(.))
+		return
+	if(QDELETED(src))
+		return
+
+	var/was_dead = . == DEAD
+	var/is_dead = stat == DEAD
+	if(was_dead == is_dead)
+		return
+
+	hibernating = FALSE
+	if(is_dead)
+		GLOB.alive_mob_list -= src
+		GLOB.dead_mob_list += src
+		GLOB.mob_living_active_list -= src
+		GLOB.mob_living_dead_list += src
+		if(SSmobs)
+			SSmobs.currentrun -= src
+		update_sneak_invis(TRUE)
+		if(GLOB.cold_breath_overlay in overlays)
+			cut_overlay(GLOB.cold_breath_overlay)
+	else
+		GLOB.dead_mob_list -= src
+		GLOB.alive_mob_list += src
+		GLOB.mob_living_dead_list -= src
+		GLOB.mob_living_active_list += src
+		if(SSmobs_dead)
+			SSmobs_dead.currentrun -= src
 
 /mob/living/onZImpact(turf/T, levels)
 	if(HAS_TRAIT(src, TRAIT_NOFALLDAMAGE2))
@@ -837,10 +878,8 @@
 	if(full_heal)
 		fully_heal(admin_revive = admin_revive, break_restraints = admin_revive)
 	if(stat == DEAD && (admin_revive || can_be_revived())) //in some cases you can't revive (e.g. no brain)
-		GLOB.dead_mob_list -= src  //If any more forms of revival are added, better to use a proc to do this - easier to search
-		GLOB.alive_mob_list += src
 		set_suicide(FALSE)
-		stat = CONSCIOUS
+		set_stat(CONSCIOUS)
 		updatehealth() //then we check if the mob should wake up.
 		update_mobility()
 		update_sight()
@@ -1932,13 +1971,6 @@
 		if ("maxHealth")
 			if (!isnum(var_value) || var_value <= 0)
 				return FALSE
-		if("stat")
-			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
-				GLOB.dead_mob_list -= src
-				GLOB.alive_mob_list += src
-			if((stat < DEAD) && (var_value == DEAD))//Kill he
-				GLOB.alive_mob_list -= src
-				GLOB.dead_mob_list += src
 	. = ..()
 	switch(var_name)
 		if("knockdown")

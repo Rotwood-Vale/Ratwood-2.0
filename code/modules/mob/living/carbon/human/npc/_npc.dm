@@ -55,6 +55,7 @@
 	var/interesting_dist = AI_DEFAULT_INTERESTING_DIST
 	///our current cell grid
 	var/datum/cell_tracker/our_cells
+	var/clients_in_range = TRUE
 
 /mob/living/carbon/human/Initialize(mapload)
 	. = ..()
@@ -72,6 +73,8 @@
 	if(client)
 		if(!ai_when_client)
 			return
+	if(mode == NPC_AI_SLEEP)
+		return
 	START_PROCESSING(SShumannpc,src)
 
 /mob/living/carbon/human/proc/check_mouth_grabbed()
@@ -921,6 +924,7 @@
 		wander = TRUE
 	if(L == src)
 		return
+	wake_from_hibernation()
 	if(mode != NPC_AI_OFF)
 		if(L.alpha == 0 && L.rogue_sneaking)
 			// we just got hit by something hidden so try and find them
@@ -990,17 +994,13 @@
 
 /mob/living/carbon/human/proc/on_client_enter(datum/source, atom/target)
 	SIGNAL_HANDLER
-	if(mode == NPC_AI_OFF)
-		return
-
+	clients_in_range = TRUE
+	hibernating = FALSE
 	if(mode == NPC_AI_SLEEP)
 		mode = NPC_AI_IDLE
 
 /mob/living/carbon/human/proc/on_client_exit(datum/source, datum/exited)
 	SIGNAL_HANDLER
-	if(mode == NPC_AI_OFF)
-		return
-
 	consider_wakeup()
 
 /mob/living/carbon/human/proc/set_new_cells()
@@ -1025,20 +1025,53 @@
 	set_new_cells()
 
 /mob/living/carbon/human/proc/consider_wakeup()
-	if(mode == NPC_AI_OFF)
-		return
-
+	if(!our_cells)
+		return clients_in_range
+	clients_in_range = FALSE
 	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
 		if(length(grid.client_contents))
-			if(mode != NPC_AI_SLEEP && mode != NPC_AI_IDLE)
-				return TRUE
-			mode = NPC_AI_IDLE
-			return TRUE
+			clients_in_range = TRUE
+			break
 
-	mode = NPC_AI_SLEEP
+	if(mode == NPC_AI_OFF)
+		return clients_in_range
+
+	if(clients_in_range)
+		if(mode == NPC_AI_SLEEP)
+			mode = NPC_AI_IDLE
+		return TRUE
+
+	if(mode == NPC_AI_IDLE && is_calm())
+		mode = NPC_AI_SLEEP
 	return FALSE
+
+/mob/living/carbon/human/proc/awaiting_deaggro_despawn()
+	return del_on_deaggro && last_aggro_loss && world.time < last_aggro_loss + del_on_deaggro + 10 SECONDS
+
+/mob/living/carbon/human/is_calm()
+	return NPC_AI_IS_CALM(mode) && !target && !awaiting_deaggro_despawn()
+
+/mob/living/carbon/human/should_hibernate(list/active_z)
+	if(stat == DEAD)
+		return ..(active_z)
+	if(ckey || ignore_hibernation || clients_in_range)
+		hibernation_pending_since = 0
+		return FALSE
+	return update_hibernation_state()
+
+/mob/living/carbon/human/wake_from_hibernation(duration = HIBERNATION_WAKE_GRACE_TIME)
+	. = ..()
+	if(mode == NPC_AI_SLEEP)
+		mode = NPC_AI_IDLE
+	if(mode != NPC_AI_OFF)
+		handle_ai()
+
+/mob/living/carbon/human/hibernation_failsafe()
+	if(mode == NPC_AI_OFF)
+		return
+	back_to_idle()
 
 /mob/living/carbon/human/Moved()
 	. = ..()
-	if(mode != NPC_AI_OFF)
+	if(!client)
 		update_grid()

@@ -189,10 +189,6 @@
 
 
 
-		GLOB.dead_mob_list -= zombie // Remove it from global dead/alive mob list here here, if they're a zombie they probably died.
-		// There is a better way to maintain it but needs overhaul. Will cover the two methods of zombie
-		GLOB.alive_mob_list += zombie// in both cure rot and medicine.
-
 		zombie.cmode_music = cmode_music
 
 		for(var/trait in traits_zombie)
@@ -342,7 +338,7 @@
 		zombie.adjustBruteLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
 		zombie.adjustFireLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
 		zombie.heal_wounds(INFINITY)
-	zombie.stat = UNCONSCIOUS
+	zombie.set_stat(UNCONSCIOUS)
 	zombie.updatehealth()
 	zombie.update_mobility()
 	zombie.update_sight()
@@ -394,7 +390,7 @@
 		zombie.heal_wounds(INFINITY) // Heal all non-permanent wounds
 		to_chat(zombie, span_userdanger("Your bones snap back into place and your flesh knits itself back together as you rise again in undeath."))
 
-	zombie.stat = UNCONSCIOUS // Start unconscious
+	zombie.set_stat(UNCONSCIOUS) // Start unconscious
 	zombie.updatehealth() // Then check if the mob should wake up
 	zombie.update_mobility()
 	zombie.update_sight()
@@ -434,4 +430,3 @@
 	if(HAS_TRAIT(src, TRAIT_ZOMBIE_IMMUNE))
 		return
 	return mind.add_antag_datum(/datum/antagonist/zombie)
-

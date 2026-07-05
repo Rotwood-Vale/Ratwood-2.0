@@ -106,7 +106,7 @@
 	if(stat != DEAD)
 		return 1
 
-/mob/living/carbon/human/DeadLife()
+/mob/living/carbon/human/DeadLife(seconds_per_tick = 2)
 	set invisibility = 0
 
 	if(notransform)

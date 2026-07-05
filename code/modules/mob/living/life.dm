@@ -101,7 +101,7 @@
 			return
 	. =..()
 
-/mob/living/proc/DeadLife()
+/mob/living/proc/DeadLife(seconds_per_tick = 2)
 	set invisibility = 0
 	if (notransform)
 		return
@@ -111,11 +111,67 @@
 		handle_wounds()
 		handle_embedded_objects()
 		handle_blood()
-	update_sneak_invis()
 	if(istype(loc, /turf/open/water))
 		handle_inwater(loc)
-	if(GLOB.cold_breath_overlay in overlays)
-		cut_overlay(GLOB.cold_breath_overlay)
+
+/mob/living/proc/can_hibernate()
+	if(ignore_hibernation)
+		return FALSE
+	if(has_hibernation_sensitive_state())
+		return FALSE
+	if(stat == DEAD)
+		return TRUE
+	return is_calm()
+
+/mob/living/proc/has_hibernation_sensitive_state()
+	if(length(simple_embedded_objects))
+		return TRUE
+	if(blood_volume && (simple_bleeding || bleed_rate))
+		return TRUE
+	return stat != DEAD && length(simple_wounds)
+
+/mob/living/proc/should_hibernate(list/active_z)
+	if(ckey || ignore_hibernation)
+		hibernation_pending_since = 0
+		return FALSE
+
+	var/turf/current_turf = get_turf(src)
+	if(!active_z || !current_turf || current_turf.z > active_z.len || active_z[current_turf.z])
+		hibernation_pending_since = 0
+		return FALSE
+
+	return update_hibernation_state()
+
+/mob/living/proc/update_hibernation_state()
+	if(world.time < hibernation_wake_until)
+		hibernation_pending_since = 0
+		return FALSE
+
+	if(can_hibernate())
+		hibernation_pending_since = 0
+		return TRUE
+
+	if(!hibernation_pending_since)
+		hibernation_pending_since = world.time
+		return FALSE
+
+	if(world.time - hibernation_pending_since < HIBERNATION_FAILSAFE_TIME)
+		return FALSE
+
+	hibernation_failsafe()
+	hibernation_pending_since = 0
+	return can_hibernate()
+
+/mob/living/proc/wake_from_hibernation(duration = HIBERNATION_WAKE_GRACE_TIME)
+	hibernating = FALSE
+	hibernation_pending_since = 0
+	hibernation_wake_until = max(hibernation_wake_until, world.time + duration)
+
+/mob/living/proc/is_calm()
+	return TRUE
+
+/mob/living/proc/hibernation_failsafe()
+	return
 
 /mob/living/proc/handle_random_events(additional = 0)
 	//random painstun

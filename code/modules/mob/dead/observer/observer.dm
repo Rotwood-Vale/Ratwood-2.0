@@ -376,7 +376,9 @@ Works together with spawning an observer, noted above.
 
 /mob/living/carbon/human/ghostize(can_reenter_corpse = 1, force_respawn = FALSE, admin = FALSE, drawskip = FALSE)
 	if(mind)
-		if(mind.has_antag_datum(/datum/antagonist/zombie))
+		if(QDESTROYING(src))
+			mind.remove_antag_datum(/datum/antagonist/zombie)
+		else if(!admin && mind.has_antag_datum(/datum/antagonist/zombie))
 			if(force_respawn)
 				mind.remove_antag_datum(/datum/antagonist/zombie)
 				return ..()
