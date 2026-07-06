@@ -95,6 +95,9 @@ jobs:
           bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build.sh --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
+      - name: Compile All Templates
+        run: |
+          tools/build/build.sh --ci dm -DCIBUILDING -DCITESTING -DALL_TEMPLATES
 
   test_windows:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
