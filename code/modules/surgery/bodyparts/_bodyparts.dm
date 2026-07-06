@@ -344,6 +344,8 @@
 //Cannot apply negative damage
 /obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, stamina = 0, blocked = 0, updating_health = TRUE, required_status = null)
 	update_HP()
+	var/old_brute_dam = brute_dam
+	var/old_burn_dam = burn_dam
 	var/hit_percent = (100-blocked)/100
 	if((!brute && !burn && !stamina) || hit_percent <= 0)
 		return FALSE
@@ -393,6 +395,8 @@
 			. = TRUE
 	consider_processing()
 	update_disabled()
+	if(owner && ((brute_dam != old_brute_dam) || (burn_dam != old_burn_dam)))
+		owner.mark_zone_selector_hud_dirty()
 	return update_bodypart_damage_state() || .
 
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
@@ -402,6 +406,8 @@
 	if((HAS_TRAIT(owner, TRAIT_SILVER_WEAK) && !owner.has_status_effect(STATUS_EFFECT_ANTIMAGIC)) && owner.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) || owner.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
 		return
 	update_HP()
+	var/old_brute_dam = brute_dam
+	var/old_burn_dam = burn_dam
 	if(required_status && (status != required_status)) //So we can only heal certain kinds of limbs, ie robotic vs organic.
 		return
 	if(owner && owner.has_status_effect(/datum/status_effect/buff/fortify))
@@ -417,6 +423,8 @@
 	consider_processing()
 	update_disabled()
 	cremation_progress = min(0, cremation_progress - ((brute_dam + burn_dam)*(100/max_damage)))
+	if(owner && ((brute_dam != old_brute_dam) || (burn_dam != old_burn_dam)))
+		owner.mark_zone_selector_hud_dirty()
 	return update_bodypart_damage_state()
 
 //Returns total damage.
@@ -814,7 +822,7 @@
 	if(owner.hud_used)
 		var/atom/movable/screen/inventory/hand/L = owner.hud_used.hand_slots["[held_index]"]
 		if(L)
-			L.update_icon()
+			L.update_hand_vis()
 
 /obj/item/bodypart/r_arm
 	name = "right arm"
@@ -859,7 +867,7 @@
 	if(owner.hud_used)
 		var/atom/movable/screen/inventory/hand/R = owner.hud_used.hand_slots["[held_index]"]
 		if(R)
-			R.update_icon()
+			R.update_hand_vis()
 
 /obj/item/bodypart/l_leg
 	name = "left leg"
