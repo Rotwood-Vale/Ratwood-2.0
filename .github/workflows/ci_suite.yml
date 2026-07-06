@@ -164,6 +164,7 @@ jobs:
           bash tools/ci/install_rust_g.sh
       - name: Compile and run tests
         run: |
+          bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build.sh --ci dm -DCIBUILDING -DANSICOLORS -Werror -ITG0001 -I"loop_checks"
           bash tools/ci/run_server.sh roguetest
