@@ -8,6 +8,7 @@
 		#include "map_files\deserttown\deserttown.dmm"
 		#include "map_files\dun_world\dun_world.dmm"
 		#include "map_files\rockhill\rockhill.dmm"
+		#include "map_files\byos\byos.dmm"
 	#endif
 
 	#ifdef ALL_TEMPLATES
