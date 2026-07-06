@@ -42,3 +42,26 @@
       of the current eagle''s beak
 
       :cl:'
+2026-07-06:
+  EvenInDeathIStillServe:
+  - rscadd: Adds an Observer ban option to the admin ban panel.
+  SneakySlinky:
+  - bugfix: Grand Mace and Punch Dagger loadout choices for Berserker now work.
+  Teragenic:
+  - qol: Adds Right and Left Indicator from AP
+  - bugfix: Czwarteki Icons returned
+  Xander3359:
+  - rscadd: Belts can now be untied into the leather that is used to make them via
+      a craft.
+  - rscadd: Sandals, boots and pouches can be chopped up with scissors.
+  Yuckuza:
+  - balance: Gave whips the wbalance var, with light whips getting swift and most
+      of the heavier whips getting heavy balance.
+  - balance: replaced the warden master's steel greataxe loadout option with the unique
+      oath axe.
+  kimesik:
+  - bugfix: Wretch-Heretic Spy gets maximum Devotion on spawn.
+  ophaq:
+  - rscadd: Adds craftable ritechalk.
+  zeroisthebiggay:
+  - image: updated god miracle icons

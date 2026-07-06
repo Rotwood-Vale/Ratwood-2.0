@@ -732,9 +732,11 @@
 
 	if(zone_selected != old_zone)
 		playsound_local(src, 'sound/misc/click.ogg', 50, TRUE)
-		if(hud_used)
-			if(hud_used.zone_select)
-				hud_used.zone_select.update_icon()
+		if(isliving(src))
+			var/mob/living/L = src
+			L.update_zone_selector_hud()
+		else if(hud_used?.zone_select)
+			hud_used.zone_select.update_zone_layers()
 
 /mob/proc/select_organ_slot(choice)
 	organ_slot_selected = choice

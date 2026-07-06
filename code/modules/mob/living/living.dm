@@ -1,6 +1,8 @@
 /mob/living
 	//used by the basic ai controller /datum/ai_behavior/basic_melee_attack to determine how fast a mob can attack
 	var/melee_cooldown = CLICK_CD_MELEE
+	var/zone_selector_hud_dirty = FALSE
+	var/zone_selector_hud_update_queued = FALSE
 
 /mob/living/Initialize(mapload)
 	. = ..()
@@ -82,6 +84,26 @@
 
 /mob/living/proc/OpenCraftingMenu()
 	return
+
+/mob/living/proc/update_zone_selector_hud()
+	if(hud_used?.zone_select)
+		hud_used.zone_select.update_zone_layers()
+
+/mob/living/proc/mark_zone_selector_hud_dirty()
+	if(!hud_used?.zone_select)
+		return
+	zone_selector_hud_dirty = TRUE
+	if(zone_selector_hud_update_queued)
+		return
+	zone_selector_hud_update_queued = TRUE
+	addtimer(CALLBACK(src, PROC_REF(flush_zone_selector_hud)), 0)
+
+/mob/living/proc/flush_zone_selector_hud()
+	zone_selector_hud_update_queued = FALSE
+	if(!zone_selector_hud_dirty)
+		return
+	zone_selector_hud_dirty = FALSE
+	update_zone_selector_hud()
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A)
@@ -432,6 +454,9 @@
 				O.sublimb_grabbed = item_override
 			else
 				O.sublimb_grabbed = used_limb
+			if(BP)
+				C.update_hud_hand_slot(BP.held_index)
+				C.mark_zone_selector_hud_dirty()
 			put_in_hands(O)
 			O.update_hands(src)
 			if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER) || item_override)
