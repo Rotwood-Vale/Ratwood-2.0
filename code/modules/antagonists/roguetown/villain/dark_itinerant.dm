@@ -97,6 +97,7 @@
 	H.cmode_music = 'sound/music/combat_heretic.ogg'
 	ADD_TRAIT(H, TRAIT_SQUIRE_REPAIR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_OUTLANDER, TRAIT_GENERIC)
 	wretch_select_bounty(H)
 
 /datum/outfit/job/dark_itinerant_knight/pre_equip(mob/living/carbon/human/H)
@@ -147,6 +148,7 @@
 
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_OUTLANDER, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC)
