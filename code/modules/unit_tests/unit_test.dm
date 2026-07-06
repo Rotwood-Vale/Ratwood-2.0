@@ -72,6 +72,8 @@ GLOBAL_VAR(test_log)
 
 	var/list/tests_to_run = sortTim(subtypesof(/datum/unit_test), /proc/cmp_unit_test_priority)
 	for(var/I in tests_to_run)
+		if(ispath(I, /datum/unit_test/focus_only))
+			continue
 		var/datum/unit_test/test = new I
 
 		GLOB.current_test = test

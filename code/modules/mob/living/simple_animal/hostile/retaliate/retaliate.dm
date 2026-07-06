@@ -3,6 +3,10 @@
 	stop_automated_movement_when_pulled = TRUE
 	use_lazy_target_scan = FALSE
 
+/mob/living/simple_animal/hostile/retaliate/Destroy()
+	enemies = null
+	return ..()
+	
 /mob/living/simple_animal/hostile/retaliate/attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(M.used_intent.type == INTENT_HELP)

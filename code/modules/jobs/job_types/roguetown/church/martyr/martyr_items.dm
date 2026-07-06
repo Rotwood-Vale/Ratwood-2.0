@@ -44,24 +44,23 @@
 	)
 
 /datum/intent/sword/cut/martyr
-		item_d_type = "fire"
-		blade_class = BCLASS_CUT
+	item_d_type = "fire"
+	blade_class = BCLASS_CUT
 /datum/intent/sword/thrust/martyr
-		item_d_type = "fire"
-		blade_class = BCLASS_PICK // so our armor-piercing attacks in ult mode can do crits(against most armors, not having crit)
+	item_d_type = "fire"
+	blade_class = BCLASS_PICK // so our armor-piercing attacks in ult mode can do crits(against most armors, not having crit)
 /datum/intent/sword/strike/martyr
-		item_d_type = "fire"
-		blade_class = BCLASS_SMASH
+	item_d_type = "fire"
+	blade_class = BCLASS_SMASH
 /datum/intent/sword/chop/martyr
-		item_d_type = "fire"
-		blade_class = BCLASS_CHOP
+	item_d_type = "fire"
+	blade_class = BCLASS_CHOP
 
 /obj/item/rogueweapon/sword/long/martyr/Initialize(mapload)
 	. = ..(mapload)
 	if(SSroguemachine.martyrweapon)
-		qdel(src)
-	else
-		SSroguemachine.martyrweapon = src
+		return INITIALIZE_HINT_QDEL
+	SSroguemachine.martyrweapon = src
 	if(!gc_destroyed)
 		var/list/active_intents = list(/datum/intent/sword/cut/martyr, /datum/intent/sword/thrust/martyr, /datum/intent/sword/strike/martyr)
 		var/list/active_intents_wielded = list(/datum/intent/sword/cut/martyr, /datum/intent/sword/thrust/martyr, /datum/intent/sword/strike/martyr, /datum/intent/sword/chop/martyr)

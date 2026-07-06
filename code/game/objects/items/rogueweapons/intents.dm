@@ -82,7 +82,7 @@
 
 /datum/intent/Destroy()
 	if(chargedloop)
-		chargedloop.stop()
+		QDEL_NULL(chargedloop)
 	if(mob_light)
 		QDEL_NULL(mob_light)
 	if(mob_charge_effect)

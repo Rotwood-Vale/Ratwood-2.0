@@ -480,47 +480,36 @@
 	if(hud_used?.action_intent)
 		hud_used.action_intent.switch_intent(r_index,l_index,oactive)
 
+/mob/proc/update_hand_intent(active = TRUE)
+	var/list/intents
+	var/obj/item/Masteritem = active ? get_active_held_item() : get_inactive_held_item()
+	if(Masteritem)
+		if(Masteritem.wielded)
+			intents = Masteritem.gripped_intents
+		else if(Masteritem.altgripped)
+			intents = Masteritem.alt_intents
+		else
+			intents = Masteritem.possible_item_intents
+	else
+		// If active = TRUE, index 1 is left and 2 is right. If active == FALSE, index 1 is right and 2 is left.
+		var/do_left = (active_hand_index == 1) ^ active
+		if(do_left)
+			l_index = l_ua_index
+		else
+			r_index = r_ua_index
+		intents = base_intents
+	. = list()
+	for(var/defintent in intents)
+		. += new defintent(src, Masteritem)
+	
 /mob/proc/update_a_intents()
 	stop_attack()
 	QDEL_LIST(possible_a_intents)
 	QDEL_LIST(possible_offhand_intents)
-	var/list/intents = list()
-	var/obj/item/Masteritem = get_active_held_item()
-	if(Masteritem)
-		intents = Masteritem.possible_item_intents
-		if(Masteritem.wielded)
-			intents = Masteritem.gripped_intents
-		if(Masteritem.altgripped)
-			intents = Masteritem.alt_intents
-	else
-		if(active_hand_index == 1)
-			r_index = r_ua_index
-		else
-			l_index = l_ua_index
-		intents = base_intents.Copy()
-	for(var/defintent in intents)
-		if(Masteritem)
-			possible_a_intents += new defintent(src, Masteritem)
-		else
-			possible_a_intents += new defintent(src)
-	Masteritem = get_inactive_held_item()
-	if(Masteritem)
-		intents = Masteritem.possible_item_intents
-		if(Masteritem.wielded)
-			intents = Masteritem.gripped_intents
-		if(Masteritem.altgripped)
-			intents = Masteritem.alt_intents
-	else
-		if(active_hand_index == 1)
-			l_index = l_ua_index
-		else
-			r_index = r_ua_index
-		intents = base_intents.Copy()
-	for(var/defintent in intents)
-		if(Masteritem)
-			possible_offhand_intents += new defintent(src, Masteritem)
-		else
-			possible_offhand_intents += new defintent(src)
+	if(QDELETED(src))
+		return
+	possible_a_intents = update_hand_intent(active = TRUE)
+	possible_offhand_intents = update_hand_intent(active = FALSE)
 	if(hud_used?.action_intent)
 		if(active_hand_index == 1)
 			hud_used.action_intent.update_icon(possible_a_intents,possible_offhand_intents,oactive)

@@ -44,9 +44,13 @@ GLOBAL_VAR_INIT(mobids, 1)
 	for(var/cc in client_colours)
 		qdel(cc)
 	if(used_intent)
-		qdel(used_intent)
-	if(a_intent && a_intent.mastermob == src)
-		a_intent.mastermob = null
+		QDEL_NULL(used_intent)
+	if(mmb_intent)
+		QDEL_NULL(mmb_intent)
+	if(rmb_intent)
+		QDEL_NULL(rmb_intent)
+	a_intent = null // this SHOULD be in possible_a_intents, so don't qdel it
+	o_intent = null // ditto but for possible_offhand_intents
 	QDEL_LIST(possible_a_intents)
 	QDEL_LIST(possible_offhand_intents)
 	SStreasury.remove_person(src) // Call me overly cautious I dunno when they giving dogs bank account
@@ -56,6 +60,11 @@ GLOBAL_VAR_INIT(mobids, 1)
 		QDEL_NULL(skills)
 	client_colours = null
 	ghostize(drawskip=TRUE)
+	// spell/action removal must go after ghostize, so we only delete the ones not transferred by a mind
+	// remove innate spells before we remove any potentially-associated actions
+	RemoveAllSpells()
+	// remove any actions not transferred in ghostize
+	QDEL_LIST(actions)
 	..()
 	return QDEL_HINT_QUEUE
 
@@ -1072,6 +1081,9 @@ GLOBAL_VAR_INIT(mobids, 1)
 		if(istype(S, spell))
 			mob_spell_list -= S
 			qdel(S)
+
+/mob/proc/RemoveAllSpells()
+	QDEL_LIST(mob_spell_list)
 
 ///Return any anti magic atom on this mob that matches the magic type
 /mob/proc/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)

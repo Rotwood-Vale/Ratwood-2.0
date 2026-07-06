@@ -10,6 +10,8 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	var/list/ignore = list(
 		//Never meant to be created, errors out the ass for mobcode reasons
 		/mob/living/carbon,
+		// needs a brain organ
+		/mob/living/brain,
 		//Needs a seed passed, but subtypes set one by default
 		/obj/item/grown,
 		/obj/item/reagent_containers/food/snacks/grown,
@@ -31,6 +33,22 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		/obj/effect/DPtarget,
 		// prompts loc for input
 		/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft,
+		// needs an obj passed in
+		/obj/effect/temp_visual/offered_item_effect,
+		// can't spawn without players to target
+		/obj/effect/tracker,
+		// can't spawn outside the vault
+		/obj/structure/roguemachine/vaultbank,
+		// garbage code refuses to force-qdel
+		/obj/item/alch/bloomstone,
+		// nope
+		/obj/structure/dungeon_entry,
+		/obj/structure/dungeon_exit,
+		// abstract turfs
+		/turf/closed,
+		/turf/closed/basic,
+		/turf/closed/wall,
+		/turf/open,
 	)
 	//these are VERY situational and need info passed
 	ignore += typesof(/obj/effect/abstract)
@@ -58,12 +76,23 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	ignore += typesof(/obj/effect/spawner)
 	ignore += typesof(/atom/movable/screen)
+	ignore += typesof(/obj/effect/landmark/mapGenerator)
+	ignore += typesof(/obj/effect/landmark/map_load_mark)
+	// temporary, skeletonize currently spams runtimes
+	ignore += typesof(/mob/living/carbon/human/species/skeleton)
+	// needs landmarks and such
+	ignore += typesof(/obj/structure/industrial_lift)
+	// needs a mob
+	ignore += typesof(/obj/shapeshift_holder)
+	ignore += typesof(/mob/living/simple_animal/hostile/rogue/xylixdouble)
+	// just generally awful code and prone to breaking
+	ignore += typesof(/mob/living/carbon/human/species/wildshape)
 
 	var/list/cached_contents = spawn_at.contents.Copy()
 	var/baseturf_count = length(spawn_at.baseturfs)
 
 	GLOB.running_create_and_destroy = TRUE
-	for(var/type_path in typesof(/atom/movable, /turf) - ignore) //No areas please
+	for(var/type_path in subtypesof(/atom/movable) + subtypesof(/turf) - ignore) //No areas please
 		if(ispath(type_path, /turf))
 			spawn_at.ChangeTurf(type_path, /turf/baseturf_skipover)
 			//We change it back to prevent pain, please don't ask

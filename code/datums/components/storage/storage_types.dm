@@ -289,3 +289,6 @@
 /datum/component/storage/concrete/roguetown/dice_pouch/New(datum/P, ...)
 	. = ..()
 	can_hold = typecacheof(list(/obj/item/dice))
+
+/datum/component/storage/concrete/roguetown/book
+	max_items = 1

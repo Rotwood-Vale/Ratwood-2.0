@@ -124,6 +124,7 @@
 
 /obj/structure/flora/roguetree/evil/Destroy()
 	soundloop.stop()
+	QDEL_NULL(soundloop)
 	if(controller)
 		controller.endvines()
 		controller.tree = null
@@ -1025,10 +1026,10 @@
 	)
 	var/mushroom_type = pickweight(mushroom_types)
 	new mushroom_type(loc)
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
-/obj/structure/flora/rogueshroom/unhappy/New(loc)
-	..()
+/obj/structure/flora/rogueshroom/unhappy/Initialize(ml)
+	. = ..()
 	if(mush_light_power > 0)
 		set_light(mush_light_range, mush_light_range, mush_light_power, l_color = mush_light_color)
 
@@ -1056,8 +1057,8 @@
 	. = ..()
 	icon_state = "happymush[rand(1,5)]"
 
-/obj/structure/flora/rogueshroom/happy/New(loc)
-	..()
+/obj/structure/flora/rogueshroom/happy/Initialize(mapload)
+	. = ..()
 	set_light(3, 3, 3, l_color ="#5D3FD3")
 
 /obj/structure/flora/rogueshroom/unhappy/metal
@@ -1089,8 +1090,8 @@
 	desc = "A cluster of mushrooms native to the underdark."
 	icon_state = "mushroomclusterunhappy"
 
-/obj/structure/flora/mushroomcluster/New(loc)
-	..()
+/obj/structure/flora/mushroomcluster/Initialize(mapload)
+	. = ..()
 	set_light(1.5, 1.5, 1.5, l_color ="#5D3FD3")
 
 /obj/structure/flora/tinymushrooms

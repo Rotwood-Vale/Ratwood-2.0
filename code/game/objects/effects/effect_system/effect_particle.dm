@@ -23,9 +23,7 @@
 
 
 /atom/movable/proc/MakeParticleEmitter(type, create_new = FALSE, time = -1)
-	var/obj/particle_emitter/pe
-	pe = new /obj/particle_emitter(loc, time)
-	pe.host = src
+	var/obj/particle_emitter/pe = new(loc, time, src)
 	pe.AddParticles(type, create_new)
 	particle_emitters |= pe
 	return pe
@@ -81,7 +79,7 @@
 	var/atom/movable/host
 
 
-/obj/particle_emitter/Initialize(mapload, time, _color)
+/obj/particle_emitter/Initialize(mapload, time, _color, _host)
 	. = ..()
 	if (particle_type)
 		particles = GLOB.all_particles[particle_type]
@@ -89,11 +87,13 @@
 	if (time > 0)
 		QDEL_IN(src, time)
 	color = _color
+	host = _host
 
 /obj/particle_emitter/Destroy(force)
 	. = ..()
-	host.particle_emitters -= src
-	host = null
+	if(host)
+		host.particle_emitters -= src
+		host = null
 
 /obj/particle_emitter/smoke
 	layer = FIRE_LAYER
