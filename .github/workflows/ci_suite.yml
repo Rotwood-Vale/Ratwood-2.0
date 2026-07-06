@@ -161,9 +161,10 @@ jobs:
           sudo dpkg --add-architecture i386
           sudo apt update || true
           sudo apt install zlib1g-dev:i386 libssl-dev:i386 curl:i386 libc6:i386
-          bash tools/ci/install_rust_g.sh
+          # bash tools/ci/install_rust_g.sh # use the one included in the repo for now
       - name: Compile and run tests
         run: |
+          bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build.sh --ci dm -DCIBUILDING -DANSICOLORS -Werror -ITG0001 -I"loop_checks"
           bash tools/ci/run_server.sh roguetest
