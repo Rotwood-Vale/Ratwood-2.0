@@ -555,8 +555,6 @@
 /atom/movable/screen/act_intent/rogintent/Destroy()
 	QDEL_LIST(intent_slots)
 	QDEL_LIST(border_slots)
-	intent_slots = null
-	border_slots = null
 	return ..()
 
 /atom/movable/screen/act_intent/rogintent/proc/reset_rogintent_layers()
