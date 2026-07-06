@@ -66,6 +66,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	var/critical = FALSE
 	/// Some wounds cause instant death for CRITICAL_WEAKNESS
 	var/mortal = FALSE
+	/// Some wounds cause instant death for SHATTER_WEAKNESS
+	var/shatter_wound = FALSE
 	/// Amount we heal passively while sleeping
 	var/sleep_healing = 1
 	/// Amount we heal passively, always
