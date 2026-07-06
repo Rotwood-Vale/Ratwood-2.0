@@ -362,8 +362,7 @@
 		I.pixel_y = initial(I.pixel_y) += CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2) + pixel_y
 		return TRUE
 
-/obj/structure/flora/roguetree/stump/attack_paw(mob/user)
-	return attack_hand(user)
+
 
 /obj/structure/flora/roguetree/stump/attack_hand(mob/living/user)
 	if(Adjacent(user) && user.pulling)
