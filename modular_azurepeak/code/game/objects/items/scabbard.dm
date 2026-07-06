@@ -718,10 +718,6 @@
 	// Is meant to be a wand for mage 2.0, but we don't have that on RW.
 	sellprice = 100
 
-/obj/item/rogueweapon/scabbard/sheath/courtphysician/hand/ComponentInitialize()
-	AddComponent(/datum/component/holster/handstaff, valid_blade, null, null, sheathe_time)
-
-
 ///////////////////////
 //	GREATWEP. STRAPS //
 ///////////////////////
