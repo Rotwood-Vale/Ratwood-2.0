@@ -1028,7 +1028,7 @@
 	new mushroom_type(loc)
 	return INITIALIZE_HINT_QDEL
 
-/obj/structure/flora/rogueshroom/unhappy/Initialize(ml)
+/obj/structure/flora/rogueshroom/unhappy/Initialize(mapload)
 	. = ..()
 	if(mush_light_power > 0)
 		set_light(mush_light_range, mush_light_range, mush_light_power, l_color = mush_light_color)
