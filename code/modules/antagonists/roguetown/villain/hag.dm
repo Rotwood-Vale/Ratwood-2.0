@@ -14,6 +14,7 @@
 
 	var/list/datum/mind/bound_followers = list()
 	var/list/follower_links = list()
+	var/datum/mindlink_coven/coven_link
 	var/hag_baseline_applied = FALSE
 	var/hag_tier = 1
 	var/datum/component/hag_curio_tracker/curio_component
@@ -83,7 +84,6 @@
 	ensure_single_spell(hag_body.mind, /obj/effect/proc_holder/spell/invoked/grant_boon)
 	ensure_single_spell(hag_body.mind, /obj/effect/proc_holder/spell/self/wildshape/hag_true_form)
 	ensure_single_spell(hag_body.mind, /obj/effect/proc_holder/spell/invoked/resurrect/hag)
-	ensure_single_spell(hag_body.mind, /obj/effect/proc_holder/spell/invoked/mindlink/hag)
 	teach_hag_recipes(hag_body.mind)
 	// Attach the curio tracker component for death/revive handling
 	curio_component = hag_body.AddComponent(/datum/component/hag_curio_tracker, src)
@@ -121,7 +121,6 @@
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/grant_boon)
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/wildshape/hag_true_form)
 	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/resurrect/hag)
-	hag_body.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/mindlink/hag)
 	hag_body.verbs -= /mob/living/carbon/human/proc/commune_with_roots
 	restore_hag_baseline_state(hag_body)
 
@@ -231,6 +230,10 @@
 	if(owner?.current)
 		qdel(owner.current.GetComponent(/datum/component/hag_curio_tracker))
 	curio_component = null
+	if(coven_link)
+		GLOB.mindlinks -= coven_link
+		qdel(coven_link)
+		coven_link = null
 	cleanup_bound_followers()
 	if(owner)
 		owner.special_role = null
@@ -268,6 +271,50 @@
 
 /datum/antagonist/hag/proc/get_boon_source()
 	return "hag_boon_[REF(src)]"
+
+/datum/antagonist/hag/proc/get_or_create_coven(create_if_missing = FALSE)
+	if(coven_link && QDELETED(coven_link))
+		coven_link = null
+
+	if(!coven_link && create_if_missing && owner?.current)
+		coven_link = new(list(owner.current), owner)
+		GLOB.mindlinks += coven_link
+
+	if(coven_link && owner?.current && !(owner.current in coven_link.members))
+		coven_link.add_member(owner.current)
+
+	return coven_link
+
+/datum/antagonist/hag/proc/add_coven_member(mob/living/member, announcement)
+	if(!member || !owner?.current)
+		return FALSE
+
+	var/datum/mindlink_coven/C = get_or_create_coven(TRUE)
+	if(!C)
+		return FALSE
+
+	if(!C.add_member(member))
+		return FALSE
+
+	if(announcement)
+		C.broadcast_notice(announcement)
+	return TRUE
+
+/datum/antagonist/hag/proc/cast_out_from_coven(mob/living/member)
+	if(!member)
+		return FALSE
+
+	var/datum/mindlink_coven/C = get_or_create_coven(FALSE)
+	if(!C)
+		return FALSE
+
+	if(!C.remove_member(member))
+		return FALSE
+
+	if(owner?.current)
+		to_chat(owner.current, span_warning("[member.real_name] was cursed and has been cast out of the coven."))
+	to_chat(member, span_userdanger("I FEEL THE MOSSMOTHER TURN HER BOON AGAINST ME! I HAVE BEEN CURSED!"))
+	return TRUE
 
 /datum/antagonist/hag/proc/add_bound_follower(datum/mind/follower)
 	if(!follower)
@@ -319,8 +366,9 @@
 		report += span_greentext("The hag still lurked within the bog by round end.")
 	else
 		report += span_redtext("The hag's revenge was cut short.")
-	if(length(bound_followers))
-		report += span_notice("Bound followers gathered: [length(bound_followers)]")
+	var/datum/mindlink_coven/C = get_or_create_coven(FALSE)
+	if(C)
+		report += span_notice("Coven souls gathered: [max(length(C.members) - 1, 0)]")
 	return report.Join("<br>")
 
 /obj/effect/proc_holder/spell/invoked/hag_pact
@@ -635,75 +683,6 @@
 		HCT.grant_boon(target.real_name, boon_path, 50)
 		to_chat(user, span_notice("You've tethered [target.real_name] to your garden. Their life is now your currency."))
 	return TRUE
-
-
-/obj/effect/proc_holder/spell/invoked/mindlink/hag
-	name = "Coven Link"
-	desc = "Weave selected minds into your web. Linked minds communicate via ,y and can sever the web with ,mst."
-	recharge_time = 4 MINUTES
-	cost = 12
-	var/link_duration = 20 MINUTES
-
-/obj/effect/proc_holder/spell/invoked/mindlink/hag/cast(list/targets, mob/living/user)
-	var/list/possible = user.mind.known_people.Copy()
-	var/list/mob/living/carbon/human/coven_members = list(user)
-	if(!possible.len)
-		to_chat(user, span_warning("I have no puppets to bind to my web."))
-		revert_cast()
-		return FALSE
-
-	for(var/i in 1 to 3)
-		var/prompt = "Choose member #[i] to bind (Cancel to finalize coven with [coven_members.len] members)"
-		var/target_name = tgui_input_list(user, prompt, "Coven Link", sort_list(possible))
-		if(!target_name)
-			break
-
-		var/mob/living/carbon/human/found_mob
-		for(var/mob/living/carbon/human/HL in GLOB.human_list)
-			if(HL.real_name == target_name)
-				found_mob = HL
-				break
-		if(found_mob)
-			var/already_linked = FALSE
-			for(var/datum/mindlink_coven/ML in GLOB.mindlinks)
-				if(found_mob in ML.members)
-					already_linked = TRUE
-					break
-			if(already_linked)
-				to_chat(user, span_warning("[found_mob.real_name]'s mind is already bound by another thread! I cannot reach them."))
-				continue
-
-			coven_members += found_mob
-			possible -= target_name
-		if(!possible.len)
-			break
-
-	if(coven_members.len < 2)
-		to_chat(user, span_warning("A coven of one is just a lonely old woman. I need at least one other."))
-		revert_cast()
-		return FALSE
-
-	var/datum/mindlink_coven/C = new(coven_members)
-	GLOB.mindlinks += C
-
-	var/list/names = list()
-	for(var/mob/living/M in coven_members)
-		names += M.real_name
-	var/roster = names.Join(", ")
-	for(var/mob/living/M in coven_members)
-		to_chat(M, span_boldnotice("The Coven is formed! Linked minds: [roster]. Use ,y to speak. Use ,mst to sever the web."))
-
-	addtimer(CALLBACK(src, PROC_REF(break_coven), C), link_duration)
-	return TRUE
-
-/obj/effect/proc_holder/spell/invoked/mindlink/hag/proc/break_coven(datum/mindlink_coven/C)
-	if(!C)
-		return
-	for(var/mob/living/M in C.members)
-		if(M)
-			to_chat(M, span_warning("The coven web snaps and withers..."))
-	GLOB.mindlinks -= C
-	qdel(C)
 
 
 /mob/living/carbon/human/proc/commune_with_roots()

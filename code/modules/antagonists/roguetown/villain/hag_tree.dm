@@ -69,6 +69,14 @@
 		to_chat(user, span_userdanger("As the Lux flows, the roots under your feet soften. You feel the map of the bog etched into your mind. You can now walk the deep paths."))
 		playsound(src, 'sound/magic/ahh1.ogg', 50, TRUE)
 
+	if(HAS_TRAIT(user, TRAIT_FEYTOUCHED))
+		for(var/obj/structure/roguemachine/hag_heart/heart in GLOB.hag_hearts)
+			var/datum/antagonist/hag/HAG = heart.bound_hag
+			if(!HAG)
+				continue
+			if(HAG.add_coven_member(user, "[user.real_name] has provided a gift of lyfe to the Mossmother and been inducted into the coven."))
+				break
+
 /// Notifies all active hags that a tree was fed with lux, including the feeder's name and area.
 /obj/structure/roguemachine/mossmother/travel/proc/notify_hag_lux_fed(mob/living/feeder, is_impure = FALSE, alert_cooldown = 20 SECONDS)
 	if(world.time >= hag_lux_alert_last_cleanup + 2 MINUTES)

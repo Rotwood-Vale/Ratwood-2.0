@@ -22,6 +22,9 @@
 
 	if(HCT.consume_prepared_boon(boon_type))
 		HCT.grant_boon(receiver.real_name, boon_type, points)
+		var/datum/antagonist/hag/HAG = offerer?.mind?.has_antag_datum(/datum/antagonist/hag)
+		if(HAG)
+			HAG.add_coven_member(receiver, "[receiver.real_name] has accepted a blessing from the Mossmother and been inducted into the coven.")
 		to_chat(offerer, span_notice("The boon takes hold in [receiver]'s soul."))
 	else
 		to_chat(offerer, span_warning("The boon loses its potency and fades into dust."))
@@ -60,6 +63,9 @@
 
 	if(HCT.user_can_receive_boon(boon_type, receiver.real_name))
 		HCT.grant_boon(receiver.real_name, boon_type, boon_type.points)
+		var/datum/antagonist/hag/HAG = offerer?.mind?.has_antag_datum(/datum/antagonist/hag)
+		if(HAG)
+			HAG.add_coven_member(receiver, "[receiver.real_name] has accepted a blessing from the Mossmother and been inducted into the coven.")
 		var/obj/item/O = parent
 		var/target_id = initial(O.name)
 

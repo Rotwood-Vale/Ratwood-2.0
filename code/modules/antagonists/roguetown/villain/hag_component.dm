@@ -55,6 +55,8 @@
 /datum/component/hag_curio_tracker/proc/grant_boon(true_name, boon_path = /datum/hag_boon, set_points)
 	if(!true_name || !ispath(boon_path))
 		return
+	var/datum/hag_boon/boon_template = boon_path
+	var/is_curse_boon = initial(boon_template.hag_curse)
 
 	if(boon_registry[true_name])
 		var/list/existing_boons = boon_registry[true_name]
@@ -71,6 +73,16 @@
 	var/datum/hag_boon/B = new boon_path(true_name, src, set_points)
 	var/list/name_list = boon_registry[true_name]
 	name_list += B
+
+	if(is_curse_boon)
+		var/mob/living/cursed_target = find_target(true_name)
+		if(cursed_target)
+			var/datum/antagonist/hag/hag_datum = hag_ref
+			if(!hag_datum && isliving(parent))
+				var/mob/living/hag_mob = parent
+				hag_datum = hag_mob.mind?.has_antag_datum(/datum/antagonist/hag)
+			if(hag_datum)
+				hag_datum.cast_out_from_coven(cursed_target)
 	return B
 
 /datum/component/hag_curio_tracker/proc/find_boon_by_type(true_name, typepath)
@@ -194,15 +206,24 @@
 	if(!boon_registry[true_name])
 		boon_registry[true_name] = list()
 	var/list/name_list = boon_registry[true_name]
+	var/mob/living/cursed_target = find_target(true_name)
 
 	var/datum/hag_boon/curse/C = new curse_path(true_name, src, points)
 	name_list += C
+
+	if(cursed_target)
+		var/datum/antagonist/hag/hag_datum = hag_ref
+		if(!hag_datum && isliving(parent))
+			var/mob/living/hag_mob = parent
+			hag_datum = hag_mob.mind?.has_antag_datum(/datum/antagonist/hag)
+		if(hag_datum)
+			hag_datum.cast_out_from_coven(cursed_target)
 
 	var/datum/hag_boon/curse_scar/scar = find_boon_by_type(true_name, /datum/hag_boon/curse_scar)
 	if(scar)
 		scar.points += points
 	else
-		var/mob/living/victim = find_target(true_name)
+		var/mob/living/victim = cursed_target || find_target(true_name)
 		if(victim)
 			ADD_TRAIT(victim, TRAIT_CURSE_SCAR, "hag_curse")
 		scar = new /datum/hag_boon/curse_scar(true_name, src, points)

@@ -505,13 +505,13 @@
 			dat += "<b>Location:</b> [AREACOORD(hag_body)]<br>"
 			dat += "<b>Alive:</b> [hag_body.stat == DEAD ? "No" : "Yes"]<br>"
 			dat += "<b>Hag tier:</b> [tracker.hag_tier]<br>"
-			dat += "<b>Bound boons:</b> [length(tracker.boon_registry)] victims tracked<br>"
-			if(length(tracker.prepared_boons))
-				var/list/prepare_rows = list()
-				for(var/boon_path in tracker.prepared_boons)
-					var/count = tracker.prepared_boons[boon_path]
-					if(count > 0)
-						prepare_rows += "- [initial(boon_path:name)]: [count]"
+			dat += "<b>Tracked victims:</b> [length(tracker.boon_registry)]<br>"
+			var/list/prepare_rows = list()
+			for(var/boon_path in tracker.prepared_boons)
+				var/count = tracker.prepared_boons[boon_path]
+				if(count > 0)
+					prepare_rows += "- [initial(boon_path:name)]: [count]"
+			if(length(prepare_rows))
 				dat += "<b>Prepared boons:</b><br>[prepare_rows.Join("<br>")]<br>"
 			else
 				dat += "<b>Prepared boons:</b> none<br>"
