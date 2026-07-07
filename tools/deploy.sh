@@ -31,6 +31,7 @@ cp -r icons/effects/* $1/icons/effects/
 cp -r icons/mob/clothing/* $1/icons/mob/clothing/
 cp -r icons/mob/inhands/* $1/icons/mob/inhands/
 cp -r icons/obj/* $1/icons/obj/
+cp icons/title_static.png $1/icons/title_static.png
 cp -r strings/* $1/strings/
 cp -r modular/code/modules/slave_collar/strings/* $1/modular/code/modules/slave_collar/strings/
 cp -r modular/code/game/objects/items/lewd/chastity/strings/* $1/modular/code/game/objects/items/lewd/chastity/strings/
