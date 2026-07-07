@@ -37,7 +37,7 @@
 
 		if(ispath(private, /datum/patron))	//Patron signs.
 			var/datum/patron/private_patron = private
-			var/icon_plane = WEATHER_EFFECT_PLANE	//Will show up through the cone.
+			var/icon_plane = GAME_PLANE_UPPER //Will show up through the cone.
 			if(!ispath(private_patron, /datum/patron/old_god))
 				for(var/mob/living/carbon/human/H in viewers(world.view, src))
 					var/pass = FALSE
