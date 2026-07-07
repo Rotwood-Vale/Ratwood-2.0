@@ -16,6 +16,8 @@ mkdir -p \
     $1/icons/mob/inhands \
     $1/icons/obj \
     $1/strings \
+	$1/modular/code/modules/slave_collar/strings \
+	$1/modular/code/game/objects/items/lewd/chastity/strings \
     $1/tgui/public \
 
 if [ -d ".git" ]; then
@@ -30,6 +32,8 @@ cp -r icons/mob/clothing/* $1/icons/mob/clothing/
 cp -r icons/mob/inhands/* $1/icons/mob/inhands/
 cp -r icons/obj/* $1/icons/obj/
 cp -r strings/* $1/strings/
+cp -r modular/code/modules/slave_collar/strings/* $1/modular/code/modules/slave_collar/strings/
+cp -r modular/code/game/objects/items/lewd/chastity/strings/* $1/modular/code/game/objects/items/lewd/chastity/strings/
 cp -r tgui/public/* $1/tgui/public/
 
 #remove .dm files from _maps
