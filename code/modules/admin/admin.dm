@@ -3,17 +3,17 @@
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message linkify\">[msg]</span></span>"
 	for(var/client/C in GLOB.admins)
 		if(check_rights_for(C, R_ADMIN))
-			to_chat(C, msg)
+			to_chat(C, type = MESSAGE_TYPE_ADMINLOG, html = msg)
 
 /proc/spawn_message_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message linkify\">[msg]</span></span>"
 	for(var/client/C in GLOB.admins)
 		if(check_rights_for(C, R_ADMIN) && (C.prefs.admin_chat_toggles & CHAT_ADMINSPAWN))
-			to_chat(C, msg)
+			to_chat(C, type = MESSAGE_TYPE_ADMINLOG, html = msg)
 
 /proc/relay_msg_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message linkify\">[msg]</span></span>"
-	to_chat(GLOB.admins, msg)
+	to_chat(GLOB.admins, type = MESSAGE_TYPE_ADMINLOG, html = msg)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
@@ -248,8 +248,8 @@
 		body += "<p>Current: [initial(living.patron.name)]</p>"
 		body += "<ul>"
 		for(var/patron_type in GLOB.patronlist)
-			// Skip Undivided and Science patrons
-			if(patron_type == /datum/patron/divine/undivided || patron_type == /datum/patron/godless)
+			// Skip Science patrons
+			if(patron_type == /datum/patron/godless)
 				continue
 			var/datum/patron/P = GLOB.patronlist[patron_type]
 			// Skip if patron is null or has no name

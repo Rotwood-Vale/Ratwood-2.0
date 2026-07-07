@@ -177,7 +177,7 @@
 	id = "net"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/netted
 	effectedstats = list(STATKEY_SPD = -5, STATKEY_WIL = -2)
-	duration = 3 MINUTES
+	duration = 30 SECONDS
 
 /datum/status_effect/debuff/netted/on_apply()
 		. = ..()
@@ -213,9 +213,19 @@
 	effectedstats = list(STATKEY_STR = -1, STATKEY_WIL = -1, STATKEY_CON = -1, STATKEY_SPD = -1, STATKEY_LCK = -1)	//Slightly punishing.
 	duration = 15 MINUTES	//Punishing, same time as revival, but mildly less punishing than revival itself.
 
+/datum/status_effect/debuff/devitalised/lux_ripped
+	id = "lux_ripped"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/devitalised/lux_ripped
+	effectedstats = list(STATKEY_STR = -5, STATKEY_WIL = -5, STATKEY_CON = -5, STATKEY_SPD = -5, STATKEY_LCK = -5)	//apparently zizite miraclists killing people is BAD so we have to make the debuff so much worse than death to encourage people to just lacrima rather than remove gorget neck chop. this also prevents necromancers from doing a lacrima circle-jerk to farm lux. have fun.
+	duration = 30 MINUTES
+
 /atom/movable/screen/alert/status_effect/debuff/devitalised
 	name = "Devitalised"
 	desc = "Something has been taken from me, and it will take time to recover."
+
+/atom/movable/screen/alert/status_effect/debuff/devitalised/lux_ripped
+	name = "Lux Ripped"
+	desc = "The very essence of my lyfe was roughly torn from me."
 
 /datum/status_effect/debuff/vamp_dreams
 	id = "sleepytime"
@@ -273,6 +283,38 @@
 /atom/movable/screen/alert/status_effect/debuff/submissive
 	name = "Conformable"
 	desc = "Falling in line is my only choice."
+
+/datum/status_effect/debuff/yield_prompt
+	id = "yieldprompt"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/yield_prompt
+	duration = 20 SECONDS
+
+/datum/status_effect/debuff/yield_prompt/on_apply()
+	if(isliving(owner) && owner.has_flaw(/datum/charflaw/compliant))
+		var/mob/living/living_owner = owner
+		living_owner.submit(TRUE)
+		return FALSE
+	return ..()
+
+/atom/movable/screen/alert/status_effect/debuff/yield_prompt
+	name = "Yield?"
+	desc = "I am being told to yield, shall I comply? Or will I continue to fight!"
+	icon_state = "compliance"
+	alert_group = ALERT_DEBUFF
+
+/atom/movable/screen/alert/status_effect/debuff/yield_prompt/Click(location, control, params)
+	if(!usr || !usr.client)
+		return FALSE
+	var/mob/user = usr
+	var/paramslist = params2list(params)
+	if(paramslist["shift"] && paramslist["left"]) // screen objects don't do the normal Click() stuff so we'll cheat
+		examine_ui(user)
+		return FALSE
+	var/mob/living/L = usr
+	if(!istype(L))
+		return
+	L.submit()
+	L.remove_status_effect(attached_effect)
 
 /datum/status_effect/debuff/chilled
 	id = "chilled"
@@ -768,6 +810,8 @@
 	var/mob/living/carbon/human/passenger
 	var/stamcost = 9
 	var/obj/item/organ/wings/harpy/harpy_wings
+	/// Buckled mob if someone decides to mount the flying harpy
+	var/datum/weakref/buckled_mob
 
 /datum/status_effect/debuff/harpy_flight/on_creation(mob/living/new_owner, new_stamcost)
 	stamcost = new_stamcost
@@ -786,11 +830,16 @@
 		break
 	harpy.movement_type |= FLYING
 	harpy.dna.species.speedmod += 0.3
+	harpy.remove_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD) // If they are slowed down (like being in water) remove it
 	harpy.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown = harpy.dna.species.speedmod)
 	harpy.apply_status_effect(/datum/status_effect/debuff/flight_sound_loop)
 	ADD_TRAIT(harpy, TRAIT_SPELLCOCKBLOCK, ORGAN_TRAIT)
 	harpy.flying = TRUE
 	init_signals()
+	var/mob/buckled_rider = harpy.buckled_mobs[1]
+	if(!isnull(buckled_rider))
+		buckled_mob = WEAKREF(buckled_rider)
+		buckled_rider.movement_type |= FLYING
 
 /datum/status_effect/debuff/harpy_flight/tick()
 	. = ..()
@@ -836,6 +885,10 @@
 		for(var/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/talons in harpy.held_items)
 			harpy.dropItemToGround(talons, TRUE)
 			return
+	var/mob/buckled_rider = buckled_mob.resolve()
+	if(!isnull(buckled_rider))
+		buckled_rider.movement_type &= ~FLYING
+	buckled_mob = null
 
 /atom/movable/screen/alert/status_effect/debuff/harpy_flight
 	name = "Flying..."
@@ -865,6 +918,9 @@
 
 /datum/status_effect/debuff/harpy_flight/proc/init_signals()
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_movement))
+	RegisterSignal(owner, COMSIG_LIVING_UPDATE_TURF_MOVESPEED, PROC_REF(on_turf_movespeed_update))
+	RegisterSignal(owner, COMSIG_MOVABLE_BUCKLE, PROC_REF(harpy_mob_buckled))
+	RegisterSignal(owner, COMSIG_MOVABLE_UNBUCKLE, PROC_REF(harpy_mob_unbuckle))
 
 /datum/status_effect/debuff/harpy_flight/proc/check_movement(datum/source) // rewritten by @tmyqlfpir
 	SIGNAL_HANDLER
@@ -881,12 +937,38 @@
 		cur_turf = temp_turf
 	shadow.forceMove(cur_turf)
 
+/datum/status_effect/debuff/harpy_flight/proc/on_turf_movespeed_update()
+	SIGNAL_HANDLER
+	return TURF_MOVESPEED_BLOCKED // Flying harpies do not get slowed down from turfs
+
+/// Updates flight when a mob is buckled as a harpy is already in flight
+/datum/status_effect/debuff/harpy_flight/proc/harpy_mob_buckled(datum/source, mob/living/M, force = FALSE)
+	SIGNAL_HANDLER
+	if(isnull(M))
+		return
+	buckled_mob = WEAKREF(M)
+	M.movement_type |= FLYING
+
+/// Updates flight when a mob is unbuckled as a harpy is already in flight
+/datum/status_effect/debuff/harpy_flight/proc/harpy_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
+	SIGNAL_HANDLER
+	var/mob/living/unbuckling_mob = buckled_mob.resolve()
+	if(!unbuckling_mob && isnull(M))
+		buckled_mob = null
+		return
+	unbuckling_mob.movement_type &= ~FLYING
+	var/turf/tile_under_rider = get_turf(unbuckling_mob)
+	tile_under_rider.zFall(unbuckling_mob)
+	buckled_mob = null
+
 /datum/status_effect/debuff/harpy_flight/proc/remove_signals()
 	UnregisterSignal(owner, list(
 		COMSIG_MOVABLE_MOVED,
+		COMSIG_LIVING_UPDATE_TURF_MOVESPEED,
+		COMSIG_MOVABLE_BUCKLE,
+		COMSIG_MOVABLE_UNBUCKLE,
 	))
-	if(shadow)
-		QDEL_NULL(shadow)
+	QDEL_NULL(shadow)
 
 /datum/status_effect/debuff/harpy_passenger
 	id = "harpy_passenger"
@@ -1095,11 +1177,12 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/overheat
 	duration = 10 SECONDS
 	effectedstats = list(STATKEY_SPD = 2, STATKEY_WIL = -4)
+
 /datum/status_effect/debuff/overheat/on_apply()
 	. = ..()
 	var/mob/living/carbon/C = owner
 	to_chat(C, span_userdanger("My core temperature rises, overheating my frame."))
-	message_admins("debuff applied")
+
 /datum/status_effect/debuff/overheat/on_remove()
 	. = ..()
 	var/mob/living/carbon/C = owner
@@ -1109,3 +1192,14 @@
 	name = "overheating"
 	desc = "My frame is overheating!"
 	icon_state = "fire"
+
+/datum/status_effect/debuff/kiss_ecstasy
+	id = "kiss_ecstasy"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/kiss_ecstasy
+	effectedstats = list(STATKEY_CON = -2, STATKEY_WIL = -2)
+	duration = 30 SECONDS
+
+/atom/movable/screen/alert/status_effect/debuff/kiss_ecstasy
+	name = "The Kiss"
+	desc = "A terrible sweetness floods my senses."
+	icon_state = "vampirebite"

@@ -2,7 +2,7 @@
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = "blunt", absorb_text = null, soften_text = null, armor_penetration, penetrated_text, damage, blade_dulling, peeldivisor, intdamfactor, used_weapon = null)
 	SEND_SIGNAL(src, COMSIG_LIVING_ARMOR_CHECKED)
 	var/armor = getarmor(def_zone, attack_flag, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor, used_weapon)
-
+	src.mob_timers[MT_SNEAKATTACK] = world.time //Stops sneaking after being hit. No more bullshit where you can just run away into fullstealth. Lose your tail first!
 	//the if "armor" check is because this is used for everything on /living, including humans
 	if(armor > 0 && armor_penetration)
 		armor = max(0, armor - armor_penetration)
@@ -368,62 +368,8 @@
 	return TRUE
 
 
-/mob/living/attack_paw(mob/living/carbon/monkey/M)
-// 	if(isturf(loc) && istype(loc.loc, /area/start))//commented out after deleting the areatype - this is old SS13 code
-// //		to_chat(M, "No attacking people at spawn, you jackass.")
-// 		return FALSE
-
-	if (M.used_intent.type == INTENT_HARM)
-		if(HAS_TRAIT(M, TRAIT_PACIFISM))
-			to_chat(M, span_info("I don't want to hurt anyone!"))
-			return FALSE
-
-		if(M.is_muzzled() || M.is_mouth_covered(FALSE, TRUE))
-			to_chat(M, span_warning("I can't bite with my mouth covered!"))
-			return FALSE
-		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
-		if (prob(75))
-			log_combat(M, src, "attacked")
-			playsound(loc, 'sound/blank.ogg', 50, TRUE, -1)
-			visible_message(span_danger("[M.name] bites [src]!"), \
-							span_danger("[M.name] bites you!"), span_hear("I hear a chomp!"), COMBAT_MESSAGE_RANGE, M)
-			to_chat(M, span_danger("I bite [src]!"))
-			return TRUE
-		else
-			visible_message(span_danger("[M.name]'s bite misses [src]!"), \
-							span_danger("I avoid [M.name]'s bite!"), span_hear("I hear the sound of jaws snapping shut!"), COMBAT_MESSAGE_RANGE, M)
-			to_chat(M, span_warning("My bite misses [src]!"))
-	return FALSE
-
 /mob/living/ex_act(severity, target)
 	..()
-
-/mob/living/attack_paw(mob/living/carbon/monkey/M)
-// 	if(isturf(loc) && istype(loc.loc, /area/start))//commented out after deleting the areatype - this is old SS13 code
-// //		to_chat(M, "No attacking people at spawn, you jackass.")
-// 		return FALSE
-
-	if (M.used_intent.type == INTENT_HARM)
-		if(HAS_TRAIT(M, TRAIT_PACIFISM))
-			to_chat(M, span_info("I don't want to hurt anyone!"))
-			return FALSE
-
-		if(M.is_muzzled() || M.is_mouth_covered(FALSE, TRUE))
-			to_chat(M, span_warning("I can't bite with my mouth covered!"))
-			return FALSE
-		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
-		if (prob(75))
-			log_combat(M, src, "attacked")
-			playsound(loc, 'sound/blank.ogg', 50, TRUE, -1)
-			visible_message(span_danger("[M.name] bites [src]!"), \
-							span_danger("[M.name] bites you!"), span_hear("I hear a chomp!"), COMBAT_MESSAGE_RANGE, M)
-			to_chat(M, span_danger("I bite [src]!"))
-			return TRUE
-		else
-			visible_message(span_danger("[M.name]'s bite misses [src]!"), \
-							span_danger("I avoid [M.name]'s bite!"), span_hear("I hear the sound of jaws snapping shut!"), COMBAT_MESSAGE_RANGE, M)
-			to_chat(M, span_warning("My bite misses [src]!"))
-	return FALSE
 
 //Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
 

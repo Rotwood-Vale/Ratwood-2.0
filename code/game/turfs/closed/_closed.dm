@@ -181,9 +181,6 @@
 					above.ScrapeAway()
 	. = ..()
 
-/turf/closed/attack_paw(mob/user)
-	return attack_hand(user)
-
 /turf/closed/attack_hand(mob/user)
 	if(wallclimb)
 		if(isliving(user))

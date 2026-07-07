@@ -16,7 +16,7 @@
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/staves = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
@@ -27,7 +27,7 @@
 	// Also because the alternative is not very clean codewise.
 	subclass_stashed_items = list(
 		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
 	)
 	extra_context = "This subclass can choose from multiple disciplines. \
 	The further your chosen discipline strays from unarmed combat, however, the greater your skills in fistfighting and wrestling will atrophy. \
@@ -62,6 +62,18 @@
 		/obj/item/reagent_containers/food/snacks/rogue/bread = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/beer = 1, //Plays into the classic stereotype of beer-loving monks and well-stocked pilgrims.
 		)
+	
+	// Ascendant symbols go into the backpack, so you don't get insta-found out.
+	switch(H.patron?.type)
+		if(/datum/patron/inhumen/zizo)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen] = 1
+		if(/datum/patron/inhumen/matthios)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
+		if(/datum/patron/inhumen/graggar)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
+		if(/datum/patron/inhumen/baotha)	
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
+
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
 
@@ -84,8 +96,7 @@
 					beltl = /obj/item/rogueweapon/knuckles/bronzeknuckles
 					gloves = /obj/item/clothing/gloves/roguetown/bandages
 			if("Quarterstaff")
-				H.adjust_skillrank_up_to(/datum/skill/combat/staves, 3, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 2, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
 				l_hand = /obj/item/rogueweapon/scabbard/gwstrap
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
@@ -138,8 +149,6 @@
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
 			neck = /obj/item/clothing/neck/roguetown/psicross
-		if(/datum/patron/divine/undivided)
-			neck = /obj/item/clothing/neck/roguetown/psicross/undivided
 		if(/datum/patron/divine/astrata)
 			neck = /obj/item/clothing/neck/roguetown/psicross/astrata
 			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
@@ -228,6 +237,15 @@
 		/obj/item/flashlight/flare/torch/metal = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		)
+	switch(H.patron?.type)
+		if(/datum/patron/inhumen/zizo)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen] = 1
+		if(/datum/patron/inhumen/matthios)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
+		if(/datum/patron/inhumen/graggar)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
+		if(/datum/patron/inhumen/baotha)	
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
 	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
@@ -293,16 +311,35 @@
 	if(H.mind)
 		if(!istype(H?.patron, /datum/patron/old_god)) //Psydonics are special.
 			C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1) //Capped to T1 miracles.
-			var/oaths = list("Cleric - Medicine & Mirth","Crusader - Silver Longsword")
+			var/oaths = list("Cleric - Medicine & Mirth","Crusader - Silver Weapon")
 			var/oath_choice = input(H, "Choose your OATH.", "PROFESS YOUR BLESSINGS.") as anything in oaths
 			switch(oath_choice)
 				if("Cleric - Medicine & Mirth")
 					H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_APPRENTICE, TRUE)
 					beltl = /obj/item/reagent_containers/glass/bottle/rogue/healthpot //No needles or cloth, but a basic potion of lifeblood - similar to the Sorcerer's manna potion. Take the 'Physician's Apprentice' virtue for that, uncapped skills, and more.
-				if("Crusader - Silver Longsword")
-					H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
-					l_hand = /obj/item/rogueweapon/sword/long/silver //Turns the Paladin into a pre-Exorcist version of the Monster Hunter. Differences are +1 CON / -1 INT, access to minor miracles, and more limb coverage.
-					beltl = /obj/item/rogueweapon/scabbard/sword //Functionally, inflicts silverbane at the cost of -5 damage. Likely won't be a balancing issue, unless we start seeing +5-10 Clerics overnight.
+				if("Crusader - Silver Weapon")
+					var/crusaderweapon = list("Silver Longsword", "Silver Mace", "Silver Flail", "Silver Spear", "Silver Axe", "Silver Whip")
+					var/crusaderweapon_choice = input(H, "Choose your silver weapon, Crusader!") as anything in crusaderweapon
+					switch(crusaderweapon_choice)
+						if("Silver Longsword")
+							H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
+							l_hand = /obj/item/rogueweapon/sword/long/silver //Turns the Paladin into a pre-Exorcist version of the Monster Hunter. Differences are +1 CON / -1 INT, access to minor miracles, and more limb coverage.
+							beltl = /obj/item/rogueweapon/scabbard/sword //Functionally, inflicts silverbane at the cost of -5 damage. Likely won't be a balancing issue, unless we start seeing +5-10 Clerics overnight.
+						if("Silver Mace")
+							H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
+							beltl = /obj/item/rogueweapon/mace/steel/silver
+						if("Silver Flail")
+							H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+							beltl = /obj/item/rogueweapon/flail/sflail/silver
+						if("Silver Spear")
+							H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
+							l_hand = /obj/item/rogueweapon/spear/silver
+						if("Silver Axe")
+							H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
+							l_hand = /obj/item/rogueweapon/stoneaxe/woodcut/silver
+						if("Silver Whip")
+							H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+							l_hand = /obj/item/rogueweapon/whip/silver // Die, monster! You don't belong in this world!
 		else
 			var/denominations = list("ENDURING, AS HE DOES - FAITH", "VEYLED, LIKE HIS MARTYRS - ARMOUR")
 			var/denomination_choice = input("Choose your DENOMINATION.", "YOUR FAITH IN HIM.") as anything in denominations
@@ -310,9 +347,11 @@
 				if("ENDURING, AS HE DOES - FAITH")
 					C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
 					H.adjust_skillrank_up_to(/datum/skill/magic/holy, SKILL_LEVEL_JOURNEYMAN, TRUE)
+					H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_NOVICE, TRUE)
 					armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/ornate
 				if("VEYLED, LIKE HIS MARTYRS - ARMOUR")
 					C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)
+					H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_APPRENTICE, TRUE)
 					ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC) //Basically a bit more flavourful Knight Errant, so may as very well give HEAVYARMOR
 					armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ornate
 	var/weapons = list("Longsword","Mace","Flail","Whip","Spear","Axe")
@@ -343,7 +382,8 @@
 				r_hand = /obj/item/rogueweapon/spear/psyspear/old
 			else
 				r_hand = /obj/item/rogueweapon/spear
-			l_hand = /obj/item/rogueweapon/scabbard/gwstrap
+			backr = /obj/item/rogueweapon/scabbard/gwstrap
+			beltr = /obj/item/rogueweapon/shield/buckler
 		if("Axe")
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut
@@ -351,8 +391,6 @@
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
 			wrists = /obj/item/clothing/neck/roguetown/psicross
-		if(/datum/patron/divine/undivided)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/undivided
 		if(/datum/patron/divine/astrata)
 			wrists = /obj/item/clothing/neck/roguetown/psicross/astrata
 			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
@@ -440,6 +478,15 @@
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
+	switch(H.patron?.type)
+		if(/datum/patron/inhumen/zizo)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen] = 1
+		if(/datum/patron/inhumen/matthios)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
+		if(/datum/patron/inhumen/graggar)
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
+		if(/datum/patron/inhumen/baotha)	
+			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
 	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
 	switch(H.patron?.type)
@@ -512,8 +559,6 @@
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
 			neck = /obj/item/clothing/neck/roguetown/psicross
-		if(/datum/patron/divine/undivided)
-			neck = /obj/item/clothing/neck/roguetown/psicross/undivided
 		if(/datum/patron/divine/astrata)
 			neck = /obj/item/clothing/neck/roguetown/psicross/astrata
 			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
@@ -554,7 +599,7 @@
 
 /datum/advclass/cleric/missionary
 	name = "Missionary"
-	tutorial = "You are a devout worshipper of the divine with a strong connection to your patron god. You've spent years studying scriptures and serving your deity - now you wander into foreign lands, spreading the word of your faith."
+	tutorial = "You are a devout worshipper of the divine with a strong connection to your patron god. You've spent years studying scriptures and serving your deity - now you wander into foreign lands, spreading the word of your faith. Preachers focus on homesteading while Shepards preach through example and protecting their would-be flock."
 	outfit = /datum/outfit/job/roguetown/adventurer/missionary
 	traits_applied = list(TRAIT_EMPATH)
 	subclass_stats = list(
@@ -565,15 +610,19 @@
 	)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/staves = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,//just enough to reattach limbs, same as acolytes
+		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/lumberjacking = SKILL_LEVEL_NOVICE,
 	)
 	subclass_stashed_items = list(
 		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
@@ -629,8 +678,9 @@
 		if (/datum/patron/divine/eora)
 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/eora
 			head = /obj/item/clothing/head/roguetown/eoramask
-			r_hand = /obj/item/rogueweapon/huntingknife/scissors
+			beltl = /obj/item/rogueweapon/huntingknife/scissors
 			backpack_contents[/obj/item/reagent_containers/eoran_seed] = 1
+			ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
 		if (/datum/patron/divine/xylix)
 			cloak = /obj/item/clothing/cloak/templar/xylix
 			mask = /obj/item/clothing/mask/rogue/xylixmask
@@ -646,14 +696,20 @@
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3)//Only T4 NOT to start maxed, with a devotion cap.
 	C.update_devotion(C.max_devotion / 4 - 50, C.max_devotion / 4 - 50, silent = TRUE) // Start at ~25% of devotion cap
 	if(H.mind)
-		var/weapons = list("Woodstaff", "Quarterstaff")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("Path of the Preacher", "Path of the Shepard")
+		var/weapon_choice = input(H, "Choose your path.", "CHOOSE YOUR DISCIPLINE.") as anything in weapons
 		switch(weapon_choice)
-			if("Woodstaff")
-				backr = /obj/item/rogueweapon/woodstaff
-			if("Quarterstaff")
+			if("Path of the Preacher")//Discount homesteader. No trait so you can't level these skills up, nor do you have starting tools.
+				r_hand = /obj/item/rogueweapon/woodstaff
+				H.adjust_skillrank_up_to(/datum/skill/craft/cooking, 3, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 3, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/craft/masonry, 1, TRUE)//just so you can make pretty floors easier
+				H.adjust_skillrank_up_to(/datum/skill/craft/sewing, 3, TRUE)
+			if("Path of the Shepard")//The "combat" variant. The core stat spread should keep this class from ever overshadowing the others, but it's worth keeping an eye out anyway.
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
-				l_hand = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 3, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 3, TRUE)//Good luck fighting like a monk without monk stats or Dodge Expert.
 
 	if(istype(H.patron, /datum/patron/divine))
 		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast)

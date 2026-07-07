@@ -1,0 +1,4 @@
+author: "PPooch"
+delete-after: True
+changes:
+  - bugfix: "Desert town palace slaves now get servant-quality traits."

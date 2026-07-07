@@ -381,6 +381,18 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			user.client.holder.show_traitor_panel(ticket.initiator.mob)
 			return TRUE
 
+		if("ticket_logs")
+			var/ticket_id = params["ticket_id"]
+			var/datum/admin_help/ticket = TicketByID(ticket_id)
+			if(!ticket || !user.client)
+				return FALSE
+			var/mob/log_target = ticket.initiator ? ticket.initiator.mob : ticket.initiator_mob
+			if(!log_target)
+				return FALSE
+			admin_ticket_log(log_target, "<font color='green'>[key_name_admin(user)] is reviewing your logs in relation to this ticket.</font>")
+			show_individual_logging_panel(log_target)
+			return TRUE
+
 		if("ticket_smite")
 			var/ticket_id = params["ticket_id"]
 			var/datum/admin_help/ticket = TicketByID(ticket_id)
@@ -647,10 +659,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		if(play_sound && (X.prefs.toggles & SOUND_ADMINHELP))
 			SEND_SOUND(X, sound('sound/adminhelp.ogg'))
 		window_flash(X, ignorepref = TRUE)
-		to_chat(X, admin_msg)
+		to_chat(X, type = MESSAGE_TYPE_ADMINPM, html = admin_msg)
 
 	//show it to the person adminhelping too
-	to_chat(initiator, span_adminnotice("PM to-<b>Admins</b>: <font color='#FFA040'><span class='linkify'>[msg]</span></font>"))
+	to_chat(initiator, type = MESSAGE_TYPE_ADMINPM, html = span_adminnotice("PM to-<b>Admins</b>: <font color='#FFA040'><span class='linkify'>[msg]</span></font>"))
 
 //Reopen a closed ticket
 /datum/admin_help/proc/Reopen()

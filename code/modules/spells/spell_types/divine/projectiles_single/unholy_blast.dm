@@ -68,7 +68,7 @@
 						H.adjust_fire_stacks(6)
 						H.ignite_mob()
 					H.Slowdown(3) 
-					H.visible_message(span_warning("Seething ambition sears within [H]'s mind!"), span_warning("Visions of progress and ambition sear into my mind!"))
+					H.visible_message(span_warning("Seething ambition sears within [H]'s mind!"), span_warning("Visions of ambition sear into my mind!"))
 	else
 		return
 

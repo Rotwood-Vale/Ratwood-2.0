@@ -1,0 +1,4 @@
+author: "Rhiannahn"
+delete-after: True
+changes:
+  - bugfix: "janissary standardbearer being unable to use their standard"

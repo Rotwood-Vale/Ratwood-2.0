@@ -87,10 +87,3 @@
 
 /turf
 	var/turf_flags = TURF_EFFECT_AFFECTABLE
-
-/turf/Exited(atom/movable/gone, direction)
-	if(!istype(gone))
-		return
-	SEND_SIGNAL(src, COMSIG_TURF_EXITED, gone, direction)
-	SEND_SIGNAL(gone, COMSIG_MOVABLE_TURF_EXITED, src, direction)
-

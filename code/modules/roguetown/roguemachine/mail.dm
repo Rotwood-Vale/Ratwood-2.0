@@ -368,120 +368,123 @@
 			return
 
 	if(istype(P, /obj/item/paper/inqslip/arrival))
-		if((HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_PURITAN)))
-			var/obj/item/paper/inqslip/arrival/I = P
-			if(I.signee && I.signed)
-				message_admins("INQ ARRIVAL: [user.real_name] ([user.ckey]) has just arrived as a [user.job], earning [I.marquevalue] Marques.")
-				log_game("INQ ARRIVAL: [user.real_name] ([user.ckey]) has just arrived as a [user.job], earning [I.marquevalue] Marques.")
-				budget2change(I.marquevalue, user, "MARQUE")
-				record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
-				qdel(I)
-				visible_message(span_warning("[user] sends something."))
-				playsound(loc, 'sound/misc/otavasent.ogg', 100, FALSE, -1)
-				playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
+		if(!(HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_PURITAN)))
+			to_chat(user, span_warning("Only the Inquisition can submit arrival slips."))
 			return
+		var/obj/item/paper/inqslip/arrival/I = P
+		if(I.signee && I.signed)
+			message_admins("INQ ARRIVAL: [user.real_name] ([user.ckey]) has just arrived as a [user.job], earning [I.marquevalue] Marques.")
+			log_game("INQ ARRIVAL: [user.real_name] ([user.ckey]) has just arrived as a [user.job], earning [I.marquevalue] Marques.")
+			budget2change(I.marquevalue, user, "MARQUE")
+			record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
+			qdel(I)
+			visible_message(span_warning("[user] sends something."))
+			playsound(loc, 'sound/misc/otavasent.ogg', 100, FALSE, -1)
+			playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
+		return
 
 	if(istype(P, /obj/item/paper/inqslip/accusation))
-		if((HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_PURITAN)))
-			var/obj/item/paper/inqslip/accusation/I = P
-			if(I.paired)
-				if(I.signee && I.paired.full && I.paired.subject)
-					var/no
-					var/specialno
-					var/stopfarming
-					var/indexed
-					var/bonuses = 2
-					var/correct
-					var/cursedblood
-					var/selfreport
-					if(HAS_TRAIT(I.paired.subject, TRAIT_INQUISITION))
-						selfreport = TRUE
-					if(HAS_TRAIT(I.paired.subject, TRAIT_CABAL) || HAS_TRAIT(I.paired.subject, TRAIT_HORDE) || HAS_TRAIT(I.paired.subject, TRAIT_DEPRAVED) || HAS_TRAIT(I.paired.subject, TRAIT_COMMIE))
-						correct = TRUE
-					if(I.paired.subject.name in GLOB.excommunicated_players)
-						correct = TRUE
-					if(GLOB.indexed && !selfreport)
-						if(HAS_TRAIT(I.paired.subject.mind, TRAIT_INDEXED))
-							indexed = TRUE
-						if(!indexed && !selfreport)
-							ADD_TRAIT(I.paired.subject.mind, TRAIT_INDEXED, "mail")
-							if(GLOB.indexed.len)
-								GLOB.indexed += ", [I.paired.subject]"
-							else
-								GLOB.indexed += "[I.paired.subject]"
-					if(I.paired.cursedblood)
-						if(HAS_TRAIT(I.paired.subject.mind, TRAIT_CBLOOD))
-							stopfarming = TRUE
-						if(!stopfarming)
-							cursedblood = TRUE
-							ADD_TRAIT(I.paired.subject.mind, TRAIT_CBLOOD, "mail")
-							if(GLOB.cursedsamples.len)
-								GLOB.cursedsamples += ", [I.paired.subject.mind]"
-							else
-								GLOB.cursedsamples += "[I.paired.subject.mind]"
-					if(GLOB.accused && !selfreport)
-						if(HAS_TRAIT(I.paired.subject.mind, TRAIT_ACCUSED))
-							no = TRUE
-						if(!no)
-							ADD_TRAIT(I.paired.subject.mind, TRAIT_ACCUSED, "mail")
-							if(GLOB.accused.len)
-								GLOB.accused += ", [I.paired.subject]"
-							else
-								GLOB.accused += "[I.paired.subject]"
-					if(GLOB.confessors && !selfreport)
-						if(HAS_TRAIT(I.paired.subject.mind, TRAIT_CONFESSED))
-							no = TRUE
-							specialno = TRUE
-					if(cursedblood)
-						bonuses = bonuses + bonuses * I.paired.cursedblood
-						if(I.waxed)
-							bonuses += 2
-						budget2change(bonuses, user, "MARQUE")
-						record_round_statistic(STATS_MARQUES_MADE, bonuses)
-					if(no || selfreport || stopfarming)
-						qdel(I.paired)
-						qdel(I)
-						visible_message(span_warning("[user] sends something."))
-						playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
-						if(!cursedblood)
-							visible_message(span_warning("[user] recieves something."))
-							var/obj/item/inqarticles/indexer/replacement = new /obj/item/inqarticles/indexer/
-							user.put_in_hands(replacement)
-							if(specialno)
-								to_chat(user, span_notice("They've confessed."))
-							else if(selfreport)
-								to_chat(user, span_notice("Why are we accusing our own? What have we come to?"))
-							else if(stopfarming)
-								to_chat(user, span_notice("We've already collected a sample of their accursed blood."))
-							else
-								to_chat(user, span_notice("They've already been accused."))
-						return
-					else
-						if(!indexed && !correct && !cursedblood)
-							(I.marquevalue -= 4) += bonuses
-							budget2change(I.marquevalue, user, "MARQUE")
-							record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
-						if(correct)
-							if(!indexed)
-								I.marquevalue += bonuses
-							budget2change(I.marquevalue, user, "MARQUE")
-							record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
-						qdel(I.paired)
-						qdel(I)
-						visible_message(span_warning("[user] sends something."))
-						playsound(loc, 'sound/misc/otavanlament.ogg', 100, FALSE, -1)
-						playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
-						return
+		if(!(HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_PURITAN)))
+			to_chat(user, span_warning("Only the Inquisition can submit accusation slips."))
+			return
+		var/obj/item/paper/inqslip/accusation/I = P
+		if(I.paired)
+			if(I.signee && I.paired.full && I.paired.subject)
+				var/no
+				var/specialno
+				var/stopfarming
+				var/indexed
+				var/bonuses = 2
+				var/correct
+				var/cursedblood
+				var/selfreport
+				if(HAS_TRAIT(I.paired.subject, TRAIT_INQUISITION))
+					selfreport = TRUE
+				if(HAS_TRAIT(I.paired.subject, TRAIT_CABAL) || HAS_TRAIT(I.paired.subject, TRAIT_HORDE) || HAS_TRAIT(I.paired.subject, TRAIT_DEPRAVED) || HAS_TRAIT(I.paired.subject, TRAIT_COMMIE))
+					correct = TRUE
+				if(I.paired.subject.name in GLOB.excommunicated_players)
+					correct = TRUE
+				if(GLOB.indexed && !selfreport)
+					if(HAS_TRAIT(I.paired.subject.mind, TRAIT_INDEXED))
+						indexed = TRUE
+					if(!indexed && !selfreport)
+						ADD_TRAIT(I.paired.subject.mind, TRAIT_INDEXED, "mail")
+						if(GLOB.indexed.len)
+							GLOB.indexed += ", [I.paired.subject]"
+						else
+							GLOB.indexed += "[I.paired.subject]"
+				if(I.paired.cursedblood)
+					if(HAS_TRAIT(I.paired.subject.mind, TRAIT_CBLOOD))
+						stopfarming = TRUE
+					if(!stopfarming)
+						cursedblood = TRUE
+						ADD_TRAIT(I.paired.subject.mind, TRAIT_CBLOOD, "mail")
+						if(GLOB.cursedsamples.len)
+							GLOB.cursedsamples += ", [I.paired.subject.mind]"
+						else
+							GLOB.cursedsamples += "[I.paired.subject.mind]"
+				if(GLOB.accused && !selfreport)
+					if(HAS_TRAIT(I.paired.subject.mind, TRAIT_ACCUSED))
+						no = TRUE
+					if(!no)
+						ADD_TRAIT(I.paired.subject.mind, TRAIT_ACCUSED, "mail")
+						if(GLOB.accused.len)
+							GLOB.accused += ", [I.paired.subject]"
+						else
+							GLOB.accused += "[I.paired.subject]"
+				if(GLOB.confessors && !selfreport)
+					if(HAS_TRAIT(I.paired.subject.mind, TRAIT_CONFESSED))
+						no = TRUE
+						specialno = TRUE
+				if(cursedblood)
+					bonuses = bonuses + bonuses * I.paired.cursedblood
+					if(I.waxed)
+						bonuses += 2
+					budget2change(bonuses, user, "MARQUE")
+					record_round_statistic(STATS_MARQUES_MADE, bonuses)
+				if(no || selfreport || stopfarming)
+					qdel(I.paired)
+					qdel(I)
+					visible_message(span_warning("[user] sends something."))
+					playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
+					if(!cursedblood)
+						visible_message(span_warning("[user] recieves something."))
+						var/obj/item/inqarticles/indexer/replacement = new /obj/item/inqarticles/indexer/
+						user.put_in_hands(replacement)
+						if(specialno)
+							to_chat(user, span_notice("They've confessed."))
+						else if(selfreport)
+							to_chat(user, span_notice("Why are we accusing our own? What have we come to?"))
+						else if(stopfarming)
+							to_chat(user, span_notice("We've already collected a sample of their accursed blood."))
+						else
+							to_chat(user, span_notice("They've already been accused."))
+					return
 				else
-					if(!I.paired.full)
-						to_chat(user, span_warning("[I.paired] needs to be full of the accused's blood."))
-						return
-					else
-						to_chat(user, span_warning("[I] is missing a signature."))
-						return
+					if(!indexed && !correct && !cursedblood)
+						(I.marquevalue -= 4) += bonuses
+						budget2change(I.marquevalue, user, "MARQUE")
+						record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
+					if(correct)
+						if(!indexed)
+							I.marquevalue += bonuses
+						budget2change(I.marquevalue, user, "MARQUE")
+						record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
+					qdel(I.paired)
+					qdel(I)
+					visible_message(span_warning("[user] sends something."))
+					playsound(loc, 'sound/misc/otavanlament.ogg', 100, FALSE, -1)
+					playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
+					return
 			else
-				to_chat(user, span_warning("[I] is missing an INDEXER."))
+				if(!I.paired.full)
+					to_chat(user, span_warning("[I.paired] needs to be full of the accused's blood."))
+					return
+				to_chat(user, span_warning("[I] is missing a signature."))
 				return
+		else
+			to_chat(user, span_warning("[I] is missing an INDEXER."))
+			return
 
 	if(istype(P, /obj/item/paper) || istype(P, /obj/item/smallDelivery))
 		if(inqcoins)
@@ -545,7 +548,7 @@
 						mailrecipient.playsound_local(mailrecipient, 'sound/misc/mail.ogg', 100, FALSE, -1)
 					return
 
-	if(istype(P, /obj/item/roguecoin/aalloy))
+	if(istype(P, /obj/item/roguecoin/gilbranze))
 		return
 
 	if(istype(P, /obj/item/roguecoin/inqcoin))

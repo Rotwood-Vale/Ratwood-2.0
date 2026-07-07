@@ -6,7 +6,6 @@
 	var/key_third_person = "" //This will also call the emote
 	var/message = "" //Message displayed when emote is used
 	var/message_mime = "" //Message displayed if the user is a mime
-	var/message_monkey = "" //Message displayed if the user is a monkey
 	var/message_simple = "" //Message to display if the user is a simple_animal
 	var/message_param = "" //Message to display if a param was given
 	var/message_muffled = null //Message to display if the user is muffled
@@ -33,6 +32,7 @@
 	// If this is true, we skip setting the base runechat message and instead use whatever our at-emote-runtime message is. Useful for things like kiss/lick which change message based on conditions.
 	var/use_params_for_runechat = FALSE
 	var/is_animal = FALSE
+	var/needs_emotion = FALSE //If true, emote will check for detached trait and not run if the user has it and the emote wasn't intentional. Used for emotes that require emotional investment to make sense, like crying or laughing.
 
 /datum/emote/New()
 	if(!runechat_msg && !use_params_for_runechat)
@@ -159,10 +159,9 @@
 	else if(STASTR < 10)
 		pitch_modifier += (10 - STASTR) * 0.03
 	return clamp(final_pitch + pitch_modifier, 0.5, 2)
+
 /datum/emote/proc/get_env(mob/living/user)
 	return
-
-
 
 
 /datum/emote/living/get_env(mob/living/user)
@@ -247,8 +246,6 @@
 			. = message_muffled
 	if(user.mind && user.mind.miming && message_mime)
 		. = message_mime
-	else if(ismonkey(user) && message_monkey)
-		. = message_monkey
 	else if(isanimal(user) && message_simple)
 		. = message_simple
 
@@ -286,7 +283,8 @@
 				return FALSE
 //			to_chat(user, span_warning("I cannot [key] while restrained!"))
 			return FALSE
-
+	if(needs_emotion && HAS_TRAIT(user, TRAIT_DETACHED) && !intentional)
+		return FALSE
 	if(intentional && HAS_TRAIT(user, TRAIT_EMOTEMUTE))
 		return FALSE
 

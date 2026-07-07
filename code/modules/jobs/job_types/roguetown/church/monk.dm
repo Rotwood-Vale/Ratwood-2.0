@@ -25,6 +25,40 @@
 	job_subclasses = list(
 		/datum/advclass/acolyte
 	)
+	
+/datum/job/roguetown/monk/proc/grant_old_path(mob/living/carbon/human/H)
+	if(!H || !H.mind || !H.patron)
+		return
+
+	REMOVE_TRAIT(H, TRAIT_CLERGYRADICAL, "job")
+	H.reset_clergy_devotion(CLERIC_T4, CLERIC_REGEN_MAJOR, TRUE, CLERIC_REQ_4)
+	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/invoked/projectile/divineblast))
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast, H)
+	to_chat(H, span_notice("I remain on the old path of devotion."))
+
+/datum/job/roguetown/monk/proc/grant_radical_path(mob/living/carbon/human/H)
+	if(!H || !H.mind || !H.patron)
+		return
+
+	ADD_TRAIT(H, TRAIT_CLERGYRADICAL, "job")
+	H.miracle_points += 3
+	H.church_favor += 1600
+	H.reset_clergy_devotion(CLERIC_T4, CLERIC_REGEN_MAJOR, TRUE, CLERIC_REQ_4)
+	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/invoked/projectile/divineblast))
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast, H)
+	to_chat(H, span_notice("I embrace the radical path."))
+
+/datum/job/roguetown/monk/proc/_delayed_path_choice(mob/living/carbon/human/H)
+	if(!H || !H.client || !H.mind)
+		return
+
+	var/choice = alert(H, "Choose your path.", "Acolyte Doctrine", "Loyalist", "Radical")
+
+	if(choice == "Radical")
+		grant_radical_path(H)
+	else
+		grant_old_path(H)
+
 /datum/job/roguetown/monk/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	..()
 	if(ishuman(L))
@@ -32,12 +66,12 @@
 		H.advsetup = 1
 		H.invisibility = INVISIBILITY_MAXIMUM
 		H.become_blind("advsetup")
-//Title stuff. This is super sloppy.
+		//Title stuff. This is super sloppy.
 		var/prev_real_name = H.real_name
 		var/prev_name = H.name
-//Default fallback title.
+		//Default fallback title.
 		var/title = "Devotee"
-//Actual titles now, based on pronouns.
+		//Actual titles now, based on pronouns.
 		switch(H.pronouns)
 			if(SHE_HER)
 				title = "Sister"
@@ -47,9 +81,13 @@
 				title = "Brother"
 			if(HE_HIM_F)
 				title = "Brother"
-//Now apply the actual title.
+		//Now apply the actual title.
 		H.real_name = "[title] [prev_real_name]"
 		H.name = "[title] [prev_name]"
+
+		spawn(50)
+			if(H && H.client)
+				_delayed_path_choice(H)
 
 /datum/advclass/acolyte
 	name = "Acolyte"
@@ -65,7 +103,6 @@
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/staves = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
@@ -180,11 +217,6 @@
 			wrists = /obj/item/clothing/wrists/roguetown/wrappings
 			shoes = /obj/item/clothing/shoes/roguetown/sandals
 			armor = /obj/item/clothing/suit/roguetown/shirt/robe/astrata
-	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast)
-	// -- End of section for god specific bonuses --
-	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)	//Starts off maxed out.
 
 /datum/outfit/job/roguetown/monk/basic/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
@@ -211,7 +243,7 @@
 		ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_SOUL_EXAMINE, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
-		H.adjust_skillrank_up_to(/datum/skill/combat/staves, 3, TRUE)//For the stave. Beat back the dead. +1 from base, like Ravox.
+		H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)//For the stave. Beat back the dead. +1 from base, like Ravox.
 		H.adjust_skillrank_up_to(/datum/skill/combat/maces, 2, TRUE)//Or the shovel, I guess... loser...
 		H.cmode_music = 'sound/music/cmode/church/combat_necra.ogg'
 	if(H.patron?.type == /datum/patron/divine/pestra) // Medicine and Healing - better surgeons and alchemists
@@ -221,6 +253,7 @@
 	if(H.patron?.type == /datum/patron/divine/eora) // Beauty and Love - beautiful and can read people pretty well.
 		ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_EMPATH, TRAIT_GENERIC)
+		ADD_TRAIT(H, TRAIT_EORAN_SERENE, TRAIT_GENERIC) //all t2 clerics getting it anyway i made it here to not create another sphagetti
 		H.adjust_skillrank(/datum/skill/craft/sewing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/labor/farming, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
@@ -233,7 +266,7 @@
 		H.adjust_skillrank(/datum/skill/craft/smelting, 2, TRUE)
 	if(H.patron?.type == /datum/patron/divine/ravox) // Justice and Honor - athletics and probably a bit better at handling the horrors of war
 		H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 3, TRUE) //Who even plays Ravoxian acolyte? Whatever, this isn't a huge buff.
-		H.adjust_skillrank_up_to(/datum/skill/combat/staves, 3, TRUE) //On par with an Adventuring Monk. Seems quite fitting.
+		H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE) //On par with an Adventuring Monk. Seems quite fitting.
 		ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 	if(H.patron?.type == /datum/patron/divine/xylix)  // Trickery and Inspiration - muxic and rogueish skills
 		H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)

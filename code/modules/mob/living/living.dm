@@ -1,6 +1,8 @@
 /mob/living
 	//used by the basic ai controller /datum/ai_behavior/basic_melee_attack to determine how fast a mob can attack
 	var/melee_cooldown = CLICK_CD_MELEE
+	var/zone_selector_hud_dirty = FALSE
+	var/zone_selector_hud_update_queued = FALSE
 
 /mob/living/Initialize(mapload)
 	. = ..()
@@ -83,6 +85,26 @@
 /mob/living/proc/OpenCraftingMenu()
 	return
 
+/mob/living/proc/update_zone_selector_hud()
+	if(hud_used?.zone_select)
+		hud_used.zone_select.update_zone_layers()
+
+/mob/living/proc/mark_zone_selector_hud_dirty()
+	if(!hud_used?.zone_select)
+		return
+	zone_selector_hud_dirty = TRUE
+	if(zone_selector_hud_update_queued)
+		return
+	zone_selector_hud_update_queued = TRUE
+	addtimer(CALLBACK(src, PROC_REF(flush_zone_selector_hud)), 0)
+
+/mob/living/proc/flush_zone_selector_hud()
+	zone_selector_hud_update_queued = FALSE
+	if(!zone_selector_hud_dirty)
+		return
+	zone_selector_hud_dirty = FALSE
+	update_zone_selector_hud()
+
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A)
 	if(..()) //we are thrown onto something
@@ -110,7 +132,7 @@
 /mob/living/proc/MobBump(mob/M)
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
-
+	M.mob_timers[MT_SNEAKBUMP] = world.time //Here we go again. Make people suddenly lose stealth if they're bumped. No more rogueshittery.
 	if(now_pushing)
 		return TRUE
 
@@ -408,10 +430,11 @@
 				return
 
 		// Makes it so people who recently broke out of grabs cannot be grabbed again
-		if(TIMER_COOLDOWN_RUNNING(target, "broke_free") && target.stat == CONSCIOUS)
+		if(COOLDOWN_TIMELEFT(target, broke_free) && target.stat == CONSCIOUS)
 			target.visible_message(span_warning("[target] slips from [src]'s grip."), \
 					span_warning("I slip from [src]'s grab."))
 			log_combat(src, target, "tried grabbing", addition="passive grab")
+			stop_pulling()
 			return
 
 		log_combat(src, target, "grabbed", addition="passive grab")
@@ -431,6 +454,9 @@
 				O.sublimb_grabbed = item_override
 			else
 				O.sublimb_grabbed = used_limb
+			if(BP)
+				C.update_hud_hand_slot(BP.held_index)
+				C.mark_zone_selector_hud_dirty()
 			put_in_hands(O)
 			O.update_hands(src)
 			if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER) || item_override)
@@ -1040,7 +1066,7 @@
 						TH.transfer_mob_blood_dna(src)
 
 /mob/living/carbon/human/makeTrail(turf/T)
-	if((NOBLOOD in dna.species.species_traits) || !bleed_rate || bleedsuppress)
+	if((NOBLOOD in dna.species.species_traits) || (INVISBLOOD in dna.species.species_traits) || !bleed_rate || bleedsuppress) //OV EDIT
 		return
 	..()
 
@@ -1067,15 +1093,14 @@
 
 	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
 	//resisting grabs (as if it helps anyone...)
-	if(pulledby)
-		var/mob/living/P
-		if(isliving(pulledby))
-			P = pulledby
+	if(isliving(pulledby))
+		var/mob/living/puller = pulledby
 		if(!restrained(ignore_grab = 1))
 			log_combat(src, pulledby, "resisted grab")
-			resist_grab()
+			if(resist_grab())
+				COOLDOWN_START(src, broke_free, 1 SECONDS)
 			return
-		else if(P.compliance) // we ARE handcuffed apart from the grab, but grabber has Compliance Mode on
+		else if(puller.compliance) // we ARE handcuffed apart from the grab, but grabber has Compliance Mode on
 			log_combat(src, pulledby, "resisted grab (is restrained, compliance mode bypass)") // if you try baiting prisoners with this, I'll know.
 			resist_grab() // resisting out of his grab (100% success) takes priority here
 			return
@@ -1148,6 +1173,9 @@
 		notifyme = client.prefs.compliance_notifs
 
 	if(has_status_effect(/datum/status_effect/compliance))
+		if(HAS_TRAIT(src, TRAIT_COMPLIANT))
+			to_chat(src, span_alert("My vice makes me compliant against my will.")) //only for people who take the compliant vice
+			return
 		src.compliance = 0
 		remove_status_effect(/datum/status_effect/compliance)
 		if(notifyme)
@@ -1353,6 +1381,8 @@
 			if(what.nudist_approved && L.IsSleeping())
 				surrender_mod = 0.5 // concession for letting nude sleepers wear certain items: people can swipe them fast
 
+		else if(HAS_TRAIT(L, TRAIT_LOOSE_STRAPS))
+			surrender_mod = 0.5
 	if(!who.Adjacent(src))
 		return
 
@@ -2047,13 +2077,7 @@
 						found_ping(get_turf(M), client, "hidden")
 
 		for(var/obj/O in view(7,src))
-			if("hiddenguy" in O.vars)
-				var/mob/living/M = O.vars["hiddenguy"]
-				if(M)
-					var/sneak = M.get_skill_level(/datum/skill/misc/sneaking)
-					var/effective_sneak = 8 + (sneak * 2)
-					if(STAPER >= effective_sneak) // skewed towards the hiding player because there's already a separate, guaranteed way to find hiders.
-						found_ping(get_turf(O), client, "hidden")
+			SEND_SIGNAL(O, COMSIG_LOOK_AROUND_SPOTTED, src)
 			if(istype(O, /obj/item/restraints/legcuffs/beartrap))
 				var/obj/item/restraints/legcuffs/beartrap/M = O
 				if(isturf(M.loc) && M.armed)

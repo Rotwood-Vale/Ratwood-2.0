@@ -1,9 +1,11 @@
 /obj/structure/fluff/walldeco/mageguild
-	name = "Mage's Guild"
+	name = "Mage's Guild Banner"
+	desc = "The white hot flame of a mage's light on a mage blue background, these banners mark the colleges and laboratories of the Mage's Guild."
 	icon_state = "mageguild"
 
 /obj/structure/fluff/walldeco/mageguild2
-	name = "Mage's Guild"
+	name = "Mage's Guild Banner"
+	desc = "The white hot flame of a mage's light on a black background, these banners mark the colleges and laboratories of the Mage's Guild."
 	icon_state = "mageguild2"
 
 /obj/effect/turf_decal/magedecal

@@ -15,7 +15,7 @@
 		/datum/skill/combat/crossbows = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/bows = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/slings = SKILL_LEVEL_MASTER,//Your entire point is ranged.
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,//You get a knife, just in case.
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,//And can double in maces and swords.
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
@@ -70,7 +70,7 @@
 		switch(weapon_choice2)
 			if("Scimitar")
 				beltl = /obj/item/rogueweapon/scabbard/sword
-				l_hand = /obj/item/rogueweapon/sword/saber/iron
+				l_hand = /obj/item/rogueweapon/sword/sabre/iron
 			if("Whip") // They can head down to the armory to sideshift into one of the other bows.
 				beltl = /obj/item/rogueweapon/whip
 			if("Club")

@@ -8,6 +8,7 @@
 	integrity_failure = 0.1
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	sewrepair = TRUE
+	dropshrink = 0.85
 	///What level of bright light protection item has.
 	var/flash_protect = FLASH_PROTECTION_NONE
 	var/tint = 0				//Sets the item's level of visual impairment tint, normally set to the same as flash_protect
@@ -339,6 +340,38 @@
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
 */
+/obj/item/clothing/proc/get_flung_off()
+	if(!ishuman(loc))
+		return
+	var/mob/living/carbon/human/H = loc
+	var/max_range = (H.mind ? 2 : 3)
+	var/throwprob = (H.mind ? 8 : 80) + ((10 - H.STALUC))    // More FOR we have the less likely it is to happen.
+	if(!prob(throwprob))
+		return
+	perform_fling(H, max_range)
+
+/// Proc mostly for admins to use that omits probabilities. We could use an arg in the proc above, but navigating proccall is simpler without them.
+/obj/item/clothing/proc/get_flung_off_forced()
+	if(!ishuman(loc))
+		return
+	var/mob/living/carbon/human/H = loc
+	var/max_range = rand(2, 3)
+	perform_fling(H, max_range)
+
+/// Actual proc for flinging the item off. This shouldn't really 'fail' if it is getting called.
+/obj/item/clothing/proc/perform_fling(mob/living/carbon/human/H, max_range)
+	if(!H.dropItemToGround(src, silent = TRUE))
+		return
+	H.update_fov_angles()
+	if(istype(src, /obj/item/clothing/suit/roguetown/armor/chainmail) || istype(src, /obj/item/clothing/suit/roguetown/armor/plate))
+		do_sparks(2, TRUE, get_turf(H))
+	var/turnangle = (prob(10) ? 180 : prob(50) ? 270 : 90)
+	var/turndir = turn(H.dir, turnangle)
+	var/dist = rand(1, max_range)
+	var/current_turf = get_turf(H)
+	var/target_turf = get_ranged_target_turf(current_turf, turndir, dist)
+	playsound(get_turf(H), 'sound/misc/obj_toss.ogg', 100, TRUE)
+	throw_at(target_turf, dist, 6, H, FALSE)
 
 /obj/item/clothing/obj_break(damage_flag)
 	original_armor = armor
@@ -346,6 +379,11 @@
 	for(var/x in armorlist)
 		if(armorlist[x] > 0)
 			armorlist[x] = 0
+	var/mob/living/carbon/human/wearer = loc
+	if(istype(wearer))
+		if(HAS_TRAIT(wearer, TRAIT_LOOSE_STRAPS) && !HAS_TRAIT(src, TRAIT_NODROP))
+			wearer.visible_message(span_danger("[src] gets flung off!"))	
+			get_flung_off_forced()
 	..()
 
 /obj/item/clothing/obj_fix(mob/user, full_repair = TRUE)
@@ -430,7 +468,7 @@ BLIND     // can't see anything
 	if(..())
 		return 1
 
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	else
 		if(attached_accessory)
@@ -496,16 +534,6 @@ BLIND     // can't see anything
 	flags_inv ^= visor_flags_inv
 	flags_cover ^= initial(flags_cover)
 	icon_state = "[initial(icon_state)][up ? "up" : ""]"
-	if(visor_vars_to_toggle & VISOR_FLASHPROTECT)
-		flash_protect ^= initial(flash_protect)
-	if(visor_vars_to_toggle & VISOR_TINT)
-		tint ^= initial(tint)
-
-/obj/item/clothing/head/helmet/space/plasmaman/visor_toggling() //handles all the actual toggling of flags
-	up = !up
-	clothing_flags ^= visor_flags
-	flags_inv ^= visor_flags_inv
-	icon_state = "[initial(icon_state)]"
 	if(visor_vars_to_toggle & VISOR_FLASHPROTECT)
 		flash_protect ^= initial(flash_protect)
 	if(visor_vars_to_toggle & VISOR_TINT)

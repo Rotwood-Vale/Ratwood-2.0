@@ -16,6 +16,11 @@
 
 	var/atom/movable/screen/maptext_holder/maptext_holder
 
+/atom/movable/screen/movable/action_button/New()
+	. = ..()
+	maptext_holder = new(src)
+	vis_contents.Add(maptext_holder)
+
 /atom/movable/screen/movable/action_button/Destroy()
 	QDEL_NULL(maptext_holder)
 	return ..()
@@ -274,10 +279,6 @@
 	button.transform = M
 
 /atom/movable/screen/movable/action_button/proc/update_maptext(cd_time_deciseconds, color_cd = "#800000", color_neutral = "#ffffff")
-	if(!istype(maptext_holder))
-		maptext_holder = new(src)
-		vis_contents.Add(maptext_holder)
-
 	maptext_holder.update_maptext(cd_time_deciseconds, color_cd, color_neutral)
 
 /atom/movable/screen/maptext_holder

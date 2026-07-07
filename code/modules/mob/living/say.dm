@@ -412,8 +412,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/Zs_yell = FALSE
 	var/listener_has_ceiling	= TRUE
 	var/speaker_has_ceiling		= TRUE
-	var/turf/speaker_turf = get_turf(src)
-	var/turf/speaker_ceiling = get_step_multiz(speaker_turf, UP)
+	var/turf/speaker_turf = get_turf(source)
+	var/turf/speaker_ceiling = GET_TURF_ABOVE(speaker_turf)
 	var/line_of_sight_only = FALSE
 
 	if(speaker_ceiling)
@@ -428,10 +428,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			message_range += 10
 			Zs_yell = TRUE
 		if(say_test(message) == "3")	//Big "!!" shout
+			message_range += 10
 			Zs_all = TRUE
 
 	var/area/speaker_area = get_area(src)
-	if(speaker_area && speaker_area.soundproof == TRUE)
+	if(speaker_area?.soundproof)
 		line_of_sight_only = TRUE
 		Zs_too = FALSE
 		Zs_yell = FALSE
@@ -453,120 +454,115 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 				S.verb_yell = initial(S.verb_yell)
 		remove_status_effect(/datum/status_effect/thaumaturgy)
 	// AZURE EDIT END
-	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
-	var/list/the_dead = list()
-	var/list/hidden_ghosts = null
-//	var/list/yellareas	//CIT CHANGE - adds the ability for yelling to penetrate walls and echo throughout areas
-	for(var/_M in GLOB.player_list)
-		var/mob/M = _M
-
-		if(line_of_sight_only && !isobserver(M)) // If soundproof area, we only care about hearers_in_view, except observers
-			continue
-
-		var/atom/movable/tocheck = M
-		if(isdullahan(M))
-			var/mob/living/carbon/human/target = M
-			var/datum/species/dullahan/target_species = target.dna.species
-			tocheck = target_species.headless ? target_species.my_head : M
-//		if(M.stat != DEAD) //not dead, not important
-//			if(yellareas)	//CIT CHANGE - see above. makes yelling penetrate walls
-//				var/area/A = get_area(M)	//CIT CHANGE - ditto
-//				if(istype(A) && A.ambientsounds != SPACE && (A in yellareas))	//CIT CHANGE - ditto
-//					listening |= M	//CIT CHANGE - ditto
-//			continue
-		if(!client) //client is so that ghosts don't have to listen to mice
-			continue
-		if(!M)
-			continue
-		if(!M.client)
-			continue
-		if(get_dist(tocheck, src) > message_range) //they're out of range of normal hearing
-			if(M.client.prefs)
-				if(eavesdropping_modes[message_mode] && !(M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
+	var/list/listening = line_of_sight_only ? get_hearers_in_view(message_range + eavesdrop_range, source) : get_hearers_in_range(message_range + eavesdrop_range, source)
+	if(Zs_too)
+		if(speaker_ceiling) // so people above us can hear us too
+			listening += line_of_sight_only ? get_hearers_in_view(message_range + eavesdrop_range, speaker_ceiling) : get_hearers_in_range(message_range + eavesdrop_range, speaker_ceiling)
+		if(!line_of_sight_only) // no real good way to do this for LOS-only
+			var/turf/below_turf = GET_TURF_BELOW(speaker_turf)
+			if(below_turf)
+				listening += get_hearers_in_range(message_range + eavesdrop_range, below_turf)
+	var/alist/admin_listeners = alist()
+	var/do_ghost_protection = has_ghost_protection(src)
+	if(Zs_all)
+		for(var/mob/potential_listener as anything in GLOB.player_list)
+			if(!potential_listener.client?.prefs)
+				continue
+			if(!client) // so we don't have to see mice or cows or chickens making a racket
+				continue
+			if(get_dist(potential_listener, src) > message_range) //they're out of range of normal hearing
+				continue // don't check ghostwhisper prefs here, those are for admins
+			if(do_ghost_protection && isobserver(potential_listener))
+				var/mob/dead/observer/potential_observer = potential_listener
+				if(!potential_observer.bypasses_ghost_protection(potential_listener))
 					continue
-				if(!(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
-					continue
-		if(!is_in_zweb(src.z,tocheck.z))
+			if(!is_in_zweb(src.z,potential_listener.z))
+				continue
+			listening |= potential_listener
+	// show to admins with ghostears/ghostwhisper on
+	for(var/client/admin as anything in GLOB.admins)
+		if(!(admin?.prefs.chat_toggles & CHAT_GHOSTEARS))
 			continue
-		listening |= M
-		the_dead[M] = TRUE
-	if(has_ghost_protection(src))
-		hidden_ghosts = get_hidden_ghosts_for_target(src)
-		for(var/mob/dead/observer/ghost in hidden_ghosts)
-			if(ghost in listening)
-				listening -= ghost
-				the_dead -= ghost
+		if(!client) // so admins don't have to see mice or cows or chickens making a racket
+			continue
+		var/mob/observer = admin.mob
+		if(get_dist(observer, src) > message_range) //they're out of range of normal hearing
+			if(eavesdropping_modes[message_mode] && !(admin.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
+				continue
+		if(!is_in_zweb(src.z,observer.z))
+			continue
+		listening |= observer
+		admin_listeners[observer] = TRUE
+	if(do_ghost_protection) // don't loop over the whole listening list unless we really have to
+		for(var/mob/dead/observer/ghost in listening) // a necessary evil so ghosts don't show up in the seen log
+			if(ghost.bypasses_ghost_protection())
+				continue
+			listening -= ghost
 	log_seen(src, null, listening, original_message, SEEN_LOG_SAY)
 
 	var/eavesdropping
 	var/eavesrendered
 	if(eavesdrop_range)
 		eavesdropping = stars(message)
-		eavesrendered = compose_message(src, message_language, eavesdropping, , spans, message_mode)
+		eavesrendered = compose_message(src, message_language, eavesdropping, null, spans, message_mode)
 
-	var/rendered = compose_message(src, message_language, message, , spans, message_mode)
-	for(var/_AM in listening)
+	/// List of mobs that actually heard the message fully
+	var/list/heard_message = list()
+
+	var/rendered = compose_message(src, message_language, message, null, spans, message_mode)
+	var/alist/speaker_ceiling_nearby = alist()
+	if(Zs_too && !Zs_all && !speaker_has_ceiling && speaker_ceiling) // only generate this lookup if we need it
+		// can't just check for living, ghosts want to hear too
+		for(var/mob/hearer in get_hearers_in_view(message_range, speaker_ceiling)) // we need LOS to their location
+			speaker_ceiling_nearby[hearer] = TRUE
+	for(var/atom/movable/AM as anything in listening)
 		var/hearall = FALSE
-		var/atom/movable/AM = _AM
 		var/turf/listener_turf = get_turf(AM)
 		var/turf/listener_ceiling = get_step_multiz(listener_turf, UP)
-		if(istype(_AM, /obj/item/listeningdevice)) // Very evil snowflake code.
+		if(istype(AM, /obj/item/listeningdevice)) // Very evil snowflake code.
 			hearall = TRUE
-
-		if(listener_ceiling)
-			listener_has_ceiling = TRUE
-			if(istransparentturf(listener_ceiling))
-				listener_has_ceiling = FALSE
-		if(!hearall)
-			if((!Zs_too && !isobserver(AM)) || message_mode == MODE_WHISPER)
-				if(AM.z != src.z)
-					continue
-		if(Zs_too && listener_turf.z != speaker_turf.z && !Zs_all)
-			if(!Zs_yell && !HAS_TRAIT(AM, TRAIT_KEENEARS) && !hearall)
+		listener_has_ceiling = listener_ceiling && !istransparentturf(listener_ceiling)
+		if(!hearall && !Zs_too && !admin_listeners[AM] && AM.z != src.z)
+			continue
+		var/keenears = HAS_TRAIT(AM, TRAIT_KEENEARS)
+		if(!hearall && Zs_too && listener_turf.z != speaker_turf.z && !Zs_all)
+			if(!Zs_yell && !keenears)
 				if(listener_turf.z < speaker_turf.z && listener_has_ceiling)	//Listener is below the speaker and has a ceiling above them
 					continue
 				if(listener_turf.z > speaker_turf.z && speaker_has_ceiling)		//Listener is above the speaker and the speaker has a ceiling above
 					continue
 				if(listener_has_ceiling && speaker_has_ceiling)	//Both have a ceiling, on different z-levels -- no hearing at all
 					continue
-			else
-				if(abs((listener_turf.z - speaker_turf.z)) >= 2)	//We're yelling with only one "!", and the listener is 2 or more z levels above or below us.
-					continue
-			var/listener_obstructed = TRUE
-			var/speaker_obstructed = TRUE
-			if(src != AM && !Zs_yell && !HAS_TRAIT(AM, TRAIT_KEENEARS) && !hearall)	//We always hear ourselves. Zs_yell will allow a "!" shout to bypass walls one z level up or below.
-				if(!speaker_has_ceiling && isliving(AM))
-					var/mob/living/M = AM
-					for(var/mob/living/MH in viewers(world.view, speaker_ceiling))
-						if(M == MH && MH.z == speaker_ceiling?.z)
-							speaker_obstructed = FALSE
-
-				if(!listener_has_ceiling)
-					for(var/mob/living/ML in viewers(world.view, listener_ceiling))
-						if(ML == src && ML.z == listener_ceiling?.z)
-							listener_obstructed = FALSE
-				if(listener_obstructed && speaker_obstructed)
-					continue
+			else if(abs((listener_turf.z - speaker_turf.z)) >= 2)	//We're yelling with only one "!", and the listener is 2 or more z levels above or below us.
+				continue
+			if(src != AM && !Zs_yell && !keenears)	//We always hear ourselves. Zs_yell will allow a "!" shout to bypass walls one z level up or below.
+				if(!speaker_ceiling || speaker_has_ceiling || AM.z != speaker_ceiling.z || !speaker_ceiling_nearby[AM])
+					// only check if the listener is unobstructed if the speaker is obstructed
+					if(!listener_ceiling || listener_has_ceiling || z != listener_ceiling.z || !(src in hearers(world.view, listener_ceiling)))
+						continue
 		var/highlighted_message
-		var/keenears
-		if(ishuman(AM))
-			var/mob/living/carbon/human/H = AM
-			keenears = HAS_TRAIT(H, TRAIT_KEENEARS)
-			var/name_to_highlight = H.nickname
-			if(name_to_highlight && name_to_highlight != "" && name_to_highlight != "Please Change Me")	//We don't need to highlight an unset or blank one.
-				highlighted_message = replacetext_char(message, name_to_highlight, "<b><font color = #[H.highlight_color]>[name_to_highlight]</font></b>")
 		var/atom/movable/tocheck = AM
-		if(isdullahan(AM))
+		if(ishuman(AM))
 			var/mob/living/carbon/human/target = AM
-			var/datum/species/dullahan/target_species = target.dna.species
-			tocheck = target_species.headless ? target_species.my_head : AM
-		if(eavesdrop_range && get_dist(source, tocheck) > message_range+keenears && !(the_dead[AM]))
-			AM.Hear(eavesrendered, src, message_language, eavesdropping, , spans, message_mode, original_message)
-		else if(highlighted_message)
-			AM.Hear(rendered, src, message_language, highlighted_message, , spans, message_mode, original_message)
+			var/name_to_highlight = target.nickname
+			if(name_to_highlight && name_to_highlight != "" && name_to_highlight != "Please Change Me")	//We don't need to highlight an unset or blank one.
+				highlighted_message = replacetext_char(message, name_to_highlight, "<b><font color = #[target.highlight_color]>[name_to_highlight]</font></b>")
+			var/datum/species/dullahan/target_species = target.dna?.species
+			if(istype(target_species) && target_species.headless)
+				tocheck = target_species.my_head
+		if(eavesdrop_range && get_dist(source, tocheck) > message_range+keenears && !(admin_listeners[AM]))
+			AM.Hear(eavesrendered, src, message_language, eavesdropping, null, spans, message_mode, original_message)
+			heard_message += AM
 		else
-			AM.Hear(rendered, src, message_language, message, , spans, message_mode, original_message)
+			AM.Hear(rendered, src, message_language, highlighted_message || message, null, spans, message_mode, original_message)
+			heard_message += AM
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
+
+	// Checks for vocal commands
+	if(findtext(message, regex("yield|give\\s*up|surrender|stop\\s*resisting","i")))
+		play_overhead_private_rclickemote(heard_message, "yield")
+		for(var/mob/living/carbon/human in heard_message)
+			human.apply_status_effect(/datum/status_effect/debuff/yield_prompt)
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
@@ -580,13 +576,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	//Listening gets trimmed here if a vocal bark's present. If anyone ever makes this proc return listening, make sure to instead initialize a copy of listening in here to avoid wonkiness
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_QUEUE_BARK, listening, args) || vocal_bark || vocal_bark_id)
+		var/list/hears_barks = list()
 		for(var/mob/M in listening)
-			if(!M.client)
-				continue
-			if(!(M.client.prefs.hear_barks))
-				listening -= M
+			if(M.client?.prefs?.hear_barks)
+				hears_barks += M
 		var/is_yell = Zs_yell || Zs_all
-		var/barks = min(round((LAZYLEN(message) / vocal_speed)) + 1, BARK_MAX_BARKS)
+		var/barks = min(round((length(message) / vocal_speed)) + 1, BARK_MAX_BARKS)
 		var/total_delay = 0
 		vocal_current_bark = world.time
 		for(var/i in 1 to barks)

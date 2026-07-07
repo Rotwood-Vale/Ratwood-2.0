@@ -604,7 +604,7 @@
 /obj/item/rogueweapon/huntingknife/idagger/steel/profane/pre_attack(mob/living/carbon/human/target, mob/living/user = usr, params)
 	if(!istype(target))
 		return FALSE
-	if(target.has_flaw(/datum/charflaw/hunted)) // Check to see if the dagger will do 20 damage or 14
+	if(target.has_flaw(/datum/charflaw/assassintarget)) // Check to see if the dagger will do 20 damage or 14
 		force = 20 * 2	//vs trait havers, 2x damage over a steel knife
 	else
 		force = 20 + 4	//vs non-trait havers, 4 more damage over a steel knife
@@ -659,7 +659,7 @@
 
 			return
 
-		if(target.has_flaw(/datum/charflaw/hunted)) // The profane dagger only thirsts for those who are hunted, by flaw or by zizoid curse.
+		if(target.has_flaw(/datum/charflaw/assassintarget)) // The profane dagger only thirsts for those who are hunted, by flaw or by zizoid curse.
 			if(target.client == null) //See if the target's soul has left their body
 				to_chat(user, "<span class='danger'>Your target's soul has already escaped its corpse...you try to call it back!</span>")
 				get_profane_ghost(target,user) //Proc to capture a soul that has left the body.
@@ -784,7 +784,7 @@
 	if(active_item)
 		return
 	active_item = TRUE
-	if(user.job == "Man at Arms")
+	if(user.job == "Man at Arms" || user.job == "Janissary")
 		to_chat(user, span_suppradio("The standard's runes pulse, accepting me as its <b>master</b>."))
 		user.change_stat(STATKEY_LCK, 3)
 		user.add_stress(/datum/stressevent/keep_standard)
@@ -806,7 +806,7 @@
 	if(!active_item)
 		return
 	active_item = FALSE
-	if(user.job == "Man at Arms")
+	if(user.job == "Man at Arms" || user.job == "Janissary")
 		to_chat(user, span_monkeyhive("The standard's runes pulse, rhythmically, as if sad to see you release your control."))
 		user.change_stat(STATKEY_LCK, -3)
 		user.remove_stress(/datum/stressevent/keep_standard)

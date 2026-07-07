@@ -32,6 +32,8 @@
 	var/static/list/accessory_icon_cache = list()
 	/// Whether this specific accessory doesn't allow for coloring
 	var/color_disabled = FALSE
+	/// Which gradient dmi file this uses
+	var/gradient_icon = 'icons/mob/sprite_accessory/hair/hair_gradients32x32.dmi'
 
 /datum/sprite_accessory/New()
 	if(color_keys > 1)
@@ -45,7 +47,7 @@
 	return TRUE
 
 /datum/sprite_accessory/proc/generic_gender_feature_adjust(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner, feature_male_key, feature_female_key)
-	if(!ishuman(owner))
+	if(!ishuman(owner) || !owner.dna?.species)
 		return
 	var/mob/living/carbon/human/humie = owner
 	var/datum/species/species = owner.dna.species

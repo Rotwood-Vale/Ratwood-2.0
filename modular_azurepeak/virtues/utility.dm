@@ -1,10 +1,12 @@
 /datum/virtue/utility/noble
 	name = "Nobility"
-	desc = "By birth, blade or brain, I am noble known to the royalty of these lands, and have all the benefits associated with it. I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
+	desc = "By birth, blade or brain, I am noble known to the royalty of these lands, and have all the benefits associated with it. \
+			I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
 	added_traits = list(TRAIT_NOBLE)
 	added_skills = list(list(/datum/skill/misc/reading, 1, 6))
 	added_stashed_items = list("Heirloom Amulet" = /obj/item/clothing/neck/roguetown/ornateamulet/noble,
 								"Hefty Coinpurse" = /obj/item/storage/belt/rogue/pouch/coins/virtuepouch)
+	triumph_cost = 7
 
 /datum/virtue/utility/noble/apply_to_human(mob/living/carbon/human/recipient)
 	SStreasury.noble_incomes[recipient] += 15
@@ -31,7 +33,7 @@
 /datum/virtue/utility/deadened
 	name = "Deadened"
 	desc = "Some terrible incident colours my past, and now, I feel nothing."
-	added_traits = list(TRAIT_NOMOOD)
+	added_traits = list(TRAIT_NOMOOD, TRAIT_DETACHED)
 
 /datum/virtue/utility/light_steps
 	name = "Light Steps"
@@ -41,7 +43,7 @@
 
 /datum/virtue/utility/resident
 	name = "Resident"
-	desc = "I'm a resident of the vale. I have an account in the city's treasury and a home in the city."
+	desc = "I'm a resident of these lands. I have an account in the city's treasury and a home in the city."
 	added_traits = list(TRAIT_RESIDENT)
 
 /datum/virtue/utility/resident/apply_to_human(mob/living/carbon/human/recipient)
@@ -203,6 +205,12 @@
 		var/instrument_type = instruments[chosen_name]
 		recipient.mind?.special_items[chosen_name] = instrument_type
 
+/datum/virtue/utility/mean
+	name = "Acquired Tastes"
+	desc = "Despite your unorthodox tastes, you know how to keep a partner off-guard and on their back. Sometimes accidents happen in the heat of passion or you enjoy making them, sharing a bed with you is a gamble. You're always prepared to handle a guest with the toys you keep stashed."
+	added_traits = list(TRAIT_DEATHBYSNUSNU, TRAIT_NUTCRACKER)
+	added_stashed_items = list("Bag of Fetish Gear" = /obj/item/storage/roguebag/fetish)
+
 /datum/virtue/utility/larcenous
 	name = "Larcenous"
 	desc = "Whether it was asked of you, or by a calling for the rush deep within your hollow heart, you seek things that don't belong you. You know how to work a lock, and have stashed a ring of them, for just the occasion."
@@ -280,7 +288,7 @@
 	desc = "You realised long ago that the ability to find a man is as helpful to aid the law as it is to evade it."
 	added_skills = list(list(/datum/skill/misc/tracking, 3, 6))
 	added_traits = list(TRAIT_SLEUTH)
-	custom_text = "- Upon right clicking a track, you will Mark the person who made them <i>(Expert skill required, not exclusive to this Virtue)</i>.\n- Further tracks found will be automatically highlighted as theirs, along with the person themselves, if they are not sneaking or invisible at the time.\n- Reduces the cooldown for tracking, allows track examining right away, and movement no longer cancels tracking."
+	custom_text = "- Upon right clicking a track, you will Mark the person who made them <i>(Expert skill required, not exclusive to this Virtue)</i>.\n- Further tracks found will be automatically highlighted as theirs, along with the person themselves, if they are not sneaking or invisible at the time.\n- Reduces the cooldown for tracking, allows track examining right away, and movement no longer cancels tracking.\n- As a bonus, you'll be able to read people's noble gossip regardless of <i>your</i> noble status."
 
 /datum/virtue/utility/bronzearm_r
 	name = "Bronze Arm (R)"
@@ -351,7 +359,7 @@
 		list(/datum/skill/misc/tracking, 1, 2),
 		list(/datum/skill/labor/butchering, 1, 2),
 		list(/datum/skill/craft/tanning, 1, 2),
-		list(/datum/skill/combat/staves, 1, 2),
+		list(/datum/skill/combat/polearms, 1, 2),
 		list(/datum/skill/combat/slings, 1, 2),
 		list(/datum/skill/craft/crafting, 1, 2),
 		list(/datum/skill/craft/cooking, 1, 2),

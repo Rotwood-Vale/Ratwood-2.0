@@ -258,6 +258,9 @@
 		if((HAS_TRAIT(src, TRAIT_OUTLANDER) && !HAS_TRAIT(user, TRAIT_OUTLANDER)) || (HAS_TRAIT(user, TRAIT_RACISMISBAD) && !(src.dna.species.name == "Elf" || src.dna.species.name == "Dark Elf" || src.dna.species.name == "Half Elf")))
 			. += span_phobia("A foreigner...")
 
+		if(HAS_TRAIT(src, TRAIT_LOOSE_STRAPS))
+			. += span_phobia("[capitalize(m2)] armor hangs on by a thread...")
+
 		if(HAS_TRAIT(src, TRAIT_DISGRACED_NOBLE))
 			if(HAS_TRAIT(user, TRAIT_NOBLE))
 				. += span_phobia("A disgraced member of the nobility...")
@@ -459,6 +462,16 @@
 		var/atom/item = get_most_expensive()
 		if(item)
 			. += span_notice("You get the feeling [m2] most valuable possession is \a [item].")
+
+	if(user != src && get_dist(user, src) <= 3)
+		var/datum/charflaw/malodorous/malodorous_flaw = src.get_flaw(/datum/charflaw/malodorous)
+		if(malodorous_flaw && malodorous_flaw.is_reeking())
+			var/can_see_stink = !isliving(user) // adminghost always sees it
+			if(isliving(user))
+				var/mob/living/living_user = user
+				can_see_stink = living_user.can_smell()
+			if(can_see_stink)
+				. += span_greentext("They reek.")
 
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
@@ -699,8 +712,8 @@
 	if(ears && !(SLOT_HEAD in obscured))
 		. += "[m3] [get_examine_item_name_with_hover(user, ears)] on [m2] ears."
 
-	//ID
-	if(wear_ring && !(SLOT_RING in obscured))
+	//ring
+	if(wear_ring && !(SLOT_RING in obscured) && !HAS_TRAIT(wear_ring, TRAIT_EXAMINE_SKIP))
 		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_ring)] on [m2] hands. "
 		if(is_smart && istype(wear_ring, /obj/item/clothing/ring/active))
 			var/obj/item/clothing/ring/active/AR = wear_ring
@@ -1165,9 +1178,9 @@
 			if(length(neck.branded_writing_on_neck) && get_location_accessible(src, BODY_ZONE_PRECISE_NECK))
 				. += span_info("[capitalize(m2)] neck has been branded with ") + "[span_boldwarning(neck.branded_writing_on_neck)]."
 
-	// Characters with the hunted flaw will freak out if they can't see someone's face.
+	// Characters with the marked for death flaw will freak out if they can't see someone's face.
 	if(!appears_dead)
-		if(skipface && user.has_flaw(/datum/charflaw/hunted) && user != src)
+		if(skipface && user.has_flaw(/datum/charflaw/assassintarget) && user != src)
 			user.add_stress(/datum/stressevent/hunted)
 
 	if(dna?.species?.type == /datum/species/gnoll)

@@ -1,0 +1,73 @@
+2026-07-01:
+  Wadelicious:
+  - rscadd: Sirwal to the lobby loadout menu
+  Xander3359:
+  - bugfix: Fix resisting out of man eaters being bugged.
+  annikaRU:
+  - rscadd: refined ducal blacksteel staff and the recipe for it
+2026-07-02:
+  IronDragoon:
+  - bugfix: Removed rontz ring from the contraband spawner
+  Yuckuza:
+  - rscdel: Removed raise fortified skeleton scroll from necromancer corpse loot pool.
+2026-07-03:
+  BlindPoet:
+  - rscadd: Added back the Janissary's mace
+  - rscadd: Added a shield to the class to match its' description
+2026-07-04:
+  Xander3359:
+  - bugfix: Fix attacks, spells and miracles fizzling sometimes if you hold a channel
+      and move your mouse.
+  - bugfix: Fix T3 eyes giving you +1 in a bugged stat
+  wikimody:
+  - bugfix: Surgical tool that stepped out of line has been brought by in line by
+      force (cautery intends got shufled)
+  zeroisthebiggay:
+  - bugfix: rookies properly get willpower
+2026-07-05:
+  JustMeTheIInd:
+  - qol: made roleplay ad notifications turned on by default
+  Xander3359:
+  - bugfix: Fixed spells giving you a permanent glow when they fizzled out.
+  - rscadd: Mending now gives you an arcyne glow when casting
+  Yuckuza:
+  - qol: Drider mounts like those used by drow mercs can be healed via apples like
+      saiga and beetles can.
+  petwir1:
+  - balance: heavy knight's claymore weapon choice split into two steel options
+  - balance: heavy knight's lucerne weapon choice changed to eagle's beak
+  - balance: foot knight's warhammer weapon choice upgraded to steel to match all
+      other options
+  - balance: 'city guard''s polehammer weapon choice downgraded to lucerne instead
+      of the current eagle''s beak
+
+      :cl:'
+2026-07-06:
+  EvenInDeathIStillServe:
+  - rscadd: Adds an Observer ban option to the admin ban panel.
+  SneakySlinky:
+  - bugfix: Grand Mace and Punch Dagger loadout choices for Berserker now work.
+  Teragenic:
+  - qol: Adds Right and Left Indicator from AP
+  - bugfix: Czwarteki Icons returned
+  Xander3359:
+  - rscadd: Belts can now be untied into the leather that is used to make them via
+      a craft.
+  - rscadd: Sandals, boots and pouches can be chopped up with scissors.
+  Yuckuza:
+  - balance: Gave whips the wbalance var, with light whips getting swift and most
+      of the heavier whips getting heavy balance.
+  - balance: replaced the warden master's steel greataxe loadout option with the unique
+      oath axe.
+  kimesik:
+  - bugfix: Wretch-Heretic Spy gets maximum Devotion on spawn.
+  ophaq:
+  - rscadd: Adds craftable ritechalk.
+  zeroisthebiggay:
+  - image: updated god miracle icons
+2026-07-07:
+  Teragenic:
+  - qol: Adds Dominant Hand Indicator
+  Xander3359:
+  - code_imp: Nukes unused undivided code
+  - admin: adds lua scripting

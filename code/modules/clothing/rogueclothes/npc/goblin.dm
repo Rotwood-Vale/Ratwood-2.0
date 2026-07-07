@@ -34,6 +34,7 @@
 	icon = 'icons/roguetown/mob/monster/goblins.dmi'
 	allowed_race = list(/datum/species/goblin, /datum/species/goblin/hell, /datum/species/goblin/cave, /datum/species/goblin/sea, /datum/species/goblin/moon)
 	sellprice = 0
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/helmet/goblin
 	name = "goblin helmet"
@@ -44,3 +45,4 @@
 	body_parts_covered = HEAD|EARS|HAIR|EYES
 	sellprice = 0
 	smeltresult = /obj/item/ingot/iron
+	dropshrink = null

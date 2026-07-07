@@ -35,6 +35,7 @@
 	icon_state = "tophat"
 	color = CLOTHING_BLACK
 	nudist_approved = TRUE
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/bardhat
 	name = "bard's hat"
@@ -109,6 +110,7 @@
 	nudist_approved = TRUE
 	heat_protection = HEAD
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/chaperon
 	name = "chaperon hat"
@@ -205,6 +207,7 @@
 	//dropshrink = 0.75
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/knitcap
 	name = "knit cap"
@@ -280,7 +283,7 @@
 	desc = "A fine leather slouch, beplumed with a crimson feather and fitted with a hidden steel skull cap. It serves as a reminder that the Holy Otavan Inquisition triumphs in one avenue above all else - fashion. </br>'To keep ones vision away from the heavens, and focused on the sin beneath the soil.'"
 	icon_state = "inqhat"
 	item_state = "inqhat"
-	max_integrity = 200
+	max_integrity = ARMOR_INT_HELMET_HARDLEATHER
 	armor = ARMOR_SPELLSINGER
 	body_parts_covered = HEAD|HAIR|EARS
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
@@ -288,6 +291,7 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 	heat_protection = HEAD
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+	resistance_flags = FIRE_PROOF // drip is eternal
 
 /obj/item/clothing/head/roguetown/headband/red
 	color = CLOTHING_RED
@@ -339,6 +343,7 @@
 	icon_state = "nun"
 	sellprice = 5
 	nudist_approved = TRUE
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/hennin
 	name = "hennin"
@@ -560,7 +565,6 @@
 	item_state = "hijab_t"
 	icon_state = "deserthood_t"
 	color = "#b8252c"
-	hidesnoutADJ = FALSE
 	flags_inv = null
 	sleevetype = null
 	sleeved = null
@@ -590,3 +594,21 @@
 		alternate_worn_layer = BACK_LAYER //Above Hair Layer
 	user.update_inv_wear_mask()
 	user.update_inv_head()
+
+// The exact same as the Grenzelhoft hat w/ the cap, but capless; no armor stats. Allows for drip with the helmet aesthetic PR
+/obj/item/clothing/head/roguetown/caplessgrenzelhofthat
+	name = "capless grenzelhoft plume hat"
+	desc = "Whether it's monsters or fair maidens, a true Grenzelhoftian slays both. This one lacks any protection beneath."
+	icon_state = "grenzelhat"
+	item_state = "grenzelhat"
+	icon = 'icons/roguetown/clothing/head.dmi'
+	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
+	slot_flags = ITEM_SLOT_HEAD
+	detail_tag = "_detail"
+	altdetail_tag = "_detailalt"
+	dynamic_hair_suffix = ""
+	resistance_flags = FIRE_PROOF //doesnt spawn, only a cosmetic loadout item. Keep the swag.
+	color = "#262927"
+	detail_color = "#FFFFFF"
+	altdetail_color = "#9c2525"
+	

@@ -17,7 +17,7 @@
 /datum/intent/dagger/thrust/fork
 	penfactor = 20
 
-/obj/item/kitchen/fork/aalloy
+/obj/item/kitchen/fork/decrepit
 	name = "decrepit fork"
 	icon_state = "afork"
 	color = "#bb9696"
