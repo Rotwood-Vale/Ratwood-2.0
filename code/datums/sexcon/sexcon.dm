@@ -1314,6 +1314,7 @@
 	var/datum/sex_action/action = SEX_ACTION(current_action)
 	var/base_speed = -1
 	var/base_force = -1
+	var/subtle_message_tick_counter = 0
 	show_progress = 1
 	suppress_moan = FALSE
 	do_subtle_action = TRUE // always start subtle supported actions with subtle mode on
@@ -1337,6 +1338,13 @@
 			break
 
 		var/show_action_message = (speed != base_speed || force != base_force)
+		if(!show_action_message && do_subtle_action)
+			subtle_message_tick_counter++
+			if(subtle_message_tick_counter >= 3)
+				show_action_message = TRUE
+				subtle_message_tick_counter = 0
+		else if(show_action_message)
+			subtle_message_tick_counter = 0
 		base_speed = speed
 		base_force = force
 		suppress_action_messages = !show_action_message
