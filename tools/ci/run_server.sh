@@ -10,6 +10,7 @@ mkdir ci_test/config
 mkdir ci_test/data
 
 #test config
+cp -r config/title_music ci_test/config/title_music
 cp tools/ci/ci_config.txt ci_test/config/config.txt
 
 #set the map
