@@ -41,3 +41,8 @@ cp -r tgui/public/* $1/tgui/public/
 if [ "$(uname -o)" = "Msys" ]; then
 	cp ./*.dll $1/
 fi
+
+#sos on linux
+if [ "$(uname -o)" = "GNU/Linux" ]; then
+	cp ./*.so $1/
+fi
