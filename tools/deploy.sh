@@ -16,9 +16,9 @@ mkdir -p \
     $1/icons/mob/inhands \
     $1/icons/obj \
     $1/strings \
-	$1/modular/code/modules/slave_collar/strings \
-	$1/modular/code/game/objects/items/lewd/chastity/strings \
-    $1/tgui/public \
+    $1/modular/code/modules/slave_collar/strings \
+    $1/modular/code/game/objects/items/lewd/chastity/strings \
+    $1/tgui/public 
 
 if [ -d ".git" ]; then
   mkdir -p $1/.git/logs
@@ -47,6 +47,8 @@ if [ "$(uname -o)" = "Msys" ]; then
 fi
 
 #sos on linux
+#this will not work on the live server, and will mess with tgs
+#useroth really needs to publish that rust-g release already
 if [ "$(uname -o)" = "GNU/Linux" ]; then
 	cp ./*.so $1/
 fi
