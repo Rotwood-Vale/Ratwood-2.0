@@ -48,8 +48,6 @@ if [ "$(uname -o)" = "Msys" ]; then
 fi
 
 #sos on linux
-#this will not work on the live server, and will mess with tgs
-#useroth really needs to publish that rust-g release already
 if [ "$(uname -o)" = "GNU/Linux" ]; then
 	cp ./*.so $1/
 fi
