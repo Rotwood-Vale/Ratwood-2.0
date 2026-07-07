@@ -50,6 +50,9 @@
 			skel_outfit = /datum/outfit/job/roguetown/skeleton/npc/hard
 	..()
 
+/mob/living/carbon/human/species/skeleton/npc/hardspread/lich
+	faction = list("lich")
+
 /datum/outfit/job/roguetown/skeleton/npc/supereasy/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.STASTR = 10
