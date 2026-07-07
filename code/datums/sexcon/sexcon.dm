@@ -63,6 +63,8 @@
 	var/suppress_moan = FALSE
 	/// Allow players to decide if they want to subtly do this action or not (only for actions that can be done subtly)
 	var/do_subtle_action = FALSE
+	/// While TRUE, sex action flavor text should be suppressed for this tick.
+	var/suppress_action_messages = FALSE
 	/// Knot based variables
 	var/do_knot_action = FALSE
 	var/do_knot_action_as_bottom = FALSE
@@ -102,6 +104,11 @@
 		knot_exit()
 	//receiving = list()
 	. = ..()
+
+/mob/living/carbon/human/proc/sexcon_action_message(message, self_message, blind_message, vision_distance)
+	if(sexcon?.suppress_action_messages)
+		return
+	visible_message(message, self_message, blind_message, vision_distance)
 
 /datum/sex_controller/proc/do_thrust_animate(atom/movable/target, pixels = 4, time = 2.7)
 	var/oldx = user.pixel_x
@@ -1305,6 +1312,8 @@
 	// Do action loop
 	var/performed_action_type = current_action
 	var/datum/sex_action/action = SEX_ACTION(current_action)
+	var/base_speed = -1
+	var/base_force = -1
 	show_progress = 1
 	suppress_moan = FALSE
 	do_subtle_action = TRUE // always start subtle supported actions with subtle mode on
@@ -1326,8 +1335,14 @@
 			break
 		if(desire_stop)
 			break
+
+		var/show_action_message = (speed != base_speed || force != base_force)
+		base_speed = speed
+		base_force = force
+		suppress_action_messages = !show_action_message
 		find_ringing_collar()
 		action.on_perform(user, target)
+		suppress_action_messages = FALSE
 		// It could want to finish afterwards the performed action
 		if(action.is_finished(user, target))
 			break
