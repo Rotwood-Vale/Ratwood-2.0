@@ -1,5 +1,5 @@
 /datum/sex_action/masturbate_penis_prestidigitation
-	name = "Prestidigitation jerk off"
+	name = "Jerk off with magehand"
 	category = SEX_CATEGORY_HANDS
 	user_sex_part = SEX_PART_COCK
 	target_sex_part = SEX_PART_COCK

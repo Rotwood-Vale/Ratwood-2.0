@@ -1,5 +1,5 @@
 /datum/sex_action/masturbate_other_breasts_orison
-	name = "Orison breastplay"
+	name = "Rub their breasts with godhand"
 	check_same_tile = FALSE
 	category = SEX_CATEGORY_HANDS
 	subtle_supported = TRUE
@@ -32,6 +32,7 @@
 	var/do_subtle = user.sexcon.do_subtle_action
 	var/list/data = modular_get_orison_patron_data(user.patron?.type)
 	var/message_suffix = data["message"]
+	modular_try_show_orison_indulgence_notice(target, user, data)
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle
 

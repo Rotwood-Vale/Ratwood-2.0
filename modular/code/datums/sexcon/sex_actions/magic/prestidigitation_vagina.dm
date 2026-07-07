@@ -1,5 +1,5 @@
 /datum/sex_action/masturbate_other_vagina_prestidigitation
-	name = "Prestidigitation clitplay"
+	name = "Rub their clit with magehand"
 	check_same_tile = FALSE
 	category = SEX_CATEGORY_HANDS
 	target_sex_part = SEX_PART_CUNT

@@ -1,5 +1,5 @@
 /datum/sex_action/masturbate_breasts_prestidigitation
-	name = "Prestidigitation rub breasts"
+	name = "Rub breasts with magehand"
 	category = SEX_CATEGORY_HANDS
 	subtle_supported = TRUE
 

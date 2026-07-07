@@ -66,6 +66,8 @@
 	var/do_subtle_action = FALSE
 	/// While TRUE, sex action flavor text should be suppressed for this tick.
 	var/suppress_action_messages = FALSE
+	/// One-shot guard for the indulgence private notice during an active action.
+	var/orison_indulgence_notice_shown = FALSE
 	/// Knot based variables
 	var/do_knot_action = FALSE
 	var/do_knot_action_as_bottom = FALSE
@@ -1276,6 +1278,7 @@
 	desire_stop = FALSE
 	if(user)
 		user.doing = FALSE
+	orison_indulgence_notice_shown = FALSE
 	current_action = null
 	bed = null
 	target_on_bed = FALSE
@@ -1299,6 +1302,7 @@
 	knot_check_remove(action_type)
 	// Set vars
 	desire_stop = FALSE
+	orison_indulgence_notice_shown = FALSE
 	current_action = action_type
 	bed = null
 	target_on_bed = FALSE

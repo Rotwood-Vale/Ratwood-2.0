@@ -46,7 +46,7 @@
 		"pain" = 0
 	)
 	var/static/list/orison_none_data = list(
-		"message" = "but nothing happens...",
+		"message" = "but nothing unusual happens...",
 		"arousal_mult" = 0,
 		"pain" = 0
 	)
@@ -58,7 +58,8 @@
 	var/static/list/orison_indulgence_data = list(
 		"message" = "the air grows sweet with indulgence...",
 		"arousal_mult" = 15,
-		"pain" = 0
+		"pain" = 0,
+		"indulgence" = TRUE
 	)
 	var/static/list/orison_harsh_data = list(
 		"message" = "that looks painful...",
@@ -113,3 +114,14 @@
 			return orison_jingle_data
 
 	return orison_default_data
+
+/datum/sex_action/proc/modular_try_show_orison_indulgence_notice(mob/living/carbon/human/receiver, mob/living/carbon/human/performer, list/orison_data)
+	if(!receiver || !performer || !performer.sexcon || !islist(orison_data))
+		return
+	if(!orison_data["indulgence"])
+		return
+	if(performer.sexcon.orison_indulgence_notice_shown)
+		return
+
+	performer.sexcon.orison_indulgence_notice_shown = TRUE
+	to_chat(receiver, span_love("The pleasure is overwhelming!!!"))

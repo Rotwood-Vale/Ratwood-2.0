@@ -1,5 +1,5 @@
 /datum/sex_action/masturbate_penis_orison
-	name = "Orison jerk off"
+	name = "Jerk off with godhand"
 	category = SEX_CATEGORY_HANDS
 	user_sex_part = SEX_PART_COCK
 	target_sex_part = SEX_PART_COCK
@@ -35,6 +35,7 @@
 	var/do_subtle = user.sexcon.do_subtle_action
 	var/list/data = modular_get_orison_patron_data(user.patron?.type)
 	var/message_suffix = data["message"]
+	modular_try_show_orison_indulgence_notice(user, user, data)
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = do_subtle
 

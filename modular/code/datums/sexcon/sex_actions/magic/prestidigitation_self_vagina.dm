@@ -1,5 +1,5 @@
 /datum/sex_action/masturbate_vagina_prestidigitation
-	name = "Prestidigitation finger cunt"
+	name = "Rub clit with magehand"
 	category = SEX_CATEGORY_HANDS
 	user_sex_part = SEX_PART_CUNT
 	target_sex_part = SEX_PART_CUNT

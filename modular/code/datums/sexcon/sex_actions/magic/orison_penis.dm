@@ -1,5 +1,5 @@
 /datum/sex_action/masturbate_other_penis_orison
-	name = "Orison handjob"
+	name = "Jerk them off with godhand"
 	check_same_tile = FALSE
 	category = SEX_CATEGORY_HANDS
 	target_sex_part = SEX_PART_COCK
@@ -33,6 +33,7 @@
 	var/do_subtle = user.sexcon.do_subtle_action
 	var/list/data = modular_get_orison_patron_data(user.patron?.type)
 	var/message_suffix = data["message"]
+	modular_try_show_orison_indulgence_notice(target, user, data)
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle
 

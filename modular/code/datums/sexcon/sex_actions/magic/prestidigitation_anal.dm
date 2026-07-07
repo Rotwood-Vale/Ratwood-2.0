@@ -1,5 +1,5 @@
 /datum/sex_action/masturbate_other_anus_prestidigitation
-	name = "Prestidigitation analplay"
+	name = "Finger their butt with magehand"
 	check_same_tile = FALSE
 	category = SEX_CATEGORY_HANDS
 	target_sex_part = SEX_PART_ANUS

@@ -46,7 +46,7 @@
 
 	user.sexcon.perform_sex_action(user, 2, 0, TRUE)
 	if(user.sexcon.check_active_ejaculation())
-		user.visible_message(span_love("[user] cums into [target]'s cunt!"))
+		user.sexcon_action_message(span_love("[user] cums into [target]'s cunt!"))
 		for(var/i = 1; i <= user.sexcon.get_load_bursts(); i++)
 			user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_CUNT, consume_charge = i == 1 ? TRUE : FALSE)
 			user.try_impregnate(target)
@@ -99,7 +99,7 @@
 
 	user.sexcon.perform_sex_action(user, 2, 0, TRUE)
 	if(user.sexcon.check_active_ejaculation())
-		user.visible_message(span_love("[user] cums into [target]'s cunt!"))
+		user.sexcon_action_message(span_love("[user] cums into [target]'s cunt!"))
 		for(var/i = 1; i <= user.sexcon.get_load_bursts(); i++)
 			user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_CUNT, consume_charge = i == 1 ? TRUE : FALSE)
 			user.try_impregnate(target)
