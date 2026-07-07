@@ -1106,7 +1106,6 @@
 
 	emote("shakehead", intentional = TRUE)
 
-
 /datum/emote/living/shiver
 	key = "shiver"
 	key_third_person = "shiver"

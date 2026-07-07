@@ -150,6 +150,7 @@
 	grid_width = 32
 	grid_height = 32
 	metalizer_result = /obj/item/flashlight/flare/torch/lantern
+	var/can_fix_ooze = TRUE //OV ADD
 
 /obj/item/flashlight/flare/torch/getonmobprop(tag)
 	. = ..()
@@ -276,6 +277,108 @@
 /obj/item/flashlight/flare/torch/prelit/Initialize(mapload) //Prelit version, testing to see if it causes less issues with pre_equip dropping stuff in your hands
 	. = ..()
 	spark_act()
+
+//OV edit
+/obj/item/flashlight/flare/torch/attack(mob/living/M, mob/user)
+	if(isooze(M) && can_fix_ooze)
+		singe(M, user)
+		return
+	else ..()
+
+/obj/item/flashlight/flare/torch/proc/singe(mob/living/target, mob/living/user)
+	if(!istype(user))
+		return FALSE
+	var/mob/living/doctor = user
+	var/mob/living/patient = target
+	if(!on)
+		to_chat(user, span_warning("[src] needs to lit!"))
+		return
+	var/list/sewable
+	var/obj/item/bodypart/affecting
+	var/is_simple_animal = !iscarbon(patient)
+	if(!isooze(patient))
+		return
+	if(iscarbon(patient))
+		affecting = patient.get_bodypart(check_zone(doctor.zone_selected))
+		if(!affecting)
+			to_chat(doctor, span_warning("That limb is missing."))
+			return FALSE
+		sewable = affecting.get_sewable_wounds()
+	else
+		sewable = patient.get_sewable_wounds()
+	if(!length(sewable))
+		to_chat(doctor, span_warning("There aren't any wounds to singe closed."))
+		return FALSE
+	var/datum/wound/target_wound = sewable.len > 1 ? input(doctor, "Which wound?", "[src]") as null|anything in sewable : sewable[1]
+	if(!target_wound)
+		return FALSE
+
+	var/moveup = 10
+	var/medskill = doctor.get_skill_level(/datum/skill/misc/medicine)
+	var/informed = FALSE
+	moveup = (medskill+1) * 4
+	if(medskill > SKILL_LEVEL_EXPERT)
+		if(medskill == SKILL_LEVEL_MASTER)
+			moveup = medskill * 6
+		else if(medskill == SKILL_LEVEL_LEGENDARY)
+			moveup = medskill * 7
+	while(!QDELETED(target_wound) && !QDELETED(src) && \
+		!QDELETED(user) && (target_wound.sew_progress < target_wound.sew_threshold) && \
+		on)
+		var/sewing_start_delay = 2 SECONDS
+		if(medskill > SKILL_LEVEL_EXPERT)
+			if(medskill == SKILL_LEVEL_MASTER)
+				sewing_start_delay = 1.5 SECONDS
+			else if(medskill == SKILL_LEVEL_LEGENDARY)
+				sewing_start_delay = 1 SECONDS
+		if(!do_after(doctor, sewing_start_delay, target = patient))
+			break
+		playsound(loc, 'sound/items/firelight.ogg', 100, TRUE, -2)
+		target_wound.sew_progress = min(target_wound.sew_progress + moveup, target_wound.sew_threshold)
+		var/bleedreduction = max((0.5 * medskill), 0.5)
+		if(medskill > SKILL_LEVEL_EXPERT)
+			if(medskill == SKILL_LEVEL_MASTER)
+				bleedreduction = 3
+			else if(medskill == SKILL_LEVEL_LEGENDARY)
+				bleedreduction = 4
+		target_wound.set_bleed_rate(max( (target_wound.bleed_rate - bleedreduction), 0))
+		if(target_wound.bleed_rate == 0 && !informed)
+			if(is_simple_animal)
+				patient.visible_message(span_smallgreen("One last drop of plasm trickles from the [(target_wound?.name)] on [patient] before it closes."), span_smallgreen("The throbbing warmth coming out of [target_wound] soothes and stops. It no longer bleeds plasm."))
+			else
+				patient.visible_message(span_smallgreen("One last drop of plasm trickles from the [(target_wound?.name)] on [patient]'s [affecting.name] before it closes."), span_smallgreen("The throbbing warmth coming out of [target_wound] soothes and stops. It no longer bleeds plasm."))
+			informed = TRUE
+		if(istype(target_wound, /datum/wound/dynamic))
+			var/datum/wound/dynamic/dynwound = target_wound
+			if(dynwound.is_maxed)
+				dynwound.is_maxed = FALSE
+			if(dynwound.is_armor_maxed)
+				dynwound.is_armor_maxed = FALSE
+		if(target_wound.sew_progress < target_wound.sew_threshold)
+			continue
+		if(doctor.mind)
+			doctor.mind.add_sleep_experience(/datum/skill/misc/medicine, doctor.STAINT * 2.5)
+		use(1)
+		target_wound.sew_wound()
+		if(patient == doctor)
+			if(is_simple_animal)
+				doctor.visible_message(span_notice("[doctor] singes \a [target_wound.name] on [doctor.p_them()]self."), span_notice("I singe \a [target_wound.name] on myself."))
+			else
+				doctor.visible_message(span_notice("[doctor] singes \a [target_wound.name] on [doctor.p_them()]self."), span_notice("I singe \a [target_wound.name] on my [affecting]."))
+		else
+			if(is_simple_animal)
+				doctor.visible_message(span_notice("[doctor] singes \a [target_wound.name] on [patient]."), span_notice("I singe \a [target_wound.name] on [patient]."))
+			else if(affecting)
+				doctor.visible_message(span_notice("[doctor] singes \a [target_wound.name] on [patient]'s [affecting]."), span_notice("I singe \a [target_wound.name] on [patient]'s [affecting]."))
+			else
+				doctor.visible_message(span_notice("[doctor] singes \a [target_wound.name] on [patient]."), span_notice("I singe \a [target_wound.name] on [patient]."))
+		if(is_simple_animal)
+			var/mob/living/simple_animal/animal_patient = patient
+			animal_patient.adjustHealth(-((animal_patient.maxHealth / 20) * (medskill + 1)), TRUE)
+		log_combat(doctor, patient, "singe", "torch")
+		return TRUE
+	return FALSE
+//OV edit end
 
 /obj/item/flashlight/flare/torch/metal
 	name = "fieftorch"

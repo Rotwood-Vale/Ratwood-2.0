@@ -418,7 +418,7 @@
 				pathing_frustration++
 				sleep(time_to_wait)
 			continue
-		else if(!step(src, move_dir, cached_multiplicative_slowdown)) // try to move onto or along our path
+		else if(!step(src, move_dir, cached_multiplicative_slowdown) && (next_step.climbable_atom_count > 0)) // try to move onto or along our path
 			for(var/obj/structure/O in next_step)
 				if(O.density && O.climbable)
 					NPC_THINK("MOVEMENT TURN [movement_turn]: Trying to climb over [O]!")
@@ -536,6 +536,43 @@
 	if(aggressive && !faction_check_mob(L))
 		return TRUE
 
+	return FALSE
+
+/mob/living/carbon/human/proc/should_flee_from(mob/living/L)
+	if (L == src)
+		return FALSE
+
+	if (L.alpha == 0 && L.rogue_sneaking)
+		return FALSE
+
+	if(!is_in_zweb(src.z,L.z))
+		return FALSE
+
+	if(L.stat >= UNCONSCIOUS)
+		return FALSE
+
+	if(L.InFullCritical())
+		return FALSE
+
+	if(L.name in friends)
+		return FALSE
+
+	if(enemies[L])
+		return TRUE
+
+	if(faction_check_mob(L))
+		return FALSE
+
+	if(ishuman(L))
+		var/mob/living/carbon/human/human_attacker = L
+		return human_attacker.client || human_attacker.aggressive
+
+	if(istype(L, /mob/living/simple_animal/hostile/retaliate))
+		var/mob/living/simple_animal/hostile/retaliate/retaliator = L
+		return retaliator.aggressive
+	else if(istype(L, /mob/living/simple_animal/hostile))
+		return TRUE
+	
 	return FALSE
 
 /mob/living/carbon/human/proc/npc_try_backstep()
@@ -680,8 +717,8 @@
 					// if our current candidate is closer, ignore this one
 					if(target && (get_dist(src, target) <= get_dist(src, bystander)))
 						continue
-					// we assume if we want to hurt them they want to hurt us back
-					if(should_target(bystander))
+					// don't flee from a cow or chicken just because you hate them
+					if(should_flee_from(bystander))
 						target = bystander // We're trying to run from this person now
 			if(!target || get_dist(src, target) >= NPC_FLEE_DISTANCE)
 				NPC_THINK("Done fleeing!")
@@ -757,6 +794,10 @@
 /mob/living/carbon/human/proc/npc_try_make_grab(mob/living/victim)
 	NPC_THINK("Trying to grab [victim]!")
 	swap_hand() // switch to offhand
+	if(get_active_held_item())
+		// can't grab with an item in our offhand
+		swap_hand() // swap back
+		return
 	rog_intent_change(3) // grab intent
 	npc_choose_grab_zone(victim)
 	UnarmedAttack(victim, TRUE) // instead of start_pulling(victim)
@@ -808,7 +849,7 @@
 			npc_try_use_grab(victim, the_grab) // twist, smash, choke, whatever
 			swap_hand() // switch back to mainhand to avoid fucking up the rest of combat
 			return TRUE // and end turn
-	else if(!OffWeapon && prob(make_grab_chance)) // grab with our empty offhand instead of attack
+	else if(!OffWeapon && !Weapon?.wielded && prob(make_grab_chance)) // grab with our empty offhand instead of attack
 		if(npc_try_make_grab(victim)) // returns TRUE if we've finished our turn, not if we succeeded at the grab
 			return TRUE
 

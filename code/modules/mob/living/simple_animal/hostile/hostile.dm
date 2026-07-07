@@ -1,31 +1,3 @@
-GLOBAL_VAR_INIT(hostile_ai_listtargets_calls, 0)
-GLOBAL_VAR_INIT(hostile_ai_candidates_scanned, 0)
-GLOBAL_VAR_INIT(hostile_ai_observer_candidates_filtered, 0)
-GLOBAL_VAR_INIT(hostile_ai_newplayer_candidates_filtered, 0)
-GLOBAL_VAR_INIT(hostile_ai_canattack_calls, 0)
-GLOBAL_VAR_INIT(hostile_ai_canattack_observer_rejects, 0)
-GLOBAL_VAR_INIT(hostile_ai_canattack_newplayer_rejects, 0)
-
-/proc/get_hostile_ai_targeting_metrics()
-	return list(
-		"listtargets_calls" = GLOB.hostile_ai_listtargets_calls,
-		"candidates_scanned" = GLOB.hostile_ai_candidates_scanned,
-		"observer_candidates_filtered" = GLOB.hostile_ai_observer_candidates_filtered,
-		"newplayer_candidates_filtered" = GLOB.hostile_ai_newplayer_candidates_filtered,
-		"canattack_calls" = GLOB.hostile_ai_canattack_calls,
-		"canattack_observer_rejects" = GLOB.hostile_ai_canattack_observer_rejects,
-		"canattack_newplayer_rejects" = GLOB.hostile_ai_canattack_newplayer_rejects,
-	)
-
-/proc/reset_hostile_ai_targeting_metrics()
-	GLOB.hostile_ai_listtargets_calls = 0
-	GLOB.hostile_ai_candidates_scanned = 0
-	GLOB.hostile_ai_observer_candidates_filtered = 0
-	GLOB.hostile_ai_newplayer_candidates_filtered = 0
-	GLOB.hostile_ai_canattack_calls = 0
-	GLOB.hostile_ai_canattack_observer_rejects = 0
-	GLOB.hostile_ai_canattack_newplayer_rejects = 0
-
 /mob/living/simple_animal/hostile
 	faction = list("hostile")
 	stop_automated_movement_when_pulled = 0
@@ -229,24 +201,13 @@ GLOBAL_VAR_INIT(hostile_ai_canattack_newplayer_rejects, 0)
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
 /mob/living/simple_animal/hostile/proc/ListTargets() //Step 1, find out what we can see
-	GLOB.hostile_ai_listtargets_calls++
-	if(!search_objects)
-		. = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
-		GLOB.hostile_ai_candidates_scanned += length(.)
-		for(var/mob/dead/observer/O in .)
-			. -= O
-			GLOB.hostile_ai_observer_candidates_filtered++
-		for(var/mob/dead/new_player/N in .)
-			. -= N
-			GLOB.hostile_ai_newplayer_candidates_filtered++
-
-		var/static/hostile_machines = typecacheof(list())
-
-		for(var/HM in typecache_filter_list(range(vision_range, targets_from), hostile_machines))
-			if(can_see(targets_from, HM, vision_range))
-				. += HM
+	if(search_objects)
+		. = view(vision_range, targets_from) // todo: does this need to be dview to ensure they have darkvision like with hearers()?
 	else
-		. = oview(vision_range, targets_from)
+		. = hearers(vision_range, targets_from) // hearers so they have darkvision. todo: make this controllable via a var
+		// if you want to make certain non-mobs get targeted, PLEASE make a spatial grid channel for it
+		// do not add any kind of range() or view() or typecache or etc checking here, that is ludicrously expensive
+	. -= src
 
 /mob/living/simple_animal/hostile/proc/FindTarget(list/possible_targets, HasTargetsList = 0)//Step 2, filter down possible targets to things we actually care about
 	. = list()
@@ -303,14 +264,7 @@ GLOBAL_VAR_INIT(hostile_ai_canattack_newplayer_rejects, 0)
 
 // Please do not add one-off mob AIs here, but override this function for your mob
 /mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
-	GLOB.hostile_ai_canattack_calls++
 	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
-		return FALSE
-	if(isobserver(the_target))
-		GLOB.hostile_ai_canattack_observer_rejects++
-		return FALSE
-	if(isnewplayer(the_target))
-		GLOB.hostile_ai_canattack_newplayer_rejects++
 		return FALSE
 
 	if(binded)

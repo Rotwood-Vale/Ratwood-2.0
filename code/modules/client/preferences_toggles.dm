@@ -84,6 +84,15 @@
 		list("id" = "grain", "label" = "Grain Effect", "enabled" = !!owner.prefs.grain, "desc" = "Overlay a subtle film grain effect."),
 		list("id" = "tgui_multiline", "label" = "TGUI Multiline", "enabled" = !!owner.mob?.tgui_multiline, "desc" = "Use multiline TGUI input where supported."),
 	)
+	var/list/graphics_selects = list(
+		list(
+			"id" = "hud_colorblind_palette",
+			"label" = "HUD Colorblind Palette",
+			"value" = owner.prefs.hud_colorblind_palette,
+			"desc" = "Swap the Rogue HUD and heat HUD icons to a higher-contrast colorblind palette.",
+			"options" = hud_colorblind_palette_options(),
+		),
+	)
 
 	var/list/character_entries = list(
 		list("id" = "masked_examine", "label" = "Masked Examine", "enabled" = !!owner.prefs.masked_examine, "desc" = "Allow your character info to be seen while masked."),
@@ -131,7 +140,7 @@
 
 	data["categories"] = list(
 		list("name" = "Character", "entries" = character_entries),
-		list("name" = "Graphics", "entries" = graphics_entries),
+		list("name" = "Graphics", "entries" = graphics_entries, "selects" = graphics_selects),
 		list("name" = "Visuals", "entries" = visual_entries),
 		list("name" = "Gameplay", "entries" = gameplay_entries),
 		list("name" = "Audio", "entries" = audio_entries),
@@ -204,6 +213,8 @@
 			if("hear_instruments")
 				owner.prefs.toggles ^= SOUND_INSTRUMENTS
 				owner.prefs.save_preferences()
+				for(var/datum/looping_sound/persistent_loop in GLOB.persistent_sound_loops)
+					owner.update_persistent_sound_loop(persistent_loop)
 				owner.update_sounds()
 				owner.sync_instrument_audio_toggle()
 			if("animal_emotes")
@@ -218,6 +229,17 @@
 				owner.toggle_extreme_ERP()
 			if("edging")
 				owner.toggle_edging()
+		SStgui.update_uis(src)
+		return TRUE
+
+	if(action == "select")
+		var/select_id = params["id"]
+		switch(select_id)
+			if("hud_colorblind_palette")
+				if(!owner.prefs.set_hud_colorblind_palette(params["value"]))
+					return FALSE
+				owner.prefs.save_preferences()
+				owner.refresh_colorblind_hud_palette()
 		SStgui.update_uis(src)
 		return TRUE
 

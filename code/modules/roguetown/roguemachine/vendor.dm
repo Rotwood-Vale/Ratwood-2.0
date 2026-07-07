@@ -373,24 +373,6 @@
 	keycontrol = "tavern"
 	will_hawk = FALSE
 
-/obj/structure/roguemachine/vendor/bathhouse
-	keycontrol = "nightmaiden"//used to be nightman but it's nice for them to be able to stock the shelves too when the master isn't around
-
-/obj/structure/roguemachine/vendor/bathhouse/locker
-	keycontrol = "tavern"
-
-/obj/structure/roguemachine/vendor/bathhouse/locker/Initialize(mapload)
-	. = ..()
-
-	// Add locker keys with a price of 10
-	for (var/X in list(/obj/item/roguekey/locker1, /obj/item/roguekey/locker2, /obj/item/roguekey/locker3, /obj/item/roguekey/locker4, /obj/item/roguekey/locker5, /obj/item/roguekey/locker6))
-		var/obj/P = new X(src)
-		held_items[P] = list()
-		held_items[P]["NAME"] = P.name
-		held_items[P]["PRICE"] = 5
-
-	update_icon()
-
 /obj/structure/roguemachine/vendor/inn/Initialize(mapload)
 	. = ..()
 
@@ -412,6 +394,7 @@
 
 /obj/structure/roguemachine/vendor/innrockhill
 	keycontrol = "tavern"
+	will_hawk = FALSE
 
 /obj/structure/roguemachine/vendor/innrockhill/Initialize(mapload)
 	. = ..()
@@ -432,6 +415,24 @@
 
 	update_icon()
 
+
+/obj/structure/roguemachine/vendor/bathhouse
+	keycontrol = "nightmaiden"//used to be nightman but it's nice for them to be able to stock the shelves too when the master isn't around
+
+/obj/structure/roguemachine/vendor/bathhouse/locker
+	will_hawk = FALSE
+
+/obj/structure/roguemachine/vendor/bathhouse/locker/Initialize(mapload)
+	. = ..()
+
+	// Add locker keys with a price of 10
+	for (var/X in list(/obj/item/roguekey/bathlocker1, /obj/item/roguekey/bathlocker2, /obj/item/roguekey/bathlocker3, /obj/item/roguekey/bathlocker4, /obj/item/roguekey/bathlocker5, /obj/item/roguekey/bathlocker6))
+		var/obj/P = new X(src)
+		held_items[P] = list()
+		held_items[P]["NAME"] = P.name
+		held_items[P]["PRICE"] = 5
+
+	update_icon()
 
 
 /obj/structure/roguemachine/vendor/merchant

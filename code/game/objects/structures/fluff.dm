@@ -427,6 +427,10 @@
 		icon_state = "passage0"
 		density = TRUE
 
+/obj/structure/bars/passage/preopen
+	density = FALSE
+	icon_state = "passage1"
+
 /obj/structure/bars/passage/shutter
 	icon_state = "shutter0"
 	density = TRUE
@@ -519,7 +523,8 @@
 	if(togg)
 		testing("togge1")
 		icon_state = "floorgrilleopen"
-		obj_flags = CAN_BE_HIT
+		set_is_platform(FALSE)
+		obj_flags &= ~BLOCK_Z_IN_UP
 		var/turf/T = loc
 		if(istype(T))
 			for(var/mob/living/M in loc)
@@ -527,7 +532,8 @@
 	else
 		testing("togge2")
 		icon_state = "floorgrille"
-		obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
+		set_is_platform(TRUE)
+		obj_flags |= BLOCK_Z_IN_UP
 
 /obj/structure/bars/grille/attackby(obj/item/I, mob/user, params)
 	. = ..()
@@ -777,10 +783,11 @@
 
 /obj/structure/fluff/signage/examine(mob/user)
 	. = ..()
+	var/realmname = SSmapping.map_adjustment.realm_name
 	if(!user.is_literate())
 		. += "I have no idea what it says."
 	else
-		. += "It says \"ROTWOOD VALE\""
+		. += "It says \"[realmname]\""
 
 /obj/structure/fluff/buysign
 	icon_state = "signwrote"
@@ -828,6 +835,9 @@
 
 /obj/structure/fluff/customsign/arrow
 	icon_state = "shitsign"
+
+/obj/structure/fluff/customsign/wrote //For mapped in signs and not player-made signs
+	icon_state = "signwrote"
 
 /obj/structure/fluff/customsign/attackby(obj/item/W, mob/user, params)
 	if(!user.cmode)

@@ -113,6 +113,7 @@
 		var/obj/item/organ/testicles/testicles = getorganslot(ORGAN_SLOT_TESTICLES)
 		if(!testicles)
 			testicles = new()
+			testicles.ball_size = MAX_TESTICLES_SIZE
 			testicles.Insert(src, TRUE, FALSE)
 	else if(penis)
 		penis.Remove(src)

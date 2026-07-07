@@ -201,7 +201,7 @@
 
 /obj/structure/flora/roguegrass/maneater/real/juvenile/Initialize(mapload)
 	..()
-	transform = transform.Scale(0.5, 0.5)  // Start at half size
+	transform = transform.Scale(0.75, 0.75)  // Start larger than an kobold.
 	addtimer(CALLBACK(src, PROC_REF(try_grow)), growth_time)
 
 /obj/structure/flora/roguegrass/maneater/real/juvenile/Crossed(atom/movable/AM)
@@ -224,8 +224,8 @@
 /obj/structure/flora/roguegrass/maneater/real/juvenile/proc/try_grow()
 	if(growth_stage < max_growth_stage)
 		growth_stage++
-		// We end up at 1.0 size by final stage
-		transform = transform.Scale(1.26, 1.26)
+		// Largest juvenile stage stays under the adult's 1.0 size
+		transform = transform.Scale(1.1, 1.1)
 		visible_message(span_warning("[src] grows bigger!"))
 		playsound(loc, list('sound/vo/mobs/plant/attack (1).ogg','sound/vo/mobs/plant/attack (2).ogg','sound/vo/mobs/plant/attack (3).ogg','sound/vo/mobs/plant/attack (4).ogg'), 100, FALSE, -1)
 		addtimer(CALLBACK(src, PROC_REF(try_grow)), growth_time)

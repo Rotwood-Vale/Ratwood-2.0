@@ -92,6 +92,7 @@ SUBSYSTEM_DEF(treasury)
 						X.demand -= rand(5,15)
 			var/total_generated_cost = 0
 			var/wasted_time = FALSE
+			var/realmname = SSmapping.map_adjustment.realm_name
 			for(var/datum/roguestock/stockpile/A in stockpile_datums) //Generate some remote resources
 				if(wasted_time && A.passive_generation) //Only the suppliers of the resource you couldn't pay get mad
 					A.passive_generation = 0
@@ -105,7 +106,7 @@ SUBSYSTEM_DEF(treasury)
 			if(wasted_time)
 				log_to_steward("-[total_generated_cost]m spent on Passive Imports, treasury drained, unable to pay remaining suppliers. Imports automatically cancelled, prices raised, do not waste supplier time.")
 				treasury_value -= total_generated_cost
-				scom_announce("Rotwood Vale failed to pay the Import Rate. Resources have not been delivered, rates set to 0.") //the treasury just got drained, shame unto the current steward
+				scom_announce("[realmname] failed to pay the Import Rate. Resources have not been delivered, rates set to 0.") //the treasury just got drained, shame unto the current steward
 			else
 				log_to_steward("-[total_generated_cost]m spent on Passive Imports.")
 				treasury_value -= total_generated_cost
@@ -279,6 +280,7 @@ SUBSYSTEM_DEF(treasury)
 	if((D.held_items[1] < D.importexport_amt))
 		return FALSE
 	var/amt = D.get_export_price()
+	var/realmname = SSmapping.map_adjustment.realm_name
 
 	// You should only export from town stockpiles, not from remote. Remote is meant
 	// To fulfill local economic shortfall and not to make $$ for the steward.
@@ -290,12 +292,13 @@ SUBSYSTEM_DEF(treasury)
 	SStreasury.log_to_steward("+[amt] exported [D.name]")
 	record_round_statistic(STATS_STOCKPILE_EXPORTS_VALUE, amt)
 	if(!silent && amt >= EXPORT_ANNOUNCE_THRESHOLD) //Only announce big spending.
-		scom_announce("Rotwood Vale exports [D.name] for [amt] mammon.")
+		scom_announce("[realmname] exports [D.name] for [amt] mammon.")
 	D.lower_demand()
 	return amt
 
 /datum/controller/subsystem/treasury/proc/auto_export()
 	var/total_value_exported = 0
+	var/realmname = SSmapping.map_adjustment.realm_name
 	for(var/datum/roguestock/D in stockpile_datums)
 		if(!D.importexport_amt)
 			continue
@@ -308,7 +311,7 @@ SUBSYSTEM_DEF(treasury)
 			var/exported = do_export(D, TRUE)
 			total_value_exported += exported
 	if(total_value_exported >= EXPORT_ANNOUNCE_THRESHOLD)
-		scom_announce("Rotwood Vale exports [total_value_exported] mammons of surplus goods.")
+		scom_announce("[realmname] exports [total_value_exported] mammons of surplus goods.")
 
 /datum/controller/subsystem/treasury/proc/remove_person(mob/living/person)
 	noble_incomes -= person

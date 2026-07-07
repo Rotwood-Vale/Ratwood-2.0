@@ -13,6 +13,14 @@
 	if(damage_amount < DAMAGE_PRECISION)
 		return
 	. = damage_amount
+	if(obj_flags & CLAMP_BREAK)
+		var/break_threshold = (integrity_failure * max_integrity)
+		if(obj_integrity > break_threshold)
+			if((obj_integrity - damage_amount) <= break_threshold)
+				obj_integrity = break_threshold
+		if(obj_broken || (integrity_failure && obj_integrity == break_threshold))	// We're either broken or we will be broken
+			if(damage_type != BURN)
+				damage_amount = 1
 	obj_integrity = max(obj_integrity - damage_amount, 0)
 	if(animate_dmg)
 		var/oldx = pixel_x
