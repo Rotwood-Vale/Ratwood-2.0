@@ -1271,10 +1271,11 @@
 	if(!current_action)
 		return
 	var/datum/sex_action/action = SEX_ACTION(current_action)
-	if(!user.sexcon.knotted_status) // never show the remove message, unless unknotted
+	if(action && user && !user.sexcon.knotted_status) // never show the remove message, unless unknotted
 		action.on_finish(user, target)
 	desire_stop = FALSE
-	user.doing = FALSE
+	if(user)
+		user.doing = FALSE
 	current_action = null
 	bed = null
 	target_on_bed = FALSE
@@ -1306,6 +1307,9 @@
 	collar_bell_user = FALSE
 	collar_bell_target = FALSE
 	var/datum/sex_action/action = SEX_ACTION(current_action)
+	if(!action)
+		current_action = null
+		return
 	log_combat(user, target, "Started sex action: [action.name]")
 	INVOKE_ASYNC(src, PROC_REF(sex_action_loop))
 
@@ -1313,9 +1317,13 @@
 	// Do action loop
 	var/performed_action_type = current_action
 	var/datum/sex_action/action = SEX_ACTION(current_action)
+	if(!action || !user || !target)
+		stop_current_action()
+		return
 	var/base_speed = -1
 	var/base_force = -1
 	var/subtle_message_tick_counter = 0
+	var/was_subtle_mode = action.subtle_supported
 	show_progress = 1
 	suppress_moan = FALSE
 	do_subtle_action = action.subtle_supported // always start subtle-supported actions in subtle mode
@@ -1323,6 +1331,8 @@
 	find_occupying_furniture()
 	find_occupying_grass()
 	while(TRUE)
+		if(!user || !target)
+			break
 		if(!isnull(target.client) && target.client.prefs.sexable == FALSE) //Vrell - Needs changed to let me test sex mechanics solo
 			break
 		if(!user.stamina_add(action.stamina_cost * get_stamina_cost_multiplier()))
@@ -1340,6 +1350,8 @@
 
 		var/is_subtle_mode = (action.subtle_supported && do_subtle_action)
 		var/show_action_message = (speed != base_speed || force != base_force)
+		if(!is_subtle_mode && was_subtle_mode)
+			show_action_message = TRUE
 		if(!show_action_message && is_subtle_mode)
 			subtle_message_tick_counter++
 			if(subtle_message_tick_counter >= SEX_SUBTLE_MESSAGE_REPEAT_INTERVAL)
@@ -1347,6 +1359,7 @@
 				subtle_message_tick_counter = 0
 		else if(show_action_message)
 			subtle_message_tick_counter = 0
+		was_subtle_mode = is_subtle_mode
 		base_speed = speed
 		base_force = force
 		suppress_action_messages = !show_action_message
