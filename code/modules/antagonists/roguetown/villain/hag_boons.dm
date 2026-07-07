@@ -183,6 +183,23 @@
 	REMOVE_TRAIT(L, TRAIT_LEECHIMMUNE, "hag_boon")
 	REMOVE_TRAIT(L, TRAIT_KNEESTINGER_IMMUNITY, "hag_boon")
 
+/datum/hag_boon/trait/pact_blessing
+	name = "Pact Blessing"
+	desc = "A slight mark of the Mossmother that keeps bog leeches at bay."
+	points = 0
+
+/datum/hag_boon/trait/pact_blessing/apply_to_target()
+	var/mob/living/L = find_target()
+	if(!L)
+		return
+	ADD_TRAIT(L, TRAIT_LEECHIMMUNE, "hag_boon")
+
+/datum/hag_boon/trait/pact_blessing/remove_from_target()
+	var/mob/living/L = find_target()
+	if(!L)
+		return
+	REMOVE_TRAIT(L, TRAIT_LEECHIMMUNE, "hag_boon")
+
 // ================== TRAIT CURSES ==================
 
 /datum/hag_boon/trait/curse

@@ -13,7 +13,6 @@
 	)
 
 	var/list/datum/mind/bound_followers = list()
-	var/list/follower_links = list()
 	var/datum/mindlink_coven/coven_link
 	var/hag_baseline_applied = FALSE
 	var/hag_tier = 1
@@ -332,26 +331,26 @@
 	if(target.mind in bound_followers)
 		return FALSE
 
-	add_bound_follower(target.mind)
-	ADD_TRAIT(target, TRAIT_LEECHIMMUNE, get_boon_source())
+	var/datum/component/hag_curio_tracker/H = owner.current.GetComponent(/datum/component/hag_curio_tracker)
+	if(!H)
+		return FALSE
 
-	var/datum/mindlink/link = new(owner.current, target)
-	GLOB.mindlinks += link
-	follower_links[target.mind] = link
+	add_bound_follower(target.mind)
+	H.grant_boon(target.real_name, /datum/hag_boon/trait/pact_blessing)
+	add_coven_member(target)
 	return TRUE
 
 /datum/antagonist/hag/proc/unbind_follower(datum/mind/follower)
 	if(!follower)
 		return
 
-	var/datum/mindlink/link = follower_links[follower]
-	if(link)
-		GLOB.mindlinks -= link
-		qdel(link)
-	follower_links -= follower
-
 	if(follower.current)
-		REMOVE_TRAIT(follower.current, TRAIT_LEECHIMMUNE, get_boon_source())
+		var/datum/component/hag_curio_tracker/H = owner?.current?.GetComponent(/datum/component/hag_curio_tracker)
+		if(H)
+			H.remove_boon_by_type(follower.current.real_name, /datum/hag_boon/trait/pact_blessing)
+		var/datum/mindlink_coven/C = get_or_create_coven(FALSE)
+		if(C)
+			C.remove_member(follower.current)
 
 	remove_bound_follower(follower)
 
@@ -421,7 +420,7 @@
 		revert_cast()
 		return FALSE
 
-	var/consent = alert(target, "[user.real_name] offers a hag's pact. Accept a minor bog-blessing and a telepathic bond?", "Hag Pact", "Accept", "Refuse")
+	var/consent = alert(target, "[user.real_name] offers a hag's pact. Accept a minor bog-blessing and join the coven?", "Hag Pact", "Accept", "Refuse")
 	if(consent != "Accept")
 		to_chat(user, span_warning("[target] refuses my bargain."))
 		to_chat(target, span_notice("I refuse the hag's bargain."))
@@ -434,8 +433,8 @@
 		return FALSE
 
 	user.visible_message(span_notice("[user] seals a sinister pact with [target]."), span_notice("I bind [target] to my pact with a sliver of bog-magic."))
-	to_chat(target, span_userdanger("The pact settles into my flesh. Bog leeches will shun me. We may now speak along the coven thread with ,y (and sever with ,mst)."))
-	to_chat(user, span_notice("[target] is now bound to my pact. We may now speak along the coven thread with ,y."))
+	to_chat(target, span_userdanger("The pact settles into my flesh. A minor blessing takes root, and bog leeches now shun me."))
+	to_chat(user, span_notice("[target] is now bound to my pact and counted among the coven."))
 	return TRUE
 
 /// Called on the hag's permanent death. Lifts curses from scarred followers and applies final spite to unblemished pact-bearers.
