@@ -6,6 +6,7 @@
 #define SEX_ZONE_MOUTH				(1<<4)
 #define SEX_ZONE_CHEST				(1<<5)
 #define SEX_ZONE_CHEST_GRAB			(1<<6)
+#define SEX_SUBTLE_MESSAGE_REPEAT_INTERVAL	3
 
 /datum/sex_controller
 	/// The user and the owner of the controller
@@ -1317,7 +1318,7 @@
 	var/subtle_message_tick_counter = 0
 	show_progress = 1
 	suppress_moan = FALSE
-	do_subtle_action = TRUE // always start subtle supported actions with subtle mode on
+	do_subtle_action = action.subtle_supported // always start subtle-supported actions in subtle mode
 	action.on_start(user, target)
 	find_occupying_furniture()
 	find_occupying_grass()
@@ -1337,10 +1338,11 @@
 		if(desire_stop)
 			break
 
+		var/is_subtle_mode = (action.subtle_supported && do_subtle_action)
 		var/show_action_message = (speed != base_speed || force != base_force)
-		if(!show_action_message && do_subtle_action)
+		if(!show_action_message && is_subtle_mode)
 			subtle_message_tick_counter++
-			if(subtle_message_tick_counter >= 3)
+			if(subtle_message_tick_counter >= SEX_SUBTLE_MESSAGE_REPEAT_INTERVAL)
 				show_action_message = TRUE
 				subtle_message_tick_counter = 0
 		else if(show_action_message)
