@@ -482,7 +482,7 @@
 	AddComponent(/datum/component/hiding_spot)
 	if(isnull(bushtype))
 		var/area/rogue/bush_area = get_area(src)
-		if(!bush_area.town_area)
+		if(!istype(bush_area) || !bush_area.town_area)
 			if(prob(88))
 				bushtype = pickweight(list(/obj/item/reagent_containers/food/snacks/grown/berries/rogue=5,
 						/obj/item/reagent_containers/food/snacks/grown/berries/rogue/poison=3,
