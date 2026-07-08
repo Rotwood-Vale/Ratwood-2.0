@@ -5,7 +5,7 @@
 
 /datum/map_config
 	// Metadata
-	var/config_filename = "_maps/dun_manor.json"
+	var/config_filename = "_maps/roguetest.json"
 	var/defaulted = TRUE  // set to FALSE by LoadConfig() succeeding
 	// Config from maps.txt
 	var/config_max_users = 0
@@ -13,10 +13,10 @@
 	var/voteweight = 1
 	var/votable = FALSE
 
-	// Config actually from the JSON - should default to Dun Manor
-	var/map_name = "Dun Manor"
-	var/map_path = "map_files/dun_manor"
-	var/map_file = "dun_manor.dmm"
+	// Config actually from the JSON - should default to Roguetest
+	var/map_name = "Roguetest"
+	var/map_path = "map_files/roguetest"
+	var/map_file = "roguetest.dmm"
 	var/map_folder = "_maps"
 
 	var/traits = null
