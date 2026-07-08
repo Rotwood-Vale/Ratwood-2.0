@@ -1,7 +1,6 @@
 /datum/sex_action/sex/other/titsmother
 	name = "Smother them with boobs"
-	intensity = 3
-	debug_erp_panel_verb = FALSE
+	category = SEX_CATEGORY_MISC
 
 /datum/sex_action/sex/other/titsmother/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
@@ -28,23 +27,17 @@
 	user.visible_message(span_warning("[user] shoves [target]'s head between [user.p_their()] tits!"))
 
 /datum/sex_action/sex/other/titsmother/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] [sex_session.get_generic_force_adjective()] smothers [target]'s face with [user.p_their()] tits..."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [sex_session.get_generic_force_adjective()] smothers [target]'s face with [user.p_their()] tits..."))
 	user.sexcon.outercourse_noise(user)
 
 	user.sexcon.perform_sex_action(user, 2, 4, TRUE)
 
 	user.sexcon.handle_passive_ejaculation(target)
 
-
-	var/datum/sex_session/sex_session = get_sex_session(user, target)
-	target.visible_message(sex_session.spanify_force("[user] [sex_session.get_generic_force_adjective()] smothers [target]'s face with [user.p_their()] tits..."))
-
-/datum/sex_action/sex/other/titsmother/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/datum/sex_session/sex_session = get_sex_session(user, target)
-	playsound(target, 'sound/misc/mat/fingering.ogg', 20, TRUE, -2, ignore_walls = FALSE)
-
-	sex_session.perform_sex_action(target, 2, 4, TRUE)
-	sex_session.handle_passive_ejaculation(target)
-
 /datum/sex_action/sex/other/titsmother/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] pulls [target]'s head out from inbetween [user.p_their()] tits."))
+
+/datum/sex_action/titsmother/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(user.sexcon.finished_check())
+		return TRUE
+	return FALSE
