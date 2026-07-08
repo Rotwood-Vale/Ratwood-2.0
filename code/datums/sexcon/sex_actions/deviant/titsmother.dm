@@ -1,5 +1,6 @@
 /datum/sex_action/titsmother
 	name = "Smother them with boobs"
+	subtle_supported = TRUE
 
 /datum/sex_action/titsmother/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
