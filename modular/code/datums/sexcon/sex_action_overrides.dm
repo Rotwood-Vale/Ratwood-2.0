@@ -46,9 +46,9 @@
 		"pain" = 0
 	)
 	var/static/list/orison_none_data = list(
-		"message" = "but nothing unusual happens...",
-		"arousal_mult" = 0,
-		"pain" = 0
+		"message" = "with a calm stoicism...",
+		"arousal_mult" = 3,
+		"pain" = 6
 	)
 	var/static/list/orison_painful_glow_data = list(
 		"message" = "the glow looks painful...",
