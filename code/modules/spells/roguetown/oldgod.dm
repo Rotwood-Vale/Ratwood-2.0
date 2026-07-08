@@ -352,9 +352,17 @@
 			return FALSE
 		// Create visual effects
 		H.apply_status_effect(/datum/status_effect/buff/psyvived)
-		// Kill the caster
-		user.say("MY LYFE FOR YOURS! LYVE, AS DOES HE!", forced = TRUE)
-		user.death()
+		if(user.has_status_effect(/datum/status_effect/debuff/devitalised))
+			// Kill the caster
+			user.say("MY LYFE FOR YOURS! LYVE, AS DOES HE!", forced = TRUE)
+			user.death()
+		else
+			// Once per 15 minutes you get to not die for it
+			user.say("MY LUX FOR YOURS! LYVE, AS DOES HE!", forced = TRUE)
+			user.apply_status_effect(/datum/status_effect/debuff/devitalised)
+			to_chat(user, span_warning("You reach out and restore [H]'s Lux, at the cost of your own! If you dont let it recover, you will not live though next attempt."))
+			user.Knockdown(5 SECONDS)
+			user.Stun(5 SECONDS)
 		// Revive the target
 		H.revive(full_heal = TRUE, admin_revive = FALSE)
 		H.adjustOxyLoss(-H.getOxyLoss())
