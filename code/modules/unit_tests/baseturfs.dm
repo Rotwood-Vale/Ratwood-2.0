@@ -13,10 +13,11 @@
 
 	RESET_TO_EXPECTED(run_loc_floor_bottom_left)
 	run_loc_floor_bottom_left.ScrapeAway()
-	TEST_ASSERT_EQUAL(run_loc_floor_bottom_left.type, /turf/open/transparent/openspace, "Stone block floors should scrape away to openspace")
+	// if the default zlevel baseturf ever changes, update it here
+	TEST_ASSERT_EQUAL(run_loc_floor_bottom_left.type, /turf/open/floor/rogue/naturalstone, "Stone block floors should scrape away to natural stone")
 
 	run_loc_floor_bottom_left.ScrapeAway()
-	TEST_ASSERT_EQUAL(run_loc_floor_bottom_left.type, /turf/open/transparent/openspace, "Openspace should scrape away to openspace")
+	TEST_ASSERT_EQUAL(run_loc_floor_bottom_left.type, /turf/open/floor/rogue/naturalstone, "Natural stone should scrape away to natural stone")
 
 /datum/unit_test/baseturfs_unmodified_scrape/Destroy()
 	RESET_TO_EXPECTED(run_loc_floor_bottom_left)
@@ -54,10 +55,10 @@
 	TEST_ASSERT_EQUAL(run_loc_floor_bottom_left.type, EXPECTED_FLOOR_TYPE, "PlaceOnBottom shouldn't have changed turf")
 
 	run_loc_floor_bottom_left.ScrapeAway()
-	TEST_ASSERT_EQUAL(run_loc_floor_bottom_left.type, /turf/open/transparent/openspace, "Stone block floors should scrape away to openspace")
+	TEST_ASSERT_EQUAL(run_loc_floor_bottom_left.type, /turf/open/floor/rogue/naturalstone, "Stone block floors should scrape away to natural stone")
 
 	run_loc_floor_bottom_left.ScrapeAway()
-	TEST_ASSERT_EQUAL(run_loc_floor_bottom_left.type, /turf/closed/wall/mineral/rogue/wood, "Space should've scraped down to a wood wall")
+	TEST_ASSERT_EQUAL(run_loc_floor_bottom_left.type, /turf/closed/wall/mineral/rogue/wood, "Natural stone should've scraped down to a wood wall")
 
 	run_loc_floor_bottom_left.ScrapeAway()
 	TEST_ASSERT_EQUAL(run_loc_floor_bottom_left.type, /turf/open/floor/rogue/ruinedwood, "Wood wall should've scraped down back to wood floor (because it's a wall)")
