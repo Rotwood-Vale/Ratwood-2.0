@@ -98,9 +98,10 @@
 
 /datum/virtue/combat/struggler
 	name = "Struggler"
-	desc = "I have spend my life fighting with just my fists and teeth. My bites are stronger and my strikes can reach where other cannot. I have stashed a set of weighted gloves that empower my punches."
+	desc = "I have spend my life fighting with just my fists and teeth. My bites are stronger and my strikes can reach where other cannot. I have stashed a set of weighted gloves that can empower my punches."
 	custom_text = "Guaranteed Journeyman for Unarmed."
-	added_stashed_items = list("Weighted gloves" = /obj/item/clothing/gloves/roguetown/bandages/weighted)
+	added_stashed_items = list("Weighted gloves" = /obj/item/clothing/gloves/roguetown/bandages/weighted,
+								"Arm protection" = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk)
 	added_traits = list(TRAIT_STRONGBITE, TRAIT_CIVILIZEDBARBARIAN)
 
 /datum/virtue/combat/struggler/apply_to_human(mob/living/carbon/human/recipient)
