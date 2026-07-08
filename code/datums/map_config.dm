@@ -20,8 +20,8 @@
 	var/map_folder = "_maps"
 
 	var/traits = null
-	var/space_ruin_levels = 7
-	var/space_empty_levels = 1
+	var/space_ruin_levels = 0
+	var/space_empty_levels = 0
 
 	/// List of unit tests that are skipped when running this map
 	var/list/skipped_tests
