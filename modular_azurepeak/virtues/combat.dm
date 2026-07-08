@@ -96,6 +96,16 @@
 	recipient.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
 	recipient.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
 
+/datum/virtue/combat/struggler
+	name = "Struggler"
+	desc = "I have spend my life fighting with just my fists and teeth. My bites are stronger and my strikes can reach where other cannot. I have stashed a set of weighted gloves that empower my punches."
+	custom_text = "Guaranteed Journeyman for Unarmed."
+	added_stashed_items = list("Weighted gloves" = /obj/item/clothing/gloves/roguetown/bandages/weighted)
+	added_traits = list(TRAIT_STRONGBITE, TRAIT_CIVILIZEDBARBARIAN)
+
+/datum/virtue/combat/struggler/apply_to_human(mob/living/carbon/human/recipient)
+	recipient.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
+
 /datum/virtue/combat/brawler
 	name = "Brawler's Apprentice"
 	desc = "I have trained under a skilled brawler, and have some experience fighting with my fists. I have a katar and some knuckledusters stashed away, too."
@@ -106,7 +116,6 @@
 /datum/virtue/combat/brawler/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
 	recipient.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
-
 
 /datum/virtue/combat/bowman
 	name = "Toxophilite"
