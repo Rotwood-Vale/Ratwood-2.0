@@ -837,6 +837,7 @@
 #include "code\datums\sexcon\sex_actions\deviant\facesitting_anal.dm"
 #include "code\datums\sexcon\sex_actions\deviant\facesitting_vaginal.dm"
 #include "code\datums\sexcon\sex_actions\deviant\footjob.dm"
+#include "code\datums\sexcon\sex_actions\deviant\footsmother.dm"
 #include "code\datums\sexcon\sex_actions\deviant\frotting.dm"
 #include "code\datums\sexcon\sex_actions\deviant\grinding.dm"
 #include "code\datums\sexcon\sex_actions\deviant\knot_grinding.dm"
