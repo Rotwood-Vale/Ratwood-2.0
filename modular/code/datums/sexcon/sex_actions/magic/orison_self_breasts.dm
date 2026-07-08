@@ -24,7 +24,7 @@
 	return TRUE
 
 /datum/sex_action/masturbate_breasts_orison/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] offers a quiet orison while rubbing [user.p_their()] breasts..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user] offers a quiet orison while touching [user.p_their()] breasts..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = 0
 
 /datum/sex_action/masturbate_breasts_orison/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -35,7 +35,7 @@
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = do_subtle
 
-	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] cups and strokes [user.p_their()] breasts through a soft orison... [message_suffix]"), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] cups and strokes [user.p_their()] breasts, fondling them with a divine energy [message_suffix]"), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	if(data["jingle"])
 		playsound(user, SFX_JINGLE_BELLS, 30, TRUE, -2, ignore_walls = FALSE)
 
