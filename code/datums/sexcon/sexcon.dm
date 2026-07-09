@@ -420,12 +420,13 @@
 				splashed_user.visible_message(span_love("[splashed_user] takes a load inside them!"), span_love("I take a load inside me!"))
 		else
 			splashed_type.refresh_cum()
-		if(oral && splashed_user.reagents) //cum fills hunger if taking it orally
+		if(oral && splashed_user.reagents) // Cum fills hunger if taking it orally
 			if(user.getorganslot(ORGAN_SLOT_PENIS))
 				splashed_user.reagents.add_reagent(/datum/reagent/erpjuice/cum, get_semen_volume())
 			else
 				splashed_user.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 2)
 			apply_cum_consumed_buff(splashed_user)
+		// Marks reciever as a gnoll breeder for the round
 		if(!oral && user?.dna?.species?.id == "gnoll")
 			splashed_user.has_gnoll_scent_this_round = TRUE
 		modular_record_collar_receive_event(splashed_user, user)

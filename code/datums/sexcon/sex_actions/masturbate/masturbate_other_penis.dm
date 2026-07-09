@@ -34,11 +34,8 @@
 	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] [chosen_verb]..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	if(!do_subtle)
 		user.sexcon.generic_sex_noise()
-
 	user.sexcon.perform_sex_action(target, 2, 0, TRUE)
-
 	target.sexcon.handle_passive_ejaculation(user)
-
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE
 
 /datum/sex_action/masturbate_penis_other/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
