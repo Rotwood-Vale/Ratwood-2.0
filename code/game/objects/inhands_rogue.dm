@@ -2,8 +2,11 @@
 	/// A lazylist to store inhands data.
 	var/list/onprop
 	var/d_type = "blunt"
-//#ifdef TESTSERVER
+#ifdef TESTSERVER
 	var/force_reupdate_inhand = TRUE
+#else
+	var/force_reupdate_inhand = FALSE
+#endif
 	var/smelted = FALSE // Sanity for smelteries to avoid runtimes, if this is a bar smelted through ore for exp gain
 	/// Determines whether this item is silver or not.
 	var/is_silver = FALSE
@@ -13,9 +16,6 @@
 	var/icon_y_offset = 0
 	var/always_destroy = FALSE
 	var/is_important = FALSE // If TRUE, this item is not allowed to be minted. May be useful for other things later.
-//#else
-//	var/force_reupdate_inhand = FALSE
-//#endif
 
 // Initalize addon for the var for custom inhands 32x32.
 /obj/item/Initialize(mapload)
