@@ -82,12 +82,17 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	var/list/severity_names = list()
 	/// Whether miracles heal it.
 	var/healable_by_miracles = TRUE
+	/// Whether we're storing the on_gain effects on the owner mob and should cleanup them if we're deleted
+	var/should_persist_effects = FALSE
 
 /datum/wound/Destroy(force)
 	if(bodypart_owner)
 		remove_from_bodypart()
 	else if(owner)
 		remove_from_mob()
+	else if(should_persist_effects)
+		remove_from_bodypart(force = TRUE)
+
 	if(werewolf_infection_timer)
 		deltimer(werewolf_infection_timer)
 		werewolf_infection_timer = null
@@ -165,7 +170,10 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	owner = bodypart_owner.owner
 	bodypart_owner.bleeding += bleed_rate // immediately apply our base bleeding
 	on_bodypart_gain(affected)
-	INVOKE_ASYNC(src, PROC_REF(on_mob_gain), affected.owner) //this is literally a fucking lint error like new species cannot possible spawn with wounds until after its ass
+	if(!isnull(bodypart_owner?.owner) && HAS_TRAIT(bodypart_owner.owner, TRAIT_PERSIST_WOUNDS))
+		should_persist_effects = TRUE
+	else
+		INVOKE_ASYNC(src, PROC_REF(on_mob_gain), affected.owner) //this is literally a fucking lint error like new species cannot possible spawn with wounds until after its ass
 	if(crit_message)
 		var/message = get_crit_message(affected.owner, affected)
 		if(message)
@@ -185,7 +193,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		affected.update_disabled()
 
 /// Removes this wound from a given bodypart
-/datum/wound/proc/remove_from_bodypart()
+/datum/wound/proc/remove_from_bodypart(force = FALSE)
 	if(!bodypart_owner)
 		return FALSE
 	set_bleed_rate(0)
@@ -195,7 +203,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	bodypart_owner = null
 	owner = null
 	on_bodypart_loss(was_bodypart)
-	on_mob_loss(was_owner)
+	if(!should_persist_effects || force)
+		on_mob_loss(was_owner)
 	return TRUE
 
 /// Effects when a wound is lost on a bodypart
@@ -311,9 +320,9 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	if(whp <= 0)
 		if(!should_persist())
 			if(bodypart_owner)
-				remove_from_bodypart(src)
+				remove_from_bodypart()
 			else if(owner)
-				remove_from_mob(src)
+				remove_from_mob()
 			else
 				qdel(src)
 	return amount_healed
