@@ -28745,8 +28745,8 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cavewet)
 "gnA" = (
-/obj/machinery/light/roguestreet/orange/walllamp{
-	dir = 8
+/obj/machinery/light/rogue/campfire/fireplace{
+	pixel_x = 32
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/physician)
@@ -54698,6 +54698,9 @@
 	},
 /obj/item/natural/bundle/cloth/bandage/full,
 /obj/structure/table/vtable,
+/obj/machinery/light/roguestreet/orange/walllamp{
+	dir = 4
+	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/physician)
 "mel" = (
@@ -62822,8 +62825,8 @@
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town/church/chapel)
 "nVD" = (
-/obj/machinery/light/roguestreet/orange/walllamp{
-	dir = 4
+/obj/machinery/light/rogue/campfire/fireplace{
+	pixel_x = -32
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/physician)
@@ -79077,6 +79080,9 @@
 /obj/item/reagent_containers/glass/bucket/pot/decrepit,
 /obj/machinery/light/rogue/oven/west{
 	pixel_x = -32
+	},
+/obj/machinery/light/rogue/campfire/fireplace{
+	pixel_y = -32
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors)
@@ -95724,6 +95730,9 @@
 	pixel_y = 32
 	},
 /obj/structure/table/vtable/v2,
+/obj/machinery/light/roguestreet/orange/walllamp{
+	dir = 8
+	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/physician)
 "vth" = (
@@ -273800,7 +273809,7 @@ skP
 oJP
 xQK
 rGy
-grY
+tFv
 qvR
 qvR
 iNT
@@ -274232,7 +274241,7 @@ hoZ
 iHb
 dfd
 kmh
-pOX
+grY
 xrY
 uaL
 qvR
@@ -291040,10 +291049,10 @@ hNi
 hNi
 hNi
 uwR
+fBL
+fBL
+fBL
 sTD
-fBL
-fBL
-fBL
 rAQ
 vyL
 jmA
