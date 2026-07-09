@@ -105,6 +105,9 @@
 	var/set_luminosity = max > 1e-6
 	#endif
 
+	if(myturf.outdoor_effect?.sunlight_overlay?.luminosity)
+		set_luminosity = max(set_luminosity, myturf.outdoor_effect.sunlight_overlay.luminosity)
+
 	if((rr & gr & br & ar) && (rg + gg + bg + ag + rb + gb + bb + ab == 8))
 	//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
 		icon_state = "transparent"

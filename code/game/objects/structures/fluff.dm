@@ -808,6 +808,58 @@
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
 
+// icon signs
+
+/obj/structure/fluff/iconsign
+	icon_state = "sign"
+	name = "icon sign"
+	desc = "you shouldn't be seeing this."
+	icon = 'icons/roguetown/misc/signs.dmi'
+	max_integrity = 200
+	blade_dulling = DULLING_BASHCHOP
+
+/obj/structure/fluff/iconsign/zizosign
+	icon_state = "signdeath"
+	name = "inverted psycross sign"
+	desc = "A sign with a inverted psycross."
+
+/obj/structure/fluff/iconsign/psycrosssign
+	icon_state = "signlife"
+	name = "psycross sign"
+	desc = "A sign with a psycross."
+
+/obj/structure/fluff/iconsign/eaglesign
+	icon_state = "signeagle"
+	name = "eagle sign"
+	desc = "A sign with a heraldic eagle on it."
+
+/obj/structure/fluff/iconsign/spidersign
+	icon_state ="signspider"
+	name = "spider sign"
+	desc = "A sign with a spider on it."
+
+/obj/structure/fluff/iconsign/smithsign
+	icon_state = "signdwarf"
+	name = "hammer sign"
+	desc = "A sign with a hammer on it."
+
+/obj/structure/fluff/iconsign/innsign
+	icon_state = "signmug"
+	name = "mug sign"
+	desc = "A sign with a cup on it."
+
+/obj/structure/fluff/iconsign/elksign
+	icon_state = "signelk"
+	name = "elk sign"
+	desc = "A sign with an elk on it."
+
+/obj/structure/fluff/iconsign/skullsign
+	icon_state = "signskull"
+	name = "skull sign"
+	desc = "A sign with a skull on it."
+
+// it should be noted that icon signs may be able to be written on but hopefully this'll prevent that
+
 /obj/structure/fluff/sellsign/examine(mob/user)
 	. = ..()
 	if(!user.is_literate())
@@ -1325,6 +1377,11 @@
 	icon_state = "psycrosscrafted"
 	max_integrity = 80
 	chance2hear = 10
+
+/obj/structure/fluff/psycross/crafted/necra
+	name = "necran pantheon cross"
+	icon_state = "cross_necra"
+	max_integrity = 120
 
 /obj/structure/fluff/psycross/psycrucifix
 	name = "wooden psydonic crucifix"

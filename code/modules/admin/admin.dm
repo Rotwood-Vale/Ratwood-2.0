@@ -248,8 +248,8 @@
 		body += "<p>Current: [initial(living.patron.name)]</p>"
 		body += "<ul>"
 		for(var/patron_type in GLOB.patronlist)
-			// Skip Undivided and Science patrons
-			if(patron_type == /datum/patron/divine/undivided || patron_type == /datum/patron/godless)
+			// Skip Science patrons
+			if(patron_type == /datum/patron/godless)
 				continue
 			var/datum/patron/P = GLOB.patronlist[patron_type]
 			// Skip if patron is null or has no name

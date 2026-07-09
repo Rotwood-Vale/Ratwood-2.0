@@ -31,6 +31,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PROCESSING_LOBBY		(1<<11)
 #define PROCESSING_DAMOVERLAYS	(1<<12)
 #define PROCESSING_ICON_UPDATES	(1<<13)
+/// Placed on datums that have a static, constant reference. Primarily only used for turfs.
+#define DF_STATIC_OBJECT (1<<14)
 
 //FLAGS BITMASK
 

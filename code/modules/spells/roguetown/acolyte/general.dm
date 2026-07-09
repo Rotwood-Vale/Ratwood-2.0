@@ -397,7 +397,7 @@
 	return FALSE
 
 /obj/effect/proc_holder/spell/invoked/blood_heal
-	name = "Blood transfer Miracle"
+	name = "Blood Transfer Miracle"
 	desc = "Transfers the blood from myself to the target with divine magycks. Ratio of transfer scales with holy skill."
 	overlay_icon = 'icons/mob/actions/genericmiracles.dmi'
 	overlay_state = "bloodheal"
@@ -426,6 +426,12 @@
 	if(ishuman(targets[1]))
 		var/mob/living/carbon/human/target = targets[1]
 		var/mob/living/carbon/human/UH = user
+
+		if(UH.doing)
+			to_chat(UH, span_warning("I can't cast this while doing something else."))
+			revert_cast()
+			return FALSE
+
 		if(NOBLOOD in UH.dna?.species?.species_traits)
 			to_chat(UH, span_warning("I have no blood to provide."))
 			revert_cast()
