@@ -36,6 +36,9 @@
 	user.sexcon.perform_sex_action(target, 2, 4, TRUE)
 	target.sexcon.handle_passive_ejaculation(user)
 
+	user.sexcon.perform_sex_action(user, 0.5, 2, TRUE)
+	user.sexcon.handle_passive_ejaculation(user)
+
 /datum/sex_action/buttjob/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] pulls [target]'s cock out from inbetween [user.p_their()] asscheeks."))
 
