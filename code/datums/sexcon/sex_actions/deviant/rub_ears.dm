@@ -15,7 +15,7 @@
 	return TRUE
 
 /datum/sex_action/rub_ears/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] places [user.p_their()] hands against [target] ears..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user] places [user.p_their()] on [target] ears..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = 0
 
 /datum/sex_action/rub_ears/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)

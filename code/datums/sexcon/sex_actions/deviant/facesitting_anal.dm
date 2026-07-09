@@ -44,7 +44,7 @@
 	// Target pleasure and oxyloss from strong intent and up
 	user.sexcon.perform_deepthroat_oxyloss(target, 1)
 	user.sexcon.perform_sex_action(target, 1, 3, FALSE)
-	target.sexcon.handle_passive_ejaculation()
+	target.sexcon.handle_passive_ejaculation(target)
 
 /datum/sex_action/facesitting_anal/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] gets off [target]'s face."))

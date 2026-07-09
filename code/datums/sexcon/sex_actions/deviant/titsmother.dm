@@ -20,10 +20,14 @@
 		return FALSE
 	if(!breasts)
 		return FALSE
-	// If someone has breasts but flat/slight/small, no smothering for you (enjoy a little shaming instead)
 	if(breasts.breast_size < 3)
-		to_chat(user, span_notice("My breasts are too small to do that..."))
+		return FALSE
 	return TRUE
+
+/datum/sex_action/titsmother/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	var/obj/item/organ/breasts/breasts = user.getorganslot(ORGAN_SLOT_BREASTS)
+	if(breasts && breasts.breast_size < 3)
+		to_chat(user, span_notice("My breasts are too small to do that..."))
 
 /datum/sex_action/titsmother/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] smothers [target]'s head under [user.p_their()] tits!"), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
@@ -37,7 +41,7 @@
 
 	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] smothers [target]'s face with [user.p_their()] tits..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	if(!do_subtle)
-		user.sexcon.outercourse_noise()
+		user.sexcon.outercourse_noise(user)
 
 	// Fat titty smash (only possible with massive/heaping/obscene size breasts)
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))

@@ -33,6 +33,9 @@
 /datum/sex_action/proc/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return TRUE
 
+/datum/sex_action/proc/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	return
+
 /datum/sex_action/proc/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return
 

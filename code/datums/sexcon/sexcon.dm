@@ -1298,7 +1298,11 @@
 		return
 	if(!action_type)
 		return
+	var/datum/sex_action/requested_action = SEX_ACTION(action_type)
+	if(!requested_action)
+		return
 	if(!can_perform_action(action_type, user.incapacitated()))
+		requested_action.on_failed_start(user, target)
 		return
 	knot_check_remove(action_type)
 	// Set vars
@@ -1311,11 +1315,11 @@
 	grassy_knoll = null
 	collar_bell_user = FALSE
 	collar_bell_target = FALSE
-	var/datum/sex_action/action = SEX_ACTION(current_action)
-	if(!action)
+	var/datum/sex_action/current_action_datum = SEX_ACTION(current_action)
+	if(!current_action_datum)
 		current_action = null
 		return
-	log_combat(user, target, "Started sex action: [action.name]")
+	log_combat(user, target, "Started sex action: [current_action_datum.name]")
 	INVOKE_ASYNC(src, PROC_REF(sex_action_loop))
 
 /datum/sex_controller/proc/sex_action_loop()
