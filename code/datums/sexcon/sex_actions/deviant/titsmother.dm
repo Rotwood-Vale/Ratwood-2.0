@@ -1,6 +1,7 @@
 /datum/sex_action/titsmother
 	name = "Smother them with boobs"
 	subtle_supported = TRUE
+	
 
 /datum/sex_action/titsmother/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
@@ -12,12 +13,16 @@
 	return TRUE
 
 /datum/sex_action/titsmother/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	var/obj/item/organ/breasts/breasts = user.getorganslot(ORGAN_SLOT_BREASTS)
 	if(user == target)
 		return FALSE
 	if(!check_location_accessible(target, user, BODY_ZONE_CHEST))
 		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_BREASTS))
+	if(!breasts)
 		return FALSE
+	// If someone has breasts but flat/slight/small, no smothering for you (enjoy a little shaming instead)
+	if(breasts.breast_size < 3)
+		to_chat(user, span_notice("My breasts are too small to do that..."))
 	return TRUE
 
 /datum/sex_action/titsmother/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -26,6 +31,7 @@
 
 /datum/sex_action/titsmother/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/do_subtle = user.sexcon.do_subtle_action
+	var/obj/item/organ/breasts/breasts = user.getorganslot(ORGAN_SLOT_BREASTS)
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle
 
@@ -33,19 +39,23 @@
 	if(!do_subtle)
 		user.sexcon.outercourse_noise()
 
-	// Fat titty smash
+	// Fat titty smash (only possible with massive/heaping/obscene size breasts)
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))
-		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
-			user.sexcon.try_jaw_crush(target)
+		if(breasts.breast_size > 6)	
+			if(istype(user.rmb_intent, /datum/rmb_intent/strong))
+				user.sexcon.try_jaw_crush(target)
 	
 	// User pleasure
 	user.sexcon.perform_sex_action(user, 1, 0, TRUE)
 	user.sexcon.handle_passive_ejaculation(user)
 	
-	// Target pleasure and oxyloss from strong intent and up
-	user.sexcon.perform_deepthroat_oxyloss(target, 0.5)
+	// Target pleasure
 	user.sexcon.perform_sex_action(target, 1, 0.2, FALSE)
 	target.sexcon.handle_passive_ejaculation(target)
+
+	// Oxyloss from strong intent and up (only possible with massive/heaping/obscene size breasts)
+	if(breasts.breast_size > 6)	
+		user.sexcon.perform_deepthroat_oxyloss(target, 0.5)
 
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE
 

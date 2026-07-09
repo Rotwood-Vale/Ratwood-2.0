@@ -30,7 +30,7 @@
 		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] rubs [target]'s ears..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 
 	if(!do_subtle)
-		target.sexcon.make_sucking_noise()()
+		target.sexcon.make_sucking_noise()
 
 	if(HAS_TRAIT(target, TRAIT_KEENEARS) || iself(target) || ishalfelf(target) || isdarkelf(target) || iswoodelf(target) || isgoblinp(target) || istabaxi(target) || iskobold(target) || isvulp(target) || islupian(target))
 		user.sexcon.perform_sex_action(target, 5, 0, TRUE)
