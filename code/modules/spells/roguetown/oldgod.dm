@@ -361,6 +361,7 @@
 			user.say("MY LUX FOR YOURS! LYVE, AS DOES HE!", forced = TRUE)
 			user.apply_status_effect(/datum/status_effect/debuff/devitalised)
 			H.apply_status_effect(/datum/status_effect/debuff/revived)
+			H.apply_status_effect(/datum/status_effect/debuff/devitalised)
 			to_chat(user, span_warning("You reach out and restore [H]'s Lux at the cost of your own! If you don't first let it recover, you will not lyve though another."))
 			user.Knockdown(5 SECONDS)
 			user.Stun(5 SECONDS)
