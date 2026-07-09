@@ -24,6 +24,13 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/titjob/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
+		to_chat(user, span_notice("My groin needs to be accessible."))
+		return
+	if(!check_location_accessible(user, target, BODY_ZONE_CHEST))
+		to_chat(user, span_notice("Their chest needs to be accessible."))
+
 /datum/sex_action/titjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] grabs [target]'s tits and shoves [user.p_their()] cock inbetween!"))
 

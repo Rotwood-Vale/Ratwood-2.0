@@ -17,6 +17,13 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/grind_body/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!user.sexcon.Adjacent_Or_Closet(target))
+		to_chat(user, span_notice("I need to be closer to [target]."))
+		return
+	if(!target.get_bodypart(check_zone(user.zone_selected)))
+		to_chat(user, span_notice("That body part isn't available."))
+
 /datum/sex_action/grind_body/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] pulls themselves onto [target]..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = 0

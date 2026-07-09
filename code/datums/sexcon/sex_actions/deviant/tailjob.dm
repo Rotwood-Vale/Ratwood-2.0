@@ -23,6 +23,10 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/tailjob/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
+		to_chat(user, span_notice("Their groin needs to be accessible."))
+
 /datum/sex_action/tailjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] slides their tail around [target]'s cock..."))
 
