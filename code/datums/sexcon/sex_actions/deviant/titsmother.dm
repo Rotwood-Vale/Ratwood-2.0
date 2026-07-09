@@ -53,8 +53,8 @@
 	user.sexcon.perform_sex_action(target, 1, 0.2, FALSE)
 	target.sexcon.handle_passive_ejaculation(target)
 
-	// Oxyloss from strong intent and up (only possible with massive/heaping/obscene size breasts)
-	if(breasts.breast_size > 6)	
+	// Oxyloss from strong intent and up (only possible with moderate and higher size breasts)
+	if(breasts.breast_size < 2)	
 		user.sexcon.perform_deepthroat_oxyloss(target, 0.5)
 
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE
