@@ -38,12 +38,12 @@
 			user.sexcon.try_jaw_crush(target)
 
 	// User pleasure
-	user.sexcon.perform_sex_action(user, 1, 3, TRUE)
+	user.sexcon.perform_sex_action(user, 1, 1, TRUE)
 	user.sexcon.handle_passive_ejaculation(target)
 
 	// Target pleasure and oxyloss from strong intent and up
-	user.sexcon.perform_deepthroat_oxyloss(target, 1.3)
-	user.sexcon.perform_sex_action(target, 0, 2, FALSE)
+	user.sexcon.perform_deepthroat_oxyloss(target, 1)
+	user.sexcon.perform_sex_action(target, 1, 3, FALSE)
 	target.sexcon.handle_passive_ejaculation()
 
 /datum/sex_action/facesitting_anal/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)

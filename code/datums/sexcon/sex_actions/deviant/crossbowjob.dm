@@ -28,11 +28,15 @@
 
 /datum/sex_action/grind_crossbow/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/do_subtle = user.sexcon.do_subtle_action
+	user.sexcon.show_progress = !do_subtle
+	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle
+
 	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] grinds the stock against [target]."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	if(!do_subtle)
 		user.sexcon.outercourse_noise()
-	user.sexcon.perform_sex_action(user, 1, 4, TRUE)
-	user.sexcon.handle_passive_ejaculation()
+
+	user.sexcon.perform_sex_action(target, 1, 4, TRUE)
+	target.sexcon.handle_passive_ejaculation(target)
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE	
 
 /datum/sex_action/grind_crossbow/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
