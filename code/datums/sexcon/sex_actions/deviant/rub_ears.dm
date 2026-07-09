@@ -21,10 +21,11 @@
 /datum/sex_action/rub_ears/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 
 	var/do_subtle = user.sexcon.do_subtle_action
+	var/has_sensitive_ears = target.has_nonhuman_ears()
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle
 
-	if(HAS_TRAIT(target, TRAIT_KEENEARS) || iself(target) || ishalfelf(target) || isdarkelf(target) || iswoodelf(target) || isgoblinp(target) || istabaxi(target) || iskobold(target) || isvulp(target) || islupian(target))
+	if(has_sensitive_ears)
 		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] rubs [target]'s ears... [target.p_their()] weakness..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	else
 		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] rubs [target]'s ears..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
@@ -32,7 +33,7 @@
 	if(!do_subtle)
 		target.sexcon.make_sucking_noise()
 
-	if(HAS_TRAIT(target, TRAIT_KEENEARS) || iself(target) || ishalfelf(target) || isdarkelf(target) || iswoodelf(target) || isgoblinp(target) || istabaxi(target) || iskobold(target) || isvulp(target) || islupian(target))
+	if(has_sensitive_ears)
 		user.sexcon.perform_sex_action(target, 5, 0, TRUE)
 	else
 		user.sexcon.perform_sex_action(target, 0.5, 0, TRUE)

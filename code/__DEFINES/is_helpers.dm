@@ -28,6 +28,19 @@ GLOBAL_LIST_INIT(our_forest_sex, typecacheof(list(
 	/area/rogue/indoors/shelter/rtfield
 	)))
 
+GLOBAL_LIST_INIT(nonhuman_ears_excluded, typecacheof(list(
+	/datum/sprite_accessory/ears/antenna_simple1,
+	/datum/sprite_accessory/ears/antenna_simple2,
+	/datum/sprite_accessory/ears/antenna_simple3,
+	/datum/sprite_accessory/ears/antenna_simple4,
+	/datum/sprite_accessory/ears/antenna_fuzzball1,
+	/datum/sprite_accessory/ears/antenna_fuzzball2,
+	/datum/sprite_accessory/ears/dendorite,
+	/datum/sprite_accessory/ears/eoran,
+	/datum/sprite_accessory/ears/pestran,
+	/datum/sprite_accessory/ears/zorzor
+	)))
+
 
 #define isclient(A) istype(A, /client)
 
