@@ -24,31 +24,37 @@
 	// Need to stand up
 	if(user.resting)
 		return FALSE
-		
+
 	// Target can't stand up
 	if(!target.resting)
 		return FALSE
 	return TRUE
 
-/datum/sex_action/footsmother/get_start_message(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	return span_warning("[user] puts [user.p_their()] feet on [target]'s face...")
-
-/datum/sex_action/footsmother/get_finish_message(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	return span_warning("[user] pulls [user.p_their()] feet off [target]'s face...")
-
-/datum/sex_action/footsmother/lock_sex_object(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	sex_locks |= new /datum/sex_session_lock(target, BODY_ZONE_PRECISE_MOUTH)
-
-/datum/sex_action/footsmother/on_perform_message(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/datum/sex_session/sex_session = get_sex_session(user, target)
-	user.visible_message(sex_session.spanify_force("[user] [sex_session.get_generic_force_adjective()] smothers [target]'s face with [user.p_their()] feet..."))
+/datum/sex_action/footsmother/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	user.visible_messsage(span_warning("[user] puts [user.p_their()] feet on [target]'s face..."))
+	user.sexcon.show_progress = 0
 
 /datum/sex_action/footsmother/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/datum/sex_session/sex_session = get_sex_session(user, target)
-	playsound(user, 'sound/misc/mat/fingering.ogg', 30, TRUE, -2, ignore_walls = FALSE)
 
-	if(istype(user.shoes, /obj/item/clothing/shoes/roguetown/jester))
-		playsound(user, SFX_JINGLE_BELLS, 30, TRUE, -2, ignore_walls = FALSE)
 
-	sex_session.perform_sex_action(target, 2, 4, TRUE)
-	sex_session.handle_passive_ejaculation(target)
+
+ 	var/do_subtle = user.sexcon.do_subtle_action
+	user.sexcon.show_progress = !do_subtle
+	user.sexcon.suppress_moan = do_subtle
+
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] smothers [target]'s face with [user.p_their()] feet..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
+	if(!do_subtle)
+		user.sexcon.generic_sex_noise()
+
+	user.sexcon.perform_sex_action(user, 2, 4, TRUE)
+	user.sexcon.handle_passive_ejaculation()
+
+	user.sexcon.suppress_moan = FALSE
+
+datum/sex_action/footsmother/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	user.visible_message(span_warning("[user] pulls [user.p_their()] feet off [target]'s face..."))
+
+/datum/sex_action/footsmother/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(user.sexcon.finished_check())
+		return TRUE
+	return FALSE
