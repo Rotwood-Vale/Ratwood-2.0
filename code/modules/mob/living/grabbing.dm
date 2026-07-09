@@ -91,15 +91,20 @@
 	if(ismob(grabbed))
 		var/mob/M = grabbed
 		LAZYREMOVE(M.grabbedby, src)
-		if(iscarbon(M) && sublimb_grabbed)
+		if(iscarbon(M))
 			var/mob/living/carbon/carbonmob = M
-			var/obj/item/bodypart/part = carbonmob.get_bodypart(sublimb_grabbed)
+			var/obj/item/bodypart/part = limb_grabbed
+			if(!part && sublimb_grabbed)
+				part = carbonmob.get_bodypart(sublimb_grabbed)
 
 			// Edge case: if a weapon becomes embedded in a mob, our "grab" will be destroyed...
 			// In this case, grabbed will be the mob, and sublimb_grabbed will be the weapon, rather than a bodypart
 			// This means we should skip any further processing for the bodypart
 			if(part)
+				var/released_held_index = part.held_index
 				LAZYREMOVE(part.grabbedby, src)
+				carbonmob.update_hud_hand_slot(released_held_index)
+				carbonmob.mark_zone_selector_hud_dirty()
 				part = null
 				sublimb_grabbed = null
 	if(grabbee)
@@ -205,6 +210,9 @@
 			if(M.grippedby(user))			//Aggro grip
 				bleed_suppressing = 0.5		//Better bleed suppression
 		if(/datum/intent/grab/choke)
+			if(HAS_TRAIT(user, TRAIT_PACIFISM))
+				to_chat(user, span_warning("I don't want to harm [src]!"))
+				return FALSE
 			if(user.buckled)
 				to_chat(user, span_warning("I can't do this while buckled!"))
 				return FALSE
@@ -283,6 +291,9 @@
 						else
 							to_chat(user, span_warning("[H]'s neck is covered!"))
 		if(/datum/intent/grab/twist)
+			if(HAS_TRAIT(user, TRAIT_PACIFISM))
+				to_chat(user, span_warning("I don't want to harm [src]!"))
+				return FALSE
 			if(user.buckled)
 				to_chat(user, span_warning("I can't do this while buckled!"))
 				return FALSE

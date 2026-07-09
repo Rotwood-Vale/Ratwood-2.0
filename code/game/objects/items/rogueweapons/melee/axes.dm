@@ -151,19 +151,6 @@
 	gripped_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop, /datum/intent/sword/peel)
 	wdefense = 2
 
-/obj/item/rogueweapon/stoneaxe/woodcut/aaxe
-	name = "decrepit axe"
-	desc = "A hatchet of frayed bronze. It reigns from a tyme before the Comet Syon's impact; when Man wrought metal not to spill blood, but to better shape the world in His image."
-	icon_state = "ahandaxe"
-	force = 17
-	force_wielded = 20
-	max_integrity = 180
-	blade_dulling = DULLING_SHAFT_CONJURED
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-	randomize_blade_int_on_init = TRUE
-
 /obj/item/rogueweapon/stoneaxe/hurlbat
 	name = "hurlbat"
 	desc = "With the sleek, lightweight design of a tossblade, and the stopping power of a battleaxe, the hurlbat's tricky design allows it to strike its targets with deadly efficiency. Although its historic origin is disputed, it is often-seen amongst Varangian Bounty-Hunters and ruthless Steppesmen."
@@ -281,11 +268,22 @@
 	smeltresult = /obj/item/ingot/steel
 	wdefense = 3
 
-/obj/item/rogueweapon/stoneaxe/woodcut/steel/paaxe
-	name = "ancient alloy axe"
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient
+	name = "ancient axe"
 	desc = "A hatchet of polished gilbranze. Vheslyn molested the hearts of Man with sin - of greed towards the better offerings, and of lust for His divinity. With a single blow, blood gouted from bone and seeped into the soil; the first murder."
 	icon_state = "ahandaxe"
 	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient/decrepit
+	name = "decrepit axe"
+	desc = "A hatchet of frayed bronze. It reigns from a tyme before the Comet Syon's impact; when Man wrought metal not to spill blood, but to better shape the world in His image."
+	force = 17
+	force_wielded = 20
+	max_integrity = 180
+	blade_dulling = DULLING_SHAFT_CONJURED
+	color = "#bb9696"
+	anvilrepair = null
+	randomize_blade_int_on_init = TRUE
 
 /datum/intent/axe/cut/long
 	reach = 2

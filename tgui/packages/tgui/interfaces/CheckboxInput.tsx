@@ -18,6 +18,7 @@ import { Loader } from './common/Loader';
 
 type Data = {
   items: string[];
+  default_checked: string[];
   message: string;
   title: string;
   timeout: number;
@@ -30,6 +31,7 @@ export const CheckboxInput = (props) => {
   const { data } = useBackend<Data>();
   const {
     items = [],
+    default_checked = [],
     min_checked,
     max_checked,
     message,
@@ -37,7 +39,9 @@ export const CheckboxInput = (props) => {
     title,
   } = data;
 
-  const [selections, setSelections] = useState<string[]>([]);
+  const [selections, setSelections] = useState<string[]>(
+    default_checked.filter((item) => items.includes(item)),
+  );
 
   const [searchQuery, setSearchQuery] = useState('');
   const search = createSearch(searchQuery, (item: string) => item);

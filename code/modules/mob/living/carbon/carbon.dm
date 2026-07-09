@@ -79,11 +79,10 @@
 		var/atom/movable/screen/inventory/hand/H
 		H = hud_used.hand_slots["[oindex]"]
 		if(H)
-			H.update_icon()
+			H.update_hand_vis()
 		H = hud_used.hand_slots["[held_index]"]
 		if(H)
-			H.update_icon()
-		H = hud_used.action_intent
+			H.update_hand_vis()
 	oactive = FALSE
 	update_a_intents()
 
@@ -672,7 +671,7 @@
 					var/mob/living/carbon/C = src
 					C.add_stress(/datum/stressevent/vomit)
 	else
-		if(NOBLOOD in dna?.species?.species_traits)
+		if(NOBLOOD in dna?.species?.species_traits || (INVISBLOOD in dna.species.species_traits)) //OV EDIT
 			return TRUE
 		if(message)
 			visible_message("<span class='danger'>[vomit_source] coughs up blood!</span>", "<span class='danger'>I cough up blood!</span>")
@@ -1053,7 +1052,7 @@
 		clear_fullscreen("painflash")
 
 /mob/living/carbon/update_health_hud(shown_health_amount)
-	if(!client || !hud_used)
+	if(!hud_used)
 		return
 	if(hud_used.healths)
 		if(stat != DEAD)
@@ -1382,4 +1381,3 @@
 	if((cmode) && (mind) && (!handcuffed) && (stat == CONSCIOUS))
 		return 0
 	. = ..()
-

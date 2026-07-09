@@ -101,6 +101,10 @@
 	name = "Bobcurl"
 	icon_state = "bobcurl"
 
+/datum/sprite_accessory/hair/head/bob_mane
+	name = "Bob (Mane)"
+	icon_state = "bob_mane"
+
 /datum/sprite_accessory/hair/head/boddicker
 	name = "Boddicker"
 	icon_state = "boddicker"
@@ -1713,6 +1717,22 @@
 /datum/sprite_accessory/hair/head/sodden
 	name = "Sodden"
 	icon_state = "sodden"
+
+/datum/sprite_accessory/hair/head/renard
+	name = "Renard"
+	icon_state = "renard"
+
+/datum/sprite_accessory/hair/head/willowtree
+	name = "Willowtree"
+	icon_state = "willowtree"
+
+/datum/sprite_accessory/hair/head/nimue
+	name = "Nimue"
+	icon_state = "nimue"
+
+/datum/sprite_accessory/hair/head/willow
+	name = "Willow"
+	icon_state = "willow"
 
 /datum/sprite_accessory/hair/head/vulpkian
 	abstract_type = /datum/sprite_accessory/hair/head/vulpkian

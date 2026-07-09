@@ -112,7 +112,7 @@
 	name = "cautery iron"
 	desc = "A tool used to cauterize wounds. Heat it up before use."
 	icon_state = "cauteryiron"
-	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/use)
+	possible_item_intents = list(/datum/intent/use, /datum/intent/mace/strike, /datum/intent/mace/smash)
 	slot_flags = ITEM_SLOT_HIP
 	parrysound = list('sound/combat/parry/parrygen.ogg')
 	swingsound = BLUNTWOOSH_MED
@@ -503,3 +503,14 @@
 	wdefense = 3
 	wbalance = 1
 	tool_behaviour = TOOL_IMPROVISED_RETRACTOR
+
+/obj/item/rogueweapon/surgery/scalpel/improv
+	name = "improvised Scalpel"
+	desc = "A crude stone blade, it will cut but the precision is to be desired"
+	icon_state = "scalpel_wood"
+	force = 8
+	throwforce = 8
+	wdefense = 2
+	wbalance = 1
+	tool_behaviour = TOOL_IMPROVISED_SCALPEL
+	sharpness = IS_SHARP

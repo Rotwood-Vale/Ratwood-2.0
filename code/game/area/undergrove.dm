@@ -62,31 +62,6 @@
 	deathsight_message = "root-bound caverns"
 	detail_text = DETAIL_TEXT_GOBLIN_CAMP
 
-
-/area/rogue/under/cave/rhgoblinencampment
-	name = "goblin encampment"
-	icon_state = "under"
-	first_time_text = "Lost Encampment"
-	ambientsounds = AMB_BASEMENT
-	ambientnight = AMB_BASEMENT
-	droning_sound = 'sound/music/area/gobcamp.ogg'
-	droning_sound_dusk = null
-	droning_sound_night = null
-	ceiling_protected = TRUE
-	deathsight_message = "A hidden goblin-stained fortress"
-	
-/area/rogue/under/cave/inferno
-	name = "inferno"
-	icon_state = "fire_chamber"
-	first_time_text = "Another Place"
-	ambientsounds = AMB_CAVELAVA
-	ambientnight = AMB_CAVELAVA
-	droning_sound = 'sound/music/area/inferno.ogg'
-	droning_sound_dusk = null
-	droning_sound_night = null
-	ceiling_protected = TRUE
-	deathsight_message = "A blistering realm beyond this mortal sphere"
-
 /area/rogue/under/cave/skeletoncrypt
 	name = "Skeleton Crypt"
 	icon_state = "under"

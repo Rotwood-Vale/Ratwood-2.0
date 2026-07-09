@@ -115,7 +115,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 			if("Polehammer")
-				r_hand = /obj/item/rogueweapon/eaglebeak
+				r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)

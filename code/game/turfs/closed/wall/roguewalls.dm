@@ -64,6 +64,7 @@
 	desc = "A window with a solid and sturdy stone frame."
 	opacity = FALSE
 	max_integrity = 1300
+	icon_state = "stonewindow"
 
 /turf/closed/wall/mineral/rogue/stone/window/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && ((mover.pass_flags & PASSTABLE) || (mover.pass_flags & PASSGRILLE)) )
@@ -152,7 +153,14 @@
 	baseturfs = list(/turf/open/floor/rogue/blocks)
 	neighborlay = "dirtedge"
 	climbdiff = 4
-	damage_deflection = 20
+	damage_deflection = 20 
+
+/turf/closed/wall/mineral/rogue/stonebrick/stonebricklight
+	name = "lit stone brick wall"
+	desc = "Rows of overlapping bricks form this wall, this one glows with a soft light."
+	icon = 'icons/turf/roguewall.dmi'
+	icon_state = "stonebricklight"
+	light_outer_range = 4
 
 /turf/closed/wall/mineral/rogue/wood
 	name = "wooden wall"

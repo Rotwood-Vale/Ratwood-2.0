@@ -5,6 +5,7 @@
 	desc = "A disgusting, blood-sucking parasite."
 	icon = 'icons/roguetown/items/surgery.dmi'
 	icon_state = "leech"
+	dropshrink = 0.8
 	baitpenalty = 0
 	fishingMods=list(
 		"commonFishingMod" = 0.7,

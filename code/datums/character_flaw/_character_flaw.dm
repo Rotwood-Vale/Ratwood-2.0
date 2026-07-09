@@ -18,12 +18,14 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Cyclops (R) (+1 TRI)"=/datum/charflaw/noeyer,
 	"Devout Follower"=/datum/charflaw/addiction/godfearing,
 	"Greedy"=/datum/charflaw/greedy,
-	"Hunted (+1 TRI)"=/datum/charflaw/hunted,
+	"Marked for Death"=/datum/charflaw/assassintarget,
+	"Marked by Gnolls"=/datum/charflaw/hunted,
 	"Isolationist"=/datum/charflaw/isolationist,
 	"Junkie"=/datum/charflaw/addiction/junkie,
 	"Lawless"=/datum/charflaw/lawless,
 	"Marked by Baotha" =/datum/charflaw/marked_by_baotha,
 	"Leper (+1 TRI)"=/datum/charflaw/leprosy,
+	"Loose Straps"=/datum/charflaw/loose_armor,
 	"Masochist"=/datum/charflaw/addiction/masochist,
 	"Missing Nose"=/datum/charflaw/missing_nose,
 	"Mute (+1 TRI)"=/datum/charflaw/mute,
@@ -43,7 +45,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Malodorous"=/datum/charflaw/malodorous,
 	"Ugly"=/datum/charflaw/ugly,
 	"Unintelligible (+1 TRI)"=/datum/charflaw/unintelligible,
-	"Unsettling Beauty"=/datum/charflaw/unsettling_beauty,
 	"Wood Arm (L) (+1 TRI)"=/datum/charflaw/limbloss/arm_l,
 	"Wood Arm (R) (+1 TRI)"=/datum/charflaw/limbloss/arm_r,
 	"Hemophage (+1 TRI)"=/datum/charflaw/hemophage,
@@ -417,16 +418,17 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		H.compliance = 0
 		H.remove_status_effect(/datum/status_effect/compliance)
 
-/datum/charflaw/hunted
-	name = "Hunted"
-	desc = "Something in my past has made me a target. I'm always looking over my shoulder. YOU MAY BE PERMANENTLY REMOVED FROM THE ROUND WITHOUT ESCALATION BY YOUR ASSASSIN!"
+/datum/charflaw/assassintarget
+	name = "Marked for Death"
+	desc = "Something in my past has made me a target. I'm always looking over my shoulder.<br>\
+	YOU MAY BE PERMANENTLY REMOVED FROM THE ROUND WITHOUT ESCALATION BY YOUR ASSASSIN!"
 	var/logged = FALSE
 
-/datum/charflaw/hunted/on_mob_creation(mob/user)
-	..()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.adjust_triumphs(1)
+/datum/charflaw/hunted
+	name = "Marked by Gnolls"
+	desc = "For one reason or another, I have been deemed a target worthy of Graggar's champions. I hear their cackles anywhere I go.<br>\
+	<small>This virtue will encourage Gnolls to hunt you down. You may potentially be killed in the process.</small>"
+	var/logged = FALSE
 
 /datum/charflaw/ugly
 	name = "Ugly"
@@ -540,22 +542,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		var/mob/living/carbon/human/H = user
 		REMOVE_TRAIT(H, TRAIT_COMICSANS, TRAIT_GENERIC)
 
-/datum/charflaw/eerie_beauty
-	name = "Eerie Beauty"
-	desc = "Some would say my visage is an artwork created by the gods themselves; others call me an unsettling abomination. Incompatible with Socialite virtue."
-
-/datum/charflaw/eerie_beauty/on_mob_creation(mob/user)
-	..()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		ADD_TRAIT(H, TRAIT_BEAUTIFUL_UNCANNY, TRAIT_GENERIC)
-
-/datum/charflaw/eerie_beauty/on_removal(mob/user)
-	..()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		REMOVE_TRAIT(H, TRAIT_BEAUTIFUL_UNCANNY, TRAIT_GENERIC)
-
 /datum/charflaw/nude_sleeper
 	name = "Nude Sleeper"
 	desc = "I can't fall asleep unless I'm nude and in bed. I cannot sleep while wearing equipment. (Unremovable clothing and certain accessories are allowed.)"
@@ -572,22 +558,23 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		var/mob/living/carbon/human/H = user
 		REMOVE_TRAIT(H, TRAIT_NUDE_SLEEPER, TRAIT_GENERIC)
 
-/datum/charflaw/unsettling_beauty
-	name = "Unsettling Beauty"
-	desc = "My appearance is deeply unsettling to most. There's something profoundly wrong about my features that disturbs those who look upon me. Incompatible with Socialite virtue."
+/datum/charflaw/loose_armor
+	name = "Loose Straps"
+	desc = "My armor never seems to fit quite right. It has a nasty habit of exploding off my body when under inordinate stress."
 
-/datum/charflaw/unsettling_beauty/on_mob_creation(mob/user)
+/datum/charflaw/loose_armor/on_mob_creation(mob/user)
 	..()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		ADD_TRAIT(H, TRAIT_UNSETTLING_BEAUTY, TRAIT_GENERIC)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	ADD_TRAIT(H, TRAIT_LOOSE_STRAPS, TRAIT_GENERIC)
 
-/datum/charflaw/unsettling_beauty/on_removal(mob/user)
+/datum/charflaw/loose_armor/on_removal(mob/user)
 	..()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		REMOVE_TRAIT(H, TRAIT_UNSETTLING_BEAUTY, TRAIT_GENERIC)
-
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	REMOVE_TRAIT(H, TRAIT_LOOSE_STRAPS, TRAIT_GENERIC)
 /datum/charflaw/scarred
 	name = "Scarred"
 	desc = "My face bears terrible scars that make identification difficult, but not impossible."

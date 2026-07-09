@@ -46,7 +46,7 @@
 				l_hand = /obj/item/rogueweapon/flail/sflail
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_MASTER, TRUE)
 			if ("Warhammer")
-				beltr = /obj/item/rogueweapon/mace/warhammer
+				beltr = /obj/item/rogueweapon/mace/warhammer/steel
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
 			if("Sabre")
 				beltl = /obj/item/rogueweapon/scabbard/sword

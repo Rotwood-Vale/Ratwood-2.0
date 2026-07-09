@@ -99,6 +99,14 @@
 	result = /obj/item/storage/belt/rogue/leather
 	reqs = list(/obj/item/natural/hide/cured = 1)
 
+/datum/crafting_recipe/roguetown/leather/unleatherbelt
+	name = "untie leather belt"
+	result = /obj/item/natural/hide/cured
+	reqs = list(/obj/item/storage/belt/rogue/leather = 1)
+	craftdiff = 0
+	verbage_simple = "untie"
+	verbage = "unties"
+
 /datum/crafting_recipe/roguetown/leather/container/belt/black
 	name = "black leather belt"
 	result = /obj/item/storage/belt/rogue/leather/black

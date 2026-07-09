@@ -1,4 +1,0 @@
-author: "IronDragoon"
-delete-after: True
-changes:
-  - bugfix: "Hostile mobs should now ignore ghost mobs in target logic, and players will need to choose to spectate as opposed to it being the default on death/fartravel. This will hopefully reduce TDI somewhat (but other changes will be needed too)"
