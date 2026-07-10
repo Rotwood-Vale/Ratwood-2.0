@@ -25,21 +25,21 @@
 		return FALSE
 	if(!can_reach_target_groin(user, target))
 		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_L_FOOT) && !check_location_accessible(user, user, BODY_ZONE_PRECISE_R_FOOT))
+	if(!user_has_both_accessible_feet(user))
 		return FALSE
 	return TRUE
 
 /datum/sex_action/chastityplay/kick_cage/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(..())
-		return TRUE
 	if(user.resting)
 		to_chat(user, span_notice("I need to stand up first."))
 		return TRUE
 	if(!user.Adjacent(target))
 		to_chat(user, span_notice("I need to be closer to [target]."))
 		return TRUE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_L_FOOT) && !check_location_accessible(user, user, BODY_ZONE_PRECISE_R_FOOT))
-		to_chat(user, span_notice("I need at least one bare foot to do that."))
+	if(..())
+		return TRUE
+	if(!user_has_both_accessible_feet(user))
+		to_chat(user, span_notice("I need both bare feet to do that."))
 		return TRUE
 	return FALSE
 

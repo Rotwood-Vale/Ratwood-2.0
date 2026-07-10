@@ -41,6 +41,7 @@
 		return
 	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
 		to_chat(user, span_notice("Their groin needs to be accessible."))
+		return
 
 /datum/sex_action/force_milk_genitals/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] starts masturbating [target] over [user.get_active_held_item()]..."))

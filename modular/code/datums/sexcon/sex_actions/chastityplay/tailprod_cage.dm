@@ -23,6 +23,11 @@
         return FALSE
     return TRUE
 
+/datum/sex_action/chastityplay/tailprod_cage/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+    if(..())
+        return TRUE
+    return FALSE
+
 /datum/sex_action/chastityplay/tailprod_cage/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
     user.visible_message(span_warning("[user] sweeps [user.p_their()] tail low and coils it around [target]'s [get_chastity_device_name(target)], feeling the weight of the device."))
 

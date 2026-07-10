@@ -29,9 +29,6 @@
 	if(!check_location_accessible(target, user, BODY_ZONE_CHEST))
 		to_chat(user, span_notice("My chest needs to be accessible."))
 		return
-	if(!breasts)
-		to_chat(user, span_notice("I need breasts to do that."))
-		return
 	if(breasts && breasts.breast_size < 3)
 		to_chat(user, span_notice("My breasts are too small to do that..."))
 

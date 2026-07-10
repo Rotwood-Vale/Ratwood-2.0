@@ -43,6 +43,7 @@
 		return
 	if(!user.sexcon.can_use_penis())
 		to_chat(user, span_notice("I can't use my cock right now."))
+		return
 
 /datum/sex_action/throat_sex/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] slides [user.p_their()] cock into [target]'s throat!"))
@@ -96,6 +97,9 @@
 	if(!user.sexcon.double_penis_type())
 		return FALSE
 	return ..()
+
+/datum/sex_action/throat_sex/double/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	..()
 
 /datum/sex_action/throat_sex/double/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] slides [user.p_their()] cocks into [target]'s throat!"))

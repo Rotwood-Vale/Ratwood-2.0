@@ -11,9 +11,7 @@
 /datum/sex_action/foot_lick/can_perform(mob/living/user, mob/living/target)
 	if(user == target)
 		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_R_FOOT))
-		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_L_FOOT))
+	if(!target_has_both_accessible_feet(user, target))
 		return FALSE
 	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_MOUTH))
 		return FALSE
@@ -22,8 +20,8 @@
 /datum/sex_action/foot_lick/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(..())
 		return TRUE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_R_FOOT) || !check_location_accessible(user, target, BODY_ZONE_PRECISE_L_FOOT))
-		to_chat(user, span_notice("Their feet need to be accessible."))
+	if(!target_has_both_accessible_feet(user, target))
+		to_chat(user, span_notice("Both of their feet need to be accessible."))
 		return TRUE
 	return FALSE
 

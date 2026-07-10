@@ -18,7 +18,7 @@
 		return FALSE
 
 	// Need bare feet ofc
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_L_FOOT) && !check_location_accessible(user, user, BODY_ZONE_PRECISE_R_FOOT))
+	if(!user_has_both_accessible_feet(user))
 		return FALSE
 
 	// Need to stand up
@@ -37,8 +37,8 @@
 	if(!check_location_accessible(target, target, BODY_ZONE_PRECISE_MOUTH))
 		to_chat(user, span_notice("Their mouth needs to be accessible."))
 		return
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_L_FOOT) && !check_location_accessible(user, user, BODY_ZONE_PRECISE_R_FOOT))
-		to_chat(user, span_notice("I need at least one bare foot to do that."))
+	if(!user_has_both_accessible_feet(user))
+		to_chat(user, span_notice("I need both bare feet to do that."))
 		return
 	if(!target.resting)
 		to_chat(user, span_notice("They need to be lying down first."))

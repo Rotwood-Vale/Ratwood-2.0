@@ -29,6 +29,9 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/force_rimming/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	return ..()
+
 /datum/sex_action/force_rimming/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] shoves [target]'s head against [user.p_their()] butt!"))
 

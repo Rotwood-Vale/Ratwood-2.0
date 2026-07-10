@@ -56,6 +56,24 @@
 		return TRUE
 	return FALSE
 
+/datum/sex_action/proc/user_has_both_accessible_feet(mob/living/carbon/human/user)
+	if(!user)
+		return FALSE
+	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_L_FOOT))
+		return FALSE
+	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_R_FOOT))
+		return FALSE
+	return TRUE
+
+/datum/sex_action/proc/target_has_both_accessible_feet(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!user || !target)
+		return FALSE
+	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_L_FOOT))
+		return FALSE
+	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_R_FOOT))
+		return FALSE
+	return TRUE
+
 /datum/sex_action/proc/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return
 

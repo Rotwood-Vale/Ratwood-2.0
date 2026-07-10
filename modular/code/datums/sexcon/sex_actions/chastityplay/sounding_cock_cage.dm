@@ -30,6 +30,11 @@
         return FALSE
     return TRUE
 
+/datum/sex_action/chastityplay/sounding_cock_cage/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+    if(..())
+        return TRUE
+    return FALSE
+
 /datum/sex_action/chastityplay/sounding_cock_cage/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
     if(HAS_TRAIT(target, TRAIT_CHASTITY_SPIKED))
         user.visible_message(span_warning("[user] produces a thin probe and angles it carefully toward [target]'s urethral opening, navigating the spikes of [target.p_their()] [get_chastity_device_name(target)]."))
