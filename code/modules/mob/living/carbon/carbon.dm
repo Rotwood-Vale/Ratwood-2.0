@@ -765,11 +765,12 @@
 		BODY_ZONE_HEAD,
 		BODY_ZONE_CHEST,
 	)
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts) //hardcoded to streamline things a bit
-		if(!(bodypart.body_zone in lethal_zones))
+	for(var/lethal_zone in lethal_zones)
+		var/obj/item/bodypart/lethal_part = get_bodypart(lethal_zone)
+		if(!lethal_part)
 			continue
 		var/hardcrit_divisor = !mind ? FIRE_HARDCRIT_DIVISOR_MINDLESS : FIRE_HARDCRIT_DIVISOR
-		var/my_burn = abs((bodypart.burn_dam / bodypart.max_damage) * hardcrit_divisor)
+		var/my_burn = abs((lethal_part.burn_dam / lethal_part.max_damage) * hardcrit_divisor)
 		total_burn = max(total_burn, my_burn)
 		used_damage = max(used_damage, my_burn)
 	if(used_damage < total_tox)
@@ -1212,6 +1213,7 @@
 		O.owner = src
 		bodyparts.Remove(X)
 		bodyparts.Add(O)
+		bodyparts_by_zone[O.body_zone] = O
 		if(O.body_part == ARM_LEFT)
 			l_arm_index_next += 2
 			O.held_index = l_arm_index_next //1, 3, 5, 7...

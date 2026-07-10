@@ -1,0 +1,4 @@
+author: "GarrusVakarian"
+delete-after: True
+changes:
+  - rscadd: "Big Man towner thugs can now choose to spawn with a mace"
