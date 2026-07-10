@@ -92,80 +92,46 @@
 	playsound(T, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2], FALSE, footstep_sounds[turf_footstep][3] + e_range)
 
 /datum/component/footstep/proc/play_humanstep()
-	var/turf/open/T = prepare_step()
-	if(!T)
+	var/turf/open/step_location = prepare_step()
+	if(!step_location)
 		return
 	if(HAS_TRAIT(parent, TRAIT_SILENT_FOOTSTEPS))
 		return
-	var/mob/living/carbon/human/H = parent
-	var/feetCover = (H.wear_armor && (H.wear_armor.body_parts_covered & FEET)) || (H.wear_pants && (H.wear_pants.body_parts_covered & FEET))
-
+	var/mob/living/carbon/human/human_parent = parent
+	var/feetCover = (human_parent.wear_armor?.body_parts_covered | human_parent.wear_pants?.body_parts_covered) & FEET
 	var/used_sound
 	var/list/used_footsteps
-	var/obj/item/clothing/shoes/humshoes = H.shoes
-	var/heldbarefoot = TRUE //Presume by default that they're barefooted. it WILL be set regardless.
-	if(istype(humshoes,/obj/item/clothing/shoes)) //Fixes amulet and other misc. item runtimes
-		heldbarefoot = humshoes?.is_barefoot
-	if((humshoes && !heldbarefoot) && !islamia(H) || feetCover && !islamia(H)) //are we wearing shoes, and do they actually cover the sole
+	var/obj/item/clothing/shoes/humshoes = human_parent.shoes
+	var/used_volume = 0
+	var/used_extra_range = 0
+	var/do_vary = FALSE
+	if(islamia(human_parent))
+		var/static/lamia_footsteps = list(
+			'sound/foley/footsteps/lamia_slither (1).ogg',
+			'sound/foley/footsteps/lamia_slither (2).ogg',
+			'sound/foley/footsteps/lamia_slither (3).ogg',
+		) // don't recreate the list every single step
+		used_footsteps = lamia_footsteps
+		used_volume = rand(40, 85)
+		used_extra_range = rand(-1, 1) // originally this was 1-3 but that didn't take into account humans having +2 by default
+	else // normal, non-lamia footsteps
+		var/feet_covered = ((istype(humshoes) && !humshoes?.is_barefoot) || feetCover)
+		// decide between normal or bare step sounds based on shoe and armor coverage
+		var/list/used_step_list = feet_covered ? GLOB.footstep : GLOB.barefootstep
+		var/turf_used_step = feet_covered ? step_location.footstep : step_location.barefootstep
+		var/list/step_data = used_step_list[turf_used_step]
 		//SANITY CHECK, WILL NOT PLAY A SOUND IF THE LIST IS INVALID
-		if(!GLOB.footstep[T.footstep] || (LAZYLEN(GLOB.footstep[T.footstep]) < 3))
-			testing("SOME silly guy GAVE AN INVALID FOOTSTEP VALUE ([T.footstep]) TO [T.type]!!! FIX THIS SHIT!!!")
+		if((LAZYLEN(step_data) < 3))
+			testing("SOME silly guy GAVE AN INVALID [feet_covered ? "FOOTSTEP" : "BAREFOOTSTEP"] VALUE ([turf_used_step]) TO [step_location.type]!!! FIX THIS SHIT!!!")
 			return
-		used_footsteps = GLOB.footstep[T.footstep][1]
-		used_footsteps = used_footsteps.Copy()
-		used_sound = pick_n_take(used_footsteps)
-		if(used_sound == last_sound)
-			if(used_footsteps.len)
-				used_sound = pick(used_footsteps)
-		if(!used_sound)
-			used_sound = last_sound
-		last_sound = used_sound
-		playsound(T, used_sound,
-			GLOB.footstep[T.footstep][2],
-			FALSE,
-			GLOB.footstep[T.footstep][3] + e_range)
-		if(ismob(parent) || isobj(parent))
-			var/dir = H.dir
-			show_sensory_effect(parent, 5, "footstep", dir, ignore_self = TRUE)
-//	if(!islamia(H))
-	else
-		//SANITY CHECK, WILL NOT PLAY A SOUND IF THE LIST IS INVALID
-		if(!GLOB.barefootstep[T.barefootstep] || (LAZYLEN(GLOB.barefootstep[T.barefootstep]) < 3))
-			testing("SOME silly guy GAVE AN INVALID BAREFOOTSTEP VALUE ([T.barefootstep]) TO [T.type]!!! FIX THIS SHIT!!!")
-			return
-		if(!islamia(H))
-			used_footsteps = GLOB.barefootstep[T.barefootstep][1]
-			used_footsteps = used_footsteps.Copy()
-			used_sound = pick_n_take(used_footsteps)
-			if(used_sound == last_sound)
-				used_sound = pick(used_footsteps)
-			if(!used_sound)
-				used_sound = last_sound
-			last_sound = used_sound
-			playsound(T, used_sound,
-				GLOB.barefootstep[T.barefootstep][2],
-				TRUE,
-				GLOB.barefootstep[T.barefootstep][3] + e_range)
-			if(ismob(parent) || isobj(parent))
-				var/dir = H.dir
-				show_sensory_effect(parent, 5, "footstep", dir, ignore_self = TRUE)
-		else
-			used_footsteps = list(
-				'sound/foley/footsteps/lamia_slither (1).ogg',
-				'sound/foley/footsteps/lamia_slither (2).ogg',
-				'sound/foley/footsteps/lamia_slither (3).ogg',
-			)
-			used_footsteps = used_footsteps.Copy()
-			used_sound = pick_n_take(used_footsteps)
-			if(used_sound == last_sound)
-				used_sound = pick(used_footsteps)
-			if(!used_sound)
-				used_sound = last_sound
-			last_sound = used_sound
-			volume = rand(40, 85)
-			e_range = rand(1, 3)
-			playsound(T, used_sound, "vol" = volume, "extrarange" = e_range)
-
-			if(ismob(parent) || isobj(parent))
-				var/dir = H.dir
-				show_sensory_effect(parent, 5, "footstep", dir, ignore_self = TRUE)
+		used_footsteps = step_data[1]
+		used_volume = step_data[2]
+		used_extra_range = step_data[3]
+		do_vary = !feet_covered // only barefoot gets the pitch variation
+	// this is fine without an explicit copy because it doesn't mutate the existing list
+	used_sound = pick(used_footsteps - last_sound) || last_sound
+	last_sound = used_sound
+	playsound(step_location, used_sound,
+		volume * used_volume,
+		do_vary,
+		used_extra_range + e_range)

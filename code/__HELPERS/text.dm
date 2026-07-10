@@ -493,14 +493,12 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	// Parse colour
 	if(!barebones)
-		var/regex/hexgex = regex(@"(?<=-=)(.{6})", "g")
-		while(hexgex.Find(t))
-			var/endblock = findtext(t, "=-", hexgex.index)
-			if(!endblock)
-				break
-			t = replacetext(t, "=-", "</font>", hexgex.index, endblock+2)
-			var/c_code = sanitize_hexcolor(hexgex.match)
-			t = replacetext(t, "-=[hexgex.match]", "<font color='[c_code]'>", hexgex.index-2, endblock+2)
+		// Because `[.\n]` would just match the literal . character and newlines,
+		// we have to use [\S\s\n] here to match all non-spaces, all spaces, and all newlines.
+		// Also if you try to add \r it explodes, don't do that.
+		var/regex/hexgex = regex(@"-=([A-Za-z0-9]{6})([\S\s\n]+?)=-", "g")
+		// group 1 - color. group 2 - affected text
+		t = hexgex.Replace_char(t, "<font color='$1'>$2</font>")
 
 	// Parse hr and small
 
@@ -515,11 +513,16 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		var/list/tlist = splittext(t, "\n")
 		var/tlistlen = tlist.len
 		var/listlevel = -1
+		var/ordered_open = FALSE // whether a <ol> is currently open
 		var/singlespace = -1 // if 0, double spaces are used before asterisks, if 1, single are
 		for(var/i = 1, i <= tlistlen, i++)
 			var/line = tlist[i]
 			var/count_asterisk = length(replacetext(line, regex("\[^\\*\]+", "g"), ""))
 			if(count_asterisk % 2 == 1 && findtext(line, regex("^\\s*\\*", "g"))) // there is an extra asterisk in the beggining
+				// Close any open ordered list before continuing an unordered one.
+				if(ordered_open)
+					line = "</ol>" + line
+					ordered_open = FALSE
 
 				var/count_w = length(replacetext(line, regex("^( *)\\*.*$", "g"), "$1")) // whitespace before asterisk
 				line = replacetext(line, regex("^ *(\\*.*)$", "g"), "$1")
@@ -541,9 +544,27 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 					line = "</ul>" + line
 					listlevel--
 
-			else while(listlevel >= 0)
-				line = "</ul>" + line
-				listlevel--
+			else if(findtext(line, regex("^\\s*\\d+\\.\\s", "g"))) // ordered list item: N. text
+				// Close any open unordered lists first.
+				while(listlevel >= 0)
+					line = "</ul>" + line
+					listlevel--
+				// Strip the leading "N. " prefix and emit as <li>.
+				line = replacetext(line, regex("^\\s*\\d+\\.\\s*", ""), "")
+				if(!ordered_open)
+					line = "<ol><li>" + line + "</li>"
+					ordered_open = TRUE
+				else
+					line = "<li>" + line + "</li>"
+
+			else
+				// Not a list line — close both open list types.
+				if(ordered_open)
+					line = "</ol>" + line
+					ordered_open = FALSE
+				while(listlevel >= 0)
+					line = "</ul>" + line
+					listlevel--
 
 			tlist[i] = line
 		// end for
@@ -556,6 +577,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 			t += "</ul>"
 			listlevel--
 
+		if(ordered_open)
+			t += "</ol>"
 	else
 		t = replacetext(t, "((", "")
 		t = replacetext(t, "))", "")
@@ -930,3 +953,10 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/endswith(input_text, ending)
 	var/input_length = LAZYLEN(ending)
 	return !!findtext(input_text, ending, -input_length)
+
+/// Returns TRUE if the input_text starts with any of the beginnings
+/proc/starts_with_any(input_text, list/beginnings)
+	for(var/beginning in beginnings)
+		if(!!findtext(input_text, beginning, 1, LAZYLEN(beginning)+1))
+			return TRUE
+	return FALSE

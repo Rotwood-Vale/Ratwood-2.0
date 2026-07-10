@@ -41,8 +41,8 @@
 			return strings("welsh_replacement.json", type, convert_HTML = TRUE)
 		if("Saut al-Atash accent")
 			return
-		if("Valley accent")
-			return strings("valley_replacement.json", type, convert_HTML = TRUE)
+		if("Gallant accent")
+			return strings("gallant_replacement.json", type, convert_HTML = TRUE)
 		if("Kazengun accent")
 			return strings("kazengun_replacement.json", type, convert_HTML = TRUE)
 		if("Xinyi accent")

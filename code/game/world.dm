@@ -495,6 +495,9 @@ GLOBAL_VAR(restart_counter)
 
 /world/proc/on_tickrate_change()
 	SStimer?.reset_buckets()
+#ifndef DISABLE_DREAMLUAU
+	DREAMLUAU_SET_EXECUTION_LIMIT_MILLIS(tick_lag * 100)
+#endif
 
 /world/proc/init_byond_tracy()
 	var/tracy_init = call_ext(world.system_type == MS_WINDOWS ? "prof.dll" : "./libprof.so", "init")() // Setup Tracy integration

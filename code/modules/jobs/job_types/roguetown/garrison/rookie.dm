@@ -53,7 +53,7 @@
 	subclass_stats = list(
 		STATKEY_STR = 1,
 		STATKEY_CON = 1,
-		STATKEY_END = 1,
+		STATKEY_WIL = 1,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/shields = 2,
@@ -70,8 +70,8 @@
 		/datum/skill/misc/reading = 1,
 		/datum/skill/misc/medicine = 2,
 		/datum/skill/misc/tracking = 2,
-		/datum/skill/craft/crafting, 1,
-		/datum/skill/craft/cooking, 1,
+		/datum/skill/craft/crafting = 1,
+		/datum/skill/craft/cooking = 1,
 	)
 
 /datum/outfit/job/roguetown/rookie/footman/pre_equip(mob/living/carbon/human/H)
@@ -125,7 +125,7 @@
 	subclass_stats = list(
 		STATKEY_SPD = 1,
 		STATKEY_PER = 1,
-		STATKEY_END = 1,
+		STATKEY_WIL = 1,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/bows = 3,
@@ -142,8 +142,8 @@
 		/datum/skill/misc/reading = 1,
 		/datum/skill/misc/medicine = 2,
 		/datum/skill/misc/tracking = 2,
-		/datum/skill/craft/crafting, 1,
-		/datum/skill/craft/cooking, 1,
+		/datum/skill/craft/crafting = 1,
+		/datum/skill/craft/cooking = 1,
 	)
 
 /datum/outfit/job/roguetown/rookie/skirmisher/pre_equip(mob/living/carbon/human/H)

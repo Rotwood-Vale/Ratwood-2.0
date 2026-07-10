@@ -449,7 +449,7 @@
 		O.forceMove(T)
 	return 1
 
-/obj/structure/closet/relaymove(mob/user)
+/obj/structure/closet/relaymove(mob/user, direction)
 	if(user.stat || !isturf(loc) || !isliving(user))
 		return
 	if(locked)
@@ -467,9 +467,6 @@
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	toggle(user)
-
-/obj/structure/closet/attack_paw(mob/user)
-	return attack_hand(user)
 
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user)

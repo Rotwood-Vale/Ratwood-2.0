@@ -351,51 +351,15 @@
 	static_debris = list(/obj/item/grown/log/tree = 1)
 	climb_offset = 14
 	stump_type = FALSE
-	hidingspot = TRUE
-	/// So we can find them with fixed eye search
-	var/mob/living/hiddenguy = null
 
 /obj/structure/flora/roguetree/stump/log/Initialize(mapload)
 	. = ..()
 	icon_state = "log[rand(1,2)]"
 
-/obj/structure/flora/roguetree/stump/log/examine(mob/user)
-	. = ..()
-	. += span_info("Some structures can be used as hiding places. Toggle the 'SNEAK' button on your HUD, then click the structure to hide in it. You can stop hiding by clicking the structure again, or by moving out of it.")
-
-/obj/structure/flora/roguetree/stump/log/attack_hand(mob/user)
-	if(isliving(user))
-		if(user.m_intent == MOVE_INTENT_SNEAK)
-			hideinside(user)
-			return
-
-/obj/structure/flora/roguetree/stump/log/proc/hideinside(mob/living/user)
-	var/sneak_level = user.get_skill_level(/datum/skill/misc/sneaking) || 0
-	var/sneaktime = max(10, 50 - (sneak_level * 10)) // Hard caps at 1 second at Expert and above.
-	if(user.loc == src)
-		unhide(user)
-		return
-	if(occupied)
-		to_chat(user, span_warning("Someone is already hiding inside [src]!"))
-		return
-	if(!do_after(user, sneaktime, src))
-		return
-	user.forceMove(src)
-	occupied = TRUE
-	hiddenguy = user
-	to_chat(user, span_warning("I hide inside [src]!"))
-
-/obj/structure/flora/roguetree/stump/log/proc/unhide(mob/living/user)
-	var/turf/T = get_turf(src)
-	if(!T) return
-	user.forceMove(T)
-	occupied = FALSE
-	hiddenguy = null
-	to_chat(user, span_warning("I come out from inside [src]!"))
-
-/obj/structure/flora/roguetree/stump/log/relaymove(mob/user)
-	if(user.loc == src)
-		unhide(user)
+	AddComponent(/datum/component/hiding_spot, \
+		"Someone is already hiding inside %LOCATION!", \
+		"I hide inside %LOCATION!", \
+		"I come out from inside %LOCATION!")
 
 //newbushes
 
@@ -427,7 +391,10 @@
 
 /obj/structure/flora/roguegrass/verdant/Initialize(mapload)
 	. = ..()
-	icon_state = "sparsegrass_[rand(1, 3)]"
+	if(prob(60))
+		icon_state = "sparsegrass_[rand(1, 3)]"
+	else
+		icon_state = "fullgrass_[rand(1, 3)]"
 
 /obj/structure/flora/roguegrass/reedbush
 	name = "reed bush"
@@ -492,9 +459,9 @@
 	debris = list(/obj/item/natural/fibers = 1, /obj/item/grown/log/tree/stick = 1, /obj/item/natural/thorn = 2)
 	var/list/looty = list()
 	var/bushtype
-	var/mob/living/hiddenguy = null
 
 /obj/structure/flora/roguegrass/bush/Initialize(mapload)
+	AddComponent(/datum/component/hiding_spot)
 	if(isnull(bushtype))
 		var/area/rogue/bush_area = get_area(src)
 		if(!bush_area.town_area)
@@ -541,13 +508,13 @@
 					BP.receive_damage(10)
 
 /obj/structure/flora/roguegrass/bush/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(isliving(user))
 		var/mob/living/L = user
 		user.changeNext_move(CLICK_CD_INTENTCAP)
 		playsound(src.loc, "plantcross", 50, FALSE, -1)
-		if(user.m_intent == MOVE_INTENT_SNEAK)
-			hideinside(user)
-			return
 		if(do_after(L, SEARCHTIME, target = src))
 			if(!looty.len && (world.time > res_replenish))
 				loot_replenish()
@@ -566,44 +533,10 @@
 			if(!looty.len)
 				to_chat(user, span_warning("Picked clean... I should try later."))
 
-/obj/structure/flora/roguegrass/bush/examine(mob/user)
-	. = ..()
-	. += span_info("Some structures can be used as hiding places. Toggle the 'SNEAK' button on your HUD, then click the structure to hide in it. You can stop hiding by clicking the structure again, or by moving out of it.")
-
-/obj/structure/flora/roguegrass/bush/proc/hideinside(mob/living/user)
-	var/sneak_level = user.get_skill_level(/datum/skill/misc/sneaking) || 0
-	var/sneaktime = max(10, 50 - (sneak_level * 10)) // Hard caps at 1 second at Expert and above.
-	if(user.loc == src)
-		unhide(user)
-		return
-	if(occupied)
-		to_chat(user, span_warning("Someone is already hiding in [src]!"))
-		return
-	if(!do_after(user, sneaktime, src))
-		return
-	user.forceMove(src)
-	occupied = TRUE
-	hiddenguy = user
-	to_chat(user, span_warning("I hide in [src]!"))
-
-/obj/structure/flora/roguegrass/bush/proc/unhide(mob/living/user)
-	var/turf/T = get_turf(src)
-	if(!T) return
-	user.forceMove(T)
-	occupied = FALSE
-	hiddenguy = null
-	to_chat(user, span_warning("I come out from [src]!"))
-
-/obj/structure/flora/roguegrass/bush/relaymove(mob/user)
-	if(user.loc == src)
-		unhide(user)
-
 /obj/structure/flora/roguegrass/bush/update_icon()
 	icon_state = "bush[rand(2, 4)]"
 
 /obj/structure/flora/roguegrass/bush/CanAStarPass(ID, travel_dir, caller)
-	if(occupied)
-		return FALSE
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
 		if(mover.pass_flags & PASSGRILLE)
@@ -613,8 +546,6 @@
 	return ..()
 
 /obj/structure/flora/roguegrass/bush/CanPass(atom/movable/mover, turf/target)
-	if(occupied)
-		return FALSE
 	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
 		return 1
 	if(get_dir(loc, target) == dir)
@@ -1194,12 +1125,15 @@
 	if(isliving(user) && user.mind)
 		user.mind.add_sleep_experience(/datum/skill/magic/druidic, 20)
 	return TRUE
-//A smattering of jungle-themed assets
+
+//A smattering of jungle-themed assets. The default artstyle of SS13 is far too bright so they all have a color to darken them down to more of a roguetown pallette
 //trees
+
+#define COLOR_JUNGLE			"#9bb6ae"
 
 /obj/structure/flora/roguetree/jungle//version with mechanics this time
 	name = "jungle tree"
-	color = "#a7b5a9"
+	color = COLOR_JUNGLE
 	// desc = "Scant, precious shade."
 	stump_type = /obj/structure/flora/roguetree/stump/palm
 	icon = 'icons/obj/flora/jungletrees.dmi'
@@ -1231,7 +1165,7 @@
 /obj/structure/flora/roguegrass/bush/jungle
 	name = "jungle bush"
 	desc = ""
-	color = "#b9c4bd"
+	color = COLOR_JUNGLE
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "bushb"
 
@@ -1249,7 +1183,7 @@
 	desc = "Haha, im in danger."
 
 /obj/structure/flora/roguegrass/bush/jungle/large
-	color = "#a7b5a9"
+	color = COLOR_JUNGLE
 	icon = 'icons/obj/flora/largejungleflora.dmi'
 	icon_state = "bush"
 	pixel_x = -16
@@ -1270,7 +1204,7 @@
 /obj/structure/flora/roguegrass/jungle
 	name = "jungle grass"
 	desc = ""
-	color = "#a7b5a9"
+	color = COLOR_JUNGLE
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "grassa"
 

@@ -51,14 +51,15 @@
 		/obj/item/rogueweapon/scabbard/sheath,
 		/obj/item/storage/belt/rogue/pouch/coins/poor
 		)
-	var/weapons = list("Heavy Mace","Shamshir and Shield","Spear and Shield","Axe and Shield")
+	var/weapons = list("Mace and Shield","Shamshir and Shield","Spear and Shield","Axe and Shield")
 	if(H.mind)
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Heavy Mace")
+			if("Mace and Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
-				backl = /obj/item/rogueweapon/mace/goden
+				backl = /obj/item/rogueweapon/shield/tower/zyb
+				beltr = /obj/item/rogueweapon/mace/steel
 			if("Shamshir and Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 				backl = /obj/item/rogueweapon/shield/tower/zyb

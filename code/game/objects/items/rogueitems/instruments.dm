@@ -189,8 +189,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	if(!channel)
 		channel = _get_sound_group()?.checkout_channel()
 		if(!channel)
-			var/atom/resolved_parent = parent?.resolve()
-			log_game("INSTRUMENT: All [/datum/sound_group/instruments::channel_count] instrument channels in use simultaneously - [resolved_parent]")
+			log_game("INSTRUMENT: All [/datum/sound_group/instruments::channel_count] instrument channels in use simultaneously - [parent]")
 			return FALSE
 	..()
 	return TRUE
@@ -443,8 +442,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 				user.remove_status_effect(/datum/status_effect/buff/playing_music)
 				return
 			if(curfile)
-				soundloop.mid_sounds = list(curfile)
-				soundloop.cursound = null
+				soundloop.set_mid_sounds(list(curfile))
 				soundloop.volume = clamp(curvol, 10, 100)
 				soundloop.repeat_sound = loop_enabled
 				if(!soundloop.start(user))
@@ -621,8 +619,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 				var/mob/living/band_mob = instrument_to_bandmate[band_instrument]
 				if(band_mob)
 					play_source = band_mob
-			band_instrument.soundloop.mid_sounds = list(band_instrument.curfile)
-			band_instrument.soundloop.cursound = null
+			band_instrument.soundloop.set_mid_sounds(list(band_instrument.curfile))
 			band_instrument.soundloop.volume = clamp(band_instrument.curvol, 10, 100)
 			band_instrument.soundloop.repeat_sound = band_instrument.loop_enabled
 			if(!band_instrument.soundloop.start(play_source, sync_anchor))

@@ -344,3 +344,40 @@
 	first_time_text = "THE HOUSE OF THE ONE"
 
 /area/rogue/under/dungeon/desert
+
+/area/rogue/under/dungeon/bizbaz
+	name = "Bizzare Bazaar"
+	icon_state = "under"
+	first_time_text = "BIZZARE BAZAAR"
+	droning_sound = 'sound/music/area/desert/freedive_2.ogg'
+
+/area/rogue/under/dungeon/desert_pyramid
+	name = "pyramid"
+	icon_state = "under"
+	first_time_text = "Tomb of the Ancient"
+	droning_sound = 'sound/music/area/tombs.ogg'
+
+/area/rogue/under/underdesert
+	name = "Underdeep"
+	icon_state = "cavewet"
+	first_time_text = "The Underdeep"
+	ambientsounds = AMB_CAVEWATER
+	ambientnight = AMB_CAVEWATER
+	spookysounds = SPOOKY_CAVE
+	spookynight = SPOOKY_CAVE
+	droning_sound = 'sound/music/area/underdark.ogg'
+	droning_sound_dusk = null
+	droning_sound_night = null
+	ambush_times = list("night","dawn","dusk","day")
+	ambush_mobs = list(
+				/mob/living/simple_animal/hostile/retaliate/rogue/spider/mutated = 20,
+				/mob/living/carbon/human/species/elf/dark/drowraider/ambush = 10,
+				/mob/living/simple_animal/hostile/retaliate/rogue/minotaur = 25,
+				/mob/living/carbon/human/species/goblin/npc/ambush/moon = 30,
+				/mob/living/simple_animal/hostile/retaliate/rogue/troll = 15,
+				/mob/living/simple_animal/hostile/retaliate/rogue/drider = 10,
+	)
+	converted_type = /area/rogue/outdoors/caves
+	deathsight_message = "the lush, hidden deeps"
+	// detail_text = DETAIL_TEXT_UNDERDARK
+//This version will use a different terraingen that spawns unhappy shrooms instead of happy shrooms, for scarier and eviler underdarks

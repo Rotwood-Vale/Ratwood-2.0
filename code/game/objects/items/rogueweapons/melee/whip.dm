@@ -20,6 +20,7 @@
 	grid_width = 32
 	grid_height = 64
 	special = /datum/special_intent/whip_coil
+	wbalance = WBALANCE_SWIFT
 
 /obj/item/rogueweapon/whip/getonmobprop(tag)
 	. = ..()
@@ -127,6 +128,7 @@
 	wdefense = 0
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/silver
+	wbalance = WBALANCE_HEAVY
 
 /obj/item/rogueweapon/whip/antique/psywhip/ComponentInitialize()
 	AddComponent(\
@@ -149,6 +151,7 @@
 	wdefense = 0
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
+	wbalance = WBALANCE_HEAVY
 
 /obj/item/rogueweapon/whip/silver/ComponentInitialize()
 	AddComponent(\
@@ -201,3 +204,4 @@
 	wdefense = 0
 	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish) //Able to dismember at range. 'Holy' is a catchall term, in this case.
 	smeltresult = /obj/item/ingot/bronze
+	wbalance = WBALANCE_HEAVY

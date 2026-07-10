@@ -1232,6 +1232,7 @@
 	)
 	bigboy = TRUE
 	gripsprite = TRUE
+	special = /datum/special_intent/piercing_lunge
 	wlength = WLENGTH_GREAT
 	w_class = WEIGHT_CLASS_BULKY
 	minstr = 8
@@ -1361,7 +1362,6 @@
 	force_wielded = 20
 	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	icon_state = "quarterstaff"
-	associated_skill = /datum/skill/combat/staves
 	max_integrity = 150
 
 /obj/item/rogueweapon/woodstaff/quarterstaff/iron
@@ -1371,7 +1371,6 @@
 	force_wielded = 22
 	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	icon_state = "quarterstaff_iron"
-	associated_skill = /datum/skill/combat/staves
 	max_integrity = 200
 
 /obj/item/rogueweapon/woodstaff/quarterstaff/steel
@@ -1381,7 +1380,6 @@
 	force_wielded = 25
 	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	icon_state = "quarterstaff_steel"
-	associated_skill = /datum/skill/combat/staves
 	max_integrity = 200
 
 /obj/item/rogueweapon/woodstaff/quarterstaff/silver
@@ -1391,7 +1389,6 @@
 	force_wielded = 27
 	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	icon_state = "quarterstaff_silver"
-	associated_skill = /datum/skill/combat/staves
 	max_integrity = 250
 	is_silver = TRUE
 
@@ -1413,7 +1410,6 @@
 	force_wielded = 27
 	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	icon_state = "quarterstaff_silver"
-	associated_skill = /datum/skill/combat/staves
 	max_integrity = 250
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed

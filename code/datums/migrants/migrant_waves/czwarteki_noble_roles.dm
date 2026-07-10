@@ -67,7 +67,7 @@
 
 /datum/migrant_role/czwarteki/servant
 	name = "Czwarteki Servant"
-	greet_text = "You are Servants of your Lord. Taken along upon the Journey through the Vale with the Retinue. Your only goals are but to ensure your Lord and his Heir's well being upon the trip."
+	greet_text = "You are Servants of your Lord. Taken along upon the Journey through the realm with the Retinue. Your only goals are but to ensure your Lord and his Heir's well being upon the trip."
 	advclass_cat_rolls = list(CTAG_CZWAR_SERVANT = 20)
 	allowed_races = RACES_NO_CONSTRUCT
 	grant_lit_torch = TRUE

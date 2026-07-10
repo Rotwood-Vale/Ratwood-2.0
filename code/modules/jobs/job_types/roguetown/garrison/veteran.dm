@@ -126,7 +126,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 6, TRUE)
 				H.put_in_hands(new /obj/item/rogueweapon/flail/sflail)
 			if("Quarterstaff")
-				H.adjust_skillrank_up_to(/datum/skill/combat/staves, 6, TRUE) // Funny and rarely utilized weapon option. Why not?
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 6, TRUE) // Funny and rarely utilized weapon option. Why not?
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 6, TRUE)
 				H.put_in_hands(new /obj/item/rogueweapon/woodstaff/quarterstaff/steel)
 				H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L)
@@ -632,7 +632,7 @@
 		)
 	H.verbs |= /mob/proc/haltyell
 
-/datum/outfit/job/roguetown/spy/scout/choose_loadout(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/vet/spy/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
 	H.adjust_blindness(-3)
 	if(H.mind)
