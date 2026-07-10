@@ -31,9 +31,14 @@ Sunlight System
 	/* misc vars */
 	var/state 					 = SKY_VISIBLE	// If we can see the see the sky, are blocked, or we have a blocked neighbour (SKY_BLOCKED/VISIBLE/VISIBLE_BORDER)
 	var/weatherproof			 = FALSE        // If we have a weather overlay
+	var/weather_applied			 = FALSE        // whether source_turf's underlays currently hold the weather overlay
+	var/underlays_dirty			 = TRUE         // source_turf's underlays may not match our cached state, so reapply unconditionally
 	var/turf/source_turf
 	var/mutable_appearance/sunlight_overlay
 	var/list/datum/lighting_corner/affecting_corners
+
+/datum/outdoor_info/proc/reset_applied_overlays()
+	underlays_dirty = TRUE
 
 /datum/outdoor_info/Destroy(force, ...)
 	if (!force)
