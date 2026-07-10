@@ -227,6 +227,15 @@
 	name = "Lux Ripped"
 	desc = "The very essence of my lyfe was roughly torn from me."
 
+/datum/status_effect/debuff/absolver
+	id = "absolve_weakness"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/absolver
+	effectedstats = list(STATKEY_STR = -3, STATKEY_CON = -5, STATKEY_WIL = -3)	//Absolver punishing.
+
+/atom/movable/screen/alert/status_effect/debuff/absolver
+	name = "Absolving Weakness"
+	desc = "I strained my lux bringing back another's. My body is weakened and will not survive another such strain anytime soon."
+
 /datum/status_effect/debuff/vamp_dreams
 	id = "sleepytime"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/vamp_dreams
