@@ -72,9 +72,6 @@
 	var/icon_render_key = ""
 	var/static/list/limb_icon_cache = list()
 
-/mob/living/carbon/proc/has_keen_ears()
-	return HAS_TRAIT(src, TRAIT_KEENEARS) && !keen_ears_disabled
-
 	//halucination vars
 	var/image/halimage
 	var/image/halbody

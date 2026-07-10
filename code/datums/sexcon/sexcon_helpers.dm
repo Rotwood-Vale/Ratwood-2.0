@@ -224,6 +224,9 @@
 			grabstate = l_grab.grab_state
 	return grabstate
 
+/mob/living/carbon/human/proc/has_keen_ears()
+	return HAS_TRAIT(src, TRAIT_KEENEARS) && !keen_ears_disabled
+
 /mob/living/carbon/human/proc/has_nonhuman_ears()
 	if(HAS_TRAIT(src, TRAIT_KEENEARS))
 		return TRUE
