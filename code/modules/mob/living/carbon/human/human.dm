@@ -117,12 +117,20 @@
 	update_tongue_noise_verbs()
 
 /mob/living/carbon/human/proc/toggle_keen_ears()
+	if(!HAS_TRAIT(src, TRAIT_KEENEARS))
+		to_chat(src, span_warning("I do not possess keen ears."))
+		return FALSE
 	keen_ears_disabled = !keen_ears_disabled
 	if(keen_ears_disabled)
 		to_chat(src, span_notice("Your keen ears are now dulled."))
 	else
 		to_chat(src, span_notice("Your keen ears are now sharp again."))
 	return !keen_ears_disabled
+
+/mob/living/carbon/human/verb/toggle_keen_ears_ic()
+	set name = "Toggle Keen Ears"
+	set category = "IC"
+	toggle_keen_ears()
 
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
 	var/obj/item/bodypart/affecting

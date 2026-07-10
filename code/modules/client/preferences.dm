@@ -557,9 +557,6 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<b>Voice Identity</b>: <a href='?_src_=prefs;preference=voicetype;task=input'>[voice_type]</a><BR>"
 			// LETHALSTONE EDIT END
 			dat += "<b>Voice Pack</b>: <a href='?_src_=prefs;preference=voicepack;task=input'>[voice_pack]</a><BR>"
-			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				dat += "<b>Keen Ears:</b> <a href='?_src_=prefs;preference=keen_ears'>[H.has_keen_ears() ? "Enabled" : "Disabled"]</a><BR>"
 
 			dat += "<BR>"
 			dat += "<b>Race:</b> <a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a>[spec_check(user) ? "" : " (!)"]<BR>"
@@ -1574,10 +1571,6 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		tgui_pref = !tgui_pref
 	else if(href_list["preference"] == "triumphs")
 		user.show_triumphs_list()
-	else if(href_list["preference"] == "keen_ears")
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.toggle_keen_ears()
 
 	else if(href_list["preference"] == "playerquality")
 		check_pq_menu(user.ckey)

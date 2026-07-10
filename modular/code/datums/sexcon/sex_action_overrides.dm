@@ -89,7 +89,7 @@
 	)
 
 	switch(patron_type)
-		if(/datum/patron/old_god, /datum/patron/divine/undivided)
+		if(/datum/patron/old_god)
 			return orison_none_data
 
 		if(/datum/patron/divine/astrata, /datum/patron/divine/malum, /datum/patron/inhumen/matthios)
