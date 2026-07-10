@@ -26,7 +26,7 @@
 
 /obj/item/bodypart/head/dullahan/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_PERSIST_WOUNDS, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_PERSIST_WOUNDS, BODYPART_TRAIT)
 
 /obj/item/bodypart/head/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	. = ..()

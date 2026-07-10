@@ -87,11 +87,9 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 
 /datum/wound/Destroy(force)
 	if(bodypart_owner)
-		remove_from_bodypart()
+		remove_from_bodypart(force = should_persist_effects)
 	else if(owner)
 		remove_from_mob()
-	else if(should_persist_effects)
-		remove_from_bodypart(force = TRUE)
 
 	if(werewolf_infection_timer)
 		deltimer(werewolf_infection_timer)
@@ -170,10 +168,11 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	owner = bodypart_owner.owner
 	bodypart_owner.bleeding += bleed_rate // immediately apply our base bleeding
 	on_bodypart_gain(affected)
-	if(!isnull(bodypart_owner?.owner) && HAS_TRAIT(bodypart_owner.owner, TRAIT_PERSIST_WOUNDS))
-		should_persist_effects = TRUE
-	else
+	// ensure we do not re-apply effects if we're holding onto them between attachments
+	if(!should_persist_effects)
 		INVOKE_ASYNC(src, PROC_REF(on_mob_gain), affected.owner) //this is literally a fucking lint error like new species cannot possible spawn with wounds until after its ass
+	if(HAS_TRAIT(affected, TRAIT_PERSIST_WOUNDS))
+		should_persist_effects = TRUE
 	if(crit_message)
 		var/message = get_crit_message(affected.owner, affected)
 		if(message)
