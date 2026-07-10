@@ -4,6 +4,8 @@
 /datum/sex_action/facesitting_vaginal/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
 		return FALSE
+	if(!user.getorganslot(ORGAN_SLOT_VAGINA))
+		return FALSE
 	return TRUE
 
 /datum/sex_action/facesitting_vaginal/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
