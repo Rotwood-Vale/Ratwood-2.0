@@ -71988,7 +71988,10 @@
 "pYM" = (
 /obj/structure/bed/rogue/inn/double,
 /obj/item/bedsheet/rogue/fabric_double{
-	dir = 4=======/obj/structure/fluff/statue/aasimar{color = "aaa0a0";
+	dir = 4
+	},
+/obj/structure/fluff/statue/aasimar{
+	color = "aaa0a0";
 	pixel_y = 2
 	},
 /turf/open/floor/carpet/red,
