@@ -71986,10 +71986,10 @@
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/indoors/town/church)
 "pYM" = (
-<<<<<<< HEAD/obj/structure/bed/rogue/inn/double,
+/obj/structure/bed/rogue/inn/double,
 /obj/item/bedsheet/rogue/fabric_double{
 	dir = 4=======/obj/structure/fluff/statue/aasimar{color = "aaa0a0";
-	pixel_y = 2>>>>>>> main
+	pixel_y = 2
 	},
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/physician)
