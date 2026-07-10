@@ -5,6 +5,7 @@
 	hud_possible = list(ANTAG_HUD)
 	has_limbs = 1
 	held_items = list(null, null)
+	var/keen_ears_disabled = FALSE
 	///List of /obj/item/organ in the mob. They don't go in the contents for some reason I don't want to know.
 	var/list/internal_organs = list()
 	///Same as above, but stores "slot ID" - "organ" pairs for easy access.
@@ -70,6 +71,9 @@
 
 	var/icon_render_key = ""
 	var/static/list/limb_icon_cache = list()
+
+/mob/living/carbon/proc/has_keen_ears()
+	return HAS_TRAIT(src, TRAIT_KEENEARS) && !keen_ears_disabled
 
 	//halucination vars
 	var/image/halimage

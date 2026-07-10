@@ -116,6 +116,14 @@
 	GLOB.human_list += src
 	update_tongue_noise_verbs()
 
+/mob/living/carbon/human/proc/toggle_keen_ears()
+	keen_ears_disabled = !keen_ears_disabled
+	if(keen_ears_disabled)
+		to_chat(src, span_notice("Your keen ears are now dulled."))
+	else
+		to_chat(src, span_notice("Your keen ears are now sharp again."))
+	return !keen_ears_disabled
+
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
 	var/obj/item/bodypart/affecting
 	var/dam = levels * rand(10,50)

@@ -126,7 +126,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 				arrowpart += " ⇊"
 			
 			var/hidden = TRUE
-			if(HAS_TRAIT(src, TRAIT_KEENEARS))
+			if(has_keen_ears())
 				if(ishuman(speaker) && ishuman(src))
 					var/mob/living/carbon/human/HS = speaker
 					var/mob/living/carbon/human/HL = src
