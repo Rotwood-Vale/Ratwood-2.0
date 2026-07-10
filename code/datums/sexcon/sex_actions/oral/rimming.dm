@@ -18,6 +18,13 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/rimming/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
+		to_chat(user, span_notice("Their groin needs to be accessible."))
+		return
+	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_MOUTH))
+		to_chat(user, span_notice("My mouth needs to be accessible."))
+
 /datum/sex_action/rimming/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] starts rimming [target]'s butt..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = FALSE

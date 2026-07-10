@@ -1,5 +1,6 @@
 /datum/sex_action/force_titjob
 	name = "Jerk them off with tits"
+	require_grab = TRUE
 	target_sex_part = SEX_PART_COCK
 
 /datum/sex_action/force_titjob/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)

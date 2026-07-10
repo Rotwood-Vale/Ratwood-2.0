@@ -2,6 +2,14 @@
 	name = "Bathe with tongue"
 	user_sex_part = SEX_PART_JAWS
 
+/datum/sex_action/tonguebath/proc/can_reach_selected_zone(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	switch(user.zone_selected)
+		if(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_SKULL, BODY_ZONE_PRECISE_EARS, BODY_ZONE_PRECISE_NECK)
+			return check_location_accessible(user, target, BODY_ZONE_PRECISE_MOUTH)
+		if(BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND)
+			return check_location_accessible(user, target, BODY_ZONE_CHEST)
+	return check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE)
+
 /datum/sex_action/tonguebath/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
 		return FALSE
@@ -10,15 +18,21 @@
 /datum/sex_action/tonguebath/can_perform(mob/living/user, mob/living/target)
 	if(user == target)
 		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN))
+	if(!can_reach_selected_zone(user, target))
 		return FALSE
 	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_MOUTH))
 		return FALSE
 	return TRUE
 
 /datum/sex_action/tonguebath/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN))
-		to_chat(user, span_notice("Their groin needs to be accessible."))
+	if(!can_reach_selected_zone(user, target))
+		switch(user.zone_selected)
+			if(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_SKULL, BODY_ZONE_PRECISE_EARS, BODY_ZONE_PRECISE_NECK)
+				to_chat(user, span_notice("Their mouth needs to be accessible."))
+			if(BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND)
+				to_chat(user, span_notice("Their chest needs to be accessible."))
+			else
+				to_chat(user, span_notice("Their groin needs to be accessible."))
 		return
 	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_MOUTH))
 		to_chat(user, span_notice("My mouth needs to be accessible."))
