@@ -290,6 +290,12 @@
 	req_blade = /obj/item/blade/iron_sword
 	created_item = /obj/item/rogueweapon/sword/short/messer/iron
 
+/datum/anvil_recipe/weapons/iron/shotel
+	name = "Shotel, Iron (+1 Iron)"
+	req_blade = /obj/item/blade/iron_sword
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/rogueweapon/sword/long/shotel/iron
+
 /datum/anvil_recipe/weapons/iron/sabre
 	name = "Sabre, Iron"
 	req_blade = /obj/item/blade/iron_sword
@@ -472,6 +478,11 @@
 	req_blade = /obj/item/blade/steel_sword
 	created_item = /obj/item/rogueweapon/sword/sabre
 
+/datum/anvil_recipe/weapons/steel/hook
+	name = "Hook Sword, Steel"
+	req_blade = /obj/item/blade/steel_sword
+	created_item = /obj/item/rogueweapon/sword/sabre/hook
+
 /datum/anvil_recipe/weapons/steel/flail
 	name = "Flail, Steel"
 	req_blade = /obj/item/blade/steel_sword
@@ -482,6 +493,12 @@
 	req_blade = /obj/item/blade/steel_sword
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/rogueweapon/sword/long
+
+/datum/anvil_recipe/weapons/steel/shotel
+	name = "Shotel, Steel (+1 Steel)"
+	req_blade = /obj/item/blade/steel_sword
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/sword/long/shotel
 
 /datum/anvil_recipe/weapons/steel/trainingsword
 	name = "Training Sword, Steel (+1 Steel)"

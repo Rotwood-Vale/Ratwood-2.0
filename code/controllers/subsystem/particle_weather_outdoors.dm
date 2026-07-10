@@ -46,6 +46,7 @@ SUBSYSTEM_DEF(outdoor_effects)
 	var/list/atom/movable/screen/plane_master/weather_effect/weather_planes_need_vis = list()
 
 	var/list/atom/movable/screen/fullscreen/lighting_backdrop/sunlight/sunlighting_planes = list()
+	var/static/mutable_appearance/shared_weather_overlay
 	var/datum/time_of_day/current_step_datum
 	var/datum/time_of_day/next_step_datum
 	var/list/mutable_appearance/sunlight_overlays
@@ -68,6 +69,7 @@ SUBSYSTEM_DEF(outdoor_effects)
 
 /datum/controller/subsystem/outdoor_effects/Initialize(timeofday)
 	if(!initialized)
+		init_weather_overlay()
 		get_time_of_day()
 		InitializeTurfs()
 		initialized = TRUE
@@ -173,7 +175,7 @@ SUBSYSTEM_DEF(outdoor_effects)
 		MC_SPLIT_TICK
 
 	for (i in 1 to GLOB.SUNLIGHT_QUEUE_UPDATE.len)
-		var/atom/movable/outdoor_effect/U = GLOB.SUNLIGHT_QUEUE_UPDATE[i]
+		var/datum/outdoor_info/U = GLOB.SUNLIGHT_QUEUE_UPDATE[i]
 		if(U)
 			U.process_state()
 			update_outdoor_effect_overlays(U)
@@ -190,16 +192,16 @@ SUBSYSTEM_DEF(outdoor_effects)
 	if(!init_tick_checks)
 		MC_SPLIT_TICK
 
-	for (i in 1 to GLOB.SUNLIGHT_QUEUE_CORNER.len)
+	// update SKY_BLOCKED turfs so they can get their correct indirect lighting
+	for (i in 1 to length(GLOB.SUNLIGHT_QUEUE_CORNER))
 		var/turf/T = GLOB.SUNLIGHT_QUEUE_CORNER[i]
-		var/atom/movable/outdoor_effect/U = T.outdoor_effect
+		var/datum/outdoor_info/U = T.outdoor_effect
 
 		/* if we haven't initialized but we are affected, create new and check state */
 		if(!U)
-			T.outdoor_effect = new /atom/movable/outdoor_effect(T)
+			// force-init the outdoor_effect since we're indirectly lit by sunlight
+			U = new /datum/outdoor_info(T)
 			T.get_sky_and_weather_states()
-			U = T.outdoor_effect
-
 			/* in case we aren't indoor somehow, wack us into the proc queue, we will be skipped on next indoor check */
 			if(U.state != SKY_BLOCKED)
 				GLOB.SUNLIGHT_QUEUE_UPDATE += T.outdoor_effect
@@ -235,8 +237,8 @@ SUBSYSTEM_DEF(outdoor_effects)
 	animate(SP,color=picked_color, time = timeDiff)
 
 // Updates overlays and vis_contents for outdoor effects
-/datum/controller/subsystem/outdoor_effects/proc/update_outdoor_effect_overlays(atom/movable/outdoor_effect/OE)
-
+/datum/controller/subsystem/outdoor_effects/proc/update_outdoor_effect_overlays(datum/outdoor_info/OE)
+	var/old_sunlight_overlay = OE.sunlight_overlay
 	var/mutable_appearance/MA
 	if (OE.state != SKY_BLOCKED)
 		MA = get_sunlight_overlay(1,1,1,1) /* fully lit */
@@ -259,8 +261,13 @@ SUBSYSTEM_DEF(outdoor_effects)
 
 	OE.sunlight_overlay = MA
 	//Get weather overlay if not weatherproof
-	OE.overlays = OE.weatherproof ? list(OE.sunlight_overlay) : list(OE.sunlight_overlay, get_weather_overlay())
-	OE.luminosity = MA.luminosity
+	if(OE.weatherproof)
+		OE.source_turf.underlays -= shared_weather_overlay
+	else
+		OE.source_turf.underlays |= shared_weather_overlay
+	OE.source_turf.underlays -= old_sunlight_overlay
+	OE.source_turf.underlays += MA
+	OE.source_turf.luminosity = max(OE.source_turf.luminosity, MA.luminosity)
 
 //Retrieve an overlay from the list - create if necessary
 /datum/controller/subsystem/outdoor_effects/proc/get_sunlight_overlay(fr, fg, fb, fa)
@@ -272,15 +279,15 @@ SUBSYSTEM_DEF(outdoor_effects)
 	return sunlight_overlays[index]
 
 
-//get our weather overlay
-/datum/controller/subsystem/outdoor_effects/proc/get_weather_overlay() //TODO VANDERLIN: Restore this to 32x48 for some extra
-	var/mutable_appearance/MA = new /mutable_appearance()
-	MA.icon 			  = 'icons/effects/weather_overlay.dmi'
-	MA.icon_state 		  = "weather_overlay"
-	MA.plane			  = WEATHER_OVERLAY_PLANE
-	MA.blend_mode   	  = BLEND_OVERLAY
-	MA.invisibility 	  = INVISIBILITY_LIGHTING
-	return MA
+//set up our weather overlay
+/datum/controller/subsystem/outdoor_effects/proc/init_weather_overlay() //TODO VANDERLIN: Restore this to 32x48 for some extra
+	if(!shared_weather_overlay)
+		shared_weather_overlay = new /mutable_appearance()
+		shared_weather_overlay.icon 			  = 'icons/effects/weather_overlay.dmi'
+		shared_weather_overlay.icon_state 		  = "weather_overlay"
+		shared_weather_overlay.plane			  = WEATHER_OVERLAY_PLANE
+		shared_weather_overlay.blend_mode   	  = BLEND_OVERLAY
+		shared_weather_overlay.invisibility 	  = INVISIBILITY_LIGHTING
 
 
 

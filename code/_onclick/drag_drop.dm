@@ -196,8 +196,10 @@
 	var/datum/intent/curplaying
 
 /client/MouseUp(object, location, control, params)
+	var/was_charging
 	if(charging && isliving(mob))
 		update_to_mob(mob, 0)
+		was_charging = TRUE
 
 	charging = 0
 
@@ -248,8 +250,8 @@
 		active_mousedown_item.onMouseUp(object, location, params, mob)
 		active_mousedown_item = null
 
-	if(!isliving(mob))
-		return
+	if(was_charging)
+		mob.stop_attack()
 
 /client/proc/updateprogbar(atom/clicked_object)
 	if(!mob)

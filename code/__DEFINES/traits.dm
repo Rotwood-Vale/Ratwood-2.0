@@ -196,8 +196,6 @@
 #define TRAIT_BAD_MOOD "Bad Mood"
 #define TRAIT_NIGHT_OWL "Night Owl"
 #define TRAIT_BEAUTIFUL "Beautiful"
-#define TRAIT_BEAUTIFUL_UNCANNY "Eerie Beauty"
-#define TRAIT_UNSETTLING_BEAUTY "Unsettling Beauty"
 #define TRAIT_SCARRED "Scarred"
 #define TRAIT_SIMPLE_WOUNDS "simple_wounds"
 #define TRAIT_VAMP_DREAMS "vamp_dreams"

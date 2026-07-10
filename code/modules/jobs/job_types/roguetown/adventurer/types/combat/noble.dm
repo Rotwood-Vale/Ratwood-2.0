@@ -27,7 +27,9 @@
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/music = SKILL_LEVEL_NOVICE,
 	)
-	
+
+	extra_context = "This class is restricted from using the Equestrian virtue."
+
 	virtue_restrictions = list(
 		/datum/virtue/utility/riding
 	)
@@ -83,7 +85,9 @@
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 	)
-	
+
+	extra_context = "This class is restricted from using the Equestrian virtue."
+
 	virtue_restrictions = list(
 		/datum/virtue/utility/riding
 	)
