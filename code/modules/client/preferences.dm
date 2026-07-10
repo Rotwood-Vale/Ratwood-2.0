@@ -2961,6 +2961,9 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					return
 
 				if("observe")
+					if(is_banned_from(user.ckey, "Observer"))
+						to_chat(user, span_danger("You are banned from observing."))
+						return
 					var/mob/dead/new_player/P = user
 					P.make_me_an_observer()
 					return

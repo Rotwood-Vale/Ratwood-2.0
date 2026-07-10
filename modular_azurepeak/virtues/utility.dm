@@ -21,9 +21,6 @@
 
 /datum/virtue/utility/socialite/handle_traits(mob/living/carbon/human/recipient)
 	..()
-	if(isdullahan(recipient))
-		REMOVE_TRAIT(recipient, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
-		ADD_TRAIT(recipient, TRAIT_BEAUTIFUL_UNCANNY, TRAIT_VIRTUE)
 	if(HAS_TRAIT(recipient, TRAIT_UNSEEMLY))
 		to_chat(recipient, "Your attractiveness is cancelled out! You become normal.")
 		if(HAS_TRAIT(recipient, TRAIT_BEAUTIFUL))

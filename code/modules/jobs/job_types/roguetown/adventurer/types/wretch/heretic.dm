@@ -279,7 +279,7 @@
 	if(H.mind)
 		if(H.mind.current)
 			H.mind.current.faction += "[H.name]_faction"
-		var/weapons = list("Rapier","Dagger", "Bow", "Crossbow", "Slurbow")
+		var/weapons = list("Rapier","Dagger", "Bow", "Crossbow", "Slurbow", "Whip")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -303,8 +303,11 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				beltr = /obj/item/quiver/bolts
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
+			if("Whip") //For baothans.
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
+				beltr = /obj/item/rogueweapon/whip
 		var/datum/devotion/C = new /datum/devotion(H, H.patron)
-		C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_4)	//Minor regen, can level up to T4.
+		C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)	//Minor regen, starts maxed out.
 		wretch_select_bounty(H)
 
 	if (istype (H.patron, /datum/patron/inhumen/zizo))
