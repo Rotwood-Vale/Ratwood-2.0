@@ -4,7 +4,7 @@
 
 	var/tmp/lighting_corners_initialised = FALSE
 
-	var/tmp/atom/movable/lighting_object/lighting_object // Our lighting object.
+	var/tmp/datum/lighting_object/lighting_object // Our lighting object.
 	var/tmp/list/datum/lighting_corner/corners
 	var/tmp/opaque_atom_count = 0 // Not to be confused with opacity, this is the number of opaque atoms on the tile.
 
@@ -22,7 +22,7 @@
 	if(lighting_object)
 		qdel(lighting_object,force=TRUE) //Shitty fix for lighting objects persisting after death
 
-	new/atom/movable/lighting_object(src)
+	new /datum/lighting_object(src)
 
 // Used to get a scaled lumcount.
 /turf/proc/get_lumcount(minlum = 0, maxlum = 1)
@@ -60,7 +60,7 @@
 	if (!lighting_object)
 		return FALSE
 
-	return !lighting_object.luminosity
+	return !luminosity
 
 // Can't think of a good name, this proc will recalculate the opaque_atom_count variable.
 /turf/proc/recalc_atom_opacity()
