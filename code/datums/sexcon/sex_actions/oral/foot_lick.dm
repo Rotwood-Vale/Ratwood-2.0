@@ -19,6 +19,14 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/foot_lick/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(..())
+		return TRUE
+	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_R_FOOT) || !check_location_accessible(user, target, BODY_ZONE_PRECISE_L_FOOT))
+		to_chat(user, span_notice("Their feet need to be accessible."))
+		return TRUE
+	return FALSE
+
 /datum/sex_action/foot_lick/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] starts licking [target]'s feet..."))
 

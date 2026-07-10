@@ -25,6 +25,14 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/force_footjob/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(..())
+		return TRUE
+	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_L_FOOT) || !check_location_accessible(user, target, BODY_ZONE_PRECISE_R_FOOT))
+		to_chat(user, span_notice("Their feet need to be accessible."))
+		return TRUE
+	return FALSE
+
 /datum/sex_action/force_footjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] grabs [target]'s feet and clamps them around [user.p_their()] cock!"))
 

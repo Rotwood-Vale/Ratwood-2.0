@@ -21,6 +21,12 @@
 	// No clothing or body zone checks, can always jerk
 	return TRUE
 
+/datum/sex_action/toy_other_masturbate/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!user.sexcon.Adjacent_Or_Closet(target))
+		to_chat(user, span_notice("I need to be closer to [target]."))
+		return TRUE
+	return FALSE
+
 /datum/sex_action/toy_other_masturbate/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] starts jerking [target]'s toy..."))
 

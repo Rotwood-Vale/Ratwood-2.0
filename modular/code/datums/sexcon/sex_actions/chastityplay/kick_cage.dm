@@ -29,6 +29,20 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/chastityplay/kick_cage/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(..())
+		return TRUE
+	if(user.resting)
+		to_chat(user, span_notice("I need to stand up first."))
+		return TRUE
+	if(!user.Adjacent(target))
+		to_chat(user, span_notice("I need to be closer to [target]."))
+		return TRUE
+	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_L_FOOT) && !check_location_accessible(user, user, BODY_ZONE_PRECISE_R_FOOT))
+		to_chat(user, span_notice("I need at least one bare foot to do that."))
+		return TRUE
+	return FALSE
+
 /datum/sex_action/chastityplay/kick_cage/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/device = target.sexcon.has_chastity_cage() ? "cage" : "belt"
 	play_chastity_impact_sound(target, 'sound/combat/hits/kick/kick.ogg', 40, 100, TRUE, -1)

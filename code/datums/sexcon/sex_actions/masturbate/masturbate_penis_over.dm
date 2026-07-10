@@ -26,6 +26,14 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/masturbate_penis_over/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(..())
+		return TRUE
+	if(!user.Adjacent(target) || !user.sexcon.Adjacent_Or_Closet(target))
+		to_chat(user, span_notice("I need to be closer to [target]."))
+		return TRUE
+	return FALSE
+
 /datum/sex_action/masturbate_penis_over/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] starts jerking over [target]..."))
 

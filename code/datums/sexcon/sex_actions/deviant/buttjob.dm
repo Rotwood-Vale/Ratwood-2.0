@@ -15,12 +15,12 @@
 		return FALSE
 	if(!target.getorganslot(ORGAN_SLOT_PENIS))
 		return FALSE
-	if(!check_location_accessible(target, target, BODY_ZONE_PRECISE_GROIN, TRUE, TRUE))
+	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE, TRUE))
 		return FALSE
 	return TRUE
 
 /datum/sex_action/buttjob/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!check_location_accessible(target, target, BODY_ZONE_PRECISE_GROIN, TRUE, TRUE))
+	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE, TRUE))
 		to_chat(user, span_notice("Their groin needs to be accessible."))
 		return
 

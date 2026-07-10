@@ -13,7 +13,7 @@
 /datum/sex_action/footjob/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
 		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_L_FOOT || BODY_ZONE_PRECISE_R_FOOT))
+	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_L_FOOT) && !check_location_accessible(user, user, BODY_ZONE_PRECISE_R_FOOT))
 		return FALSE
 	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
 		return FALSE
@@ -22,7 +22,7 @@
 	return TRUE
 
 /datum/sex_action/footjob/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_L_FOOT || BODY_ZONE_PRECISE_R_FOOT))
+	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_L_FOOT) && !check_location_accessible(user, user, BODY_ZONE_PRECISE_R_FOOT))
 		to_chat(user, span_notice("I need at least one bare foot to do that."))
 		return
 	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
