@@ -26,6 +26,12 @@
 
 /datum/sex_action/titsmother/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/organ/breasts/breasts = user.getorganslot(ORGAN_SLOT_BREASTS)
+	if(!check_location_accessible(target, user, BODY_ZONE_CHEST))
+		to_chat(user, span_notice("My chest needs to be accessible."))
+		return
+	if(!breasts)
+		to_chat(user, span_notice("I need breasts to do that."))
+		return
 	if(breasts && breasts.breast_size < 3)
 		to_chat(user, span_notice("My breasts are too small to do that..."))
 

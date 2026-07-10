@@ -40,6 +40,7 @@
 /datum/sex_action/facesitting_vaginal/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/verbstring = pick(list("smushes", "forces", "presses", "grinds", "rams", "jams"))
 	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] [verbstring] [user.p_their()] cunt against [target] face."))
+	
 	target.sexcon.make_sucking_noise()
 	user.sexcon.do_thrust_animate(target)
 

@@ -34,7 +34,12 @@
 	return TRUE
 
 /datum/sex_action/proc/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	return
+	if(require_grab && user && target)
+		var/grabstate = user.get_highest_grab_state_on(target)
+		if(grabstate == null || grabstate < required_grab_state)
+			to_chat(user, span_notice("I need to have a tight hold on them."))
+			return TRUE
+	return FALSE
 
 /datum/sex_action/proc/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return

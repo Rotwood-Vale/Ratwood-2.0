@@ -36,7 +36,6 @@
 
 /datum/sex_action/facesitting_anal/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] lowers [user.p_their()] ass onto [target]'s face!"))
-	user.sexcon.show_progress = 0
 
 /datum/sex_action/facesitting_anal/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/verbstring = pick(list("smushes", "forces", "presses", "grinds", "rams", "jams"))
