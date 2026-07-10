@@ -30,16 +30,11 @@
 	)
 
 /datum/advclass/slave/servant
-	traits_applied = list(TRAIT_CICERONE, TRAIT_ROYALSERVANT, TRAIT_FOOD_STIPEND)
-
-/datum/advclass/slave/servant
-	traits_applied = list(TRAIT_CICERONE)
-
-/datum/advclass/slave/servant
 	name = "Servant"
 	tutorial = "You are a humdrum servant, dressed the part; lowly and best out of sight. It's practical, however."
 	outfit = /datum/outfit/job/roguetown/slave/servant
 	category_tags = list(CTAG_PSLAVE)
+	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_ROYALSERVANT, TRAIT_FOOD_STIPEND)
 	subclass_stats = list(
 		STATKEY_PER = 2,
 		STATKEY_INT = 1,
@@ -68,9 +63,6 @@
 	neck = /obj/item/clothing/neck/roguetown/gorget/cursed_collar
 	backl = /obj/item/storage/backpack/rogue/satchel
 	belt = /obj/item/storage/belt/rogue/leather/rope
-	neck = /obj/item/clothing/neck/roguetown/gorget/cursed_collar
-	backl = /obj/item/storage/backpack/rogue/satchel
-	belt = /obj/item/storage/belt/rogue/leather/rope
 	beltr = /obj/item/storage/keyring/servant
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	if(H.age == AGE_MIDDLEAGED)
@@ -88,6 +80,7 @@
 	tutorial = "Not one really mentions how hard it is to do yardwork in a dress and stockings, but at least you still look really good."
 	outfit = /datum/outfit/job/roguetown/slave/pleasure
 	category_tags = list(CTAG_PSLAVE)
+	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_ROYALSERVANT, TRAIT_FOOD_STIPEND)
 	subclass_stats = list(
 		STATKEY_PER = 2,
 		STATKEY_INT = 1,
@@ -108,7 +101,7 @@
 
 /datum/outfit/job/roguetown/slave/pleasure/pre_equip(mob/living/carbon/human/H)
 	..()
-	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
+	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltr = /obj/item/storage/keyring/servant
 	backpack_contents = list(

@@ -120,6 +120,7 @@
 			if(mmb_intent.get_chargetime())
 				if(mmb_intent.no_early_release && client?.chargedprog < 100)
 					changeNext_move(mmb_intent.clickcd)
+					stop_attack()
 					return
 	if(modifiers["left"] && atkswinging == "left")
 		if(active_hand_index == 1)
