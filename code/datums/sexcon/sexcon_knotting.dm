@@ -412,6 +412,7 @@
 /datum/sex_controller/proc/knot_exit(keep_top_status = FALSE, keep_btm_status = FALSE)
 	var/mob/living/carbon/human/top = knotted_owner
 	var/mob/living/carbon/human/btm = knotted_recipient
+	var/knot_orifice = knotted_part_partner
 	if(istype(top) && top?.sexcon?.knotted_status)
 		if(!keep_top_status) // only keep the status if we're reapplying the knot
 			top.remove_status_effect(/datum/status_effect/knotted)
@@ -435,6 +436,8 @@
 		btm.sexcon.knotted_part_partner = SEX_PART_NULL
 		btm.sexcon.knotted_forced_by_bottom = FALSE
 		log_combat(btm, btm, "Stopped knot tugging")
+	if(!keep_top_status && !keep_btm_status)
+		modular_release_knot_spurt_pool(top, btm, knot_orifice)
 	if(knotted_status) // this should never trigger, but if it does clear up the invalid state
 		if(src.user)
 			src.user.remove_status_effect(/datum/status_effect/knot_tied)

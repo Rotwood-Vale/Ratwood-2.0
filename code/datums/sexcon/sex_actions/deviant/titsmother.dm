@@ -6,7 +6,7 @@
 /datum/sex_action/titsmother/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
 		return FALSE
-	if(!check_location_accessible(target, user, BODY_ZONE_CHEST))
+	if(!check_location_accessible(user, user, BODY_ZONE_CHEST))
 		return FALSE
 	if(!user.getorganslot(ORGAN_SLOT_BREASTS))
 		return
@@ -16,7 +16,7 @@
 	var/obj/item/organ/breasts/breasts = user.getorganslot(ORGAN_SLOT_BREASTS)
 	if(user == target)
 		return FALSE
-	if(!check_location_accessible(target, user, BODY_ZONE_CHEST))
+	if(!check_location_accessible(user, user, BODY_ZONE_CHEST))
 		return FALSE
 	if(!breasts)
 		return FALSE
@@ -26,7 +26,7 @@
 
 /datum/sex_action/titsmother/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/organ/breasts/breasts = user.getorganslot(ORGAN_SLOT_BREASTS)
-	if(!check_location_accessible(target, user, BODY_ZONE_CHEST))
+	if(!check_location_accessible(user, user, BODY_ZONE_CHEST))
 		to_chat(user, span_notice("My chest needs to be accessible."))
 		return
 	if(breasts && breasts.breast_size < 3)
@@ -61,7 +61,7 @@
 	target.sexcon.handle_passive_ejaculation(target)
 
 	// Oxyloss from strong intent and up (only possible with moderate and higher size breasts)
-	if(breasts.breast_size < 2)	
+	if(breasts.breast_size >= 2)
 		user.sexcon.perform_deepthroat_oxyloss(target, 0.5)
 
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE

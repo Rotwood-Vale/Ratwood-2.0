@@ -347,7 +347,7 @@
 /datum/sex_controller/proc/try_resist_orgasm()
 	if(!HAS_TRAIT(user, TRAIT_PSYDONIAN_GRIT) || !prob(40))
 		return FALSE
-	if(user.client.prefs.edging == FALSE)
+	if(user?.client?.prefs?.edging == FALSE)
 		return FALSE
 	var/resist_msg = pick(
 		"[user] trembles and hisses, \"With every broken bone, I swore I lyved... HE hath gifted me the strength to ENDURE!\"",
@@ -365,6 +365,7 @@
 /datum/sex_controller/proc/cum_onto(mob/living/carbon/human/splashed_user = null, cum_on_face = TRUE, show_excessive_cum_message = TRUE)
 	if(try_resist_orgasm())
 		return
+	modular_announce_spurt_message()
 	var/mob/living/carbon/human/effective_target = splashed_user || target
 	log_combat(user, effective_target, "Came onto the target")
 	if(effective_target)
@@ -398,6 +399,7 @@
 
 /datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null, datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null, orifice = SEX_PART_NULL, skip_knot_try = FALSE, consume_charge = TRUE, try_impreg = FALSE, show_excessive_cum_message = TRUE)
 	// splashed_user is the bottom receiving; for top-initiated actions it matches target, for riding/blowjob it is the rider/sucker while target may be null
+	modular_announce_spurt_message()
 	var/mob/living/carbon/human/effective_target = splashed_user || target
 	log_combat(user, effective_target, "Came inside the target")
 	werewolf_sex_infect_attempt(user, effective_target)
@@ -441,6 +443,7 @@
 		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	if(try_impreg && !oral && effective_target && effective_target != user)
 		user.try_impregnate(effective_target)
+	modular_track_knot_spurt(splashed_user = splashed_user, oral = oral, orifice = orifice)
 	if(show_excessive_cum_message)
 		modular_announce_excessive_cum_summary(modular_excessive_cum_context(splashed_user, oral, FALSE, orifice), splashed_user)
 	after_ejaculation(consume_charge)
@@ -623,6 +626,7 @@
 	var/cur_loc = get_turf(user)
 	if(!cur_loc || !isturf(cur_loc))
 		modular_announce_excessive_cum_summary(cum_summary_context)
+		modular_announce_spurt_message()
 		after_ejaculation()
 		return
 	cum_chalice = locate() in cur_loc
@@ -634,9 +638,11 @@
 		modular_emit_excessive_solo_spurts(cum_chalice)
 		cum_summary_context = EXCESSIVE_CUM_CONTEXT_CONTAINER
 		modular_announce_excessive_cum_summary(cum_summary_context, cum_chalice = cum_chalice)
+		modular_announce_spurt_message()
 		after_ejaculation()
 		return
 	modular_announce_excessive_cum_summary(cum_summary_context)
+	modular_announce_spurt_message()
 	after_ejaculation()
 
 /datum/sex_controller/proc/ejaculate_container(obj/item/reagent_containers/glass/C)
@@ -652,6 +658,7 @@
 			C.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 2)
 		modular_emit_excessive_solo_spurts(C, add_floor = FALSE)
 		modular_announce_excessive_cum_summary(EXCESSIVE_CUM_CONTEXT_CONTAINER, cum_chalice = C)
+	modular_announce_spurt_message()
 	after_ejaculation()
 
 /datum/sex_controller/proc/get_semen_volume()
@@ -767,7 +774,6 @@
 
 /datum/sex_controller/proc/after_ejaculation(consume_charge = TRUE)
 	set_arousal(40)
-		modular_announce_spurt_message()
 	if(consume_charge)
 		adjust_charge(-CHARGE_FOR_CLIMAX)
 	if(user.has_flaw(/datum/charflaw/addiction/lovefiend))
@@ -1729,7 +1735,7 @@
 			target.apply_status_effect(/datum/status_effect/quivering)
 			target.confused += 25
 			target.OffBalance(30 SECONDS)
-		if(user.client.prefs.extreme_erp && target.client.prefs.extreme_erp)
+		if(user?.client?.prefs?.extreme_erp && target?.client?.prefs?.extreme_erp)
 			if(!target.has_wound(/datum/wound/fracture/groin))
 				if(prob(10))
 					var/obj/item/bodypart/groin = target.get_bodypart(check_zone(BODY_ZONE_PRECISE_GROIN))
@@ -1737,7 +1743,7 @@
 		
 /datum/sex_controller/proc/try_jaw_crush(mob/living/carbon/human/target)
 	if(istype(user.rmb_intent, /datum/rmb_intent/strong) && force > SEX_FORCE_MID)
-		if(user.client.prefs.extreme_erp && target.client.prefs.extreme_erp)
+		if(user?.client?.prefs?.extreme_erp && target?.client?.prefs?.extreme_erp)
 			if(!target.has_wound(/datum/wound/fracture/mouth))
 				if(prob(10))
 					var/obj/item/bodypart/mouth = target.get_bodypart(check_zone(BODY_ZONE_PRECISE_MOUTH))

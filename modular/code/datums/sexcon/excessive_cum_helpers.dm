@@ -7,6 +7,13 @@
 #define EXCESSIVE_CUM_CONTEXT_ANAL 6
 #define EXCESSIVE_CUM_CONTEXT_CONTAINER 7
 
+/proc/modular_excessive_knot_spurt_store()
+	var/static/list/store = list()
+	return store
+
+/proc/modular_excessive_knot_spurt_key(mob/living/carbon/human/top, mob/living/carbon/human/btm, orifice)
+	return "[REF(top)]|[REF(btm)]|[orifice]"
+
 /// Returns TRUE if the excessive cum feature is enabled for the current action.
 /// Requires the user to opt in, and if there is a separate target, requires the target to opt in as well.
 /datum/sex_controller/proc/modular_excessive_cum_enabled()
@@ -89,3 +96,141 @@
 				cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 1)
 			else
 				cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/cum, get_semen_volume())
+
+/datum/sex_controller/proc/modular_track_knot_spurt(mob/living/carbon/human/splashed_user = null, oral = FALSE, orifice = SEX_PART_NULL)
+	if(!modular_excessive_cum_enabled())
+		return
+	if(!ishuman(splashed_user) || splashed_user == user)
+		return
+	if(knotted_status != KNOTTED_AS_TOP || knotted_recipient != splashed_user)
+		return
+	if(!splashed_user?.client?.prefs?.excessive_cum)
+		return
+	var/tracked_orifice = SEX_PART_NULL
+	if(oral || (orifice & SEX_PART_JAWS))
+		tracked_orifice = SEX_PART_JAWS
+	else if(orifice & SEX_PART_CUNT)
+		tracked_orifice = SEX_PART_CUNT
+	else if(orifice & SEX_PART_ANUS)
+		tracked_orifice = SEX_PART_ANUS
+	if(!tracked_orifice)
+		return
+	var/list/store = modular_excessive_knot_spurt_store()
+	var/key = modular_excessive_knot_spurt_key(user, splashed_user, tracked_orifice)
+	store[key] = (store[key] || 0) + 1
+
+/datum/sex_controller/proc/modular_get_knot_release_messages(orifice, mob/living/carbon/human/top, mob/living/carbon/human/btm)
+	var/list/messages = list(
+		"giver" = null,
+		"receiver" = null,
+		"nearby" = null,
+	)
+	if(orifice & SEX_PART_JAWS)
+		messages["giver"] = "As my knot slips free, a wet stream of cum spills from their lips..."
+		messages["receiver"] = "As the knot slips free, hot cum spills from my lips..."
+		messages["nearby"] = "As [top] slips free of [btm], a wet stream spills from [btm.p_their()] lips."
+		return messages
+	if(orifice & SEX_PART_CUNT)
+		messages["giver"] = "As my knot slips free, a warm flood spills from their cunt..."
+		messages["receiver"] = "As the knot slips free, hot cum leaks from my cunt..."
+		messages["nearby"] = "As [top] slips free of [btm], a warm wet flood spills from [btm.p_their()] cunt."
+		return messages
+	if(orifice & SEX_PART_ANUS)
+		messages["giver"] = "As my knot slips free, a hot flood spills from their ass..."
+		messages["receiver"] = "As the knot slips free, hot cum leaks from my ass..."
+		messages["nearby"] = "As [top] slips free of [btm], a hot wet spill leaks from [btm.p_their()] ass."
+		return messages
+	return messages
+
+/datum/sex_controller/proc/modular_get_knot_release_splatter_candidates(mob/living/carbon/human/leaker, turf/release_turf)
+	if(!ishuman(leaker) || !release_turf)
+		return list()
+	var/list/candidates = list()
+	for(var/mob/living/carbon/human/H in RANGE_TURFS(1, release_turf))
+		if(H == leaker)
+			continue
+		if(!H.client?.prefs?.excessive_cum)
+			continue
+		candidates += H
+	return candidates
+
+/datum/sex_controller/proc/modular_get_knot_release_observers(mob/living/carbon/human/leaker, mob/living/carbon/human/victim, turf/release_turf)
+	if(!release_turf)
+		return list()
+	var/list/observers = list()
+	for(var/mob/living/carbon/human/H in viewers(5, release_turf))
+		if(H == leaker || H == victim)
+			continue
+		if(!H.client?.prefs?.excessive_cum)
+			continue
+		observers += H
+	return observers
+
+/datum/sex_controller/proc/modular_announce_knot_release_splatter(mob/living/carbon/human/leaker, mob/living/carbon/human/victim, list/observers = null)
+	if(!ishuman(leaker) || !ishuman(victim))
+		return
+	to_chat(victim, span_love("I'm spattered with some of the seed spilling from [leaker]"))
+	to_chat(leaker, span_love("[victim] is spattered with some of the seed spilling out of me"))
+	for(var/mob/living/carbon/human/H in (observers || list()))
+		if(H == victim)
+			continue
+		to_chat(H, span_love("[victim] is spattered with some of the seed spilling from [leaker]"))
+
+/datum/sex_controller/proc/modular_release_knot_spurt_pool(mob/living/carbon/human/top, mob/living/carbon/human/btm, knot_orifice = SEX_PART_NULL)
+	if(!ishuman(top) || !ishuman(btm))
+		return
+	var/tracked_orifice = SEX_PART_NULL
+	if(knot_orifice & SEX_PART_JAWS)
+		tracked_orifice = SEX_PART_JAWS
+	else if(knot_orifice & SEX_PART_CUNT)
+		tracked_orifice = SEX_PART_CUNT
+	else if(knot_orifice & SEX_PART_ANUS)
+		tracked_orifice = SEX_PART_ANUS
+	if(!tracked_orifice)
+		return
+	var/list/store = modular_excessive_knot_spurt_store()
+	var/key = modular_excessive_knot_spurt_key(top, btm, tracked_orifice)
+	var/spurt_count = store[key] || 0
+	store -= key
+	if(spurt_count <= 0)
+		return
+	if(!top.client?.prefs?.excessive_cum || !btm.client?.prefs?.excessive_cum)
+		return
+	var/turf/release_turf = get_turf(btm)
+	if(!release_turf)
+		return
+	var/list/adjacent_turfs = list()
+	for(var/turf/T in RANGE_TURFS(1, release_turf))
+		if(T != release_turf)
+			adjacent_turfs += T
+	if(length(adjacent_turfs))
+		release_turf = pick(adjacent_turfs)
+	var/list/splatter_candidates = modular_get_knot_release_splatter_candidates(btm, release_turf)
+	var/list/splatter_observers = modular_get_knot_release_observers(btm, null, release_turf)
+	for(var/i = 1; i <= spurt_count; i++)
+		var/splatter_diverted = FALSE
+		if(prob(20) && length(splatter_candidates))
+			var/mob/living/carbon/human/splatter_target = pick(splatter_candidates)
+			if(splatter_target)
+				var/datum/status_effect/facial/external/external = splatter_target.has_status_effect(/datum/status_effect/facial/external)
+				if(!external)
+					splatter_target.apply_status_effect(/datum/status_effect/facial/external)
+				else
+					external.refresh_cum()
+				modular_announce_knot_release_splatter(btm, splatter_target, splatter_observers)
+				splatter_diverted = TRUE
+		if(!splatter_diverted)
+			add_cum_floor(release_turf)
+	playsound(release_turf, pick('sound/misc/bleed (1).ogg', 'sound/misc/bleed (2).ogg', 'sound/misc/bleed (3).ogg'), 35, TRUE, -2, ignore_walls = FALSE)
+	var/list/messages = modular_get_knot_release_messages(tracked_orifice, top, btm)
+	if(messages["giver"])
+		to_chat(top, span_love(messages["giver"]))
+	if(messages["receiver"])
+		to_chat(btm, span_love(messages["receiver"]))
+	if(messages["nearby"])
+		for(var/mob/living/carbon/human/H in viewers(5, release_turf))
+			if(H == top || H == btm)
+				continue
+			if(!H.client?.prefs?.excessive_cum)
+				continue
+			to_chat(H, span_love(messages["nearby"]))
