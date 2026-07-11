@@ -102,6 +102,7 @@
 
 	var/list/visual_entries = list(
 		list("id" = "screen_shake", "label" = "Screen Shake", "enabled" = !!owner.prefs.shake, "desc" = "Enable camera shake during impactful events."),
+		list("id" = "no_redflash", "label" = "Disable Red Flashes", "enabled" = !!owner.prefs.shake, "desc" = "Disables red overlays flashing on screen from pain or other events."),
 		list("id" = "chat_headshot", "label" = "Headshot in Chat", "enabled" = !!owner.prefs.chatheadshot, "desc" = "Show character headshot images next to chat when available."),
 		list("id" = "examine_blocks", "label" = "Hide Examine Blocks", "enabled" = !!owner.prefs.no_examine_blocks, "desc" = "Hide inspect details for items inside containers."),
 		list("id" = "language_fonts", "label" = "Disable Language Fonts", "enabled" = !!owner.prefs.no_language_fonts, "desc" = "Use normal fonts instead of stylized language fonts."),
@@ -168,6 +169,8 @@
 				owner.mob?.toggle_tgui_multiline()
 			if("screen_shake")
 				owner.toggle_screenshake()
+			if("no_redflash")
+				owner.toggle_redflash()
 			if("chat_headshot")
 				owner.set_picinchat()
 			if("masked_examine")
@@ -266,6 +269,18 @@
 			to_chat(src, "Screen shake enabled.")
 		else
 			to_chat(src, "Screen shake disabled.")
+
+/client/verb/toggle_redflash()
+	set category = "Options"
+	set name = "Disable Red Flashes"
+	set hidden = 1
+	if(prefs)
+		prefs.no_redflash = !prefs.no_redflash
+		prefs.save_preferences()
+		if(prefs.no_redflash)
+			to_chat(src, "Your screen will no longer flash red from pain or other events.")
+		else
+			to_chat(src, "Your screen will now flash red from pain or other events.")
 
 /client/verb/masked_examine()
 	set category = "Options"

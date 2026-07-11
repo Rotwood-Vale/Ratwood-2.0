@@ -32,6 +32,13 @@
 	flick(state,screen)
 	return screen
 
+/// Easy drop-in replacement for flash_fullscreen("redflashX") that checks whether the client has no-redflash on. You can use the return value to show alternative flavoring if desired.
+/mob/proc/fullscreen_redflash(state)
+	if(client?.prefs?.no_redflash)
+		return FALSE
+	else
+		flash_fullscreen(state)
+		return TRUE
 
 /mob/proc/clear_fullscreen(category, animated = 10)
 	var/atom/movable/screen/fullscreen/screen = screens[category]

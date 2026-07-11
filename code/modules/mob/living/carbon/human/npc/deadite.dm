@@ -192,7 +192,7 @@
 	var/datum/antagonist/zombie/zombie_antag = mind?.has_antag_datum(/datum/antagonist/zombie)
 	if(!zombie_antag || zombie_antag.has_turned)
 		return FALSE
-	flash_fullscreen("redflash3")
+	fullscreen_redflash("redflash3")
 	to_chat(src, span_danger("It hurts... Is this really the end for me?"))
 	emote("scream") // heres your warning to others bro
 	Knockdown(1)
