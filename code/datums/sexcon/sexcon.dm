@@ -393,7 +393,7 @@
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/baothamarked))
 		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	if(show_excessive_cum_message)
-		announce_excessive_cum_summary(splashed_user, oral = FALSE, cum_on_face = cum_on_face)
+		announce_excessive_cum_summary(get_excessive_cum_summary_context(splashed_user, FALSE, cum_on_face), splashed_user)
 	after_ejaculation()
 
 /datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null, datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null, orifice = SEX_PART_NULL, skip_knot_try = FALSE, consume_charge = TRUE, try_impreg = FALSE, show_excessive_cum_message = TRUE)
@@ -442,7 +442,7 @@
 	if(try_impreg && !oral && effective_target && effective_target != user)
 		user.try_impregnate(effective_target)
 	if(show_excessive_cum_message)
-		announce_excessive_cum_summary(splashed_user, oral = oral, cum_on_face = FALSE, orifice = orifice)
+		announce_excessive_cum_summary(get_excessive_cum_summary_context(splashed_user, oral, FALSE, orifice), splashed_user)
 	after_ejaculation(consume_charge)
 	after_intimate_climax(oral, splashed_user)
 
@@ -615,23 +615,29 @@
 	user.visible_message(span_love(climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
 	playsound(user, 'sound/misc/mat/endout.ogg', suppress_moan ? 12 : 50, TRUE, ignore_walls = FALSE)
 	var/semen_vol = get_semen_volume()
+	var/cum_summary_context = EXCESSIVE_CUM_CONTEXT_SOLO
+	var/obj/item/reagent_containers/glass/cum_chalice = null
 	add_cum_floor(get_turf(user), do_big_puddle = should_make_big_cum_puddle())
 	emit_excessive_solo_spurts()
-	announce_excessive_cum_summary()
-	after_ejaculation()
 
 	var/cur_loc = get_turf(user)
 	if(!cur_loc || !isturf(cur_loc))
+		announce_excessive_cum_summary(cum_summary_context)
+		after_ejaculation()
 		return
-	var/obj/item/reagent_containers/glass/cum_chalice = locate() in cur_loc
-	if(!cum_chalice?.spillable) // leak contents underneath the first found open container
+	cum_chalice = locate() in cur_loc
+	if(cum_chalice?.spillable) // leak contents underneath the first found open container
+		if(user.getorganslot(ORGAN_SLOT_VAGINA))
+			cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/femcum,1)
+		else
+			cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/cum, semen_vol)
+		emit_excessive_solo_spurts(cum_chalice)
+		cum_summary_context = EXCESSIVE_CUM_CONTEXT_CONTAINER
+		announce_excessive_cum_summary(cum_summary_context, cum_chalice = cum_chalice)
+		after_ejaculation()
 		return
-	if(user.getorganslot(ORGAN_SLOT_VAGINA))
-		cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/femcum,1)
-	else
-		cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/cum, semen_vol)
-	emit_excessive_solo_spurts(cum_chalice)
-	announce_excessive_cum_summary(cum_chalice = cum_chalice)
+	announce_excessive_cum_summary(cum_summary_context)
+	after_ejaculation()
 
 /datum/sex_controller/proc/ejaculate_container(obj/item/reagent_containers/glass/C)
 	if(try_resist_orgasm())
@@ -645,7 +651,7 @@
 		else
 			C.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 2)
 		emit_excessive_solo_spurts(C, add_floor = FALSE)
-		announce_excessive_cum_summary(cum_chalice = C)
+		announce_excessive_cum_summary(EXCESSIVE_CUM_CONTEXT_CONTAINER, cum_chalice = C)
 	after_ejaculation()
 
 /datum/sex_controller/proc/get_semen_volume()
@@ -682,38 +688,51 @@
 		return TRUE
 	return !!target.client?.prefs?.excessive_cum
 
-/datum/sex_controller/proc/get_excessive_cum_summary_messages(mob/living/carbon/human/splashed_user = null, oral = FALSE, cum_on_face = TRUE, orifice = SEX_PART_NULL, obj/item/reagent_containers/glass/cum_chalice = null)
+
+/datum/sex_controller/proc/get_excessive_cum_summary_context(mob/living/carbon/human/splashed_user = null, oral = FALSE, cum_on_face = TRUE, orifice = SEX_PART_NULL, obj/item/reagent_containers/glass/cum_chalice = null)
+	if(!splashed_user || splashed_user == user)
+		return cum_chalice ? EXCESSIVE_CUM_CONTEXT_CONTAINER : EXCESSIVE_CUM_CONTEXT_SOLO
+	if(oral)
+		return EXCESSIVE_CUM_CONTEXT_ORAL
+	if(orifice & SEX_PART_CUNT && !(orifice & SEX_PART_ANUS))
+		return EXCESSIVE_CUM_CONTEXT_VAGINAL
+	if(orifice & SEX_PART_ANUS && !(orifice & SEX_PART_CUNT))
+		return EXCESSIVE_CUM_CONTEXT_ANAL
+	if(cum_on_face)
+		return EXCESSIVE_CUM_CONTEXT_FACE
+	return EXCESSIVE_CUM_CONTEXT_BODY
+
+/datum/sex_controller/proc/get_excessive_cum_summary_messages(context = EXCESSIVE_CUM_CONTEXT_SOLO, mob/living/carbon/human/splashed_user = null, obj/item/reagent_containers/glass/cum_chalice = null)
 	var/list/messages = list(
 		"user" = null,
 		"receiver" = null,
 	)
 	if(!participants_allow_excessive_cum())
 		return messages
-	if(!splashed_user || splashed_user == user)
-		messages["user"] = cum_chalice ? "I've dumped a huge load into [cum_chalice]..." : "I've wasted a huge load..."
-		return messages
-	if(oral)
-		messages["receiver"] = "My belly is filled with hot spunk..."
-		messages["user"] = "I've pumped their belly full of hot spunk..."
-		return messages
-	if(orifice & SEX_PART_CUNT && !(orifice & SEX_PART_ANUS))
-		messages["receiver"] = "My womb is completely full of their seed..."
-		messages["user"] = "I've pumped their womb full of my seed..."
-		return messages
-	if(orifice & SEX_PART_ANUS && !(orifice & SEX_PART_CUNT))
-		messages["receiver"] = "My ass is completely full of their seed..."
-		messages["user"] = "I've pumped their ass full of my seed..."
-		return messages
-	if(cum_on_face)
-		messages["receiver"] = "My body has been completely painted in cum..."
-		messages["user"] = "I've painted them in cum..."
-		return messages
-	messages["receiver"] = "I feel a huge hot load splatter over me..."
-	messages["user"] = "I've painted them with a fat load..."
+	switch(context)
+		if(EXCESSIVE_CUM_CONTEXT_CONTAINER)
+			messages["user"] = "I've dumped a huge load into [cum_chalice]..."
+		if(EXCESSIVE_CUM_CONTEXT_SOLO)
+			messages["user"] = "I've wasted a huge load..."
+		if(EXCESSIVE_CUM_CONTEXT_ORAL)
+			messages["receiver"] = "My belly is filled with hot spunk..."
+			messages["user"] = "I've pumped their belly full of hot spunk..."
+		if(EXCESSIVE_CUM_CONTEXT_VAGINAL)
+			messages["receiver"] = "My womb is completely full of their seed..."
+			messages["user"] = "I've pumped their womb full of my seed..."
+		if(EXCESSIVE_CUM_CONTEXT_ANAL)
+			messages["receiver"] = "My ass is completely full of their seed..."
+			messages["user"] = "I've pumped their ass full of my seed..."
+		if(EXCESSIVE_CUM_CONTEXT_FACE)
+			messages["receiver"] = "My body has been completely painted in cum..."
+			messages["user"] = "I've painted them in cum..."
+		if(EXCESSIVE_CUM_CONTEXT_BODY)
+			messages["receiver"] = "I feel a huge hot load splatter over me..."
+			messages["user"] = "I've painted them with a fat load..."
 	return messages
 
-/datum/sex_controller/proc/announce_excessive_cum_summary(mob/living/carbon/human/splashed_user = null, oral = FALSE, cum_on_face = TRUE, orifice = SEX_PART_NULL, obj/item/reagent_containers/glass/cum_chalice = null)
-	var/list/messages = get_excessive_cum_summary_messages(splashed_user, oral, cum_on_face, orifice, cum_chalice)
+/datum/sex_controller/proc/announce_excessive_cum_summary(context = EXCESSIVE_CUM_CONTEXT_SOLO, mob/living/carbon/human/splashed_user = null, obj/item/reagent_containers/glass/cum_chalice = null)
+	var/list/messages = get_excessive_cum_summary_messages(context, splashed_user, cum_chalice)
 	if(!messages || (!messages["user"] && !messages["receiver"]))
 		return
 	if(messages["receiver"] && splashed_user && splashed_user != user)
