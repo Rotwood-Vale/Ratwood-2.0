@@ -23,7 +23,6 @@
         return FALSE
     return TRUE
 
-/datum/sex_action/chastityplay/tailprod_cage/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
     if(..())
         return TRUE
     return FALSE
@@ -43,3 +42,4 @@
     if(target.sexcon.finished_check())
         return TRUE
     return FALSE
+

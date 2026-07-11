@@ -30,7 +30,6 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/slit_sex/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
 		to_chat(user, span_notice("My groin needs to be accessible."))
 		return
@@ -94,7 +93,6 @@
 		return FALSE
 	return ..()
 
-/datum/sex_action/slit_sex/double/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	..()
 
 /datum/sex_action/slit_sex/double/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -132,3 +130,4 @@
 
 /datum/sex_action/slit_sex/double/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] pulls [user.p_their()] cocks out of [target]'s slit."))
+

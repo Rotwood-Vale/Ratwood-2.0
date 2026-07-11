@@ -23,7 +23,6 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/facesitting_vaginal/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user.resting)
 		to_chat(user, span_notice("I need to stand up first."))
 		return
@@ -67,3 +66,4 @@
 	if(user.sexcon.finished_check())
 		return TRUE
 	return FALSE
+

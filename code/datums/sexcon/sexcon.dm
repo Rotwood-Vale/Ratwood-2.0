@@ -1377,6 +1377,8 @@
 	if(!requested_action)
 		return
 	if(!can_perform_action(action_type, user.incapacitated()))
+		if(call(requested_action, /datum/sex_action/proc/on_failed_start)(user, target))
+			return
 		requested_action.on_failed_start(user, target)
 		return
 	knot_check_remove(action_type)

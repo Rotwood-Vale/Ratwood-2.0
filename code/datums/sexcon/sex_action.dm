@@ -39,6 +39,12 @@
 		if(grabstate == null || grabstate < required_grab_state)
 			to_chat(user, span_notice("I need to have a tight hold on them."))
 			return TRUE
+	if(check_same_tile && user && target && user != target)
+		var/same_tile = (get_turf(user) == get_turf(target))
+		var/grab_bypass = (aggro_grab_instead_same_tile && user.get_highest_grab_state_on(target) == GRAB_AGGRESSIVE)
+		if(!same_tile && !grab_bypass)
+			to_chat(user, span_notice("I need to be on the same tile as them, or hold them aggressively."))
+			return TRUE
 	if((user_sex_part & SEX_PART_JAWS) && !check_location_accessible(user, user, BODY_ZONE_PRECISE_MOUTH))
 		to_chat(user, span_notice("My mouth needs to be accessible."))
 		return TRUE

@@ -36,7 +36,6 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/force_blowjob/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return ..()
 
 /datum/sex_action/force_blowjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -72,3 +71,4 @@
 	if(user.sexcon.finished_check())
 		return TRUE
 	return FALSE
+

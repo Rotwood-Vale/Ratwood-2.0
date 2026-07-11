@@ -25,12 +25,20 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/frotting/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(user == target)
+		return
+	if(!user.getorganslot(ORGAN_SLOT_PENIS))
+		to_chat(user, span_notice("I need a cock for that."))
+		return
+	if(!target.getorganslot(ORGAN_SLOT_PENIS))
+		to_chat(user, span_notice("They need a cock for that."))
+		return
 	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN))
 		to_chat(user, span_notice("My groin needs to be accessible."))
 		return
 	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN))
 		to_chat(user, span_notice("Their groin needs to be accessible."))
+		return
 
 /datum/sex_action/frotting/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] shoves [user.p_their()] cock against [target]'s own!"))
@@ -47,3 +55,4 @@
 
 /datum/sex_action/frotting/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] lets go of both their cocks."))
+

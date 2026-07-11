@@ -27,15 +27,24 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/titjob/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/organ/breasts/breasts = target.getorganslot(ORGAN_SLOT_BREASTS)
+	if(user == target)
+		return
+	if(!user.getorganslot(ORGAN_SLOT_PENIS))
+		to_chat(user, span_notice("I need a cock for that."))
+		return
+	if(!target.getorganslot(ORGAN_SLOT_BREASTS))
+		to_chat(user, span_notice("They need breasts for that."))
+		return
 	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
 		to_chat(user, span_notice("My groin needs to be accessible."))
 		return
 	if(!check_location_accessible(user, target, BODY_ZONE_CHEST))
 		to_chat(user, span_notice("Their chest needs to be accessible."))
+		return
 	if(breasts && breasts.breast_size < 2)
 		to_chat(user, span_notice("Their breasts are too small to do that..."))
+		return
 
 /datum/sex_action/titjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] grabs [target]'s tits and shoves [user.p_their()] cock inbetween!"))
@@ -55,3 +64,4 @@
 	if(user.sexcon.finished_check())
 		return TRUE
 	return FALSE
+

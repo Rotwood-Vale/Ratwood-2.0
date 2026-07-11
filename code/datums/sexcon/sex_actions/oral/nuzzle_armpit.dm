@@ -16,7 +16,6 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/armpit_nuzzle/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!check_location_accessible(user, target, BODY_ZONE_CHEST))
 		to_chat(user, span_notice("Their chest needs to be accessible."))
 		return
@@ -31,3 +30,4 @@
 
 /datum/sex_action/armpit_nuzzle/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] stops nuzzling [target]'s armpit..."))
+
