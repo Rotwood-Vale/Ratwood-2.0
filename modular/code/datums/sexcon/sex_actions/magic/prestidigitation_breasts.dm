@@ -31,7 +31,7 @@
 	return FALSE
 
 /datum/sex_action/masturbate_other_breasts_prestidigitation/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] starts teasing [target]'s breasts with prestidigitation..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user] starts teasing [target]'s breasts with conjured arcyne hands..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = 0
 
 /datum/sex_action/masturbate_other_breasts_prestidigitation/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -39,7 +39,7 @@
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle
 
-	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] coaxes arcyne warmth through [target]'s breasts..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] squeezes [target]'s breasts with tingles of arcyne energy..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 
 	var/skill_level = max(user.get_skill_level(/datum/skill/magic/arcane), 1)
 	user.sexcon.perform_sex_action(target, max(1, (skill_level * 0.75)), 4, TRUE)
@@ -48,7 +48,7 @@
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE
 
 /datum/sex_action/masturbate_other_breasts_prestidigitation/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] stops teasing [target]'s breasts with prestidigitation."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user] lowers [user.p_their()] hands as the prestidigitation fades."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 
 /datum/sex_action/masturbate_other_breasts_prestidigitation/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.sexcon.finished_check())

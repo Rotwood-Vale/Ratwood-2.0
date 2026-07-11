@@ -52,7 +52,7 @@
 	user.sexcon.suppress_moan = FALSE
 
 /datum/sex_action/masturbate_breasts_orison/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] lets the orison fade and lowers [user.p_their()] hands."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user] finishes the prayer and eases off [user.p_their()] tits."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 
 /datum/sex_action/masturbate_breasts_orison/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user.sexcon.finished_check())
