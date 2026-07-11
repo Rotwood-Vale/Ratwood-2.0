@@ -1014,6 +1014,7 @@
 	mush_animate = FALSE
 
 /obj/structure/flora/rogueshroom/unhappy/random
+	mush_light_power = 0 // don't try to make a light for us, we will just be deleted
 
 /obj/structure/flora/rogueshroom/unhappy/random/Initialize(mapload)
 	. = ..()
