@@ -284,7 +284,7 @@
 	. = 1
 
 /datum/reagent/moondust/on_mob_metabolize(mob/living/M)
-	M.flash_fullscreen("whiteflash")
+	M.fullscreen_redflash("whiteflash")
 	animate(M.client, pixel_y = 1, time = 1, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -1, time = 1, flags = ANIMATION_RELATIVE)
 
@@ -299,7 +299,7 @@
 		M.sate_addiction(/datum/charflaw/addiction/junkie)
 	M.apply_status_effect(/datum/status_effect/buff/moondust)
 	if(prob(10))
-		M.flash_fullscreen("whiteflash")
+		M.fullscreen_redflash("whiteflash")
 	..()
 
 /datum/reagent/moondust/overdose_start(mob/living/M)
@@ -332,7 +332,7 @@
 
 /datum/reagent/moondust_purest/on_mob_metabolize(mob/living/M)
 	M.playsound_local(M, 'sound/ravein/small/hello_my_friend.ogg', 100, FALSE)
-	M.flash_fullscreen("whiteflash")
+	M.fullscreen_redflash("whiteflash")
 	animate(M.client, pixel_y = 1, time = 1, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -1, time = 1, flags = ANIMATION_RELATIVE)
 
@@ -348,7 +348,7 @@
 		M.sate_addiction(/datum/charflaw/addiction/junkie)
 	M.apply_status_effect(/datum/status_effect/buff/moondust_purest)
 	if(prob(20))
-		M.flash_fullscreen("whiteflash")
+		M.fullscreen_redflash("whiteflash")
 	..()
 
 /datum/reagent/moondust_purest/overdose_start(mob/living/M)
@@ -379,7 +379,7 @@
 	..()
 	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.5, blacklisted_movetypes=(FLYING|FLOATING))
 	L.playsound_local(L, 'sound/ravein/small/hello_my_friend.ogg', 100, FALSE)
-	L.flash_fullscreen("whiteflash")
+	L.fullscreen_redflash("whiteflash")
 	animate(L.client, pixel_y = 1, time = 1, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -1, time = 1, flags = ANIMATION_RELATIVE)
 
@@ -410,7 +410,7 @@
 		M.sate_addiction(/datum/charflaw/addiction/junkie)
 	M.apply_status_effect(/datum/status_effect/buff/starsugar)
 	if(prob(20))
-		M.flash_fullscreen("whiteflash")
+		M.fullscreen_redflash("whiteflash")
 	..()
 	..()
 	. = 1

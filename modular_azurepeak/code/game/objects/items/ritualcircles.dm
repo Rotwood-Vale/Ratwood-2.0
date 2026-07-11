@@ -411,7 +411,7 @@
 /obj/structure/ritualcircle/malum/proc/holyreforge(src)
 	var/ritualtargets = view(7, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
-		target.flash_fullscreen("whiteflash") //Cool effect!
+		target.fullscreen_redflash("whiteflash") //Cool effect!
 	for (var/obj/item/ingot/silver/I in loc)
 		qdel(I)
 		new /obj/item/ingot/silverblessed(loc)

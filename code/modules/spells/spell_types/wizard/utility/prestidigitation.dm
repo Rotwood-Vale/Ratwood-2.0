@@ -202,7 +202,7 @@
 	spark_cd = world.time
 
 	playsound(user, 'sound/foley/finger-snap.ogg', 100, FALSE)
-	user.flash_fullscreen("whiteflash")
+	user.fullscreen_redflash("whiteflash")
 	flick("flintstrike", src)
 
 	if (isturf(thing) || !user.Adjacent(thing))
