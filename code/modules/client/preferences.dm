@@ -117,6 +117,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/chastenable = FALSE
 	var/chastity_hardmode = CHASTITY_HARDMODE_DISABLED
 	var/extreme_erp = FALSE
+	var/excessive_cum = FALSE
 	var/edging = FALSE
 	var/compliance_notifs = TRUE
 	var/skillcap_notifs = TRUE

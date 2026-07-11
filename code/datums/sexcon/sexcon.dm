@@ -645,6 +645,9 @@
 	// Volume now derives from the same STACON-centered load scaling used for bursts/charge.
 	var/volume = 1 + floor((get_load_scaling_value() + 1) / LOAD_BURST_STEP)
 	volume += get_knot_volume_bonus()
+	if(participants_allow_excessive_cum())
+		volume += SPURT_EXCESSIVE_VOLUME_BONUS
+		return clamp(volume, SEMEN_VOLUME_MIN, SEMEN_VOLUME_EXCESSIVE_MAX)
 	return clamp(volume, SEMEN_VOLUME_MIN, SEMEN_VOLUME_MAX)
 
 /datum/sex_controller/proc/get_load_bursts()
@@ -657,7 +660,17 @@
 	additional_spurts += get_spurt_trait_bonus()
 	additional_spurts += get_spurt_species_bonus()
 	additional_spurts += get_spurt_ball_size_bonus()
+	if(participants_allow_excessive_cum())
+		additional_spurts += SPURT_EXCESSIVE_ADDITIONAL_BONUS
+		return clamp(additional_spurts, SPURT_ADDITIONAL_MIN, SPURT_EXCESSIVE_ADDITIONAL_MAX)
 	return clamp(additional_spurts, SPURT_ADDITIONAL_MIN, SPURT_ADDITIONAL_MAX)
+
+/datum/sex_controller/proc/participants_allow_excessive_cum()
+	if(!user?.client?.prefs?.excessive_cum)
+		return FALSE
+	if(!target || target == user)
+		return TRUE
+	return !!target.client?.prefs?.excessive_cum
 
 /datum/sex_controller/proc/get_spurt_stacon_bonus()
 	// Additional spurts from CON only:

@@ -135,6 +135,7 @@
 		list("id" = "chastity", "label" = "Enable Chastity Content", "enabled" = !!owner.prefs.chastenable, "desc" = "Show and allow chastity-related content."),
 		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
 		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allow extreme ERP content categories."),
+		list("id" = "excessive_cum", "label" = "Enable Excessive Cum", "enabled" = !!owner.prefs.excessive_cum, "desc" = "Allow higher spurt counts and volume when all participants opt in, as well as other fetish messages"),
 		list("id" = "edging", "label" = "Enable Edging Content", "enabled" = !!owner.prefs.edging, "desc" = "Allow edging-related ERP content."),
 	)
 
@@ -227,6 +228,8 @@
 				owner.toggle_Chastity_Hardmode()
 			if("extreme_erp")
 				owner.toggle_extreme_ERP()
+			if("excessive_cum")
+				owner.toggle_excessive_cum()
 			if("edging")
 				owner.toggle_edging()
 		SStgui.update_uis(src)
@@ -438,6 +441,18 @@
 			if(hascall(src, "modular_handle_extreme_erp_toggle_disable"))
 				call(src, "modular_handle_extreme_erp_toggle_disable")()
 			to_chat(src, "Extreme ERP content disabled in the ERP panel.")
+
+/client/verb/toggle_excessive_cum()
+	set category = "Options"
+	set name = "Toggle Excessive Cum"
+	set hidden = 1
+	if(prefs)
+		prefs.excessive_cum = !prefs.excessive_cum
+		prefs.save_preferences()
+		if(prefs.excessive_cum)
+			to_chat(src, "Excessive cum output enabled when all participants opt in.")
+		else
+			to_chat(src, "Excessive cum output disabled.")
 
 /client/verb/toggle_edging() // Toggles edging content in the ERP panel, for psydonites who clearly can't ENDURE.
 	set category = "Options"
