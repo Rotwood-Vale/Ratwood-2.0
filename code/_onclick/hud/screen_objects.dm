@@ -22,6 +22,8 @@
 	if(hud)
 		UnregisterSignal(hud, COMSIG_QDELETING)
 	master = null
+	if(hud?.mymob?.client)
+		hud?.mymob?.client?.screen -= src
 	hud = null
 	return ..()
 
